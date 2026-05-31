@@ -6,13 +6,13 @@ Acest document definește structura și convențiile pentru documentarea modulel
 
 Fiecare modul Odoo va avea propriul director markdown în directorul `wiki_module_odoo/`, numit `[module_name]/`. Documentația principală pentru modul va fi într-un fișier `index.md` în cadrul acelui director.
 
----
-
-# Numele modulului, lizibil pentru om.
+# [Nume Prietenesc Modul] (localizat la `[module_name]/index.md`)
 
 - **Nume Tehnic:** `[module_name]`
+- **Versiune:** `[VERSION]`
 - **Cale:** URL-ul complet GitHub către directorul modulului (ex: `https://github.com/OWNER/REPO/tree/BRANCH/path/to/module`)
-- **Ultima Ingestie:** `[YYYY-MM-DD]`
+- **Cale Locală:** Calea relativă către directorul modulului din rădăcina monorepo-ului Odoo (ex: `odoo-addons/l10n_ro_ent/nume_modul`)
+- **Ultima Ingestie:** `[AAAA-LL-ZZ]`
 
 #### 1. Sumar
 
