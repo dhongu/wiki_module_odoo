@@ -41,8 +41,11 @@ Acest modul gestionează facturile de avans cu TVA conform **Art. 282 alin. 2 Co
 
 ### Acțiuni Automate / Acțiuni Server
 
-*Nu au fost identificate explicit în `__manifest__.py` sau `readme/DESCRIPTION.md`.*
+- `_l10n_ro_create_advance_invoice()`: Metodă pentru crearea facturii de avans cu TVA, apelată dintr-un wizard sau direct.
+- `_l10n_ro_apply_advances()`: Metodă pe `account.move` pentru aplicarea avansurilor selectate pe factura finală, generând linii de stornare TVA și regularizare sold 419.
+- `action_open_unregularized_advances_report()`: Acțiune pentru deschiderea raportului cu avansurile clienți/furnizori neregularizate.
 
 ## 5. Conexiuni
 
-*Acest modul este fundamental pentru conformitatea fiscală românească legată de TVA și avansuri. Se conectează cu alte module de localizare românească pentru declarații ANAF (ex. D300, D394).*
+- `l10n_ro_anaf_base`: Modulul de bază pentru declarații ANAF, care utilizează câmpul `l10n_ro_is_advance` pentru a genera `TipDoc=5` în D394.
+- Alte module de localizare românească pentru declarații ANAF (ex. D300, D394).
