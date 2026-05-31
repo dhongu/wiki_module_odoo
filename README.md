@@ -1,0 +1,1 @@
+# wiki_module_odoo
