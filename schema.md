@@ -4,16 +4,15 @@ Acest document definește structura și convențiile pentru documentarea modulel
 
 ## Structura Paginii Modulului
 
-Fiecare modul Odoo va avea propriul director markdown în directorul `wiki_module_odoo/`, numit `[nume_modul]/`. Documentația principală pentru modul va fi într-un fișier `index.md` în cadrul acelui director.
+Fiecare modul Odoo va avea propriul director markdown în directorul `wiki_module_odoo/`, numit `[module_name]/`. Documentația principală pentru modul va fi într-un fișier `index.md` în cadrul acelui director.
 
 ---
 
-# `[nume_modul]` (localizat la `[nume_modul]/index.md`)
+# Numele modulului, lizibil pentru om.
 
-- **Nume Prietenesc:** Numele modulului, lizibil pentru om.
-- **Nume Tehnic:** `[nume_modul]`
-- **Cale:** URL-ul complet GitHub către directorul modulului (ex: `https://github.com/PROPRIETAR/REPOSITORIU/tree/BRANCH/cale/catre/modul`)
-- **Ultima Ingestie:** `[AAAA-LL-ZZ]`
+- **Nume Tehnic:** `[module_name]`
+- **Cale:** URL-ul complet GitHub către directorul modulului (ex: `https://github.com/OWNER/REPO/tree/BRANCH/path/to/module`)
+- **Ultima Ingestie:** `[YYYY-MM-DD]`
 
 #### 1. Sumar
 
@@ -31,8 +30,8 @@ O listă cu principalele funcționalități pe care modulul le oferă utilizator
 
 O listă cu alte module Odoo de care depinde direct acest modul. Aceasta ar trebui să provină din fișierul `__manifest__.py`. Fiecare dependență ar trebui să fie un wikilink dacă pagina sa există deja (ex: `[[account]]`).
 
-- `dependență1`
-- `dependență2`
+- `dependency1`
+- `dependency2`
 
 #### 4. Componente Cheie
 
@@ -49,22 +48,22 @@ O listă cu cele mai semnificative modele Odoo definite sau extinse de acest mod
 
 O listă cu vizualizările cheie (formulare, liste, kanban-uri) care oferă principalele interfețe de utilizator pentru acest modul.
 
-- `id_xml_vizualizare`: Scurtă descriere a scopului vizualizării.
+- `view_xml_id`: Scurtă descriere a scopului vizualizării.
 - ...
 
 **Acțiuni Automate / Acțiuni Server**
 
 O listă cu orice sarcini `ir.cron`, reguli `base.automation` sau înregistrări `ir.actions.server` definite în modul.
 
-- `nume_acțiune`: Ce face și când rulează.
+- `action_name`: Ce face și când rulează.
 - ...
 
 #### 5. Conexiuni
 
 O listă de wikilink-uri către alte pagini de module care sunt funcțional legate de acesta, dar nu sunt dependențe stricte. Acest lucru ajută la înțelegerea ecosistemului mai larg.
 
-- `[[modul_legat_a]]`
-- `[[modul_legat_b]]`
+- `[[related_module_a]]`
+- `[[related_module_b]]`
 
 ---
 

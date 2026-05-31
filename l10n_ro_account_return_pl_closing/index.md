@@ -2,14 +2,14 @@
 
 # `l10n_ro_account_return_pl_closing`
 
-- **Nume Prietenesc:** Romania - Închidere P&L Cont Return (121)
+- **Nume Prietenesc:** România - Închidere P&L Cont Return (121)
 - **Nume Tehnic:** `l10n_ro_account_return_pl_closing`
 - **Cale:** https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_account_return_pl_closing
 - **Ultima Ingestie:** 2026-05-31
 
 ## 1. Sumar
 
-Acest modul implementează fluxul de închidere lunară a conturilor de venituri (clasa 7xx) și cheltuieli (clasa 6xx) prin contul 121 (Profit și Pierdere), utilizând framework-ul standard Enterprise „Returns” (`account.return`) din `account_reports` în Odoo 19. Operațiunea este obligatorie conform reglementărilor contabile românești (OMFP 1802/2014).
+Acest modul implementează fluxul de închidere lunară a conturilor de venituri (7xx) și cheltuieli (6xx) prin contul 121 (Profit și Pierdere), utilizând framework-ul standard Enterprise „Returns” (`account.return`) din `account_reports` în Odoo 19. Operațiunea este obligatorie conform reglementărilor contabile românești (OMFP 1802/2014).
 
 ## 2. Funcționalități Cheie
 
