@@ -4,6 +4,26 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 
 ## Module
 
+- [deltatech](deltatech/index.md): Modul de bază (fundație) al suitei Deltatech, oferind utilitare partajate, structură unitară și extinderi comune pentru celelalte module Deltatech.
+- [deltatech_account](deltatech_account/index.md): Îmbunătățiri pentru contabilitatea și facturarea Odoo: vizibilitate extinsă a facturilor, configurare flexibilă a jurnalelor/conturilor și sincronizare între documente.
+- [deltatech_agreement_management](deltatech_agreement_management/index.md): Gestionarea acordurilor (număr, dată, stare) cu tipuri configurabile, secvențe de numerotare și șabloane de raport.
+- [deltatech_business_process](deltatech_business_process/index.md): Structurarea și execuția proiectelor de implementare Odoo prin Proiecte, Procese de Afaceri, Pași, Testare (intern/integrare/UAT) și gestionarea problemelor.
+- [deltatech_dropshipping](deltatech_dropshipping/index.md): Extinde drop shipping-ul Odoo afișând adresa de livrare direct în documentul de transfer (picking).
+- [deltatech_expenses](deltatech_expenses/index.md): Gestionarea decontării cheltuielilor angajaților din avansuri, cu generare automată de chitanțe, note contabile și închiderea contului 542.
+- [deltatech_fast_sale](deltatech_fast_sale/index.md): Vânzare rapidă: buton în comanda de vânzare care parcurge într-un singur pas confirmarea, livrarea și facturarea.
+- [deltatech_invoice_picking](deltatech_invoice_picking/index.md): Generează facturi direct din livrări (pickings) sau din loturi, preluând doar produsele și cantitățile efectiv realizate.
+- [deltatech_mail](deltatech_mail/index.md): Filtrarea și redirecționarea emailurilor către o adresă de substituție.
+- [deltatech_mrp](deltatech_mrp/index.md): Extinde MRP cu includerea costurilor indirecte în costul de producție, rotunjirea cantităților la explozia BOM și analiza costurilor de fabricație.
+- [deltatech_product_extension](deltatech_product_extension/index.md): Extinde produsul cu câmpuri pentru producător, dimensiuni fizice și termen de valabilitate, și marchează partenerii ca producători.
+- [deltatech_product_labels](deltatech_product_labels/index.md): Tipărește etichete pentru produse, comenzi de vânzare și livrări, inclusiv pentru toate loturile aflate pe stoc, cu aspecte personalizabile.
+- [deltatech_purchase_price](deltatech_purchase_price/index.md): Actualizează automat prețurile de achiziție, costul standard, prețul furnizorului și prețul de vânzare la validarea recepției.
+- [deltatech_sale_commission](deltatech_sale_commission/index.md): Calcul al comisioanelor de vânzare și control al profitabilității, cu condiționare opțională de încasarea facturii în termen.
+- [deltatech_sale_margin](deltatech_sale_margin/index.md): Control extins al prețurilor și marjei pe comenzile de vânzare: ascunde marja/prețul de achiziție, blochează modificarea prețului și avertizează la vânzarea sub cost.
+- [deltatech_stock_account](deltatech_stock_account/index.md): Extinde evaluarea stocurilor afișând valoarea contabilă direct la nivelul transferurilor de marfă (picking).
+- [deltatech_stock_inventory](deltatech_stock_inventory/index.md): Restaurează și extinde inventarul clasic (`stock.inventory`) cu control valoric, vizibilitate pe depozite, localizare manuală și scanare cod de bare.
+- [deltatech_warehouse_map](deltatech_warehouse_map/index.md): Hartă vizuală a depozitului pentru navigarea ierarhică a amplasamentelor de stoc, cu afișarea grafică a gradului de ocupare.
+- [deltatech_website_delivery_and_payment](deltatech_website_delivery_and_payment/index.md): Reguli eCommerce care leagă metodele de plată de cele de livrare și le restricționează în funcție de etichetele partenerilor.
+- [deltatech_website_sale_attributes](deltatech_website_sale_attributes/index.md): Filtrează valorile atributelor afișate în magazinul online pentru a arăta doar opțiunile relevante produselor disponibile.
 - [l10n_ro_account_chart](l10n_ro_account_chart/index.md): Extinde planul de conturi românesc cu controale de înregistrare și analitice.
 - [l10n_ro_account_fisa_cont](l10n_ro_account_fisa_cont/index.md): Oferă raportul 'Fișă de Cont' conform OMFP 1802/2014.
 - [l10n_ro_account_return_pl_closing](l10n_ro_account_return_pl_closing/index.md): Implementează fluxul de închidere lunară a conturilor de Profit și Pierdere prin contul 121.
@@ -75,5 +95,6 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_vat_regularization](l10n_ro_vat_regularization/index.md): Regularizare automată TVA la finele perioadei (4426/4427 → 4423/4424) conform OMFP 1802.
 - [l10n_ro_wip_closing](l10n_ro_wip_closing/index.md): Evaluare și stornare în roșu a producției în curs (331/711) la 1 a lunii următoare, conform OMFP 1802.
 - [terrabit_facebook_pixel](terrabit_facebook_pixel/index.md): Integrare Meta (Facebook) Pixel și Conversion API pentru eCommerce Odoo 19, tracking hibrid client+server.
+- [terrabit_iap_server_sale](terrabit_iap_server_sale/index.md): Achiziția de credite IAP prin magazinul eCommerce (website_sale), cu creditare automată a contului IAP la confirmarea comenzii.
 - [terrabit_tiktok_pixel](terrabit_tiktok_pixel/index.md): Integrare TikTok Pixel și Conversion API pentru eCommerce Odoo 19, tracking hibrid client+server.
 - [terrabit_website_sale_tracking_base](terrabit_website_sale_tracking_base/index.md): Fundație de tracking eCommerce — configurare globală și magistrală de evenimente normalizate pentru pixeli.
