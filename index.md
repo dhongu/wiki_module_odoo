@@ -74,3 +74,6 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_vat_refund](l10n_ro_vat_refund/index.md): Urmărire cereri de rambursare TVA din sold negativ D300 (termen 45 zile, dobânzi, monografie 4424/4426/5121).
 - [l10n_ro_vat_regularization](l10n_ro_vat_regularization/index.md): Regularizare automată TVA la finele perioadei (4426/4427 → 4423/4424) conform OMFP 1802.
 - [l10n_ro_wip_closing](l10n_ro_wip_closing/index.md): Evaluare și stornare în roșu a producției în curs (331/711) la 1 a lunii următoare, conform OMFP 1802.
+- [terrabit_facebook_pixel](terrabit_facebook_pixel/index.md): Integrare Meta (Facebook) Pixel și Conversion API pentru eCommerce Odoo 19, tracking hibrid client+server.
+- [terrabit_tiktok_pixel](terrabit_tiktok_pixel/index.md): Integrare TikTok Pixel și Conversion API pentru eCommerce Odoo 19, tracking hibrid client+server.
+- [terrabit_website_sale_tracking_base](terrabit_website_sale_tracking_base/index.md): Fundație de tracking eCommerce — configurare globală și magistrală de evenimente normalizate pentru pixeli.
