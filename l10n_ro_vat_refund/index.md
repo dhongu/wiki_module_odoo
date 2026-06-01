@@ -20,7 +20,7 @@ Acest modul urmărește cererile de rambursare TVA rezultate din soldul negativ 
 
 ## 3. Dependențe
 
-- `l10n_ro_anaf_d300`
+- [l10n_ro_anaf_d300](../l10n_ro_anaf_d300/index.md)
 - `mail`
 
 ## 4. Componente Cheie
@@ -45,6 +45,6 @@ Acest modul urmărește cererile de rambursare TVA rezultate din soldul negativ 
 
 ## 5. Conexiuni
 
-- `l10n_ro_vat_regularization`
-- `l10n_ro_vat_group`
-- `l10n_ro_vat_deductibility`
+- [l10n_ro_anaf_d300](../l10n_ro_anaf_d300/index.md): sursa soldului negativ TVA care declanșează cererea de rambursare.
+- [l10n_ro_vat_regularization](../l10n_ro_vat_regularization/index.md): regularizarea contabilă 4426/4427/4424.
+- [l10n_ro_period_close_enhanced](../l10n_ro_period_close_enhanced/index.md): checklist de închidere și urmărirea documentelor ANAF.

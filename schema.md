@@ -28,9 +28,9 @@ O listă cu principalele funcționalități pe care modulul le oferă utilizator
 
 #### 3. Dependențe
 
-O listă cu alte module Odoo de care depinde direct acest modul. Aceasta ar trebui să provină din fișierul `__manifest__.py`. Fiecare dependență ar trebui să fie un wikilink dacă pagina sa există deja (ex: `[[account]]`).
+O listă cu alte module Odoo de care depinde direct acest modul. Aceasta ar trebui să provină din fișierul `__manifest__.py`. Fiecare dependență al cărei pagină wiki există deja trebuie să fie un **link Markdown activ** relativ către pagina sa (ex: `[account](../account/index.md)`). Modulele care **nu** au încă pagină wiki rămân ca text `cod` (ex: `account`, `l10n_ro`, `mail`).
 
-- `dependency1`
+- [dependency1](../dependency1/index.md)
 - `dependency2`
 
 #### 4. Componente Cheie
@@ -60,10 +60,10 @@ O listă cu orice sarcini `ir.cron`, reguli `base.automation` sau înregistrări
 
 #### 5. Conexiuni
 
-O listă de wikilink-uri către alte pagini de module care sunt funcțional legate de acesta, dar nu sunt dependențe stricte. Acest lucru ajută la înțelegerea ecosistemului mai larg.
+O listă de **link-uri Markdown active** către alte pagini de module care sunt funcțional legate de acesta, dar nu sunt dependențe stricte. Acest lucru ajută la înțelegerea ecosistemului mai larg. Folosiți căi relative către `index.md`-ul modulului țintă. Modulele fără pagină wiki rămân ca text `cod`.
 
-- `[[related_module_a]]`
-- `[[related_module_b]]`
+- [related_module_a](../related_module_a/index.md): scurtă descriere a legăturii.
+- [related_module_b](../related_module_b/index.md): scurtă descriere a legăturii.
 
 ---
 

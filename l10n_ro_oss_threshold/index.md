@@ -21,7 +21,7 @@ Modulul monitorizează pragul anual de 10.000 EUR pentru vânzările B2C către 
 #### 3. Dependențe
 
 - `account`
-- `[[l10n_ro]]`
+- `l10n_ro`
 
 #### 4. Componente Cheie
 
@@ -45,4 +45,5 @@ Modulul monitorizează pragul anual de 10.000 EUR pentru vânzările B2C către 
 
 #### 5. Conexiuni
 
-- `[[l10n_ro]]`
+- [l10n_ro_anaf_d398](../l10n_ro_anaf_d398/index.md): declarația specială OSS în România.
+- `l10n_eu_oss` / `l10n_eu_oss_reports`: aplicarea efectivă a cotelor OSS și raportarea.

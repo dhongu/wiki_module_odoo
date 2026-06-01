@@ -43,5 +43,5 @@ Acest modul extinde gestionarea creanțelor și datoriilor pentru localizarea ro
 
 ## 5. Conexiuni
 
-- `[[l10n_ro_anaf_base]]`
-- `[[l10n_ro_account_chart]]`
+- [l10n_ro_partner_ledger_currency](../l10n_ro_partner_ledger_currency/index.md): fișa partenerului în valută, complementară urmăririi creanțelor.
+- `account`: liniile contabile (creanțe 411 / datorii 401) și reconcilierea.

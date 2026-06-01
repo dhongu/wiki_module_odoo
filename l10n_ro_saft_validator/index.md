@@ -12,10 +12,12 @@ Acest modul oferă verificări de pre-export pentru declarația **SAF-T D406**, 
 
 ## 2. Funcționalități Cheie
 
-- **Verificare parteneri fără CUI:** Detectează partenerii la care lipsește codul de identificare fiscală.
-- **Verificare conturi nemapate:** Identifică conturile contabile care nu au corespondent în structura SAF-T.
-- **Verificare coduri de țară invalide:** Semnalează valorile de țară care nu respectă formatul cerut de D406.
-- **Raport de validare structurat:** Prezintă fiecare problemă detectată ca o linie distinctă, pentru remediere rapidă înainte de export.
+- **Verificare date companie (`company_incomplete`):** semnalează adresa, orașul, codul poștal, țara sau județul lipsă.
+- **Verificare parteneri fără CUI (`partner_no_vat`):** detectează partenerii cu rulaj fără cod de identificare fiscală (sau persoane fizice fără CNP).
+- **Verificare parteneri fără țară (`partner_no_country`) sau cu țară invalidă (`partner_invalid_country`).**
+- **Verificare conturi nemapate (`accounts_no_type`):** identifică conturile fără tip configurat pentru SAF-T.
+- **Verificare taxe (`taxes_no_saft_type`):** semnalează taxele fără tipul SAF-T configurat.
+- **Raport de validare structurat:** prezintă fiecare problemă ca linie distinctă (tip, mesaj, partener/cont), pentru remediere înainte de export. Verificarea partenerilor vizează doar pe cei cu rulaj pe conturi de creanțe/datorii.
 
 ## 3. Dependențe
 
@@ -40,4 +42,5 @@ Acest modul oferă verificări de pre-export pentru declarația **SAF-T D406**, 
 
 ## 5. Conexiuni
 
-- `[[l10n_ro_anaf_base]]`
+- `l10n_ro_saft`: generarea efectivă a fișierului SAF-T D406 (pasul ulterior validării).
+- `l10n_ro`: planul de conturi și structura fiscală RO.
