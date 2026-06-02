@@ -6,11 +6,31 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 
 - [deltatech](deltatech/index.md): Modul de bază (fundație) al suitei Deltatech, oferind utilitare partajate, structură unitară și extinderi comune pentru celelalte module Deltatech.
 - [deltatech_account](deltatech_account/index.md): Îmbunătățiri pentru contabilitatea și facturarea Odoo: vizibilitate extinsă a facturilor, configurare flexibilă a jurnalelor/conturilor și sincronizare între documente.
+- [deltatech_actions](deltatech_actions/index.md): Instrumente de mentenanță și curățare a bazei de date (cron-uri pentru atașamente duplicate, PDF-uri vechi, reguli de reaprovizionare), sigure prin mod „dry run” implicit.
 - [deltatech_agreement_management](deltatech_agreement_management/index.md): Gestionarea acordurilor (număr, dată, stare) cu tipuri configurabile, secvențe de numerotare și șabloane de raport.
+- [deltatech_alternative](deltatech_alternative/index.md): Coduri alternative pentru produse și catalog master cu generare automată de produse.
+- [deltatech_alternative_website](deltatech_alternative_website/index.md): Permite căutarea produselor în magazinul online după codul alternativ (echivalent) al produsului.
+- [deltatech_analytic_distribution](deltatech_analytic_distribution/index.md): Impune completarea integrală a distribuției analitice (Locație, Departament, Linie de business) și însumarea la 100% pe liniile facturilor de furnizori.
+- [deltatech_auto_reorder_rule](deltatech_auto_reorder_rule/index.md): Creează automat reguli de reaprovizionare cu valori implicite pentru produse noi și în masă pentru cele existente.
+- [deltatech_average_payment_period](deltatech_average_payment_period/index.md): Calculează durata medie de încasare și de plată (perioada medie a contabilității de casă), ponderată cu sumele decontate.
+- [deltatech_backup_attachment](deltatech_backup_attachment/index.md): Backup selectiv al atașamentelor din Odoo pe baza unui filtru de tip domeniu, generând o arhivă cu fișierele alese.
+- [deltatech_batch_transfer](deltatech_batch_transfer/index.md): Gestionare inteligentă a livrărilor goale din transferurile în lot, cu excludere automată la validare și câmpuri suplimentare de organizare.
 - [deltatech_business_process](deltatech_business_process/index.md): Structurarea și execuția proiectelor de implementare Odoo prin Proiecte, Procese de Afaceri, Pași, Testare (intern/integrare/UAT) și gestionarea problemelor.
+- [deltatech_business_process_handover_document](deltatech_business_process_handover_document/index.md): Generează documentul de predare-primire (proces verbal) pentru un proces de business, direct dintr-un Proiect de Business, ca PDF.
+- [deltatech_cash_statement](deltatech_cash_statement/index.md): Unealtă pentru actualizarea rapidă a soldului inițial al extraselor de casă din Odoo.
+- [deltatech_category_group](deltatech_category_group/index.md): Adaugă două niveluri de grupare (tip și clasă) pentru categoriile interne de produse, utilizabile în rapoartele de marjă, stoc și facturi.
+- [deltatech_contact](deltatech_contact/index.md): Extinde fișa de contact cu câmpuri pentru persoane fizice (data nașterii, CNP, carte de identitate) și opțiune de afișare a numelui doar cu denumirea proprie.
+- [deltatech_credentials](deltatech_credentials/index.md): Gestionează centralizat acreditările (utilizator/parolă, client_id/secret, token) pentru conectarea la servicii externe.
+- [deltatech_data_sheet](deltatech_data_sheet/index.md): Atașează fișe tehnice și fișe de securitate (PDF) pe produs, în fila Vânzări.
+- [deltatech_data_sheet_website](deltatech_data_sheet_website/index.md): Expune fișele tehnice și fișele cu date de securitate ale produselor pe paginile din magazinul online.
+- [deltatech_dc](deltatech_dc/index.md): Gestionarea și tipărirea declarațiilor de conformitate pentru produse, inclusiv la facturare.
+- [deltatech_delivery_status](deltatech_delivery_status/index.md): Urmărire granulară a stării de livrare pe transferuri și comenzi, cu blocarea/amânarea livrărilor în funcție de plată.
+- [deltatech_download](deltatech_download/index.md): Mecanism de descărcare a fișierelor generate, cu opțiune de descărcare directă configurabilă la nivel de raport.
 - [deltatech_dropshipping](deltatech_dropshipping/index.md): Extinde drop shipping-ul Odoo afișând adresa de livrare direct în documentul de transfer (picking).
 - [deltatech_expenses](deltatech_expenses/index.md): Gestionarea decontării cheltuielilor angajaților din avansuri, cu generare automată de chitanțe, note contabile și închiderea contului 542.
+- [deltatech_fast_purchase](deltatech_fast_purchase/index.md): Accelerează achizițiile prin butoane care parcurg rapid confirmarea, recepția și facturarea unei comenzi de achiziție.
 - [deltatech_fast_sale](deltatech_fast_sale/index.md): Vânzare rapidă: buton în comanda de vânzare care parcurge într-un singur pas confirmarea, livrarea și facturarea.
+- [deltatech_followup](deltatech_followup/index.md): Urmărirea automată a facturilor neîncasate, prin e-mailuri de followup programate, relativ la data facturii sau a scadenței.
 - [deltatech_invoice_picking](deltatech_invoice_picking/index.md): Generează facturi direct din livrări (pickings) sau din loturi, preluând doar produsele și cantitățile efectiv realizate.
 - [deltatech_mail](deltatech_mail/index.md): Filtrarea și redirecționarea emailurilor către o adresă de substituție.
 - [deltatech_mrp](deltatech_mrp/index.md): Extinde MRP cu includerea costurilor indirecte în costul de producție, rotunjirea cantităților la explozia BOM și analiza costurilor de fabricație.
@@ -89,6 +109,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_stock_gestiune](l10n_ro_stock_gestiune/index.md): Gestiuni contabile de stoc (FR-54) cu gestionar, conturi și validare transfer valoric inter-gestiune.
 - [l10n_ro_stock_k_coefficient](l10n_ro_stock_k_coefficient/index.md): Calcul lunar al coeficientului K de repartizare a diferențelor de preț la stocuri (OMFP 1802), cu stornare în roșu.
 - [l10n_ro_stock_provision](l10n_ro_stock_provision/index.md): Identificare stocuri slow-moving și note de provizion 39x (Dr 6814/Cr 39x), conform OMFP 1802 pct. 143–148.
+- [l10n_ro_stock_sheet](l10n_ro_stock_sheet/index.md): Fișa de magazie (14-3-8) și balanța analitică a stocurilor ca raport nativ Enterprise (account.report) pe trei niveluri, cu reconciliere analitic↔sintetic.
 - [l10n_ro_vat_deductibility](l10n_ro_vat_deductibility/index.md): Gestionare TVA deductibil integral, parțial/pro-rata și nedeductibil pentru România.
 - [l10n_ro_vat_group](l10n_ro_vat_group/index.md): Grup fiscal TVA consolidat (art. 269²) cu CUI unic, excludere intra-grup și raport D300 consolidat.
 - [l10n_ro_vat_refund](l10n_ro_vat_refund/index.md): Urmărire cereri de rambursare TVA din sold negativ D300 (termen 45 zile, dobânzi, monografie 4424/4426/5121).

@@ -4,6 +4,44 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-06-02] Ingestie lot 4 suita deltatech (10 module)
+
+- **Acțiune:** Adăugate 10 pagini noi pentru suita `deltatech` (repo `dhongu/deltatech`, branch `19.0`), al patrulea lot din documentarea celor 119 module (rămân 79 nedocumentate). Analiza delegată subagenților `general-purpose`, rulați în 2 sub-loturi paralele de câte 5: `deltatech_category_group`, `deltatech_contact`, `deltatech_credentials`, `deltatech_data_sheet`, `deltatech_data_sheet_website`, `deltatech_dc`, `deltatech_delivery_status`, `deltatech_download`, `deltatech_fast_purchase`, `deltatech_followup`.
+- **Sursă:** `readme/DESCRIPTION.md` (prezent la toate) pentru Sumar și Funcționalități Cheie; secțiunea Componente Cheie omisă conform fluxului, cu mențiuni minime de cod doar unde DESCRIPTION.md era prea sumar (`deltatech_credentials` — DESCRIPTION de o linie, completat din `models/access_credentials.py`). Texte EN traduse în RO cu diacritice. Nicio referință de versiune veche de corectat.
+- **Dependențe/Conexiuni:** Link-uri active între module deltatech: `deltatech_data_sheet_website` → [deltatech_data_sheet](deltatech_data_sheet/index.md) (dependență + conexiune, activat post-lot fiindcă ambele s-au documentat în paralel); `deltatech_category_group` → [deltatech_sale_commission](deltatech_sale_commission/index.md) (dependență) și [deltatech_sale_margin](deltatech_sale_margin/index.md) (conexiune raport marjă); `deltatech_fast_purchase` → [deltatech_fast_sale](deltatech_fast_sale/index.md) (conexiune, modul analog). Restul dependențelor sunt module core, rămase text `cod`. Nicio conexiune inventată.
+- **Observații (candidate de corecție în readme-uri, nu în wiki):** `deltatech_data_sheet` are notă „TODO: de utilizat funcționalitatea standard" (autor marchează modulul ca posibil înlocuibil cu standard Odoo); `deltatech_followup` are `development_status = Alpha`; `deltatech_fast_purchase` typo „repetition" pentru „reception" (recepție) în DESCRIPTION; `deltatech_dc` are dependența `stock_picking_invoice_link` comentată (nu activă).
+- **Fișiere actualizate:** cele 10 `index.md` noi, `wiki_module_odoo/deltatech_data_sheet_website/index.md` (link activat), `wiki_module_odoo/index.md`, `wiki_module_odoo/log.md`.
+
+---
+
+## [2026-06-02] Ingestie lot 3 suita deltatech (10 module)
+
+- **Acțiune:** Adăugate 10 pagini noi pentru suita `deltatech` (repo `dhongu/deltatech`, branch `19.0`), al treilea lot din documentarea celor 119 module (rămân 89 nedocumentate). Analiza delegată subagenților `general-purpose`, rulați în 2 sub-loturi paralele de câte 5: `deltatech_actions`, `deltatech_alternative`, `deltatech_alternative_website`, `deltatech_analytic_distribution`, `deltatech_auto_reorder_rule`, `deltatech_average_payment_period`, `deltatech_backup_attachment`, `deltatech_batch_transfer`, `deltatech_business_process_handover_document`, `deltatech_cash_statement`.
+- **Sursă:** `readme/DESCRIPTION.md` (prezent la toate) pentru Sumar și Funcționalități Cheie. Componente Cheie ancorate minimal în cod doar unde DESCRIPTION.md o cere explicit: `deltatech_actions` (cron-uri + `force_cancel_order_and_moves`), `deltatech_auto_reorder_rule` (acțiuni server `create_rule()`), `deltatech_business_process_handover_document` (acțiune raport PDF); restul au omis secțiunea conform fluxului. Texte EN traduse în RO cu diacritice. Nicio referință de versiune veche de corectat.
+- **Dependențe/Conexiuni:** Singurul link activ între module deltatech: `deltatech_business_process_handover_document` → [deltatech_business_process](deltatech_business_process/index.md) (dependență + conexiune reală). `deltatech_alternative_website` → `deltatech_alternative` (conexiune reală, dar fără pagină wiki încă → text `cod`). Restul dependențelor sunt module core (`account`, `stock`, `sale`, `purchase`, `web`, `base`, `stock_picking_batch` etc.), rămase text `cod`. Nicio conexiune inventată.
+- **Observații:** `deltatech_business_process_handover_document` are readme numit `Description.md` (D mare), tratat ca echivalent `DESCRIPTION.md`. Avertismente de readme nepropagate în cod (candidate de corecție în readme-uri, nu în wiki): `deltatech_alternative` typo `product_catelog`; `deltatech_auto_reorder_rule` menționează `type='product'` (în O19: `consu`+`is_storable`).
+- **Fișiere actualizate:** cele 10 `index.md` noi, `wiki_module_odoo/index.md`, `wiki_module_odoo/log.md`.
+
+---
+
+## [2026-06-02] Ingestie `l10n_ro_stock_sheet`
+
+- **Acțiune:** Adăugată pagină nouă pentru modulul `l10n_ro_stock_sheet` (suita `l10n_ro_ent`, repo `terrabit-ro/l10n_ro_ent`, branch `19.0`). Analiza a fost delegată unui subagent `general-purpose` izolat.
+- **Sursă:** `readme/DESCRIPTION.md` (prezent și complet) pentru Sumar și Funcționalități Cheie. DESCRIPTION.md menționează explicit modele/vizualizări/meniu, deci secțiunea Componente Cheie a fost completată și verificată în cod (`models/`, `data/stock_sheet_report.xml`, `views/`): handler `l10n.ro.stock.sheet.report.handler` (moștenește `account.report.custom.handler`), raport `account.report` `l10n_ro_stock_sheet_report`, acțiune client `action_l10n_ro_stock_sheet`, `menu_l10n_ro_stock_sheet`. Versiunea `19.0.1.0.0` corectă, fără text de versiune veche de corectat.
+- **Dependențe/Conexiuni:** Dependențele din manifest (`account_reports`, `stock_account`, `l10n_ro`) nu au pagină wiki — rămase text `cod`. La Conexiuni, linkuri active reale verificate către [l10n_ro_stock_cmp_periodic](l10n_ro_stock_cmp_periodic/index.md) și [l10n_ro_stock_k_coefficient](l10n_ro_stock_k_coefficient/index.md); `l10n_ro_stock_account` (fără pagină wiki) rămas text `cod`. Nicio conexiune inventată.
+- **Fișiere actualizate:** `wiki_module_odoo/l10n_ro_stock_sheet/index.md` (nou), `wiki_module_odoo/index.md`, `wiki_module_odoo/log.md`.
+
+---
+
+## [2026-06-01] Re-ingestie `deltatech_expenses` (clarificare vs. `hr_expense`)
+
+- **Acțiune:** Actualizată pagina existentă `deltatech_expenses`. Adăugată o notă de clarificare în secțiunea Sumar privind diferența și coexistența cu modulul standard `hr_expense` (avans de trezorerie / cont 542 / diurnă vs. flux generic HR de rambursare). Restul paginii (Funcționalități, Dependențe, Componente, Conexiuni) rămâne neschimbat.
+- **Sursă:** `readme/DESCRIPTION.md`, în care a fost adăugat în prealabil un tabel comparativ `deltatech_expenses` vs. `hr_expense`.
+- **Dependențe/Conexiuni:** Nicio schimbare; `hr_expense` menționat doar ca text `cod` în notă (nu e dependență, nu are pagină wiki).
+- **Fișiere actualizate:** `wiki_module_odoo/deltatech_expenses/index.md`, `wiki_module_odoo/log.md`. Sursă editată anterior: `odoo-addons/deltatech/deltatech_expenses/readme/DESCRIPTION.md`.
+
+---
+
 ## [2026-06-01] Ingestie lot 2 suita deltatech (10 module)
 
 - **Acțiune:** Adăugate încă 10 pagini noi pentru suita `deltatech` (repo `dhongu/deltatech`, branch `19.0`), al doilea lot din documentarea celor 119 module. Analiza delegată subagenților `general-purpose`, rulați în 2 sub-loturi paralele de câte 5: `deltatech_agreement_management`, `deltatech_dropshipping`, `deltatech_expenses`, `deltatech_invoice_picking`, `deltatech_mail`, `deltatech_product_labels`, `deltatech_purchase_price`, `deltatech_sale_commission`, `deltatech_stock_inventory`, `deltatech_website_sale_attributes`.
