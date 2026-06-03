@@ -5,6 +5,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 ## Module
 
 - [deltatech](deltatech/index.md): Modul de bază (fundație) al suitei Deltatech, oferind utilitare partajate, structură unitară și extinderi comune pentru celelalte module Deltatech.
+- [deltatech_access](deltatech_access/index.md): Control granular al accesului la câmpuri din vederile Odoo (readonly / required / invisible) pe bază de grupuri de utilizatori.
 - [deltatech_account](deltatech_account/index.md): Îmbunătățiri pentru contabilitatea și facturarea Odoo: vizibilitate extinsă a facturilor, configurare flexibilă a jurnalelor/conturilor și sincronizare între documente.
 - [deltatech_actions](deltatech_actions/index.md): Instrumente de mentenanță și curățare a bazei de date (cron-uri pentru atașamente duplicate, PDF-uri vechi, reguli de reaprovizionare), sigure prin mod „dry run” implicit.
 - [deltatech_agreement_management](deltatech_agreement_management/index.md): Gestionarea acordurilor (număr, dată, stare) cu tipuri configurabile, secvențe de numerotare și șabloane de raport.
@@ -14,22 +15,53 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_auto_reorder_rule](deltatech_auto_reorder_rule/index.md): Creează automat reguli de reaprovizionare cu valori implicite pentru produse noi și în masă pentru cele existente.
 - [deltatech_average_payment_period](deltatech_average_payment_period/index.md): Calculează durata medie de încasare și de plată (perioada medie a contabilității de casă), ponderată cu sumele decontate.
 - [deltatech_backup_attachment](deltatech_backup_attachment/index.md): Backup selectiv al atașamentelor din Odoo pe baza unui filtru de tip domeniu, generând o arhivă cu fișierele alese.
+- [deltatech_barcode_sale](deltatech_barcode_sale/index.md): Adăugarea produselor pe comanda de vânzare prin scanarea codurilor de bare.
 - [deltatech_batch_transfer](deltatech_batch_transfer/index.md): Gestionare inteligentă a livrărilor goale din transferurile în lot, cu excludere automată la validare și câmpuri suplimentare de organizare.
+- [deltatech_brand_field](deltatech_brand_field/index.md): Mecanism centralizat pentru gestionarea unitară a câmpului de marcă a produselor în multiple module Odoo.
 - [deltatech_business_process](deltatech_business_process/index.md): Structurarea și execuția proiectelor de implementare Odoo prin Proiecte, Procese de Afaceri, Pași, Testare (intern/integrare/UAT) și gestionarea problemelor.
 - [deltatech_business_process_handover_document](deltatech_business_process_handover_document/index.md): Generează documentul de predare-primire (proces verbal) pentru un proces de business, direct dintr-un Proiect de Business, ca PDF.
 - [deltatech_cash_statement](deltatech_cash_statement/index.md): Unealtă pentru actualizarea rapidă a soldului inițial al extraselor de casă din Odoo.
 - [deltatech_category_group](deltatech_category_group/index.md): Adaugă două niveluri de grupare (tip și clasă) pentru categoriile interne de produse, utilizabile în rapoartele de marjă, stoc și facturi.
+- [deltatech_chart_of_accounts](deltatech_chart_of_accounts/index.md): Sincronizarea și corecția soldurilor inițiale din planul de conturi prin comparare cu balanțe externe și postarea diferențelor, cu suport storno.
+- [deltatech_chatter](deltatech_chatter/index.md): Panou divizat redimensionabil între conținutul formularului și zona de chatter în vizualizările Odoo.
+- [deltatech_cmr_document](deltatech_cmr_document/index.md): Generează documente de transport CMR (scrisoare de transport internațional) în format PDF din livrările de stoc.
 - [deltatech_contact](deltatech_contact/index.md): Extinde fișa de contact cu câmpuri pentru persoane fizice (data nașterii, CNP, carte de identitate) și opțiune de afișare a numelui doar cu denumirea proprie.
+- [deltatech_contwin](deltatech_contwin/index.md): Export de date contabile din Odoo către programul de contabilitate ContWin (Omnidata/Petrescu), cu formate `.fis` și SAF-T.
 - [deltatech_credentials](deltatech_credentials/index.md): Gestionează centralizat acreditările (utilizator/parolă, client_id/secret, token) pentru conectarea la servicii externe.
 - [deltatech_data_sheet](deltatech_data_sheet/index.md): Atașează fișe tehnice și fișe de securitate (PDF) pe produs, în fila Vânzări.
 - [deltatech_data_sheet_website](deltatech_data_sheet_website/index.md): Expune fișele tehnice și fișele cu date de securitate ale produselor pe paginile din magazinul online.
 - [deltatech_dc](deltatech_dc/index.md): Gestionarea și tipărirea declarațiilor de conformitate pentru produse, inclusiv la facturare.
+- [deltatech_delivery](deltatech_delivery/index.md): Cadru de bază pentru gestionarea livrărilor multi-curier în Odoo, cu opțiuni AWB partajate și integrare vânzări/stoc/facturare.
+- [deltatech_delivery_cm](deltatech_delivery_cm/index.md): Integrare Odoo cu platforma de curierat Courier Manager — AWB (PDF/ZPL), tarife, urmărire statusuri și expedieri (ramburs, valoare declarată, colete multiple).
+- [deltatech_delivery_dpd](deltatech_delivery_dpd/index.md): Integrare Odoo cu serviciul de curierat DPD pentru calcul tarife, generare AWB (PDF/ZPL), tracking și gestionare livrări.
+- [deltatech_delivery_dsc](deltatech_delivery_dsc/index.md): Integrare Odoo cu serviciul de curierat Dragon Star Curier (DSC) — generare AWB, tarife și opțiuni de livrare.
+- [deltatech_delivery_dummy](deltatech_delivery_dummy/index.md): Metodă de livrare fictivă (dummy) pentru testarea fluxului de curierat fără integrare cu un curier real.
+- [deltatech_delivery_fc](deltatech_delivery_fc/index.md): Integrare Odoo cu Fan Courier pentru generare AWB, calcul tarife, urmărire colete și lockere FanBox.
+- [deltatech_delivery_gls](deltatech_delivery_gls/index.md): Integrare directă a curieratului GLS în Odoo: AWB, etichete (PDF/ZPL), tracking, ramburs (COD) și livrare la locker, multi-țară.
+- [deltatech_delivery_locker](deltatech_delivery_locker/index.md): Structura de date și logica de bază, independentă de curier, pentru livrarea în lockere (puncte fixe de ridicare).
+- [deltatech_delivery_locker_website](deltatech_delivery_locker_website/index.md): Extinde livrarea în locker pentru website/eCommerce, filtrând metodele de livrare la checkout după compatibilitatea produselor din coș.
+- [deltatech_delivery_memex](deltatech_delivery_memex/index.md): Integrare de curierat PTT Express (Memex) pentru generarea AWB-urilor și expedierea coletelor direct din Odoo.
+- [deltatech_delivery_packeta](deltatech_delivery_packeta/index.md): Integrare cu serviciile de curierat Packeta (Zásilkovna), cu suport AWB, puncte de ridicare PUDO și lockere Z-BOX.
+- [deltatech_delivery_pr](deltatech_delivery_pr/index.md): Integrare curierat Poșta Română — generare AWB direct din livrări, cu suport pentru valoare declarată și ramburs.
+- [deltatech_delivery_relay](deltatech_delivery_relay/index.md): Atașează automat etichete AWB (PDF) generate de curieri/sisteme externe direct pe comenzile de livrare din Odoo.
+- [deltatech_delivery_sd](deltatech_delivery_sd/index.md): Integrare Odoo cu curierul Sameday — generare AWB, calcul tarife, urmărire colete și actualizarea stării livrării.
+- [deltatech_delivery_sd_easybox](deltatech_delivery_sd_easybox/index.md): Livrare către lockerele Easybox ale curierului Sameday în magazinul online, cu butoane de checkout personalizabile.
+- [deltatech_delivery_send_mail](deltatech_delivery_send_mail/index.md): Trimite automat un email clientului când AWB-ul este generat sau coletul este ridicat de curier.
+- [deltatech_delivery_send_sms](deltatech_delivery_send_sms/index.md): Trimite automat notificări SMS clientului când AWB-ul este generat sau coletul este preluat de curier.
 - [deltatech_delivery_status](deltatech_delivery_status/index.md): Urmărire granulară a stării de livrare pe transferuri și comenzi, cu blocarea/amânarea livrărilor în funcție de plată.
+- [deltatech_delivery_transport](deltatech_delivery_transport/index.md): Folosirea unei firme de transport ca curier (carrier), cu calcul de preț bazat pe distanță (Google Maps).
+- [deltatech_delivery_uc](deltatech_delivery_uc/index.md): Integrare Odoo cu curierul Urgent Cargus pentru expediere colete, generare AWB (PDF/ZPL/HTML) și urmărire online.
+- [deltatech_document_template](deltatech_document_template/index.md): Motor generic de șabloane de documente, agnostic față de model, cu secțiuni de conținut mixt (HTML/raport/QWeb), flux de validare și integrare cu meniul Print.
 - [deltatech_download](deltatech_download/index.md): Mecanism de descărcare a fișierelor generate, cu opțiune de descărcare directă configurabilă la nivel de raport.
 - [deltatech_dropshipping](deltatech_dropshipping/index.md): Extinde drop shipping-ul Odoo afișând adresa de livrare direct în documentul de transfer (picking).
+- [deltatech_edi](deltatech_edi/index.md): Conector EDI de bază pentru schimbul electronic standardizat de documente comerciale (facturi, comenzi, avize) cu partenerii și sistemele externe.
+- [deltatech_ediconnect](deltatech_ediconnect/index.md): Conector EDI pentru schimbul automat de documente între Odoo și platforma EDIConnect.
+- [deltatech_edinet](deltatech_edinet/index.md): Conector EDI care integrează Odoo cu platforma Infinite EDINET pentru import automat de comenzi și export de facturi.
+- [deltatech_event](deltatech_event/index.md): Adaugă numere pe insigne (badge-uri) în managementul evenimentelor Odoo.
 - [deltatech_expenses](deltatech_expenses/index.md): Gestionarea decontării cheltuielilor angajaților din avansuri, cu generare automată de chitanțe, note contabile și închiderea contului 542.
 - [deltatech_fast_purchase](deltatech_fast_purchase/index.md): Accelerează achizițiile prin butoane care parcurg rapid confirmarea, recepția și facturarea unei comenzi de achiziție.
 - [deltatech_fast_sale](deltatech_fast_sale/index.md): Vânzare rapidă: buton în comanda de vânzare care parcurge într-un singur pas confirmarea, livrarea și facturarea.
+- [deltatech_feed](deltatech_feed/index.md): Generează feed-uri de produse pentru platforme de e-commerce și marketing (Google Merchant, Facebook, Compari, Bizoo, 2performant, VidaXL), cu reîmprospătare automată zilnică.
 - [deltatech_followup](deltatech_followup/index.md): Urmărirea automată a facturilor neîncasate, prin e-mailuri de followup programate, relativ la data facturii sau a scadenței.
 - [deltatech_gln](deltatech_gln/index.md): Gestionează Numărul Global de Locație (GLN) la nivel de partener — modul obsolet, înlocuit de `account_add_gln`.
 - [deltatech_invoice_picking](deltatech_invoice_picking/index.md): Generează facturi direct din livrări (pickings) sau din loturi, preluând doar produsele și cantitățile efectiv realizate.
@@ -41,19 +73,64 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_list_view](deltatech_list_view/index.md): Blochează deschiderea unei înregistrări din lista Odoo când utilizatorul selectează text, permițând copierea comodă din celule.
 - [deltatech_logistic_docs](deltatech_logistic_docs/index.md): Depozit centralizat pentru documentele logistice și de transport (CMR, certificate, avize) legate de comenzi, livrări și facturi.
 - [deltatech_mail](deltatech_mail/index.md): Filtrarea și redirecționarea emailurilor către o adresă de substituție.
+- [deltatech_marketplace](deltatech_marketplace/index.md): Modulul de bază al familiei marketplace — cadru de integrare Odoo cu platforme de marketplace online pentru vânzare și sincronizare multi-canal.
+- [deltatech_marketplace_brand](deltatech_marketplace_brand/index.md): Extinde Odoo Marketplace cu un sistem de gestionare a brandurilor pentru produsele vândute pe platformele conectate.
+- [deltatech_marketplace_delivery](deltatech_marketplace_delivery/index.md): Integrează livrarea avansată și gestionarea lockerelor în ecosistemul de comenzi marketplace.
+- [deltatech_marketplace_doraly](deltatech_marketplace_doraly/index.md): Conector între Odoo și marketplace-ul Doraly pentru sincronizarea produselor și comenzilor.
+- [deltatech_marketplace_emag](deltatech_marketplace_emag/index.md): Conector eMAG Marketplace — sincronizare bidirecțională a produselor, stocurilor, comenzilor, livrărilor și plăților.
+- [deltatech_marketplace_extended](deltatech_marketplace_extended/index.md): Conector marketplace „Extended" cu sincronizare produse/clienți/comenzi/livrare/plăți și webhook de comenzi în timp real.
+- [deltatech_marketplace_magento](deltatech_marketplace_magento/index.md): Conector ERP Odoo ↔ platforma de e-commerce Magento, pentru sincronizare de produse, clienți, comenzi și stocuri.
+- [deltatech_marketplace_merchantpro](deltatech_marketplace_merchantpro/index.md): Conector între Odoo și marketplace-ul MerchantPro pentru sincronizarea produselor, stocurilor și comenzilor.
+- [deltatech_marketplace_odoo](deltatech_marketplace_odoo/index.md): Conector Odoo-către-Odoo prin marketplace, care importă catalog de produse (șabloane, variante, atribute, categorii) și parteneri.
+- [deltatech_marketplace_opencart](deltatech_marketplace_opencart/index.md): Conector între platforma de comerț electronic OpenCart și Odoo (catalog, stoc, comenzi, clienți) pe baza REST Admin API.
+- [deltatech_marketplace_payment](deltatech_marketplace_payment/index.md): Gestionează procesatorii de plată din marketplace-uri și sincronizează plățile/tranzacțiile pentru reconciliere financiară.
+- [deltatech_marketplace_prestashop](deltatech_marketplace_prestashop/index.md): Conector pentru sincronizarea bidirecțională a produselor, clienților și comenzilor între Odoo și magazinele PrestaShop.
+- [deltatech_marketplace_purchase](deltatech_marketplace_purchase/index.md): Integrează procesele de achiziție cu vânzările din marketplace, pentru decizii de aprovizionare bazate pe date.
+- [deltatech_marketplace_sale](deltatech_marketplace_sale/index.md): Punct central pentru gestionarea comenzilor de vânzare importate din conectorii de marketplace (eMAG, Shopify, Magento etc.).
+- [deltatech_marketplace_sale_stage](deltatech_marketplace_sale_stage/index.md): Sistem de gestionare a etapelor (stages) pentru comenzile de vânzare din marketplace, pentru vizibilitate și control pe tot ciclul de procesare.
+- [deltatech_marketplace_sale_type](deltatech_marketplace_sale_type/index.md): Clasificarea comenzilor de vânzare din marketplace pe tipuri de comandă, pentru analiză și strategii de vânzare granulare.
+- [deltatech_marketplace_shopify](deltatech_marketplace_shopify/index.md): Conector între Odoo ERP și Shopify pentru sincronizarea produselor, clienților și comenzilor.
+- [deltatech_marketplace_website](deltatech_marketplace_website/index.md): Integrează datele de marketplace în website-ul Odoo, afișând descrieri scurte și branding specific pe paginile de produs din storefront.
+- [deltatech_mentor](deltatech_mentor/index.md): Export de date din Odoo (parteneri, produse, facturi) pentru import în aplicația de contabilitate WinMentor.
 - [deltatech_mrp](deltatech_mrp/index.md): Extinde MRP cu includerea costurilor indirecte în costul de producție, rotunjirea cantităților la explozia BOM și analiza costurilor de fabricație.
 - [deltatech_mrp_concentration](deltatech_mrp_concentration/index.md): Gestionarea concentrației ingredientelor active în BoM și comenzile de producție, pentru ajustarea cantităților consumate (industrii chimică/alimentară/farmaceutică).
 - [deltatech_mrp_cost](deltatech_mrp_cost/index.md): Adaugă costuri suplimentare (regie, utilități, manoperă) în comanda de producție pentru un preț de cost mai precis al produsului finit.
+- [deltatech_nap](deltatech_nap/index.md): Planificarea necesarului și a disponibilității stocurilor (NAP — Need and Availability Planning), cu analiza cererii pentru optimizarea achizițiilor.
+- [deltatech_nap_website](deltatech_nap_website/index.md): Extinde raportul NAP cu categoria publică de produse din website_sale, pentru raportare a achizițiilor pe categorii.
+- [deltatech_partner_gifts](deltatech_partner_gifts/index.md): Gestionează cadourile oferite partenerilor — generare linii de cadou, etichete de livrare, date partener și copiere/modificare în masă.
+- [deltatech_partner_rating](deltatech_partner_rating/index.md): Permite evaluarea partenerilor de afaceri pe baza unor criterii definite de utilizator.
+- [deltatech_partner_rating_sale](deltatech_partner_rating_sale/index.md): Afișează ratingul partenerului în oferte, comenzi de vânzare și facturi.
+- [deltatech_partner_rating_service](deltatech_partner_rating_service/index.md): Afișează ratingul partenerului în echipamente, contracte de service și garanții.
+- [deltatech_payment](deltatech_payment/index.md): Confirmă comanda de vânzare la o plată parțială și permite, printr-un parametru de sistem, confirmarea fără a marca tranzacția ca finalizată.
+- [deltatech_payment_card_dummy](deltatech_payment_card_dummy/index.md): Furnizor de plată cu cardul fictiv (dummy) pentru testarea fluxurilor de plată în eCommerce și portal, fără integrare bancară reală.
+- [deltatech_payment_libra_pay](deltatech_payment_libra_pay/index.md): Gateway de plată LibraPay (Libra Internet Bank, RO) — plăți cu cardul în eCommerce și portal, cu flux de redirecționare securizat și IPN.
+- [deltatech_payment_mobilpay](deltatech_payment_mobilpay/index.md): Procesator de plăți Netopia MobilPay (RO) — plăți securizate cu cardul la comenzile eCommerce și facturile din portal.
+- [deltatech_payment_on_delivery](deltatech_payment_on_delivery/index.md): Metodă de plată ramburs la livrare (Cash On Delivery) integrată în fluxurile de vânzare/plată, cu wizard de import al confirmărilor de la curieri.
+- [deltatech_payment_revolut](deltatech_payment_revolut/index.md): Furnizor de plată Revolut — plăți prin redirecționare securizată, capturare manuală și sincronizare prin webhook.
+- [deltatech_pos](deltatech_pos/index.md): Generare fișier pentru casa de marcat — integrare între POS Odoo și case de marcat fiscale (ECR) pentru bonuri fiscale, numerar și rapoarte X/Z.
+- [deltatech_pos_base](deltatech_pos_base/index.md): Strat de bază POS-ECR care oferă definițiile și structurile de date pentru tipărirea fiscală în Odoo POS.
+- [deltatech_product_brand](deltatech_product_brand/index.md): Sistem centralizat de gestionare a mărcilor de produse, pentru organizarea catalogului pe marcă și raportare vânzări/facturi pe această dimensiune.
 - [deltatech_product_extension](deltatech_product_extension/index.md): Extinde produsul cu câmpuri pentru producător, dimensiuni fizice și termen de valabilitate, și marchează partenerii ca producători.
 - [deltatech_product_labels](deltatech_product_labels/index.md): Tipărește etichete pentru produse, comenzi de vânzare și livrări, inclusiv pentru toate loturile aflate pe stoc, cu aspecte personalizabile.
 - [deltatech_purchase_price](deltatech_purchase_price/index.md): Actualizează automat prețurile de achiziție, costul standard, prețul furnizorului și prețul de vânzare la validarea recepției.
+- [deltatech_restrict_ip](deltatech_restrict_ip/index.md): Restricționează autentificarea în Odoo după adresa IP, limitând accesul la adrese/intervale de încredere (birou, VPN) pentru securitate și conformitate.
+- [deltatech_saga](deltatech_saga/index.md): Punte de integrare bazată pe fișiere între Odoo și programul de contabilitate românesc SAGA (export/import de facturi, parteneri, produse și note contabile).
+- [deltatech_sale_cancel_order](deltatech_sale_cancel_order/index.md): Permite clienților să solicite din portal anularea unei comenzi de vânzare, cu motiv, gestionată manual de un operator în backend.
 - [deltatech_sale_commission](deltatech_sale_commission/index.md): Calcul al comisioanelor de vânzare și control al profitabilității, cu condiționare opțională de încasarea facturii în termen.
+- [deltatech_sale_contracts](deltatech_sale_contracts/index.md): Adaugă o stare de tip „Contract" (Agreement) pe comenzile de vânzare și un flux de consum părinte–copil.
 - [deltatech_sale_margin](deltatech_sale_margin/index.md): Control extins al prețurilor și marjei pe comenzile de vânzare: ascunde marja/prețul de achiziție, blochează modificarea prețului și avertizează la vânzarea sub cost.
+- [deltatech_sale_store](deltatech_sale_store/index.md): Vânzare directă din magazin cu emitere de bonuri fiscale (fișier pentru programul de tipărit, client generic, marcaj „Bon fiscal" pe jurnale).
 - [deltatech_stock_account](deltatech_stock_account/index.md): Extinde evaluarea stocurilor afișând valoarea contabilă direct la nivelul transferurilor de marfă (picking).
 - [deltatech_stock_inventory](deltatech_stock_inventory/index.md): Restaurează și extinde inventarul clasic (`stock.inventory`) cu control valoric, vizibilitate pe depozite, localizare manuală și scanare cod de bare.
+- [deltatech_vendor_products](deltatech_vendor_products/index.md): Import și sincronizare a cataloagelor de produse de la furnizori (prețuri, disponibilitate, imagini), cu creare/actualizare automată de produse.
+- [deltatech_vendor_products_granit](deltatech_vendor_products_granit/index.md): Conector specializat pentru importul și sincronizarea catalogului furnizorului Granit în Odoo.
+- [deltatech_vendor_products_kramp](deltatech_vendor_products_kramp/index.md): Conector specializat pentru importul și sincronizarea catalogului furnizorului Kramp în Odoo.
+- [deltatech_vendor_products_website](deltatech_vendor_products_website/index.md): Căutarea și expunerea produselor furnizorilor în magazinul online, cu import automat în Odoo și posibilitatea de comandă online.
 - [deltatech_warehouse_map](deltatech_warehouse_map/index.md): Hartă vizuală a depozitului pentru navigarea ierarhică a amplasamentelor de stoc, cu afișarea grafică a gradului de ocupare.
 - [deltatech_website_delivery_and_payment](deltatech_website_delivery_and_payment/index.md): Reguli eCommerce care leagă metodele de plată de cele de livrare și le restricționează în funcție de etichetele partenerilor.
 - [deltatech_website_sale_attributes](deltatech_website_sale_attributes/index.md): Filtrează valorile atributelor afișate în magazinul online pentru a arăta doar opțiunile relevante produselor disponibile.
+- [deltatech_website_watermark](deltatech_website_watermark/index.md): Aplică automat un filigran (watermark) pe imaginile de produs din magazinul online, păstrând curate fișierele sursă.
+- [deltatech_work_days_report](deltatech_work_days_report/index.md): Generează rapoarte Excel pentru prezența angajaților și gestionarea tichetelor de masă.
 - [l10n_ro_account_chart](l10n_ro_account_chart/index.md): Extinde planul de conturi românesc cu controale de înregistrare și analitice.
 - [l10n_ro_account_fisa_cont](l10n_ro_account_fisa_cont/index.md): Oferă raportul 'Fișă de Cont' conform OMFP 1802/2014.
 - [l10n_ro_account_return_pl_closing](l10n_ro_account_return_pl_closing/index.md): Implementează fluxul de închidere lunară a conturilor de Profit și Pierdere prin contul 121.
@@ -125,7 +202,10 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_vat_refund](l10n_ro_vat_refund/index.md): Urmărire cereri de rambursare TVA din sold negativ D300 (termen 45 zile, dobânzi, monografie 4424/4426/5121).
 - [l10n_ro_vat_regularization](l10n_ro_vat_regularization/index.md): Regularizare automată TVA la finele perioadei (4426/4427 → 4423/4424) conform OMFP 1802.
 - [l10n_ro_wip_closing](l10n_ro_wip_closing/index.md): Evaluare și stornare în roșu a producției în curs (331/711) la 1 a lunii următoare, conform OMFP 1802.
+- [terrabit_delivery_staff](terrabit_delivery_staff/index.md): Distribuirea livrărilor către personalul propriu de livrare (curieri/șoferi interni), cu acces restricționat și raport PDF dedicat.
 - [terrabit_facebook_pixel](terrabit_facebook_pixel/index.md): Integrare Meta (Facebook) Pixel și Conversion API pentru eCommerce Odoo 19, tracking hibrid client+server.
 - [terrabit_iap_server_sale](terrabit_iap_server_sale/index.md): Achiziția de credite IAP prin magazinul eCommerce (website_sale), cu creditare automată a contului IAP la confirmarea comenzii.
+- [terrabit_partner_credit_limit](terrabit_partner_credit_limit/index.md): Gestionarea și aplicarea limitelor de credit pe partener, cu blocarea confirmării comenzilor de vânzare la depășirea limitei.
+- [terrabit_partner_payable_receivable](terrabit_partner_payable_receivable/index.md): Afișează sumele de plată și de încasat pe fișa partenerului, pentru context financiar și evaluare de credit imediată.
 - [terrabit_tiktok_pixel](terrabit_tiktok_pixel/index.md): Integrare TikTok Pixel și Conversion API pentru eCommerce Odoo 19, tracking hibrid client+server.
 - [terrabit_website_sale_tracking_base](terrabit_website_sale_tracking_base/index.md): Fundație de tracking eCommerce — configurare globală și magistrală de evenimente normalizate pentru pixeli.
