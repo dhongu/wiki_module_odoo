@@ -31,9 +31,19 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_fast_purchase](deltatech_fast_purchase/index.md): Accelerează achizițiile prin butoane care parcurg rapid confirmarea, recepția și facturarea unei comenzi de achiziție.
 - [deltatech_fast_sale](deltatech_fast_sale/index.md): Vânzare rapidă: buton în comanda de vânzare care parcurge într-un singur pas confirmarea, livrarea și facturarea.
 - [deltatech_followup](deltatech_followup/index.md): Urmărirea automată a facturilor neîncasate, prin e-mailuri de followup programate, relativ la data facturii sau a scadenței.
+- [deltatech_gln](deltatech_gln/index.md): Gestionează Numărul Global de Locație (GLN) la nivel de partener — modul obsolet, înlocuit de `account_add_gln`.
 - [deltatech_invoice_picking](deltatech_invoice_picking/index.md): Generează facturi direct din livrări (pickings) sau din loturi, preluând doar produsele și cantitățile efectiv realizate.
+- [deltatech_invoice_picking_automatically](deltatech_invoice_picking_automatically/index.md): Generează automat facturile din livrări după validare, cu configurare pe tipul de operațiune și proces planificat.
+- [deltatech_invoice_product_filter](deltatech_invoice_product_filter/index.md): Adaugă căutarea facturilor după produsul din liniile acestora.
+- [deltatech_invoice_receipt](deltatech_invoice_receipt/index.md): Generează automat comanda de achiziție și recepția la validarea unei facturi de furnizor.
+- [deltatech_invoice_weight](deltatech_invoice_weight/index.md): Urmărirea greutății nete și brute pe facturi, comenzi de achiziție și de vânzare, cu raportare Pivot.
+- [deltatech_ledger](deltatech_ledger/index.md): Registru centralizat pentru evidența numerelor și descrierilor documentelor de intrare/ieșire, cu secvențiere automată și trasabilitate.
+- [deltatech_list_view](deltatech_list_view/index.md): Blochează deschiderea unei înregistrări din lista Odoo când utilizatorul selectează text, permițând copierea comodă din celule.
+- [deltatech_logistic_docs](deltatech_logistic_docs/index.md): Depozit centralizat pentru documentele logistice și de transport (CMR, certificate, avize) legate de comenzi, livrări și facturi.
 - [deltatech_mail](deltatech_mail/index.md): Filtrarea și redirecționarea emailurilor către o adresă de substituție.
 - [deltatech_mrp](deltatech_mrp/index.md): Extinde MRP cu includerea costurilor indirecte în costul de producție, rotunjirea cantităților la explozia BOM și analiza costurilor de fabricație.
+- [deltatech_mrp_concentration](deltatech_mrp_concentration/index.md): Gestionarea concentrației ingredientelor active în BoM și comenzile de producție, pentru ajustarea cantităților consumate (industrii chimică/alimentară/farmaceutică).
+- [deltatech_mrp_cost](deltatech_mrp_cost/index.md): Adaugă costuri suplimentare (regie, utilități, manoperă) în comanda de producție pentru un preț de cost mai precis al produsului finit.
 - [deltatech_product_extension](deltatech_product_extension/index.md): Extinde produsul cu câmpuri pentru producător, dimensiuni fizice și termen de valabilitate, și marchează partenerii ca producători.
 - [deltatech_product_labels](deltatech_product_labels/index.md): Tipărește etichete pentru produse, comenzi de vânzare și livrări, inclusiv pentru toate loturile aflate pe stoc, cu aspecte personalizabile.
 - [deltatech_purchase_price](deltatech_purchase_price/index.md): Actualizează automat prețurile de achiziție, costul standard, prețul furnizorului și prețul de vânzare la validarea recepției.
@@ -64,7 +74,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_anaf_partner](l10n_ro_anaf_partner/index.md): Monitorizarea modificărilor datelor ANAF ale partenerilor, cu change log și alerte inactiv/TVA.
 - [l10n_ro_audit_immutable](l10n_ro_audit_immutable/index.md): Pistă de audit imuabilă cu triggere PostgreSQL și hash chain SHA-256 pe documentele financiare (FR-14, OMFP 1802).
 - [l10n_ro_cbam](l10n_ro_cbam/index.md): Urmărirea emisiilor CO₂ incorporate la import și declarația CBAM trimestrială/anuală (Reg. UE 2023/956, FR-56).
-- [l10n_ro_currency_revaluation](l10n_ro_currency_revaluation/index.md): Reevaluarea lunară a soldurilor valutare fără stornare automată, cu diferențe de curs 665/765 (OMFP 1802).
+- [l10n_ro_currency_revaluation](l10n_ro_currency_revaluation/index.md): Reevaluare lunară a soldurilor monetare în valută conform OMFP 1802/2014, cu diferențe de curs definitive pe 665/765, fără stornare automată.
 - [l10n_ro_deferred_entries](l10n_ro_deferred_entries/index.md): Recunoaștere automată a cheltuielilor și veniturilor înregistrate în avans (conturi 471/472) prin planuri account.asset.
 - [l10n_ro_dividends](l10n_ro_dividends/index.md): Distribuire dividende cu cote 10%/16%, registru acționari și note contabile automate 117/457/446.
 - [l10n_ro_doc_screenshots](l10n_ro_doc_screenshots/index.md): Tooling de dezvoltare (mixin HttpCase + Playwright) pentru generarea automată a capturilor din fișele consultant.
@@ -106,7 +116,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_sod_matrix](l10n_ro_sod_matrix/index.md): Matrice de segregare a atribuțiilor (SoD) pentru detectarea și gestionarea conflictelor de roluri.
 - [l10n_ro_stock_cmp_periodic](l10n_ro_stock_cmp_periodic/index.md): Recalcul lunar al CMP periodic (OMFP 1802) cu notă de corecție perpetuu vs. periodic și audit trail.
 - [l10n_ro_stock_constraints](l10n_ro_stock_constraints/index.md): Protecție integritate stocuri: blochează modificarea mișcărilor valorizate și impune stoc non-negativ pe locații interne.
-- [l10n_ro_stock_gestiune](l10n_ro_stock_gestiune/index.md): Gestiuni contabile de stoc (FR-54) cu gestionar, conturi și validare transfer valoric inter-gestiune.
+- [l10n_ro_stock_gestiune](l10n_ro_stock_gestiune/index.md): Gestiuni contabile de stoc RO (gestionar, conturi, transfer valoric între gestiuni) și recepție fără factură 371=408 cu reconciliere pe 408, multi-monedă și storno la retur.
 - [l10n_ro_stock_k_coefficient](l10n_ro_stock_k_coefficient/index.md): Calcul lunar al coeficientului K de repartizare a diferențelor de preț la stocuri (OMFP 1802), cu stornare în roșu.
 - [l10n_ro_stock_provision](l10n_ro_stock_provision/index.md): Identificare stocuri slow-moving și note de provizion 39x (Dr 6814/Cr 39x), conform OMFP 1802 pct. 143–148.
 - [l10n_ro_stock_sheet](l10n_ro_stock_sheet/index.md): Fișa de magazie (14-3-8) și balanța analitică a stocurilor ca raport nativ Enterprise (account.report) pe trei niveluri, cu reconciliere analitic↔sintetic.

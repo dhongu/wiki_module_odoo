@@ -4,6 +4,28 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-06-02] Re-ingestie 2 module l10n_ro_ent (gestiuni stoc + reevaluare valutară)
+
+- **Acțiune:** Actualizate (re-ingestie) 2 pagini existente din suita `l10n_ro_ent` (repo `terrabit-ro/l10n_ro_ent`, branch `19.0`), regenerate complet după extinderi majore de cod: `l10n_ro_stock_gestiune` (adăugată recepția fără factură 371=408) și `l10n_ro_currency_revaluation`. Analiza delegată la 2 subagenți `general-purpose` rulați în paralel.
+- **Sursă:** `readme/DESCRIPTION.md` (actualizat la ambele) pentru Sumar și Funcționalități Cheie; Componente Cheie ancorate în cod (`models/`, `wizard/`, `views/`) fiindcă DESCRIPTION nu acoperea exhaustiv partea tehnică. La `l10n_ro_currency_revaluation` titlurile au fost convertite din `##` în `####` și wikilink-urile `[[...]]` invalide rescrise ca link-uri Markdown active.
+- **Dependențe/Conexiuni:** Dependențele ambelor (`account`, `stock_account`, `deltatech_valuation_area`, `l10n_ro`, `account_reports`) rămân text `cod` — niciuna nu are pagină wiki (notabil: `deltatech_valuation_area`, coloana vertebrală a `l10n_ro_stock_gestiune`). Conexiune funcțională reală activată bidirecțional: `l10n_ro_stock_gestiune` ↔ `l10n_ro_currency_revaluation` (diferențele de curs pe contul 408 din recepția fără factură se reevaluează ca element monetar). Pentru reevaluare, conexiuni active și către `l10n_ro_expense_currency` și `l10n_ro_period_close_enhanced`.
+- **Corecții post-subagent:** La `l10n_ro_currency_revaluation` eliminată conexiunea anterioară speculativă către `l10n_ro_deferred_entries` (nu e legătură funcțională reală pentru reevaluare).
+- **Observații:** `deltatech_valuation_area` rămâne nedocumentat în wiki, deși e dependență-cheie pentru gestiuni — candidat de ingestie viitoare.
+- **Fișiere actualizate:** `wiki_module_odoo/l10n_ro_stock_gestiune/index.md`, `wiki_module_odoo/l10n_ro_currency_revaluation/index.md`, `wiki_module_odoo/index.md`, `wiki_module_odoo/log.md`.
+
+---
+
+## [2026-06-02] Ingestie lot 5 suita deltatech (10 module)
+
+- **Acțiune:** Adăugate 10 pagini noi pentru suita `deltatech` (repo `dhongu/deltatech`, branch `19.0`), al cincilea lot din documentarea celor 119 module (rămân 69 nedocumentate). Analiza delegată subagenților `general-purpose`, rulați în 2 sub-loturi paralele de câte 5: `deltatech_gln`, `deltatech_invoice_picking_automatically`, `deltatech_invoice_product_filter`, `deltatech_invoice_receipt`, `deltatech_invoice_weight`, `deltatech_ledger`, `deltatech_list_view`, `deltatech_logistic_docs`, `deltatech_mrp_concentration`, `deltatech_mrp_cost`.
+- **Sursă:** `readme/DESCRIPTION.md` (prezent la toate) pentru Sumar și Funcționalități Cheie; Componente Cheie ancorate în cod doar unde DESCRIPTION.md era prea sumar (`deltatech_invoice_product_filter`, `deltatech_invoice_receipt`, `deltatech_mrp_cost`) sau menționa explicit elemente (`deltatech_invoice_picking_automatically` — cron). Texte EN/scurte traduse/extinse în RO cu diacritice. Nicio referință de versiune veche de corectat în paginile produse.
+- **Dependențe/Conexiuni:** Link-uri active de conexiune (nu dependențe stricte) către module deltatech existente: `deltatech_invoice_picking_automatically`, `deltatech_invoice_receipt`, `deltatech_logistic_docs` → [deltatech_invoice_picking](deltatech_invoice_picking/index.md); `deltatech_mrp_concentration` și `deltatech_mrp_cost` → [deltatech_mrp](deltatech_mrp/index.md). Restul dependențelor sunt module core (`account`, `stock`, `sale`, `purchase_stock`, `mrp_account`, `web`, `base`, `mail`), rămase text `cod`. Atenție diferențiere: dependența `mrp` (core) ≠ `deltatech_mrp`.
+- **Corecții post-subagent:** La `deltatech_mrp_cost` subagentul adăugase 2 conexiuni speculative („deduse pe baza modelelor comune": `l10n_ro_mrp_labour_account`, `deltatech_stock_account`) — eliminate la consolidare; păstrat doar `deltatech_mrp` (legătură reală, ambele extind `mrp.production`).
+- **Observații (candidate de corecție în readme-uri/cod, nu în wiki):** `deltatech_gln` marcat „Obsolet" în DESCRIPTION dar `development_status=Mature` în manifest (inconsecvent); `deltatech_ledger` are comentariu de antet învechit („version 16.0", typo „Dealtatech") și `development_status=Alpha`.
+- **Fișiere actualizate:** cele 10 `index.md` noi, `wiki_module_odoo/index.md`, `wiki_module_odoo/log.md`.
+
+---
+
 ## [2026-06-02] Ingestie lot 4 suita deltatech (10 module)
 
 - **Acțiune:** Adăugate 10 pagini noi pentru suita `deltatech` (repo `dhongu/deltatech`, branch `19.0`), al patrulea lot din documentarea celor 119 module (rămân 79 nedocumentate). Analiza delegată subagenților `general-purpose`, rulați în 2 sub-loturi paralele de câte 5: `deltatech_category_group`, `deltatech_contact`, `deltatech_credentials`, `deltatech_data_sheet`, `deltatech_data_sheet_website`, `deltatech_dc`, `deltatech_delivery_status`, `deltatech_download`, `deltatech_fast_purchase`, `deltatech_followup`.
