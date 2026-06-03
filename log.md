@@ -4,6 +4,37 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-06-03] Finalizare documentare suita deltatech (70 module)
+
+- **Acțiune:** Documentate toate cele 70 module deltatech rămase nedocumentate (repo `dhongu/deltatech`, branch `19.0`), încheind suita deltatech (120 module cu manifest, toate au acum pagină și intrare în index). Analiza delegată subagenților `general-purpose` în 10 loturi paralele de ~7. `deltatech_partner_generic`, `deltatech_product_mpn` și `deltatech_restrict_ip` (acesta din bitshop) și-au auto-adăugat intrarea; restul consolidate centralizat prin append + re-sortare alfabetică a blocului `## Module`.
+- **Sursă:** `readme/DESCRIPTION.md` (prezent la majoritate) pentru Sumar și Funcționalități Cheie; Componente Cheie ancorate în cod doar unde DESCRIPTION era gol/sumar (frecvent — multe readme-uri deltatech au o singură linie). Texte EN traduse în RO cu diacritice.
+- **Confirmări de denumire/scop (verificate în cod):** `deltatech_ral` = pigmenți de culoare RAL în BOM; `deltatech_record_type` = tipuri de înregistrare (folosit de `deltatech_marketplace_sale_type`); `deltatech_sms` = gateway 4Pay/Wapi (înlocuiește IAP); `deltatech_transport_change` = transport de **configurație** între medii prin Git (NU transport marfă); `deltatech_test_system` = marcaj test/producție; `deltatech_watermark` = câmp de bază filigran (consumat de `deltatech_website_watermark` din bitshop); `deltatech_queue_job` = îmbunătățiri queue_job pentru Odoo.sh.
+- **Lanțuri/conexiuni reale activate:** `deltatech_sms` ← `deltatech_sms_sale`; `deltatech_purchase_add_extra_line` ↔ `deltatech_sale_add_extra_line`; `deltatech_watermark` → `deltatech_website_watermark`; `deltatech_website_city` → `deltatech_delivery_locker_website`; `deltatech_product_list`/`deltatech_website_short_description` → `deltatech_feed`; `deltatech_record_type` → `deltatech_marketplace_sale_type`; `deltatech_sale_stage` → `deltatech_marketplace_sale_stage`; `deltatech_warehouse_arrangement`/`deltatech_putaway_strategy` → `deltatech_warehouse_map`; `deltatech_stock_delivery` → familia `deltatech_invoice_*`. Dependențe core (`sale`, `stock`, `purchase`, `account`, `website_sale`, `web`, `mail`) rămase text `cod`.
+- **Avertismente notabile (cod/readme, nu wiki):** multe readme-uri foarte sumare (o linie) — Sumar/Funcționalități sintetizate din cod; texte de versiune veche în readme (`deltatech_record_type` „17.0", `deltatech_project_price_list` exemple `odoo18.conf`); inconsecvențe cod semnalate doar informativ: `deltatech_ral` `create` fără `@api.model_create_multi`, `deltatech_warehouse_arrangement` precedență `_compute_full_name` + f-string în `_()`, `deltatech_website_price_without_tax` cheie QWeb nepotrivită, `deltatech_product_trade_markup` metode stub `pass`. Multe module Beta/Alpha și OPL-1.
+- **Fișiere actualizate:** 70 `index.md` noi, `wiki_module_odoo/index.md` (re-sortat, 275 module total), `wiki_module_odoo/log.md`.
+
+---
+
+## [2026-06-03] Ingestie deltatech_product_mpn (suita deltatech)
+
+- **Acțiune:** Adăugată o pagină nouă pentru modulul `deltatech_product_mpn` (repo `dhongu/deltatech`, branch `19.0`). Modul mic, documentat direct (fără subagent).
+- **Sursă:** `readme/DESCRIPTION.md` (prezent) pentru Sumar și Funcționalități Cheie; Componente Cheie omise conform prioritizării Readme (notat doar la nivel general: extindere `product.template` cu câmpul MPN + vizualizare `views/product_template_view.xml`). Text EN tradus în RO cu diacritice. Nu există `readme/USAGE.md` sau `readme/FISA_CONSULTANT.md`.
+- **Dependențe/Conexiuni:** singura dependență din manifest este `product` (fără pagină wiki → text `cod`). Nu au fost identificate conexiuni funcționale verificate către alte module cu pagină wiki.
+- **Avertismente notabile (cod/manifest, nu wiki):** licență OPL-1 (comercial), `development_status: Mature`, autor „Terrabit, Voicu Stefan". DESCRIPTION.md în engleză (tradus la ingestie). Fără greșeli de versiune în readme.
+- **Fișiere actualizate:** `wiki_module_odoo/deltatech_product_mpn/index.md` (nou), `wiki_module_odoo/index.md`, `wiki_module_odoo/log.md`.
+
+---
+
+## [2026-06-03] Ingestie deltatech_partner_generic (suita deltatech)
+
+- **Acțiune:** Adăugată o pagină nouă pentru modulul `deltatech_partner_generic` (repo `dhongu/deltatech`, branch `19.0`). Modul mic, documentat direct (fără subagent).
+- **Sursă:** `readme/DESCRIPTION.md` (prezent) pentru Sumar și Funcționalități Cheie; Componente Cheie omise conform prioritizării Readme. Text EN tradus în RO cu diacritice.
+- **Dependențe/Conexiuni:** singura dependență din manifest este `sale` (fără pagină wiki → text `cod`). Nu au fost identificate conexiuni funcționale verificate către alte module cu pagină wiki.
+- **Avertismente notabile (cod/manifest, nu wiki):** `summary` din manifest conține o greșeală de tipar („Gneric partner"); `development_status: Mature`, licență LGPL-3. Cod sursă neanalizat (există modele/vederi pentru setarea partenerului generic în `res.config.settings`, dar nedetaliate datorită prioritizării Readme).
+- **Fișiere actualizate:** `wiki_module_odoo/deltatech_partner_generic/index.md` (nou), `wiki_module_odoo/index.md`, `wiki_module_odoo/log.md`.
+
+---
+
 ## [2026-06-03] Ingestie module diverse + finalizare suita bitshop (19 module)
 
 - **Acțiune:** Adăugate 19 pagini noi pentru suita `bitshop` (repo `terrabit-ro/bitshop`, branch `19.0`) — ultimele module nedocumentate (singletoni + perechi mici), încheind documentarea celor 79 module bitshop. `deltatech_restrict_ip` documentat separat (intrare proprie de log de mai jos). Analiza delegată subagenților `general-purpose` în 3 loturi paralele de 7: (A) `deltatech_access`, `deltatech_barcode_sale`, `deltatech_brand_field`, `deltatech_chart_of_accounts`, `deltatech_chatter`, `deltatech_cmr_document`, `deltatech_document_template`; (B) `deltatech_event`, `deltatech_mentor`, `deltatech_nap`, `deltatech_nap_website`, `deltatech_partner_gifts`, `deltatech_product_brand` (+ restrict_ip); (C) `deltatech_sale_cancel_order`, `deltatech_sale_contracts`, `deltatech_sale_store`, `deltatech_website_watermark`, `deltatech_work_days_report`, `terrabit_partner_credit_limit`, `terrabit_partner_payable_receivable`.
