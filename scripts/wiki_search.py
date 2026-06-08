@@ -104,7 +104,74 @@ def _vector_scores(query: str, chunks: list[dict], meta: dict) -> list[float] | 
         return None
 
 
-def search(query: str, k: int = 5) -> list[dict]:
+# ── rerank semantic cu Claude (folosește ANTHROPIC_API_KEY din Anthropic Console) ──
+
+# Model ieftin pentru rerank. Schimbabil cu --rerank-model. Haiku 4.5 = $1/$5 per 1M:
+# un rerank (≈1,5K tokens in + ~200 out pe ~12 candidați) costă sub $0,003.
+RERANK_MODEL = "claude-haiku-4-5"
+
+_RERANK_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "ranking": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "module": {"type": "string"},
+                    "relevance": {"type": "integer"},  # 0–100
+                },
+                "required": ["module", "relevance"],
+                "additionalProperties": False,
+            },
+        }
+    },
+    "required": ["ranking"],
+    "additionalProperties": False,
+}
+
+
+def _rerank_with_claude(query: str, candidates: list[dict], model: str) -> dict | None:
+    """Reordonează semantic candidații cu un apel Claude ieftin.
+
+    Întoarce {module: relevance} sau None dacă apelul eșuază (lipsă cheie/egress/SDK) —
+    caz în care căutarea cade pe ordinea lexicală. Cheia se ia din mediu
+    (ANTHROPIC_API_KEY), exact cea din Anthropic Console.
+    """
+    try:
+        import anthropic
+    except ImportError:
+        print("⚠️  pachetul `anthropic` lipsește (pip install anthropic) — folosesc lexical.",
+              file=sys.stderr)
+        return None
+    try:
+        client = anthropic.Anthropic()  # citește ANTHROPIC_API_KEY din mediu
+        listing = "\n".join(
+            f"- {c['module']}: {(c.get('summary') or '')[:300]}" for c in candidates
+        )
+        resp = client.messages.create(
+            model=model,
+            max_tokens=1024,
+            system=(
+                "Ești un asistent care selectează module Odoo relevante pentru o întrebare. "
+                "Primești o întrebare și o listă de module candidate (nume tehnic + sumar). "
+                "Întoarce un scor de relevanță 0–100 pentru fiecare modul candidat, unde 100 = "
+                "răspunde direct la întrebare, 0 = irelevant. Bazează-te pe sensul întrebării, "
+                "nu doar pe cuvinte comune. Include doar module din lista dată."
+            ),
+            messages=[{"role": "user", "content": f"Întrebare: {query}\n\nModule candidate:\n{listing}"}],
+            output_config={"format": {"type": "json_schema", "schema": _RERANK_SCHEMA}},
+        )
+        text = next(b.text for b in resp.content if b.type == "text")
+        ranking = json.loads(text).get("ranking", [])
+        return {r["module"]: r["relevance"] for r in ranking}
+    except Exception as e:
+        print(f"⚠️  rerank Claude eșuat ({e}) — folosesc lexical.", file=sys.stderr)
+        return None
+
+
+def search(query: str, k: int = 5, rerank: bool = False,
+           rerank_model: str = RERANK_MODEL, candidates: int = 12) -> list[dict]:
     chunks, meta = _load()
     lex = _lexical_scores(query, chunks)
     vec = _vector_scores(query, chunks, meta)
@@ -115,14 +182,34 @@ def search(query: str, k: int = 5) -> list[dict]:
     else:
         final = lex
     ranked = sorted(zip(chunks, final), key=lambda x: x[1], reverse=True)
+    ranked = [(c, s) for c, s in ranked if s > 0]
+
+    if rerank and ranked:
+        # etapa 1 (retrieval lexical) → candidați; etapa 2 (Claude) → reordonare semantică
+        shortlist = [c for c, _ in ranked[:candidates]]
+        scores = _rerank_with_claude(query, shortlist, rerank_model)
+        if scores:
+            reranked = sorted(shortlist, key=lambda c: scores.get(c["module"], -1), reverse=True)
+            out = []
+            for c in reranked[:k]:
+                rel = scores.get(c["module"], 0)
+                if rel <= 0:
+                    continue
+                out.append({
+                    "module": c["module"], "friendly_name": c.get("friendly_name"),
+                    "path": c["path"], "summary": c.get("summary"),
+                    "dependencies": c.get("dependencies", []), "score": rel,
+                    "scorer": f"claude:{rerank_model}",
+                })
+            return out
+
     out = []
     for c, score in ranked[:k]:
-        if score <= 0:
-            continue
         out.append({
             "module": c["module"], "friendly_name": c.get("friendly_name"),
             "path": c["path"], "summary": c.get("summary"),
             "dependencies": c.get("dependencies", []), "score": round(score, 4),
+            "scorer": "lexical",
         })
     return out
 
@@ -132,9 +219,16 @@ def main() -> None:
     ap.add_argument("query", help="întrebarea / cuvinte cheie")
     ap.add_argument("-k", type=int, default=5, help="câte rezultate (implicit 5)")
     ap.add_argument("--json", action="store_true", help="ieșire JSON")
+    ap.add_argument("--rerank", action="store_true",
+                    help="reordonare semantică cu Claude (necesită ANTHROPIC_API_KEY + egress)")
+    ap.add_argument("--rerank-model", default=RERANK_MODEL,
+                    help=f"modelul de rerank (implicit {RERANK_MODEL})")
+    ap.add_argument("--candidates", type=int, default=12,
+                    help="câți candidați lexicali trimit la rerank (implicit 12)")
     args = ap.parse_args()
 
-    results = search(args.query, k=args.k)
+    results = search(args.query, k=args.k, rerank=args.rerank,
+                     rerank_model=args.rerank_model, candidates=args.candidates)
     if args.json:
         print(json.dumps(results, ensure_ascii=False, indent=2))
         return

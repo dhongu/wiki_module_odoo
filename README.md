@@ -44,9 +44,17 @@ python3 scripts/wiki_index.py            # (re)build the index — needs only th
 python3 scripts/wiki_search.py "export SAGA" -k 5    # rank relevant modules
 ```
 
-Retrieval is **hybrid**: lexical by default (zero network), and semantic via embeddings if
-enabled in `scripts/wiki_index.py` (then run `wiki_index.py --embed`). The embedding model and
-dimension are recorded in `.index/meta.json` so the query side always matches the ingest side.
+Retrieval is **hybrid**: lexical by default (zero network), with an optional **semantic rerank**
+that reorders the lexical candidates via a cheap Claude call:
+
+```bash
+export ANTHROPIC_API_KEY=...   # your Anthropic Console key
+python3 scripts/wiki_search.py "how do I reverse a class-6 expense" -k 5 --rerank
+```
+
+Rerank uses `claude-haiku-4-5` by default (≈ $0.003/query) and needs `pip install anthropic` +
+network egress. Without a key it falls back to lexical automatically — querying never fails.
+Anthropic has no embeddings endpoint, so semantic search is done by reranking, not vectors.
 
 ## Maintaining the wiki (ingestion)
 

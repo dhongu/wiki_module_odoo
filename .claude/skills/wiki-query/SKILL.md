@@ -44,7 +44,15 @@ Nu reconstrui indexul la fiecare întrebare dacă există deja și e recent.
 python3 scripts/wiki_search.py "<întrebarea>" -k 6 --json
 ```
 
-Întoarce top-K module cu `module`, `path`, `summary`, `dependencies`, `score`.
+Întoarce top-K module cu `module`, `path`, `summary`, `dependencies`, `score`, `scorer`.
+
+**Rerank semantic (opțional, recomandat la întrebări parafrazate):** adaugă `--rerank` ca să
+reordonezi candidații lexicali cu un apel Claude ieftin. Necesită `ANTHROPIC_API_KEY` în mediu
+(cheia din Anthropic Console) + egress. Dacă lipsește, cade automat pe lexical.
+
+```bash
+python3 scripts/wiki_search.py "<întrebarea>" -k 6 --rerank --json
+```
 
 - Dacă întrebarea **numește explicit un modul** (`l10n_ro_stock_sheet`), sari peste scor și
   țintește direct `<modul>/index.md`.
@@ -71,14 +79,17 @@ python3 scripts/wiki_search.py "<întrebarea>" -k 6 --json
   documentat (ingestie din monorepo cu `wiki-module`).
 - Nu lista module irelevante doar pentru că au apărut cu scor mic în retrieval.
 
-## Notă: lexical vs. vectorial (hibrid)
+## Notă: lexical → rerank semantic
 
 Implicit retrieval-ul e **lexical** — potrivire pe termeni. Merge foarte bine când întrebarea
-folosește cuvinte care apar în documentație. Limita lui: o întrebare parafrazată poate rata —
-de-aia pasul 2 are fallback pe `Grep`, iar arhitectura e pregătită pentru vectori.
+folosește cuvinte care apar în documentație. Limita lui: o întrebare parafrazată poate rata.
 
-Pentru căutare **semantică**: configurează providerul în `scripts/wiki_index.py`
-(`EMBED_PROVIDER/EMBED_MODEL/EMBED_DIM` + `embed_texts`), rulează `python3 scripts/wiki_index.py
---embed`, și gata — `wiki_search.py` combină automat cosine cu lexicalul, folosind același model
-salvat în `.index/meta.json`. Nicio schimbare în acest skill. Atenție: mediul trebuie să aibă
-egress către providerul de embeddings, atât la `--embed` cât și la fiecare interogare semantică.
+Calea semantică recomandată e **rerank cu Claude** (`--rerank`): lexicalul aduce candidații,
+apoi un apel Claude ieftin (implicit `claude-haiku-4-5`) îi reordonează după sensul întrebării.
+Folosește cheia din **Anthropic Console** (`ANTHROPIC_API_KEY`); cost ≈ sub $0,003/întrebare.
+Anthropic **nu** are endpoint de embeddings — de-aia semantica se face prin rerank, nu prin
+vectori. (Există și un schelet vectorial alternativ în `scripts/wiki_index.py` cu un provider
+terț de embeddings, dar nu e calea implicită.)
+
+Fallback: dacă `--rerank` nu poate rula (fără cheie, fără egress, fără pachetul `anthropic`),
+`wiki_search.py` revine automat la ordinea lexicală — niciodată nu eșuează interogarea.
