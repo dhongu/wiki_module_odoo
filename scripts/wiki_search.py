@@ -171,14 +171,17 @@ def _rerank_with_claude(query: str, candidates: list[dict], model: str) -> dict 
 
 
 def search(query: str, k: int = 5, rerank: bool = False,
-           rerank_model: str = RERANK_MODEL, candidates: int = 12) -> list[dict]:
+           rerank_model: str = RERANK_MODEL, candidates: int = 12,
+           alpha: float = 0.5) -> list[dict]:
+    """alpha = ponderea pe similaritatea semantică (cosine) în blend, 0..1.
+    0 = doar lexical, 1 = doar vectori. Implicit 0.5 (egal). Ignorat fără vectori."""
     chunks, meta = _load()
     lex = _lexical_scores(query, chunks)
     vec = _vector_scores(query, chunks, meta)
     if vec is not None:
         lo, hi = min(lex), max(lex) or 1.0
         lex_n = [(s - lo) / (hi - lo + 1e-9) for s in lex]
-        final = [0.5 * a + 0.5 * b for a, b in zip(lex_n, vec)]
+        final = [(1 - alpha) * a + alpha * b for a, b in zip(lex_n, vec)]
     else:
         final = lex
     ranked = sorted(zip(chunks, final), key=lambda x: x[1], reverse=True)
@@ -225,10 +228,13 @@ def main() -> None:
                     help=f"modelul de rerank (implicit {RERANK_MODEL})")
     ap.add_argument("--candidates", type=int, default=12,
                     help="câți candidați lexicali trimit la rerank (implicit 12)")
+    ap.add_argument("--alpha", type=float, default=0.5,
+                    help="pondere semantică (cosine) în blend, 0..1 (implicit 0.5; 1 = doar vectori)")
     args = ap.parse_args()
 
     results = search(args.query, k=args.k, rerank=args.rerank,
-                     rerank_model=args.rerank_model, candidates=args.candidates)
+                     rerank_model=args.rerank_model, candidates=args.candidates,
+                     alpha=args.alpha)
     if args.json:
         print(json.dumps(results, ensure_ascii=False, indent=2))
         return

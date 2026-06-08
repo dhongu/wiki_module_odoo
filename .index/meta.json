@@ -1,8 +1,8 @@
 {
-  "built": "2026-06-08T05:13:16+00:00",
+  "built": "2026-06-08T05:17:57+00:00",
   "module_count": 277,
   "embedding": {
-    "enabled": false,
+    "enabled": true,
     "provider": "openai",
     "model": "text-embedding-3-small",
     "dim": 1536
