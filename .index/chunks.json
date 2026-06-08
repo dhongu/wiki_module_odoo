@@ -5347,6 +5347,28 @@
     "text": "l10n_ro_account_return_pl_closing\nl10n_ro_account_return_pl_closing"
   },
   {
+    "path": "l10n_ro_account_storno/index.md",
+    "module": "l10n_ro_account_storno",
+    "version": "19.0.0.0.3",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_account_storno",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_account_storno",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Romania - Storno Enhancements",
+    "summary": "Modulul implementează contabilitatea de tip **storno** (înregistrări în roșu / cu sumă negativă) conform standardelor contabile românești. În loc să anuleze o operațiune greșită printr-o înregistrare pe partea opusă a contului (care umflă artificial rulajele), storno-ul **inversează** suma chiar pe poziția inițială, cu valoare negativă, astfel încât soldurile și rulajele contabile rămân corecte. Comportamentul de storno se activează la nivel de companie, oferind flexibilitate între entitățile dintr-un grup.",
+    "features": [
+      "Înregistrări negative (în roșu): calculează automat valorile de debit și credit ca numere negative pentru liniile de storno, asigurând raportarea corectă în registrele contabile ale localizării românești.",
+      "Configurarea utilizării contului: adaugă un câmp „Utilizare\" (Debit, Credit sau Bivalent) pe conturile din planul de conturi, pentru redirecționarea automată a sumelor către coloana corectă conform regulilor contabile RO.",
+      "Logică de storno îmbunătățită: extinde logica standard de stornare (reversare) din Odoo, marcând notele și liniile ca „storno\", astfel încât soldurile să fie diminuate corect, nu majorate pe partea opusă.",
+      "Activare la nivel de companie: comportamentul de storno este controlat de o setare pe companie, permițând flexibilitate între entități diferite."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro"
+    ],
+    "connections": [],
+    "text": "Romania - Storno Enhancements\nl10n_ro_account_storno\nModulul implementează contabilitatea de tip **storno** (înregistrări în roșu / cu sumă negativă) conform standardelor contabile românești. În loc să anuleze o operațiune greșită printr-o înregistrare pe partea opusă a contului (care umflă artificial rulajele), storno-ul **inversează** suma chiar pe poziția inițială, cu valoare negativă, astfel încât soldurile și rulajele contabile rămân corecte. Comportamentul de storno se activează la nivel de companie, oferind flexibilitate între entitățile dintr-un grup.\nÎnregistrări negative (în roșu): calculează automat valorile de debit și credit ca numere negative pentru liniile de storno, asigurând raportarea corectă în registrele contabile ale localizării românești.\nConfigurarea utilizării contului: adaugă un câmp „Utilizare\" (Debit, Credit sau Bivalent) pe conturile din planul de conturi, pentru redirecționarea automată a sumelor către coloana corectă conform regulilor contabile RO.\nLogică de storno îmbunătățită: extinde logica standard de stornare (reversare) din Odoo, marcând notele și liniile ca „storno\", astfel încât soldurile să fie diminuate corect, nu majorate pe partea opusă.\nActivare la nivel de companie: comportamentul de storno este controlat de o setare pe companie, permițând flexibilitate între entități diferite."
+  },
+  {
     "path": "l10n_ro_advance_invoice/index.md",
     "module": "l10n_ro_advance_invoice",
     "version": null,

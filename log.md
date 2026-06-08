@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-06-08] Ingestie l10n_ro_account_storno (suita l10n-romania)
+
+- **Acțiune:** Adăugată o pagină nouă pentru `l10n_ro_account_storno` (repo `dhongu/l10n-romania`, branch `19.0`). Motiv: o interogare de test („cum inversez o cheltuială greșită pe clasa 6") nu găsea niciun modul de storno — diagnostic: modulul nu era documentat (gol de acoperire), nu o problemă de retrieval. Modul mic, documentat direct.
+- **Sursă:** `readme/DESCRIPTION.md` (prezent, EN → tradus RO) pentru Sumar și Funcționalități. Componente Cheie ancorate ușor în cod (modele `account.move`/`account.move.line`, `account.account`, `res.company`; `post_init_hook`) conform mențiunilor din DESCRIPTION.
+- **Dependențe/Conexiuni:** dependențe `account` și `l10n_ro` (fără pagină wiki → text `cod`). Fără conexiuni inventate; notat doar că oferă mecanismul de bază pentru înregistrări negative folosit indirect de alte module.
+- **Avertismente notabile:** licență AGPL-3, `development_status: Production/Stable`, autor „Dorin Hongu, Terrabit, OCA". Are `post_init_hook`.
+- **Fișiere actualizate:** `wiki_module_odoo/l10n_ro_account_storno/index.md` (nou), `wiki_module_odoo/index.md`, `wiki_module_odoo/log.md`, `wiki_module_odoo/.index/` (rebuild lexical; vectorii se regenerează separat cu `--embed`).
+
 ## [2026-06-08] Ingestie terrabit_helpdesk_link (suita terrabit)
 
 - **Acțiune:** Adăugată o pagină nouă pentru modulul `terrabit_helpdesk_link` (repo `terrabit-ro/terrabit`, branch `19.0`). Modul minuscul (un meniu + o acțiune URL), documentat direct (fără subagent). Demonstrație a fluxului ingestie → push → interogare (`wiki-query`).
