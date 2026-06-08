@@ -6679,6 +6679,27 @@
     "text": "Terrabit Facebook Pixel\nterrabit_facebook_pixel"
   },
   {
+    "path": "terrabit_helpdesk_link/index.md",
+    "module": "terrabit_helpdesk_link",
+    "version": "19.0.0.0.4",
+    "github": "https://github.com/terrabit-ro/terrabit/tree/19.0/terrabit_helpdesk_link",
+    "local_path": "odoo-addons/terrabit/terrabit_helpdesk_link",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Terrabit Helpdesk Link",
+    "summary": "Modul utilitar minimal care adaugă în Odoo un element de meniu de nivel superior, „Terrabit Help\", prin care orice utilizator intern poate deschide rapid portalul de suport Terrabit (`https://www.terrabit.ro/helpdesk`) într-o filă nouă a browserului. Rolul său este pur de comoditate: oferă un punct de acces vizibil și permanent către helpdesk-ul Terrabit, direct din interfața ERP, fără a adăuga modele sau logică de business.",
+    "features": [
+      "Meniu de acces rapid la suport: adaugă meniul de top „Terrabit Help\" (cu pictogramă proprie), vizibil tuturor utilizatorilor interni.",
+      "Deschidere externă a portalului de helpdesk: la accesarea meniului, deschide într-o filă nouă pagina de suport Terrabit printr-o acțiune de tip URL (`ir.actions.act_url`), fără a părăsi sesiunea Odoo."
+    ],
+    "dependencies": [
+      "base"
+    ],
+    "connections": [
+      "base"
+    ],
+    "text": "Terrabit Helpdesk Link\nterrabit_helpdesk_link\nModul utilitar minimal care adaugă în Odoo un element de meniu de nivel superior, „Terrabit Help\", prin care orice utilizator intern poate deschide rapid portalul de suport Terrabit (`https://www.terrabit.ro/helpdesk`) într-o filă nouă a browserului. Rolul său este pur de comoditate: oferă un punct de acces vizibil și permanent către helpdesk-ul Terrabit, direct din interfața ERP, fără a adăuga modele sau logică de business.\nMeniu de acces rapid la suport: adaugă meniul de top „Terrabit Help\" (cu pictogramă proprie), vizibil tuturor utilizatorilor interni.\nDeschidere externă a portalului de helpdesk: la accesarea meniului, deschide într-o filă nouă pagina de suport Terrabit printr-o acțiune de tip URL (`ir.actions.act_url`), fără a părăsi sesiunea Odoo."
+  },
+  {
     "path": "terrabit_iap_server_sale/index.md",
     "module": "terrabit_iap_server_sale",
     "version": "19.0.1.0.0",

@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-06-08] Ingestie terrabit_helpdesk_link (suita terrabit)
+
+- **Acțiune:** Adăugată o pagină nouă pentru modulul `terrabit_helpdesk_link` (repo `terrabit-ro/terrabit`, branch `19.0`). Modul minuscul (un meniu + o acțiune URL), documentat direct (fără subagent). Demonstrație a fluxului ingestie → push → interogare (`wiki-query`).
+- **Sursă:** `readme/DESCRIPTION.md` prezent dar gol (doar „Features:") → Sumar și Funcționalități Cheie sintetizate din `__manifest__.py` + cod; Componente Cheie ancorate în `views/menu_link.xml` (nu există modele).
+- **Dependențe/Conexiuni:** singura dependență din manifest este `base` (fără pagină wiki → text `cod`). Nicio conexiune funcțională verificată către alte module cu pagină.
+- **Avertismente notabile (cod/manifest, nu wiki):** licență LGPL-3, `development_status: Beta`, autor „Terrabit, Dan Stoica". Acțiunea `ir.actions.act_url` deschide `https://www.terrabit.ro/helpdesk` în filă nouă; meniu restrâns la `base.group_user`.
+- **Fișiere actualizate:** `wiki_module_odoo/terrabit_helpdesk_link/index.md` (nou), `wiki_module_odoo/index.md`, `wiki_module_odoo/log.md`, `wiki_module_odoo/.index/` (reconstruit).
+
 ## [2026-06-03] Finalizare documentare suita deltatech (70 module)
 
 - **Acțiune:** Documentate toate cele 70 module deltatech rămase nedocumentate (repo `dhongu/deltatech`, branch `19.0`), încheind suita deltatech (120 module cu manifest, toate au acum pagină și intrare în index). Analiza delegată subagenților `general-purpose` în 10 loturi paralele de ~7. `deltatech_partner_generic`, `deltatech_product_mpn` și `deltatech_restrict_ip` (acesta din bitshop) și-au auto-adăugat intrarea; restul consolidate centralizat prin append + re-sortare alfabetică a blocului `## Module`.
