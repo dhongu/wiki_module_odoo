@@ -5319,6 +5319,29 @@
     "text": "l10n_ro_account_chart\nl10n_ro_account_chart"
   },
   {
+    "path": "l10n_ro_account_edi_ubl/index.md",
+    "module": "l10n_ro_account_edi_ubl",
+    "version": "19.0.1.0.0",
+    "github": "`https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_account_edi_ubl`",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_account_edi_ubl",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Romania - Send E-Factura - legacy",
+    "summary": "Acest modul este o punte tehnică (bridge) păstrată pentru compatibilitate retroactivă în jurul trimiterii facturilor electronice românești (E-Factura) către SPV-ul ANAF. Practic, el nu mai conține logică proprie: rolul său este să marcheze numele tehnic vechi `l10n_ro_account_edi_ubl` ca fiind în continuare instalabil și să atragă automat modulul curent de E-Factura (`l10n_ro_edi`), unde se află toată funcționalitatea reală. Existența lui asigură o tranziție lină pentru bazele de date mai vechi care îl aveau deja instalat, fără a-l pierde la upgrade și fără a cere reconfigurare din partea utilizatorului.",
+    "features": [
+      "Asigură continuitatea numelui tehnic `l10n_ro_account_edi_ubl` pentru bazele de date existente (modul legacy/bridge).",
+      "Se instalează automat (`auto_install = True`) atunci când dependența sa este prezentă, redirecționând trimiterea E-Factura către modulul curent.",
+      "Trage după sine modulul de E-Factura propriu-zis (`l10n_ro_edi`), care conține logica de generare UBL și de comunicare cu SPV-ul ANAF.",
+      "Nu adaugă modele, vizualizări sau date proprii — întreaga funcționalitate este moștenită din dependență."
+    ],
+    "dependencies": [
+      "l10n_ro_edi"
+    ],
+    "connections": [
+      "l10n_ro_edi"
+    ],
+    "text": "Romania - Send E-Factura - legacy\nl10n_ro_account_edi_ubl\nAcest modul este o punte tehnică (bridge) păstrată pentru compatibilitate retroactivă în jurul trimiterii facturilor electronice românești (E-Factura) către SPV-ul ANAF. Practic, el nu mai conține logică proprie: rolul său este să marcheze numele tehnic vechi `l10n_ro_account_edi_ubl` ca fiind în continuare instalabil și să atragă automat modulul curent de E-Factura (`l10n_ro_edi`), unde se află toată funcționalitatea reală. Existența lui asigură o tranziție lină pentru bazele de date mai vechi care îl aveau deja instalat, fără a-l pierde la upgrade și fără a cere reconfigurare din partea utilizatorului.\nAsigură continuitatea numelui tehnic `l10n_ro_account_edi_ubl` pentru bazele de date existente (modul legacy/bridge).\nSe instalează automat (`auto_install = True`) atunci când dependența sa este prezentă, redirecționând trimiterea E-Factura către modulul curent.\nTrage după sine modulul de E-Factura propriu-zis (`l10n_ro_edi`), care conține logica de generare UBL și de comunicare cu SPV-ul ANAF.\nNu adaugă modele, vizualizări sau date proprii — întreaga funcționalitate este moștenită din dependență."
+  },
+  {
     "path": "l10n_ro_account_fisa_cont/index.md",
     "module": "l10n_ro_account_fisa_cont",
     "version": null,
@@ -5363,6 +5386,28 @@
     "dependencies": [],
     "connections": [],
     "text": "l10n_ro_account_return_pl_closing\nl10n_ro_account_return_pl_closing"
+  },
+  {
+    "path": "l10n_ro_account_sequence/index.md",
+    "module": "l10n_ro_account_sequence",
+    "version": "19.0.1.0.3",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_account_sequence",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_account_sequence",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Romania - Cash Sequence",
+    "summary": "Acest modul asigură numerotarea separată a documentelor din jurnalul de casă, în conformitate cu cerințele de evidență din localizarea contabilă pentru România. Pe scurt, documentele de casă primesc o secvență de numerotare distinctă față de alte tipuri de documente, astfel încât registrul de casă să fie corect și ușor de urmărit.",
+    "features": [
+      "Numerotarea separată a documentelor din jurnalul de casă."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro"
+    ],
+    "connections": [
+      "account",
+      "l10n_ro"
+    ],
+    "text": "Romania - Cash Sequence\nl10n_ro_account_sequence\nAcest modul asigură numerotarea separată a documentelor din jurnalul de casă, în conformitate cu cerințele de evidență din localizarea contabilă pentru România. Pe scurt, documentele de casă primesc o secvență de numerotare distinctă față de alte tipuri de documente, astfel încât registrul de casă să fie corect și ușor de urmărit.\nNumerotarea separată a documentelor din jurnalul de casă."
   },
   {
     "path": "l10n_ro_account_storno/index.md",
@@ -5833,6 +5878,64 @@
     "text": "Romania - Pistă de Audit Imuabilă (FR-14)\nl10n_ro_audit_immutable"
   },
   {
+    "path": "l10n_ro_balance_confirmation/index.md",
+    "module": "l10n_ro_balance_confirmation",
+    "version": "19.0.0.0.8",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_balance_confirmation",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_balance_confirmation",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Confirmare de Sold pentru România",
+    "summary": "Modulul „Confirmare de Sold pentru România\" este o extensie Odoo specializată care generează documente de confirmare a soldului pentru partenerii de afaceri, conform cerințelor contabile românești. Permite companiilor să creeze extrase de cont pentru partenerii lor (clienți și furnizori) la o dată specificată, facilitând procesul de reconciliere a soldurilor și asigurând conformitatea cu reglementările financiare locale. Documentele rezultate includ și un formular de răspuns integrat, ușurând procedura de confirmare și procesul de audit.",
+    "features": [
+      "Generarea extrasului de cont: creează extrase de cont pentru parteneri la o dată specificată, în format standard conform cerințelor din România, cu generare PDF pentru documentare și distribuire și posibilitatea selectării mai multor parteneri pentru generare în lot.",
+      "Calculul soldului la o dată specifică: calcul precis al soldurilor partenerilor la o dată dată, cu suport pentru debite și credite, extinzând funcționalitatea nativă Odoo pentru raportare la dată istorică și afișarea corectă a soldurilor în moneda companiei.",
+      "Șablon de document personalizat: format standard de extras de cont conform normelor românești, cu secțiune pentru informațiile emitentului (companie), secțiune pentru informațiile destinatarului (partener), afișarea soldului la data specificată și textul standard al procedurii de confirmare.",
+      "Formular de răspuns: secțiune integrată pentru răspunsul partenerului, cu opțiuni de confirmare a sumei, spațiu pentru menționarea modalității de plată, secțiune pentru obiecții și explicații în caz de discrepanțe și spații pentru semnăturile persoanelor responsabile.",
+      "Interfață de utilizare simplă: wizard pentru selectarea datei de raportare, posibilitatea de a selecta mai mulți parteneri simultan, generare directă din interfața partenerilor și validări pentru evitarea erorilor de utilizare."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro_config"
+    ],
+    "connections": [
+      "account",
+      "l10n_ro_config"
+    ],
+    "text": "Confirmare de Sold pentru România\nl10n_ro_balance_confirmation\nModulul „Confirmare de Sold pentru România\" este o extensie Odoo specializată care generează documente de confirmare a soldului pentru partenerii de afaceri, conform cerințelor contabile românești. Permite companiilor să creeze extrase de cont pentru partenerii lor (clienți și furnizori) la o dată specificată, facilitând procesul de reconciliere a soldurilor și asigurând conformitatea cu reglementările financiare locale. Documentele rezultate includ și un formular de răspuns integrat, ușurând procedura de confirmare și procesul de audit.\nGenerarea extrasului de cont: creează extrase de cont pentru parteneri la o dată specificată, în format standard conform cerințelor din România, cu generare PDF pentru documentare și distribuire și posibilitatea selectării mai multor parteneri pentru generare în lot.\nCalculul soldului la o dată specifică: calcul precis al soldurilor partenerilor la o dată dată, cu suport pentru debite și credite, extinzând funcționalitatea nativă Odoo pentru raportare la dată istorică și afișarea corectă a soldurilor în moneda companiei.\nȘablon de document personalizat: format standard de extras de cont conform normelor românești, cu secțiune pentru informațiile emitentului (companie), secțiune pentru informațiile destinatarului (partener), afișarea soldului la data specificată și textul standard al procedurii de confirmare.\nFormular de răspuns: secțiune integrată pentru răspunsul partenerului, cu opțiuni de confirmare a sumei, spațiu pentru menționarea modalității de plată, secțiune pentru obiecții și explicații în caz de discrepanțe și spații pentru semnăturile persoanelor responsabile.\nInterfață de utilizare simplă: wizard pentru selectarea datei de raportare, posibilitatea de a selecta mai mulți parteneri simultan, generare directă din interfața partenerilor și validări pentru evitarea erorilor de utilizare."
+  },
+  {
+    "path": "l10n_ro_cash_register/index.md",
+    "module": "l10n_ro_cash_register",
+    "version": "19.0.1.1.7",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_cash_register",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_cash_register",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Registru de casă RO",
+    "summary": "Modulul oferă un registru de casă zilnic pentru jurnalele de tip numerar și leagă operațiunile de încasare, plată și transfer direct de soldul casei. Pentru fiecare combinație de jurnal de casă și dată există un singur registru, cu sold inițial și sold final calculate automat din mișcările contabile postate. Modulul este soluția operațională pentru partea de registru de casă din localizarea românească, oferind casierilor și contabililor un instrument controlat pentru operarea numerarului și tipărirea registrului. Modulul nu acoperă importul extraselor bancare MT940 și nici reconcilierea bancară automată; acestea rămân module complementare separate.",
+    "features": [
+      "Model nou de registru de casă, organizat pe zi și pe jurnal de casă (un registru unic per combinație).",
+      "Calcul automat de sold inițial și sold final din mișcările contabile postate pe contul de casă.",
+      "Acces rapid la încasare, plată și operațiune de casă direct din formularul registrului.",
+      "Wizard de operațiune casă (Cash In / Cash Out) care generează și postează automat nota contabilă cu contul de casă și contul corespondent.",
+      "Generare automată a registrului de casă la postarea plăților pe jurnalul de tip numerar.",
+      "Acțiune „Generate Missing Cash Register\" pentru crearea registrelor lipsă pentru toate zilele cu mișcări.",
+      "Raport PDF tipărit pentru registrul de casă (date companie, CIF/NRC, sold inițial, linii pe partener, total încasări/plăți, sold final).",
+      "Deschiderea directă a registrului de casă din jurnalul cash pentru companiile din România.",
+      "Cron pregătit pentru generarea registrelor lipsă, livrat inactiv."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro_account_sequence"
+    ],
+    "connections": [
+      "l10n_ro_account_sequence",
+      "account",
+      "l10n_ro_account_bank_statement_import_mt940_base",
+      "l10n_ro_account_bank_statement_import_mt940_bcr"
+    ],
+    "text": "Registru de casă RO\nl10n_ro_cash_register\nModulul oferă un registru de casă zilnic pentru jurnalele de tip numerar și leagă operațiunile de încasare, plată și transfer direct de soldul casei. Pentru fiecare combinație de jurnal de casă și dată există un singur registru, cu sold inițial și sold final calculate automat din mișcările contabile postate. Modulul este soluția operațională pentru partea de registru de casă din localizarea românească, oferind casierilor și contabililor un instrument controlat pentru operarea numerarului și tipărirea registrului. Modulul nu acoperă importul extraselor bancare MT940 și nici reconcilierea bancară automată; acestea rămân module complementare separate.\nModel nou de registru de casă, organizat pe zi și pe jurnal de casă (un registru unic per combinație).\nCalcul automat de sold inițial și sold final din mișcările contabile postate pe contul de casă.\nAcces rapid la încasare, plată și operațiune de casă direct din formularul registrului.\nWizard de operațiune casă (Cash In / Cash Out) care generează și postează automat nota contabilă cu contul de casă și contul corespondent.\nGenerare automată a registrului de casă la postarea plăților pe jurnalul de tip numerar.\nAcțiune „Generate Missing Cash Register\" pentru crearea registrelor lipsă pentru toate zilele cu mișcări.\nRaport PDF tipărit pentru registrul de casă (date companie, CIF/NRC, sold inițial, linii pe partener, total încasări/plăți, sold final).\nDeschiderea directă a registrului de casă din jurnalul cash pentru companiile din România.\nCron pregătit pentru generarea registrelor lipsă, livrat inactiv."
+  },
+  {
     "path": "l10n_ro_cbam/index.md",
     "module": "l10n_ro_cbam",
     "version": "19.0.1.6.0",
@@ -5948,6 +6051,27 @@
     "text": "Romania - Tooling capturi fișe consultant\nl10n_ro_doc_screenshots"
   },
   {
+    "path": "l10n_ro_edi_ubl_sale_store/index.md",
+    "module": "l10n_ro_edi_ubl_sale_store",
+    "version": "19.0.1.0.6",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_edi_ubl_sale_store",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_edi_ubl_sale_store",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Deltatech Sale from Store UBL",
+    "summary": "Acest modul completează localizarea românească pentru e-Factura prin tratarea corectă a vânzărilor efectuate prin casa de marcat. Atunci când pentru o vânzare a fost deja emis un bon fiscal, modulul setează automat tipul de e-factură la codul `751`, astfel încât documentul electronic transmis să reflecte faptul că livrarea a fost însoțită de bon fiscal. Scopul principal este conformitatea fiscală corectă a facturilor emise pe baza vânzărilor din magazin.",
+    "features": [
+      "Setează tipul de e-factură ca fiind `751` atunci când pentru vânzare a fost tipărit un bon fiscal."
+    ],
+    "dependencies": [
+      "l10n_ro_edi"
+    ],
+    "connections": [
+      "l10n_ro_edi",
+      "deltatech_sale_store"
+    ],
+    "text": "Deltatech Sale from Store UBL\nl10n_ro_edi_ubl_sale_store\nAcest modul completează localizarea românească pentru e-Factura prin tratarea corectă a vânzărilor efectuate prin casa de marcat. Atunci când pentru o vânzare a fost deja emis un bon fiscal, modulul setează automat tipul de e-factură la codul `751`, astfel încât documentul electronic transmis să reflecte faptul că livrarea a fost însoțită de bon fiscal. Scopul principal este conformitatea fiscală corectă a facturilor emise pe baza vânzărilor din magazin.\nSetează tipul de e-factură ca fiind `751` atunci când pentru vânzare a fost tipărit un bon fiscal."
+  },
+  {
     "path": "l10n_ro_efactura_b2c/index.md",
     "module": "l10n_ro_efactura_b2c",
     "version": "19.0.1.0.0",
@@ -5976,6 +6100,51 @@
     "text": "Romania - e-Factura Deduplicare SPV\nl10n_ro_efactura_dedup"
   },
   {
+    "path": "l10n_ro_efactura_enhancement/index.md",
+    "module": "l10n_ro_efactura_enhancement",
+    "version": "19.0.0.3.7",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_efactura_enhancement",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_efactura_enhancement",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "eFactura Enhancement",
+    "summary": "Modulul `l10n_ro_efactura_enhancement` extinde funcționalitatea standard de e-Facturare (e-Factura) din Odoo pentru piața din România, adăugând îmbunătățiri și automatizări care optimizează experiența utilizatorului și acoperă nevoi specifice de conformitate fiscală. Acesta validează datele obligatorii ale partenerilor români, automatizează trimiterea și urmărirea facturilor în SPV și asigură că fișierele XML generate respectă constrângerile standardului UBL, reducând astfel erorile și efortul manual.",
+    "features": [
+      "Completare automată cu 13 de zero în câmpul de TVA pentru persoanele fizice, la generarea e-facturii.",
+      "Validare îmbunătățită a adresei: verifică automat că partenerii români au definite țara, județul, orașul și strada înainte de postarea facturii.",
+      "Sugestie format EDI: sugerează automat formatul `ciusro` pentru partenerii români.",
+      "Operațiuni automate pentru e-Factură:",
+      "Sarcină cron pentru trimiterea automată a facturilor postate în SPV.",
+      "Sarcină cron pentru preluarea statusului din SPV pentru facturile trimise.",
+      "Acțiune server „Trimite in SPV\": permite trimiterea directă în SPV a facturilor selectate din lista de facturi, fără a declanșa trimiterea emailului.",
+      "Opțiune de configurare: o setare în pagina de configurare Contabilitate controlează dacă jobul cron automat de SPV suprimă trimiterea de email (trimite doar în SPV).",
+      "Trunchiere și sanitizare a datelor:",
+      "Trunchiază denumirile produselor la 100 de caractere și descrierile la 200 de caractere, pentru conformitate cu standardul UBL.",
+      "Trunchiază notele la 300 de caractere.",
+      "Trunchiază referințele comenzii și avizul de expediere la 200 de caractere.",
+      "Integrare POS: schimbă automat codul tipului de document la 751 (Factură specializată) pentru facturile provenite din Punctul de Vânzare.",
+      "Parametri de sistem configurabili:",
+      "`efactura.embed_pdf`: controlează includerea PDF-ului încorporat în e-factură (implicit: True).",
+      "`efactura.use_line_description`: dacă e activat, folosește descrierea liniei de factură în locul numelui/descrierii produsului (implicit: False).",
+      "`efactura.replace_unit_uom`: permite specificarea unui cod de unitate de înlocuire pentru unitatea standard „C62\" (implicit: False).",
+      "`efactura.get_all_banks`: dacă e activat, include toate băncile marcate cu `l10n_ro_print_report` care corespund monedei facturii (implicit: False).",
+      "Urmărirea lungimii liniilor: adaugă câmpuri calculate pe liniile de factură pentru a urmări lungimea descrierilor și a denumirilor de produse, ajutând utilizatorii să identifice posibilele probleme de trunchiere."
+    ],
+    "dependencies": [
+      "l10n_ro_edi",
+      "l10n_ro_config",
+      "spreadsheet_dashboard",
+      "l10n_ro_message_spv",
+      "account_edi_ubl_cii",
+      "spreadsheet_dashboard_account"
+    ],
+    "connections": [
+      "l10n_ro_edi",
+      "l10n_ro_message_spv",
+      "l10n_ro_config"
+    ],
+    "text": "eFactura Enhancement\nl10n_ro_efactura_enhancement\nModulul `l10n_ro_efactura_enhancement` extinde funcționalitatea standard de e-Facturare (e-Factura) din Odoo pentru piața din România, adăugând îmbunătățiri și automatizări care optimizează experiența utilizatorului și acoperă nevoi specifice de conformitate fiscală. Acesta validează datele obligatorii ale partenerilor români, automatizează trimiterea și urmărirea facturilor în SPV și asigură că fișierele XML generate respectă constrângerile standardului UBL, reducând astfel erorile și efortul manual.\nCompletare automată cu 13 de zero în câmpul de TVA pentru persoanele fizice, la generarea e-facturii.\nValidare îmbunătățită a adresei: verifică automat că partenerii români au definite țara, județul, orașul și strada înainte de postarea facturii.\nSugestie format EDI: sugerează automat formatul `ciusro` pentru partenerii români.\nOperațiuni automate pentru e-Factură:\nSarcină cron pentru trimiterea automată a facturilor postate în SPV.\nSarcină cron pentru preluarea statusului din SPV pentru facturile trimise.\nAcțiune server „Trimite in SPV\": permite trimiterea directă în SPV a facturilor selectate din lista de facturi, fără a declanșa trimiterea emailului.\nOpțiune de configurare: o setare în pagina de configurare Contabilitate controlează dacă jobul cron automat de SPV suprimă trimiterea de email (trimite doar în SPV).\nTrunchiere și sanitizare a datelor:\nTrunchiază denumirile produselor la 100 de caractere și descrierile la 200 de caractere, pentru conformitate cu standardul UBL.\nTrunchiază notele la 300 de caractere.\nTrunchiază referințele comenzii și avizul de expediere la 200 de caractere.\nIntegrare POS: schimbă automat codul tipului de document la 751 (Factură specializată) pentru facturile provenite din Punctul de Vânzare.\nParametri de sistem configurabili:\n`efactura.embed_pdf`: controlează includerea PDF-ului încorporat în e-factură (implicit: True).\n`efactura.use_line_description`: dacă e activat, folosește descrierea liniei de factură în locul numelui/descrierii produsului (implicit: False).\n`efactura.replace_unit_uom`: permite specificarea unui cod de unitate de înlocuire pentru unitatea standard „C62\" (implicit: False).\n`efactura.get_all_banks`: dacă e activat, include toate băncile marcate cu `l10n_ro_print_report` care corespund monedei facturii (implicit: False).\nUrmărirea lungimii liniilor: adaugă câmpuri calculate pe liniile de factură pentru a urmări lungimea descrierilor și a denumirilor de produse, ajutând utilizatorii să identifice posibilele probleme de trunchiere."
+  },
+  {
     "path": "l10n_ro_environmental_tax/index.md",
     "module": "l10n_ro_environmental_tax",
     "version": "19.0.1.4.0",
@@ -6002,6 +6171,32 @@
     "dependencies": [],
     "connections": [],
     "text": "Romania - e-Transport Block\nl10n_ro_etransport_block"
+  },
+  {
+    "path": "l10n_ro_etransport_enhancement/index.md",
+    "module": "l10n_ro_etransport_enhancement",
+    "version": "19.0.0.1.1",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_etransport_enhancement",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_etransport_enhancement",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "eTransport Enhancement",
+    "summary": "Modulul `l10n_ro_etransport_enhancement` extinde funcționalitatea standard de e-Transport din Odoo pentru piața românească, adăugând îmbunătățiri și opțiuni suplimentare. Scopul său este să facă integrarea cu sistemul e-Transport (SPV) mai flexibilă și mai ușor de folosit, simplificând conformitatea fiscală pentru transporturile de mărfuri. Modulul reduce efortul administrativ al departamentelor de logistică și contabilitate, permițând trimiterea documentelor de transport către autorități direct din operațiunile de stoc.",
+    "features": [
+      "Funcționalitate îmbunătățită pentru trimiterea documentelor e-Transport direct din livrările de stoc (stock pickings).",
+      "Suport pentru diferite tipuri de trimitere prin parametri de context.",
+      "Gestionare îmbunătățită a urmăririi straturilor de valorizare a stocului (stock valuation layer) pentru documentele e-Transport.",
+      "Integrare optimizată cu sistemul românesc de e-Transport (SPV).",
+      "Opțiuni suplimentare disponibile în meniul de acțiuni al livrării, accesibile automat după instalare."
+    ],
+    "dependencies": [
+      "l10n_ro_edi",
+      "l10n_ro_edi_stock"
+    ],
+    "connections": [
+      "l10n_ro_edi",
+      "l10n_ro_edi_stock"
+    ],
+    "text": "eTransport Enhancement\nl10n_ro_etransport_enhancement\nModulul `l10n_ro_etransport_enhancement` extinde funcționalitatea standard de e-Transport din Odoo pentru piața românească, adăugând îmbunătățiri și opțiuni suplimentare. Scopul său este să facă integrarea cu sistemul e-Transport (SPV) mai flexibilă și mai ușor de folosit, simplificând conformitatea fiscală pentru transporturile de mărfuri. Modulul reduce efortul administrativ al departamentelor de logistică și contabilitate, permițând trimiterea documentelor de transport către autorități direct din operațiunile de stoc.\nFuncționalitate îmbunătățită pentru trimiterea documentelor e-Transport direct din livrările de stoc (stock pickings).\nSuport pentru diferite tipuri de trimitere prin parametri de context.\nGestionare îmbunătățită a urmăririi straturilor de valorizare a stocului (stock valuation layer) pentru documentele e-Transport.\nIntegrare optimizată cu sistemul românesc de e-Transport (SPV).\nOpțiuni suplimentare disponibile în meniul de acțiuni al livrării, accesibile automat după instalare."
   },
   {
     "path": "l10n_ro_excise/index.md",
@@ -6086,6 +6281,27 @@
     "dependencies": [],
     "connections": [],
     "text": "Romania - Mijloace Fixe Complete (FR-19)\nl10n_ro_fixed_assets"
+  },
+  {
+    "path": "l10n_ro_footer_anpc/index.md",
+    "module": "l10n_ro_footer_anpc",
+    "version": "19.0.0.0.1",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_footer_anpc",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_footer_anpc",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "România - Footer ANPC",
+    "summary": "Acest modul adaugă în footer-ul site-ului web pozele și link-urile ANPC (Autoritatea Națională pentru Protecția Consumatorilor). Scopul său este să ajute magazinele online din România să afișeze elementele obligatorii de protecția consumatorului — pictogramele ANPC pentru Soluționarea Alternativă a Litigiilor (SAL) și Soluționarea Online a Litigiilor (SOL) — direct în subsolul paginilor, conform cerințelor legale.",
+    "features": [
+      "Afișează pozele (logo-urile) ANPC în footer-ul site-ului web.",
+      "Adaugă link-urile ANPC către platformele de soluționare a litigiilor în subsolul paginilor."
+    ],
+    "dependencies": [
+      "website"
+    ],
+    "connections": [
+      "website"
+    ],
+    "text": "România - Footer ANPC\nl10n_ro_footer_anpc\nAcest modul adaugă în footer-ul site-ului web pozele și link-urile ANPC (Autoritatea Națională pentru Protecția Consumatorilor). Scopul său este să ajute magazinele online din România să afișeze elementele obligatorii de protecția consumatorului — pictogramele ANPC pentru Soluționarea Alternativă a Litigiilor (SAL) și Soluționarea Online a Litigiilor (SOL) — direct în subsolul paginilor, conform cerințelor legale.\nAfișează pozele (logo-urile) ANPC în footer-ul site-ului web.\nAdaugă link-urile ANPC către platformele de soluționare a litigiilor în subsolul paginilor."
   },
   {
     "path": "l10n_ro_force_reconcile/index.md",
@@ -6188,6 +6404,52 @@
     "text": "Protecție resetare facturi furnizor și DVI\nl10n_ro_invoice_dvi_protect\nModulul protejează integritatea contabilă a stocurilor evaluate FIFO, blocând resetarea la ciornă a facturilor furnizor și anularea documentelor DVI (costuri de aterizare) atunci când stocul recepționat a fost deja parțial consumat. În Odoo, costul de achiziție FIFO se propagă către ieșirile de stoc; dacă factura de intrare ar fi resetată după consum, costul aplicat ieșirilor ar deveni orfan, generând inconsistențe. Modulul previne acest scenariu.\nBlochează butonul Resetare la ciornă pe facturile furnizor (`in_invoice`, `in_refund`) dacă vreo mișcare de stoc asociată comenzii de achiziție are `remaining_qty < quantity` (stoc deja parțial consumat).\nMesaj de eroare explicit care indică produsul și cantitățile implicate.\nBlochează butonul Anulare pe documentele DVI / costuri de aterizare (`stock.landed.cost`) când factura furnizor asociată (`vendor_bill_id`) nu trece verificarea de consum.\nProtecție automată, fără configurare, integrată în fluxul standard de achiziție și recepție."
   },
   {
+    "path": "l10n_ro_invoice_report/index.md",
+    "module": "l10n_ro_invoice_report",
+    "version": "19.0.3.4.16",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_invoice_report",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_invoice_report",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Romania - Invoice Report Terrabit",
+    "summary": "Acest modul extinde raportul de factură standard din Odoo pentru a se conforma cerințelor specifice din România și pentru a oferi opțiuni suplimentare de personalizare. Adaugă pe documentele tipărite detalii la nivel de linie (preț fără TVA, valoare TVA, numerotare), informații legale și logistice (delegat, mijloc de transport, mențiunea privind scutirea de semnătură și ștampilă) și gestionează documentele de plată corelate (chitanțe, dispoziții de plată/încasare), oferind în același timp numeroase opțiuni de configurare din setările de facturare.",
+    "features": [
+      "Detalii linii factură:",
+      "Afișarea prețului unitar fără TVA.",
+      "Afișarea valorii TVA pe fiecare linie.",
+      "Afișarea totalului cu taxe pe fiecare linie (configurabil).",
+      "Numerotarea automată a liniilor de factură (Ord).",
+      "Opțiune de a elimina numele produsului de pe linie dacă există o descriere specifică.",
+      "Afișarea prețului fără discount.",
+      "Informații suplimentare pe document:",
+      "Câmpuri dedicate pentru Delegat și Mijloc de transport.",
+      "Afișarea textului legal privind scutirea de semnătură și ștampilă (conform Codului Fiscal).",
+      "Posibilitatea de a adăuga un text adițional de la partener pe factură (`info_for_invoice`).",
+      "Vizibilitatea configurabilă pentru email, telefon și marcaje în adresa facturii.",
+      "Afișarea informațiilor despre livrări (Pickings) și AWB-uri direct pe factură.",
+      "Inserarea logoului Coface la finalul facturii (activabil din setări).",
+      "Gestiune documente corelate:",
+      "Tipărirea automată a chitanțelor, dispozițiilor de plată sau încasare direct din factură pentru plățile în numerar.",
+      "Gestionarea corectă a semnelor pentru stornări (Credit Notes).",
+      "Rapoarte dedicate:",
+      "Raport de factură în limba companiei, indiferent de limba partenerului.",
+      "Configurare flexibilă:",
+      "Numeroase opțiuni în setările de facturare pentru a activa sau dezactiva elementele menționate mai sus (Sarcini delegat, comentarii plată, index linii, etc.)."
+    ],
+    "dependencies": [
+      "base",
+      "account",
+      "l10n_ro_config",
+      "purchase",
+      "sale",
+      "stock_delivery"
+    ],
+    "connections": [
+      "l10n_ro_config",
+      "stock_delivery"
+    ],
+    "text": "Romania - Invoice Report Terrabit\nl10n_ro_invoice_report\nAcest modul extinde raportul de factură standard din Odoo pentru a se conforma cerințelor specifice din România și pentru a oferi opțiuni suplimentare de personalizare. Adaugă pe documentele tipărite detalii la nivel de linie (preț fără TVA, valoare TVA, numerotare), informații legale și logistice (delegat, mijloc de transport, mențiunea privind scutirea de semnătură și ștampilă) și gestionează documentele de plată corelate (chitanțe, dispoziții de plată/încasare), oferind în același timp numeroase opțiuni de configurare din setările de facturare.\nDetalii linii factură:\nAfișarea prețului unitar fără TVA.\nAfișarea valorii TVA pe fiecare linie.\nAfișarea totalului cu taxe pe fiecare linie (configurabil).\nNumerotarea automată a liniilor de factură (Ord).\nOpțiune de a elimina numele produsului de pe linie dacă există o descriere specifică.\nAfișarea prețului fără discount.\nInformații suplimentare pe document:\nCâmpuri dedicate pentru Delegat și Mijloc de transport.\nAfișarea textului legal privind scutirea de semnătură și ștampilă (conform Codului Fiscal).\nPosibilitatea de a adăuga un text adițional de la partener pe factură (`info_for_invoice`).\nVizibilitatea configurabilă pentru email, telefon și marcaje în adresa facturii.\nAfișarea informațiilor despre livrări (Pickings) și AWB-uri direct pe factură.\nInserarea logoului Coface la finalul facturii (activabil din setări).\nGestiune documente corelate:\nTipărirea automată a chitanțelor, dispozițiilor de plată sau încasare direct din factură pentru plățile în numerar.\nGestionarea corectă a semnelor pentru stornări (Credit Notes).\nRapoarte dedicate:\nRaport de factură în limba companiei, indiferent de limba partenerului.\nConfigurare flexibilă:\nNumeroase opțiuni în setările de facturare pentru a activa sau dezactiva elementele menționate mai sus (Sarcini delegat, comentarii plată, index linii, etc.)."
+  },
+  {
     "path": "l10n_ro_journal_reports/index.md",
     "module": "l10n_ro_journal_reports",
     "version": "19.0.2.0.0",
@@ -6234,6 +6496,26 @@
     "text": "Jurnale TVA Vânzări/Cumpărări\nl10n_ro_journal_tva\nModulul generează Jurnalul de TVA Vânzări și Jurnalul de TVA Cumpărări conform OMFP 1802/2014. Pornind de la facturile postate (inclusiv stornouri), construiește jurnale lunare cu detaliere pe cote și categorii de TVA, totaluri pe header și posibilitate de confirmare și arhivare, plus export XLSX într-un format tabelar complet.\nSelecție tip jurnal (Vânzări / Cumpărări) și perioadă.\nPopulare automată din facturile postate, inclusiv stornouri.\nDetaliu pe cote și categorii TVA: 21%, 11%, taxare inversă, intracomunitare, scutit, neimpozabil.\nTotaluri sumarizate la nivel de header.\nConfirmare și arhivare lunară a jurnalului.\nExport XLSX cu format tabelar complet (xlsxwriter)."
   },
   {
+    "path": "l10n_ro_lang/index.md",
+    "module": "l10n_ro_lang",
+    "version": "19.0.0.0.2",
+    "github": "`https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_lang`",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_lang",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Romania - Set Lang to Romanian",
+    "summary": "Acest modul ajustează automat limba site-ului web în funcție de locația vizitatorului. Mai exact, dacă adresa IP a vizitatorului provine din România, limba este setată pe română. Scopul său este de a oferi o experiență localizată automată pentru vizitatorii din România, fără ca aceștia să fie nevoiți să schimbe manual limba.",
+    "features": [
+      "Setează limba pe română dacă adresa IP a vizitatorului provine din România."
+    ],
+    "dependencies": [
+      "website"
+    ],
+    "connections": [
+      "website"
+    ],
+    "text": "Romania - Set Lang to Romanian\nl10n_ro_lang\nAcest modul ajustează automat limba site-ului web în funcție de locația vizitatorului. Mai exact, dacă adresa IP a vizitatorului provine din România, limba este setată pe română. Scopul său este de a oferi o experiență localizată automată pentru vizitatorii din România, fără ca aceștia să fie nevoiți să schimbe manual limba.\nSetează limba pe română dacă adresa IP a vizitatorului provine din România."
+  },
+  {
     "path": "l10n_ro_leasing/index.md",
     "module": "l10n_ro_leasing",
     "version": "19.0.1.1.0",
@@ -6256,6 +6538,36 @@
     ],
     "connections": [],
     "text": "Leasing Financiar și Operațional (167/21x)\nl10n_ro_leasing\nModulul gestionează contractele de leasing financiar și operațional conform OMFP 1802/2014. Pentru fiecare contract generează un grafic de rambursare cu defalcare pe capital, dobândă și TVA și produce automat notele contabile aferente activării și ratelor lunare. Include un cron opțional pentru postarea automată a ratelor scadente și o mașină de stări pentru ciclul de viață al contractului.\nLeasing financiar (art. 360 OMFP 1802/2014): activare contract Dr 21x = Cr 167, cu contul de imobilizări 21x selectabil per contract (2131 echipamente, 212 construcții, 2133 mijloace de transport etc.).\nNotă lunară per rată pentru leasing financiar: Dr 167 + Dr 666 + Dr 4426 = Cr 401.\nLeasing operațional: notă lunară per rată Dr 612 + Dr 4426 = Cr 401.\nGenerare automată a graficului de rambursare prin formula anuității constante (dobândă fixă), cu defalcare capital / dobândă / TVA per rată.\nEditare manuală a graficului (import grafic din contract).\nPostare individuală sau în batch a ratelor scadente, cu cron opțional pentru automatizare.\nMașină de stări contract: Ciornă → Activ → Finalizat (sau Anulat)."
+  },
+  {
+    "path": "l10n_ro_message_spv_purchase/index.md",
+    "module": "l10n_ro_message_spv_purchase",
+    "version": "19.0.0.0.1",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_message_spv_purchase",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_message_spv_purchase",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Purchase Message SPV",
+    "summary": "Acest modul extinde mecanismul de mesaje SPV (Spațiul Privat Virtual ANAF) din România pentru a sprijini fluxul de aprovizionare (procure-to-pay). El leagă mesajele SPV primite de comenzile de achiziție (Purchase Orders) și menține sincronizate jurnalul de discuții (chatter) și atașamentele comenzii. Practic, atunci când o factură electronică sosește prin SPV, modulul ajută utilizatorul să identifice rapid comanda de achiziție corespunzătoare sau să creeze una nouă, atașând automat fișierul XML al facturii direct pe comandă.",
+    "features": [
+      "Câmpuri noi pe mesajul SPV:",
+      "`Purchase Reference` (`purchase_ref`) – extras automat din XML, de la `OrderReference/ID`, atunci când este disponibil.",
+      "`Purchase Order` (`purchase_order_id`) – comanda de achiziție legată, dacă există.",
+      "Două acțiuni dedicate pe formularul SPV:",
+      "Find Purchase (Caută Comandă): caută comenzi de achiziție după referință (folosind `purchase_ref` sau, ca alternativă, `ref`) în câmpurile `partner_ref`, `origin` sau `name`, restrânse după partener/companie când acestea sunt disponibile.",
+      "Create Purchase (Creează Comandă): execută aceeași căutare; dacă nu găsește nimic și un partener este setat, creează o comandă de achiziție în stare ciornă și o leagă.",
+      "Când o comandă este găsită sau creată, se postează o notă în chatter-ul comenzii cu un mesaj contextual și cu XML-ul SPV atașat.",
+      "XML-ul SPV nu este doar referențiat; se creează o copie a atașamentului XML pe comandă (`ir.attachment` cu `res_model='purchase.order'`), evitând legarea încrucișată la fișierul original al mesajului.",
+      "Prevenirea duplicatelor pentru atașamentele de pe comandă, pe baza checksum-ului (cu alternativă la nume și mimetype)."
+    ],
+    "dependencies": [
+      "l10n_ro_message_spv",
+      "purchase"
+    ],
+    "connections": [
+      "l10n_ro_message_spv",
+      "purchase"
+    ],
+    "text": "Purchase Message SPV\nl10n_ro_message_spv_purchase\nAcest modul extinde mecanismul de mesaje SPV (Spațiul Privat Virtual ANAF) din România pentru a sprijini fluxul de aprovizionare (procure-to-pay). El leagă mesajele SPV primite de comenzile de achiziție (Purchase Orders) și menține sincronizate jurnalul de discuții (chatter) și atașamentele comenzii. Practic, atunci când o factură electronică sosește prin SPV, modulul ajută utilizatorul să identifice rapid comanda de achiziție corespunzătoare sau să creeze una nouă, atașând automat fișierul XML al facturii direct pe comandă.\nCâmpuri noi pe mesajul SPV:\n`Purchase Reference` (`purchase_ref`) – extras automat din XML, de la `OrderReference/ID`, atunci când este disponibil.\n`Purchase Order` (`purchase_order_id`) – comanda de achiziție legată, dacă există.\nDouă acțiuni dedicate pe formularul SPV:\nFind Purchase (Caută Comandă): caută comenzi de achiziție după referință (folosind `purchase_ref` sau, ca alternativă, `ref`) în câmpurile `partner_ref`, `origin` sau `name`, restrânse după partener/companie când acestea sunt disponibile.\nCreate Purchase (Creează Comandă): execută aceeași căutare; dacă nu găsește nimic și un partener este setat, creează o comandă de achiziție în stare ciornă și o leagă.\nCând o comandă este găsită sau creată, se postează o notă în chatter-ul comenzii cu un mesaj contextual și cu XML-ul SPV atașat.\nXML-ul SPV nu este doar referențiat; se creează o copie a atașamentului XML pe comandă (`ir.attachment` cu `res_model='purchase.order'`), evitând legarea încrucișată la fișierul original al mesajului.\nPrevenirea duplicatelor pentru atașamentele de pe comandă, pe baza checksum-ului (cu alternativă la nume și mimetype)."
   },
   {
     "path": "l10n_ro_micro_tax/index.md",
@@ -6330,6 +6642,55 @@
       "l10n_eu_oss_reports"
     ],
     "text": "Prag OSS €10.000 (FR-22)\nl10n_ro_oss_threshold\nModulul monitorizează pragul anual de 10.000 EUR pentru vânzările B2C către alte state membre UE, relevant pentru regimul OSS (One Stop Shop). Urmărește cumulat valoarea vânzărilor intracomunitare către consumatori și avertizează compania la apropierea sau depășirea pragului, peste care taxarea trebuie să se facă cu cota TVA din statul de consum. Include un cron de verificare lunară și un wizard de control la cerere.\nMonitorizarea cumulată a vânzărilor B2C către UE pentru raportare la pragul anual de 10.000 EUR.\nAvertismente pe facturi și la nivel de companie privind apropierea sau depășirea pragului OSS.\nCron lunar de verificare automată a pragului.\nWizard de verificare la cerere a situației curente față de prag.\nConfigurare a parametrilor OSS în setările companiei și în setările generale de contabilitate."
+  },
+  {
+    "path": "l10n_ro_partner_create_by_vat_button/index.md",
+    "module": "l10n_ro_partner_create_by_vat_button",
+    "version": "19.0.1.1.7",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_partner_create_by_vat_button",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_partner_create_by_vat_button",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Romania - Partner Create by VAT Button",
+    "summary": "Acest modul adaugă un buton în ecranul partenerului care permite recitirea (reîncărcarea) datelor de la ANAF pe baza codului de TVA. Astfel, utilizatorii pot actualiza manual informațiile unui partener (de exemplu denumire, adresă, status TVA) preluate din registrul ANAF, fără a fi nevoiți să recreeze fișa partenerului.",
+    "features": [
+      "Buton în formularul partenerului pentru recitirea datelor de la ANAF pe baza codului de TVA."
+    ],
+    "dependencies": [
+      "l10n_ro_config",
+      "l10n_ro_partner_create_by_vat"
+    ],
+    "connections": [
+      "l10n_ro_partner_create_by_vat"
+    ],
+    "text": "Romania - Partner Create by VAT Button\nl10n_ro_partner_create_by_vat_button\nAcest modul adaugă un buton în ecranul partenerului care permite recitirea (reîncărcarea) datelor de la ANAF pe baza codului de TVA. Astfel, utilizatorii pot actualiza manual informațiile unui partener (de exemplu denumire, adresă, status TVA) preluate din registrul ANAF, fără a fi nevoiți să recreeze fișa partenerului.\nButon în formularul partenerului pentru recitirea datelor de la ANAF pe baza codului de TVA."
+  },
+  {
+    "path": "l10n_ro_partner_create_by_vat_openapi/index.md",
+    "module": "l10n_ro_partner_create_by_vat_openapi",
+    "version": "19.0.1.0.2",
+    "github": "`https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_partner_create_by_vat_openapi`",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_partner_create_by_vat_openapi",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Creare Partener după CUI din OpenAPI",
+    "summary": "Acest modul adaugă în formularul de contact acțiunea „Get Partner Data OpenAPI\", care permite completarea automată a datelor unui partener pe baza codului de identificare fiscală (CUI). Utilizatorul introduce numărul de TVA în câmpul de nume, apasă butonul, iar modulul pornește o căutare folosind cheia OpenAPI și completează informațiile lipsă în câmpurile goale ale contactului. Astfel, crearea partenerilor români devine mai rapidă și mai puțin predispusă la erori de introducere manuală.",
+    "features": [
+      "Adaugă acțiunea „Get Partner Data OpenAPI\" în formularul de contact.",
+      "Permite introducerea numărului de TVA (CUI) direct în câmpul de nume.",
+      "Pornește o căutare folosind cheia OpenAPI proprie la apăsarea butonului.",
+      "Completează automat câmpurile goale ale contactului cu informațiile preluate."
+    ],
+    "dependencies": [
+      "base_vat",
+      "l10n_ro_config",
+      "l10n_ro_partner_create_by_vat",
+      "l10n_ro_partner_create_by_vat_button"
+    ],
+    "connections": [
+      "l10n_ro_partner_create_by_vat",
+      "l10n_ro_partner_create_by_vat_button",
+      "l10n_ro_config"
+    ],
+    "text": "Creare Partener după CUI din OpenAPI\nl10n_ro_partner_create_by_vat_openapi\nAcest modul adaugă în formularul de contact acțiunea „Get Partner Data OpenAPI\", care permite completarea automată a datelor unui partener pe baza codului de identificare fiscală (CUI). Utilizatorul introduce numărul de TVA în câmpul de nume, apasă butonul, iar modulul pornește o căutare folosind cheia OpenAPI și completează informațiile lipsă în câmpurile goale ale contactului. Astfel, crearea partenerilor români devine mai rapidă și mai puțin predispusă la erori de introducere manuală.\nAdaugă acțiunea „Get Partner Data OpenAPI\" în formularul de contact.\nPermite introducerea numărului de TVA (CUI) direct în câmpul de nume.\nPornește o căutare folosind cheia OpenAPI proprie la apăsarea butonului.\nCompletează automat câmpurile goale ale contactului cu informațiile preluate."
   },
   {
     "path": "l10n_ro_partner_ledger_currency/index.md",
@@ -6632,6 +6993,28 @@
     "text": "Pre-Validator SAF-T D406 România (FR-05)\nl10n_ro_saft_validator"
   },
   {
+    "path": "l10n_ro_sale_order_report/index.md",
+    "module": "l10n_ro_sale_order_report",
+    "version": "19.0.1.0.4",
+    "github": "`https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_sale_order_report`",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_sale_order_report",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Terrabit Sale Order Report",
+    "summary": "Acest modul permite tipărirea de facturi proforme direct din oferta (cotația) de vânzare. Sunt disponibile două tipuri de proformă: o proformă inițială, al cărei cuantum este calculat din liniile termenului de plată (prima linie de tip „procent\" sau „fix\"), și o proformă finală, care reflectă suma rămasă de încasat. Modulul este util pentru companiile care lucrează cu avansuri și plăți eșalonate, oferind clienților documente de plată clare înainte de emiterea facturii fiscale.",
+    "features": [
+      "Tipărirea unei facturi proforme inițiale din cotație, cu suma calculată din prima linie a termenului de plată (de tip „procent\" sau „fix\").",
+      "Tipărirea unei facturi proforme finale, cu suma rămasă de încasat (necesită procesarea prealabilă a unei plăți prin modulul Deltatech Sale Payment)."
+    ],
+    "dependencies": [
+      "sale",
+      "l10n_ro_config"
+    ],
+    "connections": [
+      "deltatech_sale_payment"
+    ],
+    "text": "Terrabit Sale Order Report\nl10n_ro_sale_order_report\nAcest modul permite tipărirea de facturi proforme direct din oferta (cotația) de vânzare. Sunt disponibile două tipuri de proformă: o proformă inițială, al cărei cuantum este calculat din liniile termenului de plată (prima linie de tip „procent\" sau „fix\"), și o proformă finală, care reflectă suma rămasă de încasat. Modulul este util pentru companiile care lucrează cu avansuri și plăți eșalonate, oferind clienților documente de plată clare înainte de emiterea facturii fiscale.\nTipărirea unei facturi proforme inițiale din cotație, cu suma calculată din prima linie a termenului de plată (de tip „procent\" sau „fix\").\nTipărirea unei facturi proforme finale, cu suma rămasă de încasat (necesită procesarea prealabilă a unei plăți prin modulul Deltatech Sale Payment)."
+  },
+  {
     "path": "l10n_ro_sgr/index.md",
     "module": "l10n_ro_sgr",
     "version": "19.0.1.1.0",
@@ -6658,6 +7041,58 @@
     "dependencies": [],
     "connections": [],
     "text": "Matrice Segregare Atribuții (SoD) România\nl10n_ro_sod_matrix"
+  },
+  {
+    "path": "l10n_ro_stock_account_enhancement/index.md",
+    "module": "l10n_ro_stock_account_enhancement",
+    "version": "19.0.0.0.0",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_account_enhancement",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_account_enhancement",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Romania - Stock Accounting Enhancement",
+    "summary": "Acest modul aduce verificări suplimentare pentru evidența contabilă a stocurilor în contextul localizării românești. Pe de o parte, se asigură că mișcările de stoc nu se înregistrează cu un preț de cost egal cu zero, evitând astfel valorizări incorecte. Pe de altă parte, introduce o restricție la postarea facturilor de vânzare sau de achiziție care conțin produse stocabile, dar nu sunt legate de o comandă de vânzare (SO) sau de achiziție (PO). Restricția poate fi activată sau dezactivată din setările de configurare, oferind flexibilitate în funcție de practicile fiecărei companii.",
+    "features": [
+      "Verificare ca prețul de cost să fie diferit de zero la mișcările de stoc.",
+      "Restricție la postarea facturilor (vânzare/achiziție) care conțin produse stocabile fără referință la o comandă de vânzare (SO) sau de achiziție (PO).",
+      "Posibilitatea de a activa/dezactiva această restricție din setările de configurare (Accounting -> România)."
+    ],
+    "dependencies": [
+      "l10n_ro_stock_account",
+      "l10n_ro_config"
+    ],
+    "connections": [
+      "l10n_ro_stock_account",
+      "l10n_ro_config"
+    ],
+    "text": "Romania - Stock Accounting Enhancement\nl10n_ro_stock_account_enhancement\nAcest modul aduce verificări suplimentare pentru evidența contabilă a stocurilor în contextul localizării românești. Pe de o parte, se asigură că mișcările de stoc nu se înregistrează cu un preț de cost egal cu zero, evitând astfel valorizări incorecte. Pe de altă parte, introduce o restricție la postarea facturilor de vânzare sau de achiziție care conțin produse stocabile, dar nu sunt legate de o comandă de vânzare (SO) sau de achiziție (PO). Restricția poate fi activată sau dezactivată din setările de configurare, oferind flexibilitate în funcție de practicile fiecărei companii.\nVerificare ca prețul de cost să fie diferit de zero la mișcările de stoc.\nRestricție la postarea facturilor (vânzare/achiziție) care conțin produse stocabile fără referință la o comandă de vânzare (SO) sau de achiziție (PO).\nPosibilitatea de a activa/dezactiva această restricție din setările de configurare (Accounting -> România)."
+  },
+  {
+    "path": "l10n_ro_stock_age_report/index.md",
+    "module": "l10n_ro_stock_age_report",
+    "version": "19.0.0.0.2",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_age_report",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_age_report",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Romania - Stock Aged Report",
+    "summary": "Acest modul oferă un raport de vechime a stocului (Stock Aged Report) pentru localizarea românească. El ajută utilizatorii să urmărească vechimea stocurilor prin monitorizarea ultimelor date de intrare și de ieșire pentru fiecare lot de stoc (stock quant), astfel încât să se poată identifica marfa care stagnează în depozit și să se evalueze impactul ei contabil.",
+    "features": [
+      "Urmărește automat ultima dată de intrare și ultima dată de ieșire pentru fiecare lot de stoc (stock quant).",
+      "Oferă un wizard pentru generarea raportului de vechime pentru un anumit depozit și o anumită dată.",
+      "Intervale de îmbătrânire configurabile (de ex. 15, 30, 90, 180, 365 de zile).",
+      "Defalcă valoarea și cantitatea stocului pe intervale de timp (de ex. [1] 0-15 zile, [2] 15-30 zile etc.).",
+      "Include informații contabile, cum ar fi contul de evaluare a stocului pentru fiecare produs.",
+      "Oferă o vizualizare de tip pivot și o listă pentru analiza detaliată a stocului învechit.",
+      "Actualizează retroactiv loturile de stoc existente cu date istorice la momentul instalării."
+    ],
+    "dependencies": [
+      "l10n_ro_stock",
+      "l10n_ro_stock_account"
+    ],
+    "connections": [
+      "l10n_ro_stock",
+      "l10n_ro_stock_account"
+    ],
+    "text": "Romania - Stock Aged Report\nl10n_ro_stock_age_report\nAcest modul oferă un raport de vechime a stocului (Stock Aged Report) pentru localizarea românească. El ajută utilizatorii să urmărească vechimea stocurilor prin monitorizarea ultimelor date de intrare și de ieșire pentru fiecare lot de stoc (stock quant), astfel încât să se poată identifica marfa care stagnează în depozit și să se evalueze impactul ei contabil.\nUrmărește automat ultima dată de intrare și ultima dată de ieșire pentru fiecare lot de stoc (stock quant).\nOferă un wizard pentru generarea raportului de vechime pentru un anumit depozit și o anumită dată.\nIntervale de îmbătrânire configurabile (de ex. 15, 30, 90, 180, 365 de zile).\nDefalcă valoarea și cantitatea stocului pe intervale de timp (de ex. [1] 0-15 zile, [2] 15-30 zile etc.).\nInclude informații contabile, cum ar fi contul de evaluare a stocului pentru fiecare produs.\nOferă o vizualizare de tip pivot și o listă pentru analiza detaliată a stocului învechit.\nActualizează retroactiv loturile de stoc existente cu date istorice la momentul instalării."
   },
   {
     "path": "l10n_ro_stock_cmp_periodic/index.md",
@@ -6733,6 +7168,63 @@
     "text": "Coeficient K Diferențe Preț Stocuri România\nl10n_ro_stock_k_coefficient"
   },
   {
+    "path": "l10n_ro_stock_picking_report/index.md",
+    "module": "l10n_ro_stock_picking_report",
+    "version": "19.0.1.2.8",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_picking_report",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_picking_report",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Romania - Terrabit - Picking Reports",
+    "summary": "Modulul adaugă rapoarte specifice gestiunii de stoc din România pentru documentele de mișcare a mărfurilor: recepție (NIR), livrare (aviz de însoțire) și transfer intern (bon de consum). Pe lângă tipărirea acestor documente conforme cu practicile locale, modulul propagă referința din comanda de achiziție în NIR și în factură și oferă opțiuni de configurare pentru afișarea taxelor pe recepție și a conturilor bancare pe rapoarte. Valoarea de afaceri constă în obținerea, direct din Odoo, a documentelor de gestiune uzuale folosite în România, fără prelucrări manuale suplimentare.",
+    "features": [
+      "Rapoarte pentru recepție (NIR), livrare (aviz) și transfer intern (bon de consum).",
+      "Referința din comanda de achiziție este copiată în NIR și în factură.",
+      "Opțiune în setări (România) pentru tipărirea taxelor pe recepție.",
+      "Opțiune în setări (România) pentru tipărirea conturilor bancare pe rapoarte."
+    ],
+    "dependencies": [
+      "base",
+      "stock",
+      "l10n_ro_config",
+      "purchase_stock",
+      "sale_stock",
+      "l10n_ro_stock",
+      "delivery"
+    ],
+    "connections": [
+      "l10n_ro_stock",
+      "l10n_ro_config",
+      "l10n_ro_stock_picking_comment_template",
+      "excludes"
+    ],
+    "text": "Romania - Terrabit - Picking Reports\nl10n_ro_stock_picking_report\nModulul adaugă rapoarte specifice gestiunii de stoc din România pentru documentele de mișcare a mărfurilor: recepție (NIR), livrare (aviz de însoțire) și transfer intern (bon de consum). Pe lângă tipărirea acestor documente conforme cu practicile locale, modulul propagă referința din comanda de achiziție în NIR și în factură și oferă opțiuni de configurare pentru afișarea taxelor pe recepție și a conturilor bancare pe rapoarte. Valoarea de afaceri constă în obținerea, direct din Odoo, a documentelor de gestiune uzuale folosite în România, fără prelucrări manuale suplimentare.\nRapoarte pentru recepție (NIR), livrare (aviz) și transfer intern (bon de consum).\nReferința din comanda de achiziție este copiată în NIR și în factură.\nOpțiune în setări (România) pentru tipărirea taxelor pe recepție.\nOpțiune în setări (România) pentru tipărirea conturilor bancare pe rapoarte."
+  },
+  {
+    "path": "l10n_ro_stock_picking_report_product_expiry/index.md",
+    "module": "l10n_ro_stock_picking_report_product_expiry",
+    "version": "19.0.1.0.1",
+    "github": "`https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_picking_report_product_expiry`",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_picking_report_product_expiry",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Romania - Picking Reports - Product Expiry",
+    "summary": "Acest modul este o extensie de tip „punte\" care adaugă data de expirare a produselor pe rapoartele de livrare/transfer din suita de rapoarte de stoc pentru România. Atunci când produsele sunt urmărite pe loturi/serii cu dată de expirare, modulul afișează coloana „Expiration Date\" în bonul de livrare tipărit, astfel încât atât expeditorul, cât și clientul să vadă valabilitatea fiecărui lot direct pe document. Modulul se instalează automat când sunt prezente atât modulul de rapoarte de picking pentru România, cât și modulul standard de expirare a produselor.",
+    "features": [
+      "Adaugă coloana „Expiration Date\" (data de expirare) în raportul de livrare/transfer (`report_delivery`) moștenit din `l10n_ro_stock_picking_report`.",
+      "Preia data de expirare din lotul/seria asociat fiecărei linii de mișcare (`move_line.lot_id.expiration_date`).",
+      "Afișează coloana doar dacă există cel puțin o linie cu lot ce are dată de expirare și doar pentru utilizatorii din grupul `product_expiry.group_expiry_date_on_delivery_slip`.",
+      "Se instalează automat (`auto_install`) când dependențele sunt prezente, fără configurare suplimentară."
+    ],
+    "dependencies": [
+      "l10n_ro_stock_picking_report",
+      "product_expiry"
+    ],
+    "connections": [
+      "l10n_ro_stock_picking_report",
+      "product_expiry"
+    ],
+    "text": "Romania - Picking Reports - Product Expiry\nl10n_ro_stock_picking_report_product_expiry\nAcest modul este o extensie de tip „punte\" care adaugă data de expirare a produselor pe rapoartele de livrare/transfer din suita de rapoarte de stoc pentru România. Atunci când produsele sunt urmărite pe loturi/serii cu dată de expirare, modulul afișează coloana „Expiration Date\" în bonul de livrare tipărit, astfel încât atât expeditorul, cât și clientul să vadă valabilitatea fiecărui lot direct pe document. Modulul se instalează automat când sunt prezente atât modulul de rapoarte de picking pentru România, cât și modulul standard de expirare a produselor.\nAdaugă coloana „Expiration Date\" (data de expirare) în raportul de livrare/transfer (`report_delivery`) moștenit din `l10n_ro_stock_picking_report`.\nPreia data de expirare din lotul/seria asociat fiecărei linii de mișcare (`move_line.lot_id.expiration_date`).\nAfișează coloana doar dacă există cel puțin o linie cu lot ce are dată de expirare și doar pentru utilizatorii din grupul `product_expiry.group_expiry_date_on_delivery_slip`.\nSe instalează automat (`auto_install`) când dependențele sunt prezente, fără configurare suplimentară."
+  },
+  {
     "path": "l10n_ro_stock_provision/index.md",
     "module": "l10n_ro_stock_provision",
     "version": "19.0.1.0.0",
@@ -6745,6 +7237,32 @@
     "dependencies": [],
     "connections": [],
     "text": "Provizioane Stocuri Slow-Moving (39x) România\nl10n_ro_stock_provision"
+  },
+  {
+    "path": "l10n_ro_stock_report/index.md",
+    "module": "l10n_ro_stock_report",
+    "version": "19.0.2.0.0",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_report",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_report",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Romania - Stock Report (Fișă Magazie)",
+    "summary": "Acest modul adaugă un raport de stocuri conform cerințelor legislației din România. El oferă fișa de magazie și balanța analitică a stocurilor, documente specifice gestiunii românești, pe care companiile sunt obligate să le poată genera pentru evidența mișcărilor și a soldurilor de produse pe gestiuni. Scopul principal este să aducă în Odoo aceste rapoarte standard cerute de contabilitatea românească, fără a fi nevoie de prelucrări externe.",
+    "features": [
+      "Generarea fișei de magazie pentru evidența intrărilor, ieșirilor și soldurilor de produse pe gestiuni.",
+      "Generarea balanței analitice a stocurilor, conform cerințelor din România.",
+      "Integrare cu fluxurile native Odoo de stoc, contabilitate, achiziții și vânzări."
+    ],
+    "dependencies": [
+      "stock",
+      "account",
+      "purchase",
+      "sale",
+      "l10n_ro_config"
+    ],
+    "connections": [
+      "l10n_ro_stock_picking_report"
+    ],
+    "text": "Romania - Stock Report (Fișă Magazie)\nl10n_ro_stock_report\nAcest modul adaugă un raport de stocuri conform cerințelor legislației din România. El oferă fișa de magazie și balanța analitică a stocurilor, documente specifice gestiunii românești, pe care companiile sunt obligate să le poată genera pentru evidența mișcărilor și a soldurilor de produse pe gestiuni. Scopul principal este să aducă în Odoo aceste rapoarte standard cerute de contabilitatea românească, fără a fi nevoie de prelucrări externe.\nGenerarea fișei de magazie pentru evidența intrărilor, ieșirilor și soldurilor de produse pe gestiuni.\nGenerarea balanței analitice a stocurilor, conform cerințelor din România.\nIntegrare cu fluxurile native Odoo de stoc, contabilitate, achiziții și vânzări."
   },
   {
     "path": "l10n_ro_stock_sheet/index.md",
@@ -6849,6 +7367,31 @@
     "text": "Producție în Curs (331/711) OMFP 1802 România\nl10n_ro_wip_closing"
   },
   {
+    "path": "l10n_ro_zip/index.md",
+    "module": "l10n_ro_zip",
+    "version": "19.0.0.0.0",
+    "github": "`https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_zip`",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_zip",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Romania - Coduri Poștale",
+    "summary": "Modulul oferă o bază de date completă a codurilor poștale din România, gata de folosit imediat după instalare. Sunt importate automat aproximativ 52.000 de coduri poștale, fiecare legat de județul și localitatea corespunzătoare. La completarea adresei unui partener, utilizatorul poate alege codul poștal dintr-o listă filtrată după localitate, iar câmpul standard de cod poștal se completează automat. Astfel se elimină erorile de introducere manuală și se asigură date de adresă corecte și consistente, utile pentru livrări, facturare și raportări.",
+    "features": [
+      "Adaugă modelul `res.zip` cu ~52.000 de înregistrări de coduri poștale românești, fiecare conținând: cod poștal, localitate, județ, tip stradă, nume stradă, sector (București), oficiu poștal.",
+      "Datele sunt importate automat la instalare dintr-un fișier SQL și sunt corelate cu județele și localitățile din modulul `l10n_ro_city`.",
+      "Extinde formularul partenerului (`res.partner`) cu câmpul `Cod Poștal (zip_id)`, filtrat după localitate, care completează automat câmpul standard `zip` la selecție.",
+      "Căutarea codurilor poștale funcționează atât după codul numeric, cât și după numele străzii.",
+      "Suportă sectoarele municipiului București (1–6) cu legătură directă la localitățile corespunzătoare."
+    ],
+    "dependencies": [
+      "base_address_extended",
+      "l10n_ro_city"
+    ],
+    "connections": [
+      "l10n_ro_city"
+    ],
+    "text": "Romania - Coduri Poștale\nl10n_ro_zip\nModulul oferă o bază de date completă a codurilor poștale din România, gata de folosit imediat după instalare. Sunt importate automat aproximativ 52.000 de coduri poștale, fiecare legat de județul și localitatea corespunzătoare. La completarea adresei unui partener, utilizatorul poate alege codul poștal dintr-o listă filtrată după localitate, iar câmpul standard de cod poștal se completează automat. Astfel se elimină erorile de introducere manuală și se asigură date de adresă corecte și consistente, utile pentru livrări, facturare și raportări.\nAdaugă modelul `res.zip` cu ~52.000 de înregistrări de coduri poștale românești, fiecare conținând: cod poștal, localitate, județ, tip stradă, nume stradă, sector (București), oficiu poștal.\nDatele sunt importate automat la instalare dintr-un fișier SQL și sunt corelate cu județele și localitățile din modulul `l10n_ro_city`.\nExtinde formularul partenerului (`res.partner`) cu câmpul `Cod Poștal (zip_id)`, filtrat după localitate, care completează automat câmpul standard `zip` la selecție.\nCăutarea codurilor poștale funcționează atât după codul numeric, cât și după numele străzii.\nSuportă sectoarele municipiului București (1–6) cu legătură directă la localitățile corespunzătoare."
+  },
+  {
     "path": "terrabit_delivery_staff/index.md",
     "module": "terrabit_delivery_staff",
     "version": "19.0.0.0.9",
@@ -6874,6 +7417,42 @@
       "deltatech_delivery_status"
     ],
     "text": "Terrabit Delivery Staff\nterrabit_delivery_staff\nModulul permite distribuirea livrărilor către personalul propriu de livrare (curieri/șoferi interni). Fiecare livrare poate fi atribuită unui angajat care face parte din grupul „Delivery staff\", iar acești utilizatori văd și gestionează doar propriile livrări, fără a putea modifica livrările atribuite altor colegi. În plus, modulul oferă un raport PDF dedicat personalului de livrare, util la organizarea traseelor și a predării coletelor.\nDistribuirea livrărilor pe angajați (personal de livrare propriu).\nRestricționarea accesului: utilizatorii din grupul „Delivery staff\" nu pot modifica livrările altor utilizatori.\nRaport PDF pe livrare, dedicat personalului de livrare (pickup list).\nParametru de sistem `delivery_staff.allow_change_responsible` care controlează dacă personalul de livrare poate schimba utilizatorul responsabil de pe livrare (implicit `False`)."
+  },
+  {
+    "path": "terrabit_dvi/index.md",
+    "module": "terrabit_dvi",
+    "version": "19.0.1.1.0",
+    "github": "`https://github.com/dhongu/l10n-romania/tree/19.0/terrabit_dvi`",
+    "local_path": "odoo-addons/l10n-romania/terrabit_dvi",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Terrabit - DVI",
+    "summary": "Modulul gestionează Declarația Vamală de Import (DVI) pentru operațiunile de import de marfă din afara Uniunii Europene, făcând legătura între factura de achiziție externă și costurile vamale (landed cost). Pe baza datelor din DVI, modulul generează automat o înregistrare cu două linii (taxa vamală A00 și TVA-ul la import B00), respectând cadrul legal contabil românesc (Legea 82/1991, OMFP 1802/2014, Codul Fiscal și Regulamentul UE 2015/2447): factura furnizor se înregistrează la cursul BNR din data emiterii, cursul vamal lunar se folosește exclusiv pentru valoarea în vamă, taxe și TVA la import, iar toate înregistrările contabile rămân exclusiv în RON. Astfel, taxele vamale se capitalizează corect în costul de achiziție al mărfurilor, iar TVA-ul la import deductibil este evidențiat separat, cu trasabilitate completă de la comanda de achiziție până la stocul final.",
+    "features": [
+      "Face legătura între factura de achiziție externă și DVI (landed cost).",
+      "Generează automat un DVI cu două linii și cu TVA (taxă vamală A00 și TVA la import B00).",
+      "Suportă fluxul complet de import cu recepție în locație virtuală de tranzit („Transit/In-Coming\") și vămuire prin DVI, în regim FOB.",
+      "Capitalizează taxele vamale (A00) în costul de achiziție al mărfurilor prin repartizare ca landed cost (327 ← 371.tranzit).",
+      "Evidențiază separat TVA-ul la import deductibil (B00) pe contul 4426.",
+      "Înregistrează automat diferențele de curs valutar la plata facturii furnizor (conturile 665/765).",
+      "Asigură toate înregistrările contabile exclusiv în RON, cu factura la cursul BNR și taxele/TVA la cursul vamal lunar.",
+      "Asistă consultantul în alegerea Incoterm-ului (Incoterms® 2020) și impactul acestuia asupra momentului recepției și al landed costs.",
+      "Necesită ca contul 447 să fie cont de reconciliere, pentru a putea fi închis prin bancă."
+    ],
+    "dependencies": [
+      "stock_account",
+      "account",
+      "sale",
+      "l10n_ro",
+      "purchase_stock",
+      "stock_landed_costs"
+    ],
+    "connections": [
+      "stock_landed_costs",
+      "l10n_ro",
+      "l10n_ro_dvi",
+      "excludes"
+    ],
+    "text": "Terrabit - DVI\nterrabit_dvi\nModulul gestionează Declarația Vamală de Import (DVI) pentru operațiunile de import de marfă din afara Uniunii Europene, făcând legătura între factura de achiziție externă și costurile vamale (landed cost). Pe baza datelor din DVI, modulul generează automat o înregistrare cu două linii (taxa vamală A00 și TVA-ul la import B00), respectând cadrul legal contabil românesc (Legea 82/1991, OMFP 1802/2014, Codul Fiscal și Regulamentul UE 2015/2447): factura furnizor se înregistrează la cursul BNR din data emiterii, cursul vamal lunar se folosește exclusiv pentru valoarea în vamă, taxe și TVA la import, iar toate înregistrările contabile rămân exclusiv în RON. Astfel, taxele vamale se capitalizează corect în costul de achiziție al mărfurilor, iar TVA-ul la import deductibil este evidențiat separat, cu trasabilitate completă de la comanda de achiziție până la stocul final.\nFace legătura între factura de achiziție externă și DVI (landed cost).\nGenerează automat un DVI cu două linii și cu TVA (taxă vamală A00 și TVA la import B00).\nSuportă fluxul complet de import cu recepție în locație virtuală de tranzit („Transit/In-Coming\") și vămuire prin DVI, în regim FOB.\nCapitalizează taxele vamale (A00) în costul de achiziție al mărfurilor prin repartizare ca landed cost (327 ← 371.tranzit).\nEvidențiază separat TVA-ul la import deductibil (B00) pe contul 4426.\nÎnregistrează automat diferențele de curs valutar la plata facturii furnizor (conturile 665/765).\nAsigură toate înregistrările contabile exclusiv în RON, cu factura la cursul BNR și taxele/TVA la cursul vamal lunar.\nAsistă consultantul în alegerea Incoterm-ului (Incoterms® 2020) și impactul acestuia asupra momentului recepției și al landed costs.\nNecesită ca contul 447 să fie cont de reconciliere, pentru a putea fi închis prin bancă."
   },
   {
     "path": "terrabit_facebook_pixel/index.md",
