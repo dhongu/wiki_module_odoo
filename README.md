@@ -54,7 +54,20 @@ python3 scripts/wiki_search.py "how do I reverse a class-6 expense" -k 5 --reran
 
 Rerank uses `claude-haiku-4-5` by default (≈ $0.003/query) and needs `pip install anthropic` +
 network egress. Without a key it falls back to lexical automatically — querying never fails.
-Anthropic has no embeddings endpoint, so semantic search is done by reranking, not vectors.
+Anthropic has no embeddings endpoint, so the Claude path does semantic search by **reranking**.
+
+A **vector** path is also wired, using OpenAI embeddings (`text-embedding-3-small`, 1536-dim):
+
+```bash
+pip install openai
+export OPENAI_API_KEY=...
+python3 scripts/wiki_index.py --embed          # builds .index/vectors.npy
+python3 scripts/wiki_search.py "..." -k 5      # auto-blends cosine + lexical
+```
+
+The model + dimension are recorded in `.index/meta.json` so the query side always matches the
+ingest side. `vectors.npy` is git-ignored (regenerable). Rerank and vectors are independent — use
+either, both, or neither (lexical-only is the zero-dependency default).
 
 ## Maintaining the wiki (ingestion)
 

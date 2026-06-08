@@ -102,25 +102,31 @@ def parse_page(md_path: Path) -> dict | None:
 
 # ── embeddings (SEAM HIBRID — un singur loc, partajat cu wiki_search.py) ──────
 
-# Activează vectorii completând EMBED_MODEL + EMBED_DIM și implementând apelul de
-# mai jos. Aceleași valori trebuie citite la query (wiki_search.py le ia din
-# meta.json, nu le hardcodează) — așa garantezi consistența model↔dimensiune.
-EMBED_PROVIDER = None   # ex: "voyage" / "openai" / "local"
-EMBED_MODEL = None      # ex: "voyage-3"
-EMBED_DIM = None        # ex: 1024
+# Provider de embeddings: OpenAI. Cheia se citește din mediu (OPENAI_API_KEY) —
+# NICIODATĂ hardcodată aici, ca să nu ajungă în git. Aceleași valori sunt citite la
+# query de wiki_search.py din .index/meta.json (consistență model↔dimensiune).
+EMBED_PROVIDER = "openai"
+EMBED_MODEL = "text-embedding-3-small"
+EMBED_DIM = 1536
+
+_EMBED_BATCH = 256  # câte texte pe apel; OpenAI acceptă liste mari
 
 
 def embed_texts(texts: list[str]) -> "list[list[float]]":
-    """Transformă texte în vectori. RIDICĂ NotImplementedError până la activare.
+    """Transformă texte în vectori cu OpenAI. Folosit IDENTIC de ingestie și query.
 
-    De implementat: un singur apel batch către providerul de embeddings (necesită
-    egress în mediul de rulare — gotcha #3). Întoarce o listă de vectori cu lungime
-    EMBED_DIM. Folosit IDENTIC de ingestie și de query.
+    Necesită `pip install openai` + egress + OPENAI_API_KEY în mediu. Întoarce o listă
+    de vectori de lungime EMBED_DIM.
     """
-    raise NotImplementedError(
-        "Embeddings dezactivate. Setează EMBED_PROVIDER/EMBED_MODEL/EMBED_DIM și "
-        "implementează apelul către provider, apoi rulează cu --embed."
-    )
+    from openai import OpenAI  # lazy: doar în mod vectorial
+
+    client = OpenAI()  # citește OPENAI_API_KEY din mediu
+    out: list[list[float]] = []
+    for i in range(0, len(texts), _EMBED_BATCH):
+        batch = [t.replace("\n", " ") for t in texts[i:i + _EMBED_BATCH]]
+        resp = client.embeddings.create(model=EMBED_MODEL, input=batch)
+        out.extend(d.embedding for d in resp.data)
+    return out
 
 
 # ── build ────────────────────────────────────────────────────────────────────
