@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-06-08] Ingestie lot l10n_ro_ent (6 module ANAF/fiscal)
+
+- **Acțiune:** Documentate 6 module rămase nedocumentate din suita `l10n_ro_ent` (repo `terrabit-ro/l10n_ro_ent`, branch `19.0`), procesate în paralel prin 6 subagenți `general-purpose`: `l10n_ro_anaf_agent`, `l10n_ro_anaf_messages`, `l10n_ro_anaf_submission`, `l10n_ro_cost_centers`, `l10n_ro_pos_fiscal_compliance`, `l10n_ro_saft_etva`. Consolidare centralizată (append + re-sortare alfabetică a blocului `## Module`, 283 module total).
+- **Sursă:** `readme/DESCRIPTION.md` (prezent la toate) pentru Sumar și Funcționalități Cheie; context suplimentar din `FISA_CONSULTANT.md`/`USAGE.md` unde existau (cost_centers, pos_fiscal_compliance, saft_etva). Componente Cheie (secț. 4) omise conform prioritizării Readme. Toate textele în RO cu diacritice (DESCRIPTION-uri EN traduse).
+- **Dependențe/Conexiuni (verificate în manifest):** `l10n_ro_anaf_agent` → link activ la `l10n_ro_anaf_base`; `l10n_ro_anaf_submission` → link la `l10n_ro_anaf_base`; `l10n_ro_saft_etva` → link la `l10n_ro_anaf_d300`; `l10n_ro_pos_fiscal_compliance` → link la `deltatech_pos`. Dependențe core (`account`, `l10n_ro`, `point_of_sale`, `analytic`, `mail`, `l10n_ro_reports`) rămase text `cod`.
+- **Avertisment notabil:** la `l10n_ro_anaf_messages` există o discrepanță readme↔cod — `DESCRIPTION.md` descrie acces OAuth2 (via `l10n_ro_edi`), dar `__manifest__.py` indică transport mTLS prin Agentul Terrabit și depinde de `l10n_ro_anaf_base` + `l10n_ro_anaf_agent`. Pagina respectă DESCRIPTION la secț. 1–2 și manifestul la secț. 3; `DESCRIPTION.md` pare învechit și ar trebui aliniat la implementarea actuală. Module preponderent Beta, licențe OPL-1; certSIGN Cloud încă stub în `l10n_ro_anaf_submission`.
+- **Fișiere actualizate:** 6 `index.md` noi, `wiki_module_odoo/index.md` (re-sortat, 283 module), `wiki_module_odoo/log.md`, `wiki_module_odoo/.index/` (rebuild lexical; vectorii se regenerează cu `--embed`).
+
 ## [2026-06-08] Ingestie l10n_ro_account_storno (suita l10n-romania)
 
 - **Acțiune:** Adăugată o pagină nouă pentru `l10n_ro_account_storno` (repo `dhongu/l10n-romania`, branch `19.0`). Motiv: o interogare de test („cum inversez o cheltuială greșită pe clasa 6") nu găsea niciun modul de storno — diagnostic: modulul nu era documentat (gol de acoperire), nu o problemă de retrieval. Modul mic, documentat direct.

@@ -5383,6 +5383,34 @@
     "text": "l10n_ro_advance_invoice\nl10n_ro_advance_invoice"
   },
   {
+    "path": "l10n_ro_anaf_agent/index.md",
+    "module": "l10n_ro_anaf_agent",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_anaf_agent",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_agent",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Romania - Agent ANAF (punte cloud)",
+    "summary": "Acest modul reprezintă fundația pentru modelul **cloud** de comunicare cu ANAF: oferă un registru de agenți locali, o coadă de joburi și un API pe care **Agentul Terrabit** îl apelează. Când Odoo rulează în cloud, nu poate ajunge la stația de lucru a contabilului (unde se află tokenul cu certificat digital). De aceea **agentul inițiază toate conexiunile** outbound către Odoo, autentificându-se cu o cheie API, iar Odoo nu se conectează niciodată direct la agent. Este un modul de infrastructură pe care se sprijină celelalte module de comunicare cu ANAF.",
+    "features": [
+      "Registru de agenți locali înregistrați (`l10n.ro.anaf.agent`): companie, cheie API, ultima vizualizare (`last_seen`) și subiectul certificatului digital.",
+      "Coadă de joburi (`l10n.ro.anaf.agent.job`) cu tipurile `sync_messages` / `download` / `submit` și stările `pending → claimed → done/error`, cu hook `_process_result` extins de modulele consumatoare (mesaje, depunere).",
+      "Controllere apelate de agent, cu autentificare pe antetul `X-Agent-Key`:",
+      "`POST /anaf_agent/poll` — preia joburile în stare pending.",
+      "`POST /anaf_agent/result` — întoarce rezultatul unui job.",
+      "`POST /anaf_agent/messages` — push direct de mesaje SPV (sincronizare periodică).",
+      "`POST /anaf_agent/heartbeat` — semnal de viață plus subiectul certificatului.",
+      "Model cloud sigur în care agentul inițiază conexiunile (mTLS la ANAF din stația locală), eliminând nevoia ca tokenul cu certificat să fie disponibil în cloud."
+    ],
+    "dependencies": [
+      "l10n_ro_anaf_base"
+    ],
+    "connections": [
+      "l10n_ro_anaf_messages",
+      "l10n_ro_anaf_submission"
+    ],
+    "text": "Romania - Agent ANAF (punte cloud)\nl10n_ro_anaf_agent\nAcest modul reprezintă fundația pentru modelul **cloud** de comunicare cu ANAF: oferă un registru de agenți locali, o coadă de joburi și un API pe care **Agentul Terrabit** îl apelează. Când Odoo rulează în cloud, nu poate ajunge la stația de lucru a contabilului (unde se află tokenul cu certificat digital). De aceea **agentul inițiază toate conexiunile** outbound către Odoo, autentificându-se cu o cheie API, iar Odoo nu se conectează niciodată direct la agent. Este un modul de infrastructură pe care se sprijină celelalte module de comunicare cu ANAF.\nRegistru de agenți locali înregistrați (`l10n.ro.anaf.agent`): companie, cheie API, ultima vizualizare (`last_seen`) și subiectul certificatului digital.\nCoadă de joburi (`l10n.ro.anaf.agent.job`) cu tipurile `sync_messages` / `download` / `submit` și stările `pending → claimed → done/error`, cu hook `_process_result` extins de modulele consumatoare (mesaje, depunere).\nControllere apelate de agent, cu autentificare pe antetul `X-Agent-Key`:\n`POST /anaf_agent/poll` — preia joburile în stare pending.\n`POST /anaf_agent/result` — întoarce rezultatul unui job.\n`POST /anaf_agent/messages` — push direct de mesaje SPV (sincronizare periodică).\n`POST /anaf_agent/heartbeat` — semnal de viață plus subiectul certificatului.\nModel cloud sigur în care agentul inițiază conexiunile (mTLS la ANAF din stația locală), eliminând nevoia ca tokenul cu certificat să fie disponibil în cloud."
+  },
+  {
     "path": "l10n_ro_anaf_base/index.md",
     "module": "l10n_ro_anaf_base",
     "version": "19.0.1.0.2",
@@ -5691,6 +5719,33 @@
     "text": "Romania - ANAF D398 Declaration (VAT OSS)\nl10n_ro_anaf_d398\nAcest modul permite generarea Declarației Speciale de TVA (D398) direct din Odoo, conform formatului ANAF pentru regimul special One Stop Shop (OSS). Regimul OSS permite raportarea și plata TVA-ului datorat în mai multe state membre UE printr-o singură declarație centralizată, reglementată de Directiva (UE) 2017/2455 și transpusă prin Codul Fiscal. Declarația se întocmește în EURO și se depune trimestrial (UE/Non-UE) sau lunar (Import). Implementarea folosește infrastructura comună din `l10n_ro_anaf_base`.\nConversie automată în EURO folosind cursul BCE din ultima zi a perioadei fiscale.\nGrupare pe state membre de consum (MSCON) a livrărilor de bunuri și prestărilor de servicii.\nExport XDP (Soft A): import în formularul PDF inteligent ANAF (versiunea 1.0.11+).\nExport XML (Soft J): XML nativ conform schemei XSD oficiale (`d398_20211101.xsd`), validat XSD automat și compatibil DUKIntegrator.\nDate identificare automate din configurările Odoo.\nDistincția între bunuri și servicii pe fiecare cotă de TVA.\nGap-uri rămase: avertizarea pentru pragul OSS de 10.000 EUR și depunerea automată în portalul ANAF nu sunt încă implementate."
   },
   {
+    "path": "l10n_ro_anaf_messages/index.md",
+    "module": "l10n_ro_anaf_messages",
+    "version": "19.0.1.0.0",
+    "github": "`https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_anaf_messages`",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_messages",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Romania - Mesaje SPV ANAF (generale)",
+    "summary": "Modulul citește mesajele generale din Spațiul Privat Virtual (SPV) al ANAF — notificări și recipisele declarațiilor fiscale — separat de mesajele e-Factura (care rămân în modulul `l10n_ro_message_spv`). Folosește serviciul SPVWS2 (`webserviced.anaf.ro/SPVWS2/rest/listaMesaje`, `descarcare`) prin OAuth2 Bearer, refolosind tokenul de acces gestionat de modulul standard `l10n_ro_edi` (e-Factura). Deoarece ANAF a unificat accesul SPV / e-Factura / e-Transport pe același token `logincert.anaf.ro`, nu este nevoie de un certificat suplimentar pe server: după o singură autentificare din browser (token valabil aproximativ 90 de zile), mesajele se descarcă complet server-side. Recipisele declarațiilor sosesc tot ca mesaje SPV, iar acest modul oferă canalul de preluare a lor, complementar modulului de depunere `l10n_ro_anaf_submission`.",
+    "features": [
+      "Model `l10n.ro.anaf.message` cu mesajele SPV (ID, CIF, tip, dată, detalii, ID solicitare).",
+      "Clasificare automată a tipului mesajului: recipisă / notificare / solicitare / eroare.",
+      "Descărcarea documentului (PDF) asociat fiecărui mesaj.",
+      "Sincronizare manuală (prin buton) și sincronizare programată prin cron (dezactivat implicit).",
+      "Bază URL configurabilă pe companie (mediu de test / producție)."
+    ],
+    "dependencies": [
+      "l10n_ro_anaf_base",
+      "l10n_ro_anaf_agent"
+    ],
+    "connections": [
+      "l10n_ro_anaf_submission",
+      "l10n_ro_message_spv",
+      "l10n_ro_edi"
+    ],
+    "text": "Romania - Mesaje SPV ANAF (generale)\nl10n_ro_anaf_messages\nModulul citește mesajele generale din Spațiul Privat Virtual (SPV) al ANAF — notificări și recipisele declarațiilor fiscale — separat de mesajele e-Factura (care rămân în modulul `l10n_ro_message_spv`). Folosește serviciul SPVWS2 (`webserviced.anaf.ro/SPVWS2/rest/listaMesaje`, `descarcare`) prin OAuth2 Bearer, refolosind tokenul de acces gestionat de modulul standard `l10n_ro_edi` (e-Factura). Deoarece ANAF a unificat accesul SPV / e-Factura / e-Transport pe același token `logincert.anaf.ro`, nu este nevoie de un certificat suplimentar pe server: după o singură autentificare din browser (token valabil aproximativ 90 de zile), mesajele se descarcă complet server-side. Recipisele declarațiilor sosesc tot ca mesaje SPV, iar acest modul oferă canalul de preluare a lor, complementar modulului de depunere `l10n_ro_anaf_submission`.\nModel `l10n.ro.anaf.message` cu mesajele SPV (ID, CIF, tip, dată, detalii, ID solicitare).\nClasificare automată a tipului mesajului: recipisă / notificare / solicitare / eroare.\nDescărcarea documentului (PDF) asociat fiecărui mesaj.\nSincronizare manuală (prin buton) și sincronizare programată prin cron (dezactivat implicit).\nBază URL configurabilă pe companie (mediu de test / producție)."
+  },
+  {
     "path": "l10n_ro_anaf_partner/index.md",
     "module": "l10n_ro_anaf_partner",
     "version": "19.0.1.0.0",
@@ -5715,6 +5770,33 @@
     ],
     "connections": [],
     "text": "Romania - Monitorizare Modificări Date ANAF Parteneri (FR-23)\nl10n_ro_anaf_partner\nAcest modul extinde `l10n_ro_fiscal_validation` (OCA) cu monitorizarea modificărilor datelor ANAF ale partenerilor. La fiecare actualizare ANAF, modulul înregistrează automat orice schimbare detectată (denumire, adresă, CAEN, TVA, statut plătitor TVA), marchează partenerii inactivi fiscal și emite alerte (activități și note în chatter) atunci când un partener devine inactiv sau își schimbă regimul de TVA, prevenind astfel facturarea către parteneri radiați.\nChange log: înregistrarea automată a oricărei modificări detectate la actualizarea ANAF (denumire, adresă, CAEN, TVA, scpTVA).\nMarcare inactiv ANAF: câmpul `l10n_ro_is_inactive_anaf` calculat din istoricul `statusInactivi` OCA, cu badge pe fișa partenerului.\nAlertă inactivare: activitate Odoo plus notă în chatter la prima detectare a statusului inactiv.\nAlertă schimbare regim TVA: notă automată în chatter când `scpTVA` se modifică.\nAvertizare factură: notă în chatter la postarea unei facturi pe un partener inactiv ANAF.\nUltima verificare ANAF: câmpul `l10n_ro_anaf_last_check` actualizat la fiecare rulare cron.\nMeniu Log Modificări: vizualizare globală a tuturor modificărilor ANAF, filtrabilă pe tip/partener/dată."
+  },
+  {
+    "path": "l10n_ro_anaf_submission/index.md",
+    "module": "l10n_ro_anaf_submission",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_anaf_submission",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_submission",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Romania - Depunere electronică declarații ANAF (FR-53)",
+    "summary": "Modulul oferă infrastructura comună pentru depunerea electronică a declarațiilor fiscale ANAF generate în Odoo (D112, D300, D394, D406 etc.), conform cerinței FR-53. El nu generează declarațiile — acestea sunt produse de modulele dedicate (`l10n_ro_anaf_d112`, `l10n_ro_anaf_d300`, ...) — ci adaugă stratul de urmărire a depunerii și a recipisei. O înregistrare de depunere păstrează fișierul depus, amprenta SHA-256, ID-ul solicitării ANAF, starea, eventualele erori, recipisa și pista de audit (cine și când a depus), iar declarațiile rectificative păstrează legătura cu depunerea inițială.",
+    "features": [
+      "Depunere manuală (SPV / e-guvernare) — fluxul disponibil azi, funcțional complet: contabilul depune fișierul în SPV cu certificatul calificat, introduce ID-ul solicitării în Odoo, iar sistemul verifică starea și păstrează recipisa.",
+      "Depunere TDec (agent local ANAF) — conector complet implementat: Odoo trimite fișierul prin API-ul REST TDec (`POST /api/`), preia UID-ul, verifică starea (Index ANAF + „Recipisa OK\") și descarcă automat recipisa PDF; aplicația TDec rulează local, ține certificatul calificat și semnează + transmite declarațiile la ANAF.",
+      "Depunere certSIGN Cloud (API) — conector de semnare PAdES + upload automat direct; interfața și configurarea există, însă conectorul propriu-zis este un *stub* care necesită API-ul comercial certSIGN și se activează când acesta devine disponibil.",
+      "Verificarea stării — interoghează endpoint-ul public ANAF de stare prin ID solicitare (nu necesită certificat) și poate rula automat printr-un cron dezactivat implicit.",
+      "Urmărirea depunerii și a recipisei — păstrarea fișierului depus, a amprentei SHA-256, a ID-ului solicitării ANAF, a stării, a erorilor și a recipisei.",
+      "Pistă de audit — înregistrarea utilizatorului și a momentului depunerii.",
+      "Declarații rectificative — păstrarea legăturii cu depunerea inițială."
+    ],
+    "dependencies": [
+      "l10n_ro_anaf_base"
+    ],
+    "connections": [
+      "l10n_ro_anaf_d112",
+      "l10n_ro_anaf_d300"
+    ],
+    "text": "Romania - Depunere electronică declarații ANAF (FR-53)\nl10n_ro_anaf_submission\nModulul oferă infrastructura comună pentru depunerea electronică a declarațiilor fiscale ANAF generate în Odoo (D112, D300, D394, D406 etc.), conform cerinței FR-53. El nu generează declarațiile — acestea sunt produse de modulele dedicate (`l10n_ro_anaf_d112`, `l10n_ro_anaf_d300`, ...) — ci adaugă stratul de urmărire a depunerii și a recipisei. O înregistrare de depunere păstrează fișierul depus, amprenta SHA-256, ID-ul solicitării ANAF, starea, eventualele erori, recipisa și pista de audit (cine și când a depus), iar declarațiile rectificative păstrează legătura cu depunerea inițială.\nDepunere manuală (SPV / e-guvernare) — fluxul disponibil azi, funcțional complet: contabilul depune fișierul în SPV cu certificatul calificat, introduce ID-ul solicitării în Odoo, iar sistemul verifică starea și păstrează recipisa.\nDepunere TDec (agent local ANAF) — conector complet implementat: Odoo trimite fișierul prin API-ul REST TDec (`POST /api/`), preia UID-ul, verifică starea (Index ANAF + „Recipisa OK\") și descarcă automat recipisa PDF; aplicația TDec rulează local, ține certificatul calificat și semnează + transmite declarațiile la ANAF.\nDepunere certSIGN Cloud (API) — conector de semnare PAdES + upload automat direct; interfața și configurarea există, însă conectorul propriu-zis este un *stub* care necesită API-ul comercial certSIGN și se activează când acesta devine disponibil.\nVerificarea stării — interoghează endpoint-ul public ANAF de stare prin ID solicitare (nu necesită certificat) și poate rula automat printr-un cron dezactivat implicit.\nUrmărirea depunerii și a recipisei — păstrarea fișierului depus, a amprentei SHA-256, a ID-ului solicitării ANAF, a stării, a erorilor și a recipisei.\nPistă de audit — înregistrarea utilizatorului și a momentului depunerii.\nDeclarații rectificative — păstrarea legăturii cu depunerea inițială."
   },
   {
     "path": "l10n_ro_audit_immutable/index.md",
@@ -5743,6 +5825,35 @@
     "dependencies": [],
     "connections": [],
     "text": "Romania - CBAM (FR-56)\nl10n_ro_cbam"
+  },
+  {
+    "path": "l10n_ro_cost_centers/index.md",
+    "module": "l10n_ro_cost_centers",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_cost_centers",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_cost_centers",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Romania - Repartizare costuri indirecte pe centre de cost",
+    "summary": "Modulul automatizează repartizarea cheltuielilor indirecte pe centre de cost (conturi analitice), conform contabilității de gestiune din România (OMFP 1802/2014). Costurile colectate pe un centru comun/indirect se redistribuie pe centrele productive printr-o notă contabilă care păstrează un impact financiar zero pe contul de cheltuială (creditul 6xx de pe centrul comun este egal cu debitele 6xx de pe centrele țintă), mutând costul doar pe dimensiunea analitică — fără a folosi obligatoriu conturile din clasa 9. Este un instrument de control de gestiune, neutru financiar, care nu modifică balanța contabilă.",
+    "features": [
+      "Repartizarea automată a cheltuielilor indirecte de pe un centru de cost sursă (comun/indirect) pe mai multe centre țintă (productive).",
+      "Cheie de repartizare configurabilă: manual (procente fixe), suprafață (m²), nr. angajați sau cifră de afaceri (venituri 7xx pe centru).",
+      "Câmpuri proprii pe centrul de cost (cont analitic): Suprafață (m²) și Nr. angajați, folosite ca baze de repartizare.",
+      "Colectarea costului de pe centrul sursă pe o perioadă aleasă și calculul automat al procentelor și sumelor per centru țintă.",
+      "Generarea unei note contabile de redistribuire analitică echilibrată, cu impact financiar zero pe contul de cheltuială (costul migrează doar pe dimensiunea analitică).",
+      "Anularea repartizării readuce nota în ciornă și anulează nota contabilă generată.",
+      "Bazat pe contabilitatea analitică nativă Odoo; planurile analitice ierarhice, distribuția analitică obligatorie la postare, bugetele pe centre și rapoartele P&L pe dimensiuni rămân acoperite de baza nativă (analytic + Enterprise account_budget / account_reports)."
+    ],
+    "dependencies": [
+      "account",
+      "analytic",
+      "l10n_ro"
+    ],
+    "connections": [
+      "account_budget",
+      "account_reports"
+    ],
+    "text": "Romania - Repartizare costuri indirecte pe centre de cost\nl10n_ro_cost_centers\nModulul automatizează repartizarea cheltuielilor indirecte pe centre de cost (conturi analitice), conform contabilității de gestiune din România (OMFP 1802/2014). Costurile colectate pe un centru comun/indirect se redistribuie pe centrele productive printr-o notă contabilă care păstrează un impact financiar zero pe contul de cheltuială (creditul 6xx de pe centrul comun este egal cu debitele 6xx de pe centrele țintă), mutând costul doar pe dimensiunea analitică — fără a folosi obligatoriu conturile din clasa 9. Este un instrument de control de gestiune, neutru financiar, care nu modifică balanța contabilă.\nRepartizarea automată a cheltuielilor indirecte de pe un centru de cost sursă (comun/indirect) pe mai multe centre țintă (productive).\nCheie de repartizare configurabilă: manual (procente fixe), suprafață (m²), nr. angajați sau cifră de afaceri (venituri 7xx pe centru).\nCâmpuri proprii pe centrul de cost (cont analitic): Suprafață (m²) și Nr. angajați, folosite ca baze de repartizare.\nColectarea costului de pe centrul sursă pe o perioadă aleasă și calculul automat al procentelor și sumelor per centru țintă.\nGenerarea unei note contabile de redistribuire analitică echilibrată, cu impact financiar zero pe contul de cheltuială (costul migrează doar pe dimensiunea analitică).\nAnularea repartizării readuce nota în ciornă și anulează nota contabilă generată.\nBazat pe contabilitatea analitică nativă Odoo; planurile analitice ierarhice, distribuția analitică obligatorie la postare, bugetele pe centre și rapoartele P&L pe dimensiuni rămân acoperite de baza nativă (analytic + Enterprise account_budget / account_reports)."
   },
   {
     "path": "l10n_ro_currency_revaluation/index.md",
@@ -6320,6 +6431,32 @@
     "text": "Checklist Închidere Perioadă\nl10n_ro_period_close_enhanced\nModulul implementează un checklist lunar de închidere a perioadei contabile, folosind infrastructura Enterprise `account.return.type` din `account_reports`. La fiecare închidere lunară, contabilul creează un checklist care parcurge automat sau manual o serie de verificări obligatorii conform OMFP 1802/2014 (facturi draft, extrase nereconciliate, coeficient K, CMP periodic, reevaluare valutară etc.), asigurând o închidere consistentă și auditabilă.\nChecklist de perioadă (tip audit) creat per lună pe baza cadrului Account Returns din Enterprise.\nVerificări automate evaluate prin model + domeniu: facturi/avize în Draft (`account.move`), linii de extras bancar nereconciliate (`account.bank.statement.line`).\nVerificări personalizate Python, active doar dacă modulul opțional corespunzător este instalat: coeficient K postat (`l10n_ro_stock_k_coefficient`), notă CMP periodic postată (`l10n_ro_stock_cmp_periodic`), reevaluare valutară postată (`l10n_ro_currency_revaluation`).\nVerificări manuale confirmate de contabil: sold registru de casă, inventar stocuri regularizat, reconciliere conturi clienți/furnizori.\nFlux de lucru: New → Refresh Checks → Review → Submit.\nFără configurare specială; verificările opționale apar doar dacă modulul aferent este instalat."
   },
   {
+    "path": "l10n_ro_pos_fiscal_compliance/index.md",
+    "module": "l10n_ro_pos_fiscal_compliance",
+    "version": "19.0.1.0.0",
+    "github": "`https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_pos_fiscal_compliance`",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_pos_fiscal_compliance",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Romania - Conformitate fiscală POS (AMEF)",
+    "summary": "Modulul asigură conformitatea fiscală pentru vânzarea cu amănuntul prin POS, conform OUG 28/1999 privind aparatele de marcat electronice fiscale (AMEF). Completează POS-ul Odoo și driverele de fiscalizare (ex. `deltatech_pos`) cu evidența fiscală cerută în România: urmărirea bonului fiscal pe fiecare comandă, blocarea închiderii sesiunii când există comenzi plătite fără bon emis, raportul Z reconciliat cu vânzările și încasările, returul fiscal legat de bonul inițial și arhivarea jurnalului electronic AMEF. Modulul acoperă latura de conformitate (evidență, blocaj, raport Z, arhivă) peste POS-ul Odoo; comunicarea efectivă cu aparatul fiscal se face printr-un driver opțional, modulul nedepinzând de un driver anume.",
+    "features": [
+      "Urmărirea bonului fiscal pe fiecare comandă POS: serie, număr, dată/oră fiscală și stare (de fiscalizat / emis / eroare), cu punct de integrare pentru răspunsul aparatului fiscal.",
+      "Blocarea închiderii sesiunii POS dacă există comenzi plătite fără bon fiscal emis și fără eroare justificată.",
+      "Raportul Z fiscal cu defalcare pe cote TVA și pe metode de plată, reconciliat cu vânzările și încasările din Odoo, evidențiind diferențele.",
+      "Returul fiscal care referențiază bonul inițial.",
+      "Arhiva jurnalului electronic AMEF (fișiere XML/raport pe perioadă și aparat fiscal)."
+    ],
+    "dependencies": [
+      "point_of_sale",
+      "account",
+      "l10n_ro"
+    ],
+    "connections": [
+      "deltatech_pos"
+    ],
+    "text": "Romania - Conformitate fiscală POS (AMEF)\nl10n_ro_pos_fiscal_compliance\nModulul asigură conformitatea fiscală pentru vânzarea cu amănuntul prin POS, conform OUG 28/1999 privind aparatele de marcat electronice fiscale (AMEF). Completează POS-ul Odoo și driverele de fiscalizare (ex. `deltatech_pos`) cu evidența fiscală cerută în România: urmărirea bonului fiscal pe fiecare comandă, blocarea închiderii sesiunii când există comenzi plătite fără bon emis, raportul Z reconciliat cu vânzările și încasările, returul fiscal legat de bonul inițial și arhivarea jurnalului electronic AMEF. Modulul acoperă latura de conformitate (evidență, blocaj, raport Z, arhivă) peste POS-ul Odoo; comunicarea efectivă cu aparatul fiscal se face printr-un driver opțional, modulul nedepinzând de un driver anume.\nUrmărirea bonului fiscal pe fiecare comandă POS: serie, număr, dată/oră fiscală și stare (de fiscalizat / emis / eroare), cu punct de integrare pentru răspunsul aparatului fiscal.\nBlocarea închiderii sesiunii POS dacă există comenzi plătite fără bon fiscal emis și fără eroare justificată.\nRaportul Z fiscal cu defalcare pe cote TVA și pe metode de plată, reconciliat cu vânzările și încasările din Odoo, evidențiind diferențele.\nReturul fiscal care referențiază bonul inițial.\nArhiva jurnalului electronic AMEF (fișiere XML/raport pe perioadă și aparat fiscal)."
+  },
+  {
     "path": "l10n_ro_process_library/index.md",
     "module": "l10n_ro_process_library",
     "version": "19.0.1.0.0",
@@ -6427,6 +6564,38 @@
     "dependencies": [],
     "connections": [],
     "text": "Corecție Rapoarte Contabile RO\nl10n_ro_reports_fix"
+  },
+  {
+    "path": "l10n_ro_saft_etva/index.md",
+    "module": "l10n_ro_saft_etva",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_saft_etva",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_saft_etva",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Romania - Reconciliere e-TVA (Decont precompletat ANAF)",
+    "summary": "Modulul reconciliază automat **decontul precompletat RO e-TVA** (OUG 70/2024) cu Decontul de TVA (D300) calculat intern în Odoo. ANAF generează lunar un decont de TVA pre-completat din datele e-Factura, e-Transport, SAF-T și caselor de marcat, transmis prin SPV. Modulul importă fișierul XML primit, îl compară rând cu rând cu D300-ul intern și evidențiază diferențele înainte de depunere, gradate pe severitate (informativ / avertisment / eroare critică). Diferențele critice nejustificate blochează închiderea verificării e-TVA din checklistul de închidere a perioadei de TVA, astfel încât discrepanțele să fie explicate înainte de transmiterea D300.",
+    "features": [
+      "Import al fișierului XML „Decont precompletat de TVA\" (RO e-TVA) descărcat din SPV.",
+      "Reconciliere automată rând cu rând a decontului ANAF față de D300-ul intern calculat de modulul `l10n_ro_anaf_d300`, pe aceeași perioadă.",
+      "Afișare pe fiecare rând a bazei/TVA ANAF, a bazei/TVA interne, a diferenței și a severității: Coincide / Avertisment / Eroare critică.",
+      "Praguri de severitate configurabile pe companie (prag valoric, implicit 1.000 RON, și prag procentual, implicit 20%); o diferență devine eroare critică doar dacă depășește ambele praguri.",
+      "Justificare obligatorie pe fiecare linie cu eroare critică; blocarea închiderii verificării e-TVA cât timp există erori critice nejustificate.",
+      "Verificare blocantă integrată în checklistul return-ului de TVA (D300), accesibilă din procesul de închidere a perioadei.",
+      "Raport de reconciliere cu export PDF."
+    ],
+    "dependencies": [
+      "account",
+      "mail",
+      "l10n_ro",
+      "l10n_ro_reports",
+      "l10n_ro_anaf_d300"
+    ],
+    "connections": [
+      "l10n_ro_anaf_d300",
+      "l10n_ro_reports",
+      "l10n_ro_doc_screenshots"
+    ],
+    "text": "Romania - Reconciliere e-TVA (Decont precompletat ANAF)\nl10n_ro_saft_etva\nModulul reconciliază automat **decontul precompletat RO e-TVA** (OUG 70/2024) cu Decontul de TVA (D300) calculat intern în Odoo. ANAF generează lunar un decont de TVA pre-completat din datele e-Factura, e-Transport, SAF-T și caselor de marcat, transmis prin SPV. Modulul importă fișierul XML primit, îl compară rând cu rând cu D300-ul intern și evidențiază diferențele înainte de depunere, gradate pe severitate (informativ / avertisment / eroare critică). Diferențele critice nejustificate blochează închiderea verificării e-TVA din checklistul de închidere a perioadei de TVA, astfel încât discrepanțele să fie explicate înainte de transmiterea D300.\nImport al fișierului XML „Decont precompletat de TVA\" (RO e-TVA) descărcat din SPV.\nReconciliere automată rând cu rând a decontului ANAF față de D300-ul intern calculat de modulul `l10n_ro_anaf_d300`, pe aceeași perioadă.\nAfișare pe fiecare rând a bazei/TVA ANAF, a bazei/TVA interne, a diferenței și a severității: Coincide / Avertisment / Eroare critică.\nPraguri de severitate configurabile pe companie (prag valoric, implicit 1.000 RON, și prag procentual, implicit 20%); o diferență devine eroare critică doar dacă depășește ambele praguri.\nJustificare obligatorie pe fiecare linie cu eroare critică; blocarea închiderii verificării e-TVA cât timp există erori critice nejustificate.\nVerificare blocantă integrată în checklistul return-ului de TVA (D300), accesibilă din procesul de închidere a perioadei.\nRaport de reconciliere cu export PDF."
   },
   {
     "path": "l10n_ro_saft_validator/index.md",
