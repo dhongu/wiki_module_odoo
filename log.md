@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-06-08] Re-ingestie l10n_ro_anaf_messages (corecție mecanism transport)
+
+- **Acțiune:** Re-ingestat `l10n_ro_anaf_messages` (repo `terrabit-ro/l10n_ro_ent`, branch `19.0`) pentru a rezolva discrepanța readme↔cod semnalată la ingestia anterioară. Verificat codul real (`models/anaf_spv_client.py`, `res_company.py`, `l10n_ro_anaf_message.py`, `l10n_ro_anaf_agent_job.py`): conexiunea la SPVWS2 se face **prin Agentul Terrabit (mTLS)**, nu prin OAuth2 Bearer. Sursa adevărată = manifestul + codul; `readme/DESCRIPTION.md` (care descria OAuth2 via `l10n_ro_edi`) era greșit și a fost rescris la realitate, alături de docstring-ul învechit din `l10n_ro_anaf_message.py`.
+- **Sursă:** `readme/DESCRIPTION.md` (rescris) pentru Sumar și Funcționalități; mecanismul confirmat în cod (apel `make_spv_request` către agent local pe `localhost` cu `X-Agent-Token`; model cloud prin push/job `sync_messages`). Componente Cheie omise conform prioritizării Readme.
+- **Dependențe/Conexiuni:** dependențe link activ la `l10n_ro_anaf_base` și `l10n_ro_anaf_agent`. Conexiuni: `l10n_ro_anaf_agent` (transport mTLS), `l10n_ro_anaf_submission` (recipise complementare), `l10n_ro_message_spv` (e-Factura, separat — text `cod`). Eliminată conexiunea înșelătoare către `l10n_ro_edi` (nu se refolosește tokenul OAuth pentru transport).
+- **Fișiere actualizate:** `wiki_module_odoo/l10n_ro_anaf_messages/index.md` (rescris secț. 1, 2, 5), `wiki_module_odoo/log.md`, `wiki_module_odoo/.index/` (rebuild lexical). Sursă corectată în paralel în repo modul: `readme/DESCRIPTION.md` și docstring `l10n_ro_anaf_message.py`.
+
 ## [2026-06-08] Ingestie lot l10n_ro_ent (6 module ANAF/fiscal)
 
 - **Acțiune:** Documentate 6 module rămase nedocumentate din suita `l10n_ro_ent` (repo `terrabit-ro/l10n_ro_ent`, branch `19.0`), procesate în paralel prin 6 subagenți `general-purpose`: `l10n_ro_anaf_agent`, `l10n_ro_anaf_messages`, `l10n_ro_anaf_submission`, `l10n_ro_cost_centers`, `l10n_ro_pos_fiscal_compliance`, `l10n_ro_saft_etva`. Consolidare centralizată (append + re-sortare alfabetică a blocului `## Module`, 283 module total).
