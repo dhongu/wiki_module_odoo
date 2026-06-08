@@ -2,7 +2,11 @@
 __pycache__/
 *.pyc
 
-# Index de retrieval — catalogul lexical (chunks.json + meta.json) ESTE comis,
-# ca wiki-query să meargă imediat după clonare. Vectorii sunt mari și regenerabili
-# (python3 scripts/wiki_index.py --embed), deci NU se comit.
+# Index de retrieval:
+#  - chunks.json (catalogul) ESTE comis → wiki-query merge imediat după clonare (lexical).
+#  - meta.json + vectors.npy sunt stare PER-MAȘINĂ (reflectă dacă ai rulat `--embed` local,
+#    cu ce model). NU se comit — altfel un clone fără vectori ar avea meta `enabled:true`
+#    înșelător. wiki_search.py tratează meta.json absent → lexical. Pentru vectori:
+#    `python3 scripts/wiki_index.py --embed` (regenerează ambele local).
 .index/vectors.npy
+.index/meta.json
