@@ -22,6 +22,35 @@ This `wiki_module_odoo` repository serves as the knowledge base for the Odoo 19 
 - `schema.md`: Defines the structure and rules for documenting individual Odoo modules.
 - `index.md`: A central catalog of all documented modules with links to their respective pages.
 - `log.md`: An append-only chronological record of all operations performed on the wiki.
-- `[module_name].md`: Individual markdown files, each detailing a specific Odoo module.
+- `<module_name>/index.md`: Individual markdown files, each detailing a specific Odoo module.
+- `scripts/`: Index builder + retrieval used by the `wiki-query` skill.
+- `.claude/skills/wiki-query/`: Claude Code skill for querying this wiki (shipped with the repo).
+- `.index/`: Generated retrieval index (`chunks.json` + `meta.json`).
 
 This setup aims to transform raw Odoo module code into an intelligent, evolving documentation system.
+
+## Querying the wiki (for colleagues)
+
+This repo is self-contained for **querying** — you do **not** need the Odoo source code.
+
+1. Clone this repo and open it in Claude Code (this folder is the project root).
+2. Ask questions in natural language — the `wiki-query` skill triggers automatically
+   (e.g. *"ce modul face export către SAGA?"*, *"care module extind `account.move`?"*).
+
+Under the hood it runs a deterministic retrieval over an index built from the markdown pages:
+
+```bash
+python3 scripts/wiki_index.py            # (re)build the index — needs only the .md pages
+python3 scripts/wiki_search.py "export SAGA" -k 5    # rank relevant modules
+```
+
+Retrieval is **hybrid**: lexical by default (zero network), and semantic via embeddings if
+enabled in `scripts/wiki_index.py` (then run `wiki_index.py --embed`). The embedding model and
+dimension are recorded in `.index/meta.json` so the query side always matches the ingest side.
+
+## Maintaining the wiki (ingestion)
+
+Generating/updating pages reads the actual module source, so **ingestion runs from the Odoo
+monorepo**, not from this standalone repo — use the `wiki-module` skill there. It writes the
+`<module>/index.md` pages here and rebuilds `.index/`. Commit and push this repo afterwards so
+colleagues get the refreshed knowledge base.

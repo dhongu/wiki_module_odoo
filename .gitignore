@@ -1,0 +1,8 @@
+# Python
+__pycache__/
+*.pyc
+
+# Index de retrieval — catalogul lexical (chunks.json + meta.json) ESTE comis,
+# ca wiki-query să meargă imediat după clonare. Vectorii sunt mari și regenerabili
+# (python3 scripts/wiki_index.py --embed), deci NU se comit.
+.index/vectors.npy
