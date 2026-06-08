@@ -22,6 +22,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_business_process_handover_document](deltatech_business_process_handover_document/index.md): Generează documentul de predare-primire (proces verbal) pentru un proces de business, direct dintr-un Proiect de Business, ca PDF.
 - [deltatech_cash_statement](deltatech_cash_statement/index.md): Unealtă pentru actualizarea rapidă a soldului inițial al extraselor de casă din Odoo.
 - [deltatech_category_group](deltatech_category_group/index.md): Adaugă două niveluri de grupare (tip și clasă) pentru categoriile interne de produse, utilizabile în rapoartele de marjă, stoc și facturi.
+- [deltatech_category_group_equipment](deltatech_category_group_equipment/index.md): Adaugă grupare (tip și clasă) pentru echipamente, preluată din grupurile categoriei interne a produsului.
 - [deltatech_chart_of_accounts](deltatech_chart_of_accounts/index.md): Sincronizarea și corecția soldurilor inițiale din planul de conturi prin comparare cu balanțe externe și postarea diferențelor, cu suport storno.
 - [deltatech_chatter](deltatech_chatter/index.md): Panou divizat redimensionabil între conținutul formularului și zona de chatter în vizualizările Odoo.
 - [deltatech_cmr_document](deltatech_cmr_document/index.md): Generează documente de transport CMR (scrisoare de transport internațional) în format PDF din livrările de stoc.
@@ -100,6 +101,8 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_nap_website](deltatech_nap_website/index.md): Extinde raportul NAP cu categoria publică de produse din website_sale, pentru raportare a achizițiilor pe categorii.
 - [deltatech_no_quick_create](deltatech_no_quick_create/index.md): Dezactivează global crearea rapidă (quick create) din câmpurile Many2one pentru a preveni înregistrările incomplete.
 - [deltatech_notification_sound](deltatech_notification_sound/index.md): Feedback sonor pentru notificările din backend, cu sunete distincte pe tip de mesaj și comutator per utilizator.
+- [deltatech_object_history](deltatech_object_history/index.md): Istoric paralel al documentelor Odoo, separat de mesajele standard, ale cărui intrări nu sunt șterse periodic.
+- [deltatech_object_history_service](deltatech_object_history_service/index.md): Extinde istoricul obiectelor către modelele Acord de service și Echipament de service.
 - [deltatech_partner_generic](deltatech_partner_generic/index.md): Definirea unui partener generic implicit, folosit ca valoare de rezervă în fluxurile de vânzări și facturare pentru clienții ocazionali sau anonimi.
 - [deltatech_partner_gifts](deltatech_partner_gifts/index.md): Gestionează cadourile oferite partenerilor — generare linii de cadou, etichete de livrare, date partener și copiere/modificare în masă.
 - [deltatech_partner_rating](deltatech_partner_rating/index.md): Permite evaluarea partenerilor de afaceri pe baza unor criterii definite de utilizator.
@@ -159,6 +162,14 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_sale_store](deltatech_sale_store/index.md): Vânzare directă din magazin cu emitere de bonuri fiscale (fișier pentru programul de tipărit, client generic, marcaj „Bon fiscal" pe jurnale).
 - [deltatech_sale_team](deltatech_sale_team/index.md): Restricționează accesul la documentele de vânzare/facturile propriei echipe și asociază un depozit implicit per echipă.
 - [deltatech_saleorder_pickup_list](deltatech_saleorder_pickup_list/index.md): Raport „Listă de ridicare" tipăribil din comenzile de vânzare, cu produse, cantități și amplasare în depozit.
+- [deltatech_service](deltatech_service/index.md): Modul umbrelă învechit (obsolete) — atrage `deltatech_service_agreement`, unde s-a mutat gestiunea efectivă.
+- [deltatech_service_agreement](deltatech_service_agreement/index.md): Contracte de servicii cu facturare recurentă, generând periodic facturi pe baza consumurilor planificate/efective.
+- [deltatech_service_base](deltatech_service_base/index.md): Stratul de bază al suitei de service — aplicația „Service", grupuri de securitate și date de referință (cicluri, intervale).
+- [deltatech_service_consumable](deltatech_service_consumable/index.md): Gestiunea consumabilelor de service prin contoare, cu citiri, estimări și facturare pe consum.
+- [deltatech_service_equipment](deltatech_service_equipment/index.md): Echipamente de service și contoare, cu facturare pe baza citirilor și valori estimate la finalul perioadei.
+- [deltatech_service_equipment_base](deltatech_service_equipment_base/index.md): Strat de bază pentru echipamente de service cu contoare, citiri și facturare pe citiri.
+- [deltatech_service_maintenance](deltatech_service_maintenance/index.md): Sesizări, comenzi de service și planuri de revizii, cu generare automată a comenzilor de mentenanță.
+- [deltatech_service_task](deltatech_service_task/index.md): Extinde sarcinile de proiect cu loc funcțional și echipament pentru activitățile de service/mentenanță.
 - [deltatech_sms](deltatech_sms/index.md): Trimite SMS din Odoo prin gateway-uri externe configurabile (4Pay / Wapi), înlocuind serviciul IAP nativ.
 - [deltatech_sms_sale](deltatech_sms_sale/index.md): Trimite automat SMS clientului la confirmarea și postarea comenzii de vânzare, configurabil per companie.
 - [deltatech_stock_account](deltatech_stock_account/index.md): Extinde evaluarea stocurilor afișând valoarea contabilă direct la nivelul transferurilor de marfă (picking).
