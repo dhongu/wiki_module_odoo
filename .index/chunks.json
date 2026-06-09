@@ -70,6 +70,106 @@
     "text": "Deltatech Account\ndeltatech_account\nModulul oferă o serie de îmbunătățiri aduse modelelor standard de contabilitate și facturare din Odoo. Este conceput pentru a fluidiza fluxul financiar al companiilor, oferind o vizibilitate mai bună asupra facturilor și opțiuni de configurare mai flexibile. Practic, completează zona de facturi client și facturi furnizor cu informații suplimentare relevante pentru operațiunile contabile zilnice și adaugă opțiuni de configurare pentru jurnale și conturi.\nVizibilitate extinsă a facturilor: adaugă câmpuri suplimentare și coloane specializate în vizualizările pentru facturile client și facturile furnizor; îmbunătățește vizualizarea de tip listă a facturilor cu informații mai relevante pentru operațiunile contabile zilnice.\nGestionare flexibilă a jurnalelor și conturilor: oferă opțiuni suplimentare de configurare pentru jurnalele contabile și pentru conturile individuale; include un model rafinat de securitate și permisiuni pentru câmpurile contabile sensibile.\nSincronizare între documente: asigură curgerea corectă a datelor contabile între documentele conexe (de exemplu, de la facturi către plăți); include logică specifică pentru gestionarea închiderilor de perioadă și a suprascrierilor datei contabile."
   },
   {
+    "path": "deltatech_account_bank_statement_import/index.md",
+    "module": "deltatech_account_bank_statement_import",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_account_bank_statement_import",
+    "last_ingest": "2026-06-09",
+    "friendly_name": "Bank Statements Import Extension",
+    "summary": "Acest modul extinde funcționalitatea de import al extraselor de cont bancar pentru a accepta fișiere XLSX, pe lângă formatele acceptate în mod standard. În plus, ajută la identificarea automată a partenerului asociat fiecărei tranzacții, reducând munca manuală de reconciliere și potrivire a încasărilor cu partenerii corecți.",
+    "features": [
+      "Import al extraselor de cont bancar din fișiere XLSX.",
+      "Detectare automată a partenerului după numele partenerului (caută un partener cu nume corespunzător).",
+      "Detectare automată a partenerului după referința comenzii de vânzare (caută o comandă de vânzare care corespunde referinței plății și asociază partenerul comercial al acelei comenzi)."
+    ],
+    "dependencies": [
+      "account_bank_statement_import_csv"
+    ],
+    "connections": [],
+    "text": "Bank Statements Import Extension\ndeltatech_account_bank_statement_import\nAcest modul extinde funcționalitatea de import al extraselor de cont bancar pentru a accepta fișiere XLSX, pe lângă formatele acceptate în mod standard. În plus, ajută la identificarea automată a partenerului asociat fiecărei tranzacții, reducând munca manuală de reconciliere și potrivire a încasărilor cu partenerii corecți.\nImport al extraselor de cont bancar din fișiere XLSX.\nDetectare automată a partenerului după numele partenerului (caută un partener cu nume corespunzător).\nDetectare automată a partenerului după referința comenzii de vânzare (caută o comandă de vânzare care corespunde referinței plății și asociază partenerul comercial al acelei comenzi)."
+  },
+  {
+    "path": "deltatech_account_enterprise/index.md",
+    "module": "deltatech_account_enterprise",
+    "version": "19.0.0.0.2",
+    "github": "https://github.com/terrabit-ro/bitshop_ent/tree/19.0/deltatech_account_enterprise",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_account_enterprise",
+    "last_ingest": "2026-06-09",
+    "friendly_name": "Deltatech Account Enterprise",
+    "summary": "Acest modul extinde funcționalitățile de contabilitate din Odoo Enterprise, concentrându-se pe îmbunătățirea rapoartelor de urmărire a clienților (Customer Follow-up). Scopul său principal este să ofere o imagine mai clară asupra situației datoriilor unui partener, prin gruparea tranzacțiilor după statusul lor și prin afișarea de subtotaluri pe fiecare grup. Astfel, persoanele responsabile cu încasările văd mai ușor ce sume sunt restante și ce sume urmează să devină scadente.",
+    "features": [
+      "Linii de urmărire grupate: tranzacțiile din raportul de urmărire sunt grupate după statusul lor, în Restante (Overdue) și Scadente (Due).",
+      "Subtotaluri pe status: fiecare grup de status (Restante/Scadente) afișează propriile subtotaluri pentru Sumă, Sumă în valută și Sold, oferind o imagine mai clară a situației datoriilor partenerului.",
+      "Aspect îmbunătățit al raportului: șablonul raportului de urmărire este ajustat pentru a prezenta mai bine informațiile grupate."
+    ],
+    "dependencies": [
+      "account",
+      "account_accountant",
+      "account_reports"
+    ],
+    "connections": [],
+    "text": "Deltatech Account Enterprise\ndeltatech_account_enterprise\nAcest modul extinde funcționalitățile de contabilitate din Odoo Enterprise, concentrându-se pe îmbunătățirea rapoartelor de urmărire a clienților (Customer Follow-up). Scopul său principal este să ofere o imagine mai clară asupra situației datoriilor unui partener, prin gruparea tranzacțiilor după statusul lor și prin afișarea de subtotaluri pe fiecare grup. Astfel, persoanele responsabile cu încasările văd mai ușor ce sume sunt restante și ce sume urmează să devină scadente.\nLinii de urmărire grupate: tranzacțiile din raportul de urmărire sunt grupate după statusul lor, în Restante (Overdue) și Scadente (Due).\nSubtotaluri pe status: fiecare grup de status (Restante/Scadente) afișează propriile subtotaluri pentru Sumă, Sumă în valută și Sold, oferind o imagine mai clară a situației datoriilor partenerului.\nAspect îmbunătățit al raportului: șablonul raportului de urmărire este ajustat pentru a prezenta mai bine informațiile grupate."
+  },
+  {
+    "path": "deltatech_account_scenario/index.md",
+    "module": "deltatech_account_scenario",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/bitshop_ent/tree/19.0/deltatech_account_scenario",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_account_scenario",
+    "last_ingest": "2026-06-09",
+    "friendly_name": "Accounting Scenario Framework",
+    "summary": "`deltatech_account_scenario` este un modul Odoo 19 care oferă un cadru bazat pe JSON pentru rularea și validarea unor scenarii contabile complete. Modulul permite dezvoltatorilor și contabililor să definească procese de afaceri (facturi, plăți, note contabile, mijloace fixe, recepții de stoc, livrări etc.) sub formă de scenarii JSON, să le execute pe o bază de date Odoo activă și să valideze automat înregistrările contabile și valorizările de stoc rezultate. Modulul funcționează în două moduri: modul „test\", în care execută un scenariu și verifică dacă notele contabile și valorile de stoc generate corespund celor așteptate definite în JSON, și modul „demo\", în care execută un scenariu pentru a genera date demonstrative fără validare contabilă strictă.",
+    "features": [
+      "Scenarii definite prin JSON — procese de afaceri complete descrise ca JSON structurat, cu pași (acțiuni) și înregistrări contabile/de stoc așteptate. Pașii se împart în pași de date master (creează sau identifică date de referință: conturi, parteneri, categorii de produse, produse) și pași tranzacționali (comenzi de aprovizionare, recepții de stoc, facturi furnizor, comenzi de vânzare, facturi, transferuri de stoc, note contabile, plăți). Fiecare pas poate include un câmp `_comment` folosit ca mesaj de jurnal.",
+      "Validare contabilă și de stoc — după execuția pașilor, motorul compară liniile `account.move.line` generate cu secțiunea `expected_account_moves` din JSON, validând coduri de cont, sume debit/credit și conturi analitice; validează și cantitățile și valorile de stoc per produs prin secțiunea `checks` din fiecare pas, raportând clar neconcordanțele în jurnalul rulării.",
+      "Integrare în interfață — listă de scenarii cu import de fișiere JSON (buton „Import Scenarios\"), formular de scenariu cu export JSON, istoric al rulărilor (fiecare execuție înregistrată ca `account.test.run` cu jurnal complet și rezultat), navigare din jurnal direct către documentul aferent (factură, transfer, plată), butoane „Set Ready\", „Execute Scenario\", „Re-run Scenario\", „View Runs\", și meniu sub Accounting → Account Scenarios (Test Scenarios și Test Runs).",
+      "Bibliotecă de scenarii inclusă — date de bază (`00_base_data.json`) cu categorii de produse, parteneri și produse comune, scenarii demo pentru fluxuri de achiziție/vânzare, transferuri și recepții, plus 140 de scenarii de testare a contabilității de stoc românești sub `data/scenarios/ro_stock/`: 70 de scenarii FIFO și 70 de scenarii cost mediu ponderat (CMP), acoperind cazuri-limită conform reglementărilor contabile din România.",
+      "Teste automate — teste `TransactionCase` sub `tests/test_stock_scenarios.py` și `tests/common.py` care acoperă crearea de categorii, parteneri și produse, crearea și postarea facturilor, execuția completă a scenariilor, achiziții și vânzări cu verificări contabile, precum și gestionarea erorilor pentru tipuri de pași necunoscute."
+    ],
+    "dependencies": [
+      "account",
+      "stock",
+      "stock_account",
+      "purchase_stock",
+      "sale_stock",
+      "markdown"
+    ],
+    "connections": [
+      "stock_account",
+      "purchase_stock",
+      "sale_stock"
+    ],
+    "text": "Accounting Scenario Framework\ndeltatech_account_scenario\n`deltatech_account_scenario` este un modul Odoo 19 care oferă un cadru bazat pe JSON pentru rularea și validarea unor scenarii contabile complete. Modulul permite dezvoltatorilor și contabililor să definească procese de afaceri (facturi, plăți, note contabile, mijloace fixe, recepții de stoc, livrări etc.) sub formă de scenarii JSON, să le execute pe o bază de date Odoo activă și să valideze automat înregistrările contabile și valorizările de stoc rezultate. Modulul funcționează în două moduri: modul „test\", în care execută un scenariu și verifică dacă notele contabile și valorile de stoc generate corespund celor așteptate definite în JSON, și modul „demo\", în care execută un scenariu pentru a genera date demonstrative fără validare contabilă strictă.\nScenarii definite prin JSON — procese de afaceri complete descrise ca JSON structurat, cu pași (acțiuni) și înregistrări contabile/de stoc așteptate. Pașii se împart în pași de date master (creează sau identifică date de referință: conturi, parteneri, categorii de produse, produse) și pași tranzacționali (comenzi de aprovizionare, recepții de stoc, facturi furnizor, comenzi de vânzare, facturi, transferuri de stoc, note contabile, plăți). Fiecare pas poate include un câmp `_comment` folosit ca mesaj de jurnal.\nValidare contabilă și de stoc — după execuția pașilor, motorul compară liniile `account.move.line` generate cu secțiunea `expected_account_moves` din JSON, validând coduri de cont, sume debit/credit și conturi analitice; validează și cantitățile și valorile de stoc per produs prin secțiunea `checks` din fiecare pas, raportând clar neconcordanțele în jurnalul rulării.\nIntegrare în interfață — listă de scenarii cu import de fișiere JSON (buton „Import Scenarios\"), formular de scenariu cu export JSON, istoric al rulărilor (fiecare execuție înregistrată ca `account.test.run` cu jurnal complet și rezultat), navigare din jurnal direct către documentul aferent (factură, transfer, plată), butoane „Set Ready\", „Execute Scenario\", „Re-run Scenario\", „View Runs\", și meniu sub Accounting → Account Scenarios (Test Scenarios și Test Runs).\nBibliotecă de scenarii inclusă — date de bază (`00_base_data.json`) cu categorii de produse, parteneri și produse comune, scenarii demo pentru fluxuri de achiziție/vânzare, transferuri și recepții, plus 140 de scenarii de testare a contabilității de stoc românești sub `data/scenarios/ro_stock/`: 70 de scenarii FIFO și 70 de scenarii cost mediu ponderat (CMP), acoperind cazuri-limită conform reglementărilor contabile din România.\nTeste automate — teste `TransactionCase` sub `tests/test_stock_scenarios.py` și `tests/common.py` care acoperă crearea de categorii, parteneri și produse, crearea și postarea facturilor, execuția completă a scenariilor, achiziții și vânzări cu verificări contabile, precum și gestionarea erorilor pentru tipuri de pași necunoscute."
+  },
+  {
+    "path": "deltatech_account_scenario_ai/index.md",
+    "module": "deltatech_account_scenario_ai",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/bitshop_ent/tree/19.0/deltatech_account_scenario_ai",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_account_scenario_ai",
+    "last_ingest": "2026-06-09",
+    "friendly_name": "Accounting Scenario AI Generator",
+    "summary": "Modulul `deltatech_account_scenario_ai` extinde modulul `deltatech_account_scenario` adăugând generarea de scenarii contabile cu ajutorul inteligenței artificiale. Utilizatorul descrie un proces de afaceri în text simplu (de exemplu „achiziție de marfă de la furnizor, recepție în stoc, factură furnizor și plată\"), iar Odoo folosește un agent AID dedicat pentru a genera automat o definiție JSON validă a scenariului, gata de a fi executată și validată de cadrul de scenarii. Astfel, crearea scenariilor contabile devine mult mai rapidă și accesibilă, eliminând necesitatea scrierii manuale a structurii JSON complexe.",
+    "features": [
+      "Generarea unui scenariu contabil în format JSON pornind de la o descriere în text liber a procesului de afaceri.",
+      "Câmp suplimentar AI Prompt pentru instrucțiuni adiționale către AI (conturi specifice, sume, parteneri, reguli de validare).",
+      "Buton Generate with AI pe fișa scenariului, vizibil când starea este `Draft` sau `Failed`, care trimite descrierea și promptul către agentul AI și completează automat câmpul `json_data`.",
+      "Agent AI dedicat (`ai_agent_scenario_generator`), creat automat la instalare, configurat cu un prompt de sistem care îl direcționează să respecte strict documentația cadrului de scenarii.",
+      "Sursă de cunoștințe atașată agentului: fișierul `USAGE.MD` din `deltatech_account_scenario`, încărcat ca `ir.attachment` și legat prin `source_ids`, conținând formatul JSON, toate cele 25 de tipuri de pași, descrierile câmpurilor, verificările (`checks`), `expected_account_moves` și un exemplu complet.",
+      "Flux integrat cu cadrul de scenarii: după generare, JSON-ul poate fi revizuit, apoi marcat Set Ready și executat ca orice scenariu standard."
+    ],
+    "dependencies": [
+      "deltatech_account_scenario",
+      "ai"
+    ],
+    "connections": [
+      "deltatech_account_scenario",
+      "ai"
+    ],
+    "text": "Accounting Scenario AI Generator\ndeltatech_account_scenario_ai\nModulul `deltatech_account_scenario_ai` extinde modulul `deltatech_account_scenario` adăugând generarea de scenarii contabile cu ajutorul inteligenței artificiale. Utilizatorul descrie un proces de afaceri în text simplu (de exemplu „achiziție de marfă de la furnizor, recepție în stoc, factură furnizor și plată\"), iar Odoo folosește un agent AID dedicat pentru a genera automat o definiție JSON validă a scenariului, gata de a fi executată și validată de cadrul de scenarii. Astfel, crearea scenariilor contabile devine mult mai rapidă și accesibilă, eliminând necesitatea scrierii manuale a structurii JSON complexe.\nGenerarea unui scenariu contabil în format JSON pornind de la o descriere în text liber a procesului de afaceri.\nCâmp suplimentar AI Prompt pentru instrucțiuni adiționale către AI (conturi specifice, sume, parteneri, reguli de validare).\nButon Generate with AI pe fișa scenariului, vizibil când starea este `Draft` sau `Failed`, care trimite descrierea și promptul către agentul AI și completează automat câmpul `json_data`.\nAgent AI dedicat (`ai_agent_scenario_generator`), creat automat la instalare, configurat cu un prompt de sistem care îl direcționează să respecte strict documentația cadrului de scenarii.\nSursă de cunoștințe atașată agentului: fișierul `USAGE.MD` din `deltatech_account_scenario`, încărcat ca `ir.attachment` și legat prin `source_ids`, conținând formatul JSON, toate cele 25 de tipuri de pași, descrierile câmpurilor, verificările (`checks`), `expected_account_moves` și un exemplu complet.\nFlux integrat cu cadrul de scenarii: după generare, JSON-ul poate fi revizuit, apoi marcat Set Ready și executat ca orice scenariu standard."
+  },
+  {
     "path": "deltatech_actions/index.md",
     "module": "deltatech_actions",
     "version": "19.0.0.0.9",
@@ -93,6 +193,49 @@
     ],
     "connections": [],
     "text": "Deltatech Actions\ndeltatech_actions\nModulul Deltatech Actions este un set de instrumente de mentenanță și curățare pentru baza de date Odoo. Acesta oferă acțiuni programate (cron) și funcții de service care ajută la menținerea unei baze de date curate și ordonate: eliminarea atașamentelor duplicate, ștergerea PDF-urilor vechi de pe comenzile de vânzare sau crearea regulilor de reaprovizionare lipsă. Toate sarcinile sunt gândite să fie sigure: vin dezactivate implicit și rulează în mod „dry run” (fără modificări reale în baza de date) până când administratorul le activează conștient.\nCăutarea și ștergerea fișierelor XML ANAF duplicate (cron: „Delete duplicate xml attachments”).\nCrearea regulilor de reaprovizionare a stocului lipsă (cron: „Create missing reordering rules (0/0)”).\nCăutarea și ștergerea atașamentelor PDF vechi de pe comenzile de vânzare (cron: „Delete pdf sale order attachments”).\nToate sarcinile cron sunt dezactivate implicit și rulează în mod „dry” (fără modificări în baza de date).\nFuncție de anulare a tuturor mișcărilor de stoc și contabile de pe o comandă de vânzare (`force_cancel_order_and_moves`). Aceasta trebuie apelată printr-o acțiune de server creată manual, din motive de securitate."
+  },
+  {
+    "path": "deltatech_advanced_planner/index.md",
+    "module": "deltatech_advanced_planner",
+    "version": "19.0.1.3.0",
+    "github": "https://github.com/terrabit-ro/bitshop_ent/tree/19.0/deltatech_advanced_planner",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_advanced_planner",
+    "last_ingest": "2026-06-09",
+    "friendly_name": "Deltatech Advanced Planner",
+    "summary": "Deltatech Advanced Planner este un planificator avansat de stoc care răspunde la o întrebare pe care planificarea nativă Odoo nu o acoperă: este realizabilă data de livrare promisă clientului, ținând cont de stocul disponibil, lead time-urile furnizorilor și durata producției? Modulul adaugă capabilități de tip APS (Advanced Planning & Scheduling) cu capacitate finită direct în Odoo, fără integrări externe: planificare backward de la data de livrare, verificare a capacității reale a posturilor de lucru (RCCP/CRP), netting cronologic al stocului proiectat și validare automată a plauzibilității datei de livrare (OK / Avertisment / Blocat). Pe lângă comenzile de vânzare, planificatorul analizează și mișcările de stoc independente, generând automat comenzi planificate de reaprovizionare pentru a preveni stocul negativ. Oferă vizibilitate completă în stil SAP (Situație Material, Stoc Proiectat Agregat cu pegging) și escaladare automată a abaterilor față de plan.",
+    "features": [
+      "Netting cronologic — calculează stocul proiectat la data livrării, nu stocul brut curent; ieșirile de după `commitment_date` nu reduc disponibilul calculat.",
+      "Backward scheduling cu validare dată livrare — pornind de la data dorită, calculează înapoi datele de producție și de lansare a achizițiilor; emite verdict OK / Avertisment / Blocat și propune o dată alternativă realizabilă când data e imposibilă.",
+      "Forward scheduling automat — când SO-ul nu are dată de livrare sau datele ar cădea în trecut, propune automat cea mai devreme dată realizabilă.",
+      "Explozie BOM recursivă și netting componente — descompune produsul finit pe toate nivelurile și calculează necesarul net de aprovizionat per componentă, cu alocare globală partajată la rularea în batch (fără supraplanificarea aceluiași stoc).",
+      "Capacitate producție RCCP — lead time-ul de producție este derivat din operațiile BOM grupate pe workcenter, determinat de workcenter-ul bottleneck (cu eficiență și ore de calendar).",
+      "CRP complet cu nivelare greedy (load leveling) — agregă încărcarea reală a posturilor de lucru pe sloturi (workcenter × săptămână × companie) și mută automat AP-urile cu cel mai mult slack din sloturile supraîncărcate, cu cascadă recursivă pe AP-urile copil; opțiune `dry_run`.",
+      "Reaprovizionare independentă — generează AP-uri pentru mișcările de stoc de ieșire fără comandă de vânzare (transferuri, consum intern, ajustări), prevenind stocul negativ.",
+      "Ciclu de viață SAP-style — comenzile planificate trec prin `draft → planned → done`, cu tranziții automate la trimiterea/retragerea ofertei și fixare (firming) prin `is_fixed`.",
+      "Planificare în fază de ofertare (simulare) — rulare pe SO în stare `draft`, fără rezervare de stoc sau generare PO/MO; rezultatul apare pe liniile SO.",
+      "Situație Material și Stoc Proiectat Agregat — ecran de stoc proiectat cronologic per produs cu trasabilitate completă SO → AP → PO/MO → mișcare de stoc și pegging FIFO (ATP, detecție shortage).",
+      "Sincronizare bidirecțională PO/MO ↔ AP — modificarea datelor pe liniile PO sau pe MO propagă noile date în AP-uri și cascadează prin ierarhia BOM, actualizând statusul; sincronizarea livrărilor reflectă data efectivă pe picking.",
+      "Consolidare automată RFQ-uri — RFQ-urile pentru același furnizor cu dată în fereastra ±N zile sunt adăugate la un PO existent (relație Many2many AP ↔ PO).",
+      "Generare manuală RFQ / MO — comenzile de achiziție și de producție se lansează manual din formularul comenzii planificate, cu verificare de duplicat.",
+      "Detecție abateri zilnică (cron) — detectează PO nelansat, PO întârziat și MO blocat; actualizează statusul, postează note în chatter și creează activități pentru responsabil.",
+      "Escaladare automată — AP-urile rămase `blocked` peste pragul configurat declanșează escaladarea activităților expirate.",
+      "Replanificare automată la schimbarea datei SO — retrigerează planificatorul când `commitment_date` se modifică pe un SO confirmat (activabil din Setări).",
+      "Planificare globală — wizard pentru rularea pe toate SO-urile active, sortate după `commitment_date`, cu protecție la rulări concurente prin advisory lock PostgreSQL.",
+      "Planificare bulk din lista SO — acțiune de server pe selecție multiplă; SO-urile fără BOM sunt marcate `not_applicable`.",
+      "Rapoarte și export — PDF „Plan Livrări\", Excel AP-uri (toate nivelele BOM, celule colorate per status) și Excel Workcenter Load; raport de încărcare a posturilor (pivot, grafic).",
+      "Banner status pe SO și notificare email — verde/galben/roșu pe formularul SO și alertă către managerul de logistică la starea `blocked`.",
+      "MOQ automat — cantitatea de comandat este ajustată la cantitatea minimă a furnizorului."
+    ],
+    "dependencies": [
+      "sale_management",
+      "mrp",
+      "purchase",
+      "stock",
+      "resource",
+      "mail"
+    ],
+    "connections": [],
+    "text": "Deltatech Advanced Planner\ndeltatech_advanced_planner\nDeltatech Advanced Planner este un planificator avansat de stoc care răspunde la o întrebare pe care planificarea nativă Odoo nu o acoperă: este realizabilă data de livrare promisă clientului, ținând cont de stocul disponibil, lead time-urile furnizorilor și durata producției? Modulul adaugă capabilități de tip APS (Advanced Planning & Scheduling) cu capacitate finită direct în Odoo, fără integrări externe: planificare backward de la data de livrare, verificare a capacității reale a posturilor de lucru (RCCP/CRP), netting cronologic al stocului proiectat și validare automată a plauzibilității datei de livrare (OK / Avertisment / Blocat). Pe lângă comenzile de vânzare, planificatorul analizează și mișcările de stoc independente, generând automat comenzi planificate de reaprovizionare pentru a preveni stocul negativ. Oferă vizibilitate completă în stil SAP (Situație Material, Stoc Proiectat Agregat cu pegging) și escaladare automată a abaterilor față de plan.\nNetting cronologic — calculează stocul proiectat la data livrării, nu stocul brut curent; ieșirile de după `commitment_date` nu reduc disponibilul calculat.\nBackward scheduling cu validare dată livrare — pornind de la data dorită, calculează înapoi datele de producție și de lansare a achizițiilor; emite verdict OK / Avertisment / Blocat și propune o dată alternativă realizabilă când data e imposibilă.\nForward scheduling automat — când SO-ul nu are dată de livrare sau datele ar cădea în trecut, propune automat cea mai devreme dată realizabilă.\nExplozie BOM recursivă și netting componente — descompune produsul finit pe toate nivelurile și calculează necesarul net de aprovizionat per componentă, cu alocare globală partajată la rularea în batch (fără supraplanificarea aceluiași stoc).\nCapacitate producție RCCP — lead time-ul de producție este derivat din operațiile BOM grupate pe workcenter, determinat de workcenter-ul bottleneck (cu eficiență și ore de calendar).\nCRP complet cu nivelare greedy (load leveling) — agregă încărcarea reală a posturilor de lucru pe sloturi (workcenter × săptămână × companie) și mută automat AP-urile cu cel mai mult slack din sloturile supraîncărcate, cu cascadă recursivă pe AP-urile copil; opțiune `dry_run`.\nReaprovizionare independentă — generează AP-uri pentru mișcările de stoc de ieșire fără comandă de vânzare (transferuri, consum intern, ajustări), prevenind stocul negativ.\nCiclu de viață SAP-style — comenzile planificate trec prin `draft → planned → done`, cu tranziții automate la trimiterea/retragerea ofertei și fixare (firming) prin `is_fixed`.\nPlanificare în fază de ofertare (simulare) — rulare pe SO în stare `draft`, fără rezervare de stoc sau generare PO/MO; rezultatul apare pe liniile SO.\nSituație Material și Stoc Proiectat Agregat — ecran de stoc proiectat cronologic per produs cu trasabilitate completă SO → AP → PO/MO → mișcare de stoc și pegging FIFO (ATP, detecție shortage).\nSincronizare bidirecțională PO/MO ↔ AP — modificarea datelor pe liniile PO sau pe MO propagă noile date în AP-uri și cascadează prin ierarhia BOM, actualizând statusul; sincronizarea livrărilor reflectă data efectivă pe picking.\nConsolidare automată RFQ-uri — RFQ-urile pentru același furnizor cu dată în fereastra ±N zile sunt adăugate la un PO existent (relație Many2many AP ↔ PO).\nGenerare manuală RFQ / MO — comenzile de achiziție și de producție se lansează manual din formularul comenzii planificate, cu verificare de duplicat.\nDetecție abateri zilnică (cron) — detectează PO nelansat, PO întârziat și MO blocat; actualizează statusul, postează note în chatter și creează activități pentru responsabil.\nEscaladare automată — AP-urile rămase `blocked` peste pragul configurat declanșează escaladarea activităților expirate.\nReplanificare automată la schimbarea datei SO — retrigerează planificatorul când `commitment_date` se modifică pe un SO confirmat (activabil din Setări).\nPlanificare globală — wizard pentru rularea pe toate SO-urile active, sortate după `commitment_date`, cu protecție la rulări concurente prin advisory lock PostgreSQL.\nPlanificare bulk din lista SO — acțiune de server pe selecție multiplă; SO-urile fără BOM sunt marcate `not_applicable`.\nRapoarte și export — PDF „Plan Livrări\", Excel AP-uri (toate nivelele BOM, celule colorate per status) și Excel Workcenter Load; raport de încărcare a posturilor (pivot, grafic).\nBanner status pe SO și notificare email — verde/galben/roșu pe formularul SO și alertă către managerul de logistică la starea `blocked`.\nMOQ automat — cantitatea de comandat este ajustată la cantitatea minimă a furnizorului."
   },
   {
     "path": "deltatech_agreement_management/index.md",
@@ -252,6 +395,28 @@
     ],
     "connections": [],
     "text": "Backup Attachments\ndeltatech_backup_attachment\nModulul permite salvarea (backup) a atașamentelor din Odoo pe baza unui filtru de tip domeniu. Utilizatorul alege ce categorii de fișiere dorește să exporte (de exemplu, excluzând imaginile PNG/JPEG sau fișierele PDF) și obține o arhivă cu fișierele selectate. Este util pentru a face copii de siguranță selective ale documentelor stocate, fără a descărca toate atașamentele din sistem.\nSelectarea atașamentelor de exportat pe baza unui filtru de tip domeniu (ex.: `[(\"mimetype\",\"not in\",[\"image/png\", \"image/jpeg\",\"application/pdf\"])]`).\nFiltrare avansată după model, câmp sau alte criterii (ex.: `[('res_model','not ilike','product'),('res_field','like','%')]`).\nGenerarea unei arhive cu fișierele care corespund filtrului."
+  },
+  {
+    "path": "deltatech_bank_stmt_foreign_currency/index.md",
+    "module": "deltatech_bank_stmt_foreign_currency",
+    "version": "19.0.0.0.2",
+    "github": "https://github.com/terrabit-ro/bitshop_ent/tree/19.0/deltatech_bank_stmt_foreign_currency",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_bank_stmt_foreign_currency",
+    "last_ingest": "2026-06-09",
+    "friendly_name": "Bank Statement Foreign Currency",
+    "summary": "Acest modul extinde funcționalitatea de import al extraselor bancare pentru a gestiona tranzacțiile efectuate în valută. Atunci când extrasul conține sume într-o monedă diferită de cea a jurnalului (sau a companiei), modulul realizează automat conversia pe baza cursului de schimb valabil la data tranzacției. Astfel, contabilii pot importa fără efort suplimentar extrase cu operațiuni multi-valutare, sumele fiind aduse corect în moneda de lucru.",
+    "features": [
+      "Conversie valutară automată: convertește sumele dintr-o valută străină în moneda jurnalului (sau a companiei) pe baza cursului de schimb de la data tranzacției.",
+      "Suport multi-valutar: permite importul fișierelor care conțin tranzacții în monede diferite, prin maparea câmpurilor `foreign_currency_id` și `amount_currency`.",
+      "Detectare îmbunătățită a partenerilor: moștenește identificarea automată a partenerului (după nume sau după referința comenzii de vânzare) din modulul de bază."
+    ],
+    "dependencies": [
+      "deltatech_account_bank_statement_import"
+    ],
+    "connections": [
+      "deltatech_account_bank_statement_import"
+    ],
+    "text": "Bank Statement Foreign Currency\ndeltatech_bank_stmt_foreign_currency\nAcest modul extinde funcționalitatea de import al extraselor bancare pentru a gestiona tranzacțiile efectuate în valută. Atunci când extrasul conține sume într-o monedă diferită de cea a jurnalului (sau a companiei), modulul realizează automat conversia pe baza cursului de schimb valabil la data tranzacției. Astfel, contabilii pot importa fără efort suplimentar extrase cu operațiuni multi-valutare, sumele fiind aduse corect în moneda de lucru.\nConversie valutară automată: convertește sumele dintr-o valută străină în moneda jurnalului (sau a companiei) pe baza cursului de schimb de la data tranzacției.\nSuport multi-valutar: permite importul fișierelor care conțin tranzacții în monede diferite, prin maparea câmpurilor `foreign_currency_id` și `amount_currency`.\nDetectare îmbunătățită a partenerilor: moștenește identificarea automată a partenerului (după nume sau după referința comenzii de vânzare) din modulul de bază."
   },
   {
     "path": "deltatech_barcode_sale/index.md",
@@ -433,6 +598,29 @@
     "text": "Deltatech Category Group\ndeltatech_category_group\nModulul adaugă două elemente suplimentare de grupare pentru categoriile interne de produse: „Tipul categoriei\" și „Clasa categoriei\". Aceste niveluri suplimentare permit organizarea produselor în structuri mai detaliate decât oferă categoria internă standard, oferind o vedere mai clară asupra portofoliului de produse. Valoarea principală este în raportare: utilizatorul poate analiza marja de vânzare, stocurile și facturile grupate după aceste două noi criterii, fără a fi nevoit să modifice structura existentă a categoriilor.\nAdaugă două elemente de grupare pentru categoriile interne: „Tipul categoriei\" (Category type) și „Clasa categoriei\" (Category class).\nPermite gruparea după aceste două elemente în raportul de marjă de vânzare (Sale margin report).\nPermite gruparea după aceste două elemente în analiza stocurilor (Stock quant).\nPermite gruparea după aceste două elemente în raportul de facturi (Account invoice report)."
   },
   {
+    "path": "deltatech_category_group_equipment/index.md",
+    "module": "deltatech_category_group_equipment",
+    "version": "19.0.0.0.2",
+    "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_category_group_equipment",
+    "local_path": "odoo-addons/deltatech_service/deltatech_category_group_equipment",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Deltatech Equipment Category Group",
+    "summary": "Modulul adaugă elemente de grupare pentru echipamente, preluate din grupurile definite pe categoria internă a produsului asociat echipamentului. Astfel, echipamentele pot fi organizate și filtrate după „tipul categoriei\" și „clasa categoriei\", facilitând clasificarea și raportarea parcului de echipamente în mod consecvent cu categoriile de produse.",
+    "features": [
+      "Adaugă două elemente de grupare pentru echipamente: „tipul categoriei\" (Category type) și „clasa categoriei\" (Category class).",
+      "Aceste grupări sunt legate de categoria internă a produsului echipamentului."
+    ],
+    "dependencies": [
+      "deltatech_category_group",
+      "deltatech_service_equipment"
+    ],
+    "connections": [
+      "deltatech_category_group",
+      "deltatech_service_equipment"
+    ],
+    "text": "Deltatech Equipment Category Group\ndeltatech_category_group_equipment\nModulul adaugă elemente de grupare pentru echipamente, preluate din grupurile definite pe categoria internă a produsului asociat echipamentului. Astfel, echipamentele pot fi organizate și filtrate după „tipul categoriei\" și „clasa categoriei\", facilitând clasificarea și raportarea parcului de echipamente în mod consecvent cu categoriile de produse.\nAdaugă două elemente de grupare pentru echipamente: „tipul categoriei\" (Category type) și „clasa categoriei\" (Category class).\nAceste grupări sunt legate de categoria internă a produsului echipamentului."
+  },
+  {
     "path": "deltatech_chart_of_accounts/index.md",
     "module": "deltatech_chart_of_accounts",
     "version": "19.0.0.0.6",
@@ -583,6 +771,32 @@
     ],
     "connections": [],
     "text": "Credentials\ndeltatech_credentials\nModulul oferă un loc centralizat în Odoo pentru păstrarea și gestionarea acreditărilor (credențialelor) folosite la conectarea cu servicii externe. Adaugă o secțiune dedicată „Credentials\" sub Setări / Utilizatori și Companii, unde administratorii pot înregistra date de autentificare precum nume de utilizator și parolă, perechi client_id / client_secret sau token-uri de acces. Scopul este să țină aceste informații sensibile la un loc, ușor de administrat, în loc să fie risipite prin diferite configurări.\nAdaugă fila/meniul „Credentials\" sub Setări / Utilizatori și Companii.\nPermite definirea de acreditări pentru servicii externe, cu un cod unic de identificare.\nSuportă trei tipuri de autentificare: utilizator și parolă, client_id și client_secret (cheie API), respectiv token de acces.\nAfișează doar câmpurile relevante pentru tipul de acces selectat (parola este mascată)."
+  },
+  {
+    "path": "deltatech_crm_fsm/index.md",
+    "module": "deltatech_crm_fsm",
+    "version": "19.0.0.0.1",
+    "github": "https://github.com/terrabit-ro/bitshop_ent/tree/19.0/deltatech_crm_fsm",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_crm_fsm",
+    "last_ingest": "2026-06-09",
+    "friendly_name": "Deltatech CRM FSM",
+    "summary": "Acest modul leagă oportunitățile din CRM de sarcinile din Project/FSM și permite crearea rapidă a unei sarcini direct dintr-o oportunitate. În multe fluxuri de vânzare este necesară o vizită pe teren înainte de a întocmi o ofertă (recunoaștere la fața locului, colectare de date, măsurători). Pornind de la oportunitate, utilizatorii pot crea o sarcină asociată pentru echipa de teren și pot urmări ulterior toate sarcinile conectate la acea oportunitate.",
+    "features": [
+      "Adaugă un câmp „Oportunitate\" pe sarcinile de proiect (`project.task.lead_id`).",
+      "Pe formularul oportunității:",
+      "Buton inteligent „Tasks\" care afișează numărul de sarcini asociate și le deschide; dacă există o singură sarcină, aceasta se deschide direct în vizualizare formular.",
+      "Buton de antet „Create FSM Task\" pentru a crea rapid o sarcină precompletată cu oportunitatea, partenerul și un nume contextual.",
+      "Căutare și grupare după Oportunitate în vizualizările de sarcini. Oportunitatea este vizibilă și ca o coloană în listele de sarcini."
+    ],
+    "dependencies": [
+      "crm",
+      "project"
+    ],
+    "connections": [
+      "crm",
+      "project"
+    ],
+    "text": "Deltatech CRM FSM\ndeltatech_crm_fsm\nAcest modul leagă oportunitățile din CRM de sarcinile din Project/FSM și permite crearea rapidă a unei sarcini direct dintr-o oportunitate. În multe fluxuri de vânzare este necesară o vizită pe teren înainte de a întocmi o ofertă (recunoaștere la fața locului, colectare de date, măsurători). Pornind de la oportunitate, utilizatorii pot crea o sarcină asociată pentru echipa de teren și pot urmări ulterior toate sarcinile conectate la acea oportunitate.\nAdaugă un câmp „Oportunitate\" pe sarcinile de proiect (`project.task.lead_id`).\nPe formularul oportunității:\nButon inteligent „Tasks\" care afișează numărul de sarcini asociate și le deschide; dacă există o singură sarcină, aceasta se deschide direct în vizualizare formular.\nButon de antet „Create FSM Task\" pentru a crea rapid o sarcină precompletată cu oportunitatea, partenerul și un nume contextual.\nCăutare și grupare după Oportunitate în vizualizările de sarcini. Oportunitatea este vizibilă și ca o coloană în listele de sarcini."
   },
   {
     "path": "deltatech_data_sheet/index.md",
@@ -1653,6 +1867,28 @@
     "text": "Deltatech Partner GLN\ndeltatech_gln\nAcest modul a fost conceput pentru a gestiona Numărul Global de Locație (GLN — Global Location Number) la nivel de parteneri în Odoo. Rolul său este să se asigure că datele GLN sunt corect stocate și sincronizate pentru schimbul electronic de date (EDI) și pentru procesele logistice. În prezent modulul este marcat ca **obsolet**: funcționalitatea sa principală a fost preluată de modulul `account_add_gln`, iar `deltatech_gln` rămâne în principal ca strat de compatibilitate pentru configurațiile mai vechi care încă depind de el.\nIntegrarea câmpului GLN: adaugă un câmp dedicat GLN (Global Location Number) în vizualizarea formularului de partener, făcând datele GLN ușor accesibile și editabile pentru fiecare locație de business.\nStrat de compatibilitate: acționează ca punte pentru configurațiile vechi (legacy) care necesită dependența `deltatech_gln`.\nSuport pentru migrare: sprijină migrarea datelor GLN către noul standard `account_add_gln`."
   },
   {
+    "path": "deltatech_helpdesk_tag_primary/index.md",
+    "module": "deltatech_helpdesk_tag_primary",
+    "version": "19.0.0.0.0",
+    "github": "https://github.com/terrabit-ro/bitshop_ent/tree/19.0/deltatech_helpdesk_tag_primary",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_helpdesk_tag_primary",
+    "last_ingest": "2026-06-09",
+    "friendly_name": "Helpdesk Tag Primary & Team Filter",
+    "summary": "Modulul aduce o organizare pe două niveluri a etichetelor (tag-urilor) folosite la clasificarea tichetelor din Helpdesk. Pe lângă eticheta standard, fiecare etichetă poate fi marcată ca subordonată unei etichete principale și poate fi asociată unei anumite echipe Helpdesk. Astfel, atunci când se completează un tichet, lista de etichete disponibilă devine mai scurtă și mai relevantă: utilizatorul vede întâi doar etichetele principale potrivite pentru echipa tichetului, iar apoi un câmp suplimentar de etichete secundare, dependente de selecția făcută. Rezultatul este o taxonomie mai curată a tichetelor și o selecție mai rapidă și mai corectă pentru agenții de suport.",
+    "features": [
+      "Adaugă pe eticheta de Helpdesk două câmpuri noi: echipa Helpdesk și eticheta principală.",
+      "În câmpul standard de etichete al tichetului afișează doar etichetele care nu au o etichetă principală setată și care aparțin echipei tichetului sau nu au echipă asociată.",
+      "După completarea etichetelor standard, afișează un câmp pentru etichete secundare, unde pot fi adăugate doar etichetele care au ca etichetă principală una dintre etichetele alese în câmpul standard."
+    ],
+    "dependencies": [
+      "helpdesk"
+    ],
+    "connections": [
+      "helpdesk"
+    ],
+    "text": "Helpdesk Tag Primary & Team Filter\ndeltatech_helpdesk_tag_primary\nModulul aduce o organizare pe două niveluri a etichetelor (tag-urilor) folosite la clasificarea tichetelor din Helpdesk. Pe lângă eticheta standard, fiecare etichetă poate fi marcată ca subordonată unei etichete principale și poate fi asociată unei anumite echipe Helpdesk. Astfel, atunci când se completează un tichet, lista de etichete disponibilă devine mai scurtă și mai relevantă: utilizatorul vede întâi doar etichetele principale potrivite pentru echipa tichetului, iar apoi un câmp suplimentar de etichete secundare, dependente de selecția făcută. Rezultatul este o taxonomie mai curată a tichetelor și o selecție mai rapidă și mai corectă pentru agenții de suport.\nAdaugă pe eticheta de Helpdesk două câmpuri noi: echipa Helpdesk și eticheta principală.\nÎn câmpul standard de etichete al tichetului afișează doar etichetele care nu au o etichetă principală setată și care aparțin echipei tichetului sau nu au echipă asociată.\nDupă completarea etichetelor standard, afișează un câmp pentru etichete secundare, unde pot fi adăugate doar etichetele care au ca etichetă principală una dintre etichetele alese în câmpul standard."
+  },
+  {
     "path": "deltatech_invoice_picking/index.md",
     "module": "deltatech_invoice_picking",
     "version": "19.0.1.0.9",
@@ -2720,6 +2956,54 @@
     ],
     "connections": [],
     "text": "Notification Sound\ndeltatech_notification_sound\nModulul adaugă feedback sonor pentru notificările din backend-ul Odoo, astfel încât operatorii sunt avertizați instantaneu fără a urmări permanent ecranul. Când apare o notificare (succes, avertisment, eroare sau informare), se redă automat un sunet scurt și distinct în funcție de tipul mesajului. Fiecare utilizator poate activa sau dezactiva sunetele din preferințele proprii, integrarea fiind complet transparentă, fără elemente suplimentare de interfață.\nRedă sunete diferite în funcție de tipul notificării:\nSucces → `notify.wav`\nAvertisment → `exclamation.wav`\nEroare (danger) → `error.wav`\nInformare → `bell.wav`\nIntegrare transparentă cu backend-ul (fără interfață suplimentară); extinde componenta OWL `web.NotificationWowl`.\nActivele sunt încărcate prin `web.assets_backend` (JS + XML + sunete).\nComutator per utilizator în Preferințe: fiecare utilizator poate activa/dezactiva sunetele notificărilor din profilul propriu.\nCitește preferința utilizatorului prin serviciul RPC Odoo (`/web/session/get_session_info`) și o stochează în cache, astfel încât se efectuează un singur RPC per încărcare de pagină.\nFișierele de sunet pot fi înlocuite, fiind stocate în `static/src/sounds/`."
+  },
+  {
+    "path": "deltatech_object_history/index.md",
+    "module": "deltatech_object_history",
+    "version": "19.0.0.0.1",
+    "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_object_history",
+    "local_path": "odoo-addons/deltatech_service/deltatech_object_history",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Deltatech Object History",
+    "summary": "Modulul creează un istoric paralel pentru documentele Odoo, separat de sistemul standard de mesaje (chatter). Spre deosebire de mesajele obișnuite, care pot fi șterse periodic, intrările din acest istoric sunt păstrate permanent. Astfel, utilizatorii pot înregistra comentarii și note importante legate de un document, cu garanția că acestea nu vor fi eliminate în timp, oferind o evidență durabilă a observațiilor relevante pentru afacere.",
+    "features": [
+      "Creează un model nou (`object.history`) pentru stocarea comentariilor utilizatorilor, separat de sistemul standard de chatter/mesaje Odoo.",
+      "Istoricul nou nu este șters periodic.",
+      "Intrările în istoric pot fi adăugate folosind o acțiune (wizard).",
+      "TODO: legarea istoricului cu modelul de parteneri."
+    ],
+    "dependencies": [
+      "contacts",
+      "account",
+      "stock"
+    ],
+    "connections": [],
+    "text": "Deltatech Object History\ndeltatech_object_history\nModulul creează un istoric paralel pentru documentele Odoo, separat de sistemul standard de mesaje (chatter). Spre deosebire de mesajele obișnuite, care pot fi șterse periodic, intrările din acest istoric sunt păstrate permanent. Astfel, utilizatorii pot înregistra comentarii și note importante legate de un document, cu garanția că acestea nu vor fi eliminate în timp, oferind o evidență durabilă a observațiilor relevante pentru afacere.\nCreează un model nou (`object.history`) pentru stocarea comentariilor utilizatorilor, separat de sistemul standard de chatter/mesaje Odoo.\nIstoricul nou nu este șters periodic.\nIntrările în istoric pot fi adăugate folosind o acțiune (wizard).\nTODO: legarea istoricului cu modelul de parteneri."
+  },
+  {
+    "path": "deltatech_object_history_service/index.md",
+    "module": "deltatech_object_history_service",
+    "version": "19.0.0.0.1",
+    "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_object_history_service",
+    "local_path": null,
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Deltatech Object History for Service",
+    "summary": "Acest modul extinde funcționalitatea de istoric al obiectelor (Object History) către modelele de Acord de service (Service Agreement) și de Echipament de service (Service Equipment). Astfel, modificările și evenimentele legate de aceste obiecte pot fi urmărite și consultate în istoric, oferind o trasabilitate mai bună a contractelor de service și a echipamentelor deservite.",
+    "features": [
+      "Extinde funcționalitățile de istoric al obiectelor către modelul de Acord de service (Service Agreement).",
+      "Extinde funcționalitățile de istoric al obiectelor către modelul de Echipament de service (Service Equipment)."
+    ],
+    "dependencies": [
+      "deltatech_object_history",
+      "deltatech_service_agreement",
+      "deltatech_service_equipment"
+    ],
+    "connections": [
+      "deltatech_object_history",
+      "deltatech_service_agreement",
+      "deltatech_service_equipment"
+    ],
+    "text": "Deltatech Object History for Service\ndeltatech_object_history_service\nAcest modul extinde funcționalitatea de istoric al obiectelor (Object History) către modelele de Acord de service (Service Agreement) și de Echipament de service (Service Equipment). Astfel, modificările și evenimentele legate de aceste obiecte pot fi urmărite și consultate în istoric, oferind o trasabilitate mai bună a contractelor de service și a echipamentelor deservite.\nExtinde funcționalitățile de istoric al obiectelor către modelul de Acord de service (Service Agreement).\nExtinde funcționalitățile de istoric al obiectelor către modelul de Echipament de service (Service Equipment)."
   },
   {
     "path": "deltatech_partner_generic/index.md",
@@ -4256,6 +4540,215 @@
     "text": "Deltatech Sale Order Pickup List\ndeltatech_saleorder_pickup_list\nAcest modul adaugă un raport specializat de tip **Listă de ridicare** (Pickup List) pentru comenzile de vânzare din Odoo. Scopul său este să simplifice activitatea din depozit, oferind o listă clară și ușor de urmărit cu produsele ce trebuie ridicate din stoc pentru o comandă de vânzare. Astfel, echipa de logistică identifică rapid articolele de pregătit, reducând erorile de culegere și îmbunătățind fluxul de lucru în depozit.\nRaport dedicat de ridicare: adaugă o acțiune de raport Listă de ridicare pe comanda de vânzare, accesibilă din meniul de tipărire.\nInformații utile pentru culegător: raportul afișează denumirea produsului, cantitatea și amplasarea în depozit (raft, rând, cutie).\nIntegrare cu stocul: funcționează împreună cu modulele `sale_stock` și [deltatech_stock_inventory](../deltatech_stock_inventory/index.md) pentru informații de stoc corecte.\nLayout simplu și clar: format ușor de citit, gândit să minimizeze erorile de culegere și să crească productivitatea în depozit."
   },
   {
+    "path": "deltatech_service/index.md",
+    "module": "deltatech_service",
+    "version": "19.0.2.0.4",
+    "github": "`https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service`",
+    "local_path": "odoo-addons/deltatech_service/deltatech_service",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Services Agreement Obsolete",
+    "summary": "`deltatech_service` este un modul „umbrelă\" (de tranziție) din suita de service Terrabit. El nu aduce funcționalitate proprie, ci servește doar ca punct de instalare care atrage automat modulul de gestiune a contractelor de service. Numele său tehnic „Services Agreement Obsolete\" și manifestul indică faptul că modulul este considerat **învechit (obsolete)**: rolul de gestiune efectivă a acordurilor de service a fost mutat în modulul dedicat `deltatech_service_agreement`. Practic, este păstrat pentru compatibilitate și pentru a asigura o cale de migrare lină pentru bazele de date existente.",
+    "features": [
+      "Instalarea automată a modulului de gestiune a acordurilor de service prin dependența directă către `deltatech_service_agreement`."
+    ],
+    "dependencies": [
+      "deltatech_service_agreement"
+    ],
+    "connections": [
+      "deltatech_service_agreement"
+    ],
+    "text": "Services Agreement Obsolete\ndeltatech_service\n`deltatech_service` este un modul „umbrelă\" (de tranziție) din suita de service Terrabit. El nu aduce funcționalitate proprie, ci servește doar ca punct de instalare care atrage automat modulul de gestiune a contractelor de service. Numele său tehnic „Services Agreement Obsolete\" și manifestul indică faptul că modulul este considerat **învechit (obsolete)**: rolul de gestiune efectivă a acordurilor de service a fost mutat în modulul dedicat `deltatech_service_agreement`. Practic, este păstrat pentru compatibilitate și pentru a asigura o cale de migrare lină pentru bazele de date existente.\nInstalarea automată a modulului de gestiune a acordurilor de service prin dependența directă către `deltatech_service_agreement`."
+  },
+  {
+    "path": "deltatech_service_agreement/index.md",
+    "module": "deltatech_service_agreement",
+    "version": "19.0.2.0.9",
+    "github": "`https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_agreement`",
+    "local_path": "odoo-addons/deltatech_service/deltatech_service_agreement",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Contracte de Servicii",
+    "summary": "Modulul oferă posibilitatea de a defini și gestiona contracte de servicii cu facturare recurentă. Pe baza acestor contracte, sistemul generează periodic facturi către clienți, ținând cont de moneda, data de facturare și recurența stabilite în fiecare contract. Înainte de facturare, consumurile de servicii planificate pot fi actualizate cu cele efective, astfel încât facturile reflectă serviciile prestate real.",
+    "features": [
+      "Definirea contractelor de servicii, cu precizarea monedei, a datei de facturare și a recurenței.",
+      "Generarea periodică, automată, a facturilor pe baza contractelor definite.",
+      "Actualizarea consumurilor de servicii planificate cu cele efective, înainte de facturare."
+    ],
+    "dependencies": [
+      "base",
+      "product",
+      "account",
+      "deltatech_service_base"
+    ],
+    "connections": [
+      "deltatech_service_base"
+    ],
+    "text": "Contracte de Servicii\ndeltatech_service_agreement\nModulul oferă posibilitatea de a defini și gestiona contracte de servicii cu facturare recurentă. Pe baza acestor contracte, sistemul generează periodic facturi către clienți, ținând cont de moneda, data de facturare și recurența stabilite în fiecare contract. Înainte de facturare, consumurile de servicii planificate pot fi actualizate cu cele efective, astfel încât facturile reflectă serviciile prestate real.\nDefinirea contractelor de servicii, cu precizarea monedei, a datei de facturare și a recurenței.\nGenerarea periodică, automată, a facturilor pe baza contractelor definite.\nActualizarea consumurilor de servicii planificate cu cele efective, înainte de facturare."
+  },
+  {
+    "path": "deltatech_service_base/index.md",
+    "module": "deltatech_service_base",
+    "version": "19.0.2.0.6",
+    "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_base",
+    "local_path": "odoo-addons/deltatech_service/deltatech_service_base",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Services Base",
+    "summary": "Modulul reprezintă fundația suitei de servicii Deltatech. El nu acoperă singur un flux complet de business, ci pune la dispoziție structura comună pe care se construiesc celelalte module de servicii: aplicația „Service\" cu meniurile sale, grupurile de securitate (utilizatori și manageri de service, respectiv roluri de garanție) și câteva date de referință folosite în mod repetat — cicluri de timp și intervale de date. Practic, este stratul de bază care asigură organizarea și drepturile de acces necesare modulelor de service mai avansate. > Notă: fișierul `readme/DESCRIPTION.md` există, dar este gol (conține doar „Features:\"). Prin urmare Sumarul și Funcționalitățile au fost sintetizate din `__manifest__.py` și din codul modulului. Nu există `readme/USAGE.md` sau `readme/FISA_CONSULTANT.md`.",
+    "features": [
+      "Creează aplicația „Service\" în meniul principal, cu structura de meniuri aferentă (Master data, Service, Reports, Configuration).",
+      "Definește grupurile de securitate pentru servicii (Client, User, Manager) și pentru garanție (User, Approval, Manager), organizate sub privilegiile „Service\" și „Warranty\".",
+      "Pune la dispoziție noțiunea de „ciclu\" de service (valoare + unitate de măsură: zi, săptămână, lună, an), utilizabilă pentru calcule de intervale recurente.",
+      "Permite gestionarea intervalelor de date (data de început și de sfârșit), inclusiv generarea automată a celor 12 intervale lunare ale anului curent."
+    ],
+    "dependencies": [
+      "product",
+      "account"
+    ],
+    "connections": [
+      "deltatech_service"
+    ],
+    "text": "Services Base\ndeltatech_service_base\nModulul reprezintă fundația suitei de servicii Deltatech. El nu acoperă singur un flux complet de business, ci pune la dispoziție structura comună pe care se construiesc celelalte module de servicii: aplicația „Service\" cu meniurile sale, grupurile de securitate (utilizatori și manageri de service, respectiv roluri de garanție) și câteva date de referință folosite în mod repetat — cicluri de timp și intervale de date. Practic, este stratul de bază care asigură organizarea și drepturile de acces necesare modulelor de service mai avansate. > Notă: fișierul `readme/DESCRIPTION.md` există, dar este gol (conține doar „Features:\"). Prin urmare Sumarul și Funcționalitățile au fost sintetizate din `__manifest__.py` și din codul modulului. Nu există `readme/USAGE.md` sau `readme/FISA_CONSULTANT.md`.\nCreează aplicația „Service\" în meniul principal, cu structura de meniuri aferentă (Master data, Service, Reports, Configuration).\nDefinește grupurile de securitate pentru servicii (Client, User, Manager) și pentru garanție (User, Approval, Manager), organizate sub privilegiile „Service\" și „Warranty\".\nPune la dispoziție noțiunea de „ciclu\" de service (valoare + unitate de măsură: zi, săptămână, lună, an), utilizabilă pentru calcule de intervale recurente.\nPermite gestionarea intervalelor de date (data de început și de sfârșit), inclusiv generarea automată a celor 12 intervale lunare ale anului curent."
+  },
+  {
+    "path": "deltatech_service_consumable/index.md",
+    "module": "deltatech_service_consumable",
+    "version": "19.0.1.1.6",
+    "github": "`https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_consumable`",
+    "local_path": "odoo-addons/deltatech_service/deltatech_service_consumable",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Services Consumable",
+    "summary": "Modulul extinde suita de service Deltatech cu gestiunea consumabilelor măsurate prin contoare. Permite urmărirea echipamentelor și a contoarelor asociate, înregistrarea citirilor de contor și facturarea pe baza acestor citiri. Pentru perioadele în care nu există o citire reală, modulul poate calcula estimări de consum și poate introduce automat, la sfârșitul perioadei, valori estimate. Valoarea principală constă în legarea consumului real (sau estimat) de procesul de facturare a serviciilor, reducând efortul manual și erorile.",
+    "features": [
+      "Gestiunea echipamentelor.",
+      "Gestiunea contoarelor.",
+      "Gestiunea citirilor de contor.",
+      "Facturare pe baza citirilor.",
+      "Calculul estimat al citirilor.",
+      "Introducerea automată, la sfârșitul perioadei, a valorilor estimate."
+    ],
+    "dependencies": [
+      "deltatech_service_agreement",
+      "deltatech_service_equipment",
+      "deltatech_product_extension",
+      "deltatech_stock_report"
+    ],
+    "connections": [
+      "deltatech_service_agreement",
+      "deltatech_service_equipment",
+      "deltatech_stock_report"
+    ],
+    "text": "Services Consumable\ndeltatech_service_consumable\nModulul extinde suita de service Deltatech cu gestiunea consumabilelor măsurate prin contoare. Permite urmărirea echipamentelor și a contoarelor asociate, înregistrarea citirilor de contor și facturarea pe baza acestor citiri. Pentru perioadele în care nu există o citire reală, modulul poate calcula estimări de consum și poate introduce automat, la sfârșitul perioadei, valori estimate. Valoarea principală constă în legarea consumului real (sau estimat) de procesul de facturare a serviciilor, reducând efortul manual și erorile.\nGestiunea echipamentelor.\nGestiunea contoarelor.\nGestiunea citirilor de contor.\nFacturare pe baza citirilor.\nCalculul estimat al citirilor.\nIntroducerea automată, la sfârșitul perioadei, a valorilor estimate."
+  },
+  {
+    "path": "deltatech_service_equipment/index.md",
+    "module": "deltatech_service_equipment",
+    "version": "19.0.1.1.11",
+    "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_equipment",
+    "local_path": "odoo-addons/deltatech_service/deltatech_service_equipment",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Services Equipment",
+    "summary": "Modulul gestionează echipamentele de service și contoarele asociate acestora. Permite înregistrarea citirilor de contoare și facturarea pe baza acestor citiri, inclusiv calculul unei estimări a citirilor. La finalul perioadei, valorile estimate pot fi introduse automat, simplificând astfel procesul de facturare periodică legat de utilizarea echipamentelor.",
+    "features": [
+      "Gestionarea echipamentelor",
+      "Gestionarea contoarelor",
+      "Gestionarea citirilor de contoare",
+      "Facturare pe baza citirilor",
+      "Calculul estimării citirilor",
+      "Introducerea automată, la finalul perioadei, a valorilor estimate"
+    ],
+    "dependencies": [
+      "deltatech_service_agreement",
+      "deltatech_service_equipment_base",
+      "analytic",
+      "stock",
+      "xlwt"
+    ],
+    "connections": [
+      "deltatech_service_agreement",
+      "deltatech_service_equipment_base"
+    ],
+    "text": "Services Equipment\ndeltatech_service_equipment\nModulul gestionează echipamentele de service și contoarele asociate acestora. Permite înregistrarea citirilor de contoare și facturarea pe baza acestor citiri, inclusiv calculul unei estimări a citirilor. La finalul perioadei, valorile estimate pot fi introduse automat, simplificând astfel procesul de facturare periodică legat de utilizarea echipamentelor.\nGestionarea echipamentelor\nGestionarea contoarelor\nGestionarea citirilor de contoare\nFacturare pe baza citirilor\nCalculul estimării citirilor\nIntroducerea automată, la finalul perioadei, a valorilor estimate"
+  },
+  {
+    "path": "deltatech_service_equipment_base/index.md",
+    "module": "deltatech_service_equipment_base",
+    "version": "19.0.1.2.6",
+    "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_equipment_base",
+    "local_path": "odoo-addons/deltatech_service/deltatech_service_equipment_base",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Services Equipment Base",
+    "summary": "Modulul oferă baza pentru gestiunea echipamentelor în activitatea de service. Permite înregistrarea echipamentelor și a contoarelor asociate, urmărirea citirilor de contor și facturarea pe baza acestor citiri. În plus, poate estima consumul și introduce automat valori estimate la sfârșitul perioadei, atunci când citirile reale nu sunt disponibile.",
+    "features": [
+      "Gestiunea echipamentelor",
+      "Gestiunea contoarelor",
+      "Gestiunea citirilor de contor",
+      "Facturare pe baza citirilor",
+      "Calculul estimării citirilor",
+      "Introducerea automată, la sfârșitul perioadei, a valorilor estimate"
+    ],
+    "dependencies": [
+      "deltatech_service_base",
+      "product",
+      "stock"
+    ],
+    "connections": [
+      "deltatech_service_base"
+    ],
+    "text": "Services Equipment Base\ndeltatech_service_equipment_base\nModulul oferă baza pentru gestiunea echipamentelor în activitatea de service. Permite înregistrarea echipamentelor și a contoarelor asociate, urmărirea citirilor de contor și facturarea pe baza acestor citiri. În plus, poate estima consumul și introduce automat valori estimate la sfârșitul perioadei, atunci când citirile reale nu sunt disponibile.\nGestiunea echipamentelor\nGestiunea contoarelor\nGestiunea citirilor de contor\nFacturare pe baza citirilor\nCalculul estimării citirilor\nIntroducerea automată, la sfârșitul perioadei, a valorilor estimate"
+  },
+  {
+    "path": "deltatech_service_maintenance/index.md",
+    "module": "deltatech_service_maintenance",
+    "version": "19.0.1.2.1",
+    "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_maintenance",
+    "local_path": "odoo-addons/deltatech_service/deltatech_service_maintenance",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Deltatech Services Maintenance",
+    "summary": "Modulul gestionează activitatea de service și mentenanță a echipamentelor. Permite înregistrarea sesizărilor primite de la clienți, transformarea lor în comenzi de service și planificarea reviziilor periodice ale echipamentelor. Pe baza planurilor de revizii, comenzile de service pot fi generate automat, ceea ce ajută echipa de service să țină evidența intervențiilor și să respecte termenele de mentenanță.",
+    "features": [
+      "Gestionare sesizări",
+      "Gestionare comenzi de service",
+      "Gestionare planuri de revizii",
+      "Generare automată a comenzilor de service pe baza planului"
+    ],
+    "dependencies": [
+      "deltatech_service_equipment_base",
+      "sale",
+      "sales_team",
+      "sale_stock",
+      "stock"
+    ],
+    "connections": [
+      "deltatech_service_equipment_base",
+      "sale_stock"
+    ],
+    "text": "Deltatech Services Maintenance\ndeltatech_service_maintenance\nModulul gestionează activitatea de service și mentenanță a echipamentelor. Permite înregistrarea sesizărilor primite de la clienți, transformarea lor în comenzi de service și planificarea reviziilor periodice ale echipamentelor. Pe baza planurilor de revizii, comenzile de service pot fi generate automat, ceea ce ajută echipa de service să țină evidența intervențiilor și să respecte termenele de mentenanță.\nGestionare sesizări\nGestionare comenzi de service\nGestionare planuri de revizii\nGenerare automată a comenzilor de service pe baza planului"
+  },
+  {
+    "path": "deltatech_service_task/index.md",
+    "module": "deltatech_service_task",
+    "version": "19.0.0.0.18",
+    "github": "`https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_task`",
+    "local_path": "odoo-addons/deltatech_service/deltatech_service_task",
+    "last_ingest": "2026-06-08",
+    "friendly_name": "Deltatech Services Task",
+    "summary": "Modulul extinde sarcinile de proiect (project.task) cu informații specifice activităților de service și mentenanță. El leagă fiecare sarcină de locul funcțional și de echipamentul vizat, astfel încât echipele de teren și de proiect să poată identifica imediat unde și pe ce utilaj se desfășoară intervenția. Valoarea de afaceri constă în trasabilitatea sarcinilor de mentenanță în contextul echipamentelor gestionate.",
+    "features": [
+      "Adăugarea câmpului de loc funcțional (`service.location`) în sarcina de proiect.",
+      "Adăugarea câmpului de echipament (`service.equipment`) în sarcina de proiect."
+    ],
+    "dependencies": [
+      "deltatech_service_equipment_base",
+      "project",
+      "hr"
+    ],
+    "connections": [
+      "deltatech_service_equipment_base",
+      "project",
+      "deltatech_service"
+    ],
+    "text": "Deltatech Services Task\ndeltatech_service_task\nModulul extinde sarcinile de proiect (project.task) cu informații specifice activităților de service și mentenanță. El leagă fiecare sarcină de locul funcțional și de echipamentul vizat, astfel încât echipele de teren și de proiect să poată identifica imediat unde și pe ce utilaj se desfășoară intervenția. Valoarea de afaceri constă în trasabilitatea sarcinilor de mentenanță în contextul echipamentelor gestionate.\nAdăugarea câmpului de loc funcțional (`service.location`) în sarcina de proiect.\nAdăugarea câmpului de echipament (`service.equipment`) în sarcina de proiect."
+  },
+  {
     "path": "deltatech_sms/index.md",
     "module": "deltatech_sms",
     "version": "19.0.1.0.1",
@@ -4328,6 +4821,32 @@
       "stock_account"
     ],
     "text": "Stock Account Extension\ndeltatech_stock_account\nAcest modul extinde funcționalitatea de evaluare a stocurilor din Odoo, aducând informația de valoare a stocului direct la nivelul transferurilor de marfă (livrări/recepții). Astfel, utilizatorii care gestionează mișcările de stoc pot vedea imediat valoarea contabilă asociată unui transfer, fără a fi nevoie să caute aceste date în alte rapoarte sau ecrane. Beneficiul principal este o vizibilitate mai bună asupra valorii bunurilor în mișcare, util pentru echipele de logistică și contabilitate.\nAdaugă evaluarea stocului la nivelul transferului de marfă (picking).\nAfișează valoarea evaluării stocului direct în formularul transferului."
+  },
+  {
+    "path": "deltatech_stock_barcode/index.md",
+    "module": "deltatech_stock_barcode",
+    "version": "19.0.0.0.5",
+    "github": "https://github.com/terrabit-ro/bitshop_ent/tree/19.0/deltatech_stock_barcode",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_stock_barcode",
+    "last_ingest": "2026-06-09",
+    "friendly_name": "Deltatech Stock Barcode",
+    "summary": "Acest modul extinde funcționalitatea Stock Barcode din Odoo Enterprise cu mai multe îmbunătățiri pentru transferuri (pickings) și gestiunea stocului. Operatorul de depozit poate, direct din interfața de scanare cu codul de bare, să gestioneze greutatea coletelor și numărul de pachete, să genereze și să tipărească etichetele de curier (AWB) și să vadă detaliile precise de amplasare a produselor în depozit. Scopul principal este accelerarea și simplificarea procesului de pregătire a livrărilor, oferind operatorilor toate informațiile necesare într-un singur loc.",
+    "features": [
+      "Gestiunea greutății și a coletelor: posibilitatea de a administra greutatea pachetelor și numărul de colete direct din interfața de scanare cu codul de bare.",
+      "Integrare cu curierul: generarea și tipărirea etichetelor de curier (AWB) la salvarea detaliilor de greutate în cadrul fluxului de scanare.",
+      "Detalii de amplasare îmbunătățite: integrarea informațiilor detaliate de locație (Raft, Rând, Poliță, Cutie) în vizualizările de scanare a codului de bare, pentru o mai bună vizibilitate a poziției articolelor.",
+      "Îmbunătățiri ale fluxului de lucru: include un formular simplificat pentru capturarea detaliilor de livrare în timpul procesului de transfer."
+    ],
+    "dependencies": [
+      "stock_barcode",
+      "deltatech_delivery",
+      "deltatech_stock_inventory"
+    ],
+    "connections": [
+      "deltatech_delivery",
+      "deltatech_stock_inventory"
+    ],
+    "text": "Deltatech Stock Barcode\ndeltatech_stock_barcode\nAcest modul extinde funcționalitatea Stock Barcode din Odoo Enterprise cu mai multe îmbunătățiri pentru transferuri (pickings) și gestiunea stocului. Operatorul de depozit poate, direct din interfața de scanare cu codul de bare, să gestioneze greutatea coletelor și numărul de pachete, să genereze și să tipărească etichetele de curier (AWB) și să vadă detaliile precise de amplasare a produselor în depozit. Scopul principal este accelerarea și simplificarea procesului de pregătire a livrărilor, oferind operatorilor toate informațiile necesare într-un singur loc.\nGestiunea greutății și a coletelor: posibilitatea de a administra greutatea pachetelor și numărul de colete direct din interfața de scanare cu codul de bare.\nIntegrare cu curierul: generarea și tipărirea etichetelor de curier (AWB) la salvarea detaliilor de greutate în cadrul fluxului de scanare.\nDetalii de amplasare îmbunătățite: integrarea informațiilor detaliate de locație (Raft, Rând, Poliță, Cutie) în vizualizările de scanare a codului de bare, pentru o mai bună vizibilitate a poziției articolelor.\nÎmbunătățiri ale fluxului de lucru: include un formular simplificat pentru capturarea detaliilor de livrare în timpul procesului de transfer."
   },
   {
     "path": "deltatech_stock_count_zero/index.md",
@@ -5303,6 +5822,29 @@
     ],
     "connections": [],
     "text": "Work Days Report\ndeltatech_work_days_report\nModulul **Work Days Report** generează rapoarte Excel cuprinzătoare pentru urmărirea prezenței angajaților și gestionarea tichetelor de masă. Este util departamentelor de resurse umane și proceselor de salarizare, oferind automat fișiere Excel cu orele lucrate zilnic, totalurile pe angajat, tichetele de masă cuvenite și perioadele de concediu. Astfel se simplifică monitorizarea tiparelor de lucru ale angajaților și administrarea drepturilor la tichete de masă, asigurând raportări consecvente chiar și atunci când configurarea tipurilor de concediu este incompletă.\nÎmbunătățirea tipurilor de concediu: adaugă un câmp configurabil „code\" în formularele de tip de concediu (Time Off Type), pentru o mai bună categorisire și raportare.\nExport Excel în masă: permite exportul în masă accesibil din vizualizarea de listă a angajaților (Acțiune → „Export Working Days\").\nRaportare cuprinzătoare: generează rapoarte Excel detaliate care conțin informații despre angajat și orele lucrate zilnic, totalul orelor lucrate, tichetele de masă câștigate per angajat și perioadele/datele de concediu.\nCodificare flexibilă a concediilor: afișează automat „ABS\" (absență) pentru tipurile de concediu fără cod specificat, asigurând o raportare consecventă chiar și cu o configurare incompletă."
+  },
+  {
+    "path": "l10n_ro_account_bank_statement_import_xlsx/index.md",
+    "module": "l10n_ro_account_bank_statement_import_xlsx",
+    "version": "19.0.1.0.1",
+    "github": "https://github.com/terrabit-ro/bitshop_ent/tree/19.0/l10n_ro_account_bank_statement_import_xlsx",
+    "local_path": "odoo-addons/bitshop_ent/l10n_ro_account_bank_statement_import_xlsx",
+    "last_ingest": "2026-06-09",
+    "friendly_name": "Import Extrase Bancare în Format xlsx",
+    "summary": "Acest modul extinde funcționalitatea de import al extraselor bancare pentru a accepta fișiere XLSX. Se bazează pe mecanismul standard de import din Odoo, permițând utilizatorilor să mapeze coloanele dintr-un fișier Excel pe câmpurile liniilor de extras bancar. Astfel, contabilii pot prelua direct extrasele primite de la bancă în format Excel, fără conversii manuale, simplificând reconcilierea operațiunilor bancare.",
+    "features": [
+      "Suport XLSX: Adaugă formatul XLSX în lista formatelor de import disponibile pentru jurnalele bancare.",
+      "Mapare flexibilă: Folosește asistentul de import din Odoo, permițând utilizatorilor să gestioneze diverse structuri de fișiere.",
+      "Îmbunătățiri moștenite: Beneficiază de detectarea automată a partenerului (după nume sau după referința comenzii de vânzare) atunci când este folosit împreună cu modulul `deltatech_account_bank_statement_import`."
+    ],
+    "dependencies": [
+      "account_bank_statement_import",
+      "deltatech_account_bank_statement_import"
+    ],
+    "connections": [
+      "deltatech_account_bank_statement_import"
+    ],
+    "text": "Import Extrase Bancare în Format xlsx\nl10n_ro_account_bank_statement_import_xlsx\nAcest modul extinde funcționalitatea de import al extraselor bancare pentru a accepta fișiere XLSX. Se bazează pe mecanismul standard de import din Odoo, permițând utilizatorilor să mapeze coloanele dintr-un fișier Excel pe câmpurile liniilor de extras bancar. Astfel, contabilii pot prelua direct extrasele primite de la bancă în format Excel, fără conversii manuale, simplificând reconcilierea operațiunilor bancare.\nSuport XLSX: Adaugă formatul XLSX în lista formatelor de import disponibile pentru jurnalele bancare.\nMapare flexibilă: Folosește asistentul de import din Odoo, permițând utilizatorilor să gestioneze diverse structuri de fișiere.\nÎmbunătățiri moștenite: Beneficiază de detectarea automată a partenerului (după nume sau după referința comenzii de vânzare) atunci când este folosit împreună cu modulul `deltatech_account_bank_statement_import`."
   },
   {
     "path": "l10n_ro_account_chart/index.md",
@@ -6330,6 +6872,37 @@
     "dependencies": [],
     "connections": [],
     "text": "Romania - Subvenții și Fonduri Nerambursabile (FR-38)\nl10n_ro_grants"
+  },
+  {
+    "path": "l10n_ro_intrastat_enhancement/index.md",
+    "module": "l10n_ro_intrastat_enhancement",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_intrastat_enhancement",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_intrastat_enhancement",
+    "last_ingest": "2026-06-09",
+    "friendly_name": "Romania Intrastat Declaration",
+    "summary": "Modulul extinde declarația Intrastat din Odoo pentru piața din România, adaptând-o la cerințele Institutului Național de Statistică (INS). Pe de o parte, adaugă în raportul standard de Intrastat un buton de export al declarației în format XML conform structurii cerute de portalul INS (intrastat.ro), atât pentru sosiri, cât și pentru expedieri. Pe de altă parte, ajută firma să își monitorizeze obligația de raportare: calculează automat volumul tranzacțiilor cu parteneri din Uniunea Europeană, îl compară cu pragurile anuale stabilite de INS și avertizează responsabilul atunci când compania se apropie de prag, l-a depășit sau se apropie termenul lunar de depunere. Scopul este să reducă munca manuală și riscul de amenzi prin nedeclarare sau depunere întârziată.",
+    "features": [
+      "Export al declarației Intrastat în fișier XML, în formatul cerut de portalul INS România, direct din raportul standard de Intrastat (buton dedicat „XML\").",
+      "Generare separată a declarației pentru sosiri (arrivals) sau pentru expedieri (dispatches), cu validări care impun selectarea unui interval lunar corect și a unei singure direcții.",
+      "Calcul automat al volumului anual al tranzacțiilor cu parteneri din UE (pe facturi/storno emise și primite), cu conversie în RON.",
+      "Compararea volumului cu pragurile anuale INS (implicit 1.000.000 RON expedieri și 900.000 RON sosiri) și determinarea unui status: sub prag, atenție, depășit sau declarat obligatoriu.",
+      "Avertizări automate lunare (activități în Odoo) când volumul atinge un procent configurabil din prag (implicit 80%) sau când pragul a fost depășit, plus memento pentru termenul de depunere (15 ale lunii).",
+      "Wizard de verificare a pragului Intrastat la cerere, pe an și companie, care afișează volumul, pragul, procentul și statusul pentru sosiri și expedieri.",
+      "Configurarea pragurilor, a procentului de avertizare și a statusului „declarat obligatoriu\" din Setări, per companie.",
+      "Actualizarea denumirilor codurilor Intrastat (nomenclatorul CN) prin descărcare directă din fișierul XML publicat de INS.",
+      "Versiuni de nomenclatoare (țară, CN, mod de transport, condiții de livrare etc.) configurabile prin parametri de sistem, incluse în antetul declarației XML."
+    ],
+    "dependencies": [
+      "l10n_ro_intrastat",
+      "stock_delivery"
+    ],
+    "connections": [
+      "l10n_ro_intrastat",
+      "stock_delivery",
+      "hs_code"
+    ],
+    "text": "Romania Intrastat Declaration\nl10n_ro_intrastat_enhancement\nModulul extinde declarația Intrastat din Odoo pentru piața din România, adaptând-o la cerințele Institutului Național de Statistică (INS). Pe de o parte, adaugă în raportul standard de Intrastat un buton de export al declarației în format XML conform structurii cerute de portalul INS (intrastat.ro), atât pentru sosiri, cât și pentru expedieri. Pe de altă parte, ajută firma să își monitorizeze obligația de raportare: calculează automat volumul tranzacțiilor cu parteneri din Uniunea Europeană, îl compară cu pragurile anuale stabilite de INS și avertizează responsabilul atunci când compania se apropie de prag, l-a depășit sau se apropie termenul lunar de depunere. Scopul este să reducă munca manuală și riscul de amenzi prin nedeclarare sau depunere întârziată.\nExport al declarației Intrastat în fișier XML, în formatul cerut de portalul INS România, direct din raportul standard de Intrastat (buton dedicat „XML\").\nGenerare separată a declarației pentru sosiri (arrivals) sau pentru expedieri (dispatches), cu validări care impun selectarea unui interval lunar corect și a unei singure direcții.\nCalcul automat al volumului anual al tranzacțiilor cu parteneri din UE (pe facturi/storno emise și primite), cu conversie în RON.\nCompararea volumului cu pragurile anuale INS (implicit 1.000.000 RON expedieri și 900.000 RON sosiri) și determinarea unui status: sub prag, atenție, depășit sau declarat obligatoriu.\nAvertizări automate lunare (activități în Odoo) când volumul atinge un procent configurabil din prag (implicit 80%) sau când pragul a fost depășit, plus memento pentru termenul de depunere (15 ale lunii).\nWizard de verificare a pragului Intrastat la cerere, pe an și companie, care afișează volumul, pragul, procentul și statusul pentru sosiri și expedieri.\nConfigurarea pragurilor, a procentului de avertizare și a statusului „declarat obligatoriu\" din Setări, per companie.\nActualizarea denumirilor codurilor Intrastat (nomenclatorul CN) prin descărcare directă din fișierul XML publicat de INS.\nVersiuni de nomenclatoare (țară, CN, mod de transport, condiții de livrare etc.) configurabile prin parametri de sistem, incluse în antetul declarației XML."
   },
   {
     "path": "l10n_ro_inventory_closing/index.md",

@@ -7,7 +7,12 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech](deltatech/index.md): Modul de bază (fundație) al suitei Deltatech, oferind utilitare partajate, structură unitară și extinderi comune pentru celelalte module Deltatech.
 - [deltatech_access](deltatech_access/index.md): Control granular al accesului la câmpuri din vederile Odoo (readonly / required / invisible) pe bază de grupuri de utilizatori.
 - [deltatech_account](deltatech_account/index.md): Îmbunătățiri pentru contabilitatea și facturarea Odoo: vizibilitate extinsă a facturilor, configurare flexibilă a jurnalelor/conturilor și sincronizare între documente.
+- [deltatech_account_bank_statement_import](deltatech_account_bank_statement_import/index.md): Extinde importul extraselor de cont bancar cu suport pentru fișiere XLSX și detectare automată a partenerului (după nume sau referința comenzii de vânzare).
+- [deltatech_account_enterprise](deltatech_account_enterprise/index.md): Extinde rapoartele Enterprise de urmărire a clienților (Customer Follow-up) cu grupare a tranzacțiilor pe status (Restante/Scadente) și subtotaluri pe grup.
+- [deltatech_account_scenario](deltatech_account_scenario/index.md): Cadru bazat pe JSON pentru rularea și validarea automată a scenariilor contabile și de stoc complete în Odoo, în mod test sau demo.
+- [deltatech_account_scenario_ai](deltatech_account_scenario_ai/index.md): Extinde deltatech_account_scenario cu generarea de scenarii contabile în format JSON pornind de la o descriere în text liber, folosind un agent AI Odoo.
 - [deltatech_actions](deltatech_actions/index.md): Instrumente de mentenanță și curățare a bazei de date (cron-uri pentru atașamente duplicate, PDF-uri vechi, reguli de reaprovizionare), sigure prin mod „dry run” implicit.
+- [deltatech_advanced_planner](deltatech_advanced_planner/index.md): Planificator avansat de stoc cu backward scheduling, capacitate finită (RCCP/CRP) și validare automată a datei de livrare, integrat în vânzări/producție/achiziții.
 - [deltatech_agreement_management](deltatech_agreement_management/index.md): Gestionarea acordurilor (număr, dată, stare) cu tipuri configurabile, secvențe de numerotare și șabloane de raport.
 - [deltatech_alternative](deltatech_alternative/index.md): Coduri alternative pentru produse și catalog master cu generare automată de produse.
 - [deltatech_alternative_website](deltatech_alternative_website/index.md): Permite căutarea produselor în magazinul online după codul alternativ (echivalent) al produsului.
@@ -15,6 +20,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_auto_reorder_rule](deltatech_auto_reorder_rule/index.md): Creează automat reguli de reaprovizionare cu valori implicite pentru produse noi și în masă pentru cele existente.
 - [deltatech_average_payment_period](deltatech_average_payment_period/index.md): Calculează durata medie de încasare și de plată (perioada medie a contabilității de casă), ponderată cu sumele decontate.
 - [deltatech_backup_attachment](deltatech_backup_attachment/index.md): Backup selectiv al atașamentelor din Odoo pe baza unui filtru de tip domeniu, generând o arhivă cu fișierele alese.
+- [deltatech_bank_stmt_foreign_currency](deltatech_bank_stmt_foreign_currency/index.md): Extinde importul extraselor bancare pentru tranzacții în valută, cu conversie automată la cursul de la data tranzacției.
 - [deltatech_barcode_sale](deltatech_barcode_sale/index.md): Adăugarea produselor pe comanda de vânzare prin scanarea codurilor de bare.
 - [deltatech_batch_transfer](deltatech_batch_transfer/index.md): Gestionare inteligentă a livrărilor goale din transferurile în lot, cu excludere automată la validare și câmpuri suplimentare de organizare.
 - [deltatech_brand_field](deltatech_brand_field/index.md): Mecanism centralizat pentru gestionarea unitară a câmpului de marcă a produselor în multiple module Odoo.
@@ -29,6 +35,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_contact](deltatech_contact/index.md): Extinde fișa de contact cu câmpuri pentru persoane fizice (data nașterii, CNP, carte de identitate) și opțiune de afișare a numelui doar cu denumirea proprie.
 - [deltatech_contwin](deltatech_contwin/index.md): Export de date contabile din Odoo către programul de contabilitate ContWin (Omnidata/Petrescu), cu formate `.fis` și SAF-T.
 - [deltatech_credentials](deltatech_credentials/index.md): Gestionează centralizat acreditările (utilizator/parolă, client_id/secret, token) pentru conectarea la servicii externe.
+- [deltatech_crm_fsm](deltatech_crm_fsm/index.md): Leagă oportunitățile CRM de sarcinile Project/FSM și permite crearea rapidă a unei sarcini de teren dintr-o oportunitate.
 - [deltatech_data_sheet](deltatech_data_sheet/index.md): Atașează fișe tehnice și fișe de securitate (PDF) pe produs, în fila Vânzări.
 - [deltatech_data_sheet_website](deltatech_data_sheet_website/index.md): Expune fișele tehnice și fișele cu date de securitate ale produselor pe paginile din magazinul online.
 - [deltatech_dc](deltatech_dc/index.md): Gestionarea și tipărirea declarațiilor de conformitate pentru produse, inclusiv la facturare.
@@ -65,6 +72,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_feed](deltatech_feed/index.md): Generează feed-uri de produse pentru platforme de e-commerce și marketing (Google Merchant, Facebook, Compari, Bizoo, 2performant, VidaXL), cu reîmprospătare automată zilnică.
 - [deltatech_followup](deltatech_followup/index.md): Urmărirea automată a facturilor neîncasate, prin e-mailuri de followup programate, relativ la data facturii sau a scadenței.
 - [deltatech_gln](deltatech_gln/index.md): Gestionează Numărul Global de Locație (GLN) la nivel de partener — modul obsolet, înlocuit de `account_add_gln`.
+- [deltatech_helpdesk_tag_primary](deltatech_helpdesk_tag_primary/index.md): Clasificare pe două niveluri a tichetelor Helpdesk, cu etichete principale/secundare și filtrare a etichetelor după echipă.
 - [deltatech_invoice_picking](deltatech_invoice_picking/index.md): Generează facturi direct din livrări (pickings) sau din loturi, preluând doar produsele și cantitățile efectiv realizate.
 - [deltatech_invoice_picking_automatically](deltatech_invoice_picking_automatically/index.md): Generează automat facturile din livrări după validare, cu configurare pe tipul de operațiune și proces planificat.
 - [deltatech_invoice_product_filter](deltatech_invoice_product_filter/index.md): Adaugă căutarea facturilor după produsul din liniile acestora.
@@ -173,6 +181,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_sms](deltatech_sms/index.md): Trimite SMS din Odoo prin gateway-uri externe configurabile (4Pay / Wapi), înlocuind serviciul IAP nativ.
 - [deltatech_sms_sale](deltatech_sms_sale/index.md): Trimite automat SMS clientului la confirmarea și postarea comenzii de vânzare, configurabil per companie.
 - [deltatech_stock_account](deltatech_stock_account/index.md): Extinde evaluarea stocurilor afișând valoarea contabilă direct la nivelul transferurilor de marfă (picking).
+- [deltatech_stock_barcode](deltatech_stock_barcode/index.md): Extinde Stock Barcode din Odoo Enterprise cu gestiunea greutății/coletelor, generarea etichetelor de curier (AWB) și detalii de amplasare în depozit, direct din interfața de scanare.
 - [deltatech_stock_count_zero](deltatech_stock_count_zero/index.md): Setează automat cantitatea inventariată la zero la o numărare goală de stoc (articole negăsite la inventar).
 - [deltatech_stock_delivery](deltatech_stock_delivery/index.md): Adaugă în factură un buton de Livrare/Recepție pentru a vedea rapid transferurile de stoc asociate.
 - [deltatech_stock_inventory](deltatech_stock_inventory/index.md): Restaurează și extinde inventarul clasic (`stock.inventory`) cu control valoric, vizibilitate pe depozite, localizare manuală și scanare cod de bare.
@@ -212,6 +221,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_widget_fontawesome](deltatech_widget_fontawesome/index.md): Widget OWL care afișează valoarea unui câmp ca pictogramă Font Awesome în formulare (widget="fontawesome").
 - [deltatech_widget_many2one_badge](deltatech_widget_many2one_badge/index.md): Widget web care afișează câmpurile Many2one ca badge-uri colorate, similar cu many2many_tags.
 - [deltatech_work_days_report](deltatech_work_days_report/index.md): Generează rapoarte Excel pentru prezența angajaților și gestionarea tichetelor de masă.
+- [l10n_ro_account_bank_statement_import_xlsx](l10n_ro_account_bank_statement_import_xlsx/index.md): Permite importul extraselor bancare în format XLSX, cu mapare flexibilă a coloanelor și detectare automată a partenerului.
 - [l10n_ro_account_chart](l10n_ro_account_chart/index.md): Extinde planul de conturi românesc cu controale de înregistrare și analitice.
 - [l10n_ro_account_edi_ubl](l10n_ro_account_edi_ubl/index.md): Modul punte/legacy care redirecționează trimiterea E-Factura către `l10n_ro_edi`.
 - [l10n_ro_account_fisa_cont](l10n_ro_account_fisa_cont/index.md): Oferă raportul 'Fișă de Cont' conform OMFP 1802/2014.
@@ -262,6 +272,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_footer_anpc](l10n_ro_footer_anpc/index.md): Afișează pozele și link-urile ANPC în footer-ul site-ului, pentru conformitate cu protecția consumatorului.
 - [l10n_ro_force_reconcile](l10n_ro_force_reconcile/index.md): Wizard de reconciliere forțată între conturi diferite (409↔401, 419↔411, compensare client-furnizor).
 - [l10n_ro_grants](l10n_ro_grants/index.md): Contracte de finanțare nerambursabilă cu note 475/131/132 și recunoaștere venituri (OMFP 1802 + IAS 20, FR-38).
+- [l10n_ro_intrastat_enhancement](l10n_ro_intrastat_enhancement/index.md): Extinde declarația Intrastat pentru România cu export XML în formatul INS și monitorizarea automată a pragurilor anuale, cu avertizări de prag și termen.
 - [l10n_ro_inventory_closing](l10n_ro_inventory_closing/index.md): Înregistrări contabile ale inventarierii și PV-uri PDF pentru cele 4 tipuri de diferențe (OMFP 1802 + 2861/2009, FR-18).
 - [l10n_ro_inventory_items](l10n_ro_inventory_items/index.md): Gestiunea obiectelor de inventar 303/603/8035 cu fișă OI, wizard-uri batch și rapoarte PDF (OMFP 1802).
 - [l10n_ro_inventory_register](l10n_ro_inventory_register/index.md): Registrul Inventar anual (formular cod 14-1-2, OMFP 2634/2015), cu linii recapitulative pe categorii patrimoniale din soldurile contabile postate.
