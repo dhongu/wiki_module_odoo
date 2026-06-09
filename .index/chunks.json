@@ -6032,35 +6032,44 @@
   {
     "path": "l10n_ro_anaf_d100/index.md",
     "module": "l10n_ro_anaf_d100",
-    "version": "19.0.0.0.1",
+    "version": "19.0.0.0.2",
     "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d100",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d100",
     "last_ingest": null,
     "friendly_name": "Romania - ANAF D100 Declaration",
-    "summary": "Acest modul permite generarea Declarației 100 (Declarația privind obligațiile de plată la bugetul de stat) direct din Odoo Enterprise. Declarația 100 este un document centralizator care raportează scadențele și sumele datorate pentru diverse taxe și impozite, cum ar fi impozitul pe profit, impozitul pe veniturile microîntreprinderilor, accize, redevențe și alte obligații fiscale, conform nomenclatorului ANAF.",
+    "summary": "Acest modul permite companiilor românești să genereze și să exporte **Declarația 100 — Declarația privind obligațiile de plată la bugetul de stat** direct din Odoo Enterprise, eliminând introducerea manuală a datelor în DUKIntegrator sau în formularul PDF ANAF. Se adresează plătitorilor de impozit pe profit, impozit pe veniturile microîntreprinderilor, impozit pe dividende și altor obligații fiscale raportate lunar sau trimestrial la ANAF, conform nomenclatorului de coduri bugetare.",
     "features": [
-      "Centralizare automată: colectarea sumelor pentru multiple obligații fiscale dintr-un singur punct.",
-      "Mapare pe coduri ANAF: corelarea automată a taxelor din Odoo cu codurile de obligație (ex: 103, 121, 140).",
-      "Flexibilitate perioadă: suport pentru raportare lunară sau trimestrială, în funcție de tipul obligației.",
-      "Export XML nativ: generarea fișierului XML conform structurii oficiale, gata pentru depunere.",
-      "Export XDP: generarea fișierului Adobe XDP pentru import în formularul PDF inteligent ANAF."
+      "Raport interactiv D100 integrat în rapoartele contabile Enterprise, cu linii predefinite pe coduri ANAF (102 impozit pe profit, 121 impozit micro, 150/604 impozit pe dividende) și filtrare pe perioadă (lunar sau trimestrial).",
+      "Coloane dedicate: Suma datorată, Suma de plată și Cod bugetar, sumele fiind citite automat din soldurile conturilor de obligații fiscale (ex. 4411/691).",
+      "Export XML (Soft J) — fișier XML conform schemei oficiale ANAF, validat automat față de XSD înainte de descărcare, gata pentru import în DUKIntegrator.",
+      "Export XDP (Soft A) — fișier XDP pentru formularul PDF inteligent ANAF, importabil direct în Adobe Acrobat Reader.",
+      "Calcul automat scadență — data de 25 a lunii următoare perioadei de raportare, derivată din filtrul de dată al raportului.",
+      "Preluare automată date companie — CUI (cu eliminarea automată a prefixului „RO\"), denumire, adresă, telefon, e-mail și datele declarantului din contul utilizatorului curent."
     ],
     "dependencies": [
       "l10n_ro",
-      "account_reports"
+      "account_reports",
+      "l10n_ro_anaf_base"
     ],
-    "connections": [],
-    "text": "Romania - ANAF D100 Declaration\nl10n_ro_anaf_d100\nAcest modul permite generarea Declarației 100 (Declarația privind obligațiile de plată la bugetul de stat) direct din Odoo Enterprise. Declarația 100 este un document centralizator care raportează scadențele și sumele datorate pentru diverse taxe și impozite, cum ar fi impozitul pe profit, impozitul pe veniturile microîntreprinderilor, accize, redevențe și alte obligații fiscale, conform nomenclatorului ANAF.\nCentralizare automată: colectarea sumelor pentru multiple obligații fiscale dintr-un singur punct.\nMapare pe coduri ANAF: corelarea automată a taxelor din Odoo cu codurile de obligație (ex: 103, 121, 140).\nFlexibilitate perioadă: suport pentru raportare lunară sau trimestrială, în funcție de tipul obligației.\nExport XML nativ: generarea fișierului XML conform structurii oficiale, gata pentru depunere.\nExport XDP: generarea fișierului Adobe XDP pentru import în formularul PDF inteligent ANAF."
+    "connections": [
+      "l10n_ro_anaf_base",
+      "l10n_ro_anaf_d300",
+      "l10n_ro_anaf_d120",
+      "l10n_ro_profit_tax",
+      "l10n_ro_micro_tax",
+      "l10n_ro_dividends"
+    ],
+    "text": "Romania - ANAF D100 Declaration\nl10n_ro_anaf_d100\nAcest modul permite companiilor românești să genereze și să exporte **Declarația 100 — Declarația privind obligațiile de plată la bugetul de stat** direct din Odoo Enterprise, eliminând introducerea manuală a datelor în DUKIntegrator sau în formularul PDF ANAF. Se adresează plătitorilor de impozit pe profit, impozit pe veniturile microîntreprinderilor, impozit pe dividende și altor obligații fiscale raportate lunar sau trimestrial la ANAF, conform nomenclatorului de coduri bugetare.\nRaport interactiv D100 integrat în rapoartele contabile Enterprise, cu linii predefinite pe coduri ANAF (102 impozit pe profit, 121 impozit micro, 150/604 impozit pe dividende) și filtrare pe perioadă (lunar sau trimestrial).\nColoane dedicate: Suma datorată, Suma de plată și Cod bugetar, sumele fiind citite automat din soldurile conturilor de obligații fiscale (ex. 4411/691).\nExport XML (Soft J) — fișier XML conform schemei oficiale ANAF, validat automat față de XSD înainte de descărcare, gata pentru import în DUKIntegrator.\nExport XDP (Soft A) — fișier XDP pentru formularul PDF inteligent ANAF, importabil direct în Adobe Acrobat Reader.\nCalcul automat scadență — data de 25 a lunii următoare perioadei de raportare, derivată din filtrul de dată al raportului.\nPreluare automată date companie — CUI (cu eliminarea automată a prefixului „RO\"), denumire, adresă, telefon, e-mail și datele declarantului din contul utilizatorului curent."
   },
   {
     "path": "l10n_ro_anaf_d107/index.md",
     "module": "l10n_ro_anaf_d107",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d107",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d107",
     "last_ingest": null,
     "friendly_name": "Romania - ANAF Declarația 107 (Sponsorizări)",
-    "summary": "Acest modul gestionează și exportă Declarația 107 privind sponsorizările și bursele private acordate în cursul exercițiului fiscal, conform art. 25 alin. (4) lit. i din Codul Fiscal. Modulul preia automat sponsorizările din contabilitate, calculează scăzământul de impozit conform formulei legale și generează fișierul XML pentru depunere prin SPV.",
+    "summary": "Acest modul gestionează și exportă Declarația 107 privind sponsorizările și bursele private acordate în cursul exercițiului fiscal, conform art. 25 alin. (4) lit. i din Codul Fiscal. Este destinat contribuabililor plătitori de impozit pe profit sau impozit micro-întreprindere care au acordat sponsorizări eligibile. Modulul preia automat sponsorizările din contabilitate, calculează scăzământul de impozit conform formulei legale și generează fișierul XML pentru depunere prin SPV.",
     "features": [
       "Import automat din contabilitate: preia sponsorizările înregistrate pe conturile 658x grupate pe parteneri, cu sumele debitoare din perioada anului fiscal.",
       "Calcul scăzământ conform formulei legale: `scăzământ = min(total sponsorizări, min(0,75% × CA, 20% × impozit datorat))`.",
@@ -6071,10 +6080,17 @@
     ],
     "dependencies": [
       "account",
-      "l10n_ro"
+      "l10n_ro",
+      "l10n_ro_anaf_base"
     ],
-    "connections": [],
-    "text": "Romania - ANAF Declarația 107 (Sponsorizări)\nl10n_ro_anaf_d107\nAcest modul gestionează și exportă Declarația 107 privind sponsorizările și bursele private acordate în cursul exercițiului fiscal, conform art. 25 alin. (4) lit. i din Codul Fiscal. Modulul preia automat sponsorizările din contabilitate, calculează scăzământul de impozit conform formulei legale și generează fișierul XML pentru depunere prin SPV.\nImport automat din contabilitate: preia sponsorizările înregistrate pe conturile 658x grupate pe parteneri, cu sumele debitoare din perioada anului fiscal.\nCalcul scăzământ conform formulei legale: `scăzământ = min(total sponsorizări, min(0,75% × CA, 20% × impozit datorat))`.\nExport XML în formatul ANAF pentru depunere prin SPV (Soft J).\nFlux de confirmare: ciornă → confirmată (blochează modificările după depunere).\nCine depune: contribuabilii plătitori de impozit pe profit sau impozit pe micro-întreprindere care au acordat sponsorizări eligibile.\nTermen: anual, odată cu declarația de impozit pe profit (D101) sau până la termenul de depunere a declarației de impozit micro."
+    "connections": [
+      "l10n_ro_anaf_base",
+      "l10n_ro_anaf_d100",
+      "l10n_ro_anaf_d205",
+      "l10n_ro_anaf_d207",
+      "l10n_ro_anaf_d101"
+    ],
+    "text": "Romania - ANAF Declarația 107 (Sponsorizări)\nl10n_ro_anaf_d107\nAcest modul gestionează și exportă Declarația 107 privind sponsorizările și bursele private acordate în cursul exercițiului fiscal, conform art. 25 alin. (4) lit. i din Codul Fiscal. Este destinat contribuabililor plătitori de impozit pe profit sau impozit micro-întreprindere care au acordat sponsorizări eligibile. Modulul preia automat sponsorizările din contabilitate, calculează scăzământul de impozit conform formulei legale și generează fișierul XML pentru depunere prin SPV.\nImport automat din contabilitate: preia sponsorizările înregistrate pe conturile 658x grupate pe parteneri, cu sumele debitoare din perioada anului fiscal.\nCalcul scăzământ conform formulei legale: `scăzământ = min(total sponsorizări, min(0,75% × CA, 20% × impozit datorat))`.\nExport XML în formatul ANAF pentru depunere prin SPV (Soft J).\nFlux de confirmare: ciornă → confirmată (blochează modificările după depunere).\nCine depune: contribuabilii plătitori de impozit pe profit sau impozit pe micro-întreprindere care au acordat sponsorizări eligibile.\nTermen: anual, odată cu declarația de impozit pe profit (D101) sau până la termenul de depunere a declarației de impozit micro."
   },
   {
     "path": "l10n_ro_anaf_d112/index.md",
@@ -6106,23 +6122,28 @@
   {
     "path": "l10n_ro_anaf_d120/index.md",
     "module": "l10n_ro_anaf_d120",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.1.1",
     "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d120",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d120",
     "last_ingest": null,
     "friendly_name": "Romania - ANAF D120 Declaration",
-    "summary": "Acest modul permite generarea Declarației 120 (Decont privind accizele) direct din Odoo Enterprise, oferind o soluție completă pentru companiile care produc, comercializează sau utilizează produse supuse accizelor. Declarația 120 este un document fiscal centralizator care raportează obligațiile de plată ale accizelor, fiind strâns corelat cu decontul de TVA, dar adăugând dimensiunea cantitativă specifică regimului accizelor.",
+    "summary": "Modulul adaugă exportul în format XML ANAF al **Decontului privind accizele (D120)**, peste declarația de accize gestionată de modulul `l10n_ro_excise`. D120 este decontul depus de importatorii și operatorii de produse accizabile (alcool, bere, produse energetice, tutun etc.), reglementat de Codul Fiscal Titlul VIII. Modulul nu adaugă un ecran nou: pe o declarație de accize de tip D120, butonul „Export XML\" generează fișierul în formatul ANAF D120 (namespace `mfp:anaf:dgti:d120:declaratie:v5`), validat față de schema XSD oficială, în locul template-ului D103. Astfel, responsabilul fiscal obține fișierul de depunere fără operare manuală.",
     "features": [
-      "Raportare cantitativă: calculul automat al cantităților conform unităților de măsură fiscale (hl, hl alcool pur, kg, GJ, 1000 bucăți).",
-      "Integrare cu taxele Odoo: maparea rândurilor din declarație pe baza tag-urilor fiscale din planul de conturi.",
-      "Automatizare transformări: utilizarea unor coeficienți de conversie (ex: grade Plato la hl) pentru raportarea precisă în XML.",
-      "Export direct: buton de export XML în raportul de taxe, eliminând operarea manuală a datelor."
+      "Export XML D120: generarea decontului de accize în formatul ANAF (`D120_<CUI>_<AAAALL>.xml`), pe baza liniilor declarației de accize.",
+      "Mapare automată pe rândurile D120: fiecare categorie de acciză (bere, vin, alcool etilic, țigarete, motorină, GPL, gaz natural, energie electrică, plus categoriile nearmonizate din Legea 296/2023) este pusă pe rândul corespunzător din formular (R0, R3, R9, R20 etc.).",
+      "Calcul totaluri: subtotaluri și totaluri (accize armonizate, nearmonizate, total general) calculate automat din liniile declarației.",
+      "Validare XSD: XML-ul este validat față de schema oficială ANAF v5 (`d120_13052025.xsd`) înainte de livrare; datele de identificare ale companiei (CUI, CAEN, adresă) sunt verificate la export."
     ],
     "dependencies": [
-      "l10n_ro_excise"
+      "l10n_ro_excise",
+      "l10n_ro_anaf_base"
     ],
-    "connections": [],
-    "text": "Romania - ANAF D120 Declaration\nl10n_ro_anaf_d120\nAcest modul permite generarea Declarației 120 (Decont privind accizele) direct din Odoo Enterprise, oferind o soluție completă pentru companiile care produc, comercializează sau utilizează produse supuse accizelor. Declarația 120 este un document fiscal centralizator care raportează obligațiile de plată ale accizelor, fiind strâns corelat cu decontul de TVA, dar adăugând dimensiunea cantitativă specifică regimului accizelor.\nRaportare cantitativă: calculul automat al cantităților conform unităților de măsură fiscale (hl, hl alcool pur, kg, GJ, 1000 bucăți).\nIntegrare cu taxele Odoo: maparea rândurilor din declarație pe baza tag-urilor fiscale din planul de conturi.\nAutomatizare transformări: utilizarea unor coeficienți de conversie (ex: grade Plato la hl) pentru raportarea precisă în XML.\nExport direct: buton de export XML în raportul de taxe, eliminând operarea manuală a datelor."
+    "connections": [
+      "l10n_ro_excise",
+      "l10n_ro_anaf_base",
+      "cod"
+    ],
+    "text": "Romania - ANAF D120 Declaration\nl10n_ro_anaf_d120\nModulul adaugă exportul în format XML ANAF al **Decontului privind accizele (D120)**, peste declarația de accize gestionată de modulul `l10n_ro_excise`. D120 este decontul depus de importatorii și operatorii de produse accizabile (alcool, bere, produse energetice, tutun etc.), reglementat de Codul Fiscal Titlul VIII. Modulul nu adaugă un ecran nou: pe o declarație de accize de tip D120, butonul „Export XML\" generează fișierul în formatul ANAF D120 (namespace `mfp:anaf:dgti:d120:declaratie:v5`), validat față de schema XSD oficială, în locul template-ului D103. Astfel, responsabilul fiscal obține fișierul de depunere fără operare manuală.\nExport XML D120: generarea decontului de accize în formatul ANAF (`D120_<CUI>_<AAAALL>.xml`), pe baza liniilor declarației de accize.\nMapare automată pe rândurile D120: fiecare categorie de acciză (bere, vin, alcool etilic, țigarete, motorină, GPL, gaz natural, energie electrică, plus categoriile nearmonizate din Legea 296/2023) este pusă pe rândul corespunzător din formular (R0, R3, R9, R20 etc.).\nCalcul totaluri: subtotaluri și totaluri (accize armonizate, nearmonizate, total general) calculate automat din liniile declarației.\nValidare XSD: XML-ul este validat față de schema oficială ANAF v5 (`d120_13052025.xsd`) înainte de livrare; datele de identificare ale companiei (CUI, CAEN, adresă) sunt verificate la export."
   },
   {
     "path": "l10n_ro_anaf_d205/index.md",
@@ -6225,27 +6246,35 @@
   {
     "path": "l10n_ro_anaf_d390/index.md",
     "module": "l10n_ro_anaf_d390",
-    "version": "19.0.0.0.1",
+    "version": "19.0.0.0.2",
     "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d390",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d390",
     "last_ingest": null,
     "friendly_name": "ANAF D390",
-    "summary": "Acest modul automatizează generarea Declarației recapitulative D390 (VIES) privind livrările, achizițiile și prestările intracomunitare de TVA către ANAF. Declarația este obligatorie pentru toate persoanele impozabile înregistrate în scopuri de TVA care efectuează operațiuni intracomunitare. Modulul extrage automat datele din raportul standard Odoo „Listă Vânzări/Achiziții EC\", bazându-se pe tag-urile fiscale românești, eliminând completarea manuală pe fiecare partener UE și asigurând corelația cu evidența contabilă.",
+    "summary": "Modulul automatizează generarea Declarației recapitulative D390 (VIES) privind livrările, achizițiile și prestările intracomunitare, pentru companiile înregistrate în scopuri de TVA în România care efectuează operațiuni intracomunitare. Declarația este obligatorie conform Art. 325 din Codul Fiscal și se depune lunar, până pe 25 ale lunii următoare. Modulul construiește un raport în stil contabil pe baza listei standard Odoo „Listă Vânzări/Achiziții CE\", clasifică automat operațiunile pe baza tag-urilor fiscale românești din `l10n_ro` și produce fișierele de depunere către ANAF, eliminând completarea manuală pe fiecare partener UE.",
     "features": [
-      "Handler dedicat `l10n_ro_anaf_d390.tax.report.handler` care moștenește handlerul standard Odoo EC Sales fără a-l modifica, plus mixin-ul ANAF din `l10n_ro_anaf_base`.",
-      "Export XDP (Soft A): import în formularul PDF inteligent ANAF.",
-      "Export XML (Soft J): XML nativ conform structurii oficiale ANAF (v3, schema 2020+), validat XSD automat și compatibil DUKIntegrator.",
-      "Clasificare pe tax tags (XML IDs stabile din `l10n_ro`): goods (L), services (P), triangular (T), goods_acquisition (A), services_acquisition (S).",
-      "Date declarant automate din câmpul `l10n_ro_anaf_declaration_contact_id` (funcție fallback „CONTABIL\").",
-      "Validări automate înainte de export: cod TVA companie, adresă fiscală completă, cod TVA pentru toți partenerii incluși."
+      "Raport „Listă vânzări/achiziții CE\" adaptat pentru România, accesibil din meniul Contabilitate → Declarații ANAF → Declarație 390.",
+      "Clasificare automată a operațiunilor în categoriile D390 pe baza tag-urilor fiscale românești: L (livrări bunuri), P (prestări servicii), T (triunghiulare), A (achiziții bunuri) și S (achiziții servicii).",
+      "Export XDP (Soft A) — fișier Adobe XDP gata de importat în formularul PDF inteligent de pe portalul ANAF.",
+      "Export XML (Soft J) — fișier XML conform schemei oficiale ANAF v3 (2021+), validat automat împotriva schemei XSD înainte de descărcare și compatibil cu DUKIntegrator.",
+      "Butoanele de export (XML / XDP) sunt afișate permanent în bara de sus a raportului.",
+      "Validare automată înainte de export: cod TVA companie, adresă fiscală completă, cod TVA al partenerilor UE cu prefix de țară corect.",
+      "Date declarant preluate automat din câmpul de contact ANAF configurat în setările companiei (funcție — fallback „CONTABIL\" —, prenume, nume).",
+      "Agregare pe perechea partener + tip operație, cu eliminarea automată a sumelor zero."
     ],
     "dependencies": [
       "account",
       "l10n_ro",
-      "account_reports"
+      "account_reports",
+      "l10n_ro_anaf_base"
     ],
-    "connections": [],
-    "text": "ANAF D390\nl10n_ro_anaf_d390\nAcest modul automatizează generarea Declarației recapitulative D390 (VIES) privind livrările, achizițiile și prestările intracomunitare de TVA către ANAF. Declarația este obligatorie pentru toate persoanele impozabile înregistrate în scopuri de TVA care efectuează operațiuni intracomunitare. Modulul extrage automat datele din raportul standard Odoo „Listă Vânzări/Achiziții EC\", bazându-se pe tag-urile fiscale românești, eliminând completarea manuală pe fiecare partener UE și asigurând corelația cu evidența contabilă.\nHandler dedicat `l10n_ro_anaf_d390.tax.report.handler` care moștenește handlerul standard Odoo EC Sales fără a-l modifica, plus mixin-ul ANAF din `l10n_ro_anaf_base`.\nExport XDP (Soft A): import în formularul PDF inteligent ANAF.\nExport XML (Soft J): XML nativ conform structurii oficiale ANAF (v3, schema 2020+), validat XSD automat și compatibil DUKIntegrator.\nClasificare pe tax tags (XML IDs stabile din `l10n_ro`): goods (L), services (P), triangular (T), goods_acquisition (A), services_acquisition (S).\nDate declarant automate din câmpul `l10n_ro_anaf_declaration_contact_id` (funcție fallback „CONTABIL\").\nValidări automate înainte de export: cod TVA companie, adresă fiscală completă, cod TVA pentru toți partenerii incluși."
+    "connections": [
+      "l10n_ro_anaf_base",
+      "l10n_ro_anaf_d300",
+      "l10n_ro_anaf_d394",
+      "l10n_ro_doc_screenshots"
+    ],
+    "text": "ANAF D390\nl10n_ro_anaf_d390\nModulul automatizează generarea Declarației recapitulative D390 (VIES) privind livrările, achizițiile și prestările intracomunitare, pentru companiile înregistrate în scopuri de TVA în România care efectuează operațiuni intracomunitare. Declarația este obligatorie conform Art. 325 din Codul Fiscal și se depune lunar, până pe 25 ale lunii următoare. Modulul construiește un raport în stil contabil pe baza listei standard Odoo „Listă Vânzări/Achiziții CE\", clasifică automat operațiunile pe baza tag-urilor fiscale românești din `l10n_ro` și produce fișierele de depunere către ANAF, eliminând completarea manuală pe fiecare partener UE.\nRaport „Listă vânzări/achiziții CE\" adaptat pentru România, accesibil din meniul Contabilitate → Declarații ANAF → Declarație 390.\nClasificare automată a operațiunilor în categoriile D390 pe baza tag-urilor fiscale românești: L (livrări bunuri), P (prestări servicii), T (triunghiulare), A (achiziții bunuri) și S (achiziții servicii).\nExport XDP (Soft A) — fișier Adobe XDP gata de importat în formularul PDF inteligent de pe portalul ANAF.\nExport XML (Soft J) — fișier XML conform schemei oficiale ANAF v3 (2021+), validat automat împotriva schemei XSD înainte de descărcare și compatibil cu DUKIntegrator.\nButoanele de export (XML / XDP) sunt afișate permanent în bara de sus a raportului.\nValidare automată înainte de export: cod TVA companie, adresă fiscală completă, cod TVA al partenerilor UE cu prefix de țară corect.\nDate declarant preluate automat din câmpul de contact ANAF configurat în setările companiei (funcție — fallback „CONTABIL\" —, prenume, nume).\nAgregare pe perechea partener + tip operație, cu eliminarea automată a sumelor zero."
   },
   {
     "path": "l10n_ro_anaf_d394/index.md",
@@ -6300,28 +6329,36 @@
   {
     "path": "l10n_ro_anaf_d398/index.md",
     "module": "l10n_ro_anaf_d398",
-    "version": "19.0.0.0.1",
+    "version": "19.0.0.0.2",
     "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d398",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d398",
     "last_ingest": null,
     "friendly_name": "Romania - ANAF D398 Declaration (VAT OSS)",
-    "summary": "Acest modul permite generarea Declarației Speciale de TVA (D398) direct din Odoo, conform formatului ANAF pentru regimul special One Stop Shop (OSS). Regimul OSS permite raportarea și plata TVA-ului datorat în mai multe state membre UE printr-o singură declarație centralizată, reglementată de Directiva (UE) 2017/2455 și transpusă prin Codul Fiscal. Declarația se întocmește în EURO și se depune trimestrial (UE/Non-UE) sau lunar (Import). Implementarea folosește infrastructura comună din `l10n_ro_anaf_base`.",
+    "summary": "Modulul permite generarea Declarației Speciale de TVA (D398) direct din Odoo, conform formatului solicitat de ANAF pentru regimul special One Stop Shop (OSS). Este destinat companiilor din România care efectuează livrări de bunuri sau prestări de servicii către consumatori finali (B2C) din alte state membre UE și sunt înregistrate în regimul OSS. Modulul **nu adaugă un ecran propriu**: extinde raportul standard OSS din Enterprise, adăugând butoanele de export ANAF (XML Soft J / XDP Soft A) și coloane de control în EUR (conversie la cursul BCE). Contabilitatea rămâne în RON — modulul adaugă doar conversia de raportare în EUR pentru declarația OSS. Implementarea este aliniată la infrastructura comună din `l10n_ro_anaf_base` (date companie/declarant, registru de profile de declarații, validări pentru resursele de export și pentru datele minime ale companiei).",
     "features": [
-      "Conversie automată în EURO folosind cursul BCE din ultima zi a perioadei fiscale.",
-      "Grupare pe state membre de consum (MSCON) a livrărilor de bunuri și prestărilor de servicii.",
-      "Export XDP (Soft A): import în formularul PDF inteligent ANAF (versiunea 1.0.11+).",
-      "Export XML (Soft J): XML nativ conform schemei XSD oficiale (`d398_20211101.xsd`), validat XSD automat și compatibil DUKIntegrator.",
-      "Date identificare automate din configurările Odoo.",
-      "Distincția între bunuri și servicii pe fiecare cotă de TVA.",
-      "Gap-uri rămase: avertizarea pentru pragul OSS de 10.000 EUR și depunerea automată în portalul ANAF nu sunt încă implementate."
+      "Export XML D398 (Soft J) — fișier validat automat față de schema XSD oficială ANAF, compatibil cu DUKIntegrator pentru semnare digitală.",
+      "Export XDP D398 (Soft A) — fișier de date pentru import în formularul PDF inteligent ANAF (versiunea 1.0.11+); disponibil și ca ZIP cu PDF inclus.",
+      "Conversie automată în EUR — sumele sunt convertite folosind cursul de schimb publicat de Banca Centrală Europeană (BCE) din ultima zi a perioadei fiscale, fără a afecta furnizorul de cursuri BNR configurat pentru restul înregistrărilor contabile.",
+      "Coloane suplimentare în raportul OSS — „Net (EUR)\" și „Tax (EUR)\" vizibile direct în interfața rapoartelor OSS Enterprise, pentru verificarea sumelor înainte de export.",
+      "Grupare automată pe state membre de consum (MSCON), tip livrare (bunuri/servicii) și cotă TVA (standard/redusă).",
+      "Validare date companie — verifică prezența datelor obligatorii (CUI, județ, date contact) înainte de generarea fișierului.",
+      "Meniu dedicat — „Declarație 398\" disponibil sub meniul „Declarații ANAF\" din modulul Contabilitate.",
+      "Limitări cunoscute: avertizarea pentru pragul OSS de 10.000 EUR/an și depunerea automată în portalul ANAF nu sunt încă implementate."
     ],
     "dependencies": [
       "l10n_ro",
       "account_reports",
+      "l10n_eu_oss_reports",
+      "l10n_ro_anaf_base"
+    ],
+    "connections": [
+      "l10n_ro_anaf_base",
+      "l10n_ro_anaf_d300",
+      "l10n_ro_anaf_d318",
+      "l10n_eu_oss",
       "l10n_eu_oss_reports"
     ],
-    "connections": [],
-    "text": "Romania - ANAF D398 Declaration (VAT OSS)\nl10n_ro_anaf_d398\nAcest modul permite generarea Declarației Speciale de TVA (D398) direct din Odoo, conform formatului ANAF pentru regimul special One Stop Shop (OSS). Regimul OSS permite raportarea și plata TVA-ului datorat în mai multe state membre UE printr-o singură declarație centralizată, reglementată de Directiva (UE) 2017/2455 și transpusă prin Codul Fiscal. Declarația se întocmește în EURO și se depune trimestrial (UE/Non-UE) sau lunar (Import). Implementarea folosește infrastructura comună din `l10n_ro_anaf_base`.\nConversie automată în EURO folosind cursul BCE din ultima zi a perioadei fiscale.\nGrupare pe state membre de consum (MSCON) a livrărilor de bunuri și prestărilor de servicii.\nExport XDP (Soft A): import în formularul PDF inteligent ANAF (versiunea 1.0.11+).\nExport XML (Soft J): XML nativ conform schemei XSD oficiale (`d398_20211101.xsd`), validat XSD automat și compatibil DUKIntegrator.\nDate identificare automate din configurările Odoo.\nDistincția între bunuri și servicii pe fiecare cotă de TVA.\nGap-uri rămase: avertizarea pentru pragul OSS de 10.000 EUR și depunerea automată în portalul ANAF nu sunt încă implementate."
+    "text": "Romania - ANAF D398 Declaration (VAT OSS)\nl10n_ro_anaf_d398\nModulul permite generarea Declarației Speciale de TVA (D398) direct din Odoo, conform formatului solicitat de ANAF pentru regimul special One Stop Shop (OSS). Este destinat companiilor din România care efectuează livrări de bunuri sau prestări de servicii către consumatori finali (B2C) din alte state membre UE și sunt înregistrate în regimul OSS. Modulul **nu adaugă un ecran propriu**: extinde raportul standard OSS din Enterprise, adăugând butoanele de export ANAF (XML Soft J / XDP Soft A) și coloane de control în EUR (conversie la cursul BCE). Contabilitatea rămâne în RON — modulul adaugă doar conversia de raportare în EUR pentru declarația OSS. Implementarea este aliniată la infrastructura comună din `l10n_ro_anaf_base` (date companie/declarant, registru de profile de declarații, validări pentru resursele de export și pentru datele minime ale companiei).\nExport XML D398 (Soft J) — fișier validat automat față de schema XSD oficială ANAF, compatibil cu DUKIntegrator pentru semnare digitală.\nExport XDP D398 (Soft A) — fișier de date pentru import în formularul PDF inteligent ANAF (versiunea 1.0.11+); disponibil și ca ZIP cu PDF inclus.\nConversie automată în EUR — sumele sunt convertite folosind cursul de schimb publicat de Banca Centrală Europeană (BCE) din ultima zi a perioadei fiscale, fără a afecta furnizorul de cursuri BNR configurat pentru restul înregistrărilor contabile.\nColoane suplimentare în raportul OSS — „Net (EUR)\" și „Tax (EUR)\" vizibile direct în interfața rapoartelor OSS Enterprise, pentru verificarea sumelor înainte de export.\nGrupare automată pe state membre de consum (MSCON), tip livrare (bunuri/servicii) și cotă TVA (standard/redusă).\nValidare date companie — verifică prezența datelor obligatorii (CUI, județ, date contact) înainte de generarea fișierului.\nMeniu dedicat — „Declarație 398\" disponibil sub meniul „Declarații ANAF\" din modulul Contabilitate.\nLimitări cunoscute: avertizarea pentru pragul OSS de 10.000 EUR/an și depunerea automată în portalul ANAF nu sunt încă implementate."
   },
   {
     "path": "l10n_ro_anaf_messages/index.md",
@@ -6553,16 +6590,28 @@
   {
     "path": "l10n_ro_deferred_entries/index.md",
     "module": "l10n_ro_deferred_entries",
-    "version": "19.0.1.0.0",
+    "version": "19.0.2.0.0",
     "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_deferred_entries",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_deferred_entries",
     "last_ingest": null,
-    "friendly_name": "Romania - Înregistrări în Avans (471/472)",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - Înregistrări în Avans (471/472)\nl10n_ro_deferred_entries"
+    "friendly_name": "Romania - Venituri și Cheltuieli Înregistrate în Avans (471/472)",
+    "summary": "Modulul configurează automat mecanismul nativ Odoo Enterprise de recunoaștere a cheltuielilor și veniturilor înregistrate în avans, conform OMFP 1802/2014 pct. 233–237, folosind conturile 4711 (Cheltuieli înregistrate în avans) și 4721 (Venituri înregistrate în avans) din planul de conturi românesc. Se bazează pe motorul nativ `account_accountant` (Enterprise) — câmpurile „Deferred Date\" (Start Date / End Date) de pe liniile de factură și raportul Deferred Expenses/Revenues sunt disponibile fără cod custom adițional. Astfel, după instalare, contabilul completează doar intervalul de recunoaștere pe linia de factură, iar Odoo generează singur nota de transfer și notele lunare de recunoaștere până la epuizarea soldului.",
+    "features": [
+      "Configurare automată la instalare: contul `4711` devine `Deferred Expense Account`, iar contul `4721` devine `Deferred Revenue Account` în setările companiei.",
+      "Jurnalul de Operațiuni diverse este setat automat ca jurnal de amânare.",
+      "Metoda de calcul implicită: Months (recunoaștere liniară pe luni calendaristice).",
+      "Pe linia de factură (cont 6xx sau 7xx) se completează câmpul „Deferred Date\" cu intervalul de recunoaștere (Start → End).",
+      "La postarea facturii, Odoo generează automat intrarea de transfer (`Dr 4711 = Cr 6xx`) și planifică notele lunare de recunoaștere (`Dr 6xx = Cr 4711`)."
+    ],
+    "dependencies": [
+      "account_accountant",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_fixed_assets",
+      "l10n_ro_financial_notes"
+    ],
+    "text": "Romania - Venituri și Cheltuieli Înregistrate în Avans (471/472)\nl10n_ro_deferred_entries\nModulul configurează automat mecanismul nativ Odoo Enterprise de recunoaștere a cheltuielilor și veniturilor înregistrate în avans, conform OMFP 1802/2014 pct. 233–237, folosind conturile 4711 (Cheltuieli înregistrate în avans) și 4721 (Venituri înregistrate în avans) din planul de conturi românesc. Se bazează pe motorul nativ `account_accountant` (Enterprise) — câmpurile „Deferred Date\" (Start Date / End Date) de pe liniile de factură și raportul Deferred Expenses/Revenues sunt disponibile fără cod custom adițional. Astfel, după instalare, contabilul completează doar intervalul de recunoaștere pe linia de factură, iar Odoo generează singur nota de transfer și notele lunare de recunoaștere până la epuizarea soldului.\nConfigurare automată la instalare: contul `4711` devine `Deferred Expense Account`, iar contul `4721` devine `Deferred Revenue Account` în setările companiei.\nJurnalul de Operațiuni diverse este setat automat ca jurnal de amânare.\nMetoda de calcul implicită: Months (recunoaștere liniară pe luni calendaristice).\nPe linia de factură (cont 6xx sau 7xx) se completează câmpul „Deferred Date\" cu intervalul de recunoaștere (Start → End).\nLa postarea facturii, Odoo generează automat intrarea de transfer (`Dr 4711 = Cr 6xx`) și planifică notele lunare de recunoaștere (`Dr 6xx = Cr 4711`)."
   },
   {
     "path": "l10n_ro_dividends/index.md",
@@ -6790,11 +6839,33 @@
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_financial_notes",
     "last_ingest": null,
     "friendly_name": "Romania - Note Explicative Situații Financiare",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - Note Explicative Situații Financiare\nl10n_ro_financial_notes"
+    "summary": "Modul care generează Notele explicative 1–10 la situațiile financiare anuale, conform OMFP 1802/2014. Este adresat contabililor și directorilor financiari care trebuie să atașeze notele explicative la bilanțul anual depus la ANAF. O parte dintre note sunt calculate automat din înregistrările contabile la data de referință (active imobilizate, provizioane, analiza rezultatului din exploatare, scadențarul creanțelor și datoriilor), iar restul oferă câmpuri de completare manuală. Toate cele 10 note se exportă într-un singur document PDF gata de atașat la dosarul de situații financiare anuale.",
+    "features": [
+      "Note calculate automat din contabilitate:",
+      "Nota 1 — Active imobilizate: mișcări (intrări, ieșiri) și amortizare per categorie (necorporale `20x`/`280x`, corporale `21x`/`281x`, financiare `26x`/`296x`).",
+      "Nota 2 — Provizioane: constituiri, utilizări și anulări per cont `151x`.",
+      "Nota 4 — Analiza rezultatului din exploatare: venituri și cheltuieli pe categorii (`6xx`/`7xx`).",
+      "Nota 5 — Creanțe și datorii: scadențar (sub 1 an / 1–5 ani / peste 5 ani) din soldurile nereconciliate la data de referință.",
+      "Note cu completare manuală:",
+      "Nota 3 — Repartizarea profitului (câmpuri numerice).",
+      "Nota 6 — Principii și politici contabile (text — precompletat cu text standard OMFP 1802).",
+      "Nota 7 — Participații și surse de finanțare (câmpuri numerice).",
+      "Nota 8 — Salariați și organe de administrare (câmpuri numerice).",
+      "Nota 9 — Exemple de calcul (text liber).",
+      "Nota 10 — Alte informații (text liber).",
+      "Export PDF unic cu toate cele 10 note, gata de atașat la dosarul de situații financiare anuale."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_financial_statements",
+      "l10n_ro_fixed_assets",
+      "l10n_ro_provisions",
+      "l10n_ro_dividends"
+    ],
+    "text": "Romania - Note Explicative Situații Financiare\nl10n_ro_financial_notes\nModul care generează Notele explicative 1–10 la situațiile financiare anuale, conform OMFP 1802/2014. Este adresat contabililor și directorilor financiari care trebuie să atașeze notele explicative la bilanțul anual depus la ANAF. O parte dintre note sunt calculate automat din înregistrările contabile la data de referință (active imobilizate, provizioane, analiza rezultatului din exploatare, scadențarul creanțelor și datoriilor), iar restul oferă câmpuri de completare manuală. Toate cele 10 note se exportă într-un singur document PDF gata de atașat la dosarul de situații financiare anuale.\nNote calculate automat din contabilitate:\nNota 1 — Active imobilizate: mișcări (intrări, ieșiri) și amortizare per categorie (necorporale `20x`/`280x`, corporale `21x`/`281x`, financiare `26x`/`296x`).\nNota 2 — Provizioane: constituiri, utilizări și anulări per cont `151x`.\nNota 4 — Analiza rezultatului din exploatare: venituri și cheltuieli pe categorii (`6xx`/`7xx`).\nNota 5 — Creanțe și datorii: scadențar (sub 1 an / 1–5 ani / peste 5 ani) din soldurile nereconciliate la data de referință.\nNote cu completare manuală:\nNota 3 — Repartizarea profitului (câmpuri numerice).\nNota 6 — Principii și politici contabile (text — precompletat cu text standard OMFP 1802).\nNota 7 — Participații și surse de finanțare (câmpuri numerice).\nNota 8 — Salariați și organe de administrare (câmpuri numerice).\nNota 9 — Exemple de calcul (text liber).\nNota 10 — Alte informații (text liber).\nExport PDF unic cu toate cele 10 note, gata de atașat la dosarul de situații financiare anuale."
   },
   {
     "path": "l10n_ro_financial_statements/index.md",
@@ -6804,11 +6875,26 @@
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_financial_statements",
     "last_ingest": null,
     "friendly_name": "Romania - Situații Financiare Anuale ANAF (FR-31)",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - Situații Financiare Anuale ANAF (FR-31)\nl10n_ro_financial_statements"
+    "summary": "Extinde rapoartele financiare native românești din Odoo Enterprise (`l10n_ro_reports`) cu un buton „Export XML ANAF\", direct în headerul rapoartelor Formular 10 (Bilanț) și Formular 20 (Cont de Profit și Pierdere). Modulul **nu adaugă un ecran propriu** — generează fișierul XML în formatul de depunere ANAF (`tip=BL` pentru bilanț, `tip=CPP` pentru CPP), prin același mecanism ca exportul D300/SAF-T, și validează că bilanțul este echilibrat înainte de export. Se adresează contabililor și directorilor financiari din companiile românești care depun situațiile financiare anuale conform OMFP 1802/2014.",
+    "features": [
+      "Buton „Export XML ANAF\" în headerul rapoartelor „Cod 10 - Bilanț\" și „Cod 20 - Cont de Profit și Pierdere\"; butonul este `always_show`, deci apare indiferent de varianta de raport auto-selectată.",
+      "Formularul 10 (Bilanț): XML cu rândurile 01–51 extrase din raportul Enterprise prin pattern `| NN`.",
+      "Formularul 20 (CPP): XML cu rândurile 01–68 extrase din raportul Enterprise; butonul este atașat pe toate variantele de cont de profit și pierdere (smle / micro-entitate / internațional).",
+      "Validare bilanț echilibrat: blocare export dacă Total Activ (rd.04+11+12) ≠ Total Pasiv (rd.15+18+19+20+51), cu toleranță 1 RON; validarea rulează doar pentru bilanț (F10).",
+      "Implementat ca `account.report.custom.handler` — un singur handler `l10n.ro.fs.handler` legat de raportul F10 și de variantele F20, integrat nativ în frameworkul Enterprise de rapoarte."
+    ],
+    "dependencies": [
+      "l10n_ro_reports",
+      "account"
+    ],
+    "connections": [
+      "l10n_ro_financial_notes",
+      "l10n_ro_inventory_register",
+      "l10n_ro_account_return_pl_closing",
+      "l10n_ro_anaf_base",
+      "l10n_ro_account_chart"
+    ],
+    "text": "Romania - Situații Financiare Anuale ANAF (FR-31)\nl10n_ro_financial_statements\nExtinde rapoartele financiare native românești din Odoo Enterprise (`l10n_ro_reports`) cu un buton „Export XML ANAF\", direct în headerul rapoartelor Formular 10 (Bilanț) și Formular 20 (Cont de Profit și Pierdere). Modulul **nu adaugă un ecran propriu** — generează fișierul XML în formatul de depunere ANAF (`tip=BL` pentru bilanț, `tip=CPP` pentru CPP), prin același mecanism ca exportul D300/SAF-T, și validează că bilanțul este echilibrat înainte de export. Se adresează contabililor și directorilor financiari din companiile românești care depun situațiile financiare anuale conform OMFP 1802/2014.\nButon „Export XML ANAF\" în headerul rapoartelor „Cod 10 - Bilanț\" și „Cod 20 - Cont de Profit și Pierdere\"; butonul este `always_show`, deci apare indiferent de varianta de raport auto-selectată.\nFormularul 10 (Bilanț): XML cu rândurile 01–51 extrase din raportul Enterprise prin pattern `| NN`.\nFormularul 20 (CPP): XML cu rândurile 01–68 extrase din raportul Enterprise; butonul este atașat pe toate variantele de cont de profit și pierdere (smle / micro-entitate / internațional).\nValidare bilanț echilibrat: blocare export dacă Total Activ (rd.04+11+12) ≠ Total Pasiv (rd.15+18+19+20+51), cu toleranță 1 RON; validarea rulează doar pentru bilanț (F10).\nImplementat ca `account.report.custom.handler` — un singur handler `l10n.ro.fs.handler` legat de raportul F10 și de variantele F20, integrat nativ în frameworkul Enterprise de rapoarte."
   },
   {
     "path": "l10n_ro_fixed_assets/index.md",
@@ -7150,22 +7236,29 @@
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_micro_tax",
     "last_ingest": null,
     "friendly_name": "Impozit Micro-Întreprindere",
-    "summary": "Modulul calculează și înregistrează trimestrial impozitul pe veniturile micro-întreprinderilor conform Legii 227/2015 Titlul III, actualizat prin OUG 115/2023 și OUG 21/2024. Determină automat baza impozabilă din veniturile din exploatare (cu excluderi configurabile), aplică cota corectă (1% cu cel puțin un salariat, 3% fără salariat) și generează nota contabilă aferentă. Include monitorizarea plafonului de 500.000 EUR cu alerte și tranziție automată la regimul de impozit pe profit.",
+    "summary": "Modulul calculează și înregistrează trimestrial impozitul pe veniturile micro-întreprinderilor conform Legii 227/2015 Titlul III, actualizat prin OUG 115/2023 și OUG 21/2024. Se adresează companiilor cu cifra de afaceri sub 500.000 EUR/an care aplică cota de 1% (cu cel puțin un salariat) sau 3% (fără salariat). Determină automat baza impozabilă din veniturile din exploatare (cu excluderi configurabile), aplică cota corectă în funcție de numărul de salariați și generează automat nota contabilă aferentă. Include monitorizarea plafonului de 500.000 EUR cu alerte și tranziție automată la regimul de impozit pe profit la depășire.",
     "features": [
-      "Model persistent `l10n.ro.micro.tax.compute` cu mașină de stări draft → posted → cancelled.",
-      "Calcul automat al veniturilor din `account.move.line` pentru conturile de tip income / income_other.",
-      "Conturi excluse configurabile pe companie (dividende ct. 761, subvenții ct. 7411/7584, diferențe de curs favorabile, reluări de provizioane).",
-      "Cotă automată: 1% cu cel puțin un salariat, 3% fără salariat; numărul de salariați preluat din modulul HR dacă este instalat sau completat manual.",
-      "Notă contabilă Dr 698 = Cr 4418 generată la postare (ct. 698, nu 691, conform OMFP 1802/2014).",
-      "Cron lunar de monitorizare a pragului: alertă la 80% și tranziție automată la profit la 100% din plafonul de 500.000 EUR.",
-      "Configurare în Settings: regim fiscal, prag EUR, conturi excluse.",
+      "Model persistent `l10n.ro.micro.tax.compute` cu mașină de stări `draft → posted → cancelled`.",
+      "Calcul automat al veniturilor impozabile din `account.move.line` pentru conturile de tip `income` / `income_other`, filtrând înregistrările postate în trimestrul selectat.",
+      "Conturi excluse din baza de calcul, configurabile pe companie (dividende 761, subvenții 7411/7584 etc.).",
+      "Număr de salariați preluat automat din modulul HR dacă este instalat sau completat manual.",
+      "Cotă automată: 1% (cel puțin un salariat) sau 3% (zero salariați), conform legii.",
+      "Generare automată a notei contabile Dr 698 = Cr 4418 la postare.",
+      "Cron lunar de monitorizare a plafonului: alertă la 80% și tranziție automată la impozit pe profit la depășirea pragului de 500.000 EUR.",
+      "Configurare în Setări Contabilitate — regim fiscal, prag EUR, conturi excluse.",
       "9 teste automate (TC-01 → TC-09)."
     ],
     "dependencies": [
-      "account"
+      "account",
+      "l10n_ro"
     ],
-    "connections": [],
-    "text": "Impozit Micro-Întreprindere\nl10n_ro_micro_tax\nModulul calculează și înregistrează trimestrial impozitul pe veniturile micro-întreprinderilor conform Legii 227/2015 Titlul III, actualizat prin OUG 115/2023 și OUG 21/2024. Determină automat baza impozabilă din veniturile din exploatare (cu excluderi configurabile), aplică cota corectă (1% cu cel puțin un salariat, 3% fără salariat) și generează nota contabilă aferentă. Include monitorizarea plafonului de 500.000 EUR cu alerte și tranziție automată la regimul de impozit pe profit.\nModel persistent `l10n.ro.micro.tax.compute` cu mașină de stări draft → posted → cancelled.\nCalcul automat al veniturilor din `account.move.line` pentru conturile de tip income / income_other.\nConturi excluse configurabile pe companie (dividende ct. 761, subvenții ct. 7411/7584, diferențe de curs favorabile, reluări de provizioane).\nCotă automată: 1% cu cel puțin un salariat, 3% fără salariat; numărul de salariați preluat din modulul HR dacă este instalat sau completat manual.\nNotă contabilă Dr 698 = Cr 4418 generată la postare (ct. 698, nu 691, conform OMFP 1802/2014).\nCron lunar de monitorizare a pragului: alertă la 80% și tranziție automată la profit la 100% din plafonul de 500.000 EUR.\nConfigurare în Settings: regim fiscal, prag EUR, conturi excluse.\n9 teste automate (TC-01 → TC-09)."
+    "connections": [
+      "l10n_ro_profit_tax",
+      "l10n_ro_anaf_d100",
+      "l10n_ro_anaf_d107",
+      "l10n_ro_period_close_enhanced"
+    ],
+    "text": "Impozit Micro-Întreprindere\nl10n_ro_micro_tax\nModulul calculează și înregistrează trimestrial impozitul pe veniturile micro-întreprinderilor conform Legii 227/2015 Titlul III, actualizat prin OUG 115/2023 și OUG 21/2024. Se adresează companiilor cu cifra de afaceri sub 500.000 EUR/an care aplică cota de 1% (cu cel puțin un salariat) sau 3% (fără salariat). Determină automat baza impozabilă din veniturile din exploatare (cu excluderi configurabile), aplică cota corectă în funcție de numărul de salariați și generează automat nota contabilă aferentă. Include monitorizarea plafonului de 500.000 EUR cu alerte și tranziție automată la regimul de impozit pe profit la depășire.\nModel persistent `l10n.ro.micro.tax.compute` cu mașină de stări `draft → posted → cancelled`.\nCalcul automat al veniturilor impozabile din `account.move.line` pentru conturile de tip `income` / `income_other`, filtrând înregistrările postate în trimestrul selectat.\nConturi excluse din baza de calcul, configurabile pe companie (dividende 761, subvenții 7411/7584 etc.).\nNumăr de salariați preluat automat din modulul HR dacă este instalat sau completat manual.\nCotă automată: 1% (cel puțin un salariat) sau 3% (zero salariați), conform legii.\nGenerare automată a notei contabile Dr 698 = Cr 4418 la postare.\nCron lunar de monitorizare a plafonului: alertă la 80% și tranziție automată la impozit pe profit la depășirea pragului de 500.000 EUR.\nConfigurare în Setări Contabilitate — regim fiscal, prag EUR, conturi excluse.\n9 teste automate (TC-01 → TC-09)."
   },
   {
     "path": "l10n_ro_mrp_labour_account/index.md",
@@ -7339,26 +7432,31 @@
     "path": "l10n_ro_payroll_import/index.md",
     "module": "l10n_ro_payroll_import",
     "version": "19.0.1.0.0",
-    "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_payroll_import",
+    "github": "`https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_payroll_import`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_payroll_import",
-    "last_ingest": null,
-    "friendly_name": "Import Note Salarii",
-    "summary": "Modulul permite importul notelor contabile de salarii generate de aplicații externe de salarizare (SAGA, Nexus, Charisma, WizSalary etc.) direct în Odoo 19, eliminând reintroducerea manuală. Acceptă fișiere JSON și CSV, mapează codurile externe la conturile Odoo (cu fallback automat după prefix) și distribuie analitic sumele pe centre de cost, creând automat notă contabilă echilibrată în starea postată.",
+    "last_ingest": "2026-06-09",
+    "friendly_name": "Romania - Import Note Salarii",
+    "summary": "Modulul permite importul notelor contabile de salarii generate de aplicații externe de salarizare (SAGA, Nexus, Charisma, WizSalary etc.) direct în Odoo 19, fără reintroducere manuală. Se adresează companiilor care gestionează salarizarea într-o aplicație externă și trebuie să importe lunar nota contabilă de salarii în Odoo, cu distribuție pe centre de cost analitice. Fișierul exportat (JSON sau CSV) este parsat, codurile externe sunt mapate pe conturile Odoo, iar după validare se generează automat nota contabilă (`account.move`) postată, conform monografiei salariale (641 / 421 / 4315 / 4316 / 444 / 646 / 436).",
     "features": [
-      "Import în format JSON (structură flexibilă) și CSV (delimitatori automați, denumiri de coloane în română și engleză).",
-      "Câmpuri suportate: cont debit, cont credit, sumă, centru de cost, departament, descriere; cu aliasuri multiple pentru numele coloanelor.",
-      "Tabel de mapare cont extern → cont Odoo configurat per companie, cu fallback automat după prefix de cod.",
-      "Mapare analitică cod centru cost extern → cont analitic Odoo, cu distribuție analitică 100% pe centrul indicat.",
-      "Verificare echilibru debit = credit și blocarea importului duplicat pentru aceeași perioadă și jurnal.",
-      "Creare automată a notei contabile (`account.move`) în starea posted, cu anulare prin reversare.",
-      "Flux de stări: draft → validated → posted → cancelled."
+      "Import fișiere — suportă format JSON (structură flexibilă exportată de aplicații moderne) și format CSV (delimitatori automați: virgulă sau punct-și-virgulă), cu suport pentru denumiri de coloane în română și engleză.",
+      "Câmpuri suportate — cont debit, cont credit, sumă, centru de cost, departament, descriere.",
+      "Mapare conturi — tabel de echivalență `cod extern → cont Odoo` configurat per companie, cu fallback automat prin căutare după prefix de cod (ex. `641` → primul cont care începe cu `641`).",
+      "Mapare analitică — `cod centru cost extern → cont analitic Odoo`, cu distribuție 100% pe centrul de cost indicat.",
+      "Distribuție analitică pe linie — linia de import moștenește `analytic.mixin`, expunând câmpul `analytic_distribution` pentru repartizarea pe centre de cost direct în formular.",
+      "Validare și contabilizare — verificare echilibru debit = credit înainte de validare, blocare import duplicat pentru aceeași perioadă și același jurnal, creare automată notă contabilă (`account.move`) în starea `posted`.",
+      "Anulare — anularea notei contabile asociate, cu reset la stare schiță pentru repostare.",
+      "Flux de stări — `Schiță` → `Validat` → `Contabilizat` → `Anulat`."
     ],
     "dependencies": [
       "account",
+      "l10n_ro",
       "analytic"
     ],
-    "connections": [],
-    "text": "Import Note Salarii\nl10n_ro_payroll_import\nModulul permite importul notelor contabile de salarii generate de aplicații externe de salarizare (SAGA, Nexus, Charisma, WizSalary etc.) direct în Odoo 19, eliminând reintroducerea manuală. Acceptă fișiere JSON și CSV, mapează codurile externe la conturile Odoo (cu fallback automat după prefix) și distribuie analitic sumele pe centre de cost, creând automat notă contabilă echilibrată în starea postată.\nImport în format JSON (structură flexibilă) și CSV (delimitatori automați, denumiri de coloane în română și engleză).\nCâmpuri suportate: cont debit, cont credit, sumă, centru de cost, departament, descriere; cu aliasuri multiple pentru numele coloanelor.\nTabel de mapare cont extern → cont Odoo configurat per companie, cu fallback automat după prefix de cod.\nMapare analitică cod centru cost extern → cont analitic Odoo, cu distribuție analitică 100% pe centrul indicat.\nVerificare echilibru debit = credit și blocarea importului duplicat pentru aceeași perioadă și jurnal.\nCreare automată a notei contabile (`account.move`) în starea posted, cu anulare prin reversare.\nFlux de stări: draft → validated → posted → cancelled."
+    "connections": [
+      "l10n_ro",
+      "analytic"
+    ],
+    "text": "Romania - Import Note Salarii\nl10n_ro_payroll_import\nModulul permite importul notelor contabile de salarii generate de aplicații externe de salarizare (SAGA, Nexus, Charisma, WizSalary etc.) direct în Odoo 19, fără reintroducere manuală. Se adresează companiilor care gestionează salarizarea într-o aplicație externă și trebuie să importe lunar nota contabilă de salarii în Odoo, cu distribuție pe centre de cost analitice. Fișierul exportat (JSON sau CSV) este parsat, codurile externe sunt mapate pe conturile Odoo, iar după validare se generează automat nota contabilă (`account.move`) postată, conform monografiei salariale (641 / 421 / 4315 / 4316 / 444 / 646 / 436).\nImport fișiere — suportă format JSON (structură flexibilă exportată de aplicații moderne) și format CSV (delimitatori automați: virgulă sau punct-și-virgulă), cu suport pentru denumiri de coloane în română și engleză.\nCâmpuri suportate — cont debit, cont credit, sumă, centru de cost, departament, descriere.\nMapare conturi — tabel de echivalență `cod extern → cont Odoo` configurat per companie, cu fallback automat prin căutare după prefix de cod (ex. `641` → primul cont care începe cu `641`).\nMapare analitică — `cod centru cost extern → cont analitic Odoo`, cu distribuție 100% pe centrul de cost indicat.\nDistribuție analitică pe linie — linia de import moștenește `analytic.mixin`, expunând câmpul `analytic_distribution` pentru repartizarea pe centre de cost direct în formular.\nValidare și contabilizare — verificare echilibru debit = credit înainte de validare, blocare import duplicat pentru aceeași perioadă și același jurnal, creare automată notă contabilă (`account.move`) în starea `posted`.\nAnulare — anularea notei contabile asociate, cu reset la stare schiță pentru repostare.\nFlux de stări — `Schiță` → `Validat` → `Contabilizat` → `Anulat`."
   },
   {
     "path": "l10n_ro_period_close_enhanced/index.md",
@@ -7434,25 +7532,35 @@
   {
     "path": "l10n_ro_profit_tax/index.md",
     "module": "l10n_ro_profit_tax",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_profit_tax",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_profit_tax",
     "last_ingest": null,
     "friendly_name": "Impozit pe Profit (D100/D101)",
-    "summary": "Modulul calculează automat impozitul pe profit conform Legii 227/2015 Titlul II, cu sprijin pentru D100 trimestrial (cumulat YTD) și D101 anual. Pornind de la profitul contabil dedus din `account.move.line`, aplică ajustări fiscale configurabile per cont, gestionează pierderea fiscală reportată (carry-forward 7 ani, limita 70%) și creditul fiscal pentru sponsorizări, generând nota contabilă Dr 691 = Cr 441.",
+    "summary": "Modulul calculează automat impozitul pe profit conform Legii 227/2015 Titlul II, cu sprijin pentru D100 trimestrial (cumulat YTD) și D101 anual. Pornind de la profitul contabil (venituri 7xx − cheltuieli 6xx, cumulat de la 1 ianuarie), aplică ajustări fiscale configurabile per cont, gestionează pierderea fiscală reportată (carry-forward 7 ani, deducere FIFO, limita 70%) și creditul fiscal pentru sponsorizări, generând nota contabilă Dr 691 = Cr 441 la postare. Modulul include și un Registru de evidență fiscală (OMFP 870/2005) care listează ajustările pe rânduri, cu temei legal, și se reconciliază cu calculul anual. Se adresează companiilor plătitoare de impozit pe profit la cota de 16%.",
     "features": [
-      "Profit contabil calculat automat din `account.move.line` (venituri 7xx − cheltuieli 6xx), cumulat YTD.",
-      "Ajustări fiscale configurabile per cont contabil: cheltuieli nedeductibile, venituri neimpozabile, deduceri suplimentare (C-D, investiții speciale).",
-      "Pierdere fiscală reportată (art. 31 CF): carry-forward 7 ani, FIFO, limita 70%, cu registru de utilizări și stări (activă/epuizată/expirată).",
-      "Credit fiscal sponsorizări (art. 25¹ CF): min(0,75% CA, 20% impozit calculat, cheltuieli efective).",
-      "Note contabile Dr 691 = Cr 441 generate la postare.",
-      "Periodicitate D100 T1–T3 cumulativă YTD și D101 anual."
+      "Calcul profit contabil YTD din `account.move.line` (venituri 7xx − cheltuieli 6xx), cumulat de la 1 ianuarie.",
+      "Ajustări fiscale configurabile per cont contabil: cheltuieli nedeductibile (amenzi, protocol 50%), venituri neimpozabile (dividende subsidiare), deduceri suplimentare (C-D).",
+      "Pierdere fiscală reportată (art. 31 CF): carry-forward 7 ani, deducere FIFO, limita 70% din profitul impozabil, cu tracking complet al utilizărilor per calcul.",
+      "Credit fiscal sponsorizări (art. 25¹ CF) calculat pe contul 6582: `min(0,75% CA, 20% impozit calculat, cheltuieli efective)`.",
+      "Model persistent cu mașină de stări `draft → posted → cancelled`; anularea eliberează automat utilizările de pierdere.",
+      "Notă contabilă automată Dr 691 = Cr 441 la postare, cu verificări (conturi existente, impozit > 0, limita 70% respectată).",
+      "Registru de evidență fiscală (OMFP 870/2005): generare din calculul anual, reconciliere automată, închidere imutabilă pe an.",
+      "Periodicitate YTD: D100 T1–T3 cumulativ de la 1 ianuarie (art. 41 CF) și D101 anual independent."
     ],
     "dependencies": [
-      "account"
+      "account",
+      "l10n_ro"
     ],
-    "connections": [],
-    "text": "Impozit pe Profit (D100/D101)\nl10n_ro_profit_tax\nModulul calculează automat impozitul pe profit conform Legii 227/2015 Titlul II, cu sprijin pentru D100 trimestrial (cumulat YTD) și D101 anual. Pornind de la profitul contabil dedus din `account.move.line`, aplică ajustări fiscale configurabile per cont, gestionează pierderea fiscală reportată (carry-forward 7 ani, limita 70%) și creditul fiscal pentru sponsorizări, generând nota contabilă Dr 691 = Cr 441.\nProfit contabil calculat automat din `account.move.line` (venituri 7xx − cheltuieli 6xx), cumulat YTD.\nAjustări fiscale configurabile per cont contabil: cheltuieli nedeductibile, venituri neimpozabile, deduceri suplimentare (C-D, investiții speciale).\nPierdere fiscală reportată (art. 31 CF): carry-forward 7 ani, FIFO, limita 70%, cu registru de utilizări și stări (activă/epuizată/expirată).\nCredit fiscal sponsorizări (art. 25¹ CF): min(0,75% CA, 20% impozit calculat, cheltuieli efective).\nNote contabile Dr 691 = Cr 441 generate la postare.\nPeriodicitate D100 T1–T3 cumulativă YTD și D101 anual."
+    "connections": [
+      "l10n_ro_micro_tax",
+      "l10n_ro_account_return_pl_closing",
+      "l10n_ro_anaf_d100",
+      "l10n_ro_anaf_d120",
+      "l10n_ro_anaf_d107",
+      "l10n_ro_financial_statements"
+    ],
+    "text": "Impozit pe Profit (D100/D101)\nl10n_ro_profit_tax\nModulul calculează automat impozitul pe profit conform Legii 227/2015 Titlul II, cu sprijin pentru D100 trimestrial (cumulat YTD) și D101 anual. Pornind de la profitul contabil (venituri 7xx − cheltuieli 6xx, cumulat de la 1 ianuarie), aplică ajustări fiscale configurabile per cont, gestionează pierderea fiscală reportată (carry-forward 7 ani, deducere FIFO, limita 70%) și creditul fiscal pentru sponsorizări, generând nota contabilă Dr 691 = Cr 441 la postare. Modulul include și un Registru de evidență fiscală (OMFP 870/2005) care listează ajustările pe rânduri, cu temei legal, și se reconciliază cu calculul anual. Se adresează companiilor plătitoare de impozit pe profit la cota de 16%.\nCalcul profit contabil YTD din `account.move.line` (venituri 7xx − cheltuieli 6xx), cumulat de la 1 ianuarie.\nAjustări fiscale configurabile per cont contabil: cheltuieli nedeductibile (amenzi, protocol 50%), venituri neimpozabile (dividende subsidiare), deduceri suplimentare (C-D).\nPierdere fiscală reportată (art. 31 CF): carry-forward 7 ani, deducere FIFO, limita 70% din profitul impozabil, cu tracking complet al utilizărilor per calcul.\nCredit fiscal sponsorizări (art. 25¹ CF) calculat pe contul 6582: `min(0,75% CA, 20% impozit calculat, cheltuieli efective)`.\nModel persistent cu mașină de stări `draft → posted → cancelled`; anularea eliberează automat utilizările de pierdere.\nNotă contabilă automată Dr 691 = Cr 441 la postare, cu verificări (conturi existente, impozit > 0, limita 70% respectată).\nRegistru de evidență fiscală (OMFP 870/2005): generare din calculul anual, reconciliere automată, închidere imutabilă pe an.\nPeriodicitate YTD: D100 T1–T3 cumulativ de la 1 ianuarie (art. 41 CF) și D101 anual independent."
   },
   {
     "path": "l10n_ro_provisions/index.md",

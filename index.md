@@ -253,7 +253,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_cbam](l10n_ro_cbam/index.md): Urmărirea emisiilor CO₂ incorporate la import și declarația CBAM trimestrială/anuală (Reg. UE 2023/956, FR-56).
 - [l10n_ro_cost_centers](l10n_ro_cost_centers/index.md): Repartizarea automată a cheltuielilor indirecte pe centre de cost (conturi analitice), neutră financiar, prin chei configurabile, conform OMFP 1802/2014.
 - [l10n_ro_currency_revaluation](l10n_ro_currency_revaluation/index.md): Reevaluare lunară a soldurilor monetare în valută conform OMFP 1802/2014, cu diferențe de curs definitive pe 665/765, fără stornare automată.
-- [l10n_ro_deferred_entries](l10n_ro_deferred_entries/index.md): Recunoaștere automată a cheltuielilor și veniturilor înregistrate în avans (conturi 471/472) prin planuri account.asset.
+- [l10n_ro_deferred_entries](l10n_ro_deferred_entries/index.md): Configurează automat mecanismul nativ Enterprise de recunoaștere a cheltuielilor/veniturilor înregistrate în avans (conturi 4711/4721) pe planul de conturi RO.
 - [l10n_ro_dividends](l10n_ro_dividends/index.md): Distribuire dividende cu cote 10%/16%, registru acționari și note contabile automate 117/457/446.
 - [l10n_ro_doc_screenshots](l10n_ro_doc_screenshots/index.md): Tooling de dezvoltare (mixin HttpCase + Playwright) pentru generarea automată a capturilor din fișele consultant.
 - [l10n_ro_edi_ubl_sale_store](l10n_ro_edi_ubl_sale_store/index.md): Setează automat tipul de e-factură la codul 751 pentru vânzările însoțite de bon fiscal.

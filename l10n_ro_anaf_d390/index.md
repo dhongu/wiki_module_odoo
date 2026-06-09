@@ -1,51 +1,53 @@
 # ANAF D390 (localizat la `l10n_ro_anaf_d390/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d390`
-- **Versiune:** `19.0.0.0.1`
+- **Versiune:** `19.0.0.0.2`
 - **Cale:** https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d390
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d390`
-- **Ultima Ingestie:** 2026-06-01
+- **Ultima Ingestie:** 2026-06-09
 
 #### 1. Sumar
 
-Acest modul automatizează generarea Declarației recapitulative D390 (VIES) privind livrările, achizițiile și prestările intracomunitare de TVA către ANAF. Declarația este obligatorie pentru toate persoanele impozabile înregistrate în scopuri de TVA care efectuează operațiuni intracomunitare. Modulul extrage automat datele din raportul standard Odoo „Listă Vânzări/Achiziții EC", bazându-se pe tag-urile fiscale românești, eliminând completarea manuală pe fiecare partener UE și asigurând corelația cu evidența contabilă.
+Modulul automatizează generarea Declarației recapitulative D390 (VIES) privind livrările, achizițiile și prestările intracomunitare, pentru companiile înregistrate în scopuri de TVA în România care efectuează operațiuni intracomunitare. Declarația este obligatorie conform Art. 325 din Codul Fiscal și se depune lunar, până pe 25 ale lunii următoare. Modulul construiește un raport în stil contabil pe baza listei standard Odoo „Listă Vânzări/Achiziții CE", clasifică automat operațiunile pe baza tag-urilor fiscale românești din `l10n_ro` și produce fișierele de depunere către ANAF, eliminând completarea manuală pe fiecare partener UE.
 
 #### 2. Funcționalități Cheie
 
-- **Handler dedicat** `l10n_ro_anaf_d390.tax.report.handler` care moștenește handlerul standard Odoo EC Sales fără a-l modifica, plus mixin-ul ANAF din `l10n_ro_anaf_base`.
-- **Export XDP (Soft A):** import în formularul PDF inteligent ANAF.
-- **Export XML (Soft J):** XML nativ conform structurii oficiale ANAF (v3, schema 2020+), validat XSD automat și compatibil DUKIntegrator.
-- **Clasificare pe tax tags** (XML IDs stabile din `l10n_ro`): goods (L), services (P), triangular (T), goods_acquisition (A), services_acquisition (S).
-- **Date declarant automate** din câmpul `l10n_ro_anaf_declaration_contact_id` (funcție fallback „CONTABIL").
-- **Validări automate** înainte de export: cod TVA companie, adresă fiscală completă, cod TVA pentru toți partenerii incluși.
+- Raport „Listă vânzări/achiziții CE" adaptat pentru România, accesibil din meniul **Contabilitate → Declarații ANAF → Declarație 390**.
+- Clasificare automată a operațiunilor în categoriile D390 pe baza tag-urilor fiscale românești: **L** (livrări bunuri), **P** (prestări servicii), **T** (triunghiulare), **A** (achiziții bunuri) și **S** (achiziții servicii).
+- Export **XDP (Soft A)** — fișier Adobe XDP gata de importat în formularul PDF inteligent de pe portalul ANAF.
+- Export **XML (Soft J)** — fișier XML conform schemei oficiale ANAF v3 (2021+), validat automat împotriva schemei XSD înainte de descărcare și compatibil cu DUKIntegrator.
+- Butoanele de export (XML / XDP) sunt afișate permanent în bara de sus a raportului.
+- Validare automată înainte de export: cod TVA companie, adresă fiscală completă, cod TVA al partenerilor UE cu prefix de țară corect.
+- Date declarant preluate automat din câmpul de contact ANAF configurat în setările companiei (funcție — fallback „CONTABIL" —, prenume, nume).
+- Agregare pe perechea partener + tip operație, cu eliminarea automată a sumelor zero.
 
 #### 3. Dependențe
 
 - `account`
 - `l10n_ro`
 - `account_reports`
-- `[[l10n_ro_anaf_base]]`
+- [l10n_ro_anaf_base](../l10n_ro_anaf_base/index.md)
 
 #### 4. Componente Cheie
 
 **Modele**
 
-- `l10n_ro_anaf_d390.tax.report.handler`: handlerul care moștenește `account.ec.sales.report.handler` și mixin-ul ANAF, atașat raportului `l10n_ro_d390_report`.
+- `l10n_ro_anaf_d390.tax.report.handler`: handlerul raportului D390. Moștenește handlerul standard Odoo `account.ec.sales.report.handler` și mixin-ul `l10n_ro_anaf.report.handler.mixin` din `l10n_ro_anaf_base`. Atașat raportului `l10n_ro_d390_report` (cu rădăcina `account_reports.generic_ec_sales_report`), grupează partenerii UE pe tip de operațiune și adaugă butoanele de export ANAF.
 
-**Date / Vizualizări**
+**Vizualizări**
 
-- `views/account_report_views.xml`: configurarea raportului D390.
-- `views/d390_report_export.xml`: butonul/template-ul de export XDP.
-- `views/d390_report_xml_export.xml`: butonul/template-ul de export XML.
-- `views/d390_menu.xml`: intrările de meniu.
-- `demo/demo_data.xml`: date de test.
+- `l10n_ro_d390_report` (`views/account_report_views.xml`): definirea raportului `account.report` D390, cu coloanele cod țară, număr TVA, tip operațiune și sumă.
+- `d390_report_xml_template` (`views/d390_report_xml_export.xml`): template-ul QWeb pentru exportul XML (Soft J), conform schemei `mfp:anaf:dgti:d390:declaratie:v3`.
+- `views/d390_report_export.xml`: template-ul de export XDP (Soft A).
+- `views/d390_menu.xml`: intrarea de meniu **Declarație 390**.
 
 **Acțiuni Automate / Acțiuni Server**
 
-*Nu au fost identificate acțiuni automate (`ir.cron`); exportul se declanșează manual din raport.*
+*Nu au fost identificate sarcini `ir.cron`; exportul fișierelor se declanșează manual din butoanele raportului.*
 
 #### 5. Conexiuni
 
-- `[[l10n_ro_anaf_base]]`
-- `[[l10n_ro_anaf_d300]]`
-- `[[l10n_ro_anaf_d394]]`
+- [l10n_ro_anaf_base](../l10n_ro_anaf_base/index.md): infrastructura comună pentru declarațiile ANAF (mixin handler, butoane export, date declarant).
+- [l10n_ro_anaf_d300](../l10n_ro_anaf_d300/index.md): corelarea operațiunilor intracomunitare cu decontul de TVA, fără dublarea sumelor.
+- [l10n_ro_anaf_d394](../l10n_ro_anaf_d394/index.md): reconciliere cu jurnalul TVA (D394 acoperă operațiunile interne, D390 pe cele intracomunitare).
+- [l10n_ro_doc_screenshots](../l10n_ro_doc_screenshots/index.md): mixinul `ScreenshotCase` folosit pentru generarea automată a capturilor din fișa modulului.

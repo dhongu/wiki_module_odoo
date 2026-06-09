@@ -4,6 +4,19 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-06-09] Re-ingestie lot l10n_ro_ent (11 module, după corecții de cod + fișe)
+
+- **Acțiune:** Re-ingestate paginile a 11 module din suita `l10n_ro_ent` (repo `terrabit-ro/l10n_ro_ent`, branch `19.0`), procesate în paralel prin subagenți `general-purpose` în 2 loturi (6 + 5). Module: `l10n_ro_deferred_entries`, `l10n_ro_micro_tax`, `l10n_ro_profit_tax`, `l10n_ro_financial_statements`, `l10n_ro_financial_notes`, `l10n_ro_payroll_import`, `l10n_ro_anaf_d100`, `l10n_ro_anaf_d107`, `l10n_ro_anaf_d120`, `l10n_ro_anaf_d390`, `l10n_ro_anaf_d398`. Declanșată de adăugarea capturilor de fișă + corecții de cod în aceste module.
+- **Sursă:** `readme/DESCRIPTION.md` (Sumar + Funcționalități) + `USAGE.md`/`FISA_CONSULTANT.md`; secț. 4 reflectată din cod unde diferea de pagina veche.
+- **Corecții de conținut notabile:**
+  - `l10n_ro_deferred_entries`: pagina veche descria greșit un mecanism `account.asset` + dependență `account_asset` → corectat la mecanismul nativ Enterprise (`deferred_start_date`/`deferred_end_date`, conturi 4711/4721, `post_init_hook`), dependențe `account_accountant`+`l10n_ro`. Actualizată și linia din index.
+  - `l10n_ro_anaf_d120`: clarificat că este **Decontul (anual) privind accizele**, nu impozit pe profit; sursă FISA_CONSULTANT corectată.
+  - `l10n_ro_profit_tax`: adăugat Registrul de evidență fiscală (`l10n.ro.tax.register`) + corecția credit sponsorizări pe contul 6582.
+  - `l10n_ro_financial_statements`: handler unic `l10n.ro.fs.handler`, buton `always_show` pe toate variantele de CPP.
+  - `l10n_ro_financial_notes` și `l10n_ro_anaf_d107`: reflectată moștenirea `mail.thread`/`mail.activity.mixin`.
+  - Peste tot: corectată sintaxa neconformă `[[...]]` → link-uri Markdown relative active (acolo unde pagina țintă există); versiuni și „Ultima Ingestie" (2026-06-09) actualizate.
+- **Fișiere actualizate:** 11 `index.md` (re-scrise), `wiki_module_odoo/index.md` (linia `l10n_ro_deferred_entries` corectată), `wiki_module_odoo/log.md`, `wiki_module_odoo/.index/` (rebuild lexical).
+
 ## [2026-06-09] Mutare suită l10n_ro_intrastat_enhancement (bitshop_ent → l10n_ro_ent)
 
 - **Acțiune:** Modulul `l10n_ro_intrastat_enhancement` a fost mutat fizic din suita `bitshop_ent` în `l10n_ro_ent` (modul de localizare RO, mai potrivit acolo). Verificat înainte: fără conflict de nume, niciun modul nu-l listează în `depends`, dependențele (`l10n_ro_intrastat` Enterprise, `stock_delivery` core) nu se rup. Actualizat în pagina wiki câmpurile **Cale** (`terrabit-ro/l10n_ro_ent`) și **Cale Locală** (`odoo-addons/l10n_ro_ent/l10n_ro_intrastat_enhancement`).
