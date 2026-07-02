@@ -5,6 +5,7 @@
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_cash_register
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_cash_register`
 - **Ultima Ingestie:** `2026-06-08`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

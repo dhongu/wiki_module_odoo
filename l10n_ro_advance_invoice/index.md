@@ -6,6 +6,7 @@
 - **Nume Tehnic:** `l10n_ro_advance_invoice`
 - **Cale:** https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_advance_invoice
 - **Ultima Ingestie:** 2026-05-31
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 ## 1. Sumar
 

@@ -57,11 +57,25 @@ găsești mai multe potriviri și e ambiguu, raportează și oprește-te.
    conexiuni — include doar legături funcționale reale, verificate în cod/manifest.
 5. Scrie pagina în `<modul>/index.md`. Tot textul în **română corectă, cu diacritice**.
    Setează "Ultima Ingestie" la data de azi.
+6. **Fișa consultant**: dacă există `<cale>/readme/FISA_CONSULTANT.md`, copiaz-o
+   cu tot cu poze în directorul wiki al modulului (copie fidelă, fără modificări
+   de conținut; la re-ingestie suprascrie copia veche):
+   ```bash
+   cp <cale>/readme/FISA_CONSULTANT.md <modul>/FISA_CONSULTANT.md
+   mkdir -p <modul>/screenshots
+   cp <cale>/readme/screenshots/* <modul>/screenshots/
+   ```
+   (dacă `readme/screenshots/` lipsește, copiază doar fișa). Pozele sunt referite
+   relativ (`screenshots/*.png`), deci link-urile rămân funcționale. Adaugă apoi
+   în metadatele paginii linia
+   `- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)`.
 
 ## Reguli stricte
 
-- Scrii DOAR propriul `<modul>/index.md` — rulezi în paralel cu alți documentariști,
-  fișierele trebuie să rămână independente.
+- Scrii DOAR în directorul propriului modul: `<modul>/` (`index.md`, plus
+  `FISA_CONSULTANT.md` și `screenshots/` dacă modulul are fișă consultant) —
+  rulezi în paralel cu alți documentariști, fișierele trebuie să rămână
+  independente.
 - **NU** atingi `index.md` (rădăcină), `log.md` sau `schema.md` — acele scrieri sunt
   centralizate în skill-ul `wiki-module`, ca să se evite conflictele de scriere
   concurentă.
@@ -94,6 +108,7 @@ URL final: `https://github.com/<owner>/<repo>/tree/19.0/<modul>`.
 
 Întoarce, compact: numele tehnic, numele prietenesc, versiunea, **o descriere de o
 singură linie** (pentru intrarea din `index.md`, o va scrie orchestratorul), sursa
-folosită (DESCRIPTION.md vs. analiză cod) și eventuale corecții/avertismente (ex: text
+folosită (DESCRIPTION.md vs. analiză cod), dacă ai copiat fișa consultant (și câte
+capturi) și eventuale corecții/avertismente (ex: text
 "Odoo 18" rămas în DESCRIPTION pe care l-ai corectat, dependențe fără pagină wiki
 rămase ca text).

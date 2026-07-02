@@ -13,6 +13,7 @@ Fiecare modul Odoo va avea propriul director markdown în directorul `wiki_modul
 - **Cale:** URL-ul complet GitHub către directorul modulului (ex: `https://github.com/OWNER/REPO/tree/BRANCH/path/to/module`)
 - **Cale Locală:** Calea relativă către directorul modulului din rădăcina monorepo-ului Odoo (ex: `odoo-addons/l10n_ro_ent/nume_modul`)
 - **Ultima Ingestie:** `[AAAA-LL-ZZ]`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md) — *linie opțională, prezentă DOAR dacă modulul are `readme/FISA_CONSULTANT.md` (copiată în directorul wiki al modulului, vezi Fluxul de Ingestie).*
 
 #### 1. Sumar
 
@@ -80,5 +81,10 @@ O listă de **link-uri Markdown active** către alte pagini de module care sunt 
     - Se scanează directorul `views/` pentru a identifica vizualizările cheie pentru secțiunea 'Componente Cheie'.
     - Se scanează fișierele de date (`data/*.xml`) pentru acțiuni automate și acțiuni server pentru secțiunea 'Componente Cheie'.
 4.  **Crearea Paginii:** Se sintetizează toate informațiile colectate pentru a popula o nouă pagină conform structurii de mai sus.
-5.  **Actualizarea Indexului:** Se adaugă noua pagină la `index.md`.
-6.  **Actualizarea Jurnalului:** Se adaugă o înregistrare a ingestiei la `log.md`.
+5.  **Copierea Fișei Consultant (dacă există):** Dacă modulul are `readme/FISA_CONSULTANT.md`:
+    - Se copiază fișa în `[module_name]/FISA_CONSULTANT.md` (copie fidelă, fără modificări de conținut).
+    - Se copiază integral directorul `readme/screenshots/` în `[module_name]/screenshots/` — pozele sunt referite relativ din fișă (`screenshots/*.png`), deci link-urile rămân funcționale după copiere.
+    - Se adaugă în pagina modulului linia de metadate `- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)`.
+    - La re-ingestie, copia din wiki se suprascrie cu versiunea curentă din modul (fișa din `readme/` e sursa de adevăr).
+6.  **Actualizarea Indexului:** Se adaugă noua pagină la `index.md`.
+7.  **Actualizarea Jurnalului:** Se adaugă o înregistrare a ingestiei la `log.md`.

@@ -5861,6 +5861,31 @@
     "text": "l10n_ro_account_chart\nl10n_ro_account_chart"
   },
   {
+    "path": "l10n_ro_account_counterpart/index.md",
+    "module": "l10n_ro_account_counterpart",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_account_counterpart",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_account_counterpart",
+    "last_ingest": "2026-07-02",
+    "friendly_name": "Romania - Account Counterpart",
+    "summary": "Modulul adaugă pe fiecare poziție contabilă (`account.move.line`) contul corespondent (cont contrapartidă, conform OMFP 1802/2014), util pentru fișele de cont, registrul-jurnal și verificarea notelor contabile.",
+    "features": [
+      "Pentru fiecare linie de notă contabilă: dacă pe partea opusă (debit ↔ credit) există un",
+      "Dacă există mai multe conturi distincte pe partea opusă, se afișează eticheta „Diverși\"",
+      "Liniile fără mișcare (secțiuni, note fără sumă) rămân fără corespondent.",
+      "Câmpurile sunt stocate și calculate (recalculate automat la modificarea liniilor notei),",
+      "Complementar modulului [l10n_ro_journal_reports](../l10n_ro_journal_reports/index.md), care"
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_journal_reports"
+    ],
+    "text": "Romania - Account Counterpart\nl10n_ro_account_counterpart\nModulul adaugă pe fiecare poziție contabilă (`account.move.line`) contul corespondent (cont contrapartidă, conform OMFP 1802/2014), util pentru fișele de cont, registrul-jurnal și verificarea notelor contabile.\nPentru fiecare linie de notă contabilă: dacă pe partea opusă (debit ↔ credit) există un\nDacă există mai multe conturi distincte pe partea opusă, se afișează eticheta „Diverși\"\nLiniile fără mișcare (secțiuni, note fără sumă) rămân fără corespondent.\nCâmpurile sunt stocate și calculate (recalculate automat la modificarea liniilor notei),\nComplementar modulului [l10n_ro_journal_reports](../l10n_ro_journal_reports/index.md), care"
+  },
+  {
     "path": "l10n_ro_account_edi_ubl/index.md",
     "module": "l10n_ro_account_edi_ubl",
     "version": "19.0.1.0.0",
@@ -5974,6 +5999,36 @@
     "text": "Romania - Storno Enhancements\nl10n_ro_account_storno\nModulul implementează contabilitatea de tip **storno** (înregistrări în roșu / cu sumă negativă) conform standardelor contabile românești. În loc să anuleze o operațiune greșită printr-o înregistrare pe partea opusă a contului (care umflă artificial rulajele), storno-ul **inversează** suma chiar pe poziția inițială, cu valoare negativă, astfel încât soldurile și rulajele contabile rămân corecte. Comportamentul de storno se activează la nivel de companie, oferind flexibilitate între entitățile dintr-un grup.\nÎnregistrări negative (în roșu): calculează automat valorile de debit și credit ca numere negative pentru liniile de storno, asigurând raportarea corectă în registrele contabile ale localizării românești.\nConfigurarea utilizării contului: adaugă un câmp „Utilizare\" (Debit, Credit sau Bivalent) pe conturile din planul de conturi, pentru redirecționarea automată a sumelor către coloana corectă conform regulilor contabile RO.\nLogică de storno îmbunătățită: extinde logica standard de stornare (reversare) din Odoo, marcând notele și liniile ca „storno\", astfel încât soldurile să fie diminuate corect, nu majorate pe partea opusă.\nActivare la nivel de companie: comportamentul de storno este controlat de o setare pe companie, permițând flexibilitate între entități diferite."
   },
   {
+    "path": "l10n_ro_account_vat_journal/index.md",
+    "module": "l10n_ro_account_vat_journal",
+    "version": "19.0.1.0.0",
+    "github": "[https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal](https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal)",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_account_vat_journal",
+    "last_ingest": "2026-07-02",
+    "friendly_name": "Romania - VAT Journals (Sales & Purchase)",
+    "summary": "Modulul aduce Jurnalul de Vânzări și Jurnalul de Cumpărări — registrele lunare de TVA obligatorii cerute de auditorii ANAF — direct în motorul nativ de rapoarte contabile Enterprise al Odoo (`account.report`). Fiecare jurnal listează facturile, avizele de stornare și chitanțele înregistrate în perioadă, cu baza și TVA-ul defalcate pe fiecare cotă, tratează corect TVA la încasare și taxarea inversă, iar datele rezultate stau la baza declarațiilor D300 și D394.",
+    "features": [
+      "Câte un rând pentru fiecare document (număr, dată, partener, cod fiscal, total document);",
+      "Coloane dinamice Bază + TVA per cotă (21% / 11% și cotele istorice 19% / 9% / 5%);",
+      "Tratarea TVA la încasare (bază și TVA eligibile / neeligibile);",
+      "Tratarea operațiunilor de taxare inversă (art. 331);",
+      "Rând de totaluri pentru fiecare jurnal;",
+      "Export XLSX (aspect tipizat) și PDF (nativ `account.report`);",
+      "Modul de sine stătător: instalarea `l10n_ro_anaf_d394` peste el adaugă direct pe aceste rapoarte un buton de export fișier D394."
+    ],
+    "dependencies": [
+      "l10n_ro",
+      "account_reports",
+      "l10n_ro_anaf_base"
+    ],
+    "connections": [
+      "l10n_ro_anaf_base",
+      "l10n_ro_anaf_d394",
+      "account_reports"
+    ],
+    "text": "Romania - VAT Journals (Sales & Purchase)\nl10n_ro_account_vat_journal\nModulul aduce Jurnalul de Vânzări și Jurnalul de Cumpărări — registrele lunare de TVA obligatorii cerute de auditorii ANAF — direct în motorul nativ de rapoarte contabile Enterprise al Odoo (`account.report`). Fiecare jurnal listează facturile, avizele de stornare și chitanțele înregistrate în perioadă, cu baza și TVA-ul defalcate pe fiecare cotă, tratează corect TVA la încasare și taxarea inversă, iar datele rezultate stau la baza declarațiilor D300 și D394.\nCâte un rând pentru fiecare document (număr, dată, partener, cod fiscal, total document);\nColoane dinamice Bază + TVA per cotă (21% / 11% și cotele istorice 19% / 9% / 5%);\nTratarea TVA la încasare (bază și TVA eligibile / neeligibile);\nTratarea operațiunilor de taxare inversă (art. 331);\nRând de totaluri pentru fiecare jurnal;\nExport XLSX (aspect tipizat) și PDF (nativ `account.report`);\nModul de sine stătător: instalarea `l10n_ro_anaf_d394` peste el adaugă direct pe aceste rapoarte un buton de export fișier D394."
+  },
+  {
     "path": "l10n_ro_advance_invoice/index.md",
     "module": "l10n_ro_advance_invoice",
     "version": null,
@@ -6060,6 +6115,60 @@
       "l10n_ro_dividends"
     ],
     "text": "Romania - ANAF D100 Declaration\nl10n_ro_anaf_d100\nAcest modul permite companiilor românești să genereze și să exporte **Declarația 100 — Declarația privind obligațiile de plată la bugetul de stat** direct din Odoo Enterprise, eliminând introducerea manuală a datelor în DUKIntegrator sau în formularul PDF ANAF. Se adresează plătitorilor de impozit pe profit, impozit pe veniturile microîntreprinderilor, impozit pe dividende și altor obligații fiscale raportate lunar sau trimestrial la ANAF, conform nomenclatorului de coduri bugetare.\nRaport interactiv D100 integrat în rapoartele contabile Enterprise, cu linii predefinite pe coduri ANAF (102 impozit pe profit, 121 impozit micro, 150/604 impozit pe dividende) și filtrare pe perioadă (lunar sau trimestrial).\nColoane dedicate: Suma datorată, Suma de plată și Cod bugetar, sumele fiind citite automat din soldurile conturilor de obligații fiscale (ex. 4411/691).\nExport XML (Soft J) — fișier XML conform schemei oficiale ANAF, validat automat față de XSD înainte de descărcare, gata pentru import în DUKIntegrator.\nExport XDP (Soft A) — fișier XDP pentru formularul PDF inteligent ANAF, importabil direct în Adobe Acrobat Reader.\nCalcul automat scadență — data de 25 a lunii următoare perioadei de raportare, derivată din filtrul de dată al raportului.\nPreluare automată date companie — CUI (cu eliminarea automată a prefixului „RO\"), denumire, adresă, telefon, e-mail și datele declarantului din contul utilizatorului curent."
+  },
+  {
+    "path": "l10n_ro_anaf_d101/index.md",
+    "module": "l10n_ro_anaf_d101",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d101",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d101",
+    "last_ingest": "2026-07-02",
+    "friendly_name": "Romania - D101 ANAF Declaration",
+    "summary": "Modulul generează fișierul XML al Declarației 101 (impozitul pe profit anual) pentru depunerea la ANAF, pornind de la calculul de impozit pe profit deja existent în modulul `l10n_ro_profit_tax`. Contabilul nu reintroduce date: alege înregistrarea de calcul anual, apasă un buton și obține direct XML-ul validat conform schemei oficiale ANAF, gata de import în DUKIntegrator.",
+    "features": [
+      "Buton Export D101 XML pe înregistrarea de calcul impozit pe profit",
+      "Generează elementul `declaratie101` cu indicatorii principali (P1–P53): venituri și",
+      "XML-ul respectă schema oficială ANAF v3 (OPANAF 206/11.02.2025) și este validat",
+      "Calculează automat numărul de evidență a plății și scadența, conform structurii ANAF.",
+      "Reutilizează infrastructura ANAF comună din `l10n_ro_anaf_base`: datele declarantului,",
+      "Câmp Tip obligație D101 pe înregistrarea de calcul (coduri 102/103/104/105,",
+      "Limitare: exportul automat acoperă doar scenariul de profit. Pentru exerciții cu"
+    ],
+    "dependencies": [
+      "l10n_ro_profit_tax",
+      "l10n_ro_anaf_base"
+    ],
+    "connections": [
+      "l10n_ro_anaf_d100",
+      "l10n_ro_anaf_base"
+    ],
+    "text": "Romania - D101 ANAF Declaration\nl10n_ro_anaf_d101\nModulul generează fișierul XML al Declarației 101 (impozitul pe profit anual) pentru depunerea la ANAF, pornind de la calculul de impozit pe profit deja existent în modulul `l10n_ro_profit_tax`. Contabilul nu reintroduce date: alege înregistrarea de calcul anual, apasă un buton și obține direct XML-ul validat conform schemei oficiale ANAF, gata de import în DUKIntegrator.\nButon Export D101 XML pe înregistrarea de calcul impozit pe profit\nGenerează elementul `declaratie101` cu indicatorii principali (P1–P53): venituri și\nXML-ul respectă schema oficială ANAF v3 (OPANAF 206/11.02.2025) și este validat\nCalculează automat numărul de evidență a plății și scadența, conform structurii ANAF.\nReutilizează infrastructura ANAF comună din `l10n_ro_anaf_base`: datele declarantului,\nCâmp Tip obligație D101 pe înregistrarea de calcul (coduri 102/103/104/105,\nLimitare: exportul automat acoperă doar scenariul de profit. Pentru exerciții cu"
+  },
+  {
+    "path": "l10n_ro_anaf_d103/index.md",
+    "module": "l10n_ro_anaf_d103",
+    "version": "19.0.1.0.0",
+    "github": "[https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d103](https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d103)",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d103",
+    "last_ingest": "2026-07-02",
+    "friendly_name": "Romania - ANAF D103 Declaration",
+    "summary": "Modulul generează exportul XML al Decontului lunar privind accizele (D103) direct din Odoo Enterprise, pentru antrepozitarii fiscali autorizați obligați să raporteze lunar la ANAF accizele datorate (Codul Fiscal Titlul VIII). Se așază peste infrastructura de accize din `l10n_ro_excise` (categorii de produse accizabile, marcarea produselor, cotele și modelul de declarație) și produce fișierul XML D103, gata de depus pe portalul ANAF.",
+    "features": [
+      "Export XML D103: generare fișier XML pentru decontul lunar, din liniile declarației de accize (categorie, cantitate, U.M., cotă, acciză), cu antet de identificare a companiei (CUI, denumire, lună, an).",
+      "Calcul automat al liniilor: prin acțiunea „Calculează\" a declarației, liniile sunt agregate per categorie de acciză din facturile postate ale perioadei (vânzări, cu storno pe note de credit).",
+      "Izolare față de D120: exportul D103 folosește propriul template XML; decontul anual D120 este tratat de modulul-soră [l10n_ro_anaf_d120](../l10n_ro_anaf_d120/index.md), peste aceeași infrastructură [l10n_ro_excise](../l10n_ro_excise/index.md)."
+    ],
+    "dependencies": [
+      "l10n_ro_excise",
+      "l10n_ro_anaf_base"
+    ],
+    "connections": [
+      "l10n_ro_anaf_d120",
+      "l10n_ro_excise",
+      "export_to_xml",
+      "l10n_ro_anaf_base"
+    ],
+    "text": "Romania - ANAF D103 Declaration\nl10n_ro_anaf_d103\nModulul generează exportul XML al Decontului lunar privind accizele (D103) direct din Odoo Enterprise, pentru antrepozitarii fiscali autorizați obligați să raporteze lunar la ANAF accizele datorate (Codul Fiscal Titlul VIII). Se așază peste infrastructura de accize din `l10n_ro_excise` (categorii de produse accizabile, marcarea produselor, cotele și modelul de declarație) și produce fișierul XML D103, gata de depus pe portalul ANAF.\nExport XML D103: generare fișier XML pentru decontul lunar, din liniile declarației de accize (categorie, cantitate, U.M., cotă, acciză), cu antet de identificare a companiei (CUI, denumire, lună, an).\nCalcul automat al liniilor: prin acțiunea „Calculează\" a declarației, liniile sunt agregate per categorie de acciză din facturile postate ale perioadei (vânzări, cu storno pe note de credit).\nIzolare față de D120: exportul D103 folosește propriul template XML; decontul anual D120 este tratat de modulul-soră [l10n_ro_anaf_d120](../l10n_ro_anaf_d120/index.md), peste aceeași infrastructură [l10n_ro_excise](../l10n_ro_excise/index.md)."
   },
   {
     "path": "l10n_ro_anaf_d107/index.md",
@@ -6361,6 +6470,36 @@
     "text": "Romania - ANAF D398 Declaration (VAT OSS)\nl10n_ro_anaf_d398\nModulul permite generarea Declarației Speciale de TVA (D398) direct din Odoo, conform formatului solicitat de ANAF pentru regimul special One Stop Shop (OSS). Este destinat companiilor din România care efectuează livrări de bunuri sau prestări de servicii către consumatori finali (B2C) din alte state membre UE și sunt înregistrate în regimul OSS. Modulul **nu adaugă un ecran propriu**: extinde raportul standard OSS din Enterprise, adăugând butoanele de export ANAF (XML Soft J / XDP Soft A) și coloane de control în EUR (conversie la cursul BCE). Contabilitatea rămâne în RON — modulul adaugă doar conversia de raportare în EUR pentru declarația OSS. Implementarea este aliniată la infrastructura comună din `l10n_ro_anaf_base` (date companie/declarant, registru de profile de declarații, validări pentru resursele de export și pentru datele minime ale companiei).\nExport XML D398 (Soft J) — fișier validat automat față de schema XSD oficială ANAF, compatibil cu DUKIntegrator pentru semnare digitală.\nExport XDP D398 (Soft A) — fișier de date pentru import în formularul PDF inteligent ANAF (versiunea 1.0.11+); disponibil și ca ZIP cu PDF inclus.\nConversie automată în EUR — sumele sunt convertite folosind cursul de schimb publicat de Banca Centrală Europeană (BCE) din ultima zi a perioadei fiscale, fără a afecta furnizorul de cursuri BNR configurat pentru restul înregistrărilor contabile.\nColoane suplimentare în raportul OSS — „Net (EUR)\" și „Tax (EUR)\" vizibile direct în interfața rapoartelor OSS Enterprise, pentru verificarea sumelor înainte de export.\nGrupare automată pe state membre de consum (MSCON), tip livrare (bunuri/servicii) și cotă TVA (standard/redusă).\nValidare date companie — verifică prezența datelor obligatorii (CUI, județ, date contact) înainte de generarea fișierului.\nMeniu dedicat — „Declarație 398\" disponibil sub meniul „Declarații ANAF\" din modulul Contabilitate.\nLimitări cunoscute: avertizarea pentru pragul OSS de 10.000 EUR/an și depunerea automată în portalul ANAF nu sunt încă implementate."
   },
   {
+    "path": "l10n_ro_anaf_fiscal_status/index.md",
+    "module": "l10n_ro_anaf_fiscal_status",
+    "version": "19.0.1.0.0",
+    "github": "[https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_anaf_fiscal_status](https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_anaf_fiscal_status)",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_fiscal_status",
+    "last_ingest": "2026-07-02",
+    "friendly_name": "Romania - Vector fiscal și Fișa pe rol (SPV ANAF)",
+    "summary": "Modulul descarcă automat, din Spațiul Privat Virtual (SPV) al ANAF, pentru fiecare companie și punct de lucru, două evidențe esențiale: vectorul fiscal (ce obligații declarative are contribuabilul și cu ce periodicitate) și fișa pe rol (ce sume are de plătit, restanțe și accesorii). Datele sunt păstrate cu istoric, oferind echipei financiare o imagine clară și la zi asupra situației fiscale a companiei, fără a mai fi nevoie de verificări manuale în portalul ANAF.",
+    "features": [
+      "Descărcare automată din SPV a vectorului fiscal (`l10n.ro.fiscal.vector`) — obligațiile declarative active: TVA lunar/trimestrial, impozit pe profit vs. micro, salarii (D112), accize, dividende, nerezidenți.",
+      "Arhivare automată a obligațiilor ieșite din vigoare (prin D700), cu păstrarea istoricului (`active=False`).",
+      "Descărcare automată a fișei pe rol (`l10n.ro.fiscal.ledger`) — sume de plată, restanțe și accesorii pe fiecare cod de creanță bugetară, ca snapshot append-only cu istoric pe ani.",
+      "Păstrarea documentului-sursă ANAF (PDF/registru) atașat la fiecare snapshot, pentru audit.",
+      "Transport prin infrastructura existentă Terrabit Connect (mTLS la SPVWS2, fără OAuth2 Bearer) și coada de joburi din `l10n_ro_anaf_agent` (tip job `fiscal_status`) — modulul nu reinventează transportul, adaugă doar tipul de cerere și cele două modele de evidență.",
+      "Cron zilnic de descărcare (dezactivat implicit) și cron zilnic de remindere pentru termenele de depunere apropiate (activitate `mail.activity`), pe baza mapării categorie fiscală → declarație Odoo (D300, D112, D101, D100, D103, D390).",
+      "Alimentează calendarul real de declarații (FR-60) și auditul de corelare a declarațiilor (FR-65)."
+    ],
+    "dependencies": [
+      "l10n_ro_anaf_base",
+      "l10n_ro_anaf_agent",
+      "l10n_ro_anaf_messages"
+    ],
+    "connections": [
+      "l10n_ro_anaf_base",
+      "l10n_ro_anaf_agent",
+      "l10n_ro_anaf_messages"
+    ],
+    "text": "Romania - Vector fiscal și Fișa pe rol (SPV ANAF)\nl10n_ro_anaf_fiscal_status\nModulul descarcă automat, din Spațiul Privat Virtual (SPV) al ANAF, pentru fiecare companie și punct de lucru, două evidențe esențiale: vectorul fiscal (ce obligații declarative are contribuabilul și cu ce periodicitate) și fișa pe rol (ce sume are de plătit, restanțe și accesorii). Datele sunt păstrate cu istoric, oferind echipei financiare o imagine clară și la zi asupra situației fiscale a companiei, fără a mai fi nevoie de verificări manuale în portalul ANAF.\nDescărcare automată din SPV a vectorului fiscal (`l10n.ro.fiscal.vector`) — obligațiile declarative active: TVA lunar/trimestrial, impozit pe profit vs. micro, salarii (D112), accize, dividende, nerezidenți.\nArhivare automată a obligațiilor ieșite din vigoare (prin D700), cu păstrarea istoricului (`active=False`).\nDescărcare automată a fișei pe rol (`l10n.ro.fiscal.ledger`) — sume de plată, restanțe și accesorii pe fiecare cod de creanță bugetară, ca snapshot append-only cu istoric pe ani.\nPăstrarea documentului-sursă ANAF (PDF/registru) atașat la fiecare snapshot, pentru audit.\nTransport prin infrastructura existentă Terrabit Connect (mTLS la SPVWS2, fără OAuth2 Bearer) și coada de joburi din `l10n_ro_anaf_agent` (tip job `fiscal_status`) — modulul nu reinventează transportul, adaugă doar tipul de cerere și cele două modele de evidență.\nCron zilnic de descărcare (dezactivat implicit) și cron zilnic de remindere pentru termenele de depunere apropiate (activitate `mail.activity`), pe baza mapării categorie fiscală → declarație Odoo (D300, D112, D101, D100, D103, D390).\nAlimentează calendarul real de declarații (FR-60) și auditul de corelare a declarațiilor (FR-65)."
+  },
+  {
     "path": "l10n_ro_anaf_messages/index.md",
     "module": "l10n_ro_anaf_messages",
     "version": "19.0.1.0.0",
@@ -6483,6 +6622,37 @@
     "text": "Confirmare de Sold pentru România\nl10n_ro_balance_confirmation\nModulul „Confirmare de Sold pentru România\" este o extensie Odoo specializată care generează documente de confirmare a soldului pentru partenerii de afaceri, conform cerințelor contabile românești. Permite companiilor să creeze extrase de cont pentru partenerii lor (clienți și furnizori) la o dată specificată, facilitând procesul de reconciliere a soldurilor și asigurând conformitatea cu reglementările financiare locale. Documentele rezultate includ și un formular de răspuns integrat, ușurând procedura de confirmare și procesul de audit.\nGenerarea extrasului de cont: creează extrase de cont pentru parteneri la o dată specificată, în format standard conform cerințelor din România, cu generare PDF pentru documentare și distribuire și posibilitatea selectării mai multor parteneri pentru generare în lot.\nCalculul soldului la o dată specifică: calcul precis al soldurilor partenerilor la o dată dată, cu suport pentru debite și credite, extinzând funcționalitatea nativă Odoo pentru raportare la dată istorică și afișarea corectă a soldurilor în moneda companiei.\nȘablon de document personalizat: format standard de extras de cont conform normelor românești, cu secțiune pentru informațiile emitentului (companie), secțiune pentru informațiile destinatarului (partener), afișarea soldului la data specificată și textul standard al procedurii de confirmare.\nFormular de răspuns: secțiune integrată pentru răspunsul partenerului, cu opțiuni de confirmare a sumei, spațiu pentru menționarea modalității de plată, secțiune pentru obiecții și explicații în caz de discrepanțe și spații pentru semnăturile persoanelor responsabile.\nInterfață de utilizare simplă: wizard pentru selectarea datei de raportare, posibilitatea de a selecta mai mulți parteneri simultan, generare directă din interfața partenerilor și validări pentru evitarea erorilor de utilizare."
   },
   {
+    "path": "l10n_ro_cash_bank_enhanced/index.md",
+    "module": "l10n_ro_cash_bank_enhanced",
+    "version": "19.0.1.0.0",
+    "github": "[https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_cash_bank_enhanced](https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_cash_bank_enhanced)",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_cash_bank_enhanced",
+    "last_ingest": "2026-07-02",
+    "friendly_name": "Romania - Cash and Bank Enhanced",
+    "summary": "Modulul completează funcționalitățile native de trezorerie din Odoo 19 Enterprise cu două controale specifice pieței din România (FR-28 — Casierie și bancă): alertarea automată a tranzacțiilor bancare rămase nereconciliate și aplicarea plafoanelor legale de numerar prevăzute de Legea 70/2015. Scopul este să reducă riscul de amenzi și erori de conformitate legate de operațiunile cash și de reconcilierea bancară, fără să reimplementeze funcții deja acoperite nativ de Odoo Enterprise (sincronizare bancară, OCR extrase, reconciliere automată).",
+    "features": [
+      "Alertă tranzacții bancare nereconciliate: un cron zilnic identifică liniile de extras",
+      "Plafoane de numerar conform Legii 70/2015: la validarea plăților și încasărilor în",
+      "încasări/plăți cu persoane juridice: 5.000 RON per partener/zi;",
+      "încasări/plăți cu persoane fizice: 10.000 RON per partener/zi;",
+      "total plăți în numerar către persoane juridice: 10.000 RON/zi.",
+      "Anti-fragmentare (art. 1¹): o factură peste plafon poate fi achitată în numerar doar",
+      "Plafon sold casierie: un cron zilnic verifică soldul fiecărui jurnal de casă și",
+      "Plafoane configurabile: valorile pot fi ajustate (de exemplu pentru magazinele cash and"
+    ],
+    "dependencies": [
+      "account_accountant",
+      "l10n_ro"
+    ],
+    "connections": [
+      "account_accountant",
+      "l10n_ro",
+      "account_online_synchronization",
+      "account_bank_statement_extract"
+    ],
+    "text": "Romania - Cash and Bank Enhanced\nl10n_ro_cash_bank_enhanced\nModulul completează funcționalitățile native de trezorerie din Odoo 19 Enterprise cu două controale specifice pieței din România (FR-28 — Casierie și bancă): alertarea automată a tranzacțiilor bancare rămase nereconciliate și aplicarea plafoanelor legale de numerar prevăzute de Legea 70/2015. Scopul este să reducă riscul de amenzi și erori de conformitate legate de operațiunile cash și de reconcilierea bancară, fără să reimplementeze funcții deja acoperite nativ de Odoo Enterprise (sincronizare bancară, OCR extrase, reconciliere automată).\nAlertă tranzacții bancare nereconciliate: un cron zilnic identifică liniile de extras\nPlafoane de numerar conform Legii 70/2015: la validarea plăților și încasărilor în\nîncasări/plăți cu persoane juridice: 5.000 RON per partener/zi;\nîncasări/plăți cu persoane fizice: 10.000 RON per partener/zi;\ntotal plăți în numerar către persoane juridice: 10.000 RON/zi.\nAnti-fragmentare (art. 1¹): o factură peste plafon poate fi achitată în numerar doar\nPlafon sold casierie: un cron zilnic verifică soldul fiecărui jurnal de casă și\nPlafoane configurabile: valorile pot fi ajustate (de exemplu pentru magazinele cash and"
+  },
+  {
     "path": "l10n_ro_cash_register/index.md",
     "module": "l10n_ro_cash_register",
     "version": "19.0.1.1.7",
@@ -6513,6 +6683,35 @@
       "l10n_ro_account_bank_statement_import_mt940_bcr"
     ],
     "text": "Registru de casă RO\nl10n_ro_cash_register\nModulul oferă un registru de casă zilnic pentru jurnalele de tip numerar și leagă operațiunile de încasare, plată și transfer direct de soldul casei. Pentru fiecare combinație de jurnal de casă și dată există un singur registru, cu sold inițial și sold final calculate automat din mișcările contabile postate. Modulul este soluția operațională pentru partea de registru de casă din localizarea românească, oferind casierilor și contabililor un instrument controlat pentru operarea numerarului și tipărirea registrului. Modulul nu acoperă importul extraselor bancare MT940 și nici reconcilierea bancară automată; acestea rămân module complementare separate.\nModel nou de registru de casă, organizat pe zi și pe jurnal de casă (un registru unic per combinație).\nCalcul automat de sold inițial și sold final din mișcările contabile postate pe contul de casă.\nAcces rapid la încasare, plată și operațiune de casă direct din formularul registrului.\nWizard de operațiune casă (Cash In / Cash Out) care generează și postează automat nota contabilă cu contul de casă și contul corespondent.\nGenerare automată a registrului de casă la postarea plăților pe jurnalul de tip numerar.\nAcțiune „Generate Missing Cash Register\" pentru crearea registrelor lipsă pentru toate zilele cu mișcări.\nRaport PDF tipărit pentru registrul de casă (date companie, CIF/NRC, sold inițial, linii pe partener, total încasări/plăți, sold final).\nDeschiderea directă a registrului de casă din jurnalul cash pentru companiile din România.\nCron pregătit pentru generarea registrelor lipsă, livrat inactiv."
+  },
+  {
+    "path": "l10n_ro_cash_register_report/index.md",
+    "module": "l10n_ro_cash_register_report",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_cash_register_report",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_cash_register_report",
+    "last_ingest": "2026-07-02",
+    "friendly_name": "Registru de Casă (RO) - Raport",
+    "summary": "Modulul aduce Registrul de casă românesc (cod 14-4-7A, conform OMFP 2634/2015) ca raport nativ Odoo (`account.report`), în locul unui wizard separat. Astfel, contabilii beneficiază integral de framework-ul de raportare Enterprise: filtru de interval de date, selector de jurnale (limitat la jurnalele de casă), selector multi-companie, derulare pe niveluri (fold/unfold) și export PDF/XLSX/print direct din bara de instrumente a raportului, fără a mai fi nevoie de un ecran dedicat.",
+    "features": [
+      "Structurare pe secțiuni per (jurnal, zi), cu totalurile zilei: încasări, plăți și sold final.",
+      "Rând de report al soldului din ziua precedentă (sold inițial al zilei).",
+      "Linii de mișcare ale casei, cu încasările pe debit, plățile pe credit și sold cumulat.",
+      "Rând de sold final, folosit drept report pentru ziua următoare.",
+      "Calculul soldurilor pe contul de casă al jurnalului (`default_account_id`, ex. 5311), din mișcările contabile postate, cu report automat al soldului între zile.",
+      "Drill-down din liniile de mișcare direct către înregistrarea contabilă (`account.move.line`).",
+      "Filtru de interval de dată, selector de jurnale (doar jurnale de tip casă) și selector multi-companie, moștenite din framework-ul `account_reports`.",
+      "Export PDF/XLSX și tipărire, disponibile nativ din bara de instrumente a raportului."
+    ],
+    "dependencies": [
+      "account_reports",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_cash_register",
+      "account_reports"
+    ],
+    "text": "Registru de Casă (RO) - Raport\nl10n_ro_cash_register_report\nModulul aduce Registrul de casă românesc (cod 14-4-7A, conform OMFP 2634/2015) ca raport nativ Odoo (`account.report`), în locul unui wizard separat. Astfel, contabilii beneficiază integral de framework-ul de raportare Enterprise: filtru de interval de date, selector de jurnale (limitat la jurnalele de casă), selector multi-companie, derulare pe niveluri (fold/unfold) și export PDF/XLSX/print direct din bara de instrumente a raportului, fără a mai fi nevoie de un ecran dedicat.\nStructurare pe secțiuni per (jurnal, zi), cu totalurile zilei: încasări, plăți și sold final.\nRând de report al soldului din ziua precedentă (sold inițial al zilei).\nLinii de mișcare ale casei, cu încasările pe debit, plățile pe credit și sold cumulat.\nRând de sold final, folosit drept report pentru ziua următoare.\nCalculul soldurilor pe contul de casă al jurnalului (`default_account_id`, ex. 5311), din mișcările contabile postate, cu report automat al soldului între zile.\nDrill-down din liniile de mișcare direct către înregistrarea contabilă (`account.move.line`).\nFiltru de interval de dată, selector de jurnale (doar jurnale de tip casă) și selector multi-companie, moștenite din framework-ul `account_reports`.\nExport PDF/XLSX și tipărire, disponibile nativ din bara de instrumente a raportului."
   },
   {
     "path": "l10n_ro_cbam/index.md",
@@ -6750,6 +6949,32 @@
     "text": "Romania - Taxe de Mediu / AFM (FR-48)\nl10n_ro_environmental_tax"
   },
   {
+    "path": "l10n_ro_esigiliu/index.md",
+    "module": "l10n_ro_esigiliu",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_esigiliu",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_esigiliu",
+    "last_ingest": "2026-07-02",
+    "friendly_name": "Romania - e-Sigiliu (Electronic Seals)",
+    "summary": "Modulul gestionează sigiliile electronice e-Sigiliu aplicate de autorități (ANAF/Vamă) pe transporturile rutiere de bunuri monitorizate, conform reglementărilor românești privind supravegherea fiscală a mărfurilor în tranzit.",
+    "features": [
+      "Înregistrarea sigiliului electronic cu număr unic per companie, validat printr-o constrângere SQL.",
+      "Asocierea sigiliului la un transfer de stoc (`stock.picking`): transportator, număr de înmatriculare, rută monitorizată și UIT e-Transport.",
+      "Ciclu de viață complet: Ciornă → Aplicat → Eliminat, cu înregistrarea automată a datei de aplicare și de eliminare.",
+      "Buton statistic e-Sigiliu pe formularul de transfer, cu numărul de sigilii asociate.",
+      "Meniu dedicat Inventar → Raportare → e-Sigiliu Seals pentru vizualizarea centralizată a tuturor sigiliilor.",
+      "Acces bazat pe grupurile standard Inventar (utilizator/manager)."
+    ],
+    "dependencies": [
+      "stock",
+      "l10n_ro"
+    ],
+    "connections": [
+      "uit"
+    ],
+    "text": "Romania - e-Sigiliu (Electronic Seals)\nl10n_ro_esigiliu\nModulul gestionează sigiliile electronice e-Sigiliu aplicate de autorități (ANAF/Vamă) pe transporturile rutiere de bunuri monitorizate, conform reglementărilor românești privind supravegherea fiscală a mărfurilor în tranzit.\nÎnregistrarea sigiliului electronic cu număr unic per companie, validat printr-o constrângere SQL.\nAsocierea sigiliului la un transfer de stoc (`stock.picking`): transportator, număr de înmatriculare, rută monitorizată și UIT e-Transport.\nCiclu de viață complet: Ciornă → Aplicat → Eliminat, cu înregistrarea automată a datei de aplicare și de eliminare.\nButon statistic e-Sigiliu pe formularul de transfer, cu numărul de sigilii asociate.\nMeniu dedicat Inventar → Raportare → e-Sigiliu Seals pentru vizualizarea centralizată a tuturor sigiliilor.\nAcces bazat pe grupurile standard Inventar (utilizator/manager)."
+  },
+  {
     "path": "l10n_ro_etransport_block/index.md",
     "module": "l10n_ro_etransport_block",
     "version": "19.0.1.0.0",
@@ -6895,6 +7120,34 @@
       "l10n_ro_account_chart"
     ],
     "text": "Romania - Situații Financiare Anuale ANAF (FR-31)\nl10n_ro_financial_statements\nExtinde rapoartele financiare native românești din Odoo Enterprise (`l10n_ro_reports`) cu un buton „Export XML ANAF\", direct în headerul rapoartelor Formular 10 (Bilanț) și Formular 20 (Cont de Profit și Pierdere). Modulul **nu adaugă un ecran propriu** — generează fișierul XML în formatul de depunere ANAF (`tip=BL` pentru bilanț, `tip=CPP` pentru CPP), prin același mecanism ca exportul D300/SAF-T, și validează că bilanțul este echilibrat înainte de export. Se adresează contabililor și directorilor financiari din companiile românești care depun situațiile financiare anuale conform OMFP 1802/2014.\nButon „Export XML ANAF\" în headerul rapoartelor „Cod 10 - Bilanț\" și „Cod 20 - Cont de Profit și Pierdere\"; butonul este `always_show`, deci apare indiferent de varianta de raport auto-selectată.\nFormularul 10 (Bilanț): XML cu rândurile 01–51 extrase din raportul Enterprise prin pattern `| NN`.\nFormularul 20 (CPP): XML cu rândurile 01–68 extrase din raportul Enterprise; butonul este atașat pe toate variantele de cont de profit și pierdere (smle / micro-entitate / internațional).\nValidare bilanț echilibrat: blocare export dacă Total Activ (rd.04+11+12) ≠ Total Pasiv (rd.15+18+19+20+51), cu toleranță 1 RON; validarea rulează doar pentru bilanț (F10).\nImplementat ca `account.report.custom.handler` — un singur handler `l10n.ro.fs.handler` legat de raportul F10 și de variantele F20, integrat nativ în frameworkul Enterprise de rapoarte."
+  },
+  {
+    "path": "l10n_ro_fiscal_audit/index.md",
+    "module": "l10n_ro_fiscal_audit",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_fiscal_audit",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_fiscal_audit",
+    "last_ingest": "2026-07-02",
+    "friendly_name": "Romania - Audit corelare declarații fiscale",
+    "summary": "Modulul oferă un raport de audit preventiv care corelează automat, pentru o perioadă dată, totalurile dintre declarațiile fiscale românești și sursele de date din contabilitate, semnalând neconcordanțele înainte de depunere sau înainte de un control ANAF. Practic, oferă un „semafor\" de consistență fiscală pe mai multe căi de calcul independente (TVA, SAF-T, e-Factura), astfel încât echipa financiară să corecteze eventualele diferențe din timp, fără să aștepte o eroare la depunere sau o notificare de la ANAF.",
+    "features": [
+      "Corelează TVA colectată (rd. 17) și deductibilă (rd. 27) din D300 cu totalurile din jurnalele de TVA (D394), refolosind reconcilierea FR-49 din `l10n_ro_anaf_d300`.",
+      "Pre-validează datele pentru SAF-T (D406): parteneri fără CUI, conturi nemapate, taxe fără tip SAF-T, refolosind `l10n_ro_saft_validator`.",
+      "Detectează facturi furnizor e-Factura recepționate în dublu exemplar (aceeași amprentă: CUI + serie/nr + dată + sumă), refolosind `l10n_ro_efactura_dedup`.",
+      "Prezintă neconcordanțele grupate pe arii, cu valoare așteptată, valoare găsită, diferență și drill-down către documentul vizat, pe framework-ul standard `account.report` (export PDF/XLSX inclus).",
+      "Constatările sunt avertismente de verificat (necesită confirmare umană), nu verdicte automate; când datele sunt consistente, lista de neconcordanțe este goală.",
+      "Fiecare verificare degradează grațios (afișează „indisponibil\", nu eroare) dacă modulul-sursă corespunzător nu este instalat, fără a reimplementa logica declarațiilor existente."
+    ],
+    "dependencies": [
+      "account_reports",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_anaf_d300",
+      "l10n_ro_saft_validator",
+      "l10n_ro_efactura_dedup"
+    ],
+    "text": "Romania - Audit corelare declarații fiscale\nl10n_ro_fiscal_audit\nModulul oferă un raport de audit preventiv care corelează automat, pentru o perioadă dată, totalurile dintre declarațiile fiscale românești și sursele de date din contabilitate, semnalând neconcordanțele înainte de depunere sau înainte de un control ANAF. Practic, oferă un „semafor\" de consistență fiscală pe mai multe căi de calcul independente (TVA, SAF-T, e-Factura), astfel încât echipa financiară să corecteze eventualele diferențe din timp, fără să aștepte o eroare la depunere sau o notificare de la ANAF.\nCorelează TVA colectată (rd. 17) și deductibilă (rd. 27) din D300 cu totalurile din jurnalele de TVA (D394), refolosind reconcilierea FR-49 din `l10n_ro_anaf_d300`.\nPre-validează datele pentru SAF-T (D406): parteneri fără CUI, conturi nemapate, taxe fără tip SAF-T, refolosind `l10n_ro_saft_validator`.\nDetectează facturi furnizor e-Factura recepționate în dublu exemplar (aceeași amprentă: CUI + serie/nr + dată + sumă), refolosind `l10n_ro_efactura_dedup`.\nPrezintă neconcordanțele grupate pe arii, cu valoare așteptată, valoare găsită, diferență și drill-down către documentul vizat, pe framework-ul standard `account.report` (export PDF/XLSX inclus).\nConstatările sunt avertismente de verificat (necesită confirmare umană), nu verdicte automate; când datele sunt consistente, lista de neconcordanțe este goală.\nFiecare verificare degradează grațios (afișează „indisponibil\", nu eroare) dacă modulul-sursă corespunzător nu este instalat, fără a reimplementa logica declarațiilor existente."
   },
   {
     "path": "l10n_ro_fixed_assets/index.md",
@@ -7459,6 +7712,35 @@
     "text": "Romania - Import Note Salarii\nl10n_ro_payroll_import\nModulul permite importul notelor contabile de salarii generate de aplicații externe de salarizare (SAGA, Nexus, Charisma, WizSalary etc.) direct în Odoo 19, fără reintroducere manuală. Se adresează companiilor care gestionează salarizarea într-o aplicație externă și trebuie să importe lunar nota contabilă de salarii în Odoo, cu distribuție pe centre de cost analitice. Fișierul exportat (JSON sau CSV) este parsat, codurile externe sunt mapate pe conturile Odoo, iar după validare se generează automat nota contabilă (`account.move`) postată, conform monografiei salariale (641 / 421 / 4315 / 4316 / 444 / 646 / 436).\nImport fișiere — suportă format JSON (structură flexibilă exportată de aplicații moderne) și format CSV (delimitatori automați: virgulă sau punct-și-virgulă), cu suport pentru denumiri de coloane în română și engleză.\nCâmpuri suportate — cont debit, cont credit, sumă, centru de cost, departament, descriere.\nMapare conturi — tabel de echivalență `cod extern → cont Odoo` configurat per companie, cu fallback automat prin căutare după prefix de cod (ex. `641` → primul cont care începe cu `641`).\nMapare analitică — `cod centru cost extern → cont analitic Odoo`, cu distribuție 100% pe centrul de cost indicat.\nDistribuție analitică pe linie — linia de import moștenește `analytic.mixin`, expunând câmpul `analytic_distribution` pentru repartizarea pe centre de cost direct în formular.\nValidare și contabilizare — verificare echilibru debit = credit înainte de validare, blocare import duplicat pentru aceeași perioadă și același jurnal, creare automată notă contabilă (`account.move`) în starea `posted`.\nAnulare — anularea notei contabile asociate, cu reset la stare schiță pentru repostare.\nFlux de stări — `Schiță` → `Validat` → `Contabilizat` → `Anulat`."
   },
   {
+    "path": "l10n_ro_payroll_ro/index.md",
+    "module": "l10n_ro_payroll_ro",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_payroll_ro",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_payroll_ro",
+    "last_ingest": "2026-07-02",
+    "friendly_name": "Romania - Payroll Income Tax & Personal Deduction",
+    "summary": "Modulul corectează calculul impozitului pe venitul din salarii și adaugă deducerea personală de bază (DPB) în statul de plată românesc, peste structura nativă Odoo 19 Enterprise (`l10n_ro_hr_payroll`). Regula nativă `INCOMETAX` calculează impozitul ca 10% din salariul brut, ceea ce este greșit fiscal — conform Codului fiscal, impozitul pe salarii trebuie aplicat pe baza redusă: 10% × (brut − CAS − CASS − deducere personală). Nativul nu are deloc deducerea personală, astfel încât atât impozitul cât și salariul net rezultau incorecte (cu impact și asupra declarației D112).",
+    "features": [
+      "Adaugă regula salarială DEDUCERE (DPB) — deducerea personală de bază calculată în funcție",
+      "Corectează regula INCOMETAX să folosească baza corectă: brut − CAS − CASS − DPB.",
+      "Păstrează salariul net corect — DPB reduce doar baza impozabilă, nu și netul.",
+      "Ține cotele și plafoanele în parametri versionați pe dată (`hr.rule.parameter`), astfel încât",
+      "Adaugă pe fișa angajatului și pe versiunea de contract câmpurile Persoane în întreținere",
+      "Asigură coerența cu declarația D112 (`l10n_ro_anaf_d112`), deoarece ambele module folosesc"
+    ],
+    "dependencies": [
+      "l10n_ro_hr_payroll",
+      "l10n_ro_hr_payroll_account"
+    ],
+    "connections": [
+      "l10n_ro_anaf_d112",
+      "compute_dpb",
+      "l10n_ro_hr_payroll",
+      "l10n_ro_hr_payroll_account"
+    ],
+    "text": "Romania - Payroll Income Tax & Personal Deduction\nl10n_ro_payroll_ro\nModulul corectează calculul impozitului pe venitul din salarii și adaugă deducerea personală de bază (DPB) în statul de plată românesc, peste structura nativă Odoo 19 Enterprise (`l10n_ro_hr_payroll`). Regula nativă `INCOMETAX` calculează impozitul ca 10% din salariul brut, ceea ce este greșit fiscal — conform Codului fiscal, impozitul pe salarii trebuie aplicat pe baza redusă: 10% × (brut − CAS − CASS − deducere personală). Nativul nu are deloc deducerea personală, astfel încât atât impozitul cât și salariul net rezultau incorecte (cu impact și asupra declarației D112).\nAdaugă regula salarială DEDUCERE (DPB) — deducerea personală de bază calculată în funcție\nCorectează regula INCOMETAX să folosească baza corectă: brut − CAS − CASS − DPB.\nPăstrează salariul net corect — DPB reduce doar baza impozabilă, nu și netul.\nȚine cotele și plafoanele în parametri versionați pe dată (`hr.rule.parameter`), astfel încât\nAdaugă pe fișa angajatului și pe versiunea de contract câmpurile Persoane în întreținere\nAsigură coerența cu declarația D112 (`l10n_ro_anaf_d112`), deoarece ambele module folosesc"
+  },
+  {
     "path": "l10n_ro_period_close_enhanced/index.md",
     "module": "l10n_ro_period_close_enhanced",
     "version": "19.0.1.0.0",
@@ -7804,6 +8086,34 @@
     "text": "Constrângeri Integritate Stocuri România\nl10n_ro_stock_constraints"
   },
   {
+    "path": "l10n_ro_stock_custody/index.md",
+    "module": "l10n_ro_stock_custody",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_stock_custody",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_custody",
+    "last_ingest": "2026-07-02",
+    "friendly_name": "Romania - Stock Custody",
+    "summary": "Modulul gestionează bunurile primite sau date în custodie, adică mărfuri care circulă între companie și un terț fără transfer de proprietate. Evidența se ține în afara bilanțului, conform OMFP 1802/2014, pe contul **8033 — Valori materiale primite în păstrare sau custodie**, astfel încât aceste bunuri nu distorsionează stocul propriu valorizat și nici rezultatul financiar al companiei.",
+    "features": [
+      "Custodie primită — la validarea recepției, modulul setează automat proprietarul (terțul) pe liniile de mișcare (consignație nativă Odoo), astfel încât bunurile nu intră în valorizarea proprie, și generează automat nota extracontabilă Dr 8033 = Cr 8039.",
+      "Stornare la retur — butonul Reverse Custody Entry de pe transferul de stoc stornează automat nota de custodie (Dr 8039 = Cr 8033) la returul bunurilor către terț.",
+      "Custodie dată — marcarea transferurilor de ieșire cu bunuri proprii date în custodie la terți; modulul generează automat nota Dr 357 = Cr 371 (mărfuri aflate la terți / stoc propriu), cu stornare simetrică la retur.",
+      "Raport Goods in Custody — listează toate stocurile ținute pe seama terților (quant-uri cu proprietar setat), accesibil din meniul Inventar → Raportare.",
+      "Proces-verbal predare-primire custodie — raport PDF imprimabil de pe transferul de stoc, cu lista produselor, cantităților și valorilor, pentru custodie primită sau dată.",
+      "Conturi configurabile — conturile de custodie primită (implicit 8033/8039), conturile de custodie dată (implicit 357/371) și jurnalul utilizat se configurează în Contabilitate → Setări, cu fallback automat după codul contului dacă nu sunt setate explicit."
+    ],
+    "dependencies": [
+      "stock_account",
+      "l10n_ro"
+    ],
+    "connections": [
+      "stock",
+      "stock_account",
+      "l10n_ro"
+    ],
+    "text": "Romania - Stock Custody\nl10n_ro_stock_custody\nModulul gestionează bunurile primite sau date în custodie, adică mărfuri care circulă între companie și un terț fără transfer de proprietate. Evidența se ține în afara bilanțului, conform OMFP 1802/2014, pe contul **8033 — Valori materiale primite în păstrare sau custodie**, astfel încât aceste bunuri nu distorsionează stocul propriu valorizat și nici rezultatul financiar al companiei.\nCustodie primită — la validarea recepției, modulul setează automat proprietarul (terțul) pe liniile de mișcare (consignație nativă Odoo), astfel încât bunurile nu intră în valorizarea proprie, și generează automat nota extracontabilă Dr 8033 = Cr 8039.\nStornare la retur — butonul Reverse Custody Entry de pe transferul de stoc stornează automat nota de custodie (Dr 8039 = Cr 8033) la returul bunurilor către terț.\nCustodie dată — marcarea transferurilor de ieșire cu bunuri proprii date în custodie la terți; modulul generează automat nota Dr 357 = Cr 371 (mărfuri aflate la terți / stoc propriu), cu stornare simetrică la retur.\nRaport Goods in Custody — listează toate stocurile ținute pe seama terților (quant-uri cu proprietar setat), accesibil din meniul Inventar → Raportare.\nProces-verbal predare-primire custodie — raport PDF imprimabil de pe transferul de stoc, cu lista produselor, cantităților și valorilor, pentru custodie primită sau dată.\nConturi configurabile — conturile de custodie primită (implicit 8033/8039), conturile de custodie dată (implicit 357/371) și jurnalul utilizat se configurează în Contabilitate → Setări, cu fallback automat după codul contului dacă nu sunt setate explicit."
+  },
+  {
     "path": "l10n_ro_stock_gestiune/index.md",
     "module": "l10n_ro_stock_gestiune",
     "version": "19.0.1.5.0",
@@ -7906,6 +8216,37 @@
     "text": "Romania - Picking Reports - Product Expiry\nl10n_ro_stock_picking_report_product_expiry\nAcest modul este o extensie de tip „punte\" care adaugă data de expirare a produselor pe rapoartele de livrare/transfer din suita de rapoarte de stoc pentru România. Atunci când produsele sunt urmărite pe loturi/serii cu dată de expirare, modulul afișează coloana „Expiration Date\" în bonul de livrare tipărit, astfel încât atât expeditorul, cât și clientul să vadă valabilitatea fiecărui lot direct pe document. Modulul se instalează automat când sunt prezente atât modulul de rapoarte de picking pentru România, cât și modulul standard de expirare a produselor.\nAdaugă coloana „Expiration Date\" (data de expirare) în raportul de livrare/transfer (`report_delivery`) moștenit din `l10n_ro_stock_picking_report`.\nPreia data de expirare din lotul/seria asociat fiecărei linii de mișcare (`move_line.lot_id.expiration_date`).\nAfișează coloana doar dacă există cel puțin o linie cu lot ce are dată de expirare și doar pentru utilizatorii din grupul `product_expiry.group_expiry_date_on_delivery_slip`.\nSe instalează automat (`auto_install`) când dependențele sunt prezente, fără configurare suplimentară."
   },
   {
+    "path": "l10n_ro_stock_posting_date/index.md",
+    "module": "l10n_ro_stock_posting_date",
+    "version": "19.0.1.0.0",
+    "github": "[https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_stock_posting_date](https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_stock_posting_date)",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_posting_date",
+    "last_ingest": "2026-07-02",
+    "friendly_name": "Romania - Data Contabilă Mișcări de Stoc (Posting Date)",
+    "summary": "Modulul adaugă o **dată contabilă (Posting Date)** pe operațiile de stoc — similar conceptului din SAP — pentru companiile din România, și o pune sub un control care împiedică datarea ce ar strica ordinea cronologică a valorizării. Astfel, echipa de contabilitate poate stabili exact în ce zi contabilă se înregistrează o recepție, o livrare sau un transfer, fără riscul de a rupe ordinea costurilor FIFO/CMP prin operații datate necorespunzător.",
+    "features": [
+      "Expune un câmp „Posting Date\" (dată contabilă) pe operațiile de stoc (`stock.picking`), separat de data efectivă de validare.",
+      "La validare, data contabilă aleasă este propagată către toate notele generate: valorizarea nativă Odoo, recepția fără factură (371 = 408), transferul valoric între gestiuni și storno-ul de retur — printr-un mecanism unic bazat pe contextul `force_period_date`.",
+      "Control activabil per companie care blochează o dată contabilă atunci când:",
+      "este în viitor;",
+      "este înainte de ultima mișcare valorizată a aceluiași produs (ar desincroniza ordinea costurilor FIFO/CMP);",
+      "la retur, este înainte de mișcarea originală pe care o stornează (barieră absolută — un retur nu poate precede recepția/livrarea inversată);",
+      "cade într-o perioadă contabilă blocată (lock date fiscal/TVA/hard lock);",
+      "opțional, este mai devreme de prima zi a lunii precedente.",
+      "Granularitatea verificării „ultimei postări\" urmează granularitatea valorizării native Odoo 19: implicit pe `(produs, companie)`.",
+      "Setări dedicate în Configurare Inventar/Contabilitate pentru activarea controlului și a restricției pe luna precedentă."
+    ],
+    "dependencies": [
+      "stock_account",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_stock_gestiune",
+      "force_period_date"
+    ],
+    "text": "Romania - Data Contabilă Mișcări de Stoc (Posting Date)\nl10n_ro_stock_posting_date\nModulul adaugă o **dată contabilă (Posting Date)** pe operațiile de stoc — similar conceptului din SAP — pentru companiile din România, și o pune sub un control care împiedică datarea ce ar strica ordinea cronologică a valorizării. Astfel, echipa de contabilitate poate stabili exact în ce zi contabilă se înregistrează o recepție, o livrare sau un transfer, fără riscul de a rupe ordinea costurilor FIFO/CMP prin operații datate necorespunzător.\nExpune un câmp „Posting Date\" (dată contabilă) pe operațiile de stoc (`stock.picking`), separat de data efectivă de validare.\nLa validare, data contabilă aleasă este propagată către toate notele generate: valorizarea nativă Odoo, recepția fără factură (371 = 408), transferul valoric între gestiuni și storno-ul de retur — printr-un mecanism unic bazat pe contextul `force_period_date`.\nControl activabil per companie care blochează o dată contabilă atunci când:\neste în viitor;\neste înainte de ultima mișcare valorizată a aceluiași produs (ar desincroniza ordinea costurilor FIFO/CMP);\nla retur, este înainte de mișcarea originală pe care o stornează (barieră absolută — un retur nu poate precede recepția/livrarea inversată);\ncade într-o perioadă contabilă blocată (lock date fiscal/TVA/hard lock);\nopțional, este mai devreme de prima zi a lunii precedente.\nGranularitatea verificării „ultimei postări\" urmează granularitatea valorizării native Odoo 19: implicit pe `(produs, companie)`.\nSetări dedicate în Configurare Inventar/Contabilitate pentru activarea controlului și a restricției pe luna precedentă."
+  },
+  {
     "path": "l10n_ro_stock_provision/index.md",
     "module": "l10n_ro_stock_provision",
     "version": "19.0.1.0.0",
@@ -8004,6 +8345,32 @@
     "dependencies": [],
     "connections": [],
     "text": "Grup Fiscal TVA Consolidat România\nl10n_ro_vat_group"
+  },
+  {
+    "path": "l10n_ro_vat_on_payment_lock/index.md",
+    "module": "l10n_ro_vat_on_payment_lock",
+    "version": "19.0.1.0.0",
+    "github": "`https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_vat_on_payment_lock`",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_vat_on_payment_lock",
+    "last_ingest": "2026-07-02",
+    "friendly_name": "Romania - Blocare storno TVA la încasare declarat (FR-16)",
+    "summary": "Modulul blochează desfacerea reconcilierii unei încasări atunci când TVA la încasare aferentă (exigibilitate amânată pe contul 4428, mecanismul cash-basis) este deja inclusă într-un decont D300 declarat. Conform FR-16 / art. 282 Cod Fiscal, exigibilitatea TVA la încasare devine definitivă odată raportată într-un D300 validat, iar desfacerea ulterioară a reconcilierii ar storna retroactiv TVA-ul deja declarat — ceea ce nu este permis. Astfel, modulul protejează integritatea declarațiilor fiscale deja depuse la ANAF.",
+    "features": [
+      "Blochează desfacerea reconcilierii (`account.partial.reconcile`) — fie prin reset plată la ciornă, fie prin desfacere manuală din widgetul de reconciliere — atunci când aceasta a generat o notă de exigibilitate TVA cash-basis (cont 4428).",
+      "Verifică dacă nota de exigibilitate TVA are dată mai mică sau egală decât data de blocare fiscală a companiei (`tax_lock_date`), setată la validarea D300.",
+      "Afișează un mesaj de eroare explicit, cu referință la nota contabilă, data acesteia și data blocării fiscale.",
+      "Perioadele nedeclarate (ulterioare datei de blocare) rămân editabile — controlul nu restricționează fluxul normal de lucru.",
+      "Se aplică exclusiv companiilor cu țara fiscală România.",
+      "Completează regimul de TVA la încasare furnizat de `l10n_ro_vat_on_payment` (OCA) și mecanismul nativ Odoo de exigibilitate pe încasare, fără a-l dubla."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_vat_on_payment"
+    ],
+    "text": "Romania - Blocare storno TVA la încasare declarat (FR-16)\nl10n_ro_vat_on_payment_lock\nModulul blochează desfacerea reconcilierii unei încasări atunci când TVA la încasare aferentă (exigibilitate amânată pe contul 4428, mecanismul cash-basis) este deja inclusă într-un decont D300 declarat. Conform FR-16 / art. 282 Cod Fiscal, exigibilitatea TVA la încasare devine definitivă odată raportată într-un D300 validat, iar desfacerea ulterioară a reconcilierii ar storna retroactiv TVA-ul deja declarat — ceea ce nu este permis. Astfel, modulul protejează integritatea declarațiilor fiscale deja depuse la ANAF.\nBlochează desfacerea reconcilierii (`account.partial.reconcile`) — fie prin reset plată la ciornă, fie prin desfacere manuală din widgetul de reconciliere — atunci când aceasta a generat o notă de exigibilitate TVA cash-basis (cont 4428).\nVerifică dacă nota de exigibilitate TVA are dată mai mică sau egală decât data de blocare fiscală a companiei (`tax_lock_date`), setată la validarea D300.\nAfișează un mesaj de eroare explicit, cu referință la nota contabilă, data acesteia și data blocării fiscale.\nPerioadele nedeclarate (ulterioare datei de blocare) rămân editabile — controlul nu restricționează fluxul normal de lucru.\nSe aplică exclusiv companiilor cu țara fiscală România.\nCompletează regimul de TVA la încasare furnizat de `l10n_ro_vat_on_payment` (OCA) și mecanismul nativ Odoo de exigibilitate pe încasare, fără a-l dubla."
   },
   {
     "path": "l10n_ro_vat_refund/index.md",

@@ -4,6 +4,22 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-07-02] Ingestie lot l10n_ro_ent (13 module cu fișă consultant, fără pagină wiki)
+
+- **Acțiune:** Documentate 13 module noi din suita `l10n_ro_ent` (repo `terrabit-ro/l10n_ro_ent`, branch `19.0`) care aveau `readme/FISA_CONSULTANT.md` dar nu aveau încă pagină wiki — rămase excluse din backfill-ul precedent. Procesate în paralel prin subagenți `documentarist-wiki`, în 2 loturi (7 + 6). Module: `l10n_ro_account_counterpart`, `l10n_ro_account_vat_journal`, `l10n_ro_anaf_d101`, `l10n_ro_anaf_d103`, `l10n_ro_anaf_fiscal_status`, `l10n_ro_cash_bank_enhanced`, `l10n_ro_cash_register_report`, `l10n_ro_esigiliu`, `l10n_ro_fiscal_audit`, `l10n_ro_payroll_ro`, `l10n_ro_stock_custody`, `l10n_ro_stock_posting_date`, `l10n_ro_vat_on_payment_lock`.
+- **Sursă:** `readme/DESCRIPTION.md` (Sumar + Funcționalități Cheie) pentru toate; Componente Cheie completate din analiză de cod unde DESCRIPTION.md nu le acoperea explicit.
+- **Fișă consultant:** copiată pentru toate cele 13, cu tot cu capturile din `readme/screenshots/` (total 45 de poze), conform regulii noi din `schema.md`.
+- **Avertisment de conținut semnalat de subagent:** `l10n_ro_stock_custody` — `readme/DESCRIPTION.md` declară contabilizarea custodiei date (cont 357) ca fiind în afara scopului modulului, dar codul (`models/stock_picking.py`, `models/res_company.py`) o implementează efectiv (Dr 357 = Cr 371, cu stornare simetrică); pagina wiki documentează comportamentul real din cod și semnalează discrepanța, DESCRIPTION.md rămâne de actualizat separat.
+- **Dependențe/Conexiuni:** module fără pagină wiki proprie rămase text `cod` (`account`, `stock`, `account_reports`, `l10n_ro`, `l10n_ro_hr_payroll` etc.); dependențe/conexiuni cu pagină existentă linkate activ (ex. `l10n_ro_profit_tax`, `l10n_ro_anaf_base`, `l10n_ro_anaf_d394`, `l10n_ro_cash_register`, `l10n_ro_anaf_d112`, `l10n_ro_stock_gestiune`, `l10n_ro_anaf_d300`/`l10n_ro_saft_validator`/`l10n_ro_efactura_dedup`).
+- **Fișiere actualizate:** 13× `index.md` (pagină nouă) + `FISA_CONSULTANT.md` + `screenshots/`, `wiki_module_odoo/index.md` (13 intrări noi, ordine alfabetică), `wiki_module_odoo/log.md`, `wiki_module_odoo/.index/` (rebuild lexical).
+
+## [2026-07-02] Copierea fișelor consultant în wiki (backfill 80 module + regulă nouă de ingestie)
+
+- **Acțiune:** Extins fluxul de ingestie: dacă modulul are `readme/FISA_CONSULTANT.md`, fișa se copiază fidel (cu tot cu capturile din `readme/screenshots/`) în directorul wiki al modulului, iar pagina primește linia de metadate `- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)`. La re-ingestie, copia se suprascrie (sursa de adevăr rămâne `readme/` din modul). Backfill executat pe toate modulele deja documentate care au fișă: **80 de fișe copiate, 332 de capturi**, 80 de linii de metadate adăugate. 3 fișe fără capturi (`deltatech_pos`, `deltatech_helpdesk_tag_primary`, `l10n_ro_anaf_base`).
+- **Sursă:** `readme/FISA_CONSULTANT.md` + `readme/screenshots/` din fiecare modul.
+- **Dependențe/Conexiuni:** neschimbate — doar metadatele paginilor au fost extinse.
+- **Fișiere actualizate:** `schema.md` (metadate pagină + pași 5–7 flux de ingestie), 80× `index.md` (linie metadate), 80× `FISA_CONSULTANT.md` + `screenshots/` (copii noi), agentul `documentarist-wiki` (ambele copii: standalone + monorepo), skill-ul `wiki-module` (monorepo), `wiki_module_odoo/.index/` (rebuild lexical), `wiki_module_odoo/log.md`.
+
 ## [2026-06-09] Re-ingestie lot l10n_ro_ent (11 module, după corecții de cod + fișe)
 
 - **Acțiune:** Re-ingestate paginile a 11 module din suita `l10n_ro_ent` (repo `terrabit-ro/l10n_ro_ent`, branch `19.0`), procesate în paralel prin subagenți `general-purpose` în 2 loturi (6 + 5). Module: `l10n_ro_deferred_entries`, `l10n_ro_micro_tax`, `l10n_ro_profit_tax`, `l10n_ro_financial_statements`, `l10n_ro_financial_notes`, `l10n_ro_payroll_import`, `l10n_ro_anaf_d100`, `l10n_ro_anaf_d107`, `l10n_ro_anaf_d120`, `l10n_ro_anaf_d390`, `l10n_ro_anaf_d398`. Declanșată de adăugarea capturilor de fișă + corecții de cod în aceste module.

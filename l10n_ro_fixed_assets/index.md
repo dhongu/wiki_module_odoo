@@ -5,6 +5,7 @@
 - **Cale:** https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_fixed_assets
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_fixed_assets`
 - **Ultima Ingestie:** 2026-06-01
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 ## 1. Sumar
 
