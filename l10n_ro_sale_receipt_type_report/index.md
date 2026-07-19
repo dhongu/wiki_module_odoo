@@ -51,7 +51,7 @@ Nu există `ir.cron`, `base.automation` sau `ir.actions.server`. Modulul define�
 #### 5. Conexiuni
 
 - [l10n_ro_cash_register_report](../l10n_ro_cash_register_report/index.md): citește doar mișcările contului de casă, pe zile (registru legal); acest raport reconciliază pe canal de încasare, indiferent de sursă — complementar, nu duplică.
-- `l10n_ro_bank_register_report`: aceeași relație — jurnalul de bancă citește un singur cont, pe zile; nu are încă pagină wiki proprie.
+- [l10n_ro_bank_register_report](../l10n_ro_bank_register_report/index.md): aceeași relație — jurnalul de bancă citește un singur cont, pe zile.
 - `account_reports`: framework-ul Enterprise de raportare contabilă folosit ca bază tehnică (filtre, coloane, export PDF/XLSX).
 - `point_of_sale`: sursa `pos.payment`/`pos.order`/`pos.payment.method` pentru secțiunile Casă — Numerar/Card.
 - `payment`: câmpul `account.payment.payment_transaction_id`, folosit pentru a distinge Platformă online de OP.

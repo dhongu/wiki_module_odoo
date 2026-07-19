@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-07-19] Ingestie l10n_ro_bank_register_report + l10n_ro_registru_jurnal (2 module, port 18→19)
+
+- **Acțiune:** Documentate 2 module noi din suita `l10n_ro_ent` (branch `19.0`), portate în aceeași sesiune de lucru dintr-o dezvoltare inițială pe Odoo 18: `l10n_ro_bank_register_report` (Jurnal de bancă, extinde direct `l10n_ro_cash_register_report` — suprascrie doar `_journal_type()`/`_day_section_label()`) și `l10n_ro_registru_jurnal` (Registrul-jurnal cod 14-1-1, handler complet autonom pe SQL brut, fără dependență de motorul de interogare standard `account_reports`).
+- **Sursă:** `readme/DESCRIPTION.md` (Sumar + Funcționalități Cheie) pentru ambele; niciunul nu are `readme/FISA_CONSULTANT.md` — nimic de copiat. Componente Cheie completate din analiza codului (`models/bank_register_report_handler.py`, `models/registru_jurnal_report_handler.py`, XML-urile de date).
+- **Consolidare retroactivă:** actualizată pagina `l10n_ro_sale_receipt_type_report` (ingestată azi mai devreme) — referința `l10n_ro_bank_register_report` din secțiunea Conexiuni era text `cod` (pagina nu exista încă); acum e link Markdown activ.
+- **Dependențe/Conexiuni:** `l10n_ro_bank_register_report` → dependență directă `l10n_ro_cash_register_report` (linkată, are pagină). `l10n_ro_registru_jurnal` → `account_reports`/`l10n_ro` rămase text `cod`; conexiuni linkate activ: `l10n_ro_journal_reports`, `l10n_ro_cash_register`, `deltatech_saga` (aceeași convenție „%" pentru note compuse, folosită și la exportul SAGA), `l10n_ro_bank_register_report`.
+- **Fișiere actualizate:** `l10n_ro_bank_register_report/index.md` + `l10n_ro_registru_jurnal/index.md` (pagini noi), `l10n_ro_sale_receipt_type_report/index.md` (1 link corectat), `wiki_module_odoo/index.md` (2 intrări noi, ordine alfabetică), `wiki_module_odoo/log.md`, `wiki_module_odoo/.index/` (rebuild lexical).
+
 ## [2026-07-19] Ingestie l10n_ro_sale_receipt_type_report (modul nou, nu port)
 
 - **Acțiune:** Documentat modulul nou `l10n_ro_sale_receipt_type_report` (suita `l10n_ro_ent`, branch `19.0`) — raport nativ pentru situația "Vânzări pe tipuri de încasări", cerută de contabilitatea clientului Damira. Nu e un port dintr-o versiune mai veche: modulul a fost construit direct pe Odoo 18, apoi portat pe 19.0 (fără niciun echivalent preexistent pe vreun branch).

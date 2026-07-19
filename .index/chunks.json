@@ -6622,6 +6622,35 @@
     "text": "Confirmare de Sold pentru România\nl10n_ro_balance_confirmation\nModulul „Confirmare de Sold pentru România\" este o extensie Odoo specializată care generează documente de confirmare a soldului pentru partenerii de afaceri, conform cerințelor contabile românești. Permite companiilor să creeze extrase de cont pentru partenerii lor (clienți și furnizori) la o dată specificată, facilitând procesul de reconciliere a soldurilor și asigurând conformitatea cu reglementările financiare locale. Documentele rezultate includ și un formular de răspuns integrat, ușurând procedura de confirmare și procesul de audit.\nGenerarea extrasului de cont: creează extrase de cont pentru parteneri la o dată specificată, în format standard conform cerințelor din România, cu generare PDF pentru documentare și distribuire și posibilitatea selectării mai multor parteneri pentru generare în lot.\nCalculul soldului la o dată specifică: calcul precis al soldurilor partenerilor la o dată dată, cu suport pentru debite și credite, extinzând funcționalitatea nativă Odoo pentru raportare la dată istorică și afișarea corectă a soldurilor în moneda companiei.\nȘablon de document personalizat: format standard de extras de cont conform normelor românești, cu secțiune pentru informațiile emitentului (companie), secțiune pentru informațiile destinatarului (partener), afișarea soldului la data specificată și textul standard al procedurii de confirmare.\nFormular de răspuns: secțiune integrată pentru răspunsul partenerului, cu opțiuni de confirmare a sumei, spațiu pentru menționarea modalității de plată, secțiune pentru obiecții și explicații în caz de discrepanțe și spații pentru semnăturile persoanelor responsabile.\nInterfață de utilizare simplă: wizard pentru selectarea datei de raportare, posibilitatea de a selecta mai mulți parteneri simultan, generare directă din interfața partenerilor și validări pentru evitarea erorilor de utilizare."
   },
   {
+    "path": "l10n_ro_bank_register_report/index.md",
+    "module": "l10n_ro_bank_register_report",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_bank_register_report",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_bank_register_report",
+    "last_ingest": "2026-07-19",
+    "friendly_name": "Jurnal de Bancă (RO) - Raport",
+    "summary": "Modulul aduce Jurnalul de bancă românesc ca raport nativ Odoo (`account.report`), cu aceeași structură zilnică ca Registrul de casă (modulul `l10n_ro_cash_register_report`, pe care îl extinde direct — moștenește handler-ul acestuia). Soldurile se calculează pe contul jurnalului de bancă (`default_account_id`, ex. 5121.x), din mișcările contabile postate, cu report automat al soldului între zile, astfel încât soldul contabil 512x se confruntă direct cu extrasul bancar. Spre deosebire de Registrul de casă (formular tipizat 14-4-7A), jurnalul de bancă nu are un formular impus prin lege — raportul urmează forma uzuală din practica contabilă românească.",
+    "features": [
+      "Secțiune per (jurnal, zi), cu antet care afișează contul și jurnalul (ex. „5121.2 BANCA TRANSILVANIA — 26.01.2026\") și totalurile zilei: încasări, plăți, sold final.",
+      "Rând de report al soldului din ziua precedentă.",
+      "Linii de mișcare ale contului bancar, cu încasările pe debit, plățile pe credit și sold cumulat.",
+      "Rând de sold final, folosit drept report pentru ziua următoare.",
+      "Filtrul de jurnale limitat automat la jurnalele de tip bancă (câte unul per cont bancar/monedă).",
+      "Drill-down din liniile de mișcare direct către înregistrarea contabilă (`account.move.line`).",
+      "Filtru de interval de dată, selector de jurnale și selector multi-companie, moștenite din framework-ul `account_reports`.",
+      "Export PDF/XLSX și tipărire, disponibile nativ din bara de instrumente a raportului."
+    ],
+    "dependencies": [
+      "l10n_ro_cash_register_report"
+    ],
+    "connections": [
+      "l10n_ro_registru_jurnal",
+      "l10n_ro_sale_receipt_type_report",
+      "account_reports"
+    ],
+    "text": "Jurnal de Bancă (RO) - Raport\nl10n_ro_bank_register_report\nModulul aduce Jurnalul de bancă românesc ca raport nativ Odoo (`account.report`), cu aceeași structură zilnică ca Registrul de casă (modulul `l10n_ro_cash_register_report`, pe care îl extinde direct — moștenește handler-ul acestuia). Soldurile se calculează pe contul jurnalului de bancă (`default_account_id`, ex. 5121.x), din mișcările contabile postate, cu report automat al soldului între zile, astfel încât soldul contabil 512x se confruntă direct cu extrasul bancar. Spre deosebire de Registrul de casă (formular tipizat 14-4-7A), jurnalul de bancă nu are un formular impus prin lege — raportul urmează forma uzuală din practica contabilă românească.\nSecțiune per (jurnal, zi), cu antet care afișează contul și jurnalul (ex. „5121.2 BANCA TRANSILVANIA — 26.01.2026\") și totalurile zilei: încasări, plăți, sold final.\nRând de report al soldului din ziua precedentă.\nLinii de mișcare ale contului bancar, cu încasările pe debit, plățile pe credit și sold cumulat.\nRând de sold final, folosit drept report pentru ziua următoare.\nFiltrul de jurnale limitat automat la jurnalele de tip bancă (câte unul per cont bancar/monedă).\nDrill-down din liniile de mișcare direct către înregistrarea contabilă (`account.move.line`).\nFiltru de interval de dată, selector de jurnale și selector multi-companie, moștenite din framework-ul `account_reports`.\nExport PDF/XLSX și tipărire, disponibile nativ din bara de instrumente a raportului."
+  },
+  {
     "path": "l10n_ro_cash_bank_enhanced/index.md",
     "module": "l10n_ro_cash_bank_enhanced",
     "version": "19.0.1.0.0",
@@ -7894,6 +7923,37 @@
     "dependencies": [],
     "connections": [],
     "text": "Integrare REGES-Online România (FR-45)\nl10n_ro_reges"
+  },
+  {
+    "path": "l10n_ro_registru_jurnal/index.md",
+    "module": "l10n_ro_registru_jurnal",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_registru_jurnal",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_registru_jurnal",
+    "last_ingest": "2026-07-19",
+    "friendly_name": "Registrul-Jurnal (RO) - Raport",
+    "summary": "Modulul aduce Registrul-jurnal (cod 14-1-1) ca raport nativ Odoo (`account.report`), conform Legii contabilității nr. 82/1991 art. 20 și OMFP 2634/2015: listarea cronologică a tuturor notelor contabile postate, din toate jurnalele, cu perechea cont debitor/cont creditor pe fiecare rând și totaluri zilnice. Rapoartele standard Enterprise nu acoperă acest gol — *Journal Report* grupează pe jurnal, iar *General Ledger* grupează pe cont — niciunul nu produce registrul cronologic unic cerut de lege. Modulul e vizibil automat doar pentru companiile cu Țara = România.",
+    "features": [
+      "Secțiune per zi, pliabilă, cu totalul zilei (Debit = Credit).",
+      "Rând numerotat per notă contabilă: Nr. crt. continuu pe toată perioada, Data, Explicație, Document, Cont debitor, Cont creditor, Debit, Credit, Jurnal.",
+      "Note compuse (1:N sau M:N): partea multiplă se afișează cu convenția „%\" pe rândul numerotat (aceeași convenție folosită și de exportul SAGA), iar conturile componente apar dedesubt ca rânduri nenumerotate, cu sumele lor.",
+      "Rând de total perioadă — egalitatea Debit = Credit se verifică la fiecare nivel; totalurile însumează doar rândurile numerotate, fără dublarea sumelor componentelor.",
+      "Filtru de interval de dată, selector de jurnale, selector multi-companie și unfold all, moștenite din framework-ul `account_reports`.",
+      "Drill-down la nota contabilă (rând numerotat, către `account.move`) sau la linia contabilă componentă (rând nenumerotat, către `account.move.line`).",
+      "Export PDF/XLSX direct din bara de instrumente a raportului."
+    ],
+    "dependencies": [
+      "account_reports",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_journal_reports",
+      "l10n_ro_cash_register",
+      "deltatech_saga",
+      "l10n_ro_bank_register_report",
+      "account_reports"
+    ],
+    "text": "Registrul-Jurnal (RO) - Raport\nl10n_ro_registru_jurnal\nModulul aduce Registrul-jurnal (cod 14-1-1) ca raport nativ Odoo (`account.report`), conform Legii contabilității nr. 82/1991 art. 20 și OMFP 2634/2015: listarea cronologică a tuturor notelor contabile postate, din toate jurnalele, cu perechea cont debitor/cont creditor pe fiecare rând și totaluri zilnice. Rapoartele standard Enterprise nu acoperă acest gol — *Journal Report* grupează pe jurnal, iar *General Ledger* grupează pe cont — niciunul nu produce registrul cronologic unic cerut de lege. Modulul e vizibil automat doar pentru companiile cu Țara = România.\nSecțiune per zi, pliabilă, cu totalul zilei (Debit = Credit).\nRând numerotat per notă contabilă: Nr. crt. continuu pe toată perioada, Data, Explicație, Document, Cont debitor, Cont creditor, Debit, Credit, Jurnal.\nNote compuse (1:N sau M:N): partea multiplă se afișează cu convenția „%\" pe rândul numerotat (aceeași convenție folosită și de exportul SAGA), iar conturile componente apar dedesubt ca rânduri nenumerotate, cu sumele lor.\nRând de total perioadă — egalitatea Debit = Credit se verifică la fiecare nivel; totalurile însumează doar rândurile numerotate, fără dublarea sumelor componentelor.\nFiltru de interval de dată, selector de jurnale, selector multi-companie și unfold all, moștenite din framework-ul `account_reports`.\nDrill-down la nota contabilă (rând numerotat, către `account.move`) sau la linia contabilă componentă (rând nenumerotat, către `account.move.line`).\nExport PDF/XLSX direct din bara de instrumente a raportului."
   },
   {
     "path": "l10n_ro_reports_fix/index.md",
