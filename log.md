@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-07-19] Ingestie l10n_ro_sale_receipt_type_report (modul nou, nu port)
+
+- **Acțiune:** Documentat modulul nou `l10n_ro_sale_receipt_type_report` (suita `l10n_ro_ent`, branch `19.0`) — raport nativ pentru situația "Vânzări pe tipuri de încasări", cerută de contabilitatea clientului Damira. Nu e un port dintr-o versiune mai veche: modulul a fost construit direct pe Odoo 18, apoi portat pe 19.0 (fără niciun echivalent preexistent pe vreun branch).
+- **Sursă:** `readme/DESCRIPTION.md` (Sumar + Funcționalități Cheie); secțiunea Componente Cheie completată din analiza codului (`models/sale_receipt_type_report_handler.py`, `data/l10n_ro_sale_receipt_type_report.xml`), inclusiv detaliul tehnic că `pos.payment.method.type` e câmp calculat nestocat (relevant pentru cine modifică raportul).
+- **Corecție de conținut semnalată:** maparea suită→repo din `documentarist-wiki` (`.claude/agents/documentarist-wiki.md`) listează `l10n_ro_ent` ca `terrabit-ro/l10n_ro_ent`, dar acel owner e doar un alias/redirect GitHub — repo-ul canonic actual e `terrabit-solutions/l10n_ro_ent` (verificat live: `gh repo view terrabit-ro/l10n_ro_ent` rezolvă la `terrabit-solutions/l10n_ro_ent`). Pagina nouă folosește URL-ul corect; maparea din agent rămâne de actualizat separat (afectează toate paginile viitoare din suită).
+- **Fișă consultant:** copiată integral, cu cele 4 capturi din `readme/screenshots/` (generate real, prin `tests/test_screenshots.py` rulat pe o bază 19.0 — nu doar scaffolding).
+- **Dependențe/Conexiuni:** `l10n_ro`, `account_reports`, `point_of_sale`, `payment` rămase text `cod` (fără pagină wiki proprie). `l10n_ro_cash_register_report` linkat activ (are pagină); `l10n_ro_bank_register_report` și `l10n_ro_registru_jurnal` — module-soră create în aceeași sesiune de lucru — rămase text `cod`, nu au încă pagină wiki (de documentat separat).
+- **Fișiere actualizate:** `l10n_ro_sale_receipt_type_report/index.md` (pagină nouă) + `FISA_CONSULTANT.md` + `screenshots/` (4 poze), `wiki_module_odoo/index.md` (1 intrare nouă, ordine alfabetică), `wiki_module_odoo/log.md`, `wiki_module_odoo/.index/` (rebuild lexical).
+
 ## [2026-07-02] Ingestie lot l10n_ro_ent (13 module cu fișă consultant, fără pagină wiki)
 
 - **Acțiune:** Documentate 13 module noi din suita `l10n_ro_ent` (repo `terrabit-ro/l10n_ro_ent`, branch `19.0`) care aveau `readme/FISA_CONSULTANT.md` dar nu aveau încă pagină wiki — rămase excluse din backfill-ul precedent. Procesate în paralel prin subagenți `documentarist-wiki`, în 2 loturi (7 + 6). Module: `l10n_ro_account_counterpart`, `l10n_ro_account_vat_journal`, `l10n_ro_anaf_d101`, `l10n_ro_anaf_d103`, `l10n_ro_anaf_fiscal_status`, `l10n_ro_cash_bank_enhanced`, `l10n_ro_cash_register_report`, `l10n_ro_esigiliu`, `l10n_ro_fiscal_audit`, `l10n_ro_payroll_ro`, `l10n_ro_stock_custody`, `l10n_ro_stock_posting_date`, `l10n_ro_vat_on_payment_lock`.

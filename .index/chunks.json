@@ -7978,6 +7978,41 @@
     "text": "Terrabit Sale Order Report\nl10n_ro_sale_order_report\nAcest modul permite tipărirea de facturi proforme direct din oferta (cotația) de vânzare. Sunt disponibile două tipuri de proformă: o proformă inițială, al cărei cuantum este calculat din liniile termenului de plată (prima linie de tip „procent\" sau „fix\"), și o proformă finală, care reflectă suma rămasă de încasat. Modulul este util pentru companiile care lucrează cu avansuri și plăți eșalonate, oferind clienților documente de plată clare înainte de emiterea facturii fiscale.\nTipărirea unei facturi proforme inițiale din cotație, cu suma calculată din prima linie a termenului de plată (de tip „procent\" sau „fix\").\nTipărirea unei facturi proforme finale, cu suma rămasă de încasat (necesită procesarea prealabilă a unei plăți prin modulul Deltatech Sale Payment)."
   },
   {
+    "path": "l10n_ro_sale_receipt_type_report/index.md",
+    "module": "l10n_ro_sale_receipt_type_report",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_sale_receipt_type_report",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_sale_receipt_type_report",
+    "last_ingest": "2026-07-19",
+    "friendly_name": "Vânzări pe Tipuri de Încasări (RO) - Raport",
+    "summary": "Modulul aduce situația periodică „Vânzări pe tipuri de încasări\" ca raport nativ Odoo (`account.report`), cerută explicit de contabilitatea unui client (Damira) pentru reconcilierea lunară a încasărilor pe canal. Spre deosebire de Registrul de casă sau Jurnalul de bancă (care citesc doar mișcările unui singur cont), acest raport unifică două surse de date eterogene — încasările de la casa de marcat (`pos.payment`) și încasările contabile din afara POS-ului (`account.payment`) — într-o singură vedere pe patru canale: numerar, card, transfer bancar (OP) și platformă de plată online. Nu există un formular tipizat legal pentru acest raport; este o situație de gestiune internă.",
+    "features": [
+      "Patru secțiuni pliabile, fiecare cu totalul perioadei în antet: Casă — Numerar, Casă — Card, Transfer bancar (OP), Platformă de plată online; secțiunile fără date în perioadă nu apar.",
+      "Fiecare secțiune desfășurată listează încasările individuale (dată, partener, document, sumă), cu drill-down la comanda POS (`pos.payment` → `pos_order_id`) sau la plata contabilă (`account.payment`).",
+      "Rând de Total general la finalul raportului.",
+      "Clasificare Casă — Numerar / Card după tipul jurnalului metodei de plată POS (`pos.payment.method`), nu după numele ei — câmpul `type` al metodei de plată e calculat, nestocat, deci interogarea SQL se leagă direct la `account_journal.type`.",
+      "Clasificare OP / Platformă online după prezența unei `payment_transaction_id` pe `account.payment`.",
+      "Excluderi deliberate: metodele „Cont client\" (pay later) la POS (nu sunt o încasare reală), comenzile POS nefinalizate, plățile de decontare a sesiunii POS (`account.payment.pos_session_id`, ar duplica încasarea deja numărată din `pos.payment`), plățile contabile de tip ieșire.",
+      "O încasare cash înregistrată direct în contabilitate (nu prin POS) e inclusă tot la secțiunea Casă — Numerar.",
+      "Beneficiază integral de framework-ul `account_reports`: filtru de interval de dată, selector multi-companie, export PDF/XLSX din bara de instrumente.",
+      "Limitare cunoscută (v1): o încasare cu cardul înregistrată manual în contabilitate (fără POS, fără provider de plată online) nu poate fi distinsă de un transfer bancar obișnuit — ambele ajung la secțiunea OP."
+    ],
+    "dependencies": [
+      "l10n_ro",
+      "account_reports",
+      "point_of_sale",
+      "payment"
+    ],
+    "connections": [
+      "l10n_ro_cash_register_report",
+      "l10n_ro_bank_register_report",
+      "account_reports",
+      "point_of_sale",
+      "payment"
+    ],
+    "text": "Vânzări pe Tipuri de Încasări (RO) - Raport\nl10n_ro_sale_receipt_type_report\nModulul aduce situația periodică „Vânzări pe tipuri de încasări\" ca raport nativ Odoo (`account.report`), cerută explicit de contabilitatea unui client (Damira) pentru reconcilierea lunară a încasărilor pe canal. Spre deosebire de Registrul de casă sau Jurnalul de bancă (care citesc doar mișcările unui singur cont), acest raport unifică două surse de date eterogene — încasările de la casa de marcat (`pos.payment`) și încasările contabile din afara POS-ului (`account.payment`) — într-o singură vedere pe patru canale: numerar, card, transfer bancar (OP) și platformă de plată online. Nu există un formular tipizat legal pentru acest raport; este o situație de gestiune internă.\nPatru secțiuni pliabile, fiecare cu totalul perioadei în antet: Casă — Numerar, Casă — Card, Transfer bancar (OP), Platformă de plată online; secțiunile fără date în perioadă nu apar.\nFiecare secțiune desfășurată listează încasările individuale (dată, partener, document, sumă), cu drill-down la comanda POS (`pos.payment` → `pos_order_id`) sau la plata contabilă (`account.payment`).\nRând de Total general la finalul raportului.\nClasificare Casă — Numerar / Card după tipul jurnalului metodei de plată POS (`pos.payment.method`), nu după numele ei — câmpul `type` al metodei de plată e calculat, nestocat, deci interogarea SQL se leagă direct la `account_journal.type`.\nClasificare OP / Platformă online după prezența unei `payment_transaction_id` pe `account.payment`.\nExcluderi deliberate: metodele „Cont client\" (pay later) la POS (nu sunt o încasare reală), comenzile POS nefinalizate, plățile de decontare a sesiunii POS (`account.payment.pos_session_id`, ar duplica încasarea deja numărată din `pos.payment`), plățile contabile de tip ieșire.\nO încasare cash înregistrată direct în contabilitate (nu prin POS) e inclusă tot la secțiunea Casă — Numerar.\nBeneficiază integral de framework-ul `account_reports`: filtru de interval de dată, selector multi-companie, export PDF/XLSX din bara de instrumente.\nLimitare cunoscută (v1): o încasare cu cardul înregistrată manual în contabilitate (fără POS, fără provider de plată online) nu poate fi distinsă de un transfer bancar obișnuit — ambele ajung la secțiunea OP."
+  },
+  {
     "path": "l10n_ro_sgr/index.md",
     "module": "l10n_ro_sgr",
     "version": "19.0.1.1.0",
