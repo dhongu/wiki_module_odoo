@@ -551,6 +551,31 @@
     "text": "Business process handover document\ndeltatech_business_process_handover_document\nModulul generează documentul de predare-primire (proces verbal de predare) pentru un proces de business, direct dintr-un Proiect de Business. Acesta adună informațiile despre compania furnizoare și cea beneficiară, reprezentanții acestora, testerii implicați și lista dezvoltărilor realizate în cadrul proiectului, producând un document PDF pregătit pentru semnare. Astfel, echipa de implementare poate formaliza rapid și standardizat predarea unui proiect către client, fără a redacta manual documentul.\nGenerează documentul de predare-primire pentru un proces de business direct dintr-un Proiect de Business.\nCapturează companiile furnizoare/beneficiare, reprezentanții acestora, testerii și lista dezvoltărilor proiectului.\nDisponibil în limba engleză și română.\nProduce un PDF (QWeb) folosind formatul de hârtie A4.\nAccesibil din Proiectul de Business prin meniul Print: „Handover Document\"."
   },
   {
+    "path": "deltatech_calendar_caldav/index.md",
+    "module": "deltatech_calendar_caldav",
+    "version": "19.0.3.0.0",
+    "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_calendar_caldav`",
+    "local_path": "odoo-addons/bitshop/deltatech_calendar_caldav",
+    "last_ingest": "2026-07-21",
+    "friendly_name": "deltatech_calendar_caldav",
+    "summary": "Modulul sincronizează calendarul Odoo (`calendar.event`) cu un server CalDAV extern (cPanel/Horde/SOGo, Nextcloud, sau orice server care implementează standardul CalDAV RFC 4791), în ambele direcții. Un cron (sau butonul „Sync Now\") aduce evenimentele de pe server în Odoo; crearea, modificarea sau ștergerea unui eveniment Odoo pentru un utilizator cu cont CalDAV configurat trimite imediat schimbarea pe server. Spre deosebire de Google Calendar/Microsoft 365 (sincronizate nativ de Odoo), CalDAV nu are conector nativ — acest modul umple acel gol, generic, fără cod specific per furnizor.",
+    "features": [
+      "Sincronizare bidirecțională CalDAV ↔ Odoo (pull programat/manual + push imediat la create/write/unlink).",
+      "Evenimente recurente: o serie recurentă Odoo se trimite ca o singură resursă CalDAV (eveniment „master\" cu regulă `RRULE`), nu ca evenimente separate; ocurențele aduse de pe server sunt expandate și importate individual.",
+      "Reminder-e: alarmele Odoo (`calendar.alarm`) se mapează pe/din componente `VALARM` (notificare → `DISPLAY`, email → `EMAIL`).",
+      "Participanți: `partner_ids`/organizatorul se mapează pe/din `ATTENDEE`/`ORGANIZER`, cu potrivire automată a contactelor după adresa de email (creare automată dacă lipsesc).",
+      "Detectare conflicte (ETag): înainte de a suprascrie un eveniment pe server, verifică dacă acesta s-a schimbat de la ultima sincronizare; dacă da, push-ul e sărit (serverul câștigă), nu suprascrie orbește.",
+      "Detectare schimbări (CTag): verifică marca de schimbare a colecției înainte de fiecare sincronizare; dacă nimic nu s-a schimbat, sare peste pull-ul complet."
+    ],
+    "dependencies": [
+      "calendar"
+    ],
+    "connections": [
+      "calendar"
+    ],
+    "text": "deltatech_calendar_caldav\ndeltatech_calendar_caldav\nModulul sincronizează calendarul Odoo (`calendar.event`) cu un server CalDAV extern (cPanel/Horde/SOGo, Nextcloud, sau orice server care implementează standardul CalDAV RFC 4791), în ambele direcții. Un cron (sau butonul „Sync Now\") aduce evenimentele de pe server în Odoo; crearea, modificarea sau ștergerea unui eveniment Odoo pentru un utilizator cu cont CalDAV configurat trimite imediat schimbarea pe server. Spre deosebire de Google Calendar/Microsoft 365 (sincronizate nativ de Odoo), CalDAV nu are conector nativ — acest modul umple acel gol, generic, fără cod specific per furnizor.\nSincronizare bidirecțională CalDAV ↔ Odoo (pull programat/manual + push imediat la create/write/unlink).\nEvenimente recurente: o serie recurentă Odoo se trimite ca o singură resursă CalDAV (eveniment „master\" cu regulă `RRULE`), nu ca evenimente separate; ocurențele aduse de pe server sunt expandate și importate individual.\nReminder-e: alarmele Odoo (`calendar.alarm`) se mapează pe/din componente `VALARM` (notificare → `DISPLAY`, email → `EMAIL`).\nParticipanți: `partner_ids`/organizatorul se mapează pe/din `ATTENDEE`/`ORGANIZER`, cu potrivire automată a contactelor după adresa de email (creare automată dacă lipsesc).\nDetectare conflicte (ETag): înainte de a suprascrie un eveniment pe server, verifică dacă acesta s-a schimbat de la ultima sincronizare; dacă da, push-ul e sărit (serverul câștigă), nu suprascrie orbește.\nDetectare schimbări (CTag): verifică marca de schimbare a colecției înainte de fiecare sincronizare; dacă nimic nu s-a schimbat, sare peste pull-ul complet."
+  },
+  {
     "path": "deltatech_cash_statement/index.md",
     "module": "deltatech_cash_statement",
     "version": "19.0.3.0.0",

@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-07-21] Ingestie deltatech_calendar_caldav (modul nou, bitshop)
+
+- **Acțiune:** Documentat modulul nou `deltatech_calendar_caldav` (repo `bitshop`, branch `19.0`, port dintr-o dezvoltare inițială pe Odoo 18 — PR-uri #2671 merged pe 18.0, #2672 deschis pe 19.0) — sincronizare bidirecțională CalDAV ↔ Odoo (evenimente, recurență RRULE, reminder-e VALARM, participanți ATTENDEE/ORGANIZER, detectare conflicte ETag/schimbări CTag). Prima pagină wiki din repo-ul `bitshop` care documentează un conector generic (nu o localizare fiscală).
+- **Sursă:** `readme/DESCRIPTION.md` (Sumar + Funcționalități Cheie); Componente Cheie completate din analiza codului (`models/caldav_account.py`, `models/calendar_event.py`, `views/caldav_account_views.xml`, `data/ir_cron_data.xml`) — DESCRIPTION.md nu acoperă modele/vizualizări/cron-uri.
+- **Fișă consultant:** modulul are `readme/FISA_CONSULTANT.md` + 4 capturi pe branch-ul `18.0` (PR #2673, deschis), dar **nu a fost încă portată pe branch-ul `19.0`** — pagina wiki curentă nu are linie de metadate „Fișă Consultant" și directorul nu are `screenshots/`. De completat la o ingestie ulterioară, după portarea fișei pe 19.0.
+- **Owner corect folosit:** `https://github.com/terrabit-solutions/bitshop/...` (owner canonic, verificat cu `gh repo view`) — NU `terrabit-ro/bitshop` (alias/redirect stale, folosit din greșeală în pagini mai vechi precum `deltatech_saga`, de corectat separat).
+- **Dependențe/Conexiuni:** `calendar` (Odoo core, fără pagină wiki proprie) rămas text `cod` la ambele secțiuni.
+- **Fișiere actualizate:** `deltatech_calendar_caldav/index.md` (pagină nouă), `wiki_module_odoo/index.md` (1 intrare nouă, ordine alfabetică), `wiki_module_odoo/log.md`, `wiki_module_odoo/.index/` (rebuild lexical).
+
 ## [2026-07-19] Ingestie l10n_ro_bank_register_report + l10n_ro_registru_jurnal (2 module, port 18→19)
 
 - **Acțiune:** Documentate 2 module noi din suita `l10n_ro_ent` (branch `19.0`), portate în aceeași sesiune de lucru dintr-o dezvoltare inițială pe Odoo 18: `l10n_ro_bank_register_report` (Jurnal de bancă, extinde direct `l10n_ro_cash_register_report` — suprascrie doar `_journal_type()`/`_day_section_label()`) și `l10n_ro_registru_jurnal` (Registrul-jurnal cod 14-1-1, handler complet autonom pe SQL brut, fără dependență de motorul de interogare standard `account_reports`).

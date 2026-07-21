@@ -26,6 +26,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_brand_field](deltatech_brand_field/index.md): Mecanism centralizat pentru gestionarea unitară a câmpului de marcă a produselor în multiple module Odoo.
 - [deltatech_business_process](deltatech_business_process/index.md): Structurarea și execuția proiectelor de implementare Odoo prin Proiecte, Procese de Afaceri, Pași, Testare (intern/integrare/UAT) și gestionarea problemelor.
 - [deltatech_business_process_handover_document](deltatech_business_process_handover_document/index.md): Generează documentul de predare-primire (proces verbal) pentru un proces de business, direct dintr-un Proiect de Business, ca PDF.
+- [deltatech_calendar_caldav](deltatech_calendar_caldav/index.md): Sincronizare bidirecțională a calendarului Odoo cu un server CalDAV extern (cPanel, Nextcloud etc.) — evenimente, recurență, reminder-e și participanți.
 - [deltatech_cash_statement](deltatech_cash_statement/index.md): Unealtă pentru actualizarea rapidă a soldului inițial al extraselor de casă din Odoo.
 - [deltatech_category_group](deltatech_category_group/index.md): Adaugă două niveluri de grupare (tip și clasă) pentru categoriile interne de produse, utilizabile în rapoartele de marjă, stoc și facturi.
 - [deltatech_category_group_equipment](deltatech_category_group_equipment/index.md): Adaugă grupare (tip și clasă) pentru echipamente, preluată din grupurile categoriei interne a produsului.
