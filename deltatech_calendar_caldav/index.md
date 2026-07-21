@@ -5,6 +5,7 @@
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_calendar_caldav`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_calendar_caldav`
 - **Ultima Ingestie:** `2026-07-21`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

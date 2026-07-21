@@ -4,6 +4,11 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-07-21] Completare fișă consultant deltatech_calendar_caldav (port 18.0→19.0)
+
+- **Acțiune:** Fișa consultant a modulului `deltatech_calendar_caldav` a fost portată pe branch-ul `19.0` (bitshop PR #2674, deschis) — copiată fidel, fără modificări de conținut (era deja version-agnostic, menționează „Odoo 18/19" generic). Completat ce rămăsese notat ca TODO în ingestia inițială.
+- **Fișiere actualizate:** `deltatech_calendar_caldav/index.md` (adăugată linia de metadate „Fișă Consultant"), `deltatech_calendar_caldav/FISA_CONSULTANT.md` + `deltatech_calendar_caldav/screenshots/` (4 poze, copii noi), `wiki_module_odoo/log.md`, `wiki_module_odoo/.index/` (rebuild lexical).
+
 ## [2026-07-21] Ingestie deltatech_calendar_caldav (modul nou, bitshop)
 
 - **Acțiune:** Documentat modulul nou `deltatech_calendar_caldav` (repo `bitshop`, branch `19.0`, port dintr-o dezvoltare inițială pe Odoo 18 — PR-uri #2671 merged pe 18.0, #2672 deschis pe 19.0) — sincronizare bidirecțională CalDAV ↔ Odoo (evenimente, recurență RRULE, reminder-e VALARM, participanți ATTENDEE/ORGANIZER, detectare conflicte ETag/schimbări CTag). Prima pagină wiki din repo-ul `bitshop` care documentează un conector generic (nu o localizare fiscală).
