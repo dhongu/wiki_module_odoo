@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-07-23] Ingestie lot import extrase bancare — GLS, Euplatesc, ING CSV (task 830, Insignis)
+
+- **Acțiune:** Documentate 3 module noi, procesate în paralel prin subagenți `documentarist-wiki`: `deltatech_account_bank_statement_import_gls` (borderou ramburs GLS, semnătură A1, skip preambul/total), `deltatech_account_bank_statement_import_euplatesc` (detaliere decontare Euplatesc.ro, dedup pe RRN, comision/transfer configurabil), `l10n_ro_account_bank_statement_import_ing_csv` (istoric conturi ING Business CSV, solduri + CUI contrapartidă). Toate trei dezvoltate pentru task Terrabit #830 (client Insignis/ART STORE), F1 al planului (parsere) DONE și merged.
+- **Sursă:** `readme/DESCRIPTION.md` pentru Sumar și Funcționalități Cheie la toate trei (prezent și la zi cu codul 19.0); Componente Cheie completate minimal din analiza codului (`models/account_journal.py`, view-urile de jurnal) doar unde DESCRIPTION.md nu acoperea.
+- **Fișă consultant:** toate trei module au `readme/FISA_CONSULTANT.md` + 3 capturi de ecran fiecare — copiate integral în paginile wiki respective.
+- **Dependențe/Conexiuni:** dependențele (`account_bank_statement_import`, `account_bank_statement_import_csv`, `l10n_ro`) rămase text `cod` (module core, fără pagină wiki). Cele trei module noi sunt conectate funcțional între ele (aceeași familie de import extrase) și cu `deltatech_account_bank_statement_import` — linkate reciproc unde relevant.
+- **Corecție aplicată:** la Euplatesc, subagentul a inclus inițial `deltatech_account_bank_statement_import` ca dependență (secțiunea 3), deși nu apare în `depends` din manifest — corectat, mutată doar în Conexiuni (secțiunea 5).
+- **Fișiere actualizate:** `deltatech_account_bank_statement_import_gls/index.md`, `deltatech_account_bank_statement_import_euplatesc/index.md`, `l10n_ro_account_bank_statement_import_ing_csv/index.md` (pagini noi, + FISA_CONSULTANT.md + screenshots/ la fiecare), `wiki_module_odoo/index.md` (3 intrări noi, ordine alfabetică), `wiki_module_odoo/log.md`, `wiki_module_odoo/.index/` (rebuild lexical).
+
 ## [2026-07-21] Completare fișă consultant deltatech_calendar_caldav (port 18.0→19.0)
 
 - **Acțiune:** Fișa consultant a modulului `deltatech_calendar_caldav` a fost portată pe branch-ul `19.0` (bitshop PR #2674, deschis) — copiată fidel, fără modificări de conținut (era deja version-agnostic, menționează „Odoo 18/19" generic). Completat ce rămăsese notat ca TODO în ingestia inițială.

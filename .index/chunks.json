@@ -90,6 +90,62 @@
     "text": "Bank Statements Import Extension\ndeltatech_account_bank_statement_import\nAcest modul extinde funcționalitatea de import al extraselor de cont bancar pentru a accepta fișiere XLSX, pe lângă formatele acceptate în mod standard. În plus, ajută la identificarea automată a partenerului asociat fiecărei tranzacții, reducând munca manuală de reconciliere și potrivire a încasărilor cu partenerii corecți.\nImport al extraselor de cont bancar din fișiere XLSX.\nDetectare automată a partenerului după numele partenerului (caută un partener cu nume corespunzător).\nDetectare automată a partenerului după referința comenzii de vânzare (caută o comandă de vânzare care corespunde referinței plății și asociază partenerul comercial al acelei comenzi)."
   },
   {
+    "path": "deltatech_account_bank_statement_import_euplatesc/index.md",
+    "module": "deltatech_account_bank_statement_import_euplatesc",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import_euplatesc",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_account_bank_statement_import_euplatesc",
+    "last_ingest": "2026-07-23",
+    "friendly_name": "Euplatesc Settlement Bank Statements Import",
+    "summary": "Modulul importă direct în Odoo, ca extrase de cont, fișierele de decontare (settlement) Euplatesc.ro pentru comerțul electronic, eliminând procesarea manuală a fișierelor XLSX primite de la procesatorul de plăți cu cardul. Fiecare fișier de decontare devine automat un extras bancar cu linii detaliate pe tranzacție, gata de reconciliere cu comenzile web sau facturile aferente.",
+    "features": [
+      "Import fișier original: se încarcă exact fișierul de detaliere primit de la Euplatesc — se creează câte un extras pentru fiecare lot de decontare (foaia FPS).",
+      "Detectare prin semnătură: fișierul este recunoscut după antetul specific de coloane Euplatesc (MerchantID / InvoiceId / ... / RRN), astfel poate fi importat din orice jurnal de tip bancă, alături de alte formate de extras.",
+      "O linie per plată cu cardul: fiecare tranzacție devine o linie de extras cu referința comenzii web sau a facturii (InvoiceId), numele clientului și detaliile de decontare; rambursările (refund) sunt importate ca linii negative separate.",
+      "Comisioane configurabile: comisioanele de procesare Euplatesc (Minim1RON + Diff1RON) pot fi importate ca o singură linie agregată per extras (implicit), ca o linie per tranzacție, sau pot fi omise.",
+      "Linie opțională de transfer bancar: se poate adăuga automat o linie negativă cu suma netă transferată (configurabil per jurnal), astfel încât extrasul să se balanseze la zero, iar decontarea să poată fi reconciliată cu extrasul bancar real printr-un cont de transfer intern.",
+      "Protecție la duplicate: fiecare tranzacție este importată o singură dată (id unic de import per RRN); reimportarea aceluiași fișier este detectată."
+    ],
+    "dependencies": [
+      "account_bank_statement_import",
+      "account_bank_statement_import_csv"
+    ],
+    "connections": [
+      "deltatech_account_bank_statement_import",
+      "l10n_ro_account_bank_statement_import_xlsx"
+    ],
+    "text": "Euplatesc Settlement Bank Statements Import\ndeltatech_account_bank_statement_import_euplatesc\nModulul importă direct în Odoo, ca extrase de cont, fișierele de decontare (settlement) Euplatesc.ro pentru comerțul electronic, eliminând procesarea manuală a fișierelor XLSX primite de la procesatorul de plăți cu cardul. Fiecare fișier de decontare devine automat un extras bancar cu linii detaliate pe tranzacție, gata de reconciliere cu comenzile web sau facturile aferente.\nImport fișier original: se încarcă exact fișierul de detaliere primit de la Euplatesc — se creează câte un extras pentru fiecare lot de decontare (foaia FPS).\nDetectare prin semnătură: fișierul este recunoscut după antetul specific de coloane Euplatesc (MerchantID / InvoiceId / ... / RRN), astfel poate fi importat din orice jurnal de tip bancă, alături de alte formate de extras.\nO linie per plată cu cardul: fiecare tranzacție devine o linie de extras cu referința comenzii web sau a facturii (InvoiceId), numele clientului și detaliile de decontare; rambursările (refund) sunt importate ca linii negative separate.\nComisioane configurabile: comisioanele de procesare Euplatesc (Minim1RON + Diff1RON) pot fi importate ca o singură linie agregată per extras (implicit), ca o linie per tranzacție, sau pot fi omise.\nLinie opțională de transfer bancar: se poate adăuga automat o linie negativă cu suma netă transferată (configurabil per jurnal), astfel încât extrasul să se balanseze la zero, iar decontarea să poată fi reconciliată cu extrasul bancar real printr-un cont de transfer intern.\nProtecție la duplicate: fiecare tranzacție este importată o singură dată (id unic de import per RRN); reimportarea aceluiași fișier este detectată."
+  },
+  {
+    "path": "deltatech_account_bank_statement_import_gls/index.md",
+    "module": "deltatech_account_bank_statement_import_gls",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import_gls",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_account_bank_statement_import_gls",
+    "last_ingest": "2026-07-23",
+    "friendly_name": "GLS Borderou Bank Statements Import",
+    "summary": "Modulul importă borderourile de ramburs GLS (fișiere Excel) direct ca extrase de cont bancar, fără nicio prelucrare manuală prealabilă a fișierului. Magazinele online care livrează cu plata ramburs prin GLS primesc periodic aceste borderouri cu sumele încasate de curier și virate în banca firmei; în loc să fie „curățate\" manual (șters antetul și rândul de total) și mapate coloană cu coloană în asistentul standard de import, fișierul original este încărcat ca atare pe jurnalul de tip bancă dedicat curierului, generând automat o linie de extras per colet.",
+    "features": [
+      "Import fișier original: se încarcă borderoul exact cum vine de la GLS — antetul (client,",
+      "Detecție prin semnătură: fișierul este recunoscut după semnătura GLS din prima celulă, deci",
+      "O linie per colet: fiecare sumă ramburs devine o linie de extras cu numărul AWB, referința",
+      "Verificare de control: rândul de total din fișier este verificat față de suma liniilor",
+      "Linie opțională de transfer bancar: se poate adăuga automat (configurabil per jurnal) o",
+      "Protecție la duplicate: fiecare colet are un id unic de import (per AWB); reimportul"
+    ],
+    "dependencies": [
+      "account_bank_statement_import",
+      "account_bank_statement_import_csv"
+    ],
+    "connections": [
+      "deltatech_account_bank_statement_import_euplatesc",
+      "l10n_ro_account_bank_statement_import_ing_csv",
+      "stock_delivery",
+      "carrier_tracking_ref"
+    ],
+    "text": "GLS Borderou Bank Statements Import\ndeltatech_account_bank_statement_import_gls\nModulul importă borderourile de ramburs GLS (fișiere Excel) direct ca extrase de cont bancar, fără nicio prelucrare manuală prealabilă a fișierului. Magazinele online care livrează cu plata ramburs prin GLS primesc periodic aceste borderouri cu sumele încasate de curier și virate în banca firmei; în loc să fie „curățate\" manual (șters antetul și rândul de total) și mapate coloană cu coloană în asistentul standard de import, fișierul original este încărcat ca atare pe jurnalul de tip bancă dedicat curierului, generând automat o linie de extras per colet.\nImport fișier original: se încarcă borderoul exact cum vine de la GLS — antetul (client,\nDetecție prin semnătură: fișierul este recunoscut după semnătura GLS din prima celulă, deci\nO linie per colet: fiecare sumă ramburs devine o linie de extras cu numărul AWB, referința\nVerificare de control: rândul de total din fișier este verificat față de suma liniilor\nLinie opțională de transfer bancar: se poate adăuga automat (configurabil per jurnal) o\nProtecție la duplicate: fiecare colet are un id unic de import (per AWB); reimportul"
+  },
+  {
     "path": "deltatech_account_enterprise/index.md",
     "module": "deltatech_account_enterprise",
     "version": "19.0.0.0.2",
@@ -5847,6 +5903,34 @@
     ],
     "connections": [],
     "text": "Work Days Report\ndeltatech_work_days_report\nModulul **Work Days Report** generează rapoarte Excel cuprinzătoare pentru urmărirea prezenței angajaților și gestionarea tichetelor de masă. Este util departamentelor de resurse umane și proceselor de salarizare, oferind automat fișiere Excel cu orele lucrate zilnic, totalurile pe angajat, tichetele de masă cuvenite și perioadele de concediu. Astfel se simplifică monitorizarea tiparelor de lucru ale angajaților și administrarea drepturilor la tichete de masă, asigurând raportări consecvente chiar și atunci când configurarea tipurilor de concediu este incompletă.\nÎmbunătățirea tipurilor de concediu: adaugă un câmp configurabil „code\" în formularele de tip de concediu (Time Off Type), pentru o mai bună categorisire și raportare.\nExport Excel în masă: permite exportul în masă accesibil din vizualizarea de listă a angajaților (Acțiune → „Export Working Days\").\nRaportare cuprinzătoare: generează rapoarte Excel detaliate care conțin informații despre angajat și orele lucrate zilnic, totalul orelor lucrate, tichetele de masă câștigate per angajat și perioadele/datele de concediu.\nCodificare flexibilă a concediilor: afișează automat „ABS\" (absență) pentru tipurile de concediu fără cod specificat, asigurând o raportare consecventă chiar și cu o configurare incompletă."
+  },
+  {
+    "path": "l10n_ro_account_bank_statement_import_ing_csv/index.md",
+    "module": "l10n_ro_account_bank_statement_import_ing_csv",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_account_bank_statement_import_ing_csv",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_account_bank_statement_import_ing_csv",
+    "last_ingest": "2026-07-23",
+    "friendly_name": "Import Extras ING Business - Format CSV",
+    "summary": "Acest modul importă fișierele „Istoric conturi\" (CSV) exportate din ING Business direct ca extrase de cont, fără nicio prelucrare manuală a fișierului.",
+    "features": [
+      "Import fișier original: se încarcă CSV-ul exact cum e exportat din ING Business — antetul, separatorul `;`, sumele în format românesc (`1.234,56`) și codificarea sunt gestionate automat.",
+      "Detecție după semnătură: fișierul e recunoscut după antetul ING, deci poate fi importat de pe orice jurnal de tip bancă, alături de alte formate de extras.",
+      "Validare cont: numărul de cont din fișier e verificat față de contul bancar al jurnalului (mecanismul standard Odoo).",
+      "Solduri: soldul inițial și cel final al extrasului sunt calculate din coloana „sold intermediar\".",
+      "Date bogate pentru reconciliere: numele contrapartidei, contul IBAN și CUI-ul contrapartidei sunt preluate pe linia de extras, pentru identificarea automată a partenerului.",
+      "Protecție la duplicate: fiecare tranzacție e importată o singură dată (id unic de import din referința internă/instant ING); reimportul aceluiași fișier e detectat."
+    ],
+    "dependencies": [
+      "l10n_ro",
+      "account_bank_statement_import",
+      "account_bank_statement_import_csv"
+    ],
+    "connections": [
+      "deltatech_account_bank_statement_import",
+      "l10n_ro_account_bank_statement_import_mt940_ing"
+    ],
+    "text": "Import Extras ING Business - Format CSV\nl10n_ro_account_bank_statement_import_ing_csv\nAcest modul importă fișierele „Istoric conturi\" (CSV) exportate din ING Business direct ca extrase de cont, fără nicio prelucrare manuală a fișierului.\nImport fișier original: se încarcă CSV-ul exact cum e exportat din ING Business — antetul, separatorul `;`, sumele în format românesc (`1.234,56`) și codificarea sunt gestionate automat.\nDetecție după semnătură: fișierul e recunoscut după antetul ING, deci poate fi importat de pe orice jurnal de tip bancă, alături de alte formate de extras.\nValidare cont: numărul de cont din fișier e verificat față de contul bancar al jurnalului (mecanismul standard Odoo).\nSolduri: soldul inițial și cel final al extrasului sunt calculate din coloana „sold intermediar\".\nDate bogate pentru reconciliere: numele contrapartidei, contul IBAN și CUI-ul contrapartidei sunt preluate pe linia de extras, pentru identificarea automată a partenerului.\nProtecție la duplicate: fiecare tranzacție e importată o singură dată (id unic de import din referința internă/instant ING); reimportul aceluiași fișier e detectat."
   },
   {
     "path": "l10n_ro_account_bank_statement_import_xlsx/index.md",
