@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_mentor`
 - **Versiune:** `19.0.2.1.7`
-- **Cale:** `https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_mentor`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_mentor`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_mentor`
 - **Ultima Ingestie:** `2026-06-03`
 

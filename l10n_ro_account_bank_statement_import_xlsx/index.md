@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `l10n_ro_account_bank_statement_import_xlsx`
 - **Versiune:** `19.0.1.0.1`
-- **Cale:** https://github.com/terrabit-ro/bitshop_ent/tree/19.0/l10n_ro_account_bank_statement_import_xlsx
+- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/l10n_ro_account_bank_statement_import_xlsx
 - **Cale Locală:** `odoo-addons/bitshop_ent/l10n_ro_account_bank_statement_import_xlsx`
 - **Ultima Ingestie:** `2026-06-09`
 

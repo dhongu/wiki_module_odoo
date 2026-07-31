@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_sale_cancel_order`
 - **Versiune:** `19.0.0.1.0`
-- **Cale:** `https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_sale_cancel_order`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_cancel_order`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_cancel_order`
 - **Ultima Ingestie:** `2026-06-03`
 

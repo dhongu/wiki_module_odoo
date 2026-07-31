@@ -4,7 +4,7 @@
 
 - **Nume Prietenesc:** România - Închidere P&L Cont Return (121)
 - **Nume Tehnic:** `l10n_ro_account_return_pl_closing`
-- **Cale:** https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_account_return_pl_closing
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_return_pl_closing
 - **Ultima Ingestie:** 2026-05-31
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 

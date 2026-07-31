@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_vendor_products_granit`
 - **Versiune:** `19.0.1.0.2`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_vendor_products_granit
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_vendor_products_granit
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_vendor_products_granit`
 - **Ultima Ingestie:** `2026-06-03`
 

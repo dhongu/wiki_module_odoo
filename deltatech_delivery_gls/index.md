@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_delivery_gls`
 - **Versiune:** `19.0.2.0.0`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_delivery_gls
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_gls
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_delivery_gls`
 - **Ultima Ingestie:** `2026-06-03`
 

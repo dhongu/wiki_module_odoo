@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_delivery_locker_website`
 - **Versiune:** `19.0.0.0.7`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_delivery_locker_website
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_locker_website
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_delivery_locker_website`
 - **Ultima Ingestie:** `2026-06-03`
 

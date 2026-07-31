@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_product_brand`
 - **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_product_brand
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_product_brand
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_product_brand`
 - **Ultima Ingestie:** `2026-06-03`
 

@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_edinet`
 - **Versiune:** `19.0.1.2.4`
-- **Cale:** `https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_edinet`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edinet`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_edinet`
 - **Ultima Ingestie:** `2026-06-03`
 

@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_payment_on_delivery`
 - **Versiune:** `19.0.4.0.7`
-- **Cale:** `https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_payment_on_delivery`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_on_delivery`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_on_delivery`
 - **Ultima Ingestie:** `2026-06-03`
 

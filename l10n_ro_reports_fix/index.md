@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `l10n_ro_reports_fix`
 - **Versiune:** `19.0.0.0.1`
-- **Cale:** https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_reports_fix
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_reports_fix
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_reports_fix`
 - **Ultima Ingestie:** 2026-06-01
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)

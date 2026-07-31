@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_sale_contracts`
 - **Versiune:** `19.0.1.0.2`
-- **Cale:** `https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_sale_contracts`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_contracts`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_contracts`
 - **Ultima Ingestie:** `2026-06-03`
 

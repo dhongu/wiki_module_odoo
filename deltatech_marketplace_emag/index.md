@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_marketplace_emag`
 - **Versiune:** `19.0.2.3.7`
-- **Cale:** `https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_marketplace_emag`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_marketplace_emag`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_marketplace_emag`
 - **Ultima Ingestie:** `2026-06-03`
 

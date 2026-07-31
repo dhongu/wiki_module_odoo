@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_bank_stmt_foreign_currency`
 - **Versiune:** `19.0.0.0.2`
-- **Cale:** https://github.com/terrabit-ro/bitshop_ent/tree/19.0/deltatech_bank_stmt_foreign_currency
+- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_bank_stmt_foreign_currency
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_bank_stmt_foreign_currency`
 - **Ultima Ingestie:** `2026-06-09`
 

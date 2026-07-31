@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_marketplace_merchantpro`
 - **Versiune:** `19.0.0.0.1`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_marketplace_merchantpro
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_marketplace_merchantpro
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_marketplace_merchantpro`
 - **Ultima Ingestie:** `2026-06-03`
 

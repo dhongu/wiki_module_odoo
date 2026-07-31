@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_stock_barcode`
 - **Versiune:** `19.0.0.0.5`
-- **Cale:** https://github.com/terrabit-ro/bitshop_ent/tree/19.0/deltatech_stock_barcode
+- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_stock_barcode
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_stock_barcode`
 - **Ultima Ingestie:** `2026-06-09`
 

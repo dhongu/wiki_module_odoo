@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `terrabit_partner_credit_limit`
 - **Versiune:** `19.0.1.2.0`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/terrabit_partner_credit_limit
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_partner_credit_limit
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_partner_credit_limit`
 - **Ultima Ingestie:** `2026-06-03`
 

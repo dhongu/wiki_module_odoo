@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_payment_mobilpay`
 - **Versiune:** `19.0.1.1.1`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_payment_mobilpay
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_mobilpay
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_mobilpay`
 - **Ultima Ingestie:** `2026-06-03`
 

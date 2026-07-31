@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `terrabit_facebook_pixel`
 - **Versiune:** `19.0.0.1.5`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/terrabit_facebook_pixel
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_facebook_pixel
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_facebook_pixel`
 - **Ultima Ingestie:** 2026-06-01
 

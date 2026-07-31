@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_chart_of_accounts`
 - **Versiune:** `19.0.0.0.6`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_chart_of_accounts
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chart_of_accounts
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_chart_of_accounts`
 - **Ultima Ingestie:** `2026-06-03`
 

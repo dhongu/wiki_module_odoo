@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_marketplace`
 - **Versiune:** `19.0.1.8.8`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_marketplace
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_marketplace
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_marketplace`
 - **Ultima Ingestie:** `2026-06-03`
 

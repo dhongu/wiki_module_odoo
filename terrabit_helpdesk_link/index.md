@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `terrabit_helpdesk_link`
 - **Versiune:** `19.0.0.0.4`
-- **Cale:** https://github.com/terrabit-ro/terrabit/tree/19.0/terrabit_helpdesk_link
+- **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_link
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_helpdesk_link`
 - **Ultima Ingestie:** `2026-06-08`
 

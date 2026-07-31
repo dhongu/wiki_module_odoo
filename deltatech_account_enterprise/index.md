@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_account_enterprise`
 - **Versiune:** `19.0.0.0.2`
-- **Cale:** https://github.com/terrabit-ro/bitshop_ent/tree/19.0/deltatech_account_enterprise
+- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_enterprise
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_account_enterprise`
 - **Ultima Ingestie:** `2026-06-09`
 

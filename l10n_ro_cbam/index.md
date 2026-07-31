@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `l10n_ro_cbam`
 - **Versiune:** `19.0.1.6.0`
-- **Cale:** https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_cbam
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cbam
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_cbam`
 - **Ultima Ingestie:** 2026-06-01
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)

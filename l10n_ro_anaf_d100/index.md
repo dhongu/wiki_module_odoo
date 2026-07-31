@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `l10n_ro_anaf_d100`
 - **Versiune:** `19.0.0.0.2`
-- **Cale:** https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d100
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d100
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d100`
 - **Ultima Ingestie:** 2026-06-09
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)

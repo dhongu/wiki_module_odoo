@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_delivery_dummy`
 - **Versiune:** `19.0.0.0.1`
-- **Cale:** `https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_delivery_dummy`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_dummy`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_delivery_dummy`
 - **Ultima Ingestie:** `2026-06-03`
 

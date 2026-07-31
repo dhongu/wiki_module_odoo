@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_marketplace_odoo`
 - **Versiune:** `19.0.0.1.2`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_marketplace_odoo
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_marketplace_odoo
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_marketplace_odoo`
 - **Ultima Ingestie:** `2026-06-03`
 

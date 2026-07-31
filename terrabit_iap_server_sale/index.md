@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `terrabit_iap_server_sale`
 - **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/terrabit-ro/terrabit/tree/19.0/terrabit_iap_server_sale
+- **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_sale
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server_sale`
 - **Ultima Ingestie:** 2026-06-01
 

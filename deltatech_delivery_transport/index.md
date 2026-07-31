@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_delivery_transport`
 - **Versiune:** `19.0.2.0.2`
-- **Cale:** `https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_delivery_transport`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_transport`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_delivery_transport`
 - **Ultima Ingestie:** `2026-06-03`
 

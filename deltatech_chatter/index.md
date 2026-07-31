@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_chatter`
 - **Versiune:** `19.0.0.0.3`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_chatter
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_chatter`
 - **Ultima Ingestie:** `2026-06-03`
 

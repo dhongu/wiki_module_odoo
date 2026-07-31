@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `terrabit_tiktok_pixel`
 - **Versiune:** `19.0.0.1.1`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/terrabit_tiktok_pixel
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_tiktok_pixel
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_tiktok_pixel`
 - **Ultima Ingestie:** 2026-06-01
 

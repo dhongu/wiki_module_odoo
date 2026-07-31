@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `l10n_ro_account_vat_journal`
 - **Versiune:** `19.0.1.0.0`
-- **Cale:** [https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal](https://github.com/terrabit-ro/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal)
+- **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal)
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_account_vat_journal`
 - **Ultima Ingestie:** `2026-07-02`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)

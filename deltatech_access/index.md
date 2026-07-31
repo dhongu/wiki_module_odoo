@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_access`
 - **Versiune:** `19.0.0.0.3`
-- **Cale:** `https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_access`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_access`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_access`
 - **Ultima Ingestie:** `2026-06-03`
 

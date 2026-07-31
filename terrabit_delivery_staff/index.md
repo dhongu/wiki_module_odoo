@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `terrabit_delivery_staff`
 - **Versiune:** `19.0.0.0.9`
-- **Cale:** `https://github.com/terrabit-ro/bitshop/tree/19.0/terrabit_delivery_staff`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_delivery_staff`
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_delivery_staff`
 - **Ultima Ingestie:** `2026-06-03`
 

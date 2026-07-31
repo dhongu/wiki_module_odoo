@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `terrabit_website_sale_tracking_base`
 - **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/terrabit_website_sale_tracking_base
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_website_sale_tracking_base
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_website_sale_tracking_base`
 - **Ultima Ingestie:** 2026-06-01
 

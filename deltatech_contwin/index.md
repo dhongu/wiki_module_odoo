@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_contwin`
 - **Versiune:** `19.0.1.0.6`
-- **Cale:** `https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_contwin`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_contwin`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_contwin`
 - **Ultima Ingestie:** `2026-06-03`
 

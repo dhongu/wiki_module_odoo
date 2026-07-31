@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_delivery_dpd`
 - **Versiune:** `19.0.0.2.0`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_delivery_dpd
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_dpd
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_delivery_dpd`
 - **Ultima Ingestie:** `2026-06-03`
 

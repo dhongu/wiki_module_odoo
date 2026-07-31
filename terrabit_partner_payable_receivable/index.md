@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `terrabit_partner_payable_receivable`
 - **Versiune:** `19.0.1.1.0`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/terrabit_partner_payable_receivable
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_partner_payable_receivable
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_partner_payable_receivable`
 - **Ultima Ingestie:** `2026-06-03`
 

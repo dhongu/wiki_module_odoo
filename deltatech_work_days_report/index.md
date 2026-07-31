@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_work_days_report`
 - **Versiune:** `19.0.0.0.2`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_work_days_report
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_work_days_report
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_work_days_report`
 - **Ultima Ingestie:** `2026-06-03`
 

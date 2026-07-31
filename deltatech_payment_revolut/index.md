@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_payment_revolut`
 - **Versiune:** `19.0.0.0.19`
-- **Cale:** `https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_payment_revolut`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_revolut`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_revolut`
 - **Ultima Ingestie:** `2026-06-03`
 

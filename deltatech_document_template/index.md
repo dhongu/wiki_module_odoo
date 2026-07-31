@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_document_template`
 - **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_document_template
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_document_template
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_document_template`
 - **Ultima Ingestie:** `2026-06-03`
 

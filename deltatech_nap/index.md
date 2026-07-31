@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_nap`
 - **Versiune:** `19.0.1.4.4`
-- **Cale:** `https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_nap`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_nap`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_nap`
 - **Ultima Ingestie:** `2026-06-03`
 

@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_helpdesk_tag_primary`
 - **Versiune:** `19.0.0.0.0`
-- **Cale:** https://github.com/terrabit-ro/bitshop_ent/tree/19.0/deltatech_helpdesk_tag_primary
+- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_helpdesk_tag_primary
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_helpdesk_tag_primary`
 - **Ultima Ingestie:** `2026-06-09`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)

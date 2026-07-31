@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_delivery_relay`
 - **Versiune:** `19.0.0.0.3`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_delivery_relay
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_relay
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_delivery_relay`
 - **Ultima Ingestie:** `2026-06-03`
 

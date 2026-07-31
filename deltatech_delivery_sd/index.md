@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_delivery_sd`
 - **Versiune:** `19.0.1.1.6`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_delivery_sd
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_sd
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_delivery_sd`
 - **Ultima Ingestie:** `2026-06-03`
 

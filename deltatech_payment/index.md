@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_payment`
 - **Versiune:** `19.0.0.0.2`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_payment
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment`
 - **Ultima Ingestie:** `2026-06-03`
 

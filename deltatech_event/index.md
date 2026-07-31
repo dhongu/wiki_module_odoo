@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `deltatech_event`
 - **Versiune:** `19.0.0.0.1`
-- **Cale:** https://github.com/terrabit-ro/bitshop/tree/19.0/deltatech_event
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_event
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_event`
 - **Ultima Ingestie:** `2026-06-03`
 
