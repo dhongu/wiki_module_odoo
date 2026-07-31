@@ -3230,6 +3230,33 @@
     "text": "Deltatech Payment\ndeltatech_payment\nModulul ajustează comportamentul tranzacțiilor de plată din Odoo astfel încât o comandă de vânzare să poată fi confirmată automat atunci când clientul efectuează o plată parțială, nu doar la plata integrală. Pe lângă aceasta, modulul introduce un parametru de configurare care permite confirmarea comenzii de vânzare fără a marca tranzacția de plată ca finalizată. Este o personalizare de gateway de plată (nu un modul de bază pentru gateway-uri propriu-zise), utilă în scenarii de e-commerce unde se acceptă avansuri sau plăți parțiale.\nConfirmă comanda de vânzare dacă este efectuată o plată parțială (chiar dacă suma plătită nu acoperă întreaga valoare a comenzii).\nPermite, prin parametrul `payment.do_not_set_transaction_done`, confirmarea comenzii de vânzare fără ca tranzacția de plată să mai fie trecută în starea „done\"."
   },
   {
+    "path": "deltatech_payment_advice/index.md",
+    "module": "deltatech_payment_advice",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/bitshop_ent/tree/19.0/deltatech_payment_advice",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_payment_advice",
+    "last_ingest": "2026-07-31",
+    "friendly_name": "Deltatech Payment Advice",
+    "summary": "Modulul adaugă un raport de tip **aviz de plată** (remittance advice) pe plata în lot din Odoo — documentul pe care plătitorul îl trimite furnizorilor pentru a-i notifica ce facturi le-au fost achitate printr-un ordin de plată bancar. Pornind de la o plată în lot, modulul grupează plățile pe furnizor și produce câte un aviz per furnizor, cu lista facturilor achitate și suma alocată fiecăreia; avizul poate fi tipărit ca PDF sau trimis direct pe e-mail furnizorului, eliminând nevoia de a comunica manual detaliile decontării.",
+    "features": [
+      "Adaugă un raport PDF de Aviz de plată pe `account.batch.payment`.",
+      "Grupează plățile din lot pe furnizor — se produce câte un document de aviz per furnizor.",
+      "Listează facturile furnizor achitate (număr, dată, scadență) cu suma efectiv alocată fiecăreia, calculată din reconcilierea plății atunci când este disponibilă, altfel din valoarea brută a facturii (astfel avizul poate fi emis chiar înainte ca plata să fie complet reconciliată).",
+      "Buton Trimite avizul de plată care trimite pe e-mail fiecărui furnizor propriul PDF de aviz, printr-un șablon de e-mail, omițând (și raportând) furnizorii fără adresă de e-mail.",
+      "Randează și traduce avizul fiecărui furnizor — atât PDF-ul, cât și e-mailul — în limba respectivului furnizor.",
+      "Antetul documentului este compania plătitoare."
+    ],
+    "dependencies": [
+      "account_batch_payment"
+    ],
+    "connections": [
+      "account_batch_payment",
+      "terrabit_inedit",
+      "deltatech_payment_advice"
+    ],
+    "text": "Deltatech Payment Advice\ndeltatech_payment_advice\nModulul adaugă un raport de tip **aviz de plată** (remittance advice) pe plata în lot din Odoo — documentul pe care plătitorul îl trimite furnizorilor pentru a-i notifica ce facturi le-au fost achitate printr-un ordin de plată bancar. Pornind de la o plată în lot, modulul grupează plățile pe furnizor și produce câte un aviz per furnizor, cu lista facturilor achitate și suma alocată fiecăreia; avizul poate fi tipărit ca PDF sau trimis direct pe e-mail furnizorului, eliminând nevoia de a comunica manual detaliile decontării.\nAdaugă un raport PDF de Aviz de plată pe `account.batch.payment`.\nGrupează plățile din lot pe furnizor — se produce câte un document de aviz per furnizor.\nListează facturile furnizor achitate (număr, dată, scadență) cu suma efectiv alocată fiecăreia, calculată din reconcilierea plății atunci când este disponibilă, altfel din valoarea brută a facturii (astfel avizul poate fi emis chiar înainte ca plata să fie complet reconciliată).\nButon Trimite avizul de plată care trimite pe e-mail fiecărui furnizor propriul PDF de aviz, printr-un șablon de e-mail, omițând (și raportând) furnizorii fără adresă de e-mail.\nRandează și traduce avizul fiecărui furnizor — atât PDF-ul, cât și e-mailul — în limba respectivului furnizor.\nAntetul documentului este compania plătitoare."
+  },
+  {
     "path": "deltatech_payment_card_dummy/index.md",
     "module": "deltatech_payment_card_dummy",
     "version": "19.0.0.0.3",

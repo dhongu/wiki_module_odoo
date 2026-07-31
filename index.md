@@ -120,6 +120,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_partner_rating_sale](deltatech_partner_rating_sale/index.md): Afișează ratingul partenerului în oferte, comenzi de vânzare și facturi.
 - [deltatech_partner_rating_service](deltatech_partner_rating_service/index.md): Afișează ratingul partenerului în echipamente, contracte de service și garanții.
 - [deltatech_payment](deltatech_payment/index.md): Confirmă comanda de vânzare la o plată parțială și permite, printr-un parametru de sistem, confirmarea fără a marca tranzacția ca finalizată.
+- [deltatech_payment_advice](deltatech_payment_advice/index.md): Generează și trimite pe e-mail furnizorilor un aviz de plată (remittance advice) PDF, grupat per furnizor, pornind de la o plată în lot (`account.batch.payment`).
 - [deltatech_payment_card_dummy](deltatech_payment_card_dummy/index.md): Furnizor de plată cu cardul fictiv (dummy) pentru testarea fluxurilor de plată în eCommerce și portal, fără integrare bancară reală.
 - [deltatech_payment_libra_pay](deltatech_payment_libra_pay/index.md): Gateway de plată LibraPay (Libra Internet Bank, RO) — plăți cu cardul în eCommerce și portal, cu flux de redirecționare securizat și IPN.
 - [deltatech_payment_mobilpay](deltatech_payment_mobilpay/index.md): Procesator de plăți Netopia MobilPay (RO) — plăți securizate cu cardul la comenzile eCommerce și facturile din portal.

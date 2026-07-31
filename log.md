@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-07-31] Ingestie deltatech_payment_advice — aviz de plată către furnizori (cerință Inedit Venture)
+
+- **Acțiune:** Documentat modulul `deltatech_payment_advice` (suita `bitshop_ent`, v19.0.1.0.0), prin subagent `documentarist-wiki`. Modulul fusese dezvoltat la cererea clientului Inedit Venture (Victor Cazacu), dar nu era legat de nicio instalare — exista doar în `addons_path`, deci nu ajungea pe baza clientului. Ingestia în wiki s-a făcut odată cu instalarea lui pe producția Inedit și trecerea în `depends` la `terrabit_inedit`.
+- **Sursă:** `readme/DESCRIPTION.md` pentru Sumar și Funcționalități Cheie (aliniat cu codul 19.0, fără referințe la versiuni vechi); Componente Cheie completate minimal din `models/account_batch_payment.py` și `views/account_batch_payment_views.xml`.
+- **Fișă consultant:** `readme/FISA_CONSULTANT.md` + 3 capturi (`01_plata_in_lot.png`, `02_aviz_pdf.png`, `03_email_furnizor.png`) — copiate integral în pagina wiki.
+- **Dependențe/Conexiuni:** `account_batch_payment` (Enterprise) rămas text `cod`, fără pagină wiki; în Conexiuni și `terrabit_inedit`, modulul de proiect care îl are ca dependență.
+- **Fișiere actualizate:** `deltatech_payment_advice/index.md` (pagină nouă, + FISA_CONSULTANT.md + screenshots/), `wiki_module_odoo/index.md` (1 intrare nouă, ordine alfabetică), `wiki_module_odoo/log.md`, `wiki_module_odoo/.index/` (rebuild lexical).
+
 ## [2026-07-23] Ingestie lot import extrase bancare — GLS, Euplatesc, ING CSV (task 830, Insignis)
 
 - **Acțiune:** Documentate 3 module noi, procesate în paralel prin subagenți `documentarist-wiki`: `deltatech_account_bank_statement_import_gls` (borderou ramburs GLS, semnătură A1, skip preambul/total), `deltatech_account_bank_statement_import_euplatesc` (detaliere decontare Euplatesc.ro, dedup pe RRN, comision/transfer configurabil), `l10n_ro_account_bank_statement_import_ing_csv` (istoric conturi ING Business CSV, solduri + CUI contrapartidă). Toate trei dezvoltate pentru task Terrabit #830 (client Insignis/ART STORE), F1 al planului (parsere) DONE și merged.
