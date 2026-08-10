@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-08-10] Refresh capturi `l10n_ro_stock_pack_cmp` + `l10n_ro_stock_pack_fifo`
+
+- **Acțiune:** Actualizate capturile din wiki după rafinarea cosmetică din suită (PR #83): documentele se deschid prin acțiunea de jurnal (breadcrumb cu context, nu formular fără ancoră), datele de scadență și de livrare urmează scenariul din iunie 2026 în loc de data rulării, numele demo sunt plauzibile (Alfa Distribuție SRL, Beta Retail SRL, Marfă A (buc)), iar previzualizarea CMP periodic are antetele de coloană lizibile.
+- **Sursă:** regenerate din `tests/test_screenshots.py` al fiecărui pachet; fișele nu s-au schimbat, doar imaginile.
+- **Fișiere actualizate:** `l10n_ro_stock_pack_cmp/screenshots/` (8), `l10n_ro_stock_pack_fifo/screenshots/` (9), `log.md`.
+
+---
+
 ## [2026-08-10] Fișe consultant pentru `l10n_ro_stock_pack_cmp` + `l10n_ro_stock_pack_fifo` (v19.0.1.3.0)
 
 - **Acțiune:** Adăugate fișele consultant la paginile celor două pachete de evaluare stoc, ingerate mai devreme azi. Paginile au fost actualizate la versiunea 19.0.1.3.0, cu linia de metadate **Fișă Consultant**.
