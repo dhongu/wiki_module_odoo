@@ -4,6 +4,26 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-08-10] Fișe consultant pentru `l10n_ro_stock_pack_cmp` + `l10n_ro_stock_pack_fifo` (v19.0.1.3.0)
+
+- **Acțiune:** Adăugate fișele consultant la paginile celor două pachete de evaluare stoc, ingerate mai devreme azi. Paginile au fost actualizate la versiunea 19.0.1.3.0, cu linia de metadate **Fișă Consultant**.
+- **Fișă consultant:** DA la ambele — copiate `FISA_CONSULTANT.md` și capturile: **8** la CMP (`01_instalare_pachet` … `08_corectie_cmp_periodic`) și **9** la FIFO (`01_instalare_pachet` … `09_balanta_stocuri`), generate reproductibil din `tests/test_screenshots.py`, în RO, pe planul de conturi RO, cu același scenariu ca testul de flux.
+- **Corecții consemnate (audit `verificator-fisa`, aplicate înainte de copiere):** formula CMP periodic din fișă era greșită (intrări/intrări în loc de (stoc inițial + intrări)/(cantitate inițială + intrări), OMFP 1802 pct. 96 alin. (2)); calea de activare a RNI e în Setări → **Inventar**, nu Contabilitate; conturile de inventariere nu au valoare implicită; nedeductibilitatea minusului formulată cu excepțiile art. 25 alin. (4) lit. c); consecința convenției „408 fără TVA"; pași noi de flux pentru retur și inventariere.
+- **Fix de tooling adiacent:** `l10n_ro_doc_screenshots` v19.0.1.0.1 — `click_tab` încerca doar eticheta engleză, deci pe interfața RO capturile de facturi rămâneau pe tabul greșit.
+- **Fișiere actualizate:** `wiki_module_odoo/l10n_ro_stock_pack_cmp/{index.md,FISA_CONSULTANT.md,screenshots/}` (8 poze), `wiki_module_odoo/l10n_ro_stock_pack_fifo/{index.md,FISA_CONSULTANT.md,screenshots/}` (9 poze), `wiki_module_odoo/log.md`, `wiki_module_odoo/.index/` (rebuild).
+
+---
+
+## [2026-08-10] Ingestie `l10n_ro_stock_pack_cmp` + `l10n_ro_stock_pack_fifo` — pachetele de evaluare stoc (v19.0.1.2.0)
+
+- **Acțiune:** Documentate în paralel (2 subagenți `documentarist-wiki`) cele două module-pălărie noi din `l10n_ro_ent` (create 09–10.08.2026, PR #81): bundle-uri care instalează pachetul de stoc RO per metodă de evaluare, mutual exclusive prin cheia de manifest `excludes`, cu `post_init_hook` care setează `cost_method` (average/fifo) + valorizare perpetuă pe companiile RO.
+- **Sursă:** `readme/DESCRIPTION.md` pentru Sumar/Funcționalități la ambele; `readme/USAGE.md` (monografia fluxului end-to-end, cifre verificate de testul `tests/test_stock_flow.py` și de agentul contabil) ca sursă suplimentară; module fără `models/`/`views/` — secțiunea 4 documentează doar `hooks.py`.
+- **Fișă consultant:** NU — niciunul dintre pachete nu are `readme/FISA_CONSULTANT.md`.
+- **Dependențe/Conexiuni:** toate cele 6 dependențe custom RO au pagini wiki → link-uri active (`l10n_ro_stock_cmp_periodic` doar la CMP, `l10n_ro_stock_posting_date`, `l10n_ro_stock_constraints`, `l10n_ro_stock_sheet`, `l10n_ro_stock_gestiune`, `l10n_ro_inventory_closing`); `purchase_stock`/`sale_stock` rămân text `cod`. Cross-link-urile pack_cmp ↔ pack_fifo au fost activate la consolidare (paginile s-au creat simultan).
+- **Fișiere actualizate:** `wiki_module_odoo/l10n_ro_stock_pack_cmp/index.md` (nou), `wiki_module_odoo/l10n_ro_stock_pack_fifo/index.md` (nou), `wiki_module_odoo/index.md` (+2 linii), `wiki_module_odoo/log.md`, `wiki_module_odoo/.index/` (rebuild).
+
+---
+
 ## [2026-07-31] Re-ingestie `deltatech_purchase_add_extra_line` — v19.0.1.0.2 → v19.0.1.2.0, cu fișă consultant
 
 - **Acțiune:** Regenerată pagina modulului `deltatech_purchase_add_extra_line` (ingestia anterioară: 2026-06-03, versiunea 19.0.1.0.2), prin subagent `documentarist-wiki`. Perechea de achiziție a modulului documentat mai sus, adus la același nivel: preț manual păstrat, traducere RO, fișă consultant.
