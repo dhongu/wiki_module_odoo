@@ -550,3 +550,15 @@ This is an append-only log of all operations performed on the wiki.
     - `wiki_module_odoo/l10n_ro_account_chart/index.md`
     - `wiki_module_odoo/index.md`
     - `wiki_module_odoo/log.md`
+---
+
+## [2026-08-14] Ingest: `deltatech_mrp_bom_formula`
+
+- **Acțiune:** Ingestat modulul nou `deltatech_mrp_bom_formula` (19.0.1.0.0).
+- **Detalii:** Pagina a fost generată din `readme/DESCRIPTION.md` pentru sumar și funcționalități, completată cu analiza modelelor și a vizualizărilor pentru secțiunea de componente cheie. Fișa de consultant și capturile aferente au fost copiate din `readme/`.
+- **Fișiere actualizate:**
+    - `wiki_module_odoo/deltatech_mrp_bom_formula/index.md`
+    - `wiki_module_odoo/deltatech_mrp_bom_formula/FISA_CONSULTANT.md`
+    - `wiki_module_odoo/deltatech_mrp_bom_formula/screenshots/`
+    - `wiki_module_odoo/index.md`
+    - `wiki_module_odoo/log.md`
