@@ -343,7 +343,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_balance_confirmation](l10n_ro_balance_confirmation/index.md): Generează documente de confirmare a soldului pentru parteneri (clienți/furnizori) la o dată dată.
 - [l10n_ro_bank_register_report](l10n_ro_bank_register_report/index.md): Jurnalul de bancă românesc ca raport nativ, per cont bancar și zi, cu sold reportat — extinde `l10n_ro_cash_register_report`.
 - [l10n_ro_cash_bank_enhanced](l10n_ro_cash_bank_enhanced/index.md): Alertă tranzacții bancare nereconciliate și control al plafoanelor de numerar conform Legii 70/2015 pentru jurnalele de casă și bancă.
-- [l10n_ro_cash_register](l10n_ro_cash_register/index.md): Registru de casă zilnic pe jurnal și dată, cu sold inițial/final automat și operațiuni de numerar.
+- [l10n_ro_cash_register](l10n_ro_cash_register/index.md): Registru de casă zilnic pe jurnal și dată, cu solduri reportate automat între zile, operațiuni de numerar și raport tipărit 14-4-7A.
 - [l10n_ro_cash_register_report](l10n_ro_cash_register_report/index.md): Registrul de casă românesc (14-4-7A) ca raport nativ `account.report`, cu filtre de dată/jurnal/companie și export PDF/XLSX.
 - [l10n_ro_cbam](l10n_ro_cbam/index.md): Urmărirea emisiilor CO₂ incorporate la import și declarația CBAM trimestrială/anuală (Reg. UE 2023/956, FR-56).
 - [l10n_ro_cost_centers](l10n_ro_cost_centers/index.md): Repartizarea automată a cheltuielilor indirecte pe centre de cost (conturi analitice), neutră financiar, prin chei configurabile, conform OMFP 1802/2014.
