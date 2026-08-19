@@ -4,6 +4,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 
 ## Module
 
+- [bitshop_sale_withdrawal](bitshop_sale_withdrawal/index.md): Funcția de retragere din contract la distanță (dreptul de renunțare, Directiva UE 2023/2673), cu buton pe portal, confirmare pe suport durabil și registru de retrageri în Vânzări.
 - [deltatech](deltatech/index.md): Modul de bază (fundație) al suitei Deltatech, oferind utilitare partajate, structură unitară și extinderi comune pentru celelalte module Deltatech.
 - [deltatech_access](deltatech_access/index.md): Control granular al accesului la câmpuri din vederile Odoo (readonly / required / invisible) pe bază de grupuri de utilizatori.
 - [deltatech_account](deltatech_account/index.md): Îmbunătățiri pentru contabilitatea și facturarea Odoo: vizibilitate extinsă a facturilor, configurare flexibilă a jurnalelor/conturilor și sincronizare între documente.

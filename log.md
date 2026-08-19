@@ -4,6 +4,16 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-08-19] Ingestie `bitshop_sale_withdrawal` (v19.0.0.2.0)
+
+- **Acțiune:** Primul modul din suita `bitshop` documentat în wiki. Adaugă pe portalul clienților funcția de retragere din contract la distanță (dreptul de renunțare, Directiva 2011/83/UE modificată prin Directiva (UE) 2023/2673, transpusă în România prin OUG 18/2026, aplicabilă din 19 iunie 2026): buton pe pagina comenzii, recapitulare + confirmare într-un pas separat, confirmare de primire pe suport durabil (e-mail + PDF cu timestamp), excepții art. 16 per produs/categorie și registru de retrageri în Vânzări.
+- **Sursă:** `readme/DESCRIPTION.md` + `readme/USAGE.md` + `readme/CONFIGURE.md` pentru Sumar și Funcționalități Cheie; secțiunea Componente Cheie completată suplimentar din analiza `models/`, `views/` și `data/` (readme-ul nu detaliază tehnic modelele/vizualizările).
+- **Fișă consultant:** DA — copiată împreună cu cele **7** capturi (`01_portal_buton` … `07_fisa_retragere`), generate din `tests/test_screenshots.py`, integral pe portal (flux de vizitator/consumator, nu back office).
+- **Dependențe/Conexiuni:** `sale`, `portal` (fără pagină wiki, rămase text `cod`). Conexiune identificată: `bitshop_sale_withdrawal_stock` (extensie operațională pe stoc, nu are încă pagină wiki).
+- **Fișiere actualizate:** `bitshop_sale_withdrawal/index.md`, `bitshop_sale_withdrawal/FISA_CONSULTANT.md`, `bitshop_sale_withdrawal/screenshots/` (7), `index.md`, `log.md`.
+
+---
+
 ## [2026-08-15] Re-ingestie `l10n_ro_cash_register` (v19.0.1.1.7 → v19.0.1.2.0)
 
 - **Acțiune:** Regenerată pagina modulului după PR dhongu/l10n-romania#508 (merged pe 19.0). Soldurile registrului (`balance_start` / `balance_end`) se recalculează acum automat la postarea, anularea sau ștergerea notelor care ating contul de casă — pentru ziua respectivă **și pentru toate zilele ulterioare** din același jurnal, pentru că reportul se propagă în lanț. Înainte erau compute stocate cu `depends` care nu urmărea înregistrările contabile, deci rămâneau înghețate la momentul creării registrului; cum registrul zilei se creează automat la prima plată, se năștea pe o zi goală și afișa tăcut cifre false. Recalculul era posibil doar manual, din butonul Refresh, și numai pentru registrele selectate. Bază legală: OMFP 2634/2015, Anexa 1 pct. 58 lit. e) și n) — reluarea **automată** în calcul a soldurilor obținute anterior.
