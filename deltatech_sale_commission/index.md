@@ -1,10 +1,10 @@
 # Sale Commission (localizat la `deltatech_sale_commission/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_commission`
-- **Versiune:** `19.0.1.4.3`
+- **Versiune:** `19.0.1.5.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_commission
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_commission`
-- **Ultima Ingestie:** `2026-06-01`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -15,7 +15,7 @@ Modulul extinde gestiunea vânzărilor cu un sistem de calcul al comisioanelor p
 - Grup tehnic de acces pentru afișarea marjei și a prețului de achiziție în factura clientului.
 - Grup tehnic de acces care împiedică modificarea prețului în factura clientului.
 - Grup tehnic de acces care permite vânzarea la un preț mai mic decât prețul de achiziție.
-- Avertisment / eroare la factura clientului dacă prețul de vânzare este sub prețul de achiziție.
+- Avertisment / eroare la factura clientului dacă prețul de vânzare este sub prețul de achiziție, **conform politicii companiei** stabilite în [deltatech_sale_margin](../deltatech_sale_margin/index.md) (`sale_margin_check_mode`). Pe politica „Doar avertisment" factura nu se blochează — altfel o vânzare permisă pe comandă ar fi oprită abia la facturare, după ce marfa a fost livrată.
 - Raport nou pentru analiza profitabilității.
 - Calculul comisioanelor de vânzare pe baza agentului de pe comanda de vânzare sau de pe factură (configurabil).
 - Parametru `deltatech_sale_commission.days_for_commission` (valoare întreagă): la calculul comisionului sistemul verifică dacă factura este complet plătită și dacă diferența dintre data ultimei plăți și data scadentă este mai mică decât valoarea parametrului.
@@ -31,4 +31,4 @@ Conform fluxului de ingestie, această secțiune este omisă deoarece `readme/DE
 
 #### 5. Conexiuni
 
-- [deltatech_sale_margin](../deltatech_sale_margin/index.md): furnizează calculul marjei și al prețului de achiziție pe care se bazează controlul profitabilității și comisioanele.
+- [deltatech_sale_margin](../deltatech_sale_margin/index.md): furnizează calculul marjei și al prețului de achiziție pe care se bazează controlul profitabilității și comisioanele, precum și politica de reacție la vânzarea sub cost, respectată de constrângerea de pe linia de factură.

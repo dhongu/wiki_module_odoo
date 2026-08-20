@@ -583,3 +583,18 @@ This is an append-only log of all operations performed on the wiki.
     - `wiki_module_odoo/deltatech_mrp_bom_formula/screenshots/`
     - `wiki_module_odoo/index.md`
     - `wiki_module_odoo/log.md`
+
+---
+
+## [2026-08-20] Re-ingest: `deltatech_sale_margin`, `deltatech_sale_commission`
+
+- **Acțiune:** Actualizate paginile existente după introducerea politicii configurabile de reacție la vânzarea sub cost (`res.company.sale_margin_check_mode`): `deltatech_sale_margin` 19.0.1.1.0 → 19.0.1.2.0, `deltatech_sale_commission` 19.0.1.4.3 → 19.0.1.5.0.
+- **Detalii:** Sumarul și funcționalitățile reflectă cele trei moduri (blochează / doar avertisment / fără verificare, implicit blochează — comportamentul istoric rămâne neschimbat), marcajul de linie `margin_below_limit`, garda de unitate la comparația preț↔cost și expunerea pragului „Limită de marjă" în Setări. Secțiunea de componente a fost completată la `deltatech_sale_margin` pentru câmpurile și vizualizările referite de alte module. La `deltatech_sale_commission` s-a precizat că constrângerea de pe linia de factură respectă aceeași politică. Niciunul dintre cele două module nu are fișă de consultant, deci nu s-a copiat nimic în wiki.
+- **Fișă consultant:** `deltatech_sale_margin` a primit fișă de consultant (nu avea), cu 2 capturi generate din `tests/test_screenshots.py`; fișa și capturile au fost copiate în wiki. `deltatech_sale_commission` nu are fișă.
+- **Fișiere actualizate:**
+    - `wiki_module_odoo/deltatech_sale_margin/index.md`
+    - `wiki_module_odoo/deltatech_sale_margin/FISA_CONSULTANT.md`
+    - `wiki_module_odoo/deltatech_sale_margin/screenshots/`
+    - `wiki_module_odoo/deltatech_sale_commission/index.md`
+    - `wiki_module_odoo/index.md`
+    - `wiki_module_odoo/log.md`

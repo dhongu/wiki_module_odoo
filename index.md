@@ -218,7 +218,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_sale_currency](deltatech_sale_currency/index.md): Comenzi de vânzare într-o monedă diferită de cea a facturii, cu conversie automată la facturare.
 - [deltatech_sale_feedback](deltatech_sale_feedback/index.md): Trimite automat clienților, pe baza facturilor, un email de solicitare feedback (prin cron).
 - [deltatech_sale_invoice_status](deltatech_sale_invoice_status/index.md): Corectează statusul de facturare al comenzilor mixte (produse + servicii), astfel încât liniile de produs nelivrate să nu fie facturate pe baza serviciilor.
-- [deltatech_sale_margin](deltatech_sale_margin/index.md): Control extins al prețurilor și marjei pe comenzile de vânzare: ascunde marja/prețul de achiziție, blochează modificarea prețului și avertizează la vânzarea sub cost.
+- [deltatech_sale_margin](deltatech_sale_margin/index.md): Control extins al prețurilor și marjei pe comenzile de vânzare: ascunde marja/prețul de achiziție, blochează modificarea prețului, iar reacția la vânzarea sub cost se alege per companie (blochează / doar avertisment / fără verificare).
 - [deltatech_sale_multiple](deltatech_sale_multiple/index.md): Definirea pe produs a unei cantități minime și a unui multiplu de vânzare, cu ajustare automată pe linie.
 - [deltatech_sale_multiple_website](deltatech_sale_multiple_website/index.md): Extinde regulile de cantitate minimă/multiplu de vânzare pe eCommerce, cu afișarea restricțiilor pe pagina produsului și în coș și recalibrare la limitările de stoc.
 - [deltatech_sale_pallet](deltatech_sale_pallet/index.md): Adaugă automat produse de tip palet pe comenzi/facturi când produsele ating cantitatea minimă per palet.
