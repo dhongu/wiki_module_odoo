@@ -1,10 +1,10 @@
 # Packeta Shipping (localizat la `deltatech_delivery_packeta/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_packeta`
-- **Versiune:** `19.0.1.0.6`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_packeta
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_delivery_packeta`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.1.4.1`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_packeta
+- **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_packeta`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -36,6 +36,8 @@ Modulul **Packeta Shipping**, dezvoltat de Terrabit, oferă o integrare complet�
 
 *Limitări (versiunea curentă):* nu sunt incluse calculul automat al tarifelor (Get rates) și opțiunile de livrare sâmbăta sau deschiderea coletului la livrare.
 
+*Notă de corecție:* `readme/DESCRIPTION.md` menționează încă „Odoo 18 Interactive Map" și „Odoo 18 checkout" — referințe rămase de la o versiune anterioară a textului. Modulul rulează pe Odoo 19.0, iar funcționalitatea de hartă în checkout este validă și pe această versiune; textul de mai sus a fost corectat pentru a reflecta realitatea curentă.
+
 #### 3. Dependențe
 
 - `delivery`
@@ -46,7 +48,7 @@ Modulul **Packeta Shipping**, dezvoltat de Terrabit, oferă o integrare complet�
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, secțiunea „Sumar" și „Funcționalități Cheie" provin din `readme/DESCRIPTION.md`, prin urmare analiza detaliată a codului (Modele, Vizualizări, Acțiuni Automate) a fost omisă. Singura informație structurală derivată din manifest este fișierul de date `views/delivery_view.xml`, care extinde vizualizarea de configurare a metodei de livrare (`delivery.carrier`) cu opțiunile specifice Packeta.
+Conform fluxului de ingestie, secțiunea „Sumar" și „Funcționalități Cheie" provin din `readme/DESCRIPTION.md`, prin urmare analiza detaliată a codului (Modele, Vizualizări, Acțiuni Automate) a fost omisă. Singura informație structurală derivată din manifest este fișierul de date `views/delivery_view.xml`, care extinde vizualizarea de configurare a metodei de livrare (`delivery.carrier`) cu o pagină dedicată „Packeta" (chei API, plătitor transport, serviciu, e-shop, formate/tip etichetă, folosirea locațiilor PUDO/Z-BOX etc.), vizibilă doar când `delivery_type = 'packeta'`.
 
 #### 5. Conexiuni
 

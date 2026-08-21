@@ -1,10 +1,10 @@
 # Registru de Casă (RO) - Raport (localizat la `l10n_ro_cash_register_report/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_cash_register_report`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cash_register_report
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_cash_register_report`
-- **Ultima Ingestie:** `2026-07-02`
+- **Ultima Ingestie:** `2026-08-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -31,7 +31,7 @@ Modulul aduce Registrul de casă românesc (cod 14-4-7A, conform OMFP 2634/2015)
 
 **Modele**
 
-- `l10n.ro.cash.register.report.handler` (`AbstractModel`, moștenește `account.report.custom.handler`): construiește liniile dinamice ale raportului — inițializează filtrul de jurnale (doar tip `cash`), calculează soldul de deschidere per cont/companie/dată printr-o interogare SQL brută pe `account_move_line`, grupează mișcările pe zi și generează liniile ierarhice (secțiune zi → report → mișcări → sold final), fiecare cu coloane de debit/credit/sold construite prin `_build_column_dict`.
+- `l10n.ro.cash.register.report.handler` (`AbstractModel`, moștenește `account.report.custom.handler`): construiește liniile dinamice ale raportului — inițializează filtrul de jurnale (doar tip `cash`), calculează soldul de deschidere per cont/companie/dată printr-o interogare SQL brută pe `account_move_line`, grupează mișcările pe zi și generează liniile ierarhice (secțiune zi → report → mișcări → sold final), fiecare cu coloane de debit/credit/sold construite prin `_build_column_dict`. De la versiunea `19.0.1.0.1`, tipul de jurnal listat (`_journal_type`) și eticheta secțiunii de zi (`_day_section_label`) au fost extrase în metode-hook, astfel încât modulul soră [l10n_ro_bank_register_report](../l10n_ro_bank_register_report/index.md) le poate suprascrie pentru jurnalele de bancă, fără duplicare de logică — refactor fără schimbare funcțională pentru acest modul.
 
 **Vizualizări**
 
@@ -48,4 +48,5 @@ Nu există `ir.cron`, `base.automation` sau `ir.actions.server`. Modulul define�
 #### 5. Conexiuni
 
 - [l10n_ro_cash_register](../l10n_ro_cash_register/index.md): modulul operațional de registru de casă zilnic (document, casierie, tipărire clasică); acest raport oferă o vizualizare alternativă, nativă `account.report`, pe interval de date, peste aceleași mișcări de casă postate în contabilitate.
+- [l10n_ro_bank_register_report](../l10n_ro_bank_register_report/index.md): modul soră, publicat separat pe Odoo Apps, care reutilizează handler-ul acestui modul (prin hook-urile `_journal_type`/`_day_section_label`) pentru a genera aceeași structură zilnică de raport, dar pe jurnalele de bancă.
 - `account_reports`: framework-ul Enterprise de raportare contabilă folosit ca bază tehnică (filtre, coloane, export PDF/XLSX).

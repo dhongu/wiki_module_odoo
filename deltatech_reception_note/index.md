@@ -1,10 +1,10 @@
 # Notă de Recepție pe Bază de Cereri de Ofertă (localizat la `deltatech_reception_note/index.md`)
 
 - **Nume Tehnic:** `deltatech_reception_note`
-- **Versiune:** `19.0.0.1.1`
+- **Versiune:** `19.0.0.1.2`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_reception_note`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_reception_note`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -16,6 +16,7 @@ Acest modul oferă un instrument specializat pentru gestionarea notelor de recep
 - **Tipuri de comandă diferențiate:** Introduce un tip de comandă de achiziție (Normal, RFQ Only, Notă de recepție) care controlează fluxul de confirmare și de recepție.
 - **Integrare cu fluxul de stoc:** Se integrează cu modulul `purchase_stock` pentru a asigura un flux de date consistent între aprovizionare și operațiunile de depozit.
 - **Reducerea automată din RFQ:** La confirmarea unei note de recepție, cantitățile sunt scăzute automat din cererile de ofertă (RFQ) deschise ale aceluiași furnizor, cu validări de cantitate și opțiunea de a forța cantitățile mai mari (`Ignore quantities`).
+- **Mesaje de eroare mai clare:** Cele două erori afișate la confirmarea unei note de recepție (produs negăsit / cantitate neacoperită într-un RFQ trimis) indică acum explicit soluția — bifarea „Ignore quantities” pentru a recepționa oricum marfa — nu doar faptul că produsul sau cantitatea nu au fost găsite.
 - **Documentație îmbunătățită și meniuri dedicate:** Oferă vizualizări și meniuri specializate (pregătire notă de recepție, recepții de sosit, recepții de facturat) pentru informații de recepție sintetizate, utile pentru audit intern și verificarea furnizorilor.
 
 #### 3. Dependențe

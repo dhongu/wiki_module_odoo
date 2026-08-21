@@ -1,10 +1,10 @@
 # Delivery in locker - Base (localizat la `deltatech_delivery_locker/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_locker`
-- **Versiune:** `19.0.0.0.9`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_locker
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_delivery_locker`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.1.2.0`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_locker
+- **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_locker`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -23,6 +23,8 @@ Acest modul oferă structura de date de bază și logica pentru gestionarea livr
 - **Compatibilitate produse**: permite restricționarea metodelor de livrare cu locker dacă în comandă există produse nepotrivite pentru livrarea în locker (prin câmpul `for_locker` de pe produse).
 - **Logică de upsert**: o metodă robustă `upsert_from_data` pentru sincronizarea simplă a datelor despre lockere din API-uri externe ale curierilor.
 - **Compatibilitate retroactivă**: menține legăturile cu stocarea istorică a lockerelor bazată pe `res.partner`, oferind în același timp un strat de date modern.
+
+Configurare (din `readme/CONFIGURE.md`): activarea suportului pentru locker se face per curier, din Inventar > Configurare > Livrare > Metode de livrare — se bifează „Use Locker” pe curierul dorit (Sameday, Fan Curier, Cargus, Packeta etc.) și apoi se apasă „Get Lockers” pentru a importa lockerele disponibile.
 
 #### 3. Dependențe
 
@@ -47,9 +49,13 @@ Conform fluxului de ingestie, secțiunile Sumar și Funcționalități Cheie au 
 - `sale_order_view.xml`: indicatorii vizuali pe comanda de vânzare (ribbon „Locker”, banner cu codul lockerului, coloana „Locker”).
 - `wizard/choose_delivery_carrier_views.xml` și `wizard/delivery_carrier_details_view.xml`: butonul „Choose Locker on map” în wizardurile de adăugare livrare și de generare AWB.
 
+**Acțiuni Automate / Acțiuni Server**
+
+- `data/ir_cron_data.xml`: definește o sarcină programată pentru sincronizarea/actualizarea periodică a datelor despre lockere.
+
 #### 5. Conexiuni
 
 - [deltatech_delivery_relay](../deltatech_delivery_relay/index.md): modul soră din aceeași familie de livrare, construit tot pe baza `deltatech_delivery`, ca strat alternativ de puncte de ridicare (relay).
 - [deltatech_website_delivery_and_payment](../deltatech_website_delivery_and_payment/index.md): oferă selecția metodei de livrare și de plată pe website, context în care se folosește alegerea lockerului.
-- `deltatech_delivery_locker_website`: extinde acest modul cu selecția lockerului pe harta interactivă din website (frontend).
-- `deltatech_delivery_sd_easybox`: integrarea specifică Sameday Easybox, construită peste stratul de date al acestui modul.
+- [deltatech_delivery_locker_website](../deltatech_delivery_locker_website/index.md): extinde acest modul cu selecția lockerului pe harta interactivă din website (frontend).
+- [deltatech_delivery_sd_easybox](../deltatech_delivery_sd_easybox/index.md): integrarea specifică Sameday Easybox, construită peste stratul de date al acestui modul.

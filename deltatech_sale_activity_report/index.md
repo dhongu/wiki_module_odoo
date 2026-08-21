@@ -1,10 +1,10 @@
 # Sale Order Last Modified (localizat la `deltatech_sale_activity_report/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_activity_report`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_activity_report
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_activity_report`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 

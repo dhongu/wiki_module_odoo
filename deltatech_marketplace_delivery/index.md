@@ -1,10 +1,10 @@
 # Marketplace Delivery addon (localizat la `deltatech_marketplace_delivery/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_delivery`
-- **Versiune:** `19.0.0.0.6`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_marketplace_delivery`
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_marketplace_delivery`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.0.0.9`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_delivery`
+- **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_delivery`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -20,9 +20,10 @@ Acest modul optimizează procesul de logistică și onorare a comenzilor pentru 
 
 #### 3. Dependențe
 
-- `deltatech_marketplace_sale`
+- [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md)
 - `delivery`
 - [deltatech_delivery](../deltatech_delivery/index.md)
+- [deltatech_delivery_locker](../deltatech_delivery_locker/index.md)
 
 #### 4. Componente Cheie
 
@@ -32,3 +33,4 @@ Documentația de business este preluată din `readme/DESCRIPTION.md`; conform fl
 
 - [deltatech_marketplace](../deltatech_marketplace/index.md): modulul de bază al ecosistemului marketplace, în care se integrează gestionarea livrărilor.
 - [deltatech_delivery_status](../deltatech_delivery_status/index.md): urmărirea stării livrărilor, complementară onorării comenzilor din marketplace.
+</content>

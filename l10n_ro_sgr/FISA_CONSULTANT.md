@@ -17,7 +17,9 @@ pentru pregătirea capitolului Cap 12.3 din manualul utilizator.
 
 ## 2. Bază legală și context
 
-OUG 74/2018 — sistemul de garanție-returnare; Codul Fiscal art. 286 — excludere TVA
+H.G. 1074/2021, republicată — sistemul de garanție-returnare pentru ambalaje primare nereutilizabile;
+Codul fiscal art. 315^5 alin. (2) — garanția SGR nu reprezintă contravaloarea unei livrări/prestări
+**în sfera TVA** (deci în afara sferei TVA, nu scutită și nu doar exclusă din bază)
 
 ## 3. Utilizatori și roluri
 
@@ -30,7 +32,7 @@ Roluri recomandate pentru testare:
 
 ## 4. Conturi și date implicate
 
-461.SGR (creanță RetuRO), 462.SGR (datorie furnizori SGR)
+461001 (creanță RetuRO), 462101 (datorie furnizori SGR)
 
 Date minime pentru demo:
 - companie românească cu localizarea contabilă instalată
@@ -61,7 +63,7 @@ Completați câmpurile obligatorii: companie, perioadă, jurnal, conturi, parten
 Rulați acțiunea principală a modulului. Pentru această fișă sunt documentate:
 
 **Configurare SGR pe companie** (Setări → Contabilitate → Sistem Garanție-Returnare): produsul SGR
-de 0,50 RON, conturile 461.SGR / 462.SGR și taxa 0% exclusă din TVA.
+de 0,50 RON, conturile 461001 / 462101 și taxa 0% în afara sferei TVA.
 
 ![Configurare SGR](screenshots/01_configurare_sgr.png)
 
@@ -70,13 +72,13 @@ de 0,50 RON, conturile 461.SGR / 462.SGR și taxa 0% exclusă din TVA.
 
 ![Produs cu SGR](screenshots/02_produs_cu_sgr.png)
 
-**Inserare automată a liniei SGR pe factură + excludere din baza TVA**: la 5 sticle, linia SGR =
-5 × 0,50 = 2,50 RON pe contul 461.SGR, cu taxa „Exclus TVA (Art. 286 alin. 4)" — 0,00 TVA pe SGR,
+**Inserare automată a liniei SGR pe factură + tratare în afara sferei TVA**: la 5 sticle, linia SGR =
+5 × 0,50 = 2,50 RON pe contul 461001, cu taxa „SGR - În afara sferei TVA (art. 315^5 alin. 2)" — 0,00 TVA pe SGR,
 în timp ce berea poartă TVA 21%.
 
 ![Factură cu linie SGR](screenshots/03_factura_linie_sgr.png)
 
-**Raport sold SGR per partener**: soldul 461.SGR și numărul de ambalaje în circulație per client.
+**Raport sold SGR per partener**: soldul 461001 și numărul de ambalaje în circulație per client.
 
 ![Raport sold SGR](screenshots/04_raport_sold_sgr.png)
 
@@ -84,7 +86,7 @@ de 0,50 RON, conturile 461.SGR / 462.SGR și taxa 0% exclusă din TVA.
 
 ![Wizard returnare](screenshots/05_wizard_returnare.png)
 
-**Wizard decontare RetuRO**: viramentul garanțiilor colectate (Debit bancă = Credit 461.SGR).
+**Wizard decontare RetuRO**: viramentul garanțiilor colectate (Debit bancă = Credit 461001).
 
 ![Wizard decontare](screenshots/06_wizard_decontare.png)
 
@@ -137,10 +139,10 @@ Ce rămâne manual: reconcilierea garanțiilor încasate/restituite.
 |---|--------|----------|
 | 1 | `screenshots/01_configurare_sgr.png` | Configurare SGR pe companie (produs 0,50 + conturi 461/462 + taxă 0%) |
 | 2 | `screenshots/02_produs_cu_sgr.png` | Produs comercial cu garanție SGR atașată (Extra Line) |
-| 3 | `screenshots/03_factura_linie_sgr.png` | Factură cu linia SGR inserată automat, exclusă din baza TVA |
+| 3 | `screenshots/03_factura_linie_sgr.png` | Factură cu linia SGR inserată automat, în afara sferei TVA |
 | 4 | `screenshots/04_raport_sold_sgr.png` | Raport sold SGR per partener (sold 461 + ambalaje în circulație) |
 | 5 | `screenshots/05_wizard_returnare.png` | Wizard returnare ambalaje → notă de credit |
-| 6 | `screenshots/06_wizard_decontare.png` | Wizard decontare RetuRO (virament garanții, credit 461.SGR) |
+| 6 | `screenshots/06_wizard_decontare.png` | Wizard decontare RetuRO (virament garanții, credit 461001) |
 
 > Notă i18n: câteva etichete auxiliare apar încă în engleză — `Extra Product/Qty` (din
 > `deltatech_sale_add_extra_line`), `Company` și `Date From/To` (câmpuri comune pe raport/wizard).

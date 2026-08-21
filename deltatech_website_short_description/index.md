@@ -1,10 +1,10 @@
 # eCommerce Sale Short Description (localizat la `deltatech_website_short_description/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_short_description`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_short_description`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_short_description`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -27,7 +27,7 @@ Modulul adaugă pe produsele din magazinul online un câmp dedicat de descriere 
 
 **Vizualizări**
 
-- `product_template_form_view`: extinde formularul de produs (`product.product_template_form_view`) și adaugă, în pagina „Sales", grupurile „Website description" și „Website short description".
+- `product_template_form_view`: extinde formularul de produs (`product.product_template_form_view`), adaugă butonul statistic „Publish" în `button_box` și, în pagina „Sales", grupurile „Website description" și „Website short description".
 
 **Acțiuni Automate / Acțiuni Server**
 

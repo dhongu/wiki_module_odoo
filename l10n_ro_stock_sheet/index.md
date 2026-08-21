@@ -1,10 +1,10 @@
 # Romania - Fișă de Magazie și Balanță Stocuri (localizat la `l10n_ro_stock_sheet/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_sheet`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.1.3`
 - **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_sheet`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_sheet`
-- **Ultima Ingestie:** `2026-06-02`
+- **Ultima Ingestie:** `2026-08-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -17,11 +17,14 @@ Modulul aduce în Odoo 19 două rapoarte clasice de stoc cerute în România —
 - **Balanță analitică pe articol**: stoc inițial, intrări, ieșiri și stoc final, în cantitate și valoare, încadrate pe perioadă după data mișcării.
 - **Fișa de magazie (14-3-8)**: desfășurare document-cu-document a fiecărei mișcări, cu stoc curent cumulat și linie de stoc inițial.
 - **Reconciliere analitic ↔ sintetic**: coloanele „Sold sintetic" (din notele contabile) și „Diferență" arată unde valoarea analitică a stocului nu coincide cu soldul contului contabil — instrument de control, fără a genera note de ajustare.
-- Tratarea corectă a intrărilor/ieșirilor: doar mișcările care traversează granița gestiunilor interne (recepții, livrări); transferurile intern↔intern sunt ignorate.
-- Suport atât pentru valorizare **automată** (`real_time`), cât și **periodică** — contul de stoc se determină per mișcare (din nota contabilă a mișcării, cu fallback pe contul categoriei produsului).
+- **Livrări directe (dropshipping) vizibile în fișă**: raportate ca flux de trecere (aceeași cantitate/valoare pe intrare și ieșire, pe contul de stoc al mărfii), altfel marfa dropship nu atingea nicio gestiune și lipsea complet din raport; la nivel de document apar ambele laturi, marcate „(intrare)"/„(ieșire)". Valoarea se calculează cu `stock.move._get_value()` (coloana `value` rămâne de regulă 0 pe dropship) și se persistă înapoi pe mișcare, ca deschiderile ulterioare ale raportului să fie rapide.
+- Tratarea corectă a intrărilor/ieșirilor: doar mișcările care traversează granița gestiunilor interne (recepții, livrări) plus liniile de dropship de mai sus; transferurile intern↔intern sunt ignorate.
+- Suport atât pentru valorizare **automată** (`real_time`), cât și **periodică** — contul de stoc se determină per mișcare (din nota contabilă a mișcării, cu fallback pe contul categoriei produsului, rezolvat prin ORM ca să nu piardă tăcut valorile venite din `ir.default`).
+- **Filtru de produse** care include și produsele arhivate cu mișcări de stoc reale (căutarea trimite `active_test: False`, altfel un articol scos din nomenclator nu putea fi selectat).
 - Acțiunea **„Înregistrări contabile"** pe liniile de cont și de produs deschide exact liniile `account.move.line` din care e calculat soldul sintetic, pentru audit.
 - Filtre de **perioadă**, **multi-company**, pe **gestiuni/locații** și pe **produse**, plus export nativ **PDF / XLSX**.
-- Acces din meniul **Inventar → Raportare → Fișă magazie / Balanță stocuri (RO)** și buton **Fișă de magazie** pe fișa produsului, care deschide raportul pre-filtrat pe produsul respectiv.
+- Acces din meniul **Inventar → Raportare → Balanță analitică stocuri** și buton **Fișă de magazie** pe fișa produsului, care deschide raportul pre-filtrat pe produsul respectiv.
+- **Override RO pentru nota de regularizare** generată din „Inventory Valuation → Stock Closing": linia se defalcă **per material** (produs), nu ca o singură variație agregată pe cont — totalul pe cont rămâne identic cu nativul, dar diferențele pe articole nu se mai compensează nevăzute.
 
 #### 3. Dependențe
 
@@ -33,17 +36,17 @@ Modulul aduce în Odoo 19 două rapoarte clasice de stoc cerute în România —
 
 **Modele**
 
-- `l10n.ro.stock.sheet.report.handler` (moștenește `account.report.custom.handler`): motorul raportului — construiește cele trei niveluri (cont de stoc / produs / document), citește cantitățile și valorile din `stock.move`, soldul sintetic din `account.move.line` și calculează coloanele de reconciliere și acțiunile de drill-down.
-- `product.template` (extins): adaugă butonul / acțiunea care deschide raportul pre-filtrat pe produsul respectiv.
-- `res.company` (extins): suport pentru contextul de companie folosit la determinarea conturilor și a soldurilor sintetice.
+- `l10n.ro.stock.sheet.report.handler` (moștenește `account.report.custom.handler`): motorul raportului — construiește cele trei niveluri (cont de stoc / produs / document), citește cantitățile și valorile din `stock.move` (inclusiv ramurile de dropshipping), soldul sintetic din `account.move.line` și calculează coloanele de reconciliere și acțiunile de drill-down.
+- `product.template` (extins): adaugă butonul „Fișă de magazie" (Smart Button, vizibil doar pentru produse stocabile) care deschide raportul pre-filtrat pe produsul respectiv.
+- `res.company` (extins): suprascrie `_get_stock_valuation_account_vals` pentru companiile RO — regularizarea de stoc generată la Stock Closing se postează per material (produs), cu o linie reziduală pe cont care păstrează totalul identic cu nativul.
 
 **Vizualizări**
 
-- `l10n_ro_stock_sheet_report` (`account.report`): definiția raportului — coloanele cantitative/valorice (inițial, intrări, ieșiri, final), coloanele „Sold sintetic" și „Diferență", linia rădăcină și expresiile aferente.
-- `action_l10n_ro_stock_sheet` (`ir.actions.client`): acțiunea client care afișează raportul.
-- `menu_l10n_ro_stock_sheet` (`menuitem`): intrarea de meniu în Inventar → Raportare.
-- `product_views.xml`: extinderea fișei produsului cu butonul „Fișă de magazie".
-- `static/src/stock_sheet_filters.xml`: șablonul de filtre suplimentare (gestiuni/locații, produse) injectat în bara raportului.
+- `l10n_ro_stock_sheet_report` (`account.report`): definiția raportului — coloanele cantitative/valorice (inițial, intrări, ieșiri, final), coloanele „Sold sintetic" și „Diferență", linia rădăcină `line_stock` cu groupby `stock_account, stock_product, move_detail` și expresiile aferente (motor `custom`, `_report_custom_engine_stock_sheet`).
+- `action_l10n_ro_stock_sheet` (`ir.actions.client`, tag `account_report`): acțiunea client care afișează raportul.
+- `menu_l10n_ro_stock_sheet`: intrarea de meniu „Balanță analitică stocuri" sub `stock.menu_warehouse_report` (Inventar → Raportare).
+- `product_views.xml` (`product_template_form_view_stock_sheet`): extinderea fișei produsului cu butonul „Fișă de magazie", vizibil doar dacă `is_storable`.
+- `static/src/stock_sheet_filters.xml` (`l10n_ro_stock_sheet.StockSheetFilters`): șablonul de filtre suplimentare (gestiuni/locații, produse — inclusiv arhivate) injectat în bara raportului.
 
 #### 5. Conexiuni
 

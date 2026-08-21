@@ -1,10 +1,10 @@
 # Marketplace Sales Order Stage addon (localizat la `deltatech_marketplace_sale_stage/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_sale_stage`
-- **Versiune:** `19.0.1.1.2`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_marketplace_sale_stage
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_marketplace_sale_stage`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.1.1.3`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_sale_stage
+- **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_sale_stage`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -21,7 +21,7 @@ Acest modul oferă un sistem specializat de gestionare a etapelor (stages) pentr
 #### 3. Dependențe
 
 - [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md)
-- `deltatech_sale_stage`
+- [deltatech_sale_stage](../deltatech_sale_stage/index.md)
 
 #### 4. Componente Cheie
 

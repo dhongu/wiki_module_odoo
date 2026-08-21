@@ -1,10 +1,10 @@
 # eCommerce Sale Order status (localizat la `deltatech_website_sale_status/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_sale_status`
-- **Versiune:** `19.0.2.0.3`
+- **Versiune:** `19.0.2.0.5`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_status`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_sale_status`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -40,7 +40,7 @@ Modulul extinde comenzile de vânzare din magazinul online cu o stare detaliată
 
 **Vizualizări**
 
-- `views/sale_view.xml`: extinderi ale vizualizărilor de comandă de vânzare cu filtrele și informațiile despre stare.
+- `views/sale_view.xml`: extinderi ale vizualizărilor de comandă de vânzare cu filtrele și informațiile despre stare (câmpul de căutare „Telefon" a fost corectat în 19.0.2.0.5 să folosească `partner_id.phone`, după eliminarea câmpului `mobile` de pe `res.partner` în Odoo 19).
 - `views/templates.xml`: șabloane QWeb pentru afișarea stării comenzii în portalul clientului / magazinul online.
 
 **Acțiuni Automate / Acțiuni Server**

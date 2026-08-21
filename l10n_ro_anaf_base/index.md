@@ -1,48 +1,62 @@
 # Baza ANAF România (localizat la `l10n_ro_anaf_base/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_base`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_base
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_base`
-- **Ultima Ingestie:** 2026-05-31
+- **Ultima Ingestie:** 2026-08-20
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
-## 1. Sumar
+#### 1. Sumar
 
-Acest modul centralizează logica comună și infrastructura necesară pentru generarea și exportul declarațiilor fiscale către ANAF (Soft A - Adobe XDP și Soft J - XML). Oferă o bază solidă pentru toate modulele specifice de declarații ANAF, asigurând consistența și eliminând duplicarea codului.
+Acest modul este infrastructura comună (de bază, ascunsă) pentru toate declarațiile fiscale ANAF din suita `l10n_ro_ent`. Centralizează logica de generare și export a declarațiilor către ANAF (Soft A — Adobe XDP și Soft J — XML), eliminând duplicarea codului între modulele individuale D300, D390, D394, D398 etc.
 
-## 2. Funcționalități Cheie
+#### 2. Funcționalități Cheie
 
-- **Mixin pentru Handlers (`L10nRoAnafReportHandlerMixin`):** Gestionează datele companiei și ale declarantului, validări înainte de export (VAT, adresă fiscală, județ, CAEN), validare XML față de scheme XSD ANAF, generare nume fișier și export XDP/XML.
-- **Registru de Profile de Declarații (`anaf_declaration_profile`):** Mecanism centralizat pentru înregistrarea și selecția automată a versiunilor de formulare ANAF, cu suport pentru perioade istorice.
-- **Extensii pe modele standard:** `res.company` și `res.config.settings` pentru configurarea persoanei responsabile, identificator declarant, tip export implicit și instalare module ANAF; `account.report` pentru înregistrarea tipului MIME pentru fișierele `.xdp`.
-- **Date Demo și Utilitar de Pregătire:** Seturi de date de test și un script utilitar (`preparer.py`) pentru pregătirea rapidă a mediului de test.
-- **Infrastructură Teste Automate:** Clasă de bază reutilizabilă (`AnafTestCommon`) pentru toate modulele ANAF, configurând automat mediul de test și eliminând duplicarea setup-ului.
+- **Mixin pentru handlere (`L10nRoAnafReportHandlerMixin`)** — date companie (CUI, CAEN, județ cod ANAF 01–52, reprezentant legal), date declarant (nume, prenume, funcție, identificator fiscal/CNP, email, telefon, adresă) cu fallback pe userul curent.
+- Validare companie înainte de export: VAT, adresă fiscală, județ, CAEN, contact.
+- Validare parteneri: VAT obligatoriu pentru partenerii incluși în declarații.
+- Validare XML față de scheme XSD oficiale ANAF.
+- Generare nume fișier conform convențiilor ANAF.
+- Export XDP (Adobe) cu înglobare PDF și împachetare ZIP.
+- Helper-e pentru adăugarea butoanelor de export XML și XDP în interfața rapoartelor.
+- Registru de profile de declarații (funcție `register_anaf_profile` / `_ANAF_PROFILES`) — mecanism centralizat de înregistrare și selecție a versiunilor de formulare ANAF, cu suport pentru perioade istorice.
+- Extensii pe `res.company` și `res.config.settings` — persoană responsabilă declarații, identificator declarant, tip export implicit, instalare module ANAF.
+- Extensie `account.report` — înregistrare tip MIME `application/vnd.adobe.xdp+xml` pentru fișierele `.xdp`.
+- **Gardă de postare pentru companii RO (`account.move._l10n_ro_posting_guard_errors`)** — hook extensibil, opt-in, prin care alte module de localizare pot bloca postarea unui document (de ex. parteneri inactivi la ANAF) fără a schimba comportamentul implicit al instalărilor existente.
+- Clasa de bază `AnafTestCommon` (`tests/common.py`) — reutilizabilă de toate modulele ANAF pentru configurarea automată a mediului de test (companie RO cu adresă fiscală completă, contact ANAF).
 
-## 3. Dependențe
+#### 3. Dependențe
 
 - `account_reports`
 - `l10n_ro`
 - `accountant`
 
-## 4. Componente Cheie
+#### 4. Componente Cheie
 
-### Modele
+**Modele**
 
-- `anaf_declaration_profile`: Gestionează profilele de declarații ANAF, incluzând versiunea, valabilitatea și schemele XSD.
-- `anaf_report_handler_mixin` (Mixin Python): Oferă logica comună pentru gestionarea datelor și validărilor necesare declarațiilor ANAF.
-- `res.company`: Extins pentru a stoca informații despre persoana responsabilă și alte setări ANAF la nivel de companie.
-- `res.config.settings`: Extins pentru a oferi o interfață de configurare a setărilor ANAF.
-- `account.report`: Extins pentru a gestiona tipurile MIME pentru fișierele XDP.
-- `account.chart.template`: Poate fi extins pentru a include setări specifice ANAF în template-urile planurilor de conturi.
+- `l10n_ro_anaf.report.handler.mixin` (`L10nRoAnafReportHandlerMixin`, mixin abstract de `account.report.custom.handler`): logica comună pentru declarant, validări, XSD, export XDP/ZIP.
+- `account.move` (extins): adaugă hook-ul `_l10n_ro_posting_guard_errors()` și suprascrie `_post()` pentru a bloca postarea documentelor companiilor RO în funcție de motivele raportate de acest hook.
+- `res.company` (extins): câmpurile `l10n_ro_anaf_declaration_contact_id`, `l10n_ro_anaf_declaration_identifier`, `l10n_ro_anaf_export_type`.
+- `res.config.settings` (extins): interfață de configurare pentru setările ANAF de mai sus.
+- `account.report` (extins): metode helper pentru generarea XML-urilor ANAF și înregistrarea tipului MIME pentru fișierele `.xdp`.
+- `account.chart.template` (extins, model abstract): pregătire/postare facturi demo ANAF la instalare.
+- Registru Python `anaf_declaration_profile.py` (`register_anaf_profile`, `_ANAF_PROFILES`) — nu este un model Odoo, ci un registru global în memorie prin care modulele Dxxx își înregistrează și selectează versiunile de formulare.
 
-### Vizualizări / Date
+**Vizualizări**
 
-- `views/anaf_menu.xml`: Definește intrările de meniu relevante pentru declarațiile ANAF.
-- `views/res_config_settings_views.xml`: Adaugă opțiuni de configurare în interfața de setări generale.
-- `demo/demo_data.xml`: Conține date de test pentru demonstrații și dezvoltare.
-- `security/ir.model.access.csv`: Definește drepturile de acces pentru entitățile ANAF.
+- `views/anaf_menu.xml`: creează meniul principal Contabilitate → Declarații ANAF, sub care modulele individuale de declarații (D300, D390, D394, D398 etc.) își înregistrează sub-meniurile proprii.
+- `views/res_config_settings_views.xml`: adaugă opțiunile de configurare ANAF în interfața de setări generale.
+- `demo/demo_data.xml`: date de test pentru demonstrații și dezvoltare.
 
-### Acțiuni Automate / Acțiuni Server
+**Acțiuni Automate / Acțiuni Server**
 
-*Nu au fost identificate explicit în `__manifest__.py` sau `readme/DESCRIPTION.md` ca acțiuni automate individuale, funcționalitățile fiind integrate în mixin-uri și profile.*
+*Nu au fost identificate acțiuni automate (`ir.cron`, `base.automation`, `ir.actions.server`); funcționalitatea este integrată în mixin-uri, hook-uri și extensii de model.*
+
+#### 5. Conexiuni
+
+- `l10n_ro`: localizarea contabilă românească pe care se bazează validările fiscale (CUI, județ, adresă).
+- `account_reports`: infrastructura de rapoarte contabile extinsă de mixin-ul de handler ANAF.
+- `accountant`: modulul de contabilitate enterprise necesar pentru rapoartele custom-handler.
+- Modulele individuale de declarații ANAF (D300, D390, D394, D398 etc.) din suita `l10n_ro_ent` depind funcțional de acest modul de bază, dar nu au încă pagină wiki proprie.

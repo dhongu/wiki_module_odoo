@@ -1,10 +1,10 @@
 # Conector Marketplace MerchantPro (localizat la `deltatech_marketplace_merchantpro/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_merchantpro`
-- **Versiune:** `19.0.0.0.1`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_marketplace_merchantpro
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_marketplace_merchantpro`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.0.0.12`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_merchantpro
+- **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_merchantpro`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -24,7 +24,7 @@ Acest modul oferă o interfață robustă pentru conectarea Odoo cu marketplace-
 - [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md)
 - [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md)
 - [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md)
-- `deltatech_marketplace_website`
+- [deltatech_marketplace_website](../deltatech_marketplace_website/index.md)
 
 #### 4. Componente Cheie
 
@@ -36,4 +36,5 @@ Acest modul oferă o interfață robustă pentru conectarea Odoo cu marketplace-
 - [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md): gestionarea importului comenzilor și a ciclului de vânzare din marketplace.
 - [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md): sincronizarea statusurilor de plată asociate comenzilor.
 - [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md): notificările și gestionarea livrărilor pentru comenzile preluate.
+- [deltatech_marketplace_website](../deltatech_marketplace_website/index.md): integrarea cu website-ul Odoo pentru fluxul de comerț electronic al conectorului.
 - [deltatech_marketplace_purchase](../deltatech_marketplace_purchase/index.md): modul înrudit din suita de conectori marketplace pentru fluxul de achiziții.

@@ -1,10 +1,10 @@
 # Deltatech Delivery Send SMS (localizat la `deltatech_delivery_send_sms/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_send_sms`
-- **Versiune:** `19.0.1.0.1`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_send_sms
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_delivery_send_sms`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.1.0.3`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_send_sms
+- **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_send_sms`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 

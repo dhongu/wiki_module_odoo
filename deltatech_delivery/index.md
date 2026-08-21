@@ -1,10 +1,10 @@
 # Deltatech Delivery Base (localizat la `deltatech_delivery/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery`
-- **Versiune:** `19.0.5.0.4`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_delivery`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.6.2.1`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery
+- **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -72,6 +72,7 @@ Funcționalități care pot fi adăugate în submodule: generarea AWB în format
 - [deltatech_delivery_status](../deltatech_delivery_status/index.md)
 - `stock`
 - `purchase`
+- `purchase_stock`
 
 #### 4. Componente Cheie
 
@@ -81,3 +82,4 @@ Conform fluxului de ingestie din schema wiki, secțiunea „Sumar” și „Func
 
 - [deltatech_delivery_status](../deltatech_delivery_status/index.md): furnizează stările de livrare folosite de cadrul de urmărire a expedierilor din acest modul.
 - [deltatech_website_delivery_and_payment](../deltatech_website_delivery_and_payment/index.md): extinde fluxul de livrare și plată în site-ul web, valorificând cadrul de curieri din acest modul.
+</content>

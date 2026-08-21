@@ -1,10 +1,10 @@
 # Sale Add Extra Line (localizat la `deltatech_sale_add_extra_line/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_add_extra_line`
-- **Versiune:** `19.0.1.3.0`
+- **Versiune:** `19.0.1.4.0`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_add_extra_line`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_add_extra_line`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-08-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -15,6 +15,7 @@ Acest modul introduce un proces automat de adăugare a unor linii suplimentare p
 
 - **Adăugare automată a liniei extra**: pentru produsele configurate, sistemul adaugă automat o linie suplimentară pe comanda de vânzare, poziționată direct sub linia principală.
 - **Configurare pe șablonul de produs**: produsul extra, procentul de calcul al prețului și multiplicatorul de cantitate se configurează direct pe șablonul de produs (*product template*), în grupul **Linie suplimentară**.
+- **Determinarea produsului extra printr-un hook extensibil**: produsul adăugat ca linie extra nu mai este citit direct din `product_id.extra_product_id`, ci prin metoda `SaleOrderLine._get_extra_product()`. Comportamentul implicit rămâne neschimbat (produsul configurat pe șablon), dar un modul terț poate suprascrie hook-ul și decide produsul extra pornind de la linia comenzii, fără să mai fie nevoie ca fiecare produs să aibă câmpul completat (ex: `l10n_ro_sgr` pentru garanția de ambalaj).
 - **Calcul inteligent al prețului**: prețul unitar al liniei extra se calculează din procentul configurat pe produs; dacă procentul este zero, se aplică **recalculul standard Odoo** al prețului (listă de prețuri, valuta comenzii și unitatea de măsură), nu mai prețul de listă brut al produsului.
 - **Preț manual păstrat**: un preț introdus manual pe linia extra nu mai este rescris de recalculul automat la orice schimbare a cantității sau a prețului liniei principale. Cantitatea continuă însă să urmeze linia principală. Revenirea la prețul calculat se face prin ștergerea liniei extra — se regenerează la următoarea modificare a comenzii.
 - **Detectarea prețului manual pe orice cale**: intervenția manuală este recunoscută prin câmpul tehnic `extra_price_computed` (ultimul preț calculat de modul), deci este detectată și când linia e modificată prin `write()`, import, XML-RPC sau coșul din magazinul online — nu doar din formularul comenzii.
@@ -22,7 +23,7 @@ Acest modul introduce un proces automat de adăugare a unor linii suplimentare p
 - **Actualizare dinamică**: la modificarea cantităților produselor principale, cantitățile produselor extra sunt recalculate și actualizate automat.
 - **Ștergere în cascadă**: ștergerea liniei principale șterge automat și linia extra asociată, ca să nu rămână orfană pe comandă.
 - **Integrare cu magazinul online**: coșul din e-commerce generează linia suplimentară prin hook-ul `_verify_cart_after_update` (apelat după `_cart_add` și `_cart_update_line_quantity`); linia nu poate fi ștearsă de cumpărător — reapare la următoarea actualizare a coșului, cât timp produsul principal rămâne în coș.
-- **Interfață tradusă integral în română** (`i18n/ro.po`): grupul **Linie suplimentară**, câmpurile **Produs suplimentar**, **Procent suplimentar**, **Cantitate suplimentară**.
+- **Interfață tradusă integral în română** (`i18n/ro.po`): grupul **Linie suplimentară**, câmpurile **Produs suplimentar**, **Procent suplimentar**, **Cantitate suplimentară**. Textele tooltip-urilor sunt aliniate cu cele din `deltatech_purchase_add_extra_line`, ca cele două module să nu se contrazică atunci când sunt instalate împreună (ultimul modul încărcat definește tooltip-ul afișat pentru câmpurile comune de pe `product.template`).
 - **Migrare automată**: la actualizarea de pe o versiune veche, un script de migrare completează `extra_price_computed` pe liniile extra existente, ca să nu fie confundate cu linii cu preț manual.
 
 #### 3. Dependențe
@@ -37,7 +38,7 @@ Acest modul introduce un proces automat de adăugare a unor linii suplimentare p
 
 - `product.template` (extins): adaugă câmpurile `extra_product_id` (produsul adăugat automat ca linie extra), `extra_percent` (procentul din prețul liniei principale folosit la calculul prețului liniei extra; zero = se aplică recalculul standard Odoo pe produsul extra) și `extra_qty` (multiplicatorul de cantitate pentru produsul extra, implicit 1.0).
 - `sale.order` (extins): `onchange_order_line` declanșează `check_extra_product()` cu `backend=True` la editarea comenzii în formular; `_verify_cart_after_update` (înlocuiește vechiul `_cart_update`, eliminat în Odoo 19) resincronizează liniile extra după orice actualizare a coșului din `website_sale`, înaintea `super()`, ca prețul livrării și `cart_quantity` din sesiune să țină cont de liniile suplimentare.
-- `sale.order.line` (extins): adaugă `line_uuid` (identificator stabil care perechează linia principală cu linia extra generată) și `extra_price_computed` (ultimul preț calculat de modul pe linia extra, folosit pentru a distinge o intervenție manuală de un simplu recalcul de listă de prețuri). Metoda `check_extra_product()` creează/actualizează linia extra și îi recalculează cantitatea; `_has_manual_price()` decide dacă prețul curent a fost tastat de utilizator (nu coincide nici cu `extra_price_computed`, nici cu `technical_price_unit`); `unlink()` șterge în cascadă linia extra perechea liniei principale.
+- `sale.order.line` (extins): adaugă `line_uuid` (identificator stabil care perechează linia principală cu linia extra generată) și `extra_price_computed` (ultimul preț calculat de modul pe linia extra, folosit pentru a distinge o intervenție manuală de un simplu recalcul de listă de prețuri). Metoda `_get_extra_product()` returnează produsul care trebuie adăugat ca linie extra pentru linia curentă — implicit `product_id.extra_product_id`, dar suprascriabilă de module terțe pentru a decide produsul din linie, nu din configurarea globală a produsului. Metoda `check_extra_product()` creează/actualizează linia extra și îi recalculează cantitatea, folosind acest hook; `_has_manual_price()` decide dacă prețul curent a fost tastat de utilizator (nu coincide nici cu `extra_price_computed`, nici cu `technical_price_unit`); `unlink()` șterge în cascadă linia extra perechea liniei principale.
 
 **Vizualizări**
 
@@ -54,6 +55,6 @@ Acest modul introduce un proces automat de adăugare a unor linii suplimentare p
 
 #### 5. Conexiuni
 
-- [deltatech_purchase_add_extra_line](../deltatech_purchase_add_extra_line/index.md): modul soră care aplică același mecanism de linii suplimentare pe comenzile de achiziție (Purchase) în loc de vânzări.
+- [deltatech_purchase_add_extra_line](../deltatech_purchase_add_extra_line/index.md): modul soră care aplică același mecanism de linii suplimentare pe comenzile de achiziție (Purchase) în loc de vânzări; cele două module declară aceleași câmpuri și tooltip-uri pe `product.template`.
 - [deltatech_sale_add_extra_line_pos](../deltatech_sale_add_extra_line_pos/index.md): duce mecanismul în Punctul de Vânzare (POS) — sincronizează doar cantitatea liniei extra, nu procentul.
-- [l10n_ro_sgr](../l10n_ro_sgr/index.md): folosește acest mecanism pentru garanția de ambalaj SGR (produsul extra este garanția, în afara sferei TVA conform art. 315^5 alin. 2 Cod fiscal).
+- [l10n_ro_sgr](../l10n_ro_sgr/index.md): folosește hook-ul `_get_extra_product()` pentru garanția de ambalaj SGR (produsul extra este garanția, în afara sferei TVA conform art. 315^5 alin. 2 Cod fiscal).

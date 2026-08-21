@@ -1,10 +1,10 @@
 # Sale Payment (localizat la `deltatech_sale_payment/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_payment`
-- **Versiune:** `19.0.1.1.2`
+- **Versiune:** `19.0.1.1.4`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_payment`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_payment`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -18,6 +18,7 @@ Modulul adaugă gestionarea plăților direct în comanda de vânzare (sale orde
 - Generarea unui link de plată (payment link) pentru suma rămasă de încasat din comandă.
 - Asistent (wizard) de confirmare a plății pentru a adăuga sau confirma o tranzacție manual.
 - Filtru în lista comenzilor pentru „Plată inițiată" și coloane opționale pentru status și furnizor în vizualizările listă.
+- Căutare pe câmpul calculat `payment_status` (via `_search_payment_status`), compatibilă cu rescrierea domeniilor `=`/`!=` în `in`/`not in` din Odoo 19.
 
 #### 3. Dependențe
 
@@ -28,7 +29,7 @@ Modulul adaugă gestionarea plăților direct în comanda de vânzare (sale orde
 
 **Modele**
 
-- `sale.order` (extins): adaugă câmpurile calculate `provider_id`, `payment_amount` și `payment_status`. Conține logica `_compute_payment` care determină suma încasată și statusul plății pe baza tranzacțiilor și a facturilor postate, precum și acțiunea `action_payment_link` ce generează un link de plată pentru suma rămasă.
+- `sale.order` (extins): adaugă câmpurile calculate `provider_id`, `payment_amount` și `payment_status`. Conține logica `_compute_payment` care determină suma încasată și statusul plății pe baza tranzacțiilor și a facturilor postate, metoda `_search_payment_status`/`_get_payment_status_domain`/`_get_paid_order_ids` pentru căutarea pe statusul de plată, precum și acțiunea `action_payment_link` ce generează un link de plată pentru suma rămasă.
 - `sale.confirm.payment` (`models.TransientModel`): asistent pentru confirmarea/adăugarea unei plăți la o comandă. Permite alegerea furnizorului, metodei de plată, sumei și datei plății, cu acțiunile `do_add_payment` (creează/actualizează tranzacția) și `do_confirm` (marchează tranzacția ca finalizată).
 
 **Vizualizări**

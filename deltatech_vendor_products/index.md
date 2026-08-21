@@ -1,10 +1,10 @@
 # Produse Furnizori (localizat la `deltatech_vendor_products/index.md`)
 
 - **Nume Tehnic:** `deltatech_vendor_products`
-- **Versiune:** `19.0.1.1.3`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_vendor_products
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_vendor_products`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.1.1.7`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products
+- **Cale Locală:** `odoo-addons/bitshop_vendor/deltatech_vendor_products`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -39,4 +39,4 @@ Sumarul și funcționalitățile cheie au fost preluate din `readme/DESCRIPTION.
 
 - [deltatech_vendor_products_granit](../deltatech_vendor_products_granit/index.md): extensie care adaugă integrarea specifică furnizorului Granit peste cadrul de import al acestui modul.
 - [deltatech_vendor_products_website](../deltatech_vendor_products_website/index.md): extensie care expune produsele de furnizor pe website, permițând căutarea după codul de produs al furnizorului.
-- `deltatech_vendor_products_kramp`: extensie care adaugă integrarea specifică furnizorului Kramp peste cadrul de import al acestui modul.
+- [deltatech_vendor_products_kramp](../deltatech_vendor_products_kramp/index.md): extensie care adaugă integrarea specifică furnizorului Kramp peste cadrul de import al acestui modul.

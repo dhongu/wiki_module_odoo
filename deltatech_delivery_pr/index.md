@@ -1,10 +1,10 @@
 # Poșta Română Shipping (localizat la `deltatech_delivery_pr/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_pr`
-- **Versiune:** `19.0.1.0.2`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_pr`
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_delivery_pr`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.1.1.1`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_pr`
+- **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_pr`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 

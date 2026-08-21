@@ -1,10 +1,10 @@
 # Conector Doraly (localizat la `deltatech_marketplace_doraly/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_doraly`
-- **Versiune:** `19.0.0.0.4`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_marketplace_doraly`
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_marketplace_doraly`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.0.0.7`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_doraly`
+- **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_doraly`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -25,7 +25,7 @@ Modulul oferă un conector între Odoo și marketplace-ul Doraly, extinzând cad
 - [deltatech_marketplace](../deltatech_marketplace/index.md)
 - [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md)
 - [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md)
-- `deltatech_website_short_description`
+- [deltatech_website_short_description](../deltatech_website_short_description/index.md)
 - `delivery`
 - [deltatech_marketplace_sale_stage](../deltatech_marketplace_sale_stage/index.md)
 
@@ -39,3 +39,4 @@ Documentația din `readme/DESCRIPTION.md` acoperă scopul și funcționalități
 - [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md): gestionarea importului și sincronizării comenzilor de vânzare din marketplace.
 - [deltatech_marketplace_sale_stage](../deltatech_marketplace_sale_stage/index.md): cartografierea stadiilor comenzilor între Doraly și Odoo.
 - [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md): gestionarea metodelor de livrare asociate marketplace-ului.
+</content>

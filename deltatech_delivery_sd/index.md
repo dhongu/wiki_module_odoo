@@ -1,10 +1,10 @@
 # Sameday Shipping (localizat la `deltatech_delivery_sd/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_sd`
-- **Versiune:** `19.0.1.1.6`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_sd
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_delivery_sd`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.1.7.3`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_sd
+- **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_sd`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -41,4 +41,4 @@ Limitări cunoscute (neacoperite): generare AWB în format ZPL, expediere fără
 - [deltatech_delivery](../deltatech_delivery/index.md): modulul de bază pentru gestionarea livrărilor și a curierilor, extins de acest modul Sameday.
 - [deltatech_delivery_locker](../deltatech_delivery_locker/index.md): necesar pentru selectarea lockerelor Sameday pe hartă.
 - [deltatech_delivery_status](../deltatech_delivery_status/index.md): gestionarea stărilor de livrare actualizate pe baza statusului Sameday.
-- `deltatech_delivery_sd_easybox`: modul soră pentru lockerele Sameday (Easybox).
+- [deltatech_delivery_sd_easybox](../deltatech_delivery_sd_easybox/index.md): modul soră pentru lockerele Sameday (Easybox).

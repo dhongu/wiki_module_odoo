@@ -1,10 +1,10 @@
 # OpenCart Marketplace Connector (localizat la `deltatech_marketplace_opencart/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_opencart`
-- **Versiune:** `19.0.0.2.2`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_marketplace_opencart
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_marketplace_opencart`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.0.2.3`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_opencart
+- **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_opencart`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -27,9 +27,9 @@ Acest modul este un conector între platforma de comerț electronic OpenCart și
 #### 3. Dependențe
 
 - [deltatech_marketplace](../deltatech_marketplace/index.md)
-- `deltatech_marketplace_brand`
-- `deltatech_marketplace_website`
-- `deltatech_marketplace_sale_stage`
+- [deltatech_marketplace_brand](../deltatech_marketplace_brand/index.md)
+- [deltatech_marketplace_website](../deltatech_marketplace_website/index.md)
+- [deltatech_marketplace_sale_stage](../deltatech_marketplace_sale_stage/index.md)
 - [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md)
 - [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md)
 - [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md)
@@ -51,3 +51,6 @@ Conform DESCRIPTION.md, modulul definește următoarele evenimente și automatiz
 - [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md): gestionează importul comenzilor de vânzare aduse din OpenCart.
 - [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md): gestionează metodele de livrare preluate din OpenCart.
 - [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md): gestionează maparea metodelor de plată dintre OpenCart și Odoo.
+- [deltatech_marketplace_brand](../deltatech_marketplace_brand/index.md): oferă gestiunea brandurilor produselor sincronizate.
+- [deltatech_marketplace_website](../deltatech_marketplace_website/index.md): expune informațiile de website (descriere, SEO, stare publicare) folosite la sincronizarea produselor.
+- [deltatech_marketplace_sale_stage](../deltatech_marketplace_sale_stage/index.md): furnizează etapele de comandă în care se mapează statutul comenzii din OpenCart.

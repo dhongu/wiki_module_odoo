@@ -1,10 +1,10 @@
 # Netopia MobilPay Payment Acquirer (localizat la `deltatech_payment_mobilpay/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_mobilpay`
-- **Versiune:** `19.0.1.1.1`
+- **Versiune:** `19.0.1.1.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_mobilpay
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_mobilpay`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -31,7 +31,7 @@ Dependențe Python externe: `pyjwt` (declarată în manifest); fluxul de verific
 
 #### 4. Componente Cheie
 
-Documentația de business pentru acest modul provine din `readme/DESCRIPTION.md`, conform fluxului de ingestie. Componentele tehnice detaliate (modele, vizualizări, acțiuni) nu sunt enumerate aici, deoarece Readme-ul acoperă scopul și funcționalitățile fără a impune analiza codului. Pe scurt, modulul extinde framework-ul standard de plăți Odoo (`payment`) cu un procesator („provider”) dedicat MobilPay și controllere web pentru punctele terminale de confirmare (IPN) și retur.
+Documentația de business pentru acest modul provine din `readme/DESCRIPTION.md`, conform fluxului de ingestie. Componentele tehnice detaliate (modele, vizualizări, acțiuni) nu sunt enumerate aici, deoarece Readme-ul acoperă scopul și funcționalitățile fără a impune analiza codului. Pe scurt, modulul extinde framework-ul standard de plăți Odoo (`payment`) cu un procesator („provider”) dedicat MobilPay (`models/payment_provider.py`, `models/payment_transaction.py`, `models/account_payment_method.py`) și controllere web pentru punctele terminale de confirmare (IPN) și retur (`controllers/main.py`).
 
 #### 5. Conexiuni
 

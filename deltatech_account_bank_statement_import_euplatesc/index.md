@@ -1,10 +1,10 @@
 # Euplatesc Settlement Bank Statements Import (localizat la `deltatech_account_bank_statement_import_euplatesc/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_bank_statement_import_euplatesc`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import_euplatesc
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_account_bank_statement_import_euplatesc`
-- **Ultima Ingestie:** `2026-07-23`
+- **Ultima Ingestie:** `2026-08-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -24,6 +24,7 @@ Modulul importă direct în Odoo, ca extrase de cont, fișierele de decontare (s
 
 - `account_bank_statement_import`
 - `account_bank_statement_import_csv`
+- [deltatech_account_bank_statement_import](../deltatech_account_bank_statement_import/index.md)
 
 #### 4. Componente Cheie
 
@@ -44,4 +45,4 @@ Modulul importă direct în Odoo, ca extrase de cont, fișierele de decontare (s
 #### 5. Conexiuni
 
 - [deltatech_account_bank_statement_import](../deltatech_account_bank_statement_import/index.md): face parte din aceeași familie de module de import extrase bancare pentru procesatori de plăți e-commerce.
-- `l10n_ro_account_bank_statement_import_xlsx`: modul înrudit funcțional pentru import extrase XLSX în context de localizare românească.
+- [l10n_ro_account_bank_statement_import_xlsx](../l10n_ro_account_bank_statement_import_xlsx/index.md): modul înrudit funcțional pentru import extrase XLSX în context de localizare românească.

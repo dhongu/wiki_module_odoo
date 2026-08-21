@@ -1,10 +1,10 @@
 # Declaration of Conformity (localizat la `deltatech_dc/index.md`)
 
 - **Nume Tehnic:** `deltatech_dc`
-- **Versiune:** `19.0.1.0.7`
+- **Versiune:** `19.0.1.0.12`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_dc
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_dc`
-- **Ultima Ingestie:** `2026-06-02`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -22,6 +22,7 @@ Modulul permite gestionarea și tipărirea declarațiilor de conformitate pentru
 - `sale`
 - `mrp`
 - `product_expiry`
+- `stock_account`
 
 #### 4. Componente Cheie
 

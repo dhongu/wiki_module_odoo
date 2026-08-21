@@ -1,17 +1,17 @@
 # Romania - Subvenții și Fonduri Nerambursabile (FR-38) (localizat la `l10n_ro_grants/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_grants`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.2.1`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_grants
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_grants`
-- **Ultima Ingestie:** 2026-06-01
+- **Ultima Ingestie:** 2026-08-20
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
-## 1. Sumar
+#### 1. Sumar
 
-MVP pentru FR-38 — Subvenții și Fonduri Nerambursabile conform OMFP 1802/2014 și IAS 20. Modulul gestionează contractele de finanțare nerambursabilă cu state machine, bugetul pe categorii de cheltuieli eligibile, tranșele de plată cu generare automată de note contabile (475/131/132) și recunoașterea veniturilor (manuală sau prin cron lunar liniar). Acoperă surse precum PNRR, Fonduri Structurale UE, programe naționale și ajutoare de minimis.
+MVP pentru FR-38 — Subvenții și Fonduri Nerambursabile conform OMFP 1802/2014 și IAS 20. Modulul gestionează contractele de finanțare nerambursabilă cu state machine, bugetul pe categorii de cheltuieli eligibile, tranșele de plată cu generare automată de note contabile (475/131/132) și recunoașterea veniturilor (manuală sau prin cron lunar liniar), precum și calculul cheltuielilor eligibile per categorie din înregistrările contabile cu distribuție analitică pe proiect. Acoperă surse precum PNRR, Fonduri Structurale UE, programe naționale și ajutoare de minimis.
 
-## 2. Funcționalități Cheie
+#### 2. Funcționalități Cheie
 
 - **Contract de finanțare nerambursabilă** cu state machine (draft → contractat → activ → finalizat).
 - **Buget pe categorii de cheltuieli eligibile** cu urmărire realizat vs. aprobat și alertă la procentul configurat din buget consumat.
@@ -19,33 +19,43 @@ MVP pentru FR-38 — Subvenții și Fonduri Nerambursabile conform OMFP 1802/201
 - **Recunoaștere venituri** (`Dr 475/131 = Cr 7584/7411`) — manuală sau prin cron lunar liniar.
 - **Calcul cheltuieli eligibile** per categorie din AML-uri cu distribuție analitică pe proiect.
 - **Cron lunar opțional** pentru recunoașterea liniară a subvențiilor pentru active (inactiv implicit).
+- **Cereri de rambursare (claim)** generate pe perioadă, cu linii agregate per categorie bugetară care separă eligibilul net de sumele excluse (conturi neeligibile precum 4426 TVA recuperabil și furnizori afiliați/părți legate), calculul sumei solicitate (`eligibil net × procent nerambursabil`) și fluxul propriu de stare (ciornă → depusă → aprobată → rambursată/respinsă).
+- **Rapoarte PDF/Excel** ale cererii de rambursare, pentru dosarul depus la finanțator.
 
-## 3. Dependențe
+#### 3. Dependențe
 
 - `account`
 - `analytic`
 - `mail`
 - `l10n_ro`
-- `[[l10n_ro_anaf_base]]`
+- [l10n_ro_anaf_base](../l10n_ro_anaf_base/index.md)
 
-## 4. Componente Cheie
+#### 4. Componente Cheie
 
-### Modele
+**Modele**
 
-- `l10n.ro.grant`: contractul de finanțare nerambursabilă cu state machine, buget, tranșe și recunoașterea veniturilor.
-- Modele asociate pentru categoriile de buget și tranșele de plată.
+- `l10n.ro.grant`: contractul de finanțare nerambursabilă, cu state machine, conturile contabile, bugetul pe categorii și excluderile din baza eligibilă (conturi neeligibile, furnizori afiliați).
+- `l10n.ro.grant.budget.line`: linia de buget pe categorie de cheltuieli eligibile (buget aprobat, conturi eligibile, realizat, prag de alertă).
+- `l10n.ro.grant.tranche`: tranșa de plată primită de la finanțator, cu contabilizare automată (`Dr 5121 = Cr 475/131/132`).
+- `l10n.ro.grant.recognition`: recunoașterea venitului din subvenție (`Dr 475/131 = Cr 7584/7411`), manuală sau generată de cronul lunar.
+- `l10n.ro.grant.claim` (moștenește și `l10n_ro_anaf.report.handler.mixin`): cererea de rambursare depusă periodic la finanțator, cu perioada acoperită, generarea liniilor din AML-uri, totalurile eligibil/exclus/brut, suma solicitată și export PDF/Excel.
+- `l10n.ro.grant.claim.line`: linia cererii de rambursare, agregată per categorie bugetară (eligibil net, exclus, cheltuit brut).
 
-### Vizualizări / Date
+**Vizualizări**
 
-- `views/l10n_ro_grant_views.xml`: vizualizările contractului de finanțare.
-- `data/ir_cron.xml`: jobul programat de recunoaștere liniară a subvențiilor pentru active.
+- `l10n_ro_grant_views.xml`: formularul și lista contractului de finanțare, cu tab-urile Buget pe categorii, Tranșe primite, Recunoașteri venituri și Excluderi din baza eligibilă.
+- `l10n_ro_grant_claim_views.xml`: formularul și lista cererilor de rambursare, cu liniile per categorie și butoanele de generare/depunere.
 
-### Acțiuni Automate / Acțiuni Server
+**Rapoarte**
 
-- Cron lunar (inactiv implicit): recunoașterea liniară a subvențiilor pentru active.
+- `report_actions.xml` / `report_grant_claim.xml`: raportul PDF al cererii de rambursare (situația eligibilității pentru dosarul depus la finanțator); export Excel disponibil din model (`xlsxwriter`).
 
-## 5. Conexiuni
+**Acțiuni Automate / Acțiuni Server**
 
-- `[[l10n_ro_anaf_base]]`
-- `[[l10n_ro_financial_notes]]`
-- `[[l10n_ro_fixed_assets]]`
+- `ir_cron.xml`: cron lunar **Recunoaștere lunară subvenții active (475→7584)**, inactiv implicit — calculează și contabilizează automat suma liniară pentru granturile de tip `475` aflate în starea „În derulare".
+
+#### 5. Conexiuni
+
+- [l10n_ro_anaf_base](../l10n_ro_anaf_base/index.md): mixin de raportare (`l10n_ro_anaf.report.handler.mixin`) folosit de cererea de rambursare.
+- [l10n_ro_financial_notes](../l10n_ro_financial_notes/index.md): schema notelor contabile pentru tranșe și recunoașterea veniturilor.
+- [l10n_ro_fixed_assets](../l10n_ro_fixed_assets/index.md): corelarea recunoașterii subvenției pentru active cu amortizarea activului finanțat.

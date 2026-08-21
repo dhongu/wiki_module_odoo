@@ -48,14 +48,14 @@ Monografia RO pentru recepție înainte de factură: la recepție `% = 408` (Dr 
 
 ## 3. Utilizatori și roluri
 
-- **Contabil stocuri / furnizori** — configurează conturile, verifică notele 371/408 și reconcilierea.
+- **Contabil stocuri / furnizori** — configurează conturile și verifică notele 371/408.
 - **Manager depozit** — validează organizarea pe gestiuni și traseul prin tranzit.
 - **Administrator Odoo** — activează setările companiei și definește gestiunile.
 
 Roluri recomandate pentru testare:
 - Administrator funcțional: instalează modulul, activează setările, verifică meniurile.
 - Utilizator operațional: rulează recepțiile, transferurile și returnurile.
-- Contabil/manager: validează notele contabile, reconcilierea contului 408 și balanța de stocuri.
+- Contabil/manager: validează notele contabile, stingerea contului 408 și balanța de stocuri.
 
 ## 4. Conturi și date implicate
 
@@ -176,11 +176,14 @@ Meniu: **Achiziții → Comenzi** → comanda de achiziție → **Creare factur�
 facturii în **Contabilitate → Furnizori → Facturi**.
 
 Linia de produs stocabil este contată pe **408** (nu pe 371 — marfa e deja în gestiune, valoarea
-ei nu se modifică), iar contul 408 se reconciliază automat cu nota de recepție:
+ei nu se modifică), iar contul 408 este debitat cu exact valoarea creditată la recepție:
 
 - **Dr 408 = 1.000** + **Dr 4426 = 210** / **Cr 401 = 1.210**.
 
-![Factura furnizor cu linia pe 408 și reconciliere](screenshots/04_factura_pe_408.png)
+Stingerea este determinată de documente, nu de potrivirea sumelor: contul 408 **nu** trebuie să
+fie marcat „Permite reconcilierea".
+
+![Factura furnizor cu linia pe 408](screenshots/04_factura_pe_408.png)
 
 **Starea după pas** — observați că factura **nu mișcă stocul**: cantitatea și valoarea gestiunii
 rămân neschimbate; se mută doar datoria, din „estimată" (408) în „certă" (401):
@@ -270,9 +273,13 @@ deschide direct detaliul lui.
 ### Note de monografie și raportare
 
 - Recepție fără factură: **Dr 371 = Cr 408** (la cursul recepției, pentru achiziții în valută).
-- Factură furnizor: **Dr 408 + Dr 4426 = Cr 401**; contul 408 se stinge prin reconciliere.
-- Diferență de curs recepție↔factură (valută): **665 / 765** (stocul **nu** se reevaluează).
-- Diferență de preț (factură ≠ recepție): **308/378** la cost standard, **371** la FIFO/CMP.
+- Factură furnizor: **Dr 408 + Dr 4426 = Cr 401**; contul 408 se stinge prin document (fără
+  reconciliere), cu valoarea creditată la recepție, proporțional cu cantitatea facturată.
+- Diferență de curs recepție↔factură (valută), recunoscută la primirea facturii: **Dr 408 = Cr 765**
+  (favorabilă) sau **Dr 665 = Cr 408** (nefavorabilă). Stocul **nu** se reevaluează
+  (activ nemonetar, IAS 21 / OMFP 1802).
+- Diferență de preț (factură ≠ recepție): **308/378** la cost standard, **371** la FIFO/CMP, la
+  cursul facturii — datoria suplimentară se naște la data facturii.
 - Retur furnizor: storno în roșu al notei `371 = 408` (sume negative, aceleași conturi).
 - Transfer inter-gestiune cu conturi diferite: prin contul de transfer (ex. 481) sau tranzit;
   valoarea totală a stocului nu se modifică.
@@ -291,14 +298,18 @@ Comportamentul de mai jos este acoperit de `tests/test_rni.py`, `tests/test_noti
 | Factura furnizor 10×100 | linia pe **408**; `408 = 401`; 408 se stinge la 0 |
 | 371 recunoscut o singură dată | la recepție, nu se dublează la factură |
 | Toate metodele de cost (FIFO / CMP / standard) | recepție `371 = 408` și rutare pe 408 funcționează |
-| Recepție EUR @5,0 → factură @5,1 | stoc la curs recepție (500); diferența de curs (10) pe **665** |
-| Diferență de preț, factură mai scumpă | FIFO/CMP → pe **371**; cost standard → pe **308** |
-| Facturare parțială (6 apoi 4) | reconciliere parțială pe 408; final 408 = 0, 371 = gestiune |
+| Recepție EUR @5,0 → factură @4,0 | stoc la curs recepție; diferența de curs pe **765**; 408 = 0 |
+| Recepție EUR @5,0 → factură @6,0 | stoc la curs recepție; diferența de curs pe **665**; 408 = 0 |
+| Recepție EUR, factură cu preț ȘI curs diferite | curs pe partea recepționată → 765/665; surplusul în stoc la cursul facturii |
+| Contul 408 fără bifa de reconciliere | stingerea e identică — mecanismul nu folosește reconcilierea |
+| Diferență de preț, factură mai scumpă / mai ieftină | FIFO/CMP → pe **371**; cost standard → pe **308** |
+| Facturare parțială (4 din 10) | pe 408 rămâne valoarea cantității nefacturate; 371 nemodificat |
+| Facturare parțială cu preț diferit | diferența se contează doar pentru cantitatea facturată |
 | Retur parțial (4 din 10) | storno roșu; 371 și 408 scad la 600 / -600 |
 | Retur total (10 din 10) | 371 = 0, 408 = 0 |
 | Recepție fără factură dezactivată (companie) și fără aviz | nu se generează nicio notă RNI |
 | Aviz per-transfer, setarea de companie oprită | recepția marcată **Recepție pe aviz** generează `371 = 408` |
-| Aviz implicit pe tipul de operație | recepția din comanda de achiziție moștenește bifa și e rutată/reconciliată pe 408 |
+| Aviz implicit pe tipul de operație | recepția din comanda de achiziție moștenește bifa și e rutată pe 408 |
 | Serviciu (non-stocabil) | exclus din mecanismul RNI |
 | Transfer aceeași gestiune / conturi identice | permis (nu necesită cont de transfer) |
 | Transfer A→B, conturi diferite, fără cont transfer (strict) | **blocat** cu mesaj explicit |
@@ -311,12 +322,12 @@ Comportamentul de mai jos este acoperit de `tests/test_rni.py`, `tests/test_noti
 |---|---|
 | `l10n_ro_stock_gestiune_valuation` (punte, auto-install) | leagă gestiunile de ariile de evaluare (`deltatech_valuation_area`) și pune dimensiunea contabilă pe note |
 | `stock_account` / `purchase_stock` | valorizarea nativă pe mișcarea de stoc și legătura factură↔recepție |
-| `account` | notele contabile 371/408/401 și reconcilierea |
+| `account` | notele contabile 371/408/401 și diferențele de preț/curs |
 | `deltatech_stock_valuation` / `deltatech_obyc` | valorizare CMP și determinarea conturilor pe reguli (inclusiv notele transferului intern) |
 | `l10n_ro_stock_sheet` | balanța analitică a stocurilor (cantitate + valoare + diferență) și fișa de magazie — pasul 5 |
 
 Ce este automat: valoarea pe fiecare mișcare de stoc, nota `371 = 408` la recepție, rutarea facturii
-pe 408 și reconcilierea, storno-ul la retur, notele valorice ale transferului, blocarea transferului
+pe 408 și stingerea lui, storno-ul la retur, notele valorice ale transferului, blocarea transferului
 direct neconfigurat, diferențele de curs și de preț.
 Ce rămâne manual: configurarea conturilor pe gestiune/companie, verificarea soldului 408 la
 închidere și citirea coloanei *Diferență* din balanța de stocuri.
@@ -329,7 +340,8 @@ Ce rămâne manual: configurarea conturilor pe gestiune/companie, verificarea so
 - [ ] Cu setarea de companie oprită, o recepție marcată **Recepție pe aviz** generează totuși nota `371 = 408`; una nemarcată nu.
 - [ ] Bifa **Recepție pe aviz în mod implicit** de pe tipul de operație se propagă pe recepțiile noi (inclusiv cele din comenzi de achiziție).
 - [ ] După recepție, soldul contului de stoc al gestiunii = valoarea recepționată (exemplu: 1.000).
-- [ ] Factura furnizorului contează linia pe 408, reconciliază contul 408 și **nu** modifică valoarea stocului.
+- [ ] Factura furnizorului contează linia pe 408, stinge contul 408 și **nu** modifică valoarea stocului.
+- [ ] Contul 408 se stinge și dacă nu are bifa „Permite reconcilierea" — mecanismul nu depinde de reconciliere.
 - [ ] La achiziție în valută, stocul rămâne la cursul recepției, iar diferența de curs apare pe 665/765.
 - [ ] Diferența de preț ajunge pe 308 (cost standard) sau pe 371 (FIFO/CMP).
 - [ ] Returul către furnizor generează storno în roșu, iar gestiunea și 408 scad cu aceeași sumă.
@@ -343,7 +355,7 @@ Ce rămâne manual: configurarea conturilor pe gestiune/companie, verificarea so
 |---|---|---|
 | Transferul intern este blocat la validare | gestiunile au conturi diferite și nu există cont de transfer | configurați **Cont transfer între gestiuni** sau folosiți tranzit |
 | Recepția nu generează nota 371 = 408 | setarea de companie e oprită **și** recepția nu e marcată „Recepție pe aviz"; sau produsul nu e stocabil / nu are valorizare perpetuă | activați setarea de companie *sau* bifați **Recepție pe aviz** pe transfer (ori implicit pe tipul de operație); verificați tipul produsului și categoria (`real_time`) |
-| Soldul 408 nu se stinge | factura nu e legată de recepție (fără comandă de achiziție) sau contul 408 nu e reconciliabil | facturați din comanda de achiziție; marcați contul 408 ca reconciliabil |
+| Soldul 408 nu se stinge | factura nu e legată de recepție (fără comandă de achiziție), sau e facturată doar o parte din cantitatea recepționată | facturați din comanda de achiziție; verificați cantitatea facturată față de cea recepționată |
 | Nu se generează nota RNI deși e activată | lipsește jurnalul de stoc sau contul 408 pe companie/gestiune | configurați jurnalul de stoc și contul 408 |
 | Consultantul nu vede meniul gestiunilor | meniul **Gestiuni contabile** cere drepturi de Manager stoc | verificați grupul `stock.group_stock_manager` al utilizatorului |
 | Coloana *Diferență* din balanța de stocuri nu e 0 | note manuale pe conturile de stoc sau mișcări nevalorizate | identificați nota prin drill-down pe cont → produs → mișcare; corectați sau reclasați |
@@ -357,7 +369,7 @@ pe planul de conturi RO:
 1. `01_setari_gestiuni.png` — Setări Inventar: arii de evaluare, transfer strict, recepție fără factură + cont 408.
 2. `02_gestiune_form.png` — formular gestiune cu câmpurile RO (gestionar, cont stoc, cont transfer, cont 408).
 3. `03_receptie_nota_rni.png` — nota de recepție `371 = 408`.
-4. `04_factura_pe_408.png` — factura furnizor cu linia pe 408 și reconciliere.
+4. `04_factura_pe_408.png` — factura furnizor cu linia pe 408.
 5. `05_storno_retur.png` — nota de storno în roșu la returul către furnizor.
 6. `06_transfer_blocat.png` — lista gestiunilor configurate (baza controlului de transfer; mesajul de blocare propriu-zis este un dialog la validare).
 7. `07_balanta_stocuri.png` — **planificată, de generat**: balanța analitică a stocurilor (cantitate + valoare + diferență 0), pe scenariul din pasul 5; necesită modulul `l10n_ro_stock_sheet` instalat și extinderea `tests/test_screenshots.py` (rulați skill-ul `fisa-screenshots`).

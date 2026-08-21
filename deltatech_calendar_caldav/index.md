@@ -1,10 +1,10 @@
 # Sincronizare Calendar CalDAV
 
 - **Nume Tehnic:** `deltatech_calendar_caldav`
-- **Versiune:** `19.0.3.0.0`
+- **Versiune:** `19.0.3.1.0`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_calendar_caldav`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_calendar_caldav`
-- **Ultima Ingestie:** `2026-07-21`
+- **Ultima Ingestie:** `2026-08-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -14,11 +14,12 @@ Modulul sincronizează calendarul Odoo (`calendar.event`) cu un server CalDAV ex
 #### 2. Funcționalități Cheie
 
 - Sincronizare bidirecțională CalDAV ↔ Odoo (pull programat/manual + push imediat la create/write/unlink).
-- Evenimente recurente: o serie recurentă Odoo se trimite ca **o singură resursă CalDAV** (eveniment „master" cu regulă `RRULE`), nu ca evenimente separate; ocurențele aduse de pe server sunt expandate și importate individual.
+- Evenimente recurente: o serie recurentă Odoo se trimite ca **o singură resursă CalDAV** (eveniment „master" cu regulă `RRULE`), nu ca evenimente separate; ocurențele aduse de pe server sunt expandate și importate individual, mapate pe `calendar.recurrence` nativ al Odoo (nu mai apar ca evenimente „orfane").
 - Reminder-e: alarmele Odoo (`calendar.alarm`) se mapează pe/din componente `VALARM` (notificare → `DISPLAY`, email → `EMAIL`).
 - Participanți: `partner_ids`/organizatorul se mapează pe/din `ATTENDEE`/`ORGANIZER`, cu potrivire automată a contactelor după adresa de email (creare automată dacă lipsesc).
 - Detectare conflicte (ETag): înainte de a suprascrie un eveniment pe server, verifică dacă acesta s-a schimbat de la ultima sincronizare; dacă da, push-ul e sărit (serverul câștigă), nu suprascrie orbește.
 - Detectare schimbări (CTag): verifică marca de schimbare a colecției înainte de fiecare sincronizare; dacă nimic nu s-a schimbat, sare peste pull-ul complet.
+- Pull-ul scrie doar câmpurile care s-au schimbat efectiv, ca sincronizarea să nu rupă o serie recurentă existentă rescriind inutil `start`/`stop` pe ocurențe neschimbate.
 
 #### 3. Dependențe
 
@@ -28,7 +29,7 @@ Modulul sincronizează calendarul Odoo (`calendar.event`) cu un server CalDAV ex
 
 **Modele**
 
-- `caldav.account` (model nou): un cont = un calendar CalDAV — `url`, `username`, `password` (restricționat la grupul Setări), `calendar_url` (descoperit automat la Test Connection), `user_id` (proprietarul evenimentelor sincronizate), `sync_days_past`/`sync_days_future` (fereastra de sincronizare, implicit -7/+90 zile), `last_sync`/`last_sync_status`/`last_ctag`. Conține logica de conectare (`caldav`/`icalendar`), construirea/parsarea iCalendar (RRULE, VALARM, ATTENDEE/ORGANIZER) și push/pull.
+- `caldav.account` (model nou): un cont = un calendar CalDAV — `url`, `username`, `password` (restricționat la grupul Setări), `calendar_url` (descoperit automat la Test Connection), `user_id` (proprietarul evenimentelor sincronizate), `sync_days_past`/`sync_days_future` (fereastra de sincronizare, implicit -7/+90 zile), `last_sync`/`last_sync_status`/`last_ctag`. Conține logica de conectare (`caldav`/`icalendar`), construirea/parsarea iCalendar (RRULE, VALARM, ATTENDEE/ORGANIZER) și push/pull. Pull-ul cere resursa brută de pe server (`expand=False`, nu expandată) și mapează `RRULE`-ul pe `calendar.recurrence` nativ al Odoo, astfel încât o serie rămâne o singură serie; ocurențele-excepție (`RECURRENCE-ID`) sunt atașate ocurenței cărora le aparțin, nu create ca evenimente noi. Fusul orar al recurenței se ia doar dintr-un `TZID` explicit trimis de server (nu mai cade pe fusul orar al utilizatorului curent).
 - `calendar.event` (extindere): câmpuri noi `caldav_account_id`, `caldav_uid` (identificatorul pe server), `caldav_recurrence_id` (pentru o ocurență a unei serii), `caldav_etag`; suprascrie `create`/`write`/`unlink` pentru a trimite schimbările pe serverul CalDAV al contului asociat utilizatorului evenimentului (operațiune rulată `sudo`, ca sincronizarea să nu depindă de drepturile utilizatorului curent pe `caldav.account`).
 
 **Vizualizări**

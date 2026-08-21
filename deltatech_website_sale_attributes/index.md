@@ -1,10 +1,10 @@
 # eCommerce Attribute Values (localizat la `deltatech_website_sale_attributes/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_sale_attributes`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_attributes
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_sale_attributes`
-- **Ultima Ingestie:** `2026-06-01`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 

@@ -1,10 +1,10 @@
 # Deltatech Sale from Store (localizat la `deltatech_sale_store/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_store`
-- **Versiune:** `19.0.2.2.6`
+- **Versiune:** `19.0.2.4.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_store
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_store`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -24,8 +24,9 @@ Modulul facilitează vânzarea directă din magazin prin emiterea de bonuri fisc
 - `sale`
 - `stock`
 - `sales_team`
-- `deltatech_partner_generic`
-- `deltatech_record_type`
+- [deltatech_partner_generic](../deltatech_partner_generic/index.md)
+- [deltatech_record_type](../deltatech_record_type/index.md)
+- [deltatech_ecr_connect](../deltatech_ecr_connect/index.md)
 
 #### 4. Componente Cheie
 
@@ -33,4 +34,6 @@ Modulul facilitează vânzarea directă din magazin prin emiterea de bonuri fisc
 
 #### 5. Conexiuni
 
-- `deltatech_payment_report`: definește conturile contabile și jurnalele utilizate de fluxul de plăți/încasări asociat bonurilor fiscale (referit în comentariile manifestului).
+- [deltatech_ecr_connect](../deltatech_ecr_connect/index.md): furnizează conectarea la casa de marcat (ECR) folosită pentru tipărirea bonurilor fiscale generate de acest modul.
+- [deltatech_saga](../deltatech_saga/index.md): fluxul de documente (factură/bon fiscal/storno) al acestui modul alimentează coloana `TIP` din exportul SAGA (`f`/`B`/`C`), conform `readme/CONFIGURE.md`.
+- `deltatech_payment_report`: definește conturile contabile (`data/account_data.xml`) reutilizate de fluxul de plăți/încasări asociat bonurilor fiscale (referit în comentariile manifestului).

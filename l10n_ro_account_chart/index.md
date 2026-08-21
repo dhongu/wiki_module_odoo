@@ -1,45 +1,45 @@
+# Romania - Plan de Conturi Extins (FR-01) (localizat la `l10n_ro_account_chart/index.md`)
 
-# `l10n_ro_account_chart`
-
-- **Nume Prietenesc:** Romania - Plan de Conturi Extins (FR-01)
 - **Nume Tehnic:** `l10n_ro_account_chart`
+- **Versiune:** `19.0.1.0.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_chart
-- **Ultima Ingestie:** 2026-05-31
+- **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_account_chart`
+- **Ultima Ingestie:** `2026-08-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
-## 1. Sumar
+#### 1. Sumar
 
-Acest modul completează planul de conturi românesc (OMFP 1802/2014) cu trei funcționalități esențiale: blocarea postărilor directe pe conturile sintetice, impunerea analiticului obligatoriu per cont și blocarea inactivării conturilor cu rulaj. Toate aceste mecanisme sunt opționale, configurabile per companie din **Setări → Contabilitate**.
+Acest modul completează planul de conturi românesc (OMFP 1802/2014) cu trei funcționalități esențiale: blocarea postărilor directe pe conturile sintetice, impunerea analiticului obligatoriu per cont și blocarea inactivării conturilor cu rulaj. Toate cele trei mecanisme sunt opt-in per companie din **Setări → Contabilitate**.
 
-## 2. Funcționalități Cheie
+#### 2. Funcționalități Cheie
 
-- **Blocare postare pe conturi sintetice:** Conturile marcate ca sintetice nu permit postări directe, cu excepția conturilor de tip `asset_receivable` / `liability_payable` (ex: 401, 411, 421 etc.).
-- **Analitic obligatoriu per cont:** Conturile marcate cu „Analitic obligatoriu" impun completarea `analytic_distribution` la postare.
-- **Blocaj inactivare cont cu rulaj:** Un cont cu înregistrări contabile nu poate fi marcat `deprecated` sau dezactivat.
+- **Blocare postare pe conturi sintetice:** conturile marcate ca sintetice nu permit postare directă; excepție fac conturile de tip `asset_receivable` / `liability_payable` (401, 411, 421 etc.).
+- **Analitic obligatoriu per cont:** conturile marcate cu „Analitic obligatoriu" impun completarea `analytic_distribution` la postare.
+- **Blocaj inactivare cont cu rulaj:** un cont cu înregistrări contabile nu poate fi marcat `deprecated` sau dezactivat.
 
-## 3. Dependențe
+#### 3. Dependențe
 
 - `account`
 - `l10n_ro`
 
-## 4. Componente Cheie
+#### 4. Componente Cheie
 
-### Modele
+**Modele**
 
-- `account.account`: Extinde modelul de bază al conturilor pentru a adăuga câmpuri legate de blocarea postărilor pe conturi sintetice, analitice obligatorii și blocajul inactivării conturilor cu rulaj.
-- `account.move`: Extinde modelul de note contabile pentru a aplica regulile de postare bazate pe configurația conturilor.
-- `res.company`: Stochează setările specifice companiei pentru activarea/dezactivarea funcționalităților modulului.
-- `res.config.settings`: Oferă interfața de utilizator pentru configurarea acestor funcționalități în setările Odoo.
+- `account.account`: adaugă câmpurile `l10n_ro_is_synthetic` (cont sintetic, blochează postarea directă) și `l10n_ro_analytic_required` (impune distribuție analitică la postare); suprascrie `write()` pentru a bloca dezactivarea conturilor RO cu rulaj (`account.move.line` existente).
+- `account.move`: adaugă constrângerile `_check_no_post_on_synthetic` (blochează postarea pe conturi sintetice, cu excepția `asset_receivable`/`liability_payable`) și `_check_analytic_required` (impune analitic pe liniile cu `l10n_ro_analytic_required`), ambele active doar dacă setarea companiei e activată și compania e fiscal RO.
+- `res.company`: câmpurile de configurare `l10n_ro_block_synthetic_posting` și `l10n_ro_require_analytic` (opt-in per companie).
+- `res.config.settings`: expune cele două setări de companie în ecranul de configurare Contabilitate.
 
-### Vizualizări
+**Vizualizări**
 
-- `views/account_account_views.xml`: Modifică vizualizările (formular/listă) ale conturilor pentru a afișa noile câmpuri sau a impune reguli.
-- `views/res_config_settings_views.xml`: Adaugă opțiuni de configurare în interfața de setări contabile.
+- `view_account_form_l10n_ro_chart`: adaugă câmpurile `l10n_ro_is_synthetic` și `l10n_ro_analytic_required` pe formularul contului contabil.
+- `res_config_settings_view_form_l10n_ro_chart`: adaugă cele două comutatoare de configurare în Setări → Contabilitate.
 
-### Acțiuni Automate / Acțiuni Server
+**Acțiuni Automate / Acțiuni Server**
 
-*Nu au fost identificate explicit în `__manifest__.py` sau `readme/DESCRIPTION.md`.*
+- `post_init_hook` (hooks.py): la instalare, marchează automat ca sintetice conturile companiilor fiscal RO care au cel puțin un cont-copil cu cod mai lung și același prefix (ex: 401 devine sintetic dacă există 401.01).
 
-## 5. Conexiuni
+#### 5. Conexiuni
 
-- [[l10n_ro_account_fisa_cont/|l10n_ro_account_fisa_cont]]: Modulul „Fișă de Cont” din localizarea românească, care poate beneficia de funcționalitățile acestui modul.
+- `l10n_ro_account_fisa_cont`: modulul „Fișă de Cont” din localizarea românească, care poate beneficia de conturile marcate sintetic/analitic obligatoriu introduse de acest modul.

@@ -1,52 +1,49 @@
+# Romania - Avansuri Clienți/Furnizori cu TVA (419/4091/4092) (localizat la `l10n_ro_advance_invoice/index.md`)
 
-
-# `l10n_ro_advance_invoice`
-
-- **Nume Prietenesc:** Romania - Avansuri Clienți/Furnizori cu TVA (419/4091/4092)
 - **Nume Tehnic:** `l10n_ro_advance_invoice`
+- **Versiune:** `19.0.1.0.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_advance_invoice
-- **Ultima Ingestie:** 2026-05-31
+- **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_advance_invoice`
+- **Ultima Ingestie:** `2026-08-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
-## 1. Sumar
+#### 1. Sumar
 
-Acest modul gestionează facturile de avans cu TVA conform **Art. 282 alin. 2 Cod Fiscal** (faptul generator = data încasării) și realizează regularizarea automată a acestora la emiterea facturii finale. Simplifică procesul contabil pentru avansuri și asigură conformitatea cu declarațiile D300 și D394.
+Modul pentru gestionarea facturilor de avans cu TVA conform **Art. 282 alin. 2 Cod Fiscal** (faptul generator = data încasării) și regularizarea automată la factura finală. Este adresat companiilor care încasează sau plătesc avansuri cu TVA înainte de livrarea bunurilor sau prestarea serviciilor.
 
-## 2. Funcționalități Cheie
+#### 2. Funcționalități Cheie
 
-- **Facturi de avans clienți:** Marcarea facturilor de avans client (`out_invoice`, cont 419) cu `l10n_ro_is_advance=True` pentru identificare în D394 (`TipDoc=5`).
-- **Facturi de avans furnizori:** Flux simetric pentru facturile de avans furnizor (`in_invoice`, cont 4091).
-- **Regularizare automată:** La factura finală, se generează automat linii negative pe conturile 419 și 4427 pentru regularizare (fără `is_storno`, fiind o operațiune normală).
-- **D300:** TVA-ul avansului este inclus în rândurile standard D300 (Rd.9/10/11) prin taxele standard `l10n_ro`.
-- **D394:** Câmpul `l10n_ro_is_advance` semnalează `TipDoc=5` generatorului D394.
-- **Raport avansuri neregularizate:** Generează un raport cu avansurile clienți/furnizori neregularizate (sold 419/4091 deschis), filtrabil per partener/dată.
+- **Factură de avans client** (`out_invoice`, cont 419): marcată cu `l10n_ro_is_advance=True` pentru identificare în D394 (`TipDoc=5`).
+- **Factură de avans furnizor** (`in_invoice`, cont 4091): flux simetric cu cel de client.
+- **Regularizare automată** la factura finală: linii negative pe 419/4091 și 4427/4426 (fără `is_storno` — regularizarea este operațiune normală, nu corecție de eroare).
+- **D300**: TVA-ul avansului merge în Rd.9/10/11 prin taxele standard `l10n_ro`; nu sunt necesare rânduri distincte.
+- **D394**: câmpul `l10n_ro_is_advance` semnalează `TipDoc=5` generatorului D394.
+- **Raport avansuri neregularizate**: sold 419/4091 deschis, filtrabil per partener/dată.
+- **Banner vizual** pe factura de avans și tab „Avansuri" pe factura finală.
 
-## 3. Dependențe
+#### 3. Dependențe
 
 - `account`
 - `l10n_ro`
 
-## 4. Componente Cheie
+#### 4. Componente Cheie
 
-### Modele
+**Modele**
 
-- `account.move`: Extinde modelul de note contabile pentru a introduce logica de gestionare a avansurilor (câmpuri și metode pentru marcare și regularizare).
-- `l10n_ro_advance_wizard`: Un wizard dedicat pentru gestionarea avansurilor (conform fișierelor XML).
+- `account.move`: Extinde modelul de note contabile cu câmpul `l10n_ro_is_advance` (marcare factură de avans), câmpul de legătură către facturile finale/de avans asociate și metodele de creare/aplicare a avansurilor.
 
-### Vizualizări / Date
+**Vizualizări**
 
-- `security/ir.model.access.csv`: Definește drepturile de acces pentru noile modele/câmpuri.
-- `wizard/l10n_ro_advance_wizard_views.xml`: Definește interfața wizard-ului pentru avansuri.
-- `views/account_move_views.xml`: Modifică vizualizările notelor contabile pentru a integra funcționalitățile de avans.
-- `views/l10n_ro_advance_report_views.xml`: Definește vizualizările pentru raportul de avansuri neregularizate.
+- `account_move_views.xml`: adaugă banner-ul vizual pe factura de avans și fila „Avansuri" (selectare avansuri de regularizat, buton „Aplică avansuri selectate") pe factura finală.
+- `l10n_ro_advance_wizard_views.xml`: formularul wizard-ului de emitere a facturii de avans (tip avans, partener, sumă netă, TVA, jurnal, dată, referință).
+- `l10n_ro_advance_report_views.xml`: vizualizările raportului de avansuri neregularizate (listă filtrabilă per partener/dată/tip).
 
-### Acțiuni Automate / Acțiuni Server
+**Acțiuni Automate / Acțiuni Server**
 
-- `_l10n_ro_create_advance_invoice()`: Metodă pentru crearea facturii de avans cu TVA, apelată dintr-un wizard sau direct.
-- `_l10n_ro_apply_advances()`: Metodă pe `account.move` pentru aplicarea avansurilor selectate pe factura finală, generând linii de stornare TVA și regularizare sold 419.
-- `action_open_unregularized_advances_report()`: Acțiune pentru deschiderea raportului cu avansurile clienți/furnizori neregularizate.
+- `_l10n_ro_create_advance_invoice()`: creează factura de avans cu TVA din wizard, marcată automat cu `l10n_ro_is_advance=True`.
+- `_l10n_ro_apply_advances()`: aplică avansurile selectate pe factura finală, generând liniile negative de regularizare pe 419/4091 și 4427/4426.
+- `action_open_unregularized_advances_report()`: deschide raportul cu avansurile clienți/furnizori neregularizate (postate, fără factură finală asociată).
 
-## 5. Conexiuni
+#### 5. Conexiuni
 
-- `l10n_ro_anaf_base`: Modulul de bază pentru declarații ANAF, care utilizează câmpul `l10n_ro_is_advance` pentru a genera `TipDoc=5` în D394.
-- Alte module de localizare românească pentru declarații ANAF (ex. D300, D394).
+- [l10n_ro_anaf_base](../l10n_ro_anaf_base/index.md): generatorul D394 citește câmpul `l10n_ro_is_advance` pentru a raporta facturile de avans cu `TipDoc=5`.

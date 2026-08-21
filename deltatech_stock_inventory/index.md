@@ -1,10 +1,10 @@
 # Stock Inventory (localizat la `deltatech_stock_inventory/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_inventory`
-- **Versiune:** `19.0.2.3.9`
+- **Versiune:** `19.0.2.7.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_inventory
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_inventory`
-- **Ultima Ingestie:** `2026-06-01`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 

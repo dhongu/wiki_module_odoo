@@ -1,10 +1,10 @@
 # RAL (localizat la `deltatech_ral/index.md`)
 
 - **Nume Tehnic:** `deltatech_ral`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_ral`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_ral`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -35,7 +35,7 @@ Instrucțiuni de configurare:
 
 **Modele**
 
-- `mrp.production` (extins): adaugă câmpul `ral_id` (Many2one către `product.product`, domeniu pe coduri ce încep cu „RAL"). Determină automat pigmentul din atributul de culoare al produsului și înlocuiește componenta „RAL 0000" din mișcările de materii prime cu pigmentul ales; propagă pigmentul pe loturile generate.
+- `mrp.production` (extins): adaugă câmpul `ral_id` (Many2one către `product.product`, domeniu pe coduri ce încep cu „RAL"). La schimbarea produsului (`_onchange_product_id`), determină automat pigmentul din atributul de culoare al variantei selectate; la `create` și la selectarea manuală a pigmentului (`onchange_ral_id`) înlocuiește componenta „RAL 0000" din materiile prime cu pigmentul ales. În O19 substituția e reafirmată și în `_get_move_raw_values`, deoarece `move_raw_ids` este acum câmp calculat și componentele sunt regenerate din liniile de BOM la fiecare recalculare (vechiul hook `_generate_moves` din versiunile anterioare nu mai există). La generarea seriei (`action_generate_serial`) propagă pigmentul pe loturile produse.
 - `stock.lot` (extins): adaugă câmpul `ral_id` (Many2one către `product.product`), pentru a marca lotul produs cu pigmentul RAL utilizat.
 
 **Vizualizări**
@@ -45,7 +45,7 @@ Instrucțiuni de configurare:
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Nu sunt definite sarcini `ir.cron`, reguli `base.automation` sau acțiuni server. Logica rulează prin metode `onchange`/`create`/`_generate_moves` pe `mrp.production`.
+- Nu sunt definite sarcini `ir.cron`, reguli `base.automation` sau acțiuni server. Logica rulează prin metode `onchange`/`create`/`_get_move_raw_values` pe `mrp.production`.
 
 #### 5. Conexiuni
 

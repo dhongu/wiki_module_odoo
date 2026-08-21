@@ -1,10 +1,10 @@
 # Notification Sound (localizat la `deltatech_notification_sound/index.md`)
 
 - **Nume Tehnic:** `deltatech_notification_sound`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.2.0.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_notification_sound
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_notification_sound`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -17,10 +17,10 @@ Modulul adaugă feedback sonor pentru notificările din backend-ul Odoo, astfel 
   - Avertisment → `exclamation.wav`
   - Eroare (danger) → `error.wav`
   - Informare → `bell.wav`
-- Integrare transparentă cu backend-ul (fără interfață suplimentară); extinde componenta OWL `web.NotificationWowl`.
-- Activele sunt încărcate prin `web.assets_backend` (JS + XML + sunete).
+- Integrare transparentă cu backend-ul (fără interfață suplimentară); aplică un patch peste serviciul `notification` (`add()`), decuplând funcționalitatea de ciclul de viață al componentei OWL `Notification`.
+- Activele sunt încărcate prin `web.assets_backend` (JS + sunete).
 - Comutator per utilizator în Preferințe: fiecare utilizator poate activa/dezactiva sunetele notificărilor din profilul propriu.
-- Citește preferința utilizatorului prin serviciul RPC Odoo (`/web/session/get_session_info`) și o stochează în cache, astfel încât se efectuează un singur RPC per încărcare de pagină.
+- Preferința este citită direct din informațiile de sesiune (`@web/session`, `session.user_context.notification_sound_enabled`), fără niciun apel RPC suplimentar.
 - Fișierele de sunet pot fi înlocuite, fiind stocate în `static/src/sounds/`.
 
 #### 3. Dependențe
@@ -39,11 +39,11 @@ Modulul adaugă feedback sonor pentru notificările din backend-ul Odoo, astfel 
 
 **Vizualizări**
 
-- `views/res_users_views.xml`: adaugă comutatorul „Enable notification sounds" în secțiunea de Preferințe a utilizatorului.
+- `views/res_users_views.xml` (`view_users_form_inherit_notification_sound`): adaugă comutatorul „Enable notification sounds" în secțiunea de Preferințe a formularului de utilizator (`base.view_users_form`).
 
 **Componente Frontend (JS / OWL)**
 
-- `static/src/js/notification_sound.js`: extinde (patch) componenta OWL de notificare; folosește hook-urile OWL `onMounted` și `onWillUpdateProps` pentru a reda sunetul corespunzător la apariția/actualizarea unei notificări.
+- `static/src/js/notification_sound.esm.js`: aplică un patch (`patch()`) peste `notificationService`, suprascriind metoda `add()` pentru a reda sunetul corespunzător tipului de notificare (`success`, `warning`, `danger`, `info`; implicit `warning`) înainte de afișarea efectivă a mesajului. Redarea eșuează silențios dacă browserul blochează autoplay-ul.
 - `static/src/sounds/`: fișierele audio (`notify.wav`, `exclamation.wav`, `error.wav`, `bell.wav`).
 
 **Acțiuni Automate / Acțiuni Server**

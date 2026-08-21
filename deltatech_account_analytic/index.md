@@ -1,10 +1,10 @@
 # Deltatech Account Analytic (localizat la `deltatech_account_analytic/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_analytic`
-- **Versiune:** `19.0.0.0.5`
+- **Versiune:** `19.0.0.0.6`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_account_analytic
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_account_analytic`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -12,16 +12,16 @@
 
 #### 2. Funcționalități Cheie
 
-- **Echipă de vânzări pe liniile analitice** (`team_id` pe `account.analytic.line`): la creare, se determină automat din comanda de vânzare a expedierii (pentru notele contabile generate din stoc) sau direct din factura de vânzare/nota de credit.
+- **Echipă de vânzări pe liniile analitice** (`team_id` pe `account.analytic.line`): la creare, se determină automat din comanda de vânzare a expedierii (pentru notele contabile generate din stoc) sau direct din factura de vânzare, nota de credit **sau chitanța de vânzare** (`out_invoice`/`out_refund`/`out_receipt`).
 - **Categorie de produs pe linia analitică** (`product_category_id`, câmp `related` stocat din `product_id.categ_id`) — permite gruparea și filtrarea liniilor analitice după categoria produsului.
-- **Selecție automată a modelului de distribuție analitică** pe liniile facturilor de client/notă de credit/chitanță, în funcție de echipa de vânzări a facturii — dacă există exact un `account.analytic.distribution.model` configurat pentru acea echipă, distribuția lui e aplicată automat.
+- **Selecție automată a modelului de distribuție analitică** pe liniile facturilor de client/notă de credit/chitanță, în funcție de echipa de vânzări a facturii — dacă există exact un `account.analytic.distribution.model` configurat pentru acea echipă, distribuția lui e aplicată automat, inclusiv atunci când echipa se schimbă ulterior pe o factură existentă (nu doar la creare).
 - **Determinare echipă de vânzări pe facturile de furnizor**: la generarea liniilor analitice dintr-o factură/notă de credit de furnizor, se caută o echipă CRM al cărei nume coincide cu numele contului analitic și se completează `team_id`.
 - **Filtre suplimentare** în vizualizarea liniilor analitice: grupare după echipă de vânzări și după categoria de produs.
 - **Șabloane de împărțire analitică** (`account.analytic.split.template`): un set ordonat de conturi analitice, fiecare cu un procent, reutilizabil pe mai multe împărțiri.
 - **Asistent de împărțire** (`account.analytic.split`): pornind de la o sumă introdusă manual sau de la o linie analitică existentă selectată, generează automat linii analitice noi conform procentelor din șablon; flux `draft` → `confirmed`, cu buton de resetare care șterge liniile generate și revine la starea de ciornă.
 - **Grup de securitate dedicat** ("Analitic split user") care controlează accesul la șabloane, la asistentul de împărțire și la liniile aferente.
 
-**Corecție de conținut:** `readme/DESCRIPTION.md` descrie o funcționalitate diferită și mai veche — împărțirea *automată* a liniilor analitice de pe facturile de vânzare în valoare de stoc și marjă, condiționată de instalarea modulului `deltatech_sale_commission`, plus câmpuri de configurare pe contul analitic ("This rule is for splitting", "Stock Analytic Account", "Margin Analytic Account") și o opțiune în Setări ("Split Sale Analytic"). În codul actual (19.0.0.0.5) această funcționalitate este **dezactivată/eliminată**: view-ul din `views/res_config_settings.xml` este complet comentat, iar câmpurile aferente din `models/res_config_settings.py` sunt comentate; `models/account_analytic.py` nu mai extinde `account.analytic.account` cu acele câmpuri. `deltatech_sale_commission` nu apare nicăieri în cod sau manifest. Sumarul și funcționalitățile de mai sus reflectă comportamentul real din cod, nu textul din DESCRIPTION.md.
+**Corecție de conținut:** `readme/DESCRIPTION.md` descrie o funcționalitate diferită și mai veche — împărțirea *automată* a liniilor analitice de pe facturile de vânzare în valoare de stoc și marjă, condiționată de instalarea modulului `deltatech_sale_commission`, plus câmpuri de configurare pe contul analitic ("This rule is for splitting", "Stock Analytic Account", "Margin Analytic Account") și o opțiune în Setări ("Split Sale Analytic"). În codul actual (19.0.0.0.6) această funcționalitate este **dezactivată/eliminată**: view-ul din `views/res_config_settings.xml` este complet comentat, iar câmpurile aferente din `models/res_config_settings.py` sunt comentate; `models/account_analytic.py` nu mai extinde `account.analytic.account` cu acele câmpuri. `deltatech_sale_commission` nu apare nicăieri în cod sau manifest. Sumarul și funcționalitățile de mai sus reflectă comportamentul real din cod, nu textul din DESCRIPTION.md.
 
 #### 3. Dependențe
 
@@ -34,8 +34,8 @@
 
 **Modele**
 
-- `account.analytic.line` (extins): adaugă `product_category_id` (related, stocat) și `team_id`; la `create()`, deduce automat echipa de vânzări din picking-ul de stoc legat (pentru intrări generate din mișcări de stoc) sau din factura de vânzare/nota de credit.
-- `account.move.line` (extins): suprascrie `_compute_analytic_distribution` pentru a aplica automat un `account.analytic.distribution.model` potrivit echipei facturii (facturi/note de credit/chitanțe de client); suprascrie `_prepare_analytic_lines` pentru a determina `team_id` pe facturile de furnizor prin potrivirea numelui contului analitic cu numele echipei CRM.
+- `account.analytic.line` (extins): adaugă `product_category_id` (related, stocat) și `team_id`; la `create()`, deduce automat echipa de vânzări din picking-ul de stoc legat (pentru intrări generate din mișcări de stoc) sau din factura de vânzare/nota de credit/chitanța de vânzare (`out_invoice`/`out_refund`/`out_receipt`).
+- `account.move.line` (extins): suprascrie `_compute_analytic_distribution` (cu dependența declarată pe `move_id.team_id`, astfel încât recalculul se face și când echipa se schimbă ulterior, nu doar la creare) pentru a aplica automat un `account.analytic.distribution.model` potrivit echipei facturii (facturi/note de credit/chitanțe de client); suprascrie `_prepare_analytic_lines` pentru a determina `team_id` pe facturile de furnizor prin potrivirea numelui contului analitic cu numele echipei CRM.
 - `account.analytic.distribution.model` (extins): adaugă `team_id` (echipă de vânzări), folosit ca și criteriu de selecție automată descris mai sus.
 - `account.analytic.split.template` / `account.analytic.split.template.line`: șablon reutilizabil de împărțire procentuală pe conturi analitice (nume, activ/inactiv, linii cu procent).
 - `account.analytic.split` / `account.analytic.split.line`: asistentul de împărțire propriu-zis — sumă sau linie analitică sursă, tip de împărțire (`amount`/`line`), stare (`draft`/`confirmed`), acțiuni de calcul, confirmare (generează liniile analitice) și resetare.

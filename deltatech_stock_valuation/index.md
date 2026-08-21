@@ -1,10 +1,10 @@
 # Product Valuation (localizat la `deltatech_stock_valuation/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_valuation`
-- **Versiune:** `19.0.0.0.6`
+- **Versiune:** `19.0.0.0.7`
 - **Cale:** [https://github.com/dhongu/deltatech_stock_valuation/tree/19.0/deltatech_stock_valuation](https://github.com/dhongu/deltatech_stock_valuation/tree/19.0/deltatech_stock_valuation)
 - **Cale Locală:** `odoo-addons/deltatech_stock_valuation/deltatech_stock_valuation`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-08-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar

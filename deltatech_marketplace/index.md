@@ -1,10 +1,10 @@
 # Marketplace Base Connector (localizat la `deltatech_marketplace/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace`
-- **Versiune:** `19.0.1.8.8`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_marketplace
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_marketplace`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.1.14.4`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace
+- **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -49,10 +49,10 @@ Conform fluxului de ingestie, această secțiune este sintetizată din `readme/D
 Modulul servește ca fundație pentru un ecosistem complet de management al marketplace-urilor, fiind extins de următoarele module conexe:
 
 - `deltatech_marketplace_attribute`: gestionarea atributelor de produs specifice marketplace-ului.
-- `deltatech_marketplace_brand`: managementul brandurilor pe marketplace-uri.
-- `deltatech_marketplace_delivery`: metode de livrare specifice marketplace-ului.
-- `deltatech_marketplace_emag`: extensie specifică platformei eMAG.
-- `deltatech_marketplace_magento`: extensie specifică platformei Magento.
-- `deltatech_marketplace_merchantpro`: extensie specifică platformei MerchantPro.
-- `deltatech_marketplace_doraly`: extensie specifică platformei Doraly.
+- [deltatech_marketplace_brand](../deltatech_marketplace_brand/index.md): managementul brandurilor pe marketplace-uri.
+- [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md): metode de livrare specifice marketplace-ului.
+- [deltatech_marketplace_emag](../deltatech_marketplace_emag/index.md): extensie specifică platformei eMAG.
+- [deltatech_marketplace_magento](../deltatech_marketplace_magento/index.md): extensie specifică platformei Magento.
+- [deltatech_marketplace_merchantpro](../deltatech_marketplace_merchantpro/index.md): extensie specifică platformei MerchantPro.
+- [deltatech_marketplace_doraly](../deltatech_marketplace_doraly/index.md): extensie specifică platformei Doraly.
 - `deltatech_marketplace_gremini`: extensie specifică platformei Gremini.

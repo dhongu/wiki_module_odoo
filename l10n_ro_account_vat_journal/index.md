@@ -1,10 +1,10 @@
 # Romania - VAT Journals (Sales & Purchase) (localizat la `l10n_ro_account_vat_journal/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_account_vat_journal`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal)
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_account_vat_journal`
-- **Ultima Ingestie:** `2026-07-02`
+- **Ultima Ingestie:** `2026-08-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -31,9 +31,9 @@ Modulul aduce Jurnalul de Vânzări și Jurnalul de Cumpărări — registrele l
 
 **Modele**
 
-- `l10n_ro_account_vat_journal.tax.report.handler` (`AbstractModel`, moștenește `account.generic.tax.report.handler` și `l10n_ro_anaf.report.handler.mixin`): logica comună de construire a liniilor jurnalului de TVA — interogare mișcări contabile, defalcare bază/TVA per cotă, tratare TVA la încasare și taxare inversă.
-- `l10n_ro_account_vat_journal.purchase.tax.report.handler`: handler specializat pentru Jurnalul de Cumpărări, moștenește handler-ul comun.
-- `l10n_ro_account_vat_journal.sale.tax.report.handler`: handler specializat pentru Jurnalul de Vânzări, moștenește handler-ul comun.
+- `l10n_ro_account_vat_journal.tax.report.handler` (`AbstractModel`, moștenește `account.generic.tax.report.handler` și `l10n_ro_anaf.report.handler.mixin`): logica comună a jurnalului de TVA — injectează coloanele dinamice Bază/TVA per cotă, interoghează mișcările contabile din perioadă (inclusiv CABA — TVA la încasare — și operațiuni de taxare inversă) și generează liniile raportului, inclusiv rândul de total.
+- `l10n_ro_account_vat_journal.purchase.tax.report.handler`: handler specializat pentru Jurnalul de Cumpărări; fixează `journal_type = ("purchase", "general")` înaintea logicii comune.
+- `l10n_ro_account_vat_journal.sale.tax.report.handler`: handler specializat pentru Jurnalul de Vânzări; fixează `journal_type = ("sale", "general")` înaintea logicii comune.
 
 **Vizualizări**
 
@@ -41,13 +41,13 @@ Modulul nu adaugă vizualizări de formular/listă clasice; interfața este gene
 
 **Acțiuni Automate / Acțiuni Server**
 
-- `action_l10n_ro_purchase_tax_report` (`ir.actions.client`, tag `account_report`): deschide raportul „VAT Purchase Journal” (Jurnal de Cumpărări RO), accesibil din meniul Contabilitate → Rapoarte → Taxe.
-- `action_l10n_ro_sale_tax_report` (`ir.actions.client`, tag `account_report`): deschide raportul „VAT Sales Journal” (Jurnal de Vânzări RO), din același meniu.
+- `action_l10n_ro_purchase_tax_report` (`ir.actions.client`, tag `account_report`): deschide raportul „VAT Purchase Journal” (Jurnal de Cumpărări RO), accesibil din meniul Contabilitate → Rapoarte → Taxe (sequence 31).
+- `action_l10n_ro_sale_tax_report` (`ir.actions.client`, tag `account_report`): deschide raportul „VAT Sales Journal” (Jurnal de Vânzări RO), din același meniu (sequence 32).
 - Ambele rapoarte (`l10n_ro_purchase_tax_report`, `l10n_ro_sale_tax_report`) sunt definite ca înregistrări `account.report` cu `default_opening_date_filter = previous_month` (perioada implicită este luna închisă anterioară) și `only_tax_exigible = True`.
-- `pre_init_hook` (`hooks.py`): rulează la instalare, înainte de încărcarea datelor modulului.
+- `pre_init_hook` (`hooks.py`): NU este un hook generic de inițializare, ci o migrare — pe instalările existente care aveau aceste rapoarte create de `l10n_ro_anaf_d394`, rulează ÎNAINTE de încărcarea datelor noului modul și re-atribuie xml_id-urile (rapoarte, coloane, acțiuni, meniuri), redenumește modelele de handler și curăță metadatele orfane, astfel încât loaderul să actualizeze înregistrările existente în loc să creeze duplicate. Pe instalări noi, UPDATE-urile ating 0 rânduri.
 
 #### 5. Conexiuni
 
 - [l10n_ro_anaf_base](../l10n_ro_anaf_base/index.md): furnizează mixin-ul `l10n_ro_anaf.report.handler.mixin` folosit de handler-ele de raport.
-- [l10n_ro_anaf_d394](../l10n_ro_anaf_d394/index.md): instalat peste acest modul, adaugă un buton de export fișier D394 direct pe cele două jurnale.
+- [l10n_ro_anaf_d394](../l10n_ro_anaf_d394/index.md): fost proprietar al acestor rapoarte (înainte de extragere); instalat peste acest modul, adaugă un buton de export fișier D394 direct pe cele două jurnale.
 - `account_reports`: motorul nativ Enterprise de rapoarte contabile pe care se bazează întreaga arhitectură a modulului.

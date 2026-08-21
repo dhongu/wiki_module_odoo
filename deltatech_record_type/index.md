@@ -1,10 +1,10 @@
 # Terrabit - Record Type (localizat la `deltatech_record_type/index.md`)
 
 - **Nume Tehnic:** `deltatech_record_type`
-- **Versiune:** `19.0.1.1.11`
+- **Versiune:** `19.0.1.1.12`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_record_type`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_record_type`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 

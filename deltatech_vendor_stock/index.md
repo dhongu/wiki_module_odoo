@@ -1,10 +1,10 @@
 # Stoc Furnizor (localizat la `deltatech_vendor_stock/index.md`)
 
 - **Nume Tehnic:** `deltatech_vendor_stock`
-- **Versiune:** `19.0.1.1.7`
+- **Versiune:** `19.0.1.1.8`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_vendor_stock`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_vendor_stock`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 

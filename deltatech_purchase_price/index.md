@@ -1,10 +1,10 @@
 # Purchase Price (localizat la `deltatech_purchase_price/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_price`
-- **Versiune:** `19.0.1.2.5`
+- **Versiune:** `19.0.1.2.8`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_price
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_price`
-- **Ultima Ingestie:** `2026-06-01`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -23,18 +23,20 @@ Modulul actualizează automat prețurile de achiziție atunci când o recepție 
   - `trade_markup` — adaosul comercial al produsului, care poate fi setat printr-un wizard (Acțiune → Set trade markup).
 - Dacă adaosul comercial (`trade_markup`) este setat pentru un produs, la recepție prețul de vânzare se calculează automat din `last_purchase_price` și `trade_markup`.
 
+> **Notă de ingestie:** codul modulului (versiunea `19.0.1.2.8`) conține și funcționalități care nu mai sunt descrise în `readme/DESCRIPTION.md` — vezi avertismentele din raportul de ingestie (parametru `purchase.force_price_at_validation`, tip nou de bază `last_purchase_price` pentru reguli de preț, calcul `last_purchase_price` pentru șabloane multi-variantă). Secțiunea de mai sus respectă strict conținutul readme-ului, conform fluxului de ingestie.
+
 #### 3. Dependențe
 
 - `stock`
 - `stock_account`
 - `purchase_stock`
-- `deltatech_product_trade_markup`
+- [deltatech_product_trade_markup](../deltatech_product_trade_markup/index.md)
 
 #### 4. Componente Cheie
 
 **Modele**
 
-- `product.template`: extins cu câmpurile `last_purchase_price` (ultimul preț de achiziție, actualizat la recepție) și `trade_markup` (adaosul comercial al produsului).
+- `product.template` / `product.product`: extinse cu câmpurile `last_purchase_price` (ultimul preț de achiziție, actualizat la recepție) și `trade_markup` (adaosul comercial al produsului).
 
 **Vizualizări**
 
@@ -46,4 +48,4 @@ Modulul actualizează automat prețurile de achiziție atunci când o recepție 
 
 #### 5. Conexiuni
 
-- `deltatech_product_trade_markup`: furnizează conceptul de adaos comercial pe care acest modul îl folosește pentru a calcula prețul de vânzare la recepție.
+- [deltatech_product_trade_markup](../deltatech_product_trade_markup/index.md): furnizează conceptul de adaos comercial pe care acest modul îl folosește pentru a calcula prețul de vânzare la recepție.

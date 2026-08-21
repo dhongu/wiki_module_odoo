@@ -1,10 +1,10 @@
 # eCommerce Stock Availability (localizat la `deltatech_website_stock_availability/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_stock_availability`
-- **Versiune:** `19.0.1.0.6`
+- **Versiune:** `19.0.1.0.9`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_stock_availability`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_stock_availability`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 

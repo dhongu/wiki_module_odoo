@@ -1,10 +1,10 @@
 # Banca Transilvania iPay Payment Acquirer (localizat la `deltatech_payment_bt_ipay/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_bt_ipay`
-- **Versiune:** `19.0.0.0.7`
+- **Versiune:** `19.0.0.0.8`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_bt_ipay`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_bt_ipay`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -34,8 +34,8 @@ Sumarul și funcționalitățile cheie au fost preluate din `readme/DESCRIPTION.
 
 **Modele**
 
-- `payment.provider` (extins): adaugă codul de furnizor `bt_ipay`, câmpurile de credențiale (`bt_ipay_user`, `bt_ipay_pass`) și modul de operare (`bt_mode`: 1 Phase / 2 Phase), plus autentificarea Basic Auth și URL-urile API (producție/sandbox) către iPay.
-- `payment.transaction` (extins): construiește payload-ul de înregistrare a tranzacției (`register.do` / `registerPreAuth.do` în funcție de modul 1‑Phase/2‑Phase), interoghează starea tranzacției (`getOrderStatusExtended.do`), tratează codurile de eroare/refuz specifice BT iPay (card blocat, fonduri insuficiente, 3DS2 etc.) și trimite cereri de capturare (`deposit.do`) și de anulare/reversare (`reverse.do`).
+- `payment.provider` (extins): adaugă codul de furnizor `bt_ipay`, câmpurile de credențiale (`bt_ipay_user`, `bt_ipay_pass`) și modul de operare (`bt_mode`: 1 Phase / 2 Phase), plus autentificarea Basic Auth (header recomandat de BT) și URL-urile API (producție/sandbox) către iPay.
+- `payment.transaction` (extins): construiește payload-ul de înregistrare a tranzacției (`register.do` / `registerPreAuth.do` în funcție de modul 1‑Phase/2‑Phase), interoghează starea tranzacției (`getOrderStatusExtended.do`), tratează codurile de eroare/refuz specifice BT iPay (card blocat, fonduri insuficiente, 3DS2, contestații/chargeback etc.) și trimite cereri de capturare (`deposit.do`) și de anulare/reversare (`reverse.do`).
 - `account.payment.method` (extins): înregistrează metoda de plată `bt_ipay` ca fiind de tip "multi", restricționată la conturi bancare.
 - `sale.order` (extins): la capturarea manuală a plății (`payment_action_capture`), recalculează suma de capturat scăzând din totalul comenzii sumele deja facturate.
 

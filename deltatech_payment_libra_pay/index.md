@@ -1,10 +1,10 @@
 # LibraPay Acquirer (localizat la `deltatech_payment_libra_pay/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_libra_pay`
-- **Versiune:** `19.0.1.0.7`
+- **Versiune:** `19.0.1.0.8`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_libra_pay`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_libra_pay`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -33,6 +33,8 @@ Dependențe Python externe: `phpserialize`.
 Conform fluxului de ingestie, această secțiune nu este detaliată deoarece documentația se bazează pe `readme/DESCRIPTION.md`, care nu solicită explicit analiza componentelor tehnice (modele, vizualizări, acțiuni automate).
 
 Pe scurt, din `__manifest__.py` reiese că modulul definește un nou furnizor de plată (`payment.provider`) și o metodă de plată dedicate LibraPay, plus controllere pentru gestionarea redirecționării de retur și a notificărilor IPN (`/payment/libra_pay/ipn`).
+
+Notă tehnică (versiunea 19.0.1.0.8): această versiune conține o serie de corecții importante pentru compatibilitatea cu API-ul de plăți din Odoo 19 — `_extract_amount_data` a fost suprascris pentru LibraPay (rezolvă o eroare `KeyError: 'amount'` la fiecare retur/IPN, regresie de portare din API-ul de plăți Odoo 18), `_apply_updates` nu mai marchează o tranzacție ca finalizată dacă verificarea semnăturii `P_SIGN` eșuează, câmpurile din notificare sunt citite defensiv cu `.get()`, iar `_search_by_reference` nu mai generează eroare 500 când nu găsește nicio tranzacție corespunzătoare (loghează un avertisment și lasă fluxul standard să redirecționeze către pagina de status a plății).
 
 #### 5. Conexiuni
 

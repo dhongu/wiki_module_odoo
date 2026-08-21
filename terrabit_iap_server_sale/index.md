@@ -1,10 +1,10 @@
 # IAP Server - eCommerce Credits (localizat la `terrabit_iap_server_sale/index.md`)
 
 - **Nume Tehnic:** `terrabit_iap_server_sale`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_sale
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server_sale`
-- **Ultima Ingestie:** 2026-06-01
+- **Ultima Ingestie:** 2026-08-20
 
 #### 1. Sumar
 

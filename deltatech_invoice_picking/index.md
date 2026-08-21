@@ -1,10 +1,10 @@
 # Invoice Pickings (localizat la `deltatech_invoice_picking/index.md`)
 
 - **Nume Tehnic:** `deltatech_invoice_picking`
-- **Versiune:** `19.0.1.0.9`
+- **Versiune:** `19.0.1.0.10`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_picking
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_invoice_picking`
-- **Ultima Ingestie:** `2026-06-01`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 

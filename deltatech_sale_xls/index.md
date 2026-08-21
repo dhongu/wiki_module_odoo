@@ -1,10 +1,10 @@
 # Deltatech Sale XLS (localizat la `deltatech_sale_xls/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_xls`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_xls`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_xls`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 

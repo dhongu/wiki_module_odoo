@@ -1,10 +1,10 @@
 # Conector Marketplace PrestaShop (localizat la `deltatech_marketplace_prestashop/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_prestashop`
-- **Versiune:** `19.0.0.1.6`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_marketplace_prestashop`
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_marketplace_prestashop`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.0.2.10`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_prestashop`
+- **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_prestashop`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -23,15 +23,14 @@ Conectorul Deltatech pentru marketplace PrestaShop permite integrarea directă �
 #### 3. Dependențe
 
 - [deltatech_marketplace](../deltatech_marketplace/index.md)
-- `deltatech_marketplace_website`
-- `deltatech_marketplace_sale_stage`
+- [deltatech_marketplace_website](../deltatech_marketplace_website/index.md)
+- [deltatech_marketplace_sale_stage](../deltatech_marketplace_sale_stage/index.md)
 - [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md)
 - [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md)
-- Dependență externă Python: `dicttoxml`
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, secțiunile de componente nu au fost extrase din cod deoarece fișierul `readme/DESCRIPTION.md` este prezent și acoperă Sumarul și Funcționalitățile Cheie. Pentru context, descrierea menționează că implementarea folosește API-ul de servicii web PrestaShop și un sistem de binding-uri (legături) care conectează entitățile Odoo cu corespondentele lor din PrestaShop (șabloane și variante de produs, categorii și atribute, clienți și adrese, comenzi și linii de comandă, stoc, metode de plată și livrare, țări, limbi, valute), plus controllere pentru webhook-uri și procesare de joburi în fundal.
+Conform fluxului de ingestie, secțiunile de componente nu au fost extrase din cod deoarece fișierul `readme/DESCRIPTION.md` este prezent și acoperă Sumarul și Funcționalitățile Cheie. Pentru context, descrierea menționează că implementarea folosește API-ul de servicii web PrestaShop și un sistem de binding-uri (legături) care conectează entitățile Odoo cu corespondentele lor din PrestaShop (șabloane și variante de produs, categorii și atribute, clienți și adrese, comenzi și linii de comandă, stoc, metode de plată și livrare, țări, limbi, valute), plus un controller (`controller/main.py`) pentru webhook-uri și procesare de joburi în fundal.
 
 **Modele**
 
@@ -39,7 +38,7 @@ Conform fluxului de ingestie, secțiunile de componente nu au fost extrase din c
 
 **Vizualizări**
 
-- Nu au fost extrase din cod (vezi nota de mai sus).
+- Nu au fost extrase din cod (vezi nota de mai sus). Modulul include `views/backend_views.xml` și `views/menu.xml`.
 
 **Acțiuni Automate / Acțiuni Server**
 

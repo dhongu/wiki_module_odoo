@@ -1,10 +1,10 @@
 # Products Feed (localizat la `deltatech_feed/index.md`)
 
 - **Nume Tehnic:** `deltatech_feed`
-- **Versiune:** `19.0.3.3.1`
+- **Versiune:** `19.0.3.5.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_feed
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_feed`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -23,30 +23,33 @@ Modulul Products Feed este o extensie Odoo dezvoltată de Terrabit/Deltatech car
 
 - `product`
 - `website_sale_stock`
-- `deltatech_brand_field`
-- `deltatech_product_list`
-- `deltatech_website_short_description`
+- [deltatech_brand_field](../deltatech_brand_field/index.md)
+- [deltatech_product_list](../deltatech_product_list/index.md)
+- [deltatech_website_short_description](../deltatech_website_short_description/index.md)
 
 #### 4. Componente Cheie
 
-Conform secțiunii „Technical Implementation" din readme, modulul este structurat în jurul următoarelor componente.
+Conform secțiunii „Technical Implementation" din readme, modulul este structurat în jurul următoarelor componente. Analiza codului curent confirmă lista de mai jos și adaugă câteva detalii tehnice (feed-uri active în cod, lock-uri de generare).
 
 **Modele**
 
-- `product.template` / `product.product`: extinse cu atribute și metode specifice feed-urilor.
-- `product.list`: administrarea listelor de produse folosite la generarea feed-urilor; modelul găzduiește și metoda de reîmprospătare programată (`_cron_refresh_feed`).
-- `website`: componente pentru configurarea și integrarea cu website-ul.
+- `product.template` (`models/product.py`): extins cu câmpul `google_product_category` și metode utilitare (`get_product_ID`, `_get_simple_info`) pentru informații ușoare de preț/stoc folosite la generarea feed-urilor.
+- `product.list` (`models/product_list.py`): moștenește `product.list` și `portal.mixin`; adaugă `id_field`, `brand_field` (calculat), `pricelist_id`, `website_id`, opțiuni de descriere (`use_html`, `use_short_description`, `use_name_as_description`) și domeniul de produse (`products_domain`); găzduiește metoda de reîmprospătare programată (`_cron_refresh_feed`).
+- `website` (`models/website.py`): extinde `sale_product_domain` pentru a include potrivirea căutării pe brand de produs.
 
 **Vizualizări**
 
 - `views/feed_google.xml`, `views/feed_google_index.xml`: șabloane de feed pentru Google Merchant Center.
-- `views/feed_emag.xml`, `views/feed_compari.xml`, `views/feed_e_licitatie.xml`: șabloane de feed pentru alte platforme și marketplace-uri.
+- `views/feed_emag.xml`: șablon de feed pentru eMAG Marketplace.
+- `views/feed_compari.xml`: șablon de feed pentru Compari.
+- `views/feed_e_licitatie.xml`: șablon de feed pentru e-licitatie.ro.
+- `views/feed_ptc.xml`: șablon de feed pentru clientul PTC.
 - `views/website_product_templates.xml`: șabloane web pentru livrarea feed-ului.
 - `views/product_view.xml`, `views/product_list_view.xml`: interfețe pentru gestionarea produselor și a listelor de produse.
 
 **Controllere**
 
-- `controllers/main.py`: controllere web pentru generarea și livrarea feed-urilor.
+- `controllers/main.py` (`WebsiteProducts`): controller web pentru generarea și livrarea feed-urilor (link-uri către produse, escapare CDATA pentru conținut HTML); folosește lock-uri consultative PostgreSQL (namespace `FEED_LOCK_CLASS_ID`) pentru a serializa generarea feed-urilor și a evita suprapunerea rulărilor concurente.
 
 **Acțiuni Automate / Acțiuni Server**
 
@@ -54,7 +57,7 @@ Conform secțiunii „Technical Implementation" din readme, modulul este structu
 
 #### 5. Conexiuni
 
-- `deltatech_product_list`: furnizează modelul de liste de produse pe care se bazează gruparea produselor pentru feed-uri.
-- `deltatech_brand_field`: oferă câmpul de brand/producător folosit în datele exportate către platforme.
-- `deltatech_website_short_description`: pune la dispoziție descrierea scurtă utilizată în feed-uri.
+- [deltatech_product_list](../deltatech_product_list/index.md): furnizează modelul de liste de produse pe care se bazează gruparea produselor pentru feed-uri.
+- [deltatech_brand_field](../deltatech_brand_field/index.md): oferă câmpul de brand/producător folosit în datele exportate către platforme.
+- [deltatech_website_short_description](../deltatech_website_short_description/index.md): pune la dispoziție descrierea scurtă utilizată în feed-uri.
 - `website_sale_stock`: aduce datele de stoc din e-commerce, valorificate la generarea feed-urilor.

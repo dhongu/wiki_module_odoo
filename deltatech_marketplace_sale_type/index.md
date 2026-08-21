@@ -1,10 +1,10 @@
 # Tip comandă de vânzare Marketplace (localizat la `deltatech_marketplace_sale_type/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_sale_type`
-- **Versiune:** `19.0.0.0.1`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_marketplace_sale_type`
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_marketplace_sale_type`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.0.0.2`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_sale_type`
+- **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_sale_type`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -21,11 +21,11 @@ Acest modul introduce un sistem specializat de clasificare pentru comenzile de v
 #### 3. Dependențe
 
 - [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md)
-- `deltatech_record_type`
+- [deltatech_record_type](../deltatech_record_type/index.md)
 
 #### 4. Componente Cheie
 
-Documentația de business este furnizată prin `readme/DESCRIPTION.md`; conform fluxului de ingestie, analiza detaliată a componentelor tehnice (modele, vizualizări, acțiuni) este omisă întrucât readme-ul nu o solicită explicit.
+Documentația de business este furnizată prin `readme/DESCRIPTION.md`; conform fluxului de ingestie, analiza detaliată a componentelor tehnice (modele, vizualizări, acțiuni) este omisă întrucât readme-ul nu o solicită explicit. Din inspecția rapidă a codului: modulul adaugă câmpul `so_type_id` pe `marketplace.backend` (folosind tipul de înregistrare din `deltatech_record_type`) și extinde formularul `deltatech_marketplace.view_marketplace_backend_form` cu acest câmp, pentru a permite asocierea unui tip implicit de comandă fiecărui backend de marketplace.
 
 #### 5. Conexiuni
 

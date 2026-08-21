@@ -1,10 +1,10 @@
 # Paleți pe comenzi de vânzare (localizat la `deltatech_sale_pallet/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_pallet`
-- **Versiune:** `19.0.1.0.8`
+- **Versiune:** `19.0.1.0.9`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_pallet`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_pallet`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -22,16 +22,17 @@ Modulul adaugă automat paleți pe comenzile de vânzare și pe facturi. Atunci 
 
 - `sale_margin`
 - `account`
+- `stock`
 
 #### 4. Componente Cheie
 
-*Sumarul și funcționalitățile au fost preluate din `readme/DESCRIPTION.md`; analiza detaliată a codului pentru această secțiune nu a fost solicitată în Readme. Componentele de mai jos sunt menționate orientativ, pe baza structurii modulului.*
+*Sumarul și funcționalitățile au fost preluate din `readme/DESCRIPTION.md`; analiza detaliată a codului pentru această secțiune nu a fost solicitată explicit în Readme. Componentele de mai jos sunt menționate orientativ, pe baza structurii modulului.*
 
 **Modele**
 
 - `product.category`: extins pentru opțiunea de palet la nivel de categorie.
-- `product.template`: extins pentru configurarea produsului ca palet și a cantității minime pentru un palet.
-- `sale.order` / `sale.order.line`: logica de adăugare automată a liniilor de palet pe comanda de vânzare.
+- `product.template`: extins pentru configurarea produsului ca palet și a cantității minime pentru un palet (`pallet_product_id`, `pallet_qty_min`).
+- `sale.order` / `sale.order.line`: recalculează liniile de palet la modificarea comenzii (`onchange_order_line`, `recompute_pallet_lines`, `compute_pallet_number`), adăugând sau ajustând automat linia de palet.
 - `account.move`: tratarea paleților la nivel de factură.
 - `sale.report`: extinderea raportării de vânzări.
 
@@ -44,3 +45,4 @@ Modulul adaugă automat paleți pe comenzile de vânzare și pe facturi. Atunci 
 
 - `sale_margin`: bază pentru gestionarea liniilor de comandă de vânzare extinse de acest modul.
 - `account`: tratarea paleților la nivel de factură.
+- `stock`: folosit de teste pentru actualizarea cantităților disponibile (`stock.quant._update_available_quantity`); dependență adăugată explicit în 19.0.1.0.9 (era adusă anterior indirect de alte module instalate).

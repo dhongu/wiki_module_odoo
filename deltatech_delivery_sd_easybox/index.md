@@ -1,10 +1,10 @@
 # Sameday Shipping EasyBox (localizat la `deltatech_delivery_sd_easybox/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_sd_easybox`
-- **Versiune:** `19.0.0.0.9`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_sd_easybox
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_delivery_sd_easybox`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.0.0.10`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_sd_easybox
+- **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_sd_easybox`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -19,7 +19,7 @@ Acest modul adaugă livrarea către lockerele Easybox ale curierului Sameday în
 
 #### 3. Dependențe
 
-- `deltatech_delivery_sd`: integrarea de bază Sameday (în curs de documentare în paralel — link va deveni activ după ingestie).
+- [deltatech_delivery_sd](../deltatech_delivery_sd/index.md): integrarea de bază Sameday.
 - [deltatech_delivery_locker_website](../deltatech_delivery_locker_website/index.md)
 
 #### 4. Componente Cheie
@@ -34,6 +34,4 @@ Conform fluxului de ingestie, secțiunea de componente nu a fost detaliată din 
 
 ---
 
-> **Avertismente:**
-> - Modul în stadiul `Beta`; nu a fost testat pe un sistem de producție.
-> - Marcat `installable: False` în manifest: frontend-ul JS (`easybox.esm.js`) folosește încă API-ul `WebsiteSale.include` din Odoo 18 (bazat pe jQuery/underscore). Este dezactivat până la migrarea la modelul de Interactions din Odoo 19, deoarece asset-urile defecte ar sparge întreg `web.assets_frontend`.
+> **Avertisment:** Modul în stadiul `Beta`; nu a fost testat pe un sistem de producție (conform `readme/DESCRIPTION.md`).

@@ -1,10 +1,10 @@
 # Deltatech EDI Base Connector (localizat la `deltatech_edi/index.md`)
 
 - **Nume Tehnic:** `deltatech_edi`
-- **Versiune:** `19.0.0.1.1`
+- **Versiune:** `19.0.0.1.8`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edi
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_edi`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -50,5 +50,5 @@ Acest modul reprezintă conectorul EDI (Electronic Data Interchange) de bază pe
 #### 5. Conexiuni
 
 - [deltatech_gln](../deltatech_gln/index.md): furnizează codurile GLN (Global Location Number) necesare identificării partenerilor în schimbul EDI.
-- `deltatech_ediconnect`: modul soră care extinde conectorul EDI de bază cu logica de conectare/transport a mesajelor.
-- `deltatech_edinet`: modul soră care implementează integrarea cu rețeaua/serviciul EDI.
+- [deltatech_ediconnect](../deltatech_ediconnect/index.md): modul soră care extinde conectorul EDI de bază cu logica de conectare/transport a mesajelor.
+- [deltatech_edinet](../deltatech_edinet/index.md): modul soră care implementează integrarea cu rețeaua/serviciul EDI.

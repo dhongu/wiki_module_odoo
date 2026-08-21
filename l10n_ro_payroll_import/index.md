@@ -1,25 +1,24 @@
-# Romania - Import Note Salarii (localizat la `l10n_ro_payroll_import/index.md`)
+# Romania - Payroll Import Notes (localizat la `l10n_ro_payroll_import/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_payroll_import`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_import`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_payroll_import`
-- **Ultima Ingestie:** `2026-06-09`
+- **Ultima Ingestie:** `2026-08-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul permite importul notelor contabile de salarii generate de aplicații externe de salarizare (SAGA, Nexus, Charisma, WizSalary etc.) direct în Odoo 19, fără reintroducere manuală. Se adresează companiilor care gestionează salarizarea într-o aplicație externă și trebuie să importe lunar nota contabilă de salarii în Odoo, cu distribuție pe centre de cost analitice. Fișierul exportat (JSON sau CSV) este parsat, codurile externe sunt mapate pe conturile Odoo, iar după validare se generează automat nota contabilă (`account.move`) postată, conform monografiei salariale (641 / 421 / 4315 / 4316 / 444 / 646 / 436).
+Modulul permite importul notelor contabile de salarii generate de aplicații externe de salarizare (SAGA, Nexus, Charisma, WizSalary etc.) direct în Odoo 19, fără reintroducere manuală. Se adresează companiilor care gestionează salarizarea în aplicații externe și trebuie să importe lunar nota contabilă de salarii în Odoo, cu distribuție pe centre de cost analitice.
 
 #### 2. Funcționalități Cheie
 
-- **Import fișiere** — suportă format JSON (structură flexibilă exportată de aplicații moderne) și format CSV (delimitatori automați: virgulă sau punct-și-virgulă), cu suport pentru denumiri de coloane în română și engleză.
+- **Import fișiere** — suportă format JSON (structură flexibilă exportată de aplicații moderne), CSV (delimitatori automați: virgulă sau punct-și-virgulă) și Excel (XLSX), cu suport pentru denumiri de coloane în română și engleză.
 - **Câmpuri suportate** — cont debit, cont credit, sumă, centru de cost, departament, descriere.
 - **Mapare conturi** — tabel de echivalență `cod extern → cont Odoo` configurat per companie, cu fallback automat prin căutare după prefix de cod (ex. `641` → primul cont care începe cu `641`).
 - **Mapare analitică** — `cod centru cost extern → cont analitic Odoo`, cu distribuție 100% pe centrul de cost indicat.
-- **Distribuție analitică pe linie** — linia de import moștenește `analytic.mixin`, expunând câmpul `analytic_distribution` pentru repartizarea pe centre de cost direct în formular.
 - **Validare și contabilizare** — verificare echilibru debit = credit înainte de validare, blocare import duplicat pentru aceeași perioadă și același jurnal, creare automată notă contabilă (`account.move`) în starea `posted`.
-- **Anulare** — anularea notei contabile asociate, cu reset la stare schiță pentru repostare.
+- **Anulare** — reversarea notei contabile asociate cu reset la stare schiță pentru repostare.
 - **Flux de stări** — `Schiță` → `Validat` → `Contabilizat` → `Anulat`.
 
 #### 3. Dependențe
@@ -37,7 +36,7 @@ Modulul permite importul notelor contabile de salarii generate de aplicații ext
 - `l10n.ro.payroll.account.mapping`: configurarea de mapare conturi per companie; expune `get_account` (cu fallback pe prefix de cod) și `get_analytic_distribution`.
 - `l10n.ro.payroll.account.mapping.line`: linie de mapare `cod extern → cont Odoo`.
 - `l10n.ro.payroll.analytic.mapping.line`: linie de mapare `cod centru cost extern → cont analitic Odoo`.
-- `l10n.ro.payroll.import.wizard`: wizard de încărcare fișier (JSON/CSV) care parsează datele și generează importul cu liniile aferente.
+- `l10n.ro.payroll.import.wizard`: wizard de încărcare fișier (JSON/CSV/XLSX) care detectează formatul după extensie, parsează datele și generează importul cu liniile aferente (parsarea XLSX necesită biblioteca opțională `openpyxl`).
 
 **Vizualizări**
 

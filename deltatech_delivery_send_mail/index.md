@@ -1,10 +1,10 @@
 # Deltatech Delivery Send Mail (localizat la `deltatech_delivery_send_mail/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_send_mail`
-- **Versiune:** `19.0.1.0.2`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_send_mail
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_delivery_send_mail`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.1.0.4`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_send_mail
+- **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_send_mail`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -26,6 +26,8 @@ Acest modul îmbunătățește satisfacția și transparența față de client p
 #### 4. Componente Cheie
 
 Conform fluxului de ingestie, secțiunile de „Componente Cheie" sunt omise deoarece modulul dispune de un fișier `readme/DESCRIPTION.md` care acoperă scopul și funcționalitățile, fără a solicita explicit detalierea componentelor tehnice.
+
+De reținut din `readme/HISTORY.md` (relevant pentru versiunea curentă `19.0.1.0.4`): modulul folosește acum șabloane de email dedicate (`data/mail_template_data.xml`) pentru „AWB creat" și „AWB ridicat", ambele incluzând link-ul de tracking al curierului (`object.carrier_tracking_url`), în locul șablonului generic `stock.mail_template_data_delivery_confirmation`. A fost corectată și valoarea implicită din `res.company`, astfel încât „AWB ridicat" să nu mai preia implicit șablonul „AWB creat". Versiunea anterioară (`19.0.1.0.3`) a adăugat acoperire de teste (`tests/test_send_mail.py`) pe mecanismul de mail gateway simulat.
 
 #### 5. Conexiuni
 

@@ -1,10 +1,10 @@
 # Deltatech Advanced Planner (localizat la `deltatech_advanced_planner/index.md`)
 
 - **Nume Tehnic:** `deltatech_advanced_planner`
-- **Versiune:** `19.0.1.3.0`
+- **Versiune:** `19.0.1.3.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_advanced_planner
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_advanced_planner`
-- **Ultima Ingestie:** `2026-06-09`
+- **Ultima Ingestie:** `2026-08-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -43,6 +43,7 @@ Deltatech Advanced Planner este un planificator avansat de stoc care răspunde l
 - `stock`
 - `resource`
 - `mail`
+- `web_gantt`
 
 #### 4. Componente Cheie
 

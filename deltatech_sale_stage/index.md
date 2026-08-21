@@ -1,10 +1,10 @@
 # Deltatech Sale Order Stage (localizat la `deltatech_sale_stage/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_stage`
-- **Versiune:** `19.0.1.2.4`
+- **Versiune:** `19.0.1.2.5`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_stage`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_stage`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -24,6 +24,7 @@ Acest modul ajută echipa de vânzări să țină sub control fiecare comandă p
 #### 3. Dependențe
 
 - `sale_stock`
+- [deltatech_widget_many2one_badge](../deltatech_widget_many2one_badge/index.md)
 
 #### 4. Componente Cheie
 

@@ -1,15 +1,15 @@
 # Romania - Stock Valuation Pack CMP (AVCO) (localizat la `l10n_ro_stock_pack_cmp/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_pack_cmp`
-- **Versiune:** `19.0.1.3.0`
+- **Versiune:** `19.0.1.3.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_pack_cmp
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_pack_cmp`
-- **Ultima Ingestie:** `2026-08-10`
+- **Ultima Ingestie:** `2026-08-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul este un „pachet" (bundle) care instalează dintr-o singură mișcare toate modulele necesare pentru gestiunea contabilă a stocurilor în România cu metoda costului mediu ponderat (CMP / AVCO), conform OMFP 1802/2014 pct. 293–305. La instalare, configurează automat companiile românești pe metoda de cost „Average Cost" cu valorizare perpetuă, astfel încât un consultant Terrabit poate porni un client pe fluxul complet de stoc CMP fără să instaleze și să configureze manual șase module separate.
+Acest modul este un „pachet" (bundle) care instalează dintr-o singură mișcare toate modulele necesare pentru gestiunea contabilă a stocurilor în România cu metoda costului mediu ponderat (CMP / AVCO), conform OMFP 1802/2014 pct. 96 (metodele de evaluare la ieșire) și pct. 276–291 (evaluarea stocurilor, inventarul permanent). La instalare, configurează automat companiile românești pe metoda de cost „Average Cost" cu valorizare perpetuă, astfel încât un consultant Terrabit poate porni un client pe fluxul complet de stoc CMP fără să instaleze și să configureze manual șase module separate.
 
 #### 2. Funcționalități Cheie
 

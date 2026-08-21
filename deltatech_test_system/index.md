@@ -1,10 +1,10 @@
 # Deltatech Test System (localizat la `deltatech_test_system/index.md`)
 
 - **Nume Tehnic:** `deltatech_test_system`
-- **Versiune:** `19.0.0.0.7`
+- **Versiune:** `19.0.0.0.9`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_test_system`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_test_system`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -19,6 +19,7 @@ Acest modul ajută la marcarea clară a unei baze de date Odoo ca fiind de test 
 #### 3. Dependențe
 
 - `web`
+- `base_setup`
 
 #### 4. Componente Cheie
 
@@ -31,7 +32,7 @@ Acest modul ajută la marcarea clară a unei baze de date Odoo ca fiind de test 
 
 **Vizualizări**
 
-- `res_config_settings_view.xml`: adaugă în Setări opțiunile pentru marcarea stării sistemului și neutralizarea bazei de date.
+- `res_config_settings_view.xml`: adaugă în Setări opțiunile pentru marcarea stării sistemului și neutralizarea bazei de date; moștenește vizualizarea `base_setup.res_config_settings_view_form`.
 - `ir_module_module_view.xml`: ajustări de vizualizare aferente modulelor.
 - `templates.xml`: definește bannerul permanent afișat în partea de sus a interfeței pentru bazele de date de test.
 

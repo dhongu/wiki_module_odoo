@@ -1,10 +1,10 @@
 # Print to ECR from POS (localizat la `deltatech_pos/index.md`)
 
 - **Nume Tehnic:** `deltatech_pos`
-- **Versiune:** `19.0.2.3.3`
+- **Versiune:** `19.0.2.6.11`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_pos`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -32,10 +32,17 @@ Modulul Deltatech POS ECR asigură o integrare eficientă între punctul de vân
 - Incotex Succes — cu driverul FiscalPrinterDevice.
 - Daisy — cu driver corespunzător (folosind protocolul Daisy).
 
+**Configurare și utilizare (din `readme/USAGE.md`):**
+
+- Codul ECR se setează per metodă de plată (Punct de vânzare > Configurare > Metode de plată).
+- Comportamentul specific ECR (cod de bare pe bon, Cash In/Out, Cash In/Out către ECR, duplicat dispoziție de plată, departament implicit) se configurează în Setările Punctului de Vânzare, secțiunea ECR.
+- Rapoartele X și Z se tipăresc din sesiunea POS activă (Punct de vânzare > Comenzi > Sesiuni).
+
 #### 3. Dependențe
 
 - `point_of_sale`
 - [deltatech_pos_base](../deltatech_pos_base/index.md)
+- [deltatech_ecr_connect](../deltatech_ecr_connect/index.md)
 
 #### 4. Componente Cheie
 
@@ -44,3 +51,4 @@ Conform fluxului de ingestie, secțiunile de Componente Cheie au fost omise deoa
 #### 5. Conexiuni
 
 - [deltatech_pos_base](../deltatech_pos_base/index.md): modul de bază POS Deltatech pe care se construiește integrarea ECR (dependență directă).
+- [deltatech_ecr_connect](../deltatech_ecr_connect/index.md): componenta partajată de conectare/comunicare cu casele de marcat, folosită de `deltatech_pos` pentru generarea fișierelor ECR (dependență directă, adăugată față de versiunea anterioară a modulului).

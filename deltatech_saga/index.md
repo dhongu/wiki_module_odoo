@@ -1,10 +1,10 @@
 # Interfață SAGA
 
 - **Nume Tehnic:** `deltatech_saga`
-- **Versiune:** `19.0.6.6.10`
+- **Versiune:** `19.0.6.15.0`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_saga`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -21,6 +21,8 @@ Interfața Deltatech SAGA este un modul cuprinzător conceput pentru a facilita 
 - Suport pentru ambele formate de schimb de date: XML (recomandat) și DBF.
 - Generarea automată a codurilor SAGA pentru parteneri folosind secvențe sau codul de TVA.
 - Câmp pe factură pentru a indica gestiunea/locația folosită la exportul facturilor către SAGA.
+- Coloana `TIP` din exportul facturilor reflectă natura documentului (factură normală, bon fiscal cu factură, bon fiscal fără factură, bon cu CIF, sau un cod SAGA prioritar setat pe poziția fiscală precum `T` taxare inversă sau `A` aviz) — determinată din integrarea cu `deltatech_sale_store`, dacă e instalat, sau din flag-ul jurnalului de bonuri fiscale ca rezervă.
+- La finalul exportului de facturi, wizard-ul afișează o secțiune de reconciliere (total venituri clasa 7 vs. total exportat pe `TIP`), utilă pentru a depista notele contabile manuale sau documentele de furnizor înregistrate greșit pe cont de venit.
 - Pentru Odoo Community, utilizatorii trebuie incluși în grupul „Show Full Accounting Features" pentru a accesa meniul de export SAGA.
 
 #### 3. Dependențe
@@ -39,4 +41,5 @@ Interfața Deltatech SAGA este un modul cuprinzător conceput pentru a facilita 
 
 #### 5. Conexiuni
 
-- `deltatech_contwin`: modul înrudit de export contabil (interfață către WinMentor / Contwin), documentat în paralel ca alternativă pentru schimbul de date contabile pe piața RO.
+- [deltatech_contwin](../deltatech_contwin/index.md): modul înrudit de export contabil (interfață către WinMentor / Contwin), documentat în paralel ca alternativă pentru schimbul de date contabile pe piața RO.
+- [deltatech_sale_store](../deltatech_sale_store/index.md): furnizează flag-ul „Sale from store" propagat pe factură/comandă, folosit pentru a determina automat coloana `TIP` (`f`) la exportul facturilor emise pe bon fiscal.

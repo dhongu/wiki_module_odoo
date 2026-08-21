@@ -1,10 +1,10 @@
 # Conector Marketplace Magento (localizat la `deltatech_marketplace_magento/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_magento`
-- **Versiune:** `19.0.0.0.5`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_marketplace_magento
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_marketplace_magento`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.0.0.8`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_magento
+- **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_magento`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -45,11 +45,11 @@ Conectorul Magento Marketplace este o extensie Odoo dezvoltată de Terrabit care
 #### 3. Dependențe
 
 - [deltatech_marketplace](../deltatech_marketplace/index.md)
-- `deltatech_marketplace_website`
+- [deltatech_marketplace_website](../deltatech_marketplace_website/index.md)
 - [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md)
 - [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md)
 - [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md)
-- `deltatech_marketplace_sale_stage`
+- [deltatech_marketplace_sale_stage](../deltatech_marketplace_sale_stage/index.md)
 
 #### 4. Componente Cheie
 

@@ -1,10 +1,10 @@
 # Terrabit Payable and Receivable in Partner Form (localizat la `terrabit_partner_payable_receivable/index.md`)
 
 - **Nume Tehnic:** `terrabit_partner_payable_receivable`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.2.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_partner_payable_receivable
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_partner_payable_receivable`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -25,17 +25,20 @@ Acest modul îmbunătățește fișa partenerului adăugând o vizualizare clar�
 
 #### 4. Componente Cheie
 
-Documentația acestui modul a fost generată pe baza fișierului `readme/DESCRIPTION.md`, conform fluxului de ingestie. Componentele tehnice de mai jos sunt deduse din `__manifest__.py` și oferite cu titlu orientativ; pentru detalii complete consultă codul sursă.
+Documentația acestui modul a fost generată pe baza fișierului `readme/DESCRIPTION.md`, conform fluxului de ingestie. Componentele tehnice de mai jos sunt deduse din `__manifest__.py` și cod, oferite cu titlu orientativ; pentru detalii complete consultă codul sursă.
 
 **Modele**
 
-- `res.partner`: extins pentru a afișa sumele de plată și de încasat direct pe fișa partenerului.
-- `res.config.settings`: extins pentru configurarea grupurilor de conturi folosite la calculul soldurilor (inclusiv plăți în avans).
+- `res.partner`: extins cu câmpurile calculate `partner_aml_receivable`, `partner_aml_payable` (sold din liniile de notă contabilă postate, pe conturile de tip `asset_receivable`/`liability_payable`, nereconciliate), `receivable_date` și sumele de avans client/furnizor (`partner_aml_deposit_customer`, `partner_aml_deposit_vendor`) calculate din grupurile de conturi de avans configurate pe companie.
+- `res.company` / `res.config.settings`: extinse pentru configurarea grupurilor de conturi (`account_group_deposit_customer_id`, `account_group_deposit_vendor_id`) folosite la calculul avansurilor client/furnizor.
+- `sale.order` (`models/sale.py`): ajustări conexe fluxului de facturare/avans.
+- `sale.advance.payment.inv` (`wizard/sale_make_invoice_advance.py`): ajustări pe asistentul de facturare în avans.
 
 **Vizualizări**
 
 - `views/res_partner.xml`: adaugă pe formularul partenerului afișarea sumelor de plată/încasat și fila specializată pentru reconcilierea soldurilor.
 - `views/sale_view.xml`: ajustări pe vizualizările de vânzări.
+- `views/templates.xml`: șabloane QWeb asociate.
 - `views/res_config_settings_views.xml`: opțiuni de configurare a grupurilor de conturi.
 - `wizard/sale_make_invoice_advance.xml`: ajustări pe asistentul de facturare în avans.
 
@@ -45,4 +48,4 @@ Documentația acestui modul a fost generată pe baza fișierului `readme/DESCRIP
 
 #### 5. Conexiuni
 
-- `terrabit_partner_credit_limit`: modul Terrabit înrudit, axat pe gestionarea limitei de credit a partenerului; completează vizibilitatea financiară oferită de acest modul pe fișa partenerului.
+- [terrabit_partner_credit_limit](../terrabit_partner_credit_limit/index.md): modul Terrabit înrudit, axat pe gestionarea limitei de credit a partenerului; completează vizibilitatea financiară oferită de acest modul pe fișa partenerului.

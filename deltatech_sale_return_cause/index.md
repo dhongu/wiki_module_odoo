@@ -1,10 +1,10 @@
 # Sale Return Cause (localizat la `deltatech_sale_return_cause/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_return_cause`
-- **Versiune:** `19.0.0.0.7`
+- **Versiune:** `19.0.0.0.8`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_return_cause`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_return_cause`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -30,8 +30,8 @@ Modulul **Sale Return Cause** îmbunătățește gestiunea vânzărilor din Odoo
 **Modele**
 
 - `sale.return.cause`: model nou care definește catalogul de cauze de retur predefinite (probleme de calitate, erori de livrare, greșeli ale clientului etc.).
-- `sale.order` (extins): adaugă cauza de retur, valoarea returnată și data returului pe comanda de vânzare.
-- `sale.report` (extins): adaugă cauza de retur în raportul standard de Analiză a Vânzărilor.
+- `sale.order` (extins): adaugă cauza de retur (câmpul nou `return_cause_id`, precum și câmpul vechi `return_cause` de tip selecție, păstrat pentru compatibilitate), valoarea returnată (`return_amount`) și data returului (`return_cause_date`) pe comanda de vânzare; include și logica de calcul automat al valorii returnate pe baza notelor de credit postate.
+- `sale.report` (extins): adaugă cauza de retur (`return_cause_id`, `return_cause`, `return_cause_date`) în raportul standard de Analiză a Vânzărilor, inclusiv la nivel de select și group by SQL.
 
 **Vizualizări**
 
@@ -41,8 +41,8 @@ Modulul **Sale Return Cause** îmbunătățește gestiunea vânzărilor din Odoo
 
 **Acțiuni Automate / Acțiuni Server**
 
-- `ir_cron_data.xml`: acțiune programată (cron) zilnică ce reverifică și actualizează valorile returnate pentru comenzile din ultimul an.
-- `ir_config_parameter_data.xml`: parametru de configurare care comută între calculul automat și introducerea manuală a valorilor returnate.
+- `ir_cron_check_and_update_return_amount` (`ir_cron_data.xml`): acțiune programată (cron) zilnică ce reverifică și actualizează valorile returnate pentru comenzile din ultimul an care au o cauză de retur asociată, doar dacă e activat calculul automat.
+- `param_auto_calculate_return_amount` (`ir_config_parameter_data.xml`): parametru de configurare (`deltatech_sale_return_cause.auto_calculate`) care comută între calculul automat și introducerea manuală a valorilor returnate.
 
 #### 5. Conexiuni
 

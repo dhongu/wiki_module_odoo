@@ -1,10 +1,10 @@
 # Validare Telefon pe Website (localizat la `deltatech_website_phone_validation/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_phone_validation`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_phone_validation`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_phone_validation`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 

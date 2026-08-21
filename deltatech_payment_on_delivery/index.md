@@ -1,10 +1,10 @@
 # Plată Ramburs / la Livrare (COD) (localizat la `deltatech_payment_on_delivery/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_on_delivery`
-- **Versiune:** `19.0.4.0.7`
+- **Versiune:** `19.0.4.1.2`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_on_delivery`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_on_delivery`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -28,6 +28,9 @@ Modulul integrează o metodă de plată „Ramburs la livrare" (Cash On Delivery
 - `sale`
 - `delivery`
 - `payment_custom`
+- `account`
+- `stock_delivery`
+- `website_sale`
 
 #### 4. Componente Cheie
 

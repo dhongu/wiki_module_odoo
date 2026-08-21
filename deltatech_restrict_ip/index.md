@@ -1,10 +1,10 @@
 # Deltatech Restrict IP Login (localizat la `deltatech_restrict_ip/index.md`)
 
 - **Nume Tehnic:** `deltatech_restrict_ip`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.3.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_restrict_ip
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_restrict_ip`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -21,6 +21,7 @@ Acest modul adaugă un strat de securitate esențial pentru Odoo, permițând re
 #### 3. Dependențe
 
 - `base`
+- `website`
 
 #### 4. Componente Cheie
 

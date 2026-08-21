@@ -1,10 +1,10 @@
-# Conector eMAG Marketplace (localizat la `deltatech_marketplace_emag/index.md`)
+# EMAG Marketplace Connector (localizat la `deltatech_marketplace_emag/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_emag`
-- **Versiune:** `19.0.2.3.7`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_marketplace_emag`
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_marketplace_emag`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.2.3.20`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_emag`
+- **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_emag`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -44,8 +44,8 @@ Conectorul eMAG Marketplace este o extensie Odoo specializată, dezvoltată de T
 - [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md)
 - [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md)
 - [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md)
-- `deltatech_marketplace_website`
-- `deltatech_delivery`
+- [deltatech_marketplace_website](../deltatech_marketplace_website/index.md)
+- [deltatech_delivery](../deltatech_delivery/index.md)
 
 #### 4. Componente Cheie
 
@@ -54,9 +54,9 @@ Modulul este construit peste cadrul marketplace al Deltatech și implementează 
 - **Backend Adapter**: gestionează comunicarea API cu eMAG.
 - **Modele de binding (binding)**: leagă entitățile Odoo de omoloagele lor din eMAG — binding de produs, comandă, categorie, transportator de livrare și metodă de plată.
 - **Servicii de sincronizare**: gestionează fluxul de date între sisteme.
-- **Job-uri programate**: automatizează sincronizarea în fundal (definite în `data/ir_cron_data.xml`).
+- **Job-uri programate**: automatizează sincronizarea în fundal — `ir_cron_emag_set_price` (definit în `data/ir_cron_data.xml`) rulează la fiecare 4 ore actualizarea automată a prețurilor pe backend-ul de marketplace (dezactivat implicit).
 
-Pentru detalii suplimentare de configurare și operare, modulul include un manual de utilizare („Manual utilizare eMAG Marketplace.docx").
+Pentru detalii suplimentare de configurare și operare, modulul include un manual de utilizare („Manual utilizare eMAG Marketplace.docx") și un ghid `readme/CONFIGURE.md`.
 
 #### 5. Conexiuni
 
@@ -64,3 +64,5 @@ Pentru detalii suplimentare de configurare și operare, modulul include un manua
 - [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md): integrarea comenzilor de vânzare cu eMAG.
 - [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md): integrarea metodelor și informațiilor de livrare eMAG.
 - [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md): integrarea metodelor de plată și reconcilierea plăților eMAG.
+- [deltatech_marketplace_website](../deltatech_marketplace_website/index.md): integrarea cu prezența de website/e-commerce a marketplace-ului.
+- [deltatech_delivery](../deltatech_delivery/index.md): gestiunea metodelor de livrare folosite de conector.

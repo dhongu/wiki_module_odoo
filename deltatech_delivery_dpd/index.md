@@ -1,10 +1,10 @@
 # DPD Romania Shipping (localizat la `deltatech_delivery_dpd/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_dpd`
-- **Versiune:** `19.0.0.2.0`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_dpd
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_delivery_dpd`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.0.5.0`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_dpd
+- **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_dpd`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -19,6 +19,8 @@ Modulul DPD Romania Shipping integrează Odoo cu serviciul de curierat DPD (Dyna
 - **Funcții de urmărire**: generarea linkurilor de tracking, accesul la istoricul de stare al expedierii și actualizarea stării livrării în Odoo pe baza statusului DPD.
 - **Opțiuni avansate de expediere**: ramburs (cash on delivery), valoare declarată (asigurare), instrucțiuni speciale de livrare și gestionarea coletelor multiple, opțiune de pachet deschis și livrare sâmbăta.
 - **Gestionarea punctelor de ridicare (pickup)**: configurarea punctelor de ridicare DPD, asocierea cu adresele companiei și detectarea automată a client ID-ului.
+
+Funcționalități explicit neacoperite (conform DESCRIPTION.md): generare AWB în format HTML, listă de lockere, listă de puncte de ridicare (pickup point), expediere cu dimensiuni, notă de restituire în AWB, trimiterea unui locker id în AWB, restricționarea la un singur punct de ridicare indicat.
 
 #### 3. Dependențe
 

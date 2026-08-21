@@ -1,15 +1,15 @@
 # Instrumente de Plată (Cecuri, Bilete la Ordin) (localizat la `l10n_ro_payment_instruments/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_payment_instruments`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payment_instruments
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_payment_instruments`
-- **Ultima Ingestie:** 2026-06-01
+- **Ultima Ingestie:** 2026-08-20
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul gestionează instrumentele de plată specifice (cecuri, bilete la ordin, cambii) conform Legii 58/1934 și Legii 59/1934. Urmărește fiecare instrument printr-o mașină de stări de la emitere/primire până la onorare sau refuz, generează automat notele contabile aferente fiecărei etape și oferă un scadențar cu alerte. Conturile contabile sunt auto-detectate din planul de conturi RO și pot fi suprascrise manual.
+Modulul gestionează instrumentele de plată specifice (cecuri, bilete la ordin, cambii) conform Legii 58/1934 (cambia și biletul la ordin) și Legii 59/1934 (cecul). Urmărește fiecare instrument printr-o mașină de stări de la emitere/primire până la onorare sau refuz, generează automat notele contabile aferente fiecărei etape și oferă un scadențar cu alerte. Conturile contabile sunt auto-detectate din planul de conturi RO și pot fi suprascrise manual.
 
 #### 2. Funcționalități Cheie
 
@@ -17,6 +17,7 @@ Modulul gestionează instrumentele de plată specifice (cecuri, bilete la ordin,
 - Mașină de stări: Ciornă → În portofoliu → Remis la bancă → Onorat, cu ramuri Refuzat / Protestat și Andosat (pentru BO/cambii primite).
 - Note contabile automate per etapă (ex.: cec primit Dr 5113 = Cr 4111 → onorare Dr 5121 = Cr 5113; BO emis Dr 401 = Cr 403 → plată Dr 403 = Cr 5121; andosare BO Dr 401 = Cr 413).
 - Gestionarea refuzului: reactivarea creanței/datoriei și activitate de avertizare.
+- Blocaj opt-in la facturare (FR-39): dacă `res.company.l10n_ro_block_refused_instrument` e bifat, emiterea unei facturi de vânzare către un partener cu instrumente de plată refuzate este blocată (eroare dură), în loc de simpla activitate de avertizare. Gardă agregată prin mixinul de postare din `l10n_ro_anaf_base`.
 - Scadențar cu coloane "Zile până la scadență" și coduri de culoare în listă.
 - Cron zilnic opțional de alertă cu X zile înainte de scadență (parametru `l10n_ro_payment_instruments.alert_days_before_due`, implicit 5 zile).
 - Auto-detectare conturi 5113, 413, 403, 4111, 401, 5121 din planul RO, cu suprascriere manuală per instrument.
@@ -24,17 +25,22 @@ Modulul gestionează instrumentele de plată specifice (cecuri, bilete la ordin,
 #### 3. Dependențe
 
 - `account`
-- `[[l10n_ro]]`
+- `l10n_ro`
+- [l10n_ro_anaf_base](../l10n_ro_anaf_base/index.md)
 
 #### 4. Componente Cheie
 
 **Modele**
 
 - `l10n.ro.payment.instrument`: Instrumentul de plată cu mașina de stări, conturile asociate și generarea notelor contabile.
+- `account.move` (extindere): adaugă blocajul opt-in de postare a facturilor de vânzare pentru partenerii cu instrumente refuzate, agregat în garda de postare din `l10n_ro_anaf_base`.
+- `res.company` (extindere): câmpul boolean `l10n_ro_block_refused_instrument` care activează blocajul.
+- `res.config.settings` (extindere): expune `l10n_ro_block_refused_instrument` în configurarea companiei.
 
 **Vizualizări / Date**
 
 - `views/l10n_ro_payment_instrument_views.xml`: Interfața de gestionare și scadențarul instrumentelor.
+- `views/res_config_settings_views.xml`: Setarea de blocaj facturare pentru parteneri cu instrumente refuzate.
 - `data/ir_cron.xml`: Cron-ul zilnic de alertă scadență.
 - `security/ir.model.access.csv`: Drepturile de acces.
 
@@ -44,4 +50,4 @@ Modulul gestionează instrumentele de plată specifice (cecuri, bilete la ordin,
 
 #### 5. Conexiuni
 
-- `[[l10n_ro_leasing]]`
+- [l10n_ro_leasing](../l10n_ro_leasing/index.md)

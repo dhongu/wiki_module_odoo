@@ -1,10 +1,10 @@
 # Terrabit Sale Cancel Order (localizat la `deltatech_sale_cancel_order/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_cancel_order`
-- **Versiune:** `19.0.0.1.0`
+- **Versiune:** `19.0.0.2.0`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_cancel_order`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_cancel_order`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-08-20`
 
 #### 1. Sumar
 
@@ -20,6 +20,7 @@ Acest modul oferă clienților posibilitatea de a solicita anularea unei comenzi
 - O bară roșie este afișată în formular pentru comenzile cu o cerere de anulare.
 - Motivul cererii de anulare este afișat în chatter-ul comenzii de vânzare.
 - În funcție de setări (Vânzări -> Configurare), se trimite un e-mail către agentul de vânzări al comenzii și către alți parteneri.
+- Blochează validarea (expedierea) unui transfer de stoc (`stock.picking`) dacă acesta are o anulare solicitată (`cancel_requested`), prevenind livrarea unei comenzi pentru care clientul a cerut anularea.
 
 #### 3. Dependențe
 
@@ -28,7 +29,9 @@ Acest modul oferă clienților posibilitatea de a solicita anularea unei comenzi
 
 #### 4. Componente Cheie
 
-Documentația acestei secțiuni a fost omisă deoarece modulul include un fișier `readme/DESCRIPTION.md`, care a fost folosit ca sursă principală conform fluxului de ingestie.
+Documentația detaliată a acestei secțiuni a fost omisă deoarece modulul include un fișier `readme/DESCRIPTION.md`, care a fost folosit ca sursă principală conform fluxului de ingestie. Se semnalează totuși, ca excepție explicit adusă de codul recent, componenta tehnică nou introdusă:
+
+- `stock.picking` (extindere): adaugă câmpul `cancel_requested` și suprascrie `button_validate()` pentru a bloca validarea transferurilor de stoc asociate unei cereri de anulare, cu un mesaj de eroare explicit.
 
 #### 5. Conexiuni
 
