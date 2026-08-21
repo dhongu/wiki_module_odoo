@@ -4,6 +4,17 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-08-20] Rezolvare conflict de nume duplicat `l10n_ro_account_bank_statement_import_xlsx`
+
+- **Acțiune:** Investigație (agent read-only) a confirmat că modulul `l10n_ro_account_bank_statement_import_xlsx` exista ca **două module distincte** cu același nume tehnic — unul în `odoo-addons/l10n_ro_ent` (Enterprise, OEEL-1, plătit) și unul în `odoo-addons/bitshop_ent` (AGPL-3, moștenit din 2016 "Forest and Biomass Romania"). Cauza: o migrare din mai 2026 (AGPL → Enterprise) rămasă incompletă — ambele au supraviețuit și au fost întreținute în paralel până azi. Confirmat din cod (`odoo/modules/module.py`): Odoo nu semnalează conflictul de nume, ia silențios primul director găsit în `addons_path` — iar `bitshop_ent` apărea înaintea `l10n_ro_ent` în `odoo.conf`, deci varianta AGPL veche câștiga silențios pe toate cele 14 instanțe client care au ambele suite, iar varianta Enterprise plătită nu se instala niciodată.
+- **Decizie utilizator:** păstrează `l10n_ro_account_bank_statement_import_xlsx` doar în `l10n_ro_ent`; elimină complet varianta din `bitshop_ent` (nu redenumire).
+- **Executat:** `git rm -r l10n_ro_account_bank_statement_import_xlsx` în repo-ul `odoo-addons/bitshop_ent` (branch `19.0`), urmat de regenerarea `README.md` al suitei prin `update_readme.sh` (pre-commit, hook `oca-gen-addons-table`) — linia modulului a dispărut automat din tabelul de module. Diff-ul a fost restrâns strict la această schimbare (au fost revertite 6 fișiere `index.html` neînrudite, regenerate ca efect secundar al rulării hook-ului pe toată suita, dar cu drift preexistent nelegat de acest task).
+- **Neschimbat:** pagina wiki a modulului (deja documenta corect versiunea `l10n_ro_ent`, fără nicio referire directă la copia ștearsă). Dependența declarată în `proiecte/flodel/terrabit_flodel/__manifest__.py` rămâne funcțională — se va rezolva acum exclusiv prin `l10n_ro_ent`.
+- **Rămas de făcut (nu în sarcina agentului):** commit + push pe repo-ul `bitshop_ent` — lăsate explicit în sarcina utilizatorului, conform cererii.
+- **Fișiere atinse:** `odoo-addons/bitshop_ent/README.md` (modificat local, necommis), `odoo-addons/bitshop_ent/l10n_ro_account_bank_statement_import_xlsx/*` (șters, necommis), `wiki_module_odoo/log.md`.
+
+---
+
 ## [2026-08-20] Re-ingestie 170 module cu drift de versiune (audit sistematic)
 
 - **Acțiune:** Utilizatorul a întrebat dacă toate modulele din wiki sunt la ultima versiune. Un script de audit a comparat câmpul `Versiune:` din fiecare din cele 463 pagini wiki cu versiunea reală din `__manifest__.py` local, excluzând fals-pozitivele cauzate de repo-ul `l10n-romania` fiind pe branch-ul greșit local (`18.0-fix-...`) și de copii client-pinned din `proiecte/`. Rezultat: 272 module la zi, **170 module cu drift real** (wiki mai vechi decât codul). Toate cele 170 au fost re-ingerate în paralel, în 9 loturi de câte 20 de subagenți `documentarist-wiki` izolați (limita de concurență), cu instrucțiune explicită de regenerare completă a paginii (nu doar bump de versiune).
