@@ -1,10 +1,11 @@
 # Deltatech Purchase UBL (localizat la `deltatech_purchase_ubl/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_ubl`
-- **Versiune:** `19.0.1.2.4`
+- **Versiune:** `19.0.1.3.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_ubl
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_ubl`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-08-25`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -25,6 +26,8 @@ Acest modul importă facturi de la furnizori în format UBL XML (Universal Busin
 - **Automatizare de stoc:** validează opțional recepția de stoc asociată, potrivind cantitățile din XML; liniile de servicii cu politică de facturare „la recepție" (ex. taxele de eco-tax) sunt marcate manual ca recepționate, deoarece nu au mișcări de stoc.
 - **Contabilitate:** creează și leagă opțional o factură de la furnizor pornind de la comanda de achiziție. Factura se creează automat când documentul sursă identifică un număr de factură, dar numai dacă înainte comanda a fost confirmată (`state` în `purchase`/`done`) — pentru a evita generarea unor facturi „fantomă" cu cantități zero pe comenzi neconfirmate.
 - **Produse lipsă:** opțiune de creare automată a produselor lipsă folosind datele din fișierul UBL.
+- **Previzualizare cu potrivire pe culori** (nou în 19.0.1.3.0, ticket #9315): fluxul interactiv (butonul „Importă UBL” de pe comandă) are acum doi pași — „Preview” analizează XML-ul și afișează câte o linie per articol din factură, cu produsul identificat de algoritm și modul în care a fost găsit, codificat pe culori: verde = potrivire după cod de furnizor sau cod de bare (sigură), galben = potrivire doar după nume (de verificat), roșu = nicio potrivire (s-ar crea un produs nou). Utilizatorul poate alege manual alt produs pe orice linie înainte de a confirma; alegerea manuală înlocuiește potrivirea automată (`_process_invoice_data(product_map=...)`). Punctul de intrare headless `action_import` rămâne neschimbat, deci apelanții automatizați funcționează în continuare.
+- **Creare de produse controlată pe fluxul automat** (fix în 19.0.1.3.0, ticket #9315): `_process_attachments_for_post` rula întotdeauna importul headless cu `create_missing_products=True`. Era în regulă pentru wizard-ul interactiv, unde un utilizator revizuiește ce se creează, dar era și singurul punct de intrare pentru atașamentele XML postate de apelanți automatizați (ex. `l10n_ro_message_spv_purchase`, care atașează XML-ul SPV pe comenzi de achiziție create înainte ca factura să existe). Când linia din factura sursă nu avea cod de furnizor și numele nu se potrivea exact cu un produs existent, importul headless crea în tăcere un produs duplicat, nerevizuit de nimeni. Acum, `_process_attachments_for_post` respectă cheia de context `purchase_ubl_no_new_products`: când e setată, importul headless rulează cu `create_missing_products=False`, iar liniile nepotrivite rămân în jurnalul „produse nepotrivite” al wizard-ului, în loc să creeze un produs.
 
 Modulul suportă namespace-urile standard UBL Invoice și mapările uzuale de coduri de unitate de măsură (C62, KGM, LTR etc.).
 
