@@ -15,6 +15,11 @@ POS-ul Odoo cu evidența cerută în România: urmărirea seriei și numărului 
 comandă, blocarea închiderii sesiunii dacă există comenzi plătite fără bon fiscal, raportul Z fiscal
 reconciliat cu vânzările și încasările, și arhivarea jurnalului electronic AMEF.
 
+Din versiunea 19.0.2.0.0, modulul poate **importa direct arhiva periodică a casei de marcat** (fișierul
+`.zip` cu bonurile `.p7b` primit de la aparat) și reconciliază automat, bon cu bon, ce a emis fizic
+aparatul fiscal față de ce a înregistrat Odoo — fără introducere manuală și fără să depindă de
+corespondența aproximativă dată+sumă acolo unde bonul e deja înregistrat cu serie și număr.
+
 ## 2. Bază legală și context
 
 OUG 28/1999 — obligația operatorilor economici care fac vânzări cu amănuntul către populație să
@@ -43,7 +48,10 @@ implicate:
 - **bon fiscal** pe `pos.order`: serie, număr, dată/oră fiscală, stare (de fiscalizat / emis / eroare);
 - **punct de lucru** (`pos.config`): fiscalizare obligatorie + serie aparat fiscal (AMEF);
 - **raport Z**: defalcare pe cote TVA și pe metode de plată, valori declarate vs. calculate;
-- **jurnal electronic AMEF**: fișiere XML/raport pe perioadă și aparat.
+- **jurnal electronic AMEF**: arhiva `.zip` cu bonurile `.p7b` pe perioadă și aparat;
+- **bonuri fiscale reconciliate**: câte o linie per bon din arhivă, cu starea potrivirii cu comanda
+  Odoo corespunzătoare (Reconciliat / Sumă diferită / TVA diferit / Lipsă în Odoo / Lipsă în arhiva
+  fiscală).
 
 Date minime pentru demo:
 - companie românească cu localizarea contabilă și `point_of_sale` instalate;
@@ -88,11 +96,37 @@ metode de plată. Completați valorile declarate din raportul Z al aparatului ș
 
 ![Raport Z fiscal — defalcare TVA + plăți, reconciliere](screenshots/03_raport_z.png)
 
-### Pasul 4 — Arhivarea jurnalului electronic AMEF
+### Pasul 4 — Importul arhivei jurnalului electronic AMEF
 
-Fișierele jurnalului electronic AMEF se încarcă și se arhivează pe perioadă/aparat în **Point of Sale →
-Fiscalizare AMEF → Jurnale electronice AMEF**: completați aparatul, perioada, atașați fișierul și
-apăsați **Arhivează**.
+În **Point of Sale → Fiscalizare AMEF → Jurnale electronice AMEF**, creați o înregistrare nouă:
+selectați punctul de lucru, seria aparatului, perioada (dată început/sfârșit) și atașați arhiva
+`.zip` primită de la casa de marcat (fișierele `.p7b` din interior sunt exporturile semnate ale
+raportului Z, în formatul standard ANAF de monitorizare AMEF). Apăsați **Importă arhiva**.
+
+Modulul extrage conținutul fiecărui `.p7b` (semnătura garantează doar autenticitatea, nu e nevoie de
+nicio cheie sau certificat pentru citire), identifică bonurile și raportul Z al fiecărei zile și le
+reconciliază automat cu comenzile din Odoo pe **seria și numărul bonului** — nu pe o simplă
+apropiere de dată și sumă, acolo unde bonul e deja înregistrat. Starea jurnalului trece în
+**Parsed**, iar fila **Fiscal Receipts** se umple cu câte o linie per bon fiscal găsit în arhivă.
+
+![Jurnal AMEF după import — fila cu bonurile reconciliate](screenshots/05_import_arhiva.png)
+
+> Dacă arhiva conține și fișierul OPIS (manifestul perioadei), modulul verifică și dacă lipsesc
+> rapoarte Z întregi din arhivă față de ce apare în OPIS, afișând lista în câmpul **Missing Z
+> Reports (OPIS)** de pe formular.
+
+### Pasul 5 — Verificarea discrepanțelor
+
+Din butonul statistic **Discrepancies** de pe jurnal (sau din meniul **Point of Sale → Fiscalizare
+AMEF → Fiscal Receipts Discrepancies**) se deschide lista completă a bonurilor cu probleme, cu
+filtre pe starea potrivirii: bonuri fără corespondent în Odoo, sume sau cote TVA diferite între
+aparat și Odoo, și — simetric — comenzi fiscalizate în Odoo care nu apar în arhiva fiscală a
+aparatului pentru ziua respectivă.
+
+![Lista discrepanțelor bonurilor fiscale](screenshots/06_discrepante.png)
+
+După ce discrepanțele sunt lămurite (corectare manuală în Odoo sau justificare), reveniți pe jurnal
+și apăsați **Archive** pentru a-l marca drept închis pentru perioada respectivă.
 
 ![Jurnal electronic AMEF arhivat](screenshots/04_jurnal_amef.png)
 
@@ -104,6 +138,13 @@ Modulul **nu produce note contabile** — nota contabilă agregată a sesiunii P
 raportul Z reconciliat (pe cote TVA și metode de plată) și arhiva jurnalului electronic AMEF.
 Returul fiscal referențiază bonul inițial (câmpurile „Bon inițial (retur)").
 
+La importul arhivei (Pasul 4), raportul Z al fiecărei zile se completează și reconciliază automat:
+totalul declarat (`declared_total`) devine suma bonurilor găsite în arhivă pentru ziua respectivă,
+iar plățile declarate se aliniază, unde numele metodei de plată din Odoo corespunde celei din
+arhivă, cu sumele raportate de aparat (nodul `<pl>` din raportul Z). Reconcilierea rămâne la nivel
+de total declarat pe raport — defalcarea pe cote TVA e disponibilă doar la nivel de bon individual
+(fila **Fiscal Receipts**), nu agregată automat pe liniile raportului Z.
+
 ## 7. Legături cu alte module / declarații
 
 | Modul / proces | Rol în flux | Tip legătură |
@@ -114,10 +155,12 @@ Returul fiscal referențiază bonul inițial (câmpurile „Bon inițial (retur)
 | `deltatech_pos` / `deltatech_pos_base` | driver fiscal AMEF (apelează `_l10n_ro_apply_fiscal_response`) | integrare opțională (nu dependență) |
 | `l10n_ro_anaf_d394_pos` | agregarea bonurilor fiscale POS în declarația D394 (dacă e instalat) | integrare prin convenție (realizată de modulul D394 POS, nu de acesta) |
 
-Ce este automat: marcarea stării de fiscalizare, blocarea închiderii sesiunii, calculul raportului Z și
+Ce este automat: marcarea stării de fiscalizare, blocarea închiderii sesiunii, importul și
+reconcilierea bon-cu-bon din arhiva `.zip`/`.p7b`, completarea raportului Z din arhivă și
 reconcilierea cu vânzările/încasările POS.
-Ce rămâne manual: configurarea fiscalizării pe punctul de lucru, completarea valorilor declarate din
-raportul Z, justificarea erorilor de fiscalizare și încărcarea fișierului de jurnal electronic.
+Ce rămâne manual: configurarea fiscalizării pe punctul de lucru, obținerea arhivei periodice de la
+casa de marcat și încărcarea ei, lămurirea discrepanțelor semnalate (corectare în Odoo sau
+justificare), și justificarea erorilor de fiscalizare.
 
 ## 8. Verificări pentru consultant
 
@@ -128,6 +171,16 @@ raportul Z, justificarea erorilor de fiscalizare și încărcarea fișierului de
 - [ ] „Înregistrează bon fiscal" trece comanda în starea „Bon emis" și salvează seria/numărul.
 - [ ] Raportul Z agregă corect pe cote TVA și pe metode de plată; reconcilierea semnalează diferențele.
 - [ ] Jurnalul electronic AMEF poate fi arhivat cu fișier atașat.
+- [ ] „Importă arhiva" pe un jurnal cu un `.zip` valid de `.p7b` trece starea în „Parsed" și
+      populează fila **Fiscal Receipts** cu câte o linie per bon găsit.
+- [ ] Un bon cu serie+număr deja înregistrate pe o comandă Odoo, cu sumă identică, apare
+      **Reconciliat**; cu sumă diferită apare **Sumă diferită**.
+- [ ] Un `idB` din arhivă fără nicio comandă Odoo corespunzătoare apare **Lipsă în Odoo**; o comandă
+      fiscalizată în Odoo absentă din arhiva zilei respective apare **Lipsă în arhiva fiscală**.
+- [ ] Lista de discrepanțe (buton statistic sau meniu dedicat) filtrează corect după starea
+      potrivirii.
+- [ ] Un `.zip` invalid sau un `.p7b` care nu poate fi decodat CMS/PKCS7 produce un mesaj de eroare
+      clar, nu o eroare tehnică.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -136,6 +189,9 @@ raportul Z, justificarea erorilor de fiscalizare și încărcarea fișierului de
 | „Nu se poate închide sesiunea …: … comenzi plătite nu au bon fiscal emis." | Comenzi plătite nefiscalizate într-o sesiune cu fiscalizare obligatorie | Emiteți bonul fiscal sau marcați eroarea ca justificată pe comenzile listate |
 | „Completați numărul bonului fiscal pentru comanda …" | „Înregistrează bon fiscal" apăsat fără număr completat | Completați numărul (și seria) bonului fiscal |
 | „Încărcați fișierul jurnalului electronic înainte de arhivare." | „Arhivează" apăsat fără fișier atașat | Atașați fișierul jurnalului electronic AMEF |
+| „Please upload the .zip archive before importing." | „Importă arhiva" apăsat fără fișier atașat | Atașați arhiva `.zip` primită de la casa de marcat |
+| „The uploaded file is not a valid .zip archive." | Fișierul atașat nu e o arhivă `.zip` (ex. e chiar un `.p7b` sau un fișier corupt) | Verificați că atașați arhiva `.zip` originală, nenmodificată |
+| „…: could not be parsed as a valid CMS/PKCS7 (.p7b) file." (în notele jurnalului, după import) | Un fișier `.p7b` din arhivă e corupt sau nu e o structură CMS SignedData | Verificați exportul de la casa de marcat; fișierele valide sunt sărite din raport, restul se importă normal |
 
 ## 10. Capturi de ecran
 
@@ -146,7 +202,9 @@ pe planul de conturi RO (`setup_country("ro")`):
 1. `01_config_fiscal.png` — setări POS, secțiunea „Conformitate fiscală RO (AMEF)".
 2. `02_comanda_fiscal.png` — comanda POS, fila „Fiscalizare AMEF".
 3. `03_raport_z.png` — raportul Z fiscal (defalcare TVA + metode de plată, reconciliere).
-4. `04_jurnal_amef.png` — jurnalul electronic AMEF.
+4. `05_import_arhiva.png` — jurnalul AMEF după import, fila „Fiscal Receipts" cu bonurile reconciliate.
+5. `06_discrepante.png` — lista discrepanțelor bonurilor fiscale.
+6. `04_jurnal_amef.png` — jurnalul electronic AMEF arhivat (pasul final, după lămurirea discrepanțelor).
 
 Regenerare:
 
@@ -162,3 +220,10 @@ amănuntul, ce înseamnă blocarea închiderii sesiunii, cum se citește raportu
 arhivează jurnalul electronic. Subliniați că modulul nu modifică contabilitatea POS, ci adaugă
 controlul fiscal cerut de lege; comunicarea cu aparatul fiscal fizic se face prin driverul de
 fiscalizare instalat separat.
+
+Pentru fluxul de import arhivă, precizați clar diferența dintre cele două stări de reconciliere pe
+care le poate întâlni consultantul: **Reconciliat/Sumă diferită/TVA diferit** (bonul există și în
+arhivă, și în Odoo — verificarea e pe conținut) versus **Lipsă în Odoo/Lipsă în arhiva fiscală**
+(bonul există doar de o parte — verificarea e pe existență). A doua categorie e cea care necesită
+investigație operațională (vânzare neînregistrată în Odoo sau bon emis manual fără corespondent
+fizic), nu doar o corecție de sumă.

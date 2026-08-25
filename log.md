@@ -4,6 +4,17 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-08-25] Re-ingestie `l10n_ro_pos_fiscal_compliance` (PR #110 — import arhivă Z)
+
+- **Acțiune:** Regenerare completă a paginii (nu doar bump de versiune) după PR #110, merge-uit în `19.0`, care a dus modulul de la `19.0.1.0.0` la `19.0.2.0.0` cu o funcționalitate majoră nouă: import și reconciliere a arhivelor Z fiscale (`.zip` cu fișiere `.p7b`, export periodic AMEF semnat CMS/PKCS7).
+- **Sursă:** `readme/DESCRIPTION.md` pentru sumarul funcționalității de bază (rămâne valid); `readme/DESCRIPTION.md` **nu fusese actualizat** cu noua funcționalitate din PR #110, deci secțiunile „Funcționalități Cheie" și „Componente Cheie" au fost completate manual din analiza codului (`models/l10n_ro_amef_journal.py`, `l10n_ro_amef_journal_bon.py`, `l10n_ro_amef_parser.py`, view-urile și securitatea) și din `readme/USAGE.md`/`FISA_CONSULTANT.md`.
+- **Dependențe/Conexiuni:** dependențe manifest neschimbate (`point_of_sale`, `account`, `l10n_ro`, fără pagină wiki proprie) + dependență externă Python nouă `asn1crypto` (CMS/PKCS7, nu shell-out la `openssl`). Conexiuni neschimbate: [deltatech_pos](../deltatech_pos/index.md) (driver fiscal opțional), [l10n_ro_anaf_d394_pos](../l10n_ro_anaf_d394_pos/index.md) (agregare D394).
+- **Fișă consultant:** resincronizată — copiate toate cele 6 capturi din `readme/screenshots/` (cele 4 existente + `05_import_arhiva.png`/`06_discrepante.png`, noi din acest PR).
+- **Corecție la sursă:** `readme/FISA_CONSULTANT.md` secțiunea 10 conținea încă nota că cele două capturi noi „nu există încă", deși fuseseră deja generate — notă rămasă neactualizată din tura anterioară. Corectată direct la sursă (nu doar în copia wiki) și re-copiată.
+- **Fișiere actualizate:** `l10n_ro_pos_fiscal_compliance/index.md`, `l10n_ro_pos_fiscal_compliance/FISA_CONSULTANT.md`, `l10n_ro_pos_fiscal_compliance/screenshots/*.png` (6 fișiere), `index.md` (linia sumarului), `log.md`.
+
+---
+
 ## [2026-08-20] Rezolvare conflict de nume duplicat `l10n_ro_account_bank_statement_import_xlsx`
 
 - **Acțiune:** Investigație (agent read-only) a confirmat că modulul `l10n_ro_account_bank_statement_import_xlsx` exista ca **două module distincte** cu același nume tehnic — unul în `odoo-addons/l10n_ro_ent` (Enterprise, OEEL-1, plătit) și unul în `odoo-addons/bitshop_ent` (AGPL-3, moștenit din 2016 "Forest and Biomass Romania"). Cauza: o migrare din mai 2026 (AGPL → Enterprise) rămasă incompletă — ambele au supraviețuit și au fost întreținute în paralel până azi. Confirmat din cod (`odoo/modules/module.py`): Odoo nu semnalează conflictul de nume, ia silențios primul director găsit în `addons_path` — iar `bitshop_ent` apărea înaintea `l10n_ro_ent` în `odoo.conf`, deci varianta AGPL veche câștiga silențios pe toate cele 14 instanțe client care au ambele suite, iar varianta Enterprise plătită nu se instala niciodată.

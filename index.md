@@ -419,7 +419,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_payroll_import](l10n_ro_payroll_import/index.md): Importă note contabile de salarii din aplicații externe (SAGA, Nexus, Charisma) cu distribuție analitică pe centre de cost.
 - [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md): Corectează calculul impozitului pe salarii (bază brut − CAS − CASS − deducere personală) și adaugă deducerea personală de bază (DPB) în statul de plată românesc, peste `l10n_ro_hr_payroll`.
 - [l10n_ro_period_close_enhanced](l10n_ro_period_close_enhanced/index.md): Checklist lunar de închidere perioadă pe infrastructura Enterprise account.return.type.
-- [l10n_ro_pos_fiscal_compliance](l10n_ro_pos_fiscal_compliance/index.md): Conformitate fiscală AMEF pentru POS conform OUG 28/1999 — urmărire bon fiscal, blocaj sesiune, raport Z reconciliat și arhivă jurnal electronic.
+- [l10n_ro_pos_fiscal_compliance](l10n_ro_pos_fiscal_compliance/index.md): Conformitate fiscală AMEF pentru POS conform OUG 28/1999 — urmărire bon fiscal, blocaj sesiune, raport Z reconciliat, arhivă jurnal electronic, plus import și reconciliere automată a arhivelor Z (.zip/.p7b) pe FK exact cu comenzile POS.
 - [l10n_ro_process_library](l10n_ro_process_library/index.md): Bibliotecă versionată de procese de implementare importabile selectiv în deltatech_business_process, cu fișe PDF.
 - [l10n_ro_profit_tax](l10n_ro_profit_tax/index.md): Calcul impozit pe profit D100/D101 cu ajustări fiscale, pierdere reportată și credit sponsorizări.
 - [l10n_ro_provisions](l10n_ro_provisions/index.md): Urmărire provizioane 151x cu workflow aprobare/ajustare/soluționare și monografie automată OMFP 1802.
