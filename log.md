@@ -4,6 +4,23 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-08-26] Re-ingestie 7 conectori marketplace (fișe consultant + corecturi de audit)
+
+- **Acțiune:** Regenerare completă a paginilor pentru toți cei 7 conectori marketplace activi din `odoo-addons/bitshop_marketplace` (branch `19.0`) — `deltatech_marketplace_shopify`, `_woocommerce`, `_prestashop`, `_magento`, `_emag`, `_trendyol`, `_merchantpro` — după fuziunea unei serii de PR-uri (#221, #226, #227, #229, #231, #232, #233) care a adăugat câte o fișă `readme/FISA_CONSULTANT.md` (11 secțiuni) cu capturi reale de ecran pentru fiecare modul. Procesate în paralel, 7 subagenți `documentarist-wiki` izolați.
+- **Sursă:** `readme/DESCRIPTION.md` pentru Sumar/Funcționalități (prioritizat conform schema.md), completat din `readme/FISA_CONSULTANT.md`/`readme/USAGE.md` pentru Componente Cheie și pentru corecturile funcționale de mai jos.
+- **Corecturi funcționale importante, ieșite din procesul de audit (`verificator-fisa`) și reflectate acum în wiki, nu doar în fișe:**
+  - **WooCommerce:** eliminat exportul de preț (inexistent în cod); exportul de stoc e pe cron dedicat, dezactivat implicit, nu „în timp real"; testul de conexiune validează acum efectiv credențialele (fix de cod separat, `system_status`).
+  - **PrestaShop:** direcția webhook-ului e PrestaShop → Odoo (nu invers); wizard-ul real se numește „Marketplace sync" (nu „Update in Marketplace"); tracking-ul și legătura facturii se trimit necondiționat, doar statusul comenzii depinde de „Active On Write".
+  - **Magento:** mecanismul real de export stoc e `magento_stock_export()` (bulk pe sursa MSI implicită), nu metoda `update_stock` menționată eronat anterior; eliminate „real-time stock sync" și „multi-warehouse" (nesusținute de cod).
+  - **eMAG:** importul de localități RO are buton real „Get city"; „Safe stock" fără efect; nu există „Import All"; Auto Price cu Min/Max=0 trimite efectiv preț 0; comandă CANCELED nu se anulează automat; push factură trimite link, nu PDF; potrivire la import e EAN-câștigă-ultimul.
+  - **Trendyol:** tracking-ul automat NU e necondiționat (depinde de transportator real cu integrare rate-and-ship); maparea automată a curierului Trendyol nu funcționează (cade mereu pe „Free delivery" — bug de cod semnalat separat); atributele de categorie nu au buton dedicat de import.
+  - **MerchantPro:** nu există „Import All"; importul de produse nu leagă categoria (cod mort, bug semnalat separat); lista de prețuri a backend-ului NU e sursa prețului exportat (`list_price` al produsului e sursa reală); importul de comenzi filtrează pe `shipping_status` și nu recuperează comenzi noi ratate de webhook.
+  - **Shopify:** pagina actualizată la versiunea curentă (`19.0.0.29.2`), cu wizard-ul „Check webhooks" documentat.
+- **Fișă consultant:** copiată/resincronizată pentru toate cele 7 module (Shopify, PrestaShop, MerchantPro, Trendyol nu o aveau încă în wiki — copiată acum prima dată; WooCommerce, Magento, eMAG resincronizate) — total 34 capturi de ecran noi/actualizate.
+- **Notă de proces:** repo-ul `bitshop_marketplace` e un working tree partajat cu sesiuni concurente de lucru pe alte task-uri; checkout-ul local era pe un branch de lucru (`19.0-merchantpro-fisa-consultant`) fără toate commit-urile — subagenții pentru Shopify, eMAG și Trendyol au extras conținutul direct din `origin/19.0` (via `git show`/`git archive`), fără să modifice working tree-ul local.
+- **Bug-uri de cod descoperite în timpul auditului (semnalate separat, NEreparate în această re-ingestie):** WooCommerce (XML-ID mort la trigger export stoc, deja reparat separat), Magento (`parent_id` adresă nesalvat, cod mort în `backend_stock.py`), Trendyol (mapare curier eșuează mereu), MerchantPro (categorie nelegată la import, cron export stoc dezactivat implicit — framework comun), plus un typo („Currier Currency") în `deltatech_delivery`.
+- **Fișiere actualizate:** 7× `<modul>/index.md`, 7× `<modul>/FISA_CONSULTANT.md` (copii noi/resincronizate), 34× `<modul>/screenshots/*.png`, `index.md` (7 linii de descriere actualizate), `log.md`.
+
 ## [2026-08-25] Re-ingestie `l10n_ro_pos_fiscal_compliance` (PR #110 — import arhivă Z)
 
 - **Acțiune:** Regenerare completă a paginii (nu doar bump de versiune) după PR #110, merge-uit în `19.0`, care a dus modulul de la `19.0.1.0.0` la `19.0.2.0.0` cu o funcționalitate majoră nouă: import și reconciliere a arhivelor Z fiscale (`.zip` cu fișiere `.p7b`, export periodic AMEF semnat CMS/PKCS7).

@@ -1,28 +1,30 @@
 # Conector Marketplace WooCommerce (localizat la `deltatech_marketplace_woocommerce/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_woocommerce`
-- **Versiune:** `19.0.0.0.8`
+- **Versiune:** `19.0.0.0.16`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_woocommerce
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_woocommerce`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-08-26`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul conectează Odoo cu magazine online WooCommerce, sincronizând bidirecțional produse, comenzi, clienți, transportatori și metode de plată, astfel încât o afacere care vinde și pe un site WooCommerce să gestioneze tot din Odoo, fără introducere manuală de date și fără riscul de suprevânzare din cauza stocurilor neactualizate.
+Modulul conectează Odoo cu magazine online WooCommerce, sincronizând produse, comenzi și clienți din WooCommerce către Odoo și trimițând stocul Odoo înapoi spre magazin, astfel încât o afacere care vinde și pe un site WooCommerce să gestioneze catalogul, comenzile și stocul dintr-un singur backend Odoo, fără introducere manuală de date în două locuri.
 
 #### 2. Funcționalități Cheie
 
-- Sincronizare bidirecțională: produse și stoc din Odoo către WooCommerce, comenzi și clienți din WooCommerce către Odoo, cu actualizări în timp real sau programate.
-- Gestiune produse: creare/actualizare produse în WooCommerce din Odoo, mapare categorii, atribute și variante, sincronizare imagini și niveluri de stoc.
-- Gestiune comenzi: import automat al comenzilor WooCommerce, sincronizare stare comandă, gestionare etape și stări, modificări/anulări, istoric complet.
-- Integrare clienți: sincronizare date client, adrese, grupuri/etichete, istoric de achiziții, profiluri unificate.
-- Integrare plăți: mapare metode de plată WooCommerce către Odoo, sincronizare stare plată, suport pentru diverse gateway-uri, procesare rambursări.
-- Livrare și transport: mapare metode de livrare, partajare informații de tracking, sincronizare costuri de transport, suport multi-curier.
-- Integrare website: suport pentru mai multe magazine WooCommerce, prețuri și stoc specifice per site, reguli de sincronizare personalizabile.
-- Raportare unificată a vânzărilor pe toate canalele și informații privind performanța WooCommerce direct în Odoo.
-- Implementare tehnică pe bază de REST API WooCommerce, procesare pe joburi în fundal, mapare inteligentă a datelor, logare erori/sincronizări și webhook-uri pentru evenimente în timp real.
+- Sincronizare bidirecțională: produse, clienți și comenzi din WooCommerce către Odoo; stocul Odoo se exportă înapoi spre WooCommerce printr-un cron dedicat, dezactivat implicit.
+- Gestiune produse: import produse din WooCommerce, inclusiv variante, mapare categorii, atribute și valori de atribut, sincronizare imagini (dacă „Ignore Images" nu e bifat).
+- Gestiune comenzi: import automat al comenzilor WooCommerce, filtrabil după status (`Any`/`pending`/`processing`/`on-hold`/`completed`/`cancelled`/`refunded`/`failed`/`trash`) și după fereastra „Sale Order Days", cu mapare status → fază de vânzare Odoo creată automat la prima întâlnire a unui status nou.
+- Integrare clienți: sincronizare date client, adrese de facturare/livrare, istoric de achiziții consolidat ca și contacte Odoo.
+- Integrare plăți: mapare metodă de plată WooCommerce către achizitor de plată Odoo, creată automat la prima referință dintr-o comandă.
+- Livrare și transport: mapare transportator (creat automat dacă nu există), linie de transport pe comanda importată.
+- Suport pentru mai multe magazine WooCommerce, fiecare ca backend separat cu propriile credențiale și setări.
+- Test de conexiune care validează efectiv credențialele printr-un apel real către magazin (`system_status`), nu doar completarea câmpurilor.
+- Implementare tehnică pe bază de REST API WooCommerce (`wc/v3`), fără bibliotecă Python externă (folosește `requests`), autentificare HTTP Basic Auth (Consumer key/secret) peste HTTPS, procesare pe joburi în fundal (queue jobs) și suport generic de webhook moștenit din framework-ul comun.
+- **Nu** exportă prețuri către WooCommerce: lista de prețuri e doar destinația prețului importat din magazin. **Nu** are un cron dedicat de import recurent (comenzi/produse/clienți noi se aduc prin repetarea manuală a acțiunii Import sau printr-o acțiune programată proprie). **Nu** urmărește anulările/rambursările făcute în WooCommerce după import.
 
-*Sursă: `readme/DESCRIPTION.md`.*
+*Sursă: `readme/DESCRIPTION.md` și `readme/USAGE.md` (corectate: exportul de preț inexistent a fost eliminat din documentație, exportul de stoc e descris corect ca fiind pe cron dedicat dezactivat implicit, iar testul de conexiune validează efectiv credențialele prin apel real la magazin — vezi și fișa consultant).*
 
 #### 3. Dependențe
 
