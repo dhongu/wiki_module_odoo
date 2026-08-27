@@ -1,10 +1,10 @@
 # Bitshop Sale Withdrawal (localizat la `bitshop_sale_withdrawal/index.md`)
 
 - **Nume Tehnic:** `bitshop_sale_withdrawal`
-- **Versiune:** `19.0.0.2.1`
+- **Versiune:** `19.0.0.2.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/bitshop_sale_withdrawal
 - **Cale Locală:** `odoo-addons/bitshop/bitshop_sale_withdrawal`
-- **Ultima Ingestie:** 2026-08-20
+- **Ultima Ingestie:** 2026-08-27
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -13,7 +13,7 @@ Modulul implementează funcția de retragere din contract (dreptul de renunțare
 
 #### 2. Funcționalități Cheie
 
-- Buton de retragere clar etichetat, vizibil pe pagina comenzii din portal pe toată durata perioadei de retragere.
+- Buton de retragere clar etichetat, vizibil pe pagina comenzii din portal pe toată durata perioadei de retragere, sub un titlu propriu de secțiune („Right of withdrawal") cu ancoră proprie în navigarea rapidă (navspy) a portalului.
 - Accesibil **fără cont**, deci acoperă și comenzile plasate ca invitat (guest checkout).
 - Flux în doi pași: recapitulare a contractului, apoi buton separat de confirmare.
 - **Fără motiv obligatoriu** — consumatorul nu trebuie să justifice retragerea.
@@ -22,6 +22,7 @@ Modulul implementează funcția de retragere din contract (dreptul de renunțare
 - Excepții legale (art. 16) declarate pe produs sau pe categorie de produs, afișate consumatorului ca neeligibile, nu ascunse.
 - Registru de retrageri în Vânzări, cu termenul de rambursare din art. 13 și activitate programată pentru responsabil.
 - Contract de execuție conectabil (pluggable), astfel încât urmărirea operațională (retur de stoc, notă de credit, sistem extern) se adaugă prin alte module, fără a atinge acest modul.
+- Interfață tradusă integral în română (`i18n/ro.po`).
 
 #### 3. Dependențe
 
@@ -44,7 +45,7 @@ Modulul implementează funcția de retragere din contract (dreptul de renunțare
 - `view_bitshop_sale_withdrawal_list` / `_form` / `_search`: registrul de retrageri din back office, cu evidențierea în roșu a înregistrărilor nefinalizate cu confirmarea de primire.
 - `action_bitshop_sale_withdrawal`: acțiunea din meniul **Vânzări → Comenzi → Withdrawals**.
 - `views/sale_order_views.xml`, `views/product_views.xml`, `views/res_config_settings_views.xml`: integrarea pe formularul comenzii, pe produs și în setările Vânzărilor.
-- `views/portal_templates.xml`: paginile portalului — recapitulare, confirmare și status al retragerii, accesibile prin link cu token, inclusiv pentru invitați.
+- `views/portal_templates.xml`: paginile portalului — recapitulare, confirmare și status al retragerii, accesibile prin link cu token, inclusiv pentru invitați. Secțiunea butonului de pe pagina comenzii are acum titlu propriu (`<h3>Right of withdrawal</h3>`), care generează automat o ancoră separată în navspy-ul portalului; butonul activ e stilizat `btn-primary` (anterior `btn-secondary`), pentru a-l scoate în evidență față de restul acțiunilor secundare ale comenzii.
 - `report/withdrawal_report.xml`: raportul PDF anexat la confirmarea de primire.
 
 **Acțiuni Automate / Acțiuni Server**

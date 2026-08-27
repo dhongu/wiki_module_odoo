@@ -76,10 +76,15 @@ Date minime pentru demo:
 ### Pasul 1 — Consumatorul accesează comanda din portal
 
 Consumatorul deschide comanda din link-ul primit prin e-mail (**Contul meu → Comenzi**, sau
-link-ul direct din e-mailul de confirmare). Pe pagina comenzii apare butonul **„Withdraw from this
-contract here”**, vizibil pe toată durata perioadei legale de retragere, cu data limită afișată sub
-buton. După expirarea perioadei, butonul rămâne vizibil dar dezactivat, cu explicația aferentă — nu
-dispare, pentru ca dovada existenței lui să rămână verificabilă ulterior.
+link-ul direct din e-mailul de confirmare). Secțiunea are propriul titlu, **„Drept de retragere”**,
+care apare și ca ancoră proprie în meniul rapid din bara laterală a portalului (alături de „Istoric
+comunicare”), astfel încât un client care doar derulează pagina o poate găsi și din navigare, nu
+doar dând scroll. Sub titlu apare butonul **„Retrage-te din acest contract aici”** — stilizat ca
+buton primar (nu gri secundar, cum era inițial), pentru vizibilitate mai bună — vizibil pe toată
+durata perioadei legale de retragere, cu data limită afișată dedesubt. După expirarea perioadei,
+butonul rămâne vizibil dar dezactivat, cu explicația aferentă — nu dispare, pentru ca dovada
+existenței lui să rămână verificabilă ulterior. Interfața urmează limba portalului: pagina este
+disponibilă și integral tradusă în română.
 
 ![Butonul de retragere pe pagina portalului comenzii](screenshots/01_portal_buton.png)
 
@@ -165,6 +170,8 @@ Ce rămâne manual: emiterea notei de credit/rambursarea efectivă a banilor, ma
 - [ ] Registrul din **Vânzări → Comenzi → Withdrawals** arată corect starea (roșu = neconfirmat).
 - [ ] Termenul de rambursare (implicit 14 zile) e calculat corect pe fișa retragerii.
 - [ ] Setarea „Use Odoo's Native Withdrawal Button” ascunde butonul acestui modul fără să șteargă registrul.
+- [ ] Secțiunea de retragere are titlul „Drept de retragere”/„Right of withdrawal” și apare ca ancoră separată în meniul rapid din bara laterală a portalului (nu doar ca bloc fără titlu).
+- [ ] Pe un portal setat în română, titlul secțiunii, textul butonului și mențiunea termenului limită apar traduse (nu în engleză) — traducerea vine din `i18n/ro.po`.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -181,9 +188,18 @@ Ce rămâne manual: emiterea notei de credit/rambursarea efectivă a banilor, ma
 
 Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), pe compania „Magazin
-Demo SRL" (RO, RON). Interfața acestui modul rămâne în engleză (nu are traducere `i18n/ro.po`,
-convenție Apps Store standard pentru modulele bitshop vândute internațional); textele fișei sunt
-în română.
+Demo SRL" (RO, RON), regenerate la 2026-08-27 — arată interfața curentă: titlul de secțiune „Right
+of withdrawal", butonul primar (nu mai e gri secundar) și ancora proprie în navigarea rapidă a
+portalului (vizibilă în bara laterală din `01_portal_buton.png`).
+
+Modulul are acum traducere completă în română (`i18n/ro.po`) pentru titlu, buton și mențiunea
+termenului limită — confirmat direct în `ir_ui_view.arch_db['ro_RO']` după instalare. **Capturile
+de portal (01-04) rămân totuși în engleză**: paginile `website=True` își aleg limba dintr-un
+website/cookie de limbă frontend, nu din limba operatorului autentificat, iar baza de test
+folosită aici nu are un website cu `ro_RO` activat ca limbă frontend (un prefix `/ro/` în URL dă
+404). Capturile de back office (06, 07) apar corect în română, pentru că acolo limba vine direct
+din `admin.lang`. Pe un site cu multi-limbă configurat (ca la producția Damira, care a raportat
+inițial acest tichet), aceleași pagini de portal ies traduse.
 
 1. `01_portal_buton.png` — butonul de retragere pe pagina portalului comenzii, cu termenul limită afișat.
 2. `02_portal_recapitulare.png` — recapitularea contractului: cantitatea disponibilă pe fiecare

@@ -4,7 +4,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 
 ## Module
 
-- [bitshop_sale_withdrawal](bitshop_sale_withdrawal/index.md): Funcția de retragere din contract la distanță (dreptul de renunțare, Directiva UE 2023/2673), cu buton pe portal, confirmare pe suport durabil și registru de retrageri în Vânzări.
+- [bitshop_sale_withdrawal](bitshop_sale_withdrawal/index.md): Funcție de retragere din contract pentru comenzi online, conform Directivei UE 2023/2673 (OUG 18/2026), cu buton dedicat pe portal, confirmare de primire pe suport durabil și registru de retrageri în Vânzări.
 - [bitshop_sale_withdrawal_stock](bitshop_sale_withdrawal_stock/index.md): Continuă operațional retragerea dintr-un contract la nivel de stoc — anulează livrările neefectuate sau le returnează prin wizard-ul standard, când un consumator renunță la contract.
 - [deltatech](deltatech/index.md): Modul de bază (fundație) al suitei Deltatech, oferind utilitare partajate, structură unitară și extinderi comune pentru celelalte module Deltatech.
 - [deltatech_access](deltatech_access/index.md): Control granular al accesului la câmpuri din vederile Odoo (readonly / required / invisible) pe bază de grupuri de utilizatori.

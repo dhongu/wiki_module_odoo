@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-08-27] Re-ingestie `bitshop_sale_withdrawal` (PR #2773, #2774 — UX portal + traducere RO)
+
+- **Acțiune:** Regenerare paginii `bitshop_sale_withdrawal` (versiune nouă `19.0.0.2.2`), după două PR-uri fuzionate pe tichetul #9251 (client Damira): PR #2773 a adăugat traducerea completă în română (`i18n/ro.po`, nu exista deloc înainte), a schimbat butonul de retragere din `btn-secondary` gri în `btn-primary` și a adăugat secțiunii un titlu propriu `<h3>Right of withdrawal</h3>`, care primește automat o ancoră proprie în navigarea rapidă (navspy) a portalului; PR #2774 a actualizat `readme/FISA_CONSULTANT.md` și a regenerat cele 7 capturi de ecran, plus a reparat garda `SkipTest` lipsă din `tests/test_screenshots.py` (fără ea, testul pica CI-ul cu `AttributeError` în loc să sară curat, din cauză că `l10n_ro_doc_screenshots` nu e dependență a repo-ului `bitshop`).
+- **Sursă:** `readme/DESCRIPTION.md` pentru Sumar/Funcționalități Cheie (neschimbat), completat din analiza de cod (`views/portal_templates.xml`) pentru elementele funcționale noi (titlu + ancoră navspy, stil buton, traducere RO).
+- **Fișă consultant:** resincronizată din `readme/FISA_CONSULTANT.md`, împreună cu cele 7 capturi din `readme/screenshots/`. Fișa notează explicit că interfața de portal din capturi rămâne în engleză (limitare a mediului de test — paginile `website=True` își aleg limba din website/cookie de limbă frontend, nu din `admin.lang`), deși codul are acum traducere RO funcțională (confirmată direct în `ir_ui_view.arch_db['ro_RO']`).
+- **Fișiere actualizate:** `bitshop_sale_withdrawal/index.md` (regenerat), `bitshop_sale_withdrawal/FISA_CONSULTANT.md` (resincronizată), `bitshop_sale_withdrawal/screenshots/*.png` (7 fișiere), `index.md` (1 linie de descriere actualizată), `log.md`.
+
 ## [2026-08-26] Re-ingestie 7 conectori marketplace (fișe consultant + corecturi de audit)
 
 - **Acțiune:** Regenerare completă a paginilor pentru toți cei 7 conectori marketplace activi din `odoo-addons/bitshop_marketplace` (branch `19.0`) — `deltatech_marketplace_shopify`, `_woocommerce`, `_prestashop`, `_magento`, `_emag`, `_trendyol`, `_merchantpro` — după fuziunea unei serii de PR-uri (#221, #226, #227, #229, #231, #232, #233) care a adăugat câte o fișă `readme/FISA_CONSULTANT.md` (11 secțiuni) cu capturi reale de ecran pentru fiecare modul. Procesate în paralel, 7 subagenți `documentarist-wiki` izolați.
