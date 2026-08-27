@@ -1,7 +1,7 @@
 # Bitshop Sale Withdrawal (localizat la `bitshop_sale_withdrawal/index.md`)
 
 - **Nume Tehnic:** `bitshop_sale_withdrawal`
-- **Versiune:** `19.0.0.2.2`
+- **Versiune:** `19.0.0.2.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/bitshop_sale_withdrawal
 - **Cale Locală:** `odoo-addons/bitshop/bitshop_sale_withdrawal`
 - **Ultima Ingestie:** 2026-08-27
