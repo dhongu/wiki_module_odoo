@@ -2,7 +2,7 @@
 
 **Modul:** `deltatech_purchase_ubl`
 **Utilizator principal:** Operator achiziții, contabil furnizori
-**Versiune documentată:** 19.0.1.3.0
+**Versiune documentată:** 19.0.1.4.0
 **Prioritate:** 🔴 Ridicată (parte din fluxul standard de facturare furnizori prin SPV/e-Factura pentru produse stocabile)
 
 ---
@@ -20,12 +20,20 @@ creează o comandă de achiziție dintr-un mesaj SPV și atașează XML-ul factu
 Modulul poate fi folosit și manual, din bara de sus a oricărei comenzi de achiziție, prin butonul
 **Importă UBL**.
 
-Din versiunea **19.0.1.3.0** (ticket #9315), fluxul manual are un pas suplimentar de
+Din versiunea **19.0.1.3.0** (tichet #9315), fluxul manual are un pas suplimentar de
 **previzualizare**: înainte de a scrie ceva pe comandă, operatorul vede o listă cu fiecare linie
 din factură, produsul pe care sistemul l-a identificat automat și cât de sigură este acea
 identificare (culoare verde/galben/roșu — vezi secțiunea 6). Fluxul automat (din mesajul SPV)
 **nu** trece prin acest ecran — rulează headless, dar de la aceeași versiune nu mai creează
 produse noi în tăcere atunci când nu găsește o potrivire sigură (vezi secțiunea 9).
+
+Din versiunea **19.0.1.4.0** (tichet #9287), rezultatul importului headless nu mai rămâne doar o
+notă de text în chatter: jurnalul se postează colorat (verde pentru liniile potrivite, roșu/portocaliu
+pentru nepotriviri), iar dacă importul are un semnal real de problemă — **total care nu se
+potrivește** sau **linii pe care sistemul nu a putut plasa** — se programează pe comandă o
+**activitate de tip „De făcut" cu titlul „Import SPV necesită verificare"**, atribuită
+cumpărătorului de pe comandă. Motivul schimbării: la un client, un total nepotrivit și 4 linii
+neasociate au stat neobservate ore în chatter, printre notele automate ale cronului SPV.
 
 ## 2. Bază legală și context
 
@@ -67,7 +75,12 @@ Elemente specifice pe care modulul le scrie/actualizează, relevante pentru veri
   facturii;
 - **Verificare total** — totalul comenzii este comparat cu totalul din XML
   (`PayableAmount`/`TaxInclusiveAmount`, cu fallback pe valoarea fără TVA); o diferență generează
-  un avertisment vizibil în fereastra de import, nu blochează procesul.
+  un avertisment vizibil în fereastra de import, nu blochează procesul;
+- **Indicator de atenție** (`has_warning`, din 19.0.1.4.0) — se setează pe wizard exact în două
+  situații: totalul nu se potrivește sau au rămas linii neasociate pe comandă. Este intenționat mai
+  îngust decât „orice mesaj de avertisment din jurnal": pași de rutină ai unui import automat
+  (factura săltată pentru că comanda nu e confirmată, nicio recepție de validat) **nu** îl
+  declanșează, ca să nu se genereze activități la fiecare import reușit.
 
 Date minime pentru demo (scenariul folosit și în capturi):
 - companie românească cu localizarea contabilă instalată;
@@ -87,6 +100,10 @@ Date minime pentru demo (scenariul folosit și în capturi):
    **codul de bare** pe produsele cumpărate frecvent de la fiecare furnizor.
 4. Drepturi: rularea manuală a importului cere drept de scriere pe comenzi de achiziție
    (Achiziții / Utilizator); crearea de produse noi din import cere și drept de creare pe produse.
+5. Din 19.0.1.4.0, activitatea de verificare generată de importul automat se atribuie
+   **cumpărătorului de pe comandă** (`user_id`), cu revenire pe utilizatorul care rulează importul
+   dacă acel câmp e gol. Verificați că pe comenzile create din mesaje SPV cumpărătorul este cel
+   care trebuie să primească sarcina — altfel activitățile ajung pe userul tehnic al cronului.
 
 ## 6. Flux de utilizare
 
@@ -112,6 +129,17 @@ este potrivirea:
 
 ![Exemplu linie roșie — niciun produs găsit](screenshots/04_preview_linie_rosie.jpg)
 
+Cele trei culori, împreună, într-o singură previzualizare — verde (cod de furnizor), galben
+(doar nume), roșu (nicio potrivire):
+
+![Previzualizare cu toate trei tipurile de potrivire; ① linia galbenă](screenshots/06_preview_linie_galbena.png)
+
+> **Cazul galben apare DOAR pe o comandă fără linii.** Când comanda are deja linii,
+> previzualizarea restrânge potrivirea la produsele de pe comandă
+> (`_match_product_on_order_detailed`), iar acolo potrivirea după nume nu se poate produce
+> deloc. Scenariul galben e deci specific comenzii create din mesajul SPV, încă goală.
+
+
 Pe orice linie se poate alege manual alt produs din listă înainte de a confirma — alegerea
 manuală înlocuiește potrivirea automată (`match_type` devine „Chosen manually”).
 
@@ -134,12 +162,49 @@ Jurnalul afișat la final (`log`/`log_html`) listează exact ce s-a întâmplat:
 produse create, linii adăugate/actualizate, linii nepotrivite, rezultatul verificării totalului și
 rezultatul creării facturii.
 
+> **Jurnal mai scurt din 19.0.1.4.0.** Jurnalul nu mai enumeră fiecare preț actualizat linie cu
+> linie — apare o singură linie de tip „Produse identificate și prețuri actualizate pentru N
+> linie(i)", iar produsele create sunt precedate de numărul lor („Produse create (N)"). Detaliul
+> pe produs rămâne doar pentru produsele efectiv create, pentru că acolo contează. Textele care
+> spuneau „din XML" spun acum „din documentul sursă", pentru că același mixin deservește și
+> importurile din PDF (Marso, Delta, Sigemo, Procar).
+
 ### Pasul 5 — Factura de furnizor creată automat
 
 Dacă la comandă apare smart-butonul **Facturi furnizor**, factura ciornă a fost creată — se
 deschide, se verifică liniile și taxele preluate din XML, apoi se confirmă.
 
 ![Comandă confirmată, cu smart-butonul Facturi furnizor apărut după import](screenshots/05_comanda_confirmata_factura.jpg)
+
+### Pasul 6 — Ce vede operatorul pe fluxul automat (din mesaj SPV) — nou în 19.0.1.4.0
+
+Pe importul headless declanșat de atașarea XML-ului SPV pe comandă, operatorul nu vede fereastra
+de import. Rezultatul ajunge la el pe două căi:
+
+1. **Nota din chatter**, postată acum colorată (`log_html` în loc de text simplu), ca nepotrivirile
+   să sară în ochi în loc să se piardă într-un bloc de text;
+2. **Activitatea „Import SPV necesită verificare"**, programată pe comandă doar când există un
+   semnal real (total nepotrivit sau linii neasociate). Nota activității conține jurnalul complet
+   al importului, iar responsabil este cumpărătorul de pe comandă.
+
+![Comandă din fluxul automat: activitatea de verificare și jurnalul colorat în chatter](screenshots/07_activitate_verificare.png)
+
+În captură se văd, în panoul din dreapta: activitatea planificată cu jurnalul complet ca notă,
+sub ea aceeași informație postată ca mesaj, iar în jurnal linia neasociată
+(`FM-NECUNOSCUT-01`), diferența de total și motivul pentru care crearea facturii a fost sărită.
+
+> **Deduplicarea compară titlul TRADUS.** Garda care împiedică activitățile duplicate
+> verifică `a.summary == „Import SPV necesită verificare"`, adică textul în limba
+> utilizatorului care a declanșat importul. Pe bazele care au rulat cu traducerile
+> nefuncționale (înainte de resincronizarea `.pot` — vezi secțiunea 10) există activități cu
+> titlul englez „SPV import needs review"; acelea **nu** mai deduplică față de cele noi, deci
+> o comandă poate ajunge cu două activități. De verificat la upgrade pe bazele existente.
+
+Activitatea este **deduplicată pe titlu**: dacă cronul SPV reprocesează același mesaj (comportament
+observat de ~10 ori într-o dimineață), nu se adaugă o a doua activitate. Consecința practică pentru
+operator: după ce a rezolvat liniile, trebuie să **închidă manual activitatea** — nu se închide
+singură la un import ulterior curat, iar cât timp rămâne deschisă un import nou cu probleme nu mai
+generează o a doua sarcină.
 
 > **Atenție — creare automată doar dacă comanda era deja confirmată.** Factura de furnizor se
 > creează automat (fie la import manual cu opțiunea bifată, fie la import headless dintr-un mesaj
@@ -157,22 +222,26 @@ deschide, se verifică liniile și taxele preluate din XML, apoi se confirmă.
 | `purchase_stock` | comenzi de achiziție + recepții de stoc pe care modulul le actualizează | dependență (manifest) |
 | `account` | facturi de furnizor create din import | dependență (manifest) |
 | `l10n_ro_message_spv_purchase` | atașează automat XML-ul facturii SPV pe comanda de achiziție creată/identificată din mesaj — declanșează importul headless | modul separat, principal punct de intrare automat |
+| `mail` (activități) | activitatea „De făcut" „Import SPV necesită verificare", programată pe comandă când importul automat are total nepotrivit sau linii neasociate | dependență indirectă (via `account`/`purchase_stock`) |
 | `purchase.invoice.import.mixin` | logica de potrivire produse / actualizare prețuri / creare factură, partajată și cu alte wizard-uri de import (PDF Marso, Delta, Sigemo, Procar) | infrastructură internă (abstract model, definit în acest modul) |
 
 Ce este automat: potrivirea produsului (cod de bare → cod de furnizor → nume), actualizarea
 prețurilor de furnizor, adăugarea liniilor lipsă pe comandă, aplicarea discountului din XML,
-verificarea totalului, crearea facturii de furnizor (când comanda e confirmată).
+verificarea totalului, crearea facturii de furnizor (când comanda e confirmată), semnalizarea
+importurilor problematice printr-o activitate pe comandă (din 19.0.1.4.0).
 
 Ce rămâne manual: configurarea codului de furnizor pe produse (pentru potrivire sigură), revizuirea
 liniilor galbene/roșii din previzualizare, confirmarea comenzii înainte de import dacă se dorește
-factură automată, verificarea și confirmarea facturii ciornă create.
+factură automată, verificarea și confirmarea facturii ciornă create, **închiderea activității
+„Import SPV necesită verificare"** după ce liniile au fost rezolvate.
 
 **Limitări cunoscute — de comunicat clientului:**
 
 1. **Fluxul headless (automat, din SPV) nu trece prin previzualizare.** Din 19.0.1.3.0 nu mai
-   creează produse noi în tăcere pe acest flux, dar liniile nepotrivite rămân neasociate pe comandă,
-   cu avertisment în chatter — necesită completare manuală prin **Importă UBL → Preview** (vezi
-   fișa de manual, punctul 8 din articolul „Gestionare facturi furnizori prin Mesaje SPV”).
+   creează produse noi în tăcere pe acest flux, dar liniile nepotrivite rămân neasociate pe comandă;
+   din 19.0.1.4.0 apar semnalizate printr-o activitate pe comandă — necesită completare manuală prin
+   **Importă UBL → Preview** (vezi fișa de manual, punctul 8 din articolul „Gestionare facturi
+   furnizori prin Mesaje SPV”).
 2. **Crearea facturii nu e retroactivă.** Vezi avertismentul din Pasul 5 — confirmarea ulterioară a
    comenzii nu generează automat factura ratată la momentul importului.
 3. **Când comanda are deja linii, liniile noi din XML care nu corespund unui produs deja de pe
@@ -180,7 +249,17 @@ factură automată, verificarea și confirmarea facturii ciornă create.
    operatorul trebuie să verifice că adăugarea e corectă (ex. o linie de tip „Ecovaloare” apărută
    doar pe factură).
 4. **Verificarea totalului este strict informativă** — o diferență între totalul comenzii și cel
-   din XML doar afișează un avertisment, nu blochează importul sau confirmarea facturii.
+   din XML doar afișează un avertisment (și, pe fluxul automat, programează activitatea de
+   verificare), nu blochează importul sau confirmarea facturii.
+5. **Deduplicarea activității se face doar pe titlu, și nu se autoînchide** (19.0.1.4.0). Cât timp
+   există pe comandă o activitate „Import SPV necesită verificare" nerezolvată, un import automat
+   ulterior cu alte probleme nu mai generează o sarcină nouă — doar nota din chatter. Operatorul
+   trebuie să închidă activitatea după rezolvare.
+6. **Indicatorul de atenție nu acoperă factura săltată.** Dacă importul automat rulează pe o
+   comandă neconfirmată și sare crearea facturii, `has_warning` rămâne fals și nu se programează
+   activitate — motivul apare doar în jurnal. Comportamentul e intenționat (altfel s-ar genera
+   activități la fiecare import automat normal), dar înseamnă că punctul 2 mai sus nu are alertă
+   proprie.
 
 ## 8. Verificări pentru consultant
 
@@ -204,6 +283,15 @@ factură automată, verificarea și confirmarea facturii ciornă create.
       **Încarcă factura** sau relansarea **Importă UBL**.
 - [ ] Cota de TVA de pe factura de furnizor reflectă procentul declarat în XML, dacă diferă de cel
       implicit pe produs.
+- [ ] Nota postată în chatter de importul automat este **colorată** (`log_html`), nu text simplu.
+- [ ] Un import automat cu **linii neasociate** sau **total nepotrivit** programează pe comandă
+      activitatea „Import SPV necesită verificare", atribuită cumpărătorului de pe comandă.
+- [ ] Un import automat **complet curat** (toate liniile potrivite, totalul corect) **nu**
+      programează activitate — nici măcar când crearea facturii a fost sărită pentru comandă
+      neconfirmată.
+- [ ] Reprocesarea aceluiași mesaj SPV **nu** duplică activitatea de verificare.
+- [ ] Jurnalul afișează prețurile actualizate agregat („... pentru N linie(i)"), nu linie cu linie,
+      iar produsele create apar cu numărul în titlu.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -215,26 +303,42 @@ factură automată, verificarea și confirmarea facturii ciornă create.
 | Linie roșie în previzualizare, dar produsul există în Odoo | Produsul nu are codul de furnizor sau codul de bare din XML configurat pe fișa lui | Completați `product.supplierinfo.product_code` sau codul de bare, apoi refaceți Preview |
 | Produs nou creat automat, deși nu era de dorit | Opțiunea **Creează produse lipsă** era bifată la import (implicit activă în wizard-ul manual) | Debifați opțiunea înainte de Importă, sau alegeți manual produsul corect pe linia din Preview |
 | Linia dintr-un mesaj SPV rămâne neasociată, fără produs creat | Comportament așteptat din 19.0.1.3.0 pe fluxul automat (context `purchase_ubl_no_new_products`) — nu e o eroare | Completați linia manual din comandă, prin Importă UBL → Preview |
+| Activitate „Import SPV necesită verificare" apărută pe comandă | Importul automat a găsit un total nepotrivit sau linii neasociate (din 19.0.1.4.0) — nu e o eroare de sistem | Citiți jurnalul din nota activității, completați liniile prin Importă UBL → Preview, apoi **marcați activitatea ca finalizată** |
+| Import automat cu probleme, dar fără activitate nouă | Există deja pe comandă o activitate „Import SPV necesită verificare" deschisă — deduplicarea e pe titlu | Închideți activitatea existentă după rezolvare; verificați între timp nota din chatter |
+| Activitățile de verificare ajung pe userul tehnic al cronului, nu pe cumpărător | Comanda creată din mesajul SPV are `user_id` gol | Completați cumpărătorul pe comandă (sau pe regula care creează comenzile din SPV) |
+| Factura săltată pe comandă neconfirmată, dar nicio activitate | Intenționat: `has_warning` acoperă doar totalul nepotrivit și liniile neasociate | Urmăriți motivul în jurnalul din chatter; vezi limitarea 6 din secțiunea 7 |
 | Factura de furnizor nu apare deși importul a rulat | Comanda nu era confirmată în momentul importului (vezi Pasul 5) | Confirmați comanda, apoi **Încarcă factura** sau relansați Importă UBL cu „Creează factură furnizor” bifat |
 | „Vendor bill already exists for this invoice reference” | Există deja o factură nu-anulată cu aceeași referință pentru acest furnizor | Verificați factura existentă înainte de a relansa importul |
 | Avertisment de diferență la verificarea totalului | Totalul comenzii nu coincide cu `PayableAmount`/`TaxInclusiveAmount` din XML | Verificați liniile, discounturile și taxele; diferența nu blochează, dar trebuie investigată |
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) au fost realizate **manual**, pe baza de test Romchim staging
-(Odoo 19), în limba română — nu există încă un test automat de capturi (`test_screenshots.py`) pentru
-acest modul, spre deosebire de alte module Deltatech:
+Capturile `01`–`05` (`.jpg`) au fost realizate **manual**, pe baza de test Romchim staging
+(Odoo 19). Capturile `06`–`07` (`.png`) sunt generate **reproductibil** de
+`tests/test_screenshots.py`, pe compania demo a localizării RO („RO Company", RON, plan de
+conturi RO):
+
+```bash
+./odoo/odoo-bin -c odoo.conf -d <db> --load-language=ro_RO -i deltatech_purchase_ubl,l10n_ro_doc_screenshots --test-tags=fise_screenshots --stop-after-init
+```
+
+> `--load-language=ro_RO` nu e opțional: fără el capturile ies cu etichetele modulului în
+> engleză. La generarea acestor capturi s-a descoperit și reparat cauza pentru care
+> traducerile RO ale modulului nu se aplicau deloc (`i18n/*.pot` rămas în urmă față de
+> `ro.po` — Odoo fuzionează cele două și marchează obsolete intrările absente din `.pot`).
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/02_fereastra_importa_ubl.jpg` | Fereastra „Importă UBL”, cu fișierul XML deja atașat și butonul Preview |
+| 1 | `screenshots/02_fereastra_importa_ubl.jpg` | Fereastra „Importă UBL", cu fișierul XML deja atașat și butonul Preview |
 | 2 | `screenshots/03_preview_linie_verde.jpg` | Previzualizare — linie VERDE, produs găsit după codul de furnizor (Match Type: By supplier code) |
 | 3 | `screenshots/04_preview_linie_rosie.jpg` | Previzualizare — linie ROȘIE, niciun produs găsit (Match Type: Not found) |
-| 4 | `screenshots/01_avertisment_linii_neasociate.jpg` | Comandă creată automat din mesaj SPV, cu avertisment în chatter pentru liniile neasociate |
-| 5 | `screenshots/05_comanda_confirmata_factura.jpg` | Comandă confirmată, cu smart-butonul „Facturi furnizor” apărut după relansarea Importă UBL |
+| 4 | `screenshots/06_preview_linie_galbena.png` | Previzualizare — toate trei culorile, cu linia GALBENĂ (Match Type: By name) evidențiată |
+| 5 | `screenshots/01_avertisment_linii_neasociate.jpg` | Comandă creată automat din mesaj SPV, cu avertisment în chatter pentru liniile neasociate |
+| 6 | `screenshots/07_activitate_verificare.png` | Comandă din fluxul automat (19.0.1.4.0): activitatea „SPV import needs review" + jurnalul colorat în chatter |
+| 7 | `screenshots/05_comanda_confirmata_factura.jpg` | Comandă confirmată, cu smart-butonul „Facturi furnizor" apărut după relansarea Importă UBL |
 
-Notă: nu există încă o captură pentru cazul galben (potrivire doar după nume) — se poate adăuga
-ulterior dacă se identifică un exemplu pe staging.
+Rămâne fără captură proprie: **Pasul 3** (confirmarea importului) — ecranul e identic cu
+previzualizarea, diferă doar butonul apăsat.
 
 ## 11. Observații pentru manual
 
