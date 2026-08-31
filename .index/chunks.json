@@ -2,7 +2,7 @@
   {
     "path": "bitshop_sale_withdrawal/index.md",
     "module": "bitshop_sale_withdrawal",
-    "version": "19.0.0.2.2",
+    "version": "19.0.0.2.3",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/bitshop_sale_withdrawal",
     "local_path": "odoo-addons/bitshop/bitshop_sale_withdrawal",
     "last_ingest": null,
@@ -11215,6 +11215,41 @@
       "l10n_ro_anaf"
     ],
     "text": "Romania - Partner Screening\nl10n_ro_partner_screening\nModul de conformitate fiscală și AML (Anti-Money Laundering) pentru partenerii din Odoo, adaptat cerințelor legislative românești. Ajută companiile să respecte obligațiile legale privind paradisurile fiscale, sancțiunile internaționale și impozitul la sursă pentru nerezidenți, marcând automat riscurile pe fișa partenerului, pe facturi și, opțional, la postarea plăților.\nParadisuri fiscale (HG 1/2024): marchează automat țările din lista jurisdicțiilor\nListe de sancțiuni OFAC și UE: bază de date locală a entităților sancționate\nScreening pe fișa partenerului: buton „Screening\" cu potrivire fuzzy pe tokeni\nScreening automat la creare/modificare: la salvarea partenerului (nume sau țară\nImpozit la Sursă (WHT): câmpul „Impozit la Sursă (WHT)\" sugerat automat pentru\nBlocaj opt-in la plăți (FR-08): pe `account.payment`, la postarea unei plăți ieșite,\nStatus screening unificat: câmp calculat `l10n_ro_screening_status` cu priorități\nAcțiuni manuale de mentenanță: din lista de sancțiuni, acțiuni server pentru"
+  },
+  {
+    "path": "l10n_ro_payment_allocation_report/index.md",
+    "module": "l10n_ro_payment_allocation_report",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payment_allocation_report",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_payment_allocation_report",
+    "last_ingest": "2026-08-31",
+    "friendly_name": "l10n_ro_payment_allocation_report",
+    "summary": "Modulul răspunde la o întrebare pe care contabilitatea o pune la fiecare verificare de sold: din ce se compune suma plătită printr-un ordin de plată? Cazul tipic este furnizorul care a emis o factură și un storno, iar prin bancă se achită doar diferența — din extras se vede o singură sumă, nu documentele care au produs-o. Rapoartele standard (*Partner Ledger*, *Aged Payable/Receivable*) listează plățile și facturile una lângă alta, dar niciodată **alocarea** dintre ele. Modulul adaugă două rapoarte native `account.report` care arată legătura în ambele sensuri: de la plată spre facturile pe care le stinge și de la factură spre documentele care au închis-o. Este exclusiv de citire — nu generează și nu modifică note contabile.",
+    "features": [
+      "Alocarea plăților (*Payment Allocation*) — grupare pe documentul care stinge: plata cu valoarea, suma alocată în perioadă și restul nealocat; sub ea, fiecare factură închisă cu suma alocată și restul neachitat; sub factură, celelalte alocări ale ei (note de credit, avansuri, plăți anterioare), fără de care suma nu se închide.",
+      "Stingerea facturilor (*Invoice Settlement*) — aceleași alocări grupate invers, pornind de la factură.",
+      "Sursa de date este `account.partial.reconcile`, nu `account.payment` — acoperă toate modurile de stingere folosite în practică: note contabile reconciliate din extrasul bancar, registru de casă, note de credit, compensări. În majoritatea instalărilor românești plățile de furnizor sunt note contabile, nu înregistrări `account.payment`, iar un raport construit pe `account.payment` le-ar rata aproape complet.",
+      "Până la patru secțiuni cu subtotaluri separate, fiecare afișată doar dacă are conținut: *Plăți către furnizori* (401), *Încasări de la clienți* (4111), *Alte stingeri* (note de credit, compensări) și *Reconcilieri fără factură* (mecanica POS, stingeri între note contabile). Plățile și încasările stau separat pentru că au sens contrar în trezorerie — un subtotal comun nu s-ar putea confrunta cu rulajul unui extras. Încadrarea ca trezorerie se face după tipul jurnalului (bancă/casă), iar sensul după contul de terți.",
+      "Câte un total per flux — *Total plăți către furnizori* (confruntabil cu rulajul creditor al trezoreriei), *Total încasări de la clienți* (cu cel debitor) și *Total stins (toate secțiunile de mai sus)*.",
+      "Filtre native: perioadă (implicit luna curentă), jurnale (aplicate documentului de la primul nivel), parteneri, creanțe/datorii (`filter_account_type`), selector multi-companie, unfold all. Filtrele de comparație și de ciorne sunt dezactivate intenționat — alocările există numai între note postate, iar coloanele de comparație ar repeta aceleași valori.",
+      "Meniurile declară explicit grupurile de acces la rapoartele contabile (`account.group_account_readonly` / `account.group_account_basic`). Raportul citește prin interogări directe, deci nu aplică reguli de acces la nivel de înregistrare pe notele contabile.",
+      "Drill-down la orice document și export PDF/XLSX din bara de instrumente, moștenite din framework-ul de raportare Enterprise.",
+      "Interfață tradusă integral în română (`i18n/ro.po`)."
+    ],
+    "dependencies": [
+      "account_reports",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_balance_confirmation",
+      "l10n_ro_account_fisa_cont",
+      "l10n_ro_registru_jurnal",
+      "l10n_ro_journal_reports",
+      "l10n_ro_payment_instruments",
+      "l10n_ro_stock_sheet",
+      "account_reports"
+    ],
+    "text": "l10n_ro_payment_allocation_report\nl10n_ro_payment_allocation_report\nModulul răspunde la o întrebare pe care contabilitatea o pune la fiecare verificare de sold: din ce se compune suma plătită printr-un ordin de plată? Cazul tipic este furnizorul care a emis o factură și un storno, iar prin bancă se achită doar diferența — din extras se vede o singură sumă, nu documentele care au produs-o. Rapoartele standard (*Partner Ledger*, *Aged Payable/Receivable*) listează plățile și facturile una lângă alta, dar niciodată **alocarea** dintre ele. Modulul adaugă două rapoarte native `account.report` care arată legătura în ambele sensuri: de la plată spre facturile pe care le stinge și de la factură spre documentele care au închis-o. Este exclusiv de citire — nu generează și nu modifică note contabile.\nAlocarea plăților (*Payment Allocation*) — grupare pe documentul care stinge: plata cu valoarea, suma alocată în perioadă și restul nealocat; sub ea, fiecare factură închisă cu suma alocată și restul neachitat; sub factură, celelalte alocări ale ei (note de credit, avansuri, plăți anterioare), fără de care suma nu se închide.\nStingerea facturilor (*Invoice Settlement*) — aceleași alocări grupate invers, pornind de la factură.\nSursa de date este `account.partial.reconcile`, nu `account.payment` — acoperă toate modurile de stingere folosite în practică: note contabile reconciliate din extrasul bancar, registru de casă, note de credit, compensări. În majoritatea instalărilor românești plățile de furnizor sunt note contabile, nu înregistrări `account.payment`, iar un raport construit pe `account.payment` le-ar rata aproape complet.\nPână la patru secțiuni cu subtotaluri separate, fiecare afișată doar dacă are conținut: *Plăți către furnizori* (401), *Încasări de la clienți* (4111), *Alte stingeri* (note de credit, compensări) și *Reconcilieri fără factură* (mecanica POS, stingeri între note contabile). Plățile și încasările stau separat pentru că au sens contrar în trezorerie — un subtotal comun nu s-ar putea confrunta cu rulajul unui extras. Încadrarea ca trezorerie se face după tipul jurnalului (bancă/casă), iar sensul după contul de terți.\nCâte un total per flux — *Total plăți către furnizori* (confruntabil cu rulajul creditor al trezoreriei), *Total încasări de la clienți* (cu cel debitor) și *Total stins (toate secțiunile de mai sus)*.\nFiltre native: perioadă (implicit luna curentă), jurnale (aplicate documentului de la primul nivel), parteneri, creanțe/datorii (`filter_account_type`), selector multi-companie, unfold all. Filtrele de comparație și de ciorne sunt dezactivate intenționat — alocările există numai între note postate, iar coloanele de comparație ar repeta aceleași valori.\nMeniurile declară explicit grupurile de acces la rapoartele contabile (`account.group_account_readonly` / `account.group_account_basic`). Raportul citește prin interogări directe, deci nu aplică reguli de acces la nivel de înregistrare pe notele contabile.\nDrill-down la orice document și export PDF/XLSX din bara de instrumente, moștenite din framework-ul de raportare Enterprise.\nInterfață tradusă integral în română (`i18n/ro.po`)."
   },
   {
     "path": "l10n_ro_payment_instruments/index.md",

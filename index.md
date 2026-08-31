@@ -415,6 +415,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_partner_create_by_vat_openapi](l10n_ro_partner_create_by_vat_openapi/index.md): Completează automat datele partenerului român după CUI, printr-o căutare cu cheie OpenAPI.
 - [l10n_ro_partner_ledger_currency](l10n_ro_partner_ledger_currency/index.md): Extinde Fișa Partenerului cu coloane Debit/Credit/Sold în valuta originală a tranzacțiilor.
 - [l10n_ro_partner_screening](l10n_ro_partner_screening/index.md): Conformitate fiscală și AML: paradisuri fiscale HG 1/2024, sancțiuni OFAC/UE și impozit la sursă nerezidenți.
+- [l10n_ro_payment_allocation_report](l10n_ro_payment_allocation_report/index.md): Arată ce facturi închide o plată și, invers, ce documente au închis o factură — două rapoarte native pe `account.partial.reconcile`, cu plățile, încasările și stingerile fără numerar în secțiuni separate.
 - [l10n_ro_payment_instruments](l10n_ro_payment_instruments/index.md): Gestionează cecuri, bilete la ordin și cambii cu scadențar, note contabile automate și alertă refuz.
 - [l10n_ro_payroll_import](l10n_ro_payroll_import/index.md): Importă note contabile de salarii din aplicații externe (SAGA, Nexus, Charisma) cu distribuție analitică pe centre de cost.
 - [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md): Corectează calculul impozitului pe salarii (bază brut − CAS − CASS − deducere personală) și adaugă deducerea personală de bază (DPB) în statul de plată românesc, peste `l10n_ro_hr_payroll`.
