@@ -1,43 +1,29 @@
 # Restricție Jurnale pentru Partenerul Generic (localizat la `deltatech_generic_partner_restriction/index.md`)
 
 - **Nume Tehnic:** `deltatech_generic_partner_restriction`
-- **Versiune:** `19.0.2.0.0`
+- **Versiune:** `19.0.3.0.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_generic_partner_restriction
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_generic_partner_restriction`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-08-31`
 
 #### 1. Sumar
 
-Modulul restricționează, la înregistrarea plăților, jurnalele bancare și de casă disponibile atunci când partenerul selectat este "partenerul generic" configurat pe companie. Practic, permite excluderea anumitor conturi/case de marcat din lista de jurnale afișate pentru încasările/plățile efectuate pe acest partener generic (folosit de obicei pentru vânzări cu amănuntul sau clienți neidentificați), evitând astfel utilizarea greșită a unor jurnale rezervate altor fluxuri.
+**Modul de tranziție, gol.** Funcționalitatea pe care o oferea — restricționarea jurnalelor bancare și de casă la înregistrarea plăților pentru partenerul generic, plus refuzul de a valida o factură de client emisă pe acest partener — a fost comasată în [deltatech_partner_generic](../deltatech_partner_generic/index.md) în versiunea `19.0.3.0.0`. Modulul păstrează doar dependența, astfel încât bazele care îl au instalat preiau restricțiile la actualizare, fără niciun pas manual. Jurnalele bifate ca restricționate sunt păstrate de scriptul de pre-migrare al modulului-gazdă.
+
+Instalările noi folosesc direct `deltatech_partner_generic`.
 
 #### 2. Funcționalități Cheie
 
-- Adaugă pe jurnalul contabil (`account.journal`) o bifă "Restricție Generic" care marchează jurnalul ca fiind interzis pentru partenerul generic.
-- La deschiderea unei plăți (`account.payment`) pentru partenerul generic al companiei, lista de jurnale disponibile exclude automat jurnalele bancare/casă marcate cu restricție.
-- Pentru orice alt partener (diferit de cel generic), toate jurnalele rămân disponibile ca de obicei.
-- Câmpul de restricție este vizibil (opțional, ascuns implicit) în vizualizarea listă a jurnalelor și în formularul jurnalului.
+Niciuna proprie. Vezi [deltatech_partner_generic](../deltatech_partner_generic/index.md).
 
 #### 3. Dependențe
 
-- `account`
 - [deltatech_partner_generic](../deltatech_partner_generic/index.md)
 
 #### 4. Componente Cheie
 
-**Modele**
-
-- `account.payment` (extins): suprascrie `_compute_available_journal_ids` pentru a filtra, în cazul partenerului generic al companiei, jurnalele bancare/casă marcate cu `restriction`.
-- `account.journal` (extins): adaugă câmpul boolean `restriction` ("Generic Restriction") care marchează jurnalul ca restricționat pentru partenerul generic.
-
-**Vizualizări**
-
-- `account_journal_view_list` (extinde `account.view_account_journal_tree`): adaugă coloana `restriction` (ascunsă implicit) înainte de câmpul `type`.
-- `account_journal_view_form` (extinde `account.view_account_journal_form`): adaugă câmpul `restriction` în formularul jurnalului, înainte de câmpul `type`.
-
-**Acțiuni Automate / Acțiuni Server**
-
-Nu sunt definite `ir.cron`, `base.automation` sau `ir.actions.server` în acest modul.
+Modulul nu declară modele, vizualizări, date sau acțiuni automate. `data` este o listă goală, iar pachetul `models/` a fost eliminat.
 
 #### 5. Conexiuni
 
-- [deltatech_partner_generic](../deltatech_partner_generic/index.md): furnizează câmpul `generic_partner_id` pe companie, folosit de acest modul pentru a identifica partenerul generic ale cărui plăți sunt restricționate.
+- [deltatech_partner_generic](../deltatech_partner_generic/index.md): modulul-gazdă, care conține acum câmpul `restriction` de pe `account.journal`, filtrarea jurnalelor pe `account.payment` și blocarea postării facturilor de client emise pe partenerul generic.

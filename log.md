@@ -4,6 +4,38 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-08-31] Re-ingestie `l10n_ro_invoice_report` — traduceri care existau, dar nu se aplicau (PR #529)
+
+- **Acțiune:** Resincronizarea paginii și a fișei consultant după PR #529 (l10n-romania), care repară o categorie de eroare tăcută în traduceri. Fișa din wiki e înlocuită cu versiunea corectată (169 de linii), împreună cu capturile regenerate.
+- **Constatarea, contraintuitivă:** documentul tipărit ieșea parțial în engleză — „(without taxes)", „Total amount (with taxes)", textul legal de final — deși `ro.po` avea 143 de intrări și părea complet. Cauza nu era lipsa traducerii, ci **potrivirea**: Odoo aplică traducerile de șablon prin `msgid` **exact**, cu newline-urile și indentarea din interiorul textului. Șablonul fusese reindentat, `ro.po` a rămas pe forma veche. Textul legal era chiar tradus, cu 24 de spații de indentare, în timp ce șablonul cere 20 — **traducere fantomă**: prezentă, corectă ca text, inaplicabilă. Nimic nu semnalează situația: nici pre-commit, nici testele, nici numărul de intrări din po.
+- **Măsurat pe forma curentă:** 127 de stringuri în șablon, 97 potrivite, 30 netraduse, una fantomă. Completate cele care ajung pe documente; restul sunt etichete tehnice sau date demo. Intrarea fantomă a fost eliminată, ca să nu inducă în eroare la următoarea verificare.
+- **Două corecturi de raportare, consemnate ca atare:** (1) afirmația din fișa PR-ului #527, că termenii rămași în engleză provin din `l10n_ro_report_common`, era **greșită** — sunt în șablonul acestui modul, iar `l10n_ro_report_common` e tradus 14/14; (2) prima măsurătoare a golului (23 de stringuri) era subestimată, fiindcă regexul folosit rata `msgid`-urile scrise pe mai multe linii — numărul real era 30.
+- **Verificare prin randare, nu prin diff:** Odoo a fost pornit cu branch-ul respectiv în locul repo-ului (worktree izolat, fără a atinge checkout-ul altei sesiuni care lucra în el), iar capturile au fost regenerate. Factura apare integral în română, inclusiv textul legal. Singurul termen rămas în engleză, „VAT collected 21% Goods", e denumirea taxei din configurare, nu un string traductibil — adăugat ca rând în tabelul de mesaje frecvente al fișei.
+- **Legătură:** PR #530 (altă sesiune, în paralel) adaugă în pre-commit garda care blochează exact acest tip de traducere ignorată în silențiu.
+- **Fișiere actualizate:** `l10n_ro_invoice_report/index.md`, `l10n_ro_invoice_report/FISA_CONSULTANT.md` (resincronizată), `l10n_ro_invoice_report/screenshots/*.png` (5 fișiere, 02 și 03 regenerate), `log.md`.
+
+## [2026-08-31] Re-ingestie `l10n_ro_invoice_report` — fișă consultant cu capturi (PR #527)
+
+- **Acțiune:** Actualizarea paginii `l10n_ro_invoice_report` după PR #527 (l10n-romania), care adaugă fișa consultant cu 5 capturi generate reproductibil și corectează trei defecte ieșite la iveală **uitându-ne la capturi**, nu citind codul. Pagina primește linia de metadate `Fișă Consultant`, iar fișa și capturile sunt copiate în directorul wiki al modulului.
+- **Sursă:** `readme/DESCRIPTION.md` pentru Sumar/Funcționalități Cheie, completat cu constatările din PR (etichetele părților, mecanismul limbii, traducerile).
+- **Trei defecte găsite prin capturi:** (1) la plățile de ieșire, compania era etichetată „Client" și partenerul „Furnizor" — la o restituire de marfă către o persoană fizică, beneficiarul nu e furnizor; pe documentele de casă etichetele devin **Plătitor / Beneficiar** la plată și **Beneficiar / Depunător** la încasare, restul cazurilor neatinse; (2) factura ieșea în engleză, fiindcă raportul „în limba companiei" citește limba **partenerului companiei**, nu a utilizatorului — nu e defect, e mecanismul, dar nu era scris nicăieri; (3) 20 de stringuri netraduse în `i18n/ro.po`, printre care chiar cele tipărite pe factură (`Elaborate:`, `Delegate:`, `Mean Transport:`).
+- **Limită consemnată, nu ascunsă:** termenii rămași în engleză pe factură — „(without taxes)", textul legal de la final — provin din `l10n_ro_report_common`, alt modul al localizării. Notat explicit în fișă și în tabelul de mesaje frecvente, ca să nu caute cineva soluția în setările modulului greșit.
+- **Reproductibilitatea capturilor:** se generează pe o bază **curată** (121 module), cu doar modulul și cel de capturi instalate. Prima încercare, pe o copie a bazei de test cu suita completă (~1.000 module), a eșuat: captura ecranului de Setări depășea timpul de așteptare chiar la 90 de secunde. Captura respectivă a fost scoasă din flux, iar configurarea e descrisă în text la secțiunea 5; comanda și avertismentul sunt în fișă.
+- **Fișă consultant:** copiată din `readme/FISA_CONSULTANT.md` (161 de linii), cu cele 5 capturi din `readme/screenshots/`. Extrasă direct din branch cu `git show`, fără să comutăm checkout-ul repo-ului `l10n-romania` — altă sesiune lucra în el în acel moment.
+- **Fișiere actualizate:** `l10n_ro_invoice_report/index.md`, `l10n_ro_invoice_report/FISA_CONSULTANT.md` (nouă), `l10n_ro_invoice_report/screenshots/*.png` (5 fișiere), `log.md`.
+
+## [2026-08-31] Ingestie `l10n_ro_pos_returns` (modul nou) + re-ingestie `l10n_ro_cash_bank_enhanced` și `l10n_ro_invoice_report` — tichet #9362 Damira
+
+- **Acțiune:** Pagină nouă pentru `l10n_ro_pos_returns` (`19.0.1.1.0`) și regenerarea a două pagini existente, după cinci PR-uri fuzionate în aceeași sesiune pornind de la tichetul #9362 (client Damira): retururile restituite în numerar nu aveau niciun document fiscal, iar în registrul de casă nu apăreau deloc — erau netate în încasarea zilei. `l10n_ro_ent` #117 (modulul nou), #118 (registrul dispozițiilor de casă), #121 (identificarea cumpărătorului), #119 (fix de CI apărut pe drum) și `l10n-romania` #525 (formularul de casă completat).
+- **Sursă:** `readme/DESCRIPTION.md` pentru Sumar/Funcționalități Cheie la toate trei, completat din cod pentru Componente Cheie la modulul nou și la cel de casierie (handlerele de sesiune POS și modelul de registru nu sunt acoperite de Readme).
+- **Baza legală, verificată în textul consolidat, nu din memorie:** ajustarea bazei de impozitare la retur intră sub art. 287 lit. b) din Codul fiscal, iar normele cer explicit factură cu valorile înscrise cu semnul minus, transmisă și cumpărătorului (HG 1/2016, pct. 32 alin. (1)). Vânzarea la casa de marcat e scutită de factură (art. 319 alin. (10) lit. a)), dar scutirea **nu** se extinde la retur — de aici modulul.
+- **Trei decizii luate pe date de producție, nu pe presupuneri:** (1) returul se recunoaște după totalul negativ al bonului, nu după `is_refund`, care era adevărat pe 6 bonuri din 75 cu total negativ — casierii introduc cantități negative direct pe bon; (2) restul dat clientului e tot o plată de numerar negativă, dar pe un bon cu total pozitiv, deci netarea lui e corectă și nu are ce căuta pe rândul de plăți — o selecție naivă după plăți negative scotea 243 de „retururi" în loc de 223; (3) poarta „bonul de retur are client" se satisface nominal cu partenerul generic pentru clienți anonimi — 66 din 223 de retururi fuseseră înregistrate exact așa, plus 7 fără partener, adică o treime treceau verificarea fără cumpărător identificabil.
+- **Două dublări evitate, ambele descoperite prin verificare, nu prin proiectare:** raportul „Voucher / Payment" din `l10n_ro_invoice_report` tipărea deja dispoziția de plată pentru `account.payment` — butonul adăugat în #118 a fost scos, iar formularul OCA a fost completat cu ce îi lipsea (cod 14-4-4/14-4-1, casieria — era în șablon, dar comentată —, actul de identitate, cele trei semnături); iar flag-ul propriu pentru „contact colectiv" a fost înlocuit cu desemnarea existentă din modulul de partener generic al suitei.
+- **Capcană de nucleu clarificată:** facturarea retroactivă a unui bon din sesiune închisă **nu** dublează venitul și TVA-ul — `_create_misc_reversal_move` reversează contribuția bonului din nota de închidere pe toate naturile, iar `_prepare_invoice_vals` datează factura la ziua curentă. Deci perioadele deja declarate rămân neatinse și nu sunt necesare declarații rectificative; acoperit de test.
+- **Verificare:** 26 teste `post_install` pe modulul nou, 10 pe registrul dispozițiilor, 22 pe raportul de factură — toate trec. CI verde pe toate cele cinci PR-uri, după ce #119 a reparat un eșec preexistent pe `19.0` (shard-ul `misc-2`: `AnafTestCommon` scria câmpuri ANAF fără să verifice că există, iar `l10n_ro_pos_fiscal_compliance` folosește clasa fără să depindă de modulul care le definește).
+- **Rămas de făcut:** fișa consultant cu capturi pentru `l10n_ro_invoice_report` (testul de capturi e scris; captura ecranului de Setări expiră pe o bază cu suita completă instalată).
+- **Fișiere actualizate:** `l10n_ro_pos_returns/index.md` (pagină nouă), `l10n_ro_cash_bank_enhanced/index.md` (regenerată), `l10n_ro_invoice_report/index.md` (regenerată), `index.md` (1 intrare nouă, 2 descrieri actualizate), `log.md`.
+
 ## [2026-08-31] Ingestie `l10n_ro_payment_allocation_report` (modul nou — tichet #9363 Damira)
 
 - **Acțiune:** Pagină nouă pentru modulul `l10n_ro_payment_allocation_report` (`19.0.1.0.0`), creat în aceeași sesiune pornind de la tichetul #9363 (client Damira): contabilitatea cerea un raport din care să reiasă ce facturi reconciliază un ordin de plată, în special când o factură și un storno se sting cu o plată pentru diferență. Modulul adaugă două rapoarte native `account.report` — *Alocarea plăților* și *Stingerea facturilor* — construite pe `account.partial.reconcile`.
@@ -687,5 +719,18 @@ This is an append-only log of all operations performed on the wiki.
     - `wiki_module_odoo/deltatech_sale_margin/FISA_CONSULTANT.md`
     - `wiki_module_odoo/deltatech_sale_margin/screenshots/`
     - `wiki_module_odoo/deltatech_sale_commission/index.md`
+    - `wiki_module_odoo/index.md`
+    - `wiki_module_odoo/log.md`
+
+---
+
+## [2026-08-31] Re-ingest: `deltatech_partner_generic`, `deltatech_generic_partner_restriction`
+
+- **Acțiune:** Actualizate ambele pagini după comasarea restricțiilor în modulul-gazdă: `deltatech_partner_generic` 19.0.1.0.0 → 19.0.2.0.0, `deltatech_generic_partner_restriction` 19.0.2.0.0 → 19.0.3.0.0 (devine shim gol).
+- **Detalii:** Pagina modulului-gazdă documentează acum blocarea postării facturilor de client emise pe partenerul generic (`_generic_partner_invoices` / `_post`, verificare atât pe `partner_id` cât și pe `partner_shipping_id`, ciornele rămân permise), câmpul `restriction` pe `account.journal`, filtrarea jurnalelor pe `account.payment`, protecția partenerului (`lock_generic_partner` pe companie, `generic_partner_locked` pe partener) și pre-migrarea `19.0.2.0.0`, care preia `ir_model_data` de la shim ca să nu se piardă coloana `restriction` și bifele clientului. Pagina shim-ului trimite la modulul-gazdă și precizează că instalările noi îl folosesc direct.
+- **Fișă consultant:** niciunul dintre cele două module nu are fișă, deci nu s-a copiat nimic în wiki.
+- **Fișiere actualizate:**
+    - `wiki_module_odoo/deltatech_partner_generic/index.md`
+    - `wiki_module_odoo/deltatech_generic_partner_restriction/index.md`
     - `wiki_module_odoo/index.md`
     - `wiki_module_odoo/log.md`

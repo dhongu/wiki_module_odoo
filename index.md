@@ -94,7 +94,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_fast_sale](deltatech_fast_sale/index.md): Vânzare rapidă: buton în comanda de vânzare care parcurge într-un singur pas confirmarea, livrarea și facturarea.
 - [deltatech_feed](deltatech_feed/index.md): Generează feed-uri de produse pentru platforme de e-commerce și marketing (Google Merchant, Facebook, Compari, Bizoo, 2performant, VidaXL), cu reîmprospătare automată zilnică.
 - [deltatech_followup](deltatech_followup/index.md): Urmărirea automată a facturilor neîncasate, prin e-mailuri de followup programate, relativ la data facturii sau a scadenței.
-- [deltatech_generic_partner_restriction](deltatech_generic_partner_restriction/index.md): Restricționează jurnalele bancare/de casă disponibile la plăți atunci când partenerul este partenerul generic al companiei.
+- [deltatech_generic_partner_restriction](deltatech_generic_partner_restriction/index.md): Modul de tranziție, gol — funcționalitatea a fost comasată în `deltatech_partner_generic`.
 - [deltatech_gln](deltatech_gln/index.md): Gestionează Numărul Global de Locație (GLN) la nivel de partener — modul obsolet, înlocuit de `account_add_gln`.
 - [deltatech_helpdesk_tag_primary](deltatech_helpdesk_tag_primary/index.md): Clasificare pe două niveluri a tichetelor Helpdesk, cu etichete principale/secundare și filtrare a etichetelor după echipă.
 - [deltatech_image_optimize](deltatech_image_optimize/index.md): Recomprimă automat atașamentele imagine supradimensionate (JPEG/WebP/PNG) pentru a elibera spațiu din filestore, fără să afecteze calitatea vizuală.
@@ -152,7 +152,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_object_history](deltatech_object_history/index.md): Istoric paralel al documentelor Odoo, separat de mesajele standard, ale cărui intrări nu sunt șterse periodic.
 - [deltatech_object_history_service](deltatech_object_history_service/index.md): Extinde istoricul obiectelor către modelele Acord de service și Echipament de service.
 - [deltatech_obyc](deltatech_obyc/index.md): Determinare automată a conturilor contabile de stoc printr-o matrice de reguli (tip SAP OBYC), pe cheie de tranzacție, clasă de evaluare, arie de evaluare, modificator contabil și companie.
-- [deltatech_partner_generic](deltatech_partner_generic/index.md): Definirea unui partener generic implicit, folosit ca valoare de rezervă în fluxurile de vânzări și facturare pentru clienții ocazionali sau anonimi.
+- [deltatech_partner_generic](deltatech_partner_generic/index.md): Definirea unui partener generic implicit, folosit ca valoare de rezervă în fluxurile de vânzări și facturare pentru clienții ocazionali sau anonimi; include restricțiile contabile (jurnale de plată, blocarea facturii de client) și protecția partenerului împotriva modificărilor.
 - [deltatech_partner_gifts](deltatech_partner_gifts/index.md): Gestionează cadourile oferite partenerilor — generare linii de cadou, etichete de livrare, date partener și copiere/modificare în masă.
 - [deltatech_partner_merge](deltatech_partner_merge/index.md): Unifică în masă fișele de parteneri duplicate pe același CUI, cu simulare obligatorie și verificare post-unificare a totalurilor.
 - [deltatech_partner_rating](deltatech_partner_rating/index.md): Permite evaluarea partenerilor de afaceri pe baza unor criterii definite de utilizator.
@@ -370,7 +370,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_audit_immutable](l10n_ro_audit_immutable/index.md): Pistă de audit imuabilă cu triggere PostgreSQL și hash chain SHA-256 pe documentele financiare (FR-14, OMFP 1802).
 - [l10n_ro_balance_confirmation](l10n_ro_balance_confirmation/index.md): Generează documente de confirmare a soldului pentru parteneri (clienți/furnizori) la o dată dată.
 - [l10n_ro_bank_register_report](l10n_ro_bank_register_report/index.md): Jurnalul de bancă românesc ca raport nativ, per cont bancar și zi, cu sold reportat — extinde `l10n_ro_cash_register_report`.
-- [l10n_ro_cash_bank_enhanced](l10n_ro_cash_bank_enhanced/index.md): Alertă tranzacții bancare nereconciliate și control al plafoanelor de numerar conform Legii 70/2015 pentru jurnalele de casă și bancă.
+- [l10n_ro_cash_bank_enhanced](l10n_ro_cash_bank_enhanced/index.md): Dispoziție de plată/încasare către casierie (14-4-4) cu registru numerotat, alertă tranzacții bancare nereconciliate și control al plafoanelor de numerar conform Legii 70/2015.
 - [l10n_ro_cash_register](l10n_ro_cash_register/index.md): Registru de casă zilnic pe jurnal și dată, cu solduri reportate automat între zile, operațiuni de numerar și raport tipărit 14-4-7A.
 - [l10n_ro_cash_register_report](l10n_ro_cash_register_report/index.md): Registrul de casă românesc (14-4-7A) ca raport nativ `account.report`, cu filtre de dată/jurnal/companie și export PDF/XLSX.
 - [l10n_ro_cbam](l10n_ro_cbam/index.md): Urmărirea emisiilor CO₂ incorporate la import și declarația CBAM trimestrială/anuală (Reg. UE 2023/956, FR-56).
@@ -402,7 +402,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_inventory_items](l10n_ro_inventory_items/index.md): Gestiunea obiectelor de inventar 303/603/8035 cu fișă OI, wizard-uri batch și rapoarte PDF (OMFP 1802).
 - [l10n_ro_inventory_register](l10n_ro_inventory_register/index.md): Registrul Inventar anual (formular cod 14-1-2, OMFP 2634/2015), cu linii recapitulative pe categorii patrimoniale din soldurile contabile postate.
 - [l10n_ro_invoice_dvi_protect](l10n_ro_invoice_dvi_protect/index.md): Blochează resetarea la ciornă a facturilor furnizor și anularea DVI când stocul FIFO recepționat a fost deja parțial consumat.
-- [l10n_ro_invoice_report](l10n_ro_invoice_report/index.md): Extinde rapoartele de factură și documentele de plată pentru conformitate RO (TVA pe linie, delegat, chitanțe, mențiuni legale).
+- [l10n_ro_invoice_report](l10n_ro_invoice_report/index.md): Extinde rapoartele de factură și documentele de plată pentru conformitate RO (TVA pe linie, delegat, mențiuni legale), iar chitanța și dispoziția de casă ies ca formular complet: cod 14-4-4/14-4-1, casierie, act de identitate, semnături și părțile etichetate după rolul real (Plătitor/Beneficiar).
 - [l10n_ro_journal_reports](l10n_ro_journal_reports/index.md): Adaugă coloana Cont Corespondent (OMFP 1802/2014) în Cartea Mare standard Odoo Enterprise.
 - [l10n_ro_journal_tva](l10n_ro_journal_tva/index.md): Generează Jurnalul de TVA Vânzări și Cumpărări cu detaliu pe cote și categorii, plus export XLSX.
 - [l10n_ro_lang](l10n_ro_lang/index.md): Setează automat limba site-ului pe română dacă IP-ul vizitatorului provine din România.
@@ -421,6 +421,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md): Corectează calculul impozitului pe salarii (bază brut − CAS − CASS − deducere personală) și adaugă deducerea personală de bază (DPB) în statul de plată românesc, peste `l10n_ro_hr_payroll`.
 - [l10n_ro_period_close_enhanced](l10n_ro_period_close_enhanced/index.md): Checklist lunar de închidere perioadă pe infrastructura Enterprise account.return.type.
 - [l10n_ro_pos_fiscal_compliance](l10n_ro_pos_fiscal_compliance/index.md): Conformitate fiscală AMEF pentru POS conform OUG 28/1999 — urmărire bon fiscal, blocaj sesiune, raport Z reconciliat, arhivă jurnal electronic, plus import și reconciliere automată a arhivelor Z (.zip/.p7b) pe FK exact cu comenzile POS.
+- [l10n_ro_pos_returns](l10n_ro_pos_returns/index.md): Retururile din POS tratate conform legislației RO — factură de retur automată pentru ajustarea bazei de TVA, cumpărător identificat obligatoriu și restituirile de numerar pe rândul de plăți al registrului de casă.
 - [l10n_ro_process_library](l10n_ro_process_library/index.md): Bibliotecă versionată de procese de implementare importabile selectiv în deltatech_business_process, cu fișe PDF.
 - [l10n_ro_profit_tax](l10n_ro_profit_tax/index.md): Calcul impozit pe profit D100/D101 cu ajustări fiscale, pierdere reportată și credit sponsorizări.
 - [l10n_ro_provisions](l10n_ro_provisions/index.md): Urmărire provizioane 151x cu workflow aprobare/ajustare/soluționare și monografie automată OMFP 1802.
