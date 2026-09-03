@@ -75,6 +75,9 @@ O listă de **link-uri Markdown active** către alte pagini de module care sunt 
         - Conținutul său este utilizat pentru secțiunile 'Sumar' și 'Funcționalități Cheie' ale paginii wiki.
         - **Se omite analiza suplimentară a codului pentru 'Componente Cheie' (Modele, Vizualizări, Acțiuni Automate / Acțiuni Server) cu excepția cazului în care este menționat explicit în Readme.**
     - Dacă nu este găsit, 'Sumarul' și 'Funcționalitățile Cheie' sunt sintetizate prin analiza descrierii din `__manifest__.py` și a codului modulului (modele, vizualizări).
+    - **Sursă secundară — `readme/USAGE.md` / `readme/CONFIGURE.md`:** dacă există, se citesc și se folosesc pentru a **îmbogăți** secțiunea 'Funcționalități Cheie' cu detalii operaționale pe care `DESCRIPTION.md` de regulă nu le are — căi reale de meniu, semnificația câmpurilor dintr-un wizard, tipurile/valorile unei opțiuni, ordinea pașilor unui flux, formatul unui fișier generat. Nu se copiază fraze întregi din USAGE/CONFIGURE; se sintetizează la nivel de bullet, ca restul secțiunii.
+      - Dacă modulul are deja `readme/FISA_CONSULTANT.md` (copiată integral la pasul 5), fluxul detaliat pas-cu-pas rămâne **acolo** — 'Funcționalități Cheie' preia doar esențialul (ex. valorile unei opțiuni-cheie), nu reface fișa. Evitați dublarea.
+      - Dacă modulul **nu** are fișă consultant, USAGE/CONFIGURE devin sursa principală pentru orice detaliu operațional care altfel ar lipsi din pagină (ex. ce alege operatorul într-un wizard, ce meniu accesează).
 2.  **Fișier Manifest:** Se citește fișierul `__manifest__.py` pentru a obține numele prietenesc, numele tehnic, dependențele și calea.
 3.  **Analiza Codului (pentru componente - DOAR dacă Readme-ul nu este prezent sau nu acoperă aceste secțiuni):**
     - Se scanează directorul `models/` pentru a identifica modelele cheie pentru secțiunea 'Componente Cheie'.

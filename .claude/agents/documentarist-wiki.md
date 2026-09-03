@@ -30,33 +30,42 @@ inventezi și fără să atingi fișierele partajate ale wiki-ului.
 
 ## Intrare
 
-`$ARGUMENTS` = numele tehnic al modulului și, opțional, calea locală a directorului
-(cea care conține `__manifest__.py`). Dacă primești doar numele, localizează modulul
-cu `Glob`: `**/<modul>/__manifest__.py` sub `odoo-addons/` și `proiecte/`. Dacă
-găsești mai multe potriviri și e ambiguu, raportează și oprește-te.
+`$ARGUMENTS` = numele tehnic al modulului și, opțional, calea locală a
+directorului (cea care conține `__manifest__.py`). Dacă primești doar numele,
+localizează modulul cu `Glob`: `**/<modul>/__manifest__.py` sub `odoo-addons/`
+și `proiecte/`. Dacă găsești mai multe potriviri și e ambiguu, raportează și
+oprește-te.
 
 ## Pași de execuție
 
-1. Citește `schema.md` și respectă **exact** structura paginii (secțiunile 1–5) și
-   fluxul de ingestie din el.
+1. Citește `schema.md` și respectă **exact** structura paginii
+   (secțiunile 1–5) și fluxul de ingestie din el.
 2. Aplică prioritizarea Readme: dacă există `<cale>/readme/DESCRIPTION.md`,
-   folosește-l pentru Sumar (secțiunea 1) și Funcționalități Cheie (secțiunea 2) și
-   NU mai analiza codul pentru Componente Cheie decât dacă DESCRIPTION.md o cere
-   explicit. Dacă lipsește, sintetizează Sumarul/Funcționalitățile din descrierea
-   `__manifest__.py` + cod. Verifică și `readme/USAGE.md`, `readme/FISA_CONSULTANT.md`
-   dacă există.
-3. Citește `<cale>/__manifest__.py` pentru: nume prietenesc, versiune, dependențe,
-   cale. Pentru "Cale Locală" folosește calea relativă din rădăcina monorepo. Pentru
-   "Cale" (URL GitHub) folosește maparea suită→repo de mai jos (NU ghici); branch-ul
-   implicit este `19.0`. Dacă suita nu e în tabel, rulează `git -C <suită> remote -v`
-   și `git -C <suită> rev-parse --abbrev-ref HEAD` ca să afli repo-ul și branch-ul
-   reale.
+   folosește-l pentru Sumar (secțiunea 1) și Funcționalități Cheie (secțiunea 2)
+   și NU mai analiza codul pentru Componente Cheie decât dacă DESCRIPTION.md o
+   cere explicit. Dacă lipsește, sintetizează Sumarul/Funcționalitățile din
+   descrierea `__manifest__.py` + cod.
+   Citește și `<cale>/readme/USAGE.md` / `readme/CONFIGURE.md`, dacă există, și
+   folosește-le ca sursă **secundară** pentru Funcționalități Cheie — detalii
+   operaționale pe care DESCRIPTION.md de regulă nu le are (căi reale de meniu,
+   semnificația câmpurilor dintr-un wizard, valorile unei opțiuni, ordinea unui
+   flux). Sintetizează la nivel de bullet, nu copia fraze întregi. Dacă modulul
+   are `readme/FISA_CONSULTANT.md`, fluxul pas-cu-pas rămâne acolo — nu-l reface
+   aici, preia doar esențialul; dacă NU are fișă, USAGE/CONFIGURE devin sursa
+   principală pentru orice detaliu operațional care altfel ar lipsi din pagină.
+3. Citește `<cale>/__manifest__.py` pentru: nume prietenesc, versiune,
+   dependențe, cale. Pentru "Cale Locală" folosește calea relativă din rădăcina
+   monorepo. Pentru "Cale" (URL GitHub) folosește maparea suită→repo de mai jos
+   (NU ghici); branch-ul implicit este `19.0`. Dacă suita nu e în tabel, rulează
+   `git -C <suită> remote -v` și `git -C <suită> rev-parse --abbrev-ref HEAD`
+   ca să afli repo-ul și branch-ul reale.
 4. Dependențe (secț. 3) și Conexiuni (secț. 5): module care au deja pagină în
-   `<dep>/index.md` se scriu ca **link Markdown activ relativ** `[dep](../dep/index.md)`;
-   cele fără pagină rămân text `cod` (ex: `account`, `l10n_ro`, `mail`). NU inventa
-   conexiuni — include doar legături funcționale reale, verificate în cod/manifest.
-5. Scrie pagina în `<modul>/index.md`. Tot textul în **română corectă, cu diacritice**.
-   Setează "Ultima Ingestie" la data de azi.
+   `<dep>/index.md` se scriu ca **link Markdown activ relativ**
+   `[dep](../dep/index.md)`; cele fără pagină rămân text `cod` (ex: `account`,
+   `l10n_ro`, `mail`). NU inventa conexiuni — include doar legături funcționale
+   reale, verificate în cod/manifest.
+5. Scrie pagina în `<modul>/index.md`. Tot textul în **română
+   corectă, cu diacritice**. Setează "Ultima Ingestie" la data de azi.
 6. **Fișa consultant**: dacă există `<cale>/readme/FISA_CONSULTANT.md`, copiaz-o
    cu tot cu poze în directorul wiki al modulului (copie fidelă, fără modificări
    de conținut; la re-ingestie suprascrie copia veche):
@@ -82,33 +91,47 @@ găsești mai multe potriviri și e ambiguu, raportează și oprește-te.
 - Nu copia orbește din DESCRIPTION.md dacă conține referințe la versiuni vechi
   (16/17/18) care nu mai corespund codului 19.0 — corectează la realitate și
   semnalează corecția în raport.
-- Titlurile secțiunilor 1–5 se scriu cu **`####`** (ex: `#### 1. Sumar`), conform
-  `schema.md` și paginilor existente. NU folosi `##` pentru ele.
+- Titlurile secțiunilor 1–5 se scriu cu **`####`** (ex: `#### 1. Sumar`),
+  conform `schema.md` și paginilor existente. NU folosi `##` pentru ele.
 - Nu rula Odoo și nu instala module — ingestia e pură analiză de fișiere.
 - Nu edita `README.md`-urile auto-generate din addon-uri.
 - NU face commit.
 
 ## Mapare suită → repo GitHub (pentru "Cale", branch implicit `19.0`)
 
+Tabel verificat pe 2026-07-31 cu `git -C <suită> remote get-url origin`. Owner-ul canonic al
+suitelor Terrabit este **`terrabit-solutions`**, NU `terrabit-ro` — acesta din urmă e un
+alias/redirect stale, corect doar pentru `l10n-romania-oca`.
+
 | Cale locală suită | Repo GitHub (`owner/repo`) |
 |---|---|
-| `odoo-addons/terrabit` | `terrabit-ro/terrabit` |
-| `odoo-addons/l10n_ro_ent` | `terrabit-ro/l10n_ro_ent` |
-| `odoo-addons/bitshop` | `terrabit-ro/bitshop` |
-| `odoo-addons/bitshop_ent` | `terrabit-ro/bitshop_ent` |
+| `odoo-addons/terrabit` | `terrabit-solutions/terrabit` |
+| `odoo-addons/l10n_ro_ent` | `terrabit-solutions/l10n_ro_ent` |
+| `odoo-addons/bitshop` | `terrabit-solutions/bitshop` |
+| `odoo-addons/bitshop_ent` | `terrabit-solutions/bitshop_ent` |
+| `odoo-addons/bitshop_delivery` | `terrabit-solutions/bitshop_delivery` |
+| `odoo-addons/bitshop_marketplace` | `terrabit-solutions/bitshop_marketplace` |
+| `odoo-addons/bitshop_vendor` | `terrabit-solutions/bitshop_vendor` |
 | `odoo-addons/deltatech` | `dhongu/deltatech` |
 | `odoo-addons/deltatech_service` | `dhongu/deltatech_service` |
 | `odoo-addons/deltatech_stock_valuation` | `dhongu/deltatech_stock_valuation` |
 | `odoo-addons/l10n-romania` | `dhongu/l10n-romania` |
+| `odoo-addons/l10n-romania-oca` | `terrabit-ro/l10n-romania` |
+| `odoo-addons/l10n-moldova` | `dhongu/l10n-moldova` |
 | `odoo-addons/others_addons` | `dhongu/others_addons` |
+| `odoo-addons/queue` | `dhongu/queue` |
 
 URL final: `https://github.com/<owner>/<repo>/tree/19.0/<modul>`.
 
+Dacă suita nu e în tabel, citește remote-ul real (`git -C <cale suită> remote get-url origin`) —
+nu ghici owner-ul. Dacă remote-ul contrazice tabelul, remote-ul câștigă și semnalează asta în
+raportul final.
+
 ## Raport final (mesajul tău de încheiere)
 
-Întoarce, compact: numele tehnic, numele prietenesc, versiunea, **o descriere de o
-singură linie** (pentru intrarea din `index.md`, o va scrie orchestratorul), sursa
-folosită (DESCRIPTION.md vs. analiză cod), dacă ai copiat fișa consultant (și câte
-capturi) și eventuale corecții/avertismente (ex: text
-"Odoo 18" rămas în DESCRIPTION pe care l-ai corectat, dependențe fără pagină wiki
-rămase ca text).
+Întoarce, compact: numele tehnic, numele prietenesc, versiunea, **o descriere
+de o singură linie** (pentru intrarea din `index.md`, o va scrie orchestratorul),
+sursa folosită (DESCRIPTION.md vs. analiză cod), dacă ai copiat fișa consultant
+(și câte capturi) și eventuale corecții/avertismente
+(ex: text "Odoo 18" rămas în DESCRIPTION pe care l-ai corectat, dependențe fără
+pagină wiki rămase ca text).
