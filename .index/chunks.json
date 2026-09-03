@@ -2529,27 +2529,21 @@
   {
     "path": "deltatech_generic_partner_restriction/index.md",
     "module": "deltatech_generic_partner_restriction",
-    "version": "19.0.2.0.0",
+    "version": "19.0.3.0.0",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_generic_partner_restriction",
     "local_path": "odoo-addons/deltatech/deltatech_generic_partner_restriction",
-    "last_ingest": "2026-07-31",
+    "last_ingest": "2026-08-31",
     "friendly_name": "Restricție Jurnale pentru Partenerul Generic",
-    "summary": "Modulul restricționează, la înregistrarea plăților, jurnalele bancare și de casă disponibile atunci când partenerul selectat este \"partenerul generic\" configurat pe companie. Practic, permite excluderea anumitor conturi/case de marcat din lista de jurnale afișate pentru încasările/plățile efectuate pe acest partener generic (folosit de obicei pentru vânzări cu amănuntul sau clienți neidentificați), evitând astfel utilizarea greșită a unor jurnale rezervate altor fluxuri.",
-    "features": [
-      "Adaugă pe jurnalul contabil (`account.journal`) o bifă \"Restricție Generic\" care marchează jurnalul ca fiind interzis pentru partenerul generic.",
-      "La deschiderea unei plăți (`account.payment`) pentru partenerul generic al companiei, lista de jurnale disponibile exclude automat jurnalele bancare/casă marcate cu restricție.",
-      "Pentru orice alt partener (diferit de cel generic), toate jurnalele rămân disponibile ca de obicei.",
-      "Câmpul de restricție este vizibil (opțional, ascuns implicit) în vizualizarea listă a jurnalelor și în formularul jurnalului."
-    ],
+    "summary": "**Modul de tranziție, gol.** Funcționalitatea pe care o oferea — restricționarea jurnalelor bancare și de casă la înregistrarea plăților pentru partenerul generic, plus refuzul de a valida o factură de client emisă pe acest partener — a fost comasată în [deltatech_partner_generic](../deltatech_partner_generic/index.md) în versiunea `19.0.3.0.0`. Modulul păstrează doar dependența, astfel încât bazele care îl au instalat preiau restricțiile la actualizare, fără niciun pas manual. Jurnalele bifate ca restricționate sunt păstrate de scriptul de pre-migrare al modulului-gazdă. Instalările noi folosesc direct `deltatech_partner_generic`.",
+    "features": [],
     "dependencies": [
-      "account",
       "deltatech_partner_generic"
     ],
     "connections": [
       "deltatech_partner_generic",
-      "generic_partner_id"
+      "restriction"
     ],
-    "text": "Restricție Jurnale pentru Partenerul Generic\ndeltatech_generic_partner_restriction\nModulul restricționează, la înregistrarea plăților, jurnalele bancare și de casă disponibile atunci când partenerul selectat este \"partenerul generic\" configurat pe companie. Practic, permite excluderea anumitor conturi/case de marcat din lista de jurnale afișate pentru încasările/plățile efectuate pe acest partener generic (folosit de obicei pentru vânzări cu amănuntul sau clienți neidentificați), evitând astfel utilizarea greșită a unor jurnale rezervate altor fluxuri.\nAdaugă pe jurnalul contabil (`account.journal`) o bifă \"Restricție Generic\" care marchează jurnalul ca fiind interzis pentru partenerul generic.\nLa deschiderea unei plăți (`account.payment`) pentru partenerul generic al companiei, lista de jurnale disponibile exclude automat jurnalele bancare/casă marcate cu restricție.\nPentru orice alt partener (diferit de cel generic), toate jurnalele rămân disponibile ca de obicei.\nCâmpul de restricție este vizibil (opțional, ascuns implicit) în vizualizarea listă a jurnalelor și în formularul jurnalului."
+    "text": "Restricție Jurnale pentru Partenerul Generic\ndeltatech_generic_partner_restriction\n**Modul de tranziție, gol.** Funcționalitatea pe care o oferea — restricționarea jurnalelor bancare și de casă la înregistrarea plăților pentru partenerul generic, plus refuzul de a valida o factură de client emisă pe acest partener — a fost comasată în [deltatech_partner_generic](../deltatech_partner_generic/index.md) în versiunea `19.0.3.0.0`. Modulul păstrează doar dependența, astfel încât bazele care îl au instalat preiau restricțiile la actualizare, fără niciun pas manual. Jurnalele bifate ca restricționate sunt păstrate de scriptul de pre-migrare al modulului-gazdă. Instalările noi folosesc direct `deltatech_partner_generic`."
   },
   {
     "path": "deltatech_gln/index.md",
@@ -4248,23 +4242,29 @@
   {
     "path": "deltatech_partner_generic/index.md",
     "module": "deltatech_partner_generic",
-    "version": "19.0.1.0.0",
+    "version": "19.0.2.0.0",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_partner_generic",
     "local_path": "odoo-addons/deltatech/deltatech_partner_generic",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-08-31",
     "friendly_name": "Deltatech Generic Partner",
-    "summary": "Modulul oferă o modalitate eficientă de a gestiona tranzacțiile cu parteneri generici sau anonimi, permițând definirea unui „Partener Generic” în configurarea Odoo. Acest partener implicit este folosit ca opțiune de rezervă atunci când un partener specific nu este necesar, simplificând introducerea datelor pentru companiile care lucrează cu mulți clienți ocazionali sau anonimi.",
+    "summary": "Modulul oferă o modalitate eficientă de a gestiona tranzacțiile cu parteneri generici sau anonimi, permițând definirea unui „Partener Generic” în configurarea Odoo. Acest partener implicit este folosit ca opțiune de rezervă atunci când un partener specific nu este necesar, simplificând introducerea datelor pentru companiile care lucrează cu mulți clienți ocazionali sau anonimi. Din versiunea `19.0.2.0.0` modulul conține și **restricțiile contabile** aferente partenerului generic, preluate din `deltatech_generic_partner_restriction`, plus **protecția** partenerului împotriva modificărilor accidentale.",
     "features": [
       "Definirea unui „Partener Generic” implicit, folosit atunci când nu este necesar un partener specific.",
       "Gestionarea automată a selectării acestui partener în diverse fluxuri de business, precum vânzările și facturarea.",
       "Simplificarea introducerii datelor pentru companiile care lucrează cu mulți clienți ocazionali sau anonimi.",
-      "Integrare completă cu setările standard de contabilitate și vânzări din Odoo."
+      "Integrare completă cu setările standard de contabilitate și vânzări din Odoo.",
+      "Blocarea validării facturilor de client emise pe partenerul generic: postarea e refuzată cu eroare explicită, care numește câmpul vinovat. Se verifică atât `partner_id`, cât și `partner_shipping_id`. Ciornele rămân permise, deci fluxurile care trec prin partenerul generic (POS, eCommerce, importuri) continuă să funcționeze. Facturile de furnizor și notele contabile nu sunt afectate.",
+      "Restricționarea jurnalelor la înregistrarea plăților pentru partenerul generic, prin bifa „Generic Restriction” de pe jurnal.",
+      "Protecția partenerului generic (opțională, per companie): odată activată, partenerul nu mai poate fi redenumit, arhivat sau șters."
     ],
     "dependencies": [
+      "account",
       "sale"
     ],
-    "connections": [],
-    "text": "Deltatech Generic Partner\ndeltatech_partner_generic\nModulul oferă o modalitate eficientă de a gestiona tranzacțiile cu parteneri generici sau anonimi, permițând definirea unui „Partener Generic” în configurarea Odoo. Acest partener implicit este folosit ca opțiune de rezervă atunci când un partener specific nu este necesar, simplificând introducerea datelor pentru companiile care lucrează cu mulți clienți ocazionali sau anonimi.\nDefinirea unui „Partener Generic” implicit, folosit atunci când nu este necesar un partener specific.\nGestionarea automată a selectării acestui partener în diverse fluxuri de business, precum vânzările și facturarea.\nSimplificarea introducerii datelor pentru companiile care lucrează cu mulți clienți ocazionali sau anonimi.\nIntegrare completă cu setările standard de contabilitate și vânzări din Odoo."
+    "connections": [
+      "deltatech_generic_partner_restriction"
+    ],
+    "text": "Deltatech Generic Partner\ndeltatech_partner_generic\nModulul oferă o modalitate eficientă de a gestiona tranzacțiile cu parteneri generici sau anonimi, permițând definirea unui „Partener Generic” în configurarea Odoo. Acest partener implicit este folosit ca opțiune de rezervă atunci când un partener specific nu este necesar, simplificând introducerea datelor pentru companiile care lucrează cu mulți clienți ocazionali sau anonimi. Din versiunea `19.0.2.0.0` modulul conține și **restricțiile contabile** aferente partenerului generic, preluate din `deltatech_generic_partner_restriction`, plus **protecția** partenerului împotriva modificărilor accidentale.\nDefinirea unui „Partener Generic” implicit, folosit atunci când nu este necesar un partener specific.\nGestionarea automată a selectării acestui partener în diverse fluxuri de business, precum vânzările și facturarea.\nSimplificarea introducerii datelor pentru companiile care lucrează cu mulți clienți ocazionali sau anonimi.\nIntegrare completă cu setările standard de contabilitate și vânzări din Odoo.\nBlocarea validării facturilor de client emise pe partenerul generic: postarea e refuzată cu eroare explicită, care numește câmpul vinovat. Se verifică atât `partner_id`, cât și `partner_shipping_id`. Ciornele rămân permise, deci fluxurile care trec prin partenerul generic (POS, eCommerce, importuri) continuă să funcționeze. Facturile de furnizor și notele contabile nu sunt afectate.\nRestricționarea jurnalelor la înregistrarea plăților pentru partenerul generic, prin bifa „Generic Restriction” de pe jurnal.\nProtecția partenerului generic (opțională, per companie): odată activată, partenerul nu mai poate fi redenumit, arhivat sau șters."
   },
   {
     "path": "deltatech_partner_gifts/index.md",
@@ -10030,13 +10030,14 @@
   {
     "path": "l10n_ro_cash_bank_enhanced/index.md",
     "module": "l10n_ro_cash_bank_enhanced",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "github": "[https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cash_bank_enhanced](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cash_bank_enhanced)",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_cash_bank_enhanced",
-    "last_ingest": "2026-07-02",
+    "last_ingest": "2026-08-31",
     "friendly_name": "Romania - Cash and Bank Enhanced",
-    "summary": "Modulul completează funcționalitățile native de trezorerie din Odoo 19 Enterprise cu două controale specifice pieței din România (FR-28 — Casierie și bancă): alertarea automată a tranzacțiilor bancare rămase nereconciliate și aplicarea plafoanelor legale de numerar prevăzute de Legea 70/2015. Scopul este să reducă riscul de amenzi și erori de conformitate legate de operațiunile cash și de reconcilierea bancară, fără să reimplementeze funcții deja acoperite nativ de Odoo Enterprise (sincronizare bancară, OCR extrase, reconciliere automată).",
+    "summary": "Modulul completează funcționalitățile native de trezorerie din Odoo 19 Enterprise cu documentele și controalele de casierie specifice pieței din România (FR-28 — Casierie și bancă): **dispoziția de plată / de încasare către casierie** (cod 14-4-4, respectiv 14-4-1), alertarea automată a tranzacțiilor bancare rămase nereconciliate și aplicarea plafoanelor legale de numerar prevăzute de Legea 70/2015. Scopul este să reducă riscul de amenzi și erori de conformitate legate de operațiunile cash și de reconcilierea bancară, fără să reimplementeze funcții deja acoperite nativ de Odoo Enterprise (sincronizare bancară, OCR extrase, reconciliere automată).",
     "features": [
+      "Dispoziție de plată / de încasare către casierie (cod 14-4-4): documentul de casă care",
       "Alertă tranzacții bancare nereconciliate: un cron zilnic identifică liniile de extras",
       "Plafoane de numerar conform Legii 70/2015: la validarea plăților și încasărilor în",
       "încasări/plăți cu persoane juridice: 5.000 RON per partener/zi;",
@@ -10054,9 +10055,11 @@
       "account_accountant",
       "l10n_ro",
       "account_online_synchronization",
-      "account_bank_statement_extract"
+      "account_bank_statement_extract",
+      "l10n_ro_invoice_report",
+      "l10n_ro_pos_returns"
     ],
-    "text": "Romania - Cash and Bank Enhanced\nl10n_ro_cash_bank_enhanced\nModulul completează funcționalitățile native de trezorerie din Odoo 19 Enterprise cu două controale specifice pieței din România (FR-28 — Casierie și bancă): alertarea automată a tranzacțiilor bancare rămase nereconciliate și aplicarea plafoanelor legale de numerar prevăzute de Legea 70/2015. Scopul este să reducă riscul de amenzi și erori de conformitate legate de operațiunile cash și de reconcilierea bancară, fără să reimplementeze funcții deja acoperite nativ de Odoo Enterprise (sincronizare bancară, OCR extrase, reconciliere automată).\nAlertă tranzacții bancare nereconciliate: un cron zilnic identifică liniile de extras\nPlafoane de numerar conform Legii 70/2015: la validarea plăților și încasărilor în\nîncasări/plăți cu persoane juridice: 5.000 RON per partener/zi;\nîncasări/plăți cu persoane fizice: 10.000 RON per partener/zi;\ntotal plăți în numerar către persoane juridice: 10.000 RON/zi.\nAnti-fragmentare (art. 1¹): o factură peste plafon poate fi achitată în numerar doar\nPlafon sold casierie: un cron zilnic verifică soldul fiecărui jurnal de casă și\nPlafoane configurabile: valorile pot fi ajustate (de exemplu pentru magazinele cash and"
+    "text": "Romania - Cash and Bank Enhanced\nl10n_ro_cash_bank_enhanced\nModulul completează funcționalitățile native de trezorerie din Odoo 19 Enterprise cu documentele și controalele de casierie specifice pieței din România (FR-28 — Casierie și bancă): **dispoziția de plată / de încasare către casierie** (cod 14-4-4, respectiv 14-4-1), alertarea automată a tranzacțiilor bancare rămase nereconciliate și aplicarea plafoanelor legale de numerar prevăzute de Legea 70/2015. Scopul este să reducă riscul de amenzi și erori de conformitate legate de operațiunile cash și de reconcilierea bancară, fără să reimplementeze funcții deja acoperite nativ de Odoo Enterprise (sincronizare bancară, OCR extrase, reconciliere automată).\nDispoziție de plată / de încasare către casierie (cod 14-4-4): documentul de casă care\nAlertă tranzacții bancare nereconciliate: un cron zilnic identifică liniile de extras\nPlafoane de numerar conform Legii 70/2015: la validarea plăților și încasărilor în\nîncasări/plăți cu persoane juridice: 5.000 RON per partener/zi;\nîncasări/plăți cu persoane fizice: 10.000 RON per partener/zi;\ntotal plăți în numerar către persoane juridice: 10.000 RON/zi.\nAnti-fragmentare (art. 1¹): o factură peste plafon poate fi achitată în numerar doar\nPlafon sold casierie: un cron zilnic verifică soldul fiecărui jurnal de casă și\nPlafoane configurabile: valorile pot fi ajustate (de exemplu pentru magazinele cash and"
   },
   {
     "path": "l10n_ro_cash_register/index.md",
@@ -10869,10 +10872,10 @@
   {
     "path": "l10n_ro_invoice_report/index.md",
     "module": "l10n_ro_invoice_report",
-    "version": "19.0.3.4.16",
+    "version": "19.0.3.4.20",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_invoice_report",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_invoice_report",
-    "last_ingest": "2026-06-08",
+    "last_ingest": "2026-08-31",
     "friendly_name": "Romania - Invoice Report Terrabit",
     "summary": "Acest modul extinde raportul de factură standard din Odoo pentru a se conforma cerințelor specifice din România și pentru a oferi opțiuni suplimentare de personalizare. Adaugă pe documentele tipărite detalii la nivel de linie (preț fără TVA, valoare TVA, numerotare), informații legale și logistice (delegat, mijloc de transport, mențiunea privind scutirea de semnătură și ștampilă) și gestionează documentele de plată corelate (chitanțe, dispoziții de plată/încasare), oferind în același timp numeroase opțiuni de configurare din setările de facturare.",
     "features": [
@@ -10891,10 +10894,14 @@
       "Afișarea informațiilor despre livrări (Pickings) și AWB-uri direct pe factură.",
       "Inserarea logoului Coface la finalul facturii (activabil din setări).",
       "Gestiune documente corelate:",
-      "Tipărirea automată a chitanțelor, dispozițiilor de plată sau încasare direct din factură pentru plățile în numerar.",
+      "Chitanță, dispoziție de plată și dispoziție de încasare tipărite din plată (raportul „Voucher / Payment\" pe `account.payment`), cu titlul potrivit tipului de plată și cu suma în cifre și în litere.",
+      "Pentru plățile pe jurnal de casă, documentul iese ca formular de casierie complet: codul formularului (14-4-4 la plată, 14-4-1 la încasare), casieria, rândul pentru actul de identitate al beneficiarului la plăți, și cele trei semnături — conducătorul unității, casierul și beneficiarul. La plățile bancare aceste elemente nu se tipăresc, nefiind vorba de un document de casă.",
+      "Părțile sunt etichetate după rolul lor real în operațiune: pe documentele de casă, Plătitor / Beneficiar la plată și Beneficiar / Depunător la încasare. Etichetele „Client / Furnizor\" rămân doar pe celelalte cazuri — la o restituire de marfă către o persoană fizică, beneficiarul nu e furnizor.",
       "Gestionarea corectă a semnelor pentru stornări (Credit Notes).",
       "Rapoarte dedicate:",
       "Raport de factură în limba companiei, indiferent de limba partenerului.",
+      "Șabloanele sunt scrise în engleză și traduse prin `i18n/ro.po`, deci documentele ies în română la clienții RO. Odoo potrivește traducerile de șablon prin `msgid` exact, cu newline-urile și indentarea din interiorul textului: dacă șablonul e reindentat fără a resincroniza `ro.po`, traducerea rămâne în fișier dar nu se mai aplică, iar documentul iese în engleză deși fișierul pare complet. Verificat și corectat: pe forma curentă a șablonului sunt 127 de stringuri, dintre care cele care ajung pe documente sunt traduse.",
+      "Limba facturii tipărite vine de la partenerul companiei, nu de la utilizator: pe o companie configurată pe engleză, documentul iese în engleză deși interfața e în română. E felul în care funcționează raportul „în limba companiei\", nu un defect — dar trebuie știut la configurare.",
       "Configurare flexibilă:",
       "Numeroase opțiuni în setările de facturare pentru a activa sau dezactiva elementele menționate mai sus (Sarcini delegat, comentarii plată, index linii, etc.)."
     ],
@@ -10908,9 +10915,11 @@
     ],
     "connections": [
       "l10n_ro_config",
-      "stock_delivery"
+      "stock_delivery",
+      "l10n_ro_cash_bank_enhanced",
+      "l10n_ro_pos_returns"
     ],
-    "text": "Romania - Invoice Report Terrabit\nl10n_ro_invoice_report\nAcest modul extinde raportul de factură standard din Odoo pentru a se conforma cerințelor specifice din România și pentru a oferi opțiuni suplimentare de personalizare. Adaugă pe documentele tipărite detalii la nivel de linie (preț fără TVA, valoare TVA, numerotare), informații legale și logistice (delegat, mijloc de transport, mențiunea privind scutirea de semnătură și ștampilă) și gestionează documentele de plată corelate (chitanțe, dispoziții de plată/încasare), oferind în același timp numeroase opțiuni de configurare din setările de facturare.\nDetalii linii factură:\nAfișarea prețului unitar fără TVA.\nAfișarea valorii TVA pe fiecare linie.\nAfișarea totalului cu taxe pe fiecare linie (configurabil).\nNumerotarea automată a liniilor de factură (Ord).\nOpțiune de a elimina numele produsului de pe linie dacă există o descriere specifică.\nAfișarea prețului fără discount.\nInformații suplimentare pe document:\nCâmpuri dedicate pentru Delegat și Mijloc de transport.\nAfișarea textului legal privind scutirea de semnătură și ștampilă (conform Codului Fiscal).\nPosibilitatea de a adăuga un text adițional de la partener pe factură (`info_for_invoice`).\nVizibilitatea configurabilă pentru email, telefon și marcaje în adresa facturii.\nAfișarea informațiilor despre livrări (Pickings) și AWB-uri direct pe factură.\nInserarea logoului Coface la finalul facturii (activabil din setări).\nGestiune documente corelate:\nTipărirea automată a chitanțelor, dispozițiilor de plată sau încasare direct din factură pentru plățile în numerar.\nGestionarea corectă a semnelor pentru stornări (Credit Notes).\nRapoarte dedicate:\nRaport de factură în limba companiei, indiferent de limba partenerului.\nConfigurare flexibilă:\nNumeroase opțiuni în setările de facturare pentru a activa sau dezactiva elementele menționate mai sus (Sarcini delegat, comentarii plată, index linii, etc.)."
+    "text": "Romania - Invoice Report Terrabit\nl10n_ro_invoice_report\nAcest modul extinde raportul de factură standard din Odoo pentru a se conforma cerințelor specifice din România și pentru a oferi opțiuni suplimentare de personalizare. Adaugă pe documentele tipărite detalii la nivel de linie (preț fără TVA, valoare TVA, numerotare), informații legale și logistice (delegat, mijloc de transport, mențiunea privind scutirea de semnătură și ștampilă) și gestionează documentele de plată corelate (chitanțe, dispoziții de plată/încasare), oferind în același timp numeroase opțiuni de configurare din setările de facturare.\nDetalii linii factură:\nAfișarea prețului unitar fără TVA.\nAfișarea valorii TVA pe fiecare linie.\nAfișarea totalului cu taxe pe fiecare linie (configurabil).\nNumerotarea automată a liniilor de factură (Ord).\nOpțiune de a elimina numele produsului de pe linie dacă există o descriere specifică.\nAfișarea prețului fără discount.\nInformații suplimentare pe document:\nCâmpuri dedicate pentru Delegat și Mijloc de transport.\nAfișarea textului legal privind scutirea de semnătură și ștampilă (conform Codului Fiscal).\nPosibilitatea de a adăuga un text adițional de la partener pe factură (`info_for_invoice`).\nVizibilitatea configurabilă pentru email, telefon și marcaje în adresa facturii.\nAfișarea informațiilor despre livrări (Pickings) și AWB-uri direct pe factură.\nInserarea logoului Coface la finalul facturii (activabil din setări).\nGestiune documente corelate:\nChitanță, dispoziție de plată și dispoziție de încasare tipărite din plată (raportul „Voucher / Payment\" pe `account.payment`), cu titlul potrivit tipului de plată și cu suma în cifre și în litere.\nPentru plățile pe jurnal de casă, documentul iese ca formular de casierie complet: codul formularului (14-4-4 la plată, 14-4-1 la încasare), casieria, rândul pentru actul de identitate al beneficiarului la plăți, și cele trei semnături — conducătorul unității, casierul și beneficiarul. La plățile bancare aceste elemente nu se tipăresc, nefiind vorba de un document de casă.\nPărțile sunt etichetate după rolul lor real în operațiune: pe documentele de casă, Plătitor / Beneficiar la plată și Beneficiar / Depunător la încasare. Etichetele „Client / Furnizor\" rămân doar pe celelalte cazuri — la o restituire de marfă către o persoană fizică, beneficiarul nu e furnizor.\nGestionarea corectă a semnelor pentru stornări (Credit Notes).\nRapoarte dedicate:\nRaport de factură în limba companiei, indiferent de limba partenerului.\nȘabloanele sunt scrise în engleză și traduse prin `i18n/ro.po`, deci documentele ies în română la clienții RO. Odoo potrivește traducerile de șablon prin `msgid` exact, cu newline-urile și indentarea din interiorul textului: dacă șablonul e reindentat fără a resincroniza `ro.po`, traducerea rămâne în fișier dar nu se mai aplică, iar documentul iese în engleză deși fișierul pare complet. Verificat și corectat: pe forma curentă a șablonului sunt 127 de stringuri, dintre care cele care ajung pe documente sunt traduse.\nLimba facturii tipărite vine de la partenerul companiei, nu de la utilizator: pe o companie configurată pe engleză, documentul iese în engleză deși interfața e în română. E felul în care funcționează raportul „în limba companiei\", nu un defect — dar trebuie știut la configurare.\nConfigurare flexibilă:\nNumeroase opțiuni în setările de facturare pentru a activa sau dezactiva elementele menționate mai sus (Sarcini delegat, comentarii plată, index linii, etc.)."
   },
   {
     "path": "l10n_ro_journal_reports/index.md",
@@ -11384,12 +11393,12 @@
   {
     "path": "l10n_ro_pos_fiscal_compliance/index.md",
     "module": "l10n_ro_pos_fiscal_compliance",
-    "version": "19.0.2.0.0",
+    "version": "19.0.2.2.0",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_fiscal_compliance`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_pos_fiscal_compliance",
-    "last_ingest": "2026-08-25",
+    "last_ingest": "2026-09-02",
     "friendly_name": "Romania - Conformitate fiscală POS (AMEF)",
-    "summary": "Modulul asigură conformitatea fiscală pentru vânzarea cu amănuntul prin POS, conform OUG 28/1999 privind aparatele de marcat electronice fiscale (AMEF). Completează POS-ul Odoo și driverele de fiscalizare (ex. `deltatech_pos`) cu evidența fiscală cerută în România: urmărirea bonului fiscal pe fiecare comandă, blocarea închiderii sesiunii când există comenzi plătite fără bon emis, raportul Z reconciliat cu vânzările și încasările, returul fiscal legat de bonul inițial și arhivarea jurnalului electronic AMEF. Din versiunea 19.0.2.0.0, modulul poate importa direct arhiva periodică a casei de marcat (`.zip` cu fișiere `.p7b`, exportul semnat CMS/PKCS7 primit de la aparat), extrăgând bonurile și raportul Z fără intervenție manuală și reconciliindu-le automat, bon cu bon, cu comenzile din Odoo. Modulul acoperă latura de conformitate (evidență, blocaj, raport Z, arhivă, import și reconciliere) peste POS-ul Odoo; comunicarea efectivă cu aparatul fiscal se face printr-un driver opțional, modulul nedepinzând de un driver anume.",
+    "summary": "Modulul asigură conformitatea fiscală pentru vânzarea cu amănuntul prin POS, conform OUG 28/1999 privind aparatele de marcat electronice fiscale (AMEF). Completează POS-ul Odoo și driverele de fiscalizare (ex. `deltatech_pos`) cu evidența fiscală cerută în România: urmărirea bonului fiscal pe fiecare comandă, blocarea închiderii sesiunii când există comenzi plătite fără bon emis, raportul Z reconciliat cu vânzările și încasările, returul fiscal legat de bonul inițial și arhivarea jurnalului electronic AMEF. Modulul poate importa direct arhiva periodică a casei de marcat (`.zip` cu fișiere `.p7b`, exportul semnat CMS/PKCS7 primit de la aparat), extrăgând bonurile și raportul Z fără intervenție manuală și reconciliindu-le automat, bon cu bon, cu comenzile din Odoo. Cea mai recentă adăugire este raportul **Vânzări TVA pe casă de marcat** — un sumar pivot/listă peste liniile de TVA ale rapoartelor Z deja existente, pe interval de dată, punct de lucru și cotă de TVA, util pentru verificarea rapidă a încasărilor declarate fiscal pe orice perioadă, comparabil direct cu jurnalul electronic transmis către ANAF. Modulul acoperă latura de conformitate (evidență, blocaj, raport Z, arhivă, import, reconciliere și raportare TVA) peste POS-ul Odoo; comunicarea efectivă cu aparatul fiscal se face printr-un driver opțional, modulul nedepinzând de un driver anume.",
     "features": [
       "Urmărirea bonului fiscal pe fiecare comandă POS: serie, număr, dată/oră fiscală și stare (de fiscalizat / emis / eroare), cu punct de integrare pentru răspunsul aparatului fiscal.",
       "Blocarea închiderii sesiunii POS dacă există comenzi plătite fără bon fiscal emis și fără eroare justificată.",
@@ -11400,7 +11409,8 @@
       "Reconciliere pe FK exact (serie + număr bon) cu `pos.order`; doar dacă bonul din arhivă nu are corespondent înregistrat cu serie/număr, se aplică un fallback euristic pe dată apropiată + sumă identică, în aceeași zi și punct de lucru.",
       "Populare automată a raportului Z (`l10n.ro.pos.z.report`) din arhivă: totalul declarat și plățile declarate pe metodă, urmate de reconcilierea automată cu totalurile din sesiunea POS.",
       "Verificarea completitudinii perioadei din fișierul OPIS al arhivei (declarația `a4200`): semnalează rapoartele Z lipsă între ce apare în OPIS și ce a fost efectiv găsit în arhivă.",
-      "Raport de discrepanțe pe bonuri fiscale (`l10n.ro.amef.journal.bon`), cu stări: Reconciliat, Sumă diferită, TVA diferit, Lipsă în Odoo, Lipsă în arhiva fiscală — accesibil dintr-un meniu dedicat „Fiscal Receipts Discrepancies\" sau din butonul statistic al jurnalului."
+      "Raport de discrepanțe pe bonuri fiscale (`l10n.ro.amef.journal.bon`), cu stări: Reconciliat, Sumă diferită, TVA diferit, Lipsă în Odoo, Lipsă în arhiva fiscală — accesibil dintr-un meniu dedicat „Fiscal Receipts Discrepancies\" sau din butonul statistic al jurnalului.",
+      "Raportul „Vânzări TVA pe casă de marcat\" (*Point of Sale → Fiscalizare AMEF → Vânzări TVA pe casă de marcat*): agregă liniile de TVA ale rapoartelor Z deja existente, fără recalculare, filtrabil pe interval de dată, punct de lucru și cotă de TVA, cu vizualizare pivot (implicit) și listă; implicit sunt afișate doar rapoartele Z reconciliate/închise."
     ],
     "dependencies": [
       "point_of_sale",
@@ -11412,7 +11422,44 @@
       "deltatech_pos",
       "l10n_ro_anaf_d394_pos"
     ],
-    "text": "Romania - Conformitate fiscală POS (AMEF)\nl10n_ro_pos_fiscal_compliance\nModulul asigură conformitatea fiscală pentru vânzarea cu amănuntul prin POS, conform OUG 28/1999 privind aparatele de marcat electronice fiscale (AMEF). Completează POS-ul Odoo și driverele de fiscalizare (ex. `deltatech_pos`) cu evidența fiscală cerută în România: urmărirea bonului fiscal pe fiecare comandă, blocarea închiderii sesiunii când există comenzi plătite fără bon emis, raportul Z reconciliat cu vânzările și încasările, returul fiscal legat de bonul inițial și arhivarea jurnalului electronic AMEF. Din versiunea 19.0.2.0.0, modulul poate importa direct arhiva periodică a casei de marcat (`.zip` cu fișiere `.p7b`, exportul semnat CMS/PKCS7 primit de la aparat), extrăgând bonurile și raportul Z fără intervenție manuală și reconciliindu-le automat, bon cu bon, cu comenzile din Odoo. Modulul acoperă latura de conformitate (evidență, blocaj, raport Z, arhivă, import și reconciliere) peste POS-ul Odoo; comunicarea efectivă cu aparatul fiscal se face printr-un driver opțional, modulul nedepinzând de un driver anume.\nUrmărirea bonului fiscal pe fiecare comandă POS: serie, număr, dată/oră fiscală și stare (de fiscalizat / emis / eroare), cu punct de integrare pentru răspunsul aparatului fiscal.\nBlocarea închiderii sesiunii POS dacă există comenzi plătite fără bon fiscal emis și fără eroare justificată.\nRaportul Z fiscal cu defalcare pe cote TVA și pe metode de plată, reconciliat cu vânzările și încasările din Odoo, evidențiind diferențele.\nReturul fiscal care referențiază bonul inițial.\nArhiva jurnalului electronic AMEF (fișiere pe perioadă și aparat fiscal, cu stări Draft / Parsed / Archived).\nImport automat al arhivei fiscale: butonul „Importă arhiva\" extrage conținutul XML din fiecare fișier `.p7b` (structură CMS/PKCS7 SignedData, prin biblioteca `asn1crypto`, fără shell-out la `openssl` și fără nevoie de certificat sau cheie privată), parsează bonurile fiscale și raportul Z al fiecărei zile.\nReconciliere pe FK exact (serie + număr bon) cu `pos.order`; doar dacă bonul din arhivă nu are corespondent înregistrat cu serie/număr, se aplică un fallback euristic pe dată apropiată + sumă identică, în aceeași zi și punct de lucru.\nPopulare automată a raportului Z (`l10n.ro.pos.z.report`) din arhivă: totalul declarat și plățile declarate pe metodă, urmate de reconcilierea automată cu totalurile din sesiunea POS.\nVerificarea completitudinii perioadei din fișierul OPIS al arhivei (declarația `a4200`): semnalează rapoartele Z lipsă între ce apare în OPIS și ce a fost efectiv găsit în arhivă.\nRaport de discrepanțe pe bonuri fiscale (`l10n.ro.amef.journal.bon`), cu stări: Reconciliat, Sumă diferită, TVA diferit, Lipsă în Odoo, Lipsă în arhiva fiscală — accesibil dintr-un meniu dedicat „Fiscal Receipts Discrepancies\" sau din butonul statistic al jurnalului."
+    "text": "Romania - Conformitate fiscală POS (AMEF)\nl10n_ro_pos_fiscal_compliance\nModulul asigură conformitatea fiscală pentru vânzarea cu amănuntul prin POS, conform OUG 28/1999 privind aparatele de marcat electronice fiscale (AMEF). Completează POS-ul Odoo și driverele de fiscalizare (ex. `deltatech_pos`) cu evidența fiscală cerută în România: urmărirea bonului fiscal pe fiecare comandă, blocarea închiderii sesiunii când există comenzi plătite fără bon emis, raportul Z reconciliat cu vânzările și încasările, returul fiscal legat de bonul inițial și arhivarea jurnalului electronic AMEF. Modulul poate importa direct arhiva periodică a casei de marcat (`.zip` cu fișiere `.p7b`, exportul semnat CMS/PKCS7 primit de la aparat), extrăgând bonurile și raportul Z fără intervenție manuală și reconciliindu-le automat, bon cu bon, cu comenzile din Odoo. Cea mai recentă adăugire este raportul **Vânzări TVA pe casă de marcat** — un sumar pivot/listă peste liniile de TVA ale rapoartelor Z deja existente, pe interval de dată, punct de lucru și cotă de TVA, util pentru verificarea rapidă a încasărilor declarate fiscal pe orice perioadă, comparabil direct cu jurnalul electronic transmis către ANAF. Modulul acoperă latura de conformitate (evidență, blocaj, raport Z, arhivă, import, reconciliere și raportare TVA) peste POS-ul Odoo; comunicarea efectivă cu aparatul fiscal se face printr-un driver opțional, modulul nedepinzând de un driver anume.\nUrmărirea bonului fiscal pe fiecare comandă POS: serie, număr, dată/oră fiscală și stare (de fiscalizat / emis / eroare), cu punct de integrare pentru răspunsul aparatului fiscal.\nBlocarea închiderii sesiunii POS dacă există comenzi plătite fără bon fiscal emis și fără eroare justificată.\nRaportul Z fiscal cu defalcare pe cote TVA și pe metode de plată, reconciliat cu vânzările și încasările din Odoo, evidențiind diferențele.\nReturul fiscal care referențiază bonul inițial.\nArhiva jurnalului electronic AMEF (fișiere pe perioadă și aparat fiscal, cu stări Draft / Parsed / Archived).\nImport automat al arhivei fiscale: butonul „Importă arhiva\" extrage conținutul XML din fiecare fișier `.p7b` (structură CMS/PKCS7 SignedData, prin biblioteca `asn1crypto`, fără shell-out la `openssl` și fără nevoie de certificat sau cheie privată), parsează bonurile fiscale și raportul Z al fiecărei zile.\nReconciliere pe FK exact (serie + număr bon) cu `pos.order`; doar dacă bonul din arhivă nu are corespondent înregistrat cu serie/număr, se aplică un fallback euristic pe dată apropiată + sumă identică, în aceeași zi și punct de lucru.\nPopulare automată a raportului Z (`l10n.ro.pos.z.report`) din arhivă: totalul declarat și plățile declarate pe metodă, urmate de reconcilierea automată cu totalurile din sesiunea POS.\nVerificarea completitudinii perioadei din fișierul OPIS al arhivei (declarația `a4200`): semnalează rapoartele Z lipsă între ce apare în OPIS și ce a fost efectiv găsit în arhivă.\nRaport de discrepanțe pe bonuri fiscale (`l10n.ro.amef.journal.bon`), cu stări: Reconciliat, Sumă diferită, TVA diferit, Lipsă în Odoo, Lipsă în arhiva fiscală — accesibil dintr-un meniu dedicat „Fiscal Receipts Discrepancies\" sau din butonul statistic al jurnalului.\nRaportul „Vânzări TVA pe casă de marcat\" (*Point of Sale → Fiscalizare AMEF → Vânzări TVA pe casă de marcat*): agregă liniile de TVA ale rapoartelor Z deja existente, fără recalculare, filtrabil pe interval de dată, punct de lucru și cotă de TVA, cu vizualizare pivot (implicit) și listă; implicit sunt afișate doar rapoartele Z reconciliate/închise."
+  },
+  {
+    "path": "l10n_ro_pos_returns/index.md",
+    "module": "l10n_ro_pos_returns",
+    "version": "19.0.1.1.0",
+    "github": "[https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_returns](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_returns)",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_pos_returns",
+    "last_ingest": "2026-08-31",
+    "friendly_name": "l10n_ro_pos_returns",
+    "summary": "Modulul tratează returul din comerțul cu amănuntul așa cum îl cere legislația română, pe două laturi care nu au sens una fără alta. Prima: la fiecare bon de retur se emite **factura de retur (storno)**, documentul pe care normele îl cer pentru ajustarea bazei de impozitare a TVA — vânzarea la casa de marcat e scutită de factură, dar scutirea nu se extinde la retur, iar fără acel document contabilul nu are pe ce să diminueze TVA-ul colectat. A doua: **restituirile de numerar apar pe rândul de plăți al registrului de casă**, nu netate în încasarea zilei, cum le scrie Odoo implicit. Modulul a pornit din tichetul #9362 (client Damira), unde 870 de retururi din doi ani și jumătate nu aveau niciun document fiscal, iar în registrul de casă restituirile erau invizibile.",
+    "features": [
+      "Factură de retur automată la finalizarea bonului de retur: document `out_refund` postat, cu cota de TVA și valoarea pe fiecare articol — exact informațiile pe care le cere contabilitatea.",
+      "Cumpărător identificat obligatoriu la retur. Nu e vorba de completarea unui câmp: partenerul generic pentru clienți anonimi (desemnat prin modulul de partener generic al suitei) este refuzat, iar contactul trebuie să aibă datele cerute destinatarului unei facturi RO — țară, județ, oraș, stradă. Verificarea rulează la sincronizarea bonului, deci mesajul apare la casă, cât clientul e încă acolo, nu ca eroare de postare după ce a plecat cu banii.",
+      "Încasările brute și restituirile pe linii separate pe contul de casă, la închiderea sesiunii — pentru registrul de casă cod 14-4-7A, care cere încasările pe rândul lor și plățile pe al lor. Soldul rămâne neschimbat.",
+      "Restul dat clientului rămâne netat, fiind tot o plată de numerar negativă, dar pe un bon cu total pozitiv: un bon de 15,50 lei încasat cu 200 lei este o încasare de 15,50, nu o încasare de 200 și o plată de 184,50.",
+      "Emiterea în lot pentru perioada scursă (`Issue Return Invoices`), din lista de comenzi POS: pentru un bon din sesiune închisă factura primește data curentă, iar contribuția bonului din nota de închidere se reversează în aceeași perioadă — TVA-ul nu se mută între perioade și nu sunt necesare declarații rectificative. Bonurile care nu pot fi facturate sunt sărite, cu motivul raportat.",
+      "Jurnal dedicat opțional pentru facturile de retur, separat de jurnalul de facturi al punctului de vânzare.",
+      "Filtrele „Returns\" și „Returns without Invoice\" pe comenzile POS, pentru inventarierea situației.",
+      "Dispoziția de plată din bonul de retur, când e instalat modulul de casierie: butonul întocmește documentul pe casieria bonului, cu numerarul efectiv restituit.",
+      "Interfață tradusă în română (`i18n/ro.po`)."
+    ],
+    "dependencies": [
+      "point_of_sale",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_cash_bank_enhanced",
+      "l10n_ro_invoice_report",
+      "l10n_ro_pos_fiscal_compliance",
+      "l10n_ro_pos",
+      "_accumulate_amounts",
+      "deltatech_partner_generic",
+      "l10n_ro_cash_register_report",
+      "l10n_ro_cash_register",
+      "l10n_ro_efactura_b2c"
+    ],
+    "text": "l10n_ro_pos_returns\nl10n_ro_pos_returns\nModulul tratează returul din comerțul cu amănuntul așa cum îl cere legislația română, pe două laturi care nu au sens una fără alta. Prima: la fiecare bon de retur se emite **factura de retur (storno)**, documentul pe care normele îl cer pentru ajustarea bazei de impozitare a TVA — vânzarea la casa de marcat e scutită de factură, dar scutirea nu se extinde la retur, iar fără acel document contabilul nu are pe ce să diminueze TVA-ul colectat. A doua: **restituirile de numerar apar pe rândul de plăți al registrului de casă**, nu netate în încasarea zilei, cum le scrie Odoo implicit. Modulul a pornit din tichetul #9362 (client Damira), unde 870 de retururi din doi ani și jumătate nu aveau niciun document fiscal, iar în registrul de casă restituirile erau invizibile.\nFactură de retur automată la finalizarea bonului de retur: document `out_refund` postat, cu cota de TVA și valoarea pe fiecare articol — exact informațiile pe care le cere contabilitatea.\nCumpărător identificat obligatoriu la retur. Nu e vorba de completarea unui câmp: partenerul generic pentru clienți anonimi (desemnat prin modulul de partener generic al suitei) este refuzat, iar contactul trebuie să aibă datele cerute destinatarului unei facturi RO — țară, județ, oraș, stradă. Verificarea rulează la sincronizarea bonului, deci mesajul apare la casă, cât clientul e încă acolo, nu ca eroare de postare după ce a plecat cu banii.\nÎncasările brute și restituirile pe linii separate pe contul de casă, la închiderea sesiunii — pentru registrul de casă cod 14-4-7A, care cere încasările pe rândul lor și plățile pe al lor. Soldul rămâne neschimbat.\nRestul dat clientului rămâne netat, fiind tot o plată de numerar negativă, dar pe un bon cu total pozitiv: un bon de 15,50 lei încasat cu 200 lei este o încasare de 15,50, nu o încasare de 200 și o plată de 184,50.\nEmiterea în lot pentru perioada scursă (`Issue Return Invoices`), din lista de comenzi POS: pentru un bon din sesiune închisă factura primește data curentă, iar contribuția bonului din nota de închidere se reversează în aceeași perioadă — TVA-ul nu se mută între perioade și nu sunt necesare declarații rectificative. Bonurile care nu pot fi facturate sunt sărite, cu motivul raportat.\nJurnal dedicat opțional pentru facturile de retur, separat de jurnalul de facturi al punctului de vânzare.\nFiltrele „Returns\" și „Returns without Invoice\" pe comenzile POS, pentru inventarierea situației.\nDispoziția de plată din bonul de retur, când e instalat modulul de casierie: butonul întocmește documentul pe casieria bonului, cu numerarul efectiv restituit.\nInterfață tradusă în română (`i18n/ro.po`)."
   },
   {
     "path": "l10n_ro_process_library/index.md",

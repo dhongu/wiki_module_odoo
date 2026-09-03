@@ -1,16 +1,17 @@
 # Romania - Cash and Bank Enhanced (localizat la `l10n_ro_cash_bank_enhanced/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_cash_bank_enhanced`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cash_bank_enhanced](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cash_bank_enhanced)
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_cash_bank_enhanced`
-- **Ultima Ingestie:** `2026-07-02`
+- **Ultima Ingestie:** `2026-08-31`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul completează funcționalitățile native de trezorerie din Odoo 19 Enterprise cu două
-controale specifice pieței din România (FR-28 — Casierie și bancă): alertarea automată a
+Modulul completează funcționalitățile native de trezorerie din Odoo 19 Enterprise cu documentele
+și controalele de casierie specifice pieței din România (FR-28 — Casierie și bancă): **dispoziția
+de plată / de încasare către casierie** (cod 14-4-4, respectiv 14-4-1), alertarea automată a
 tranzacțiilor bancare rămase nereconciliate și aplicarea plafoanelor legale de numerar
 prevăzute de Legea 70/2015. Scopul este să reducă riscul de amenzi și erori de conformitate
 legate de operațiunile cash și de reconcilierea bancară, fără să reimplementeze funcții deja
@@ -18,6 +19,13 @@ acoperite nativ de Odoo Enterprise (sincronizare bancară, OCR extrase, reconcil
 
 #### 2. Funcționalități Cheie
 
+- **Dispoziție de plată / de încasare către casierie (cod 14-4-4)**: documentul de casă care
+  justifică o mișcare de numerar neacoperită de chitanță — restituirea contravalorii unei mărfi
+  returnate, un avans de trezorerie, o plată către o persoană fizică. Registru propriu, cu
+  numerotare separată pe casierie, pe sensul operațiunii și pe an; formular tipizat cu suma în
+  cifre și în litere, actul de identitate al beneficiarului și cele trei semnături. Un document
+  anulat își păstrează numărul, ca registrul să nu aibă goluri. Se întocmește din registru sau
+  dintr-un bon de retur, când e instalat modulul de retururi POS.
 - **Alertă tranzacții bancare nereconciliate**: un cron zilnic identifică liniile de extras
   bancar rămase nereconciliate după un număr configurabil de zile și creează o activitate pe
   jurnalul de bancă, asignată responsabilului de trezorerie; alertele existente se actualizează
@@ -60,9 +68,18 @@ structura fișierelor modulului)*
 - `res_company` (extindere): câmpurile de configurare a plafoanelor și a responsabilului de
   trezorerie.
 - `res_config_settings` (extindere): expune setările companiei în ecranul de configurare.
+- `l10n.ro.cash.payment.order`: registrul dispozițiilor de casă. Folosește `sequence.mixin` pentru
+  numerotare, cu `_get_last_sequence_domain` care filtrează pe casierie, operațiune și an —
+  mixinul cere clauza `WHERE` completă, altfel interogarea de secvență iese fără `WHERE` și crapă
+  în SQL. Suma în litere vine din `currency.amount_to_text`; actul de identitate al beneficiarului
+  se reține pe document, nu în fișa partenerului.
 
 **Vizualizări**
 
+- `l10n_ro_cash_payment_order_view_list` / `_view_form` / `_view_search`: registrul dispozițiilor de
+  casă, cu acțiunea și meniul din **Contabilitate → Tranzacții → Cash Orders**.
+- `action_report_cash_payment_order` + șablonul `report_cash_payment_order`: formularul tipizat
+  14-4-4 / 14-4-1, în engleză în cod și tradus în română prin `i18n/ro.po`.
 - `res_config_settings_view_form_cash_bank`: secțiune „Cash and Bank (RO)” în Setări
   Contabilitate, cu pragul de alertă pentru nereconciliate, responsabilul de trezorerie și
   plafoanele de numerar (Legea 70/2015).
@@ -84,3 +101,9 @@ structura fișierelor modulului)*
   importul extraselor (nu este reimplementată de acest modul).
 - `account_bank_statement_extract`: extragerea OCR din PDF a extraselor bancare, folosită
   nativ (nu este reimplementată de acest modul).
+- [l10n_ro_invoice_report](../l10n_ro_invoice_report/index.md): tipărește dispoziția de plată
+  direct de pe `account.payment`; registrul de aici **nu dublează** acel flux, ci acoperă mișcările
+  de numerar care nu trec printr-o plată contabilă.
+- [l10n_ro_pos_returns](../l10n_ro_pos_returns/index.md): alimentează registrul din bonurile de
+  retur, unde restituirea stă în linia de extras a sesiunii POS și nu există `account.payment` de
+  pe care să tipărești.

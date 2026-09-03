@@ -96,7 +96,46 @@ metode de plată. Completați valorile declarate din raportul Z al aparatului ș
 
 ![Raport Z fiscal — defalcare TVA + plăți, reconciliere](screenshots/03_raport_z.png)
 
-### Pasul 4 — Importul arhivei jurnalului electronic AMEF
+### Pasul 4 — Raportul TVA pe interval, per casă de marcat
+
+Pentru un sumar centralizat pe o perioadă oarecare (nu doar sesiune cu sesiune), deschideți
+**Point of Sale → Fiscalizare AMEF → Vânzări TVA pe casă de marcat**. Raportul pornește implicit
+grupat pe **punct de lucru** și **cotă TVA**, filtrat pe rapoartele Z reconciliate/închise, și
+însumează pentru fiecare combinație baza fără TVA, TVA-ul și totalul — indiferent de metoda de
+încasare (numerar, card, tichete etc.), pentru că liniile provin din defalcarea pe cote TVA a
+raportului Z, nu din liniile de plată.
+
+**Găsește pe ecran** — vederea implicită e de tip pivot: rândurile grupează punctul de lucru și
+cota de TVA, coloanele defalcă pe lună (interval de dată). Fiecare celulă arată baza, TVA-ul și
+totalul agregat. Câmpul **Serie dispozitiv fiscal** (vizibil în vederea listă) identifică exact
+aparatul fizic — cel care apare și în arhiva jurnalului electronic exportată de casă.
+
+**Verifică** — înainte de a trimite cifrele mai departe (ex. către contabilitatea externă),
+confirmați: intervalul de dată selectat corespunde perioadei cerute; toate punctele de lucru cu
+vânzări în perioadă apar în raport (nu doar unul); suma totalurilor pe cote TVA ale unui punct de
+lucru coincide cu totalul din raportul Z declarat/reconciliat al aceluiași punct de lucru pentru
+aceeași perioadă. Dacă filtrul „Reconciliat / Închis" e activ și lipsesc zile din perioadă, e
+posibil ca acele rapoarte Z să fie încă în starea „Ciornă"/„Calculat din POS" — verificați Pasul 3 pentru
+zilele lipsă înainte de a trage concluzii.
+
+> **Limitări de citit înainte de a trimite cifrele mai departe.** Raportul **nu** e o citire directă
+> a jurnalului/arhivei ANAF — e calculat din datele Odoo ale raportului Z (Pasul 3), care la rândul
+> lor sunt doar reconciliate ca *total* cu arhiva, nu linie cu linie pe cotă (vezi „Note de
+> monografie și raportare" mai jos); tratați-l ca sursă de lucru, nu ca substitut al arhivei oficiale.
+> Cota de TVA a fiecărei linii se ia din **prima taxă procentuală** a liniei — vânzările scutite și
+> cele cu taxe fixe (fără procent) apar toate cumulat pe rândul „0", care merită verificat separat.
+> Agregarea include orice comandă a sesiunii care nu e ciornă/anulată, deci și comenzile POS
+> facturate — pentru un total strict pe bonuri fiscale, verificați și distincția factură/bon din
+> Pasul 2.
+
+**Treci mai departe** — pentru detaliere pe bon individual sau pe sesiune, treceți din pivot în
+vederea **listă** (butonul din colțul din dreapta sus): fiecare linie arată raportul Z sursă,
+data, punctul de lucru, seria aparatului și cota de TVA. Din listă, exportul standard Odoo (XLSX)
+e disponibil pentru a transmite datele mai departe.
+
+![Raport TVA pe casă de marcat — sumar pivot pe interval de dată](screenshots/07_raport_tva_casa_marcat.png)
+
+### Pasul 5 — Importul arhivei jurnalului electronic AMEF
 
 În **Point of Sale → Fiscalizare AMEF → Jurnale electronice AMEF**, creați o înregistrare nouă:
 selectați punctul de lucru, seria aparatului, perioada (dată început/sfârșit) și atașați arhiva
@@ -115,7 +154,7 @@ apropiere de dată și sumă, acolo unde bonul e deja înregistrat. Starea jurna
 > rapoarte Z întregi din arhivă față de ce apare în OPIS, afișând lista în câmpul **Missing Z
 > Reports (OPIS)** de pe formular.
 
-### Pasul 5 — Verificarea discrepanțelor
+### Pasul 6 — Verificarea discrepanțelor
 
 Din butonul statistic **Discrepancies** de pe jurnal (sau din meniul **Point of Sale → Fiscalizare
 AMEF → Fiscal Receipts Discrepancies**) se deschide lista completă a bonurilor cu probleme, cu
@@ -138,12 +177,21 @@ Modulul **nu produce note contabile** — nota contabilă agregată a sesiunii P
 raportul Z reconciliat (pe cote TVA și metode de plată) și arhiva jurnalului electronic AMEF.
 Returul fiscal referențiază bonul inițial (câmpurile „Bon inițial (retur)").
 
-La importul arhivei (Pasul 4), raportul Z al fiecărei zile se completează și reconciliază automat:
+La importul arhivei (Pasul 5), raportul Z al fiecărei zile se completează și reconciliază automat:
 totalul declarat (`declared_total`) devine suma bonurilor găsite în arhivă pentru ziua respectivă,
 iar plățile declarate se aliniază, unde numele metodei de plată din Odoo corespunde celei din
 arhivă, cu sumele raportate de aparat (nodul `<pl>` din raportul Z). Reconcilierea rămâne la nivel
 de total declarat pe raport — defalcarea pe cote TVA e disponibilă doar la nivel de bon individual
 (fila **Fiscal Receipts**), nu agregată automat pe liniile raportului Z.
+
+Raportul **Vânzări TVA pe casă de marcat** (Pasul 4) nu recalculează nimic — citește direct liniile
+de TVA deja calculate de fiecare raport Z (`action_compute_from_session`) și le însumează pe
+interval, punct de lucru și cotă. De aceea reflectă întotdeauna starea curentă a rapoartelor Z din
+perioadă: dacă un raport Z e încă „Ciornă"/„Calculat din POS" (necalculat sau nereconciliat),
+valorile lui intră totuși în sumă doar dacă filtrul „Reconciliat / Închis" e dezactivat — cu filtrul
+activ (implicit), doar rapoartele Z finalizate contează. Chiar și așa, raportul rămâne o citire a
+datelor Odoo, nu a arhivei ANAF — vezi rezerva de la Pasul 4 privind bucketul de cotă „0" și
+comenzile facturate.
 
 ## 7. Legături cu alte module / declarații
 
@@ -155,9 +203,14 @@ de total declarat pe raport — defalcarea pe cote TVA e disponibilă doar la ni
 | `deltatech_pos` / `deltatech_pos_base` | driver fiscal AMEF (apelează `_l10n_ro_apply_fiscal_response`) | integrare opțională (nu dependență) |
 | `l10n_ro_anaf_d394_pos` | agregarea bonurilor fiscale POS în declarația D394 (dacă e instalat) | integrare prin convenție (realizată de modulul D394 POS, nu de acesta) |
 
+> Raportul **Vânzări TVA pe casă de marcat** (Pasul 4) e o vedere peste datele deja calculate ale
+> rapoartelor Z — nu are dependențe suplimentare și e disponibil oricărui client cu modulul
+> instalat, nu doar celor care importă arhiva jurnalului electronic (Pasul 5).
+
 Ce este automat: marcarea stării de fiscalizare, blocarea închiderii sesiunii, importul și
-reconcilierea bon-cu-bon din arhiva `.zip`/`.p7b`, completarea raportului Z din arhivă și
-reconcilierea cu vânzările/încasările POS.
+reconcilierea bon-cu-bon din arhiva `.zip`/`.p7b`, completarea raportului Z din arhivă,
+reconcilierea cu vânzările/încasările POS, și agregarea pe interval/casă de marcat/cotă TVA a
+liniilor deja calculate ale rapoartelor Z.
 Ce rămâne manual: configurarea fiscalizării pe punctul de lucru, obținerea arhivei periodice de la
 casa de marcat și încărcarea ei, lămurirea discrepanțelor semnalate (corectare în Odoo sau
 justificare), și justificarea erorilor de fiscalizare.
@@ -170,6 +223,12 @@ justificare), și justificarea erorilor de fiscalizare.
 - [ ] O comandă plătită fără bon fiscal blochează închiderea sesiunii (cu mesaj clar).
 - [ ] „Înregistrează bon fiscal" trece comanda în starea „Bon emis" și salvează seria/numărul.
 - [ ] Raportul Z agregă corect pe cote TVA și pe metode de plată; reconcilierea semnalează diferențele.
+- [ ] **Vânzări TVA pe casă de marcat** grupează corect pe punct de lucru și cotă TVA; totalul pe un
+      punct de lucru pentru o zi coincide cu totalul raportului Z reconciliat al aceleiași zile.
+- [ ] Cu filtrul „Reconciliat / Închis" activ, rapoartele Z în starea „Ciornă"/„Calculat din POS" nu
+      intră în sumă (dezactivând filtrul, intră și ele).
+- [ ] Coloana **Serie dispozitiv fiscal** din vederea listă a raportului corespunde cu seria
+      configurată pe punctul de lucru (Pasul 1) și cu cea din jurnalul AMEF importat (Pasul 5).
 - [ ] Jurnalul electronic AMEF poate fi arhivat cu fișier atașat.
 - [ ] „Importă arhiva" pe un jurnal cu un `.zip` valid de `.p7b` trece starea în „Parsed" și
       populează fila **Fiscal Receipts** cu câte o linie per bon găsit.
@@ -202,9 +261,11 @@ pe planul de conturi RO (`setup_country("ro")`):
 1. `01_config_fiscal.png` — setări POS, secțiunea „Conformitate fiscală RO (AMEF)".
 2. `02_comanda_fiscal.png` — comanda POS, fila „Fiscalizare AMEF".
 3. `03_raport_z.png` — raportul Z fiscal (defalcare TVA + metode de plată, reconciliere).
-4. `05_import_arhiva.png` — jurnalul AMEF după import, fila „Fiscal Receipts" cu bonurile reconciliate.
-5. `06_discrepante.png` — lista discrepanțelor bonurilor fiscale.
-6. `04_jurnal_amef.png` — jurnalul electronic AMEF arhivat (pasul final, după lămurirea discrepanțelor).
+4. `07_raport_tva_casa_marcat.png` — raportul „Vânzări TVA pe casă de marcat" (pivot pe interval,
+   punct de lucru și cotă TVA).
+5. `05_import_arhiva.png` — jurnalul AMEF după import, fila „Fiscal Receipts" cu bonurile reconciliate.
+6. `06_discrepante.png` — lista discrepanțelor bonurilor fiscale.
+7. `04_jurnal_amef.png` — jurnalul electronic AMEF arhivat (pasul final, după lămurirea discrepanțelor).
 
 Regenerare:
 
