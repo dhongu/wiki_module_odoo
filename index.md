@@ -64,12 +64,16 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_delivery_dummy](deltatech_delivery_dummy/index.md): Metodă de livrare fictivă (dummy) pentru testarea fluxului de curierat fără integrare cu un curier real.
 - [deltatech_delivery_fc](deltatech_delivery_fc/index.md): Integrare Odoo cu Fan Courier pentru generare AWB, calcul tarife, urmărire colete și lockere FanBox.
 - [deltatech_delivery_gls](deltatech_delivery_gls/index.md): Integrare directă a curieratului GLS în Odoo: AWB, etichete (PDF/ZPL), tracking, ramburs (COD) și livrare la locker, multi-țară.
+- [deltatech_delivery_innoship](deltatech_delivery_innoship/index.md): Conectează Odoo la Innoship pentru rezervare AWB, etichete, tarifare, urmărire și lockere prin peste o sută de curieri europeni, printr-o singură cheie API.
 - [deltatech_delivery_iot](deltatech_delivery_iot/index.md): Restricționează imprimantele IoT folosite la tipărirea etichetelor de expediere, pe baza utilizatorilor atribuiți fiecărei imprimante.
 - [deltatech_delivery_locker](deltatech_delivery_locker/index.md): Structura de date și logica de bază, independentă de curier, pentru livrarea în lockere (puncte fixe de ridicare).
 - [deltatech_delivery_locker_website](deltatech_delivery_locker_website/index.md): Extinde livrarea în locker pentru website/eCommerce, filtrând metodele de livrare la checkout după compatibilitatea produselor din coș.
 - [deltatech_delivery_memex](deltatech_delivery_memex/index.md): Integrare de curierat PTT Express (Memex) pentru generarea AWB-urilor și expedierea coletelor direct din Odoo.
 - [deltatech_delivery_ne](deltatech_delivery_ne/index.md): Integrare curier Nemo Express pentru generare AWB, tarife și tracking, construită peste infrastructura Courier Manager.
 - [deltatech_delivery_packeta](deltatech_delivery_packeta/index.md): Integrare cu serviciile de curierat Packeta (Zásilkovna), cu suport AWB, puncte de ridicare PUDO și lockere Z-BOX.
+- [deltatech_delivery_portal](deltatech_delivery_portal/index.md): Afișează pe portalul clienților statusul real de livrare (nu doar starea transferului), AWB, transportator și istoricul evenimentelor curierului, preluate din `deltatech_delivery`.
+- [deltatech_delivery_postis](deltatech_delivery_postis/index.md): Integrare Odoo cu Postis, platforma românească ce agregă mai mulți curieri (Cargus, GLS, DPD, Sameday, Nemo, DHL, FAN) sub o singură conexiune — tarifare, AWB, etichete, anulare și tracking direct din fluxul de livrare.
+- [deltatech_delivery_postis_locker](deltatech_delivery_postis_locker/index.md): Permite alegerea unui locker/punct de ridicare Postis la checkout, prin harta widget Postis, cu înregistrare în catalogul comun de lockere și adresare corectă a AWB-ului.
 - [deltatech_delivery_pr](deltatech_delivery_pr/index.md): Integrare curierat Poșta Română — generare AWB direct din livrări, cu suport pentru valoare declarată și ramburs.
 - [deltatech_delivery_relay](deltatech_delivery_relay/index.md): Atașează automat etichete AWB (PDF) generate de curieri/sisteme externe direct pe comenzile de livrare din Odoo.
 - [deltatech_delivery_sd](deltatech_delivery_sd/index.md): Integrare Odoo cu curierul Sameday — generare AWB, calcul tarife, urmărire colete și actualizarea stării livrării.
@@ -120,6 +124,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_marketplace_delivery](deltatech_marketplace_delivery/index.md): Integrează livrarea avansată și gestionarea lockerelor în ecosistemul de comenzi marketplace.
 - [deltatech_marketplace_doraly](deltatech_marketplace_doraly/index.md): Conector între Odoo și marketplace-ul Doraly pentru sincronizarea produselor și comenzilor.
 - [deltatech_marketplace_emag](deltatech_marketplace_emag/index.md): Conector eMAG Marketplace — sincronizare de produse, stocuri, comenzi, livrări și plăți, cu fișă de consultant și corecturi de comportament (Auto Price, import comenzi, push factură).
+- [deltatech_marketplace_emag_delivery](deltatech_marketplace_emag_delivery/index.md): Emite AWB-uri prin eMAG Courier direct din livrarea Odoo — etichete A4/A5/A6/ZPL și urmărirea coletului prin curierul partener real al eMAG.
 - [deltatech_marketplace_extended](deltatech_marketplace_extended/index.md): Conector marketplace „Extended" cu sincronizare produse/clienți/comenzi/livrare/plăți și webhook de comenzi în timp real.
 - [deltatech_marketplace_magento](deltatech_marketplace_magento/index.md): Conector ERP Odoo ↔ platforma de e-commerce Magento, pentru sincronizare de produse, clienți, comenzi și stocuri (export stoc real prin `magento_stock_export`, pe sursa MSI implicită).
 - [deltatech_marketplace_merchantpro](deltatech_marketplace_merchantpro/index.md): Conector între Odoo și marketplace-ul MerchantPro pentru sincronizarea produselor, stocurilor și comenzilor, cu API V2, webhook-uri și import paginat de siguranță.

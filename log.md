@@ -4,6 +4,17 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-03] Ingestie 5 module de curierat cu pagină lipsă — Postis, Postis Locker, Innoship, Delivery Portal, eMAG Delivery
+
+- **Acțiune:** La cererea utilizatorului, verificarea suitei de curierat (`odoo-addons/bitshop_delivery`) a arătat că majoritatea transportatorilor (FAN, Cargus, Sameday, DPD, GLS, TNT etc.) nu au `readme/USAGE.md` — nu sunt candidați pentru regula nouă (USAGE ca sursă secundară) —, dar 5 module aveau o problemă mai gravă: pagină wiki lipsă complet, deși 3 dintre ele au `USAGE.md`/`CONFIGURE.md` complete. Ingerate în paralel (5 subagenți `documentarist-wiki`), pagini noi:
+  - `deltatech_delivery_postis` — integrare cu platforma Postis (agregator: Cargus, GLS, DPD, Sameday, Nemo, DHL, FAN sub o singură conexiune).
+  - `deltatech_delivery_postis_locker` — selecția de locker Postis la checkout, peste modulul de bază.
+  - `deltatech_delivery_innoship` — agregator european (100+ curieri), sursă USAGE/CONFIGURE folosită pentru fluxul de inițializare (Init Carrier/Service, import dicționare de adrese, import lockere).
+  - `deltatech_delivery_portal` — status de livrare detaliat pe portalul clienților, din `deltatech_delivery`.
+  - `deltatech_marketplace_emag_delivery` — emitere AWB prin eMAG Courier direct din livrarea Odoo (split din `deltatech_marketplace_emag`).
+- **Corecții de consolidare:** cele două legături text-`cod` dintre `deltatech_delivery_postis` ↔ `deltatech_delivery_postis_locker` (create înainte ca ambele pagini să existe) transformate în link-uri Markdown active; la fel legăturile `deltatech_delivery_locker`/`deltatech_delivery_locker_website` din pagina `deltatech_delivery_innoship`.
+- **Fișiere actualizate:** cele 5 pagini noi (`deltatech_delivery_postis/index.md`, `deltatech_delivery_postis_locker/index.md`, `deltatech_delivery_innoship/index.md`, `deltatech_delivery_portal/index.md`, `deltatech_marketplace_emag_delivery/index.md`), `index.md` (5 linii noi), `log.md`.
+
 ## [2026-09-03] Lot de test — audit USAGE.md ca sursă secundară (6 module), în urma noii reguli din schema.md
 
 - **Acțiune:** Prim lot de verificare/re-ingestie pentru regula nou adăugată în `schema.md` (USAGE.md/CONFIGURE.md ca sursă secundară pentru „Funcționalități Cheie"). Un audit prealabil pe cele 189 module locale cu `readme/USAGE.md` a găsit 46 cu pagină wiki dar fără fișă consultant — candidați la gol; scorul de acoperire cuvinte-cheie (USAGE vs. secțiunea 2 din wiki) a plasat majoritatea sub 20%. S-a ales un lot de 6 pentru validare înainte de a continua cu restul.
