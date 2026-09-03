@@ -40,6 +40,7 @@ Un cont de seller eMAG lângă Odoo, fără conector, înseamnă catalog, comenz
   - Push automat al unui **link** către PDF-ul facturii din portalul Odoo (nu conținutul PDF-ului) când o factură legată de o comandă eMAG e validată, dacă backend-ul are activă bifa **Enable Order Push Invoice** ȘI **Active On Write**; cere ca `web.base.url` să fie public
 - **Plăți**:
   - Metodele de plată eMAG sunt mapate la payment provideri Odoo; metodele nerecunoscute cad pe Wire Transfer, ca o comandă să nu rămână fără metodă de plată
+  - **Fără borderou/decontare prin API**: eMAG Marketplace API (v4.x) nu expune nicio resursă pentru raportul de decontare/comisioane — nu există `/settlement`, `/financial-report` sau echivalent. Borderoul de plăți se obține doar prin descărcare manuală (Excel/CSV) din panoul de vânzător eMAG (Financiar > Rapoarte); conectorul nu îl importă/reconciliază automat
 - **Operațiuni programate**:
   - Sincronizare în fundal prin job-uri cron și coada de job-uri comună
   - Intervale de sincronizare configurabile; cron-ul de auto-pricing pe buy box vine dezactivat implicit
