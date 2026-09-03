@@ -225,7 +225,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_restrict_ip](deltatech_restrict_ip/index.md): Restricționează autentificarea în Odoo după adresa IP, limitând accesul la adrese/intervale de încredere (birou, VPN) pentru securitate și conformitate.
 - [deltatech_restrict_reports](deltatech_restrict_reports/index.md): Restricționează accesul la rapoartele Analiză Vânzări și Analiză Facturi prin două grupuri (doar propriile înregistrări / toate înregistrările), independent de drepturile standard.
 - [deltatech_rpc_audit](deltatech_rpc_audit/index.md): Loghează apelurile XML-RPC/JSON-RPC externe (IP client real, model, metodă) pentru audit tehnic, configurabil on/off fără dezinstalare.
-- [deltatech_saga](deltatech_saga/index.md): Punte de integrare bazată pe fișiere între Odoo și programul de contabilitate românesc SAGA (export/import de facturi, parteneri, produse și note contabile).
+- [deltatech_saga](deltatech_saga/index.md): Modul de export/import fișiere (XML/DBF) pentru schimbul de date contabile, parteneri, produse și stocuri între Odoo și SAGA, adaptat cerințelor fiscale românești.
 - [deltatech_saga_mrp](deltatech_saga_mrp/index.md): Extinde interfața de export SAGA pentru a sincroniza mișcările de stoc și producția kiturilor (BoM phantom) din MRP către SAGA.
 - [deltatech_sale_activity_report](deltatech_sale_activity_report/index.md): Raport de activitate pentru comenzile de vânzare — jurnalizează modificările utilizatorilor și le curăță automat după 2 luni (Data Recycle).
 - [deltatech_sale_activity_search](deltatech_sale_activity_search/index.md): Adaugă vizibilitate și filtre de căutare pe comenzile de vânzare în funcție de tipurile de activități active (apeluri, e-mailuri, întâlniri).

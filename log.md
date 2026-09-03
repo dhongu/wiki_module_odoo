@@ -4,6 +4,24 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-03] Re-ingestie `deltatech_saga` — fișă consultant nouă, readme rescris, coduri SAGA de la o bază existentă (PR bitshop#2794)
+
+- **Acțiune:** Resincronizarea paginii după PR terrabit-solutions/bitshop#2794 (mergeuit pe `19.0`), care adaugă modulului o fișă consultant completă (inexistentă anterior) și corectează fragmentele readme, care descriau greșit fluxul de export.
+- **Corectarea de fond:** `readme/USAGE.md` afirma anterior că opțiunea „Export Type" alege între *Invoices/Partners/Products/Accounting Entries* — fals; câmpul real (`export_type`) are valorile **Global-Valoric** / **Cantitativ-Valoric**, iar exportul generează într-o singură rulare o arhivă ZIP cu toate fișierele relevante (furnizori, clienți, articole, intrări/ieșiri RON și valută, note contabile, plăți). Rescris pe baza directă a `wizard/export_saga.py`.
+- **`readme/CONFIGURE.md` nou** (lipsea complet): coduri SAGA pe partener/categorie/taxă/poziție fiscală/locație, setările din Contabilitate > Configurare (`res.config.settings`).
+- **Pornirea de la o bază SAGA existentă:** adăugată explicit — nomenclatoarele Clienți/Furnizori/Articole se exportă din SAGA în DBF și se importă în Odoo (Import SAGA) **înainte** de primul export, ca partenerii să primească codurile SAGA originale și SAGA să nu creeze duplicate.
+- **Traduceri RO:** `.pot` era din iulie (80 de termeni lipsă din cauza unui `.pot` neactualizat); regenerat din bază și `ro.po` completat integral (228/228 mesaje).
+- **Fișă consultant:** nouă, 9 capturi (`01`–`09`), generate reproductibil din `tests/test_screenshots.py` nou (mixin `ScreenshotCase`).
+- **Fișiere actualizate:** `deltatech_saga/index.md`, `deltatech_saga/FISA_CONSULTANT.md` (nouă), `deltatech_saga/screenshots/*.png` (9 fișiere noi), `index.md` (o linie), `log.md`.
+
+## [2026-09-02] Re-ingestie `l10n_ro_pos_fiscal_compliance` — raport TVA pe interval, per casă de marcat (PR #131)
+
+- **Acțiune:** Resincronizarea paginii și a fișei consultant după PR terrabit-solutions/l10n_ro_ent#131 (mergeuit pe `19.0`), care adaugă un raport nou: „Vânzări TVA pe casă de marcat" (meniu Point of Sale → Fiscalizare AMEF, `action_l10n_ro_pos_z_report_vat_summary`) — pivot+listă pe modelul `l10n.ro.pos.z.report.vat.line`, cu câmpuri `related`+`store` noi (`report_date`, `config_id`, `device_serial`, `report_state`) care agregă liniile de TVA deja calculate de rapoartele Z existente (fără recalculare), grupate pe interval de dată, punct de lucru și cotă TVA, filtrat implicit pe rapoartele Z reconciliate/închise.
+- **Origine:** tichet Terrabit #9389 (Damira COM SRL) — cerere de raport centralizat de vânzări prin casa de marcat pe cote de TVA, comparabil cu jurnalul/arhiva ANAF; continuarea firească a mecanismului `cod_ecr` de pe tichetul #9319.
+- **Sursă:** `readme/DESCRIPTION.md` + `readme/USAGE.md` + `readme/NOUTATI_19.md`, completate cu analiza directă a codului (`models/l10n_ro_pos_z_report.py`, `views/l10n_ro_pos_z_report_summary_views.xml`, `views/pos_menus.xml`).
+- **Fișă consultant:** resincronizată (Pasul 4 nou, pașii 5-6 renumerotați, verificări și legături actualizate), cu toate cele 7 capturi, inclusiv noua `07_raport_tva_casa_marcat.png`.
+- **Fișiere actualizate:** `l10n_ro_pos_fiscal_compliance/index.md`, `l10n_ro_pos_fiscal_compliance/FISA_CONSULTANT.md` (resincronizată), `l10n_ro_pos_fiscal_compliance/screenshots/*.png` (7 fișiere, toate regenerate), `index.md` (o linie), `log.md`.
+
 ## [2026-08-31] Re-ingestie `l10n_ro_invoice_report` — traduceri care existau, dar nu se aplicau (PR #529)
 
 - **Acțiune:** Resincronizarea paginii și a fișei consultant după PR #529 (l10n-romania), care repară o categorie de eroare tăcută în traduceri. Fișa din wiki e înlocuită cu versiunea corectată (169 de linii), împreună cu capturile regenerate.
