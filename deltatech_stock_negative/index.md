@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.2.0.7`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_negative`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_negative`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-03`
 
 #### 1. Sumar
 
@@ -13,7 +13,8 @@ Acest modul împiedică apariția stocurilor negative în locațiile interne ale
 #### 2. Funcționalități Cheie
 
 - Interzice stocul negativ pentru locațiile interne.
-- Permite stoc negativ la anumite locații configurate explicit.
+- Opțiunea globală se activează din `Inventar → Configurare → Setări → Trasabilitate → Stoc negativ` (bifa „Fără stoc negativ”, câmpul `no_negative_stock` de pe companie).
+- Excepțiile per-locație se configurează din `Inventar → Configurare → Locații`, pe formularul fiecărei locații de stoc, bifând opțiunea care permite stoc negativ (`allow_negative_stock`) — util pentru locații virtuale/de tranzit sau alte cazuri unde blocarea nu trebuie aplicată.
 
 #### 3. Dependențe
 

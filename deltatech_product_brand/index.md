@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_product_brand
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_product_brand`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-09-03`
 
 #### 1. Sumar
 

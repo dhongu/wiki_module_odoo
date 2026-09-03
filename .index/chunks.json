@@ -438,21 +438,27 @@
     "version": "19.0.0.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_agreement_management",
     "local_path": "odoo-addons/deltatech/deltatech_agreement_management",
-    "last_ingest": "2026-06-01",
+    "last_ingest": "2026-09-03",
     "friendly_name": "Agreement Management",
-    "summary": "Modulul oferă o evidență centralizată a acordurilor (contractelor) încheiate cu partenerii companiei. Permite gestionarea numerelor, datelor și stărilor acordurilor, astfel încât echipa să poată urmări într-un singur loc situația documentelor contractuale. Acordurile pot fi clasificate pe tipuri configurabile, fiecare tip având propria secvență de numerotare și șablon de raport, ceea ce simplifică emiterea și organizarea documentelor.",
+    "summary": "Modulul oferă o evidență centralizată a acordurilor (contractelor) comerciale și de servicii încheiate cu partenerii companiei — număr de referință, dată, stare și tipărirea documentului direct din Odoo. Acordurile pot fi clasificate pe tipuri configurabile, fiecare tip având propria secvență de numerotare și șablon de raport, ceea ce simplifică emiterea și organizarea documentelor contractuale.",
     "features": [
-      "Gestionarea acordurilor: număr, dată și stare.",
-      "Configurarea tipurilor de acord, fiecare cu secvență proprie de numerotare și șablon de raport.",
-      "Integrare cu partenerii (`res.partner`), pentru a lega acordurile de contacte/clienți.",
-      "Urmărirea modificărilor prin firul de discuții și activitățile Odoo (mesagerie și activități)."
+      "Creare acorduri legate de un partener, cu dată a acordului și dată de expirare (opțională).",
+      "Ciclu de viață al acordului cu trei stări: Draft → In Progress → Terminated; câmpurile devin needitabile odată ce acordul iese din Draft.",
+      "Buton Get number (vizibil doar în Draft, cât timp referința e `/`) generează numărul de acord din secvența configurată pe tip.",
+      "Tipurile de acord (meniu Agreement → Configuration → Agreement types) definesc secvența de numerotare și șablonul de raport (QWeb) folosit la tipărire; fără șablon setat, tipărirea generează eroare.",
+      "Buton Print generează PDF-ul acordului folosind șablonul de raport asociat tipului.",
+      "Butoane Set In Progress, Close Contract (→ Terminated) și Set Draft (reactivare) pentru tranziția între stări.",
+      "Ștergerea unui acord e permisă doar în starea Draft; pentru In Progress/Terminated se ridică eroare de validare.",
+      "Pe fișa partenerului: buton inteligent Agreements cu numărul de acorduri legate, plus filtru de căutare With agreement în lista de parteneri.",
+      "Două grupuri de securitate: Agreement / User (vizualizare și creare acorduri, acces la butonul inteligent de pe partener) și Agreement / Manager (drepturi User + meniul de Configurare pentru tipuri de acord); administratorul e inclus implicit în grupul Manager.",
+      "Urmărirea modificărilor prin firul de discuții și activitățile Odoo (mesagerie și activități) pe fiecare acord."
     ],
     "dependencies": [
       "base",
       "mail"
     ],
     "connections": [],
-    "text": "Agreement Management\ndeltatech_agreement_management\nModulul oferă o evidență centralizată a acordurilor (contractelor) încheiate cu partenerii companiei. Permite gestionarea numerelor, datelor și stărilor acordurilor, astfel încât echipa să poată urmări într-un singur loc situația documentelor contractuale. Acordurile pot fi clasificate pe tipuri configurabile, fiecare tip având propria secvență de numerotare și șablon de raport, ceea ce simplifică emiterea și organizarea documentelor.\nGestionarea acordurilor: număr, dată și stare.\nConfigurarea tipurilor de acord, fiecare cu secvență proprie de numerotare și șablon de raport.\nIntegrare cu partenerii (`res.partner`), pentru a lega acordurile de contacte/clienți.\nUrmărirea modificărilor prin firul de discuții și activitățile Odoo (mesagerie și activități)."
+    "text": "Agreement Management\ndeltatech_agreement_management\nModulul oferă o evidență centralizată a acordurilor (contractelor) comerciale și de servicii încheiate cu partenerii companiei — număr de referință, dată, stare și tipărirea documentului direct din Odoo. Acordurile pot fi clasificate pe tipuri configurabile, fiecare tip având propria secvență de numerotare și șablon de raport, ceea ce simplifică emiterea și organizarea documentelor contractuale.\nCreare acorduri legate de un partener, cu dată a acordului și dată de expirare (opțională).\nCiclu de viață al acordului cu trei stări: Draft → In Progress → Terminated; câmpurile devin needitabile odată ce acordul iese din Draft.\nButon Get number (vizibil doar în Draft, cât timp referința e `/`) generează numărul de acord din secvența configurată pe tip.\nTipurile de acord (meniu Agreement → Configuration → Agreement types) definesc secvența de numerotare și șablonul de raport (QWeb) folosit la tipărire; fără șablon setat, tipărirea generează eroare.\nButon Print generează PDF-ul acordului folosind șablonul de raport asociat tipului.\nButoane Set In Progress, Close Contract (→ Terminated) și Set Draft (reactivare) pentru tranziția între stări.\nȘtergerea unui acord e permisă doar în starea Draft; pentru In Progress/Terminated se ridică eroare de validare.\nPe fișa partenerului: buton inteligent Agreements cu numărul de acorduri legate, plus filtru de căutare With agreement în lista de parteneri.\nDouă grupuri de securitate: Agreement / User (vizualizare și creare acorduri, acces la butonul inteligent de pe partener) și Agreement / Manager (drepturi User + meniul de Configurare pentru tipuri de acord); administratorul e inclus implicit în grupul Manager.\nUrmărirea modificărilor prin firul de discuții și activitățile Odoo (mesagerie și activități) pe fiecare acord."
   },
   {
     "path": "deltatech_ai_anthropic/index.md",
@@ -485,16 +491,20 @@
     "version": "19.0.2.1.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_alternative",
     "local_path": "odoo-addons/deltatech/deltatech_alternative",
-    "last_ingest": "2026-06-02",
+    "last_ingest": "2026-09-03",
     "friendly_name": "Products Alternative",
-    "summary": "Modulul extinde gestiunea produselor cu coduri alternative și cu un catalog de date master pentru produse. Permite asocierea mai multor coduri alternative pentru același produs, astfel încât căutarea după aceste coduri să identifice corect produsul în comenzi, achiziții și mișcări de stoc. În plus, dispune de un catalog amplu de produse din care, atunci când o căutare după cod nu returnează rezultate, se poate genera automat un produs nou. Modulul ajută companiile care lucrează cu nomenclatoare extinse sau cu coduri venite de la furnizori și clienți diferiți.",
+    "summary": "Modulul permite gestiunea mai multor coduri alternative pentru același produs, astfel încât acesta să poată fi găsit indiferent de codul cu care este cunoscut — cod de furnizor, cod de producător, cod vechi (legacy) sau identificator specific unui client. Este util companiilor care lucrează cu nomenclatoare provenite din surse multiple, unde același articol circulă sub denumiri sau coduri diferite.",
     "features": [
-      "Model nou `product_catelog` pentru baze mari de date master de produse.",
-      "Generarea automată a unui produs nou din catalog: dacă o căutare după cod nu returnează rezultate, se face o căutare suplimentară în catalogul de produse și se generează automat un produs, dacă a fost găsit.",
-      "Adăugarea de coduri alternative pe fișa produsului.",
-      "Căutarea produsului după codul alternativ.",
-      "Câmp nou pe produs („used for”) care indică pentru ce poate fi utilizat produsul.",
-      "Câmp `search_index` adăugat pe produs, în care se face căutarea dacă este setat parametrul `deltatech_alternative_website.search_index`."
+      "Tab dedicat Alternative pe fișa produsului, unde se pot adăuga oricâte coduri suplimentare, reordona (prin drag handle) și marca individual ca ascunse din afișarea combinată (`hide`).",
+      "Câmp calculat Alternative Code (concatenarea codurilor vizibile, separate prin „; ”), afișat în lista de produse și pe fișa produsului, în secțiunea de informații generale.",
+      "Extinderea căutării de produs (`name_search`) astfel încât introducerea unui cod alternativ să returneze produsul potrivit, atât pentru șabloane de produs cât și pentru variante. Căutarea este opțională (dezactivată implicit) și configurabilă din Setări.",
+      "Coloană opțională Alternative Code (needit, ascunsă implicit) pe liniile de Comandă de Vânzare, Comandă de Achiziție și Mișcare de Stoc — se activează din meniul coloanelor opționale al listei de linii.",
+      "Câmp text liber Used For pe produs, pentru a nota utilizarea acestuia (ajută la identificare și la vânzarea încrucișată).",
+      "Configurare din Setări > Inventar (secțiunea injectată după *Unități de Măsură*):",
+      "Alternative Search (`alternative.search_name`, implicit dezactivat) — activează scanarea codurilor alternative în căutarea de produse.",
+      "Alternative Limit (`alternative.limit`, implicit 10) — numărul maxim de rezultate suplimentare din căutarea după cod alternativ.",
+      "Minimum Length (`alternative.length_min`, implicit 3) — numărul minim de caractere introduse înainte ca această căutare să se declanșeze.",
+      "Cei trei parametri sunt salvați ca `ir.config_parameter` și pot fi editați și direct din Setări > Tehnic > Parametri > Parametri de Sistem."
     ],
     "dependencies": [
       "product",
@@ -502,8 +512,13 @@
       "sale",
       "purchase"
     ],
-    "connections": [],
-    "text": "Products Alternative\ndeltatech_alternative\nModulul extinde gestiunea produselor cu coduri alternative și cu un catalog de date master pentru produse. Permite asocierea mai multor coduri alternative pentru același produs, astfel încât căutarea după aceste coduri să identifice corect produsul în comenzi, achiziții și mișcări de stoc. În plus, dispune de un catalog amplu de produse din care, atunci când o căutare după cod nu returnează rezultate, se poate genera automat un produs nou. Modulul ajută companiile care lucrează cu nomenclatoare extinse sau cu coduri venite de la furnizori și clienți diferiți.\nModel nou `product_catelog` pentru baze mari de date master de produse.\nGenerarea automată a unui produs nou din catalog: dacă o căutare după cod nu returnează rezultate, se face o căutare suplimentară în catalogul de produse și se generează automat un produs, dacă a fost găsit.\nAdăugarea de coduri alternative pe fișa produsului.\nCăutarea produsului după codul alternativ.\nCâmp nou pe produs („used for”) care indică pentru ce poate fi utilizat produsul.\nCâmp `search_index` adăugat pe produs, în care se face căutarea dacă este setat parametrul `deltatech_alternative_website.search_index`."
+    "connections": [
+      "product",
+      "stock",
+      "sale",
+      "purchase"
+    ],
+    "text": "Products Alternative\ndeltatech_alternative\nModulul permite gestiunea mai multor coduri alternative pentru același produs, astfel încât acesta să poată fi găsit indiferent de codul cu care este cunoscut — cod de furnizor, cod de producător, cod vechi (legacy) sau identificator specific unui client. Este util companiilor care lucrează cu nomenclatoare provenite din surse multiple, unde același articol circulă sub denumiri sau coduri diferite.\nTab dedicat Alternative pe fișa produsului, unde se pot adăuga oricâte coduri suplimentare, reordona (prin drag handle) și marca individual ca ascunse din afișarea combinată (`hide`).\nCâmp calculat Alternative Code (concatenarea codurilor vizibile, separate prin „; ”), afișat în lista de produse și pe fișa produsului, în secțiunea de informații generale.\nExtinderea căutării de produs (`name_search`) astfel încât introducerea unui cod alternativ să returneze produsul potrivit, atât pentru șabloane de produs cât și pentru variante. Căutarea este opțională (dezactivată implicit) și configurabilă din Setări.\nColoană opțională Alternative Code (needit, ascunsă implicit) pe liniile de Comandă de Vânzare, Comandă de Achiziție și Mișcare de Stoc — se activează din meniul coloanelor opționale al listei de linii.\nCâmp text liber Used For pe produs, pentru a nota utilizarea acestuia (ajută la identificare și la vânzarea încrucișată).\nConfigurare din Setări > Inventar (secțiunea injectată după *Unități de Măsură*):\nAlternative Search (`alternative.search_name`, implicit dezactivat) — activează scanarea codurilor alternative în căutarea de produse.\nAlternative Limit (`alternative.limit`, implicit 10) — numărul maxim de rezultate suplimentare din căutarea după cod alternativ.\nMinimum Length (`alternative.length_min`, implicit 3) — numărul minim de caractere introduse înainte ca această căutare să se declanșeze.\nCei trei parametri sunt salvați ca `ir.config_parameter` și pot fi editați și direct din Setări > Tehnic > Parametri > Parametri de Sistem."
   },
   {
     "path": "deltatech_alternative_website/index.md",
@@ -3199,6 +3214,7 @@
       "Push automat al unui link către PDF-ul facturii din portalul Odoo (nu conținutul PDF-ului) când o factură legată de o comandă eMAG e validată, dacă backend-ul are activă bifa Enable Order Push Invoice ȘI Active On Write; cere ca `web.base.url` să fie public",
       "Plăți:",
       "Metodele de plată eMAG sunt mapate la payment provideri Odoo; metodele nerecunoscute cad pe Wire Transfer, ca o comandă să nu rămână fără metodă de plată",
+      "Fără borderou/decontare prin API: eMAG Marketplace API (v4.x) nu expune nicio resursă pentru raportul de decontare/comisioane — nu există `/settlement`, `/financial-report` sau echivalent. Borderoul de plăți se obține doar prin descărcare manuală (Excel/CSV) din panoul de vânzător eMAG (Financiar > Rapoarte); conectorul nu îl importă/reconciliază automat",
       "Operațiuni programate:",
       "Sincronizare în fundal prin job-uri cron și coada de job-uri comună",
       "Intervale de sincronizare configurabile; cron-ul de auto-pricing pe buy box vine dezactivat implicit"
@@ -3226,7 +3242,7 @@
       "l10n_ro_edi",
       "l10n_ro_edi_stock"
     ],
-    "text": "EMAG Marketplace Connector\ndeltatech_marketplace_emag\nUn cont de seller eMAG lângă Odoo, fără conector, înseamnă catalog, comenzi și stoc ținute manual în două locuri — și, spre deosebire de un magazin propriu, prețul afișat pe eMAG nu e neapărat cel pe care îl vede primul cumpărătorul: o ofertă mai bine clasată pe același produs câștigă butonul „Adaugă în coș\" (buy box). Modulul închide acest gol pentru piața din România specific: produsele, categoriile (cu caracteristicile lor obligatorii), comenzile și stocul circulă automat între Odoo și eMAG, adresele de livrare cu geografia românească (județe, localități, sectoarele Bucureștiului) se potrivesc automat cu identificatorii eMAG, iar etichetele AWB pentru curier se generează direct din Odoo. Conectorul se leagă de același framework comun (`deltatech_marketplace`) folosit și de conectorii Shopify, WooCommerce sau Magento, deci adăugarea eMAG lângă un canal deja folosit nu înseamnă învățarea unui al doilea sistem.\nSincronizare bidirecțională: produsele, comenzile și informațiile de livrare circulă automat între Odoo și eMAG; stocul se exportă periodic, la un interval configurabil, nu instantaneu la fiecare mișcare.\nGestiune produse:\nExport detalii produs, specificații și imagini către eMAG\nGestionarea variantelor de produs și a categoriilor (cu caracteristicile obligatorii/opționale importate odată cu fiecare categorie)\nConfigurarea atributelor de produs specifice eMAG\nCrearea automată a ofertelor de produs pe eMAG\nGestiune comenzi:\nImport comenzi din eMAG aflate în starea `NEW`, `IN_PROGRESS` sau `PREPARED` (filtru fix în cod, valabil și pe calea webhook) — comenzile `CANCELED`, `FINALIZED` sau `RETURNED` nu sunt aduse pe această cale\nCreare automată a comenzilor de vânzare în Odoo, cu județe, localități și sectoarele Bucureștiului mapate la geografia eMAG\nComenzile noi sunt confirmate automat înapoi la eMAG (`/order/acknowledge`) dacă bifa Active On Write e activă; NU există o sincronizare generică de status înapoi spre eMAG, în afara acestui acknowledge și a push-ului de factură\nO comandă deja importată care trece ulterior în `CANCELED` pe eMAG nu se anulează automat — necesită un Reimport manual pe acea comandă\nIntegrare stocuri:\nExport periodic, configurabil, al nivelurilor de stoc către eMAG (nu în timp real)\nActualizări automate de stoc pentru a preveni supravânzarea\nIntegrare livrare:\nSuport pentru metodele de livrare eMAG, inclusiv puncte easybox/locker\nGenerare AWB cu etichetă în format PDF (A4/A5/A6) și ZPL (imprimantă termică Zebra)\nIstoric al stării livrării, mapat din codurile de stare AWB ale eMAG\nImport al geografiei românești (localități, sectoare) printr-un pas manual, unic per backend — butonul Get city de pe metoda de livrare eMAG; nu se importă automat cu restul datelor și e obligatoriu înainte de primul AWB\nBuy Box Auto-Pricing:\nCron opțional, dezactivat implicit, care ajustează prețul unei oferte în funcție de rangul ei în buy box-ul eMAG, plafonat între Min sale price/Max sale price configurate pe produs\nAtenție: dacă Min/Max sale price rămân necompletate (0) pe un produs cu Auto Price activ și rang cunoscut, cron-ul nu sare produsul — trimite efectiv prețul 0 la eMAG; limitele trebuie completate ÎNAINTE de activarea Auto Price\nRe-ajustare limitată la un număr fix de pași per rulare, ca să nu ruleze necontrolat\nFacturare:\nPush automat al unui link către PDF-ul facturii din portalul Odoo (nu conținutul PDF-ului) când o factură legată de o comandă eMAG e validată, dacă backend-ul are activă bifa Enable Order Push Invoice ȘI Active On Write; cere ca `web.base.url` să fie public\nPlăți:\nMetodele de plată eMAG sunt mapate la payment provideri Odoo; metodele nerecunoscute cad pe Wire Transfer, ca o comandă să nu rămână fără metodă de plată\nOperațiuni programate:\nSincronizare în fundal prin job-uri cron și coada de job-uri comună\nIntervale de sincronizare configurabile; cron-ul de auto-pricing pe buy box vine dezactivat implicit"
+    "text": "EMAG Marketplace Connector\ndeltatech_marketplace_emag\nUn cont de seller eMAG lângă Odoo, fără conector, înseamnă catalog, comenzi și stoc ținute manual în două locuri — și, spre deosebire de un magazin propriu, prețul afișat pe eMAG nu e neapărat cel pe care îl vede primul cumpărătorul: o ofertă mai bine clasată pe același produs câștigă butonul „Adaugă în coș\" (buy box). Modulul închide acest gol pentru piața din România specific: produsele, categoriile (cu caracteristicile lor obligatorii), comenzile și stocul circulă automat între Odoo și eMAG, adresele de livrare cu geografia românească (județe, localități, sectoarele Bucureștiului) se potrivesc automat cu identificatorii eMAG, iar etichetele AWB pentru curier se generează direct din Odoo. Conectorul se leagă de același framework comun (`deltatech_marketplace`) folosit și de conectorii Shopify, WooCommerce sau Magento, deci adăugarea eMAG lângă un canal deja folosit nu înseamnă învățarea unui al doilea sistem.\nSincronizare bidirecțională: produsele, comenzile și informațiile de livrare circulă automat între Odoo și eMAG; stocul se exportă periodic, la un interval configurabil, nu instantaneu la fiecare mișcare.\nGestiune produse:\nExport detalii produs, specificații și imagini către eMAG\nGestionarea variantelor de produs și a categoriilor (cu caracteristicile obligatorii/opționale importate odată cu fiecare categorie)\nConfigurarea atributelor de produs specifice eMAG\nCrearea automată a ofertelor de produs pe eMAG\nGestiune comenzi:\nImport comenzi din eMAG aflate în starea `NEW`, `IN_PROGRESS` sau `PREPARED` (filtru fix în cod, valabil și pe calea webhook) — comenzile `CANCELED`, `FINALIZED` sau `RETURNED` nu sunt aduse pe această cale\nCreare automată a comenzilor de vânzare în Odoo, cu județe, localități și sectoarele Bucureștiului mapate la geografia eMAG\nComenzile noi sunt confirmate automat înapoi la eMAG (`/order/acknowledge`) dacă bifa Active On Write e activă; NU există o sincronizare generică de status înapoi spre eMAG, în afara acestui acknowledge și a push-ului de factură\nO comandă deja importată care trece ulterior în `CANCELED` pe eMAG nu se anulează automat — necesită un Reimport manual pe acea comandă\nIntegrare stocuri:\nExport periodic, configurabil, al nivelurilor de stoc către eMAG (nu în timp real)\nActualizări automate de stoc pentru a preveni supravânzarea\nIntegrare livrare:\nSuport pentru metodele de livrare eMAG, inclusiv puncte easybox/locker\nGenerare AWB cu etichetă în format PDF (A4/A5/A6) și ZPL (imprimantă termică Zebra)\nIstoric al stării livrării, mapat din codurile de stare AWB ale eMAG\nImport al geografiei românești (localități, sectoare) printr-un pas manual, unic per backend — butonul Get city de pe metoda de livrare eMAG; nu se importă automat cu restul datelor și e obligatoriu înainte de primul AWB\nBuy Box Auto-Pricing:\nCron opțional, dezactivat implicit, care ajustează prețul unei oferte în funcție de rangul ei în buy box-ul eMAG, plafonat între Min sale price/Max sale price configurate pe produs\nAtenție: dacă Min/Max sale price rămân necompletate (0) pe un produs cu Auto Price activ și rang cunoscut, cron-ul nu sare produsul — trimite efectiv prețul 0 la eMAG; limitele trebuie completate ÎNAINTE de activarea Auto Price\nRe-ajustare limitată la un număr fix de pași per rulare, ca să nu ruleze necontrolat\nFacturare:\nPush automat al unui link către PDF-ul facturii din portalul Odoo (nu conținutul PDF-ului) când o factură legată de o comandă eMAG e validată, dacă backend-ul are activă bifa Enable Order Push Invoice ȘI Active On Write; cere ca `web.base.url` să fie public\nPlăți:\nMetodele de plată eMAG sunt mapate la payment provideri Odoo; metodele nerecunoscute cad pe Wire Transfer, ca o comandă să nu rămână fără metodă de plată\nFără borderou/decontare prin API: eMAG Marketplace API (v4.x) nu expune nicio resursă pentru raportul de decontare/comisioane — nu există `/settlement`, `/financial-report` sau echivalent. Borderoul de plăți se obține doar prin descărcare manuală (Excel/CSV) din panoul de vânzător eMAG (Financiar > Rapoarte); conectorul nu îl importă/reconciliază automat\nOperațiuni programate:\nSincronizare în fundal prin job-uri cron și coada de job-uri comună\nIntervale de sincronizare configurabile; cron-ul de auto-pricing pe buy box vine dezactivat implicit"
   },
   {
     "path": "deltatech_marketplace_extended/index.md",
@@ -5124,7 +5140,7 @@
     "version": "19.0.1.0.0",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_product_brand",
     "local_path": "odoo-addons/bitshop/deltatech_product_brand",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-09-03",
     "friendly_name": "deltatech_product_brand",
     "summary": "Acest modul oferă un sistem robust și centralizat de gestionare a mărcilor de produse în Odoo, ajutând companiile să-și organizeze și să-și categorisească întregul catalog de produse în funcție de marcă. Din perspectivă de business, această extensie este esențială pentru menținerea unei baze de date de produse structurate și ușor de căutat, ceea ce conduce la îmbunătățirea performanței de marketing și vânzări.",
     "features": [
@@ -5678,14 +5694,20 @@
     "version": "19.0.1.0.1",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_purchase_price_compare`",
     "local_path": "odoo-addons/bitshop/deltatech_purchase_price_compare",
-    "last_ingest": "2026-07-31",
+    "last_ingest": "2026-09-03",
     "friendly_name": "Supplier Price Comparison",
     "summary": "Modulul adaugă pe comanda de achiziție (`purchase.order`) un buton „Compare supplier prices\" care deschide un dialog de comparare a prețurilor tuturor furnizorilor definiți pentru produsele din comandă (`product.supplierinfo`). Din punct de vedere al afacerii, ajută echipa de achiziții să cumpere la cel mai bun preț și, mai important, să sesizeze din timp situațiile în care prețul de pe comandă nu mai corespunde tarifului curent al furnizorului — înainte ca o comandă cu preț greșit să fie plasată.",
     "features": [
       "Comparație unul-lângă-altul a tuturor furnizorilor unui produs, cu prețul convertit în moneda și UM-ul comenzii (selecția respectă logica standard Odoo: companie, valabilitate, cantitate minimă, discount).",
       "Evidențierea celui mai mic preț, cu economia calculată pe linie și pe total.",
       "Detectarea prețurilor „derapate\" — pentru furnizorul comenzii se afișează tariful curent, iar liniile la care prețul comenzii diferă de tariful actual al furnizorului sunt marcate.",
-      "Aplicare rapidă — scrie prețul ales înapoi pe liniile comenzii și, dacă toate liniile converg către un singur furnizor, actualizează și furnizorul comenzii."
+      "Aplicare rapidă — scrie prețul ales înapoi pe liniile comenzii și, dacă toate liniile converg către un singur furnizor, actualizează și furnizorul comenzii.",
+      "Acces din `Purchase → Orders`, prin butonul „Compare supplier prices\" din antetul comenzii de achiziție.",
+      "În grid, furnizorii apar ca și coloane; un clic pe o celulă selectează furnizorul respectiv pentru linie, iar furnizorul curent al comenzii este mereu vizibil, marcat cu eticheta „order\".",
+      "Liniile ale căror preț de pe comandă diferă de tariful curent al furnizorului sunt evidențiate, cu un banner de avertizare în partea de sus care numără liniile afectate.",
+      "KPI-urile din dialog arată suma curentă a comenzii, suma optimizată (dacă s-ar aplica prețurile alese) și economia estimată.",
+      "Butonul „Apply selected prices to the order\" scrie prețurile alese pe liniile comenzii și actualizează furnizorul comenzii dacă toate liniile converg spre același furnizor.",
+      "Conversie automată monedă/UM: prețul din `product.supplierinfo` (exprimat în moneda și UM-ul furnizorului) este convertit în moneda comenzii (la data `date_order`) și în UM-ul liniei înainte de comparație."
     ],
     "dependencies": [
       "purchase"
@@ -5693,7 +5715,7 @@
     "connections": [
       "purchase"
     ],
-    "text": "Supplier Price Comparison\ndeltatech_purchase_price_compare\nModulul adaugă pe comanda de achiziție (`purchase.order`) un buton „Compare supplier prices\" care deschide un dialog de comparare a prețurilor tuturor furnizorilor definiți pentru produsele din comandă (`product.supplierinfo`). Din punct de vedere al afacerii, ajută echipa de achiziții să cumpere la cel mai bun preț și, mai important, să sesizeze din timp situațiile în care prețul de pe comandă nu mai corespunde tarifului curent al furnizorului — înainte ca o comandă cu preț greșit să fie plasată.\nComparație unul-lângă-altul a tuturor furnizorilor unui produs, cu prețul convertit în moneda și UM-ul comenzii (selecția respectă logica standard Odoo: companie, valabilitate, cantitate minimă, discount).\nEvidențierea celui mai mic preț, cu economia calculată pe linie și pe total.\nDetectarea prețurilor „derapate\" — pentru furnizorul comenzii se afișează tariful curent, iar liniile la care prețul comenzii diferă de tariful actual al furnizorului sunt marcate.\nAplicare rapidă — scrie prețul ales înapoi pe liniile comenzii și, dacă toate liniile converg către un singur furnizor, actualizează și furnizorul comenzii."
+    "text": "Supplier Price Comparison\ndeltatech_purchase_price_compare\nModulul adaugă pe comanda de achiziție (`purchase.order`) un buton „Compare supplier prices\" care deschide un dialog de comparare a prețurilor tuturor furnizorilor definiți pentru produsele din comandă (`product.supplierinfo`). Din punct de vedere al afacerii, ajută echipa de achiziții să cumpere la cel mai bun preț și, mai important, să sesizeze din timp situațiile în care prețul de pe comandă nu mai corespunde tarifului curent al furnizorului — înainte ca o comandă cu preț greșit să fie plasată.\nComparație unul-lângă-altul a tuturor furnizorilor unui produs, cu prețul convertit în moneda și UM-ul comenzii (selecția respectă logica standard Odoo: companie, valabilitate, cantitate minimă, discount).\nEvidențierea celui mai mic preț, cu economia calculată pe linie și pe total.\nDetectarea prețurilor „derapate\" — pentru furnizorul comenzii se afișează tariful curent, iar liniile la care prețul comenzii diferă de tariful actual al furnizorului sunt marcate.\nAplicare rapidă — scrie prețul ales înapoi pe liniile comenzii și, dacă toate liniile converg către un singur furnizor, actualizează și furnizorul comenzii.\nAcces din `Purchase → Orders`, prin butonul „Compare supplier prices\" din antetul comenzii de achiziție.\nÎn grid, furnizorii apar ca și coloane; un clic pe o celulă selectează furnizorul respectiv pentru linie, iar furnizorul curent al comenzii este mereu vizibil, marcat cu eticheta „order\".\nLiniile ale căror preț de pe comandă diferă de tariful curent al furnizorului sunt evidențiate, cu un banner de avertizare în partea de sus care numără liniile afectate.\nKPI-urile din dialog arată suma curentă a comenzii, suma optimizată (dacă s-ar aplica prețurile alese) și economia estimată.\nButonul „Apply selected prices to the order\" scrie prețurile alese pe liniile comenzii și actualizează furnizorul comenzii dacă toate liniile converg spre același furnizor.\nConversie automată monedă/UM: prețul din `product.supplierinfo` (exprimat în moneda și UM-ul furnizorului) este convertit în moneda comenzii (la data `date_order`) și în UM-ul liniei înainte de comparație."
   },
   {
     "path": "deltatech_purchase_stock/index.md",
@@ -7673,18 +7695,19 @@
     "version": "19.0.2.0.7",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_negative`",
     "local_path": "odoo-addons/deltatech/deltatech_stock_negative",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-09-03",
     "friendly_name": "Fără Stoc Negativ",
     "summary": "Acest modul împiedică apariția stocurilor negative în locațiile interne ale companiei. Atunci când validarea unei operațiuni de stoc ar lăsa o cantitate fizică mai mică decât zero într-o locație, sistemul oprește operațiunea și afișează un mesaj de eroare, solicitând utilizatorului să corecteze cantitățile sau să realizeze o ajustare de inventar. Pentru situațiile excepționale, modulul permite configurarea anumitor locații în care stocul negativ este totuși acceptat, oferind astfel un control flexibil asupra disciplinei de stoc.",
     "features": [
       "Interzice stocul negativ pentru locațiile interne.",
-      "Permite stoc negativ la anumite locații configurate explicit."
+      "Opțiunea globală se activează din `Inventar → Configurare → Setări → Trasabilitate → Stoc negativ` (bifa „Fără stoc negativ”, câmpul `no_negative_stock` de pe companie).",
+      "Excepțiile per-locație se configurează din `Inventar → Configurare → Locații`, pe formularul fiecărei locații de stoc, bifând opțiunea care permite stoc negativ (`allow_negative_stock`) — util pentru locații virtuale/de tranzit sau alte cazuri unde blocarea nu trebuie aplicată."
     ],
     "dependencies": [
       "stock"
     ],
     "connections": [],
-    "text": "Fără Stoc Negativ\ndeltatech_stock_negative\nAcest modul împiedică apariția stocurilor negative în locațiile interne ale companiei. Atunci când validarea unei operațiuni de stoc ar lăsa o cantitate fizică mai mică decât zero într-o locație, sistemul oprește operațiunea și afișează un mesaj de eroare, solicitând utilizatorului să corecteze cantitățile sau să realizeze o ajustare de inventar. Pentru situațiile excepționale, modulul permite configurarea anumitor locații în care stocul negativ este totuși acceptat, oferind astfel un control flexibil asupra disciplinei de stoc.\nInterzice stocul negativ pentru locațiile interne.\nPermite stoc negativ la anumite locații configurate explicit."
+    "text": "Fără Stoc Negativ\ndeltatech_stock_negative\nAcest modul împiedică apariția stocurilor negative în locațiile interne ale companiei. Atunci când validarea unei operațiuni de stoc ar lăsa o cantitate fizică mai mică decât zero într-o locație, sistemul oprește operațiunea și afișează un mesaj de eroare, solicitând utilizatorului să corecteze cantitățile sau să realizeze o ajustare de inventar. Pentru situațiile excepționale, modulul permite configurarea anumitor locații în care stocul negativ este totuși acceptat, oferind astfel un control flexibil asupra disciplinei de stoc.\nInterzice stocul negativ pentru locațiile interne.\nOpțiunea globală se activează din `Inventar → Configurare → Setări → Trasabilitate → Stoc negativ` (bifa „Fără stoc negativ”, câmpul `no_negative_stock` de pe companie).\nExcepțiile per-locație se configurează din `Inventar → Configurare → Locații`, pe formularul fiecărei locații de stoc, bifând opțiunea care permite stoc negativ (`allow_negative_stock`) — util pentru locații virtuale/de tranzit sau alte cazuri unde blocarea nu trebuie aplicată."
   },
   {
     "path": "deltatech_stock_picking_activity_report/index.md",
@@ -12424,11 +12447,28 @@
     "local_path": "odoo-addons/bitshop/terrabit_facebook_pixel",
     "last_ingest": null,
     "friendly_name": "Terrabit Facebook Pixel",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Terrabit Facebook Pixel\nterrabit_facebook_pixel"
+    "summary": "Integrare Meta (Facebook) Pixel și Conversion API (CAPI) pentru website-ul Odoo 19, pentru urmărirea acțiunilor vizitatorilor și optimizarea campaniilor publicitare cu acuratețe ridicată a datelor. Combină tracking-ul client-side din browser (Pixel) cu evenimente server-side (CAPI), depășind limitările AdBlocker-elor și ale browserelor. Se bazează pe modulul de fundație `terrabit_website_sale_tracking_base` pentru evenimentele de frontend.",
+    "features": [
+      "Tracking hibrid (Pixel + CAPI): evenimente client-side combinate cu evenimente server-side pentru acuratețe maximă.",
+      "Advanced Matching: trimite date de utilizator hash-uite SHA-256 (email, telefon) pentru a crește rata de potrivire (Event Match Quality).",
+      "Identificare produs centralizată: dropdown-ul `Item ID Type` global oferă trei opțiuni pentru potrivirea cu Catalogul Meta — Product Variant ID (implicit, ID-ul variantei), Product Template ID (ID-ul produsului template) sau Internal Reference SKU (`default_code`, cu fallback pe ID dacă produsul nu are SKU).",
+      "Exclude Delivery: comutator care, activat, scade costul de livrare din parametrul `value` trimis către Facebook, astfel încât valoarea de conversie raportată să reflecte doar produsele.",
+      "Evenimente standard: `PageView`, `ViewContent`, `AddToCart`, `RemoveFromCart`, `Search`, `InitiateCheckout`, `AddPaymentInfo`, `Purchase`, `CompleteRegistration`, `Login`, `AddToWishlist`, plus lead-uri (`Contact`, `Lead`).",
+      "Lead generation: urmărește clicurile pe numere de telefon (`tel:`) și trimiterile de formulare (ex. pagina de contact); CAPI pentru lead-uri noi create în CRM.",
+      "CAPI asincron: evenimentele server-side se trimit în thread-uri de fundal, fără impact asupra performanței site-ului.",
+      "Configurare: din Website > Configuration > Settings, secțiunea *Google Analytics* — se bifează „Facebook Pixel\" și se completează Pixel ID și tokenul Conversion API; opțiunile `Item ID Type` și `Exclude Delivery` se găsesc în aceleași setări de tracking global, sub secțiunea *SEO*.",
+      "Verificare: evenimentele Pixel se verifică cu extensia Chrome „Meta Pixel Helper\", iar sosirea evenimentelor CAPI se confirmă în Events Manager din Meta Business Suite."
+    ],
+    "dependencies": [
+      "website_sale",
+      "terrabit_website_sale_tracking_base",
+      "crm"
+    ],
+    "connections": [
+      "terrabit_website_sale_tracking_base",
+      "terrabit_tiktok_pixel"
+    ],
+    "text": "Terrabit Facebook Pixel\nterrabit_facebook_pixel\nIntegrare Meta (Facebook) Pixel și Conversion API (CAPI) pentru website-ul Odoo 19, pentru urmărirea acțiunilor vizitatorilor și optimizarea campaniilor publicitare cu acuratețe ridicată a datelor. Combină tracking-ul client-side din browser (Pixel) cu evenimente server-side (CAPI), depășind limitările AdBlocker-elor și ale browserelor. Se bazează pe modulul de fundație `terrabit_website_sale_tracking_base` pentru evenimentele de frontend.\nTracking hibrid (Pixel + CAPI): evenimente client-side combinate cu evenimente server-side pentru acuratețe maximă.\nAdvanced Matching: trimite date de utilizator hash-uite SHA-256 (email, telefon) pentru a crește rata de potrivire (Event Match Quality).\nIdentificare produs centralizată: dropdown-ul `Item ID Type` global oferă trei opțiuni pentru potrivirea cu Catalogul Meta — Product Variant ID (implicit, ID-ul variantei), Product Template ID (ID-ul produsului template) sau Internal Reference SKU (`default_code`, cu fallback pe ID dacă produsul nu are SKU).\nExclude Delivery: comutator care, activat, scade costul de livrare din parametrul `value` trimis către Facebook, astfel încât valoarea de conversie raportată să reflecte doar produsele.\nEvenimente standard: `PageView`, `ViewContent`, `AddToCart`, `RemoveFromCart`, `Search`, `InitiateCheckout`, `AddPaymentInfo`, `Purchase`, `CompleteRegistration`, `Login`, `AddToWishlist`, plus lead-uri (`Contact`, `Lead`).\nLead generation: urmărește clicurile pe numere de telefon (`tel:`) și trimiterile de formulare (ex. pagina de contact); CAPI pentru lead-uri noi create în CRM.\nCAPI asincron: evenimentele server-side se trimit în thread-uri de fundal, fără impact asupra performanței site-ului.\nConfigurare: din Website > Configuration > Settings, secțiunea *Google Analytics* — se bifează „Facebook Pixel\" și se completează Pixel ID și tokenul Conversion API; opțiunile `Item ID Type` și `Exclude Delivery` se găsesc în aceleași setări de tracking global, sub secțiunea *SEO*.\nVerificare: evenimentele Pixel se verifică cu extensia Chrome „Meta Pixel Helper\", iar sosirea evenimentelor CAPI se confirmă în Events Manager din Meta Business Suite."
   },
   {
     "path": "terrabit_google_tag/index.md",

@@ -4,6 +4,19 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-03] Lot de test — audit USAGE.md ca sursă secundară (6 module), în urma noii reguli din schema.md
+
+- **Acțiune:** Prim lot de verificare/re-ingestie pentru regula nou adăugată în `schema.md` (USAGE.md/CONFIGURE.md ca sursă secundară pentru „Funcționalități Cheie"). Un audit prealabil pe cele 189 module locale cu `readme/USAGE.md` a găsit 46 cu pagină wiki dar fără fișă consultant — candidați la gol; scorul de acoperire cuvinte-cheie (USAGE vs. secțiunea 2 din wiki) a plasat majoritatea sub 20%. S-a ales un lot de 6 pentru validare înainte de a continua cu restul.
+- **Module procesate în paralel** (agent `documentarist-wiki`, câte un subagent per modul): `deltatech_product_brand`, `deltatech_purchase_price_compare`, `deltatech_stock_negative`, `terrabit_facebook_pixel`, `deltatech_agreement_management`, `deltatech_alternative`.
+- **Rezultat pe modul:**
+  - `deltatech_product_brand`, `deltatech_purchase_price_compare`: pagina era deja alineată cu USAGE.md (fals-pozitive ale scorului de acoperire, care măsoară cuvinte identice, nu conținut echivalent) — doar data de ingestie actualizată.
+  - `deltatech_stock_negative`: gol real, completat — cele două căi de meniu (`Inventar → Configurare → Setări`, opțiunea globală; `Inventar → Configurare → Locații`, excepția per-locație).
+  - `terrabit_facebook_pixel`: gol real, completat — calea de meniu, cele trei valori ale `Item ID Type`, comutatorul `Exclude Delivery`; corectat și un defect separat (titlurile secțiunilor foloseau `##` în loc de `####`, contrar schema.md).
+  - `deltatech_agreement_management`: gol real, completat — fluxul de tranziții de stare, butoanele din UI, cele două grupuri de securitate.
+  - `deltatech_alternative`: **pagina descria funcționalități inexistente** — un model `product_catelog` (catalog master) și generare automată de produs la căutare eșuată, plus un câmp `search_index`; nimic din acestea nu mai există în manifestul `19.0.2.1.1` sau în cod. Rescrisă complet pe baza codului real (`product.alternative`, coloană opțională pe SO/PO/mișcări de stoc, trei parametri de configurare în Setări). Actualizată și linia din `index.md`.
+- **Concluzie pentru restul lotului de 46:** scorul de acoperire cuvinte-cheie e un semnal util dar cu fals-pozitive (2 din 6 în acest lot) — fiecare modul rămas trebuie verificat individual, nu reingerat mecanic.
+- **Fișiere actualizate:** `deltatech_product_brand/index.md`, `deltatech_purchase_price_compare/index.md`, `deltatech_stock_negative/index.md`, `terrabit_facebook_pixel/index.md`, `deltatech_agreement_management/index.md`, `deltatech_alternative/index.md`, `index.md` (o linie), `log.md`.
+
 ## [2026-09-03] Re-ingestie `deltatech_saga` — fișă consultant nouă, readme rescris, coduri SAGA de la o bază existentă (PR bitshop#2794)
 
 - **Acțiune:** Resincronizarea paginii după PR terrabit-solutions/bitshop#2794 (mergeuit pe `19.0`), care adaugă modulului o fișă consultant completă (inexistentă anterior) și corectează fragmentele readme, care descriau greșit fluxul de export.

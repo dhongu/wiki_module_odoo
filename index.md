@@ -22,7 +22,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_advanced_planner](deltatech_advanced_planner/index.md): Planificator avansat de stoc cu backward scheduling, capacitate finită (RCCP/CRP) și validare automată a datei de livrare, integrat în vânzări/producție/achiziții.
 - [deltatech_agreement_management](deltatech_agreement_management/index.md): Gestionarea acordurilor (număr, dată, stare) cu tipuri configurabile, secvențe de numerotare și șabloane de raport.
 - [deltatech_ai_anthropic](deltatech_ai_anthropic/index.md): Adaugă Anthropic (Claude) ca furnizor LLM în framework-ul nativ de AI al Odoo, cu suport pentru tool use pe agenți, câmpuri și acțiuni AI.
-- [deltatech_alternative](deltatech_alternative/index.md): Coduri alternative pentru produse și catalog master cu generare automată de produse.
+- [deltatech_alternative](deltatech_alternative/index.md): Coduri alternative multiple pe produs (furnizor, producător, cod vechi, client), căutabile și afișate opțional pe comenzi și mișcări de stoc.
 - [deltatech_alternative_website](deltatech_alternative_website/index.md): Permite căutarea produselor în magazinul online după codul alternativ (echivalent) al produsului.
 - [deltatech_analytic_distribution](deltatech_analytic_distribution/index.md): Impune completarea integrală a distribuției analitice (Locație, Departament, Linie de business) și însumarea la 100% pe liniile facturilor de furnizori.
 - [deltatech_auto_reorder_rule](deltatech_auto_reorder_rule/index.md): Creează automat reguli de reaprovizionare cu valori implicite pentru produse noi și în masă pentru cele existente.
