@@ -1,10 +1,11 @@
 # Retururi POS (RO) — factură de retur și registrul de casă
 
 - **Nume Tehnic:** `l10n_ro_pos_returns`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_returns](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_returns)
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_pos_returns`
-- **Ultima Ingestie:** `2026-08-31`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
+- **Ultima Ingestie:** `2026-09-04`
 
 #### 1. Sumar
 

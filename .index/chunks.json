@@ -11615,10 +11615,10 @@
   {
     "path": "l10n_ro_pos_returns/index.md",
     "module": "l10n_ro_pos_returns",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.1.1",
     "github": "[https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_returns](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_returns)",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_pos_returns",
-    "last_ingest": "2026-08-31",
+    "last_ingest": "2026-09-04",
     "friendly_name": "l10n_ro_pos_returns",
     "summary": "Modulul tratează returul din comerțul cu amănuntul așa cum îl cere legislația română, pe două laturi care nu au sens una fără alta. Prima: la fiecare bon de retur se emite **factura de retur (storno)**, documentul pe care normele îl cer pentru ajustarea bazei de impozitare a TVA — vânzarea la casa de marcat e scutită de factură, dar scutirea nu se extinde la retur, iar fără acel document contabilul nu are pe ce să diminueze TVA-ul colectat. A doua: **restituirile de numerar apar pe rândul de plăți al registrului de casă**, nu netate în încasarea zilei, cum le scrie Odoo implicit. Modulul a pornit din tichetul #9362 (client Damira), unde 870 de retururi din doi ani și jumătate nu aveau niciun document fiscal, iar în registrul de casă restituirile erau invizibile.",
     "features": [

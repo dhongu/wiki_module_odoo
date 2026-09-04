@@ -4,6 +4,17 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-04] Fișă consultant cu capturi pentru `l10n_ro_pos_returns` (tichet #9362, Damira)
+
+- **Acțiune:** Adăugată fișa consultant a modulului de retururi POS, cu opt capturi de ecran, și legată din pagina modulului. Fișa e destinată **și clientului**, nu doar consultantului — Damira a cerut explicit „de unde anume pot genera acest raport", iar linkul public către wiki e răspunsul.
+- **Sursă:** `odoo-addons/l10n_ro_ent/l10n_ro_pos_returns/readme/` — fișa scrisă din `DESCRIPTION.md`/`USAGE.md`/`CONFIGURE.md` plus citirea codului; capturile generate din `tests/test_screenshots.py` (mixinul `ScreenshotCase`), în RO, pe bază curată. Livrate în PR terrabit-solutions/l10n_ro_ent#137.
+- **Ce a scos la iveală generarea capturilor** (defecte reale de produs, nu de captură): 12 texte netraduse în `l10n_ro_pos_returns` și 23 în `l10n_ro_cash_bank_enhanced` — printre ele toate ajutoarele din ecranele de setări și motivul restituirii tipărit pe dispoziția de plată. La modulul de casierie traducerea *exista*, dar msgid-ul se schimbase în cod, deci rămăsese orfană — același tipar ca la `l10n_ro_invoice_report` pe 03.09.
+- **Corecții după auditul fișei** (agent `verificator-fisa`): temeiul legal completat cu art. 287 lit. b) și art. 330 alin. (2); echivalența notă de credit ↔ factură „cu semnul minus" spusă explicit; poziția privind declarațiile rectificative prezentată ca poziție asumată, nu ca certitudine; cazul returului aferent exercițiului precedent (418/408, OMFP 1802/2014 pct. 330); calea reală a registrului de casă (sub Raportare, în `l10n_ro_cash_register_report`); avertisment că obligativitatea clientului la retur acționează **independent** de facturarea automată — combinația implicită blochează retururile fără să emită nimic.
+- **Rest deschis:** pasul „Returul la casă" nu are captură — ecranul de plată POS e o aplicație OWL separată, greu de capturat automat. Singurul pas din flux fără imagine.
+- **Fișiere actualizate:** `l10n_ro_pos_returns/FISA_CONSULTANT.md` (nou), `l10n_ro_pos_returns/screenshots/` (8 fișiere noi), `l10n_ro_pos_returns/index.md` (link fișă + versiune 19.0.1.1.1), `log.md`, `.index/`.
+
+---
+
 ## [2026-09-03] Ingestie 5 module de curierat cu pagină lipsă — Postis, Postis Locker, Innoship, Delivery Portal, eMAG Delivery
 
 - **Acțiune:** La cererea utilizatorului, verificarea suitei de curierat (`odoo-addons/bitshop_delivery`) a arătat că majoritatea transportatorilor (FAN, Cargus, Sameday, DPD, GLS, TNT etc.) nu au `readme/USAGE.md` — nu sunt candidați pentru regula nouă (USAGE ca sursă secundară) —, dar 5 module aveau o problemă mai gravă: pagină wiki lipsă complet, deși 3 dintre ele au `USAGE.md`/`CONFIGURE.md` complete. Ingerate în paralel (5 subagenți `documentarist-wiki`), pagini noi:
