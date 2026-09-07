@@ -23,9 +23,12 @@ gestionarea livrărilor (`stock_delivery`).
 Declarația statistică Intrastat este obligatorie pentru operatorii care depășesc pragurile
 anuale de expediere/sosire de bunuri în relația intra-UE, conform **Regulamentului (UE)
 2019/2152** și normelor metodologice INS (Legea 422/2006 privind organizarea statisticii
-Intrastat). Pragurile sunt stabilite anual de INS (valori 2025 livrate ca implicite:
-**1.000.000 RON expedieri / 900.000 RON sosiri**). Declarația se depune lunar, până în jurul
-datei de 15 a lunii următoare, pe portalul INS (https://intrastat.ro).
+Intrastat). Pragurile sunt stabilite **anual** de INS printr-o decizie proprie — modulul
+livrează doar niște **valori implicite** (**1.000.000 RON expedieri / 900.000 RON sosiri**),
+care trebuie confirmate/actualizate manual în Setări la fiecare an, pe baza deciziei INS
+în vigoare (verificați anul curent pe https://intrastat.ro înainte de a vă baza pe ele).
+Declarația se depune lunar, **până la data de 15 a lunii următoare lunii de referință**, pe
+portalul INS (https://intrastat.ro).
 
 > Intrastat este o raportare **statistică**, nu fiscală — modulul nu generează note contabile.
 
@@ -65,31 +68,36 @@ facturi de vânzare/achiziție intra-UE postate în luna declarată.
 
 ## 6. Flux de utilizare
 
-### Pasul 1 — Verificarea pragului anual
+### Pasul 1 — Statusul pragului, direct în raportul Intrastat
 
-Accesați **Contabilitate → Raportare → Intrastat → Verificare Prag Intrastat**. Alegeți anul
-și apăsați **Verifică**. **Găsiți pe ecran**, pe ambele direcții (expedieri și sosiri):
-volumul calculat (RON), pragul INS configurat, procentul atins și starea — **Sub prag** /
-**Atenție** / **Depășit** / **Declarat obligatoriu**. Volumul se calculează din facturile și
-stornările postate către parteneri UE (exclus România) ale căror produse au cod Intrastat,
-convertite în RON.
+Accesați **Contabilitate → Raportare → Intrastat**. Dacă firma este românească, în **antetul
+raportului** apare automat un **banner de alertă** — fără niciun click suplimentar — cu, pe
+ambele direcții (expedieri și sosiri): volumul calculat (RON, pe anul perioadei deschise),
+pragul INS configurat, procentul atins și starea — **sub prag** (verde) / **atenție**
+(portocaliu) / **depășit** (roșu) / **declarat obligatoriu** (albastru). Volumul se calculează
+din facturile și stornările postate către parteneri UE (exclus România) ale căror produse au
+cod Intrastat, convertite în RON.
 
-**Verificați**: dacă o direcție arată **Depășit** sau **Atenție**, firma trebuie să declare
-Intrastat pentru acea direcție; bifați „Declarat obligatoriu" în setări dacă nu e deja.
+**Găsiți pe ecran**: banner-ul colorat, imediat sub filtrele raportului (fără să fie nevoie să
+deschideți vreun wizard sau meniu separat).
 
-![Wizardul de verificare a pragului, cu volum, prag, procent și stare](screenshots/02_verificare_prag.png)
+**Verificați**: dacă o direcție arată **depășit** sau **atenție**, firma trebuie să declare
+Intrastat pentru acea direcție; bifați „Declarat obligatoriu" în setări dacă nu e deja (secțiunea
+5 de mai sus).
+
+![Raportul Intrastat, cu banner-ul de status prag vizibil în antet](screenshots/02_raport_prag_banner.png)
+
+> Acțiunea tehnică `action_l10n_ro_intrastat_check` (fostul wizard „Verificare Prag Intrastat")
+> rămâne disponibilă ca acces secundar, fără meniu propriu — utilă pentru un recalcul punctual
+> pe un an anume, în afara raportului.
 
 ### Pasul 2 — Raportul Intrastat și verificarea erorilor (înainte de export)
 
-Deschideți **Contabilitate → Raportare → Intrastat** (raportul standard Enterprise), cu luna
-și filtrele de declarație (mod normal/extins, direcție). Acesta este punctul din care se
-lansează verificarea erorilor și exportul XML pentru INS.
-
-> **Notă (stare curentă):** butoanele **XML** și **Verificare INS** adăugate de modul nu apar
-> momentan în bara de instrumente a raportului în Odoo 19 — un regres legat de separarea
-> handler-elor `goods`/`services` în O19 (vezi secțiunea de mai jos „Ce e automat / manual" și
-> `readme/ROADMAP` / TODO suită). Verificarea și exportul **funcționează la nivel de cod**
-> (acoperite de teste), urmează re-expunerea lor în toolbar.
+Deschideți **Contabilitate (sau Facturare, în funcție de ediție) → Raportare → Intrastat**
+(raportul standard Enterprise), cu luna și filtrele de declarație (mod normal/extins,
+direcție). Bara de instrumente a raportului (pentru companii RO) conține, pe lângă
+**PDF**/**XLSX**: butoanele **XML** și **Verificare INS** adăugate de modul — acesta este
+punctul din care se lansează verificarea erorilor și exportul XML pentru INS.
 
 **Verificarea erorilor INS** rulează exact aceeași interogare ca exportul și listează liniile
 cu câmpuri obligatorii lipsă — **cod NC8**, valoare, masă netă/unități suplimentare, natura
@@ -99,7 +107,7 @@ transport/regiune (la declarația extinsă). Acestea sunt cauzele tipice de resp
 **Verificați**: lista de erori e goală (sau corectați produsele/partenerii semnalați și
 reverificați) **înainte** de a genera fișierul.
 
-![Raportul Intrastat (luna și filtrele de declarație)](screenshots/03_raport_intrastat.png)
+![Raportul Intrastat, cu butoanele XML și Verificare INS](screenshots/03_raport_intrastat.png)
 
 ![Lista erorilor INS — câmpuri obligatorii lipsă](screenshots/04_erori_ins.png)
 
@@ -113,13 +121,28 @@ companiei în forma cerută de INS — și o descarcă, gata de încărcat pe po
 > Validări aplicate la export: o singură lună și o singură direcție per fișier; altfel exportul
 > e refuzat cu mesaj explicit.
 
+### Pasul 4 — Reconciliere cu D390 (opțional, dacă `l10n_ro_anaf_d390` e instalat)
+
+Dacă suita include modulul D390, în bara de instrumente a raportului Intrastat apare și
+butonul **Reconciliere D390**. Apăsarea lui compară, pentru aceeași perioadă, valoarea
+bunurilor din Intrastat cu declarația recapitulativă D390: **sosiri Intrastat ↔ achiziții
+intracomunitare de bunuri D390 (cod „A")** și **expedieri Intrastat ↔ livrări + operațiuni
+triunghiulare D390 (coduri „L"+„T")**. Fereastra afișează cele două valori, diferența absolută
+și procentuală, plus un status: **Concordant** / **Diferență minoră** (sub 5%) / **De
+verificat** (peste 5%).
+
+**Verificați**: un status „De verificat" merită investigat înainte de depunere — diferențe mici
+sunt normale (Intrastat urmărește mișcarea fizică a bunurilor, D390 baza facturii), dar una mare
+poate semnala o linie omisă sau clasificată greșit.
+
 ### Note de monografie și raportare
 
 Modulul **nu generează note contabile** (niciun Dr/Cr) — Intrastat e raportare statistică.
 Sursa de date este raportul Intrastat (facturi intra-UE postate). Remindere automate: o
-acțiune programată lunară creează activități de avertizare la atingerea procentului de alertă
-/ depășirea pragului (o singură activitate per direcție pe an) și un reminder de depunere
-înainte de 15 ale lunii, cu link către portalul INS.
+acțiune programată lunară creează, per direcție, o singură **activitate de avertizare deschisă**
+(nu se dublează cât timp cea anterioară nu a fost închisă manual — dedup-ul nu ține cont de an)
+la atingerea procentului de alertă/depășirea pragului, plus o **activitate reminder de
+depunere** înainte de data de 15 a lunii, recreată la fiecare rulare lunară a cron-ului.
 
 ## 7. Legături cu alte module / declarații
 
@@ -128,6 +151,7 @@ acțiune programată lunară creează activități de avertizare la atingerea pr
 | `l10n_ro_intrastat` | raportul Intrastat RO de bază | dependență (manifest) |
 | `stock_delivery` | datele de livrare (mod transport etc.) | dependență (manifest) |
 | `account_intrastat` (Enterprise) | raportul `account.report` Intrastat + meniul | dependență tranzitivă |
+| `l10n_ro_anaf_d390` (opțional) | reconciliere Intrastat ↔ D390 pe bunuri | buton condiționat, fără dependență hard |
 | produse cu cod Intrastat (NC8) | sursa codurilor de marfă | date de configurare |
 
 Ce este automat: calculul volumului față de prag, verificarea erorilor, generarea XML,
@@ -138,16 +162,23 @@ efectivă a fișierului pe portalul INS, ajustarea pragurilor la valorile INS al
 ## 8. Verificări pentru consultant
 
 - [ ] Modulul se instalează (auto-install) fără erori; blocul de praguri apare în Setări → Contabilitate.
-- [ ] Meniul **Contabilitate → Raportare → Intrastat → Verificare Prag Intrastat** e vizibil.
-- [ ] Wizardul de prag afișează volum, prag, procent și stare pe ambele direcții pentru anul ales.
-- [ ] Bifa „Declarat obligatoriu" comută starea pe **Declarat obligatoriu** indiferent de volum.
-- [~] În raportul Intrastat ar trebui să apară butoanele **XML** și **Verificare INS** (doar
-      pentru companii RO) — **gap O19 cunoscut**: butoanele nu se injectează momentan pe
-      raportul `goods` (handler split); export + verificare funcționează la nivel de cod.
+- [ ] La deschiderea raportului **Contabilitate → Raportare → Intrastat** (companie română),
+      banner-ul de status prag apare automat în antet, fără click suplimentar, cu volum/prag/
+      procent/stare pentru ambele direcții.
+- [ ] Anul folosit de banner corespunde perioadei selectate în raport (nu anul calendaristic curent,
+      dacă raportul e deschis pe alt an).
+- [ ] Bifa „Declarat obligatoriu" comută starea pe **Declarat obligatoriu** (albastru) indiferent de volum.
+- [ ] Acțiunea tehnică `action_l10n_ro_intrastat_check` (fostul wizard) rămâne funcțională ca
+      acces secundar — fără meniu propriu, se deschide din **Setări → Tehnic → Acțiuni →
+      Acțiuni fereastră** (necesită modul dezvoltator activat).
+- [ ] În raportul Intrastat apar butoanele **XML** și **Verificare INS** (doar pentru companii
+      RO), lângă PDF/XLSX — verificați că sunt vizibile direct în bară, nu doar în meniul-rotiță.
+- [ ] Dacă `l10n_ro_anaf_d390` e instalat, apare și butonul **Reconciliere D390**.
 - [ ] **Verificare INS** listează liniile cu câmpuri lipsă; o linie completă nu apare în listă.
 - [ ] **XML** refuză perioada multi-lună și selecția ambelor direcții, cu mesaj clar.
 - [ ] Exportul XML reușit produce un fișier în structura INS, cu CUI și cod TVA normalizate.
-- [ ] Cron-ul de remindere există și creează o singură activitate per direcție pe an.
+- [ ] Cron-ul de remindere există; nu creează o a doua activitate de avertizare per direcție
+      cât timp una anterioară e încă deschisă (necitită/neînchisă).
 
 ## 9. Mesaje de eroare frecvente
 
@@ -168,7 +199,7 @@ pe planul de conturi RO; seedul postează facturi intra-UE și exersează verifi
 de erori — fără conexiune la INS:
 
 1. `01_setari_praguri.png` — blocul de setări Intrastat (praguri, % avertizare, obligatoriu).
-2. `02_verificare_prag.png` — wizardul de verificare a pragului (volum/prag/procent/stare).
+2. `02_raport_prag_banner.png` — raportul Intrastat cu banner-ul de status prag (volum/prag/procent/stare) vizibil în antet.
 3. `03_raport_intrastat.png` — raportul Intrastat cu butoanele XML și Verificare INS.
 4. `04_erori_ins.png` — lista erorilor INS (câmpuri obligatorii lipsă).
 

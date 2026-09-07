@@ -4,6 +4,29 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-07] Re-ingestie `l10n_ro_intrastat_enhancement` — status prag mutat în raportul Intrastat
+
+- **Acțiune:** Resincronizarea paginii și a fișei consultant după PR terrabit-solutions/l10n_ro_ent#148.
+  Statusul pragului Intrastat (expedieri/sosiri: OK/Warning/Exceeded/Registered) apare acum ca banner
+  de alertă direct în antetul raportului Intrastat (`account.report`), prin hook-ul nativ
+  `_customize_warnings()`, în loc de wizard-ul separat cu meniu propriu (`l10n.ro.intrastat.check`
+  rămâne doar ca acțiune tehnică, fără meniu). Componentă OWL nouă: `static/src/intrastat_threshold_warning.xml`.
+- **Bug real reparat, root-cauzat în timpul verificării fișei:** butoanele „XML"/„Verificare INS"/
+  „Reconciliere D390" nu apăreau în bara raportului fiindcă le lipsea `always_show: True` — framework-ul
+  `account.report` le trimitea tăcut în meniul-rotiță (`AccountReportCogMenu`) în loc de bara principală
+  (`AccountReportButtonsBar`), exact ca PDF/XLSX din core, care au acest flag. Fișa veche documenta greșit
+  cauza ca „regres de separare goods/services handler în O19" — corectat, confirmat empiric prin
+  `get_options()` că butoanele erau deja corect calculate, doar randarea le ascundea.
+- **Sursă:** `readme/DESCRIPTION.md` (prioritizat) + `readme/USAGE.md`/`CONFIGURE.md`; fișa consultant
+  regenerată complet (`FISA_CONSULTANT.md`) cu 4 capturi noi din `tests/test_screenshots.py`
+  (seed determinist — companie „declarant obligatoriu", fără dependență de un calcul de prag/dată
+  fragil; mesajele de eroare folosesc acum traducerile reale RO).
+- **Fișiere actualizate:** `l10n_ro_intrastat_enhancement/index.md` (versiune 19.0.1.3.0),
+  `l10n_ro_intrastat_enhancement/FISA_CONSULTANT.md`, `l10n_ro_intrastat_enhancement/screenshots/`
+  (4 capturi înlocuite, `02_verificare_prag.png` orfan șters), `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-09-04] Fișă consultant cu capturi pentru `l10n_ro_pos_returns` (tichet #9362, Damira)
 
 - **Acțiune:** Adăugată fișa consultant a modulului de retururi POS, cu opt capturi de ecran, și legată din pagina modulului. Fișa e destinată **și clientului**, nu doar consultantului — Damira a cerut explicit „de unde anume pot genera acest raport", iar linkul public către wiki e răspunsul.
@@ -12,6 +35,31 @@ This is an append-only log of all operations performed on the wiki.
 - **Corecții după auditul fișei** (agent `verificator-fisa`): temeiul legal completat cu art. 287 lit. b) și art. 330 alin. (2); echivalența notă de credit ↔ factură „cu semnul minus" spusă explicit; poziția privind declarațiile rectificative prezentată ca poziție asumată, nu ca certitudine; cazul returului aferent exercițiului precedent (418/408, OMFP 1802/2014 pct. 330); calea reală a registrului de casă (sub Raportare, în `l10n_ro_cash_register_report`); avertisment că obligativitatea clientului la retur acționează **independent** de facturarea automată — combinația implicită blochează retururile fără să emită nimic.
 - **Rest deschis:** pasul „Returul la casă" nu are captură — ecranul de plată POS e o aplicație OWL separată, greu de capturat automat. Singurul pas din flux fără imagine.
 - **Fișiere actualizate:** `l10n_ro_pos_returns/FISA_CONSULTANT.md` (nou), `l10n_ro_pos_returns/screenshots/` (8 fișiere noi), `l10n_ro_pos_returns/index.md` (link fișă + versiune 19.0.1.1.1), `log.md`, `.index/`.
+
+---
+
+## [2026-09-04] Re-ingestie `deltatech_pos` — raport TVA pe interval, per casă de marcat (PR #2795 + #2797)
+
+- **Acțiune:** Resincronizarea paginii și a fișei consultant după PR terrabit-solutions/bitshop#2795
+  (cod) + #2797 (documentație), ambele mergeuite pe `19.0`. Adaugă raportul „VAT Sales by Fiscal
+  Device" (meniu Point of Sale → Reporting) — modelul nou `deltatech.pos.vat.report`
+  (`models/deltatech_pos_vat_report.py`), o vedere SQL (`_auto = False`, fără migrare/backfill)
+  peste `pos.order.line`, care agregă vânzările POS pe interval de dată, punct de lucru și cotă TVA,
+  filtrat implicit pe bonurile efectiv tipărite (`receipt_print`).
+- **Origine:** tichet Terrabit #9389 (Damira COM SRL) — **al doilea PR** pe același tichet. Primul
+  (`l10n_ro_ent#131`, vezi intrarea de mai jos) fusese construit pe modulul greșit — verificare
+  directă pe producția Damira a arătat că `l10n_ro_pos_fiscal_compliance` nu e instalat acolo;
+  stiva reală de conformitate AMEF a clientului e `deltatech_pos`/`deltatech_ecr_fiscal`, unde nu
+  exista niciun raport Z structurat (doar câmpuri per-bon, fără agregare pe cotă TVA). Deploy
+  confirmat pe producția Damira (5.260 linii, sume plauzibile) după merge.
+- **Sursă:** `readme/DESCRIPTION.md` + `readme/USAGE.md` (secțiunea nouă „4. VAT Sales by Fiscal
+  Device"), completate cu analiză directă a codului nou pentru secțiunea Componente Cheie —
+  excepție justificată de la regula „omite codul dacă există DESCRIPTION.md", fiindcă modelul
+  (vedere SQL `_auto=False`) e prea tehnic pentru a fi acoperit doar de readme.
+- **Fișă consultant:** resincronizată (Pasul 5 nou, legături, verificări și limitări actualizate).
+  Nu există `readme/screenshots/` la acest modul — copiată doar fișa, fără capturi.
+- **Fișiere actualizate:** `deltatech_pos/index.md`, `deltatech_pos/FISA_CONSULTANT.md`
+  (resincronizată), `index.md` (o linie), `log.md`.
 
 ---
 

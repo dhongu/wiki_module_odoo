@@ -180,7 +180,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_picking_restrict_entry_exit](deltatech_picking_restrict_entry_exit/index.md): Blochează validarea recepțiilor/livrărilor fără linie de comandă de achiziție/vânzare aferentă și limitează cantitățile la cele comandate.
 - [deltatech_picking_services](deltatech_picking_services/index.md): Adaugă un tab de linii de servicii pe transferurile de stoc, pentru a atașa produse de tip serviciu la operațiunea de ridicare/livrare.
 - [deltatech_picking_transit](deltatech_picking_transit/index.md): Automatizează transferurile interne în doi pași printr-o locație de tranzit.
-- [deltatech_pos](deltatech_pos/index.md): Generare fișier pentru casa de marcat — integrare între POS Odoo și case de marcat fiscale (ECR) pentru bonuri fiscale, numerar și rapoarte X/Z.
+- [deltatech_pos](deltatech_pos/index.md): Generare fișier pentru casa de marcat — integrare între POS Odoo și case de marcat fiscale (ECR) pentru bonuri fiscale, numerar, rapoarte X/Z și raport de vânzări TVA pe punct de lucru.
 - [deltatech_pos_base](deltatech_pos_base/index.md): Strat de bază POS-ECR care oferă definițiile și structurile de date pentru tipărirea fiscală în Odoo POS.
 - [deltatech_pos_fix](deltatech_pos_fix/index.md): Corectează calculul totalului în POS când o poziție fiscală transformă o taxă inclusă în preț într-o taxă neinclusă (ex: taxare inversă), aliniind POS la comportamentul din Vânzări.
 - [deltatech_pos_online_payment](deltatech_pos_online_payment/index.md): Ascunde/blochează butonul "Force done" pe plățile POS online, prevenind confirmarea manuală a unei plăți neîncasate efectiv de furnizor.
@@ -402,7 +402,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_footer_anpc](l10n_ro_footer_anpc/index.md): Afișează pozele și link-urile ANPC în footer-ul site-ului, pentru conformitate cu protecția consumatorului.
 - [l10n_ro_force_reconcile](l10n_ro_force_reconcile/index.md): Wizard de reconciliere forțată între conturi diferite (409↔401, 419↔411, compensare client-furnizor).
 - [l10n_ro_grants](l10n_ro_grants/index.md): Contracte de finanțare nerambursabilă cu note 475/131/132 și recunoaștere venituri (OMFP 1802 + IAS 20, FR-38).
-- [l10n_ro_intrastat_enhancement](l10n_ro_intrastat_enhancement/index.md): Extinde declarația Intrastat pentru România cu export XML în formatul INS și monitorizarea automată a pragurilor anuale, cu avertizări de prag și termen.
+- [l10n_ro_intrastat_enhancement](l10n_ro_intrastat_enhancement/index.md): Extinde raportul Intrastat Enterprise cu export XML pentru INS, banner de status prag direct în antetul raportului, verificare erori și reconciliere D390.
 - [l10n_ro_inventory_closing](l10n_ro_inventory_closing/index.md): Înregistrări contabile ale inventarierii și PV-uri PDF pentru cele 4 tipuri de diferențe (OMFP 1802 + 2861/2009, FR-18).
 - [l10n_ro_inventory_items](l10n_ro_inventory_items/index.md): Gestiunea obiectelor de inventar 303/603/8035 cu fișă OI, wizard-uri batch și rapoarte PDF (OMFP 1802).
 - [l10n_ro_inventory_register](l10n_ro_inventory_register/index.md): Registrul Inventar anual (formular cod 14-1-2, OMFP 2634/2015), cu linii recapitulative pe categorii patrimoniale din soldurile contabile postate.
