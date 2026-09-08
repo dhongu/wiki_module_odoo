@@ -130,6 +130,31 @@ Sistemul descarcă fișierul specific modelului ECR: `print_x.<ext>` sau `print_
 Acest flux este util când consultantul trebuie să regenereze local fișierul pentru driver fără să
 refacă vânzarea.
 
+### Pasul 5 — Raportul „Vânzări TVA pe casă de marcat"
+
+Din **Point of Sale → Reporting → VAT Sales by Fiscal Device** se deschide un raport centralizat al
+vânzărilor prin casa de marcat, pe orice interval de dată, grupat pe **punct de lucru** (casă de
+marcat) și **cotă TVA**, cu bază, TVA și total. Vederea implicită e pivot, cu filtrul „Fiscal Receipt
+Printed" activ (doar liniile pentru care bonul a fost efectiv tipărit — câmpul `receipt_print`),
+grupat pe punct de lucru și cotă.
+
+Sursa e strict `pos.order.line` — nu recalculează nimic, doar agregă live liniile comenzilor plătite
+sau postate (`state in ('paid', 'done')`). O linie cu mai multe taxe procentuale e raportată pe prima
+taxă procentuală găsită; o linie fără nicio taxă procentuală (scutită) apare pe rândul de cotă „0".
+
+Pentru detaliere pe comandă individuală, treceți din pivot în vederea listă (fiecare rând arată
+comanda sursă).
+
+## Note de reconciliere cu jurnalul ANAF/AMEF
+
+Raportul „Vânzări TVA pe casă de marcat" citește direct din Odoo (`pos.order.line`), nu din jurnalul
+electronic al aparatului fiscal — acest modul nu importă și nu citește arhiva/XML-ul casei de marcat.
+Pentru un client la care valorile trebuie verificate exact față de ce a transmis aparatul la ANAF,
+raportul e un punct de plecare pentru reconciliere, nu o citire directă a arhivei oficiale. De
+asemenea, raportul acoperă doar vânzările din fluxul POS (`pos.order`) — dacă un client emite și bonuri
+fiscale prin fluxul separat de facturare la bon fiscal (`deltatech_sale_store`, neinstalat împreună cu
+acest modul la majoritatea clienților), acele vânzări nu apar aici.
+
 ## 7. Reguli funcționale
 
 | Situație | Comportament |
@@ -165,6 +190,7 @@ refacă vânzarea.
 | `deltatech_pos_base` | configurare bază ECR: tip casă, prefix/extensie fișier, cod ECR pe metodele de plată |
 | `point_of_sale` | fluxul de vânzare și sesiuni POS |
 | `l10n_ro_anaf_d394_pos` | duce bonurile POS în declarația D394 |
+| `deltatech_sale_store` / `deltatech_sale_store_report` | fluxul separat de facturare la bon fiscal (nu POS) — raportul de la Pasul 5 nu îl acoperă |
 
 ## 10. Verificări pentru consultant
 
@@ -176,6 +202,11 @@ refacă vânzarea.
 - [ ] Rapoartele X și Z pot fi generate de utilizatorii operaționali.
 - [ ] Pentru retururi și dispoziții de plată există partener selectat.
 - [ ] D394 POS este documentată separat când clientul cere și raportarea fiscală a bonurilor.
+- [ ] Raportul **VAT Sales by Fiscal Device** grupează corect pe punct de lucru și cotă TVA; totalul
+      unei zile coincide cu suma liniilor plătite/postate din acea zi pentru punctul de lucru respectiv.
+- [ ] Cu filtrul „Fiscal Receipt Printed" activ, doar comenzile cu bon efectiv tipărit intră în sumă.
+- [ ] Dacă la client există și fluxul `deltatech_sale_store` (bon fiscal pe factură, nu prin POS),
+      semnalați explicit că acele vânzări nu apar în acest raport.
 
 ## 11. Limitări și gap-uri cunoscute
 
@@ -186,6 +217,8 @@ refacă vânzarea.
 | Nu există import de jurnal electronic / XML de la casa de marcat | reconcilierea fiscală detaliată rămâne în afara acestui modul |
 | Reconcilierea raportului Z și fiscalizarea e-commerce nu sunt acoperite aici | necesită extensii suplimentare |
 | Comentariul din cod dezactivează trimiterea CIF-ului clientului pe bon | pentru scenariile care cer CIF pe bon trebuie analizat separat |
+| Raportul „Vânzări TVA pe casă de marcat" citește doar `pos.order`, nu jurnalul/arhiva ANAF a aparatului | nu e o citire directă a arhivei oficiale — folosiți-l ca punct de plecare pentru reconciliere |
+| Raportul nu acoperă vânzările din fluxul separat `deltatech_sale_store` (facturare la bon fiscal, fără POS) | dacă acel modul e instalat la client, vânzările lui rămân neagregat aici |
 
 ## 12. Indicații pentru capturi de ecran
 
@@ -195,3 +228,4 @@ refacă vânzarea.
 - [ ] [SCREENSHOT: Popup / buton Cash In-Cash Out]
 - [ ] [SCREENSHOT: Popup / sesiune cu Print X și Print Z]
 - [ ] [SCREENSHOT: Comandă POS în backoffice cu tabul ECR data și butonul Print Fiscal Receipt]
+- [ ] [SCREENSHOT: Raport VAT Sales by Fiscal Device — vedere pivot pe punct de lucru și cotă TVA]
