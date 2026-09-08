@@ -427,7 +427,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_period_close_enhanced](l10n_ro_period_close_enhanced/index.md): Checklist lunar de închidere perioadă pe infrastructura Enterprise account.return.type.
 - [l10n_ro_pos_fiscal_compliance](l10n_ro_pos_fiscal_compliance/index.md): Conformitate fiscală AMEF pentru POS conform OUG 28/1999 — urmărire bon fiscal, blocaj sesiune, raport Z reconciliat, arhivă jurnal electronic, import și reconciliere automată a arhivelor Z (.zip/.p7b) pe FK exact cu comenzile POS, plus raport centralizat de vânzări TVA pe interval, punct de lucru și cotă.
 - [l10n_ro_pos_returns](l10n_ro_pos_returns/index.md): Retururile din POS tratate conform legislației RO — factură de retur automată pentru ajustarea bazei de TVA, cumpărător identificat obligatoriu și restituirile de numerar pe rândul de plăți al registrului de casă.
-- [l10n_ro_process_library](l10n_ro_process_library/index.md): Bibliotecă versionată de procese de implementare importabile selectiv în deltatech_business_process, cu fișe PDF.
+- [l10n_ro_process_library](l10n_ro_process_library/index.md): Bibliotecă versionată de procese de implementare importabile selectiv în deltatech_business_process, cu fișe PDF și capturi proprii per pas.
 - [l10n_ro_profit_tax](l10n_ro_profit_tax/index.md): Calcul impozit pe profit D100/D101 cu ajustări fiscale, pierdere reportată și credit sponsorizări.
 - [l10n_ro_provisions](l10n_ro_provisions/index.md): Urmărire provizioane 151x cu workflow aprobare/ajustare/soluționare și monografie automată OMFP 1802.
 - [l10n_ro_receivables_enhanced](l10n_ro_receivables_enhanced/index.md): Compensare client-furnizor cu proces-verbal și penalități de întârziere conform Legii 72/2013.

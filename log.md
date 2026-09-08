@@ -4,6 +4,33 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-08] Re-ingestie `l10n_ro_process_library` — INC002 rescris pe 7 faze, cu capturi proprii
+
+- **Acțiune:** Resincronizarea paginii după PR-urile terrabit-solutions/l10n_ro_ent#155, #156 și #157.
+  Procesul `INC002_checklist_inchidere_perioada` a fost rescris de la 4 pași generici (fără descrieri,
+  fără `details`, cu `modules: []`) la cele 7 faze ale închiderii lunare RO, fiecare cu `description`
+  + `details` HTML și cu `modules` completat cu 13 module — la import procesul se leagă acum efectiv
+  prin `module_ids`. Testul UAT are câte un step-test per fază.
+- **Primul proces din bibliotecă cu capturi proprii:** `screenshots/step_10.png` … `step_70.png`,
+  generate de `tests/test_screenshots_inc002.py` (`ProcessScreenshotCase`) pe convenția
+  `step_<sequence>.png`, pe care `tools/fisa_generator.py` o agață automat pe pasul cu secvența
+  corespunzătoare.
+- **Constatare consemnată în pagină:** `fisa_generator.py` randează doar `description`, nu `details` —
+  notele bogate ale pașilor ajung în Odoo la import, dar nu în PDF-ul fișei. Relevant pentru oricine
+  se așteaptă să le vadă în fișa atașată procesului.
+- **Versiune neschimbată:** manifestul a rămas la `19.0.2.0.0` deși conținutul s-a modificat
+  substanțial — semnalat, nu corectat (modulul e conținut, nu cod).
+- **Corecție la consolidare:** cele 13 module legate de INC002 au toate pagină wiki, deci au fost
+  trecute din text `cod` în link-uri Markdown active, grupate pe fazele în care intervin, conform
+  regulii din `schema.md` pentru secțiunea Conexiuni.
+- **Sursă:** `readme/DESCRIPTION.md` + `readme/USAGE.md`, verificate față de `process.json`,
+  `tools/fisa_generator.py` și `tests/`. Modulul nu are `readme/FISA_CONSULTANT.md`, deci nu s-a
+  copiat nicio fișă.
+- **Fișiere actualizate:** `wiki_module_odoo/l10n_ro_process_library/index.md`,
+  `wiki_module_odoo/index.md`, `wiki_module_odoo/log.md`, `.index/` (reconstruit).
+
+---
+
 ## [2026-09-07] Re-ingestie `l10n_ro_intrastat_enhancement` — status prag mutat în raportul Intrastat
 
 - **Acțiune:** Resincronizarea paginii și a fișei consultant după PR terrabit-solutions/l10n_ro_ent#148.
