@@ -1158,7 +1158,7 @@
   {
     "path": "deltatech_credit_control/index.md",
     "module": "deltatech_credit_control",
-    "version": "19.0.0.0.1",
+    "version": "19.0.0.0.2",
     "github": "`https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_credit_control`",
     "local_path": "odoo-addons/bitshop_ent/deltatech_credit_control",
     "last_ingest": "2026-09-08",
