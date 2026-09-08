@@ -1,7 +1,7 @@
 # Credit Control Cockpit (localizat la `deltatech_credit_control/index.md`)
 
 - **Nume Tehnic:** `deltatech_credit_control`
-- **Versiune:** `19.0.0.0.1`
+- **Versiune:** `19.0.0.0.2`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_credit_control`
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_credit_control`
 - **Ultima Ingestie:** `2026-09-08`
