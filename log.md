@@ -4,6 +4,32 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-08] Ingestie `deltatech_credit_control` — modul nou în bitshop_ent
+
+- **Acțiune:** Prima ingestie a modulului `deltatech_credit_control` (Credit Control Cockpit,
+  `19.0.0.0.1`), creat în această sesiune și livrat prin terrabit-solutions/bitshop_ent#139.
+  Modulul generalizează un raport de proiect (`agroamat_rau_platnici`): clasamentul clienților
+  cu restanțe, cu scor de risc 0-100 configurabil pe companie, comportamentul la plată din
+  ultimele 12 luni și tăieturi pe agent, județ și lună a scadenței.
+- **Sursă:** `readme/DESCRIPTION.md` pentru Sumar și Funcționalități Cheie, îmbogățite cu
+  `readme/USAGE.md` și `readme/CONFIGURE.md` (căi reale de meniu, semnificația parametrilor de
+  scor, cheia de context pentru situația la o dată din trecut). Componente Cheie omise conform
+  fluxului standard, readme-ul fiind prezent.
+- **Fișă consultant copiată:** da — `FISA_CONSULTANT.md` (11 secțiuni) plus 8 capturi în
+  `screenshots/`, generate reproductibil din `tests/test_screenshots.py` pe „RO Company" în RON,
+  cu interfața în română.
+- **Dependențe/Conexiuni:** dependențele `account` și `sales_team` sunt module core Odoo, fără
+  pagină wiki, deci rămân text `cod`. O singură conexiune funcțională cu pagină existentă:
+  [l10n_ro_receivables_enhanced](l10n_ro_receivables_enhanced/index.md), unde se calculează
+  penalitățile Legii 72/2013 — modulul de față nu le implementează.
+- **De reținut:** modulul nu generează nicio notă contabilă; citește liniile contabile de creanță
+  cu scadența de pe linie, aceeași bază ca raportul standard „Balanța clienți pe vechimi", deci
+  cele două trebuie să dea aceleași totaluri.
+- **Fișiere actualizate:** `wiki_module_odoo/deltatech_credit_control/index.md`,
+  `wiki_module_odoo/deltatech_credit_control/FISA_CONSULTANT.md`,
+  `wiki_module_odoo/deltatech_credit_control/screenshots/` (8 fișiere),
+  `wiki_module_odoo/index.md`, `wiki_module_odoo/log.md`, `.index/` (reconstruit).
+
 ## [2026-09-08] Re-ingestie `l10n_ro_process_library` — INC002 rescris pe 7 faze, cu capturi proprii
 
 - **Acțiune:** Resincronizarea paginii după PR-urile terrabit-solutions/l10n_ro_ent#155, #156 și #157.

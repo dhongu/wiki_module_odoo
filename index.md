@@ -48,6 +48,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_contact](deltatech_contact/index.md): Extinde fișa de contact cu câmpuri pentru persoane fizice (data nașterii, CNP, carte de identitate) și opțiune de afișare a numelui doar cu denumirea proprie.
 - [deltatech_contwin](deltatech_contwin/index.md): Export de date contabile din Odoo către programul de contabilitate ContWin (Omnidata/Petrescu), cu formate `.fis` și SAF-T.
 - [deltatech_credentials](deltatech_credentials/index.md): Gestionează centralizat acreditările (utilizator/parolă, client_id/secret, token) pentru conectarea la servicii externe.
+- [deltatech_credit_control](deltatech_credit_control/index.md): Clasament al clienților cu restanțe, cu scor de risc 0-100, telefonul pe rând, comportamentul la plată din ultimul an și tăieturi pe agent, județ și lună a scadenței.
 - [deltatech_crm_fsm](deltatech_crm_fsm/index.md): Leagă oportunitățile CRM de sarcinile Project/FSM și permite crearea rapidă a unei sarcini de teren dintr-o oportunitate.
 - [deltatech_cron_monitor_webhook](deltatech_cron_monitor_webhook/index.md): Declanșează sarcinile cron prin webhook-uri securizate cu token global, pentru integrare cu servicii externe de monitorizare/scheduling.
 - [deltatech_data_sheet](deltatech_data_sheet/index.md): Atașează fișe tehnice și fișe de securitate (PDF) pe produs, în fila Vânzări.
