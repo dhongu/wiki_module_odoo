@@ -9,7 +9,8 @@ Credențialele pe care le introduce clientul (Kramp, curieri, ANAF) rămân în 
 build și dispar odată cu branch-ul.
 
 Subcomenzi:
-  create   <client> <module,...> [--ro] [--name "Nume Client"] [--password X|random] [--no-push]
+  create   <client> <module,...> [--ro | --ro-fiscal] [--name "Nume Client"]
+           [--password X|random] [--no-push]
   list                              branch-urile demo-* de pe origin, cu vârsta ultimului commit
   keepalive [--older-than ORE]      push gol pe branch-urile demo-* mai vechi de N ore (implicit 36)
   refresh  <branch>                 regenerează modulul de demo din șablon pe un branch existent
@@ -182,15 +183,22 @@ def odoosh_key_registered(repo_name):
     return any(k.split("/")[-1].lower() == repo_name.lower() for k in json.load(open(keys)))
 
 
-def render_template(dst, client_slug, client_name, modules, password, ro_company):
+# Dependența adusă de fiecare mod RO: modul „fiscal" trage l10n_ro_anaf_base, ale cărui date
+# demo pun cazurile fiscale (taxare inversă, intracomunitar, TVA la încasare) pe compania demo RO.
+RO_MODE_DEPEND = {"own": "l10n_ro", "fiscal": "l10n_ro_anaf_base"}
+
+
+def render_template(dst, client_slug, client_name, modules, password, ro_company, ro_mode=None):
     depends = list(dict.fromkeys(modules))  # ordine stabilă, fără dubluri
-    if ro_company and "l10n_ro" not in depends:
-        depends.insert(0, "l10n_ro")
+    ro_depend = RO_MODE_DEPEND.get(ro_mode)
+    if ro_depend and ro_depend not in depends:
+        depends.insert(0, ro_depend)
     repl = {
         "__CLIENT_NAME__": client_name,
         "__MODULES_HUMAN__": ", ".join(modules),
         "__DEPENDS__": json.dumps(depends),
         "__ADMIN_PASSWORD__": password,
+        "__RO_MODE__": json.dumps(ro_mode) if ro_mode else "None",
         "__RO_COMPANY_NAME__": json.dumps(ro_company) if ro_company else "None",
     }
     repl["__MODULE__"] = dst.name
@@ -232,7 +240,8 @@ def cmd_create(args):
     branch = f"demo-{client_slug.replace('_', '-')}-{datetime.now():%Y%m%d}"
     glue = f"terrabit_demo_{client_slug}"
     password = gen_password() if args.password == "random" else args.password
-    ro_company = f"{client_name} Demo SRL" if args.ro else None
+    ro_mode = "fiscal" if args.ro_fiscal else ("own" if args.ro else None)
+    ro_company = f"{client_name} Demo SRL" if ro_mode else None
 
     needed = {}
     for mod in modules:
@@ -253,13 +262,13 @@ def cmd_create(args):
                 missing_keys.append(url)
         if (wt / glue).exists():
             sys.exit(f"eroare: {glue} există deja pe main; șterge-l sau alege alt client")
-        render_template(wt / glue, client_slug, client_name, modules, password, ro_company)
+        render_template(wt / glue, client_slug, client_name, modules, password, ro_company, ro_mode)
         sh(["git", "add", "-A"], cwd=wt)
         msg = (
             f"[DEMO] {branch}: {', '.join(modules)}\n\n"
             f"Branch temporar de demo pentru {client_name}. Modulul {glue} pune parola admin\n"
             f"și restrânge instalarea la modulele cerute. Se șterge după test.\n\n"
-            f"Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"
+            f"Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
         )
         sh(["git", "commit", "--quiet", "-m", msg], cwd=wt)
         if args.no_push:
@@ -277,8 +286,11 @@ def cmd_create(args):
     if password == "admin":
         print("                   URL-ul e public și ghicibil: dacă clientul introduce credențiale de terți,")
         print("                   cere-i să schimbe parola la prima intrare sau refă cu --password random.")
-    if ro_company:
-        print(f"Companie RO:       {ro_company} (plan de conturi ro, RON)")
+    if ro_mode == "fiscal":
+        print("Companie RO:       RO Company (demo standard) + cazurile fiscale din l10n_ro_anaf_base")
+        print("                   21%/11%, taxare inversă, IC bunuri/servicii, TVA la încasare, plus seed comercial")
+    elif ro_mode == "own":
+        print(f"Companie RO:       {ro_company} (plan de conturi ro, RON) + seed comercial")
     print(f"Setări branch:     https://www.odoo.sh/project/{ODOOSH_PROJECT}/branches/{branch}/settings")
     print(f"Build-uri:         https://www.odoo.sh/project/{ODOOSH_PROJECT}/builds/{branch}")
     print("=" * 72)
@@ -312,16 +324,22 @@ def cmd_refresh(args):
         manifest = ast.literal_eval(glue.joinpath("__manifest__.py").read_text().split("\n", 1)[1])
         client_slug = glue.name[len("terrabit_demo_"):]
         client_name = manifest["name"].split(" - ", 1)[-1]
-        modules = [d for d in manifest["depends"] if d != "l10n_ro" or not ns.get("RO_COMPANY_NAME")]
+        # Compatibil cu branch-urile generate înainte de RO_MODE: prezența numelui de companie
+        # însemna pe atunci modul „own".
+        ro_mode = ns.get("RO_MODE") or ("own" if ns.get("RO_COMPANY_NAME") else None)
+        ro_depend = RO_MODE_DEPEND.get(ro_mode)
+        modules = [d for d in manifest["depends"] if d != ro_depend]
         shutil.rmtree(glue)
-        render_template(glue, client_slug, client_name, modules, ns["ADMIN_PASSWORD"], ns.get("RO_COMPANY_NAME"))
+        render_template(
+            glue, client_slug, client_name, modules, ns["ADMIN_PASSWORD"], ns.get("RO_COMPANY_NAME"), ro_mode
+        )
         sh(["git", "add", "-A"], cwd=wt)
         if not sh(["git", "status", "--porcelain"], cwd=wt):
             print("modulul e deja la zi; nimic de împins")
             return
         sh(["git", "commit", "--quiet", "-m",
             f"[DEMO] {branch}: regenerare {glue.name} din șablon\n\n"
-            "Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"], cwd=wt)
+            "Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"], cwd=wt)
         sh(["git", "push", "--quiet", "origin", f"HEAD:{branch}"], cwd=wt)
         print(f"{glue.name} regenerat și împins pe {branch} → build nou")
 
@@ -355,7 +373,7 @@ def keepalive_branch(branch):
             [
                 "git", "commit", "--quiet", "--allow-empty", "-m",
                 f"[KEEPALIVE] {branch}: build nou pentru demo\n\n"
-                "Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>",
+                "Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>",
             ],
             cwd=wt,
         )
@@ -391,7 +409,13 @@ def main():
     c.add_argument("client", help="identificator client, ex. agrotrac")
     c.add_argument("modules", help="module de demonstrat, separate prin virgulă")
     c.add_argument("--name", help="numele afișat al clientului (implicit = identificatorul)")
-    c.add_argument("--ro", action="store_true", help="creează o companie RO cu planul de conturi românesc")
+    ro = c.add_mutually_exclusive_group()
+    ro.add_argument("--ro", action="store_true", help="companie RO proprie cu planul de conturi românesc + seed comercial")
+    ro.add_argument(
+        "--ro-fiscal",
+        action="store_true",
+        help="compania demo RO standard cu cazurile fiscale din l10n_ro_anaf_base (taxare inversă, IC, TVA la încasare) + seed comercial",
+    )
     c.add_argument("--password", default="admin", help="parola admin: implicit 'admin'; 'random' pentru una aleatorie")
     c.add_argument("--no-push", action="store_true", help="pregătește commit-ul fără push (test)")
     c.set_defaults(fn=cmd_create)

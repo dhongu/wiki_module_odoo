@@ -37,6 +37,25 @@ PRODUCTS = [
 ]
 
 
+def _ensure_payment_accounts(env, company):
+    """Se asigură că plățile ajung într-o notă contabilă și pot reconcilia factura.
+
+    În Odoo 19, dacă metoda de plată a jurnalului nu are cont de tranzit (`payment_account_id`),
+    plata rămâne o simplă promisiune: nu produce notă contabilă, iar factura arată „În plată"
+    fără să fie reconciliată. Compania demo a localizării (`base.demo_company_ro`) vine exact așa.
+    Punem contul jurnalului ca cont de tranzit — permis explicit de domeniul câmpului — deci plata
+    se contează direct în bancă, ca într-o firmă care nu folosește conturi de tranzit.
+    """
+    journals = env["account.journal"].search(
+        [("company_id", "=", company.id), ("type", "in", ("bank", "cash"))]
+    )
+    for journal in journals:
+        for line in journal.inbound_payment_method_line_ids | journal.outbound_payment_method_line_ids:
+            if not line.payment_account_id and journal.default_account_id:
+                line.payment_account_id = journal.default_account_id
+    return journals
+
+
 def _tax(env, company, xmlid):
     return env["account.chart.template"].with_company(company).ref(xmlid, raise_if_not_found=False)
 
@@ -54,6 +73,8 @@ def seed(env, company):
     if not all(taxes.values()):
         _logger.warning("terrabit_demo: taxele RO nu au fost găsite (%s); seed-ul de facturi e sărit", taxes)
         return
+
+    _ensure_payment_accounts(env, company)
 
     partners = {}
     for name, base, city, county, role in PARTNERS:
@@ -107,6 +128,7 @@ def seed(env, company):
         ("in_invoice", 1, 6, [(4, 2)], False),
     ]
     moves = env["account.move"]
+    settled = env["account.move"]
     for mtype, pidx, days_ago, lines, paid in plan:
         partner = (customers if mtype == "out_invoice" else suppliers)[pidx]
         inv_date = today - timedelta(days=days_ago)
@@ -130,8 +152,17 @@ def seed(env, company):
             env["account.payment.register"].with_company(company).with_context(
                 active_model="account.move", active_ids=move.ids
             ).create({"payment_date": inv_date + timedelta(days=7)})._create_payments()
+            if move.payment_state in ("paid", "in_payment") and not move.amount_residual:
+                settled |= move
 
+    expected = sum(1 for row in plan if row[4])
     _logger.info(
-        "terrabit_demo: seed RO pe '%s': %d parteneri, %d produse, %d facturi (%d încasate/plătite)",
-        company.name, len(partners), len(products), len(moves), sum(1 for p in plan if p[4]),
+        "terrabit_demo: seed RO pe '%s': %d parteneri, %d produse, %d facturi, %d achitate integral",
+        company.name, len(partners), len(products), len(moves), len(settled),
     )
+    if len(settled) < expected:
+        _logger.warning(
+            "terrabit_demo: doar %d din %d facturi de seed s-au reconciliat cu plata; "
+            "verifică metodele de plată ale jurnalelor pe '%s'",
+            len(settled), expected, company.name,
+        )
