@@ -24,8 +24,19 @@ le face agentul în browser (odoo.sh nu are API): setarea listei de module pe br
 - Același modul **pune parola admin** (implicit `admin`, sau aleatorie cu `--password random`) și dezactivează
   userul `demo`. Atenție: odoo.sh **rescrie parola admin după instalare**, deci `post_init_hook` singur nu
   ajunge; modulul are și un cron la 1 minut care verifică parola, o reimpune dacă a fost schimbată și se
-  dezactivează la prima verificare reușită. Login-ul merge deci ~1–2 minute după ce build-ul e „done”. Opțional (`--ro`) creează o companie RO cu planul de
-  conturi românesc, fiindcă datele demo sunt US/USD.
+  dezactivează la prima verificare reușită. Login-ul merge deci ~1–2 minute după ce build-ul e „done”.
+- **Context românesc** (datele demo standard sunt US/USD), două variante care se exclud:
+  - `--ro`: companie RO proprie („<Client> Demo SRL") cu planul de conturi `ro`, plus seed comercial —
+    5 parteneri cu CUI valid, 5 produse, 10 facturi postate în RON (6 de vânzare, 4 de achiziție,
+    TVA 21%/11%), din care 5 achitate integral, pe ultimele două luni.
+  - `--ro-fiscal`: adaugă `l10n_ro_anaf_base` în `depends` și lucrează pe compania demo a localizării
+    (`base.demo_company_ro`, „RO Company"), fiindcă pe ea stau cele 11 cazuri fiscale din datele demo
+    ale acelui modul — 21%/11%, taxare inversă, livrări și achiziții intracomunitare de bunuri și
+    servicii, TVA la încasare — postate de `_l10n_ro_prepare_demo_invoices`. Seed-ul comercial rulează
+    peste ele, deci build-ul are ~32 de facturi postate. Alege varianta asta pentru demo-uri de
+    declarații (D300, D390, D394) sau de export contabil; `--ro` pentru orice altceva.
+  Dacă seed-ul pică, instalarea și parola nu pică cu el (savepoint + log). Pe un build făcut fără date
+  demo, „RO Company" nu există și modul fiscal cade automat pe comportamentul din `--ro`.
 - Un build de dev **trăiește 24–48 h**. `keepalive` face un push gol → build nou. Datele introduse de
   client NU se păstrează între build-uri; spune-i asta.
 - Intrarea noastră în build e prin butonul **Connect** din odoo.sh (`/_odoo/paas/connect`), fără parolă.
@@ -42,12 +53,13 @@ le face agentul în browser (odoo.sh nu are API): setarea listei de module pe br
 
 ### 1. Clarifică cererea (fără să blochezi)
 Identificator client (scurt, ex. `agrotrac`), lista de module, dacă are nevoie de context RO
-(`--ro` pentru orice modul fiscal, de stoc valorizat sau de facturare). Dacă modulul cere un cont la
+(`--ro` pentru module de stoc valorizat sau de facturare, `--ro-fiscal` pentru declarații ANAF și
+exporturi contabile). Dacă modulul cere un cont la
 un terț (Kramp, Sameday, eMAG...), notează că clientul trebuie să aibă propriile credențiale.
 
 ### 2. Rulează scriptul
 ```bash
-python3 <cale-skill>/scripts/demo_branch.py create <client> <modul1,modul2> [--ro] [--name "Nume Client"] [--password random]
+python3 <cale-skill>/scripts/demo_branch.py create <client> <modul1,modul2> [--ro | --ro-fiscal] [--name "Nume Client"] [--password random]
 ```
 Alege `--password random` când clientul va introduce credențiale de terți (Kramp, curieri, ANAF):
 URL-ul build-ului e public și ghicibil, iar admin/admin l-ar deschide oricui.
@@ -122,3 +134,12 @@ dispar și modulul cu parola, și baza cu credențialele lui.
   (vezi `conectare-agent-claudiu`).
 - Nu oferă demo permanent: pentru un mediu care trebuie să țină săptămâni, discută un server demo
   propriu sau un branch de staging.
+
+## Capcană: plățile de seed pot rămâne nereconciliate
+
+În Odoo 19, dacă metoda de plată a jurnalului nu are cont de tranzit (`payment_account_id`), plata
+NU produce notă contabilă: rămâne o promisiune, iar factura arată „În plată" cu residualul intact.
+Compania demo a localizării vine exact așa, deci seed-ul completează contul de tranzit cu contul
+jurnalului înainte de a înregistra plățile, și logează un avertisment dacă s-au reconciliat mai
+puține facturi decât a cerut. Dacă vezi „doar N din M facturi de seed s-au reconciliat", verifică
+metodele de plată ale jurnalelor, nu seed-ul.
