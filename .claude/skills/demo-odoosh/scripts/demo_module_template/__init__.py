@@ -37,3 +37,15 @@ def post_init_hook(env):
         if "account.chart.template" in env:
             env["account.chart.template"].try_loading("ro", company, install_demo=False)
             _logger.info("terrabit_demo: companie RO '%s' creată cu planul de conturi ro", company.name)
+            # Seed-ul e opțional: dacă pică, instalarea (și parola admin) nu trebuie să pice cu el.
+            try:
+                with env.cr.savepoint():
+                    from . import demo_seed_ro
+
+                    demo_seed_ro.seed(env, company)
+            except Exception:  # noqa: BLE001 — logăm și mergem mai departe
+                # Rollback-ul savepoint-ului șterge înregistrările seed-ului, dar callback-urile
+                # post-commit deja înregistrate (ex. rangul de client pe parteneri) le mai referă
+                # și ar rupe încărcarea registry-ului. Le abandonăm.
+                env.cr.postcommit.clear()
+                _logger.exception("terrabit_demo: seed-ul RO a eșuat; compania rămâne fără facturi demo")
