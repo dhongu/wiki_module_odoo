@@ -288,7 +288,8 @@ def cmd_create(args):
         f"     alege „A specific list of modules” și scrie: {glue}; dezactivează testele.\n"
         "  2. Primul build (pornit la push) folosește setările implicite; după pasul 1 rulează\n"
         f"     `{Path(__file__).name} keepalive --branch {branch}` ca să pornești build-ul corect.\n"
-        "  3. Trimite clientului URL-ul build-ului (Connect → adresa) și parola, pe canale separate.\n"
+        "  3. Așteaptă ~1–2 min după „done”: odoo.sh rescrie parola admin, cronul modulului o reimpune.\n"
+        "  4. Trimite clientului URL-ul build-ului (Connect → adresa) și parola, pe canale separate.\n"
         "  Build-ul de dev trăiește 24–48h: `keepalive` îl reîmprospătează cât durează testul."
     )
     if missing_keys:

@@ -21,8 +21,10 @@ le face agentul în browser (odoo.sh nu are API): setarea listei de module pe br
   interne ale Terrabit) și rulează testele → ~10 minute și teste roșii. De aceea setăm pe branch
   „A specific list of modules” cu **un singur modul**: `terrabit_demo_<client>`, generat de script,
   care trage prin `depends` doar modulele de demonstrat.
-- Același modul are un `post_init_hook` care **pune parola admin** (build-urile de dev O19 NU acceptă
-  admin/admin de la sine): implicit `admin`, sau aleatorie cu `--password random`. Dezactivează și userul `demo`. Opțional (`--ro`) creează o companie RO cu planul de
+- Același modul **pune parola admin** (implicit `admin`, sau aleatorie cu `--password random`) și dezactivează
+  userul `demo`. Atenție: odoo.sh **rescrie parola admin după instalare**, deci `post_init_hook` singur nu
+  ajunge; modulul are și un cron la 1 minut care verifică parola, o reimpune dacă a fost schimbată și se
+  dezactivează la prima verificare reușită. Login-ul merge deci ~1–2 minute după ce build-ul e „done”. Opțional (`--ro`) creează o companie RO cu planul de
   conturi românesc, fiindcă datele demo sunt US/USD.
 - Un build de dev **trăiește 24–48 h**. `keepalive` face un push gol → build nou. Datele introduse de
   client NU se păstrează între build-uri; spune-i asta.
@@ -67,8 +69,12 @@ re-randează:
 ```js
 JSON.stringify([...document.querySelectorAll('input[type=radio],input[type=checkbox]')].map(i=>({l:i.parentElement.textContent.trim().slice(0,40),c:i.checked})))
 ```
-Capcană: pe pagina de Settings a proiectului există două butoane „Add”; pe pagina branch-ului
-iconița rotundă de pe cardul build-ului e link spre commitul GitHub, NU rebuild.
+Capcane: pe pagina de Settings a proiectului există două butoane „Add”; pe pagina branch-ului
+iconița rotundă de pe cardul build-ului e link spre commitul GitHub, NU rebuild. Un click pe un radio
+imediat după debifarea setărilor implicite se pierde (pagina se re-randează) — re-verifică după reload că
+lista de module ȘI „Disable the test suite” au rămas salvate, altfel build-ul instalează tot repo-ul și rulează
+testele (~10–15 min). Un build cu „All modules from the repository” pe `terrabit-erp` are login-ul rupt:
+`user_interchange` (modul intern, neinstalat în producție) suprascrie `_login` cu semnătura veche.
 
 ### 4. Pornește build-ul corect
 Primul build (declanșat de push) a plecat cu setările implicite. Declanșează unul nou:
@@ -104,6 +110,7 @@ Scurt, fără nume în salut (convenția Terrabit), pe două canale separate: UR
 ```bash
 python3 <cale-skill>/scripts/demo_branch.py list                   # demo-urile active, vârsta ultimului commit
 python3 <cale-skill>/scripts/demo_branch.py keepalive              # push gol pe cele mai vechi de 36 h
+python3 <cale-skill>/scripts/demo_branch.py refresh <branch>       # regenerează modulul din șablon, păstrează setările odoo.sh
 python3 <cale-skill>/scripts/demo_branch.py delete <branch>        # șterge branch-ul → odoo.sh șterge baza
 ```
 După `keepalive` URL-ul se schimbă (alt id de build) — trimite-l din nou clientului. La `delete`
