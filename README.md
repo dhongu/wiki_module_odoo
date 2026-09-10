@@ -29,6 +29,15 @@ This `wiki_module_odoo` repository serves as the knowledge base for the Odoo 19 
 
 This setup aims to transform raw Odoo module code into an intelligent, evolving documentation system.
 
+## Demo pentru clienți (skill `demo-odoosh`)
+
+Repo-ul livrează și skill-ul `demo-odoosh` (`.claude/skills/demo-odoosh/`), cu care un consultant
+ridică pentru un client o instanță temporară de test cu module Terrabit, ca branch de dezvoltare pe
+proiectul odoo.sh `terrabit`. Fluxul: `python3 .claude/skills/demo-odoosh/scripts/demo_branch.py create <client> <module>`
+→ setarea listei de module pe branch în odoo.sh → build (~5 min) → URL + parolă către client.
+Detalii, capcane și mesajul-tip către client sunt în `SKILL.md`; în Claude Code se declanșează
+la „clientul X vrea să testeze modulul Y".
+
 ## Querying the wiki (for colleagues)
 
 This repo is self-contained for **querying** — you do **not** need the Odoo source code.
