@@ -123,6 +123,7 @@ Scurt, fără nume în salut (convenția Terrabit), pe două canale separate: UR
 python3 <cale-skill>/scripts/demo_branch.py list                   # demo-urile active, vârsta ultimului commit
 python3 <cale-skill>/scripts/demo_branch.py keepalive              # push gol pe cele mai vechi de 36 h
 python3 <cale-skill>/scripts/demo_branch.py refresh <branch>       # regenerează modulul din șablon, păstrează setările odoo.sh
+python3 <cale-skill>/scripts/demo_branch.py refresh <branch> --ro-fiscal   # și comută contextul RO (sau --ro)
 python3 <cale-skill>/scripts/demo_branch.py delete <branch>        # șterge branch-ul → odoo.sh șterge baza
 ```
 După `keepalive` URL-ul se schimbă (alt id de build) — trimite-l din nou clientului. La `delete`

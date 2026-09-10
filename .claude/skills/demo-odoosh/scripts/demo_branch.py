@@ -13,7 +13,8 @@ Subcomenzi:
            [--password X|random] [--no-push]
   list                              branch-urile demo-* de pe origin, cu vârsta ultimului commit
   keepalive [--older-than ORE]      push gol pe branch-urile demo-* mai vechi de N ore (implicit 36)
-  refresh  <branch>                 regenerează modulul de demo din șablon pe un branch existent
+  refresh  <branch> [--ro | --ro-fiscal]  regenerează modulul din șablon pe un branch existent,
+           opțional comutând contextul românesc
   delete   <branch>                 șterge branch-ul de pe origin (odoo.sh șterge și baza)
 
 Lucrează într-un git worktree separat sub /tmp, ca să nu atingă checkout-ul din proiecte/terrabit-erp.
@@ -327,12 +328,17 @@ def cmd_refresh(args):
         # Compatibil cu branch-urile generate înainte de RO_MODE: prezența numelui de companie
         # însemna pe atunci modul „own".
         ro_mode = ns.get("RO_MODE") or ("own" if ns.get("RO_COMPANY_NAME") else None)
-        ro_depend = RO_MODE_DEPEND.get(ro_mode)
-        modules = [d for d in manifest["depends"] if d != ro_depend]
+        if args.ro_fiscal:
+            ro_mode = "fiscal"
+        elif args.ro:
+            ro_mode = "own"
+        ro_company = ns.get("RO_COMPANY_NAME") or f"{client_name} Demo SRL"
+        # Scoatem dependența oricărui mod RO, nu doar a celui curent: la comutarea între moduri,
+        # dependența modului vechi ar rămâne altfel în manifest.
+        ro_depends = set(RO_MODE_DEPEND.values())
+        modules = [d for d in manifest["depends"] if d not in ro_depends]
         shutil.rmtree(glue)
-        render_template(
-            glue, client_slug, client_name, modules, ns["ADMIN_PASSWORD"], ns.get("RO_COMPANY_NAME"), ro_mode
-        )
+        render_template(glue, client_slug, client_name, modules, ns["ADMIN_PASSWORD"], ro_company, ro_mode)
         sh(["git", "add", "-A"], cwd=wt)
         if not sh(["git", "status", "--porcelain"], cwd=wt):
             print("modulul e deja la zi; nimic de împins")
@@ -426,6 +432,9 @@ def main():
     k.set_defaults(fn=cmd_keepalive)
     rf = sub.add_parser("refresh", help="regenerează modulul de demo pe un branch existent (șablon nou)")
     rf.add_argument("branch")
+    rf_ro = rf.add_mutually_exclusive_group()
+    rf_ro.add_argument("--ro", action="store_true", help="comută branch-ul pe companie RO proprie")
+    rf_ro.add_argument("--ro-fiscal", action="store_true", help="comută branch-ul pe cazurile fiscale din l10n_ro_anaf_base")
     rf.set_defaults(fn=cmd_refresh)
     d = sub.add_parser("delete", help="șterge un branch demo-* de pe origin")
     d.add_argument("branch")
