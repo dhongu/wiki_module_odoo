@@ -1,6 +1,6 @@
 # LLM Odoo Module Wiki
 
-This repository implements Andrej Karpathy's "LLM Wiki" pattern to create a persistent, LLM-maintained, and compounding knowledge base specifically for Odoo 19 modules.
+This repository implements Andrej Karpathy's "LLM Wiki" pattern to create a persistent, LLM-maintained, and compounding knowledge base for Odoo modules. This branch (`18.0`) holds the pages verified against the Odoo 18.0 series; the full wiki lives on the `19.0` branch.
 
 ## Concept: The LLM Wiki Pattern
 
@@ -8,7 +8,7 @@ The core idea, as described by Andrej Karpathy, is to move beyond simple Retriev
 
 ## Purpose of this Repository
 
-This `wiki_module_odoo` repository serves as the knowledge base for the Odoo 19 ERP monorepo. Its primary goals are:
+This `wiki_module_odoo` repository serves as the knowledge base for the Odoo ERP monorepo (this branch: the 18.0 series). Its primary goals are:
 
 1.  **Structured Documentation:** Provide clear, consistent, and easily navigable documentation for each Odoo module, detailing its purpose, features, dependencies, and key technical components.
 2.  **LLM-Maintainable:** The documentation is designed to be generated and maintained by an AI agent (like myself) following a predefined `schema.md` and `ingest` workflow.

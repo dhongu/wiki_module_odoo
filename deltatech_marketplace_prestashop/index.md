@@ -1,11 +1,10 @@
 # Conector Marketplace PrestaShop (localizat la `deltatech_marketplace_prestashop/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_prestashop`
-- **Versiune:** `19.0.0.2.15`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_prestashop`
+- **Versiune:** `18.0.0.2.9`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/18.0/deltatech_marketplace_prestashop`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_prestashop`
 - **Ultima Ingestie:** `2026-09-11`
-- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -27,11 +26,11 @@ Conectorul Deltatech pentru marketplace PrestaShop permite integrarea directă �
 
 #### 3. Dependențe
 
-- [deltatech_marketplace](../deltatech_marketplace/index.md)
-- [deltatech_marketplace_website](../deltatech_marketplace_website/index.md)
-- [deltatech_marketplace_sale_stage](../deltatech_marketplace_sale_stage/index.md)
-- [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md)
-- [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md)
+- `deltatech_marketplace`
+- `deltatech_marketplace_website`
+- `deltatech_marketplace_sale_stage`
+- `deltatech_marketplace_delivery`
+- `deltatech_marketplace_payment`
 
 #### 4. Componente Cheie
 
@@ -49,9 +48,15 @@ Conform fluxului de ingestie, secțiunile de componente nu au fost extrase din c
 
 - Nu au fost extrase din cod (vezi nota de mai sus). Descrierea menționează existența unor joburi programate de sincronizare și procesare în fundal; cron-ul comun „Marketplace: Get Orders" (inactiv implicit) importă comenzile pentru backend-urile fără „Disable Import Sale Order" bifat.
 
+**Diferențe față de seria 19.0**
+
+- Structura multilingvă trimisă la export are aici forma `{"language": [{"attrs": {"id": "<id_limbă>"}, "value": ...}]}`; pe 19.0 a fost simplificată la `{"id": ..., "value": ...}`.
+- Conversia prețului importat la preț cu TVA (opțiunea **Tax included**) folosește în această serie helperul `_get_price_without_and_with_taxes()`; pe 19.0 se cheamă direct `taxes_id.compute_all()`. Câmpurile schimbate rămân aceleași.
+- Structura de modele, controllerul de webhook și ruta de facturi sunt identice între serii.
+
 **Mapare câmpuri produs**
 
-Documentată integral în `readme/USAGE.md` (punctul 11), derivată din `prestashop_import_by_id()`, `prestashop_create()`, `prestashop_write()` și binderul de stoc. Câmpurile traductibile circulă pe fiecare limbă din `marketplace.lang` (structura multilingvă construită de `prestashop_get_translatable_payload()`); fără nicio limbă mapată se trimit ca șiruri simple, în limba backend-ului.
+Documentată integral în `readme/USAGE.md` (secțiunea „Product field mapping”), derivată din `prestashop_import_by_id()`, `prestashop_create()`, `prestashop_write()` și binderul de stoc. Câmpurile traductibile circulă pe fiecare limbă din `marketplace.lang` (structura multilingvă construită de `prestashop_get_translatable_payload()`); fără nicio limbă mapată se trimit ca șiruri simple, în limba backend-ului.
 
 | Câmp | Câmp Odoo | Câmp PrestaShop | Direcție |
 |------|-----------|-----------------|----------|
@@ -80,5 +85,11 @@ Documentată integral în `readme/USAGE.md` (punctul 11), derivată din `prestas
 
 #### 5. Conexiuni
 
-- [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md): gestionarea comenzilor de vânzare provenite din marketplace, importate și din PrestaShop.
-- [deltatech_marketplace_purchase](../deltatech_marketplace_purchase/index.md): latura de achiziții a ecosistemului de marketplace Deltatech.
+- [deltatech_marketplace_shopify](../deltatech_marketplace_shopify/index.md): conector marketplace analog, pentru Shopify.
+- [deltatech_marketplace_emag](../deltatech_marketplace_emag/index.md): conector marketplace analog, pentru eMAG.
+- [deltatech_marketplace_woocommerce](../deltatech_marketplace_woocommerce/index.md): conector marketplace analog, pentru WooCommerce.
+- [deltatech_marketplace_merchantpro](../deltatech_marketplace_merchantpro/index.md): conector marketplace analog, pentru MerchantPro.
+- [deltatech_marketplace_trendyol](../deltatech_marketplace_trendyol/index.md): conector marketplace analog, pentru Trendyol.
+- `deltatech_marketplace`: cadrul de bază marketplace (backend, job-uri, rate-limiting, indicator de sănătate).
+- `deltatech_marketplace_sale` / `_sale_stage` / `_delivery` / `_payment` / `_website`: comenzile importate, fazele de vânzare pe care se mapează statusurile PrestaShop, curierii, metodele de plată și integrarea de site.
+- `deltatech_marketplace_purchase`: latura de achiziții a ecosistemului de conectori.

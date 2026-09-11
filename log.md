@@ -4,6 +4,18 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-11] Ramura `18.0`: cele 6 pagini de conector marketplace verificate pe seria 18.0
+
+- **Acțiune:** creată ramura `18.0` din `19.0` și păstrate doar paginile `deltatech_marketplace_shopify`, `_emag`, `_prestashop`, `_woocommerce`, `_merchantpro`, `_trendyol`, rescrise pe codul seriei 18.0 (Versiune, Cale, conținut, tabelul de mapare a câmpurilor). Celelalte ~280 de pagini au fost șterse de pe această ramură — rămân documentate exclusiv pe `19.0`, ca să nu existe aici pagini care descriu altă serie. `index.md` și `README.md` explică convenția ramurii.
+- **Sursă:** PR bitshop_marketplace#331 (18.0), care aduce pe seria 18.0 tabelele de mapare a câmpurilor de produs din `readme/USAGE.md` + convenția din `AGENTS.md`.
+- **Diferențe reale față de 19.0, notate în fiecare pagină (secțiunea Componente Cheie):**
+  - **Shopify:** seria 18.0 vorbește cu Shopify **exclusiv prin REST Admin API** — tot stratul `shopify_graphql_*.py` și comutatoarele GraphQL per subsistem sunt doar pe 19.0, la fel ca retururile (RMA), editarea liniilor de comandă, traducerea filtrelor de comandă și opțiunea **Update Price Only**. Tabelul de mapare de pe această ramură folosește numele REST (`body_html`, `product_type`, `compare_at_price`, `weight`/`weight_unit`, `inventory_item_id`).
+  - **eMAG:** integrarea de curier (AWB, etichete, **Get city**, starea livrării) este **în interiorul** modulului pe 18.0 (`delivery_emag.py`, `binding_delivery_carrier.py`, `stock_picking.py` + vederile lor); pe 19.0 a fost mutată în `deltatech_marketplace_emag_delivery`. Retururile și vocherele nu există în această serie; exportul de preț are metoda proprie `emag_export_price()`, iar filtrele de citire se trimit împachetate în cheia `data`.
+  - **WooCommerce:** fără traducerea filtrelor de status (`woocommerce_order_filters.py`, doar pe 19.0) și fără vedere proprie de backend; comenzile se importă pe fereastra **Sale Order Days**. Produsele rămân doar import, dar statusul comenzii se trimite înapoi prin `_woo_push_order_status()`.
+  - **PrestaShop / MerchantPro / Trendyol:** aceleași câmpuri ca pe 19.0; diferă doar detalii interne (structura multilingvă `{"attrs": {"id": ...}}` la PrestaShop, helperul de taxe `_get_price_without_and_with_taxes()` la PrestaShop și MerchantPro, apelurile de traducere la Trendyol).
+- **Legături:** dependențele și conexiunile către module fără pagină pe această ramură au fost transformate în text `cod`, conform `schema.md`; link-urile active rămân doar între cele 6 conectoare.
+- **Index lexical:** reconstruit cu `scripts/wiki_index.py` (6 chunk-uri pe această ramură).
+
 ## [2026-09-11] Mapare câmpuri produs pentru 6 conectoare marketplace (PR bitshop_marketplace#330)
 
 - **Acțiune:** Adăugată secțiunea **Mapare câmpuri produs** în Componente Cheie pe paginile `deltatech_marketplace_shopify`, `_emag`, `_prestashop`, `_woocommerce`, `_merchantpro`, `_trendyol` — tabel `Câmp | Câmp Odoo | Câmp platformă | Direcție`, tradus din tabelele noi din `readme/USAGE.md` ale modulelor.

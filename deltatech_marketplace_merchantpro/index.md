@@ -1,11 +1,10 @@
 # Conector Marketplace MerchantPro (localizat la `deltatech_marketplace_merchantpro/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_merchantpro`
-- **Versiune:** `19.0.0.0.17`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_merchantpro
+- **Versiune:** `18.0.0.0.12`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/18.0/deltatech_marketplace_merchantpro
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_merchantpro`
 - **Ultima Ingestie:** `2026-09-11`
-- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -26,16 +25,21 @@ Un magazin MerchantPro lângă Odoo, fără conector, înseamnă catalog, stoc �
 
 #### 3. Dependențe
 
-- [deltatech_marketplace](../deltatech_marketplace/index.md)
-- [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md)
-- [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md)
-- [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md)
-- [deltatech_marketplace_website](../deltatech_marketplace_website/index.md)
+- `deltatech_marketplace`
+- `deltatech_marketplace_sale`
+- `deltatech_marketplace_payment`
+- `deltatech_marketplace_delivery`
+- `deltatech_marketplace_website`
 - `queue_job` (dependență tehnică, folosită pentru import/export paginat și pentru `RetryableJobError` la limita de rată)
 
 #### 4. Componente Cheie
 
 *Conform fluxului de ingestie, secțiunile 'Sumar' și 'Funcționalități Cheie' au fost preluate din `readme/DESCRIPTION.md` (corectat unde textul original nu mai reflecta comportamentul real al codului — vezi nota din secțiunea 2), iar analiza detaliată a codului pentru componente a fost omisă deoarece Readme-ul nu o solicită explicit.*
+
+**Diferențe față de seria 19.0**
+
+- Prețul net exportat se obține în această serie prin helperul `_get_price_without_and_with_taxes()`; pe 19.0 se cheamă direct `taxes_id.compute_all()`. Câmpul trimis rămâne `price_net`.
+- Restul fluxurilor (import/export produse și categorii, export stoc și preț, import comenzi, tratarea limitelor de rată) sunt identice între serii.
 
 **Mapare câmpuri produs**
 
@@ -63,9 +67,11 @@ Documentată integral în `readme/USAGE.md` (secțiunea „Product field mapping
 
 #### 5. Conexiuni
 
-- [deltatech_marketplace](../deltatech_marketplace/index.md): cadrul de bază pentru conectori de marketplace (backend, indicator de sănătate, job-uri, rate-limiting, webhook) pe care acest modul îl specializează pentru MerchantPro.
-- [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md): comanda de vânzare Odoo generată din comanda MerchantPro, politica de confirmare, repararea prețurilor de import (`action_fix_import_prices`).
-- [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md): metoda de plată și jurnalul „Marketplace Payment" (`MRPY`) create automat la prima comandă plătită importată.
-- [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md): potrivirea transportatorului după nume exact, cu fallback pe „Free Delivery".
-- [deltatech_marketplace_website](../deltatech_marketplace_website/index.md): legătura de categorie publică (`marketplace.public.category`) pentru integrarea cu website-ul Odoo.
-- [deltatech_marketplace_purchase](../deltatech_marketplace_purchase/index.md): modul înrudit din suita de conectori marketplace pentru fluxul de achiziții.
+- [deltatech_marketplace_shopify](../deltatech_marketplace_shopify/index.md): conector marketplace analog, pentru Shopify.
+- [deltatech_marketplace_emag](../deltatech_marketplace_emag/index.md): conector marketplace analog, pentru eMAG.
+- [deltatech_marketplace_prestashop](../deltatech_marketplace_prestashop/index.md): conector marketplace analog, pentru PrestaShop.
+- [deltatech_marketplace_woocommerce](../deltatech_marketplace_woocommerce/index.md): conector marketplace analog, pentru WooCommerce.
+- [deltatech_marketplace_trendyol](../deltatech_marketplace_trendyol/index.md): conector marketplace analog, pentru Trendyol.
+- `deltatech_marketplace`: cadrul de bază (backend, indicator de sănătate, job-uri, rate-limiting, webhook).
+- `deltatech_marketplace_sale` / `_payment` / `_delivery` / `_website`: comanda generată, jurnalul „Marketplace Payment", potrivirea transportatorului (fallback pe „Free Delivery") și legătura de categorie publică.
+- `deltatech_marketplace_purchase`: modul înrudit din suită, pentru fluxul de achiziții.

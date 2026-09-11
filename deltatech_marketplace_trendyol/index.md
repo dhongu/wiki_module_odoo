@@ -1,11 +1,10 @@
 # Conector Trendyol Marketplace (localizat la `deltatech_marketplace_trendyol/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_trendyol`
-- **Versiune:** `19.0.1.1.8`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_trendyol`
+- **Versiune:** `18.0.1.1.1`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/18.0/deltatech_marketplace_trendyol`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_trendyol`
 - **Ultima Ingestie:** `2026-09-11`
-- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -27,10 +26,10 @@ Un cont de seller Trendyol lângă Odoo, fără conector, înseamnă catalog, st
 
 - `sale`
 - `delivery`
-- [deltatech_marketplace](../deltatech_marketplace/index.md)
-- [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md)
-- [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md)
-- [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md)
+- `deltatech_marketplace`
+- `deltatech_marketplace_sale`
+- `deltatech_marketplace_delivery`
+- `deltatech_marketplace_payment`
 
 #### 4. Componente Cheie
 
@@ -43,9 +42,13 @@ Conform fluxului de ingestie, secțiunea Sumar/Funcționalități a fost preluat
 - `ir_cron_trendyol_import_orders`: sarcină programată „Trendyol: Import Orders", la fiecare 30 de minute, dezactivată implicit (se activează manual după validarea configurării).
 - `ir_cron_trendyol_export_stock`: sarcină programată „Trendyol: Export Stock", la fiecare oră, dezactivată implicit.
 
+**Diferențe față de seria 19.0**
+
+- Fluxurile și câmpurile sunt identice; diferă doar detalii interne (apelurile de traducere `self.env._()` și canalele de job), fără efect asupra datelor schimbate cu Trendyol.
+
 **Mapare câmpuri produs**
 
-Documentată integral în `readme/USAGE.md` (punctul 9), derivată din `trendyol_job_import()`, `trendyol_write()`, `trendyol_export_price()` și `trendyol_stock_export()`. Pe Trendyol listarea e identificată prin **cod de bare** — acela e `external_id` pe legătură, deci un produs fără cod de bare nu poate fi exportat. Exporturile de produs, preț și stoc trec toate prin API-ul batch asincron: conectorul reține `batchRequestId` și îi verifică rezultatul după un minut.
+Documentată integral în `readme/USAGE.md` (secțiunea „Product field mapping”), derivată din `trendyol_job_import()`, `trendyol_write()`, `trendyol_export_price()` și `trendyol_stock_export()`. Pe Trendyol listarea e identificată prin **cod de bare** — acela e `external_id` pe legătură, deci un produs fără cod de bare nu poate fi exportat. Exporturile de produs, preț și stoc trec toate prin API-ul batch asincron: conectorul reține `batchRequestId` și îi verifică rezultatul după un minut.
 
 | Câmp | Câmp Odoo | Câmp Trendyol | Direcție |
 |------|-----------|---------------|----------|
@@ -69,7 +72,10 @@ Documentată integral în `readme/USAGE.md` (punctul 9), derivată din `trendyol
 
 #### 5. Conexiuni
 
-- [deltatech_marketplace](../deltatech_marketplace/index.md): cadrul de bază marketplace peste care este construit conectorul.
-- [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md): integrarea comenzilor de vânzare importate din Trendyol.
-- [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md): infrastructura de mapare a curierilor; legătura creată la import nu se mapează automat la un transportator Odoo real.
-- [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md): metoda de plată „Trendyol", creată automat la prima comandă importată.
+- [deltatech_marketplace_shopify](../deltatech_marketplace_shopify/index.md): conector marketplace analog, pentru Shopify.
+- [deltatech_marketplace_emag](../deltatech_marketplace_emag/index.md): conector marketplace analog, pentru eMAG.
+- [deltatech_marketplace_prestashop](../deltatech_marketplace_prestashop/index.md): conector marketplace analog, pentru PrestaShop.
+- [deltatech_marketplace_woocommerce](../deltatech_marketplace_woocommerce/index.md): conector marketplace analog, pentru WooCommerce.
+- [deltatech_marketplace_merchantpro](../deltatech_marketplace_merchantpro/index.md): conector marketplace analog, pentru MerchantPro.
+- `deltatech_marketplace`: cadrul de bază marketplace peste care e construit conectorul.
+- `deltatech_marketplace_sale` / `_delivery` / `_payment`: comenzile importate, infrastructura de mapare a curierilor (legătura creată la import nu se mapează automat la un transportator real) și metoda de plată „Trendyol".

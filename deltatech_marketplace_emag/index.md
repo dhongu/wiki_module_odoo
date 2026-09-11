@@ -1,11 +1,10 @@
 # EMAG Marketplace Connector (localizat la `deltatech_marketplace_emag/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_emag`
-- **Versiune:** `19.0.2.3.26`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_emag`
+- **Versiune:** `18.0.2.3.21`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/18.0/deltatech_marketplace_emag`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_emag`
 - **Ultima Ingestie:** `2026-09-11`
-- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -49,12 +48,12 @@ Un cont de seller eMAG lângă Odoo, fără conector, înseamnă catalog, comenz
 
 - `sale`
 - `delivery`
-- [deltatech_marketplace](../deltatech_marketplace/index.md)
-- [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md)
-- [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md)
-- [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md)
-- [deltatech_marketplace_website](../deltatech_marketplace_website/index.md)
-- [deltatech_delivery](../deltatech_delivery/index.md)
+- `deltatech_marketplace`
+- `deltatech_marketplace_sale`
+- `deltatech_marketplace_delivery`
+- `deltatech_marketplace_payment`
+- `deltatech_marketplace_website`
+- `deltatech_delivery`
 
 #### 4. Componente Cheie
 
@@ -67,9 +66,15 @@ Modulul este construit peste cadrul marketplace al Deltatech și implementează 
 
 Pentru detalii suplimentare de configurare și operare, modulul include un manual de utilizare („Manual utilizare eMAG Marketplace.docx"), un ghid `readme/CONFIGURE.md` și un ghid pas-cu-pas `readme/USAGE.md`.
 
+**Diferențe față de seria 19.0**
+
+- Integrarea de curier eMAG este **în acest modul** pe 18.0 — `models/delivery_emag.py`, `models/binding_delivery_carrier.py`, `models/stock_picking.py`, `views/delivery_view.xml`, `views/stock_picking_view.xml` (AWB, etichete, butonul **Get city**, starea livrării). Pe 19.0 a fost mutată în modulul separat `deltatech_marketplace_emag_delivery`, care pe 18.0 nu conține cod.
+- Retururile (RMA) și vocherele eMAG **nu există** în această serie: `binding_return_request.py` și tratarea vocherelor ca linie de comandă sunt doar pe 19.0.
+- Exportul de preț are aici o metodă proprie, `emag_export_price()` (trimite prețurile curente prin `/product_offer save`, fără ajustarea de buy box); pe 19.0 a fost eliminată, iar salvarea de preț merge pe `/offer`. Filtrele de citire se trimit în această serie împachetate în cheia `data`.
+
 **Mapare câmpuri produs**
 
-Documentată integral în `readme/USAGE.md` (secțiunea „Product field mapping"), derivată din `emag_job_import()`, `emag_get_price()`, `emag_write()` și `emag_stock_export()`. eMAG lucrează cu *oferte* pe un catalog existent: câmpurile de documentație (denumire, marcă, descriere, imagini, caracteristici) sunt acceptate doar cât timp oferta e nouă sau încă editabilă.
+Documentată integral în `readme/USAGE.md` (secțiunea „Product field mapping"), derivată din `emag_job_import()`, `emag_get_price()`, `emag_write()`, `emag_export_price()` și `emag_stock_export()`. eMAG lucrează cu *oferte* pe un catalog existent: câmpurile de documentație (denumire, marcă, descriere, imagini, caracteristici) sunt acceptate doar cât timp oferta e nouă sau încă editabilă.
 
 | Câmp | Câmp Odoo | Câmp eMAG | Direcție |
 |------|-----------|-----------|----------|
@@ -101,10 +106,12 @@ Documentată integral în `readme/USAGE.md` (secțiunea „Product field mapping
 
 #### 5. Conexiuni
 
-- [deltatech_marketplace](../deltatech_marketplace/index.md): cadrul de bază marketplace peste care este construit conectorul (backend, indicator de sănătate, job-uri, rate-limiting).
-- [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md): comanda de vânzare Odoo generată din comanda eMAG importată.
-- [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md): maparea transportatorului și linia de livrare pe comandă.
-- [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md): maparea metodei de plată eMAG către payment provider Odoo (fallback pe Wire Transfer).
-- [deltatech_marketplace_website](../deltatech_marketplace_website/index.md): link-ul de produs eMAG folosește rutele website-ului Odoo la export.
-- [deltatech_delivery](../deltatech_delivery/index.md): contractul de capabilități al curierilor (`cities`, `ship`, `tracking`), butonul **Get city** și cron-ul comun de stare livrare.
+- [deltatech_marketplace_shopify](../deltatech_marketplace_shopify/index.md): conector marketplace analog, pentru magazine Shopify, pe același nucleu `deltatech_marketplace`.
+- [deltatech_marketplace_prestashop](../deltatech_marketplace_prestashop/index.md): conector marketplace analog, pentru PrestaShop.
+- [deltatech_marketplace_woocommerce](../deltatech_marketplace_woocommerce/index.md): conector marketplace analog, pentru WooCommerce.
+- [deltatech_marketplace_merchantpro](../deltatech_marketplace_merchantpro/index.md): conector marketplace analog, pentru MerchantPro.
+- [deltatech_marketplace_trendyol](../deltatech_marketplace_trendyol/index.md): conector marketplace analog, pentru Trendyol.
+- `deltatech_marketplace`: cadrul de bază marketplace peste care e construit conectorul (backend, indicator de sănătate, job-uri, rate-limiting).
+- `deltatech_marketplace_sale` / `_delivery` / `_payment` / `_website`: comanda de vânzare generată, maparea transportatorului, maparea metodei de plată (fallback pe Wire Transfer) și rutele de site folosite în link-ul de produs exportat.
+- `deltatech_delivery`: contractul de capabilități al curierilor (`cities`, `ship`, `tracking`), butonul **Get city** și cron-ul comun de stare livrare.
 - `l10n_ro_edi` / `l10n_ro_edi_stock`: e-Factura (SPV) și eTransport — rămân neatinse de acest conector; push-ul de factură eMAG e doar un link către PDF, nu o depunere SPV.

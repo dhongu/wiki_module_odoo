@@ -1,11 +1,10 @@
 # Conector Marketplace WooCommerce (localizat la `deltatech_marketplace_woocommerce/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_woocommerce`
-- **Versiune:** `19.0.0.0.16`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_woocommerce
+- **Versiune:** `18.0.0.0.8`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/18.0/deltatech_marketplace_woocommerce
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_woocommerce`
 - **Ultima Ingestie:** `2026-09-11`
-- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -28,20 +27,25 @@ Modulul conectează Odoo cu magazine online WooCommerce, sincronizând produse, 
 
 #### 3. Dependențe
 
-- [deltatech_marketplace](../deltatech_marketplace/index.md)
-- [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md)
-- [deltatech_marketplace_sale_stage](../deltatech_marketplace_sale_stage/index.md)
-- [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md)
-- [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md)
-- [deltatech_marketplace_website](../deltatech_marketplace_website/index.md)
+- `deltatech_marketplace`
+- `deltatech_marketplace_sale`
+- `deltatech_marketplace_sale_stage`
+- `deltatech_marketplace_delivery`
+- `deltatech_marketplace_payment`
+- `deltatech_marketplace_website`
 
 #### 4. Componente Cheie
 
 *(secțiune omisă conform fluxului de ingestie: `readme/DESCRIPTION.md` acoperă Sumarul și Funcționalitățile Cheie, iar Componentele Cheie nu sunt cerute explicit de readme)*
 
+**Diferențe față de seria 19.0**
+
+- Nu există traducerea filtrelor de status ale comenzilor (`woocommerce_order_filters.py`, adăugat pe 19.0) și nici o vizualizare proprie de backend: comenzile se importă pe fereastra **Sale Order Days** a framework-ului (parametrul `after` al API-ului), iar statusul WooCommerce se mapează la o fază de vânzare creată automat la prima întâlnire.
+- Statusul comenzii **se trimite** înapoi spre WooCommerce (`_woo_push_order_status()`, `PUT orders/{id}`) când faza de vânzare se schimbă în Odoo; produsele rămân totuși doar import, singurul alt lucru exportat fiind stocul.
+
 **Mapare câmpuri produs**
 
-Documentată integral în `readme/USAGE.md` (punctul 7), derivată din `woo_import_by_values()` și `woo_stock_export()`. Două limitări reale ale conectorului: **produsele sunt doar import** — nu există `woo_create`/`woo_write` pe legăturile de produs, singurul lucru care pleacă spre WooCommerce e stocul — iar prețul vine pe variații, nu pe șablon, deci un produs simplu importat ca șablon rămâne fără preț propriu.
+Documentată integral în `readme/USAGE.md` (secțiunea „Product field mapping”), derivată din `woo_import_by_values()` și `woo_stock_export()`. Două limitări reale ale conectorului: **produsele sunt doar import** — nu există `woo_create`/`woo_write` pe legăturile de produs, singurul lucru care pleacă spre WooCommerce e stocul — iar prețul vine pe variații, nu pe șablon, deci un produs simplu importat ca șablon rămâne fără preț propriu.
 
 | Câmp | Câmp Odoo | Câmp WooCommerce | Direcție |
 |------|-----------|------------------|----------|
@@ -61,7 +65,10 @@ Documentată integral în `readme/USAGE.md` (punctul 7), derivată din `woo_impo
 
 #### 5. Conexiuni
 
-- [deltatech_marketplace_shopify](../deltatech_marketplace_shopify/index.md): conector marketplace analog, pentru magazine Shopify, construit pe același nucleu `deltatech_marketplace`.
+- [deltatech_marketplace_shopify](../deltatech_marketplace_shopify/index.md): conector marketplace analog, pentru Shopify.
 - [deltatech_marketplace_emag](../deltatech_marketplace_emag/index.md): conector marketplace analog, pentru eMAG.
-- [deltatech_marketplace_magento](../deltatech_marketplace_magento/index.md): conector marketplace analog, pentru Magento.
 - [deltatech_marketplace_prestashop](../deltatech_marketplace_prestashop/index.md): conector marketplace analog, pentru PrestaShop.
+- [deltatech_marketplace_merchantpro](../deltatech_marketplace_merchantpro/index.md): conector marketplace analog, pentru MerchantPro.
+- [deltatech_marketplace_trendyol](../deltatech_marketplace_trendyol/index.md): conector marketplace analog, pentru Trendyol.
+- `deltatech_marketplace`: cadrul de bază marketplace peste care e construit conectorul.
+- `deltatech_marketplace_sale` / `_sale_stage` / `_delivery` / `_payment` / `_website`: comanda importată, faza de vânzare mapată din statusul WooCommerce, transportatorul, metoda de plată și integrarea de site.
