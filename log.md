@@ -4,6 +4,17 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-11] Re-ingestie `deltatech_sale_product_reference` + fișă consultant (PR bitshop#2819)
+
+- **Acțiune:** Pagină regenerată integral și fișă consultant nouă, copiată în wiki cu cele 8 capturi. Pagina veche era **greșită, nu doar învechită**: descria versiunea 19.0.1.2.0 și convenția în care clientul era înregistrat ca *furnizor* al produsului (`product.supplierinfo`) — convenție abandonată în 19.0.2.0.0, când referințele au primit model propriu, `product.customerinfo`.
+- **Sursă:** `readme/DESCRIPTION.md` (+ `USAGE.md` / `CONFIGURE.md` pentru detalii operaționale) și analiză de cod pentru Componente Cheie; fluxul pas-cu-pas rămâne în fișa consultant, nu e dublat în pagină.
+- **Două defecte găsite scriind fișa și reparate în 19.0.2.0.1:** (1) la facturare, `_get_journal_items_full_name` reintroducea denumirea noastră de produs **deasupra** celei a clientului — exact dubla denumire pe care modulul o elimină pe ofertă; suprimată acum prin `_prepare_invoice_line`, cu două teste de regresie. XML-ul e-Facturii **nu** era afectat (exportatorul standard elimină oricum denumirea redundantă). (2) lista „Referințe client" din tabul Vânzări nu avea titlu de secțiune și apărea ca tabel orfan; ancora nouă a fost propagată în `.pot`/`ro.po`, altfel titlul ieșea în engleză pe interfață RO.
+- **Dependențe/Conexiuni:** `sale` (singura dependență). Legătura cu [deltatech_edi](deltatech_edi/index.md) a fost rescrisă ca **limitare cunoscută**, nu integrare — EDI folosește încă `product.supplierinfo` și **re-creează** rândurile la fiecare comandă importată, deci la clienții cu EDI codul se întreține deocamdată în două locuri. Adăugate la Conexiuni și modulele de proiect `terrabit_inedit` / `inedit_reports` (ca text, wiki-ul nu documentează module de proiect client).
+- **De urmărit:** fișa consultant a modulului `inedit_reports` descrie încă vechea convenție („lista de prețuri furnizor") — de corectat separat.
+- **Fișiere actualizate:** `deltatech_sale_product_reference/` (index.md rescris, FISA_CONSULTANT.md + 8 capturi noi), `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-09-11] Resincronizare registru de casă, casierie și retururi POS (tichet #9362, Damira)
 
 - **Acțiune:** Actualizate trei pagini după livrările din 08–11.09: versiuni, funcționalități noi și fișa retururilor POS cu captura care lipsea.
