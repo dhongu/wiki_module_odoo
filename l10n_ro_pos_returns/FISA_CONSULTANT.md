@@ -113,6 +113,13 @@ pentru bonurile anonime este refuzat, iar contactul ales trebuie să aibă țara
 strada completate — datele pe care factura le cere destinatarului. Mesajul apare **la casă**, cât
 clientul este încă acolo, nu ca eroare de postare după ce a plecat cu banii.
 
+![Ecranul de plată la un retur: „Factură" bifat, clientul cerut, „Validează" indisponibil](screenshots/03_retur_la_casa.png)
+
+Pe ecranul de plată se văd trei lucruri: totalul este **negativ**, comutatorul **Factură** este
+**bifat automat** — modulul marchează bonul de retur „de facturat" fără intervenția casierului —
+iar butonul **Validează** rămâne **indisponibil** până se alege clientul. Butonul **Client** este
+evidențiat exact pentru asta.
+
 ### Pasul 4 — Factura de retur
 
 La sincronizarea bonului, factura de retur se emite și se postează automat: document de tip **notă de
@@ -122,7 +129,7 @@ Când returul a fost introdus prin butonul de retur al POS-ului — deci este le
 în subsolul facturii, la **Termeni și condiții**, apare și trimiterea la bonul stornat. La un retur
 introdus cu cantități negative direct pe bon, acea legătură nu există, deci câmpul rămâne gol.
 
-![Factura de retur postată, cu TVA pe fiecare articol](screenshots/03_factura_retur.png)
+![Factura de retur postată, cu TVA pe fiecare articol](screenshots/04_factura_retur.png)
 
 Panglica verde **„Inversat"** de pe document nu înseamnă că nota a fost anulată: Odoo o marchează
 astfel după ce documentul a fost stins integral prin plata de pe bon. Este un document valid și
@@ -131,7 +138,7 @@ complet decontat.
 Bonul de retur păstrează legătura către factură, astfel încât documentul se regăsește pornind de la
 oricare dintre cele două.
 
-![Bonul de retur cu factura emisă](screenshots/04_bon_retur.png)
+![Bonul de retur cu factura emisă](screenshots/05_bon_retur.png)
 
 ### Pasul 5 — Verificarea situației
 
@@ -146,7 +153,7 @@ Ce apare acolo are nevoie de atenție — de regulă retururi fără cumpărăto
 intrate prin sincronizare offline.
 **Abia apoi** treceți la emiterea în lot (pasul 6) sau la corectarea contactelor.
 
-![Lista de comenzi filtrată pe retururi fără factură](screenshots/05_filtre_retururi.png)
+![Lista de comenzi filtrată pe retururi fără factură](screenshots/06_filtre_retururi.png)
 
 ### Pasul 6 — Emiterea pentru perioada scursă
 
@@ -166,10 +173,10 @@ rămâne astfel o singură dată în evidență.
 > **Recomandarea practică rămâne emiterea facturii în aceeași perioadă cu bonul**, ori de câte ori
 > este posibil; emiterea retroactivă este soluția pentru situația deja creată, nu regimul normal.
 
-Emiterea în lot nu generează PDF-uri și nu trimite e-mailuri; documentele se transmit ulterior,
-controlat, prin fluxul de e-Factura.
+Facturile de retur se emit fără PDF și fără e-mail — atât cele automate, la finalizarea bonului,
+cât și cele din lot; documentele se transmit ulterior, controlat, prin fluxul de e-Factura.
 
-![Acțiunea de emitere în lot, din meniul Acțiuni](screenshots/06_emitere_lot.png)
+![Acțiunea de emitere în lot, din meniul Acțiuni](screenshots/07_emitere_lot.png)
 
 ### Pasul 7 — Registrul de casă
 
@@ -184,7 +191,7 @@ schimbat; iar restul dat clientului la o vânzare **nu** apare ca plată, pentru
 doar diferența.
 **Abia apoi** tipăriți sau exportați registrul de casă.
 
-![Cele două linii distincte pe contul de casă](screenshots/07_registru_casa.png)
+![Cele două linii distincte pe contul de casă](screenshots/08_registru_casa.png)
 
 ### Pasul 8 — Dispoziția de plată pentru numerarul restituit
 
@@ -192,7 +199,7 @@ Dacă este instalat modulul de casierie, bonul de retur are butonul **Dispoziți
 întocmește documentul cod 14-4-4 pe casieria bonului, cu numerarul efectiv restituit și cu
 beneficiarul de pe bon. Documentul se tipărește și se semnează la casierie.
 
-![Dispoziția de plată tipărită pentru numerarul restituit](screenshots/08_dispozitie_plata.png)
+![Dispoziția de plată tipărită pentru numerarul restituit](screenshots/09_dispozitie_plata.png)
 
 ### Note de monografie și raportare
 
@@ -272,12 +279,18 @@ planul de conturi RO:
 
 1. `01_setari_pos.png` — setările **Facturarea retururilor (RO)** pe punctul de vânzare.
 2. `02_setari_registru_casa.png` — comutatorul **Separă încasările de restituirile POS în numerar**.
-3. `03_factura_retur.png` — factura de retur postată, cu TVA pe articol.
-4. `04_bon_retur.png` — bonul de retur cu factura emisă.
-5. `05_filtre_retururi.png` — lista de comenzi filtrată pe **Retururi fără factură**.
-6. `06_emitere_lot.png` — acțiunea **Emite facturile de retur** din meniul **Acțiuni**, cu bonul selectat.
-7. `07_registru_casa.png` — cele două linii distincte pe contul de casă.
-8. `08_dispozitie_plata.png` — dispoziția de plată tipărită (cod 14-4-4).
+3. `03_retur_la_casa.png` — ecranul de plată la un retur, cu **Factură** bifat și **Validează**
+   indisponibil până la alegerea clientului.
+4. `04_factura_retur.png` — factura de retur postată, cu TVA pe articol.
+5. `05_bon_retur.png` — bonul de retur cu factura emisă.
+6. `06_filtre_retururi.png` — lista de comenzi filtrată pe **Retururi fără factură**.
+7. `07_emitere_lot.png` — acțiunea **Emite facturile de retur** din meniul **Acțiuni**, cu bonul selectat.
+8. `08_registru_casa.png` — cele două linii distincte pe contul de casă.
+9. `09_dispozitie_plata.png` — dispoziția de plată tipărită (cod 14-4-4).
+
+Captura **03** face excepție: interfața POS este o aplicație separată, care nu se poate conduce
+fiabil din suita de capturi, așa că se produce cu `tests/manual_pos_screenshot.py` (instrucțiunile
+complete sunt în capul acelui fișier). Celelalte se regenerează cu comanda de mai jos.
 
 Regenerare:
 

@@ -4,6 +4,17 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-11] Resincronizare registru de casă, casierie și retururi POS (tichet #9362, Damira)
+
+- **Acțiune:** Actualizate trei pagini după livrările din 08–11.09: versiuni, funcționalități noi și fișa retururilor POS cu captura care lipsea.
+- **`l10n_ro_cash_register_report` → 19.0.1.0.2:** raportul preia acum **eticheta liniei contabile** (`aml.name`) ca explicație, nu doar `ref` — care pe liniile de casă e de regulă gol. Contabila Damira reclamase că nu distinge retururile în registru; documentul OCA (`l10n_ro_cash_register`) afișa deja corect `line.name or line.ref`, deci **raportul nostru era cel incomplet**, nu o funcționalitate lipsă. PR terrabit-solutions/l10n_ro_ent#161.
+- **`l10n_ro_cash_bank_enhanced` → 19.0.1.1.2:** suma în litere se formatează acum în modul pentru leu, cu acordul limbii („un leu", „douăzeci **de** lei", „cincizeci **de** bani"). Nucleul trece `num2words` prin `.title()` și lipește eticheta fixă a monedei, deci pe un formular 14-4-4 semnat la casierie scria „Cinci Sute Patruzeci Și Patru Leu și Cincizeci Bani". Alte monede rămân pe nucleu. Corectată și afirmația din pagină, care spunea că suma vine din `currency.amount_to_text`. PR #139.
+- **`l10n_ro_pos_returns` → 19.0.1.1.4:** fișa are acum **nouă** capturi. Cea nouă (`03_retur_la_casa.png`) e ecranul de plată POS: total negativ, **Factură** bifat automat, **Validează** indisponibil până la alegerea clientului. Nu se produce din suita de capturi — interfața POS e OWL separată; scriptul e `tests/manual_pos_screenshot.py`, cu capcanele notate în capul fișierului (sesiunea POS e legată de userul care a deschis-o; cookie-ul Odoo e per-host, nu per-port; butonul e `.pay-order-button`; traducerile POS cer `--load-language=ro_RO`; `env.cr.commit()` din shell poate fi anulat). PR #168.
+- **Delimitarea celor două registre:** ambele module își descriu acum reciproc rolul în `DESCRIPTION.md` — aceleași linii contabile, deci **aceleași cifre**; diferă că unul produce documentul numerotat (Community), celălalt raportul interogabil (Enterprise). PR-uri dhongu/l10n-romania#549 și terrabit-solutions/l10n_ro_ent#167. Paginile wiki se refereau deja corect una la alta.
+- **Fișiere actualizate:** `l10n_ro_pos_returns/` (fișă + 9 capturi, cele vechi șterse), `l10n_ro_cash_bank_enhanced/index.md`, `l10n_ro_cash_register_report/index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-09-08] Ingestie `deltatech_credit_control` — modul nou în bitshop_ent
 
 - **Acțiune:** Prima ingestie a modulului `deltatech_credit_control` (Credit Control Cockpit,

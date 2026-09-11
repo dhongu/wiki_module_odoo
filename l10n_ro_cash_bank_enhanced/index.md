@@ -1,10 +1,10 @@
 # Romania - Cash and Bank Enhanced (localizat la `l10n_ro_cash_bank_enhanced/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_cash_bank_enhanced`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.2`
 - **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cash_bank_enhanced](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cash_bank_enhanced)
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_cash_bank_enhanced`
-- **Ultima Ingestie:** `2026-08-31`
+- **Ultima Ingestie:** `2026-09-11`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -44,6 +44,12 @@ acoperite nativ de Odoo Enterprise (sincronizare bancară, OCR extrase, reconcil
 - **Plafoane configurabile**: valorile pot fi ajustate (de exemplu pentru magazinele cash and
   carry, unde plafonul legal este 10.000 RON), iar controlul poate fi dezactivat per companie.
 
+- **Suma în litere cu acordul limbii române** pe dispoziția de casă: „unu" devine „un" înaintea
+  substantivului, de la 20 în sus se leagă cu „de", iar substantivul se acordă (leu/lei, ban/bani).
+  Nucleul Odoo trece rezultatul prin `.title()` și lipește eticheta fixă a monedei, deci scria
+  „Cinci Sute Patruzeci Și Patru Leu și Cincizeci Bani" pe un formular semnat la casierie. Alte
+  monede rămân pe implementarea nucleului.
+
 #### 3. Dependențe
 
 - `account_accountant`
@@ -71,7 +77,8 @@ structura fișierelor modulului)*
 - `l10n.ro.cash.payment.order`: registrul dispozițiilor de casă. Folosește `sequence.mixin` pentru
   numerotare, cu `_get_last_sequence_domain` care filtrează pe casierie, operațiune și an —
   mixinul cere clauza `WHERE` completă, altfel interogarea de secvență iese fără `WHERE` și crapă
-  în SQL. Suma în litere vine din `currency.amount_to_text`; actul de identitate al beneficiarului
+  în SQL. Suma în litere se formatează în modul pentru leu, cu acordul limbii române —
+  `currency.amount_to_text` rămâne pentru celelalte monede; actul de identitate al beneficiarului
   se reține pe document, nu în fișa partenerului.
 
 **Vizualizări**
