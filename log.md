@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-11] Mapare câmpuri produs — conectorul Magento (PR bitshop_marketplace#333)
+
+- **Acțiune:** Adăugată secțiunea **Mapare câmpuri produs** în Componente Cheie pe pagina `deltatech_marketplace_magento`, după modelul celor șase conectoare din PR #330.
+- **Două fapte notate înaintea tabelului, pentru că schimbă felul în care se citește:** produsele sunt **doar import** (`magento_write()` e stub care doar loghează un avertisment; înapoi pleacă doar stocul prin `/inventory/source-items` și prețul prin `/products/base-prices`, ambele potrivite pe SKU), iar prețul se citește doar pe produsul configurabil — importul de variantă lasă `list_price` neatins.
+- **Rămase de ingerat:** Doraly, OpenCart și Odoo nu au încă tabel în modul, deci nici în wiki.
+- **Fișiere actualizate:** `deltatech_marketplace_magento/index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-09-11] Mapare câmpuri produs pentru 6 conectoare marketplace (PR bitshop_marketplace#330)
 
 - **Acțiune:** Adăugată secțiunea **Mapare câmpuri produs** în Componente Cheie pe paginile `deltatech_marketplace_shopify`, `_emag`, `_prestashop`, `_woocommerce`, `_merchantpro`, `_trendyol` — tabel `Câmp | Câmp Odoo | Câmp platformă | Direcție`, tradus din tabelele noi din `readme/USAGE.md` ale modulelor.

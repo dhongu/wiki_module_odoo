@@ -3491,7 +3491,7 @@
     "version": "19.0.0.0.15",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_magento",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_magento",
-    "last_ingest": "2026-08-26",
+    "last_ingest": "2026-09-11",
     "friendly_name": "Conector Marketplace Magento",
     "summary": "Conectorul Magento Marketplace este o extensie Odoo dezvoltată de Terrabit care realizează o integrare fluidă între sistemul ERP Odoo și Magento, o platformă de e-commerce de nivel enterprise. Conectorul permite afacerilor să sincronizeze și să gestioneze magazinele online Magento direct din Odoo, oferind o soluție unificată pentru gestionarea produselor, datelor clienților, comenzilor și a stocurilor pe ambele platforme. Astfel, Magento devine canalul de vânzare online, iar Odoo rămâne sursa unică de adevăr pentru operațiunile de back-office.",
     "features": [
