@@ -4,6 +4,16 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-11] Mapare câmpuri produs pentru 6 conectoare marketplace (PR bitshop_marketplace#330)
+
+- **Acțiune:** Adăugată secțiunea **Mapare câmpuri produs** în Componente Cheie pe paginile `deltatech_marketplace_shopify`, `_emag`, `_prestashop`, `_woocommerce`, `_merchantpro`, `_trendyol` — tabel `Câmp | Câmp Odoo | Câmp platformă | Direcție`, tradus din tabelele noi din `readme/USAGE.md` ale modulelor.
+- **Sursă:** PR #330 pe `bitshop_marketplace` (19.0), care introduce convenția în `AGENTS.md` — fiecare conector trebuie să documenteze în `readme/USAGE.md` ce câmpuri schimbă cu marketplace-ul, derivat din cod (`*_convert_result_to_values`, `*_write`, `*_export_*`, constructorii de payload), nu din documentația API.
+- **Două limitări reale, notate în pagini pentru că schimbă felul în care se citește tabelul:** produsele WooCommerce sunt **doar import** (nu există `woo_create`/`woo_write` pe legăturile de produs, doar stocul pleacă înapoi) și prețul vine pe variații, nu pe șablon; pe Trendyol listarea e identificată prin cod de bare (`external_id`), deci un produs fără cod de bare nu poate fi exportat, iar toate exporturile trec prin API-ul batch asincron.
+- **Rămase de ingerat:** conectoarele Magento, Doraly, OpenCart și Odoo nu au încă tabel în modul, deci nici în wiki.
+- **Fișiere actualizate:** cele 6 `index.md` (secțiune nouă + data ingestiei), `log.md`, `.index/`.
+
+---
+
 ## [2026-09-11] Re-ingestie `deltatech_sale_product_reference` + fișă consultant (PR bitshop#2819)
 
 - **Acțiune:** Pagină regenerată integral și fișă consultant nouă, copiată în wiki cu cele 8 capturi. Pagina veche era **greșită, nu doar învechită**: descria versiunea 19.0.1.2.0 și convenția în care clientul era înregistrat ca *furnizor* al produsului (`product.supplierinfo`) — convenție abandonată în 19.0.2.0.0, când referințele au primit model propriu, `product.customerinfo`.

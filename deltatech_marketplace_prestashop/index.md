@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.0.2.15`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_prestashop`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_prestashop`
-- **Ultima Ingestie:** `2026-08-26`
+- **Ultima Ingestie:** `2026-09-11`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -48,6 +48,35 @@ Conform fluxului de ingestie, secțiunile de componente nu au fost extrase din c
 **Acțiuni Automate / Acțiuni Server**
 
 - Nu au fost extrase din cod (vezi nota de mai sus). Descrierea menționează existența unor joburi programate de sincronizare și procesare în fundal; cron-ul comun „Marketplace: Get Orders" (inactiv implicit) importă comenzile pentru backend-urile fără „Disable Import Sale Order" bifat.
+
+**Mapare câmpuri produs**
+
+Documentată integral în `readme/USAGE.md` (punctul 11), derivată din `prestashop_import_by_id()`, `prestashop_create()`, `prestashop_write()` și binderul de stoc. Câmpurile traductibile circulă pe fiecare limbă din `marketplace.lang` (structura multilingvă construită de `prestashop_get_translatable_payload()`); fără nicio limbă mapată se trimit ca șiruri simple, în limba backend-ului.
+
+| Câmp | Câmp Odoo | Câmp PrestaShop | Direcție |
+|------|-----------|-----------------|----------|
+| ID produs | `external_id` (legătură) | `id` | ambele |
+| Denumire produs | `name` | `name` (traductibil) | ambele |
+| Referință internă | `default_code`, `external_code` (legătură) | `reference` | ambele |
+| Preț de vânzare | `list_price` | `price` (fără TVA) | ambele (importul adaugă TVA cu **Tax included**; exportul ia prețul din lista backend-ului) |
+| Cod de bare | `barcode` | `ean13` | ambele |
+| Greutate | `weight` | `weight` | ambele |
+| Publicat | `active` | `active` | Odoo → PrestaShop |
+| Descriere site | `website_description` | `description` (traductibil) | ambele |
+| Descriere scurtă | `description_sale` | `description_short` (traductibil) | Odoo → PrestaShop |
+| Meta titlu | `website_meta_title` | `meta_title` (traductibil) | ambele |
+| Meta descriere | `website_meta_description` | `meta_description` (traductibil) | ambele |
+| Meta cuvinte-cheie | `website_meta_keywords` | `meta_keywords` (traductibil) | ambele |
+| Categorii eCommerce | `public_categ_ids` | `associations.categories` | ambele (cu **Use public category**) |
+| Caracteristici | valori `product.attribute.value`, prin `marketplace.product.attribute.value` (`product_feature_values`) | `associations.product_features` | PrestaShop → Odoo |
+| Atribute de variantă | `attribute_line_ids`, prin `marketplace.product.attribute.value` (`product_option_values`) | `associations.product_option_values` | PrestaShop → Odoo |
+| Variante | legături `marketplace.product` | `associations.combinations`, `/combinations` | PrestaShop → Odoo |
+| Referință variantă | `default_code`, `external_code` (legătură) | `/combinations` `reference` | PrestaShop → Odoo |
+| Preț variantă | `list_price` | `/combinations` `price` | PrestaShop → Odoo |
+| Accesorii | `accessory_product_ids` | `associations.accessories` | PrestaShop → Odoo |
+| Imagine principală | `image_1920` | `id_default_image`, `/images/products/{id}` | ambele |
+| Imagini suplimentare | înregistrări `product.image` | `associations.images` | ambele |
+| Stoc | `odoo_stock` (legătură), `external_quantity` (`marketplace.stock`) | `/stock_availables` `quantity` | ambele |
 
 #### 5. Conexiuni
 

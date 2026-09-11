@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.0.29.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_shopify
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_shopify`
-- **Ultima Ingestie:** `2026-08-26`
+- **Ultima Ingestie:** `2026-09-11`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -105,6 +105,33 @@ Dependență externă Python: `ShopifyAPI`.
 
 - `cron_shopify_refresh_tokens` (`data/cron.xml`): rulează la fiecare 23 de ore, reînnoiește token-urile OAuth pentru backend-urile Dev Dashboard Apps active (vizibilă doar în Settings → Technical → Scheduled Actions, nu în meniul Marketplace → Configuration → Crons).
 - `job_function_sale_order_job_shopify_import` și `job_function_sale_order_shopify_job_from_webhook` (`data/job_function.xml`): joburi `queue_job` pentru importul comenzilor, pe canalele `shopify_inbound`/`shopify_outbound`, cu tipar de retry configurat.
+
+**Mapare câmpuri produs**
+
+Documentată integral în `readme/USAGE.md` (secțiunea „Product field mapping"), derivată din cod: `shopify_convert_result_to_values()`, `shopify_write()`, `product_set_input()`, `variant_bulk_input()`. „ambele" = câmpul circulă în ambele direcții, fiecare pe acțiunea ei (import, export, export preț).
+
+| Câmp | Câmp Odoo | Câmp Shopify | Direcție |
+|------|-----------|--------------|----------|
+| Denumire produs | `name` | `title` | ambele |
+| Referință internă (SKU) | `default_code` | `variants[].sku` (`inventoryItem.sku`) | ambele |
+| Cod extern | `external_code` (legătură) | `variants[0].sku` | Shopify → Odoo |
+| ID extern | `external_id` (legătură) | `id` (Product / ProductVariant) | ambele |
+| Preț de vânzare | `list_price`, `odoo_price` (legătură) | `variants[].price` | ambele |
+| Preț de catalog | `list_price`, când lista de prețuri a backend-ului dă discount | `compareAtPrice` | Odoo → Shopify |
+| Cod de bare | `barcode` | `barcode` | ambele |
+| Greutate | `weight` (kg) | `inventoryItem.measurement.weight` | ambele |
+| Descriere vânzare | `description_sale` | `descriptionHtml` (`body_html`) | Odoo → Shopify |
+| Categorie produs | `categ_id` | `productType` | ambele (import doar cu **Product Type as Category**) |
+| Marcă | `get_brand_name()` (`deltatech_marketplace_brand`) | `vendor` | Odoo → Shopify |
+| Categorii eCommerce | `public_categ_ids` | colecții (manuale și inteligente) | Shopify → Odoo |
+| Atribute și valori | `attribute_line_ids` | `options[].name` / `options[].values`, `optionValues` | ambele (import doar cu **Options as Attributes**) |
+| Imagine principală | `image_1920` | `images[0].src`, `files` | ambele |
+| Imagini suplimentare | înregistrări `product.image` | `images[1..]` | Shopify → Odoo |
+| Stoc | `odoo_stock`, `external_stock` (legătură) | `InventoryLevel.available`, per locație | ambele |
+| Articol de inventar | `shopify_inventory_item_id` (legătură) | `inventoryItem.id` | Shopify → Odoo |
+| Stare publicare | — (mereu activ la creare) | `status` | Odoo → Shopify |
+| Cod vamal | `hs_code` | `harmonized_system_code` | Shopify → Odoo |
+| Țară de origine | `country_of_origin` | `country_code_of_origin` | Shopify → Odoo |
 
 #### 5. Conexiuni
 

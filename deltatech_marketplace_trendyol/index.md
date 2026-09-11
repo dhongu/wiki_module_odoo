@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.1.8`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_trendyol`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_trendyol`
-- **Ultima Ingestie:** `2026-08-26`
+- **Ultima Ingestie:** `2026-09-11`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -42,6 +42,30 @@ Conform fluxului de ingestie, secțiunea Sumar/Funcționalități a fost preluat
 - **Marcă produs (`brandId`)**: fără câmp de mapare în interfață; valoarea se citește doar dintr-o cheie de context (`trendyol_brand_id`) pe care nimic din UI standard nu o setează.
 - `ir_cron_trendyol_import_orders`: sarcină programată „Trendyol: Import Orders", la fiecare 30 de minute, dezactivată implicit (se activează manual după validarea configurării).
 - `ir_cron_trendyol_export_stock`: sarcină programată „Trendyol: Export Stock", la fiecare oră, dezactivată implicit.
+
+**Mapare câmpuri produs**
+
+Documentată integral în `readme/USAGE.md` (punctul 9), derivată din `trendyol_job_import()`, `trendyol_write()`, `trendyol_export_price()` și `trendyol_stock_export()`. Pe Trendyol listarea e identificată prin **cod de bare** — acela e `external_id` pe legătură, deci un produs fără cod de bare nu poate fi exportat. Exporturile de produs, preț și stoc trec toate prin API-ul batch asincron: conectorul reține `batchRequestId` și îi verifică rezultatul după un minut.
+
+| Câmp | Câmp Odoo | Câmp Trendyol | Direcție |
+|------|-----------|---------------|----------|
+| Cod de bare (ID listare) | `external_id` (legătură), `barcode` | `barcode` | ambele |
+| Cod de stoc | `external_code` (legătură, **Stock Code**), `default_code` | `stockCode` | ambele |
+| Denumire produs | `name` | `title` | ambele |
+| ID produs principal | `default_code` al șablonului | `productMainId` | Odoo → Trendyol |
+| Categorie | `categ_id`, prin `marketplace.product.category` | `categoryId`; `pimCategoryId` la import | ambele (exportul eșuează dacă nu e mapată) |
+| Preț de vânzare | `sale_price` (legătură), `list_price` | `salePrice` | ambele |
+| Preț tăiat | `trendyol_list_price` (legătură) | `listPrice` | ambele |
+| Cotă TVA | `taxes_id` (procentul primei taxe) | `vatRate` | Odoo → Trendyol |
+| Monedă | moneda backend-ului | `currencyType` | Odoo → Trendyol |
+| Stoc | `odoo_stock`, `external_stock` (legătură) | `quantity` | ambele |
+| Greutate volumetrică | `weight` (1 dacă lipsește) | `dimensionalWeight` | Odoo → Trendyol |
+| Descriere | `description_sale`, cu revenire pe denumire | `description` | Odoo → Trendyol |
+| Marcă | `trendyol_brand_id` din context | `brandId` | Odoo → Trendyol |
+| Aprobat | `trendyol_approved` (legătură, doar citire) | `approved` | Trendyol → Odoo |
+| În vânzare | `trendyol_on_sale` (legătură, doar citire) | `onSale` | Trendyol → Odoo |
+| Atribute | `attribute_line_ids`, prin `marketplace.product.attribute(.value)` | `attributes[].attributeId`, `attributes[].attributeValueId`; `attributeValue` / `customAttributeValue` la import | ambele (valorile nemapate sunt sărite și logate) |
+| Imagini | `image_1024` (trimisă ca URL Odoo); `main_image` și restul la import | `images[].url` | ambele |
 
 #### 5. Conexiuni
 

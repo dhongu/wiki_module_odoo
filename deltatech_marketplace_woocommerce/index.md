@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.0.0.16`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_woocommerce
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_woocommerce`
-- **Ultima Ingestie:** `2026-08-26`
+- **Ultima Ingestie:** `2026-09-11`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -38,6 +38,26 @@ Modulul conectează Odoo cu magazine online WooCommerce, sincronizând produse, 
 #### 4. Componente Cheie
 
 *(secțiune omisă conform fluxului de ingestie: `readme/DESCRIPTION.md` acoperă Sumarul și Funcționalitățile Cheie, iar Componentele Cheie nu sunt cerute explicit de readme)*
+
+**Mapare câmpuri produs**
+
+Documentată integral în `readme/USAGE.md` (punctul 7), derivată din `woo_import_by_values()` și `woo_stock_export()`. Două limitări reale ale conectorului: **produsele sunt doar import** — nu există `woo_create`/`woo_write` pe legăturile de produs, singurul lucru care pleacă spre WooCommerce e stocul — iar prețul vine pe variații, nu pe șablon, deci un produs simplu importat ca șablon rămâne fără preț propriu.
+
+| Câmp | Câmp Odoo | Câmp WooCommerce | Direcție |
+|------|-----------|------------------|----------|
+| ID produs | `external_id` (legătură) | `id` | WooCommerce → Odoo |
+| Denumire produs | `name` | `name` | WooCommerce → Odoo |
+| SKU | `default_code`, `external_code` (legătură) | `sku` | WooCommerce → Odoo |
+| Descriere site | `website_description` | `description` | WooCommerce → Odoo |
+| Greutate | `weight` | `weight` | WooCommerce → Odoo |
+| Preț de vânzare | `list_price` | `price`, citit de pe variație (`products/{id}/variations`) | WooCommerce → Odoo |
+| Atribute | `marketplace.product.attribute`, apoi `attribute_line_ids` | `attributes[].id`, `attributes[].name`, `attributes[].options` | WooCommerce → Odoo |
+| Valoare atribut variantă | `odoo_attribute_values` | `attributes[].option` de pe variație | WooCommerce → Odoo |
+| Variante | legături `marketplace.product` | `products/{id}/variations` | WooCommerce → Odoo |
+| Imagine principală | `image_1920` | `images[0].src` | WooCommerce → Odoo |
+| Imagini suplimentare | înregistrări `product.image` | `images[].src`, `images[].name` | WooCommerce → Odoo |
+| Cantitate în stoc | `odoo_stock` (legătură) | `stock_quantity` | Odoo → WooCommerce |
+| Stare stoc | derivată din `odoo_stock` (mai mare ca zero) | `stock_status` (`instock` / `outofstock`) | Odoo → WooCommerce |
 
 #### 5. Conexiuni
 

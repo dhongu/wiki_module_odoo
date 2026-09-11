@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.0.0.17`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_merchantpro
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_merchantpro`
-- **Ultima Ingestie:** `2026-08-26`
+- **Ultima Ingestie:** `2026-09-11`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -36,6 +36,30 @@ Un magazin MerchantPro lângă Odoo, fără conector, înseamnă catalog, stoc �
 #### 4. Componente Cheie
 
 *Conform fluxului de ingestie, secțiunile 'Sumar' și 'Funcționalități Cheie' au fost preluate din `readme/DESCRIPTION.md` (corectat unde textul original nu mai reflecta comportamentul real al codului — vezi nota din secțiunea 2), iar analiza detaliată a codului pentru componente a fost omisă deoarece Readme-ul nu o solicită explicit.*
+
+**Mapare câmpuri produs**
+
+Documentată integral în `readme/USAGE.md` (secțiunea „Product field mapping"), derivată din `mp_import_by_values()`, `mp_convert_from_odoo()` și `mp_call_inventory()`. Payload-ul de export se construiește din câmpurile listate în `mp_get_export_fields()`, deci un export parțial (la scriere) trimite doar ce s-a schimbat.
+
+| Câmp | Câmp Odoo | Câmp MerchantPro | Direcție |
+|------|-----------|------------------|----------|
+| ID produs | `external_id` (legătură) | `id` | ambele |
+| Denumire produs | `name` | `name` | ambele |
+| SKU | `default_code` | `sku` | ambele |
+| Referință externă | `external_code` (legătură) | `ext_ref` | MerchantPro → Odoo |
+| Cod de bare | `barcode` | `ean` | ambele |
+| Preț de vânzare | `list_price` | `price_net` (fără TVA; recalculat la export cu `taxes_id.compute_all()`) | ambele |
+| Cost | `standard_price` | `cost_net` | Odoo → MerchantPro |
+| Greutate | `weight` | `weight` | Odoo → MerchantPro |
+| Descriere site | `website_description` | `description` | ambele |
+| Publicat | `active` | `status` (`active` / `inactive`) | Odoo → MerchantPro |
+| Poate fi vândut | `sale_ok` | `visibility` (`visible` / `hidden`) | Odoo → MerchantPro |
+| Sfârșit de viață | `eol` împreună cu `qty_available` zero | `status` forțat pe `inactive` | Odoo → MerchantPro |
+| Categorii eCommerce | `public_categ_ids` | `category_id` (prima) și `categories[]` | ambele (o categorie fără legătură e creată întâi în MerchantPro) |
+| Imagine principală | `image_1920` | intrarea din `images[]` cu `default` true (`base64`) | MerchantPro → Odoo |
+| Imagini suplimentare | înregistrări `product.image` | `images[]` (`caption`, `base64`, `url`) | ambele |
+| Tip produs | `product_variant_count` | `type` (`basic` / `multi_variant`) | Odoo → MerchantPro (la creare) |
+| Stoc | `odoo_stock` (legătură) | `stock`, prin `/api/v2/inventory/id/{id}` | Odoo → MerchantPro |
 
 #### 5. Conexiuni
 

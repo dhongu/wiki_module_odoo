@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.2.3.26`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_emag`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_emag`
-- **Ultima Ingestie:** `2026-08-26`
+- **Ultima Ingestie:** `2026-09-11`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -66,6 +66,38 @@ Modulul este construit peste cadrul marketplace al Deltatech și implementează 
 - **Job-uri programate**: automatizează sincronizarea în fundal — `ir_cron_emag_set_price` (definit în `data/ir_cron_data.xml`) rulează auto-pricing-ul pe buy box (dezactivat implicit).
 
 Pentru detalii suplimentare de configurare și operare, modulul include un manual de utilizare („Manual utilizare eMAG Marketplace.docx"), un ghid `readme/CONFIGURE.md` și un ghid pas-cu-pas `readme/USAGE.md`.
+
+**Mapare câmpuri produs**
+
+Documentată integral în `readme/USAGE.md` (secțiunea „Product field mapping"), derivată din `emag_job_import()`, `emag_get_price()`, `emag_write()` și `emag_stock_export()`. eMAG lucrează cu *oferte* pe un catalog existent: câmpurile de documentație (denumire, marcă, descriere, imagini, caracteristici) sunt acceptate doar cât timp oferta e nouă sau încă editabilă.
+
+| Câmp | Câmp Odoo | Câmp eMAG | Direcție |
+|------|-----------|-----------|----------|
+| ID ofertă | `external_id` (legătură) | `id` | ambele |
+| Denumire ofertă | `name` | `name` | ambele |
+| PNK | `external_code` (legătură, **PNK**) | `part_number_key` | eMAG → Odoo |
+| Part number | `external_part_number` (legătură) | `part_number` | ambele (export doar la crearea ofertei) |
+| Referință internă | `default_code` | `part_number_key` sau `part_number`, după **Mapping product code** | eMAG → Odoo |
+| Cod de bare (EAN) | `barcode` | `ean[]` | ambele (export doar la crearea ofertei) |
+| Preț de vânzare | `sale_price` (legătură), `list_price` | `sale_price` | ambele |
+| Preț minim / maxim | `min_sale_price`, `max_sale_price` (legătură) | `min_sale_price`, `max_sale_price` | ambele (la creare, ±10% din prețul Odoo) |
+| Preț recomandat | `recommended_price` (legătură, doar citire); exportul trimite `list_price` | `recommended_price` | ambele |
+| Cea mai bună ofertă | `best_offer_sale_price`, `best_offer_recommended_price` (legătură) | aceleași | eMAG → Odoo |
+| Poziție buy-box | `buy_button_rank` (legătură) | `buy_button_rank` | eMAG → Odoo |
+| Stare ofertă | `emag_active` (legătură) | `status` (1 = activă) | ambele (exportul trimite mereu 1) |
+| Stoc | `odoo_stock`, `external_stock` (legătură) | `stock[].value` (`/offer_stock`), `general_stock` | ambele |
+| Categorie | `categ_id`, prin `marketplace.product.category` | `category_id` | ambele (exportul eșuează dacă nu e mapată) |
+| Marcă | `get_brand_name()` (`deltatech_brand_field`), altfel numele companiei | `brand` | Odoo → eMAG |
+| Greutate | `weight` (kg) | `weight`; `/measurements` `weight` (g) | Odoo → eMAG |
+| Dimensiuni | `product_length`, `product_width`, `product_height` (cm) | `/measurements` `length`, `width`, `height` (mm) | Odoo → eMAG |
+| Descriere | `website_description` | `description` | ambele |
+| Imagine principală | `image_1024` (trimisă ca URL Odoo) | `images[]` cu `display_type` 1 | ambele |
+| Imagini suplimentare | înregistrări `product.image` | `images[]` cu `display_type` 0 | ambele |
+| Caracteristici | `attribute_line_ids`, prin `marketplace.product.attribute(.value)` | `characteristics[].id`, `characteristics[].value` | ambele (valorile nemapate sunt sărite și logate) |
+| Familie (variante) | legătura de șablon `marketplace.product.template` | `family.id`, `family.name` | eMAG → Odoo |
+| URL produs | URL-ul de site al produsului (`/shop/...`) | `url` | Odoo → eMAG |
+| Cotă TVA | fix (`vat_id` 1) | `vat_id` | Odoo → eMAG |
+| Monedă | fix (RON) | `currency_type` | Odoo → eMAG |
 
 #### 5. Conexiuni
 
