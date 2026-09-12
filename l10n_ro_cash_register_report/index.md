@@ -1,4 +1,4 @@
-# Registru de Casă (RO) - Raport (localizat la `l10n_ro_cash_register_report/index.md`)
+# Romania - Registru de casă (localizat la `l10n_ro_cash_register_report/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_cash_register_report`
 - **Versiune:** `19.0.1.0.2`

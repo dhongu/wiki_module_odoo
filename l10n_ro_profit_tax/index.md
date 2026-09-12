@@ -1,4 +1,4 @@
-# Impozit pe Profit (D100/D101) (localizat la `l10n_ro_profit_tax/index.md`)
+# Romania - Impozit pe profit (D100/D101) (localizat la `l10n_ro_profit_tax/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_profit_tax`
 - **Versiune:** `19.0.1.1.1`

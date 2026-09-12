@@ -1,4 +1,4 @@
-# Grup Fiscal TVA Consolidat România (localizat la `l10n_ro_vat_group/index.md`)
+# Romania - Grup fiscal TVA consolidat (localizat la `l10n_ro_vat_group/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_vat_group`
 - **Versiune:** `19.0.1.0.1`

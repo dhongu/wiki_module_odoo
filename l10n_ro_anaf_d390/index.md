@@ -1,4 +1,4 @@
-# ANAF D390 (localizat la `l10n_ro_anaf_d390/index.md`)
+# Romania - Declarație recapitulativă (D390) (localizat la `l10n_ro_anaf_d390/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d390`
 - **Versiune:** `19.0.0.0.6`

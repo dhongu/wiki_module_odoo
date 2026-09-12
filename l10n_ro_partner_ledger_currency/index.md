@@ -1,4 +1,4 @@
-# Fișa Partenerului în Valută (localizat la `l10n_ro_partner_ledger_currency/index.md`)
+# Romania - Fișa partenerului în valută (localizat la `l10n_ro_partner_ledger_currency/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_partner_ledger_currency`
 - **Versiune:** `19.0.1.4.0`

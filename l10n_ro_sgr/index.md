@@ -1,4 +1,4 @@
-# Sistem Garanție-Returnare (SGR) România (localizat la `l10n_ro_sgr/index.md`)
+# Romania - Sistem Garanție-Returnare (SGR) (localizat la `l10n_ro_sgr/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_sgr`
 - **Versiune:** `19.0.1.3.1`

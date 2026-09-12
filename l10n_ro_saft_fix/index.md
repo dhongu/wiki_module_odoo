@@ -1,4 +1,4 @@
-# Romania - SAF-T install fix (localizat la `l10n_ro_saft_fix/index.md`)
+# Romania - Corecție la instalarea SAF-T (localizat la `l10n_ro_saft_fix/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_saft_fix`
 - **Versiune:** `19.0.1.0.0`

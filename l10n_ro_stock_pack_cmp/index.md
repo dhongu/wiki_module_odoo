@@ -1,4 +1,4 @@
-# Romania - Stock Valuation Pack CMP (AVCO) (localizat la `l10n_ro_stock_pack_cmp/index.md`)
+# Romania - Pachet valorizare stocuri CMP (localizat la `l10n_ro_stock_pack_cmp/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_pack_cmp`
 - **Versiune:** `19.0.1.3.3`

@@ -1,4 +1,4 @@
-# Romania - Balance Confirmation (localizat la `l10n_ro_balance_confirmation/index.md`)
+# Romania - Confirmare de sold (localizat la `l10n_ro_balance_confirmation/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_balance_confirmation`
 - **Versiune:** `19.0.2.1.1`

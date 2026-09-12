@@ -1,4 +1,4 @@
-# Romania - Reconciliere e-TVA (Decont precompletat ANAF) (localizat la `l10n_ro_saft_etva/index.md`)
+# Romania - Reconciliere e-TVA (decont precompletat ANAF) (localizat la `l10n_ro_saft_etva/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_saft_etva`
 - **Versiune:** `19.0.1.0.2`

@@ -1,4 +1,4 @@
-# Romania - Partner Screening (localizat la `l10n_ro_partner_screening/index.md`)
+# Romania - Verificarea partenerilor (localizat la `l10n_ro_partner_screening/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_partner_screening`
 - **Versiune:** `19.0.1.3.0`

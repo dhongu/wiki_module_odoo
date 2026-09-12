@@ -1,4 +1,4 @@
-# Protecție resetare facturi furnizor și DVI (localizat la `l10n_ro_invoice_dvi_protect/index.md`)
+# Romania - Protecție la resetarea facturilor de furnizor și DVI (localizat la `l10n_ro_invoice_dvi_protect/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_invoice_dvi_protect`
 - **Versiune:** `19.0.1.0.0`

@@ -1,4 +1,4 @@
-# Romania - Diurne și Deplasări (Limită Fiscală 2,5×) (localizat la `l10n_ro_expense_allowance/index.md`)
+# Romania - Diurne și deplasări (plafon 2,5x) (localizat la `l10n_ro_expense_allowance/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_expense_allowance`
 - **Versiune:** `19.0.1.0.0`

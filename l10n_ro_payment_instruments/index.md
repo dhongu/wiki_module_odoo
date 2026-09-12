@@ -1,4 +1,4 @@
-# Instrumente de Plată (Cecuri, Bilete la Ordin) (localizat la `l10n_ro_payment_instruments/index.md`)
+# Romania - Instrumente de plată (cecuri, bilete la ordin) (localizat la `l10n_ro_payment_instruments/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_payment_instruments`
 - **Versiune:** `19.0.1.1.1`

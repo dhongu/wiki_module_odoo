@@ -1,4 +1,4 @@
-# Romania - Data Contabilă Mișcări de Stoc (Posting Date) (localizat la `l10n_ro_stock_posting_date/index.md`)
+# Romania - Data contabilă a mișcărilor de stoc (localizat la `l10n_ro_stock_posting_date/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_posting_date`
 - **Versiune:** `19.0.1.0.0`

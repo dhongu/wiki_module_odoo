@@ -1,4 +1,4 @@
-# Romania - Fișă de Magazie per Gestiune (localizat la `l10n_ro_stock_sheet_gestiune/index.md`)
+# Romania - Fișă de magazie pe gestiuni (localizat la `l10n_ro_stock_sheet_gestiune/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_sheet_gestiune`
 - **Versiune:** `19.0.1.0.0`

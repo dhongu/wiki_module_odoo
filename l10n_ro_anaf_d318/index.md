@@ -1,4 +1,4 @@
-# Romania - ANAF D318 Declaration (localizat la `l10n_ro_anaf_d318/index.md`)
+# Romania - Declarația D318 ANAF (localizat la `l10n_ro_anaf_d318/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d318`
 - **Versiune:** `19.0.1.0.0`

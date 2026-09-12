@@ -1,4 +1,4 @@
-# Romania - Note Explicative Situații Financiare (localizat la `l10n_ro_financial_notes/index.md`)
+# Romania - Note explicative la situațiile financiare (localizat la `l10n_ro_financial_notes/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_financial_notes`
 - **Versiune:** `19.0.1.0.0`

@@ -1,4 +1,4 @@
-# Romania - Repartizare costuri indirecte pe centre de cost (localizat la `l10n_ro_cost_centers/index.md`)
+# Romania - Repartizarea cheltuielilor indirecte pe centre de cost (localizat la `l10n_ro_cost_centers/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_cost_centers`
 - **Versiune:** `19.0.1.0.1`

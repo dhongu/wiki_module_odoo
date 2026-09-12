@@ -1,4 +1,4 @@
-# Romania - Gestiuni Contabile de Stoc (FR-54) (localizat la `l10n_ro_stock_gestiune/index.md`)
+# Romania - Gestiuni contabile de stoc (FR-54) (localizat la `l10n_ro_stock_gestiune/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_gestiune`
 - **Versiune:** `19.0.3.0.2`

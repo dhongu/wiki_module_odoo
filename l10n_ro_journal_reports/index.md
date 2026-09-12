@@ -1,4 +1,4 @@
-# Cont Corespondent în Grand Livre (localizat la `l10n_ro_journal_reports/index.md`)
+# Romania - Cont corespondent în Cartea mare (localizat la `l10n_ro_journal_reports/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_journal_reports`
 - **Versiune:** `19.0.2.0.0`

@@ -1,4 +1,4 @@
-# Romania - Subvenții și Fonduri Nerambursabile (FR-38) (localizat la `l10n_ro_grants/index.md`)
+# Romania - Subvenții și fonduri nerambursabile (FR-38) (localizat la `l10n_ro_grants/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_grants`
 - **Versiune:** `19.0.1.2.2`

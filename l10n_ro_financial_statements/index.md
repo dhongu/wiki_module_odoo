@@ -1,4 +1,4 @@
-# Romania - Situații Financiare Anuale ANAF (FR-31) (localizat la `l10n_ro_financial_statements/index.md`)
+# Romania - Situații financiare anuale ANAF (FR-31) (localizat la `l10n_ro_financial_statements/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_financial_statements`
 - **Versiune:** `19.0.1.9.1`

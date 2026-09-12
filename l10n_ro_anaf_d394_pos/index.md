@@ -1,4 +1,4 @@
-# Romania - D394 Point of Sale (localizat la `l10n_ro_anaf_d394_pos/index.md`)
+# Romania - D394 pentru punctul de vânzare (localizat la `l10n_ro_anaf_d394_pos/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d394_pos`
 - **Versiune:** `19.0.1.1.1`

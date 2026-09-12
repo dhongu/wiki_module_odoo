@@ -1,4 +1,4 @@
-# Romania - e-Factura B2C (Persoane Fizice) (localizat la `l10n_ro_efactura_b2c/index.md`)
+# Romania - e-Factura B2C (persoane fizice) (localizat la `l10n_ro_efactura_b2c/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_efactura_b2c`
 - **Versiune:** `19.0.1.0.0`

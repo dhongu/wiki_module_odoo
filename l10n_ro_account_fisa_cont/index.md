@@ -1,4 +1,4 @@
-# Romania - Fișă de Cont (localizat la `l10n_ro_account_fisa_cont/index.md`)
+# Romania - Fișă de cont (localizat la `l10n_ro_account_fisa_cont/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_account_fisa_cont`
 - **Versiune:** `19.0.1.0.0`

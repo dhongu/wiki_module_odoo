@@ -1,4 +1,4 @@
-# Romania - Inventariere și Înregistrări Contabile (FR-18) (localizat la `l10n_ro_inventory_closing/index.md`)
+# Romania - Închidere de inventar și note contabile (FR-18) (localizat la `l10n_ro_inventory_closing/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_inventory_closing`
 - **Versiune:** `19.0.1.0.1`

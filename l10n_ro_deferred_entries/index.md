@@ -1,4 +1,4 @@
-# Romania - Venituri și Cheltuieli Înregistrate în Avans (471/472) (localizat la `l10n_ro_deferred_entries/index.md`)
+# Romania - Venituri și cheltuieli înregistrate în avans (471/472) (localizat la `l10n_ro_deferred_entries/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_deferred_entries`
 - **Versiune:** `19.0.2.0.0`

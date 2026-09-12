@@ -1,4 +1,4 @@
-# Romania - Blocare storno TVA la încasare declarat (FR-16) (localizat la `l10n_ro_vat_on_payment_lock/index.md`)
+# Romania - Blocare stornare TVA la încasare declarat (FR-16) (localizat la `l10n_ro_vat_on_payment_lock/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_vat_on_payment_lock`
 - **Versiune:** `19.0.1.0.0`

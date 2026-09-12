@@ -1,4 +1,4 @@
-# Romania - ANAF Declarația 207 (WHT PJ Nerezidente) (localizat la `l10n_ro_anaf_d207/index.md`)
+# Romania - Declarația 207 ANAF (impozit la sursă PJ nerezidente) (localizat la `l10n_ro_anaf_d207/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d207`
 - **Versiune:** `19.0.1.0.1`

@@ -1,4 +1,4 @@
-# Deductibilitate TVA România (localizat la `l10n_ro_vat_deductibility/index.md`)
+# Romania - Deductibilitatea TVA (localizat la `l10n_ro_vat_deductibility/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_vat_deductibility`
 - **Versiune:** `19.0.1.4.1`

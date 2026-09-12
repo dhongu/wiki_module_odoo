@@ -1,4 +1,4 @@
-# Creanțe și Datorii Extinse România (FR-29) (localizat la `l10n_ro_receivables_enhanced/index.md`)
+# Romania - Creanțe și datorii extinse (FR-29) (localizat la `l10n_ro_receivables_enhanced/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_receivables_enhanced`
 - **Versiune:** `19.0.1.2.1`

@@ -1,4 +1,4 @@
-# Romania - Cash and Bank Enhanced (localizat la `l10n_ro_cash_bank_enhanced/index.md`)
+# Romania - Casă și bancă extinse (localizat la `l10n_ro_cash_bank_enhanced/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_cash_bank_enhanced`
 - **Versiune:** `19.0.1.1.2`

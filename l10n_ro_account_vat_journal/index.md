@@ -1,4 +1,4 @@
-# Romania - VAT Journals (Sales & Purchase) (localizat la `l10n_ro_account_vat_journal/index.md`)
+# Romania - Jurnale de TVA (vânzări și cumpărări) (localizat la `l10n_ro_account_vat_journal/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_account_vat_journal`
 - **Versiune:** `19.0.1.0.1`

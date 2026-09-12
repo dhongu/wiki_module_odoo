@@ -1,4 +1,4 @@
-# Romania - Reverse Charge Article 331 in Point of Sale (localizat la `l10n_ro_reverse_charge_331_pos/index.md`)
+# Romania - Taxare inversă art. 331 în punctul de vânzare (localizat la `l10n_ro_reverse_charge_331_pos/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_reverse_charge_331_pos`
 - **Versiune:** `19.0.1.0.0`

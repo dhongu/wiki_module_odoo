@@ -1,4 +1,4 @@
-# Jurnal de Bancă (RO) - Raport (localizat la `l10n_ro_bank_register_report/index.md`)
+# Romania - Registru de bancă (localizat la `l10n_ro_bank_register_report/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_bank_register_report`
 - **Versiune:** `19.0.1.0.0`

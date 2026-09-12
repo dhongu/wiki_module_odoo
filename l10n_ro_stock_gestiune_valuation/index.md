@@ -1,4 +1,4 @@
-# Romania - Gestiuni pe Arii de Evaluare (localizat la `l10n_ro_stock_gestiune_valuation/index.md`)
+# Romania - Gestiuni pe arii de evaluare (localizat la `l10n_ro_stock_gestiune_valuation/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_gestiune_valuation`
 - **Versiune:** `19.0.1.0.0`

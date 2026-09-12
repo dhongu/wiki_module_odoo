@@ -1,4 +1,4 @@
-# Romania - Dividende și Registru Acționari (localizat la `l10n_ro_dividends/index.md`)
+# Romania - Dividende și registru acționari (localizat la `l10n_ro_dividends/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_dividends`
 - **Versiune:** `19.0.1.0.1`

@@ -1,4 +1,4 @@
-# Registrul Inventar (FR-50) (localizat la `l10n_ro_inventory_register/index.md`)
+# Romania - Registrul inventar (FR-50) (localizat la `l10n_ro_inventory_register/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_inventory_register`
 - **Versiune:** `19.0.1.3.0`

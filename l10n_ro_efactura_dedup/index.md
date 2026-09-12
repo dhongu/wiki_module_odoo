@@ -1,4 +1,4 @@
-# Romania - e-Factura Deduplicare SPV (localizat la `l10n_ro_efactura_dedup/index.md`)
+# Romania - Deduplicare facturi din SPV (localizat la `l10n_ro_efactura_dedup/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_efactura_dedup`
 - **Versiune:** `19.0.1.0.1`

@@ -1,4 +1,4 @@
-# Romania - e-Sigiliu (Electronic Seals) (localizat la `l10n_ro_esigiliu/index.md`)
+# Romania - e-Sigiliu (sigilii electronice) (localizat la `l10n_ro_esigiliu/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_esigiliu`
 - **Versiune:** `19.0.1.0.0`

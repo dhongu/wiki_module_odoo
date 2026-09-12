@@ -1,4 +1,4 @@
-# Regularizare TVA România (localizat la `l10n_ro_vat_regularization/index.md`)
+# Romania - Regularizare TVA (localizat la `l10n_ro_vat_regularization/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_vat_regularization`
 - **Versiune:** `19.0.1.0.1`

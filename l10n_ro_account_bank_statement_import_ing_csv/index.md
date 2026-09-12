@@ -1,4 +1,4 @@
-# Import Extras ING Business - Format CSV (localizat la `l10n_ro_account_bank_statement_import_ing_csv/index.md`)
+# Romania - Import extrase bancare ING (CSV) (localizat la `l10n_ro_account_bank_statement_import_ing_csv/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_account_bank_statement_import_ing_csv`
 - **Versiune:** `19.0.1.1.0`

@@ -1,4 +1,4 @@
-# Romania - Pistă de Audit Imuabilă (FR-14) (localizat la `l10n_ro_audit_immutable/index.md`)
+# Romania - Pistă de audit imuabilă (FR-14) (localizat la `l10n_ro_audit_immutable/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_audit_immutable`
 - **Versiune:** `19.0.1.1.0`

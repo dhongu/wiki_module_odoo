@@ -1,4 +1,4 @@
-# Integrare REGES-Online România (FR-45) (localizat la `l10n_ro_reges/index.md`)
+# Romania - Integrare REGES-Online (FR-45) (localizat la `l10n_ro_reges/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_reges`
 - **Versiune:** `19.0.1.1.0`

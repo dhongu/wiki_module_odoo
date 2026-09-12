@@ -1,4 +1,4 @@
-# Romania - Currency Rate Live BNR Fix (localizat la `l10n_ro_currency_rate_live_bnr/index.md`)
+# Romania - Corecție curs valutar BNR (localizat la `l10n_ro_currency_rate_live_bnr/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_currency_rate_live_bnr`
 - **Versiune:** `19.0.1.0.0`

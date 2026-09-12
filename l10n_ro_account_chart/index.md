@@ -1,4 +1,4 @@
-# Romania - Plan de Conturi Extins (FR-01) (localizat la `l10n_ro_account_chart/index.md`)
+# Romania - Plan de conturi extins (FR-01) (localizat la `l10n_ro_account_chart/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_account_chart`
 - **Versiune:** `19.0.1.0.0`

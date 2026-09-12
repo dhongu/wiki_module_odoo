@@ -1,4 +1,4 @@
-# Romania - Reconciliere forțată conturi diferite (localizat la `l10n_ro_force_reconcile/index.md`)
+# Romania - Reconciliere forțată între conturi diferite (localizat la `l10n_ro_force_reconcile/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_force_reconcile`
 - **Versiune:** `19.0.1.0.0`

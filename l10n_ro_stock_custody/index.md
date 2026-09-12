@@ -1,4 +1,4 @@
-# Romania - Stock Custody (localizat la `l10n_ro_stock_custody/index.md`)
+# Romania - Stocuri în custodie (localizat la `l10n_ro_stock_custody/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_custody`
 - **Versiune:** `19.0.1.0.0`

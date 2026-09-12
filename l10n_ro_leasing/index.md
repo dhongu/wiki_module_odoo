@@ -1,4 +1,4 @@
-# Leasing Financiar și Operațional (167/21x) (localizat la `l10n_ro_leasing/index.md`)
+# Romania - Leasing financiar și operațional (167/21x) (localizat la `l10n_ro_leasing/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_leasing`
 - **Versiune:** `19.0.1.1.1`

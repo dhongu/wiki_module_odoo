@@ -1,4 +1,4 @@
-# Coeficient K Diferențe Preț Stocuri România (localizat la `l10n_ro_stock_k_coefficient/index.md`)
+# Romania - Coeficient K pentru diferențe de preț la stocuri (localizat la `l10n_ro_stock_k_coefficient/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_k_coefficient`
 - **Versiune:** `19.0.1.0.1`

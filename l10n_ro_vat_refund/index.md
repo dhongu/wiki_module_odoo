@@ -1,4 +1,4 @@
-# Rambursare TVA (D300 Sold Negativ) România (localizat la `l10n_ro_vat_refund/index.md`)
+# Romania - Rambursare TVA (sold negativ D300) (localizat la `l10n_ro_vat_refund/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_vat_refund`
 - **Versiune:** `19.0.1.0.1`

@@ -1,4 +1,4 @@
-# România - Închidere P&L Cont Return (121) (localizat la `l10n_ro_account_return_pl_closing/index.md`)
+# Romania - Închiderea conturilor de venituri și cheltuieli (121) (localizat la `l10n_ro_account_return_pl_closing/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_account_return_pl_closing`
 - **Versiune:** `19.0.1.0.3`

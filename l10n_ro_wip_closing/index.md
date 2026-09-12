@@ -1,4 +1,4 @@
-# Producție în Curs (331/711) OMFP 1802 România (localizat la `l10n_ro_wip_closing/index.md`)
+# Romania - Producție în curs (331/711) OMFP 1802 (localizat la `l10n_ro_wip_closing/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_wip_closing`
 - **Versiune:** `19.0.1.0.0`

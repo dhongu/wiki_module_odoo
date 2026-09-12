@@ -1,4 +1,4 @@
-# Pre-Validator SAF-T D406 România (FR-05) (localizat la `l10n_ro_saft_validator/index.md`)
+# Romania - Pre-validator SAF-T D406 (FR-05) (localizat la `l10n_ro_saft_validator/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_saft_validator`
 - **Versiune:** `19.0.1.0.1`

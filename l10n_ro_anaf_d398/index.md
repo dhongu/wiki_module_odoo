@@ -1,4 +1,4 @@
-# Romania - ANAF D398 Declaration (VAT OSS) (localizat la `l10n_ro_anaf_d398/index.md`)
+# Romania - Declarația D398 ANAF (TVA OSS) (localizat la `l10n_ro_anaf_d398/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d398`
 - **Versiune:** `19.0.0.0.2`

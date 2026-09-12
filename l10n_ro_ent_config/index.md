@@ -1,4 +1,4 @@
-# Romania - Enterprise Localization Config (localizat la `l10n_ro_ent_config/index.md`)
+# Romania - Configurare localizare Enterprise (localizat la `l10n_ro_ent_config/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_ent_config`
 - **Versiune:** `19.0.1.0.0`

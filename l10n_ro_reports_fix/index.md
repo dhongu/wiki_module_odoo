@@ -1,4 +1,4 @@
-# Corecție Rapoarte Contabile RO (localizat la `l10n_ro_reports_fix/index.md`)
+# Romania - Corecții rapoarte contabile (localizat la `l10n_ro_reports_fix/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_reports_fix`
 - **Versiune:** `19.0.0.0.1`

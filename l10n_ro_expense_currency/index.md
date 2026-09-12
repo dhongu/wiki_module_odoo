@@ -1,4 +1,4 @@
-# Romania - Avansuri Trezorerie Valutare (542) (localizat la `l10n_ro_expense_currency/index.md`)
+# Romania - Avansuri de trezorerie în valută (542) (localizat la `l10n_ro_expense_currency/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_expense_currency`
 - **Versiune:** `19.0.1.0.0`

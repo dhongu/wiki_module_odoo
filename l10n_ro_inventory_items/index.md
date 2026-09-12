@@ -1,4 +1,4 @@
-# Romania - Obiecte de Inventar (303/603/8035) (localizat la `l10n_ro_inventory_items/index.md`)
+# Romania - Obiecte de inventar (303/603/8035) (localizat la `l10n_ro_inventory_items/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_inventory_items`
 - **Versiune:** `19.0.1.0.1`

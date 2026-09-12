@@ -1,4 +1,4 @@
-# Retururi POS (RO) — factură de retur și registrul de casă
+# Romania - Retururi POS
 
 - **Nume Tehnic:** `l10n_ro_pos_returns`
 - **Versiune:** `19.0.1.1.4`

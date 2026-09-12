@@ -1,4 +1,4 @@
-# Romania - Mijloace Fixe Complete (FR-19) (localizat la `l10n_ro_fixed_assets/index.md`)
+# Romania - Mijloace fixe complete (FR-19) (localizat la `l10n_ro_fixed_assets/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_fixed_assets`
 - **Versiune:** `19.0.1.1.1`

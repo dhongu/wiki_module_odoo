@@ -1,4 +1,4 @@
-# Romania - Account Counterpart (localizat la `l10n_ro_account_counterpart/index.md`)
+# Romania - Cont corespondent (localizat la `l10n_ro_account_counterpart/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_account_counterpart`
 - **Versiune:** `19.0.1.0.0`

@@ -1,4 +1,4 @@
-# Romania - Avansuri Clienți/Furnizori cu TVA (419/4091/4092) (localizat la `l10n_ro_advance_invoice/index.md`)
+# Romania - Facturi de avans client/furnizor cu TVA (419/4091/4092) (localizat la `l10n_ro_advance_invoice/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_advance_invoice`
 - **Versiune:** `19.0.1.0.1`

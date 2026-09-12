@@ -1,4 +1,4 @@
-# Romania - e-Transport Block (localizat la `l10n_ro_etransport_block/index.md`)
+# Romania - Blocare e-Transport (localizat la `l10n_ro_etransport_block/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_etransport_block`
 - **Versiune:** `19.0.1.0.0`

@@ -1,4 +1,4 @@
-# Romania - ANAF D120 Declaration (localizat la `l10n_ro_anaf_d120/index.md`)
+# Romania - Declarația D120 ANAF (localizat la `l10n_ro_anaf_d120/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d120`
 - **Versiune:** `19.0.1.1.1`

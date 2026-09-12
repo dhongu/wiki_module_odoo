@@ -1,4 +1,4 @@
-# Romania - ANAF Declarația 107 (Sponsorizări) (localizat la `l10n_ro_anaf_d107/index.md`)
+# Romania - Declarația 107 ANAF (sponsorizări) (localizat la `l10n_ro_anaf_d107/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d107`
 - **Versiune:** `19.0.1.0.1`

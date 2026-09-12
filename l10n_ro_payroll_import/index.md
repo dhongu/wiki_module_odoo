@@ -1,4 +1,4 @@
-# Romania - Payroll Import Notes (localizat la `l10n_ro_payroll_import/index.md`)
+# Romania - Import note de salarii (localizat la `l10n_ro_payroll_import/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_payroll_import`
 - **Versiune:** `19.0.1.1.1`

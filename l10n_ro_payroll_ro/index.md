@@ -1,4 +1,4 @@
-# Romania - Payroll Income Tax & Personal Deduction (localizat la `l10n_ro_payroll_ro/index.md`)
+# Romania - Impozit pe salarii și deducere personală (localizat la `l10n_ro_payroll_ro/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_payroll_ro`
 - **Versiune:** `19.0.1.0.0`

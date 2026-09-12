@@ -1,4 +1,4 @@
-# Romania - Reevaluare Valutară (OMFP 1802) (localizat la `l10n_ro_currency_revaluation/index.md`)
+# Romania - Reevaluare valutară (OMFP 1802) (localizat la `l10n_ro_currency_revaluation/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_currency_revaluation`
 - **Versiune:** `19.0.1.1.1`

@@ -1,4 +1,4 @@
-# Romania - Depunere electronică declarații ANAF (FR-53) (localizat la `l10n_ro_anaf_submission/index.md`)
+# Romania - Depunere electronică a declarațiilor ANAF (FR-53) (localizat la `l10n_ro_anaf_submission/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_submission`
 - **Versiune:** `19.0.1.0.1`

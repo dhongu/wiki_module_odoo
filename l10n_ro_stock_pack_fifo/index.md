@@ -1,4 +1,4 @@
-# Romania - Stock Valuation Pack FIFO (localizat la `l10n_ro_stock_pack_fifo/index.md`)
+# Romania - Pachet valorizare stocuri FIFO (localizat la `l10n_ro_stock_pack_fifo/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_pack_fifo`
 - **Versiune:** `19.0.1.3.3`

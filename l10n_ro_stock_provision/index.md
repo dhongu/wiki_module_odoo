@@ -1,4 +1,4 @@
-# Provizioane Stocuri Slow-Moving (39x) România (localizat la `l10n_ro_stock_provision/index.md`)
+# Romania - Ajustări pentru deprecierea stocurilor (39x) (localizat la `l10n_ro_stock_provision/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_provision`
 - **Versiune:** `19.0.1.0.1`

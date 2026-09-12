@@ -1,4 +1,4 @@
-# ANAF D394 - Jurnale TVA Romania (localizat la `l10n_ro_anaf_d394/index.md`)
+# Romania - Declarație informativă (D394) (localizat la `l10n_ro_anaf_d394/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d394`
 - **Versiune:** `19.0.1.2.0`

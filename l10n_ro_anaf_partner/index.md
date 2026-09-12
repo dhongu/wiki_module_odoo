@@ -1,4 +1,4 @@
-# Romania - Monitorizare Modificări Date ANAF Parteneri (FR-23) (localizat la `l10n_ro_anaf_partner/index.md`)
+# Romania - Monitorizare modificări date ANAF parteneri (FR-23) (localizat la `l10n_ro_anaf_partner/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_partner`
 - **Versiune:** `19.0.2.3.2`

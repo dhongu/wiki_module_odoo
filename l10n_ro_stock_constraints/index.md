@@ -1,4 +1,4 @@
-# Constrângeri Integritate Stocuri România (localizat la `l10n_ro_stock_constraints/index.md`)
+# Romania - Constrângeri de integritate a stocului (localizat la `l10n_ro_stock_constraints/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_constraints`
 - **Versiune:** `19.0.1.0.0`

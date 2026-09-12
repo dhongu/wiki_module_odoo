@@ -1,4 +1,4 @@
-# Matrice Segregare Atribuții (SoD) România (localizat la `l10n_ro_sod_matrix/index.md`)
+# Romania - Matrice de segregare a atribuțiilor (SoD) (localizat la `l10n_ro_sod_matrix/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_sod_matrix`
 - **Versiune:** `19.0.1.1.0`

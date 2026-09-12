@@ -1,4 +1,4 @@
-# Vânzări pe Tipuri de Încasări (RO) - Raport (localizat la `l10n_ro_sale_receipt_type_report/index.md`)
+# Romania - Vânzări pe tipuri de încasări (localizat la `l10n_ro_sale_receipt_type_report/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_sale_receipt_type_report`
 - **Versiune:** `19.0.1.0.2`

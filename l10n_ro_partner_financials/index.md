@@ -1,4 +1,4 @@
-# Romania - Partner Financial Data (MFinanțe) (localizat la `l10n_ro_partner_financials/index.md`)
+# Romania - Date financiare partener (MFinanțe) (localizat la `l10n_ro_partner_financials/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_partner_financials`
 - **Versiune:** `19.0.1.0.0`

@@ -1,4 +1,4 @@
-# Romania Intrastat Declaration (localizat la `l10n_ro_intrastat_enhancement/index.md`)
+# Romania - Declarație Intrastat (localizat la `l10n_ro_intrastat_enhancement/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_intrastat_enhancement`
 - **Versiune:** `19.0.1.5.1`

@@ -1,4 +1,4 @@
-# Romania - Reverse Charge Article 331 on Sales Orders (localizat la `l10n_ro_reverse_charge_331_sale/index.md`)
+# Romania - Taxare inversă art. 331 pe comenzile de vânzare (localizat la `l10n_ro_reverse_charge_331_sale/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_reverse_charge_331_sale`
 - **Versiune:** `19.0.1.0.0`

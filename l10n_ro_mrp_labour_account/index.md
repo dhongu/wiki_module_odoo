@@ -1,4 +1,4 @@
-# Contabilizare Manoperă Producție (localizat la `l10n_ro_mrp_labour_account/index.md`)
+# Romania - Cont de manoperă în producție (localizat la `l10n_ro_mrp_labour_account/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_mrp_labour_account`
 - **Versiune:** `19.0.1.0.0`

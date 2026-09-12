@@ -1,4 +1,4 @@
-# Provizioane Litigii și Riscuri (151) (localizat la `l10n_ro_provisions/index.md`)
+# Romania - Provizioane pentru litigii și riscuri (151) (localizat la `l10n_ro_provisions/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_provisions`
 - **Versiune:** `19.0.1.0.0`

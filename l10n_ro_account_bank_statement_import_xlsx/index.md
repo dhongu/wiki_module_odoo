@@ -1,4 +1,4 @@
-# Import Extrase Bancare în Format xlsx (localizat la `l10n_ro_account_bank_statement_import_xlsx/index.md`)
+# Romania - Import extrase bancare (XLSX) (localizat la `l10n_ro_account_bank_statement_import_xlsx/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_account_bank_statement_import_xlsx`
 - **Versiune:** `19.0.2.1.0`

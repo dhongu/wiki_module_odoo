@@ -1,4 +1,4 @@
-# Romania - Environmental Tax / AFM (FR-48) (localizat la `l10n_ro_environmental_tax/index.md`)
+# Romania - Taxe de mediu / AFM (FR-48) (localizat la `l10n_ro_environmental_tax/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_environmental_tax`
 - **Versiune:** `19.0.1.5.0`

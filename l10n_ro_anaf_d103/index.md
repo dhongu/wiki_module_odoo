@@ -1,4 +1,4 @@
-# Romania - ANAF D103 Declaration (localizat la `l10n_ro_anaf_d103/index.md`)
+# Romania - Declarația D103 ANAF (localizat la `l10n_ro_anaf_d103/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d103`
 - **Versiune:** `19.0.1.0.0`

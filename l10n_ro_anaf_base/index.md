@@ -1,4 +1,4 @@
-# Baza ANAF România (localizat la `l10n_ro_anaf_base/index.md`)
+# Romania - Bază ANAF (localizat la `l10n_ro_anaf_base/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_base`
 - **Versiune:** `19.0.1.2.0`

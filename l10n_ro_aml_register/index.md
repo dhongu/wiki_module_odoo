@@ -1,4 +1,4 @@
-# Romania - AML Compliance Register (localizat la `l10n_ro_aml_register/index.md`)
+# Romania - Registru de conformitate AML (localizat la `l10n_ro_aml_register/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_aml_register`
 - **Versiune:** `19.0.1.0.0`

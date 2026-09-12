@@ -4,6 +4,27 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-12] Numele modulelor `l10n_ro_ent` resincronizate cu manifestele
+
+- **Acțiune:** Titlul (H1) a 106 pagini din suita `l10n_ro_ent` a fost aliniat la `name`-ul din
+  `__manifest__.py`, după redenumirea în română din terrabit-solutions/l10n_ro_ent#197. Titlurile
+  erau nume „prietenoase" inventate la ingestie, care acum divergeau de ce vede utilizatorul în
+  Odoo și pe Apps Store — `Romania - ANAF D100 Declaration` în wiki față de
+  `Romania - Declarația D100 ANAF` în manifest.
+- **Sursă:** `git show origin/19.0:<modul>/__manifest__.py` — numele citit din manifestul comis,
+  nu din arborele de lucru partajat, în care lucrează concurent alte sesiuni.
+- **Neatinse, deliberat:** 22 de pagini `l10n_ro_*` din wiki aparțin altor suite (OCA
+  `l10n-romania` / `l10n-romania-oca`) și n-au manifest în `l10n_ro_ent` — numele lor nu s-a
+  schimbat. Alte 10 pagini aveau deja titlul identic cu numele nou.
+- **De urmărit — 3 pagini rămase în urma codului:** `l10n_ro_anaf_d107` (19.0.1.0.1 → 19.0.2.0.0),
+  `l10n_ro_anaf_d112` (19.0.2.1.0 → 19.0.2.2.0) și `l10n_ro_financial_statements`
+  (19.0.1.9.1 → 19.0.1.10.0). Versiunea **nu** a fost rescrisă mecanic: bump-urile sunt
+  funcționale, nu cosmetice, iar un număr actualizat peste un conținut vechi ar fi mai înșelător
+  decât un număr vechi. Cer re-ingestie.
+- **Fișiere actualizate:** 106 `index.md` de modul (doar linia de titlu), `log.md`, `.index/`.
+
+---
+
 ## [2026-09-12] Resincronizare suită `l10n_ro_ent` — 16 pagini noi + 11 re-ingestii
 
 - **Acțiune:** Sweep complet pe suita `l10n_ro_ent` (120 module): **16 module nedocumentate** au primit pagină (`l10n_ro_aml_register`, `l10n_ro_anaf_d112_payroll`, `l10n_ro_anaf_duk`, `l10n_ro_currency_rate_live_bnr`, `l10n_ro_efactura_import_assist`, `l10n_ro_ent_config`, `l10n_ro_partner_financials`, `l10n_ro_partner_ubo`, `l10n_ro_pos_fiscal_compliance_ecr`, `l10n_ro_reverse_charge_331` + `_pos` + `_sale`, `l10n_ro_saft_fix`, `l10n_ro_stock_gestiune_valuation`, `l10n_ro_stock_sheet_gestiune`, `l10n_ro_rni_report`), iar **11 pagini rămase în urmă față de cod** au fost regenerate (`l10n_ro_financial_statements`, `l10n_ro_period_close_enhanced`, `l10n_ro_anaf_partner`, `l10n_ro_anaf_base`, `l10n_ro_anaf_d112`, `l10n_ro_intrastat_enhancement`, `l10n_ro_stock_sheet`, `l10n_ro_doc_screenshots`, `l10n_ro_account_return_pl_closing`, `l10n_ro_sale_receipt_type_report`, `l10n_ro_process_library`). Procesare în paralel, un subagent `documentarist-wiki` per modul.

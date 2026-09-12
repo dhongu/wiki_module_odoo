@@ -1,4 +1,4 @@
-# Romania - ANAF Declarația 205 (WHT PF Nerezidente) (localizat la `l10n_ro_anaf_d205/index.md`)
+# Romania - Declarația 205 ANAF (impozit la sursă PF nerezidente) (localizat la `l10n_ro_anaf_d205/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d205`
 - **Versiune:** `19.0.1.0.1`

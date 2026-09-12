@@ -1,4 +1,4 @@
-# Romania - Reverse Charge Article 331 (localizat la `l10n_ro_reverse_charge_331/index.md`)
+# Romania - Taxare inversă art. 331 (localizat la `l10n_ro_reverse_charge_331/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_reverse_charge_331`
 - **Versiune:** `19.0.1.0.0`

@@ -1,4 +1,4 @@
-# Romania - POS Fiscal Compliance / ECR Bridge (localizat la `l10n_ro_pos_fiscal_compliance_ecr/index.md`)
+# Romania - Punte POS ↔ casă de marcat (AMEF) (localizat la `l10n_ro_pos_fiscal_compliance_ecr/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_pos_fiscal_compliance_ecr`
 - **Versiune:** `19.0.1.1.0`

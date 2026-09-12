@@ -1,4 +1,4 @@
-# Romania - e-Invoice Import Assistant (PO Discrepancy Check) (localizat la `l10n_ro_efactura_import_assist/index.md`)
+# Romania - Asistent import e-Factura (verificare față de comandă) (localizat la `l10n_ro_efactura_import_assist/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_efactura_import_assist`
 - **Versiune:** `19.0.1.0.0`

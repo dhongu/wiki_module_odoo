@@ -1,4 +1,4 @@
-# Romania - Partner Ultimate Beneficial Owner (localizat la `l10n_ro_partner_ubo/index.md`)
+# Romania - Beneficiarul real al partenerului (localizat la `l10n_ro_partner_ubo/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_partner_ubo`
 - **Versiune:** `19.0.1.0.0`

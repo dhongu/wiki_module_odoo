@@ -1,4 +1,4 @@
-# CMP Periodic Lunar România (localizat la `l10n_ro_stock_cmp_periodic/index.md`)
+# Romania - CMP periodic lunar (localizat la `l10n_ro_stock_cmp_periodic/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_cmp_periodic`
 - **Versiune:** `19.0.1.0.1`

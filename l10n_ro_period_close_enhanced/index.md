@@ -1,4 +1,4 @@
-# Checklist Închidere Perioadă (localizat la `l10n_ro_period_close_enhanced/index.md`)
+# Romania - Checklist de închidere de perioadă (localizat la `l10n_ro_period_close_enhanced/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_period_close_enhanced`
 - **Versiune:** `19.0.1.12.0`

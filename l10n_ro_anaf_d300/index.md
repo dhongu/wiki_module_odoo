@@ -1,4 +1,4 @@
-# ANAF D300 (localizat la `l10n_ro_anaf_d300/index.md`)
+# Romania - Decont de TVA (D300) (localizat la `l10n_ro_anaf_d300/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d300`
 - **Versiune:** `19.0.0.0.12`

@@ -1,4 +1,4 @@
-# Romania - Fișă de Magazie și Balanță Stocuri (localizat la `l10n_ro_stock_sheet/index.md`)
+# Romania - Fișă de magazie și balanță analitică a stocurilor (localizat la `l10n_ro_stock_sheet/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_sheet`
 - **Versiune:** `19.0.1.1.6`

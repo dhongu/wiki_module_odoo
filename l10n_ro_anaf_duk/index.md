@@ -1,4 +1,4 @@
-# Romania - DUK Integrator (via local agent) (localizat la `l10n_ro_anaf_duk/index.md`)
+# Romania - DUK Integrator (prin agent local) (localizat la `l10n_ro_anaf_duk/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_duk`
 - **Versiune:** `19.0.1.0.0`
