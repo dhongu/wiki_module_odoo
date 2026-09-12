@@ -4,6 +4,37 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-12] Re-ingestie: D107, D112 și situațiile financiare
+
+- **Acțiune:** Regenerate trei pagini rămase în urma codului, semnalate la resincronizarea de nume
+  de mai devreme. Codul a fost citit dintr-un worktree la zi cu `origin/19.0` (`4dc0632b`), nu din
+  `odoo-addons/l10n_ro_ent`, care era cu 12 commit-uri în urmă și cu modificări necomise ale altor
+  sesiuni — citit de acolo, re-ingestia ar fi „confirmat" tăcut versiuni vechi.
+- **`l10n_ro_anaf_d107` → 19.0.2.0.0:** schimbare de fond, nu de detaliu. Exportul XML a fost
+  rescris pe structura oficială ANAF — rădăcina `<d107>` în locul lui `<declaratie107>`, namespace
+  `mfp:anaf:dgti:d107:declaratie:v1`, beneficiari `<entit>` cu atributele cerute — plus câmpuri noi
+  (cod obligație, exercițiu financiar, rectificativă, dizolvare, succesor, semnatar, beneficiari
+  neindividualizați), termen de scadență calculat automat și validare de corelații înainte de
+  export. **Fișierul anterior era nedepunabil**; cel nou trece `D107Validator.jar`.
+- **`l10n_ro_anaf_d112` → 19.0.2.2.0:** `asigExc`/`motivExc` lipseau din XML și blocau declarația la
+  validatorul ANAF J27.0.5 (S9c1.1/SP1A.1); al treilea patch documentat pe XSD-ul 07/2026; orele
+  lucrate (`A_6`) la contractele part-time se raportează acum din cifra `Pi`, nu din norma de
+  referință `A_4`.
+- **`l10n_ro_financial_statements` → 19.0.1.10.0:** conținutul paginii era deja corect (documentul
+  unic `<Bilant1003>`, dubla exportare); în urmă era doar numărul de versiune. Fișa consultant era
+  însă desincronizată — recopiată, împreună cu cele 5 capturi curente, și eliminate 3 capturi
+  orfane rămase dintr-o convenție de denumire mai veche.
+- **Notat pentru cine citește codul:** metoda se numește încă `export_xml_bilant1002`, iar unele
+  docstring-uri spun `Bilant1002`, deși codul emite `<Bilant1003>` (validator S1003, namespace
+  `mfp:anaf:dgti:s1003:declaratie:v15`). Pagina spune explicit acest lucru, ca discrepanța să nu
+  fie citită ca o eroare de documentație.
+- **Legături promovate:** `l10n_ro_anaf_d101` pe pagina D107 și `l10n_ro_anaf_d112_payroll` pe
+  pagina D112 au trecut din text `cod` în link-uri active — ambele au acum pagină proprie.
+- **Fișiere actualizate:** 3 `index.md` de modul, `FISA_CONSULTANT.md` + capturi la
+  `financial_statements`, `index.md` (descrierea D107), `log.md`, `.index/`.
+
+---
+
 ## [2026-09-12] Numele modulelor `l10n_ro_ent` resincronizate cu manifestele
 
 - **Acțiune:** Titlul (H1) a 106 pagini din suita `l10n_ro_ent` a fost aliniat la `name`-ul din

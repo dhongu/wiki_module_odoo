@@ -1,7 +1,7 @@
 # Romania - Situații financiare anuale ANAF (FR-31) (localizat la `l10n_ro_financial_statements/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_financial_statements`
-- **Versiune:** `19.0.1.9.1`
+- **Versiune:** `19.0.1.10.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_financial_statements
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_financial_statements`
 - **Ultima Ingestie:** 2026-09-12
