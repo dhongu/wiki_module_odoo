@@ -1,7 +1,7 @@
 # Romania - Conformitate fiscală POS (AMEF) (localizat la `l10n_ro_pos_fiscal_compliance/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_pos_fiscal_compliance`
-- **Versiune:** `19.0.2.2.0`
+- **Versiune:** `19.0.2.2.1`
 - **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_fiscal_compliance`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_pos_fiscal_compliance`
 - **Ultima Ingestie:** `2026-09-02`

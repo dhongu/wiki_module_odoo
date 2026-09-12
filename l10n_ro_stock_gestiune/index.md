@@ -1,7 +1,7 @@
 # Romania - Gestiuni Contabile de Stoc (FR-54) (localizat la `l10n_ro_stock_gestiune/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_gestiune`
-- **Versiune:** `19.0.3.0.1`
+- **Versiune:** `19.0.3.0.2`
 - **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_gestiune`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_gestiune`
 - **Ultima Ingestie:** `2026-08-20`
@@ -64,7 +64,7 @@ Modulul aduce în Odoo evidența gestiunilor contabile de stoc așa cum o cere l
 
 #### 5. Conexiuni
 
-- `l10n_ro_stock_gestiune_valuation`: modul-punte (auto_install) care transformă fiecare gestiune într-o arie de evaluare (`deltatech_valuation_area`), astfel încât notele generate de acest modul să poarte dimensiunea contabilă `valuation_area_id` pentru balanțe pe gestiune.
-- `l10n_ro_stock_sheet_gestiune`: modul-punte (auto_install) care adaugă Fișa de magazie / Balanța stocurilor filtrată pe gestiune.
+- [l10n_ro_stock_gestiune_valuation](../l10n_ro_stock_gestiune_valuation/index.md): modul-punte (auto_install) care transformă fiecare gestiune într-o arie de evaluare (`deltatech_valuation_area`), astfel încât notele generate de acest modul să poarte dimensiunea contabilă `valuation_area_id` pentru balanțe pe gestiune.
+- [l10n_ro_stock_sheet_gestiune](../l10n_ro_stock_sheet_gestiune/index.md): modul-punte (auto_install) care adaugă Fișa de magazie / Balanța stocurilor filtrată pe gestiune.
 - [l10n_ro_currency_revaluation](../l10n_ro_currency_revaluation/index.md): contul 408 alimentat de recepția fără factură în valută este un element monetar, ale cărui diferențe de curs se reevaluează la închiderea de perioadă conform logicii acestui modul.
 - `l10n_ro_stock_account` (OCA): oferă un câmp „aviz" similar pe formularul de transfer; instalarea simultană cu acest modul nu este recomandată — modulul dezactivează automat view-ul OCA corespunzător.

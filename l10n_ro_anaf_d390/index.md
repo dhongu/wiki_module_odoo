@@ -1,7 +1,7 @@
 # ANAF D390 (localizat la `l10n_ro_anaf_d390/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d390`
-- **Versiune:** `19.0.0.0.5`
+- **Versiune:** `19.0.0.0.6`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d390
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d390`
 - **Ultima Ingestie:** 2026-08-20

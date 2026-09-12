@@ -90,12 +90,12 @@ Completați:
 
 ### Pasul 4 — Verificare solduri
 
-Rulați check-ul **Estimated Profit / Loss** și verificați rezultatul estimat:
+Rulați verificarea **Profit / Pierdere estimată** și verificați rezultatul estimat:
 - profit dacă veniturile sunt mai mari decât cheltuielile
 - pierdere dacă cheltuielile sunt mai mari decât veniturile
 - rezultat zero dacă veniturile și cheltuielile sunt egale
 
-Deschideți check-ul **Review P&L Balances** și verificați liniile contabile postate pe conturile de venituri și cheltuieli.
+Deschideți verificarea **Revizuiți soldurile P&L** și verificați liniile contabile postate pe conturile de venituri și cheltuieli.
 
 ### Pasul 5 — Generare notă contabilă
 
@@ -124,7 +124,7 @@ Deschideți nota prin **View Entry** și verificați:
 - conturile 6xx sunt închise prin creditare
 - conturile 7xx sunt închise prin debitare
 - contul `121` reflectă rezultatul perioadei
-- return-ul afișează valoarea **Profit / Loss**
+- cardul kanban afișează valoarea **Profit / Pierdere**
 
 ### Pasul 7 — Finalizare
 
@@ -157,8 +157,8 @@ Ce rămâne manual: validarea ordinii operațiunilor lunare și rerularea după 
 - [ ] Modulul se instalează fără erori pe baza demo.
 - [ ] Tipul de return `RO – P&L Closing (Income/Expense)` este vizibil.
 - [ ] Jurnalul de închidere și contul `121` pot fi configurate pe tipul de return.
-- [ ] Check-ul **Estimated Profit / Loss** afișează rezultatul așteptat.
-- [ ] Check-ul **Review P&L Balances** listează liniile 6xx/7xx din perioada selectată.
+- [ ] Verificarea **Profit / Pierdere estimată** afișează rezultatul așteptat.
+- [ ] Verificarea **Revizuiți soldurile P&L** listează liniile 6xx/7xx din perioada selectată.
 - [ ] Nota de închidere este generată și postată la `Review` / `Validate`.
 - [ ] Soldurile conturilor 6xx/7xx sunt zero după închidere pentru perioada testată.
 - [ ] Conturile speciale `609`, `709`, `711` sunt documentate dacă firma le folosește.
@@ -183,7 +183,7 @@ Ce rămâne manual: validarea ordinii operațiunilor lunare și rerularea după 
 | 2 | `screenshots/02_inchidere_kanban.png` | Lista închiderilor P&L (kanban) cu starea și verificările |
 | 3 | `screenshots/03_nota_inchidere.png` | Nota contabilă de închidere (6xx creditat, 7xx debitat, 121 rezultatul) |
 
-> Notă: valoarea Profit / Loss apare pe cardul kanban după rularea completă a verificărilor
+> Notă: valoarea Profit / Pierdere apare pe cardul kanban după rularea completă a verificărilor
 > (Review → Validate); rezultatul perioadei este vizibil direct în nota de închidere (captura 3).
 
 ## 11. Observații pentru manual

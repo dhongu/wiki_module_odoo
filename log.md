@@ -4,6 +4,21 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-12] Resincronizare suită `l10n_ro_ent` — 16 pagini noi + 11 re-ingestii
+
+- **Acțiune:** Sweep complet pe suita `l10n_ro_ent` (120 module): **16 module nedocumentate** au primit pagină (`l10n_ro_aml_register`, `l10n_ro_anaf_d112_payroll`, `l10n_ro_anaf_duk`, `l10n_ro_currency_rate_live_bnr`, `l10n_ro_efactura_import_assist`, `l10n_ro_ent_config`, `l10n_ro_partner_financials`, `l10n_ro_partner_ubo`, `l10n_ro_pos_fiscal_compliance_ecr`, `l10n_ro_reverse_charge_331` + `_pos` + `_sale`, `l10n_ro_saft_fix`, `l10n_ro_stock_gestiune_valuation`, `l10n_ro_stock_sheet_gestiune`, `l10n_ro_rni_report`), iar **11 pagini rămase în urmă față de cod** au fost regenerate (`l10n_ro_financial_statements`, `l10n_ro_period_close_enhanced`, `l10n_ro_anaf_partner`, `l10n_ro_anaf_base`, `l10n_ro_anaf_d112`, `l10n_ro_intrastat_enhancement`, `l10n_ro_stock_sheet`, `l10n_ro_doc_screenshots`, `l10n_ro_account_return_pl_closing`, `l10n_ro_sale_receipt_type_report`, `l10n_ro_process_library`). Procesare în paralel, un subagent `documentarist-wiki` per modul.
+- **Sursă:** `readme/DESCRIPTION.md` (+ `USAGE.md` / `CONFIGURE.md` / `HISTORY.md`) și analiză de cod pentru Componente Cheie; fișele consultant au fost recopiate din `readme/` acolo unde există.
+- **Criteriul de re-ingestie, notat pentru că schimbă ce s-a atins:** driftul de versiune al suitei nu înseamnă drift de conținut. Commit-ul `8c3a8b6a` („declară `views` pe acțiunile act_window construite inline") a bumpat +0.0.1 pe ~32 de module fără nicio schimbare funcțională, iar `f49b17b6` a regenerat doar `index.html` de Apps Store. Pe acelea s-a actualizat **doar linia Versiune**, mecanic, fără a atinge data ingestiei — re-ingestia s-a limitat la modulele cu salt real (minor sau mai multe patch-uri).
+- **Trei decalaje readme↔cod găsite de subagenți, semnalate în pagini:**
+  - `l10n_ro_period_close_enhanced` — `DESCRIPTION.md`/`USAGE.md` descriu 8 verificări, codul (`data/period_close_return_type.xml` + `models/account_return*.py`) definește **20**. Pagina reflectă codul, cu notă explicită despre decalaj. Manifestul era deja la 19.0.1.12.0, nu 1.11.0.
+  - `l10n_ro_financial_statements` — `USAGE.md` descrie încă fluxul vechi, cu export XML separat pe formular; versiunea curentă are ca funcționalitate principală documentul unic `<Bilant1003>`, exporturile pe formular fiind doar pre-fill.
+  - `l10n_ro_anaf_d112` — `DESCRIPTION.md` era stale (doar profilul v6 / XSD 10.2024), fără structura 07/2026, cele două profile v7 sau validarea XSD reactivată.
+- **Nedocumentat deliberat:** `l10n_ro_efactura_certificate` nu are `__manifest__.py` — directorul conține doar `ROADMAP.md`, e specificație, nu modul. Se ingerează după implementare.
+- **Igienă de linkuri:** promovate la link-uri active referințele către cele 16 pagini noi din paginile existente (`l10n_ro_anaf_d112` → `l10n_ro_anaf_d112_payroll` ș.a.) și reparate două link-uri către pagini inexistente (`../l10n_ro/index.md`, `../l10n_ro_saft/index.md`), readuse la text `cod`.
+- **Fișiere actualizate:** 27 `index.md` de modul (+ fișe consultant și capturi acolo unde există), 32 de pagini cu linia Versiune reîmprospătată, `index.md`, `log.md`, `.index/`; curățate 3 capturi orfane rămase din ingestia anterioară a `l10n_ro_period_close_enhanced`.
+
+---
+
 ## [2026-09-11] Mapare câmpuri produs — conectorul Magento (PR bitshop_marketplace#333)
 
 - **Acțiune:** Adăugată secțiunea **Mapare câmpuri produs** în Componente Cheie pe pagina `deltatech_marketplace_magento`, după modelul celor șase conectoare din PR #330.
@@ -30,7 +45,7 @@ This is an append-only log of all operations performed on the wiki.
 - **Două defecte găsite scriind fișa și reparate în 19.0.2.0.1:** (1) la facturare, `_get_journal_items_full_name` reintroducea denumirea noastră de produs **deasupra** celei a clientului — exact dubla denumire pe care modulul o elimină pe ofertă; suprimată acum prin `_prepare_invoice_line`, cu două teste de regresie. XML-ul e-Facturii **nu** era afectat (exportatorul standard elimină oricum denumirea redundantă). (2) lista „Referințe client" din tabul Vânzări nu avea titlu de secțiune și apărea ca tabel orfan; ancora nouă a fost propagată în `.pot`/`ro.po`, altfel titlul ieșea în engleză pe interfață RO.
 - **Dependențe/Conexiuni:** `sale` (singura dependență). Legătura cu [deltatech_edi](deltatech_edi/index.md) a fost rescrisă ca **limitare cunoscută**, nu integrare — EDI folosește încă `product.supplierinfo` și **re-creează** rândurile la fiecare comandă importată, deci la clienții cu EDI codul se întreține deocamdată în două locuri. Adăugate la Conexiuni și modulele de proiect `terrabit_inedit` / `inedit_reports` (ca text, wiki-ul nu documentează module de proiect client).
 - **De urmărit:** fișa consultant a modulului `inedit_reports` descrie încă vechea convenție („lista de prețuri furnizor") — de corectat separat.
-- **Fișiere actualizate:** `deltatech_sale_product_reference/` (index.md rescris, FISA_CONSULTANT.md + 8 capturi noi), `index.md`, `log.md`, `.index/`.
+- **Fișiere actualizate:** `deltatech_sale_product_reference/` (index.md rescris, FISA_CONSULTANT.md + 8 capturi noi), `index.md`, `log.md`, `.index/`; curățate 3 capturi orfane rămase din ingestia anterioară a `l10n_ro_period_close_enhanced`.
 
 ---
 
@@ -117,7 +132,7 @@ This is an append-only log of all operations performed on the wiki.
   fragil; mesajele de eroare folosesc acum traducerile reale RO).
 - **Fișiere actualizate:** `l10n_ro_intrastat_enhancement/index.md` (versiune 19.0.1.3.0),
   `l10n_ro_intrastat_enhancement/FISA_CONSULTANT.md`, `l10n_ro_intrastat_enhancement/screenshots/`
-  (4 capturi înlocuite, `02_verificare_prag.png` orfan șters), `index.md`, `log.md`, `.index/`.
+  (4 capturi înlocuite, `02_verificare_prag.png` orfan șters), `index.md`, `log.md`, `.index/`; curățate 3 capturi orfane rămase din ingestia anterioară a `l10n_ro_period_close_enhanced`.
 
 ---
 

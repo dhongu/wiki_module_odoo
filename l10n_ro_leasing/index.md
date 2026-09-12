@@ -1,7 +1,7 @@
 # Leasing Financiar și Operațional (167/21x) (localizat la `l10n_ro_leasing/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_leasing`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_leasing
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_leasing`
 - **Ultima Ingestie:** 2026-06-01

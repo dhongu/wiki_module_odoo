@@ -1,22 +1,22 @@
 # Romania - Fișă de Magazie și Balanță Stocuri (localizat la `l10n_ro_stock_sheet/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_sheet`
-- **Versiune:** `19.0.1.1.3`
+- **Versiune:** `19.0.1.1.6`
 - **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_sheet`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_sheet`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-12`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul aduce în Odoo 19 două rapoarte clasice de stoc cerute în România — **fișa de magazie** (formularul 14-3-8) și **balanța analitică a stocurilor** — implementate ca rapoarte native Enterprise (`account.report`), în același stil cu celelalte rapoarte din suita `l10n_ro_ent`. Rolul lor este să arate, pentru o perioadă aleasă, situația cantitativă și valorică a articolelor (stoc inițial, intrări, ieșiri, stoc final) și, în plus, să compare valoarea analitică a stocului cu soldul contabil al conturilor de stoc, semnalând diferențele. Valorizarea se citește direct de pe mișcările de stoc (`stock.move`), fără tabelul `stock.valuation.layer` eliminat în versiunea 19, ceea ce face raportul potrivit pentru deployment-urile pe valorizare nativă (cost standard sau CMP).
+Modulul aduce în Odoo 19 două rapoarte clasice de stoc cerute în România — **fișa de magazie** (formularul 14-3-8) și **balanța analitică a stocurilor** — implementate ca un singur raport nativ Enterprise (`account.report`), în același stil cu celelalte rapoarte din suita `l10n_ro_ent`. Rolul lor este să arate, pentru o perioadă aleasă, situația cantitativă și valorică a articolelor (stoc inițial, intrări, ieșiri, stoc final) și, în plus, să compare valoarea analitică a stocului cu soldul contabil al conturilor de stoc, semnalând diferențele per material. Valorizarea se citește direct de pe mișcările de stoc (`stock.move`), fără tabelul `stock.valuation.layer` eliminat în versiunea 19, ceea ce face raportul potrivit pentru deployment-urile pe valorizare nativă (cost standard sau CMP).
 
 #### 2. Funcționalități Cheie
 
 - Raport unic cu **trei niveluri** de detaliere: cont de stoc (clasa 3), produs și document (fișa de magazie desfășurată 14-3-8), cu drill-down de la sintetic la documentul individual.
 - **Balanță analitică pe articol**: stoc inițial, intrări, ieșiri și stoc final, în cantitate și valoare, încadrate pe perioadă după data mișcării.
 - **Fișa de magazie (14-3-8)**: desfășurare document-cu-document a fiecărei mișcări, cu stoc curent cumulat și linie de stoc inițial.
-- **Reconciliere analitic ↔ sintetic**: coloanele „Sold sintetic" (din notele contabile) și „Diferență" arată unde valoarea analitică a stocului nu coincide cu soldul contului contabil — instrument de control, fără a genera note de ajustare.
+- **Reconciliere analitic ↔ sintetic per material**: coloanele „Sold sintetic" (din notele contabile) și „Diferență" arată unde valoarea analitică a stocului nu coincide cu soldul contului contabil, pe fiecare produs — evită compensările pe care un control global pe cont nu le-ar vedea. Nu generează note de ajustare, e doar instrument de control.
 - **Livrări directe (dropshipping) vizibile în fișă**: raportate ca flux de trecere (aceeași cantitate/valoare pe intrare și ieșire, pe contul de stoc al mărfii), altfel marfa dropship nu atingea nicio gestiune și lipsea complet din raport; la nivel de document apar ambele laturi, marcate „(intrare)"/„(ieșire)". Valoarea se calculează cu `stock.move._get_value()` (coloana `value` rămâne de regulă 0 pe dropship) și se persistă înapoi pe mișcare, ca deschiderile ulterioare ale raportului să fie rapide.
 - Tratarea corectă a intrărilor/ieșirilor: doar mișcările care traversează granița gestiunilor interne (recepții, livrări) plus liniile de dropship de mai sus; transferurile intern↔intern sunt ignorate.
 - Suport atât pentru valorizare **automată** (`real_time`), cât și **periodică** — contul de stoc se determină per mișcare (din nota contabilă a mișcării, cu fallback pe contul categoriei produsului, rezolvat prin ORM ca să nu piardă tăcut valorile venite din `ir.default`).
@@ -24,7 +24,9 @@ Modulul aduce în Odoo 19 două rapoarte clasice de stoc cerute în România —
 - Acțiunea **„Înregistrări contabile"** pe liniile de cont și de produs deschide exact liniile `account.move.line` din care e calculat soldul sintetic, pentru audit.
 - Filtre de **perioadă**, **multi-company**, pe **gestiuni/locații** și pe **produse**, plus export nativ **PDF / XLSX**.
 - Acces din meniul **Inventar → Raportare → Balanță analitică stocuri** și buton **Fișă de magazie** pe fișa produsului, care deschide raportul pre-filtrat pe produsul respectiv.
-- **Override RO pentru nota de regularizare** generată din „Inventory Valuation → Stock Closing": linia se defalcă **per material** (produs), nu ca o singură variație agregată pe cont — totalul pe cont rămâne identic cu nativul, dar diferențele pe articole nu se mai compensează nevăzute.
+- **„Desfășoară tot" scalabil pe cataloage mari**: handlerul implementează `_custom_unfold_all_batch_data_generator` (mecanismul folosit și de registrul general/balanța de verificare din Enterprise) — toate nivelurile ies din doar două treceri prin CTE, în loc să recalculeze SQL separat pentru fiecare linie părinte expandată. Pragul de grupare pe prefix alfabetic e dezactivat (`prefix_groups_threshold = 0`), produsele restrângându-se prin filtrul de produs al raportului.
+- **Override RO pentru nota de regularizare** generată din raportul nativ de evaluare (Contabilitate → Examinare → Inventar → Evaluare stoc, buton „Generează înregistrare"): linia se defalcă **per material** (produs), cu numele produsului în eticheta liniei (`Closing: Stock Variation - <produs>`), plus o linie reziduală distinctă pe cont (`Closing: Stock Variation - Account Remainder`) — totalul pe cont rămâne identic cu nativul, dar diferențele pe articole nu se mai compensează nevăzute. Nota primește referința „Închidere stoc" și, dacă periodicitatea (Contabilitate → Configurare → Setări → Evaluare stoc → „Periodic Valuation") e Zilnic/Lunar, e postată automat de cronul nativ, fără pas de control.
+- **Internaționalizare**: stringurile din cod sunt acum în engleză, urmând convenția Odoo (`self.env._()`), iar traducerea în română vine din `i18n/ro.po`; interfața în română rămâne identică (denumiri de raport, coloane, meniu, caret și etichete ale notei de regularizare).
 
 #### 3. Dependențe
 
@@ -36,9 +38,9 @@ Modulul aduce în Odoo 19 două rapoarte clasice de stoc cerute în România —
 
 **Modele**
 
-- `l10n.ro.stock.sheet.report.handler` (moștenește `account.report.custom.handler`): motorul raportului — construiește cele trei niveluri (cont de stoc / produs / document), citește cantitățile și valorile din `stock.move` (inclusiv ramurile de dropshipping), soldul sintetic din `account.move.line` și calculează coloanele de reconciliere și acțiunile de drill-down.
+- `l10n.ro.stock.sheet.report.handler` (moștenește `account.report.custom.handler`): motorul raportului — construiește cele trei niveluri (cont de stoc / produs / document), citește cantitățile și valorile din `stock.move` (inclusiv ramurile de dropshipping), soldul sintetic din `account.move.line` și calculează coloanele de reconciliere și acțiunile de drill-down. Implementează `_custom_unfold_all_batch_data_generator` pentru „desfășoară tot" performant pe volume mari (loturi, nu recalcul per linie).
 - `product.template` (extins): adaugă butonul „Fișă de magazie" (Smart Button, vizibil doar pentru produse stocabile) care deschide raportul pre-filtrat pe produsul respectiv.
-- `res.company` (extins): suprascrie `_get_stock_valuation_account_vals` pentru companiile RO — regularizarea de stoc generată la Stock Closing se postează per material (produs), cu o linie reziduală pe cont care păstrează totalul identic cu nativul.
+- `res.company` (extins): suprascrie `_get_stock_valuation_account_vals` pentru companiile RO — regularizarea de stoc generată la închiderea nativă (Stock Closing) se postează per material (produs), cu etichetă `Closing: Stock Variation - <produs>` pe fiecare linie și o linie reziduală distinctă pe cont (`Closing: Stock Variation - Account Remainder`) care păstrează totalul identic cu nativul.
 
 **Vizualizări**
 

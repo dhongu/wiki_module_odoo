@@ -1,7 +1,7 @@
 # Instrumente de Plată (Cecuri, Bilete la Ordin) (localizat la `l10n_ro_payment_instruments/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_payment_instruments`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payment_instruments
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_payment_instruments`
 - **Ultima Ingestie:** 2026-08-20

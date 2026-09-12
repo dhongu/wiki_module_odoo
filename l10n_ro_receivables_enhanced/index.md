@@ -1,7 +1,7 @@
 # Creanțe și Datorii Extinse România (FR-29) (localizat la `l10n_ro_receivables_enhanced/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_receivables_enhanced`
-- **Versiune:** `19.0.1.2.0`
+- **Versiune:** `19.0.1.2.1`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_receivables_enhanced
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_receivables_enhanced`
 - **Ultima Ingestie:** 2026-08-20

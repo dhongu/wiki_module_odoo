@@ -26,7 +26,7 @@ Extinde modulul `account_asset` (Enterprise) cu câmpurile și funcționalităț
 #### 3. Dependențe
 
 - `account_asset`
-- [l10n_ro_saft](../l10n_ro_saft/index.md)
+- `l10n_ro_saft`
 - `l10n_ro`
 
 #### 4. Componente Cheie

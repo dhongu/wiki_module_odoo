@@ -5,6 +5,13 @@
 **Utilizator principal:** Contabil / responsabil raportări statistice (Intrastat)
 **Prioritate:** 🟡 Medie (obligatorie doar peste prag; lunară pentru declaranți)
 
+> **INS = Institutul Național de Statistică** — autoritatea la care se depune declarația
+> Intrastat, **nu** ANAF. Intrastat este o raportare *statistică*, cu portal propriu
+> (https://intrastat.ro) și termen propriu, separată de declarațiile fiscale (D390, D300).
+> Peste tot în modul și în această fișă, „INS" desemnează această autoritate: butonul
+> **Verificare INS** verifică datele față de cerințele INS, **Export XML INS** produce
+> fișierul în formatul cerut de INS, iar **pragurile INS** sunt cele publicate anual de INS.
+
 ---
 
 ## 1. Scop business
@@ -98,6 +105,10 @@ Deschideți **Contabilitate (sau Facturare, în funcție de ediție) → Raporta
 direcție). Bara de instrumente a raportului (pentru companii RO) conține, pe lângă
 **PDF**/**XLSX**: butoanele **XML** și **Verificare INS** adăugate de modul — acesta este
 punctul din care se lansează verificarea erorilor și exportul XML pentru INS.
+
+> Butonul se citește „Verificare [pentru depunerea la] **INS**" — *Institutul Național de
+> Statistică*, autoritatea care colectează Intrastat. Verificarea este locală, în Odoo: nu
+> trimite nimic la INS și nu necesită conexiune la portal.
 
 **Verificarea erorilor INS** rulează exact aceeași interogare ca exportul și listează liniile
 cu câmpuri obligatorii lipsă — **cod NC8**, valoare, masă netă/unități suplimentare, natura

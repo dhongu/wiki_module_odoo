@@ -23,7 +23,7 @@ Modulul oferă un raport de audit preventiv care corelează automat, pentru o pe
 #### 3. Dependențe
 
 - `account_reports`
-- [l10n_ro](../l10n_ro/index.md)
+- `l10n_ro`
 
 #### 4. Componente Cheie
 

@@ -1,7 +1,7 @@
 # Romania - Depunere electronică declarații ANAF (FR-53) (localizat la `l10n_ro_anaf_submission/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_submission`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_submission
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_submission`
 - **Ultima Ingestie:** `2026-06-08`

@@ -47,17 +47,23 @@ Roluri recomandate pentru testare:
 ## 5. Configurare inițială
 
 1. Instalați modulul `l10n_ro_stock_sheet` pe baza demo (necesită Enterprise — `account_reports`).
-2. Pe **categoriile de produs**, setați contul de stoc (clasa 3) în „Stock Valuation Account".
-3. Pentru regularizare, setați pe fiecare cont de stoc câmpul **„Variation Account"**
+2. Pe **categoriile de produs**, setați contul de stoc (clasa 3) în **„Cont Evaluare Stoc"**
+   (`property_stock_valuation_account_id`).
+3. Pentru regularizare, setați pe fiecare cont de stoc câmpul **„Cont variație"**
    (`account_stock_variation_id`): 371→607, 301→601, 302→602, 303→603, 345/341/331→711.
+   **Atenție:** dacă nu e setat nici acest câmp, nici contul de cheltuieli implicit al
+   companiei, contul respectiv este **sărit în silențiu** la închidere — nu apare nicio
+   eroare, doar lipsesc liniile.
 4. Pregătiți un set de mișcări postate (recepții, livrări) în perioada de test.
-5. Verificați că utilizatorul are acces la meniul **Inventar → Raportare**.
+5. Verificați că utilizatorul are acces la meniul **Inventar → Raportare** (raportul acestui
+   modul) și, pentru generarea notei de regularizare, la **Contabilitate → Examinare**
+   (grupul `account.group_account_readonly`).
 
 ## 6. Flux de utilizare
 
 ### Pasul 1 — Deschiderea raportului (defalcare pe conturi)
 
-Accesați **Inventar → Raportare → Fișă magazie / Balanță stocuri (RO)**. Raportul se deschide pe
+Accesați **Inventar → Raportare → Balanță analitică stocuri**. Raportul se deschide pe
 luna curentă și afișează, implicit, **defalcarea pe conturile de stoc** (371, 303 etc.), cu
 Stoc inițial / Intrări / Ieșiri / Stoc final (cantitativ și valoric) și coloanele de reconciliere.
 
@@ -95,17 +101,37 @@ deschide exact liniile contabile (`account.move.line`) din care e calculat soldu
 
 ### Pasul 6 — Generarea notei de regularizare (per material)
 
-Regularizarea de valoare se generează din **Inventar → „Inventory Valuation" → Stock Closing**
-(care folosește override-ul RO **per material** din acest modul): o **notă contabilă draft** cu
-**linii pe fiecare produs**, totalizate corect pe cont — pentru verificare și postare.
+Regularizarea de valoare **nu se generează din raportul acestui modul**, ci din raportul nativ
+de evaluare: **Contabilitate → Examinare → Inventar → Evaluare stoc**, butonul
+**„Generează înregistrare"**. Modulul nostru intervine acolo prin override-ul RO **per
+material** (`res.company._get_stock_valuation_account_vals`), deci rezultatul este o **notă
+contabilă ciornă** cu **linii pe fiecare produs**, totalizate identic pe cont cu nativul —
+pentru verificare și postare manuală. Nota primește referința **„Închidere stoc"**
+(`ref`, în limba utilizatorului care o generează).
 
-![Nota de regularizare (Stock Closing), draft](screenshots/06_nota_regularizare.png)
+![Nota de regularizare („Închidere stoc"), ciornă](screenshots/06_nota_regularizare.png)
 
 **Note de monografie și raportare** (regularizarea de valoare, inventar intermitent):
 - Creștere de valoare: `Dr 3xx (stoc) = Cr 60x/711`.
 - Scădere de valoare: `Dr 60x/711 = Cr 3xx (stoc)`.
 - Stocuri achiziționate → 607/601/602/603; **producție proprie → 711**.
 - Reconcilierea este **instrument de verificare** — nu postează automat; nota se generează la cerere.
+
+**Periodicitatea închiderii** se configurează în **Contabilitate → Configurare → Setări →
+„Evaluare stoc"**, câmpul **„Periodic Valuation"** (`inventory_period`):
+
+| Valoare | Comportament |
+|---|---|
+| **Manual** | închiderea se face numai din buton; cronul nu face nimic |
+| **Zilnic** | cronul „Stock Account: Inventory Valuation Closing" închide și **postează automat** în fiecare zi |
+| **Lunar** | același cron închide și postează automat **doar în ultima zi calendaristică a lunii** |
+
+Pentru închiderea lunară de stocuri în România recomandăm **Manual** sau **Lunar cu
+verificare**: nota generată automat este **postată direct** (`auto_post=True`), fără pasul de
+control pe material. Închiderea refuză o dată anterioară unei închideri deja postate
+(„Există înregistrări de închidere după data selectată…"); istoricul închiderilor e ținut în
+`ir.config_parameter` (`<company_id>.stock_valuation_closing_ids`) și e **plafonat la
+ultimele 10** — nu vă bazați pe el ca registru de audit.
 
 ### Pasul 7 — Filtre și acces din produs
 
@@ -126,7 +152,8 @@ cu reconcilierea analitic ↔ sintetic limitată strict la acel material.
 
 | Modul | Rol |
 |---|---|
-| `stock_account` (nativ) | valorizarea pe `stock.move.value`; „Inventory Valuation" + „Stock Closing" (regularizare globală pe cont) |
+| `stock_account` (nativ) | valorizarea pe `stock.move.value`; raportul „Evaluare stoc" + închiderea de stoc (regularizare globală pe cont) |
+| `stock_accountant` (Enterprise) | meniul **Contabilitate → Examinare → Inventar → Evaluare stoc** și setările de evaluare/periodicitate |
 | `l10n_ro_inventory_closing` | inventarierea fizică (diferențe cantitative: 6588/4282-7588/6583) |
 | `l10n_ro_stock_cmp_periodic` | nota de corecție CMP perpetuu vs. periodic |
 | `l10n_ro_stock_k_coefficient` | coeficient K, diferențe de preț (348/378) |
@@ -143,7 +170,8 @@ postarea/aprobarea notei de regularizare; corectarea erorilor de valorizare la n
 - [ ] Desfășurarea unui produs arată documentele cu **stoc curent** (fișa de magazie).
 - [ ] Coloanele „Sold sintetic" și „Diferență" sunt populate pe cont și pe produs.
 - [ ] Caretul „Înregistrări contabile" deschide `account.move.line` filtrate pe cont/produs.
-- [ ] Butonul „Notă regularizare (draft)" generează o notă cu linii **pe material**.
+- [ ] Butonul „Generează înregistrare" (Contabilitate → Examinare → Inventar → Evaluare stoc)
+      produce o notă cu linii **pe material**, cu referința „Închidere stoc".
 - [ ] După postarea regularizării (la o dată ≤ azi), diferența pe material → 0.
 - [ ] Butonul „Fișă de magazie" de pe produs deschide raportul pre-filtrat.
 
@@ -151,10 +179,13 @@ postarea/aprobarea notei de regularizare; corectarea erorilor de valorizare la n
 
 | Mesaj | Cauză | Remediere |
 |---|---|---|
-| „Please set the Valuation Account for Inventory Valuation in the settings." | Lipsește contul de evaluare a stocului (categorie / companie) | Setați un cont de clasa 3 (ex. 371) pe categorie sau pe companie |
-| „Everything is correctly closed" | Nu există diferență de valoare pe contul de stoc (deja reconciliat) | Normal — nu e nimic de regularizat pe cont |
-| Diferența rămâne după postare | Nota a fost postată cu **dată viitoare** (rămâne draft) sau există aml fără produs | Postați la o dată ≤ azi; verificați liniile „Fără produs"; corectați valorizarea mișcărilor |
-| „Selectați o singură companie..." | Butonul de regularizare cu mai multe companii selectate | Selectați o singură companie în filtru |
+| „Vă rugăm să setați Contul de evaluare pentru Evaluarea stocurilor în setări." (`Please set the Valuation Account for Inventory Valuation in the settings.`) | Lipsește **contul de evaluare pe companie** (`account_stock_valuation_id`), din Setări → Evaluare stoc | Setați un cont de clasa 3 (ex. 371) în setările companiei |
+| „Vă rugăm să setați Jurnalul pentru Evaluarea Stocurilor în setări." | Lipsește jurnalul de stoc pe companie (`account_stock_journal_id`) | Setați un jurnal de tip Diverse în setările companiei |
+| „Totul este închis corect" (`Everything is correctly closed`) | Nu există diferență de valoare pe conturile de stoc (deja reconciliat) | Normal — nu e nimic de regularizat |
+| „Există înregistrări de închidere după data selectată. Anulați-le înainte să generați o înregistrare anterioară acestora" | Cereți o închidere la o dată anterioară unei închideri deja postate | Anulați închiderea ulterioară sau alegeți o dată mai recentă |
+| **Niciun mesaj, dar lipsesc liniile pe un cont** | Contul de stoc nu are „Cont variație" și nici companiile nu au cont de cheltuieli implicit → contul e sărit **în silențiu** | Setați `account_stock_variation_id` pe fiecare cont de clasa 3 |
+| Diferența rămâne după postare | Nota a fost postată cu **dată viitoare** (rămâne ciornă) sau există aml fără produs | Postați la o dată ≤ azi; verificați liniile „Fără produs"; corectați valorizarea mișcărilor |
+| Nota de închidere iese pe altă companie | Raportul de evaluare lucrează pe `env.company` (compania activă), nu pe selecția multiplă | Comutați pe compania dorită înainte de a genera nota |
 
 ## 10. Capturi de ecran
 
@@ -165,15 +196,17 @@ companie RO, cu plan de conturi RO.
 Toate capturile există în `readme/screenshots/` (în ordinea fluxului):
 1. `01_balanta_conturi.png` — raportul, defalcare pe conturi + coloanele Sold sintetic / Diferență
 2. `02_drill_produse.png` — cont (371000 Mărfuri) desfășurat pe produse
-3. `03_fisa_magazie_documente.png` — produs desfășurat pe documente (Stoc inițial + recepție)
-4. `04_reconciliere.png` — Sold sintetic vs. Diferență (−200 lei) pe cont/produs
+3. `03_fisa_magazie_documente.png` — raport desfășurat complet: cont → produse → documente
+4. `04_reconciliere.png` — coloanele Sold sintetic vs. Diferență, evidențiate
 5. `05_caret_aml.png` — caret „Înregistrări contabile" → lista `account.move.line`
-6. `06_nota_regularizare.png` — nota de regularizare (Stock Closing), draft
+6. `06_nota_regularizare.png` — nota de regularizare („Închidere stoc"), ciornă
 7. `07_buton_produs.png` — butonul „Fișă de magazie" pe fișa produsului
 8. `08_fisa_produs_filtrata.png` — raportul deschis din buton, pre-filtrat pe produs (desfășurat)
 
-`01`, `07` și `08` se regenerează automat din `tests/test_screenshots.py` (tag `fise_screenshots`);
-`02`–`06` necesită interacțiuni (drill-down/caret/notă) capturate pe instanță.
+**Toate cele 8 capturi** se regenerează din `tests/test_screenshots.py` (tag
+`fise_screenshots`), inclusiv desfășurările, caretul și nota de regularizare. Testul seedează
+două materiale recepționate fără factură (deci fără sold sintetic) plus o recepție înregistrată
+doar contabil, ca reconcilierea să aibă diferențe reale de arătat.
 
 Regenerare:
 ```
@@ -183,7 +216,7 @@ Regenerare:
 
 ## 11. Observații pentru manual
 
-- Subliniați **diferența față de raportul nativ** „Inventory Valuation": acesta lucrează **global
+- Subliniați **diferența față de raportul nativ** „Evaluare stoc": acesta lucrează **global
   pe cont**; `l10n_ro_stock_sheet` verifică **pe fiecare material** (prinde compensările).
 - Reconcilierea e **verificare**, nu postare; regularizarea de valoare se postează la cerere, iar
   corecțiile RO specifice (CMP, diferențe de preț) se fac cu modulele dedicate.
