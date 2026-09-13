@@ -51,11 +51,40 @@ cele trei spețe operaționale principale; vezi fișa dedicată pentru fluxul en
 | `company_incomplete` (date companie) | ✓ | ✓ | ✓ | error / warning |
 | `partner_no_vat` (parteneri fără CUI) | ✓ |  |  | error / warning |
 | `partner_no_country` / `partner_invalid_country` | ✓ |  |  | error / warning |
+| `partner_no_city` (parteneri fără localitate) | ✓ |  |  | error |
+| `partner_no_state` / `partner_invalid_state` (județ) | ✓ |  |  | warning |
+| `partner_fiscal_type_mismatch` (țară și TVA se contrazic) | ✓ |  |  | error / warning |
+| `move_line_no_partner` (note pe 40x/41x fără partener) | ✓ |  |  | error |
 | `account_no_type` (conturi nemapate) | ✓ |  |  | error |
 | `tax_no_saft_type` (taxe fără tip SAF-T) | ✓ |  |  | warning |
+| `export_section_empty` (secțiuni care ar ieși goale) | ✓ |  |  | error |
+| `payments_not_exported` (plăți fără extras bancar) | ✓ |  |  | warning |
+| `product_no_default_code` (articole fără referință internă) | ✓ |  |  | error |
+| `product_no_category` (articole fără categorie) | ✓ |  |  | error |
+| `product_no_account` (articole fără cont de venit/cheltuială) | ✓ |  |  | warning |
 | `asset_no_saft_category` (active fără categorie SAF-T) |  | ✓ |  | error |
 | `picking_type_no_movement_type` (tip operație stoc fără cod SAF-T) |  |  | ✓ | error |
 | `uom_no_unece_code` (UoM fără cod UNECE) |  |  | ✓ | warning |
+
+> **Verificarea de companie s-a înăsprit** și se aplică tuturor celor trei spețe: pe lângă CUI,
+> adresă și județ, sunt semnalate acum și lipsa telefonului, a contului bancar, a bazei de
+> impozitare SAF-T și a unui contact cu nume din două cuvinte și telefon. Primele trei opresc
+> exportul Enterprise înainte să genereze fișierul; al patrulea lasă declarația fără elementul
+> obligatoriu `Contact` și o face respinsă de validatorul ANAF.
+
+### De unde vin verificările
+
+Cele mai multe nu sunt deduse din documentația D406, ci din confruntarea unui fișier generat de
+Odoo cu validatorul oficial `D406Validator` din DUK Integrator: fiecare a fost mai întâi un fișier
+respins, apoi o verificare. Două tipare merită reținute de consultant, pentru că nu se văd nicăieri
+în interfața Odoo:
+
+- **O secțiune emisă goală invalidează tot fișierul.** Exportul scrie necondiționat
+  `SalesInvoices`, `PurchaseInvoices` și `Payments`, iar validatorul cere minimum un element în
+  fiecare secțiune prezentă. O lună fără achiziții produce o declarație respinsă în întregime.
+- **Plățile intră în declarație doar dintr-o linie de extras bancar.** O plată înregistrată prin
+  „Înregistrează plata", fără extras, nu ajunge în fișier. Un client care nu importă extrase în
+  Odoo generează sistematic un D406 nedepunabil.
 
 ## 6. Flux general
 

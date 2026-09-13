@@ -8209,6 +8209,45 @@
     "text": "Product Valuation Check Report\ndeltatech_valuation_report\nModulul adaugă un raport de tip Enterprise (în cadrul framework-ului `account_reports`) care verifică, pentru fiecare cont de evaluare a stocului, dacă valoarea calculată prin evaluarea produselor (`deltatech_stock_valuation`) coincide cu soldul contabil al contului respectiv. Diferența dintre cele două — cauzată de obicei de înregistrări contabile pe conturile de stoc fără produs atașat — este afișată explicit și poate fi investigată printr-un clic direct pe liniile contabile responsabile, ajutând echipa contabilă să identifice rapid și să corecteze abaterile de evaluare a stocului.\nRaport dedicat „Stock Valuation vs Balance Check\", accesibil din meniul de rapoarte financiare (Contabilitate → Raportare).\nCompară, per cont de evaluare a stocului, soldul contabil complet cu totalul liniilor care poartă un produs (adică exact ce agregă evaluarea produsului).\nAfișează diferența drept sumă a liniilor contabile fără produs asociat pe conturile de stoc — acestea nu pot fi alocate niciunei evaluări de produs.\nAcțiune de tip „caret\" pe fiecare linie de cont, care deschide direct lista liniilor contabile fără produs, pentru audit și corecție rapidă (asignare produs sau mutare pe un cont fără evaluare).\nSuportă filtrare pe interval de dată și selecție multi-companie, conform standardului framework-ului `account_reports`."
   },
   {
+    "path": "deltatech_van_sales/index.md",
+    "module": "deltatech_van_sales",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_van_sales",
+    "local_path": "odoo-addons/bitshop/deltatech_van_sales",
+    "last_ingest": "2026-09-13",
+    "friendly_name": "Van Sales",
+    "summary": "Modulul transformă orice depozit Odoo într-o flotă de dube pentru vânzare mobilă: un agent încarcă marfă dimineața, confirmă și livrează comenzi pe teren dintr-un singur click, încasează cash sau card pe loc, iar seara returnează stocul nevândut. Este un MVP simplu, gândit pentru distribuitori mici și medii — nu concurează cu un SFA complet (nu are planificare de rute/vizite, GPS sau execuție de retail cu poze) —, dar acoperă solid nucleul operațional: livrare instantă din stocul dubei, încasare pe loc și facturare centralizată, în batch, la birou, cu reconciliere contabilă automată.",
+    "features": [
+      "Fiecare dubă e propriul mini-depozit Odoo (`stock.warehouse` de tip ship-only), creat automat la",
+      "Configurare dubă în Van Sales > Configuration > Vans: nume, cod (reutilizat ca și cod de",
+      "Load Stock pe formularul dubei deschide un transfer intern precompletat (de la depozitul de",
+      "Câmpul Van pe comanda de vânzare setează automat warehouse-ul dubei și politica de livrare",
+      "Confirm & Deliver confirmă comanda și validează livrarea din stocul dubei într-un singur",
+      "Register Collection deschide un dialog precompletat cu suma comenzii, dubă și agent; alegerea",
+      "Return Unsold Stock pe formularul dubei creează transferul invers către depozitul de",
+      "Meniul Van Sales > To Invoice (doar grupul Manager) listează comenzile de tip van livrate și",
+      "Meniul Van Sales > Reports deschide un wizard pentru două rapoarte PDF pe interval de date,",
+      "Două grupuri de securitate dedicate: Van Sales / Agent (vede doar dubă și comenzile/",
+      "Încasarea caută automat, per companie, primul jurnal Cash (pentru Cash) sau Bank (pentru"
+    ],
+    "dependencies": [
+      "sale_stock",
+      "stock",
+      "account",
+      "barcodes",
+      "deltatech_barcode_sale"
+    ],
+    "connections": [
+      "sale_stock",
+      "account",
+      "barcodes",
+      "deltatech_barcode_sale",
+      "barcode_handler",
+      "deltatech_invoice_picking_automatically"
+    ],
+    "text": "Van Sales\ndeltatech_van_sales\nModulul transformă orice depozit Odoo într-o flotă de dube pentru vânzare mobilă: un agent încarcă marfă dimineața, confirmă și livrează comenzi pe teren dintr-un singur click, încasează cash sau card pe loc, iar seara returnează stocul nevândut. Este un MVP simplu, gândit pentru distribuitori mici și medii — nu concurează cu un SFA complet (nu are planificare de rute/vizite, GPS sau execuție de retail cu poze) —, dar acoperă solid nucleul operațional: livrare instantă din stocul dubei, încasare pe loc și facturare centralizată, în batch, la birou, cu reconciliere contabilă automată.\nFiecare dubă e propriul mini-depozit Odoo (`stock.warehouse` de tip ship-only), creat automat la\nConfigurare dubă în Van Sales > Configuration > Vans: nume, cod (reutilizat ca și cod de\nLoad Stock pe formularul dubei deschide un transfer intern precompletat (de la depozitul de\nCâmpul Van pe comanda de vânzare setează automat warehouse-ul dubei și politica de livrare\nConfirm & Deliver confirmă comanda și validează livrarea din stocul dubei într-un singur\nRegister Collection deschide un dialog precompletat cu suma comenzii, dubă și agent; alegerea\nReturn Unsold Stock pe formularul dubei creează transferul invers către depozitul de\nMeniul Van Sales > To Invoice (doar grupul Manager) listează comenzile de tip van livrate și\nMeniul Van Sales > Reports deschide un wizard pentru două rapoarte PDF pe interval de date,\nDouă grupuri de securitate dedicate: Van Sales / Agent (vede doar dubă și comenzile/\nÎncasarea caută automat, per companie, primul jurnal Cash (pentru Cash) sau Bank (pentru"
+  },
+  {
     "path": "deltatech_vendor_products/index.md",
     "module": "deltatech_vendor_products",
     "version": "19.0.1.1.7",
@@ -12504,7 +12543,7 @@
   {
     "path": "l10n_ro_saft_validator/index.md",
     "module": "l10n_ro_saft_validator",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_saft_validator",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_saft_validator",
     "last_ingest": null,

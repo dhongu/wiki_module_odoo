@@ -4,6 +4,51 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-13] Ingestie nouă: Van Sales
+
+- **Acțiune:** Documentat modulul nou `deltatech_van_sales` (suita `bitshop`), un MVP de vânzare
+  mobilă din stocul unei dube pentru distribuitori mici-mediu — mergeat azi în `origin/19.0` (PR
+  #2828). Fiecare dubă e propriul `stock.warehouse`, cu confirmare+livrare instantă dintr-un click,
+  încasare pe loc (cash/card) ca plată neconciliată, și facturare centralizată în batch la birou.
+- **Sursă:** `readme/DESCRIPTION.md` (Sumar/Funcționalități, prioritar) + `readme/USAGE.md` pentru
+  detalii operaționale (meniuri, câmpuri, butoane); modelele/vederile nu au fost resintetizate în
+  pagină — fluxul pas-cu-pas complet rămâne în fișa consultant.
+- **Dependențe/Conexiuni:** `sale_stock`, `stock`, `account`, `barcodes` rămân text (fără pagină
+  wiki); [deltatech_barcode_sale](deltatech_barcode_sale/index.md) e link activ (widget-ul de
+  scanare pe comandă e moștenit, nu reimplementat).
+- **Fișe consultant:** copiată `FISA_CONSULTANT.md` (română) + 9 capturi reale (Playwright, pe
+  instanță de test), ilustrând tot fluxul: configurare dubă, Load Stock, câmpul Van pe comandă,
+  Confirm & Deliver, Register Collection, lista de încasări, To Invoice, wizard-ul de rapoarte.
+- **Fișiere actualizate:** `deltatech_van_sales/index.md` (nou), `deltatech_van_sales/FISA_CONSULTANT.md`
+  + `screenshots/` (noi), `index.md` (intrare nouă), acest fișier.
+
+## [2026-09-12] Re-ingestie: pre-validatorul SAF-T D406
+
+- **Acțiune:** Regenerată pagina `l10n_ro_saft_validator`, rămasă la `19.0.1.0.1` (ingestie
+  01.06.2026) în timp ce modulul ajunsese la `19.0.1.2.1`. Nu e o actualizare de detaliu: modulul a
+  trecut de la **8 la 20 de verificări**, prin trei PR-uri intrate azi pe `origin/19.0` (#221, #224,
+  #227). Codul a fost citit dintr-un worktree detașat pe `origin/19.0` (`b147f65a`), nu din
+  `odoo-addons/l10n_ro_ent`, care e pe branch-ul altei sesiuni.
+- **Sursă:** `readme/DESCRIPTION.md` + `readme/USAGE.md` (Sumar și Funcționalități Cheie), completate
+  cu `__manifest__.py`, `wizard/l10n_ro_saft_validator.py` și testele; fluxul pas-cu-pas rămâne în
+  fișele consultant, nu se dublează în pagină.
+- **Ce s-a schimbat de fond:** patru verificări vin din comparația cu RVX ERP (note contabile fără
+  partener pe 40x/41x, județ în afara nomenclatorului ISO 3166-2:RO, tip fiscal de partener
+  incoerent, articole fără cont de venit/cheltuială). Restul de opt sunt derivate din confruntarea
+  unui D406 generat de Odoo cu `D406Validator` din DUK Integrator — fiecare a fost întâi un fișier
+  respins: secțiuni emise goale (`SalesInvoices`/`PurchaseInvoices`/`Payments`), plăți care nu vin
+  dintr-o linie de extras bancar, contact de companie absent, articole fără categorie
+  (`ProductGroup` vid), plus prerechizitele care opresc exportul — telefon, cont bancar, bază de
+  impozitare SAF-T, localitate de partener, referință internă de articol.
+- **Dependențe/Conexiuni:** `account`, `l10n_ro` rămân text (fără pagină wiki); conexiunile către
+  [l10n_ro_anaf_duk](l10n_ro_anaf_duk/index.md) și [l10n_ro_anaf_d300](l10n_ro_anaf_d300/index.md)
+  sunt link-uri active. `l10n_ro_saft` / `l10n_ro_saft_stock` (Enterprise) rămân text — sunt sursa
+  mai multor reguli de verificare, dar nu au pagină.
+- **Fișe consultant:** recopiate toate patru (overview + L/T + A + C) și cele 9 capturi, regenerate
+  în română pe un scenariu realist.
+- **Fișiere actualizate:** `l10n_ro_saft_validator/index.md`, `FISA_CONSULTANT*.md` (4),
+  `screenshots/` (9 `.png`), `index.md`, `log.md`.
+
 ## [2026-09-12] Re-ingestie: D107, D112 și situațiile financiare
 
 - **Acțiune:** Regenerate trei pagini rămase în urma codului, semnalate la resincronizarea de nume
