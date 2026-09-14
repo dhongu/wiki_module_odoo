@@ -487,7 +487,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [terrabit_helpdesk_link](terrabit_helpdesk_link/index.md): Adaugă meniul de top „Terrabit Help" care deschide portalul de suport Terrabit într-o filă nouă.
 - [terrabit_iap_server_sale](terrabit_iap_server_sale/index.md): Achiziția de credite IAP prin magazinul eCommerce (website_sale), cu creditare automată a contului IAP la confirmarea comenzii.
 - [terrabit_partner_credit_limit](terrabit_partner_credit_limit/index.md): Blochează confirmarea comenzilor de vânzare când soldul de încasat al clientului depășește limita de credit stabilită, cu excepții pe partener/echipă și fluxuri de aprobare configurabile.
-- [terrabit_partner_credit_limit_website](terrabit_partner_credit_limit_website/index.md): Extinde limita de credit pe partener către website/eCommerce, blocând comenzile online și restricționând metodele de plată când limita e depășită.
+- [terrabit_partner_credit_limit_website](terrabit_partner_credit_limit_website/index.md): Extinde limita de credit pe partener la checkout-ul website, restricționând metodele de plată „pe încredere" (transfer bancar/ramburs) sau, opțional, toate metodele, la depășirea limitei.
 - [terrabit_partner_payable_receivable](terrabit_partner_payable_receivable/index.md): Afișează sumele de plată și de încasat pe fișa partenerului, pentru context financiar și evaluare de credit imediată.
 - [terrabit_picking_flow](terrabit_picking_flow/index.md): Urmărește ridicările (picking) printr-o rută ordonată de locații fizice de depozit, cu progres controlat pe Kanban.
 - [terrabit_tiktok_pixel](terrabit_tiktok_pixel/index.md): Integrare TikTok Pixel și Conversion API pentru eCommerce Odoo 19, tracking hibrid client+server.

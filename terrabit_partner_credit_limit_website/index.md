@@ -4,7 +4,8 @@
 - **Versiune:** `19.0.0.0.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_partner_credit_limit_website
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_partner_credit_limit_website`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-09-14`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

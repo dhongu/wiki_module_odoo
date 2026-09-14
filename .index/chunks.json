@@ -13477,7 +13477,7 @@
     "version": "19.0.0.0.2",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_partner_credit_limit_website",
     "local_path": "odoo-addons/bitshop/terrabit_partner_credit_limit_website",
-    "last_ingest": "2026-07-31",
+    "last_ingest": "2026-09-14",
     "friendly_name": "Limită de Credit pe Partener — Website",
     "summary": "Modulul extinde funcționalitatea de limită de credit pe partener către platforma de website/e-commerce a Odoo. Integrează gestiunea limitei de credit direct în experiența de cumpărare online, astfel încât politica de credit a companiei să fie aplicată consecvent atât pe canalele de vânzare tradiționale, cât și pe cele de comerț electronic.",
     "features": [

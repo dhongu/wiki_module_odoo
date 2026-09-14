@@ -4,6 +4,26 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-14] Re-ingestie: Fișă consultant nouă pentru limita de credit la checkout website
+
+- **Acțiune:** Actualizat pagina modulului `terrabit_partner_credit_limit_website` (suita `bitshop`)
+  după ce modulul a primit o fișă consultant nouă (`readme/FISA_CONSULTANT.md`) cu 4 capturi reale,
+  generate printr-un test Playwright dedicat (`tests/test_screenshots.py`, simulând un checkout
+  real cu useri portal). Descrierea din index.md a fost corectată pentru a reflecta direcția reală
+  a restricției: la depășirea limitei se elimină metodele „pe încredere" (transfer bancar/ramburs),
+  nu cele online.
+- **Sursă:** `readme/DESCRIPTION.md` (Sumar/Funcționalități, structură nemodificată) + fișa
+  consultant pentru detaliile operaționale (parametrul `restrict_all_provider`, capcana
+  `credit_limit.skip_term_immediate`).
+- **Dependențe/Conexiuni:** neschimbate (`terrabit_partner_credit_limit` ca link,
+  `website_sale`/`payment_custom` ca text).
+- **Fișe consultant:** copiată `FISA_CONSULTANT.md` (română) + 4 capturi reale (Playwright):
+  setarea globală din Website → Configurare → Setări, rezumatul sold/limită pe pagina de plată,
+  alerta de facturi restante și lista de metode de plată restricționată.
+- **Fișiere actualizate:** `terrabit_partner_credit_limit_website/index.md` (Ultima Ingestie +
+  linie Fișă Consultant), `terrabit_partner_credit_limit_website/FISA_CONSULTANT.md` + `screenshots/`
+  (noi), `index.md` (descriere corectată), acest fișier.
+
 ## [2026-09-14] Re-ingestie: Fișă consultant nouă pentru limita de credit
 
 - **Acțiune:** Actualizat pagina modulului `terrabit_partner_credit_limit` (suita `bitshop`) după ce
