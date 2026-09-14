@@ -25,7 +25,7 @@ următoare — astfel rezultatul financiar reflectă diferența față de ultima
 
 ## 2. Bază legală și context
 
-- **OMFP 1802/2014, pct. 135** — creanțele, datoriile și disponibilitățile în valută se
+- **OMFP 1802/2014, pct. 304** — creanțele, datoriile și disponibilitățile în valută se
   evaluează la cursul de închidere (cursul BNR din ultima zi a lunii); diferențele de curs se
   recunosc în rezultat (venituri/cheltuieli financiare).
 - **Diferența față de IFRS / Enterprise:** în RO diferențele din reevaluare sunt definitive (nu se
