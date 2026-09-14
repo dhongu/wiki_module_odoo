@@ -4,6 +4,42 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-14] Re-ingestie: Fix bază amortizare fiscală (post-audit fișă) — `l10n_ro_fixed_assets`
+
+- **Acțiune:** Actualizată pagina modulului `l10n_ro_fixed_assets` la versiunea `19.0.1.2.2`. În timpul
+  auditării fișei consultant (3 ture cu agentul `verificator-fisa`), a fost descoperit un bug
+  suplimentar: `_compute_l10n_ro_fiscal_depreciation` folosea `original_value` ca bază de calcul, iar
+  o reevaluare majorează acest câmp cu un surplus nedeductibil fiscal (Cod Fiscal art. 28) — cifrele
+  de amortizare fiscală ieșeau umflate. Corectat prin câmpul nou `l10n_ro_fiscal_original_value`,
+  înghețat la creare (`create()` override).
+- **Sursă:** `readme/HISTORY.md` (intrarea 19.0.1.2.2) + `models/account_asset.py`.
+- **Dependențe/Conexiuni:** neschimbate.
+- **Fișe consultant:** `FISA_CONSULTANT.md` resincronizată — inclusiv o corecție de etichetă de
+  versiune în tabelul din secțiunea 12 (rândul despre acest fix era etichetat greșit „19.0.1.2.1" în
+  loc de „19.0.1.2.2"), aplicată atât la sursă (`readme/`) cât și în copia din wiki.
+- **Fișiere actualizate:** `l10n_ro_fixed_assets/index.md`, `l10n_ro_fixed_assets/FISA_CONSULTANT.md`,
+  acest fișier.
+
+## [2026-09-14] Re-ingestie: Fix-uri amortizare mijloace fixe RO (tichet 9452)
+
+- **Acțiune:** Actualizată pagina modulului `l10n_ro_fixed_assets` (suita `l10n_ro_ent`) la versiunea
+  `19.0.1.2.1`, după rezolvarea tichetului Terrabit #9452: amortizarea contabilă (companii RO,
+  perioadă lunară) pornea greșit din luna PIF în loc de luna următoare (art. 28 alin. (12) lit. a)
+  L227/2015; OMFP 1802/2014 pct. 238) și mai amortiza pro-rata pe zile luna vânzării la casare. Un
+  al doilea bug, descoperit în timpul auditării fișei consultant, făcea ca amortizarea fiscală
+  cumulată afișată pe activ să iasă mai mică decât cea a anului curent pentru un activ pus în
+  funcțiune în anul curent (`_compute_l10n_ro_fiscal_depreciation`) — corectat simetric.
+- **Sursă:** `readme/HISTORY.md` (istoricul de versiuni) + `readme/FISA_CONSULTANT.md` (secțiunea
+  nouă 12 „Corecții relevante pentru consultant", produsă și auditată în 3 ture cu agentul
+  `verificator-fisa`).
+- **Dependențe/Conexiuni:** neschimbate (`account_asset`, `l10n_ro_saft`, `l10n_ro`).
+- **Fișe consultant:** `FISA_CONSULTANT.md` reactualizată (monografie casare/vânzare separată
+  corect, pași de configurare `loss_account_id`/`gain_account_id`/`account_storno`, mesaje de eroare
+  reale) + 3 capturi regenerate (custode cu nume RO plauzibil, activ confirmat cu reevaluare
+  postată, coloane netrunchiate în listă).
+- **Fișiere actualizate:** `l10n_ro_fixed_assets/index.md`, `l10n_ro_fixed_assets/FISA_CONSULTANT.md`
+  + `screenshots/` (3 fișiere), acest fișier.
+
 ## [2026-09-14] Re-ingestie: Fișă consultant nouă pentru limita de credit la checkout website
 
 - **Acțiune:** Actualizat pagina modulului `terrabit_partner_credit_limit_website` (suita `bitshop`)
