@@ -4,7 +4,8 @@
 - **Versiune:** `19.0.1.0.0`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_create_bill_button`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_create_bill_button`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-09-14`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -12,7 +13,7 @@
 
 #### 2. Funcționalități Cheie
 
-- Restabilește butonul „Create Bill" (facturare cu un singur clic) pe formularul comenzii de achiziție, alături de widget-ul „Upload Bill"
+- Restabilește butonul „Create Bill" (facturare cu un singur clic) pe formularul comenzii de achiziție, alături de widget-ul „Upload Bill", evidențiat vizual (culoare primară) pentru a fi ușor de identificat
 - Permite crearea facturii de furnizor direct din comanda de achiziție, fără a fi necesară atașarea unui fișier
 - Restaurează copierea automată a „Referinței Furnizorului" din comanda de achiziție în câmpurile „Referință" și „Referință Plată" ale facturii generate, replicând comportamentul din Odoo 18
 

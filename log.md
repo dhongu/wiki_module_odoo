@@ -4,6 +4,39 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-14] Re-ingestie: Fișă consultant nouă pentru limita de credit
+
+- **Acțiune:** Actualizat pagina modulului `terrabit_partner_credit_limit` (suita `bitshop`) după ce
+  modulul a primit o fișă consultant nouă (`readme/FISA_CONSULTANT.md`) cu 5 capturi reale, generate
+  printr-un test Playwright dedicat (`tests/test_screenshots.py`). Funcționalitățile Cheie au fost
+  îmbogățite cu detalii operaționale din fișă (toleranță, zile de grație, buton „Req. confirm",
+  parametrul `skip_only_card`); fluxul pas-cu-pas complet rămâne doar în fișă.
+- **Sursă:** `readme/DESCRIPTION.md` (Sumar/Funcționalități, structură nemodificată) + fișa
+  consultant pentru detalii operaționale.
+- **Dependențe/Conexiuni:** neschimbate (`account_payment`, `sale_management` ca text,
+  `terrabit_partner_payable_receivable` ca link).
+- **Fișe consultant:** copiată `FISA_CONSULTANT.md` (română) + 5 capturi reale (Playwright):
+  formularul partenerului cu limita de credit, setările globale, echipa de vânzări cu excepție,
+  blocajul la confirmarea comenzii peste limită și bifa „Allow Over Credit?" pe comandă.
+- **Fișiere actualizate:** `terrabit_partner_credit_limit/index.md` (Ultima Ingestie + linie Fișă
+  Consultant + Funcționalități Cheie îmbogățite), `terrabit_partner_credit_limit/FISA_CONSULTANT.md`
+  + `screenshots/` (noi), `index.md` (descriere actualizată), acest fișier.
+
+## [2026-09-14] Re-ingestie: Buton „Create Bill" pe achiziții
+
+- **Acțiune:** Actualizat pagina modulului `deltatech_purchase_create_bill_button` (suita
+  `deltatech`) după ce butonul „Create Bill" a fost evidențiat vizual (clasa `btn-primary`) pe
+  formularul comenzii de achiziție, iar modulul a primit o fișă consultant nouă cu capturi reale.
+- **Sursă:** `readme/DESCRIPTION.md` (Sumar/Funcționalități), fără resintetizarea componentelor
+  tehnice (Readme nu o cere).
+- **Dependențe/Conexiuni:** `purchase` rămâne text (fără pagină wiki).
+- **Fișe consultant:** copiată `FISA_CONSULTANT.md` (română) + 3 capturi reale (Playwright, pe
+  `test19`): comanda confirmată cu Referință furnizor, butonul „Creează factură" evidențiat, și
+  factura generată cu Referință/Referință plată preluate.
+- **Fișiere actualizate:** `deltatech_purchase_create_bill_button/index.md` (Ultima Ingestie +
+  linie Fișă Consultant + mențiune buton evidențiat), `deltatech_purchase_create_bill_button/FISA_CONSULTANT.md`
+  + `screenshots/` (noi), `index.md` (descriere actualizată), acest fișier.
+
 ## [2026-09-13] Ingestie nouă: Van Sales
 
 - **Acțiune:** Documentat modulul nou `deltatech_van_sales` (suita `bitshop`), un MVP de vânzare

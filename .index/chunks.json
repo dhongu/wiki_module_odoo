@@ -5746,11 +5746,11 @@
     "version": "19.0.1.0.0",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_create_bill_button`",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_create_bill_button",
-    "last_ingest": "2026-07-31",
+    "last_ingest": "2026-09-14",
     "friendly_name": "Purchase Create Bill Button",
     "summary": "În Odoo 19, butonul clasic „Create Bill\" de pe formularul comenzii de achiziție a fost înlocuit cu un widget „Upload Bill\" care obligă utilizatorul să atașeze un fișier înainte de a putea genera factura. Acest modul restabilește butonul clasic, cu un singur clic, lângă widget-ul de încărcare, astfel încât comenzile de achiziție să poată fi facturate direct, fără a fi nevoie de un fișier atașat — exact ca în Odoo 18. Modulul restaurează totodată și copierea automată a „Referinței Furnizorului\" de pe comanda de achiziție în câmpurile „Referință\" și „Referință Plată\" ale facturii de furnizor generate, comportament eliminat în Odoo 19.",
     "features": [
-      "Restabilește butonul „Create Bill\" (facturare cu un singur clic) pe formularul comenzii de achiziție, alături de widget-ul „Upload Bill\"",
+      "Restabilește butonul „Create Bill\" (facturare cu un singur clic) pe formularul comenzii de achiziție, alături de widget-ul „Upload Bill\", evidențiat vizual (culoare primară) pentru a fi ușor de identificat",
       "Permite crearea facturii de furnizor direct din comanda de achiziție, fără a fi necesară atașarea unui fișier",
       "Restaurează copierea automată a „Referinței Furnizorului\" din comanda de achiziție în câmpurile „Referință\" și „Referință Plată\" ale facturii generate, replicând comportamentul din Odoo 18"
     ],
@@ -5758,7 +5758,7 @@
       "purchase"
     ],
     "connections": [],
-    "text": "Purchase Create Bill Button\ndeltatech_purchase_create_bill_button\nÎn Odoo 19, butonul clasic „Create Bill\" de pe formularul comenzii de achiziție a fost înlocuit cu un widget „Upload Bill\" care obligă utilizatorul să atașeze un fișier înainte de a putea genera factura. Acest modul restabilește butonul clasic, cu un singur clic, lângă widget-ul de încărcare, astfel încât comenzile de achiziție să poată fi facturate direct, fără a fi nevoie de un fișier atașat — exact ca în Odoo 18. Modulul restaurează totodată și copierea automată a „Referinței Furnizorului\" de pe comanda de achiziție în câmpurile „Referință\" și „Referință Plată\" ale facturii de furnizor generate, comportament eliminat în Odoo 19.\nRestabilește butonul „Create Bill\" (facturare cu un singur clic) pe formularul comenzii de achiziție, alături de widget-ul „Upload Bill\"\nPermite crearea facturii de furnizor direct din comanda de achiziție, fără a fi necesară atașarea unui fișier\nRestaurează copierea automată a „Referinței Furnizorului\" din comanda de achiziție în câmpurile „Referință\" și „Referință Plată\" ale facturii generate, replicând comportamentul din Odoo 18"
+    "text": "Purchase Create Bill Button\ndeltatech_purchase_create_bill_button\nÎn Odoo 19, butonul clasic „Create Bill\" de pe formularul comenzii de achiziție a fost înlocuit cu un widget „Upload Bill\" care obligă utilizatorul să atașeze un fișier înainte de a putea genera factura. Acest modul restabilește butonul clasic, cu un singur clic, lângă widget-ul de încărcare, astfel încât comenzile de achiziție să poată fi facturate direct, fără a fi nevoie de un fișier atașat — exact ca în Odoo 18. Modulul restaurează totodată și copierea automată a „Referinței Furnizorului\" de pe comanda de achiziție în câmpurile „Referință\" și „Referință Plată\" ale facturii de furnizor generate, comportament eliminat în Odoo 19.\nRestabilește butonul „Create Bill\" (facturare cu un singur clic) pe formularul comenzii de achiziție, alături de widget-ul „Upload Bill\", evidențiat vizual (culoare primară) pentru a fi ușor de identificat\nPermite crearea facturii de furnizor direct din comanda de achiziție, fără a fi necesară atașarea unui fișier\nRestaurează copierea automată a „Referinței Furnizorului\" din comanda de achiziție în câmpurile „Referință\" și „Referință Plată\" ale facturii generate, replicând comportamentul din Odoo 18"
   },
   {
     "path": "deltatech_purchase_mail/index.md",
@@ -13442,19 +13442,22 @@
     "version": "19.0.1.2.0",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_partner_credit_limit",
     "local_path": "odoo-addons/bitshop/terrabit_partner_credit_limit",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-09-14",
     "friendly_name": "Limită de Credit pe Partener",
     "summary": "Modulul implementează un sistem robust de gestionare a limitelor de credit pentru partenerii de afaceri. Permite organizațiilor să stabilească și să aplice limite de credit clienților, ajutând la administrarea riscului financiar și la controlul eficient al creanțelor. Atunci când limita de credit a unui client este depășită, comenzile de vânzare nu mai pot fi confirmate, oferind un control automat asupra expunerii la credit. Modulul este util în special pentru companiile care oferă termene de plată clienților și care doresc să își gestioneze responsabil expunerea pe creanțe.",
     "features": [
-      "Stabilește o limită de credit pe partener; comenzile de vânzare nu pot fi confirmate dacă limita de credit este depășită.",
-      "Permite marcarea anumitor parteneri pentru a ignora limitele de credit.",
+      "Stabilește o limită de credit pe partener; comenzile de vânzare nu pot fi confirmate dacă limita de credit plus toleranța admisă este depășită.",
+      "Permite marcarea anumitor parteneri pentru a ignora limitele de credit (opțiunea „Allow Over Credit?\" de pe partener) și definirea unor „zile de grație\" (`Clemency Days`) înainte ca o factură scadentă să conteze drept restantă.",
       "Introduce grupuri de acces pentru utilizatori:",
-      "„Manage credit limits\" — permite utilizatorilor să modifice limitele de credit ale partenerilor.",
-      "„Can approve sale order over credit limit\" — permite utilizatorilor autorizați să depășească restricția de credit (prin bifarea opțiunii „Allow Over Credit?\" din tab-ul Other Info al comenzii de vânzare).",
-      "Permite exceptarea anumitor echipe de vânzări de la verificarea limitei de credit.",
+      "„Manage credit limits\" — permite editarea limitei de credit, a „Allow Over Credit?\" și a zilelor de grație de pe partener; nu ocolește însă blocajul la confirmarea comenzii.",
+      "„Can approve sale order over credit limit\" — singurul grup care ocolește verificarea la confirmarea comenzii și poate bifa „Allow Over Credit?\" direct pe comanda de vânzare.",
+      "Pentru utilizatorii fără grupul „Manage credit limits\", la depășirea limitei apare pe comandă butonul „Req. confirm\", care deschide o activitate (`mail.activity`) către responsabilul echipei de vânzări, ca flux alternativ de aprobare.",
+      "Permite exceptarea anumitor echipe de vânzări de la verificarea limitei de credit (opțiunea „Ignore credit limits\").",
+      "Parametri globali configurabili din Vânzări → Configurare → Setări: toleranța admisă (`credit_limit.tolerance`), telefonul departamentului contabil afișat în mesajul de eroare și sărirea verificării pentru termene de plată imediate (`credit_limit.skip_term_immediate`).",
       "Calcul flexibil al creditului bazat pe parametri de sistem:",
-      "Parametrul `credit_limit_from_invoices` — dacă este `False` (implicit), creditul se calculează din liniile de cont (account move lines); dacă este `True`, creditul se calculează din facturi (facturile trebuie să fie plătite).",
-      "Parametrul `credit_limit_check_supplier_invoices` (necesită `credit_limit_from_invoices = True`) — dacă este `False` (implicit), creditul se calculează doar din facturile sau notele de credit ale clientului; dacă este `True`, creditul se calculează din toate facturile sau notele de credit."
+      "`credit_limit_from_invoices` — dacă este `False` (implicit), creditul se calculează din liniile de cont (account move lines); dacă este `True`, creditul se calculează din facturi (facturile trebuie să fie plătite).",
+      "`credit_limit_check_supplier_invoices` (necesită `credit_limit_from_invoices = True`) — dacă este `False` (implicit), creditul se calculează doar din facturile sau notele de credit ale clientului; dacă este `True`, creditul se calculează din toate facturile sau notele de credit.",
+      "`skip_only_card` — limitează sărirea verificării doar la tranzacțiile plătite altfel decât cu cardul."
     ],
     "dependencies": [
       "account_payment",
@@ -13462,9 +13465,11 @@
       "terrabit_partner_payable_receivable"
     ],
     "connections": [
-      "terrabit_partner_payable_receivable"
+      "terrabit_partner_payable_receivable",
+      "sales_team",
+      "mail"
     ],
-    "text": "Limită de Credit pe Partener\nterrabit_partner_credit_limit\nModulul implementează un sistem robust de gestionare a limitelor de credit pentru partenerii de afaceri. Permite organizațiilor să stabilească și să aplice limite de credit clienților, ajutând la administrarea riscului financiar și la controlul eficient al creanțelor. Atunci când limita de credit a unui client este depășită, comenzile de vânzare nu mai pot fi confirmate, oferind un control automat asupra expunerii la credit. Modulul este util în special pentru companiile care oferă termene de plată clienților și care doresc să își gestioneze responsabil expunerea pe creanțe.\nStabilește o limită de credit pe partener; comenzile de vânzare nu pot fi confirmate dacă limita de credit este depășită.\nPermite marcarea anumitor parteneri pentru a ignora limitele de credit.\nIntroduce grupuri de acces pentru utilizatori:\n„Manage credit limits\" — permite utilizatorilor să modifice limitele de credit ale partenerilor.\n„Can approve sale order over credit limit\" — permite utilizatorilor autorizați să depășească restricția de credit (prin bifarea opțiunii „Allow Over Credit?\" din tab-ul Other Info al comenzii de vânzare).\nPermite exceptarea anumitor echipe de vânzări de la verificarea limitei de credit.\nCalcul flexibil al creditului bazat pe parametri de sistem:\nParametrul `credit_limit_from_invoices` — dacă este `False` (implicit), creditul se calculează din liniile de cont (account move lines); dacă este `True`, creditul se calculează din facturi (facturile trebuie să fie plătite).\nParametrul `credit_limit_check_supplier_invoices` (necesită `credit_limit_from_invoices = True`) — dacă este `False` (implicit), creditul se calculează doar din facturile sau notele de credit ale clientului; dacă este `True`, creditul se calculează din toate facturile sau notele de credit."
+    "text": "Limită de Credit pe Partener\nterrabit_partner_credit_limit\nModulul implementează un sistem robust de gestionare a limitelor de credit pentru partenerii de afaceri. Permite organizațiilor să stabilească și să aplice limite de credit clienților, ajutând la administrarea riscului financiar și la controlul eficient al creanțelor. Atunci când limita de credit a unui client este depășită, comenzile de vânzare nu mai pot fi confirmate, oferind un control automat asupra expunerii la credit. Modulul este util în special pentru companiile care oferă termene de plată clienților și care doresc să își gestioneze responsabil expunerea pe creanțe.\nStabilește o limită de credit pe partener; comenzile de vânzare nu pot fi confirmate dacă limita de credit plus toleranța admisă este depășită.\nPermite marcarea anumitor parteneri pentru a ignora limitele de credit (opțiunea „Allow Over Credit?\" de pe partener) și definirea unor „zile de grație\" (`Clemency Days`) înainte ca o factură scadentă să conteze drept restantă.\nIntroduce grupuri de acces pentru utilizatori:\n„Manage credit limits\" — permite editarea limitei de credit, a „Allow Over Credit?\" și a zilelor de grație de pe partener; nu ocolește însă blocajul la confirmarea comenzii.\n„Can approve sale order over credit limit\" — singurul grup care ocolește verificarea la confirmarea comenzii și poate bifa „Allow Over Credit?\" direct pe comanda de vânzare.\nPentru utilizatorii fără grupul „Manage credit limits\", la depășirea limitei apare pe comandă butonul „Req. confirm\", care deschide o activitate (`mail.activity`) către responsabilul echipei de vânzări, ca flux alternativ de aprobare.\nPermite exceptarea anumitor echipe de vânzări de la verificarea limitei de credit (opțiunea „Ignore credit limits\").\nParametri globali configurabili din Vânzări → Configurare → Setări: toleranța admisă (`credit_limit.tolerance`), telefonul departamentului contabil afișat în mesajul de eroare și sărirea verificării pentru termene de plată imediate (`credit_limit.skip_term_immediate`).\nCalcul flexibil al creditului bazat pe parametri de sistem:\n`credit_limit_from_invoices` — dacă este `False` (implicit), creditul se calculează din liniile de cont (account move lines); dacă este `True`, creditul se calculează din facturi (facturile trebuie să fie plătite).\n`credit_limit_check_supplier_invoices` (necesită `credit_limit_from_invoices = True`) — dacă este `False` (implicit), creditul se calculează doar din facturile sau notele de credit ale clientului; dacă este `True`, creditul se calculează din toate facturile sau notele de credit.\n`skip_only_card` — limitează sărirea verificării doar la tranzacțiile plătite altfel decât cu cardul."
   },
   {
     "path": "terrabit_partner_credit_limit_website/index.md",
