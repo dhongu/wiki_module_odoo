@@ -4,6 +4,27 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-15] Re-ingestie: Registrul Imobilizărilor migrat la `account.report` — `l10n_ro_fixed_assets`
+
+- **Acțiune:** Actualizată pagina modulului `l10n_ro_fixed_assets` la versiunea `19.0.1.3.0`. Raportul
+  „Registrul Imobilizărilor" a fost migrat de la un wizard (`l10n.ro.asset.register.wizard`) + raport
+  QWeb PDF la framework-ul nativ `account.report` (Enterprise): filtru „As of Date" (situație la o
+  dată aleasă), grupare pe cont de imobilizări cu subtotaluri și total general, drill-down pe fiecare
+  activ (caret → fișa `account.asset`), export PDF/XLSX nativ. Wizard-ul vechi și template-ul QWeb au
+  fost eliminate; a apărut modelul handler nou `l10n.ro.asset.register.report.handler`
+  (`account.report.custom.handler`, groupby `asset_account` → `asset_line`). Decizia de Casare
+  (raport QWeb separat) e neschimbată.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/USAGE.md` (Pasul 8), `readme/FISA_CONSULTANT.md`
+  (Pasul 4 nou), `__manifest__.py` (versiune + dependență nouă `account_reports`).
+- **Dependențe/Conexiuni:** dependență nouă `account_reports` (fără pagină wiki proprie, rămasă text
+  cod în secțiunea de Dependențe).
+- **Fișe consultant:** copia din wiki resincronizată, cu a patra captură nouă
+  (`04_registrul_imobilizarilor.png`, raportul desfășurat: grupare pe cont, subtotaluri, total
+  general).
+- **Fișiere actualizate:** `l10n_ro_fixed_assets/index.md`, `l10n_ro_fixed_assets/FISA_CONSULTANT.md`,
+  `l10n_ro_fixed_assets/screenshots/04_registrul_imobilizarilor.png`, intrarea din `index.md` central,
+  acest fișier.
+
 ## [2026-09-14] Re-ingestie: Fix bază amortizare fiscală (post-audit fișă) — `l10n_ro_fixed_assets`
 
 - **Acțiune:** Actualizată pagina modulului `l10n_ro_fixed_assets` la versiunea `19.0.1.2.2`. În timpul

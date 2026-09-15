@@ -92,6 +92,20 @@ starea „Cedat".
 
 ![Tab „Informații RO" — identificare/localizare, amortizare fiscală, casare, reevaluări](screenshots/03_informatii_ro.png)
 
+### Pasul 4 — Registrul Imobilizărilor
+
+Accesați **Contabilitate → Raportare → Statement Reports → Fixed Assets Register (RO)**. Raportul
+este nativ `account.report` (Enterprise), nu mai e un wizard separat: filtrul **„As of Date"** din
+antet stabilește data de referință (implicit, ziua curentă), iar situația se recalculează automat
+pentru acea dată — inclusiv amortizarea cumulată, luată doar din notele postate până atunci.
+
+Activele sunt grupate pe **contul de imobilizări**, cu subtotal pe cont și **total general** în
+capul tabelului. Fiecare linie e un activ confirmat (activele în ciornă nu apar în registru); click
+pe o linie deschide direct fișa activului respectiv (drill-down). Butoanele **PDF** / **XLSX** din
+colțul stânga-sus exportă exact ce se vede pe ecran.
+
+![Registrul Imobilizărilor — grupare pe cont, subtotaluri, total general, filtrul „As of Date"](screenshots/04_registrul_imobilizarilor.png)
+
 ### Note de monografie și raportare
 
 - **Amortizare lunară:** `Dr 6811 (cheltuieli amortizare) = Cr 281x (amortizare cumulată)`.
@@ -157,6 +171,8 @@ din `l10n_ro_doc_screenshots`, HttpCase + Playwright), pe companie RO, în lei, 
    conturi (213/281/681), jurnal, nr. inventar și smart button „Rezervă 105".
 3. `03_informatii_ro.png` — tab „Informații RO": Data PIF, locație, DNU (HG 2139/2004), responsabil
    custodie, amortizare fiscală (Cod Fiscal art. 28), casare, reevaluări (rezerva 105).
+4. `04_registrul_imobilizarilor.png` — Registrul Imobilizărilor (`account.report`): filtrul
+   „As of Date", grupare pe cont cu subtotaluri, total general, 3 active confirmate.
 
 Regenerare:
 ```
@@ -188,6 +204,7 @@ Fixuri livrate pe acest modul, relevante pentru discuția cu clientul (ce s-a sc
 | **19.0.1.2.2** (2026-09-14) | Amortizarea fiscală se calcula pe **valoarea curentă** a activului (`original_value`), care crește la o reevaluare — un surplus din reevaluare (nedeductibil fiscal, Cod Fiscal art. 28) ajungea astfel inclus greșit în baza de amortizare fiscală, umflând cifra afișată. | Baza de calcul este acum câmpul nou **„Fiscal Original Value"**, înghețat la valoarea de intrare din momentul creării activului — neafectat de reevaluări ulterioare. |
 | **19.0.1.2.0** (2026-09-14) | Legarea manuală a unei note contabile (ex. o notă de reevaluare) la câmpul tehnic „Asset" al unei note contabile, fără completarea datei de început a amortizării, bloca ulterior orice calcul de valoare reziduală a activului, inclusiv din wizard-ul „Modifică". Incident reprodus pe o instanță client. | Legarea manuală incompletă este acum respinsă explicit la salvare, cu un mesaj clar (deocamdată doar în engleză) — câmpul „Asset" rămâne rezervat notelor generate automat de motorul de amortizare. |
 | **19.0.1.1.1** (2026-07-17) | Butonul/acțiunea „Reevaluează Mijlocul Fix" din lista de active (meniu contextual) arunca o eroare la orice utilizare, blocând reevaluarea din acel punct de intrare. | Acțiunea apelează corect wizard-ul de reevaluare; funcționează identic cu butonul „Reevaluare" din formularul activului. |
+| **19.0.1.3.0** (2026-09-15) | Registrul Imobilizărilor se genera printr-un wizard separat (dată + companie), care producea un PDF static; exportul PDF putea eșua cu o eroare de server (`IndexError`, template incomplet — corectat separat, chiar înainte de această migrare). | Raportul a fost migrat la framework-ul nativ `account.report`: se accesează direct din **Contabilitate → Raportare → Statement Reports → Fixed Assets Register (RO)**, cu filtru „As of Date", grupare pe cont cu subtotaluri, drill-down pe fiecare activ și export PDF/XLSX din bara de instrumente a raportului — fără wizard intermediar. |
 
 > Notă: fix-urile de amortizare (din luna următoare PIF, fără prorata la vânzare) și blocarea legării
 > manuale sunt acoperite direct de teste automate (`tests/test_fixed_assets_ro.py`), reproduse cu date

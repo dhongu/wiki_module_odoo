@@ -406,7 +406,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_financial_notes](l10n_ro_financial_notes/index.md): Generare automată a Notelor explicative 1–10 la situațiile financiare anuale cu export PDF (OMFP 1802).
 - [l10n_ro_financial_statements](l10n_ro_financial_statements/index.md): Generează documentul unic `<Bilant1003>` de depunere a situațiilor financiare anuale (F10/F20/F30/F40) în formatul ANAF, cu numerotare de rânduri extrasă din validator și pre-validare de corelații (FR-31).
 - [l10n_ro_fiscal_audit](l10n_ro_fiscal_audit/index.md): Raport de audit preventiv care corelează totalurile declarațiilor fiscale RO (D300↔Jurnale TVA, SAF-T, e-Factura) și listează neconcordanțele înainte de depunere sau control ANAF.
-- [l10n_ro_fixed_assets](l10n_ro_fixed_assets/index.md): Mijloace fixe complete RO: nr. inventar SAF-T, data PIF, amortizare fiscală vs. contabilă, reevaluare 105 și casare (FR-19).
+- [l10n_ro_fixed_assets](l10n_ro_fixed_assets/index.md): Mijloace fixe complete RO: nr. inventar SAF-T, data PIF, amortizare fiscală vs. contabilă, reevaluare 105, casare și Registrul Imobilizărilor ca raport nativ `account.report` (FR-19).
 - [l10n_ro_footer_anpc](l10n_ro_footer_anpc/index.md): Afișează pozele și link-urile ANPC în footer-ul site-ului, pentru conformitate cu protecția consumatorului.
 - [l10n_ro_force_reconcile](l10n_ro_force_reconcile/index.md): Wizard de reconciliere forțată între conturi diferite (409↔401, 419↔411, compensare client-furnizor).
 - [l10n_ro_grants](l10n_ro_grants/index.md): Contracte de finanțare nerambursabilă cu note 475/131/132 și recunoaștere venituri (OMFP 1802 + IAS 20, FR-38).
