@@ -2569,36 +2569,62 @@
   {
     "path": "deltatech_expenses/index.md",
     "module": "deltatech_expenses",
-    "version": "19.0.3.2.0",
+    "version": "19.0.3.3.0",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_expenses",
     "local_path": "odoo-addons/deltatech/deltatech_expenses",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-09-16",
     "friendly_name": "Expenses Deduction",
-    "summary": "Modulul gestionează decontarea cheltuielilor efectuate de angajați pe baza avansurilor primite. Permite introducerea unui decont de cheltuieli într-un document distinct, care generează automat chitanțele de achiziție aferente, iar la validare produce notele contabile de avans și înregistrează plățile. Astfel, soldul avansurilor de decontat (cont 542) se închide corect, calculându-se automat diferența de restituit sau de încasat între avansul acordat și cheltuielile justificate, inclusiv TVA-ul deductibil. > **Notă — diferența față de `hr_expense`:** Acest modul **nu** înlocuiește modulul standard `hr_expense` și poate coexista cu el. `deltatech_expenses` acoperă fluxul contabil românesc *avans de trezorerie (cont 542) → decont → diurnă → închidere 542*, cu model central propriu (`deltatech.expenses.deduction`), angajatul fiind un `hr.employee` (partenerul contabil derivă din `work_contact_id`). În schimb, `hr_expense` acoperă fluxul generic HR *angajatul/firma plătește → (eventual) rambursare*, bazat pe `hr.expense` / `hr.expense.sheet`, fără noțiunea de avans 542 sau diurnă. Cele două module pot coexista fără dublă contabilizare: butonul „Preia cheltuieli HR\" leagă o cheltuială `hr.expense` de un decont (`expenses_deduction_id`), caz în care postarea ei standard este sărită automat — contabilizarea rămâne unică.",
+    "summary": "Modulul gestionează decontarea cheltuielilor efectuate de angajați pe baza avansurilor de trezorerie primite, un flux specific contabilității din România. Permite introducerea unui decont de cheltuieli într-un document distinct, care generează automat chitanțele de achiziție aferente, iar la validare produce notele contabile de avans, de decontare și de diurnă, închizând corect soldul contului de avansuri de decontat (542). Se calculează automat diferența de restituit sau de încasat între avansul acordat și cheltuielile justificate, inclusiv TVA-ul deductibil. > **Notă — nu mai depinde de `hr_expense`.** Modulul a fost restructurat: nucleul `deltatech_expenses` este acum independent de modulul standard `hr_expense` și nu îl mai include ca dependență. Preluarea cheltuielilor `hr.expense` într-un decont (fostul wizard „Preia cheltuieli HR\", câmpul `hr_expense_id` și override-ul pe `hr.expense.action_post`) a fost mutată într-un modul-punte separat, `deltatech_expenses_hr_expense` (auto-instalabil, activ doar dacă ambele module coexistă). Cele două module acoperă procese distincte care pot coexista fără dublă contabilizare: `deltatech_expenses` tratează fluxul românesc *avans de trezorerie (542) → decont → diurnă → închidere 542* cu model central propriu (`deltatech.expenses.deduction`), iar `hr_expense` tratează fluxul generic *angajatul/firma plătește → (eventual) rambursare*.",
     "features": [
       "Introducerea decontului de cheltuieli într-un document distinct care generează automat chitanțe de achiziție.",
-      "Validarea documentului duce la generarea notelor contabile de avans și înregistrarea plăților.",
-      "Calculul automat al diferenței dintre avansul acordat și totalul cheltuielilor (restituire sau încasare).",
-      "Calculul corect al TVA-ului deductibil aferent cheltuielilor, inclusiv când taxele sunt incluse în preț.",
-      "Generarea documentului de încasare (Chitanță / Dispoziție de Încasare) pentru restituirea soldului de către angajat.",
-      "Închiderea automată a contului de avansuri de decontat (542) la contabilizarea finală.",
-      "Preluarea cheltuielilor `hr.expense` eligibile ale angajatului printr-un wizard dedicat („Preia cheltuieli HR\"), cu prevenirea dublei contabilizări.",
+      "Validarea documentului duce la generarea notelor contabile de avans, de decontare din avans și de diurnă, și la înregistrarea plăților.",
+      "Calculul automat al diferenței dintre avansul acordat și totalul cheltuielilor (restituire sau încasare de către angajat).",
+      "Calculul corect al TVA-ului deductibil aferent cheltuielilor, cu sume introduse TVA inclus.",
+      "Linii de cheltuieli de două tipuri: „Cheltuieli\" (justificată cu bon/factură, generează chitanță de achiziție `in_receipt`) și „Plată furnizor\" (angajatul achită direct o datorie a firmei, generează doar nota `Dr 401 = Cr 542`, reconciliată cu facturile furnizor deschise).",
+      "Calcul diurnă (câmp `diem`, implicit 42,5 lei/zi) și `total_diem`, cu notă contabilă proprie (`Dr 625 = Cr 542`).",
+      "Închiderea automată a contului de avansuri de decontat (542) la contabilizarea finală, prin nota de diferență (`5311/5121` ↔ `542`).",
       "Buton smart „Deconturi\" pe fișa angajatului (`hr.employee`), cu numărul deconturilor și listă filtrată.",
-      "Separare pe roluri (Angajat/Aprobator/Contabil) cu acces și acțiuni diferențiate: acordarea avansului cere rol de Aprobator, validarea/invalidarea decontului cere rol de Contabil.",
-      "Calcul diurnă (câmp `diem`, implicit 42,5) și `total_diem`."
+      "Angajatul este un `hr.employee`; partenerul contabil folosit pe notele contabile derivă din câmpul „Work Contact\" (`work_contact_id`) — dacă acesta lipsește, notele se generează fără partener (înregistrări interne), validarea funcționând în ambele cazuri."
     ],
     "dependencies": [
       "l10n_ro",
       "account",
       "product",
       "hr",
-      "hr_expense",
       "deltatech_partner_generic"
     ],
     "connections": [
+      "deltatech_expenses_hr_expense",
+      "deltatech_expenses",
       "deltatech_partner_generic"
     ],
-    "text": "Expenses Deduction\ndeltatech_expenses\nModulul gestionează decontarea cheltuielilor efectuate de angajați pe baza avansurilor primite. Permite introducerea unui decont de cheltuieli într-un document distinct, care generează automat chitanțele de achiziție aferente, iar la validare produce notele contabile de avans și înregistrează plățile. Astfel, soldul avansurilor de decontat (cont 542) se închide corect, calculându-se automat diferența de restituit sau de încasat între avansul acordat și cheltuielile justificate, inclusiv TVA-ul deductibil. > **Notă — diferența față de `hr_expense`:** Acest modul **nu** înlocuiește modulul standard `hr_expense` și poate coexista cu el. `deltatech_expenses` acoperă fluxul contabil românesc *avans de trezorerie (cont 542) → decont → diurnă → închidere 542*, cu model central propriu (`deltatech.expenses.deduction`), angajatul fiind un `hr.employee` (partenerul contabil derivă din `work_contact_id`). În schimb, `hr_expense` acoperă fluxul generic HR *angajatul/firma plătește → (eventual) rambursare*, bazat pe `hr.expense` / `hr.expense.sheet`, fără noțiunea de avans 542 sau diurnă. Cele două module pot coexista fără dublă contabilizare: butonul „Preia cheltuieli HR\" leagă o cheltuială `hr.expense` de un decont (`expenses_deduction_id`), caz în care postarea ei standard este sărită automat — contabilizarea rămâne unică.\nIntroducerea decontului de cheltuieli într-un document distinct care generează automat chitanțe de achiziție.\nValidarea documentului duce la generarea notelor contabile de avans și înregistrarea plăților.\nCalculul automat al diferenței dintre avansul acordat și totalul cheltuielilor (restituire sau încasare).\nCalculul corect al TVA-ului deductibil aferent cheltuielilor, inclusiv când taxele sunt incluse în preț.\nGenerarea documentului de încasare (Chitanță / Dispoziție de Încasare) pentru restituirea soldului de către angajat.\nÎnchiderea automată a contului de avansuri de decontat (542) la contabilizarea finală.\nPreluarea cheltuielilor `hr.expense` eligibile ale angajatului printr-un wizard dedicat („Preia cheltuieli HR\"), cu prevenirea dublei contabilizări.\nButon smart „Deconturi\" pe fișa angajatului (`hr.employee`), cu numărul deconturilor și listă filtrată.\nSeparare pe roluri (Angajat/Aprobator/Contabil) cu acces și acțiuni diferențiate: acordarea avansului cere rol de Aprobator, validarea/invalidarea decontului cere rol de Contabil.\nCalcul diurnă (câmp `diem`, implicit 42,5) și `total_diem`."
+    "text": "Expenses Deduction\ndeltatech_expenses\nModulul gestionează decontarea cheltuielilor efectuate de angajați pe baza avansurilor de trezorerie primite, un flux specific contabilității din România. Permite introducerea unui decont de cheltuieli într-un document distinct, care generează automat chitanțele de achiziție aferente, iar la validare produce notele contabile de avans, de decontare și de diurnă, închizând corect soldul contului de avansuri de decontat (542). Se calculează automat diferența de restituit sau de încasat între avansul acordat și cheltuielile justificate, inclusiv TVA-ul deductibil. > **Notă — nu mai depinde de `hr_expense`.** Modulul a fost restructurat: nucleul `deltatech_expenses` este acum independent de modulul standard `hr_expense` și nu îl mai include ca dependență. Preluarea cheltuielilor `hr.expense` într-un decont (fostul wizard „Preia cheltuieli HR\", câmpul `hr_expense_id` și override-ul pe `hr.expense.action_post`) a fost mutată într-un modul-punte separat, `deltatech_expenses_hr_expense` (auto-instalabil, activ doar dacă ambele module coexistă). Cele două module acoperă procese distincte care pot coexista fără dublă contabilizare: `deltatech_expenses` tratează fluxul românesc *avans de trezorerie (542) → decont → diurnă → închidere 542* cu model central propriu (`deltatech.expenses.deduction`), iar `hr_expense` tratează fluxul generic *angajatul/firma plătește → (eventual) rambursare*.\nIntroducerea decontului de cheltuieli într-un document distinct care generează automat chitanțe de achiziție.\nValidarea documentului duce la generarea notelor contabile de avans, de decontare din avans și de diurnă, și la înregistrarea plăților.\nCalculul automat al diferenței dintre avansul acordat și totalul cheltuielilor (restituire sau încasare de către angajat).\nCalculul corect al TVA-ului deductibil aferent cheltuielilor, cu sume introduse TVA inclus.\nLinii de cheltuieli de două tipuri: „Cheltuieli\" (justificată cu bon/factură, generează chitanță de achiziție `in_receipt`) și „Plată furnizor\" (angajatul achită direct o datorie a firmei, generează doar nota `Dr 401 = Cr 542`, reconciliată cu facturile furnizor deschise).\nCalcul diurnă (câmp `diem`, implicit 42,5 lei/zi) și `total_diem`, cu notă contabilă proprie (`Dr 625 = Cr 542`).\nÎnchiderea automată a contului de avansuri de decontat (542) la contabilizarea finală, prin nota de diferență (`5311/5121` ↔ `542`).\nButon smart „Deconturi\" pe fișa angajatului (`hr.employee`), cu numărul deconturilor și listă filtrată.\nAngajatul este un `hr.employee`; partenerul contabil folosit pe notele contabile derivă din câmpul „Work Contact\" (`work_contact_id`) — dacă acesta lipsește, notele se generează fără partener (înregistrări interne), validarea funcționând în ambele cazuri."
+  },
+  {
+    "path": "deltatech_expenses_hr_expense/index.md",
+    "module": "deltatech_expenses_hr_expense",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_expenses_hr_expense",
+    "local_path": "odoo-addons/deltatech/deltatech_expenses_hr_expense",
+    "last_ingest": "2026-09-16",
+    "friendly_name": "Expenses Deduction - HR Expense Bridge",
+    "summary": "Modulul este o punte între cheltuielile standard de angajați (`hr_expense`) și Decontul de cheltuieli din avans de trezorerie (`deltatech_expenses`, cont 542), pentru companiile care folosesc ambele fluxuri și vor să evite dubla contabilizare a acelorași cheltuieli. Se instalează automat, fără intervenție manuală, doar atunci când ambele module de bază sunt deja prezente în baza de date — companiile care nu folosesc modulul standard de cheltuieli nu îl primesc și nu văd elemente suplimentare aduse de `hr_expense`.",
+    "features": [
+      "Buton „Preia cheltuieli HR\" pe formularul Decontului (vizibil doar în stările Ciornă/Avans):",
+      "Acțiune contextuală pe lista de cheltuieli standard, „Adaugă în decont de cheltuieli\": permite",
+      "Cheltuielile `hr.expense` legate de un decont (câmpul `expenses_deduction_id`) nu se mai",
+      "La invalidarea unui decont, liniile importate din `hr.expense` se șterg automat, iar cheltuielile",
+      "Preluarea revalidează explicit eligibilitatea (angajat, companie, stare, absența unei note",
+      "Nu necesită configurare suplimentară — funcționează imediat ce ambele module sunt instalate."
+    ],
+    "dependencies": [
+      "deltatech_expenses",
+      "hr_expense"
+    ],
+    "connections": [
+      "deltatech_expenses"
+    ],
+    "text": "Expenses Deduction - HR Expense Bridge\ndeltatech_expenses_hr_expense\nModulul este o punte între cheltuielile standard de angajați (`hr_expense`) și Decontul de cheltuieli din avans de trezorerie (`deltatech_expenses`, cont 542), pentru companiile care folosesc ambele fluxuri și vor să evite dubla contabilizare a acelorași cheltuieli. Se instalează automat, fără intervenție manuală, doar atunci când ambele module de bază sunt deja prezente în baza de date — companiile care nu folosesc modulul standard de cheltuieli nu îl primesc și nu văd elemente suplimentare aduse de `hr_expense`.\nButon „Preia cheltuieli HR\" pe formularul Decontului (vizibil doar în stările Ciornă/Avans):\nAcțiune contextuală pe lista de cheltuieli standard, „Adaugă în decont de cheltuieli\": permite\nCheltuielile `hr.expense` legate de un decont (câmpul `expenses_deduction_id`) nu se mai\nLa invalidarea unui decont, liniile importate din `hr.expense` se șterg automat, iar cheltuielile\nPreluarea revalidează explicit eligibilitatea (angajat, companie, stare, absența unei note\nNu necesită configurare suplimentară — funcționează imediat ce ambele module sunt instalate."
   },
   {
     "path": "deltatech_fast_purchase/index.md",

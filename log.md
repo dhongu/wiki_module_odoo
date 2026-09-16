@@ -4,6 +4,34 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-16] Split modul: `deltatech_expenses_hr_expense` extras din `deltatech_expenses`
+
+- **Acțiune:** `deltatech_expenses` (v19.0.3.3.0) nu mai depinde de `hr_expense` — nucleul (Decont de
+  cheltuieli din avans de trezorerie, cont 542) nu avea nevoie de el decât pentru o singură
+  funcționalitate opțională: preluarea cheltuielilor standard `hr.expense` ca linii de decont. Acea
+  parte (câmpul `hr_expense_id`, `_eligible_hr_expenses`/`_import_hr_expenses`/
+  `action_open_import_hr_expenses`, override-ul pe `hr.expense.action_post`, wizard-ul „Preia
+  cheltuieli HR" și butonul aferent) a fost mutată într-un modul nou, `deltatech_expenses_hr_expense`
+  (v19.0.1.0.0, `auto_install: True`, depends `[deltatech_expenses, hr_expense]`). Pe bazele
+  existente, modulul nou se instalează automat la următorul update, fiindcă `hr_expense` era deja
+  instalat acolo. Nucleul câștigă un hook de extensie, `_release_imported_lines()`, apelat din
+  `invalidate_expenses()`, pe care modulul-punte îl suprascrie. PR mergeuit:
+  `dhongu/deltatech#2919` (branch `19.0`).
+- **Sursă:** `readme/DESCRIPTION.md` (ambele module), `__manifest__.py` (dependențe/versiune),
+  `readme/FISA_CONSULTANT.md` (regenerat pentru nucleu; scris nou pentru modulul-punte), cod
+  (`models/`, `views/`, `wizard/`).
+- **Dependențe/Conexiuni:** `deltatech_expenses` pierde dependența directă `hr_expense`; câștigă
+  conexiune (nu dependență) către `deltatech_expenses_hr_expense`. Modulul nou depinde de
+  `deltatech_expenses` (are pagină wiki, link activ) și `hr_expense` (fără pagină wiki, text cod).
+- **Fișe consultant:** `deltatech_expenses/FISA_CONSULTANT.md` resincronizată — pasul de import HR a
+  fost scos, capturile `03`/`04` (wizard-ul HR) au fost mutate la modulul nou. Scrisă fișă nouă
+  `deltatech_expenses_hr_expense/FISA_CONSULTANT.md` (skill `fisa-modul`), reutilizând acele două
+  capturi; copiată apoi în pagina wiki a modulului nou (`index.md` completat cu linia „Fișă Consultant").
+- **Fișiere actualizate:** `deltatech_expenses/index.md` (regenerat), `deltatech_expenses/FISA_CONSULTANT.md`
+  și `screenshots/` (resincronizate, 5 capturi rămase), `deltatech_expenses_hr_expense/index.md` (nou),
+  `deltatech_expenses_hr_expense/FISA_CONSULTANT.md` și `screenshots/` (noi, 2 capturi mutate),
+  intrările din `index.md` central, acest fișier.
+
 ## [2026-09-15] Re-ingestie: Registrul Imobilizărilor migrat la `account.report` — `l10n_ro_fixed_assets`
 
 - **Acțiune:** Actualizată pagina modulului `l10n_ro_fixed_assets` la versiunea `19.0.1.3.0`. Raportul
