@@ -182,7 +182,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_picking_restrict_entry_exit](deltatech_picking_restrict_entry_exit/index.md): Blochează validarea recepțiilor/livrărilor fără linie de comandă de achiziție/vânzare aferentă și limitează cantitățile la cele comandate.
 - [deltatech_picking_services](deltatech_picking_services/index.md): Adaugă un tab de linii de servicii pe transferurile de stoc, pentru a atașa produse de tip serviciu la operațiunea de ridicare/livrare.
 - [deltatech_picking_transit](deltatech_picking_transit/index.md): Automatizează transferurile interne în doi pași printr-o locație de tranzit.
-- [deltatech_pos](deltatech_pos/index.md): Generare fișier pentru casa de marcat — integrare între POS Odoo și case de marcat fiscale (ECR) pentru bonuri fiscale, numerar, rapoarte X/Z și raport de vânzări TVA pe punct de lucru.
+- [deltatech_pos](deltatech_pos/index.md): Generare fișier pentru casa de marcat — integrare între POS Odoo și case de marcat fiscale (ECR) pentru bonuri fiscale, numerar, rapoarte X/Z și raport de vânzări TVA pe punct de lucru și taxă (fișă consultant cu capturi).
 - [deltatech_pos_base](deltatech_pos_base/index.md): Strat de bază POS-ECR care oferă definițiile și structurile de date pentru tipărirea fiscală în Odoo POS.
 - [deltatech_pos_fix](deltatech_pos_fix/index.md): Corectează calculul totalului în POS când o poziție fiscală transformă o taxă inclusă în preț într-o taxă neinclusă (ex: taxare inversă), aliniind POS la comportamentul din Vânzări.
 - [deltatech_pos_online_payment](deltatech_pos_online_payment/index.md): Ascunde/blochează butonul "Force done" pe plățile POS online, prevenind confirmarea manuală a unei plăți neîncasate efectiv de furnizor.

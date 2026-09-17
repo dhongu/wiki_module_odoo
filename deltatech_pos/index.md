@@ -1,15 +1,15 @@
 # Print to ECR from POS (localizat la `deltatech_pos/index.md`)
 
 - **Nume Tehnic:** `deltatech_pos`
-- **Versiune:** `19.0.2.8.0`
+- **Versiune:** `19.0.2.8.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_pos`
-- **Ultima Ingestie:** `2026-09-04`
+- **Ultima Ingestie:** `2026-09-17`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul Deltatech POS ECR asigură o integrare eficientă între punctul de vânzare (Point of Sale) din Odoo și diverse case de marcat fiscale (ECR — Electronic Cash Register), permițând generarea automată a bonurilor fiscale și o gestionare completă a numerarului. În practică, modulul creează o punte între POS-ul Odoo și casa de marcat configurată: generează un fișier în formatul potrivit, care este apoi preluat și tipărit de casa de marcat în modul Conexiune PC (este nevoie de un driver de comunicare specific modelului). Astfel, operatorul nu mai lucrează din utilitarul instalat al casei de marcat, ci direct din Odoo — poate tipări bonuri fiscale, introduce sau scoate bani din casă, emite rapoarte X și Z și urmărește vânzările pe TVA direct dintr-un raport dedicat.
+Modulul Deltatech POS ECR asigură o integrare eficientă între punctul de vânzare (Point of Sale) din Odoo și diverse case de marcat fiscale (ECR — Electronic Cash Register), permițând generarea automată a bonurilor fiscale și o gestionare completă a numerarului. În practică, modulul creează o punte între POS-ul Odoo și casa de marcat configurată: generează un fișier în formatul potrivit, care este apoi preluat și tipărit de casa de marcat în modul Conexiune PC (este nevoie de un driver de comunicare specific modelului). Astfel, operatorul nu mai lucrează din utilitarul instalat al casei de marcat, ci direct din Odoo — poate tipări bonuri fiscale, introduce sau scoate bani din casă, emite rapoarte X și Z și urmărește vânzările pe TVA (pe casă de marcat și pe taxă) direct dintr-un raport dedicat.
 
 #### 2. Funcționalități Cheie
 
@@ -24,7 +24,8 @@ Modulul Deltatech POS ECR asigură o integrare eficientă între punctul de vân
 - Tipărirea rapoartelor X și Z direct din Odoo.
 - Posibilitatea de a configura departamentul implicit pentru liniile de pe bon.
 - Output compatibil ASCII pentru driverele ECR: elimină diacriticele și convertește exponenții uzuali (ex.: m² → m2, m³ → m3); orice alt caracter non-ASCII este înlocuit cu spațiu.
-- **Raportul „Vânzări TVA pe casă de marcat"** (nou, PR #2795): **Punct de vânzare → Reporting → VAT Sales by Fiscal Device** — vedere pivot/listă peste comenzile POS plătite sau postate, grupată implicit pe punct de lucru (casă de marcat) și cotă TVA, cu bază, TVA și total pentru orice interval de dată; filtrul implicit „Fiscal Receipt Printed" arată doar liniile al căror bon a fost efectiv tipărit, iar vederea listă oferă detalierea pe comandă. Citește direct `pos.order.line`, fără migrare/backfill — e un punct de plecare pentru reconciliere, nu o citire a arhivei electronice a aparatului fiscal, și nu acoperă fluxul separat `deltatech_sale_store` (facturare la bon fiscal, fără POS).
+- **Tipărirea CIF-ului clientului pe bon** (factură simplificată, Cod fiscal art. 319 alin. (12) lit. a)): opțiunea **Print customer VAT on receipt**, sub plafonul configurat în **VAT print limit** (implicit 490 lei); peste plafon, vânzarea trebuie facturată normal.
+- **Raportul „Vânzări TVA pe casă de marcat"** (**Punct de vânzare → Reporting → VAT Sales by Fiscal Device**): vedere pivot/listă peste liniile comenzilor POS plătite sau postate, grupată implicit pe punct de vânzare (casă de marcat) și **numele real al taxei** (`tax_name`, ex. „TVA colectat 21% Bunuri", „TVA Taxare Inversa"), cu bază, TVA și total pentru orice interval de dată. Gruparea pe `tax_name` (nu pe cota numerică `vat_rate`, păstrată doar pentru compatibilitate) evită cumularea tăcută a taxelor diferite care au aceeași cotă 0% (SGR, taxare inversă, scutiri). Câmpul `multi_tax` semnalează liniile cu **două taxe procentuale simultan** pe aceeași linie de comandă — o configurare de verificat, nu un comportament normal (caz real găsit la un client: 21% Bunuri + TVA Taxare Inversă pe aceeași linie). Filtrul „Fiscal Receipt Printed"/„ECR Receipt Text" NU e activ implicit, ca să nu ascundă vânzări reale din perioadele fără integrare ECR activă. Citește direct `pos.order.line`, fără migrare/backfill — e un punct de plecare pentru reconciliere, nu o citire a arhivei electronice a aparatului fiscal, și nu acoperă fluxul separat `deltatech_sale_store` (facturare la bon fiscal, fără POS).
 
 **Case de marcat compatibile:**
 
@@ -38,6 +39,7 @@ Modulul Deltatech POS ECR asigură o integrare eficientă între punctul de vân
 - Codul ECR se setează per metodă de plată (Punct de vânzare > Configurare > Metode de plată).
 - Comportamentul specific ECR (cod de bare pe bon, Cash In/Out, Cash In/Out către ECR, duplicat dispoziție de plată, departament implicit) se configurează în Setările Punctului de Vânzare, secțiunea ECR.
 - Rapoartele X și Z se tipăresc din sesiunea POS activă (Punct de vânzare > Comenzi > Sesiuni).
+- Fluxul pas-cu-pas complet (inclusiv reimprimarea din backoffice, plafonul CIF-ului pe bon și limitările raportului TVA) e detaliat în fișa consultant.
 
 #### 3. Dependențe
 
@@ -48,22 +50,22 @@ Modulul Deltatech POS ECR asigură o integrare eficientă între punctul de vân
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, secțiunile de Componente Cheie sunt în principiu omise deoarece modulul include un fișier `readme/DESCRIPTION.md`, folosit pentru Sumar și Funcționalități Cheie. Excepție: modelul nou adăugat pentru raportul de vânzări TVA, prea tehnic pentru a fi acoperit exclusiv de readme.
+Conform fluxului de ingestie, secțiunile de Componente Cheie sunt în principiu omise deoarece modulul include un fișier `readme/DESCRIPTION.md`, folosit pentru Sumar și Funcționalități Cheie. Excepție: modelul raportului de vânzări TVA, prea tehnic pentru a fi acoperit exclusiv de readme.
 
 **Modele**
 
-- `deltatech.pos.vat.report` (`models/deltatech_pos_vat_report.py`): model nestocat (`_auto = False`), definit direct ca vedere SQL peste `pos.order.line` (join cu `pos_order`, `res_company` și taxele procentuale ale liniei). Nu are migrare/backfill — se recreează la fiecare pornire a modulului. Agregă vânzările POS pe dată fiscală (`report_date`, din `date_order`), punct de vânzare (`config_id`), cotă TVA (`vat_rate`, prima taxă procentuală a liniei) și stare (`paid`/`done`), expunând bază, TVA și total. Include și `receipt_print`, pentru filtrarea pe bonuri efectiv tipărite.
+- `deltatech.pos.vat.report` (`models/deltatech_pos_vat_report.py`): model nestocat (`_auto = False`), definit direct ca vedere SQL peste `pos.order.line` (join cu `pos_order`, `res_company` și taxele procentuale ale liniei, via `account_tax_pos_order_line_rel`). Nu are migrare/backfill — se recreează la fiecare pornire a modulului. Agregă vânzările POS pe dată fiscală (`report_date`, din `date_order`), punct de vânzare (`config_id`) și stare (`paid`/`done`), expunând bază, TVA și total. `tax_name` e numele real al taxei (sau al taxelor concatenate cu „ + ", când sunt mai multe), preluat cu `string_agg` peste taxele procentuale ale liniei; liniile fără nicio taxă procentuală apar cu `tax_name = "Fără taxă TVA"`. `vat_rate` rămâne cota primei taxe procentuale, doar pentru compatibilitate. `multi_tax` e `true` când linia are mai mult de o taxă procentuală simultan — caz de configurare de verificat. `receipt_print`, pentru filtrarea pe bonuri efectiv tipărite.
 
 **Vizualizări**
 
-- `view_deltatech_pos_vat_report_search`: căutare/filtre pe punct de vânzare, cotă TVA și dată fiscală, cu grupare rapidă pe punct de vânzare/cotă/dată și filtrul „Fiscal Receipt Printed".
-- `view_deltatech_pos_vat_report_pivot`: vedere implicită a raportului — rânduri pe punct de vânzare și cotă TVA, coloane pe lună, măsuri Bază/TVA/Total.
-- `view_deltatech_pos_vat_report_list`: vedere listă needitabilă (`create="0" edit="0" delete="0"`) pentru detalierea pe comandă individuală.
-- `action_deltatech_pos_vat_report` + `menu_deltatech_pos_vat_report`: acțiunea și intrarea de meniu **Point of Sale → Reporting → VAT Sales by Fiscal Device**, cu grupare implicită pe punct de vânzare și cotă TVA și filtrul „Fiscal Receipt Printed" activ din context.
+- `view_deltatech_pos_vat_report_search`: căutare/filtre pe punct de vânzare, taxă (`tax_name`) și cotă TVA, cu grupare rapidă pe punct de vânzare/taxă/cotă/dată, filtrul „ECR Receipt Text" (`receipt_print`, neactiv implicit) și filtrul „Multiple Taxes (to check)" (`multi_tax`).
+- `view_deltatech_pos_vat_report_pivot`: vedere implicită a raportului — rânduri pe punct de vânzare și taxă (`tax_name`), coloane pe lună, măsuri Bază/TVA/Total.
+- `view_deltatech_pos_vat_report_list`: vedere listă needitabilă (`create="0" edit="0" delete="0"`) pentru detalierea pe comandă individuală, cu `multi_tax` și `receipt_print` ascunse opțional (`optional="hide"`).
+- `action_deltatech_pos_vat_report` + `menu_deltatech_pos_vat_report`: acțiunea și intrarea de meniu **Point of Sale → Reporting → VAT Sales by Fiscal Device**, cu grupare implicită pe punct de vânzare și taxă din context.
 
 #### 5. Conexiuni
 
 - [deltatech_pos_base](../deltatech_pos_base/index.md): modul de bază POS Deltatech pe care se construiește integrarea ECR (dependență directă).
 - [deltatech_ecr_connect](../deltatech_ecr_connect/index.md): componenta partajată de conectare/comunicare cu casele de marcat, folosită de `deltatech_pos` pentru generarea fișierelor ECR (dependență directă).
 - `l10n_ro_anaf_d394_pos`: preia bonurile POS pentru declarația D394 (menționat în fișa consultant ca modul complementar, nu dependență directă).
-- `deltatech_sale_store` / `deltatech_sale_store_report`: fluxul separat de facturare la bon fiscal, fără POS — nu e acoperit de noul raport „VAT Sales by Fiscal Device" (limitare notată explicit în fișa consultant).
+- `deltatech_sale_store` / `deltatech_sale_store_report`: fluxul separat de facturare la bon fiscal, fără POS — nu e acoperit de raportul „VAT Sales by Fiscal Device" (limitare notată explicit în fișa consultant).

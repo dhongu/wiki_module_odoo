@@ -4,6 +4,27 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-17] Re-ingestie `deltatech_pos` — taxă în loc de cotă, fișă cu capturi reale (PR #2837 + #2838)
+
+- **Acțiune:** Resincronizare după două PR-uri mergeuite pe `19.0`. PR terrabit-solutions/bitshop#2837:
+  raportul `deltatech.pos.vat.report` grupează acum implicit pe `tax_name` (numele real al taxei),
+  nu pe `vat_rate` — taxe diferite cu aceeași cotă 0% (SGR, taxare inversă, scutiri) nu mai se
+  cumulează tăcut sub un singur rând. Adaugă `multi_tax`, care semnalează liniile cu două taxe
+  procentuale simultan pe aceeași linie (caz real de configurare greșită găsit la Damira: 21%
+  Bunuri + TVA Taxare Inversă deodată). PR terrabit-solutions/bitshop#2838: fișa consultant
+  restructurată complet, cu 5 capturi reale (`tests/test_screenshots.py`, inexistent înainte).
+- **Trei erori reale corectate în fișă, găsite de auditul `verificator-fisa`:** numele fișierelor
+  Print X/Z erau greșite (`cash_box_<sesiune>_close.<ext>`, nu `print_x`/`print_z`) — plus un bug
+  real de coliziune de nume între ele, semnalat ca limitare (a doua apăsare șterge atașamentul
+  creat de prima); afirmația falsă că modulul nu poate trimite CIF-ul clientului pe bon — funcția
+  există (`Print customer VAT on receipt` / `VAT print limit`), cu temei legal propriu (factură
+  simplificată, Cod fiscal art. 319 alin. (12) lit. a)); captura comenzii POS nu arăta butonul de
+  reimprimare promis în text (seed corectat cu `receipt_print=False`).
+- **Origine:** tichetele Terrabit #9389 și #9451 (Damira COM SRL) — a doua iterație pe același
+  raport, după prima re-ingestie din această sesiune (raportul de bază, fără distincție pe taxă).
+- **Fișiere actualizate:** `deltatech_pos/index.md`, `deltatech_pos/FISA_CONSULTANT.md`
+  (resincronizată), `deltatech_pos/screenshots/*.png` (5 fișiere noi), `index.md` (o linie), `log.md`.
+
 ## [2026-09-16] Re-ingestie: `l10n_ro_intrastat_enhancement` (tichet Terrabit #9488)
 
 - **Acțiune:** Pagină wiki regenerată de la zero, pe baza modificărilor din sesiunea de azi pe
