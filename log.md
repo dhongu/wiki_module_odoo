@@ -4,6 +4,33 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-16] Re-ingestie: `l10n_ro_intrastat_enhancement` (tichet Terrabit #9488)
+
+- **Acțiune:** Pagină wiki regenerată de la zero, pe baza modificărilor din sesiunea de azi pe
+  tichetul #9488 (client Sanodor). Schimbări majore surprinse: fix trunchiere cod TVA partener la
+  export XML; tratare automată (cod special `QV`) pentru parteneri fără cod de TVA identificat
+  (ex. persoane fizice), care altfel erau respinși de aplicația offline INS; versiunile de
+  nomenclator INS mutate din Parametri de sistem în Contabilitate → Configurare → Setări (secțiune
+  nouă); statusul de prag mutat dintr-un banner permanent în antetul raportului într-un buton
+  discret „Intrastat Threshold" în meniul ⚙; modelul nou `l10n_ro_intrastat_vat_validator.py`
+  (validare formală regex + cifră de control, port fidel al bibliotecii Java folosite de aplicația
+  oficială INS, descoperit prin decompilarea `IntrastatApp.jar`); verificări suplimentare „INS
+  Validation" (linie de antet declarație — contact, CUI declarant; valori negative; lungime cod
+  TVA partener; mod de transport obligatoriu indiferent de tipul declarației). PR-uri:
+  `terrabit-solutions/l10n_ro_ent#257`, `#258`, `#259`, `#260`, `#261` (mergeuite), `#262`, `#263`
+  (deschise, în review).
+- **Sursă:** `readme/DESCRIPTION.md` (deja aliniat, fără corecții necesare), analiză cod
+  (`models/account_intrastat_report.py`, `models/l10n_ro_intrastat_vat_validator.py`,
+  `models/res_company.py`, `models/res_config_settings.py`, `views/res_config_settings_views.xml`).
+- **Dependențe/Conexiuni:** neschimbate — `l10n_ro_intrastat` (fără pagină wiki, text cod),
+  `stock_delivery` (fără pagină wiki, text cod).
+- **Fișă consultant:** `readme/FISA_CONSULTANT.md` copiată din nou, împreună cu cele 4 capturi
+  regenerate (`01_setari_praguri.png`, `02_raport_prag_banner.png`, `03_raport_intrastat.png`,
+  `04_erori_ins.png`), reflectând fluxul nou (buton ⚙, bloc de nomenclatoare în Setări).
+- **Fișiere actualizate:** `l10n_ro_intrastat_enhancement/index.md` (regenerat),
+  `l10n_ro_intrastat_enhancement/FISA_CONSULTANT.md` + `screenshots/*.png` (resincronizate),
+  `wiki_module_odoo/index.md` (linia de descriere).
+
 ## [2026-09-16] Split modul: `deltatech_expenses_hr_expense` extras din `deltatech_expenses`
 
 - **Acțiune:** `deltatech_expenses` (v19.0.3.3.0) nu mai depinde de `hr_expense` — nucleul (Decont de

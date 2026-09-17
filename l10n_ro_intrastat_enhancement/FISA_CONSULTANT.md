@@ -68,35 +68,41 @@ facturi de vânzare/achiziție intra-UE postate în luna declarată.
    bifați **Declarat Intrastat obligatoriu** (dacă firma a depășit deja pragul), ajustați
    **Pragul expedieri** / **Pragul sosiri** (RON/an) și **Avertizare la % din prag** (implicit 80%).
 3. Marcați produsele comercializate intra-UE cu **codul Intrastat (NC8)** pe fișa produsului.
-4. Verificați versiunile nomenclatoarelor (CN, transport, termeni de livrare, țări) — se
-   stochează în parametri de sistem și se pot actualiza anual fără modificări de cod.
+4. Tot în **Setări → Contabilitate**, în blocul **Intrastat — INS Romania Nomenclature
+   Versions**, verificați versiunile nomenclatoarelor (CN8, țări, țări UE, mod transport,
+   termeni de livrare, natura tranzacției A/B, județe, localități, unități suplimentare) —
+   actualizați-le la începutul fiecărui an de raportare, conform anunțului oficial de pe
+   www.intrastat.ro. Versiunea declarată în fișierul XML trebuie să corespundă exact cu ce are
+   **instalat local** clientul în aplicația offline INTRASTAT, altfel fișierul e respins cu
+   „Document uses unsupported nomenclatures" chiar dacă toate codurile din el sunt corecte.
 
 ![Blocul de setări Intrastat — Praguri INS România](screenshots/01_setari_praguri.png)
 
 ## 6. Flux de utilizare
 
-### Pasul 1 — Statusul pragului, direct în raportul Intrastat
+### Pasul 1 — Statusul pragului, la cerere din meniul raportului Intrastat
 
-Accesați **Contabilitate → Raportare → Intrastat**. Dacă firma este românească, în **antetul
-raportului** apare automat un **banner de alertă** — fără niciun click suplimentar — cu, pe
-ambele direcții (expedieri și sosiri): volumul calculat (RON, pe anul perioadei deschise),
-pragul INS configurat, procentul atins și starea — **sub prag** (verde) / **atenție**
-(portocaliu) / **depășit** (roșu) / **declarat obligatoriu** (albastru). Volumul se calculează
-din facturile și stornările postate către parteneri UE (exclus România) ale căror produse au
-cod Intrastat, convertite în RON.
+Accesați **Contabilitate → Raportare → Intrastat**. Dacă firma este românească, deschideți
+meniul **⚙** din antetul raportului și alegeți **Intrastat Threshold** — se deschide o
+fereastră cu, pe ambele direcții (expedieri și sosiri): volumul calculat (RON, pe anul
+perioadei deschise), pragul INS configurat, procentul atins și starea — **sub prag** (verde) /
+**atenție** (portocaliu) / **depășit** (roșu) / **declarat obligatoriu** (albastru). Volumul se
+calculează din facturile și stornările postate către parteneri UE (exclus România) ale căror
+produse au cod Intrastat, convertite în RON.
 
-**Găsiți pe ecran**: banner-ul colorat, imediat sub filtrele raportului (fără să fie nevoie să
-deschideți vreun wizard sau meniu separat).
+**Găsiți pe ecran**: meniul ⚙ (rotița) din antetul raportului, lângă butoanele XML/INS
+Validation — statusul nu mai apare automat ca banner, tocmai ca să nu ocupe spațiu vizual
+permanent când totul e sub prag.
 
 **Verificați**: dacă o direcție arată **depășit** sau **atenție**, firma trebuie să declare
 Intrastat pentru acea direcție; bifați „Declarat obligatoriu" în setări dacă nu e deja (secțiunea
 5 de mai sus).
 
-![Raportul Intrastat, cu banner-ul de status prag vizibil în antet](screenshots/02_raport_prag_banner.png)
+![Raportul Intrastat, cu fereastra de status prag deschisă din meniul ⚙](screenshots/02_raport_prag_banner.png)
 
-> Acțiunea tehnică `action_l10n_ro_intrastat_check` (fostul wizard „Verificare Prag Intrastat")
-> rămâne disponibilă ca acces secundar, fără meniu propriu — utilă pentru un recalcul punctual
-> pe un an anume, în afara raportului.
+> Aceeași fereastră e disponibilă și direct, prin acțiunea tehnică
+> `action_l10n_ro_intrastat_check` (fostul wizard „Verificare Prag Intrastat") — utilă pentru
+> un recalcul punctual pe un an anume, în afara raportului.
 
 ### Pasul 2 — Raportul Intrastat și verificarea erorilor (înainte de export)
 
@@ -131,6 +137,12 @@ companiei în forma cerută de INS — și o descarcă, gata de încărcat pe po
 
 > Validări aplicate la export: o singură lună și o singură direcție per fișier; altfel exportul
 > e refuzat cu mesaj explicit.
+
+> **Clienți fără cod de TVA** (ex. vânzări către persoane fizice): modulul recunoaște automat
+> aceste linii și le exportă cu codul special de țară `QV` pe partener, singura formă acceptată
+> de aplicația oficială INS pentru un cod de TVA neidentificat — nu necesită nicio acțiune
+> manuală, dar poate explica de ce `PartnerCountryCode` diferă de țara reală de destinație pe
+> astfel de linii.
 
 ### Pasul 4 — Reconciliere cu D390 (opțional, dacă `l10n_ro_anaf_d390` e instalat)
 
@@ -173,14 +185,16 @@ efectivă a fișierului pe portalul INS, ajustarea pragurilor la valorile INS al
 ## 8. Verificări pentru consultant
 
 - [ ] Modulul se instalează (auto-install) fără erori; blocul de praguri apare în Setări → Contabilitate.
+- [ ] Blocul **Intrastat — INS Romania Nomenclature Versions** apare în aceeași pagină de Setări,
+      cu cele 10 versiuni de nomenclator editabile (global, nu per companie).
 - [ ] La deschiderea raportului **Contabilitate → Raportare → Intrastat** (companie română),
-      banner-ul de status prag apare automat în antet, fără click suplimentar, cu volum/prag/
-      procent/stare pentru ambele direcții.
-- [ ] Anul folosit de banner corespunde perioadei selectate în raport (nu anul calendaristic curent,
-      dacă raportul e deschis pe alt an).
+      meniul **⚙** conține un buton „Intrastat Threshold" care deschide statusul de prag
+      (volum/prag/procent/stare pentru ambele direcții) — fără să apară automat vreun banner.
+- [ ] Anul folosit de status corespunde perioadei selectate în raport (nu anul calendaristic
+      curent, dacă raportul e deschis pe alt an).
 - [ ] Bifa „Declarat obligatoriu" comută starea pe **Declarat obligatoriu** (albastru) indiferent de volum.
 - [ ] Acțiunea tehnică `action_l10n_ro_intrastat_check` (fostul wizard) rămâne funcțională ca
-      acces secundar — fără meniu propriu, se deschide din **Setări → Tehnic → Acțiuni →
+      acces alternativ — fără meniu propriu, se deschide din **Setări → Tehnic → Acțiuni →
       Acțiuni fereastră** (necesită modul dezvoltator activat).
 - [ ] În raportul Intrastat apar butoanele **XML** și **Verificare INS** (doar pentru companii
       RO), lângă PDF/XLSX — verificați că sunt vizibile direct în bară, nu doar în meniul-rotiță.
@@ -201,6 +215,8 @@ efectivă a fișierului pe portalul INS, ajustarea pragurilor la valorile INS al
 | Verificare INS: „Lipsește codul NC8 (cod marfă) — setați-l pe produs" | Produsul nu are cod Intrastat | Completați NC8 pe fișa produsului |
 | Verificare INS: „Lipsește codul TVA al partenerului (obligatoriu la expedieri)" | Partener UE fără cod TVA | Completați codul TVA intra-UE pe partener |
 | Verificare INS: „Lipsește țara de origine (obligatorie la sosiri)" | Produsul/linia fără țară de origine | Completați țara de origine |
+| Aplicația offline INTRASTAT: „Doesn't match any of the regex array" pe o linie cu client fără cod de TVA (ex. persoană fizică) | Vânzare către un client fără cod de TVA identificat — normal, nu e o eroare de date | Nimic de făcut: modulul completează automat codul special `QV` pe câmpul de țară a partenerului pentru aceste linii, ceea ce face aplicația oficială INS să sară validarea de format a codului de TVA |
+| Aplicația offline INTRASTAT: „Document uses unsupported nomenclatures" | Versiunea de nomenclator declarată în XML (Setări → Nomenclature Versions) nu corespunde cu ce are clientul **instalat local** în aplicația offline | Cereți clientului să deschidă meniul „Nomenclatoare" din aplicația offline și să confirme versiunile active; aliniați valorile din Setări la ce arată clientul, sau clientul își actualizează aplicația |
 
 ## 10. Capturi de ecran
 
@@ -210,7 +226,7 @@ pe planul de conturi RO; seedul postează facturi intra-UE și exersează verifi
 de erori — fără conexiune la INS:
 
 1. `01_setari_praguri.png` — blocul de setări Intrastat (praguri, % avertizare, obligatoriu).
-2. `02_raport_prag_banner.png` — raportul Intrastat cu banner-ul de status prag (volum/prag/procent/stare) vizibil în antet.
+2. `02_raport_prag_banner.png` — raportul Intrastat cu fereastra de status prag (volum/prag/procent/stare) deschisă din meniul ⚙.
 3. `03_raport_intrastat.png` — raportul Intrastat cu butoanele XML și Verificare INS.
 4. `04_erori_ins.png` — lista erorilor INS (câmpuri obligatorii lipsă).
 
