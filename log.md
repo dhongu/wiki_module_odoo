@@ -4,6 +4,23 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-19] Re-ingestie `l10n_ro_fixed_assets` — fix reevaluare, amortizare viitoare nerecalculată (PR #273)
+
+- **Acțiune:** Actualizată pagina modulului la versiunea `19.0.1.3.1`, după fix-ul semnalat de
+  Alexandra pe tichetul Terrabit #9452. `l10n.ro.asset.revaluation.action_post()` ajusta valoarea
+  activului la o reevaluare (surplus sau diminuare), dar apela direct `asset._recompute_board()` —
+  metodă care doar calculează valorile noi ale planului de amortizare, fără să șteargă liniile
+  draft vechi sau să creeze cele noi. Amortizarea viitoare rămânea tăcut la vechea sumă lunară,
+  ca și cum reevaluarea nu ar fi avut loc. Corectat prin `asset.compute_depreciation_board(date=self.date)`.
+- **Sursă:** `readme/HISTORY.md` (intrarea 19.0.1.3.1) + `models/l10n_ro_asset_revaluation.py`.
+- **Dependențe/Conexiuni:** neschimbate.
+- **Fișe consultant:** `FISA_CONSULTANT.md` resincronizată, cu secțiune nouă „Exemplu numeric
+  verificat — reevaluare cu diminuare de valoare" + 2 capturi noi (`08_reevaluare_inainte.png`,
+  `09_reevaluare_dupa.png`) care arată planul de amortizare înainte/după o diminuare de 2.000 lei
+  pe un activ cu 7 luni deja amortizate — 9 capturi în total acum.
+- **Fișiere actualizate:** `l10n_ro_fixed_assets/index.md`, `l10n_ro_fixed_assets/FISA_CONSULTANT.md`
+  + `screenshots/` (9 fișiere), acest fișier.
+
 ## [2026-09-17] Re-ingestie `deltatech_pos` — taxă în loc de cotă, fișă cu capturi reale (PR #2837 + #2838)
 
 - **Acțiune:** Resincronizare după două PR-uri mergeuite pe `19.0`. PR terrabit-solutions/bitshop#2837:

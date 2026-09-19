@@ -130,6 +130,68 @@ colțul stânga-sus exportă exact ce se vede pe ecran.
   pentru calculul impozitului pe profit. Baza de calcul este **valoarea fiscală de intrare**, nu
   valoarea reevaluată — un surplus din reevaluare nu se amortizează fiscal.
 
+#### Exemplu numeric verificat (tichetul 9452)
+
+Reproduce exact scenariul din tichet: mijloc fix de **6.000 lei** (cont **214** „Mobilier, aparatură
+birotică"), amortizare liniară pe **60 de luni** (100 lei/lună), PIF **1 iunie 2026**, vândut la
+**15 septembrie 2026** cu **5.000 lei + TVA 21% (1.050 lei)**. Notele de mai jos sunt cele generate
+**efectiv** de motor (nu un calcul manual) — capturate din baza de test.
+
+**Planul de amortizare al activului** (tab „Panou Devalorizare" — traducerea Enterprise pentru
+„Depreciere", vezi nota din secțiunea 11): două luni amortizate (iulie + august, 100 lei fiecare —
+**nu** și septembrie, luna vânzării), apoi nota de cedare la vânzare.
+
+![Planul de amortizare — 2 luni amortizate (iul+aug) + nota de cedare la vânzare](screenshots/05_exemplu_plan_amortizare.png)
+
+**Factura de vânzare**, cu liniile Dr/Cr reale:
+
+![Factura de vânzare — 4111 (6.050), 7583 (5.000), 4427 (1.050)](screenshots/06_exemplu_factura_vanzare.png)
+
+```
+Dr 4111  6.050,00 lei   (creanța clientului)
+Cr 7583  5.000,00 lei   (venit din vânzarea activului)
+Cr 4427  1.050,00 lei   (TVA colectată 21%)
+```
+
+**Nota de cedare a activului** (separată de factură), cu liniile Dr/Cr reale pe conturi:
+
+![Nota de cedare — 214 (-6.000), 2814 (-200), 7583 (5.000), 6583 (800)](screenshots/07_exemplu_nota_cedare.png)
+
+```
+Dr 214  -6.000,00 lei   (scoaterea activului din evidență — notație storno)
+Cr 2814    -200,00 lei  (scoaterea amortizării cumulate — notație storno)
+Dr 7583   5.000,00 lei  (stornarea liniei de venit reluate din factura de vânzare)
+Dr 6583     800,00 lei  (pierderea: 5.800 valoare neamortizată − 5.000 preț vânzare)
+```
+
+**De reținut pentru consultant:** cu **Contabilitate Storno** activată (secțiunea 5), motorul nu
+postează separat `Dr 6583 = 5.800` (valoarea neamortizată brută) pe **nota de cedare**, ca în
+monografia „de manual" transmisă uneori de client — în schimb reia linia de venit din factură
+(`Dr 7583 5.000`, ca stornare a creditării din factură) și închide doar **diferența netă**
+(`Dr 6583 800`) pe contul de pierdere. Rezultatul financiar total (pe ambele note împreună) e
+identic: `4111 = 6.050`, `7583` net `= 0` (5.000 din factură, stornat 5.000 pe cedare),
+`4427 = 1.050`, `6583 = 800`, `214/2814` = scoaterea integrală a activului — pierderea de 800 lei
+ajunge corect în contul de profit și pierdere. Dacă un client cere explicit monografia „brută" pe
+nota de cedare (7583 = 5.000 venit, 6583 = 5.800 cheltuială, fără compensare — conform principiului
+necompensării, OMFP 1802/2014), explicați această diferență de prezentare: e o decizie de
+arhitectură a motorului nativ `account_asset` (Enterprise), nu un defect al acestui modul.
+
+#### Exemplu numeric verificat — reevaluare cu diminuare de valoare
+
+Confirmă vizual fix-ul din 19.0.1.3.1 (mai jos, secțiunea 12): un activ de **12.000 lei**
+(60 luni, 200 lei/lună), cu **7 luni deja amortizate** (feb-aug), este diminuat cu **2.000 lei**
+printr-o reevaluare. Planul de amortizare, **înainte** și **după**:
+
+![Planul de amortizare înainte de reevaluare — toate lunile viitoare la 200 lei](screenshots/08_reevaluare_inainte.png)
+
+![Planul de amortizare după reevaluare — lunile viitoare recalculate la ~164,12 lei](screenshots/09_reevaluare_dupa.png)
+
+Lunile deja postate (feb-aug, 200 lei fiecare) rămân neschimbate — corect, nu se rescrie
+istoricul. Luna reevaluării (septembrie) se împarte proporțional (65,65 lei, pentru zilele
+rămase din lună), iar din **octombrie** amortizarea viitoare scade la **~164,12 lei/lună**
+(valoarea reziduală rămasă, împărțită la lunile rămase) — nu mai rămâne la vechea sumă de
+200 lei/lună, cum se întâmpla înainte de fix.
+
 ## 7. Legături cu alte module / declarații
 
 | Modul / proces | Rol în flux |
@@ -173,6 +235,16 @@ din `l10n_ro_doc_screenshots`, HttpCase + Playwright), pe companie RO, în lei, 
    custodie, amortizare fiscală (Cod Fiscal art. 28), casare, reevaluări (rezerva 105).
 4. `04_registrul_imobilizarilor.png` — Registrul Imobilizărilor (`account.report`): filtrul
    „As of Date", grupare pe cont cu subtotaluri, total general, 3 active confirmate.
+5. `05_exemplu_plan_amortizare.png` — exemplul numeric (tichet 9452): planul de amortizare al
+   activului-exemplu (tab „Panou Devalorizare"), cu cele 2 luni amortizate și nota de cedare.
+6. `06_exemplu_factura_vanzare.png` — factura de vânzare a activului-exemplu, cu liniile Dr/Cr
+   (4111/7583/4427, inclusiv TVA 21%).
+7. `07_exemplu_nota_cedare.png` — nota de cedare a activului, deschisă separat, cu liniile Dr/Cr
+   detaliate pe conturi (214/2814/7583/6583).
+8. `08_reevaluare_inainte.png` — planul de amortizare înainte de o reevaluare cu diminuare de
+   valoare: toate lunile viitoare la suma inițială (200 lei).
+9. `09_reevaluare_dupa.png` — același plan, după reevaluare: lunile deja postate neschimbate,
+   luna reevaluării proporțională, lunile viitoare recalculate pe noua valoare (~164,12 lei).
 
 Regenerare:
 ```
@@ -202,6 +274,7 @@ Fixuri livrate pe acest modul, relevante pentru discuția cu clientul (ce s-a sc
 | **19.0.1.2.0** (2026-09-14) | La vânzarea/casarea unui mijloc fix parțial amortizat în cursul lunii, programul amortiza proporțional cu zilele scurse până la data vânzării — deși amortizarea e strict lunară, iar luna vânzării nu ar trebui amortizată deloc. | Ultima lună amortizată la casare este acum luna anterioară vânzării, indiferent de ziua exactă din lună. Monografia de casare/vânzare (secțiunea 6) era deja corectă structural — discrepanța era doar efectul sumei greșite de amortizare. |
 | **19.0.1.2.1** (2026-09-14) | Amortizarea fiscală afișată pe activ (câmpurile „Amortizare fiscală cumulată" / „an curent") putea arăta cumulatul **mai mic** decât amortizarea anului curent pentru un activ pus în funcțiune în anul curent — incoerență imposibilă contabil, cauzată de o formulă care numără luna PIF diferit în cele două cifre. | Ambele cifre folosesc acum aceeași convenție „luna următoare PIF", simetric cu fix-ul din 19.0.1.2.0; pentru primul an de amortizare, cumulatul și amortizarea anului curent coincid. |
 | **19.0.1.2.2** (2026-09-14) | Amortizarea fiscală se calcula pe **valoarea curentă** a activului (`original_value`), care crește la o reevaluare — un surplus din reevaluare (nedeductibil fiscal, Cod Fiscal art. 28) ajungea astfel inclus greșit în baza de amortizare fiscală, umflând cifra afișată. | Baza de calcul este acum câmpul nou **„Fiscal Original Value"**, înghețat la valoarea de intrare din momentul creării activului — neafectat de reevaluări ulterioare. |
+| **19.0.1.3.1** (2026-09-19) | O reevaluare (creștere sau diminuare de valoare) actualiza valoarea activului, dar **nu** regenera amortizarea viitoare — liniile de amortizare încă neconfirmate rămâneau la vechea sumă lunară, ca și cum reevaluarea nu ar fi avut loc. Raportat pe o instanță internă: după o diminuare, luna următoare continua să se amortizeze la valoarea dinaintea reevaluării. | Reevaluarea regenerează acum corect planul de amortizare de la data reevaluării încolo, pe baza noii valori — simetric la creștere și la diminuare. |
 | **19.0.1.2.0** (2026-09-14) | Legarea manuală a unei note contabile (ex. o notă de reevaluare) la câmpul tehnic „Asset" al unei note contabile, fără completarea datei de început a amortizării, bloca ulterior orice calcul de valoare reziduală a activului, inclusiv din wizard-ul „Modifică". Incident reprodus pe o instanță client. | Legarea manuală incompletă este acum respinsă explicit la salvare, cu un mesaj clar (deocamdată doar în engleză) — câmpul „Asset" rămâne rezervat notelor generate automat de motorul de amortizare. |
 | **19.0.1.1.1** (2026-07-17) | Butonul/acțiunea „Reevaluează Mijlocul Fix" din lista de active (meniu contextual) arunca o eroare la orice utilizare, blocând reevaluarea din acel punct de intrare. | Acțiunea apelează corect wizard-ul de reevaluare; funcționează identic cu butonul „Reevaluare" din formularul activului. |
 | **19.0.1.3.0** (2026-09-15) | Registrul Imobilizărilor se genera printr-un wizard separat (dată + companie), care producea un PDF static; exportul PDF putea eșua cu o eroare de server (`IndexError`, template incomplet — corectat separat, chiar înainte de această migrare). | Raportul a fost migrat la framework-ul nativ `account.report`: se accesează direct din **Contabilitate → Raportare → Statement Reports → Fixed Assets Register (RO)**, cu filtru „As of Date", grupare pe cont cu subtotaluri, drill-down pe fiecare activ și export PDF/XLSX din bara de instrumente a raportului — fără wizard intermediar. |
