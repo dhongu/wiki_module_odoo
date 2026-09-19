@@ -4,6 +4,50 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-19] Re-ingestie `l10n_ro_fixed_assets` — corecție cont 401→404 la achiziție (PR #276)
+
+- **Acțiune:** Re-ingestie pentru `l10n_ro_fixed_assets` după mergeul PR #276 (commit `dc40c76d`), care
+  corectează o eroare contabilă din fișa consultant: exemplul de achiziție a unui mijloc fix folosea
+  greșit contul **401 „Furnizori"** pentru furnizorul de imobilizări, în loc de **404 „Furnizori de
+  imobilizări"** (OMFP 1802/2014, pct. 401/404). Corecția a fost identificată prin consultarea agentului
+  `pacioli`. Am resincronizat `FISA_CONSULTANT.md` și toate cele 14 capturi din `readme/screenshots/`
+  (regenerate cu contul corect), și am adăugat în secțiunea 2 a `index.md` mențiunea că nota contabilă a
+  facturii de achiziție trebuie să folosească 404, dependent de `property_account_payable_id` setat pe
+  fișa furnizorului.
+- **Sursă:** `readme/FISA_CONSULTANT.md` (resincronizat integral) + capturile din `readme/screenshots/`.
+- **Proces:** Cu această ocazie am completat și referințele skill-ului `contabilitate-ro`
+  (`monografii.md`, `plan-conturi.md`) cu distincția 401 vs 404 (și excepțiile 451/453 afiliați,
+  4093/4094 avansuri), care lipsea complet — golul din referințe era o cauză a faptului că eroarea nu a
+  fost prinsă la verificarea inițială a fișei.
+- **Dependențe/Conexiuni:** Fără impact asupra altor pagini wiki.
+
+---
+
+## [2026-09-19] Lot import extrase: pagină nouă `..._emag`, re-ingestie `..._import` și `..._euplatesc` (PR #152)
+
+- **Acțiune:** Trei module procesate în paralel, după merge-ul PR bitshop_ent#152. Pagină **nouă**
+  pentru `deltatech_account_bank_statement_import_emag` (19.0.2.0.0), care lipsea din wiki, cu fișa
+  consultant și cele 3 capturi copiate. **Re-ingestie** pentru `deltatech_account_bank_statement_import`
+  (19.0.1.2.0) — helperele comune noi `statement_header_key()` și `_statement_sheet_matching_header()` —
+  și pentru `deltatech_account_bank_statement_import_euplatesc` (19.0.1.2.0), unde recunoașterea
+  fișierului nu mai depinde de ordinea coloanelor sau de limba raportului.
+- **Sursă:** `readme/DESCRIPTION.md` + `USAGE.md`/`CONFIGURE.md` pentru sumar și funcționalități;
+  codul (`models/`) și `readme/HISTORY.md` pentru componentele și noutățile pe care descrierile nu le
+  acopereau.
+- **Dependențe/Conexiuni:** `deltatech_account_bank_statement_import` e acum link activ din ambele
+  conectoare; legăturile către `..._emag` din paginile fraților au fost transformate din text în
+  link, pagina existând. `..._gls` a rămas neatins: nu depinde de modulul comun și își recunoaște
+  fișierul după marcajul emitentului din prima celulă, nu după antet.
+- **Fișiere actualizate:** `deltatech_account_bank_statement_import_emag/index.md` (nou),
+  `deltatech_account_bank_statement_import_emag/FISA_CONSULTANT.md` + `screenshots/` (noi),
+  `deltatech_account_bank_statement_import/index.md`,
+  `deltatech_account_bank_statement_import_euplatesc/index.md` + fișă și capturi resincronizate,
+  `index.md`, `log.md`.
+- **Observație:** cei doi agenți de documentare au semnalat, independent, că `readme/DESCRIPTION.md`
+  al ambelor conectoare rămăsese la vechiul mecanism de detecție, iar la eMAG mai promitea și bifa
+  `emag_check_balance`, eliminată. Corectat separat în bitshop_ent#153 — wiki-ul reflectă codul, nu
+  textul învechit.
+
 ## [2026-09-19] Re-ingestie `l10n_ro_fixed_assets` — fix reevaluare, amortizare viitoare nerecalculată (PR #273)
 
 - **Acțiune:** Actualizată pagina modulului la versiunea `19.0.1.3.1`, după fix-ul semnalat de

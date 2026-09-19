@@ -48,22 +48,78 @@ Date minime pentru demo:
 1. Instalați modulul `l10n_ro_fixed_assets` (necesită `account_asset`, `l10n_ro_saft`, `l10n_ro`).
 2. Verificați jurnalul de tip **Active fixe** și conturile 21x/281x/6811/105/6813/1175/6583 pe planul
    de conturi RO.
-3. **Setări → Contabilitate**, secțiunea Active: setați **6583** pe **„Cont Pierderi"**
+3. Pe fiecare cont de imobilizări folosit la achiziții, setați tab-ul **„Automatizare"** →
+   **„Automatizează activul" = „Creează în stadiu de proiect"** — altfel facturile de furnizor nu
+   generează automat mijlocul fix (Pasul 1).
+4. **Setări → Contabilitate**, secțiunea Active: setați **6583** pe **„Cont Pierderi"**
    (`loss_account_id`) și **7583** pe **„Cont Venituri"** (`gain_account_id`) — fără ele, motorul
    nu are unde posta rezultatul net la casare/vânzare.
-4. **Setări → Contabilitate**: activați **„Contabilitate Storno"** (`account_storno`) — fără el,
+5. **Setări → Contabilitate**: activați **„Contabilitate Storno"** (`account_storno`) — fără el,
    nota de vânzare a unui mijloc fix produce un rulaj în oglindă (debit) pe contul de venit (7583),
    deformând cifra de afaceri din operațiuni de capital.
-5. Verificați secvența **„Număr Inventar Mijloc Fix RO"** (`l10n_ro.asset_inventory_number`, format
+6. Verificați secvența **„Număr Inventar Mijloc Fix RO"** (`l10n_ro.asset_inventory_number`, format
    `MF/AAAA/NNNN`).
-6. Pe activele de test, setați **Metodă = Linie dreaptă** și **Perioadă = 1 lună** — fix-ul „amortizare
+7. Pe activele de test, setați **Metodă = Linie dreaptă** și **Perioadă = 1 lună** — fix-ul „amortizare
    din luna următoare PIF" (secțiunea 12) se aplică doar când perioada este lunară.
-7. Completați pe fiecare activ de test câmpurile **Nr. Inventar** și **Data PIF** (obligatorii pentru
+8. Completați pe fiecare activ de test câmpurile **Nr. Inventar** și **Data PIF** (obligatorii pentru
    SAF-T D406).
 
 ## 6. Flux de utilizare
 
-### Pasul 1 — Lista mijloacelor fixe
+### Pasul 1 — Achiziția mijlocului fix
+
+Un mijloc fix **nu se creează manual** din lista de active — apare la finalul fluxului standard de
+achiziție: **Comandă de achiziție → Recepție → Factură furnizor**. Activul se generează **automat**
+la postarea facturii, dacă linia facturii e pe un cont configurat corespunzător. Configurarea se
+face o singură dată, pe cont, în **Contabilitate → Configurare → Conturi**, tab-ul
+**„Automatizare"**: câmpul **„Automatizează activul"** are 3 opțiuni — „Nu", **„Creează în stadiu
+de proiect"** (recomandat: activul apare în ciornă, de completat manual) sau „Creează și
+validează" (generează direct activul confirmat, cu riscul de a valida date incomplete).
+
+![Cont de imobilizări — tab „Automatizare": „Creează în stadiu de proiect"](screenshots/00a_cont_automatizare.png)
+
+**Comanda de achiziție** se confirmă normal, ca pentru orice altă achiziție — nu are nimic specific
+mijloacelor fixe la acest pas.
+
+![Comanda de achiziție confirmată — smart button-uri „Recepție" și „Facturi furnizor"](screenshots/00b_comanda_achizitie.png)
+
+Pentru un produs stocabil, comanda generează o **recepție** (mișcare de stoc), care se validează
+înainte de facturare — practica standard de recepționare a bunului fizic înainte de plată.
+
+![Recepția validată — stare „Efectuat"](screenshots/00c_receptie.png)
+
+La generarea și postarea **facturii de furnizor** (din comandă, cu butonul „Facturi furnizor" sau
+acțiunea „Creează factură"), nota contabilă generată e cea obișnuită pentru o achiziție de mijloc
+fix — cu **404 „Furnizori de imobilizări"** ca și contrapartidă, **nu 401 „Furnizori"**: 401 e
+rezervat aprovizionărilor din exploatare (stocuri/servicii), în timp ce 404 e contul dedicat
+furnizorilor de imobilizări corporale/necorporale (pct. 401/404, OMFP 1802/2014). Pentru asta,
+furnizorul de mijloace fixe trebuie să aibă setat pe fișa lui de partener contul de plată
+**„Furnizori de imobilizări"** (`property_account_payable_id`) — altfel Odoo folosește implicit
+401, contul de plată standard al companiei.
+
+![Nota contabilă a facturii de furnizor — 213200/442600/404100](screenshots/00d_factura_nota_contabila.png)
+
+```
+Dr 213200  9.000,00 lei   (activul, pe contul configurat cu „Automatizează activul")
+Dr 442600  1.890,00 lei   (TVA deductibilă 21%)
+Cr 404100 10.890,00 lei   (furnizor de imobilizări — NU 401)
+```
+
+Chiar **postarea acestei note** e evenimentul care declanșează generarea automată a mijlocului fix
+**în ciornă**, cu numele produsului, valoarea și data din factură, și legătura către linia de
+factură originală (vizibilă în tab-ul „Facturi" al activului). Conturile de amortizare/cheltuială
+**nu** se completează automat — rămân goale (marcate cu roșu, câmpuri obligatorii) până la validare
+manuală.
+
+![Activul generat automat din factura de furnizor — stare „Ciornă", conturi de completat](screenshots/00e_activ_generat_automat.png)
+
+De aici, consultantul completează: conturile de amortizare/cheltuială, metoda și durata, apoi
+câmpurile specifice RO (Pasul 4) și confirmă activul (butonul „Confirmă", vizibil doar în ciornă).
+
+> **Notă:** pentru bunuri necesitate strict ca servicii sau consumabile fără recepție (fără produs
+> stocabil), activul se generează identic la postarea facturii — doar pasul de recepție lipsește.
+
+### Pasul 2 — Lista mijloacelor fixe
 
 Accesați **Contabilitate → Active și pasive → Active**. Lista afișează mijloacele fixe cu coloanele RO:
 valoare inițială, metodă, contul de activ (213), starea și **numărul de inventar** (`MF/AAAA/NNNN`).
@@ -72,7 +128,7 @@ Conturile de amortizare (281) și cheltuială (681) sunt disponibile ca **coloan
 
 ![Lista mijloacelor fixe cu coloanele RO (nr. inventar, conturi, stare)](screenshots/01_lista_active.png)
 
-### Pasul 2 — Formularul activului (tab „Active")
+### Pasul 3 — Formularul activului (tab „Active")
 
 Deschideți un mijloc fix. Tab-ul **„Active"** arată valorile (valoare inițială, **metodă „Linie
 dreaptă"**, durată), conturile contabile și jurnalul; în antet, numărul de inventar generat automat
@@ -81,7 +137,7 @@ activul și generează planul de amortizare.
 
 ![Formularul mijlocului fix — tab „Active" (valori, metodă, conturi)](screenshots/02_formular_active.png)
 
-### Pasul 3 — Datele specifice RO (tab „Informații RO")
+### Pasul 4 — Datele specifice RO (tab „Informații RO")
 
 Tab-ul **„Informații RO"** grupează câmpurile cerute de localizare: **Data PIF** (punere în
 funcțiune), **DNU** (durata normală din Catalogul HG 2139/2004), **Cod de clasificare**,
@@ -92,7 +148,7 @@ starea „Cedat".
 
 ![Tab „Informații RO" — identificare/localizare, amortizare fiscală, casare, reevaluări](screenshots/03_informatii_ro.png)
 
-### Pasul 4 — Registrul Imobilizărilor
+### Pasul 5 — Registrul Imobilizărilor
 
 Accesați **Contabilitate → Raportare → Statement Reports → Fixed Assets Register (RO)**. Raportul
 este nativ `account.report` (Enterprise), nu mai e un wizard separat: filtrul **„As of Date"** din
@@ -207,6 +263,8 @@ Ce rămâne manual: validarea numărului de inventar, codului nomenclator și DN
 ## 8. Verificări pentru consultant
 
 - [ ] Modulul se instalează fără erori pe baza demo.
+- [ ] O factură de furnizor pe un cont cu „Automatizează activul" generează corect mijlocul fix
+      în ciornă (Pasul 1).
 - [ ] Meniurile și acțiunile sunt vizibile pentru rolul de utilizator potrivit.
 - [ ] Fluxul poate fi reprodus de la cap la coadă cu date fictive românești.
 - [ ] Rezultatul contabil sau operațional corespunde descrierii din plan.
@@ -228,23 +286,33 @@ Ce rămâne manual: validarea numărului de inventar, codului nomenclator și DN
 Capturile din `readme/screenshots/` se obțin din `tests/test_screenshots.py` (mixinul `ScreenshotCase`
 din `l10n_ro_doc_screenshots`, HttpCase + Playwright), pe companie RO, în lei, cu plan de conturi RO.
 
-1. `01_lista_active.png` — lista mijloacelor fixe cu coloanele RO (nr. inventar, conturi, stare).
-2. `02_formular_active.png` — formularul, tab „Active": valori, metodă „Linie dreaptă", durată,
+1. `00a_cont_automatizare.png` — contul de imobilizări, tab „Automatizare": „Creează în stadiu
+   de proiect".
+2. `00b_comanda_achizitie.png` — comanda de achiziție confirmată, cu smart button-urile
+   „Recepție" și „Facturi furnizor".
+3. `00c_receptie.png` — recepția bunului, validată (stare „Efectuat").
+4. `00d_factura_nota_contabila.png` — nota contabilă a facturii de furnizor, cu liniile Dr/Cr
+   reale (213200/442600/404100 — furnizor de imobilizări, nu 401) — postarea ei declanșează
+   generarea activului.
+5. `00e_activ_generat_automat.png` — mijlocul fix generat automat la postarea facturii de
+   furnizor, în stare „Ciornă", cu conturile de amortizare/cheltuială de completat.
+6. `01_lista_active.png` — lista mijloacelor fixe cu coloanele RO (nr. inventar, conturi, stare).
+7. `02_formular_active.png` — formularul, tab „Active": valori, metodă „Linie dreaptă", durată,
    conturi (213/281/681), jurnal, nr. inventar și smart button „Rezervă 105".
-3. `03_informatii_ro.png` — tab „Informații RO": Data PIF, locație, DNU (HG 2139/2004), responsabil
+8. `03_informatii_ro.png` — tab „Informații RO": Data PIF, locație, DNU (HG 2139/2004), responsabil
    custodie, amortizare fiscală (Cod Fiscal art. 28), casare, reevaluări (rezerva 105).
-4. `04_registrul_imobilizarilor.png` — Registrul Imobilizărilor (`account.report`): filtrul
+9. `04_registrul_imobilizarilor.png` — Registrul Imobilizărilor (`account.report`): filtrul
    „As of Date", grupare pe cont cu subtotaluri, total general, 3 active confirmate.
-5. `05_exemplu_plan_amortizare.png` — exemplul numeric (tichet 9452): planul de amortizare al
-   activului-exemplu (tab „Panou Devalorizare"), cu cele 2 luni amortizate și nota de cedare.
-6. `06_exemplu_factura_vanzare.png` — factura de vânzare a activului-exemplu, cu liniile Dr/Cr
-   (4111/7583/4427, inclusiv TVA 21%).
-7. `07_exemplu_nota_cedare.png` — nota de cedare a activului, deschisă separat, cu liniile Dr/Cr
-   detaliate pe conturi (214/2814/7583/6583).
-8. `08_reevaluare_inainte.png` — planul de amortizare înainte de o reevaluare cu diminuare de
-   valoare: toate lunile viitoare la suma inițială (200 lei).
-9. `09_reevaluare_dupa.png` — același plan, după reevaluare: lunile deja postate neschimbate,
-   luna reevaluării proporțională, lunile viitoare recalculate pe noua valoare (~164,12 lei).
+10. `05_exemplu_plan_amortizare.png` — exemplul numeric (tichet 9452): planul de amortizare al
+    activului-exemplu (tab „Panou Devalorizare"), cu cele 2 luni amortizate și nota de cedare.
+11. `06_exemplu_factura_vanzare.png` — factura de vânzare a activului-exemplu, cu liniile Dr/Cr
+    (4111/7583/4427, inclusiv TVA 21%).
+12. `07_exemplu_nota_cedare.png` — nota de cedare a activului, deschisă separat, cu liniile Dr/Cr
+    detaliate pe conturi (214/2814/7583/6583).
+13. `08_reevaluare_inainte.png` — planul de amortizare înainte de o reevaluare cu diminuare de
+    valoare: toate lunile viitoare la suma inițială (200 lei).
+14. `09_reevaluare_dupa.png` — același plan, după reevaluare: lunile deja postate neschimbate,
+    luna reevaluării proporțională, lunile viitoare recalculate pe noua valoare (~164,12 lei).
 
 Regenerare:
 ```
