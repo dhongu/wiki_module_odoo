@@ -4,6 +4,34 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-21] Actualizare formulare de casierie — semnături eliminate (tichet 9535)
+
+- **Acțiune:** Actualizare punctuală a paginilor existente după mergeul a cinci PR-uri pe 19.0,
+  nu re-ingestie completă. Pornit de la tichetul 9535 („Corectare formulare chitanțe").
+- **Ce s-a schimbat în module:**
+  1. `l10n_ro_invoice_report` 19.0.3.4.23 (dhongu/l10n-romania#557) — blocul de semnături scos din
+     chitanță (14-4-1) și din dispoziția de plată (14-4-4); „Depunător" → „Plătitor" pe chitanță.
+     Temeiul e art. 4 alin. (2) din OMFP 2634/2015 (entitatea poate adapta modelele), **nu**
+     absența rubricilor din model: modelele din Anexa 3 le conțin.
+  2. `l10n_ro_cash_bank_enhanced` 19.0.1.1.3 (l10n_ro_ent#277) — același bloc scos din dispoziția
+     14-4-4 a registrului propriu. `cashier_id` rămâne pe document în interfață, netipărit.
+  3. `l10n_ro_doc_screenshots` 19.0.1.1.1 (l10n_ro_ent#282) — `report_shot` trimite
+     `allowed_company_ids`, nou `align_website_company()`.
+- **Pagini actualizate:**
+    - `wiki_module_odoo/l10n_ro_invoice_report/index.md`
+    - `wiki_module_odoo/l10n_ro_cash_bank_enhanced/index.md`
+    - `wiki_module_odoo/l10n_ro_doc_screenshots/index.md`
+    - `wiki_module_odoo/index.md` (descrierea `l10n_ro_invoice_report` promitea semnături)
+    - `wiki_module_odoo/log.md`
+- **Neatins:** `l10n_ro_etransport_enhancement` 19.0.0.9.2 (dhongu/l10n-romania#558, partenerul
+  comercial la dropship) — pagina nu descrie derivarea partenerului, deci nu conține nimic
+  contrazis de fix; rămâne la ingestia anterioară, de re-ingerat la următoarea trecere.
+- **Sursă legislativă de reținut:** PDF-ul OMFP 2634/2015 de pe static.anaf.ro conține doar
+  Anexele 1 și 4; Nomenclatorul și modelele sunt în Anexele 2 și 3 (M.Of. 910 *bis*). Detalii în
+  `l10n_ro_ent/readme/casierie/FORMULARE_TIPIZATE_CASIERIE.md`.
+
+---
+
 ## [2026-09-21] Re-ingestie `l10n_ro_fixed_assets` — reevaluare fără split pe zile, cont 655 nu 6813 (PR #283)
 
 - **Acțiune:** Re-ingestie după mergeul PR #283 (commit `99ba5d58`), care corectează două probleme

@@ -1,10 +1,10 @@
 # Romania - Invoice Report Terrabit (localizat la `l10n_ro_invoice_report/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_invoice_report`
-- **Versiune:** `19.0.3.4.20`
+- **Versiune:** `19.0.3.4.23`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_invoice_report
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_invoice_report`
-- **Ultima Ingestie:** `2026-08-31`
+- **Ultima Ingestie:** `2026-09-21`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -29,8 +29,8 @@ Acest modul extinde raportul de factură standard din Odoo pentru a se conforma 
     - Inserarea logoului **Coface** la finalul facturii (activabil din setări).
 - **Gestiune documente corelate**:
     - **Chitanță, dispoziție de plată și dispoziție de încasare** tipărite din plată (raportul „Voucher / Payment" pe `account.payment`), cu titlul potrivit tipului de plată și cu suma în cifre și în litere.
-    - Pentru plățile pe **jurnal de casă**, documentul iese ca formular de casierie complet: **codul formularului** (14-4-4 la plată, 14-4-1 la încasare), **casieria**, rândul pentru **actul de identitate** al beneficiarului la plăți, și **cele trei semnături** — conducătorul unității, casierul și beneficiarul. La plățile bancare aceste elemente nu se tipăresc, nefiind vorba de un document de casă.
-    - Părțile sunt etichetate după rolul lor real în operațiune: pe documentele de casă, **Plătitor / Beneficiar** la plată și **Beneficiar / Depunător** la încasare. Etichetele „Client / Furnizor" rămân doar pe celelalte cazuri — la o restituire de marfă către o persoană fizică, beneficiarul nu e furnizor.
+    - Pentru plățile pe **jurnal de casă**, documentul iese ca formular de casierie: **codul formularului** (14-4-4 la plată, 14-4-1 la încasare), **casieria** și rândul pentru **actul de identitate** al beneficiarului la plăți. Rubricile de semnătură **nu** se tipăresc (din 19.0.3.4.23): modelele din Anexa 3 la OMFP 2634/2015 le au, dar art. 4 alin. (2) permite adaptarea modelelor. La plățile bancare elementele de casierie nu apar deloc, nefiind vorba de un document de casă.
+    - Părțile sunt etichetate după rolul lor real în operațiune: pe documentele de casă, **Plătitor / Beneficiar** la plată și **Beneficiar / Plătitor** la încasare (până în 19.0.3.4.23, „Depunător" la încasare). Etichetele „Client / Furnizor" rămân doar pe celelalte cazuri — la o restituire de marfă către o persoană fizică, beneficiarul nu e furnizor.
     - Gestionarea corectă a semnelor pentru stornări (Credit Notes).
 - **Rapoarte dedicate**:
     - Raport de factură în limba companiei, indiferent de limba partenerului.

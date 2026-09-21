@@ -1,7 +1,7 @@
 # Romania - Tooling capturi fișe consultant (localizat la `l10n_ro_doc_screenshots/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_doc_screenshots`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_doc_screenshots
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_doc_screenshots`
 - **Ultima Ingestie:** 2026-09-12
@@ -22,7 +22,8 @@ Modul de **tooling de dezvoltare** — nu adaugă funcționalitate de business, 
 - `prepare_demo_company` — alternativă pentru module cu date demo pre-populate (ex. facturi din localizarea RO).
 - `force_light_theme` — forțează tema luminoasă pe admin (câmpul Enterprise `res.users.settings.color_scheme`), indiferent de preferința din baza de date; apelat automat din `prepare_ro_company` / `prepare_demo_company`.
 - `account_move_shot` — helper pentru captura unui formular `account.move`, deschis prin acțiunea jurnalului (breadcrumb cu context, nu formular gol), cu tab-ul „Journal Items"/„Elemente jurnal" deschis (liniile Dr/Cr vizibile).
-- `report_shot` — captură pentru un raport tipăribil (PDF), randat ca HTML prin `/report/html/<report_ref>/<res_id>`, fără a depinde de wkhtmltopdf în mediul de test.
+- `report_shot` — captură pentru un raport tipăribil (PDF), randat ca HTML prin `/report/html/<report_ref>/<res_id>`, fără a depinde de wkhtmltopdf în mediul de test. Trimite `lang` și `allowed_company_ids` în contextul cererii (`companies=False` dezactivează forțarea companiei): `/report/html` e o rută de website, unde regulile multi-companie se evaluează pe contextul cererii.
+- `align_website_company` — aliniază compania site-ului la compania capturilor, apelat automat din `prepare_ro_company` / `prepare_demo_company`. Pe ruta de website, `env.company` din randarea raportului vine de la compania site-ului, nu din `allowed_company_ids`: fără aliniere capturile de raport ies „403 Interzis" sau randate în altă limbă, iar testul trece — imaginea salvată e pagina greșită.
 - `xlsx_shot` / `xlsx_to_html` — randează prima foaie a unui XLSX generat ca tabel HTML stilizat, pentru capturi din exporturi.
 - `xml_excerpt` — formatează (pretty-print) un extras dintr-un XML generat (D300/D390/e-Factura etc.), gata de inserat în fișă între ``` ```xml ``` ```.
 - Opțiunea `highlight` per captură evidențiază selectoare CSS/Playwright cu contur portocaliu Odoo și buline numerotate ①②③, pentru a indica exact pașii din fișă.

@@ -1,10 +1,10 @@
 # Romania - Casă și bancă extinse (localizat la `l10n_ro_cash_bank_enhanced/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_cash_bank_enhanced`
-- **Versiune:** `19.0.1.1.2`
+- **Versiune:** `19.0.1.1.3`
 - **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cash_bank_enhanced](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cash_bank_enhanced)
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_cash_bank_enhanced`
-- **Ultima Ingestie:** `2026-09-11`
+- **Ultima Ingestie:** `2026-09-21`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -22,8 +22,10 @@ acoperite nativ de Odoo Enterprise (sincronizare bancară, OCR extrase, reconcil
 - **Dispoziție de plată / de încasare către casierie (cod 14-4-4)**: documentul de casă care
   justifică o mișcare de numerar neacoperită de chitanță — restituirea contravalorii unei mărfi
   returnate, un avans de trezorerie, o plată către o persoană fizică. Registru propriu, cu
-  numerotare separată pe casierie, pe sensul operațiunii și pe an; formular tipizat cu suma în
-  cifre și în litere, actul de identitate al beneficiarului și cele trei semnături. Un document
+  numerotare separată pe casierie, pe sensul operațiunii și pe an; formular cu suma în
+  cifre și în litere și actul de identitate al beneficiarului. Rubricile de semnătură nu se
+  tipăresc (din 19.0.1.1.3): modelul din Anexa 3 la OMFP 2634/2015 le are, dar art. 4 alin. (2)
+  permite adaptarea modelelor. Un document
   anulat își păstrează numărul, ca registrul să nu aibă goluri. Se întocmește din registru sau
   dintr-un bon de retur, când e instalat modulul de retururi POS.
 - **Alertă tranzacții bancare nereconciliate**: un cron zilnic identifică liniile de extras
