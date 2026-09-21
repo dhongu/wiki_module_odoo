@@ -32,8 +32,10 @@ Roluri recomandate pentru testare:
 ## 4. Conturi și date implicate
 
 21x (active), 281x (amortizare cumulată), 6811 (cheltuieli amortizare), 105 (rezerve din
-reevaluare), 1175 (rezultat reportat — transfer rezervă la casare), 6813 (depreciere ce depășește
-soldul 105), 6583 (valoarea neamortizată la casare / „Cont Pierderi"), 7583 (venit din vânzarea
+reevaluare), 1175 (rezultat reportat — transfer rezervă la casare), 655 (cheltuieli din
+reevaluare ce depășesc soldul 105 — OMFP 1802/2014 pct. 111 alin. (3), NU 6813, cont de
+ajustări pentru depreciere/provizioane, un mecanism diferit), 6583 (valoarea neamortizată la
+casare / „Cont Pierderi"), 7583 (venit din vânzarea
 activelor / „Cont Venituri"), 4111/461 (creanța clientului la vânzare, după contul configurat pe
 partener), 4427 (TVA colectată la vânzare)
 
@@ -46,7 +48,7 @@ Date minime pentru demo:
 ## 5. Configurare inițială
 
 1. Instalați modulul `l10n_ro_fixed_assets` (necesită `account_asset`, `l10n_ro_saft`, `l10n_ro`).
-2. Verificați jurnalul de tip **Active fixe** și conturile 21x/281x/6811/105/6813/1175/6583 pe planul
+2. Verificați jurnalul de tip **Active fixe** și conturile 21x/281x/6811/105/655/1175/6583 pe planul
    de conturi RO.
 3. Pe fiecare cont de imobilizări folosit la achiziții, setați tab-ul **„Automatizare"** →
    **„Automatizează activul" = „Creează în stadiu de proiect"** — altfel facturile de furnizor nu
@@ -166,8 +168,14 @@ colțul stânga-sus exportă exact ce se vede pe ecran.
 
 - **Amortizare lunară:** `Dr 6811 (cheltuieli amortizare) = Cr 281x (amortizare cumulată)`.
 - **Reevaluare (creștere):** `Dr 21x (activ) = Cr 105 (rezerve din reevaluare)`.
-- **Depreciere peste soldul 105:** `Dr 6813 (cheltuieli deprecieri) = Cr 21x (activ)`, pentru partea
-  care depășește rezerva disponibilă din 105.
+- **Depreciere peste soldul 105:** `Dr 655 (cheltuieli din reevaluare) = Cr 21x (activ)`, pentru
+  partea care depășește rezerva disponibilă din 105 (OMFP 1802/2014 pct. 111 alin. (3) — **nu**
+  6813, cont de ajustări pentru depreciere/provizioane, un mecanism contabil diferit).
+- **Luna reevaluării nu se împarte pe zile:** amortizarea din luna în care are loc reevaluarea
+  rămâne neschimbată, la vechea valoare lunară — valoarea nouă (recalculată pe durata rămasă) se
+  aplică începând cu luna următoare. Amortizarea RO e strict lunară (OMFP 1802/2014 pct. 238);
+  motorul standard Enterprise ar calcula, altfel, o notă suplimentară pro-rata pe zilele rămase
+  din luna reevaluării.
 - **Casare (fără vânzare — activ complet sau parțial amortizat, fără încasare):** scoaterea din
   evidență `Dr 281x (amortizare cumulată) + Dr 6583 (valoare neamortizată) = Cr 21x (activ, valoare
   brută)`, cu **Decizie de casare** (raport PDF) ca document justificativ. Aici toată valoarea
@@ -277,7 +285,7 @@ Ce rămâne manual: validarea numărului de inventar, codului nomenclator și DN
 |-----------------|-----------------|-----------|
 | „Commissioning date (PIF) cannot be before the acquisition date." | Data PIF a fost setată înaintea datei de achiziție a activului. | Corectați data PIF — trebuie să fie egală sau ulterioară achiziției. |
 | „The journal entry … is linked to asset … but has no depreciation beginning date. The 'Asset' field is reserved for entries generated automatically…" *(mesaj momentan netradus în ro.po)* | O notă contabilă (ex. de reevaluare) a fost legată manual la câmpul tehnic „Asset", fără ca acesta să provină din motorul de amortizare. | Nu legați manual câmpul „Asset" pe notele contabile — el este completat automat de planul de amortizare/reevaluare. |
-| „Account 6813 not found. Please fill in the 'Account 6813' field on the revaluation." | Deprecierea depășește soldul disponibil în 105, iar contul 6813 nu e configurat pe planul de conturi sau pe reevaluare. | Completați câmpul „Cont 6813" pe reevaluare sau adăugați contul 6813 pe planul de conturi RO. |
+| „Account 655 not found. Please fill in the 'Account 655' field on the revaluation." | Deprecierea depășește soldul disponibil în 105, iar contul 655 nu e configurat pe planul de conturi sau pe reevaluare. | Completați câmpul „Revaluation Expense Account" pe reevaluare sau adăugați contul 655 pe planul de conturi RO. |
 | „The revaluation has already been confirmed." / „…has a posted accounting entry. Please reset the journal entry first." | Se încearcă re-confirmarea unei reevaluări deja postate. | Resetați mai întâi nota contabilă asociată (draft), apoi reluați reevaluarea. |
 | „Missing inventory number on fixed assets" / „Missing commissioning date on fixed assets" (avertisment SAF-T) | Activul nu are completat Nr. Inventar sau Data PIF, câmpuri obligatorii pentru declarația SAF-T D406. | Completați câmpurile lipsă direct din acțiunea „Fill in…" oferită de avertisment. |
 
@@ -346,6 +354,7 @@ Fixuri livrate pe acest modul, relevante pentru discuția cu clientul (ce s-a sc
 | **19.0.1.2.0** (2026-09-14) | Legarea manuală a unei note contabile (ex. o notă de reevaluare) la câmpul tehnic „Asset" al unei note contabile, fără completarea datei de început a amortizării, bloca ulterior orice calcul de valoare reziduală a activului, inclusiv din wizard-ul „Modifică". Incident reprodus pe o instanță client. | Legarea manuală incompletă este acum respinsă explicit la salvare, cu un mesaj clar (deocamdată doar în engleză) — câmpul „Asset" rămâne rezervat notelor generate automat de motorul de amortizare. |
 | **19.0.1.1.1** (2026-07-17) | Butonul/acțiunea „Reevaluează Mijlocul Fix" din lista de active (meniu contextual) arunca o eroare la orice utilizare, blocând reevaluarea din acel punct de intrare. | Acțiunea apelează corect wizard-ul de reevaluare; funcționează identic cu butonul „Reevaluare" din formularul activului. |
 | **19.0.1.3.0** (2026-09-15) | Registrul Imobilizărilor se genera printr-un wizard separat (dată + companie), care producea un PDF static; exportul PDF putea eșua cu o eroare de server (`IndexError`, template incomplet — corectat separat, chiar înainte de această migrare). | Raportul a fost migrat la framework-ul nativ `account.report`: se accesează direct din **Contabilitate → Raportare → Statement Reports → Fixed Assets Register (RO)**, cu filtru „As of Date", grupare pe cont cu subtotaluri, drill-down pe fiecare activ și export PDF/XLSX din bara de instrumente a raportului — fără wizard intermediar. |
+| **19.0.1.3.2** (2026-09-21) | O reevaluare la mijlocul lunii genera o notă suplimentară pro-rata pe zilele rămase din acea lună, pe lângă amortizarea deja calculată la vechea valoare — dublând efectiv amortizarea lunii reevaluării, în loc să fie o singură notă lunară. În plus, deprecierea care depășea soldul rezervei 105 se înregistra pe contul **6813** (ajustări pentru depreciere/provizioane), în loc de **655** „Cheltuieli din reevaluarea imobilizărilor" (OMFP 1802/2014 pct. 111 alin. (3)). Semnalat de client cu exemple numerice concrete (tichet 9452). | Recalculul planului de amortizare la reevaluare pornește acum din prima zi a lunii **următoare** reevaluării — luna reevaluării rămâne neschimbată, la vechea valoare lunară, consecvent cu principiul amortizării strict lunare (OMFP 1802/2014 pct. 238). Câmpul de cont pentru depreciere a fost înlocuit cu **„Revaluation Expense Account"** (implicit 655, nu mai 6813); etichetele câmpurilor de cont (105/655) nu mai includ codul de cont în numele tehnic al câmpului. |
 
 > Notă: fix-urile de amortizare (din luna următoare PIF, fără prorata la vânzare) și blocarea legării
 > manuale sunt acoperite direct de teste automate (`tests/test_fixed_assets_ro.py`), reproduse cu date

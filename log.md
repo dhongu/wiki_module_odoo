@@ -4,6 +4,64 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-21] Re-ingestie `l10n_ro_fixed_assets` — reevaluare fără split pe zile, cont 655 nu 6813 (PR #283)
+
+- **Acțiune:** Re-ingestie după mergeul PR #283 (commit `99ba5d58`), care corectează două probleme
+  din fluxul de reevaluare a mijloacelor fixe, semnalate de client cu exemple numerice concrete
+  (tichet 9452, cazurile "CAZ 1"/"CAZ 2" adăugate în descrierea tichetului):
+  1. Amortizarea lunii reevaluării se împărțea pe zile (motorul Enterprise genera o notă
+     suplimentară pro-rata pentru restul lunii, pe lângă cea deja calculată la vechea valoare —
+     dublând efectiv amortizarea acelei luni). Recalculul planului de amortizare pornește acum din
+     prima zi a lunii următoare reevaluării; luna curentă rămâne neschimbată (amortizare RO strict
+     lunară, OMFP 1802/2014 pct. 238).
+  2. Deprecierea ce depășește soldul rezervei 105 folosea contul greșit 6813 (ajustări pentru
+     depreciere/provizioane); corect este 655 "Cheltuieli din reevaluarea imobilizărilor corporale"
+     (OMFP 1802/2014 pct. 111 alin. (3)).
+  Cu ocazia asta, câmpurile `account_105_id`/`account_6813_id` au fost redenumite în
+  `account_reserve_id`/`account_expense_id` — eticheta nu mai include codul de cont în numele
+  tehnic al câmpului.
+- **Sursă:** `readme/FISA_CONSULTANT.md` (resincronizat integral, inclusiv rândul nou din secțiunea
+  12 — istoric corecții) + toate cele 14 capturi din `readme/screenshots/` (regenerate; confirmat
+  vizual că luna reevaluării rămâne la vechea valoare, iar luna următoare arată valoarea nouă).
+- **Dependențe/Conexiuni:** Fără impact asupra altor pagini wiki.
+
+---
+
+## [2026-09-21] Re-ingestie `l10n_ro_deferred_entries` — terminologie RO reală, flux extins, traduceri livrate (PR #279, #280)
+
+- **Acțiune:** Re-ingestie după extinderea fișei consultant: fluxul a crescut de la 5 la 6 pași și
+  capturile de la 5 la 10 (introducerea facturii cu accent pe **data facturii**, afișarea coloanei
+  opționale, nota de amânare pe tabul Elemente jurnal, drill-down din raport, raportul de venituri).
+  Sursa extinderii: un document de utilizare primit de la client, comparat pas cu pas cu fișa.
+- **Corecție de terminologie:** pagina (și tot folderul `readme/`) foloseau etichetele englezești ale
+  câmpurilor. Capturile regenerate au arătat denumirile RO reale din Odoo 19: coloana este
+  **„Dată amânată"**, setările stau în **Conturi implicite → Înregistrări de cheltuieli/venituri
+  amânate** (**Cheltuială amânată** / **Venit amânat** / **Generează înregistrare** / **Bazat pe**),
+  rapoartele sunt **„Cheltuieli reportate"** și **„Venituri reportate"**, iar conturile din planul RO
+  sunt `471100` / `472100`.
+- **Capcană documentată, apoi reparată:** butonul smart apărea ca **„Deferral Entries"**, în engleză,
+  și pe o interfață RO — `msgstr` gol în `account_accountant/i18n/ro.po` (19.0). Traducerea
+  „Înregistrări amânate" există, dar pentru alt msgid („Deferred Entries"), nefolosit de buton.
+  Modulul livrează acum traducerea din propriul `i18n/ro.po` („Înregistrări de amânare", plus
+  „Amânare diversă"): sunt termeni de model rezolvați prin xmlid, deci pot veni din alt modul.
+  Verificat pe bază reală — capturile regenerate arată butonul în română. Mesajele de eroare din
+  codul Python al lui `account_accountant` rămân netraduse: traducerile de cod se caută doar în
+  .po-ul modulului care le definește.
+- **A doua eroare corectată:** `USAGE.md` indica postarea manuală din raport → „Generate Entries".
+  Butonul (RO: **„Generează înregistrare"**) apare doar când metoda companiei e `Manual și grupat`
+  (`account_reports/models/account_deferred_reports.py:249`); pe metoda implicită pusă de modul
+  (`La validarea facturii`) nu există.
+- **Sursă:** `readme/FISA_CONSULTANT.md`, `USAGE.md`, `CONFIGURE.md`, `DESCRIPTION.md`, `CONTEXT.md`,
+  `ROADMAP.md` (toate resincronizate) + cele 10 capturi din `readme/screenshots/`.
+- **Dependențe/Conexiuni:** neschimbate.
+- **Fișiere actualizate:** `l10n_ro_deferred_entries/index.md` (Sumar, Funcționalități, secțiunea 4
+  cu noua componentă `i18n/ro.po`), copia `FISA_CONSULTANT.md` + cele 10 capturi din
+  `l10n_ro_deferred_entries/screenshots/` (resincronizate din modul — copia din wiki rămăsese la
+  versiunea din iunie, cu 5 capturi), linia din `wiki_module_odoo/index.md`,
+  `wiki_module_odoo/log.md`, `wiki_module_odoo/.index/` (rebuild lexical).
+- **PR-uri:** [#279](https://github.com/terrabit-solutions/l10n_ro_ent/pull/279) (fișă + terminologie),
+  [#280](https://github.com/terrabit-solutions/l10n_ro_ent/pull/280) (traducerile RO), ambele merged în `19.0`.
+
 ## [2026-09-19] Re-ingestie `l10n_ro_fixed_assets` — corecție cont 401→404 la achiziție (PR #276)
 
 - **Acțiune:** Re-ingestie pentru `l10n_ro_fixed_assets` după mergeul PR #276 (commit `dc40c76d`), care
