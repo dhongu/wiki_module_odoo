@@ -4,6 +4,31 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-21] Re-ingestie `l10n_ro_etransport_enhancement` — dropship și partenerul comercial
+
+- **Acțiune:** Re-ingestie completă. Pagina era din `2026-06-08`, la versiunea `19.0.0.1.1`, iar
+  modulul e la `19.0.0.9.2` — lipsea nu doar fixul recent, ci opt versiuni de funcționalitate.
+- **Sursă:** `readme/DESCRIPTION.md` + `readme/USAGE.md` (secțiunea dropship) + `readme/HISTORY.md`,
+  completate cu analiza codului (`stock_picking.py`, `stock_picking_dropship.py`,
+  `etransport_api.py`, `etransport_document.py`, `picking_weight.py`, `res_config.py`,
+  `stock_move.py`, `views/`). DESCRIPTION.md descrie doar fluxul clasic prin depozit, fără
+  dropship — diferența a fost dedusă din cod, nu presupusă.
+- **Ce s-a adăugat față de ingestia veche:** suport dropship (traseul și tranzacția se rezolvă din
+  comanda de achiziție + cea de vânzare, nu din depozit), fixul `19.0.0.9.2`
+  (dhongu/l10n-romania#558 — nucleul Odoo 19 a primit dropship nativ și ignoră de atunci
+  `data["partner_id"]`, derivând mereu furnizorul; modulul rescrie `partenerComercial` după apelul
+  nucleului), timeout configurabil, alinierea unității și cantității declarate, greutăți cântărite,
+  adresa de încărcare aleasă manual.
+- **Dependențe/Conexiuni:** `l10n_ro_edi`, `l10n_ro_edi_stock` (manifest) rămân text `cod`, fără
+  pagină wiki. `stock_dropshipping` și `deltatech_uom_unece` sunt notate ca legături funcționale
+  opționale, nu dependențe de manifest. Modulul nu are fișă consultant, deci nu s-a copiat nimic.
+- **Fișiere actualizate:**
+    - `wiki_module_odoo/l10n_ro_etransport_enhancement/index.md`
+    - `wiki_module_odoo/index.md`
+    - `wiki_module_odoo/log.md`
+
+---
+
 ## [2026-09-21] Actualizare formulare de casierie — semnături eliminate (tichet 9535)
 
 - **Acțiune:** Actualizare punctuală a paginilor existente după mergeul a cinci PR-uri pe 19.0,

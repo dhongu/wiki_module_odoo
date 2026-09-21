@@ -400,7 +400,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_environmental_tax](l10n_ro_environmental_tax/index.md): Profiluri și cote AFM pentru ambalaje cu declarație de taxe de mediu calculată din facturi (FR-48).
 - [l10n_ro_esigiliu](l10n_ro_esigiliu/index.md): Evidența sigiliilor electronice ANAF/Vamă aplicate pe transporturile rutiere monitorizate, asociate transferurilor de stoc, cu ciclu de viață Ciornă → Aplicat → Eliminat.
 - [l10n_ro_etransport_block](l10n_ro_etransport_block/index.md): Blocarea validării avizelor cu produse cu risc fiscal ridicat fără UIT confirmat și actualizare automată status UIT.
-- [l10n_ro_etransport_enhancement](l10n_ro_etransport_enhancement/index.md): Extinde e-Transport, cu trimitere flexibilă a documentelor de transport către SPV din livrări.
+- [l10n_ro_etransport_enhancement](l10n_ro_etransport_enhancement/index.md): Extinde e-Transport (SPV) cu timeout configurabil, gestionarea erorilor de rețea ANAF, alinierea unității/cantității declarate, greutăți cântărite și suport pentru dropship (furnizor → client) pe operațiunile 10/20/30/40/50.
 - [l10n_ro_excise](l10n_ro_excise/index.md): Categorii de produse accizabile, rate și declarații D103/D120 cu export XML (Titlul VIII CF, FR-42).
 - [l10n_ro_expense_allowance](l10n_ro_expense_allowance/index.md): Calcul limită deductibilă diurnă 2,5× și surplus impozabil pentru deplasări interne/externe (Cod Fiscal art. 76).
 - [l10n_ro_expense_currency](l10n_ro_expense_currency/index.md): Avansuri de trezorerie în valută (cont 542) cu justificare și diferențe de curs 665/765 (OMFP 1802).
