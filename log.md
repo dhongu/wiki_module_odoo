@@ -4,6 +4,28 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-21] Re-ingestie `l10n_ro_fixed_assets` — corecții din auditul final Pacioli (PR #289)
+
+- **Acțiune:** Re-ingestie după mergeul PR #289 (commit `02ca1784`), o rundă de **confirmare**
+  Pacioli pe fișa actualizată din PR #288 — toate cele 12 probleme anterioare confirmate
+  rezolvate, plus 5 lacune noi, minore, găsite și corectate imediat:
+  1. Costul istoric de achiziție (`l10n_ro_acquisition_value`, pragul minim al bazei fiscale) nu
+     se resincroniza dacă activul era corectat manual cât era încă în ciornă (scenariul din
+     Pasul 1 al fișei) — se resincronizează acum la orice scriere cât `state == 'draft'`.
+  2. Vânzarea unui activ fără `loss_account_id` configurat lăsa nota de cedare dezechilibrată,
+     care pica ulterior cu o eroare generică — ridică acum un `UserError` explicit.
+  3. Rezerva 105 afișată rămânea la vechea valoare și după transferul 105→1175 la casare — câmp
+     nou `l10n_ro_revaluation_reserve_transferred`, previne și dublarea transferului.
+  4. Căutările de cont (105/1175/655/755) preferă acum o potrivire exactă de cod înaintea
+     prefixului (`=like`).
+  5. Rândul istoric al fix-ului 19.0.1.2.2 marcat ca depășit; adăugată nota de monografie
+     lipsă pentru compensarea pe 755.
+- **Sursă:** `readme/FISA_CONSULTANT.md` (resincronizat — fără schimbări de capturi, PR-ul nu
+  a modificat scenariile demo).
+- **Dependențe/Conexiuni:** Fără impact asupra altor pagini wiki.
+
+---
+
 ## [2026-09-21] Re-ingestie `l10n_ro_fixed_assets` — audit Pacioli: bază fiscală, rezervă 105, cont 755, 461 (PR #288)
 
 - **Acțiune:** Re-ingestie după mergeul PR #288 (commit `4fc0515d`), la cererea clientului de a rula
