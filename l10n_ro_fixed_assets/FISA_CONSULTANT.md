@@ -31,13 +31,15 @@ Roluri recomandate pentru testare:
 
 ## 4. Conturi și date implicate
 
-21x (active), 281x (amortizare cumulată), 6811 (cheltuieli amortizare), 105 (rezerve din
-reevaluare), 1175 (rezultat reportat — transfer rezervă la casare), 655 (cheltuieli din
-reevaluare ce depășesc soldul 105 — OMFP 1802/2014 pct. 111 alin. (3), NU 6813, cont de
-ajustări pentru depreciere/provizioane, un mecanism diferit), 6583 (valoarea neamortizată la
-casare / „Cont Pierderi"), 7583 (venit din vânzarea
-activelor / „Cont Venituri"), 4111/461 (creanța clientului la vânzare, după contul configurat pe
-partener), 4427 (TVA colectată la vânzare)
+21x (active), 281x (amortizare cumulată), 6811 (cheltuieli amortizare), 105 (rezervă din
+reevaluare), 755 (venit din reevaluare, compensează o cheltuială 655 anterioară pe același activ
+— OMFP 1802/2014 pct. 111 alin. (1) liniuța a doua), 1175 (rezultat reportat — transfer rezervă
+la casare, pct. 109), 655 (cheltuială din reevaluare ce depășește soldul 105 — pct. 111 alin. (2)
+și (3), NU 6813, cont de ajustări pentru depreciere/provizioane, un mecanism diferit), 6583
+(valoarea neamortizată la casare/vânzare — indiferent de preț, „Cont Pierderi"/`loss_account_id`),
+7583 (venit din vânzarea activelor, din factură — neatins de nota de cedare), 461 (creanța
+clientului la vânzare — „Debitori diverși", funcțiunea contului, Cap. 16; nu 411/4111, rezervat
+vânzărilor din exploatare), 404 (furnizori de imobilizări, la achiziție — nu 401), 4427 (TVA)
 
 Date minime pentru demo:
 - companie românească cu localizarea contabilă instalată
@@ -48,14 +50,16 @@ Date minime pentru demo:
 ## 5. Configurare inițială
 
 1. Instalați modulul `l10n_ro_fixed_assets` (necesită `account_asset`, `l10n_ro_saft`, `l10n_ro`).
-2. Verificați jurnalul de tip **Active fixe** și conturile 21x/281x/6811/105/655/1175/6583 pe planul
-   de conturi RO.
+2. Verificați jurnalul de tip **Active fixe** și conturile 21x/281x/6811/105/655/755/1175/6583 pe
+   planul de conturi RO.
 3. Pe fiecare cont de imobilizări folosit la achiziții, setați tab-ul **„Automatizare"** →
    **„Automatizează activul" = „Creează în stadiu de proiect"** — altfel facturile de furnizor nu
    generează automat mijlocul fix (Pasul 1).
 4. **Setări → Contabilitate**, secțiunea Active: setați **6583** pe **„Cont Pierderi"**
-   (`loss_account_id`) și **7583** pe **„Cont Venituri"** (`gain_account_id`) — fără ele, motorul
-   nu are unde posta rezultatul net la casare/vânzare.
+   (`loss_account_id`) — obligatoriu, e singurul cont folosit de nota de cedare la casare/vânzare
+   (fix 19.0.1.3.3, secțiunea 12: nota nu mai atinge contul de venit din factură). **„Cont
+   Venituri"** (`gain_account_id`) rămâne opțional pe acest flux — nefolosit de nota de cedare;
+   relevant doar dacă alte module îl folosesc separat.
 5. **Setări → Contabilitate**: activați **„Contabilitate Storno"** (`account_storno`) — controlează
    dacă liniile 214/281x din nota de cedare la vânzare apar cu semn negativ („notație storno", motor
    standard Enterprise) sau ca stornare clasică (sume pozitive pe partea opusă). Nu mai afectează
@@ -181,19 +185,30 @@ colțul stânga-sus exportă exact ce se vede pe ecran.
   evidență `Dr 281x (amortizare cumulată) + Dr 6583 (valoare neamortizată) = Cr 21x (activ, valoare
   brută)`, cu **Decizie de casare** (raport PDF) ca document justificativ. Aici toată valoarea
   neamortizată ajunge direct în 6583 (`loss_account_id`).
-- **Vânzare mijloc fix:** factura de vânzare generează separat `Dr 461/4111 (creanța clientului,
-  după contul configurat pe partener) = Cr 7583 (venit din vânzare active) + Cr 4427 (TVA
-  colectată)`. Nota de cedare a activului este **independentă** de preț și de factură — nu conține
+- **Vânzare mijloc fix:** factura de vânzare generează separat `Dr 461 (creanța clientului — „Debitori
+  diverși", funcțiunea contului, Cap. 16; nu 411/4111 „Clienți", rezervat vânzărilor din exploatare —
+  necesită `property_account_receivable_id` = 461 pe partener, altfel Odoo cade implicit pe 4111)
+  = Cr 7583 (venit din vânzare active) + Cr 4427 (TVA colectată)`. Nota de cedare a activului este
+  **independentă** de preț și de factură — nu conține
   nicio linie pe 7583 (fix 19.0.1.3.3): `Dr 281x (amortizare cumulată) + Dr 6583 (valoare
   neamortizată integrală, `loss_account_id`) = Cr 21x (activ, valoare brută)`, identic cu monografia
   de la casare. Câștigul sau pierderea din vânzare nu se înregistrează explicit nicăieri — reiese
-  din P&L prin comparația 7583 (din factură) vs. 6583 (din cedare), conform principiului
-  necompensării (OMFP 1802/2014 pct. 56 alin. (1), pct. 243 alin. (1)).
+  din P&L prin comparația 7583 (din factură) vs. 6583 (din cedare), fără nicio compensare explicită
+  în conturi (OMFP 1802/2014 pct. 56 alin. (1), pct. 243 alin. (1)) — la **prezentarea** oficială în
+  contul de profit și pierdere, pct. 243 alin. (2) cere totuși ca rezultatul (câștig/pierdere) să
+  fie arătat **net**; asta nu contrazice înregistrarea brută din conturi, e o regulă separată de
+  raportare.
 - **La casare/cedare, dacă activul are rezervă de reevaluare (105) nesoldată:** transfer automat
-  `Dr 105 (rezerve din reevaluare) = Cr 1175 (rezultat reportat)` (OMFP 1802/2014 pct. 103).
+  `Dr 105 (rezerve din reevaluare) = Cr 1175 (rezultat reportat)` — surplusul se consideră „câștig
+  realizat" la ieșirea activului din evidență (OMFP 1802/2014 pct. 109 alin. (1)-(2); **nu** pct. 103,
+  care tratează tratamentul amortizării cumulate la reevaluare, altă temă).
 - **Amortizare fiscală vs. contabilă** (Cod Fiscal art. 28): se urmărește separat de cea contabilă,
-  pentru calculul impozitului pe profit. Baza de calcul este **valoarea fiscală de intrare**, nu
-  valoarea reevaluată — un surplus din reevaluare nu se amortizează fiscal.
+  pentru calculul impozitului pe profit. Baza de calcul (**valoarea fiscală de intrare**) urmărește
+  **creșterile** din reevaluare — surplusul intră în valoarea fiscală și se amortizează fiscal, cu
+  impozitarea concomitentă a rezervei 105 pe măsura deducerii amortizării (L227/2015 art. 7 pct. 44
+  lit. c), art. 26 alin. (6)) — dar nu poate coborî sub **costul istoric de achiziție** la o
+  diminuare. Afirmația „un surplus din reevaluare nu se amortizează fiscal" e corectă doar pentru
+  partea de diminuare sub cost, nu generalizată la orice reevaluare.
 
 #### Exemplu numeric verificat (tichetul 9452)
 
@@ -210,10 +225,10 @@ birotică"), amortizare liniară pe **60 de luni** (100 lei/lună), PIF **1 iuni
 
 **Factura de vânzare**, cu liniile Dr/Cr reale:
 
-![Factura de vânzare — 4111 (6.050), 7583 (5.000), 4427 (1.050)](screenshots/06_exemplu_factura_vanzare.png)
+![Factura de vânzare — 461 (6.050), 7583 (5.000), 4427 (1.050)](screenshots/06_exemplu_factura_vanzare.png)
 
 ```
-Dr 4111  6.050,00 lei   (creanța clientului)
+Dr 461   6.050,00 lei   (creanța clientului — „Debitori diverși", nu 411/4111)
 Cr 7583  5.000,00 lei   (venit din vânzarea activului)
 Cr 4427  1.050,00 lei   (TVA colectată 21%)
 ```
@@ -249,7 +264,7 @@ printr-o reevaluare. Planul de amortizare, **înainte** și **după**:
 
 ![Planul de amortizare înainte de reevaluare — toate lunile viitoare la 200 lei](screenshots/08_reevaluare_inainte.png)
 
-![Planul de amortizare după reevaluare — lunile viitoare recalculate la ~164,12 lei](screenshots/09_reevaluare_dupa.png)
+![Planul de amortizare după reevaluare — lunile viitoare recalculate la ~161,54 lei](screenshots/09_reevaluare_dupa.png)
 
 Lunile deja postate (feb-aug, 200 lei fiecare) rămân neschimbate — corect, nu se rescrie
 istoricul. **Luna reevaluării (septembrie) rămâne neschimbată, la vechea valoare (200 lei)** —
@@ -317,13 +332,14 @@ din `l10n_ro_doc_screenshots`, HttpCase + Playwright), pe companie RO, în lei, 
 10. `05_exemplu_plan_amortizare.png` — exemplul numeric (tichet 9452): planul de amortizare al
     activului-exemplu (tab „Panou Devalorizare"), cu cele 2 luni amortizate și nota de cedare.
 11. `06_exemplu_factura_vanzare.png` — factura de vânzare a activului-exemplu, cu liniile Dr/Cr
-    (4111/7583/4427, inclusiv TVA 21%).
+    (461/7583/4427, inclusiv TVA 21%).
 12. `07_exemplu_nota_cedare.png` — nota de cedare a activului, deschisă separat, cu liniile Dr/Cr
-    detaliate pe conturi (214/2814/7583/6583).
+    detaliate pe conturi (214/2814/6583 — fără nicio linie pe 7583, fix 19.0.1.3.3).
 13. `08_reevaluare_inainte.png` — planul de amortizare înainte de o reevaluare cu diminuare de
     valoare: toate lunile viitoare la suma inițială (200 lei).
 14. `09_reevaluare_dupa.png` — același plan, după reevaluare: lunile deja postate neschimbate,
-    luna reevaluării proporțională, lunile viitoare recalculate pe noua valoare (~164,12 lei).
+    luna reevaluării neschimbată (200 lei, fix 19.0.1.3.2 — fără split pe zile), lunile viitoare
+    recalculate pe noua valoare (~161,54 lei).
 
 Regenerare:
 ```
@@ -359,6 +375,7 @@ Fixuri livrate pe acest modul, relevante pentru discuția cu clientul (ce s-a sc
 | **19.0.1.3.0** (2026-09-15) | Registrul Imobilizărilor se genera printr-un wizard separat (dată + companie), care producea un PDF static; exportul PDF putea eșua cu o eroare de server (`IndexError`, template incomplet — corectat separat, chiar înainte de această migrare). | Raportul a fost migrat la framework-ul nativ `account.report`: se accesează direct din **Contabilitate → Raportare → Statement Reports → Fixed Assets Register (RO)**, cu filtru „As of Date", grupare pe cont cu subtotaluri, drill-down pe fiecare activ și export PDF/XLSX din bara de instrumente a raportului — fără wizard intermediar. |
 | **19.0.1.3.2** (2026-09-21) | O reevaluare la mijlocul lunii genera o notă suplimentară pro-rata pe zilele rămase din acea lună, pe lângă amortizarea deja calculată la vechea valoare — dublând efectiv amortizarea lunii reevaluării, în loc să fie o singură notă lunară. În plus, deprecierea care depășea soldul rezervei 105 se înregistra pe contul **6813** (ajustări pentru depreciere/provizioane), în loc de **655** „Cheltuieli din reevaluarea imobilizărilor" (OMFP 1802/2014 pct. 111 alin. (3)). Semnalat de client cu exemple numerice concrete (tichet 9452). | Recalculul planului de amortizare la reevaluare pornește acum din prima zi a lunii **următoare** reevaluării — luna reevaluării rămâne neschimbată, la vechea valoare lunară, consecvent cu principiul amortizării strict lunare (OMFP 1802/2014 pct. 238). Câmpul de cont pentru depreciere a fost înlocuit cu **„Revaluation Expense Account"** (implicit 655, nu mai 6813); etichetele câmpurilor de cont (105/655) nu mai includ codul de cont în numele tehnic al câmpului. |
 | **19.0.1.3.3** (2026-09-21) | Nota de cedare la **vânzarea** unui mijloc fix relua linia de venit din factură ca stornare (`Dr 7583`) și înregistra doar diferența netă (preț vânzare − valoare neamortizată) pe contul de pierderi (6583) — o compensare venituri/cheltuieli interzisă de OMFP 1802/2014 pct. 56 alin. (1) și contrară pct. 243 alin. (1) (evidențiere distinctă a veniturilor și cheltuielilor la cedare). Rezultatul financiar total ieșea corect, dar rulajele conturilor 7583 și 6583 erau subevaluate cu exact valoarea vânzării, deformând contul de profit și pierdere la nivel de rând. Confirmat printr-o consultare explicită a agentului `pacioli`. | Nota de cedare la vânzare nu mai atinge deloc contul de venit din factură — înregistrează independent de preț **întreaga valoare neamortizată** pe 6583 (`loss_account_id`), identic cu monografia de la casare fără vânzare. Rezultatul (câștig/pierdere) reiese din P&L prin comparația 7583 (din factură, neschimbat) vs. 6583 (din cedare), fără nicio compensare explicită. |
+| **19.0.1.3.4** (2026-09-21) | Audit complet `pacioli` pe fișa de consultant, care a confirmat fix-urile 19.0.1.3.1-3 și a găsit erori suplimentare: (1) baza de amortizare fiscală îngheța complet la valoarea de intrare, deși L227/2015 art. 7 pct. 44 lit. c) cere ca surplusul din reevaluare să intre în baza fiscală (amortizabil, cu impozitarea concomitentă a rezervei 105 conform art. 26 alin. (6)) — doar diminuările sub costul istoric trebuie plafonate; (2) rezerva 105 afișată pe activ era suma algebrică a tuturor reevaluărilor, nu soldul real al contului — putea diverge de soldul contabil real când o diminuare depășea 105 (integral pe 655, fără să-l atingă); (3) o a doua diminuare succesivă putea consuma din 105 mai mult decât soldul real rămas (aceeași cauză); (4) lipsea mecanismul de compensare cont 755 pentru o creștere ulterioară unei diminuări recunoscute pe 655 (pct. 111 alin. (1), liniuța a doua); (5) citare greșită „pct. 103" pentru transferul 105→1175 (corect: pct. 109); (6) creanța la vânzare folosea 4111 în loc de 461 „Debitori diverși" (funcțiunea contului, Cap. 16); (7) reziduuri de text neactualizate din fix-urile anterioare (cifra „164,12" în loc de „161,54", mențiuni la „7583" în nota de cedare, wording „proporțional" pentru luna reevaluării). | Câmp nou **`l10n_ro_acquisition_value`** (cost istoric, înghețat la creare) — baza fiscală (`l10n_ro_fiscal_original_value`) e acum `max(cost istoric, valoare curentă)`, calculată prin `compute`. Rezerva 105 (`l10n_ro_revaluation_reserve`) se calculează acum din soldul REAL al liniilor contului 105 din notele de reevaluare postate, nu din suma algebrică — corectează și a doua diminuare succesivă. Adăugat câmpul **„Revaluation Income Account"** (cont 755) pe reevaluare/wizard, folosit automat când o creștere compensează o cheltuială 655 anterioară necompensată. Corectate citările (pct. 109) și contul de creanță la vânzare (461) în capturile/exemplul din fișă. Toate reziduurile de text corectate. |
 
 > Notă: fix-urile de amortizare (din luna următoare PIF, fără prorata la vânzare) și blocarea legării
 > manuale sunt acoperite direct de teste automate (`tests/test_fixed_assets_ro.py`), reproduse cu date

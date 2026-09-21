@@ -4,6 +4,32 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-21] Re-ingestie `l10n_ro_fixed_assets` — audit Pacioli: bază fiscală, rezervă 105, cont 755, 461 (PR #288)
+
+- **Acțiune:** Re-ingestie după mergeul PR #288 (commit `4fc0515d`), la cererea clientului de a rula
+  un audit contabil complet (nu doar punctual) pe fișa de consultant (tichet 9452). Agentul `pacioli`
+  a găsit 12 probleme suplimentare, inclusiv una de fond fiscal:
+  1. Baza de amortizare fiscală (`l10n_ro_fiscal_original_value`) îngheța complet la valoarea de
+     intrare — greșit pentru CREȘTERI de reevaluare (L227/2015 art. 7 pct. 44 lit. c): surplusul
+     trebuie să intre în valoarea fiscală, deductibil, cu impozitarea concomitentă a rezervei 105,
+     art. 26 alin. (6)). Câmp nou `l10n_ro_acquisition_value` (cost istoric, prag minim);
+     `l10n_ro_fiscal_original_value` devine `max(cost istoric, valoare curentă)`.
+  2. Rezerva 105 afișată (`l10n_ro_revaluation_reserve`) era suma algebrică a tuturor reevaluărilor,
+     nu soldul real al contului — corectat să reflecte soldul real din notele contabile postate
+     (corectează și o a doua diminuare succesivă care putea consuma mai mult decât soldul rămas).
+  3. Lipsea compensarea pe contul 755 pentru o creștere ulterioară unei diminuări recunoscute pe 655
+     (OMFP 1802/2014 pct. 111 alin. (1)) — câmp nou `account_income_id`.
+  4. Citare greșită „pct. 103" pentru transferul 105→1175 (corect: pct. 109); creanța la vânzare
+     folosea 4111 în loc de 461 „Debitori diverși"; reziduuri de text din fix-urile anterioare
+     (cifra „164,12" greșită, mențiuni vechi „7583" în nota de cedare).
+- **Sursă:** `readme/FISA_CONSULTANT.md` (resincronizat integral, inclusiv rândul nou din secțiunea
+  12 — istoric corecții) + toate cele 14 capturi din `readme/screenshots/` (regenerate; confirmat
+  vizual: factura de vânzare arată 461, nota de cedare arată 6583=5.800 fără 7583, „Rezervă 105" pe
+  activul demo arată corect 0,00 în loc de un −2.000 fals).
+- **Dependențe/Conexiuni:** Fără impact asupra altor pagini wiki.
+
+---
+
 ## [2026-09-21] Obiecte de inventar — randare PDF, registru în fișă și nota 603=303 (tichet 9509)
 
 - **Acțiune:** Actualizare punctuală a paginii `l10n_ro_inventory_items` după mergeul a trei PR-uri pe
