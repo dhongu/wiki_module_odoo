@@ -56,9 +56,10 @@ Date minime pentru demo:
 4. **Setări → Contabilitate**, secțiunea Active: setați **6583** pe **„Cont Pierderi"**
    (`loss_account_id`) și **7583** pe **„Cont Venituri"** (`gain_account_id`) — fără ele, motorul
    nu are unde posta rezultatul net la casare/vânzare.
-5. **Setări → Contabilitate**: activați **„Contabilitate Storno"** (`account_storno`) — fără el,
-   nota de vânzare a unui mijloc fix produce un rulaj în oglindă (debit) pe contul de venit (7583),
-   deformând cifra de afaceri din operațiuni de capital.
+5. **Setări → Contabilitate**: activați **„Contabilitate Storno"** (`account_storno`) — controlează
+   dacă liniile 214/281x din nota de cedare la vânzare apar cu semn negativ („notație storno", motor
+   standard Enterprise) sau ca stornare clasică (sume pozitive pe partea opusă). Nu mai afectează
+   contul de venit (7583) — de la fix-ul 19.0.1.3.3, nota de cedare nu îl mai atinge deloc.
 6. Verificați secvența **„Număr Inventar Mijloc Fix RO"** (`l10n_ro.asset_inventory_number`, format
    `MF/AAAA/NNNN`).
 7. Pe activele de test, setați **Metodă = Linie dreaptă** și **Perioadă = 1 lună** — fix-ul „amortizare
@@ -182,12 +183,12 @@ colțul stânga-sus exportă exact ce se vede pe ecran.
   neamortizată ajunge direct în 6583 (`loss_account_id`).
 - **Vânzare mijloc fix:** factura de vânzare generează separat `Dr 461/4111 (creanța clientului,
   după contul configurat pe partener) = Cr 7583 (venit din vânzare active) + Cr 4427 (TVA
-  colectată)`. Nota de cedare a activului reia linia de venit din factură și adaugă `Dr 281x
-  (amortizare cumulată) = Cr 21x (activ, valoare brută)`; **diferența** dintre valoarea neamortizată
-  și prețul de vânzare (câștig sau pierdere) se închide în contul configurat pe companie — **7583**
-  („Cont Venituri", `gain_account_id`) dacă vânzarea aduce câștig, **6583** („Cont Pierderi",
-  `loss_account_id`) dacă aduce pierdere. Fără **Contabilitate Storno** activată, această notă
-  produce un rulaj suplimentar (debit) pe 7583, pe lângă cel din factură.
+  colectată)`. Nota de cedare a activului este **independentă** de preț și de factură — nu conține
+  nicio linie pe 7583 (fix 19.0.1.3.3): `Dr 281x (amortizare cumulată) + Dr 6583 (valoare
+  neamortizată integrală, `loss_account_id`) = Cr 21x (activ, valoare brută)`, identic cu monografia
+  de la casare. Câștigul sau pierderea din vânzare nu se înregistrează explicit nicăieri — reiese
+  din P&L prin comparația 7583 (din factură) vs. 6583 (din cedare), conform principiului
+  necompensării (OMFP 1802/2014 pct. 56 alin. (1), pct. 243 alin. (1)).
 - **La casare/cedare, dacă activul are rezervă de reevaluare (105) nesoldată:** transfer automat
   `Dr 105 (rezerve din reevaluare) = Cr 1175 (rezultat reportat)` (OMFP 1802/2014 pct. 103).
 - **Amortizare fiscală vs. contabilă** (Cod Fiscal art. 28): se urmărește separat de cea contabilă,
@@ -219,26 +220,26 @@ Cr 4427  1.050,00 lei   (TVA colectată 21%)
 
 **Nota de cedare a activului** (separată de factură), cu liniile Dr/Cr reale pe conturi:
 
-![Nota de cedare — 214 (-6.000), 2814 (-200), 7583 (5.000), 6583 (800)](screenshots/07_exemplu_nota_cedare.png)
+![Nota de cedare — 214 (-6.000), 2814 (-200), 6583 (5.800)](screenshots/07_exemplu_nota_cedare.png)
 
 ```
 Dr 214  -6.000,00 lei   (scoaterea activului din evidență — notație storno)
 Cr 2814    -200,00 lei  (scoaterea amortizării cumulate — notație storno)
-Dr 7583   5.000,00 lei  (stornarea liniei de venit reluate din factura de vânzare)
-Dr 6583     800,00 lei  (pierderea: 5.800 valoare neamortizată − 5.000 preț vânzare)
+Dr 6583   5.800,00 lei  (valoarea neamortizată integrală — fix 19.0.1.3.3, secțiunea 12)
 ```
 
-**De reținut pentru consultant:** cu **Contabilitate Storno** activată (secțiunea 5), motorul nu
-postează separat `Dr 6583 = 5.800` (valoarea neamortizată brută) pe **nota de cedare**, ca în
-monografia „de manual" transmisă uneori de client — în schimb reia linia de venit din factură
-(`Dr 7583 5.000`, ca stornare a creditării din factură) și închide doar **diferența netă**
-(`Dr 6583 800`) pe contul de pierdere. Rezultatul financiar total (pe ambele note împreună) e
-identic: `4111 = 6.050`, `7583` net `= 0` (5.000 din factură, stornat 5.000 pe cedare),
-`4427 = 1.050`, `6583 = 800`, `214/2814` = scoaterea integrală a activului — pierderea de 800 lei
-ajunge corect în contul de profit și pierdere. Dacă un client cere explicit monografia „brută" pe
-nota de cedare (7583 = 5.000 venit, 6583 = 5.800 cheltuială, fără compensare — conform principiului
-necompensării, OMFP 1802/2014), explicați această diferență de prezentare: e o decizie de
-arhitectură a motorului nativ `account_asset` (Enterprise), nu un defect al acestui modul.
+**De reținut pentru consultant:** nota de cedare **nu** atinge deloc contul de venit din factură
+(7583) — venitul din vânzare rămâne exclusiv în factură (`Cr 7583 5.000`), iar nota de cedare
+înregistrează separat **întreaga valoare neamortizată** (`Dr 6583 = 5.800`, adică 6.000 valoare
+brută − 200 amortizare cumulată), indiferent de prețul de vânzare. Rezultatul (pierdere de 800 lei
+= 5.000 venit − 5.800 cheltuială) reiese din P&L prin comparația celor două conturi, fără nicio
+notă care să le compenseze explicit — conform principiului necompensării (OMFP 1802/2014 pct. 56
+alin. (1)) și evidențierii distincte a venitului/cheltuielii la cedare (pct. 243 alin. (1)). Până
+la 19.0.1.3.2, modulul (prin motorul nativ `account_asset`) relua linia de venit din factură ca
+stornare (`Dr 7583 5.000`) și înregistra doar diferența netă (`Dr 6583 800`) — rezultatul financiar
+total ieșea corect, dar rulajele conturilor 7583/6583 erau greșite (subevaluate cu 5.000 lei
+fiecare), afectând contul de profit și pierdere la nivel de rând. Corectat, confirmat de o
+consultare `pacioli` explicită.
 
 #### Exemplu numeric verificat — reevaluare cu diminuare de valoare
 
@@ -251,10 +252,12 @@ printr-o reevaluare. Planul de amortizare, **înainte** și **după**:
 ![Planul de amortizare după reevaluare — lunile viitoare recalculate la ~164,12 lei](screenshots/09_reevaluare_dupa.png)
 
 Lunile deja postate (feb-aug, 200 lei fiecare) rămân neschimbate — corect, nu se rescrie
-istoricul. Luna reevaluării (septembrie) se împarte proporțional (65,65 lei, pentru zilele
-rămase din lună), iar din **octombrie** amortizarea viitoare scade la **~164,12 lei/lună**
-(valoarea reziduală rămasă, împărțită la lunile rămase) — nu mai rămâne la vechea sumă de
-200 lei/lună, cum se întâmpla înainte de fix.
+istoricul. **Luna reevaluării (septembrie) rămâne neschimbată, la vechea valoare (200 lei)** —
+fără nicio notă suplimentară pro-rata pe zile (fix 19.0.1.3.2, secțiunea 12); din **octombrie**
+amortizarea viitoare scade la noua valoare recalculată pe durata rămasă (valoarea reziduală
+rămasă, împărțită la lunile rămase) — nu mai rămâne la vechea sumă de 200 lei/lună, cum se
+întâmpla înainte de primul fix (19.0.1.3.1), și nu se mai împarte artificial pe zile în luna
+reevaluării, cum se întâmpla între cele două fix-uri (19.0.1.3.1 → 19.0.1.3.2).
 
 ## 7. Legături cu alte module / declarații
 
@@ -355,6 +358,7 @@ Fixuri livrate pe acest modul, relevante pentru discuția cu clientul (ce s-a sc
 | **19.0.1.1.1** (2026-07-17) | Butonul/acțiunea „Reevaluează Mijlocul Fix" din lista de active (meniu contextual) arunca o eroare la orice utilizare, blocând reevaluarea din acel punct de intrare. | Acțiunea apelează corect wizard-ul de reevaluare; funcționează identic cu butonul „Reevaluare" din formularul activului. |
 | **19.0.1.3.0** (2026-09-15) | Registrul Imobilizărilor se genera printr-un wizard separat (dată + companie), care producea un PDF static; exportul PDF putea eșua cu o eroare de server (`IndexError`, template incomplet — corectat separat, chiar înainte de această migrare). | Raportul a fost migrat la framework-ul nativ `account.report`: se accesează direct din **Contabilitate → Raportare → Statement Reports → Fixed Assets Register (RO)**, cu filtru „As of Date", grupare pe cont cu subtotaluri, drill-down pe fiecare activ și export PDF/XLSX din bara de instrumente a raportului — fără wizard intermediar. |
 | **19.0.1.3.2** (2026-09-21) | O reevaluare la mijlocul lunii genera o notă suplimentară pro-rata pe zilele rămase din acea lună, pe lângă amortizarea deja calculată la vechea valoare — dublând efectiv amortizarea lunii reevaluării, în loc să fie o singură notă lunară. În plus, deprecierea care depășea soldul rezervei 105 se înregistra pe contul **6813** (ajustări pentru depreciere/provizioane), în loc de **655** „Cheltuieli din reevaluarea imobilizărilor" (OMFP 1802/2014 pct. 111 alin. (3)). Semnalat de client cu exemple numerice concrete (tichet 9452). | Recalculul planului de amortizare la reevaluare pornește acum din prima zi a lunii **următoare** reevaluării — luna reevaluării rămâne neschimbată, la vechea valoare lunară, consecvent cu principiul amortizării strict lunare (OMFP 1802/2014 pct. 238). Câmpul de cont pentru depreciere a fost înlocuit cu **„Revaluation Expense Account"** (implicit 655, nu mai 6813); etichetele câmpurilor de cont (105/655) nu mai includ codul de cont în numele tehnic al câmpului. |
+| **19.0.1.3.3** (2026-09-21) | Nota de cedare la **vânzarea** unui mijloc fix relua linia de venit din factură ca stornare (`Dr 7583`) și înregistra doar diferența netă (preț vânzare − valoare neamortizată) pe contul de pierderi (6583) — o compensare venituri/cheltuieli interzisă de OMFP 1802/2014 pct. 56 alin. (1) și contrară pct. 243 alin. (1) (evidențiere distinctă a veniturilor și cheltuielilor la cedare). Rezultatul financiar total ieșea corect, dar rulajele conturilor 7583 și 6583 erau subevaluate cu exact valoarea vânzării, deformând contul de profit și pierdere la nivel de rând. Confirmat printr-o consultare explicită a agentului `pacioli`. | Nota de cedare la vânzare nu mai atinge deloc contul de venit din factură — înregistrează independent de preț **întreaga valoare neamortizată** pe 6583 (`loss_account_id`), identic cu monografia de la casare fără vânzare. Rezultatul (câștig/pierdere) reiese din P&L prin comparația 7583 (din factură, neschimbat) vs. 6583 (din cedare), fără nicio compensare explicită. |
 
 > Notă: fix-urile de amortizare (din luna următoare PIF, fără prorata la vânzare) și blocarea legării
 > manuale sunt acoperite direct de teste automate (`tests/test_fixed_assets_ro.py`), reproduse cu date

@@ -4,6 +4,49 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-21] Obiecte de inventar — randare PDF, registru în fișă și nota 603=303 (tichet 9509)
+
+- **Acțiune:** Actualizare punctuală a paginii `l10n_ro_inventory_items` după mergeul a trei PR-uri pe
+  19.0, nu re-ingestie completă. Pornit de la tichetul 9509 („Obiecte de inventar"), la testarea
+  făcută pe baza de test Interheat.
+- **Ce s-a schimbat în modul** (`l10n_ro_inventory_items` 19.0.1.0.1 → 19.0.1.1.0):
+  1. l10n_ro_ent#271 — cele trei rapoarte apelau direct `web.external_layout`, fără
+     `web.html_container`, deci HTML-ul randat nu avea `<main>` și orice tipărire pica în
+     `_prepare_html` cu `IndexError`. Adăugate template-uri „document complet", cu `report_name`
+     mutat pe ele.
+  2. l10n_ro_ent#272 — raportul „Inventory Item Register" adăugat în fișa de consultant (pas propriu
+     + captura `06_registru_oi.png`); coloana Stare folosea `_fields['state'].selection`, care
+     întoarce etichetele-sursă EN și ocolește `ro.po` — trecută pe `t-field`.
+  3. l10n_ro_ent#281 — darea în folosință nu genera nicio notă contabilă când produsul nu era pe o
+     categorie cu valorizare în timp real: modulul doar prelua ce produsese `stock_account`, iar
+     altfel scria `move_603_id = False` și raporta succes. Nota 603=303 e acum generată de modul
+     (`_create_603_move()`), fără dublare acolo unde valorizarea o produce deja. Corectat și
+     `_get_oi_consumption_location()`, care citea locația fără `sudo` și pica cu `AccessError` în
+     multi-company.
+- **De reținut:** testele modulului rulau pe planul de conturi generic, unde nu există conturi
+  603/303, și erau scrise condiționat (`if oi.move_8035_in_id:`) — treceau verzi și când nu se
+  genera nicio notă. Verificările contabile noi rulează pe plan RO, prin `AccountTestInvoicingCommon`
+  cu `setup_country("ro")`.
+- **Fișă consultant:** resincronizată în wiki împreună cu capturile (acum 6, cu registrul OI).
+- **Redenumire semantică** (l10n_ro_ent#286, `19.0.1.1.0` → `19.0.2.0.0`): numerele de cont ies din
+  API și rămân doar în etichetele vizibile — `move_603_id` → `usage_entry_id`, `move_8035_in_id` /
+  `_out_id` → `off_balance_entry_in_id` / `_out_id`, `_create_603_move()` → `_create_usage_entry()`,
+  `_create_8035_move()` → `_create_off_balance_entry()`, `_check_8035_balance()` →
+  `_check_off_balance()`, `l10n_ro_use_8035_account_move` → `l10n_ro_use_off_balance_entries`,
+  `l10n_ro_oi_account_8035_id` → `l10n_ro_oi_off_balance_account_id`. Pre-migrarea `19.0.2.0.0`
+  redenumește coloanele (verificat pe o bază instalată cu codul vechi: valorile se păstrează).
+- **Format:** pagina folosea `##` pentru secțiuni și meta fără backticks, deci parserul din
+  `scripts/wiki_index.py` (care cere `#### N.` și `` `valoare` ``) o indexa cu sumar și
+  funcționalități goale. Adusă la formatul așteptat și reindexată.
+- **Fișiere actualizate:**
+    - `wiki_module_odoo/l10n_ro_inventory_items/index.md`
+    - `wiki_module_odoo/l10n_ro_inventory_items/FISA_CONSULTANT.md`
+    - `wiki_module_odoo/l10n_ro_inventory_items/screenshots/` (6 capturi)
+    - `wiki_module_odoo/index.md`
+    - `wiki_module_odoo/log.md`
+
+---
+
 ## [2026-09-21] Re-ingestie `l10n_ro_etransport_enhancement` — dropship și partenerul comercial
 
 - **Acțiune:** Re-ingestie completă. Pagina era din `2026-06-08`, la versiunea `19.0.0.1.1`, iar
@@ -54,6 +97,27 @@ This is an append-only log of all operations performed on the wiki.
 - **Sursă legislativă de reținut:** PDF-ul OMFP 2634/2015 de pe static.anaf.ro conține doar
   Anexele 1 și 4; Nomenclatorul și modelele sunt în Anexele 2 și 3 (M.Of. 910 *bis*). Detalii în
   `l10n_ro_ent/readme/casierie/FORMULARE_TIPIZATE_CASIERIE.md`.
+
+---
+
+## [2026-09-21] Re-ingestie `l10n_ro_fixed_assets` — nota de cedare la vânzare fără compensare (PR #287)
+
+- **Acțiune:** Re-ingestie după mergeul PR #287 (commit `d1659fe4`), care corectează o eroare
+  contabilă de fond în nota de cedare la **vânzarea** unui mijloc fix (tichet 9452, continuare a
+  PR #283), confirmată printr-o consultare explicită a agentului `pacioli`: motorul standard
+  `account_asset` relua linia de venit din factura de vânzare (Dr 7583, ca stornare) și
+  înregistra doar diferența netă (preț vânzare − valoare neamortizată) pe contul de pierderi
+  (6583) — o compensare venituri/cheltuieli interzisă de OMFP 1802/2014 pct. 56 alin. (1) și
+  contrară pct. 243 alin. (1) (evidențiere distinctă venit/cheltuială la cedare). Rezultatul net
+  total ieșea corect, dar rulajele 7583/6583 erau subevaluate cu exact valoarea vânzării,
+  deformând contul de profit și pierdere la nivel de rând. Fix: nota de cedare la vânzare nu mai
+  atinge deloc contul de venit din factură — înregistrează independent de preț întreaga valoare
+  neamortizată pe 6583, identic cu monografia de la casare fără vânzare.
+- **Sursă:** `readme/FISA_CONSULTANT.md` (resincronizat integral, inclusiv rândul nou din secțiunea
+  12 — istoric corecții, și corectarea unui fragment rămas neactualizat din fix-ul anterior de
+  reevaluare) + toate cele 14 capturi din `readme/screenshots/` (regenerate; confirmat vizual că
+  nota de cedare arată acum `658300 ... 5.800,00 lei`, fără nicio linie pe `7583`).
+- **Dependențe/Conexiuni:** Fără impact asupra altor pagini wiki.
 
 ---
 
