@@ -14,7 +14,7 @@ Modulul oferă infrastructura comună pentru depunerea electronică a declarați
 #### 2. Funcționalități Cheie
 
 - **Depunere manuală (SPV / e-guvernare)** — fluxul disponibil azi, funcțional complet: contabilul depune fișierul în SPV cu certificatul calificat, introduce ID-ul solicitării în Odoo, iar sistemul verifică starea și păstrează recipisa.
-- **Depunere TDec (agent local ANAF)** — conector complet implementat: Odoo trimite fișierul prin API-ul REST TDec (`POST /api/`), preia UID-ul, verifică starea (Index ANAF + „Recipisa OK") și descarcă automat recipisa PDF; aplicația TDec rulează local, ține certificatul calificat și semnează + transmite declarațiile la ANAF.
+- **Depunere prin Terrabit Agent (Terrabit Connect)** — conector complet implementat: Odoo pune fișierul într-o coadă de job-uri (`deltatech.tc.job`); agentul local Terrabit, cu certificatul calificat pe stația contabilului, îl semnează și îl urcă direct la ANAF (SPVWS2), iar starea și recipisa se sincronizează înapoi în Odoo.
 - **Depunere certSIGN Cloud (API)** — conector de semnare PAdES + upload automat direct; interfața și configurarea există, însă conectorul propriu-zis este un *stub* care necesită API-ul comercial certSIGN și se activează când acesta devine disponibil.
 - **Verificarea stării** — interoghează endpoint-ul public ANAF de stare prin ID solicitare (nu necesită certificat) și poate rula automat printr-un cron dezactivat implicit.
 - **Urmărirea depunerii și a recipisei** — păstrarea fișierului depus, a amprentei SHA-256, a ID-ului solicitării ANAF, a stării, a erorilor și a recipisei.
