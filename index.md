@@ -4,14 +4,13 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 
 ## Module
 
-- [bitshop_sale_withdrawal](bitshop_sale_withdrawal/index.md): Funcție de retragere din contract pentru comenzi online, conform Directivei UE 2023/2673 (OUG 18/2026), cu buton dedicat pe portal, confirmare de primire pe suport durabil și registru de retrageri în Vânzări.
-- [bitshop_sale_withdrawal_stock](bitshop_sale_withdrawal_stock/index.md): Continuă operațional retragerea dintr-un contract la nivel de stoc — anulează livrările neefectuate sau le returnează prin wizard-ul standard, când un consumator renunță la contract.
 - [deltatech](deltatech/index.md): Modul de bază (fundație) al suitei Deltatech, oferind utilitare partajate, structură unitară și extinderi comune pentru celelalte module Deltatech.
 - [deltatech_access](deltatech_access/index.md): Control granular al accesului la câmpuri din vederile Odoo (readonly / required / invisible) pe bază de grupuri de utilizatori.
 - [deltatech_account](deltatech_account/index.md): Îmbunătățiri pentru contabilitatea și facturarea Odoo: vizibilitate extinsă a facturilor, configurare flexibilă a jurnalelor/conturilor și sincronizare între documente.
 - [deltatech_account_analytic](deltatech_account_analytic/index.md): Leagă liniile/distribuțiile analitice de pe facturi de echipa de vânzări și oferă un asistent de împărțire a sumelor pe conturi analitice conform unor șabloane procentuale.
-- [deltatech_account_bank_statement_import](deltatech_account_bank_statement_import/index.md): Extinde importul extraselor de cont bancar cu suport pentru fișiere XLSX și detectare automată a partenerului (după nume sau referința comenzii de vânzare).
-- [deltatech_account_bank_statement_import_euplatesc](deltatech_account_bank_statement_import_euplatesc/index.md): Importă direct fișierele de decontare Euplatesc.ro (e-commerce, XLSX) ca extrase bancare în Odoo, cu detecție automată, deduplicare pe RRN și linii de comision/transfer configurabile.
+- [deltatech_account_bank_statement_import](deltatech_account_bank_statement_import/index.md): Extinde importul extraselor de cont bancar cu suport XLSX, detectare automată a partenerului și mecanismul comun de recunoaștere a fișierelor de decontare după antet (set de coloane).
+- [deltatech_account_bank_statement_import_emag](deltatech_account_bank_statement_import_emag/index.md): Importă borderoul de plăți eMAG Marketplace (XLSX) direct ca extras de cont bancar, cu un extras per virare, semnele corectate și potrivire automată a clientului.
+- [deltatech_account_bank_statement_import_euplatesc](deltatech_account_bank_statement_import_euplatesc/index.md): Importă fișierele de decontare Euplatesc.ro (XLSX) ca extrase de cont, cu recunoaștere pe set de coloane obligatorii, potrivire automată a partenerului, deduplicare pe RRN și linii de comision/transfer configurabile.
 - [deltatech_account_bank_statement_import_gls](deltatech_account_bank_statement_import_gls/index.md): Importă borderourile de ramburs GLS (Excel) direct ca extrase de cont bancar, o linie per colet, fără prelucrare manuală a fișierului.
 - [deltatech_account_edi_ubl_advice](deltatech_account_edi_ubl_advice/index.md): Adaugă în facturile UBL de vânzare o referință (`cac:DespatchDocumentReference`) către avizele de expediție validate care au generat factura.
 - [deltatech_account_edit_currency_rate](deltatech_account_edit_currency_rate/index.md): Permite editarea manuală a cursului valutar direct pe facturi, cu recalcularea automată a sumelor contabile aferente.
@@ -54,7 +53,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_data_sheet](deltatech_data_sheet/index.md): Atașează fișe tehnice și fișe de securitate (PDF) pe produs, în fila Vânzări.
 - [deltatech_data_sheet_website](deltatech_data_sheet_website/index.md): Expune fișele tehnice și fișele cu date de securitate ale produselor pe paginile din magazinul online.
 - [deltatech_dc](deltatech_dc/index.md): Gestionarea și tipărirea declarațiilor de conformitate pentru produse, inclusiv la facturare.
-- [deltatech_delivery](deltatech_delivery/index.md): Cadru de bază pentru gestionarea livrărilor multi-curier în Odoo, cu opțiuni AWB partajate și integrare vânzări/stoc/facturare.
+- [deltatech_delivery](deltatech_delivery/index.md): Modul de bază pentru curierat în Odoo — infrastructura AWB/expediere comună pentru toate integrările de curier, plus acțiuni în masă din lista de comenzi (validare livrări și trimitere la curier cu progres live).
 - [deltatech_delivery_batch](deltatech_delivery_batch/index.md): Generează AWB-uri pentru mai multe livrări simultan, prin procesare în lot pe transferurile grupate (`stock.picking.batch`).
 - [deltatech_delivery_category_price](deltatech_delivery_category_price/index.md): Calculează tariful de livrare eCommerce pe baza categoriilor website ale produselor din coș (preț fix sau pe tranșe de greutate), cu preț implicit de rezervă și supliment opțional de handling.
 - [deltatech_delivery_cm](deltatech_delivery_cm/index.md): Integrare Odoo cu platforma de curierat Courier Manager — AWB (PDF/ZPL), tarife, urmărire statusuri și expedieri (ramburs, valoare declarată, colete multiple).
@@ -231,6 +230,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_report_prn_zebra_sdk](deltatech_report_prn_zebra_sdk/index.md): Tipărire directă a etichetelor Zebra PRN/ZPL prin agentul local Terrabit Connect (sau Zebra Browser Print SDK), fără descărcarea manuală a fișierului.
 - [deltatech_restrict_ip](deltatech_restrict_ip/index.md): Restricționează autentificarea în Odoo după adresa IP, limitând accesul la adrese/intervale de încredere (birou, VPN) pentru securitate și conformitate.
 - [deltatech_restrict_reports](deltatech_restrict_reports/index.md): Restricționează accesul la rapoartele Analiză Vânzări și Analiză Facturi prin două grupuri (doar propriile înregistrări / toate înregistrările), independent de drepturile standard.
+- [deltatech_rma](deltatech_rma/index.md): Gestionează returul comercial și reclamațiile de garanție, cu fișă de retur PDF cu cod de bare și recepție în depozit prin scanare.
 - [deltatech_rpc_audit](deltatech_rpc_audit/index.md): Loghează apelurile XML-RPC/JSON-RPC externe (IP client real, model, metodă) pentru audit tehnic, configurabil on/off fără dezinstalare.
 - [deltatech_saga](deltatech_saga/index.md): Modul de export/import fișiere (XML/DBF) pentru schimbul de date contabile, parteneri, produse și stocuri între Odoo și SAGA, adaptat cerințelor fiscale românești.
 - [deltatech_saga_mrp](deltatech_saga_mrp/index.md): Extinde interfața de export SAGA pentru a sincroniza mișcările de stoc și producția kiturilor (BoM phantom) din MRP către SAGA.
@@ -268,6 +268,8 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_sale_store](deltatech_sale_store/index.md): Vânzare directă din magazin cu emitere de bonuri fiscale (fișier pentru programul de tipărit, client generic, marcaj „Bon fiscal" pe jurnale).
 - [deltatech_sale_store_report](deltatech_sale_store_report/index.md): Raport zilnic al vânzărilor cu bon fiscal tipărit, pentru punctajul cu raportul Z al casei de marcat (totaluri pe zi, TVA și tip de plată).
 - [deltatech_sale_team](deltatech_sale_team/index.md): Restricționează accesul la documentele de vânzare/facturile propriei echipe și asociază un depozit implicit per echipă.
+- [deltatech_sale_withdrawal](deltatech_sale_withdrawal/index.md): Funcție de retragere din contract pentru comenzi online, conform Directivei UE 2023/2673 (OUG 18/2026), cu buton dedicat pe portal, confirmare de primire pe suport durabil și registru de retrageri în Vânzări.
+- [deltatech_sale_withdrawal_stock](deltatech_sale_withdrawal_stock/index.md): Continuă operațional retragerea dintr-un contract la nivel de stoc — anulează livrările neefectuate sau le returnează prin wizard-ul standard, când un consumator renunță la contract.
 - [deltatech_sale_xls](deltatech_sale_xls/index.md): Import al liniilor comenzii de vânzare din Excel, cu secțiune dedicată „Order Lines" pe formularul comenzii.
 - [deltatech_saleorder_pickup_list](deltatech_saleorder_pickup_list/index.md): Raport „Listă de ridicare" tipăribil din comenzile de vânzare, cu produse, cantități și amplasare în depozit.
 - [deltatech_saleorder_search](deltatech_saleorder_search/index.md): Extinde căutarea comenzilor de vânzare cu e-mail și telefon partener, pentru identificarea rapidă a comenzii pe baza datelor de contact ale clientului.
@@ -388,7 +390,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_cost_centers](l10n_ro_cost_centers/index.md): Repartizarea automată a cheltuielilor indirecte pe centre de cost (conturi analitice), neutră financiar, prin chei configurabile, conform OMFP 1802/2014.
 - [l10n_ro_currency_rate_live_bnr](l10n_ro_currency_rate_live_bnr/index.md): Repară preluarea automată a cursului valutar BNR în Odoo Enterprise, mutând endpoint-ul de la `www.bnr.ro` (rupt din 04.08.2026) la `curs.bnr.ro`.
 - [l10n_ro_currency_revaluation](l10n_ro_currency_revaluation/index.md): Reevaluare lunară a soldurilor monetare în valută conform OMFP 1802/2014, cu diferențe de curs definitive pe 665/765, fără stornare automată.
-- [l10n_ro_deferred_entries](l10n_ro_deferred_entries/index.md): Configurează automat mecanismul nativ Enterprise de recunoaștere a cheltuielilor/veniturilor înregistrate în avans (conturi 4711/4721) pe planul de conturi RO.
+- [l10n_ro_deferred_entries](l10n_ro_deferred_entries/index.md): Configurează automat mecanismul nativ Enterprise de recunoaștere a cheltuielilor/veniturilor înregistrate în avans (conturi 4711/4721) pe planul de conturi RO și livrează traducerile RO lipsă ale mecanismului.
 - [l10n_ro_dividends](l10n_ro_dividends/index.md): Distribuire dividende cu cote 10%/16%, registru acționari și note contabile automate 117/457/446.
 - [l10n_ro_doc_screenshots](l10n_ro_doc_screenshots/index.md): Mixin `ScreenshotCase` (HttpCase + Playwright) pentru generarea capturilor din fișele consultant, acum doar la cerere explicită.
 - [l10n_ro_edi_ubl_sale_store](l10n_ro_edi_ubl_sale_store/index.md): Setează automat tipul de e-factură la codul 751 pentru vânzările însoțite de bon fiscal.
@@ -413,7 +415,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_grants](l10n_ro_grants/index.md): Contracte de finanțare nerambursabilă cu note 475/131/132 și recunoaștere venituri (OMFP 1802 + IAS 20, FR-38).
 - [l10n_ro_intrastat_enhancement](l10n_ro_intrastat_enhancement/index.md): Extinde raportul Intrastat Enterprise cu export XML pentru INS, versiuni de nomenclator configurabile în Setări, status de prag la cerere, verificare INS Validation (inclusiv antet declarație), reconciliere D390 și terminologie română pentru codurile de marfă și de tranzacție.
 - [l10n_ro_inventory_closing](l10n_ro_inventory_closing/index.md): Înregistrări contabile ale inventarierii și PV-uri PDF pentru cele 4 tipuri de diferențe (OMFP 1802 + 2861/2009, FR-18).
-- [l10n_ro_inventory_items](l10n_ro_inventory_items/index.md): Gestiunea obiectelor de inventar 303/603/8035 cu fișă OI, wizard-uri batch și rapoarte PDF (OMFP 1802).
+- [l10n_ro_inventory_items](l10n_ro_inventory_items/index.md): Gestiunea obiectelor de inventar 303/603/8035 cu fișă OI creată la recepție, wizard-uri batch și trei rapoarte PDF, inclusiv Registrul OI (OMFP 1802).
 - [l10n_ro_inventory_register](l10n_ro_inventory_register/index.md): Registrul Inventar anual (formular cod 14-1-2, OMFP 2634/2015), cu linii recapitulative pe categorii patrimoniale din soldurile contabile postate.
 - [l10n_ro_invoice_dvi_protect](l10n_ro_invoice_dvi_protect/index.md): Blochează resetarea la ciornă a facturilor furnizor și anularea DVI când stocul FIFO recepționat a fost deja parțial consumat.
 - [l10n_ro_invoice_report](l10n_ro_invoice_report/index.md): Extinde rapoartele de factură și documentele de plată pentru conformitate RO (TVA pe linie, delegat, mențiuni legale), iar chitanța și dispoziția de casă ies ca formular de casierie: cod 14-4-4/14-4-1, casierie, act de identitate și părțile etichetate după rolul real (Plătitor/Beneficiar), fără rubrici de semnătură.
@@ -467,7 +469,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_stock_k_coefficient](l10n_ro_stock_k_coefficient/index.md): Calcul lunar al coeficientului K de repartizare a diferențelor de preț la stocuri (OMFP 1802), cu stornare în roșu.
 - [l10n_ro_stock_pack_cmp](l10n_ro_stock_pack_cmp/index.md): Pachet care instalează și configurează automat toate modulele necesare pentru evidența stocului RO pe metoda costului mediu ponderat (CMP/AVCO).
 - [l10n_ro_stock_pack_fifo](l10n_ro_stock_pack_fifo/index.md): Pachet-bundle care instalează și configurează automat toate modulele necesare pentru contabilitatea stocurilor românești pe metoda FIFO.
-- [l10n_ro_stock_picking_report](l10n_ro_stock_picking_report/index.md): Rapoarte RO de gestiune stoc — NIR (recepție), aviz (livrare) și bon de consum (transfer intern).
+- [l10n_ro_stock_picking_report](l10n_ro_stock_picking_report/index.md): Rapoarte localizate pentru transferurile de stoc din România — NIR, aviz de însoțire, bon de consum și notă de transfer — inclusiv variante cumulative pe interval.
 - [l10n_ro_stock_picking_report_product_expiry](l10n_ro_stock_picking_report_product_expiry/index.md): Adaugă data de expirare a loturilor/seriilor pe rapoartele de livrare/transfer din suita RO.
 - [l10n_ro_stock_posting_date](l10n_ro_stock_posting_date/index.md): Adaugă o dată contabilă (Posting Date) pe operațiile de stoc RO, cu blocarea datărilor ce ar strica ordinea cronologică a valorizării FIFO/CMP.
 - [l10n_ro_stock_provision](l10n_ro_stock_provision/index.md): Identificare stocuri slow-moving și note de provizion 39x (Dr 6814/Cr 39x), conform OMFP 1802 pct. 143–148.

@@ -1,10 +1,10 @@
-# Bitshop Sale Withdrawal (localizat la `bitshop_sale_withdrawal/index.md`)
+# Sale Withdrawal (localizat la `deltatech_sale_withdrawal/index.md`)
 
-- **Nume Tehnic:** `bitshop_sale_withdrawal`
-- **Versiune:** `19.0.0.2.3`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/bitshop_sale_withdrawal
-- **Cale Locală:** `odoo-addons/bitshop/bitshop_sale_withdrawal`
-- **Ultima Ingestie:** 2026-08-27
+- **Nume Tehnic:** `deltatech_sale_withdrawal`
+- **Versiune:** `19.0.0.3.0`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_withdrawal
+- **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_withdrawal`
+- **Ultima Ingestie:** 2026-09-22
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -33,8 +33,8 @@ Modulul implementează funcția de retragere din contract (dreptul de renunțare
 
 **Modele**
 
-- `bitshop.sale.withdrawal`: înregistrarea unei retrageri legate de o comandă de vânzare, cu stare (`submitted` / `acknowledged` / `refunded` / `disputed`), data și canalul de transmitere, termenul de rambursare calculat și modul de execuție folosit; nu are stare „aprobat" — retragerea produce efecte prin confirmarea consumatorului, nu prin aprobarea comerciantului.
-- `bitshop.sale.withdrawal.line`: liniile de retragere (produs, cantitate retrasă, subtotal), cu validare că se retrage doar cantitatea încă disponibilă din linia comenzii.
+- `deltatech.sale.withdrawal`: înregistrarea unei retrageri legate de o comandă de vânzare, cu stare (`submitted` / `acknowledged` / `refunded` / `disputed`), data și canalul de transmitere, termenul de rambursare calculat și modul de execuție folosit; nu are stare „aprobat" — retragerea produce efecte prin confirmarea consumatorului, nu prin aprobarea comerciantului.
+- `deltatech.sale.withdrawal.line`: liniile de retragere (produs, cantitate retrasă, subtotal), cu validare că se retrage doar cantitatea încă disponibilă din linia comenzii.
 - `sale.order` (extins): expune retragerile comenzii, numărul lor, termenul-limită de retragere calculat pe linii și disponibilitatea butonului pe portal.
 - `sale.order.line` (extins): calculează termenul de retragere per linie (începe la livrare pentru bunuri, la data comenzii pentru servicii) și determină eligibilitatea/excepția art. 16; liniile de avans (down payment) sunt excluse explicit din verificarea de eligibilitate și din lista de linii oferite pe portal, pentru că nu au produs și unitate de măsură proprii — corecție introdusă în 19.0.0.2.1 după ce lipsa acestei excluderi bloca deschiderea oricărei comenzi cu avans, atât în back office cât și pe portal.
 - `product.template` / `product.category` (extinse): câmp de excepție de retragere (art. 16), moștenit din categorie dacă nu e setat pe produs.
@@ -42,8 +42,8 @@ Modulul implementează funcția de retragere din contract (dreptul de renunțare
 
 **Vizualizări**
 
-- `view_bitshop_sale_withdrawal_list` / `_form` / `_search`: registrul de retrageri din back office, cu evidențierea în roșu a înregistrărilor nefinalizate cu confirmarea de primire.
-- `action_bitshop_sale_withdrawal`: acțiunea din meniul **Vânzări → Comenzi → Withdrawals**.
+- `view_deltatech_sale_withdrawal_list` / `_form` / `_search`: registrul de retrageri din back office, cu evidențierea în roșu a înregistrărilor nefinalizate cu confirmarea de primire.
+- `action_deltatech_sale_withdrawal`: acțiunea din meniul **Vânzări → Comenzi → Withdrawals**.
 - `views/sale_order_views.xml`, `views/product_views.xml`, `views/res_config_settings_views.xml`: integrarea pe formularul comenzii, pe produs și în setările Vânzărilor.
 - `views/portal_templates.xml`: paginile portalului — recapitulare, confirmare și status al retragerii, accesibile prin link cu token, inclusiv pentru invitați. Secțiunea butonului de pe pagina comenzii are acum titlu propriu (`<h3>Right of withdrawal</h3>`), care generează automat o ancoră separată în navspy-ul portalului; butonul activ e stilizat `btn-primary` (anterior `btn-secondary`), pentru a-l scoate în evidență față de restul acțiunilor secundare ale comenzii.
 - `report/withdrawal_report.xml`: raportul PDF anexat la confirmarea de primire.
@@ -54,5 +54,6 @@ Modulul implementează funcția de retragere din contract (dreptul de renunțare
 
 #### 5. Conexiuni
 
-- [bitshop_sale_withdrawal_stock](../bitshop_sale_withdrawal_stock/index.md): extensie care depinde de acest modul și de `sale_stock`, adăugând anularea sau returul efectiv de stoc la execuția retragerii.
+- [deltatech_sale_withdrawal_stock](../deltatech_sale_withdrawal_stock/index.md): extensie care depinde de acest modul și de `sale_stock`, adăugând anularea sau returul efectiv de stoc la execuția retragerii.
+- [deltatech_rma](../deltatech_rma/index.md): returul comercial — act juridic diferit, model separat intenționat; puntea `deltatech_rma_withdrawal` dă retragerii fișa cu cod de bare și recepția prin scanare.
 - `mail`: infrastructura de e-mail și șablon folosită pentru confirmarea de primire pe suport durabil.

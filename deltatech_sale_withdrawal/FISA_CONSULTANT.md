@@ -1,6 +1,6 @@
 # Fișă Modul: Buton de retragere din contract (Directiva UE 2023/2673)
 
-**Modul:** `bitshop_sale_withdrawal`
+**Modul:** `deltatech_sale_withdrawal`
 **Utilizator principal:** Administrator magazin online, Operator vânzări/portal
 **Prioritate:** 🔴 Ridicată (obligație legală din 19 iunie 2026, aplicabilă oricărui comerciant care vinde online către consumatori din UE)
 
@@ -8,7 +8,7 @@
 
 ## 1. Scop business
 
-Această fișă descrie modulul `bitshop_sale_withdrawal`, care adaugă pe portalul clienților
+Această fișă descrie modulul `deltatech_sale_withdrawal`, care adaugă pe portalul clienților
 **butonul de retragere din contract** cerut de Directiva (UE) 2023/2673 (transpusă în România prin
 OUG 18/2026). Consumatorul își poate exercita dreptul de retragere direct de pe pagina comenzii,
 fără cont, fără motiv, iar comerciantul primește automat un registru al retragerilor și confirmarea
@@ -59,7 +59,7 @@ Date minime pentru demo:
 
 ## 5. Configurare inițială
 
-1. Instalați modulul `bitshop_sale_withdrawal` (necesită `sale` și `portal`).
+1. Instalați modulul `deltatech_sale_withdrawal` (necesită `sale` și `portal`).
 2. Mergeți la **Vânzări → Configurare → Setări → Withdrawal from Contract** și verificați:
    - **Withdrawal Function** activă (implicit pornită) — expune butonul pe portal;
    - **Withdrawal Period (days)** — implicit 14 (minimul legal);
@@ -150,14 +150,14 @@ responsabilul comenzii.
 | `sale` | comanda de vânzare, liniile și accesul de portal | dependență (manifest) |
 | `portal` | autentificarea/accesul consumatorului fără cont (link cu token) | dependență (manifest) |
 | `website_sale` | canalul prin care se generează comenzile online supuse retragerii | context de utilizare (nu dependență directă) |
-| `bitshop_sale_withdrawal_stock` | calculează începutul perioadei de retragere de la livrarea efectivă (recepția fizică a bunurilor) și adaugă execuția operațională (retur marfă) | extensie opțională |
+| `deltatech_sale_withdrawal_stock` | calculează începutul perioadei de retragere de la livrarea efectivă (recepția fizică a bunurilor) și adaugă execuția operațională (retur marfă) | extensie opțională |
 | `account` | emiterea notei de credit / rambursarea efectivă | integrare manuală, în afara modulului |
 
 Ce este automat: expunerea butonului pe portal, recapitularea comenzii, înregistrarea retragerii,
 confirmarea pe suport durabil (e-mail + PDF cu timestamp), calculul termenului de rambursare,
 activitatea de urmărire pe responsabil.
 Ce rămâne manual: emiterea notei de credit/rambursarea efectivă a banilor, marcarea retragerii ca
-„Rambursată”, gestionarea returului fizic al mărfii (dacă nu e instalat `bitshop_sale_withdrawal_stock`).
+„Rambursată”, gestionarea returului fizic al mărfii (dacă nu e instalat `deltatech_sale_withdrawal_stock`).
 
 ## 8. Verificări pentru consultant
 
@@ -180,7 +180,7 @@ Ce rămâne manual: emiterea notei de credit/rambursarea efectivă a banilor, ma
 | „Select at least one item before confirming.” | Consumatorul a trimis formularul de retragere fără nicio cantitate completată | Reveniți pe pagina de recapitulare și introduceți cantitatea de retras pentru cel puțin un articol |
 | „You cannot withdraw X of <produs>: only Y left.” | Cantitatea cerută depășește cantitatea încă disponibilă pentru retragere (parțial deja retrasă anterior) | Introduceți o cantitate mai mică sau egală cu disponibilul afișat |
 | „The withdrawn quantity must be positive.” | S-a încercat crearea unei linii de retragere cu cantitate 0 sau negativă | Corectați cantitatea; validarea se aplică și la creare manuală din back office |
-| „The withdrawal acknowledgement template is missing.” | Șablonul de e-mail `mail_template_withdrawal_ack` a fost șters sau dezinstalat | Reinstalați/actualizați modulul (`-u bitshop_sale_withdrawal`) pentru a recrea datele demo |
+| „The withdrawal acknowledgement template is missing.” | Șablonul de e-mail `mail_template_withdrawal_ack` a fost șters sau dezinstalat | Reinstalați/actualizați modulul (`-u deltatech_sale_withdrawal`) pentru a recrea datele demo |
 | Butonul de retragere nu apare pe portal | „Withdrawal Function” e dezactivată pe companie, sau „Use Odoo's Native Withdrawal Button” e activă | Verificați cele două setări din **Vânzări → Configurare → Setări** |
 | Retragerea rămâne roșie (neconfirmată) în registru | Trimiterea e-mailului de confirmare a eșuat (SMTP) | Verificați activitatea de avertizare de pe retragere; job-ul orar reîncearcă automat, sau folosiți „Resend Acknowledgement” |
 
@@ -213,7 +213,7 @@ inițial acest tichet), aceleași pagini de portal ies traduse.
 Regenerare:
 
 ```bash
-./odoo/odoo-bin -c odoo.conf -d <db> -i bitshop_sale_withdrawal,l10n_ro_doc_screenshots \
+./odoo/odoo-bin -c odoo.conf -d <db> -i deltatech_sale_withdrawal,l10n_ro_doc_screenshots \
     --test-tags=fise_screenshots --stop-after-init
 ```
 
@@ -223,5 +223,5 @@ Regenerare:
 retragere trebuie să rămână vizibil (chiar dezactivat după expirare), motivul rămâne opțional,
 confirmarea pe suport durabil cu timestamp nu este opțională, iar excepțiile art. 16 se afișează,
 nu se ascund. Explicați clar diferența dintre acest modul (suficient legal de unul singur) și
-extensia `bitshop_sale_withdrawal_stock` (doar pentru comercianții care livrează bunuri fizice și
+extensia `deltatech_sale_withdrawal_stock` (doar pentru comercianții care livrează bunuri fizice și
 vor gestiunea returului integrată).

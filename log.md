@@ -4,6 +4,148 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-22] `deltatech_rma` — pagină nouă + redenumirea familiei `bitshop_*` → `deltatech_*`
+
+- **Acțiune:** Ingestie nouă pentru `deltatech_rma` (`19.0.1.0.0`) și corectarea a două pagini rămase
+  pe nume vechi, după redenumirea suitei din bitshop#2852 și bitshop_ent#156: prefixul `bitshop_`
+  urmărea numele repo-ului, nu convenția modulelor (61 `deltatech_*` față de 5 `bitshop_*`), iar
+  modulele nefiind instalate nicăieri, fereastra de redenumire era deschisă.
+- **Sursă:** pentru `deltatech_rma`, `readme/DESCRIPTION.md` pentru Sumar și Funcționalități Cheie,
+  îmbogățite cu detalii operaționale din `readme/USAGE.md` și `readme/CONFIGURE.md` (căi de meniu,
+  valorile verdictului, pragurile de configurare); secțiunea 4 omisă conform regulii de prioritizare
+  a Readme-ului. Fișa consultant copiată integral, cu 19 capturi.
+- **Ce s-a schimbat la paginile vechi:** `bitshop_sale_withdrawal` → `deltatech_sale_withdrawal`
+  (`19.0.0.2.3` → `19.0.0.3.0`, promovat la Production/Stable) și `bitshop_sale_withdrawal_stock` →
+  `deltatech_sale_withdrawal_stock` (`19.0.0.2.0`, promovat și el, cu `i18n/ro.po` adăugat, care
+  lipsea cu totul). Numele prietenoase urmează convenția casei, fără vendor în titlu. Cele două
+  intrări din `index.md` au fost mutate alfabetic, de la `bitshop_` la `deltatech_s`.
+- **Dependențe/Conexiuni:** `sale_stock` și `portal` n-au pagină wiki, rămase text `cod`. Legătură
+  activă în ambele sensuri între `deltatech_rma` și `deltatech_sale_withdrawal` — acte juridice
+  diferite, modele separate intenționat, legate prin puntea `deltatech_rma_withdrawal`.
+- **Rămase nedocumentate:** cele trei punți — `deltatech_rma_lot`, `deltatech_rma_withdrawal`
+  (suita bitshop) și `deltatech_rma_helpdesk` (bitshop_ent).
+- **Fișiere actualizate:** `deltatech_rma/index.md` (nou), `deltatech_rma/FISA_CONSULTANT.md` (nou),
+  `deltatech_rma/screenshots/*.png` (19 fișiere), `deltatech_sale_withdrawal/` și
+  `deltatech_sale_withdrawal_stock/` (directoare redenumite, pagini actualizate, fișă resincronizată
+  cu 7 capturi), `index.md` (1 intrare nouă, 2 mutate), `log.md`, `.index/chunks.json`.
+
+## [2026-09-22] deltatech_delivery — capturi generate + fix versiune (tichet 9471)
+
+- **Acțiune:** A doua re-ingestie a paginii `deltatech_delivery` din aceeași zi (`19.0.6.5.2` →
+  `19.0.6.5.3`), pentru capturile de ecran ale fișei consultant abia adăugate (bitshop_delivery#166)
+  și fix-ul de versiune (bitshop_delivery#165).
+- **Ce s-a schimbat:**
+  1. bitshop_delivery#165 — bitshop_delivery#163 și #164 merseseră fără incrementarea versiunii din
+     manifest, deci mecanismul de deploy (care declanșează `-u` pe baza diferenței de versiune) nu a
+     rulat actualizarea schemei pe cel puțin o instanță — eroare observată în producție:
+     `Model deltatech.delivery.bulk.validate.wizard has no table.`
+  2. bitshop_delivery#166 — cele 8 capturi planificate în fișă (comandă cu buton AWB, livrare cu
+     butoanele curierului, cele două acțiuni bulk noi pas cu pas) au fost generate real, cu testul
+     Playwright reproductibil `tests/test_screenshots.py`, folosind curierul de test
+     `deltatech_delivery_dummy` (fără nicio credențială externă) — inclusiv rândul cu „rezultat
+     incert" din dialogul „Send to Carrier", simulat prin `mock.patch` pe `send_to_shipper`
+     (`CarrierUncertainResult`), activ doar cât durează interacțiunea browser-ului cu acel rând.
+- **Sursă:** fișa consultant (neschimbată ca text) + noile capturi din `readme/screenshots/`.
+- **Fișiere actualizate:** `wiki_module_odoo/deltatech_delivery/index.md` (versiune),
+  `wiki_module_odoo/deltatech_delivery/screenshots/` (nou, 8 fișiere), `wiki_module_odoo/log.md`.
+
+---
+
+## [2026-09-22] l10n_ro_stock_picking_report — prima fișă consultant + fix unitate de măsură
+
+- **Acțiune:** Re-ingestie a paginii `l10n_ro_stock_picking_report` (`19.0.1.2.8` → `19.0.1.3.6`),
+  declanșată de generarea primei fișe de consultant a modulului (cerută după ce clientul Inedit a
+  raportat sume greșite pe NIR).
+- **Ce s-a schimbat:**
+  1. l10n-romania#562 — toate coloanele NIR-ului și ale notei de transfer se exprimau parțial în
+     unitatea de referință a produsului, parțial în unitatea documentului (recepții în cutii/baxuri
+     cu `stock.propagate_uom = 1`); plus un crash (`TypeError`) la validarea/tipărirea recepțiilor
+     într-o locație cu listă de prețuri, din cauza semnăturii vechi a `_get_product_price`.
+  2. l10n-romania#563 — prima fișă de consultant a modulului (11 secțiuni, 13 capturi), auditată de
+     agentul `verificator-fisa` pe două ture; a scos la iveală ea însăși încă defecte, tratate în #564.
+  3. l10n-romania#564 — aceeași eroare de unitate pe raportul de aviz (`report_delivery_price`),
+     rămasă netratată de #562.
+  4. Documentat explicit în fișă (și acum în pagina wiki): bonul de consum și nota de transfer
+     citesc `move.value`, dar niciun modul instalat nu scrie în el implicit — nici Odoo 19 core,
+     nici pachetul CMP al Terrabit (`l10n_ro_stock_gestiune`/`l10n_ro_stock_pack_cmp`, care
+     valorizează transferurile doar pentru propria notă contabilă, fără să scrie pe mișcare). Singura
+     sursă e OCA `l10n_ro_stock_account`, incompatibilă cu pachetul CMP (dezactivare automată de
+     view reciprocă, documentată în `CONFIGURE.md`-ul lui).
+- **Sursă:** `readme/DESCRIPTION.md` pentru Sumar/Funcționalități Cheie; `readme/FISA_CONSULTANT.md`
+  (nou) pentru detaliile operaționale esențiale — fluxul pas-cu-pas rămâne în fișă, nedublat aici.
+- **Dependențe/Conexiuni:** manifestul actual are `l10n_ro_report_common` și `l10n_ro_invoice_report`
+  în loc de vechiul `l10n_ro_config` din pagină (schimbare reală de cod, nu eroare de ingestie);
+  adăugate conexiunile către sursele de valorizare a mișcărilor interne (`l10n_ro_stock_account`,
+  `l10n_ro_stock_gestiune`/`l10n_ro_stock_pack_cmp`) — legături funcționale reale, nu dependențe de
+  manifest.
+- **Fișiere actualizate:** `wiki_module_odoo/l10n_ro_stock_picking_report/index.md` (rescris),
+  `wiki_module_odoo/l10n_ro_stock_picking_report/FISA_CONSULTANT.md` (nou),
+  `wiki_module_odoo/l10n_ro_stock_picking_report/screenshots/*.png` (13 fișiere, noi),
+  `wiki_module_odoo/index.md`.
+
+---
+
+## [2026-09-22] deltatech_delivery — acțiuni bulk pe lista de comenzi (tichet 9471)
+
+- **Acțiune:** Re-ingestie a paginii `deltatech_delivery` (`19.0.6.2.1` → `19.0.6.5.2`), după
+  bitshop_delivery#163 și #164 — două acțiuni noi în masă (bulk), declanșate manual din lista de
+  comenzi (`sale.order`), cerute de clientul SANODOR ca alternativă controlată la automatizarea
+  completă.
+- **Ce s-a schimbat:**
+  1. bitshop_delivery#163 — `action_bulk_validate_deliveries()` + wizard de confirmare: validează
+     livrările comenzilor selectate, izolat per comandă (savepoint), continuă la eroare, raport
+     final într-o singură notificare.
+  2. bitshop_delivery#164 — `action_send_to_carrier_one()` / `action_download_awb_labels()` +
+     dialog OWL cu progres live: trimite comenzile la curier secvențial, distinge succes / eroare /
+     rezultat incert (`CarrierUncertainResult` — AWB posibil creat la curier, dar nescris local, nu
+     se reîncearcă orbește), tipărește un PDF combinat al AWB-urilor generate. Deliberat fără
+     `queue_job` și fără `cr.commit()` manual (interzis de regula `invalid-commit` din
+     `pylint-odoo`) — fiecare comandă e propriul apel RPC/tranzacție, deci o întrerupere la mijloc
+     afectează doar comanda în curs.
+  3. Modulul a primit acum și primul `readme/FISA_CONSULTANT.md` — copiat în pagina wiki.
+- **Sursă:** `readme/DESCRIPTION.md` + `readme/FISA_CONSULTANT.md` (esențialul celor două
+  funcționalități noi, fără a dubla fluxul deja detaliat în fișă).
+- **Dependențe/Conexiuni:** extinde `sale.order` fără `sale` explicit în `depends` din
+  `__manifest__.py` (dependență tranzitivă neexplicitată — semnalat, neschimbat).
+- **Fișiere actualizate:** `wiki_module_odoo/deltatech_delivery/index.md`,
+  `wiki_module_odoo/deltatech_delivery/FISA_CONSULTANT.md` (nou), `wiki_module_odoo/index.md`.
+
+---
+
+## [2026-09-22] Obiecte de inventar — auditul contabil Pacioli (tichet 9509)
+
+- **Acțiune:** Actualizare a paginii `l10n_ro_inventory_items` după patru PR-uri născute dintr-un
+  audit contabil-fiscal al fișei de consultant. Auditul a fost cerut **după** publicarea fișei — de
+  reținut că verificarea Pacioli trebuie făcută înainte de merge, nu după.
+- **Ce s-a schimbat** (`19.0.1.1.0` → `19.0.2.3.0`):
+  1. l10n_ro_ent#290 — `_get_usage_entry_accounts()` lua întâi conturile categoriei de produs, care
+     pe o categorie obișnuită sunt 607/371, nu 603/303: nota ieșea echilibrată, dar descria o
+     descărcare de gestiune de marfă. Conturile și jurnalul devin explicite pe companie; categoria e
+     acceptată doar cu codul așteptat; jurnalul extrabilanțier EXTR (`type="general"`, creat de acest
+     modul) e exclus din fallback.
+  2. l10n_ro_ent#291 — wizardul oferea „Lost" / „Returned" pe `physical_state`, care nu le acceptă
+     (`ValueError`). Tipul scoaterii trece pe `disposal_type`, iar tipurile sunt tratate distinct:
+     restituirea repune bunul pe 303 (`Dr 303 = Cr 603`), lipsa nu generează notă automată.
+     `_check_off_balance()` nu mai raportează „ok" când lipsește contul 8035.
+  3. l10n_ro_ent#292 — pragul mijloacelor fixe: **5.000 lei din anul fiscal 2026** (art. 28 alin. (2)
+     lit. b) CF, modificat prin OUG 8/2026), nu 2.500 lei (HG 276/2013, valabil până la 31.12.2025).
+     Modulul spunea două lucruri diferite, iar pagina publică de pe Apps Store era pe cifra veche.
+     Adăugată și regula tranzitorie (art. 45 alin. (21^3)): bunurile de 2.500–5.000 lei din
+     patrimoniu la 31.12.2025 nu se reclasifică.
+  4. l10n_ro_ent#293 — raportul registru: totalul se calcula peste toate stările, deci nu corespundea
+     niciunui sold contabil; acum e pe stări. Gruparea pe responsabil, pe care fișa o promitea, e
+     reală, cu subtotal. Fișa: monografie completă (TVA la recepție, lipsa la inventar imputabilă și
+     neimputabilă, neajustarea TVA la casare — art. 304 alin. (2) lit. a) CF), „extracontabil" →
+     „extrabilanțier", contul tehnic 8035C documentat.
+- **Fișă consultant:** resincronizată în wiki cu capturile.
+- **Fișiere actualizate:**
+    - `wiki_module_odoo/l10n_ro_inventory_items/index.md`
+    - `wiki_module_odoo/l10n_ro_inventory_items/FISA_CONSULTANT.md`
+    - `wiki_module_odoo/l10n_ro_inventory_items/screenshots/`
+    - `wiki_module_odoo/log.md`
+
+---
+
 ## [2026-09-21] Re-ingestie `l10n_ro_fixed_assets` — corecții din auditul final Pacioli (PR #289)
 
 - **Acțiune:** Re-ingestie după mergeul PR #289 (commit `02ca1784`), o rundă de **confirmare**
