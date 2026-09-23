@@ -155,7 +155,7 @@ de acest modul.
 | `purchase_stock` | legătura comandă de achiziție ↔ mișcări de stoc | dependență (manifest) |
 | `stock_landed_costs` | costuri de aterizare (DVI) și repartizarea lor în cost | dependență (manifest) |
 | `stock_account` | valorizarea FIFO pe mișcările de stoc | indirectă (prin dependențe) |
-| `terrabit_dvi` | flux DVI complet pentru import non-UE | opțional, complementar |
+| `l10n_ro_customs_dvi` | flux DVI complet pentru import non-UE | opțional, complementar |
 | `l10n_ro_anaf_d300` | TVA deductibilă la import prin tag-urile taxelor | integrare prin convenție (nu automată) |
 
 Ce este automat: blocarea resetării/anulării când stocul a fost parțial consumat.
