@@ -1,42 +1,32 @@
-# Terrabit - DVI (localizat la `terrabit_dvi/index.md`)
+# Terrabit - DVI (moved to l10n_ro_customs_dvi) (localizat la `terrabit_dvi/index.md`)
 
 - **Nume Tehnic:** `terrabit_dvi`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.3.0`
 - **Cale:** `https://github.com/dhongu/l10n-romania/tree/19.0/terrabit_dvi`
 - **Cale Locală:** `odoo-addons/l10n-romania/terrabit_dvi`
-- **Ultima Ingestie:** `2026-06-08`
+- **Ultima Ingestie:** `2026-09-23`
+- **Conținutul s-a mutat la:** [`l10n_ro_customs_dvi`](../l10n_ro_customs_dvi/index.md)
 
 #### 1. Sumar
 
-Modulul gestionează Declarația Vamală de Import (DVI) pentru operațiunile de import de marfă din afara Uniunii Europene, făcând legătura între factura de achiziție externă și costurile vamale (landed cost). Pe baza datelor din DVI, modulul generează automat o înregistrare cu două linii (taxa vamală A00 și TVA-ul la import B00), respectând cadrul legal contabil românesc (Legea 82/1991, OMFP 1802/2014, Codul Fiscal și Regulamentul UE 2015/2447): factura furnizor se înregistrează la cursul BNR din data emiterii, cursul vamal lunar se folosește exclusiv pentru valoarea în vamă, taxe și TVA la import, iar toate înregistrările contabile rămân exclusiv în RON. Astfel, taxele vamale se capitalizează corect în costul de achiziție al mărfurilor, iar TVA-ul la import deductibil este evidențiat separat, cu trasabilitate completă de la comanda de achiziție până la stocul final.
+Modul **tranzitoriu**, fără cod și fără date. Conținutul funcțional — wizardul DVI, repartizarea taxelor vamale în costul stocului și nota de TVA la import — a fost mutat la 23.09.2026 în modulul [`l10n_ro_customs_dvi`](../l10n_ro_customs_dvi/index.md), pentru alinierea la convenția de denumire `l10n_ro_` a repo-ului: era singurul din 39 de module fără acest prefix, deși are categoria Localization și țara RO. Numele `l10n_ro_dvi` nu putea fi folosit, fiind ocupat de modulul OCA cu care se exclude reciproc. Modulul de față declară o singură dependență, către modulul nou, și există exclusiv pentru ca manifestele care îl listează ca dependență să continue să se încarce, fără a fi modificate. Pentru module noi, depindeți direct de `l10n_ro_customs_dvi`.
 
 #### 2. Funcționalități Cheie
 
-- Face legătura între factura de achiziție externă și DVI (landed cost).
-- Generează automat un DVI cu două linii și cu TVA (taxă vamală A00 și TVA la import B00).
-- Suportă fluxul complet de import cu recepție în locație virtuală de tranzit („Transit/In-Coming") și vămuire prin DVI, în regim FOB.
-- Capitalizează taxele vamale (A00) în costul de achiziție al mărfurilor prin repartizare ca landed cost (327 ← 371.tranzit).
-- Evidențiază separat TVA-ul la import deductibil (B00) pe contul 4426.
-- Înregistrează automat diferențele de curs valutar la plata facturii furnizor (conturile 665/765).
-- Asigură toate înregistrările contabile exclusiv în RON, cu factura la cursul BNR și taxele/TVA la cursul vamal lunar.
-- Asistă consultantul în alegerea Incoterm-ului (Incoterms® 2020) și impactul acestuia asupra momentului recepției și al landed costs.
-- Necesită ca contul 447 să fie cont de reconciliere, pentru a putea fi închis prin bancă.
+- Instalează automat `l10n_ro_customs_dvi`, unde se află întreaga funcționalitate.
+- Păstrează compatibilitatea manifestelor existente care declară `terrabit_dvi` ca dependență.
+- Nu conține modele, view-uri, acțiuni, meniuri sau reguli de acces proprii.
+- Înregistrările istorice din `ir_model_data` sunt preluate automat de modulul nou, printr-un `pre_init_hook`, deci actualizarea nu produce duplicate în interfață.
+- **Durata de viață:** până la portarea pe 20.0. Stub-ul **nu se portează**; la portare se actualizează manifestele dependente direct pe modulul nou.
 
 #### 3. Dependențe
 
-- `stock_account`
-- `account`
-- `sale`
-- `l10n_ro`
-- `purchase_stock`
-- `stock_landed_costs`
+- `l10n_ro_customs_dvi`
 
 #### 4. Componente Cheie
 
-Această secțiune a fost omisă deoarece fișierul `readme/DESCRIPTION.md` este prezent și nu solicită explicit analiza modelelor, vizualizărilor sau a acțiunilor automate. Conform schemei de ingestie, analiza codului pentru componente nu se efectuează în acest caz.
+Modulul nu conține cod. Singurul său conținut este manifestul, care declară dependența către `l10n_ro_customs_dvi`.
 
 #### 5. Conexiuni
 
-- `stock_landed_costs`: modulul Odoo de bază pentru repartizarea costurilor adiționale (landed costs) folosit la capitalizarea taxelor vamale.
-- `l10n_ro`: localizarea contabilă românească, sursa pentru determinarea conturilor 446/447 utilizate la DVI.
-- `l10n_ro_dvi`: modul cu funcționalitate similară, exclus prin manifest (`excludes`) — cele două nu pot coexista.
+- [`l10n_ro_customs_dvi`](../l10n_ro_customs_dvi/index.md): modulul care a preluat întreaga funcționalitate.

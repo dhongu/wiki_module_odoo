@@ -4,6 +4,30 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-23] `terrabit_dvi` → `l10n_ro_customs_dvi` — redenumire + re-ingestie
+
+- **Acțiune:** Pagină nouă pentru `l10n_ro_customs_dvi` (`19.0.1.3.0`) și rescrierea paginii
+  `terrabit_dvi` ca pagină de modul tranzitoriu, după redenumirea din dhongu/l10n-romania#566.
+  Modulul era singurul din 39 ale repo-ului fără prefixul `l10n_ro_`, deși are
+  `category: Localization` și `countries: ["ro"]`; numele `l10n_ro_dvi` nu putea fi folosit, fiind
+  al modulului OCA cu care se exclude reciproc.
+- **Sursă:** `readme/DESCRIPTION.md` și `readme/USAGE.md` (rescrise în același PR, cu baza legală
+  art. 289 și capitolul „Biroul vamal nu este partener"), plus `__manifest__.py`, `wizard/`,
+  `models/` și `hooks.py` pentru secțiunea 4. Fișa consultant este nouă, cu 10 capturi.
+- **Ce s-a corectat față de ingestia din 2026-06-08:** versiunea (`19.0.1.1.0` → `19.0.1.3.0`);
+  afirmația „necesită ca **contul 447** să fie cont de reconciliere" — comisionul vamal se
+  creditează acum pe **446**, fiindcă funcțiunea contului 447 din OMFP 1802/2014 îl rezervă
+  datoriilor către alte organisme publice, creditat exclusiv prin 635; secțiunea 4 „Componente
+  Cheie", care era omisă, e acum populată (wizardul, extinderile pe `stock.landed.cost` și
+  `account.move`, `pre_init_hook`-ul de preluare a `ir_model_data`).
+- **Index:** intrare nouă inserată alfabetic la `l10n_ro_customs_dvi` (între
+  `l10n_ro_currency_revaluation` și `l10n_ro_deferred_entries`); intrarea `terrabit_dvi` rescrisă ca
+  stub. Ambele pagini se leagă reciproc, ca o căutare după numele vechi să ducă la cel nou.
+- **Avertismente notabile:** stub-ul `terrabit_dvi` **nu se portează pe 20.0** — la portare se
+  actualizează manifestele care îl declară ca dependență (cunoscut: `proiecte/ptc/deltatech_ptc`)
+  direct pe modulul nou. Înregistrările `ir_model_data` sunt preluate automat de modulul nou printr-un
+  `pre_init_hook`; fără el, actualizarea ar produce două acțiuni și două meniuri „DVI" în interfață.
+
 ## [2026-09-22] `deltatech_rma` — pagină nouă + redenumirea familiei `bitshop_*` → `deltatech_*`
 
 - **Acțiune:** Ingestie nouă pentru `deltatech_rma` (`19.0.1.0.0`) și corectarea a două pagini rămase

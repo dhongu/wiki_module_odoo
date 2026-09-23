@@ -390,6 +390,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_cost_centers](l10n_ro_cost_centers/index.md): Repartizarea automată a cheltuielilor indirecte pe centre de cost (conturi analitice), neutră financiar, prin chei configurabile, conform OMFP 1802/2014.
 - [l10n_ro_currency_rate_live_bnr](l10n_ro_currency_rate_live_bnr/index.md): Repară preluarea automată a cursului valutar BNR în Odoo Enterprise, mutând endpoint-ul de la `www.bnr.ro` (rupt din 04.08.2026) la `curs.bnr.ro`.
 - [l10n_ro_currency_revaluation](l10n_ro_currency_revaluation/index.md): Reevaluare lunară a soldurilor monetare în valută conform OMFP 1802/2014, cu diferențe de curs definitive pe 665/765, fără stornare automată.
+- [l10n_ro_customs_dvi](l10n_ro_customs_dvi/index.md): Înregistrează Declarația Vamală de Import (DVI) ca landed cost — taxă vamală A00 și comision pe 446, TVA import B00 deductibil pe 4426, cu MRN-ul ca referință a notei.
 - [l10n_ro_deferred_entries](l10n_ro_deferred_entries/index.md): Configurează automat mecanismul nativ Enterprise de recunoaștere a cheltuielilor/veniturilor înregistrate în avans (conturi 4711/4721) pe planul de conturi RO și livrează traducerile RO lipsă ale mecanismului.
 - [l10n_ro_dividends](l10n_ro_dividends/index.md): Distribuire dividende cu cote 10%/16%, registru acționari și note contabile automate 117/457/446.
 - [l10n_ro_doc_screenshots](l10n_ro_doc_screenshots/index.md): Mixin `ScreenshotCase` (HttpCase + Playwright) pentru generarea capturilor din fișele consultant, acum doar la cerere explicită.
@@ -484,7 +485,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_wip_closing](l10n_ro_wip_closing/index.md): Evaluare și stornare în roșu a producției în curs (331/711) la 1 a lunii următoare, conform OMFP 1802.
 - [l10n_ro_zip](l10n_ro_zip/index.md): Bază de date cu ~52.000 de coduri poștale din România, cu autocompletare în adresa partenerului.
 - [terrabit_delivery_staff](terrabit_delivery_staff/index.md): Distribuirea livrărilor către personalul propriu de livrare (curieri/șoferi interni), cu acces restricționat și raport PDF dedicat.
-- [terrabit_dvi](terrabit_dvi/index.md): Gestionează Declarația Vamală de Import (DVI), legând factura de import de landed cost, cu taxă vamală A00 și TVA import B00.
+- [terrabit_dvi](terrabit_dvi/index.md): Modul tranzitoriu fără conținut — redenumit în `l10n_ro_customs_dvi`; există doar ca dependențele existente să se încarce. Nu se portează pe 20.0.
 - [terrabit_facebook_pixel](terrabit_facebook_pixel/index.md): Integrare Meta (Facebook) Pixel și Conversion API pentru eCommerce Odoo 19, tracking hibrid client+server.
 - [terrabit_google_tag](terrabit_google_tag/index.md): Integrare Google Tag Manager cu magazinul online — trimite evenimente e-commerce (view_item, add_to_cart, purchase) în dataLayer, configurabil din setările website-ului.
 - [terrabit_helpdesk_link](terrabit_helpdesk_link/index.md): Adaugă meniul de top „Terrabit Help" care deschide portalul de suport Terrabit într-o filă nouă.
