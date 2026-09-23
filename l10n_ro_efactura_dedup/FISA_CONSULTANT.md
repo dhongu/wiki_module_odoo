@@ -75,7 +75,7 @@ verificarea în masă a păstrării/ignorării.
 |---|---|
 | `l10n_ro_edi` / e-Factura | import și procesare documente SPV |
 | `account` | facturi furnizor și atașamente |
-| `l10n_ro_efactura_b2c` | fluxuri e-Factura pentru persoane fizice, unde este cazul |
+| `l10n_ro_efactura_consumer` | fluxuri e-Factura pentru persoane fizice, unde este cazul |
 | ANAF SPV | sursa documentelor descărcate |
 
 Ce este automat: detectarea documentelor duplicate pe baza metadatelor SPV.

@@ -38,5 +38,5 @@ Modul de prevenire a duplicatelor la trimiterea și importul facturilor prin SPV
 
 ## 5. Conexiuni
 
-- `[[l10n_ro_efactura_b2c]]`
+- `[[l10n_ro_efactura_consumer]]`
 - `[[l10n_ro_etransport_block]]`

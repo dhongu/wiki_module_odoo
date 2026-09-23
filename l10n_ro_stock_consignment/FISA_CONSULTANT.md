@@ -1,6 +1,6 @@
 # Fișă Modul: Custodia Stocurilor (cont 8033)
 
-**Modul:** `l10n_ro_stock_custody`
+**Modul:** `l10n_ro_stock_consignment`
 **Utilizator principal:** Gestionar, Contabil stocuri
 **Prioritate:** 🟡 Medie (mărfuri ale terților în gestiune)
 
@@ -38,7 +38,7 @@ o locație de recepție.
 
 ## 5. Configurare inițială
 
-1. Instalați `l10n_ro_stock_custody`.
+1. Instalați `l10n_ro_stock_consignment`.
 2. În **Contabilitate → Setări → Romania - Stock Custody**, verificați/setați **Contul de custodie**
    (implicit 8033), **Contul contrapartidă** (implicit 8039) și **Jurnalul de custodie**.
 3. Dacă nu sunt setate, modulul le caută automat după cod în planul RO.
@@ -119,7 +119,7 @@ La momentul redactării **nu există încă** — rulați `fisa-screenshots`. Li
 4. `05_storno_custodie.png` — stornarea la retur (Dr 8039 = Cr 8033).
 
 ```bash
-./odoo/odoo-bin -c odoo.conf -d test19 -u l10n_ro_stock_custody \
+./odoo/odoo-bin -c odoo.conf -d test19 -u l10n_ro_stock_consignment \
   --test-tags=fise_screenshots --stop-after-init
 ```
 

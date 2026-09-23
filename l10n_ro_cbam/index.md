@@ -60,4 +60,4 @@ Modul pentru Carbon Border Adjustment Mechanism (CBAM), conform Regulamentului (
 #### 5. Conexiuni
 
 - [l10n_ro_environmental_tax](../l10n_ro_environmental_tax/index.md): ambele module tratează obligații de mediu specifice pieței românești, deși nu au dependență directă de cod.
-- [l10n_ro_excise](../l10n_ro_excise/index.md): modul conex de fiscalitate specială la import/producție, din aceeași familie de localizare română enterprise.
+- [l10n_ro_excise_duty](../l10n_ro_excise_duty/index.md): modul conex de fiscalitate specială la import/producție, din aceeași familie de localizare română enterprise.

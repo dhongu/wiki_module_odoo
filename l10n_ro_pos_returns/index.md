@@ -66,4 +66,4 @@ Trei decizii de proiectare merită reținute, pentru că ghidează orice extinde
 - `l10n_ro_pos` (OCA): scoate din nota de închidere liniile de ieșire din gestiune, pentru companiile cu contabilitate RO; atinge `_accumulate_amounts`, complementar cu acest modul.
 - [deltatech_partner_generic](../deltatech_partner_generic/index.md): desemnează partenerul generic pentru clienți anonimi, pe care verificarea de la retur îl refuză.
 - [l10n_ro_cash_register_report](../l10n_ro_cash_register_report/index.md) și `l10n_ro_cash_register` (OCA): cele două forme de registru de casă folosite în practică; ambele citesc liniile contabile de pe contul jurnalului, deci beneficiază de separarea încasări/restituiri fără modificări proprii.
-- [l10n_ro_efactura_b2c](../l10n_ro_efactura_b2c/index.md): completează CNP-ul în XML-ul CIUS-RO pentru facturile către persoane fizice, utile la transmiterea facturilor de retur în SPV.
+- [l10n_ro_efactura_consumer](../l10n_ro_efactura_consumer/index.md): completează CNP-ul în XML-ul CIUS-RO pentru facturile către persoane fizice, utile la transmiterea facturilor de retur în SPV.

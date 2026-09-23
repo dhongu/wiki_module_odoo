@@ -105,27 +105,22 @@
   {
     "path": "deltatech_account_bank_statement_import/index.md",
     "module": "deltatech_account_bank_statement_import",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import",
     "local_path": "odoo-addons/bitshop_ent/deltatech_account_bank_statement_import",
-    "last_ingest": "2026-09-19",
+    "last_ingest": "2026-08-20",
     "friendly_name": "Bank Statements Import Extension",
-    "summary": "Acest modul extinde funcționalitatea de import al extraselor de cont bancar pentru a accepta fișiere XLSX, pe lângă formatele acceptate în mod standard. În plus, ajută la identificarea automată a partenerului asociat fiecărei tranzacții, reducând munca manuală de reconciliere și potrivire a încasărilor cu partenerii corecți. De la versiunea 19.0.1.2.0 pune la dispoziție și un mecanism comun de recunoaștere a fișierelor de decontare (procesatori de carduri, curieri, marketplace-uri), folosit de conectoarele specializate ale suitei.",
+    "summary": "Acest modul extinde funcționalitatea de import al extraselor de cont bancar pentru a accepta fișiere XLSX, pe lângă formatele acceptate în mod standard. În plus, ajută la identificarea automată a partenerului asociat fiecărei tranzacții, reducând munca manuală de reconciliere și potrivire a încasărilor cu partenerii corecți.",
     "features": [
       "Import al extraselor de cont bancar din fișiere XLSX.",
       "Detectare automată a partenerului după numele partenerului (caută un partener cu nume corespunzător).",
-      "Detectare automată a partenerului după referința comenzii de vânzare (caută o comandă de vânzare care corespunde referinței plății și asociază partenerul comercial al acelei comenzi) — helper comun `_statement_partner_from_order_ref()`, folosit de conectoarele de decontare (ex. eMAG, Euplatesc); dacă referința se potrivește cu mai multe comenzi, linia rămâne neatribuită și cere intervenția operatorului la reconciliere.",
-      "Helper comun `statement_header_key()`: normalizează un nume de coloană din antetul unui fișier (fără diacritice, literă mică, fără spații), astfel încât variații de scriere ale aceluiași antet să fie recunoscute ca identice.",
-      "Helper comun `account.journal._statement_sheet_matching_header(raw_file, required_columns)`: identifică fișierul XLSX de decontare potrivit după antetul lui, verificat ca set de coloane obligatorii (nu ca prefix ordonat) și căutat în toate foile fișierului — necesar pentru că aceste fișiere de la procesatori/curieri/marketplace nu poartă niciun marcaj al emitentului, iar un prefix ordonat ceda tăcut la prima coloană adăugată sau reordonată de furnizor."
+      "Detectare automată a partenerului după referința comenzii de vânzare (caută o comandă de vânzare care corespunde referinței plății și asociază partenerul comercial al acelei comenzi)."
     ],
     "dependencies": [
       "account_bank_statement_import_csv"
     ],
-    "connections": [
-      "deltatech_account_bank_statement_import_euplatesc",
-      "deltatech_account_bank_statement_import_emag"
-    ],
-    "text": "Bank Statements Import Extension\ndeltatech_account_bank_statement_import\nAcest modul extinde funcționalitatea de import al extraselor de cont bancar pentru a accepta fișiere XLSX, pe lângă formatele acceptate în mod standard. În plus, ajută la identificarea automată a partenerului asociat fiecărei tranzacții, reducând munca manuală de reconciliere și potrivire a încasărilor cu partenerii corecți. De la versiunea 19.0.1.2.0 pune la dispoziție și un mecanism comun de recunoaștere a fișierelor de decontare (procesatori de carduri, curieri, marketplace-uri), folosit de conectoarele specializate ale suitei.\nImport al extraselor de cont bancar din fișiere XLSX.\nDetectare automată a partenerului după numele partenerului (caută un partener cu nume corespunzător).\nDetectare automată a partenerului după referința comenzii de vânzare (caută o comandă de vânzare care corespunde referinței plății și asociază partenerul comercial al acelei comenzi) — helper comun `_statement_partner_from_order_ref()`, folosit de conectoarele de decontare (ex. eMAG, Euplatesc); dacă referința se potrivește cu mai multe comenzi, linia rămâne neatribuită și cere intervenția operatorului la reconciliere.\nHelper comun `statement_header_key()`: normalizează un nume de coloană din antetul unui fișier (fără diacritice, literă mică, fără spații), astfel încât variații de scriere ale aceluiași antet să fie recunoscute ca identice.\nHelper comun `account.journal._statement_sheet_matching_header(raw_file, required_columns)`: identifică fișierul XLSX de decontare potrivit după antetul lui, verificat ca set de coloane obligatorii (nu ca prefix ordonat) și căutat în toate foile fișierului — necesar pentru că aceste fișiere de la procesatori/curieri/marketplace nu poartă niciun marcaj al emitentului, iar un prefix ordonat ceda tăcut la prima coloană adăugată sau reordonată de furnizor."
+    "connections": [],
+    "text": "Bank Statements Import Extension\ndeltatech_account_bank_statement_import\nAcest modul extinde funcționalitatea de import al extraselor de cont bancar pentru a accepta fișiere XLSX, pe lângă formatele acceptate în mod standard. În plus, ajută la identificarea automată a partenerului asociat fiecărei tranzacții, reducând munca manuală de reconciliere și potrivire a încasărilor cu partenerii corecți.\nImport al extraselor de cont bancar din fișiere XLSX.\nDetectare automată a partenerului după numele partenerului (caută un partener cu nume corespunzător).\nDetectare automată a partenerului după referința comenzii de vânzare (caută o comandă de vânzare care corespunde referinței plății și asociază partenerul comercial al acelei comenzi)."
   },
   {
     "path": "deltatech_account_bank_statement_import_emag/index.md",
@@ -161,20 +156,18 @@
   {
     "path": "deltatech_account_bank_statement_import_euplatesc/index.md",
     "module": "deltatech_account_bank_statement_import_euplatesc",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import_euplatesc",
     "local_path": "odoo-addons/bitshop_ent/deltatech_account_bank_statement_import_euplatesc",
-    "last_ingest": "2026-09-19",
+    "last_ingest": "2026-08-20",
     "friendly_name": "Euplatesc Settlement Bank Statements Import",
     "summary": "Modulul importă direct în Odoo, ca extrase de cont, fișierele de decontare (settlement) Euplatesc.ro pentru comerțul electronic, eliminând procesarea manuală a fișierelor XLSX primite de la procesatorul de plăți cu cardul. Fiecare fișier de decontare devine automat un extras bancar cu linii detaliate pe tranzacție, gata de reconciliere cu comenzile web sau facturile aferente.",
     "features": [
-      "Import fișier original: se încarcă exact fișierul de detaliere primit de la Euplatesc — se creează câte un extras pentru fiecare lot de decontare (foaie FPS).",
-      "Detectare prin semnătură pe SET de coloane: fișierul este recunoscut dacă antetul conține coloanele obligatorii `MerchantID`, `InvoiceId`, `RRN`, `Suma`, `Moneda` — în orice ordine și în oricare dintre foile fișierului — nu mai printr-un prefix fix de patru coloane în ordine. Astfel poate fi importat din orice jurnal de tip bancă, alături de alte formate de extras, chiar dacă antetul e reordonat sau primește o coloană nouă.",
-      "Semnătură bazată doar pe coloane cu nume tehnice: `Descriere` și `Nume client` sunt citite de parser, dar nu mai fac parte din semnătura de recunoaștere — anterior, fiind denumiri românești, un raport descărcat din interfața Euplatesc în engleză nu mai era recunoscut și cădea tăcut în asistentul generic de mapare a coloanelor.",
+      "Import fișier original: se încarcă exact fișierul de detaliere primit de la Euplatesc — se creează câte un extras pentru fiecare lot de decontare (foaia FPS).",
+      "Detectare prin semnătură: fișierul este recunoscut după antetul specific de coloane Euplatesc (MerchantID / InvoiceId / ... / RRN), astfel poate fi importat din orice jurnal de tip bancă, alături de alte formate de extras.",
       "O linie per plată cu cardul: fiecare tranzacție devine o linie de extras cu referința comenzii web sau a facturii (InvoiceId), numele clientului și detaliile de decontare; rambursările (refund) sunt importate ca linii negative separate.",
       "Comisioane configurabile: comisioanele de procesare Euplatesc (Minim1RON + Diff1RON) pot fi importate ca o singură linie agregată per extras (implicit), ca o linie per tranzacție, sau pot fi omise.",
       "Linie opțională de transfer bancar: se poate adăuga automat o linie negativă cu suma netă transferată (configurabil per jurnal), astfel încât extrasul să se balanseze la zero, iar decontarea să poată fi reconciliată cu extrasul bancar real printr-un cont de transfer intern.",
-      "Identificare automată a partenerului: numărul comenzii (`InvoiceId`) este căutat în `sale.order` (`client_order_ref` sau `name`), iar clientul găsit este setat direct pe liniile de plată și de refund; o potrivire ambiguă lasă linia neatribuită, pentru decizia operatorului.",
       "Protecție la duplicate: fiecare tranzacție este importată o singură dată (id unic de import per RRN); reimportarea aceluiași fișier este detectată."
     ],
     "dependencies": [
@@ -184,12 +177,9 @@
     ],
     "connections": [
       "deltatech_account_bank_statement_import",
-      "_statement_sheet_matching_header",
-      "_statement_partner_from_order_ref",
-      "deltatech_account_bank_statement_import_emag",
       "l10n_ro_account_bank_statement_import_xlsx"
     ],
-    "text": "Euplatesc Settlement Bank Statements Import\ndeltatech_account_bank_statement_import_euplatesc\nModulul importă direct în Odoo, ca extrase de cont, fișierele de decontare (settlement) Euplatesc.ro pentru comerțul electronic, eliminând procesarea manuală a fișierelor XLSX primite de la procesatorul de plăți cu cardul. Fiecare fișier de decontare devine automat un extras bancar cu linii detaliate pe tranzacție, gata de reconciliere cu comenzile web sau facturile aferente.\nImport fișier original: se încarcă exact fișierul de detaliere primit de la Euplatesc — se creează câte un extras pentru fiecare lot de decontare (foaie FPS).\nDetectare prin semnătură pe SET de coloane: fișierul este recunoscut dacă antetul conține coloanele obligatorii `MerchantID`, `InvoiceId`, `RRN`, `Suma`, `Moneda` — în orice ordine și în oricare dintre foile fișierului — nu mai printr-un prefix fix de patru coloane în ordine. Astfel poate fi importat din orice jurnal de tip bancă, alături de alte formate de extras, chiar dacă antetul e reordonat sau primește o coloană nouă.\nSemnătură bazată doar pe coloane cu nume tehnice: `Descriere` și `Nume client` sunt citite de parser, dar nu mai fac parte din semnătura de recunoaștere — anterior, fiind denumiri românești, un raport descărcat din interfața Euplatesc în engleză nu mai era recunoscut și cădea tăcut în asistentul generic de mapare a coloanelor.\nO linie per plată cu cardul: fiecare tranzacție devine o linie de extras cu referința comenzii web sau a facturii (InvoiceId), numele clientului și detaliile de decontare; rambursările (refund) sunt importate ca linii negative separate.\nComisioane configurabile: comisioanele de procesare Euplatesc (Minim1RON + Diff1RON) pot fi importate ca o singură linie agregată per extras (implicit), ca o linie per tranzacție, sau pot fi omise.\nLinie opțională de transfer bancar: se poate adăuga automat o linie negativă cu suma netă transferată (configurabil per jurnal), astfel încât extrasul să se balanseze la zero, iar decontarea să poată fi reconciliată cu extrasul bancar real printr-un cont de transfer intern.\nIdentificare automată a partenerului: numărul comenzii (`InvoiceId`) este căutat în `sale.order` (`client_order_ref` sau `name`), iar clientul găsit este setat direct pe liniile de plată și de refund; o potrivire ambiguă lasă linia neatribuită, pentru decizia operatorului.\nProtecție la duplicate: fiecare tranzacție este importată o singură dată (id unic de import per RRN); reimportarea aceluiași fișier este detectată."
+    "text": "Euplatesc Settlement Bank Statements Import\ndeltatech_account_bank_statement_import_euplatesc\nModulul importă direct în Odoo, ca extrase de cont, fișierele de decontare (settlement) Euplatesc.ro pentru comerțul electronic, eliminând procesarea manuală a fișierelor XLSX primite de la procesatorul de plăți cu cardul. Fiecare fișier de decontare devine automat un extras bancar cu linii detaliate pe tranzacție, gata de reconciliere cu comenzile web sau facturile aferente.\nImport fișier original: se încarcă exact fișierul de detaliere primit de la Euplatesc — se creează câte un extras pentru fiecare lot de decontare (foaia FPS).\nDetectare prin semnătură: fișierul este recunoscut după antetul specific de coloane Euplatesc (MerchantID / InvoiceId / ... / RRN), astfel poate fi importat din orice jurnal de tip bancă, alături de alte formate de extras.\nO linie per plată cu cardul: fiecare tranzacție devine o linie de extras cu referința comenzii web sau a facturii (InvoiceId), numele clientului și detaliile de decontare; rambursările (refund) sunt importate ca linii negative separate.\nComisioane configurabile: comisioanele de procesare Euplatesc (Minim1RON + Diff1RON) pot fi importate ca o singură linie agregată per extras (implicit), ca o linie per tranzacție, sau pot fi omise.\nLinie opțională de transfer bancar: se poate adăuga automat o linie negativă cu suma netă transferată (configurabil per jurnal), astfel încât extrasul să se balanseze la zero, iar decontarea să poată fi reconciliată cu extrasul bancar real printr-un cont de transfer intern.\nProtecție la duplicate: fiecare tranzacție este importată o singură dată (id unic de import per RRN); reimportarea aceluiași fișier este detectată."
   },
   {
     "path": "deltatech_account_bank_statement_import_gls/index.md",
@@ -1294,12 +1284,12 @@
   {
     "path": "deltatech_delivery/index.md",
     "module": "deltatech_delivery",
-    "version": "19.0.6.5.3",
+    "version": "19.0.6.2.1",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery",
-    "last_ingest": "2026-09-22",
+    "last_ingest": "2026-08-20",
     "friendly_name": "Deltatech Delivery Base",
-    "summary": "Modulul „Deltatech Delivery Base” este o extensie cuprinzătoare pentru Odoo care îmbunătățește și optimizează capacitățile de gestionare a livrărilor din ecosistemul Odoo. Modulul servește drept fundație pentru diverse integrări specifice fiecărui curier și oferă un cadru robust pentru gestionarea expedierilor către mai mulți furnizori de servicii de livrare. Modulul de bază pune la dispoziție și un cadru partajat de opțiuni de livrare pentru serviciile legate de AWB: opțiuni standard precum livrarea sâmbăta, deschiderea coletului, returul coletului, livrarea personală și notificarea prin SMS sunt definite centralizat și pot fi expuse per curier, în funcție de capabilitățile conectorului. Operatorul selectează doar opțiunile permise de curierul ales, în timp ce structura existentă `shipment_info` rămâne neschimbată pentru compatibilitate retroactivă. Pentru volume mari de comenzi, modulul oferă acum și două acțiuni în masă direct din lista de comenzi de vânzare: validarea rapidă a livrărilor deja pregătite și trimiterea la curier cu urmărire vizuală a progresului.",
+    "summary": "Modulul „Deltatech Delivery Base” este o extensie cuprinzătoare pentru Odoo care îmbunătățește și optimizează capacitățile de gestionare a livrărilor din ecosistemul Odoo. Modulul servește drept fundație pentru diverse integrări specifice fiecărui curier și oferă un cadru robust pentru gestionarea expedierilor către mai mulți furnizori de servicii de livrare. Modulul de bază pune la dispoziție și un cadru partajat de opțiuni de livrare pentru serviciile legate de AWB: opțiuni standard precum livrarea sâmbăta, deschiderea coletului, returul coletului, livrarea personală și notificarea prin SMS sunt definite centralizat și pot fi expuse per curier, în funcție de capabilitățile conectorului. Operatorul selectează doar opțiunile permise de curierul ales, în timp ce structura existentă `shipment_info` rămâne neschimbată pentru compatibilitate retroactivă.",
     "features": [
       "Gestionare îmbunătățită a livrărilor:",
       "Opțiuni îmbunătățite de configurare a curierului de livrare",
@@ -1321,10 +1311,6 @@
       "Capabilități de procesare în lot pentru expedieri multiple",
       "Urmărirea și sincronizarea stării livrării",
       "Opțiunile de livrare sunt stocate compatibil în structura JSON existentă `shipment_info`",
-      "Acțiuni în masă pe comenzile de vânzare *(nou)*:",
-      "Validate Deliveries — din meniul Acțiuni al listei de comenzi de vânzare, validează în masă livrările deja pregătite (rezervare stoc + `button_validate`) pentru comenzile selectate; fiecare comandă e procesată izolat, printr-un wizard de confirmare urmat de o notificare cu numărul de succese și lista comenzilor cu probleme (motiv inclus)",
-      "Send to Carrier — din același meniu, deschide un dialog OWL care trimite comenzile selectate la curier secvențial (una câte una), cu progres live per linie: succes (cu numărul AWB), eroare clară sau rezultat „incert\" (când răspunsul curierului s-a pierdut și nu se reîncearcă automat, ca să nu apară un AWB dublu)",
-      "Din același dialog, Print AWBs combină într-un singur PDF etichetele deja generate pentru comenzile trimise cu succes, fără să genereze nimic nou",
       "Gestionarea coletelor:",
       "Suport pentru mai multe colete într-o singură expediere",
       "Gestionarea dimensiunilor și greutății coletelor",
@@ -1360,7 +1346,7 @@
       "deltatech_delivery_status",
       "deltatech_website_delivery_and_payment"
     ],
-    "text": "Deltatech Delivery Base\ndeltatech_delivery\nModulul „Deltatech Delivery Base” este o extensie cuprinzătoare pentru Odoo care îmbunătățește și optimizează capacitățile de gestionare a livrărilor din ecosistemul Odoo. Modulul servește drept fundație pentru diverse integrări specifice fiecărui curier și oferă un cadru robust pentru gestionarea expedierilor către mai mulți furnizori de servicii de livrare. Modulul de bază pune la dispoziție și un cadru partajat de opțiuni de livrare pentru serviciile legate de AWB: opțiuni standard precum livrarea sâmbăta, deschiderea coletului, returul coletului, livrarea personală și notificarea prin SMS sunt definite centralizat și pot fi expuse per curier, în funcție de capabilitățile conectorului. Operatorul selectează doar opțiunile permise de curierul ales, în timp ce structura existentă `shipment_info` rămâne neschimbată pentru compatibilitate retroactivă. Pentru volume mari de comenzi, modulul oferă acum și două acțiuni în masă direct din lista de comenzi de vânzare: validarea rapidă a livrărilor deja pregătite și trimiterea la curier cu urmărire vizuală a progresului.\nGestionare îmbunătățită a livrărilor:\nOpțiuni îmbunătățite de configurare a curierului de livrare\nCatalog partajat de opțiuni de livrare pentru serviciile AWB\nSelectarea opțiunilor de livrare specifice curierului cu `many2many_tags`\nCapabilități de curier calculate automat (doar citire) din `delivery_type`\nMetode de expediere și tipuri de livrare extinse\nMecanisme flexibile de calcul al costului de livrare\nCapabilități avansate de gestionare a coletelor\nSuport pentru mai mulți curieri:\nCadru de bază pentru integrarea mai multor curieri de expediere\nInterfață unificată pentru gestionarea diferitelor servicii de curierat\nAPI standardizat pentru extensiile specifice curierilor\nStructuri de date comune pentru informațiile de expediere\nModulele de curier definesc opțiunile de livrare suportate pentru propriul conector\nProcesarea expedierilor:\nFlux de lucru simplificat pentru crearea și procesarea expedierilor\nGenerarea automată a documentelor de expediere\nCapabilități de procesare în lot pentru expedieri multiple\nUrmărirea și sincronizarea stării livrării\nOpțiunile de livrare sunt stocate compatibil în structura JSON existentă `shipment_info`\nAcțiuni în masă pe comenzile de vânzare *(nou)*:\nValidate Deliveries — din meniul Acțiuni al listei de comenzi de vânzare, validează în masă livrările deja pregătite (rezervare stoc + `button_validate`) pentru comenzile selectate; fiecare comandă e procesată izolat, printr-un wizard de confirmare urmat de o notificare cu numărul de succese și lista comenzilor cu probleme (motiv inclus)\nSend to Carrier — din același meniu, deschide un dialog OWL care trimite comenzile selectate la curier secvențial (una câte una), cu progres live per linie: succes (cu numărul AWB), eroare clară sau rezultat „incert\" (când răspunsul curierului s-a pierdut și nu se reîncearcă automat, ca să nu apară un AWB dublu)\nDin același dialog, Print AWBs combină într-un singur PDF etichetele deja generate pentru comenzile trimise cu succes, fără să genereze nimic nou\nGestionarea coletelor:\nSuport pentru mai multe colete într-o singură expediere\nGestionarea dimensiunilor și greutății coletelor\nConfigurarea și validarea tipurilor de ambalare\nGruparea și optimizarea coletelor\nGestionarea adreselor:\nCapabilități îmbunătățite de validare a adreselor\nSuport pentru diferite formate de adrese în funcție de țară\nNormalizarea adreselor pentru cerințele de expediere\nTratarea specială a locațiilor de livrare\nFuncționalități de integrare:\nIntegrare cu gestionarea stocurilor Odoo\nConexiune fără cusur cu procesarea comenzilor de vânzare\nCrearea automată a livrărilor din vânzări sau transferuri\nSincronizare cu operațiunile de facturare\nExperiența utilizatorului:\nInterfețe intuitive pentru operațiunile de expediere\nVizibilitate clară asupra informațiilor de expediere\nProces simplificat de selectare a curierului\nSelectarea opțiunilor AWB pe bază de etichete (tags), în locul valorilor booleene fixe din wizard\nIstoric și urmărire cuprinzătoare a expedierilor"
+    "text": "Deltatech Delivery Base\ndeltatech_delivery\nModulul „Deltatech Delivery Base” este o extensie cuprinzătoare pentru Odoo care îmbunătățește și optimizează capacitățile de gestionare a livrărilor din ecosistemul Odoo. Modulul servește drept fundație pentru diverse integrări specifice fiecărui curier și oferă un cadru robust pentru gestionarea expedierilor către mai mulți furnizori de servicii de livrare. Modulul de bază pune la dispoziție și un cadru partajat de opțiuni de livrare pentru serviciile legate de AWB: opțiuni standard precum livrarea sâmbăta, deschiderea coletului, returul coletului, livrarea personală și notificarea prin SMS sunt definite centralizat și pot fi expuse per curier, în funcție de capabilitățile conectorului. Operatorul selectează doar opțiunile permise de curierul ales, în timp ce structura existentă `shipment_info` rămâne neschimbată pentru compatibilitate retroactivă.\nGestionare îmbunătățită a livrărilor:\nOpțiuni îmbunătățite de configurare a curierului de livrare\nCatalog partajat de opțiuni de livrare pentru serviciile AWB\nSelectarea opțiunilor de livrare specifice curierului cu `many2many_tags`\nCapabilități de curier calculate automat (doar citire) din `delivery_type`\nMetode de expediere și tipuri de livrare extinse\nMecanisme flexibile de calcul al costului de livrare\nCapabilități avansate de gestionare a coletelor\nSuport pentru mai mulți curieri:\nCadru de bază pentru integrarea mai multor curieri de expediere\nInterfață unificată pentru gestionarea diferitelor servicii de curierat\nAPI standardizat pentru extensiile specifice curierilor\nStructuri de date comune pentru informațiile de expediere\nModulele de curier definesc opțiunile de livrare suportate pentru propriul conector\nProcesarea expedierilor:\nFlux de lucru simplificat pentru crearea și procesarea expedierilor\nGenerarea automată a documentelor de expediere\nCapabilități de procesare în lot pentru expedieri multiple\nUrmărirea și sincronizarea stării livrării\nOpțiunile de livrare sunt stocate compatibil în structura JSON existentă `shipment_info`\nGestionarea coletelor:\nSuport pentru mai multe colete într-o singură expediere\nGestionarea dimensiunilor și greutății coletelor\nConfigurarea și validarea tipurilor de ambalare\nGruparea și optimizarea coletelor\nGestionarea adreselor:\nCapabilități îmbunătățite de validare a adreselor\nSuport pentru diferite formate de adrese în funcție de țară\nNormalizarea adreselor pentru cerințele de expediere\nTratarea specială a locațiilor de livrare\nFuncționalități de integrare:\nIntegrare cu gestionarea stocurilor Odoo\nConexiune fără cusur cu procesarea comenzilor de vânzare\nCrearea automată a livrărilor din vânzări sau transferuri\nSincronizare cu operațiunile de facturare\nExperiența utilizatorului:\nInterfețe intuitive pentru operațiunile de expediere\nVizibilitate clară asupra informațiilor de expediere\nProces simplificat de selectare a curierului\nSelectarea opțiunilor AWB pe bază de etichete (tags), în locul valorilor booleene fixe din wizard\nIstoric și urmărire cuprinzătoare a expedierilor"
   },
   {
     "path": "deltatech_delivery_batch/index.md",
@@ -9454,12 +9440,12 @@
     "text": "Romania - Plan de conturi extins (FR-01)\nl10n_ro_account_chart\nAcest modul completează planul de conturi românesc (OMFP 1802/2014) cu trei funcționalități esențiale: blocarea postărilor directe pe conturile sintetice, impunerea analiticului obligatoriu per cont și blocarea inactivării conturilor cu rulaj. Toate cele trei mecanisme sunt opt-in per companie din **Setări → Contabilitate**.\nBlocare postare pe conturi sintetice: conturile marcate ca sintetice nu permit postare directă; excepție fac conturile de tip `asset_receivable` / `liability_payable` (401, 411, 421 etc.).\nAnalitic obligatoriu per cont: conturile marcate cu „Analitic obligatoriu\" impun completarea `analytic_distribution` la postare.\nBlocaj inactivare cont cu rulaj: un cont cu înregistrări contabile nu poate fi marcat `deprecated` sau dezactivat."
   },
   {
-    "path": "l10n_ro_account_counterpart/index.md",
-    "module": "l10n_ro_account_counterpart",
-    "version": "19.0.1.0.0",
-    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_counterpart",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_account_counterpart",
-    "last_ingest": "2026-07-02",
+    "path": "l10n_ro_account_correspondence/index.md",
+    "module": "l10n_ro_account_correspondence",
+    "version": "19.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_correspondence",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_account_correspondence",
+    "last_ingest": null,
     "friendly_name": "Romania - Cont corespondent",
     "summary": "Modulul adaugă pe fiecare poziție contabilă (`account.move.line`) contul corespondent (cont contrapartidă, conform OMFP 1802/2014), util pentru fișele de cont, registrul-jurnal și verificarea notelor contabile.",
     "features": [
@@ -9476,7 +9462,7 @@
     "connections": [
       "l10n_ro_journal_reports"
     ],
-    "text": "Romania - Cont corespondent\nl10n_ro_account_counterpart\nModulul adaugă pe fiecare poziție contabilă (`account.move.line`) contul corespondent (cont contrapartidă, conform OMFP 1802/2014), util pentru fișele de cont, registrul-jurnal și verificarea notelor contabile.\nPentru fiecare linie de notă contabilă: dacă pe partea opusă (debit ↔ credit) există un\nDacă există mai multe conturi distincte pe partea opusă, se afișează eticheta „Diverși\"\nLiniile fără mișcare (secțiuni, note fără sumă) rămân fără corespondent.\nCâmpurile sunt stocate și calculate (recalculate automat la modificarea liniilor notei),\nComplementar modulului [l10n_ro_journal_reports](../l10n_ro_journal_reports/index.md), care"
+    "text": "Romania - Cont corespondent\nl10n_ro_account_correspondence\nModulul adaugă pe fiecare poziție contabilă (`account.move.line`) contul corespondent (cont contrapartidă, conform OMFP 1802/2014), util pentru fișele de cont, registrul-jurnal și verificarea notelor contabile.\nPentru fiecare linie de notă contabilă: dacă pe partea opusă (debit ↔ credit) există un\nDacă există mai multe conturi distincte pe partea opusă, se afișează eticheta „Diverși\"\nLiniile fără mișcare (secțiuni, note fără sumă) rămân fără corespondent.\nCâmpurile sunt stocate și calculate (recalculate automat la modificarea liniilor notei),\nComplementar modulului [l10n_ro_journal_reports](../l10n_ro_journal_reports/index.md), care"
   },
   {
     "path": "l10n_ro_account_edi_ubl/index.md",
@@ -9864,23 +9850,23 @@
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d103",
     "last_ingest": "2026-07-02",
     "friendly_name": "Romania - Declarația D103 ANAF",
-    "summary": "Modulul generează exportul XML al Decontului lunar privind accizele (D103) direct din Odoo Enterprise, pentru antrepozitarii fiscali autorizați obligați să raporteze lunar la ANAF accizele datorate (Codul Fiscal Titlul VIII). Se așază peste infrastructura de accize din `l10n_ro_excise` (categorii de produse accizabile, marcarea produselor, cotele și modelul de declarație) și produce fișierul XML D103, gata de depus pe portalul ANAF.",
+    "summary": "Modulul generează exportul XML al Decontului lunar privind accizele (D103) direct din Odoo Enterprise, pentru antrepozitarii fiscali autorizați obligați să raporteze lunar la ANAF accizele datorate (Codul Fiscal Titlul VIII). Se așază peste infrastructura de accize din `l10n_ro_excise_duty` (categorii de produse accizabile, marcarea produselor, cotele și modelul de declarație) și produce fișierul XML D103, gata de depus pe portalul ANAF.",
     "features": [
       "Export XML D103: generare fișier XML pentru decontul lunar, din liniile declarației de accize (categorie, cantitate, U.M., cotă, acciză), cu antet de identificare a companiei (CUI, denumire, lună, an).",
       "Calcul automat al liniilor: prin acțiunea „Calculează\" a declarației, liniile sunt agregate per categorie de acciză din facturile postate ale perioadei (vânzări, cu storno pe note de credit).",
-      "Izolare față de D120: exportul D103 folosește propriul template XML; decontul anual D120 este tratat de modulul-soră [l10n_ro_anaf_d120](../l10n_ro_anaf_d120/index.md), peste aceeași infrastructură [l10n_ro_excise](../l10n_ro_excise/index.md)."
+      "Izolare față de D120: exportul D103 folosește propriul template XML; decontul anual D120 este tratat de modulul-soră [l10n_ro_anaf_d120](../l10n_ro_anaf_d120/index.md), peste aceeași infrastructură [l10n_ro_excise_duty](../l10n_ro_excise_duty/index.md)."
     ],
     "dependencies": [
-      "l10n_ro_excise",
+      "l10n_ro_excise_duty",
       "l10n_ro_anaf_base"
     ],
     "connections": [
       "l10n_ro_anaf_d120",
-      "l10n_ro_excise",
+      "l10n_ro_excise_duty",
       "export_to_xml",
       "l10n_ro_anaf_base"
     ],
-    "text": "Romania - Declarația D103 ANAF\nl10n_ro_anaf_d103\nModulul generează exportul XML al Decontului lunar privind accizele (D103) direct din Odoo Enterprise, pentru antrepozitarii fiscali autorizați obligați să raporteze lunar la ANAF accizele datorate (Codul Fiscal Titlul VIII). Se așază peste infrastructura de accize din `l10n_ro_excise` (categorii de produse accizabile, marcarea produselor, cotele și modelul de declarație) și produce fișierul XML D103, gata de depus pe portalul ANAF.\nExport XML D103: generare fișier XML pentru decontul lunar, din liniile declarației de accize (categorie, cantitate, U.M., cotă, acciză), cu antet de identificare a companiei (CUI, denumire, lună, an).\nCalcul automat al liniilor: prin acțiunea „Calculează\" a declarației, liniile sunt agregate per categorie de acciză din facturile postate ale perioadei (vânzări, cu storno pe note de credit).\nIzolare față de D120: exportul D103 folosește propriul template XML; decontul anual D120 este tratat de modulul-soră [l10n_ro_anaf_d120](../l10n_ro_anaf_d120/index.md), peste aceeași infrastructură [l10n_ro_excise](../l10n_ro_excise/index.md)."
+    "text": "Romania - Declarația D103 ANAF\nl10n_ro_anaf_d103\nModulul generează exportul XML al Decontului lunar privind accizele (D103) direct din Odoo Enterprise, pentru antrepozitarii fiscali autorizați obligați să raporteze lunar la ANAF accizele datorate (Codul Fiscal Titlul VIII). Se așază peste infrastructura de accize din `l10n_ro_excise_duty` (categorii de produse accizabile, marcarea produselor, cotele și modelul de declarație) și produce fișierul XML D103, gata de depus pe portalul ANAF.\nExport XML D103: generare fișier XML pentru decontul lunar, din liniile declarației de accize (categorie, cantitate, U.M., cotă, acciză), cu antet de identificare a companiei (CUI, denumire, lună, an).\nCalcul automat al liniilor: prin acțiunea „Calculează\" a declarației, liniile sunt agregate per categorie de acciză din facturile postate ale perioadei (vânzări, cu storno pe note de credit).\nIzolare față de D120: exportul D103 folosește propriul template XML; decontul anual D120 este tratat de modulul-soră [l10n_ro_anaf_d120](../l10n_ro_anaf_d120/index.md), peste aceeași infrastructură [l10n_ro_excise_duty](../l10n_ro_excise_duty/index.md)."
   },
   {
     "path": "l10n_ro_anaf_d107/index.md",
@@ -9998,7 +9984,7 @@
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d120",
     "last_ingest": null,
     "friendly_name": "Romania - Declarația D120 ANAF",
-    "summary": "Modulul adaugă exportul în format XML ANAF al **Decontului privind accizele (D120)**, peste declarația de accize gestionată de modulul `l10n_ro_excise`. D120 este decontul depus de importatorii și operatorii de produse accizabile (alcool, bere, produse energetice, tutun etc.), reglementat de Codul Fiscal Titlul VIII. Modulul nu adaugă un ecran nou: pe o declarație de accize de tip D120, butonul „Export XML\" generează fișierul în formatul ANAF D120 (namespace `mfp:anaf:dgti:d120:declaratie:v5`), validat față de schema XSD oficială, în locul template-ului D103. Astfel, responsabilul fiscal obține fișierul de depunere fără operare manuală.",
+    "summary": "Modulul adaugă exportul în format XML ANAF al **Decontului privind accizele (D120)**, peste declarația de accize gestionată de modulul `l10n_ro_excise_duty`. D120 este decontul depus de importatorii și operatorii de produse accizabile (alcool, bere, produse energetice, tutun etc.), reglementat de Codul Fiscal Titlul VIII. Modulul nu adaugă un ecran nou: pe o declarație de accize de tip D120, butonul „Export XML\" generează fișierul în formatul ANAF D120 (namespace `mfp:anaf:dgti:d120:declaratie:v5`), validat față de schema XSD oficială, în locul template-ului D103. Astfel, responsabilul fiscal obține fișierul de depunere fără operare manuală.",
     "features": [
       "Export XML D120: generarea decontului de accize în formatul ANAF (`D120_<CUI>_<AAAALL>.xml`), pe baza liniilor declarației de accize.",
       "Mapare automată pe rândurile D120: fiecare categorie de acciză (bere, vin, alcool etilic, țigarete, motorină, GPL, gaz natural, energie electrică, plus categoriile nearmonizate din Legea 296/2023) este pusă pe rândul corespunzător din formular (R0, R3, R9, R20 etc.).",
@@ -10006,15 +9992,15 @@
       "Validare XSD: XML-ul este validat față de schema oficială ANAF v5 (`d120_13052025.xsd`) înainte de livrare; datele de identificare ale companiei (CUI, CAEN, adresă) sunt verificate la export."
     ],
     "dependencies": [
-      "l10n_ro_excise",
+      "l10n_ro_excise_duty",
       "l10n_ro_anaf_base"
     ],
     "connections": [
-      "l10n_ro_excise",
+      "l10n_ro_excise_duty",
       "l10n_ro_anaf_base",
       "cod"
     ],
-    "text": "Romania - Declarația D120 ANAF\nl10n_ro_anaf_d120\nModulul adaugă exportul în format XML ANAF al **Decontului privind accizele (D120)**, peste declarația de accize gestionată de modulul `l10n_ro_excise`. D120 este decontul depus de importatorii și operatorii de produse accizabile (alcool, bere, produse energetice, tutun etc.), reglementat de Codul Fiscal Titlul VIII. Modulul nu adaugă un ecran nou: pe o declarație de accize de tip D120, butonul „Export XML\" generează fișierul în formatul ANAF D120 (namespace `mfp:anaf:dgti:d120:declaratie:v5`), validat față de schema XSD oficială, în locul template-ului D103. Astfel, responsabilul fiscal obține fișierul de depunere fără operare manuală.\nExport XML D120: generarea decontului de accize în formatul ANAF (`D120_<CUI>_<AAAALL>.xml`), pe baza liniilor declarației de accize.\nMapare automată pe rândurile D120: fiecare categorie de acciză (bere, vin, alcool etilic, țigarete, motorină, GPL, gaz natural, energie electrică, plus categoriile nearmonizate din Legea 296/2023) este pusă pe rândul corespunzător din formular (R0, R3, R9, R20 etc.).\nCalcul totaluri: subtotaluri și totaluri (accize armonizate, nearmonizate, total general) calculate automat din liniile declarației.\nValidare XSD: XML-ul este validat față de schema oficială ANAF v5 (`d120_13052025.xsd`) înainte de livrare; datele de identificare ale companiei (CUI, CAEN, adresă) sunt verificate la export."
+    "text": "Romania - Declarația D120 ANAF\nl10n_ro_anaf_d120\nModulul adaugă exportul în format XML ANAF al **Decontului privind accizele (D120)**, peste declarația de accize gestionată de modulul `l10n_ro_excise_duty`. D120 este decontul depus de importatorii și operatorii de produse accizabile (alcool, bere, produse energetice, tutun etc.), reglementat de Codul Fiscal Titlul VIII. Modulul nu adaugă un ecran nou: pe o declarație de accize de tip D120, butonul „Export XML\" generează fișierul în formatul ANAF D120 (namespace `mfp:anaf:dgti:d120:declaratie:v5`), validat față de schema XSD oficială, în locul template-ului D103. Astfel, responsabilul fiscal obține fișierul de depunere fără operare manuală.\nExport XML D120: generarea decontului de accize în formatul ANAF (`D120_<CUI>_<AAAALL>.xml`), pe baza liniilor declarației de accize.\nMapare automată pe rândurile D120: fiecare categorie de acciză (bere, vin, alcool etilic, țigarete, motorină, GPL, gaz natural, energie electrică, plus categoriile nearmonizate din Legea 296/2023) este pusă pe rândul corespunzător din formular (R0, R3, R9, R20 etc.).\nCalcul totaluri: subtotaluri și totaluri (accize armonizate, nearmonizate, total general) calculate automat din liniile declarației.\nValidare XSD: XML-ul este validat față de schema oficială ANAF v5 (`d120_13052025.xsd`) înainte de livrare; datele de identificare ale companiei (CUI, CAEN, adresă) sunt verificate la export."
   },
   {
     "path": "l10n_ro_anaf_d205/index.md",
@@ -10665,7 +10651,7 @@
     ],
     "connections": [
       "l10n_ro_environmental_tax",
-      "l10n_ro_excise"
+      "l10n_ro_excise_duty"
     ],
     "text": "Romania - CBAM (FR-56)\nl10n_ro_cbam\nModul pentru Carbon Border Adjustment Mechanism (CBAM), conform Regulamentului (UE) 2023/956. Sprijină importatorii români care introduc pe piața UE produse din categoriile vizate (oțel și fier, aluminiu, ciment, îngrășăminte, electricitate, hidrogen) să declare emisiile de CO₂ incorporate și, din regimul definitiv (1 ianuarie 2026), să determine certificatele CBAM necesare. Este construit peste modulul `esg` (Enterprise), reutilizând `esg.emission.factor` și `esg.emission.source` în loc să le dubleze, și peste `account_intrastat` pentru codul CN.\nProfil produs CBAM: marcaj `cbam_liable`, categorie derivată automat din codul CN (Intrastat), factor de emisie din nomenclator sau override verificat per instalație, țară de origine și preț carbon plătit în origine (certificat sau nu).\nNomenclator factori de emisie: extindere `esg.emission.factor` cu factori impliciți conform Reg. delegat (UE) 2024/3212; sursă ESG dedicată „Importuri CBAM\" în Scope 3 (Category 1: Purchased goods).\nCaptură automată la import: la postarea facturii de la furnizor din afara UE, generează linii CBAM (`l10n.ro.cbam.import.line`) cu cantitatea în tone și emisiile incorporate; smart button pe factură; retururile compensează cu semn negativ.\nDeclarație CBAM: trimestrială (regim de tranziție, Oct 2023 – Dec 2025) sau anuală (regim definitiv, din 2026); agregă liniile din perioadă, calculează totalurile de emisii și deducerea prețului carbonului plătit în origine.\nPrețuri de referință ale certificatelor (`l10n.ro.cbam.certificate.price`): nomenclator introdus manual pe măsură ce Comisia Europeană publică mediile (trimestriale pentru 2026, săptămânale ulterior), folosit automat la calculul declarației.\nVerificare trimestrială de deținere (regula 50%, din 2027): declarație definitivă cu trimestru completat funcționează ca checkpoint de deținere, distinct de declarația anuală de predare.\nGenerare notă contabilă pentru obligația de certificate CBAM (declarație definitivă anuală), cu conturi configurabile (652/462).\nExport XML pentru Registrul CBAM (conform Reg. de punere în aplicare (UE) 2023/1570 pentru tranziție) și raport PDF „Situație CBAM\".\nAnaliză CBAM: vizualizări grafic/pivot pe emisii, grupate pe lună, categorie și țară de origine."
   },
@@ -10757,6 +10743,48 @@
     "text": "Romania - Reevaluare valutară (OMFP 1802)\nl10n_ro_currency_revaluation\nModulul pentru reevaluarea lunară obligatorie a soldurilor în valută conform OMFP 1802/2014, pct. 340–345, cu generare automată a diferențelor de curs valutar la conturile 665 (cheltuieli) și 765 (venituri), FĂRĂ stornare automată. Este adresat companiilor românești cu tranzacții în valută (exportatori, importatori, entități cu conturi bancare sau împrumuturi intra-grup în EUR/USD/altă valută), obligate să ajusteze lunar valoarea RON a soldurilor valutare la cursul BNR din ultima zi a lunii. Spre deosebire de comportamentul implicit al modulului Enterprise (`account_reports`), care aplică modelul IFRS „provizion + stornare a doua zi\" — lăsând soldurile 665/765 la zero la finele lunii —, acest modul înregistrează diferențele definitiv, așa cum cere legislația română, astfel încât bilanțul și contul de profit și pierdere reflectă corect diferențele de curs ale perioadei. Reevaluarea lunii următoare este calculată incremental față de cursul ultimei reevaluări (nu față de cursul istoric al documentului), iar întregul proces este urmărit printr-un model de audit trail cu stări clare (ciornă → postată → anulată), oferind contabilului trasabilitate completă și control asupra închiderii lunare.\nReevaluare lunară a soldurilor în valută cu generarea automată a diferențelor de curs valutar pe conturile 665 (cheltuieli) și 765 (venituri).\nDiferențe de curs înregistrate definitiv, FĂRĂ stornare automată în luna următoare — corect conform OMFP 1802/2014 (vs. comportamentul IFRS din Enterprise).\nModel de audit trail `l10n.ro.currency.revaluation` cu state machine: ciornă → postată → anulată, urmărit cu `mail.thread`/`mail.activity.mixin`.\nCalcul automat al soldurilor reziduale valutare la data reevaluării, printr-o interogare SQL (cu CTE) care ține cont de reconcilierile parțiale efectuate până la acea dată.\nDiferența la decontare calculată incremental față de ultima reevaluare (nu față de cursul istoric): liniile de ajustare sunt marcate `l10n_ro_is_fx_revaluation` și poartă valuta elementului cu `amount_currency=0`, astfel încât soldul contabil rezidual reportat în luna următoare include ajustările deja postate; la decontarea unui element, partea nerealizată rămasă se „realizează\" (stornare) la reevaluarea următoare.\nRaport de audit PDF per reevaluare (`action_print_audit_report`): perioadă, companie/CUI, jurnal, cursuri BNR per linie, sold rezidual valutar/contabil, diferențe 665/765 cu totaluri.\nExcluderea automată a conturilor nemonetare (clase 1xx capitaluri, 3xx stocuri, venituri și cheltuieli) — se reevaluează doar conturile monetare relevante (ex.: 5124, 5314, 4111, 401, 451, 461, 462, 267, 508).\nOverride al wizard-ului Enterprise `account.multicurrency.revaluation.wizard`, cu opțiunea „Fără stornare automată (OMFP 1802)\" activă implicit pentru companiile din România.\nTemei legal: OMFP 1802/2014, pct. 340–345 (elemente monetare în valută, evaluare la cursul BNR de la data bilanțului)."
   },
   {
+    "path": "l10n_ro_customs_dvi/index.md",
+    "module": "l10n_ro_customs_dvi",
+    "version": "19.0.2.0.0",
+    "github": "`https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_customs_dvi`",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_customs_dvi",
+    "last_ingest": "2026-09-23",
+    "friendly_name": "Romania - Customs Import Declaration (DVI)",
+    "summary": "Modulul înregistrează Declarația Vamală de Import (DVI) pentru importurile din afara Uniunii Europene, legând factura furnizorului extern de costurile vamale printr-un cost de aterizare (landed cost) atașat recepției. Din wizardul deschis de pe factura furnizor se transcriu sumele din declarație — taxa vamală (poziția A00), baza de impozitare și TVA-ul plătit în vamă (poziția B00) — iar modulul repartizează taxa în costul stocului și generează nota de TVA deductibilă. Taxele vamale majorează costul mărfii, în timp ce TVA-ul la import rămâne deductibil pe contul 4426, fără să atingă costul. Nota contabilă primește ca referință numărul MRN al declarației, astfel încât plata către vamă să poată fi reconciliată pe contul 4462 per declarație. Tot în notă intră o pereche tehnică pe un cont neutru 473, care duce baza importului în decontul de TVA.",
+    "features": [
+      "Wizard DVI pornit de pe factura furnizorului postată, care creează un cost de aterizare legat de recepțiile comenzii de achiziție.",
+      "Repartizează taxa vamală (A00) în costul de achiziție al mărfii, prin mecanismul nativ de cost adițional.",
+      "Generează nota de TVA la import — Dr 4426 = Cr 4462 — cu eticheta fiscală de taxă, plus o pereche tehnică echilibrată pe contul 473 care poartă eticheta de bază, fără de care rândul din D300 ar ieși cu TVA și cu bază zero.",
+      "Creditează taxa vamală pe 4462 „Alte impozite, taxe și vărsăminte asimilate — reluate într-o perioadă de până la un an”: datoria vamală se stinge în zile, deci e datorie curentă (OMFP 1802/2014 pct. 360). Atenție la ordinea contraintuitivă din planul RO — 4461 înseamnă peste un an.",
+      "Scrie numărul declarației (MRN) ca referință a notei contabile, pentru reconcilierea plății pe 4462 per declarație.",
+      "Câmpuri DVI pe costul de aterizare (tip, număr MRN, cotă, bază, valoare TVA), filtru dedicat și coloană în listă.",
+      "Meniu propriu „DVI — Costuri vamale\", cu lista filtrată pe costurile de tip DVI și grupată pe dată.",
+      "Ajutoare extinse pe fiecare câmp al wizardului și o casetă de îndrumare cu maparea poziție din declarație → câmp.",
+      "Produsul de serviciu generat automat pentru taxa vamală e marcat ca fiind cost adițional, deci funcționează și pe traseul nativ „factură furnizor → Creați costuri adiționale”.",
+      "Onorariul comisionarului vamal nu se operează prin wizard: brokerul e furnizor obișnuit, cu sold pe 401, iar onorariul se capitalizează prin mecanismul nativ de cost adițional de pe factura lui.",
+      "Se exclude reciproc cu modulul OCA `l10n_ro_dvi`."
+    ],
+    "dependencies": [
+      "stock_account",
+      "account",
+      "sale",
+      "l10n_ro",
+      "purchase_stock",
+      "stock_landed_costs"
+    ],
+    "connections": [
+      "stock_landed_costs",
+      "l10n_ro",
+      "l10n_ro_dvi",
+      "excludes",
+      "addons_path",
+      "`l10n_ro_invoice_dvi_protect`",
+      "`terrabit_dvi`",
+      "l10n_ro_anaf_d300"
+    ],
+    "text": "Romania - Customs Import Declaration (DVI)\nl10n_ro_customs_dvi\nModulul înregistrează Declarația Vamală de Import (DVI) pentru importurile din afara Uniunii Europene, legând factura furnizorului extern de costurile vamale printr-un cost de aterizare (landed cost) atașat recepției. Din wizardul deschis de pe factura furnizor se transcriu sumele din declarație — taxa vamală (poziția A00), baza de impozitare și TVA-ul plătit în vamă (poziția B00) — iar modulul repartizează taxa în costul stocului și generează nota de TVA deductibilă. Taxele vamale majorează costul mărfii, în timp ce TVA-ul la import rămâne deductibil pe contul 4426, fără să atingă costul. Nota contabilă primește ca referință numărul MRN al declarației, astfel încât plata către vamă să poată fi reconciliată pe contul 4462 per declarație. Tot în notă intră o pereche tehnică pe un cont neutru 473, care duce baza importului în decontul de TVA.\nWizard DVI pornit de pe factura furnizorului postată, care creează un cost de aterizare legat de recepțiile comenzii de achiziție.\nRepartizează taxa vamală (A00) în costul de achiziție al mărfii, prin mecanismul nativ de cost adițional.\nGenerează nota de TVA la import — Dr 4426 = Cr 4462 — cu eticheta fiscală de taxă, plus o pereche tehnică echilibrată pe contul 473 care poartă eticheta de bază, fără de care rândul din D300 ar ieși cu TVA și cu bază zero.\nCreditează taxa vamală pe 4462 „Alte impozite, taxe și vărsăminte asimilate — reluate într-o perioadă de până la un an”: datoria vamală se stinge în zile, deci e datorie curentă (OMFP 1802/2014 pct. 360). Atenție la ordinea contraintuitivă din planul RO — 4461 înseamnă peste un an.\nScrie numărul declarației (MRN) ca referință a notei contabile, pentru reconcilierea plății pe 4462 per declarație.\nCâmpuri DVI pe costul de aterizare (tip, număr MRN, cotă, bază, valoare TVA), filtru dedicat și coloană în listă.\nMeniu propriu „DVI — Costuri vamale\", cu lista filtrată pe costurile de tip DVI și grupată pe dată.\nAjutoare extinse pe fiecare câmp al wizardului și o casetă de îndrumare cu maparea poziție din declarație → câmp.\nProdusul de serviciu generat automat pentru taxa vamală e marcat ca fiind cost adițional, deci funcționează și pe traseul nativ „factură furnizor → Creați costuri adiționale”.\nOnorariul comisionarului vamal nu se operează prin wizard: brokerul e furnizor obișnuit, cu sold pe 401, iar onorariul se capitalizează prin mecanismul nativ de cost adițional de pe factura lui.\nSe exclude reciproc cu modulul OCA `l10n_ro_dvi`."
+  },
+  {
     "path": "l10n_ro_deferred_entries/index.md",
     "module": "l10n_ro_deferred_entries",
     "version": "19.0.2.0.0",
@@ -10764,13 +10792,12 @@
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_deferred_entries",
     "last_ingest": null,
     "friendly_name": "Romania - Venituri și cheltuieli înregistrate în avans (471/472)",
-    "summary": "Modulul configurează automat mecanismul nativ Odoo Enterprise de recunoaștere a cheltuielilor și veniturilor înregistrate în avans, conform OMFP 1802/2014 pct. 233–237, folosind conturile 4711 (Cheltuieli înregistrate în avans) și 4721 (Venituri înregistrate în avans) din planul de conturi românesc. Se bazează pe motorul nativ `account_accountant` (Enterprise) — coloana opțională „Dată amânată\" (dată de început / dată de sfârșit) de pe liniile de factură și rapoartele „Cheltuieli reportate\" / „Venituri reportate\" sunt disponibile fără cod custom adițional. Astfel, după instalare, contabilul completează doar intervalul de recunoaștere pe linia de factură, iar Odoo generează singur nota de transfer și notele lunare de recunoaștere până la epuizarea soldului.",
+    "summary": "Modulul configurează automat mecanismul nativ Odoo Enterprise de recunoaștere a cheltuielilor și veniturilor înregistrate în avans, conform OMFP 1802/2014 pct. 233–237, folosind conturile 4711 (Cheltuieli înregistrate în avans) și 4721 (Venituri înregistrate în avans) din planul de conturi românesc. Se bazează pe motorul nativ `account_accountant` (Enterprise) — câmpurile „Deferred Date\" (Start Date / End Date) de pe liniile de factură și raportul Deferred Expenses/Revenues sunt disponibile fără cod custom adițional. Astfel, după instalare, contabilul completează doar intervalul de recunoaștere pe linia de factură, iar Odoo generează singur nota de transfer și notele lunare de recunoaștere până la epuizarea soldului.",
     "features": [
-      "Configurare automată la instalare: contul `471100` devine Cheltuială amânată, iar contul `472100` devine Venit amânat în setările companiei (Setări → Conturi implicite).",
+      "Configurare automată la instalare: contul `4711` devine `Deferred Expense Account`, iar contul `4721` devine `Deferred Revenue Account` în setările companiei.",
       "Jurnalul de Operațiuni diverse este setat automat ca jurnal de amânare.",
-      "Livrează traducerile RO lipsă din `account_accountant`: „Înregistrări de amânare\" (buton pe factură) și „Amânare diversă\" (tip de intrare amânată).",
-      "Metoda de calcul implicită: Luni (recunoaștere liniară pe luni calendaristice).",
-      "Pe linia de factură (cont 6xx sau 7xx) se completează coloana opțională „Dată amânată\" cu intervalul de recunoaștere (început → sfârșit).",
+      "Metoda de calcul implicită: Months (recunoaștere liniară pe luni calendaristice).",
+      "Pe linia de factură (cont 6xx sau 7xx) se completează câmpul „Deferred Date\" cu intervalul de recunoaștere (Start → End).",
       "La postarea facturii, Odoo generează automat intrarea de transfer (`Dr 4711 = Cr 6xx`) și planifică notele lunare de recunoaștere (`Dr 6xx = Cr 4711`)."
     ],
     "dependencies": [
@@ -10781,7 +10808,7 @@
       "l10n_ro_fixed_assets",
       "l10n_ro_financial_notes"
     ],
-    "text": "Romania - Venituri și cheltuieli înregistrate în avans (471/472)\nl10n_ro_deferred_entries\nModulul configurează automat mecanismul nativ Odoo Enterprise de recunoaștere a cheltuielilor și veniturilor înregistrate în avans, conform OMFP 1802/2014 pct. 233–237, folosind conturile 4711 (Cheltuieli înregistrate în avans) și 4721 (Venituri înregistrate în avans) din planul de conturi românesc. Se bazează pe motorul nativ `account_accountant` (Enterprise) — coloana opțională „Dată amânată\" (dată de început / dată de sfârșit) de pe liniile de factură și rapoartele „Cheltuieli reportate\" / „Venituri reportate\" sunt disponibile fără cod custom adițional. Astfel, după instalare, contabilul completează doar intervalul de recunoaștere pe linia de factură, iar Odoo generează singur nota de transfer și notele lunare de recunoaștere până la epuizarea soldului.\nConfigurare automată la instalare: contul `471100` devine Cheltuială amânată, iar contul `472100` devine Venit amânat în setările companiei (Setări → Conturi implicite).\nJurnalul de Operațiuni diverse este setat automat ca jurnal de amânare.\nLivrează traducerile RO lipsă din `account_accountant`: „Înregistrări de amânare\" (buton pe factură) și „Amânare diversă\" (tip de intrare amânată).\nMetoda de calcul implicită: Luni (recunoaștere liniară pe luni calendaristice).\nPe linia de factură (cont 6xx sau 7xx) se completează coloana opțională „Dată amânată\" cu intervalul de recunoaștere (început → sfârșit).\nLa postarea facturii, Odoo generează automat intrarea de transfer (`Dr 4711 = Cr 6xx`) și planifică notele lunare de recunoaștere (`Dr 6xx = Cr 4711`)."
+    "text": "Romania - Venituri și cheltuieli înregistrate în avans (471/472)\nl10n_ro_deferred_entries\nModulul configurează automat mecanismul nativ Odoo Enterprise de recunoaștere a cheltuielilor și veniturilor înregistrate în avans, conform OMFP 1802/2014 pct. 233–237, folosind conturile 4711 (Cheltuieli înregistrate în avans) și 4721 (Venituri înregistrate în avans) din planul de conturi românesc. Se bazează pe motorul nativ `account_accountant` (Enterprise) — câmpurile „Deferred Date\" (Start Date / End Date) de pe liniile de factură și raportul Deferred Expenses/Revenues sunt disponibile fără cod custom adițional. Astfel, după instalare, contabilul completează doar intervalul de recunoaștere pe linia de factură, iar Odoo generează singur nota de transfer și notele lunare de recunoaștere până la epuizarea soldului.\nConfigurare automată la instalare: contul `4711` devine `Deferred Expense Account`, iar contul `4721` devine `Deferred Revenue Account` în setările companiei.\nJurnalul de Operațiuni diverse este setat automat ca jurnal de amânare.\nMetoda de calcul implicită: Months (recunoaștere liniară pe luni calendaristice).\nPe linia de factură (cont 6xx sau 7xx) se completează câmpul „Deferred Date\" cu intervalul de recunoaștere (Start → End).\nLa postarea facturii, Odoo generează automat intrarea de transfer (`Dr 4711 = Cr 6xx`) și planifică notele lunare de recunoaștere (`Dr 6xx = Cr 4711`)."
   },
   {
     "path": "l10n_ro_dividends/index.md",
@@ -10869,18 +10896,18 @@
     "text": "Deltatech Sale from Store UBL\nl10n_ro_edi_ubl_sale_store\nAcest modul completează localizarea românească pentru e-Factura prin tratarea corectă a vânzărilor efectuate prin casa de marcat. Atunci când pentru o vânzare a fost deja emis un bon fiscal, modulul setează automat tipul de e-factură la codul `751`, astfel încât documentul electronic transmis să reflecte faptul că livrarea a fost însoțită de bon fiscal. Scopul principal este conformitatea fiscală corectă a facturilor emise pe baza vânzărilor din magazin.\nSetează tipul de e-factură ca fiind `751` atunci când pentru vânzare a fost tipărit un bon fiscal."
   },
   {
-    "path": "l10n_ro_efactura_b2c/index.md",
-    "module": "l10n_ro_efactura_b2c",
-    "version": "19.0.1.0.0",
-    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_efactura_b2c",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_efactura_b2c",
+    "path": "l10n_ro_efactura_consumer/index.md",
+    "module": "l10n_ro_efactura_consumer",
+    "version": "19.0.1.0.2",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_efactura_consumer",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_efactura_consumer",
     "last_ingest": null,
     "friendly_name": "Romania - e-Factura B2C (persoane fizice)",
     "summary": "",
     "features": [],
     "dependencies": [],
     "connections": [],
-    "text": "Romania - e-Factura B2C (persoane fizice)\nl10n_ro_efactura_b2c"
+    "text": "Romania - e-Factura B2C (persoane fizice)\nl10n_ro_efactura_consumer"
   },
   {
     "path": "l10n_ro_efactura_dedup/index.md",
@@ -11010,13 +11037,13 @@
       "l10n_ro_anaf_messages",
       "l10n_ro_anaf_partner",
       "l10n_ro_anaf_submission",
-      "l10n_ro_efactura_b2c",
+      "l10n_ro_efactura_consumer",
       "l10n_ro_efactura_dedup",
       "l10n_ro_efactura_import_assist",
       "l10n_ro_esigiliu",
       "l10n_ro_etransport_block",
       "l10n_ro_account_chart",
-      "l10n_ro_account_counterpart",
+      "l10n_ro_account_correspondence",
       "l10n_ro_account_return_pl_closing",
       "l10n_ro_account_vat_journal",
       "l10n_ro_advance_invoice",
@@ -11059,7 +11086,7 @@
       "l10n_ro_sgr",
       "l10n_ro_stock_cmp_periodic",
       "l10n_ro_stock_constraints",
-      "l10n_ro_stock_custody",
+      "l10n_ro_stock_consignment",
       "l10n_ro_stock_gestiune",
       "l10n_ro_stock_k_coefficient",
       "l10n_ro_stock_pack_cmp",
@@ -11078,7 +11105,7 @@
       "l10n_ro_reges",
       "l10n_ro_cbam",
       "l10n_ro_environmental_tax",
-      "l10n_ro_excise",
+      "l10n_ro_excise_duty",
       "l10n_ro_grants",
       "l10n_ro_oss_threshold",
       "l10n_ro_partner_screening",
@@ -11118,7 +11145,7 @@
     "connections": [
       "l10n_ro_cbam",
       "l10n_ro_ent",
-      "l10n_ro_excise"
+      "l10n_ro_excise_duty"
     ],
     "text": "Romania - Taxe de mediu / AFM (FR-48)\nl10n_ro_environmental_tax\nMVP pentru FR-48 — Taxe de mediu / AFM, cu focus inițial pe ambalaje. Modulul adaugă profil AFM pe produs, linii de ambalaj cu material, tip și greutate per unitate, cote AFM pe material și o declarație AFM persistentă pe perioadă, calculată din facturile de vânzare postate pentru cantitățile introduse pe piață și cele scutite/exportate, cu trasabilitate completă până la documentul sursă și rapoarte suport în PDF și XLSX. Prima versiune acoperă raportul suport pentru ambalaje și pregătește extinderea spre baterii, DEEE și alte categorii AFM.\nProfil AFM pe produs (tab dedicat) cu marcarea bunurilor supuse obligațiilor AFM.\nLinii de ambalaj pe produs: material AFM, tip ambalaj (Primar / Secundar / Transport), factor cantitate și greutate/cantitate (kg) per unitate.\nCote AFM configurabile pe material.\nDeclarație AFM persistentă pe perioadă, cu stări Ciornă → Calculată → Validată.\nCalcul automat din facturile de vânzare postate în perioada selectată, cu grupare pe material în cantitate introdusă pe piață (parteneri din aceeași țară) și cantitate scutită/export (parteneri din altă țară).\nAjustare manuală a cantității acoperite OIREP pe linie, cu distribuire automată din contractele OIREP active la recalculare.\nTrasabilitate completă document → partener → produs → material → flux → cantitate, prin liniile sursă.\nRaport suport al declarației în PDF (QWeb) și export XLSX (sumar pe material + foaie surse).\nBlocarea validării facturilor pentru produse cu obligații AFM dar fără nicio linie de material activă.\nGestionare contracte OIREP: operator, categorie, materiale acoperite, interval de valabilitate și cantitate acoperită per perioadă."
   },
@@ -11212,11 +11239,11 @@
     "text": "eTransport Enhancement\nl10n_ro_etransport_enhancement\nModulul `l10n_ro_etransport_enhancement` extinde funcționalitatea standard de e-Transport din Odoo pentru piața românească, adăugând îmbunătățiri și opțiuni suplimentare. Scopul său este să facă integrarea cu sistemul e-Transport (SPV) mai flexibilă și mai fiabilă, acoperind atât livrările/recepțiile clasice printr-un depozit, cât și transporturile dropship (furnizor → client, fără mișcare de stoc intermediară), simplificând conformitatea fiscală pentru transporturile de mărfuri și reducând efortul administrativ al departamentelor de logistică și contabilitate.\nTrimiterea documentelor e-Transport direct din livrările/recepțiile de stoc (stock pickings), cu suport pentru diferite tipuri de trimitere prin parametri de context.\nTimeout configurabil pentru API-ul ANAF (implicit 60 s, per companie) — standardul Odoo are 10 s fix, insuficient la ore de vârf.\nCăderile de rețea către ANAF nu mai aruncă eroare tehnică în interfață: transferul rămâne cu un document eșuat și un mesaj clar care avertizează să se verifice în SPV înainte de retrimitere, ca să nu se emită un al doilea UIT pentru aceleași bunuri.\nReîncercare automată doar pentru interogările de stare (GET, idempotent); încărcarea documentului (POST) nu se reîncearcă niciodată automat.\nTraseu rutier complet punct de trecere a frontierei ↔ birou vamal la import (operațiune 40) și export (50): standardul Odoo permite biroul vamal doar la un singur capăt al traseului, ceea ce face imposibilă declararea tronsonului aflat sub supraveghere vamală (PTF → birou vamal interior la import, birou vamal → PTF la export).\nData transportului nu mai cade cu eroare când utilizatorul care trimite nu are fus orar setat (cazul tipic al trimiterilor automate rulate ca OdooBot); se folosește implicit fusul României (`Europe/Bucharest`).\nLiniile pe care standardul le trimite cu valoare 0 nu mai ajung la ANAF ca zero: prețul unitar se calculează din valoarea de stoc a mișcării, apoi din costul standard al produsului, apoi din prețul de vânzare; dacă niciunul nu poate fi determinat, trimiterea se oprește cu o eroare explicită în loc să depună o declarație invalidă.\nLiniile fără cantitate sunt eliminate din declarație, iar o greutate netă sau brută lipsă e aproximată cu cealaltă — șablonul QWeb standard scapă tăcut un atribut cu valoare zero, dar schema ANAF le cere pe toate.\nUnitate de măsură aliniată cu cantitatea declarată (`codUnitateMasura`): standardul ia cantitatea din UoM-ul de bază al produsului dar codul unității din UoM-ul liniei; când linia e într-o UoM secundară (cutie, bax, palet), perechea devine incoerentă și declarația e greșită fără nicio eroare vizibilă. Modulul aliniază codul pe unitatea în care e efectiv exprimată cantitatea.\nOpțiunea de companie „UIT: get price from order\" convertește corect prețul de pe linia de comandă la UoM-ul de bază al produsului, evitând supraevaluarea valorii declarate cu factorul de conversie al UoM-ului secundar.\n„Get lines\" (calculul liniilor de greutate) recalculează de la zero, nu adaugă — o a doua apăsare nu mai dublează greutățile trimise la ANAF; un avertisment pe transfer semnalează mișcările fără linie de greutate calculată.\nGreutăți totale (netă/brută) cântărite la rampă, cu buton „Distribute weights\" care ajustează liniile individuale proporțional (sau egal, când toate pornesc de la zero) ca să însumeze greutatea reală cântărită.\nLocație de start specifică (`Specific Start Location`): permite alegerea manuală a unui partener a cărui adresă înlocuiește adresa calculată automat (depozit) pentru capătul de plecare al traseului — util când transportul național pleacă efectiv dintr-un alt loc (ex. birou vamal interior, după vămuire). Vizibil doar pe livrări, doar pentru operațiunea „Transport pe teritoriul național\" și doar când locația e de tip adresă.\nDocumente însoțitoare configurabile pe transfer (CMR, factură, aviz, altele), trimise ca listă la ANAF — standardul trimite un singur document, hardcodat ca aviz cu numărul transferului. Butonul de completare automată adaugă avizul (numărul transferului) și facturile emise deja legate de livrare; observațiile lipsă/goale sunt omise din XML în loc să fie trimise ca șir vid (respins de ANAF).\nPartener de transport dedicat (`Transport Partner`) pe transfer, populat automat din curierul livrării dacă are partener e-Transport configurat; folosit ca declarant al transportatorului fără să mai fie obligatoriu `carrier_id`.\nUIT-ul nu se mai scrie în `carrier_tracking_ref` la preluarea stării — acel câmp e referința reală de urmărire a curierului (AWB), nu un cod ANAF; UIT-ul rămâne disponibil în tab-ul eTransport.\nSuport dropship (furnizor → client direct, fără mișcare de stoc intermediară): trimiterea eTransport funcționează pe transferul dropship nativ, pentru operațiunile 10 (AIC), 20 (LIC), 30 (național), 40 (import) și 50 (export), fără depozit fictiv.\nColoana mișcării din lista de linii de greutate poate afișa denumirea produsului (nu doar codul intern), pentru a distinge vizual liniile pe transferuri cu mai multe produse.\nTraseul fizic și tranzacția declarată se rezolvă din comenzile legate (vânzare + achiziție), nu din depozit: nu există locație de plecare/sosire reală în stoc.\nPartenerul comercial declarat (`partenerComercial`) e clientul pe operațiunile de livrare (20, 30, 50) și furnizorul pe operațiunile de achiziție (10, 40); adresa de încărcare implicită e cea a furnizorului (poate fi înlocuită cu `Specific Start Location`), iar adresa de livrare vine din comanda legată.\nValoarea declarată folosește prețul din comanda legată (achiziție pentru 10/40, vânzare pentru 20/30/50), fără TVA, cu conversia UoM și valutară nativă la RON — dropship folosește mereu valoarea din comandă, indiferent de setarea „UIT: get price from order\" a depozitului.\nFiecare linie de marfă trebuie legată atât de o comandă de vânzare cât și de o comandă de achiziție ale companiei declarante; o declarație are un singur furnizor, un singur client comercial și o singură adresă de livrare. Nepotrivirile de țară față de operațiunea selectată, datele de adresă românești lipsă, operațiunile nesuportate, retururile și dropship-urile în lot/mixte sunt blocate cu eroare explicită.\nDocumentele însoțitoare implicite (buton) adaugă numărul transferului și facturile de vânzare emise; pentru AIC/import, documentul furnizorului trebuie introdus manual.\nFix 19.0.0.9.2: Odoo 19 a primit ulterior suport nativ pentru dropship în `l10n_ro_edi_stock`, iar metoda nucleului care pregătește datele declarației ignoră de atunci `data[\"partner_id\"]` când tipul de operațiune e `dropship` și derivă întotdeauna partenerul din comanda de achiziție (furnizorul) — indiferent de sensul operațiunii. Fără corecție, o livrare dropship (operațiunile 20/30/50) ar pleca la ANAF cu furnizorul în locul clientului, fără nicio eroare vizibilă. Modulul rescrie acum `partenerComercial` (denumire, cod fiscal, cod de țară) după apelul metodei nucleului, cu partenerul corect ales de modul.\nCodul de țară al Greciei se declară `EL`, nu `GR` (conform standardului ANAF), atât pentru partenerul comercial cât și pentru organizatorul transportului — aplicat consecvent și pe calea dropship.\nCâmpurile `l10n_ro_transport_partner_id` și `l10n_ro_etransport_start_address` sunt indexate (chei străine către `res.partner`, tabelă mare) — fără index, ștergerea/unificarea unui partener declanșa scanări secvențiale costisitoare."
   },
   {
-    "path": "l10n_ro_excise/index.md",
-    "module": "l10n_ro_excise",
-    "version": "19.0.1.4.0",
-    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_excise",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_excise",
+    "path": "l10n_ro_excise_duty/index.md",
+    "module": "l10n_ro_excise_duty",
+    "version": "19.0.1.4.1",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_excise_duty",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_excise_duty",
     "last_ingest": null,
     "friendly_name": "Romania - Accize (FR-42)",
     "summary": "Modul pentru gestionarea accizelor conform Titlului VIII din Codul Fiscal RO, destinat antrepozitarilor autorizați și importatorilor de produse accizabile. Acoperă întreg ciclul: configurare categorii și rate, marcare produse, calcul automat din facturi, declarații D103/D120 și export XML pentru depunere la ANAF.",
@@ -11242,7 +11269,7 @@
       "l10n_ro_environmental_tax",
       "l10n_ro_cbam"
     ],
-    "text": "Romania - Accize (FR-42)\nl10n_ro_excise\nModul pentru gestionarea accizelor conform Titlului VIII din Codul Fiscal RO, destinat antrepozitarilor autorizați și importatorilor de produse accizabile. Acoperă întreg ciclul: configurare categorii și rate, marcare produse, calcul automat din facturi, declarații D103/D120 și export XML pentru depunere la ANAF.\nNomenclator complet de categorii accizabile: 16 categorii armonizate (alcool, bere, vinuri, tutun, combustibili, energie electrică — Anexele I și II CF) și 6 categorii nearmonizate H1–H6 (Legea 296/2023, art. 355¹–355⁶).\nRate 2025 conform HG 2/2025, cu dată de intrare în vigoare și istoric.\nMarcare produse cu categorie de acciză direct din fișa produsului (fila „Accize RO\").\nDeclarație persistentă D103 (lunar, antrepozit fiscal) și D120 (anual, plătitori de accize), cu state machine draft → confirmed → exported.\nCalcul automat al liniilor din facturile de vânzare postate în perioadă — include stornări cu semn negativ.\nExport XML D103/D120 generat prin QWeb, gata de depunere (delegat modulelor ANAF dedicate, vezi mai jos).\nEvidență antrepozite fiscale cu cod ANAF, autorizație și stare (activ/suspendat/revocat).\nEvidență garanții financiare (bancară, depozit, asigurare) cu calcul sumă recomandată pe baza mediei declarațiilor anterioare.\nWizard „Actualizare cote (HG)\" pentru aplicarea modificărilor anuale de cote prin HG, cu mod manual sau indexare procentuală; declarațiile deja calculate păstrează cotele istorice."
+    "text": "Romania - Accize (FR-42)\nl10n_ro_excise_duty\nModul pentru gestionarea accizelor conform Titlului VIII din Codul Fiscal RO, destinat antrepozitarilor autorizați și importatorilor de produse accizabile. Acoperă întreg ciclul: configurare categorii și rate, marcare produse, calcul automat din facturi, declarații D103/D120 și export XML pentru depunere la ANAF.\nNomenclator complet de categorii accizabile: 16 categorii armonizate (alcool, bere, vinuri, tutun, combustibili, energie electrică — Anexele I și II CF) și 6 categorii nearmonizate H1–H6 (Legea 296/2023, art. 355¹–355⁶).\nRate 2025 conform HG 2/2025, cu dată de intrare în vigoare și istoric.\nMarcare produse cu categorie de acciză direct din fișa produsului (fila „Accize RO\").\nDeclarație persistentă D103 (lunar, antrepozit fiscal) și D120 (anual, plătitori de accize), cu state machine draft → confirmed → exported.\nCalcul automat al liniilor din facturile de vânzare postate în perioadă — include stornări cu semn negativ.\nExport XML D103/D120 generat prin QWeb, gata de depunere (delegat modulelor ANAF dedicate, vezi mai jos).\nEvidență antrepozite fiscale cu cod ANAF, autorizație și stare (activ/suspendat/revocat).\nEvidență garanții financiare (bancară, depozit, asigurare) cu calcul sumă recomandată pe baza mediei declarațiilor anterioare.\nWizard „Actualizare cote (HG)\" pentru aplicarea modificărilor anuale de cote prin HG, cu mod manual sau indexare procentuală; declarațiile deja calculate păstrează cotele istorice."
   },
   {
     "path": "l10n_ro_expense_allowance/index.md",
@@ -11531,29 +11558,16 @@
   {
     "path": "l10n_ro_inventory_items/index.md",
     "module": "l10n_ro_inventory_items",
-    "version": "19.0.2.3.0",
-    "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_inventory_items`",
+    "version": "19.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_inventory_items",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_inventory_items",
-    "last_ingest": "2026-09-21",
+    "last_ingest": null,
     "friendly_name": "Romania - Obiecte de inventar (303/603/8035)",
-    "summary": "Implementează fluxul complet de gestiune a obiectelor de inventar conform OMFP 1802/2014 — bunuri sub pragul mijloacelor fixe (sub 2.500 RON conform HG 276/2013). Acoperă recepția (Dr 303 = Cr 401), darea în folosință (Dr 603 = Cr 303), evidența extracontabilă opțională pe contul 8035 și scoaterea din gestiune, cu fișă de obiect de inventar, wizard-uri batch și rapoarte PDF. Fișa OI se creează automat la recepția produselor marcate „Obiect de Inventar (RO)\", iar nota de dare în folosință e generată de modul și atunci când valorizarea de stoc nu o produce.",
-    "features": [
-      "Fișa OI (`l10n.ro.inventory.item`): nr. inventar auto-generat `OI/AAAA/NNNN`, responsabil, locație/departament cu tracking, stare fizică (Bună/Deteriorată/Casată) și stare flux (Recepționat → Dat în Folosință → Scos din Gestiune).",
-      "Creare automată la recepție: hook pe `stock_move._action_done()` — o recepție (`picking_type.code == \"incoming\"`) de produs marcat „Obiect de Inventar (RO)\" creează fișa OI, legată de mișcarea de stoc, fără dublare la re-rulare.",
-      "Dare în folosință (`action_use()`): verificare stoc 303, picking intern către locație virtuală, nota `603 = 303` și, opțional, notă extracontabilă `Dr 8035 = Cr 8035C`.",
-      "Nota 603=303 independentă de valorizare (`_create_usage_entry()`, din 19.0.1.1.0): dacă produsul nu e pe o categorie cu valorizare în timp real, `stock_account` nu produce nicio notă la validarea pickingului; modulul o înregistrează atunci el, pe conturile din categoria produsului, cu revenire pe codurile `603%` / `303%` din planul companiei. Acolo unde valorizarea generează deja nota, nu se dublează. Dacă lipsesc conturile sau jurnalul, motivul e postat în chatter, în loc ca fluxul să pară reușit.",
-      "Scoatere din gestiune (`action_dispose()`): tratament distinct pe `disposal_type` — casare (fără notă bilanțieră, valoarea e deja pe 603), restituire (picking invers + `Dr 303 = Cr 603` + revenire în „Recepționat\"), lipsă la inventar (nicio notă automată: imputabilitatea e decizia clientului). `physical_state` rămâne starea fizică, distinctă de tipul scoaterii.",
-      "Wizard-uri batch pentru dare în folosință (cu Bon PDF) și scoatere din gestiune (cu PV PDF).",
-      "Conturi explicite pe companie (`l10n_ro_oi_expense_account_id`, `l10n_ro_oi_stock_account_id`, `l10n_ro_oi_journal_id`): conturile categoriei de produs sunt acceptate doar dacă au codul 603/303 — altfel ar da 607/371 (descărcare de marfă). Jurnalul extrabilanțier EXTR e exclus explicit.",
-      "Cont extrabilanțier 8035: la instalare se creează contul 8035C (off_balance) și jurnalul „Evidență Extracontabilă\" (EXTR), cu toggle pe companie; verificare sold prin `_check_8035_balance()`.",
-      "Rapoarte PDF: Bon de Dare în Folosință, PV de Scoatere din Gestiune și Registrul Obiectelor de Inventar (multi-document, grupat pe responsabil cu subtotal, totaluri pe stări — cel „în folosință\" e comparabil cu soldul 8035, cel „în stoc\" cu 303 —, plus dată de întocmire și bloc de semnături). Fiecare raport are un template „document complet\" care apelează `web.html_container` — fără el randarea PDF pică în `_prepare_html` cu `IndexError` pe `//main`."
-    ],
-    "dependencies": [
-      "stock_account",
-      "l10n_ro"
-    ],
+    "summary": "",
+    "features": [],
+    "dependencies": [],
     "connections": [],
-    "text": "Romania - Obiecte de inventar (303/603/8035)\nl10n_ro_inventory_items\nImplementează fluxul complet de gestiune a obiectelor de inventar conform OMFP 1802/2014 — bunuri sub pragul mijloacelor fixe (sub 2.500 RON conform HG 276/2013). Acoperă recepția (Dr 303 = Cr 401), darea în folosință (Dr 603 = Cr 303), evidența extracontabilă opțională pe contul 8035 și scoaterea din gestiune, cu fișă de obiect de inventar, wizard-uri batch și rapoarte PDF. Fișa OI se creează automat la recepția produselor marcate „Obiect de Inventar (RO)\", iar nota de dare în folosință e generată de modul și atunci când valorizarea de stoc nu o produce.\nFișa OI (`l10n.ro.inventory.item`): nr. inventar auto-generat `OI/AAAA/NNNN`, responsabil, locație/departament cu tracking, stare fizică (Bună/Deteriorată/Casată) și stare flux (Recepționat → Dat în Folosință → Scos din Gestiune).\nCreare automată la recepție: hook pe `stock_move._action_done()` — o recepție (`picking_type.code == \"incoming\"`) de produs marcat „Obiect de Inventar (RO)\" creează fișa OI, legată de mișcarea de stoc, fără dublare la re-rulare.\nDare în folosință (`action_use()`): verificare stoc 303, picking intern către locație virtuală, nota `603 = 303` și, opțional, notă extracontabilă `Dr 8035 = Cr 8035C`.\nNota 603=303 independentă de valorizare (`_create_usage_entry()`, din 19.0.1.1.0): dacă produsul nu e pe o categorie cu valorizare în timp real, `stock_account` nu produce nicio notă la validarea pickingului; modulul o înregistrează atunci el, pe conturile din categoria produsului, cu revenire pe codurile `603%` / `303%` din planul companiei. Acolo unde valorizarea generează deja nota, nu se dublează. Dacă lipsesc conturile sau jurnalul, motivul e postat în chatter, în loc ca fluxul să pară reușit.\nScoatere din gestiune (`action_dispose()`): tratament distinct pe `disposal_type` — casare (fără notă bilanțieră, valoarea e deja pe 603), restituire (picking invers + `Dr 303 = Cr 603` + revenire în „Recepționat\"), lipsă la inventar (nicio notă automată: imputabilitatea e decizia clientului). `physical_state` rămâne starea fizică, distinctă de tipul scoaterii.\nWizard-uri batch pentru dare în folosință (cu Bon PDF) și scoatere din gestiune (cu PV PDF).\nConturi explicite pe companie (`l10n_ro_oi_expense_account_id`, `l10n_ro_oi_stock_account_id`, `l10n_ro_oi_journal_id`): conturile categoriei de produs sunt acceptate doar dacă au codul 603/303 — altfel ar da 607/371 (descărcare de marfă). Jurnalul extrabilanțier EXTR e exclus explicit.\nCont extrabilanțier 8035: la instalare se creează contul 8035C (off_balance) și jurnalul „Evidență Extracontabilă\" (EXTR), cu toggle pe companie; verificare sold prin `_check_8035_balance()`.\nRapoarte PDF: Bon de Dare în Folosință, PV de Scoatere din Gestiune și Registrul Obiectelor de Inventar (multi-document, grupat pe responsabil cu subtotal, totaluri pe stări — cel „în folosință\" e comparabil cu soldul 8035, cel „în stoc\" cu 303 —, plus dată de întocmire și bloc de semnături). Fiecare raport are un template „document complet\" care apelează `web.html_container` — fără el randarea PDF pică în `_prepare_html` cu `IndexError` pe `//main`."
+    "text": "Romania - Obiecte de inventar (303/603/8035)\nl10n_ro_inventory_items"
   },
   {
     "path": "l10n_ro_inventory_register/index.md",
@@ -12303,7 +12317,7 @@
       "deltatech_partner_generic",
       "l10n_ro_cash_register_report",
       "l10n_ro_cash_register",
-      "l10n_ro_efactura_b2c"
+      "l10n_ro_efactura_consumer"
     ],
     "text": "l10n_ro_pos_returns\nl10n_ro_pos_returns\nModulul tratează returul din comerțul cu amănuntul așa cum îl cere legislația română, pe două laturi care nu au sens una fără alta. Prima: la fiecare bon de retur se emite **factura de retur (storno)**, documentul pe care normele îl cer pentru ajustarea bazei de impozitare a TVA — vânzarea la casa de marcat e scutită de factură, dar scutirea nu se extinde la retur, iar fără acel document contabilul nu are pe ce să diminueze TVA-ul colectat. A doua: **restituirile de numerar apar pe rândul de plăți al registrului de casă**, nu netate în încasarea zilei, cum le scrie Odoo implicit. Modulul a pornit din tichetul #9362 (client Damira), unde 870 de retururi din doi ani și jumătate nu aveau niciun document fiscal, iar în registrul de casă restituirile erau invizibile.\nFactură de retur automată la finalizarea bonului de retur: document `out_refund` postat, cu cota de TVA și valoarea pe fiecare articol — exact informațiile pe care le cere contabilitatea.\nCumpărător identificat obligatoriu la retur. Nu e vorba de completarea unui câmp: partenerul generic pentru clienți anonimi (desemnat prin modulul de partener generic al suitei) este refuzat, iar contactul trebuie să aibă datele cerute destinatarului unei facturi RO — țară, județ, oraș, stradă. Verificarea rulează la sincronizarea bonului, deci mesajul apare la casă, cât clientul e încă acolo, nu ca eroare de postare după ce a plecat cu banii.\nÎncasările brute și restituirile pe linii separate pe contul de casă, la închiderea sesiunii — pentru registrul de casă cod 14-4-7A, care cere încasările pe rândul lor și plățile pe al lor. Soldul rămâne neschimbat.\nRestul dat clientului rămâne netat, fiind tot o plată de numerar negativă, dar pe un bon cu total pozitiv: un bon de 15,50 lei încasat cu 200 lei este o încasare de 15,50, nu o încasare de 200 și o plată de 184,50.\nEmiterea în lot pentru perioada scursă (`Issue Return Invoices`), din lista de comenzi POS: pentru un bon din sesiune închisă factura primește data curentă, iar contribuția bonului din nota de închidere se reversează în aceeași perioadă — TVA-ul nu se mută între perioade și nu sunt necesare declarații rectificative. Bonurile care nu pot fi facturate sunt sărite, cu motivul raportat.\nJurnal dedicat opțional pentru facturile de retur, separat de jurnalul de facturi al punctului de vânzare.\nFiltrele „Returns\" și „Returns without Invoice\" pe comenzile POS, pentru inventarierea situației.\nDispoziția de plată din bonul de retur, când e instalat modulul de casierie: butonul întocmește documentul pe casieria bonului, cu numerarul efectiv restituit.\nInterfață tradusă în română (`i18n/ro.po`)."
   },
@@ -12898,26 +12912,12 @@
     "text": "Romania - CMP periodic lunar\nl10n_ro_stock_cmp_periodic"
   },
   {
-    "path": "l10n_ro_stock_constraints/index.md",
-    "module": "l10n_ro_stock_constraints",
-    "version": "19.0.1.0.0",
-    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_constraints",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_constraints",
+    "path": "l10n_ro_stock_consignment/index.md",
+    "module": "l10n_ro_stock_consignment",
+    "version": "19.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_consignment",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_consignment",
     "last_ingest": null,
-    "friendly_name": "Romania - Constrângeri de integritate a stocului",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - Constrângeri de integritate a stocului\nl10n_ro_stock_constraints"
-  },
-  {
-    "path": "l10n_ro_stock_custody/index.md",
-    "module": "l10n_ro_stock_custody",
-    "version": "19.0.1.0.0",
-    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_custody",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_custody",
-    "last_ingest": "2026-07-02",
     "friendly_name": "Romania - Stocuri în custodie",
     "summary": "Modulul gestionează bunurile primite sau date în custodie, adică mărfuri care circulă între companie și un terț fără transfer de proprietate. Evidența se ține în afara bilanțului, conform OMFP 1802/2014, pe contul **8033 — Valori materiale primite în păstrare sau custodie**, astfel încât aceste bunuri nu distorsionează stocul propriu valorizat și nici rezultatul financiar al companiei.",
     "features": [
@@ -12937,7 +12937,21 @@
       "stock_account",
       "l10n_ro"
     ],
-    "text": "Romania - Stocuri în custodie\nl10n_ro_stock_custody\nModulul gestionează bunurile primite sau date în custodie, adică mărfuri care circulă între companie și un terț fără transfer de proprietate. Evidența se ține în afara bilanțului, conform OMFP 1802/2014, pe contul **8033 — Valori materiale primite în păstrare sau custodie**, astfel încât aceste bunuri nu distorsionează stocul propriu valorizat și nici rezultatul financiar al companiei.\nCustodie primită — la validarea recepției, modulul setează automat proprietarul (terțul) pe liniile de mișcare (consignație nativă Odoo), astfel încât bunurile nu intră în valorizarea proprie, și generează automat nota extracontabilă Dr 8033 = Cr 8039.\nStornare la retur — butonul Reverse Custody Entry de pe transferul de stoc stornează automat nota de custodie (Dr 8039 = Cr 8033) la returul bunurilor către terț.\nCustodie dată — marcarea transferurilor de ieșire cu bunuri proprii date în custodie la terți; modulul generează automat nota Dr 357 = Cr 371 (mărfuri aflate la terți / stoc propriu), cu stornare simetrică la retur.\nRaport Goods in Custody — listează toate stocurile ținute pe seama terților (quant-uri cu proprietar setat), accesibil din meniul Inventar → Raportare.\nProces-verbal predare-primire custodie — raport PDF imprimabil de pe transferul de stoc, cu lista produselor, cantităților și valorilor, pentru custodie primită sau dată.\nConturi configurabile — conturile de custodie primită (implicit 8033/8039), conturile de custodie dată (implicit 357/371) și jurnalul utilizat se configurează în Contabilitate → Setări, cu fallback automat după codul contului dacă nu sunt setate explicit."
+    "text": "Romania - Stocuri în custodie\nl10n_ro_stock_consignment\nModulul gestionează bunurile primite sau date în custodie, adică mărfuri care circulă între companie și un terț fără transfer de proprietate. Evidența se ține în afara bilanțului, conform OMFP 1802/2014, pe contul **8033 — Valori materiale primite în păstrare sau custodie**, astfel încât aceste bunuri nu distorsionează stocul propriu valorizat și nici rezultatul financiar al companiei.\nCustodie primită — la validarea recepției, modulul setează automat proprietarul (terțul) pe liniile de mișcare (consignație nativă Odoo), astfel încât bunurile nu intră în valorizarea proprie, și generează automat nota extracontabilă Dr 8033 = Cr 8039.\nStornare la retur — butonul Reverse Custody Entry de pe transferul de stoc stornează automat nota de custodie (Dr 8039 = Cr 8033) la returul bunurilor către terț.\nCustodie dată — marcarea transferurilor de ieșire cu bunuri proprii date în custodie la terți; modulul generează automat nota Dr 357 = Cr 371 (mărfuri aflate la terți / stoc propriu), cu stornare simetrică la retur.\nRaport Goods in Custody — listează toate stocurile ținute pe seama terților (quant-uri cu proprietar setat), accesibil din meniul Inventar → Raportare.\nProces-verbal predare-primire custodie — raport PDF imprimabil de pe transferul de stoc, cu lista produselor, cantităților și valorilor, pentru custodie primită sau dată.\nConturi configurabile — conturile de custodie primită (implicit 8033/8039), conturile de custodie dată (implicit 357/371) și jurnalul utilizat se configurează în Contabilitate → Setări, cu fallback automat după codul contului dacă nu sunt setate explicit."
+  },
+  {
+    "path": "l10n_ro_stock_constraints/index.md",
+    "module": "l10n_ro_stock_constraints",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_constraints",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_constraints",
+    "last_ingest": null,
+    "friendly_name": "Romania - Constrângeri de integritate a stocului",
+    "summary": "",
+    "features": [],
+    "dependencies": [],
+    "connections": [],
+    "text": "Romania - Constrângeri de integritate a stocului\nl10n_ro_stock_constraints"
   },
   {
     "path": "l10n_ro_stock_gestiune/index.md",
@@ -13456,38 +13470,26 @@
   {
     "path": "terrabit_dvi/index.md",
     "module": "terrabit_dvi",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.3.0",
     "github": "`https://github.com/dhongu/l10n-romania/tree/19.0/terrabit_dvi`",
     "local_path": "odoo-addons/l10n-romania/terrabit_dvi",
-    "last_ingest": "2026-06-08",
-    "friendly_name": "Terrabit - DVI",
-    "summary": "Modulul gestionează Declarația Vamală de Import (DVI) pentru operațiunile de import de marfă din afara Uniunii Europene, făcând legătura între factura de achiziție externă și costurile vamale (landed cost). Pe baza datelor din DVI, modulul generează automat o înregistrare cu două linii (taxa vamală A00 și TVA-ul la import B00), respectând cadrul legal contabil românesc (Legea 82/1991, OMFP 1802/2014, Codul Fiscal și Regulamentul UE 2015/2447): factura furnizor se înregistrează la cursul BNR din data emiterii, cursul vamal lunar se folosește exclusiv pentru valoarea în vamă, taxe și TVA la import, iar toate înregistrările contabile rămân exclusiv în RON. Astfel, taxele vamale se capitalizează corect în costul de achiziție al mărfurilor, iar TVA-ul la import deductibil este evidențiat separat, cu trasabilitate completă de la comanda de achiziție până la stocul final.",
+    "last_ingest": "2026-09-23",
+    "friendly_name": "Terrabit - DVI (moved to l10n_ro_customs_dvi)",
+    "summary": "Modul **tranzitoriu**, fără cod și fără date. Conținutul funcțional — wizardul DVI, repartizarea taxelor vamale în costul stocului și nota de TVA la import — a fost mutat la 23.09.2026 în modulul [`l10n_ro_customs_dvi`](../l10n_ro_customs_dvi/index.md), pentru alinierea la convenția de denumire `l10n_ro_` a repo-ului: era singurul din 39 de module fără acest prefix, deși are categoria Localization și țara RO. Numele `l10n_ro_dvi` nu putea fi folosit, fiind ocupat de modulul OCA cu care se exclude reciproc. Modulul de față declară o singură dependență, către modulul nou, și există exclusiv pentru ca manifestele care îl listează ca dependență să continue să se încarce, fără a fi modificate. Pentru module noi, depindeți direct de `l10n_ro_customs_dvi`.",
     "features": [
-      "Face legătura între factura de achiziție externă și DVI (landed cost).",
-      "Generează automat un DVI cu două linii și cu TVA (taxă vamală A00 și TVA la import B00).",
-      "Suportă fluxul complet de import cu recepție în locație virtuală de tranzit („Transit/In-Coming\") și vămuire prin DVI, în regim FOB.",
-      "Capitalizează taxele vamale (A00) în costul de achiziție al mărfurilor prin repartizare ca landed cost (327 ← 371.tranzit).",
-      "Evidențiază separat TVA-ul la import deductibil (B00) pe contul 4426.",
-      "Înregistrează automat diferențele de curs valutar la plata facturii furnizor (conturile 665/765).",
-      "Asigură toate înregistrările contabile exclusiv în RON, cu factura la cursul BNR și taxele/TVA la cursul vamal lunar.",
-      "Asistă consultantul în alegerea Incoterm-ului (Incoterms® 2020) și impactul acestuia asupra momentului recepției și al landed costs.",
-      "Necesită ca contul 447 să fie cont de reconciliere, pentru a putea fi închis prin bancă."
+      "Instalează automat `l10n_ro_customs_dvi`, unde se află întreaga funcționalitate.",
+      "Păstrează compatibilitatea manifestelor existente care declară `terrabit_dvi` ca dependență.",
+      "Nu conține modele, view-uri, acțiuni, meniuri sau reguli de acces proprii.",
+      "Înregistrările istorice din `ir_model_data` sunt preluate automat de modulul nou, printr-un `pre_init_hook`, deci actualizarea nu produce duplicate în interfață.",
+      "Durata de viață: până la portarea pe 20.0. Stub-ul nu se portează; la portare se actualizează manifestele dependente direct pe modulul nou."
     ],
     "dependencies": [
-      "stock_account",
-      "account",
-      "sale",
-      "l10n_ro",
-      "purchase_stock",
-      "stock_landed_costs"
+      "l10n_ro_customs_dvi"
     ],
     "connections": [
-      "stock_landed_costs",
-      "l10n_ro",
-      "l10n_ro_dvi",
-      "excludes"
+      "`l10n_ro_customs_dvi`"
     ],
-    "text": "Terrabit - DVI\nterrabit_dvi\nModulul gestionează Declarația Vamală de Import (DVI) pentru operațiunile de import de marfă din afara Uniunii Europene, făcând legătura între factura de achiziție externă și costurile vamale (landed cost). Pe baza datelor din DVI, modulul generează automat o înregistrare cu două linii (taxa vamală A00 și TVA-ul la import B00), respectând cadrul legal contabil românesc (Legea 82/1991, OMFP 1802/2014, Codul Fiscal și Regulamentul UE 2015/2447): factura furnizor se înregistrează la cursul BNR din data emiterii, cursul vamal lunar se folosește exclusiv pentru valoarea în vamă, taxe și TVA la import, iar toate înregistrările contabile rămân exclusiv în RON. Astfel, taxele vamale se capitalizează corect în costul de achiziție al mărfurilor, iar TVA-ul la import deductibil este evidențiat separat, cu trasabilitate completă de la comanda de achiziție până la stocul final.\nFace legătura între factura de achiziție externă și DVI (landed cost).\nGenerează automat un DVI cu două linii și cu TVA (taxă vamală A00 și TVA la import B00).\nSuportă fluxul complet de import cu recepție în locație virtuală de tranzit („Transit/In-Coming\") și vămuire prin DVI, în regim FOB.\nCapitalizează taxele vamale (A00) în costul de achiziție al mărfurilor prin repartizare ca landed cost (327 ← 371.tranzit).\nEvidențiază separat TVA-ul la import deductibil (B00) pe contul 4426.\nÎnregistrează automat diferențele de curs valutar la plata facturii furnizor (conturile 665/765).\nAsigură toate înregistrările contabile exclusiv în RON, cu factura la cursul BNR și taxele/TVA la cursul vamal lunar.\nAsistă consultantul în alegerea Incoterm-ului (Incoterms® 2020) și impactul acestuia asupra momentului recepției și al landed costs.\nNecesită ca contul 447 să fie cont de reconciliere, pentru a putea fi închis prin bancă."
+    "text": "Terrabit - DVI (moved to l10n_ro_customs_dvi)\nterrabit_dvi\nModul **tranzitoriu**, fără cod și fără date. Conținutul funcțional — wizardul DVI, repartizarea taxelor vamale în costul stocului și nota de TVA la import — a fost mutat la 23.09.2026 în modulul [`l10n_ro_customs_dvi`](../l10n_ro_customs_dvi/index.md), pentru alinierea la convenția de denumire `l10n_ro_` a repo-ului: era singurul din 39 de module fără acest prefix, deși are categoria Localization și țara RO. Numele `l10n_ro_dvi` nu putea fi folosit, fiind ocupat de modulul OCA cu care se exclude reciproc. Modulul de față declară o singură dependență, către modulul nou, și există exclusiv pentru ca manifestele care îl listează ca dependență să continue să se încarce, fără a fi modificate. Pentru module noi, depindeți direct de `l10n_ro_customs_dvi`.\nInstalează automat `l10n_ro_customs_dvi`, unde se află întreaga funcționalitate.\nPăstrează compatibilitatea manifestelor existente care declară `terrabit_dvi` ca dependență.\nNu conține modele, view-uri, acțiuni, meniuri sau reguli de acces proprii.\nÎnregistrările istorice din `ir_model_data` sunt preluate automat de modulul nou, printr-un `pre_init_hook`, deci actualizarea nu produce duplicate în interfață.\nDurata de viață: până la portarea pe 20.0. Stub-ul nu se portează; la portare se actualizează manifestele dependente direct pe modulul nou."
   },
   {
     "path": "terrabit_facebook_pixel/index.md",

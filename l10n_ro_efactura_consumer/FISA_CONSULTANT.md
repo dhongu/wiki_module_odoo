@@ -1,7 +1,7 @@
 # Fișă Modul: e-Factura B2C (Persoane Fizice / CNP)
 
 **Poziție plan:** B8.4
-**Modul:** `l10n_ro_efactura_b2c`
+**Modul:** `l10n_ro_efactura_consumer`
 **FR:** FR-24
 **Capitol manual:** Cap 12.6
 **Utilizator principal:** Operator facturare, Contabil clienți
@@ -38,7 +38,7 @@ pe factură când CNP-ul lipsește sau este invalid, și injectează automat CNP
 
 ## 5. Configurare inițială
 
-1. Instalați `l10n_ro_efactura_b2c` (dependențe: `l10n_ro_edi`).
+1. Instalați `l10n_ro_efactura_consumer` (dependențe: `l10n_ro_edi`).
 2. Nu necesită configurare suplimentară — câmpul CNP apare automat pe fișa partenerului
    dacă compania contabilă are localizarea RO activă.
 

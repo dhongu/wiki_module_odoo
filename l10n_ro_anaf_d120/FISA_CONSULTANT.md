@@ -12,7 +12,7 @@
 ## 1. Scop business
 
 Modulul adaugă **exportul XML ANAF al Decontului anual privind accizele (D120)** peste declarația de
-accize din `l10n_ro_excise`. D120 este decontul **anual** depus de plătitorii de accize
+accize din `l10n_ro_excise_duty`. D120 este decontul **anual** depus de plătitorii de accize
 (antrepozitari autorizați, importatori, destinatari înregistrați, utilizatori industriali) pentru
 produsele accizabile (alcool, bere, produse energetice, tutun etc.), distinct de **D103** (decontul
 lunar al antrepozitului fiscal).
@@ -49,14 +49,14 @@ declarației de accize: per **categorie de acciză**, cantitatea × cota → acc
 
 Date minime pentru demo:
 - compania RO cu **CUI, CAEN și adresă** completate (cerute la export);
-- categorii de accize configurate (`l10n_ro_excise` — ex. A Alcool etilic, B Bere, G3 Motorină);
+- categorii de accize configurate (`l10n_ro_excise_duty` — ex. A Alcool etilic, B Bere, G3 Motorină);
 - o declarație de accize de tip **D120** pe anul de raportare (1 ianuarie – 31 decembrie), cu linii
   pe categorii.
 
 ## 5. Configurare inițială
 
-1. Instalați `l10n_ro_anaf_d120` (depinde de `l10n_ro_excise` și `l10n_ro_anaf_base`).
-2. Verificați **categoriile de accize** și cotele în vigoare (`l10n_ro_excise`).
+1. Instalați `l10n_ro_anaf_d120` (depinde de `l10n_ro_excise_duty` și `l10n_ro_anaf_base`).
+2. Verificați **categoriile de accize** și cotele în vigoare (`l10n_ro_excise_duty`).
 3. Completați **CUI, CAEN și adresa companiei** — cerute la generarea XML.
 4. Configurați, dacă e cazul, antrepozitele fiscale.
 
@@ -126,7 +126,7 @@ Structura XML generată (extras ilustrativ — antet companie + câteva rânduri
 
 | Modul / proces | Rol în flux |
 |---|---|
-| `l10n_ro_excise` | declarația de accize, categoriile și cotele (model de bază extins) |
+| `l10n_ro_excise_duty` | declarația de accize, categoriile și cotele (model de bază extins) |
 | `l10n_ro_anaf_base` | infrastructură comună ANAF (validare companie, profil declarație, XSD) |
 | D103 | decontul lunar al antrepozitului fiscal (același model, alt tip și template) |
 

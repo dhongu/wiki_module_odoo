@@ -229,7 +229,7 @@ beneficiarul de pe bon. Documentul se tipărește și se semnează la casierie.
 | `l10n_ro_cash_bank_enhanced` | registrul dispozițiilor de casă (14-4-4) alimentat de butonul de pe bon | integrare opțională, verificată la rulare |
 | `deltatech_partner_generic` | desemnează contactul colectiv refuzat la retur | integrare opțională |
 | `l10n_ro_pos_fiscal_compliance` | evidența bonului fiscal AMEF; când e instalat, trimiterea la bonul inițial intră în descrierea facturii | integrare opțională |
-| `l10n_ro_efactura_b2c` | completează CNP-ul în XML-ul CIUS-RO pentru facturile către persoane fizice | recomandat la transmiterea în SPV |
+| `l10n_ro_efactura_consumer` | completează CNP-ul în XML-ul CIUS-RO pentru facturile către persoane fizice | recomandat la transmiterea în SPV |
 | `l10n_ro_cash_register_report` | tipărește registrul de casă (14-4-7A), care citește liniile separate | complementar, fără suprapunere |
 | `l10n_ro_pos` (OCA) | scoate din nota de închidere liniile de ieșire din gestiune | complementar, fără suprapunere |
 

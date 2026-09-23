@@ -65,4 +65,4 @@ MVP pentru FR-48 — Taxe de mediu / AFM, cu focus inițial pe ambalaje. Modulul
 #### 5. Conexiuni
 
 - [l10n_ro_cbam](../l10n_ro_cbam/index.md): altă localizare de raportare de mediu/carbon pentru piața românească, din aceeași suită `l10n_ro_ent`.
-- [l10n_ro_excise](../l10n_ro_excise/index.md): modul înrudit de fiscalitate specială (accize) din aceeași suită `l10n_ro_ent`.
+- [l10n_ro_excise_duty](../l10n_ro_excise_duty/index.md): modul înrudit de fiscalitate specială (accize) din aceeași suită `l10n_ro_ent`.

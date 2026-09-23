@@ -1,6 +1,6 @@
 # Fișă Modul: Cont Corespondent pe Pozițiile Contabile
 
-**Modul:** `l10n_ro_account_counterpart`
+**Modul:** `l10n_ro_account_correspondence`
 **Utilizator principal:** Contabil general, Contabil-șef (verificare monografie)
 **Prioritate:** 🟡 Medie (suport pentru fișa de cont și registrul-jurnal, OMFP 1802)
 
@@ -38,7 +38,7 @@ Pentru demonstrație sunt suficiente note contabile existente:
 
 ## 5. Configurare inițială
 
-1. Instalați modulul `l10n_ro_account_counterpart` pe baza demo (companie cu plan de conturi RO).
+1. Instalați modulul `l10n_ro_account_correspondence` pe baza demo (companie cu plan de conturi RO).
 2. Nu necesită nicio configurare — câmpurile se calculează automat la postarea/modificarea notelor.
 3. Asigurați-vă că utilizatorul de test are acces la Contabilitate (grupul „Contabil").
 4. Aveți câteva note contabile postate în perioada de test.
@@ -120,7 +120,7 @@ Capturile se **generează automat** din `tests/test_screenshots.py` (mixinul `Sc
 
 Comandă de regenerare:
 ```bash
-./odoo/odoo-bin -c odoo.conf -d test19 -u l10n_ro_account_counterpart \
+./odoo/odoo-bin -c odoo.conf -d test19 -u l10n_ro_account_correspondence \
   --test-tags=fise_screenshots --stop-after-init
 ```
 

@@ -1702,3 +1702,15 @@ This is an append-only log of all operations performed on the wiki.
     - `wiki_module_odoo/deltatech_generic_partner_restriction/index.md`
     - `wiki_module_odoo/index.md`
     - `wiki_module_odoo/log.md`
+
+---
+
+## [2026-09-23] Redenumire module: `l10n_ro_excise`, `l10n_ro_stock_custody`, `l10n_ro_account_counterpart`, `l10n_ro_efactura_b2c`
+
+- **Acțiune:** Paginile au fost mutate pe noile nume tehnice, după ce Odoo Apps a respins numele vechi, ocupate în seria 19.0 de alți furnizori (terrabit-solutions/l10n_ro_ent#305):
+    - `l10n_ro_excise` → `l10n_ro_excise_duty`
+    - `l10n_ro_stock_custody` → `l10n_ro_stock_consignment`
+    - `l10n_ro_account_counterpart` → `l10n_ro_account_correspondence`
+    - `l10n_ro_efactura_b2c` → `l10n_ro_efactura_consumer`
+- **Detalii:** Pe paginile redenumite am actualizat versiunea și am adăugat câmpul „Nume anterior”, ca modulele să fie găsite și după numele vechi. Au fost actualizate și trimiterile din paginile care depind de ele sau le menționează (d103, d120, ent_config, efactura_dedup, pos_returns, cbam, environmental_tax, etransport_block) și din `index.md`. Intrările mai vechi din acest jurnal păstrează numele vechi.
+- **Fișiere actualizate:** cele 4 pagini redenumite (index.md + FISA_CONSULTANT.md), paginile care le menționează, `index.md`, `log.md`, `.index/chunks.json`.

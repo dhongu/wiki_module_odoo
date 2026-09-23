@@ -85,7 +85,7 @@ setări, oricare dintre modulele suitei l10n_ro_ent, grupate pe categorii:
 
 **e-Factura & e-Transport**
 
-- [l10n_ro_efactura_b2c](../l10n_ro_efactura_b2c/index.md)
+- [l10n_ro_efactura_consumer](../l10n_ro_efactura_consumer/index.md)
 - [l10n_ro_efactura_dedup](../l10n_ro_efactura_dedup/index.md)
 - [l10n_ro_efactura_import_assist](../l10n_ro_efactura_import_assist/index.md)
 - [l10n_ro_esigiliu](../l10n_ro_esigiliu/index.md)
@@ -94,7 +94,7 @@ setări, oricare dintre modulele suitei l10n_ro_ent, grupate pe categorii:
 **Contabilitate & Închidere de Lună**
 
 - [l10n_ro_account_chart](../l10n_ro_account_chart/index.md)
-- [l10n_ro_account_counterpart](../l10n_ro_account_counterpart/index.md)
+- [l10n_ro_account_correspondence](../l10n_ro_account_correspondence/index.md)
 - [l10n_ro_account_return_pl_closing](../l10n_ro_account_return_pl_closing/index.md)
 - [l10n_ro_account_vat_journal](../l10n_ro_account_vat_journal/index.md)
 - [l10n_ro_advance_invoice](../l10n_ro_advance_invoice/index.md)
@@ -143,7 +143,7 @@ setări, oricare dintre modulele suitei l10n_ro_ent, grupate pe categorii:
 - [l10n_ro_sgr](../l10n_ro_sgr/index.md)
 - [l10n_ro_stock_cmp_periodic](../l10n_ro_stock_cmp_periodic/index.md)
 - [l10n_ro_stock_constraints](../l10n_ro_stock_constraints/index.md)
-- [l10n_ro_stock_custody](../l10n_ro_stock_custody/index.md)
+- [l10n_ro_stock_consignment](../l10n_ro_stock_consignment/index.md)
 - [l10n_ro_stock_gestiune](../l10n_ro_stock_gestiune/index.md)
 - [l10n_ro_stock_k_coefficient](../l10n_ro_stock_k_coefficient/index.md)
 - [l10n_ro_stock_pack_cmp](../l10n_ro_stock_pack_cmp/index.md)
@@ -171,7 +171,7 @@ setări, oricare dintre modulele suitei l10n_ro_ent, grupate pe categorii:
 
 - [l10n_ro_cbam](../l10n_ro_cbam/index.md)
 - [l10n_ro_environmental_tax](../l10n_ro_environmental_tax/index.md)
-- [l10n_ro_excise](../l10n_ro_excise/index.md)
+- [l10n_ro_excise_duty](../l10n_ro_excise_duty/index.md)
 - [l10n_ro_grants](../l10n_ro_grants/index.md)
 - [l10n_ro_oss_threshold](../l10n_ro_oss_threshold/index.md)
 - [l10n_ro_partner_screening](../l10n_ro_partner_screening/index.md)

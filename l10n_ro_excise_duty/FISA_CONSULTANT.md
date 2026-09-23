@@ -1,6 +1,6 @@
 # Fișă Modul: Accize — categorii, antrepozite, garanții și declarațiile D103/D120
 
-**Modul:** `l10n_ro_excise`
+**Modul:** `l10n_ro_excise_duty`
 **FR:** FR-42
 **Utilizator principal:** Contabil fiscalitate / responsabil accize la antrepozitarul autorizat
 **Prioritate:** 🔴 Ridicată (obligație lunară D103 pentru antrepozitari; risc fiscal direct)
@@ -18,7 +18,7 @@ stornări cu semn negativ), declarațiile persistente **D103** (lunară, antrepo
 plus actualizarea anuală a cotelor prin hotărâre de guvern.
 
 Exportul XML al fiecărei declarații e contribuit de modulul ANAF dedicat
-(`l10n_ro_anaf_d103`, `l10n_ro_anaf_d120`) — `l10n_ro_excise` e infrastructura comună.
+(`l10n_ro_anaf_d103`, `l10n_ro_anaf_d120`) — `l10n_ro_excise_duty` e infrastructura comună.
 
 ## 2. Bază legală și context
 
@@ -61,7 +61,7 @@ acciză, facturi de vânzare postate în perioada declarată, opțional un antre
 
 ## 5. Configurare inițială
 
-1. Instalați modulul `l10n_ro_excise` — nomenclatorul de categorii (16 armonizate A–G7 +
+1. Instalați modulul `l10n_ro_excise_duty` — nomenclatorul de categorii (16 armonizate A–G7 +
    6 nearmonizate H1–H6, cu cotele HG 2/2025) se încarcă automat.
 2. Verificați nomenclatorul în **Contabilitate → Raportare → Accize → Categorii produse
    accizabile** (cod, cotă, U.M., valabilitate de la).
@@ -230,7 +230,7 @@ Extrasul XML din Pasul 4 e text inline (nu fișier în `screenshots/`).
 Regenerare:
 
 ```bash
-./odoo/odoo-bin -c odoo.conf -d <db> -i l10n_ro_excise,l10n_ro_anaf_d103,l10n_ro_doc_screenshots \
+./odoo/odoo-bin -c odoo.conf -d <db> -i l10n_ro_excise_duty,l10n_ro_anaf_d103,l10n_ro_doc_screenshots \
     --test-tags=fise_screenshots --stop-after-init
 ```
 

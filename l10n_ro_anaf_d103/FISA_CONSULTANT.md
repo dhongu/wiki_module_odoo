@@ -1,6 +1,6 @@
 # Fișă Modul: D103 — Decont lunar privind accizele (antrepozit fiscal)
 
-**Modul:** `l10n_ro_anaf_d103` (peste infrastructura `l10n_ro_excise`)
+**Modul:** `l10n_ro_anaf_d103` (peste infrastructura `l10n_ro_excise_duty`)
 **FR:** FR-42
 **Capitol manual:** Cap 14.1
 **Utilizator principal:** Responsabil accize, Contabil
@@ -11,7 +11,7 @@
 ## 1. Scop business
 
 Modulul `l10n_ro_anaf_d103` adaugă **exportul XML al Decontului lunar D103** peste infrastructura de
-**accize** din `l10n_ro_excise` (categoriile de produse accizabile cu cotele legale, marcarea
+**accize** din `l10n_ro_excise_duty` (categoriile de produse accizabile cu cotele legale, marcarea
 produselor, calculul accizei `cantitate × cotă` din facturile postate și modelul de declarație).
 D103 este decontul depus lunar de **antrepozitarii fiscali autorizați**.
 
@@ -51,13 +51,13 @@ taxe și vărsăminte asimilate", analitic accize), nu prin decont. Decontul cit
 
 Date minime pentru demo:
 - compania RO cu **CUI, CAEN și adresă** completate (cerute la export);
-- categorii de accize configurate (`l10n_ro_excise` — A Alcool etilic, B Bere, G3 Motorină etc.);
+- categorii de accize configurate (`l10n_ro_excise_duty` — A Alcool etilic, B Bere, G3 Motorină etc.);
 - cel puțin un **produs marcat** cu o categorie de acciză;
 - facturi postate cu produse accizabile (pentru calcul automat) sau linii introduse manual.
 
 ## 5. Configurare inițială
 
-1. Instalați `l10n_ro_anaf_d103` (instalează automat infrastructura `l10n_ro_excise`).
+1. Instalați `l10n_ro_anaf_d103` (instalează automat infrastructura `l10n_ro_excise_duty`).
 2. Verificați **categoriile de accize** și cotele în vigoare în
    **Contabilitate → Raportare → Accize → Categorii produse accizabile**.
 3. Completați **CUI, CAEN și adresa companiei** — cerute la generarea XML.
@@ -156,7 +156,7 @@ Structura XML generată (extras ilustrativ — antet + o linie + total):
 
 | Modul / proces | Rol în flux |
 |---|---|
-| `l10n_ro_excise` | infrastructura de accize: categorii, marcare produse, cote, model declarație (dependență) |
+| `l10n_ro_excise_duty` | infrastructura de accize: categorii, marcare produse, cote, model declarație (dependență) |
 | `account` | facturile postate care alimentează liniile decontului |
 | `l10n_ro_anaf_base` | infrastructură comună ANAF (validare companie, profil declarație) |
 | `l10n_ro_anaf_d120` | modul-soră peste aceeași infrastructură, pentru **D120** (decontul anual) — vezi fișa lui |

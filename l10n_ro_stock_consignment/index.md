@@ -1,10 +1,11 @@
-# Romania - Stocuri în custodie (localizat la `l10n_ro_stock_custody/index.md`)
+# Romania - Stocuri în custodie (localizat la `l10n_ro_stock_consignment/index.md`)
 
-- **Nume Tehnic:** `l10n_ro_stock_custody`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_custody
-- **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_custody`
-- **Ultima Ingestie:** `2026-07-02`
+- **Nume Tehnic:** `l10n_ro_stock_consignment`
+- **Nume anterior:** `l10n_ro_stock_custody` (redenumit pe 23.09.2026: numele vechi e ocupat pe Odoo Apps de alt furnizor)
+- **Versiune:** `19.0.1.0.1`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_consignment
+- **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_consignment`
+- **Ultima Ingestie:** 2026-09-23
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar

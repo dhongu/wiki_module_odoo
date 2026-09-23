@@ -43,5 +43,5 @@ Extinde modulul `l10n_ro_edi_stock` pentru a bloca validarea avizelor care conț
 
 ## 5. Conexiuni
 
-- `[[l10n_ro_efactura_b2c]]`
+- `[[l10n_ro_efactura_consumer]]`
 - `[[l10n_ro_efactura_dedup]]`

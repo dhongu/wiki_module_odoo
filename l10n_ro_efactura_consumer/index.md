@@ -1,10 +1,11 @@
-# Romania - e-Factura B2C (persoane fizice) (localizat la `l10n_ro_efactura_b2c/index.md`)
+# Romania - e-Factura B2C (persoane fizice) (localizat la `l10n_ro_efactura_consumer/index.md`)
 
-- **Nume Tehnic:** `l10n_ro_efactura_b2c`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_efactura_b2c
-- **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_efactura_b2c`
-- **Ultima Ingestie:** 2026-06-01
+- **Nume Tehnic:** `l10n_ro_efactura_consumer`
+- **Nume anterior:** `l10n_ro_efactura_b2c` (redenumit pe 23.09.2026: numele vechi e ocupat pe Odoo Apps de alt furnizor)
+- **Versiune:** `19.0.1.0.2`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_efactura_consumer
+- **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_efactura_consumer`
+- **Ultima Ingestie:** 2026-09-23
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 ## 1. Sumar
