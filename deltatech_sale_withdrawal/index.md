@@ -1,10 +1,10 @@
 # Sale Withdrawal (localizat la `deltatech_sale_withdrawal/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_withdrawal`
-- **Versiune:** `19.0.0.3.0`
+- **Versiune:** `19.0.0.3.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_withdrawal
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_withdrawal`
-- **Ultima Ingestie:** 2026-09-22
+- **Ultima Ingestie:** 2026-09-23
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -47,6 +47,10 @@ Modulul implementează funcția de retragere din contract (dreptul de renunțare
 - `views/sale_order_views.xml`, `views/product_views.xml`, `views/res_config_settings_views.xml`: integrarea pe formularul comenzii, pe produs și în setările Vânzărilor.
 - `views/portal_templates.xml`: paginile portalului — recapitulare, confirmare și status al retragerii, accesibile prin link cu token, inclusiv pentru invitați. Secțiunea butonului de pe pagina comenzii are acum titlu propriu (`<h3>Right of withdrawal</h3>`), care generează automat o ancoră separată în navspy-ul portalului; butonul activ e stilizat `btn-primary` (anterior `btn-secondary`), pentru a-l scoate în evidență față de restul acțiunilor secundare ale comenzii.
 - `report/withdrawal_report.xml`: raportul PDF anexat la confirmarea de primire.
+
+**Migrare de la numele vechi**
+
+- `hooks.py` → `pre_init_hook`: preia datele modulelor `bitshop_sale_withdrawal` / `bitshop_sale_withdrawal_stock`, cum se numeau înainte de redenumirea `bitshop_*` → `deltatech_*`. Modulele vechi erau deja instalate la Damira (și probabil la Romchim). Hook-ul redenumește pe loc tabelele (inclusiv cele many2many), coloanele `bitshop_withdrawal_*`, constrângerile, indecșii, secvențele, `ir_model` / `ir_model_fields`, xml id-urile și referințele la model din chatter, followeri, activități și atașamente. Fără el, retragerile înregistrate rămâneau în tabele orfane, iar Odoo le-ar fi șters la actualizarea modulelor vechi. Modulele vechi rămân în bază ca stub-uri care depind de cele noi, în repo-ul proiectului, așa că hook-ul rulează înainte de crearea tabelelor noi. Pe o instalare nouă nu face nimic.
 
 **Acțiuni Automate / Acțiuni Server**
 

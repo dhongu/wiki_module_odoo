@@ -4,6 +4,30 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-23] `deltatech_rma` 19.0.1.1.0 (IBAN în portal, acces automat, poze verificate în pagină) + migrarea `deltatech_sale_withdrawal`
+
+- **Acțiune:** Re-ingestie `deltatech_rma` (`19.0.1.0.0` → `19.0.1.1.0`) după bitshop#2856 și
+  actualizarea `deltatech_sale_withdrawal` (`19.0.0.3.0` → `19.0.0.3.1`) după bitshop d846a6244.
+- **Ce s-a schimbat la `deltatech_rma`:** IBAN-ul de rambursare cerut în formularul din portal, doar
+  la renunțare și produs greșit, verificat mod 97 și în back office, cu validator propriu
+  (`stdnum.iban` nu se importă în Odoo 19, `base_iban` ar valida toți partenerii). Accesul automat al
+  colegilor: orice utilizator intern devine **User**, cu setare de oprire care nu se anulează la
+  upgrade. Pozele obligatorii se verifică în pagină, înainte de trimitere, iar eticheta câmpului
+  urmează motivul ales. Mesajele verificărilor din formular au trecut din `<script>` în șablon,
+  pentru că textul din `<script>` nu ajunge în `.pot` și apăreau în engleză în portalul RO.
+  `customer_hint` pe motiv a devenit traductibil. Setările modulului sunt în tabul **Vânzări**.
+- **Capcană reținută:** în Odoo 19, `lazyloader.js` blochează orice `submit` (`preventDefault` +
+  `stopImmediatePropagation`) până se încarcă JS-ul întârziat. Un test `browser_js` care trimite un
+  formular trebuie să aștepte dispariția clasei `o_lazy_js_waiting` de pe `<body>`. Altfel handler-ul
+  paginii nu rulează deloc, fără nicio eroare.
+- **Corectură:** intrarea din 2026-09-22 spunea că modulele `bitshop_*` nu erau „instalate nicăieri".
+  Era fals: `bitshop_sale_withdrawal` era instalat la Damira. Pagina `deltatech_sale_withdrawal` are
+  acum o subsecțiune despre `pre_init_hook`-ul care preia datele. Intrarea veche rămâne neatinsă,
+  pentru că jurnalul e append-only; corectura e aceasta.
+- **Fișiere actualizate:** `deltatech_rma/index.md`, `deltatech_rma/FISA_CONSULTANT.md`
+  (resincronizată), `deltatech_rma/screenshots/*.png` (19 actualizate, 2 noi: `05a_portal_fara_poze`,
+  `05b_portal_iban`), `deltatech_sale_withdrawal/index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-09-23] deltatech_marketplace_extended — Extended API V2, webhook-uri semnate, fișă consultant cu capturi
 
 - **Acțiune:** Re-ingestie a paginii `deltatech_marketplace_extended` (`19.0.0.0.14` → `19.0.0.0.19`) și

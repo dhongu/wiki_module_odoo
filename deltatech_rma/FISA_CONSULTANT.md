@@ -51,6 +51,11 @@ eligibilitate pentru cererile de tip garanție. Fereastra se schimbă din Setăr
 | **Retururi / Responsabil** | în plus: configurează motive, etichete și motive de închidere, șterge cereri |
 | **Portal** | vede doar cererile proprii și ale firmei lui, trimite cereri și mesaje pe ele |
 
+**La instalare, orice utilizator intern devine Utilizator de retururi**, inclusiv cei adăugați de
+acum încolo — ca în `agroamat_retururi`. Dacă firma vrea să dea accesul doar unor oameni anume,
+debifează *Toți utilizatorii interni lucrează cu retururi* în setări (vezi secțiunea 5); de atunci
+grupul se atribuie de mână. O dezactivare rămâne dezactivată și după actualizarea modulului.
+
 Regula de acces pe client e `child_of` pe partenerul comercial: un angajat al firmei client vede
 cererile firmei, nu doar pe ale lui. Multi-companie: regulă globală pe `company_id`.
 
@@ -85,8 +90,9 @@ iar costul repus în stoc ar fi cel curent, nu cel cu care a ieșit.
 1. **Retururi → Configurare → Motive de retur** — politica. Fiecare motiv are categoria, intervalul
    taxei (minim / propus / maxim), dacă cere poze, cine plătește transportul și explicația pentru
    client. Motivele livrate sunt un punct de plecare, cu `noupdate="1"`: ce schimbați rămâne.
-2. **Vânzări → Configurare → Setări → Retururi și garanții** — fereastra de eligibilitate (luni
-   pentru garanție, zile pentru retur), motiv obligatoriu sau opțional, taxa implicită.
+2. **Vânzări → Configurare → Setări → Retururi și garanții** — cine are acces (toți utilizatorii
+   interni sau doar cei aleși), fereastra de eligibilitate (luni pentru garanție, zile pentru retur),
+   motiv obligatoriu sau opțional, taxa implicită.
 3. **Produse** — bifa „Nu se poate returna” pe produsele de tip taxă și pe categoriile lor, ca să nu
    apară în formularul clientului.
 4. **Retururi → Configurare → Etichete** și **Motive de închidere** — opțional, pentru raportare.
@@ -135,8 +141,20 @@ Bifează produsele, cantitatea, motivul per produs, descrierea și pozele. Nu ap
 transportul, taxele, serviciile, produsele marcate „nu se poate returna" și ce a cerut deja pe altă
 cerere. Cantitatea e plafonată la cât a cumpărat.
 
-Pozele se verifică **înainte** de a crea cererea: dacă motivul le cere și niciuna nu se poate
-deschide ca imagine, clientul se întoarce la formular cu un mesaj, nu rămâne cu o cerere fără dovadă.
+Eticheta câmpului de poze urmează motivul: „opțional” cât timp niciun produs bifat nu le cere,
+„obligatorii la motivul ales” altfel. Când motivul cere poze și clientul n-a atașat niciuna, formularul **nu pleacă**: mesajul apare pe loc,
+lângă câmpul de poze, fără drum la server. Serverul verifică oricum încă o dată — dacă pozele atașate
+nu se pot deschide ca imagine, clientul se întoarce la formular cu un mesaj, nu rămâne cu o cerere
+fără dovadă.
+
+![Garanție fără poze: formularul se oprește în pagină](screenshots/05a_portal_fara_poze.png)
+
+La returul de tip renunțare și la produsul greșit — cele care se pot încheia cu banii înapoi —
+formularul cere și **IBAN-ul pentru rambursare**. E opțional: gol, echipa îl cere la rezolvare. Dacă e
+completat, se verifică (țară, lungime, sumă de control), iar unul greșit întoarce clientul la formular.
+Aceeași verificare se aplică în back office, când colegul îl tastează de la telefon.
+
+![IBAN-ul pentru rambursare](screenshots/05b_portal_iban.png)
 
 #### 6.5 Confirmarea
 
@@ -271,8 +289,8 @@ contabil, intră în D300 și D394 ca orice storno de vânzare.
 
 ## 10. Capturi de ecran
 
-Cele 19 capturi din `readme/screenshots/` sunt cele folosite în secțiunea 6, în ordinea fluxului:
-opt de pe partea clientului (01–08), șase de pe partea echipei (09–16) și trei de configurare și
+Cele 21 de capturi din `readme/screenshots/` sunt cele folosite în secțiunea 6, în ordinea fluxului:
+zece de pe partea clientului (01–08, plus 05a fără poze și 05b cu IBAN-ul), șase de pe partea echipei (09–16) și trei de configurare și
 analiză (17–19).
 
 Se generează cu testul `tests/test_screenshots.py`, în română, pe planul de conturi RO:
