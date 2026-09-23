@@ -4,6 +4,18 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-23] `deltatech_rma` 19.0.1.1.1 — accesul automat ajunge și la bazele actualizate
+
+- **Acțiune:** Actualizare punctuală a paginii `deltatech_rma` (`19.0.1.1.0` → `19.0.1.1.1`) după
+  bitshop#2858.
+- **Ce s-a schimbat:** în 19.0.1.1.0, regula „orice utilizator intern e operator de retururi" venea
+  dintr-un `<function>` într-un fișier `noupdate`, care rulează doar la instalare, așa că o bază
+  actualizată de pe 19.0.1.0.0 rămânea fără ea. Scriptul `migrations/19.0.1.1.1/post-migration.py`
+  o aplică o singură dată, doar bazelor care vin de sub 19.0.1.1.0. Bazele aflate deja pe 19.0.1.1.0
+  nu se ating, pentru că acolo lipsa regulii înseamnă o oprire deliberată din setări.
+- **Fișiere actualizate:** `deltatech_rma/index.md`, `log.md`, `.index/chunks.json`. Fișa consultant
+  nu s-a schimbat.
+
 ## [2026-09-23] `deltatech_rma` 19.0.1.1.0 (IBAN în portal, acces automat, poze verificate în pagină) + migrarea `deltatech_sale_withdrawal`
 
 - **Acțiune:** Re-ingestie `deltatech_rma` (`19.0.1.0.0` → `19.0.1.1.0`) după bitshop#2856 și

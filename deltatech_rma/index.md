@@ -1,7 +1,7 @@
 # RMA - Returns and Warranty Claims (localizat la `deltatech_rma/index.md`)
 
 - **Nume Tehnic:** `deltatech_rma`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_rma`
 - **Ultima Ingestie:** 2026-09-23
@@ -27,7 +27,7 @@ Modulul gestionează returul comercial și reclamațiile de garanție pentru vâ
 - **Returns → Analysis** arată retururile pe lună și tip, plus rata de retur per produs (raportat la cantitățile vândute).
 - Configurare în **Returns → Configuration → Return Reasons** (categorie, interval taxă, obligativitate poze/video, cine plătește transportul, explicația afișată clientului, opțiunea *Staff Only* pentru motive interne) și în **Settings → Sales → Returns and Warranty Claims** (accesul automat al colegilor, fereastra de eligibilitate, opțiunea de motiv obligatoriu, taxa de manipulare implicită). Explicația afișată clientului la fiecare motiv e traductibilă.
 - Opțiunea *Not Returnable* pe produs sau categorie exclude transportul, taxele de manipulare și serviciile din formularul clientului; serviciile sunt oricum excluse automat.
-- Două grupuri de securitate: **User** (gestionează cererile) și **Manager** (configurează motive, etichete și motive de închidere, poate șterge o cerere). La instalare, orice utilizator intern devine automat **User**, ca în `agroamat_retururi`. Accesul automat se poate opri din setări, cu opțiunea *All Internal Users Handle Returns*; după asta, accesul rămâne doar celor cărora li s-a dat explicit, iar actualizarea modulului nu îl mai repornește.
+- Două grupuri de securitate: **User** (gestionează cererile) și **Manager** (configurează motive, etichete și motive de închidere, poate șterge o cerere). La instalare, orice utilizator intern devine automat **User**, ca în `agroamat_retururi`. Accesul automat se poate opri din setări, cu opțiunea *All Internal Users Handle Returns*; după asta, accesul rămâne doar celor cărora li s-a dat explicit, iar actualizarea modulului nu îl mai repornește. O bază actualizată de pe `19.0.1.0.0`, versiune care nu avea opțiunea, primește accesul automat o singură dată, prin scriptul `migrations/19.0.1.1.1/post-migration.py`. Scriptul nu atinge bazele aflate deja pe `19.0.1.1.0`: acolo lipsa regulii înseamnă că a fost oprită deliberat.
 
 #### 3. Dependențe
 
