@@ -4,6 +4,28 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-23] deltatech_marketplace_extended — Extended API V2, webhook-uri semnate, fișă consultant cu capturi
+
+- **Acțiune:** Re-ingestie a paginii `deltatech_marketplace_extended` (`19.0.0.0.14` → `19.0.0.0.19`) și
+  copierea fișei consultant noi, cu 9 capturi (înainte fișa nu avea nicio imagine).
+- **Ce s-a schimbat:**
+  1. bitshop_marketplace#381 (unit în 19.0) — Extended API V2 ales per backend (**Extended API Version**
+     V1/V2): comenzile, nomenclatoarele, factura, AWB-ul și stadiul trec prin V2; produsele, stocul și
+     dicționarul de stoc informativ rămân pe V1, deci cheia V1 rămâne necesară. Webhook-uri semnate
+     (Register/Unregister Webhooks, HMAC, import în job), limitele de ritm V2 aplicate automat. Verificat
+     read-only pe date reale Insignis: reducerea pe comandă și taxa de ramburs se tratează ca pe V1.
+  2. bitshop_marketplace#385 (deschis la data ingestiei) — cardul **Public category** are din nou
+     acțiunea Import; fișa consultant actualizată pentru V2 (TVA inclus în preț, nota de încasare
+     condiționată de contul de încasări în curs, căile reale de export de stoc), verificată în 3 ture
+     cu `verificator-fisa` (verdict curat).
+- **Sursă:** worktree-ul branch-ului `19.0-extended-fisa` (origin/19.0 + #385): `readme/DESCRIPTION.md`,
+  `readme/HISTORY.md`, `readme/FISA_CONSULTANT.md`. Checkout-ul principal era în urmă.
+- **Dependențe/Conexiuni:** neschimbate; toate dependențele marketplace au pagini wiki.
+- **Fișiere actualizate:** `wiki_module_odoo/deltatech_marketplace_extended/index.md`,
+  `wiki_module_odoo/deltatech_marketplace_extended/FISA_CONSULTANT.md`,
+  `wiki_module_odoo/deltatech_marketplace_extended/screenshots/01_*.png` … `09_*.png`,
+  `wiki_module_odoo/index.md`, `wiki_module_odoo/log.md`, `wiki_module_odoo/.index/chunks.json`.
+
 ## [2026-09-23] deltatech_delivery — „View Invoices" + banner de progres în „Send to Carrier" (tichet 9471)
 
 - **Acțiune:** Re-ingestie a paginii `deltatech_delivery` (`19.0.6.5.3` → `19.0.6.5.5`).
