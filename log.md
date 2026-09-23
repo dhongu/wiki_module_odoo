@@ -4,6 +4,31 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-23] `l10n_ro_customs_dvi` — re-ingestie după auditul contabil (19.0.2.0.0)
+
+- **Acțiune:** Actualizată pagina și fișa consultant, după corecțiile din dhongu/l10n-romania#568.
+  Pagina primește secțiune de istoric, ca diferențele între versiuni să fie vizibile fără git.
+- **Ce s-a corectat față de ingestia de dimineață (19.0.1.3.0):**
+  - **contul nu e „446" generic, ci 4462.** În planul RO ordinea e contraintuitivă — 4461 înseamnă
+    reluate într-o perioadă **mai mare** de un an, 4462 până la un an. Datoria vamală se stinge în
+    zile, deci e datorie curentă (OMFP 1802/2014 pct. 360). Codul lua determinist 4461;
+  - **baza importului nu ajungea în decont.** Nota purta eticheta fiscală doar pe linia de taxă, iar
+    rândul din D300 are și expresie de bază — deci ieșea cu TVA și cu bază zero. Se adaugă acum o
+    pereche tehnică echilibrată pe un cont neutru 473, care poartă eticheta de bază;
+  - **eliminat câmpul „Comision vamal".** Nu există un comision datorat autorității vamale; cel de
+    0,5% a dispărut odată cu aderarea la UE. În practică era folosit pentru onorariul brokerului, cu
+    contul greșit (446, datorie la buget, în loc de 401) și fără TVA deductibilă;
+  - **brokerul se înregistrează pe 622**, nu pe 628, iar capitalizarea onorariului e regula, nu o
+    opțiune de politică contabilă (pct. 8 subpct. 6 enumeră expres comisioanele).
+- **Fișa consultant** primește două secțiuni noi pe limitări: modulul acoperă doar plata efectivă la
+  vamă, nu și amânarea prin certificat (art. 326 alin. (4)-(5), unde nota e `Dr 4426 = Cr 4427`), și
+  deducerea e condiționată de dovada plății (art. 299 alin. (1) lit. c)), deși nota se face la data DVI.
+- **Capturi:** regenerate toate 10. Cifrele seed-ului scad cu comisionul eliminat — baza B00 devine
+  70.000, TVA 11% = 7.700, cost unitar 61,00.
+- **Avertismente notabile:** pe bazele existente, schimbarea contului afectează doar înregistrările
+  noi; soldurile istorice rămân pe 4461, iar produsul „Comision vamal" rămâne orfan și **nu se
+  șterge** — istoricul costurilor adiționale îl referă.
+
 ## [2026-09-23] `terrabit_dvi` → `l10n_ro_customs_dvi` — redenumire + re-ingestie
 
 - **Acțiune:** Pagină nouă pentru `l10n_ro_customs_dvi` (`19.0.1.3.0`) și rescrierea paginii
