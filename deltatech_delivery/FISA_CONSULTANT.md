@@ -91,19 +91,19 @@ Din **Vânzări → Comenzi → Comenzi**, selectați comenzile dorite și desch
 
 ![Dialogul „Send to Carrier" nou deschis, cu comenzile în așteptare](screenshots/06_dialog_send_to_carrier_initial.png)
 
-La **Send to Carrier**, comenzile sunt trimise **secvențial, una câte una** (nu în paralel, ca să nu bombardeze API-ul curierului), fiecare printr-un apel RPC independent (`action_send_to_carrier_one`). Fiecare linie își schimbă starea live, în timp real:
+La **Send to Carrier**, comenzile sunt trimise **secvențial, una câte una** (nu în paralel, ca să nu bombardeze API-ul curierului), fiecare printr-un apel RPC independent (`action_send_to_carrier_one`). Cât durează procesarea, în capul ferestrei apare un banner albastru cu o rotiță animată („Se procesează, vă rugăm așteptați… Comanda X/N se trimite la curier. Nu închideți această fereastră.”), butonul de trimitere arată o rotiță, iar **Închide** e dezactivat până la final — operatorul vede că acțiunea rulează și trebuie să aștepte. Fiecare linie își schimbă starea live, în timp real:
 - rotița de încărcare cât timp cererea e în curs;
 - ✅ verde cu numărul AWB, la succes (inclusiv atunci când livrarea avea deja AWB — caz tratat ca succes, fără resend);
 - ❌ roșu cu mesajul de eroare, la un eșec clar (ex. lipsă livrare de ieșire, mai multe livrări de ieșire, configurare curier incompletă);
 - ⚠️ galben „rezultat incert", când răspunsul curierului s-a pierdut și nu se știe sigur dacă expedierea a fost înregistrată — acest caz **nu se reîncearcă automat**, tocmai ca să nu se genereze un AWB dublu la curier.
 
-![Dialogul în timpul procesării: succes, eroare și rezultat incert pe linii diferite](screenshots/07_dialog_send_to_carrier_progres.png)
+![Dialogul în timpul procesării: banner animat „Se procesează…”, prima comandă în curs, celelalte în așteptare](screenshots/07_dialog_send_to_carrier_progres.png)
 
 Dacă o cerere eșuează la jumătatea lotului (ex. se închide browserul), comenzile deja marcate „success" rămân trimise — fiecare apel e propria tranzacție, redeschiderea dialogului pe aceeași selecție nu retrimite comenzile care au deja AWB.
 
-După ce toate liniile au ieșit din starea „în așteptare"/"în curs", butonul **Print AWBs** devine activ (doar dacă există cel puțin un succes) și apelează `action_download_awb_labels()`: **nu generează** nimic nou, ci doar combină într-un singur PDF etichetele deja obținute la trimitere, pentru comenzile reușite din acest lot.
+La final, banner-ul devine verde („Finalizat: X/N comandă(comenzi) trimisă(e).”), fiecare linie arată rezultatul ei (succes, eroare sau rezultat incert), iar butonul **Print AWBs** devine activ (doar dacă există cel puțin un succes) și apelează `action_download_awb_labels()`: **nu generează** nimic nou, ci doar combină într-un singur PDF etichetele deja obținute la trimitere, pentru comenzile reușite din acest lot.
 
-![Dialog finalizat, cu butonul Print AWBs activ și rezultatul descărcării PDF](screenshots/08_dialog_send_to_carrier_finalizat_print.png)
+![Dialog finalizat: banner „Finalizat”, succes, eroare și rezultat incert pe linii diferite, butonul Print AWBs activ](screenshots/08_dialog_send_to_carrier_finalizat_print.png)
 
 ### Note de monografie și raportare
 
@@ -163,8 +163,8 @@ Capturile nu există încă în `readme/screenshots/` pentru acest modul. Lista 
 4. `04_wizard_confirmare_validare.png` — wizard-ul de confirmare al validării în masă.
 5. `05_notificare_rezultat_validare.png` — notificarea finală cu numărul de comenzi validate și eventualele probleme.
 6. `06_dialog_send_to_carrier_initial.png` — dialogul „Send to Carrier" nou deschis, comenzi în așteptare.
-7. `07_dialog_send_to_carrier_progres.png` — dialogul în timpul procesării, cu succes/eroare/incert vizibile pe linii diferite.
-8. `08_dialog_send_to_carrier_finalizat_print.png` — dialogul finalizat, cu butonul Print AWBs activ.
+7. `07_dialog_send_to_carrier_progres.png` — dialogul în timpul procesării, cu banner-ul animat „Se procesează…” și comanda curentă în curs.
+8. `08_dialog_send_to_carrier_finalizat_print.png` — dialogul finalizat, cu succes/eroare/incert pe linii diferite și butonul Print AWBs activ.
 
 Recomand rularea skill-ului `fisa-screenshots` pentru a genera aceste capturi (folosind mixinul `ScreenshotCase`, în română, pe date demo cu un curier de test simplu — ex. „Fixed Price" — pentru a nu depinde de credențiale reale de curier).
 

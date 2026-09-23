@@ -4,6 +4,24 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-23] deltatech_delivery — „View Invoices" + banner de progres în „Send to Carrier" (tichet 9471)
+
+- **Acțiune:** Re-ingestie a paginii `deltatech_delivery` (`19.0.6.5.3` → `19.0.6.5.5`).
+- **Ce s-a schimbat:**
+  1. bitshop_delivery#168 — a treia acțiune în masă pe lista de comenzi, „View Invoices" (Afișează
+     facturile): expune `sale.order.action_view_invoice()` din core, fără logică nouă; tipărirea
+     facturilor în masă rămâne cea standard Odoo (soluție agreată cu clientul).
+  2. bitshop_delivery#170 — în dialogul „Send to Carrier", banner cu rotiță animată cât rulează
+     („Se procesează, vă rugăm așteptați… Comanda X/N...”), rotiță pe butonul de trimitere, „Închide”
+     dezactivat până la final, banner verde de rezumat la sfârșit. Cerut după testul clientului pe
+     staging: singurul semn de progres era o rotiță mică pe rândul curent.
+  3. Fișa consultant: captura 07 arată acum dialogul în timpul procesării (banner-ul), 08 starea finală.
+- **Fișiere actualizate:** `wiki_module_odoo/deltatech_delivery/index.md`,
+  `wiki_module_odoo/deltatech_delivery/FISA_CONSULTANT.md`,
+  `wiki_module_odoo/deltatech_delivery/screenshots/07_*.png`, `08_*.png`, `wiki_module_odoo/log.md`.
+
+---
+
 ## [2026-09-23] `l10n_ro_currency_rate_live_bnr` — pagină eliminată
 
 - **Acțiune:** Ștearsă pagina și intrarea din `index.md`; modulul a fost scos din suita `l10n_ro_ent`
