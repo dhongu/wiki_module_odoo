@@ -10685,31 +10685,6 @@
     "text": "Romania - Repartizarea cheltuielilor indirecte pe centre de cost\nl10n_ro_cost_centers\nModulul automatizează repartizarea cheltuielilor indirecte pe centre de cost (conturi analitice), conform contabilității de gestiune din România (OMFP 1802/2014). Costurile colectate pe un centru comun/indirect se redistribuie pe centrele productive printr-o notă contabilă care păstrează un impact financiar zero pe contul de cheltuială (creditul 6xx de pe centrul comun este egal cu debitele 6xx de pe centrele țintă), mutând costul doar pe dimensiunea analitică — fără a folosi obligatoriu conturile din clasa 9. Este un instrument de control de gestiune, neutru financiar, care nu modifică balanța contabilă.\nRepartizarea automată a cheltuielilor indirecte de pe un centru de cost sursă (comun/indirect) pe mai multe centre țintă (productive).\nCheie de repartizare configurabilă: manual (procente fixe), suprafață (m²), nr. angajați sau cifră de afaceri (venituri 7xx pe centru).\nCâmpuri proprii pe centrul de cost (cont analitic): Suprafață (m²) și Nr. angajați, folosite ca baze de repartizare.\nColectarea costului de pe centrul sursă pe o perioadă aleasă și calculul automat al procentelor și sumelor per centru țintă.\nGenerarea unei note contabile de redistribuire analitică echilibrată, cu impact financiar zero pe contul de cheltuială (costul migrează doar pe dimensiunea analitică).\nAnularea repartizării readuce nota în ciornă și anulează nota contabilă generată.\nBazat pe contabilitatea analitică nativă Odoo; planurile analitice ierarhice, distribuția analitică obligatorie la postare, bugetele pe centre și rapoartele P&L pe dimensiuni rămân acoperite de baza nativă (analytic + Enterprise account_budget / account_reports)."
   },
   {
-    "path": "l10n_ro_currency_rate_live_bnr/index.md",
-    "module": "l10n_ro_currency_rate_live_bnr",
-    "version": "19.0.1.0.0",
-    "github": "[https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_currency_rate_live_bnr](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_currency_rate_live_bnr)",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_currency_rate_live_bnr",
-    "last_ingest": "2026-09-12",
-    "friendly_name": "Romania - Corecție curs valutar BNR",
-    "summary": "Acest modul repară preluarea automată a cursului valutar BNR din Odoo Enterprise. Începând cu 4 august 2026, Banca Națională a României și-a mutat fluxul XML cu cursuri de la `www.bnr.ro` la `curs.bnr.ro`; adresa veche redirecționează acum către pagina principală a băncii și întoarce HTML în loc de XML, ceea ce oprește silențios actualizarea automată a cursului valutar în Odoo. Modulul corectează adresa folosită, astfel încât actualizarea automată să continue să funcționeze fără nicio intervenție a utilizatorului.",
-    "features": [
-      "Suprascrie complet metoda `res.company._parse_bnr_data()` din `currency_rate_live`, folosind noul endpoint `https://curs.bnr.ro/nbrfxrates.xml` (nu poate apela `super()`, fiindcă adresa veche e cablată acolo).",
-      "Structura XML a fluxului BNR nu s-a schimbat, deci logica de parsare rămâne identică celei standard.",
-      "Cursurile sunt salvate cu valabilitate pentru ziua următoare, conform normei metodologice românești privind cursul de schimb valutar.",
-      "Se instalează automat (`auto_install`) atunci când `currency_rate_live` este prezent în bază, fără configurare suplimentară.",
-      "Nu necesită nicio configurare: se folosește fluxul standard — *Contabilitate → Configurare → Setări → Monede*, serviciul [RO] National Bank of Romania, cu intervalul dorit și rulare manuală (*Update now*) sau prin acțiunea programată.",
-      "Devine un no-op inofensiv în momentul în care Odoo repară adresa în amonte, în standard."
-    ],
-    "dependencies": [
-      "currency_rate_live"
-    ],
-    "connections": [
-      "currency_rate_live"
-    ],
-    "text": "Romania - Corecție curs valutar BNR\nl10n_ro_currency_rate_live_bnr\nAcest modul repară preluarea automată a cursului valutar BNR din Odoo Enterprise. Începând cu 4 august 2026, Banca Națională a României și-a mutat fluxul XML cu cursuri de la `www.bnr.ro` la `curs.bnr.ro`; adresa veche redirecționează acum către pagina principală a băncii și întoarce HTML în loc de XML, ceea ce oprește silențios actualizarea automată a cursului valutar în Odoo. Modulul corectează adresa folosită, astfel încât actualizarea automată să continue să funcționeze fără nicio intervenție a utilizatorului.\nSuprascrie complet metoda `res.company._parse_bnr_data()` din `currency_rate_live`, folosind noul endpoint `https://curs.bnr.ro/nbrfxrates.xml` (nu poate apela `super()`, fiindcă adresa veche e cablată acolo).\nStructura XML a fluxului BNR nu s-a schimbat, deci logica de parsare rămâne identică celei standard.\nCursurile sunt salvate cu valabilitate pentru ziua următoare, conform normei metodologice românești privind cursul de schimb valutar.\nSe instalează automat (`auto_install`) atunci când `currency_rate_live` este prezent în bază, fără configurare suplimentară.\nNu necesită nicio configurare: se folosește fluxul standard — *Contabilitate → Configurare → Setări → Monede*, serviciul [RO] National Bank of Romania, cu intervalul dorit și rulare manuală (*Update now*) sau prin acțiunea programată.\nDevine un no-op inofensiv în momentul în care Odoo repară adresa în amonte, în standard."
-  },
-  {
     "path": "l10n_ro_currency_revaluation/index.md",
     "module": "l10n_ro_currency_revaluation",
     "version": "19.0.1.1.1",

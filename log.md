@@ -4,6 +4,17 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-23] `l10n_ro_currency_rate_live_bnr` — pagină eliminată
+
+- **Acțiune:** Ștearsă pagina și intrarea din `index.md`; modulul a fost scos din suita `l10n_ro_ent`
+  (terrabit-solutions/l10n_ro_ent#306). Odoo a corectat URL-ul BNR (`curs.bnr.ro`) direct în Enterprise
+  `currency_rate_live` pe 07.08.2026, așa că modulul-punte devenise inutil.
+- **Fișiere actualizate:**
+    - `wiki_module_odoo/l10n_ro_currency_rate_live_bnr/` (șters)
+    - `wiki_module_odoo/index.md`
+    - `wiki_module_odoo/log.md`
+    - `wiki_module_odoo/.index/chunks.json`
+
 ## [2026-09-23] `l10n_ro_customs_dvi` — re-ingestie după auditul contabil (19.0.2.0.0)
 
 - **Acțiune:** Actualizată pagina și fișa consultant, după corecțiile din dhongu/l10n-romania#568.
