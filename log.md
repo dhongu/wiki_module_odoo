@@ -4,6 +4,29 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `terrabit_helpdesk_connector`, `terrabit_iap_server_helpdesk` — pagini noi, cu fișe consultant
+
+- **Acțiune:** Ingestie nouă pentru cele două capete ale conectorului de suport Terrabit (procesate
+  în paralel, câte un subagent `documentarist-wiki` per modul). Ambele module au primit azi fișă
+  consultant verificată de agentul `verificator-fisa`, copiată aici cu capturile.
+- **Sursă:** `readme/FISA_CONSULTANT.md` și cod (`models/`, `views/`, `controllers/`, `data/`,
+  `static/src/`). **Abatere conștientă de la prioritizarea README:** `readme/DESCRIPTION.md` al
+  conectorului e învechit (descrie un wizard „Tichet nou" scos și ecrane „care urmează", deși
+  există) — nu a fost folosit pentru Sumar/Funcționalități; trebuie rescris în modul, altfel o
+  re-ingestie îl readuce. Serverul a fost citit dintr-un worktree separat
+  (`odoo-addons/terrabit_wt_srv`), cu fișa nouă încă nemergeuită în `19.0`; în pagină sunt calea
+  și linkul canonice.
+- **De reținut:** pagina serverului documentează capcana potrivirii exacte a codului fiscal (partener
+  dublură la nepotrivire) și faptul că consumul creditelor din pontaje nu e încă implementat.
+- **Dependențe/Conexiuni:** `terrabit_iap`, `terrabit_iap_server`, `iap`, `mail`, `helpdesk`,
+  `helpdesk_timesheet` fără pagină proprie — rămase text; conectorul și serverul se leagă reciproc
+  în Conexiuni.
+- **Fișă consultant:** copiată pentru ambele (8, respectiv 5 capturi).
+- **Fișiere actualizate:** `terrabit_helpdesk_connector/{index.md,FISA_CONSULTANT.md,screenshots/*}`,
+  `terrabit_iap_server_helpdesk/{index.md,FISA_CONSULTANT.md,screenshots/*}`, `index.md`, `log.md`.
+
+---
+
 ## [2026-09-24] `deltatech_stock_inventory`, `deltatech_nap` — re-ingestie cu fișe consultant noi
 
 - **Acțiune:** Re-ingestie a două pagini, în paralel (câte un subagent `documentarist-wiki` pe modul),
