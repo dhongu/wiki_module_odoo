@@ -23,7 +23,8 @@ Nu există temei legal: modulul nu generează documente fiscale și nici note co
 
 Context operațional:
 - Tichetul trăiește la Terrabit. În baza clientului se păstrează o **oglindă doar pentru citire**
-  (tichet, status, discuție, fișiere), reîmprospătată automat la 15 minute.
+  (tichet, status, discuție, fișiere), reîmprospătată imediat ce Terrabit anunță o modificare și,
+  ca plasă de siguranță, la 15 minute. Ecranele deschise se reîncarcă singure.
 - Clientul scrie în două locuri: tichetul nou (subiect, urgență, descriere, fișiere) și răspunsurile
   din discuție. Restul câmpurilor le completează Terrabit.
 - **Notele interne ale consultanților nu ajung niciodată la client.** Doar mesajele publice sunt
@@ -79,7 +80,8 @@ din exterior (cazul oricărei instanțe odoo.sh).
    de activare: contul se înregistrează singur (un cron zilnic reia înregistrarea dacă serverul era
    indisponibil).
 5. Pe o **bază de test sau staging** a clientului: după neutralizare, endpointul trece automat pe
-   `https://terrabit-staging.odoo.com`. Sincronizarea rulează în continuare la 15 minute, ca în
+   `https://terrabit-staging.odoo.com`, fie la instalarea modulului, fie la prima sincronizare,
+   inclusiv pe o copie restaurată a producției. Sincronizarea rulează în continuare la 15 minute, ca în
    producție, doar că vorbește cu helpdesk-ul de test. Se oprește numai cronul de înregistrare:
    contul se înregistrează singur pe staging, la prima sincronizare. Vezi secțiunea 11.
 
@@ -271,8 +273,10 @@ Regenerare:
 ## 11. Observații pentru manual
 
 - **Terrabit rămâne sursa adevărului.** Tot ce vede clientul e o oglindă; o modificare făcută la
-  Terrabit apare la client la următoarea sincronizare (maxim 15 minute sau imediat, din
-  **Actualizează acum**).
+  Terrabit apare la client în câteva secunde: Terrabit anunță baza clientului, care sincronizează și
+  reîncarcă ecranele deschise (un tichet în curs de editare nu se reîncarcă). Dacă baza clientului nu
+  poate fi contactată de la Terrabit (server propriu, în spatele unui firewall), modificarea vine la
+  sincronizarea de 15 minute sau imediat, din **Actualizează acum**.
 - **Staging-ul clientului nu vorbește cu producția Terrabit.** Pe o bază neutralizată, conectorul
   trece singur pe helpdesk-ul de test. Asta rămâne valabil și dacă modulul se instalează sau se
   actualizează după neutralizare. Testele făcute acolo nu ajung la consultanții din producție.
