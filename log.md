@@ -129,6 +129,24 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] Importul rambursărilor eMAG / Shopify — `_emag` 19.0.2.8.0, `_shopify` 19.0.1.3.0, `_sale` 19.0.2.12.0, `deltatech_rma_marketplace` 19.0.1.0.1
+
+- **Acțiune:** Actualizarea paginilor după bitshop_marketplace#390, care implementează pașii 3–4 din
+  `ANALIZA_RAMBURSARI_EMAG_SHOPIFY.md`.
+- **Ce s-a schimbat:**
+  - **eMAG:** rambursarea vine din RMA-urile cu `return_type = 3`, din sumele pe produs.
+  - **Shopify:** rambursarea vine din `Order.refunds`, inclusiv pentru rambursările fără retur.
+  - **`_sale`:** a primit tipul de element `refunds`, a cărui lipsă ar fi blocat prima rambursare
+    salvată de un conector.
+  - **Fișa punții** spune acum de unde vin rambursările.
+- **Corectează** intrarea anterioară din aceeași zi: afirmația „niciun conector nu populează
+  registrul rambursărilor” era adevărată la momentul scrierii și nu mai e.
+- **Rămase deschise:** nota de credit din rambursare (pasul 5, decizie contabilă) și confirmarea pe
+  un payload real (eMAG: `refund_value` la `/rma/read`, cu whitelist de IP).
+- **Fișiere actualizate:** `deltatech_marketplace_emag/index.md`, `deltatech_marketplace_shopify/index.md`,
+  `deltatech_marketplace_sale/index.md`, `deltatech_rma_marketplace/` (`index.md`,
+  `FISA_CONSULTANT.md`), `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-09-24] `deltatech_marketplace_emag` 19.0.2.7.4 și `deltatech_marketplace_shopify` 19.0.1.2.6 — re-ingestie, fișe consultant
 
 - **Acțiune:** Paginile erau mult în urmă: eMAG la `19.0.2.3.26`, Shopify la `19.0.0.29.2`. Le-am

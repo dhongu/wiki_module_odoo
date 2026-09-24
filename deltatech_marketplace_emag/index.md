@@ -1,7 +1,7 @@
 # EMAG Marketplace Connector (localizat la `deltatech_marketplace_emag/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_emag`
-- **Versiune:** `19.0.2.7.4`
+- **Versiune:** `19.0.2.8.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_emag
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_emag`
 - **Ultima Ingestie:** `2026-09-24`
@@ -31,6 +31,7 @@ Un cont de seller eMAG lângă Odoo, fără conector, înseamnă catalog, comenz
   - O comandă deja importată care trece ulterior în `CANCELED` pe eMAG **nu** se anulează automat — necesită un **Reimport** manual pe acea comandă; o comandă cu `cancellation_request` și fără picking făcut e anulată automat la orice import, inclusiv webhook
   - **Vouchere eMAG** (carduri cadou): partea suportată de eMAG ajunge pe o linie de comandă cu valoare, pe produsul **Voucher Product** (fără taxă, cotă TVA 0 — eMAG decontează diferența separat, printr-un „decont de voucher"); partea suportată de vânzător merge pe **Discount Product**, cu TVA, ca o reducere comercială obișnuită; un voucher mixt primește ambele linii; la livrare prin locker, partea alocată taxei de transport nu apare pe factură
 - **Retururi (RMA)**: `/rma/read` alimentează registrul comun `marketplace.return.request` din `deltatech_marketplace_sale` — status, ce a cerut cumpărătorul, motivul, liniile returnate cu cantități, legătura la comandă și la linia pe care a fost vândut articolul; se păstrează și tipul de fulfilment eMAG (**Fulfilled by eMAG** / **Fulfilled by seller**). Fereastra de import e limitată pe dată, nu pe status (API-ul RMA acceptă un singur status de filtru); o cerere deja în bază e re-citită la fiecare import până ajunge într-o stare finală (Refuzat/Anulat/Finalizat) — webhook-ul eMAG nu anunță acele tranziții. **Doar citire, intenționat**: `/rma/save` există, dar documentația eMAG nu clarifică cine trebuie să deschidă un retur, așa că modulul nu scrie niciodată înapoi; nu se creează picking de retur, notă de credit sau rambursare din această citire — acelea rămân manuale (vezi și puntea [deltatech_rma_marketplace](../deltatech_rma_marketplace/index.md), pentru retururile care trebuie să treacă prin fluxul de depozit).
+- **Rambursări** (19.0.2.8.0): un RMA cu `return_type = 3` care are `refund_value` pe produse aduce o rambursare în `marketplace.refund`, legată de retur — câte o linie pe produs, total însumat (*Total Computed*), moneda și contul bancar al cumpărătorului. `refund_value` e text opțional, parsat defensiv; un RMA fără sume nu aduce rambursare. `return_tax_value` (taxa suportată de client la un retur refuzat) nu se mapează.
 - **Integrare stocuri**:
   - Export periodic, configurabil, al nivelurilor de stoc către eMAG (nu în timp real), prin API-ul „light" de ofertă (`POST /offer/save`), în loturi de 50 de oferte per request — nu câte un `PATCH` per ofertă — pentru a nu epuiza bugetul comun de 3 cereri/secundă al contului (partajat cu AWB și RMA); un lot respins de eMAG e reluat ofertă cu ofertă, ca o singură eroare să nu blocheze restul lotului
   - Un stoc Odoo negativ se trimite ca 0, nu e respins de eMAG

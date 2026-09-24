@@ -1,7 +1,7 @@
 # Conector Shopify Marketplace (localizat la `deltatech_marketplace_shopify/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_shopify`
-- **Versiune:** `19.0.1.2.6`
+- **Versiune:** `19.0.1.3.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_shopify
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_shopify`
 - **Ultima Ingestie:** `2026-09-24`
@@ -81,6 +81,8 @@ Conectorul Shopify Marketplace dezvoltat de Terrabit creează o integrare direct
   - Indicator de sănătate (verde/portocaliu/roșu/gri) pe cardul kanban al backend-ului, cu ora ultimei sincronizări și linkuri către log-uri/job-uri eșuate din ultimele 24h.
   - Wizard **Check webhooks** (buton de antet) care compară webhook-urile efectiv înregistrate în Shopify cu cele așteptate de Odoo (Matched/Missing/Orphan), cu remediere directă (înregistrare sau ștergere din Shopify). Un webhook blocat pe „Missing" la nesfârșit este aproape mereu parametrul de sistem `web.base.url` setat pe `http://` în loc de `https://` — API-ul Admin al Shopify refuză tăcut să înregistreze un webhook a cărui adresă de callback nu e HTTPS, fără nicio eroare vizibilă în Odoo.
   - Buton **Test connection** care validează credențialele printr-un query GraphQL `shop`, înainte de orice import.
+
+- **Rambursări** (19.0.1.3.0): import din `Order.refunds` pe comenzile rambursate / parțial rambursate din fereastra de retururi, câte un `marketplace.refund` per `Refund` — totalul raportat (`totalRefundedSet`), TVA-ul, transportul rambursat și, pe linie, suma, TVA-ul și dacă marfa s-a întors în stoc (`restockType`). Legat de retur când îl numește; o rambursare fără retur (cazul normal la Shopify) rămâne fără. Rulează din același cron ca retururile.
 
 #### 3. Dependențe
 

@@ -1,7 +1,7 @@
 # Fișă Modul: Retururi din marketplace (RMA Marketplace)
 
 **Modul:** `deltatech_rma_marketplace`
-**Versiune:** 19.0.1.0.0
+**Versiune:** 19.0.1.0.1
 **Suită:** bitshop_marketplace
 **Dependențe:** `deltatech_rma`, `deltatech_marketplace_sale` (se instalează automat când ambele sunt prezente)
 
@@ -42,6 +42,13 @@ noastră (fișa `deltatech_rma`). **Rambursarea din marketplace nu devine notă 
 arată banii pe care marketplace-ul i-a dat cumpărătorului, iar nota de credit e documentul fiscal al
 storno-ului. Sunt amândouă necesare și trebuie să spună aceeași sumă: la crearea notei, cererea
 primește un mesaj cu ambele sume și semnalează o diferență.
+
+De unde vin rambursările: **eMAG** le aduce din RMA — la un retur cu rambursare, câte o sumă pe
+fiecare produs, iar totalul se adună din ele (de la `deltatech_marketplace_emag` 19.0.2.8.0).
+**Shopify** le aduce din entitatea `Refund`, cu totalul, TVA-ul și transportul rambursat raportate
+de Shopify (de la `deltatech_marketplace_shopify` 19.0.1.3.0). O rambursare Shopify **fără retur**
+(banii dați înapoi, marfa nu se întoarce) nu ajunge pe nicio cerere de-a noastră: nu există colet de
+recepționat. Rambursările se importă din același cron ca retururile.
 
 ## 5. Configurare inițială
 
@@ -115,7 +122,7 @@ că marfa merge la depozitul marketplace-ului.
 |---|---|
 | `deltatech_rma` | cererea de retur, recepția prin scanare, verdictele, transferul, nota de credit |
 | `deltatech_marketplace_sale` | registrul retururilor (`marketplace.return.request`) și al rambursărilor (`marketplace.refund`) |
-| `deltatech_marketplace_emag`, `deltatech_marketplace_shopify` | importul retururilor și al rambursărilor; câmpul *Fulfilled by eMAG* |
+| `deltatech_marketplace_emag` (≥ 19.0.2.8.0), `deltatech_marketplace_shopify` (≥ 19.0.1.3.0) | importul retururilor și al rambursărilor; câmpul *Fulfilled by eMAG* |
 
 Niciun raport ANAF nu se alimentează din această punte. Nota de credit rămâne cea din `deltatech_rma`.
 
