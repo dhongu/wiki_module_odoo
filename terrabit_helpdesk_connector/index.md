@@ -1,7 +1,7 @@
 # Terrabit Helpdesk Connector (localizat la `terrabit_helpdesk_connector/index.md`)
 
 - **Nume Tehnic:** `terrabit_helpdesk_connector`
-- **Versiune:** `19.0.0.2.7`
+- **Versiune:** `19.0.0.2.8`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_helpdesk_connector`
 - **Ultima Ingestie:** `2026-09-24`
@@ -49,8 +49,9 @@ răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la
 - Actualizare imediată: Terrabit anunță baza clientului printr-o notificare semnată, fără date
   (`/terrabit_helpdesk/notify`), conectorul sincronizează în fundal și reîncarcă singur lista, kanbanul
   și tichetul deschis. Cronul de 15 minute rămâne pentru bazele pe care Terrabit nu le poate contacta.
-- Lângă „Sync Now” se vede ora ultimei sincronizări și a următoarei rulări; o încercare eșuată
-  apare cu roșu, cu motivul la trecerea mouse-ului. „Sync Now” există și pe formularul tichetului.
+- Panou deasupra listei și a kanbanului, în stilul tabloului din Helpdesk: tichetele mele (deschise,
+  cu răspuns nou, netrimise) și sincronizarea (ultima, următoarea; o încercare eșuată apare cu roșu,
+  cu motivul la trecerea mouse-ului). „Sync Now” există și pe formularul tichetului.
 - Trecere automată pe endpointul de staging (`terrabit-staging.odoo.com`) când baza e neutralizată,
   ca testele să nu ajungă în helpdesk-ul de producție. Verificarea se face la instalare și înainte
   de fiecare sincronizare, deci și o copie restaurată a producției trece singură pe staging; un
