@@ -168,6 +168,9 @@ partenerul clientului, alocarea creditelor.
 - [ ] Fiecare etapă deschisă are un **Status vizibil clientului** potrivit. Etapa de așteptare a
       clientului e pe **De răspuns**. Verificați la fiecare etapă nouă: pornește pe **În lucru**.
 - [ ] Etapele de închidere au bifa **Pliat**.
+- [ ] Dacă vrem ca clienții să-și închidă singuri tichetele, echipa are bifa **Closure by Customers**
+  (tichetul trece în prima etapă pliată, cu notă internă „Tichet închis de client”; pontajul de 0 h
+  se pune automat).
 - [ ] Contul unui client nou apare în **Conturi înregistrate** după ce își înregistrează
       conectorul, legat de firma lui, nu de un partener dublură.
 - [ ] Un tichet trimis din conector ajunge pe echipa implicită, cu **Companie Partener** completată.

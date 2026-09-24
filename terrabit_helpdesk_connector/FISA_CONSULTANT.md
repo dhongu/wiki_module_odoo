@@ -27,6 +27,9 @@ Context operațional:
   ca plasă de siguranță, la 15 minute. Ecranele deschise se reîncarcă singure.
 - Clientul scrie în două locuri: tichetul nou (subiect, urgență, descriere, fișiere) și răspunsurile
   din discuție. Restul câmpurilor le completează Terrabit.
+- Clientul își poate **închide singur** tichetul, din butonul **Închide tichetul**, dacă echipa de
+  suport Terrabit permite (bifa **Closure by Customers**). Un tichet închis nu se mai redeschide:
+  pentru o problemă nouă se deschide alt tichet.
 - **Notele interne ale consultanților nu ajung niciodată la client.** Doar mesajele publice sunt
   oglindite.
 - Conectorul nu trimite emailuri. Notificările pe email pleacă o singură dată, din helpdesk-ul
