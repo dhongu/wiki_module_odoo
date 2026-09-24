@@ -1,7 +1,7 @@
 # Terrabit Helpdesk Connector (localizat la `terrabit_helpdesk_connector/index.md`)
 
 - **Nume Tehnic:** `terrabit_helpdesk_connector`
-- **Versiune:** `19.0.0.2.3`
+- **Versiune:** `19.0.0.2.4`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_helpdesk_connector`
 - **Ultima Ingestie:** `2026-09-24`
@@ -41,6 +41,9 @@ răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la
   **Actualizează acum** pentru sincronizare imediată.
 - Sincronizare automată a stadiului, consultantului atribuit și discuției, plus curățarea locală a
   tichetelor retrase la Terrabit.
+- Sincronizare incrementală: fiecare rulare aduce doar tichetele și mesajele modificate de la
+  ultima sincronizare; o dată pe zi rulează una completă, care prinde și ce a dispărut (tichet mutat
+  pe altă companie, mesaj retras). Cu un server mai vechi, sincronizarea rămâne completă.
 - Trecere automată pe endpointul de staging (`terrabit-staging.odoo.com`) când baza e neutralizată,
   ca testele să nu ajungă în helpdesk-ul de producție. Verificarea se face la instalare și înainte
   de fiecare sincronizare, deci și o copie restaurată a producției trece singură pe staging; un

@@ -1,7 +1,7 @@
 # IAP Server - Service Helpdesk (localizat la `terrabit_iap_server_helpdesk/index.md`)
 
 - **Nume Tehnic:** `terrabit_iap_server_helpdesk`
-- **Versiune:** `19.0.0.1.9`
+- **Versiune:** `19.0.0.1.10`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_helpdesk
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server_helpdesk`
 - **Ultima Ingestie:** `2026-09-24`
@@ -47,6 +47,9 @@ este doar planificat, nu funcționează încă.
 - Cererile de creare tichet sunt idempotente printr-o cheie trimisă de conector
   (`terrabit_request_key`): dacă un timeout face clientul să retrimită aceeași cerere, serverul
   întoarce tichetul deja creat, nu unul nou.
+- Sincronizare incrementală: cu parametrul `since`, listele de tichete și mesaje întorc doar ce
+  s-a modificat de atunci (tichetele închise sau arhivate inclusiv, cu `active`), iar autorii doar
+  pe cei ai mesajelor noi. Lista de tichete întoarce `server_time`, cursorul rulării următoare.
 - Atașamentele venite de la client se salvează local ca bytes; cele trimise către client
   (atașamente pe mesaje) pleacă ca link `access_token`, ca să nu depășească limita de timeout a
   apelurilor JSON-RPC.
