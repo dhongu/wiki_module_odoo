@@ -33,7 +33,7 @@ Returul comercial **nu** e același lucru cu retragerea în 14 zile.
 | cine decide | consumatorul, unilateral | comerciantul, după verificare |
 | motiv | interzis a fi cerut (art. 9) | obligatoriu |
 | stare de aprobare | nu există | există |
-| taxă reținută | nu | da, dacă politica o prevede |
+| taxă reținută | nu | la returul comercial, dacă politica o prevede; la **garanția legală** (OUG 140/2021) remediile sunt în principiu gratuite pentru consumator — verificați juridic înainte de a pune taxă pe motivele de garanție |
 
 Retragerea e acoperită de `deltatech_sale_withdrawal`, care **nu are** stare de aprobare, tocmai
 pentru că nu are voie. Modulul acesta stă lângă el, nu peste el. Ce împart cele două e partea în
@@ -68,28 +68,51 @@ Modulul **nu** generează note contabile singur. Singurul document contabil pe c
 valoare returnată − taxă de manipulare = valoare rambursabilă
 ```
 
-Creditarea se face linie cu linie, cu prețul net de taxa liniei, ca totalul notei să fie exact
-valoarea rambursabilă, iar cotele de TVA se preiau de pe linia comenzii originale. Nota rămâne în
-**ciornă**: o pregătim, nu o înregistrăm în locul contabilului.
+Creditarea se face linie cu linie, cu prețul liniei de comandă micșorat cu taxa de manipulare a
+liniei; cotele de TVA se preiau de pe linia comenzii originale. Nota rămâne în **ciornă**: o
+pregătim, nu o înregistrăm în locul contabilului, iar **contabilul o verifică față de factura
+inițială** înainte de înregistrare — prețul, discountul, cota de TVA și legătura cu factura
+stornată.
 
-Nota contabilă, la înregistrarea notei de credit de către contabil, e cea standard de stornare
-vânzare:
+La înregistrare, Odoo generează nota standard de stornare a vânzării (pct. 330 OMFP 1802/2014):
 
 | Cont | Descriere | Dr | Cr |
 |---|---|---|---|
-| 4111 | Clienți | | X |
-| 707 / 701 | Venituri din vânzări (stornare) | X | |
-| 4427 | TVA colectată (stornare) | X | |
+| 707 (mărfuri) / 7015 (produse finite) | Venituri din vânzări — stornare | X | |
+| 4427 (4428 la TVA la încasare) | TVA colectată — stornare | TVA | |
+| 4111 | Clienți | | X + TVA |
 
-Marfa se întoarce în stoc prin transferul de retur, cu mișcările legate de livrarea pe care o
-anulează (`origin_returned_move_id`). Fără legătura asta valorizarea nu poate reconcilia returul,
-iar costul repus în stoc ar fi cel curent, nu cel cu care a ieșit.
+TVA-ul se creditează cu **cota facturii inițiale** (art. 291 alin. (4) Cod fiscal): un retur în
+garanție din 2026 al unei vânzări făcute înainte de 1.08.2025 se creditează cu 19%, nu cu 21%. Dacă
+vânzarea returnată e din exercițiul financiar anterior și returul e cunoscut la data bilanțului,
+contabilul face corecția la închidere prin 418 (pct. 330 alin. (1)).
+
+**Taxa de manipulare** nu apare ca venit separat: micșorează valoarea creditată, iar TVA-ul pe
+partea reținută rămâne colectat la cota facturii inițiale (reducere parțială a bazei, art. 287
+lit. b) Cod fiscal) — varianta prudentă fiscal. Dacă termenii comerciali ai clientului definesc
+reținerea ca **serviciu** (704, cu TVA) sau ca **penalitate** (7581, fără TVA, art. 286 alin. (4)
+lit. b)), contabilul stornează linia integral și adaugă manual pe nota de credit taxa pe contul
+potrivit. Încadrarea se stabilește cu contabilul clientului înainte de punerea în funcțiune.
+
+**Reintrarea în stoc.** La validarea transferului de retur, cu evaluare automată pe categorie, Odoo
+înregistrează reintrarea la costul de ieșire: **Dr 371 Mărfuri = Cr 607 Cheltuieli privind
+mărfurile** (produse finite: Dr 345 = Cr 711), conform pct. 330 OMFP 1802/2014; la gestiunea ținută
+la preț de vânzare se refac și 378 și 4428. Mișcările sunt legate de livrarea pe care o anulează
+(`origin_returned_move_id`): fără legătura asta valorizarea nu poate reconcilia returul, iar costul
+repus în stoc ar fi cel curent, nu cel cu care a ieșit.
+
+Marfa cu verdict **„defect”** nu se repune în stocul vandabil, dar odată creditată clientului a
+intrat fizic înapoi în patrimoniu: se primește într-o locație de defecte / rebuturi și iese apoi
+prin retur la furnizor sau prin casare cu proces-verbal. Altfel costul rămâne pe 607 fără nicio
+intrare în gestiune. Modulul nu face singur această intrare.
 
 ## 5. Configurare inițială
 
 1. **Retururi → Configurare → Motive de retur** — politica. Fiecare motiv are categoria, intervalul
    taxei (minim / propus / maxim), dacă cere poze, cine plătește transportul și explicația pentru
-   client. Motivele livrate sunt un punct de plecare, cu `noupdate="1"`: ce schimbați rămâne.
+   client. Un motiv bifat **Doar pentru colegi** se folosește numai din back office și nu apare
+   niciodată în portal (livrat: „Alt motiv (de clarificat)”). Motivele livrate sunt un punct de
+   plecare, cu `noupdate="1"`: ce schimbați rămâne.
 2. **Vânzări → Configurare → Setări → Retururi și garanții** — cine are acces (toți utilizatorii
    interni sau doar cei aleși), fereastra de eligibilitate (luni pentru garanție, zile pentru retur),
    termenele promise clientului (în câte zile lucrătoare răspundem și în câte verificăm coletul; zero
@@ -196,6 +219,9 @@ recepția prin scanare.
 ![Registrul, listă](screenshots/10_registru_lista.png)
 
 *Retururi → Retururi și garanții*, cu filtrul implicit „În lucru" și vârsta fiecărei cereri.
+Filtrele gata făcute urmează fluxul — *De decis*, *Așteptăm coletul*, *De verificat* —, plus *Ale
+mele*, *Urgent* și *Cu termenul depășit*. Steaua de pe cerere o marchează **Urgent**, iar
+**Etichetele** o grupează după ce vrea echipa să urmărească (de exemplu un furnizor sau o campanie).
 
 ![Registrul, pe stări](screenshots/11_registru_kanban.png)
 
@@ -206,15 +232,29 @@ Aceleași cereri pe stări, pentru cine lucrează pe fluxul zilnic.
 ![Cererea, cu butoanele de decizie](screenshots/12_cerere_decizie.png)
 
 **Aprobă și trimite fișa** trimite clientului mailul cu fișa atașată. O cerere cu motiv care cere
-poze, venită fără nicio poză, e semnalată pe formular înainte de aprobare. **Refuză** închide cererea
-cu explicația scrisă de dumneavoastră.
+poze, venită fără nicio poză, e semnalată pe formular înainte de aprobare; dacă o aprobați totuși,
+rămâne o notă în istoricul cererii. **Refuză** închide cererea cu explicația scrisă de dumneavoastră.
+
+Câmpul **Termen limită** e data până la care i-ați promis clientului un răspuns. La aprobare devine o
+activitate pe responsabilul cererii (sau pe cine aprobă, dacă cererea n-are responsabil), cu data
+aceea, ca termenul să nu depindă de memoria cuiva.
 
 #### 6.11 Recepția coletului
 
 ![Recepția prin scanare](screenshots/13_receptie_scanare.png)
 
 Un singur câmp. Se scanează codul de pe fișă sau AWB-ul; pistolul trimite Enter, iar cererea se
-deschide singură. Dacă fișa lipsește din colet, coletul se alege din lista celor așteptate.
+deschide singură. Spațiile, cratimele, slash-urile și literele mari/mici nu contează. Dacă fișa
+lipsește din colet, coletul se alege din lista celor așteptate.
+
+Trei cazuri în care ecranul nu deschide direct cererea:
+
+- **Același AWB pe mai multe cereri** — ecranul afișează lista lor („Codul … se potrivește la N
+  cereri. Alege-o pe cea din mână.”) și alegeți cererea; nu se alege la întâmplare prima.
+- **Colet scanat a doua oară** — cererea deja primită nu-și schimbă starea; rămâne doar o notă în
+  istoric („Coletul a fost scanat din nou la recepție.”).
+- **Cerere închisă** (rezolvată, refuzată sau anulată) — scanarea e refuzată, cu motivul. Dacă a mai
+  venit un colet pe ea, o deschideți din registru și apăsați **Redeschide**.
 
 #### 6.12 Verificarea
 
@@ -265,13 +305,23 @@ față de cea vândută — adică rata de retur per produs.
 | Modul | Legătura |
 |---|---|
 | `deltatech_sale_withdrawal` | retragerea în 14 zile, act juridic diferit; model separat, intenționat |
+| `deltatech_rma_withdrawal` (punte) | retragerea își ia fișa cu cod de bare și recepția prin scanare de aici, fără stare de aprobare și fără taxă |
+| `deltatech_rma_lot` (punte) | lot / serie pe linia de retur, verificat față de ce s-a livrat clientului, dus pe transferul de retur |
+| `deltatech_rma_helpdesk` (punte, `bitshop_ent`) | cerere de retur deschisă dintr-un tichet de Helpdesk, cu rezultatul scris înapoi pe tichet |
 | `sale_stock` | comanda, livrarea, transferul de retur |
 | `stock_delivery` / `delivery` | curierul cererii, preluat de pe comandă; transferul „trimite înapoi" pleacă pe el |
 | `account` | nota de credit în ciornă |
 | `deltatech_marketplace_sale` | `marketplace.return.request` e a treia entitate, a eMAG / Shopify; se leagă printr-o punte, nu se contopește |
 
-Niciun raport ANAF nu se alimentează din acest modul. Nota de credit, odată înregistrată de
-contabil, intră în D300 și D394 ca orice storno de vânzare.
+Niciun raport ANAF nu se alimentează direct din acest modul. Nota de credit, odată înregistrată de
+contabil, e o factură cu valori negative (art. 330 alin. (2) Cod fiscal):
+
+- se transmite în **RO e-Factura**, în 5 zile lucrătoare, ca orice factură, B2B și B2C;
+- trebuie să facă referire la factura inițială (art. 319 alin. (20) lit. r)) — contabilul verifică
+  legătura înainte de înregistrare, pentru că nota pregătită de modul poartă ca referință numărul
+  cererii de retur, nu factura stornată;
+- reduce baza TVA în **D300** din perioada emiterii, cu cota facturii inițiale, și apare în **D394**
+  și **D406** ca orice storno de vânzare.
 
 ## 8. Verificări pentru consultant
 
@@ -283,7 +333,12 @@ contabil, intră în D300 și D394 ca orice storno de vânzare.
 - [ ] Fișa de retur se tipărește corect, iar codul de bare se scanează cu pistolul clientului.
 - [ ] Un retur de test intră în stoc cu **costul cu care a ieșit**, nu cu cel curent: verificați
       evaluarea pe transferul de retur.
-- [ ] Nota de credit de test are TVA-ul corect, preluat de pe comanda originală.
+- [ ] Nota de credit de test are TVA-ul corect, preluat de pe comanda originală, și prețul facturat
+      (atenție la liniile cu discount); se leagă de factura inițială înainte de înregistrare.
+- [ ] Încadrarea taxei de manipulare (reducere de bază / serviciu 704 / penalitate 7581) e stabilită
+      cu contabilul clientului.
+- [ ] Există o locație pentru marfa cu verdict „defect” și o procedură de ieșire (retur la furnizor
+      sau casare).
 - [ ] Clientul de portal vede doar cererile lui: testați cu doi clienți diferiți.
 
 ## 9. Mesaje de eroare frecvente

@@ -4,6 +4,32 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] Punțile `deltatech_rma_lot`, `_withdrawal`, `_helpdesk` — pagini noi; fișa `deltatech_rma` completată
+
+- **Acțiune:** Trei pagini noi, pentru cele trei punți ale `deltatech_rma` (rămase nedocumentate de la
+  2026-09-22), fiecare cu fișă consultant și capturi (bitshop#2862, bitshop_ent#162). Pagina
+  `deltatech_rma` e adusă la `19.0.1.2.1`, cu fișa resincronizată.
+- **Sursă:** `readme/DESCRIPTION.md` și `CONTEXT.md` ale fiecărei punți, pentru Sumar și Funcționalități
+  Cheie, plus codul (modelele și vizualizările extinse sunt puține, deci secțiunea 4 e completată).
+  Fișele consultant sunt noi, cu capturi generate de `tests/test_screenshots.py` din fiecare punte.
+- **Fișa `deltatech_rma`:**
+  - Completată cu ce făcea deja modulul și nu era descris: cazurile speciale ale recepției prin
+    scanare, motivele *Doar pentru colegi*, filtrele registrului, prioritatea, termenul limită
+    devenit activitate, punțile.
+  - Secțiunile contabile corectate după un audit Pacioli: 7015 / 4428, cota TVA a facturii
+    inițiale, încadrarea taxei de manipulare, nota de reintrare în stoc, marfa defectă,
+    e-Factura, referința la factura inițială.
+- **Găsite la audit, neatinse:** nota de credit ia prețul de pe comandă înainte de discount; „De
+  returnat clientului” e fără TVA la prețuri fără TVA; nota nu e legată de factura inițială. Pe
+  retragere, *Mod de execuție* afișează codul tehnic.
+- **Dependențe/Conexiuni:** legături active între `deltatech_rma` și cele trei punți, și între
+  `deltatech_sale_withdrawal` și `deltatech_rma_withdrawal`. `helpdesk_sale` și `stock` n-au pagină,
+  rămân text `cod`.
+- **Fișiere actualizate:** `deltatech_rma_lot/`, `deltatech_rma_withdrawal/`, `deltatech_rma_helpdesk/`
+  (noi: `index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `deltatech_rma/index.md`,
+  `deltatech_rma/FISA_CONSULTANT.md`, `deltatech_rma/screenshots/16_transfer_retur.png`,
+  `deltatech_sale_withdrawal/index.md`, `index.md` (3 intrări), `log.md`, `.index/chunks.json`.
+
 ## [2026-09-24] `deltatech_rma` 19.0.1.2.0 — curierul pe cerere, termene promise, e-mailuri editabile
 
 - **Acțiune:** Re-ingestie `deltatech_rma` (`19.0.1.1.1` → `19.0.1.2.0`) după bitshop#2861.

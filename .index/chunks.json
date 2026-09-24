@@ -6346,7 +6346,7 @@
   {
     "path": "deltatech_rma/index.md",
     "module": "deltatech_rma",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma",
     "local_path": "odoo-addons/bitshop/deltatech_rma",
     "last_ingest": null,
@@ -6382,9 +6382,91 @@
       "sale_stock",
       "stock_delivery",
       "delivery",
-      "mail"
+      "mail",
+      "deltatech_rma_lot",
+      "deltatech_rma_withdrawal",
+      "deltatech_rma_helpdesk"
     ],
     "text": "RMA - Returns and Warranty Claims\ndeltatech_rma\nModulul gestionează returul comercial și reclamațiile de garanție pentru vânzările online și B2B: clientul deschide cererea direct din comanda proprie, fișa de retur se generează cu cod de bare, iar coletul se recepționează în depozit prin scanare. Este vorba despre returul *comercial* — produs defect, articol greșit, piesă necorespunzătoare — un act diferit de retragerea legală de 14 zile (dreptul unilateral al consumatorului), acoperită de modulul [deltatech_sale_withdrawal](../deltatech_sale_withdrawal/index.md): acolo comerciantul confirmă primirea, aici comerciantul decide.\nCerere de retur deschisă de client din portal, pe fiecare linie de comandă, cu poze și video.\nCurierul pe cerere (`carrier_id`), preluat din metoda de livrare a comenzii și modificabil. Apare în formular, în listă, la căutare și la grupare.\nIBAN-ul pentru rambursare cerut direct în formularul din portal, doar la cererile care se pot încheia cu banii înapoi (renunțare și produs greșit, nu garanție). Câmpul e opțional; un IBAN completat se verifică după ISO 13616 (țară, lungime, suma de control mod 97), iar unul greșit întoarce clientul la formular. Aceeași verificare se aplică și în back office. Validatorul e scris în modul: `stdnum.iban` nu se poate importa în procesul Odoo 19, iar `base_iban` ar începe să valideze conturile bancare ale tuturor partenerilor.\nFișă de retur PDF cu cod de bare, trimisă clientului prin e-mail pentru a fi pusă în colet.\nRecepție în depozit prin scanare: un singur câmp, se scanează codul de bare al fișei sau AWB-ul de retur, iar produsele așteptate se deschid direct pentru verificare.\nVerdict pe fiecare produs — bun, defect confirmat, fără defect constatat, deteriorat, lipsă.\nMotive de retur configurate ca date, nu ca cod: fiecare motiv are propriul interval de taxă de manipulare, obligativitatea pozelor și cine plătește transportul de retur.\nDecizie finală — înlocuire, reparație, rambursare, refuz — cu e-mail automat către client.\nProdusele cu verdict „bun\" reintră în stoc prin transferul standard de retur al Odoo, legat de livrarea pe care o anulează.\nRegistru de retururi cu vechime (ageing), pe companie, cu reguli de înregistrare astfel încât fiecare client își vede doar propriile cereri.\nFlux client din portal (Returns and Warranty Claims din *My Account* sau butonul de pe comanda confirmată): alege tipul cererii (produs defect / articol greșit / retur), bifează produsele și cantitatea, motivul pe fiecare produs, descrierea problemei și pozele. Când un produs bifat are un motiv care cere poze, eticheta câmpului trece din „opțional\" în „obligatorii la motivul ales\", iar formularul fără poze se oprește chiar în pagină, cu mesajul lângă câmp, fără drum la server. Serverul verifică oricum încă o dată: un fișier care nu se deschide ca imagine respinge formularul înainte de creare, ca să nu rămână o cerere fără dovezi. Mesajele verificărilor din pagină sunt traduse ca restul șablonului.\nFlux echipă din back office (Returns → Returns and Warranty Claims): Approve and Send the Slip trimite fișa cu cod de bare (blocat dacă motivul cere poze și acestea lipsesc); Returns → Parcel Check-in (Scan) este ecranul de depozit, tolerant la spații, cratime, slash-uri și majuscule, cu avertizare la AWB regăsit pe mai multe cereri sau la scanare dublă; All Good marchează tot coletul cu verdict bun dintr-o singură apăsare; Put Back In Stock creează transferul de retur doar pentru liniile cu verdict bun; închiderea cu rambursare cere IBAN, iar de acolo se pot genera Credit Note, Replacement Order sau Ship Back To Customer. Transferul de ieșire creat de Ship Back To Customer primește curierul cererii, așa că AWB-ul îl generează conectorul curierului. Coletul care intră de la client nu primește curier, pentru că AWB-ul lui l-a făcut clientul.\nReturns → Analysis arată retururile pe lună și tip, plus rata de retur per produs (raportat la cantitățile vândute).\nConfigurare în Returns → Configuration → Return Reasons (categorie, interval taxă, obligativitate poze/video, cine plătește transportul, explicația afișată clientului, opțiunea *Staff Only* pentru motive interne) și în Settings → Sales → Returns and Warranty Claims (accesul automat al colegilor, fereastra de eligibilitate, termenele promise clientului, opțiunea de motiv obligatoriu, taxa de manipulare implicită). Explicația afișată clientului la fiecare motiv e traductibilă. Termenele promise sunt *Answer Within* (zile lucrătoare, implicit 1) și *Check Within* (implicit 0, adică nu se promite niciun termen). Apar în portal, în e-mailul de aprobare și pe fișa de retur; frazele sunt termeni de traducere întregi, cu `{days}` înlocuit la afișare.\nCele trei e-mailuri (aprobat, refuzat, rezolvat) sunt șabloane `noupdate`, editabile din Settings → Technical → Email Templates. Modificările rămân la actualizarea modulului. Migrarea spre `19.0.1.2.0` le reîncarcă o singură dată, cu textul nou: până atunci, orice actualizare scria peste ele.\nOpțiunea *Not Returnable* pe produs sau categorie exclude transportul, taxele de manipulare și serviciile din formularul clientului; serviciile și linia de transport adăugată de metoda de livrare (`is_delivery`) sunt oricum excluse automat.\nDouă grupuri de securitate: User (gestionează cererile) și Manager (configurează motive, etichete și motive de închidere, poate șterge o cerere). La instalare, orice utilizator intern devine automat User, ca în `agroamat_retururi`. Accesul automat se poate opri din setări, cu opțiunea *All Internal Users Handle Returns*; după asta, accesul rămâne doar celor cărora li s-a dat explicit, iar actualizarea modulului nu îl mai repornește. O bază actualizată de pe `19.0.1.0.0`, versiune care nu avea opțiunea, primește accesul automat o singură dată, prin scriptul `migrations/19.0.1.1.1/post-migration.py`. Scriptul nu atinge bazele aflate deja pe `19.0.1.1.0`: acolo lipsa regulii înseamnă că a fost oprită deliberat."
+  },
+  {
+    "path": "deltatech_rma_helpdesk/index.md",
+    "module": "deltatech_rma_helpdesk",
+    "version": "19.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_rma_helpdesk",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_rma_helpdesk",
+    "last_ingest": null,
+    "friendly_name": "RMA Helpdesk",
+    "summary": "Un tichet de Helpdesk e o conversație, un retur e un document: linii cu cantități, un motiv care poartă o politică, o fișă care călătorește în colet, un verdict pe fiecare produs și banii la final. Panoul After-Sales din Odoo îi dă tichetului wizardul standard de retur; puntea îi dă în schimb o cerere de retur completă, din [deltatech_rma](../deltatech_rma/index.md), și le leagă pe cele două. Modul Enterprise, din suita bitshop_ent.",
+    "features": [
+      "Bifă proprie pe echipă, Cereri de retur, în secțiunea *După Vânzare* (Helpdesk → Configurare → Echipe HelpDesk), separată de *Retururi* din Odoo, care instalează `helpdesk_stock`.",
+      "Butonul Cerere de retur pe tichet (Alt+Shift+R), vizibil doar cu client pe tichet și pentru utilizatorii cu *Retururi / Utilizator*.",
+      "Butonul deschide formularul cererii nesalvat, precompletat cu clientul, comanda de pe tichet, tichetul și liniile returnabile ale comenzii (cantitatea disponibilă, titlul tichetului ca descriere); cererea primește număr abia la salvare.",
+      "Contorul Retururi pe tichet și legătura înapoi pe cerere (câmp și buton *Tichet*, căutare după tichet); ștergerea tichetului nu șterge cererea.",
+      "Rezultatul e scris în istoricul tichetului la aprobare, refuz și rezolvare, ca agentul de suport să nu deschidă returul."
+    ],
+    "dependencies": [
+      "deltatech_rma",
+      "helpdesk_sale"
+    ],
+    "connections": [
+      "deltatech_rma",
+      "helpdesk_sale"
+    ],
+    "text": "RMA Helpdesk\ndeltatech_rma_helpdesk\nUn tichet de Helpdesk e o conversație, un retur e un document: linii cu cantități, un motiv care poartă o politică, o fișă care călătorește în colet, un verdict pe fiecare produs și banii la final. Panoul After-Sales din Odoo îi dă tichetului wizardul standard de retur; puntea îi dă în schimb o cerere de retur completă, din [deltatech_rma](../deltatech_rma/index.md), și le leagă pe cele două. Modul Enterprise, din suita bitshop_ent.\nBifă proprie pe echipă, Cereri de retur, în secțiunea *După Vânzare* (Helpdesk → Configurare → Echipe HelpDesk), separată de *Retururi* din Odoo, care instalează `helpdesk_stock`.\nButonul Cerere de retur pe tichet (Alt+Shift+R), vizibil doar cu client pe tichet și pentru utilizatorii cu *Retururi / Utilizator*.\nButonul deschide formularul cererii nesalvat, precompletat cu clientul, comanda de pe tichet, tichetul și liniile returnabile ale comenzii (cantitatea disponibilă, titlul tichetului ca descriere); cererea primește număr abia la salvare.\nContorul Retururi pe tichet și legătura înapoi pe cerere (câmp și buton *Tichet*, căutare după tichet); ștergerea tichetului nu șterge cererea.\nRezultatul e scris în istoricul tichetului la aprobare, refuz și rezolvare, ca agentul de suport să nu deschidă returul."
+  },
+  {
+    "path": "deltatech_rma_lot/index.md",
+    "module": "deltatech_rma_lot",
+    "version": "19.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma_lot",
+    "local_path": "odoo-addons/bitshop/deltatech_rma_lot",
+    "last_ingest": null,
+    "friendly_name": "RMA Lot / Serial",
+    "summary": "Puntea pune lotul sau seria pe cererea de retur, o verifică față de ce a plecat efectiv din depozit către clientul respectiv și o duce pe transferul de retur, ca depozitul să nu o mai tasteze a doua oară. Trasabilitatea valorează ceva doar dacă e adevărată: un lot tastat de mână la intrare e locul cel mai ușor de stricat, fără ca nimic să semnaleze că seria aceea n-a plecat niciodată către clientul acesta. Stă separat de [deltatech_rma](../deltatech_rma/index.md), pentru că cele mai multe magazine nu vând nimic urmărit pe lot.",
+    "features": [
+      "Coloana Lot / serie pe fiecare linie de retur, limitată la loturile produsului liniei și editabilă doar la produsele urmărite; vizibilă cu grupul standard *Loturi și numere de serie*.",
+      "Verificare la salvare față de livrarea liniei de comandă (`stock.move.line` de ieșire, efectuate): un lot al altui produs e refuzat, iar un lot al produsului corect, dar livrat altui client, e refuzat cu lista loturilor livrate efectiv în mesaj.",
+      "O cerere a cărei livrare n-a fost încă validată nu se blochează: coletul ajunge uneori înaintea hârtiilor.",
+      "Repune în stoc creează transferul de retur cu lotul de pe cerere deja pus pe operațiile detaliate (extindere a `_create_return_picking` din nucleu).",
+      "Lotul apare și în *Retururi → Analiză → Produse returnate*, cu căutare după lot — util la o reclamație de serie către furnizor."
+    ],
+    "dependencies": [
+      "deltatech_rma"
+    ],
+    "connections": [
+      "deltatech_rma",
+      "stock"
+    ],
+    "text": "RMA Lot / Serial\ndeltatech_rma_lot\nPuntea pune lotul sau seria pe cererea de retur, o verifică față de ce a plecat efectiv din depozit către clientul respectiv și o duce pe transferul de retur, ca depozitul să nu o mai tasteze a doua oară. Trasabilitatea valorează ceva doar dacă e adevărată: un lot tastat de mână la intrare e locul cel mai ușor de stricat, fără ca nimic să semnaleze că seria aceea n-a plecat niciodată către clientul acesta. Stă separat de [deltatech_rma](../deltatech_rma/index.md), pentru că cele mai multe magazine nu vând nimic urmărit pe lot.\nColoana Lot / serie pe fiecare linie de retur, limitată la loturile produsului liniei și editabilă doar la produsele urmărite; vizibilă cu grupul standard *Loturi și numere de serie*.\nVerificare la salvare față de livrarea liniei de comandă (`stock.move.line` de ieșire, efectuate): un lot al altui produs e refuzat, iar un lot al produsului corect, dar livrat altui client, e refuzat cu lista loturilor livrate efectiv în mesaj.\nO cerere a cărei livrare n-a fost încă validată nu se blochează: coletul ajunge uneori înaintea hârtiilor.\nRepune în stoc creează transferul de retur cu lotul de pe cerere deja pus pe operațiile detaliate (extindere a `_create_return_picking` din nucleu).\nLotul apare și în *Retururi → Analiză → Produse returnate*, cu căutare după lot — util la o reclamație de serie către furnizor."
+  },
+  {
+    "path": "deltatech_rma_withdrawal/index.md",
+    "module": "deltatech_rma_withdrawal",
+    "version": "19.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma_withdrawal",
+    "local_path": "odoo-addons/bitshop/deltatech_rma_withdrawal",
+    "last_ingest": null,
+    "friendly_name": "RMA Withdrawal",
+    "summary": "Retragerea din contract și returul comercial rămân înregistrări diferite: [deltatech_sale_withdrawal](../deltatech_sale_withdrawal/index.md) ține declarația consumatorului, [deltatech_rma](../deltatech_rma/index.md) ține coletul. Puntea le leagă, ca un consumator care se retrage să primească aceeași fișă de retur cu cod de bare și coletul lui să treacă prin aceeași recepție prin scanare ca orice retur, fără ca retragerea să capete vreodată o stare de aprobare pe care, conform art. 11a din Directiva 2011/83/UE, nu are voie s-o aibă.",
+    "features": [
+      "Mod de execuție nou, `rma_parcel` (*Așteptăm coletul înapoi, cu fișă de retur*), ales în Vânzări → Configurare → Setări → Retragere din contract → Execuția retragerii.",
+      "La confirmarea retragerii se creează, ca superuser, o cerere de retur direct în Așteptăm coletul, de tip *Retur*, cu rezolvarea *Returnăm banii*: nu trece prin *Ciornă* sau *Trimis*, din care ar putea fi aprobată. Executarea de două ori nu deschide un al doilea colet.",
+      "Taxa de manipulare e zero (art. 14): motivul rezervat, Retragere în termenul legal, are intervalul 0–0, e *Doar pentru colegi* (nu apare în portal) și spune că transportul de întoarcere e pe cheltuiala clientului.",
+      "Fișa pleacă pe mail cu un șablon propriu, fără nicio formulare de aprobare; spune că banii se returnează după ce produsele ajung sau după dovada expedierii (art. 13 alin. (3)).",
+      "Coletul urmează apoi fluxul obișnuit: recepție prin scanare, verdicte, repunere în stoc. Nota de credit se pregătește din cererea de retur, iar retragerea se marchează rambursată; câmpul *Notă credit* de pe retragere nu e completat de punte.",
+      "Pe formularul retragerii, butonul și câmpul Colet de retur. Câmpul *Mod de execuție* al retragerii afișează codul tehnic (`rma_parcel`)."
+    ],
+    "dependencies": [
+      "deltatech_rma",
+      "deltatech_sale_withdrawal"
+    ],
+    "connections": [
+      "deltatech_sale_withdrawal",
+      "deltatech_sale_withdrawal_stock",
+      "deltatech_rma"
+    ],
+    "text": "RMA Withdrawal\ndeltatech_rma_withdrawal\nRetragerea din contract și returul comercial rămân înregistrări diferite: [deltatech_sale_withdrawal](../deltatech_sale_withdrawal/index.md) ține declarația consumatorului, [deltatech_rma](../deltatech_rma/index.md) ține coletul. Puntea le leagă, ca un consumator care se retrage să primească aceeași fișă de retur cu cod de bare și coletul lui să treacă prin aceeași recepție prin scanare ca orice retur, fără ca retragerea să capete vreodată o stare de aprobare pe care, conform art. 11a din Directiva 2011/83/UE, nu are voie s-o aibă.\nMod de execuție nou, `rma_parcel` (*Așteptăm coletul înapoi, cu fișă de retur*), ales în Vânzări → Configurare → Setări → Retragere din contract → Execuția retragerii.\nLa confirmarea retragerii se creează, ca superuser, o cerere de retur direct în Așteptăm coletul, de tip *Retur*, cu rezolvarea *Returnăm banii*: nu trece prin *Ciornă* sau *Trimis*, din care ar putea fi aprobată. Executarea de două ori nu deschide un al doilea colet.\nTaxa de manipulare e zero (art. 14): motivul rezervat, Retragere în termenul legal, are intervalul 0–0, e *Doar pentru colegi* (nu apare în portal) și spune că transportul de întoarcere e pe cheltuiala clientului.\nFișa pleacă pe mail cu un șablon propriu, fără nicio formulare de aprobare; spune că banii se returnează după ce produsele ajung sau după dovada expedierii (art. 13 alin. (3)).\nColetul urmează apoi fluxul obișnuit: recepție prin scanare, verdicte, repunere în stoc. Nota de credit se pregătește din cererea de retur, iar retragerea se marchează rambursată; câmpul *Notă credit* de pe retragere nu e completat de punte.\nPe formularul retragerii, butonul și câmpul Colet de retur. Câmpul *Mod de execuție* al retragerii afișează codul tehnic (`rma_parcel`)."
   },
   {
     "path": "deltatech_rpc_audit/index.md",

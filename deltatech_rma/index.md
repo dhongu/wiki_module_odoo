@@ -1,7 +1,7 @@
 # RMA - Returns and Warranty Claims (localizat la `deltatech_rma/index.md`)
 
 - **Nume Tehnic:** `deltatech_rma`
-- **Versiune:** `19.0.1.2.0`
+- **Versiune:** `19.0.1.2.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_rma`
 - **Ultima Ingestie:** 2026-09-24
@@ -47,3 +47,6 @@ Documentația acestei secțiuni se bazează pe fișierul `readme/DESCRIPTION.md`
 - `sale_stock`: transferul standard de retur folosit la „Put Back In Stock" și legătura cu livrarea originală.
 - `stock_delivery` / `delivery`: curierul cererii, preluat de pe comandă; transferul „Ship Back To Customer” pleacă pe el, iar AWB-ul îl face conectorul curierului.
 - `mail`: infrastructura de e-mail și șabloanele folosite pentru trimiterea fișei de retur și notificarea deciziei finale.
+- [deltatech_rma_lot](../deltatech_rma_lot/index.md): punte — lot / serie pe linia de retur, verificat față de livrare și dus pe transferul de retur.
+- [deltatech_rma_withdrawal](../deltatech_rma_withdrawal/index.md): punte — retragerea în 14 zile își ia fișa cu cod de bare și recepția prin scanare de aici.
+- [deltatech_rma_helpdesk](../deltatech_rma_helpdesk/index.md): punte (Enterprise) — cerere de retur deschisă dintr-un tichet de Helpdesk, cu rezultatul scris înapoi pe tichet.

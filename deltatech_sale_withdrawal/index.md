@@ -59,5 +59,5 @@ Modulul implementează funcția de retragere din contract (dreptul de renunțare
 #### 5. Conexiuni
 
 - [deltatech_sale_withdrawal_stock](../deltatech_sale_withdrawal_stock/index.md): extensie care depinde de acest modul și de `sale_stock`, adăugând anularea sau returul efectiv de stoc la execuția retragerii.
-- [deltatech_rma](../deltatech_rma/index.md): returul comercial — act juridic diferit, model separat intenționat; puntea `deltatech_rma_withdrawal` dă retragerii fișa cu cod de bare și recepția prin scanare.
+- [deltatech_rma](../deltatech_rma/index.md): returul comercial — act juridic diferit, model separat intenționat; puntea [deltatech_rma_withdrawal](../deltatech_rma_withdrawal/index.md) dă retragerii fișa cu cod de bare și recepția prin scanare.
 - `mail`: infrastructura de e-mail și șablon folosită pentru confirmarea de primire pe suport durabil.
