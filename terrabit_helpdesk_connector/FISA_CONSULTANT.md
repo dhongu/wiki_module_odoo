@@ -79,8 +79,9 @@ din exterior (cazul oricărei instanțe odoo.sh).
    de activare: contul se înregistrează singur (un cron zilnic reia înregistrarea dacă serverul era
    indisponibil).
 5. Pe o **bază de test sau staging** a clientului: după neutralizare, endpointul trece automat pe
-   `https://terrabit-staging.odoo.com`, iar cronurile conectorului se opresc. Sincronizarea se face
-   atunci doar din butonul **Actualizează acum**. Vezi secțiunea 11.
+   `https://terrabit-staging.odoo.com`. Sincronizarea rulează în continuare la 15 minute, ca în
+   producție, doar că vorbește cu helpdesk-ul de test. Se oprește numai cronul de înregistrare:
+   contul se înregistrează singur pe staging, la prima sincronizare. Vezi secțiunea 11.
 
 ![Contul de conectare la helpdesk-ul Terrabit](screenshots/01_cont_conectare.png)
 
@@ -95,6 +96,10 @@ cu filtrul **Închis**.
 
 Pe fiecare card se văd codul (ex. `09163`), subiectul, urgența (stele), data deschiderii, cine l-a
 deschis și avatarul consultantului Terrabit care se ocupă de tichet.
+
+Un tichet cu **răspuns nou necitit** iese în evidență: cardul are bordură colorată și eticheta
+**Răspuns nou**, iar în listă rândul e îngroșat și colorat. Marcajul îl vede doar cel care a
+deschis tichetul și dispare când acesta citește discuția.
 
 ![Tichetele mele, grupate pe status](screenshots/02_tichetele_mele.png)
 
@@ -202,7 +207,7 @@ statusului, a consultantului și a discuției (la 15 minute), retrimiterea din c
 tichetelor retrase la Terrabit, trecerea pe serverul de test după neutralizare.
 
 **Ce rămâne manual:** completarea codului fiscal al companiei și a emailului utilizatorilor;
-alegerea urgenței. Pe staging, sincronizarea se face din **Actualizează acum**.
+alegerea urgenței.
 
 ## 8. Verificări pentru consultant
 
@@ -219,6 +224,9 @@ alegerea urgenței. Pe staging, sincronizarea se face din **Actualizează acum**
       **Actualizează acum**.
 - [ ] Un răspuns public al consultantului apare în chatter, cu numele lui. O notă internă **nu**
       apare.
+- [ ] La un răspuns nou al consultantului, cardul tichetului are eticheta **Răspuns nou** la
+      autor, și numai la el. Marcajul dispare după ce autorul deschide tichetul și citește
+      discuția.
 - [ ] La un răspuns nou al consultantului, autorul tichetului primește notificarea la clopoțel.
       Nu primește niciun email în plus, iar colegii nu primesc notificarea.
 - [ ] O notă scrisă de client cu **Scrie notă** **nu** ajunge la Terrabit.
@@ -245,7 +253,7 @@ Capturile se generează automat din `tests/test_screenshots.py` (mixinul `Screen
 `l10n_ro_doc_screenshots`, import defensiv), în limba română. Ordinea e cea a pașilor de mai sus:
 
 1. `01_cont_conectare.png` — contul IAP „Terrabit Helpdesk", cu endpoint-ul.
-2. `02_tichetele_mele.png` — kanbanul „Tichetele mele", grupat pe status.
+2. `02_tichetele_mele.png` — kanbanul „Tichetele mele", grupat pe status, cu un tichet marcat **Răspuns nou**.
 3. `03_tichet_nou.png` — formularul de tichet nou, gol, cu câmpurile de completat evidențiate și butonul **Trimite la Terrabit**.
 4. `04_zona_fisiere.png` — o ciornă cu fișiere atașate, înainte de trimitere.
 5. `05_tichet_trimis.png` — tichetul abia trimis: `(#cod)`, status **Nou**, fișierele plecate.
@@ -266,9 +274,10 @@ Regenerare:
   Terrabit apare la client la următoarea sincronizare (maxim 15 minute sau imediat, din
   **Actualizează acum**).
 - **Staging-ul clientului nu vorbește cu producția Terrabit.** Pe o bază neutralizată, conectorul
-  trece singur pe helpdesk-ul de test, iar cronurile sale se opresc. Asta rămâne valabil și dacă
-  modulul se instalează sau se actualizează după neutralizare. Testele făcute acolo nu ajung la
-  consultanți.
+  trece singur pe helpdesk-ul de test. Asta rămâne valabil și dacă modulul se instalează sau se
+  actualizează după neutralizare. Testele făcute acolo nu ajung la consultanții din producție.
+  Sincronizarea rulează și pe staging, ca testerii să vadă statusul și răspunsurile fără să apese
+  **Actualizează acum**.
 - **Un tichet închis și apoi șters la Terrabit rămâne vizibil la client**, cu filtrul **Închis**:
   conectorul nu mai întreabă serverul de tichetele închise. E o limită cunoscută, fără impact
   asupra lucrului curent.

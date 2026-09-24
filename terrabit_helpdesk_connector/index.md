@@ -1,7 +1,7 @@
 # Terrabit Helpdesk Connector (localizat la `terrabit_helpdesk_connector/index.md`)
 
 - **Nume Tehnic:** `terrabit_helpdesk_connector`
-- **Versiune:** `19.0.0.2.1`
+- **Versiune:** `19.0.0.2.2`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_helpdesk_connector`
 - **Ultima Ingestie:** `2026-09-24`
@@ -25,6 +25,8 @@ răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la
 - Ecranul **Tichetele mele** (`Terrabit Support → Tichetele mele`): kanban/listă grupate pe status,
   în ordinea firească a fluxului (Ciornă, De trimis, Nou, În lucru, De răspuns, Închis), cu urgență,
   consultant atribuit și dată de deschidere.
+- Tichetele cu răspuns nou necitit ies în evidență: în kanban bară colorată pe card și eticheta
+  „Răspuns nou”, în listă rândul îngroșat și colorat — doar la autor, dispare când citește discuția.
 - Autorul tichetului e anunțat în Odoo, la clopoțel (doar inbox, fără email), când vine un
   răspuns nou de la Terrabit — nu pentru propriile mesaje și nici pentru istoricul adus la prima
   sincronizare.

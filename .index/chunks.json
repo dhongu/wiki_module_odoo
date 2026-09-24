@@ -13721,7 +13721,7 @@
   {
     "path": "terrabit_helpdesk_connector/index.md",
     "module": "terrabit_helpdesk_connector",
-    "version": "19.0.0.2.1",
+    "version": "19.0.0.2.2",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector",
     "local_path": "odoo-addons/terrabit/terrabit_helpdesk_connector",
     "last_ingest": "2026-09-24",
@@ -13730,6 +13730,7 @@
     "features": [
       "Deschiderea unui tichet nou direct din formularul standard Odoo (subiect, urgență pe 4 niveluri,",
       "Ecranul Tichetele mele (`Terrabit Support → Tichetele mele`): kanban/listă grupate pe status,",
+      "Tichetele cu răspuns nou necitit ies în evidență: în kanban bară colorată pe card și eticheta",
       "Autorul tichetului e anunțat în Odoo, la clopoțel (doar inbox, fără email), când vine un",
       "Ecranul Ale echipei (`Terrabit Support → Ale echipei`): toate tichetele companiei, indiferent",
       "Discuție bidirecțională prin chatter: răspunsurile publice ale consultanților Terrabit apar local,",
@@ -13748,7 +13749,7 @@
       "terrabit_helpdesk_link",
       "terrabit_iap"
     ],
-    "text": "Terrabit Helpdesk Connector\nterrabit_helpdesk_connector\nModulul aduce tichetele de suport Terrabit direct în Odoo-ul clientului, fără email și fără portal separat: utilizatorul deschide un tichet, urmărește statusul real (nou, în lucru, așteaptă răspunsul clientului, închis), vede cine din Terrabit se ocupă de el și poartă discuția din chatter, la fel ca pe orice document Odoo. Colegii din aceeași firmă văd și tichetele celorlalți, ca să nu se deschidă de două ori aceeași problemă. Dacă serverul Terrabit e temporar indisponibil, tichetul sau răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la revenire.\nDeschiderea unui tichet nou direct din formularul standard Odoo (subiect, urgență pe 4 niveluri,\nEcranul Tichetele mele (`Terrabit Support → Tichetele mele`): kanban/listă grupate pe status,\nAutorul tichetului e anunțat în Odoo, la clopoțel (doar inbox, fără email), când vine un\nEcranul Ale echipei (`Terrabit Support → Ale echipei`): toate tichetele companiei, indiferent\nDiscuție bidirecțională prin chatter: răspunsurile publice ale consultanților Terrabit apar local,\nCoadă de retrimitere automată (cron la 15 minute) pentru tichete și răspunsuri neplecate din cauza\nSincronizare automată a stadiului, consultantului atribuit și discuției, plus curățarea locală a\nTrecere automată pe endpointul de staging (`terrabit-staging.odoo.com`) când baza e neutralizată,\nGestionare inteligentă a fișierelor mari: cele sub 2 MB se copiază la Terrabit, cele peste rămân în"
+    "text": "Terrabit Helpdesk Connector\nterrabit_helpdesk_connector\nModulul aduce tichetele de suport Terrabit direct în Odoo-ul clientului, fără email și fără portal separat: utilizatorul deschide un tichet, urmărește statusul real (nou, în lucru, așteaptă răspunsul clientului, închis), vede cine din Terrabit se ocupă de el și poartă discuția din chatter, la fel ca pe orice document Odoo. Colegii din aceeași firmă văd și tichetele celorlalți, ca să nu se deschidă de două ori aceeași problemă. Dacă serverul Terrabit e temporar indisponibil, tichetul sau răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la revenire.\nDeschiderea unui tichet nou direct din formularul standard Odoo (subiect, urgență pe 4 niveluri,\nEcranul Tichetele mele (`Terrabit Support → Tichetele mele`): kanban/listă grupate pe status,\nTichetele cu răspuns nou necitit ies în evidență: în kanban bară colorată pe card și eticheta\nAutorul tichetului e anunțat în Odoo, la clopoțel (doar inbox, fără email), când vine un\nEcranul Ale echipei (`Terrabit Support → Ale echipei`): toate tichetele companiei, indiferent\nDiscuție bidirecțională prin chatter: răspunsurile publice ale consultanților Terrabit apar local,\nCoadă de retrimitere automată (cron la 15 minute) pentru tichete și răspunsuri neplecate din cauza\nSincronizare automată a stadiului, consultantului atribuit și discuției, plus curățarea locală a\nTrecere automată pe endpointul de staging (`terrabit-staging.odoo.com`) când baza e neutralizată,\nGestionare inteligentă a fișierelor mari: cele sub 2 MB se copiază la Terrabit, cele peste rămân în"
   },
   {
     "path": "terrabit_helpdesk_link/index.md",

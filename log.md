@@ -4,6 +4,16 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `terrabit_helpdesk_connector` — 19.0.0.2.2 (marcaj „Răspuns nou”, sincronizare pe staging)
+
+- **Acțiune:** Re-ingestie după PR #359: marcaj pentru răspuns nou necitit (card cu `highlight_color`,
+  rând colorat în listă) și sincronizarea care rămâne activă pe bazele neutralizate. Fișa și
+  capturile 02/07 recopiate.
+- **Fișiere actualizate:** `terrabit_helpdesk_connector/{index.md,FISA_CONSULTANT.md,screenshots/*}`,
+  `log.md`, `.index/chunks.json`.
+
+---
+
 ## [2026-09-24] `terrabit_helpdesk_connector` — 19.0.0.2.1 (notificare la clopoțel pentru autor)
 
 - **Acțiune:** Re-ingestie după PR #357: autorul tichetului primește notificare în inbox, fără email,
