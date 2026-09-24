@@ -4,6 +4,25 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `l10n_ro_partner_ledger_currency` — actualizat la 19.0.1.4.5 (corecții text/UI fișă, PR #317)
+
+- **Acțiune:** Re-ingestie a paginii, după PR #317 (tichet #9575, merge-uit în 19.0), care corectează
+  constatările de text/UI ale raportului agentului `verificator-fisa` din 2026-09-24 (bug-ul de cod
+  al liniilor desfășurate fusese reparat separat, în PR #316, deja reflectat în wiki). Corecții
+  strict de text: monografia din secțiunea 6 confunda un furnizor intracomunitar UE cu unul intern
+  (lipsea taxarea inversă Dr 4426 = Cr 4427); mențiunea coloanei „Cont coresp." era depășită (deja
+  eliminată dintr-o versiune anterioară a șablonului); etichetele filtrului „Cont" și starea lui
+  implicită erau citate greșit (Receivable/Payable + „Cont: Tot" în loc de Creanță/Datorie + „Cont:
+  Parteneri comerciali"); calea de meniu era greșită („Rapoarte partener", nu „Raportare →
+  Parteneri"). Verificat contabil (agent `pacioli`) monografia intracomunitară și notele de avans.
+  Nu schimbă modele, dependențe sau logica tehnică descrisă în pagină — doar fișa consultant și
+  capturile 02/03 au fost resincronizate.
+- **Sursă:** `readme/HISTORY.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`.
+- **Fișe consultant:** copiată (`FISA_CONSULTANT.md` + 3 capturi, 02 și 03 regenerate).
+- **Fișiere actualizate:** `l10n_ro_partner_ledger_currency/index.md`,
+  `l10n_ro_partner_ledger_currency/FISA_CONSULTANT.md`,
+  `l10n_ro_partner_ledger_currency/screenshots/*`, `log.md`, `.index/`.
+
 ## [2026-09-24] `terrabit_helpdesk_connector`, `terrabit_iap_server_helpdesk` — pagini noi, cu fișe consultant
 
 - **Acțiune:** Ingestie nouă pentru cele două capete ale conectorului de suport Terrabit (procesate

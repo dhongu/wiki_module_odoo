@@ -1,7 +1,7 @@
 # Romania - Fișa partenerului în valută (localizat la `l10n_ro_partner_ledger_currency/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_partner_ledger_currency`
-- **Versiune:** `19.0.1.4.4`
+- **Versiune:** `19.0.1.4.5`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_partner_ledger_currency
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_partner_ledger_currency`
 - **Ultima Ingestie:** 2026-09-24
@@ -18,7 +18,7 @@ Modulul extinde raportul Partner Ledger (Fișa Partenerului) din Odoo Enterprise
 - Netransparent pentru RON: tranzacțiile în RON au coloanele valutare goale, pentru vizibilitate clară a operațiunilor cu valută efectivă.
 - Păstrarea coloanelor standard **Debit (RON)**, **Credit (RON)**, **Sold (RON)**.
 - Vizibil automat doar pentru companiile cu Țara = România, și doar când baza de date are multi-valută activă (Setări → Contabilitate → Valute).
-- Meniu: **Contabilitate → Raportare → Parteneri → Fișa Partenerului în Valută**.
+- Meniu: **Contabilitate → Rapoarte partener → Fișa Partenerului în Valută**.
 - Moștenește toate funcționalitățile Partner Ledger: sold inițial, export PDF/XLSX, filtre parteneri/jurnale, drill-down, reconciliere.
 - Filtrul „Cont" extins doar pe acest raport: conturile de avans **409** (Furnizori-debitori) intră sub **Payable**, **419** (Clienți-creditori) sub **Receivable** — altfel rămâneau invizibile, fiind `liability_current` în planul RO și nu `asset_receivable`/`liability_payable`. Extinderea este aplicată consecvent atât pe antetul partenerului (agregatele calculate de handler), cât și pe liniile desfășurate pe ecran sub fiecare grup de valută — vezi corecția din 19.0.1.4.4 la Componente Cheie.
 - Parteneri cu mai multe valute (ex. EUR și USD): raportul inserează automat un sub-nivel de grupare pe valută, fiecare cu propriul sold inițial și sold rulant.
@@ -39,7 +39,7 @@ Modulul extinde raportul Partner Ledger (Fișa Partenerului) din Odoo Enterprise
 
 **Vizualizări / Date**
 
-- `data/l10n_ro_partner_currency_report.xml`: definește raportul `account.report` „Fișa Partenerului în Valută" (vizibil doar pentru `country_id = base.ro`), coloanele standard RON + `amount_currency`, filtrul `filter_aml_ir_filters` pentru izolarea unei singure valute, acțiunea client și meniul (Contabilitate → Raportare → Parteneri).
+- `data/l10n_ro_partner_currency_report.xml`: definește raportul `account.report` „Fișa Partenerului în Valută" (vizibil doar pentru `country_id = base.ro`), coloanele standard RON + `amount_currency`, filtrul `filter_aml_ir_filters` pentru izolarea unei singure valute, acțiunea client și meniul (Contabilitate → Rapoarte partener).
 - `data/confirmare_sold_pdf.xml`: șablon QWeb `confirmare_sold_pdf` — extras de cont compact, o pagină per partener, cu tabel per valută și tip de sold (comercial vs. avans, pe rânduri separate), în valută și RON, plus text legal OMFP 2861/2009.
 - `data/fisa_cont_valuta_pdf.xml`: acțiune `ir.actions.report` + șablon QWeb `fisa_cont_valuta_pdf` — fișă de cont clasică per (partener, cont, valută), randată cu `web.external_layout`.
 - `security/ir.model.access.csv`: acces în citire pentru `account.group_account_readonly` pe handlerul raportului.

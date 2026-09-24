@@ -16,7 +16,7 @@ Modulul adaugă coloanele **Debit/Credit/Sold Valută** direct în fișa partene
 automat mișcările pe valută la partenerii cu mai multe monede și generează două documente
 tipăribile — fără a afecta registrele contabile:
 
-- **Confirmare sold (PDF)** — extras de cont compact, cu o linie per valută;
+- **Confirmare sold (PDF)** — extras de cont compact, cu o linie per valută și tip de sold;
 - **Fișă în valută (PDF)** — „Fișa contului" în format clasic (doar în valută, o linie per document,
   cu sold cumulat), utilă contabililor obișnuiți cu fișa de cont clasică și pentru verificarea
   rulajelor pe un partener/cont în moneda tranzacției.
@@ -50,11 +50,13 @@ Raportul citește conturile de **parteneri** din planul RO: **4111** (clienți),
 și conturile de avans **409x** (Furnizori - debitori) și **419x** (Clienți - creditori). Nu
 generează note contabile — este un raport de citire peste liniile contabile existente.
 
-⚠️ **Filtrul „Cont"**: cele patru opțiuni standard Odoo (Receivable / Non Trade Receivable /
-Payable / Non Trade Payable) se bazează pe `account_type` (`asset_receivable` / `liability_payable`).
-Conturile 409x/419x sunt însă `liability_current` în planul de conturi românesc — modulul extinde
-domeniul acestui filtru DOAR pe acest raport (nu global), astfel: cu **Payable** bifat se includ și
-conturile **409%**, cu **Receivable** bifat se includ și conturile **419%** (Tichet #9575).
+⚠️ **Filtrul „Cont"**: cele patru opțiuni standard Odoo (**Creanță** / Creanțe non-comerciale /
+**Datorie** / Datorii non-comerciale) se bazează pe `account_type` (`asset_receivable` /
+`liability_payable`). Starea implicită a filtrului are bifate doar **Creanță** și **Datorie**
+(afișată în antet ca „Cont: Parteneri comerciali") — nu toate cele patru opțiuni. Conturile
+409x/419x sunt însă `liability_current` în planul de conturi românesc — modulul extinde domeniul
+acestui filtru DOAR pe acest raport (nu global), astfel: cu **Datorie** bifată se includ și
+conturile **409%**, cu **Creanță** bifată se includ și conturile **419%** (Tichet #9575).
 
 Date minime pentru demo:
 - companie românească cu planul de conturi RO instalat (`l10n_ro`);
@@ -74,7 +76,7 @@ Date minime pentru demo:
 
 ### Pasul 1 — Accesarea și citirea raportului
 
-Accesați **Contabilitate → Raportare → Parteneri → Fișa Partenerului în Valută** și desfaceți
+Accesați **Contabilitate → Rapoarte partener → Fișa Partenerului în Valută** și desfaceți
 partenerii (săgeata `▶` sau filtrul *Desfășoară tot*).
 
 **Găsiți pe ecran:** pe lângă coloanele standard (Jurnal, Cont, Dată Factură, Scadență,
@@ -121,7 +123,7 @@ soldul debitor pe 409 se regularizează la primirea facturii de la furnizor, iar
 pe 419 se stinge prin livrarea către client, nu prin plată. Rândul de total rămâne doar
 informativ (suma tuturor rândurilor) — soldul care se confirmă este cel de pe fiecare rând.
 
-![Confirmare sold (PDF) — extras de cont cu o linie per valută și text OMFP 2861/2009](screenshots/02_confirmare_sold.png)
+![Confirmare sold (PDF) — extras de cont cu o linie per valută și tip de sold și text OMFP 2861/2009](screenshots/02_confirmare_sold.png)
 
 Convenția de semn: **sold pozitiv = sumă de încasat** de către companie, **sold negativ = sumă
 de plătit** (la furnizori soldul apare negativ).
@@ -137,7 +139,7 @@ obișnuit din fișa de cont clasică (doar valută, fără coloanele RON/scaden�
    PDF/XLSX).
 3. **Găsiți în document:** câte o **„Fișă a contului"** per (partener, cont, valută) — antet cu
    `Debit precedent` / `Credit precedent` / `Sold inițial`, tabelul `Data | Nr. doc. | Explicație |
-   Cont coresp. | Sumă debitoare | Sumă creditoare | Sold` (toate în valută, o linie per document,
+   Sumă debitoare | Sumă creditoare | Sold` (toate în valută, o linie per document,
    cu **sold cumulat**), iar la final `Rulaj total` și `Sold final`.
 
 Documentul este randat cu **layout-ul de document configurat în Odoo** (antet/subsol cu
@@ -163,19 +165,33 @@ valută, dacă partenerii sunt desfăcuți). Ecranul este același din Pasul 1
 ### Note de monografie și raportare
 
 Modulul **nu generează note contabile** — citește liniile existente pe conturile de parteneri
-(4111, 401 etc.) și afișează `amount_currency` alături de Debit/Credit în RON:
+(4111, 401 etc.) și afișează `amount_currency` alături de Debit/Credit în RON. Scenariul din fișă
+(`Global Trading GmbH`, Germania) este un furnizor extern din UE — achiziție intracomunitară cu
+taxare inversă (autolichidare TVA), nu o factură de la un furnizor intern:
 
-- factura de furnizor în EUR: **Dr 6xx / Dr 4426 = Cr 401** (în RON la cursul facturii), cu
-  `Credit Valută = suma EUR` pe linia 401 din fișă;
+- factura de la furnizorul intracomunitar în EUR (achiziție de bunuri): **Dr 6xx/3xx = Cr 401**
+  (valoarea EUR la cursul facturii) și, prin taxare inversă, **Dr 4426 = Cr 4427** (TVA colectată =
+  TVA deductibilă, fără plată efectivă către furnizor; baza TVA se calculează la cursul de la data
+  exigibilității, care poate diferi de cursul facturii) — pe linia 401 din fișă apare
+  `Credit Valută = suma EUR`. La un furnizor intern (fără taxare inversă) nota rămâne
+  **Dr 6xx/3xx / Dr 4426 = Cr 401**;
 - plata facturii: **Dr 401 = Cr 5124**, cu `Debit Valută = suma EUR`;
+- avans acordat furnizorului: **Dr 409 = Cr 5124** (bancă în valută); regularizarea la primirea
+  facturii: **Dr 401 = Cr 409**;
+- avans încasat de la client: **Dr 5124 = Cr 419** (bancă în valută); stingerea la livrare/facturare:
+  **Dr 419 = Cr 4111**;
+  (notele de avans de mai sus sunt cele ale unei achiziții/livrări intracomunitare de bunuri, fără
+  TVA pe avans; la servicii din UE sau la parteneri interni, avansul generează și el TVA prin
+  taxare inversă, respectiv prin 4427/4426 pe factura de avans);
 - diferențele de curs (665/765) apar în fișă doar în coloanele RON (sunt linii fără valută) —
   soldul valutar nu este afectat, corect contabil;
 - reevaluarea soldurilor la cursul BNR de închidere se face separat
   (modulul `l10n_ro_currency_revaluation`);
-- **avansurile (409/419) sunt elemente nemonetare** (OMFP 1802/2014 pct. 315-316) — spre
-  deosebire de 401/4111, soldul lor în valută **nu se reevaluează** lunar. La un partener cu
-  avans, raportul dintre soldul RON și soldul valutar din fișă poate să nu mai corespundă unui
-  singur curs; nu este o eroare a raportului.
+- **avansurile (409/419, inclusiv 4093/4094) nu se evaluează la curs** — spre deosebire de
+  401/4111, soldul lor în valută **nu se reevaluează**, nici lunar, nici la închiderea exercițiului
+  (OMFP 1802/2014 pct. 316 alin. (2); calificarea de „element nemonetar" e doctrinară, nu din
+  textul punctului). La un partener cu avans, raportul dintre soldul RON și soldul valutar
+  din fișă poate să nu mai corespundă unui singur curs; nu este o eroare a raportului.
 
 ## 7. Legături cu alte module / declarații
 
@@ -194,14 +210,15 @@ Ce rămâne manual: trimiterea confirmării către partener și compararea cu ex
 ## 8. Verificări pentru consultant
 
 - [ ] Modulul se instalează fără erori pe baza demo (cu `account_reports` Enterprise).
-- [ ] Meniul **Contabilitate → Raportare → Parteneri → Fișa Partenerului în Valută** este vizibil
+- [ ] Meniul **Contabilitate → Rapoarte partener → Fișa Partenerului în Valută** este vizibil
       pe compania RO și **nu** apare pe o companie non-RO.
 - [ ] Coloanele Debit/Credit/Sold Valută apar când multi-valuta este activă.
 - [ ] La un partener cu EUR + USD, raportul grupează pe valută, cu Sold Inițial per valută.
 - [ ] Soldul rulant al grupului EUR = Sold Inițial EUR + mișcările EUR din perioadă.
 - [ ] La tranzacțiile RON coloanele valutare sunt goale.
 - [ ] Butonul **Confirmare sold (PDF)** generează documentul: o pagină per partener, o linie per
-      valută, totalul RON corect (suma soldurilor finale în RON ale tuturor valutelor).
+      valută și tip de sold, cu rândul „Poziție netă totală (RON)" — suma soldurilor finale în RON
+      ale tuturor rândurilor, cu titlu strict informativ (nu se compensează rândurile).
 - [ ] Soldul final din PDF corespunde antetului de grup din raportul de pe ecran.
 - [ ] Un partener cu sold pe 401 ȘI pe 409 (sau 4111 ȘI 419), în aceeași valută, apare în
       „Confirmare sold" cu **DOUĂ rânduri distincte** — soldul comercial și avansul NU sunt
@@ -213,10 +230,11 @@ Ce rămâne manual: trimiterea confirmării către partener și compararea cu ex
 - [ ] Tranzacțiile în moneda companiei apar ca fișe separate în RON.
 - [ ] Exporturile PDF/XLSX standard conțin coloanele valutare.
 - [ ] Conturile de avans **409** (furnizor cu sold pe 409) și **419** (client cu sold pe 419) apar
-      în raport cu filtrul **Cont: Tot** bifat — nu doar cu conturile 4111/401 (Tichet #9575).
-- [ ] Cu filtrul „Cont" restrâns la **doar Receivable**, un sold pe 409 (avans furnizor) **nu**
-      apare; cu filtrul restrâns la **doar Payable**, un sold pe 419 (avans client) **nu** apare —
-      extinderea urmează latura corectă (409↔Payable, 419↔Receivable), nu le arată pe amândouă
+      în raport cu starea implicită a filtrului **Cont: Parteneri comerciali** (Creanță + Datorie
+      bifate) — nu doar cu conturile 4111/401 (Tichet #9575).
+- [ ] Cu filtrul „Cont" restrâns la **doar Creanță**, un sold pe 409 (avans furnizor) **nu**
+      apare; cu filtrul restrâns la **doar Datorie**, un sold pe 419 (avans client) **nu** apare —
+      extinderea urmează latura corectă (409↔Datorie, 419↔Creanță), nu le arată pe amândouă
       indiferent de selecție.
 
 ## 9. Mesaje de eroare frecvente
@@ -229,7 +247,7 @@ Ce rămâne manual: trimiterea confirmării către partener și compararea cu ex
 | Soldul valutar pare amestecat | Partener cu mai multe valute, raport vechi în cache | Reîncărcați raportul; gruparea pe valută separă soldurile per monedă |
 | PDF-ul de confirmare iese gol | Filtrele exclud toți partenerii (perioadă/partener) | Lărgiți perioada sau scoateți filtrul de partener |
 | Sold Inițial 0 deși există istoric | Mișcările istorice sunt în ciornă | Postați documentele din perioadele anterioare |
-| Contul 409/419 nu apare deși are sold | Filtrul „Cont" e restrâns la o singură latură | 409 apare doar cu Payable bifat, 419 doar cu Receivable bifat — bifați „Cont: Tot" pentru ambele |
+| Contul 409/419 nu apare deși are sold | Filtrul „Cont" e restrâns la o singură latură | 409 apare doar cu Datorie bifată, 419 doar cu Creanță bifată — starea implicită „Cont: Parteneri comerciali" le include pe ambele |
 
 ## 10. Capturi de ecran
 
@@ -241,7 +259,7 @@ un avans pe cont 409 în EUR) și un client RON:
 1. `01_raport_valuta.png` — raportul desfășurat: furnizor cu EUR + USD grupat pe valută
    (Sold Inițial + sold rulant per valută) și partener RON cu coloanele valutare goale.
 2. `02_confirmare_sold.png` — documentul **Confirmare sold (PDF)** (randarea HTML a aceluiași
-   layout tipărit): o linie per valută pentru soldul comercial, plus rândul separat de avans
+   layout tipărit): o linie per valută și tip de sold pentru soldul comercial, plus rândul separat de avans
    furnizor (`Global Trading GmbH` are un avans de 200 € pe contul 409) — nu compensate —,
    rândul de informare „Poziție netă totală (RON)", text OMFP 2861/2009 și zone de semnătură.
 3. `03_fisa_cont_valuta.png` — documentul **Fișă în valută (PDF)**, format clasic: „Fișa contului"
