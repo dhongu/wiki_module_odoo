@@ -151,7 +151,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_mrp_simple](deltatech_mrp_simple/index.md): Producție simplă fără listă de materiale: componente și produse rezultate pe un singur ecran, cu generare automată de mișcări de stoc și calcul de preț.
 - [deltatech_mrp_simple_barcode](deltatech_mrp_simple_barcode/index.md): Extinde producția simplă cu scanare de coduri de bare pentru adăugarea/incrementarea rapidă a produselor consumate.
 - [deltatech_mrp_validation_date](deltatech_mrp_validation_date/index.md): Adaugă un câmp „Dată Validare" pe comanda de fabricație, completat automat la marcarea „Efectuată", pentru trasabilitatea finalizării producției.
-- [deltatech_nap](deltatech_nap/index.md): Planificarea necesarului și a disponibilității stocurilor (NAP — Need and Availability Planning), cu analiza cererii pentru optimizarea achizițiilor.
+- [deltatech_nap](deltatech_nap/index.md): NAP (Necesar de Aprovizionare) — raport la cerere pentru necesarul de achiziție (cerere medie zilnică, stoc de siguranță statistic, clasificare XYZ) și reaprovizionare consolidată pe furnizor.
 - [deltatech_nap_website](deltatech_nap_website/index.md): Extinde raportul NAP cu categoria publică de produse din website_sale, pentru raportare a achizițiilor pe categorii.
 - [deltatech_no_quick_create](deltatech_no_quick_create/index.md): Dezactivează global crearea rapidă (quick create) din câmpurile Many2one pentru a preveni înregistrările incomplete.
 - [deltatech_notification_sound](deltatech_notification_sound/index.md): Feedback sonor pentru notificările din backend, cu sunete distincte pe tip de mesaj și comutator per utilizator.
@@ -293,7 +293,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_stock_close](deltatech_stock_close/index.md): Marchează valorizările mișcărilor de stoc drept închise la o dată dată, pentru a le exclude din fișa de magazie după perioada de raportare sau la închiderea exercițiului.
 - [deltatech_stock_count_zero](deltatech_stock_count_zero/index.md): Setează automat cantitatea inventariată la zero la o numărare goală de stoc (articole negăsite la inventar).
 - [deltatech_stock_delivery](deltatech_stock_delivery/index.md): Adaugă în factură un buton de Livrare/Recepție pentru a vedea rapid transferurile de stoc asociate.
-- [deltatech_stock_inventory](deltatech_stock_inventory/index.md): Restaurează și extinde inventarul clasic (`stock.inventory`) cu control valoric, vizibilitate pe depozite, localizare manuală și scanare cod de bare.
+- [deltatech_stock_inventory](deltatech_stock_inventory/index.md): Documentul de inventar clasic (`stock.inventory`), cu listă de numărare, valorile diferențelor înainte de validare, unire de inventare, stoc pe depozite în kanban și amplasamente manuale.
 - [deltatech_stock_inventory_product_display](deltatech_stock_inventory_product_display/index.md): Buton pe comenzi/facturi pentru a vizualiza rapid produsele din linii și disponibilitatea lor în stoc.
 - [deltatech_stock_negative](deltatech_stock_negative/index.md): Interzice stocurile negative în locațiile interne, cu excepție pe locații configurate explicit.
 - [deltatech_stock_picking_activity_report](deltatech_stock_picking_activity_report/index.md): Evidența modificărilor, mesajelor din chatter și evenimentelor de validare pe transferurile de stoc, cu raport statistic în Inventar și curățare automată a datelor vechi.

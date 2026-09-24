@@ -1,10 +1,11 @@
 # NAP (localizat la `deltatech_nap/index.md`)
 
 - **Nume Tehnic:** `deltatech_nap`
-- **Versiune:** `19.0.1.8.0`
+- **Versiune:** `19.0.1.8.3`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_nap`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_nap`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-24`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -23,6 +24,8 @@ NAP (Necesar de Aprovizionare / Purchase requirements) este o unealtă simplă �
 - **Gestionarea sfârșitului de ciclu de viață (EOL)**: un indicator `EOL` și o acțiune programată care arhivează produsele EOL odată ce stocul acestora ajunge la zero.
 - **Relevanță pentru planificare**: un indicator `planning_relevant` (specific variantei de produs) pentru a exclude din raport produsele care nu sunt planificate.
 - **Raport de stoc cu mișcare lentă (slow move)**: identifică produsele cu stoc pozitiv și fără ieșiri semnificative într-o perioadă, cu filtrare inteligentă care exclude produsele recent recepționate sau nou create.
+- **Meniu**: raportul principal se accesează din *Inventar ▸ Raportare ▸ Stock Forecast Report*, cu opțiuni pentru depozit/locație, perioadă istoric, zile de prognoză, timp de livrare, furnizori/produse, majorare vânzări și comutatorul pentru stocul de siguranță statistic (nivel de serviciu). Din lista rezultată, liniile marcate pentru verificare manuală (clasa Z) sunt evidențiate, iar dialogul „Info” arată explicația de calcul pas cu pas; reaprovizionarea se lansează per linie sau pe întreaga selecție.
+- **Parametri de sistem** (`Setări ▸ Tehnic ▸ Parametri de Sistem`): valorile implicite pentru stocul de siguranță statistic (comutator, nivel de serviciu) și pragurile coeficientului de variație pentru clasele X/Y/Z sunt configurabile centralizat, la fel ca opțiunea de a respecta și minimul regulilor de reaprovizionare ale produsului.
 
 #### 3. Dependențe
 
@@ -38,7 +41,7 @@ Conform `readme/DESCRIPTION.md`, modulul extinde mai multe modele de bază Odoo:
 
 **Modele**
 
-- `product.template` / `product.product`: extindere cu câmpurile `planning_relevant`, `replacement_product_id` și `eol`; începând cu versiunea 18.0.1.4.1 (istoric), `planning_relevant` și `replacement_product_id` sunt specifice variantei de produs.
+- `product.template` / `product.product`: extindere cu câmpurile `planning_relevant`, `replacement_product_id` și `eol`; `planning_relevant` și `replacement_product_id` sunt specifice variantei de produs.
 - `stock.demand`: model dedicat pentru înregistrarea manuală și analiza cererii de produse.
 - `stock.delivery.history`: istoricul livrărilor, folosit ca sursă suplimentară de cerere pentru prognoză.
 - `stock.forecast.report` (wizard): raportul principal „ce trebuie comandat”, cu agregare grea în SQL pentru performanță și citirea în batch a cifrelor de stoc.

@@ -4,6 +4,24 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `deltatech_stock_inventory`, `deltatech_nap` — re-ingestie cu fișe consultant noi
+
+- **Acțiune:** Re-ingestie a două pagini, în paralel (câte un subagent `documentarist-wiki` pe modul),
+  după adăugarea fișelor consultant auditate de `verificator-fisa` (verdict curat pe amândouă).
+  - `deltatech_stock_inventory` (19.0.2.10.0): fișă nouă cu 15 capturi (dhongu/deltatech#2939).
+    Funcțiile din DESCRIPTION.md care nu mai există în 19.0 (arhivarea SVL, integrarea de cod de
+    bare) nu mai apar ca active. Legătura nesusținută de cod către `deltatech_stock_account` a fost
+    înlocuită cu `l10n_ro_inventory_closing` și `l10n_ro_inventory_register`.
+  - `deltatech_nap` (19.0.1.8.3): fișă nouă cu 9 capturi și traducere RO completată
+    (terrabit-solutions/bitshop#2865). Descrierea din index era greșită: numea NAP „Need and
+    Availability Planning”, corect este „Necesar de Aprovizionare”.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/USAGE.md`, `readme/CONFIGURE.md`,
+  `readme/FISA_CONSULTANT.md`, `__manifest__.py`.
+- **Fișe consultant:** copiate amândouă (`FISA_CONSULTANT.md` + capturi: 15, respectiv 9).
+- **Fișiere actualizate:** `deltatech_stock_inventory/index.md`, `deltatech_stock_inventory/FISA_CONSULTANT.md`,
+  `deltatech_stock_inventory/screenshots/*`, `deltatech_nap/index.md`, `deltatech_nap/FISA_CONSULTANT.md`,
+  `deltatech_nap/screenshots/*`, `index.md`, `log.md`, `.index/`.
+
 ## [2026-09-24] `l10n_ro_partner_ledger_currency` — actualizat la 19.0.1.4.4 (fix liniile desfășurate pe ecran)
 
 - **Acțiune:** Re-ingestie a paginii, după fix-ul de cod din PR #316 (tichet #9575, găsit la

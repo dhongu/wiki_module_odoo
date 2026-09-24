@@ -4290,10 +4290,10 @@
   {
     "path": "deltatech_nap/index.md",
     "module": "deltatech_nap",
-    "version": "19.0.1.8.0",
+    "version": "19.0.1.8.3",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_nap`",
     "local_path": "odoo-addons/bitshop/deltatech_nap",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-09-24",
     "friendly_name": "NAP",
     "summary": "NAP (Necesar de Aprovizionare / Purchase requirements) este o unealtă simplă și rapidă pentru determinarea necesarului de achiziție în Odoo, dezvoltată de Terrabit. Utilizatorul deschide un raport, obține o listă justificată de „ce trebuie comandat” și lansează direct reaprovizionarea, fără obiecte de planificare permanente și fără un flux de lucru greoi. Nucleul modulului este Raportul de Prognoză Stoc (Stock Forecast Report): pentru o perioadă, un depozit/locație și, opțional, un furnizor sau un produs selectat, se calculează cererea medie zilnică din istoric și se determină, pentru fiecare produs, cantitatea de comandat pentru orizontul de prognoză, ținând cont de stocul disponibil, de intrări, ieșiri și de cantitățile aflate deja în circuitul de aprovizionare.",
     "features": [
@@ -4307,7 +4307,9 @@
       "Produse de înlocuire: cererea unui produs scos din uz este preluată de produsul său de înlocuire.",
       "Gestionarea sfârșitului de ciclu de viață (EOL): un indicator `EOL` și o acțiune programată care arhivează produsele EOL odată ce stocul acestora ajunge la zero.",
       "Relevanță pentru planificare: un indicator `planning_relevant` (specific variantei de produs) pentru a exclude din raport produsele care nu sunt planificate.",
-      "Raport de stoc cu mișcare lentă (slow move): identifică produsele cu stoc pozitiv și fără ieșiri semnificative într-o perioadă, cu filtrare inteligentă care exclude produsele recent recepționate sau nou create."
+      "Raport de stoc cu mișcare lentă (slow move): identifică produsele cu stoc pozitiv și fără ieșiri semnificative într-o perioadă, cu filtrare inteligentă care exclude produsele recent recepționate sau nou create.",
+      "Meniu: raportul principal se accesează din *Inventar ▸ Raportare ▸ Stock Forecast Report*, cu opțiuni pentru depozit/locație, perioadă istoric, zile de prognoză, timp de livrare, furnizori/produse, majorare vânzări și comutatorul pentru stocul de siguranță statistic (nivel de serviciu). Din lista rezultată, liniile marcate pentru verificare manuală (clasa Z) sunt evidențiate, iar dialogul „Info” arată explicația de calcul pas cu pas; reaprovizionarea se lansează per linie sau pe întreaga selecție.",
+      "Parametri de sistem (`Setări ▸ Tehnic ▸ Parametri de Sistem`): valorile implicite pentru stocul de siguranță statistic (comutator, nivel de serviciu) și pragurile coeficientului de variație pentru clasele X/Y/Z sunt configurabile centralizat, la fel ca opțiunea de a respecta și minimul regulilor de reaprovizionare ale produsului."
     ],
     "dependencies": [
       "purchase",
@@ -4319,7 +4321,7 @@
     "connections": [
       "deltatech_nap_website"
     ],
-    "text": "NAP\ndeltatech_nap\nNAP (Necesar de Aprovizionare / Purchase requirements) este o unealtă simplă și rapidă pentru determinarea necesarului de achiziție în Odoo, dezvoltată de Terrabit. Utilizatorul deschide un raport, obține o listă justificată de „ce trebuie comandat” și lansează direct reaprovizionarea, fără obiecte de planificare permanente și fără un flux de lucru greoi. Nucleul modulului este Raportul de Prognoză Stoc (Stock Forecast Report): pentru o perioadă, un depozit/locație și, opțional, un furnizor sau un produs selectat, se calculează cererea medie zilnică din istoric și se determină, pentru fiecare produs, cantitatea de comandat pentru orizontul de prognoză, ținând cont de stocul disponibil, de intrări, ieșiri și de cantitățile aflate deja în circuitul de aprovizionare.\nRaport „ce trebuie comandat”: cerere medie zilnică × (zile de prognoză + timp de livrare), ajustată cu stocul disponibil, intrările, ieșirile și cantitățile în curs de aprovizionare; fiecare linie are o explicație pas cu pas a calculului.\nSurse multiple de cerere: mișcări de stoc finalizate (ieșiri către clienți și retururi), un istoric de livrări importat, înregistrări manuale de cerere de stoc și cerere prognozată.\nCantități comandabile: cantitatea propusă respectă cantitatea minimă de comandă a furnizorului (`product.supplierinfo.min_qty`) și este rotunjită la multiplul de ambalare, astfel încât poate fi trimisă furnizorului ca atare.\nReaprovizionare consolidată: lansarea reaprovizionării grupează liniile aceluiași furnizor într-o singură comandă de achiziție, în loc de o comandă per produs.\nStoc de siguranță statistic (opțional): în loc de un procent fix de stoc de siguranță, un mod opțional adaugă `Z × σ_zilnic × √(timp de livrare)`, unde σ este deviația standard a cererii săptămânale (inclusiv săptămânile fără cerere), iar Z provine din nivelul de serviciu ales (90 / 95 / 97,5 / 99%).\nClasificare XYZ: produsele sunt clasificate după predictibilitatea cererii, folosind coeficientul de variație — X (stabil), Y (variabil), Z (eratic). Produsele erratice (clasa Z) sunt excluse din calculul automat al stocului de siguranță și marcate pentru verificare manuală, astfel încât nu se propune o cifră fals-precisă pe o cerere imprevizibilă.\nMajorări de vânzări și siguranță: creșteri procentuale opționale, plus filtrarea vânzărilor excepționale (ignorarea mișcărilor mari, punctuale, peste un prag).\nProduse de înlocuire: cererea unui produs scos din uz este preluată de produsul său de înlocuire.\nGestionarea sfârșitului de ciclu de viață (EOL): un indicator `EOL` și o acțiune programată care arhivează produsele EOL odată ce stocul acestora ajunge la zero.\nRelevanță pentru planificare: un indicator `planning_relevant` (specific variantei de produs) pentru a exclude din raport produsele care nu sunt planificate.\nRaport de stoc cu mișcare lentă (slow move): identifică produsele cu stoc pozitiv și fără ieșiri semnificative într-o perioadă, cu filtrare inteligentă care exclude produsele recent recepționate sau nou create."
+    "text": "NAP\ndeltatech_nap\nNAP (Necesar de Aprovizionare / Purchase requirements) este o unealtă simplă și rapidă pentru determinarea necesarului de achiziție în Odoo, dezvoltată de Terrabit. Utilizatorul deschide un raport, obține o listă justificată de „ce trebuie comandat” și lansează direct reaprovizionarea, fără obiecte de planificare permanente și fără un flux de lucru greoi. Nucleul modulului este Raportul de Prognoză Stoc (Stock Forecast Report): pentru o perioadă, un depozit/locație și, opțional, un furnizor sau un produs selectat, se calculează cererea medie zilnică din istoric și se determină, pentru fiecare produs, cantitatea de comandat pentru orizontul de prognoză, ținând cont de stocul disponibil, de intrări, ieșiri și de cantitățile aflate deja în circuitul de aprovizionare.\nRaport „ce trebuie comandat”: cerere medie zilnică × (zile de prognoză + timp de livrare), ajustată cu stocul disponibil, intrările, ieșirile și cantitățile în curs de aprovizionare; fiecare linie are o explicație pas cu pas a calculului.\nSurse multiple de cerere: mișcări de stoc finalizate (ieșiri către clienți și retururi), un istoric de livrări importat, înregistrări manuale de cerere de stoc și cerere prognozată.\nCantități comandabile: cantitatea propusă respectă cantitatea minimă de comandă a furnizorului (`product.supplierinfo.min_qty`) și este rotunjită la multiplul de ambalare, astfel încât poate fi trimisă furnizorului ca atare.\nReaprovizionare consolidată: lansarea reaprovizionării grupează liniile aceluiași furnizor într-o singură comandă de achiziție, în loc de o comandă per produs.\nStoc de siguranță statistic (opțional): în loc de un procent fix de stoc de siguranță, un mod opțional adaugă `Z × σ_zilnic × √(timp de livrare)`, unde σ este deviația standard a cererii săptămânale (inclusiv săptămânile fără cerere), iar Z provine din nivelul de serviciu ales (90 / 95 / 97,5 / 99%).\nClasificare XYZ: produsele sunt clasificate după predictibilitatea cererii, folosind coeficientul de variație — X (stabil), Y (variabil), Z (eratic). Produsele erratice (clasa Z) sunt excluse din calculul automat al stocului de siguranță și marcate pentru verificare manuală, astfel încât nu se propune o cifră fals-precisă pe o cerere imprevizibilă.\nMajorări de vânzări și siguranță: creșteri procentuale opționale, plus filtrarea vânzărilor excepționale (ignorarea mișcărilor mari, punctuale, peste un prag).\nProduse de înlocuire: cererea unui produs scos din uz este preluată de produsul său de înlocuire.\nGestionarea sfârșitului de ciclu de viață (EOL): un indicator `EOL` și o acțiune programată care arhivează produsele EOL odată ce stocul acestora ajunge la zero.\nRelevanță pentru planificare: un indicator `planning_relevant` (specific variantei de produs) pentru a exclude din raport produsele care nu sunt planificate.\nRaport de stoc cu mișcare lentă (slow move): identifică produsele cu stoc pozitiv și fără ieșiri semnificative într-o perioadă, cu filtrare inteligentă care exclude produsele recent recepționate sau nou create.\nMeniu: raportul principal se accesează din *Inventar ▸ Raportare ▸ Stock Forecast Report*, cu opțiuni pentru depozit/locație, perioadă istoric, zile de prognoză, timp de livrare, furnizori/produse, majorare vânzări și comutatorul pentru stocul de siguranță statistic (nivel de serviciu). Din lista rezultată, liniile marcate pentru verificare manuală (clasa Z) sunt evidențiate, iar dialogul „Info” arată explicația de calcul pas cu pas; reaprovizionarea se lansează per linie sau pe întreaga selecție.\nParametri de sistem (`Setări ▸ Tehnic ▸ Parametri de Sistem`): valorile implicite pentru stocul de siguranță statistic (comutator, nivel de serviciu) și pragurile coeficientului de variație pentru clasele X/Y/Z sunt configurabile centralizat, la fel ca opțiunea de a respecta și minimul regulilor de reaprovizionare ale produsului."
   },
   {
     "path": "deltatech_nap_website/index.md",
@@ -8073,42 +8075,20 @@
   {
     "path": "deltatech_stock_inventory/index.md",
     "module": "deltatech_stock_inventory",
-    "version": "19.0.2.7.3",
+    "version": "19.0.2.10.0",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_inventory",
     "local_path": "odoo-addons/deltatech/deltatech_stock_inventory",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-09-24",
     "friendly_name": "Stock Inventory",
-    "summary": "Modulul restaurează și extinde funcționalitatea de inventar clasic (`stock.inventory`) din Odoo, eliminată în versiunile mai noi, oferind un instrument complet pentru gestiunea și controlul valoric al stocurilor. Le permite utilizatorilor să creeze documente de inventar, să numere produsele pe locații și să valideze diferențele, actualizând în același timp prețurile de cost și straturile de evaluare a stocului (SVL). Adaugă vizibilitate sporită asupra stocului defalcat pe depozite, câmpuri de localizare manuală (raft, rând, poliță, cutie), scanare cu cititorul de coduri de bare și control de securitate asupra cine poate modifica cantitățile. Este compatibil cu modulele de contabilitate pentru România (l10n_ro), fiind util companiilor care doresc un proces de inventariere riguros și aliniat cerințelor locale.",
+    "summary": "Modulul readuce documentul clasic de inventar (`stock.inventory`), eliminat din nucleul Odoo în versiunile recente, oferind gestionarilor de stoc un document cu număr, filtre pe locații și produse, stări *Ciornă → În desfășurare → Validat* și mișcări de stoc generate la validare. Pe fiecare linie arată impactul valoric înainte de validare — cost unitar, valoare scriptică, valoare numărată, diferență — astfel încât managerul de stoc vede câți lei înseamnă plusurile și minusurile înainte de a le înregistra. În jurul documentului, modulul mai adaugă amplasamente manuale pe produs, defalcarea stocului pe depozite în kanban, un drept separat pentru cine poate modifica cantitățile, confirmarea rapidă a stocului unui produs, unirea inventarelor validate și gruparea zilnică a reaprovizionărilor manuale.",
     "features": [
-      "Sistem de inventar clasic: readuce funcționalitatea vechiului model `stock.inventory`, eliminat în versiunile recente de Odoo.",
-      "Evaluare valorică îmbunătățită a stocului:",
-      "afișează coloane cu prețul stocului în vizualizările de inventar;",
-      "permite actualizarea prețurilor de cost ale produselor în timpul validării inventarului.",
-      "Vizibilitate stoc pe mai multe depozite:",
-      "afișează stocul defalcat pe coduri de depozit direct în vizualizarea Kanban a produsului;",
-      "opțiune de configurare pe depozit pentru a afișa stocul total sau doar din locația principală.",
-      "Control manual al locației:",
-      "adaugă câmpurile Raft, Rând, Poliță și Cutie pe produse și pe liniile de inventar;",
-      "câmpurile pot fi activate/dezactivate din setările de inventar.",
-      "Control de securitate:",
-      "adaugă grupul de securitate „Poate actualiza cantitățile\" pentru a restricționa cine poate modifica cantitățile de inventar.",
-      "Actualizare preț la inventar:",
-      "când parametrul de sistem `stock.use_inventory_price` este setat pe True, prețul de cost al produselor (cu evaluare FIFO) este actualizat cu prețul din liniile de inventar.",
-      "Arhivarea inventarului:",
-      "opțiune de arhivare a vechilor straturi de evaluare a stocului (SVL) și de creare a unora noi pe baza numărătorilor de inventar;",
-      "compatibilitate cu modulele de contabilitate pentru România (l10n_ro).",
-      "Suport pentru coduri de bare:",
-      "scanare integrată pentru operațiuni de inventar mai rapide;",
-      "suport pentru scanarea produselor și a numerelor de lot/serie.",
-      "Raportare îmbunătățită:",
-      "rapoarte de inventar încorporate;",
-      "vizualizări detaliate ale ajustărilor de inventar.",
-      "Funcții de gestiune a inventarului:",
-      "filtrare după locație, raft sau produs;",
-      "marcarea liniilor de inventar ca „OK\" pentru verificare;",
-      "crearea de inventare noi din liniile neverificate;",
-      "precompletarea cantităților numărate cu stocul curent sau cu zero;",
-      "includerea produselor epuizate (cu cantitate zero)."
+      "Sistem de inventar clasic: documente cu număr din secvența `INV`, filtre pe locații/produse,",
+      "Evaluare valorică pe linie (vizibilă doar grupului *Inventar / Administrator*): valoare unitară",
+      "Actualizare preț la inventar: cu parametrul de sistem `stock.use_inventory_price` activ",
+      "Vizibilitate stoc pe mai multe depozite: stocul defalcat pe coduri de depozit în kanban-ul de",
+      "Control manual al locației: câmpuri Raft, Rând, Etaj și Casetă pe produse și pe liniile de",
+      "Control de securitate: grupul „Poate actualiza cantitățile\" restricționează cine aplică",
+      "Funcții de gestiune a inventarului: tipărirea listei de numărare și a raportului de diferențe,"
     ],
     "dependencies": [
       "stock",
@@ -8117,10 +8097,12 @@
       "sale_stock"
     ],
     "connections": [
-      "deltatech_stock_account",
-      "l10n_ro"
+      "l10n_ro_inventory_closing",
+      "l10n_ro_inventory_register",
+      "purchase_stock",
+      "sale_stock"
     ],
-    "text": "Stock Inventory\ndeltatech_stock_inventory\nModulul restaurează și extinde funcționalitatea de inventar clasic (`stock.inventory`) din Odoo, eliminată în versiunile mai noi, oferind un instrument complet pentru gestiunea și controlul valoric al stocurilor. Le permite utilizatorilor să creeze documente de inventar, să numere produsele pe locații și să valideze diferențele, actualizând în același timp prețurile de cost și straturile de evaluare a stocului (SVL). Adaugă vizibilitate sporită asupra stocului defalcat pe depozite, câmpuri de localizare manuală (raft, rând, poliță, cutie), scanare cu cititorul de coduri de bare și control de securitate asupra cine poate modifica cantitățile. Este compatibil cu modulele de contabilitate pentru România (l10n_ro), fiind util companiilor care doresc un proces de inventariere riguros și aliniat cerințelor locale.\nSistem de inventar clasic: readuce funcționalitatea vechiului model `stock.inventory`, eliminat în versiunile recente de Odoo.\nEvaluare valorică îmbunătățită a stocului:\nafișează coloane cu prețul stocului în vizualizările de inventar;\npermite actualizarea prețurilor de cost ale produselor în timpul validării inventarului.\nVizibilitate stoc pe mai multe depozite:\nafișează stocul defalcat pe coduri de depozit direct în vizualizarea Kanban a produsului;\nopțiune de configurare pe depozit pentru a afișa stocul total sau doar din locația principală.\nControl manual al locației:\nadaugă câmpurile Raft, Rând, Poliță și Cutie pe produse și pe liniile de inventar;\ncâmpurile pot fi activate/dezactivate din setările de inventar.\nControl de securitate:\nadaugă grupul de securitate „Poate actualiza cantitățile\" pentru a restricționa cine poate modifica cantitățile de inventar.\nActualizare preț la inventar:\ncând parametrul de sistem `stock.use_inventory_price` este setat pe True, prețul de cost al produselor (cu evaluare FIFO) este actualizat cu prețul din liniile de inventar.\nArhivarea inventarului:\nopțiune de arhivare a vechilor straturi de evaluare a stocului (SVL) și de creare a unora noi pe baza numărătorilor de inventar;\ncompatibilitate cu modulele de contabilitate pentru România (l10n_ro).\nSuport pentru coduri de bare:\nscanare integrată pentru operațiuni de inventar mai rapide;\nsuport pentru scanarea produselor și a numerelor de lot/serie.\nRaportare îmbunătățită:\nrapoarte de inventar încorporate;\nvizualizări detaliate ale ajustărilor de inventar.\nFuncții de gestiune a inventarului:\nfiltrare după locație, raft sau produs;\nmarcarea liniilor de inventar ca „OK\" pentru verificare;\ncrearea de inventare noi din liniile neverificate;\nprecompletarea cantităților numărate cu stocul curent sau cu zero;\nincluderea produselor epuizate (cu cantitate zero)."
+    "text": "Stock Inventory\ndeltatech_stock_inventory\nModulul readuce documentul clasic de inventar (`stock.inventory`), eliminat din nucleul Odoo în versiunile recente, oferind gestionarilor de stoc un document cu număr, filtre pe locații și produse, stări *Ciornă → În desfășurare → Validat* și mișcări de stoc generate la validare. Pe fiecare linie arată impactul valoric înainte de validare — cost unitar, valoare scriptică, valoare numărată, diferență — astfel încât managerul de stoc vede câți lei înseamnă plusurile și minusurile înainte de a le înregistra. În jurul documentului, modulul mai adaugă amplasamente manuale pe produs, defalcarea stocului pe depozite în kanban, un drept separat pentru cine poate modifica cantitățile, confirmarea rapidă a stocului unui produs, unirea inventarelor validate și gruparea zilnică a reaprovizionărilor manuale.\nSistem de inventar clasic: documente cu număr din secvența `INV`, filtre pe locații/produse,\nEvaluare valorică pe linie (vizibilă doar grupului *Inventar / Administrator*): valoare unitară\nActualizare preț la inventar: cu parametrul de sistem `stock.use_inventory_price` activ\nVizibilitate stoc pe mai multe depozite: stocul defalcat pe coduri de depozit în kanban-ul de\nControl manual al locației: câmpuri Raft, Rând, Etaj și Casetă pe produse și pe liniile de\nControl de securitate: grupul „Poate actualiza cantitățile\" restricționează cine aplică\nFuncții de gestiune a inventarului: tipărirea listei de numărare și a raportului de diferențe,"
   },
   {
     "path": "deltatech_stock_inventory_product_display/index.md",
