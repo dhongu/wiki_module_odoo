@@ -1,7 +1,7 @@
 # IAP Server - Service Helpdesk (localizat la `terrabit_iap_server_helpdesk/index.md`)
 
 - **Nume Tehnic:** `terrabit_iap_server_helpdesk`
-- **Versiune:** `19.0.0.1.11`
+- **Versiune:** `19.0.0.1.12`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_helpdesk
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server_helpdesk`
 - **Ultima Ingestie:** `2026-09-24`
@@ -51,6 +51,9 @@ este doar planificat, nu funcționează încă.
 - Sincronizare incrementală: cu parametrul `since`, listele de tichete și mesaje întorc doar ce
   s-a modificat de atunci (tichetele închise sau arhivate inclusiv, cu `active`), iar autorii doar
   pe cei ai mesajelor noi. Lista de tichete întoarce `server_time`, cursorul rulării următoare.
+- La o modificare vizibilă clientului sau la un răspuns public, serverul anunță după commit baza
+  clientului (`<base_url>/terrabit_helpdesk/notify`), cu o notificare semnată HMAC și fără date, pe un
+  fir separat; un client care nu răspunde e ignorat.
 - Atașamentele venite de la client se salvează local ca bytes; cele trimise către client
   (atașamente pe mesaje) pleacă ca link `access_token`, ca să nu depășească limita de timeout a
   apelurilor JSON-RPC.
