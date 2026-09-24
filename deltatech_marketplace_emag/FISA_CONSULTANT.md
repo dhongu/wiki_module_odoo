@@ -313,17 +313,44 @@ erori în ultimele 24h, fără job-uri eșuate, și cel puțin un tip de date ar
 > multe conectoare de test/demo e normal să apară și cardurile lor alături de cel eMAG. Urmăriți
 > cardul cu numele backend-ului configurat de voi.
 
+### Pasul 15 — Retururi (RMA) importate de pe eMAG — doar citire
+
+Cererile de retur (RMA) deschise de cumpărători pe eMAG apar în Odoo la
+**Marketplace → Bindings → Return Requests**, ca înregistrări `marketplace.return.request` legate de
+comanda de vânzare — cine a cerut ce, în ce cantitate, din ce motiv, și starea cererii
+(`requested`/`approved`/`refused`/`cancelled`/`received`/`done`), sincronizată periodic din statusul
+eMAG. Importul e **doar de citire**: conectorul nu trimite nimic înapoi la eMAG pentru o cerere de
+retur — aprobarea, refuzul sau recepția se fac tot în panoul eMAG, iar Odoo doar reflectă starea.
+
+**Nu se creează automat**: nici recepție de retur (picking), nici notă de credit, nici rambursare —
+decizia deliberată a conectorului este să nu ghicească cine trebuie să inițieze acele operațiuni în
+Odoo. Consultantul/operatorul creează manual nota de credit și recepția, pornind de la informațiile
+din cererea de retur importată. Starea de livrare a AWB-ului „Return to Sender" (§6, Pasul 11) se
+reflectă în continuare separat, ca stare de livrare pe expediție, nu ca parte din acest flux RMA.
+
+### Note privind vouchere pe comanda importată
+
+O comandă eMAG poate conține **vouchere** (card cadou sau altă reducere emisă de eMAG sau de
+platformă) aplicate pe unul sau mai multe produse ori pe transport. La import, valoarea voucherului
+ajunge pe comanda de vânzare Odoo ca linie proprie, iar `amount_total` al comenzii reflectă deja
+efectul lui — dacă totalul comenzii Odoo pare „prea mic" față de suma produselor, motivul e frecvent
+un voucher deja scăzut, nu o eroare de import. Nu necesită nicio configurare din partea
+consultantului; e menționat aici doar ca reper de diagnostic pentru o eventuală întrebare a
+clientului despre totalul comenzii.
+
 ### Note de monografie și raportare
 
 Nu se aplică — acest modul nu generează note contabile proprii. Comanda de vânzare rezultată din
 importul eMAG urmează contabilizarea standard Odoo (`sale`/`account`), neatinsă de acest conector.
+Nota de credit pentru un retur eMAG (§6, Pasul 15) se creează manual, prin fluxul standard
+`sale`/`account` — conectorul nu o generează.
 
 ## 7. Legături cu alte module / declarații
 
 | Modul / proces | Rol în flux | Tip legătură |
 |---|---|---|
 | `deltatech_marketplace` | framework comun: backend, indicator de sănătate, job-uri, rate-limiting (token bucket) | dependență (manifest) |
-| `deltatech_marketplace_sale` | comanda de vânzare Odoo generată din comanda eMAG | dependență (manifest) |
+| `deltatech_marketplace_sale` | comanda de vânzare Odoo generată din comanda eMAG; registrul de retururi (`marketplace.return.request`, meniul **Bindings → Return Requests**) folosit de importul RMA | dependență (manifest) |
 | `deltatech_marketplace_delivery` | mapare transportator, linie de livrare pe comandă | dependență (manifest) |
 | `deltatech_marketplace_payment` | mapare metodă de plată eMAG → payment acquirer Odoo (fallback pe Wire Transfer) | dependență (manifest) |
 | `deltatech_marketplace_website` | link-ul de produs eMAG folosește rutele website-ului Odoo la export (`/shop/...`) | dependență (manifest) |
@@ -331,7 +358,8 @@ importul eMAG urmează contabilizarea standard Odoo (`sale`/`account`), neatins�
 | `l10n_ro_edi` / `l10n_ro_edi_stock` | e-Factura (SPV) / eTransport — **neatinse** de acest conector; push-ul de factură eMAG e doar un link către PDF | flux independent |
 | `sale` / `stock` / `account` | comanda de vânzare, mișcarea de stoc, factura rezultată — flux Odoo standard | flux standard Odoo |
 
-Ce este automat: crearea automată a județelor (`res.country.state`) la prima referință; potrivirea
+Ce este automat: importul periodic al cererilor de retur (RMA) și al statusului lor pe
+`marketplace.return.request`; crearea automată a județelor (`res.country.state`) la prima referință; potrivirea
 localităților/sectoarelor Bucureștiului după `emag_id` (odată importate, vezi §6 Pasul 7); acknowledge
 automat al comenzilor noi (dacă **Active On Write** e activ); anularea automată a comenzii Odoo pe
 baza `cancellation_request`; atașarea etichetei AWB la expediție după emitere; polling-ul periodic al
@@ -384,8 +412,13 @@ cron-ului de auto-pricing.
       actuală — nu promiteți o rezervă de siguranță pe baza lui.
 - [ ] Auto-pricing-ul pe buy box **nu se activează** pe niciun produs fără ca **Min sale price** și
       **Max sale price** să fie completate întâi — altfel riscă să trimită prețul 0 la eMAG.
-- [ ] Clientul nu se așteaptă la un flux de retur/refund automat — statusul AWB „Return to Sender"
-      se reflectă în Odoo doar ca stare de livrare, fără proces RMA sau notă de credit generată.
+- [ ] Clientul nu se așteaptă la un flux de retur/refund automat — cererile RMA se importă și li se
+      urmărește statusul în **Bindings → Return Requests**, dar recepția, nota de credit și
+      rambursarea rămân manuale; statusul AWB „Return to Sender" se reflectă separat, doar ca stare
+      de livrare.
+- [ ] Dacă totalul unei comenzi importate pare inconsistent cu suma produselor, s-a verificat întâi
+      dacă pe comandă există o linie de voucher (redusă din `amount_total`) înainte de a raporta
+      import greșit.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -402,6 +435,8 @@ cron-ului de auto-pricing.
 | Prețul unui produs scade neașteptat la 0 pe eMAG | **Auto Price** bifat fără **Min/Max sale price** completate, pe o ofertă cu Buy Button Rank cunoscut (o deține sau nu buy box-ul, ambele cazuri sunt afectate) | Completați limitele înainte de a activa Auto Price; corectați manual prețul curent |
 | Job în coadă rămâne „failed" cu eroare HTTP 429 | Limita de 3 apeluri/secundă a fost depășită, iar reîncercările s-au epuizat | Requeue manual din **Jobs** — un job „failed" NU se mai reîncearcă singur |
 | Job în coadă rămâne „failed" (alt motiv) | Câmp obligatoriu lipsă sau eroare eMAG netratată | Verificați traceback-ul job-ului din **Jobs**, corectați configurarea, requeue |
+| Totalul comenzii importate pare mai mic decât suma produselor | Comanda are un voucher eMAG aplicat, scăzut deja din `amount_total` | Comportament normal — verificați liniile comenzii pentru linia de voucher |
+| Cererea de retur (RMA) nu are notă de credit/recepție în Odoo | Comportament normal — importul e doar de citire, nu creează automat retur/notă de credit | Creați manual nota de credit și recepția pornind de la informațiile din **Bindings → Return Requests** |
 
 ## 10. Capturi de ecran
 
@@ -445,5 +480,9 @@ factură (nu PDF-ul propriu-zis) — și că filtrul de import comenzi (`NEW`/`I
 fix în cod, inclusiv pe calea webhook; o comandă anulată ulterior pe eMAG cere un **Reimport** manual
 în Odoo. Insistați ca **Min/Max sale price** să fie completate ÎNAINTE de a activa Auto Price — altfel
 riscul e trimiterea prețului 0 la eMAG. Menționați explicit că **Test connection** validează efectiv
-un apel către eMAG (`/vat`), nu doar completarea câmpurilor. Evitați alte detalii de implementare
-(nume de câmpuri interne, endpoint-uri REST) în corpul explicației către utilizatorul final.
+un apel către eMAG (`/vat`), nu doar completarea câmpurilor. Precizați clar limita de scop pe
+retururi: importul RMA (**Bindings → Return Requests**) e doar de citire — recepția, nota de credit
+și rambursarea rămân operațiuni manuale ale operatorului, nu ale conectorului — și că un total de
+comandă mai mic decât suma produselor e adesea un voucher eMAG deja scăzut, nu o eroare de import.
+Evitați alte detalii de implementare (nume de câmpuri interne, endpoint-uri REST) în corpul
+explicației către utilizatorul final.

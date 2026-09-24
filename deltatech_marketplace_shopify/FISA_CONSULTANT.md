@@ -82,6 +82,9 @@ cu variante, un client și o comandă existentă în magazin.
 6. Opțional, activați comutatoarele GraphQL dorite din tab-ul **GraphQL** (toate pornesc oprite).
 7. Apăsați **Test connection** din antet — validează credențialele printr-un query GraphQL `shop`.
 8. Apăsați **Import basic data** — înregistrează webhook-urile Shopify necesare.
+9. Verificați câmpul **Granted Access Scopes** (apare după **Test connection**): e lista pe care
+   Shopify o raportează pentru instalarea curentă. Dacă **Missing Scopes** e completat, o opțiune
+   pornită pe backend nu are dreptul de care are nevoie — vezi Pasul 8 de mai jos.
 
 ## 6. Flux de utilizare
 
@@ -170,6 +173,47 @@ tipul de date corespunzător, **Import basic data** o reînregistrează la urmă
 
 ![Wizardul de verificare a webhook-urilor: Matched, Missing și Orphan](screenshots/07_webhook_checker.png)
 
+### Pasul 8 — Acordarea unui scope lipsă în Shopify (ex. exportul liniilor)
+
+Se face **o singură dată per magazin**, și doar dacă activați o opțiune care cere un drept
+suplimentar. Cazul concret de azi: **Export Order Lines** are nevoie de `write_order_edits`,
+care e un scope de sine stătător — `write_orders` **nu** îl acoperă.
+
+Semnul că lipsește: câmpul **Missing Scopes** de pe backend îl arată, iar dacă cineva modifică
+totuși liniile unei comenzi, în chatterul comenzii apare mesajul „*The order lines were NOT sent
+to Shopify: the Shopify app has no `write_order_edits` access scope...*". Jobul **nu** eșuează și
+nu apare nicio eroare — mesajul din comandă e singurul semnal.
+
+Pașii, pentru o aplicație Dev Dashboard (Mode B):
+
+1. Deschideți **[Shopify Dev Dashboard](https://dev.shopify.com/dashboard)** → organizația →
+   aplicația (ex. „Odoo") → meniul din stânga **Versions**.
+   Vedeți lista de versiuni, cea curentă marcată `Active`.
+
+![Lista de versiuni a aplicației în Shopify Dev Dashboard, cu versiunea activă marcată](screenshots/08_shopify_app_versions.png)
+2. Apăsați **Create version** (sau **New version** din pagina Overview). Se deschide un formular
+   „Create version", pornit de la versiunea activă.
+3. În secțiunea **API access**, câmpul **Scopes** conține lista actuală, separată prin virgulă.
+   Adăugați scope-ul lipsă în listă (ex. `...,write_orders,write_order_edits,read_products,...`).
+   Ordinea nu contează. Butonul **Select scopes** de lângă câmp deschide un selector, dacă
+   preferați să nu editați textul direct.
+
+![Formularul Create version: câmpul Scopes cu write_order_edits adăugat în listă](screenshots/09_shopify_scopes_field.png)
+4. Apăsați **Release** (dreapta sus) → în dialogul „Release this new version?" puteți da un nume
+   și un mesaj versiunii → **Release**. Versiunea nouă devine `Active`.
+5. **Atenție — aici e pasul care se uită ușor: publicarea versiunii NU acordă scope-ul.**
+   Instalarea existentă pe magazin păstrează drepturile vechi. Din pagina **Overview** a
+   aplicației, secțiunea **Installs**, apăsați **Install app** și alegeți magazinul.
+6. Se deschide în admin-ul magazinului ecranul **„Update data access"**, cu lista a ce cere
+   aplicația în plus — pentru cazul nostru: *View and edit store data → Edit orders, Order
+   edits*. Apăsați **Update**.
+7. Înapoi în Odoo, apăsați **Test connection** pe backend. Câmpul **Granted Access Scopes** se
+   reîmprospătează, **Missing Scopes** se golește, iar exportul funcționează de la următorul job.
+   (Tokenul se reînnoiește oricum singur; scope-ul nou intră în vigoare la primul token nou.)
+
+> Verificare rapidă că a mers, fără să deschideți Shopify: pe backend, **Missing Scopes** trebuie
+> să fie gol, iar **Granted Access Scopes** să conțină scope-ul adăugat.
+
 ## 7. Legături cu alte module / declarații
 
 | Modul / proces | Rol în flux | Tip legătură |
@@ -207,6 +251,22 @@ vânzare (tag-uri Shopify), verificarea periodică a webhook-urilor.
 - [ ] Exportul de stoc/preț (dacă activat manual din **Marketplace → Configuration → Crons**)
       reflectă corect mapările de depozit/listă de prețuri.
 
+### Ce NU pleacă spre Shopify: prețul liniei
+
+Shopify **nu poate** schimba prețul unitar al unei linii deja existente pe comandă — API-ul de
+editare oferă doar o reducere peste prețul inițial, ceea ce e altceva (apare ca discount, nu ca
+preț nou). Nu e o limitare a conectorului, ci a platformei.
+
+Ce face conectorul: **nu blochează** modificarea în Odoo (operatorul are adesea motive bune să
+corecteze prețul doar la el, pentru facturare) și **nu oprește restul exportului** — cantitățile,
+liniile adăugate și cele scoase pleacă normal în aceeași rulare. În schimb, pune pe comandă un
+mesaj care spune că prețul nu a fost trimis și că cele două părți diferă acum.
+
+> De spus clientului **înainte** de a porni exportul de linii: dacă se așteaptă ca modificarea
+> prețului în Odoo să se vadă în Shopify, nu se poate. Singura alternativă ar fi aplicarea unui
+> discount pe linie, care schimbă felul în care arată comanda în magazin — e o decizie de
+> business, nu ceva ce conectorul face din oficiu.
+
 ## 9. Mesaje de eroare frecvente
 
 | Mesaj / simptom | Cauză probabilă | Remediere |
@@ -233,6 +293,8 @@ Capturile (`readme/screenshots/`) ilustrează fluxul din secțiunea 6, generate 
 5. `05_objects.png` — tab Objects: cardurile kanban cu acțiunile de import.
 6. `06_health_badge.png` — indicatorul de sănătate pe cardul kanban al backend-ului.
 7. `07_webhook_checker.png` — wizardul de verificare a webhook-urilor (Matched/Missing/Orphan).
+8. `08_shopify_app_versions.png` — Shopify Dev Dashboard, lista de versiuni a aplicației (Pasul 8).
+9. `09_shopify_scopes_field.png` — formularul Create version, câmpul Scopes (Pasul 8).
 
 Regenerare:
 
@@ -240,6 +302,13 @@ Regenerare:
 ./odoo/odoo-bin -c odoo.conf -d <db> -i deltatech_marketplace_shopify,l10n_ro_doc_screenshots \
     --test-tags=fise_screenshots --stop-after-init
 ```
+
+**Capturile 08 și 09 sunt din Shopify, nu din Odoo**, deci nu se regenerează cu comanda de mai
+sus — sunt făcute manual din Dev Dashboard și se actualizează doar dacă Shopify schimbă
+interfața. Al treilea ecran al Pasului 8, dialogul **Update data access** din admin-ul
+magazinului, nu are captură: apare **doar** atunci când există într-adevăr o schimbare de
+drepturi de aprobat, deci nu poate fi reprodus la cerere fără a modifica scope-urile aplicației.
+Textul lui e citat integral în Pasul 8.
 
 ## 11. Observații pentru manual
 

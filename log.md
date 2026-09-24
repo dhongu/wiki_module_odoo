@@ -106,6 +106,30 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `deltatech_marketplace_emag` 19.0.2.7.4 și `deltatech_marketplace_shopify` 19.0.1.2.6 — re-ingestie, fișe consultant
+
+- **Acțiune:** Paginile erau mult în urmă: eMAG la `19.0.2.3.26`, Shopify la `19.0.0.29.2`. Le-am
+  regenerat cu agentul `documentarist-wiki`, din `origin/19.0` și din `readme/HISTORY.md`, și am
+  copiat fișele consultant (6 capturi eMAG, 9 Shopify), care lipseau din wiki. Am actualizat și
+  descrierile din `index.md`.
+- **eMAG:**
+  - AWB-urile s-au mutat în `deltatech_marketplace_emag_delivery`.
+  - Retururile se importă, doar citire, cu corespondența celor 7 stări.
+  - Vouchere, stoc exportat în loturi de 50, *eMAG Warehouse ID*, conflicte de cod de bare/SKU la
+    import, butonul *Export Price*.
+- **Shopify:**
+  - Retururile se importă doar citire, prin `Order.returns`.
+  - Anulare în ambele sensuri, cu protecție pentru comenzile deja încasate.
+  - Export opțional al liniilor de comandă (Order Editing API).
+  - Registrul de permisiuni (scope-uri), locker pe `marketplace.sale.order`, API `2026-07`.
+- **Corectură pe `deltatech_rma_marketplace`:** pagina (și fișa din repo, secțiunea 7) spunea că
+  eMAG și Shopify importă și rambursări. Nu e adevărat în `19.0`: `marketplace.refund` există, dar
+  niciun conector nu îl populează încă. Deci *Rambursat de marketplace* de pe cerere rămâne gol până
+  la implementarea importului. Am corectat pagina wiki; fișa din repo trebuie corectată în cod.
+- **Fișiere actualizate:** `deltatech_marketplace_emag/` și `deltatech_marketplace_shopify/`
+  (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `deltatech_rma_marketplace/index.md`,
+  `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-09-24] `deltatech_marketplace_sale` 19.0.2.11.2 — re-ingestie, fișă consultant adăugată
 
 - **Acțiune:** Pagina era la `19.0.2.4.0` (ingestie 2026-08-20), iar codul ajunsese la

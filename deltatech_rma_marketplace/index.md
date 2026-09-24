@@ -20,7 +20,7 @@ Un retur cerut pe eMAG sau pe Shopify se aprobă acolo și ajunge la noi ca un c
 - Buton **Deschide cererea de retur** pe returul importat, pentru un colet neidentificat la scanare; după deschidere, legătura *Cerere de retur* și coloana cererii în lista retururilor.
 - **Retururi → Configurare → Motive din marketplace**: codul motivului din marketplace (eMAG: id numeric pe țară; Shopify: numele) mapat pe motivul nostru, pe fiecare backend; nemapat → *Alt motiv (de clarificat)*.
 - Transferul de retur apare în *Transferuri* pe returul din marketplace; o schimbare ulterioară de stare în marketplace e scrisă în istoricul cererii, nu impusă.
-- *Rambursat de marketplace* pe cerere; la crearea notei de credit, un mesaj pune suma rambursată lângă totalul notei și semnalează o diferență. Rambursarea din marketplace nu devine notă de credit.
+- *Rambursat de marketplace* pe cerere; la crearea notei de credit, un mesaj pune suma rambursată lângă totalul notei și semnalează o diferență. Rambursarea din marketplace nu devine notă de credit. **Atenție:** registrul `marketplace.refund` există, dar în `19.0` niciun conector nu îl populează încă (nici eMAG, nici Shopify), deci *Rambursat de marketplace* apare abia când importul rambursărilor va fi implementat.
 
 #### 3. Dependențe
 
@@ -48,5 +48,5 @@ Fluxul operațional pas-cu-pas, cu capturi, e în [FISA_CONSULTANT.md](FISA_CONS
 #### 5. Conexiuni
 
 - [deltatech_marketplace_emag](../deltatech_marketplace_emag/index.md): importul retururilor eMAG și câmpul *Fulfilled by eMAG*.
-- [deltatech_marketplace_shopify](../deltatech_marketplace_shopify/index.md): importul retururilor și rambursărilor Shopify.
+- [deltatech_marketplace_shopify](../deltatech_marketplace_shopify/index.md): importul retururilor Shopify.
 - [deltatech_rma_helpdesk](../deltatech_rma_helpdesk/index.md), [deltatech_rma_withdrawal](../deltatech_rma_withdrawal/index.md), [deltatech_rma_lot](../deltatech_rma_lot/index.md): celelalte punți ale `deltatech_rma`.
