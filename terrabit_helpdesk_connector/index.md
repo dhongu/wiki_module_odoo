@@ -1,7 +1,7 @@
 # Terrabit Helpdesk Connector (localizat la `terrabit_helpdesk_connector/index.md`)
 
 - **Nume Tehnic:** `terrabit_helpdesk_connector`
-- **Versiune:** `19.0.0.2.5`
+- **Versiune:** `19.0.0.2.6`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_helpdesk_connector`
 - **Ultima Ingestie:** `2026-09-24`
@@ -46,6 +46,8 @@ răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la
   pe altă companie, mesaj retras). Un tichet care apare prima oară (creat direct la Terrabit,
   mutat pe companie, dezarhivat) vine cu toată discuția. Cu un server mai vechi, sincronizarea
   rămâne completă.
+- Lângă „Sync Now” se vede ora ultimei sincronizări și a următoarei rulări; o încercare eșuată
+  apare cu roșu, cu motivul la trecerea mouse-ului. „Sync Now” există și pe formularul tichetului.
 - Trecere automată pe endpointul de staging (`terrabit-staging.odoo.com`) când baza e neutralizată,
   ca testele să nu ajungă în helpdesk-ul de producție. Verificarea se face la instalare și înainte
   de fiecare sincronizare, deci și o copie restaurată a producției trece singură pe staging; un

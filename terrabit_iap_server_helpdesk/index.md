@@ -1,7 +1,7 @@
 # IAP Server - Service Helpdesk (localizat la `terrabit_iap_server_helpdesk/index.md`)
 
 - **Nume Tehnic:** `terrabit_iap_server_helpdesk`
-- **Versiune:** `19.0.0.1.10`
+- **Versiune:** `19.0.0.1.11`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_helpdesk
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server_helpdesk`
 - **Ultima Ingestie:** `2026-09-24`
@@ -34,7 +34,8 @@ este doar planificat, nu funcționează încă.
   era exactă și crea dubluri tăcute.
 - Fiecare stadiu al helpdesk-ului nostru primește un status vizibil clientului: **Nou**, **În
   lucru** sau **De răspuns**; „Închis" nu se mapează manual, ci se deduce din bifa **Pliat** a
-  stadiului, ca să existe o singură sursă de adevăr.
+  stadiului, ca să existe o singură sursă de adevăr. Pe un stadiu pliat, formularul ascunde câmpul și
+  explică faptul că clientul vede tichetul **Închis**.
 - La instalare, modulul propune singur o mapare inițială a stadiilor existente: cele cu „răspuns"
   / „raspuns" / „response" / „await" / „feedback" în nume devin **De răspuns**; primul stadiu
   deschis (cel cu secvența minimă) devine **Nou**; restul rămân **În lucru**. Un stadiu nou creat

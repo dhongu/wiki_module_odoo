@@ -1,7 +1,7 @@
 # Terrabit Helpdesk Link (localizat la `terrabit_helpdesk_link/index.md`)
 
 - **Nume Tehnic:** `terrabit_helpdesk_link`
-- **Versiune:** `19.0.0.0.7`
+- **Versiune:** `19.0.0.0.8`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_link
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_helpdesk_link`
 - **Ultima Ingestie:** `2026-08-20`
@@ -14,6 +14,7 @@ Modul utilitar minimal care adaugă în Odoo un element de meniu de nivel superi
 
 - **Meniu de acces rapid la suport:** adaugă meniul de top „Terrabit Help" (cu pictogramă proprie), vizibil tuturor utilizatorilor interni (`base.group_user`).
 - **Formular de suport precompletat:** la accesarea meniului, deschide într-o filă nouă formularul de pe `https://www.terrabit.ro/helpdesk/asistenta-odoo-1`, cu parametri URL pentru numele și emailul utilizatorului, precum și o descriere pregătită automat ce conține numele companiei, CUI, telefon, versiunea Odoo și numele bazei de date.
+- **Staging pe baze neutralizate:** pe o copie de test neutralizată (`database.is_neutralized`), meniul deschide același formular pe `https://terrabit-staging.odoo.com`, ca testele să nu devină tichete reale în producția Terrabit.
 - **Citire sigură a datelor companiei:** câmpurile `vat` și `phone` de pe companie (câmpuri `related` către `res.partner`) sunt citite prin `sudo()`, astfel încât și utilizatorii fără drept de scriere pe `res.company` pot folosi meniul fără `AccessError`.
 
 #### 3. Dependențe
