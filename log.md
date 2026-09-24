@@ -46,6 +46,25 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `deltatech_rma_marketplace` — pagină nouă; `deltatech_rma` 19.0.1.4.0
+
+- **Acțiune:** Ingestie nouă pentru `deltatech_rma_marketplace` (`19.0.1.0.0`, bitshop_marketplace#388),
+  cu fișa consultant și 5 capturi. Pagina `deltatech_rma` e adusă la `19.0.1.4.0` (bitshop#2864).
+- **Context:** puntea implementează variantele G + C + F din analiza de integrare cu eMAG / Shopify.
+  Varianta G protejează: comenzile din marketplace sunt scoase din portalul de retururi, iar cererile
+  deschise de mână sunt avertizate. Varianta C creează cererea la recepția prin scanare, din returul
+  importat. Varianta F pune rambursarea marketplace-ului lângă nota de credit. Au fost respinse
+  varianta D, un singur registru pentru retururi (binder și document sunt entități diferite), și, deocamdată,
+  varianta E, scrierea înapoi în marketplace (conectorii sunt doar-citire intenționat). Varianta A,
+  creare la aprobarea din marketplace, rămâne opțională.
+- **Sursă:** `readme/DESCRIPTION.md` și `CONTEXT.md` pentru Sumar și Funcționalități; secțiunea 4
+  e completată din cod.
+- **Rămase în afară:** AWB-ul coletului de retur nu vine din marketplace, deci coletul se
+  identifică după numărul returului sau al comenzii. Trendyol nu importă retururi.
+- **Fișiere actualizate:** `deltatech_rma_marketplace/` (nou: `index.md`, `FISA_CONSULTANT.md`,
+  `screenshots/`), `deltatech_rma/index.md`, `deltatech_marketplace_sale/index.md`, `index.md`
+  (1 intrare), `log.md`, `.index/chunks.json`.
+
 ## [2026-09-24] `deltatech_rma` 19.0.1.3.0 + `deltatech_sale_withdrawal` 19.0.0.3.2 — nota de credit, discount, TVA
 
 - **Acțiune:** Actualizarea paginilor `deltatech_rma` (`19.0.1.2.1` → `19.0.1.3.0`),

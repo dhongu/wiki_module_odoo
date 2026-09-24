@@ -34,3 +34,4 @@ Acest modul reprezintă punctul central pentru gestionarea comenzilor de vânzar
 
 - [deltatech_marketplace_sale_stage](../deltatech_marketplace_sale_stage/index.md): extinde gestionarea etapelor (stage) pentru comenzile de vânzare din marketplace.
 - [deltatech_marketplace_sale_type](../deltatech_marketplace_sale_type/index.md): adaugă tipuri de comenzi de vânzare specifice fluxurilor de marketplace.
+- [deltatech_rma_marketplace](../deltatech_rma_marketplace/index.md): duce retururile importate (`marketplace.return.request`) pe fluxul de depozit al `deltatech_rma` și pune rambursările (`marketplace.refund`) lângă nota de credit.

@@ -232,6 +232,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_restrict_reports](deltatech_restrict_reports/index.md): Restricționează accesul la rapoartele Analiză Vânzări și Analiză Facturi prin două grupuri (doar propriile înregistrări / toate înregistrările), independent de drepturile standard.
 - [deltatech_rma](deltatech_rma/index.md): Gestionează returul comercial și reclamațiile de garanție, cu fișă de retur PDF cu cod de bare și recepție în depozit prin scanare.
 - [deltatech_rma_helpdesk](deltatech_rma_helpdesk/index.md): Deschide o cerere de retur completă dintr-un tichet de Helpdesk Enterprise, precompletată din comandă, cu rezultatul scris înapoi pe tichet.
+- [deltatech_rma_marketplace](deltatech_rma_marketplace/index.md): Duce retururile eMAG / Shopify pe fluxul de depozit al retururilor — cererea se deschide la scanarea coletului, cu rambursarea marketplace-ului lângă nota de credit.
 - [deltatech_rma_lot](deltatech_rma_lot/index.md): Pune lotul / seria pe cererea de retur, o verifică față de ce s-a livrat clientului și o duce pe transferul de retur.
 - [deltatech_rma_withdrawal](deltatech_rma_withdrawal/index.md): Dă retragerii în 14 zile fișa de retur cu cod de bare și recepția prin scanare, fără stare de aprobare și fără taxă.
 - [deltatech_rpc_audit](deltatech_rpc_audit/index.md): Loghează apelurile XML-RPC/JSON-RPC externe (IP client real, model, metodă) pentru audit tehnic, configurabil on/off fără dezinstalare.
