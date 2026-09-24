@@ -4,6 +4,29 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `l10n_ro_partner_ledger_currency` — actualizat la 19.0.1.4.3 (fix compensare avans/comercial)
+
+- **Acțiune:** Re-ingestie a paginii existente, după fix-ul de pe tichetul #9575 (PR #315): în
+  „Confirmare sold (PDF)", soldul de avans (409/419) apare acum pe rând separat de soldul
+  comercial (401/4111), în loc să fie compensate într-un singur rând — încălcare a principiului
+  necompensării (OMFP 1802/2014 pct. 56), semnalată de agentul `pacioli`. Pagina, fișa consultant
+  și capturile au fost regenerate de la zero pe starea curentă a codului.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/USAGE.md`, `readme/HISTORY.md` (fix 19.0.1.4.3) și
+  analiză directă de cod (`models/l10n_ro_partner_currency_handler.py`,
+  `models/account_report.py`) pentru noile metode `_l10n_ro_advance_kind_case_sql` și clasificarea
+  `trade`/`advance_supplier`/`advance_customer`.
+- **Fișa consultant:** copiată (`FISA_CONSULTANT.md` + 3 capturi), conținut sincronizat la
+  19.0.1.4.3 — inclusiv eticheta nouă „Poziție netă totală (RON), cu titlu informativ".
+- **Dependențe/Conexiuni:** adăugat link activ către `l10n_ro_balance_confirmation` (sursa
+  pattern-ului `_ADVANCE_PREFIXES`, are pagină wiki, nu era listat anterior) și către
+  `l10n_ro_currency_revaluation`. `account_reports`, `l10n_ro`, `currency_rate_live` rămân text cod
+  (fără pagină wiki).
+- **Fișiere actualizate:** `l10n_ro_partner_ledger_currency/index.md`,
+  `l10n_ro_partner_ledger_currency/FISA_CONSULTANT.md`,
+  `l10n_ro_partner_ledger_currency/screenshots/{01_raport_valuta,02_confirmare_sold,03_fisa_cont_valuta}.png`.
+
+---
+
 ## [2026-09-24] Punțile `deltatech_rma_lot`, `_withdrawal`, `_helpdesk` — pagini noi; fișa `deltatech_rma` completată
 
 - **Acțiune:** Trei pagini noi, pentru cele trei punți ale `deltatech_rma` (rămase nedocumentate de la
