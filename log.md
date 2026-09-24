@@ -4,6 +4,30 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `l10n_ro_stock_gestiune` — 19.0.3.0.3 (fișa completată și corectată după audit contabil)
+
+- **Acțiune:** Re-ingestie a paginii (subagent `documentarist-wiki`), după terrabit-solutions/l10n_ro_ent#322.
+  Fișa consultant avea o captură planificată și negenerată (balanța analitică). Auditul
+  `verificator-fisa`, în două ture, a găsit în fișa deja publicată afirmații contabile false,
+  corectate acum:
+  - contul propriu al gestiunii e folosit doar la transfer;
+  - 481 apare pe ambele laturi ale notei de transfer (OMFP îl rezervă subunităților cu contabilitate
+    proprie);
+  - tranzitul fără cont de transfer nu generează notă;
+  - diferențele de preț la mărfuri merg pe 378, nu pe 308;
+  - 345 nu se debitează la recepție;
+  - 408 în valută nu e reevaluat lunar de `l10n_ro_currency_revaluation`.
+  Pagina urmează fișa și are o secțiune de limitări. Defectele de cod rămân de corectat separat:
+  contul gestiunii, 481, storno pe diferențele de curs, partenerul 408, balanța fără transferuri
+  interne, reevaluarea 408.
+- **Sursă:** `readme/FISA_CONSULTANT.md`, `readme/DESCRIPTION.md`, `__manifest__.py`, cod.
+- **Fișa consultant:** recopiată (`FISA_CONSULTANT.md` + 8 capturi; `06_transfer_blocat` înlocuită de
+  `06_nota_transfer`, noi 07 și 08).
+- **Fișiere actualizate:** `l10n_ro_stock_gestiune/{index.md,FISA_CONSULTANT.md,screenshots/*}`,
+  `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-09-24] `deltatech_service_equipment` — 19.0.1.1.13 (re-ingestie cu fișa consultant nouă)
 
 - **Acțiune:** Re-ingestie a paginii (subagent `documentarist-wiki`), după adăugarea fișei
