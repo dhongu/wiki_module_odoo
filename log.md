@@ -4,6 +4,26 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `deltatech_business_process` — 19.0.1.9.2 (re-ingestie cu fișa consultant nouă)
+
+- **Acțiune:** Re-ingestie a paginii (subagent `documentarist-wiki`), după adăugarea fișei
+  consultant auditate în două ture de `verificator-fisa` (verdict curat), prin
+  dhongu/deltatech#2949. Versiunea trece de la 19.0.1.9.0 la 19.0.1.9.2. Pagina urmează fișa, nu
+  documentația tehnică din `readme/`, la aceste comportamente:
+  - doar „Admin procese” poate schimba starea procesului;
+  - pornirea testelor pe mai multe procese odată nu funcționează corect;
+  - butonul inteligent „Pornire test” creează un test nou la fiecare apăsare;
+  - „Efectuat” pe test marchează „Trecut” și pașii eșuați;
+  - „Așteaptă” blochează testul;
+  - coloanele Testing / Data Migration din exportul Excel sunt inversate.
+  Conexiunea cu `l10n_ro_process_library` e acum link activ.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`, cod.
+- **Fișa consultant:** copiată (`FISA_CONSULTANT.md` + 16 capturi).
+- **Fișiere actualizate:** `deltatech_business_process/{index.md,FISA_CONSULTANT.md,screenshots/*}`,
+  `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-09-24] `terrabit_helpdesk_connector` — 19.0.0.2.2 (marcaj „Răspuns nou”, sincronizare pe staging)
 
 - **Acțiune:** Re-ingestie după PR #359: marcaj pentru răspuns nou necitit (card cu `highlight_color`,

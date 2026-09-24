@@ -1,10 +1,11 @@
 # Business process (localizat la `deltatech_business_process/index.md`)
 
 - **Nume Tehnic:** `deltatech_business_process`
-- **Versiune:** `19.0.1.9.0`
+- **Versiune:** `19.0.1.9.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_business_process
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_business_process`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-24`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -12,19 +13,25 @@ Modulul ajută echipele de implementare să structureze și să execute proiecte
 
 #### 2. Funcționalități Cheie
 
-- Spațiu de lucru pentru proiect: gestionează proiectele de implementare, fazele și progresul general.
-- Procese de afaceri: definește procese per proiect, grupate pe zonă de afaceri și, opțional, pe grup de procese.
-- Pași: descompune fiecare proces în pași ordonați, cu responsabili și tranzacții asociate.
-- Testare: creează teste Interne, de Integrare și de Acceptanță de Utilizator (UAT) care reflectă pașii procesului și urmăresc starea și rezultatul execuției pentru fiecare pas.
-- Probleme (issues): înregistrează problemele apărute la testare sau în execuție pe un proces ori pe un pas specific de test, le urmărește prin stări și le închide cu validări (o problemă rezolvată poate marca automat pasul de test drept trecut, dacă nu mai rămân alte probleme deschise pe acel pas).
-- Dezvoltări: leagă elementele de dezvoltare de procese și/sau proiecte pentru a urmări personalizările necesare.
+- Spațiu de lucru pentru proiect: gestionează proiectele de implementare, fazele și progresul general; codul proiectului (`P00001`) se dă automat, iar starea (Pregătire → Realizare → Lansare → În exploatare) se schimbă din bara de stare.
+- Procese de afaceri: definește procese per proiect, grupate pe zonă de afaceri și, opțional, pe grup de procese; un proces nou dintr-o arie cu responsabil primește automat *Responsabil implementare*.
+- Pași: descompune fiecare proces în pași ordonați, cu responsabili și tranzacții asociate; pașii se pot modifica doar cât procesul e în *Ciornă* sau *Proiectare*.
+- Ciclul de viață al procesului: Ciornă → Proiectare → Test → Gata → Producție (sau Abandonat). **Doar grupul „Admin procese” poate schimba starea procesului** — butoanele de stare apar și pentru „Responsabil proces”, dar acel grup nu are drept de scriere pe proces și primește eroare de acces.
+- Testare: creează teste ale Implementatorului, de Integrare și de Acceptanță a Utilizatorului (UAT), pornite din meniul „Acțiuni” al listei de procese; fiecare test se creează cu toți pașii procesului. Pornirea unui test pe o selecție de mai multe procese **nu funcționează corect**: testul implementatorului dă eroare, iar testele de integrare/acceptanță se creează doar pentru primul proces selectat — porniți testele pe un singur proces odată.
+- Butonul inteligent „Pornire test” (cu contor) din formularul procesului **creează un test de acceptanță nou la fiecare apăsare**; pentru a reveni la un test existent se folosește butonul „Teste”.
+- Rularea testului: rezultatul (Trecut/Eșuat) se trece pe fiecare pas, nu pe test în ansamblu. „Efectuat” închide testul și **marchează drept „Trecut” inclusiv pașii eșuați**; pașii rămași în *Ciornă* nu se modifică — testul se închide doar după ce toate problemele lui au fost rezolvate. Butonul „Așteaptă” **blochează testul**: din starea *Așteptare* nu mai există niciun buton de ieșire (remediere: un Admin procese șterge testul și pornește altul).
+- Probleme (issues): înregistrează problemele apărute la testare sau în execuție pe un proces ori pe un pas specific de test, le urmărește printr-un flux de stări (Deschis → Alocat → Rezolvat → În testare la client → Închis/Redeschis) și le închide cu validări; o problemă închisă marchează automat pasul de test drept *Trecut*, dacă nu mai rămân alte probleme deschise pe acel pas.
+- Dezvoltări: leagă elementele de dezvoltare de procese și/sau proiecte pentru a urmări personalizările necesare, cu aprobare și contribuție la durata proiectului.
 - Atașamente: acces rapid la toate documentele asociate proiectului, proceselor, pașilor, testelor și problemelor, printr-un buton inteligent cu vizualizare consolidată.
-- Rapoarte: tipărește rapoartele de Proces de Afaceri și de Test de Proces; exportă/importă procese ca JSON pentru reutilizare (cu opțiuni pentru includerea testelor, a responsabilului, a clientului și a informațiilor de suport).
-- Raport Excel: generează din proiect un sumar Excel care grupează procesele pe zonă și agregă duratele de configurare/instruire/testare/migrare de date, evidențiind procesele cu durată totală zero.
-- Bibliotecă de procese: sursă reutilizabilă de procese, populată din module instalate care conțin un folder `processes/` și/sau din repository-uri git externe configurabile din Setări (URL-uri separate prin virgulă, cu buton „Sincronizează acum" pentru clonare/actualizare locală); importul selectiv se face în proiect prin acțiunea „Process Library", cu comutator „Include durations" pentru a aduce sau nu estimările de efort.
+- Rapoarte: tipărește rapoartele de Proces de Afaceri (pași pe proiect, arie și stare) și de Test de Proces (pași de test pe arie și rezultat), plus un raport de Probleme pe arie și severitate; exportă/importă procese ca JSON pentru reutilizare (cu opțiuni pentru includerea testelor, a responsabilului, a clientului și a informațiilor de suport).
+- Raport Excel: din proiect, „Acțiuni → Descarcă raportul Excel” generează `Project_Report.xlsx` cu procesele grupate pe arie și duratele de configurare/instruire/testare/migrare de date, evidențiind cu roșu procesele cu durată totală zero. **Coloanele „Testing duration” și „Data Migration Duration” sunt inversate** — valoarea migrării apare sub *Testing duration* și invers, inclusiv în totaluri; doar totalul pe rând (*Total Duration*) e corect.
+- Bibliotecă de procese: sursă reutilizabilă de procese, populată din module instalate care conțin un folder `processes/` (ex. `l10n_ro_process_library`) și/sau din repository-uri git externe configurabile din Setări (URL-uri separate prin virgulă, cu buton „Sincronizează acum” pentru clonare/actualizare locală); importul selectiv se face în proiect prin acțiunea „Import din bibliotecă”, cu comutator „Include durations” pentru a aduce sau nu estimările de efort (tot sau nimic pentru procesele selectate). Deschiderea bibliotecii creează automat ariile lipsă, chiar dacă nu se importă nimic.
 - Suport pentru repository-uri git private HTTPS: utilizator (implicit `x-access-token` pentru GitHub, `oauth2` pentru GitLab) și token/parolă, trimise ca antet HTTP Basic Authorization, fără a fi scrise pe disc în configurația clonei; URL-urile SSH sau cele cu credențiale incluse sunt folosite ca atare.
-- Instalare de module direct de pe un proces, pentru proiecte locale (blocată intenționat pentru proiectele remote).
-- Securitate și chatter: majoritatea înregistrărilor moștenesc `mail.thread`/activity pentru urmăritori, jurnalizare și notificări, abonând automat participanții cheie.
+- Instalare de module direct de pe un proces, pentru proiecte locale (blocată intenționat pentru proiectele remote — „La distanță”).
+- Vizibilitate pe proces: câmpul „Vizibil doar pentru” (tab „Responsabil”, editabil doar de Admin procese) restrânge procesul, pașii, testele, problemele și rândurile din rapoarte la utilizatorii din listă; gol înseamnă vizibil tuturor.
+- Securitate și chatter: majoritatea înregistrărilor moștenesc `mail.thread`/activity pentru urmăritori, jurnalizare și notificări, abonând automat participanții cheie; la crearea unei probleme și la aprobarea unei dezvoltări pleacă e-mailuri automate către managerul de proiect.
+
+Detaliile pas-cu-pas (configurare inițială, fluxul complet, tabele de stări, mesaje de eroare frecvente) sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -65,4 +72,5 @@ Modulul ajută echipele de implementare să structureze și să execute proiecte
 
 #### 5. Conexiuni
 
-- Nu sunt declarate conexiuni funcționale către alte module documentate în wiki. Modulul depinde doar de `base` și `mail`; Biblioteca de Procese poate opțional descoperi conținut din orice alt modul instalat care conține un folder `processes/`, dar aceasta nu constituie o dependență strictă.
+- [l10n_ro_process_library](../l10n_ro_process_library/index.md): biblioteca de procese RO (contabilitate, TVA, declarații ANAF, trezorerie, imobilizări, stocuri); instalarea ei le face disponibile la „Import din bibliotecă".
+- `l10n_ro_doc_screenshots`: generează capturile fișei consultant a acestui modul (dependență doar pentru teste).

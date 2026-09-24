@@ -34,7 +34,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_barcode_sale](deltatech_barcode_sale/index.md): Adăugarea produselor pe comanda de vânzare prin scanarea codurilor de bare.
 - [deltatech_batch_transfer](deltatech_batch_transfer/index.md): Gestionare inteligentă a livrărilor goale din transferurile în lot, cu excludere automată la validare și câmpuri suplimentare de organizare.
 - [deltatech_brand_field](deltatech_brand_field/index.md): Mecanism centralizat pentru gestionarea unitară a câmpului de marcă a produselor în multiple module Odoo.
-- [deltatech_business_process](deltatech_business_process/index.md): Structurarea și execuția proiectelor de implementare Odoo prin Proiecte, Procese de Afaceri, Pași, Testare (intern/integrare/UAT) și gestionarea problemelor.
+- [deltatech_business_process](deltatech_business_process/index.md): Organizează proiectele de implementare Odoo (procese, pași, teste, probleme) cu bibliotecă de procese reutilizabilă și export/import JSON.
 - [deltatech_business_process_handover_document](deltatech_business_process_handover_document/index.md): Generează documentul de predare-primire (proces verbal) pentru un proces de business, direct dintr-un Proiect de Business, ca PDF.
 - [deltatech_calendar_caldav](deltatech_calendar_caldav/index.md): Sincronizare bidirecțională a calendarului Odoo cu un server CalDAV extern (cPanel, Nextcloud etc.) — evenimente, recurență, reminder-e și participanți.
 - [deltatech_cash_statement](deltatech_cash_statement/index.md): Unealtă pentru actualizarea rapidă a soldului inițial al extraselor de casă din Odoo.
