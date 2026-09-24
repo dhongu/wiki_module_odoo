@@ -7854,19 +7854,21 @@
   {
     "path": "deltatech_service_equipment_base/index.md",
     "module": "deltatech_service_equipment_base",
-    "version": "19.0.1.2.6",
+    "version": "19.0.1.2.7",
     "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_equipment_base",
     "local_path": "odoo-addons/deltatech_service/deltatech_service_equipment_base",
-    "last_ingest": "2026-06-08",
+    "last_ingest": "2026-09-24",
     "friendly_name": "Services Equipment Base",
-    "summary": "Modulul oferă baza pentru gestiunea echipamentelor în activitatea de service. Permite înregistrarea echipamentelor și a contoarelor asociate, urmărirea citirilor de contor și facturarea pe baza acestor citiri. În plus, poate estima consumul și introduce automat valori estimate la sfârșitul perioadei, atunci când citirile reale nu sunt disponibile.",
+    "summary": "Modulul oferă baza pentru gestiunea echipamentelor în activitatea de service: locuri funcționale la client, fișa echipamentelor, contoarele lor și citirile de contor, cu o valoare estimată calculată prin regresie liniară din citirile reale. Nu face facturare pe baza citirilor și nici introducere automată de citiri estimate la sfârșitul perioadei — acestea, ca și legătura echipamentelor cu contractele de service, sunt aduse de `deltatech_service_equipment` și `deltatech_service_agreement`. Valoarea de afaceri constă în registrul unic de echipamente și contoare pe care se construiește facturarea pe consum a suitei de service.",
     "features": [
-      "Gestiunea echipamentelor",
-      "Gestiunea contoarelor",
-      "Gestiunea citirilor de contor",
-      "Facturare pe baza citirilor",
-      "Calculul estimării citirilor",
-      "Introducerea automată, la sfârșitul perioadei, a valorilor estimate"
+      "Gestiunea locurilor funcționale la client (sediu, punct de lucru), cu client, persoană de contact,",
+      "Gestiunea echipamentelor: tip, model, producător, serie, număr de inventar, tip de proprietate,",
+      "Legătura echipamentului cu un produs stocabil și cu numărul de serie/lot din stoc, cu",
+      "Gestiunea contoarelor, fiecare pe o unitate de măsură proprie (un echipament nu poate avea două",
+      "Gestiunea citirilor de contor, cu diferența calculată automat față de citirea anterioară (sau față",
+      "Calculul estimării: butonul Calculează estimarea pe contor determină coeficienții unei drepte",
+      "Tipuri de echipament cu șabloane de piese, verificări și măsurători (completate automat la",
+      "Acces restricționat: doar grupul Serviciu / Manager poate deschide fișa unui echipament care"
     ],
     "dependencies": [
       "deltatech_service_base",
@@ -7874,9 +7876,12 @@
       "stock"
     ],
     "connections": [
-      "deltatech_service_base"
+      "deltatech_service_base",
+      "deltatech_service_equipment",
+      "deltatech_service_agreement",
+      "deltatech_service_consumable"
     ],
-    "text": "Services Equipment Base\ndeltatech_service_equipment_base\nModulul oferă baza pentru gestiunea echipamentelor în activitatea de service. Permite înregistrarea echipamentelor și a contoarelor asociate, urmărirea citirilor de contor și facturarea pe baza acestor citiri. În plus, poate estima consumul și introduce automat valori estimate la sfârșitul perioadei, atunci când citirile reale nu sunt disponibile.\nGestiunea echipamentelor\nGestiunea contoarelor\nGestiunea citirilor de contor\nFacturare pe baza citirilor\nCalculul estimării citirilor\nIntroducerea automată, la sfârșitul perioadei, a valorilor estimate"
+    "text": "Services Equipment Base\ndeltatech_service_equipment_base\nModulul oferă baza pentru gestiunea echipamentelor în activitatea de service: locuri funcționale la client, fișa echipamentelor, contoarele lor și citirile de contor, cu o valoare estimată calculată prin regresie liniară din citirile reale. Nu face facturare pe baza citirilor și nici introducere automată de citiri estimate la sfârșitul perioadei — acestea, ca și legătura echipamentelor cu contractele de service, sunt aduse de `deltatech_service_equipment` și `deltatech_service_agreement`. Valoarea de afaceri constă în registrul unic de echipamente și contoare pe care se construiește facturarea pe consum a suitei de service.\nGestiunea locurilor funcționale la client (sediu, punct de lucru), cu client, persoană de contact,\nGestiunea echipamentelor: tip, model, producător, serie, număr de inventar, tip de proprietate,\nLegătura echipamentului cu un produs stocabil și cu numărul de serie/lot din stoc, cu\nGestiunea contoarelor, fiecare pe o unitate de măsură proprie (un echipament nu poate avea două\nGestiunea citirilor de contor, cu diferența calculată automat față de citirea anterioară (sau față\nCalculul estimării: butonul Calculează estimarea pe contor determină coeficienții unei drepte\nTipuri de echipament cu șabloane de piese, verificări și măsurători (completate automat la\nAcces restricționat: doar grupul Serviciu / Manager poate deschide fișa unui echipament care"
   },
   {
     "path": "deltatech_service_maintenance/index.md",
@@ -13725,7 +13730,7 @@
   {
     "path": "terrabit_helpdesk_connector/index.md",
     "module": "terrabit_helpdesk_connector",
-    "version": "19.0.0.2.4",
+    "version": "19.0.0.2.5",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector",
     "local_path": "odoo-addons/terrabit/terrabit_helpdesk_connector",
     "last_ingest": "2026-09-24",

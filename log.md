@@ -4,6 +4,28 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `deltatech_service_equipment_base` — 19.0.1.2.7 (re-ingestie cu fișa consultant nouă)
+
+- **Acțiune:** Re-ingestie a paginii (subagent `documentarist-wiki`), după adăugarea fișei
+  consultant auditate în două ture de `verificator-fisa` (verdict curat), prin
+  dhongu/deltatech_service#88. Versiunea trece de la 19.0.1.2.6 la 19.0.1.2.7. Pagina urmează
+  fișa, nu `readme/DESCRIPTION.md`:
+  - modulul nu face facturare pe citiri și nici citiri estimate automate; acestea sunt în
+    `deltatech_service_equipment` / `deltatech_service_agreement` (descrierea din `index.md`
+    spunea greșit „facturare pe citiri”);
+  - doar grupul Manager deschide fișa unui echipament cu piese, verificări sau măsurători și alege
+    Tipul;
+  - o citire cu dată în trecut umflă consumul până la „Recalculează valorile”;
+  - estimarea și totalul colectorului nu se recalculează la citiri noi;
+  - șabloanele de contoare de pe tip sunt ignorate de `deltatech_service_equipment`.
+  Conexiunile trimit acum la patru module din suită.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`, cod.
+- **Fișa consultant:** copiată (`FISA_CONSULTANT.md` + 10 capturi).
+- **Fișiere actualizate:** `deltatech_service_equipment_base/{index.md,FISA_CONSULTANT.md,screenshots/*}`,
+  `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-09-24] `deltatech_business_process` — 19.0.1.9.2 (re-ingestie cu fișa consultant nouă)
 
 - **Acțiune:** Re-ingestie a paginii (subagent `documentarist-wiki`), după adăugarea fișei
