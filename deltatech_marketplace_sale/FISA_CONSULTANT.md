@@ -105,6 +105,13 @@ pregătit înainte de a testa fluxul:
    nebifat, comanda rămâne ca ofertă trimisă (`sent`), de confirmat manual. Dacă backend-ul
    raportează și un cuantum de ramburs (COD), completați opțional **Max Auto-Confirm COD Amount** —
    peste acest plafon, confirmarea automată se oprește și comanda rămâne de revizuit manual.
+   **Notă (19.0.2.13.0):** cu puntea `deltatech_marketplace_review` instalată (automat, când există
+   și `deltatech_sale_order_review`), aceste gărzi — mesajul lăsat de client, rambursul peste plafon
+   — devin **motive de verificare vizibile** pe comandă (banner „Reținută pentru verificare", coada
+   „De verificat"), iar jobul de confirmare se programează pentru **orice** comandă importată cu
+   **Confirm Sale Order** bifat și revine la 5 minute cât comanda e oprită doar de motive
+   temporare. Fără punte, comanda oprită rămâne ofertă fără nicio explicație. Detalii în fișa
+   modulului `deltatech_marketplace_review`.
 4. Decideți politica de anulare: **Cancel Sale Order** bifat (implicit) anulează automat comanda Odoo
    când marketplace-ul o raportează anulată.
 5. Completați **Discount Product**/**Voucher Product** dacă backend-ul concret le folosește.
@@ -198,6 +205,7 @@ confirmare/facturare, neatinsă de acest hub.
 | `deltatech_marketplace_emag` / `_shopify` / `_woocommerce` / `_magento` / `_prestashop` / `_merchantpro` / `_trendyol` | conectorii concreți care implementează `<provider>_import` și hook-urile `after_*` peste acest hub | dependent de acest modul |
 | `account` | factura generată la confirmarea/facturarea comenzii importate (`after_invoice_post`) | flux standard Odoo |
 | `stock` | expedițiile generate din comanda de vânzare (`after_send_to_shipper`, `after_picking_set_status`) | flux standard Odoo |
+| `deltatech_marketplace_review` (+ `deltatech_sale_order_review`) | gărzile de confirmare automată (mesaj client, ramburs peste plafon) devin motive de verificare vizibile pe comandă; jobul de confirmare revine la 5 minute cât comanda e doar „În așteptare" | punte, instalată automat |
 
 Ce este automat: transformarea unei comenzi externe în `sale.order` (`save_from_marketplace`),
 propagarea semnalului de „linii schimbate" către binding la orice editare de linie (formular, wizard,
@@ -248,6 +256,7 @@ importată, alegerea explicită „notific marketplace-ul sau doar anulez în Od
 | O editare de linie (din wizard/alt modul) nu ajunge la marketplace | Contextul `from_marketplace` era activ pe scriere, sau câmpul modificat nu e în `MARKETPLACE_LINE_FIELDS` | Verificați dacă schimbarea chiar afectează unul din câmpurile urmărite (produs, cantitate, UM, preț, discount, taxe, denumire) |
 | O rambursare nu poate fi creată fără `marketplace_order_id` | Câmpul e obligatoriu — o rambursare nu poate exista fără comanda pe care s-a făcut vânzarea | Legați rambursarea de comanda de marketplace corectă înainte de a o salva |
 | Comanda importată rămâne „sent" deși se aștepta confirmare automată | **Confirm Sale Order** e dezactivat pe backend | Activați bifa, sau confirmați manual comanda |
+| Comanda importată rămâne ofertă cu **Confirm Sale Order** activ, fără explicație | O gardă a oprit confirmarea (mesaj de la client, ramburs peste **Max Auto-Confirm COD Amount**) și puntea `deltatech_marketplace_review` nu e instalată | Instalați `deltatech_sale_order_review` (puntea vine automat): motivul apare pe comandă și jobul de confirmare revine singur |
 
 ## 10. Capturi de ecran
 

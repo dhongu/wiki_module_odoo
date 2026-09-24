@@ -4,6 +4,32 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] Verificarea comenzilor înainte de procesare — 4 pagini noi, 4 re-ingestii
+
+- **Acțiune:** Ingestie în paralel (8 subagenți `documentarist-wiki`) după inițiativa din helpdesk #9471
+  (Sanodor) și #9378 (PTC), livrată în 19.0 prin bitshop#2873/#2874/#2875/#2877/#2878,
+  bitshop_delivery#176/#178 și bitshop_marketplace#398/#399.
+  - Pagini noi: `deltatech_sale_order_review` (modulul de bază: reguli, motive, două porți, aprobare pe
+    grup), `deltatech_delivery_status_review` (poarta de livrare → `postponed`),
+    `deltatech_delivery_review` (rambursul de pe AWB, motivele în dialogurile de curierat),
+    `deltatech_marketplace_review` (gărzile marketplace ca motive, retry la 5 minute).
+  - Re-ingestii: `terrabit_partner_credit_limit` 19.0.1.3.1 (limita de credit și facturile restante ca
+    motive), `deltatech_delivery` 19.0.6.6.1 (livrarea amânată nu pleacă), `deltatech_marketplace_sale`
+    19.0.2.13.1 (jobul de confirmare pentru orice comandă importată), `deltatech_marketplace_shopify`
+    19.0.1.3.1 (calea de livrare amânată trece prin gărzi).
+  - Linkurile între paginile noi activate la consolidare (fiecare subagent le lăsase text `cod`, pagina-soră
+    neexistând încă).
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `readme/FISA_CONSULTANT.md`,
+  `__manifest__.py`, cod.
+- **Fișe consultant:** copiate pentru toate 8 (6 + 7 + 4 + 5 capturi pe paginile noi; resincronizate pe
+  re-ingestii, inclusiv 2 capturi noi la `deltatech_delivery` și 3 refăcute la limita de credit; o captură
+  orfană veche ștearsă).
+- **Dependențe/Conexiuni:** `sale`, `delivery`, `deltatech_delivery_status`, `deltatech_marketplace_sale`
+  (link activ), `payment`, modulele de locker curier (text).
+- **Fișiere actualizate:** `index.md` (4 intrări noi, 1 actualizată), paginile celor 8 module.
+
+---
+
 ## [2026-09-24] `l10n_ro_stock_gestiune` — 19.0.3.0.3 (fișa completată și corectată după audit contabil)
 
 - **Acțiune:** Re-ingestie a paginii (subagent `documentarist-wiki`), după terrabit-solutions/l10n_ro_ent#322.

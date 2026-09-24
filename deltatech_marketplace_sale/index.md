@@ -1,7 +1,7 @@
 # Comenzi de vânzare din Marketplace (localizat la `deltatech_marketplace_sale/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_sale`
-- **Versiune:** `19.0.2.12.0`
+- **Versiune:** `19.0.2.13.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_sale
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_sale`
 - **Ultima Ingestie:** 2026-09-24
@@ -23,6 +23,8 @@ Acest modul reprezintă punctul central pentru gestionarea comenzilor de vânzar
 - **Anularea unei comenzi din marketplace întreabă** dacă anularea se trimite și magazinului (*Cancel & Notify Marketplace*) sau rămâne doar în Odoo (*Cancel in Odoo Only*); alegerea se scrie în istoricul comenzii. Pe backend, *Cancel Sale Order* decide dacă o comandă anulată în marketplace se anulează și în Odoo.
 - O modificare a liniilor comenzii — cantitate, preț, linie adăugată sau ștearsă — ajunge la exportul către marketplace și când e făcută direct pe linii (wizard, acțiune server, alt modul), nu doar din formular; conectorul primește semnalul, nu diferența, și recitește comanda. O schimbare de preț e semnalată separat (`price_changed`), pentru marketplace-urile care nu acceptă un preț nou pe o linie existentă. Nimic din ce scrie un import nu se trimite înapoi.
 - **Produs pentru vouchere** pe backend, separat de produsul de discount: un voucher al marketplace-ului e o plată a unui terț (TVA 0, decontat pe cont de decontare), nu o reducere comercială; comanda păstrează valoarea voucherului și partea decontată de marketplace.
+- Cu **Confirm Sale Order** bifat, jobul de confirmare automată (`try_to_confirm`) se programează pentru **orice** comandă importată, nu doar pentru cele confirmabile chiar la import — o comandă oprită la import (mesaj de la client, ramburs peste plafon) primea altfel jobul deloc și rămânea ofertă trimisă până observa cineva. La rulare, jobul reverifică eligibilitatea (și o reîmprospătează, unde conectorul o suportă) în loc să se bazeze pe starea de la import.
+- Integrare cu [deltatech_marketplace_review](../deltatech_marketplace_review/index.md) (punte instalată automat când ambele module sunt prezente): gărzile de confirmare automată — mesajul lăsat de client, rambursul (COD) peste **Max Auto-Confirm COD Amount** — devin motive de verificare vizibile pe comandă, în loc de o oprire tăcută; jobul de confirmare revine la interval scurt cât comanda e oprită doar de motive temporare.
 
 #### 3. Dependențe
 
@@ -47,3 +49,4 @@ Acest modul reprezintă punctul central pentru gestionarea comenzilor de vânzar
 - [deltatech_marketplace_sale_stage](../deltatech_marketplace_sale_stage/index.md): extinde gestionarea etapelor (stage) pentru comenzile de vânzare din marketplace.
 - [deltatech_marketplace_sale_type](../deltatech_marketplace_sale_type/index.md): adaugă tipuri de comenzi de vânzare specifice fluxurilor de marketplace.
 - [deltatech_rma_marketplace](../deltatech_rma_marketplace/index.md): duce retururile importate (`marketplace.return.request`) pe fluxul de depozit al `deltatech_rma` și pune rambursările (`marketplace.refund`) lângă nota de credit.
+- [deltatech_marketplace_review](../deltatech_marketplace_review/index.md): punte (instalată automat cu [deltatech_sale_order_review](../deltatech_sale_order_review/index.md)) care transformă gărzile de confirmare automată (mesaj client, ramburs peste plafon) în motive vizibile de verificare pe comandă și reprogramează jobul de confirmare cât timp acestea sunt temporare.
