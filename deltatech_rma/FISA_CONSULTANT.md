@@ -1,7 +1,7 @@
 # Fișă Modul: Retururi și garanții (RMA)
 
 **Modul:** `deltatech_rma`
-**Versiune:** 19.0.1.2.0
+**Versiune:** 19.0.1.3.0
 **Suită:** bitshop
 **Dependențe:** `sale_stock`, `portal`, `stock_delivery` (aduce și `delivery`)
 
@@ -68,11 +68,29 @@ Modulul **nu** generează note contabile singur. Singurul document contabil pe c
 valoare returnată − taxă de manipulare = valoare rambursabilă
 ```
 
-Creditarea se face linie cu linie, cu prețul liniei de comandă micșorat cu taxa de manipulare a
-liniei; cotele de TVA se preiau de pe linia comenzii originale. Nota rămâne în **ciornă**: o
-pregătim, nu o înregistrăm în locul contabilului, iar **contabilul o verifică față de factura
-inițială** înainte de înregistrare — prețul, discountul, cota de TVA și legătura cu factura
-stornată.
+Sumele cererii — *Total*, *Taxă de manipulare*, *De returnat clientului* — sunt **cu TVA**, la
+prețul vândut (după discount): e suma pe care o primește clientul și pe care o citește în portal și
+pe fișa de retur. Taxa de manipulare se ia din valoarea cu TVA.
+
+Creditarea se face linie cu linie, cu **prețul, discountul și taxele liniei de factură** care a
+facturat produsul, cu taxa de manipulare compusă în discount. Totalul notei, cu TVA, este la ban
+suma de returnat clientului. Cu o singură factură, nota o **stornează**: îi poartă legătura
+(`reversed_entry_id`), jurnalul, clientul, moneda și cursul, iar în referință apar cererea și
+factura. La înregistrare, Odoo compensează automat nota cu factura, dacă aceasta e neîncasată; dacă e
+încasată, nota rămâne credit de rambursat. Cu produse facturate pe mai multe facturi, o notă în
+istoricul cererii îi cere contabilului să lege nota de factura potrivită.
+
+La politica de facturare **„la livrare”**, cu returul fizic validat, liniile notei se leagă de
+liniile comenzii: cantitatea livrată și cea facturată scad împreună, iar comanda nu mai propune o a
+doua notă. La **„la comandă”** nota nu se leagă, tocmai ca, după ea, comanda să nu redevină „de
+facturat” și marfa returnată să nu fie refacturată. Un produs **nefacturat** nu primește notă de
+credit — nu are ce storna; se ajustează comanda. Nota rămâne în **ciornă**: o pregătim, nu o
+înregistrăm în locul contabilului.
+
+De știut pentru contabil: cu factură, nota ia prețul **de pe factură** — un preț modificat de mână pe
+linia cererii nu se regăsește pe notă. La facturile în valută, nota preia cursul facturii; dacă pe
+ciornă se completează de mână *Data facturii*, Odoo recalculează cursul la data aceea, iar cursul
+operațiunii de bază (art. 282 alin. (9) Cod fiscal) trebuie pus înapoi.
 
 La înregistrare, Odoo generează nota standard de stornare a vânzării (pct. 330 OMFP 1802/2014):
 
@@ -317,9 +335,10 @@ Niciun raport ANAF nu se alimentează direct din acest modul. Nota de credit, od
 contabil, e o factură cu valori negative (art. 330 alin. (2) Cod fiscal):
 
 - se transmite în **RO e-Factura**, în 5 zile lucrătoare, ca orice factură, B2B și B2C;
-- trebuie să facă referire la factura inițială (art. 319 alin. (20) lit. r)) — contabilul verifică
-  legătura înainte de înregistrare, pentru că nota pregătită de modul poartă ca referință numărul
-  cererii de retur, nu factura stornată;
+- trebuie să facă referire la factura inițială (art. 319 alin. (20) lit. r)) — nota pregătită de
+  modul e legată de ea când produsele au fost facturate pe o singură factură; altfel contabilul o
+  leagă înainte de înregistrare. În XML-ul e-Factura, trimiterea structurată (BillingReference) nu
+  e completată încă de localizare din această legătură: verificați XML-ul la prima notă;
 - reduce baza TVA în **D300** din perioada emiterii, cu cota facturii inițiale, și apare în **D394**
   și **D406** ca orice storno de vânzare.
 
@@ -333,8 +352,8 @@ contabil, e o factură cu valori negative (art. 330 alin. (2) Cod fiscal):
 - [ ] Fișa de retur se tipărește corect, iar codul de bare se scanează cu pistolul clientului.
 - [ ] Un retur de test intră în stoc cu **costul cu care a ieșit**, nu cu cel curent: verificați
       evaluarea pe transferul de retur.
-- [ ] Nota de credit de test are TVA-ul corect, preluat de pe comanda originală, și prețul facturat
-      (atenție la liniile cu discount); se leagă de factura inițială înainte de înregistrare.
+- [ ] Nota de credit de test are prețul și TVA-ul facturii inițiale (inclusiv pe o linie cu
+      discount), e legată de ea, iar totalul ei e suma *De returnat clientului* de pe cerere.
 - [ ] Încadrarea taxei de manipulare (reducere de bază / serviciu 704 / penalitate 7581) e stabilită
       cu contabilul clientului.
 - [ ] Există o locație pentru marfa cu verdict „defect” și o procedură de ieșire (retur la furnizor
@@ -350,6 +369,7 @@ contabil, e o factură cu valori negative (art. 330 alin. (2) Cod fiscal):
 | „Returul X e deja închis” | s-a scanat un colet pe o cerere finalizată | deschideți cererea din registru și redeschideți-o |
 | „Nu găsesc nicio cerere cu codul …” | cod greșit sau cerere din altă companie | căutați clientul în registru |
 | „Ca să dăm banii înapoi avem nevoie de IBAN” | decizie „banii înapoi” fără IBAN | completați IBAN-ul sau sunați clientul |
+| „… de pe comanda … nu are nicio factură înregistrată, deci nu e nimic de creditat” | notă de credit cerută pe un produs nefacturat | ajustați comanda (cantitate, anulare) în loc de notă de credit |
 | „La «motiv», taxa poate fi doar între X% și Y%” | s-a depășit intervalul motivului | schimbați procentul sau motivul |
 
 ## 10. Capturi de ecran

@@ -27,6 +27,28 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `deltatech_rma` 19.0.1.3.0 + `deltatech_sale_withdrawal` 19.0.0.3.2 — nota de credit, discount, TVA
+
+- **Acțiune:** Actualizarea paginilor `deltatech_rma` (`19.0.1.2.1` → `19.0.1.3.0`),
+  `deltatech_sale_withdrawal` (`19.0.0.3.1` → `19.0.0.3.2`), `deltatech_rma_lot`, `_withdrawal`,
+  `_helpdesk` (→ `19.0.1.0.2`), după bitshop#2863 și bitshop_ent#163. Fișele și capturile au fost
+  resincronizate.
+- **Ce s-a schimbat:**
+  - Defectele găsite la auditul contabil al fișei, corectate și verificate de două ori cu Pacioli
+    înainte de merge.
+  - Prețul liniei de retur se ia după discount.
+  - Sumele cererii sunt cu TVA, egale la ban cu nota.
+  - Nota stornează factura inițială (preț, taxe, jurnal, curs, `reversed_entry_id`).
+  - Nota se leagă de comandă doar la „la livrare” cu returul validat, ca să nu se refactureze.
+  - Un produs nefacturat nu primește notă.
+  - La retragere, totalul e cu TVA, iar modul de execuție se afișează cu eticheta.
+  - Capturile tuturor fișelor au fost refăcute pe o firmă românească (plan RO, TVA 21%).
+- **Rămase în afară:** BillingReference în XML-ul e-Factura (ține de `l10n_ro_efactura_enhancement`).
+  Notele deja emise pe linii cu discount sunt semnalate de migrare, pentru corecție de către contabil.
+- **Fișiere actualizate:** `deltatech_rma/`, `deltatech_rma_lot/`, `deltatech_rma_withdrawal/`,
+  `deltatech_rma_helpdesk/`, `deltatech_sale_withdrawal/` (`index.md`, `FISA_CONSULTANT.md`,
+  `screenshots/`), `log.md`, `.index/chunks.json`.
+
 ## [2026-09-24] Punțile `deltatech_rma_lot`, `_withdrawal`, `_helpdesk` — pagini noi; fișa `deltatech_rma` completată
 
 - **Acțiune:** Trei pagini noi, pentru cele trei punți ale `deltatech_rma` (rămase nedocumentate de la

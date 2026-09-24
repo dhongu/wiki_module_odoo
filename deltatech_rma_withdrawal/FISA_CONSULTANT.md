@@ -1,7 +1,7 @@
 # Fișă Modul: Retragere cu fișă de retur și recepție prin scanare (RMA Withdrawal)
 
 **Modul:** `deltatech_rma_withdrawal`
-**Versiune:** 19.0.1.0.1
+**Versiune:** 19.0.1.0.2
 **Suită:** bitshop
 **Dependențe:** `deltatech_rma`, `deltatech_sale_withdrawal`
 
@@ -46,6 +46,11 @@ Rambursarea: nota de credit în ciornă se pregătește **din cererea de retur**
 (butonul **Notă credit**, vizibil pentru că rezolvarea e deja *Returnăm banii*), iar retragerea se
 marchează apoi **Marchează ca rambursat**. Câmpul *Notă credit* de pe retragere nu e completat de
 punte. Faceți o singură notă de credit pe retragere, nu câte una din fiecare document.
+
+Sumele sunt **cu TVA** pe ambele documente: totalul retragerii e ce i se rambursează consumatorului
+(art. 13), iar *De returnat clientului* de pe cerere e totalul notei de credit — pentru o retragere
+fără diminuare de valoare, aceeași sumă. Totalul cuprinde **produsele** retrase; la o retragere
+integrală, costul livrării standard plătit de consumator se rambursează și el (art. 13), separat.
 
 ## 5. Configurare inițială
 

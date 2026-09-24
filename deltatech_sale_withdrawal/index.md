@@ -1,10 +1,10 @@
 # Sale Withdrawal (localizat la `deltatech_sale_withdrawal/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_withdrawal`
-- **Versiune:** `19.0.0.3.1`
+- **Versiune:** `19.0.0.3.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_withdrawal
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_withdrawal`
-- **Ultima Ingestie:** 2026-09-23
+- **Ultima Ingestie:** 2026-09-24
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -18,7 +18,8 @@ Modulul implementează funcția de retragere din contract (dreptul de renunțare
 - Flux în doi pași: recapitulare a contractului, apoi buton separat de confirmare.
 - **Fără motiv obligatoriu** — consumatorul nu trebuie să justifice retragerea.
 - Confirmare automată de primire pe suport durabil (e-mail plus PDF), cu conținutul declarației și data **și ora** exactă a transmiterii.
-- Retragere parțială, pe linie de comandă.
+- Retragere parțială, pe linie de comandă. Linia ia proporțional valorile liniei de comandă, fără și cu TVA; **totalul retragerii e cu TVA** — ce se rambursează consumatorului (art. 13) —, iar PDF-ul de confirmare arată suma cu TVA. Totalul cuprinde produsele; costul livrării la o retragere integrală se rambursează separat.
+- Pe retragere, *Mod de execuție* se afișează cu eticheta modului; codul rămâne stocat, ca să fie citibil și după dezinstalarea modulului care l-a adus.
 - Excepții legale (art. 16) declarate pe produs sau pe categorie de produs, afișate consumatorului ca neeligibile, nu ascunse.
 - Registru de retrageri în Vânzări, cu termenul de rambursare din art. 13 și activitate programată pentru responsabil.
 - Contract de execuție conectabil (pluggable), astfel încât urmărirea operațională (retur de stoc, notă de credit, sistem extern) se adaugă prin alte module, fără a atinge acest modul.

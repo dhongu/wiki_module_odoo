@@ -1,7 +1,7 @@
 # RMA Lot / Serial (localizat la `deltatech_rma_lot/index.md`)
 
 - **Nume Tehnic:** `deltatech_rma_lot`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma_lot
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_rma_lot`
 - **Ultima Ingestie:** 2026-09-24

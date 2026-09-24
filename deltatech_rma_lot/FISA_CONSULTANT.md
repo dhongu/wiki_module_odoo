@@ -1,7 +1,7 @@
 # Fișă Modul: Retururi — lot / serie (RMA Lot)
 
 **Modul:** `deltatech_rma_lot`
-**Versiune:** 19.0.1.0.1
+**Versiune:** 19.0.1.0.2
 **Suită:** bitshop
 **Dependențe:** `deltatech_rma`
 

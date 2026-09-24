@@ -1,7 +1,7 @@
 # RMA Withdrawal (localizat la `deltatech_rma_withdrawal/index.md`)
 
 - **Nume Tehnic:** `deltatech_rma_withdrawal`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma_withdrawal
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_rma_withdrawal`
 - **Ultima Ingestie:** 2026-09-24
@@ -18,7 +18,8 @@ Retragerea din contract și returul comercial rămân înregistrări diferite: [
 - Taxa de manipulare e zero (art. 14): motivul rezervat, **Retragere în termenul legal**, are intervalul 0–0, e *Doar pentru colegi* (nu apare în portal) și spune că transportul de întoarcere e pe cheltuiala clientului.
 - Fișa pleacă pe mail cu un șablon propriu, fără nicio formulare de aprobare; spune că banii se returnează după ce produsele ajung sau după dovada expedierii (art. 13 alin. (3)).
 - Coletul urmează apoi fluxul obișnuit: recepție prin scanare, verdicte, repunere în stoc. Nota de credit se pregătește din cererea de retur, iar retragerea se marchează rambursată; câmpul *Notă credit* de pe retragere nu e completat de punte.
-- Pe formularul retragerii, butonul și câmpul **Colet de retur**. Câmpul *Mod de execuție* al retragerii afișează codul tehnic (`rma_parcel`).
+- Pe formularul retragerii, butonul și câmpul **Colet de retur**; *Mod de execuție* se afișează cu eticheta lui (din `deltatech_sale_withdrawal` 19.0.0.3.2).
+- Liniile coletului iau prețul plătit, după discount; sumele sunt cu TVA pe ambele documente — totalul retragerii e ce se rambursează consumatorului, *De returnat clientului* de pe cerere e totalul notei de credit.
 
 #### 3. Dependențe
 

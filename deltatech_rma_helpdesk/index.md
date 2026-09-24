@@ -1,7 +1,7 @@
 # RMA Helpdesk (localizat la `deltatech_rma_helpdesk/index.md`)
 
 - **Nume Tehnic:** `deltatech_rma_helpdesk`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_rma_helpdesk
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_rma_helpdesk`
 - **Ultima Ingestie:** 2026-09-24
@@ -15,7 +15,7 @@ Un tichet de Helpdesk e o conversație, un retur e un document: linii cu cantit�
 
 - Bifă proprie pe echipă, **Cereri de retur**, în secțiunea *După Vânzare* (**Helpdesk → Configurare → Echipe HelpDesk**), separată de *Retururi* din Odoo, care instalează `helpdesk_stock`.
 - Butonul **Cerere de retur** pe tichet (Alt+Shift+R), vizibil doar cu client pe tichet și pentru utilizatorii cu *Retururi / Utilizator*.
-- Butonul deschide formularul cererii **nesalvat**, precompletat cu clientul, comanda de pe tichet, tichetul și liniile returnabile ale comenzii (cantitatea disponibilă, titlul tichetului ca descriere); cererea primește număr abia la salvare.
+- Butonul deschide formularul cererii **nesalvat**, precompletat cu clientul, comanda de pe tichet, tichetul și liniile returnabile ale comenzii (cantitatea disponibilă, prețul plătit după discount, titlul tichetului ca descriere); cererea primește număr abia la salvare.
 - Contorul **Retururi** pe tichet și legătura înapoi pe cerere (câmp și buton *Tichet*, căutare după tichet); ștergerea tichetului nu șterge cererea.
 - Rezultatul e scris în istoricul tichetului la aprobare, refuz și rezolvare, ca agentul de suport să nu deschidă returul.
 

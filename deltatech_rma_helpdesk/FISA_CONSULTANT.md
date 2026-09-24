@@ -1,7 +1,7 @@
 # Fișă Modul: Cerere de retur din tichetul de Helpdesk (RMA Helpdesk)
 
 **Modul:** `deltatech_rma_helpdesk`
-**Versiune:** 19.0.1.0.1
+**Versiune:** 19.0.1.0.2
 **Suită:** bitshop_ent (Enterprise)
 **Dependențe:** `deltatech_rma`, `helpdesk_sale`
 
