@@ -120,7 +120,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_lot](deltatech_lot/index.md): Automatizează generarea numărului de lot la recepția produselor de la furnizor și adaugă un câmp de locație pe lot pentru trasabilitate.
 - [deltatech_mail](deltatech_mail/index.md): Filtrarea și redirecționarea emailurilor către o adresă de substituție.
 - [deltatech_markdown_field](deltatech_markdown_field/index.md): Widget WYSIWYG (OWL) pentru câmpuri Text care stochează conținutul ca Markdown brut, cu conversie MD↔HTML client-side, fără CDN.
-- [deltatech_marketplace](deltatech_marketplace/index.md): Modulul de bază al familiei marketplace — cadru de integrare Odoo cu platforme de marketplace online pentru vânzare și sincronizare multi-canal.
+- [deltatech_marketplace](deltatech_marketplace/index.md): Framework-ul comun al conectorilor marketplace (eMAG, Shopify, WooCommerce etc.) — backend-uri cu stare de sănătate, reguli de import/export pe obiecte, export de stoc și preț, legături Odoo ↔ magazin, coadă de joburi și jurnal.
 - [deltatech_marketplace_brand](deltatech_marketplace_brand/index.md): Extinde Odoo Marketplace cu un sistem de gestionare a brandurilor pentru produsele vândute pe platformele conectate.
 - [deltatech_marketplace_delivery](deltatech_marketplace_delivery/index.md): Integrează livrarea avansată și gestionarea lockerelor în ecosistemul de comenzi marketplace.
 - [deltatech_marketplace_doraly](deltatech_marketplace_doraly/index.md): Conector între Odoo și marketplace-ul Doraly pentru sincronizarea produselor și comenzilor.

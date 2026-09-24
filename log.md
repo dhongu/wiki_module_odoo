@@ -4,6 +4,23 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `deltatech_marketplace` — re-ingestie cu fișa consultant nouă
+
+- **Acțiune:** Re-ingestie a paginii (subagent `documentarist-wiki`), după adăugarea fișei
+  consultant auditate în trei ture de `verificator-fisa` (verdict curat), prin
+  terrabit-solutions/bitshop_marketplace#389. Versiunea trece de la 19.0.1.14.4 la 19.0.1.27.6.
+  Pe cinci puncte, pagina urmează fișa, nu documentația tehnică din `readme/`:
+  - maparea TVA nu decide TVA-ul comenzilor (acesta vine din taxele produsului și poziția fiscală);
+  - „Fee Product” nu e comisionul platformei;
+  - „Default category” e doar o rezervă pentru produsele noi;
+  - lista legăturilor pe variantă nu are meniu (id de meniu dublat);
+  - „Run jobs” nu are efect.
+  Conexiunile trimit acum la conectorii de platformă ai suitei care au pagină wiki.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`.
+- **Fișa consultant:** copiată (`FISA_CONSULTANT.md` + 12 capturi).
+- **Fișiere actualizate:** `deltatech_marketplace/index.md`, `deltatech_marketplace/FISA_CONSULTANT.md`,
+  `deltatech_marketplace/screenshots/*`, `index.md`, `log.md`, `.index/`.
+
 ## [2026-09-24] `terrabit_iap_server_helpdesk` — corectat: potrivirea codului fiscal e acum tolerantă
 
 - **Acțiune:** Pagina și fișa consultant avertizau că potrivirea codului fiscal e exactă și creează
