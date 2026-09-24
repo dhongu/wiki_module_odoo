@@ -24,10 +24,12 @@ Context operațional:
 - Fiecare client cu conector are un **cont înregistrat** pe serviciul **Terrabit Helpdesk**. Contul
   se creează singur la prima conectare și se leagă de partenerul-companie al clientului, după
   **codul fiscal**.
-- ⚠️ Potrivirea codului fiscal e **exactă, pe text**. Dacă la noi partenerul are „16507426", iar
-  clientul trimite „RO16507426", nu se potrivesc: serverul **creează un partener nou**, dublură, iar
-  tichetele firmei se împart între cei doi. Codul fiscal al partenerului nostru trebuie scris exact
-  ca în Odoo-ul clientului, cu tot cu prefixul RO.
+- Potrivirea codului fiscal e **tolerantă** la felul în care e scris: „RO16507426",
+  „ro 16507426" și „16507426" găsesc același partener. Serverul caută doar printre partenerii
+  **companie activi**. Dacă nu găsește niciunul, creează un partener nou. Dacă găsește mai mulți
+  (dubluri rămase din trecut), alege partenerul legat de cele mai multe conturi, iar la egalitate
+  pe cel mai vechi. Modulul `terrabit_iap_server` face asta începând cu 19.0.0.1.3. Înainte
+  potrivirea era exactă, pe text, și crea dubluri fără niciun avertisment.
 - Clientul vede statusul tichetului simplificat, în patru stări: **Nou**, **În lucru**,
   **De răspuns**, **Închis**. Fiecare stadiu al helpdesk-ului nostru e tradus într-una dintre ele.
 - **Clientul vede doar mesajele publice.** Notele interne ale consultanților nu pleacă niciodată la
@@ -186,8 +188,10 @@ Mesajele de mai jos le vede clientul în Odoo-ul lui, nu consultantul. Le primim
 | „The message is empty." | răspuns format doar din spații | nimic de făcut la noi |
 
 Separat, nu ca eroare: dacă tichetele unei firme apar împărțite în două grupuri în **Companie
-Partener**, e aproape sigur un partener dublură, creat din cauza unui cod fiscal scris diferit (vezi
-secțiunea 2). Unificați partenerii și corectați codul fiscal.
+Partener**, e aproape sigur un partener dublură. Poate fi rămas din perioada de dinainte de potrivirea
+tolerantă. Se mai creează unul nou și dacă partenerul firmei e arhivat sau nu e marcat ca companie
+(vezi secțiunea 2). Unificați partenerii. Conturile noi ajung oricum pe cel cu cele mai multe
+conturi.
 
 ## 10. Capturi de ecran
 

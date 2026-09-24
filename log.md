@@ -4,6 +4,16 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `terrabit_iap_server_helpdesk` — corectat: potrivirea codului fiscal e acum tolerantă
+
+- **Acțiune:** Pagina și fișa consultant avertizau că potrivirea codului fiscal e exactă și creează
+  dubluri. Între timp #354 (`terrabit_iap_server` 19.0.0.1.3) a făcut-o tolerantă la prefix, spații
+  și majuscule; pagina și fișa descriu acum comportamentul curent. Fișa recopiată din PR #356.
+- **Fișiere actualizate:** `terrabit_iap_server_helpdesk/{index.md,FISA_CONSULTANT.md}`, `log.md`,
+  `.index/chunks.json`.
+
+---
+
 ## [2026-09-24] `terrabit_helpdesk_connector` — actualizat la 19.0.0.2.0 (tichetul nou e ciornă)
 
 - **Acțiune:** Re-ingestie după PR #355: tichetul nou e o ciornă și pleacă doar la „Trimite la

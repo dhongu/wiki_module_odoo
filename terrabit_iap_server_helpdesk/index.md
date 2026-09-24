@@ -27,11 +27,11 @@ este doar planificat, nu funcționează încă.
   clienților, cu patru endpointuri JSON-RPC: creare tichet, listare tichete deschise, listare
   mesaje de corespondență și postare de răspuns.
 - Fiecare client cu conector are un cont (`iap.server.account`) legat automat de compania lui,
-  după codul fiscal al partenerului. **⚠️ Potrivirea codului fiscal e exactă, pe text** — de
-  exemplu „16507426" la noi și „RO16507426" trimis de client nu se potrivesc, iar serverul creează
-  un **partener nou, dublură**; tichetele firmei ajung împărțite între cei doi parteneri. Codul
-  fiscal al partenerului trebuie scris identic cu cel din Odoo-ul clientului, inclusiv prefixul
-  RO.
+  după codul fiscal al partenerului. Potrivirea e **tolerantă** la prefixul de țară, spații și
+  majuscule („RO16507426" = „16507426"), dar se caută doar printre partenerii companie activi; fără
+  potrivire se creează un partener nou. Dacă există mai mulți (dubluri vechi), contul ajunge pe cel
+  cu cele mai multe conturi. Comportament din `terrabit_iap_server` 19.0.0.1.3; înainte potrivirea
+  era exactă și crea dubluri tăcute.
 - Fiecare stadiu al helpdesk-ului nostru primește un status vizibil clientului: **Nou**, **În
   lucru** sau **De răspuns**; „Închis" nu se mapează manual, ci se deduce din bifa **Pliat** a
   stadiului, ca să existe o singură sursă de adevăr.
