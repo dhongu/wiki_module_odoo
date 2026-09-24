@@ -4,6 +4,28 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `deltatech_service_equipment` — 19.0.1.1.13 (re-ingestie cu fișa consultant nouă)
+
+- **Acțiune:** Re-ingestie a paginii (subagent `documentarist-wiki`), după adăugarea fișei
+  consultant auditate în două ture de `verificator-fisa` (verdict curat), prin
+  dhongu/deltatech_service#89. Versiunea trece de la 19.0.1.1.11 la 19.0.1.1.13. Pagina urmează
+  fișa, nu `readme/DESCRIPTION.md`:
+  - fluxul real: contractul se creează întâi, iar Adaugă la contract cere indexul curent;
+  - pregătirea facturării adună citirile nefacturate; factura se datează la ultima citire;
+  - nota contabilă 4111 = 704 (service) / 706 (chirie) + 4427.
+  Limitările trecute pe pagină: conversia UM de facturare inversată, citirea de instalare
+  facturată față de Valoarea inițială, poziția fiscală ignorată, data instalării = azi, prețul 1
+  pe liniile noi, dezinstalarea pe o perioadă deja pregătită, numerotarea doar în compania
+  principală. Conexiunile trimit la patru module din suită.
+- **Tot aici:** fișa `deltatech_service_equipment_base` recopiată, după alinierea făcută în
+  același PR (stările înlocuite, „New” în alte companii, tab-ul *Contoare* al tipului).
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`, cod.
+- **Fișa consultant:** copiată (`FISA_CONSULTANT.md` + 11 capturi).
+- **Fișiere actualizate:** `deltatech_service_equipment/{index.md,FISA_CONSULTANT.md,screenshots/*}`,
+  `deltatech_service_equipment_base/FISA_CONSULTANT.md`, `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-09-24] `deltatech_service_equipment_base` — 19.0.1.2.7 (re-ingestie cu fișa consultant nouă)
 
 - **Acțiune:** Re-ingestie a paginii (subagent `documentarist-wiki`), după adăugarea fișei

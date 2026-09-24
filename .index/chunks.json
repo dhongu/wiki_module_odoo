@@ -7824,19 +7824,26 @@
   {
     "path": "deltatech_service_equipment/index.md",
     "module": "deltatech_service_equipment",
-    "version": "19.0.1.1.11",
+    "version": "19.0.1.1.13",
     "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_equipment",
     "local_path": "odoo-addons/deltatech_service/deltatech_service_equipment",
-    "last_ingest": "2026-06-08",
+    "last_ingest": "2026-09-24",
     "friendly_name": "Services Equipment",
-    "summary": "Modulul gestionează echipamentele de service și contoarele asociate acestora. Permite înregistrarea citirilor de contoare și facturarea pe baza acestor citiri, inclusiv calculul unei estimări a citirilor. La finalul perioadei, valorile estimate pot fi introduse automat, simplificând astfel procesul de facturare periodică legat de utilizarea echipamentelor.",
+    "summary": "Modulul leagă echipamentele din `deltatech_service_equipment_base` de contractele de service din `deltatech_service_agreement` și transformă citirile de contor în facturi de vânzare. Aduce ciclul de viață al echipamentului la client (Disponibil → Instalat, cu adresă și amplasament), asistenții de **Instalare**, **Adaugă la contract** și dezinstalare (**Elimină din contract**), liniile de contract legate de contor, calculul consumului din citirile nefacturate și anexa XLS de contoare a facturii. Valoarea de afaceri constă în facturarea lunară corectă, pe pagină sau pe oră de funcționare, pentru echipamentele închiriate sau întreținute cu plată pe consum.",
     "features": [
-      "Gestionarea echipamentelor",
-      "Gestionarea contoarelor",
-      "Gestionarea citirilor de contoare",
-      "Facturare pe baza citirilor",
-      "Calculul estimării citirilor",
-      "Introducerea automată, la finalul perioadei, a valorilor estimate"
+      "Ciclul de viață al echipamentului: Disponibil → Instalat, controlat doar prin asistenți",
+      "Creează contoare: generează câte un contor pentru fiecare șablon al categoriei echipamentului;",
+      "Instalare: asistent cu client, locație (adresă), amplasament liber, dată și indexul fiecărui",
+      "Adaugă la contract: leagă echipamentul de un contract deja creat (*Contracte → Nou*, cu",
+      "Elimină din contract (dezinstalare): asistent cu perioada de facturare a consumului rămas și",
+      "Pregătire facturare pe contract: pentru fiecare linie legată de un contor creează un consum a",
+      "Necesită citiri pentru facturare (pe tipul de contract): blochează pregătirea facturării pe",
+      "Schimbă data facturii pe consumuri, înainte de facturare, pentru a data factura la data ultimei",
+      "Facturare din consum, cu grupare pe partener, contract sau linie de contract; scade *Cantitatea",
+      "Exportă contoarele în XLS pe factură: echipament, serie, contor, adresă, index vechi, index nou",
+      "Istoric (*Serviciu → Serviciu → Istoric echipament/contract*, sau butonul Istoric amplasare)",
+      "Creare automată a echipamentului la crearea unei serii (lot) pentru un produs dintr-o categorie",
+      "Notă contabilă a facturii: 4111 = 704 (venituri din servicii, ex. pagină) sau 706 (venituri din"
     ],
     "dependencies": [
       "deltatech_service_agreement",
@@ -7846,10 +7853,12 @@
       "xlwt"
     ],
     "connections": [
+      "deltatech_service_equipment_base",
       "deltatech_service_agreement",
-      "deltatech_service_equipment_base"
+      "deltatech_service_base",
+      "deltatech_service_consumable"
     ],
-    "text": "Services Equipment\ndeltatech_service_equipment\nModulul gestionează echipamentele de service și contoarele asociate acestora. Permite înregistrarea citirilor de contoare și facturarea pe baza acestor citiri, inclusiv calculul unei estimări a citirilor. La finalul perioadei, valorile estimate pot fi introduse automat, simplificând astfel procesul de facturare periodică legat de utilizarea echipamentelor.\nGestionarea echipamentelor\nGestionarea contoarelor\nGestionarea citirilor de contoare\nFacturare pe baza citirilor\nCalculul estimării citirilor\nIntroducerea automată, la finalul perioadei, a valorilor estimate"
+    "text": "Services Equipment\ndeltatech_service_equipment\nModulul leagă echipamentele din `deltatech_service_equipment_base` de contractele de service din `deltatech_service_agreement` și transformă citirile de contor în facturi de vânzare. Aduce ciclul de viață al echipamentului la client (Disponibil → Instalat, cu adresă și amplasament), asistenții de **Instalare**, **Adaugă la contract** și dezinstalare (**Elimină din contract**), liniile de contract legate de contor, calculul consumului din citirile nefacturate și anexa XLS de contoare a facturii. Valoarea de afaceri constă în facturarea lunară corectă, pe pagină sau pe oră de funcționare, pentru echipamentele închiriate sau întreținute cu plată pe consum.\nCiclul de viață al echipamentului: Disponibil → Instalat, controlat doar prin asistenți\nCreează contoare: generează câte un contor pentru fiecare șablon al categoriei echipamentului;\nInstalare: asistent cu client, locație (adresă), amplasament liber, dată și indexul fiecărui\nAdaugă la contract: leagă echipamentul de un contract deja creat (*Contracte → Nou*, cu\nElimină din contract (dezinstalare): asistent cu perioada de facturare a consumului rămas și\nPregătire facturare pe contract: pentru fiecare linie legată de un contor creează un consum a\nNecesită citiri pentru facturare (pe tipul de contract): blochează pregătirea facturării pe\nSchimbă data facturii pe consumuri, înainte de facturare, pentru a data factura la data ultimei\nFacturare din consum, cu grupare pe partener, contract sau linie de contract; scade *Cantitatea\nExportă contoarele în XLS pe factură: echipament, serie, contor, adresă, index vechi, index nou\nIstoric (*Serviciu → Serviciu → Istoric echipament/contract*, sau butonul Istoric amplasare)\nCreare automată a echipamentului la crearea unei serii (lot) pentru un produs dintr-o categorie\nNotă contabilă a facturii: 4111 = 704 (venituri din servicii, ex. pagină) sau 706 (venituri din"
   },
   {
     "path": "deltatech_service_equipment_base/index.md",
@@ -13730,7 +13739,7 @@
   {
     "path": "terrabit_helpdesk_connector/index.md",
     "module": "terrabit_helpdesk_connector",
-    "version": "19.0.0.2.5",
+    "version": "19.0.0.2.8",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector",
     "local_path": "odoo-addons/terrabit/terrabit_helpdesk_connector",
     "last_ingest": "2026-09-24",
@@ -13746,6 +13755,8 @@
       "Coadă de retrimitere automată (cron la 15 minute) pentru tichete și răspunsuri neplecate din cauza",
       "Sincronizare automată a stadiului, consultantului atribuit și discuției, plus curățarea locală a",
       "Sincronizare incrementală: fiecare rulare aduce doar tichetele și mesajele modificate de la",
+      "Actualizare imediată: Terrabit anunță baza clientului printr-o notificare semnată, fără date",
+      "Panou deasupra listei și a kanbanului, în stilul tabloului din Helpdesk: tichetele mele (deschise,",
       "Trecere automată pe endpointul de staging (`terrabit-staging.odoo.com`) când baza e neutralizată,",
       "Gestionare inteligentă a fișierelor mari: cele sub 2 MB se copiază la Terrabit, cele peste rămân în"
     ],
@@ -13759,12 +13770,12 @@
       "terrabit_helpdesk_link",
       "terrabit_iap"
     ],
-    "text": "Terrabit Helpdesk Connector\nterrabit_helpdesk_connector\nModulul aduce tichetele de suport Terrabit direct în Odoo-ul clientului, fără email și fără portal separat: utilizatorul deschide un tichet, urmărește statusul real (nou, în lucru, așteaptă răspunsul clientului, închis), vede cine din Terrabit se ocupă de el și poartă discuția din chatter, la fel ca pe orice document Odoo. Colegii din aceeași firmă văd și tichetele celorlalți, ca să nu se deschidă de două ori aceeași problemă. Dacă serverul Terrabit e temporar indisponibil, tichetul sau răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la revenire.\nDeschiderea unui tichet nou direct din formularul standard Odoo (subiect, urgență pe 4 niveluri,\nEcranul Tichetele mele (`Terrabit Support → Tichetele mele`): kanban/listă grupate pe status,\nTichetele cu răspuns nou necitit ies în evidență: în kanban bară colorată pe card și eticheta\nAutorul tichetului e anunțat în Odoo, la clopoțel (doar inbox, fără email), când vine un\nEcranul Ale echipei (`Terrabit Support → Ale echipei`): toate tichetele companiei, indiferent\nDiscuție bidirecțională prin chatter: răspunsurile publice ale consultanților Terrabit apar local,\nCoadă de retrimitere automată (cron la 15 minute) pentru tichete și răspunsuri neplecate din cauza\nSincronizare automată a stadiului, consultantului atribuit și discuției, plus curățarea locală a\nSincronizare incrementală: fiecare rulare aduce doar tichetele și mesajele modificate de la\nTrecere automată pe endpointul de staging (`terrabit-staging.odoo.com`) când baza e neutralizată,\nGestionare inteligentă a fișierelor mari: cele sub 2 MB se copiază la Terrabit, cele peste rămân în"
+    "text": "Terrabit Helpdesk Connector\nterrabit_helpdesk_connector\nModulul aduce tichetele de suport Terrabit direct în Odoo-ul clientului, fără email și fără portal separat: utilizatorul deschide un tichet, urmărește statusul real (nou, în lucru, așteaptă răspunsul clientului, închis), vede cine din Terrabit se ocupă de el și poartă discuția din chatter, la fel ca pe orice document Odoo. Colegii din aceeași firmă văd și tichetele celorlalți, ca să nu se deschidă de două ori aceeași problemă. Dacă serverul Terrabit e temporar indisponibil, tichetul sau răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la revenire.\nDeschiderea unui tichet nou direct din formularul standard Odoo (subiect, urgență pe 4 niveluri,\nEcranul Tichetele mele (`Terrabit Support → Tichetele mele`): kanban/listă grupate pe status,\nTichetele cu răspuns nou necitit ies în evidență: în kanban bară colorată pe card și eticheta\nAutorul tichetului e anunțat în Odoo, la clopoțel (doar inbox, fără email), când vine un\nEcranul Ale echipei (`Terrabit Support → Ale echipei`): toate tichetele companiei, indiferent\nDiscuție bidirecțională prin chatter: răspunsurile publice ale consultanților Terrabit apar local,\nCoadă de retrimitere automată (cron la 15 minute) pentru tichete și răspunsuri neplecate din cauza\nSincronizare automată a stadiului, consultantului atribuit și discuției, plus curățarea locală a\nSincronizare incrementală: fiecare rulare aduce doar tichetele și mesajele modificate de la\nActualizare imediată: Terrabit anunță baza clientului printr-o notificare semnată, fără date\nPanou deasupra listei și a kanbanului, în stilul tabloului din Helpdesk: tichetele mele (deschise,\nTrecere automată pe endpointul de staging (`terrabit-staging.odoo.com`) când baza e neutralizată,\nGestionare inteligentă a fișierelor mari: cele sub 2 MB se copiază la Terrabit, cele peste rămân în"
   },
   {
     "path": "terrabit_helpdesk_link/index.md",
     "module": "terrabit_helpdesk_link",
-    "version": "19.0.0.0.7",
+    "version": "19.0.0.0.8",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_link",
     "local_path": "odoo-addons/terrabit/terrabit_helpdesk_link",
     "last_ingest": "2026-08-20",
@@ -13773,6 +13784,7 @@
     "features": [
       "Meniu de acces rapid la suport: adaugă meniul de top „Terrabit Help\" (cu pictogramă proprie), vizibil tuturor utilizatorilor interni (`base.group_user`).",
       "Formular de suport precompletat: la accesarea meniului, deschide într-o filă nouă formularul de pe `https://www.terrabit.ro/helpdesk/asistenta-odoo-1`, cu parametri URL pentru numele și emailul utilizatorului, precum și o descriere pregătită automat ce conține numele companiei, CUI, telefon, versiunea Odoo și numele bazei de date.",
+      "Staging pe baze neutralizate: pe o copie de test neutralizată (`database.is_neutralized`), meniul deschide același formular pe `https://terrabit-staging.odoo.com`, ca testele să nu devină tichete reale în producția Terrabit.",
       "Citire sigură a datelor companiei: câmpurile `vat` și `phone` de pe companie (câmpuri `related` către `res.partner`) sunt citite prin `sudo()`, astfel încât și utilizatorii fără drept de scriere pe `res.company` pot folosi meniul fără `AccessError`."
     ],
     "dependencies": [
@@ -13781,12 +13793,12 @@
     "connections": [
       "base"
     ],
-    "text": "Terrabit Helpdesk Link\nterrabit_helpdesk_link\nModul utilitar minimal care adaugă în Odoo un element de meniu de nivel superior, „Terrabit Help\", prin care orice utilizator intern poate deschide rapid formularul de asistență Terrabit direct din interfața ERP. Spre deosebire de un simplu link static, acțiunea precompletează formularul de pe site cu datele de identificare ale companiei (nume, CUI, telefon), numele și emailul utilizatorului curent, plus versiunea de Odoo și numele bazei de date — informații utile echipei de suport pentru a trata rapid solicitarea, fără ca utilizatorul să le introducă manual.\nMeniu de acces rapid la suport: adaugă meniul de top „Terrabit Help\" (cu pictogramă proprie), vizibil tuturor utilizatorilor interni (`base.group_user`).\nFormular de suport precompletat: la accesarea meniului, deschide într-o filă nouă formularul de pe `https://www.terrabit.ro/helpdesk/asistenta-odoo-1`, cu parametri URL pentru numele și emailul utilizatorului, precum și o descriere pregătită automat ce conține numele companiei, CUI, telefon, versiunea Odoo și numele bazei de date.\nCitire sigură a datelor companiei: câmpurile `vat` și `phone` de pe companie (câmpuri `related` către `res.partner`) sunt citite prin `sudo()`, astfel încât și utilizatorii fără drept de scriere pe `res.company` pot folosi meniul fără `AccessError`."
+    "text": "Terrabit Helpdesk Link\nterrabit_helpdesk_link\nModul utilitar minimal care adaugă în Odoo un element de meniu de nivel superior, „Terrabit Help\", prin care orice utilizator intern poate deschide rapid formularul de asistență Terrabit direct din interfața ERP. Spre deosebire de un simplu link static, acțiunea precompletează formularul de pe site cu datele de identificare ale companiei (nume, CUI, telefon), numele și emailul utilizatorului curent, plus versiunea de Odoo și numele bazei de date — informații utile echipei de suport pentru a trata rapid solicitarea, fără ca utilizatorul să le introducă manual.\nMeniu de acces rapid la suport: adaugă meniul de top „Terrabit Help\" (cu pictogramă proprie), vizibil tuturor utilizatorilor interni (`base.group_user`).\nFormular de suport precompletat: la accesarea meniului, deschide într-o filă nouă formularul de pe `https://www.terrabit.ro/helpdesk/asistenta-odoo-1`, cu parametri URL pentru numele și emailul utilizatorului, precum și o descriere pregătită automat ce conține numele companiei, CUI, telefon, versiunea Odoo și numele bazei de date.\nStaging pe baze neutralizate: pe o copie de test neutralizată (`database.is_neutralized`), meniul deschide același formular pe `https://terrabit-staging.odoo.com`, ca testele să nu devină tichete reale în producția Terrabit.\nCitire sigură a datelor companiei: câmpurile `vat` și `phone` de pe companie (câmpuri `related` către `res.partner`) sunt citite prin `sudo()`, astfel încât și utilizatorii fără drept de scriere pe `res.company` pot folosi meniul fără `AccessError`."
   },
   {
     "path": "terrabit_iap_server_helpdesk/index.md",
     "module": "terrabit_iap_server_helpdesk",
-    "version": "19.0.0.1.10",
+    "version": "19.0.0.1.12",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_helpdesk",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_helpdesk",
     "last_ingest": "2026-09-24",
@@ -13801,6 +13813,7 @@
       "Clientul vede doar mesajele publice; notele interne ale consultanților nu ajung niciodată la",
       "Cererile de creare tichet sunt idempotente printr-o cheie trimisă de conector",
       "Sincronizare incrementală: cu parametrul `since`, listele de tichete și mesaje întorc doar ce",
+      "La o modificare vizibilă clientului sau la un răspuns public, serverul anunță după commit baza",
       "Atașamentele venite de la client se salvează local ca bytes; cele trimise către client",
       "Urgența aleasă de client în conector se traduce 1:1 în prioritatea nativă a tichetului",
       "Creditele nu se acordă automat la înregistrarea contului — se alocă manual, per client, direct",
@@ -13818,7 +13831,7 @@
       "helpdesk_timesheet",
       "terrabit_helpdesk_connector"
     ],
-    "text": "IAP Server - Service Helpdesk\nterrabit_iap_server_helpdesk\nModulul e partea de server a conectorului de suport Terrabit și rulează doar pe helpdesk-ul Terrabit, niciodată la clienți. El primește tichetele pe care clienții cu modulul `terrabit_helpdesk_connector` le deschid din propriul Odoo, le leagă automat de firma clientului (după codul fiscal al partenerului) și le atribuie echipei de helpdesk configurate. Pentru consultant, un tichet venit astfel se tratează exact ca oricare altul: preluare, pontaj, răspuns, schimbare de stadiu, închidere. Modulul se ocupă doar de rutarea inițială, de traducerea stadiului intern într-un status simplu pentru client (Nou / În lucru / De răspuns / Închis) și de sincronizarea mesajelor publice; nu trimite nimic din proprie inițiativă — conectorul clientului cere datele la fiecare sincronizare. Fiecare client are pe cont și un sold de credite, dar alocarea acestora este în prezent **manuală**, per client; consumul automat al creditelor din orele pontate pe tichete este doar planificat, nu funcționează încă.\nAdaugă serviciul IAP `terrabit_helpdesk`, folosit de conectorul de suport instalat în Odoo-ul\nFiecare client cu conector are un cont (`iap.server.account`) legat automat de compania lui,\nFiecare stadiu al helpdesk-ului nostru primește un status vizibil clientului: Nou, **În\nLa instalare, modulul propune singur o mapare inițială a stadiilor existente: cele cu „răspuns\"\nTichetele fiecărei firme se grupează sub un singur partener-companie (`partner_company_id`),\nClientul vede doar mesajele publice; notele interne ale consultanților nu ajung niciodată la\nCererile de creare tichet sunt idempotente printr-o cheie trimisă de conector\nSincronizare incrementală: cu parametrul `since`, listele de tichete și mesaje întorc doar ce\nAtașamentele venite de la client se salvează local ca bytes; cele trimise către client\nUrgența aleasă de client în conector se traduce 1:1 în prioritatea nativă a tichetului\nCreditele nu se acordă automat la înregistrarea contului — se alocă manual, per client, direct\nÎnchiderea unui tichet pe helpdesk-ul Terrabit cere pontaj (regulă venită din alt modul, nu din"
+    "text": "IAP Server - Service Helpdesk\nterrabit_iap_server_helpdesk\nModulul e partea de server a conectorului de suport Terrabit și rulează doar pe helpdesk-ul Terrabit, niciodată la clienți. El primește tichetele pe care clienții cu modulul `terrabit_helpdesk_connector` le deschid din propriul Odoo, le leagă automat de firma clientului (după codul fiscal al partenerului) și le atribuie echipei de helpdesk configurate. Pentru consultant, un tichet venit astfel se tratează exact ca oricare altul: preluare, pontaj, răspuns, schimbare de stadiu, închidere. Modulul se ocupă doar de rutarea inițială, de traducerea stadiului intern într-un status simplu pentru client (Nou / În lucru / De răspuns / Închis) și de sincronizarea mesajelor publice; nu trimite nimic din proprie inițiativă — conectorul clientului cere datele la fiecare sincronizare. Fiecare client are pe cont și un sold de credite, dar alocarea acestora este în prezent **manuală**, per client; consumul automat al creditelor din orele pontate pe tichete este doar planificat, nu funcționează încă.\nAdaugă serviciul IAP `terrabit_helpdesk`, folosit de conectorul de suport instalat în Odoo-ul\nFiecare client cu conector are un cont (`iap.server.account`) legat automat de compania lui,\nFiecare stadiu al helpdesk-ului nostru primește un status vizibil clientului: Nou, **În\nLa instalare, modulul propune singur o mapare inițială a stadiilor existente: cele cu „răspuns\"\nTichetele fiecărei firme se grupează sub un singur partener-companie (`partner_company_id`),\nClientul vede doar mesajele publice; notele interne ale consultanților nu ajung niciodată la\nCererile de creare tichet sunt idempotente printr-o cheie trimisă de conector\nSincronizare incrementală: cu parametrul `since`, listele de tichete și mesaje întorc doar ce\nLa o modificare vizibilă clientului sau la un răspuns public, serverul anunță după commit baza\nAtașamentele venite de la client se salvează local ca bytes; cele trimise către client\nUrgența aleasă de client în conector se traduce 1:1 în prioritatea nativă a tichetului\nCreditele nu se acordă automat la înregistrarea contului — se alocă manual, per client, direct\nÎnchiderea unui tichet pe helpdesk-ul Terrabit cere pontaj (regulă venită din alt modul, nu din"
   },
   {
     "path": "terrabit_iap_server_sale/index.md",

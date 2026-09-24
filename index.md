@@ -282,7 +282,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_service_agreement](deltatech_service_agreement/index.md): Contracte de servicii cu facturare recurentă, generând periodic facturi pe baza consumurilor planificate/efective.
 - [deltatech_service_base](deltatech_service_base/index.md): Stratul de bază al suitei de service — aplicația „Service", grupuri de securitate și date de referință (cicluri, intervale).
 - [deltatech_service_consumable](deltatech_service_consumable/index.md): Gestiunea consumabilelor de service prin contoare, cu citiri, estimări și facturare pe consum.
-- [deltatech_service_equipment](deltatech_service_equipment/index.md): Echipamente de service și contoare, cu facturare pe baza citirilor și valori estimate la finalul perioadei.
+- [deltatech_service_equipment](deltatech_service_equipment/index.md): Leagă echipamentele de service de contracte, transformă citirile de contor în consum facturabil (704/706 + 4427) și oferă asistenții de instalare, adăugare la contract și dezinstalare.
 - [deltatech_service_equipment_base](deltatech_service_equipment_base/index.md): Baza suitei de service: locuri funcționale, echipamente, contoare și citiri cu estimare prin regresie liniară (facturarea pe consum e în modulele derivate).
 - [deltatech_service_maintenance](deltatech_service_maintenance/index.md): Sesizări, comenzi de service și planuri de revizii, cu generare automată a comenzilor de mentenanță.
 - [deltatech_service_task](deltatech_service_task/index.md): Extinde sarcinile de proiect cu loc funcțional și echipament pentru activitățile de service/mentenanță.
