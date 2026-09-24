@@ -4,6 +4,27 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `deltatech_rma` 19.0.1.2.0 — curierul pe cerere, termene promise, e-mailuri editabile
+
+- **Acțiune:** Re-ingestie `deltatech_rma` (`19.0.1.1.1` → `19.0.1.2.0`) după bitshop#2861.
+  Include și `19.0.1.1.2` (bitshop#2859, corecție pylint `missing-return`, fără efect funcțional).
+- **Ce s-a schimbat:**
+  - Curierul pe cerere, preluat de pe comandă. „Ship Back To Customer” pleacă pe el, iar AWB-ul îl
+    face conectorul curierului.
+  - Linia de transport a metodei de livrare e exclusă automat din formularul clientului.
+  - Termenele promise clientului (răspuns / verificare, în zile lucrătoare) devin setări pe firmă,
+    în locul textului „o zi lucrătoare” scris direct în șablonul portalului.
+  - Șabloanele de e-mail devin `noupdate`, deci editările nu se mai pierd la actualizare; o migrare
+    le reîncarcă o singură dată.
+  - Dependență nouă: `stock_delivery`. Puntea `deltatech_rma_delivery`, propusă inițial, n-a mai
+    fost făcută, la decizia utilizatorului, fiind vorba de un singur câmp.
+- **Capcană reținută:** un `<t t-out>` în mijlocul unei fraze QWeb o rupe în mai mulți termeni de
+  traducere (nodurile cu directive `t-*` nu intră în termen). Soluția e fraza întreagă cu `{days}`,
+  pusă într-un `<t t-set>` și înlocuită la afișare. `<t t-set>` se pune înaintea lanțului
+  `t-if`/`t-elif`, altfel îl rupe.
+- **Fișiere actualizate:** `deltatech_rma/index.md`, `deltatech_rma/FISA_CONSULTANT.md`
+  (resincronizată), `deltatech_rma/screenshots/*.png`, `log.md`, `.index/chunks.json`.
+
 ## [2026-09-23] `deltatech_rma` 19.0.1.1.1 — accesul automat ajunge și la bazele actualizate
 
 - **Acțiune:** Actualizare punctuală a paginii `deltatech_rma` (`19.0.1.1.0` → `19.0.1.1.1`) după

@@ -1,9 +1,9 @@
 # Fișă Modul: Retururi și garanții (RMA)
 
 **Modul:** `deltatech_rma`
-**Versiune:** 19.0.1.0.0
+**Versiune:** 19.0.1.2.0
 **Suită:** bitshop
-**Dependențe:** `sale_stock`, `portal`
+**Dependențe:** `sale_stock`, `portal`, `stock_delivery` (aduce și `delivery`)
 
 ---
 
@@ -92,11 +92,16 @@ iar costul repus în stoc ar fi cel curent, nu cel cu care a ieșit.
    client. Motivele livrate sunt un punct de plecare, cu `noupdate="1"`: ce schimbați rămâne.
 2. **Vânzări → Configurare → Setări → Retururi și garanții** — cine are acces (toți utilizatorii
    interni sau doar cei aleși), fereastra de eligibilitate (luni pentru garanție, zile pentru retur),
-   motiv obligatoriu sau opțional, taxa implicită.
+   termenele promise clientului (în câte zile lucrătoare răspundem și în câte verificăm coletul; zero
+   nu promite niciun termen), motiv obligatoriu sau opțional, taxa implicită.
 3. **Produse** — bifa „Nu se poate returna” pe produsele de tip taxă și pe categoriile lor, ca să nu
-   apară în formularul clientului.
-4. **Retururi → Configurare → Etichete** și **Motive de închidere** — opțional, pentru raportare.
-5. Verificați că firma are adresă completă și e-mail: fișa de retur tipărește adresa unde vine
+   apară în formularul clientului. Linia de transport adăugată de metoda de livrare nu are nevoie de
+   bifă: e exclusă automat.
+4. **Setări → Tehnic → Șabloane e-mail** — cele trei mailuri (aprobat, refuzat, rezolvat) se pot
+   adapta: telefonul firmei, formulări proprii, semnătura. Modificările rămân la actualizarea
+   modulului.
+5. **Retururi → Configurare → Etichete** și **Motive de închidere** — opțional, pentru raportare.
+6. Verificați că firma are adresă completă și e-mail: fișa de retur tipărește adresa unde vine
    coletul, din `company_id.partner_id`.
 
 ## 6. Flux de utilizare
@@ -226,6 +231,10 @@ linie nu se trece mai departe.
 Înlocuire, reparație, banii înapoi sau refuz. Banii cer IBAN-ul. De aici pleacă nota de credit în
 ciornă și comanda de înlocuire, tot în ciornă.
 
+Când verificarea nu găsește defectul, **Trimite înapoi la client** returnează marfa așa cum a venit.
+Transferul de ieșire pleacă pe **curierul cererii** — preluat de pe comandă, se poate schimba în
+fișa cererii —, deci AWB-ul îl generează conectorul curierului, ca la orice livrare.
+
 #### 6.14 Repunerea în stoc
 
 ![Transferul de retur](screenshots/16_transfer_retur.png)
@@ -243,8 +252,8 @@ maximă, pozele obligatorii, cine plătește transportul, explicația pentru cli
 
 ![Setările pe companie](screenshots/18_setari.png)
 
-*Vânzări → Configurare → Setări → Retururi și garanții*: fereastra de eligibilitate, motivul
-obligatoriu sau opțional, taxa implicită.
+*Vânzări → Configurare → Setări → Retururi și garanții*: accesul colegilor, fereastra de
+eligibilitate, termenele promise clientului, motivul obligatoriu sau opțional, taxa implicită.
 
 ![Analiza](screenshots/19_analiza.png)
 
@@ -257,6 +266,7 @@ față de cea vândută — adică rata de retur per produs.
 |---|---|
 | `deltatech_sale_withdrawal` | retragerea în 14 zile, act juridic diferit; model separat, intenționat |
 | `sale_stock` | comanda, livrarea, transferul de retur |
+| `stock_delivery` / `delivery` | curierul cererii, preluat de pe comandă; transferul „trimite înapoi" pleacă pe el |
 | `account` | nota de credit în ciornă |
 | `deltatech_marketplace_sale` | `marketplace.return.request` e a treia entitate, a eMAG / Shopify; se leagă printr-o punte, nu se contopește |
 
