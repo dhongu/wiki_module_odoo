@@ -4,6 +4,25 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `l10n_ro_partner_ledger_currency` — actualizat la 19.0.1.4.4 (fix liniile desfășurate pe ecran)
+
+- **Acțiune:** Re-ingestie a paginii, după fix-ul de cod din PR #316 (tichet #9575, găsit la
+  auditul fișei consultant de agentul `verificator-fisa`): pe ecran, antetul partenerului
+  includea avansul (409/419) în totalul afișat, dar liniile desfășurate dedesubt (grupul de
+  valută) nu — `_get_options_account_type_domain` verifica greșit raportul din `self` în loc de
+  `options['report_id']`, iar `_get_aml_values` din nucleu aduce liniile desfășurate pe raportul
+  standard hardcodat, nu pe cel curent. Pagina, fișa consultant și capturile au fost regenerate.
+  Citit dintr-un worktree separat (`/tmp/wiki-read/l10n_ro_ent`, `origin/19.0`), ca să nu se
+  amestece cu munca necomisă a unei sesiuni concurente pe același checkout.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/USAGE.md`, `readme/HISTORY.md` (fix 19.0.1.4.4) și
+  cod (`models/account_report.py`, `models/l10n_ro_partner_currency_handler.py`).
+- **Fișa consultant:** copiată (`FISA_CONSULTANT.md` + 3 capturi), sincronizată la 19.0.1.4.4.
+- **Fișiere actualizate:** `l10n_ro_partner_ledger_currency/index.md`,
+  `l10n_ro_partner_ledger_currency/FISA_CONSULTANT.md`,
+  `l10n_ro_partner_ledger_currency/screenshots/*.png`.
+
+---
+
 ## [2026-09-24] `l10n_ro_partner_ledger_currency` — actualizat la 19.0.1.4.3 (fix compensare avans/comercial)
 
 - **Acțiune:** Re-ingestie a paginii existente, după fix-ul de pe tichetul #9575 (PR #315): în

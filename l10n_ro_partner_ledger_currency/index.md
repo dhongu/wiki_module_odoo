@@ -1,7 +1,7 @@
 # Romania - Fișa partenerului în valută (localizat la `l10n_ro_partner_ledger_currency/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_partner_ledger_currency`
-- **Versiune:** `19.0.1.4.3`
+- **Versiune:** `19.0.1.4.4`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_partner_ledger_currency
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_partner_ledger_currency`
 - **Ultima Ingestie:** 2026-09-24
@@ -20,7 +20,7 @@ Modulul extinde raportul Partner Ledger (Fișa Partenerului) din Odoo Enterprise
 - Vizibil automat doar pentru companiile cu Țara = România, și doar când baza de date are multi-valută activă (Setări → Contabilitate → Valute).
 - Meniu: **Contabilitate → Raportare → Parteneri → Fișa Partenerului în Valută**.
 - Moștenește toate funcționalitățile Partner Ledger: sold inițial, export PDF/XLSX, filtre parteneri/jurnale, drill-down, reconciliere.
-- Filtrul „Cont" extins doar pe acest raport: conturile de avans **409** (Furnizori-debitori) intră sub **Payable**, **419** (Clienți-creditori) sub **Receivable** — altfel rămâneau invizibile, fiind `liability_current` în planul RO și nu `asset_receivable`/`liability_payable`.
+- Filtrul „Cont" extins doar pe acest raport: conturile de avans **409** (Furnizori-debitori) intră sub **Payable**, **419** (Clienți-creditori) sub **Receivable** — altfel rămâneau invizibile, fiind `liability_current` în planul RO și nu `asset_receivable`/`liability_payable`. Extinderea este aplicată consecvent atât pe antetul partenerului (agregatele calculate de handler), cât și pe liniile desfășurate pe ecran sub fiecare grup de valută — vezi corecția din 19.0.1.4.4 la Componente Cheie.
 - Parteneri cu mai multe valute (ex. EUR și USD): raportul inserează automat un sub-nivel de grupare pe valută, fiecare cu propriul sold inițial și sold rulant.
 - **Confirmare sold (PDF)**: extras de cont compact per partener, cu o linie per valută (sold inițial / rulaje / sold final, în valută și RON) și text de confirmare conform OMFP 2861/2009, pentru inventarierea anuală a creanțelor și datoriilor. Soldul de **avans (409/419)** apare pe un **rând separat** de soldul comercial al aceleiași valute, necompensat (OMFP 1802/2014 pct. 56); rândul de total al documentului este doar informativ — „Poziție netă totală (RON), cu titlu informativ" — soldul care se confirmă este cel de pe fiecare rând.
 - **Fișă în valută (PDF)**: fișă de cont în format clasic, o fișă per (partener, cont, valută), cu antet de sold precedent, linii per document și sold cumulat.
@@ -35,7 +35,7 @@ Modulul extinde raportul Partner Ledger (Fișa Partenerului) din Odoo Enterprise
 **Modele**
 
 - `l10n.ro.partner.currency.report.handler` (`AbstractModel`, moștenește `account.partner.ledger.report.handler`): injectează coloanele valutare (`debit_currency`, `credit_currency`, `balance_currency`) în opțiunile raportului Partner Ledger, extinde query-ul SQL pe `account.move.line` cu sumele brute în valută, calculează soldul inițial și soldul rulant per valută, grupează liniile pe valută sub fiecare partener și expune exporturile PDF „Confirmare sold" și „Fișă în valută". Pentru „Confirmare sold" agregarea soldurilor se face și pe tipul contului (`_l10n_ro_advance_kind_case_sql`, pattern `_ADVANCE_PREFIXES`): soldul comercial (401/4111) și soldul de avans (409/419) sunt calculate și afișate ca rânduri distincte, fără compensare.
-- `account.report` (extensie, `account_report.py`): `_get_options_account_type_domain` — extinde domeniul filtrului standard „Cont" (Receivable/Payable) pentru a include și conturile de avans 409%/419% pe acest raport.
+- `account.report` (extensie, `account_report.py`): `_get_options_account_type_domain` — extinde domeniul filtrului standard „Cont" (Receivable/Payable) pentru a include și conturile de avans 409%/419% pe acest raport, dar doar dacă raportul curent (`options['report_id']`, nu `self`) este chiar Fișa Partenerului în Valută. Verificarea prin `options['report_id']` este obligatorie: nucleul (`_get_aml_values`, `enterprise/account_reports/models/account_partner_ledger.py`) aduce liniile pentru desfășurarea pe ecran (grupul de valută, sub fiecare partener) pe raportul standard hardcodat (`account_reports.partner_ledger_report`), nu pe raportul curent din context — dacă metoda ar verifica `self`, extinderea 409/419 s-ar aplica corect agregatelor din handler (antetul partenerului, Sold inițial, Confirmare sold PDF), dar NU și liniilor efectiv desfășurate pe ecran, ducând la un total din antet care nu se regăsea în liniile vizibile ale grupului de valută (fix 19.0.1.4.4, tichet #9575).
 
 **Vizualizări / Date**
 
