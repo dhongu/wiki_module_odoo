@@ -64,6 +64,20 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `deltatech_marketplace_sale` 19.0.2.11.2 — re-ingestie, fișă consultant adăugată
+
+- **Acțiune:** Pagina era la `19.0.2.4.0` (ingestie 2026-08-20), iar codul ajunsese la
+  `19.0.2.11.2`. Am găsit decalajul la verificarea paginilor legate de retururi. Am copiat fișa
+  consultant, cu 8 capturi, care lipsea din wiki.
+- **Ce s-a adăugat în pagină** (din `readme/HISTORY.md`, 2.5 → 2.11):
+  - registrul cererilor de retur și al rambursărilor;
+  - dialogul de anulare, cu varianta doar în Odoo, și opțiunea *Cancel Sale Order* pe backend;
+  - semnalarea modificărilor de pe liniile comenzii către export (`price_changed`);
+  - produsul pentru vouchere;
+  - cron-ul *Get Return Requests*.
+- **Fișiere actualizate:** `deltatech_marketplace_sale/index.md`, `FISA_CONSULTANT.md` și
+  `screenshots/` (noi), `log.md`, `.index/chunks.json`.
+
 ## [2026-09-24] `deltatech_rma_marketplace` — pagină nouă; `deltatech_rma` 19.0.1.4.0
 
 - **Acțiune:** Ingestie nouă pentru `deltatech_rma_marketplace` (`19.0.1.0.0`, bitshop_marketplace#388),

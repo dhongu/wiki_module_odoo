@@ -3758,10 +3758,10 @@
   {
     "path": "deltatech_marketplace_sale/index.md",
     "module": "deltatech_marketplace_sale",
-    "version": "19.0.2.4.0",
+    "version": "19.0.2.11.2",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_sale",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_sale",
-    "last_ingest": "2026-08-20",
+    "last_ingest": null,
     "friendly_name": "Comenzi de vânzare din Marketplace",
     "summary": "Acest modul reprezintă punctul central pentru gestionarea comenzilor de vânzare provenite din diferiți conectori de marketplace, simplificând procesul de la comandă la încasare (order-to-cash) pentru retailerii care vând pe mai multe canale. Din perspectiva afacerii, elimină introducerea manuală a comenzilor și reduce erorile prin automatizarea importului și procesării vânzărilor din mai multe canale (de exemplu eMAG, Shopify, Magento etc.) direct în Odoo, oferind o imagine unificată asupra vânzărilor și menținând sincronizate statusurile comenzilor și nivelurile de stoc.",
     "features": [
@@ -3769,7 +3769,12 @@
       "Eficiență operațională: procesare mai rapidă a comenzilor și timpi de livrare îmbunătățiți pentru fulfillment-ul de marketplace.",
       "Consistența datelor: sincronizarea statusurilor comenzilor între Odoo și platformele de marketplace respective.",
       "Raportare financiară corectă: datele de vânzări integrate permit calculul precis al veniturilor și al indicatorilor de performanță pe marketplace.",
-      "Fiabilitatea stocului: actualizările de inventar în timp real, declanșate de vânzările din marketplace, ajută la prevenirea rupturilor de stoc și a supravânzării."
+      "Fiabilitatea stocului: actualizările de inventar în timp real, declanșate de vânzările din marketplace, ajută la prevenirea rupturilor de stoc și a supravânzării.",
+      "Registrul cererilor de retur (`marketplace.return.request`): ce vrea cumpărătorul să trimită înapoi, de ce, pe ce comandă și cât de departe a ajuns cererea, într-un vocabular comun al tuturor conectorilor (Solicitat / Aprobat / Primit / Finalizat / Refuzat / Anulat), cu starea brută a marketplace-ului păstrată alături. Retururile se importă, nu se conduc: aprobarea sau refuzul rămân în marketplace. Importul periodic se reglează pe backend (*Return Request Days*, *Disable Return Import*); fluxul de depozit îl aduce puntea [deltatech_rma_marketplace](../deltatech_rma_marketplace/index.md).",
+      "Registrul rambursărilor (`marketplace.refund`): banii dați înapoi cumpărătorului, cu sumele pe linie, TVA-ul separat unde marketplace-ul îl raportează și legătura opțională către cererea de retur (o rambursare poate exista fără retur, iar un retur se poate deconta în mai multe tranșe). Totalul raportat de marketplace nu e înlocuit; pentru eMAG, care nu raportează total, se adună din linii (*Total Computed*). Nu se creează notă de credit din registru.",
+      "Anularea unei comenzi din marketplace întreabă dacă anularea se trimite și magazinului (*Cancel & Notify Marketplace*) sau rămâne doar în Odoo (*Cancel in Odoo Only*); alegerea se scrie în istoricul comenzii. Pe backend, *Cancel Sale Order* decide dacă o comandă anulată în marketplace se anulează și în Odoo.",
+      "O modificare a liniilor comenzii — cantitate, preț, linie adăugată sau ștearsă — ajunge la exportul către marketplace și când e făcută direct pe linii (wizard, acțiune server, alt modul), nu doar din formular; conectorul primește semnalul, nu diferența, și recitește comanda. O schimbare de preț e semnalată separat (`price_changed`), pentru marketplace-urile care nu acceptă un preț nou pe o linie existentă. Nimic din ce scrie un import nu se trimite înapoi.",
+      "Produs pentru vouchere pe backend, separat de produsul de discount: un voucher al marketplace-ului e o plată a unui terț (TVA 0, decontat pe cont de decontare), nu o reducere comercială; comanda păstrează valoarea voucherului și partea decontată de marketplace."
     ],
     "dependencies": [
       "deltatech_marketplace",
@@ -3782,7 +3787,7 @@
       "deltatech_rma_marketplace",
       "deltatech_rma"
     ],
-    "text": "Comenzi de vânzare din Marketplace\ndeltatech_marketplace_sale\nAcest modul reprezintă punctul central pentru gestionarea comenzilor de vânzare provenite din diferiți conectori de marketplace, simplificând procesul de la comandă la încasare (order-to-cash) pentru retailerii care vând pe mai multe canale. Din perspectiva afacerii, elimină introducerea manuală a comenzilor și reduce erorile prin automatizarea importului și procesării vânzărilor din mai multe canale (de exemplu eMAG, Shopify, Magento etc.) direct în Odoo, oferind o imagine unificată asupra vânzărilor și menținând sincronizate statusurile comenzilor și nivelurile de stoc.\nVizualizare unificată a vânzărilor: monitorizarea și gestionarea comenzilor de pe toate canalele de marketplace dintr-o singură interfață Odoo.\nEficiență operațională: procesare mai rapidă a comenzilor și timpi de livrare îmbunătățiți pentru fulfillment-ul de marketplace.\nConsistența datelor: sincronizarea statusurilor comenzilor între Odoo și platformele de marketplace respective.\nRaportare financiară corectă: datele de vânzări integrate permit calculul precis al veniturilor și al indicatorilor de performanță pe marketplace.\nFiabilitatea stocului: actualizările de inventar în timp real, declanșate de vânzările din marketplace, ajută la prevenirea rupturilor de stoc și a supravânzării."
+    "text": "Comenzi de vânzare din Marketplace\ndeltatech_marketplace_sale\nAcest modul reprezintă punctul central pentru gestionarea comenzilor de vânzare provenite din diferiți conectori de marketplace, simplificând procesul de la comandă la încasare (order-to-cash) pentru retailerii care vând pe mai multe canale. Din perspectiva afacerii, elimină introducerea manuală a comenzilor și reduce erorile prin automatizarea importului și procesării vânzărilor din mai multe canale (de exemplu eMAG, Shopify, Magento etc.) direct în Odoo, oferind o imagine unificată asupra vânzărilor și menținând sincronizate statusurile comenzilor și nivelurile de stoc.\nVizualizare unificată a vânzărilor: monitorizarea și gestionarea comenzilor de pe toate canalele de marketplace dintr-o singură interfață Odoo.\nEficiență operațională: procesare mai rapidă a comenzilor și timpi de livrare îmbunătățiți pentru fulfillment-ul de marketplace.\nConsistența datelor: sincronizarea statusurilor comenzilor între Odoo și platformele de marketplace respective.\nRaportare financiară corectă: datele de vânzări integrate permit calculul precis al veniturilor și al indicatorilor de performanță pe marketplace.\nFiabilitatea stocului: actualizările de inventar în timp real, declanșate de vânzările din marketplace, ajută la prevenirea rupturilor de stoc și a supravânzării.\nRegistrul cererilor de retur (`marketplace.return.request`): ce vrea cumpărătorul să trimită înapoi, de ce, pe ce comandă și cât de departe a ajuns cererea, într-un vocabular comun al tuturor conectorilor (Solicitat / Aprobat / Primit / Finalizat / Refuzat / Anulat), cu starea brută a marketplace-ului păstrată alături. Retururile se importă, nu se conduc: aprobarea sau refuzul rămân în marketplace. Importul periodic se reglează pe backend (*Return Request Days*, *Disable Return Import*); fluxul de depozit îl aduce puntea [deltatech_rma_marketplace](../deltatech_rma_marketplace/index.md).\nRegistrul rambursărilor (`marketplace.refund`): banii dați înapoi cumpărătorului, cu sumele pe linie, TVA-ul separat unde marketplace-ul îl raportează și legătura opțională către cererea de retur (o rambursare poate exista fără retur, iar un retur se poate deconta în mai multe tranșe). Totalul raportat de marketplace nu e înlocuit; pentru eMAG, care nu raportează total, se adună din linii (*Total Computed*). Nu se creează notă de credit din registru.\nAnularea unei comenzi din marketplace întreabă dacă anularea se trimite și magazinului (*Cancel & Notify Marketplace*) sau rămâne doar în Odoo (*Cancel in Odoo Only*); alegerea se scrie în istoricul comenzii. Pe backend, *Cancel Sale Order* decide dacă o comandă anulată în marketplace se anulează și în Odoo.\nO modificare a liniilor comenzii — cantitate, preț, linie adăugată sau ștearsă — ajunge la exportul către marketplace și când e făcută direct pe linii (wizard, acțiune server, alt modul), nu doar din formular; conectorul primește semnalul, nu diferența, și recitește comanda. O schimbare de preț e semnalată separat (`price_changed`), pentru marketplace-urile care nu acceptă un preț nou pe o linie existentă. Nimic din ce scrie un import nu se trimite înapoi.\nProdus pentru vouchere pe backend, separat de produsul de discount: un voucher al marketplace-ului e o plată a unui terț (TVA 0, decontat pe cont de decontare), nu o reducere comercială; comanda păstrează valoarea voucherului și partea decontată de marketplace."
   },
   {
     "path": "deltatech_marketplace_sale_stage/index.md",
@@ -13686,6 +13691,35 @@
     "text": "Terrabit Google Tag Manager\nterrabit_google_tag\nModulul integrează Google Tag Manager (GTM) cu magazinul online Odoo, permițând urmărirea evenimentelor de comerț electronic (vizualizare produs, adăugare în coș, început de checkout, plată, căutare, contact, formular, achiziție finală) direct în `window.dataLayer`, fără personalizări suplimentare de cod. Astfel, echipele de marketing pot construi rapoarte și campanii de conversie în Google Ads/Analytics folosind un singur container GTM, configurabil direct din setările website-ului.\nInjectează automat scriptul GTM (și fallback-ul `<noscript>`) în `<head>`-ul fiecărei pagini, pe baza unui ID de container (`Tracking ID`) configurat în Website → Configurare → Setări.\nTrimite către `dataLayer` evenimentele standard de comerț electronic: `view_item`, `add_to_cart`, `begin_checkout`, `add_payment_info`, `search`, `contact`, `generate_lead` și `purchase`.\nFiecare eveniment de produs conține detalii bogate (`item_id`, `item_name`, `item_brand`, `item_category`, `price`, `quantity`), cu `item_id` configurabil (variantă / șablon / SKU) prin `terrabit_website_sale_tracking_base`.\nSuportă opțional un `Cod de Conversie` Google Ads — la finalizarea comenzii trimite și un eveniment `conversion` cu `send_to` setat pe eticheta de conversie.\nPăstrează formatul (plat) al evenimentelor identic cu versiunea Odoo 18, astfel încât trigger-ele existente din containerul GTM continuă să funcționeze după upgrade.\nSe bazează pe evenimentele native `website_sale` (`view_item_event`, `add_to_cart_event`) și pe evenimentele normalizate din `terrabit_website_sale_tracking_base`, evitând astfel duplicarea logicii de tracking pentru fiecare pixel de marketing."
   },
   {
+    "path": "terrabit_helpdesk_connector/index.md",
+    "module": "terrabit_helpdesk_connector",
+    "version": "19.0.0.1.9",
+    "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector",
+    "local_path": "odoo-addons/terrabit/terrabit_helpdesk_connector",
+    "last_ingest": "2026-09-24",
+    "friendly_name": "Terrabit Helpdesk Connector",
+    "summary": "Modulul aduce tichetele de suport Terrabit direct în Odoo-ul clientului, fără email și fără portal separat: utilizatorul deschide un tichet, urmărește statusul real (nou, în lucru, așteaptă răspunsul clientului, închis), vede cine din Terrabit se ocupă de el și poartă discuția din chatter, la fel ca pe orice document Odoo. Colegii din aceeași firmă văd și tichetele celorlalți, ca să nu se deschidă de două ori aceeași problemă. Dacă serverul Terrabit e temporar indisponibil, tichetul sau răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la revenire.",
+    "features": [
+      "Deschiderea unui tichet nou direct din formularul standard Odoo (subiect, urgență pe 4 niveluri,",
+      "Ecranul Tichetele mele (`Terrabit Support → Tichetele mele`): kanban/listă grupate pe status,",
+      "Ecranul Ale echipei (`Terrabit Support → Ale echipei`): toate tichetele companiei, indiferent",
+      "Discuție bidirecțională prin chatter: răspunsurile publice ale consultanților Terrabit apar local,",
+      "Coadă de retrimitere automată (cron la 15 minute) pentru tichete și răspunsuri neplecate din cauza",
+      "Sincronizare automată a stadiului, consultantului atribuit și discuției, plus curățarea locală a",
+      "Trecere automată pe endpointul de staging (`terrabit-staging.odoo.com`) când baza e neutralizată,",
+      "Gestionare inteligentă a fișierelor mari: cele sub 2 MB se copiază la Terrabit, cele peste rămân în"
+    ],
+    "dependencies": [
+      "terrabit_iap",
+      "iap",
+      "mail"
+    ],
+    "connections": [
+      "terrabit_iap"
+    ],
+    "text": "Terrabit Helpdesk Connector\nterrabit_helpdesk_connector\nModulul aduce tichetele de suport Terrabit direct în Odoo-ul clientului, fără email și fără portal separat: utilizatorul deschide un tichet, urmărește statusul real (nou, în lucru, așteaptă răspunsul clientului, închis), vede cine din Terrabit se ocupă de el și poartă discuția din chatter, la fel ca pe orice document Odoo. Colegii din aceeași firmă văd și tichetele celorlalți, ca să nu se deschidă de două ori aceeași problemă. Dacă serverul Terrabit e temporar indisponibil, tichetul sau răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la revenire.\nDeschiderea unui tichet nou direct din formularul standard Odoo (subiect, urgență pe 4 niveluri,\nEcranul Tichetele mele (`Terrabit Support → Tichetele mele`): kanban/listă grupate pe status,\nEcranul Ale echipei (`Terrabit Support → Ale echipei`): toate tichetele companiei, indiferent\nDiscuție bidirecțională prin chatter: răspunsurile publice ale consultanților Terrabit apar local,\nCoadă de retrimitere automată (cron la 15 minute) pentru tichete și răspunsuri neplecate din cauza\nSincronizare automată a stadiului, consultantului atribuit și discuției, plus curățarea locală a\nTrecere automată pe endpointul de staging (`terrabit-staging.odoo.com`) când baza e neutralizată,\nGestionare inteligentă a fișierelor mari: cele sub 2 MB se copiază la Terrabit, cele peste rămân în"
+  },
+  {
     "path": "terrabit_helpdesk_link/index.md",
     "module": "terrabit_helpdesk_link",
     "version": "19.0.0.0.7",
@@ -13706,6 +13740,42 @@
       "base"
     ],
     "text": "Terrabit Helpdesk Link\nterrabit_helpdesk_link\nModul utilitar minimal care adaugă în Odoo un element de meniu de nivel superior, „Terrabit Help\", prin care orice utilizator intern poate deschide rapid formularul de asistență Terrabit direct din interfața ERP. Spre deosebire de un simplu link static, acțiunea precompletează formularul de pe site cu datele de identificare ale companiei (nume, CUI, telefon), numele și emailul utilizatorului curent, plus versiunea de Odoo și numele bazei de date — informații utile echipei de suport pentru a trata rapid solicitarea, fără ca utilizatorul să le introducă manual.\nMeniu de acces rapid la suport: adaugă meniul de top „Terrabit Help\" (cu pictogramă proprie), vizibil tuturor utilizatorilor interni (`base.group_user`).\nFormular de suport precompletat: la accesarea meniului, deschide într-o filă nouă formularul de pe `https://www.terrabit.ro/helpdesk/asistenta-odoo-1`, cu parametri URL pentru numele și emailul utilizatorului, precum și o descriere pregătită automat ce conține numele companiei, CUI, telefon, versiunea Odoo și numele bazei de date.\nCitire sigură a datelor companiei: câmpurile `vat` și `phone` de pe companie (câmpuri `related` către `res.partner`) sunt citite prin `sudo()`, astfel încât și utilizatorii fără drept de scriere pe `res.company` pot folosi meniul fără `AccessError`."
+  },
+  {
+    "path": "terrabit_iap_server_helpdesk/index.md",
+    "module": "terrabit_iap_server_helpdesk",
+    "version": "19.0.0.1.9",
+    "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_helpdesk",
+    "local_path": "odoo-addons/terrabit/terrabit_iap_server_helpdesk",
+    "last_ingest": "2026-09-24",
+    "friendly_name": "IAP Server - Service Helpdesk",
+    "summary": "Modulul e partea de server a conectorului de suport Terrabit și rulează doar pe helpdesk-ul Terrabit, niciodată la clienți. El primește tichetele pe care clienții cu modulul `terrabit_helpdesk_connector` le deschid din propriul Odoo, le leagă automat de firma clientului (după codul fiscal al partenerului) și le atribuie echipei de helpdesk configurate. Pentru consultant, un tichet venit astfel se tratează exact ca oricare altul: preluare, pontaj, răspuns, schimbare de stadiu, închidere. Modulul se ocupă doar de rutarea inițială, de traducerea stadiului intern într-un status simplu pentru client (Nou / În lucru / De răspuns / Închis) și de sincronizarea mesajelor publice; nu trimite nimic din proprie inițiativă — conectorul clientului cere datele la fiecare sincronizare. Fiecare client are pe cont și un sold de credite, dar alocarea acestora este în prezent **manuală**, per client; consumul automat al creditelor din orele pontate pe tichete este doar planificat, nu funcționează încă.",
+    "features": [
+      "Adaugă serviciul IAP `terrabit_helpdesk`, folosit de conectorul de suport instalat în Odoo-ul",
+      "Fiecare client cu conector are un cont (`iap.server.account`) legat automat de compania lui,",
+      "Fiecare stadiu al helpdesk-ului nostru primește un status vizibil clientului: Nou, **În",
+      "La instalare, modulul propune singur o mapare inițială a stadiilor existente: cele cu „răspuns\"",
+      "Tichetele fiecărei firme se grupează sub un singur partener-companie (`partner_company_id`),",
+      "Clientul vede doar mesajele publice; notele interne ale consultanților nu ajung niciodată la",
+      "Cererile de creare tichet sunt idempotente printr-o cheie trimisă de conector",
+      "Atașamentele venite de la client se salvează local ca bytes; cele trimise către client",
+      "Urgența aleasă de client în conector se traduce 1:1 în prioritatea nativă a tichetului",
+      "Creditele nu se acordă automat la înregistrarea contului — se alocă manual, per client, direct",
+      "Închiderea unui tichet pe helpdesk-ul Terrabit cere pontaj (regulă venită din alt modul, nu din"
+    ],
+    "dependencies": [
+      "iap",
+      "terrabit_iap_server",
+      "helpdesk",
+      "helpdesk_timesheet"
+    ],
+    "connections": [
+      "terrabit_iap_server",
+      "helpdesk",
+      "helpdesk_timesheet",
+      "terrabit_helpdesk_connector"
+    ],
+    "text": "IAP Server - Service Helpdesk\nterrabit_iap_server_helpdesk\nModulul e partea de server a conectorului de suport Terrabit și rulează doar pe helpdesk-ul Terrabit, niciodată la clienți. El primește tichetele pe care clienții cu modulul `terrabit_helpdesk_connector` le deschid din propriul Odoo, le leagă automat de firma clientului (după codul fiscal al partenerului) și le atribuie echipei de helpdesk configurate. Pentru consultant, un tichet venit astfel se tratează exact ca oricare altul: preluare, pontaj, răspuns, schimbare de stadiu, închidere. Modulul se ocupă doar de rutarea inițială, de traducerea stadiului intern într-un status simplu pentru client (Nou / În lucru / De răspuns / Închis) și de sincronizarea mesajelor publice; nu trimite nimic din proprie inițiativă — conectorul clientului cere datele la fiecare sincronizare. Fiecare client are pe cont și un sold de credite, dar alocarea acestora este în prezent **manuală**, per client; consumul automat al creditelor din orele pontate pe tichete este doar planificat, nu funcționează încă.\nAdaugă serviciul IAP `terrabit_helpdesk`, folosit de conectorul de suport instalat în Odoo-ul\nFiecare client cu conector are un cont (`iap.server.account`) legat automat de compania lui,\nFiecare stadiu al helpdesk-ului nostru primește un status vizibil clientului: Nou, **În\nLa instalare, modulul propune singur o mapare inițială a stadiilor existente: cele cu „răspuns\"\nTichetele fiecărei firme se grupează sub un singur partener-companie (`partner_company_id`),\nClientul vede doar mesajele publice; notele interne ale consultanților nu ajung niciodată la\nCererile de creare tichet sunt idempotente printr-o cheie trimisă de conector\nAtașamentele venite de la client se salvează local ca bytes; cele trimise către client\nUrgența aleasă de client în conector se traduce 1:1 în prioritatea nativă a tichetului\nCreditele nu se acordă automat la înregistrarea contului — se alocă manual, per client, direct\nÎnchiderea unui tichet pe helpdesk-ul Terrabit cere pontaj (regulă venită din alt modul, nu din"
   },
   {
     "path": "terrabit_iap_server_sale/index.md",
