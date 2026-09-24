@@ -28,8 +28,11 @@ Context operațional:
   din discuție. Restul câmpurilor le completează Terrabit.
 - **Notele interne ale consultanților nu ajung niciodată la client.** Doar mesajele publice sunt
   oglindite.
-- Conectorul nu trimite emailuri. Notificările pleacă o singură dată, din helpdesk-ul Terrabit,
-  către urmăritorii tichetului, ca să nu primească nimeni același mesaj de două ori.
+- Conectorul nu trimite emailuri. Notificările pe email pleacă o singură dată, din helpdesk-ul
+  Terrabit, către urmăritorii tichetului, ca să nu primească nimeni același mesaj de două ori.
+- În Odoo, **autorul tichetului** e anunțat la clopoțel (inbox) când vine un răspuns nou de la
+  Terrabit. Numai el, fără email, și numai pentru răspunsuri noi: nu pentru mesajele lui și nici
+  pentru discuția veche adusă la prima sincronizare a unui tichet.
 
 ## 3. Utilizatori și roluri
 
@@ -142,6 +145,9 @@ pasul 5).
 clientului. Clientul răspunde din **Trimiteți un mesaj**, ca pe orice document Odoo, inclusiv cu
 fișiere atașate. Mesajul pleacă la Terrabit pe loc.
 
+Când vine un răspuns nou de la Terrabit, cel care a deschis tichetul îl vede la **clopoțelul** din
+Odoo, fără să deschidă tichetul. Colegii nu primesc notificarea: o văd doar la tichet.
+
 Când Terrabit îi cere clientului o informație, tichetul trece în **De răspuns**. E semnalul că
 următorul pas e al clientului.
 
@@ -213,6 +219,8 @@ alegerea urgenței. Pe staging, sincronizarea se face din **Actualizează acum**
       **Actualizează acum**.
 - [ ] Un răspuns public al consultantului apare în chatter, cu numele lui. O notă internă **nu**
       apare.
+- [ ] La un răspuns nou al consultantului, autorul tichetului primește notificarea la clopoțel.
+      Nu primește niciun email în plus, iar colegii nu primesc notificarea.
 - [ ] O notă scrisă de client cu **Scrie notă** **nu** ajunge la Terrabit.
 - [ ] Un răspuns scris cu Terrabit oprit afișează „Răspunsul n-a plecat încă" și pleacă după
       revenire, cu fișierele lui.

@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `terrabit_helpdesk_connector` — 19.0.0.2.1 (notificare la clopoțel pentru autor)
+
+- **Acțiune:** Re-ingestie după PR #357: autorul tichetului primește notificare în inbox, fără email,
+  la un răspuns nou de la Terrabit. Fișa consultant recopiată (context, pasul 5, checklist).
+- **Fișiere actualizate:** `terrabit_helpdesk_connector/{index.md,FISA_CONSULTANT.md}`, `log.md`,
+  `.index/chunks.json`.
+
+---
+
 ## [2026-09-24] `deltatech_marketplace` — re-ingestie cu fișa consultant nouă
 
 - **Acțiune:** Re-ingestie a paginii (subagent `documentarist-wiki`), după adăugarea fișei
