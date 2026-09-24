@@ -13715,7 +13715,7 @@
   {
     "path": "terrabit_helpdesk_connector/index.md",
     "module": "terrabit_helpdesk_connector",
-    "version": "19.0.0.1.9",
+    "version": "19.0.0.2.0",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector",
     "local_path": "odoo-addons/terrabit/terrabit_helpdesk_connector",
     "last_ingest": "2026-09-24",

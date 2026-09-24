@@ -1,7 +1,7 @@
 # Terrabit Helpdesk Connector (localizat la `terrabit_helpdesk_connector/index.md`)
 
 - **Nume Tehnic:** `terrabit_helpdesk_connector`
-- **Versiune:** `19.0.0.1.9`
+- **Versiune:** `19.0.0.2.0`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_helpdesk_connector`
 - **Ultima Ingestie:** `2026-09-24`
@@ -19,9 +19,11 @@ răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la
 #### 2. Funcționalități Cheie
 
 - Deschiderea unui tichet nou direct din formularul standard Odoo (subiect, urgență pe 4 niveluri,
-  descriere, fișiere atașate prin drag&drop sau lipite cu Ctrl+V), fără wizard separat.
+  descriere, fișiere atașate prin drag&drop sau lipite cu Ctrl+V), fără wizard separat. Tichetul
+  nou e o **ciornă**: Odoo îl salvează pe parcurs, dar pleacă la Terrabit doar la butonul
+  **Trimite la Terrabit** — altfel salvarea automată trimitea tichete incomplete.
 - Ecranul **Tichetele mele** (`Terrabit Support → Tichetele mele`): kanban/listă grupate pe status,
-  în ordinea firească a fluxului (De trimis, Nou, În lucru, De răspuns, Închis), cu urgență,
+  în ordinea firească a fluxului (Ciornă, De trimis, Nou, În lucru, De răspuns, Închis), cu urgență,
   consultant atribuit și dată de deschidere.
 - Ecranul **Ale echipei** (`Terrabit Support → Ale echipei`): toate tichetele companiei, indiferent
   cine le-a deschis (inclusiv cele venite direct la Terrabit prin telefon/email), grupabile după

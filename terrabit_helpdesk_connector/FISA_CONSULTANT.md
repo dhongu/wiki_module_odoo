@@ -86,7 +86,7 @@ din exterior (cazul oricărei instanțe odoo.sh).
 ### Pasul 1 — Lista tichetelor
 
 Accesați **Terrabit Support → Tichetele mele**. Tichetele apar grupate pe status, în ordinea în
-care circulă un tichet: **De trimis**, **Nou**, **În lucru**, **De răspuns**, **Închis**. Apar doar
+care circulă un tichet: **Ciornă**, **De trimis**, **Nou**, **În lucru**, **De răspuns**, **Închis**. Apar doar
 coloanele care au tichete. Implicit sunt afișate doar tichetele deschise; cele închise se pot afișa
 cu filtrul **Închis**.
 
@@ -103,22 +103,26 @@ Apăsați **Nou**. În formular completați:
   *Blochează munca*;
 - **Descriere**: detalii și pași de reproducere. Capturile de ecran se pot lipi direct cu Ctrl+V.
 
+Tichetul nou e o **ciornă**. Odoo îl salvează singur pe parcurs, de exemplu când încărcați un
+fișier sau treceți la alt ecran, dar **nu îl trimite**. Puteți reveni la el oricând, din coloana
+**Ciornă**, până îl trimiteți la pasul 4.
+
 ![Formularul de tichet nou](screenshots/03_tichet_nou.png)
 
 ### Pasul 3 — Atașarea fișierelor
 
 Sub descriere e zona **Fișiere**: trageți fișierele cu mouse-ul în chenar, sau folosiți butonul
-**Fișiere**. Fișierele apar imediat în listă și pot fi scoase cu ×. Salvați tichetul (iconul de nor
-de lângă titlu): tichetul pleacă imediat la Terrabit.
+**Fișiere**. Fișierele apar imediat în listă și pot fi scoase cu ×.
 
-Captura arată un tichet cu fișierele atașate, salvat, dar încă netrimis (status **De trimis**).
-Cât timp tichetul n-a plecat, fișierele se pot încă adăuga sau scoate.
+Captura arată o ciornă cu fișierele atașate. Cât timp tichetul n-a plecat, fișierele se pot încă
+adăuga sau scoate.
 
 ![Zona de fișiere, cu fișierele atașate](screenshots/04_zona_fisiere.png)
 
-### Pasul 4 — Tichetul trimis
+### Pasul 4 — Trimiterea tichetului
 
-După salvare, titlul devine `(#09163) Subiect`, cu codul de la Terrabit. Statusul trece în **Nou**.
+Când tichetul e complet, apăsați **Trimite la Terrabit**, în antetul formularului. Abia acum pleacă.
+Titlul devine `(#09163) Subiect`, cu codul de la Terrabit, iar statusul trece în **Nou**.
 Câmpurile completate de client se blochează, pentru că de aici tichetul îl continuă Terrabit.
 
 **Găsește pe ecran:** statusul (colorat), **Deschis de**, **Deschis pe** și, sub descriere,
@@ -160,12 +164,13 @@ cuprinde tichetele pe care încă nu le-a preluat niciun consultant.
 
 ### Pasul 7 — Când Terrabit e indisponibil
 
-Dacă serverul Terrabit nu răspunde la salvare (mentenanță, rețea), tichetul **nu se pierde**:
-rămâne în coloana **De trimis**. Deschis, tichetul arată sus un avertisment cu motivul
+Dacă serverul Terrabit nu răspunde la **Trimite la Terrabit** (mentenanță, rețea), tichetul **nu se
+pierde**: rămâne în coloana **De trimis**. Deschis, tichetul arată sus un avertisment cu motivul
 („Încă netrimis la Terrabit…"). Cronul îl retrimite automat (la 15
 minute), cu tot cu fișiere și în numele celui care l-a scris, iar la retrimitere nu se creează un
-al doilea tichet. Se poate grăbi
-din butonul **Actualizează acum**, din antetul listei, după care lista se reîncarcă singură.
+al doilea tichet. Se poate grăbi din butonul **Reîncearcă acum** de pe tichet, sau din
+**Actualizează acum**, din antetul listei, după care lista se reîncarcă singură. O **ciornă** nu
+pleacă niciodată singură, nici din coadă: doar la apăsarea butonului.
 
 La fel se întâmplă cu un răspuns scris în discuție cât timp serverul e indisponibil: rămâne
 salvat, iar la retrimitere pleacă tot cu fișierele lui. Utilizatorul vede pe loc notificarea
@@ -199,7 +204,8 @@ alegerea urgenței. Pe staging, sincronizarea se face din **Actualizează acum**
 - [ ] Contul IAP „Terrabit Helpdesk" există pentru fiecare companie și are endpoint-ul
       `https://terrabit.odoo.com` (pe staging: `https://terrabit-staging.odoo.com`).
 - [ ] Un tichet nou pornește fără stea la urgență.
-- [ ] După salvare, titlul primește codul Terrabit, iar statusul e **Nou**.
+- [ ] Un tichet nou, salvat dar netrimis, rămâne **Ciornă** și **nu** apare la Terrabit.
+- [ ] După **Trimite la Terrabit**, titlul primește codul Terrabit, iar statusul e **Nou**.
 - [ ] Tichetul apare la Terrabit pe echipa corectă, pe firma clientului.
 - [ ] Un fișier tras în zonă ajunge la Terrabit. Unul peste 2 MB apare ca link în descriere și se
       deschide din exterior.
@@ -232,8 +238,8 @@ Capturile se generează automat din `tests/test_screenshots.py` (mixinul `Screen
 
 1. `01_cont_conectare.png` — contul IAP „Terrabit Helpdesk", cu endpoint-ul.
 2. `02_tichetele_mele.png` — kanbanul „Tichetele mele", grupat pe status.
-3. `03_tichet_nou.png` — formularul de tichet nou, gol, cu câmpurile de completat evidențiate.
-4. `04_zona_fisiere.png` — zona de fișiere, cu fișiere atașate, pe un tichet încă netrimis.
+3. `03_tichet_nou.png` — formularul de tichet nou, gol, cu câmpurile de completat evidențiate și butonul **Trimite la Terrabit**.
+4. `04_zona_fisiere.png` — o ciornă cu fișiere atașate, înainte de trimitere.
 5. `05_tichet_trimis.png` — tichetul abia trimis: `(#cod)`, status **Nou**, fișierele plecate.
 6. `06_discutie.png` — chatter-ul, cu răspunsul consultantului și al clientului.
 7. `07_ale_echipei.png` — lista „Ale echipei", grupată după consultant, cu un grup deschis.

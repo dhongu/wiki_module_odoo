@@ -4,6 +4,19 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-24] `terrabit_helpdesk_connector` — actualizat la 19.0.0.2.0 (tichetul nou e ciornă)
+
+- **Acțiune:** Re-ingestie după PR #355: tichetul nou e o ciornă și pleacă doar la „Trimite la
+  Terrabit"; înainte salvarea automată a formularului trimitea tichete incomplete. Fișa consultant
+  și capturile au fost regenerate în modul (pasul 4 devine „Trimiterea tichetului"); aici s-au
+  recopiat, iar pagina a primit versiunea nouă și starea „Ciornă" în funcționalități.
+- **Sursă:** `readme/FISA_CONSULTANT.md`, `readme/HISTORY.md` (19.0.0.2.0), cod.
+- **Fișa consultant:** recopiată, cu 8 capturi.
+- **Fișiere actualizate:** `terrabit_helpdesk_connector/{index.md,FISA_CONSULTANT.md,screenshots/*}`,
+  `log.md`, `.index/chunks.json`.
+
+---
+
 ## [2026-09-24] `l10n_ro_partner_ledger_currency` — actualizat la 19.0.1.4.5 (corecții text/UI fișă, PR #317)
 
 - **Acțiune:** Re-ingestie a paginii, după PR #317 (tichet #9575, merge-uit în 19.0), care corectează
