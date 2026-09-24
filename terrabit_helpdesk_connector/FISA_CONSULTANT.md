@@ -102,6 +102,10 @@ cu filtrul **Închis**.
 Pe fiecare card se văd codul (ex. `09163`), subiectul, urgența (stele), data deschiderii, cine l-a
 deschis și avatarul consultantului Terrabit care se ocupă de tichet.
 
+Deasupra listei, un panou arată pe scurt **Tichetele mele** (deschise, cu răspuns nou, netrimise) și
+**Sincronizarea** cu Terrabit: ora ultimei sincronizări, a următoarei și, cu roșu, o încercare eșuată
+(motivul apare la trecerea mouse-ului). Lista se actualizează singură când Terrabit trimite noutăți.
+
 Un tichet cu **răspuns nou necitit** iese în evidență: cardul are bordură colorată și eticheta
 **Răspuns nou**, iar în listă rândul e îngroșat și colorat. Marcajul îl vede doar cel care a
 deschis tichetul și dispare când acesta citește discuția.
@@ -194,6 +198,21 @@ salvat, iar la retrimitere pleacă tot cu fișierele lui. Utilizatorul vede pe l
 
 ![Tichet în coada „De trimis"](screenshots/08_de_trimis.png)
 
+### Pasul 8 — Închiderea tichetului
+
+Când problema e rezolvată, clientul poate închide singur tichetul, fără să aștepte consultantul:
+deschide tichetul și apasă **Închide tichetul**, din bara de sus a formularului. Odoo cere
+confirmarea, apoi tichetul trece imediat pe **Închis**, iar la Terrabit intră în etapa de închidere,
+cu nota internă „Tichet închis de client”.
+
+Butonul apare doar dacă echipa de suport Terrabit permite închiderea de către client și doar pe
+tichetele încă deschise. Un tichet închis **nu se mai poate redeschide**: pentru o problemă nouă se
+deschide un tichet nou. Nu se cere motiv.
+
+![Butonul „Închide tichetul"](screenshots/09_inchide_tichet.png)
+
+![Confirmarea închiderii](screenshots/10_confirmare_inchidere.png)
+
 ### Note de monografie și raportare
 
 Nu se aplică: modulul nu generează note contabile și nici raportări.
@@ -240,6 +259,11 @@ alegerea urgenței.
 - [ ] Un tichet deschis de alt coleg apare în **Ale echipei**, dar nu în **Tichetele mele**.
 - [ ] Cu serverul Terrabit oprit, tichetul rămâne **De trimis** și pleacă după revenire, **o singură
       dată**.
+- [ ] Panoul de deasupra listei arată ora ultimei sincronizări; după o modificare făcută la
+      Terrabit, lista se actualizează singură în circa un minut.
+- [ ] Cu bifa **Closure by Customers** pe echipa Terrabit, un tichet deschis are butonul **Închide
+      tichetul**. După confirmare, tichetul e **Închis** la client și în etapa de închidere la Terrabit.
+- [ ] Fără bifă, butonul nu apare. Pe un tichet deja închis, butonul nu apare.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -250,6 +274,8 @@ alegerea urgenței.
 | „Scrieți pe scurt despre ce este vorba." | subiectul e gol | completați **Subiect** |
 | avertismentul „Încă netrimis la Terrabit" (ex.: „Trimiterea tichetului a eșuat. Încercați din nou.") | serverul Terrabit n-a răspuns la timp | nimic: tichetul rămâne **De trimis** și pleacă automat. Dacă persistă ore în șir, verificați endpoint-ul contului IAP |
 | „Account not found or not linked to a company" | contul nu e încă înregistrat la Terrabit | așteptați înregistrarea automată sau verificați codul fiscal al companiei |
+| „Echipa de suport nu permite clienților să închidă tichetele." | bifa **Closure by Customers** a fost scoasă la Terrabit după ultima sincronizare | nimic de făcut la client: tichetul rămâne deschis și îl închide consultantul |
+| „Închiderea tichetului a eșuat. Încercați din nou." | serverul Terrabit n-a răspuns | reîncercați mai târziu; tichetul rămâne deschis |
 | notificarea „Răspunsul n-a plecat încă" | serverul n-a primit răspunsul din discuție, **sau** utilizatorul n-are email pe profil | dacă Terrabit era indisponibil: nimic, mesajul rămâne salvat și e retrimis automat, cu tot cu fișiere. Dacă lipsește emailul: completați-l pe profilul utilizatorului, altfel retrimiterea eșuează din nou |
 
 ## 10. Capturi de ecran
@@ -265,6 +291,8 @@ Capturile se generează automat din `tests/test_screenshots.py` (mixinul `Screen
 6. `06_discutie.png` — chatter-ul, cu răspunsul consultantului și al clientului.
 7. `07_ale_echipei.png` — lista „Ale echipei", grupată după consultant, cu un grup deschis.
 8. `08_de_trimis.png` — tichet în coada „De trimis", cu motivul afișat.
+9. `09_inchide_tichet.png` — tichet deschis, cu butonul **Închide tichetul** evidențiat.
+10. `10_confirmare_inchidere.png` — fereastra de confirmare a închiderii.
 
 Regenerare:
 
@@ -291,5 +319,8 @@ Regenerare:
 - **Fișierele peste 2 MB** depind de accesibilitatea instanței clientului. La o instalare internă,
   fără domeniu public, Terrabit nu le poate deschide. Recomandați atunci atașarea unor fișiere mai
   mici sau arhivarea lor.
+- **Închiderea de către client e ireversibilă** din conector. Dacă un client a închis din greșeală,
+  consultantul Terrabit mută tichetul înapoi într-o etapă deschisă, iar la sincronizare tichetul
+  reapare deschis la client.
 - Notificarea de la **Actualizează acum** apare în engleză („Synced"): textul e scris direct în
   acțiune și nu intră în traduceri.
