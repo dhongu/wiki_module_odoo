@@ -1,7 +1,7 @@
 # Terrabit Helpdesk Connector (localizat la `terrabit_helpdesk_connector/index.md`)
 
 - **Nume Tehnic:** `terrabit_helpdesk_connector`
-- **Versiune:** `19.0.0.2.10`
+- **Versiune:** `19.0.0.2.11`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_helpdesk_connector`
 - **Ultima Ingestie:** `2026-09-24`
@@ -50,7 +50,8 @@ răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la
   Terrabit are bifa **Closure by Customers**; un tichet închis nu se redeschide.
 - Actualizare imediată: Terrabit anunță baza clientului printr-o notificare semnată, fără date
   (`/terrabit_helpdesk/notify`), conectorul sincronizează în fundal și reîncarcă singur lista, kanbanul
-  și tichetul deschis. Cronul de 15 minute rămâne pentru bazele pe care Terrabit nu le poate contacta.
+  și tichetul deschis, în câteva secunde (sincronizarea pornește imediat, pe un fir separat; o singură
+  sincronizare odată). Cronul de 15 minute rămâne pentru bazele pe care Terrabit nu le poate contacta.
 - Panou deasupra listei și a kanbanului, în stilul tabloului din Helpdesk: tichetele mele (deschise,
   cu răspuns nou, netrimise) și sincronizarea (ultima, următoarea; o încercare eșuată apare cu roșu,
   cu motivul la trecerea mouse-ului). „Sync Now” există și pe formularul tichetului.

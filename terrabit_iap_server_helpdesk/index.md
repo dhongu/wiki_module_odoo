@@ -1,7 +1,7 @@
 # IAP Server - Service Helpdesk (localizat la `terrabit_iap_server_helpdesk/index.md`)
 
 - **Nume Tehnic:** `terrabit_iap_server_helpdesk`
-- **Versiune:** `19.0.0.1.13`
+- **Versiune:** `19.0.0.1.14`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_helpdesk
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server_helpdesk`
 - **Ultima Ingestie:** `2026-09-24`
@@ -56,6 +56,8 @@ este doar planificat, nu funcționează încă.
   fir separat; un client care nu răspunde e ignorat.
 - Închidere de către client (`/iap/terrabit_helpdesk/tickets/close`), după bifa **Closure by Customers**
   a echipei: prima etapă pliată + `closed_by_partner` (trece și de regula de pontaj), cu notă internă.
+- Mesajele și autorii lor vin dintr-o singură căutare; avatarul unui autor pe care clientul îl are deja
+  (`skip_avatars`) nu se mai retrimite.
 - Atașamentele venite de la client se salvează local ca bytes; cele trimise către client
   (atașamente pe mesaje) pleacă ca link `access_token`, ca să nu depășească limita de timeout a
   apelurilor JSON-RPC.
