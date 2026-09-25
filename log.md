@@ -4,6 +4,26 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-25] Gestiuni contabile de stoc după auditul fișei — 3 re-ingestii
+
+- **Acțiune:** Re-ingestie în paralel (3 subagenți `documentarist-wiki`) după merge-ul
+  l10n_ro_ent#323 (monografii corectate după auditul fișei consultant).
+  - `l10n_ro_stock_gestiune` 19.0.3.1.0: transfer direct `371.B = 371.A`, tranzit prin contul de
+    tranzit al locației (371.T), 481/482 doar la subunități cu contabilitate proprie, blocarea
+    recepțiilor/ieșirilor directe pe gestiunile cu cont propriu, storno corect pe închiderea 408,
+    furnizorul pe 408. Limitările vechi rezolvate au fost scoase; limitările rămase aliniate manual
+    cu fișa (subagentul păstrase „balanța nu include transferurile").
+  - `l10n_ro_stock_sheet_gestiune` 19.0.1.0.2: balanța include transferul între gestiuni.
+  - `l10n_ro_stock_gestiune_valuation` 19.0.1.0.1: dimensiunea pe toate liniile notei de transfer,
+    oricare ar fi contrapartida; mențiunea „transfer 481" ca regulă generală corectată.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `readme/FISA_CONSULTANT.md`,
+  `__manifest__.py`, cod.
+- **Fișe consultant:** resincronizată pentru `l10n_ro_stock_gestiune` (secțiunea nouă 1.1 „Ce s-a schimbat
+  în 19.0.3.1.0"), cu 14 capturi, dintre care 6 noi (09–14). Celelalte două module nu au fișă.
+- **Dependențe/Conexiuni:** `l10n_ro_stock_sheet`, `deltatech_valuation_area`, `l10n_ro_currency_revaluation`
+  (linkuri active).
+- **Fișiere actualizate:** `index.md` (3 intrări actualizate), paginile celor 3 module.
+
 ## [2026-09-24] Verificarea comenzilor înainte de procesare — 4 pagini noi, 4 re-ingestii
 
 - **Acțiune:** Ingestie în paralel (8 subagenți `documentarist-wiki`) după inițiativa din helpdesk #9471
