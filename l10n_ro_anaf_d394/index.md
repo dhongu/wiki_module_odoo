@@ -1,10 +1,10 @@
 # Romania - Declarație informativă (D394) (localizat la `l10n_ro_anaf_d394/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d394`
-- **Versiune:** `19.0.1.2.0`
+- **Versiune:** `19.0.1.3.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d394
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d394`
-- **Ultima Ingestie:** 2026-08-20
+- **Ultima Ingestie:** 2026-09-25
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -19,10 +19,12 @@ Modul dedicat contabililor care lucrează cu legislația fiscală din România, 
 - **Gestionare TVA la încasare (CABA):** identifică automat facturile sub regimul TVA la încasare și raportează exigibilitatea taxei în momentul plății; evidențiază sumele neexigibile (din facturile neplătite) și sumele devenite exigibile în urma încasărilor/plăților din perioada curentă.
 - **Taxare inversă (Reverse Charge):** identifică automat tranzacțiile cu taxare inversă și le clasifică corect — tip V pentru livrări RC, tip C pentru achiziții RC; ambele tipuri sunt incluse corect în D394, chiar dacă cota TVA este 0.
 - **Export XLSX avansat:** jurnalele pot fi exportate în format Excel cu coloane dinamice pentru fiecare tip de taxă identificat în documente, optimizat pentru audit și verificare detaliată.
-- **Generare D394 (XDP și XML Soft J):** butoanele „D394 file XDP" și „D394 file XML" sunt disponibile direct pe rapoartele de vânzări și cumpărări; fișierul generat poate fi importat în formularul PDF inteligent ANAF sau validat direct în aplicația DUKIntegrator (Soft J).
+- **Generare D394 (XDP și XML Soft J):** butoanele „D394 file XDP" și „D394 file XML" sunt disponibile direct pe rapoartele de vânzări și cumpărări; fișierul generat poate fi importat în formularul PDF inteligent ANAF sau validat direct în aplicația DUKIntegrator (Soft J). Fișierul XML trece validatorul oficial (`D394Validator.jar`) fără erori — atributele opționale fără valoare nu mai sunt emise goale, adresa reprezentantului se completează corect prin fallback pe adresa companiei, iar `efectuat` nu mai apare alături de `solicit=0`.
 - **Clasificare automată Partener 1 / Partener 2:** partenerii înregistrați în scopuri TVA (Cartușul C) sunt separați automat de persoanele fizice și juridice neînregistrate TVA (Cartușul D), conform structurii XML D394.
 - **Gestionare parteneri inactivi fiscal:** operațiunile cu parteneri declarați inactivi sunt clasificate corect în Cartușul C (perioada activă) și Cartușul D (perioada de inactivitate).
 - **Opțiuni declarație configurabile:** periodicitate TVA, sistem TVA la încasare, opțiune contribuabil și persoane afiliate — configurabile per companie în Setări.
+- **Accesare rapoarte:** din Contabilitate → ANAF → Declarație 394 (direct pe Tax Sale Report) sau din Contabilitate → Raportare → Taxe și Fiscal (Tax Purchase Report RO / Tax Sale Report RO); butonul D394 colectează automat atât vânzările, cât și cumpărările, indiferent din care raport este apăsat.
+- **Raportarea pe cartușe (A–I):** structura declarației urmează cartușele ANAF — parteneri înregistrați TVA (C), neînregistrați (D), parteneri UE/non-UE nestabiliți în RO (E/F), încasări AMEF (G), rezumat valoric (H) și plaja de facturi/facturi simplificate/autofacturi (I).
 
 #### 3. Dependențe
 
@@ -38,8 +40,8 @@ Modul dedicat contabililor care lucrează cu legislația fiscală din România, 
 
 - `l10n_ro_anaf_d394.report.mixin`: model abstract cu logica de construcție a datelor D394 (clasificare parteneri Cartuș C/D, CABA, taxare inversă, generare XDP/XML, filtre de export).
 - `l10n_ro_account_vat_journal.sale.tax.report.handler` / `l10n_ro_account_vat_journal.purchase.tax.report.handler`: extind handler-ele jurnalelor de vânzări/cumpărări din `l10n_ro_account_vat_journal` cu mixin-ul D394.
-- `res.company` (extindere): opțiuni de declarație configurabile per companie.
-- `res.config.settings` (extindere): expune opțiunile D394 în ecranul de setări.
+- `res.company` (extindere): opțiuni de declarație configurabile per companie (periodicitate TVA, TVA la încasare, opțiune contribuabil, persoane afiliate).
+- `res.config.settings` (extindere): expune opțiunile D394 în ecranul de setări (Setări → Contabilitate → Declarații ANAF).
 
 **Date / Vizualizări**
 

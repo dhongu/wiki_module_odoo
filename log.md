@@ -4,6 +4,22 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-25] Taxare inversă, D394, tooling capturi — 3 re-ingestii
+
+- **Acțiune:** Re-ingestie în paralel (3 subagenți `documentarist-wiki`) pentru modulele atinse odată cu jurnalele de TVA.
+  - `l10n_ro_reverse_charge_331` 19.0.1.1.0 (era 19.0.1.0.0): partea de achiziție — taxa 21% R331 cu
+    autolichidare (Dr 4426 = Cr 4427, D300 rd. 12.1/26.1), verificarea furnizorului, blocaj la
+    postare și pe facturile de furnizor.
+  - `l10n_ro_anaf_d394` 19.0.1.3.0 (era 19.0.1.2.0): XML-ul trece de `D394Validator.jar` (atributele
+    `fax`, `adresaR`, `efectuat`/`solicit`).
+  - `l10n_ro_doc_screenshots` 19.0.1.1.3 (era 19.0.1.1.1): `xlsx_shot` randează XLSX-ul real prin
+    LibreOffice → PDF → pdftoppm, cu decuparea paginii tipărite.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `readme/FISA_CONSULTANT.md`, cod.
+- **Fișe consultant:** resincronizate pentru `l10n_ro_reverse_charge_331` (13 capturi, 6 noi: 08–13) și
+  `l10n_ro_anaf_d394` (3 capturi, neschimbate); `l10n_ro_doc_screenshots` nu are fișă.
+- **Dependențe/Conexiuni:** `l10n_ro_account_vat_journal`, `l10n_ro_anaf_d300`, `l10n_ro_anaf_base` (linkuri active).
+- **Fișiere actualizate:** `index.md` (3 linii actualizate), cele 3 directoare de modul.
+
 ## [2026-09-25] Jurnale de TVA — re-ingestie `l10n_ro_account_vat_journal`
 
 - **Acțiune:** Re-ingestie (1 subagent `documentarist-wiki`) după l10n_ro_ent#324, #325, #326, #330, #333.

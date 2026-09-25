@@ -380,7 +380,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_anaf_d300](l10n_ro_anaf_d300/index.md): Decontul de TVA (D300) cu export XDP și XML nativ validat XSD.
 - [l10n_ro_anaf_d318](l10n_ro_anaf_d318/index.md): Cererea de rambursare TVA din alt stat membru UE (D318), conform Directivei 2008/9/CE.
 - [l10n_ro_anaf_d390](l10n_ro_anaf_d390/index.md): Declarația recapitulativă D390 (VIES) pentru operațiunile intracomunitare de TVA.
-- [l10n_ro_anaf_d394](l10n_ro_anaf_d394/index.md): Jurnalele de TVA și Declarația informativă D394 cu export XDP/XML și XLSX.
+- [l10n_ro_anaf_d394](l10n_ro_anaf_d394/index.md): Declarația informativă D394 peste jurnalele de TVA, cu export XML validat de `D394Validator.jar` și XLSX.
 - [l10n_ro_anaf_d394_pos](l10n_ro_anaf_d394_pos/index.md): Punte care integrează bonurile fiscale din POS în declarația D394 (op1/op2).
 - [l10n_ro_anaf_d398](l10n_ro_anaf_d398/index.md): Declarația specială de TVA D398 pentru regimul One Stop Shop (OSS), cu conversie EURO.
 - [l10n_ro_anaf_duk](l10n_ro_anaf_duk/index.md): Validează declarațiile ANAF cu aplicația oficială DUKIntegrator, delegând execuția Java agentului Terrabit de pe stația contabilului (cloud-safe).
@@ -401,7 +401,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_customs_dvi](l10n_ro_customs_dvi/index.md): Înregistrează Declarația Vamală de Import (DVI) ca landed cost — taxă vamală A00 pe 4462, TVA import B00 deductibil pe 4426, baza dusă în decont printr-o pereche tehnică pe 473, cu MRN-ul ca referință a notei.
 - [l10n_ro_deferred_entries](l10n_ro_deferred_entries/index.md): Configurează automat mecanismul nativ Enterprise de recunoaștere a cheltuielilor/veniturilor înregistrate în avans (conturi 4711/4721) pe planul de conturi RO și livrează traducerile RO lipsă ale mecanismului.
 - [l10n_ro_dividends](l10n_ro_dividends/index.md): Distribuire dividende cu cote 10%/16%, registru acționari și note contabile automate 117/457/446.
-- [l10n_ro_doc_screenshots](l10n_ro_doc_screenshots/index.md): Mixin `ScreenshotCase` (HttpCase + Playwright) pentru generarea capturilor din fișele consultant, acum doar la cerere explicită.
+- [l10n_ro_doc_screenshots](l10n_ro_doc_screenshots/index.md): Mixin `ScreenshotCase` (HttpCase + Playwright) pentru capturile fișelor consultant, doar la cerere explicită, cu randare XLSX reală prin LibreOffice → PDF.
 - [l10n_ro_edi_ubl_sale_store](l10n_ro_edi_ubl_sale_store/index.md): Setează automat tipul de e-factură la codul 751 pentru vânzările însoțite de bon fiscal.
 - [l10n_ro_efactura_consumer](l10n_ro_efactura_consumer/index.md): e-Factura către persoane fizice cu CNP valid în XML CIUS-RO (validare Luhn RO, schemeID CNP).
 - [l10n_ro_efactura_dedup](l10n_ro_efactura_dedup/index.md): Prevenire duplicate facturi SPV prin cheie extinsă SHA-256 (CUI + serie/nr + dată + valoare).
@@ -457,7 +457,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_reges](l10n_ro_reges/index.md): Integrare REGES-Online pentru transmiterea electronică a angajaților și contractelor de muncă (înlocuitor REVISAL).
 - [l10n_ro_registru_jurnal](l10n_ro_registru_jurnal/index.md): Registrul-jurnal (cod 14-1-1) ca raport nativ, listare cronologică pe toate jurnalele, cu perechea cont debitor/creditor și totaluri zilnice.
 - [l10n_ro_reports_fix](l10n_ro_reports_fix/index.md): Corectează soldul final al balanței cu 5 coloane și adaugă opțiunea „Raw trial balance" fără Result Brought Forward.
-- [l10n_ro_reverse_charge_331](l10n_ro_reverse_charge_331/index.md): Aplică automat taxarea inversă art. 331 din Codul fiscal la vânzare, doar pentru cumpărători înregistrați în scopuri de TVA, cu blocaj la postare pentru configurări greșite.
+- [l10n_ro_reverse_charge_331](l10n_ro_reverse_charge_331/index.md): Taxare inversă art. 331 din Codul fiscal la vânzare și la achiziție (autolichidare 21% R331, Dr 4426 = Cr 4427), doar pentru parteneri înregistrați în scopuri de TVA, cu blocaj la postare pentru configurări greșite.
 - [l10n_ro_reverse_charge_331_pos](l10n_ro_reverse_charge_331_pos/index.md): Filtrează pozițiile fiscale de taxare inversă art. 331 din selectorul POS cât timp clientul comenzii nu e înregistrat în scopuri de TVA conform art. 316.
 - [l10n_ro_reverse_charge_331_sale](l10n_ro_reverse_charge_331_sale/index.md): Extinde garda de taxare inversă art. 331 la oferte și comenzi de vânzare, ca prețul afișat clientului să fie corect încă din faza de ofertă.
 - [l10n_ro_rni_report](l10n_ro_rni_report/index.md): Raport contabil pe soldul 408, cu drill-down pe furnizor și document, pentru recepțiile încă nefacturate.

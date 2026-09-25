@@ -1,10 +1,10 @@
 # Romania - Tooling capturi fișe consultant (localizat la `l10n_ro_doc_screenshots/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_doc_screenshots`
-- **Versiune:** `19.0.1.1.1`
+- **Versiune:** `19.0.1.1.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_doc_screenshots
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_doc_screenshots`
-- **Ultima Ingestie:** 2026-09-12
+- **Ultima Ingestie:** 2026-09-25
 
 #### 1. Sumar
 
@@ -24,7 +24,8 @@ Modul de **tooling de dezvoltare** — nu adaugă funcționalitate de business, 
 - `account_move_shot` — helper pentru captura unui formular `account.move`, deschis prin acțiunea jurnalului (breadcrumb cu context, nu formular gol), cu tab-ul „Journal Items"/„Elemente jurnal" deschis (liniile Dr/Cr vizibile).
 - `report_shot` — captură pentru un raport tipăribil (PDF), randat ca HTML prin `/report/html/<report_ref>/<res_id>`, fără a depinde de wkhtmltopdf în mediul de test. Trimite `lang` și `allowed_company_ids` în contextul cererii (`companies=False` dezactivează forțarea companiei): `/report/html` e o rută de website, unde regulile multi-companie se evaluează pe contextul cererii.
 - `align_website_company` — aliniază compania site-ului la compania capturilor, apelat automat din `prepare_ro_company` / `prepare_demo_company`. Pe ruta de website, `env.company` din randarea raportului vine de la compania site-ului, nu din `allowed_company_ids`: fără aliniere capturile de raport ies „403 Interzis" sau randate în altă limbă, iar testul trece — imaginea salvată e pagina greșită.
-- `xlsx_shot` / `xlsx_to_html` — randează prima foaie a unui XLSX generat ca tabel HTML stilizat, pentru capturi din exporturi.
+- `xlsx_shot` — construiește un shot dintr-un XLSX generat de un raport/export, randat exact cum se tipărește: **din 19.0.1.1.3**, îl convertește cu LibreOffice (`soffice --headless --convert-to pdf`) în PDF, apoi randează prima pagină ca PNG cu `pdftoppm` (sau, ca alternativă, PyMuPDF dacă `pdftoppm` lipsește), decupată la conținutul tipărit prin `_crop_printed_page` (ignoră banda subsolului cu numerotarea paginii, ca `_autotrim` să nu taie greșit spațiul dintre tabel și subsol). Rezultatul păstrează formatarea reală a fișierului — culori, borduri, format de dată și număr, lățimi de coloană, setările de pagină (peisaj, încadrare pe lățime) — pe care randarea HTML anterioară o pierdea (datele apăreau ca `2026-08-10 00:00:00`, numerele fără separatori). Dacă LibreOffice/`pdftoppm`/PyMuPDF lipsesc din mediu, revine elegant la tabelul HTML din `xlsx_to_html` (datele reale, fără stilul nativ Excel).
+- `xlsx_to_html` — randează prima foaie a unui XLSX generat ca tabel HTML stilizat (antet bold cu fundal gri, truncat la `max_rows`/`max_cols`); rămâne planul de rezervă pentru `xlsx_shot` când conversia LibreOffice → PDF → PNG nu e posibilă.
 - `xml_excerpt` — formatează (pretty-print) un extras dintr-un XML generat (D300/D390/e-Factura etc.), gata de inserat în fișă între ``` ```xml ``` ```.
 - Opțiunea `highlight` per captură evidențiază selectoare CSS/Playwright cu contur portocaliu Odoo și buline numerotate ①②③, pentru a indica exact pașii din fișă.
 - Opțiuni suplimentare per captură: `full`, `wait`, `hover`, `click_btn`, `click_tab` (încearcă și eticheta română a tab-ului, interfața fiind capturată în română), `unfold_report` (desfășoară toate liniile pliabile dintr-un `account.report`), `hide_fields`, `eval`, `hide_chatter`, `settle`.
@@ -32,10 +33,10 @@ Modul de **tooling de dezvoltare** — nu adaugă funcționalitate de business, 
 - `_autotrim` — decupează automat marginile uniforme ale capturii (elimină spațiul gol, gestionează și fundaluri neuniforme, ex. chatter alb lângă raport gri).
 - Lățime de viewport implicită `(1920, 950)` — încape tabelele `account.report` cu multe coloane (la 1600px se tăiau coloanele din dreapta).
 - Comandă de rulare (cere explicit capturile): `./odoo/odoo-bin -c odoo.conf -d <db> -u <modul>,l10n_ro_doc_screenshots --test-tags=fise_screenshots --stop-after-init --http-port=<liber> --gevent-port=<liber>`; capturile se scriu în `<modul>/readme/screenshots/`.
-- Degradare elegantă: dacă `playwright` lipsește din mediul Odoo, testele de capturi se sar (`skipTest`) fără a bloca suita; testele sunt sărite explicit pe CI prin variabila `SKIP_FISE_SCREENSHOTS`. Necesită și `websocket-client` (comunicare CDP) și, opțional, `pillow` (pentru `_autotrim`; fără el, captura rămâne netăiată) + `playwright install chrome`.
+- Degradare elegantă: dacă `playwright` lipsește din mediul Odoo, testele de capturi se sar (`skipTest`) fără a bloca suita; testele sunt sărite explicit pe CI prin variabila `SKIP_FISE_SCREENSHOTS`. Necesită și `websocket-client` (comunicare CDP), `openpyxl` (pentru `xlsx_to_html`) și, opțional, `pillow` (pentru `_autotrim`; fără el, captura rămâne netăiată) + `playwright install chrome`; pentru capturile XLSX cu formatare reală, opțional și LibreOffice (`soffice`) și `pdftoppm` (poppler-utils) sau PyMuPDF.
 - Parcurgere manuală/diagnoză alternativă printr-un browser controlat (Preview MCP) atașat la o instanță deja rulantă — util pentru diagnoză de mediu (cod vechi în memoria unui server dev), dar capturile „de producție" rămân cele generate determinist de test.
 
-Sursă: `readme/DESCRIPTION.md` + `readme/USAGE.md` + `readme/HISTORY.md` (schimbarea „doar la cerere" din 19.0.1.1.0) + docstring-ul din `screenshot_case.py` (Componentele Cheie de mai jos completează cu detalii tehnice din cod, dat fiind caracterul de tooling al modulului).
+Sursă: `readme/DESCRIPTION.md` + `readme/USAGE.md` + `readme/HISTORY.md` (schimbarea „doar la cerere" din 19.0.1.1.0 și randarea XLSX reală prin LibreOffice din 19.0.1.1.3) + docstring-ul din `screenshot_case.py` (Componentele Cheie de mai jos completează cu detalii tehnice din cod, dat fiind caracterul de tooling al modulului).
 
 #### 3. Dependențe
 
