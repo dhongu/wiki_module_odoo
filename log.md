@@ -4,6 +4,19 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-25] Jurnale de TVA — re-ingestie `l10n_ro_account_vat_journal`
+
+- **Acțiune:** Re-ingestie (1 subagent `documentarist-wiki`) după l10n_ro_ent#324, #325, #326, #330, #333.
+  - `l10n_ro_account_vat_journal` 19.0.1.2.5 (pagina era pe 19.0.1.0.1): jurnale pe regimuri cu
+    coloane configurabile (`l10n_ro.vat.journal.column`, clasificare pe taxă → grup → grilă D300 →
+    cotă), taxare inversă pe achiziție, TVA la încasare defalcată pe cote în XLSX și urmărită peste
+    luni (neexigibilă în luna înregistrării, exigibilă parțial în luna plății, reportată până la
+    stingere), export XLSX formatat ca registru.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`, cod (`models/`, `data/`, `views/`).
+- **Fișe consultant:** resincronizată (Pasul 9 „Factură cu TVA la încasare plătită în altă lună"), capturi de la 4 la 13.
+- **Dependențe/Conexiuni:** `l10n_ro_caba`, `l10n_ro_anaf_d300`, `l10n_ro_anaf_d394`, `l10n_ro_reverse_charge_331`.
+- **Fișiere actualizate:** `index.md` (linie actualizată), `l10n_ro_account_vat_journal/` (pagină, fișă, capturi).
+
 ## [2026-09-25] TVA la încasare (CABA) — pagină nouă `l10n_ro_caba`
 
 - **Acțiune:** Ingestie (1 subagent `documentarist-wiki`) după merge-ul l10n_ro_ent#328.

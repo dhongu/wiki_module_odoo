@@ -363,7 +363,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_account_return_pl_closing](l10n_ro_account_return_pl_closing/index.md): Închiderea lunară a conturilor de venituri și cheltuieli prin contul 121, pe framework-ul Enterprise `account.return`.
 - [l10n_ro_account_sequence](l10n_ro_account_sequence/index.md): Numerotare separată a documentelor din jurnalul de casă, conform localizării RO.
 - [l10n_ro_account_storno](l10n_ro_account_storno/index.md): Contabilitate storno (înregistrări negative/în roșu) conform standardelor RO, cu utilizare cont și activare pe companie.
-- [l10n_ro_account_vat_journal](l10n_ro_account_vat_journal/index.md): Aduce Jurnalul de Vânzări și Jurnalul de Cumpărări (registrele lunare de TVA cerute de ANAF) ca rapoarte native `account.report`, cu defalcare pe cote, TVA la încasare, taxare inversă și export XLSX/PDF.
+- [l10n_ro_account_vat_journal](l10n_ro_account_vat_journal/index.md): Jurnalul de Vânzări și Jurnalul de Cumpărări (registrele lunare de TVA) ca rapoarte native `account.report` — pe taxe și pe regimuri cu coloane configurabile, TVA la încasare urmărită peste luni, taxare inversă și export XLSX formatat ca registru.
 - [l10n_ro_advance_invoice](l10n_ro_advance_invoice/index.md): Gestionează facturile de avans cu TVA și regularizarea automată a acestora.
 - [l10n_ro_aml_register](l10n_ro_aml_register/index.md): Registrul imutabil al verificărilor AML (Legea 129/2019), cu consemnare automată din screeningul de sancțiuni și verificarea beneficiarului real.
 - [l10n_ro_anaf_agent](l10n_ro_anaf_agent/index.md): Fundația modelului cloud de comunicare cu ANAF prin Agentul Terrabit (registru de agenți, coadă de joburi, API apelat de agent).
