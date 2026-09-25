@@ -17,6 +17,21 @@ This is an append-only log of all operations performed on the wiki.
 - **Dependențe/Conexiuni:** `l10n_ro_caba`, `l10n_ro_anaf_d300`, `l10n_ro_anaf_d394`, `l10n_ro_reverse_charge_331`.
 - **Fișiere actualizate:** `index.md` (linie actualizată), `l10n_ro_account_vat_journal/` (pagină, fișă, capturi).
 
+## [2026-09-25] TVA la încasare (CABA) — re-ingestie `l10n_ro_caba` 19.0.1.1.0
+
+- **Acțiune:** Re-ingestie (1 subagent `documentarist-wiki`) după merge-ul l10n_ro_ent#332.
+  - bifă nouă „Compania aplică TVA la încasare": firma în sistem are automat poziția la încasare pe
+    toate facturile și comenzile cu parteneri din România;
+  - firma normală: regimul furnizorului rămâne pe poziția fiscală de pe partener; modulul o scoate
+    de pe facturile de vânzare (regimul clientului nu contează pentru vânzător);
+  - fișa: matricea celor 8 cazuri companie × partener × sens, excepțiile, intrarea/ieșirea din
+    sistem, limitarea comenzilor de vânzare/POS.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `readme/FISA_CONSULTANT.md`,
+  cod (`models/`).
+- **Fișe consultant:** resincronizată, 10 capturi (05 redenumită în `05_furnizor_tva_incasare.png`,
+  vechea `05_partener_pozitie_fiscala.png` ștearsă).
+- **Fișiere actualizate:** `index.md` (intrare actualizată), `l10n_ro_caba/` (pagină, fișă, capturi).
+
 ## [2026-09-25] TVA la încasare (CABA) — pagină nouă `l10n_ro_caba`
 
 - **Acțiune:** Ingestie (1 subagent `documentarist-wiki`) după merge-ul l10n_ro_ent#328.
