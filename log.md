@@ -4,6 +4,22 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-25] TVA la încasare (CABA) — pagină nouă `l10n_ro_caba`
+
+- **Acțiune:** Ingestie (1 subagent `documentarist-wiki`) după merge-ul l10n_ro_ent#328.
+  - `l10n_ro_caba` 19.0.1.0.0: completează configurarea CABA pe planul RO — bifa Baza de numerar,
+    jurnalul CABA și contul tehnic pentru bază 442830 (analitic 4428, nu 473 — motivarea e în fișă),
+    setate doar unde lipsesc; verificarea configurării în Setări → Taxe; eticheta corectă a câmpului
+    „Cont tehnic pentru baza TVA la încasare". Fără dependență de OCA `l10n_ro_vat_on_payment`.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `readme/FISA_CONSULTANT.md`,
+  `__manifest__.py`, cod (`models/`, `views/`, `hooks.py`).
+- **Fișe consultant:** copiată, cu 10 capturi (setări, taxa la încasare, poziția fiscală, partener,
+  facturi de vânzare/achiziție cu notele CABA, D300).
+- **Dependențe/Conexiuni:** `l10n_ro_vat_on_payment_lock`, `l10n_ro_anaf_d300`,
+  `l10n_ro_account_vat_journal` (linkuri active); `l10n_ro_vat_on_payment`, `l10n_ro_dvi`,
+  `l10n_ro_nondeductible_vat` fără pagină (text).
+- **Fișiere actualizate:** `index.md` (1 intrare nouă), `l10n_ro_caba/` (pagină, fișă, capturi).
+
 ## [2026-09-25] Gestiuni contabile de stoc după auditul fișei — 3 re-ingestii
 
 - **Acțiune:** Re-ingestie în paralel (3 subagenți `documentarist-wiki`) după merge-ul

@@ -10840,6 +10840,37 @@
     "text": "Romania - Registru de bancă\nl10n_ro_bank_register_report\nModulul aduce Jurnalul de bancă românesc ca raport nativ Odoo (`account.report`), cu aceeași structură zilnică ca Registrul de casă (modulul `l10n_ro_cash_register_report`, pe care îl extinde direct — moștenește handler-ul acestuia). Soldurile se calculează pe contul jurnalului de bancă (`default_account_id`, ex. 5121.x), din mișcările contabile postate, cu report automat al soldului între zile, astfel încât soldul contabil 512x se confruntă direct cu extrasul bancar. Spre deosebire de Registrul de casă (formular tipizat 14-4-7A), jurnalul de bancă nu are un formular impus prin lege — raportul urmează forma uzuală din practica contabilă românească.\nSecțiune per (jurnal, zi), cu antet care afișează contul și jurnalul (ex. „5121.2 BANCA TRANSILVANIA — 26.01.2026\") și totalurile zilei: încasări, plăți, sold final.\nRând de report al soldului din ziua precedentă.\nLinii de mișcare ale contului bancar, cu încasările pe debit, plățile pe credit și sold cumulat.\nRând de sold final, folosit drept report pentru ziua următoare.\nFiltrul de jurnale limitat automat la jurnalele de tip bancă (câte unul per cont bancar/monedă).\nDrill-down din liniile de mișcare direct către înregistrarea contabilă (`account.move.line`).\nFiltru de interval de dată, selector de jurnale și selector multi-companie, moștenite din framework-ul `account_reports`.\nExport PDF/XLSX și tipărire, disponibile nativ din bara de instrumente a raportului."
   },
   {
+    "path": "l10n_ro_caba/index.md",
+    "module": "l10n_ro_caba",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_caba",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_caba",
+    "last_ingest": "2026-09-25",
+    "friendly_name": "Romania - TVA la încasare (CABA) (FR-16)",
+    "summary": "Modulul completează configurarea TVA la încasare (mecanismul nativ Odoo *cash basis*, cu jurnalul CABA) pe planul de conturi al României. Planul RO aduce taxele la încasare, poziția fiscală „Sistem de colectare TVA\" și jurnalul CABA, dar lasă nesetat contul tehnic pe care se scriu liniile de bază din notele de exigibilitate — fără el, la fiecare încasare baza rulează debit = credit pe contul de venit sau cheltuială al facturii, ceea ce umflă rulajul acelui cont. Modulul setează automat ce lipsește, semnalează în Setări orice configurare incompletă și oferă contabilului o fișă consultant cu fluxul complet, notele contabile și reflectarea în D300.",
+    "features": [
+      "La instalare și la încărcarea planului RO setează automat, doar unde e gol: bifa Baza de",
+      "În Contabilitate → Configurare → Setări → Taxe, sub blocul „Baza de numerar\", adaugă blocul",
+      "Redenumește în interfață câmpul „Cont de primire fiscală de bază\" (traducere greșită moștenită",
+      "Fișa consultant descrie fluxul complet: configurare inițială, poziția fiscală pusă pe parteneri,",
+      "Nu depinde de modulul OCA `l10n_ro_vat_on_payment` (lista ANAF de firme la încasare și aplicarea"
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_vat_on_payment_lock",
+      "l10n_ro_caba",
+      "l10n_ro_vat_on_payment",
+      "l10n_ro_account_vat_journal",
+      "l10n_ro_anaf_d300",
+      "l10n_ro_dvi",
+      "l10n_ro_nondeductible_vat"
+    ],
+    "text": "Romania - TVA la încasare (CABA) (FR-16)\nl10n_ro_caba\nModulul completează configurarea TVA la încasare (mecanismul nativ Odoo *cash basis*, cu jurnalul CABA) pe planul de conturi al României. Planul RO aduce taxele la încasare, poziția fiscală „Sistem de colectare TVA\" și jurnalul CABA, dar lasă nesetat contul tehnic pe care se scriu liniile de bază din notele de exigibilitate — fără el, la fiecare încasare baza rulează debit = credit pe contul de venit sau cheltuială al facturii, ceea ce umflă rulajul acelui cont. Modulul setează automat ce lipsește, semnalează în Setări orice configurare incompletă și oferă contabilului o fișă consultant cu fluxul complet, notele contabile și reflectarea în D300.\nLa instalare și la încărcarea planului RO setează automat, doar unde e gol: bifa Baza de\nÎn Contabilitate → Configurare → Setări → Taxe, sub blocul „Baza de numerar\", adaugă blocul\nRedenumește în interfață câmpul „Cont de primire fiscală de bază\" (traducere greșită moștenită\nFișa consultant descrie fluxul complet: configurare inițială, poziția fiscală pusă pe parteneri,\nNu depinde de modulul OCA `l10n_ro_vat_on_payment` (lista ANAF de firme la încasare și aplicarea"
+  },
+  {
     "path": "l10n_ro_cash_bank_enhanced/index.md",
     "module": "l10n_ro_cash_bank_enhanced",
     "version": "19.0.1.1.3",
@@ -13883,7 +13914,7 @@
   {
     "path": "terrabit_helpdesk_connector/index.md",
     "module": "terrabit_helpdesk_connector",
-    "version": "19.0.0.2.12",
+    "version": "19.0.0.2.14",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector",
     "local_path": "odoo-addons/terrabit/terrabit_helpdesk_connector",
     "last_ingest": "2026-09-24",
@@ -13899,6 +13930,8 @@
       "Coadă de retrimitere automată (cron la 15 minute) pentru tichete și răspunsuri neplecate din cauza",
       "Sincronizare automată a stadiului, consultantului atribuit și discuției, plus curățarea locală a",
       "Sincronizare incrementală: fiecare rulare aduce doar tichetele și mesajele modificate de la",
+      "Bara de status cu timp pe tichet (Nou → În lucru → De răspuns → Închis), ca bara de stadii de la",
+      "Duplicarea sau butonul Tichet nou legat (pe tichetele închise) creează o ciornă nouă, „Continuare",
       "Clientul își poate închide singur tichetul (buton Închide tichetul, cu confirmare), dacă echipa",
       "Reconcilierea zilnică cere doar id-urile mesajelor și aduce întregi numai pe cele lipsă; mesajele",
       "Actualizare imediată: Terrabit anunță baza clientului printr-o notificare semnată, fără date",
@@ -13916,7 +13949,7 @@
       "terrabit_helpdesk_link",
       "terrabit_iap"
     ],
-    "text": "Terrabit Helpdesk Connector\nterrabit_helpdesk_connector\nModulul aduce tichetele de suport Terrabit direct în Odoo-ul clientului, fără email și fără portal separat: utilizatorul deschide un tichet, urmărește statusul real (nou, în lucru, așteaptă răspunsul clientului, închis), vede cine din Terrabit se ocupă de el și poartă discuția din chatter, la fel ca pe orice document Odoo. Colegii din aceeași firmă văd și tichetele celorlalți, ca să nu se deschidă de două ori aceeași problemă. Dacă serverul Terrabit e temporar indisponibil, tichetul sau răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la revenire.\nDeschiderea unui tichet nou direct din formularul standard Odoo (subiect, urgență pe 4 niveluri,\nEcranul Tichetele mele (`Terrabit Support → Tichetele mele`): kanban/listă grupate pe status,\nTichetele cu răspuns nou necitit ies în evidență: în kanban bară colorată pe card și eticheta\nAutorul tichetului e anunțat în Odoo, la clopoțel (doar inbox, fără email), când vine un\nEcranul Ale echipei (`Terrabit Support → Ale echipei`): toate tichetele companiei, indiferent\nDiscuție bidirecțională prin chatter: răspunsurile publice ale consultanților Terrabit apar local,\nCoadă de retrimitere automată (cron la 15 minute) pentru tichete și răspunsuri neplecate din cauza\nSincronizare automată a stadiului, consultantului atribuit și discuției, plus curățarea locală a\nSincronizare incrementală: fiecare rulare aduce doar tichetele și mesajele modificate de la\nClientul își poate închide singur tichetul (buton Închide tichetul, cu confirmare), dacă echipa\nReconcilierea zilnică cere doar id-urile mesajelor și aduce întregi numai pe cele lipsă; mesajele\nActualizare imediată: Terrabit anunță baza clientului printr-o notificare semnată, fără date\nPanou deasupra listei și a kanbanului, în stilul tabloului din Helpdesk: tichetele mele (deschise,\nTrecere automată pe endpointul de staging (`terrabit-staging.odoo.com`) când baza e neutralizată,\nGestionare inteligentă a fișierelor mari: cele sub 2 MB se copiază la Terrabit, cele peste rămân în"
+    "text": "Terrabit Helpdesk Connector\nterrabit_helpdesk_connector\nModulul aduce tichetele de suport Terrabit direct în Odoo-ul clientului, fără email și fără portal separat: utilizatorul deschide un tichet, urmărește statusul real (nou, în lucru, așteaptă răspunsul clientului, închis), vede cine din Terrabit se ocupă de el și poartă discuția din chatter, la fel ca pe orice document Odoo. Colegii din aceeași firmă văd și tichetele celorlalți, ca să nu se deschidă de două ori aceeași problemă. Dacă serverul Terrabit e temporar indisponibil, tichetul sau răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la revenire.\nDeschiderea unui tichet nou direct din formularul standard Odoo (subiect, urgență pe 4 niveluri,\nEcranul Tichetele mele (`Terrabit Support → Tichetele mele`): kanban/listă grupate pe status,\nTichetele cu răspuns nou necitit ies în evidență: în kanban bară colorată pe card și eticheta\nAutorul tichetului e anunțat în Odoo, la clopoțel (doar inbox, fără email), când vine un\nEcranul Ale echipei (`Terrabit Support → Ale echipei`): toate tichetele companiei, indiferent\nDiscuție bidirecțională prin chatter: răspunsurile publice ale consultanților Terrabit apar local,\nCoadă de retrimitere automată (cron la 15 minute) pentru tichete și răspunsuri neplecate din cauza\nSincronizare automată a stadiului, consultantului atribuit și discuției, plus curățarea locală a\nSincronizare incrementală: fiecare rulare aduce doar tichetele și mesajele modificate de la\nBara de status cu timp pe tichet (Nou → În lucru → De răspuns → Închis), ca bara de stadii de la\nDuplicarea sau butonul Tichet nou legat (pe tichetele închise) creează o ciornă nouă, „Continuare\nClientul își poate închide singur tichetul (buton Închide tichetul, cu confirmare), dacă echipa\nReconcilierea zilnică cere doar id-urile mesajelor și aduce întregi numai pe cele lipsă; mesajele\nActualizare imediată: Terrabit anunță baza clientului printr-o notificare semnată, fără date\nPanou deasupra listei și a kanbanului, în stilul tabloului din Helpdesk: tichetele mele (deschise,\nTrecere automată pe endpointul de staging (`terrabit-staging.odoo.com`) când baza e neutralizată,\nGestionare inteligentă a fișierelor mari: cele sub 2 MB se copiază la Terrabit, cele peste rămân în"
   },
   {
     "path": "terrabit_helpdesk_link/index.md",
@@ -13944,7 +13977,7 @@
   {
     "path": "terrabit_iap_server_helpdesk/index.md",
     "module": "terrabit_iap_server_helpdesk",
-    "version": "19.0.0.1.15",
+    "version": "19.0.0.1.16",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_helpdesk",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_helpdesk",
     "last_ingest": "2026-09-24",
@@ -13963,6 +13996,7 @@
       "Închidere de către client (`/iap/terrabit_helpdesk/tickets/close`), după bifa Closure by Customers",
       "Mesajele și autorii lor vin dintr-o singură căutare; avatarul unui autor pe care clientul îl are deja",
       "Pentru reconcilierea zilnică, `/tickets/messages` întoarce doar id-urile (`ids_only`, până la 20.000)",
+      "Lista de tichete trimite timpul pe fiecare status al clientului (`state_durations`, din",
       "Atașamentele venite de la client se salvează local ca bytes; cele trimise către client",
       "Urgența aleasă de client în conector se traduce 1:1 în prioritatea nativă a tichetului",
       "Creditele nu se acordă automat la înregistrarea contului — se alocă manual, per client, direct",
@@ -13980,7 +14014,7 @@
       "helpdesk_timesheet",
       "terrabit_helpdesk_connector"
     ],
-    "text": "IAP Server - Service Helpdesk\nterrabit_iap_server_helpdesk\nModulul e partea de server a conectorului de suport Terrabit și rulează doar pe helpdesk-ul Terrabit, niciodată la clienți. El primește tichetele pe care clienții cu modulul `terrabit_helpdesk_connector` le deschid din propriul Odoo, le leagă automat de firma clientului (după codul fiscal al partenerului) și le atribuie echipei de helpdesk configurate. Pentru consultant, un tichet venit astfel se tratează exact ca oricare altul: preluare, pontaj, răspuns, schimbare de stadiu, închidere. Modulul se ocupă doar de rutarea inițială, de traducerea stadiului intern într-un status simplu pentru client (Nou / În lucru / De răspuns / Închis) și de sincronizarea mesajelor publice; nu trimite nimic din proprie inițiativă — conectorul clientului cere datele la fiecare sincronizare. Fiecare client are pe cont și un sold de credite, dar alocarea acestora este în prezent **manuală**, per client; consumul automat al creditelor din orele pontate pe tichete este doar planificat, nu funcționează încă.\nAdaugă serviciul IAP `terrabit_helpdesk`, folosit de conectorul de suport instalat în Odoo-ul\nFiecare client cu conector are un cont (`iap.server.account`) legat automat de compania lui,\nFiecare stadiu al helpdesk-ului nostru primește un status vizibil clientului: Nou, **În\nLa instalare, modulul propune singur o mapare inițială a stadiilor existente: cele cu „răspuns\"\nTichetele fiecărei firme se grupează sub un singur partener-companie (`partner_company_id`),\nClientul vede doar mesajele publice; notele interne ale consultanților nu ajung niciodată la\nCererile de creare tichet sunt idempotente printr-o cheie trimisă de conector\nSincronizare incrementală: cu parametrul `since`, listele de tichete și mesaje întorc doar ce\nLa o modificare vizibilă clientului sau la un răspuns public, serverul anunță după commit baza\nÎnchidere de către client (`/iap/terrabit_helpdesk/tickets/close`), după bifa Closure by Customers\nMesajele și autorii lor vin dintr-o singură căutare; avatarul unui autor pe care clientul îl are deja\nPentru reconcilierea zilnică, `/tickets/messages` întoarce doar id-urile (`ids_only`, până la 20.000)\nAtașamentele venite de la client se salvează local ca bytes; cele trimise către client\nUrgența aleasă de client în conector se traduce 1:1 în prioritatea nativă a tichetului\nCreditele nu se acordă automat la înregistrarea contului — se alocă manual, per client, direct\nÎnchiderea unui tichet pe helpdesk-ul Terrabit cere pontaj (regulă venită din alt modul, nu din"
+    "text": "IAP Server - Service Helpdesk\nterrabit_iap_server_helpdesk\nModulul e partea de server a conectorului de suport Terrabit și rulează doar pe helpdesk-ul Terrabit, niciodată la clienți. El primește tichetele pe care clienții cu modulul `terrabit_helpdesk_connector` le deschid din propriul Odoo, le leagă automat de firma clientului (după codul fiscal al partenerului) și le atribuie echipei de helpdesk configurate. Pentru consultant, un tichet venit astfel se tratează exact ca oricare altul: preluare, pontaj, răspuns, schimbare de stadiu, închidere. Modulul se ocupă doar de rutarea inițială, de traducerea stadiului intern într-un status simplu pentru client (Nou / În lucru / De răspuns / Închis) și de sincronizarea mesajelor publice; nu trimite nimic din proprie inițiativă — conectorul clientului cere datele la fiecare sincronizare. Fiecare client are pe cont și un sold de credite, dar alocarea acestora este în prezent **manuală**, per client; consumul automat al creditelor din orele pontate pe tichete este doar planificat, nu funcționează încă.\nAdaugă serviciul IAP `terrabit_helpdesk`, folosit de conectorul de suport instalat în Odoo-ul\nFiecare client cu conector are un cont (`iap.server.account`) legat automat de compania lui,\nFiecare stadiu al helpdesk-ului nostru primește un status vizibil clientului: Nou, **În\nLa instalare, modulul propune singur o mapare inițială a stadiilor existente: cele cu „răspuns\"\nTichetele fiecărei firme se grupează sub un singur partener-companie (`partner_company_id`),\nClientul vede doar mesajele publice; notele interne ale consultanților nu ajung niciodată la\nCererile de creare tichet sunt idempotente printr-o cheie trimisă de conector\nSincronizare incrementală: cu parametrul `since`, listele de tichete și mesaje întorc doar ce\nLa o modificare vizibilă clientului sau la un răspuns public, serverul anunță după commit baza\nÎnchidere de către client (`/iap/terrabit_helpdesk/tickets/close`), după bifa Closure by Customers\nMesajele și autorii lor vin dintr-o singură căutare; avatarul unui autor pe care clientul îl are deja\nPentru reconcilierea zilnică, `/tickets/messages` întoarce doar id-urile (`ids_only`, până la 20.000)\nLista de tichete trimite timpul pe fiecare status al clientului (`state_durations`, din\nAtașamentele venite de la client se salvează local ca bytes; cele trimise către client\nUrgența aleasă de client în conector se traduce 1:1 în prioritatea nativă a tichetului\nCreditele nu se acordă automat la înregistrarea contului — se alocă manual, per client, direct\nÎnchiderea unui tichet pe helpdesk-ul Terrabit cere pontaj (regulă venită din alt modul, nu din"
   },
   {
     "path": "terrabit_iap_server_sale/index.md",

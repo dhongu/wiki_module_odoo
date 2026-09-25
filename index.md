@@ -391,6 +391,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_audit_immutable](l10n_ro_audit_immutable/index.md): Pistă de audit imuabilă cu triggere PostgreSQL și hash chain SHA-256 pe documentele financiare (FR-14, OMFP 1802).
 - [l10n_ro_balance_confirmation](l10n_ro_balance_confirmation/index.md): Generează documente de confirmare a soldului pentru parteneri (clienți/furnizori) la o dată dată.
 - [l10n_ro_bank_register_report](l10n_ro_bank_register_report/index.md): Jurnalul de bancă românesc ca raport nativ, per cont bancar și zi, cu sold reportat — extinde `l10n_ro_cash_register_report`.
+- [l10n_ro_caba](l10n_ro_caba/index.md): Completează automat configurarea TVA la încasare (cash basis) pe planul RO — jurnal CABA, cont tehnic de bază 442830 și verificare în Setări, cu fișă consultant.
 - [l10n_ro_cash_bank_enhanced](l10n_ro_cash_bank_enhanced/index.md): Dispoziție de plată/încasare către casierie (14-4-4) cu registru numerotat, alertă tranzacții bancare nereconciliate și control al plafoanelor de numerar conform Legii 70/2015.
 - [l10n_ro_cash_register](l10n_ro_cash_register/index.md): Registru de casă zilnic pe jurnal și dată, cu solduri reportate automat între zile, operațiuni de numerar și raport tipărit 14-4-7A.
 - [l10n_ro_cash_register_report](l10n_ro_cash_register_report/index.md): Registrul de casă românesc (14-4-7A) ca raport nativ `account.report`, cu filtre de dată/jurnal/companie și export PDF/XLSX.
