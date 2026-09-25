@@ -1,7 +1,7 @@
 # IAP Server - Service Helpdesk (localizat la `terrabit_iap_server_helpdesk/index.md`)
 
 - **Nume Tehnic:** `terrabit_iap_server_helpdesk`
-- **Versiune:** `19.0.0.1.14`
+- **Versiune:** `19.0.0.1.15`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_helpdesk
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server_helpdesk`
 - **Ultima Ingestie:** `2026-09-24`
@@ -58,6 +58,8 @@ este doar planificat, nu funcționează încă.
   a echipei: prima etapă pliată + `closed_by_partner` (trece și de regula de pontaj), cu notă internă.
 - Mesajele și autorii lor vin dintr-o singură căutare; avatarul unui autor pe care clientul îl are deja
   (`skip_avatars`) nu se mai retrimite.
+- Pentru reconcilierea zilnică, `/tickets/messages` întoarce doar id-urile (`ids_only`, până la 20.000)
+  sau doar mesajele cerute (`message_ids`).
 - Atașamentele venite de la client se salvează local ca bytes; cele trimise către client
   (atașamente pe mesaje) pleacă ca link `access_token`, ca să nu depășească limita de timeout a
   apelurilor JSON-RPC.

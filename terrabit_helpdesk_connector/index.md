@@ -1,7 +1,7 @@
 # Terrabit Helpdesk Connector (localizat la `terrabit_helpdesk_connector/index.md`)
 
 - **Nume Tehnic:** `terrabit_helpdesk_connector`
-- **Versiune:** `19.0.0.2.11`
+- **Versiune:** `19.0.0.2.12`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_helpdesk_connector`
 - **Ultima Ingestie:** `2026-09-24`
@@ -48,6 +48,8 @@ răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la
   rămâne completă.
 - Clientul își poate închide singur tichetul (buton **Închide tichetul**, cu confirmare), dacă echipa
   Terrabit are bifa **Closure by Customers**; un tichet închis nu se redeschide.
+- Reconcilierea zilnică cere doar id-urile mesajelor și aduce întregi numai pe cele lipsă; mesajele
+  retrase se șterg pe lista de id-uri, inclusiv la discuțiile de peste 500 de mesaje.
 - Actualizare imediată: Terrabit anunță baza clientului printr-o notificare semnată, fără date
   (`/terrabit_helpdesk/notify`), conectorul sincronizează în fundal și reîncarcă singur lista, kanbanul
   și tichetul deschis, în câteva secunde (sincronizarea pornește imediat, pe un fir separat; o singură
