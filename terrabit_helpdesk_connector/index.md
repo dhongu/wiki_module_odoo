@@ -1,7 +1,7 @@
 # Terrabit Helpdesk Connector (localizat la `terrabit_helpdesk_connector/index.md`)
 
 - **Nume Tehnic:** `terrabit_helpdesk_connector`
-- **Versiune:** `19.0.0.2.12`
+- **Versiune:** `19.0.0.2.14`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_helpdesk_connector`
 - **Ultima Ingestie:** `2026-09-24`
@@ -46,6 +46,10 @@ răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la
   pe altă companie, mesaj retras). Un tichet care apare prima oară (creat direct la Terrabit,
   mutat pe companie, dezarhivat) vine cu toată discuția. Cu un server mai vechi, sincronizarea
   rămâne completă.
+- Bara de status cu timp pe tichet (Nou → În lucru → De răspuns → Închis), ca bara de stadii de la
+  Terrabit; timpul statusului curent crește în direct. Orele pontate rămân doar la Terrabit.
+- Duplicarea sau butonul **Tichet nou legat** (pe tichetele închise) creează o ciornă nouă, „Continuare
+  la #cod”, cu trimitere la tichetul original.
 - Clientul își poate închide singur tichetul (buton **Închide tichetul**, cu confirmare), dacă echipa
   Terrabit are bifa **Closure by Customers**; un tichet închis nu se redeschide.
 - Reconcilierea zilnică cere doar id-urile mesajelor și aduce întregi numai pe cele lipsă; mesajele

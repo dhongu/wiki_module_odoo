@@ -99,6 +99,10 @@ care circulă un tichet: **Ciornă**, **De trimis**, **Nou**, **În lucru**, **D
 coloanele care au tichete. Implicit sunt afișate doar tichetele deschise; cele închise se pot afișa
 cu filtrul **Închis**.
 
+Deschis, un tichet arată sus bara de status (**Nou → În lucru → De răspuns → Închis**) cu timpul
+petrecut în fiecare, la fel ca bara de stadii de la Terrabit: cât a așteptat tichetul după noi și cât
+după client. Timpul statusului curent crește în direct.
+
 Pe fiecare card se văd codul (ex. `09163`), subiectul, urgența (stele), data deschiderii, cine l-a
 deschis și avatarul consultantului Terrabit care se ocupă de tichet.
 
@@ -206,8 +210,13 @@ confirmarea, apoi tichetul trece imediat pe **Închis**, iar la Terrabit intră 
 cu nota internă „Tichet închis de client”.
 
 Butonul apare doar dacă echipa de suport Terrabit permite închiderea de către client și doar pe
-tichetele încă deschise. Un tichet închis **nu se mai poate redeschide**: pentru o problemă nouă se
-deschide un tichet nou. Nu se cere motiv.
+tichetele încă deschise. Un tichet închis **nu se mai poate redeschide**. Nu se cere motiv.
+
+Dacă problema revine sau e nevoie de o verificare legată de un tichet închis, pe acesta apare
+butonul **Tichet nou legat**. El deschide o ciornă nouă, cu subiectul „Continuare la #cod: …”,
+aceeași urgență și descrierea originală, precedată de „Legat de tichetul #cod.”. Ciorna se
+completează și se trimite ca orice tichet nou. Același lucru se întâmplă la **Acțiuni → Duplicare**
+pe orice tichet.
 
 ![Butonul „Închide tichetul"](screenshots/09_inchide_tichet.png)
 
@@ -264,6 +273,10 @@ alegerea urgenței.
 - [ ] Cu bifa **Closure by Customers** pe echipa Terrabit, un tichet deschis are butonul **Închide
       tichetul**. După confirmare, tichetul e **Închis** la client și în etapa de închidere la Terrabit.
 - [ ] Fără bifă, butonul nu apare. Pe un tichet deja închis, butonul nu apare.
+- [ ] Pe un tichet deschis, bara de sus arată timpul pe fiecare status, aceleași valori ca bara de
+      stadii de la Terrabit, grupate pe statusurile clientului.
+- [ ] Pe un tichet închis, **Tichet nou legat** deschide o ciornă cu „Continuare la #cod”, fără cod
+      Terrabit și fără fișierele tichetului vechi. **Duplicare** face același lucru, fără eroare.
 
 ## 9. Mesaje de eroare frecvente
 
