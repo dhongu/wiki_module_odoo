@@ -222,6 +222,24 @@ pe orice tichet.
 
 ![Confirmarea închiderii](screenshots/10_confirmare_inchidere.png)
 
+### Pasul 9 — Tichet direct din fereastra de eroare
+
+Când Odoo afișează fereastra de eroare („Ups! Ceva nu a mers bine…”), aceasta are butonul
+**Trimite la Terrabit**. Butonul închide fereastra și deschide un tichet nou, ciornă, completat
+automat cu:
+
+- subiectul „Eroare: …”, cu mesajul real al erorii;
+- pagina pe care era utilizatorul;
+- detaliile tehnice (tipul erorii, modelul, ora, traceback-ul complet), pe care altfel utilizatorul
+  nu le vede decât dacă apasă **Vezi detalii tehnice**.
+
+Utilizatorul scrie pe primul rând ce făcea când a apărut eroarea și apasă **Trimite la Terrabit**. Nu
+mai e nevoie de o fotografie a ecranului: consultantul primește textul exact al erorii.
+
+![Fereastra de eroare, cu butonul „Trimite la Terrabit"](screenshots/11_eroare_trimite.png)
+
+![Tichetul completat din eroare](screenshots/12_tichet_din_eroare.png)
+
 ### Note de monografie și raportare
 
 Nu se aplică: modulul nu generează note contabile și nici raportări.
@@ -275,6 +293,8 @@ alegerea urgenței.
 - [ ] Fără bifă, butonul nu apare. Pe un tichet deja închis, butonul nu apare.
 - [ ] Pe un tichet deschis, bara de sus arată timpul pe fiecare status, aceleași valori ca bara de
       stadii de la Terrabit, grupate pe statusurile clientului.
+- [ ] La o eroare Odoo („Ups!”), butonul **Trimite la Terrabit** deschide o ciornă cu subiectul
+      „Eroare: <mesajul real>”, pagina și traceback-ul completate.
 - [ ] Pe un tichet închis, **Tichet nou legat** deschide o ciornă cu „Continuare la #cod”, fără cod
       Terrabit și fără fișierele tichetului vechi. **Duplicare** face același lucru, fără eroare.
 
@@ -306,6 +326,8 @@ Capturile se generează automat din `tests/test_screenshots.py` (mixinul `Screen
 8. `08_de_trimis.png` — tichet în coada „De trimis", cu motivul afișat.
 9. `09_inchide_tichet.png` — tichet deschis, cu butonul **Închide tichetul** evidențiat.
 10. `10_confirmare_inchidere.png` — fereastra de confirmare a închiderii.
+11. `11_eroare_trimite.png` — fereastra de eroare Odoo, cu butonul **Trimite la Terrabit**.
+12. `12_tichet_din_eroare.png` — tichetul ciornă completat din eroare.
 
 Regenerare:
 
