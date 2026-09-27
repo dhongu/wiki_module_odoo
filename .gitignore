@@ -10,3 +10,6 @@ __pycache__/
 #    `python3 scripts/wiki_index.py --embed` (regenerează ambele local).
 .index/vectors.npy
 .index/meta.json
+
+# macOS
+.DS_Store
