@@ -1,7 +1,7 @@
 # Terrabit Helpdesk Connector (localizat la `terrabit_helpdesk_connector/index.md`)
 
 - **Nume Tehnic:** `terrabit_helpdesk_connector`
-- **Versiune:** `19.0.0.2.16`
+- **Versiune:** `19.0.0.2.17`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_helpdesk_connector`
 - **Ultima Ingestie:** `2026-09-24`
@@ -48,7 +48,7 @@ răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la
   rămâne completă.
 - Meniuri **Tichete echipă**, **Tichete în așteptare** și **Tichete închise** (consultare, doar citire).
 - Status **În așteptare**: clientul își parchează singur tichetul (**Pune în așteptare** / **Reia**).
-- Urgență pe 4 niveluri: 0★ Normal, 1★ Urgent, 2★ Critic, 3★ Blochează munca, cu explicație lângă stele.
+- Urgență pe 4 niveluri: 0★ Normal, 1★ Urgent, 2★ Critic, 3★ Blocant, cu explicație lângă stele.
 - Aviz în Odoo pentru tichetele care așteaptă răspunsul clientului de peste 24 h (autor sau persoană
   desemnată pe cont).
 - Tichetul nou legat arată textul sursă separat, needitabil.

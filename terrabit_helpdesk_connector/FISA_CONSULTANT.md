@@ -124,7 +124,7 @@ deschis tichetul și dispare când acesta citește discuția.
 Apăsați **Nou**. În formular completați:
 - **Subiect**: pe scurt, despre ce este vorba (obligatoriu);
 - **Urgență**: fără stea = *Normal* (implicit), 1 stea = *Urgent*, 2 stele = *Critic*, 3 stele =
-  *Blochează munca*. Sub stele, formularul explică nivelurile și avertizează că o urgență mai mare
+  *Blocant*. Sub stele, formularul explică nivelurile și avertizează că o urgență mai mare
   decât cere problema poate genera costuri suplimentare de asistență;
 - **Descriere**: detalii și pași de reproducere. Capturile de ecran se pot lipi direct cu Ctrl+V.
 
