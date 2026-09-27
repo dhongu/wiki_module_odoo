@@ -50,7 +50,7 @@ Oglinda se curăță singură când un tichet dispare de la Terrabit.
 
 Roluri recomandate la testare:
 - un utilizator intern **cu adresă de email** completată pe profil, care deschide tichetul;
-- un al doilea utilizator intern, ca să verifici ecranul „Ale echipei";
+- un al doilea utilizator intern, ca să verifici ecranul „Tichete echipă";
 - un consultant pe helpdesk-ul Terrabit de **test** (staging), care răspunde și schimbă statusul.
 
 ## 4. Conturi și date implicate
@@ -87,6 +87,9 @@ din exterior (cazul oricărei instanțe odoo.sh).
    inclusiv pe o copie restaurată a producției. Sincronizarea rulează în continuare la 15 minute, ca în
    producție, doar că vorbește cu helpdesk-ul de test. Se oprește numai cronul de înregistrare:
    contul se înregistrează singur pe staging, la prima sincronizare. Vezi secțiunea 11.
+6. Opțional, pe același cont: **Avize „așteaptă răspuns” către** — cine e anunțat când un tichet
+   așteaptă răspunsul clientului de peste 24 de ore. Gol: cel care a deschis tichetul. Avizul apare
+   în Odoo, la clopoțel, o singură dată pentru fiecare așteptare; nu pleacă la Terrabit.
 
 ![Contul de conectare la helpdesk-ul Terrabit](screenshots/01_cont_conectare.png)
 
@@ -120,8 +123,9 @@ deschis tichetul și dispare când acesta citește discuția.
 
 Apăsați **Nou**. În formular completați:
 - **Subiect**: pe scurt, despre ce este vorba (obligatoriu);
-- **Urgență**: implicit fără stea (*Scăzută*); stelele se adaugă doar când e cazul, până la
-  *Blochează munca*;
+- **Urgență**: fără stea = *Normal* (implicit), 1 stea = *Urgent*, 2 stele = *Critic*, 3 stele =
+  *Blochează munca*. Sub stele, formularul explică nivelurile și avertizează că o urgență mai mare
+  decât cere problema poate genera costuri suplimentare de asistență;
 - **Descriere**: detalii și pași de reproducere. Capturile de ecran se pot lipi direct cu Ctrl+V.
 
 Tichetul nou e o **ciornă**. Odoo îl salvează singur pe parcurs, de exemplu când încărcați un
@@ -177,12 +181,15 @@ vadă.
 
 ![Discuția din chatter](screenshots/06_discutie.png)
 
-### Pasul 6 — Tichetele echipei
+### Pasul 6 — Tichetele echipei și tichetele închise
 
-Accesați **Terrabit Support → Ale echipei**. Apar toate tichetele firmei, indiferent cine le-a
+Accesați **Terrabit Support → Tichete echipă**. Apar toate tichetele firmei, indiferent cine le-a
 deschis, inclusiv cele deschise direct la Terrabit (telefon, email). Se pot grupa după **Status**,
 **Urgență**, **Deschis de** sau **Atribuit lui**. În gruparea după **Atribuit lui**, grupul **Fără**
 cuprinde tichetele pe care încă nu le-a preluat niciun consultant.
+
+Tichetele închise rămân în baza clientului, cu discuția și fișierele lor, pentru consultare: meniul
+**Terrabit Support → Tichete închise** le arată pe toate, doar pentru citire.
 
 ![Tichetele echipei, grupate după consultant](screenshots/07_ale_echipei.png)
 
@@ -214,13 +221,29 @@ tichetele încă deschise. Un tichet închis **nu se mai poate redeschide**. Nu 
 
 Dacă problema revine sau e nevoie de o verificare legată de un tichet închis, pe acesta apare
 butonul **Tichet nou legat**. El deschide o ciornă nouă, cu subiectul „Continuare la #cod: …”,
-aceeași urgență și descrierea originală, precedată de „Legat de tichetul #cod.”. Ciorna se
-completează și se trimite ca orice tichet nou. Același lucru se întâmplă la **Acțiuni → Duplicare**
+aceeași urgență și descrierea „Legat de tichetul #cod.”, sub care clientul scrie ce e nou. Textul
+tichetului sursă apare separat, sub descriere, **doar pentru citire**: clientul îl are la îndemână,
+dar nu-l poate modifica. Ciorna se completează și se trimite ca orice tichet nou. Același lucru se întâmplă la **Acțiuni → Duplicare**
 pe orice tichet.
 
 ![Butonul „Închide tichetul"](screenshots/09_inchide_tichet.png)
 
 ![Confirmarea închiderii](screenshots/10_confirmare_inchidere.png)
+
+### Pasul 8b — Punerea tichetului în așteptare
+
+Un tichet la care clientul vrea să revină mai târziu (o dezvoltare amânată, o informație pe care o
+va avea peste o lună) se poate **parca**: pe tichet, butonul **Pune în așteptare**. La Terrabit
+tichetul trece în etapa de așteptare și e lăsat deoparte până îi vine rândul.
+
+Tichetele parcate nu mai apar în **Tichetele mele** și **Tichete echipă**, ci în meniul lor,
+**Terrabit Support → Tichete în așteptare**. Când clientul vrea să continue, deschide tichetul și
+apasă **Reia**; tichetul revine **În lucru**. Butoanele apar doar dacă echipa Terrabit permite
+(aceeași bifă ca la închidere). Ce s-a lucrat deja pe tichet rămâne pontat la Terrabit.
+
+![Tichetele în așteptare](screenshots/13_in_asteptare.png)
+
+![Butonul „Reia" pe un tichet parcat](screenshots/14_reia_tichet.png)
 
 ### Pasul 9 — Tichet direct din fereastra de eroare
 
@@ -262,10 +285,15 @@ alegerea urgenței.
 
 ## 8. Verificări pentru consultant
 
-- [ ] Meniul **Terrabit Support** apare după instalare, cu **Tichetele mele** și **Ale echipei**.
+- [ ] Meniul **Terrabit Support** apare după instalare, cu **Tichetele mele** și **Tichete echipă**.
 - [ ] Contul IAP „Terrabit Helpdesk" există pentru fiecare companie și are endpoint-ul
       `https://terrabit.odoo.com` (pe staging: `https://terrabit-staging.odoo.com`).
-- [ ] Un tichet nou pornește fără stea la urgență.
+- [ ] Un tichet nou pornește fără stea la urgență (*Normal*), iar sub stele apare explicația nivelurilor.
+- [ ] Meniul **Tichete închise** arată tichetele închise, cu discuția lor.
+- [ ] **Pune în așteptare** mută tichetul la Terrabit în etapa de așteptare; tichetul dispare din
+      **Tichetele mele** și apare în **Tichete în așteptare**. **Reia** îl aduce înapoi **În lucru**.
+- [ ] Un tichet în **De răspuns** de peste 24 de ore aduce un aviz la clopoțel autorului (sau
+      persoanei desemnate pe cont), o singură dată.
 - [ ] Un tichet nou, salvat dar netrimis, rămâne **Ciornă** și **nu** apare la Terrabit.
 - [ ] După **Trimite la Terrabit**, titlul primește codul Terrabit, iar statusul e **Nou**.
 - [ ] Tichetul apare la Terrabit pe echipa corectă, pe firma clientului.
@@ -283,7 +311,7 @@ alegerea urgenței.
 - [ ] O notă scrisă de client cu **Scrie notă** **nu** ajunge la Terrabit.
 - [ ] Un răspuns scris cu Terrabit oprit afișează „Răspunsul n-a plecat încă" și pleacă după
       revenire, cu fișierele lui.
-- [ ] Un tichet deschis de alt coleg apare în **Ale echipei**, dar nu în **Tichetele mele**.
+- [ ] Un tichet deschis de alt coleg apare în **Tichete echipă**, dar nu în **Tichetele mele**.
 - [ ] Cu serverul Terrabit oprit, tichetul rămâne **De trimis** și pleacă după revenire, **o singură
       dată**.
 - [ ] Panoul de deasupra listei arată ora ultimei sincronizări; după o modificare făcută la
@@ -295,7 +323,7 @@ alegerea urgenței.
       stadii de la Terrabit, grupate pe statusurile clientului.
 - [ ] La o eroare Odoo („Ups!”), butonul **Trimite la Terrabit** deschide o ciornă cu subiectul
       „Eroare: <mesajul real>”, pagina și traceback-ul completate.
-- [ ] Pe un tichet închis, **Tichet nou legat** deschide o ciornă cu „Continuare la #cod”, fără cod
+- [ ] Pe un tichet închis, **Tichet nou legat** deschide o ciornă cu „Continuare la #cod”, cu textul sursă needitabil, fără cod
       Terrabit și fără fișierele tichetului vechi. **Duplicare** face același lucru, fără eroare.
 
 ## 9. Mesaje de eroare frecvente
@@ -322,12 +350,14 @@ Capturile se generează automat din `tests/test_screenshots.py` (mixinul `Screen
 4. `04_zona_fisiere.png` — o ciornă cu fișiere atașate, înainte de trimitere.
 5. `05_tichet_trimis.png` — tichetul abia trimis: `(#cod)`, status **Nou**, fișierele plecate.
 6. `06_discutie.png` — chatter-ul, cu răspunsul consultantului și al clientului.
-7. `07_ale_echipei.png` — lista „Ale echipei", grupată după consultant, cu un grup deschis.
+7. `07_ale_echipei.png` — lista „Tichete echipă", grupată după consultant, cu un grup deschis.
 8. `08_de_trimis.png` — tichet în coada „De trimis", cu motivul afișat.
 9. `09_inchide_tichet.png` — tichet deschis, cu butonul **Închide tichetul** evidențiat.
 10. `10_confirmare_inchidere.png` — fereastra de confirmare a închiderii.
 11. `11_eroare_trimite.png` — fereastra de eroare Odoo, cu butonul **Trimite la Terrabit**.
 12. `12_tichet_din_eroare.png` — tichetul ciornă completat din eroare.
+13. `13_in_asteptare.png` — meniul „Tichete în așteptare”.
+14. `14_reia_tichet.png` — tichet parcat, cu butonul **Reia**.
 
 Regenerare:
 

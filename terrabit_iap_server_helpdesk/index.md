@@ -1,7 +1,7 @@
 # IAP Server - Service Helpdesk (localizat la `terrabit_iap_server_helpdesk/index.md`)
 
 - **Nume Tehnic:** `terrabit_iap_server_helpdesk`
-- **Versiune:** `19.0.0.1.16`
+- **Versiune:** `19.0.0.1.17`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_helpdesk
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server_helpdesk`
 - **Ultima Ingestie:** `2026-09-24`
@@ -62,6 +62,9 @@ este doar planificat, nu funcționează încă.
   sau doar mesajele cerute (`message_ids`).
 - Lista de tichete trimite timpul pe fiecare status al clientului (`state_durations`, din
   `duration_tracking`, grupat după „Status vizibil clientului”) și `state_since`.
+- Status **În așteptare** (`on_hold`) pentru etapele de parcare (la noi „In Pending”); clientul poate
+  parca și relua tichetul (`/tickets/hold`), după **Closure by Customers**. Notele acțiunilor clientului
+  sunt în limba lui.
 - Atașamentele venite de la client se salvează local ca bytes; cele trimise către client
   (atașamente pe mesaje) pleacă ca link `access_token`, ca să nu depășească limita de timeout a
   apelurilor JSON-RPC.

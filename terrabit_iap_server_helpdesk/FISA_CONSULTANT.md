@@ -30,8 +30,10 @@ Context operațional:
   (dubluri rămase din trecut), alege partenerul legat de cele mai multe conturi, iar la egalitate
   pe cel mai vechi. Modulul `terrabit_iap_server` face asta începând cu 19.0.0.1.3. Înainte
   potrivirea era exactă, pe text, și crea dubluri fără niciun avertisment.
-- Clientul vede statusul tichetului simplificat, în patru stări: **Nou**, **În lucru**,
-  **De răspuns**, **Închis**. Fiecare stadiu al helpdesk-ului nostru e tradus într-una dintre ele.
+- Clientul vede statusul tichetului simplificat, în cinci stări: **Nou**, **În lucru**,
+  **De răspuns**, **În așteptare**, **Închis**. Fiecare stadiu al helpdesk-ului nostru e tradus
+  într-una dintre ele. **În așteptare** e tichetul parcat: nu se lucrează la el până nu revine
+  clientul, iar la client are meniul lui.
 - **Clientul vede doar mesajele publice.** Notele interne ale consultanților nu pleacă niciodată la
   client.
 - Nu se trimit emailuri în plus: notificările sunt cele obișnuite ale helpdesk-ului, către urmăritorii
@@ -76,7 +78,9 @@ pontate nu e încă implementat, deci deocamdată soldul nu scade singur.
 3. Verificați ce vede clientul pentru fiecare stadiu (vezi pasul 1 din flux). **Doar la instalare**,
    modulul propune singur o mapare: etapele care conțin în nume „răspuns" / „raspuns", „response",
    „await" sau „feedback" devin **De răspuns**; prima etapă deschisă, cea cu secvența cea mai mică,
-   devine **Nou**, dacă nu e deja **De răspuns**; restul, **În lucru**.
+   devine **Nou**, dacă nu e deja **De răspuns**; cele cu „pending”, „hold” sau „așteptare” devin
+   **În așteptare** (la noi: „In Pending”); restul, **În lucru**. La actualizarea la 19.0.0.1.17,
+   etapele de acest fel rămase pe **În lucru** trec singure pe **În așteptare**.
    **O etapă creată după instalare pornește pe În lucru**, oricum s-ar numi. Setați-i manual
    **Status vizibil clientului**.
    Etapele cu bifa **Pliat** apar la client ca **Închis**, indiferent de mapare.
@@ -95,6 +99,10 @@ clientului** arată cum apare stadiul în Odoo-ul clientului: **Nou**, **În luc
 **Verifică:**
 - stadiul în care îi cereți clientului o informație e pe **De răspuns**. E semnalul, la client, că
   urmează pasul lui;
+- stadiul de parcare („In Pending”) e pe **În așteptare**. Cu bifa **Closure by Customers** pe
+  echipă, clientul își poate pune singur tichetul în așteptare și îl poate relua; pe tichet rămâne
+  o notă internă („Pus în așteptare de client” / „Reluat de client”). Pontajul pentru ce s-a lucrat
+  deja se face ca de obicei;
 - etapele de închidere (la noi: Solved, Cancelled, Closed M/A/T) au bifa **Pliat**, ca să apară la
   client ca **Închis**.
 
