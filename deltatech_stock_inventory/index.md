@@ -1,10 +1,10 @@
 # Stock Inventory (localizat la `deltatech_stock_inventory/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_inventory`
-- **Versiune:** `19.0.2.10.0`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_inventory
+- **Versiune:** `20.0.2.10.0`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_stock_inventory
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_inventory`
-- **Ultima Ingestie:** `2026-09-24`
+- **Ultima Ingestie:** `2026-09-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -70,13 +70,18 @@ fluxului de ingestie, analiza codului pentru această secțiune a fost omisă.
 
 ### Notă privind corectările față de DESCRIPTION.md
 
-`readme/DESCRIPTION.md` menționează două funcționalități care nu mai există în codul 19.0 și care au
-fost tratate ca atare (nu ca funcționalități active), conform fișei consultant:
+`readme/DESCRIPTION.md` menționează două funcționalități care nu există în codul 20.0 și care au
+fost tratate ca atare (nu ca funcționalități active), conform fișei consultant (verificate direct în
+cod: importul modelului `stock_valuation_layer` e comentat în `models/__init__.py`, iar nicio
+integrare proprie de coduri de bare nu apare în `models/` sau `wizard/`):
 
-- **arhivarea straturilor de evaluare a stocului (SVL)** — straturile de valoare nu mai există în
-  19.0, opțiunea nu are efect și nu apare pe formular;
+- **arhivarea straturilor de evaluare a stocului (SVL)** — opțiunea `archive_svl` există pe formular,
+  dar logica de arhivare/recreare e comentată în cod și nu produce efect;
 - **integrare proprie de coduri de bare** — modulul nu are integrare proprie; numărarea cu scanerul
   se face din aplicația standard, pe **Inventariere fizică**.
 
 Ambele sunt documentate ca limitări cunoscute în [FISA_CONSULTANT.md](FISA_CONSULTANT.md), secțiunea
-„Limitări cunoscute", nu ca funcționalități curente.
+„Limitări cunoscute", nu ca funcționalități curente. Textul din `FISA_CONSULTANT.md` a fost copiat
+fidel din `readme/`; unde fișa menționează „Odoo 19" în descrierea comportamentului standard, aceasta
+se referă la nucleul Odoo fără acest modul (comportamentul e identic în 20.0 — `stock.inventory`
+clasic rămâne eliminat din core și în această versiune).

@@ -1,10 +1,10 @@
 # Romania - Monitorizare modificări date ANAF parteneri (FR-23) (localizat la `l10n_ro_anaf_partner/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_partner`
-- **Versiune:** `19.0.2.3.2`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_partner
+- **Versiune:** `20.0.2.3.2`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_anaf_partner
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_partner`
-- **Ultima Ingestie:** 2026-09-12
+- **Ultima Ingestie:** 2026-09-27
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -23,7 +23,7 @@ Acest modul monitorizează modificările datelor ANAF ale partenerilor, cu **cli
 - **Alertă radiere/dizolvare:** activitate Odoo plus notă în chatter la prima detectare a stării de radiat/dizolvat.
 - **Alertă schimbare regim TVA:** notă automată în chatter când `scpTVA` se modifică.
 - **Avertizare/blocare la postarea facturii:** notă informativă în chatter, restrânsă la facturile emise (`out_invoice`) — NU la storno-uri, facturi de furnizor sau note contabile — la postarea pe un partener inactiv sau radiat la ANAF; blocare hard opțională și independentă din Setări (`l10n_ro_anaf_block_inactive`, `l10n_ro_anaf_block_struck_off`), ambele oprite implicit.
-- **Re-verificare VIES periodică:** cron opțional (dezactivat implicit) care reia verificarea VIES pentru partenerii UE și semnalează în chatter numerele devenite invalide.
+- **Re-verificare VIES periodică:** cron opțional (dezactivat implicit) care reia verificarea VIES pentru partenerii UE și semnalează în chatter numerele devenite invalide; pe Odoo 20 verificarea VIES nu mai vine din `base_vat`, ci din modulul separat `l10n_eu_account_vies` — cronul se auto-dezactivează logic (skip) dacă acesta nu e instalat.
 - **Sincronizare manuală:** buton „Sync with ANAF" pe fila ANAF a partenerului (ascuns pentru partenerii propriei companii).
 - **Ultima verificare ANAF:** câmpul `l10n_ro_anaf_last_check` actualizat la fiecare rulare cron.
 - **Meniu Log Modificări:** vizualizare globală a tuturor modificărilor ANAF, filtrabilă pe tip/partener/dată.
@@ -40,6 +40,7 @@ Acest modul monitorizează modificările datelor ANAF ale partenerilor, cu **cli
 #### 3. Dependențe
 
 - [l10n_ro_anaf_base](../l10n_ro_anaf_base/index.md)
+- [l10n_ro_config](../l10n_ro_config/index.md)
 - `account`
 
 Dependență externă Python: `requests`.
@@ -67,4 +68,4 @@ Dependență externă Python: `requests`.
 
 #### 5. Conexiuni
 
-Nu au fost identificate în cod alte module care să consume câmpurile sau modelele definite aici (`l10n_ro_is_inactive_anaf`, `l10n_ro_is_struck_off_anaf`, `l10n.ro.anaf.change.log`) în afara dependenței directe [l10n_ro_anaf_base](../l10n_ro_anaf_base/index.md), de la care preiau meniul de rapoarte financiare și infrastructura comună ANAF. Normalizarea sectorului bucureștean pentru e-Factura este relevantă pentru fluxul `l10n_ro_edi` (fără dependență directă în cod).
+Nu au fost identificate în cod alte module care să consume câmpurile sau modelele definite aici (`l10n_ro_is_inactive_anaf`, `l10n_ro_is_struck_off_anaf`, `l10n.ro.anaf.change.log`) în afara dependențelor directe [l10n_ro_anaf_base](../l10n_ro_anaf_base/index.md) și [l10n_ro_config](../l10n_ro_config/index.md), de la care preiau meniul de rapoarte financiare, infrastructura comună ANAF și tab-ul comun „ANAF" din fișa partenerului. Normalizarea sectorului bucureștean pentru e-Factura este relevantă pentru fluxul `l10n_ro_edi` (fără dependență directă în cod). Re-verificarea VIES devine activă doar dacă e instalat `l10n_eu_account_vies` (fără dependență directă în cod).

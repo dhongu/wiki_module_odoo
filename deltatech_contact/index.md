@@ -1,10 +1,10 @@
 # Deltatech Contacts (localizat la `deltatech_contact/index.md`)
 
 - **Nume Tehnic:** `deltatech_contact`
-- **Versiune:** `19.0.1.4.8`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_contact`
+- **Versiune:** `20.0.1.4.8`
+- **Cale:** `https://github.com/dhongu/deltatech/tree/20.0/deltatech_contact`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_contact`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-27`
 
 #### 1. Sumar
 
@@ -15,9 +15,9 @@ Modulul extinde modulul standard de Contacte din Odoo cu date personale suplimen
 - Adaugă un tab **Date personale** pe fișa de contact (vizibil doar pentru persoane fizice) cu: CNP, data nașterii, sex, seria/numărul actului de identitate, autoritatea emitentă și data emiterii.
 - **Validare CNP**: verifică la salvare cifra de control a CNP-ului românesc din 13 cifre; la import în masă (context `install_mode`) CNP-urile invalide sunt golite silențios, nu blochează importul.
 - **Completare automată din CNP**: la introducerea CNP-ului, data nașterii și sexul sunt derivate automat din cifrele codului (și invers, la modificarea datei nașterii, CNP-ul e recalculat).
-- **Afișare nume contact**: poate ascunde numele companiei-părinte din numele afișat al contactului, controlat printr-un parametru de sistem (`contact.get_name_only`).
+- **Afișare nume contact**: poate ascunde numele companiei-părinte din numele afișat al contactului, controlat printr-un parametru de sistem (`contact.get_name_only`, citit acum prin noul API `get_str`).
 - Câmp **Mijloc de transport** pe fișa contactului.
-- **Filtre de căutare extinse**: adaugă filtre de tip adresă de Livrare și de Facturare în vizualizarea de căutare a Contactelor.
+- **Filtre de căutare extinse**: adaugă filtrele "Persons" / "Companies" (refăcute manual, întrucât `company_type`/filtrele echivalente au fost eliminate din nucleul Odoo 20) plus filtre de tip adresă de Livrare și de Facturare în vizualizarea de căutare a Contactelor.
 - **Afișare inline a adresei**: suportă flag-urile de context `show_phone`, `show_category` și `address_inline` pentru a îmbogăți sau aplatiza numele afișat al contactului în câmpurile relaționale.
 
 #### 3. Dependențe

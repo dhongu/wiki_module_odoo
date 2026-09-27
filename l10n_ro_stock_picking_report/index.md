@@ -1,10 +1,10 @@
 # Romania - Terrabit - Picking Reports (localizat la `l10n_ro_stock_picking_report/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_picking_report`
-- **Versiune:** `19.0.1.3.6`
-- **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_picking_report
+- **Versiune:** `20.0.1.3.6`
+- **Cale:** https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_stock_picking_report
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_stock_picking_report`
-- **Ultima Ingestie:** `2026-09-22`
+- **Ultima Ingestie:** `2026-09-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -26,10 +26,10 @@ Modulul adaugă rapoarte specifice gestiunii de stoc din România pentru documen
 
 - `base`
 - `stock`
-- `l10n_ro_report_common`
+- [l10n_ro_report_common](../l10n_ro_report_common/index.md)
 - `purchase_stock`
 - `sale_stock`
-- `l10n_ro_stock`
+- [l10n_ro_stock](../l10n_ro_stock/index.md)
 - [l10n_ro_invoice_report](../l10n_ro_invoice_report/index.md)
 - `delivery`
 
@@ -39,9 +39,9 @@ Secțiune omisă: fișierul `readme/DESCRIPTION.md` acoperă Sumarul și Funcți
 
 #### 5. Conexiuni
 
-- `l10n_ro_stock`: gestiunea de stoc localizată pe care se bazează rapoartele de picking (indicatorul de aviz).
+- [l10n_ro_stock](../l10n_ro_stock/index.md): gestiunea de stoc localizată pe care se bazează rapoartele de picking (indicatorul de aviz).
 - [l10n_ro_invoice_report](../l10n_ro_invoice_report/index.md): primește delegatul și mijlocul de transport pe factură (câmpuri adăugate de acest modul).
-- `l10n_ro_report_common`: elementele comune de layout ale rapoartelor localizării.
+- [l10n_ro_report_common](../l10n_ro_report_common/index.md): elementele comune de layout ale rapoartelor localizării.
 - `l10n_ro_stock_picking_comment_template`: modul exclus reciproc (`excludes`), care oferă o abordare alternativă pentru comentariile pe rapoartele de picking.
 - `l10n_ro_stock_account` (suita `l10n-romania-oca`): singura sursă care valorizează mișcările interne (`move.value`) — dacă e instalat, bonul de consum și nota de transfer arată prețul și valoarea reale în loc de 0,00; incompatibil cu pachetul CMP de mai jos.
 - [l10n_ro_stock_gestiune](../l10n_ro_stock_gestiune/index.md) / [l10n_ro_stock_pack_cmp](../l10n_ro_stock_pack_cmp/index.md) (suita `l10n_ro_ent`): valorizează transferurile pe cont propriu, cu notă contabilă separată, dar nu scriu `move.value` — bonul de consum și nota de transfer rămân 0,00 chiar dacă nota contabilă corectă există în altă parte.

@@ -1,10 +1,10 @@
 # Deltatech Delivery Base (localizat la `deltatech_delivery/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery`
-- **Versiune:** `19.0.6.6.1`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery
+- **Versiune:** `20.0.6.7.0`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/20.0/deltatech_delivery
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery`
-- **Ultima Ingestie:** `2026-09-24`
+- **Ultima Ingestie:** `2026-09-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -38,16 +38,16 @@ Modulul „Deltatech Delivery Base” este o extensie cuprinzătoare pentru Odoo
 
 - **Acțiuni în masă pe comenzile de vânzare**:
   - **Validate Deliveries** — din meniul Acțiuni al listei de comenzi de vânzare, validează în masă livrările deja pregătite (rezervare stoc + `button_validate`) pentru comenzile selectate; fiecare comandă e procesată izolat, printr-un wizard de confirmare urmat de o notificare cu numărul de succese și lista comenzilor cu probleme (motiv inclus)
-  - **Send to Carrier** — din același meniu, deschide un dialog OWL care trimite comenzile selectate la curier secvențial (una câte una), cu progres live per linie: succes (cu numărul AWB), eroare clară, rezultat „incert" (când răspunsul curierului s-a pierdut și nu se reîncearcă automat, ca să nu apară un AWB dublu) sau **reținut** (livrare amânată, fără apel la curier); cât rulează, un banner cu rotiță animată arată că acțiunea e în curs, iar „Închide” e dezactivat până la final
+  - **Send to Carrier** — din același meniu, deschide un dialog OWL care trimite comenzile selectate la curier secvențial (una câte una), cu progres live per linie: succes (cu numărul AWB), eroare clară, rezultat „incert" (când răspunsul curierului s-a pierdut și nu se reîncearcă automat, ca să nu apară un AWB dublu) sau **reținut** (livrare amânată, fără apel la curier); cât rulează, un banner cu rotiță animată arată că acțiunea e în curs, iar „Închide" e dezactivat până la final
   - Din același dialog, **Print AWBs** combină într-un singur PDF etichetele deja generate pentru comenzile trimise cu succes, fără să genereze nimic nou
   - **View Invoices** (Afișează facturile) — deschide lista facturilor comenzilor selectate (sau direct factura, dacă e una), de unde se folosește tipărirea standard Odoo în masă
 
-- **Reținerea livrărilor amânate** *(nou, 19.0.6.6.x)*:
-  - o livrare cu bifa **Amânată** (`postponed` pe transfer, din `deltatech_delivery_status`) nu poate primi AWB până nu este eliberată, indiferent de calea folosită
+- **Reținerea livrărilor amânate**:
+  - o livrare cu bifa **Amânată** (`postponed` pe transfer, din [deltatech_delivery_status](../deltatech_delivery_status/index.md)) nu poate primi AWB până nu este eliberată, indiferent de calea folosită
   - **Trimite la curier** de pe transfer refuză cu mesajul de reținere în loc să încerce expedierea
   - **Validate Deliveries** listează comanda cu mesajul de reținere, în locul erorii seci „transfer is postponed"
   - **Send to Carrier** raportează rândul ca reținut (`held`, distinct de eroare și de rezultat incert), fără apel la curier
-  - un singur hook central, `stock.picking._delivery_hold_message()`, întoarce textul de reținere (sau nimic) și e consultat de toate cele trei căi de mai sus; modulele care cunosc motivele (ex. [deltatech_delivery_review](../deltatech_delivery_review/index.md)) completează textul cu motivul concret (ex. ramburs peste prag)
+  - un singur hook central, `stock.picking._delivery_hold_message()`, întoarce textul de reținere (sau nimic) și e consultat de toate cele trei căi de mai sus; modulele care cunosc motivele (ex. `deltatech_delivery_review`) completează textul cu motivul concret (ex. ramburs peste prag)
 
 - **Gestionarea coletelor**:
   - Suport pentru mai multe colete într-o singură expediere
@@ -92,10 +92,10 @@ Fluxul pas-cu-pas al acțiunilor în masă și al reținerii livrărilor amânat
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie din schema wiki, secțiunea „Sumar” și „Funcționalități Cheie” provin din `readme/DESCRIPTION.md` (îmbogățit cu esențialul din `readme/FISA_CONSULTANT.md` pentru cele două acțiuni în masă și pentru reținerea livrărilor amânate), care nu solicită explicit analiza codului pentru componente. Prin urmare, această secțiune nu este detaliată din cod; ca reper minim, hook-ul central al reținerii — `stock.picking._delivery_hold_message()` — este consultat de `send_to_shipper()`, `action_send_to_carrier_one()` și `action_bulk_validate_deliveries()`.
+Conform fluxului de ingestie din schema wiki, secțiunea „Sumar" și „Funcționalități Cheie" provin din `readme/DESCRIPTION.md` (îmbogățit cu esențialul din `readme/FISA_CONSULTANT.md` pentru cele două acțiuni în masă și pentru reținerea livrărilor amânate), care nu solicită explicit analiza codului pentru componente. Prin urmare, această secțiune nu este detaliată din cod; ca reper minim, hook-ul central al reținerii — `stock.picking._delivery_hold_message()` — este consultat de `send_to_shipper()`, `action_send_to_carrier_one()` și `action_bulk_validate_deliveries()`.
 
 #### 5. Conexiuni
 
 - [deltatech_delivery_status](../deltatech_delivery_status/index.md): furnizează stările de livrare folosite de cadrul de urmărire a expedierilor din acest modul, inclusiv câmpul `postponed` și butoanele Amână/Eliberează pe comandă.
-- [deltatech_website_delivery_and_payment](../deltatech_website_delivery_and_payment/index.md): extinde fluxul de livrare și plată în site-ul web, valorificând cadrul de curieri din acest modul.
+- [deltatech_website_delivery_and_payment](../deltatech_website_delivery_and_payment/index.md): extinde fluxul de livrare și plată în site-ul web, valorificând cadrul de curieri din acest modul (fără pagină wiki proprie încă).
 - [deltatech_sale_order_review](../deltatech_sale_order_review/index.md) + [deltatech_delivery_review](../deltatech_delivery_review/index.md) (bitshop): verificarea comenzii amână livrarea pe poarta „Înainte de livrare"; puntea completează mesajul de reținere din `_delivery_hold_message()` cu motivele concrete (ex. ramburs peste prag, adresă incompletă) — extindere opțională, fără pagină wiki proprie încă.

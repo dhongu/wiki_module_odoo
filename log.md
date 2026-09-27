@@ -4,6 +4,29 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-27] Odoo 20.0 — ingestia primelor 23 de module migrate
+
+- **Acțiune:** Ingestie în paralel (23 de subagenți `documentarist-wiki`, în loturi de 6) pe codul de pe
+  branch-ul `20.0` al suitelor, pentru modulele migrate până acum 19.0 → 20.0.
+  - **Pagini noi (9):** `l10n_ro_config`, `l10n_ro_report_common`, `terrabit_iap`, `queue_job`,
+    `l10n_ro_stock`, `l10n_ro_vat_on_payment`, `l10n_ro_message_spv`, `l10n_ro_partner_create_by_vat`,
+    `account_statement_base`.
+  - **Re-ingestii (14):** `deltatech_contact`, `deltatech_partner_generic`, `deltatech_widget_many2one_badge`,
+    `deltatech_delivery_status`, `deltatech_delivery`, `deltatech_delivery_dummy`, `deltatech_sale_stage`,
+    `deltatech_stock_inventory`, `deltatech_service_base`, `l10n_ro_anaf_base`, `l10n_ro_anaf_partner`,
+    `l10n_ro_doc_screenshots`, `l10n_ro_invoice_report`, `l10n_ro_stock_picking_report` — versiuni `20.0.x`,
+    linkuri GitHub pe branch-ul `20.0`, schimbările Odoo 20 reflectate (ex. `company_type` eliminat, Binary ca
+    bytes brute, Owl 3, faza „facturat” din `account.move._post`, `l10n_ro_report_common` ca dependență a
+    raportului de factură).
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `readme/FISA_CONSULTANT.md`, cod (branch `20.0`).
+- **Fișe consultant:** resincronizate pentru `deltatech_stock_inventory` (15 capturi), `deltatech_delivery` (10),
+  `l10n_ro_stock_picking_report` (12), `l10n_ro_invoice_report` (5), `l10n_ro_anaf_partner` (5), `l10n_ro_anaf_base` (fără capturi).
+- **Dependențe/Conexiuni:** dependențele cu pagină transformate în linkuri active după terminarea tuturor
+  subagenților (paginile noi nu erau vizibile subagenților care rulau în paralel).
+- **Avertismente:** `l10n_ro_invoice_report/readme/FISA_CONSULTANT.md` descrie încă rubricile de semnătură
+  pe chitanță/dispoziție, pe care codul nu le mai tipărește (de corectat la sursă).
+- **Fișiere actualizate:** `index.md` (9 intrări noi, 14 actualizate), cele 23 de directoare de modul.
+
 ## [2026-09-25] Taxare inversă, D394, tooling capturi — 3 re-ingestii
 
 - **Acțiune:** Re-ingestie în paralel (3 subagenți `documentarist-wiki`) pentru modulele atinse odată cu jurnalele de TVA.
