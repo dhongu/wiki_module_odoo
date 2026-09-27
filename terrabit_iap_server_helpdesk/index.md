@@ -15,7 +15,7 @@ Terrabit, niciodată la clienți. El primește tichetele pe care clienții cu mo
 (după codul fiscal al partenerului) și le atribuie echipei de helpdesk configurate. Pentru
 consultant, un tichet venit astfel se tratează exact ca oricare altul: preluare, pontaj, răspuns,
 schimbare de stadiu, închidere. Modulul se ocupă doar de rutarea inițială, de traducerea stadiului
-intern într-un status simplu pentru client (Nou / În lucru / De răspuns / Închis) și de sincronizarea
+intern într-un status simplu pentru client (Nou / În lucru / De răspuns / În așteptare / Închis) și de sincronizarea
 mesajelor publice; nu trimite nimic din proprie inițiativă — conectorul clientului cere datele la
 fiecare sincronizare. Fiecare client are pe cont și un sold de credite, dar alocarea acestora este
 în prezent **manuală**, per client; consumul automat al creditelor din orele pontate pe tichete
@@ -24,8 +24,9 @@ este doar planificat, nu funcționează încă.
 #### 2. Funcționalități Cheie
 
 - Adaugă serviciul IAP `terrabit_helpdesk`, folosit de conectorul de suport instalat în Odoo-ul
-  clienților, cu patru endpointuri JSON-RPC: creare tichet, listare tichete deschise, listare
-  mesaje de corespondență și postare de răspuns.
+  clienților, cu endpointuri JSON-RPC pentru: creare tichet, listare tichete (completă sau
+  incrementală), listare mesaje de corespondență (inclusiv doar id-uri, pentru reconciliere),
+  postare de răspuns, închidere și punere în așteptare / reluare de către client.
 - Fiecare client cu conector are un cont (`iap.server.account`) legat automat de compania lui,
   după codul fiscal al partenerului. Potrivirea e **tolerantă** la prefixul de țară, spații și
   majuscule („RO16507426" = „16507426"), dar se caută doar printre partenerii companie activi; fără
@@ -95,7 +96,7 @@ este doar planificat, nu funcționează încă.
 - `helpdesk.ticket` (extindere): câmpurile `iap_account_id` (contul care a creat tichetul),
   `terrabit_request_key` (cheia de idempotență, cu index unic parțial) și
   `partner_company_id` (compania-ancoră, calculată din contact).
-- `helpdesk.stage` (extindere): câmpul `connector_state` (Nou / În lucru / De răspuns) și logica
+- `helpdesk.stage` (extindere): câmpul `connector_state` (Nou / În lucru / De răspuns / În așteptare) și logica
   de propunere automată a mapării la instalare.
 
 **Vizualizări**

@@ -30,13 +30,13 @@ răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la
 - Autorul tichetului e anunțat în Odoo, la clopoțel (doar inbox, fără email), când vine un
   răspuns nou de la Terrabit — nu pentru propriile mesaje și nici pentru istoricul adus la prima
   sincronizare.
-- Ecranul **Ale echipei** (`Terrabit Support → Ale echipei`): toate tichetele companiei, indiferent
+- Ecranul **Tichete echipă** (`Terrabit Support → Tichete echipă`): toate tichetele companiei, indiferent
   cine le-a deschis (inclusiv cele venite direct la Terrabit prin telefon/email), grupabile după
   status, urgență, autor sau consultant.
 - Discuție bidirecțională prin chatter: răspunsurile publice ale consultanților Terrabit apar local,
   iar răspunsurile clientului pleacă automat spre Terrabit; notele interne scrise cu „Scrie notă” nu
   ies niciodată din baza clientului, iar notele interne ale consultanților nu ajung la client.
-- Coadă de retrimitere automată (cron la 15 minute) pentru tichete și răspunsuri neplecate din cauza
+- Coadă de retrimitere automată (cronul de sincronizare, la 15 minute, plus la fiecare notificare de la Terrabit) pentru tichete și răspunsuri neplecate din cauza
   indisponibilității serverului Terrabit, cu deduplicare (nu se creează tichete duble) și buton
   **Actualizează acum** pentru sincronizare imediată.
 - Sincronizare automată a stadiului, consultantului atribuit și discuției, plus curățarea locală a
@@ -100,13 +100,15 @@ răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la
 **Vizualizări**
 
 - `view_terrabit_helpdesk_ticket_kanban` / `view_terrabit_helpdesk_ticket_list`: listele „Tichetele
-  mele” și „Ale echipei”, grupate implicit pe status, cu buton „Sync Now” în antet.
+  mele” și „Tichete echipă”, grupate implicit pe status, cu buton „Sync Now” în antet și panoul cu
+  tichetele mele și starea sincronizării deasupra listei.
 - `view_terrabit_helpdesk_ticket_form`: formularul de tichet, cu zona de fișiere
   (`terrabit_attachment_dropzone`), avertisment când tichetul n-a plecat încă la Terrabit și chatter
   pentru discuție.
 - `view_terrabit_helpdesk_ticket_search`: filtre pe status și pe „Mine”, grupări după status,
   urgență, autor și consultant.
-- Meniu rădăcină `Terrabit Support`, cu submeniurile `My Tickets` și `Team Tickets`.
+- Meniu rădăcină `Terrabit Support`, cu submeniurile `My Tickets`, `Team Tickets` („Tichete echipă”),
+  `Tickets On Hold` („Tichete în așteptare”) și `Closed Tickets` („Tichete închise”).
 
 **Acțiuni Automate / Acțiuni Server**
 
@@ -114,6 +116,8 @@ răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la
   serverul Terrabit (fără cod de activare manual).
 - `ir_cron_sync_terrabit_helpdesk_tickets`: rulează la 15 minute — trimite tichetele și mesajele din
   coada locală, aduce tichetele și discuțiile de la Terrabit, curăță tichetele retrase.
+- `ir_cron_remind_awaiting_reply`: rulează din oră în oră — aviz în Odoo pentru tichetele în
+  „De răspuns” de peste 24 de ore, o singură dată pe așteptare.
 - `ir_actions_server_sync_terrabit_helpdesk_tickets` ("Sync Now"): acțiune server declanșată din
   butonul din antetul listei/kanbanului, pentru sincronizare imediată la cerere.
 
