@@ -4,6 +4,17 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-27] Fișa `l10n_ro_invoice_report` fără rubrici de semnătură (20.0)
+
+- **Acțiune:** Resincronizare fișă consultant după dhongu/l10n-romania#580.
+  - Pasul 5 (chitanța, cod 14-4-1): blocurile tipărite pe jurnal de casă sunt **Beneficiar** (compania) /
+    **Plătitor**, nu Furnizor/Client; pasul are acum „Găsiți pe ecran" / „Verificați" și precizează că
+    documentul se încheie după tabel, fără rubrici de semnătură.
+  - Secțiunea 10: legenda capturii `05_chitanta_incasare.png` nu mai pomenește „Am depus suma".
+- **Sursă:** `l10n_ro_invoice_report/readme/FISA_CONSULTANT.md` (branch `20.0`), `views/payment_report.xml`.
+- **Capturi:** neschimbate (erau deja fără semnături).
+- **Fișiere actualizate:** `l10n_ro_invoice_report/FISA_CONSULTANT.md`.
+
 ## [2026-09-27] Odoo 20.0 — ingestia primelor 23 de module migrate
 
 - **Acțiune:** Ingestie în paralel (23 de subagenți `documentarist-wiki`, în loturi de 6) pe codul de pe
