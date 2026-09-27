@@ -105,27 +105,22 @@
   {
     "path": "deltatech_account_bank_statement_import/index.md",
     "module": "deltatech_account_bank_statement_import",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import",
     "local_path": "odoo-addons/bitshop_ent/deltatech_account_bank_statement_import",
-    "last_ingest": "2026-09-19",
+    "last_ingest": "2026-08-20",
     "friendly_name": "Bank Statements Import Extension",
-    "summary": "Acest modul extinde funcționalitatea de import al extraselor de cont bancar pentru a accepta fișiere XLSX, pe lângă formatele acceptate în mod standard. În plus, ajută la identificarea automată a partenerului asociat fiecărei tranzacții, reducând munca manuală de reconciliere și potrivire a încasărilor cu partenerii corecți. De la versiunea 19.0.1.2.0 pune la dispoziție și un mecanism comun de recunoaștere a fișierelor de decontare (procesatori de carduri, curieri, marketplace-uri), folosit de conectoarele specializate ale suitei.",
+    "summary": "Acest modul extinde funcționalitatea de import al extraselor de cont bancar pentru a accepta fișiere XLSX, pe lângă formatele acceptate în mod standard. În plus, ajută la identificarea automată a partenerului asociat fiecărei tranzacții, reducând munca manuală de reconciliere și potrivire a încasărilor cu partenerii corecți.",
     "features": [
       "Import al extraselor de cont bancar din fișiere XLSX.",
       "Detectare automată a partenerului după numele partenerului (caută un partener cu nume corespunzător).",
-      "Detectare automată a partenerului după referința comenzii de vânzare (caută o comandă de vânzare care corespunde referinței plății și asociază partenerul comercial al acelei comenzi) — helper comun `_statement_partner_from_order_ref()`, folosit de conectoarele de decontare (ex. eMAG, Euplatesc); dacă referința se potrivește cu mai multe comenzi, linia rămâne neatribuită și cere intervenția operatorului la reconciliere.",
-      "Helper comun `statement_header_key()`: normalizează un nume de coloană din antetul unui fișier (fără diacritice, literă mică, fără spații), astfel încât variații de scriere ale aceluiași antet să fie recunoscute ca identice.",
-      "Helper comun `account.journal._statement_sheet_matching_header(raw_file, required_columns)`: identifică fișierul XLSX de decontare potrivit după antetul lui, verificat ca set de coloane obligatorii (nu ca prefix ordonat) și căutat în toate foile fișierului — necesar pentru că aceste fișiere de la procesatori/curieri/marketplace nu poartă niciun marcaj al emitentului, iar un prefix ordonat ceda tăcut la prima coloană adăugată sau reordonată de furnizor."
+      "Detectare automată a partenerului după referința comenzii de vânzare (caută o comandă de vânzare care corespunde referinței plății și asociază partenerul comercial al acelei comenzi)."
     ],
     "dependencies": [
       "account_bank_statement_import_csv"
     ],
-    "connections": [
-      "deltatech_account_bank_statement_import_euplatesc",
-      "deltatech_account_bank_statement_import_emag"
-    ],
-    "text": "Bank Statements Import Extension\ndeltatech_account_bank_statement_import\nAcest modul extinde funcționalitatea de import al extraselor de cont bancar pentru a accepta fișiere XLSX, pe lângă formatele acceptate în mod standard. În plus, ajută la identificarea automată a partenerului asociat fiecărei tranzacții, reducând munca manuală de reconciliere și potrivire a încasărilor cu partenerii corecți. De la versiunea 19.0.1.2.0 pune la dispoziție și un mecanism comun de recunoaștere a fișierelor de decontare (procesatori de carduri, curieri, marketplace-uri), folosit de conectoarele specializate ale suitei.\nImport al extraselor de cont bancar din fișiere XLSX.\nDetectare automată a partenerului după numele partenerului (caută un partener cu nume corespunzător).\nDetectare automată a partenerului după referința comenzii de vânzare (caută o comandă de vânzare care corespunde referinței plății și asociază partenerul comercial al acelei comenzi) — helper comun `_statement_partner_from_order_ref()`, folosit de conectoarele de decontare (ex. eMAG, Euplatesc); dacă referința se potrivește cu mai multe comenzi, linia rămâne neatribuită și cere intervenția operatorului la reconciliere.\nHelper comun `statement_header_key()`: normalizează un nume de coloană din antetul unui fișier (fără diacritice, literă mică, fără spații), astfel încât variații de scriere ale aceluiași antet să fie recunoscute ca identice.\nHelper comun `account.journal._statement_sheet_matching_header(raw_file, required_columns)`: identifică fișierul XLSX de decontare potrivit după antetul lui, verificat ca set de coloane obligatorii (nu ca prefix ordonat) și căutat în toate foile fișierului — necesar pentru că aceste fișiere de la procesatori/curieri/marketplace nu poartă niciun marcaj al emitentului, iar un prefix ordonat ceda tăcut la prima coloană adăugată sau reordonată de furnizor."
+    "connections": [],
+    "text": "Bank Statements Import Extension\ndeltatech_account_bank_statement_import\nAcest modul extinde funcționalitatea de import al extraselor de cont bancar pentru a accepta fișiere XLSX, pe lângă formatele acceptate în mod standard. În plus, ajută la identificarea automată a partenerului asociat fiecărei tranzacții, reducând munca manuală de reconciliere și potrivire a încasărilor cu partenerii corecți.\nImport al extraselor de cont bancar din fișiere XLSX.\nDetectare automată a partenerului după numele partenerului (caută un partener cu nume corespunzător).\nDetectare automată a partenerului după referința comenzii de vânzare (caută o comandă de vânzare care corespunde referinței plății și asociază partenerul comercial al acelei comenzi)."
   },
   {
     "path": "deltatech_account_bank_statement_import_emag/index.md",
@@ -161,20 +156,18 @@
   {
     "path": "deltatech_account_bank_statement_import_euplatesc/index.md",
     "module": "deltatech_account_bank_statement_import_euplatesc",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import_euplatesc",
     "local_path": "odoo-addons/bitshop_ent/deltatech_account_bank_statement_import_euplatesc",
-    "last_ingest": "2026-09-19",
+    "last_ingest": "2026-08-20",
     "friendly_name": "Euplatesc Settlement Bank Statements Import",
     "summary": "Modulul importă direct în Odoo, ca extrase de cont, fișierele de decontare (settlement) Euplatesc.ro pentru comerțul electronic, eliminând procesarea manuală a fișierelor XLSX primite de la procesatorul de plăți cu cardul. Fiecare fișier de decontare devine automat un extras bancar cu linii detaliate pe tranzacție, gata de reconciliere cu comenzile web sau facturile aferente.",
     "features": [
-      "Import fișier original: se încarcă exact fișierul de detaliere primit de la Euplatesc — se creează câte un extras pentru fiecare lot de decontare (foaie FPS).",
-      "Detectare prin semnătură pe SET de coloane: fișierul este recunoscut dacă antetul conține coloanele obligatorii `MerchantID`, `InvoiceId`, `RRN`, `Suma`, `Moneda` — în orice ordine și în oricare dintre foile fișierului — nu mai printr-un prefix fix de patru coloane în ordine. Astfel poate fi importat din orice jurnal de tip bancă, alături de alte formate de extras, chiar dacă antetul e reordonat sau primește o coloană nouă.",
-      "Semnătură bazată doar pe coloane cu nume tehnice: `Descriere` și `Nume client` sunt citite de parser, dar nu mai fac parte din semnătura de recunoaștere — anterior, fiind denumiri românești, un raport descărcat din interfața Euplatesc în engleză nu mai era recunoscut și cădea tăcut în asistentul generic de mapare a coloanelor.",
+      "Import fișier original: se încarcă exact fișierul de detaliere primit de la Euplatesc — se creează câte un extras pentru fiecare lot de decontare (foaia FPS).",
+      "Detectare prin semnătură: fișierul este recunoscut după antetul specific de coloane Euplatesc (MerchantID / InvoiceId / ... / RRN), astfel poate fi importat din orice jurnal de tip bancă, alături de alte formate de extras.",
       "O linie per plată cu cardul: fiecare tranzacție devine o linie de extras cu referința comenzii web sau a facturii (InvoiceId), numele clientului și detaliile de decontare; rambursările (refund) sunt importate ca linii negative separate.",
       "Comisioane configurabile: comisioanele de procesare Euplatesc (Minim1RON + Diff1RON) pot fi importate ca o singură linie agregată per extras (implicit), ca o linie per tranzacție, sau pot fi omise.",
       "Linie opțională de transfer bancar: se poate adăuga automat o linie negativă cu suma netă transferată (configurabil per jurnal), astfel încât extrasul să se balanseze la zero, iar decontarea să poată fi reconciliată cu extrasul bancar real printr-un cont de transfer intern.",
-      "Identificare automată a partenerului: numărul comenzii (`InvoiceId`) este căutat în `sale.order` (`client_order_ref` sau `name`), iar clientul găsit este setat direct pe liniile de plată și de refund; o potrivire ambiguă lasă linia neatribuită, pentru decizia operatorului.",
       "Protecție la duplicate: fiecare tranzacție este importată o singură dată (id unic de import per RRN); reimportarea aceluiași fișier este detectată."
     ],
     "dependencies": [
@@ -184,12 +177,9 @@
     ],
     "connections": [
       "deltatech_account_bank_statement_import",
-      "_statement_sheet_matching_header",
-      "_statement_partner_from_order_ref",
-      "deltatech_account_bank_statement_import_emag",
       "l10n_ro_account_bank_statement_import_xlsx"
     ],
-    "text": "Euplatesc Settlement Bank Statements Import\ndeltatech_account_bank_statement_import_euplatesc\nModulul importă direct în Odoo, ca extrase de cont, fișierele de decontare (settlement) Euplatesc.ro pentru comerțul electronic, eliminând procesarea manuală a fișierelor XLSX primite de la procesatorul de plăți cu cardul. Fiecare fișier de decontare devine automat un extras bancar cu linii detaliate pe tranzacție, gata de reconciliere cu comenzile web sau facturile aferente.\nImport fișier original: se încarcă exact fișierul de detaliere primit de la Euplatesc — se creează câte un extras pentru fiecare lot de decontare (foaie FPS).\nDetectare prin semnătură pe SET de coloane: fișierul este recunoscut dacă antetul conține coloanele obligatorii `MerchantID`, `InvoiceId`, `RRN`, `Suma`, `Moneda` — în orice ordine și în oricare dintre foile fișierului — nu mai printr-un prefix fix de patru coloane în ordine. Astfel poate fi importat din orice jurnal de tip bancă, alături de alte formate de extras, chiar dacă antetul e reordonat sau primește o coloană nouă.\nSemnătură bazată doar pe coloane cu nume tehnice: `Descriere` și `Nume client` sunt citite de parser, dar nu mai fac parte din semnătura de recunoaștere — anterior, fiind denumiri românești, un raport descărcat din interfața Euplatesc în engleză nu mai era recunoscut și cădea tăcut în asistentul generic de mapare a coloanelor.\nO linie per plată cu cardul: fiecare tranzacție devine o linie de extras cu referința comenzii web sau a facturii (InvoiceId), numele clientului și detaliile de decontare; rambursările (refund) sunt importate ca linii negative separate.\nComisioane configurabile: comisioanele de procesare Euplatesc (Minim1RON + Diff1RON) pot fi importate ca o singură linie agregată per extras (implicit), ca o linie per tranzacție, sau pot fi omise.\nLinie opțională de transfer bancar: se poate adăuga automat o linie negativă cu suma netă transferată (configurabil per jurnal), astfel încât extrasul să se balanseze la zero, iar decontarea să poată fi reconciliată cu extrasul bancar real printr-un cont de transfer intern.\nIdentificare automată a partenerului: numărul comenzii (`InvoiceId`) este căutat în `sale.order` (`client_order_ref` sau `name`), iar clientul găsit este setat direct pe liniile de plată și de refund; o potrivire ambiguă lasă linia neatribuită, pentru decizia operatorului.\nProtecție la duplicate: fiecare tranzacție este importată o singură dată (id unic de import per RRN); reimportarea aceluiași fișier este detectată."
+    "text": "Euplatesc Settlement Bank Statements Import\ndeltatech_account_bank_statement_import_euplatesc\nModulul importă direct în Odoo, ca extrase de cont, fișierele de decontare (settlement) Euplatesc.ro pentru comerțul electronic, eliminând procesarea manuală a fișierelor XLSX primite de la procesatorul de plăți cu cardul. Fiecare fișier de decontare devine automat un extras bancar cu linii detaliate pe tranzacție, gata de reconciliere cu comenzile web sau facturile aferente.\nImport fișier original: se încarcă exact fișierul de detaliere primit de la Euplatesc — se creează câte un extras pentru fiecare lot de decontare (foaia FPS).\nDetectare prin semnătură: fișierul este recunoscut după antetul specific de coloane Euplatesc (MerchantID / InvoiceId / ... / RRN), astfel poate fi importat din orice jurnal de tip bancă, alături de alte formate de extras.\nO linie per plată cu cardul: fiecare tranzacție devine o linie de extras cu referința comenzii web sau a facturii (InvoiceId), numele clientului și detaliile de decontare; rambursările (refund) sunt importate ca linii negative separate.\nComisioane configurabile: comisioanele de procesare Euplatesc (Minim1RON + Diff1RON) pot fi importate ca o singură linie agregată per extras (implicit), ca o linie per tranzacție, sau pot fi omise.\nLinie opțională de transfer bancar: se poate adăuga automat o linie negativă cu suma netă transferată (configurabil per jurnal), astfel încât extrasul să se balanseze la zero, iar decontarea să poată fi reconciliată cu extrasul bancar real printr-un cont de transfer intern.\nProtecție la duplicate: fiecare tranzacție este importată o singură dată (id unic de import per RRN); reimportarea aceluiași fișier este detectată."
   },
   {
     "path": "deltatech_account_bank_statement_import_gls/index.md",
@@ -11899,29 +11889,16 @@
   {
     "path": "l10n_ro_inventory_items/index.md",
     "module": "l10n_ro_inventory_items",
-    "version": "19.0.2.3.0",
-    "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_inventory_items`",
+    "version": "19.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_inventory_items",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_inventory_items",
-    "last_ingest": "2026-09-21",
+    "last_ingest": null,
     "friendly_name": "Romania - Obiecte de inventar (303/603/8035)",
-    "summary": "Implementează fluxul complet de gestiune a obiectelor de inventar conform OMFP 1802/2014 — bunuri sub pragul mijloacelor fixe (sub 2.500 RON conform HG 276/2013). Acoperă recepția (Dr 303 = Cr 401), darea în folosință (Dr 603 = Cr 303), evidența extracontabilă opțională pe contul 8035 și scoaterea din gestiune, cu fișă de obiect de inventar, wizard-uri batch și rapoarte PDF. Fișa OI se creează automat la recepția produselor marcate „Obiect de Inventar (RO)\", iar nota de dare în folosință e generată de modul și atunci când valorizarea de stoc nu o produce.",
-    "features": [
-      "Fișa OI (`l10n.ro.inventory.item`): nr. inventar auto-generat `OI/AAAA/NNNN`, responsabil, locație/departament cu tracking, stare fizică (Bună/Deteriorată/Casată) și stare flux (Recepționat → Dat în Folosință → Scos din Gestiune).",
-      "Creare automată la recepție: hook pe `stock_move._action_done()` — o recepție (`picking_type.code == \"incoming\"`) de produs marcat „Obiect de Inventar (RO)\" creează fișa OI, legată de mișcarea de stoc, fără dublare la re-rulare.",
-      "Dare în folosință (`action_use()`): verificare stoc 303, picking intern către locație virtuală, nota `603 = 303` și, opțional, notă extracontabilă `Dr 8035 = Cr 8035C`.",
-      "Nota 603=303 independentă de valorizare (`_create_usage_entry()`, din 19.0.1.1.0): dacă produsul nu e pe o categorie cu valorizare în timp real, `stock_account` nu produce nicio notă la validarea pickingului; modulul o înregistrează atunci el, pe conturile din categoria produsului, cu revenire pe codurile `603%` / `303%` din planul companiei. Acolo unde valorizarea generează deja nota, nu se dublează. Dacă lipsesc conturile sau jurnalul, motivul e postat în chatter, în loc ca fluxul să pară reușit.",
-      "Scoatere din gestiune (`action_dispose()`): tratament distinct pe `disposal_type` — casare (fără notă bilanțieră, valoarea e deja pe 603), restituire (picking invers + `Dr 303 = Cr 603` + revenire în „Recepționat\"), lipsă la inventar (nicio notă automată: imputabilitatea e decizia clientului). `physical_state` rămâne starea fizică, distinctă de tipul scoaterii.",
-      "Wizard-uri batch pentru dare în folosință (cu Bon PDF) și scoatere din gestiune (cu PV PDF).",
-      "Conturi explicite pe companie (`l10n_ro_oi_expense_account_id`, `l10n_ro_oi_stock_account_id`, `l10n_ro_oi_journal_id`): conturile categoriei de produs sunt acceptate doar dacă au codul 603/303 — altfel ar da 607/371 (descărcare de marfă). Jurnalul extrabilanțier EXTR e exclus explicit.",
-      "Cont extrabilanțier 8035: la instalare se creează contul 8035C (off_balance) și jurnalul „Evidență Extracontabilă\" (EXTR), cu toggle pe companie; verificare sold prin `_check_8035_balance()`.",
-      "Rapoarte PDF: Bon de Dare în Folosință, PV de Scoatere din Gestiune și Registrul Obiectelor de Inventar (multi-document, grupat pe responsabil cu subtotal, totaluri pe stări — cel „în folosință\" e comparabil cu soldul 8035, cel „în stoc\" cu 303 —, plus dată de întocmire și bloc de semnături). Fiecare raport are un template „document complet\" care apelează `web.html_container` — fără el randarea PDF pică în `_prepare_html` cu `IndexError` pe `//main`."
-    ],
-    "dependencies": [
-      "stock_account",
-      "l10n_ro"
-    ],
+    "summary": "",
+    "features": [],
+    "dependencies": [],
     "connections": [],
-    "text": "Romania - Obiecte de inventar (303/603/8035)\nl10n_ro_inventory_items\nImplementează fluxul complet de gestiune a obiectelor de inventar conform OMFP 1802/2014 — bunuri sub pragul mijloacelor fixe (sub 2.500 RON conform HG 276/2013). Acoperă recepția (Dr 303 = Cr 401), darea în folosință (Dr 603 = Cr 303), evidența extracontabilă opțională pe contul 8035 și scoaterea din gestiune, cu fișă de obiect de inventar, wizard-uri batch și rapoarte PDF. Fișa OI se creează automat la recepția produselor marcate „Obiect de Inventar (RO)\", iar nota de dare în folosință e generată de modul și atunci când valorizarea de stoc nu o produce.\nFișa OI (`l10n.ro.inventory.item`): nr. inventar auto-generat `OI/AAAA/NNNN`, responsabil, locație/departament cu tracking, stare fizică (Bună/Deteriorată/Casată) și stare flux (Recepționat → Dat în Folosință → Scos din Gestiune).\nCreare automată la recepție: hook pe `stock_move._action_done()` — o recepție (`picking_type.code == \"incoming\"`) de produs marcat „Obiect de Inventar (RO)\" creează fișa OI, legată de mișcarea de stoc, fără dublare la re-rulare.\nDare în folosință (`action_use()`): verificare stoc 303, picking intern către locație virtuală, nota `603 = 303` și, opțional, notă extracontabilă `Dr 8035 = Cr 8035C`.\nNota 603=303 independentă de valorizare (`_create_usage_entry()`, din 19.0.1.1.0): dacă produsul nu e pe o categorie cu valorizare în timp real, `stock_account` nu produce nicio notă la validarea pickingului; modulul o înregistrează atunci el, pe conturile din categoria produsului, cu revenire pe codurile `603%` / `303%` din planul companiei. Acolo unde valorizarea generează deja nota, nu se dublează. Dacă lipsesc conturile sau jurnalul, motivul e postat în chatter, în loc ca fluxul să pară reușit.\nScoatere din gestiune (`action_dispose()`): tratament distinct pe `disposal_type` — casare (fără notă bilanțieră, valoarea e deja pe 603), restituire (picking invers + `Dr 303 = Cr 603` + revenire în „Recepționat\"), lipsă la inventar (nicio notă automată: imputabilitatea e decizia clientului). `physical_state` rămâne starea fizică, distinctă de tipul scoaterii.\nWizard-uri batch pentru dare în folosință (cu Bon PDF) și scoatere din gestiune (cu PV PDF).\nConturi explicite pe companie (`l10n_ro_oi_expense_account_id`, `l10n_ro_oi_stock_account_id`, `l10n_ro_oi_journal_id`): conturile categoriei de produs sunt acceptate doar dacă au codul 603/303 — altfel ar da 607/371 (descărcare de marfă). Jurnalul extrabilanțier EXTR e exclus explicit.\nCont extrabilanțier 8035: la instalare se creează contul 8035C (off_balance) și jurnalul „Evidență Extracontabilă\" (EXTR), cu toggle pe companie; verificare sold prin `_check_8035_balance()`.\nRapoarte PDF: Bon de Dare în Folosință, PV de Scoatere din Gestiune și Registrul Obiectelor de Inventar (multi-document, grupat pe responsabil cu subtotal, totaluri pe stări — cel „în folosință\" e comparabil cu soldul 8035, cel „în stoc\" cu 303 —, plus dată de întocmire și bloc de semnături). Fiecare raport are un template „document complet\" care apelează `web.html_container` — fără el randarea PDF pică în `_prepare_html` cu `IndexError` pe `//main`."
+    "text": "Romania - Obiecte de inventar (303/603/8035)\nl10n_ro_inventory_items"
   },
   {
     "path": "l10n_ro_inventory_register/index.md",

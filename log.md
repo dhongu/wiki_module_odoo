@@ -4,6 +4,20 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-27] Fișa `l10n_ro_invoice_report` fără rubrici de semnătură (19.0)
+
+- **Acțiune:** Resincronizare fișă consultant + capturi după dhongu/l10n-romania#579. Pagina wiki rămăsese
+  pe varianta cu cele trei semnături (Conducătorul unității, Casier, Am primit/depus suma), eliminate în
+  19.0.3.4.23.
+  - Secțiunile 1, 2, 7, 8 și pașii 4–5: documentele de casă se încheie după tabel, fără rubrici de
+    semnătură (art. 4 alin. (2) din OMFP 2634/2015 permite adaptarea modelelor din Anexa 3); semnăturile
+    se dau pe exemplarul tipărit.
+  - Pasul 5 (chitanța, cod 14-4-1): blocurile pe jurnal de casă sunt **Beneficiar** (compania) / **Plătitor**.
+  - Secțiunea 10: legendele capturilor 04 și 05 fără „Am depus suma".
+- **Sursă:** `l10n_ro_invoice_report/readme/FISA_CONSULTANT.md` (branch `19.0`), `views/payment_report.xml`.
+- **Capturi:** toate 5 înlocuite cu cele regenerate în modul (#559), fără rubrici de semnătură.
+- **Fișiere actualizate:** `l10n_ro_invoice_report/FISA_CONSULTANT.md`, `l10n_ro_invoice_report/screenshots/` (5).
+
 ## [2026-09-25] Taxare inversă, D394, tooling capturi — 3 re-ingestii
 
 - **Acțiune:** Re-ingestie în paralel (3 subagenți `documentarist-wiki`) pentru modulele atinse odată cu jurnalele de TVA.
