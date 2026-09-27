@@ -1,10 +1,10 @@
 # RMA - Returns and Warranty Claims (localizat la `deltatech_rma/index.md`)
 
 - **Nume Tehnic:** `deltatech_rma`
-- **Versiune:** `19.0.1.4.0`
+- **Versiune:** `19.0.1.4.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_rma`
-- **Ultima Ingestie:** 2026-09-24
+- **Ultima Ingestie:** 2026-09-27
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -28,6 +28,8 @@ Modulul gestionează returul comercial și reclamațiile de garanție pentru vâ
 - Sumele cererii (*Total*, *Taxă de manipulare*, *De returnat clientului*) sunt **cu TVA**, la prețul vândut după discount, calculate cu motorul de taxe al facturilor Odoo 19 din aceleași valori și cu aceeași rotunjire ca nota de credit: suma afișată clientului în portal și pe fișă e, la ban, totalul notei; taxa de manipulare iese prin diferență.
 - **Credit Note** stornează factura inițială: preț, discount, taxe (cota de la faptul generator) și unitate de măsură ale liniei de factură, taxa de manipulare compusă în discount, jurnalul, clientul, moneda și cursul facturii, legătura `reversed_entry_id`. Nota se leagă de linia comenzii (`sale_line_ids`) doar la politica „la livrare” cu returul fizic validat, ca comanda să nu fie refacturată; un produs nefacturat nu primește notă (se ajustează comanda). Trimiterea structurată la factura inițială în XML-ul e-Factura (BillingReference) nu e încă completată de localizare.
 - Puncte de extindere pentru retururile care se cer în alt canal: `sale.order._rma_external_return_channel()` (implicit `False`) scoate comanda din formularul de retur din portal, înlocuiește butonul de pe pagina comenzii cu indicația canalului și pune un avertisment pe o cerere deschisă de mână (`external_return_warning`). Le folosește [deltatech_rma_marketplace](../deltatech_rma_marketplace/index.md). O a doua notă de credit pe aceeași factură e semnalată pe cerere.
+- Motivul trimis din portal e verificat pe server (`19.0.1.4.1`): se acceptă doar motivele pe care formularul le arată clientului pentru tipul cererii, adică nu cele *Staff Only* și nu cele din altă categorie. Orice alt id cade pe motivul implicit al tipului, ca un client să nu poată trimite id-ul unui motiv fără taxă sau cu transportul plătit de firmă.
+- Pagina din Odoo Apps (`static/description/index.html`, `19.0.1.4.2`) are tabul *Presentation*, cu toate cele 36 de slide-uri ale prezentării în engleză, ca imagini în `static/description/presentation/`. Sursa e `readme/PRESENTATION.md`. Nu are link extern: prezentarea online cere cont Claude pentru vizualizare. Prezentările online, pentru uz intern: [română](https://claude.ai/artifact/8MzYW31s789wyoA6ZGPBJJ), [engleză](https://claude.ai/artifact/QM2zptNwZU9v6Ah2RPRviR).
 - **Returns → Analysis** arată retururile pe lună și tip, plus rata de retur per produs (raportat la cantitățile vândute).
 - Configurare în **Returns → Configuration → Return Reasons** (categorie, interval taxă, obligativitate poze/video, cine plătește transportul, explicația afișată clientului, opțiunea *Staff Only* pentru motive interne) și în **Settings → Sales → Returns and Warranty Claims** (accesul automat al colegilor, fereastra de eligibilitate, termenele promise clientului, opțiunea de motiv obligatoriu, taxa de manipulare implicită). Explicația afișată clientului la fiecare motiv e traductibilă. Termenele promise sunt *Answer Within* (zile lucrătoare, implicit 1) și *Check Within* (implicit 0, adică nu se promite niciun termen). Apar în portal, în e-mailul de aprobare și pe fișa de retur; frazele sunt termeni de traducere întregi, cu `{days}` înlocuit la afișare.
 - Cele trei e-mailuri (aprobat, refuzat, rezolvat) sunt șabloane `noupdate`, editabile din **Settings → Technical → Email Templates**. Modificările rămân la actualizarea modulului. Migrarea spre `19.0.1.2.0` le reîncarcă o singură dată, cu textul nou: până atunci, orice actualizare scria peste ele.

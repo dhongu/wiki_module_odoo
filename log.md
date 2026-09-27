@@ -2300,3 +2300,16 @@ This is an append-only log of all operations performed on the wiki.
     - `l10n_ro_efactura_b2c` → `l10n_ro_efactura_consumer`
 - **Detalii:** Pe paginile redenumite am actualizat versiunea și am adăugat câmpul „Nume anterior”, ca modulele să fie găsite și după numele vechi. Au fost actualizate și trimiterile din paginile care depind de ele sau le menționează (d103, d120, ent_config, efactura_dedup, pos_returns, cbam, environmental_tax, etransport_block) și din `index.md`. Intrările mai vechi din acest jurnal păstrează numele vechi.
 - **Fișiere actualizate:** cele 4 pagini redenumite (index.md + FISA_CONSULTANT.md), paginile care le menționează, `index.md`, `log.md`, `.index/chunks.json`.
+
+---
+
+## [2026-09-27] Re-ingest: `deltatech_rma` — verificarea motivului pe server și prezentarea în Odoo Apps
+
+- **Acțiune:** Pagina actualizată de la 19.0.1.4.0 la 19.0.1.4.2 (bitshop#2895).
+- **Detalii:**
+    - `19.0.1.4.1`: motivul trimis din portal se verifică pe server. Se acceptă doar motivele oferite clientului pentru tipul cererii; orice alt id cade pe motivul implicit.
+    - `19.0.1.4.2`: pagina din Odoo Apps are tabul *Presentation*, cu cele 36 de slide-uri ale prezentării în engleză, ca imagini, fără link extern. Sursa tabului e `readme/PRESENTATION.md`, iar `scripts/tb_gen_index.py` din bitshop știe acum de fragmentul opțional acesta.
+    - Pe pagină sunt trecute și linkurile prezentărilor online (RO și EN), pentru uz intern.
+- **Fișiere actualizate:**
+    - `wiki_module_odoo/deltatech_rma/index.md`
+    - `wiki_module_odoo/log.md`
