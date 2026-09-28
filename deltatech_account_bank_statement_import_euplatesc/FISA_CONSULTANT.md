@@ -77,9 +77,14 @@ al comisioanelor și bifa pentru linia de transfer către bancă.
 Din **Contabilitate → Tablou de bord**, pe cardul jurnalului „Jurnal Euplatesc", deschideți
 meniul **⋮** și alegeți **Extrase** (secțiunea *Vizualizare*) — se deschide lista
 **Extrase bancă**. Apăsați butonul **Încărcare** și alegeți fișierul de detaliere primit de
-la Euplatesc — **nemodificat**. Modulul recunoaște fișierul după antetul de coloane
-(MerchantID / InvoiceId / ... / RRN); nu se mai deschide asistentul de mapare. Se creează
-câte un extras per lot de decontare (sheet „FPS...").
+la Euplatesc — **nemodificat**. Modulul recunoaște fișierul după coloanele din antet
+(MerchantID, InvoiceId, RRN, Suma, Moneda), indiferent de ordinea lor și de foaia în care se
+află; nu se mai deschide asistentul de mapare. Se creează câte un extras per lot de decontare
+(sheet „FPS...").
+
+> Recunoașterea se sprijină doar pe coloanele cu **nume tehnice**, aceleași în orice limbă, deci
+> un raport descărcat din interfața în engleză („Description", „Customer name") se importă la fel
+> de bine ca unul în română.
 
 > Alternativ, același import se poate porni din meniul **⋮** al cardului, linkul
 > **Importă fișier** (secțiunea *Nou*), sau trăgând fișierul peste lista de tranzacții.
@@ -129,7 +134,7 @@ liniile de comision).
 |---|---|---|
 | `account_bank_statement_import` (Enterprise) | mecanismul standard de import extrase | dependență (manifest) |
 | `account_bank_statement_import_csv` (Enterprise) | interceptorul de wizard peste care modulul are prioritate | dependență (manifest) |
-| `deltatech_account_bank_statement_import_gls` | același tipar pentru borderourile GLS | frate (opțional) |
+| `deltatech_account_bank_statement_import_gls` | același tipar pentru borderourile GLS (recunoscute însă după marcajul emitentului din prima celulă) | frate (opțional) |
 | `l10n_ro_account_bank_statement_import_ing_csv` | extrasul ING în care sosește decontarea | complementar (opțional) |
 | `sale` / e-commerce | comenzile web (`InvoiceId`) — baza identificării automate a partenerului (faza următoare) | opțional |
 
@@ -160,7 +165,7 @@ regula de reconciliere pentru 627 și închiderea 581 pe extrasul băncii reale.
 | „You already have imported that file." | Detalierea a fost deja importată (id unic per RRN) | Nu e o eroare — liniile există deja; verificați extrasul creat anterior |
 | „Cannot find in which journal to import this statement..." | Jurnalul nu e în RON (moneda detalierii) sau importul s-a făcut de pe alt jurnal | Importați de pe jurnalul Euplatesc configurat în RON |
 | „You can't create a new statement line without a suspense account..." | Jurnalul nu are cont tranzitoriu (suspense) configurat | Setați contul tranzitoriu pe jurnal (Contabilitate → Configurare → Jurnale) |
-| Fișierul deschide asistentul de mapare în loc de import direct | Antetul nu corespunde formatului Euplatesc (alt export) | Verificați că e detalierea Euplatesc originală; alte formate se importă prin asistent |
+| Fișierul deschide asistentul de mapare în loc de import direct | Antetului îi lipsește una dintre coloanele după care se recunoaște fișierul (MerchantID, InvoiceId, RRN, Suma, Moneda) — de regulă alt export sau un fișier prelucrat manual | Verificați că e detalierea Euplatesc originală, nerezalvată; dacă Euplatesc a schimbat structura raportului, trimiteți mostra către Terrabit |
 | Soldul extrasului nu e zero | Comisioanele setate pe „deloc" dar linia de transfer activă | Aliniați opțiunile jurnalului (transferul scade mereu și comisioanele reale) |
 
 ## 10. Capturi de ecran
