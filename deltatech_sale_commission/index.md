@@ -1,10 +1,11 @@
 # Sale Commission (localizat la `deltatech_sale_commission/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_commission`
-- **Versiune:** `19.0.1.5.0`
+- **Versiune:** `19.0.1.5.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_commission
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_commission`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -20,6 +21,7 @@ Modulul extinde gestiunea vânzărilor cu un sistem de calcul al comisioanelor p
 - Calculul comisioanelor de vânzare pe baza agentului de pe comanda de vânzare sau de pe factură (configurabil).
 - Parametru `deltatech_sale_commission.days_for_commission` (valoare întreagă): la calculul comisionului sistemul verifică dacă factura este complet plătită și dacă diferența dintre data ultimei plăți și data scadentă este mai mică decât valoarea parametrului.
 - Dacă diferența este mai mare decât valoarea parametrului, comisionul devine 0.
+- Fluxul pas-cu-pas de configurare a agenților și de calcul/plată a comisioanelor este detaliat în [Fișa Consultant](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 

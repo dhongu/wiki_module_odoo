@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-28] Re-ingestie `deltatech_sale_commission` (19.0.1.5.2)
+
+- **Acțiune:** Actualizare pagină (era 19.0.1.5.0). Singura modificare de cod: migrarea la `self.env._()`
+  (pylint-odoo `prefer-env-translation`), fără schimbare funcțională. Fișa consultant, existentă în modul
+  dar lipsă din wiki, a fost copiată acum, cu 9 capturi; pagina trimite la ea pentru fluxul pas-cu-pas.
+- **Sursă:** `deltatech_sale_commission/readme/DESCRIPTION.md`, `readme/HISTORY.md`, `readme/FISA_CONSULTANT.md` (branch `19.0`).
+- **Dependențe/Conexiuni:** neschimbate.
+- **Fișiere actualizate:** `deltatech_sale_commission/index.md`, `deltatech_sale_commission/FISA_CONSULTANT.md`, `deltatech_sale_commission/screenshots/` (9).
+
 ## [2026-09-27] Fișa `l10n_ro_invoice_report` fără rubrici de semnătură (19.0)
 
 - **Acțiune:** Resincronizare fișă consultant + capturi după dhongu/l10n-romania#579. Pagina wiki rămăsese
