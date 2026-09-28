@@ -4,6 +4,17 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-28] Ingestie `deltatech_delivery_dashboard` (19.0.1.0.0) — modul nou
+
+- **Acțiune:** Pagină nouă pentru tabloul de urmărire livrări: 7 carduri KPI deasupra listei de AWB-uri
+  (în tranzit, livrate azi, întârziate, risc retur, retururi luna asta, ramburs pe drum pe monede, fără
+  urmărire), fiecare filtrând lista pe click. Fișa consultant copiată, cu 4 capturi.
+- **Sursă:** `deltatech_delivery_dashboard/readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`,
+  `readme/FISA_CONSULTANT.md`, cod `models/` și `views/` (branch `19.0`, terrabit-solutions/bitshop_delivery#209).
+- **Dependențe/Conexiuni:** [deltatech_delivery](deltatech_delivery/index.md).
+- **Fișiere actualizate:** `deltatech_delivery_dashboard/index.md`, `deltatech_delivery_dashboard/FISA_CONSULTANT.md`,
+  `deltatech_delivery_dashboard/screenshots/` (4), `index.md`.
+
 ## [2026-09-28] Re-ingestie `deltatech_sale_commission` (19.0.1.5.2)
 
 - **Acțiune:** Actualizare pagină (era 19.0.1.5.0). Singura modificare de cod: migrarea la `self.env._()`
