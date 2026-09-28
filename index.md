@@ -53,7 +53,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_data_sheet](deltatech_data_sheet/index.md): Atașează fișe tehnice și fișe de securitate (PDF) pe produs, în fila Vânzări.
 - [deltatech_data_sheet_website](deltatech_data_sheet_website/index.md): Expune fișele tehnice și fișele cu date de securitate ale produselor pe paginile din magazinul online.
 - [deltatech_dc](deltatech_dc/index.md): Gestionarea și tipărirea declarațiilor de conformitate pentru produse, inclusiv la facturare.
-- [deltatech_delivery](deltatech_delivery/index.md): Modul de bază pentru curierat în Odoo — infrastructura AWB/expediere comună pentru toate integrările de curier, plus acțiuni în masă din lista de comenzi (validare livrări și trimitere la curier cu progres live).
+- [deltatech_delivery](deltatech_delivery/index.md): Modul de bază Odoo pentru gestionarea livrărilor multi-curier — expediere, AWB, opțiuni de livrare, acțiuni în masă pe comenzi și reținerea livrărilor amânate.
 - [deltatech_delivery_batch](deltatech_delivery_batch/index.md): Generează AWB-uri pentru mai multe livrări simultan, prin procesare în lot pe transferurile grupate (`stock.picking.batch`).
 - [deltatech_delivery_category_price](deltatech_delivery_category_price/index.md): Calculează tariful de livrare eCommerce pe baza categoriilor website ale produselor din coș (preț fix sau pe tranșe de greutate), cu preț implicit de rezervă și supliment opțional de handling.
 - [deltatech_delivery_cm](deltatech_delivery_cm/index.md): Integrare Odoo cu platforma de curierat Courier Manager — AWB (PDF/ZPL), tarife, urmărire statusuri și expedieri (ramburs, valoare declarată, colete multiple).

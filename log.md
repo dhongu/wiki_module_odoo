@@ -4,6 +4,17 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-28] Re-ingestie `deltatech_delivery` (19.0.6.8.1)
+
+- **Acțiune:** Actualizare pagină (era 19.0.6.6.1): trimiterea la curier aplică singură detaliile de
+  curier neaplicate (19.0.6.6.2), avertisment pentru greutăți/dimensiuni aberante (19.0.6.7.0),
+  `cod_amount` pe AWB și lista „Refused COD - Invoice Open” (19.0.6.8.0), `company_id` pe AWB
+  calculat din livrare/comandă, cu aliniere SQL la upgrade (19.0.6.8.1). Legătură către noul tablou.
+  Fișa consultant resincronizată; capturile, neschimbate.
+- **Sursă:** `deltatech_delivery/readme/DESCRIPTION.md`, `USAGE.md`, `HISTORY.md`, `FISA_CONSULTANT.md` (branch `19.0`).
+- **Dependențe/Conexiuni:** [deltatech_delivery_dashboard](deltatech_delivery_dashboard/index.md) (nou).
+- **Fișiere actualizate:** `deltatech_delivery/index.md`, `deltatech_delivery/FISA_CONSULTANT.md`, `index.md`.
+
 ## [2026-09-28] Ingestie `deltatech_delivery_dashboard` (19.0.1.0.0) — modul nou
 
 - **Acțiune:** Pagină nouă pentru tabloul de urmărire livrări: 7 carduri KPI deasupra listei de AWB-uri
