@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-29] Re-ingestie `deltatech_marketplace_emag` (19.0.2.13.1) și `deltatech_marketplace_emag_delivery` (19.0.1.1.1)
+
+- **Acțiune:** Actualizarea celor două pagini, procesate în paralel.
+    - `deltatech_marketplace_emag` (era 19.0.2.8.0): versiunile 2.8.1–2.13.1 — starea eMAG pe comandă (badge, grupare, filtrele „Returned on eMAG”), trimiterea stării înapoi la eMAG (`/order/save`: Prepared/Finalized, anulare cu motiv), termenul de expediere și cererea de anulare, termenul de retur și de storno, pașii pentru dashboard, corecțiile de auto-pricing și validarea prețurilor, traducerea RO completă (2.13.1). Au fost scoase afirmațiile devenite false („nu există sincronizare de status înapoi la eMAG”, „o comandă CANCELED nu se anulează automat”). Fișa consultant resincronizată; 3 din 6 capturi schimbate.
+    - `deltatech_marketplace_emag_delivery` (era 19.0.1.0.1): voucherul nu se mai scade de două ori din ramburs (1.0.2), rambursul urmează `external_payment_code` și eticheta ZPL are toate coletele (1.0.3), statusul `CAN` nu mai duce livrarea în Refuzat și codul de status se păstrează pe `delivery.awb` (1.1.0), traducerea RO (1.1.1). Fișa consultant copiată pentru prima dată; modulul nu are încă `readme/screenshots/`, deci cele 5 poze referite din fișă lipsesc.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `HISTORY.md`, `FISA_CONSULTANT.md` ale celor două module (branch `19.0`).
+- **Dependențe/Conexiuni:** [deltatech_payment_on_delivery](deltatech_payment_on_delivery/index.md) devine link activ; `deltatech_marketplace_dashboard` (fără pagină) apare în Conexiuni.
+- **Fișiere actualizate:** `deltatech_marketplace_emag/index.md`, `deltatech_marketplace_emag/FISA_CONSULTANT.md`, `deltatech_marketplace_emag/screenshots/` (6), `deltatech_marketplace_emag_delivery/index.md`, `deltatech_marketplace_emag_delivery/FISA_CONSULTANT.md`, `index.md`, `.index/chunks.json`.
+
 ## [2026-09-28] Re-ingestie `deltatech_delivery` (19.0.6.8.1)
 
 - **Acțiune:** Actualizare pagină (era 19.0.6.6.1): trimiterea la curier aplică singură detaliile de

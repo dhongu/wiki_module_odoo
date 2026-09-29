@@ -68,10 +68,10 @@ declanșate normal de comanda de vânzare creată din comanda eMAG importată). 
 
 - **Cont de webservice eMAG** (username/parolă din **Technical Details**) cu IP-ul serverului Odoo
   deja whitelist-at — fără el, **Test connection** eșuează indiferent de configurarea din Odoo.
-- **Mapping product code** (tab **Other Info**, grup **Settings**) — `PN` sau `SKU`, în funcție de
+- **Mapping product code** (tab **Orders and Products**, grup **Settings**) — `PN` sau `SKU`, în funcție de
   câmpul care identifică produsele pe eMAG; folosit doar ca sursă a codului intern al produsului
   (`default_code`) la import.
-- **Safe stock** (tab **Other Info**, grup **Settings**) — câmp de configurare prezent în interfață,
+- **Safe stock** (tab **Orders and Products**, grup **Settings**) — câmp de configurare prezent în interfață,
   dar **fără efect în versiunea actuală**: nimic în export nu îl citește încă (exportul trimite
   stocul Odoo brut). Nu promiteți clientului o rezervă de siguranță pe baza acestui câmp.
 - **Odoo ID is External ID** — dacă e bifat, la import produsul se leagă **inițial** de ID-ul Odoo
@@ -106,7 +106,7 @@ caracteristicile ei, un produs cu ofertă activă, un client și o comandă exis
    automat.
 4. În tab-ul **Credentials**, verificați **Access Type = User and password**, apoi completați
    **Username**/**Password** cu contul de webservice eMAG.
-5. Pe tab-ul **Other Info**, grupul **Settings**, completați câmpurile specifice eMAG: **Enable
+5. Pe tab-ul **Orders and Products**, grupul **Settings**, completați câmpurile specifice eMAG: **Enable
    Order Push Invoice**, **Mapping Product Code**, **Odoo ID is External ID** (Safe stock rămâne
    fără efect în versiunea actuală, vezi §4).
 6. Apăsați **Test connection** din antet — apelează efectiv `/vat`, nu doar validează completarea
@@ -126,9 +126,9 @@ and password**, apoi **Username**/**Password** cu contul de webservice eMAG.
 
 ![Backend eMAG, tab Credentials completat, înainte de Test connection (Not Confirmed)](screenshots/01_credentials.png)
 
-### Pasul 2 — Câmpurile specifice eMAG (tab Other Info)
+### Pasul 2 — Câmpurile specifice eMAG (tab Orders and Products)
 
-Pe tab-ul **Other Info**, grupul **Settings**, salvarea cu `Provider = EMAG` afișează un grup
+Pe tab-ul **Orders and Products**, grupul **Settings**, salvarea cu `Provider = EMAG` afișează un grup
 suplimentar de câmpuri: **Enable Order Push Invoice** (trimite un link către PDF-ul facturii spre
 eMAG la validare, vezi §6 Pasul 13 — dezactivați-l în mediul de testare), **Mapping Product Code**
 (`PN` sau `SKU`), **Safe stock** (câmp de configurare, în prezent fără efect asupra exportului — nu
@@ -158,7 +158,7 @@ etichete informative („Import", „Export manual" etc.) — acestea arată **c
 însele butoane. Acțiunea reală se declanșează din meniul „⋮" al cardului. Deschideți meniul cardului
 **Categories** și alegeți **Import** (nu există „Import All" pentru eMAG — spre deosebire de alți
 conectori din suită, singura acțiune disponibilă e importul obișnuit, care parcurge toate paginile
-disponibile la fiecare rulare). **Atenție:** bifa **Only Missing** (tab Other Info → Limits) are efect
+disponibile la fiecare rulare). **Atenție:** bifa **Only Missing** (tab Technical → Limits) are efect
 doar la importul de **comenzi** (Pasul 10) — la categorii și produse pe eMAG, fiecare **Import**
 reia toate paginile indiferent de starea bifei, nu doar elementele lipsă.
 
@@ -225,7 +225,9 @@ jos, deci se închide o buclă preț-eMAG → listă de prețuri Odoo → export
 produs** (Pasul 5/meniul cardului Products → Export), `min_sale_price`/`max_sale_price` trimise sunt
 recalculate automat la ±10% din prețul curent din **lista de prețuri a backend-ului** (nu din prețul
 de vânzare Odoo al produsului) — o ajustare manuală a acestor două câmpuri în Odoo se pierde la
-următorul export, dacă nu e reflectată și în lista de prețuri.
+următorul export, dacă nu e reflectată și în lista de prețuri. Excepție: ofertele cu **Auto Price**
+și cu **Max sale price** completat — exportul le trimite propriul preț și propriile limite min/max,
+în care lucrează auto-pricing-ul.
 
 ![Fișa produsului marketplace: Odoo Price/External Price, Sale Price, Auto Price, Buy Button Rank, Min/Max Sale Price, butoanele Set price/Get price](screenshots/05_product_pricing.png)
 
@@ -278,9 +280,18 @@ livrare și mapate pe starea Odoo (ex. `DLV` → livrat, `RTS`/`REF`/`CAN` → r
 Cron-ul **EMAG: Set Price** (dezactivat implicit, **Settings → Technical → Scheduled Actions**)
 ajustează prețul ofertelor cu **Auto Price** bifat și cu un **Buy Button Rank** cunoscut (diferit de
 0 — o ofertă fără rang cunoscut e sărită, până la un **Get price**): dacă oferta deține buy box-ul
-(rang exact 1), prețul urcă spre `max_sale_price`; pentru orice alt rang cunoscut (2, 3, …), coboară
-— mereu plafonat între `min_sale_price` și `max_sale_price` configurate pe produs. Ajustările sub 0,5
-unități monetare sunt ignorate.
+(rang exact 1), prețul urcă la jumătatea distanței până la `max_sale_price`; pentru orice alt rang
+cunoscut (2, 3, …), coboară cu 0,01 sub oferta care deține buy box-ul (**Best offer sale price**), iar
+dacă aceea nu e mai ieftină, coboară la jumătatea distanței până la `min_sale_price` — mereu plafonat
+între `min_sale_price` și `max_sale_price` configurate pe produs. Urcările și pașii „la jumătate" sub
+0,5 unități monetare sunt ignorați. Sunt re-prețuite doar ofertele cu stoc pe eMAG.
+
+După 15 minute (eMAG nu recalculează buy box-ul imediat), conectorul citește din nou rangul ofertelor
+re-prețuite și le ajustează pe cele care tot nu dețin buy box-ul, repetând cu aceeași pauză cât timp
+se schimbă ceva, de maximum 10 ori pe rulare, separat pentru fiecare backend eMAG. Prețul nou se scrie
+și în lista de prețuri a backend-ului (cu **Price per product**), iar exportul de preț (**Export
+Price**, cron-ul **Marketplace: export price**) nu mai trimite ofertele cu **Auto Price** — altfel
+le-ar suprascrie cu prețul din lista de prețuri.
 
 > **Avertisment obligatoriu de comunicat clientului:** dacă **Min sale price**/**Max sale price**
 > rămân necompletate (0) pe un produs cu **Auto Price** bifat și cu un rang cunoscut (deține buy
@@ -450,7 +461,7 @@ test de marketing existent):
 
 1. `01_credentials.png` — backend eMAG, tab Credentials completat, înainte de Test connection
    (`Not Confirmed`).
-2. `02_provider_details.png` — grupul de câmpuri specifice eMAG (tab Other Info): Enable Order Push
+2. `02_provider_details.png` — grupul de câmpuri specifice eMAG (tab Orders and Products → Settings): Enable Order Push
    Invoice, Mapping Product Code, Safe stock, Odoo ID is External ID.
 3. `03_objects.png` — tab Objects: cardurile cu contoare și etichete informative per tip de date.
 4. `04_delivery_carrier.png` — metoda de livrare EMAG: butonul **Get city** din antet (import

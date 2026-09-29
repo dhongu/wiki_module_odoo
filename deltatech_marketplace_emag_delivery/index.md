@@ -1,10 +1,11 @@
 # EMAG Marketplace Delivery (localizat la `deltatech_marketplace_emag_delivery/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_emag_delivery`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** [https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_emag_delivery](https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_emag_delivery)
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_emag_delivery`
-- **Ultima Ingestie:** `2026-09-03`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
@@ -12,12 +13,15 @@ Modulul emite AWB-uri (etichete de livrare) prin **eMAG Courier**, serviciul de 
 
 #### 2. Funcționalități Cheie
 
-- Emiterea AWB-ului prin eMAG Courier direct din livrarea Odoo (**Send to shipper**); suma de încasat ramburs se recalculează live din comandă în acel moment, astfel încât o plată deja capturată online nu mai apare de încasat.
+- Emiterea AWB-ului prin eMAG Courier direct din livrarea Odoo (**Send to shipper**); suma de încasat ramburs se recalculează live din comandă în acel moment, astfel încât o plată deja capturată online nu mai apare de încasat. Rambursul urmează modul de plată eMAG păstrat pe comandă (`external_payment_code`: 1 ramburs, 2 transfer bancar, 3 card online), nu furnizorul Odoo asociat: o comandă cu ramburs se încasează la totalul comenzii, cardul și transferul la 0. Voucherul eMAG nu mai este scăzut de două ori, fiindcă ajunge pe comandă ca linie proprie.
 - Comenzile cu ridicare din locker se trimit cu locker-ul returnat de eMAG pe comandă (`locker_id` transmis separat față de adresa destinatarului).
 - **Print label** descarcă eticheta și o atașează pe livrare, denumită după numărul de AWB, astfel încât fluxul de printare ZPL o poate prelua.
 - Livrarea afișează **eMAG AWB Number** (numărul de AWB lizibil pentru client) și **eMAG Courier** (curierul partener care transportă efectiv coletul) — referința de urmărire internă rămâne id-ul eMAG.
 - Starea coletului este interogată periodic la eMAG și scrisă în istoricul de livrare al comenzii.
+- Eticheta ZPL a unui AWB cu mai multe colete conține acum toate coletele (fiecare etichetă este decodată, ZPL-ul concatenat și recodat), nu doar primul.
 - Eticheta poate fi re-descărcată de la API doar pe baza AWB-ului (`label_refetch`), deci o etichetă ștearsă local este recuperabilă.
+- Statusul AWB `CAN` (anulat, adesea reemis) nu mai duce livrarea în starea **Refuzat**: starea rămâne neschimbată (se loghează), deoarece `deltatech_delivery_status` nu are stare de livrare anulată; `RTS` și `REF` rămân Refuzat. Un cod de status necunoscut păstrează starea și scrie un avertisment în log. Ultimul cod primit de la eMAG se păstrează pe AWB (**eMAG AWB Status Code** pe `delivery.awb`, coloană ascunsă în listă).
+- Modulul are acum traducere în română (`i18n/ro.po` și `.pot`): termenii din configurare, formatul etichetei și mesajele de eroare AWB/localitate apar în română.
 - Anularea unui AWB nu e posibilă din Odoo — se face din interfața de vânzător eMAG, care nu oferă API pentru asta.
 - Configurare metodă de livrare: în *Inventar > Configurare > Metode de Livrare*, se creează o metodă cu **Provider** `EMAG`; pe tab-ul **EMag Configuration** se aleg Backend-ul (contul eMAG pe care se rezervă AWB-ul), formatul etichetei (A4/A5/A6 sau ZPL pentru imprimante Zebra), adresa companiei folosită ca expeditor și metodele de plată considerate ramburs.
 - Localitățile eMAG se importă din formularul backend-ului (*Import Localities*) — atât expeditorul, cât și destinatarul trebuie să corespundă unui oraș cunoscut de eMAG, altfel AWB-ul este refuzat.
@@ -36,10 +40,12 @@ Modulul emite AWB-uri (etichete de livrare) prin **eMAG Courier**, serviciul de 
 - `delivery.carrier` (extins): adaugă tipul de livrare `emag`, câmpurile `backend_id` (backend-ul eMAG folosit) și `emag_label_format` (A4/A5/A6/ZPL); implementează emiterea AWB-ului (`emag_send_shipping`), preluarea etichetei, importul localităților și pollul de stare. Declară explicit capabilitățile `cities`, `ship`, `tracking`, `label_refetch`.
 - `stock.picking` (extins): adaugă `emag_awb_number` (numărul de AWB lizibil) și `emag_courier_name` (curierul partener real); suprascrie `carrier_generate_label` pentru a genera automat AWB-ul dacă lipsește și a redenumi atașamentul etichetei după AWB.
 - `marketplace.delivery.carrier` (extins): `emag_import` aduce conturile de curier din `/courier_accounts` și le leagă de un produs de tip serviciu.
+- `delivery.awb` (extins): adaugă `emag_status_code`, ultimul cod de status eMAG, exact cum a fost trimis.
 - `marketplace.backend` (extins): adaugă `delivery_carrier` la lista de tipuri de obiecte importabile atunci când provider-ul este `emag`.
 
 **Vizualizări**
 
+- Listă `delivery.awb` extinsă cu coloana ascunsă `emag_status_code`.
 - `view_delivery_carrier_form_with_provider_emag`: adaugă tab-ul „EMag Configuration” pe formularul metodei de livrare (`delivery.carrier`), vizibil doar când `delivery_type = emag`.
 - `view_picking_form_emag`: adaugă pe formularul livrării (`stock.picking`) câmpurile `emag_awb_number` și `emag_courier_name`, afișate doar când sunt completate.
 
