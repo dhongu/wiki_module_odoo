@@ -380,7 +380,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_anaf_d101](l10n_ro_anaf_d101/index.md): Generează XML-ul Declarației 101 (impozit pe profit anual) pentru ANAF, pornind de la calculul din `l10n_ro_profit_tax`, validat automat împotriva XSD-ului oficial.
 - [l10n_ro_anaf_d103](l10n_ro_anaf_d103/index.md): Export XML al Decontului lunar privind accizele (D103) din declarația de accize Odoo, gata de depus pe portalul ANAF.
 - [l10n_ro_anaf_d107](l10n_ro_anaf_d107/index.md): Declarația 107 privind sponsorizările și bursele private, cu calculul scăzământului de impozit și export XML pe structura oficială ANAF (`<d107>`), validat cu D107Validator.
-- [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md): Generare, validare și export XML pentru Declarația D112, cu trei profile de structură pe perioadă (v6, v7-0126, v7-0726) și validare XSD reactivată.
+- [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md): Generare, validare și export XML pentru Declarația D112, cu trei profile de structură pe perioadă (v6, v7-0126, v7-0726), validare XSD și prag minim CAS/CASS pe zilele cu contract activ.
 - [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md): Punte care preia evidența nominală D112 din statele de plată Odoo validate și proiectează live obligațiile de plată din salarizare.
 - [l10n_ro_anaf_d120](l10n_ro_anaf_d120/index.md): Decontul anual privind accizele (D120), cu raportare cantitativă și export XML.
 - [l10n_ro_anaf_d177](l10n_ro_anaf_d177/index.md): Cererea 177 de redirecționare a unei părți din impozitul pe profit/micro către beneficiarii sponsorizărilor, cu rest disponibil calculat automat și export XML validat ANAF.
@@ -440,6 +440,8 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_footer_anpc](l10n_ro_footer_anpc/index.md): Afișează pozele și link-urile ANPC în footer-ul site-ului, pentru conformitate cu protecția consumatorului.
 - [l10n_ro_force_reconcile](l10n_ro_force_reconcile/index.md): Wizard de reconciliere forțată între conturi diferite (409↔401, 419↔411, compensare client-furnizor).
 - [l10n_ro_grants](l10n_ro_grants/index.md): Contracte de finanțare nerambursabilă cu note 475/131/132 și recunoaștere venituri (OMFP 1802 + IAS 20, FR-38).
+- [l10n_ro_hr_pontaj](l10n_ro_hr_pontaj/index.md): Foaie colectivă de prezență lunară pentru România, propusă din program, sărbători legale și concedii aprobate, cu corecții pe zi, export Excel/PDF, închiderea lunii, cerere de concediu tipărită și plan CO cu report 18 luni.
+- [l10n_ro_hr_pontaj_payroll](l10n_ro_hr_pontaj_payroll/index.md): Corecțiile din foaia colectivă de prezență devin prezențe (work entries), iar fluturașul și D112 primesc zilele pe drumul standard al salarizării.
 - [l10n_ro_intrastat_enhancement](l10n_ro_intrastat_enhancement/index.md): Declarația Intrastat pentru România: export XML INS, praguri anuale cu avertizări, verificare erori „INS Validation" (inclusiv antet și TVA partener), reconciliere D390 și actualizare nomenclator CN.
 - [l10n_ro_inventory_closing](l10n_ro_inventory_closing/index.md): Înregistrări contabile ale inventarierii și PV-uri PDF pentru cele 4 tipuri de diferențe (OMFP 1802 + 2861/2009, FR-18).
 - [l10n_ro_inventory_items](l10n_ro_inventory_items/index.md): Gestiunea obiectelor de inventar 303/603/8035 cu fișă OI creată la recepție, wizard-uri batch și trei rapoarte PDF, inclusiv Registrul OI (OMFP 1802).

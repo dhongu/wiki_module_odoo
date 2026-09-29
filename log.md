@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-29] Ingestie pontaj RO + re-ingestie D112
+
+- **Acțiune:** Pagini noi pentru [l10n_ro_hr_pontaj](l10n_ro_hr_pontaj/index.md) 19.0.1.0.2 (foaia colectivă de prezență, cu fișa consultant și 12 capturi) și [l10n_ro_hr_pontaj_payroll](l10n_ro_hr_pontaj_payroll/index.md) 19.0.1.0.0 (corecțiile din pontaj devin prezențe pe fluturaș); re-ingestie [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md) 19.0.2.4.0 (`zile_contract_activ`, pragul CAS/CASS pe zilele cu contract activ; fișa recopiată). 3 subagenți `documentarist-wiki` în paralel, branch `19.0-wiki-pontaj-d112`.
+- **Neactualizat:** `l10n_ro_anaf_d112_payroll` (19.0.1.0.3 în cod, pagina rămâne pe 19.0.1.0.0): rescrierea paginii a fost refuzată de sistemul de permisiuni; de reluat.
+- **Sursă:** `readme/` și codul modulelor pe `origin/19.0` (l10n_ro_ent #370, #371, #373, #375). Rescrise după `mdtrade_concedii` (MD Trade Concept SRL).
+- **Dependențe/Conexiuni:** `l10n_ro_hr_pontaj_payroll` → `l10n_ro_hr_pontaj`, `hr_payroll`; tabul „Pontaj” în [deltatech_hr_leave_dashboard](deltatech_hr_leave_dashboard/index.md); zilele ajung în D112 prin [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md).
+- **Fișiere actualizate:** `l10n_ro_hr_pontaj/` (index + fișă + capturi), `l10n_ro_hr_pontaj_payroll/index.md`, `l10n_ro_anaf_d112/index.md` (+ fișa), `index.md`, `.index/chunks.json`.
+
 ## [2026-09-29] Ingestie `deltatech_hr_leave_dashboard` (modul nou)
 
 - **Acțiune:** Pagină nouă pentru [deltatech_hr_leave_dashboard](deltatech_hr_leave_dashboard/index.md) 19.0.1.0.1 (suita `bitshop`, OPL-1): tabloul concediilor echipei peste Time Off — aprobare dintr-un clic prin metodele standard, soldurile întregii echipe din `get_allocation_data`, suprapuneri pe departament, analiză pe tip / lună / departament / angajat; registrul de taburi `deltatech_hr_leave_dashboard.tabs`. Fișa consultant copiată, cu 6 capturi.
