@@ -18,6 +18,13 @@ This is an append-only log of all operations performed on the wiki.
 - **Sursă:** `readme/DESCRIPTION.md`, `CONFIGURE.md`, `USAGE.md`, `HISTORY.md`, `__manifest__.py`; dhongu/deltatech și terrabit-solutions/bitshop, `origin/19.0` (checkout-urile locale erau în urmă).
 - **Dependențe/Conexiuni:** `deltatech_print_queue` → [deltatech_tc](deltatech_tc/index.md); conexiuni [deltatech_report_prn](deltatech_report_prn/index.md), [deltatech_report_prn_zebra_sdk](deltatech_report_prn_zebra_sdk/index.md), [deltatech_delivery_iot](deltatech_delivery_iot/index.md) (aceasta din urmă doar de domeniu, neverificată în cod). `deltatech_tc` ↔ [deltatech_print_queue](deltatech_print_queue/index.md).
 - **Fișiere actualizate:** `deltatech_print_queue/index.md` (nou), `deltatech_tc/index.md`, `index.md`, `.index/chunks.json`.
+## [2026-09-29] Ingestie suita `l10n_ro_ent` — 12 module noi (lot Clio)
+
+- **Acțiune:** Prima documentare a 12 module din `l10n_ro_ent`, procesate în paralel (12 subagenți `documentarist-wiki`, în două loturi de câte 6), pe branchul `19.0-wiki-l10n_ro_ent`. Declarațiile ANAF `l10n_ro_anaf_d177`, `d301`, `d307`, `d311`, `d392`, `d700`, `d710`; creanțe incerte `l10n_ro_doubtful_receivables` și puntea `l10n_ro_doubtful_receivables_profit_tax`; `l10n_ro_efactura_product_match`; `l10n_ro_reverse_charge_331_purchase`; `l10n_ro_saft_export_fix`.
+- **Sursă:** `readme/DESCRIPTION.md` (+ `USAGE.md`, `CONFIGURE.md`, `CONTEXT.md` unde au conținut propriu), `__manifest__.py` și, pentru componente, codul modulelor; terrabit-solutions/l10n_ro_ent 19.0.
+- **Dependențe/Conexiuni:** link-uri active către paginile existente (`l10n_ro_anaf_base`, `l10n_ro_profit_tax`, `l10n_ro_anaf_d107`, `l10n_ro_reverse_charge_331` etc.); `l10n_ro_doubtful_receivables_profit_tax` → [l10n_ro_doubtful_receivables](l10n_ro_doubtful_receivables/index.md). Conexiunile neverificate în cod au fost scoase de subagenți sau marcate explicit ca legături de domeniu (`l10n_ro_anaf_d300` la D301/D311, `l10n_ro_efactura_dedup` și `l10n_ro_efactura_import_assist` la `l10n_ro_efactura_product_match`).
+- **Fișe consultant copiate:** 8 din 12 (`d177`, `d301`, `d307`, `d311`, `d710`, `doubtful_receivables`, `doubtful_receivables_profit_tax`, `efactura_product_match` — cu capturile aferente); fără fișă: `d392`, `d700`, `reverse_charge_331_purchase`, `saft_export_fix`.
+- **Fișiere actualizate:** câte un `<modul>/index.md` pentru cele 12 module (+ `FISA_CONSULTANT.md` și `screenshots/` acolo unde există fișă), `index.md`, `.index/chunks.json`.
 
 ## [2026-09-29] Re-ingestie `deltatech_marketplace_emag_delivery` (19.0.1.1.2) — capturile fișei
 

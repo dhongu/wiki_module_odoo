@@ -10465,6 +10465,37 @@
     "text": "Romania - Declarația D120 ANAF\nl10n_ro_anaf_d120\nModulul adaugă exportul în format XML ANAF al **Decontului privind accizele (D120)**, peste declarația de accize gestionată de modulul `l10n_ro_excise_duty`. D120 este decontul depus de importatorii și operatorii de produse accizabile (alcool, bere, produse energetice, tutun etc.), reglementat de Codul Fiscal Titlul VIII. Modulul nu adaugă un ecran nou: pe o declarație de accize de tip D120, butonul „Export XML\" generează fișierul în formatul ANAF D120 (namespace `mfp:anaf:dgti:d120:declaratie:v5`), validat față de schema XSD oficială, în locul template-ului D103. Astfel, responsabilul fiscal obține fișierul de depunere fără operare manuală.\nExport XML D120: generarea decontului de accize în formatul ANAF (`D120_<CUI>_<AAAALL>.xml`), pe baza liniilor declarației de accize.\nMapare automată pe rândurile D120: fiecare categorie de acciză (bere, vin, alcool etilic, țigarete, motorină, GPL, gaz natural, energie electrică, plus categoriile nearmonizate din Legea 296/2023) este pusă pe rândul corespunzător din formular (R0, R3, R9, R20 etc.).\nCalcul totaluri: subtotaluri și totaluri (accize armonizate, nearmonizate, total general) calculate automat din liniile declarației.\nValidare XSD: XML-ul este validat față de schema oficială ANAF v5 (`d120_13052025.xsd`) înainte de livrare; datele de identificare ale companiei (CUI, CAEN, adresă) sunt verificate la export."
   },
   {
+    "path": "l10n_ro_anaf_d177/index.md",
+    "module": "l10n_ro_anaf_d177",
+    "version": "19.0.1.1.3",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d177",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d177",
+    "last_ingest": "2026-09-29",
+    "friendly_name": "Romania - Cerere de redirecționare a impozitului (D177)",
+    "summary": "Modulul pregătește Cererea 177, prin care o firmă care a acordat sponsorizări cere ca o parte din impozitul pe profit sau pe veniturile microîntreprinderilor să fie virată direct către beneficiari (art. 25 alin. (4) lit. i) din Codul fiscal). Cererea se depune separat de D107: D107 raportează sponsorizările acordate, iar D177 cere virarea impozitului. Modulul calculează restul disponibil de redirecționat și generează fișierul XML pentru ANAF, validat cu schema oficială.",
+    "features": [
+      "Cerere proprie (model cu linii de beneficiari): denumire, cod fiscal, adresă, tip beneficiar, contract de sponsorizare, IBAN, sumă redirecționată, acord obținut, telefon și e-mail.",
+      "Antet cu anul fiscal, perioada, opțiunile de cerere rectificativă și numele semnatarului; meniul este în Contabilitate → Raportare → Declarații ANAF → D177 Redirecționare impozit.",
+      "Plafon de redirecționare, sumă redirecționată anterior și rest disponibil, calculat automat; totalul cerut se însumează pe cerere.",
+      "Alegerea partenerului completează automat denumirea, codul fiscal și IBAN-ul din conturile lui bancare.",
+      "Flux cu stări: ciornă, confirmare, revenire în ciornă; apoi export XML.",
+      "Validări la confirmare/export: beneficiarul are nevoie de cod fiscal, denumire, IBAN și sumă pozitivă; contractul de sponsorizare este obligatoriu pentru toate tipurile de beneficiar, cu excepția tipului 5 („alt beneficiar prevăzut de lege”), conform regulii ANAF R27.",
+      "Export XML validat cu schema oficială `d177_20260309.xsd`; exportul este blocat dacă totalul cerut depășește restul disponibil.",
+      "Modulul nu generează note contabile; este o cerere administrativă. Fluxul detaliat pas-cu-pas este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "l10n_ro_anaf_base",
+      "account",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_anaf_d107",
+      "l10n_ro_profit_tax",
+      "l10n_ro_anaf_submission"
+    ],
+    "text": "Romania - Cerere de redirecționare a impozitului (D177)\nl10n_ro_anaf_d177\nModulul pregătește Cererea 177, prin care o firmă care a acordat sponsorizări cere ca o parte din impozitul pe profit sau pe veniturile microîntreprinderilor să fie virată direct către beneficiari (art. 25 alin. (4) lit. i) din Codul fiscal). Cererea se depune separat de D107: D107 raportează sponsorizările acordate, iar D177 cere virarea impozitului. Modulul calculează restul disponibil de redirecționat și generează fișierul XML pentru ANAF, validat cu schema oficială.\nCerere proprie (model cu linii de beneficiari): denumire, cod fiscal, adresă, tip beneficiar, contract de sponsorizare, IBAN, sumă redirecționată, acord obținut, telefon și e-mail.\nAntet cu anul fiscal, perioada, opțiunile de cerere rectificativă și numele semnatarului; meniul este în Contabilitate → Raportare → Declarații ANAF → D177 Redirecționare impozit.\nPlafon de redirecționare, sumă redirecționată anterior și rest disponibil, calculat automat; totalul cerut se însumează pe cerere.\nAlegerea partenerului completează automat denumirea, codul fiscal și IBAN-ul din conturile lui bancare.\nFlux cu stări: ciornă, confirmare, revenire în ciornă; apoi export XML.\nValidări la confirmare/export: beneficiarul are nevoie de cod fiscal, denumire, IBAN și sumă pozitivă; contractul de sponsorizare este obligatoriu pentru toate tipurile de beneficiar, cu excepția tipului 5 („alt beneficiar prevăzut de lege”), conform regulii ANAF R27.\nExport XML validat cu schema oficială `d177_20260309.xsd`; exportul este blocat dacă totalul cerut depășește restul disponibil.\nModulul nu generează note contabile; este o cerere administrativă. Fluxul detaliat pas-cu-pas este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+  },
+  {
     "path": "l10n_ro_anaf_d205/index.md",
     "module": "l10n_ro_anaf_d205",
     "version": "19.0.1.0.1",
@@ -10572,6 +10603,99 @@
     "text": "Romania - Decont de TVA (D300)\nl10n_ro_anaf_d300\nModul destinat departamentelor financiar-contabile din România care au obligația depunerii Decontului de TVA (Declarația 300) la ANAF. Permite generarea și exportul D300 direct din Odoo, în două formate acceptate oficial, fără re-introducerea manuală a datelor.\nExport XDP (Soft A): generează un fișier Adobe XDP care poate fi importat instantaneu în formularul PDF inteligent oficial ANAF (D300 v12).\nExport XML (Soft J): generează fișierul XML conform structurii oficiale ANAF v12.0.0+, gata pentru validare și semnare digitală în DUKIntegrator.\nValidare XSD automată: fișierul XML este validat față de schema XSD oficială înainte de export; erorile de structură sunt raportate înainte de descărcare.\nMapare rânduri de decont: corelează automat codurile liniilor din raportul de taxe Odoo cu câmpurile corespunzătoare din declarația D300 (rânduri R1–R44).\nDate de identificare completate automat: CUI, denumire companie, reprezentant legal, județ (prin mapare ANAF din `l10n_ro_anaf_base`).\nCalcul sold reportat TVA: preia automat soldul conturilor 4423 (TVA de plată) și 4424 (TVA de recuperat) din perioada precedentă pentru rândurile R35/R38.\nSuport TVA la încasare (CABA): calculează baza și TVA neexigibil din facturile neîncasate la sfârșitul perioadei.\nIntegrare account.return: buton „Generează D300\" disponibil în fluxul de închidere lunară/trimestrială, cu pre-filtrare automată pe perioada return-ului.\nTip decont automat: detectează tipul perioadei (lunar L, trimestrial T, semestrial S, anual A) și generează numărul de evidență al plății conform algoritmului ANAF."
   },
   {
+    "path": "l10n_ro_anaf_d301/index.md",
+    "module": "l10n_ro_anaf_d301",
+    "version": "19.0.1.0.3",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d301",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d301",
+    "last_ingest": "2026-09-29",
+    "friendly_name": "Romania - Decont special de TVA (D301)",
+    "summary": "Modulul construiește **decontul special de TVA (formularul 301)**, depus de persoanele care nu sunt înregistrate normal în scopuri de TVA, dar datorează totuși taxa, cel mai frecvent pentru achiziții intracomunitare de bunuri sau servicii. Contabilul introduce operațiunile una câte una, iar modulul le agregă pe secțiunile formularului, calculează valorile de control și exportă fișierul XML acceptat de ANAF.",
+    "features": [
+      "Operațiuni declarate individual, cu documentul, data și, la achizițiile în valută, suma în valută, valuta și cursul (coloanele de valută sunt ascunse implicit în listă); suma intră automat în secțiunea dată de tipul operațiunii.",
+      "Cele cinci secțiuni ale decontului, cu baze și TVA agregate: S1 (achiziții intracomunitare de bunuri), S2 (mijloace de transport noi), S3 (produse accizabile), S4 (operațiuni art. 307 Cod fiscal) și S4.1 (servicii intracomunitare cu TVA în sarcina beneficiarului).",
+      "Suma de control și numărul de evidență a plății, calculate după regulile ANAF (numărul nu se copiază de pe recipisă); termenul de depunere este data de 25 a lunii următoare.",
+      "Antet cu perioada (lună și an), tipul declarantului, opțiunea „Numai mijloace de transport\", temeiul legal, banca și contul (obligatorii în schema ANAF) și semnatarul.",
+      "Reguli de corelare verificate ca în validatorul ANAF: temeiul art. 105 alin. (6) lit. a) se poate invoca numai pe o rectificativă, iar declarația pentru mijloace de transport noi trebuie să conțină cel puțin o operațiune din S2.",
+      "Flux cu stări ciornă/confirmată: Confirmă, Exportă XML, Resetează la ciornă; validare față de schema oficială `d301_20200130.xsd`.",
+      "Meniu: Contabilitate → Raportare → Declarații ANAF → Decont special de TVA (D301), vizibil pentru grupul Contabil.",
+      "Modulul nu generează note contabile; declarația se construiește din datele introduse, nu din registrul contabil. Fluxul pas-cu-pas este în [fișa consultant](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro",
+      "l10n_ro_anaf_base"
+    ],
+    "connections": [
+      "l10n_ro_anaf_d300"
+    ],
+    "text": "Romania - Decont special de TVA (D301)\nl10n_ro_anaf_d301\nModulul construiește **decontul special de TVA (formularul 301)**, depus de persoanele care nu sunt înregistrate normal în scopuri de TVA, dar datorează totuși taxa, cel mai frecvent pentru achiziții intracomunitare de bunuri sau servicii. Contabilul introduce operațiunile una câte una, iar modulul le agregă pe secțiunile formularului, calculează valorile de control și exportă fișierul XML acceptat de ANAF.\nOperațiuni declarate individual, cu documentul, data și, la achizițiile în valută, suma în valută, valuta și cursul (coloanele de valută sunt ascunse implicit în listă); suma intră automat în secțiunea dată de tipul operațiunii.\nCele cinci secțiuni ale decontului, cu baze și TVA agregate: S1 (achiziții intracomunitare de bunuri), S2 (mijloace de transport noi), S3 (produse accizabile), S4 (operațiuni art. 307 Cod fiscal) și S4.1 (servicii intracomunitare cu TVA în sarcina beneficiarului).\nSuma de control și numărul de evidență a plății, calculate după regulile ANAF (numărul nu se copiază de pe recipisă); termenul de depunere este data de 25 a lunii următoare.\nAntet cu perioada (lună și an), tipul declarantului, opțiunea „Numai mijloace de transport\", temeiul legal, banca și contul (obligatorii în schema ANAF) și semnatarul.\nReguli de corelare verificate ca în validatorul ANAF: temeiul art. 105 alin. (6) lit. a) se poate invoca numai pe o rectificativă, iar declarația pentru mijloace de transport noi trebuie să conțină cel puțin o operațiune din S2.\nFlux cu stări ciornă/confirmată: Confirmă, Exportă XML, Resetează la ciornă; validare față de schema oficială `d301_20200130.xsd`.\nMeniu: Contabilitate → Raportare → Declarații ANAF → Decont special de TVA (D301), vizibil pentru grupul Contabil.\nModulul nu generează note contabile; declarația se construiește din datele introduse, nu din registrul contabil. Fluxul pas-cu-pas este în [fișa consultant](FISA_CONSULTANT.md)."
+  },
+  {
+    "path": "l10n_ro_anaf_d307/index.md",
+    "module": "l10n_ro_anaf_d307",
+    "version": "19.0.1.0.3",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d307",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d307",
+    "last_ingest": "2026-09-29",
+    "friendly_name": "Romania - Declarația 307 (ajustări de TVA)",
+    "summary": "Modulul permite întocmirea Declarației 307 (formularul ANAF privind sumele rezultate din ajustarea, corecția ajustărilor sau regularizarea taxei pe valoarea adăugată). Se depune de persoana impozabilă care a ajustat TVA-ul în urma transferului de active, a transferului proprietății asupra activelor fixe din leasing sau a anulării codului de TVA. Operațiunile se introduc pe rânduri, totalurile se calculează automat, iar declarația se exportă în XML acceptat de ANAF.",
+    "features": [
+      "Declarația se creează din Contabilitate → Raportare → Declarații ANAF → D307 Ajustări de TVA (acces pentru grupul contabil) și are stările Ciornă / Confirmată.",
+      "Trei tipuri de operațiuni: A (transfer de active), L (transferul dreptului de proprietate asupra activelor corporale fixe din leasing) și C (anularea codului de TVA conform art. 316 alin. (11) lit. a)–e), g) sau h) din Codul fiscal).",
+      "Fiecare operațiune are operatorul implicat (cedent, finanțator sau beneficiar) și TVA-ul aferent; codul fiscal și denumirea se preiau de pe partener cu un singur clic, fără prefixul RO.",
+      "Totalurile pe cele trei tipuri și suma de control se calculează automat, cu sume întregi (lei), conform regulilor ANAF; TVA-ul poate fi negativ.",
+      "Suport pentru declarație rectificativă și pentru declarația depusă după anularea rezervei verificării ulterioare, caz în care temeiul legal este obligatoriu (art. 105 alin. (6) lit. a) sau b) din Legea 207/2015).",
+      "Semnatarul (nume, funcție) intră în antetul XML.",
+      "Validări la export: CUI-ul companiei, numele semnatarului, cel puțin o operațiune și unicitatea perechii (tip, cod operator) — un operator nu poate apărea de două ori pe același tip.",
+      "Export XML conform schemei `d307_20171205.xsd` (OPANAF 793/2016, validator J1.1.0).",
+      "Modulul nu generează note contabile; raportează sumele deja ajustate în contabilitate. Fluxul pas cu pas este în fișa consultant."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro",
+      "l10n_ro_anaf_base"
+    ],
+    "connections": [
+      "l10n_ro_anaf_d300"
+    ],
+    "text": "Romania - Declarația 307 (ajustări de TVA)\nl10n_ro_anaf_d307\nModulul permite întocmirea Declarației 307 (formularul ANAF privind sumele rezultate din ajustarea, corecția ajustărilor sau regularizarea taxei pe valoarea adăugată). Se depune de persoana impozabilă care a ajustat TVA-ul în urma transferului de active, a transferului proprietății asupra activelor fixe din leasing sau a anulării codului de TVA. Operațiunile se introduc pe rânduri, totalurile se calculează automat, iar declarația se exportă în XML acceptat de ANAF.\nDeclarația se creează din Contabilitate → Raportare → Declarații ANAF → D307 Ajustări de TVA (acces pentru grupul contabil) și are stările Ciornă / Confirmată.\nTrei tipuri de operațiuni: A (transfer de active), L (transferul dreptului de proprietate asupra activelor corporale fixe din leasing) și C (anularea codului de TVA conform art. 316 alin. (11) lit. a)–e), g) sau h) din Codul fiscal).\nFiecare operațiune are operatorul implicat (cedent, finanțator sau beneficiar) și TVA-ul aferent; codul fiscal și denumirea se preiau de pe partener cu un singur clic, fără prefixul RO.\nTotalurile pe cele trei tipuri și suma de control se calculează automat, cu sume întregi (lei), conform regulilor ANAF; TVA-ul poate fi negativ.\nSuport pentru declarație rectificativă și pentru declarația depusă după anularea rezervei verificării ulterioare, caz în care temeiul legal este obligatoriu (art. 105 alin. (6) lit. a) sau b) din Legea 207/2015).\nSemnatarul (nume, funcție) intră în antetul XML.\nValidări la export: CUI-ul companiei, numele semnatarului, cel puțin o operațiune și unicitatea perechii (tip, cod operator) — un operator nu poate apărea de două ori pe același tip.\nExport XML conform schemei `d307_20171205.xsd` (OPANAF 793/2016, validator J1.1.0).\nModulul nu generează note contabile; raportează sumele deja ajustate în contabilitate. Fluxul pas cu pas este în fișa consultant."
+  },
+  {
+    "path": "l10n_ro_anaf_d311/index.md",
+    "module": "l10n_ro_anaf_d311",
+    "version": "19.0.1.0.3",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d311",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d311",
+    "last_ingest": "2026-09-29",
+    "friendly_name": "Romania - Declarația 311 (TVA la cod anulat)",
+    "summary": "Modulul permite întocmirea Declarației 311 — taxa pe valoarea adăugată colectată, datorată de persoanele impozabile al căror cod de TVA a fost anulat conform art. 316 alin. (11) lit. a)–e), g) sau h) din Codul fiscal — și exportul ei în format XML pentru depunere la ANAF. Formularul urmează structura publicată la 29.01.2021 (schema `d311_20210129.xsd`, validator J2.0.0), iar rubricile, totalurile și regulile de corelație sunt controlate înainte de export.",
+    "features": [
+      "Două situații de depunere care se exclud reciproc, alese în câmpul „Filed As\":",
+      "persoana cu codul anulat — secțiunea IV: livrări, achiziții cu taxare inversă și livrări dinainte de anulare exigibile în sistemul TVA la încasare;",
+      "persoana reînregistrată conform art. 316 alin. (12) — secțiunea V: operațiuni din perioada anulării pentru care taxa nu a fost colectată atunci.",
+      "Alegerea situației deschide doar rubricile secțiunii corespunzătoare.",
+      "Subtotaluri și total calculate după formulele formularului (rd. 03 = 01 + 02, rd. 05 = 03 + 04), plus suma de control peste ambele secțiuni; sumele sunt valori întregi, nenegative.",
+      "Temeiul anulării redat prin perechea complementară de bife cerută de validator; date specifice: data anulării, data reînregistrării, CUI succesor.",
+      "Declarație inițială sau rectificativă (depusă integral, cu toate sumele corectate) și indicator de depunere după anularea rezervei verificării ulterioare, cu temei legal obligatoriu.",
+      "Date semnatar (nume, funcție) pentru antetul XML.",
+      "Fluxul în două stări (Ciornă / Confirmată), cu reset la ciornă și export XML validat după regulile de corelație verificate de ANAF.",
+      "Acces din meniul declarațiilor ANAF („D311 VAT After Code Cancellation\"), pentru utilizatorii cu drepturi de contabil.",
+      "Fluxul detaliat pas-cu-pas, cu capturi de ecran, este în [Fișa Consultant](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro",
+      "l10n_ro_anaf_base"
+    ],
+    "connections": [
+      "l10n_ro_anaf_base",
+      "l10n_ro_anaf_d300",
+      "l10n_ro_anaf_d394"
+    ],
+    "text": "Romania - Declarația 311 (TVA la cod anulat)\nl10n_ro_anaf_d311\nModulul permite întocmirea Declarației 311 — taxa pe valoarea adăugată colectată, datorată de persoanele impozabile al căror cod de TVA a fost anulat conform art. 316 alin. (11) lit. a)–e), g) sau h) din Codul fiscal — și exportul ei în format XML pentru depunere la ANAF. Formularul urmează structura publicată la 29.01.2021 (schema `d311_20210129.xsd`, validator J2.0.0), iar rubricile, totalurile și regulile de corelație sunt controlate înainte de export.\nDouă situații de depunere care se exclud reciproc, alese în câmpul „Filed As\":\npersoana cu codul anulat — secțiunea IV: livrări, achiziții cu taxare inversă și livrări dinainte de anulare exigibile în sistemul TVA la încasare;\npersoana reînregistrată conform art. 316 alin. (12) — secțiunea V: operațiuni din perioada anulării pentru care taxa nu a fost colectată atunci.\nAlegerea situației deschide doar rubricile secțiunii corespunzătoare.\nSubtotaluri și total calculate după formulele formularului (rd. 03 = 01 + 02, rd. 05 = 03 + 04), plus suma de control peste ambele secțiuni; sumele sunt valori întregi, nenegative.\nTemeiul anulării redat prin perechea complementară de bife cerută de validator; date specifice: data anulării, data reînregistrării, CUI succesor.\nDeclarație inițială sau rectificativă (depusă integral, cu toate sumele corectate) și indicator de depunere după anularea rezervei verificării ulterioare, cu temei legal obligatoriu.\nDate semnatar (nume, funcție) pentru antetul XML.\nFluxul în două stări (Ciornă / Confirmată), cu reset la ciornă și export XML validat după regulile de corelație verificate de ANAF.\nAcces din meniul declarațiilor ANAF („D311 VAT After Code Cancellation\"), pentru utilizatorii cu drepturi de contabil.\nFluxul detaliat pas-cu-pas, cu capturi de ecran, este în [Fișa Consultant](FISA_CONSULTANT.md)."
+  },
+  {
     "path": "l10n_ro_anaf_d318/index.md",
     "module": "l10n_ro_anaf_d318",
     "version": "19.0.1.0.0",
@@ -10633,6 +10757,35 @@
       "l10n_ro_doc_screenshots"
     ],
     "text": "Romania - Declarație recapitulativă (D390)\nl10n_ro_anaf_d390\nModulul automatizează generarea Declarației recapitulative D390 (VIES) privind livrările, achizițiile și prestările intracomunitare, pentru companiile înregistrate în scopuri de TVA în România care efectuează operațiuni intracomunitare. Declarația este obligatorie conform Art. 325 din Codul Fiscal și se depune lunar, până pe 25 ale lunii următoare. Modulul construiește un raport în stil contabil pe baza listei standard Odoo „Listă Vânzări/Achiziții CE\", clasifică automat operațiunile pe baza tag-urilor fiscale românești din `l10n_ro`, produce fișierele de depunere către ANAF și integrează D390 în lista declarațiilor fiscale (`account.return`), cu termen legal calculat și verificări proprii, eliminând completarea manuală pe fiecare partener UE.\nRaport „Listă vânzări/achiziții CE\" adaptat pentru România, accesibil din meniul Contabilitate → Declarații ANAF → Declarație 390.\nClasificare automată a operațiunilor în categoriile D390 pe baza tag-urilor fiscale românești: L (livrări bunuri), P (prestări servicii), T (triunghiulare), A (achiziții bunuri) și S (achiziții servicii).\nExport XDP (Soft A) — fișier Adobe XDP gata de importat în formularul PDF inteligent de pe portalul ANAF.\nExport XML (Soft J) — fișier XML conform schemei oficiale ANAF v3 (2021+), validat automat împotriva schemei XSD înainte de descărcare și compatibil cu DUKIntegrator.\nButoanele de export (XML / XDP) sunt afișate permanent în bara de sus a raportului.\nValidare automată înainte de export: cod TVA companie, adresă fiscală completă, cod TVA al partenerilor UE cu prefix de țară corect.\nDate declarant preluate automat din câmpul de contact ANAF configurat în setările companiei (funcție — fallback „CONTABIL\" —, prenume, nume).\nAgregare pe perechea partener + tip operație, cu eliminarea automată a sumelor zero.\nD390 apare în lista declarațiilor fiscale (`account.return`), cu termenul legal calculat automat (ziua 25 a lunii următoare perioadei) și cu două verificări proprii: operațiunile intracomunitare ale perioadei (cu acțiune directă către raport) și partenerii fără cod de TVA sau fără țară, care altfel ar bloca exportul.\nSuport pentru declarație rectificativă: caracterul rectificativ se deduce automat din istoric (dacă declarația a fost deja depusă pentru perioadă), fără bifă manuală și fără dialog suplimentar.\nCategoria de comerț triunghiular (cod `T`) este funcțională: tag fiscal dedicat (`01T - TAX BASE`) și taxă de vânzare `0% EU T`, creată automat la instalare inclusiv pe companiile RO care au deja planul de conturi instalat."
+  },
+  {
+    "path": "l10n_ro_anaf_d392/index.md",
+    "module": "l10n_ro_anaf_d392",
+    "version": "19.0.1.0.3",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d392",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d392",
+    "last_ingest": "2026-09-29",
+    "friendly_name": "Romania - Declarație informativă anuală (D392)",
+    "summary": "Modulul permite pregătirea și depunerea Declarației 392 — informativa anuală privind livrările, prestările și achizițiile — pentru persoanele impozabile cu cifra de afaceri sub plafon (300.000 lei pentru anii de raportare de la 2019). Sumele se completează automat din facturile anului, iar declarația se exportă în format XML, validat cu schema oficială ANAF, gata de încărcat în SPV.",
+    "features": [
+      "Două variante de declarație: 392A pentru persoanele înregistrate în scopuri de TVA (livrări cu TVA aferent, separat către parteneri înregistrați și neînregistrați) și 392B pentru cele neînregistrate (în plus, blocul de achiziții); modelul cere exact blocurile obligatorii fiecărei variante.",
+      "Completare automată a sumelor din facturile anului, separate după prefixul `RO` al codului fiscal al partenerului (criteriul folosit și de ANAF); valorile rămân editabile manual.",
+      "Gardă pe plafonul cifrei de afaceri, verificat pe anul de raportare.",
+      "Flux cu stări (ciornă / confirmat), cu revenire la ciornă; numele declarației este generat din varianta, CUI și anul fiscal.",
+      "Semnatar al declarației: implicit contactul ANAF al companiei, dar poate fi completat manual pe declarație.",
+      "Export XML validat cu schema oficială `d392.xsd`.",
+      "Acces din meniul declarațiilor ANAF (D392 Annual Informative), pentru utilizatorii cu drepturi de contabil.",
+      "Istoric de discuții și activități pe fiecare declarație (chatter)."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro",
+      "l10n_ro_anaf_base"
+    ],
+    "connections": [
+      "l10n_ro_anaf_base"
+    ],
+    "text": "Romania - Declarație informativă anuală (D392)\nl10n_ro_anaf_d392\nModulul permite pregătirea și depunerea Declarației 392 — informativa anuală privind livrările, prestările și achizițiile — pentru persoanele impozabile cu cifra de afaceri sub plafon (300.000 lei pentru anii de raportare de la 2019). Sumele se completează automat din facturile anului, iar declarația se exportă în format XML, validat cu schema oficială ANAF, gata de încărcat în SPV.\nDouă variante de declarație: 392A pentru persoanele înregistrate în scopuri de TVA (livrări cu TVA aferent, separat către parteneri înregistrați și neînregistrați) și 392B pentru cele neînregistrate (în plus, blocul de achiziții); modelul cere exact blocurile obligatorii fiecărei variante.\nCompletare automată a sumelor din facturile anului, separate după prefixul `RO` al codului fiscal al partenerului (criteriul folosit și de ANAF); valorile rămân editabile manual.\nGardă pe plafonul cifrei de afaceri, verificat pe anul de raportare.\nFlux cu stări (ciornă / confirmat), cu revenire la ciornă; numele declarației este generat din varianta, CUI și anul fiscal.\nSemnatar al declarației: implicit contactul ANAF al companiei, dar poate fi completat manual pe declarație.\nExport XML validat cu schema oficială `d392.xsd`.\nAcces din meniul declarațiilor ANAF (D392 Annual Informative), pentru utilizatorii cu drepturi de contabil.\nIstoric de discuții și activități pe fiecare declarație (chatter)."
   },
   {
     "path": "l10n_ro_anaf_d394/index.md",
@@ -10738,6 +10891,65 @@
       "l10n_eu_oss_reports"
     ],
     "text": "Romania - Declarația D398 ANAF (TVA OSS)\nl10n_ro_anaf_d398\nModulul permite generarea Declarației Speciale de TVA (D398) direct din Odoo, conform formatului solicitat de ANAF pentru regimul special One Stop Shop (OSS). Este destinat companiilor din România care efectuează livrări de bunuri sau prestări de servicii către consumatori finali (B2C) din alte state membre UE și sunt înregistrate în regimul OSS. Modulul **nu adaugă un ecran propriu**: extinde raportul standard OSS din Enterprise, adăugând butoanele de export ANAF (XML Soft J / XDP Soft A) și coloane de control în EUR (conversie la cursul BCE). Contabilitatea rămâne în RON — modulul adaugă doar conversia de raportare în EUR pentru declarația OSS. Implementarea este aliniată la infrastructura comună din `l10n_ro_anaf_base` (date companie/declarant, registru de profile de declarații, validări pentru resursele de export și pentru datele minime ale companiei).\nExport XML D398 (Soft J) — fișier validat automat față de schema XSD oficială ANAF, compatibil cu DUKIntegrator pentru semnare digitală.\nExport XDP D398 (Soft A) — fișier de date pentru import în formularul PDF inteligent ANAF (versiunea 1.0.11+); disponibil și ca ZIP cu PDF inclus.\nConversie automată în EUR — sumele sunt convertite folosind cursul de schimb publicat de Banca Centrală Europeană (BCE) din ultima zi a perioadei fiscale, fără a afecta furnizorul de cursuri BNR configurat pentru restul înregistrărilor contabile.\nColoane suplimentare în raportul OSS — „Net (EUR)\" și „Tax (EUR)\" vizibile direct în interfața rapoartelor OSS Enterprise, pentru verificarea sumelor înainte de export.\nGrupare automată pe state membre de consum (MSCON), tip livrare (bunuri/servicii) și cotă TVA (standard/redusă).\nValidare date companie — verifică prezența datelor obligatorii (CUI, județ, date contact) înainte de generarea fișierului.\nMeniu dedicat — „Declarație 398\" disponibil sub meniul „Declarații ANAF\" din modulul Contabilitate.\nLimitări cunoscute: avertizarea pentru pragul OSS de 10.000 EUR/an și depunerea automată în portalul ANAF nu sunt încă implementate."
+  },
+  {
+    "path": "l10n_ro_anaf_d700/index.md",
+    "module": "l10n_ro_anaf_d700",
+    "version": "19.0.1.0.3",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d700",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d700",
+    "last_ingest": "2026-09-29",
+    "friendly_name": "Romania - Declarație vector fiscal (D700)",
+    "summary": "Modulul permite pregătirea Declarației 700 — înregistrarea sau modificarea, în mediu electronic, a categoriilor de obligații fiscale declarative înscrise în vectorul fiscal al contribuabilului. Declarația se depune la fiecare schimbare de regim: intrarea sau ieșirea din sistemul de TVA, trecerea de la declarare lunară la trimestrială, adăugarea sau radierea unei obligații declarative. Din Odoo se completează declarația și se exportă fișierul XML pentru ANAF, fără reintroducerea datelor în formularul de pe portal.",
+    "features": [
+      "Antet complet: perioada solicitării, declarantul (semnatar implicit din contactul de declarații ANAF al companiei), tipul de contribuabil (`dec_inreg`) și felul declarației (modificare / radiere).",
+      "Secțiunile D, E și F ale vectorului fiscal: fiecare obligație are cod din nomenclatorul secțiunii, periodicitate (doar la D: trimestrială, lunară la opțiune, lunară conform legii) și datele de la care obligația se adaugă sau se radiază (cele două date se exclud reciproc).",
+      "Respectarea limitelor de apariții (4 la D, 6 la E, 12 la F) și a unicității codurilor în cadrul secțiunii.",
+      "Secțiunea B: bifele de subsecțiune pentru înregistrarea în scopuri de TVA (B.I, B.II, B.VII, B.VIII), schimbarea perioadei fiscale (cu data schimbării) și TVA la încasare (cu data și cifra de afaceri).",
+      "Flux cu stări (ciornă / confirmată), cu revenire la ciornă, urmărire prin chatter și activități.",
+      "Validări la export: CUI configurat, semnatar completat, cerere din 2022 încolo, cel puțin o obligație sau o secțiune de TVA bifată.",
+      "Export XML ANAF, atașat declarației și descărcabil; accesibil din meniul declarațiilor ANAF (`D700 Tax Vector`, pentru grupul Contabilitate / utilizator).",
+      "Nu acoperă (se folosește formularul de pe portalul ANAF): sediile secundare, datele contabilului, codurile CAEN, reprezentantul fiscal, stările 61/62 și subsecțiunile B mai rare.",
+      "Validare: ANAF nu publică XSD pentru D700, deci structura urmează documentația oficială; verificarea se face cu DUKIntegrator."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro",
+      "l10n_ro_anaf_base"
+    ],
+    "connections": [
+      "l10n_ro_anaf_base"
+    ],
+    "text": "Romania - Declarație vector fiscal (D700)\nl10n_ro_anaf_d700\nModulul permite pregătirea Declarației 700 — înregistrarea sau modificarea, în mediu electronic, a categoriilor de obligații fiscale declarative înscrise în vectorul fiscal al contribuabilului. Declarația se depune la fiecare schimbare de regim: intrarea sau ieșirea din sistemul de TVA, trecerea de la declarare lunară la trimestrială, adăugarea sau radierea unei obligații declarative. Din Odoo se completează declarația și se exportă fișierul XML pentru ANAF, fără reintroducerea datelor în formularul de pe portal.\nAntet complet: perioada solicitării, declarantul (semnatar implicit din contactul de declarații ANAF al companiei), tipul de contribuabil (`dec_inreg`) și felul declarației (modificare / radiere).\nSecțiunile D, E și F ale vectorului fiscal: fiecare obligație are cod din nomenclatorul secțiunii, periodicitate (doar la D: trimestrială, lunară la opțiune, lunară conform legii) și datele de la care obligația se adaugă sau se radiază (cele două date se exclud reciproc).\nRespectarea limitelor de apariții (4 la D, 6 la E, 12 la F) și a unicității codurilor în cadrul secțiunii.\nSecțiunea B: bifele de subsecțiune pentru înregistrarea în scopuri de TVA (B.I, B.II, B.VII, B.VIII), schimbarea perioadei fiscale (cu data schimbării) și TVA la încasare (cu data și cifra de afaceri).\nFlux cu stări (ciornă / confirmată), cu revenire la ciornă, urmărire prin chatter și activități.\nValidări la export: CUI configurat, semnatar completat, cerere din 2022 încolo, cel puțin o obligație sau o secțiune de TVA bifată.\nExport XML ANAF, atașat declarației și descărcabil; accesibil din meniul declarațiilor ANAF (`D700 Tax Vector`, pentru grupul Contabilitate / utilizator).\nNu acoperă (se folosește formularul de pe portalul ANAF): sediile secundare, datele contabilului, codurile CAEN, reprezentantul fiscal, stările 61/62 și subsecțiunile B mai rare.\nValidare: ANAF nu publică XSD pentru D700, deci structura urmează documentația oficială; verificarea se face cu DUKIntegrator."
+  },
+  {
+    "path": "l10n_ro_anaf_d710/index.md",
+    "module": "l10n_ro_anaf_d710",
+    "version": "19.0.1.0.3",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d710",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d710",
+    "last_ingest": "2026-09-29",
+    "friendly_name": "Romania - Declarație rectificativă (D710)",
+    "summary": "Modulul permite întocmirea Declarației 710, prin care se rectifică obligațiile de plată declarate la bugetul de stat (de regulă prin D100, dar și prin D112 sau alte declarații care declară creanțe fiscale). Pentru fiecare obligație se raportează atât suma inițială, cât și cea corectată, iar ANAF operează diferența. Declarația se exportă în format XML, validat cu schema oficială ANAF, gata de depus.",
+    "features": [
+      "Declarație cu linii de obligații, fiecare cu perechea inițial/corectat pentru suma datorată, deduceri, plăți și rest (plus sponsorizări, reduceri de impozit, bifa impozit minim pe cifra de afaceri și cota).",
+      "Bife în antetul formularului: anulare, succesor (cu CIF-ul succesorului), dizolvare, sector energie, modificare, precum și temeiul rectificării (1 — corectarea sumelor declarate; 2 — corecție în urma unui control fiscal).",
+      "Perioada de raportare (lună/an) și numele persoanei care semnează declarația (preluat din contactul companiei dacă nu este completat manual).",
+      "Numărul de evidență (`nr_evid`) al fiecărei obligații se calculează automat (23 de cifre, conform regulii din structura oficială: cod obligație, perioadă, scadență, sumă de control); poate fi suprascris dacă ANAF a emis alt număr pe recipisa depunerii inițiale.",
+      "Flux cu stări (ciornă / confirmată, cu revenire în ciornă) și istoric în chatter.",
+      "Export XML validat cu schema oficială `d710_20012025.xsd`, cu gărzi de corelație înainte de export: declarație fără nicio linie, succesor fără CIF (sau CIF de succesor fără bifa de succesor), lipsa numelui semnatarului, obligație fără număr de evidență.",
+      "Acces din meniul declarațiilor ANAF (D710 Rectifying Statement), pentru utilizatorii cu drepturi de contabil.",
+      "Fluxul pas-cu-pas pentru consultant este detaliat în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro",
+      "l10n_ro_anaf_base"
+    ],
+    "connections": [
+      "l10n_ro_anaf_base"
+    ],
+    "text": "Romania - Declarație rectificativă (D710)\nl10n_ro_anaf_d710\nModulul permite întocmirea Declarației 710, prin care se rectifică obligațiile de plată declarate la bugetul de stat (de regulă prin D100, dar și prin D112 sau alte declarații care declară creanțe fiscale). Pentru fiecare obligație se raportează atât suma inițială, cât și cea corectată, iar ANAF operează diferența. Declarația se exportă în format XML, validat cu schema oficială ANAF, gata de depus.\nDeclarație cu linii de obligații, fiecare cu perechea inițial/corectat pentru suma datorată, deduceri, plăți și rest (plus sponsorizări, reduceri de impozit, bifa impozit minim pe cifra de afaceri și cota).\nBife în antetul formularului: anulare, succesor (cu CIF-ul succesorului), dizolvare, sector energie, modificare, precum și temeiul rectificării (1 — corectarea sumelor declarate; 2 — corecție în urma unui control fiscal).\nPerioada de raportare (lună/an) și numele persoanei care semnează declarația (preluat din contactul companiei dacă nu este completat manual).\nNumărul de evidență (`nr_evid`) al fiecărei obligații se calculează automat (23 de cifre, conform regulii din structura oficială: cod obligație, perioadă, scadență, sumă de control); poate fi suprascris dacă ANAF a emis alt număr pe recipisa depunerii inițiale.\nFlux cu stări (ciornă / confirmată, cu revenire în ciornă) și istoric în chatter.\nExport XML validat cu schema oficială `d710_20012025.xsd`, cu gărzi de corelație înainte de export: declarație fără nicio linie, succesor fără CIF (sau CIF de succesor fără bifa de succesor), lipsa numelui semnatarului, obligație fără număr de evidență.\nAcces din meniul declarațiilor ANAF (D710 Rectifying Statement), pentru utilizatorii cu drepturi de contabil.\nFluxul pas-cu-pas pentru consultant este detaliat în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
   },
   {
     "path": "l10n_ro_anaf_duk/index.md",
@@ -11355,6 +11567,68 @@
     "text": "Romania - Tooling capturi fișe consultant\nl10n_ro_doc_screenshots\nModul de **tooling de dezvoltare** — nu adaugă funcționalitate de business, fiind ascuns din Odoo Apps (`hidden: True`). Oferă mixinul `ScreenshotCase` pentru generarea **automată** a capturilor de ecran folosite în fișele consultant (`<modul>/readme/screenshots/`), pornind de la date seedate determinist în teste. Mecanismul combină `HttpCase` (serverul Odoo + tranzacția testului) cu **Playwright** (Chrome de sistem) pentru navigare și capturi cu nume curate, scrise direct în directorul de capturi al modulului consumator. Autentificarea se face prin cookie de sesiune. Din versiunea 19.0.1.1.0, capturile se generează **doar la cerere explicită** — orice altă rulare de teste le sare, ca să nu apară diff-uri binare (`.png`) în mijlocul altei modificări.\n`ScreenshotCase` — clasă de bază (`HttpCase`) reutilizabilă în orice modul consumator; descrie capturile ca listă de dict-uri și le generează dintr-o singură comandă (`capture_screenshots`).\nGenerare doar la cerere (`_screenshots_requested`) — capturile se produc numai dacă rularea le cere explicit, prin una din:\n`--test-tags` conține tagul propriu al clasei, terminat în `_screenshots` (ex. `fise_screenshots`, `shopify_screenshots`);\n`--test-tags` numește clasa direct, ex. `--test-tags=/<modul>:TestXScreenshots`;\nvariabila de mediu `FISE_SCREENSHOTS=1`, pentru scripturi care declanșează generarea altfel.\n`prepare_ro_company` — seedează compania cu date RO (țară, monedă RON, CUI, adresă), acordă drepturi contabile adminului, activează limba română și tema luminoasă; maschează complet identitatea companiei (nume, NRC, IBAN, telefon, județ, footer de raport) — util când capturile se generează pe o copie de bază de client, singurul loc cu un plan de conturi RO real.\n`prepare_demo_company` — alternativă pentru module cu date demo pre-populate (ex. facturi din localizarea RO).\n`force_light_theme` — forțează tema luminoasă pe admin (câmpul Enterprise `res.users.settings.color_scheme`), indiferent de preferința din baza de date; apelat automat din `prepare_ro_company` / `prepare_demo_company`.\n`account_move_shot` — helper pentru captura unui formular `account.move`, deschis prin acțiunea jurnalului (breadcrumb cu context, nu formular gol), cu tab-ul „Journal Items\"/„Elemente jurnal\" deschis (liniile Dr/Cr vizibile).\n`report_shot` — captură pentru un raport tipăribil (PDF), randat ca HTML prin `/report/html/<report_ref>/<res_id>`, fără a depinde de wkhtmltopdf în mediul de test. Trimite `lang` și `allowed_company_ids` în contextul cererii (`companies=False` dezactivează forțarea companiei): `/report/html` e o rută de website, unde regulile multi-companie se evaluează pe contextul cererii.\n`align_website_company` — aliniază compania site-ului la compania capturilor, apelat automat din `prepare_ro_company` / `prepare_demo_company`. Pe ruta de website, `env.company` din randarea raportului vine de la compania site-ului, nu din `allowed_company_ids`: fără aliniere capturile de raport ies „403 Interzis\" sau randate în altă limbă, iar testul trece — imaginea salvată e pagina greșită.\n`xlsx_shot` — construiește un shot dintr-un XLSX generat de un raport/export, randat exact cum se tipărește: din 19.0.1.1.3, îl convertește cu LibreOffice (`soffice --headless --convert-to pdf`) în PDF, apoi randează prima pagină ca PNG cu `pdftoppm` (sau, ca alternativă, PyMuPDF dacă `pdftoppm` lipsește), decupată la conținutul tipărit prin `_crop_printed_page` (ignoră banda subsolului cu numerotarea paginii, ca `_autotrim` să nu taie greșit spațiul dintre tabel și subsol). Rezultatul păstrează formatarea reală a fișierului — culori, borduri, format de dată și număr, lățimi de coloană, setările de pagină (peisaj, încadrare pe lățime) — pe care randarea HTML anterioară o pierdea (datele apăreau ca `2026-08-10 00:00:00`, numerele fără separatori). Dacă LibreOffice/`pdftoppm`/PyMuPDF lipsesc din mediu, revine elegant la tabelul HTML din `xlsx_to_html` (datele reale, fără stilul nativ Excel).\n`xlsx_to_html` — randează prima foaie a unui XLSX generat ca tabel HTML stilizat (antet bold cu fundal gri, truncat la `max_rows`/`max_cols`); rămâne planul de rezervă pentru `xlsx_shot` când conversia LibreOffice → PDF → PNG nu e posibilă.\n`xml_excerpt` — formatează (pretty-print) un extras dintr-un XML generat (D300/D390/e-Factura etc.), gata de inserat în fișă între ``` ```xml ``` ```.\nOpțiunea `highlight` per captură evidențiază selectoare CSS/Playwright cu contur portocaliu Odoo și buline numerotate ①②③, pentru a indica exact pașii din fișă.\nOpțiuni suplimentare per captură: `full`, `wait`, `hover`, `click_btn`, `click_tab` (încearcă și eticheta română a tab-ului, interfața fiind capturată în română), `unfold_report` (desfășoară toate liniile pliabile dintr-un `account.report`), `hide_fields`, `eval`, `hide_chatter`, `settle`.\n`capture_screenshots(..., hide_systray=True)` — ascunde bara de sistray (AI, notificări, Studio, meniu debug) și tooltip-uri rămase, injectat ca `<style>` ca să supraviețuiască re-randărilor OWL.\n`_autotrim` — decupează automat marginile uniforme ale capturii (elimină spațiul gol, gestionează și fundaluri neuniforme, ex. chatter alb lângă raport gri).\nLățime de viewport implicită `(1920, 950)` — încape tabelele `account.report` cu multe coloane (la 1600px se tăiau coloanele din dreapta).\nComandă de rulare (cere explicit capturile): `./odoo/odoo-bin -c odoo.conf -d <db> -u <modul>,l10n_ro_doc_screenshots --test-tags=fise_screenshots --stop-after-init --http-port=<liber> --gevent-port=<liber>`; capturile se scriu în `<modul>/readme/screenshots/`.\nDegradare elegantă: dacă `playwright` lipsește din mediul Odoo, testele de capturi se sar (`skipTest`) fără a bloca suita; testele sunt sărite explicit pe CI prin variabila `SKIP_FISE_SCREENSHOTS`. Necesită și `websocket-client` (comunicare CDP), `openpyxl` (pentru `xlsx_to_html`) și, opțional, `pillow` (pentru `_autotrim`; fără el, captura rămâne netăiată) + `playwright install chrome`; pentru capturile XLSX cu formatare reală, opțional și LibreOffice (`soffice`) și `pdftoppm` (poppler-utils) sau PyMuPDF.\nParcurgere manuală/diagnoză alternativă printr-un browser controlat (Preview MCP) atașat la o instanță deja rulantă — util pentru diagnoză de mediu (cod vechi în memoria unui server dev), dar capturile „de producție\" rămân cele generate determinist de test."
   },
   {
+    "path": "l10n_ro_doubtful_receivables/index.md",
+    "module": "l10n_ro_doubtful_receivables",
+    "version": "19.0.1.0.3",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_doubtful_receivables",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_doubtful_receivables",
+    "last_ingest": "2026-09-29",
+    "friendly_name": "Romania - Doubtful Receivables and Impairment Adjustments (491)",
+    "summary": "Modulul acoperă tratamentul contabil și fiscal al creanțelor comerciale devenite incerte, conform OMFP 1802/2014 (principiul prudenței) și art. 26 alin. (1) lit. c) din Codul fiscal. Odoo standard urmărește vechimea creanțelor, dar nu le reclasifică în clienți incerți, nu constituie ajustarea pentru depreciere și nu separă partea deductibilă fiscal de cea nedeductibilă. Modulul introduce un dosar de creanță incertă, cu un flux în patru momente contabile, iar diferența permanentă nedeductibilă devine o cifră vizibilă pe fiecare dosar. Este în stadiul de dezvoltare Alpha.",
+    "features": [
+      "Dosar de creanță incertă (numerotat `CI/AAAA/nnnnn`, cu chatter și activități) cu flux în momente distincte, fiecare cu nota lui contabilă: reclasificare, ajustare, apoi reluare sau scoatere din evidență.",
+      "Reclasificare `Dr 4118 = Cr 4111`, cu reconcilierea automată a liniei de creanță din factură, pentru ca soldul să nu apară dublu (pe 4111 și pe 4118).",
+      "Ajustare pentru depreciere `Dr 6814 = Cr 491`, pe o sumă propusă din politica de vechime sau introdusă manual.",
+      "Limita fiscală de 30% ca parametru de companie: fiecare dosar arată partea deductibilă și diferența permanentă nedeductibilă. Procentul se îngheață pe dosar la creare, deci o modificare ulterioară a setării nu rescrie istoricul. Cota rămâne editabilă pe dosar (ex. 100% pentru faliment). Condițiile cumulative de deductibilitate (peste 270 de zile de la scadență, negarantată, debitor neafiliat) sunt modelate ca bife pe dosar; detaliile sunt în fișa consultantului.",
+      "Reluarea ajustării `Dr 491 = Cr 7814` la încasarea creanței (buton Recovered) și la scoaterea din evidență.",
+      "Scoatere din evidență `Dr 654 = Cr 4118` pentru pierderea definitivă, cu reluarea prealabilă a ajustării.",
+      "Politici de ajustare pe vechime: tranșe configurabile (ex. 90 zile → 20%, 180 → 50%, 365 → 100%); se aplică tranșa cu pragul cel mai mare atins de vechime.",
+      "Wizard „Propose from Overdue Invoices”: propune în bloc facturile restante peste un prag de zile (implicit 270), sare facturile deja marcate și nu postează nimic, propunerile rămânând ciorne.",
+      "Semnalarea ajustărilor orfane: filtrul „Needs Reversal” și un cron zilnic care creează activități pe dosarele cu factura încasată și ajustarea rămasă în sold. Reluarea o face manual contabilul.",
+      "Totaluri în listă: coloanele Tax Deductible și Non-Deductible, utile pentru registrul fiscal și D101.",
+      "Configurare în Contabilitate → Configurare → Setări, secțiunea „Doubtful Receivables (RO)” (vizibilă doar pentru companii cu țara fiscală România): conturile 4118, 491, 6814, 7814, 654, jurnalul notelor și procentul deductibil. Dacă un cont lipsește, acțiunea se oprește cu mesaj explicit, fără nota incompletă.",
+      "Meniuri: Contabilitate → Tranzacții → Doubtful Receivables (dosare și wizardul de propunere); Contabilitate → Configurare → Contabilitate → Doubtful Receivable Policies.",
+      "Acces: managerul contabil (`account.group_account_manager`) are drepturi complete; utilizatorul contabil (`account.group_account_user`) doar citire."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro",
+      "mail"
+    ],
+    "connections": [
+      "account",
+      "l10n_ro",
+      "mail"
+    ],
+    "text": "Romania - Doubtful Receivables and Impairment Adjustments (491)\nl10n_ro_doubtful_receivables\nModulul acoperă tratamentul contabil și fiscal al creanțelor comerciale devenite incerte, conform OMFP 1802/2014 (principiul prudenței) și art. 26 alin. (1) lit. c) din Codul fiscal. Odoo standard urmărește vechimea creanțelor, dar nu le reclasifică în clienți incerți, nu constituie ajustarea pentru depreciere și nu separă partea deductibilă fiscal de cea nedeductibilă. Modulul introduce un dosar de creanță incertă, cu un flux în patru momente contabile, iar diferența permanentă nedeductibilă devine o cifră vizibilă pe fiecare dosar. Este în stadiul de dezvoltare Alpha.\nDosar de creanță incertă (numerotat `CI/AAAA/nnnnn`, cu chatter și activități) cu flux în momente distincte, fiecare cu nota lui contabilă: reclasificare, ajustare, apoi reluare sau scoatere din evidență.\nReclasificare `Dr 4118 = Cr 4111`, cu reconcilierea automată a liniei de creanță din factură, pentru ca soldul să nu apară dublu (pe 4111 și pe 4118).\nAjustare pentru depreciere `Dr 6814 = Cr 491`, pe o sumă propusă din politica de vechime sau introdusă manual.\nLimita fiscală de 30% ca parametru de companie: fiecare dosar arată partea deductibilă și diferența permanentă nedeductibilă. Procentul se îngheață pe dosar la creare, deci o modificare ulterioară a setării nu rescrie istoricul. Cota rămâne editabilă pe dosar (ex. 100% pentru faliment). Condițiile cumulative de deductibilitate (peste 270 de zile de la scadență, negarantată, debitor neafiliat) sunt modelate ca bife pe dosar; detaliile sunt în fișa consultantului.\nReluarea ajustării `Dr 491 = Cr 7814` la încasarea creanței (buton Recovered) și la scoaterea din evidență.\nScoatere din evidență `Dr 654 = Cr 4118` pentru pierderea definitivă, cu reluarea prealabilă a ajustării.\nPolitici de ajustare pe vechime: tranșe configurabile (ex. 90 zile → 20%, 180 → 50%, 365 → 100%); se aplică tranșa cu pragul cel mai mare atins de vechime.\nWizard „Propose from Overdue Invoices”: propune în bloc facturile restante peste un prag de zile (implicit 270), sare facturile deja marcate și nu postează nimic, propunerile rămânând ciorne.\nSemnalarea ajustărilor orfane: filtrul „Needs Reversal” și un cron zilnic care creează activități pe dosarele cu factura încasată și ajustarea rămasă în sold. Reluarea o face manual contabilul.\nTotaluri în listă: coloanele Tax Deductible și Non-Deductible, utile pentru registrul fiscal și D101.\nConfigurare în Contabilitate → Configurare → Setări, secțiunea „Doubtful Receivables (RO)” (vizibilă doar pentru companii cu țara fiscală România): conturile 4118, 491, 6814, 7814, 654, jurnalul notelor și procentul deductibil. Dacă un cont lipsește, acțiunea se oprește cu mesaj explicit, fără nota incompletă.\nMeniuri: Contabilitate → Tranzacții → Doubtful Receivables (dosare și wizardul de propunere); Contabilitate → Configurare → Contabilitate → Doubtful Receivable Policies.\nAcces: managerul contabil (`account.group_account_manager`) are drepturi complete; utilizatorul contabil (`account.group_account_user`) doar citire."
+  },
+  {
+    "path": "l10n_ro_doubtful_receivables_profit_tax/index.md",
+    "module": "l10n_ro_doubtful_receivables_profit_tax",
+    "version": "19.0.1.0.3",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_doubtful_receivables_profit_tax",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_doubtful_receivables_profit_tax",
+    "last_ingest": "2026-09-29",
+    "friendly_name": "Romania - Doubtful Receivables in Corporate Income Tax",
+    "summary": "Modul-punte între evidența creanțelor incerte și impozitul pe profit. Preia automat partea nedeductibilă a ajustărilor pentru deprecierea creanțelor (contul 491) în calculul declarației D101 și în registrul de evidență fiscală, astfel încât contabilul să nu mai transcrie manual diferențele permanente. Se instalează automat când ambele module de bază sunt prezente și nu are meniuri proprii.",
+    "features": [
+      "Alimentează calculul D101: partea nedeductibilă a ajustărilor 491 postate în perioadă se adaugă la cheltuielile nedeductibile. Rândul „(+) Ajustări nedeductibile pentru creanțe\" arată cât din total provine din creanțe, cu un buton către dosarele respective (Contabilitate → Impozit pe profit → Calcul impozit, după Calculează).",
+      "Alimentează registrul de evidență fiscală (OMFP 870/2005) cu câte un rând per creanță, nu un total pe cont. Fiecare rând are valoarea contabilă (ajustarea constituită), valoarea fiscală (partea deductibilă), diferența permanentă și temeiul legal propriu (art. 26 alin. (1) lit. c) sau lit. j) Cod fiscal, cu mențiune separată când condițiile nu sunt îndeplinite și ajustarea e integral nedeductibilă). Rândurile apar la Generează în Contabilitate → Impozit pe profit → Registru de evidență fiscală.",
+      "Semnalează dubla numărare: dacă există o regulă `l10n.ro.tax.adjustment` activă pe contul de cheltuială cu ajustările (6814), pe calculul D101 apare un avertisment; modulul nu corectează tăcut situația. Soluția este ștergerea regulii.",
+      "Verificare încrucișată: totalul rândurilor de creanțe din registru trebuie să fie egal cu câmpul din D101 al aceluiași an; o diferență înseamnă că registrul trebuie regenerat.",
+      "Nu acoperă: pierderea din scoaterea din evidență (654), ajustarea bazei de TVA (D300) și evidența extracontabilă 8034."
+    ],
+    "dependencies": [
+      "l10n_ro_doubtful_receivables",
+      "l10n_ro_profit_tax"
+    ],
+    "connections": [
+      "l10n_ro_doubtful_receivables",
+      "l10n_ro_profit_tax"
+    ],
+    "text": "Romania - Doubtful Receivables in Corporate Income Tax\nl10n_ro_doubtful_receivables_profit_tax\nModul-punte între evidența creanțelor incerte și impozitul pe profit. Preia automat partea nedeductibilă a ajustărilor pentru deprecierea creanțelor (contul 491) în calculul declarației D101 și în registrul de evidență fiscală, astfel încât contabilul să nu mai transcrie manual diferențele permanente. Se instalează automat când ambele module de bază sunt prezente și nu are meniuri proprii.\nAlimentează calculul D101: partea nedeductibilă a ajustărilor 491 postate în perioadă se adaugă la cheltuielile nedeductibile. Rândul „(+) Ajustări nedeductibile pentru creanțe\" arată cât din total provine din creanțe, cu un buton către dosarele respective (Contabilitate → Impozit pe profit → Calcul impozit, după Calculează).\nAlimentează registrul de evidență fiscală (OMFP 870/2005) cu câte un rând per creanță, nu un total pe cont. Fiecare rând are valoarea contabilă (ajustarea constituită), valoarea fiscală (partea deductibilă), diferența permanentă și temeiul legal propriu (art. 26 alin. (1) lit. c) sau lit. j) Cod fiscal, cu mențiune separată când condițiile nu sunt îndeplinite și ajustarea e integral nedeductibilă). Rândurile apar la Generează în Contabilitate → Impozit pe profit → Registru de evidență fiscală.\nSemnalează dubla numărare: dacă există o regulă `l10n.ro.tax.adjustment` activă pe contul de cheltuială cu ajustările (6814), pe calculul D101 apare un avertisment; modulul nu corectează tăcut situația. Soluția este ștergerea regulii.\nVerificare încrucișată: totalul rândurilor de creanțe din registru trebuie să fie egal cu câmpul din D101 al aceluiași an; o diferență înseamnă că registrul trebuie regenerat.\nNu acoperă: pierderea din scoaterea din evidență (654), ajustarea bazei de TVA (D300) și evidența extracontabilă 8034."
+  },
+  {
     "path": "l10n_ro_edi_ubl_sale_store/index.md",
     "module": "l10n_ro_edi_ubl_sale_store",
     "version": "19.0.1.0.6",
@@ -11476,6 +11750,35 @@
       "l10n_ro_edi"
     ],
     "text": "Romania - Asistent import e-Factura (verificare față de comandă)\nl10n_ro_efactura_import_assist\nModulul închide ultimul gol din fluxul FR-03 (e-Factura B2B bidirecțional prin SPV): atunci când o factură de la furnizor este importată automat din SPV și e legată de o comandă de achiziție, factura este confruntată linie cu linie cu comanda pe cantitate și preț. Dacă apar diferențe peste toleranțele acceptate, postarea facturii este blocată până când operatorul ia o decizie explicită — acceptă cu ajustare sau refuză total, caz în care furnizorul este notificat automat prin e-mail cu tabelul diferențelor.\nVerificare automată la import a facturilor SPV legate de o comandă de achiziție:\nToleranțele se setează în Setări → Contabilitate → SPV Import Assistant (cantitate %\nLa diferențe peste toleranțe, factura intră în starea „Pending Decision\": postarea\nWizard de decizie explicită, accesibil din butonul Review Discrepancies:\nAccept with adjustment — deblochează postarea (pentru refuz parțial, se\nRefuse — factura se anulează, iar furnizorul poate primi opțional un e-mail cu\nLiniile facturate suplimentar, fără corespondent în comandă, sunt semnalate ca\nVerificare manuală re-rulabilă pe orice factură ciornă, cu acțiunea **Re-check"
+  },
+  {
+    "path": "l10n_ro_efactura_product_match/index.md",
+    "module": "l10n_ro_efactura_product_match",
+    "version": "19.0.1.0.3",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_efactura_product_match",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_efactura_product_match",
+    "last_ingest": "2026-09-29",
+    "friendly_name": "Romania - Potrivire articol la import e-Factura",
+    "summary": "La importul facturilor de cumpărare din SPV (e-Factura), Odoo standard nu caută niciodată codul propriu de articol dacă furnizorul trimite și codul lui. Linia rămâne fără articol, fără nicio eroare, deci nu intră în stoc și nu moștenește contul și taxele articolului. Modulul închide acest gol: adaugă în planul de căutare o treaptă nouă, care folosește codul nostru retrimis de furnizor în factură, astfel încât liniile să fie legate corect de nomenclatorul de articole.",
+    "features": [
+      "Căutare suplimentară a articolului după codul propriu din `BuyersItemIdentification` (BT-156), comparat cu Referința internă (`default_code`) a articolului.",
+      "Treaptă nouă cu prioritatea 16, între căutarea după cod intern (15) și cea după denumire (20), astfel încât o potrivire exactă pe cod câștigă în fața celei aproximative pe denumire.",
+      "Fără efecte secundare: rulează doar dacă treptele anterioare au eșuat și doar când BT-156 diferă de codul deja căutat; prioritatea codului de furnizor (`product.supplierinfo`) rămâne neschimbată.",
+      "Ordinea completă de căutare: cod furnizor (`supplierinfo`, 5) → cod de bare (BT-157, 10) → cod intern (15) → codul nostru din BT-156 (16) → denumire (20) → predicție din facturile anterioare.",
+      "Nu are meniuri, câmpuri sau setări proprii; este suficient să fie instalat. Verificarea se face pe factura importată (Contabilitate → Furnizori → Facturi), unde coloana opțională Produs trebuie să fie completată.",
+      "Limită: dacă furnizorul nu trimite deloc BT-156, potrivirea rămâne în sarcina treptelor standard; se completează codul furnizorului în fila *Achiziții* a articolului. Facturile importate înainte de instalare nu se corectează retroactiv.",
+      "Acoperă doar fluxul UBL (CIUS-RO); fluxul CII / Factur-X nu este tratat.",
+      "Fluxul detaliat, verificările și erorile frecvente sunt în [fișa consultant](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "l10n_ro_edi"
+    ],
+    "connections": [
+      "l10n_ro_efactura_dedup",
+      "l10n_ro_efactura_import_assist",
+      "account_edi_ubl_cii"
+    ],
+    "text": "Romania - Potrivire articol la import e-Factura\nl10n_ro_efactura_product_match\nLa importul facturilor de cumpărare din SPV (e-Factura), Odoo standard nu caută niciodată codul propriu de articol dacă furnizorul trimite și codul lui. Linia rămâne fără articol, fără nicio eroare, deci nu intră în stoc și nu moștenește contul și taxele articolului. Modulul închide acest gol: adaugă în planul de căutare o treaptă nouă, care folosește codul nostru retrimis de furnizor în factură, astfel încât liniile să fie legate corect de nomenclatorul de articole.\nCăutare suplimentară a articolului după codul propriu din `BuyersItemIdentification` (BT-156), comparat cu Referința internă (`default_code`) a articolului.\nTreaptă nouă cu prioritatea 16, între căutarea după cod intern (15) și cea după denumire (20), astfel încât o potrivire exactă pe cod câștigă în fața celei aproximative pe denumire.\nFără efecte secundare: rulează doar dacă treptele anterioare au eșuat și doar când BT-156 diferă de codul deja căutat; prioritatea codului de furnizor (`product.supplierinfo`) rămâne neschimbată.\nOrdinea completă de căutare: cod furnizor (`supplierinfo`, 5) → cod de bare (BT-157, 10) → cod intern (15) → codul nostru din BT-156 (16) → denumire (20) → predicție din facturile anterioare.\nNu are meniuri, câmpuri sau setări proprii; este suficient să fie instalat. Verificarea se face pe factura importată (Contabilitate → Furnizori → Facturi), unde coloana opțională Produs trebuie să fie completată.\nLimită: dacă furnizorul nu trimite deloc BT-156, potrivirea rămâne în sarcina treptelor standard; se completează codul furnizorului în fila *Achiziții* a articolului. Facturile importate înainte de instalare nu se corectează retroactiv.\nAcoperă doar fluxul UBL (CIUS-RO); fluxul CII / Factur-X nu este tratat.\nFluxul detaliat, verificările și erorile frecvente sunt în [fișa consultant](FISA_CONSULTANT.md)."
   },
   {
     "path": "l10n_ro_ent_config/index.md",
@@ -13094,6 +13397,32 @@
     "text": "Romania - Taxare inversă art. 331 în punctul de vânzare\nl10n_ro_reverse_charge_331_pos\nAcest modul ține poziția fiscală de taxare inversă art. 331 în afara accesului casierului din Punctul de Vânzare (POS), atunci când cumpărătorul nu este înregistrat în scopuri de TVA. Butonul de poziție fiscală din POS listează în mod normal toate regimurile configurate pe casă, indiferent de clientul comenzii — singura cale prin care un regim art. 331 ar putea ajunge pe o vânzare căreia nu i se cuvine. Modulul elimină aceste regimuri din listă până când comanda are un client înregistrat conform art. 316 și refuză să moștenească o astfel de poziție de la un partener al cărui statut de TVA o contrazice. Filtrează opțiunile disponibile, în loc să blocheze ulterior — decizia rămâne a datelor, nu a operatorului de la casă.\nAscunde regimurile fiscale art. 331 din dialogul „Choose the tax you want to apply” cât timp beneficiarul comenzii nu este înregistrat în scopuri de TVA (art. 316).\nLa schimbarea clientului pe comandă (`updatePricelistAndFiscalPosition`), anulează automat o poziție art. 331 deja aplicată dacă noul client nu este înregistrat în scopuri de TVA.\nCriteriul de „înregistrat în scopuri de TVA” folosește câmpul `l10n_ro_vat_subjected` al partenerului, cu fallback pe prefixul `RO` al codului TVA dacă acel câmp nu e disponibil în payload-ul POS — aceeași logică e oglindită în Python (`res.partner`) și JavaScript, pentru a nu diverge tăcut.\nExtinde datele încărcate în POS: marcajul `l10n_ro_reverse_charge_331` pe poziția fiscală și statutul de TVA al partenerului, altfel indisponibile pe ecranul de vânzare.\nNu afectează notele contabile de închidere a sesiunii (tip `entry`, nu documente de vânzare); un bon facturat totuși cu regim art. 331 pentru un cumpărător neînregistrat rămâne blocat la validare de garda din `l10n_ro_reverse_charge_331` (`account.move._post`)."
   },
   {
+    "path": "l10n_ro_reverse_charge_331_purchase/index.md",
+    "module": "l10n_ro_reverse_charge_331_purchase",
+    "version": "19.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_reverse_charge_331_purchase",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_reverse_charge_331_purchase",
+    "last_ingest": "2026-09-29",
+    "friendly_name": "Romania - Taxare inversă art. 331 pe comenzile de achiziție",
+    "summary": "Modulul extinde garda de taxare inversă de la articolul 331 din Codul fiscal la cererile de ofertă și la comenzile de achiziție. Fără el, o comandă către un furnizor care nu este înregistrat în scopuri de TVA ar purta taxa de autolichidare de 21% R331, iar factura de furnizor creată din comandă ar prelua această taxă fără recalculare; eroarea ar ieși la iveală abia când factura este blocată la postare. Cu modulul instalat, taxa corectă este stabilită încă din comandă. Se instalează automat când sunt prezente `l10n_ro_reverse_charge_331` și `purchase`.",
+    "features": [
+      "Aplică garda art. 331 pe statutul de TVA al furnizorului direct la calculul taxelor pe liniile comenzii de achiziție: furnizorul înregistrat în scopuri de TVA primește autolichidarea 21% R331, cel neînregistrat păstrează taxa internă.",
+      "Aceeași gardă se aplică și liniilor create prin reaprovizionare (reguli de reaprovizionare / achiziție automată), care nu trec prin calculul obișnuit al taxelor.",
+      "Factura de furnizor generată din comandă copiază taxele liniei, deci moștenește direct taxa corectă și nu mai este blocată la postare.",
+      "Statutul de TVA este evaluat pe partenerul comercial (`commercial_partner_id`) al furnizorului.",
+      "Este un modul-punte separat, pentru ca modulul contabil să nu depindă de `purchase`; o companie care doar înregistrează facturi de furnizor folosește garda fără modulul de achiziții.",
+      "Nu adaugă câmpuri, meniuri sau vizualizări noi."
+    ],
+    "dependencies": [
+      "l10n_ro_reverse_charge_331",
+      "purchase"
+    ],
+    "connections": [
+      "l10n_ro_reverse_charge_331"
+    ],
+    "text": "Romania - Taxare inversă art. 331 pe comenzile de achiziție\nl10n_ro_reverse_charge_331_purchase\nModulul extinde garda de taxare inversă de la articolul 331 din Codul fiscal la cererile de ofertă și la comenzile de achiziție. Fără el, o comandă către un furnizor care nu este înregistrat în scopuri de TVA ar purta taxa de autolichidare de 21% R331, iar factura de furnizor creată din comandă ar prelua această taxă fără recalculare; eroarea ar ieși la iveală abia când factura este blocată la postare. Cu modulul instalat, taxa corectă este stabilită încă din comandă. Se instalează automat când sunt prezente `l10n_ro_reverse_charge_331` și `purchase`.\nAplică garda art. 331 pe statutul de TVA al furnizorului direct la calculul taxelor pe liniile comenzii de achiziție: furnizorul înregistrat în scopuri de TVA primește autolichidarea 21% R331, cel neînregistrat păstrează taxa internă.\nAceeași gardă se aplică și liniilor create prin reaprovizionare (reguli de reaprovizionare / achiziție automată), care nu trec prin calculul obișnuit al taxelor.\nFactura de furnizor generată din comandă copiază taxele liniei, deci moștenește direct taxa corectă și nu mai este blocată la postare.\nStatutul de TVA este evaluat pe partenerul comercial (`commercial_partner_id`) al furnizorului.\nEste un modul-punte separat, pentru ca modulul contabil să nu depindă de `purchase`; o companie care doar înregistrează facturi de furnizor folosește garda fără modulul de achiziții.\nNu adaugă câmpuri, meniuri sau vizualizări noi."
+  },
+  {
     "path": "l10n_ro_reverse_charge_331_sale/index.md",
     "module": "l10n_ro_reverse_charge_331_sale",
     "version": "19.0.1.0.0",
@@ -13181,6 +13510,37 @@
       "l10n_ro_doc_screenshots"
     ],
     "text": "Romania - Reconciliere e-TVA (decont precompletat ANAF)\nl10n_ro_saft_etva\nModulul reconciliază automat **decontul precompletat RO e-TVA** (OUG 70/2024) cu Decontul de TVA (D300) calculat intern în Odoo. ANAF generează lunar un decont de TVA pre-completat din datele e-Factura, e-Transport, SAF-T și caselor de marcat, transmis prin SPV. Modulul importă fișierul XML primit, îl compară rând cu rând cu D300-ul intern și evidențiază diferențele înainte de depunere, gradate pe severitate (informativ / avertisment / eroare critică). Diferențele critice nejustificate blochează închiderea verificării e-TVA din checklistul de închidere a perioadei de TVA, astfel încât discrepanțele să fie explicate înainte de transmiterea D300.\nImport al fișierului XML „Decont precompletat de TVA\" (RO e-TVA) descărcat din SPV.\nReconciliere automată rând cu rând a decontului ANAF față de D300-ul intern calculat de modulul `l10n_ro_anaf_d300`, pe aceeași perioadă.\nAfișare pe fiecare rând a bazei/TVA ANAF, a bazei/TVA interne, a diferenței și a severității: Coincide / Avertisment / Eroare critică.\nPraguri de severitate configurabile pe companie (prag valoric, implicit 1.000 RON, și prag procentual, implicit 20%); o diferență devine eroare critică doar dacă depășește ambele praguri.\nJustificare obligatorie pe fiecare linie cu eroare critică; blocarea închiderii verificării e-TVA cât timp există erori critice nejustificate.\nVerificare blocantă integrată în checklistul return-ului de TVA (D300), accesibilă din procesul de închidere a perioadei.\nRaport de reconciliere cu export PDF."
+  },
+  {
+    "path": "l10n_ro_saft_export_fix/index.md",
+    "module": "l10n_ro_saft_export_fix",
+    "version": "19.0.1.0.2",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_saft_export_fix",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_saft_export_fix",
+    "last_ingest": "2026-09-29",
+    "friendly_name": "Romania - Corecții la exportul SAF-T D406",
+    "summary": "Modulul corectează două defecte ale exportului SAF-T D406 din modulul Enterprise `l10n_ro_saft`, descoperite prin confruntarea fișierelor generate de Odoo cu validatorul oficial `D406Validator` din DUK Integrator. Primul defect face declarația nedepunabilă (secțiuni goale respinse de ANAF), al doilea lasă în afara declarației plățile care nu provin dintr-un extras bancar. Corecțiile se aplică fără a modifica codul Enterprise, iar declarațiile care validează deja pe baza extraselor rămân identice. Defectele sunt raportate și către Odoo; modulul acoperă perioada până la rezolvarea în amonte.",
+    "features": [
+      "Eliminarea secțiunilor goale: `SalesInvoices`, `PurchaseInvoices` și `Payments` sunt scrise doar dacă au cel puțin un document. O lună fără achiziții nu mai duce la respingerea întregului fișier (eroarea „elementul 'Payment' ar fi trebuit sa apara de minimum 1 ori\").",
+      "Raportarea plăților fără extras: plățile înregistrate prin „Înregistrează plata\" și operațiunile de casă (jurnalele de casă nu mai lucrează cu extrase din 17.0) apar acum în secțiunea `Payments`.",
+      "`PaymentMethod`: `01` pentru numerar (jurnal de casă), `03` pentru transfer.",
+      "Latura de trezorerie corectă: pentru plățile fără extras, linia de trezorerie este citită de pe contul de tranzit (5125 / 581), astfel încât fiecare `Payment` are cel puțin un `PaymentLine`.",
+      "Fără dublare: o plată reconciliată cu un extras se raportează o singură dată, prin nota extrasului (care poartă referința și data bancară).",
+      "Fără meniuri sau câmpuri noi: declarația se generează ca înainte, din Contabilitate → Raportare → Cartea Mare, butonul „SAF-T (Declarația D406)\".",
+      "Verificare: pentru o lună fără plăți prin extras, secțiunea `Payments` lipsește cu totul, iar DUK Integrator întoarce „Validare fara erori\".",
+      "Flux recomandat: se rulează întâi `l10n_ro_saft_validator` (semnalează secțiunile care ar ieși goale și plățile nelegate de un extras), apoi se generează declarația și se validează cu DUK Integrator înainte de depunere."
+    ],
+    "dependencies": [
+      "l10n_ro_saft",
+      "l10n_ro_saft_fix"
+    ],
+    "connections": [
+      "l10n_ro_saft_fix",
+      "l10n_ro_saft",
+      "depends",
+      "l10n_ro_saft_validator"
+    ],
+    "text": "Romania - Corecții la exportul SAF-T D406\nl10n_ro_saft_export_fix\nModulul corectează două defecte ale exportului SAF-T D406 din modulul Enterprise `l10n_ro_saft`, descoperite prin confruntarea fișierelor generate de Odoo cu validatorul oficial `D406Validator` din DUK Integrator. Primul defect face declarația nedepunabilă (secțiuni goale respinse de ANAF), al doilea lasă în afara declarației plățile care nu provin dintr-un extras bancar. Corecțiile se aplică fără a modifica codul Enterprise, iar declarațiile care validează deja pe baza extraselor rămân identice. Defectele sunt raportate și către Odoo; modulul acoperă perioada până la rezolvarea în amonte.\nEliminarea secțiunilor goale: `SalesInvoices`, `PurchaseInvoices` și `Payments` sunt scrise doar dacă au cel puțin un document. O lună fără achiziții nu mai duce la respingerea întregului fișier (eroarea „elementul 'Payment' ar fi trebuit sa apara de minimum 1 ori\").\nRaportarea plăților fără extras: plățile înregistrate prin „Înregistrează plata\" și operațiunile de casă (jurnalele de casă nu mai lucrează cu extrase din 17.0) apar acum în secțiunea `Payments`.\n`PaymentMethod`: `01` pentru numerar (jurnal de casă), `03` pentru transfer.\nLatura de trezorerie corectă: pentru plățile fără extras, linia de trezorerie este citită de pe contul de tranzit (5125 / 581), astfel încât fiecare `Payment` are cel puțin un `PaymentLine`.\nFără dublare: o plată reconciliată cu un extras se raportează o singură dată, prin nota extrasului (care poartă referința și data bancară).\nFără meniuri sau câmpuri noi: declarația se generează ca înainte, din Contabilitate → Raportare → Cartea Mare, butonul „SAF-T (Declarația D406)\".\nVerificare: pentru o lună fără plăți prin extras, secțiunea `Payments` lipsește cu totul, iar DUK Integrator întoarce „Validare fara erori\".\nFlux recomandat: se rulează întâi `l10n_ro_saft_validator` (semnalează secțiunile care ar ieși goale și plățile nelegate de un extras), apoi se generează declarația și se validează cu DUK Integrator înainte de depunere."
   },
   {
     "path": "l10n_ro_saft_fix/index.md",
