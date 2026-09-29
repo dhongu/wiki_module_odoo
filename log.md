@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-29] Ingestie familia „portofoliu clienți” — 4 module noi (lot Clio)
+
+- **Acțiune:** Prima documentare a 4 module, procesate în paralel (4 subagenți `documentarist-wiki`), pe branchul `19.0-wiki-portofoliu-clienti`: `deltatech_customer_segment` (F1, segmentarea nocturnă, 19.0.1.0.2), `deltatech_customer_analysis` (F2, tabloul „ce fac azi”, 19.0.1.0.1), `deltatech_sale_missions` (F3, misiunile săptămânale, 19.0.1.0.0), toate din bitshop, și `deltatech_web_kpi_cards` (19.0.1.1.0, deltatech), banda de carduri KPI folosită de tablouri. F2 și F3 sunt preluate din `mdtrade_customer_analysis` / `mdtrade_missions` (MD Trade Concept SRL, cu acord).
+- **Sursă:** `readme/DESCRIPTION.md` (+ `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`) și scanarea modelelor, view-urilor, cron-urilor și meniurilor; terrabit-solutions/bitshop 19.0 și dhongu/deltatech 19.0 (origin/19.0 din 29.09).
+- **Dependențe/Conexiuni:** lanț F3 → F2 → F1, F2 → `deltatech_web_kpi_cards` (F3 îl folosește în JS, indirect prin F2); link-uri încrucișate active între cele 4 pagini și către [deltatech_delivery_dashboard](deltatech_delivery_dashboard/index.md). `sale_management`, `account`, `mail`, `web` rămân text.
+- **Fișe consultant copiate:** 3 din 4 (F1 cu 6 capturi, F2 cu 6, F3 cu 10); `deltatech_web_kpi_cards` nu are fișă (modul tehnic).
+- **Fișiere actualizate:** câte un `<modul>/index.md` pentru cele 4 module (+ `FISA_CONSULTANT.md` și `screenshots/` pentru F1–F3), `index.md`, `.index/chunks.json`.
+
 ## [2026-09-29] Re-ingestie `l10n_ro_customs_dvi` (19.0.2.1.0)
 
 - **Acțiune:** Actualizare pagină de la 19.0.2.0.0 la 19.0.2.1.0, pe branchul `19.0-wiki-l10n_ro_customs_dvi` (lot Clio). Pagina reflectă eliminarea câmpului „Comision vamal", analiticul 4462, contul 622 pentru broker (473 dacă se capitalizează) și amânarea plății TVA în vamă (art. 326 alin. (4)-(5)); `l10n_ro_anaf_d300` devine link activ.
