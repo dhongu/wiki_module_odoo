@@ -1,10 +1,10 @@
 # Romania - Stock Report (Fișă Magazie) (localizat la `l10n_ro_stock_report/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_report`
-- **Versiune:** `19.0.2.7.0`
+- **Versiune:** `19.0.2.10.0`
 - **Cale:** https://github.com/terrabit-ro/l10n-romania/tree/19.0/l10n_ro_stock_report
 - **Cale Locală:** `odoo-addons/l10n-romania-oca/l10n_ro_stock_report`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
@@ -16,7 +16,8 @@ Acest modul adaugă un raport de stocuri conform cerințelor legislației din Ro
 - Filtrare pe o singură gestiune (locație) sau pe mai multe, cu opțiunea de a include sub-gestiunile.
 - Afișare detaliată pe locații (`detailed_locations`) și opțiune de a arăta explicit locația pe fiecare linie (`show_locations`).
 - Filtrare pe produse specifice sau doar pe produsele cu mișcări în perioada selectată (`products_with_move`).
-- Grupare a liniilor pe tipul de mișcare valorizată (`valued_type`: intrare, ieșire, sold inițial, sold final etc.), citit din câmpul `stock.move.l10n_ro_move_type`.
+- Grupare a liniilor pe tipul de mișcare valorizată (`valued_type`: intrare, ieșire etc.), citit din câmpul stocat `stock.move.l10n_ro_move_type`; rândurile de sold inițial și sold final au tipuri proprii (`initial`, `final`), deci la grupare nu se amestecă cu mișcările de tip nedeterminat.
+- Raportul PDF pentru „Toate locațiile” preia soldul final direct din valorile stocate pe rândul FINAL (`quantity_final`/`amount_final`), nu îl mai recalculează din liniile de intrare/ieșire.
 - Vizualizare a rezultatului atât ca listă/pivot interactiv în Odoo, cât și ca raport PDF (o pagină per produs, opțional).
 - Vizualizare pivot pentru analiza cantităților și valorilor pe cont contabil, produs, locație sau tip valorizat.
 

@@ -1,10 +1,10 @@
 # Delivery in locker - Base (localizat la `deltatech_delivery_locker/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_locker`
-- **Versiune:** `19.0.1.2.0`
+- **Versiune:** `19.0.1.8.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_locker
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_locker`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
@@ -22,7 +22,15 @@ Acest modul oferă structura de date de bază și logica pentru gestionarea livr
 - **Indicatori vizuali**: feedback vizual clar pe comenzile de vânzare cu livrare în locker, inclusiv un ribbon „Locker”, un banner informativ cu codul lockerului și o coloană dedicată „Locker” în liste.
 - **Compatibilitate produse**: permite restricționarea metodelor de livrare cu locker dacă în comandă există produse nepotrivite pentru livrarea în locker (prin câmpul `for_locker` de pe produse).
 - **Logică de upsert**: o metodă robustă `upsert_from_data` pentru sincronizarea simplă a datelor despre lockere din API-uri externe ale curierilor.
+- **Arhivare a lockerelor retrase**: metoda `deactivate_missing` arhivează (niciodată nu șterge) lockerele care nu mai apar în catalogul proaspăt al curierului; domeniul este catalogul (cont, test/producție etc., prin `_locker_catalog_key`), nu un singur curier, iar dacă lista de coduri este goală sau răspunsul e incomplet (404/429) nu se arhivează nimic. Un locker arhivat care reapare în catalog este reactivat, nu duplicat.
+- **Actualizare fără scrieri inutile**: reîmprospătarea catalogului nu scrie nimic dacă datele nu s-au schimbat (codul se citește ca text, iar numărul și forma text sunt tratate ca egale), evitând recalculări costisitoare pe comenzi.
+- **Cod și tip din payload-ul curierului**: `_code_from_data` citește codul locației sub oricare dintre numele folosite de curieri (ex. `lockerId`/`oohId` la Sameday), iar `_classify_type` respectă un `locker_type` declarat de curier, cu fallback pe euristica după nume.
+- **Județ și localitate corecte**: județul se determină din datele curierului (cel raportat de curier are prioritate), apoi din numele localității (când e unic în țară) și din codul poștal; dacă nu poate fi stabilit, adresa clientului rămâne neschimbată, fără adrese mixte. Se stochează `country_id`/`state_id`/`city_id`.
+- **AWB cu adresa punctului de ridicare**: adresa destinatarului preia strada (`street`), numărul (`street_no`), localitatea, județul și codul poștal ale lockerului, nu ale clientului (cerință FAN Courier pentru PUDO).
+- **Reîncercare pentru lockere foarte noi**: mecanism comun (`_schedule_locker_retry`, `_cron_retry_locker_shipments`) pentru livrările a căror rezolvare eșuează pentru un punct de ridicare încă neindexat de curier; se delegă către `<delivery_type>_retry_locker_shipments` (primul utilizator: `deltatech_delivery_fc`).
 - **Compatibilitate retroactivă**: menține legăturile cu stocarea istorică a lockerelor bazată pe `res.partner`, oferind în același timp un strat de date modern.
+
+Import automat: o sarcină programată reîmprospătează săptămânal toate cataloagele accesibile (curierii fără credențiale sau fără capabilitatea `lockers` sunt omiși, iar defectarea unui curier nu îl oprește pe altul).
 
 Configurare (din `readme/CONFIGURE.md`): activarea suportului pentru locker se face per curier, din Inventar > Configurare > Livrare > Metode de livrare — se bifează „Use Locker” pe curierul dorit (Sameday, Fan Curier, Cargus, Packeta etc.) și apoi se apasă „Get Lockers” pentru a importa lockerele disponibile.
 
@@ -41,6 +49,7 @@ Conform fluxului de ingestie, secțiunile Sumar și Funcționalități Cheie au 
 - `delivery.carrier` (extins): adaugă opțiunea „Use Locker” și hook-ul generic `action_import_lockers`, cu sincronizare către câmpurile specifice curierului.
 - `res.partner` (extins): adaugă câmpul `locker_id` pentru a lega adresa de livrare de un punct fix de ridicare.
 - `sale.order` (extins): adaugă câmpul `locker` și sincronizarea cu locația de ridicare standard Odoo.
+- `stock.picking` (extins): câmpul `delivery_locker_retry_count`, contor folosit de mecanismul de reîncercare când punctul de ridicare nu e încă indexat de curier.
 - `product.template` / `product.product` (extins): adaugă câmpul `for_locker` pentru compatibilitatea produselor cu livrarea în locker.
 
 **Vizualizări**
@@ -51,7 +60,8 @@ Conform fluxului de ingestie, secțiunile Sumar și Funcționalități Cheie au 
 
 **Acțiuni Automate / Acțiuni Server**
 
-- `data/ir_cron_data.xml`: definește o sarcină programată pentru sincronizarea/actualizarea periodică a datelor despre lockere.
+- `Delivery: Refresh locker catalogs` (`ir_cron_import_lockers`): rulează `delivery.carrier._cron_import_lockers()` o dată la 7 zile și reîmprospătează cataloagele de lockere ale curierilor configurați.
+- `ir_cron_retry_locker_shipments`: rulează `_cron_retry_locker_shipments()` la fiecare 3 minute și reia livrările amânate pentru lockere prea noi pentru catalogul curierului (inert dacă nu există niciuna).
 
 #### 5. Conexiuni
 

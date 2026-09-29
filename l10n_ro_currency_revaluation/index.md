@@ -1,15 +1,15 @@
 # Romania - Reevaluare valutară (OMFP 1802) (localizat la `l10n_ro_currency_revaluation/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_currency_revaluation`
-- **Versiune:** `19.0.1.1.1`
+- **Versiune:** `19.0.1.2.3`
 - **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_currency_revaluation`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_currency_revaluation`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-29`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul pentru reevaluarea lunară obligatorie a soldurilor în valută conform OMFP 1802/2014, pct. 340–345, cu generare automată a diferențelor de curs valutar la conturile 665 (cheltuieli) și 765 (venituri), FĂRĂ stornare automată. Este adresat companiilor românești cu tranzacții în valută (exportatori, importatori, entități cu conturi bancare sau împrumuturi intra-grup în EUR/USD/altă valută), obligate să ajusteze lunar valoarea RON a soldurilor valutare la cursul BNR din ultima zi a lunii. Spre deosebire de comportamentul implicit al modulului Enterprise (`account_reports`), care aplică modelul IFRS „provizion + stornare a doua zi" — lăsând soldurile 665/765 la zero la finele lunii —, acest modul înregistrează diferențele definitiv, așa cum cere legislația română, astfel încât bilanțul și contul de profit și pierdere reflectă corect diferențele de curs ale perioadei. Reevaluarea lunii următoare este calculată incremental față de cursul ultimei reevaluări (nu față de cursul istoric al documentului), iar întregul proces este urmărit printr-un model de audit trail cu stări clare (ciornă → postată → anulată), oferind contabilului trasabilitate completă și control asupra închiderii lunare.
+Modulul pentru reevaluarea lunară obligatorie a soldurilor în valută conform OMFP 1802/2014 (pct. 325 alin. (1)-(2) și pct. 304 alin. (3)-(4)), cu generare automată a diferențelor de curs valutar la conturile 665 (cheltuieli) și 765 (venituri), FĂRĂ stornare automată. Este adresat companiilor românești cu tranzacții în valută (exportatori, importatori, entități cu conturi bancare sau împrumuturi intra-grup în EUR/USD/altă valută), obligate să ajusteze lunar valoarea RON a soldurilor valutare la cursul BNR din ultima zi a lunii. Spre deosebire de comportamentul implicit al modulului Enterprise (`account_reports`), care aplică modelul IFRS „provizion + stornare a doua zi" — lăsând soldurile 665/765 la zero la finele lunii —, acest modul înregistrează diferențele definitiv, așa cum cere legislația română, astfel încât bilanțul și contul de profit și pierdere reflectă corect diferențele de curs ale perioadei. Reevaluarea lunii următoare este calculată incremental față de cursul ultimei reevaluări (nu față de cursul istoric al documentului), iar întregul proces este urmărit printr-un model de audit trail cu stări clare (ciornă → postată → anulată), oferind contabilului trasabilitate completă și control asupra închiderii lunare.
 
 #### 2. Funcționalități Cheie
 
@@ -19,9 +19,11 @@ Modulul pentru reevaluarea lunară obligatorie a soldurilor în valută conform 
 - Calcul automat al soldurilor reziduale valutare la data reevaluării, printr-o interogare SQL (cu CTE) care ține cont de reconcilierile parțiale efectuate până la acea dată.
 - Diferența la decontare calculată incremental față de ultima reevaluare (nu față de cursul istoric): liniile de ajustare sunt marcate `l10n_ro_is_fx_revaluation` și poartă valuta elementului cu `amount_currency=0`, astfel încât soldul contabil rezidual reportat în luna următoare include ajustările deja postate; la decontarea unui element, partea nerealizată rămasă se „realizează" (stornare) la reevaluarea următoare.
 - Raport de audit PDF per reevaluare (`action_print_audit_report`): perioadă, companie/CUI, jurnal, cursuri BNR per linie, sold rezidual valutar/contabil, diferențe 665/765 cu totaluri.
-- Excluderea automată a conturilor nemonetare (clase 1xx capitaluri, 3xx stocuri, venituri și cheltuieli) — se reevaluează doar conturile monetare relevante (ex.: 5124, 5314, 4111, 401, 451, 461, 462, 267, 508).
-- Override al wizard-ului Enterprise `account.multicurrency.revaluation.wizard`, cu opțiunea „Fără stornare automată (OMFP 1802)" activă implicit pentru companiile din România.
-- Temei legal: OMFP 1802/2014, pct. 340–345 (elemente monetare în valută, evaluare la cursul BNR de la data bilanțului).
+- Excluderea automată a conturilor nemonetare (clase 1xx capitaluri, 3xx stocuri, venituri și cheltuieli, avansurile din 409/419 conform pct. 316 alin. (2)) și a combinațiilor cont/valută excluse manual din raportul standard Enterprise — se reevaluează doar conturile monetare relevante (ex.: 5124, 5314, 4111, 401, 451, 461, 462, 267, 508).
+- Parametru de companie `l10n_ro_fx_revaluation_standard` (Contabilitate → Configurare → Setări → „Foreign Currency Revaluation"): OMFP 1802/2014 (implicit pe companiile RO) sau IFRS - IAS 21. Pe companiile setate pe IFRS, meniul propriu refuză calculul și trimite spre wizard-ul standard.
+- Override al wizard-ului Enterprise `account.multicurrency.revaluation.wizard`, cu opțiunea „Fără stornare automată (OMFP 1802)" activă implicit pentru companiile din România; wizard-ul și meniul propriu rulează același motor de calcul, deci nu apar sume diferite după punctul de intrare.
+- Buton „RO Currency Revaluation (OMFP 1802)" pe raportul Enterprise „Câștiguri/pierderi valutare nerealizate", care deschide direct reevaluarea RO a lunii afișate.
+- Temei legal: OMFP 1802/2014, pct. 325 alin. (1)-(2) (creanțe și datorii) și pct. 304 alin. (3)-(4) (disponibilități), cu evaluare la cursul BNR de la data bilanțului.
 
 #### 3. Dependențe
 
@@ -36,6 +38,8 @@ Modulul pentru reevaluarea lunară obligatorie a soldurilor în valută conform 
 - `l10n.ro.currency.revaluation`: Sesiunea de reevaluare valutară (audit trail). Implementează state machine-ul (ciornă/postată/anulată) cu constrângere de unicitate `UNIQUE(date, company_id)` și metodele `action_compute` (calculează soldurile reziduale eligibile și populează liniile), `action_post` (generează nota contabilă fără stornare, cu cerința prealabilă a conturilor 665/765 configurate pe companie), `action_cancel` (stornează nota contabilă în roșu prin `_reverse_moves`), `action_view_move` (deschide nota contabilă generată) și `action_print_audit_report` (deschide raportul PDF de audit). Moștenește `mail.thread` și `mail.activity.mixin` pentru istoric și activități.
 - `l10n.ro.currency.revaluation.line`: Linie de reevaluare per cont/valută, cu sold rezidual valutar (`balance_currency`), sold contabil (`balance_book`), cursul BNR nou (`rate_new`), soldul recalculat (`balance_new`), diferența (`adjustment`) și tipul diferenței (`diff_type` — pierdere 665/câștig 765).
 - `account.move.line` (extindere): adaugă câmpul `l10n_ro_is_fx_revaluation`, care marchează liniile de ajustare generate de reevaluarea RO, pentru a reporta corect ajustările în soldul contabil al lunii următoare.
+- `res.company` / `res.config.settings` (extindere): câmpul `l10n_ro_fx_revaluation_standard` (OMFP 1802 / IFRS), expus în Setări.
+- `account.multicurrency.revaluation.report.handler` (extindere): adaugă butonul de deschidere a reevaluării RO pe raportul standard.
 - `account.multicurrency.revaluation.wizard` (extindere): Adaugă câmpul `l10n_ro_no_reversal` (bifat implicit pentru companiile din România) și suprascrie `create_entries` pentru a genera înregistrări fără stornare automată (`_l10n_ro_create_entries_no_reversal`) când compania este din România.
 
 **Vizualizări**

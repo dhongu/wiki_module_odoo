@@ -1,10 +1,11 @@
 # Conector Marketplace Odoo către Odoo (localizat la `deltatech_marketplace_odoo/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_odoo`
-- **Versiune:** `19.0.0.1.5`
+- **Versiune:** `19.0.0.2.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_odoo
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_odoo`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-29`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -17,6 +18,11 @@ Acest modul oferă o interfață de conectare Odoo-către-Odoo prin intermediul 
 - Import atribute cu valorile aferente.
 - Import categorii de produse.
 - Import parteneri.
+- Mapare produse (**Map Products**, din 19.0.0.2.0): produsele Odoo locale sunt căutate în baza de date la distanță după referință internă și cod de bare (potrivire exactă, câte 100 per `search_read`), pe aceeași selecție ca importul (variante active și, pe un backend B2B, doar cele publicate). Legătura primește id-ul și referința internă ale variantei la distanță, iar șablonul la distanță este legat de șablonul Odoo local dacă nu era deja legat. Nu se importă nimic: produsul local își păstrează denumirea, prețul și codurile.
+- Import listă de prețuri, țări/județe și imagini de produs; export comenzi (comandă de achiziție locală confirmată devine comandă de vânzare în instanța la distanță, în flux B2B) și sincronizarea mesajelor și a stării comenzii, conform fișei consultant.
+- Robustețe: erorile tranzitorii XML-RPC (rețea, `ProtocolError`) declanșează reîncercarea automată a jobului; exportul comenzilor de achiziție se face câte un job per comandă, pe canalul de ieșire.
+- Ajustarea de inventar creată la import vizează prima locație configurată pe backend (`location_stock_ids[:1]`); cu mai multe locații configurate se ajustează doar prima.
+- Datele de conectare ale backend-ului sunt citite cu `sudo()`, deoarece în `deltatech_marketplace` sunt vizibile doar pentru Marketplace Manager; utilizatorii fără grup pot rula în continuare fluxurile care apelează marketplace-ul.
 
 #### 3. Dependențe
 

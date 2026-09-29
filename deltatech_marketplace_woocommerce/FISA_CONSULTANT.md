@@ -33,7 +33,7 @@ browserului. Recomandarea e clară: magazin pe HTTPS, întotdeauna când e posib
 
 Spre deosebire de conectorul Shopify (REST + GraphQL, comutabile per subsistem), WooCommerce are
 un singur transport — REST — deci nu există aici o alegere de protocol pe backend. Filtrul de
-import comandă după status (`woo_order_status`, tab **Other Info**) mapează direct pe parametrul
+import comandă după status (`woo_order_status`, tab **Technical**) mapează direct pe parametrul
 `status` al apelului `GET /orders`; lista de statusuri e cea nativă WooCommerce (`pending`,
 `processing`, `on-hold`, `completed`, `cancelled`, `refunded`, `failed`, `trash`), plus valoarea
 `any` (implicită) care înseamnă „fără filtru" — comportamentul dinaintea acestui câmp.
@@ -61,13 +61,13 @@ pregătit înainte de prima sincronizare:
 - **Lista de prețuri** (`pricelist_id`, tab **Price**) — nu e un export de preț către WooCommerce
   (acest conector nu exportă prețuri), ci **destinația** prețului pe care WooCommerce îl raportează
   la import; `Update Price Only`/`Ignore Price` guvernează cum se scrie peste prețul Odoo existent.
-- **Categoria implicită / categorie marketplace implicită** (tab **Other Info → Defaults**) —
+- **Categoria implicită / categorie marketplace implicită** (tab **Orders and Products → Defaults**) —
   folosite când produsul importat nu are o mapare mai specifică.
 - **Filtrul de status comandă** (`woo_order_status`) — dacă e restrâns la altceva decât `Any`,
   fereastra de import (**Sale Order Days**, câmp comun al framework-ului, implicit 2 zile, tab
-  **Other Info → Limits**) trebuie să fie suficient de largă cât acel status să fie atins înainte
+  **Technical → Limits**) trebuie să fie suficient de largă cât acel status să fie atins înainte
   ca fereastra să expire; altfel comanda nu mai e importată niciodată.
-- **„Can send stock"** (tab **Other Info → Stock**) — trebuie bifat pentru ca produsele acestui
+- **„Can send stock"** (tab **Orders and Products → Stock**) — trebuie bifat pentru ca produsele acestui
   backend să fie luate în calcul de cron-ul comun de export stoc (vezi §6, Pasul 5); implicit
   nebifat.
 
@@ -94,10 +94,10 @@ puțin un produs (eventual cu variante/atribute), un client și o comandă exist
    Customers, Sale Order, Delivery Carrier, Sale Stage, Payment Acquirer, Characteristics,
    Characteristics Values și Product Image.
 6. Setați tab-ul **Price** (lista de prețuri, politica `Update Price Only`/`Ignore Price`) și, în
-   **Other Info**, filtrul `Import Orders With Status` dacă e nevoie de o restricție.
+   **Technical**, filtrul `Import Orders With Status` dacă e nevoie de o restricție.
 7. Apăsați **Test connection** din antet.
 8. Dacă vreți ca stocul Odoo să se exporte spre WooCommerce, bifați **Can send stock** (tab
-   **Other Info → Stock**) și activați cron-ul comun „Marketplace: export stock" din
+   **Orders and Products → Stock**) și activați cron-ul comun „Marketplace: export stock" din
    **Marketplace → Configuration → Crons** (dezactivat implicit).
 
 ## 6. Flux de utilizare
@@ -117,16 +117,16 @@ key/secret introduse; la succes, starea (`State`) backend-ului trece pe **Confir
 necesară ca indicatorul de sănătate să poată deveni verde mai târziu. Un eșec ridică eroarea
 WooCommerce/HTTP ca mesaj de validare, direct pe ecran, înainte de a merge mai departe.
 
-### Pasul 3 — Filtrul de import comandă (Other Info)
+### Pasul 3 — Filtrul de import comandă (Technical)
 
-Tab-ul **Other Info → Limits** conține, lângă câmpul comun **Sale Order Days** (fereastra de
+Tab-ul **Technical → Limits** conține, lângă câmpul comun **Sale Order Days** (fereastra de
 import, implicit 2 zile), câmpul specific acestui conector, `Import Orders With Status`: lăsat pe
 **Any** (implicit), importă orice status de comandă WooCommerce — comportamentul dinaintea acestui
 câmp. Restrângerea la un singur status (de exemplu `Processing`) e sigură doar dacă fereastra
 **Sale Order Days** e suficient de largă cât comanda să atingă acel status înainte ca fereastra
 să expire.
 
-![Tab Other Info: câmpul Import Orders With Status, lângă Sale Order Days](screenshots/02_order_status.png)
+![Tab Technical: câmpul Import Orders With Status, lângă Sale Order Days](screenshots/02_order_status.png)
 
 ### Pasul 4 — Prima sincronizare (tab Objects)
 
@@ -161,7 +161,7 @@ cron-ul job-runner deja pornit).
 Stocul se exportă către WooCommerce prin cron-ul comun „Marketplace: export stock"
 (**Marketplace → Configuration → Crons**), **dezactivat implicit** — nu există un export „în timp
 real" declanșat direct de mișcarea de stoc în acest conector. Pentru ca produsele acestui backend
-să fie incluse, mai trebuie bifat **Can send stock** (tab **Other Info → Stock**). **Nu există
+să fie incluse, mai trebuie bifat **Can send stock** (tab **Orders and Products → Stock**). **Nu există
 export de preț** către WooCommerce: direcția e inversă — `pricelist_id` e doar destinația
 prețului importat (vezi §4).
 
@@ -264,7 +264,7 @@ Capturile (`readme/screenshots/`) ilustrează fluxul din secțiunea 6, generate 
 folosită pentru capturile de marketing din `static/description/screenshots/`):
 
 1. `01_credentials.png` — backend WooCommerce, tab Credentials completat.
-2. `02_order_status.png` — tab Other Info: câmpul Import Orders With Status, lângă Sale Order Days.
+2. `02_order_status.png` — tab Technical: câmpul Import Orders With Status, lângă Sale Order Days.
 3. `03_objects.png` — tab Objects: rândurile cu acțiunile de import per tip de date.
 4. `04_health_badge.png` — indicatorul de sănătate pe cardul kanban al backend-ului.
 

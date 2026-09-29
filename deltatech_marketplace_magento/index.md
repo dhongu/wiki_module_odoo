@@ -1,10 +1,10 @@
 # Conector Marketplace Magento (localizat la `deltatech_marketplace_magento/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_magento`
-- **Versiune:** `19.0.0.0.15`
+- **Versiune:** `19.0.0.1.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_magento
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_magento`
-- **Ultima Ingestie:** `2026-09-11`
+- **Ultima Ingestie:** `2026-09-29`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -26,6 +26,9 @@ Conectorul Magento Marketplace este o extensie Odoo dezvoltată de Terrabit care
 - **Integrarea clienților**:
   - Import al clienților Magento în baza de contacte Odoo
   - Menținerea unor înregistrări de client consecvente între platforme
+- **Mapare produse (Map Products)**:
+  - Acțiunea *Map Products* funcționează și pe backend-urile Magento: SKU-urile produselor Odoo sunt căutate pe `/products` în loturi de 50 (`conditionType: in`, paginat), iar fiecare produs `simple` cu SKU identic este legat (`external_id` = id entitate Magento, `external_code` = SKU)
+  - Se creează doar legăturile, fără import; codul de bare nu se caută, iar legătura de șablon nu se creează (părintele configurabil nu apare în răspuns)
 - **Gestionarea comenzilor**:
   - Import al comenzilor de vânzare din Magento în Odoo
   - Import de comenzi filtrat după status, nu doar după dată — statusurile disponibile pentru
@@ -40,10 +43,13 @@ Conectorul Magento Marketplace este o extensie Odoo dezvoltată de Terrabit care
   - Integrare cu metodele de livrare Magento
   - Suport pentru mai mulți procesatori de plată
   - Sincronizarea informațiilor de livrare și de plată
+  - Punctul de ridicare (locker) importat se păstrează pe comanda de marketplace (`marketplace_locker`), deci conectorul nu mai depinde de suita de curierat Terrabit; unde aceasta e instalată, codul se oglindește pe comanda de vânzare și ajunge pe AWB
+  - Trimiterea AWB nu mai eșuează când un transportator Odoo are mai multe mapări de transportator marketplace; se folosește cea mai recentă
 - **Operațiuni automatizate**:
   - Procesare în fundal a sarcinilor cu gestionare a cozii de job-uri
   - Paginare și dimensiuni de lot configurabile pentru optimizarea performanței
   - Sarcini de sincronizare programate
+  - Datele secrete de conectare ale backend-ului se citesc cu `sudo()`, deoarece în `deltatech_marketplace` sunt vizibile doar pentru Marketplace Manager; utilizatorii fără grup continuă să ruleze fluxurile care apelează marketplace-ul
 
 #### 3. Dependențe
 

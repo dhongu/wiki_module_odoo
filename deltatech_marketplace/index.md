@@ -1,10 +1,10 @@
 # Marketplace Base Connector (localizat la `deltatech_marketplace/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace`
-- **Versiune:** `19.0.1.27.6`
+- **Versiune:** `19.0.1.33.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace`
-- **Ultima Ingestie:** `2026-09-24`
+- **Ultima Ingestie:** `2026-09-29`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -23,6 +23,14 @@ Marketplace Base Connector este modulul de bază al familiei de module marketpla
 - Asistent de sincronizare la cerere pe produs (export/import, tot/stoc/preț), pentru un produs urgent între două rulări.
 - Jurnal centralizat al operațiunilor de marketplace (stoc, preț, import, export, webhook, limitare), cu stare de sănătate per backend (Neconfirmat / Erori / Avertismente / În regulă) și curățare automată după un număr configurabil de zile.
 - Coadă de joburi (`queue_job`), cu canale proprii per backend și reîncercare automată a joburilor eșuate.
+- Mapare produse existente (**Map Products**, din meniul cardului *Produse* al backend-ului, și **Map in Marketplace** din meniul *Acțiune* al produselor): leagă produsele Odoo de ofertele din magazin după referință internă și cod de bare, în joburi de câte 100, fără a importa nimic (produsul Odoo își păstrează numele, prețul și codurile); conflictele de cod sunt raportate. Apare doar pe backend-urile ai căror conectori implementează căutarea după produse.
+- Asocierile duplicate sunt semnalate (câmp `duplicate_mapping`, în roșu în liste, cu filtru dedicat pe categorii) pentru categorii, atribute, valori de atribut și liste de prețuri.
+- Imaginea principală se descarcă doar când se schimbă linkul ei (linkul ultimei descărcări e ținut pe asociere), iar o descărcare eșuată nu mai șterge imaginea existentă.
+- Formularul backend-ului: tab-ul *Alte informații* este împărțit în *Comenzi și produse* (setări de business) și *Tehnic* (limite de import, canale de joburi, limitarea ratei API și lista de găleți de rată).
+- Securitate: parola, `client_secret`, tokenurile și linkul de webhook sunt vizibile doar pentru Marketplace Manager; conectorii le citesc cu `sudo()`, deci fluxurile utilizatorilor obișnuiți merg în continuare. Cheia API nu mai ajunge în logul serverului. Se actualizează împreună cu conectorii.
+- Exportul de stoc și de preț procesează acum toate backend-urile selectate (nu doar primul împărțit în joburi), iar filtrul „doar modificate” se aplică și pe calea cu joburi.
+- Starea de sănătate: joburile eșuate din canalele comune se contorizează pe backend-ul căruia îi aparțin; butonul **Run jobs** declanșează cron-urile `queue_job_cron_jobrunner`; Marketplace Manager are acces la joburi și canale.
+- Protecție la importuri concurente: `import_chain_running` / `import_chain_skipped` spun dacă un lanț de import al unui binder rulează deja pe backend, ca un al doilea import să nu parcurgă din nou toate paginile.
 
 #### 3. Dependențe
 

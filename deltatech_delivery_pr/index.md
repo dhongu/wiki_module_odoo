@@ -1,10 +1,10 @@
 # Poșta Română Shipping (localizat la `deltatech_delivery_pr/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_pr`
-- **Versiune:** `19.0.1.1.1`
+- **Versiune:** `19.0.1.2.1`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_pr`
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_pr`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
@@ -17,6 +17,7 @@ Acest modul integrează serviciul de curierat al Poștei Române în Odoo, permi
 - Expediere cu mai multe colete (parcels) într-o singură comandă de transport.
 - Expediere cu valoare declarată (asigurare).
 - Expediere cu plată ramburs (cash on delivery).
+- Recuperarea din nou a etichetei (AWB) de la Poșta Română după ce a fost ștearsă de pe livrare (capabilitatea `label_refetch` este declarată, deci apelanții pot afla corect că reobținerea este posibilă).
 
 Funcționalități neacoperite de modul (conform README): obținerea de tarife pentru o expediere, generarea AWB în format ZPL sau HTML, listele de orașe/județe/lockere/puncte de ridicare, istoricul de status al unei expedieri, expedierea după numele orașului fără id, expedierea cu id de oraș și județ, expedierea cu dimensiuni, livrare sâmbăta, deschiderea coletului, nota de restituire în AWB, ridicarea doar din punctul de ridicare indicat și trimiterea id-ului de locker în AWB.
 

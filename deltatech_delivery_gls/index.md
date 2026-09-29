@@ -1,10 +1,10 @@
 # GLS Shipping (localizat la `deltatech_delivery_gls/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_gls`
-- **Versiune:** `19.0.2.0.12`
+- **Versiune:** `19.0.2.1.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_gls
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_gls`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
@@ -19,7 +19,8 @@ Modulul GLS Shipping integrează direct în Odoo serviciile de curierat GLS (Gen
 - **Management tranzacții:** import tranzacții de plată din GLS, urmărirea plăților ramburs (cash-on-delivery), potrivirea tranzacțiilor GLS cu înregistrările Odoo și raportare istorică.
 - **Gestionare listă AWB:** preluarea listei de AWB-uri din sistemul GLS, auto-crearea înregistrărilor AWB în Odoo, potrivirea informațiilor expeditor/destinatar și stocarea referințelor.
 - **Opțiuni avansate de expediere:** ramburs (COD), valoare declarată (asigurare), colete multiple, instrucțiuni speciale de livrare, livrare sâmbăta, colet deschis la livrare.
-- **Livrare la locker:** import automat al punctelor de livrare GLS (lockere) pentru România și Ungaria, selecție interactivă a locker-ului în checkout-ul Odoo și sugestii de locker pe bază de proximitate față de client; posibilitatea trimiterii ID-ului de locker în AWB.
+- **Livrare la locker:** import automat al punctelor de livrare GLS (lockere) pentru România și Ungaria, selecție interactivă a locker-ului în checkout-ul Odoo și sugestii de locker pe bază de proximitate față de client; posibilitatea trimiterii ID-ului de locker în AWB. Catalogul de puncte GLS este identificat după țară, variantă de API și cont (`_gls_locker_catalog_key`), astfel încât un al doilea transportator GLS pe alt cont (ex. cont separat pentru Ungaria) nu arhivează punctele importate de primul; punctele care nu mai apar în feed-ul GLS sunt arhivate la importul următor.
+- **Robustețe la urmărire și autentificare:** interogarea de status ignoră și curăță din livrare referințele non-numerice (AWB-urile GLS sunt mereu numerice), iar un AWB problematic nu mai blochează interogarea celorlalte livrări; un transportator fără parolă configurată returnează eroarea clară „No password is set on the GLS carrier."
 
 Limitări cunoscute (nesuportate): calculul tarifelor pentru o expediere, listele de orașe/județe/puncte de pickup, generarea AWB în format HTML, expedierea cu ID oraș și ID județ, expedierea cu dimensiuni și nota de retur în AWB.
 
@@ -57,3 +58,4 @@ Dependență externă Python: `zeep` (client SOAP pentru serviciile web GLS).
 
 - [deltatech_delivery](../deltatech_delivery/index.md): cadrul de bază pentru metodele de livrare Deltatech pe care acest modul îl extinde cu integrarea GLS (dependență directă).
 - [deltatech_delivery_status](../deltatech_delivery_status/index.md): valorifică statusurile de livrare actualizate de pe baza informațiilor de tracking GLS.
+- [deltatech_delivery_locker](../deltatech_delivery_locker/index.md): consumă cheia de catalog `_gls_locker_catalog_key` și metodele de import/arhivare pentru punctele de livrare (lockere) GLS.

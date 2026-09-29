@@ -12,7 +12,8 @@ Cine urmărește expedierile are nevoie să vadă dintr-o privire ce colete cer 
 
 - **În tranzit** — coletele pe care le are curierul;
 - **Livrate azi** — livrate de la miezul nopții;
-- **Întârziate ≥ N zile** — predate curierului, cu Data AWB mai veche de N zile și încă nelivrate;
+- **Întârziate** — predate curierului și nelivrate după termenul de livrare (SLA) al curierului, în zile lucrătoare de la predare; pentru un curier fără SLA, după N zile de la Data AWB;
+- **La timp, 4 săptămâni** — ce procent din coletele livrate în ultimele 28 de zile au ajuns până la termenul SLA și câte au întârziat; apare doar dacă cel puțin un curier are SLA;
 - **Risc retur ≥ R zile** — stau la oficiul/lockerul curierului sau în livrare de R zile sau mai mult;
 - **Retururi luna asta** — refuzate de la începutul lunii;
 - **Ramburs pe drum** — rambursul pe care curierii încă îl au de încasat, pe monedă;
@@ -49,7 +50,7 @@ Date minime pentru demo:
 - o livrare **În depozit curier** cu AWB mai vechi de 5 zile și aflată în depozit de cel puțin 3 zile (apare la „Întârziate" și la „Risc retur");
 - o livrare **În tranzit** la care interogarea de stare a eșuat repetat (implicit cel puțin 5 eșecuri pe 48 de ore, vezi Pasul 4; apare la „Fără urmărire").
 
-Ce se afișează pe fiecare rând: numărul AWB, transportatorul, livrarea, clientul, telefonul, **Data AWB**, **Stare livrare**, **În stare din** și **Ramburs**.
+Ce se afișează pe fiecare rând: numărul AWB, transportatorul, livrarea, clientul, telefonul, **Data AWB**, **Stare livrare**, **În stare din**, **Zile la curier** (de când a preluat curierul coletul, sau de la Data AWB, până azi sau până la livrare/retur; 0 cât timp coletul nu e încă la curier) și **Ramburs**.
 
 **„În stare din" este data evenimentului de la curier**, nu ora la care Odoo a întrebat curierul: la schimbarea stării se ia data ultimului eveniment din istoricul de livrare primit de la curier (o dată din viitor, cu ceasul curierului înainte, se aduce la ora curentă). Un colet livrat seara la 23:40 și interogat după miezul nopții apare livrat în seara respectivă. Fără istoric, se ia momentul în care Odoo a înregistrat schimbarea. La instalare, AWB-urile existente primesc data ultimului eveniment din istoric sau, dacă nu există, data AWB-ului.
 
@@ -57,18 +58,19 @@ Ce se afișează pe fiecare rând: numărul AWB, transportatorul, livrarea, clie
 
 1. Instalați `deltatech_delivery_dashboard` (aduce `deltatech_delivery`). `deltatech_delivery` trebuie să fie cel puțin 19.0.6.8.1, în orice bază: de la această versiune fiecare AWB primește compania livrării sale, iar cardurile numără doar AWB-urile companiilor selectate — un AWB fără companie apare în listă, dar nu e numărat pe niciun card.
 2. Verificați că cronul de stare a livrărilor din `deltatech_delivery` este activ: el aduce stările de la curieri, iar cardurile numără din aceste stări.
-3. Opțional, schimbați pragurile din **Setări → Tehnic → Parametri → Parametri sistem** (meniul apare în modul dezvoltator):
-   - `delivery_dashboard.overdue_days` — după câte zile de la **Data AWB** un colet predat curierului și nelivrat este „Întârziat". Implicit `5`.
+3. Opțional, setați pe fiecare curier termenul de livrare: **Inventar → Configurare → Livrare → Metode de expediere**, câmpul **SLA livrare (zile lucrătoare)**. Se numără zilele de luni până vineri de la predarea coletului către curier (primul eveniment al curierului care îl trece În tranzit, În depozit curier sau În livrare); sărbătorile legale nu se scad. Fiecare AWB primește **Termen SLA** (coloană ascunsă implicit; se afișează din selectorul de coloane al listei), iar a doua zi după termen coletul nelivrat intră la „Întârziate". Schimbarea termenului recalculează doar coletele încă pe drum. `0` (implicit) înseamnă fără SLA: curierul rămâne pe pragul de mai jos.
+4. Opțional, schimbați pragurile din **Setări → Tehnic → Parametri → Parametri sistem** (meniul apare în modul dezvoltator):
+   - `delivery_dashboard.overdue_days` — pentru curierii fără SLA, după câte zile de la **Data AWB** un colet predat curierului și nelivrat este „Întârziat". Implicit `5`.
    - `delivery_dashboard.return_risk_days` — câte zile poate sta un colet la oficiul/lockerul curierului sau în livrare până intră la „Risc retur". Implicit `3`.
 
-   Parametrul lipsă sau gol înseamnă valoarea implicită; o valoare nenumerică este ignorată (se folosește tot implicitul). Pragul ales apare în titlul cardului („Întârziate ≥ 5 zile").
-4. Acordați utilizatorilor care urmăresc livrările grupul **Inventar / Utilizator** și setați fusul orar pe utilizatori (sau pe companie): de el depind „Livrate azi" și „Retururi luna asta".
+   Parametrul lipsă sau gol înseamnă valoarea implicită; o valoare nenumerică este ignorată (se folosește tot implicitul). Pragul ales apare în titlul cardului („Întârziate ≥ 5 zile"); dacă cel puțin un curier are SLA, titlul devine simplu „Întârziate".
+5. Acordați utilizatorilor care urmăresc livrările grupul **Inventar / Utilizator** și setați fusul orar pe utilizatori (sau pe companie): de el depind „Livrate azi" și „Retururi luna asta".
 
 ## 6. Flux de utilizare
 
 ### Pasul 1 — Deschiderea tabloului și citirea cardurilor
 
-Din **Inventar → Operații → AWB de livrare → Urmărire livrări** se deschide lista AWB-urilor livrărilor de ieșire, cu banda de carduri deasupra. Lista este ordonată după **În stare din**, cele mai recente sus.
+Din **Inventar → Operații → AWB de livrare → Urmărire livrări** se deschide lista AWB-urilor livrărilor de ieșire, cu banda de carduri deasupra. La deschidere lista e filtrată pe **În tranzit** (cardul e evidențiat): coletele încă la curier, nu tot istoricul livrat. Un clic pe cardul **În tranzit** scoate filtrul și arată toate AWB-urile; un clic pe alt card îl înlocuiește. Lista este ordonată după **În stare din**, cele mai recente sus.
 
 ![Tabloul „Urmărire livrări": cele 7 carduri deasupra listei de AWB-uri](screenshots/01_tablou_livrari.png)
 
@@ -78,7 +80,8 @@ Din **Inventar → Operații → AWB de livrare → Urmărire livrări** se desc
 |---|---|
 | **În tranzit** | AWB-uri în starea Avizat, În tranzit, În depozit curier sau În livrare |
 | **Livrate azi** | stare Livrat, cu **În stare din** de la miezul nopții de azi (fusul orar al utilizatorului, altfel al companiei, altfel UTC) |
-| **Întârziate ≥ N zile** | stare În tranzit, În depozit curier sau În livrare, cu **Data AWB** mai veche de N zile. Starea **Avizat** nu intră: coletul poate fi încă pe raftul nostru |
+| **Întârziate** | stare În tranzit, În depozit curier sau În livrare, cu **Termen SLA** depășit (înainte de azi); fără termen SLA, cu **Data AWB** mai veche de N zile. Starea **Avizat** nu intră: coletul poate fi încă pe raftul nostru |
+| **La timp, 4 săptămâni** | procentul livrărilor la timp dintre coletele livrate în ultimele 28 de zile care au **Termen SLA**; sub procent, „N întârziate din M". Click-ul deschide livrările întârziate din aceeași perioadă. Rezultatul (**Rezultat SLA**: La timp / Întârziat) se fixează la livrare, după ziua evenimentului curierului, și nu se mai schimbă dacă se modifică ulterior SLA-ul curierului. Cardul lipsește cât timp niciun curier nu are SLA |
 | **Risc retur ≥ R zile** | stare În depozit curier sau În livrare, cu **În stare din** mai veche de R zile |
 | **Retururi luna asta** | stare Refuzat, cu **În stare din** de la 1 ale lunii curente |
 | **Ramburs pe drum** | AWB-urile din „În tranzit" care au ramburs; câte un total pe moneda în care se încasează rambursul (moneda expedierii, altfel a companiei), rotunjit la unități întregi pe card |
@@ -163,9 +166,13 @@ Ce rămâne manual: contactarea clienților cu colete la risc de retur, verifica
 - [ ] Click pe fiecare card: numărul de rânduri din listă (dreapta sus, „1-N / N") este egal cu numărul de pe card, dacă nu aveți alte filtre puse.
 - [ ] Un al doilea click pe același card scoate filtrul; click pe alt card înlocuiește filtrul, nu îl adaugă.
 - [ ] Cu un filtru pe transportator pus înainte, cardul își păstrează numărul (toate AWB-urile), iar lista arată doar AWB-urile curierului ales.
+- [ ] Cu **SLA livrare (zile lucrătoare)** = 2 pe curier, un colet predat joi are **Termen SLA** luni; marți, dacă nu e livrat, apare la „Întârziate", iar luni încă nu.
+- [ ] Schimbarea SLA-ului pe curier mută **Termen SLA** doar pe coletele încă pe drum; la cele livrate rămâne cel vechi.
+- [ ] Un colet livrat în ziua termenului are **Rezultat SLA** „La timp", unul livrat a doua zi „Întârziat"; cardul „La timp, 4 săptămâni" arată procentul, iar click-ul deschide doar cele întârziate.
 - [ ] Un colet **Avizat** apare la „În tranzit", dar nu la „Întârziate", oricât de veche ar fi **Data AWB**.
 - [ ] Un colet **În depozit curier** de peste 5 zile (cu AWB mai vechi de 5 zile) apare atât la „Întârziate", cât și la „Risc retur".
 - [ ] **În stare din** pe un colet livrat este data ultimului eveniment din istoricul livrării, nu ora interogării.
+- [ ] Cu mouse-ul pe cardul **Întârziate** sau **Ramburs pe drum**, tooltip-ul arată câte un rând pe curier (număr de colete, respectiv suma pe curier și monedă), cel mai mare primul.
 - [ ] Totalul coloanei **Ramburs** din listă, după click pe „Ramburs pe drum", corespunde sumei de pe card (rotunjită la unități).
 - [ ] Un AWB scos din interogare apare la „Fără urmărire"; după **Reia interogarea stării**, iese de acolo la următoarea căutare (dacă AWB-ul nu e mai vechi de 30 de zile).
 - [ ] Într-o bază multi-companie, fiecare companie vede doar AWB-urile ei, iar rambursul apare separat pe monede.

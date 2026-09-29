@@ -1,10 +1,10 @@
 # Interfață SAGA
 
 - **Nume Tehnic:** `deltatech_saga`
-- **Versiune:** `19.0.6.15.0`
+- **Versiune:** `19.0.6.24.1`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_saga`
-- **Ultima Ingestie:** `2026-09-03`
+- **Ultima Ingestie:** `2026-09-29`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -26,6 +26,13 @@ Interfața Deltatech SAGA este un modul cuprinzător conceput pentru a facilita 
 - O singură rulare a exportului generează o arhivă ZIP unică (`ExportOdoo_<de la>_<până la>.zip`) cu toate fișierele relevante perioadei: parteneri, articole (doar cantitativ-valoric), facturi RON/valută pe intrări și ieșiri, note contabile, încasări/plăți și mișcări de consum/producție.
 - Coloana `TIP` din exportul facturilor reflectă natura documentului (factură normală, bon fiscal cu factură, bon fiscal fără factură, bon cu CIF, sau un cod SAGA prioritar setat pe poziția fiscală precum `T` taxare inversă sau `A` aviz) — determinată din integrarea cu `deltatech_sale_store`, dacă e instalat, sau din flag-ul jurnalului de bonuri fiscale ca rezervă.
 - La finalul exportului de facturi, wizard-ul afișează un sumar HTML al operațiunilor exportate și o secțiune de reconciliere (total venituri clasa 7 vs. total exportat pe `TIP`), utilă pentru a depista notele contabile manuale sau documentele de furnizor înregistrate greșit pe cont de venit.
+- Exportul de plăți/încasări (XML) se face în moneda companiei, cu câte o linie pe factură reconciliată (suma efectiv decontată), `FacturaNumar` cu numărul furnizorului pe facturile de achiziție și `Numar` fără bare oblice (cu sufix `*N` la dezambiguizare); opțiunea „Scurtează anul la 2 cifre" (`fix_name_year`) ajută la respectarea limitei de 16 caractere pentru NDP/NR_DOC. Plățile decontate printr-un cont de încasări/plăți în așteptare (ex. 5125) sunt expandate pe linia de client/furnizor, iar diferențele de curs 665/765 sunt exportate în `I_`/`P_`, fără dublare în `NC_`.
+- Jurnalul TVA la încasare (CABA) este exclus din exportul notelor contabile.
+- Codurile SAGA de parteneri nu se mai emit de două ori: secvențele se realiniază automat (la prima coliziune, la import și la upgrade), inclusiv după preluări prin import CSV.
+- Taxarea inversă se recunoaște și pe taxă, nu doar pe poziția fiscală (ex. `0% R331` / `21% R331` cu autolichidare): coloana `TIP` devine `T` din taxele facturii, inclusiv pe note de credit; codul de pe poziția fiscală, bonul fiscal sau autofactura rămân prioritare.
+- Facturile mixte (linii cu taxare inversă împreună cu linii cu TVA normal) au opțiunea de export „Facturi mixte cu taxare inversă": *Nu exporta (introdu manual)* (implicit), *Exportă cu tip T* sau *Exportă fără tip*, fiecare cu avertisment corespunzător.
+- Furnizorii fără țară sunt exportați ca furnizori români (cu avertisment în raport), iar exportul mișcărilor de stoc nu mai pică pe produse fără referință internă.
+- Pagina din Odoo Apps are un tab Prezentare cu 13 slide-uri (import coduri SAGA, configurare, export lunar, totalul de control, plăți, cazuri de TVA, import în SAGA).
 - Ordinea recomandată de import al fișierelor în SAGA: parteneri (Furnizori/Clienți) → articole → facturi (IN/IE/INV/IEV) → note contabile (NC) → încasări/plăți (I/P); nu se importă simultan fișierele DBF și XML generate din același export, pentru că ar duplica înregistrările în SAGA.
 - Pentru Odoo Community, utilizatorii trebuie incluși în grupul „Show Full Accounting Features" pentru a accesa meniul de export SAGA.
 

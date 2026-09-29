@@ -1,10 +1,10 @@
 # Deltatech EDINET (localizat la `deltatech_edinet/index.md`)
 
 - **Nume Tehnic:** `deltatech_edinet`
-- **Versiune:** `19.0.1.5.0`
+- **Versiune:** `19.0.1.6.0`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edinet`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_edinet`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
@@ -20,13 +20,14 @@ Modulul integrează Odoo cu platforma **Infinite EDINET**, permițând schimbul 
 - **URL WSDL configurabil per companie:** câmpul `edinet_wsdl_template` permite direcționarea integrării către noua platformă EDInet (placeholder `{service}`), fără modificări de cod, în perspectiva migrării anunțate de furnizor (Axis2 legacy → platformă nouă).
 - **Reimport EDI:** buton pe comanda de vânzare (draft/trimisă, cu `client_order_ref` completat) care rerulează importul EDI din XML-ul EDInet deja atașat pe comandă, fără a mai fi nevoie de intervenția suportului.
 - **Verificare Edinet:** buton care compară comanda cu XML-ul EDInet atașat (adresă de livrare, produse, cantități, prețuri) și scrie diferențele în chatter; verificarea este strict read-only și nu suprascrie comanda.
+- **Import manual din Excel (wizard):** acțiune „Import Sale Edinet Line” în meniul Acțiune al comenzii de vânzare în stare `draft`; încarcă un fișier `.xls` și completează comanda: client și adresă de livrare (identificate după GLN), numărul comenzii și informațiile suplimentare în notă, data de livrare cerută, plus liniile (produs identificat după cod de bare, apoi referință internă; cantitate, unitate de măsură, preț net). Este independent de fluxul automat (cron, Reimport EDI, Verificare Edinet, care lucrează pe documente XML SOAP) și acoperă cazul în care partenerul trimite Excel în loc de XML.
 - **Control acces dedicat:** butoanele de reimport și verificare sunt restricționate la grupul de securitate *Edinet: reimport și verificare comenzi*, implicat automat de *Vânzări / Administrator*.
 
 #### 3. Dependențe
 
 - [deltatech_edi](../deltatech_edi/index.md)
 
-Dependențe externe Python: `zeep`, `xmltodict`.
+Dependențe externe Python: `zeep`, `xmltodict`, `xlrd`.
 
 #### 4. Componente Cheie
 
@@ -38,10 +39,13 @@ Dependențe externe Python: `zeep`, `xmltodict`.
 - `account.move` (extindere): adaugă `export_edinet_button` / `action_mass_export_edinet` pentru exportul facturilor validate către EDINET (individual sau în masă) și suprascrie `button_export_edi` pentru partenerii cu `edi_system == "edi_net"`.
 - `res.company` (extindere): câmpurile `edinet_username`, `edinet_password` și `edinet_wsdl_template` pentru credențiale și URL-ul șablon al serviciilor SOAP.
 
+- `import.sale.edinet.line` (wizard tranzitoriu, `wizard/import_sale_edinet_lines.py`): câmpurile `data_file`, `filename`, `sale_id`; `parse_xls_order` citește fișierul `.xls`, iar `do_import` completează comanda (parteneri după `res.partner.gln`, produse după cod de bare/referință, UoM pe `product_uom_id`, taxe recalculate prin `_compute_tax_ids()`). Accesul (`ir.model.access.csv`) este acordat grupului `base.group_user`.
+
 **Vizualizări**
 
 - `views/account_move_view.xml`: extinde formularul de factură (`account.move`) pentru acțiunile de export către EDINET.
 - `views/sale_order_view.xml` (`view_order_form_edinet_reimport`): adaugă în antetul comenzii de vânzare butoanele „Reimport EDI” și „Verificare Edinet”, ambele restricționate la grupul `deltatech_edinet.group_edinet_reimport`.
+- `wizard/import_sale_edinet_lines_view.xml`: formularul wizardului și acțiunea legată de `sale.order` (vizualizare formular).
 - `views/res_config_settings_view.xml`: adaugă în Setări (secțiunea Integrări) câmpurile pentru credențialele și URL-ul WSDL EDINET, la nivel de companie.
 
 **Securitate**

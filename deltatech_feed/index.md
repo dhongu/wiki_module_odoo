@@ -1,10 +1,10 @@
 # Products Feed (localizat la `deltatech_feed/index.md`)
 
 - **Nume Tehnic:** `deltatech_feed`
-- **Versiune:** `19.0.3.5.0`
+- **Versiune:** `19.0.3.6.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_feed
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_feed`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
@@ -17,6 +17,8 @@ Modulul Products Feed este o extensie Odoo dezvoltată de Terrabit/Deltatech car
 - **Optimizarea datelor de produs**: asigură formatarea și optimizarea corectă a datelor de produs pentru fiecare platformă țintă.
 - **Generare automată a feed-urilor**: simplifică crearea și actualizarea periodică a feed-urilor.
 - **Administrarea listelor de produse**: instrumente pentru organizarea și gruparea produselor pe liste destinate diferitelor exporturi de feed.
+- **Cache separat pe fiecare rută de feed**: fiecare rută își păstrează cache-ul sub propriul nume de fișier, deci o cerere anonimă pe altă rută (de ex. JSON de stoc pe o listă Google) nu mai înlocuiește feed-ul citit de marketplace-uri; `refresh_feed` șterge și fișierele din cache ale celorlalte rute.
+- **Index de sub-feed-uri (`use_subfeeds`)**: verifică `access_token` înaintea oricărei alte operații, este servit din cache sub lock-ul de generare și își construiește link-urile cu token-ul salvat pe listă.
 - **Integrare cu website-ul**: integrare cu funcționalitatea de website și e-commerce din Odoo.
 
 #### 3. Dependențe
@@ -49,7 +51,7 @@ Conform secțiunii „Technical Implementation" din readme, modulul este structu
 
 **Controllere**
 
-- `controllers/main.py` (`WebsiteProducts`): controller web pentru generarea și livrarea feed-urilor (link-uri către produse, escapare CDATA pentru conținut HTML); folosește lock-uri consultative PostgreSQL (namespace `FEED_LOCK_CLASS_ID`) pentru a serializa generarea feed-urilor și a evita suprapunerea rulărilor concurente.
+- `controllers/main.py` (`WebsiteProducts`): controller web pentru generarea și livrarea feed-urilor (link-uri către produse, escapare CDATA pentru conținut HTML); folosește lock-uri consultative PostgreSQL (namespace `FEED_LOCK_CLASS_ID`) pentru a serializa generarea feed-urilor; cererea care pierde lock-ul primește copia expirată din cache (`get_from_cache` cu `allow_stale`), iar cache-ul fiecărei rute folosește numele propriu (`get_route_filename`).
 
 **Acțiuni Automate / Acțiuni Server**
 

@@ -78,13 +78,16 @@ cu variante, un client și o comandă existentă în magazin.
    o Dev Dashboard App (apar câmpurile Client Id/Client Secret) sau lăsați-l gol și completați
    direct `Access Token` pentru o Private App clasică.
 5. Setați tab-ul **Price** (lista de prețuri, `Update Price Only`/`Ignore Price` după caz) și
-   filtrele de comandă din tab-ul **Other Info** (status, plată, livrare).
+   filtrele de comandă din tab-ul **Orders and Products** (status, plată, livrare).
 6. Opțional, activați comutatoarele GraphQL dorite din tab-ul **GraphQL** (toate pornesc oprite).
 7. Apăsați **Test connection** din antet — validează credențialele printr-un query GraphQL `shop`.
 8. Apăsați **Import basic data** — înregistrează webhook-urile Shopify necesare.
 9. Verificați câmpul **Granted Access Scopes** (apare după **Test connection**): e lista pe care
    Shopify o raportează pentru instalarea curentă. Dacă **Missing Scopes** e completat, o opțiune
-   pornită pe backend nu are dreptul de care are nevoie — vezi Pasul 8 de mai jos.
+   pornită pe backend nu are dreptul de care are nevoie — vezi Pasul 8 de mai jos. Excepție:
+   `read_all_orders` apare mereu cât lipsește. Fără el, Shopify arată aplicației doar comenzile
+   din ultimele 60 de zile, iar conectorul nu mai trimite nimic pe comenzile mai vechi (fază,
+   anulare, AWB). Dreptul îl aprobă Shopify, la cererea din contul magazinului.
 
 ## 6. Flux de utilizare
 
@@ -101,12 +104,12 @@ autentificare apar mai jos: `Client_id and client_secret` pentru Dev Dashboard A
 
 Tab-ul **Price** stabilește lista de prețuri de export și politica `Update Price Only`/
 `Ignore Price` (utilă când Shopify decide prețul, dar Odoo rămâne proprietarul datelor de produs).
-Tab-ul **Other Info** conține cele trei filtre de import comandă — status, stare de plată, stare
-de livrare — configurabile per magazin.
+Tab-ul **Orders and Products** (grupul **Order and Payment**) conține cele trei filtre de import
+comandă — status, stare de plată, stare de livrare — configurabile per magazin.
 
-> Atenție la combinația cu fereastra de import (`Sale Order Days`, tot în **Other Info**): o
-> comandă care atinge starea cerută de filtru **după** ce a ieșit din această fereastră nu mai e
-> importată niciodată. Un filtru mai restrictiv decât `Any` cere o fereastră suficient de largă.
+> Atenție la combinația cu fereastra de import (`Sale Order Days`, în tab-ul **Technical** →
+> **Limits**): o comandă care atinge starea cerută de filtru **după** ce a ieșit din această
+> fereastră nu mai e importată niciodată. Un filtru mai restrictiv decât `Any` cere o fereastră suficient de largă.
 
 ![Tab Price: lista de prețuri, Update Price Only și Ignore Price](screenshots/02_price.png)
 

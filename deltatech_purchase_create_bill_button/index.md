@@ -1,21 +1,22 @@
 # Purchase Create Bill Button (localizat la `deltatech_purchase_create_bill_button/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_create_bill_button`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_create_bill_button`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_create_bill_button`
-- **Ultima Ingestie:** `2026-09-14`
+- **Ultima Ingestie:** `2026-09-29`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-În Odoo 19, butonul clasic „Create Bill" de pe formularul comenzii de achiziție a fost înlocuit cu un widget „Upload Bill" care obligă utilizatorul să atașeze un fișier înainte de a putea genera factura. Acest modul restabilește butonul clasic, cu un singur clic, lângă widget-ul de încărcare, astfel încât comenzile de achiziție să poată fi facturate direct, fără a fi nevoie de un fișier atașat — exact ca în Odoo 18. Modulul restaurează totodată și copierea automată a „Referinței Furnizorului" de pe comanda de achiziție în câmpurile „Referință" și „Referință Plată" ale facturii de furnizor generate, comportament eliminat în Odoo 19.
+În Odoo 19, butonul clasic „Create Bill" de pe formularul comenzii de achiziție a fost înlocuit cu un widget „Upload Bill" care obligă utilizatorul să atașeze un fișier înainte de a putea genera factura. Acest modul restabilește butonul clasic, cu un singur clic, lângă widget-ul de încărcare, astfel încât comenzile de achiziție să poată fi facturate direct, fără a fi nevoie de un fișier atașat — exact ca în Odoo 18. Modulul restaurează totodată și copierea automată a „Referinței Furnizorului" de pe comanda de achiziție în câmpurile „Referință" și „Referință Plată" ale facturii de furnizor generate, comportament eliminat în Odoo 19. Butonul „Create Bills" este restaurat și pe lista Requests for Quotation (lista implicită din dashboard), unde Odoo 19 îl păstrase doar pe lista „Purchase Orders".
 
 #### 2. Funcționalități Cheie
 
 - Restabilește butonul „Create Bill" (facturare cu un singur clic) pe formularul comenzii de achiziție, alături de widget-ul „Upload Bill", evidențiat vizual (culoare primară) pentru a fi ușor de identificat
 - Permite crearea facturii de furnizor direct din comanda de achiziție, fără a fi necesară atașarea unui fișier
 - Restaurează copierea automată a „Referinței Furnizorului" din comanda de achiziție în câmpurile „Referință" și „Referință Plată" ale facturii generate, replicând comportamentul din Odoo 18
+- Restaurează butonul de antet „Create Bills" pe lista Requests for Quotation, astfel încât mai multe comenzi de achiziție pot fi selectate și facturate deodată; retururile (total negativ) sunt convertite automat de Odoo în notă de credit de furnizor
 
 #### 3. Dependențe
 

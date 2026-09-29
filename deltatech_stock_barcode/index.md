@@ -1,10 +1,10 @@
 # Deltatech Stock Barcode (localizat la `deltatech_stock_barcode/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_barcode`
-- **Versiune:** `19.0.0.0.9`
+- **Versiune:** `19.0.0.1.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_stock_barcode
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_stock_barcode`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
@@ -17,6 +17,8 @@ Acest modul extinde funcționalitatea Stock Barcode din Odoo Enterprise cu mai m
 - **Detalii de amplasare îmbunătățite:** integrarea informațiilor detaliate de locație (Raft, Rând, Poliță, Cutie) în vizualizările de scanare a codului de bare, pentru o mai bună vizibilitate a poziției articolelor.
 - **Îmbunătățiri ale fluxului de lucru:** include un formular simplificat pentru capturarea detaliilor de livrare în timpul procesului de transfer.
 - **Listă de prețuri configurabilă pentru scanare:** permite alegerea unei liste de prețuri specifice din setări, pentru calcularea prețului produsului la scanarea codului de bare, oferind mai multă flexibilitate în gestiunea stocului.
+- **Inventar pe baze mari de date:** setarea opțională „Barcode Inventory: Only My Quants” (Inventar > Setări > Barcode, dezactivată implicit) face ca ecranul Inventar din aplicația Cod de bare să încarce doar cantitățile (quants) atribuite utilizatorului curent, ca în Odoo 18, nu și cele neatribuite cu data de inventar scadentă. Astfel ecranul se deschide rapid chiar și cu zeci de mii de quants; celelalte produse se adaugă prin scanare.
+- **Amplasare fără raftul sursă:** la transferurile interne din aplicația de scanare, destinația propusă de strategia de amplasare nu mai este raftul de pe care pleacă marfa (relevant când e activă opțiunea `prefer_existing_stock_location`).
 
 #### 3. Dependențe
 
@@ -34,11 +36,14 @@ Sumarul și funcționalitățile provin din `readme/DESCRIPTION.md`; componentel
 - `res.config.settings` (extindere): adaugă câmpul `barcode_pricelist_id`, ce permite configurarea listei de prețuri folosite la calculul prețului produsului în timpul scanării.
 - `stock.location` (extindere): adaugă `max_products_leaf` în lista de câmpuri expuse către interfața Stock Barcode.
 - `product.product` (extindere): adaugă `loc_rack`, `loc_row`, `loc_shelf`, `loc_case` în lista de câmpuri expuse către interfața Stock Barcode, pentru afișarea detaliilor de amplasare.
-- `stock.picking`, `stock.quant` (extinderi): susțin integrarea greutății/coletelor și a fluxului de scanare pentru transferuri și inventar.
+- `res.config.settings` (extindere): adaugă și `barcode_inventory_own_quants` (parametru `deltatech_stock_barcode.inventory_own_quants`).
+- `stock.picking` (extindere): expune în interfața de scanare `carrier_tracking_ref`, `carrier_ready`, `carrier_ready_mobile`; metoda `barcode_get_putaway_dest` primește `location_id` (locația sursă a liniei noi) și o transmite, împreună cu sursa transferului, prin cheia de context `putaway_exclude_location_ids` din [deltatech_putaway_strategy](../deltatech_putaway_strategy/index.md).
+- `stock.picking.type` (extindere): opțiunile `barcode_require_weight` și `barcode_require_putaway_dest` (obligă scanarea destinației determinate de regulile de amplasare).
+- `stock.quant` (extindere): câmpurile calculate de amplasare și `list_price` (din lista de prețuri configurată); `_get_stock_barcode_data` este suprascrisă pentru ecranul Inventar când setarea „Only My Quants” este activă.
 
 **Vizualizări**
 
-- `res_config_settings_views.xml`: adaugă opțiunea de listă de prețuri pentru scanarea codurilor de bare în setările de Inventar.
+- `res_config_settings_views.xml`: adaugă în setările de Inventar opțiunile de listă de prețuri pentru scanare și „Only My Quants”.
 - `stock_picking_view.xml`: extensii pe formularul de transfer pentru greutate, colete și date de curier.
 - `stock_inventory_view.xml`: integrează detaliile de amplasare (raft/rând/poliță/cutie) în vizualizările de inventar.
 - `wizard/delivery_carrier_details_view.xml`: formular simplificat (wizard `delivery.carrier.details`) pentru capturarea greutății și generarea/tipărirea etichetei AWB direct din fluxul de scanare.

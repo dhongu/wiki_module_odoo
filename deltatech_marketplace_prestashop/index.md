@@ -1,10 +1,10 @@
 # Conector Marketplace PrestaShop (localizat la `deltatech_marketplace_prestashop/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_prestashop`
-- **Versiune:** `19.0.0.2.15`
+- **Versiune:** `19.0.0.3.1`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_prestashop`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_prestashop`
-- **Ultima Ingestie:** `2026-09-11`
+- **Ultima Ingestie:** `2026-09-29`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -19,6 +19,8 @@ Conectorul Deltatech pentru marketplace PrestaShop permite integrarea directă �
 - **Push dinspre Odoo spre PrestaShop:** statusul comenzii se trimite către PrestaShop doar dacă *Active On Write* e activat pe elementul „Sale Order"; în schimb, numărul de tracking (la trimiterea coletului către curier) și legătura facturii (la postarea facturii) se trimit **necondiționat**, indiferent de acest comutator.
 - **Webhook de intrare (nu ieșire):** fiecare tip de date sincronizat expune un link de webhook pe care **PrestaShop îl apelează către Odoo** (nu invers) pentru a declanșa imediat importul unei comenzi, fără a aștepta cron-ul orar.
 - **Wizard „Marketplace sync":** acțiune contextuală de pe produse/șabloane de produs pentru export la cerere (implicit `Direction = Export`, `Update Mode = Stock`; comutat manual pe `All` include și preț/nume) — ignoră comutatorul Active On Write.
+- **Mapare produse existente (Map Products):** când catalogul există deja pe ambele părți, produsele Odoo se leagă de itemii PrestaShop fără import, prin acțiunea generică *Map Products*. Căutarea e exactă, în loturi de 50 de coduri: *Referința internă* în `reference` și *Codul de bare* în `ean13`, pe `/combinations` și `/products`. Combinația se leagă pe id-ul combinației (șablonul pe `id_product`), produsul fără combinații pe `p<id>`; un produs cu combinații se leagă doar prin combinațiile sale; codurile cu `[`, `]` sau `|` sunt sărite. Se creează doar legăturile, nu se importă nimic.
+- **Tracking pe `order_carriers`:** numărul de tracking se scrie (PUT) pe transportatorul comenzii citit din resursa standard `order_carriers` filtrată după comandă, fără mapare de curier; maparea e folosită doar dacă comanda nu are `order_carrier`. Lockerul importat se stochează pe `marketplace.sale.order.marketplace_locker` (din `deltatech_marketplace_delivery`), nu mai cere suita de curierat Terrabit.
 - **Capabilități internaționale:** suport multilingv prin legături de limbă, gestionarea multi-valută, sincronizarea țărilor și a județelor (regiuni/state), gestionarea livrărilor și a taxelor internaționale.
 - **Integrare livrare și plată:** suport pentru curierii de livrare PrestaShop, sincronizarea metodelor de plată și a procesatorilor, integrarea cu depozitele pentru îndeplinirea comenzilor.
 - **Îmbunătățirea procesului de vânzare:** suport pentru etapele de vânzare și urmărirea statusului comenzilor, sincronizarea etichetelor de vânzare, atribuirea comenzilor pe echipe cu asociere de depozit.

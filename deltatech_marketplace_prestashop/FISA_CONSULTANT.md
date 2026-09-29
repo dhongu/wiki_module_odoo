@@ -39,7 +39,7 @@ făcut înainte de restul catalogului.
 Paginarea are o gardă anti-buclă infinită: dacă un magazin ignoră parametrul `limit`
 (offset,count) și tot răspunde cu același set de date, importul se oprește când o pagină nu mai
 aduce id-uri noi, în loc să bată API-ul la nesfârșit. Filtrul de import comandă după status
-(`prestashop_order_import_phase_ids`, tab **Other Info → Language**) mapează pe parametrul
+(`prestashop_order_import_phase_ids`, tab **Orders and Products → Language**) mapează pe parametrul
 `filter[current_state]` cu sintaxa OR proprie webservice-ului PrestaShop (`[id1|id2]`); statusurile
 oferite aici sunt cele deja aduse prin sincronizarea **Sale Stage**, nu o listă fixă — statusurile
 de comandă din PrestaShop sunt configurabile per magazin.
@@ -77,11 +77,33 @@ pregătit sau de înțeles înainte de prima sincronizare:
   ambele setate pe backend, prețul importat chiar se scrie și ca item fix în lista de prețuri
   (`update_price_in_list_price`), pe lângă `list_price`.
 - **Prestashop Tax Included** afectează și prețul **produselor importate** (nu doar comenzile,
-  vezi §6 Pasul 3): dacă e bifat, prețul PrestaShop e tratat ca fără TVA și se majorează cu taxa de
-  vânzare implicită a companiei (`account_sale_tax_id`) înainte de a fi scris pe `list_price` —
-  verificați că această taxă e configurată corect pe companie înainte de prima sincronizare de
-  produse (vezi §8).
-- **Categoria implicită / categorie marketplace implicită** (tab **Other Info → Defaults**) —
+  vezi §6 Pasul 3): dacă e bifat, prețul PrestaShop e tratat ca fără TVA și se majorează înainte de
+  a fi scris pe `list_price`. Taxa folosită **diferă după tipul de import**: la importul de
+  **Product Template** se folosește mereu taxa de vânzare implicită a companiei
+  (`account_sale_tax_id`); la importul de **variante/combinații** (Products) se preferă **taxa deja
+  pusă pe produsul Odoo** (`product.taxes_id`, filtrată pe compania backend-ului) și se cade pe taxa
+  implicită a companiei doar dacă produsul nu are nicio taxă proprie setată — verificați ambele
+  (taxa companiei **și** taxele produselor) înainte de prima sincronizare de produse (vezi §8).
+  **Risc de dublare TVA pe comenzi:** liniile de comandă importate scriu prețul citit din PrestaShop
+  direct în `price_unit` (nu prin mecanismul `price_unit_with_taxes`/`tax_correction` din
+  `deltatech_marketplace_sale`, care aici nu se activează). Dacă **Prestashop Tax Included** e
+  bifat, acel `price_unit` e deja un preț **cu TVA inclus** — iar dacă taxa de vânzare de pe linia
+  Odoo (moștenită din taxele produsului) **nu** are bifat „Included in Price", Odoo mai adaugă încă
+  o dată TVA peste, dublând-o pe factura/comanda rezultată. Pentru a evita asta, taxa de vânzare
+  folosită pe produsele vândute prin acest backend trebuie să fie de tip „Included in Price" ori de
+  câte ori **Prestashop Tax Included** e bifat pe backend (vezi avertismentul din §6 Pasul 3 și
+  checklist-ul din §8).
+- **Efectul financiar al importului de comandă (plată)**: după import, `create_payment()`
+  (`deltatech_marketplace_sale`) creează pe comandă o tranzacție de plată legată de metoda de plată
+  PrestaShop mapată. Dacă acel achizitor de plată (`marketplace.payment.provider`) **nu are deja un
+  jurnal setat** (și codul intern nu e `custom`/`transfer`/`none`), conectorul îi **creează automat**
+  un jurnal bancar nou cu codul **`MRPY`** („Marketplace Payment") pe compania backend-ului — dacă nu
+  găsește deja unul cu acel cod. Tranzacția creată trece pe **Done** (plată confirmată) sau rămâne pe
+  **Pending**, în funcție de bifa **Confirm Payment** de pe achizitorul de plată mapat
+  (`deltatech_marketplace_payment`, implicit bifată) — nu presupuneți că orice comandă importată
+  ajunge automat „plătită" în Odoo dacă acea bifă e dezactivată. Verificați jurnalul `MRPY` cu
+  clientul înainte de prima sincronizare (poate fi nedorit ca jurnal contabil implicit — vezi §8).
+- **Categoria implicită / categorie marketplace implicită** (tab **Orders and Products → Defaults**) —
   folosite când produsul importat nu are o mapare mai specifică.
 - **Warehouses** (`/shops`, tip element „Warehouses") — magazinele PrestaShop (`id_shop`, relevant
   pe instalări multi-magazin) se mapează la depozite Odoo și sunt folosite doar ca sursă pentru
@@ -108,8 +130,8 @@ client și o comandă existentă în magazin.
    externă în afara celor deja incluse în Odoo).
 3. Creați un backend nou: **Marketplace → Backends → Nou**, `Provider = Prestashop`.
 4. În tab-ul **Credentials**, completați **Location** (URL-ul webservice-ului, cel care se termină
-   în `/api`), **Access Type = client**, apoi **Client Secret** cu cheia Webservice din PrestaShop
-   (**Client ID** rămâne necompletat — nu e folosit).
+   în `/api`), **Access Type = „Client_id and client_secret"**, apoi **Client Secret** cu cheia
+   Webservice din PrestaShop (**Client ID** rămâne necompletat — nu e folosit).
 5. Salvați. Salvarea cu `Provider = Prestashop` populează automat tab-ul **Objects** cu câte un
    rând pentru fiecare tip de date acoperit: Categories, Country, County, Public category,
    Products, Product Template, Customers, Sale Order, Sale Stage, Delivery Carrier, Product Image,
@@ -117,7 +139,7 @@ client și o comandă existentă în magazin.
    Warehouses.
 6. Dacă magazinul e multi-limbă sau dacă nu sunteți sigur de id-ul limbii, rulați întâi **Import**
    pe cardul **Language** (tab Objects) — acest import setează singur `Prestashop Lang` (vezi §6,
-   Pasul 3). Completați manual `Prestashop Lang`/`Prestashop Tax Included` (tab **Other Info**,
+   Pasul 3). Completați manual `Prestashop Lang`/`Prestashop Tax Included` (tab **Orders and Products**,
    grup **Language**) **după** acest import, altfel valoarea manuală e suprascrisă.
 7. Apăsați **Test connection** din antet — vezi limitarea importantă din §6, Pasul 2.
 8. Înainte de primul **Export** de pe cardul Product Template, setați **Domain** pe acel item
@@ -125,6 +147,27 @@ client și o comandă existentă în magazin.
    lăsat gol, exportă tot catalogul Odoo pe magazinul PrestaShop, inclusiv pe un magazin live.
 9. Dacă vreți ca prețul/numele produselor deja exportate să se actualizeze automat la fiecare
    scriere din Odoo, bifați **Active On Write** pe rândul „Product Template" din tab-ul Objects.
+10. Verificați/completați câmpurile comune de contabilizare a comenzii, comune tuturor conectorilor
+    din familia `deltatech_marketplace_sale` — nu sunt grupate într-un singur loc, ci împărțite
+    între tab-ul **Orders and Products** (grupurile **Order and Payment** și **Defaults**) și tab-ul **Price**
+    (după câmpul Monedă). Influențează direct comportamentul contabil al comenzilor importate, nu
+    doar cel funcțional:
+    - **Sales Journal** (tab Orders and Products, grup **Order and Payment**) — dacă e gol, comanda importată
+      folosește jurnalul de vânzări implicit al companiei; setați-l explicit dacă vânzările
+      PrestaShop trebuie separate contabil.
+    - **Confirm Sale Order** (tab Orders and Products, grup **Order and Payment**) — bifat, comanda importată
+      trece automat în starea „Sale" (confirmată); nebifat (implicit), rămâne pe cotație și trebuie
+      confirmată manual.
+    - **Discount Product** (tab Orders and Products, grup **Defaults**) — produsul folosit pentru linia de
+      discount atunci când comanda PrestaShop are un `total_discounts` — necompletat, adăugarea
+      liniei de discount poate eșua la comenzile cu discount.
+    - **Fiscal Position** (tab **Price**, lângă Monedă) — se aplică pe comanda importată dacă e
+      setată; lăsată goală, se aplică poziția fiscală calculată normal de Odoo din partener.
+    - **Tax Correction** (tab **Price**, implicit bifat) — activează mecanismul comun de recalcul
+      preț/TVA din `price_unit_with_taxes`/`price_unit_without_taxes`; mecanismul chiar rulează, dar
+      rămâne fără efect pentru acest conector, fiindcă PrestaShop scrie prețul direct în `price_unit`
+      (vezi avertismentul de la §4/§6 Pasul 3) — nu presupuneți că bifa protejează comenzile
+      PrestaShop de dublarea TVA.
 
 ## 6. Flux de utilizare
 
@@ -147,9 +190,9 @@ PrestaShop**: `prestashop_test_connection()` doar construiește antetul Basic Au
 conectorul WooCommerce, unde același buton face un apel real. O credențială greșită nu va fi
 depistată aici, ci abia la primul import/export real (eroare HTTP/PrestaShop pe ecran, vezi §9).
 
-### Pasul 3 — Limbă, TVA și filtrul de status pe comenzi (Other Info → Language)
+### Pasul 3 — Limbă, TVA și filtrul de status pe comenzi (Orders and Products → Language)
 
-Tab-ul **Other Info**, grupul **Language**, conține câmpurile specifice acestui conector:
+Tab-ul **Orders and Products**, grupul **Language**, conține câmpurile specifice acestui conector:
 
 - **Prestashop Lang**: id-ul limbii PrestaShop din care se citesc câmpurile traductibile. Lăsat
   gol pe un magazin multi-limbă, fiecare import de produs/categorie/status de comandă rulează
@@ -160,7 +203,16 @@ Tab-ul **Other Info**, grupul **Language**, conține câmpurile specifice acestu
 - **Prestashop Tax Included**: bifat, comanda/liniile se citesc cu TVA inclus
   (`total_shipping_tax_incl`, `unit_price_tax_incl`); nebifat (implicit), fără TVA. **Aceeași bifă
   afectează și prețul produselor importate** (§4) — cu ea bifată, prețul PrestaShop e majorat cu
-  taxa de vânzare implicită a companiei înainte de a fi scris pe `list_price`.
+  taxa de vânzare (a produsului sau, dacă lipsește, a companiei) înainte de a fi scris pe
+  `list_price`.
+
+  > 🔴 **Atenție TVA dublă:** cu **Prestashop Tax Included** bifat, liniile de comandă importate
+  > primesc un `price_unit` deja **cu TVA inclus**. Conectorul îl scrie direct, fără mecanismul de
+  > corecție `tax_correction`/`price_unit_with_taxes` din `deltatech_marketplace_sale` (acesta nu se
+  > activează pentru acest conector). Dacă taxa de vânzare de pe produsele vândute prin acest
+  > backend **nu** are bifat „Included in Price", Odoo mai adaugă încă o dată TVA peste prețul deja
+  > cu TVA inclus, dublând-o. **Obligatoriu** cu bifa activă: taxa de vânzare folosită pe produse să
+  > fie de tip „Included in Price" — altfel dezactivați bifa și lăsați liniile fără TVA inclus.
 - **Import Orders With Status (PrestaShop)**: lăsat gol, importă orice status de comandă
   (comportamentul dinaintea acestui câmp); restrâns la unul sau mai multe statusuri, filtrează
   importul — dar statusurile oferite aici vin din sincronizarea **Sale Stage**, deci rulați-o
@@ -171,7 +223,7 @@ Tot pe acest ecran (grupul **Order and Payment**) se află **Disable Import Sale
 exclude acest backend din cron-ul comun „Marketplace: Get Orders" — util pentru un backend
 configurat, dar încă netestat, ca să nu importe comenzi accidental.
 
-![Tab Other Info, grup Language: Prestashop Lang, Prestashop Tax Included, Import Orders With Status](screenshots/02_language_tax.png)
+![Tab Orders and Products, grup Language: Prestashop Lang, Prestashop Tax Included, Import Orders With Status](screenshots/02_language_tax.png)
 
 ### Pasul 4 — Prima sincronizare (tab Objects)
 
@@ -180,11 +232,11 @@ poate face fiecare: „Import" (verde, cu „+price"/„+stock" dacă există), 
 cu fulger) sau „Export manual" (gri), în funcție de **Active On Write**. Acest conector **nu are
 Import All** pe niciun card (spre deosebire de alți conectori din familie) — doar acțiunea Import
 simplă; pentru a limita importul la ce lipsește, folosiți bifa **Only Missing** de pe backend (tab
-Other Info → Limits), nu un buton separat pe card. Acțiunile reale (Import, Export, ...) sunt în
+Technical → Limits), nu un buton separat pe card. Acțiunile reale (Import, Export, ...) sunt în
 **meniul ⋮ al cardului**, nu un buton vizibil direct — vizibile doar dacă tipul respectiv le
 suportă (vezi §8, „03_objects.png": nu toate cardurile au un badge verde de Import).
 
-**Trei carduri nu au deloc acțiune de import** (fără badge verde „Import"), deși apar în listă —
+**Patru carduri nu au deloc acțiune de import** (fără badge verde „Import"), deși apar în listă —
 nu le căutați în ordinea de mai jos:
 
 - **Categories** — nu există `prestashop_import` pentru categoriile interne (spre deosebire de
@@ -194,6 +246,8 @@ nu le căutați în ordinea de mai jos:
   prima comandă importată în acea monedă (nu e o resursă PrestaShop de tras explicit).
 - **Product Image** — imaginile vin **automat** odată cu importul de Product Template (dacă
   `Ignore Images` nu e bifat), nu printr-un import separat.
+- **Payment Acquirer** (`marketplace.payment.provider`) — nu are import propriu; se creează
+  automat la prima comandă importată care îl referă (§6, Pasul 4, punctul 8), la fel ca Price List.
 
 Ordinea recomandată pentru prima sincronizare, pe cardurile care chiar au Import:
 
@@ -223,6 +277,8 @@ efect real (nu există `prestashop_import_basic_data`); folosiți cardurile din 
 buton.
 
 ![Tab Objects: cardurile cu badge-uri Import/Export per tip de date](screenshots/03_objects.png)
+
+![Meniul ⋮ deschis pe cardul Product Template — singurul punct real de acțiune (Edit, Defaults, View Logs, Import, Export)](screenshots/06_objects_menu.png)
 
 ### Pasul 5 — Exportul de produse către PrestaShop (real, spre deosebire de WooCommerce)
 
@@ -349,16 +405,31 @@ de **preț prin cron/wizard izolat** nu există în acest conector (vezi avertis
 - [ ] **Test connection** e tratat ca o simplă confirmare a stării, nu ca o validare reală a
       credențialelor — nu promiteți clientului că acest buton detectează o cheie/URL greșite.
 - [ ] Prima sincronizare respectă ordinea din Pasul 4 — și nu se caută un buton de Import pe
-      cardurile care nu au (**Categories**, **Price List**, **Product Image**).
+      cardurile care nu au (**Categories**, **Price List**, **Product Image**, **Payment
+      Acquirer**).
 - [ ] Dacă `Import Orders With Status` e completat, Sale Stage a fost importat înainte, iar
       `Sale Order Days` acoperă statusul urmărit.
 - [ ] `Prestashop Lang` a fost completat manual **după** importul „Language" (Pasul 3), nu înainte
       — altfel importul îl suprascrie.
-- [ ] Dacă `Prestashop Tax Included` e bifat: taxa de vânzare implicită a companiei
-      (`account_sale_tax_id`) e configurată corect, pentru că afectează și prețul produselor
-      importate, nu doar liniile de comandă.
+- [ ] Dacă `Prestashop Tax Included` e bifat: atât taxa de vânzare implicită a companiei
+      (`account_sale_tax_id`), cât și taxele proprii ale produselor deja existente în Odoo sunt
+      configurate corect — ambele pot influența prețul produselor importate (§4).
+- [ ] 🔴 Dacă `Prestashop Tax Included` e bifat: taxa de vânzare folosită pe produsele vândute prin
+      acest backend este de tip **„Included in Price"** — altfel liniile de comandă importate (care
+      vin deja cu TVA inclus în `price_unit`) primesc TVA dublă. `Tax Correction` de pe backend
+      (`deltatech_marketplace_sale`) **nu** corectează acest caz pentru PrestaShop.
 - [ ] **Domain** e setat pe cardul Product Template (nu lăsat gol) înainte de primul Export, ca
       să nu exporte tot catalogul Odoo pe un magazin live.
+- [ ] **Sales Journal**, **Confirm Sale Order** (tab Orders and Products → Order and Payment),
+      **Discount Product** (tab Orders and Products → Defaults) și **Fiscal Position** (tab Price) sunt
+      discutate explicit cu clientul — influențează jurnalul, poziția fiscală, starea (cotație vs.
+      confirmată) și liniile de discount ale comenzilor importate.
+- [ ] Jurnalul bancar **`MRPY`** ("Marketplace Payment"), creat automat la prima plată importată
+      dacă achizitorul de plată mapat nu are deja un jurnal, e acceptat de client ca jurnal contabil
+      — sau i se setează manual un jurnal existent pe achizitorul de plată înainte de prima
+      sincronizare de comenzi.
+- [ ] Bifa **Confirm Payment** de pe achizitorul de plată mapat e discutată cu clientul: determină
+      dacă tranzacția creată la import trece automat pe **Done** sau rămâne pe **Pending**.
 - [ ] Dacă se dorește export automat de preț/nume pe produsele deja legate sau push automat de
       **status** de comandă: **Active On Write** e bifat pe cardul corespunzător din Objects
       (implicit dezactivat peste tot) — și **Registered Url** e gol pe acel item.
@@ -399,11 +470,13 @@ Capturile (`readme/screenshots/`) ilustrează fluxul din secțiunea 6, generate 
 eventuală suită de capturi de marketing din `static/description/screenshots/`):
 
 1. `01_credentials.png` — backend PrestaShop, tab Credentials completat.
-2. `02_language_tax.png` — tab Other Info, grup Language (Prestashop Lang, Prestashop Tax
+2. `02_language_tax.png` — tab Orders and Products, grup Language (Prestashop Lang, Prestashop Tax
    Included, Import Orders With Status).
 3. `03_objects.png` — tab Objects: cardurile cu badge-uri Import/Export per tip de date.
 4. `04_active_on_write.png` — comutatorul Active On Write pe cardul Product Template.
 5. `05_health_badge.png` — indicatorul de sănătate pe cardul kanban al backend-ului.
+6. `06_objects_menu.png` — meniul ⋮ deschis pe cardul Product Template (Edit, Defaults, View
+   Logs, Import, Export) — singurul punct real de acțiune al unui card din Objects.
 
 Regenerare:
 

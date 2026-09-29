@@ -1,14 +1,14 @@
 # Monri (Payten) Payment Provider (localizat la `deltatech_payment_monri/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_monri`
-- **Versiune:** `19.0.0.0.5`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_monri
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_monri`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
-Modulul conectează Odoo la procesatorul de plăți **Monri WebPay** (parte din grupul Payten), permițând clienților să plătească comenzile printr-un flux de redirecționare către pagina securizată Monri, cu confirmarea automată a statusului plății printr-un callback server-to-server. Modulul se află în stadiu **Alpha**: fluxul de redirecționare este implementat pe baza documentației Monri și a unui plugin WooCommerce open-source de referință, dar trebuie validat integral pe contul de test Monri înainte de a fi folosit în producție.
+Modulul conectează Odoo la procesatorul de plăți **Monri WebPay** (parte din grupul Payten), permițând clienților să plătească comenzile printr-un flux de redirecționare către pagina securizată Monri, cu confirmarea automată a statusului plății printr-un callback server-to-server. Modulul are stadiul de dezvoltare **Production/Stable**: fluxul (trimitere, retur din browser și callback server-to-server, inclusiv verificarea digest-urilor) este validat pe mediul de test Monri, iar credențialele de producție au fost verificate contra endpointului real (inclusiv acceptarea monedei RON la nivel de IPG). Autorizarea efectivă a unui card în RON de către acquirer se confirmă abia la prima plată reală, iar operațiunile post-plată (captură/anulare/rambursare) nu sunt încă validate live pe sandbox.
 
 #### 2. Funcționalități Cheie
 
@@ -16,6 +16,7 @@ Modulul conectează Odoo la procesatorul de plăți **Monri WebPay** (parte din 
 - Confirmare automată a statusului plății prin callback server-to-server (webhook `WP3-callback`), verificat criptografic (digest SHA-512 cu cheia de comerciant).
 - Verificare suplimentară a digest-ului la revenirea clientului în browser (`/payment/monri/return`), ca strat secundar față de callback-ul autoritativ.
 - Suport pentru capturare manuală a plății (`authorize` + captură ulterioară) și pentru rambursare parțială, prin API-ul XML de tranzacții Monri (`capture`/`void`/`refund`).
+- Înregistrare automată a furnizorului și a metodei de plată la instalare, cu curățare la dezinstalare (`post_init_hook` / `uninstall_hook`); monedele nu sunt restricționate în cod, ci se limitează din furnizor (`available_currency_ids`), astfel încât modulul rămâne utilizabil de orice comerciant.
 - Configurare dedicată în formularul furnizorului de plată pentru credențialele Monri (`monri_authenticity_token`, `monri_merchant_key`).
 - Mesaje personalizabile pentru stările plății (în așteptare, autorizat, finalizat, anulat), traductibile prin i18n.
 

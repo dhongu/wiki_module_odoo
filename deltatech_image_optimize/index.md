@@ -1,16 +1,17 @@
 # Image Optimizer (localizat la `deltatech_image_optimize/index.md`)
 
 - **Nume Tehnic:** `deltatech_image_optimize`
-- **Versiune:** `19.0.1.8.1`
+- **Versiune:** `19.0.1.9.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_image_optimize
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_image_optimize`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
-Modulul recomprimă automat atașamentele de tip imagine (poze de produs, avatare
-etc.) care sunt supradimensionate, pentru a elibera spațiu din filestore-ul
-Odoo. Fiecare imagine originală este redusă ca dimensiune și recodată în JPEG
+Modulul face două lucruri pe aceleași imagini: recomprimă atașamentele de tip
+imagine (poze de produs, avatare etc.) supradimensionate, pentru a elibera
+spațiu din filestore-ul Odoo, și elimină imaginile de produs stocate de două ori
+în aceeași fișă de produs. Fiecare imagine originală este redusă ca dimensiune și recodată în JPEG
 (sau WebP/PNG dacă are transparență reală), păstrând doar rezultatul dacă e
 efectiv mai mic decât originalul — fără să afecteze vizual imaginile publicate
 pe site sau în documente.
@@ -43,10 +44,34 @@ pe site sau în documente.
   catalogului.
 - La finalul rulării cron, apelează garbage collection-ul filestore-ului
   pentru a recupera efectiv spațiul de pe disc.
+- Metodele de batch întorc două cifre: `freed` (suma diferențelor per atașament)
+  și `freed_disk` (doar atașamentele al căror fișier din filestore nu e
+  partajat). Odoo păstrează un singur fișier per checksum, deci `freed`
+  supraestimează câștigul când aceeași poză apare pe mai multe înregistrări;
+  spațiul real se raportează cu `freed_disk`. Filestore-ul crește înainte să
+  scadă — spațiul revine abia după GC.
+- **Imagini de produs duplicate:** detectează înregistrările `product.image` cu
+  conținut identic (după checksum-ul SHA1 calculat deja de Odoo, deci fără
+  decodarea imaginilor) și le raportează grupat pe conținut. Se șterg doar
+  copiile care se repetă în cadrul aceluiași produs/variantă; se păstrează
+  imaginea cu `sequence, id` cel mai mic. Aceeași poză folosită pe mai multe
+  produse (de ex. o fotografie generică din feed-ul furnizorului) este raportată,
+  dar **niciodată ștearsă**. Înregistrările cu `video_url` sunt păstrate mereu.
+- Meniu: Website → Configurare → eCommerce → Produse → **Imagini duplicate**
+  (doar administratori). Lista se deschide filtrată pe grupurile care se pot
+  curăța; acțiunea **Remove Duplicated Images** afișează în prealabil exact ce
+  se va șterge (wizard), și poate rula și fără selecție, pe tot catalogul.
+- Nu detectează aceeași poză reexportată/redimensionată (checksum diferit — ar
+  necesita hash perceptual). Ștergerea duplicatelor curăță catalogul, dar
+  eliberează puțin spațiu pe disc; pentru spațiu se folosește recomprimarea.
+- La instalare, un hook completează `image_checksum` printr-un singur `UPDATE`
+  SQL din `ir_attachment`; ulterior se poate reface cu
+  `env["product.image"]._dedup_backfill_checksums()`.
 
 #### 3. Dependențe
 
 - `base`
+- `website_sale`: definește `product.image` (dependență adăugată în 19.0.1.9.0).
 
 #### 4. Componente Cheie
 
@@ -71,11 +96,24 @@ pe site sau în documente.
     programată — rulează întâi originalele, apoi variantele, apoi GC-ul
     filestore-ului.
 
+- `product.image` (extins): adaugă `image_checksum` (indexat, preluat din
+  atașament) și `duplicate_count`; metode `_dedup_backfill_checksums()` și
+  `action_view_duplicates()`.
+- `deltatech.product.image.duplicate` (vedere SQL, `_auto = False`): o linie per
+  conținut distinct, cu numărul de copii, numărul de produse și numărul de
+  imagini ce se pot elimina; acțiuni `action_view_images()` și `action_clean()`.
+- `deltatech.product.image.dedup` (wizard tranzitoriu): previzualizare și
+  aplicare a ștergerii (`action_apply()`).
+
 **Vizualizări**
 
-Modulul nu adaugă vizualizări proprii; configurarea se face prin parametrii de
-sistem standard (Settings → Technical → System Parameters) și prin ecranul
-standard de acțiuni programate (Settings → Technical → Scheduled Actions).
+- `view_product_image_duplicate_list` / `view_product_image_duplicate_search`:
+  lista și căutarea grupurilor de imagini duplicate.
+- `view_product_image_dedup_form` (wizard) și `view_product_image_dedup_list`:
+  previzualizarea și lista imaginilor de produs vizate.
+- Meniul `menu_product_image_duplicate` (sub `website_sale.menu_catalog`).
+- Configurarea recomprimării se face prin parametrii de sistem (Settings →
+  Technical → System Parameters) și acțiunile programate standard.
 
 **Acțiuni Automate / Acțiuni Server**
 
@@ -86,7 +124,10 @@ standard de acțiuni programate (Settings → Technical → Scheduled Actions).
   `deltatech_image_optimize.quality`, `.max_dim`, `.min_size`, `.batch`,
   `.flush_every`, `.target_fields`, `.variant_fields`, `.variant_quality`,
   `.webp_quality`, `.force_jpeg`, `.variant_min_size` — toate `noupdate="1"`
-  pentru a nu suprascrie modificările utilizatorului la upgrade.
+  pentru a nu suprascrie modificările utilizatorului la upgrade. De la 19.0.1.8.1
+  și `ir_cron.xml` este `noupdate="1"`: activarea cron-ului supraviețuiește
+  upgrade-urilor (pe bazele existente, cron-ul oprit anterior de un upgrade
+  trebuie reactivat manual).
 
 #### 5. Conexiuni
 

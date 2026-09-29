@@ -48,7 +48,7 @@ contabile. Contextul operațional:
 
 | Rol | Ce face | Drept Odoo |
 |---|---|---|
-| Consultant / administrator marketplace | creează și configurează backend-urile, obiectele, cron-urile; citește jurnalul și joburile | grupul **Administrator marketplace** (meniul *Marketplace* e vizibil doar acestui grup) **și** grupul **Job Queue Manager** din `queue_job` — fără el, crearea unui backend e refuzată (vezi limitările) |
+| Consultant / administrator marketplace | creează și configurează backend-urile, obiectele, cron-urile; citește jurnalul și joburile | grupul **Administrator marketplace** (meniul *Marketplace* e vizibil doar acestui grup). Grupul dă și citirea joburilor și a canalelor din `queue_job`; pentru reluarea sau anularea joburilor eșuate e nevoie în plus de **Job Queue Manager** |
 | Administrator tehnic | câmpurile tehnice ale obiectelor (model, domeniu, câmpuri ignorate), parametrii de sistem | **Setări / Administrare** (`base.group_system`) |
 | Responsabil e-commerce | urmărește diferențele de stoc și preț pe asocieri, forțează exportul unui produs | **Administrator marketplace** |
 | Operator vânzări / depozit | lucrează normal în Odoo; exportul spre magazin pleacă în fundal | fără drepturi marketplace |
@@ -64,26 +64,28 @@ Modulul nu atinge conturi contabile. Datele pe care se bazează:
 
 | Date | Unde | Rol |
 |---|---|---|
-| Backend | *Marketplace → Backend-uri* | un magazin conectat: furnizor (platformă), acces, companie, echipă de vânzări |
+| Backend | *Marketplace → Backend-uri* | un magazin conectat: platformă, acces, companie, echipă de vânzări |
 | Obiecte | tab-ul *Obiecte* al backend-ului | tipurile de date sincronizate și regulile lor |
-| Asocieri | *Marketplace → Asocieri* (variantele: din cardul *Produse* al backend-ului) | legătura Odoo ↔ magazin (produse, variante, clienți, categorii, atribute, TVA, depozite) |
+| Asocieri | *Marketplace → Asocieri* | legătura Odoo ↔ magazin (produse, variante, clienți, categorii, atribute, TVA, depozite) |
 | Mapare TVA | *Marketplace → Asocieri → TVA* | tabelă de referință: cota din magazin → taxa Odoo, completată de conector la importul datelor de bază (nu decide TVA-ul comenzilor) |
 | Listă de prețuri | tab-ul *Preț* | sursa prețului exportat (implicit, prețul de vânzare al produsului) |
-| Locații de stoc | tab-ul *Alte informații*, grupul *Stoc* | stocul numărat pentru export |
+| Locații de stoc | tab-ul *Comenzi și produse*, grupul *Stoc* | stocul numărat pentru export |
 | Acțiuni programate | *Marketplace → Configurare → Acțiuni programate* | exportul periodic de stoc și preț, importul de produse |
 | Jurnal | *Marketplace → Jurnale* | operațiunile reușite și erorile, pe backend |
 
 Date minime pentru demo (folosite și în capturi):
 - Companie **Demo Magazin Online SRL**, plan de conturi RO, RON.
-- Trei backend-uri fără conector (furnizor „Fără”), în trei stări de sănătate:
+- Trei backend-uri fără conector (platformă „Fără”), în trei stări de sănătate:
   - **Magazin online RO** — conexiune confirmată, sincronizat, fără erori → *În regulă*;
   - **Magazin B2B** — conexiune confirmată, cu erori în ultimele 24 de ore → *Erori*;
   - **Magazin test** — conexiune netestată → *Neconfirmat*.
 - Pe **Magazin online RO**: obiectele *Produse*, *Șablon de produs*, *Clienți*, *Categorii* și
   *Stoc*, cu reguli diferite; lista de prețuri „Prețuri magazin online”; stocul din locația
-  principală, cu **Cantitate disponibilă** (liber = în stoc − rezervat).
+  principală, cu **Cantitate liberă (fără rezervări)** (liber = în stoc − rezervat).
 - Trei produse legate de magazin: **Căști wireless** (stoc 25 în Odoo, 30 în magazin — stoc
   nesincronizat), **Încărcător USB-C** (sincronizat), **Husă telefon** (preț diferit în magazin).
+- Pe **Magazin online RO**, limitarea apelurilor: 5 cereri pe secundă și 80 pe minut, cu cele două
+  bucket-uri corespunzătoare create de testul de capturi.
 - Maparea TVA: cotele „21” și „11” din magazin → taxele de vânzare din planul RO „21% G” și
   „11% G” (G = bunuri).
 - Cardurile de obiecte sunt create de testul de capturi. Pe o instalare reală, le generează
@@ -97,20 +99,21 @@ Date minime pentru demo (folosite și în capturi):
 2. **Runner-ul de joburi** — pe server, porniți Odoo cu `queue_job` încărcat la pornire
    (`server_wide_modules`) și cu un worker pentru joburi. Fără el, joburile rămân *În așteptare*.
    Pe instalările fără worker dedicat (de exemplu odoo.sh), modulul `queue_job_cron_jobrunner` rulează
-   joburile dintr-o acțiune programată. Butonul **Rulează joburile** din backend nu face nimic în
-   versiunea actuală (vezi limitările).
-3. **Drepturi** — adăugați grupurile **Administrator marketplace** și **Job Queue Manager**
-   utilizatorilor care configurează magazinele.
-4. **Backend-ul** — *Marketplace → Backend-uri → Nou*: nume, **Furnizor** (platforma; eticheta RO
-   „Furnizor” înseamnă aici *provider*, nu furnizor de marfă), **Companie**, **Echipa de vânzări**
+   joburile dintr-o acțiune programată. Cu el, butonul **Rulează joburile** din backend pornește
+   imediat rularea; fără el, butonul doar anunță că joburile le rulează runner-ul serverului.
+3. **Drepturi** — adăugați grupul **Administrator marketplace** utilizatorilor care configurează
+   magazinele. E suficient pentru backend-uri, obiecte și citirea joburilor; **Job Queue Manager**
+   e necesar doar pentru reluarea sau anularea joburilor din coadă.
+4. **Backend-ul** — *Marketplace → Backend-uri → Nou*: nume, **Platformă**, **Companie**, **Echipa de vânzări**
    pentru comenzile importate. La creare, Odoo generează automat canalele de coadă ale backend-ului
    și cardurile de obiecte cerute de conector.
 5. **Taxele** — verificați că fiecare produs vândut are taxa de vânzare corectă și că pozițiile
    fiscale sunt configurate: de acolo vine TVA-ul comenzilor importate. După **Importă datele de
-   bază**, verificați și *Contabilitate → Configurare → Taxe*. Pentru o cotă fără taxă de vânzare
-   Odoo cu aceeași valoare, importul **creează o taxă nouă**, fără conturile și etichetele D300 ale
-   planului RO. O astfel de taxă se leagă de taxa RO existentă sau se completează (cont 4427,
-   etichete D300) înainte de folosire.
+   bază**, verificați maparea TVA (pasul 10). Importul leagă fiecare cotă din magazin de o taxă de
+   vânzare **existentă** a companiei backend-ului, cu aceeași valoare și exigibilitate la facturare
+   (niciodată TVA la încasare). Pentru o cotă fără astfel de taxă, importul **nu creează nimic**:
+   scrie o eroare în jurnal, cu cota și compania. Creați taxa din planul RO (cont 4427, rânduri
+   D300) și reimportați datele de bază.
 6. **Acțiunile programate** — sunt livrate **dezactivate**, ca o instalare nouă să nu trimită nimic
    din greșeală. Activați-le din *Marketplace → Configurare → Acțiuni programate*, după ce ați
    verificat importul:
@@ -120,7 +123,7 @@ Date minime pentru demo (folosite și în capturi):
    | *Marketplace: exportă stocul* | trimite stocul produselor la care Odoo diferă de magazin; e declanșată și de fiecare mișcare de stoc | zilnic, inactivă |
    | *Marketplace: exportă stocul pentru toate produsele* | retrimite stocul tuturor produselor legate (realiniere) | lunar, inactivă |
    | *Marketplace: exportă prețul* | trimite prețul produselor la care Odoo diferă de magazin | zilnic, inactivă |
-   | *Marketplace: import products* | importă produsele din magazin | zilnic, inactivă |
+   | *Marketplace: importă produsele* | importă produsele din magazin | zilnic, inactivă |
    | *Marketplace: elimină produsele arhivate* | curăță asocierile produselor arhivate | zilnic, inactivă |
 
 7. **Parametri de sistem** (opțional): `marketplace.log.retention_days` — câte zile se păstrează
@@ -163,12 +166,12 @@ Pe fiecare card:
 Butoanele din antet:
 - **Testează conexiunea** — confirmă backend-ul (starea trece în *Confirmat*);
 - **Importă datele de bază** — datele de referință ale platformei (taxe, țări etc., după conector);
-- **Rulează joburile** — gândit să ruleze o dată coada; în versiunea actuală nu are efect (vezi
-  limitările).
+- **Rulează joburile** — cu `queue_job_cron_jobrunner`, pornește imediat rularea joburilor în
+  așteptare (în fundal, nu în ecranul utilizatorului). Fără el, afișează un mesaj: joburile le
+  rulează runner-ul `queue_job` al serverului.
 
 Butonul inteligent **Joburi** arată joburile de pe canalele proprii ale backend-ului.
-**Furnizor** e platforma (pe demo „Fără”, adică niciun conector). Câmpul **Taxă** nu e folosit de
-niciun conector.
+**Platformă** e conectorul magazinului (pe demo „Fără”, adică niciun conector).
 
 ![Backend-ul, tab-ul Obiecte, cu regulile pe fiecare card](screenshots/02_backend_obiecte.png)
 
@@ -177,15 +180,16 @@ niciun conector.
 Din meniul ⋮ al cardului, **Editare** deschide regula obiectului:
 - **Activ la scriere** — exportul automat la salvare, oprit implicit. Cu el oprit, nimic nu pleacă
   singur, dar exportul la cerere funcționează (butoanele cardului, asistentul de sincronizare).
-  **Excepție la preț:** pe obiectul *Produse*, cu el oprit, nu pleacă prețul nici din butonul
-  **Exportă prețul** al legăturii, nici din acțiunea programată *exportă prețul*, fără niciun mesaj.
-  Prețul pleacă atunci doar din butonul de pe card sau din asistent;
+  Butonul **Exportă prețul** al legăturii trimite prețul și cu el oprit, iar dacă nu are ce trimite
+  (prețul e deja același în magazin) sau conectorul nu știe să exporte prețuri, spune asta. Acțiunea
+  programată *exportă prețul* respectă însă comutatorul: cu el oprit pe *Produse*, nu trimite
+  prețuri;
 - **Creează** / **Actualizare** — dacă importul poate crea înregistrări noi în Odoo și dacă poate
   modifica ce există. Cu **Actualizare** oprit, importul tot creează și reîmprospătează legăturile,
   dar nu scrie nimic pe înregistrarea Odoo. Cu **Creează** oprit pe *Produse*, o ofertă fără
   corespondent se leagă de **Produsul fictiv** al backend-ului. Fără produs fictiv, importul eșuează
   (vezi secțiunea 9);
-- **Use Webhook** și **Legătură webhook** — adresa la care magazinul trimite notificările pentru
+- **Folosește webhook** și **Legătură webhook** — adresa la care magazinul trimite notificările pentru
   acest obiect, construită din tokenul de securitate al backend-ului;
 - câmpuri tehnice (doar administratorii tehnici le văd):
   - **Domeniu** — restrânge exportul la un subset;
@@ -201,7 +205,7 @@ disponibile pentru conectorul respectiv.
 ### Pasul 4 — Datele de acces și webhook-ul
 
 Tab-ul **Date de autentificare**:
-- **Locație** — adresa API a magazinului (conectorul o completează din furnizor);
+- **Locație** — adresa API a magazinului (conectorul o completează din platformă);
 - **Tip acces** — utilizator și parolă sau *client_id* și *client_secret*, după platformă;
 - **Token de acces** și **Token site web** — completate de conector sau de platformă, după caz;
 - **Token de securitate** și **Tip webhook** — pentru notificările trimise de magazin spre Odoo.
@@ -229,26 +233,24 @@ Tab-ul **Preț** decide, o dată pe magazin:
 
 ### Pasul 6 — Stoc, produse, parteneri și coadă
 
-Tab-ul **Alte informații** grupează restul regulilor:
-- **Limite** — **Elemente pe pagină** la import; **Doar cele lipsă** (implicit bifat): la reimport
-  se sar înregistrările deja legate.
+Tab-ul **Comenzi și produse** grupează regulile de date:
 - **Produse**:
   - **Folosește categoriile** / **Folosește variantele** — dacă se preiau categoriile și variantele
     magazinului;
   - **Potrivire strictă a variantei** — produsul din magazin se leagă doar după cod de bare sau
     referință internă exacte. Fără ea, ultima soluție e potrivirea după nume, care poate lega o ofertă
     de o variantă greșită. Recomandat bifat înainte de primul import;
-  - **Refuse barcode/SKU conflicts on import** (netradus) — importul eșuează explicit în loc să
+  - **Refuză la import conflictele de cod de bare/SKU** — importul eșuează explicit în loc să
     lege două oferte de același produs;
   - **Ignoră imaginea**;
   - **Partajează produsul** — produsele importate nu primesc companie (multi-companie).
 - **Stoc**:
   - **Poate trimite stocul** — comutatorul principal. Fără el, niciun stoc nu pleacă spre magazin;
   - **Nivel de stoc** — pe variantă sau pe șablon, după cum ține magazinul stocul;
-  - **Stoc disponibil** — ce cantitate se trimite: liberă (în stoc minus rezervat, implicit), în
-    stoc, prognozată, nelimitat (999) sau „zero sau nelimitat”. În RO, prima și a doua opțiune au
-    aceeași etichetă, „Cantitate disponibilă” (vezi limitările);
-  - **Stock Locations** (netradus) — locațiile adunate. Goală = stocul tuturor depozitelor
+  - **Stoc disponibil** — ce cantitate se trimite: **Cantitate liberă (fără rezervări)** (în stoc
+    minus rezervat, implicit), **Cantitate în stoc (fizică)**, prognozată, nelimitat (999) sau „zero
+    sau nelimitat”;
+  - **Locații de stoc** — locațiile adunate. Goală = stocul tuturor depozitelor
     companiilor la care are acces utilizatorul care rulează exportul (la acțiunea programată,
     toate). În multi-companie, completați-o explicit;
   - **Include stocul furnizorului** — adaugă stocul furnizorilor;
@@ -268,26 +270,33 @@ Tab-ul **Alte informații** grupează restul regulilor:
     **Folosește categoriile** sau adăugați `categ_id` la **Câmpuri ignorate la import**;
   - **Produs fictiv** — produsul de care se leagă ofertele fără corespondent, când importul nu are
     voie să creeze produse;
-  - **Produs pentru comision** (*Fee Product*) — în ciuda etichetei, nu e comisionul platformei. E
+  - **Produs pentru taxe suplimentare pe comandă** (*Fee Product*) — nu e comisionul platformei. E
     produsul cu care conectorul WooCommerce adaugă pe **comanda clientului** taxele sau suprataxele
     din magazin (facturate clientului, deci venit). Comisionul platformei vine pe factura de furnizor
     a platformei: Dr 622 + Dr 4426 = Cr 401.
-- **Coadă** — canalele de intrare și de ieșire ale backend-ului, create automat.
 - **Limba** — limba în care se trimit și se citesc textele produselor.
-- **Webhook cu job** — în versiunea actuală nu are efect: niciun cod nu citește câmpul.
-- **Rate Limit** — numărul maxim de cereri pe secundă, minut, oră sau zi, pentru platformele care
-  limitează API-ul. Tab-ul **Rate Buckets** apare doar cu limitarea activă, cea implicită.
 
-![Regulile de stoc, produse și parteneri](screenshots/06_alte_informatii.png)
+![Regulile de stoc, produse și parteneri](screenshots/06_comenzi_produse.png)
+
+Tab-ul **Tehnic** grupează mecanica sincronizării:
+- **Limite** — **Elemente pe pagină** la import; **Doar cele lipsă** (implicit bifat): la reimport
+  se sar înregistrările deja legate.
+- **Coadă** — canalele de intrare și de ieșire ale backend-ului, create automat.
+- **Webhook cu job** — webhook-ul doar pune comanda într-un job și răspunde imediat. Îl citesc doar
+  conectorii care îl suportă (de exemplu Brickweb); ceilalți procesează webhook-ul pe loc.
+- **Limitare apeluri** — numărul maxim de cereri pe secundă, minut, oră sau zi, pentru platformele
+  care limitează API-ul. Lista **Bucket-uri de limitare**, sub grup, apare doar cu limitarea activă.
+
+![Limitele, coada și limitarea apelurilor](screenshots/07_tehnic.png)
 
 ### Pasul 7 — Legăturile produselor și diferențele de stoc și preț
 
 Deschideți backend-ul, tab-ul **Obiecte**, și apăsați pe numărul de pe cardul **Produse**: se
-deschide lista legăturilor pe variantă. Meniul *Marketplace → Asocieri → Produse* deschide lista
-legăturilor pe **șablon**. Lista pe variantă nu are meniu propriu (vezi limitările).
+deschide lista legăturilor pe variantă, aceeași ca în meniul *Marketplace → Asocieri → Variante de
+produs*. Meniul *Marketplace → Asocieri → Produse* deschide lista legăturilor pe **șablon**.
 
 1. **Găsiți pe ecran** — fiecare rând e o legătură: **Produs Odoo**, **ID extern** și codul din
-   magazin (eticheta RO e „Cod stoc”), iar în coloanele opționale (⇄) **Stoc Odoo** / **Stoc extern**
+   magazin (**Cod extern**), iar în coloanele opționale (⇄) **Stoc Odoo** / **Stoc extern**
    și **Preț Odoo** / **Preț extern**.
 2. **Verificați** — filtrele **Stoc nesincronizat** și **Preț nesincronizat** arată doar
    produsele la care Odoo diferă de ultima valoare trimisă. Pe demo: **Căști wireless** are stoc
@@ -297,7 +306,7 @@ legăturilor pe **șablon**. Lista pe variantă nu are meniu propriu (vezi limit
    prețul**, **Importă stocul**, **Reimportă**. Peste **Elemente pe pagină** (implicit 10) produse,
    exportul se împarte în joburi în fundal. Sub prag, rulează imediat, în cererea utilizatorului.
 
-![Legăturile produselor, cu stocul și prețul din Odoo față de magazin](screenshots/07_legaturi_produse.png)
+![Legăturile produselor, cu stocul și prețul din Odoo față de magazin](screenshots/08_legaturi_produse.png)
 
 ### Pasul 8 — Fișa unei legături
 
@@ -319,7 +328,7 @@ Deschideți o legătură. Fișa arată:
 
 Butonul **Produs** deschide produsul Odoo.
 
-![Fișa unei legături de produs](screenshots/08_fisa_legatura.png)
+![Fișa unei legături de produs](screenshots/09_fisa_legatura.png)
 
 ### Pasul 9 — Exportul la cerere al unui produs
 
@@ -336,7 +345,7 @@ programate. E soluția pentru un produs urgent între două rulări, cu două co
 
 Implicit, modul e *Stoc*.
 
-![Asistentul de sincronizare a unui produs](screenshots/09_sincronizare_produs.png)
+![Asistentul de sincronizare a unui produs](screenshots/10_sincronizare_produs.png)
 
 ### Pasul 10 — Maparea TVA
 
@@ -349,13 +358,16 @@ din pozițiile fiscale (secțiunea 2).
 2. **Verificați**:
    - fiecare cotă e legată de taxa de vânzare RO cu aceeași valoare **și exigibilitate normală**
      (nu TVA la încasare): *G* pentru bunuri, *S* pentru servicii (pe demo, „21% G” și „11% G”).
-     La 21 %, planul RO are trei taxe de vânzare, iar importul o alege pe prima găsită după valoare;
-   - nicio taxă nu a fost creată de import în afara planului de conturi (pasul 5 din configurare).
+     La 21 %, planul RO are mai multe taxe de vânzare: importul o alege pe cea implicită de vânzare
+     a companiei, dacă are cota respectivă, altfel prima după secvență, iar o taxă arhivată doar
+     dacă nu există una activă. Pentru servicii, schimbați legătura pe taxa *S*;
+   - jurnalul nu are erori „Nu s-a găsit TVA de vânzare…” pentru cotele folosite de magazin (pasul
+     5 din configurare).
 
-**Atenție:** coloana **Nume taxa** este numele **taxei Odoo** (maparea o moștenește). Editarea lui
+**Atenție:** coloana **Nume taxă** este numele **taxei Odoo** (maparea o moștenește). Editarea lui
 aici redenumește taxa folosită pe facturi.
 
-![Maparea cotelor de TVA din magazin pe taxele Odoo](screenshots/10_mapare_tva.png)
+![Maparea cotelor de TVA din magazin pe taxele Odoo](screenshots/11_mapare_tva.png)
 
 ### Pasul 11 — Jurnalul operațiunilor
 
@@ -365,15 +377,15 @@ succesele în verde, iar erorile rezolvate la o reîncercare ulterioară apar es
 
 1. **Găsiți pe ecran** — filtrați pe **Eroare** și grupați pe **Backend** sau **Operațiune**.
 2. **Verificați** — fiecare eroare are înregistrarea afectată și mesajul platformei. Jobul eșuat
-   lasă urmă aici chiar dacă conectorul nu a scris-o explicit. **Excepție:** o eroare a
-   conectorului la exportul de stoc pe variantă e doar scrisă în logul serverului, iar jobul se
-   termină *Efectuat*. Verificați de aceea și filtrul **Stoc nesincronizat** (pasul 7).
+   lasă urmă aici chiar dacă conectorul nu a scris-o explicit, iar o eroare a conectorului la
+   exportul de stoc pe variantă apare ca eroare *Stoc*, deși jobul se termină *Efectuat* (continuă cu
+   celelalte backend-uri).
 3. **Treceți mai departe** — corectați cauza (de exemplu codul de bare lipsă) și rerulați exportul
    de pe legătură sau jobul din coadă.
 
 Jurnalul se curăță automat după 90 de zile (parametrul `marketplace.log.retention_days`).
 
-![Jurnalul operațiunilor marketplace](screenshots/11_jurnal.png)
+![Jurnalul operațiunilor marketplace](screenshots/12_jurnal.png)
 
 ### Pasul 12 — Acțiunile programate
 
@@ -381,7 +393,7 @@ Accesați **Marketplace → Configurare → Acțiuni programate**. Lista arată 
 marketplace (active și inactive). La o instalare nouă, toate sunt **inactive**. Activați-le și
 setați intervalul după cât de repede se mișcă stocul, abia după ce importul a fost verificat.
 
-![Acțiunile programate marketplace, inactive la instalare](screenshots/12_actiuni_programate.png)
+![Acțiunile programate marketplace, inactive la instalare](screenshots/13_actiuni_programate.png)
 
 ### Note de monografie și raportare
 
@@ -389,7 +401,8 @@ Modulul **nu generează note contabile**. Contabilitatea apare în fluxurile con
 - comenzile importate devin comenzi de vânzare Odoo, facturate standard, cu TVA-ul din taxele
   produselor și din poziția fiscală a comenzii (la facturare: Dr 4111 = Cr 70x + Cr 4427);
 - comisionul platformei vine pe factura de furnizor a platformei: Dr 622 + Dr 4426 = Cr 401. Nu
-  folosește **Produsul pentru comision**, care adaugă taxele magazinului pe comanda clientului.
+  folosește **Produsul pentru taxe suplimentare pe comandă**, care adaugă taxele magazinului pe
+  comanda clientului.
 
 ## 7. Legături cu alte module / declarații
 
@@ -412,7 +425,7 @@ Modulul **nu generează note contabile**. Contabilitatea apare în fluxurile con
 
 **Ce rămâne manual:**
 - configurarea backend-ului și a regulilor pe obiecte;
-- taxele produselor și pozițiile fiscale; verificarea taxelor create de importul datelor de bază;
+- taxele produselor și pozițiile fiscale; crearea taxelor pentru cotele pe care maparea TVA nu le găsește;
 - activarea acțiunilor programate;
 - rularea runner-ului de joburi pe server;
 - urmărirea erorilor din jurnal și din joburi.
@@ -420,7 +433,7 @@ Modulul **nu generează note contabile**. Contabilitatea apare în fluxurile con
 ## 8. Verificări pentru consultant
 
 - [ ] Meniul *Marketplace* e vizibil doar utilizatorilor cu **Administrator marketplace**.
-- [ ] Un backend nou are, fără altă acțiune, canalele de coadă generate (tab-ul *Alte informații*,
+- [ ] Un backend nou are, fără altă acțiune, canalele de coadă generate (tab-ul *Tehnic*,
       grupul *Coadă*).
 - [ ] Starea de sănătate trece din *Neconfirmat* în *Avertismente* după **Testează conexiunea**
       și în *În regulă* după prima sincronizare fără erori.
@@ -430,33 +443,34 @@ Modulul **nu generează note contabile**. Contabilitatea apare în fluxurile con
 - [ ] Cu **Actualizare** oprit pe obiectul *Produse*, reimportul nu modifică produsul Odoo, dar
       legătura rămâne.
 - [ ] **Poate trimite stocul** debifat oprește orice export de stoc pentru acel backend.
-- [ ] **Stoc Odoo** pe legătură respectă **Stoc disponibil** și **Stock Locations**, iar stocul
+- [ ] **Stoc Odoo** pe legătură respectă **Stoc disponibil** și **Locații de stoc**, iar stocul
       negativ apare ca 0.
 - [ ] Filtrul **Stoc nesincronizat** arată pe demo doar **Căști wireless**, iar **Preț nesincronizat**
       doar **Husă telefon** (45,00 din lista de prețuri față de 49,00 în magazin).
 - [ ] Fiecare produs legat are taxa de vânzare corectă (21 % / 11 %), iar pozițiile fiscale (OSS,
       UE, export) sunt configurate.
-- [ ] După **Importă datele de bază**, nu există taxe noi create de import fără cont 4427 și fără
-      etichete D300.
-- [ ] Cu **Activ la scriere** oprit pe *Produse*, butonul **Exportă prețul** al legăturii nu trimite
-      nimic; prețul pleacă din butonul cardului sau din asistent.
+- [ ] După **Importă datele de bază**, fiecare cotă a magazinului e legată de o taxă RO cu exigibilitate
+      la facturare, iar cotele fără taxă apar ca erori în jurnal (importul nu creează taxe).
+- [ ] Cu **Activ la scriere** oprit pe *Produse*, butonul **Exportă prețul** al legăturii trimite
+      totuși prețul, iar pe o legătură fără diferență de preț afișează că nu are ce trimite.
+- [ ] Un utilizator doar cu **Administrator marketplace** (fără *Job Queue Manager*) creează un
+      backend și deschide lista backend-urilor și butonul **Joburi** fără eroare de acces.
 - [ ] Acțiunile programate sunt inactive la instalare și sunt activate abia după verificarea
       importului.
-- [ ] Runner-ul de joburi rulează: un job nou trece din *În așteptare* în *Efectuat* (fără să
-      depindeți de butonul **Rulează joburile**).
+- [ ] Runner-ul de joburi rulează: un job nou trece din *În așteptare* în *Efectuat*.
 
 ## 9. Mesaje de eroare frecvente
 
 | Mesaj / simptom | Cauză probabilă | Remediere |
 |---|---|---|
-| „You are not allowed to access 'Job Channels' (queue.job.channel) records” la crearea unui backend | Utilizatorul nu are grupul **Job Queue Manager** | Adăugați grupul *Job Queue Manager* din *Setări → Utilizatori* |
-| Joburile rămân *În așteptare* | Runner-ul `queue_job` nu rulează pe server | Porniți Odoo cu `queue_job` în `server_wide_modules` și workeri, sau instalați `queue_job_cron_jobrunner` (butonul **Rulează joburile** nu are efect) |
-| „Can not create product for … Please set a default product.” la import | **Creează** oprit pe *Produse* și niciun **Produs fictiv** pe backend | Setați **Produs fictiv** (*Alte informații → Valori implicite*) sau permiteți crearea |
-| Factură cu TVA greșit pe o comandă importată | Taxa de vânzare a produsului sau poziția fiscală greșită; sau o taxă creată de importul datelor de bază | Corectați taxa pe produs și poziția fiscală; legați taxa creată de import de taxa RO |
+| „Nu s-a găsit TVA de vânzare de X% în compania …” în jurnal, după **Importă datele de bază** | Compania nu are o taxă de vânzare cu acea cotă și exigibilitate la facturare | Creați taxa din planul RO (cont 4427, rânduri D300) și reimportați datele de bază; o cotă nefolosită de magazin poate rămâne nemapată |
+| Joburile rămân *În așteptare* | Runner-ul `queue_job` nu rulează pe server | Porniți Odoo cu `queue_job` în `server_wide_modules` și workeri, sau instalați `queue_job_cron_jobrunner` (atunci **Rulează joburile** pornește rularea imediat) |
+| „Can not create product for … Please set a default product.” la import | **Creează** oprit pe *Produse* și niciun **Produs fictiv** pe backend | Setați **Produs fictiv** (*Comenzi și produse → Valori implicite*) sau permiteți crearea |
+| Factură cu TVA greșit pe o comandă importată | Taxa de vânzare a produsului sau poziția fiscală greșită | Corectați taxa pe produs și poziția fiscală |
 | Stocul nu ajunge niciodată în magazin | **Poate trimite stocul** debifat sau acțiunea *Marketplace: exportă stocul* inactivă | Bifați comutatorul pe backend și activați acțiunea programată |
-| Prețul nu se exportă automat, nici din butonul legăturii | Acțiunea *Marketplace: exportă prețul* inactivă sau **Activ la scriere** oprit pe obiectul *Produse* | Activați-le; sau exportați din butonul cardului ori din **Sincronizare marketplace**, pe formularul șablonului |
-| Tab-ul *Obiecte* e gol | Conectorul platformei nu e instalat, sau furnizorul e „Fără” | Instalați conectorul și alegeți furnizorul |
-| Backend-ul arată *Erori* fără erori recente în jurnal | Joburi eșuate în coada backend-ului sau token expirat | Linkul **failed jobs** de pe card; reautentificați backend-ul |
+| Prețul nu se exportă automat | Acțiunea *Marketplace: exportă prețul* inactivă sau **Activ la scriere** oprit pe obiectul *Produse* | Activați-le; sau exportați din butonul **Exportă prețul** al legăturii, al cardului ori din **Sincronizare marketplace** |
+| Tab-ul *Obiecte* e gol | Conectorul platformei nu e instalat, sau platforma e „Fără” | Instalați conectorul și alegeți platforma |
+| Backend-ul arată *Erori* fără erori recente în jurnal | Joburi eșuate ale backend-ului (pe canalele lui sau pe cele comune, cu înregistrări ale lui), un job comun tuturor backend-urilor, sau token expirat | Linkul **joburi eșuate** de pe card; reautentificați backend-ul |
 | O ofertă din magazin legată de varianta greșită | Potrivire după nume (fără **Potrivire strictă a variantei**) | Bifați potrivirea strictă, completați codurile de bare / referințele identice cu magazinul și corectați legătura |
 | Importul schimbă categoria produselor existente | Categoriile magazinului se leagă după nume de categorii Odoo | Debifați **Folosește categoriile** sau adăugați `categ_id` la **Câmpuri ignorate la import** (**Categorie implicită** nu oprește schimbarea) |
 | Prețul de vânzare al produsului s-a schimbat „singur” | Cineva a editat **Preț Odoo** pe o legătură | Editați prețul pe produs sau în lista de prețuri, nu pe legătură |
@@ -466,7 +480,7 @@ Modulul **nu generează note contabile**. Contabilitatea apare în fluxurile con
 Capturile (`readme/screenshots/`) se generează automat din `tests/test_screenshots.py`, cu mixinul
 `ScreenshotCase` din `l10n_ro_doc_screenshots` (import defensiv). Sunt în **limba română**, pe
 compania **Demo Magazin Online SRL**, cu planul de conturi RO și datele demo din secțiunea 4.
-Backend-urile nu au conector (furnizor „Fără”), ca ecranele să arate doar baza comună. Cardurile de
+Backend-urile nu au conector (platformă „Fără”), ca ecranele să arate doar baza comună. Cardurile de
 obiecte sunt create de test, pentru că fără conector backend-ul nu își cere niciun obiect.
 
 | # | Fișier | Conținut |
@@ -476,13 +490,14 @@ obiecte sunt create de test, pentru că fără conector backend-ul nu își cere
 | 3 | `03_regula_obiect.png` | Regula obiectului *Produse* |
 | 4 | `04_date_autentificare.png` | Tab-ul **Date de autentificare** |
 | 5 | `05_politica_pret.png` | Tab-ul **Preț** |
-| 6 | `06_alte_informatii.png` | Tab-ul **Alte informații** |
-| 7 | `07_legaturi_produse.png` | Legăturile variantelor, cu stocul și prețul din Odoo față de magazin |
-| 8 | `08_fisa_legatura.png` | Fișa legăturii **Căști wireless** |
-| 9 | `09_sincronizare_produs.png` | Asistentul **Sincronizare marketplace** |
-| 10 | `10_mapare_tva.png` | Maparea TVA |
-| 11 | `11_jurnal.png` | Jurnalul operațiunilor |
-| 12 | `12_actiuni_programate.png` | Acțiunile programate marketplace |
+| 6 | `06_comenzi_produse.png` | Tab-ul **Comenzi și produse** |
+| 7 | `07_tehnic.png` | Tab-ul **Tehnic**, cu bucket-urile de limitare |
+| 8 | `08_legaturi_produse.png` | Legăturile variantelor, cu stocul și prețul din Odoo față de magazin |
+| 9 | `09_fisa_legatura.png` | Fișa legăturii **Căști wireless** |
+| 10 | `10_sincronizare_produs.png` | Asistentul **Sincronizare marketplace** |
+| 11 | `11_mapare_tva.png` | Maparea TVA |
+| 12 | `12_jurnal.png` | Jurnalul operațiunilor |
+| 13 | `13_actiuni_programate.png` | Acțiunile programate marketplace |
 
 Regenerare:
 
@@ -507,42 +522,21 @@ pașii specifici fiecărei platforme, trimiteți la fișa conectorului.
 
 ### Limitări cunoscute
 
-- **Traduceri RO ambigue:**
-  - **Furnizor** e traducerea lui *Provider* (platforma magazinului), nu un furnizor de marfă;
-  - la **Stoc disponibil**, opțiunile *Free Quantity* și *Quantity Available* au aceeași etichetă,
-    „Cantitate disponibilă”. Prima e stocul liber (fără rezervări), a doua stocul fizic;
-  - câteva etichete au rămas în engleză: **Stock Locations** (locațiile de stoc), **Refuse
-    barcode/SKU conflicts on import**, **Use Webhook**, tab-ul **Rate Buckets**, grupul **Rate
-    Limit** cu toate câmpurile lui și acțiunea programată *Marketplace: import products*;
-  - antetul mapării TVA e „Nume taxa”, fără diacritice;
-  - codul extern al legăturii apare ca „Cod stoc”, iar pe legătură apare eticheta tehnică „Nume
-    binder”;
-  - *Fee Product* e tradus „Produs pentru comision”, deși nu e comisionul platformei (pasul 6).
 - **Preț Odoo** pe legătură e editabil și rescrie prețul produsului sau lista de prețuri (pasul 8).
 - **Exportul automat de stoc** depinde de acțiunea programată *Marketplace: exportă stocul*: mișcările
   de stoc o declanșează, dar dacă e inactivă nu se trimite nimic.
+- **Exportul automat de preț** (acțiunea programată și salvarea în Odoo) respectă **Activ la
+  scriere**: cu el oprit pe *Produse*, prețul pleacă doar la cerere (butonul legăturii, al cardului,
+  asistentul).
 - **Asistentul de sincronizare** propune primul backend găsit, nu neapărat pe cel dorit, când
   există mai multe.
-- **Lista legăturilor pe variantă nu are meniu.** Meniul „Products Variant” de sub *Asocieri* e
-  suprascris de un al doilea meniu cu același identificator (`menu_marketplace_product`, folosit și
-  pentru *Marketplace → Produse*), deci nu apare. Lista se deschide din cardul **Produse** al
-  backend-ului. Documentația tehnică a modulului (`USAGE.md`) trimite încă la meniul inexistent.
-- **Butonul Rulează joburile nu are efect:** codul verifică un atribut care nu există
-  (`_job_runners`), deci nu pornește nimic. Folosiți un worker `queue_job` sau
-  `queue_job_cron_jobrunner`.
-- **Maparea TVA nu decide TVA-ul comenzilor**, iar câmpurile **Taxă** și **Webhook cu job** ale
-  backend-ului nu sunt folosite de niciun cod.
-  Importul datelor de bază poate crea taxe noi fără conturi și etichete RO (configurare, pasul 5).
+- **Maparea TVA nu decide TVA-ul comenzilor.** O cotă fără taxă de vânzare potrivită în compania
+  backend-ului rămâne nemapată (eroare în jurnal), iar pentru servicii legătura se schimbă manual pe
+  taxa *S* (pasul 10).
 - **Numele din maparea TVA și de pe legătura de produs** sunt numele înregistrărilor Odoo
   (taxă, respectiv produs): editarea lor le redenumește.
-- **Exportul de preț cu Activ la scriere oprit** e blocat tăcut pe butonul legăturii și pe
-  acțiunea programată (pasul 3).
-- **Erorile de export de stoc pe variantă** ajung doar în logul serverului, nu în jurnal (pasul 11).
-- **Crearea unui backend cere și grupul Job Queue Manager.** La creare se generează canalele de
-  coadă ale backend-ului, iar un utilizator doar cu **Administrator marketplace** primește eroarea
-  de acces „You are not allowed to access 'Job Channels' (queue.job.channel) records”. Dați
-  consultantului și grupul *Job Queue Manager*.
-- **Joburile eșuate** din starea de sănătate includ întotdeauna și canalele comune ale
-  marketplace-ului. Un job eșuat pe un canal comun trece deci pe *Erori* toate backend-urile, nu doar
-  pe cel vinovat. Butonul **Joburi** numără însă doar canalele proprii, deci cele două cifre pot
-  diferi.
+- **Joburile eșuate fără backend** (de exemplu importul comenzilor tuturor backend-urilor) se numără
+  pe toate backend-urile. Cele de pe canalele comune care aparțin unui backend se numără doar la el.
+- **Reluarea sau anularea joburilor** din coadă cere în continuare grupul *Job Queue Manager*;
+  **Administrator marketplace** le poate doar vedea.
+- **Webhook cu job** are efect doar la conectorii care îl citesc (de exemplu Brickweb).

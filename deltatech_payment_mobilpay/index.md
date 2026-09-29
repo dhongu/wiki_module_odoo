@@ -1,10 +1,10 @@
 # Netopia MobilPay Payment Acquirer (localizat la `deltatech_payment_mobilpay/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_mobilpay`
-- **Versiune:** `19.0.1.1.3`
+- **Versiune:** `19.0.1.2.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_mobilpay
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_mobilpay`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
@@ -17,6 +17,9 @@ Acest modul conectează Odoo cu Netopia MobilPay, permițând plăți securizate
 - Plată cu cardul securizată via Netopia MobilPay printr-un flux prin redirecționare către pagina de plată securizată Netopia.
 - Moduri Test și Live cu punctele lor terminale (endpoints) respective (sandbox: `https://sandboxsecure.mobilpay.ro/payment/card/index`, producție: `https://secure.mobilpay.ro/payment/card/index`).
 - Puncte terminale de confirmare (IPN) și retur generate automat.
+- Securitate IPN: notificarea (`/payment/mobilpay/notify/<id>`) este acceptată doar cu antet `Verification-token` valid (JWT semnat RS512 cu cheia publică NETOPIA, emitent „NETOPIA Payments”, audiență = semnătura POS, `sub` = SHA-512 în base64 al corpului). Un token lipsă sau fals este respins, iar tranzacția rămâne neschimbată.
+- Tranzacția este identificată după `order.orderID` (referința) din corpul verificat, care trebuie să corespundă cu id-ul din URL-ul de notificare; `ntpID` trebuie să coincidă cu cel primit la inițiere. Verificarea sumei și a monedei nu mai este omisă când IPN-ul nu le conține.
+- Erorile de decodare base64 ale atașamentelor cu chei sunt înregistrate în jurnal ca avertisment, cu traceback.
 - Integrare cu site-ul web (`website_sale`) și pagina standard de stare a plății (`/payment/status`).
 - Câmpuri de configurare pentru Semnătură POS, Cheie API și chei RSA (certificat public / cheie privată), citite în mod securizat de pe înregistrarea procesatorului.
 - Verificare opțională a stării la revenire (GetStatus) folosind clientul REST / SDK-ul Netopia, ca alternativă în cazul în care IPN-ul nu a fost încă procesat.
@@ -27,7 +30,7 @@ Acest modul conectează Odoo cu Netopia MobilPay, permițând plăți securizate
 - `payment`
 - `website_sale`
 
-Dependențe Python externe: `pyjwt` (declarată în manifest); fluxul de verificare a stării utilizează și `netopia-sdk` (vezi `odoo-addons/bitshop/requirements.txt`).
+Dependențe Python externe: `pyjwt` și `cryptography` (declarate în manifest); fluxul de verificare a stării utilizează și `netopia-sdk` (vezi `odoo-addons/bitshop/requirements.txt`).
 
 #### 4. Componente Cheie
 

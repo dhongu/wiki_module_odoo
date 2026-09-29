@@ -1,10 +1,10 @@
 # Deltatech EDI Base Connector (localizat la `deltatech_edi/index.md`)
 
 - **Nume Tehnic:** `deltatech_edi`
-- **Versiune:** `19.0.0.1.8`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edi
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_edi`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
@@ -12,6 +12,9 @@ Acest modul reprezintă conectorul EDI (Electronic Data Interchange) de bază pe
 
 #### 2. Funcționalități Cheie
 
+- Coduri de articol ale clientului: codul cumpărătorului (`BuyerItemID`) se ține în `product.customerinfo` (din [deltatech_sale_product_reference](../deltatech_sale_product_reference/index.md)), nu mai în `product.supplierinfo`; cumpărătorul EDI nu mai apare ca furnizor al produsului (reaprovizionare, rute, ecran Furnizori). Migrare automată a referințelor existente la upgrade.
+- Cod export determinist: `BuyerItemID` se rezolvă după precedență (variantă peste șablon, partener exact peste entitatea comercială, apoi secvență), fără revenire tăcută la `default_code` propriu.
+- Import comenzi: un cod de cumpărător ambiguu se rezolvă după aceeași precedență (cu avertisment în log), iar liniile importate poartă în descriere codul clientului (`[BuyerItemID] nume`).
 - Comunicare standardizată: implementarea de protocoale EDI standard din industrie pentru schimbul de documente comerciale (de ex. facturi, comenzi de achiziție) cu partenerii.
 - Procesare mai rapidă a tranzacțiilor: automatizarea schimbului de documente între sisteme pentru o comunicare aproape instantanee.
 - Acuratețe îmbunătățită a datelor: eliminarea erorilor de introducere manuală prin transmiterea electronică a informațiilor între platforme.
@@ -24,6 +27,7 @@ Acest modul reprezintă conectorul EDI (Electronic Data Interchange) de bază pe
 - `sale_stock`
 - [deltatech_gln](../deltatech_gln/index.md)
 - `account`
+- [deltatech_sale_product_reference](../deltatech_sale_product_reference/index.md)
 
 #### 4. Componente Cheie
 
@@ -34,7 +38,7 @@ Acest modul reprezintă conectorul EDI (Electronic Data Interchange) de bază pe
 - `res.partner`: extindere a partenerului cu informații necesare schimbului EDI.
 - `sale.order`: extindere a comenzii de vânzare pentru fluxul EDI.
 - `stock.picking`: extindere a transferului de stoc pentru generarea avizului de expediție (DESADV).
-- `product.product` / `uom.uom`: extinderi pentru maparea produselor și a unităților de măsură în EDI.
+- `product.product` / `uom.uom`: extinderi (inclusiv citirea/scrierea codurilor de articol ale cumpărătorului prin `product.customerinfo`) pentru maparea produselor și a unităților de măsură în EDI.
 
 **Vizualizări**
 
@@ -50,5 +54,6 @@ Acest modul reprezintă conectorul EDI (Electronic Data Interchange) de bază pe
 #### 5. Conexiuni
 
 - [deltatech_gln](../deltatech_gln/index.md): furnizează codurile GLN (Global Location Number) necesare identificării partenerilor în schimbul EDI.
+- [deltatech_sale_product_reference](../deltatech_sale_product_reference/index.md): furnizează `product.customerinfo` și `_get_reference()` pentru codurile de articol ale clientului.
 - [deltatech_ediconnect](../deltatech_ediconnect/index.md): modul soră care extinde conectorul EDI de bază cu logica de conectare/transport a mesajelor.
 - [deltatech_edinet](../deltatech_edinet/index.md): modul soră care implementează integrarea cu rețeaua/serviciul EDI.

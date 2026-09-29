@@ -1,10 +1,10 @@
 # Romania - Bază ANAF (localizat la `l10n_ro_anaf_base/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_base`
-- **Versiune:** `19.0.1.2.0`
+- **Versiune:** `19.0.1.3.2`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_base
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_base`
-- **Ultima Ingestie:** 2026-09-12
+- **Ultima Ingestie:** `2026-09-29`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -26,11 +26,12 @@ Acest modul este infrastructura comună (de bază, ascunsă) pentru toate declar
 - **Gardă de postare pentru companii RO (`account.move._l10n_ro_posting_guard_errors`)** — hook extensibil, opt-in, prin care alte module de localizare pot bloca postarea unui document (de ex. parteneri inactivi la ANAF) fără a schimba comportamentul implicit al instalărilor existente.
 - **Codul CAEN al companiei, definit acum aici (nou în 19.0.1.2.0)** — câmpul `l10n_ro_caen_code`, pe partener, cu oglindă pe `res.company` (editabil) și expus în setările contabile. E obligatoriu și enumerat strict în schemele ANAF (D100, D101, D112 și celelalte), dar anterior venea doar din `l10n_ro_config` (l10n-romania-oca), de care suita de declarații nu depinde — pe o instalare fără acel modul, orice declarație se genera cu CAEN gol. Când ambele module sunt instalate, definițiile de câmp fuzionează și rămâne un singur câmp.
 - **Fără fallback tăcut pe `"0000"`** — spre deosebire de `l10n_ro_config`, câmpul CAEN nu are valoare implicită, pentru că `"0000"` nu există în nomenclatorul ANAF și ar produce un XML respins de schemă cu un mesaj criptic. `_get_anaf_company_data` întoarce valoarea reală a companiei, iar `_validate_anaf_export_company(require_caen=True)` prinde atât câmpul gol, cât și placeholderul `"0000"` lăsat de `l10n_ro_config`, cu un mesaj acționabil.
+- **Convenția „Nume Prenume" pentru numele de persoane (nou în 19.0.1.3.0)** — `_split_contact_name` împarte `name` considerând primul cuvânt drept nume de familie, restul prenume (ex. `Popescu Ion` → Popescu / Ion), ca în actele oficiale românești. Se aplică persoanei responsabile cu declarațiile și, în D112, salariaților din liniile nominale (funcția proprie, cu regula opusă, a fost eliminată). Ordinea inversă nu e respinsă de ANAF (câmpuri text liber), dar apare inversată pe declarația depusă. La upgrade, verificați contactul persoanei responsabile dacă e scris „Prenume Nume".
 - Clasa de bază `AnafTestCommon` (`tests/common.py`) — reutilizabilă de toate modulele ANAF pentru configurarea automată a mediului de test (companie RO cu adresă fiscală completă, contact ANAF).
 
 Configurare (Setări → Contabilitate → Declarații ANAF, partajată de toate modulele de declarații):
 
-- **Persoana responsabilă** — contactul care apare ca declarant în XML (`<Declarant>`/`<Preparer>`).
+- **Persoana responsabilă** — contactul care apare ca declarant în XML (`<Declarant>`/`<Preparer>`); numele se scrie „Nume Prenume" (ex. `Popescu Ion`).
 - **Declaration Identifier** — codul fiscal/CNP al declarantului; dacă e gol, se preia din VAT/CNP-ul persoanei responsabile.
 - **Tip export** — `XDP direct` (descărcare directă a fișierului, pentru upload pe portalul ANAF) sau `Arhivă ZIP` (XDP + PDF, implicit).
 - Din același ecran se pot activa rapid modulele individuale D300, D390, D394 și D398.
@@ -48,6 +49,7 @@ Configurare (Setări → Contabilitate → Declarații ANAF, partajată de toate
 - `l10n_ro_anaf.report.handler.mixin` (`L10nRoAnafReportHandlerMixin`, mixin abstract de `account.report.custom.handler`): logica comună pentru declarant, validări (inclusiv `_validate_anaf_export_company(require_caen=...)`), XSD, export XDP/ZIP, `_get_anaf_company_data`.
 - `account.move` (extins): adaugă hook-ul `_l10n_ro_posting_guard_errors()` și suprascrie `_post()` pentru a bloca postarea documentelor companiilor RO în funcție de motivele raportate de acest hook.
 - `res.partner` (extins): câmpul `l10n_ro_caen_code` (codul CAEN), fără valoare implicită — deliberat, spre deosebire de `l10n_ro_config`.
+- `_split_contact_name` (metodă în mixin): împarte numele persoanei în nume de familie și prenume, convenția „Nume Prenume".
 - `res.company` (extins): `l10n_ro_caen_code` (related, editabil, pe `partner_id`), `l10n_ro_anaf_declaration_contact_id`, `l10n_ro_anaf_declaration_identifier`, `l10n_ro_anaf_export_type`.
 - `res.config.settings` (extins): interfață de configurare pentru toate câmpurile de mai sus, plus togglurile de instalare `module_l10n_ro_anaf_d300/d390/d394/d398`.
 - `account.report` (extins): metode helper pentru generarea XML-urilor ANAF și înregistrarea tipului MIME pentru fișierele `.xdp`.
@@ -70,4 +72,4 @@ Configurare (Setări → Contabilitate → Declarații ANAF, partajată de toate
 - `account_reports`: infrastructura de rapoarte contabile extinsă de mixin-ul de handler ANAF.
 - `accountant`: modulul de contabilitate enterprise necesar pentru rapoartele custom-handler.
 - `l10n_ro_config` (OCA, l10n-romania-oca): definește câmpul `l10n_ro_caen_code` cu aceeași denumire și cu un default `"0000"`; când e instalat împreună cu acest modul, definițiile de câmp fuzionează, dar `l10n_ro_anaf_base` tratează `"0000"` ca valoare invalidă la validare.
-- Modulele individuale de declarații ANAF (D300, D390, D394, D398 etc.) din suita `l10n_ro_ent` depind funcțional de acest modul de bază, dar nu au încă pagină wiki proprie.
+- Modulele individuale de declarații ANAF din suita `l10n_ro_ent` depind funcțional de acest modul de bază: [l10n_ro_anaf_d100](../l10n_ro_anaf_d100/index.md), [l10n_ro_anaf_d300](../l10n_ro_anaf_d300/index.md), [l10n_ro_anaf_d390](../l10n_ro_anaf_d390/index.md), [l10n_ro_anaf_d394](../l10n_ro_anaf_d394/index.md), [l10n_ro_anaf_d398](../l10n_ro_anaf_d398/index.md), [l10n_ro_anaf_d112](../l10n_ro_anaf_d112/index.md) ș.a.

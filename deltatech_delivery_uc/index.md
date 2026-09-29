@@ -1,10 +1,10 @@
 # Cargus Shipping (localizat la `deltatech_delivery_uc/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_uc`
-- **Versiune:** `19.0.0.2.2`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_uc`
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_uc`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
@@ -25,6 +25,11 @@ Modulul integrează în Odoo serviciul de curierat Urgent Cargus (UC), permițâ
 - Expediere cu id localitate și id județ.
 - Opțiune de livrare sâmbăta și opțiune de colet deschis.
 - Ridicare doar din punctul de ridicare indicat și posibilitatea trimiterii id-ului de locker în AWB.
+- Expediere către alte țări deservite de Cargus pe același API, între care Polonia: țările al căror catalog se importă se configurează pe transportator (`uc_country_ids`; gol înseamnă doar România, deci configurațiile existente rămân neschimbate), iar AWB-ul transmite țara destinatarului (`CountryId`, luat din țara localității). Scurtătura sectoarelor Bucureștiului se aplică doar adreselor din România.
+- Reobținerea etichetei unui AWB existent direct de la Cargus (`uc_get_label`), utilă când eticheta livrării a fost ștearsă.
+- Lockerele care nu mai apar în lista Cargus (`PudoPoints`) sunt arhivate automat la import, iar importul se face în lot.
+- Localitățile raportate de Cargus se înregistrează în catalogul de mapări al transportatorului; cele ambigue sau necunoscute apar ca „de mapat”, fără a crea localități duplicate în nomenclator.
+- Interogarea stărilor este protejată: un AWB problematic nu mai oprește interogarea livrărilor următoare, iar istoricul se rescrie doar când starea sau istoricul s-au schimbat.
 
 > Notă: Pentru funcționalitatea de selecție a lockerului pe hartă este necesară și instalarea modulului `deltatech_delivery_locker`. De asemenea, extensia `unaccent` trebuie instalată în baza de date (`CREATE EXTENSION IF NOT EXISTS unaccent`), deoarece unele localități din România au denumiri diferite față de baza SIRUTA (ex: Popești-Leordeni).
 >

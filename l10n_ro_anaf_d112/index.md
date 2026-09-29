@@ -1,10 +1,10 @@
 # Romania - Declarația D112 ANAF (FR-44) (localizat la `l10n_ro_anaf_d112/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d112`
-- **Versiune:** `19.0.2.2.0`
+- **Versiune:** `19.0.2.3.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112`
-- **Ultima Ingestie:** 2026-09-12
+- **Ultima Ingestie:** `2026-09-29`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -16,6 +16,7 @@ Modulul automatizează întocmirea, validarea și exportul Declarației D112 ANA
 - **Import automat din statele de plată** Odoo Enterprise (coduri `BASIC`, `GROSS`, `CAS`, `CASS`, `INCOMETAX`, `WORK100`) prin modulul-punte [l10n_ro_anaf_d112_payroll](../l10n_ro_anaf_d112_payroll/index.md); completare manuală pentru firme care importă salarii din sisteme externe (SAGA, Nexus) — acest modul nu depinde de `hr_payroll`.
 - **State machine** pentru declarație: ciornă → calculat → validat → exportat; butonul „Calculează" importă din statele de plată, „Validează" blochează modificările, iar „Descarcă XML" produce fișierul de depus la ANAF.
 - **Linii nominale per angajat** cu CNP, venit brut, CAS/CASS/impozit, zile lucrate, concediu de odihnă și concediu medical.
+- **Împărțirea numelui salariaților** în nume/prenume delegă la funcția din `l10n_ro_anaf_base`, cu convenția „Nume Prenume” identică în toate declarațiile ANAF (înainte, D112 avea o funcție proprie cu convenția opusă).
 - **Calcul automat al deducerilor** (orientativ, buton „Recalculează deduceri"): sumă neimpozabilă la salariul minim (S1/S2), deducere personală de bază, deducere suplimentară tineri sub 26 ani (15% × salariu minim) și copii (100 lei/copil), contribuții CAS/CASS și impozit 10%. Parametrii fiscali sunt grupați în `SALARY_PARAMS` și se revizuiesc anual; liniile importate din statul de plată păstrează valorile autoritare.
 - **Tichete de masă** — câmp dedicat; suportă CASS (10%) și impozit (10%), scutite de CAS și CAM.
 - **CAS suplimentar angajator** pentru condiții de muncă deosebite (+4%) / speciale (+8%), raportat distinct în obligațiile de plată (coduri 481/482).
@@ -71,4 +72,4 @@ Fluxul complet lunar (previzualizare → ciornă → verificare linii → reconc
 
 ---
 
-**Notă corecții față de pagina anterioară (19.0.2.1.0):** versiunea 19.0.2.2.0 (2026-09-12) corectează trei probleme descoperite prin validare cu DUKIntegrator real: (1) `asigExc`/`motivExc` (poziția salariatului față de baza minimă) nu se scriau în XML deși câmpurile Odoo existau, ceea ce respingea declarația la regulile S9c1.1 și SP1A.1; (2) un al treilea patch documentat pe XSD-ul ANAF 07/2026, unde `asigExc`/`motivExc` erau publicate cu tip greșit față de propria documentație a structurii; (3) orele lucrate (`A_6`) la contracte part-time se raportau din norma de referință a contractului, nu din cifra reală de ore a tipului `Pi` — corectat, iar etichetele tipului de contract au fost rescrise pentru claritate. Modulul [l10n_ro_anaf_d112_payroll](../l10n_ro_anaf_d112_payroll/index.md) are acum pagină wiki proprie, deci trecut la link activ (anterior era text simplu, fără pagină).
+**Notă modificări față de pagina anterioară (19.0.2.2.0):** 19.0.2.3.0 (2026-09-12) aliniază împărțirea numelor salariaților la `l10n_ro_anaf_base`; 19.0.2.3.1 mută protecția la ștergere într-o metodă `@api.ondelete(at_uninstall=False)`, deci dezinstalarea modulului nu mai e blocată; 19.0.2.3.2 corectează întoarcerea rezultatului din override-uri (`missing-return`), fără schimbare de comportament; 19.0.2.3.3 adaugă iconița proprie a modulului.

@@ -1,10 +1,10 @@
 # Packeta Shipping (localizat la `deltatech_delivery_packeta/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_packeta`
-- **Versiune:** `19.0.1.4.1`
+- **Versiune:** `19.0.1.5.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_packeta
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_packeta`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
@@ -29,6 +29,11 @@ Modulul **Packeta Shipping**, dezvoltat de Terrabit, oferă o integrare complet�
   - Livrare asigurată (valoare declarată).
   - Gestionarea ramburs-ului (Cash on Delivery – COD).
   - Istoric complet al stărilor pentru fiecare expediere.
+- **Urmărire și stări de livrare** (din `readme/HISTORY.md`, versiunile 1.1.2–1.5.1):
+  - Starea livrării poate fi promovată pe baza istoricului curierului extern, când Packeta întârzie sau nu republică rezultatul; promovarea merge doar înainte, iar `delivered` și `refused` nu se suprascriu niciodată (retururile care folosesc vocabularul livrării, ex. BG Econt, sunt excluse).
+  - Trecerea `pre_advice` → `in_transit` ("colet ridicat de curier") cere un eveniment real de mișcare al curierului; simplele înregistrări sau decizii de rutare (ex. „Allocated for pick-up”) nu mai declanșează expedierea, deci notificarea de ridicare nu pleacă prematur.
+  - Sondarea stărilor este izolată per AWB (`_status_poll_guard`): un AWB problematic nu mai blochează livrările din spatele lui, iar istoricul se scrie doar dacă s-a schimbat starea sau istoricul.
+  - Declară capabilitatea `label_refetch`: eticheta ștearsă de pe transfer poate fi regenerată din Packeta (`packeta_get_label`).
 - **Integrare tehnică**:
   - Utilizarea API-ului modern Packeta JSON v5 (`pickup-point.api.packeta.com`).
   - Extinderea modelului standard de livrare din Odoo pentru a include funcționalități specifice Packeta.

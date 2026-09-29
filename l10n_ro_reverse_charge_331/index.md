@@ -1,10 +1,10 @@
 # Romania - Taxare inversă art. 331 (localizat la `l10n_ro_reverse_charge_331/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_reverse_charge_331`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.2.2`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_reverse_charge_331
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_reverse_charge_331`
-- **Ultima Ingestie:** `2026-09-25`
+- **Ultima Ingestie:** `2026-09-29`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -61,13 +61,26 @@ TVA-ul, cu o taxă dedicată de 21%.
 - Materialele lemnoase derivate (PAL, OSB, placaj) nu intră sub incidența art. 331
   lit. b) și rămân pe taxa standard, separate de cheresteaua propriu-zisă, care nu are
   termen de expirare și nici prag valoric.
-- Dacă `account_edi_ubl_cii` e instalat, taxa **0% R331** primește explicit codul
-  UNCL5305 `AE` (motiv `VATEX-EU-AE`) pentru factura electronică, în loc de codul
-  implicit `E` (scutit), semantic greșit pentru o taxare inversă.
+- e-Factura (CIUS-RO): taxa **0% R331** primește explicit codul UNCL5305 `AE` (motiv
+  `VATEX-EU-AE`), în loc de codul implicit `E` (scutit), semantic greșit pentru o taxare
+  inversă. Motivul scutirii (BT-120) este „Taxare inversă (art. 331 din Codul fiscal)" în
+  română, nu textul englezesc „Reverse charge" pus de Odoo; mențiunea e obligatorie pe
+  factură (art. 319 alin. (20) lit. m) Cod fiscal), iar în B2B factura originală este
+  XML-ul. Subtotalurile `AE` se separă după motiv, ca la `E`.
+- Descrierea taxelor **0% R331** și **21% R331** (antetul coloanei din jurnalele de TVA) și
+  mențiunea legală tipărită pe factură au traducere în română și pe bazele unde taxele au
+  fost create la instalare; upgrade-ul completează traducerile lipsă, fără să atingă textele
+  personalizate.
+- Furnizor neînregistrat în scopuri de TVA: achiziția nu se autolichidează și nu are TVA
+  (baza pe rândul 29 din D300); TVA-ul facturat de un furnizor cu codul anulat nu e
+  deductibil (art. 11 alin. (9) Cod fiscal). Furnizorul neînregistrat trebuie pus pe poziția
+  fiscală a neplătitorilor, mapată pe o taxă de achiziție fără TVA. Notele de credit se
+  creează din factura corectată, ca să păstreze taxa originală.
 
 #### 3. Dependențe
 
 - `account`
+- `account_edi_ubl_cii`
 - `l10n_ro`
 
 #### 4. Componente Cheie
@@ -91,6 +104,10 @@ TVA-ul, cu o taxă dedicată de 21%.
   parte neînregistrată.
 - `res.partner`: `_l10n_ro_is_vat_registered`, sursa unică de adevăr pentru statutul de
   TVA (câmpul `l10n_ro_vat_subjected` dacă există, altfel prefixul „RO" din CUI).
+- `account.edi.common`: `_get_tax_exemption_reason` înlocuiește textul BT-120 al codului
+  `VATEX-EU-AE` cu mențiunea în română pentru taxele R331.
+- `account.edi.ubl_cen_en16931`: `_ubl_tax_totals_node_grouping_key` separă subtotalurile
+  `AE` după motivul scutirii.
 - `account.chart.template`: creează pe planul de conturi RO taxele **0% R331** (rândul
   13 din D300, grup `tvati`) și **21% R331** (autolichidare 21%, `Dr 4426 = Cr 4427`,
   rândurile 12.1 și 26.1, grup `tvatip21`).
@@ -122,6 +139,6 @@ TVA-ul, cu o taxă dedicată de 21%.
   înregistrare TVA, dacă e instalat (OCA, `auto_install`).
 - `l10n_ro_anaf_partner`: alternativă pentru `l10n_ro_vat_subjected`, sincronizat din
   registrul ANAF.
-- `account_edi_ubl_cii`: dacă e instalat, modulul setează explicit codul UNCL5305
-  `AE` pe taxa **0% R331**, pentru ca factura electronică să declare corect taxarea
-  inversă în locul codului implicit `E` (scutit).
+- `account_edi_ubl_cii`: dependență (din 1.2.0); modulul setează codul UNCL5305 `AE` și
+  motivul în română (BT-120) pe taxa **0% R331**, pentru ca factura electronică să declare
+  corect taxarea inversă în locul codului implicit `E` (scutit).

@@ -1,10 +1,10 @@
 # Conector Shopify Marketplace (localizat la `deltatech_marketplace_shopify/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_shopify`
-- **Versiune:** `19.0.1.3.1`
+- **Versiune:** `19.0.1.7.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_shopify
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_shopify`
-- **Ultima Ingestie:** `2026-09-24`
+- **Ultima Ingestie:** `2026-09-29`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -21,6 +21,9 @@ Conectorul Shopify Marketplace dezvoltat de Terrabit creează o integrare direct
   - Actualizări în timp real ale produselor prin webhook (`products/update`).
   - Un produs cu mai multe variante Shopify, importat fără opțiunea **Options as Attributes** activată, tot se importă — dar variantele lui sunt sărite (avertisment doar în log-ul serverului), niciodată fuzionate tăcut într-o singură variantă.
   - Potrivirea unui produs Shopify cu un șablon Odoo deja existent se face acum și prin SKU/cod de bare al oricărei variante, înainte de a recurge la potrivirea exactă pe nume — evită duplicate atunci când același produs a fost creat independent în cele două sisteme (ex. produs importat din eMAG în Odoo, creat manual în Shopify cu SKU/cod de bare identic pe variante).
+
+  - **Map Products** (meniul cardului **Products**, din modulul de bază): caută produsele Odoo în Shopify după SKU și cod de bare, câte 25 pe interogare GraphQL. Referința internă trebuie să fie exact SKU-ul Shopify; setarea **SKU Listing Suffix Separator** (backend, grupul *Products*, goală implicit) permite legarea și a listărilor cu sufix (ex. cu `#`: `TM800367#fr1` se leagă de `TM800367`). Binding-ul primește id-ul variantei, SKU-ul și id-ul articolului de inventar, deci exportul de stoc merge imediat; produsul Shopify se leagă de șablonul Odoo dacă nu era legat.
+  - Imaginea se descarcă doar când e nouă sau i s-a schimbat link-ul (Shopify schimbă `?v=...` la înlocuirea fișierului); importul de produs aduce acum și galeria, prin sincronizarea comună din `deltatech_marketplace_website`.
 
 - **Atribute de produs**:
   - Import al atributelor de produs (opțiuni Shopify) și al valorilor lor.
@@ -45,6 +48,10 @@ Conectorul Shopify Marketplace dezvoltat de Terrabit creează o integrare direct
   - Reguli de protecție la re-import: pe o comandă ale cărei valori sunt marcate ca „discarded" (backend `only_missing` sau „No Refresh" pe comandă), doar locker-ul, curierul și liniile de livrare deschise mai sunt actualizate — restul (linii, sume, fază, adrese) rămân neatinse.
   - **Export opțional al liniilor de comandă** (**Export Order Lines**, oprit implicit): o cantitate schimbată, o linie adăugată sau ștearsă în Odoo se trimite înapoi în Shopify prin API-ul de editare a comenzii (`orderEditBegin` → `orderEditSetQuantity`/`orderEditAddVariant` → `orderEditCommit`). Necesită permisiunea `write_order_edits`, separată de `write_orders` și care trebuie acordată explicit magazinului (re-autorizare); fără ea exportul e inert și motivul apare în chatter, fără reîncercare. Nu se trimite nimic dacă modificarea nu poate fi exprimată de API (cantitate sub ce e deja onorat/rambursat, produs fără variantă Shopify mapată, comandă cu peste 250 de linii) sau dacă pe o comandă deja plătită editarea ar lăsa un sold necompensat (Shopify nu încasează/rambursează diferența la editare) — o modificare care se echilibrează la zero trece și pe o comandă plătită. Prețul unitar al unei linii existente nu poate fi trimis (API-ul Shopify oferă doar o reducere peste prețul original); o schimbare de preț în Odoo e semnalată pe comandă, dar nu blochează exportul cantităților/liniilor.
 
+  - **Fereastra de 60 de zile a comenzilor**: fără permisiunea `read_all_orders`, Shopify arată aplicației doar comenzile create în ultimele 60 de zile. Conectorul o respectă: nu programează exporturi (tag de fază, anulare, linii) pentru o comandă din afara ferestrei, nu trimite AWB-ul (motivul apare în chatter), limitează importurile de comenzi/rambursări/retururi la fereastră (cu avertisment în log), iar **Missing Scopes** numește `read_all_orders`. Cu permisiunea acordată, limita dispare de la sine.
+  - O anulare acceptată de Shopify marchează comanda ca *Cancelled in Marketplace* (`deltatech_marketplace_sale` 19.0.2.14.0), deci redeschiderea comenzii în Odoo avertizează că Shopify o ține anulată.
+  - Reimportul care schimbă curierul unei comenzi confirmate nu mai eșuează: linia de livrare se sincronizează doar când `product_updatable` permite, altfel rămâne neatinsă.
+
 - **Retururi (RMA)**:
   - Import al retururilor Shopify în registrul comun `marketplace.return.request` din `deltatech_marketplace_sale`: status, motive și cantități pe fiecare linie, legătura la comandă și la linia pe care a fost vândut articolul.
   - Cele cinci stări Shopify se mapează pe vocabularul comun folosit de toate conectoarele (`REQUESTED` → Solicitat, `OPEN` → Aprobat, `CLOSED` → Finalizat, `DECLINED` → Respins, `CANCELED` → Anulat).
@@ -54,6 +61,7 @@ Conectorul Shopify Marketplace dezvoltat de Terrabit creează o integrare direct
   - Nu există import al unui singur retur după id (Shopify nu expune un asemenea query) — reîmprospătarea se face prin importul pe fereastră, care recitește oricum tot ce nu s-a închis încă.
 
 - **Registru de permisiuni (scopes)**:
+  - Locațiile comenzii (`retailLocation`, `fulfillments.location`, `assignedLocation`) se cer doar dacă instalarea are o permisiune care le citește (`read_locations`, `read_inventory` sau `read_markets_home`); altfel interogarea le omite de la început, iar **Missing Scopes** numește `read_locations` (exceptând cazul **Skip Location Lookup On Orders** activ). Joburile de comandă concurente nu mai pică cu „Access denied for retailLocation”.
   - Permisiunile pe care Shopify le raportează pentru instalare sunt citite la fiecare test de conexiune și la fiecare reîmprospătare de token și păstrate pe backend: **Granted Access Scopes** e lista efectivă, **Missing Scopes** numește ce cer opțiunile pornite pe acest magazin dar nu au fost acordate — o permisiune lipsă devine o propoziție pe backend, nu doar un „Access denied" descoperit la prima utilizare.
   - Permisiunile aparțin *instalării*, nu versiunii aplicației: publicarea unei versiuni cu o permisiune nouă nu o acordă automat — instalarea existentă păstrează drepturile vechi până când magazinul aprobă actualizarea de acces la date.
 
@@ -77,6 +85,8 @@ Conectorul Shopify Marketplace dezvoltat de Terrabit creează o integrare direct
 - **Autentificare și operații automate**:
   - Suport pentru două moduri de autentificare, alese din câmpul **Access Type**: Legacy Private Apps (token permanent, `Access Token` completat manual — de la 1 ianuarie 2026 Shopify nu mai permite crearea de aplicații legacy noi, doar cele existente anterior rămân utilizabile) și Dev Dashboard Apps (OAuth `client_credentials`, `Client Id`/`Client Secret`, token cu expirare la 24h, cu reîmprospătare automată sub 30 minute rămase și proactiv la fiecare 23 de ore prin job-ul „Shopify: Refresh Access Tokens").
   - `Client Secret` este necesar și pentru verificarea semnăturii HMAC (`X-Shopify-Hmac-Sha256`) a webhook-urilor primite — fără el, verificarea eșuează silențios (doar avertisment în log).
+  - Fiecare pagină a importurilor (imagini, produse, variante, clienți, colecții, comenzi) se pune în coadă cu o cheie per backend și pagină, iar un import nu pornește din nou cât timp rulează un lanț al aceluiași import pentru backend (protecția `import_chain_skipped` e în `deltatech_marketplace`) — evită sutele de importuri paralele care blocau canalul inbound.
+  - Secretele de conexiune ale backend-ului se citesc cu `sudo()`: în `deltatech_marketplace` sunt vizibile doar pentru Marketplace Manager, iar utilizatorii fără grup continuă să ruleze fluxurile.
   - Sincronizare programată și asincronă prin `queue_job`, cu retry automat la limitări de rată (HTTP 429 / GraphQL `THROTTLED`) și erori de server.
   - Import de colecții Shopify (custom și smart) ca și categorii publice de produs.
   - Fiecare subsistem (produse, stoc, expediere, clienți, comenzi, webhook-uri) are propriul comutator GraphQL/REST pe backend, implicit oprit — tranziția se face treptat, subsistem cu subsistem, reversibilă dintr-un singur comutator.
@@ -114,6 +124,7 @@ Dependență externă Python: `ShopifyAPI`.
 - `binding_payment_acquirer.py`: binding pentru metodele de plată.
 - `binding_public_category.py`: binding pentru colecțiile Shopify importate ca și categorii publice.
 - `binding_warehouse.py`: binding pentru locațiile Shopify mapate la depozitele Odoo (`marketplace.warehouse`).
+- `binding_refund.py` / `shopify_graphql_refund.py`: importul rambursărilor (`marketplace.refund`) din `Order.refunds`.
 - `binding_return_request.py` (extinde `marketplace.return.request` din `deltatech_marketplace_sale`): importul retururilor Shopify pe fereastră de dată, potrivirea liniei vândute, marcarea stărilor „settled" ca să nu se recitească la nesfârșit — fără cale de import după id, doar pe fereastră.
 - `stock_picking.py`: extensie pentru trimiterea AWB-urilor și a onorărilor (fulfillment) către Shopify la validarea transferului.
 

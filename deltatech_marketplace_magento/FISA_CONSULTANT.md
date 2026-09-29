@@ -64,16 +64,16 @@ pregătit înainte de prima sincronizare:
   `list_price`, doar la produsele **configurable**, cf. §6 Pasul 4.3) ajunge aici; pentru produsele
   **simple**, prețul Magento **nu** e importat deloc (linia de cod care l-ar prelua e comentată
   intenționat) — un produs simplu importat separat își păstrează prețul din Odoo.
-- **Categoria implicită / categorie marketplace implicită** (tab **Other Info → Defaults**) —
+- **Categoria implicită / categorie marketplace implicită** (tab **Orders and Products → Defaults**) —
   folosite când produsul importat nu are o mapare mai specifică.
-- **„Import Orders With Status (Magento)"** (tab **Other Info**) — Many2many pe fazele de vânzare
+- **„Import Orders With Status (Magento)"** (tab **Orders and Products → Settings**) — Many2many pe fazele de vânzare
   deja sincronizate pentru acest backend; rămâne **gol și inutilizabil** până rulează cel puțin o
   dată sincronizarea „Sale Stage" (vezi §6, Pasul 3). Gol = importă orice status, comportamentul
   dinaintea acestui filtru.
-- **Sale Order Days** (câmp comun al framework-ului, tab **Other Info → Limits**) — fereastra de
+- **Sale Order Days** (câmp comun al framework-ului, tab **Technical → Limits**) — fereastra de
   import după dată; dacă filtrul de status e mai restrictiv decât această fereastră, o comandă care
   atinge statusul urmărit **după** ce fereastra a expirat nu mai e importată niciodată.
-- **„Can send stock"** (tab **Other Info → Stock**, câmp comun al framework-ului) — trebuie bifat
+- **„Can send stock"** (tab **Orders and Products → Stock**, câmp comun al framework-ului) — trebuie bifat
   pentru ca produsele acestui backend să fie luate în calcul de cron-ul comun de export stoc.
 
 Transportatorii, achizitorii de plată și fazele de vânzare **nu** cer o mapare manuală prealabilă:
@@ -135,12 +135,12 @@ Odoo **doar** după ce au fost sincronizate cel puțin o dată. Pe tab-ul **Obje
 nepaginat, spre deosebire de celelalte) și salvează fiecare status Magento ca o fază de vânzare
 Odoo, cu eticheta reală din Magento, nu doar codul intern.
 
-Abia după acest pas, câmpul **„Import Orders With Status (Magento)"** (tab **Other Info**) se
+Abia după acest pas, câmpul **„Import Orders With Status (Magento)"** (tab **Orders and Products → Settings**) se
 populează cu opțiuni reale de ales — înainte de acest pas e gol și nu poate filtra nimic. Alegeți
 aici doar statusurile pe care chiar vreți să le importați (de exemplu doar „processing" și
 „complete"); lăsat gol, importă orice status — comportamentul dinaintea acestui filtru.
 
-![Tab Other Info: câmpul Import Orders With Status (Magento), populat după rularea Sale Stage](screenshots/02_order_status_filter.png)
+![Tab Orders and Products, grupul Settings: câmpul Import Orders With Status (Magento), populat după rularea Sale Stage](screenshots/02_order_status_filter.png)
 
 > **Atenție la combinația filtru de status + fereastră de dată:** importul de comenzi mai
 > restricționează și după dată, prin **Sale Order Days** (câmp comun al framework-ului). Dacă
@@ -204,7 +204,7 @@ Stocul se exportă către Magento (bulk, `POST /inventory/source-items`) prin cr
 Exportul nu e sincron (nu se întâmplă exact în momentul mișcării de stoc), dar orice mișcare de
 stoc din Odoo **declanșează** rularea acestui cron, dacă e activ — deci actualizarea ajunge la
 Magento în câteva secunde/minute, nu abia la ora fixă a cron-ului. **Condiție tăcută:** exportul
-funcționează doar dacă **Stock Level** (tab Other Info → Stock) rămâne pe valoarea implicită
+funcționează doar dacă **Stock Level** (tab Orders and Products → Stock) rămâne pe valoarea implicită
 **Product Variant** — pe **Product Template**, acest conector nu are un export de stoc
 implementat, iar eșecul e tăcut (doar în jurnal, fără eroare vizibilă operatorului).
 Prețul se exportă (bulk, `POST /products/base-prices`, cu TVA inclus calculat din taxele produsului)
@@ -279,7 +279,7 @@ dedicat de import); activarea cron-urilor de export stoc/preț.
       cel puțin o sincronizare înregistrată) după prima sincronizare reușită.
 - [ ] Nu s-a promis clientului sincronizare sincronă a stocului — exportul pleacă la prima rulare
       a cron-ului comun (declanșat de orice mișcare de stoc, dacă e activ), nu instantaneu.
-- [ ] **Stock Level** (tab Other Info → Stock) e pe **Product Variant** (implicit) — pe
+- [ ] **Stock Level** (tab Orders and Products → Stock) e pe **Product Variant** (implicit) — pe
       **Product Template**, exportul de stoc Magento nu rulează și nu semnalează nicio eroare.
 - [ ] Nu s-a promis clientului import de preț sau de stoc dinspre Magento — acest conector exportă
       doar (Odoo → Magento) pentru amândouă.
@@ -320,7 +320,7 @@ folosită pentru capturile de marketing din `static/description/screenshots/`):
 
 1. `01_credentials.png` — backend Magento, tab Credentials completat (Location, Access Type = User and password,
    Username/Password).
-2. `02_order_status_filter.png` — tab Other Info: câmpul „Import Orders With Status (Magento)",
+2. `02_order_status_filter.png` — tab Orders and Products, grupul Settings: câmpul „Import Orders With Status (Magento)",
    populat după rularea Sale Stage.
 3. `03_objects.png` — tab Objects: rândurile cu acțiunile de import per tip de date.
 4. `04_health_badge.png` — indicatorul de sănătate pe cardul kanban al backend-ului.

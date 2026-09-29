@@ -1,10 +1,10 @@
 # Deltatech Putaway Strategy (localizat la `deltatech_putaway_strategy/index.md`)
 
 - **Nume Tehnic:** `deltatech_putaway_strategy`
-- **Versiune:** `19.0.1.0.7`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_putaway_strategy`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_putaway_strategy`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
@@ -23,6 +23,8 @@ Acest modul extinde locațiile din Inventarul Odoo cu o evidență simplă a cap
   - Respectă capacitatea locațiilor terminale când sugerează destinații.
   - Împarte automat liniile de mișcare dacă o locație de destinație atinge capacitatea maximă.
   - Preferă locațiile copil goale atunci când este posibil (dacă este activată căutarea în sublocații).
+  - Opțional (parametru de sistem `deltatech_putaway_strategy.prefer_existing_stock_location`, dezactivat implicit; Setări → Tehnic → Parametri de sistem): preferă raftul pe care produsul este deja stocat, oriunde sub locația de intrare (ex. `D1/S`), în locul raftului dat de regula de putaway. Se propune raftul cu cea mai mare cantitate care mai are capacitate; regula se aplică normal dacă raftul ei conține deja produsul, dacă raftul preferat e plin, iar locația de intrare în sine este ignorată (marfă încă neamplasată). Acoperă produsele mutate fizic pe alt raft fără actualizarea regulii.
+  - Un raft nu este niciodată propus ca destinație a mărfii care îl părăsește: se numără doar stocul liber (cantitate minus rezervat), iar locațiile sursă ale liniilor de mișcare sunt transmise putaway-ului prin cheia de context `putaway_exclude_location_ids`.
   - Căutare optimizată a regulilor de putaway prin indexuri de bază de date pe `product_id` și `sequence` pentru `stock.putaway.rule`.
   - Păstrează compatibilitatea completă cu regulile de categorie de stocare din Odoo (greutate maximă, capacități produs/pachet, reguli pentru produse noi etc.).
 - Opțiuni noi pe tipul de operație (`stock.picking.type`):
@@ -51,7 +53,7 @@ Acest modul extinde locațiile din Inventarul Odoo cu o evidență simplă a cap
 **Metode cheie (acoperite de teste)**
 
 - `_check_can_be_used`: aplică limita de capacitate pe locațiile terminale.
-- `_get_putaway_strategy`: preferința pentru locații copil goale și împărțirea automată a liniilor de mișcare la atingerea capacității.
+- `_get_putaway_strategy`: preferința pentru raftul cu stoc existent (când parametrul e activ), preferința pentru locații copil goale și împărțirea automată a liniilor de mișcare la atingerea capacității.
 - `exclude_location_ids`: cheie de context publicată de opțiunea `Avoid Root Location on Reservation`, citită de `stock.quant._get_gather_domain` (implementată în `deltatech_stock_removal_priority`) pentru a exclude locația-rădăcină la rezervare, doar pentru livrări.
 
 #### 5. Conexiuni

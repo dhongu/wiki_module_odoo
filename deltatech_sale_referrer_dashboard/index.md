@@ -1,10 +1,10 @@
 # Sale Referrer Margin Dashboard (localizat la `deltatech_sale_referrer_dashboard/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_referrer_dashboard`
-- **Versiune:** `19.0.1.1.1`
+- **Versiune:** `19.0.1.2.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_sale_referrer_dashboard
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_sale_referrer_dashboard`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
@@ -27,6 +27,8 @@ citite live din baza de date și filtrate mereu pe aceeași perioadă.
 - Un singur filtru de perioadă pentru tot dashboard-ul: vânzările și înregistrările contabile sunt
   conduse de același filtru global de dată, astfel încât cifrele nu se pot raporta la perioade
   diferite.
+- Compatibil multi-monedă: comenzile în valută sunt convertite în moneda companiei la cursul
+  comenzii, deci sume în monede diferite nu se mai adună ca și cum ar fi aceeași monedă.
 - Orice granularitate de perioadă: lună, trimestru, an, intervale relative (ex. ultimele 30 de
   zile) sau interval personalizat.
 - Drill-down: fiecare cifră provine dintr-un pivot Odoo, astfel încât comenzile și liniile de
@@ -34,19 +36,25 @@ citite live din baza de date și filtrate mereu pe aceeași perioadă.
 - Acces restricționat: dashboard-ul este vizibil doar utilizatorilor care au dreptul să vadă costul
   mărfii vândute.
 
-Dashboard-ul agregă trei pivoturi live: `sale.order` (comenzi confirmate, pe data comenzii, cu
-măsurile `amount_untaxed`, `commission`, `cost_of_goods` și numărul de înregistrări),
-`account.move.line` (filtrat pe contul de cheltuială și pe înregistrări validate, pe data notei,
-măsurând `balance`) și `sale.order` (oferte încă deschise — stare *ofertă* și *ofertă trimisă* —,
-numărând înregistrările).
+Dashboard-ul agregă patru pivoturi live: `sale.report` (comenzi confirmate, pe data comenzii, cu
+măsurile `price_subtotal` și `referrer_commission`), `sale.order` (comenzi confirmate, pe data
+comenzii, cu măsurile `cost_of_goods` și numărul de înregistrări), `account.move.line` (filtrat pe
+contul de cheltuială și pe înregistrări validate, pe data notei, măsurând `balance`) și `sale.order`
+(oferte încă deschise — stare *ofertă* și *ofertă trimisă* —, numărând înregistrările).
+
+Împărțirea între primele două pivoturi păstrează cifrele corecte când comenzile sunt în mai multe
+monede: `amount_untaxed` și comisionul sunt stocate pe `sale.order` în moneda comenzii, deci
+însumarea lor ar aduna lei cu euro. Ele sunt citite din `sale.report`, care convertește în SQL la
+cursul comenzii (aceleași cifre ca raportul standard *Analiză vânzări*). Costul mărfii și soldul
+contului sunt deja în moneda companiei, iar numărătorile nu au monedă, deci rămân neconvertite.
+Comenzile confirmate sunt cele în starea `sale` (starea `done` nu mai există pe `sale.order` în Odoo 19).
 
 Citirea contului de cheltuială printr-un pivot, în loc de formula spreadsheet `ODOO.BALANCE`, este
 deliberată: `ODOO.BALANCE` acceptă ca perioadă doar an, trimestru sau lună, iar pe un interval liber
 ar returna tăcut un sold calculat pe altă perioadă decât cifrele de vânzări. Pivotul e filtrat nativ
 de Odoo și rămâne corect pentru orice valoare de filtru.
 
-Limitări: comisionul provine din [deltatech_sale_referrer_raport](../deltatech_sale_referrer_raport/index.md)
-(dacă are pagină wiki) sau `deltatech_sale_referrer_raport`, iar costul mărfii din
+Limitări: comisionul provine din [deltatech_sale_referrer_raport](../deltatech_sale_referrer_raport/index.md), iar costul mărfii din
 [deltatech_sale_cost_product](../deltatech_sale_cost_product/index.md) — ambele sunt câmpuri stocate,
 însumate de pivot. Sunt luate în calcul doar notele contabile validate (posted). Comenzile anulate
 sunt excluse din ambele pivoturi de vânzări, deci nu apar nici la numărul de oferte, nici la numitorul
@@ -55,7 +63,7 @@ randează pe ecrane înguste — este gândit pentru desktop.
 
 #### 3. Dependențe
 
-- `deltatech_sale_referrer_raport`
+- [deltatech_sale_referrer_raport](../deltatech_sale_referrer_raport/index.md)
 - [deltatech_sale_cost_product](../deltatech_sale_cost_product/index.md)
 - `spreadsheet_dashboard`
 - `spreadsheet_account`
@@ -66,7 +74,7 @@ randează pe ecrane înguste — este gândit pentru desktop.
 
 Modulul nu definește modele Python noi (`__init__.py` este gol, fără director `models/`); folosește
 doar câmpurile deja definite de dependențe (`sale.order.commission`, `sale.order.cost_of_goods`) prin
-pivoturi de spreadsheet.
+pivoturi de spreadsheet (`sale.report` pentru sumele convertite în moneda companiei).
 
 **Vizualizări**
 
@@ -78,11 +86,14 @@ Nu adaugă vizualizări formular/listă/kanban clasice — interfața este sprea
   „Sales Profitability", încarcă fișierul `data/files/sale_referrer_margin_dashboard.json`, legată
   de modelul `sale.order`, plasată în grupul de dashboard-uri Vânzări
   (`spreadsheet_dashboard.spreadsheet_dashboard_group_sales`), publicată implicit și vizibilă doar
-  grupului `deltatech_sale_cost_product.group_view_cost_on_sale`.
+  grupului `deltatech_sale_cost_product.group_view_cost_on_sale`. Contul de cheltuială implicit este
+  `624000.CN`, definit în domeniul pivotului (modificabil din modul de editare al spreadsheet-ului
+  sau din `data/files/sale_referrer_margin_dashboard.json`); utilizatorii au nevoie și de drept de
+  citire în Contabilitate pentru celula contului. Modulul are pictogramă proprie.
 
 #### 5. Conexiuni
 
-- `deltatech_sale_referrer_raport`: sursă a comisionului de referrer agregat în dashboard.
+- [deltatech_sale_referrer_raport](../deltatech_sale_referrer_raport/index.md): sursă a comisionului de referrer agregat în dashboard.
 - [deltatech_sale_cost_product](../deltatech_sale_cost_product/index.md): sursă a costului mărfii
   vândute și a grupului de acces care controlează vizibilitatea dashboard-ului.
 - `spreadsheet_dashboard`: infrastructura de dashboard-uri spreadsheet în care este publicat.

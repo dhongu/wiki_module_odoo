@@ -1,10 +1,10 @@
 # Conector Marketplace WooCommerce (localizat la `deltatech_marketplace_woocommerce/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_woocommerce`
-- **Versiune:** `19.0.0.0.16`
+- **Versiune:** `19.0.0.1.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_woocommerce
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_woocommerce`
-- **Ultima Ingestie:** `2026-09-11`
+- **Ultima Ingestie:** `2026-09-29`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -20,11 +20,16 @@ Modulul conectează Odoo cu magazine online WooCommerce, sincronizând produse, 
 - Integrare plăți: mapare metodă de plată WooCommerce către achizitor de plată Odoo, creată automat la prima referință dintr-o comandă.
 - Livrare și transport: mapare transportator (creat automat dacă nu există), linie de transport pe comanda importată.
 - Suport pentru mai multe magazine WooCommerce, fiecare ca backend separat cu propriile credențiale și setări.
+- Mapare produse (butonul „Map Products” de pe cardul backend-ului): produsele Odoo încă nemapate sunt căutate după referința internă (SKU) în loturi (`GET products?sku=A,B,...`, care returnează și variațiile) și se creează doar legăturile, fără import. Codul de bare nu se caută. Variația se leagă pe id-ul ei sub produsul părinte, produsul simplu pe id-ul produsului; părinții variabili sau grupați nu se leagă niciodată de o variantă Odoo.
+- Export stoc pe variantă (opțiunea implicită „Stock Level” = „Product Variant”) funcțional: părintele se găsește prin șablonul Odoo, iar produsul simplu mapat primește stocul pe `products/{id}`.
+- Galerii de imagini sincronizate prin mecanismul comun din `deltatech_marketplace_website`: o imagine se descarcă doar dacă e nouă sau i s-a schimbat linkul, iar imaginile șterse în WooCommerce se șterg și în Odoo.
+- Importurile paginate (atribute, valori, produse, variații, clienți, comenzi) au cheie de identitate per backend și pagină; un import nu pornește din nou cât timp rulează un lanț al lui pentru același backend.
+- Trimiterea fazei comenzii spre WooCommerce nu mai eșuează când înregistrarea Odoo e mapată de mai multe ori pe backend (se folosește maparea cea mai recentă). Secretele de conexiune ale backend-ului se citesc cu `sudo()`, deci fluxurile merg și pentru utilizatorii fără grupul Marketplace Manager.
 - Test de conexiune care validează efectiv credențialele printr-un apel real către magazin (`system_status`), nu doar completarea câmpurilor.
 - Implementare tehnică pe bază de REST API WooCommerce (`wc/v3`), fără bibliotecă Python externă (folosește `requests`), autentificare HTTP Basic Auth (Consumer key/secret) peste HTTPS, procesare pe joburi în fundal (queue jobs) și suport generic de webhook moștenit din framework-ul comun.
 - **Nu** exportă prețuri către WooCommerce: lista de prețuri e doar destinația prețului importat din magazin. **Nu** are un cron dedicat de import recurent (comenzi/produse/clienți noi se aduc prin repetarea manuală a acțiunii Import sau printr-o acțiune programată proprie). **Nu** urmărește anulările/rambursările făcute în WooCommerce după import.
 
-*Sursă: `readme/DESCRIPTION.md` și `readme/USAGE.md` (corectate: exportul de preț inexistent a fost eliminat din documentație, exportul de stoc e descris corect ca fiind pe cron dedicat dezactivat implicit, iar testul de conexiune validează efectiv credențialele prin apel real la magazin — vezi și fișa consultant).*
+*Sursă: `readme/DESCRIPTION.md`, `readme/USAGE.md` și `readme/HISTORY.md` până la 19.0.0.1.3 (corectate: exportul de preț inexistent a fost eliminat din documentație, exportul de stoc e descris corect ca fiind pe cron dedicat dezactivat implicit, iar testul de conexiune validează efectiv credențialele prin apel real la magazin — vezi și fișa consultant).*
 
 #### 3. Dependențe
 

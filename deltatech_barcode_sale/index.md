@@ -1,10 +1,10 @@
 # Barcode Sale (localizat la `deltatech_barcode_sale/index.md`)
 
 - **Nume Tehnic:** `deltatech_barcode_sale`
-- **Versiune:** `19.0.2.0.0`
+- **Versiune:** `19.0.2.1.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_barcode_sale
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_barcode_sale`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
@@ -16,6 +16,8 @@ Acest modul optimizează procesul de vânzare permițând scanarea directă a co
 - **Reducerea erorilor în comenzi:** eliminarea greșelilor de tastare manuală, asigurând că produsele și variantele corecte sunt întotdeauna adăugate pe comandă.
 - **Control îmbunătățit al stocului:** identificarea produselor în timp real prin coduri de bare ajută la menținerea unor evidențe corecte de stoc în timpul vânzării.
 - **Eficiență sporită a vânzărilor:** personalul se poate concentra pe servirea clientului și pe cross-selling în loc de introducerea laborioasă a datelor.
+- **Mesaje clare la scanare:** scanarea unui cod de bare al unui ambalaj (`product.uom`) afișează un mesaj care numește produsul, iar scanarea unui produs nevandabil (`sale_ok = False`) afișează un mesaj dedicat „produsul nu poate fi vândut”, în loc de eroarea generică „produs negăsit”.
+- **Scanare sigură în multi-company:** căutarea produsului după codul de bare este limitată la compania comenzii (sau la produse fără companie) și la un singur rezultat, astfel că un cod de bare duplicat între companii nu mai produce eroarea „Expected singleton”.
 - **Serviciu profesional:** o experiență de finalizare a comenzii modernă și eficientă pentru clienți, care crește încrederea și satisfacția.
 
 #### 3. Dependențe
@@ -25,7 +27,7 @@ Acest modul optimizează procesul de vânzare permițând scanarea directă a co
 
 #### 4. Componente Cheie
 
-Informațiile pentru această secțiune provin din `readme/DESCRIPTION.md`, conform fluxului de ingestie; analiza detaliată a codului (modele, vizualizări, acțiuni) nu a fost necesară. Pe scurt, modulul extinde modelul de comandă de vânzare (`sale.order`) și interfața acestuia (`views/sale_views.xml`) pentru a integra scanarea codurilor de bare la adăugarea liniilor de comandă.
+Informațiile provin din `readme/DESCRIPTION.md` și `readme/HISTORY.md`; codul nu a fost analizat în detaliu. Pe scurt, modulul extinde modelul de comandă de vânzare (`sale.order`) și interfața acestuia (`views/sale_views.xml`) pentru a integra scanarea codurilor de bare la adăugarea liniilor de comandă.
 
 #### 5. Conexiuni
 

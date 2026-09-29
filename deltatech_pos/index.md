@@ -1,10 +1,10 @@
 # Print to ECR from POS (localizat la `deltatech_pos/index.md`)
 
 - **Nume Tehnic:** `deltatech_pos`
-- **Versiune:** `19.0.2.8.1`
+- **Versiune:** `19.0.2.9.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_pos`
-- **Ultima Ingestie:** `2026-09-17`
+- **Ultima Ingestie:** `2026-09-29`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar

@@ -1,10 +1,10 @@
 # Courier Manager Shipping (localizat la `deltatech_delivery_cm/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_cm`
-- **Versiune:** `19.0.1.1.3`
+- **Versiune:** `19.0.1.2.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_cm
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_cm`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
@@ -18,6 +18,8 @@ Acest modul integrează Odoo cu platforma de curierat Courier Manager, permițâ
 - Obținerea tarifelor pentru o expediere
 - Obținerea listei de orașe și a listei de județe
 - Urmărirea istoricului de statusuri pentru o expediere
+- Regenerarea etichetei (PDF sau ZPL) pentru un AWB existent, direct de la Courier Manager, când eticheta a fost ștearsă din document; formatul fișierului regăsit respectă tipul etichetei (un ZPL nu mai e salvat ca PDF)
+- Interogarea periodică a statusurilor este izolată per AWB: un AWB refuzat de curier nu mai blochează verificarea livrărilor din spatele lui
 - Expediere cu mai multe colete
 - Expediere cu valoare declarată (asigurare)
 - Expediere cu ramburs (cash on delivery)

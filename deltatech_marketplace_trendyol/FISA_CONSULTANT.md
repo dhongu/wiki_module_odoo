@@ -65,12 +65,12 @@ Nu există note contabile Dr/Cr generate direct de acest modul (asta ține de `s
 declanșate normal de comanda de vânzare creată din comanda Trendyol importată). Datele-cheie de
 pregătit înainte de prima sincronizare:
 
-- **Seller ID** (`trendyol_seller_id`, tab **Other Info → Settings**) — identificatorul de furnizor
+- **Seller ID** (`trendyol_seller_id`, tab **Orders and Products → Settings**) — identificatorul de furnizor
   din panoul de seller Trendyol; obligatoriu, folosit atât în calea fiecărui apel API cât și în
   antetul `User-Agent`. Fără el, orice apel eșuează cu o eroare explicită de configurare, nu tăcut.
 - **API Key / API Secret** (câmpurile generice **Username**/**Password**, tab **Credentials**,
   `Access Type = User and password`) — perechea de autentificare Basic Auth.
-- **Storefront Code** (tab **Other Info → Settings**, implicit `TR`) — vitrina pe care sunt listate
+- **Storefront Code** (tab **Orders and Products → Settings**, implicit `TR`) — vitrina pe care sunt listate
   produsele; trimis ca antet doar dacă e completat.
 - **Categoria Odoo mapată la o categorie Trendyol** (`marketplace.product.category`, cu `odoo_id` pe
   categoria de produs Odoo) — obligatorie pentru fiecare produs exportat; fără ea, exportul unui
@@ -99,7 +99,7 @@ pregătit înainte de prima sincronizare:
 - **Un utilizator Odoo pe câmpul „User" al backend-ului** — folosit de webhook-ul de comenzi, care
   rulează importul cu drepturile acestui utilizator (`with_user`); necompletat, webhook-ul rulează cu
   drepturi implicite, ceea ce poate produce erori de acces tăcute la o companie cu reguli restrictive.
-- **„Sale Order Days"** (câmp comun al framework-ului, tab Other Info → Limits) — la Trendyol acest
+- **„Sale Order Days"** (câmp comun al framework-ului, tab Technical → Limits) — la Trendyol acest
   câmp **nu are niciun efect**: parametrul de filtrare după zile a fost eliminat din import (vezi
   HISTORY.md, 19.0.1.1.6); cron-ul de comenzi reinterogă mereu toate paginile disponibile pentru
   fiecare status urmărit, la fiecare rulare, indiferent de valoarea acestui câmp.
@@ -118,7 +118,7 @@ cu barcode și categorie mapată, o comandă existentă în cont.
    (`https://apigw.trendyol.com`) se completează automat.
 4. În tab-ul **Credentials**, verificați **Access Type = User and password**, apoi completați
    **Username** cu API Key și **Password** cu API Secret.
-5. Pe tab-ul **Other Info**, grupul **Settings**, completați **Seller ID**, **Storefront Code**
+5. Pe tab-ul **Orders and Products**, grupul **Settings**, completați **Seller ID**, **Storefront Code**
    (implicit `TR`) și, dacă doriți trimiterea automată a facturii, lăsați bifat **Enable Order Push
    Invoice** (dezactivați-l în mediul de testare). Pe același tab, secțiunea generică, desemnați un
    **User** — folosit de webhook-ul de comenzi pentru a rula importul cu drepturile lui.
@@ -143,9 +143,9 @@ automat) și completați tab-ul **Credentials**: **Access Type = User and passwo
 
 ![Backend Trendyol, tab Credentials completat (Location, Access Type = User and password, Username/Password)](screenshots/01_credentials.png)
 
-### Pasul 2 — Câmpurile specifice Trendyol (tab Other Info)
+### Pasul 2 — Câmpurile specifice Trendyol (tab Orders and Products)
 
-Pe tab-ul **Other Info**, grupul **Settings**, salvarea cu `Provider = Trendyol` afișează câmpurile
+Pe tab-ul **Orders and Products**, grupul **Settings**, salvarea cu `Provider = Trendyol` afișează câmpurile
 proprii acestui conector: **Seller ID** (obligatoriu — identificatorul de furnizor din panoul
 Trendyol, folosit în calea fiecărui apel și în antetul `User-Agent`), **Storefront Code** (implicit
 `TR`) și **Enable Order Push Invoice** (trimite automat linkul facturii către Trendyol la validarea
@@ -343,7 +343,7 @@ comenzii — `trendyol_write` pe comandă e un stub neimplementat.
 ## 8. Verificări pentru consultant
 
 - [ ] Modulul se instalează fără erori (nu necesită bibliotecă Python externă).
-- [ ] **Seller ID** este completat pe tab-ul **Other Info → Settings** — fără el, orice apel API
+- [ ] **Seller ID** este completat pe tab-ul **Orders and Products → Settings** — fără el, orice apel API
       eșuează cu o eroare explicită.
 - [ ] **Test connection** confirmă credențialele (`State = Confirmed`) — verifică apelul real la lista
       de produse Trendyol, nu doar completarea câmpurilor — înainte de orice import.
@@ -416,7 +416,7 @@ test de marketing existent):
 
 1. `01_credentials.png` — backend Trendyol, tab Credentials completat (Location, Access Type = User
    and password, Username/Password).
-2. `02_provider_details.png` — grupul de câmpuri specifice Trendyol (tab Other Info → Settings):
+2. `02_provider_details.png` — grupul de câmpuri specifice Trendyol (tab Orders and Products → Settings):
    Seller ID, Storefront Code, Enable Order Push Invoice.
 3. `03_objects.png` — tab Objects: cardurile cu acțiunile de import per tip de date.
 4. `04_health_badge.png` — indicatorul de sănătate pe cardul kanban al backend-ului.

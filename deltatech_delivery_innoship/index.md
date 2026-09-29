@@ -1,10 +1,10 @@
 # Innoship Shipping (localizat la `deltatech_delivery_innoship/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_innoship`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.2.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_innoship
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_innoship`
-- **Ultima Ingestie:** `2026-09-03`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 
@@ -18,7 +18,7 @@ Modulul conectează Odoo la Innoship, o platformă de curierat care agregă pest
 - Reobținerea etichetei unei AWB existente ("Print Label"), dacă atașamentul a fost șters — fără o nouă rezervare
 - Anularea unui transport ("Cancel Shipment") direct la Innoship și la curier
 - Tarifare în timp real pentru o comandă de vânzare, câte un tarif per curier deținut de cont; tariful cel mai mic devine prețul de livrare; alternativ, preț fix cu un prag opțional peste care se interoghează Innoship
-- Import și gestionare de lockere și puncte de ridicare din catalogul Innoship, restrâns la curierul și țara configurate pe metoda de livrare, integrat prin catalogul comun `delivery.locker` (necesită `deltatech_delivery_locker`, respectiv `deltatech_delivery_locker_website` pentru magazin)
+- Import și gestionare de lockere și puncte de ridicare din catalogul Innoship, restrâns la curierul și țara configurate pe metoda de livrare, AWB-ul este adresat prin id-ul locației, iar locațiile dispărute din catalog sunt arhivate, nu șterse; două metode de livrare pe același cont pot avea cataloage diferite (filtrul pe țară, curier și tip de locație face parte din identitatea catalogului, declarată prin `_innoship_locker_catalog_key`), fără să-și arhiveze reciproc locațiile; integrat prin catalogul comun `delivery.locker` (necesită `deltatech_delivery_locker`, respectiv `deltatech_delivery_locker_website` pentru magazin)
 - Import automat al catalogului de județe și localități Innoship; județele sunt potrivite cu nomenclatorul Odoo ignorând diacriticele; localitățile nepotrivite rămân vizibile ca „de mapat" în *Inventar > Configurare > Carrier Localities*, în loc să fie ghicite
 - Urmărire: istoricul stărilor transportului este preluat de la Innoship printr-un cron periodic și scris pe livrare; o stare Innoship nerecunoscută lasă starea existentă neschimbată, în loc să fie ghicită
 - Opțiuni avansate de expediere: ramburs (COD), valoare declarată, colet multiplu (cu greutatea distribuită pe colete), livrare sâmbăta, colet deschis la livrare, retur colet, plată de expeditor sau de destinatar, ridicare de la o locație de client înregistrată la Innoship

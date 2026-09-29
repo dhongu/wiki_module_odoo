@@ -1,10 +1,10 @@
 # Conector Trendyol Marketplace (localizat la `deltatech_marketplace_trendyol/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_trendyol`
-- **Versiune:** `19.0.1.1.8`
+- **Versiune:** `19.0.1.4.1`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_trendyol`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_trendyol`
-- **Ultima Ingestie:** `2026-09-11`
+- **Ultima Ingestie:** `2026-09-29`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -16,8 +16,13 @@ Un cont de seller Trendyol lângă Odoo, fără conector, înseamnă catalog, st
 - Import produse (oferte) existente din Trendyol, potrivite automat după cod de bare (barcode), cu status de aprobare, preț de vânzare/listă și cantitate de stoc
 - Export asincron de preț și stoc prin API-ul batch `price-and-inventory`, cu verificare automată a rezultatului până când Trendyol raportează batch-ul finalizat, iar articolele respinse sunt înregistrate cu motivul exact dat de Trendyol
 - Creare și actualizare de produse pe Trendyol (Product V2 API), cu categorie, atribute, cod de bare și imagine mapate din fișa produsului Odoo
-- Import comenzi (pachete de expediție) cu client, adrese de livrare/facturare și linii de comandă complete, gata de pregătit și facturat ca orice altă vânzare
-- Notificări de comenzi în timp real printr-un webhook Trendyol, pe lângă importul programat
+- Import comenzi (pachete de expediție) din serviciul **Order V2** (`/v2/orders`, obligatoriu de la 15.10.2026), cu client, adrese de livrare/facturare și linii de comandă complete, gata de pregătit și facturat ca orice altă vânzare; fereastra de import este setarea **Sale Order Days** (1–30 zile), citită în felii de două săptămâni, iar un pachet deja importat se actualizează când se schimbă pe Trendyol (status, AWB alocat ulterior, anulare)
+- Anulare/„UnSupplied" tratată prin politica de anulare a backend-ului (**Cancel Sale Order**): o comandă doar parțial afectată sau blocată nu se anulează, ci primește o notă cu ce trebuie ajustat manual
+- **Map Products**: produsele Odoo nemapate sunt căutate pe Trendyol după cod de bare și după referința internă (`stockCode`); se creează doar legăturile, fără import și fără modificarea produsului Odoo
+- Import retururi (claims) în registrul generic **Marketplace > Return Requests**, din `getClaims`: legate de comanda importată și de liniile vândute, stare Trendyol păstrată și mapată; doar citire (acceptarea/respingerea rămâne în panoul de seller), iar o cerere în WaitingInAction primește o activitate *To Do* la termenul acceptării automate (48 de ore)
+- La crearea unui produs pe Trendyol se trimite țara de origine (`origin`, din **Country of Origin** al produsului), obligatorie de la 23.10.2026; fără ea sau fără cod de bare exportul se oprește cu mesaj, fără să trimită nimic
+- Erorile de API sunt clasificate: 429 (cu Retry-After, pe limitatorul comun), 5xx și erorile de transport în job se reîncearcă; orice alt 4xx e definitiv și raportat cu mesajul Trendyol, iar jurnalul pe produs se scrie pe cursor izolat
+- Notificări de comenzi în timp real printr-un webhook Trendyol (acceptă atât `shipmentPackageId`, cât și vechiul `id`), pe lângă importul programat
 - Trimiterea numărului de tracking AWB către Trendyol la validarea expedierii — **condiționată**: se declanșează doar dacă transferul are deja atribuit manual un transportator Odoo real cu integrare „rate and ship" (nu transportatorul generic „Free delivery" pe care cade implicit orice comandă Trendyol importată) și dacă tracking-ul nu a fost deja completat manual înainte de validare
 - Actualizarea explicită a stării pachetului pe Trendyol (de exemplu Picking/Invoiced) — disponibilă doar ca apel de server/dezvoltator, fără declanșator automat din nicio tranziție Odoo
 - Trimiterea automată a link-ului facturii către Trendyol după postarea facturii Odoo (dacă opțiunea e activă pe backend)
@@ -27,6 +32,7 @@ Un cont de seller Trendyol lângă Odoo, fără conector, înseamnă catalog, st
 
 - `sale`
 - `delivery`
+- `stock_delivery`
 - [deltatech_marketplace](../deltatech_marketplace/index.md)
 - [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md)
 - [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md)
@@ -41,6 +47,8 @@ Conform fluxului de ingestie, secțiunea Sumar/Funcționalități a fost preluat
 - **`trendyol_write` pe comandă**: stub neimplementat (doar scrie un avertisment în jurnal) — nu există niciun push generic al modificărilor comenzii înapoi spre Trendyol, nici chiar cu „Active on write" bifat pe tipul de articol `orders`.
 - **Marcă produs (`brandId`)**: fără câmp de mapare în interfață; valoarea se citește doar dintr-o cheie de context (`trendyol_brand_id`) pe care nimic din UI standard nu o setează.
 - `ir_cron_trendyol_import_orders`: sarcină programată „Trendyol: Import Orders", la fiecare 30 de minute, dezactivată implicit (se activează manual după validarea configurării).
+- Import retururi: sarcina generică „Marketplace: Get Return Requests” (dezactivată implicit) sau butonul **Import** pe rândul *Return Request* al backend-ului; fereastra este **Return Request Days**. Motivele Trendyol se mapează în motivele de marketplace din RMA (`deltatech_rma_marketplace`, dacă e instalat).
+- Fereastra de import comenzi este **Sale Order Days** (tab *Technical*, *Limits*, implicit 2 zile); ține-o peste intervalul sarcinii programate.
 - `ir_cron_trendyol_export_stock`: sarcină programată „Trendyol: Export Stock", la fiecare oră, dezactivată implicit.
 
 **Mapare câmpuri produs**
@@ -61,6 +69,7 @@ Documentată integral în `readme/USAGE.md` (punctul 9), derivată din `trendyol
 | Stoc | `odoo_stock`, `external_stock` (legătură) | `quantity` | ambele |
 | Greutate volumetrică | `weight` (1 dacă lipsește) | `dimensionalWeight` | Odoo → Trendyol |
 | Descriere | `description_sale`, cu revenire pe denumire | `description` | Odoo → Trendyol |
+| Țară de origine | `country_of_origin` | `origin` | Odoo → Trendyol (doar la creare; obligatoriu de la 23.10.2026) |
 | Marcă | `trendyol_brand_id` din context | `brandId` | Odoo → Trendyol |
 | Aprobat | `trendyol_approved` (legătură, doar citire) | `approved` | Trendyol → Odoo |
 | În vânzare | `trendyol_on_sale` (legătură, doar citire) | `onSale` | Trendyol → Odoo |

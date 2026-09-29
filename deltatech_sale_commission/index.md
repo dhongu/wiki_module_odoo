@@ -1,10 +1,10 @@
 # Sale Commission (localizat la `deltatech_sale_commission/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_commission`
-- **Versiune:** `19.0.1.5.2`
+- **Versiune:** `19.0.1.6.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_commission
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_commission`
-- **Ultima Ingestie:** `2026-09-28`
+- **Ultima Ingestie:** `2026-09-29`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -21,6 +21,10 @@ Modulul extinde gestiunea vânzărilor cu un sistem de calcul al comisioanelor p
 - Calculul comisioanelor de vânzare pe baza agentului de pe comanda de vânzare sau de pe factură (configurabil).
 - Parametru `deltatech_sale_commission.days_for_commission` (valoare întreagă): la calculul comisionului sistemul verifică dacă factura este complet plătită și dacă diferența dintre data ultimei plăți și data scadentă este mai mică decât valoarea parametrului.
 - Dacă diferența este mai mare decât valoarea parametrului, comisionul devine 0.
+- Drepturi: wizardurile de calcul al comisionului și de actualizare a prețului de achiziție (și intrările lor din *Acțiuni*) sunt limitate la grupul *Commission Manager*; *Aplică* funcționează și fără drept de facturare, iar butonul *Setează plătit* apare doar managerilor. Un *Commission Viewer* nu mai poate modifica sau marca plătit un comision.
+- Costul liniilor de notă de credit fără retur de marfă: storno-ul unei facturi (același produs, unitate și preț) păstrează costul unitar al liniei facturii, deci perechea dă profit zero; o linie cu preț sau discount modificat, ori o notă de credit care nu stornează nicio factură, are cost 0. Costul se recalculează la schimbarea prețului sau a discountului. Wizardul de actualizare *resetează* costul (inclusiv la 0), iar cronul zilnic doar completează costul lipsă. Atenție: *Actualizare preț achiziție → pentru toate* după upgrade rescrie costul notelor de credit vechi și implicit profitul raportat.
+- Tarifele de comision (`commission.users`): jurnalul este obligatoriu (doar jurnale de vânzări), iar combinația (agent, jurnal, companie) este unică; raportul de marjă ia cel mult un tarif pe linie de factură și potrivește tariful și pe companie. Migrarea completează jurnalul acolo unde compania are un singur jurnal de vânzări și raportează duplicatele rămase; înainte de upgrade în producție se rulează `scripts/sale_commission_precheck_1_6_0.py` (doar citire).
+- Schimbarea setării *Salesperson commission compute* reconstruiește raportul după salvare; facturile *În plată* se socotesc plătite pentru comision, iar filtrul implicit al wizardurilor listează corect liniile plătite fără comision.
 - Fluxul pas-cu-pas de configurare a agenților și de calcul/plată a comisioanelor este detaliat în [Fișa Consultant](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
