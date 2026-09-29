@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-29] Re-ingestie `l10n_ro_customs_dvi` (19.0.2.1.0)
+
+- **Acțiune:** Actualizare pagină de la 19.0.2.0.0 la 19.0.2.1.0, pe branchul `19.0-wiki-l10n_ro_customs_dvi` (lot Clio). Pagina reflectă eliminarea câmpului „Comision vamal", analiticul 4462, contul 622 pentru broker (473 dacă se capitalizează) și amânarea plății TVA în vamă (art. 326 alin. (4)-(5)); `l10n_ro_anaf_d300` devine link activ.
+- **Sursă:** `readme/USAGE.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`, `wizard/` și `models/stock_landed_cost.py`; dhongu/l10n-romania 19.0.
+- **Notă:** `readme/DESCRIPTION.md` și `readme/USAGE.md` din modul au fost aliniate cu codul în dhongu/l10n-romania#588 (4462, 622/473, amânarea TVA, fără comision).
+- **Fișe consultant copiate:** da, fișa și 10 capturi (suprascrise).
+- **Fișiere actualizate:** `l10n_ro_customs_dvi/index.md`, `l10n_ro_customs_dvi/FISA_CONSULTANT.md`, `l10n_ro_customs_dvi/screenshots/`, `index.md`, `.index/chunks.json`.
+
 ## [2026-09-29] Ingestie `deltatech_print_queue` (nou) și re-ingestie `deltatech_tc` (19.0.1.2.1) — lot Clio
 
 - **Acțiune:** Prima documentare a `deltatech_print_queue` 19.0.1.0.0 (bitshop: tipărire ZPL/PDF prin coada Terrabit Connect, fără IoT Box, bazat pe `mdtrade_print` al lui Alexandru Grecu, MD Trade Concept SRL) și re-ingestia `deltatech_tc` (19.0.1.1.1 → 19.0.1.2.1): agentul Tauri în locul variantei Java, doar `X-Station-Key`, coada robustă (revendicare atomică, reofertare retry-safe, Retry, curățenie zilnică, parametrii `deltatech_tc.*`, `TERRABIT_POLL_JOBS`). Procesate în paralel (2 subagenți `documentarist-wiki`), pe branchul `19.0-wiki-print-queue`.
