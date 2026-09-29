@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-29] Re-ingestie `deltatech_marketplace_emag` (19.0.2.13.3)
+
+- **Acțiune:** Actualizare după corecția documentației modulului (branch `19.0-doc-emag-status-sync`, terrabit-solutions/bitshop_marketplace). DESCRIPTION, USAGE și fișa consultant nu mai spun că la eMAG se trimit doar acknowledge-ul și linkul facturii și că o comandă anulată pe eMAG după import cere **Reimport** manual; descriu trimiterea stării prin `/order/save` (Prepared/Finalized, anulare cu motiv) și citirea periodică a comenzilor anulate/finalizate/returnate (19.0.2.10.0–2.11.0). În pagină, fraza din *Gestiune comenzi* despre stările `CANCELED`/`FINALIZED`/`RETURNED` e corectată; fișa consultant copiată din nou (capturile neschimbate).
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `HISTORY.md`, `FISA_CONSULTANT.md`; cod `models/binding_sale_order.py` (`_emag_import_status_changes`, `_emag_save_order_status`).
+- **Dependențe/Conexiuni:** neschimbate.
+- **Fișiere actualizate:** `deltatech_marketplace_emag/` (index.md, FISA_CONSULTANT.md), `.index/chunks.json`.
+
 ## [2026-09-29] Re-ingestie `deltatech_marketplace_dashboard` (19.0.1.0.2), `deltatech_marketplace_emag` (19.0.2.13.2), `deltatech_marketplace_sale` (19.0.2.15.1)
 
 - **Acțiune:** Actualizarea celor trei pagini după terrabit-solutions/bitshop_marketplace (19.0 `f873f455`, 20.0 `f9d1bd33`).

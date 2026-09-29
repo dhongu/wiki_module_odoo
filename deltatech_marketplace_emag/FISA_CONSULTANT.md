@@ -234,18 +234,18 @@ următorul export, dacă nu e reflectată și în lista de prețuri. Excepție: 
 ### Pasul 10 — Import comenzi și acknowledge automat
 
 Din meniul cardului **Sale Order** (tab Objects), alegeți **Import** — aduce comenzile aflate pe
-eMAG în starea `NEW`, `IN_PROGRESS` sau `PREPARED`. Aceste trei stări sunt **singurele** aduse
-automat sau la apăsarea acestui buton — nu există un câmp în interfață care să schimbe lista, e
-fixată în cod; o comandă `CANCELED`, `FINALIZED` sau `RETURNED` e respinsă de acest filtru, inclusiv
-dacă ajunge prin webhook.
+eMAG în starea `NEW`, `IN_PROGRESS` sau `PREPARED`. Aceste trei stări sunt **singurele** din care
+se creează comenzi noi în Odoo, automat sau la apăsarea acestui buton — nu există un câmp în
+interfață care să schimbe lista, e fixată în cod; o comandă `CANCELED`, `FINALIZED` sau `RETURNED`
+care nu e deja în Odoo nu se creează, inclusiv dacă ajunge prin webhook.
 
 Pe lângă butonul manual, eMAG trimite comenzi noi/schimbate spre Odoo printr-un **webhook**
 (configurat pe backend, secțiunea Webhook, cu **Security Token**, plus bifa **Use Webhook** pe
 item-ul `orders` — link-ul de trimis către eMAG e cel afișat pe același item, nu unul generic de pe
 backend): la fiecare apel, comanda respectivă se importă sincron, cu **același filtru de stare** ca
 mai sus; dacă importul sincron eșuează dintr-un motiv tehnic, cade pe un job în coadă, ca să nu se
-piardă comanda — dar o comandă aflată deja în afara filtrului de stare nu ajunge oricum în Odoo pe
-această cale.
+piardă comanda — dar o comandă nouă aflată deja în afara filtrului de stare nu ajunge oricum în Odoo
+pe această cale.
 
 Când o comandă `NEW` e importată **și** item-ul `orders` are bifat **Active On Write** (tab Objects),
 comanda este confirmată automat înapoi la eMAG (`/order/acknowledge`), ca job de fundal. Cu bifa
@@ -255,10 +255,14 @@ manual: cu `deltatech_marketplace_dashboard` instalat, comanda apare în tabloul
 nebifată e utilă în testare, ca eMAG să nu considere comanda preluată.
 
 O comandă care are `cancellation_request` fără nicio expediție deja finalizată se anulează automat
-și pe comanda de vânzare Odoo, la orice import (inclusiv webhook). **O comandă deja importată, care
-trece ulterior în `CANCELED` pe eMAG, nu se anulează automat**: filtrul de stare de mai sus respinge
-și acest caz la reimportul periodic/webhook. Anularea pe baza statusului `CANCELED` se aplică doar la
-un **Reimport** manual, apăsat direct pe înregistrarea comenzii din Odoo.
+și pe comanda de vânzare Odoo, la orice import (inclusiv webhook), iar anularea se trimite și la
+eMAG (vezi Pasul 13b). **O comandă deja importată, care trece ulterior în `CANCELED` pe eMAG, se
+anulează automat în Odoo** (după politica **Cancel Sale Order** a backend-ului): prin webhook, iar
+dacă apelul acestuia s-a pierdut, prin importul periodic, care citește la fiecare rulare și comenzile
+modificate în ultima zi în stările `CANCELED`, `FINALIZED` sau `RETURNED` — doar pe cele deja
+existente în Odoo, fără să creeze nimic. Pentru cele `FINALIZED`/`RETURNED` se actualizează doar
+**eMAG Status** pe comanda marketplace; comanda de vânzare Odoo nu se modifică. Nimic din aceste
+anulări venite de la eMAG nu se trimite înapoi.
 
 ### Pasul 11 — Emiterea AWB-ului
 
@@ -309,6 +313,34 @@ trebuie ambele) — conectorul trimite către eMAG **link-ul portalului Odoo** c
 Aceasta cere ca **URL-ul de bază al instanței Odoo (`web.base.url`) să fie public și accesibil din
 afară** — pe o instanță fără acces public din internet, push-ul „reușește" (apelul API nu dă eroare),
 dar eMAG nu poate obține efectiv factura.
+
+### Pasul 13b — Starea comenzii trimisă înapoi la eMAG
+
+Pentru comenzile livrate de vânzător (tip `3` pe eMAG; cele livrate de eMAG nu se pot modifica prin
+API) și numai cu **Active On Write** bifat pe item-ul `orders`, conectorul mută comanda mai departe pe
+eMAG (`/order/save`), ca job de fundal:
+
+- când toate transferurile de ieșire ale comenzii sunt finalizate (o livrare parțială cu backorder
+  lasă comanda cum e — eMAG nu are stare parțială), comanda devine **Finalized** (4) dacă una din
+  facturile ei validate e deja atașată pe eMAG, altfel **Prepared** (3); factura trimisă ulterior
+  (Pasul 13) o trece apoi în **Finalized**;
+- **Cancel & Notify Marketplace** din dialogul de anulare al comenzii de vânzare anulează și comanda
+  eMAG (status 0), cu motivul ales în același dialog (**eMAG Cancellation Reason**, fără valoare
+  implicită — operatorul trebuie să-l aleagă); **Cancel in Odoo Only**, anularea în masă sau o simplă
+  schimbare de stare nu trimit nimic. Pe comanda de vânzare rămâne o notă dacă anularea a ajuns sau
+  nu la eMAG;
+- o comandă anulată în Odoo pentru că clientul a cerut anularea pe eMAG (`cancellation_request`) se
+  anulează și pe eMAG, cu motivul 24 „By customer request".
+
+Înainte de fiecare trimitere comanda se citește din nou de la eMAG și se trimite înapoi exact cum a
+fost citită, cu schimbată doar starea (și motivul anulării). Nu se trimite nimic dacă eMAG are deja
+comanda în acea stare sau mai departe (de ex. finalizată singură la emiterea AWB-ului prin eMAG),
+anulată sau returnată; o comandă încă „new" pe eMAG primește întâi acknowledge. eMAG acceptă anularea
+unei comenzi finalizate doar în primele 48 de ore — după aceea o refuză, iar job-ul afișează mesajul
+eMAG.
+
+Starea eMAG a comenzii se păstrează pe comanda marketplace (**eMAG Status**, **eMAG Status Since**),
+actualizată la fiecare citire a comenzii și după fiecare stare trimisă de Odoo.
 
 ### Pasul 14 — Citirea stării de sănătate
 
@@ -373,17 +405,21 @@ Nota de credit pentru un retur eMAG (§6, Pasul 15) se creează manual, prin flu
 Ce este automat: importul periodic al cererilor de retur (RMA) și al statusului lor pe
 `marketplace.return.request`; crearea automată a județelor (`res.country.state`) la prima referință; potrivirea
 localităților/sectoarelor Bucureștiului după `emag_id` (odată importate, vezi §6 Pasul 7); acknowledge
-automat al comenzilor noi (dacă **Active On Write** e activ); anularea automată a comenzii Odoo pe
-baza `cancellation_request`; atașarea etichetei AWB la expediție după emitere; polling-ul periodic al
+automat al comenzilor noi (dacă **Active On Write** e activ); trimiterea stării comenzii la eMAG —
+Prepared/Finalized după livrare și factură, anulare cu motiv (dacă **Active On Write** e activ, §6
+Pasul 13b); anularea automată a comenzii Odoo pe baza `cancellation_request` sau a stării `CANCELED`
+de pe eMAG (webhook + citirea periodică a comenzilor anulate/finalizate/returnate), cu păstrarea
+stării eMAG pe comanda marketplace; atașarea etichetei AWB la expediție după emitere; polling-ul periodic al
 stării AWB; reîncercarea automată a job-urilor eșuate temporar (HTTP 429/5xx), cât timp mai au
 reîncercări disponibile.
 
 Ce rămâne manual: whitelisting-ul de IP la eMAG; crearea celor două metode de livrare cu
 `Provider = EMAG`; maparea codului `courier`/`pickup` pe fiecare `marketplace.delivery.carrier`
 (reverificată după fiecare re-import de curieri); importul de localități (**Get city**, o singură
-dată per backend); ordinea primei sincronizări (categorii → produse → curieri → comenzi); anularea pe
-baza statusului `CANCELED` pentru o comandă deja importată (doar prin **Reimport** manual); acknowledge
-manual când **Active On Write** e dezactivat; activarea cron-urilor de export stoc/preț și a
+dată per backend); ordinea primei sincronizări (categorii → produse → curieri → comenzi); alegerea
+motivului de anulare eMAG în dialogul **Cancel & Notify Marketplace**; acceptarea comenzilor noi din
+tabloul marketplace (butonul **Acceptă**) când **Active On Write** e dezactivat — atunci stările
+Prepared/Finalized și anularea nu se trimit deloc la eMAG; activarea cron-urilor de export stoc/preț și a
 cron-ului de auto-pricing.
 
 ## 8. Verificări pentru consultant
@@ -406,14 +442,17 @@ cron-ului de auto-pricing.
 - [ ] Filtrul de import comenzi (`NEW`/`IN_PROGRESS`/`PREPARED`) e cunoscut clientului ca fix în cod
       — nu există câmp UI care să-l schimbe, iar filtrul se aplică inclusiv comenzilor primite prin
       webhook.
-- [ ] Clientul știe că o comandă deja importată, ajunsă ulterior în `CANCELED` pe eMAG, **nu** se
-      anulează automat în Odoo — necesită un **Reimport** manual pe acea comandă.
+- [ ] Clientul știe că o comandă deja importată, ajunsă ulterior în `CANCELED` pe eMAG, se anulează
+      automat în Odoo doar dacă **Cancel Sale Order** e activ pe backend (prin webhook sau, cel
+      târziu, la următorul import periodic), iar una `FINALIZED`/`RETURNED` își schimbă doar
+      **eMAG Status**, nu și comanda de vânzare.
 - [ ] **Active On Write** pe item-ul `orders` este setat conform așteptării clientului — dacă e
-      dezactivat, nici acknowledge-ul, nici push-ul facturii nu ajung automat la eMAG, deși comanda
-      se importă normal.
-- [ ] Nu s-a promis clientului o sincronizare generică de status înapoi spre eMAG — singurele push-uri
-      de status de comandă reale sunt acknowledge-ul comenzilor noi și trimiterea link-ului facturii;
-      există separat push de ofertă/preț/stoc/AWB, dar nu de status generic al comenzii.
+      dezactivat, nici acknowledge-ul, nici push-ul facturii, nici stările Prepared/Finalized/anulare
+      nu ajung automat la eMAG, deși comanda se importă normal.
+- [ ] Clientul știe ce stări trimite Odoo la eMAG și când: acknowledge la import, Prepared/Finalized
+      doar după ce toate transferurile de ieșire sunt finalizate (nu la livrare parțială), anulare doar
+      din **Cancel & Notify Marketplace** cu motiv ales, doar pentru comenzile livrate de vânzător;
+      anularea unei comenzi finalizate e acceptată de eMAG doar în primele 48 de ore.
 - [ ] **Enable Order Push Invoice** e dezactivat în mediul de testare, ca să nu se trimită facturi
       ciornă către eMAG; e cunoscut faptul că se trimite un **link**, nu PDF-ul propriu-zis, și că
       necesită `web.base.url` public.
@@ -441,7 +480,8 @@ cron-ului de auto-pricing.
 | O comandă importată nu poate emite AWB (transportator „Livrare gratuită") | Codul `courier`/`pickup` nu e mapat pe niciun `marketplace.delivery.carrier`, sau a fost rescris de un re-import de curieri | Deschideți lista de curieri (contorul cardului **Delivery Carrier**) și remapați **Code**-ul |
 | Emiterea AWB-ului eșuează cu eroare de localitate | **Get city** nu a rulat încă pentru geografia respectivă | Rulați **Get city** pe metoda de livrare eMAG |
 | O comandă nu ajunge niciodată în Odoo | Comanda e în alt status decât `NEW`/`IN_PROGRESS`/`PREPARED` pe eMAG | Comportament normal — filtrul e fix, se aplică și pe webhook; verificați statusul real pe eMAG |
-| O comandă `CANCELED` pe eMAG rămâne activă în Odoo | Anularea pe bază de status se aplică doar la Reimport manual, nu la import periodic/webhook | Deschideți comanda în Odoo și apăsați **Reimport** |
+| O comandă `CANCELED` pe eMAG rămâne activă în Odoo | **Cancel Sale Order** dezactivat pe backend, sau webhook-ul s-a pierdut și importul periodic nu a rulat încă (citește anulările din ultima zi) | Verificați **Cancel Sale Order** și cron-ul de import comenzi; pentru o comandă mai veche de o zi apăsați **Reimport** pe ea |
+| Comanda nu își schimbă starea pe eMAG după livrare / anulare | **Active On Write** dezactivat pe `orders`, livrare parțială (backorder deschis), comandă livrată de eMAG, comanda e deja în acea stare sau mai departe pe eMAG, ori anulare făcută cu **Cancel in Odoo Only** | Verificați nota de pe comanda de vânzare și job-ul din **Jobs**; la anulare folosiți **Cancel & Notify Marketplace** cu motiv |
 | Comanda ajunge în Odoo dar nu e confirmată pe eMAG (rămâne „new") | **Active On Write** e dezactivat pe item-ul `orders` | Activați bifa, sau acceptați comanda din tabloul marketplace (butonul **Acceptă**, pasul *De acceptat*) |
 | Factura nu ajunge la eMAG deși a fost validată | **Enable Order Push Invoice** dezactivat, **Active On Write** dezactivat pe `orders`, sau `web.base.url` nu e accesibil din exterior | Verificați toate trei — primele două sunt independente, iar link-ul trimis trebuie să fie public |
 | Prețul unui produs scade neașteptat la 0 pe eMAG | **Auto Price** bifat fără **Min/Max sale price** completate, pe o ofertă cu Buy Button Rank cunoscut (o deține sau nu buy box-ul, ambele cazuri sunt afectate) | Completați limitele înainte de a activa Auto Price; corectați manual prețul curent |
@@ -486,11 +526,12 @@ cd /Users/dhongu/Odoo/odoo19
 whitelisting-ul de IP la eMAG (fără el, nimic nu funcționează), crearea manuală a celor două metode de
 livrare cu maparea corectă `courier`/`pickup` (verificată după fiecare re-import de curieri, care o
 rescrie), importul de localități cu **Get city** înainte de primul AWB, și ordinea primei sincronizări
-(categorii/caracteristici înainte de produse). Subliniați clar clientului că **nu există sincronizare
-generică de status înapoi spre eMAG** — doar acknowledge la import și trimiterea unui link către
-factură (nu PDF-ul propriu-zis) — și că filtrul de import comenzi (`NEW`/`IN_PROGRESS`/`PREPARED`) e
-fix în cod, inclusiv pe calea webhook; o comandă anulată ulterior pe eMAG cere un **Reimport** manual
-în Odoo. Insistați ca **Min/Max sale price** să fie completate ÎNAINTE de a activa Auto Price — altfel
+(categorii/caracteristici înainte de produse). Explicați clientului ce se trimite înapoi la eMAG:
+acknowledge la import, un link către factură (nu PDF-ul propriu-zis), starea **Prepared**/**Finalized**
+după livrarea completă și anularea cu motiv din **Cancel & Notify Marketplace** — toate doar cu
+**Active On Write** activ și doar pentru comenzile livrate de vânzător. Filtrul de import comenzi noi
+(`NEW`/`IN_PROGRESS`/`PREPARED`) e fix în cod, inclusiv pe calea webhook; o comandă anulată ulterior
+pe eMAG se anulează în Odoo prin webhook sau la următorul import periodic. Insistați ca **Min/Max sale price** să fie completate ÎNAINTE de a activa Auto Price — altfel
 riscul e trimiterea prețului 0 la eMAG. Menționați explicit că **Test connection** validează efectiv
 un apel către eMAG (`/vat`), nu doar completarea câmpurilor. Precizați clar limita de scop pe
 retururi: importul RMA (**Bindings → Return Requests**) e doar de citire — recepția, nota de credit
