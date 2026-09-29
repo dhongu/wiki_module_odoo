@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-29] Ingestie `deltatech_hr_leave_dashboard` (modul nou)
+
+- **Acțiune:** Pagină nouă pentru [deltatech_hr_leave_dashboard](deltatech_hr_leave_dashboard/index.md) 19.0.1.0.1 (suita `bitshop`, OPL-1): tabloul concediilor echipei peste Time Off — aprobare dintr-un clic prin metodele standard, soldurile întregii echipe din `get_allocation_data`, suprapuneri pe departament, analiză pe tip / lună / departament / angajat; registrul de taburi `deltatech_hr_leave_dashboard.tabs`. Fișa consultant copiată, cu 6 capturi.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md` și codul modulului, pe `origin/19.0` (PR bitshop#2929, #2930). Rescris după `mdtrade_concedii` (MD Trade Concept SRL).
+- **Dependențe/Conexiuni:** `hr_holidays`; tabul „Pontaj” vine din `l10n_ro_hr_pontaj` (fără pagină wiki încă).
+- **Fișiere actualizate:** `deltatech_hr_leave_dashboard/index.md`, `deltatech_hr_leave_dashboard/FISA_CONSULTANT.md` + `screenshots/`, `index.md`, `.index/chunks.json`.
+
 ## [2026-09-29] Re-ingestie a 5 module mutate din `bitshop` în alte suite
 
 - **Acțiune:** Paginile indicau încă suita `bitshop`, deși modulele fuseseră mutate: `deltatech_delivery_dummy` → `bitshop_delivery`, `deltatech_marketplace_website` → `bitshop_marketplace`, `deltatech_vendor_products_granit` / `_kramp` / `_website` → `bitshop_vendor`. Corectate „Cale” (repo-urile `terrabit-solutions/<suită>`) și „Cale Locală”, versiunile și conținutul actualizate după codul din suita nouă (5 subagenți `documentarist-wiki` în paralel, branch `19.0-wiki-moved-5`).

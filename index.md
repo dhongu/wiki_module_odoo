@@ -107,6 +107,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_generic_partner_restriction](deltatech_generic_partner_restriction/index.md): Modul de tranziție, gol — funcționalitatea a fost comasată în `deltatech_partner_generic`.
 - [deltatech_gln](deltatech_gln/index.md): Câmp GLN pe partener, modul obsolet păstrat ca strat de compatibilitate; copiază valorile în câmpul standard `global_location_number` din `account_add_gln`.
 - [deltatech_helpdesk_tag_primary](deltatech_helpdesk_tag_primary/index.md): Clasificare pe două niveluri a tichetelor Helpdesk, cu etichete principale/secundare și filtrare a etichetelor după echipă.
+- [deltatech_hr_leave_dashboard](deltatech_hr_leave_dashboard/index.md): Tablou de bord pentru concediile echipei, peste Time Off: aprobare dintr-un clic, solduri pentru toată echipa, suprapuneri pe departament și analiză.
 - [deltatech_image_optimize](deltatech_image_optimize/index.md): Recomprimă imaginile supradimensionate din filestore și elimină imaginile de produs duplicate din aceeași fișă de produs.
 - [deltatech_invoice_number](deltatech_invoice_number/index.md): Renumerotare facturi și validare a ordinii cronologice de emitere pe jurnalele de vânzare.
 - [deltatech_invoice_picking](deltatech_invoice_picking/index.md): Generează facturi direct din livrări (pickings) sau din loturi, preluând doar produsele și cantitățile efectiv realizate.
