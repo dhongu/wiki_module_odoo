@@ -1,10 +1,10 @@
 # Dummy Shipping (localizat la `deltatech_delivery_dummy/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_dummy`
-- **Versiune:** `19.0.0.0.1`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_dummy`
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_delivery_dummy`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `19.0.0.0.2`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_dummy`
+- **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_dummy`
+- **Ultima Ingestie:** `2026-09-29`
 
 #### 1. Sumar
 

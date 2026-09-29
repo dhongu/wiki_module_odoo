@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-29] Re-ingestie a 5 module mutate din `bitshop` în alte suite
+
+- **Acțiune:** Paginile indicau încă suita `bitshop`, deși modulele fuseseră mutate: `deltatech_delivery_dummy` → `bitshop_delivery`, `deltatech_marketplace_website` → `bitshop_marketplace`, `deltatech_vendor_products_granit` / `_kramp` / `_website` → `bitshop_vendor`. Corectate „Cale” (repo-urile `terrabit-solutions/<suită>`) și „Cale Locală”, versiunile și conținutul actualizate după codul din suita nouă (5 subagenți `documentarist-wiki` în paralel, branch `19.0-wiki-moved-5`).
+- **Noutăți:** `deltatech_marketplace_website` 19.0.0.1.0 (sincronizarea galeriilor după link, importul categoriilor publice cu mapări duplicate marcate, fișa consultant copiată); `deltatech_vendor_products_website` 19.0.1.1.6 (ruta `/vendor_product/<id>` restrânsă la rezultatele căutării din sesiune și la utilizatorii interni); `deltatech_delivery_dummy` 19.0.0.0.2 (doar iconiță). Granit și Kramp: doar căile.
+- **Sursă:** copii detașate la `origin/19.0` ale suitelor `bitshop_delivery`, `bitshop_marketplace`, `bitshop_vendor`.
+- **Fișiere actualizate:** cele 5 `<modul>/index.md` (+ `deltatech_marketplace_website/FISA_CONSULTANT.md`), `index.md`, `.index/chunks.json`.
+
 ## [2026-09-29] Ștergere pagină `l10n_ro_journal_tva` (modul eliminat)
 
 - **Acțiune:** Pagina `l10n_ro_journal_tva` a fost ștearsă: modulul nu mai există pe nicio serie (eliminat în `l10n_ro_ent` prin commit-ul `e84303c1` din 2026-06-02, „jurnale TVA cu coloane dinamice pe cote + elimină l10n_ro_journal_tva”); jurnalele de TVA sunt acum în [l10n_ro_anaf_d394](l10n_ro_anaf_d394/index.md).

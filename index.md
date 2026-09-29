@@ -64,7 +64,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_delivery_dpd](deltatech_delivery_dpd/index.md): Integrare Odoo cu serviciul de curierat DPD pentru calcul tarife, generare AWB (PDF/ZPL), tracking și gestionare livrări.
 - [deltatech_delivery_dropshiping](deltatech_delivery_dropshiping/index.md): Modul depreciat pe 19.0 (installable: False) care trimitea AWB-ul și detaliile de livrare furnizorilor în fluxul de dropshipping; funcționalitatea e acum acoperită integral de `deltatech_delivery`.
 - [deltatech_delivery_dsc](deltatech_delivery_dsc/index.md): Integrare cu Dragon Star Curier (DSC): AWB, tarife, ridicare, borderou zilnic, urmărire, cu anulare AWB validată în Odoo și re-obținerea etichetei.
-- [deltatech_delivery_dummy](deltatech_delivery_dummy/index.md): Metodă de livrare fictivă (dummy) pentru testarea fluxului de curierat fără integrare cu un curier real.
+- [deltatech_delivery_dummy](deltatech_delivery_dummy/index.md): Metodă de livrare „dummy" (fictivă) pentru testarea fluxului de checkout și livrare, fără apeluri către API-uri reale de curierat.
 - [deltatech_delivery_fc](deltatech_delivery_fc/index.md): Integrare Fan Courier: AWB (PDF/ZPL/HTML), tarife, urmărire, lockere FanBox cu import fără ștergeri și reîncercare automată, Client ID per depozit.
 - [deltatech_delivery_gls](deltatech_delivery_gls/index.md): Integrare GLS (GLS Online și MyGLS): AWB, etichete, tracking, ramburs, tranzacții și livrare la lockere GLS.
 - [deltatech_delivery_innoship](deltatech_delivery_innoship/index.md): Conectare Odoo la Innoship (agregator de peste 100 de curieri): AWB, etichete, tarifare, anulare, tracking, lockere și puncte de ridicare, dintr-o singură integrare.
@@ -146,7 +146,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_marketplace_sale_type](deltatech_marketplace_sale_type/index.md): Clasificarea comenzilor de vânzare din marketplace pe tipuri de comandă, pentru analiză și strategii de vânzare granulare.
 - [deltatech_marketplace_shopify](deltatech_marketplace_shopify/index.md): Conector Shopify (GraphQL Admin API) pentru produse, clienți, comenzi, stoc, prețuri, AWB, retururi și rambursări, cu registru de permisiuni, Map Products după SKU/cod de bare și fereastra de 60 de zile a comenzilor.
 - [deltatech_marketplace_trendyol](deltatech_marketplace_trendyol/index.md): Conector Trendyol Marketplace: produse, comenzi (Order V2), stoc, preț, retururi (claims) și facturi între Odoo și Trendyol, prin API-ul V2 cu endpoint-uri batch asincrone.
-- [deltatech_marketplace_website](deltatech_marketplace_website/index.md): Integrează datele de marketplace în website-ul Odoo, afișând descrieri scurte și branding specific pe paginile de produs din storefront.
+- [deltatech_marketplace_website](deltatech_marketplace_website/index.md): Extensie de website pentru conectorii de marketplace: importă categoriile publice și sincronizează galeriile de imagini ale produselor în magazinul online (modul dependență, instalat odată cu conectorul).
 - [deltatech_marketplace_woocommerce](deltatech_marketplace_woocommerce/index.md): Conector WooCommerce pentru Odoo: sincronizează produse, clienți și comenzi din magazin și exportă stocul Odoo înapoi, cu mapare produse după SKU.
 - [deltatech_mentor](deltatech_mentor/index.md): Export de date din Odoo (parteneri, produse, facturi) pentru import în aplicația de contabilitate WinMentor.
 - [deltatech_move_negative_stock](deltatech_move_negative_stock/index.md): Completează automat transferurile de stoc cu cantitățile necesare pentru corectarea stocului negativ și notifică zilnic managerul locației.
@@ -319,9 +319,9 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_valuation_report](deltatech_valuation_report/index.md): Raport Enterprise care compară soldul contabil al conturilor de stoc cu evaluarea produsului și explică diferențele prin liniile fără produs.
 - [deltatech_van_sales](deltatech_van_sales/index.md): MVP de vânzare mobilă din stocul unei dube — livrare instant pe teren, încasare pe loc, facturare centralizată în batch la birou.
 - [deltatech_vendor_products](deltatech_vendor_products/index.md): Import și sincronizare a cataloagelor de produse de la furnizori (prețuri, disponibilitate, imagini), cu creare/actualizare automată de produse.
-- [deltatech_vendor_products_granit](deltatech_vendor_products_granit/index.md): Conector specializat pentru importul și sincronizarea catalogului furnizorului Granit în Odoo.
-- [deltatech_vendor_products_kramp](deltatech_vendor_products_kramp/index.md): Conector specializat pentru importul și sincronizarea catalogului furnizorului Kramp în Odoo.
-- [deltatech_vendor_products_website](deltatech_vendor_products_website/index.md): Căutarea și expunerea produselor furnizorilor în magazinul online, cu import automat în Odoo și posibilitatea de comandă online.
+- [deltatech_vendor_products_granit](deltatech_vendor_products_granit/index.md): Conector pentru importul și sincronizarea catalogului de produse al furnizorului Granit în Odoo.
+- [deltatech_vendor_products_kramp](deltatech_vendor_products_kramp/index.md): Conector Kramp care importă și sincronizează catalogul de produse al furnizorului Kramp în Odoo, fără introducere manuală.
+- [deltatech_vendor_products_website](deltatech_vendor_products_website/index.md): Caută produse în cataloagele furnizorilor, le importă automat și le afișează în magazinul online, cu adăugare în coș și comandă.
 - [deltatech_vendor_stock](deltatech_vendor_stock/index.md): Vizibilitate asupra stocului disponibil la furnizor, afișat în datele produsului și în comenzile de vânzare.
 - [deltatech_warehouse_arrangement](deltatech_warehouse_arrangement/index.md): Gestionează amplasamentele fizice de depozit (magazie→zonă→raft→secțiune→grilă), în paralel cu locațiile standard.
 - [deltatech_warehouse_map](deltatech_warehouse_map/index.md): Hartă vizuală a depozitului pentru navigarea ierarhică a amplasamentelor de stoc, cu afișarea grafică a gradului de ocupare.

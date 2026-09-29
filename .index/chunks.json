@@ -1738,10 +1738,10 @@
   {
     "path": "deltatech_delivery_dummy/index.md",
     "module": "deltatech_delivery_dummy",
-    "version": "19.0.0.0.1",
-    "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_dummy`",
-    "local_path": "odoo-addons/bitshop/deltatech_delivery_dummy",
-    "last_ingest": "2026-06-03",
+    "version": "19.0.0.0.2",
+    "github": "`https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_dummy`",
+    "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_dummy",
+    "last_ingest": "2026-09-29",
     "friendly_name": "Dummy Shipping",
     "summary": "Acest modul adaugă o metodă de livrare „dummy\" (fictivă) în sistemul de curierat al Odoo, menită să faciliteze testarea și flexibilitatea operațională fără a necesita integrarea cu un curier real. Din perspectivă business, este un instrument esențial în fazele de implementare și testare a unor noi canale de e-commerce sau a fluxurilor logistice, permițând simularea realistă a unui ciclu complet de comandă. Astfel, echipa poate valida întregul proces de checkout și livrare într-un mediu sigur, fără apeluri către API-urile curierilor reali și fără costurile aferente.",
     "features": [
@@ -4371,18 +4371,21 @@
   {
     "path": "deltatech_marketplace_website/index.md",
     "module": "deltatech_marketplace_website",
-    "version": "19.0.0.0.4",
-    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_marketplace_website",
-    "local_path": "odoo-addons/bitshop/deltatech_marketplace_website",
-    "last_ingest": "2026-06-03",
+    "version": "19.0.0.1.0",
+    "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_website`",
+    "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_website",
+    "last_ingest": "2026-09-29",
     "friendly_name": "Marketplace website addon",
-    "summary": "Acest modul îmbogățește website-ul Odoo orientat către client, integrând date specifice marketplace-ului și oferind informații descriptive suplimentare potențialilor cumpărători. Din punct de vedere business, extensia ajută la construirea încrederii și a clarității cu cumpărătorii online, afișând detaliile relevante de marketplace direct în magazinul online. Astfel, conținutul de pe website-ul Odoo și cel din magazinele de tip marketplace rămân aliniate, oferind o experiență de brand unitară și consecventă, gestionată dintr-un singur backend Odoo centralizat.",
+    "summary": "Acest modul îmbogățește website-ul Odoo orientat către client, integrând date specifice marketplace-ului și oferind informații descriptive suplimentare potențialilor cumpărători. Din punct de vedere business, extensia ajută la construirea încrederii și a clarității cu cumpărătorii online, afișând detaliile relevante de marketplace direct în magazinul online. Astfel, conținutul de pe website-ul Odoo și cel din magazinele de tip marketplace rămân aliniate, oferind o experiență de brand unitară și consecventă, gestionată dintr-un singur backend Odoo centralizat. Modulul este marcat „Hidden\" (categorie) și are preț simbolic: se instalează ca dependență a conectorului de marketplace ales, nu se cumpără de sine stătător.",
     "features": [
       "Informații bogate despre produs: valorifică descrierile scurte de marketplace pentru a oferi conținut concis și informativ pe paginile de produs.",
       "Vizibilitate îmbunătățită: scoate în evidență atributele și branding-ul specifice marketplace-ului pe website, îmbunătățind experiența de căutare și descoperire.",
       "Experiență consecventă pentru client: aliniază informațiile între website-ul Odoo și magazinele de tip marketplace pentru un parcurs de brand fără întreruperi.",
       "Optimizarea conversiei: conținut descriptiv mai bun și branding clar pot duce la o implicare mai mare și la rate de conversie a vânzărilor îmbunătățite.",
-      "Platformă unificată: gestionează conținutul website-ului și informațiile legate de marketplace dintr-un backend Odoo unic, centralizat."
+      "Platformă unificată: gestionează conținutul website-ului și informațiile legate de marketplace dintr-un backend Odoo unic, centralizat.",
+      "Galerii de imagini sincronizate după link: metoda unică `marketplace.product.image.sync_gallery` tratează imaginile suplimentare ale șabloanelor și variantelor, pentru toate conectoarele. O imagine se recunoaște după id-ul din marketplace sau după link; se descarcă doar imaginile noi sau cele cu link schimbat. Imaginea care nu mai vine din marketplace este ștearsă de pe produs, imaginile adăugate manual în Odoo rămân neatinse, iar o galerie goală nu schimbă nimic.",
+      "Categorii publice din marketplace: importul mapează categoriile externe pe `product.public.category` (opțiunea „Use public category\" pe backend, activă implicit); mapările duplicate apar în roșu în listă, cu filtrul „Duplicate mappings\", iar la citirea id-ului extern se folosește cea mai recentă mapare.",
+      "Descrierea scurtă de site se preia doar dacă este instalat separat `deltatech_website_short_description`; fără el valoarea primită este ignorată."
     ],
     "dependencies": [
       "deltatech_marketplace",
@@ -4392,7 +4395,7 @@
       "deltatech_marketplace",
       "deltatech_marketplace_sale"
     ],
-    "text": "Marketplace website addon\ndeltatech_marketplace_website\nAcest modul îmbogățește website-ul Odoo orientat către client, integrând date specifice marketplace-ului și oferind informații descriptive suplimentare potențialilor cumpărători. Din punct de vedere business, extensia ajută la construirea încrederii și a clarității cu cumpărătorii online, afișând detaliile relevante de marketplace direct în magazinul online. Astfel, conținutul de pe website-ul Odoo și cel din magazinele de tip marketplace rămân aliniate, oferind o experiență de brand unitară și consecventă, gestionată dintr-un singur backend Odoo centralizat.\nInformații bogate despre produs: valorifică descrierile scurte de marketplace pentru a oferi conținut concis și informativ pe paginile de produs.\nVizibilitate îmbunătățită: scoate în evidență atributele și branding-ul specifice marketplace-ului pe website, îmbunătățind experiența de căutare și descoperire.\nExperiență consecventă pentru client: aliniază informațiile între website-ul Odoo și magazinele de tip marketplace pentru un parcurs de brand fără întreruperi.\nOptimizarea conversiei: conținut descriptiv mai bun și branding clar pot duce la o implicare mai mare și la rate de conversie a vânzărilor îmbunătățite.\nPlatformă unificată: gestionează conținutul website-ului și informațiile legate de marketplace dintr-un backend Odoo unic, centralizat."
+    "text": "Marketplace website addon\ndeltatech_marketplace_website\nAcest modul îmbogățește website-ul Odoo orientat către client, integrând date specifice marketplace-ului și oferind informații descriptive suplimentare potențialilor cumpărători. Din punct de vedere business, extensia ajută la construirea încrederii și a clarității cu cumpărătorii online, afișând detaliile relevante de marketplace direct în magazinul online. Astfel, conținutul de pe website-ul Odoo și cel din magazinele de tip marketplace rămân aliniate, oferind o experiență de brand unitară și consecventă, gestionată dintr-un singur backend Odoo centralizat. Modulul este marcat „Hidden\" (categorie) și are preț simbolic: se instalează ca dependență a conectorului de marketplace ales, nu se cumpără de sine stătător.\nInformații bogate despre produs: valorifică descrierile scurte de marketplace pentru a oferi conținut concis și informativ pe paginile de produs.\nVizibilitate îmbunătățită: scoate în evidență atributele și branding-ul specifice marketplace-ului pe website, îmbunătățind experiența de căutare și descoperire.\nExperiență consecventă pentru client: aliniază informațiile între website-ul Odoo și magazinele de tip marketplace pentru un parcurs de brand fără întreruperi.\nOptimizarea conversiei: conținut descriptiv mai bun și branding clar pot duce la o implicare mai mare și la rate de conversie a vânzărilor îmbunătățite.\nPlatformă unificată: gestionează conținutul website-ului și informațiile legate de marketplace dintr-un backend Odoo unic, centralizat.\nGalerii de imagini sincronizate după link: metoda unică `marketplace.product.image.sync_gallery` tratează imaginile suplimentare ale șabloanelor și variantelor, pentru toate conectoarele. O imagine se recunoaște după id-ul din marketplace sau după link; se descarcă doar imaginile noi sau cele cu link schimbat. Imaginea care nu mai vine din marketplace este ștearsă de pe produs, imaginile adăugate manual în Odoo rămân neatinse, iar o galerie goală nu schimbă nimic.\nCategorii publice din marketplace: importul mapează categoriile externe pe `product.public.category` (opțiunea „Use public category\" pe backend, activă implicit); mapările duplicate apar în roșu în listă, cu filtrul „Duplicate mappings\", iar la citirea id-ului extern se folosește cea mai recentă mapare.\nDescrierea scurtă de site se preia doar dacă este instalat separat `deltatech_website_short_description`; fără el valoarea primită este ignorată."
   },
   {
     "path": "deltatech_marketplace_woocommerce/index.md",
@@ -9109,9 +9112,9 @@
     "path": "deltatech_vendor_products_granit/index.md",
     "module": "deltatech_vendor_products_granit",
     "version": "19.0.1.0.2",
-    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_vendor_products_granit",
-    "local_path": "odoo-addons/bitshop/deltatech_vendor_products_granit",
-    "last_ingest": "2026-06-03",
+    "github": "`https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products_granit`",
+    "local_path": "odoo-addons/bitshop_vendor/deltatech_vendor_products_granit",
+    "last_ingest": "2026-09-29",
     "friendly_name": "Vendor Products Granit",
     "summary": "Acest modul oferă un conector specializat pentru importul și sincronizarea datelor despre produse din catalogul furnizorului Granit direct în Odoo, simplificând astfel aprovizionarea și gestiunea stocurilor. Din punct de vedere de business, automatizarea elimină introducerea manuală a datelor pentru produsele Granit, asigurând că în Odoo catalogul este mereu actualizat cu cele mai recente informații despre produse și prețuri.",
     "features": [
@@ -9133,9 +9136,9 @@
     "path": "deltatech_vendor_products_kramp/index.md",
     "module": "deltatech_vendor_products_kramp",
     "version": "19.0.1.0.1",
-    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_vendor_products_kramp",
-    "local_path": "odoo-addons/bitshop/deltatech_vendor_products_kramp",
-    "last_ingest": "2026-06-03",
+    "github": "`https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products_kramp`",
+    "local_path": "odoo-addons/bitshop_vendor/deltatech_vendor_products_kramp",
+    "last_ingest": "2026-09-29",
     "friendly_name": "Vendor Products Kramp",
     "summary": "Acest modul oferă un conector specializat pentru importul și sincronizarea datelor despre produse din catalogul furnizorului Kramp în Odoo, simplificând aprovizionarea și gestiunea stocurilor. Din punct de vedere business, automatizarea elimină introducerea manuală a produselor Kramp, asigurând că în Odoo catalogul este mereu actualizat cu cele mai recente informații despre produse și prețuri.",
     "features": [
@@ -9157,16 +9160,18 @@
   {
     "path": "deltatech_vendor_products_website/index.md",
     "module": "deltatech_vendor_products_website",
-    "version": "19.0.1.1.5",
-    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_vendor_products_website",
-    "local_path": "odoo-addons/bitshop/deltatech_vendor_products_website",
-    "last_ingest": "2026-06-03",
+    "version": "19.0.1.1.6",
+    "github": "`https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products_website`",
+    "local_path": "odoo-addons/bitshop_vendor/deltatech_vendor_products_website",
+    "last_ingest": "2026-09-29",
     "friendly_name": "Vendor Products Website",
     "summary": "Acest modul extinde funcționalitatea de gestionare a produselor furnizorilor către magazinul online (website). Permite căutarea produselor în cataloagele furnizorilor și importul automat al acestora în lista principală de produse din Odoo, afișarea produselor furnizorilor direct în site și posibilitatea ca vizitatorii să adauge aceste produse în coș și să plaseze comenzi pentru ele. Astfel, oferta de produse disponibile în magazinul online poate fi extinsă cu produsele furnizorilor fără a fi nevoie de o gestionare manuală separată a fiecărui articol.",
     "features": [
       "Căutarea produselor în cataloagele furnizorilor și importul automat al acestora în lista principală de produse din Odoo.",
       "Afișarea produselor furnizorilor în magazinul online (website).",
-      "Adăugarea produselor furnizorilor în coș și plasarea de comenzi pentru acestea."
+      "Adăugarea produselor furnizorilor în coș și plasarea de comenzi pentru acestea.",
+      "Securitate (19.0.1.1.6): ruta `/vendor_product/<id>` acționează doar pe ID-uri returnate de `/vendor_product/online_search` în aceeași sesiune sau pentru utilizatori interni de vânzări; orice alt ID întoarce 404. Pentru produse deja legate, ruta nu mai forțează `website_published` și `allow_out_of_stock_order`, deci produsele despublicate rămân despublicate.",
+      "Căutarea online acceptă doar fluxurile (feed-urile) cu `online_search` activat."
     ],
     "dependencies": [
       "deltatech_vendor_products",
@@ -9177,7 +9182,7 @@
       "deltatech_vendor_products",
       "website_sale"
     ],
-    "text": "Vendor Products Website\ndeltatech_vendor_products_website\nAcest modul extinde funcționalitatea de gestionare a produselor furnizorilor către magazinul online (website). Permite căutarea produselor în cataloagele furnizorilor și importul automat al acestora în lista principală de produse din Odoo, afișarea produselor furnizorilor direct în site și posibilitatea ca vizitatorii să adauge aceste produse în coș și să plaseze comenzi pentru ele. Astfel, oferta de produse disponibile în magazinul online poate fi extinsă cu produsele furnizorilor fără a fi nevoie de o gestionare manuală separată a fiecărui articol.\nCăutarea produselor în cataloagele furnizorilor și importul automat al acestora în lista principală de produse din Odoo.\nAfișarea produselor furnizorilor în magazinul online (website).\nAdăugarea produselor furnizorilor în coș și plasarea de comenzi pentru acestea."
+    "text": "Vendor Products Website\ndeltatech_vendor_products_website\nAcest modul extinde funcționalitatea de gestionare a produselor furnizorilor către magazinul online (website). Permite căutarea produselor în cataloagele furnizorilor și importul automat al acestora în lista principală de produse din Odoo, afișarea produselor furnizorilor direct în site și posibilitatea ca vizitatorii să adauge aceste produse în coș și să plaseze comenzi pentru ele. Astfel, oferta de produse disponibile în magazinul online poate fi extinsă cu produsele furnizorilor fără a fi nevoie de o gestionare manuală separată a fiecărui articol.\nCăutarea produselor în cataloagele furnizorilor și importul automat al acestora în lista principală de produse din Odoo.\nAfișarea produselor furnizorilor în magazinul online (website).\nAdăugarea produselor furnizorilor în coș și plasarea de comenzi pentru acestea.\nSecuritate (19.0.1.1.6): ruta `/vendor_product/<id>` acționează doar pe ID-uri returnate de `/vendor_product/online_search` în aceeași sesiune sau pentru utilizatori interni de vânzări; orice alt ID întoarce 404. Pentru produse deja legate, ruta nu mai forțează `website_published` și `allow_out_of_stock_order`, deci produsele despublicate rămân despublicate.\nCăutarea online acceptă doar fluxurile (feed-urile) cu `online_search` activat."
   },
   {
     "path": "deltatech_vendor_stock/index.md",
