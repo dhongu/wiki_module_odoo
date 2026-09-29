@@ -72,51 +72,58 @@ Date minime pentru demo:
 ### Pasul 1 — Pregătirea livrării unei comenzi eMAG
 
 O comandă importată de la eMAG generează automat o livrare (`stock.picking`) legată de comanda
-de vânzare. Deschideți livrarea din **Inventar → Transferuri → Livrări** și verificați metoda
-de livrare de tip eMAG pe antetul livrării.
+de vânzare. Deschideți livrarea din **Inventar → Transferuri → Livrări** și verificați, pe tabul
+**Informații suplimentare**, că **Transportator** este o metodă de livrare de tip eMAG (①).
 
-![Livrare eMAG cu metoda de curier configurată](screenshots/01_livrare_metoda_emag.png)
+Apăsați apoi **Detalii transportator** și confirmați detaliile expedierii (colete, greutate,
+ramburs). Abia după confirmare apare butonul **Trimite la curier** (②).
+
+![Livrare eMAG: transportatorul eMAG pe tabul Informații suplimentare și butonul Trimite la curier](screenshots/01_livrare_metoda_emag.png)
 
 > Curierul real (Sameday, FAN etc.) nu este cunoscut la importul comenzii — eMAG transmite doar
 > modul de livrare („curier"/„locker"). Operatorul alege metoda de livrare Odoo potrivită
 > (asociată contului de curier eMAG dorit) chiar înainte de a genera AWB-ul.
 
-### Pasul 2 — Trimitere către transportator (emiterea AWB-ului)
+### Pasul 2 — Trimitere la curier (emiterea AWB-ului)
 
-Din livrare, apăsați **Trimite la transportator**. Modulul calculează suma de ramburs din
+Din livrare, apăsați **Trimite la curier**. Modulul calculează suma de ramburs din
 starea curentă a comenzii (dacă plata a fost deja încasată online, nu rămâne nimic de încasat
 ramburs), preia adresa de expediere/destinație mapată pe localitățile eMAG și, pentru comenzile
 cu ridicare din easybox, transmite automatul (lockerul) primit pe comandă. Cere apoi AWB-ul prin
 API-ul eMAG.
 
-![Confirmarea trimiterii la transportator, cu AWB generat](screenshots/02_trimite_transportator.png)
+![Livrarea după Trimite la curier: referința de urmărire completată și butonul Tipărire AWB](screenshots/02_trimite_transportator.png)
 
-La succes, livrarea primește numărul de urmărire intern (`carrier_tracking_ref` — id-ul eMAG,
-folosit pentru toate apelurile API), iar dacă răspunsul conține numărul de AWB vizibil clientului,
-acesta este reținut imediat.
+La succes, livrarea primește **Referință de urmărire** (①), adică id-ul intern eMAG
+(`carrier_tracking_ref`), folosit pentru toate apelurile API. Dacă răspunsul conține și numărul de
+AWB vizibil clientului, acesta este reținut imediat. Butonul **Trimite la curier** dispare și
+apare **Tipărire AWB** (②).
 
 ### Pasul 3 — Tipărirea etichetei
 
-Apăsați **Tipărire etichetă** (sau lăsați fluxul automat de etichetare să o facă la trimitere).
-Modulul cere eticheta de la eMAG în formatul configurat (PDF pentru A4/A5/A6, conținut ZPL pentru
+Eticheta se aduce automat la trimitere și apare în previzualizarea din dreapta livrării (①).
+**Tipărire AWB** (②) o cere din nou de la eMAG, de exemplu după o ștergere. Modulul cere eticheta
+de la eMAG în formatul configurat (PDF pentru A4/A5/A6, conținut ZPL pentru
 imprimantele Zebra) și o atașează livrării, cu un nume de fișier care conține AWB-ul
 (`LabelEmag-<awb>.pdf` sau `.zpl`), astfel încât fluxul de tipărire ZPL din `deltatech_delivery`
 o poate recunoaște automat.
 
-![Eticheta AWB atașată livrării](screenshots/03_eticheta_awb.png)
+![Eticheta AWB atașată livrării, în previzualizarea din dreapta, și butonul Tipărire AWB](screenshots/03_eticheta_awb.png)
 
 ### Pasul 4 — Urmărirea coletului (AWB și curier)
 
-Pe formularul livrării, sub istoricul de livrare, apar acum **eMAG AWB Number** (numărul de AWB
-citit de client, diferit de id-ul intern folosit de API) și **eMAG Courier** (curierul partener
-care transportă efectiv coletul — Sameday, FAN etc.). Ambele câmpuri se completează/actualizează
-automat la interogarea periodică de status.
+Pe tabul **Istoric** al livrării, deasupra listei de statusuri, apar **Număr AWB eMAG** (①,
+numărul de AWB citit de client, diferit de id-ul intern folosit de API) și **Curier eMAG** (②,
+curierul partener care transportă efectiv coletul — Sameday, FAN etc.). Câmpurile apar doar după
+ce eMAG le-a trimis și se actualizează automat la interogarea periodică de status; butonul
+**Reîmprospătează** face interogarea pe loc.
 
-![Câmpurile eMAG AWB Number și eMAG Courier pe livrare](screenshots/04_awb_courier_picking.png)
+![Câmpurile Număr AWB eMAG și Curier eMAG pe tabul Istoric al livrării](screenshots/04_awb_courier_picking.png)
 
 Starea de livrare (`delivery_state`) și istoricul de tranzit se actualizează din codurile de
-status transmise de eMAG (ridicat, în tranzit, în depozit, în livrare, livrat, refuzat/returnat,
-anulat), afișate în istoricul de livrare al comenzii.
+status transmise de eMAG (ridicat, în tranzit, în depozit, în livrare, livrat, refuzat/returnat).
+Fiecare status apare ca un rând în lista de pe tabul **Istoric** (①), cu curierul ca locație. Un
+AWB anulat (`CAN`) nu schimbă starea livrării: de regulă, AWB-ul se emite din nou.
 
 ![Istoricul de livrare actualizat din statusul eMAG](screenshots/05_istoric_livrare.png)
 
@@ -154,10 +161,11 @@ interfața eMAG).
       un oraș cunoscut de eMAG.
 - [ ] Conturile de curier eMAG sunt importate pe backend și mapate la o singură metodă de
       livrare Odoo fiecare (o mapare ambiguă blochează emiterea AWB-ului).
-- [ ] „Trimite la transportator" generează AWB-ul și populează numărul de urmărire.
+- [ ] **Trimite la curier** apare după **Detalii transportator**, generează AWB-ul și completează
+      **Referință de urmărire**.
 - [ ] Eticheta se tipărește în formatul configurat (PDF sau ZPL) și numele fișierului conține
       AWB-ul.
-- [ ] Câmpurile **eMAG AWB Number** și **eMAG Courier** se completează după interogarea de
+- [ ] Câmpurile **Număr AWB eMAG** și **Curier eMAG** se completează după interogarea de
       status.
 - [ ] Istoricul de livrare reflectă statusul real transmis de eMAG.
 
@@ -169,25 +177,23 @@ interfața eMAG).
 | „Please select the city for the recipient from the EMAG list of cities" | Localitatea clientului (destinatar, în România) nu este mapată în nomenclatorul eMAG | Corectați/completați orașul pe adresa de livrare a comenzii |
 | „Multiple eMAG courier accounts are mapped to delivery method …" | Mai multe conturi de curier eMAG sunt asociate aceleiași metode de livrare Odoo | Alocați fiecare cont de curier eMAG unei metode de livrare Odoo distincte |
 | Eticheta nu se convertește/tipărește corect pe imprimanta Zebra | Formatul etichetei nu este setat pe `ZPL` pe metoda de livrare | Setați `emag_label_format = ZPL` pe metoda de livrare folosită |
-| AWB emis, dar fără număr vizibil pentru client (`eMAG AWB Number` gol) | Răspunsul de emitere nu a conținut încă numărul de AWB (apare abia la interogarea de status) | Așteptați următoarea rulare a interogării de status sau reinterogați manual istoricul |
+| AWB emis, dar fără număr vizibil pentru client (**Număr AWB eMAG** gol) | Răspunsul de emitere nu a conținut încă numărul de AWB (apare abia la interogarea de status) | Așteptați următoarea rulare a interogării de status sau reinterogați manual istoricul |
 | Statusul livrării nu se mai actualizează | Backend-ul asociat comenzii lipsește sau apelul către eMAG eșuează silențios (se loghează ca avertisment) | Verificați backend-ul comenzii marketplace și jurnalul de erori (`_logger`) pentru apelul `/awb read` |
 
 ## 10. Capturi de ecran
 
-Capturile nu există încă în `readme/screenshots/`. Lista planificată, în ordinea pașilor din
-secțiunea 6:
+Capturile sunt generate de `tests/test_screenshots.py` (Playwright, API-ul eMAG simulat), pe „RO
+Company”, cu interfața în română:
 
-1. `01_livrare_metoda_emag.png` — livrarea unei comenzi eMAG, cu metoda de livrare de tip EMAG
-   configurată pe antet.
-2. `02_trimite_transportator.png` — rezultatul acțiunii „Trimite la transportator" (AWB generat).
-3. `03_eticheta_awb.png` — eticheta AWB atașată livrării.
-4. `04_awb_courier_picking.png` — câmpurile „eMAG AWB Number" și „eMAG Courier" pe formularul
-   livrării.
-5. `05_istoric_livrare.png` — istoricul de livrare actualizat din statusul eMAG.
+| Fișier | Ce arată |
+| --- | --- |
+| `screenshots/01_livrare_metoda_emag.png` | livrarea eMAG: transportatorul eMAG și butonul *Trimite la curier* |
+| `screenshots/02_trimite_transportator.png` | după *Trimite la curier*: referința de urmărire și butonul *Tipărire AWB* |
+| `screenshots/03_eticheta_awb.png` | eticheta AWB în previzualizarea din dreapta livrării |
+| `screenshots/04_awb_courier_picking.png` | tabul *Istoric*: *Număr AWB eMAG* și *Curier eMAG* |
+| `screenshots/05_istoric_livrare.png` | tabul *Istoric*: statusurile citite de la eMAG |
 
-Se recomandă rularea skill-ului `fisa-screenshots` pentru a genera aceste capturi (necesită un
-scenariu de test cu comandă eMAG importată, backend mock/patch pe API-ul eMAG, similar cu
-`tests/test_emag_delivery.py`), înainte de a considera fișa completă.
+Eticheta și statusurile din capturi sunt date de test, nu un AWB real.
 
 ## 11. Observații pentru manual
 

@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-29] Re-ingestie `deltatech_marketplace_emag_delivery` (19.0.1.1.2) — capturile fișei
+
+- **Acțiune:** Fișa consultant resincronizată și cele 5 capturi copiate: nu mai sunt linkuri rupte. Capturile vin din noul `tests/test_screenshots.py` (Playwright, API-ul eMAG simulat). Pagina numește pasul *Detalii transportator* (fără el *Trimite la curier* nu apare), tabul *Istoric* cu *Număr AWB eMAG* / *Curier eMAG*, previzualizarea etichetei și butonul *Tipărire AWB*.
+- **Sursă:** `deltatech_marketplace_emag_delivery/readme/HISTORY.md`, `FISA_CONSULTANT.md`, `screenshots/` (branch `19.0`, terrabit-solutions/bitshop_marketplace 19.0 `60a3ab46`).
+- **Dependențe/Conexiuni:** neschimbate.
+- **Fișiere actualizate:** `deltatech_marketplace_emag_delivery/index.md`, `deltatech_marketplace_emag_delivery/FISA_CONSULTANT.md`, `deltatech_marketplace_emag_delivery/screenshots/` (5, noi), `.index/chunks.json`.
+
 ## [2026-09-29] Re-ingestie `deltatech_marketplace_emag` (19.0.2.13.3)
 
 - **Acțiune:** Actualizare după corecția documentației modulului (branch `19.0-doc-emag-status-sync`, terrabit-solutions/bitshop_marketplace). DESCRIPTION, USAGE și fișa consultant nu mai spun că la eMAG se trimit doar acknowledge-ul și linkul facturii și că o comandă anulată pe eMAG după import cere **Reimport** manual; descriu trimiterea stării prin `/order/save` (Prepared/Finalized, anulare cu motiv) și citirea periodică a comenzilor anulate/finalizate/returnate (19.0.2.10.0–2.11.0). În pagină, fraza din *Gestiune comenzi* despre stările `CANCELED`/`FINALIZED`/`RETURNED` e corectată; fișa consultant copiată din nou (capturile neschimbate).
