@@ -196,6 +196,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_price_categ](deltatech_price_categ/index.md): Sistem de prețuri pe niveluri (Bronze/Silver/Gold) cu adaos procentual pe produs.
 - [deltatech_pricelist](deltatech_pricelist/index.md): Permite ca prețul de listă din fișa produsului să fie exprimat într-o monedă diferită de cea a companiei.
 - [deltatech_pricelist_line_viewer](deltatech_pricelist_line_viewer/index.md): Vizualizare listă pentru liniile listei de prețuri, cu grup de securitate dedicat editării.
+- [deltatech_print_queue](deltatech_print_queue/index.md): Tipărire etichete ZPL și documente PDF direct din Odoo pe imprimantele locale, prin stația Terrabit Connect, fără IoT Box și funcțională pe odoo.sh.
 - [deltatech_product_brand](deltatech_product_brand/index.md): Sistem centralizat de gestionare a mărcilor de produse, pentru organizarea catalogului pe marcă și raportare vânzări/facturi pe această dimensiune.
 - [deltatech_product_category_color](deltatech_product_category_color/index.md): Adaugă o culoare pe categoria de produse, afișată apoi pe kanban-ul transferurilor de stoc pentru identificare vizuală rapidă.
 - [deltatech_product_category_group](deltatech_product_category_group/index.md): Leagă categoriile de produse de grupuri de utilizatori și atribuie automat responsabilul pe transferurile de stoc, echilibrând volumul de lucru.
@@ -307,7 +308,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_stock_report](deltatech_stock_report/index.md): Raport analitic pivot/listă peste pozițiile din transferurile de stoc finalizate, cu filtre multiple.
 - [deltatech_stock_reseller](deltatech_stock_reseller/index.md): Raport de stoc per locație cu preț de revânzare pe listă/partener și cantități opțional mascate ca text.
 - [deltatech_stock_valuation](deltatech_stock_valuation/index.md): Calculează și urmărește evaluarea stocului (cost mediu ponderat) pe arie de evaluare și cont contabil, derivată direct din notele contabile, garantând consistență cu balanța.
-- [deltatech_tc](deltatech_tc/index.md): Modul de bază Terrabit Connect — registrul de stații, coada de job-uri și endpoint-urile REST care conectează Odoo la hardware/servicii locale (token ANAF, imprimante fiscale, Zebra, DUKIntegrator).
+- [deltatech_tc](deltatech_tc/index.md): Fundația Terrabit Connect (agent desktop Tauri): registru de stații, coadă robustă de job-uri (revendicare atomică, reofertare retry-safe, Retry, curățenie zilnică), endpoint-uri REST cu `X-Station-Key` și job generic `http_request` către rețeaua locală.
 - [deltatech_team_logo](deltatech_team_logo/index.md): Logo de firmă în rapoarte (factură, ofertă, aviz) în funcție de echipa de vânzare.
 - [deltatech_test_system](deltatech_test_system/index.md): Setarea stării sistemului (test/producție), cu neutralizarea bazei de date și banner permanent pentru mediile de test.
 - [deltatech_transport_change](deltatech_transport_change/index.md): Export al modificărilor de configurație în CSV și transportul lor între medii (Dev→Staging→Producție) prin Git.
