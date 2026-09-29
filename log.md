@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-29] Ștergere pagină `l10n_ro_journal_tva` (modul eliminat)
+
+- **Acțiune:** Pagina `l10n_ro_journal_tva` a fost ștearsă: modulul nu mai există pe nicio serie (eliminat în `l10n_ro_ent` prin commit-ul `e84303c1` din 2026-06-02, „jurnale TVA cu coloane dinamice pe cote + elimină l10n_ro_journal_tva”); jurnalele de TVA sunt acum în [l10n_ro_anaf_d394](l10n_ro_anaf_d394/index.md).
+- **Verificare:** din cele 6 pagini ale căror „Cale Locală” nu mai există pe `origin/19.0`, doar aceasta privește un modul dispărut. Celelalte 5 sunt module mutate în alte suite (`deltatech_delivery_dummy` → `bitshop_delivery`; `deltatech_marketplace_website` → `bitshop_marketplace`; `deltatech_vendor_products_granit` / `_kramp` / `_website` → `bitshop_vendor`) și nu au fost șterse.
+- **Dependențe/Conexiuni:** în `l10n_ro_journal_reports`, legătura spre modulul eliminat e înlocuită cu [l10n_ro_anaf_d394](l10n_ro_anaf_d394/index.md).
+- **Fișiere actualizate:** `l10n_ro_journal_tva/` (șters), `l10n_ro_journal_reports/index.md`, `index.md`, `.index/chunks.json`.
+
 ## [2026-09-29] Re-ingestie a 53 de module rămase în urma versiunii din cod (lot Clio)
 
 - **Acțiune:** Actualizarea paginilor ale căror versiune din `__manifest__.py` (`origin/19.0`) crescuse minor sau major față de pagină. Detectare: comparația automată versiune pagină ↔ manifest pe toate cele 509 pagini cu cale locală (420 în urmă: 55 minor/major, 365 doar patch). Din cele 55, `deltatech_tc` fusese actualizat mai devreme în aceeași zi, iar `l10n_ro_customs_dvi` de o altă sesiune; au rămas 53, procesate în paralel (53 de subagenți `documentarist-wiki`, în loturi), pe branchul `19.0-wiki-refresh-55`. Cele 365 cu schimbări doar de patch au rămas neactualizate.

@@ -40,5 +40,5 @@ Modulul completează Cartea Mare standard din Odoo Enterprise (General Ledger di
 
 #### 5. Conexiuni
 
-- `[[l10n_ro_journal_tva]]`
+- [l10n_ro_anaf_d394](../l10n_ro_anaf_d394/index.md): jurnalele de TVA vânzări/cumpărări (cu coloane pe cote) sunt acum aici; au înlocuit fostul `l10n_ro_journal_tva`, eliminat.
 - `[[l10n_ro_partner_ledger_currency]]`

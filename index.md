@@ -446,7 +446,6 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_invoice_dvi_protect](l10n_ro_invoice_dvi_protect/index.md): Blochează resetarea la ciornă a facturilor furnizor și anularea DVI când stocul FIFO recepționat a fost deja parțial consumat.
 - [l10n_ro_invoice_report](l10n_ro_invoice_report/index.md): Extinde rapoartele de factură și documentele de plată pentru conformitate RO (TVA pe linie, delegat, mențiuni legale), iar chitanța și dispoziția de casă ies ca formular de casierie: cod 14-4-4/14-4-1, casierie, act de identitate și părțile etichetate după rolul real (Plătitor/Beneficiar), fără rubrici de semnătură.
 - [l10n_ro_journal_reports](l10n_ro_journal_reports/index.md): Adaugă coloana Cont Corespondent (OMFP 1802/2014) în Cartea Mare standard Odoo Enterprise.
-- [l10n_ro_journal_tva](l10n_ro_journal_tva/index.md): Generează Jurnalul de TVA Vânzări și Cumpărări cu detaliu pe cote și categorii, plus export XLSX.
 - [l10n_ro_lang](l10n_ro_lang/index.md): Setează automat limba site-ului pe română dacă IP-ul vizitatorului provine din România.
 - [l10n_ro_leasing](l10n_ro_leasing/index.md): Contracte de leasing financiar și operațional cu grafic de rate, note contabile automate și cron scadențar.
 - [l10n_ro_message_spv_purchase](l10n_ro_message_spv_purchase/index.md): Leagă mesajele SPV (e-Factura ANAF) de comenzile de achiziție și sincronizează chatter + atașament XML.
