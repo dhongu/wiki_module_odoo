@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-29] Ingestie `deltatech_marketplace_dashboard` (19.0.1.0.1) — modul nou
+
+- **Acțiune:** Pagină nouă pentru tabloul de bord comun al marketplace-urilor: banda de conexiune, contoarele, lista *De rezolvat, după termenul de expediere*, vânzări pe zile, cele mai vândute produse, marja brută cu comision estimat, retururile deschise. Fișa consultant copiată cu cele 6 capturi, refăcute în 19.0.1.0.1 (formularul eMAG tradus, stările retururilor în română). Mențiunea din pagina `deltatech_marketplace_emag` devine link activ.
+- **Sursă:** `deltatech_marketplace_dashboard/readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `FISA_CONSULTANT.md`, cod `models/` (branch `19.0`, terrabit-solutions/bitshop_marketplace#459).
+- **Dependențe/Conexiuni:** [deltatech_marketplace_sale](deltatech_marketplace_sale/index.md); [deltatech_marketplace_emag](deltatech_marketplace_emag/index.md), [deltatech_marketplace](deltatech_marketplace/index.md), [deltatech_rma_marketplace](deltatech_rma_marketplace/index.md).
+- **Fișiere actualizate:** `deltatech_marketplace_dashboard/index.md`, `deltatech_marketplace_dashboard/FISA_CONSULTANT.md`, `deltatech_marketplace_dashboard/screenshots/` (6), `deltatech_marketplace_emag/index.md`, `index.md`, `.index/chunks.json`.
+
 ## [2026-09-29] Re-ingestie `deltatech_marketplace_emag` (19.0.2.13.1) și `deltatech_marketplace_emag_delivery` (19.0.1.1.1)
 
 - **Acțiune:** Actualizarea celor două pagini, procesate în paralel.
