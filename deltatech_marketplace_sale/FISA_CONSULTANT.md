@@ -125,7 +125,7 @@ pregătit înainte de a testa fluxul:
 
 Deschideți **Marketplace → Backends**, formularul unui backend deja creat. Câmpul **Sales Team**
 există deja în antetul generic al framework-ului (`deltatech_marketplace`); acest modul adaugă, în
-grupul **„Order and Payment"** din tab-ul **Other Info**: **Sales Journal**, **Confirm Sale Order**,
+grupul **„Order and Payment"** din tab-ul **Orders and Products**: **Sales Journal**, **Confirm Sale Order**,
 **Cancel Sale Order**, **SO Prefix**, **Disable Import Sale Order**, plus **Fiscal Position** și
 **Tax Correction** lângă monedă (tab **Price**), și **Discount Product**/**Voucher Product** în
 grupul de produse implicite.
@@ -272,7 +272,7 @@ importată, alegerea explicită „notific marketplace-ul sau doar anulez în Od
 Capturile (`readme/screenshots/`) ilustrează fluxul din secțiunea 6, generate cu
 `ScreenshotCase`/Playwright (`tests/test_screenshots.py`, import defensiv):
 
-1. `01_backend_sale_fields.png` — backend de marketplace, tab Other Info: Sales Journal, Confirm
+1. `01_backend_sale_fields.png` — backend de marketplace, tab Orders and Products: Sales Journal, Confirm
    Sale Order, Max Auto-Confirm COD Amount, Cancel Sale Order, SO Prefix.
 2. `02_sale_order_marketplace_ref.png` — comanda de vânzare cu `marketplace_ref` completat și butonul
    Refresh în antet.

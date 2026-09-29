@@ -1,7 +1,7 @@
 # Marketplace Dashboard
 
 - **Nume Tehnic:** `deltatech_marketplace_dashboard`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_dashboard
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_dashboard`
 - **Ultima Ingestie:** `2026-09-29`
@@ -13,9 +13,9 @@ Un singur ecran pentru toate marketplace-urile conectate (eMAG, Trendyol, Shopif
 
 #### 2. Funcționalități Cheie
 
-- **Banda de conexiune:** starea sincronizării pentru fiecare backend selectat (erori în ultimele 24 de ore, joburi eșuate, backend-uri niciodată sincronizate), backend-urile cu importul de comenzi dezactivat și dacă jobul de import rulează.
+- **Banda de conexiune:** starea sincronizării pentru fiecare backend selectat (erori în ultimele 24 de ore, joburi eșuate, backend-uri niciodată sincronizate), backend-urile cu importul de comenzi dezactivat și dacă jobul de import rulează. Banda e verde doar când toate backend-urile sunt funcționale **și** importă comenzi; un backend cu importul oprit o face galbenă, iar mențiunea *(importul comenzilor e oprit)* apare îngroșat, cu semn de avertizare (19.0.1.0.2).
 - **Contoare:** câte unul pentru fiecare pas al listei de lucru (de mapat, de confirmat, de expediat, de predat, plus cele adăugate de conectori: de confirmat la marketplace, întârziate, anulare cerută pe eMAG) și *De încasat* (facturi postate neachitate). Click pe contor deschide lista comenzilor numărate, cu același domeniu pentru număr și listă.
-- **De făcut, după termenul de expediere:** comenzile deschise care așteaptă ceva, fiecare cu pasul următor, sortate după termenul setat de marketplace, apoi după data comenzii (maximum 30 de rânduri). Pașii pe care un conector îi poate executa de aici (eMAG: confirmare/acknowledge) au buton pe rând; o comandă cu anulare cerută de client nu îl oferă.
+- **De făcut, după termenul de expediere:** comenzile deschise care așteaptă ceva, fiecare cu pasul următor, sortate după termenul setat de marketplace, apoi după data comenzii (maximum 30 de rânduri). Pașii pe care un conector îi poate executa de aici au buton pe rând, cu textul acțiunii (`action_label`, 19.0.1.0.2): pe eMAG, pasul *De acceptat* are butonul *Acceptă*, care trimite `/order/acknowledge` și trece comanda din *Nouă* în *În curs*; o comandă cu anulare cerută de client nu îl oferă.
 - **Pașii listei de lucru:** *De mapat* (o linie e pe produsul *Dummy* al backend-ului), *De confirmat la marketplace* (comandă nouă pe eMAG, status 1, din conectorul eMAG), *De confirmat* (ofertă sau ofertă trimisă), *De expediat* (comandă confirmată, transfer de ieșire fără număr de urmărire), *De predat* (confirmată, cu număr de urmărire, transfer neterminat).
 - **Vânzări pe zi, cele mai vândute produse și marja brută** (vânzări fără TVA - cost de achiziție - comision estimat) pentru 7, 30, 90 sau 365 de zile. Marja apare doar utilizatorilor care au voie să vadă costul produsului.
 - **Retururi deschise** ale marketplace-urilor, cu starea afișată în limba utilizatorului.
@@ -50,6 +50,6 @@ Fluxul pas-cu-pas și capturile de ecran sunt în [fișa consultant](FISA_CONSUL
 
 #### 5. Conexiuni
 
-- [deltatech_marketplace_emag](../deltatech_marketplace_emag/index.md): adaugă pașii și contoarele *De preluat*, *Întârziate*, *Anulare cerută* și butonul *De preluat* pe rând, prin hook-urile dashboard-ului.
+- [deltatech_marketplace_emag](../deltatech_marketplace_emag/index.md): adaugă pașii și contoarele *De acceptat*, *Întârziate*, *Anulare cerută* și butonul *Acceptă* pe rând, prin hook-urile dashboard-ului.
 - [deltatech_marketplace](../deltatech_marketplace/index.md): backend-urile și conectorii marketplace pe care îi afișează dashboard-ul.
 - [deltatech_rma_marketplace](../deltatech_rma_marketplace/index.md): lucrează cu aceleași cereri de retur marketplace (`marketplace.return.request`) afișate la *Retururi deschise*.

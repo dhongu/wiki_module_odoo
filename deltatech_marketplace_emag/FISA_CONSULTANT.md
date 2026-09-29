@@ -249,9 +249,10 @@ această cale.
 
 Când o comandă `NEW` e importată **și** item-ul `orders` are bifat **Active On Write** (tab Objects),
 comanda este confirmată automat înapoi la eMAG (`/order/acknowledge`), ca job de fundal. Cu bifa
-nebifată (implicit), comanda tot ajunge în Odoo, dar rămâne neconfirmată pe eMAG până apăsați manual
-`emag_acknowledge` pe înregistrarea comenzii — util în testare, ca eMAG să nu considere comanda
-preluată.
+nebifată (implicit), comanda tot ajunge în Odoo, dar rămâne neconfirmată pe eMAG până o acceptați
+manual: cu `deltatech_marketplace_dashboard` instalat, comanda apare în tabloul marketplace la pasul
+*De acceptat*, cu butonul **Acceptă** pe rând (formularul comenzii nu are un asemenea buton). Bifa
+nebifată e utilă în testare, ca eMAG să nu considere comanda preluată.
 
 O comandă care are `cancellation_request` fără nicio expediție deja finalizată se anulează automat
 și pe comanda de vânzare Odoo, la orice import (inclusiv webhook). **O comandă deja importată, care
@@ -441,7 +442,7 @@ cron-ului de auto-pricing.
 | Emiterea AWB-ului eșuează cu eroare de localitate | **Get city** nu a rulat încă pentru geografia respectivă | Rulați **Get city** pe metoda de livrare eMAG |
 | O comandă nu ajunge niciodată în Odoo | Comanda e în alt status decât `NEW`/`IN_PROGRESS`/`PREPARED` pe eMAG | Comportament normal — filtrul e fix, se aplică și pe webhook; verificați statusul real pe eMAG |
 | O comandă `CANCELED` pe eMAG rămâne activă în Odoo | Anularea pe bază de status se aplică doar la Reimport manual, nu la import periodic/webhook | Deschideți comanda în Odoo și apăsați **Reimport** |
-| Comanda ajunge în Odoo dar nu e confirmată pe eMAG (rămâne „new") | **Active On Write** e dezactivat pe item-ul `orders` | Activați bifa, sau confirmați manual cu `emag_acknowledge` |
+| Comanda ajunge în Odoo dar nu e confirmată pe eMAG (rămâne „new") | **Active On Write** e dezactivat pe item-ul `orders` | Activați bifa, sau acceptați comanda din tabloul marketplace (butonul **Acceptă**, pasul *De acceptat*) |
 | Factura nu ajunge la eMAG deși a fost validată | **Enable Order Push Invoice** dezactivat, **Active On Write** dezactivat pe `orders`, sau `web.base.url` nu e accesibil din exterior | Verificați toate trei — primele două sunt independente, iar link-ul trimis trebuie să fie public |
 | Prețul unui produs scade neașteptat la 0 pe eMAG | **Auto Price** bifat fără **Min/Max sale price** completate, pe o ofertă cu Buy Button Rank cunoscut (o deține sau nu buy box-ul, ambele cazuri sunt afectate) | Completați limitele înainte de a activa Auto Price; corectați manual prețul curent |
 | Job în coadă rămâne „failed" cu eroare HTTP 429 | Limita de 3 apeluri/secundă a fost depășită, iar reîncercările s-au epuizat | Requeue manual din **Jobs** — un job „failed" NU se mai reîncearcă singur |

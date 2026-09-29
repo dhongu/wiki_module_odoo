@@ -14,7 +14,7 @@ nu vede dintr-o privire *ce comandă expiră prima*. Tabloul de bord adună totu
 și răspunde la trei întrebări, în ordinea în care contează dimineața:
 
 1. **Ce am de făcut acum?** Starea legăturii cu fiecare marketplace, contoarele pe pași (de mapat,
-   de preluat, de confirmat, de expediat, de predat, întârziate, cu cerere de anulare, de încasat)
+   de acceptat, de confirmat, de expediat, de predat, întârziate, cu cerere de anulare, de încasat)
    și lista comenzilor deschise, ordonată după termenul de expediere dat de marketplace.
 2. **Cum merg vânzările?** Vânzările pe zi și cele mai vândute produse, pe 7, 30, 90 sau 365 de zile.
 3. **Câștig ceva?** Marja brută estimată: vânzări fără TVA − cost de achiziție − comisionul estimat
@@ -42,14 +42,14 @@ ecran de lucru peste comenzile importate din marketplace-uri.
   de date, nu treaba de azi.
 - **Pașii specifici unui marketplace îi adaugă conectorul lui.** Modulul de bază al comenzilor de
   marketplace (`deltatech_marketplace_sale`) are patru puncte de extensie goale. Conectorul eMAG le
-  completează cu pasul „De preluat” (cu buton pe rând), cu „Întârziate” și cu „Cerere de anulare”.
+  completează cu pasul „De acceptat” (cu butonul *Acceptă* pe rând), cu „Întârziate” și cu „Cerere de anulare”.
   Nu există nicio dependență inversă și nicio instalare automată la clienți.
 - **Valuta.** Vânzările, produsele și marja se convertesc în moneda companiei la cursul zilei. Suma
   de pe fiecare rând al listei rămâne în moneda comenzii.
 
 ## 3. Utilizatori și roluri
 
-- **Operator e-commerce:** lucrează lista „De rezolvat” de sus în jos, preia comenzile eMAG direct
+- **Operator e-commerce:** lucrează lista „De rezolvat” de sus în jos, acceptă comenzile eMAG direct
   din tablou și deschide contoarele cu probleme (întârziate, de mapat).
 - **Manager de vânzări online:** urmărește vânzările pe zi, cele mai vândute produse și marja
   estimată pe perioadă și pe backend.
@@ -133,7 +133,7 @@ Deschideți **Marketplace → Tablou de bord**.
    *Erori* sau *Neconfirmat*. Backend-urile cu problemă apar primele.
 2. **Verificați:**
    - niciun backend nu e pe *Erori*;
-   - niciun backend nu are mențiunea *(importul comenzilor e oprit)*;
+   - niciun backend nu are mențiunea *(importul comenzilor e oprit)*, scrisă îngroșat, cu semn de avertizare;
    - nu apare mesajul *Jobul de import al comenzilor e oprit*.
 
    Dacă apare oricare dintre ele, comenzile noi nu mai intră în Odoo. Lista „De rezolvat” de mai jos
@@ -165,19 +165,20 @@ Deschideți **Marketplace → Tablou de bord**.
    - o comandă cu *anulare cerută* **nu** are buton de pas.
 3. **Treceți mai departe:**
    - un clic pe rând deschide comanda de vânzare;
-   - pe eMAG, butonul **De preluat** de pe rând preia comanda direct din tablou. Mesajul *Gata:
-     …* confirmă preluarea, iar rândul trece la pasul următor.
+   - pe eMAG, butonul **Acceptă** de pe rândurile *De acceptat* trimite la eMAG acceptarea comenzii
+     (`/order/acknowledge`): comanda trece din *Nouă* în *În curs*. Mesajul *Gata: …* confirmă
+     acceptarea, iar rândul trece la pasul următor.
 
-   Dacă între timp comanda a fost preluată din altă parte, butonul refuză a doua preluare (§9).
+   Dacă între timp comanda a fost acceptată din altă parte, butonul refuză a doua acceptare (§9).
 
-![Lista De rezolvat, după termenul de expediere: comenzi eMAG cu termen, etichetele întârziată și anulare cerută, butonul De preluat pe rând](screenshots/03_worklist.png)
+![Lista De rezolvat, după termenul de expediere: comenzi eMAG cu termen, etichetele întârziată și anulare cerută, butonul Acceptă pe rând](screenshots/03_worklist.png)
 
 Pașii, în ordinea în care îi primește o comandă deschisă:
 
 | Pas | Când | Adăugat de |
 | --- | --- | --- |
 | De mapat | o linie e pe produsul fictiv al backend-ului | tablou |
-| De preluat | comandă nouă pe eMAG | conectorul eMAG |
+| De acceptat | comandă nouă pe eMAG, încă neacceptată de vânzător | conectorul eMAG |
 | De confirmat | ofertă sau ofertă trimisă | tablou |
 | De expediat | confirmată, cu transfer de livrare fără AWB | tablou |
 | De predat curierului | confirmată, cu AWB, transferul încă nevalidat | tablou |
@@ -189,7 +190,7 @@ Pașii, în ordinea în care îi primește o comandă deschisă:
    neîncasată.
 2. **Verificați:** citiți contoarele ca liste separate, nu ca părți ale unui total. O comandă apare o
    singură dată în listă, la primul ei pas, dar e numărată în toate contoarele în care se încadrează.
-   De exemplu, o comandă eMAG nouă e ofertă, deci e și *De preluat*, și *De confirmat*. O comandă
+   De exemplu, o comandă eMAG nouă e ofertă, deci e și *De acceptat*, și *De confirmat*. O comandă
    întârziată e și *Întârziate*, și *De expediat*. De aceea, în captură, contoarele însumează 13, iar lista are
    9 comenzi deschise.
 3. **Treceți mai departe:** un clic pe un contor, de exemplu **De expediat**, deschide lista comenzilor
@@ -239,7 +240,8 @@ Pașii, în ordinea în care îi primește o comandă deschisă:
 ### Note de monografie și raportare
 
 Modulul **nu generează note contabile** și nu modifică documente, cu o singură excepție: butonul
-**De preluat** trimite preluarea comenzii către eMAG, exact ca butonul din comanda eMAG.
+**Acceptă** trimite acceptarea comenzii către eMAG, la fel ca acceptarea automată de la import (când
+elementul de backend pentru comenzi are bifat *Activ la scriere*).
 
 Cifrele sunt de gestiune, nu contabile:
 - *Vânzări fără TVA* = suma liniilor comenzilor confirmate, fără TVA, fără transport și fără linii de
@@ -265,7 +267,7 @@ Notele contabile se generează în fluxul obișnuit, nu aici:
 | --- | --- |
 | `deltatech_marketplace_sale` | comenzile de marketplace, retururile și cele patru puncte de extensie ale tabloului |
 | `deltatech_marketplace` | backend-urile, starea de sănătate a legăturii și grupul Administrator marketplace |
-| `deltatech_marketplace_emag` | pașii eMAG: de preluat (cu buton), întârziate, cerere de anulare, termenul de expediere |
+| `deltatech_marketplace_emag` | pașii eMAG: de acceptat (cu butonul *Acceptă*), întârziate, cerere de anulare, termenul de expediere |
 | alți conectori (Trendyol, Shopify, PrestaShop...) | apar cu pașii comuni; pașii lor proprii se adaugă în modulul fiecăruia |
 
 **Ce e automat:**
@@ -284,15 +286,15 @@ Notele contabile se generează în fluxul obișnuit, nu aici:
       fără grup ecranul refuză accesul.
 - [ ] Banda de conexiune arată fiecare backend ales. Un backend în eroare apare primul, chiar dacă
       celelalte sunt sănătoase.
-- [ ] Cu importul de comenzi dezactivat pe un backend, banda devine galbenă și arată *(order import
-      disabled)* lângă el.
+- [ ] Cu importul de comenzi dezactivat pe un backend, banda devine galbenă și arată lângă el, îngroșat, *(importul comenzilor
+      e oprit)*.
 - [ ] Cu jobul de import comenzi oprit, banda arată *Jobul de import al comenzilor e oprit*.
 - [ ] Lista „De rezolvat” e ordonată după termenul de expediere. Comenzile fără termen vin după, în
       ordinea datei.
 - [ ] O comandă eMAG cu cerere de anulare are eticheta *anulare cerută* și **nu** are buton de
       pas.
-- [ ] Butonul **De preluat** preia comanda, iar rândul trece la pasul următor. Deschideți tabloul
-      în două taburi, preluați comanda din primul, apoi apăsați butonul în al doilea: apare *Comanda … nu
+- [ ] Butonul **Acceptă** acceptă comanda, iar rândul trece la pasul următor. Deschideți tabloul
+      în două taburi, acceptați comanda din primul, apoi apăsați butonul în al doilea: apare *Comanda … nu
       mai așteaptă acest pas.*
 - [ ] Clicul pe fiecare contor deschide o listă cu exact atâtea comenzi câte arată contorul.
 - [ ] Mențiunea *N comenzi deschise* din lista „De rezolvat” e numărul real de comenzi deschise, chiar
@@ -312,7 +314,7 @@ Notele contabile se generează în fluxul obișnuit, nu aici:
 | Mesaj | Cauză | Remediere |
 | --- | --- | --- |
 | *Doar un Manager Marketplace poate deschide tabloul de bord marketplace.* | utilizatorul nu are grupul Administrator marketplace | dați grupul din fișa utilizatorului |
-| *Comanda … nu mai așteaptă acest pas.* | comanda a fost preluată sau a trecut la alt pas între încărcarea ecranului și clic | reîncărcați tabloul; rândul arată pasul actual |
+| *Comanda … nu mai așteaptă acest pas.* | comanda a fost acceptată sau a trecut la alt pas între încărcarea ecranului și clic | reîncărcați tabloul; rândul arată pasul actual |
 | *Clientul a cerut anularea comenzii ….* | clientul a cerut anularea pe eMAG după încărcarea ecranului | nu preluați comanda; tratați cererea de anulare din comanda eMAG |
 | *Această acțiune nu poate fi rulată din tabloul de bord: …* | un apel direct cu o acțiune pe care conectorul nu a declarat-o pentru tablou | nu e un caz de operare; semnalați echipei tehnice |
 | *Comanda nu mai este disponibilă.* | comanda de marketplace a fost ștearsă între timp | reîncărcați tabloul |
@@ -332,7 +334,7 @@ facturi: contorul *De încasat* apare cu 0 în capturi.
 | --- | --- |
 | `screenshots/01_backend_commission.png` | backend-ul eMAG, câmpul *Comision estimat (%)* |
 | `screenshots/02_dashboard.png` | tabloul: selecția, banda de conexiune, contoarele, începutul listei |
-| `screenshots/03_worklist.png` | lista *De rezolvat, după termenul de expediere*, cu etichete și butonul *De preluat* |
+| `screenshots/03_worklist.png` | lista *De rezolvat, după termenul de expediere*, cu etichete și butonul *Acceptă* |
 | `screenshots/04_kpi_to_ship.png` | lista comenzilor deschisă din contorul *De expediat* |
 | `screenshots/05_sales_margin.png` | vânzări pe zi, cele mai vândute produse, marja brută |
 | `screenshots/06_returns.png` | panoul *Retururi deschise* |
@@ -353,5 +355,5 @@ Regenerare:
   îi lipsesc comenzile.
 - Marja e o **estimare de gestiune**: fără transport, fără factura reală de comision, cu costul actual
   al produsului. Nu o prezentați ca profit contabil.
-- Pașii eMAG (*De preluat*, *Întârziate*, *Anulare cerută*) apar doar când există un backend
+- Pașii eMAG (*De acceptat*, *Întârziate*, *Anulare cerută*) apar doar când există un backend
   eMAG. Ceilalți conectori vor adăuga pașii lor în versiunile următoare.

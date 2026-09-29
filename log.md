@@ -4,6 +4,16 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-29] Re-ingestie `deltatech_marketplace_dashboard` (19.0.1.0.2), `deltatech_marketplace_emag` (19.0.2.13.2), `deltatech_marketplace_sale` (19.0.2.15.1)
+
+- **Acțiune:** Actualizarea celor trei pagini după terrabit-solutions/bitshop_marketplace (19.0 `f873f455`, 20.0 `f9d1bd33`).
+    - `deltatech_marketplace_dashboard`: pasul eMAG *De acceptat* (era *De preluat*), cu butonul *Acceptă* pe rând (`action_label`); mențiunea *(importul comenzilor e oprit)* e îngroșată, cu semn de avertizare, și pagina explică de ce banda e galbenă. Fișa consultant și 5 capturi resincronizate.
+    - `deltatech_marketplace_emag`: o comandă neacceptată la import se acceptă din tablou (formularul comenzii nu are buton de acceptare). Fișa consultant resincronizată.
+    - `deltatech_marketplace_sale` (era 19.0.2.13.1, reingerată în paralel de un subagent): jobul de confirmare nu se mai reprogramează pe comenzi confirmate (2.13.3), *Cancel in Odoo Only* implicit și steagul *Cancelled in Marketplace* (2.14.0), hook-urile tabloului de bord cu `action_label` opțional (2.15.0–2.15.1). Fișa consultant și 8 capturi resincronizate.
+- **Sursă:** `readme/HISTORY.md`, `USAGE.md`, `FISA_CONSULTANT.md` și `screenshots/` ale celor trei module; codul `_dashboard_*` din `deltatech_marketplace_sale/models/binding_sale_order.py`.
+- **Dependențe/Conexiuni:** `deltatech_marketplace_sale` → [deltatech_marketplace_dashboard](deltatech_marketplace_dashboard/index.md) (link nou).
+- **Fișiere actualizate:** `deltatech_marketplace_dashboard/` (index.md, FISA_CONSULTANT.md, screenshots/), `deltatech_marketplace_emag/` (index.md, FISA_CONSULTANT.md), `deltatech_marketplace_sale/` (index.md, FISA_CONSULTANT.md, screenshots/), `index.md`, `.index/chunks.json`.
+
 ## [2026-09-29] Ingestie `deltatech_marketplace_dashboard` (19.0.1.0.1) — modul nou
 
 - **Acțiune:** Pagină nouă pentru tabloul de bord comun al marketplace-urilor: banda de conexiune, contoarele, lista *De rezolvat, după termenul de expediere*, vânzări pe zile, cele mai vândute produse, marja brută cu comision estimat, retururile deschise. Fișa consultant copiată cu cele 6 capturi, refăcute în 19.0.1.0.1 (formularul eMAG tradus, stările retururilor în română). Mențiunea din pagina `deltatech_marketplace_emag` devine link activ.
