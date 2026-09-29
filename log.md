@@ -4,6 +4,12 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-29] Re-ingestie `l10n_ro_anaf_d112_payroll`
+
+- **Acțiune:** Pagina [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) adusă de la 19.0.1.0.0 la 19.0.1.0.3 (rămasă în urmă la lotul anterior): zilele D112 din `worked_days_line_ids` în locul regulii inexistente `WORK100` (19.0.1.0.2), `zile_contract_activ` pentru pragul CAS/CASS (19.0.1.0.3); conexiune nouă cu [l10n_ro_hr_pontaj_payroll](l10n_ro_hr_pontaj_payroll/index.md). Editare pe secțiuni, în conversația principală.
+- **Sursă:** `readme/HISTORY.md` și `models/l10n_ro_d112.py` pe `origin/19.0` (l10n_ro_ent #370, #375).
+- **Fișiere actualizate:** `l10n_ro_anaf_d112_payroll/index.md`, `index.md`, `.index/chunks.json`.
+
 ## [2026-09-29] Ingestie `deltatech_customer_map` (modul nou)
 
 - **Acțiune:** Pagină nouă pentru [deltatech_customer_map](deltatech_customer_map/index.md) 19.0.1.1.1 (suita `bitshop`, OPL-1): harta 3D a clienților pe relieful real — județele României și țările Europei (proiecție Lambert), colorate după vânzări, clienți sau facturi, orașe ca coloane, top clienți și top produse pe zonă, trecere din Europa în harta județelor; vânzările și rolurile din Customer Segment. Fișa consultant copiată, cu 5 capturi. Un subagent `documentarist-wiki`, branch `19.0-wiki-customer-map`.

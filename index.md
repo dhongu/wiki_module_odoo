@@ -382,7 +382,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_anaf_d103](l10n_ro_anaf_d103/index.md): Export XML al Decontului lunar privind accizele (D103) din declarația de accize Odoo, gata de depus pe portalul ANAF.
 - [l10n_ro_anaf_d107](l10n_ro_anaf_d107/index.md): Declarația 107 privind sponsorizările și bursele private, cu calculul scăzământului de impozit și export XML pe structura oficială ANAF (`<d107>`), validat cu D107Validator.
 - [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md): Generare, validare și export XML pentru Declarația D112, cu trei profile de structură pe perioadă (v6, v7-0126, v7-0726), validare XSD și prag minim CAS/CASS pe zilele cu contract activ.
-- [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md): Punte care preia evidența nominală D112 din statele de plată Odoo validate și proiectează live obligațiile de plată din salarizare.
+- [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md): Punte D112 – salarizare Odoo: evidența nominală și obligațiile lunii se preiau din statele de plată validate, inclusiv zilele lucrate, CO/CM și zilele cu contract activ din fluturaș.
 - [l10n_ro_anaf_d120](l10n_ro_anaf_d120/index.md): Decontul anual privind accizele (D120), cu raportare cantitativă și export XML.
 - [l10n_ro_anaf_d177](l10n_ro_anaf_d177/index.md): Cererea 177 de redirecționare a unei părți din impozitul pe profit/micro către beneficiarii sponsorizărilor, cu rest disponibil calculat automat și export XML validat ANAF.
 - [l10n_ro_anaf_d205](l10n_ro_anaf_d205/index.md): Declarația informativă 205 privind impozitul reținut la sursă pe veniturile PF nerezidente.
