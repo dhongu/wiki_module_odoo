@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-09-29] Ingestie `deltatech_customer_map` (modul nou)
+
+- **Acțiune:** Pagină nouă pentru [deltatech_customer_map](deltatech_customer_map/index.md) 19.0.1.1.1 (suita `bitshop`, OPL-1): harta 3D a clienților pe relieful real — județele României și țările Europei (proiecție Lambert), colorate după vânzări, clienți sau facturi, orașe ca coloane, top clienți și top produse pe zonă, trecere din Europa în harta județelor; vânzările și rolurile din Customer Segment. Fișa consultant copiată, cu 5 capturi. Un subagent `documentarist-wiki`, branch `19.0-wiki-customer-map`.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md` și codul modulului pe `origin/19.0` (bitshop#2932, #2933, #2934). Rescris după `mdtrade_romania_map` (MD Trade Concept SRL).
+- **Dependențe/Conexiuni:** [deltatech_customer_segment](deltatech_customer_segment/index.md); în același meniu cu [deltatech_customer_analysis](deltatech_customer_analysis/index.md) și [deltatech_sale_missions](deltatech_sale_missions/index.md); `l10n_ro_city` opțional, fără pagină wiki.
+- **Fișiere actualizate:** `deltatech_customer_map/` (index + fișă + capturi), `index.md`, `.index/chunks.json`.
+
 ## [2026-09-29] Ingestie pontaj RO + re-ingestie D112
 
 - **Acțiune:** Pagini noi pentru [l10n_ro_hr_pontaj](l10n_ro_hr_pontaj/index.md) 19.0.1.0.2 (foaia colectivă de prezență, cu fișa consultant și 12 capturi) și [l10n_ro_hr_pontaj_payroll](l10n_ro_hr_pontaj_payroll/index.md) 19.0.1.0.0 (corecțiile din pontaj devin prezențe pe fluturaș); re-ingestie [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md) 19.0.2.4.0 (`zile_contract_activ`, pragul CAS/CASS pe zilele cu contract activ; fișa recopiată). 3 subagenți `documentarist-wiki` în paralel, branch `19.0-wiki-pontaj-d112`.

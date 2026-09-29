@@ -51,6 +51,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_crm_fsm](deltatech_crm_fsm/index.md): Leagă oportunitățile CRM de sarcinile Project/FSM și permite crearea rapidă a unei sarcini de teren dintr-o oportunitate.
 - [deltatech_cron_monitor_webhook](deltatech_cron_monitor_webhook/index.md): Declanșează sarcinile cron prin webhook-uri securizate cu token global, pentru integrare cu servicii externe de monitorizare/scheduling.
 - [deltatech_customer_analysis](deltatech_customer_analysis/index.md): Tablou „ce fac azi” cu fiecare client din portofoliu (de sunat, de încasat, de vândut mai mult), pe baza segmentelor calculate noaptea.
+- [deltatech_customer_map](deltatech_customer_map/index.md): Harta 3D a clienților pe relieful real (județele României și țările Europei), colorată după vânzări, clienți sau facturi, cu orașe, top clienți și top produse, pe roluri din Customer Segment.
 - [deltatech_customer_segment](deltatech_customer_segment/index.md): Calculează noaptea, pentru fiecare client, ritmul de cumpărare, vânzările, creanțele restante și segmentul de portofoliu, față de propriul ritm al clientului.
 - [deltatech_data_sheet](deltatech_data_sheet/index.md): Atașează fișe tehnice și fișe de securitate (PDF) pe produs, în fila Vânzări.
 - [deltatech_data_sheet_website](deltatech_data_sheet_website/index.md): Expune fișele tehnice și fișele cu date de securitate ale produselor pe paginile din magazinul online.
