@@ -1,7 +1,7 @@
 # Terrabit - Record Type (localizat la `deltatech_record_type/index.md`)
 
 - **Nume Tehnic:** `deltatech_record_type`
-- **Versiune:** `19.0.1.1.14`
+- **Versiune:** `19.0.1.1.17`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_record_type`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_record_type`
 - **Ultima Ingestie:** `2026-10-01`
@@ -15,11 +15,11 @@ Modulul Terrabit - Record Type oferă o modalitate îmbunătățită de a gestio
 
 - Definirea de tipuri de înregistrare personalizate pentru comenzi de vânzare, comenzi de achiziție și facturi (de client); meniuri separate: Vânzări → Configurare → Tipuri comandă, Achiziții → Configurare → Tipuri comandă, Contabilitate → Configurare → Facturare → Tipuri factură.
 - Asignarea de utilizatori specifici fiecărui tip, pentru control al accesului. Restricția se aplică doar pe comanda de vânzare (gol = disponibil tuturor); pe achiziții și facturi lista nu este filtrată.
-- Valori implicite pentru câmpuri, aplicate la alegerea tipului pe document (onchange, nu modifică documente existente). Textul se scrie între apostrofuri, bifele ca `True`/`False`, câmpurile relaționale se aleg din lista „Related".
+- Valori implicite pentru câmpuri, aplicate la alegerea tipului pe document (onchange, nu modifică documente existente). Textul se scrie între apostrofuri, bifele ca `True`/`False`, câmpurile relaționale se aleg din lista „Înregistrare asociată". Tipul valorii se stabilește automat doar pentru many2one, char, selection, boolean și integer; câmpurile many2many/one2many nu se pot folosi.
 - Configurarea rutelor de stoc pentru fiecare tip; se aplică liniilor comenzii de vânzare care nu au rută proprie (câmpul apare doar cu „Trasee în mai mulți pași" activ).
-- Tipul este obligatoriu la confirmarea comenzii (vânzare și achiziție) pentru utilizatorii fără grupul „Poate confirma comenzi fără tip comandă", dacă există tipuri definite; comenzile de pe website nu sunt blocate la vânzări. Opțiunea „Confirmat fără tip comandă" se găsește în Setări → Vânzări.
+- Tipul este obligatoriu la confirmarea comenzii (vânzare și achiziție) pentru utilizatorii fără grupul „Poate confirma comenzi fără tip comandă", dacă există tipuri definite; comenzile de pe website și ofertele acceptate/semnate sau plătite de client din portal nu sunt blocate la vânzări (verificarea se aplică doar utilizatorilor interni). Pe facturi tipul rămâne opțional. Opțiunea „Confirmat fără tip comandă" se găsește în Setări → Vânzări.
 - Câmpul de tip apare doar pe documentele pentru care există cel puțin un tip definit.
-- Jurnal pe comanda de achiziție, transmis facturii de furnizor generate.
+- Jurnal pe comanda de achiziție (manual sau ca valoare implicită a tipului), transmis facturii de furnizor generate cu **Creare factură**.
 - Tipul este dimensiune de grupare în rapoartele de vânzări și achiziții, precum și în căutările și listele documentelor.
 - Fluxul detaliat pas-cu-pas, verificările și erorile frecvente sunt în [Fișa Consultant](FISA_CONSULTANT.md), cu capturi de ecran.
 
@@ -35,7 +35,8 @@ Modulul Terrabit - Record Type oferă o modalitate îmbunătățită de a gestio
 
 - `record.type`: Definește configurația tipului de înregistrare, inclusiv modelul țintă (`sale.order`, `purchase.order`, `account.move`), utilizatorii permiși, rutele de stoc asociate și compania (regulă multi-companie).
 - `record.type.default.values`: Valorile implicite ale câmpurilor pentru fiecare tip, cu selecție dinamică a câmpului în funcție de model.
-- `sale.order` (extins): câmpul `so_type` (Tip comandă), blocarea la confirmare, aplicarea rutelor tipului la aprovizionare.
+- `sale.order` (extins): câmpul `so_type` (Tip comandă), blocarea la confirmare (doar pentru utilizatorii interni, `_skip_so_type_check`), aplicarea rutelor tipului la aprovizionare.
+- `payment.transaction` (extins): confirmarea comenzii la plata online rulează cu contextul `record_type_payment_confirm`, ca să nu fie blocată de lipsa tipului.
 - `purchase.order` (extins): câmpurile `po_type` și `journal_id`.
 - `account.move` (extins): câmpul `invoice_type` (Tip factură).
 - `sale.report`, `purchase.report` (extinse): dimensiunea tip comandă (`so_type`, `po_type`).

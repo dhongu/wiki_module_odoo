@@ -4,6 +4,12 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-01] Actualizare `deltatech_record_type` după corecțiile fișei și fix-ul de portal
+
+- **Acțiune:** Pagina [deltatech_record_type](deltatech_record_type/index.md) adusă de la 19.0.1.1.14 la 19.0.1.1.17: ofertele acceptate/semnate sau plătite de client din portal nu mai sunt blocate (verificarea tipului doar pentru utilizatorii interni, `payment.transaction` extins), pe facturi tipul rămâne opțional, tipurile de câmp suportate la valorile implicite, jurnalul de achiziție ca valoare implicită a tipului; fișa consultant recopiată după audit (etichete RO aliniate, 9 capturi, `09_factura_furnizor_jurnal.png` nouă). Editare în conversația principală.
+- **Sursă:** `readme/FISA_CONSULTANT.md`, `readme/HISTORY.md` și codul modulului pe `origin/19.0` (dhongu/deltatech #3030, #3028).
+- **Fișiere actualizate:** `deltatech_record_type/` (index + fișă + capturi), `log.md`, `.index/chunks.json`.
+
 ## [2026-10-01] Re-ingestie suita `deltatech_stock_valuation`: `deltatech_obyc`, `deltatech_stock_valuation`, `deltatech_valuation_area`
 
 - **Acțiune:** Cele trei pagini aduse la versiunile de pe `origin/19.0`, cu fișele consultant corectate după auditul contabil și capturile recopiate. Trei subagenți `documentarist-wiki`, în paralel.
