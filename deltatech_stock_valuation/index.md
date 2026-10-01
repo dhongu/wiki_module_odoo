@@ -1,30 +1,32 @@
 # Product Valuation (localizat la `deltatech_stock_valuation/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_valuation`
-- **Versiune:** `19.0.0.0.7`
-- **Cale:** [https://github.com/dhongu/deltatech_stock_valuation/tree/19.0/deltatech_stock_valuation](https://github.com/dhongu/deltatech_stock_valuation/tree/19.0/deltatech_stock_valuation)
+- **Versiune:** `20.0.0.0.11`
+- **Cale:** [https://github.com/dhongu/deltatech_stock_valuation/tree/20.0/deltatech_stock_valuation](https://github.com/dhongu/deltatech_stock_valuation/tree/20.0/deltatech_stock_valuation)
 - **Cale Locală:** `odoo-addons/deltatech_stock_valuation/deltatech_stock_valuation`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-10-01`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul calculează și urmărește evaluarea stocului de produse pe arie de evaluare și cont contabil, după modelul SAP Material Valuation (MBEW & MBEWH). Spre deosebire de mecanismul standard Odoo, care se bazează pe mișcările de stoc, evaluarea este derivată direct din notele contabile (`account.move.line`), garantând astfel consistență permanentă cu balanța contabilă — util în contexte cu ajustări contabile manuale sau cerințe de raportare pe centre de cost/depozite.
+Modulul calculează și urmărește evaluarea stocului de produse pe arie de evaluare și cont contabil, după modelul SAP Material Valuation (MBEW & MBEWH). Spre deosebire de mecanismul standard Odoo, care se bazează pe mișcările de stoc, evaluarea este derivată direct din notele contabile postate (`account.move.line`), ceea ce o ține consistentă cu balanța contabilă — util în contexte cu ajustări contabile manuale sau cerințe de raportare pe centre de cost/depozite. Modulul nu înlocuiește evaluarea standard din `stock_account`, ci adaugă un strat suplimentar de raportare și nu generează el însuși note contabile.
 
 #### 2. Funcționalități Cheie
 
-- Cost mediu ponderat (AVCO) calculat per produs, arie de evaluare și cont contabil
-- Evaluare determinată din note contabile, nu din mișcările de stoc
-- Istoric lunar al evaluărilor (`product.valuation.history`) pentru urmărirea evoluției în timp
-- Conturi contabile dedicate — se marchează conturile utilizate la evaluarea stocului (`is_for_stock_valuation`)
-- Validare inteligentă — aria de evaluare devine obligatorie pe liniile contabile doar pentru conturile marcate pentru evaluare stoc
-- Configurare nivel arie de evaluare per companie (ex. nivel companie, depozit, locație)
-- Recalculare manuală/în fundal a evaluărilor din interfața de configurare (proces în 7 pași, doar pentru administratori de sistem), plus un cron dedicat de reîmprospătare automată
-- Opțiune per categorie de produs (`use_valuation_area_price`) pentru ca ieșirile de stoc să folosească prețul calculat din `product.valuation` în locul prețului standard/CMP global
+- Cost mediu ponderat (AVCO) calculat per produs, arie de evaluare și cont contabil, direct din notele contabile.
+- Istoric lunar al evaluărilor (`product.valuation.history`): cantitate inițială, intrări, ieșiri, finală și valorile aferente.
+- Conturi contabile dedicate: se bifează **Stock Valuation** (`is_for_stock_valuation`) pe contul de stoc; la salvarea setărilor, conturile de stoc ale categoriilor de produse sunt marcate automat.
+- Aria de evaluare este obligatorie pe orice linie contabilă cu produs stocabil (regulă din `deltatech_valuation_area`) și se completează automat cu aria companiei.
+- La postarea, de-postarea, schimbarea datei sau ștergerea unei note, istoricul și evaluarea curentă se recalculează țintit pentru combinațiile afectate.
+- Convenție de cantitate semnată pe notele de tip `entry`: pozitivă pe debit (intrare), negativă pe credit (ieșire); la notele manuale de stoc cantitatea se introduce cu semn.
+- Opțiunea **Use Valuation Area Price** pe categoria de produs (doar AVCO): ieșirile din locații interne se valorizează la prețul din **Product Valuation** al ariei și contului, nu la costul standard; fără evaluare sau cu preț zero se folosește costul mediu, cu avertisment în log.
+- Odoo 20: valoarea mișcărilor de ieșire este negativă. Setarea **Keep move value on retroactive recompute** (bifată implicit, vine din `deltatech_valuation_area`) păstrează prețul unitar al ieșirilor valorizate la prețul ariei după o corecție retroactivă (dată schimbată, cantitate editată, intrare revalorizată); debifată, recalcularea standard le rescrie la costul mediu global, fără a corecta notele contabile deja postate.
+- Configurare **Valuation Area Level** per companie (singurul nivel suportat de recalcularea completă este Company); setările se salvează per companie și necesită grupul de administrator de sistem.
+- Recalculare completă în fundal din **Inventar → Configurare → Setări → Evaluare → Recompute All (Background)**, cu indicator de progres; alternativ, acțiunea server **Recompute All Stock Valuation** (administrator de sistem) și un cron dedicat, implicit inactiv. Necesară la prima instalare sau după import de date.
+- Recomandare pentru companiile românești: instalarea împreună cu `deltatech_obyc`, astfel încât notele de stoc să se posteze la validarea recepției/livrării, nu doar la facturare. Categoriile trebuie să aibă metoda **AVCO** și **Inventory Valuation** = Perpetual (at invoicing).
+- Detaliile pas cu pas (configurare, utilizare, erori frecvente) sunt în [Fișa consultantului](FISA_CONSULTANT.md).
 
-> **Notă Odoo 19:** Modelul `stock.valuation.layer` a fost eliminat în Odoo 19; evaluarea standard se bazează acum pe `stock.move`. Modulul rămâne independent de această schimbare, deoarece folosește `account.move.line` ca sursă de adevăr.
-
-> **Limitare:** Modulul suportă exclusiv metoda de evaluare **AVCO** (cost mediu ponderat). Nu este compatibil cu produsele configurate cu metoda **FIFO** — folosirea acesteia produce rezultate incorecte, deoarece FIFO necesită urmărirea straturilor individuale de cost, informație pierdută prin agregarea contabilă folosită de acest modul.
+> **Limitare:** Modulul suportă exclusiv metoda de evaluare **AVCO**. Nu este compatibil cu produsele FIFO — FIFO necesită straturi individuale de cost, informație pierdută prin agregarea contabilă folosită aici; opțiunea **Use Valuation Area Price** este refuzată pe categoriile FIFO.
 
 #### 3. Dependențe
 
@@ -36,35 +38,36 @@ Modulul calculează și urmărește evaluarea stocului de produse pe arie de eva
 **Modele**
 
 - `product.valuation`: evaluarea curentă a unui produs pe arie de evaluare, cont și companie (preț, cantitate, valoare).
-- `product.valuation.history` (extinde `product.valuation`): istoricul lunar al evaluărilor (cantitate/valoare inițială, intrări, ieșiri, finală), unic pe combinația produs/arie/cont/companie/lună.
-- `account.account` (extins): câmp nou `is_for_stock_valuation` pentru a marca conturile ce participă la evaluare.
-- `account.move` (extins): metode `_get_valuation_keys` / `_recompute_valuation_keys` / `_recompute_valuation` pentru recalcul țintit al evaluării la postarea/anularea notelor de stoc.
-- `account.move.line` (extins): punct de extensie pentru cerința ariei de evaluare pe conturile marcate.
-- `product.category` (extins): câmp `use_valuation_area_price`, cu constrângere care blochează combinația cu metoda de cost FIFO.
-- `product.product` / `product.template` (extinse): relația `product_valuation_ids` și metoda `recompute_valuation_amount()` pentru recalcul manual per produs.
-- `res.company` (extins): câmpurile `valuation_area_level` (companie/depozit/locație) și `valuation_lot_level`, plus `set_stock_valuation_at_company_level()`.
-- `res.config.settings` (extins): câmpuri și logică pentru urmărirea progresului recalculării în fundal (pași 1-7).
-- `stock.move` (extins): `_get_valuation_area_price()` și suprascrierea `_set_value()` pentru a valoriza ieșirile de stoc la prețul din `product.valuation` când categoria are `use_valuation_area_price` activ.
+- `product.valuation.history` (extinde `product.valuation`): istoricul lunar al evaluărilor, unic pe combinația produs/arie/cont/companie/lună; conține și logica recalculării în pași (în fundal).
+- `account.account` (extins): câmpul `is_for_stock_valuation`.
+- `account.move` (extins): recalcul țintit al evaluării la postarea/anularea/modificarea notelor.
+- `account.move.line` (extins): punct de extensie pentru cerința ariei de evaluare.
+- `product.category` (extins): câmpul `use_valuation_area_price`, cu constrângere față de metoda FIFO.
+- `product.product` / `product.template` (extinse): relația `product_valuation_ids` și recalcul manual per produs.
+- `res.company` (extins): `valuation_area_level`, `valuation_lot_level` și `set_stock_valuation_at_company_level()`.
+- `res.config.settings` (extins): setările de evaluare și urmărirea progresului recalculării.
+- `stock.move` (extins): `_get_valuation_area_price()` și suprascrierea `_set_value()` pentru valorizarea ieșirilor la prețul ariei, inclusiv păstrarea valorii la recalculări retroactive.
+- `stock.move.line` (extins): suprascrie `write` pentru corecțiile de cantitate pe mișcări efectuate.
 
 **Vizualizări**
 
-- `product_valuation_view_tree` / `product_valuation_view_form` / `product_valuation_view_pivot`: interfețele principale pentru `product.valuation`.
-- `product_valuation_history_view_tree` / `product_valuation_history_view_form` / `product_valuation_history_view_pivot`: interfețele pentru istoricul lunar `product.valuation.history`.
-- `product_valuation_action` / `product_valuation_history_action`: acțiuni de fereastră asociate, cu meniuri dedicate (`product_valuation_menu`, `product_valuation_history_menu`).
-- `product_template_form_view`: adaugă evaluările produsului pe formularul de articol.
-- `view_account_form`: adaugă bifa `is_for_stock_valuation` pe formularul contului contabil.
-- `res_config_settings_view_form`: secțiunea de configurare a nivelului ariei de evaluare și a progresului recalculării.
-- `product_category_form_view_inherit`: adaugă opțiunea `use_valuation_area_price` pe formularul categoriei de produs.
+- `product_valuation_view_tree` / `product_valuation_view_form` / `product_valuation_view_pivot`: interfețele pentru `product.valuation`.
+- `product_valuation_history_view_tree` / `product_valuation_history_view_form` / `product_valuation_history_view_pivot`: interfețele pentru istoricul lunar.
+- `product_valuation_action` / `product_valuation_history_action`: acțiunile de fereastră, cu meniuri dedicate.
+- `product_template_form_view`: evaluările produsului pe formularul de articol.
+- `view_account_form`: bifa `is_for_stock_valuation` pe contul contabil.
+- `res_config_settings_view_form`: secțiunea de evaluare din setările Inventarului și progresul recalculării.
+- `product_category_form_view_inherit`: opțiunea `use_valuation_area_price` pe categoria de produs.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- `action_product_valuation_history_recompute`: acțiune server care recalculează integral `product.valuation.history` și `product.valuation` (`recompute_all_amount()`), disponibilă manual din configurare.
-- `product_valuation_recompute_amount_action` / `product_valuation_history_recompute_amount_action` / `product_template_recompute_amount_action`: acțiuni server suplimentare de recalcul, expuse la nivel de listă/formular.
-- `ir_cron_auto_refresh_valuation`: cron (implicit inactiv, interval 2 minute) care rulează `model._auto_refresh_step()` pentru a avansa procesul de reîmprospătare în fundal (7 pași) al istoricului și evaluării curente.
+- `action_product_valuation_history_recompute`: acțiune server (administrator de sistem) care recalculează integral istoricul și evaluarea curentă.
+- `product_valuation_recompute_amount_action` / `product_valuation_history_recompute_amount_action` / `product_template_recompute_amount_action`: acțiuni server de recalcul la nivel de listă/formular.
+- `ir_cron_auto_refresh_valuation`: cron „Auto Refresh Stock Valuation” (implicit inactiv, la 2 minute) care rulează `_auto_refresh_step()` pentru avansarea reîmprospătării în fundal.
 
 #### 5. Conexiuni
 
-- `stock_account`: mecanismul standard Odoo de evaluare a stocului, față de care acest modul adaugă un strat suplimentar de raportare sincronizat cu contabilitatea.
-- [deltatech_valuation_area](../deltatech_valuation_area/index.md): definește ariile de evaluare (`valuation.area`) și liniile de notă contabile pe care se bazează calculul din acest modul.
-- [deltatech_obyc](../deltatech_obyc/index.md): determină conturile de stoc pe care se generează notele contabile reconstruite de acest modul.
+- `stock_account`: evaluarea standard Odoo, față de care modulul adaugă un strat de raportare sincronizat cu contabilitatea.
+- [deltatech_valuation_area](../deltatech_valuation_area/index.md): definește ariile de evaluare și setarea de păstrare a valorii mișcărilor.
+- [deltatech_obyc](../deltatech_obyc/index.md): determină conturile de stoc și postează notele la validarea recepției/livrării (recomandat în România).
 - [deltatech_valuation_report](../deltatech_valuation_report/index.md): raport de verificare care compară evaluarea calculată aici cu soldul conturilor de stoc.

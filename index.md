@@ -161,7 +161,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_notification_sound](deltatech_notification_sound/index.md): Feedback sonor pentru notificările din backend, cu sunete distincte pe tip de mesaj și comutator per utilizator.
 - [deltatech_object_history](deltatech_object_history/index.md): Istoric paralel al documentelor Odoo, separat de mesajele standard, ale cărui intrări nu sunt șterse periodic.
 - [deltatech_object_history_service](deltatech_object_history_service/index.md): Extinde istoricul obiectelor către modelele Acord de service și Echipament de service.
-- [deltatech_obyc](deltatech_obyc/index.md): Determinare automată a conturilor contabile de stoc printr-o matrice de reguli (tip SAP OBYC), pe cheie de tranzacție, clasă de evaluare, arie de evaluare, modificator contabil și companie.
+- [deltatech_obyc](deltatech_obyc/index.md): Determinare automată a conturilor contabile pentru tranzacțiile de stoc (stil SAP OBYC), cu COGS înregistrat la livrare, pe baza cheii de tranzacție, clasei și ariei de evaluare.
 - [deltatech_partner_generic](deltatech_partner_generic/index.md): Partener generic/anonim implicit, folosit ca fallback în vânzări și facturare, cu blocarea postării facturilor pe el și protecție opțională la modificări.
 - [deltatech_partner_gifts](deltatech_partner_gifts/index.md): Gestionează cadourile oferite partenerilor — generare linii de cadou, etichete de livrare, date partener și copiere/modificare în masă.
 - [deltatech_partner_merge](deltatech_partner_merge/index.md): Unifică în masă fișele de parteneri duplicate pe același CUI, cu simulare obligatorie și verificare post-unificare a totalurilor.
@@ -305,12 +305,12 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_stock_removal_priority](deltatech_stock_removal_priority/index.md): Strategie de eliminare a stocului bazată pe prioritate, derivată automat din regulile de putaway, pentru a ridica întâi stocul din locațiile cele mai accesibile.
 - [deltatech_stock_report](deltatech_stock_report/index.md): Raport analitic pivot/listă peste pozițiile din transferurile de stoc finalizate, cu filtre multiple.
 - [deltatech_stock_reseller](deltatech_stock_reseller/index.md): Raport de stoc per locație cu preț de revânzare pe listă/partener și cantități opțional mascate ca text.
-- [deltatech_stock_valuation](deltatech_stock_valuation/index.md): Calculează și urmărește evaluarea stocului (cost mediu ponderat) pe arie de evaluare și cont contabil, derivată direct din notele contabile, garantând consistență cu balanța.
+- [deltatech_stock_valuation](deltatech_stock_valuation/index.md): Evaluarea stocului pe produs, arie de evaluare și cont contabil (AVCO), derivată din notele contabile postate, cu istoric lunar și recalculare în fundal.
 - [deltatech_tc](deltatech_tc/index.md): Modul de bază Terrabit Connect — registrul de stații, coada de job-uri și endpoint-urile REST care conectează Odoo la hardware/servicii locale (token ANAF, imprimante fiscale, Zebra, DUKIntegrator).
 - [deltatech_team_logo](deltatech_team_logo/index.md): Logo de firmă în rapoarte (factură, ofertă, aviz) în funcție de echipa de vânzare.
 - [deltatech_test_system](deltatech_test_system/index.md): Setarea stării sistemului (test/producție), cu neutralizarea bazei de date și banner permanent pentru mediile de test.
 - [deltatech_transport_change](deltatech_transport_change/index.md): Export al modificărilor de configurație în CSV și transportul lor între medii (Dev→Staging→Producție) prin Git.
-- [deltatech_valuation_area](deltatech_valuation_area/index.md): Definește arii de evaluare a stocului (companie/depozit/locație) și propagă automat jurnalul contabil aferent pe liniile generate din mișcările de stoc.
+- [deltatech_valuation_area](deltatech_valuation_area/index.md): Arii de evaluare a stocului (per companie, depozit sau locație), cu propagare automată pe liniile contabile și blocarea transferurilor interne între arii diferite.
 - [deltatech_valuation_report](deltatech_valuation_report/index.md): Raport Enterprise care compară soldul contabil al conturilor de stoc cu evaluarea produsului și explică diferențele prin liniile fără produs.
 - [deltatech_van_sales](deltatech_van_sales/index.md): MVP de vânzare mobilă din stocul unei dube — livrare instant pe teren, încasare pe loc, facturare centralizată în batch la birou.
 - [deltatech_vendor_products](deltatech_vendor_products/index.md): Import și sincronizare a cataloagelor de produse de la furnizori (prețuri, disponibilitate, imagini), cu creare/actualizare automată de produse.

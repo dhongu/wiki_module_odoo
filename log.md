@@ -4,6 +4,24 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-01] `deltatech_obyc`, `deltatech_stock_valuation`, `deltatech_valuation_area` — re-ingestie pe 20.0 (după dhongu/deltatech_stock_valuation#50)
+
+- **Acțiune:** Re-ingestie a celor trei pagini pentru Odoo 20 (până acum erau copiile de 19.0), procesate în
+  paralel. Versiuni: `deltatech_obyc` 20.0.1.0.6, `deltatech_stock_valuation` 20.0.0.0.11,
+  `deltatech_valuation_area` 20.0.1.0.5. Fișele consultant reflectă auditul contabil portat din 19.0
+  (#42): livrat-nefacturat Dr 418 / Cr 707 + Cr 4428, apoi Dr 4428 / Cr 4427, cu grile fiscale D300 pe
+  nota manuală; lipsuri imputate pe 7581 fără TVA și ajustarea TVA Dr 635 = Cr 4426; reconcilierea
+  lunară a soldului 371 pe arie; ruta prin tranzit nu e o ocolire validată (OBYC-009). Inversarea notelor
+  de stoc anulează cantitatea (fix 20.0.1.0.5). Linkurile GitHub trec pe branch-ul `20.0`.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/FISA_CONSULTANT.md`, `readme/HISTORY.md`, `__manifest__.py`, cod
+  (`_get_account_move_line_vals`, `_check_internal_move_valuation_area`, `_compute_transaction_key`).
+- **Dependențe/Conexiuni:** `deltatech_obyc` → `deltatech_valuation_area`; `deltatech_stock_valuation` →
+  `deltatech_valuation_area`; legături reciproce între cele trei și `deltatech_valuation_report`.
+- **Fișe consultant:** copiate toate trei, cu capturile curente de 20.0 (OBYC 11, SV 8, VA 9); pozele vechi
+  de 19.0 care nu mai există în sursă au fost șterse.
+- **Fișiere actualizate:** `deltatech_obyc/*`, `deltatech_stock_valuation/*`, `deltatech_valuation_area/*`,
+  `index.md`, `log.md`, `.index/`.
+
 ## [2026-09-27] Fișa `l10n_ro_invoice_report` fără rubrici de semnătură (20.0)
 
 - **Acțiune:** Resincronizare fișă consultant după dhongu/l10n-romania#580.

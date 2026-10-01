@@ -1,47 +1,39 @@
 # Deltatech OBYC - Account Determination (localizat la `deltatech_obyc/index.md`)
 
 - **Nume Tehnic:** `deltatech_obyc`
-- **Versiune:** `19.0.1.0.1`
-- **Cale:** https://github.com/dhongu/deltatech_stock_valuation/tree/19.0/deltatech_obyc
+- **Versiune:** `20.0.1.0.6`
+- **Cale:** https://github.com/dhongu/deltatech_stock_valuation/tree/20.0/deltatech_obyc
 - **Cale Locală:** `odoo-addons/deltatech_stock_valuation/deltatech_obyc`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-10-01`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Deltatech OBYC - Account Determination aduce în Odoo un mecanism de determinare automată a conturilor contabile pentru tranzacțiile de stoc, inspirat din conceptul SAP OBYC (Object-based valuation and account determination for inventorY and Cost management). În loc ca notele contabile de stoc să fie derivate doar din categoria de produs, modulul le determină dintr-o matrice de reguli configurabilă, bazată pe combinația dintre cheia de tranzacție (recepție, livrare, retur, transfer intern, ajustare de inventar, producție, dropship, landed cost etc.), clasa de evaluare a produsului, aria de evaluare, un modificator contabil opțional și companie. Astfel, contabilitatea de stoc poate fi mult mai fin segmentată decât permite mecanismul standard Odoo cu două conturi, oferind un al treilea cont dedicat diferențelor de valorizare.
+Deltatech OBYC - Account Determination aduce în Odoo un mecanism de determinare automată a conturilor contabile pentru tranzacțiile de stoc, inspirat din conceptul SAP OBYC. În loc ca notele contabile de stoc să fie derivate doar din categoria produsului, modulul le determină dintr-o matrice de reguli configurabilă, în funcție de cheia de tranzacție (recepție, livrare, retur, transfer intern, ajustare de inventar, producție, dropship, landed cost etc.), clasa de evaluare a produsului, aria de evaluare, un modificator contabil opțional și companie. Contabilitatea de stoc poate fi astfel segmentată mult mai fin decât permite mecanismul standard Odoo, iar costul mărfii vândute se înregistrează la livrare, conform regulilor contabile românești.
 
 #### 2. Funcționalități Cheie
 
-- Definește o matrice de mapare flexibilă (`product.account.determination`) pentru atribuirea automată a conturilor contabile (sursă, destinație, evaluare) pe baza cheii de tranzacție, clasei de evaluare, ariei de evaluare, modificatorului contabil și companiei.
-- Introduce date de bază configurabile: `product.valuation.class` (clasă de evaluare atașată pe șablonul de produs) și `account.modifier` (modificator contabil opțional, folosit de exemplu pe tipul de operațiune de stoc sau pe jurnal).
-- Calculează automat cheia de tranzacție pe mișcările de stoc, pe baza combinației uzanță sursă/destinație (furnizor, client, intern, tranzit), pentru operațiuni precum recepție, livrare, retur de la client, retur la furnizor, transfer intern, dropship.
-- Suprascrie determinarea contului pe liniile de factură (`account.move.line`): documentele de vânzare folosesc cheia `stock_income`, cele de achiziție folosesc `stock_receipt`, iar linia primește și aria de evaluare corespunzătoare.
-- Dacă nu există regulă de determinare pentru o combinație dată, ridică un `RedirectWarning` care trimite direct spre ecranul de configurare a regulilor, cu contextul precompletat (în loc de o eroare simplă, greu de acționat).
-- Notele contabile generate păstrează `product_id` și o cantitate semnată (pozitivă pe debit, negativă pe credit) plus unitatea de măsură — convenție necesară stratului de evaluare (`deltatech_stock_valuation`) care reconstruiește mișcările cantitativ-valorice direct din liniile notei contabile.
-- Dacă aria de evaluare a mișcării are completat câmpul „Stock Journal", nota OBYC se postează pe jurnalul ariei, nu pe jurnalul de stoc al companiei — permite separarea notelor de stoc pe gestiune/arie.
-- Cu opțiunea „Storno accounting" activă pe companie, retururile (mișcări care au la origine o mișcare returnată) generează o notă „în roșu" (aceleași conturi ca tranzacția originală, cu sume negative), în loc de o notă inversată clasică.
-- Suportă și `landed_cost` ca o cheie de tranzacție dedicată, prin extinderea liniilor de ajustare a costului de aterizare (`stock.valuation.adjustment.lines`).
-- Dacă produsul nu are `valuation_class_id` completat, fluxul revine automat la comportamentul standard de valorizare Odoo, fără a bloca sau altera notele contabile existente.
+- Matrice de mapare flexibilă (`product.account.determination`) pentru atribuirea automată a conturilor: cont sursă, cont destinație și cont de evaluare, pe baza cheii de tranzacție, clasei de evaluare, ariei de evaluare, modificatorului contabil și companiei.
+- Date de bază configurabile: `product.valuation.class` (clasă de evaluare pe șablonul de produs) și `account.modifier` (modificator contabil opțional, pe tipul de operațiune sau pe jurnal).
+- Cheia de tranzacție se calculează automat pe mișcarea de stoc din uzanța locațiilor sursă/destinație (furnizor, client, intern, tranzit, inventar, producție): 16 combinații acoperite; pentru o combinație necunoscută se ridică eroare, iar contextul `price_difference` suprascrie cheia calculată.
+- Regula de contare a conturilor la mișcarea de stoc: cu contul sursă completat nota este Dr Evaluare / Cr Sursă (intrări); cu sursa goală, Dr Destinație / Cr Evaluare (ieșiri); cu toate trei goale nu se generează notă.
+- Fără notă contabilă pentru: produse nestocabile, categorii fără evaluare în timp real, cantități zero, stoc al unui terț și mișcări ignorate de evaluarea standard.
+- **Costul mărfii vândute se înregistrează la livrare**, pe nota mișcării de stoc (cheia `stock_delivery`, ex. Dr 607 / Cr 371), nu la postarea facturii: pentru produsele cu clasă de evaluare, factura de vânzare nu mai conține linii COGS (`account.move._get_cogs_lines_vals`), deci costul nu se dublează. Cazurile neacoperite (livrat și nefacturat la sfârșit de lună, consignație, facturi înainte de livrare) sunt descrise în `readme/bugs.md`.
+- Conturile liniilor de factură: documentele de vânzare (factură, notă de credit) folosesc contul destinație al regulii `stock_income`, cele de achiziție contul sursă al regulii `stock_receipt` (contul de evaluare doar dacă acela e gol); linia primește și aria de evaluare. Diferențele de preț și de curs dintre recepție și factura furnizorului nu sunt tratate, rămân pe 408 și se regularizează manual.
+- Landed cost: cheie dedicată `landed_cost` (Dr contul de evaluare / Cr contul liniei de cost), prin extinderea `stock.valuation.adjustment.lines`.
+- Jurnal pe arie: dacă aria de evaluare are „Stock Journal", nota OBYC se postează pe jurnalul ariei.
+- Storno: cu opțiunea „Storno accounting" pe companie, retururile generează o notă „în roșu" (aceleași conturi, sume negative).
+- Ajustări de inventar: câștigul la inventar (inventar → intern) folosește `inventory_adjustment_plus`, lipsa (intern → inventar) `inventory_adjustment_minus` (în versiunile înainte de 20.0.1.0.5 cheile erau inversate).
+- Dacă regula lipsește, se ridică un `RedirectWarning` cu trimitere directă la configurarea regulilor; produsele fără clasă de evaluare rămân pe comportamentul standard Odoo.
+- Notele păstrează `product_id`, cantitate semnată și unitate de măsură, convenție necesară stratului `deltatech_stock_valuation`.
+- Neacoperit: stoc evaluat la preț cu amănuntul (371 cu adaos pe 378 și TVA pe 4428); ruta de transfer între arii prin tranzit (`internal_transfer_out`/`in`) nu este validată în Odoo 20 (mișcarea stoc → tranzit nu primește valoare, OBYC-009) și nu trebuie folosită.
+- Meniuri: configurare în Inventar, submeniul „Account Determination Config" cu „Evaluation Class", „Account Modifiers" și „Product Account Determination".
 
-**Chei de tranzacție.** Modulul definește 18 chei în `TRANSACTION_KEYS`
-(`models/product_account_determination.py`): `stock_valuation`, `price_difference`,
-`stock_receipt`, `return_to_supplier`, `stock_receipt_price_difference`, `stock_delivery`,
-`return_from_customer`, `stock_income`, `dropship`, `dropship_return`, `internal_transfer`,
-`internal_transfer_out`, `internal_transfer_in`, `inventory_adjustment_plus`,
-`inventory_adjustment_minus`, `production_issue`, `production_receipt`, `landed_cost`.
-Pe mișcările de stoc, cheia se deduce din uzanța locațiilor sursă/destinație
-(`stock.move._compute_transaction_key`, 13 combinații acoperite, inclusiv tranzit); dacă nicio
-combinație nu se potrivește, mișcarea ridică `UserError`, iar contextul `price_difference`
-suprascrie cheia calculată. Cheile `stock_income`/`stock_receipt` se determină și pe
-`account.move.line`, iar `landed_cost` pe `stock.landed.cost`.
+**Chei de tranzacție (18).** `stock_valuation`, `price_difference`, `stock_receipt`, `return_to_supplier`, `stock_receipt_price_difference`, `stock_delivery`, `return_from_customer`, `stock_income`, `dropship`, `dropship_return`, `internal_transfer`, `internal_transfer_out`, `internal_transfer_in`, `inventory_adjustment_plus`, `inventory_adjustment_minus`, `production_issue`, `production_receipt`, `landed_cost`.
 
-> **Notă de corecție (2026-07-31):** `readme/DESCRIPTION.md` conținea referințe la Odoo 17
-> (mențiunea „compatible with Odoo 17 Enterprise & Community" și link-urile către documentația
-> oficială 17.0) și o listă **incompletă** de chei de tranzacție — lipseau `price_difference`,
-> `stock_receipt_price_difference` și `landed_cost`, iar tabelul de determinare implicită acoperea
-> doar 6 din cele 13 combinații de uzanțe. Corectat direct în modul (v19.0.1.0.1, vezi
-> `readme/HISTORY.md`); pagina reflectă acum codul 19.0.
+Exemple de mapări (plan de conturi românesc; MF = mărfuri, RM = materii prime, FG = produse finite): recepție MF Dr 371 / Cr 408; livrare MF Dr 607 / Cr 371; livrare FG Dr 711 / Cr 345; retur de la client Dr 371 / Cr 607; consum producție Dr 601 / Cr 301; predare din producție Dr 345 / Cr 711; transfer intern în aceeași arie: fără notă. Fluxul detaliat pas cu pas este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
+
+> **Notă de corecție (2026-10-01):** `readme/DESCRIPTION.md` este deja aliniat la Odoo 20 (fără referințe la versiuni vechi); pagina reflectă codul 20.0.1.0.6, inclusiv trecerea COGS la livrare, cheile de inventar corectate și recunoașterea a 16 combinații de uzanțe (față de 13 în ingestia de 19.0).
 
 #### 3. Dependențe
 
@@ -54,21 +46,34 @@ suprascrie cheia calculată. Cheile `stock_income`/`stock_receipt` se determină
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, secțiunile de mai sus (Sumar și Funcționalități Cheie) sunt preluate din `readme/DESCRIPTION.md` și `readme/FISA_CONSULTANT.md`; acestea nu solicită explicit detalierea Componentelor Cheie (Vizualizări, Acțiuni Automate). Totuși, modelele introduse sau extinse sunt explicit menționate în readme, motiv pentru care sunt listate mai jos ca reper tehnic.
+Secțiunile 1 și 2 provin din `readme/DESCRIPTION.md` și `readme/FISA_CONSULTANT.md`; modelele sunt listate ca reper tehnic.
 
 **Modele**
 
-- `product.account.determination`: regula centrală de mapare — combină cheia de tranzacție, modificatorul contabil, clasa de evaluare, aria de evaluare și compania pentru a stabili contul sursă, contul destinație și contul de evaluare.
-- `product.valuation.class`: date de bază pentru clasificarea contabilă a produselor (ex. materii prime, produse finite), afișată în format `[COD] Nume`.
-- `account.modifier`: modificator contabil opțional pentru rafinarea suplimentară a selecției regulii, afișat în format `[COD] Nume`.
-- `product.template` (extindere): adaugă câmpul de clasă de evaluare pe șablonul de produs.
-- `stock.move` (extindere): calculează cheia de tranzacție și generează notele contabile OBYC pe mișcările de stoc.
-- `stock.picking.type` (extindere): permite atașarea unui modificator contabil pe tipul de operațiune.
-- `account.journal` (extindere): permite atașarea unui modificator contabil pe jurnal.
-- `account.move.line` (extindere): recalculează contul pe liniile de produs din facturi, pe baza cheii de tranzacție și a ariei de evaluare.
-- `stock.valuation.adjustment.lines` (extindere): integrează cheia de tranzacție `landed_cost` în determinarea contului pentru costurile de aterizare.
+- `product.account.determination`: regula centrală de mapare (cheie, modificator, clasă, arie, companie, conturi sursă/destinație/evaluare).
+- `product.valuation.class`: clasificarea contabilă a produselor, afișată `[COD] Nume`.
+- `account.modifier`: modificator contabil opțional, afișat `[COD] Nume`.
+- `product.template` (extindere): clasa de evaluare pe produs.
+- `stock.move` (extindere): calculul cheii de tranzacție, regula de cont, crearea notei contabile OBYC (jurnal pe arie, storno la retururi) și valorizarea mișcării.
+- `stock.move.line` (extindere): actualizează valoarea mișcării la modificarea cantităților.
+- `stock.picking.type` și `account.journal` (extinderi): atașează un modificator contabil.
+- `account.move` (extindere): elimină liniile COGS de pe factura de vânzare pentru produsele OBYC.
+- `account.move.line` (extindere): contul liniilor de factură pe baza cheii și a ariei de evaluare.
+- `stock.valuation.adjustment.lines` (extindere): cheia `landed_cost`.
+
+**Vizualizări**
+
+- `view_product_account_determination_tree` / `_form`: lista și formularul regulilor de determinare.
+- `view_product_valuation_class_tree` / `_form`: clase de evaluare.
+- `view_account_modifier_tree` / `_form`: modificatori contabili.
+- `view_product_template_form_valuation_class`, `view_product_template_search_valuation_class`, `view_product_template_tree_valuation_class`: clasa de evaluare pe produs.
+- `view_picking_type_form`, `view_account_bank_journal_form`: modificatorul contabil pe tipul de operațiune și pe jurnal.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Nu sunt definite acțiuni automate sau cron; modulul oferă doar acțiuni de fereastră pentru regulile de determinare, clasele de evaluare și modificatorii contabili.
 
 #### 5. Conexiuni
 
-- [deltatech_valuation_area](../deltatech_valuation_area/index.md): furnizează conceptul de arie de evaluare (`valuation.area`), folosit ca dimensiune de selecție a regulilor OBYC și pentru jurnalul de stoc dedicat pe arie.
-- [deltatech_stock_valuation](../deltatech_stock_valuation/index.md): stratul de evaluare care reconstruiește mișcările cantitativ-valorice direct din liniile notei contabile generate de acest modul (cantitate semnată + unitate de măsură pe linii).
+- [deltatech_valuation_area](../deltatech_valuation_area/index.md): furnizează aria de evaluare, dimensiune de selecție a regulilor și jurnal de stoc dedicat.
+- [deltatech_stock_valuation](../deltatech_stock_valuation/index.md): stratul de evaluare care reconstruiește mișcările cantitativ-valorice din liniile notei generate de acest modul.
