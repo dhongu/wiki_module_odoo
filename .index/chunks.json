@@ -596,6 +596,34 @@
     "text": "Deltatech Auto Reorder Rule\ndeltatech_auto_reorder_rule\nModulul automatizează crearea regulilor de reaprovizionare (reordering rules) pentru produse. La adăugarea unui produs nou, modulul generează automat o regulă de reaprovizionare cu valori implicite, eliminând astfel un pas manual repetitiv. Pentru produsele deja existente, oferă o metodă dedicată prin care regulile pot fi create în masă. Astfel, echipa de achiziții și logistică se asigură că fiecare produs gestionat are definite pragurile de stoc necesare pentru reaprovizionarea automată.\nCreează automat o regulă de reaprovizionare cu valori implicite atunci când este creat un produs nou.\nOferă metoda `create_rule()` pe modelul `product.product` pentru a crea reguli pentru produsele deja existente.\nRegulile sunt create doar pentru produsele de tip stocabil (`type='product'`)."
   },
   {
+    "path": "deltatech_auto_translate/index.md",
+    "module": "deltatech_auto_translate",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_auto_translate",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_auto_translate",
+    "last_ingest": "2026-10-01",
+    "friendly_name": "Deltatech Auto Translate",
+    "summary": "Modulul traduce automat câmpurile traductibile (text simplu și HTML) folosind cadrul AI nativ din Odoo (modulul `ai`, Enterprise). Este independent de furnizor: folosește modelul AI ales în *Setări → Integrări → Traducere automată* și cheia API a furnizorului respectiv din setările AI. Pentru traducere cu Claude se instalează `deltatech_ai_anthropic`, ale cărui modele apar apoi în listă. Valoarea de afaceri: conținut (produse, pagini, descrieri) tradus în mai multe limbi fără muncă manuală și fără costuri repetate.",
+    "features": [
+      "Joburi de traducere (Setări → Auto Translate → Translation jobs): definesc ce se traduce — un model, câmpurile traductibile, un domeniu de filtrare și, opțional, limbile țintă. Fiecare job are propriul cursor de progres.",
+      "Acțiune programată instalată inactivă (rulează din oră în oră când este activată): procesează joburile în loturi, cu buget de timp. Butonul Run now de pe job face același lucru la cerere.",
+      "Grupare a textelor: textele unei rulări sunt trimise într-un set de cereri pe limbă.",
+      "Cache de traduceri: nimic nu se plătește de două ori.",
+      "Validarea etichetelor HTML: o traducere cu etichete sau atribute diferite este respinsă.",
+      "Corecțiile manuale sunt respectate: pentru câmpurile simple se rețin hash-urile sursei și ale traducerii scrise; pentru câmpurile HTML se retraduc doar propozițiile modificate în limba sursă.",
+      "API pentru alte module: `env[\"deltatech.translate.service\"].translate_records(records, field_names)`; metoda `_system_prompt` poate fi extinsă pentru terminologie proprie.",
+      "Meniu de consultare a cache-ului (Auto Translate → Translation cache)."
+    ],
+    "dependencies": [
+      "ai",
+      "base_setup"
+    ],
+    "connections": [
+      "deltatech_ai_anthropic"
+    ],
+    "text": "Deltatech Auto Translate\ndeltatech_auto_translate\nModulul traduce automat câmpurile traductibile (text simplu și HTML) folosind cadrul AI nativ din Odoo (modulul `ai`, Enterprise). Este independent de furnizor: folosește modelul AI ales în *Setări → Integrări → Traducere automată* și cheia API a furnizorului respectiv din setările AI. Pentru traducere cu Claude se instalează `deltatech_ai_anthropic`, ale cărui modele apar apoi în listă. Valoarea de afaceri: conținut (produse, pagini, descrieri) tradus în mai multe limbi fără muncă manuală și fără costuri repetate.\nJoburi de traducere (Setări → Auto Translate → Translation jobs): definesc ce se traduce — un model, câmpurile traductibile, un domeniu de filtrare și, opțional, limbile țintă. Fiecare job are propriul cursor de progres.\nAcțiune programată instalată inactivă (rulează din oră în oră când este activată): procesează joburile în loturi, cu buget de timp. Butonul Run now de pe job face același lucru la cerere.\nGrupare a textelor: textele unei rulări sunt trimise într-un set de cereri pe limbă.\nCache de traduceri: nimic nu se plătește de două ori.\nValidarea etichetelor HTML: o traducere cu etichete sau atribute diferite este respinsă.\nCorecțiile manuale sunt respectate: pentru câmpurile simple se rețin hash-urile sursei și ale traducerii scrise; pentru câmpurile HTML se retraduc doar propozițiile modificate în limba sursă.\nAPI pentru alte module: `env[\"deltatech.translate.service\"].translate_records(records, field_names)`; metoda `_system_prompt` poate fi extinsă pentru terminologie proprie.\nMeniu de consultare a cache-ului (Auto Translate → Translation cache)."
+  },
+  {
     "path": "deltatech_average_payment_period/index.md",
     "module": "deltatech_average_payment_period",
     "version": "19.0.1.0.1",
@@ -616,6 +644,40 @@
       "account"
     ],
     "text": "Deltatech Average Payment Period\ndeltatech_average_payment_period\nModulul calculează durata medie de încasare și de plată a companiei, adică perioada medie scursă între data facturii și data efectivă a decontării. Această informație ajută echipa financiară să înțeleagă cât de repede își încasează banii de la clienți și cât de repede își plătește furnizorii, oferind un indicator util pentru gestionarea cash-flow-ului.\nCalculează durata medie a contabilității de casă (perioada medie de plată/încasare).\nZile de plată (\"Payment Days\"): diferența dintre data facturii și data plății, ponderată cu suma decontată.\nZile de plată simple (\"Payment days simple\"): diferența dintre data facturii și data plății, doar pentru facturile de furnizor și client, fără notele de credit."
+  },
+  {
+    "path": "deltatech_b2b_portal/index.md",
+    "module": "deltatech_b2b_portal",
+    "version": "19.0.1.0.3",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_portal",
+    "local_path": "odoo-addons/bitshop/deltatech_b2b_portal",
+    "last_ingest": "2026-10-01",
+    "friendly_name": "deltatech_b2b_portal",
+    "summary": "Un portal pentru clienții persoane juridice de pe website-ul Odoo: firmele cer un cont dintr-o pagină publică, un agent de vânzări îl aprobă dintr-un singur clic, iar apoi fiecare contact al firmei vede în portal ce contează pentru un cumpărător business: soldul, facturile restante, creditul disponibil și agentul de vânzări. Este baza familiei Terrabit B2B; comanda rapidă după cod, listele de comandă salvate și treptele de preț pe cantitate sunt module separate, construite peste el.",
+    "features": [
+      "Pagina publică /b2b cu formularul de cerere de cont: denumire firmă, CUI, nr. registrul comerțului, adresă, persoană de contact, cu câmp-capcană anti-spam și, opțional, acceptarea termenilor B2B.",
+      "Cererea este chiar clientul: formularul creează firma în starea *Solicitat* (cu contactul sub ea) și generează o activitate pentru agentul de vânzări; nu există un model separat de cereri care să dubleze datele.",
+      "Potrivire după CUI (`RO 1234 5678` și `12345678` sunt aceeași firmă): la un client existent se adaugă doar contactul; datele introduse de un vizitator anonim nu suprascriu ce e deja înregistrat. Aceeași persoană care trimite de două ori nu duplică nimic; o cerere respinsă și arhivată care revine este dezarhivată.",
+      "Aprobare dintr-un clic: contul devine activ, iar contactele care au cerut acces primesc invitația standard de portal. Respingerea cere motivul și poate arhiva firma (propus doar dacă nu are comenzi sau facturi).",
+      "Stare cont B2B pe firmă (solicitat, activ, suspendat, respins) și rol per contact: poate comanda sau doar vizualizare (prețuri și documente). Rolul îl setează administratorul B2B.",
+      "Tablou de bord pe /my: sold, restant, credit disponibil cu bară de utilizare (verde, galben de la 70%, roșu de la 90%), oferte în așteptare, facturi de plătit cu zile întârziere și cardul agentului de vânzări.",
+      "Blocarea comenzilor: un contact „doar vizualizare\" sau un cont suspendat nu poate finaliza coșul și nu poate semna sau plăti online o ofertă din portal; portalul explică motivul. Oferta deschisă din e-mail, fără autentificare, se semnează ca de obicei.",
+      "Meniuri sub *Vânzări ▸ Comenzi*: *Cereri de cont B2B* (firmele în starea Solicitat, implicit) și *Clienți B2B* (conturi active și suspendate, cu sold, restanțe, credit disponibil); filtre pe contacte: *Clienți B2B*, *Cereri de cont B2B*, *B2B cu facturi restante*.",
+      "Activarea unui client existent: *Acțiune ▸ Activare cont B2B* (administrator B2B) deschide wizardul standard de acces la portal; Suspendă oprește comenzile din portal fără a retrage accesul la documente, Reactivează le repornește fără invitație nouă.",
+      "Setări (*Website ▸ Configurare ▸ Setări ▸ Portal B2B*): agentul de vânzări pentru cereri (implicit agentul website-ului) și adresa termenilor B2B. Accesul în magazin doar pentru utilizatori autentificați se face cu setarea standard *eCommerce Access*.",
+      "Drepturi de acces: B2B Portal ▸ User (aprobă, respinge, suspendă) și B2B Portal ▸ Administrator (activează clienți existenți, setează rolurile).",
+      "Folosește mecanismele standard Odoo (agent de vânzări, limită de credit, listă de prețuri, termene de plată, invitație portal, acces eCommerce), fără duplicări. Limita de credit și facturile restante se impun prin `terrabit_partner_credit_limit` și `terrabit_partner_credit_limit_website`.",
+      "Neinclus (planificat): aprobarea comenzilor plasate de colegi și completarea automată a datelor firmei dintr-un registru public."
+    ],
+    "dependencies": [
+      "website_sale",
+      "sale_management"
+    ],
+    "connections": [
+      "terrabit_partner_credit_limit",
+      "terrabit_partner_credit_limit_website"
+    ],
+    "text": "deltatech_b2b_portal\ndeltatech_b2b_portal\nUn portal pentru clienții persoane juridice de pe website-ul Odoo: firmele cer un cont dintr-o pagină publică, un agent de vânzări îl aprobă dintr-un singur clic, iar apoi fiecare contact al firmei vede în portal ce contează pentru un cumpărător business: soldul, facturile restante, creditul disponibil și agentul de vânzări. Este baza familiei Terrabit B2B; comanda rapidă după cod, listele de comandă salvate și treptele de preț pe cantitate sunt module separate, construite peste el.\nPagina publică /b2b cu formularul de cerere de cont: denumire firmă, CUI, nr. registrul comerțului, adresă, persoană de contact, cu câmp-capcană anti-spam și, opțional, acceptarea termenilor B2B.\nCererea este chiar clientul: formularul creează firma în starea *Solicitat* (cu contactul sub ea) și generează o activitate pentru agentul de vânzări; nu există un model separat de cereri care să dubleze datele.\nPotrivire după CUI (`RO 1234 5678` și `12345678` sunt aceeași firmă): la un client existent se adaugă doar contactul; datele introduse de un vizitator anonim nu suprascriu ce e deja înregistrat. Aceeași persoană care trimite de două ori nu duplică nimic; o cerere respinsă și arhivată care revine este dezarhivată.\nAprobare dintr-un clic: contul devine activ, iar contactele care au cerut acces primesc invitația standard de portal. Respingerea cere motivul și poate arhiva firma (propus doar dacă nu are comenzi sau facturi).\nStare cont B2B pe firmă (solicitat, activ, suspendat, respins) și rol per contact: poate comanda sau doar vizualizare (prețuri și documente). Rolul îl setează administratorul B2B.\nTablou de bord pe /my: sold, restant, credit disponibil cu bară de utilizare (verde, galben de la 70%, roșu de la 90%), oferte în așteptare, facturi de plătit cu zile întârziere și cardul agentului de vânzări.\nBlocarea comenzilor: un contact „doar vizualizare\" sau un cont suspendat nu poate finaliza coșul și nu poate semna sau plăti online o ofertă din portal; portalul explică motivul. Oferta deschisă din e-mail, fără autentificare, se semnează ca de obicei.\nMeniuri sub *Vânzări ▸ Comenzi*: *Cereri de cont B2B* (firmele în starea Solicitat, implicit) și *Clienți B2B* (conturi active și suspendate, cu sold, restanțe, credit disponibil); filtre pe contacte: *Clienți B2B*, *Cereri de cont B2B*, *B2B cu facturi restante*.\nActivarea unui client existent: *Acțiune ▸ Activare cont B2B* (administrator B2B) deschide wizardul standard de acces la portal; Suspendă oprește comenzile din portal fără a retrage accesul la documente, Reactivează le repornește fără invitație nouă.\nSetări (*Website ▸ Configurare ▸ Setări ▸ Portal B2B*): agentul de vânzări pentru cereri (implicit agentul website-ului) și adresa termenilor B2B. Accesul în magazin doar pentru utilizatori autentificați se face cu setarea standard *eCommerce Access*.\nDrepturi de acces: B2B Portal ▸ User (aprobă, respinge, suspendă) și B2B Portal ▸ Administrator (activează clienți existenți, setează rolurile).\nFolosește mecanismele standard Odoo (agent de vânzări, limită de credit, listă de prețuri, termene de plată, invitație portal, acces eCommerce), fără duplicări. Limita de credit și facturile restante se impun prin `terrabit_partner_credit_limit` și `terrabit_partner_credit_limit_website`.\nNeinclus (planificat): aprobarea comenzilor plasate de colegi și completarea automată a datelor firmei dintr-un registru public."
   },
   {
     "path": "deltatech_backup_attachment/index.md",
@@ -1147,6 +1209,28 @@
     "text": "Interfață ContWin\ndeltatech_contwin\nModulul „Interfață ContWin\" este o extensie Odoo specializată, dezvoltată de Terrabit, care facilitează exportul datelor din Odoo către programul de contabilitate ContWin. ContWin este o aplicație de contabilitate dezvoltată de Omnidata (Petrescu), utilizată frecvent în România. Modulul funcționează ca o punte între funcționalitatea ERP modernă a Odoo și sistemul de contabilitate ContWin, permițând companiilor să folosească Odoo pentru operațiunile zilnice, păstrând totodată compatibilitatea cu ContWin pentru evidența contabilă și raportarea fiscală.\nExport complet de facturi: exportă atât facturile de intrare (achiziții), cât și cele de ieșire (vânzări) din Odoo către ContWin.\nFormate multiple de export:\nformat ContWin (fișiere `.fis`) cu câmpuri delimitate prin punct și virgulă;\nformat SAF-T (Standard Audit File for Tax) pentru raportare standardizată.\nMapare detaliată a datelor: corelarea atentă a câmpurilor Odoo cu formatul așteptat de ContWin, inclusiv coduri de cont, informații despre parteneri, tipuri de TVA și altele.\nOpțiuni de export configurabile: filtrare după interval de date, jurnale, unități operaționale și alte criterii.\nSuport pentru specificul contabil românesc: tratarea cazurilor speciale precum taxarea inversă și TVA la încasare.\nDate tranzacționale complete: exportul detaliilor complete ale tranzacțiilor, inclusiv termene de plată, numere de document, sume, monede și cursuri de schimb."
   },
   {
+    "path": "deltatech_create_ticket_button/index.md",
+    "module": "deltatech_create_ticket_button",
+    "version": "19.0.0.1.8",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_create_ticket_button",
+    "local_path": "odoo-addons/bitshop/deltatech_create_ticket_button",
+    "last_ingest": "2026-10-01",
+    "friendly_name": "deltatech_create_ticket_button",
+    "summary": "Modulul adaugă un buton „Open ticket\" direct în fereastra de eroare a Odoo, astfel încât utilizatorul să poată raporta problema imediat, în momentul în care apare. Butonul deschide într-o filă nouă pagina de suport Terrabit, ceea ce scurtează timpul dintre apariția unei erori și raportarea ei către echipa de suport.",
+    "features": [
+      "Buton „Open ticket\" afișat în dialogul de eroare, sub butonul existent de tip link (de exemplu „Close\"), cu un singur clic până la raportare.",
+      "Butonul deschide într-o filă nouă adresa de suport `https://www.terrabit.ro/helpdesk`.",
+      "Butonul este plasat în corpul dialogului, nu în footer, pentru că pe 19.0 un al doilea buton în footer ar ascunde butonul „Close\" al Odoo.",
+      "Adresa de suport este expusă în informațiile de sesiune, atât prin cheia proprie `terrabit_support_url`, cât și prin `support_url`. Pe Enterprise, `web_enterprise` rescrie `support_url`, de aceea butonul citește mai întâi cheia proprie.",
+      "Beneficii de afaceri: raportare rapidă a erorilor, canal direct între utilizatori și echipa de suport, date utile pentru îmbunătățirea continuă."
+    ],
+    "dependencies": [
+      "web"
+    ],
+    "connections": [],
+    "text": "deltatech_create_ticket_button\ndeltatech_create_ticket_button\nModulul adaugă un buton „Open ticket\" direct în fereastra de eroare a Odoo, astfel încât utilizatorul să poată raporta problema imediat, în momentul în care apare. Butonul deschide într-o filă nouă pagina de suport Terrabit, ceea ce scurtează timpul dintre apariția unei erori și raportarea ei către echipa de suport.\nButon „Open ticket\" afișat în dialogul de eroare, sub butonul existent de tip link (de exemplu „Close\"), cu un singur clic până la raportare.\nButonul deschide într-o filă nouă adresa de suport `https://www.terrabit.ro/helpdesk`.\nButonul este plasat în corpul dialogului, nu în footer, pentru că pe 19.0 un al doilea buton în footer ar ascunde butonul „Close\" al Odoo.\nAdresa de suport este expusă în informațiile de sesiune, atât prin cheia proprie `terrabit_support_url`, cât și prin `support_url`. Pe Enterprise, `web_enterprise` rescrie `support_url`, de aceea butonul citește mai întâi cheia proprie.\nBeneficii de afaceri: raportare rapidă a erorilor, canal direct între utilizatori și echipa de suport, date utile pentru îmbunătățirea continuă."
+  },
+  {
     "path": "deltatech_credentials/index.md",
     "module": "deltatech_credentials",
     "version": "19.0.1.0.1",
@@ -1348,6 +1432,62 @@
       "deltatech_sale_missions"
     ],
     "text": "Deltatech Customer Segment\ndeltatech_customer_segment\nÎn fiecare noapte, modulul calculează pentru fiecare client (și pentru fiecare companie) poziția lui în portofoliul de vânzări: cât de des cumpără, cât a cumpărat, cât are de plată și în ce categorie de portofoliu se încadrează. Clientul este judecat în raport cu propriul ritm de cumpărare, nu cu o medie a firmei, astfel încât un cumpărător săptămânal tăcut trei săptămâni este „în risc”, iar unul trimestrial tăcut două luni este încă activ. Rezultatele stau într-un tabel propriu, fără câmpuri adăugate pe partener, și oferă agenților și directorului de vânzări lista zilnică de clienți de sunat.\nRitm de cumpărare: media zilelor dintre achiziții, calculată pe istoricul clientului, și numărul de zile de când nu a mai cumpărat.\nSegment de ritm: nou, activ, în risc, adormit sau pierdut, raportat la ritmul propriu al clientului.\nVânzări: total de la început, ultimele 12 luni, perioada curentă față de cea anterioară, achiziție medie, creștere.\nCreanțe: sold deschis, sumă restantă, număr de facturi restante și vechimea celei mai vechi, citite doar din facturile de client.\nClasificare de portofoliu: client de top, în creștere, cu potențial ridicat, comenzi mici (upsell), stabil, în scădere, inactiv (trei niveluri) sau risc de plată, plus scor de risc și scor de potențial.\nSursa datelor: facturi de client postate (note de credit scăzute) sau comenzi de vânzare confirmate, fără TVA și în moneda companiei; vânzările contactelor se cumulează la firma-mamă.\nSetări (Vânzări > Portofoliu clienți > Setări): sursa, excluderea persoanelor fizice (doar B2B), prefixele conturilor de venit numărate ca vânzări (implicit `70`), perioada de comparație în luni, pragurile în moneda companiei; buton „Recalculează acum”.\nUtilizare: Vânzări > Portofoliu clienți > Segmente clienți, cu filtre (în scădere, inactiv, risc de plată, în risc pe ritm propriu, a cumpărat o singură dată, clienții mei), vedere pivot și grafic; din fișa partenerului, Acțiune > Segment client.\nRoluri: „Clienți proprii” (agentul vede doar clienții pe care este vânzător) și „Toți clienții” (director, editează pragurile); regulă multi-companie.\nDetaliile pas cu pas sunt în [fișa consultantului](FISA_CONSULTANT.md)."
+  },
+  {
+    "path": "deltatech_dashboard_builder/index.md",
+    "module": "deltatech_dashboard_builder",
+    "version": "19.0.1.0.3",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_dashboard_builder",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_dashboard_builder",
+    "last_ingest": "2026-10-01",
+    "friendly_name": "Dashboard Builder",
+    "summary": "Permite construirea, fără cod, a tablourilor de bord cu indicatori (KPI) și grafice pe orice model Odoo. Un tablou este un set de widget-uri; fiecare numără, însumează sau face media înregistrărilor unui model, opțional grupate după un câmp, și se afișează ca număr, grafic sau tabel. Utilizatorii văd mereu doar datele la care au dreptul, iar managerii pot urmări ținte, tendințe și alerte pe praguri.",
+    "features": [
+      "Datele utilizatorului curent: widget-urile se calculează cu drepturile și companiile celui care privește tabloul (citiri grupate Odoo); regulile de înregistrare și multi-company se aplică, iar un widget pe un model necitibil este golit, nu expus.",
+      "De la număr la înregistrări: un clic pe un KPI, o bară sau un rând de tabel deschide lista înregistrărilor din spate.",
+      "Aceleași carduri peste tot: KPI-urile folosesc cardurile din [deltatech_web_kpi_cards](../deltatech_web_kpi_cards/index.md) (numere compacte, variație, progres, linie de tendință, mod luminos/întunecat).",
+      "Perioade: un singur selector (luna aceasta, trimestrul trecut, ultimele 12 luni etc.) se aplică tuturor widget-urilor cu câmp de perioadă; KPI-ul arată variația față de perioada anterioară.",
+      "Ținte, instantanee și alerte: un KPI poate avea țintă cu bară de progres, instantaneu zilnic (opțiunea „Keep daily snapshots\") pentru tendință și alerte pe prag, care notifică o singură dată la depășire și se rearmează la revenire.",
+      "Partajare și prezentare: tablourile sunt vizibile pentru grupuri alese, pot primi intrare proprie în meniu („Add to menu\"), se deschid pe tot ecranul, iar graficele și tabelele se exportă în PNG sau CSV.",
+      "Configurare: în KPI Dashboards ▸ Configuration ▸ Dashboards se definesc numele, perioada implicită și grupurile; pentru fiecare widget se aleg modelul, agregarea (count, sum, average etc.), măsura, câmpul de grupare și domeniul. Grupul Builder creează tablouri, Viewer doar le vizualizează; tabloul fără grupuri este vizibil oricărui viewer. Alertele se calculează cu drepturile utilizatorului din „Computed as\". Fluxul detaliat este în fișa consultant."
+    ],
+    "dependencies": [
+      "web",
+      "mail",
+      "deltatech_web_kpi_cards"
+    ],
+    "connections": [
+      "deltatech_web_kpi_cards"
+    ],
+    "text": "Dashboard Builder\ndeltatech_dashboard_builder\nPermite construirea, fără cod, a tablourilor de bord cu indicatori (KPI) și grafice pe orice model Odoo. Un tablou este un set de widget-uri; fiecare numără, însumează sau face media înregistrărilor unui model, opțional grupate după un câmp, și se afișează ca număr, grafic sau tabel. Utilizatorii văd mereu doar datele la care au dreptul, iar managerii pot urmări ținte, tendințe și alerte pe praguri.\nDatele utilizatorului curent: widget-urile se calculează cu drepturile și companiile celui care privește tabloul (citiri grupate Odoo); regulile de înregistrare și multi-company se aplică, iar un widget pe un model necitibil este golit, nu expus.\nDe la număr la înregistrări: un clic pe un KPI, o bară sau un rând de tabel deschide lista înregistrărilor din spate.\nAceleași carduri peste tot: KPI-urile folosesc cardurile din [deltatech_web_kpi_cards](../deltatech_web_kpi_cards/index.md) (numere compacte, variație, progres, linie de tendință, mod luminos/întunecat).\nPerioade: un singur selector (luna aceasta, trimestrul trecut, ultimele 12 luni etc.) se aplică tuturor widget-urilor cu câmp de perioadă; KPI-ul arată variația față de perioada anterioară.\nȚinte, instantanee și alerte: un KPI poate avea țintă cu bară de progres, instantaneu zilnic (opțiunea „Keep daily snapshots\") pentru tendință și alerte pe prag, care notifică o singură dată la depășire și se rearmează la revenire.\nPartajare și prezentare: tablourile sunt vizibile pentru grupuri alese, pot primi intrare proprie în meniu („Add to menu\"), se deschid pe tot ecranul, iar graficele și tabelele se exportă în PNG sau CSV.\nConfigurare: în KPI Dashboards ▸ Configuration ▸ Dashboards se definesc numele, perioada implicită și grupurile; pentru fiecare widget se aleg modelul, agregarea (count, sum, average etc.), măsura, câmpul de grupare și domeniul. Grupul Builder creează tablouri, Viewer doar le vizualizează; tabloul fără grupuri este vizibil oricărui viewer. Alertele se calculează cu drepturile utilizatorului din „Computed as\". Fluxul detaliat este în fișa consultant."
+  },
+  {
+    "path": "deltatech_dashboard_builder_ai/index.md",
+    "module": "deltatech_dashboard_builder_ai",
+    "version": "19.0.1.0.3",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_dashboard_builder_ai",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_dashboard_builder_ai",
+    "last_ingest": "2026-10-01",
+    "friendly_name": "deltatech_dashboard_builder_ai",
+    "summary": "Modulul permite utilizatorilor să ceară AI-ului din Odoo să schițeze un tablou de bord. Utilizatorul descrie ce vrea să vadă (de exemplu „vânzări pe lună și top clienți\"), iar **Dashboard Assistant** găsește modelele potrivite, le verifică câmpurile și construiește widgeturile unui tablou pe care utilizatorul îl verifică. Asistentul vede doar structura (nume de modele și câmpuri), niciodată datele: cifrele sunt calculate de Odoo, cu drepturile utilizatorului, la deschiderea tabloului.",
+    "features": [
+      "Structura, nu datele: furnizorului AI i se trimit doar numele modelelor și ale câmpurilor; nicio înregistrare și nicio cifră nu pleacă din Odoo.",
+      "Ciornă, nu surpriză: rezultatul este un tablou în stare *Draft* (panglică „Draft\"), vizibil doar constructorilor de tablouri. Aceștia verifică widgeturile și apasă Publish.",
+      "Verificat pe baza de date reală: fiecare model și câmp propus este validat, inclusiv tipul. Un widget greșit anulează întreaga propunere, iar asistentul primește motivul și poate corecta.",
+      "Drepturile utilizatorului, nu mai multe: uneltele rulează ca utilizatorul care discută cu asistentul; cine nu poate citi un model nu poate construi widget pe el, iar un simplu vizualizator nu poate crea tablouri (este necesar grupul *Dashboards / Builder*).",
+      "Flux de utilizare: chat AI ▸ alegi Dashboard Assistant ▸ descrii nevoia ▸ deschizi KPI Dashboards ▸ Configuration ▸ Dashboards ▸ verifici și publici. Pentru a adăuga widgeturi la un tablou existent, îl numești în cerere.",
+      "Orice furnizor din framework-ul AI Odoo: OpenAI, Google și, cu *Deltatech AI - Anthropic (Claude)*, Claude. Furnizorul și cheia se configurează o singură dată, în Settings ▸ Technical ▸ AI.",
+      "Explicarea cifrelor este opțională: un al doilea topic, *Dashboard insights (sends figures to the AI provider)*, permite unui agent să citească cifrele calculate și să le explice. Nu este legat de niciun agent; adăugarea lui în Settings ▸ Technical ▸ AI ▸ Agents este decizia explicită de a trimite cifrele către furnizor.",
+      "Modul comercial (20 EUR, licență OPL-1), stadiu de dezvoltare Beta."
+    ],
+    "dependencies": [
+      "deltatech_dashboard_builder",
+      "ai"
+    ],
+    "connections": [
+      "deltatech_ai_anthropic"
+    ],
+    "text": "deltatech_dashboard_builder_ai\ndeltatech_dashboard_builder_ai\nModulul permite utilizatorilor să ceară AI-ului din Odoo să schițeze un tablou de bord. Utilizatorul descrie ce vrea să vadă (de exemplu „vânzări pe lună și top clienți\"), iar **Dashboard Assistant** găsește modelele potrivite, le verifică câmpurile și construiește widgeturile unui tablou pe care utilizatorul îl verifică. Asistentul vede doar structura (nume de modele și câmpuri), niciodată datele: cifrele sunt calculate de Odoo, cu drepturile utilizatorului, la deschiderea tabloului.\nStructura, nu datele: furnizorului AI i se trimit doar numele modelelor și ale câmpurilor; nicio înregistrare și nicio cifră nu pleacă din Odoo.\nCiornă, nu surpriză: rezultatul este un tablou în stare *Draft* (panglică „Draft\"), vizibil doar constructorilor de tablouri. Aceștia verifică widgeturile și apasă Publish.\nVerificat pe baza de date reală: fiecare model și câmp propus este validat, inclusiv tipul. Un widget greșit anulează întreaga propunere, iar asistentul primește motivul și poate corecta.\nDrepturile utilizatorului, nu mai multe: uneltele rulează ca utilizatorul care discută cu asistentul; cine nu poate citi un model nu poate construi widget pe el, iar un simplu vizualizator nu poate crea tablouri (este necesar grupul *Dashboards / Builder*).\nFlux de utilizare: chat AI ▸ alegi Dashboard Assistant ▸ descrii nevoia ▸ deschizi KPI Dashboards ▸ Configuration ▸ Dashboards ▸ verifici și publici. Pentru a adăuga widgeturi la un tablou existent, îl numești în cerere.\nOrice furnizor din framework-ul AI Odoo: OpenAI, Google și, cu *Deltatech AI - Anthropic (Claude)*, Claude. Furnizorul și cheia se configurează o singură dată, în Settings ▸ Technical ▸ AI.\nExplicarea cifrelor este opțională: un al doilea topic, *Dashboard insights (sends figures to the AI provider)*, permite unui agent să citească cifrele calculate și să le explice. Nu este legat de niciun agent; adăugarea lui în Settings ▸ Technical ▸ AI ▸ Agents este decizia explicită de a trimite cifrele către furnizor.\nModul comercial (20 EUR, licență OPL-1), stadiu de dezvoltare Beta."
   },
   {
     "path": "deltatech_data_sheet/index.md",
@@ -3131,6 +3271,30 @@
       "deltatech_website_watermark"
     ],
     "text": "Image Optimizer\ndeltatech_image_optimize\nModulul face două lucruri pe aceleași imagini: recomprimă atașamentele de tip imagine (poze de produs, avatare etc.) supradimensionate, pentru a elibera spațiu din filestore-ul Odoo, și elimină imaginile de produs stocate de două ori în aceeași fișă de produs. Fiecare imagine originală este redusă ca dimensiune și recodată în JPEG (sau WebP/PNG dacă are transparență reală), păstrând doar rezultatul dacă e efectiv mai mic decât originalul — fără să afecteze vizual imaginile publicate pe site sau în documente.\nRecomprimă imaginile „originale\" (implicit `image_1920` și\nDetectează transparența reală (nu doar modul de culoare) și păstrează\nSare peste GIF-urile animate — nu le aplatizează niciodată.\nScrie imaginea optimizată prin înregistrarea proprietară, astfel încât Odoo\nRecomprimă separat și variantele deja stocate (fără redimensionare, doar\nMarchează atașamentele deja procesate (`deltatech_image_optimized`) ca să nu\nRulează prin acțiune programată (`ir.cron`) zilnică, dezactivată implicit\nConfigurare completă prin parametri de sistem (`ir.config_parameter`):\nOpțiune destructivă `force_jpeg` (dezactivată implicit) care ignoră complet\nLa finalul rulării cron, apelează garbage collection-ul filestore-ului\nMetodele de batch întorc două cifre: `freed` (suma diferențelor per atașament)\nImagini de produs duplicate: detectează înregistrările `product.image` cu\nMeniu: Website → Configurare → eCommerce → Produse → Imagini duplicate\nNu detectează aceeași poză reexportată/redimensionată (checksum diferit — ar\nLa instalare, un hook completează `image_checksum` printr-un singur `UPDATE`"
+  },
+  {
+    "path": "deltatech_instastat_tax_risk/index.md",
+    "module": "deltatech_instastat_tax_risk",
+    "version": "19.0.0.0.2",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_instastat_tax_risk",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_instastat_tax_risk",
+    "last_ingest": "2026-10-01",
+    "friendly_name": "Deltatech Intrastat Fiscal Risk",
+    "summary": "Modulul permite marcarea produselor care sunt supuse riscului fiscal. Marcajul se face la nivelul codurilor Intrastat (nomenclatorul de coduri de marfă), astfel încât toate produsele încadrate la un cod marcat sunt tratate ca fiind cu risc fiscal. Ajută contabilii și responsabilii de conformitate să identifice rapid bunurile sensibile în raportarea Intrastat.",
+    "features": [
+      "Indicator „Fiscal Risk\" (da/nu) pe fiecare cod Intrastat, implicit dezactivat.",
+      "Câmpul apare în formularul codului Intrastat.",
+      "În lista codurilor Intrastat există o coloană opțională „Fiscal Risk\" (ascunsă implicit).",
+      "În căutare există câmpul „Fiscal Risk\" și filtrul „Fiscal Risk\", care afișează doar codurile marcate.",
+      "Starea modulului: Beta; licență OPL-1."
+    ],
+    "dependencies": [
+      "account_intrastat"
+    ],
+    "connections": [
+      "l10n_ro_intrastat_enhancement"
+    ],
+    "text": "Deltatech Intrastat Fiscal Risk\ndeltatech_instastat_tax_risk\nModulul permite marcarea produselor care sunt supuse riscului fiscal. Marcajul se face la nivelul codurilor Intrastat (nomenclatorul de coduri de marfă), astfel încât toate produsele încadrate la un cod marcat sunt tratate ca fiind cu risc fiscal. Ajută contabilii și responsabilii de conformitate să identifice rapid bunurile sensibile în raportarea Intrastat.\nIndicator „Fiscal Risk\" (da/nu) pe fiecare cod Intrastat, implicit dezactivat.\nCâmpul apare în formularul codului Intrastat.\nÎn lista codurilor Intrastat există o coloană opțională „Fiscal Risk\" (ascunsă implicit).\nÎn căutare există câmpul „Fiscal Risk\" și filtrul „Fiscal Risk\", care afișează doar codurile marcate.\nStarea modulului: Beta; licență OPL-1."
   },
   {
     "path": "deltatech_invoice_number/index.md",
@@ -5057,6 +5221,33 @@
     "text": "Deltatech Partner Gifts\ndeltatech_partner_gifts\nModulul gestionează cadourile oferite anumitor parteneri (clienți sau contacte). Permite generarea de linii de cadou pornind de la partenerii selectați, tipărirea etichetelor de cadou (expeditor/destinatar, pentru livrare) și colectarea de date despre parteneri (de exemplu totalul facturat în anul curent) printr-o acțiune de server. De asemenea, oferă posibilitatea de a copia și modifica în masă cadourile existente, simplificând astfel organizarea campaniilor de cadouri către parteneri.\nGenerarea de linii de cadou pornind de la partenerii selectați.\nTipărirea etichetei de cadou (expeditor/destinatar) pentru livrare.\nObținerea datelor despre partener (de exemplu totalul facturat în anul curent) printr-o acțiune de server.\nCopierea și modificarea în masă a cadourilor."
   },
   {
+    "path": "deltatech_partner_gifts_agreement/index.md",
+    "module": "deltatech_partner_gifts_agreement",
+    "version": "19.0.0.0.8",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_gifts_agreement",
+    "local_path": "odoo-addons/bitshop/deltatech_partner_gifts_agreement",
+    "last_ingest": "2026-10-01",
+    "friendly_name": "Deltatech Partner Gifts Service Agreement",
+    "summary": "Modulul leagă programul de cadouri pentru parteneri de contractele de service. Partenerii care au contracte de service active sunt identificați și incluși automat în campaniile de atenții, astfel încât recompensarea clienților fideli să se facă unitar și cu efort administrativ redus.",
+    "features": [
+      "Adăugare automată în programul de cadouri a partenerilor cu contracte de service, printr-un asistent din meniul Cadouri partener (opțiunea „Add service partners\").",
+      "Asistentul cere o singură dată tipul cadoului (simplu, mediu, VIP), data cadoului și modalitatea de livrare (curier, logistică, vânzări, service); creează apoi câte o linie de cadou pentru fiecare partener cu contracte în ciornă sau deschise.",
+      "Pentru fiecare cadou generat se preia adresa de livrare a partenerului (prima adresă de tip livrare) și responsabilul: utilizatorul din contractul de service sau, în lipsă, cel al partenerului.",
+      "Motiv nou de cadou, „Service Agreement\", care permite raportarea separată a cadourilor generate din contracte față de cele manuale sau din vânzări.",
+      "Marcaj „Active agreements\" pe linia de cadou (în listă și în formular), calculat la actualizarea datelor partenerului: este bifat dacă partenerul sau societatea-mamă are un contract de service care nu este închis.",
+      "Filtru de căutare „Active service agreement\", pentru prioritizarea bugetului de atenții."
+    ],
+    "dependencies": [
+      "deltatech_partner_gifts",
+      "deltatech_service"
+    ],
+    "connections": [
+      "deltatech_partner_gifts",
+      "deltatech_service"
+    ],
+    "text": "Deltatech Partner Gifts Service Agreement\ndeltatech_partner_gifts_agreement\nModulul leagă programul de cadouri pentru parteneri de contractele de service. Partenerii care au contracte de service active sunt identificați și incluși automat în campaniile de atenții, astfel încât recompensarea clienților fideli să se facă unitar și cu efort administrativ redus.\nAdăugare automată în programul de cadouri a partenerilor cu contracte de service, printr-un asistent din meniul Cadouri partener (opțiunea „Add service partners\").\nAsistentul cere o singură dată tipul cadoului (simplu, mediu, VIP), data cadoului și modalitatea de livrare (curier, logistică, vânzări, service); creează apoi câte o linie de cadou pentru fiecare partener cu contracte în ciornă sau deschise.\nPentru fiecare cadou generat se preia adresa de livrare a partenerului (prima adresă de tip livrare) și responsabilul: utilizatorul din contractul de service sau, în lipsă, cel al partenerului.\nMotiv nou de cadou, „Service Agreement\", care permite raportarea separată a cadourilor generate din contracte față de cele manuale sau din vânzări.\nMarcaj „Active agreements\" pe linia de cadou (în listă și în formular), calculat la actualizarea datelor partenerului: este bifat dacă partenerul sau societatea-mamă are un contract de service care nu este închis.\nFiltru de căutare „Active service agreement\", pentru prioritizarea bugetului de atenții."
+  },
+  {
     "path": "deltatech_partner_merge/index.md",
     "module": "deltatech_partner_merge",
     "version": "19.0.1.0.0",
@@ -5524,6 +5715,37 @@
     "text": "Revolut Payment Provider\ndeltatech_payment_revolut\nAcest modul integrează platforma de plăți Revolut în Odoo, oferind clienților o modalitate sigură și fluidă de a plăti pentru produse sau servicii folosind contul lor Revolut sau cardurile de credit/debit. Prin redirecționarea clienților către pagina securizată de checkout Revolut, modulul ajută la reducerea numărului de coșuri abandonate în timpul procesului de finalizare a comenzii și aduce un canal suplimentar de încasare pentru magazinele online.\nPlăți prin redirecționare securizată: redirecționează clienții către pagina de checkout securizată Revolut pentru efectuarea plății.\nCapturare manuală: opțiune de capturare manuală a plăților direct din comanda de vânzare.\nIntegrare prin webhook: sincronizare automată a stării plății prin intermediul webhook-urilor Revolut.\nSuport sandbox: testare facilă folosind mediul sandbox al Revolut.\nPlăți securizate: complet conform cu procesarea securizată a plăților Revolut.\nMesaje personalizabile: configurarea de mesaje proprii pentru diferitele stări ale plății (În așteptare, Autorizat, Finalizat, Anulat)."
   },
   {
+    "path": "deltatech_payment_tbi_bank/index.md",
+    "module": "deltatech_payment_tbi_bank",
+    "version": "19.0.1.0.3",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_tbi_bank",
+    "local_path": "odoo-addons/bitshop/deltatech_payment_tbi_bank",
+    "last_ingest": "2026-10-01",
+    "friendly_name": "Banca TBI Bank Payment Acquirer",
+    "summary": "Modulul adaugă în magazinul online metoda de plată „tbi Bank\", prin care cumpărătorul poate solicita finanțare (plata în rate) direct la finalizarea comenzii sau la plata unei facturi. Datele cererii se pregătesc automat din comanda de vânzare sau din factură, se criptează și se trimit către banca TBI, iar decizia băncii (aprobat, refuzat, în așteptare) se reflectă automat în tranzacția din Odoo, fără intervenție manuală.",
+    "features": [
+      "Furnizor de plată nou `tbi Bank` (`code = tbi_bank`), cu metodă de plată dedicată.",
+      "Cererea de finanțare (JSON cu datele comenzii, ale clientului și produsele) este criptată RSA (PKCS#1 v1.5) cu cheia publică TBI, împărțită în blocuri și codificată base64; browserul o trimite automat către endpoint-ul Finalize al băncii împreună cu `providerCode`.",
+      "Endpoint-ul se alege automat după starea furnizorului: producție când furnizorul este activat, mediul UAT (de test) în caz contrar.",
+      "Suportă atât comenzi de vânzare, cât și facturi: dacă tranzacția este legată de facturi, produsele și datele clientului se iau din factură; altfel din liniile comenzii; ca ultimă variantă, o singură linie.",
+      "Procesarea răspunsului: datele primite de la bancă se decriptează cu cheia privată proprie, iar `status_id` se mapează pe starea tranzacției (`1` aprobat, `0` anulat/refuzat, `2` în așteptare).",
+      "Mod opțional în două faze (autorizare, apoi captură manuală din Odoo): `tbi_bank_mode` = `1` (o fază) sau `2` (două faze, tranzacțiile aprobate rămân „Autorizate\").",
+      "Securitate: un răspuns cu `order_id` lipsă sau diferit de referința tranzacției este respins; răspunsurile pentru tranzacții deja finalizate sunt ignorate; un payload care nu poate fi decriptat lasă tranzacția în așteptare; datele sensibile nu se loghează.",
+      "Configurare în Setări > Plăți > Furnizori > tbi Bank: `Store ID`, `Provider Code`, utilizator și parolă API, mod (o fază/două faze) și cheile PEM (publică TBI pentru criptare, privată proprie pentru decriptare).",
+      "Limitări cunoscute: `order_total` se trimite rotunjit la număr întreg, conform exemplului PHP al băncii; codul categoriei produsului este implicit `\"8\"`; operațiile de captură/anulare urmează semantica iPay și pot necesita adaptare."
+    ],
+    "dependencies": [
+      "payment",
+      "website_sale",
+      "phone_validation",
+      "cryptography"
+    ],
+    "connections": [
+      "deltatech_payment_bt_ipay"
+    ],
+    "text": "Banca TBI Bank Payment Acquirer\ndeltatech_payment_tbi_bank\nModulul adaugă în magazinul online metoda de plată „tbi Bank\", prin care cumpărătorul poate solicita finanțare (plata în rate) direct la finalizarea comenzii sau la plata unei facturi. Datele cererii se pregătesc automat din comanda de vânzare sau din factură, se criptează și se trimit către banca TBI, iar decizia băncii (aprobat, refuzat, în așteptare) se reflectă automat în tranzacția din Odoo, fără intervenție manuală.\nFurnizor de plată nou `tbi Bank` (`code = tbi_bank`), cu metodă de plată dedicată.\nCererea de finanțare (JSON cu datele comenzii, ale clientului și produsele) este criptată RSA (PKCS#1 v1.5) cu cheia publică TBI, împărțită în blocuri și codificată base64; browserul o trimite automat către endpoint-ul Finalize al băncii împreună cu `providerCode`.\nEndpoint-ul se alege automat după starea furnizorului: producție când furnizorul este activat, mediul UAT (de test) în caz contrar.\nSuportă atât comenzi de vânzare, cât și facturi: dacă tranzacția este legată de facturi, produsele și datele clientului se iau din factură; altfel din liniile comenzii; ca ultimă variantă, o singură linie.\nProcesarea răspunsului: datele primite de la bancă se decriptează cu cheia privată proprie, iar `status_id` se mapează pe starea tranzacției (`1` aprobat, `0` anulat/refuzat, `2` în așteptare).\nMod opțional în două faze (autorizare, apoi captură manuală din Odoo): `tbi_bank_mode` = `1` (o fază) sau `2` (două faze, tranzacțiile aprobate rămân „Autorizate\").\nSecuritate: un răspuns cu `order_id` lipsă sau diferit de referința tranzacției este respins; răspunsurile pentru tranzacții deja finalizate sunt ignorate; un payload care nu poate fi decriptat lasă tranzacția în așteptare; datele sensibile nu se loghează.\nConfigurare în Setări > Plăți > Furnizori > tbi Bank: `Store ID`, `Provider Code`, utilizator și parolă API, mod (o fază/două faze) și cheile PEM (publică TBI pentru criptare, privată proprie pentru decriptare).\nLimitări cunoscute: `order_total` se trimite rotunjit la număr întreg, conform exemplului PHP al băncii; codul categoriei produsului este implicit `\"8\"`; operațiile de captură/anulare urmează semantica iPay și pot necesita adaptare."
+  },
+  {
     "path": "deltatech_payment_term/index.md",
     "module": "deltatech_payment_term",
     "version": "19.0.2.0.1",
@@ -5929,6 +6151,29 @@
       "deltatech_delivery_iot"
     ],
     "text": "Print Queue (Terrabit Connect)\ndeltatech_print_queue\nModulul permite tipărirea etichetelor (ZPL) și a documentelor (PDF) direct din Odoo pe imprimantele din depozit sau magazin, fără IoT Box, la fel de bine on-premise și pe odoo.sh. Odoo nu comunică niciodată cu imprimanta: pune un job în coada stației Terrabit Connect la care este conectată imprimanta, iar stația interoghează Odoo prin HTTPS, tipărește local și raportează rezultatul. Astfel serverul nu trebuie să vadă imprimanta, iar în rețeaua clientului nu se deschide niciun port. Modulul are la bază `mdtrade_print`, realizat de Alexandru Grecu (MD Trade Concept SRL).\nImprimante atașate unei stații: instalate pe stația de lucru (USB, spooler; conexiune „sistem”) sau Zebra accesată direct în rețea (TCP 9100), cu dimensiunile rolei de etichete (lățime, înălțime, rezoluție). Limbaj: *Etichete (ZPL)* pentru Zebra, *Documente (PDF)* pentru laser/inkjet. Se configurează la Setări → Terrabit Connect → Imprimante.\nOrice raport către o imprimantă: pe raport (Setări → Tehnic → Rapoarte) se setează câmpul „Print queue printer”. Tipărirea din meniul Print sau dintr-un buton trimite jobul în coadă, în loc să descarce fișierul. Rapoartele text (etichetele ZPL standard din Inventar și Producție, `qweb-prn`) merg la o imprimantă de etichete, cele PDF la una de documente.\nSiguranța etichetelor: ZPL-ul ajunge brut în firmware, deci o etichetă ar putea reconfigura definitiv imprimanta. Etichetele randate de Odoo trec printr-o listă de comenzi permise (allow-list); ZPL-ul primit de la curier trece printr-o listă de comenzi interzise (deny-list: `^JU`, `^CC`/`~CC`, `~JR` etc.).\nFeedback către utilizator: cel care a tipărit primește o notificare la trimiterea în coadă și una roșie, cu motivul, dacă stația raportează eșec (imprimantă offline, nume necunoscut).\nEtichetă de calibrare și buton Print test label pe imprimantă, pentru a verifica rola configurată față de cea fizică (cadrul trebuie să cadă pe marginea etichetei).\nUrmărirea joburilor: Setări → Terrabit Connect → Jobs sau butonul Jobs de pe imprimantă; tipuri „Print label (ZPL)” și „Print document (PDF)”. Un job de tipărire nu se reia automat dacă rezultatul se pierde (stația nu ține încă evidența a ce a tipărit, deci s-ar dubla): rămâne în starea *Claimed*; după verificarea imprimantei se folosește Retry dacă nu a ieșit nimic.\nConfigurarea stației: Terrabit Connect (Tauri, versiune ulterioară 1.6.21) înregistrat ca stație; în profil trebuie `TERRABIT_POLL_JOBS=1`. Cu funcția Labels activă, stația interoghează la 3 secunde (`TERRABIT_POLL_SEC` modifică intervalul). Pentru PDF: pe Windows SumatraPDF (portabil, `TERRABIT_SUMATRA_PATH=C:\\TerrabitConnect\\SumatraPDF.exe`), pe macOS/Linux `lp` (CUPS). Pentru ZPL nu e nevoie de nimic în plus.\nApel din cod: `printer.print_zpl(zpl, name=..., record=...)`, `printer.print_pdf(pdf_bytes, filename=..., record=...)`, iar pentru ZPL primit de la curier (AWB) `source=\"external\"` (deny-list în loc de allow-list). Alegerea imprimantei per depozit, utilizator sau document se face suprascriind `ir.actions.report._print_queue_get_printer(records)`.\nDrepturi: utilizatorii care tipăresc nu au nevoie de drepturi pe coada de joburi; joburile sunt create de modul după verificarea dreptului de citire asupra înregistrării, deci conținutul sau imprimanta unui job nu pot fi modificate prin RPC."
+  },
+  {
+    "path": "deltatech_product_attribute/index.md",
+    "module": "deltatech_product_attribute",
+    "version": "19.0.1.0.2",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_product_attribute",
+    "local_path": "odoo-addons/bitshop/deltatech_product_attribute",
+    "last_ingest": "2026-10-01",
+    "friendly_name": "Product Attribute Extension",
+    "summary": "Modulul extinde gestionarea atributelor de produs din Odoo pentru cataloagele cu produse complexe, cu multe atribute și variante. Permite organizarea atributelor în grupuri și introduce atribute de tip Da/Nu, care exprimă simplu prezența unei caracteristici. Rezultatul este un catalog mai bine structurat, mai ușor de filtrat și de raportat, cu informații mai clare pentru site-uri și marketplace-uri.",
+    "features": [
+      "Grupuri de atribute: atributele pot fi încadrate într-un grup configurabil, de tip „un singur atribut\" sau „mai multe\", cu limite minim și maxim. Grupul se alege din formularul atributului, lângă opțiunea de creare a variantelor.",
+      "Atribute de tip Da/Nu (`boolean`): tip nou de afișare pentru atribute, fără valori artificiale „Da\"/„Nu\". Pe fiecare valoare apare o bifă „True Value\", vizibilă doar când atributul este de tip Da/Nu.",
+      "Denumire mai curată a variantelor: la atributele Da/Nu, numele variantei conține doar caracteristicile active. Rezultă „Cămașă (Mânecă lungă)\", nu „Cămașă (Mânecă lungă: Da)\".",
+      "Meniu dedicat: Vânzări → Configurare → Attribute group, vizibil pentru utilizatorii cu variantele de produs activate.",
+      "Pentru a structura catalogul, a facilita filtrarea și raportarea după atribute, modulul sprijină și integrarea cu site-ul și marketplace-urile prin date de produs mai detaliate."
+    ],
+    "dependencies": [
+      "product",
+      "sale"
+    ],
+    "connections": [],
+    "text": "Product Attribute Extension\ndeltatech_product_attribute\nModulul extinde gestionarea atributelor de produs din Odoo pentru cataloagele cu produse complexe, cu multe atribute și variante. Permite organizarea atributelor în grupuri și introduce atribute de tip Da/Nu, care exprimă simplu prezența unei caracteristici. Rezultatul este un catalog mai bine structurat, mai ușor de filtrat și de raportat, cu informații mai clare pentru site-uri și marketplace-uri.\nGrupuri de atribute: atributele pot fi încadrate într-un grup configurabil, de tip „un singur atribut\" sau „mai multe\", cu limite minim și maxim. Grupul se alege din formularul atributului, lângă opțiunea de creare a variantelor.\nAtribute de tip Da/Nu (`boolean`): tip nou de afișare pentru atribute, fără valori artificiale „Da\"/„Nu\". Pe fiecare valoare apare o bifă „True Value\", vizibilă doar când atributul este de tip Da/Nu.\nDenumire mai curată a variantelor: la atributele Da/Nu, numele variantei conține doar caracteristicile active. Rezultă „Cămașă (Mânecă lungă)\", nu „Cămașă (Mânecă lungă: Da)\".\nMeniu dedicat: Vânzări → Configurare → Attribute group, vizibil pentru utilizatorii cu variantele de produs activate.\nPentru a structura catalogul, a facilita filtrarea și raportarea după atribute, modulul sprijină și integrarea cu site-ul și marketplace-urile prin date de produs mai detaliate."
   },
   {
     "path": "deltatech_product_brand/index.md",
@@ -15101,6 +15346,36 @@
       "mail"
     ],
     "text": "Limită de Credit pe Partener\nterrabit_partner_credit_limit\nModulul implementează un sistem de gestionare a limitelor de credit pentru partenerii de afaceri. Permite stabilirea și aplicarea limitelor de credit clienților, ajutând la administrarea riscului financiar și la controlul creanțelor. La confirmarea unei comenzi de vânzare care depășește limita (plus toleranța admisă), confirmarea este refuzată cu mesajul limitei de credit; un utilizator cu drept de aprobare poate acorda derogarea bifând „Allow Over Credit?\" pe comandă. Integrarea cu fluxul de verificări al comenzii (motive de verificare, banner, wizard de aprobare din `deltatech_sale_order_review`) a fost mutată în modulul separat `terrabit_partner_credit_limit_review`, care se instalează explicit. Modulul este util companiilor care oferă termene de plată clienților și doresc să își gestioneze expunerea pe creanțe.\nStabilește o limită de credit pe partener; când soldul de încasat plus comanda curentă depășesc limita plus toleranța admisă, confirmarea comenzii este refuzată cu mesajul limitei de credit (`UserError`, cu telefonul departamentului contabil).\nPermite marcarea anumitor parteneri pentru a ignora limitele de credit („Allow Over Credit?\" pe partener) și definirea unor „zile de grație\" (`Clemency Days`) înainte ca o factură scadentă să conteze drept restantă.\nIntroduce grupuri de acces pentru utilizatori:\n„Manage credit limits\" — permite editarea limitei de credit, a „Allow Over Credit?\" și a zilelor de grație de pe partener; nu ocolește verificarea la confirmarea comenzii și nu vede butonul „Req. confirm\".\n„Can approve sale order over credit limit\" — permite derogarea prin bifarea „Allow Over Credit?\" (fila Other Info) pe comanda de vânzare.\nPentru utilizatorii fără grupul „Manage credit limits\", pe ofertă apare butonul „Req. confirm\", care deschide o activitate (`mail.activity`) către responsabilul echipei de vânzări, ca flux alternativ de aprobare.\nPermite exceptarea anumitor echipe de vânzări de la verificarea limitei de credit (opțiunea „Ignore credit limits\").\nParametri globali configurabili din Vânzări → Configurare → Setări: toleranța admisă (`credit_limit.tolerance`), telefonul departamentului contabil afișat în mesajul de eroare și sărirea verificării pentru termene de plată imediate (`credit_limit.skip_term_immediate`).\nCalcul flexibil al creditului bazat pe parametri de sistem:\n`credit_limit_from_invoices` — dacă este `False` (implicit), creditul se calculează din liniile de cont (account move lines); dacă este `True`, creditul se calculează din facturi (facturile trebuie să fie plătite).\n`credit_limit_check_supplier_invoices` (necesită `credit_limit_from_invoices = True`) — dacă este `False` (implicit), creditul se calculează doar din facturile sau notele de credit ale clientului; dacă este `True`, din toate facturile sau notele de credit.\n`skip_only_card` — limitează sărirea verificării doar la tranzacțiile plătite altfel decât cu cardul.\n`can_skip_credit_limit()` și `action_confirm()` (prin `check_limit()`) rulează cu `sudo`, ca să nu dea eroare de acces unui vânzător fără drepturi pe `payment.transaction` / `partner.credit`.\nFluxul cu motive de verificare pe comandă (regulile „Limită de credit depășită\" și „Facturi restante\", banner, wizard de aprobare, integrarea cu importul din marketplace) nu mai face parte din acest modul: este oferit de `terrabit_partner_credit_limit_review`, instalat explicit. Migrarea predă cele două reguli (`rule_credit_limit`, `rule_overdue_invoices`) către xml id-urile punții, fără ștergere sau duplicare."
+  },
+  {
+    "path": "terrabit_partner_credit_limit_review/index.md",
+    "module": "terrabit_partner_credit_limit_review",
+    "version": "19.0.0.1.3",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_partner_credit_limit_review",
+    "local_path": "odoo-addons/bitshop/terrabit_partner_credit_limit_review",
+    "last_ingest": "2026-10-01",
+    "friendly_name": "Partner Credit Limit - Sale Order Review",
+    "summary": "Modulul transformă verificările de limită de credit din `terrabit_partner_credit_limit` în motive de revizuire pe comanda de vânzare, în loc de o eroare afișată la apăsarea butonului Confirmă. O ofertă care depășește limita de credit a clientului sau care are facturi restante rămâne ofertă, iar motivul apare vizibil pe comandă. Un utilizator cu drept de aprobare o confirmă printr-un wizard, care păstrează cine a aprobat și de ce. Se instalează explicit, acolo unde se dorește fluxul de revizuire; cele două reguli livrate sunt inactive implicit.",
+    "features": [
+      "Motive de revizuire pe poarta „înainte de confirmare\": *Credit limit exceeded* și *Overdue invoices*. Oferta afișează bannerul „Held for review\", butonul inteligent *Reviews* și insigna *To Review* în lista de comenzi.",
+      "Confirmare controlată: butonul Confirm deschide wizardul de aprobare pentru utilizatorii din grupul *Can approve sale order over credit limit*; ceilalți primesc un refuz cu lista motivelor, iar oferta rămâne neatinsă. Wizardul afișează motivele cu sumele și un câmp Note, care ajunge în chatter.",
+      "Derogarea existentă: aprobarea bifează automat *Allow Over Credit?* pe comandă (fila *Other Info*); o comandă cu bifa activă nu mai primește motive de credit. Aprobatorii pot bifa câmpul și direct pe ofertă.",
+      "Reevaluare: dacă valoarea comenzii crește după aprobare, motivul se redeschide; motivul pentru facturi restante se rezolvă singur după plata facturii.",
+      "Fluxuri automate (ex. import marketplace): comanda rămâne ofertă cu motivele vizibile, în loc să pice pe eroarea de limită de credit (prin `_review_can_auto_confirm()`).",
+      "Excepții păstrate din modulul de bază: echipă de vânzări cu *Ignore credit limits*, partener cu *Allow Over Credit?*, comenzi plătite.",
+      "Configurare: regulile se activează din *Sales → Configuration → Order Review Rules*; grupul de aprobare al ambelor reguli este implicit *Can approve sale order over credit limit* și poate fi schimbat pe regulă. Limita, toleranța, zilele de clemență și modul de calcul al soldului se setează conform modulului `terrabit_partner_credit_limit` (partener, *Sales → Configuration → Settings*, echipă de vânzări).",
+      "Utilizatorii din afara grupului de gestiune a limitelor văd și butonul Req. confirm, care creează o activitate pentru liderul echipei de vânzări.",
+      "Fără acest modul, `terrabit_partner_credit_limit` funcționează independent, refuzând confirmarea cu mesajul de limită de credit.",
+      "Flux pas-cu-pas, cu capturi: vezi [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "terrabit_partner_credit_limit",
+      "deltatech_sale_order_review"
+    ],
+    "connections": [
+      "terrabit_partner_credit_limit_website"
+    ],
+    "text": "Partner Credit Limit - Sale Order Review\nterrabit_partner_credit_limit_review\nModulul transformă verificările de limită de credit din `terrabit_partner_credit_limit` în motive de revizuire pe comanda de vânzare, în loc de o eroare afișată la apăsarea butonului Confirmă. O ofertă care depășește limita de credit a clientului sau care are facturi restante rămâne ofertă, iar motivul apare vizibil pe comandă. Un utilizator cu drept de aprobare o confirmă printr-un wizard, care păstrează cine a aprobat și de ce. Se instalează explicit, acolo unde se dorește fluxul de revizuire; cele două reguli livrate sunt inactive implicit.\nMotive de revizuire pe poarta „înainte de confirmare\": *Credit limit exceeded* și *Overdue invoices*. Oferta afișează bannerul „Held for review\", butonul inteligent *Reviews* și insigna *To Review* în lista de comenzi.\nConfirmare controlată: butonul Confirm deschide wizardul de aprobare pentru utilizatorii din grupul *Can approve sale order over credit limit*; ceilalți primesc un refuz cu lista motivelor, iar oferta rămâne neatinsă. Wizardul afișează motivele cu sumele și un câmp Note, care ajunge în chatter.\nDerogarea existentă: aprobarea bifează automat *Allow Over Credit?* pe comandă (fila *Other Info*); o comandă cu bifa activă nu mai primește motive de credit. Aprobatorii pot bifa câmpul și direct pe ofertă.\nReevaluare: dacă valoarea comenzii crește după aprobare, motivul se redeschide; motivul pentru facturi restante se rezolvă singur după plata facturii.\nFluxuri automate (ex. import marketplace): comanda rămâne ofertă cu motivele vizibile, în loc să pice pe eroarea de limită de credit (prin `_review_can_auto_confirm()`).\nExcepții păstrate din modulul de bază: echipă de vânzări cu *Ignore credit limits*, partener cu *Allow Over Credit?*, comenzi plătite.\nConfigurare: regulile se activează din *Sales → Configuration → Order Review Rules*; grupul de aprobare al ambelor reguli este implicit *Can approve sale order over credit limit* și poate fi schimbat pe regulă. Limita, toleranța, zilele de clemență și modul de calcul al soldului se setează conform modulului `terrabit_partner_credit_limit` (partener, *Sales → Configuration → Settings*, echipă de vânzări).\nUtilizatorii din afara grupului de gestiune a limitelor văd și butonul Req. confirm, care creează o activitate pentru liderul echipei de vânzări.\nFără acest modul, `terrabit_partner_credit_limit` funcționează independent, refuzând confirmarea cu mesajul de limită de credit.\nFlux pas-cu-pas, cu capturi: vezi [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
   },
   {
     "path": "terrabit_partner_credit_limit_website/index.md",

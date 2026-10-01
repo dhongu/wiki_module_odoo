@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-01] Ingestie lot 1 (bucla orară): 10 module noi din bitshop și bitshop_ent
+
+- **Acțiune:** Pagini noi, zece subagenți `documentarist-wiki` în paralel: [deltatech_b2b_portal](deltatech_b2b_portal/index.md) (fișă + 11 capturi), [deltatech_create_ticket_button](deltatech_create_ticket_button/index.md), [deltatech_partner_gifts_agreement](deltatech_partner_gifts_agreement/index.md), [deltatech_payment_tbi_bank](deltatech_payment_tbi_bank/index.md), [deltatech_product_attribute](deltatech_product_attribute/index.md), [terrabit_partner_credit_limit_review](terrabit_partner_credit_limit_review/index.md) (fișă + 6 capturi), [deltatech_auto_translate](deltatech_auto_translate/index.md), [deltatech_dashboard_builder](deltatech_dashboard_builder/index.md) (fișă + 6 capturi), [deltatech_dashboard_builder_ai](deltatech_dashboard_builder_ai/index.md) (fișă + 14 capturi), [deltatech_instastat_tax_risk](deltatech_instastat_tax_risk/index.md).
+- **Sursă:** `readme/DESCRIPTION.md` (+ `USAGE.md`/`CONFIGURE.md`/`NOUTATI_19.md` unde există) și codul modulelor pe 19.0.
+- **Corecții față de readme:** `deltatech_create_ticket_button` — butonul doar deschide pagina de helpdesk, nu transmite detaliile erorii (DESCRIPTION.md spune altfel); `deltatech_instastat_tax_risk` — marcajul e pe `account.intrastat.code`, nu pe produs (NOUTATI_19.md spune altfel).
+- **Dependențe/Conexiuni:** `deltatech_dashboard_builder_ai` → [deltatech_dashboard_builder](deltatech_dashboard_builder/index.md) (link activat la consolidare); `terrabit_partner_credit_limit_review` → [terrabit_partner_credit_limit](terrabit_partner_credit_limit/index.md), [deltatech_sale_order_review](deltatech_sale_order_review/index.md).
+- **Fișiere actualizate:** cele 10 directoare de modul, `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-01] Ingestie `deltatech_mcp_server`
 
 - **Acțiune:** Pagină nouă [deltatech_mcp_server](deltatech_mcp_server/index.md) (19.0.1.4.0): endpoint `/mcp` cu cheie API sau OAuth 2.1 + PKCE, politici de acces per utilizator (modele, câmpuri ascunse/mascate, limite), date personale mascate, scriere oprită implicit, unelte proprii din acțiuni de server și metode-buton, jurnal de apeluri și consum zilnic; fișa consultant copiată (9 capturi). Un subagent `documentarist-wiki`.
