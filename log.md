@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-01] Actualizare `deltatech_expenses` și `deltatech_expenses_hr_expense` după auditul fișei
+
+- **Acțiune:** Re-ingestie, doi subagenți `documentarist-wiki` în paralel. [deltatech_expenses](deltatech_expenses/index.md) adus la 19.0.3.4.0: suma liniei mereu brută (TVA inclus), nota de diferență 5311/542 cu data decontului, plata directă la furnizor fără factură deschisă reclasificată `Dr 4092 = Cr 401`, fără `account.payment`, tab „Chitanțe", decontul operat de contabil (angajatul nu lucrează în modul), diurna implicită 42,50 lei/zi precizată ca neplafon; fișa consultant recopiată cu 8 capturi (01, 02, 05–10). [deltatech_expenses_hr_expense](deltatech_expenses_hr_expense/index.md) adus la 19.0.1.1.0: cheltuielile preluate intră cu totalul cu TVA inclus; fișa recopiată (03, 04).
+- **Sursă:** `readme/DESCRIPTION.md`, `FISA_CONSULTANT.md`, `HISTORY.md` și codul pe `origin/19.0` (dhongu/deltatech#3087).
+- **Corecții față de readme:** `deltatech_expenses/readme/DESCRIPTION.md` mai menționează „înregistrarea plăților" și TVA 19% — nepreluate în pagină, de corectat în sursă.
+- **Dependențe/Conexiuni:** [deltatech_expenses_hr_expense](deltatech_expenses_hr_expense/index.md) și [l10n_ro_expense_allowance](l10n_ro_expense_allowance/index.md) devin link-uri active în pagina `deltatech_expenses`.
+- **Fișiere actualizate:** `deltatech_expenses/` și `deltatech_expenses_hr_expense/` (index + fișă + capturi), `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-01] Ingestie lot 1 (bucla orară): 10 module noi din bitshop și bitshop_ent
 
 - **Acțiune:** Pagini noi, zece subagenți `documentarist-wiki` în paralel: [deltatech_b2b_portal](deltatech_b2b_portal/index.md) (fișă + 11 capturi), [deltatech_create_ticket_button](deltatech_create_ticket_button/index.md), [deltatech_partner_gifts_agreement](deltatech_partner_gifts_agreement/index.md), [deltatech_payment_tbi_bank](deltatech_payment_tbi_bank/index.md), [deltatech_product_attribute](deltatech_product_attribute/index.md), [terrabit_partner_credit_limit_review](terrabit_partner_credit_limit_review/index.md) (fișă + 6 capturi), [deltatech_auto_translate](deltatech_auto_translate/index.md), [deltatech_dashboard_builder](deltatech_dashboard_builder/index.md) (fișă + 6 capturi), [deltatech_dashboard_builder_ai](deltatech_dashboard_builder_ai/index.md) (fișă + 14 capturi), [deltatech_instastat_tax_risk](deltatech_instastat_tax_risk/index.md).

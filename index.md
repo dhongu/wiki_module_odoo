@@ -104,8 +104,8 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_ediconnect](deltatech_ediconnect/index.md): Conector EDI pentru schimbul automat de documente între Odoo și platforma EDIConnect.
 - [deltatech_edinet](deltatech_edinet/index.md): Conector Odoo–Infinite EDINET: import automat de comenzi, export de facturi și import manual de comenzi din fișiere Excel (.xls).
 - [deltatech_event](deltatech_event/index.md): Adaugă numere pe insigne (badge-uri) în managementul evenimentelor Odoo.
-- [deltatech_expenses](deltatech_expenses/index.md): Decontarea cheltuielilor angajaților din avans de trezorerie (542), cu diurnă și închidere automată a contului 542, independent de `hr_expense`.
-- [deltatech_expenses_hr_expense](deltatech_expenses_hr_expense/index.md): Punte între `hr_expense` și `deltatech_expenses` — preia cheltuieli standard aprobate ale angajatului ca linii de decont și previne dubla lor contabilizare.
+- [deltatech_expenses](deltatech_expenses/index.md): Decont de cheltuieli din avans de trezorerie (542), operat de contabil: chitanțe de achiziție, decontare din avans, diurnă și diferență în casă, cu închiderea soldului 542.
+- [deltatech_expenses_hr_expense](deltatech_expenses_hr_expense/index.md): Punte auto-instalată între `hr_expense` și Decontul de cheltuieli — preia cheltuielile standard în decont, cu totalul cu TVA inclus, fără dublă contabilizare.
 - [deltatech_fast_purchase](deltatech_fast_purchase/index.md): Accelerează achizițiile prin butoane care parcurg rapid confirmarea, recepția și facturarea unei comenzi de achiziție.
 - [deltatech_fast_sale](deltatech_fast_sale/index.md): Vânzare rapidă: buton în comanda de vânzare care parcurge într-un singur pas confirmarea, livrarea și facturarea.
 - [deltatech_feed](deltatech_feed/index.md): Generează feed-uri de produse (Google, Facebook, eMAG, Compari, 2performant, e-licitatie și altele) din listele de produse, cu cache separat pe fiecare rută și generare serializată prin lock.

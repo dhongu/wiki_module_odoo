@@ -1,10 +1,10 @@
 # Expenses Deduction - HR Expense Bridge (localizat la `deltatech_expenses_hr_expense/index.md`)
 
 - **Nume Tehnic:** `deltatech_expenses_hr_expense`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_expenses_hr_expense
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_expenses_hr_expense`
-- **Ultima Ingestie:** `2026-09-16`
+- **Ultima Ingestie:** `2026-10-01`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -31,6 +31,9 @@ suplimentare aduse de `hr_expense`.
 - La invalidarea unui decont, liniile importate din `hr.expense` se șterg automat, iar cheltuielile
   respective sunt eliberate — redevin disponibile pentru fluxul standard sau pentru o nouă preluare;
   liniile introduse manual în decont nu sunt afectate.
+- Cheltuielile preluate intră în decont cu **totalul cu TVA inclus** (`total_amount`), conform regulii
+  din `deltatech_expenses` (suma liniei este întotdeauna brută); taxele cheltuielii se păstrează pe
+  linie, iar baza și TVA-ul se extrag din total, la fel ca în `hr.expense`.
 - Preluarea revalidează explicit eligibilitatea (angajat, companie, stare, absența unei note
   contabile) pe orice set de cheltuieli primit, indiferent de filtrul afișat în wizard, ca protecție
   împotriva unor apeluri directe sau a unor deconturi finalizate/anulate.
