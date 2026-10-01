@@ -4,6 +4,16 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-01] Re-ingestie suita `deltatech_stock_valuation`: `deltatech_obyc`, `deltatech_stock_valuation`, `deltatech_valuation_area`
+
+- **Acțiune:** Cele trei pagini aduse la versiunile de pe `origin/19.0`, cu fișele consultant corectate după auditul contabil și capturile recopiate. Trei subagenți `documentarist-wiki`, în paralel.
+  - [deltatech_obyc](deltatech_obyc/index.md) 19.0.1.0.1 → 19.0.1.0.4: costul mărfii vândute la livrare (factura de vânzare fără linii COGS), contul liniei de factură după tipul documentului (OBYC-001 reparat, notele de credit pe același cont), landed cost; limitările OBYC-002…009; 11 capturi (08–11 noi).
+  - [deltatech_stock_valuation](deltatech_stock_valuation/index.md) 19.0.0.0.7 → 19.0.0.0.10: recalculare în fundal, recomandarea OBYC pentru clienții RO, avertisment pe baze cu mai multe companii, limitările SV-001…008 (SV-003 P1, SV-007 acțiunea server ruptă); aria obligatorie pe orice linie cu produs stocabil (corectat față de DESCRIPTION.md); captura 04 nouă.
+  - [deltatech_valuation_area](deltatech_valuation_area/index.md) → 19.0.1.0.3: inversarea notelor de stoc inversează și cantitatea (fără storno și, cu storno, la liniile de valoare zero); limitările VA-001…006; fișa consultant copiată, 8 capturi (vechea 05 scoasă).
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `HISTORY.md`, `bugs.md`, `FISA_CONSULTANT.md` și codul pe `origin/19.0` (dhongu/deltatech_stock_valuation #36, #37, #42).
+- **Dependențe/Conexiuni:** `deltatech_obyc` → [deltatech_valuation_area](deltatech_valuation_area/index.md); `deltatech_stock_valuation` → [deltatech_valuation_area](deltatech_valuation_area/index.md), conexiuni cu [deltatech_obyc](deltatech_obyc/index.md) și [deltatech_valuation_report](deltatech_valuation_report/index.md).
+- **Fișiere actualizate:** `deltatech_obyc/`, `deltatech_stock_valuation/`, `deltatech_valuation_area/` (index + fișă + capturi), `index.md`, `.index/chunks.json`.
+
 ## [2026-10-01] Re-ingestie `deltatech_record_type`
 
 - **Acțiune:** Pagina [deltatech_record_type](deltatech_record_type/index.md) adusă de la 19.0.1.1.12 la 19.0.1.1.14: fișa consultant copiată (8 capturi), funcționalități îmbogățite din fișă (meniuri de configurare, restricția de utilizatori doar pe vânzare, regulile valorilor implicite, tipul obligatoriu la confirmare cu opțiunea din Setări, jurnalul de achiziție transmis facturii de furnizor, gruparea în rapoarte); modelele extinse și vizualizările adăugate la Componente Cheie. Un subagent `documentarist-wiki`.

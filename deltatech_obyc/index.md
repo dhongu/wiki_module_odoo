@@ -1,10 +1,10 @@
 # Deltatech OBYC - Account Determination (localizat la `deltatech_obyc/index.md`)
 
 - **Nume Tehnic:** `deltatech_obyc`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/dhongu/deltatech_stock_valuation/tree/19.0/deltatech_obyc
 - **Cale Locală:** `odoo-addons/deltatech_stock_valuation/deltatech_obyc`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-10-01`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -16,7 +16,8 @@ Deltatech OBYC - Account Determination aduce în Odoo un mecanism de determinare
 - Definește o matrice de mapare flexibilă (`product.account.determination`) pentru atribuirea automată a conturilor contabile (sursă, destinație, evaluare) pe baza cheii de tranzacție, clasei de evaluare, ariei de evaluare, modificatorului contabil și companiei.
 - Introduce date de bază configurabile: `product.valuation.class` (clasă de evaluare atașată pe șablonul de produs) și `account.modifier` (modificator contabil opțional, folosit de exemplu pe tipul de operațiune de stoc sau pe jurnal).
 - Calculează automat cheia de tranzacție pe mișcările de stoc, pe baza combinației uzanță sursă/destinație (furnizor, client, intern, tranzit), pentru operațiuni precum recepție, livrare, retur de la client, retur la furnizor, transfer intern, dropship.
-- Suprascrie determinarea contului pe liniile de factură (`account.move.line`): documentele de vânzare folosesc cheia `stock_income`, cele de achiziție folosesc `stock_receipt`, iar linia primește și aria de evaluare corespunzătoare.
+- **Costul mărfii vândute se înregistrează la livrare**, nu la factură: pentru produsele cu clasă de evaluare OBYC, nota contabilă a mișcării de stoc (cheia `stock_delivery`, ex. Dr 607 / Cr 371 pentru mărfuri, Dr 711 / Cr 345 pentru produse finite) preia costul. **Factura de vânzare nu are linii COGS** (doar Dr 4111 / Cr 707 + 4427), deci costul nu se înregistrează de două ori; produsele fără clasă OBYC păstrează comportamentul standard. Abordarea urmează OMFP 1802/2014 (ieșirea din stoc la transferul controlului, de regulă livrarea).
+- **Contul liniei de factură se alege după tipul documentului** (suprascrie `account.move.line`): vânzare (factură, notă de credit) → *Cont destinație* al regulii `stock_income` (Venituri); achiziție (factură furnizor, notă de credit) → *Cont sursă* al regulii `stock_receipt` (Recepție, ex. 408); contul de evaluare doar dacă acel cont e gol. **Notele de credit folosesc același cont ca factura** (cu storno, în roșu pe aceeași parte; fără storno, Odoo inversează partea). Linia primește și aria de evaluare corespunzătoare.
 - Dacă nu există regulă de determinare pentru o combinație dată, ridică un `RedirectWarning` care trimite direct spre ecranul de configurare a regulilor, cu contextul precompletat (în loc de o eroare simplă, greu de acționat).
 - Notele contabile generate păstrează `product_id` și o cantitate semnată (pozitivă pe debit, negativă pe credit) plus unitatea de măsură — convenție necesară stratului de evaluare (`deltatech_stock_valuation`) care reconstruiește mișcările cantitativ-valorice direct din liniile notei contabile.
 - Dacă aria de evaluare a mișcării are completat câmpul „Stock Journal", nota OBYC se postează pe jurnalul ariei, nu pe jurnalul de stoc al companiei — permite separarea notelor de stoc pe gestiune/arie.
@@ -36,12 +37,23 @@ combinație nu se potrivește, mișcarea ridică `UserError`, iar contextul `pri
 suprascrie cheia calculată. Cheile `stock_income`/`stock_receipt` se determină și pe
 `account.move.line`, iar `landed_cost` pe `stock.landed.cost`.
 
+**Limitări cunoscute** (din `readme/bugs.md`, revizuire 2026-10-01):
+
+- OBYC-002: fără venit acumulat (418) pentru marfa livrată și nefacturată la sfârșit de lună; procedura manuală (factură cu data contabilă în luna livrării sau notă 418/707 fără TVA, stornată în ziua 1) e descrisă în fișa consultantului și în `bugs.md`.
+- OBYC-003: consignația, marfa trimisă la testare sau ținută la dispoziția clientului se trece pe cheltuială la expediere (orice mișcare internă → client folosește `stock_delivery`).
+- OBYC-004: factura integrală emisă înainte de livrare se înregistrează ca venit, nu ca avans (419).
+- OBYC-005: cheile `inventory_adjustment_plus` / `inventory_adjustment_minus` sunt inversate în cod (pierderea folosește `plus`, plusul `minus`).
+- OBYC-006: se creează note OBYC și pentru produse fără evaluare în timp real (lipsesc verificările din nucleu).
+- OBYC-007: defecte minore (mesaj de eroare cu acolade neformatate, storno aplicat și liniilor produselor fără clasă, titlu regulă cu „None", cost de aterizare pe marfă parțial livrată).
+- OBYC-008 / OBYC-009 (deduse din cod, netestate): wizardul de avans (și cel de venituri acumulate) probabil eșuează cu „Transaction key is not defined" pe comenzi cu produse OBYC; transferurile prin locația de tranzit pot fi postate la valoare 0.
+- Facturile postate înainte de 19.0.1.0.4 păstrează contul greșit (OBYC-001, remediat) și trebuie corectate prin notă contabilă.
+
 > **Notă de corecție (2026-07-31):** `readme/DESCRIPTION.md` conținea referințe la Odoo 17
 > (mențiunea „compatible with Odoo 17 Enterprise & Community" și link-urile către documentația
 > oficială 17.0) și o listă **incompletă** de chei de tranzacție — lipseau `price_difference`,
 > `stock_receipt_price_difference` și `landed_cost`, iar tabelul de determinare implicită acoperea
 > doar 6 din cele 13 combinații de uzanțe. Corectat direct în modul (v19.0.1.0.1, vezi
-> `readme/HISTORY.md`); pagina reflectă acum codul 19.0.
+> `readme/HISTORY.md`); la 2026-10-01 (v19.0.1.0.4, PR #36 și #42) au fost corectate și contul liniei de factură (OBYC-001) și exemplele de mapare; pagina reflectă acum codul 19.0.
 
 #### 3. Dependențe
 

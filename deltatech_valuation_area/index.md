@@ -1,10 +1,10 @@
 # Deltatech Stock Valuation Area (localizat la `deltatech_valuation_area/index.md`)
 
 - **Nume Tehnic:** `deltatech_valuation_area`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** [https://github.com/dhongu/deltatech_stock_valuation/tree/19.0/deltatech_valuation_area](https://github.com/dhongu/deltatech_stock_valuation/tree/19.0/deltatech_valuation_area)
 - **Cale Locală:** `odoo-addons/deltatech_stock_valuation/deltatech_valuation_area`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-10-01`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -19,9 +19,19 @@ Modulul introduce conceptul de **arie de evaluare a stocului** (inspirat din "Va
 - Propagare automată a ariei de evaluare pe liniile contabile (`account.move.line`) generate din mișcările de stoc
 - Validare a caracterului obligatoriu al ariei de evaluare pentru produsele stocabile (dacă funcționalitatea e activată pe companie), prin metodă extensibilă
 - Editare manuală a ariei pe linia contabilă, pentru corecții excepționale
+- Inversarea notelor de stoc (**Intrare inversă**) păstrează corect semnul cantității: fără storno, cantitatea își schimbă semnul odată cu partea contabilă; cu storno, linia rămâne pe aceeași parte și cantitatea nu se modifică, cu excepția liniilor de valoare zero (mișcări la cost 0), unde cantitatea se inversează (fix 19.0.1.0.3, PR #36 și #42)
 - Constrângere: transferurile interne între locații cu arii de evaluare diferite nu sunt permise (sursa și destinația trebuie să aparțină aceleiași arii)
 
 **Notă privind metoda de evaluare:** modulul este proiectat pentru metoda **AVCO (cost mediu ponderat)**; nu este compatibil cu produse configurate pe metoda **FIFO**, întrucât agregarea liniilor contabile per produs și arie pierde informația despre straturile individuale de cost necesare pentru FIFO.
+
+**Limitări cunoscute** (detaliate în `readme/bugs.md`; modulul este în stadiul Beta):
+
+- **VA-001 (P2):** aria setată doar pe depozit este ignorată la ajustările de inventar și la transferurile manuale (`warehouse_id` de pe mișcare e gol); soluție de moment: se setează aria și pe locația de stoc.
+- **VA-002 (P2):** aria și cantitatea nu pot fi introduse pe notele contabile manuale (fără coloanele produs/cantitate/UM); notele manuale de stoc se pot face doar prin import sau integrare.
+- **VA-003 (P2):** blocarea transferurilor interne între arii diferite nu se declanșează fără `deltatech_obyc`, deoarece în Odoo 19 transferul intern nu generează notă contabilă; valoarea și cantitatea rămân pe aria sursă, fără eroare.
+- **VA-004 (P3):** probleme de interfață: terminologie amestecată („Zonă”/„Arie”), etichetă lipită de valoare în setări, formularul ariei fără `sheet`, jurnalul de stoc fără domeniu, meniul vizibil managerului de stoc fără drept de scriere.
+- **VA-005 (P3):** aria liniei de factură se ia de la prima mișcare de stoc asociată; la recepții parțiale în arii diferite, linia nu se împarte pe arii.
+- **VA-006 (P3):** aria se calculează pe orice linie cu produs, nu doar pe cele stocabile; fără arie implicită pe companie, facturile cu servicii pot fi blocate cu „Valuation area is not defined”.
 
 #### 3. Dependențe
 
