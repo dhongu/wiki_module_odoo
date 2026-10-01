@@ -233,7 +233,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_queue_job](deltatech_queue_job/index.md): Îmbunătățiri de performanță și fiabilitate peste coada de joburi standard, optimizate pentru Odoo.sh.
 - [deltatech_ral](deltatech_ral/index.md): Gestionează pigmenții de culoare RAL în producție, înlocuind componenta dummy din BOM cu pigmentul variantei de culoare.
 - [deltatech_reception_note](deltatech_reception_note/index.md): Wizard pentru note de recepție în masă, cu reducerea automată a cantităților din cererile de ofertă deschise.
-- [deltatech_record_type](deltatech_record_type/index.md): Tipuri multiple de înregistrare (comenzi/facturi) cu valori implicite, utilizatori permiși și rute de stoc per tip.
+- [deltatech_record_type](deltatech_record_type/index.md): Tipuri de documente (comenzi de vânzare, comenzi de achiziție, facturi) cu utilizatori permiși, valori implicite și rute de stoc pe tip, plus blocarea confirmării comenzii fără tip.
 - [deltatech_replenishment_explain](deltatech_replenishment_explain/index.md): Fereastră „explică-mi" pentru regulile de reaprovizionare — reconstituie cu date live calculul de prognoză/cantitate de comandat al Odoo și semnalează riscuri de vizibilitate/orizont.
 - [deltatech_report_packaging](deltatech_report_packaging/index.md): Calculează materialele de ambalare din produsele facturate, cu cantități separate la achiziție și vânzare, configurabile pe produs sau categorie, și oferă un raport agregat pe facturi.
 - [deltatech_report_prn](deltatech_report_prn/index.md): Tip de raport text brut PRN pentru tipărire directă la imprimante de etichete Zebra (ZPL) și matriciale.

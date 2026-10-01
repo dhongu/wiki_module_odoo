@@ -6712,18 +6712,22 @@
   {
     "path": "deltatech_record_type/index.md",
     "module": "deltatech_record_type",
-    "version": "19.0.1.1.12",
+    "version": "19.0.1.1.14",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_record_type`",
     "local_path": "odoo-addons/deltatech/deltatech_record_type",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-10-01",
     "friendly_name": "Terrabit - Record Type",
-    "summary": "Modulul Terrabit - Record Type oferă o modalitate îmbunătățită de a gestiona mai multe tipuri de înregistrări pentru diverse documente Odoo, inclusiv comenzi de vânzare, comenzi de achiziție și facturi. Permite companiilor să definească și să întrețină tipuri distincte de documente, fiecare cu valori implicite specifice și configurări de rutare a stocului. Astfel se standardizează crearea documentelor, se reduc erorile de introducere a datelor și fiecare utilizator vede doar tipurile relevante pentru rolul său.",
+    "summary": "Modulul Terrabit - Record Type oferă o modalitate îmbunătățită de a gestiona mai multe tipuri de înregistrări pentru diverse documente Odoo, inclusiv comenzi de vânzare, comenzi de achiziție și facturi. Permite companiilor să definească și să întrețină tipuri distincte de documente, fiecare cu valori implicite specifice și configurări de rutare a stocului. Astfel se standardizează crearea documentelor, se reduc erorile de introducere a datelor și fiecare utilizator vede doar tipurile relevante pentru rolul său. Tipul este o clasificare cu valori implicite și rute, fără efect contabil direct.",
     "features": [
-      "Definirea de tipuri de înregistrare personalizate pentru comenzi de vânzare, comenzi de achiziție și facturi.",
-      "Asignarea de utilizatori specifici fiecărui tip de înregistrare, pentru control al accesului.",
-      "Setarea de valori implicite pentru câmpuri la crearea unei noi înregistrări de un anumit tip.",
-      "Configurarea rutelor de stoc pentru fiecare tip de înregistrare.",
-      "Afișarea câmpului de tip doar în modelele în care există tipuri definite."
+      "Definirea de tipuri de înregistrare personalizate pentru comenzi de vânzare, comenzi de achiziție și facturi (de client); meniuri separate: Vânzări → Configurare → Tipuri comandă, Achiziții → Configurare → Tipuri comandă, Contabilitate → Configurare → Facturare → Tipuri factură.",
+      "Asignarea de utilizatori specifici fiecărui tip, pentru control al accesului. Restricția se aplică doar pe comanda de vânzare (gol = disponibil tuturor); pe achiziții și facturi lista nu este filtrată.",
+      "Valori implicite pentru câmpuri, aplicate la alegerea tipului pe document (onchange, nu modifică documente existente). Textul se scrie între apostrofuri, bifele ca `True`/`False`, câmpurile relaționale se aleg din lista „Related\".",
+      "Configurarea rutelor de stoc pentru fiecare tip; se aplică liniilor comenzii de vânzare care nu au rută proprie (câmpul apare doar cu „Trasee în mai mulți pași\" activ).",
+      "Tipul este obligatoriu la confirmarea comenzii (vânzare și achiziție) pentru utilizatorii fără grupul „Poate confirma comenzi fără tip comandă\", dacă există tipuri definite; comenzile de pe website nu sunt blocate la vânzări. Opțiunea „Confirmat fără tip comandă\" se găsește în Setări → Vânzări.",
+      "Câmpul de tip apare doar pe documentele pentru care există cel puțin un tip definit.",
+      "Jurnal pe comanda de achiziție, transmis facturii de furnizor generate.",
+      "Tipul este dimensiune de grupare în rapoartele de vânzări și achiziții, precum și în căutările și listele documentelor.",
+      "Fluxul detaliat pas-cu-pas, verificările și erorile frecvente sunt în [Fișa Consultant](FISA_CONSULTANT.md), cu capturi de ecran."
     ],
     "dependencies": [
       "sale",
@@ -6731,9 +6735,10 @@
       "purchase"
     ],
     "connections": [
-      "deltatech_marketplace_sale_type"
+      "deltatech_marketplace_sale_type",
+      "deltatech_sale_store"
     ],
-    "text": "Terrabit - Record Type\ndeltatech_record_type\nModulul Terrabit - Record Type oferă o modalitate îmbunătățită de a gestiona mai multe tipuri de înregistrări pentru diverse documente Odoo, inclusiv comenzi de vânzare, comenzi de achiziție și facturi. Permite companiilor să definească și să întrețină tipuri distincte de documente, fiecare cu valori implicite specifice și configurări de rutare a stocului. Astfel se standardizează crearea documentelor, se reduc erorile de introducere a datelor și fiecare utilizator vede doar tipurile relevante pentru rolul său.\nDefinirea de tipuri de înregistrare personalizate pentru comenzi de vânzare, comenzi de achiziție și facturi.\nAsignarea de utilizatori specifici fiecărui tip de înregistrare, pentru control al accesului.\nSetarea de valori implicite pentru câmpuri la crearea unei noi înregistrări de un anumit tip.\nConfigurarea rutelor de stoc pentru fiecare tip de înregistrare.\nAfișarea câmpului de tip doar în modelele în care există tipuri definite."
+    "text": "Terrabit - Record Type\ndeltatech_record_type\nModulul Terrabit - Record Type oferă o modalitate îmbunătățită de a gestiona mai multe tipuri de înregistrări pentru diverse documente Odoo, inclusiv comenzi de vânzare, comenzi de achiziție și facturi. Permite companiilor să definească și să întrețină tipuri distincte de documente, fiecare cu valori implicite specifice și configurări de rutare a stocului. Astfel se standardizează crearea documentelor, se reduc erorile de introducere a datelor și fiecare utilizator vede doar tipurile relevante pentru rolul său. Tipul este o clasificare cu valori implicite și rute, fără efect contabil direct.\nDefinirea de tipuri de înregistrare personalizate pentru comenzi de vânzare, comenzi de achiziție și facturi (de client); meniuri separate: Vânzări → Configurare → Tipuri comandă, Achiziții → Configurare → Tipuri comandă, Contabilitate → Configurare → Facturare → Tipuri factură.\nAsignarea de utilizatori specifici fiecărui tip, pentru control al accesului. Restricția se aplică doar pe comanda de vânzare (gol = disponibil tuturor); pe achiziții și facturi lista nu este filtrată.\nValori implicite pentru câmpuri, aplicate la alegerea tipului pe document (onchange, nu modifică documente existente). Textul se scrie între apostrofuri, bifele ca `True`/`False`, câmpurile relaționale se aleg din lista „Related\".\nConfigurarea rutelor de stoc pentru fiecare tip; se aplică liniilor comenzii de vânzare care nu au rută proprie (câmpul apare doar cu „Trasee în mai mulți pași\" activ).\nTipul este obligatoriu la confirmarea comenzii (vânzare și achiziție) pentru utilizatorii fără grupul „Poate confirma comenzi fără tip comandă\", dacă există tipuri definite; comenzile de pe website nu sunt blocate la vânzări. Opțiunea „Confirmat fără tip comandă\" se găsește în Setări → Vânzări.\nCâmpul de tip apare doar pe documentele pentru care există cel puțin un tip definit.\nJurnal pe comanda de achiziție, transmis facturii de furnizor generate.\nTipul este dimensiune de grupare în rapoartele de vânzări și achiziții, precum și în căutările și listele documentelor.\nFluxul detaliat pas-cu-pas, verificările și erorile frecvente sunt în [Fișa Consultant](FISA_CONSULTANT.md), cu capturi de ecran."
   },
   {
     "path": "deltatech_replenishment_explain/index.md",

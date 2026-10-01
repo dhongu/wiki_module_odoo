@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-01] Re-ingestie `deltatech_record_type`
+
+- **Acțiune:** Pagina [deltatech_record_type](deltatech_record_type/index.md) adusă de la 19.0.1.1.12 la 19.0.1.1.14: fișa consultant copiată (8 capturi), funcționalități îmbogățite din fișă (meniuri de configurare, restricția de utilizatori doar pe vânzare, regulile valorilor implicite, tipul obligatoriu la confirmare cu opțiunea din Setări, jurnalul de achiziție transmis facturii de furnizor, gruparea în rapoarte); modelele extinse și vizualizările adăugate la Componente Cheie. Un subagent `documentarist-wiki`.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/FISA_CONSULTANT.md`, `readme/HISTORY.md` și codul modulului pe `origin/19.0` (deltatech 920f64219: fișă, capturi, traduceri RO complete).
+- **Dependențe/Conexiuni:** `sale`, `sale_stock`, `purchase`; conexiune nouă cu [deltatech_sale_store](deltatech_sale_store/index.md) (are modulul în `depends`), pe lângă [deltatech_marketplace_sale_type](deltatech_marketplace_sale_type/index.md).
+- **Fișiere actualizate:** `deltatech_record_type/` (index + fișă + capturi), `index.md`, `.index/chunks.json`.
+
 ## [2026-09-29] Re-ingestie `l10n_ro_anaf_d112_payroll`
 
 - **Acțiune:** Pagina [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) adusă de la 19.0.1.0.0 la 19.0.1.0.3 (rămasă în urmă la lotul anterior): zilele D112 din `worked_days_line_ids` în locul regulii inexistente `WORK100` (19.0.1.0.2), `zile_contract_activ` pentru pragul CAS/CASS (19.0.1.0.3); conexiune nouă cu [l10n_ro_hr_pontaj_payroll](l10n_ro_hr_pontaj_payroll/index.md). Editare pe secțiuni, în conversația principală.
