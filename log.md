@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-01] Ingestie `deltatech_mcp_server`
+
+- **Acțiune:** Pagină nouă [deltatech_mcp_server](deltatech_mcp_server/index.md) (19.0.1.4.0): endpoint `/mcp` cu cheie API sau OAuth 2.1 + PKCE, politici de acces per utilizator (modele, câmpuri ascunse/mascate, limite), date personale mascate, scriere oprită implicit, unelte proprii din acțiuni de server și metode-buton, jurnal de apeluri și consum zilnic; fișa consultant copiată (9 capturi). Un subagent `documentarist-wiki`.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `FISA_CONSULTANT.md` și codul modulului pe `origin/19.0` (terrabit-solutions/bitshop_ent #195/#196).
+- **Dependențe/Conexiuni:** `base_setup`; nicio legătură verificată în cod cu alte module din wiki.
+- **Fișiere actualizate:** `deltatech_mcp_server/` (index + fișă + capturi), `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-01] Actualizare `deltatech_record_type` după corecțiile fișei și fix-ul de portal
 
 - **Acțiune:** Pagina [deltatech_record_type](deltatech_record_type/index.md) adusă de la 19.0.1.1.14 la 19.0.1.1.17: ofertele acceptate/semnate sau plătite de client din portal nu mai sunt blocate (verificarea tipului doar pentru utilizatorii interni, `payment.transaction` extins), pe facturi tipul rămâne opțional, tipurile de câmp suportate la valorile implicite, jurnalul de achiziție ca valoare implicită a tipului; fișa consultant recopiată după audit (etichete RO aliniate, 9 capturi, `09_factura_furnizor_jurnal.png` nouă). Editare în conversația principală.
