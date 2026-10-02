@@ -4,6 +4,16 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-02] Actualizare `l10n_ro_payroll_ro` la 19.0.1.1.3 (ecran angajat rearanjat, documentație)
+
+- **Acțiune:** Re-ingestie. [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md) adus la 19.0.1.1.3: formularele angajatului și versiunii de contract rearanjate (grupul «Salarizare România»), `DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `CONTEXT.md` actualizate în modul; fișa consultant recopiată cu capturile 02–08 regenerate (9 în total).
+- **Sursă:** `__manifest__.py`, `readme/HISTORY.md`, `FISA_CONSULTANT.md`, `views/hr_version_views.xml` din `19.0` (PR-ul terrabit-solutions/l10n_ro_ent#397).
+- **Corecții față de readme:** nu e cazul — `DESCRIPTION.md` nu mai e depășit.
+- **Dependențe/Conexiuni:** neschimbate.
+- **Fișiere actualizate:** `l10n_ro_payroll_ro/` (index + fișă + `screenshots/`), `log.md`, `.index/chunks.json`.
+
+---
+
 ## [2026-10-02] Actualizare `l10n_ro_payroll_ro` la 19.0.1.1.2 și `l10n_ro_anaf_d112_payroll` la 19.0.1.1.0 (tichet 9660)
 
 - **Acțiune:** Re-ingestie. [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md) adus la 19.0.1.1.2: grila art. 77 pe tranșe, salariul minim cu istoric, persoane în întreținere și copii, deducere pentru tineri, funcție de bază, suma neimpozabilă, tichete de masă, scutiri art. 60, rotunjiri; fișa consultant recopiată cu cele 9 capturi (cele vechi înlocuite). [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) adus la 19.0.1.1.0: transferă tichetele, suma neimpozabilă și deducerile în D112.

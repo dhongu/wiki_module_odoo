@@ -1,7 +1,7 @@
 # Romania - Impozit pe salarii, deduceri personale și tichete de masă (localizat la `l10n_ro_payroll_ro/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_payroll_ro`
-- **Versiune:** `19.0.1.1.2`
+- **Versiune:** `19.0.1.1.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_ro
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_payroll_ro`
 - **Ultima Ingestie:** `2026-10-02`
@@ -43,7 +43,8 @@ Modulul completează statul de plată românesc, peste structura nativă Odoo 19
 
 **Vizualizări**
 
-- `view_hr_contract_template_form_l10n_ro_dpb` și `view_hr_employee_form_l10n_ro_dpb`: câmpurile RO pe versiunea de contract și pe fișa angajatului, plus lista persoanelor în întreținere.
+- `view_hr_employee_form_l10n_ro_dpb`: pe fila *Stat de plată* a angajatului, grupul «Salarizare România» pe două coloane (funcție de bază, persoane în întreținere, sub 26 de ani | tichete, scutire, tip salariu minim) și un grup separat, pe toată lățimea, cu lista persoanelor în întreținere.
+- `view_hr_contract_template_form_l10n_ro_dpb`: aceleași câmpuri RO în două grupuri pe formularul versiunii de contract (fără lista de persoane, care aparține angajatului).
 - `view_hr_payslip_form_l10n_ro_meal_tickets`: numărul de tichete pe fluturaș.
 
 **Reguli salariale**
