@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-02] Actualizare `deltatech_account_bank_statement_import_emag` după fișa consultant
+
+- **Acțiune:** Re-ingestie, un subagent `documentarist-wiki`. [deltatech_account_bank_statement_import_emag](deltatech_account_bank_statement_import_emag/index.md) adus de la 19.0.2.0.0 la 19.0.2.0.6: tratamentul importului pe fiecare Document code (`KD`, `KX`, `ZC`, `DM`, `C3`, `ZP`), definirea jurnalului eMAG (cont 5125.EMAG de tip Bancă și numerar, cont tranzitoriu), notele contabile pe tip de document, comanda anulată după încasare, transportul (fără linie proprie în borderou); fișa consultant recopiată cu cele 3 capturi.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `FISA_CONSULTANT.md` pe `origin/19.0` (terrabit-solutions/bitshop_ent#197), verificat pe borderoul real Agroamat 01.08–09.09.2026 (74 de linii, total 0,00) și pe preprod-ul Agroamat.
+- **Corecții față de readme:** nu e cazul; cazul voucherului pe comandă anulată rămâne marcat „neverificat" în fișă și în pagină.
+- **Dependențe/Conexiuni:** neschimbate; linkuri active către [deltatech_account_bank_statement_import](deltatech_account_bank_statement_import/index.md), [deltatech_marketplace_emag](deltatech_marketplace_emag/index.md), [euplatesc](deltatech_account_bank_statement_import_euplatesc/index.md) și [gls](deltatech_account_bank_statement_import_gls/index.md).
+- **Fișiere actualizate:** `deltatech_account_bank_statement_import_emag/` (index + fișă + capturi), `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-01] Actualizare `deltatech_expenses` și `deltatech_expenses_hr_expense` după auditul fișei
 
 - **Acțiune:** Re-ingestie, doi subagenți `documentarist-wiki` în paralel. [deltatech_expenses](deltatech_expenses/index.md) adus la 19.0.3.4.0: suma liniei mereu brută (TVA inclus), nota de diferență 5311/542 cu data decontului, plata directă la furnizor fără factură deschisă reclasificată `Dr 4092 = Cr 401`, fără `account.payment`, tab „Chitanțe", decontul operat de contabil (angajatul nu lucrează în modul), diurna implicită 42,50 lei/zi precizată ca neplafon; fișa consultant recopiată cu 8 capturi (01, 02, 05–10). [deltatech_expenses_hr_expense](deltatech_expenses_hr_expense/index.md) adus la 19.0.1.1.0: cheltuielile preluate intră cu totalul cu TVA inclus; fișa recopiată (03, 04).

@@ -1,10 +1,10 @@
 # eMAG Marketplace Statement Import (localizat la `deltatech_account_bank_statement_import_emag/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_bank_statement_import_emag`
-- **Versiune:** `19.0.2.0.0`
+- **Versiune:** `19.0.2.0.6`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import_emag
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_account_bank_statement_import_emag`
-- **Ultima Ingestie:** `2026-09-19`
+- **Ultima Ingestie:** `2026-10-02`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -46,6 +46,27 @@ liniile pregătite pentru reconciliere și clientul completat automat acolo unde
 - **Protecție la duplicate**: fiecare linie primește un identificator unic de import bazat pe *SAP
   document ID*; reimportul aceluiași fișier este detectat.
 - **Interfață în română**: mesajele de eroare ale importului sunt traduse (`i18n/ro.po`).
+- **Tratament pe Document code** (detaliat în fișa consultant): `KD` (încasare card) și `KX`
+  (ramburs) intră cu sumă pozitivă, cu numărul comenzii eMAG, și se reconciliază cu factura
+  clientului; `ZC` (restituire) intră negativ și, dacă anulează o încasare a aceleiași comenzi, se
+  reconciliază cu ea, fără factură; `DM` (facturi eMAG) și `C3` (notificări) intră negativ și se
+  reconciliază cu factura de furnizor deja înregistrată, parțial când eMAG reține doar o parte;
+  `ZP` este suma efectiv virată, reconciliată cu extrasul bancar real prin contul de viramente
+  interne (`581000`).
+- **Jurnal dedicat eMAG**: jurnal de tip *Bancă*, cu **Bank Feeds = Import**, cont implicit
+  propriu din 5125 (*Sume în curs de decontare*, `5125.EMAG`, tip *Bancă și numerar*, nu cont
+  bancar 512 — banii sunt la eMAG până la virare) și cont tranzitoriu preferabil dedicat
+  (`473.EMAG`). Prezența formatului „eMAG Marketplace" în formatele de import acceptate arată că
+  modulul e activ.
+- **Fișa consultant**: tabel de definire a jurnalului câmp cu câmp, note contabile pe tip de
+  document, secțiune despre comanda anulată după încasare (`KD` + `ZC`; cazul voucherului e marcat
+  ca neverificat) și despre transport (nu are linie proprie în borderou; este inclus în totalul
+  `KD`/`KX` sau în facturile `DM`/`C3`). Partenerul de decontare este Dante International.
+- **Situații cu atenția operatorului**: o linie mai mare decât restul facturii lasă excedentul ca
+  avans de client; o diferență egală cu un voucher eMAG se reconciliază parțial, iar restul rămâne
+  creanță deschisă până la decontarea de către eMAG.
+- **Import din ecranul corect**: importul pornit din altă parte (*Import records* pe lista de
+  tranzacții) ocolește modulul și ajunge în wizardul de mapare; se folosește *Import* de pe jurnal.
 
 #### 3. Dependențe
 
@@ -58,8 +79,8 @@ override-ul modulului trebuie să ruleze înaintea interceptorului CSV/XLSX stan
 
 #### 4. Componente Cheie
 
-Sumarul și funcționalitățile din secțiunile 1–2 provin din `readme/DESCRIPTION.md` (cu corectarea
-notată mai jos); pentru această secțiune s-a analizat suplimentar `models/account_journal.py`,
+Sumarul și funcționalitățile din secțiunile 1–2 provin din `readme/DESCRIPTION.md`, completate din
+`readme/USAGE.md`, `readme/CONFIGURE.md` și fișa consultant; pentru această secțiune s-a analizat suplimentar `models/account_journal.py`,
 fiindcă DESCRIPTION.md nu detaliază implementarea tehnică.
 
 **Modele**
