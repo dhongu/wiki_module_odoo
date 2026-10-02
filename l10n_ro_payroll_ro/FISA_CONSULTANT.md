@@ -185,6 +185,18 @@ Stan Vlad declarația arată baza impozabilă 2.688 și impozit 0.
 
 ![Linia D112 cu tichete, sumă neimpozabilă și deduceri](screenshots/09_d112_linii_tichete.png)
 
+### Pasul 10 — Fluturașul tipărit (PDF)
+
+Din fluturașul calculat sau validat, butonul **Tipăriți** generează fluturașul individual al angajatului (raportul
+standard Odoo pentru structura România, în PDF): perioada de plată, zilele lucrate și liniile fluturașului. Linia
+**Tichete de masă** arată numărul de tichete și valoarea nominală (20 × 45 lei = 900), iar la contribuții și impozit se
+afișează doar valoarea reținută. Documentul se predă angajatului după validare.
+
+Verificați pe document: *Suma neimpozabilă*, *Tichete de masă*, *CAS*, *CASS*, *Deducerea personală*, *Impozit*,
+**Salariu net** (2.511) și suma de plată.
+
+![Fluturașul tipărit al angajatului](screenshots/10_fluturas_pdf.png)
+
 ### Note de monografie și raportare
 
 ⚠️ Modulul **nu mapează conturile** pe regulile salariale, iar structura nativă `l10n_ro_hr_payroll_account` nu o
@@ -258,6 +270,7 @@ Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixin `Scre
 7. `07_linii_tineri.png` — angajat sub 26 de ani.
 8. `08_linii_scutit.png` — angajat scutit de impozit.
 9. `09_d112_linii_tichete.png` — linia D112 cu tichete, sumă neimpozabilă și deduceri (necesită puntea D112).
+10. `10_fluturas_pdf.png` — fluturașul tipărit (PDF) al angajatului cu tichete.
 
 ```bash
 ./odoo/odoo-bin -c odoo.conf -d test19 -i l10n_ro_payroll_ro,l10n_ro_doc_screenshots \

@@ -4,6 +4,16 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-02] Actualizare `l10n_ro_payroll_ro` 19.0.1.1.4, `l10n_ro_anaf_d112_payroll` 19.0.1.1.1 și `l10n_ro_anaf_d112` 19.0.2.4.1 (tichet 9660)
+
+- **Acțiune:** Re-ingestie, trei module. [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md) la 19.0.1.1.4: fluturașul tipărit (PDF) cu linia tichetelor pe număr × valoare și fără rata ±100%; fișa recopiată cu 10 capturi. [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) la 19.0.1.1.1: fișă consultant nouă (2 capturi, extras XML), documentație (DESCRIPTION, USAGE, CONFIGURE), baza CAM fără suma neimpozabilă. [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md) la 19.0.2.4.1: grila DPB pe tranșe în calculul automat, tichete în `E3_10`/`E3_60`, baza CAM = brut − suma neimpozabilă.
+- **Sursă:** `__manifest__.py`, `readme/HISTORY.md`, `FISA_CONSULTANT.md` din `19.0` (PR-urile terrabit-solutions/l10n_ro_ent#398, #399, #400).
+- **Corecții față de readme:** nu e cazul.
+- **Dependențe/Conexiuni:** neschimbate. Scutirea art. 60 nu se transferă în D112 (limită consemnată în pagini și fișe).
+- **Fișiere actualizate:** `l10n_ro_payroll_ro/`, `l10n_ro_anaf_d112_payroll/` (index + fișă + `screenshots/`), `l10n_ro_anaf_d112/index.md`, `index.md`, `log.md`, `.index/chunks.json`.
+
+---
+
 ## [2026-10-02] Actualizare `l10n_ro_payroll_ro` la 19.0.1.1.3 (ecran angajat rearanjat, documentație)
 
 - **Acțiune:** Re-ingestie. [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md) adus la 19.0.1.1.3: formularele angajatului și versiunii de contract rearanjate (grupul «Salarizare România»), `DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `CONTEXT.md` actualizate în modul; fișa consultant recopiată cu capturile 02–08 regenerate (9 în total).

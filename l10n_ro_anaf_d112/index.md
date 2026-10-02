@@ -1,10 +1,10 @@
 # Romania - Declarația D112 ANAF (FR-44) (localizat la `l10n_ro_anaf_d112/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d112`
-- **Versiune:** `19.0.2.4.0`
+- **Versiune:** `19.0.2.4.1`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112`
-- **Ultima Ingestie:** `2026-09-29`
+- **Ultima Ingestie:** `2026-10-02`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -17,8 +17,8 @@ Modulul automatizează întocmirea, validarea și exportul Declarației D112 ANA
 - **State machine** pentru declarație: ciornă → calculat → validat → exportat; butonul „Calculează" importă din statele de plată, „Validează" blochează modificările, iar „Descarcă XML" produce fișierul de depus la ANAF.
 - **Linii nominale per angajat** cu CNP, venit brut, CAS/CASS/impozit, zile lucrate, zile cu contract activ, concediu de odihnă și concediu medical.
 - **Împărțirea numelui salariaților** în nume/prenume delegă la funcția din `l10n_ro_anaf_base`, cu convenția „Nume Prenume” identică în toate declarațiile ANAF (înainte, D112 avea o funcție proprie cu convenția opusă).
-- **Calcul automat al deducerilor** (orientativ, buton „Recalculează deduceri"): sumă neimpozabilă la salariul minim (S1/S2), deducere personală de bază, deducere suplimentară tineri sub 26 ani (15% × salariu minim) și copii (100 lei/copil), contribuții CAS/CASS și impozit 10%. Parametrii fiscali sunt grupați în `SALARY_PARAMS` și se revizuiesc anual; liniile importate din statul de plată păstrează valorile autoritare.
-- **Tichete de masă** — câmp dedicat; suportă CASS (10%) și impozit (10%), scutite de CAS și CAM.
+- **Calcul automat al deducerilor** (orientativ, buton „Recalculează deduceri"): sumă neimpozabilă la salariul minim (S1/S2), deducere personală de bază, deducere suplimentară tineri sub 26 ani (15% × salariu minim) și copii (100 lei/copil), contribuții CAS/CASS și impozit 10%. Parametrii fiscali sunt grupați în `SALARY_PARAMS` și se revizuiesc anual; liniile importate din statul de plată păstrează valorile autoritare. Deducerea personală de bază folosește grila oficială art. 77 pe tranșe de 50 lei (venitul rotunjit la leu), aliniată cu `l10n_ro_payroll_ro`.
+- **Tichete de masă** — câmp dedicat; suportă CASS (10%) și impozit (10%), scutite de CAS și CAM; în XML se declară în `E3_10` (8.3.1), din `E3_60`, cu `E3_8` care le include (structura ANAF cere E3_8 ≥ E3_60 ≥ E3_10).
 - **CAS suplimentar angajator** pentru condiții de muncă deosebite (+4%) / speciale (+8%), raportat distinct în obligațiile de plată (coduri 481/482).
 - **Baza minimă de CAS/CASS** (art. 146 alin. (5^6) și art. 168 alin. (6^1) Cod fiscal): când baza reală e sub salariul minim pro-rata cu zilele în care contractul a fost activ (câmpul *Zile cu contract activ* de pe linia nominală, `zile_contract_activ`), se declară pragul, iar diferența de contribuție o suportă angajatorul în numele angajatului, raportată la codurile de obligație proprii **458** (CAS) și **459** (CASS). Pragul folosește salariul minim al perioadei — (4050 − 300) pe lunile 01–06/2026, (4325 − 200) de la 07/2026 — iar dacă acel câmp e gol, pragul rămâne pe zilele lucrate + CO + CM, iar zilele libere plătite și absențele nemotivate fără decizie de suspendare nu mai scad pragul când e completat; numitorul e tabelul oficial ANAF de zile lucrătoare pe lună (`WORKING_DAYS`). Declarația scrie acum și `asigExc`/`motivExc` (poziția salariatului față de prag și motivul, art. 146 alin. (5^7)) — câmpurile Odoo existau deja, dar validatorul oficial ANAF (J27.0.5) respingea declarația fiindcă nu erau scrise în XML.
 - **Excepții de la baza minimă** (art. 146 alin. (5^7)), marcabile pe linia nominală: elev/student sub 26 ani, ucenic sub 18, persoană cu dizabilități sau îndreptățită legal la sub 8 ore/zi, pensionar pentru limită de vârstă, sau salariat cu mai multe contracte a căror bază cumulată atinge salariul minim; se aplică doar veniturilor dintr-un contract individual de muncă (nu mandat/funcții elective) și rămân o decizie de dosar, cu documente justificative la angajator.
@@ -31,7 +31,7 @@ Modulul automatizează întocmirea, validarea și exportul Declarației D112 ANA
 - **Integrare în tabloul de declarații** (`account.return`): tip de declarație lunar cu termen 25 a lunii următoare, pași de verificare (pregătire declarație, reconciliere, atașare XML semnat/recipisă SPV).
 - **Validări blocante** la validare: checksum CNP, CNP duplicat, dată angajare obligatorie/coerentă, zile lucrate raportate la numărul de zile LUCRĂTOARE din lună (nu cele calendaristice), ore normă 6/7/8, venit pozitiv; avertismente neblocante pentru CAS/CASS recalculate.
 - **Cod CAEN obligatoriu** pe companie (`angajator/@caen`), citit acum din `l10n_ro_anaf_base` (nu mai depinde tacit de `l10n_ro_config`); câmpul lipsă e prins de o gardă cu mesaj acționabil în locul unui fallback tăcut „0000".
-- **Totaluri** CAS/CASS/impozit/CAM calculate automat din linii.
+- **Totaluri** CAS/CASS/impozit/CAM calculate automat din linii; baza CAM (`cam_baza`, `A_5`, `B1_5`, `B4_14`, `C4_baza`) = venit brut − suma neimpozabilă la salariul minim.
 
 Fluxul complet lunar (previzualizare → ciornă → verificare linii → reconciliere contabilă → validare → generare/descărcare XML → înregistrarea depunerii în tabloul de declarații), precum și declarația rectificativă, sunt detaliate pas cu pas în [FISA_CONSULTANT.md](FISA_CONSULTANT.md). Setările obligatorii dinaintea primei utilizări (cod CAEN, județ, date contact ANAF, conturile și toleranța de reconciliere din Contabilitate → Configurare → Setări) sunt descrise în `readme/CONFIGURE.md`.
 

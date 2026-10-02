@@ -1,7 +1,7 @@
 # Romania - Impozit pe salarii, deduceri personale și tichete de masă (localizat la `l10n_ro_payroll_ro/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_payroll_ro`
-- **Versiune:** `19.0.1.1.3`
+- **Versiune:** `19.0.1.1.4`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_ro
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_payroll_ro`
 - **Ultima Ingestie:** `2026-10-02`
@@ -21,6 +21,7 @@ Modulul completează statul de plată românesc, peste structura nativă Odoo 19
 - **Suma neimpozabilă la salariul minim**: 300 lei (ian.–iun. 2026), 200 lei din 01.07.2026, plafonată la 33% din salariul de bază; doar când salariul de bază din contract nu depășește salariul minim, cu normă întreagă, proratată cu zilele lucrate și cu partea din lună în care contractul e activ. Scade din baza CAS, CASS, CAM și impozit. *De confirmat cu contabilul:* textul OUG 89/2025 și OUG 8/2026, pragul de venit (parametru opțional `suma_neimpozabila_prag_venit`, nesetat).
 - **Tichete de masă**: număr pe fluturaș (implicit zilele lucrate fără concedii, modificabil) × valoare nominală cu dată de început; intră în CASS și în venitul pentru deducere, nu în CAS, CAM sau netul în bani; rând «Cost angajator» (brut + CAM + tichete).
 - **Scutire de impozit pe venit** (art. 60): handicap grav sau accentuat și cercetare-dezvoltare (aceasta din urmă doar pentru fluturașul separat al proiectului); contribuțiile se calculează normal.
+- **Fluturașul tipărit (PDF)**: raportul «România» al structurii arată linia «Tichete de masă» cu numărul de tichete și valoarea nominală; rata tehnică ±100% a contribuțiilor rotunjite nu se mai afișează (`report_payslip_ro_clean`).
 - **Rotunjire**: CAS, CASS și CAM la leu; baza impozabilă la leu cu 0,50 în jos (HG 1/2016), apoi cota de 10%.
 - **Exemplu verificat** (brut 4.325, 1 persoană, 20 tichete × 45 lei): CAS 1.031, CASS 503, DPB 692, impozit 280, net 2.511, cost angajator 5.318.
 
@@ -46,6 +47,7 @@ Modulul completează statul de plată românesc, peste structura nativă Odoo 19
 - `view_hr_employee_form_l10n_ro_dpb`: pe fila *Stat de plată* a angajatului, grupul «Salarizare România» pe două coloane (funcție de bază, persoane în întreținere, sub 26 de ani | tichete, scutire, tip salariu minim) și un grup separat, pe toată lățimea, cu lista persoanelor în întreținere.
 - `view_hr_contract_template_form_l10n_ro_dpb`: aceleași câmpuri RO în două grupuri pe formularul versiunii de contract (fără lista de persoane, care aparține angajatului).
 - `view_hr_payslip_form_l10n_ro_meal_tickets`: numărul de tichete pe fluturaș.
+- `report_payslip_ro_clean`: șablonul fluturașului tipărit, fără rata ±100%.
 
 **Reguli salariale**
 
