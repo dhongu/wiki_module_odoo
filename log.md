@@ -4,6 +4,16 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-02] Actualizare `l10n_ro_payroll_ro` la 19.0.1.1.2 și `l10n_ro_anaf_d112_payroll` la 19.0.1.1.0 (tichet 9660)
+
+- **Acțiune:** Re-ingestie. [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md) adus la 19.0.1.1.2: grila art. 77 pe tranșe, salariul minim cu istoric, persoane în întreținere și copii, deducere pentru tineri, funcție de bază, suma neimpozabilă, tichete de masă, scutiri art. 60, rotunjiri; fișa consultant recopiată cu cele 9 capturi (cele vechi înlocuite). [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) adus la 19.0.1.1.0: transferă tichetele, suma neimpozabilă și deducerile în D112.
+- **Sursă:** `__manifest__.py`, `readme/HISTORY.md`, `FISA_CONSULTANT.md`, codul modulelor din `19.0` (PR-urile terrabit-solutions/l10n_ro_ent#393–#396).
+- **Corecții față de readme:** `readme/DESCRIPTION.md` al modulului `l10n_ro_payroll_ro` e depășit (descrie descreșterea liniară a deducerii și S1/S2 ca bază) — pagina wiki urmează codul și fișa, nu DESCRIPTION.
+- **Dependențe/Conexiuni:** adăugată legătura reciprocă payroll_ro ↔ d112_payroll.
+- **Fișiere actualizate:** `l10n_ro_payroll_ro/` (index + fișă + `screenshots/`), `l10n_ro_anaf_d112_payroll/index.md`, `index.md`, `log.md`, `.index/chunks.json`.
+
+---
+
 ## [2026-10-02] Actualizare `deltatech_account_bank_statement_import_emag` la 19.0.2.0.7 (fișă anonimizată)
 
 - **Acțiune:** Re-ingestie, un subagent `documentarist-wiki`. [deltatech_account_bank_statement_import_emag](deltatech_account_bank_statement_import_emag/index.md) adus la 19.0.2.0.7: secțiune nouă despre încasarea deja înregistrată pe alt jurnal (risc de încasare dublă), tipul contului tranzitoriu (*Active circulante*); fișa consultant recopiată cu cele 3 capturi. Fișa nu mai conține nume de client, sume sau numere reale — înlocuiește copia ingerată anterior, care le avea.

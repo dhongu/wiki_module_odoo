@@ -1,4 +1,4 @@
-# Fișă Modul: Salarizare RO — Impozit Corect + Deducere Personală
+# Fișă Modul: Salarizare RO — Impozit corect, deduceri personale și tichete de masă
 
 **Modul:** `l10n_ro_payroll_ro`
 **Utilizator principal:** Inspector resurse umane/salarizare, Contabil salarii
@@ -8,127 +8,278 @@
 
 ## 1. Scop business
 
-Modulul **corectează calculul impozitului pe salarii** din structura nativă Odoo Enterprise și adaugă
-**deducerea personală de bază (DPB)**, care lipsește în nativ. Nativul calculează `impozit = 10% × brut`,
-ceea ce este greșit fiscal: în România impozitul se aplică pe `brut − CAS − CASS − deducere personală`.
-Rezultatul: net și impozit corecte pe fluturaș (și, implicit, D112 corect, fiindcă D112 citește din
-fluturași).
+Modulul **corectează calculul impozitului pe salarii** din structura nativă Odoo Enterprise și completează
+statul de plată cu regulile fiscale care lipsesc în nativ:
+
+- impozitul se calculează pe baza corectă (`brut + tichete − suma neimpozabilă − CAS − CASS − deduceri`), nu ca 10% din brut;
+- **suma neimpozabilă** acordată la salariul minim (300 lei ian.–iun. 2026, 200 lei din 01.07.2026);
+- CAS, CASS și CAM se rețin rotunjite la leu, iar **baza impozabilă** se rotunjește la leu prin neglijarea fracțiunilor
+  de până la 50 de bani inclusiv (HG 1/2016, pct. 4 la art. 64);
+- **deducerea personală de bază** pe grila oficială (tranșe de 50 lei), cu salariul minim versionat în timp;
+- **persoane în întreținere** cu CNP și perioade, inclusiv deducerea de 100 lei pe lună pentru fiecare copil
+  înscris în învățământ;
+- **deducere suplimentară pentru angajații sub 26 de ani**;
+- bifa **Funcție de bază** și **scutirea de impozit** pentru handicap și cercetare-dezvoltare (art. 60);
+- **tichete de masă** incluse corect în CASS și în venitul pentru deducere.
+
+Rezultatul: net și impozit corecte pe fluturaș. Transferul acestor valori în D112 nu este încă complet (vezi secțiunea 11).
 
 ## 2. Bază legală și context
 
-Legea 227/2015 (Codul fiscal): **art. 78** (calculul impozitului pe venitul din salarii, pe baza
-impozabilă = venit net − deducere personală) și **art. 77** (deducerea personală, în funcție de venit
-și de numărul de persoane în întreținere). Cotele 2026: CAS 25%, CASS 10%, impozit 10%, CAM 2,25%
-(angajator). Facilitățile sectoriale IT/construcții/agro au fost **abrogate de la 01.01.2025** (Legea
-290/2024, art. LXIV) — nu sunt incluse în modul.
+Legea 227/2015 (Codul fiscal): **art. 78** (impozitul lunar pe salarii), **art. 77** (deducerea personală de
+bază: grila pe venit și persoane în întreținere; deducerea pentru copii; deducerea pentru tineri) și **art. 60**
+(scutiri de impozit pe venit). Plafonul de eligibilitate al deducerii de bază este **salariul minim brut pe
+țară + 2.000 lei**. Cote 2026: CAS 25%, CASS 10%, impozit 10%, CAM 2,25% (angajator).
+
+Salariul minim brut pe țară: **4.050 lei până la 30.06.2026 și 4.325 lei din 01.07.2026**; ambele valori se
+păstrează în istoricul parametrilor, iar fluturașul o folosește pe cea în vigoare în luna calculată.
+Suma neimpozabilă la salariul minim este reglementată de **OUG 89/2025** și **OUG 8/2026** (aceleași acte pe care le folosește `l10n_ro_anaf_d112`): 300 lei în ian.–iun. 2026, 200 lei din 01.07.2026, plafonată la 33% din salariul de bază. Se acordă pe funcția de bază, când **salariul de bază din contract nu depășește salariul minim**, cu normă întreagă și proporțional cu partea din lună plătită; valorile sunt parametri versionați. Grila deducerii se raportează întotdeauna la salariul minim **general** pe țară (art. 77), nu la cel sectorial.
+Facilitățile sectoriale IT/construcții/agro au fost abrogate de la 01.01.2025 și nu sunt incluse.
 
 ## 3. Utilizatori și roluri
 
-Inspector salarizare (configurează angajatul, rulează fluturașul), Contabil salarii (verifică netul
-și impozitul).
-
-Roluri recomandate pentru testare:
-- Administrator HR/Payroll: instalează modulul, verifică parametrii și câmpurile angajatului.
-- Inspector salarizare: rulează un fluturaș pe structura RO și verifică liniile.
+- **Administrator HR/Payroll** — instalează modulul, verifică parametrii versionați, configurează angajații.
+- **Inspector salarizare** — completează câmpurile angajatului și persoanele în întreținere, rulează fluturașul.
+- **Contabil salarii** — verifică netul, impozitul și deducerile pe fluturaș.
 
 ## 4. Conturi și date implicate
 
-Conturile de salarizare folosite de structura nativă RO: 641 (cheltuieli salarii), 421 (personal-
-salarii datorate), 4315 (CAS), 4316 (CASS), 444 (impozit pe venituri din salarii), 436 (CAM angajator).
-Date minime pentru demo: companie RO, un angajat cu contract pe structura **„Romania: Regular Pay"
-(ROMONTHLY)**, salariu brut, tip salariu minim (S1/S2) și numărul de persoane în întreținere.
+Conturile din structura nativă RO: 641 (cheltuieli salarii), 421 (personal – salarii datorate), 4315 (CAS),
+4316 (CASS), 444 (impozit pe venituri din salarii), 436 (CAM), 6461 (cheltuieli cu CAM), 642 (tichete de masă), 5328
+(tichete de masă în casierie), 5121 (plata netului). Date minime: companie RO în RON, un angajat cu
+contract pe structura **„România: Plată obișnuită"**, salariu brut și, după caz, persoane în întreținere.
+
+Modulul instalează în demo 7 angajați cu fluturaș calculat pentru **iulie 2026** (salariu minim 4.325 lei):
+
+| Angajat demo | Cazul ilustrat |
+|---|---|
+| Ion Popescu | Salariu minim, fără persoane în întreținere; suma neimpozabilă de 200 lei |
+| Maria Ionescu | Brut 4.325, 1 persoană, 20 tichete × 45 lei |
+| Andrei Dobre | Brut 7.000 — peste plafon, fără deducere de bază |
+| Elena Radu | Soț/soție și 2 copii, unul înscris în învățământ |
+| Cristina Matei | Sub 26 de ani, deducere suplimentară |
+| Vlad Stan | Scutit de impozit (handicap grav, art. 60) |
+| Radu Georgescu | Fără funcție de bază — nicio deducere |
 
 ## 5. Configurare inițială
 
-1. Instalați `l10n_ro_payroll_ro` (necesită Enterprise `l10n_ro_hr_payroll` + `l10n_ro_hr_payroll_account`).
-2. Pe angajat/contract, completați **Tip salariu minim** (S1 general / S2 construcții) și **Persoane
-   în întreținere**.
-3. Verificați parametrii versionați (cote și plafoane 2026) în `hr.rule.parameter`
-   (`l10n_ro_salary_params`) — actualizarea anuală se face adăugând o nouă valoare cu altă dată.
+1. Instalați `l10n_ro_payroll_ro` (necesită Enterprise `l10n_ro_hr_payroll` și `l10n_ro_hr_payroll_account`).
+2. Verificați parametrii versionați, descriși la Pasul 1 (**Stat de plată → Configurare → Salariu → Regulă Parametri**, vizibil pentru
+   managerul de salarizare, parametrul *Romania Salary Parameters*): salariul minim, procentele grilei, suma
+   neimpozabilă, valoarea nominală a tichetului. O valoare
+   nouă se adaugă cu o altă **dată de început**, fără intervenție în cod.
+3. Pe fiecare angajat completați câmpurile de pe fila **Stat de plată** (Pasul 2).
 
 ## 6. Flux de utilizare
 
-> **Capturi:** se generează cu `fisa-screenshots` (secțiunea 10); încă nu există în `readme/screenshots/`.
+### Pasul 1 — Parametrii care intră în calculul salariului
 
-### Pasul 1 — Configurarea angajatului
+**Stat de plată → Configurare → Salariu → Regulă Parametri → Romania Salary Parameters** (vizibil pentru managerul de
+salarizare). Fiecare rând din fila *Istoric* are o **dată de început** și o valoare; fluturașul folosește rândul în
+vigoare la data lui. Pentru o modificare legislativă adăugați un rând nou, nu editați rândul vechi.
 
-Pe fișa angajatului (sau pe versiunea de contract), completați salariul brut, **Tip salariu minim**
-(S1/S2) și **Persoane în întreținere** — acestea determină deducerea personală.
+| Parametru | Rol | Valoare 2026 |
+|---|---|---|
+| `cas`, `cass`, `impozit`, `cam` | cotele de contribuții și de impozit | 25%, 10%, 10%, 2,25% |
+| `salariu_minim` | salariul minim brut; `S1` este baza grilei | 4.050 lei (din 01.01), 4.325 lei (din 01.07) |
+| `dpb_pct_la_minim` | procentul deducerii la salariul minim, după nr. persoane în întreținere (0, 1, 2, 3, 4+) | 20 / 25 / 30 / 35 / 45% |
+| `dpb_transe_lei`, `dpb_scadere_pe_transa` | tranșa de venit și scăderea procentului pe tranșă | 50 lei, 0,5 puncte procentuale |
+| `plafon_dpb_peste_minim` | peste salariul minim + plafon nu se acordă deducere | 2.000 lei |
+| `deducere_copil`, `varsta_copil_deducere` | deducerea lunară per copil în învățământ și vârsta limită | 100 lei, 18 ani |
+| `deducere_tineri_pct`, `varsta_tineri` | deducerea pentru tineri (% din salariul minim) și vârsta limită | 15%, 26 ani |
+| `tichet_valoare` | valoarea nominală a unui tichet de masă | 45 lei |
+| `suma_neimpozabila`, `suma_neimpozabila_plafon_pct` | suma neimpozabilă la salariul minim și plafonul din salariul de bază | 300 lei (ian.–iun.), 200 lei și 33% (din 01.07) |
 
-![Câmpuri RO pe fișa angajatului (S1/S2, persoane în întreținere)](screenshots/01_config_angajat.png)
+![Parametrii salariali RO, cu istoric pe date de început](screenshots/01_parametri_salariali.png)
 
-### Pasul 2 — Generarea fluturașului
+### Pasul 2 — Configurarea angajatului
 
-Creați un fluturaș pe structura **„Romania: Regular Pay"** și apăsați **Calculează**. Regulile rulează
-în ordine: BASIC → GROSS → CAS → CASS → **DEDUCERE (DPB)** → **INCOMETAX (corectat)** → … → NET.
+**Angajați → fișa angajatului → fila Stat de plată.** Câmpurile adăugate de modul:
 
-![Fluturaș calculat pe structura RO](screenshots/02_fluturas.png)
+1. **Tip salariu minim** — S1/S2, doar informativ: grila deducerii folosește mereu salariul minim general;
+2. **Persoane în întreținere** — folosit doar dacă nu sunt listate persoane la Pasul 3;
+3. **Funcție de bază** — fără bifă nu se acordă nicio deducere personală;
+4. **Tichete de masă** — angajatul primește tichete.
 
-### Pasul 3 — Verificarea liniilor (baza corectă a impozitului)
+Mai sunt **Deducere sub 26 de ani** (se acordă doar cât timp angajatul are sub 26 de ani la sfârșitul lunii
+fluturașului) și **Scutire de impozit pe venit** (handicap grav sau accentuat; cercetare-dezvoltare — impozitul
+devine 0). Scutirea pentru cercetare-dezvoltare are trei condiții cumulative (art. 60 pct. 3): persoana face parte din echipa
+unui proiect conform OG 57/2002, cu indicatori de rezultat; scutirea este în limita cheltuielilor cu personalul din
+bugetul proiectului; stat de plată separat pe fiecare proiect. Modulul pune impozit 0 pe **tot** fluturașul, deci
+bifați scutirea doar pe fluturașul separat al proiectului.
 
-Pe ecran, citiți liniile: CAS = 25% × brut, CASS = 10% × brut, **DPB** = deducerea personală (după
-venit și persoane în întreținere). Verificați că **impozitul = 10% × (brut − CAS − CASS − DPB)**, nu
-10% × brut, și că netul = brut − CAS − CASS − impozit. DPB **nu** reduce netul (doar baza impozabilă).
+![Câmpurile RO pe fila Stat de plată a angajatului](screenshots/02_config_angajat.png)
 
-![Liniile fluturașului: CAS, CASS, DPB, impozit, net](screenshots/03_linii_fluturas.png)
+### Pasul 3 — Persoane în întreținere
+
+Pe aceeași filă, lista **Persoane în întreținere (RO)**: relația, nume, prenume, CNP, **Din data**, **Până la**
+(se completează când se cunoaște) și bifa **Școală** (doar pentru copii). Datele de început și sfârșit permit
+recalcularea fără a modifica lunile anterioare. Când lista are rânduri, ea înlocuiește câmpul numeric
+*Persoane în întreținere*.
+
+Pentru fiecare copil în întreținere, înscris în învățământ și sub 18 ani (vârsta se deduce din CNP-ul copilului),
+se acordă **100 lei pe lună**, indiferent de nivelul salariului.
+
+![Persoanele în întreținere ale angajatului](screenshots/03_persoane_intretinere.png)
+
+### Pasul 4 — Generarea fluturașului și numărul de tichete
+
+**Stat de plată → Fluturași de salariu → Fluturași de salariu → Nou**: alegeți angajatul, structura **România: Plată obișnuită** și
+perioada, apoi apăsați **Calculați bilanțul**. Câmpul **Tichete de masă** apare când numărul de tichete este diferit de 0; la angajații cu bifa
+*Tichete de masă* este propus automat ca zilele lucrate fără concedii (23 în iulie 2026); îl puteți modifica manual (aici 20), apoi
+recalculați fluturașul.
+
+![Fluturaș cu numărul de tichete de masă](screenshots/04_fluturas_tichete.png)
+
+### Pasul 5 — Verificarea liniilor: tichete de masă și suma neimpozabilă
+
+Pe fila **Calcul Salariu** citiți, în ordine (contribuțiile și impozitul sunt rotunjite la leu, de aceea coloana
+*Rata* arată ±100%, minus la rețineri): *Salariu impozabil* (brut) = 4.325; *Sumă neimpozabilă* = 200 (salariul de bază din contract este
+egal cu salariul minim); *Tichete de masă* = 20 × 45 = 900; *CAS* = 25% × (4.325 − 200) = 1.031; *CASS* =
+10% × (4.325 + 900 − 200) = 502,50 → 503; *Deducere personală (DPB)* = 692 — grila se citește la venitul 5.225
+(brut + tichete, fără a scădea suma neimpozabilă), unde 1 persoană în întreținere înseamnă 16% din 4.325;
+*Impozitul pe venit* = 10% × (4.325 + 900 − 200 − 1.031 − 503 − 692) = 279,90 → 280.
+
+Verificați că **Salariu net** (2.511) este în bani, fără tichete, și că **Cost angajator** (5.318) = brut + CAM (93) +
+tichete. Aceste valori coincid cu exemplul de calcul din cerința clientului.
+
+![Liniile fluturașului cu tichete de masă](screenshots/05_linii_tichete.png)
+
+### Pasul 6 — Verificarea liniilor: familie cu copii
+
+La Elena Radu (brut 5.000, 3 persoane în întreținere): *DPB* = 1.211 (28% din 4.325, fiindcă la venitul 5.000
+grila a coborât cu 7 puncte procentuale de la 35%), plus *Deducere personală – copii în învățământ* = 100
+(doar copilul înscris la școală; celălalt nu se numără). Impozitul este 194 (193,90 rotunjit), netul 3.056.
+
+![Liniile fluturașului pentru familie cu copii](screenshots/06_linii_familie.png)
+
+### Pasul 7 — Verificarea liniilor: angajat sub 26 de ani
+
+La Cristina Matei (născută în 2003, brut 4.800) apare linia *Deducere personală – sub 26 de ani* = 15% din salariul
+minim = 649 lei, **în plus** față de deducerea de bază (tot 649: la 475 lei peste salariul minim, 10 tranșe de 50
+lei coboară procentul de la 20% la 15%). Deducerea pentru tineri se acordă doar dacă venitul se încadrează în
+plafon (salariul minim + 2.000 lei). Vârsta se ia din câmpul **Data nașterii** al angajatului; dacă lipsește, din
+CNP; dacă diferă, se folosește data nașterii și pe fișă apare un avertisment. Impozitul este 182, netul 2.938.
+
+![Liniile fluturașului pentru angajat sub 26 de ani](screenshots/07_linii_tineri.png)
+
+### Pasul 8 — Verificarea liniilor: angajat scutit de impozit
+
+La Vlad Stan (scutire *Handicap grav sau accentuat*), linia *Impozitul pe venit* este 0 și netul este
+brut − CAS − CASS = 3.250 lei. Contribuțiile CAS, CASS și CAM se calculează normal.
+
+![Liniile fluturașului pentru angajat scutit](screenshots/08_linii_scutit.png)
+
+### Pasul 9 — Declarația D112
+
+Cu puntea `l10n_ro_anaf_d112_payroll` instalată: **validați fluturașii lunii**, apoi **Contabilitate → Raportare → Declarația D112 → Nou**
+(luna 7, anul 2026, tip *Declarație inițială*) și apăsați **Calculează**. Fila **Angajați** se completează din
+fluturași. Coloanele care vin din regulile acestui modul sunt opționale: activați-le din butonul de coloane din
+colțul listei (*Tichete de masă*, *Sumă neimpozabilă*, *Baza CASS*, iar deducerile apar în *Ded. pers.*).
+
+Verificați pe rândul fiecărui angajat că valorile coincid cu fluturașul: la Ionescu Maria, *Tichete de masă* = 900,
+*CAS* = 1.031, *CASS* = 503, *Sumă neimpozabilă* = 200, *Ded. pers.* = 692 și *Bază impozabilă* = 2.799. Suma
+neimpozabilă se declară în XML ca tip asigurat 51 (câmpul A_13S), iar bazele CAS și CASS ale declarației țin cont de ea
+(CAS pe brut − suma neimpozabilă; CASS pe brut + tichete − suma neimpozabilă). Scutirea art. 60 nu se transferă: la
+Stan Vlad declarația arată baza impozabilă 2.688 și impozit 0.
+
+![Linia D112 cu tichete, sumă neimpozabilă și deduceri](screenshots/09_d112_linii_tichete.png)
 
 ### Note de monografie și raportare
 
-Notele contabile sunt generate de structura nativă (`l10n_ro_hr_payroll_account`), pe care modulul o
-corectează valoric:
+⚠️ Modulul **nu mapează conturile** pe regulile salariale, iar structura nativă `l10n_ro_hr_payroll_account` nu o
+face nici ea (nu are conturi preconfigurate). Înainte de a valida fluxul, mapați manual conturile pe reguli
+(**Stat de plată → Configurare → Salariu → Reguli → fila Contabilitate**). Monografia corectă este:
 - **Dr 641 = Cr 421** — salariul brut;
-- **Dr 421 = Cr 4315 (CAS) + 4316 (CASS) + 444 (impozit)** — reținerile salariale;
-- **Dr 646 = Cr 436** — CAM angajator (2,25%).
+- **Dr 421 = Cr 4315 (CAS) + 4316 (CASS) + 444 (impozit)** — rețineri;
+- **Dr 6461 = Cr 436** — CAM angajator (2,25%);
+- **Dr 5328 = Cr 401 sau 5121** — achiziția tichetelor de masă;
+- **Dr 642 = Cr 5328** — contravaloarea tichetelor de masă acordate;
+- **Dr 421 = Cr 5121** — plata netului.
 
-Modulul corectează **valoarea impozitului (444)** și, implicit, netul (421), prin baza impozabilă
-redusă și deducerea personală. Valorile alimentează corect declarația **D112**.
+Regulile noi (*Tichete de masă*, *Sumă neimpozabilă*, *Cost angajator*) nu au cont și nu generează înregistrări.
 
 ## 7. Legături cu alte module / declarații
 
 | Modul | Rol |
 |---|---|
-| `l10n_ro_hr_payroll` (Enterprise) | Structura RO, regulile CAS/CASS/CAM, work entries, payslip. |
+| `l10n_ro_hr_payroll` (Enterprise) | Structura RO, regulile CAS/CASS/CAM, work entries, fluturaș. |
 | `l10n_ro_hr_payroll_account` (Enterprise) | Maparea regulilor pe conturi (note contabile). |
-| `l10n_ro_anaf_d112` | Declarația contribuții+impozit; citește din fluturași → preia valorile corecte. |
+| `l10n_ro_anaf_d112` | Declarația 112. |
+| `l10n_ro_anaf_d112_payroll` | Puntea fluturaș → D112: transferă tichetele, suma neimpozabilă, deducerile și bazele CAS/CASS (Pasul 9). |
 
-**Ce e automat:** deducerea personală, corecția bazei impozitului, parametrii versionați.
-**Ce rămâne manual:** completarea câmpurilor angajatului (S1/S2, persoane în întreținere); actualizarea
-anuală a parametrilor (o nouă valoare în `hr.rule.parameter`).
+**Ce e automat:** grila deducerii, salariul minim și suma neimpozabilă în vigoare la data fluturașului, deducerea
+pentru copii, deducerea pentru tineri (doar sub 26 de ani la data fluturașului), valoarea tichetelor, CASS pe
+brut + tichete − suma neimpozabilă, rotunjirea la leu.
+**Ce rămâne manual:** completarea câmpurilor angajatului și a persoanelor în întreținere; bifa pentru scutire;
+numărul de tichete când diferă de zilele lucrate; actualizarea parametrilor când se modifică legislația.
 
 ## 8. Verificări pentru consultant
 
-- [ ] Impozitul pe fluturaș = 10% × (brut − CAS − CASS − DPB), **nu** 10% × brut.
-- [ ] Regula **DEDUCERE (DPB)** apare pe fluturaș cu o valoare pozitivă conformă art. 77.
-- [ ] DPB **nu** reduce netul (categorie în afara DED) — netul = brut − CAS − CASS − impozit.
-- [ ] DPB crește cu numărul de persoane în întreținere și scade spre 0 peste salariul minim + 2.000 lei.
-- [ ] Valorile fluturașului corespund cu declarația D112 pentru aceleași date.
+- [ ] Parametrul *Romania Salary Parameters* are două valori: 01.01.2026 (S1 = 4.050, suma neimpozabilă 300) și
+      01.07.2026 (S1 = 4.325, suma neimpozabilă 200).
+- [ ] La brut = salariu minim, fără persoane și fără tichete: *Sumă neimpozabilă* = 200, DPB = 20% × 4.325 = 865,
+      CAS = 1.031, CASS = 413 (Ion Popescu).
+- [ ] Dacă salariul de bază din contract depășește salariul minim, nu există sumă neimpozabilă; deducerea scade cu 0,5 puncte procentuale la fiecare 50
+      lei peste salariul minim și este 0 peste salariul minim + 2.000 lei (Andrei Dobre).
+- [ ] CASS = 10% × (brut + tichete − suma neimpozabilă); CAS și CAM = procent × (brut − suma neimpozabilă).
+- [ ] Impozitul = 10% × (brut + tichete − suma neimpozabilă − CAS − CASS − deduceri), rotunjit conform regulii de mai sus: baza se rotunjește la leu (0,50 în jos), apoi se aplică cota.
+- [ ] Salariul net = brut − CAS − CASS − impozit, fără tichete (Maria Ionescu: 2.511); *Cost angajator* = brut + CAM + tichete.
+- [ ] Copil neînscris la școală sau major nu generează cei 100 lei.
+- [ ] Fără bifa Funcție de bază, toate deducerile și suma neimpozabilă sunt 0 (Radu Georgescu).
+- [ ] La scutire (art. 60), impozitul este 0 (Vlad Stan).
+- [ ] Cei 100 lei pentru copil se acordă unui singur părinte, pe baza declarației și a documentului de înscriere (se verifică manual).
+- [ ] În D112 (cu puntea instalată), linia fiecărui angajat are aceleași tichete, sumă neimpozabilă, deduceri și bază impozabilă ca fluturașul.
+- [ ] Verificați manual condiția din art. 77: persoana în întreținere nu are venituri peste 20% din salariul minim
+      (modulul nu o verifică).
 
 ## 9. Mesaje de eroare frecvente
 
 | Mesaj | Cauză | Remediere |
 |---|---|---|
-| Impozit neașteptat de mare | Câmpurile S1/S2 sau persoane în întreținere necompletate | Completați-le pe fișa angajatului/contract |
-| Structura RO nu apare | Enterprise `l10n_ro_hr_payroll` neinstalat | Instalați dependențele de payroll Enterprise |
-| Parametri lipsă la o dată | Lipsește valoarea `hr.rule.parameter` pentru anul respectiv | Adăugați o nouă valoare cu `date_from` pentru anul nou |
+| Deducerea personală este 0 | Lipsește bifa Funcție de bază, sau venitul depășește salariul minim + 2.000 lei | Verificați bifa și venitul brut (inclusiv tichete) |
+| Deducerea de bază nu crește cu persoanele | Persoanele listate au perioada încheiată înainte de luna fluturașului | Verificați coloanele Din data / Până la |
+| Deducerea pentru copii lipsește | Copilul nu are CNP, nu e bifat Școală sau are 18 ani împliniți | Completați CNP-ul și bifa Școală |
+| Avertisment la data nașterii | Data nașterii diferă de cea din CNP | Corectați una dintre ele; se folosește câmpul Data nașterii |
+| Tichetele nu apar pe fluturaș | Angajatul nu are bifa Tichete de masă | Bifați-o pe fila Stat de plată |
+| Parametri lipsă la o dată | Lipsește valoarea parametrului pentru perioada respectivă | Adăugați o valoare nouă cu data de început corectă |
 
 ## 10. Capturi de ecran
 
-Se **generează automat** din `tests/test_screenshots.py` (mixin `ScreenshotCase`), în RO, pe planul RO.
-La momentul redactării **nu există încă** — rulați `fisa-screenshots`. Lista planificată:
+Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixin `ScreenshotCase` din
+`l10n_ro_doc_screenshots`, import defensiv), în română, pe planul RO, în RON, pe cazurile din iulie 2026:
 
-1. `01_config_angajat.png` — câmpuri RO pe angajat (S1/S2, persoane în întreținere).
-2. `02_fluturas.png` — fluturaș calculat pe structura RO.
-3. `03_linii_fluturas.png` — liniile (CAS, CASS, DPB, impozit, net).
+1. `01_parametri_salariali.png` — parametrii salariali RO, cu istoric.
+2. `02_config_angajat.png` — câmpurile RO pe fila Stat de plată.
+3. `03_persoane_intretinere.png` — lista persoanelor în întreținere.
+4. `04_fluturas_tichete.png` — fluturaș cu numărul de tichete.
+5. `05_linii_tichete.png` — liniile fluturașului cu tichete de masă.
+6. `06_linii_familie.png` — familie cu copii în învățământ.
+7. `07_linii_tineri.png` — angajat sub 26 de ani.
+8. `08_linii_scutit.png` — angajat scutit de impozit.
+9. `09_d112_linii_tichete.png` — linia D112 cu tichete, sumă neimpozabilă și deduceri (necesită puntea D112).
 
 ```bash
-./odoo/odoo-bin -c odoo.conf -d test19 -u l10n_ro_payroll_ro \
+./odoo/odoo-bin -c odoo.conf -d test19 -i l10n_ro_payroll_ro,l10n_ro_doc_screenshots \
   --test-tags=fise_screenshots --stop-after-init
 ```
 
 ## 11. Observații pentru manual
 
-- Subliniați eroarea corectată: nativul calcula impozitul pe brut; modulul aplică baza fiscală corectă.
-- Explicați deducerea personală (DPB) — variabilă cu venitul și persoanele în întreținere (art. 77).
-- Menționați parametrii versionați (actualizare anuală fără cod) și abrogarea facilităților sectoriale
-  (01.01.2025), ca să nu fie căutate de utilizatori.
-- Legați de D112: corectarea fluturașului propagă valori corecte în declarație.
+- Subliniați eroarea corectată: nativul calcula impozitul pe brut.
+- Explicați grila ca pe o tabelă cu trepte de 50 lei și arătați cum se citește la venitul care include tichetele.
+- Salariul minim și suma neimpozabilă sunt parametri cu istoric: fluturașii lunilor trecute rămân corecți la recalculare.
+- Limite cunoscute:
+  - conturile contabile nu sunt mapate pe reguli, deci validarea fluturașului nu generează încă nota contabilă
+    (fluxul din această fișă se oprește la fluturașul calculat, în ciornă);
+  - puntea `l10n_ro_anaf_d112_payroll` nu transferă scutirea de impozit din art. 60: D112 arată baza impozabilă fără scutire și
+    impozitul 0 din fluturaș;
+  - declarația `l10n_ro_anaf_d112` are propria formulă liniară pentru deducere; în ian.–iun. 2026 ea acordă 200 lei
+    sumă neimpozabilă și la nivelul S2 (4.325), pe când acest modul acordă 300 lei doar la salariul de bază egal cu
+    S1 (4.050) — de aliniat după confirmarea regulii;
+  - cotizația sindicală și pensiile facultative/ocupaționale nu sunt scăzute din baza impozabilă;
+  - **de confirmat de contabil, din textul OUG 89/2025 și OUG 8/2026:** valorile 300/200 lei, plafonul de 33%
+    (care, la salariul minim, nu limitează practic suma de 200 lei), eventualul prag al venitului brut fără tichete
+    (parametrul opțional `suma_neimpozabila_prag_venit`, nesetat), tratamentul concediului medical la proratare,
+    rotunjirea CAS/CASS/CAM și vârsta în luna în care se împlinește;
+  - suma neimpozabilă se proratează cu zilele lucrate fără concedii și cu partea din lună în care contractul este activ.

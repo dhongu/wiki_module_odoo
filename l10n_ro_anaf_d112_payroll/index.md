@@ -1,10 +1,10 @@
 # Romania - D112 ANAF: punte salarizare Odoo (localizat la `l10n_ro_anaf_d112_payroll/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d112_payroll`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112_payroll
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112_payroll`
-- **Ultima Ingestie:** 2026-09-29
+- **Ultima Ingestie:** 2026-10-02
 
 #### 1. Sumar
 
@@ -13,7 +13,8 @@ Modulul face legătura directă între declarația D112 și salarizarea Odoo Ent
 #### 2. Funcționalități Cheie
 
 - **Import automat al evidenței nominale** din statele de plată validate (stare **Validat** sau **Plătit**) ale lunii, la apăsarea butonului **Calculează** din declarația D112 — câte o linie per stat de plată.
-- **Mapare coduri regulă salarială → câmpuri D112:** `GROSS` (venit brut, bază CAS, bază CASS), `BASIC` (salariu de bază, cu revenire pe `GROSS` dacă lipsește), `CAS`, `CASS`, `INCOMETAX` (impozit).
+- **Mapare coduri regulă salarială → câmpuri D112:** `GROSS` (venit brut), `BASIC` (salariu de bază, cu revenire pe `GROSS` dacă lipsește), `CAS`, `CASS`, `INCOMETAX` (impozit).
+- **Tichete, sumă neimpozabilă și deduceri**, din 19.0.1.1.0, din regulile modulului `l10n_ro_payroll_ro`: `TICHETE` → tichete de masă; `NEIMPOZ` → suma neimpozabilă (declarată ca tip asigurat 51, A_13S); `DPB`, `DPBTIN`, `DPBCOP` → deducerea de bază, pentru tineri și pentru copii (E1_41, E1_421, E1_422). Bazele: CAS = brut − suma neimpozabilă; CASS = brut + tichete − suma neimpozabilă. Numărul de persoane în întreținere și de copii înscriși în învățământ vine din evidența angajatului (altfel din numărul de pe versiune). Fără aceste reguli valorile rămân 0. *Nu se transferă scutirea de impozit din art. 60.*
 - **Zile din fluturaș (`worked_days_line_ids`)**, din 19.0.1.0.2: zilele lucrate din tipurile de prezență care nu sunt concediu (`WORK100`, `WORK110` munca de acasă, delegația), zilele de concediu de odihnă din `LEAVE120` și cele de concediu medical din `LEAVE110`. Un fluturaș fără linii de zile primește zilele lucrătoare ale lunii (NZL). Până în 19.0.1.0.2 se căuta o regulă salarială `WORK100` care nu există, deci declarația pleca mereu cu 21 de zile lucrate și fără CO/CM.
 - **Zile cu contract activ (`zile_contract_activ`)**, din 19.0.1.0.3, pentru pragul minim CAS/CASS (art. 146 alin. 5^6 Cod fiscal; HG 1/2016, Titlul V, pct. 6 alin. 3): lucrate + CO + CM + zilele plătite sau absențele fără decizie de suspendare (evenimente familiale, recuperare, alt concediu plătit, absență nemotivată). Nu se numără concediul fără plată, suspendarea prin decizie, creșterea copilului, șomajul tehnic, maternitatea și sărbătorile (`LEAVE100`, pe care NZL le scade deja).
 - **CNP și dată angajare preluate automat**: CNP din angajat (`l10n_ro_cnp`, cu revenire pe `ssnid`), data angajării din contractul/versiunea angajatului.
@@ -31,7 +32,7 @@ Modulul face legătura directă între declarația D112 și salarizarea Odoo Ent
 
 **Modele**
 
-- `l10n.ro.d112` (extindere): implementează punctul de extensie `_d112_collect_employee_lines` din `l10n_ro_anaf_d112` — populează evidența nominală din statele de plată validate/plătite ale perioadei; `_d112_payslip_days` calculează zilele lucrate, CO, CM și zilele cu contract activ din liniile de zile ale fluturașului.
+- `l10n.ro.d112` (extindere): `_d112_payslip_extras` preia tichetele, suma neimpozabilă și deducerile din regulile fluturașului; implementează punctul de extensie `_d112_collect_employee_lines` din `l10n_ro_anaf_d112` — populează evidența nominală din statele de plată validate/plătite ale perioadei; `_d112_payslip_days` calculează zilele lucrate, CO, CM și zilele cu contract activ din liniile de zile ale fluturașului.
 - `l10n.ro.d112.employee.line` (extindere): adaugă câmpul `payslip_id` (statul de plată sursă), folosit pentru a evita importul dublu al aceleiași linii.
 - `l10n_ro_anaf_d112.report.handler` (extindere, `models.AbstractModel`): implementează `_d112_live_obligation_amounts` — proiecția live a obligațiilor lunii (impozit, CAS, CASS, CAM) din statele de plată validate; întoarce dicționar gol dacă nu există state de plată în perioadă, pentru ca raportul să cadă pe declarația persistentă.
 
@@ -45,6 +46,7 @@ Modulul face legătura directă între declarația D112 și salarizarea Odoo Ent
 
 #### 5. Conexiuni
 
+- [l10n_ro_payroll_ro](../l10n_ro_payroll_ro/index.md): sursa regulilor `TICHETE`, `NEIMPOZ`, `DPB`, `DPBTIN`, `DPBCOP` transferate pe linia nominală (nu e dependență; fără el valorile rămân 0).
 - [l10n_ro_anaf_d112](../l10n_ro_anaf_d112/index.md): declarația de bază pe care acest modul o alimentează automat din salarizare, prin punctele de extensie `_d112_collect_employee_lines` și `_d112_live_obligation_amounts`.
 - [l10n_ro_hr_pontaj_payroll](../l10n_ro_hr_pontaj_payroll/index.md): aduce în fluturaș, ca prezențe, zilele corectate în foaia colectivă de prezență; codurile de suspendare `L10N_RO_*` din [l10n_ro_hr_pontaj](../l10n_ro_hr_pontaj/index.md) sunt recunoscute la zilele cu contract activ (un cod absent din bază nu deranjează). Nu e dependență.
 - `hr_payroll` (Odoo Enterprise): sursa statelor de plată (`hr.payslip`), a liniilor de regulă salarială și a liniilor de zile lucrate folosite la import.
