@@ -130,7 +130,7 @@
   {
     "path": "deltatech_account_bank_statement_import_emag/index.md",
     "module": "deltatech_account_bank_statement_import_emag",
-    "version": "19.0.2.0.6",
+    "version": "19.0.2.0.7",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import_emag",
     "local_path": "odoo-addons/bitshop_ent/deltatech_account_bank_statement_import_emag",
     "last_ingest": "2026-10-02",
@@ -148,6 +148,7 @@
       "Tratament pe Document code (detaliat în fișa consultant): `KD` (încasare card) și `KX`",
       "Jurnal dedicat eMAG: jurnal de tip *Bancă*, cu Bank Feeds = Import, cont implicit",
       "Fișa consultant: tabel de definire a jurnalului câmp cu câmp, note contabile pe tip de",
+      "Încasare deja înregistrată pe alt jurnal: dacă facturile din borderou sunt deja plătite pe",
       "Situații cu atenția operatorului: o linie mai mare decât restul facturii lasă excedentul ca",
       "Import din ecranul corect: importul pornit din altă parte (*Import records* pe lista de"
     ],
@@ -161,7 +162,7 @@
       "deltatech_account_bank_statement_import_euplatesc",
       "deltatech_account_bank_statement_import_gls"
     ],
-    "text": "eMAG Marketplace Statement Import\ndeltatech_account_bank_statement_import_emag\nComercianții care vând pe eMAG Marketplace nu încasează direct de la fiecare client: eMAG colectează încasările (card online și ramburs), își reține comisioanele și virează periodic o singură sumă către comerciant. Modulul importă raportul *Account statement details* (XLSX), descărcat exact cum vine din panoul de comerciant eMAG, direct ca extras de cont bancar — fără nicio mapare manuală de coloane — și creează câte un extras de cont pentru fiecare virare, cu liniile pregătite pentru reconciliere și clientul completat automat acolo unde referința permite.\nImport fișier original: se încarcă raportul *Account statement details* exact cum vine de la\nDetecție prin semnătură: fișierul este recunoscut după un set de coloane obligatorii din\nO linie de extras per virare: liniile sunt grupate după *Clearing document*, deci un fișier\nSemn corectat: eMAG scrie sumele din propria perspectivă (încasările comerciantului apar cu\nVerificare de închidere pe zero, obligatorie: suma liniilor unei virări este verificată să fie\nIdentificare automată a partenerului: pe încasări și restituiri, referința este numărul\nProtecție la duplicate: fiecare linie primește un identificator unic de import bazat pe *SAP\nInterfață în română: mesajele de eroare ale importului sunt traduse (`i18n/ro.po`).\nTratament pe Document code (detaliat în fișa consultant): `KD` (încasare card) și `KX`\nJurnal dedicat eMAG: jurnal de tip *Bancă*, cu Bank Feeds = Import, cont implicit\nFișa consultant: tabel de definire a jurnalului câmp cu câmp, note contabile pe tip de\nSituații cu atenția operatorului: o linie mai mare decât restul facturii lasă excedentul ca\nImport din ecranul corect: importul pornit din altă parte (*Import records* pe lista de"
+    "text": "eMAG Marketplace Statement Import\ndeltatech_account_bank_statement_import_emag\nComercianții care vând pe eMAG Marketplace nu încasează direct de la fiecare client: eMAG colectează încasările (card online și ramburs), își reține comisioanele și virează periodic o singură sumă către comerciant. Modulul importă raportul *Account statement details* (XLSX), descărcat exact cum vine din panoul de comerciant eMAG, direct ca extras de cont bancar — fără nicio mapare manuală de coloane — și creează câte un extras de cont pentru fiecare virare, cu liniile pregătite pentru reconciliere și clientul completat automat acolo unde referința permite.\nImport fișier original: se încarcă raportul *Account statement details* exact cum vine de la\nDetecție prin semnătură: fișierul este recunoscut după un set de coloane obligatorii din\nO linie de extras per virare: liniile sunt grupate după *Clearing document*, deci un fișier\nSemn corectat: eMAG scrie sumele din propria perspectivă (încasările comerciantului apar cu\nVerificare de închidere pe zero, obligatorie: suma liniilor unei virări este verificată să fie\nIdentificare automată a partenerului: pe încasări și restituiri, referința este numărul\nProtecție la duplicate: fiecare linie primește un identificator unic de import bazat pe *SAP\nInterfață în română: mesajele de eroare ale importului sunt traduse (`i18n/ro.po`).\nTratament pe Document code (detaliat în fișa consultant): `KD` (încasare card) și `KX`\nJurnal dedicat eMAG: jurnal de tip *Bancă*, cu Bank Feeds = Import, cont implicit\nFișa consultant: tabel de definire a jurnalului câmp cu câmp, note contabile pe tip de\nÎncasare deja înregistrată pe alt jurnal: dacă facturile din borderou sunt deja plătite pe\nSituații cu atenția operatorului: o linie mai mare decât restul facturii lasă excedentul ca\nImport din ecranul corect: importul pornit din altă parte (*Import records* pe lista de"
   },
   {
     "path": "deltatech_account_bank_statement_import_euplatesc/index.md",

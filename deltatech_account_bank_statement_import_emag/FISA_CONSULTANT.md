@@ -202,8 +202,7 @@ contrapartida reală. Rezultatul final, pe tip de document:
 | — | extrasul băncii reale (încasare de la Dante sau HeyBlu) | **Dr 5121 Bancă = Cr 581 Viramente interne** | linia `ZP`, prin 581 |
 
 Verificare: pe o virare completă, suma liniilor `KD`+`KX`−`ZC`−`DM`−`C3` este egală cu `ZP`, deci
-5125.EMAG iese pe zero (în borderoul Agroamat din 09.09.2026: 3.565,73 + 3.212,65 − 215,19 − 945,73
-− 113,67 = 5.503,79).
+5125.EMAG iese pe zero (exemplu: 1.000,00 + 500,00 − 100,00 − 250,00 − 50,00 = 1.100,00).
 
 Nu se folosește **Dr 5121 = Cr 4111** cu partener HeyBlu sau Dante (clientul este clientul final) și nici
 **Dr 5121 = Cr 401 Dante** direct (suma virată este netă, iar pct. 56 cere evidența brută).
@@ -230,8 +229,8 @@ standard Odoo, făcută de operator.
 
 Clientul plătește cu cardul, comanda se anulează (de client sau de vânzător), iar eMAG restituie
 banii. În borderou apar două linii pe același *Reference ID*: `KD` (încasarea) și `ZC` (restituirea),
-cu aceeași sumă. Cazul e real: borderoul Agroamat din 01.08–09.09.2026 conține patru astfel de
-perechi (de exemplu 14,95 încasat pe 26.08 și restituit pe 01.09; 106,16; 41,86; 52,22), toate în
+cu aceeași sumă. Cazul apare în practică: într-un borderou real de câteva săptămâni au existat
+patru astfel de perechi (de exemplu o încasare de 100,00 din 26.08, restituită pe 01.09), toate în
 aceeași virare, deci se anulează între ele în suma `ZP`.
 
 Ce face importul: aduce ambele linii (`KD` cu plus, `ZC` cu minus) și le pune pe același client, găsit
@@ -275,10 +274,37 @@ Borderoul **nu are linie sau cod de document pentru transport**: coloanele sunt 
 
 **Când suma încasată diferă de factură:** o diferență între linia `KD` / `KX` și totalul facturii poate
 veni dintr-un voucher eMAG, dintr-o rotunjire (±0,01–0,06) sau dintr-un transport tratat diferit în
-comandă față de factură. Borderoul nu spune care dintre ele; se stabilește pe comandă. În borderoul
-Agroamat din 09.09.2026, din 64 de potriviri, 5 diferențe erau reale (−42,42; −27,55; −25,00; +29,80;
-−0,90) și **cauza lor nu a fost confirmată** — nu se presupune transport sau voucher fără să se
+comandă față de factură. Borderoul nu spune care dintre ele; se stabilește pe comandă. Într-un
+borderou real analizat, din 64 de potriviri, 5 diferențe erau reale (de la sub 1 leu la zeci de lei) și
+**cauza lor nu a fost confirmată** — nu se presupune transport sau voucher fără să se
 verifice comanda.
+
+### Când încasarea este deja înregistrată pe alt jurnal
+
+Borderoul presupune că factura clientului este **deschisă** până la reconciliere. Dacă firma înregistrează
+deja încasările prin alt flux (de exemplu plata la livrare importată din borderoul curierului, pe un
+jurnal al curierului), facturile sunt plătite înainte de import și borderoul eMAG nu mai are ce să stingă.
+Verificat pe o copie a bazei unui client, cu un borderou real de peste 70 de linii: aproape toate facturile
+`KD`/`KX` (61 din 66) erau deja plătite pe jurnalul curierului, pe contul de clienți 4111.
+
+Ce se întâmplă la import și la reconciliere:
+
+- **Importul reușește la fel**: toate liniile intră, extrasul se închide pe zero. Linia `ZP` și
+  liniile `DM`/`C3` nu depind de facturile clienților.
+- **Odoo reconciliază singur, parțial, la import**, restul mic rămas deschis pe o factură (rotunjiri de
+  0,01–0,06, dar și diferențe reale, de la sub 1 leu la zeci de lei). Verificați aceste linii, nu le luați drept
+  încasări întregi.
+- **Perechile `KD` + `ZC` ale comenzilor anulate** se reconciliază între ele (liniile de suspense se anulează
+  reciproc) și nu depind de nicio factură.
+- **Restul liniilor `KD`/`KX` nu au factură deschisă.** Ca să le legați de factură, trebuie întâi
+  **desfăcută plata existentă** de pe celălalt jurnal; plata rămâne apoi pe client ca **credit nealocat**,
+  deci aceeași încasare apare de două ori (o dată pe jurnalul curierului, o dată din borderou). Fără
+  desfacere, liniile rămân în contul tranzitoriu, nereconciliate.
+
+**Înainte de a pune importul în producție** stabiliți cu contabilul care flux ține evidența încasării:
+borderoul eMAG (atunci plata pe celălalt jurnal nu se mai înregistrează pentru comenzile eMAG) sau fluxul
+existent (atunci borderoul se folosește doar pentru `ZP`, `DM` și `C3`). Nu le rulați pe amândouă pentru
+aceleași comenzi.
 
 ## 7. Legături cu alte module / declarații
 
@@ -308,6 +334,8 @@ Ce rămâne manual: reconcilierea liniilor cu facturile și închiderea contului
 - [ ] Reîncărcarea aceluiași fișier nu dublează liniile.
 - [ ] După reconcilierea completă a unei virări, contul de tranzit are sold zero.
 - [ ] O comandă anulată după încasare (`KD` + `ZC` pe același *Reference ID*) se reconciliază cu ea însăși și lasă 4111 pe zero.
+- [ ] S-a verificat dacă facturile din borderou sunt deja plătite pe alt jurnal (curier, POS); dacă da, s-a decis care flux ține încasarea, ca să nu apară de două ori.
+- [ ] Contul tranzitoriu ales are tipul *Active circulante*: domeniul jurnalului nu acceptă alt tip, deci 473000 standard (*Datorii curente*) nu poate fi ales ca atare.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -320,6 +348,7 @@ Ce rămâne manual: reconcilierea liniilor cu facturile și închiderea contului
 | „You already have imported that file." | Borderoul a fost deja importat | Nu e o eroare — verificați extrasul creat anterior |
 | „You can't create a new statement line without a suspense account..." | Jurnalul nu are cont tranzitoriu configurat | Setați contul tranzitoriu pe jurnal |
 | Clientul nu e completat pe unele linii de încasare | Comanda eMAG nu există în Odoo sau referința nu se potrivește unic | Completați manual partenerul la reconciliere; verificați importul comenzilor din `deltatech_marketplace_emag` |
+| Aceeași încasare apare de două ori pe client (plată pe alt jurnal + linie din borderou) | Factura era deja plătită pe alt jurnal (curier), iar borderoul a fost reconciliat peste ea după desfacerea plății | Alegeți un singur flux pentru încasare; vezi secțiunea „Când încasarea este deja înregistrată pe alt jurnal" |
 | Contul de tranzit rămâne cu sold după reconciliere | O linie a rămas nereconciliată (frecvent o comandă neîncasată integral sau un voucher eMAG) | Identificați linia rămasă în widgetul de reconciliere |
 
 ## 10. Capturi de ecran

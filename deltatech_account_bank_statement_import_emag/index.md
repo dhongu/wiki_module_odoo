@@ -1,7 +1,7 @@
 # eMAG Marketplace Statement Import (localizat la `deltatech_account_bank_statement_import_emag/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_bank_statement_import_emag`
-- **Versiune:** `19.0.2.0.6`
+- **Versiune:** `19.0.2.0.7`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import_emag
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_account_bank_statement_import_emag`
 - **Ultima Ingestie:** `2026-10-02`
@@ -56,12 +56,20 @@ liniile pregătite pentru reconciliere și clientul completat automat acolo unde
 - **Jurnal dedicat eMAG**: jurnal de tip *Bancă*, cu **Bank Feeds = Import**, cont implicit
   propriu din 5125 (*Sume în curs de decontare*, `5125.EMAG`, tip *Bancă și numerar*, nu cont
   bancar 512 — banii sunt la eMAG până la virare) și cont tranzitoriu preferabil dedicat
-  (`473.EMAG`). Prezența formatului „eMAG Marketplace" în formatele de import acceptate arată că
+  (`473.EMAG`) de tip *Active circulante* — domeniul jurnalului nu acceptă alt tip, deci 473000
+  standard (*Datorii curente*) nu poate fi ales ca atare. Prezența formatului „eMAG Marketplace" în formatele de import acceptate arată că
   modulul e activ.
 - **Fișa consultant**: tabel de definire a jurnalului câmp cu câmp, note contabile pe tip de
   document, secțiune despre comanda anulată după încasare (`KD` + `ZC`; cazul voucherului e marcat
-  ca neverificat) și despre transport (nu are linie proprie în borderou; este inclus în totalul
-  `KD`/`KX` sau în facturile `DM`/`C3`). Partenerul de decontare este Dante International.
+  ca neverificat), despre transport (nu are linie proprie în borderou; este inclus în totalul
+  `KD`/`KX` sau în facturile `DM`/`C3`) și despre cazul în care încasarea este deja înregistrată pe
+  alt jurnal (vezi mai jos). Partenerul de decontare este Dante International.
+- **Încasare deja înregistrată pe alt jurnal**: dacă facturile din borderou sunt deja plătite pe
+  jurnalul curierului (sau al altui canal), liniile din extras nu le pot deconta fără a desface
+  plata existentă, iar încasarea ar fi numărată de două ori. Fișa explică alegerea unui singur flux
+  pentru încasare; verificarea se face înainte de import, iar eroarea de dublare este descrisă în
+  tabelul de erori. Pe date de test, importul în sine funcționează, restul mici de factură se
+  reconciliază automat, iar perechile `KD`/`ZC` ale comenzilor anulate se reconciliază între ele.
 - **Situații cu atenția operatorului**: o linie mai mare decât restul facturii lasă excedentul ca
   avans de client; o diferență egală cu un voucher eMAG se reconciliază parțial, iar restul rămâne
   creanță deschisă până la decontarea de către eMAG.

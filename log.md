@@ -4,10 +4,18 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-02] Actualizare `deltatech_account_bank_statement_import_emag` la 19.0.2.0.7 (fișă anonimizată)
+
+- **Acțiune:** Re-ingestie, un subagent `documentarist-wiki`. [deltatech_account_bank_statement_import_emag](deltatech_account_bank_statement_import_emag/index.md) adus la 19.0.2.0.7: secțiune nouă despre încasarea deja înregistrată pe alt jurnal (risc de încasare dublă), tipul contului tranzitoriu (*Active circulante*); fișa consultant recopiată cu cele 3 capturi. Fișa nu mai conține nume de client, sume sau numere reale — înlocuiește copia ingerată anterior, care le avea.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `FISA_CONSULTANT.md` de pe branch-ul PR-ului terrabit-solutions/bitshop_ent#198 (încă nemerge-uit la momentul ingestiei).
+- **Corecții față de readme:** nu e cazul.
+- **Dependențe/Conexiuni:** neschimbate.
+- **Fișiere actualizate:** `deltatech_account_bank_statement_import_emag/` (index + fișă), `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-02] Actualizare `deltatech_account_bank_statement_import_emag` după fișa consultant
 
 - **Acțiune:** Re-ingestie, un subagent `documentarist-wiki`. [deltatech_account_bank_statement_import_emag](deltatech_account_bank_statement_import_emag/index.md) adus de la 19.0.2.0.0 la 19.0.2.0.6: tratamentul importului pe fiecare Document code (`KD`, `KX`, `ZC`, `DM`, `C3`, `ZP`), definirea jurnalului eMAG (cont 5125.EMAG de tip Bancă și numerar, cont tranzitoriu), notele contabile pe tip de document, comanda anulată după încasare, transportul (fără linie proprie în borderou); fișa consultant recopiată cu cele 3 capturi.
-- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `FISA_CONSULTANT.md` pe `origin/19.0` (terrabit-solutions/bitshop_ent#197), verificat pe borderoul real Agroamat 01.08–09.09.2026 (74 de linii, total 0,00) și pe preprod-ul Agroamat.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `FISA_CONSULTANT.md` pe `origin/19.0` (terrabit-solutions/bitshop_ent#197), verificat pe un borderou real și pe o copie a bazei unui client.
 - **Corecții față de readme:** nu e cazul; cazul voucherului pe comandă anulată rămâne marcat „neverificat" în fișă și în pagină.
 - **Dependențe/Conexiuni:** neschimbate; linkuri active către [deltatech_account_bank_statement_import](deltatech_account_bank_statement_import/index.md), [deltatech_marketplace_emag](deltatech_marketplace_emag/index.md), [euplatesc](deltatech_account_bank_statement_import_euplatesc/index.md) și [gls](deltatech_account_bank_statement_import_gls/index.md).
 - **Fișiere actualizate:** `deltatech_account_bank_statement_import_emag/` (index + fișă + capturi), `index.md`, `log.md`, `.index/chunks.json`.
