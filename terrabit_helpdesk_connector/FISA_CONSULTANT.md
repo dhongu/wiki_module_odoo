@@ -163,7 +163,7 @@ pasul 5).
 
 ### Pasul 5 — Discuția cu Terrabit
 
-În chatter-ul tichetului apar răspunsurile consultanților, cu numele și avatarul lor, și mesajele
+În chatter-ul tichetului, așezat mereu sub tichet, pe toată lățimea ecranului, apar răspunsurile consultanților, cu numele și avatarul lor, și mesajele
 clientului. Clientul răspunde din **Trimiteți un mesaj**, ca pe orice document Odoo, inclusiv cu
 fișiere atașate. Mesajul pleacă la Terrabit pe loc.
 

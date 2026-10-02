@@ -1,7 +1,7 @@
 # Terrabit Helpdesk Connector (localizat la `terrabit_helpdesk_connector/index.md`)
 
 - **Nume Tehnic:** `terrabit_helpdesk_connector`
-- **Versiune:** `19.0.0.2.18`
+- **Versiune:** `19.0.0.2.19`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_helpdesk_connector`
 - **Ultima Ingestie:** `2026-09-24`
@@ -52,6 +52,7 @@ răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la
 - Aviz în Odoo pentru tichetele care așteaptă răspunsul clientului de peste 24 h (autor sau persoană
   desemnată pe cont).
 - Tichetul nou legat arată textul sursă separat, needitabil.
+- Discuția (chatterul) stă mereu sub tichet, pe toată lățimea, și pe ecranele late.
 - Buton **Trimite la Terrabit** în fereastra de eroare Odoo („Ups!”): deschide o ciornă cu mesajul real
   al erorii, pagina și traceback-ul completate.
 - Bara de status cu timp pe tichet (Nou → În lucru → De răspuns → Închis), ca bara de stadii de la
