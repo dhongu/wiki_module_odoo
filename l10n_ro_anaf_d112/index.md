@@ -1,7 +1,7 @@
 # Romania - Declarația D112 ANAF (FR-44) (localizat la `l10n_ro_anaf_d112/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d112`
-- **Versiune:** `19.0.2.5.0`
+- **Versiune:** `19.0.2.6.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112`
 - **Ultima Ingestie:** `2026-10-03`
@@ -31,6 +31,7 @@ Modulul automatizează întocmirea, validarea și exportul Declarației D112 ANA
 - **Integrare în tabloul de declarații** (`account.return`): tip de declarație lunar cu termen 25 a lunii următoare, pași de verificare (pregătire declarație, reconciliere, atașare XML semnat/recipisă SPV).
 - **Validări blocante** la validare: checksum CNP, CNP duplicat, dată angajare obligatorie/coerentă, zile lucrate raportate la numărul de zile LUCRĂTOARE din lună (nu cele calendaristice), ore normă 6/7/8, venit pozitiv; avertismente neblocante pentru CAS/CASS recalculate.
 - **Cod CAEN obligatoriu** pe companie (`angajator/@caen`), citit acum din `l10n_ro_anaf_base` (nu mai depinde tacit de `l10n_ro_config`); câmpul lipsă e prins de o gardă cu mesaj acționabil în locul unui fallback tăcut „0000".
+- **`E3_8` și venituri neimpozabile** (19.0.2.6.0): de la perioada 07/2026 rândul 8 cuprinde art. 76 alin. (1)–(4¹) (OPANAF 605/2026, Anexa 6), deci `E3_8` și `E1_1` includ veniturile neimpozabile 8.4 / 8.5. Câmpuri noi pe linia nominală: venit neimpozabil alin. (4) → `E3_69`, diurnă neimpozabilă (din care, 8.4.3) → `E3_62`, venit neimpozabil alin. (4¹) → `E3_90`; nu intră în bazele CAS / CASS / impozit și nu se declară înainte de 07/2026. `A_sal2` = `E3_8` − `E3_69` (include și tichetele). Verificat cu DUKIntegrator (`E3_8` 5.200, `A_sal2` 5.085).
 - **Scutirea de impozit art. 60** (pct. 1 handicap, pct. 3 cercetare-dezvoltare), declarată (XML 09/2026 validat de DUKIntegrator): câmpul de linie *Scutire impozit (art. 60)* → `asigScu` 1/3; `E3_23`/`E3_24` sau `E3_27`/`E3_28` = baza impozabilă și impozitul care s-ar fi datorat (10%); `E3_15` = 0; la angajator obligația 602 cu `A_datorat` = reținut + scutit, `A_scutit` și `angajatorF1`; `E3_16` include tichetele; XSD 07/2026 admite tipul de asigurat 51.
 - **Deduceri și în `asiguratE3`**: persoanele în întreținere și deducerile personale se declară și în `E3_11`, `E3_12`, `E3_121`, `E3_122`, `E3_1221`, `E3_1222`, `E3_13` (structura ANAF cere ca E1_x să fie sumele câmpurilor E3).
 - **Totaluri** CAS/CASS/impozit/CAM calculate automat din linii; baza CAM (`cam_baza`, `A_5`, `B1_5`, `B4_14`, `C4_baza`) = venit brut − suma neimpozabilă la salariul minim.
