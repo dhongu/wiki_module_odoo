@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-03] Actualizare `l10n_ro_hr_payroll_enhancement` 19.0.2.1.0 și `l10n_ro_anaf_d112_payroll` 19.0.1.4.0 (avertizări S3, simulator brut/net S4)
+
+- **Acțiune:** Re-ingestie. [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md) la 19.0.2.1.0: avertizări pe fluturaș (CNP, perioade de întreținere, copil fără CNP) și simulatorul brut ↔ net cu PDF. [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) la 19.0.1.4.0: avertisment D112 pentru salariat fără fluturaș.
+- **Sursă:** `__manifest__.py`, `readme/HISTORY.md`, `FISA_CONSULTANT.md` din `19.0` (PR terrabit-solutions/l10n_ro_ent#407; verificat cu Pacioli înainte de merge).
+- **Corecții față de readme:** referințele la SAGA au fost scoase din paginile modulelor `l10n_ro_hr_payroll_enhancement`, `l10n_ro_hr_payroll_account_enhancement`, `l10n_ro_anaf_d112_payroll`, `l10n_ro_anaf_d112` (cerință: documentația modulului nu face referire la SAGA). **Dependențe/Conexiuni:** neschimbate.
+- **Fișiere actualizate:** paginile și fișele de mai sus, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-03] Redenumire `l10n_ro_payroll_ro` → `l10n_ro_hr_payroll_enhancement` 19.0.2.0.0 și modul nou `l10n_ro_hr_payroll_account_enhancement` 19.0.1.0.0
 
 - **Acțiune:** Redenumire și split. Directorul `l10n_ro_payroll_ro/` (pagină, fișă, `screenshots/`) a devenit [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md); partea contabilă (conturile implicite pe reguli, S1) are pagină proprie: [l10n_ro_hr_payroll_account_enhancement](l10n_ro_hr_payroll_account_enhancement/index.md), instalat automat. Modulul de bază nu mai depinde de `l10n_ro_hr_payroll_account`.

@@ -18,7 +18,7 @@ Modulul completează salarizarea românească (`l10n_ro_hr_payroll_enhancement`)
 - **Completează doar golurile:** regulile care au deja conturi pe companie nu se suprascriu; se aplică la instalare și la încărcarea planului RO. Conturile lipsă din plan sunt sărite, cu avertisment în jurnal.
 - **Căutarea contului:** întâi cod exact (fără zerouri de completare), apoi prefix; alternativele se scriu cu «|» (de ex. `6461|646`).
 - **Linii cu partener:** liniile contului 421 au ca partener angajatul (`employee_move_line`), ca plata salariilor să se poată reconcilia pe angajat.
-- **Cifre de control** din statul SAGA 09/2026 (testul TC-15): 641 = 421 19.325; 421 Dr 7.333; 43151 4.781; 43161 2.003; 4441 549; 6422 / 5328 900; CAM 432. Monografia verificată de Pacioli (OMFP 1802/2014).
+- **Cifre de control** dintr-un stat de plată de referință, 09/2026 (testul TC-15): 641 = 421 19.325; 421 Dr 7.333; 43151 4.781; 43161 2.003; 4441 549; 6422 / 5328 900; CAM 432. Monografia verificată de Pacioli (OMFP 1802/2014).
 
 > **Limite cunoscute:** plata netului, avansurile, achiziția tichetelor (Dr 5328 = Cr 401), `PENSION` și `UNEMPDISABLED` nu sunt mapate contabil; CAM rotunjit la leu pe angajat poate diferi cu câțiva lei de CAM-ul pe total din D112.
 

@@ -227,7 +227,7 @@ Modulul completează conturile implicite pe regulile salariale (doar unde lipses
 - **Dr 6422 = Cr 5328** — contravaloarea tichetelor de masă acordate;
 - **Dr 421 = Cr 4271** — popriri și alte rețineri în favoarea terților.
 
-Cifre de control (SAGA, 09/2026, 3 salariați la brut 5.000 și unul la salariul minim cu tichete): 641 = 421 19.325; 421 = 43xx/444 7.333 (impozit
+Cifre de control (stat de referință 09/2026, 3 salariați la brut 5.000 și unul la salariul minim cu tichete): 641 = 421 19.325; 421 = 43xx/444 7.333 (impozit
 549, CAS 4.781, CASS 2.003); 6422 = 5328 900. CAM: 3 × 113 + 93 = 432 lei pe fluturași, față de 430 în D112 (care rotunjește pe total) — diferența de
 2 lei se acoperă din toleranța reconcilierii D112 sau printr-o corecție lunară.
 

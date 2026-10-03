@@ -9,11 +9,11 @@
 
 #### 1. Sumar
 
-Modulul automatizează întocmirea, validarea și exportul Declarației D112 ANAF — raportarea lunară a contribuțiilor sociale (CAS/CASS/CAM) și a impozitului pe venitul din salarii, cu evidență nominală per angajat. Permite atât importul automat al datelor din statele de plată Odoo Enterprise (prin modulul-punte `l10n_ro_anaf_d112_payroll`), cât și completarea manuală pentru firmele care importă salariile din sisteme externe (SAGA, Nexus), reducând semnificativ efortul de conformare fiscală lunară.
+Modulul automatizează întocmirea, validarea și exportul Declarației D112 ANAF — raportarea lunară a contribuțiilor sociale (CAS/CASS/CAM) și a impozitului pe venitul din salarii, cu evidență nominală per angajat. Permite atât importul automat al datelor din statele de plată Odoo Enterprise (prin modulul-punte `l10n_ro_anaf_d112_payroll`), cât și completarea manuală pentru firmele care importă salariile din sisteme externe (de exemplu Nexus, Charisma), reducând semnificativ efortul de conformare fiscală lunară.
 
 #### 2. Funcționalități Cheie
 
-- **Import automat din statele de plată** Odoo Enterprise (coduri `BASIC`, `GROSS`, `CAS`, `CASS`, `INCOMETAX`, `WORK100`) prin modulul-punte [l10n_ro_anaf_d112_payroll](../l10n_ro_anaf_d112_payroll/index.md); completare manuală pentru firme care importă salarii din sisteme externe (SAGA, Nexus) — acest modul nu depinde de `hr_payroll`.
+- **Import automat din statele de plată** Odoo Enterprise (coduri `BASIC`, `GROSS`, `CAS`, `CASS`, `INCOMETAX`, `WORK100`) prin modulul-punte [l10n_ro_anaf_d112_payroll](../l10n_ro_anaf_d112_payroll/index.md); completare manuală pentru firme care importă salarii din sisteme externe (de exemplu Nexus, Charisma) — acest modul nu depinde de `hr_payroll`.
 - **State machine** pentru declarație: ciornă → calculat → validat → exportat; butonul „Calculează" importă din statele de plată, „Validează" blochează modificările, iar „Descarcă XML" produce fișierul de depus la ANAF.
 - **Linii nominale per angajat** cu CNP, venit brut, CAS/CASS/impozit, zile lucrate, zile cu contract activ, concediu de odihnă și concediu medical.
 - **Împărțirea numelui salariaților** în nume/prenume delegă la funcția din `l10n_ro_anaf_base`, cu convenția „Nume Prenume” identică în toate declarațiile ANAF (înainte, D112 avea o funcție proprie cu convenția opusă).
@@ -31,7 +31,7 @@ Modulul automatizează întocmirea, validarea și exportul Declarației D112 ANA
 - **Integrare în tabloul de declarații** (`account.return`): tip de declarație lunar cu termen 25 a lunii următoare, pași de verificare (pregătire declarație, reconciliere, atașare XML semnat/recipisă SPV).
 - **Validări blocante** la validare: checksum CNP, CNP duplicat, dată angajare obligatorie/coerentă, zile lucrate raportate la numărul de zile LUCRĂTOARE din lună (nu cele calendaristice), ore normă 6/7/8, venit pozitiv; avertismente neblocante pentru CAS/CASS recalculate.
 - **Cod CAEN obligatoriu** pe companie (`angajator/@caen`), citit acum din `l10n_ro_anaf_base` (nu mai depinde tacit de `l10n_ro_config`); câmpul lipsă e prins de o gardă cu mesaj acționabil în locul unui fallback tăcut „0000".
-- **Scutirea de impozit art. 60** (pct. 1 handicap, pct. 3 cercetare-dezvoltare), declarată ca în SAGA (XML 09/2026 validat de DUKIntegrator): câmpul de linie *Scutire impozit (art. 60)* → `asigScu` 1/3; `E3_23`/`E3_24` sau `E3_27`/`E3_28` = baza impozabilă și impozitul care s-ar fi datorat (10%); `E3_15` = 0; la angajator obligația 602 cu `A_datorat` = reținut + scutit, `A_scutit` și `angajatorF1`; `E3_16` include tichetele; XSD 07/2026 admite tipul de asigurat 51.
+- **Scutirea de impozit art. 60** (pct. 1 handicap, pct. 3 cercetare-dezvoltare), declarată (XML 09/2026 validat de DUKIntegrator): câmpul de linie *Scutire impozit (art. 60)* → `asigScu` 1/3; `E3_23`/`E3_24` sau `E3_27`/`E3_28` = baza impozabilă și impozitul care s-ar fi datorat (10%); `E3_15` = 0; la angajator obligația 602 cu `A_datorat` = reținut + scutit, `A_scutit` și `angajatorF1`; `E3_16` include tichetele; XSD 07/2026 admite tipul de asigurat 51.
 - **Deduceri și în `asiguratE3`**: persoanele în întreținere și deducerile personale se declară și în `E3_11`, `E3_12`, `E3_121`, `E3_122`, `E3_1221`, `E3_1222`, `E3_13` (structura ANAF cere ca E1_x să fie sumele câmpurilor E3).
 - **Totaluri** CAS/CASS/impozit/CAM calculate automat din linii; baza CAM (`cam_baza`, `A_5`, `B1_5`, `B4_14`, `C4_baza`) = venit brut − suma neimpozabilă la salariul minim.
 
