@@ -206,6 +206,18 @@ partener angajatul. Verificați că nota e echilibrată și că soldul lui 421 p
 
 ![Nota contabilă a fluturașului validat](screenshots/11_nota_contabila.png)
 
+### Pasul 12 — Rețineri deductibile din baza de impozit (sindicat, pensie facultativă)
+
+1. *Salarizare → Ajustări salariale → Nou*: angajatul, tipul **Cotizație sindicală**, suma lunară (ex. 50) și durata nelimitată.
+2. Pentru pensia facultativă plătită direct de salariat alegeți **Pensie facultativă (doar baza impozabilă)** (ex. 100); dacă o reține
+   angajatorul, **Pensie facultativă (reținută)**.
+3. Generați fluturașul: apare **Deduceri din baza impozabilă** 150; deducerea personală nu se schimbă, impozitul scade (5.000 brut,
+   09/2026: bază 2.538, impozit 254), iar **Rețineri voluntare** −50 scad netul (rest de plată 2.946).
+4. Plafonul de 400 EUR/an se aplică automat pensiei facultative și asigurării de sănătate; verificați cursul EUR din companie.
+5. În D112 suma ajunge în câmpul «alte deduceri» (`E1_5` / `E3_13`).
+
+*Captura acestui pas se adaugă la următoarea actualizare a capturilor.*
+
 ### Note de monografie și raportare
 
 Modulul completează conturile implicite pe regulile salariale (doar unde lipsesc; configurările manuale rămân). Monografia generată:

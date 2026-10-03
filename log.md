@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-03] Actualizare `l10n_ro_payroll_ro` 19.0.1.3.0 și `l10n_ro_anaf_d112_payroll` 19.0.1.3.0 (rețineri deductibile, S2)
+
+- **Acțiune:** Re-ingestie. [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md) la 19.0.1.3.0: sindicat, pensie facultativă și asigurare de sănătate scad baza impozitului (reguli `DEDBAZA` / `RETINERI`, plafon 400 EUR/an pe cumul în euro și pe grup, doar la funcția de bază). [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) la 19.0.1.3.0: `DEDBAZA` → `E1_5` / `E3_13`.
+- **Sursă:** `__manifest__.py`, `readme/HISTORY.md`, `FISA_CONSULTANT.md` din `19.0` (PR terrabit-solutions/l10n_ro_ent#405, S2 din `ROADMAP_salarizare_ro.md`; verificat cu Pacioli înainte de merge).
+- **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** neschimbate. Pasul 12 din fișă (rețineri) nu are încă captură.
+- **Fișiere actualizate:** `l10n_ro_payroll_ro/` (index + fișă), `l10n_ro_anaf_d112_payroll/index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-03] Actualizare `l10n_ro_payroll_ro` 19.0.1.2.0 și `l10n_ro_anaf_d112_payroll` 19.0.1.2.1 (conturi implicite pe reguli, S1)
 
 - **Acțiune:** Re-ingestie. [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md) adus la 19.0.1.2.0: nota contabilă la validarea fluturașului prin conturi implicite pe regulile salariale (641 = 421; 421 = 43151 / 43161 / 4441; 6461 = 4361; 6422 = 5328; 421 = 4271), completate doar unde lipsesc; fișa consultant recopiată cu a 11-a captură (nota contabilă). [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) la 19.0.1.2.1: previzualizarea live a CAM fără suma neimpozabilă.
