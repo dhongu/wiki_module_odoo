@@ -1,7 +1,7 @@
 # Romania - Impozit pe salarii, deduceri personale și tichete de masă (localizat la `l10n_ro_hr_payroll_enhancement/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_hr_payroll_enhancement`
-- **Versiune:** `19.0.2.1.0`
+- **Versiune:** `19.0.2.2.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_payroll_enhancement
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_hr_payroll_enhancement`
 - **Ultima Ingestie:** `2026-10-03`
@@ -28,6 +28,7 @@ Modulul completează statul de plată românesc, peste structura nativă Odoo 19
 - **Rețineri deductibile din baza de impozit** (S2): tipuri de intrare `SINDICAT`, `PENSIE_FAC`, `PENSIE_FAC_RET`, `SANATATE_PRIV`, disponibile și în *Ajustări salariale*. Indicatori pe tip: deductibil din baza impozitului (art. 78 alin. 2 lit. a Cod fiscal), reținut din net (sindicat: da; pensie facultativă plătită direct și asigurare de sănătate: doar baza), plafon anual și grup de plafon. Regulile `DEDBAZA` (scade baza impozitului; deducerea personală rămâne din brut; doar la funcția de bază) și `RETINERI` (scade netul; 421 = 4271). Plafonul de 400 EUR/an se aplică pe cumul în euro, fiecare lună la cursul ei, pe grup (pensia plătită direct și cea reținută împart plafonul); fără curs EUR calculul se oprește cu eroare. Cifre de control 09/2026: brut 5.000, sindicat 50 + pensie 100 → bază 2.538, impozit 254, net 2.946. Verificat cu Pacioli.
 - **Avertizări pe fluturaș** (S3), în mecanismul nativ: CNP lipsă sau invalid, perioadă de întreținere încheiată luna trecută, copil înscris în învățământ fără CNP valid (deducerea pentru copil nu se acordă). Nu blochează calculul. Nu există avertizarea «salariu minim după 2 ani» (fără temei legal în 2026) și nici «contract fără COR» (fără câmp COR).
 - **Simulator brut ↔ net** (S4): *Salarizare → Raportare → Simulator brut / net (RO)*; brut → net și net → brut (cel mai mic brut întreg care atinge netul, cu o fereastră de 60 de lei pentru treptele deducerii), cu sau fără angajat ales, fără urme în bază (savepoint anulat), cu PDF. Rulează structura salarială a fluturașului, deci cifrele coincid cu ale statului de plată.
+- **Pregătire pentru concedii medicale** (19.0.2.2.0): categoria `CMFN` (indemnizația din FNUASS, în afara brutului dar în net și în venitul impozabil); rândurile CASS, impozit, net și deducerile personale țin cont de ea, iar impozitul se împarte între partea din FNUASS și restul (`_l10n_ro_income_tax_split`). Fără [l10n_ro_payroll_leave](../l10n_ro_payroll_leave/index.md), valorile sunt 0 și calculul rămâne neschimbat.
 - **Rotunjire**: CAS, CASS și CAM la leu; baza impozabilă la leu cu 0,50 în jos (HG 1/2016), apoi cota de 10%.
 - **Exemplu verificat** (brut 4.325, 1 persoană, 20 tichete × 45 lei): CAS 1.031, CASS 503, DPB 692, impozit 280, net 2.511, cost angajator 5.318.
 

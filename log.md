@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-03] Modul nou `l10n_ro_payroll_leave` 19.0.1.0.0 (concedii medicale, S5.1) și actualizări conexe
+
+- **Acțiune:** Ingestie. [l10n_ro_payroll_leave](l10n_ro_payroll_leave/index.md): certificat unic de concediu medical, nomenclatorul `D_9`, zilele angajatorului / FNUASS, prima zi neplătită, baza pe 6 luni, regulile `CM_FS` / `CM_FNUASS` / `CAS_CM` / `CASS_CM` / `TAX_CM`. Re-ingestie: [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md) 19.0.2.2.0 (categoria `CMFN`), [l10n_ro_hr_payroll_account_enhancement](l10n_ro_hr_payroll_account_enhancement/index.md) 19.0.1.1.0 (4382 = 423), [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) 19.0.1.4.1 (avertisment).
+- **Sursă:** `__manifest__.py`, `readme/*.md` din `19.0` (PR terrabit-solutions/l10n_ro_ent#411); OUG 158/2005 consolidată și structura D112; verificat cu Pacioli înainte de merge.
+- **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** noi între modulele de salarizare, vezi paginile. Modulul nu are încă fișă consultant.
+- **Fișiere actualizate:** paginile de mai sus, `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-03] Actualizare `l10n_ro_anaf_d112` 19.0.2.6.0 (`E3_8` cu venituri neimpozabile, `A_sal2`)
 
 - **Acțiune:** Re-ingestie. [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md) adus la 19.0.2.6.0: de la 07/2026 `E3_8` și `E1_1` includ veniturile neimpozabile (`E3_69`, `E3_62`, `E3_90`, câmpuri noi pe linia nominală); `A_sal2` = `E3_8` − `E3_69`, cu tichetele incluse.

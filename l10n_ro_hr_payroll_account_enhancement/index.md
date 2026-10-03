@@ -1,7 +1,7 @@
 # Romania - Contabilizare salarii, conturi implicite pe reguli (localizat la `l10n_ro_hr_payroll_account_enhancement/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_hr_payroll_account_enhancement`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_payroll_account_enhancement
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_hr_payroll_account_enhancement`
 - **Ultima Ingestie:** `2026-10-03`
@@ -17,6 +17,7 @@ Modulul completează salarizarea românească (`l10n_ro_hr_payroll_enhancement`)
 - **Conturi implicite pe reguli** (Debit = Credit): `GROSS` 641 = 421; `CAS` 421 = 43151; `CASS` 421 = 43161; `INCOMETAX` 421 = 4441; `CAM` 6461 = 4361 (646 dacă planul nu are 6461); `TICHETE` 6422 = 5328; popriri, cesiuni, pensie alimentară, `DEDUCTION` și `RETINERI` (sindicat, pensie facultativă reținută) 421 = 4271.
 - **Completează doar golurile:** regulile care au deja conturi pe companie nu se suprascriu; se aplică la instalare și la încărcarea planului RO. Conturile lipsă din plan sunt sărite, cu avertisment în jurnal.
 - **Căutarea contului:** întâi cod exact (fără zerouri de completare), apoi prefix; alternativele se scriu cu «|» (de ex. `6461|646`).
+- **Concedii medicale** (19.0.1.1.0, cu [l10n_ro_payroll_leave](../l10n_ro_payroll_leave/index.md)): `CM_FNUASS` Dr 4382 = Cr 423; `CAS_CM` / `CASS_CM` / `TAX_CM` Dr 423 = Cr 4315 / 4316 / 444; indemnizația angajatorului (`CM_FS`) rămâne în brut, 641 = 421. Planul RO are analitice pe 423 (4231), deci contul se caută pe familie.
 - **Linii cu partener:** liniile contului 421 au ca partener angajatul (`employee_move_line`), ca plata salariilor să se poată reconcilia pe angajat.
 - **Cifre de control** dintr-un stat de plată de referință, 09/2026 (testul TC-15): 641 = 421 19.325; 421 Dr 7.333; 43151 4.781; 43161 2.003; 4441 549; 6422 / 5328 900; CAM 432. Monografia verificată de Pacioli (OMFP 1802/2014).
 
