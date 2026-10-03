@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-03] Actualizare `l10n_ro_anaf_d112` 19.0.2.5.0, `l10n_ro_anaf_d112_payroll` 19.0.1.2.0 și `l10n_ro_payroll_ro` 19.0.1.1.5 (scutirea art. 60)
+
+- **Acțiune:** Re-ingestie, trei module. Scutirea de impozit din art. 60 e declarată în D112 ca în SAGA (referință: XML D112 09/2026 generat de SAGA și validat de DUKIntegrator): `asigScu`, `E3_23`/`E3_24`, `E3_27`/`E3_28`, obligația 602 și `angajatorF1`; `E3_16` include tichetele; XSD-ul 07/2026 admite `A_1` = 51. [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md), [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) și [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md) actualizate (limitele nu mai spun că scutirea nu se transferă); fișele recopiate.
+- **Sursă:** `__manifest__.py`, `readme/HISTORY.md`, `FISA_CONSULTANT.md` din `19.0` (PR terrabit-solutions/l10n_ro_ent#402).
+- **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** neschimbate. Interpretarea `E3_23` = bază impozabilă provine din SAGA; de confirmat cu contabilul.
+- **Fișiere actualizate:** `l10n_ro_anaf_d112/index.md`, `l10n_ro_anaf_d112_payroll/` și `l10n_ro_payroll_ro/` (index + fișă), `log.md`, `.index/chunks.json`.
+
+---
+
 ## [2026-10-03] Actualizare `l10n_ro_anaf_d112` la 19.0.2.4.2
 
 - **Acțiune:** Re-ingestie. [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md) adus la 19.0.2.4.2: `asiguratE3` conține și deducerile și persoanele în întreținere (`E3_11`, `E3_12`, `E3_121`, `E3_122`, `E3_1221`, `E3_1222`, `E3_13`).

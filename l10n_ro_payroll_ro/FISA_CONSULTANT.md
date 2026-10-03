@@ -180,8 +180,9 @@ colțul listei (*Tichete de masă*, *Sumă neimpozabilă*, *Baza CASS*, iar dedu
 Verificați pe rândul fiecărui angajat că valorile coincid cu fluturașul: la Ionescu Maria, *Tichete de masă* = 900,
 *CAS* = 1.031, *CASS* = 503, *Sumă neimpozabilă* = 200, *Ded. pers.* = 692 și *Bază impozabilă* = 2.799. Suma
 neimpozabilă se declară în XML ca tip asigurat 51 (câmpul A_13S), iar bazele CAS și CASS ale declarației țin cont de ea
-(CAS pe brut − suma neimpozabilă; CASS pe brut + tichete − suma neimpozabilă). Scutirea art. 60 nu se transferă: la
-Stan Vlad declarația arată baza impozabilă 2.688 și impozit 0.
+(CAS pe brut − suma neimpozabilă; CASS pe brut + tichete − suma neimpozabilă). Scutirea art. 60 se transferă: la
+Stan Vlad (scutit pentru handicap) declarația arată `asigScu` 1, baza impozabilă 2.688 în `E3_14` și `E3_23`, impozitul teoretic 269 în
+`E3_24` și impozitul reținut 0; obligația 602 are `A_scutit` și există `angajatorF1`.
 
 ![Linia D112 cu tichete, sumă neimpozabilă și deduceri](screenshots/09_d112_linii_tichete.png)
 
@@ -285,8 +286,6 @@ Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixin `Scre
 - Limite cunoscute:
   - conturile contabile nu sunt mapate pe reguli, deci validarea fluturașului nu generează încă nota contabilă
     (fluxul din această fișă se oprește la fluturașul calculat, în ciornă);
-  - puntea `l10n_ro_anaf_d112_payroll` nu transferă scutirea de impozit din art. 60: D112 arată baza impozabilă fără scutire și
-    impozitul 0 din fluturaș;
   - declarația `l10n_ro_anaf_d112` are propria formulă liniară pentru deducere; în ian.–iun. 2026 ea acordă 200 lei
     sumă neimpozabilă și la nivelul S2 (4.325), pe când acest modul acordă 300 lei doar la salariul de bază egal cu
     S1 (4.050) — de aliniat după confirmarea regulii;

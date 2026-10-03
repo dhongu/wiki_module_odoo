@@ -85,8 +85,9 @@ tichetele de masă apar în `E3_10`/`E3_60` și în `E3_8`/`E1_1` (brut + tichet
 | `hr_payroll` | Fluturașii și liniile de zile lucrate. |
 
 **Ce e automat:** importul liniilor, bazele CAS/CASS, tichetele, suma neimpozabilă, deducerile, zilele din fluturaș.
-**Ce rămâne manual / neacoperit:** scutirea de impozit din art. 60 (handicap, cercetare-dezvoltare) nu se poate declara
-în Odoo — pentru acești angajați XML-ul se corectează în afara Odoo; alte deduceri (cotizație sindicală, pensii facultative)
+**Scutirea art. 60** (handicap, cercetare-dezvoltare) se transferă din fluturaș: linia primește *Scutire impozit (art. 60)*, iar
+XML-ul are `asigScu` 1/3, `E3_23`/`E3_24` (sau `E3_27`/`E3_28`) = baza impozabilă și impozitul teoretic (10%), `E3_15` = 0, obligația
+602 cu `A_scutit` și `angajatorF1`, ca în SAGA. **Ce rămâne manual:** alte deduceri (cotizație sindicală, pensii facultative)
 se introduc pe fluturaș, nu direct în D112 (câmpul *Alte deduceri* din D112 nu se recalculează pe liniile importate);
 configurarea filei *Reconciliere contabilă* a declarației.
 
@@ -102,7 +103,7 @@ Angajați și apăsați din nou *Calculează*; liniile fluturașilor anulați se
 - [ ] Tichetele apar în `E3_10` și `E3_60`, iar `E3_8` ≥ `E3_60`.
 - [ ] Persoane în întreținere (`E1_3`) și deduceri (`E1_41`, `E1_421`, `E1_422`) corespund fluturașului.
 - [ ] Total CAM = 2,25% × Σ(brut − suma neimpozabilă) și coincide cu suma CAM de pe fluturași.
-- [ ] Angajații scutiți de impozit (art. 60) nu sunt acoperiți: verificați-i și corectați XML-ul în afara Odoo.
+- [ ] La angajații scutiți (art. 60): `asigScu` = 1/3, `E3_23`/`E3_24` (sau `E3_27`/`E3_28`) = baza și 10% din ea, `E3_15` = 0; în obligația 602 `A_scutit` = Σ impozit scutit și există `angajatorF1`.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -130,7 +131,6 @@ română, în RON, pe cazurile din iulie 2026:
 
 - Puntea transferă doar ce calculează fluturașul; nu verifică legislația. Valorile sumei neimpozabile se confirmă cu
   contabilul (vezi fișa `l10n_ro_payroll_ro`).
-- Scutirea art. 60 nu se transferă. Structura ANAF definește câmpurile (`E3_23/E3_24` pentru pct. 1, `E3_27/E3_28` pentru pct. 3),
-  dar corelația lor cu `E3_14`/`E3_15` nu este documentată, iar aceleași coduri se repetă în secțiunea angajator; se clarifică
-  cu validatorul oficial înainte de implementare.
+- Scutirea art. 60 se declară ca în SAGA (XML D112 09/2026 verificat de DUKIntegrator): `E3_23`/`E3_27` = baza impozabilă, `E3_24`/`E3_28` =
+  impozitul teoretic; validatorul nu verifică semnificația acestor câmpuri, deci alinierea la SAGA este referința.
 - Declarația `l10n_ro_anaf_d112` folosește pentru liniile cu calcul automat aceeași grilă pe tranșe ca fluturașul.
