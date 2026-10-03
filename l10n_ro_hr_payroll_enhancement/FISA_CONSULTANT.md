@@ -1,6 +1,6 @@
 # Fișă Modul: Salarizare RO — Impozit corect, deduceri personale și tichete de masă
 
-**Modul:** `l10n_ro_payroll_ro`
+**Modul:** `l10n_ro_hr_payroll_enhancement`
 **Utilizator principal:** Inspector resurse umane/salarizare, Contabil salarii
 **Prioritate:** 🔴 Ridicată (corectitudine fiscală a statului de plată)
 
@@ -63,7 +63,7 @@ Modulul instalează în demo 7 angajați cu fluturaș calculat pentru **iulie 20
 
 ## 5. Configurare inițială
 
-1. Instalați `l10n_ro_payroll_ro` (necesită Enterprise `l10n_ro_hr_payroll` și `l10n_ro_hr_payroll_account`).
+1. Instalați `l10n_ro_hr_payroll_enhancement` (necesită Enterprise `l10n_ro_hr_payroll` și `l10n_ro_hr_payroll_account`).
 2. Verificați parametrii versionați, descriși la Pasul 1 (**Stat de plată → Configurare → Salariu → Regulă Parametri**, vizibil pentru
    managerul de salarizare, parametrul *Romania Salary Parameters*): salariul minim, procentele grilei, suma
    neimpozabilă, valoarea nominală a tichetului. O valoare
@@ -298,7 +298,7 @@ Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixin `Scre
 11. `11_nota_contabila.png` — nota contabilă a fluturașului validat.
 
 ```bash
-./odoo/odoo-bin -c odoo.conf -d test19 -i l10n_ro_payroll_ro,l10n_ro_doc_screenshots \
+./odoo/odoo-bin -c odoo.conf -d test19 -i l10n_ro_hr_payroll_enhancement,l10n_ro_doc_screenshots \
   --test-tags=fise_screenshots --stop-after-init
 ```
 

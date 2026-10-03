@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-03] Redenumire `l10n_ro_payroll_ro` → `l10n_ro_hr_payroll_enhancement` 19.0.2.0.0 și modul nou `l10n_ro_hr_payroll_account_enhancement` 19.0.1.0.0
+
+- **Acțiune:** Redenumire și split. Directorul `l10n_ro_payroll_ro/` (pagină, fișă, `screenshots/`) a devenit [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md); partea contabilă (conturile implicite pe reguli, S1) are pagină proprie: [l10n_ro_hr_payroll_account_enhancement](l10n_ro_hr_payroll_account_enhancement/index.md), instalat automat. Modulul de bază nu mai depinde de `l10n_ro_hr_payroll_account`.
+- **Sursă:** `__manifest__.py`, `readme/HISTORY.md` din `19.0` (PR terrabit-solutions/l10n_ro_ent#406). Migrarea se face prin `pre_init_hook` (identificatorii externi trec pe numele nou).
+- **Corecții față de readme:** nu e cazul. **Conexiuni actualizate:** `l10n_ro_anaf_d112_payroll` (index + fișă), `l10n_ro_anaf_d112`, `l10n_ro_ent_config`, `index.md`.
+- **Fișiere actualizate:** `l10n_ro_hr_payroll_enhancement/`, `l10n_ro_hr_payroll_account_enhancement/index.md`, paginile de mai sus, `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-03] Actualizare `l10n_ro_payroll_ro` 19.0.1.3.0 și `l10n_ro_anaf_d112_payroll` 19.0.1.3.0 (rețineri deductibile, S2)
 
 - **Acțiune:** Re-ingestie. [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md) la 19.0.1.3.0: sindicat, pensie facultativă și asigurare de sănătate scad baza impozitului (reguli `DEDBAZA` / `RETINERI`, plafon 400 EUR/an pe cumul în euro și pe grup, doar la funcția de bază). [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) la 19.0.1.3.0: `DEDBAZA` → `E1_5` / `E3_13`.

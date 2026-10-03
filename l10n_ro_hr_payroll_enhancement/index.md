@@ -1,11 +1,13 @@
-# Romania - Impozit pe salarii, deduceri personale și tichete de masă (localizat la `l10n_ro_payroll_ro/index.md`)
+# Romania - Impozit pe salarii, deduceri personale și tichete de masă (localizat la `l10n_ro_hr_payroll_enhancement/index.md`)
 
-- **Nume Tehnic:** `l10n_ro_payroll_ro`
-- **Versiune:** `19.0.1.3.0`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_ro
-- **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_payroll_ro`
+- **Nume Tehnic:** `l10n_ro_hr_payroll_enhancement`
+- **Versiune:** `19.0.2.0.0`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_payroll_enhancement
+- **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_hr_payroll_enhancement`
 - **Ultima Ingestie:** `2026-10-03`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
+
+> **Redenumit:** fostul `l10n_ro_payroll_ro` (până la 19.0.1.3.0); migrarea se face automat la instalare (`pre_init_hook`).
 
 #### 1. Sumar
 
@@ -22,7 +24,7 @@ Modulul completează statul de plată românesc, peste structura nativă Odoo 19
 - **Tichete de masă**: număr pe fluturaș (implicit zilele lucrate fără concedii, modificabil) × valoare nominală cu dată de început; intră în CASS și în venitul pentru deducere, nu în CAS, CAM sau netul în bani; rând «Cost angajator» (brut + CAM + tichete).
 - **Scutire de impozit pe venit** (art. 60): handicap grav sau accentuat și cercetare-dezvoltare (aceasta din urmă doar pentru fluturașul separat al proiectului); se transferă în D112 (`asigScu` 1/3, `E3_23`/`E3_24` sau `E3_27`/`E3_28`, obligația 602, `angajatorF1`); contribuțiile se calculează normal.
 - **Fluturașul tipărit (PDF)**: raportul «România» al structurii arată linia «Tichete de masă» cu numărul de tichete și valoarea nominală; rata tehnică ±100% a contribuțiilor rotunjite nu se mai afișează (`report_payslip_ro_clean`).
-- **Nota contabilă la validarea fluturașului** (S1): conturile implicite pe regulile salariale, completate doar unde lipsesc, la instalare și la încărcarea planului RO — Dr 641 = Cr 421 (brut); Dr 421 = Cr 43151 / 43161 / 4441 (CAS / CASS / impozit); Dr 6461 = Cr 4361 (CAM; 646 dacă planul nu are 6461); Dr 6422 = Cr 5328 (tichete); Dr 421 = Cr 4271 (popriri, `DEDUCTION`). Linia contului 421 are ca partener angajatul. Cifre de control din statul SAGA 09/2026; monografia verificată de Pacioli (OMFP 1802/2014).
+- **Nota contabilă la validarea fluturașului** (S1) a trecut în modulul separat [l10n_ro_hr_payroll_account_enhancement](../l10n_ro_hr_payroll_account_enhancement/index.md) (instalat automat): conturile implicite pe regulile salariale, 641 = 421, 421 = 43151 / 43161 / 4441, 6461 = 4361, 6422 = 5328, 421 = 4271.
 - **Rețineri deductibile din baza de impozit** (S2): tipuri de intrare `SINDICAT`, `PENSIE_FAC`, `PENSIE_FAC_RET`, `SANATATE_PRIV`, disponibile și în *Ajustări salariale*. Indicatori pe tip: deductibil din baza impozitului (art. 78 alin. 2 lit. a Cod fiscal), reținut din net (sindicat: da; pensie facultativă plătită direct și asigurare de sănătate: doar baza, ca în SAGA), plafon anual și grup de plafon. Regulile `DEDBAZA` (scade baza impozitului; deducerea personală rămâne din brut; doar la funcția de bază) și `RETINERI` (scade netul; 421 = 4271). Plafonul de 400 EUR/an se aplică pe cumul în euro, fiecare lună la cursul ei, pe grup (pensia plătită direct și cea reținută împart plafonul); fără curs EUR calculul se oprește cu eroare. Cifre SAGA 09/2026: brut 5.000, sindicat 50 + pensie 100 → bază 2.538, impozit 254, net 2.946. Verificat cu Pacioli.
 - **Rotunjire**: CAS, CASS și CAM la leu; baza impozabilă la leu cu 0,50 în jos (HG 1/2016), apoi cota de 10%.
 - **Exemplu verificat** (brut 4.325, 1 persoană, 20 tichete × 45 lei): CAS 1.031, CASS 503, DPB 692, impozit 280, net 2.511, cost angajator 5.318.
@@ -32,7 +34,6 @@ Modulul completează statul de plată românesc, peste structura nativă Odoo 19
 #### 3. Dependențe
 
 - `l10n_ro_hr_payroll`
-- `l10n_ro_hr_payroll_account`
 
 #### 4. Componente Cheie
 
@@ -45,7 +46,7 @@ Modulul completează statul de plată românesc, peste structura nativă Odoo 19
 - `hr.payslip` (extins): numărul de tichete și metodele de calcul apelate de regulile salariale (`_l10n_ro_dpb_breakdown`, `_l10n_ro_non_taxable_amount`, `_l10n_ro_meal_ticket_value`, rotunjirile).
 - Parametri salariali (`hr.rule.parameter`, cod `l10n_ro_salary_params`): cote, salariul minim, procentele grilei, deducerile, valoarea tichetului, suma neimpozabilă — două valori, de la 01.01.2026 și 01.07.2026.
 
-- `account.chart.template` (extins): `_configure_payroll_account_ro` completează conturile pe reguli (`PAYROLL_RULES` în `models/account_chart_template.py`), doar unde lipsesc.
+- Maparea conturilor pe reguli (`account.chart.template`) e în [l10n_ro_hr_payroll_account_enhancement](../l10n_ro_hr_payroll_account_enhancement/index.md).
 
 **Vizualizări**
 
@@ -68,5 +69,4 @@ Modulul nu definește sarcini `ir.cron`, reguli `base.automation` sau `ir.action
 - [l10n_ro_anaf_d112](../l10n_ro_anaf_d112/index.md): declarația D112; are propria formulă liniară de deducere, nealiniată cu grila pe tranșe (pentru liniile cu calcul automat).
 - `l10n_ro_hr_payroll`: furnizează structura salarială de bază pentru Romania (regulile GROSS,
   CAS, CASS, INCOMETAX native) peste care acest modul aplică corecțiile fiscale.
-- `l10n_ro_hr_payroll_account`: integrarea contabilă a statului de plată RO, dependență directă
-  a modulului.
+- [l10n_ro_hr_payroll_account_enhancement](../l10n_ro_hr_payroll_account_enhancement/index.md): partea contabilă (conturi implicite pe reguli), separată din acest modul în 19.0.2.0.0; se instalează automat cu `l10n_ro_hr_payroll_account`.

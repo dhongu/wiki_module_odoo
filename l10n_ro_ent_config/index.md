@@ -164,7 +164,7 @@ setări, oricare dintre modulele suitei l10n_ro_ent, grupate pe categorii:
 
 - [l10n_ro_expense_allowance](../l10n_ro_expense_allowance/index.md)
 - [l10n_ro_payroll_import](../l10n_ro_payroll_import/index.md)
-- [l10n_ro_payroll_ro](../l10n_ro_payroll_ro/index.md)
+- [l10n_ro_hr_payroll_enhancement](../l10n_ro_hr_payroll_enhancement/index.md)
 - [l10n_ro_reges](../l10n_ro_reges/index.md)
 
 **Fiscalitate Specială & Mediu**

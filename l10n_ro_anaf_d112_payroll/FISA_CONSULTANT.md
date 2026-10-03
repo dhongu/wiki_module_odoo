@@ -18,7 +18,7 @@ fluturaș.
 Declarația 112 (structura ANAF 2026): `asiguratA` (tipul de asigurat 51 și `A_13S` pentru suma neimpozabilă la
 salariul minim), `asiguratE1`/`asiguratE3` (venituri, deduceri art. 77, baza impozabilă) și `E3_10` din `E3_60`
 (contravaloarea tichetelor de masă acordate; structura cere `E3_8 ≥ E3_60 ≥ E3_10`). Calculele de pe fluturaș sunt cele
-din `l10n_ro_payroll_ro` (Cod fiscal art. 77, 78). Suma neimpozabilă la salariul minim este reglementată de OUG 89/2025
+din `l10n_ro_hr_payroll_enhancement` (Cod fiscal art. 77, 78). Suma neimpozabilă la salariul minim este reglementată de OUG 89/2025
 (nomenclatorul ANAF o declară cu tipul de asigurat 51) și de Ordinul comun 605/95/928/2.314/2026; baza CAM exclude suma
 neimpozabilă, la fel ca bazele CAS, CASS și a impozitului.
 
@@ -29,15 +29,15 @@ Inspector salarizare (validează fluturașii), Contabil salarii (calculează și
 ## 4. Conturi și date implicate
 
 Puntea nu generează note contabile. Date minime: fluturași validați pe structura **România: Plată obișnuită**
-(`l10n_ro_payroll_ro`) și compania cu datele declarantului completate în D112.
+(`l10n_ro_hr_payroll_enhancement`) și compania cu datele declarantului completate în D112.
 
 ## 5. Configurare inițială
 
-1. Instalați `l10n_ro_anaf_d112`, `l10n_ro_payroll_ro` și puntea (se instalează automat când D112 și salarizarea
+1. Instalați `l10n_ro_anaf_d112`, `l10n_ro_hr_payroll_enhancement` și puntea (se instalează automat când D112 și salarizarea
    coexistă).
 2. Completați pe fiecare angajat **CNP-ul** (câmpul `l10n_ro_cnp`, altfel `ssnid`) și data de angajare din contract; fără ele
    validarea declarației și generarea XML se blochează.
-3. Configurați parametrii în **Stat de plată → Configurare → Salariu → Regulă Parametri** (vezi fișa `l10n_ro_payroll_ro`).
+3. Configurați parametrii în **Stat de plată → Configurare → Salariu → Regulă Parametri** (vezi fișa `l10n_ro_hr_payroll_enhancement`).
 
 ## 6. Flux de utilizare
 
@@ -81,7 +81,7 @@ tichetele de masă apar în `E3_10`/`E3_60` și în `E3_8`/`E1_1` (brut + tichet
 | Modul | Rol |
 |---|---|
 | `l10n_ro_anaf_d112` | Declarația de bază; punctele de extensie pentru evidența nominală. |
-| `l10n_ro_payroll_ro` | Sursa regulilor `TICHETE`, `NEIMPOZ`, `DPB`, `DPBTIN`, `DPBCOP` (nu e dependență). |
+| `l10n_ro_hr_payroll_enhancement` | Sursa regulilor `TICHETE`, `NEIMPOZ`, `DPB`, `DPBTIN`, `DPBCOP` (nu e dependență). |
 | `hr_payroll` | Fluturașii și liniile de zile lucrate. |
 
 **Ce e automat:** importul liniilor, bazele CAS/CASS, tichetele, suma neimpozabilă, deducerile, zilele din fluturaș.
@@ -110,7 +110,7 @@ Angajați și apăsați din nou *Calculează*; liniile fluturașilor anulați se
 | Mesaj | Cauză | Remediere |
 |---|---|---|
 | Nicio linie după Calculează | Fluturașii nu sunt în stare Validat/Plătit sau sunt în altă lună | Validați fluturașii și verificați perioada |
-| Tichete, sumă neimpozabilă sau deduceri 0 | Structura salarială nu are regulile `l10n_ro_payroll_ro` | Folosiți structura România: Plată obișnuită |
+| Tichete, sumă neimpozabilă sau deduceri 0 | Structura salarială nu are regulile `l10n_ro_hr_payroll_enhancement` | Folosiți structura România: Plată obișnuită |
 | Eroare la validare: zile lucrate în afara intervalului 1..NZL | Zilele din fluturaș depășesc zilele lucrătoare ale lunii | Corectați zilele pe fluturaș, ștergeți linia și recalculați |
 | Employee … has no CNP filled in / CNP invalid / fără dată de angajare | Lipsesc datele angajatului | Completați CNP-ul și data de angajare pe angajat/contract |
 
@@ -123,14 +123,14 @@ română, în RON, pe cazurile din iulie 2026:
 2. `02_d112_calculat.png` — declarația D112 calculată, cu coloanele din salarizare.
 
 ```bash
-./odoo/odoo-bin -c odoo.conf -d test19 -i l10n_ro_payroll_ro,l10n_ro_anaf_d112_payroll,l10n_ro_doc_screenshots \
+./odoo/odoo-bin -c odoo.conf -d test19 -i l10n_ro_hr_payroll_enhancement,l10n_ro_anaf_d112_payroll,l10n_ro_doc_screenshots \
   --test-tags=fise_screenshots --stop-after-init
 ```
 
 ## 11. Observații pentru manual
 
 - Puntea transferă doar ce calculează fluturașul; nu verifică legislația. Valorile sumei neimpozabile se confirmă cu
-  contabilul (vezi fișa `l10n_ro_payroll_ro`).
+  contabilul (vezi fișa `l10n_ro_hr_payroll_enhancement`).
 - Scutirea art. 60 se declară ca în SAGA (XML D112 09/2026 verificat de DUKIntegrator): `E3_23`/`E3_27` = baza impozabilă, `E3_24`/`E3_28` =
   impozitul teoretic; validatorul nu verifică semnificația acestor câmpuri, deci alinierea la SAGA este referința.
 - Declarația `l10n_ro_anaf_d112` folosește pentru liniile cu calcul automat aceeași grilă pe tranșe ca fluturașul.
