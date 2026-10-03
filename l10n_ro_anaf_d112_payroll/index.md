@@ -1,7 +1,7 @@
 # Romania - D112 ANAF: punte salarizare Odoo (localizat la `l10n_ro_anaf_d112_payroll/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d112_payroll`
-- **Versiune:** `19.0.1.2.0`
+- **Versiune:** `19.0.1.2.1`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112_payroll
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112_payroll`
 - **Ultima Ingestie:** 2026-10-02
@@ -21,7 +21,7 @@ Modulul face legătura directă între declarația D112 și salarizarea Odoo Ent
 - **CNP și dată angajare preluate automat**: CNP din angajat (`l10n_ro_cnp`, cu revenire pe `ssnid`), data angajării din contractul/versiunea angajatului.
 - **Idempotență la reimport**: un stat de plată deja importat nu se adaugă a doua oară; statele adăugate ulterior în lună intră la următoarea apăsare a butonului **Calculează**.
 - **Linii cu valori autoritare**: liniile importate au „Calcul automat deduceri" debifat — valorile din statul de plată nu se recalculează din parametrii fiscali ai D112.
-- **Proiecție live în previzualizarea „Obligații D112"**: cât timp luna are state de plată validate, sumele afișate vin din salarizare (impozit, CAS, CASS, CAM 2,25% din brut); fără state de plată în perioadă, raportul revine la totalurile declarației salvate.
+- **Proiecție live în previzualizarea „Obligații D112"**: cât timp luna are state de plată validate, sumele afișate vin din salarizare (impozit, CAS, CASS, CAM 2,25% din brut − suma neimpozabilă); fără state de plată în perioadă, raportul revine la totalurile declarației salvate.
 - **Trasabilitate**: fiecare linie nominală păstrează statul de plată sursă (câmp ascuns implicit în listă, vizibil la nevoie pentru verificarea provenienței).
 
 #### 3. Dependențe

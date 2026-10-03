@@ -22,7 +22,7 @@ statul de plată cu regulile fiscale care lipsesc în nativ:
 - bifa **Funcție de bază** și **scutirea de impozit** pentru handicap și cercetare-dezvoltare (art. 60);
 - **tichete de masă** incluse corect în CASS și în venitul pentru deducere.
 
-Rezultatul: net și impozit corecte pe fluturaș. Transferul acestor valori în D112 nu este încă complet (vezi secțiunea 11).
+Rezultatul: net și impozit corecte pe fluturaș, transferate în D112 prin puntea `l10n_ro_anaf_d112_payroll` (tichete, suma neimpozabilă, deducerile și scutirea art. 60; Pasul 9).
 
 ## 2. Bază legală și context
 
@@ -45,7 +45,7 @@ Facilitățile sectoriale IT/construcții/agro au fost abrogate de la 01.01.2025
 ## 4. Conturi și date implicate
 
 Conturile din structura nativă RO: 641 (cheltuieli salarii), 421 (personal – salarii datorate), 4315 (CAS),
-4316 (CASS), 444 (impozit pe venituri din salarii), 436 (CAM), 6461 (cheltuieli cu CAM), 642 (tichete de masă), 5328
+4316 (CASS), 444 (impozit pe venituri din salarii), 436 (CAM), 6461 (cheltuieli cu CAM), 6422 (tichete de masă), 5328
 (tichete de masă în casierie), 5121 (plata netului). Date minime: companie RO în RON, un angajat cu
 contract pe structura **„România: Plată obișnuită"**, salariu brut și, după caz, persoane în întreținere.
 
@@ -198,19 +198,30 @@ Verificați pe document: *Suma neimpozabilă*, *Tichete de masă*, *CAS*, *CASS*
 
 ![Fluturașul tipărit al angajatului](screenshots/10_fluturas_pdf.png)
 
+### Pasul 11 — Validarea fluturașului și nota contabilă
+
+La **Validează**, fluturașul generează nota contabilă în jurnalul **Salarii**, datată în ultima zi a lunii (**Contabilitate → Note
+contabile**, fila *Elemente jurnal*). Conturile sunt cele implicite din planul RO (vezi mai jos); la fiecare linie, contul 421 are ca
+partener angajatul. Verificați că nota e echilibrată și că soldul lui 421 pe angajat este salariul net.
+
+![Nota contabilă a fluturașului validat](screenshots/11_nota_contabila.png)
+
 ### Note de monografie și raportare
 
-⚠️ Modulul **nu mapează conturile** pe regulile salariale, iar structura nativă `l10n_ro_hr_payroll_account` nu o
-face nici ea (nu are conturi preconfigurate). Înainte de a valida fluxul, mapați manual conturile pe reguli
-(**Stat de plată → Configurare → Salariu → Reguli → fila Contabilitate**). Monografia corectă este:
+Modulul completează conturile implicite pe regulile salariale (doar unde lipsesc; configurările manuale rămân). Monografia generată:
 - **Dr 641 = Cr 421** — salariul brut;
-- **Dr 421 = Cr 4315 (CAS) + 4316 (CASS) + 444 (impozit)** — rețineri;
-- **Dr 6461 = Cr 436** — CAM angajator (2,25%);
-- **Dr 5328 = Cr 401 sau 5121** — achiziția tichetelor de masă;
-- **Dr 642 = Cr 5328** — contravaloarea tichetelor de masă acordate;
-- **Dr 421 = Cr 5121** — plata netului.
+- **Dr 421 = Cr 43151 (CAS) + 43161 (CASS) + 4441 (impozit)** — rețineri;
+- **Dr 6461 = Cr 4361** — CAM angajator (2,25%); Dr 646 dacă planul nu are 6461;
+- **Dr 6422 = Cr 5328** — contravaloarea tichetelor de masă acordate;
+- **Dr 421 = Cr 4271** — popriri și alte rețineri în favoarea terților.
 
-Regulile noi (*Tichete de masă*, *Sumă neimpozabilă*, *Cost angajator*) nu au cont și nu generează înregistrări.
+Cifre de control (SAGA, 09/2026, 3 salariați la brut 5.000 și unul la salariul minim cu tichete): 641 = 421 19.325; 421 = 43xx/444 7.333 (impozit
+549, CAS 4.781, CASS 2.003); 6422 = 5328 900. CAM: 3 × 113 + 93 = 432 lei pe fluturași, față de 430 în D112 (care rotunjește pe total) — diferența de
+2 lei se acoperă din toleranța reconcilierii D112 sau printr-o corecție lunară.
+
+Regulile *Sumă neimpozabilă*, *Cost angajator* și deducerile nu generează înregistrări. **Nemapate:** plata netului (reconcilierea se face pe
+contul 421, cu partenerul angajat), plata obligațiilor către buget, avansul chenzinal, achiziția tichetelor (Dr 5328 = Cr 401), `PENSION` și
+`UNEMPDISABLED`.
 
 ## 7. Legături cu alte module / declarații
 
@@ -272,6 +283,7 @@ Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixin `Scre
 8. `08_linii_scutit.png` — angajat scutit de impozit.
 9. `09_d112_linii_tichete.png` — linia D112 cu tichete, sumă neimpozabilă și deduceri (necesită puntea D112).
 10. `10_fluturas_pdf.png` — fluturașul tipărit (PDF) al angajatului cu tichete.
+11. `11_nota_contabila.png` — nota contabilă a fluturașului validat.
 
 ```bash
 ./odoo/odoo-bin -c odoo.conf -d test19 -i l10n_ro_payroll_ro,l10n_ro_doc_screenshots \
@@ -284,8 +296,7 @@ Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixin `Scre
 - Explicați grila ca pe o tabelă cu trepte de 50 lei și arătați cum se citește la venitul care include tichetele.
 - Salariul minim și suma neimpozabilă sunt parametri cu istoric: fluturașii lunilor trecute rămân corecți la recalculare.
 - Limite cunoscute:
-  - conturile contabile nu sunt mapate pe reguli, deci validarea fluturașului nu generează încă nota contabilă
-    (fluxul din această fișă se oprește la fluturașul calculat, în ciornă);
+  - plata netului, avansurile, achiziția tichetelor și contribuțiile în condiții speciale nu sunt încă mapate contabil (vezi monografia);
   - declarația `l10n_ro_anaf_d112` are propria formulă liniară pentru deducere; în ian.–iun. 2026 ea acordă 200 lei
     sumă neimpozabilă și la nivelul S2 (4.325), pe când acest modul acordă 300 lei doar la salariul de bază egal cu
     S1 (4.050) — de aliniat după confirmarea regulii;
