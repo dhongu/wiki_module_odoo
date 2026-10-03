@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-03] Actualizare `l10n_ro_anaf_d112` la 19.0.2.4.2
+
+- **Acțiune:** Re-ingestie. [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md) adus la 19.0.2.4.2: `asiguratE3` conține și deducerile și persoanele în întreținere (`E3_11`, `E3_12`, `E3_121`, `E3_122`, `E3_1221`, `E3_1222`, `E3_13`).
+- **Sursă:** `__manifest__.py`, `readme/HISTORY.md` din `19.0` (PR terrabit-solutions/l10n_ro_ent#401).
+- **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** neschimbate.
+- **Fișiere actualizate:** `l10n_ro_anaf_d112/index.md`, `log.md`, `.index/chunks.json`.
+
+---
+
 ## [2026-10-02] Actualizare `l10n_ro_payroll_ro` 19.0.1.1.4, `l10n_ro_anaf_d112_payroll` 19.0.1.1.1 și `l10n_ro_anaf_d112` 19.0.2.4.1 (tichet 9660)
 
 - **Acțiune:** Re-ingestie, trei module. [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md) la 19.0.1.1.4: fluturașul tipărit (PDF) cu linia tichetelor pe număr × valoare și fără rata ±100%; fișa recopiată cu 10 capturi. [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) la 19.0.1.1.1: fișă consultant nouă (2 capturi, extras XML), documentație (DESCRIPTION, USAGE, CONFIGURE), baza CAM fără suma neimpozabilă. [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md) la 19.0.2.4.1: grila DPB pe tranșe în calculul automat, tichete în `E3_10`/`E3_60`, baza CAM = brut − suma neimpozabilă.
