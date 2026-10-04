@@ -4,6 +4,11 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-04] Ingestie `l10n_ro_payroll_bank_export` 19.0.1.0.0 (S7, fișiere de plată salarii pentru bănci)
+
+- **Acțiune:** Pagină nouă [l10n_ro_payroll_bank_export](l10n_ro_payroll_bank_export/index.md): fișier de plată în formatul băncii (BT GO/CSV, BRD, ING OneCSV/MT, CEC, Raiffeisen DBF, UniCredit, OTP, Alpha), generat din lotul de fluturași prin fereastra Raport de plată; filtru pe banca din IBAN, rezumat, explicație editabilă; fișa consultant (5 pași) și capturile copiate.
+- **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** depinde de `l10n_ro_hr_payroll`; extinde `hr.payroll.payment.report.wizard`. De verificat: fișierele în aplicațiile băncilor; BCR, First Bank, Banca Românească și MT100 lipsesc; sume cu bani la formatele fără zecimale; diacriticele.
+
 ## [2026-10-04] Ingestie `l10n_ro_payroll_certificates` 19.0.1.0.0 și actualizare `l10n_ro_hr_payroll_enhancement` 19.0.2.6.3 (S9, adeverințe salariale)
 
 - **Acțiune:** Pagină nouă [l10n_ro_payroll_certificates](l10n_ro_payroll_certificates/index.md): adeverințe de venit, de bază pentru concediul medical (12 luni, cu concediile medicale și codul de indemnizație) și de asigurat (CASS), cu număr `ADV/an/nr`, text editabil în ciornă, două semnături și PDF arhivat pe angajat; fișa consultant (7 pași) și capturile copiate. [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md) la 19.0.2.6.3: baza concediului medical fără suma neimpozabilă (art. 10 alin. 1).
