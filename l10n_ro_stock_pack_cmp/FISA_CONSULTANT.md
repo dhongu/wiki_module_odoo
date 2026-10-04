@@ -15,7 +15,7 @@ Cost (AVCO)* și valorizarea perpetuă (*real time*). Consultantul nu mai
 alege modul cu modul la implementare, iar clientul primește o configurație
 coerentă și verificată: recepție cu pivot 408, dată contabilă cu gardă
 cronologică, protecții de integritate, fișă de magazie, gestiuni contabile,
-note de inventariere și recalculul lunar CMP periodic (stil WinMentor/SAGA).
+note de inventariere și recalculul lunar CMP periodic.
 
 ## 2. Bază legală și context
 

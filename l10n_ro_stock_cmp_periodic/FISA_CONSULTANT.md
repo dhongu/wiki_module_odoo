@@ -13,7 +13,7 @@
 
 Odoo 19 evaluează ieșirile din stoc la **CMP perpetuu**: costul mediu (`standard_price`) se
 actualizează după fiecare intrare, iar fiecare ieșire este înregistrată imediat la CMP-ul din
-momentul validării. Firmele migrate de la WinMentor sau SAGA folosesc însă **CMP periodic
+momentul validării. Multe firme folosesc însă **CMP periodic
 (lunar)** — toate ieșirile dintr-o lună se evaluează la un cost mediu unic, calculat la finele
 lunii pe baza stocului inițial și a tuturor intrărilor din lună.
 
@@ -219,7 +219,7 @@ Regenerare:
 ## 11. Observații pentru manual
 
 În manualul final, păstrați explicația orientată pe activitatea utilizatorului: diferența dintre CMP
-perpetuu (implicit Odoo) și CMP periodic (lunar, WinMentor/SAGA), când se rulează corecția (la
+perpetuu (implicit Odoo) și CMP periodic (lunar), când se rulează corecția (la
 închiderea lunii, înainte de blocarea perioadei), ce date trebuie pregătite (categorii AVCO bifate,
 jurnal de corecție) și cum se verifică rezultatul (nota echilibrată + registrul de audit). Subliniați
 că modulul nu modifică notele deja postate, ci adaugă o corecție transparentă și reversibilă.

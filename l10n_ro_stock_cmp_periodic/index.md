@@ -9,7 +9,7 @@
 
 ## 1. Sumar
 
-Acest modul recalculează lunar Costul Mediu Ponderat (CMP) conform OMFP 1802/2014, pentru firmele care folosesc CMP periodic (lunar) în loc de CMP perpetuu folosit nativ de Odoo 19. La finele lunii, modulul calculează CMP-ul lunar din toate intrările, determină diferența față de valoarea perpetuă deja postată și generează o singură notă contabilă de corecție, cu audit trail complet. Este util în special firmelor care migrează de la WinMentor sau SAGA.
+Acest modul recalculează lunar Costul Mediu Ponderat (CMP) conform OMFP 1802/2014, pentru firmele care folosesc CMP periodic (lunar) în loc de CMP perpetuu folosit nativ de Odoo 19. La finele lunii, modulul calculează CMP-ul lunar din toate intrările, determină diferența față de valoarea perpetuă deja postată și generează o singură notă contabilă de corecție, cu audit trail complet. Este util în special firmelor care evaluează ieșirile lunar, la un cost mediu unic.
 
 ## 2. Funcționalități Cheie
 

@@ -4,6 +4,12 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-04] Formulare neutră: fără comparații cu alte programe la `l10n_ro_stock_cmp_periodic` și `l10n_ro_stock_pack_cmp`
+
+- **Acțiune:** Curățenie. [l10n_ro_stock_cmp_periodic](l10n_ro_stock_cmp_periodic/index.md) (pagina și fișa) și [l10n_ro_stock_pack_cmp](l10n_ro_stock_pack_cmp/FISA_CONSULTANT.md): scoase trimiterile „WinMentor / SAGA” la CMP periodic; conținutul rămâne același.
+- **Sursă:** regula de documentație (fără comparații cu alte programe în documentația modulelor); readme-urile modulelor din `l10n_ro_ent` nu le mai conțineau.
+- **Fișiere actualizate:** paginile de mai sus, `log.md`.
+
 ## [2026-10-04] Actualizare `l10n_ro_hr_payroll_enhancement` 19.0.2.6.2 și `l10n_ro_anaf_d112` 19.0.2.8.1 (ACL wizard-uri, fișa consultant cu 23 de pași)
 
 - **Acțiune:** Re-ingestie. [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md): ACL pentru simulator și decontarea FNUASS (bug: funcționau doar ca superutilizator), decontare XLSX peisaj cu antete, etichete noi pe câmpurile calculate din certificat, fișa consultant extinsă la 23 de pași și 23 de capturi (copiate în wiki). [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md): `_rec_name` pe linia de angajat.
