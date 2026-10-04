@@ -173,6 +173,61 @@ colțul stânga-sus exportă exact ce se vede pe ecran.
 
 ![Registrul Imobilizărilor — grupare pe cont, subtotaluri, total general, filtrul „As of Date"](screenshots/04_registrul_imobilizarilor.png)
 
+**Situația la o dată trecută (din 19.0.1.10.0):** toate coloanele se reconstituie la data raportului,
+nu doar amortizarea: valoarea de intrare fără reevaluările de după dată, modernizările confirmate până
+atunci (cu amortizarea lor), gestiunea din transferuri, amortizarea lunară din planul real (nota lunii
+raportului) și lunile rămase din plan. Coloana **Historical Cost** arată costul istoric de achiziție
+(pragul bazei fiscale), neschimbat de reevaluări. Registrul la 31.12, tipărit în martie, arată astfel
+situația de la 31.12.
+
+**Pe gestiune:** din selectorul de variante al raportului alegeți **Fixed Assets Register by Location**:
+activele sunt grupate după gestiunea de la data raportului (o mutare din februarie nu schimbă
+registrul la 31.12 al anului anterior); activele fără gestiune apar la „Without location”.
+
+**Liste de inventariere (din 19.0.1.11.0):** Contabilitate → Active → **Fixed Asset Inventory Lists**.
+Alegeți data inventarului, gestiunile (gol = toate), decizia de numire și comisia. Rezultă câte o listă de
+inventariere (14-3-12) pe gestiune, cu mijloacele fixe aflate în gestiune la data inventarului și valoarea
+de intrare, amortizarea cumulată și valoarea contabilă la acea dată (aceleași cifre ca registrul).
+Cantitatea faptică, diferențele, valoarea de inventar și deprecierea le completează comisia; pentru
+imobilizări se înscrie valoarea contabilă minus ajustări, comparată cu valoarea actuală (OMFP 2861/2009
+pct. 34 alin. (2), pct. 37). Bunurile terților, imobilizările în curs și activele depreciate se trec pe
+liste distincte (pct. 13, 14, 19, 20), azi întocmite separat. Export PDF și XLSX.
+
+### Pasul 5b — Operarea de zi cu zi: grila, închiderea lunii, operațiile în lot (din 19.0.1.13.0)
+
+**Grila mijloacelor fixe** (Contabilitate → Active → **Fixed Assets Grid**): activele în ciornă se
+completează direct în listă, rând cu rând: denumire, categoria SAF-T (propune durata și codul de clasă),
+contul 21x (propune 281x), valoarea, data achiziției și data PIF, gestiunea. Jurnalul de operațiuni
+diverse și contul 6811 sunt propuse, amortizarea e lunară, iar numărul de inventar se generează la
+salvare dacă lipsește. Se selectează rândurile și se confirmă din **Acțiuni → Confirm**. Activele în
+funcțiune sunt needitabile în grilă (gestiunea se schimbă prin transfer, valoarea prin „Modifică”) și arată
+situația de azi: amortizarea cumulată, valoarea netă, amortizarea lunii și lunile rămase. Filtre: în
+ciornă, în funcțiune, în conservare, amortizate integral, fără număr de inventar / fără PIF / fără
+categorie, ieșite în anul curent; grupare pe cont, gestiune, categorie.
+
+**Închiderea lunii** (Contabilitate → Active → **Fixed Assets Month Closing**), după încheierea lunii:
+1. **Check** — verificări: active achiziționate până la sfârșitul lunii, dar neconfirmate; active fără număr
+   de inventar sau fără categorie; transferuri și reevaluări în ciornă; active în conservare (ajustarea
+   `6813 = 291x` se evaluează și se înregistrează manual, OMFP 1802/2014 pct. 238 alin. (4)); facturi de
+   furnizor pe conturi de imobilizări fără mijloc fix. Fiecare verificare deschide înregistrările găsite.
+2. **Reconcilierea** registrului la sfârșitul lunii cu balanța: valoarea de inventar pe contul 21x și
+   amortizarea cumulată pe contul 281x, cu diferența pe cont. Bunurile ținute în afara modulului (de
+   exemplu terenurile) dau diferențe legitime.
+3. **Post Depreciation and Close** — postează notele de amortizare din ciornă până la sfârșitul lunii
+   (aceleași note pe care le-ar posta automat Odoo) și închide luna. O lună neîncheiată nu se poate închide.
+4. **Lock Period** (opțional, doar managerul contabil) — data de blocare globală la sfârșitul lunii.
+Raportul PDF de închidere cuprinde verificările, amortizarea lunii și reconcilierea; închiderile rămân în
+listă, cu istoricul în chatter.
+
+**Operații în lot**, din lista de active (selecție → **Acțiuni**):
+- **Batch Transfer** — mută activele selectate în altă gestiune / la alt responsabil, la o dată: câte un
+  transfer confirmat (bon de mișcare) pe activ.
+- **Batch Revaluation** (managerul contabil) — reevaluarea de la sfârșitul exercițiului pe o listă: valoarea
+  netă la dată pe fiecare activ și o coloană pentru valoarea justă din raportul evaluatorului; confirmarea
+  creează câte o reevaluare pe activ, cu aceleași note și verificări ca reevaluarea individuală.
+- Tipărirea în lot (fișa mijlocului fix, PV-urile de recepție, registrul numerelor de inventar) se face din
+  **Tipărire** pe selecție.
+
 ### Pasul 6 — Preluarea registrului de imobilizări din programul anterior
 
 1. În programul anterior, exportați în Excel, cu toate coloanele, **Registrul imobilizărilor** la
@@ -217,10 +272,33 @@ colțul stânga-sus exportă exact ce se vede pe ecran.
   la sfârșitul lunii reevaluării. Pct. 105 cere reevaluarea simultană a întregii categorii de
   imobilizări din care face parte activul. Baza fiscală rămâne costul plus diferențele din
   reevaluare (art. 7 pct. 44 lit. c) Cod fiscal), cu costul ca minim: eliminarea amortizării e o
-  operație contabilă, pe care Codul fiscal nu o cunoaște. Un activ cu modernizări înregistrate
-  separat (active copil) nu se poate reevalua încă. Exemplu: mobilier de 7.500 lei pe 48 de luni,
+  operație contabilă, pe care Codul fiscal nu o cunoaște. Exemplu: mobilier de 7.500 lei pe 48 de luni,
   amortizat iulie–septembrie (468,75), reevaluat la 8.000: `Dr 2814 = Cr 214` 468,75 și
   `Dr 214 = Cr 105` 968,75; din octombrie, 8.000 / 45 = 177,78 lei/lună.
+- **Reevaluarea unui activ cu modernizări (din 19.0.1.12.0):** activul se reevaluează împreună cu
+  modernizările lui (activele copil), la valoarea justă a întregului. Pe fiecare modernizare se elimină
+  amortizarea (`Dr 281x = Cr 21x`), iar valoarea ei rămasă trece pe activul principal (pe același cont,
+  fără efect în balanță; pe conturi diferite, `Dr 21x principal = Cr 21x modernizare`); modernizarea se
+  închide, iar diferența față de valoarea justă se înregistrează o singură dată, pe activul principal.
+  Planul continuă pe activul principal, pe durata lui rămasă. Registrul la o dată dinaintea reevaluării
+  arată modernizările separat; după, totul e în activul principal, iar fișa modernizării se închide cu
+  linia „închisă în activul principal”. Baza fiscală rămâne costul plus modernizările plus diferențele din
+  reevaluare, cu costul plus modernizările ca minim (art. 7 pct. 44 lit. c), art. 28 alin. (12) lit. d)).
+  Modernizarea închisă nu are notă de ieșire; în D406 nu mai apare ca activ separat după data închiderii,
+  dar nota ei de închidere apare în AssetTransactions (codul tranzacției e de verificat în nomenclatorul
+  SAF-T). O modernizare pe alt cont 21x decât activul principal arată de obicei o greșeală de configurare
+  (pct. 227); o componentă cu durată proprie (pct. 229) nu trebuie contopită în activul principal.
+- **Metoda brută (pct. 103 lit. a)), din 19.0.1.12.0:** setarea „Revaluation Method” (Setări →
+  Contabilitate → Fixed Assets (RO)) și câmpul „Method” din wizard. Brutul și amortizarea cumulată se
+  recalculează proporțional (k = valoarea justă / valoarea netă), astfel încât valoarea netă să fie
+  valoarea justă: la creștere `Dr 21x = Cr 105` (diferența) și `Dr 21x = Cr 281x` (creșterea amortizării);
+  la scădere `Dr 281x` (scăderea amortizării) + `Dr 105`, sau `655` peste soldul rezervei (diferența) =
+  `Cr 21x` (scăderea brutului). Exemplu: 6.000 lei, 250 amortizați, valoarea justă 6.500 → brut 6.782,61,
+  amortizare 282,61, 750 pe 105. În wizard se introduce **valoarea justă, adică valoarea netă reevaluată**
+  din raportul evaluatorului, nu costul de înlocuire brut: OMFP cere ca valoarea netă după reevaluare să
+  fie egală cu valoarea reevaluată (pct. 103 lit. a)); brutul rezultă prin proporție și poate diferi de
+  costul de înlocuire brut din raport, diferență care nu se înregistrează. Metoda brută nu se aplică pe un
+  activ complet amortizat (folosiți metoda netă, pct. 100) și nici pe unul cu modernizări.
 - **Reevaluare (creștere):** `Dr 21x (activ) = Cr 105 (rezerve din reevaluare)`.
 - **Depreciere peste soldul 105:** `Dr 655 (cheltuieli din reevaluare) = Cr 21x (activ)`, pentru
   partea care depășește rezerva disponibilă din 105 (OMFP 1802/2014 pct. 111 alin. (2)-(3) — **nu**
@@ -310,17 +388,20 @@ colțul stânga-sus exportă exact ce se vede pe ecran.
   suplimentară pro-rata pe zilele rămase din luna reevaluării, iar amortizarea RO este strict
   lunară (OMFP 1802/2014 pct. 238 alin. (2) — care se referă însă la **punerea în funcțiune**,
   nu la reevaluare).
-- **⚠️ Divergență cunoscută față de OMFP la momentul aplicării valorii reevaluate.** Punctul direct
-  aplicabil, **pct. 99 alin. (2)**, cere imperativ și fără opțiune ca „amortizarea calculată pentru
-  imobilizările corporale astfel reevaluate să se înregistreze în contabilitate **începând cu
-  exercițiul financiar următor** celui pentru care s-a efectuat reevaluarea" (alin. (1): reevaluarea
-  privește imobilizările existente **la sfârșitul exercițiului financiar**). Modulul aplică în
-  schimb modelul **IAS 16**: recalculează planul imediat, din luna următoare reevaluării — deci și
-  la o reevaluare făcută în cursul anului, ca în exemplul de mai jos. Diferența nu produce nicio
-  eroare vizibilă; apare doar ca amortizare recunoscută mai devreme decât ar cere OMFP. Nu există
-  (încă) un parametru de companie OMFP/IFRS pe acest modul, spre deosebire de
-  `l10n_ro_currency_revaluation`. **De discutat cu clientul înainte de punerea în producție** dacă
-  ține strict la tratamentul OMFP.
+- **Momentul aplicării valorii reevaluate (setarea „Revalued Depreciation Starts”, din 19.0.1.12.0).**
+  **Pct. 99 alin. (2)** cere ca amortizarea imobilizărilor reevaluate să se înregistreze **începând cu
+  exercițiul financiar următor** celui pentru care s-a efectuat reevaluarea (alin. (1): reevaluarea
+  privește imobilizările existente la sfârșitul exercițiului). Varianta „From the next financial year”
+  aplică regula: până la sfârșitul exercițiului rămân notele lunare de dinainte, iar din ianuarie se
+  amortizează valoarea rămasă pe lunile rămase. Implicit setarea e „From the next month” (modelul IAS 16,
+  comportamentul de până acum): planul se recalculează din luna următoare reevaluării. La o reevaluare
+  făcută la 31.12 cele două variante coincid. OMFP prevede reevaluarea la data bilanțului (pct. 99
+  alin. (1), pct. 102): la o reevaluare făcută în cursul anului, varianta „din luna următoare” se abate de
+  la pct. 99 alin. (2), iar la varianta „din exercițiul următor” valoarea netă la 31.12 nu mai este valoarea
+  justă (formularul avertizează când data nu e sfârșitul exercițiului). Planul fiscal urmează aceeași
+  setare: creșterea din reevaluare se deduce (iar rezerva 105 aferentă se impozitează, art. 26 alin. (6))
+  din aceeași lună în care începe amortizarea contabilă. **De ales cu clientul înainte de punerea în
+  producție.**
 - **Casare (fără vânzare — activ complet sau parțial amortizat, fără încasare):** scoaterea din
   evidență `Dr 281x (amortizare cumulată) + Dr 6583 (valoare neamortizată) = Cr 21x (activ, valoare
   brută)`, cu **Decizie de casare** (raport PDF) ca document justificativ. Aici toată valoarea

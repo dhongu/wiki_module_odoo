@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-04] Actualizare `l10n_ro_fixed_assets` 19.0.1.13.0 (fazele 8 și 9 ale planului de mijloace fixe)
+
+- **Acțiune:** Re-ingestie. [l10n_ro_fixed_assets](l10n_ro_fixed_assets/index.md) de la 19.0.1.9.0 la 19.0.1.13.0: registrul imobilizărilor la o dată trecută (cost istoric, varianta pe gestiune), liste de inventariere MF (14-3-12) pe gestiune, reevaluarea activului cu modernizări, metoda brută și momentul aplicării (luna / exercițiul următor), grila mijloacelor fixe, închiderea lunii (`l10n.ro.asset.closing`), transfer și reevaluare în lot.
+- **Sursă:** `__manifest__.py`, `readme/HISTORY.md`, `readme/FISA_CONSULTANT.md` și codul, din PR-urile terrabit-solutions/l10n_ro_ent#441, #443, #448 (unite) și #451 (faza 9), toate unite.
+- **Corecții față de readme:** nu e cazul. **Dependențe:** `xlsxwriter` adăugat la cele Python. **Conexiuni:** `l10n_ro_inventory_register` (anexa 8035, 19.0.1.4.0).
+- **Fișiere actualizate:** `l10n_ro_fixed_assets/index.md`, `FISA_CONSULTANT.md` și capturile modulului, `index.md` (descrierea), `log.md`, `.index/chunks.json` (doar intrarea modulului).
+
+---
+
 ## [2026-10-04] Actualizare `l10n_ro_anaf_d112` 19.0.2.9.0 (S8, ordine de plată pentru obligațiile D112)
 
 - **Acțiune:** [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md): butonul *Pregătește plăți* creează plăți în ciornă pe obligație către contul unic al Trezoreriei (setare nouă pe companie), cu suma datorat − scutit, scadența 25 a lunii următoare și contul de datorie drept contrapartidă; fișa consultant (Pasul 8) și captura 16 copiate.
