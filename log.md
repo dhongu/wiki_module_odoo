@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-04] Actualizare `l10n_ro_anaf_d112` 19.0.2.7.0, `l10n_ro_anaf_d112_payroll` 19.0.1.5.0 și `l10n_ro_hr_payroll_enhancement` 19.0.2.4.0 (concedii medicale în D112, S5.2)
+
+- **Acțiune:** Re-ingestie. [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md): GrupB cu `asiguratB1…B4` și `asiguratD`, `angajatorC2`, `C1_12`, model `l10n.ro.d112.medical.leave`, validări pe secțiunea D. [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md): preia certificatele din salarizare. [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md): `_l10n_ro_d112_medical_leaves`.
+- **Sursă:** `__manifest__.py`, `readme/*.md` din `19.0` (PR terrabit-solutions/l10n_ro_ent#416); structura D112 și validatorul oficial ANAF (DUKIntegrator: declarație mixtă, continuare, carantină).
+- **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** neschimbate.
+- **Fișiere actualizate:** paginile de mai sus, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-04] Unire `l10n_ro_payroll_leave` în `l10n_ro_hr_payroll_enhancement` 19.0.2.3.0 (continuări, S5.3)
 
 - **Acțiune:** Re-ingestie și desființare de pagină. Pagina `l10n_ro_payroll_leave` (19.0.1.1.0, cu continuările S5.3: lanț de certificate, procent pe episod, recalcul retroactiv de la 01.07.2026) a fost mutată în [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md), care are acum 19.0.2.3.0. Motiv: `l10n_ro_hr_payroll` depinde deja de `hr_payroll_holidays`, deci nu apare nicio dependență nouă. [l10n_ro_hr_payroll_account_enhancement](l10n_ro_hr_payroll_account_enhancement/index.md) la 19.0.1.2.0.

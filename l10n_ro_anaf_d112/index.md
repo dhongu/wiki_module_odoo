@@ -1,7 +1,7 @@
 # Romania - Declarația D112 ANAF (FR-44) (localizat la `l10n_ro_anaf_d112/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d112`
-- **Versiune:** `19.0.2.6.0`
+- **Versiune:** `19.0.2.7.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112`
 - **Ultima Ingestie:** `2026-10-03`
@@ -31,6 +31,7 @@ Modulul automatizează întocmirea, validarea și exportul Declarației D112 ANA
 - **Integrare în tabloul de declarații** (`account.return`): tip de declarație lunar cu termen 25 a lunii următoare, pași de verificare (pregătire declarație, reconciliere, atașare XML semnat/recipisă SPV).
 - **Validări blocante** la validare: checksum CNP, CNP duplicat, dată angajare obligatorie/coerentă, zile lucrate raportate la numărul de zile LUCRĂTOARE din lună (nu cele calendaristice), ore normă 6/7/8, venit pozitiv; avertismente neblocante pentru CAS/CASS recalculate.
 - **Cod CAEN obligatoriu** pe companie (`angajator/@caen`), citit acum din `l10n_ro_anaf_base` (nu mai depinde tacit de `l10n_ro_config`); câmpul lipsă e prins de o gardă cu mesaj acționabil în locul unui fallback tăcut „0000".
+- **Concedii medicale (secțiunea D, GrupB)** (19.0.2.7.0): salariatul cu concediu medical se declară pe GrupB — `asiguratB1…B4`, câte un `asiguratD` pe certificat (`D_1`…`D_28`, cu `Data_CMI`, `D_3`/`D_4` la continuări, `D_9b`, `D_14a`, `D_20a`/`D_21a`) și `E3_1="B"`. `B2_5` = baza CAS a salariului, `B3_7` = baza CAS a indemnizațiilor (`B3_12` + `B3_13`), `B4_7` = `B2_5` + `B3_7`, `B4_14` = baza CAM fără partea din FNUASS; `E1_1`, `E3_8`, `E3_16` și baza impozabilă includ indemnizația din FNUASS. Secțiunea angajator `angajatorC2` (cazuri, zile și sume pe categorii: incapacitate 1.1–1.4, prevenire, sarcină, copil bolnav, oncologic, risc maternal; `C2_T6`, `C2_10`, `C2_140`), `C1_12` / `C1_T2` și `C1_11` pe baza salariului. Validări blocante pe secțiunea D (certificat dublat, `D_8` la copil bolnav, `D_11` / `D_12`, `D_7` în luna raportată, zile) și avertisment pentru codurile neimpozabile (08, 09, 91, 92, 15, 17). Verificat cu DUKIntegrator: declarație mixtă GrupA + GrupB, certificat inițial + continuare, carantină.
 - **`E3_8` și venituri neimpozabile** (19.0.2.6.0): de la perioada 07/2026 rândul 8 cuprinde art. 76 alin. (1)–(4¹) (OPANAF 605/2026, Anexa 6), deci `E3_8` și `E1_1` includ veniturile neimpozabile 8.4 / 8.5. Câmpuri noi pe linia nominală: venit neimpozabil alin. (4) → `E3_69`, diurnă neimpozabilă (din care, 8.4.3) → `E3_62`, venit neimpozabil alin. (4¹) → `E3_90`; nu intră în bazele CAS / CASS / impozit și nu se declară înainte de 07/2026. `A_sal2` = `E3_8` − `E3_69` (include și tichetele). Verificat cu DUKIntegrator (`E3_8` 5.200, `A_sal2` 5.085).
 - **Scutirea de impozit art. 60** (pct. 1 handicap, pct. 3 cercetare-dezvoltare), declarată (XML 09/2026 validat de DUKIntegrator): câmpul de linie *Scutire impozit (art. 60)* → `asigScu` 1/3; `E3_23`/`E3_24` sau `E3_27`/`E3_28` = baza impozabilă și impozitul care s-ar fi datorat (10%); `E3_15` = 0; la angajator obligația 602 cu `A_datorat` = reținut + scutit, `A_scutit` și `angajatorF1`; `E3_16` include tichetele; XSD 07/2026 admite tipul de asigurat 51.
 - **Deduceri și în `asiguratE3`**: persoanele în întreținere și deducerile personale se declară și în `E3_11`, `E3_12`, `E3_121`, `E3_122`, `E3_1221`, `E3_1222`, `E3_13` (structura ANAF cere ca E1_x să fie sumele câmpurilor E3).
@@ -52,6 +53,7 @@ Fluxul complet lunar (previzualizare → ciornă → verificare linii → reconc
 
 - `l10n.ro.d112` (`mail.thread`, `mail.activity.mixin`, `l10n_ro_anaf.report.handler.mixin`): declarația D112 propriu-zisă — state machine, calculul deducerilor și al bazei minime CAS/CASS (inclusiv `asigExc`/`motivExc`), reconcilierea contabilă și generatorul de XML (profilele v6, v7-0126, v7-0726).
 - `l10n.ro.d112.employee.line`: liniile nominale per angajat (CNP, venituri, contribuții, zile lucrate/concediu, `zile_contract_activ` pentru pragul CAS/CASS, excepții de la baza minimă, condiții de muncă, ore efective calculate din tipul de contract).
+- `l10n.ro.d112.medical.leave`: certificatele de concediu medical (secțiunea D) ale unei linii nominale; pagina *Concedii medicale* a declarației.
 - `l10n.ro.d112.reconcile.line`: liniile de reconciliere D112 vs. conturile contabile 4315/4316/436/444.
 - `l10n_ro_anaf_d112.report.handler` (`account.report.custom.handler`, `l10n_ro_anaf.report.handler.mixin`): handler-ul raportului de previzualizare a obligațiilor D112; sursa implicită sunt totalurile declarației persistente, iar dacă e instalat modulul-punte de salarizare contribuie o proiecție live din statele de plată.
 - `account.return` (extindere): calculul termenului legal (25 a lunii următoare) și verificările specifice D112 (declarație + reconciliere) în tabloul de declarații.
