@@ -1,7 +1,7 @@
 # Romania - Impozit pe salarii, deduceri personale și tichete de masă (localizat la `l10n_ro_hr_payroll_enhancement/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_hr_payroll_enhancement`
-- **Versiune:** `19.0.2.4.0`
+- **Versiune:** `19.0.2.5.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_payroll_enhancement
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_hr_payroll_enhancement`
 - **Ultima Ingestie:** `2026-10-03`
@@ -35,6 +35,7 @@ Modulul completează statul de plată românesc, peste structura nativă Odoo 19
     - **Baza** (art. 10): media zilnică a veniturilor din cele mai recente 6 luni cu venit din ultimele 12, plafonate lunar la 12 salarii minime, cu indemnizațiile și zilele de concediu medical incluse; automată sau manuală (adeverință de la alt angajator). Indemnizația = media × zilele plătite × procentul, rotunjită la leu.
     - **Continuări:** câmpul *Continuă* leagă certificatele aceluiași episod (`D_3`/`D_4`/`Data_CMI` din primul); procentul pe zilele cumulate ale episodului (cod 01), cele 5 zile ale angajatorului pe episod, ziua neplătită doar la primul certificat; de la 01.07.2026 recalcul retroactiv: suma lunii = cuvenitul cumulat − plătit efectiv în lunile anterioare (din fluturașii validați), cu partea retroactivă identificată (`D_20a`/`D_21a`).
     - **Pe fluturaș:** `CM_FS` (în brut, cu CAS, CASS după cod, impozit și CAM), `CM_FNUASS` (categoria `CMFN`: în afara brutului și a bazei CAM, dar în venitul impozabil și în net), `CAS_CM`, `CASS_CM` (doar codurile 01, 07, 10) și `TAX_CM` (impozitul alocat proporțional părții din FNUASS). Contabil, cu [l10n_ro_hr_payroll_account_enhancement](../l10n_ro_hr_payroll_account_enhancement/index.md): 4382 = 423 pentru FNUASS, contribuțiile aferente pe 423; indemnizația angajatorului rămâne în brut (641 = 421).
+    - **Rapoarte** (19.0.2.5.0): *Fișa de calcul concediu medical* (PDF, din Tipărește pe certificat: lunile din baza pe 6 luni cu plafonul lunar, `D_17` / `D_18` / media zilnică, procentul, zilele și indemnizațiile pe lună), *Lista certificatelor medicale* (PDF pe certificatele selectate, cu totaluri angajator / FNUASS) și *Decontare concedii medicale (FNUASS)* (XLSX pe lună, în *Salarizare → Raportare*: certificatele cu sume din FNUASS, aceleași valori ca secțiunea D din D112, cu totalul de recuperat de la Casa de Asigurări de Sănătate).
     - **D112:** `hr.payslip._l10n_ro_d112_medical_leaves()` furnizează secțiunile D pentru luna fluturașului (zile angajator / FNUASS, ziua neplătită, baza, procentul, indemnizațiile și diferențele retroactive).
     - **Exemplu verificat** (14–23.09.2026, brut 5.000, media 238,10, 65%): indemnizații 619 (angajator) și 464 (FNUASS), salariu 3.181,82, CAS 950 + 116, CASS 380 + 46, impozit 191 (21 pe FNUASS), 423 net 281.
 - **Rotunjire**: CAS, CASS și CAM la leu; baza impozabilă la leu cu 0,50 în jos (HG 1/2016), apoi cota de 10%.
@@ -42,7 +43,7 @@ Modulul completează statul de plată românesc, peste structura nativă Odoo 19
 
 > **Limite cunoscute:** plata netului, avansurile, achiziția tichetelor, `PENSION` și `UNEMPDISABLED` nu sunt încă mapate contabil; CAM rotunjit la leu pe angajat poate diferi cu câțiva lei de CAM-ul pe total din D112; lipsesc pensiile ocupaționale, PEPP, ETF și abonamentele sportive (OUG 8/2026), deducerile angajatorului anterior și limita cotizației sindicale (Legea 367/2022) e de verificat. Scutirea art. 60 și deducerile se transferă în D112 prin puntea `l10n_ro_anaf_d112_payroll` (declarate). Facilitățile sectoriale (IT, construcții, agro) sunt abrogate din 01.01.2025 și nu sunt incluse.
 >
-> **Concedii medicale, limite:** D112 declară certificatele pe GrupB prin [l10n_ro_anaf_d112_payroll](../l10n_ro_anaf_d112_payroll/index.md) (codurile neimpozabile 08, 09, 91, 92, 15, 17 au venitul și impozitul manuale; perioada unui certificat se limitează la luna raportată); lipsesc rapoartele. De confirmat: zilele angajatorului urmează convenția D112 (4 plătite), nu literal OUG 91/2025 (zilele 2–6); partea angajatorului 641 = 421 (funcțiunea OMFP ar fi 6458 = 423); excepția pentru codul 51, Legea 64/2026 și procentul la codurile 02–04; plățile anterioare se iau din toți fluturașii validați din lunile episodului.
+> **Concedii medicale, limite:** D112 declară certificatele pe GrupB prin [l10n_ro_anaf_d112_payroll](../l10n_ro_anaf_d112_payroll/index.md) (codurile neimpozabile 08, 09, 91, 92, 15, 17 au venitul și impozitul manuale; perioada unui certificat se limitează la luna raportată). De confirmat: zilele angajatorului urmează convenția D112 (4 plătite), nu literal OUG 91/2025 (zilele 2–6); partea angajatorului 641 = 421 (funcțiunea OMFP ar fi 6458 = 423); excepția pentru codul 51, Legea 64/2026 și procentul la codurile 02–04; plățile anterioare se iau din toți fluturașii validați din lunile episodului.
 
 #### 3. Dependențe
 
@@ -58,6 +59,7 @@ Modulul completează statul de plată românesc, peste structura nativă Odoo 19
 - `l10n.ro.payroll.simulator` (wizard, `wizard/`): simulatorul brut ↔ net, cu liniile de rezultat `l10n.ro.payroll.simulator.line` și raportul PDF «Simulare salariu».
 - `l10n.ro.medical.certificate` (nou): certificatul de concediu medical, cu zilele, procentul, baza și sumele (`_episode_schedule`, `_entitlement`, `_episode_window_amounts`, `_auto_base`).
 - `l10n.ro.medical.code` (nou): nomenclatorul `D_9`.
+- `l10n.ro.medical.fnuass.report` (wizard, `wizard/`): decontarea FNUASS pe lună (XLSX); rapoartele PDF (fișa de calcul, lista) sunt în `views/report_medical_certificate.xml`.
 - `hr.payslip.input.type` (extins): indicatorii `l10n_ro_tax_deductible`, `l10n_ro_withheld`, `l10n_ro_annual_cap`, `l10n_ro_cap_group`.
 - `hr.payslip` (extins): numărul de tichete și metodele de calcul apelate de regulile salariale (`_l10n_ro_dpb_breakdown`, `_l10n_ro_non_taxable_amount`, `_l10n_ro_meal_ticket_value`, rotunjirile).
 - Parametri salariali (`hr.rule.parameter`, cod `l10n_ro_salary_params`): cote, salariul minim, procentele grilei, deducerile, valoarea tichetului, suma neimpozabilă — două valori, de la 01.01.2026 și 01.07.2026.

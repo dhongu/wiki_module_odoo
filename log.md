@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-04] Actualizare `l10n_ro_hr_payroll_enhancement` 19.0.2.5.0 (rapoarte concedii medicale, S5.4)
+
+- **Acțiune:** Re-ingestie. [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md) adus la 19.0.2.5.0: fișa de calcul PDF a certificatului (baza pe 6 luni, procent, zile, indemnizații), lista certificatelor și decontarea FNUASS XLSX pe lună.
+- **Sursă:** `__manifest__.py`, `readme/HISTORY.md`, `readme/USAGE.md` din `19.0` (PR terrabit-solutions/l10n_ro_ent#417).
+- **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** neschimbate. Șabloanele PDF au fost randate în HTML în teste; aspectul pe pagină nu a fost verificat vizual.
+- **Fișiere actualizate:** `l10n_ro_hr_payroll_enhancement/index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-04] Actualizare `l10n_ro_anaf_d112` 19.0.2.7.0, `l10n_ro_anaf_d112_payroll` 19.0.1.5.0 și `l10n_ro_hr_payroll_enhancement` 19.0.2.4.0 (concedii medicale în D112, S5.2)
 
 - **Acțiune:** Re-ingestie. [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md): GrupB cu `asiguratB1…B4` și `asiguratD`, `angajatorC2`, `C1_12`, model `l10n.ro.d112.medical.leave`, validări pe secțiunea D. [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md): preia certificatele din salarizare. [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md): `_l10n_ro_d112_medical_leaves`.
