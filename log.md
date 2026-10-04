@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-04] Actualizare `l10n_ro_hr_payroll_enhancement` 19.0.2.6.2 și `l10n_ro_anaf_d112` 19.0.2.8.1 (ACL wizard-uri, fișa consultant cu 23 de pași)
+
+- **Acțiune:** Re-ingestie. [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md): ACL pentru simulator și decontarea FNUASS (bug: funcționau doar ca superutilizator), decontare XLSX peisaj cu antete, etichete noi pe câmpurile calculate din certificat, fișa consultant extinsă la 23 de pași și 23 de capturi (copiate în wiki). [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md): `_rec_name` pe linia de angajat.
+- **Sursă:** `__manifest__.py`, `readme/HISTORY.md`, `readme/FISA_CONSULTANT.md` din `19.0` (PR terrabit-solutions/l10n_ro_ent#426, în așteptarea CI la data intrării); fișa a trecut două ture de verificare.
+- **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** neschimbate. De urmărit: modulul nu proratează automat sporurile permanente la CO.
+- **Fișiere actualizate:** paginile de mai sus, `FISA_CONSULTANT.md` și capturile modulului, `log.md`, `.index/chunks.json` (doar câmpurile de versiune).
+
 ## [2026-10-04] Actualizare `l10n_ro_hr_payroll_enhancement` 19.0.2.6.0 și `l10n_ro_anaf_d112` 19.0.2.8.0 (indemnizația de CO pe medie, S6)
 
 - **Acțiune:** Re-ingestie. [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md): `CO_IND` (media drepturilor permanente din 3 luni, prag cu drepturi permanente), `CO_COMP` la încetare, câmpul *Drept permanent* pe reguli, CO fără efect asupra sumei neimpozabile, `WORK110` ca lucrat. [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md): CO declarat la zile lucrate.

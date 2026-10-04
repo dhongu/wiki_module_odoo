@@ -11059,7 +11059,7 @@
   {
     "path": "l10n_ro_anaf_d112/index.md",
     "module": "l10n_ro_anaf_d112",
-    "version": "19.0.2.8.0",
+    "version": "19.0.2.8.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112",
     "last_ingest": "2026-10-03",
@@ -13038,7 +13038,7 @@
   {
     "path": "l10n_ro_hr_payroll_enhancement/index.md",
     "module": "l10n_ro_hr_payroll_enhancement",
-    "version": "19.0.2.6.0",
+    "version": "19.0.2.6.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_payroll_enhancement",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_hr_payroll_enhancement",
     "last_ingest": "2026-10-03",
