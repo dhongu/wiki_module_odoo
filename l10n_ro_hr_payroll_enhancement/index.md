@@ -1,7 +1,7 @@
 # Romania - Impozit pe salarii, deduceri personale și tichete de masă (localizat la `l10n_ro_hr_payroll_enhancement/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_hr_payroll_enhancement`
-- **Versiune:** `19.0.2.6.2`
+- **Versiune:** `19.0.2.6.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_payroll_enhancement
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_hr_payroll_enhancement`
 - **Ultima Ingestie:** `2026-10-04`
@@ -40,6 +40,7 @@ Modulul completează statul de plată românesc, peste structura nativă Odoo 19
     - **D112:** `hr.payslip._l10n_ro_d112_medical_leaves()` furnizează secțiunile D pentru luna fluturașului (zile angajator / FNUASS, ziua neplătită, baza, procentul, indemnizațiile și diferențele retroactive).
     - **Exemplu verificat** (14–23.09.2026, brut 5.000, media 238,10, 65%): indemnizații 619 (angajator) și 464 (FNUASS), salariu 3.181,82, CAS 950 + 116, CASS 380 + 46, impozit 191 (21 pe FNUASS), 423 net 281.
 - **Acces și rapoarte** (19.0.2.6.2): simulatorul brut / net și decontarea FNUASS au ACL pentru grupul *Utilizator salarizare* (înainte funcționau doar ca superutilizator, cu test TC-24); decontarea XLSX are pagină peisaj, antete pe mai multe rânduri și media zilnică cu două zecimale; câmpurile calculate din certificat au etichetele *Venit luat în calcul (D_17)* / *Zile luate în calcul (D_18)*. **Fișa consultant** are acum 23 de pași cu capturi (rețineri, avertizări, simulator, concedii medicale cu continuare și nota 4382/423, fișa de calcul, decontarea FNUASS, D112, CO pe medie); ea precizează că regulile de spor marcate *Drept permanent* se scriu proporțional cu zilele lucrate, fiindcă modulul nu le proratează.
+- **Baza concediului medical** (19.0.2.6.3, OUG 158/2005 art. 10 alin. 1): venitul lunar din baza de calcul (D_17) e baza contribuției asiguratorii pentru muncă, deci scade suma neimpozabilă de la salariul minim (300 / 200 lei), la fel ca regula CAM; adeverința din [l10n_ro_payroll_certificates](../l10n_ro_payroll_certificates/index.md) folosește aceeași bază. De verificat: actul care fixează suma neimpozabilă pentru 2026.
 - **Rotunjire**: CAS, CASS și CAM la leu; baza impozabilă la leu cu 0,50 în jos (HG 1/2016), apoi cota de 10%.
 - **Exemplu verificat** (brut 4.325, 1 persoană, 20 tichete × 45 lei): CAS 1.031, CASS 503, DPB 692, impozit 280, net 2.511, cost angajator 5.318.
 

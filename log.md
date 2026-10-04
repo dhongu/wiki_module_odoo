@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-04] Ingestie `l10n_ro_payroll_certificates` 19.0.1.0.0 și actualizare `l10n_ro_hr_payroll_enhancement` 19.0.2.6.3 (S9, adeverințe salariale)
+
+- **Acțiune:** Pagină nouă [l10n_ro_payroll_certificates](l10n_ro_payroll_certificates/index.md): adeverințe de venit, de bază pentru concediul medical (12 luni, cu concediile medicale și codul de indemnizație) și de asigurat (CASS), cu număr `ADV/an/nr`, text editabil în ciornă, două semnături și PDF arhivat pe angajat; fișa consultant (7 pași) și capturile copiate. [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md) la 19.0.2.6.3: baza concediului medical fără suma neimpozabilă (art. 10 alin. 1).
+- **Sursă:** `__manifest__.py`, `readme/DESCRIPTION.md`, `readme/FISA_CONSULTANT.md`, `HISTORY.md` din `19.0` (PR terrabit-solutions/l10n_ro_ent#435 și #437); verificat cu Pacioli înainte de merge (statutul contractului, venitul net, zilele de concediu medical, cele 12 luni).
+- **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** `l10n_ro_payroll_certificates` depinde de `l10n_ro_hr_payroll_enhancement`. De verificat: actul care fixează suma neimpozabilă 2026; modelul CNAS pentru adeverința de stagiu.
+- **Fișiere actualizate:** paginile de mai sus, `index.md`, `log.md`, `.index/chunks.json` (doar câmpul de versiune pentru enhancement; chunk-urile paginii noi nu sunt generate).
+
 ## [2026-10-04] Re-ingestie `l10n_ro_fixed_assets` 19.0.1.9.0 (planul de mijloace fixe, fazele 0–7)
 
 - **Acțiune:** Re-ingestie completă. [l10n_ro_fixed_assets](l10n_ro_fixed_assets/index.md) de la 19.0.1.3.1 la 19.0.1.9.0: reevaluare prin metoda netă, plan fiscal lunar (degresiv, accelerat, superaccelerat, M1, conservare), punere în funcțiune din 231, catalogul HG care propune durata, luna ieșirii configurabilă, gestiune ca nomenclator cu transferuri, documentele OMFP 2634/2015, importul registrului de imobilizări, creanța pe 461 la vânzarea activului. Pagina rescrisă fără istoricul de fix-uri.
