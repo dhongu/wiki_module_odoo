@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-04] Re-ingestie `l10n_ro_fixed_assets` 19.0.1.9.0 (planul de mijloace fixe, fazele 0–7)
+
+- **Acțiune:** Re-ingestie completă. [l10n_ro_fixed_assets](l10n_ro_fixed_assets/index.md) de la 19.0.1.3.1 la 19.0.1.9.0: reevaluare prin metoda netă, plan fiscal lunar (degresiv, accelerat, superaccelerat, M1, conservare), punere în funcțiune din 231, catalogul HG care propune durata, luna ieșirii configurabilă, gestiune ca nomenclator cu transferuri, documentele OMFP 2634/2015, importul registrului de imobilizări, creanța pe 461 la vânzarea activului. Pagina rescrisă fără istoricul de fix-uri.
+- **Sursă:** `__manifest__.py`, `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `FISA_CONSULTANT.md` din `origin/19.0` (a5853f10, după PR-urile terrabit-solutions/l10n_ro_ent#409–#428).
+- **Corecții față de readme:** `DESCRIPTION.md` spune încă „amortizarea începe la data PIF”; pagina folosește regula din cod și HISTORY (luna următoare PIF). **Conexiuni:** adăugate `l10n_ro_inventory_register`, `l10n_ro_saft_validator`, `l10n_ro_inventory_items_hr` (fără pagină).
+- **Fișiere actualizate:** `l10n_ro_fixed_assets/index.md`, `FISA_CONSULTANT.md` și capturile modulului, `index.md` (descrierea), `log.md`, `.index/chunks.json` (doar intrarea modulului).
+
+---
+
 ## [2026-10-04] Formulare neutră: fără comparații cu alte programe la `l10n_ro_stock_cmp_periodic` și `l10n_ro_stock_pack_cmp`
 
 - **Acțiune:** Curățenie. [l10n_ro_stock_cmp_periodic](l10n_ro_stock_cmp_periodic/index.md) (pagina și fișa) și [l10n_ro_stock_pack_cmp](l10n_ro_stock_pack_cmp/FISA_CONSULTANT.md): scoase trimiterile „WinMentor / SAGA” la CMP periodic; conținutul rămâne același.
