@@ -1,10 +1,10 @@
 # Romania - Declarația D112 ANAF (FR-44) (localizat la `l10n_ro_anaf_d112/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d112`
-- **Versiune:** `19.0.2.8.1`
+- **Versiune:** `19.0.2.9.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112`
-- **Ultima Ingestie:** `2026-10-03`
+- **Ultima Ingestie:** `2026-10-04`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -28,6 +28,7 @@ Modulul automatizează întocmirea, validarea și exportul Declarației D112 ANA
 - **Reconciliere contabilă** D112 vs. rulajul conturilor 4315/4316/436/444 din perioadă, cu conturi și toleranță configurabile pe companie; opțional blocarea exportului la diferențe peste toleranță.
 - **Raport de previzualizare** (`D112 — Previzualizare obligații` în meniu): obligațiile lunii proiectate live din statele de plată sau din declarația materializată, cu butoanele „Generează ciorna D112" și export XML.
 - **Declarație rectificativă** legată de declarația inițială exportată.
+- **Ordine de plată pentru obligații** (buton *Pregătește plăți*, din 19.0.2.9.0): câte o plată în ciornă pe obligație cu sumă de plată (602, 412, 432, 480, 481/482/458/459), către contul IBAN unic al Trezoreriei (setare pe companie), cu suma datorat − scutit, scadența 25 a lunii următoare (weekend → luni) și contul de datorie al obligației drept contrapartidă (4315, 4316, 436, 444); buton *Plăți* pe declarație; nu se pregătesc de două ori și nu din rectificativă. De verificat: structura IBAN-ului Trezoreriei și datele OP, termenul în zi nelucrătoare, codurile 458/459/481/482; fără plată de grup și fără tipărirea OP.
 - **Integrare în tabloul de declarații** (`account.return`): tip de declarație lunar cu termen 25 a lunii următoare, pași de verificare (pregătire declarație, reconciliere, atașare XML semnat/recipisă SPV).
 - **Validări blocante** la validare: checksum CNP, CNP duplicat, dată angajare obligatorie/coerentă, zile lucrate raportate la numărul de zile LUCRĂTOARE din lună (nu cele calendaristice), ore normă 6/7/8, venit pozitiv; avertismente neblocante pentru CAS/CASS recalculate.
 - **Cod CAEN obligatoriu** pe companie (`angajator/@caen`), citit acum din `l10n_ro_anaf_base` (nu mai depinde tacit de `l10n_ro_config`); câmpul lipsă e prins de o gardă cu mesaj acționabil în locul unui fallback tăcut „0000".

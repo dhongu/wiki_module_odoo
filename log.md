@@ -4,6 +4,11 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-04] Actualizare `l10n_ro_anaf_d112` 19.0.2.9.0 (S8, ordine de plată pentru obligațiile D112)
+
+- **Acțiune:** [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md): butonul *Pregătește plăți* creează plăți în ciornă pe obligație către contul unic al Trezoreriei (setare nouă pe companie), cu suma datorat − scutit, scadența 25 a lunii următoare și contul de datorie drept contrapartidă; fișa consultant (Pasul 8) și captura 16 copiate.
+- **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** fără dependențe noi. De verificat: structura IBAN-ului Trezoreriei și datele OP (ordinul MF), articolul din Codul de procedură fiscală pentru termenul în zi nelucrătoare, corespondența codurilor 458/459/481/482 cu contul de datorie.
+
 ## [2026-10-04] Ingestie `l10n_ro_payroll_bank_export` 19.0.1.0.0 (S7, fișiere de plată salarii pentru bănci)
 
 - **Acțiune:** Pagină nouă [l10n_ro_payroll_bank_export](l10n_ro_payroll_bank_export/index.md): fișier de plată în formatul băncii (BT GO/CSV, BRD, ING OneCSV/MT, CEC, Raiffeisen DBF, UniCredit, OTP, Alpha), generat din lotul de fluturași prin fereastra Raport de plată; filtru pe banca din IBAN, rezumat, explicație editabilă; fișa consultant (5 pași) și capturile copiate.

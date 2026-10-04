@@ -233,6 +233,14 @@ fi modificate și declarația nu mai poate fi resetată în ciornă. Pentru core
 
 ![Declarația în starea Exportat](screenshots/08_d112_exportat.png)
 
+### Pasul 8 — Plata obligațiilor la Trezorerie
+
+După export, apăsați **Pregătește plăți** (declarația inițială, în starea Validat sau Exportat). Se creează câte o **plată în ciornă** pentru fiecare obligație cu sumă de plată (impozit 602, CAS 412, CASS 432, CAM 480 și, după caz, 481/482/458/459), către contul unic al Trezoreriei din setări, cu suma `datorat − scutit` (impozitul scutit conform art. 60 nu se plătește), data = **25 a lunii următoare** (o scadență în weekend se mută în prima zi de luni), explicația *D112 LL/AAAA - cod obligație* și **contul de datorie al obligației** drept cont de contrapartidă (4315, 4316, 436, 444). Butonul *Plăți* de pe declarație deschide plățile.
+
+![Plățile pregătite din D112, în ciornă](screenshots/16_plati_trezorerie.png)
+
+**Verificați înainte de a posta:** suma fiecărei plăți coincide cu *A_plata* din XML; contul de contrapartidă e cel al obligației; jurnalul e contul bancar din care se plătește (se poate schimba pe ciornă); IBAN-ul Trezoreriei e cel din lista ANAF pentru unitatea de care ține firma. Apoi postați plățile (nota **Dr 4315 / 4316 / 436 / 444 = Cr 5121**) și transmiteți banca ordinul de plată; plata în contul unic trebuie făcută până la scadență (25 a lunii următoare, prima zi lucrătoare dacă cade în weekend sau sărbătoare legală).
+
 ### Note de monografie și raportare
 
 - D112 **nu generează note contabile** — citește datele salariale și obligațiile deja înregistrate în
@@ -318,6 +326,7 @@ planul de conturi RO:
 9. `10_scenariu_salariu_minim.png` … `13_scenariu_rectificativa.png` — capturi pentru fișele per scenariu.
 10. `14_angajat_date.png` — fișa angajatului (Loc de muncă, data de început a contractului).
 11. `15_angajat_cnp.png` — fila REGES a angajatului: **CNP** și datele preluate la importul nominal.
+12. `16_plati_trezorerie.png` — plățile pregătite din declarația exportată, în ciornă.
 
 ### Date sursă din fișa angajatului
 
