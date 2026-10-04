@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-04] Actualizare `l10n_ro_hr_payroll_enhancement` 19.0.2.6.0 și `l10n_ro_anaf_d112` 19.0.2.8.0 (indemnizația de CO pe medie, S6)
+
+- **Acțiune:** Re-ingestie. [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md): `CO_IND` (media drepturilor permanente din 3 luni, prag cu drepturi permanente), `CO_COMP` la încetare, câmpul *Drept permanent* pe reguli, CO fără efect asupra sumei neimpozabile, `WORK110` ca lucrat. [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md): CO declarat la zile lucrate.
+- **Sursă:** `__manifest__.py`, `readme/HISTORY.md`, `readme/USAGE.md` din `19.0` (PR terrabit-solutions/l10n_ro_ent#420); Codul muncii art. 145, 146, 150 (legislatie.just.ro) și OPANAF 605/2026; verificat cu Pacioli înainte de merge.
+- **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** neschimbate. De confirmat: divizorul mediei, declararea CO la zile lucrate (interpretare).
+- **Fișiere actualizate:** paginile de mai sus, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-04] Actualizare `l10n_ro_hr_payroll_enhancement` 19.0.2.5.0 (rapoarte concedii medicale, S5.4)
 
 - **Acțiune:** Re-ingestie. [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md) adus la 19.0.2.5.0: fișa de calcul PDF a certificatului (baza pe 6 luni, procent, zile, indemnizații), lista certificatelor și decontarea FNUASS XLSX pe lună.
