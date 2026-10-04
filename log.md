@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-04] Unire `l10n_ro_payroll_leave` în `l10n_ro_hr_payroll_enhancement` 19.0.2.3.0 (continuări, S5.3)
+
+- **Acțiune:** Re-ingestie și desființare de pagină. Pagina `l10n_ro_payroll_leave` (19.0.1.1.0, cu continuările S5.3: lanț de certificate, procent pe episod, recalcul retroactiv de la 01.07.2026) a fost mutată în [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md), care are acum 19.0.2.3.0. Motiv: `l10n_ro_hr_payroll` depinde deja de `hr_payroll_holidays`, deci nu apare nicio dependență nouă. [l10n_ro_hr_payroll_account_enhancement](l10n_ro_hr_payroll_account_enhancement/index.md) la 19.0.1.2.0.
+- **Sursă:** `__manifest__.py`, `readme/*.md`, `migrations/` din `19.0` (PR terrabit-solutions/l10n_ro_ent#413 și #414); verificat cu Pacioli înainte de merge.
+- **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** referințele din `l10n_ro_hr_payroll_account_enhancement`, `l10n_ro_anaf_d112_payroll` și `index.md` actualizate; directorul `l10n_ro_payroll_leave/` șters.
+- **Fișiere actualizate:** `l10n_ro_hr_payroll_enhancement/index.md`, `l10n_ro_hr_payroll_account_enhancement/index.md`, `l10n_ro_anaf_d112_payroll/index.md`, `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-03] Modul nou `l10n_ro_payroll_leave` 19.0.1.0.0 (concedii medicale, S5.1) și actualizări conexe
 
 - **Acțiune:** Ingestie. [l10n_ro_payroll_leave](l10n_ro_payroll_leave/index.md): certificat unic de concediu medical, nomenclatorul `D_9`, zilele angajatorului / FNUASS, prima zi neplătită, baza pe 6 luni, regulile `CM_FS` / `CM_FNUASS` / `CAS_CM` / `CASS_CM` / `TAX_CM`. Re-ingestie: [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md) 19.0.2.2.0 (categoria `CMFN`), [l10n_ro_hr_payroll_account_enhancement](l10n_ro_hr_payroll_account_enhancement/index.md) 19.0.1.1.0 (4382 = 423), [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) 19.0.1.4.1 (avertisment).
