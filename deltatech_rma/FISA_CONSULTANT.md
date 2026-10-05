@@ -1,7 +1,7 @@
 # Fișă Modul: Retururi și garanții (RMA)
 
 **Modul:** `deltatech_rma`
-**Versiune:** 19.0.1.3.0
+**Versiune:** 19.0.1.5.0
 **Suită:** bitshop
 **Dependențe:** `sale_stock`, `portal`, `stock_delivery` (aduce și `delivery`)
 
@@ -119,10 +119,37 @@ la preț de vânzare se refac și 378 și 4428. Mișcările sunt legate de livra
 (`origin_returned_move_id`): fără legătura asta valorizarea nu poate reconcilia returul, iar costul
 repus în stoc ar fi cel curent, nu cel cu care a ieșit.
 
-Marfa cu verdict **„defect”** nu se repune în stocul vandabil, dar odată creditată clientului a
-intrat fizic înapoi în patrimoniu: se primește într-o locație de defecte / rebuturi și iese apoi
-prin retur la furnizor sau prin casare cu proces-verbal. Altfel costul rămâne pe 607 fără nicio
-intrare în gestiune. Modulul nu face singur această intrare.
+Marfa cu verdict **„defect confirmat”** sau **„deteriorat”** nu se repune în stocul vandabil. Dacă
+cererea se încheie cu **banii înapoi** sau cu o **înlocuire**, produsul a redevenit proprietatea
+firmei și intră în gestiune. Cu **locația pentru marfa defectă** setată (secțiunea 5), **Repune în
+stoc** îl primește acolo, printr-un transfer de retur separat, legat de livrarea pe care o anulează.
+Evaluarea se face la costul de ieșire: **Dr 371 = Cr 607** (produse finite: Dr 345 = Cr 711).
+
+- La **banii înapoi** e un retur de vânzare (pct. 330 OMFP 1802/2014): se corectează 4111/707/4427
+  prin nota de credit și 371/607 prin transfer. Returul scade cantitatea livrată pe comandă.
+- La **înlocuire** vânzarea inițială rămâne: se reface doar costul produsului defect (371 = 607), iar
+  produsul nou iese pe comanda de înlocuire (607 = 371), fără factură către client. Returul nu scade
+  cantitatea livrată pe comanda inițială, ca aceasta să nu propună o notă de credit peste schimb.
+  Documentul de schimb (aviz, PV de schimb în garanție) și încadrarea TVA a produsului dat în schimb
+  se stabilesc cu contabilul clientului.
+
+Recomandăm un analitic separat al contului 371 (345) pe locația de defecte. Marfa iese de acolo prin
+**retur la furnizor** sau prin **casare cu proces-verbal**; nota o face Odoo la operația respectivă.
+Cheltuiala cu marfa casată e deductibilă dacă se face dovada distrugerii (art. 25 alin. (4) lit. c)
+pct. 3 Cod fiscal), iar TVA dedusă nu se ajustează pentru bunurile distruse dovedit (art. 304
+alin. (2) lit. a)). Marfa rămasă în locația de defecte la închiderea exercițiului se evaluează la
+minimul dintre cost și valoarea realizabilă netă: diferența se înregistrează **Dr 6814 = Cr 397**
+(produse: Cr 394), conform pct. 88 OMFP.
+
+La **reparație** și la **refuz** produsul rămâne al clientului și nu intră în gestiune. Contabilul îl
+ține în afara bilanțului: **8032** „Valori materiale primite spre prelucrare sau reparare” la
+reparație, **8033** „Valori materiale primite în păstrare sau custodie” la refuz, până la restituire.
+Odoo nu ține conturile din clasa 8. Tocmai de aceea rezolvarea se alege **înainte** de a primi marfa
+defectă, iar după primire cererea nu mai poate trece pe reparație sau refuz.
+
+**Fără locație setată**, modulul nu primește marfa defectă și lasă un mesaj pe cerere. Intrarea în
+gestiune trebuie atunci făcută de mână de contabil: altfel stocul e subevaluat, iar marfa apare ca
+plus la inventar.
 
 ## 5. Configurare inițială
 
@@ -141,8 +168,12 @@ intrare în gestiune. Modulul nu face singur această intrare.
 4. **Setări → Tehnic → Șabloane e-mail** — cele trei mailuri (aprobat, refuzat, rezolvat) se pot
    adapta: telefonul firmei, formulări proprii, semnătura. Modificările rămân la actualizarea
    modulului.
-5. **Retururi → Configurare → Etichete** și **Motive de închidere** — opțional, pentru raportare.
-6. Verificați că firma are adresă completă și e-mail: fișa de retur tipărește adresa unde vine
+5. **Locația pentru marfa defectă**, în aceleași setări (*Marfă defectă*). Alegeți o locație internă
+   **lângă** stocul depozitului, nu sub el (ex. `WH/Defecte`), ca marfa să nu fie oferită la vânzare.
+   Fără ea, marfa defectă nu intră în gestiune și intrarea o face contabilul de mână. Recomandat:
+   un analitic separat al contului 371 pe locație.
+6. **Retururi → Configurare → Etichete** și **Motive de închidere** — opțional, pentru raportare.
+7. Verificați că firma are adresă completă și e-mail: fișa de retur tipărește adresa unde vine
    coletul, din `company_id.partner_id`.
 
 ## 6. Flux de utilizare
@@ -297,9 +328,17 @@ fișa cererii —, deci AWB-ul îl generează conectorul curierului, ca la orice
 
 ![Transferul de retur](screenshots/16_transfer_retur.png)
 
-**Repune în stoc** creează transferul **numai** din liniile cu verdictul „bun". Observați
+**Repune în stoc** creează transferul de retur din liniile cu verdictul „bun". Observați
 *Document sursă: Return of …* — legătura cu livrarea pe care o anulează. Marfa intră în stoc când
 **validați** transferul, nu înainte.
+
+Liniile cu verdict „defect confirmat” sau „deteriorat” primesc un al doilea transfer, spre locația
+pentru marfa defectă, dacă e setată și dacă rezolvarea nu e reparație sau refuz. **Trimite înapoi la
+client** nu ia niciodată marfa din locația de defecte: aceea e deja a noastră.
+
+**Alegeți rezolvarea înainte de „Repune în stoc”.** Marfa defectă intră în locația de defecte doar la
+banii înapoi sau la înlocuire; fără rezolvare aleasă, butonul o cere. După ce marfa defectă a fost
+primită, cererea nu mai poate trece pe reparație sau refuz.
 
 ### Configurarea
 
@@ -356,8 +395,10 @@ contabil, e o factură cu valori negative (art. 330 alin. (2) Cod fiscal):
       discount), e legată de ea, iar totalul ei e suma *De returnat clientului* de pe cerere.
 - [ ] Încadrarea taxei de manipulare (reducere de bază / serviciu 704 / penalitate 7581) e stabilită
       cu contabilul clientului.
-- [ ] Există o locație pentru marfa cu verdict „defect” și o procedură de ieșire (retur la furnizor
-      sau casare).
+- [ ] Locația pentru marfa defectă e setată, lângă stocul depozitului, și există o procedură de
+      ieșire din ea (retur la furnizor sau casare cu proces-verbal).
+- [ ] Contabilul clientului știe să țină 8032/8033 pentru produsele primite la reparație sau
+      refuzate și să evalueze la închiderea exercițiului marfa din locația de defecte (397/6814).
 - [ ] Clientul de portal vede doar cererile lui: testați cu doi clienți diferiți.
 
 ## 9. Mesaje de eroare frecvente

@@ -2765,3 +2765,17 @@ This is an append-only log of all operations performed on the wiki.
 - **Acțiune:** pagină nouă [l10n_ro_payroll_allowances](l10n_ro_payroll_allowances/index.md), cu fișa consultant și cele 5 capturi: nomenclator de sporuri, sporuri permanente pe angajat (`SPORPERM`, proratate în luna cu timp nelucrat), sporul pentru ore suplimentare din prezențe (`SPOR_ORE_SUPL`, 75%) și pentru munca de noapte (`SPOR_NOAPTE`, 25%), cu minimul legal impus pe procente.
 - **De verificat / rămas:** munca în sărbători (≥ 100%) și în repausul săptămânal (≥ 150%), compensarea cu timp liber, orele de noapte din prezențe, condiția de 3 ore, clauza de mobilitate.
 - **Fișiere actualizate:** `l10n_ro_payroll_allowances/` (index.md, FISA_CONSULTANT.md, screenshots), `index.md`, `log.md`.
+
+---
+
+## [2026-10-05] Re-ingest: `deltatech_rma` — marfa defectă în locație proprie
+
+- **Acțiune:** Pagina actualizată de la 19.0.1.4.2 la 19.0.1.5.0 (bitshop#2980). Fișa consultant e recopiată din modul.
+- **Detalii:**
+    - `19.0.1.5.0`: locație pentru marfa defectă, setată pe companie. Marfa „defect confirmat” / „deteriorat” intră în gestiune la banii înapoi sau la înlocuire (Dr 371 = Cr 607). La reparație și refuz rămâne a clientului (8032/8033). Rezolvarea e obligatorie înainte de primire. Înlocuirea nu mai scade cantitatea livrată (`to_refund=False`). Corecțiile vin din auditul Pacioli, făcut înainte de merge.
+    - `19.0.1.4.3`: nota de credit convertește cantitatea în unitatea facturii (RMA-001), consemnat acum în pagină.
+- **Fișiere actualizate:**
+    - `wiki_module_odoo/deltatech_rma/index.md`
+    - `wiki_module_odoo/deltatech_rma/FISA_CONSULTANT.md`
+    - `wiki_module_odoo/log.md`
+    - `wiki_module_odoo/.index/chunks.json`
