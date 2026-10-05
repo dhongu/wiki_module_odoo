@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-05] Actualizare `l10n_ro_saft_export_fix` 19.0.1.1.0 (TVA cu deducere limitată la 50% în SAF-T)
+
+- **Acțiune:** [l10n_ro_saft_export_fix](l10n_ro_saft_export_fix/index.md): separarea TVA-ului „21% ND 50%” în D406 după repartiția taxei — partea din 4426 primește codul 341104, partea din 6352 păstrează 391104 (nomenclatorul ANAF, nota „Situația 1”); aceeași regulă pe 391101–391105 → 341101–341105, plus codul deductibil în `TaxTable`. Fișa consultant nouă (6 pași, factură 2 × 250 lei, extras XML) și 5 capturi copiate.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/FISA_CONSULTANT.md` și `models/account_general_ledger.py` din PR terrabit-solutions/l10n_ro_ent#482.
+- **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** fără dependențe noi. De verificat: Situația 2 (ajustare prin notă 6xx = 4426) nu e tratată automat; codurile de 11% (341105/391105) apar marcate „x - Inactiv” în nomenclatorul 2026.
+- **Fișiere actualizate:** `l10n_ro_saft_export_fix/index.md`, `FISA_CONSULTANT.md`, `screenshots/` (5 noi), `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-05] Actualizare `l10n_ro_hr_payroll_enhancement` 19.0.2.7.0 (S11, prime în net)
 
 - **Acțiune:** [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md): prime în net cu recalculul brutului (*Primă (în net)* / *Primă (în brut)*, regulile `PRIMA` / `PRIMA_NET`, solver cu căutare binară și fereastră de 60 lei în savepoint); fișa consultant (pasul 24) și captura 24 copiate.

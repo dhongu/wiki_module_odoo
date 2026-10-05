@@ -501,7 +501,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_reverse_charge_331_sale](l10n_ro_reverse_charge_331_sale/index.md): Extinde garda de taxare inversă art. 331 la oferte și comenzi de vânzare, ca prețul afișat clientului să fie corect încă din faza de ofertă.
 - [l10n_ro_rni_report](l10n_ro_rni_report/index.md): Raport contabil pe soldul 408, cu drill-down pe furnizor și document, pentru recepțiile încă nefacturate.
 - [l10n_ro_saft_etva](l10n_ro_saft_etva/index.md): Importă decontul precompletat RO e-TVA (OUG 70/2024) din SPV și îl reconciliază automat cu D300-ul intern, blocând depunerea la diferențe critice.
-- [l10n_ro_saft_export_fix](l10n_ro_saft_export_fix/index.md): Elimină secțiunile goale respinse de ANAF din exportul SAF-T D406 și raportează plățile care nu provin dintr-un extras bancar (numerar și plăți nereconciliate).
+- [l10n_ro_saft_export_fix](l10n_ro_saft_export_fix/index.md): Elimină secțiunile goale respinse de ANAF, raportează plățile fără extras bancar și separă TVA-ul deductibil (341104) de cel nedeductibil (391104) la deducerea limitată la 50% în SAF-T D406.
 - [l10n_ro_saft_fix](l10n_ro_saft_fix/index.md): Previne eroarea de instalare a `l10n_ro_saft` (taxe create fără nume) și corectează codurile SAF-T `TaxCode` greșite pentru cotele de TVA 21%/11%.
 - [l10n_ro_saft_validator](l10n_ro_saft_validator/index.md): Verificări de pre-export SAF-T D406 pe cele trei spețe (companie, parteneri, note fără partener, articole, secțiuni care ar ieși goale), derivate din respingerile validatorului oficial.
 - [l10n_ro_sale_order_report](l10n_ro_sale_order_report/index.md): Tipărirea facturilor proforme (inițială și finală) direct din oferta de vânzare.
