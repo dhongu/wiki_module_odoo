@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-05] Actualizare `l10n_ro_fixed_assets` 19.0.1.13.1 (capturile ecranelor din fazele 8–9)
+
+- **Acțiune:** Actualizare. [l10n_ro_fixed_assets](l10n_ro_fixed_assets/index.md): fișa consultant recopiată, cu cinci capturi noi (grila mijloacelor fixe, închiderea lunii, registrul pe gestiuni, reevaluarea în lot, listele de inventariere 14-3-12); versiunea paginii 19.0.1.13.1. Funcționalitățile nu se schimbă față de 19.0.1.13.0 (doar traduceri și titluri în interfață).
+- **Sursă:** `readme/FISA_CONSULTANT.md` și `readme/screenshots/` din PR terrabit-solutions/l10n_ro_ent#454.
+- **Fișiere actualizate:** `l10n_ro_fixed_assets/index.md` (versiune, dată), `FISA_CONSULTANT.md`, `screenshots/` (10–14 noi), `log.md`, `.index/chunks.json` (doar intrarea modulului).
+
+---
+
 ## [2026-10-05] Actualizare `l10n_ro_payroll_bank_export` 19.0.1.1.0 (format BCR, BRD aliniat)
 
 - **Acțiune:** [l10n_ro_payroll_bank_export](l10n_ro_payroll_bank_export/index.md): format BCR (Click 24 / George, plăți salariale, după instrucțiunile publice ale băncii) cu câmpul nou *Contul plătitor*; BRD aliniat la specificația oficială (suma cu virgulă și două zecimale, coloana *Data* goală, nume și detalii până la 35 de caractere); fișa consultant copiată.

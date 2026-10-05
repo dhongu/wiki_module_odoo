@@ -12904,7 +12904,7 @@
   {
     "path": "l10n_ro_fixed_assets/index.md",
     "module": "l10n_ro_fixed_assets",
-    "version": "19.0.1.13.0",
+    "version": "19.0.1.13.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_fixed_assets",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_fixed_assets",
     "last_ingest": null,

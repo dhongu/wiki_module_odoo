@@ -184,6 +184,8 @@ situația de la 31.12.
 activele sunt grupate după gestiunea de la data raportului (o mutare din februarie nu schimbă
 registrul la 31.12 al anului anterior); activele fără gestiune apar la „Without location”.
 
+![Registrul imobilizărilor pe gestiuni — gestiunea de la data raportului, cost istoric](screenshots/12_registrul_pe_gestiuni.png)
+
 **Liste de inventariere (din 19.0.1.11.0):** Contabilitate → Active → **Fixed Asset Inventory Lists**.
 Alegeți data inventarului, gestiunile (gol = toate), decizia de numire și comisia. Rezultă câte o listă de
 inventariere (14-3-12) pe gestiune, cu mijloacele fixe aflate în gestiune la data inventarului și valoarea
@@ -192,6 +194,8 @@ Cantitatea faptică, diferențele, valoarea de inventar și deprecierea le compl
 imobilizări se înscrie valoarea contabilă minus ajustări, comparată cu valoarea actuală (OMFP 2861/2009
 pct. 34 alin. (2), pct. 37). Bunurile terților, imobilizările în curs și activele depreciate se trec pe
 liste distincte (pct. 13, 14, 19, 20), azi întocmite separat. Export PDF și XLSX.
+
+![Lista de inventariere (14-3-12) pe gestiune — coloanele de constatare rămân pentru comisie](screenshots/14_lista_inventariere.png)
 
 ### Pasul 5b — Operarea de zi cu zi: grila, închiderea lunii, operațiile în lot (din 19.0.1.13.0)
 
@@ -204,6 +208,8 @@ funcțiune sunt needitabile în grilă (gestiunea se schimbă prin transfer, val
 situația de azi: amortizarea cumulată, valoarea netă, amortizarea lunii și lunile rămase. Filtre: în
 ciornă, în funcțiune, în conservare, amortizate integral, fără număr de inventar / fără PIF / fără
 categorie, ieșite în anul curent; grupare pe cont, gestiune, categorie.
+
+![Grila mijloacelor fixe — rândul în ciornă se completează în listă, cele în funcțiune arată situația de azi](screenshots/10_grila_mijloace_fixe.png)
 
 **Închiderea lunii** (Contabilitate → Active → **Fixed Assets Month Closing**), după încheierea lunii:
 1. **Check** — verificări: active achiziționate până la sfârșitul lunii, dar neconfirmate; active fără număr
@@ -219,12 +225,16 @@ categorie, ieșite în anul curent; grupare pe cont, gestiune, categorie.
 Raportul PDF de închidere cuprinde verificările, amortizarea lunii și reconcilierea; închiderile rămân în
 listă, cu istoricul în chatter.
 
+![Închiderea lunii — verificările înainte de postarea amortizării](screenshots/11_inchidere_luna.png)
+
 **Operații în lot**, din lista de active (selecție → **Acțiuni**):
 - **Batch Transfer** — mută activele selectate în altă gestiune / la alt responsabil, la o dată: câte un
   transfer confirmat (bon de mișcare) pe activ.
 - **Batch Revaluation** (managerul contabil) — reevaluarea de la sfârșitul exercițiului pe o listă: valoarea
   netă la dată pe fiecare activ și o coloană pentru valoarea justă din raportul evaluatorului; confirmarea
   creează câte o reevaluare pe activ, cu aceleași note și verificări ca reevaluarea individuală.
+
+  ![Reevaluarea în lot — valoarea netă la dată și valoarea justă pe fiecare activ](screenshots/13_reevaluare_lot.png)
 - Tipărirea în lot (fișa mijlocului fix, PV-urile de recepție, registrul numerelor de inventar) se face din
   **Tipărire** pe selecție.
 
@@ -618,6 +628,14 @@ din `l10n_ro_doc_screenshots`, HttpCase + Playwright), pe companie RO, în lei, 
 14. `09_reevaluare_dupa.png` — același plan, după reevaluare: lunile deja postate neschimbate,
     luna reevaluării neschimbată (200 lei, fix 19.0.1.3.2 — fără split pe zile), lunile viitoare
     recalculate pe noua valoare (~161,54 lei).
+15. `10_grila_mijloace_fixe.png` — grila mijloacelor fixe: rândul în ciornă introdus în listă și
+    activele în funcțiune cu amortizarea cumulată, valoarea netă, amortizarea lunii și lunile rămase.
+16. `11_inchidere_luna.png` — închiderea lunii, verificată: verificările găsite, cu link la înregistrări.
+17. `12_registrul_pe_gestiuni.png` — varianta „pe gestiuni” a registrului, cu coloana „Cost istoric”.
+18. `13_reevaluare_lot.png` — reevaluarea în lot: valoarea netă la dată, valoarea justă, diferența.
+19. `14_lista_inventariere.png` — listele de inventariere (14-3-12), câte una pe gestiune.
+
+Capturile 15–19 vin din `test_capture_operare`; le regenerează aceeași comandă.
 
 Regenerare:
 ```
