@@ -133,14 +133,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ## [2026-10-03] Actualizare `l10n_ro_payroll_ro` 19.0.1.3.0 și `l10n_ro_anaf_d112_payroll` 19.0.1.3.0 (rețineri deductibile, S2)
 
-- **Acțiune:** Re-ingestie. [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md) la 19.0.1.3.0: sindicat, pensie facultativă și asigurare de sănătate scad baza impozitului (reguli `DEDBAZA` / `RETINERI`, plafon 400 EUR/an pe cumul în euro și pe grup, doar la funcția de bază). [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) la 19.0.1.3.0: `DEDBAZA` → `E1_5` / `E3_13`.
+- **Acțiune:** Re-ingestie. [l10n_ro_payroll_ro](l10n_ro_hr_payroll_enhancement/index.md) la 19.0.1.3.0: sindicat, pensie facultativă și asigurare de sănătate scad baza impozitului (reguli `DEDBAZA` / `RETINERI`, plafon 400 EUR/an pe cumul în euro și pe grup, doar la funcția de bază). [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) la 19.0.1.3.0: `DEDBAZA` → `E1_5` / `E3_13`.
 - **Sursă:** `__manifest__.py`, `readme/HISTORY.md`, `FISA_CONSULTANT.md` din `19.0` (PR terrabit-solutions/l10n_ro_ent#405, S2 din `ROADMAP_salarizare_ro.md`; verificat cu Pacioli înainte de merge).
 - **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** neschimbate. Pasul 12 din fișă (rețineri) nu are încă captură.
 - **Fișiere actualizate:** `l10n_ro_payroll_ro/` (index + fișă), `l10n_ro_anaf_d112_payroll/index.md`, `log.md`, `.index/chunks.json`.
 
 ## [2026-10-03] Actualizare `l10n_ro_payroll_ro` 19.0.1.2.0 și `l10n_ro_anaf_d112_payroll` 19.0.1.2.1 (conturi implicite pe reguli, S1)
 
-- **Acțiune:** Re-ingestie. [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md) adus la 19.0.1.2.0: nota contabilă la validarea fluturașului prin conturi implicite pe regulile salariale (641 = 421; 421 = 43151 / 43161 / 4441; 6461 = 4361; 6422 = 5328; 421 = 4271), completate doar unde lipsesc; fișa consultant recopiată cu a 11-a captură (nota contabilă). [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) la 19.0.1.2.1: previzualizarea live a CAM fără suma neimpozabilă.
+- **Acțiune:** Re-ingestie. [l10n_ro_payroll_ro](l10n_ro_hr_payroll_enhancement/index.md) adus la 19.0.1.2.0: nota contabilă la validarea fluturașului prin conturi implicite pe regulile salariale (641 = 421; 421 = 43151 / 43161 / 4441; 6461 = 4361; 6422 = 5328; 421 = 4271), completate doar unde lipsesc; fișa consultant recopiată cu a 11-a captură (nota contabilă). [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) la 19.0.1.2.1: previzualizarea live a CAM fără suma neimpozabilă.
 - **Sursă:** `__manifest__.py`, `readme/HISTORY.md`, `FISA_CONSULTANT.md` din `19.0` (PR terrabit-solutions/l10n_ro_ent#404, S1 din `ROADMAP_salarizare_ro.md`).
 - **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** neschimbate. CAM rotunjit pe angajat (432) vs. pe total în D112 (430): decizie de rotunjire rămasă deschisă.
 - **Fișiere actualizate:** `l10n_ro_payroll_ro/` (index + fișă + `screenshots/`), `l10n_ro_anaf_d112_payroll/index.md`, `log.md`, `.index/chunks.json`.
@@ -149,7 +149,7 @@ This is an append-only log of all operations performed on the wiki.
 
 ## [2026-10-03] Actualizare `l10n_ro_anaf_d112` 19.0.2.5.0, `l10n_ro_anaf_d112_payroll` 19.0.1.2.0 și `l10n_ro_payroll_ro` 19.0.1.1.5 (scutirea art. 60)
 
-- **Acțiune:** Re-ingestie, trei module. Scutirea de impozit din art. 60 e declarată în D112 ca în SAGA (referință: XML D112 09/2026 generat de SAGA și validat de DUKIntegrator): `asigScu`, `E3_23`/`E3_24`, `E3_27`/`E3_28`, obligația 602 și `angajatorF1`; `E3_16` include tichetele; XSD-ul 07/2026 admite `A_1` = 51. [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md), [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) și [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md) actualizate (limitele nu mai spun că scutirea nu se transferă); fișele recopiate.
+- **Acțiune:** Re-ingestie, trei module. Scutirea de impozit din art. 60 e declarată în D112 ca în SAGA (referință: XML D112 09/2026 generat de SAGA și validat de DUKIntegrator): `asigScu`, `E3_23`/`E3_24`, `E3_27`/`E3_28`, obligația 602 și `angajatorF1`; `E3_16` include tichetele; XSD-ul 07/2026 admite `A_1` = 51. [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md), [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) și [l10n_ro_payroll_ro](l10n_ro_hr_payroll_enhancement/index.md) actualizate (limitele nu mai spun că scutirea nu se transferă); fișele recopiate.
 - **Sursă:** `__manifest__.py`, `readme/HISTORY.md`, `FISA_CONSULTANT.md` din `19.0` (PR terrabit-solutions/l10n_ro_ent#402).
 - **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** neschimbate. Interpretarea `E3_23` = bază impozabilă provine din SAGA; de confirmat cu contabilul.
 - **Fișiere actualizate:** `l10n_ro_anaf_d112/index.md`, `l10n_ro_anaf_d112_payroll/` și `l10n_ro_payroll_ro/` (index + fișă), `log.md`, `.index/chunks.json`.
@@ -167,7 +167,7 @@ This is an append-only log of all operations performed on the wiki.
 
 ## [2026-10-02] Actualizare `l10n_ro_payroll_ro` 19.0.1.1.4, `l10n_ro_anaf_d112_payroll` 19.0.1.1.1 și `l10n_ro_anaf_d112` 19.0.2.4.1 (tichet 9660)
 
-- **Acțiune:** Re-ingestie, trei module. [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md) la 19.0.1.1.4: fluturașul tipărit (PDF) cu linia tichetelor pe număr × valoare și fără rata ±100%; fișa recopiată cu 10 capturi. [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) la 19.0.1.1.1: fișă consultant nouă (2 capturi, extras XML), documentație (DESCRIPTION, USAGE, CONFIGURE), baza CAM fără suma neimpozabilă. [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md) la 19.0.2.4.1: grila DPB pe tranșe în calculul automat, tichete în `E3_10`/`E3_60`, baza CAM = brut − suma neimpozabilă.
+- **Acțiune:** Re-ingestie, trei module. [l10n_ro_payroll_ro](l10n_ro_hr_payroll_enhancement/index.md) la 19.0.1.1.4: fluturașul tipărit (PDF) cu linia tichetelor pe număr × valoare și fără rata ±100%; fișa recopiată cu 10 capturi. [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) la 19.0.1.1.1: fișă consultant nouă (2 capturi, extras XML), documentație (DESCRIPTION, USAGE, CONFIGURE), baza CAM fără suma neimpozabilă. [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md) la 19.0.2.4.1: grila DPB pe tranșe în calculul automat, tichete în `E3_10`/`E3_60`, baza CAM = brut − suma neimpozabilă.
 - **Sursă:** `__manifest__.py`, `readme/HISTORY.md`, `FISA_CONSULTANT.md` din `19.0` (PR-urile terrabit-solutions/l10n_ro_ent#398, #399, #400).
 - **Corecții față de readme:** nu e cazul.
 - **Dependențe/Conexiuni:** neschimbate. Scutirea art. 60 nu se transferă în D112 (limită consemnată în pagini și fișe).
@@ -177,7 +177,7 @@ This is an append-only log of all operations performed on the wiki.
 
 ## [2026-10-02] Actualizare `l10n_ro_payroll_ro` la 19.0.1.1.3 (ecran angajat rearanjat, documentație)
 
-- **Acțiune:** Re-ingestie. [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md) adus la 19.0.1.1.3: formularele angajatului și versiunii de contract rearanjate (grupul «Salarizare România»), `DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `CONTEXT.md` actualizate în modul; fișa consultant recopiată cu capturile 02–08 regenerate (9 în total).
+- **Acțiune:** Re-ingestie. [l10n_ro_payroll_ro](l10n_ro_hr_payroll_enhancement/index.md) adus la 19.0.1.1.3: formularele angajatului și versiunii de contract rearanjate (grupul «Salarizare România»), `DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `CONTEXT.md` actualizate în modul; fișa consultant recopiată cu capturile 02–08 regenerate (9 în total).
 - **Sursă:** `__manifest__.py`, `readme/HISTORY.md`, `FISA_CONSULTANT.md`, `views/hr_version_views.xml` din `19.0` (PR-ul terrabit-solutions/l10n_ro_ent#397).
 - **Corecții față de readme:** nu e cazul — `DESCRIPTION.md` nu mai e depășit.
 - **Dependențe/Conexiuni:** neschimbate.
@@ -187,7 +187,7 @@ This is an append-only log of all operations performed on the wiki.
 
 ## [2026-10-02] Actualizare `l10n_ro_payroll_ro` la 19.0.1.1.2 și `l10n_ro_anaf_d112_payroll` la 19.0.1.1.0 (tichet 9660)
 
-- **Acțiune:** Re-ingestie. [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md) adus la 19.0.1.1.2: grila art. 77 pe tranșe, salariul minim cu istoric, persoane în întreținere și copii, deducere pentru tineri, funcție de bază, suma neimpozabilă, tichete de masă, scutiri art. 60, rotunjiri; fișa consultant recopiată cu cele 9 capturi (cele vechi înlocuite). [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) adus la 19.0.1.1.0: transferă tichetele, suma neimpozabilă și deducerile în D112.
+- **Acțiune:** Re-ingestie. [l10n_ro_payroll_ro](l10n_ro_hr_payroll_enhancement/index.md) adus la 19.0.1.1.2: grila art. 77 pe tranșe, salariul minim cu istoric, persoane în întreținere și copii, deducere pentru tineri, funcție de bază, suma neimpozabilă, tichete de masă, scutiri art. 60, rotunjiri; fișa consultant recopiată cu cele 9 capturi (cele vechi înlocuite). [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) adus la 19.0.1.1.0: transferă tichetele, suma neimpozabilă și deducerile în D112.
 - **Sursă:** `__manifest__.py`, `readme/HISTORY.md`, `FISA_CONSULTANT.md`, codul modulelor din `19.0` (PR-urile terrabit-solutions/l10n_ro_ent#393–#396).
 - **Corecții față de readme:** `readme/DESCRIPTION.md` al modulului `l10n_ro_payroll_ro` e depășit (descrie descreșterea liniară a deducerii și S1/S2 ca bază) — pagina wiki urmează codul și fișa, nu DESCRIPTION.
 - **Dependențe/Conexiuni:** adăugată legătura reciprocă payroll_ro ↔ d112_payroll.
