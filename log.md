@@ -2731,3 +2731,11 @@ This is an append-only log of all operations performed on the wiki.
 - **Fișiere actualizate:**
     - `wiki_module_odoo/deltatech_rma/index.md`
     - `wiki_module_odoo/log.md`
+
+---
+
+## [2026-10-05] Ingestie `l10n_ro_expense_allowance_payroll`, `l10n_ro_payroll_statements`, `l10n_ro_payroll_tax_redirect` și actualizare `l10n_ro_anaf_d112` 19.0.2.10.0, `l10n_ro_expense_allowance` 19.0.1.1.0 (S12, S14, S15)
+
+- **Acțiune:** pagini noi pentru [l10n_ro_expense_allowance_payroll](l10n_ro_expense_allowance_payroll/index.md) (S12, diurna în fluturaș și D112), [l10n_ro_payroll_statements](l10n_ro_payroll_statements/index.md) (S15, tipăriri centralizate) și [l10n_ro_payroll_tax_redirect](l10n_ro_payroll_tax_redirect/index.md) (S14, redirecționarea de 3,5%), cu fișele consultant și capturile. Actualizate [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md) (puncte de extensie pentru redirecționare) și [l10n_ro_expense_allowance](l10n_ro_expense_allowance/index.md) (cuantum 23 lei/zi).
+- **De verificat:** semnificația atributului `cota` din `asiguratE4` (procent sau cod); nivelul de 23 lei/zi; E3_52 / E3_59; validarea cu DUKIntegrator.
+- **Fișiere actualizate:** cele 5 pagini (index.md, FISA_CONSULTANT.md, screenshots), `index.md`, `log.md`.

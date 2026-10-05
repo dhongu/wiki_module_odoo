@@ -1,10 +1,10 @@
 # Romania - Declarația D112 ANAF (FR-44) (localizat la `l10n_ro_anaf_d112/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d112`
-- **Versiune:** `19.0.2.9.0`
+- **Versiune:** `19.0.2.10.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112`
-- **Ultima Ingestie:** `2026-10-04`
+- **Ultima Ingestie:** `2026-10-05`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -71,7 +71,11 @@ Fluxul complet lunar (previzualizare → ciornă → verificare linii → reconc
 
 *Nu au fost identificate acțiuni automate (`ir.cron`); calculul, validarea și exportul se declanșează manual prin butoanele din formular.*
 
+- **Redirecționarea de 3,5% (19.0.2.10.0):** puncte de extensie pentru [l10n_ro_payroll_tax_redirect](../l10n_ro_payroll_tax_redirect/index.md): `A_deductibil` și `angajatorF1` scad impozitul de plată (`A_plata = A_datorat − A_deductibil − A_scutit`), iar pe asigurat apar `Tcota_E4`, `Tsuma_E4` și `asiguratE4`; fără modulul de redirecționare nu se schimbă nimic.
+
 #### 5. Conexiuni
+- [l10n_ro_payroll_tax_redirect](../l10n_ro_payroll_tax_redirect/index.md): redirecționarea de 3,5% din impozit, declarată prin punctele de extensie ale D112.
+- [l10n_ro_expense_allowance_payroll](../l10n_ro_expense_allowance_payroll/index.md): diurna neimpozabilă la rândul 8.4.3 (`E3_62`) și în `E3_69`.
 
 - [l10n_ro_anaf_base](../l10n_ro_anaf_base/index.md): furnizează infrastructura comună ANAF (profilele de declarație v6/v7, mixin-ul de handler de raport, codul CAEN al companiei) folosită de D112.
 - [l10n_ro_anaf_d100](../l10n_ro_anaf_d100/index.md): altă declarație ANAF din aceeași familie, integrată similar în tabloul `account.return`.

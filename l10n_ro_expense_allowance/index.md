@@ -1,10 +1,10 @@
 # Romania - Diurne și deplasări (plafon 2,5x) (localizat la `l10n_ro_expense_allowance/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_expense_allowance`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_expense_allowance
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_expense_allowance`
-- **Ultima Ingestie:** 2026-06-01
+- **Ultima Ingestie:** 2026-10-05
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 ## 1. Sumar
@@ -40,6 +40,10 @@ Extinde modulul `deltatech_expenses` (Decont Cheltuieli) cu verificarea automat�
 
 *Nu au fost identificate acțiuni automate; calculul se face la completarea decontului.*
 
+- **Cuantum intern 23 lei/zi** (limită neimpozabilă 57,50 lei/zi) în locul celui vechi de 13 lei/zi (19.0.1.1.0); migrarea schimbă doar valoarea necustomizată. Nivelul rămâne de verificat pe legislatie.just.ro.
+- **Fluturaș și D112:** partea impozabilă, plafonul de 3 salarii pe lună și diurna neimpozabilă în D112 sunt în [l10n_ro_expense_allowance_payroll](../l10n_ro_expense_allowance_payroll/index.md).
+
 ## 5. Conexiuni
+- [l10n_ro_expense_allowance_payroll](../l10n_ro_expense_allowance_payroll/index.md): diurna în fluturaș și în D112.
 
 - `[[l10n_ro_expense_currency]]`

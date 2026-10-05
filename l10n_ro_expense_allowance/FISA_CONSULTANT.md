@@ -18,14 +18,14 @@ depășește plafonul. Cuantumurile legale (intern/extern, per țară) sunt țin
 ## 2. Bază legală și context
 
 - **HG 714/2018** — cuantumul indemnizației de delegare/detașare **în țară** (un nivel stabilit pentru
-  instituțiile publice, actualizat periodic prin HG). Valoarea din datele demo (13 RON/zi) este un
-  **exemplu parametrizabil** — **actualizați-o** la nivelul HG în vigoare la data deplasării.
+  instituțiile publice, actualizat periodic prin HG). Valoarea preîncărcată (23 RON/zi) este
+  **parametrizabilă** — **verificați-o și actualizați-o** la nivelul HG în vigoare la data deplasării.
 - **HG 518/1995** (actualizată, ex. OMAI 976/2023) — cuantumul diurnei pentru **deplasări externe**, per țară.
 - **Codul fiscal, art. 76 alin. (2) lit. k)** — diurna este neimpozabilă în limita a **2,5 × nivelul
   legal** stabilit pentru instituțiile publice; ce depășește este **venit din salarii** (impozit pe venit
   + contribuții sociale).
 
-> **Atenție — al doilea plafon legal.** Art. 76 alin. (2) lit. k) prevede **două** plafoane care se
+> **Atenție — al doilea plafon legal** (tratat în modulul `l10n_ro_expense_allowance_payroll`, instalat automat cu salarizarea). Art. 76 alin. (2) lit. k) prevede **două** plafoane care se
 > aplică simultan: (a) **2,5 × nivelul legal** și (b) **3 salarii de bază** corespunzătoare locului de
 > muncă, raportat la zilele lucrătoare din lună. **Acest modul verifică doar plafonul (a) — 2,5×**;
 > plafonul de 3 salarii rămâne o **verificare manuală** la salarizare.
@@ -68,7 +68,7 @@ Date minime pentru demo: un angajat, un decont cu număr de zile și diurnă/zi 
 
 ### Pasul 2 — Cuantumul intern (HG 714/2018)
 
-Pe un cuantum, vedeți baza (13 RON/zi), multiplicatorul (2,5) și limita rezultată (32,50 RON/zi).
+Pe un cuantum, vedeți baza (13 RON/zi), multiplicatorul (2,5) și limita rezultată (32,50 RON/zi). (Capturile folosesc valoarea veche de 13 RON/zi; preîncărcarea actuală e 23 RON/zi, limita 57,50 RON/zi.)
 
 ![Cuantum legal intern — 13 × 2,5 = 32,50 RON/zi](screenshots/02_cuantum_intern.png)
 
