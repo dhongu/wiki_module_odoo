@@ -4,6 +4,17 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-05] Actualizare `l10n_ro_vat_deductibility` 19.0.1.5.0, `l10n_ro_anaf_d300` 19.0.0.0.18, `l10n_ro_account_vat_journal` 19.0.1.5.3 (TVA deductibilă parțial / 50%)
+
+- **Acțiune:** re-ingestie în paralel (3 subagenți) după PR terrabit-solutions/l10n_ro_ent#483.
+  - [l10n_ro_vat_deductibility](l10n_ro_vat_deductibility/index.md): grupul „TVA 21% (50% Nedeductibil)” scos în favoarea taxei standard „21% ND 50%”. Baza rămâne întreagă pe contul liniei, iar TVA-ul nededus merge pe contul jurnalului (pro-rata) sau pe contul liniei. Fișa consultant (5 capturi) și `Manual_TVA_Nedeductibil_50.md` sunt copiate.
+  - [l10n_ro_anaf_d300](l10n_ro_anaf_d300/index.md): noutățile 13–18, printre care rândul brut cu TVA nededusă rotunjit o singură dată (105, nu 53 + 53) și TVA nededusă fără linii tehnice. Fișa și 4 capturi recopiate.
+  - [l10n_ro_account_vat_journal](l10n_ro_account_vat_journal/index.md): noutățile 1.2.6–1.5.3, printre care recapitulația pe rânduri D300, coloanele TVA nededusă și TVA la încasare, plus semnăturile. Fișa și 13 capturi recopiate.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md` și `HISTORY.md` ale celor trei module, de pe 19.0 (`2ade4f60`).
+- **Corecții față de readme:** nu e cazul. Am corectat descrierea „Situației 2” din conexiunea către `l10n_ro_saft_export_fix`: înregistrare integral deductibilă, apoi notă 6xx = 4426.
+- **Dependențe/Conexiuni:** conexiuni noi `l10n_ro_vat_deductibility` → [l10n_ro_saft_export_fix](l10n_ro_saft_export_fix/index.md) (341104 / 391104), `l10n_ro_anaf_d300` → `l10n_ro_vat_deductibility`, `l10n_ro_customs_dvi`, `l10n_ro_account_vat_journal` → `l10n_ro_anaf_d300`, `l10n_ro_vat_deductibility`.
+- **Fișiere actualizate:** cele trei directoare de modul (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`, plus manualul la `l10n_ro_vat_deductibility`), `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-05] Actualizare `l10n_ro_saft_export_fix` 19.0.1.1.0 (TVA cu deducere limitată la 50% în SAF-T)
 
 - **Acțiune:** [l10n_ro_saft_export_fix](l10n_ro_saft_export_fix/index.md): separarea TVA-ului „21% ND 50%” în D406 după repartiția taxei — partea din 4426 primește codul 341104, partea din 6352 păstrează 391104 (nomenclatorul ANAF, nota „Situația 1”); aceeași regulă pe 391101–391105 → 341101–341105, plus codul deductibil în `TaxTable`. Fișa consultant nouă (6 pași, factură 2 × 250 lei, extras XML) și 5 capturi copiate.

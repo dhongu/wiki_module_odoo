@@ -1,22 +1,28 @@
 # Romania - Jurnale de TVA (vânzări și cumpărări) (localizat la `l10n_ro_account_vat_journal/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_account_vat_journal`
-- **Versiune:** `19.0.1.2.5`
+- **Versiune:** `19.0.1.5.3`
 - **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal)
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_account_vat_journal`
-- **Ultima Ingestie:** `2026-09-25`
+- **Ultima Ingestie:** `2026-10-05`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul aduce Jurnalul de Vânzări și Jurnalul de Cumpărări — registrele lunare de TVA obligatorii cerute de auditorii ANAF — direct în motorul nativ de rapoarte contabile Enterprise al Odoo (`account.report`). Fiecare jurnal listează facturile, avizele de stornare și chitanțele înregistrate în perioadă, cu baza și TVA-ul defalcate pe fiecare cotă, tratează corect TVA la încasare (inclusiv facturile plătite peste mai multe luni) și taxarea inversă, iar datele rezultate stau la baza declarațiilor D300 și D394. Pe lângă jurnalele „clasice" (o coloană per taxă), modulul oferă acum și o pereche de jurnale **pe regimuri fiscale**, cu coloane fixe și configurabile (redenumire, ordonare, ascundere), iar exportul XLSX are aspect tipizat de registru, gata de tipărit și predat la inspecție.
+Modulul aduce Jurnalul de Vânzări și Jurnalul de Cumpărări — registrele lunare de TVA obligatorii cerute de auditorii ANAF — direct în motorul nativ de rapoarte contabile Enterprise al Odoo (`account.report`). Fiecare jurnal listează facturile, avizele de stornare și chitanțele înregistrate în perioadă, cu baza și TVA-ul defalcate pe fiecare cotă, tratează corect TVA la încasare (inclusiv facturile plătite peste mai multe luni) și taxarea inversă, iar datele rezultate stau la baza declarațiilor D300 și D394. Pe lângă jurnalele „clasice" (o coloană per taxă), modulul oferă acum și o pereche de jurnale **pe regimuri fiscale**, cu coloane fixe și configurabile (redenumire, ordonare, ascundere), iar exportul XLSX are aspect tipizat de registru, gata de tipărit și predat la inspecție. Jurnalele de cumpărări evidențiază și TVA-ul nededus, iar o recapitulație pe rânduri D300 permite reconcilierea rapidă cu decontul.
 
 #### 2. Funcționalități Cheie
 
-- Câte un rând pentru fiecare document (număr, dată, partener, cod fiscal, total document cu TVA);
+- Câte un rând pentru fiecare document, numerotat (coloana „Nr.”, ca în registrul tipărit), cu număr, dată (data facturii, nu cea contabilă), partener, cod fiscal, **tip document** (factură, factură storno, bon fiscal, sesiune POS, notă contabilă) și total cu TVA; la cumpărări apare și „Nr. document furnizor” (referința facturii primite, comparabilă cu e-Factura), iar sesiunea POS totalizează bonurile fiscale ale sesiunii;
 - **Jurnale standard**, cu coloane dinamice **Bază + TVA per cotă** (21% / 11% și cotele istorice 19% / 9% / 5%);
 - **Jurnale pe regimuri fiscale** noi — „Jurnal TVA Vânzări/Cumpărări pe regimuri (RO)" — cu coloane fixe per regim (taxabile pe cote, cote anterioare, taxare inversă, livrări/achiziții intracomunitare, export, scutite cu și fără drept de deducere, neimpozabile, autolichidare cu TVA deductibilă și colectată), configurabile în **Contabilitate → Configurare → Contabilitate → Coloane jurnale de TVA (RO)**: redenumire, reordonare, arhivare sau afișare doar dacă au operațiuni în perioadă;
 - Clasificarea unei taxe pe coloană urmează, în ordine: taxa aleasă explicit pe coloană, grupul de taxe, grilele D300 (inclusiv grile vechi adăugate manual), cota (pentru cotele istorice fără grile); taxele cu grile D300 neclasificate ajung în coloana „Alte operațiuni", ca nimic să nu dispară din jurnal;
+- **TVA nededusă** pe jurnalele de cumpărări (standard și pe regimuri): coloanele „TVA nededusă” și „TVA deductibilă totală” (= dedusă + nededusă), pentru ambele mecanisme Odoo (taxă cu repartiție parțială și „Deductibilitate” pe linie); o achiziție cu TVA nedeductibilă integral apare cu toată baza în coloana cotei. Fără linii tehnice `non_deductible_product` pentru companiile RO;
+- **Rânduri D300**: coloana „Rând D300” pe fiecare document și, sub Total, „Recapitulație pe rânduri D300” (bază și TVA pe rând, cu semnul din decont), pentru reconcilierea cu D300; partea nededusă a TVA-ului se împarte după liniile de produs cu deductibilitate sub 100%, iar documentele mai vechi cu linii tehnice se citesc ca înainte;
+- **TVA fără grile D300**: notele contabile pe 4426 / 4427 fără grile fiscale apar ca „Notă contabilă”, cu suma în coloana „TVA fără grile D300”, pentru verificare sau justificare (doar în jurnal, nu în datele D394);
+- **TVA la încasare pe ecran**: coloanele „Bază exigibilă” și „Bază neexigibilă (TVA la încasare)”, alături de „TVA neexigibilă”; XLSX-ul păstrează detaliul complet (inclusiv grupul „Total factură” pe fiecare cotă);
+- **Filtre**: partener (inclusiv pe facturile cu TVA la încasare reportate) și meniul „Documente”, cu „Documente datate înaintea perioadei” și, la cumpărări, „Doar documentele cu TVA nededusă”; filtrele schimbă doar rândurile afișate, nu datele pentru D300 / D394;
+- **Semnături** *Întocmit* și *Verificat* la finalul jurnalelor tipărite (PDF și XLSX), cu nume și funcție din Setări → Semnături pe jurnalele de TVA; dacă sunt goale, rămân linii de semnat de mână;
 - Tratarea **TVA la încasare** (bază și TVA eligibile / neeligibile), inclusiv **urmărirea peste mai multe luni**: o factură rămâne vizibilă cu valoarea integrală în luna înregistrării, soldul neexigibil se reportează, iar partea exigibilă apare treptat, pe cote, în luna fiecărei plăți, până la stingerea integrală;
 - Tratarea operațiunilor de **taxare inversă** (art. 331), inclusiv TVA colectat din autolichidare pe achiziții intracomunitare, într-o coloană dedicată pe jurnalul de cumpărări;
 - Rând de totaluri pentru fiecare jurnal, cu valoare calculată (nu doar formulă) pe fiecare coloană;
@@ -40,9 +46,12 @@ Modulul aduce Jurnalul de Vânzări și Jurnalul de Cumpărări — registrele l
 - `l10n_ro_account_vat_journal.regime.report.mixin` (`AbstractModel`): varianta „pe regimuri" a jurnalelor — păstrează interogarea, TVA la încasare, taxarea inversă și totalurile jurnalului standard, dar înlocuiește coloanele per-taxă cu coloanele fixe din `l10n_ro.vat.journal.column`; mai multe taxe cu aceeași încadrare (ex. două taxe de 21% cu denumiri diferite) ajung în aceeași coloană.
 - `l10n_ro_account_vat_journal.purchase.regime.report.handler` / `...sale.regime.report.handler`: combină mixin-ul de regim cu handler-ul standard de cumpărări/vânzări pentru cele două jurnale pe regimuri.
 
+- `res.company` / `res.config.settings` (extindere): câmpurile cu numele pentru semnăturile „Întocmit” și „Verificat” de pe jurnalele tipărite.
+
 **Vizualizări**
 
 - `view_l10n_ro_vat_journal_column_list` / `..._form` / `..._search`: interfața de configurare a coloanelor jurnalelor pe regimuri — listă cu ordonare prin drag (`sequence`, widget `handle`), grupare/filtrare pe tip de jurnal, formular cu secțiunile „Column" (etichetă, tip, fel, ordine, activ) și „Classification" (taxe explicite, referințe plan de conturi RO, grupuri de taxe, grile D300, cotă, prioritate de potrivire).
+- Vizualizarea moștenită a setărilor (`res.config.settings`): secțiunea „Semnături pe jurnalele de TVA”; template-uri pentru exportul PDF (`pdf_export_templates.xml`) și filtrele suplimentare ale rapoartelor (`static/src/vat_journal_filters.xml`).
 - Restul interfeței (jurnalele standard și cele pe regimuri) este generată de motorul nativ `account.report` (rapoarte Enterprise, randate prin acțiunea client `account_report`); modulul nu adaugă vizualizări de formular/listă clasice pentru rapoarte.
 
 **Acțiuni Automate / Acțiuni Server**
@@ -56,5 +65,7 @@ Modulul aduce Jurnalul de Vânzări și Jurnalul de Cumpărări — registrele l
 #### 5. Conexiuni
 
 - [l10n_ro_anaf_base](../l10n_ro_anaf_base/index.md): furnizează mixin-ul `l10n_ro_anaf.report.handler.mixin` folosit de toate handler-ele de raport.
+- [l10n_ro_anaf_d300](../l10n_ro_anaf_d300/index.md): grilele D300 și taxele care stau la baza clasificării pe regimuri și a recapitulației pe rânduri D300.
+- [l10n_ro_vat_deductibility](../l10n_ro_vat_deductibility/index.md): „Deductibilitate” pe linie, recunoscută în coloanele de TVA nededusă.
 - [l10n_ro_anaf_d394](../l10n_ro_anaf_d394/index.md): fost proprietar al rapoartelor standard (înainte de extragere); instalat peste acest modul, adaugă un buton de export fișier D394 direct pe jurnale.
 - `account_reports`: motorul nativ Enterprise de rapoarte contabile pe care se bazează întreaga arhitectură a modulului.

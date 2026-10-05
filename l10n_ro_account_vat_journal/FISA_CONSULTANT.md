@@ -74,8 +74,9 @@ capitolului din manual dedicat registrelor de TVA.
 | Achiziții intracomunitare de bunuri (lit. b) pct. 1) | coloanele taxei + coloana „TVA colectată (taxare inversă)" | taxă proprie cu autolichidare (factor −100% pe 4427) |
 | Achiziții cu taxa datorată de cumpărător — art. 307 alin. (3)–(6), inclusiv art. 331 (lit. b) pct. 2) | la fel | taxă proprie cu autolichidare, separată de cea pentru AIC |
 | Servicii intracomunitare — art. 307 alin. (2) (lit. b) pct. 4) | la fel | taxă proprie cu autolichidare, separată de cele de mai sus |
-| TVA la încasare — lit. a)–e) din alin. (3) / (6) | **XLSX:** număr și dată încasare/plată, valoarea integrală cu TVA, baza și TVA-ul întregii facturi **pe fiecare cotă** („Total factură – <taxa>" — lit. c)), suma încasată/plătită, bază/TVA exigibile și bază/TVA neexigibile **pe fiecare cotă** („Operațiuni exigibile – <taxa>", „Operațiuni neexigibile – <taxa>"); **ecran:** TVA-ul exigibil în coloana `TVA` și soldul neexigibil total. Taxele cu TVA la încasare nu au coloane printre coloanele taxelor, ca partea exigibilă să nu apară de două ori | taxa are exigibilitate „la plată" |
-| Taxă deductibilă totală vs. taxă dedusă | **neacoperit** — jurnalul arată doar TVA-ul dedus (partea nededusă nu are grilă) | — |
+| TVA la încasare — lit. a)–e) din alin. (3) / (6) | **XLSX:** număr și dată încasare/plată, valoarea integrală cu TVA, baza și TVA-ul întregii facturi **pe fiecare cotă** („Total factură – <taxa>" — lit. c)), suma încasată/plătită, bază/TVA exigibile și bază/TVA neexigibile **pe fiecare cotă** („Operațiuni exigibile – <taxa>", „Operațiuni neexigibile – <taxa>"); **ecran:** baza exigibilă („Bază exigibilă”) și TVA-ul exigibil (coloana `TVA`), soldul neexigibil total (bază și TVA). Taxele cu TVA la încasare nu au coloane printre coloanele taxelor, ca partea exigibilă să nu apară de două ori | taxa are exigibilitate „la plată" |
+| Taxă deductibilă totală vs. taxă dedusă (lit. d)) | la cumpărări: `TVA` (taxa dedusă), `TVA nededusă` și `TVA deductibilă totală`; achiziția cu TVA nedeductibilă rămâne în coloana cotei cu toată baza | partea nededusă e pe cheltuieli (repartiția taxei sau „Deductibilitate” pe linie) |
+| Legătura cu decontul | coloana `Rând D300` pe fiecare document și **recapitulația pe rânduri D300** sub Total (ecran și XLSX), cu valorile din decont | taxa are grile fiscale |
 | Pro-rata | **neacoperit** | — |
 | Operațiuni fără nicio taxă pe linie | **nu apar** în jurnal | puneți o taxă de 0% pe linie |
 
@@ -129,27 +130,60 @@ Date minime pentru demo:
    jurnale de TVA (RO)** (necesită grupul *Administrator contabilitate*). Lista vine precompletată;
    ajustați-o doar dacă clientul are taxe proprii sau grile vechi (ex. etichete „09a" moștenite).
    Configurarea nu se suprascrie la actualizarea modulului.
+7. Semnăturile de pe jurnalele tipărite: în **Contabilitate → Configurare → Setări**, secțiunea
+   declarațiilor ANAF, **Semnături pe jurnalele de TVA** — numele și funcția pentru *Întocmit* și
+   *Verificat*. Apar la finalul PDF-ului și al XLSX-ului; dacă rămân goale, se tipăresc linii de
+   semnat de mână.
 
 ## 6. Flux de utilizare
 
 ### Pasul 1 — Deschiderea Jurnalului de cumpărări
 
 Accesați **Contabilitate → Raportare → Taxe și fiscalitate → Jurnal TVA Cumpărări (RO)**. Raportul
-afișează câte un rând per document de achiziție: jurnalul, data, furnizorul și codul fiscal, câte o
+afișează câte un rând per document de achiziție: jurnalul, **numărul facturii furnizorului**, data
+facturii, furnizorul și codul fiscal, câte o
 pereche de coloane **Bază / TVA pentru fiecare taxă** folosită în perioadă, coloana **TVA** (TVA-ul
 exigibil/deductibil al rândului), **Total document (cu TVA)**, **TVA colectată (taxare inversă)**,
-**TVA neexigibilă (TVA la încasare)** și un rând de **Total**.
+**Bază exigibilă / Bază neexigibilă (TVA la încasare)**, **TVA neexigibilă (TVA la încasare)**,
+**Rând D300**, **TVA nededusă**, **TVA deductibilă totală**, un
+rând de **Total** și, sub el, **recapitulația pe rânduri D300**.
 
 **Găsiți pe ecran:**
 - fiecare rând este un document de achiziție; perechile de coloane pe taxă descompun documentul (cu
   excepția TVA la încasare, vezi mai jos);
+- `Nr. document furnizor` e numărul de pe factura primită (câmpul *Referință factură*), iar
+  denumirea rândului e numărul intern, din care se deschide documentul; dacă factura nu are
+  referință, coloana arată numărul intern. `Dată document` e data facturii; perioada jurnalului se
+  stabilește după data înregistrării în contabilitate (perioada din D300);
 - `TVA` cumulează TVA-ul exigibil/deductibil al rândului;
 - `Total document (cu TVA)` este totalul facturii, cu TVA, **în lei** — și pentru o achiziție în
   valută; la o factură cu TVA la încasare plătită de mai multe ori în perioadă, totalul se repetă pe
   fiecare rând de plată, dar pe rândul de Total documentul se adună o singură dată;
 - `TVA colectată (taxare inversă)` arată TVA-ul autolichidat, pe același rând cu cel deductibil din
   coloana `TVA`;
-- `TVA neexigibilă (TVA la încasare)` arată soldul încă neexigibil al facturilor cu TVA la încasare.
+- `TVA neexigibilă (TVA la încasare)` arată soldul încă neexigibil al facturilor cu TVA la încasare,
+  iar `Bază neexigibilă (TVA la încasare)` baza lui; pe rândul unei plăți din perioadă,
+  `Bază exigibilă (TVA la încasare)` e baza părții devenite exigibile (TVA-ul ei e în `TVA`). Pe
+  rândul de Total, soldul neexigibil (bază și TVA) se adună o singură dată pe factură;
+- `Tip document` distinge factura, stornoul, bonul fiscal, **sesiunea POS** (nota de închidere a
+  sesiunii, care totalizează bonurile fiscale, cu punctul de vânzare în locul partenerului; ea
+  corespunde raportului Z doar dacă sesiunea acoperă o zi pe o singură casă de marcat) și nota
+  contabilă;
+- `TVA fără grile D300` arată TVA-ul de pe 4426 (cumpărări) / 4427 (vânzări) fără grile fiscale —
+  de regulă note contabile, care apar ca rânduri „Notă contabilă”. Sumele lipsesc din D300 și se
+  verifică fiecare: se pun grilele fiscale (dacă e TVA de declarat) sau se justifică nota. `TVA` +
+  `TVA fără grile D300` se compară cu rulajul contului fără notele de închidere și regularizare a
+  TVA; la vânzări se adaugă TVA colectată prin taxare inversă din jurnalul de cumpărări;
+- `Rând D300` arată rândurile decontului pe care le alimentează documentul (ex. „24” pentru o
+  achiziție la 21%, „12.1, 26.1” pentru taxarea inversă art. 331), din grilele fiscale ale liniilor;
+- `TVA nededusă` e TVA-ul nededus (art. 298; art. 297 alin. (4) a contrario, respectiv art. 300 la regim mixt), trecut pe cheltuieli, iar `TVA
+  deductibilă totală` = `TVA` + `TVA nededusă` (Norme Titlul VII pct. 101 alin. (2) lit. d)). O
+  achiziție cu TVA nedeductibilă integral apare cu toată baza în coloana cotei, cu `TVA` 0 și
+  TVA-ul în `TVA nededusă`;
+- sub Total, **Recapitulație pe rânduri D300** are câte un rând pentru fiecare rând al decontului,
+  cu baza și TVA-ul în `Bază D300` / `TVA D300`, calculate ca în D300 (grilele documentelor din
+  jurnal, cu semnul din decont), comparabile cu D300 generat de Odoo pe rândurile alimentate din
+  grile.
 
 **Verificați** înainte de a continua:
 - perioada selectată este perioada fiscală de raportat;
@@ -158,7 +192,8 @@ exigibil/deductibil al rândului), **Total document (cu TVA)**, **TVA colectată
 - taxele cu TVA la încasare **nu au coloane pe cotă**: pe rândul unei plăți din perioadă, partea
   exigibilă apare în coloana `TVA`, iar restul în `TVA neexigibilă`; o factură preluată fără plată în
   perioadă are completată doar coloana `TVA neexigibilă`. Pe rândurile cu TVA la încasare, suma
-  coloanelor pe taxe nu e deci egală cu `TVA` — defalcarea pe bază/TVA exigibile e în XLSX;
+  coloanelor pe taxe nu e deci egală cu `TVA`; bazele exigibilă și neexigibilă sunt în coloanele lor,
+  iar defalcarea pe cote, în XLSX;
 - taxele fără TVA (0%, scutiri, export) au perechea Bază / TVA, cu TVA 0,00 pe rândurile cu bază;
 - o factură cu TVA la încasare neplătită integral **la sfârșitul perioadei raportate** apare în
   jurnal, chiar dacă între timp a fost plătită.
@@ -203,6 +238,20 @@ plătitorii cu perioadă fiscală trimestrială aleg trimestrul.
 **Verificați:** intervalul afișat în antet este exact perioada pentru care depuneți D300/D394.
 
 ![Selectorul de perioadă, deschis](screenshots/03_filtru_perioada.png)
+
+Lângă perioadă:
+- **Partener** — restrânge jurnalul la unul sau mai mulți parteneri (inclusiv facturile cu TVA la
+  încasare reportate). Exportul D394 din jurnal ignoră acest filtru: declarația cuprinde toți
+  partenerii;
+- **Documente → Documente datate înaintea perioadei** — documentele din jurnalul perioadei
+  (stabilită după data înregistrării) cu data facturii anterioară începutului ei: facturi primite
+  sau înregistrate cu întârziere, precum și facturile cu TVA la încasare din lunile anterioare,
+  exigibile în perioadă. La vânzări, TVA-ul unei facturi emise într-o lună anterioară se declară în
+  perioada în care a devenit exigibil (de regulă luna emiterii), nu în luna înregistrării;
+- **Documente → Doar documentele cu TVA nededusă** (cumpărări) — documentele cu TVA nededusă.
+
+Aceste filtre schimbă doar rândurile afișate și exportate, nu datele pentru D300 / D394. Prima
+coloană, **Nr.**, numerotează rândurile ca în registrul tipărit.
 
 ### Pasul 4 — Export în XLSX
 
@@ -255,13 +304,13 @@ operațiuni** și grilele D300 după care clasifică. Mutați rândurile ca să 
 Deschideți o coloană ca să vedeți sau să schimbați regulile. Exemplul de mai jos e coloana
 **Export**: o clasifică taxa din planul de conturi `tvati_extra` („Taxe (plan)"). Câmpurile, în
 ordinea în care se aplică: **Taxe** (alese explicit, au prioritate), **Taxe (plan)**, **Grupuri de
-taxe (plan)**, **Grile fiscale D300** (se pot adăuga și grile vechi), **Cotă** (doar pentru taxele procentuale fără grile). Bifa **Doar taxe fără grile** restrânge regula de
+taxe (plan)**, **Grile fiscale D300** (se pot adăuga și grile vechi), **Cotă**. Pe coloanele cotelor actuale (21%, 11%, 9% locuințe), **Cotă** e un filtru: grupul și grilele primesc doar taxe cu aceeași cotă. Pe coloanele cotelor anterioare, **Cotă** preia taxele procentuale cu acea cotă neprinse de alte reguli, inclusiv pe cele cu grilele D300 de dinainte de 1.08.2025 (atunci rd. 9 era 19%, rd. 10 era 9%). Bifa **Doar taxe fără grile** restrânge regula de
 grup la taxele fără grile — așa sunt livrate cotele anterioare, al căror grup (ex. 9%) conține și
 taxe cu grile. Debifați **Activ** ca să scoateți coloana din jurnal;
 **Doar dacă are operațiuni** o afișează doar în perioadele în care are sume — așa sunt livrate
 cotele anterioare 19% / 9% / 5%.
 
-Pentru taxele proprii ale clientului folosiți câmpul **Taxe** (selecție din listă). Câmpurile
+Pentru taxele proprii ale clientului folosiți câmpul **Taxe** (selecție din listă; se pot alege și taxe arhivate, pentru perioadele în care au fost folosite). Câmpurile
 „(plan)" și **Grile fiscale D300** sunt text exact, separat prin virgulă, ca în exemplele
 precompletate: identificatorii din planul de conturi (ex. `tvati_extra`, `tax_group_tva_21`) și
 numele grilelor în forma din listă (ex. `24 - TAX BASE`). O valoare scrisă greșit nu dă eroare —
@@ -307,14 +356,19 @@ Accesați **Contabilitate → Raportare → Taxe și fiscalitate → Jurnal TVA 
   servicii art. 307 alin. (2)** și **taxare inversă art. 331 - 21%** — fiecare cu **Bază**, **TVA
   deductibilă** și **TVA colectată** —, și **Scutite și alte achiziții fără TVA (D300 rd. 29)**;
 - coloanele care apar doar în perioadele cu operațiuni: cotele anterioare, **alte achiziții cu
-  taxare inversă (D300 rd. 7)** (import, servicii de la prestatori din afara UE), taxare inversă
+  taxare inversă (D300 rd. 7)** (servicii de la prestatori din afara UE — „21% EX S” / „11% EX S”, import
+  cu art. 326 alin. (4) și (5)), taxare inversă
   art. 331 pe 11% și pe cote anterioare, achiziții intracomunitare scutite, neimpozabile, alte
   operațiuni.
 
 **Verificați:**
 - la fiecare autolichidare, TVA deductibilă = TVA colectată (cu excepția deducerii limitate);
-- la taxele cu deducere limitată (ex. 50%), coloana TVA arată doar partea dedusă, ca D300 rd. 24;
-- importul și serviciile de la prestatori din afara UE nu apar la „intracomunitare".
+- la taxele cu deducere limitată (ex. 50%), coloana TVA a regimului arată doar partea dedusă (=
+  D300 rd. 31); partea nededusă e în `TVA nededusă`, iar baza e întreagă. D300 rd. 24 și
+  recapitulația au TVA-ul brut (dedus + nededus);
+- serviciile de la prestatori din afara UE nu apar la „intracomunitare”; factura furnizorului extern
+  la import („0% EX G”) e la „Neimpozabile” (TVA-ul de import se declară din DVI, pe rd. 24 / 25),
+  iar „0% EX S” (servicii scutite din afara UE) la „Scutite și alte achiziții fără TVA”.
 
 ![Jurnalul de cumpărări pe regimuri: 21%, 11% și taxare inversă art. 331 cu cele trei valori](screenshots/09_jurnal_cumparari_regimuri.png)
 
@@ -418,7 +472,16 @@ soldul rămas, până la plată. Suma TVA-ului exigibil din toate lunile este eg
   Egalitatea ține pe planul RO, unde stornourile se înregistrează în roșu (contabilitate storno
   activă implicit).
 - La taxele cu deducere parțială (ex. 50% nedeductibil), partea nededusă merge pe cheltuieli și nu
-  are grilă fiscală: jurnalul arată doar TVA-ul dedus.
+  are grilă fiscală: coloana `TVA` arată TVA-ul dedus (= rulajul debitor 4426 din documentele
+  jurnalului, fără închiderea lunară și notele manuale), iar partea nededusă e în `TVA nededusă`.
+  Baza achiziției e întreagă în coloana cotei (Norme Titlul VII pct. 101 alin. (2) lit. b) pct. 3).
+  Ca în instrucțiunile D300 (OPANAF 174/2026), D300 și recapitulația de sub Total au pe rd. 24 / 25
+  și rd. 30 TVA-ul deductibil brut (`TVA deductibilă totală`), iar pe rd. 31 doar taxa dedusă
+  (`TVA`) — nu se preia la rd. 31 partea nededusă, nici cea limitată de art. 298, nici cea a
+  achizițiilor pentru operațiuni fără drept de deducere.
+- Recapitulația pe rânduri D300 se compară cu D300 generat de Odoo pentru aceeași perioadă.
+  Diferențele vin din note contabile pe conturile de TVA fără documente în jurnal, din documente
+  fără grile fiscale sau din rândurile calculate ori de regularizare ale decontului.
 
 ## 7. Legături cu alte module / declarații
 
@@ -462,6 +525,9 @@ totalurilor față de balanță, evidența taxei nededuse și a pro-ratei, și d
       de vânzări = rulajul creditor 4427 **doar** dacă nu există autolichidări în perioadă — altfel
       `4427 = Total TVA vânzări + Total TVA colectată (taxare inversă) cumpărări`.
 - [ ] Stornourile apar cu bază, TVA și total **negative**.
+- [ ] Un bon fiscal fără factură apare cu bază și TVA **pozitive** în coloana cotei.
+- [ ] La cumpărări, `Nr. document furnizor` (ecran) și `Număr document` (XLSX) arată numărul
+      facturii furnizorului, iar XLSX-ul are și `Număr intern`; `Dată document` e data facturii.
 - [ ] O factură cu TVA la încasare neplătită integral apare în jurnalul perioadei, cu restul
       neexigibil în coloana dedicată — și la rularea retroactivă, după ce a fost plătită.
 - [ ] În XLSX, factura cu TVA la încasare are plata, operațiunile exigibile și neexigibile.
@@ -478,8 +544,22 @@ totalurilor față de balanță, evidența taxei nededuse și a pro-ratei, și d
 - [ ] Pe jurnalele pe regimuri: rulaj creditor 4427 = Total TVA vânzări + suma coloanelor „TVA
       colectată" din cumpărări; exportul XLSX nu are o coloană globală de TVA colectată.
 - [ ] Taxele de 21% cu denumiri diferite ajung în aceeași coloană; exportul e separat de alte scutiri.
-- [ ] Autolichidarea are Bază, TVA deductibilă și TVA colectată; TVA nedeductibil 50% apare doar cu
-      partea dedusă.
+- [ ] Autolichidarea are Bază, TVA deductibilă și TVA colectată; TVA nedeductibil 50% apare cu
+      partea dedusă în coloana regimului și cu partea nededusă în `TVA nededusă`.
+- [ ] `TVA deductibilă totală` = `TVA` + `TVA nededusă`; o achiziție cu TVA nedeductibilă
+      integral are baza în coloana cotei.
+- [ ] Filtrul de partener restrânge jurnalul, dar exportul D394 din jurnal cuprinde toți partenerii;
+      filtrele din **Documente** (perioade anterioare, TVA nededusă) schimbă doar rândurile afișate
+      și exportate (PDF / XLSX), nu datele pentru D300 / D394.
+- [ ] PDF-ul și XLSX-ul au la final *Întocmit* / *Verificat* (din setări sau linii goale), iar
+      ecranul are coloana **Nr.**
+- [ ] Bonurile fiscale și sesiunile POS au `Tip document` propriu, distinct de facturi; totalul
+      sesiunilor POS din zi se compară cu rapoartele Z ale caselor de marcat.
+- [ ] O notă contabilă pe 4426 / 4427 fără grile apare ca „Notă contabilă”, cu suma în `TVA fără
+      grile D300`, și e justificată sau completată cu grile; nota de închidere a TVA nu apare.
+- [ ] Fiecare document are `Rând D300`; recapitulația de sub Total are, pe rândurile alimentate din
+      grile, aceleași valori ca D300 generat de Odoo pentru perioadă (dacă toate documentele cu grile
+      sunt în jurnal).
 - [ ] Cotele anterioare 19% / 9% / 5% apar doar în perioadele în care au operațiuni.
 - [ ] O coloană arhivată dispare din jurnal; una cu „Doar dacă are operațiuni" debifat apare și goală.
 
@@ -495,7 +575,7 @@ totalurilor față de balanță, evidența taxei nededuse și a pro-ratei, și d
 | O factură lipsește complet din jurnal | Liniile ei nu au nicio taxă | Puneți pe linii taxa regimului (ex. neimpozabil 0%) |
 | Coloanele pe taxe dispar | Butonul **Comparație** e activ | Dezactivați comparația |
 | Taxa cu TVA la încasare nu are coloană printre coloanele taxelor | Comportament intenționat: partea exigibilă ar apărea de două ori (coloana taxei și „Operațiuni exigibile") | Citiți-o pe cotă în „Operațiuni exigibile / neexigibile – <taxa>" (XLSX) sau total în coloana `TVA` (ecran) |
-| Totalul jurnalului nu se potrivește cu balanța | Documente nepostate, perioadă diferită, sau sume pe 4426 / 4427 fără grile fiscale (note manuale, DVI, taxe fără grile) | Reconciliați perioada și identificați notele fără grile fiscale pe conturile de TVA |
+| Totalul jurnalului nu se potrivește cu balanța | Documente nepostate, perioadă diferită, sau sume pe 4426 / 4427 fără grile fiscale (note manuale, DVI, taxe fără grile) | Reconciliați perioada; notele fără grile sunt în coloana `TVA fără grile D300` (rânduri „Notă contabilă”) |
 | Rulajul 4427 nu se potrivește cu totalul jurnalului de vânzări | Există autolichidări în perioadă — TVA-ul lor colectat apare pe jurnalul de cumpărări | Adunați și coloana „TVA colectată (taxare inversă)" din jurnalul de cumpărări standard, respectiv coloanele „TVA colectată" din jurnalul de cumpărări pe regimuri |
 | Butonul de export D394 lipsește | Modulul `l10n_ro_anaf_d394` nu e instalat | Butonul apare doar cu modulul de declarație instalat |
 | Rest mic (câțiva lei) pe `TVA neexigibilă` la o factură în valută plătită integral | Nota de exigibilizare e făcută la cursul plății, nu la cursul facturii (art. 290 alin. (2) Cod fiscal) — TVA-ul dedus/colectat și baza din D300 diferă | Corectați nota de exigibilizare cu grilele fiscale ale taxei (vezi nota din Pasul 9); verificați soldul real pe 4428 |

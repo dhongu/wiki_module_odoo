@@ -382,7 +382,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_account_return_pl_closing](l10n_ro_account_return_pl_closing/index.md): Închiderea lunară a conturilor de venituri și cheltuieli prin contul 121, pe framework-ul Enterprise `account.return`.
 - [l10n_ro_account_sequence](l10n_ro_account_sequence/index.md): Numerotare separată a documentelor din jurnalul de casă, conform localizării RO.
 - [l10n_ro_account_storno](l10n_ro_account_storno/index.md): Contabilitate storno (înregistrări negative/în roșu) conform standardelor RO, cu utilizare cont și activare pe companie.
-- [l10n_ro_account_vat_journal](l10n_ro_account_vat_journal/index.md): Jurnalul de Vânzări și Jurnalul de Cumpărări (registrele lunare de TVA) ca rapoarte native `account.report` — pe taxe și pe regimuri cu coloane configurabile, TVA la încasare urmărită peste luni, taxare inversă și export XLSX formatat ca registru.
+- [l10n_ro_account_vat_journal](l10n_ro_account_vat_journal/index.md): Jurnalele de TVA de vânzări și cumpărări, standard și pe regimuri, ca rapoarte contabile native, cu TVA la încasare, taxare inversă, TVA nededusă, recapitulație pe rânduri D300 și export XLSX/PDF tipizat.
 - [l10n_ro_advance_invoice](l10n_ro_advance_invoice/index.md): Gestionează facturile de avans cu TVA și regularizarea automată a acestora.
 - [l10n_ro_aml_register](l10n_ro_aml_register/index.md): Registrul imutabil al verificărilor AML (Legea 129/2019), cu consemnare automată din screeningul de sancțiuni și verificarea beneficiarului real.
 - [l10n_ro_anaf_agent](l10n_ro_anaf_agent/index.md): Fundația modelului cloud de comunicare cu ANAF prin Agentul Terrabit (registru de agenți, coadă de joburi, API apelat de agent).
@@ -397,7 +397,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_anaf_d177](l10n_ro_anaf_d177/index.md): Cererea 177 de redirecționare a unei părți din impozitul pe profit/micro către beneficiarii sponsorizărilor, cu rest disponibil calculat automat și export XML validat ANAF.
 - [l10n_ro_anaf_d205](l10n_ro_anaf_d205/index.md): Declarația informativă 205 privind impozitul reținut la sursă pe veniturile PF nerezidente.
 - [l10n_ro_anaf_d207](l10n_ro_anaf_d207/index.md): Declarația informativă 207 privind impozitul reținut la sursă pe veniturile PJ nerezidente.
-- [l10n_ro_anaf_d300](l10n_ro_anaf_d300/index.md): Decontul de TVA (D300) cu export XDP și XML nativ validat XSD.
+- [l10n_ro_anaf_d300](l10n_ro_anaf_d300/index.md): Decontul de TVA D300 generat din jurnalele de TVA ale perioadei, cu export XDP (Soft A) și XML (Soft J), validare XSD și integrare în fluxul `account.return`.
 - [l10n_ro_anaf_d301](l10n_ro_anaf_d301/index.md): Decontul special de TVA (D301) pentru persoanele neînregistrate normal în scopuri de TVA, cu operațiuni pe cele cinci secțiuni, suma de control și export XML ANAF.
 - [l10n_ro_anaf_d307](l10n_ro_anaf_d307/index.md): Declarația 307 (ajustări de TVA): operațiuni de tip A/L/C, totaluri și sumă de control automate, export XML ANAF.
 - [l10n_ro_anaf_d311](l10n_ro_anaf_d311/index.md): Declarația 311 (TVA colectată de persoanele cu codul de TVA anulat sau reînregistrate), cu totaluri, verificări de corelație ANAF și export XML.
@@ -525,7 +525,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_stock_report](l10n_ro_stock_report/index.md): Fișa de magazie conform legislației românești: sold inițial, intrări, ieșiri și sold final pe gestiuni și perioadă, cu vizualizare în listă, pivot sau PDF.
 - [l10n_ro_stock_sheet](l10n_ro_stock_sheet/index.md): Fișa de magazie (14-3-8) și balanța analitică a stocurilor ca raport nativ Enterprise (account.report) pe trei niveluri, cu reconciliere analitic↔sintetic și notă de regularizare cu etichete per material.
 - [l10n_ro_stock_sheet_gestiune](l10n_ro_stock_sheet_gestiune/index.md): Punte între fișa de magazie/balanța stocurilor și gestiunile contabile de stoc — filtrare pe gestiuni și transferul valoric între gestiuni inclus în balanță (Diferența 0 pe conturile gestiunilor), cu instalare automată.
-- [l10n_ro_vat_deductibility](l10n_ro_vat_deductibility/index.md): Gestionare TVA deductibil integral, parțial/pro-rata și nedeductibil pentru România.
+- [l10n_ro_vat_deductibility](l10n_ro_vat_deductibility/index.md): TVA integral deductibilă, parțial deductibilă (pro-rata) și nedeductibilă pentru România, cu regularizare anuală, recalcul al facturilor ciornă, pre-verificare D300/D394 și ghid pentru TVA deductibilă 50% (art. 298).
 - [l10n_ro_vat_group](l10n_ro_vat_group/index.md): Grup fiscal TVA consolidat (art. 269²) cu CUI unic, excludere intra-grup și raport D300 consolidat.
 - [l10n_ro_vat_on_payment_lock](l10n_ro_vat_on_payment_lock/index.md): Blochează desfacerea reconcilierii unei încasări când TVA la încasare aferentă e deja inclusă într-un decont D300 declarat, conform FR-16/art. 282 Cod Fiscal.
 - [l10n_ro_vat_refund](l10n_ro_vat_refund/index.md): Urmărire cereri de rambursare TVA din sold negativ D300 (termen 45 zile, dobânzi, monografie 4424/4426/5121).

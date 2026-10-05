@@ -109,7 +109,8 @@ dedicate — „Generează D300 (TVA)" (deschide raportul pre-filtrat pe perioad
 | TVA deductibilă mai mare decât TVA colectată | sold negativ; se decide reportare sau rambursare |
 | Taxe cu exigibilitate la plată/încasare | verificați 4428 și înregistrările CABA înainte de D300 |
 | Taxare inversă | verificați simetria 4426/4427 și rândurile D300 aferente |
-| TVA parțial/nedeductibil | D300 trebuie să includă în deducere doar partea deductibilă |
+| Import fără plata efectivă a TVA în vamă (art. 326 alin. (4)-(5): certificat de amânare, vămuire centralizată, înscriere în evidențele declarantului, bunurile din art. 331 alin. (2) lit. b), c), i)–k)) | pe DVI se alege „21% IMP AM” / „11% IMP AM”: Dr 4426 = Cr 4427 (taxă colectată și deductibilă simultan, art. 326 alin. (5)), fără 446 și fără plată în vamă; baza de impozitare TVA din DVI (art. 289) și TVA-ul pe rd. 7 și 22, în perioada datei DVI (art. 285). Deducerea cere DVI-ul cu importatorul și suma taxei datorate și înscrierea taxei colectate în aceeași perioadă (art. 299 alin. (1) lit. d)). Factura furnizorului extern rămâne pe „0% EX G”, fără grile. Importul cu plata efectivă în vamă (art. 326 alin. (3)) rămâne pe rd. 24 / 25 |
+| TVA parțial/nedeductibil | rd. 24 / 25 și rd. 30 au TVA-ul deductibil brut (inclusiv partea nededusă: art. 298; art. 297 alin. (4) a contrario, respectiv art. 300 la regim mixt); rd. 31 doar taxa efectiv dedusă — instrucțiunile D300 (OPANAF 174/2026) |
 
 Regularizarea lunară recomandată se documentează separat în fluxul de închidere:
 
@@ -139,6 +140,7 @@ Notarea exactă depinde de soldurile lunii și de politica modulului de închide
 | D300-08 | Generare XML Soft J (rotița ⚙) | fișierul XML se generează și trece validarea XSD; cu date companie incomplete → eroare blocantă cu mesaj |
 | D300-09 | Generare XDP Soft A | fișierul XDP se generează pentru formularul inteligent ANAF |
 | D300-10 | Apăsare buton „Declarații" (Returns) | se deschide tabloul declarațiilor pe perioade; checklist-ul perioadei afișează „Generează D300 (TVA)" și „Atașează D300 (XML semnat)" |
+| D300-12 | DVI fără plata TVA în vamă (taxa „21% IMP AM”), bază 1.000 lei | rd. 7 și rd. 22: bază 1.000, TVA 210; nimic pe rd. 7.1 / 22.1 sau 24 |
 | D300-11 | Atașare D300 semnat în checklist | fișierul semnat se atașează la declarație, verificarea se marchează revizuită, declarația avansează prin etape |
 
 ## 9. Legături cu alte module / declarații
