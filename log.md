@@ -4,6 +4,11 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-05] Actualizare `l10n_ro_payroll_bank_export` 19.0.1.1.0 (format BCR, BRD aliniat)
+
+- **Acțiune:** [l10n_ro_payroll_bank_export](l10n_ro_payroll_bank_export/index.md): format BCR (Click 24 / George, plăți salariale, după instrucțiunile publice ale băncii) cu câmpul nou *Contul plătitor*; BRD aliniat la specificația oficială (suma cu virgulă și două zecimale, coloana *Data* goală, nume și detalii până la 35 de caractere); fișa consultant copiată.
+- **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** fără dependențe noi. De verificat: First Bank (acum Intesa Sanpaolo Bank România), Banca Românească (acum Exim Banca Românească) și MT100 fără specificații publice accesibile; CEC după fișierul de referință; fișierele în aplicațiile băncilor.
+
 ## [2026-10-04] Actualizare `l10n_ro_fixed_assets` 19.0.1.13.0 (fazele 8 și 9 ale planului de mijloace fixe)
 
 - **Acțiune:** Re-ingestie. [l10n_ro_fixed_assets](l10n_ro_fixed_assets/index.md) de la 19.0.1.9.0 la 19.0.1.13.0: registrul imobilizărilor la o dată trecută (cost istoric, varianta pe gestiune), liste de inventariere MF (14-3-12) pe gestiune, reevaluarea activului cu modernizări, metoda brută și momentul aplicării (luna / exercițiul următor), grila mijloacelor fixe, închiderea lunii (`l10n.ro.asset.closing`), transfer și reevaluare în lot.

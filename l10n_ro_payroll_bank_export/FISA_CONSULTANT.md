@@ -80,7 +80,7 @@ După execuția plății la bancă, apăsați **Mark as Paid** pe lot, iar plata
 
 ### Formate disponibile
 
-BT (BT GO, CSV simplu), BRD (BRD@ffice), ING (OneCSV, MT), CEC Bank (CSV), Raiffeisen (DBF), UniCredit (CSV), OTP (TXT), Alpha Bank (ALPHAClick). Lipsesc BCR, First Bank, Banca Românească și MT100: formatul trebuie cerut băncii.
+BT (BT GO, CSV simplu), BRD (BRD@ffice), BCR (Click 24 / George, plăți salariale), ING (OneCSV, MT), CEC Bank (CSV), Raiffeisen (DBF), UniCredit (CSV), OTP (TXT), Alpha Bank (ALPHAClick). Lipsesc First Bank (integrată în Intesa Sanpaolo Bank România), Banca Românească (integrată în Exim Banca Românească) și MT100: formatul trebuie cerut băncii. **La BCR alegeți *Contul plătitor*** (IBAN-ul din care se plătește): fișierul începe cu el. La BRD și CEC se scrie dacă e ales.
 
 ## 7. Legături cu alte module / declarații
 
@@ -99,12 +99,14 @@ BT (BT GO, CSV simplu), BRD (BRD@ffice), ING (OneCSV, MT), CEC Bank (CSV), Raiff
 - [ ] Numele angajaților cu diacritice apar fără diacritice, cu majuscule.
 - [ ] Un angajat cu IBAN la altă bancă nu apare în fișier, dar este numărat în rezumat la „fără cont la această bancă”.
 - [ ] Un angajat cu mai multe conturi (repartizare a salariului) apare câte o dată pe cont, cu suma repartizată.
-- [ ] Pentru BRD / CEC / UniCredit / OTP, sumele întregi apar fără zecimale; un net cu bani apare cu două zecimale (de verificat cu banca).
+- [ ] BRD: suma apare cu virgulă și două zecimale (`3250,00`), iar coloana *Data* e goală; CEC / UniCredit / OTP: sumele întregi apar fără zecimale, un net cu bani cu două zecimale (de verificat cu banca).
+- [ ] BCR: prima linie începe cu `OPM|`, urmată de total, IBAN-ul plătitorului și data; fiecare plată se termină cu `|N|6`.
 
 ## 9. Mesaje de eroare frecvente
 
 | Mesaj | Cauză | Remediere |
 |---|---|---|
+| Alegeți contul plătitor: fișierul BCR începe cu IBAN-ul lui | formatul BCR fără contul plătitor | alegeți *Contul plătitor* (cont bancar al companiei) |
 | Niciun angajat nu are cont la banca formatului ales | niciun IBAN al lotului nu are codul băncii formatului | alegeți formatul potrivit sau debifați *Doar angajații acestei bănci* |
 | Ar trebui să existe cel puțin un fluturaș de salariu... | fereastra s-a deschis fără fluturași | deschideți fereastra din lot sau din fluturaș |
 | There is no valid payslip (validated and net wage > 0)... | fluturașii nu sunt validați sau au rest de plată 0 | validați fluturașii |
