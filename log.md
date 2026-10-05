@@ -4,6 +4,11 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-05] Ingestie `l10n_ro_hr_documents` 19.0.1.0.0 (S10, documente HR)
+
+- **Acțiune:** Pagină nouă [l10n_ro_hr_documents](l10n_ro_hr_documents/index.md): contract individual de muncă, act adițional (diferențele dintre două versiuni), decizii de suspendare și de încetare (preaviz și contestare după temei, motive și instanță obligatorii la concediere), cerere de demisie (preaviz 20/45 de zile lucrătoare, fără sărbătorile calendarului) și adeverință de vechime (cu salariu și vechime), cu număr `HR/an/nr`, text editabil și PDF arhivat; fișa consultant (5 pași) și 9 capturi copiate.
+- **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** depinde de `l10n_ro_reges`; `l10n_ro_hr_pontaj` opțional pentru sărbătorile legale. De verificat: validarea juridică a modelelor (nu e modelul-cadru); fără decizia de nominalizare REGES, regulament intern și fișa postului; clauzele art. 17 alin. (3) neacoperite se completează manual.
+
 ## [2026-10-05] Actualizare `l10n_ro_fixed_assets` 19.0.1.13.1 (capturile ecranelor din fazele 8–9)
 
 - **Acțiune:** Actualizare. [l10n_ro_fixed_assets](l10n_ro_fixed_assets/index.md): fișa consultant recopiată, cu cinci capturi noi (grila mijloacelor fixe, închiderea lunii, registrul pe gestiuni, reevaluarea în lot, listele de inventariere 14-3-12); versiunea paginii 19.0.1.13.1. Funcționalitățile nu se schimbă față de 19.0.1.13.0 (doar traduceri și titluri în interfață).
