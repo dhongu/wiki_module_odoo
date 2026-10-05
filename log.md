@@ -2739,3 +2739,11 @@ This is an append-only log of all operations performed on the wiki.
 - **Acțiune:** pagini noi pentru [l10n_ro_expense_allowance_payroll](l10n_ro_expense_allowance_payroll/index.md) (S12, diurna în fluturaș și D112), [l10n_ro_payroll_statements](l10n_ro_payroll_statements/index.md) (S15, tipăriri centralizate) și [l10n_ro_payroll_tax_redirect](l10n_ro_payroll_tax_redirect/index.md) (S14, redirecționarea de 3,5%), cu fișele consultant și capturile. Actualizate [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md) (puncte de extensie pentru redirecționare) și [l10n_ro_expense_allowance](l10n_ro_expense_allowance/index.md) (cuantum 23 lei/zi).
 - **De verificat:** semnificația atributului `cota` din `asiguratE4` (procent sau cod); nivelul de 23 lei/zi; E3_52 / E3_59; validarea cu DUKIntegrator.
 - **Fișiere actualizate:** cele 5 pagini (index.md, FISA_CONSULTANT.md, screenshots), `index.md`, `log.md`.
+
+---
+
+## [2026-10-05] Ingestie `l10n_ro_payroll_allowances` 19.0.1.0.0 (S13, sporuri, ore suplimentare, noapte)
+
+- **Acțiune:** pagină nouă [l10n_ro_payroll_allowances](l10n_ro_payroll_allowances/index.md), cu fișa consultant și cele 5 capturi: nomenclator de sporuri, sporuri permanente pe angajat (`SPORPERM`, proratate în luna cu timp nelucrat), sporul pentru ore suplimentare din prezențe (`SPOR_ORE_SUPL`, 75%) și pentru munca de noapte (`SPOR_NOAPTE`, 25%), cu minimul legal impus pe procente.
+- **De verificat / rămas:** munca în sărbători (≥ 100%) și în repausul săptămânal (≥ 150%), compensarea cu timp liber, orele de noapte din prezențe, condiția de 3 ore, clauza de mobilitate.
+- **Fișiere actualizate:** `l10n_ro_payroll_allowances/` (index.md, FISA_CONSULTANT.md, screenshots), `index.md`, `log.md`.
