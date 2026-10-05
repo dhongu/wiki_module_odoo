@@ -363,10 +363,28 @@ conform art. 146 alin. 3 din Codul muncii. Numărul de zile se poate impune manu
 
 ![Fluturaș cu indemnizația de concediu de odihnă calculată pe medie](screenshots/23_linii_concediu_odihna.png)
 
+### Pasul 24 — Prime în net (recalculul brutului)
+
+Când firma garantează salariatului o primă **netă** (suma care ajunge în mână), brutul nu se mai calculează de mână. Pe fluturașul în ciornă, în fila de
+intrări, adăugați intrarea **Primă (în net)** cu suma netă dorită (aici 1.000 lei) și apăsați **Calculează**. Modulul caută **cel mai mic brut întreg** al primei
+pentru care netul fluturașului crește cu cel puțin suma cerută, ținând cont de CAS, CASS, impozit și de deducerea personală, care scade în trepte de 50 lei
+când brutul crește. Linia **Primă (în net, brut calculat)** apare pe fluturaș cu brutul găsit, iar prima intră în brutul lunii, deci în CAS, CASS, CAM, impozit și D112.
+Pentru o primă dată **în brut** folosiți intrarea **Primă (în brut)**.
+
+![Fluturaș cu prima de 1.000 lei net și brutul calculat](screenshots/24_prima_in_net.png)
+
+Dacă suma exactă nu se poate atinge (rotunjirea la leu, treptele deducerii), fluturașul are o avertizare cu brutul găsit și netul obținut. Prima se **recalculează la fiecare calcul**:
+dacă salariul sau deducerile se schimbă, brutul primei se schimbă și el. Scoaterea intrării și un nou calcul readuc fluturașul la netul inițial.
+
+**Limită:** dacă pragul de venit pentru suma neimpozabilă la salariul minim (parametrul `suma_neimpozabila_prag_venit`, azi nesetat: actul pentru 2026 e de confirmat) ar fi activat, o primă care trece brutul peste prag face să se piardă suma neimpozabilă și netul scade brusc; căutarea brutului ar trebui adaptată (căutare liniară în jurul pragului). Primele din profit (participarea la profit) nu trec prin acest mecanism: se înregistrează Dr 644 = Cr 424.
+
+**Verificați:** netul fluturașului cu prima minus netul fără ea este cel puțin suma cerută (de regulă egal, uneori cu un leu în plus); linia *Primă (în net, brut calculat)* e cea din brut;
+brutul total include prima; D112 preia brutul cu tot cu primă.
+
 ### Note de monografie și raportare
 
 Maparea conturilor (făcută de `l10n_ro_hr_payroll_account_enhancement`) completează conturile implicite pe regulile salariale (doar unde lipsesc; configurările manuale rămân). Monografia generată:
-- **Dr 641 = Cr 421** — salariul brut;
+- **Dr 641 = Cr 421** — salariul brut, inclusiv primele (liniile *Primă* nu au conturi proprii: sunt incluse în brut);
 - **Dr 421 = Cr 43151 (CAS) + 43161 (CASS) + 4441 (impozit)** — rețineri;
 - **Dr 6461 = Cr 4361** — CAM angajator (2,25%); Dr 646 dacă planul nu are 6461;
 - **Dr 6422 = Cr 5328** — contravaloarea tichetelor de masă acordate;
@@ -414,6 +432,7 @@ codurile neimpozabile de concediu medical în D112 se verifică manual; depunere
 - [ ] Salariul net = brut − CAS − CASS − impozit, fără tichete (Maria Ionescu: 2.511); *Cost angajator* = brut + CAM + tichete.
 - [ ] Copil neînscris la școală sau major nu generează cei 100 lei.
 - [ ] Fără bifa Funcție de bază, toate deducerile și suma neimpozabilă sunt 0 (Radu Georgescu).
+- [ ] Prima în net: netul fluturașului cu prima minus netul fără ea este cel puțin suma cerută (Moraru Elena, 1.000 lei); linia *Primă (în net, brut calculat)* arată brutul găsit și intră în brutul lunii.
 - [ ] La scutire (art. 60), impozitul este 0 (Vlad Stan).
 - [ ] Cei 100 lei pentru copil se acordă unui singur părinte, pe baza declarației și a documentului de înscriere (se verifică manual).
 - [ ] În D112 (cu puntea instalată), linia fiecărui angajat are aceleași tichete, sumă neimpozabilă, deduceri și bază impozabilă ca fluturașul.
@@ -472,8 +491,9 @@ Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixin `Scre
 21. `21_decontare_fnuass.png` — decontarea FNUASS exportată (XLSX).
 22. `22_d112_concedii_medicale.png` — D112 cu fila *Concedii medicale* (necesită puntea D112).
 23. `23_linii_concediu_odihna.png` — fluturaș cu concediu de odihnă pe medie.
+24. `24_prima_in_net.png` — fluturaș cu prima de 1.000 lei net și brutul calculat.
 
-Cazurile din Pașii 12–23 folosesc septembrie 2026 (pașii 12–13 iulie 2026) și datele create de test: baza trebuie creată cu limba **română** activă.
+Cazurile din Pașii 12–24 folosesc septembrie 2026 (pașii 12–13 iulie 2026) și datele create de test: baza trebuie creată cu limba **română** activă.
 
 ```bash
 ./odoo/odoo-bin -c odoo.conf -d test19 --load-language=ro_RO -i l10n_ro_hr_payroll_enhancement,l10n_ro_anaf_d112_payroll,l10n_ro_doc_screenshots \

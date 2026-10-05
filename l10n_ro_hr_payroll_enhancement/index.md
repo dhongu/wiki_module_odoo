@@ -1,10 +1,10 @@
 # Romania - Impozit pe salarii, deduceri personale și tichete de masă (localizat la `l10n_ro_hr_payroll_enhancement/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_hr_payroll_enhancement`
-- **Versiune:** `19.0.2.6.3`
+- **Versiune:** `19.0.2.7.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_payroll_enhancement
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_hr_payroll_enhancement`
-- **Ultima Ingestie:** `2026-10-04`
+- **Ultima Ingestie:** `2026-10-05`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 > **Redenumit:** fostul `l10n_ro_payroll_ro` (până la 19.0.1.3.0); migrarea se face automat la instalare (`pre_init_hook`). Din 19.0.2.3.0 include și fostul `l10n_ro_payroll_leave` (migrare prin `migrations/19.0.2.3.0/pre-migration.py`).
@@ -28,6 +28,7 @@ Modulul completează statul de plată românesc, peste structura nativă Odoo 19
 - **Rețineri deductibile din baza de impozit** (S2): tipuri de intrare `SINDICAT`, `PENSIE_FAC`, `PENSIE_FAC_RET`, `SANATATE_PRIV`, disponibile și în *Ajustări salariale*. Indicatori pe tip: deductibil din baza impozitului (art. 78 alin. 2 lit. a Cod fiscal), reținut din net (sindicat: da; pensie facultativă plătită direct și asigurare de sănătate: doar baza), plafon anual și grup de plafon. Regulile `DEDBAZA` (scade baza impozitului; deducerea personală rămâne din brut; doar la funcția de bază) și `RETINERI` (scade netul; 421 = 4271). Plafonul de 400 EUR/an se aplică pe cumul în euro, fiecare lună la cursul ei, pe grup (pensia plătită direct și cea reținută împart plafonul); fără curs EUR calculul se oprește cu eroare. Cifre de control 09/2026: brut 5.000, sindicat 50 + pensie 100 → bază 2.538, impozit 254, net 2.946. Verificat cu Pacioli.
 - **Avertizări pe fluturaș** (S3), în mecanismul nativ: CNP lipsă sau invalid, perioadă de întreținere încheiată luna trecută, copil înscris în învățământ fără CNP valid (deducerea pentru copil nu se acordă). Nu blochează calculul. Nu există avertizarea «salariu minim după 2 ani» (fără temei legal în 2026) și nici «contract fără COR» (fără câmp COR).
 - **Simulator brut ↔ net** (S4): *Salarizare → Raportare → Simulator brut / net (RO)*; brut → net și net → brut (cel mai mic brut întreg care atinge netul, cu o fereastră de 60 de lei pentru treptele deducerii), cu sau fără angajat ales, fără urme în bază (savepoint anulat), cu PDF. Rulează structura salarială a fluturașului, deci cifrele coincid cu ale statului de plată.
+- **Prime în net cu recalculul brutului** (S11, 19.0.2.7.0): intrările de fluturaș *Primă (în net)* (`PRIMA_NET`) și *Primă (în brut)* (`PRIMA`) și regulile `PRIMA` / `PRIMA_NET` (categoria ALW, înaintea `GROSS`: intră în CAS, CASS, CAM, impozit și D112; fără conturi proprii, brutul le are). La calcul, brutul primei în net este cel mai mic brut întreg pentru care netul fluturașului crește cu cel puțin suma cerută: căutare binară + coborâre pe o fereastră de 60 lei (netul nu e monoton în brut), cu încercările într-un savepoint anulat; avertizare când suma exactă nu se atinge. Verificat Pacioli (prima se tratează ca salariul, fără plafoane, deductibilă integral). De verificat: pragul de venit pentru suma neimpozabilă 2026 (nesetat; dacă se activează, căutarea trebuie adaptată); primele din profit (Dr 644 = Cr 424) nu sunt tratate.
 - **Concediul de odihnă pe medie** (19.0.2.6.0, Codul muncii art. 150): concediul de odihnă (`LEAVE120`) nu se mai plătește ca salariu proratat, ci prin regula `CO_IND` (în brut, cu CAS, CASS, impozit și CAM) = media zilnică a drepturilor permanente din ultimele 3 luni × zilele de concediu, dar nu mai puțin decât salariul și drepturile permanente ale perioadei. Media: salariul de bază și regulile marcate *Drept permanent* (câmp nou pe regula salarială) din fluturașii aceluiași contract, împărțite la zilele plătite cu salariu, fără concedii medicale și de odihnă; fără istoric se plătește salariul perioadei. Regulile permanente trebuie să aibă secvența sub 49 ca să intre în prag. **Compensarea CO neefectuat** (`CO_COMP`, art. 146 alin. 3), doar în luna încetării contractului: zile rămase din alocări × media (cel puțin salariul zilnic), cu intrarea `CO_COMP_ZILE` ca suprascriere. CO nu mai reduce suma neimpozabilă la salariul minim, iar munca de acasă (`WORK110`) numără ca lucrată la proratarea sumei și la tichete. De confirmat: divizorul mediei (practică, legea nu îl precizează); fără provizion pentru CO neefectuat la închiderea anului (1518 / 4281).
 - **Concedii medicale** (unite din fostul `l10n_ro_payroll_leave` în 19.0.2.3.0; OUG 158/2005 și structura D112):
     - **Certificat unic** (`l10n.ro.medical.certificate`): serie și număr (`D_1`/`D_2`), perioada (`D_6`/`D_7`), data eliberării (`D_5`), codul de indemnizație (`D_9`), locul prescrierii (`D_10`), `D_11`/`D_12`/`D_23`, bifele *Spitalizat* și *Program național*, CNP copil; la confirmare creează concediul medical din *Concedii*, iar zilele ies din salariu.
@@ -79,7 +80,7 @@ Modulul completează statul de plată românesc, peste structura nativă Odoo 19
 
 **Reguli salariale**
 
-Reguli noi: `NEIMPOZ`, `TICHETE`, `DPB`, `DPBTIN`, `DPBCOP`, `COSTANG`; reguli native suprascrise: `CAS`, `CASS`, `CAM`, `INCOMETAX`; concedii medicale: `CM_FS`, `CM_FNUASS`, `CAS_CM`, `CASS_CM`, `TAX_CM`; concediu de odihnă: `CO_IND`, `CO_COMP`.
+Reguli noi: `NEIMPOZ`, `TICHETE`, `DPB`, `DPBTIN`, `DPBCOP`, `COSTANG`; reguli native suprascrise: `CAS`, `CASS`, `CAM`, `INCOMETAX`; concedii medicale: `CM_FS`, `CM_FNUASS`, `CAS_CM`, `CASS_CM`, `TAX_CM`; concediu de odihnă: `CO_IND`, `CO_COMP`; prime: `PRIMA`, `PRIMA_NET`.
 
 **Acțiuni Automate / Acțiuni Server**
 

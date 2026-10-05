@@ -4,6 +4,11 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-05] Actualizare `l10n_ro_hr_payroll_enhancement` 19.0.2.7.0 (S11, prime în net)
+
+- **Acțiune:** [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md): prime în net cu recalculul brutului (*Primă (în net)* / *Primă (în brut)*, regulile `PRIMA` / `PRIMA_NET`, solver cu căutare binară și fereastră de 60 lei în savepoint); fișa consultant (pasul 24) și captura 24 copiate.
+- **Corecții față de readme:** nu e cazul. **Dependențe/Conexiuni:** fără dependențe noi. De verificat: pragul de venit pentru suma neimpozabilă 2026 (nesetat) și primele din profit (Dr 644 = Cr 424), netratate.
+
 ## [2026-10-05] Ingestie `l10n_ro_hr_documents` 19.0.1.0.0 (S10, documente HR)
 
 - **Acțiune:** Pagină nouă [l10n_ro_hr_documents](l10n_ro_hr_documents/index.md): contract individual de muncă, act adițional (diferențele dintre două versiuni), decizii de suspendare și de încetare (preaviz și contestare după temei, motive și instanță obligatorii la concediere), cerere de demisie (preaviz 20/45 de zile lucrătoare, fără sărbătorile calendarului) și adeverință de vechime (cu salariu și vechime), cu număr `HR/an/nr`, text editabil și PDF arhivat; fișa consultant (5 pași) și 9 capturi copiate.
