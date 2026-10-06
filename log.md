@@ -4,6 +4,17 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-06] Ingestie `deltatech_sale_dashboard` 19.0.1.0.1, `deltatech_sale_dashboard_rma` 19.0.1.0.0, `deltatech_sale_dashboard_delivery` 19.0.1.0.0 (tablou de bord vânzări)
+
+- **Acțiune:** ingestie nouă în paralel (3 subagenți) după PR terrabit-solutions/bitshop_ent#216 și #217.
+  - [deltatech_sale_dashboard](deltatech_sale_dashboard/index.md): ecranul **Vânzări → Tablou de bord** cu banda „De făcut acum” și „Rezultate” pe 7/30/90/365 zile, vizibilitate mine/echipă/firmă, sume doar pentru Administrator Vânzări. Fișa consultant (6 pași) și 6 capturi copiate.
+  - [deltatech_sale_dashboard_rma](deltatech_sale_dashboard_rma/index.md): retururi de aprobat, în curs și cererile perioadei.
+  - [deltatech_sale_dashboard_delivery](deltatech_sale_dashboard_delivery/index.md): colete de pregătit, de ridicat de curier și în curs de livrare; fereastra de zile din parametrul `deltatech_sale_dashboard_delivery.recent_days`.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md` și `FISA_CONSULTANT.md` de pe 19.0 (`e853f5d`).
+- **Corecții față de readme:** nu e cazul.
+- **Dependențe/Conexiuni:** dependențe către [deltatech_web_kpi_cards](deltatech_web_kpi_cards/index.md), [deltatech_rma](deltatech_rma/index.md), [deltatech_delivery_status](deltatech_delivery_status/index.md); conexiune `deltatech_sale_dashboard_delivery` → [deltatech_delivery_dashboard](deltatech_delivery_dashboard/index.md).
+- **Fișiere actualizate:** cele trei directoare de modul (`index.md`, plus `FISA_CONSULTANT.md` și `screenshots/` la `deltatech_sale_dashboard`), `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-05] Actualizare `l10n_ro_vat_deductibility` 19.0.1.5.0, `l10n_ro_anaf_d300` 19.0.0.0.18, `l10n_ro_account_vat_journal` 19.0.1.5.3 (TVA deductibilă parțial / 50%)
 
 - **Acțiune:** re-ingestie în paralel (3 subagenți) după PR terrabit-solutions/l10n_ro_ent#483.

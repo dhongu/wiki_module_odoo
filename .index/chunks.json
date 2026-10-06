@@ -7752,6 +7752,91 @@
     "text": "Deltatech Sale Currency\ndeltatech_sale_currency\nAcest modul oferă o gestionare specializată a conversiei valutare între comenzile de vânzare și facturile generate din acestea. Este util în special pentru companiile care își mențin listele de prețuri într-o monedă (de exemplu EUR), dar doresc să emită facturile într-o altă monedă (de exemplu moneda jurnalului de vânzări sau moneda funcțională a companiei, cum ar fi RON). Astfel, prețurile sunt convertite automat la momentul facturării, iar înregistrările financiare reflectă valorile corecte în moneda dorită.\nMoneda facturii bazată pe jurnal: setează automat moneda facturii generate în funcție de moneda jurnalului de vânzări selectat, înlocuind comportamentul implicit Odoo de a folosi moneda comenzii de vânzare.\nConversie automată a prețurilor: convertește prețurile unitare din moneda comenzii de vânzare în moneda facturii pe parcursul procesului de facturare, folosind cursul de schimb valabil la data conversiei.\nCoerență financiară: asigură că înregistrările din jurnalul contabil reflectă valorile corecte în moneda dorită.\nIntegrare între module: se integrează cu modulele de Vânzări și Contabilitate pentru un flux de date consistent."
   },
   {
+    "path": "deltatech_sale_dashboard/index.md",
+    "module": "deltatech_sale_dashboard",
+    "version": "19.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_sale_dashboard",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_sale_dashboard",
+    "last_ingest": "2026-10-06",
+    "friendly_name": "deltatech_sale_dashboard",
+    "summary": "Un singur ecran în aplicația Vânzări, care răspunde la două întrebări: ce așteaptă acum echipa de vânzări și cum a mers perioada. Agentul vede dintr-o privire ofertele de urmărit, comenzile de livrat sau de facturat și rezultatele ultimelor zile, fără să caute prin liste. Un clic pe orice card deschide lista exactă a înregistrărilor numărate.",
+    "features": [
+      "Banda „De făcut acum” (indiferent de dată): oferte deschise, oferte expirate, oferte de urmărit (trimise de mai mult de 7 zile, încă valabile și fără răspuns), comenzi de livrat, livrări întârziate (programate înainte de azi) și comenzi de facturat.",
+      "Banda „Rezultate” pe ultimele 7, 30, 90 sau 365 de zile, fiecare față de perioada anterioară de aceeași lungime, cu linie de evoluție: oferte emise, comenzi confirmate, vânzări fără TVA (în moneda companiei), rata de conversie (cu variația în puncte) și facturat fără TVA (notele de credit se scad).",
+      "Sume doar pentru manageri: valorile și cardurile de sume (vânzări, facturat) sunt vizibile doar pentru Vânzări: Administrator; agentul vede numărătorile, variațiile și rata de conversie.",
+      "Domeniu de vizualizare: „Vânzările mele”, „Echipa mea” (echipele din care utilizatorul face parte sau pe care le conduce) sau „Toată compania”, ultimele două doar pentru cine are dreptul. Datele se citesc cu drepturile utilizatorului (reguli de înregistrare și companii selectate).",
+      "De la număr la listă: cardul deschide lista în vizualizările standard (oferte, comenzi, facturi, retururi), fără filtrele implicite, astfel încât numărul de pe card egalează numărul de rânduri.",
+      "Configurare: numărul de zile după care o ofertă trimisă se urmărește este parametrul de sistem `deltatech_sale_dashboard.follow_up_days` (implicit 7). Meniul: Vânzări ▸ Dashboard.",
+      "Cardurile sunt cele din `deltatech_web_kpi_cards` și respectă modul luminos/întunecat.",
+      "Cu modulele punte instalate, apar automat carduri pentru retururi și colete (vezi Conexiuni). Fluxul detaliat este în fișa consultant."
+    ],
+    "dependencies": [
+      "sale_stock",
+      "deltatech_web_kpi_cards"
+    ],
+    "connections": [
+      "deltatech_sale_dashboard_rma",
+      "deltatech_rma",
+      "deltatech_sale_dashboard_delivery",
+      "deltatech_delivery_status"
+    ],
+    "text": "deltatech_sale_dashboard\ndeltatech_sale_dashboard\nUn singur ecran în aplicația Vânzări, care răspunde la două întrebări: ce așteaptă acum echipa de vânzări și cum a mers perioada. Agentul vede dintr-o privire ofertele de urmărit, comenzile de livrat sau de facturat și rezultatele ultimelor zile, fără să caute prin liste. Un clic pe orice card deschide lista exactă a înregistrărilor numărate.\nBanda „De făcut acum” (indiferent de dată): oferte deschise, oferte expirate, oferte de urmărit (trimise de mai mult de 7 zile, încă valabile și fără răspuns), comenzi de livrat, livrări întârziate (programate înainte de azi) și comenzi de facturat.\nBanda „Rezultate” pe ultimele 7, 30, 90 sau 365 de zile, fiecare față de perioada anterioară de aceeași lungime, cu linie de evoluție: oferte emise, comenzi confirmate, vânzări fără TVA (în moneda companiei), rata de conversie (cu variația în puncte) și facturat fără TVA (notele de credit se scad).\nSume doar pentru manageri: valorile și cardurile de sume (vânzări, facturat) sunt vizibile doar pentru Vânzări: Administrator; agentul vede numărătorile, variațiile și rata de conversie.\nDomeniu de vizualizare: „Vânzările mele”, „Echipa mea” (echipele din care utilizatorul face parte sau pe care le conduce) sau „Toată compania”, ultimele două doar pentru cine are dreptul. Datele se citesc cu drepturile utilizatorului (reguli de înregistrare și companii selectate).\nDe la număr la listă: cardul deschide lista în vizualizările standard (oferte, comenzi, facturi, retururi), fără filtrele implicite, astfel încât numărul de pe card egalează numărul de rânduri.\nConfigurare: numărul de zile după care o ofertă trimisă se urmărește este parametrul de sistem `deltatech_sale_dashboard.follow_up_days` (implicit 7). Meniul: Vânzări ▸ Dashboard.\nCardurile sunt cele din `deltatech_web_kpi_cards` și respectă modul luminos/întunecat.\nCu modulele punte instalate, apar automat carduri pentru retururi și colete (vezi Conexiuni). Fluxul detaliat este în fișa consultant."
+  },
+  {
+    "path": "deltatech_sale_dashboard_delivery/index.md",
+    "module": "deltatech_sale_dashboard_delivery",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_sale_dashboard_delivery",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_sale_dashboard_delivery",
+    "last_ingest": "2026-10-06",
+    "friendly_name": "Sales Dashboard - Parcels",
+    "summary": "Adaugă pe tabloul de bord de vânzări coloanele despre coletele comenzilor: ce trebuie pregătit în depozit, ce așteaptă preluarea de către curier și ce este deja pe drum. Vânzătorul vede dintr-o privire starea livrărilor comenzilor sale, pe baza statusului de livrare urmărit de modulul `deltatech_delivery_status`. Se instalează automat când ambele module sunt prezente.",
+    "features": [
+      "Parcels to Prepare — livrări pregătite în depozit (stare „Pregătit”), cu transportator și fără AWB încă.",
+      "Awaiting Courier Pickup — colete cu AWB pe care curierul nu le-a preluat încă (status de livrare „pre-aviz”).",
+      "Parcels on the Way — colete preluate de curier și nelivrate încă: în tranzit, în depozitul curierului sau în curs de livrare.",
+      "Coletul aparține vânzătorului și echipei de vânzări ale comenzii, deci filtrele *My Sales*, *My Team* și *Whole Company* funcționează ca la celelalte carduri.",
+      "Un click pe card deschide transferurile numărate.",
+      "Se numără doar transferurile de livrare (outgoing) legate de comenzi de vânzare, necanceleate, create în ultimele 60 de zile. Un colet cu statusul needitat de luni de zile e o problemă de date, nu muncă de azi.",
+      "Numărul de zile se configurează prin parametrul de sistem `deltatech_sale_dashboard_delivery.recent_days` (Settings ▸ Technical ▸ System Parameters, mod dezvoltator); implicit 60, și când lipsește sau nu e număr.",
+      "Întârzierile față de SLA-ul curierului, returnările și rambursul se urmăresc în tabloul de bord de livrări ([deltatech_delivery_dashboard](../deltatech_delivery_dashboard/index.md))."
+    ],
+    "dependencies": [
+      "deltatech_sale_dashboard",
+      "deltatech_delivery_status"
+    ],
+    "connections": [
+      "deltatech_sale_dashboard_rma",
+      "deltatech_delivery_dashboard"
+    ],
+    "text": "Sales Dashboard - Parcels\ndeltatech_sale_dashboard_delivery\nAdaugă pe tabloul de bord de vânzări coloanele despre coletele comenzilor: ce trebuie pregătit în depozit, ce așteaptă preluarea de către curier și ce este deja pe drum. Vânzătorul vede dintr-o privire starea livrărilor comenzilor sale, pe baza statusului de livrare urmărit de modulul `deltatech_delivery_status`. Se instalează automat când ambele module sunt prezente.\nParcels to Prepare — livrări pregătite în depozit (stare „Pregătit”), cu transportator și fără AWB încă.\nAwaiting Courier Pickup — colete cu AWB pe care curierul nu le-a preluat încă (status de livrare „pre-aviz”).\nParcels on the Way — colete preluate de curier și nelivrate încă: în tranzit, în depozitul curierului sau în curs de livrare.\nColetul aparține vânzătorului și echipei de vânzări ale comenzii, deci filtrele *My Sales*, *My Team* și *Whole Company* funcționează ca la celelalte carduri.\nUn click pe card deschide transferurile numărate.\nSe numără doar transferurile de livrare (outgoing) legate de comenzi de vânzare, necanceleate, create în ultimele 60 de zile. Un colet cu statusul needitat de luni de zile e o problemă de date, nu muncă de azi.\nNumărul de zile se configurează prin parametrul de sistem `deltatech_sale_dashboard_delivery.recent_days` (Settings ▸ Technical ▸ System Parameters, mod dezvoltator); implicit 60, și când lipsește sau nu e număr.\nÎntârzierile față de SLA-ul curierului, returnările și rambursul se urmăresc în tabloul de bord de livrări ([deltatech_delivery_dashboard](../deltatech_delivery_dashboard/index.md))."
+  },
+  {
+    "path": "deltatech_sale_dashboard_rma/index.md",
+    "module": "deltatech_sale_dashboard_rma",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_sale_dashboard_rma",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_sale_dashboard_rma",
+    "last_ingest": "2026-10-06",
+    "friendly_name": "Sales Dashboard - Returns",
+    "summary": "Puntea dintre tabloul de bord de vânzări și modulul de retururi/garanții. Adaugă pe dashboard cererile de retur și de garanție care așteaptă o decizie sau sunt în curs de procesare, astfel încât responsabilul de vânzări să vadă dintr-o privire ce are de aprobat. Se instalează automat atunci când ambele module sunt prezente.",
+    "features": [
+      "Retururi de aprobat (indicator de lucru): cererile trimise, care așteaptă o decizie (stare „trimisă”).",
+      "Retururi în curs (indicator de lucru): cererile aprobate și neînchise — colet așteptat, recepționat sau inspectat.",
+      "Cereri de retur în rezultatele perioadei, comparate cu perioada anterioară (ciorne și anulate excluse, după data cererii).",
+      "O cerere aparține agentului de vânzări responsabil și echipei de vânzări a comenzii sale.",
+      "Click pe un card deschide lista cererilor numărate."
+    ],
+    "dependencies": [
+      "deltatech_sale_dashboard",
+      "deltatech_rma"
+    ],
+    "connections": [
+      "deltatech_sale_dashboard_delivery"
+    ],
+    "text": "Sales Dashboard - Returns\ndeltatech_sale_dashboard_rma\nPuntea dintre tabloul de bord de vânzări și modulul de retururi/garanții. Adaugă pe dashboard cererile de retur și de garanție care așteaptă o decizie sau sunt în curs de procesare, astfel încât responsabilul de vânzări să vadă dintr-o privire ce are de aprobat. Se instalează automat atunci când ambele module sunt prezente.\nRetururi de aprobat (indicator de lucru): cererile trimise, care așteaptă o decizie (stare „trimisă”).\nRetururi în curs (indicator de lucru): cererile aprobate și neînchise — colet așteptat, recepționat sau inspectat.\nCereri de retur în rezultatele perioadei, comparate cu perioada anterioară (ciorne și anulate excluse, după data cererii).\nO cerere aparține agentului de vânzări responsabil și echipei de vânzări a comenzii sale.\nClick pe un card deschide lista cererilor numărate."
+  },
+  {
     "path": "deltatech_sale_feedback/index.md",
     "module": "deltatech_sale_feedback",
     "version": "19.0.1.0.5",
