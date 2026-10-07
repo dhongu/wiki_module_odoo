@@ -58,11 +58,11 @@ Date minime pentru demo:
 
 > Sursa de date: dacă este instalat `deltatech_stock_valuation`, modulul folosește istoricul valoric
 > lunar (`product.valuation.history`); altfel cade pe `stock.quant` și data ultimei intrări
-> (`l10n_ro_last_in_date` din `l10n_ro_stock_age_report`).
+> (`l10n_ro_last_in_date`, dacă e instalat `l10n_ro_stock_aged_report`, altfel `in_date` din nucleu).
 
 ## 5. Configurare inițială
 
-1. Instalați modulul `l10n_ro_stock_provision` (dependențe: `stock`, `account`, `l10n_ro_stock_age_report`).
+1. Instalați modulul `l10n_ro_stock_provision` (dependențe: `stock`, `account`).
 2. **Contabilitate → Configurare → Setări → secțiunea „Provizioane Stocuri Slow-Moving (OMFP 1802)"**:
    selectați **Contul de cheltuieli 6814**, **Contul de venituri 7814** și **Zilele slow-moving
    implicite** (180 implicit, folosit de cron).
@@ -131,7 +131,7 @@ cu valoarea stocurilor, ajustarea totală și starea (**Analiză / Confirmat / N
 |---|---|---|
 | `stock` | stocul pe locații interne (`stock.quant`) | dependență (manifest) |
 | `account` | nota de ajustare și liniile contabile | dependență (manifest) |
-| `l10n_ro_stock_age_report` | data ultimei intrări per quant (`l10n_ro_last_in_date`) pentru pragul slow-moving | dependență (manifest) |
+| `l10n_ro_stock_aged_report` | dacă e instalat, data ultimei intrări per quant (`l10n_ro_last_in_date`) pentru pragul slow-moving; altfel se folosește `in_date` | opțional (detectat la runtime) |
 | `deltatech_stock_valuation` | dacă e instalat, sursa de date devine `product.valuation.history` (valori contabile exacte) | opțional (detectat la runtime) |
 | `l10n_ro_period_close_enhanced` | checklist de închidere — rulați analiza înainte de închiderea perioadei | secvențiere recomandată |
 

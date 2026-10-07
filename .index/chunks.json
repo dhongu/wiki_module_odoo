@@ -14886,32 +14886,32 @@
     "text": "Romania - Stock Accounting Enhancement\nl10n_ro_stock_account_enhancement\nAcest modul aduce verificări suplimentare pentru evidența contabilă a stocurilor în contextul localizării românești. Pe de o parte, se asigură că mișcările de stoc nu se înregistrează cu un preț de cost egal cu zero, evitând astfel valorizări incorecte. Pe de altă parte, introduce o restricție la postarea facturilor de vânzare sau de achiziție care conțin produse stocabile, dar nu sunt legate de o comandă de vânzare (SO) sau de achiziție (PO). Restricția poate fi activată sau dezactivată din setările de configurare, oferind flexibilitate în funcție de practicile fiecărei companii.\nVerificare ca prețul de cost să fie diferit de zero la mișcările de stoc.\nRestricție la postarea facturilor (vânzare/achiziție) care conțin produse stocabile fără referință la o comandă de vânzare (SO) sau de achiziție (PO).\nPosibilitatea de a activa/dezactiva această restricție din setările de configurare (Accounting -> România)."
   },
   {
-    "path": "l10n_ro_stock_age_report/index.md",
-    "module": "l10n_ro_stock_age_report",
-    "version": "19.0.0.0.2",
-    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_age_report",
-    "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_age_report",
-    "last_ingest": "2026-06-08",
+    "path": "l10n_ro_stock_aged_report/index.md",
+    "module": "l10n_ro_stock_aged_report",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_aged_report",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_aged_report",
+    "last_ingest": "2026-10-07",
     "friendly_name": "Romania - Stock Aged Report",
-    "summary": "Acest modul oferă un raport de vechime a stocului (Stock Aged Report) pentru localizarea românească. El ajută utilizatorii să urmărească vechimea stocurilor prin monitorizarea ultimelor date de intrare și de ieșire pentru fiecare lot de stoc (stock quant), astfel încât să se poată identifica marfa care stagnează în depozit și să se evalueze impactul ei contabil.",
+    "summary": "Modulul oferă un raport de vechime a stocului (Stock Aged Report) pentru localizarea românească. Urmărește ultima dată de intrare și ultima dată de ieșire pe fiecare quant de stoc, astfel încât marfa care stagnează în depozit să poată fi identificată și evaluată contabil, pe intervale de vechime configurabile. **Redenumire.** Modulul s-a numit anterior `l10n_ro_stock_age_report`. Numele tehnic vechi este ocupat pe Odoo Apps de alt publicator (modulul provine din `NextERP-Romania/addons_extern`), așa că modulul a fost redenumit pe 07.10.2026 în `l10n_ro_stock_aged_report` (dhongu/l10n-romania#608 pe 19.0, #609 pe 18.0). Cine caută după `l10n_ro_stock_age_report` ajunge la această pagină. Modelele (`l10n.ro.stock.age.report`), câmpurile și funcționalitatea au rămas neschimbate.",
     "features": [
-      "Urmărește automat ultima dată de intrare și ultima dată de ieșire pentru fiecare lot de stoc (stock quant).",
-      "Oferă un wizard pentru generarea raportului de vechime pentru un anumit depozit și o anumită dată.",
-      "Intervale de îmbătrânire configurabile (de ex. 15, 30, 90, 180, 365 de zile).",
-      "Defalcă valoarea și cantitatea stocului pe intervale de timp (de ex. [1] 0-15 zile, [2] 15-30 zile etc.).",
-      "Include informații contabile, cum ar fi contul de evaluare a stocului pentru fiecare produs.",
-      "Oferă o vizualizare de tip pivot și o listă pentru analiza detaliată a stocului învechit.",
-      "Actualizează retroactiv loturile de stoc existente cu date istorice la momentul instalării."
+      "Data ultimei intrări / ieșiri pe quant: câmpurile `l10n_ro_last_in_date` și `l10n_ro_last_out_date` pe `stock.quant` se actualizează automat când cantitatea crește, respectiv scade.",
+      "Wizard de raport: din Inventar → Raportare → Raport vechime stoc se alege depozitul (sau locațiile), data de referință și intervalul de vechime (15, 30, 90, 180, 365 de zile).",
+      "Defalcare pe intervale: cantitatea și valoarea stocului sunt împărțite pe tranșe de vechime (de ex. [1] 0-15 zile, [2] 15-30 zile etc.).",
+      "Cont contabil: fiecare linie arată contul de evaluare a stocului; se folosește contul de pe produs dacă există câmpul OCA `l10n_ro_property_stock_valuation_account_id` (citit defensiv), altfel contul de pe categoria produsului.",
+      "Analiză: rezultatul se deschide în vizualizare pivot și listă.",
+      "Date istorice la instalare: `post_init_hook` completează datele goale pe quant-urile existente din ultimele mișcări de stoc efectuate.",
+      "Migrare automată de la numele vechi: la instalare, `pre_init_hook` preia înregistrările modulului vechi `l10n_ro_stock_age_report`, dacă este instalat, prin aceiași pași ca `merge_module` din upgrade-util (fără dependență externă). Câmpurile, vizualizările, acțiunile și meniurile sunt mutate pe noul nume, dependențele altor module sunt redirecționate, iar modulul vechi este scos din lista de module. Datele de intrare/ieșire deja calculate pe quant-uri se păstrează."
     ],
     "dependencies": [
-      "l10n_ro_stock",
-      "l10n_ro_stock_account"
+      "stock_account"
     ],
     "connections": [
-      "l10n_ro_stock",
-      "l10n_ro_stock_account"
+      "l10n_ro_stock_provision",
+      "l10n_ro_last_in_date",
+      "terrabit_datus"
     ],
-    "text": "Romania - Stock Aged Report\nl10n_ro_stock_age_report\nAcest modul oferă un raport de vechime a stocului (Stock Aged Report) pentru localizarea românească. El ajută utilizatorii să urmărească vechimea stocurilor prin monitorizarea ultimelor date de intrare și de ieșire pentru fiecare lot de stoc (stock quant), astfel încât să se poată identifica marfa care stagnează în depozit și să se evalueze impactul ei contabil.\nUrmărește automat ultima dată de intrare și ultima dată de ieșire pentru fiecare lot de stoc (stock quant).\nOferă un wizard pentru generarea raportului de vechime pentru un anumit depozit și o anumită dată.\nIntervale de îmbătrânire configurabile (de ex. 15, 30, 90, 180, 365 de zile).\nDefalcă valoarea și cantitatea stocului pe intervale de timp (de ex. [1] 0-15 zile, [2] 15-30 zile etc.).\nInclude informații contabile, cum ar fi contul de evaluare a stocului pentru fiecare produs.\nOferă o vizualizare de tip pivot și o listă pentru analiza detaliată a stocului învechit.\nActualizează retroactiv loturile de stoc existente cu date istorice la momentul instalării."
+    "text": "Romania - Stock Aged Report\nl10n_ro_stock_aged_report\nModulul oferă un raport de vechime a stocului (Stock Aged Report) pentru localizarea românească. Urmărește ultima dată de intrare și ultima dată de ieșire pe fiecare quant de stoc, astfel încât marfa care stagnează în depozit să poată fi identificată și evaluată contabil, pe intervale de vechime configurabile. **Redenumire.** Modulul s-a numit anterior `l10n_ro_stock_age_report`. Numele tehnic vechi este ocupat pe Odoo Apps de alt publicator (modulul provine din `NextERP-Romania/addons_extern`), așa că modulul a fost redenumit pe 07.10.2026 în `l10n_ro_stock_aged_report` (dhongu/l10n-romania#608 pe 19.0, #609 pe 18.0). Cine caută după `l10n_ro_stock_age_report` ajunge la această pagină. Modelele (`l10n.ro.stock.age.report`), câmpurile și funcționalitatea au rămas neschimbate.\nData ultimei intrări / ieșiri pe quant: câmpurile `l10n_ro_last_in_date` și `l10n_ro_last_out_date` pe `stock.quant` se actualizează automat când cantitatea crește, respectiv scade.\nWizard de raport: din Inventar → Raportare → Raport vechime stoc se alege depozitul (sau locațiile), data de referință și intervalul de vechime (15, 30, 90, 180, 365 de zile).\nDefalcare pe intervale: cantitatea și valoarea stocului sunt împărțite pe tranșe de vechime (de ex. [1] 0-15 zile, [2] 15-30 zile etc.).\nCont contabil: fiecare linie arată contul de evaluare a stocului; se folosește contul de pe produs dacă există câmpul OCA `l10n_ro_property_stock_valuation_account_id` (citit defensiv), altfel contul de pe categoria produsului.\nAnaliză: rezultatul se deschide în vizualizare pivot și listă.\nDate istorice la instalare: `post_init_hook` completează datele goale pe quant-urile existente din ultimele mișcări de stoc efectuate.\nMigrare automată de la numele vechi: la instalare, `pre_init_hook` preia înregistrările modulului vechi `l10n_ro_stock_age_report`, dacă este instalat, prin aceiași pași ca `merge_module` din upgrade-util (fără dependență externă). Câmpurile, vizualizările, acțiunile și meniurile sunt mutate pe noul nume, dependențele altor module sunt redirecționate, iar modulul vechi este scos din lista de module. Datele de intrare/ieșire deja calculate pe quant-uri se păstrează."
   },
   {
     "path": "l10n_ro_stock_cmp_periodic/index.md",

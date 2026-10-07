@@ -24,7 +24,8 @@ Acest modul identifică automat stocurile fără rulaj (slow-moving) și generea
 
 - `stock`
 - `account`
-- `l10n_ro_stock_age_report`
+
+Opțional (detectat la runtime, fără dependență în manifest): [l10n_ro_stock_aged_report](../l10n_ro_stock_aged_report/index.md) (fost `l10n_ro_stock_age_report`), pentru data ultimei intrări `l10n_ro_last_in_date`; altfel se folosește `in_date` din nucleu.
 
 ## 4. Componente Cheie
 

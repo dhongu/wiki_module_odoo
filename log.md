@@ -2798,3 +2798,11 @@ This is an append-only log of all operations performed on the wiki.
 - **Acțiune:** pagina veche `l10n_ro_account_storno/` (19.0.0.0.3) e înlocuită de [l10n_ro_storno_enhancement](l10n_ro_storno_enhancement/index.md). Numele tehnic vechi e ocupat pe Odoo Apps de alt publicator; redenumirea e în dhongu/l10n-romania#605 (19.0), #606 (18.0) și #607 (20.0). Pagina nouă menționează numele vechi, migrarea automată prin `pre_init_hook` și storno-ul manual `l10n_ro_force_storno`, care lipseau.
 - **De verificat:** `readme/DESCRIPTION.md` al modulului descrie valorile „Usage” ca Debit/Credit/Bivalent (în cod: Bifunctional/Activ/Pasiv) și o activare pe companie care în cod e comentată; pagina e scrisă după cod.
 - **Fișiere actualizate:** `l10n_ro_storno_enhancement/index.md` (nou), `l10n_ro_account_storno/` (șters), `index.md`, `log.md`, `.index/` (rebuild lexical; vectorii se regenerează separat cu `--embed`).
+
+---
+
+## [2026-10-07] Redenumire: `l10n_ro_stock_age_report` → `l10n_ro_stock_aged_report` (19.0.1.0.0)
+
+- **Acțiune:** pagina veche `l10n_ro_stock_age_report/` (19.0.0.0.2) e înlocuită de [l10n_ro_stock_aged_report](l10n_ro_stock_aged_report/index.md). Numele tehnic vechi e ocupat pe Odoo Apps de alt publicator (17.0, modul provenit din `NextERP-Romania/addons_extern`); redenumirea e în dhongu/l10n-romania#608 (19.0) și #609 (18.0). Pagina nouă e scrisă după cod: dependența e doar `stock_account` (dependențele OCA `l10n_ro_stock` / `l10n_ro_stock_account` au fost scoase în 19.0.0.0.3), plus migrarea automată prin `pre_init_hook` și componentele cheie, care lipseau.
+- **Corecții la [l10n_ro_stock_provision](l10n_ro_stock_provision/index.md):** modulul de vechime nu mai e dependență în manifest, ci opțional, detectat la runtime (din 19.0.1.0.2); `FISA_CONSULTANT.md` resincronizat cu fișa din modul (terrabit-solutions/l10n_ro_ent#519).
+- **Fișiere actualizate:** `l10n_ro_stock_aged_report/index.md` (nou), `l10n_ro_stock_age_report/` (șters), `l10n_ro_stock_provision/index.md`, `l10n_ro_stock_provision/FISA_CONSULTANT.md`, `index.md`, `log.md`, `.index/` (rebuild lexical; vectorii se regenerează separat cu `--embed`).
