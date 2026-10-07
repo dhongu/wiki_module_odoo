@@ -10698,29 +10698,6 @@
     "text": "Romania - Cont corespondent\nl10n_ro_account_correspondence\nModulul adaugă pe fiecare poziție contabilă (`account.move.line`) contul corespondent (cont contrapartidă, conform OMFP 1802/2014), util pentru fișele de cont, registrul-jurnal și verificarea notelor contabile.\nPentru fiecare linie de notă contabilă: dacă pe partea opusă (debit ↔ credit) există un\nDacă există mai multe conturi distincte pe partea opusă, se afișează eticheta „Diverși\"\nLiniile fără mișcare (secțiuni, note fără sumă) rămân fără corespondent.\nCâmpurile sunt stocate și calculate (recalculate automat la modificarea liniilor notei),\nComplementar modulului [l10n_ro_journal_reports](../l10n_ro_journal_reports/index.md), care"
   },
   {
-    "path": "l10n_ro_account_edi_ubl/index.md",
-    "module": "l10n_ro_account_edi_ubl",
-    "version": "19.0.1.0.0",
-    "github": "`https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_account_edi_ubl`",
-    "local_path": "odoo-addons/l10n-romania/l10n_ro_account_edi_ubl",
-    "last_ingest": "2026-06-08",
-    "friendly_name": "Romania - Send E-Factura - legacy",
-    "summary": "Acest modul este o punte tehnică (bridge) păstrată pentru compatibilitate retroactivă în jurul trimiterii facturilor electronice românești (E-Factura) către SPV-ul ANAF. Practic, el nu mai conține logică proprie: rolul său este să marcheze numele tehnic vechi `l10n_ro_account_edi_ubl` ca fiind în continuare instalabil și să atragă automat modulul curent de E-Factura (`l10n_ro_edi`), unde se află toată funcționalitatea reală. Existența lui asigură o tranziție lină pentru bazele de date mai vechi care îl aveau deja instalat, fără a-l pierde la upgrade și fără a cere reconfigurare din partea utilizatorului.",
-    "features": [
-      "Asigură continuitatea numelui tehnic `l10n_ro_account_edi_ubl` pentru bazele de date existente (modul legacy/bridge).",
-      "Se instalează automat (`auto_install = True`) atunci când dependența sa este prezentă, redirecționând trimiterea E-Factura către modulul curent.",
-      "Trage după sine modulul de E-Factura propriu-zis (`l10n_ro_edi`), care conține logica de generare UBL și de comunicare cu SPV-ul ANAF.",
-      "Nu adaugă modele, vizualizări sau date proprii — întreaga funcționalitate este moștenită din dependență."
-    ],
-    "dependencies": [
-      "l10n_ro_edi"
-    ],
-    "connections": [
-      "l10n_ro_edi"
-    ],
-    "text": "Romania - Send E-Factura - legacy\nl10n_ro_account_edi_ubl\nAcest modul este o punte tehnică (bridge) păstrată pentru compatibilitate retroactivă în jurul trimiterii facturilor electronice românești (E-Factura) către SPV-ul ANAF. Practic, el nu mai conține logică proprie: rolul său este să marcheze numele tehnic vechi `l10n_ro_account_edi_ubl` ca fiind în continuare instalabil și să atragă automat modulul curent de E-Factura (`l10n_ro_edi`), unde se află toată funcționalitatea reală. Existența lui asigură o tranziție lină pentru bazele de date mai vechi care îl aveau deja instalat, fără a-l pierde la upgrade și fără a cere reconfigurare din partea utilizatorului.\nAsigură continuitatea numelui tehnic `l10n_ro_account_edi_ubl` pentru bazele de date existente (modul legacy/bridge).\nSe instalează automat (`auto_install = True`) atunci când dependența sa este prezentă, redirecționând trimiterea E-Factura către modulul curent.\nTrage după sine modulul de E-Factura propriu-zis (`l10n_ro_edi`), care conține logica de generare UBL și de comunicare cu SPV-ul ANAF.\nNu adaugă modele, vizualizări sau date proprii — întreaga funcționalitate este moștenită din dependență."
-  },
-  {
     "path": "l10n_ro_account_fisa_cont/index.md",
     "module": "l10n_ro_account_fisa_cont",
     "version": "19.0.1.0.0",

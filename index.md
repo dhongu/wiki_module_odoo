@@ -379,7 +379,6 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_account_bank_statement_import_xlsx](l10n_ro_account_bank_statement_import_xlsx/index.md): Permite importul extraselor bancare în format XLSX, cu mapare flexibilă a coloanelor și detectare automată a partenerului.
 - [l10n_ro_account_chart](l10n_ro_account_chart/index.md): Extinde planul de conturi românesc cu controale de înregistrare și analitice.
 - [l10n_ro_account_correspondence](l10n_ro_account_correspondence/index.md): Calculează și stochează pe fiecare poziție contabilă contul corespondent (conform OMFP 1802/2014), pentru fișe de cont, registru-jurnal și rapoarte.
-- [l10n_ro_account_edi_ubl](l10n_ro_account_edi_ubl/index.md): Modul punte/legacy care redirecționează trimiterea E-Factura către `l10n_ro_edi`.
 - [l10n_ro_account_fisa_cont](l10n_ro_account_fisa_cont/index.md): Oferă raportul 'Fișă de Cont' conform OMFP 1802/2014.
 - [l10n_ro_account_report](l10n_ro_account_report/index.md): Rapoarte contabile pentru localizarea România (momentan registrul de casă).
 - [l10n_ro_account_return_pl_closing](l10n_ro_account_return_pl_closing/index.md): Închiderea lunară a conturilor de venituri și cheltuieli prin contul 121, pe framework-ul Enterprise `account.return`.
