@@ -2790,3 +2790,11 @@ This is an append-only log of all operations performed on the wiki.
     - `wiki_module_odoo/deltatech_rma/FISA_CONSULTANT.md`
     - `wiki_module_odoo/log.md`
     - `wiki_module_odoo/.index/chunks.json`
+
+---
+
+## [2026-10-07] Redenumire: `l10n_ro_account_storno` → `l10n_ro_storno_enhancement` (19.0.1.0.0)
+
+- **Acțiune:** pagina veche `l10n_ro_account_storno/` (19.0.0.0.3) e înlocuită de [l10n_ro_storno_enhancement](l10n_ro_storno_enhancement/index.md). Numele tehnic vechi e ocupat pe Odoo Apps de alt publicator; redenumirea e în dhongu/l10n-romania#605 (19.0), #606 (18.0) și #607 (20.0). Pagina nouă menționează numele vechi, migrarea automată prin `pre_init_hook` și storno-ul manual `l10n_ro_force_storno`, care lipseau.
+- **De verificat:** `readme/DESCRIPTION.md` al modulului descrie valorile „Usage” ca Debit/Credit/Bivalent (în cod: Bifunctional/Activ/Pasiv) și o activare pe companie care în cod e comentată; pagina e scrisă după cod.
+- **Fișiere actualizate:** `l10n_ro_storno_enhancement/index.md` (nou), `l10n_ro_account_storno/` (șters), `index.md`, `log.md`, `.index/` (rebuild lexical; vectorii se regenerează separat cu `--embed`).
