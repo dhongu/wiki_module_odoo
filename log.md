@@ -4,6 +4,19 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-08] Ingestie `l10n_ro_move_template` 19.0.1.0.0 (șabloane de note contabile, FR-81)
+
+- **Acțiune:** ingestie modul nou, după PR terrabit-solutions/l10n_ro_ent#537 (merged în 19.0, `ac860db1`).
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `FISA_CONSULTANT.md`, `models/`, `views/` de pe `origin/19.0` (copia locală a suitei nu avea încă modulul).
+- **Corecții față de readme:** nu e cazul. Monografiile șabloanelor RO au fost verificate de Pacioli, iar fișa a trecut verificator-fisa în 3 ture.
+- **Dependențe/Conexiuni:**
+  - [l10n_ro_payroll_import](l10n_ro_payroll_import/index.md): importă fișierul notei de salarii; șablonul acoperă cazul fără fișier;
+  - [l10n_ro_deferred_entries](l10n_ro_deferred_entries/index.md): eșalonarea automată 471/472;
+  - [l10n_ro_anaf_d300](l10n_ro_anaf_d300/index.md): D300 citește grilele de taxe de pe linii;
+  - [l10n_ro_stock_consignment](l10n_ro_stock_consignment/index.md) și [l10n_ro_inventory_items](l10n_ro_inventory_items/index.md): alte contrapartide tehnice în afara bilanțului (8039, 8035C), față de 800000 aici;
+  - `account_move_template` (OCA): modelele noastre sunt `l10n.ro.move.template*`, ca să poată coexista.
+- **Fișiere actualizate:** `l10n_ro_move_template/index.md`, `l10n_ro_move_template/FISA_CONSULTANT.md`, `l10n_ro_move_template/screenshots/` (10), `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-08] Re-ingestie `l10n_ro_cash_register` (v19.0.1.2.0 → v19.0.1.4.0, monetarul)
 
 - **Acțiune:** re-ingestie după PR dhongu/l10n-romania#613 (merged în 19.0, `204664ace`). Pagina rămăsese la 19.0.1.2.0, fără închiderea zilei.

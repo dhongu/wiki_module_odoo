@@ -13616,6 +13616,46 @@
     "text": "Romania - Impozit pe veniturile microîntreprinderilor\nl10n_ro_micro_tax\nModulul calculează și înregistrează trimestrial impozitul pe veniturile micro-întreprinderilor conform Legii 227/2015 Titlul III, actualizat prin OUG 115/2023 și OUG 21/2024. Se adresează companiilor cu cifra de afaceri sub 500.000 EUR/an care aplică cota de 1% (cu cel puțin un salariat) sau 3% (fără salariat). Determină automat baza impozabilă din veniturile din exploatare (cu excluderi configurabile), aplică cota corectă în funcție de numărul de salariați și generează automat nota contabilă aferentă. Include monitorizarea plafonului de 500.000 EUR cu alerte și tranziție automată la regimul de impozit pe profit la depășire.\nModel persistent `l10n.ro.micro.tax.compute` cu mașină de stări `draft → posted → cancelled`.\nCalcul automat al veniturilor impozabile din `account.move.line` pentru conturile de tip `income` / `income_other`, filtrând înregistrările postate în trimestrul selectat.\nConturi excluse din baza de calcul, configurabile pe companie (dividende 761, subvenții 7411/7584 etc.).\nNumăr de salariați preluat automat din modulul HR dacă este instalat sau completat manual.\nCotă automată: 1% (cel puțin un salariat) sau 3% (zero salariați), conform legii.\nGenerare automată a notei contabile Dr 698 = Cr 4418 la postare.\nCron lunar de monitorizare a plafonului: alertă la 80% și tranziție automată la impozit pe profit la depășirea pragului de 500.000 EUR.\nConfigurare în Setări Contabilitate — regim fiscal, prag EUR, conturi excluse.\n9 teste automate (TC-01 → TC-09)."
   },
   {
+    "path": "l10n_ro_move_template/index.md",
+    "module": "l10n_ro_move_template",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_move_template",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_move_template",
+    "last_ingest": "2026-10-08",
+    "friendly_name": "Romania - Șabloane note contabile",
+    "summary": "Modulul permite contabilului să definească o singură dată șabloane de note contabile și să genereze apoi notele dintr-un asistent, introducând doar sumele de bază și data. În Odoo standard se poate doar duplica o notă existentă și modifica fiecare linie. Modulul vine și cu zece șabloane românești gata făcute (salarii, chirie, amortizare, comodat, TVA la încasare), validate pe planul de conturi RO.",
+    "features": [
+      "Un șablon are jurnal, referință implicită, instrucțiuni pentru operator și linii cu cont, etichetă, partener opțional, distribuție analitică, taxe sau grile de taxe și sens (debit sau credit).",
+      "Fiecare linie are un cod (de ex. `GROSS`; dacă rămâne gol se completează automat `L1`, `L2`...) și un tip de sumă:",
+      "Introdusă: se completează la generare; valoarea propusă poate fi o sumă fixă sau o formulă (de ex. `GROSS * 0.25`), pe care operatorul o poate înlocui (dezactivând Propusă în asistent);",
+      "Fixă: întotdeauna aceeași sumă;",
+      "Procent: un procent dintr-o altă linie (Codul de bază);",
+      "Formulă: expresie Python pe codurile celorlalte linii, cu `round`, `abs`, `min`, `max`;",
+      "Sold: suma care închide nota, inclusiv taxele (cel mult o linie pe șablon).",
+      "Liniile fără cont sunt parametri de calcul (o sumă cu TVA, o cotă): se introduc sau se calculează, dar nu se înregistrează.",
+      "Ordinea de calcul urmează formulele, nu ordinea liniilor; codurile necunoscute, buclele între formule și formulele care folosesc linia de sold sunt refuzate la salvarea șablonului.",
+      "Taxele de pe o linie funcționează ca pe o notă manuală: Odoo adaugă liniile de TVA cu grilele lor, deci nota intră în decontul de TVA, iar linia de sold include taxa.",
+      "O sumă negativă trece pe partea cealaltă a contului; liniile cu sumă zero sunt omise.",
+      "Generarea se face din Facturare → Contabilitate → Tranzacții → Notă din șablon sau cu butonul Generează nota de pe șablon; se aleg șablonul, data, referința și partenerul (pus pe liniile fără partener), apoi nota se poate lăsa în ciornă sau valida imediat (Validează nota).",
+      "Nota generată rămâne legată de șablon: filtrul Din șablon pe notele contabile și butonul Note pe șablon.",
+      "Șabloanele se administrează din Configurare → Contabilitate → Șabloane note contabile; butonul Încarcă șabloanele românești creează cele zece șabloane: chirie la chiriaș și la locator, amortizare manuală (corporale și necorporale), bunuri primite în folosință (comodat sau chirie, în afara bilanțului; la nevoie se creează contul tehnic de contrapartidă 800000), salarii dintr-un stat de plată extern, tichete de masă și exigibilizarea / deducerea TVA la încasare. Șabloanele pentru care lipsește un cont din plan sunt omise, iar o nouă încărcare nu creează dubluri.",
+      "Fluxul pas-cu-pas, cu capturi de ecran, este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_payroll_import",
+      "l10n_ro_deferred_entries",
+      "l10n_ro_anaf_d300",
+      "l10n_ro_stock_consignment",
+      "l10n_ro_inventory_items",
+      "account_move_template"
+    ],
+    "text": "Romania - Șabloane note contabile\nl10n_ro_move_template\nModulul permite contabilului să definească o singură dată șabloane de note contabile și să genereze apoi notele dintr-un asistent, introducând doar sumele de bază și data. În Odoo standard se poate doar duplica o notă existentă și modifica fiecare linie. Modulul vine și cu zece șabloane românești gata făcute (salarii, chirie, amortizare, comodat, TVA la încasare), validate pe planul de conturi RO.\nUn șablon are jurnal, referință implicită, instrucțiuni pentru operator și linii cu cont, etichetă, partener opțional, distribuție analitică, taxe sau grile de taxe și sens (debit sau credit).\nFiecare linie are un cod (de ex. `GROSS`; dacă rămâne gol se completează automat `L1`, `L2`...) și un tip de sumă:\nIntrodusă: se completează la generare; valoarea propusă poate fi o sumă fixă sau o formulă (de ex. `GROSS * 0.25`), pe care operatorul o poate înlocui (dezactivând Propusă în asistent);\nFixă: întotdeauna aceeași sumă;\nProcent: un procent dintr-o altă linie (Codul de bază);\nFormulă: expresie Python pe codurile celorlalte linii, cu `round`, `abs`, `min`, `max`;\nSold: suma care închide nota, inclusiv taxele (cel mult o linie pe șablon).\nLiniile fără cont sunt parametri de calcul (o sumă cu TVA, o cotă): se introduc sau se calculează, dar nu se înregistrează.\nOrdinea de calcul urmează formulele, nu ordinea liniilor; codurile necunoscute, buclele între formule și formulele care folosesc linia de sold sunt refuzate la salvarea șablonului.\nTaxele de pe o linie funcționează ca pe o notă manuală: Odoo adaugă liniile de TVA cu grilele lor, deci nota intră în decontul de TVA, iar linia de sold include taxa.\nO sumă negativă trece pe partea cealaltă a contului; liniile cu sumă zero sunt omise.\nGenerarea se face din Facturare → Contabilitate → Tranzacții → Notă din șablon sau cu butonul Generează nota de pe șablon; se aleg șablonul, data, referința și partenerul (pus pe liniile fără partener), apoi nota se poate lăsa în ciornă sau valida imediat (Validează nota).\nNota generată rămâne legată de șablon: filtrul Din șablon pe notele contabile și butonul Note pe șablon.\nȘabloanele se administrează din Configurare → Contabilitate → Șabloane note contabile; butonul Încarcă șabloanele românești creează cele zece șabloane: chirie la chiriaș și la locator, amortizare manuală (corporale și necorporale), bunuri primite în folosință (comodat sau chirie, în afara bilanțului; la nevoie se creează contul tehnic de contrapartidă 800000), salarii dintr-un stat de plată extern, tichete de masă și exigibilizarea / deducerea TVA la încasare. Șabloanele pentru care lipsește un cont din plan sunt omise, iar o nouă încărcare nu creează dubluri.\nFluxul pas-cu-pas, cu capturi de ecran, este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+  },
+  {
     "path": "l10n_ro_mrp_labour_account/index.md",
     "module": "l10n_ro_mrp_labour_account",
     "version": "19.0.1.0.0",

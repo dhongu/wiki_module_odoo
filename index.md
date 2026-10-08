@@ -469,6 +469,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_leasing](l10n_ro_leasing/index.md): Contracte de leasing financiar și operațional cu grafic de rate, note contabile automate și cron scadențar.
 - [l10n_ro_message_spv_purchase](l10n_ro_message_spv_purchase/index.md): Leagă mesajele SPV (e-Factura ANAF) de comenzile de achiziție și sincronizează chatter + atașament XML.
 - [l10n_ro_micro_tax](l10n_ro_micro_tax/index.md): Calcul trimestrial al impozitului micro-întreprindere (1%/3%) cu monitorizare plafon și tranziție la profit.
+- [l10n_ro_move_template](l10n_ro_move_template/index.md): Șabloane de note contabile cu sume introduse, procente, formule și sold, plus zece șabloane românești gata făcute (salarii, chirie, amortizare, comodat, TVA la încasare).
 - [l10n_ro_mrp_labour_account](l10n_ro_mrp_labour_account/index.md): Configurează conturile de manoperă producție (331/921/923) pentru contabilizarea automată din mrp_account.
 - [l10n_ro_oss_threshold](l10n_ro_oss_threshold/index.md): Monitorizează pragul anual de 10.000 EUR pentru vânzările B2C UE relevante pentru regimul OSS.
 - [l10n_ro_partner_create_by_vat_button](l10n_ro_partner_create_by_vat_button/index.md): Buton în fișa partenerului pentru recitirea datelor de la ANAF pe baza codului de TVA.
