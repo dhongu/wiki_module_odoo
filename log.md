@@ -4,6 +4,24 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-08] Re-ingestie `l10n_ro_cash_register` (v19.0.1.2.0 → v19.0.1.4.0, monetarul)
+
+- **Acțiune:** re-ingestie după PR dhongu/l10n-romania#613 (merged în 19.0, `204664ace`). Pagina rămăsese la 19.0.1.2.0, fără închiderea zilei.
+- **Ce s-a schimbat în modul:**
+  - **19.0.1.3.0**: **Închide ziua**, blocarea postărilor în urmă, **Redeschide** în cascadă;
+  - **19.0.1.3.1**: contor de secvență propriu al registrului;
+  - **19.0.1.4.0**: **monetarul**. Include:
+    - cupiurile pe monedă, pentru leu și euro;
+    - numărarea pe registru;
+    - tipărirea „Monetar – situația numerarului pe cupiuri”;
+    - **Înregistrează diferența** prin operațiunea de casă precompletată, pe 7588 / 65882 pe planul RO, nu pe conturile 999xxx;
+    - monetarul obligatoriu la închiderea zilei;
+    - casieria în valută, comparată cu soldul în valută.
+- **Sursă:** `readme/DESCRIPTION.md`, `HISTORY.md` (1.2.1–1.4.0), `models/`, `views/` de pe 19.0.
+- **Corecții față de readme:** nu e cazul. Monografia diferențelor a fost verificată de Pacioli înainte de merge.
+- **Dependențe/Conexiuni:** conexiune nouă către [deltatech_cash_statement](deltatech_cash_statement/index.md): aceeași diferență de numerar, dar pe extrasele de casă și fără cupiuri.
+- **Fișiere actualizate:** `l10n_ro_cash_register/index.md`, `l10n_ro_cash_register/FISA_CONSULTANT.md` (pașii 9–13 noi), `l10n_ro_cash_register/screenshots/` (15, dintre care 5 noi), `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-06] Ingestie `deltatech_sale_dashboard` 19.0.1.0.1, `deltatech_sale_dashboard_rma` 19.0.1.0.0, `deltatech_sale_dashboard_delivery` 19.0.1.0.0 (tablou de bord vânzări)
 
 - **Acțiune:** ingestie nouă în paralel (3 subagenți) după PR terrabit-solutions/bitshop_ent#216 și #217.
