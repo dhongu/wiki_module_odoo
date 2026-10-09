@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-09] `deltatech_sale_payment` 19.0.1.3.2: capturile fișei regenerate
+
+- **Acțiune:** cele 5 capturi ale fișei consultant au fost regenerate după reparațiile ferestrei „Confirmă încasarea” (SALEPAY-002..006); capturile anterioare erau din 01.10.2026. Pagina și fișa erau deja la zi (19.0.1.3.2), fără modificări de text.
+- **Sursă:** `tests/test_screenshots.py` (ScreenshotCase, RO, plan de conturi RO, compania „Demo Încasări SRL”).
+- **Dependențe/Conexiuni:** neschimbate.
+- **Fișiere actualizate:** `deltatech_sale_payment/screenshots/` (5 imagini), `log.md`.
+
+---
+
 ## [2026-10-09] Re-ingestie `deltatech_account_enterprise` 19.0.0.1.1: sold rămas semnat în urmărire
 
 - **Acțiune:** actualizare după PR [bitshop_ent#238](https://github.com/terrabit-solutions/bitshop_ent/pull/238) (merge `6d4a7cd`): raportul de urmărire arată Valoare inițială, Stins / aplicat și Rest la data raportului, pe baza reconcilierilor parțiale datate; butoane noi pe fișa partenerului (Urmărire, Fișa partener, Creanțe pe scadențe); listă „Poziții deschise actuale”; câmpurile `followup_open_amount` și `aged_open_amount`.
