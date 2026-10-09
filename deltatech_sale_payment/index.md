@@ -1,7 +1,7 @@
 # Sale Payment (localizat la `deltatech_sale_payment/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_payment`
-- **Versiune:** `19.0.1.3.2`
+- **Versiune:** `19.0.1.3.4`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_payment`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_payment`
 - **Ultima Ingestie:** `2026-10-09`
@@ -26,10 +26,11 @@ Modulul adaugă gestionarea plăților direct în comanda de vânzare (sale orde
   - refuză comenzile cu plată autorizată (autorizarea se capturează sau se anulează la furnizor);
   - data plății se păstrează în mesajul de stare al tranzacției, într-o notă pe comandă și ca dată a plății contabile (când furnizorul creează una); tranzacția este post-procesată imediat, nu de cron;
   - cine poate modifica comanda îi poate confirma încasarea, fără drept de Facturare (verificare de scriere pe comandă, scriere cu drepturi de sistem); vânzătorii pot citi tranzacțiile, nu le pot modifica.
-- Securitate (SALEPAY-006): asistentul verifică la fiecare pas că tranzacția aparține comenzii, că furnizorul este din compania comenzii și că metoda de plată aparține furnizorului; `update_transaction` a devenit privată (`_update_transaction`), codul extern trebuie să apeleze `do_add_payment()`.
+- Securitate (SALEPAY-006): asistentul verifică la fiecare pas că tranzacția aparține comenzii, că furnizorul este din compania comenzii (sau dintr-o companie-mamă, pe comanda unei sucursale — SALEPAY-008, 19.0.1.3.4) și că metoda de plată aparține furnizorului; `update_transaction` a devenit privată (`_update_transaction`), codul extern trebuie să apeleze `do_add_payment()`.
 - Furnizori fără linie de metodă de plată (transfer bancar, „none"): post-procesarea nu mai creează plată contabilă și nu mai eșuează la fiecare 10 minute; comanda se confirmă și, cu facturare automată, se facturează, iar plata o înregistrează contabilul din extras.
 - Migrare: câmpurile se calculează în SQL, înainte de încărcarea registry-ului, pentru baze provenite din 18.0 sau din 19.0.1.1.x; comenzile în altă monedă decât cea a companiei se recalculează la 19.0.1.2.2.
-- Modulul are pictogramă proprie și fișă consultant cu capturi de ecran.
+- Mesajele de eroare ale asistentului sunt traduse în română (19.0.1.3.3).
+- Modulul are pictogramă proprie și fișă consultant cu capturi de ecran, auditată contabil (19.0.1.3.3): cont implicit „Încasări restante” (5121xx) de înlocuit cu 5125, încasarea înainte de factură tratată ca avans (419 + 4427, cu **Cont plată în avans** = 419 setat), comisionul procesatorului (627) și rambursul prin curier (461).
 
 #### 3. Dependențe
 

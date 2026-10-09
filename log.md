@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-09] Re-ingestie `deltatech_sale_payment` 19.0.1.3.4: fișa auditată, SALEPAY-008
+
+- **Acțiune:** actualizare după PR [deltatech#3234](https://github.com/dhongu/deltatech/pull/3234) (fișa corectată în 3 ture de audit, mesajele SALEPAY-006 traduse, 19.0.1.3.3) și SALEPAY-008 (19.0.1.3.4: procesatorul companiei-mamă acceptat pe comanda unei sucursale).
+- **Sursă:** `readme/FISA_CONSULTANT.md`, `readme/HISTORY.md`.
+- **Dependențe/Conexiuni:** neschimbate.
+- **Fișiere actualizate:** `deltatech_sale_payment/index.md`, `deltatech_sale_payment/FISA_CONSULTANT.md`, `log.md`.
+
+---
+
 ## [2026-10-09] `deltatech_sale_payment` 19.0.1.3.2: capturile fișei regenerate
 
 - **Acțiune:** cele 5 capturi ale fișei consultant au fost regenerate după reparațiile ferestrei „Confirmă încasarea” (SALEPAY-002..006); capturile anterioare erau din 01.10.2026. Pagina și fișa erau deja la zi (19.0.1.3.2), fără modificări de text.
