@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-09] Re-ingestie `deltatech_account_enterprise` 19.0.0.1.1: sold rămas semnat în urmărire
+
+- **Acțiune:** actualizare după PR [bitshop_ent#238](https://github.com/terrabit-solutions/bitshop_ent/pull/238) (merge `6d4a7cd`): raportul de urmărire arată Valoare inițială, Stins / aplicat și Rest la data raportului, pe baza reconcilierilor parțiale datate; butoane noi pe fișa partenerului (Urmărire, Fișa partener, Creanțe pe scadențe); listă „Poziții deschise actuale”; câmpurile `followup_open_amount` și `aged_open_amount`.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, cod; fișa consultant nouă `readme/FISA_CONSULTANT.md` cu 8 capturi, copiată în wiki.
+- **Dependențe/Conexiuni:** `account`, `account_accountant`, `account_reports`, `account_followup` (fără pagini wiki); nicio conexiune verificată cu `deltatech_followup` sau `deltatech_credit_control`.
+- **Fișiere actualizate:** `deltatech_account_enterprise/index.md`, `FISA_CONSULTANT.md` și `screenshots/` (noi), `index.md`, `log.md`, `.index/` (rebuild lexical).
+
+---
+
 ## [2026-10-09] Actualizare după PR-urile #577, #579, #582: avans chenzinal, sporuri, adeverințe
 
 - **Acțiune:** pagină nouă pentru [l10n_ro_payroll_advance](l10n_ro_payroll_advance/index.md) (19.0.1.0.0) și actualizări după funcționalitățile unite în `19.0`:
