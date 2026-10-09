@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-09] Actualizare după corecturi de documentație: `l10n_ro_stock_consignment` 19.0.1.1.3, `deltatech_advanced_planner` 19.0.1.6.1
+
+- **Acțiune:** după corectarea fragmentelor `readme/` din module (semnalate la ingestia lotului de azi):
+  - `l10n_ro_stock_consignment`: scoasă „Nota de corecție” (DESCRIPTION/USAGE descriu acum custodia dată Dr 357 = Cr 371), înlocuită cu avertismentele contabile pentru custodia dată (verificate de Pacioli); fișa consultantului recopiată din modul.
+  - `deltatech_advanced_planner`: Delivery Risk Board descris corect (listă de comenzi de vânzare pe nivel de risc, butoanele Risk Orders / Escalate).
+  - `deltatech_marketplace_shopify` (19.0.1.8.1): pagina descria deja corect maparea depozitelor; neschimbată.
+- **Fișiere actualizate:** `l10n_ro_stock_consignment/index.md`, `l10n_ro_stock_consignment/FISA_CONSULTANT.md`, `deltatech_advanced_planner/index.md`, `log.md`, `.index/chunks.json` (rebuild lexical).
+
 ## [2026-10-09] Ingestie lot: 87 module noi + re-ingestie 42 module rămase în urmă
 
 - **Acțiune:** actualizare generală a wiki-ului, cu câte un subagent `documentarist-wiki` per modul, în paralel (loturi de 10).

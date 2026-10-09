@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `l10n_ro_stock_consignment`
 - **Nume anterior:** `l10n_ro_stock_custody` (redenumit pe 23.09.2026: numele vechi e ocupat pe Odoo Apps de alt furnizor)
-- **Versiune:** `19.0.1.1.2`
+- **Versiune:** `19.0.1.1.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_consignment
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_consignment`
 - **Ultima Ingestie:** 2026-10-09
@@ -22,7 +22,7 @@ Modulul gestionează bunurile primite sau date în custodie, adică mărfuri car
 - **Proces-verbal predare-primire custodie** — raport PDF imprimabil de pe transferul de stoc, cu lista produselor, cantităților și valorilor, pentru custodie primită sau dată.
 - **Conturi configurabile** — conturile de custodie primită (implicit 8033 / contrapartida comună 803999), conturile de custodie dată (implicit 357/371) și jurnalul utilizat se configurează în Contabilitate → Setări. Fallback-uri: contul 8033 se caută automat după cod; contrapartida goală = 803999; jurnalul gol = **EXTR** (Evidență extrabilanțieră). Nota de custodie dată nu ajunge niciodată în EXTR, ci într-un jurnal general bilanțier.
 
-> **Notă de corecție (semnalată la ingestie):** `readme/DESCRIPTION.md` (și USAGE.md) afirmă că tratamentul contabil al „custodiei date" (contul 357) *nu face parte din scope-ul modulului* și că aceasta ar fi doar un marcaj de evidență. Analiza codului (`models/stock_picking.py`, `models/res_company.py`, view-ul de setări) arată însă că modulul **implementează efectiv** contabilizarea on-balance Dr 357 = Cr 371 (cu stornare Dr 371 = Cr 357), inclusiv câmpuri de configurare dedicate (`l10n_ro_custody_given_account_id`, `l10n_ro_custody_stock_account_id`). Secțiunile de mai sus reflectă comportamentul real din cod; DESCRIPTION.md pare neactualizat față de implementare.
+> **Atenție la custodia dată** (din documentația modulului, verificată contabil): nota Dr 357 = Cr 371 se generează **în plus** față de mișcarea de stoc, deci destinația nu trebuie să aibă notă de valorizare proprie (altfel 371 e creditat de două ori) și nu trebuie să fie o locație de tip Client; 357 e corect doar pentru mărfuri (351 materii prime și materiale, 354 produse, 358 ambalaje); valoarea notei este cantitate × cost standard, iar la valoare 0 nu se generează notă; stornarea se calculează la costul de la data returului, deci soldul 357 / 8033 se verifică după retur.
 
 #### 3. Dependențe
 

@@ -80,8 +80,8 @@ de stornare (Dr 803999 = Cr 8033).
 
 - Recepție custodie: **Dr 8033 = Cr 803999** (valoarea bunurilor, în afara bilanțului).
 - Retur custodie: **Dr 803999 = Cr 8033** (stornare).
-- „Custodie dată" (bunuri proprii la terți) este doar marcaj/evidență — tratamentul on-balance prin
-  contul **357 „Mărfuri aflate la terți"** nu face parte din scope-ul acestui modul.
+- Custodie dată (bunuri proprii la terți): **Dr 357 „Mărfuri aflate la terți” = Cr 371** (bilanțieră,
+  niciodată în jurnalul EXTR); la retur, **Dr 371 = Cr 357**.
 
 ## 7. Legături cu alte module / declarații
 
@@ -91,8 +91,8 @@ de stornare (Dr 803999 = Cr 8033).
 | `l10n_ro` | Planul de conturi RO (8033). |
 | `l10n_ro_off_balance` | Contrapartida tehnică 803999 și jurnalul EXTR, comune notelor extrabilanțiere. |
 
-**Ce e automat:** proprietarul pe stoc, nota 8033/803999 la recepție, stornarea la retur, raportul.
-**Ce rămâne manual:** marcarea transferului ca custodie; tratamentul 357 pentru „custodie dată".
+**Ce e automat:** proprietarul pe stoc, nota 8033/803999 la recepție, nota 357/371 la custodia dată, stornarea la retur, raportul.
+**Ce rămâne manual:** marcarea transferului ca custodie (primită sau dată).
 
 ## 8. Verificări pentru consultant
 
@@ -128,5 +128,5 @@ La momentul redactării **nu există încă** — rulați `fisa-screenshots`. Li
 ## 11. Observații pentru manual
 
 - Subliniați separarea contabilă: bunurile în custodie NU sunt stoc propriu (off-balance 8033).
-- Explicați diferența 8033 (primite în custodie) vs 357 (date la terți, on-balance, în afara scope).
+- Explicați diferența 8033 (primite în custodie, extrabilanțier) vs 357 (date la terți, bilanțier: Dr 357 = Cr 371).
 - Menționați mecanismul de consignație nativ (proprietar pe quant) care exclude valorizarea proprie.

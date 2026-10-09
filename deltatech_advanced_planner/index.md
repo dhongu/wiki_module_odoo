@@ -1,7 +1,7 @@
 # Deltatech Advanced Planner (localizat la `deltatech_advanced_planner/index.md`)
 
 - **Nume Tehnic:** `deltatech_advanced_planner`
-- **Versiune:** `19.0.1.6.0`
+- **Versiune:** `19.0.1.6.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_advanced_planner
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_advanced_planner`
 - **Ultima Ingestie:** `2026-10-09`
@@ -37,7 +37,7 @@ Deltatech Advanced Planner este un planificator avansat de stoc care răspunde l
 - **Mai multe depozite în aceeași companie** — fiecare comandă planificată poartă depozitul comenzii de vânzare (inclusiv subansamblele și componentele); stocul alocat la planificarea globală se numără per depozit, RFQ-urile se recepționează și se consolidează doar în depozitul comenzii planificate, iar MO-urile generate folosesc tipul de operație și locațiile depozitului. Planificarea globală fără depozit rulează reaprovizionarea pentru toate depozitele companiei.
 - **Rapoarte pe depozit** — Situația Material și Stocul Proiectat au un Depozit opțional (gol = toată compania); transferul între depozite contează ca ieșire și intrare; depozitul apare în exporturile PDF/Excel, în wizardul de snapshot și ca filtru/grupare pe comenzile planificate și pe tabloul riscurilor de livrare.
 - **Dashboard cu carduri KPI** — rândul de statistici (Blocate, Avertismente, OK, Reaprovizionări) folosește cardurile partajate din `deltatech_web_kpi_cards`; click pe card deschide înregistrările numărate; selector de depozit (când sunt mai multe depozite). Încărcarea posturilor de lucru rămâne pe toate depozitele.
-- **Tablou riscuri livrare** (Delivery Risk Board) — vedere dedicată a comenzilor planificate cu risc, filtrabilă și grupabilă pe depozit.
+- **Tablou riscuri livrare** (Delivery Risk Board) — lista comenzilor de vânzare cu riscul de livrare agregat (Critical / At Risk / On Track / No Risk), calculat din statusul de planificare și din data efectivă față de cea promisă; filtre pe risc și termen, grupare pe risc sau depozit; pe fiecare rând, **Risk Orders** deschide comenzile planificate care generează riscul, iar **Escalate** creează o activitate To-Do pentru comunicarea cu clientul.
 - **Comenzi planificate partajate** — subansamblele și materiile prime comune mai multor linii de SO (ex. variante ale aceluiași produs finit) sunt planificate o singură dată, cu cantitatea cumulată; în Gantt, fiecare comandă care consumă o componentă comună depinde de ea.
 - **Cumulare linii în RFQ** — la consolidare, cantitatea se adaugă la linia existentă cu același produs, UoM, preț și discount, în loc să se creeze o linie duplicat; generarea în masă (acțiune pe listă) rulează fiecare AP într-un savepoint și afișează erorile într-o notificare.
 - **Multi-companie și unități de măsură** — reguli multi-companie pe comenzile planificate, încărcarea posturilor, sloturile CRP, situații material și proiecții de stoc; cantitățile din BOM, PO, MO și mișcări sunt convertite în UoM-ul de bază al produsului înainte de netting și pegging.
