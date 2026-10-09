@@ -1,10 +1,10 @@
 # Romania - D112 ANAF: punte salarizare Odoo (localizat la `l10n_ro_anaf_d112_payroll/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d112_payroll`
-- **Versiune:** `19.0.1.5.0`
+- **Versiune:** `19.0.1.7.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112_payroll
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112_payroll`
-- **Ultima Ingestie:** 2026-10-03
+- **Ultima Ingestie:** 2026-10-09
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -20,6 +20,8 @@ Modulul face legătura directă între declarația D112 și salarizarea Odoo Ent
 - **Avertisment la validare** (19.0.1.4.0): salariat cu contract activ în lună fără fluturaș validat în declarație (doar când declarația are linii din state de plată).
 - **Concedii medicale** (19.0.1.5.0): fluturașii cu concediu medical ajung în D112 pe GrupB — baza CAS / CASS include indemnizația din FNUASS (fără partea fără CASS), CAS / CASS / impozit însumează rândurile `CAS_CM` / `CASS_CM` / `TAX_CM`, salariul de bază e cel din contract, iar fiecare certificat devine o secțiune D (`medical_leave_ids`), cu recalculul retroactiv `D_20a` / `D_21a` (din `hr.payslip._l10n_ro_d112_medical_leaves()`).
 - **Zile din fluturaș (`worked_days_line_ids`)**, din 19.0.1.0.2: zilele lucrate din tipurile de prezență care nu sunt concediu (`WORK100`, `WORK110` munca de acasă, delegația), zilele de concediu de odihnă din `LEAVE120` și cele de concediu medical din `LEAVE110`. Un fluturaș fără linii de zile primește zilele lucrătoare ale lunii (NZL). Până în 19.0.1.0.2 se căuta o regulă salarială `WORK100` care nu există, deci declarația pleca mereu cu 21 de zile lucrate și fără CO/CM.
+- **Beneficii suportate de angajator** (19.0.1.6.0): `PENS_ANG`, `POCUP_ANG`, `SAN_ANG` și părțile neimpozabile `*_NI` din fluturaș ajung pe linia D112 — partea neimpozabilă în 8.5.5 / 8.5.6 / 8.5.7 și în totalul 8.5, excedentul în 8.3.3 (asigurare) și 8.3.4 (pensii).
+- **Ore speciale fără zile lucrate** (19.0.1.7.0): prezențele `L10N_RO_OT_HOL` (sărbătoare legală), `L10N_RO_OT_REST` (repaus săptămânal) și `L10N_RO_OT_COMP` (compensate cu timp liber) din [l10n_ro_hr_pontaj_payroll](../l10n_ro_hr_pontaj_payroll/index.md) nu se numără ca zile lucrate, ca și orele suplimentare obișnuite.
 - **Zile cu contract activ (`zile_contract_activ`)**, din 19.0.1.0.3, pentru pragul minim CAS/CASS (art. 146 alin. 5^6 Cod fiscal; HG 1/2016, Titlul V, pct. 6 alin. 3): lucrate + CO + CM + zilele plătite sau absențele fără decizie de suspendare (evenimente familiale, recuperare, alt concediu plătit, absență nemotivată). Nu se numără concediul fără plată, suspendarea prin decizie, creșterea copilului, șomajul tehnic, maternitatea și sărbătorile (`LEAVE100`, pe care NZL le scade deja).
 - **CNP și dată angajare preluate automat**: CNP din angajat (`l10n_ro_cnp`, cu revenire pe `ssnid`), data angajării din contractul/versiunea angajatului.
 - **Idempotență la reimport**: un stat de plată deja importat nu se adaugă a doua oară; statele adăugate ulterior în lună intră la următoarea apăsare a butonului **Calculează**.

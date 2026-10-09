@@ -4,6 +4,19 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-09] Actualizare după PR-urile #577, #579, #582: avans chenzinal, sporuri, adeverințe
+
+- **Acțiune:** pagină nouă pentru [l10n_ro_payroll_advance](l10n_ro_payroll_advance/index.md) (19.0.1.0.0) și actualizări după funcționalitățile unite în `19.0`:
+  - [l10n_ro_payroll_allowances](l10n_ro_payroll_allowances/index.md) 19.0.1.1.0: spor de sărbătoare legală (100%), repaus săptămânal (dublul sporului de ore suplimentare), ore compensate cu timp liber; fișa recopiată.
+  - [l10n_ro_hr_pontaj_payroll](l10n_ro_hr_pontaj_payroll/index.md) 19.0.1.1.0: tipurile de prezență `L10N_RO_OT_HOL` / `L10N_RO_OT_REST` / `L10N_RO_OT_COMP`, codurile `RS` și `OC`, reparația dublei plăți a orelor.
+  - [l10n_ro_payroll_certificates](l10n_ro_payroll_certificates/index.md) 19.0.1.1.0: adeverințe pentru șomaj și creșterea copilului (conținut orientativ, bifa „Model verificat”); fișa recopiată.
+  - [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md) 19.0.1.7.0: tipurile noi de prezență nu se numără ca zile lucrate; beneficiile suportate de angajator.
+  - [l10n_ro_reges](l10n_ro_reges/index.md) 19.0.1.1.5: eticheta `Art61LitA` corectată (art. 61 lit. a = concediere disciplinară); fișa recopiată.
+- **De verificat:** în pagina avansului, descrierile modelelor `hr.payslip`, `account.move`, `res.company` și `res.config.settings` sunt deduse din numele fișierelor și din readme, nu din corpul metodelor.
+- **Fișiere actualizate:** `l10n_ro_payroll_advance/index.md` și `FISA_CONSULTANT.md` (noi), `index.md`, `log.md`, `.index/` (rebuild lexical; vectorii se regenerează separat cu `--embed`).
+
+---
+
 ## [2026-10-09] Actualizare după corecturi de documentație: `l10n_ro_stock_consignment` 19.0.1.1.3, `deltatech_advanced_planner` 19.0.1.6.1
 
 - **Acțiune:** după corectarea fragmentelor `readme/` din module (semnalate la ingestia lotului de azi):

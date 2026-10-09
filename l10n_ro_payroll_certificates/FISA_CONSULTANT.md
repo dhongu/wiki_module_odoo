@@ -1,4 +1,4 @@
-# Fișă Modul: Adeverințe salariale — venit, bază pentru concediul medical, asigurat
+# Fișă Modul: Adeverințe salariale — venit, bază pentru concediul medical, asigurat, șomaj, creșterea copilului
 
 **Modul:** `l10n_ro_payroll_certificates`
 **Utilizator principal:** Inspector resurse umane / salarizare, Contabil salarii
@@ -14,6 +14,7 @@ Angajații cer des adeverințe: de venit (bancă, chirie, credit), cu baza pentr
 
 - **Codul muncii, art. 34 alin. (5):** angajatorul eliberează, la cerere, document care atestă activitatea desfășurată, durata, salariul și vechimea, inclusiv pentru fost salariat.
 - **OUG 158/2005**, concediul medical: art. 7 (stagiul de asigurare), **art. 10** (baza de calcul: ultimele 6 luni din cele 12 ale stagiului, venituri pe baza cărora se calculează contribuția asiguratorie pentru muncă; indemnizațiile de concediu medical se cuprind în baza lunii respective, alin. 4 lit. a) și art. 3^1 (adeverința plătitorului de indemnizații cu zilele de concediu medical).
+- **Șomaj și concediul pentru creșterea copilului — de verificat:** modelele oficiale („Anexa 7", modelul din normele de aplicare) nu au fost verificate; modulul pregătește un conținut **orientativ**, editabil în ciornă. Din memorie, neconfirmat: la șomaj stagiul de cotizare de cel puțin 12 luni în ultimele 24 dinaintea cererii și indemnizația pe baza salariului de bază mediu din ultimele 12 luni de stagiu; la creșterea copilului venituri supuse impozitului cel puțin 12 luni din ultimii 2 ani dinaintea nașterii, cu media veniturilor din ultimele 12 luni. **Conținutul și rubricile trebuie confirmate cu modelul în vigoare cerut de AJOFM / AJPIS înainte de utilizare.** Confirmat: Codul muncii art. 34 alin. (5) (document care atestă activitatea, durata, salariul și vechimea, inclusiv foștilor salariați).
 - Textele sunt documente oficiale românești: se scriu doar în limba română. **Modelul unei bănci sau al casei de asigurări prevalează** asupra modelului din modul.
 - **De verificat:** dacă există un model obligatoriu de adeverință pentru stagiu și venituri în normele de aplicare (Ordinul MS/CNAS 15/1.311/2006); articolul din actul care fixează suma neimpozabilă pentru 2026.
 
@@ -44,6 +45,8 @@ Modulul **nu face înregistrări contabile**. Citește din fluturașii validați
 
 Apăsați **Nou**: alegeți **angajatul** și **tipul adeverinței** (*Venit*, *Bază de calcul pentru concediul medical*, *Asigurat (sănătate)*). Pentru tipurile *Venit* și *Asigurat* completați **numărul de luni** (implicit 6; se iau lunile încheiate înainte de data emiterii), apoi **Data emiterii** și **Se eliberează pentru** (destinatarul; se tipărește în text). Completați cele două semnături (nume și funcție).
 
+Pentru *Șomaj* și *Concediu pentru creșterea copilului* numărul de luni implicit este 24; la creșterea copilului completați obligatoriu **Data nașterii copilului** (fereastra = lunile dinaintea lunii nașterii), iar la șomaj perioada se oprește la încetarea contractului, dacă acesta a încetat. Formularul afișează o notă că **conținutul este orientativ**.
+
 Fila **Text** se precompletează din fișa angajatului: CNP, funcție, data angajării, durata contractului; contractul încetat apare ca „a fost salariat(ă) … în perioada …", nu ca „în derulare". Textul se poate edita cât timp adeverința e în ciornă; dacă schimbați apoi tipul, luna sau destinatarul, textul se recalculează și editările se pierd.
 
 ![Formularul adeverinței, cu tipul și destinatarul](screenshots/02_formular_adeverinta.png)
@@ -55,7 +58,10 @@ Deschideți fila **Date**: aici se vede tabelul exact cum se va tipări. Verific
 1. **Avertismentul** din partea de sus (dacă există): „Doar X din cele N luni acoperite au fluturași validați" — validați fluturașii lipsă sau micșorați numărul de luni;
 2. la **Venit**: *Venit net* = *Venit brut* − CAS − CASS − impozit; coloanele *Tichete de masă*, *Rețineri / popriri* și *din care indemnizații CM* apar doar când există;
 3. la **Bază pentru concediul medical**: toate cele 12 luni anterioare lunii emiterii, inclusiv cele fără venit; *Venit realizat* este baza contribuției asiguratorii (fără suma neimpozabilă, cu indemnizațiile de concediu medical din FNUASS), iar al doilea tabel listează concediile medicale confirmate din perioadă, cu codul de indemnizație și zilele. *Media zilnică* e informativă: noul angajator își calculează baza la data concediului medical de la el;
-4. la **Asigurat**: contribuția CASS reținută pe luni.
+4. la **Asigurat**: contribuția CASS reținută pe luni;
+5. la **Șomaj**: toate cele 24 de luni, cu zile cu stagiu (lucrate, CO, CM) și salariul de bază brut din fluturaș (fără orele suplimentare, proporțional cu timpul plătit); lunile fără stat de plată sunt marcate „fără stat de plată în evidența electronică; situația se completează de angajator" — modulul nu verifică contractul sau suspendările, deci nu afirmă motivul (la clienții cu mai puțin de 24 de luni de Odoo, lunile dinainte de punere în funcțiune apar la fel, deși salariatul a lucrat); totalul arată lunile cu stagiu; media salariului de bază (ultimele 12 luni cu stagiu) se vede doar în fila *Date*; temeiul încetării apare doar dacă există pe contract;
+6. la **Concediu pentru creșterea copilului**: 24 de luni dinaintea lunii nașterii, cu brut, CAS, CASS, impozit, net și marcaj „da" / „fără venit"; media netă pe ultimele 12 luni cu venit se vede doar în fila *Date*, nu pe documentul tipărit.
+7. la **Emite** (șomaj și creșterea copilului): bifa **Model verificat** e obligatorie; fără ea apare eroarea „Confirm that you checked the text and columns ...".
 
 ![Fila Date: tabelul bazei pentru concediul medical](screenshots/03_date_baza_cm.png)
 
@@ -101,6 +107,10 @@ După emitere, câmpurile și tabelul sunt blocate (**Anulează** o scoate din u
 - [ ] Contractul încetat apare la timpul trecut, fără „durată determinată".
 - [ ] Textul editat nu se pierde la emitere; tabelul nu se schimbă la retipărire.
 - [ ] Numărul urmează secvența `ADV/an/nr`; PDF-ul e pe fișa angajatului.
+- [ ] Șomaj: 24 de luni, lunile fără fluturaș marcate, avertisment sub 12 luni cu stagiu, perioada oprită la încetarea contractului.
+- [ ] Creșterea copilului: fără data nașterii adeverința nu se salvează; fereastra se mută odată cu data; avertisment sub 12 luni cu venit.
+- [ ] La șomaj, completați manual situația lunilor fără stat de plată; salariul de bază nu include orele suplimentare; fără *Model verificat* adeverința nu se emite.
+- [ ] Textul și coloanele celor două tipuri au fost comparate cu modelul cerut de AJOFM / AJPIS.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -108,6 +118,7 @@ După emitere, câmpurile și tabelul sunt blocate (**Anulează** o scoate din u
 |---|---|---|
 | Nu există fluturași validați de adeverit pentru … | Lunile acoperite nu au fluturaș validat/plătit | Validați fluturașii sau micșorați numărul de luni |
 | Doar X din cele N luni acoperite au fluturași validați | Unele luni lipsesc | Validați fluturașii lipsă |
+| Data nașterii copilului este obligatorie pentru concediul de creștere a copilului | Tip *Concediu pentru creșterea copilului* fără data nașterii | Completați *Data nașterii copilului* |
 | Numărul de luni trebuie să fie între 1 și 36 | Valoare în afara intervalului | Corectați câmpul *Luni* |
 | O adeverință emisă nu poate fi ștearsă; anulați-o | Încercare de ștergere după emitere | Folosiți **Anulează** |
 
@@ -133,7 +144,8 @@ Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixin `Scre
 - Subliniați că adeverința nu înlocuiește modelul cerut de bancă sau de casa de asigurări: textul se editează în ciornă.
 - Baza pentru concediul medical e un **document informativ pentru noul angajator**: baza efectivă o calculează el, la data concediului.
 - Limite cunoscute:
-  - nu există încă adeverințele pentru șomaj (Anexa 7), concediul pentru creșterea copilului și venituri peste salariul minim;
+  - șomajul și creșterea copilului au conținut orientativ, neconfirmat cu modelele oficiale (de verificat, vezi secțiunea 2);
+  - **declarația de venituri peste salariul minim nu este implementată**: ține de cumulul de contracte (art. 146 alin. 5^7 lit. e din Codul fiscal) și de un ordin al ministerului finanțelor al cărui număr și model nu sunt confirmate;
   - zilele de stagiu numără doar zilele lucrate, concediul de odihnă și concediul medical; alte absențe plătite nu se numără;
   - concediile medicale înregistrate la alt angajator nu apar;
   - baza concediului medical din certificatul medical (`l10n_ro_hr_payroll_enhancement` 19.0.2.6.3+) exclude, ca și adeverința, suma neimpozabilă (art. 10 alin. 1); **de verificat** actul care fixează suma neimpozabilă pentru 2026.

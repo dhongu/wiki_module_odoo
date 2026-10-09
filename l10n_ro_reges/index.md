@@ -1,10 +1,10 @@
 # Romania - Integrare REGES-Online (FR-45) (localizat la `l10n_ro_reges/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_reges`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.5`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_reges
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_reges`
-- **Ultima Ingestie:** 2026-08-20
+- **Ultima Ingestie:** 2026-10-09
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -18,6 +18,7 @@ Modulul integrează Odoo cu **REGES-Online** (Registrul Electronic General al Sa
 - Transmitere contracte: adăugare, modificare, suspendare, încetare, radiere (`AdaugareContract`, `ModificareContract`, `SuspendareContract`, `IncetareContract`, `RadiereContract`).
 - Polling asincron al cozii de rezultate REGES (`/api/Status/PollMessage`).
 - Auto-tracking al modificărilor pe câmpurile urmărite ale angajatului și contractului, cu retrimitere automată la `write()` dacă starea REGES e activă.
+- Temei de încetare `Art61LitA`: eticheta corectată în 19.0.1.1.5 — art. 61 lit. a) din Codul muncii este concedierea disciplinară, nu „necorespundere profesională” (aceasta e lit. d). Codul trimis la REGES nu s-a schimbat (corespondența cu nomenclatorul REGES nu e verificată), iar selecția nu are încă o valoare pentru lit. d).
 - Jurnal de transmisii cu posibilitate de retrimitere după corectarea erorilor.
 - Sincronizare nomenclator COR din API-ul REGES (~5.044 ocupații).
 - Tab REGES pe fișa angajatului și pe contract.
