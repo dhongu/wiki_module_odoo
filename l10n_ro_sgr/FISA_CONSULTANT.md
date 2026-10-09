@@ -99,6 +99,22 @@ de recuperat de la RetuRO (461003), cu echivalentul în ambalaje.
 
 ![Raport sold SGR](screenshots/04_raport_sold_sgr.png)
 
+**Situația ambalajelor SGR** (Contabilitate → Rapoarte → Situație ambalaje SGR): pe interval și
+pe produs de garanție (tipul ambalajului în față), ambalajele pline — stoc inițial, intrate,
+ieșite, stoc final — și ambalajele goale nedecontate de RetuRO — returnate de consumatori,
+decontate prin autofactură. Varianta pe documente arată fiecare factură, notă sau comandă POS cu
+soldurile după ea; varianta pe zile cumulează pe zi. Export PDF și XLSX din raport. Verificare:
+goale nedecontate final × 0,50 = sold 461003; stoc final × 0,50 = sold 461002 − sold 462102.
+
+![Situație ambalaje SGR pe documente](screenshots/07_situatie_ambalaje_sgr.png)
+
+![Situație ambalaje SGR pe zile](screenshots/08_situatie_ambalaje_sgr_zile.png)
+
+**Tip ambalaj SGR pe produsul de garanție** (Informații generale): cu câte un produs de garanție
+pe material (sticlă / plastic / metal), situația ambalajelor arată un rând pe tip.
+
+![Produs de garanție cu tip ambalaj](screenshots/09_produs_tip_ambalaj.png)
+
 **Wizard returnare ambalaje** → restituire în numerar (Dr 461003 = Cr 5311) sau notă de credit către
 client (Dr 461003 = Cr 4111), în ciornă (4 × 0,50 = 2,00 RON).
 
@@ -149,6 +165,8 @@ reclasificare de către contabil.
 - [ ] Vânzarea creditează 462102 (pasiv), achiziția debitează 461002 (activ); niciun cont nu ajunge
       pe sold contrar funcțiunii lui.
 - [ ] Autofactura RetuRO are TVA 21% doar pe tariful de gestionare, cu grilele decontului de TVA.
+- [ ] Situația ambalajelor SGR se reconciliază cu balanța: goale nedecontate × 0,50 = sold 461003,
+      stoc final × 0,50 = sold 461002 − sold 462102; vânzările POS nefacturate apar la ieșite.
 - [ ] Mesajele de eroare sunt clare pentru un utilizator non-tehnic.
 - [ ] Exporturile sau rapoartele se descarcă și conțin datele testate.
 
@@ -169,8 +187,11 @@ reclasificare de către contabil.
 | 2 | `screenshots/02_produs_cu_sgr.png` | Produs comercial cu garanție SGR atașată (Extra Line) |
 | 3 | `screenshots/03_factura_linie_sgr.png` | Factură cu linia SGR inserată automat, în afara sferei TVA |
 | 4 | `screenshots/04_raport_sold_sgr.png` | Raport sold SGR per partener (garanții încasate / plătite / de recuperat) |
-| 5 | `screenshots/05_wizard_returnare.png` | Wizard returnare ambalaje (numerar sau notă de credit) |
+| 5 | `screenshots/05_wizard_returnare.png` | Wizard returnare ambalaje (numerar sau notă de credit, produsul SGR returnat) |
 | 6 | `screenshots/06_wizard_decontare.png` | Wizard autofactură RetuRO (garanții + tarif de gestionare + TVA) |
+| 7 | `screenshots/07_situatie_ambalaje_sgr.png` | Situația ambalajelor SGR pe documente: pline (stoc) și goale nedecontate de RetuRO |
+| 8 | `screenshots/08_situatie_ambalaje_sgr_zile.png` | Situația ambalajelor SGR, varianta cumulată pe zile |
+| 9 | `screenshots/09_produs_tip_ambalaj.png` | Produs de garanție SGR cu tipul ambalajului (metal) |
 
 > Notă i18n: câteva etichete auxiliare apar încă în engleză — `Extra Product/Qty` (din
 > `deltatech_sale_add_extra_line`), `Company` și `Date From/To` (câmpuri comune pe raport/wizard).

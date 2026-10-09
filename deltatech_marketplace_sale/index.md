@@ -1,10 +1,10 @@
 # Comenzi de vânzare din Marketplace (localizat la `deltatech_marketplace_sale/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_sale`
-- **Versiune:** `19.0.2.15.1`
+- **Versiune:** `19.0.2.18.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_sale
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_sale`
-- **Ultima Ingestie:** 2026-09-29
+- **Ultima Ingestie:** 2026-10-09
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -25,11 +25,16 @@ Acest modul reprezintă punctul central pentru gestionarea comenzilor de vânzar
 - **Anularea primită din marketplace nu mai e tăcută**: chatter-ul spune că vine din marketplace. Nu se aplică pe o comandă reconfirmată după anularea din marketplace (fiecare re-import o anula din nou) și nici pe una a cărei livrare are deja AWB; în aceste cazuri agentul de vânzări primește o activitate de avertizare.
 - O modificare a liniilor comenzii — cantitate, preț, linie adăugată sau ștearsă — ajunge la exportul către marketplace și când e făcută direct pe linii (wizard, acțiune server, alt modul), nu doar din formular; conectorul primește semnalul, nu diferența, și recitește comanda. O schimbare de preț e semnalată separat (`price_changed`), pentru marketplace-urile care nu acceptă un preț nou pe o linie existentă. Nimic din ce scrie un import nu se trimite înapoi.
 - **Produs pentru vouchere** pe backend, separat de produsul de discount: un voucher al marketplace-ului e o plată a unui terț (TVA 0, decontat pe cont de decontare), nu o reducere comercială; comanda păstrează valoarea voucherului și partea decontată de marketplace.
+- **Voucher încasat ca plată pe factură** (19.0.2.18.0): cu **Voucher Journal** setat pe backend (jurnal de tip bancă, ale cărui metode de plată au creanța față de marketplace, ex. 461, drept cont de plăți în curs), la postarea facturii comenzii partea din **Voucher Paid on the Invoice** se înregistrează ca plată pe acel jurnal și se reconciliază cu factura, având numărul comenzii din marketplace ca memo. Factura păstrează prețul întreg (corect pentru TVA) iar e-factura poartă voucherul ca sumă deja plătită. O notă de credit care stornează integral factura returnează voucherul printr-o plată de ieșire; una parțială îl lasă neatins și spune asta în chatter.
+- **Protecție la editare a comenzilor importate** (19.0.2.17.0, implicit dezactivată): pe backend, **Lock Orders** blochează comanda *la confirmare* sau *la emiterea AWB-ului*, astfel încât liniile și sumele nu mai pot fi modificate din greșeală. *Unlock* e pasul explicit, notat în chatter; de atunci comanda nu se mai reîmprospătează din marketplace (*No Refresh*), iar cât livrarea are AWB deblocarea e refuzată (curierul are deja suma de încasat); o comandă deblocată înainte de AWB se blochează din nou la emiterea lui. **Freeze Lines After Confirmation**: un re-import nu mai creează sau rescrie liniile unei comenzi confirmate (inclusiv linia de discount și transportul); plata, locker-ul și curierul se actualizează în continuare, iar un total diferit rămâne raportat (`check_total_amount`). Pe un backend cu oricare opțiune, editarea manuală a cantității, prețului, discountului, taxelor sau produsului unei linii setează *No Refresh*; simpla reformulare a descrierii nu.
+- **Anularea din marketplace nu închide o comandă deja livrată sau facturată** (19.0.2.16.0): la fel ca o comandă cu AWB, rămâne deschisă, cu mesaj și activitate de avertizare pentru agentul de vânzări (`_cancellation_blocked_message`). O comandă blocată de backend se anulează totuși la o anulare din marketplace, atât timp cât nu are AWB, fără a ieși din reîmprospătare.
+- **Preț unitar dat cu taxe** (`price_unit_with_taxes`, 19.0.2.16.0): se convertește la prețul fără taxe cu precizia *Product Price*, nu a monedei, astfel încât un marketplace care rotunjește prețul cu TVA pe unitate să ajungă la propriul total (`_marketplace_net_unit_price`; doar taxe procentuale simple, altfel cifra motorului de taxe).
+- **Reîmprospătarea comenzii nu mai dă eroare de server când un import rulează deja** (19.0.2.18.1): cu reîmprospătarea în prim-plan activă, dacă un job din coadă importa același client în același moment, butonul *Refresh* pica cu „Concurrent creation of the same marketplace binding". Acum afișează un avertisment cu backend-ul de reîncercat mai târziu și păstrează ce au importat celelalte backend-uri.
 - Cu **Confirm Sale Order** bifat, jobul de confirmare automată (`try_to_confirm`) se programează pentru **orice** comandă importată, nu doar pentru cele confirmabile chiar la import — o comandă oprită la import (mesaj de la client, ramburs peste plafon) primea altfel jobul deloc și rămânea ofertă trimisă până observa cineva. La rulare, jobul reverifică eligibilitatea (și o reîmprospătează, unde conectorul o suportă) în loc să se bazeze pe starea de la import.
 - Integrare cu [deltatech_marketplace_review](../deltatech_marketplace_review/index.md) (punte instalată automat când ambele module sunt prezente): gărzile de confirmare automată — mesajul lăsat de client, rambursul (COD) peste **Max Auto-Confirm COD Amount** — devin motive de verificare vizibile pe comandă, în loc de o oprire tăcută; jobul de confirmare revine la interval scurt cât comanda e oprită doar de motive temporare.
 - Jobul de confirmare automată se reprogramează doar pentru o comandă încă neconfirmată (ofertă sau ofertă trimisă); `try_to_confirm()` se încheie imediat pentru o comandă confirmată sau anulată (fix 19.0.2.13.3: fiecare re-import al unei comenzi confirmate programa un job și coada crescuse de la ~40 la ~500 de joburi pe oră).
 - **Hook-uri pentru tabloul de bord** [deltatech_marketplace_dashboard](../deltatech_marketplace_dashboard/index.md), pe `marketplace.sale.order`: `_dashboard_steps()`, `_dashboard_kpis()`, `_dashboard_row_actions()` și `_dashboard_row_values()`, declarate goale aici, ca un conector să-și poată adăuga pașii proprii fără dependență de dashboard. Un pas din lista de lucru poate avea `action_label` (opțional), textul butonului de pe rând; fără el, butonul afișează eticheta pasului (19.0.2.15.0–19.0.2.15.1).
-- Traduceri românești complete pentru toate mesajele modulului (19.0.2.13.2).
+- Traduceri românești complete pentru toate mesajele modulului (19.0.2.13.2); pictogramă proprie a modulului, în stilul plat al celorlalte (19.0.2.16.1).
 
 #### 3. Dependențe
 
@@ -48,7 +53,10 @@ Acest modul reprezintă punctul central pentru gestionarea comenzilor de vânzar
 
 - `marketplace.return.request` / `.line`: binder de sine stătător (fără `_inherits`), legat de comandă și, prin `picking_ids`, de transferurile de retur; identitatea liniei e unică pe cerere.
 - `marketplace.refund` / `.line`: registrul rambursărilor, fără stare proprie (doar `external_state`), cu `compute_amount_total()` pentru conectorii fără total raportat.
-- `marketplace.sale.order`: metodele-hook `_dashboard_steps(backends)`, `_dashboard_kpis(backends)`, `_dashboard_row_actions()`, `_dashboard_row_values()` (goale, suprascrise de conectori).
+- `marketplace.sale.order`: legătura comenzii cu marketplace-ul (blocare/deblocare, *No Refresh*, steag anulare, preț net din prețul cu taxe) și metodele-hook `_dashboard_steps(backends)`, `_dashboard_kpis(backends)`, `_dashboard_row_actions()`, `_dashboard_row_values()` (goale, suprascrise de conectori).
+- `marketplace.backend` (extins): opțiunile *Lock Orders*, *Freeze Lines After Confirmation*, *Voucher Journal*, *Return Request Days*, *Disable Return Import*, *Cancel Sale Order*.
+- `account.move` (extins): înregistrarea și reconcilierea voucherului ca plată la postarea facturii și returnarea lui la stornarea integrală.
+- `stock.picking` (extins): la completarea numărului de urmărire (AWB) pe un transfer de livrare blochează comanda (`_marketplace_lock_on_awb`); după trimiterea la curier, la rezervare și la finalizare transmite comenzii din marketplace statusul și AWB-ul.
 
 #### 5. Conexiuni
 

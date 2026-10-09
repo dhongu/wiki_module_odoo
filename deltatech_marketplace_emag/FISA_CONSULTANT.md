@@ -264,6 +264,39 @@ existente în Odoo, fără să creeze nimic. Pentru cele `FINALIZED`/`RETURNED` 
 **eMAG Status** pe comanda marketplace; comanda de vânzare Odoo nu se modifică. Nimic din aceste
 anulări venite de la eMAG nu se trimite înapoi.
 
+### Pasul 10b — Înregistrarea webhook-ului pentru comenzi
+
+Conectorul **nu înregistrează singur** webhook-ul la eMAG: Odoo doar expune endpoint-ul, iar
+link-ul trebuie comunicat către eMAG.
+
+1. Pe backend, tab **Credentials**, secțiunea **Webhook**: verificați **Webhook Type** și **Security Token**. Token-ul se
+   generează automat și este singura „parolă" a endpoint-ului — nu îl dați în afara
+   configurării eMAG. Fiecare backend are token propriu (același token pe două backend-uri e
+   refuzat).
+2. Tab **Objects**, item-ul `orders`: bifa **Use Webhook** trebuie să fie activă (implicit este).
+   Dezactivată, link-ul nu se afișează, iar apelurile pentru comenzi sunt respinse cu mesajul
+   *webhook disabled*.
+3. Copiați **Web Hook Link** de pe același item (îl văd doar membrii grupului *Marketplace
+   Manager*). Se construiește din parametrul de sistem `web.base.url`, deci verificați înainte
+   că este adresa publică HTTPS a instanței, nu `localhost` sau un nume intern, și că nu se termină cu `/` (altfel link-ul iese cu dublu slash,
+   `https://magazin.ro//marketplace/...`). Formatul depinde
+   de **Webhook Type**:
+   - `html`: `<base_url>/marketplace/sale_order/webhook/?apikey=<Security Token>`
+   - `json`: `<base_url>/marketplace/sale_order/json/<Security Token>`
+4. În panoul de seller eMAG, deschideți **Contul meu > Profil**, tab **Detalii tehnice**,
+   secțiunea **Setari**, lipiți link-ul în câmpul **Order callback URL** și salvați. La fiecare
+   notificare, Odoo citește `order_id` din apel, importă acea comandă și răspunde
+   `acknowledge`. Dacă în câmp există deja o valoare, aparține unei integrări anterioare:
+   întrebați înainte să o înlocuiți, pentru că acea integrare nu va mai primi comenzi. Celelalte
+   câmpuri de callback din secțiune (AWB, Return, New product, Documentation approved, conturi
+   de curier, Order cancellation) nu fac parte din această procedură.
+5. Test: plasați sau modificați o comandă în `NEW`, `IN_PROGRESS` sau `PREPARED` pe eMAG și
+   căutați apelul în **Marketplace > Logs** (și în *Queue Jobs*, dacă importul sincron a
+   eșuat). Comenzile în alte stări nu se creează — vezi filtrul de la Pasul 10.
+
+Dacă token-ul este regenerat sau adresa publică a instanței se schimbă, link-ul se schimbă și
+el și trebuie retrimis către eMAG.
+
 ### Pasul 11 — Emiterea AWB-ului
 
 La confirmarea unei expediții cu o metodă de livrare `EMAG`, apăsați **Send to Shipper** — conectorul

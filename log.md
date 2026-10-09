@@ -4,6 +4,68 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-09] Ingestie lot: 87 module noi + re-ingestie 42 module rămase în urmă
+
+- **Acțiune:** actualizare generală a wiki-ului, cu câte un subagent `documentarist-wiki` per modul, în paralel (loturi de 10).
+  - **Ingestie nouă (87):** toate modulele 19.0 din suitele noastre (deltatech, deltatech_service, terrabit, bitshop, bitshop_vendor, l10n-romania, l10n_ro_ent, l10n-moldova) care nu aveau pagină. Excluse: `others_addons`, `l10n-romania-oca`, `test`, `queue` și `proiecte/`.
+  - **Re-ingestie (42):** paginile la care versiunea minoră sau majoră din cod a avansat față de pagină. Cele 464 de pagini care diferă doar la patch nu au fost regenerate.
+- **Sursă:** `readme/DESCRIPTION.md` + USAGE/CONFIGURE/HISTORY, completate din cod unde DESCRIPTION lipsea sau era gol (`terrabit_base`, `terrabit_pro`, `terrabit_clear_data`, `terrabit_iap_server*`, `terrabit_iap_line_counter`, `l10n_md`, `l10n_ro_stock_report_dropship`).
+- **Module noi:** `deltatech_b2b_order_list`, `deltatech_b2b_price_tier`, `deltatech_b2b_quick_order`, `deltatech_b2b_website_restrict`, `deltatech_card_payment`, `deltatech_ecr_fiscal`, `deltatech_expected_receipt`, `deltatech_fleet`, `deltatech_fleet_geo`, `deltatech_menu_access`, `deltatech_partner_discount`, `deltatech_payment_report`, `deltatech_picking_split`, `deltatech_pricelist_vat_cost`, `deltatech_product_attribute_search`, `deltatech_product_catalog`, `deltatech_property`, `deltatech_property_agreement`, `deltatech_purchase_refund`, `deltatech_replenish`, `deltatech_report_layout`, `deltatech_sale_catalog_website`, `deltatech_sale_order_report`, `deltatech_sale_transfer`, `deltatech_stock_analytic`, `deltatech_stock_orderpoint_multiple`, `deltatech_transfer_product_to_product`, `deltatech_uom_domain`, `deltatech_uom_unece`, `deltatech_vendor_products_bepco`, `deltatech_warehouse_access`, `deltatech_warranty`, `deltatech_website_access_design`, `deltatech_website_delivery_address`, `deltatech_website_floating_widgets`, `deltatech_website_sale_wishlist`, `l10n_md`, `l10n_ro_account_bank_statement_import_mt940_bt`, `l10n_ro_account_bank_statement_import_mt940_cec`, `l10n_ro_account_bank_statement_import_mt940_revolut`, `l10n_ro_account_pack`, `l10n_ro_config_fix`, `l10n_ro_dni_report`, `l10n_ro_efactura_xml_rules`, `l10n_ro_einvoice_download`, `l10n_ro_etransport_batch_enhancement`, `l10n_ro_etransport_uit_actions`, `l10n_ro_etransport_uit_actions_batch`, `l10n_ro_hide_net_weight`, `l10n_ro_hr_pontaj_ai`, `l10n_ro_inventory_items_hr`, `l10n_ro_message_spv_self_billing`, `l10n_ro_off_balance`, `l10n_ro_partner_cnp`, `l10n_ro_payroll_copyright`, `l10n_ro_payroll_day_labourers`, `l10n_ro_report_common`, `l10n_ro_residual_balance_writeoff`, `l10n_ro_shareholder_loan`, `l10n_ro_stock_account_check`, `l10n_ro_stock_account_landed_cost_account`, `l10n_ro_stock_account_store`, `l10n_ro_stock_obyc`, `l10n_ro_stock_picking_batch_report`, `l10n_ro_stock_report_dropship`, `l10n_ro_travel_order`, `l10n_ro_travel_order_fleet`, `l10n_ro_travel_order_pontaj`, `terrabit_ai_olg`, `terrabit_base`, `terrabit_clean_chatter`, `terrabit_clear_data`, `terrabit_helpdesk_ai_reply`, `terrabit_iap`, `terrabit_iap_ai`, `terrabit_iap_anaf`, `terrabit_iap_line_counter`, `terrabit_iap_params`, `terrabit_iap_server`, `terrabit_iap_server_ai`, `terrabit_iap_server_anaf`, `terrabit_iap_server_line_counter`, `terrabit_iap_server_params`, `terrabit_iap_server_sms`, `terrabit_pro`, `terrabit_web_editor_ai`, `terrabit_web_editor_ai_enterprise`.
+- **Fișe consultant noi copiate:** deltatech_expected_receipt (13 capturi), l10n_ro_dni_report, l10n_ro_efactura_xml_rules (8 capturi), l10n_ro_hr_pontaj_ai (3 capturi), l10n_ro_residual_balance_writeoff (7 capturi).
+- **Re-ingestii (ce s-a schimbat):**
+  - `deltatech_account_enterprise` 0.0.4→0.1.0: memento automat (email și SMS) cu o zi înainte de scadență
+  - `deltatech_b2b_portal` 1.0.3→1.1.0: helper-e pentru quick_order/order_list, fix securitate B2B-001, conexiuni către modulele B2B noi
+  - `deltatech_advanced_planner` 1.3.1→1.6.0: multi-depozit, dashboard KPI cards, tablou riscuri, RFQ cumulat; dependență nouă deltatech_web_kpi_cards; 14 capturi
+  - `deltatech_expenses` 3.4.0→3.5.0: diurnă cu zecimale, moneda liniilor = moneda companiei
+  - `deltatech_cash_statement` 3.0.0→3.1.1: două moduri (aliniere / diferență de casă 7588/6588/4282); fișă consultant nouă cu 9 capturi
+  - `deltatech_marketplace_prestashop` 0.3.1→0.4.0: opțiunea Ignore Company Without VAT la import comenzi
+  - `deltatech_delivery_dsc` 1.4.0→2.0.1: API Dragon Star v1 cu cheie API, plus funcții noi
+  - `deltatech_delivery_cod` 1.0.0→1.1.0: Match Courier Transfer (virament fără borderou); fișă cu 12 capturi
+  - `deltatech_ledger` 0.0.1→0.1.0: rezervări, numerotare comună anuală, anulare cu motiv, grup Manager, tab Links
+  - `deltatech_marketplace_emag_delivery` 1.1.2→1.4.1: ramburs = rest de plată la factură, verificare voucher, refuz AWB la anulare cerută, fără AWB dublu
+  - `deltatech_marketplace` 1.33.2→1.39.0: barcode lookup, comision pe categorie, preț cu comision, verificare webhook-uri mutată în bază, Ignore Company Without VAT
+  - `deltatech_marketplace_website` 0.1.0→0.2.0: maparea categoriilor eCommerce pe categoriile marketplace
+  - `deltatech_marketplace_sale` 2.15.1→2.18.1: Voucher Journal (plată pe factură), protecție la editare (Lock Orders / Freeze Lines), anulare nu mai închide comanda livrată
+  - `deltatech_product_code` 1.0.5→1.1.0: GTIN-13 din prefixul GS1, prefix intern implicit 20 în loc de 40
+  - `deltatech_marketplace_emag` 2.13.3→2.20.3: voucher ca plată pe factură (nu linie), rotunjire totaluri, barcode lookup, preț cu comision, handling_time, loturi respinse înjumătățite; fișa era rămasă în urmă
+  - `deltatech_payment_mobilpay` 1.2.0→1.3.6: fallback GetStatus, API v2 documentat, „Private Key” eliminat (pagina veche era greșită)
+  - `deltatech_pos_stock` 1.1.0→1.2.0: badge On hand/Available, free_qty, avertizare stoc epuizat
+  - `deltatech_marketplace_shopify` 1.7.5→1.8.0: locații nemapate (fără depozite create automat), export stoc tolerant, wizard webhook mutat în bază
+  - `deltatech_image_optimize` 1.9.2→1.12.0: eliminare fundal (rembg), eliminare filigran (numpy), 3 cron-uri; fișă nouă cu 9 capturi
+  - `deltatech_purchase_add_extra_line` 1.3.0→1.5.0: is_extra_line, înlocuire extra la schimbarea produsului, regenerare la confirmare
+  - `deltatech_sale_add_extra_line` 1.4.0→1.5.0: is_extra_line, înlocuire extra la schimbarea produsului, migrare
+  - `deltatech_secondary_uom` 1.1.0→1.2.0: recalcularea cantității secundare pe liniile deschise la schimbarea conversiei
+  - `deltatech_pos` 2.9.2→2.10.3: raport TVA pe taxa efectivă + filtru vat_mismatch, scanare după referința internă, Force total la facturare, casa Succes
+  - `deltatech_web_kpi_cards` 1.1.0→1.2.0: delta, progres spre țintă, sparkline
+  - `deltatech_rma` 1.5.0→1.7.0: meniu To Approve, Default Responsible, motive cu taxă în portal; fișă 22 capturi
+  - `l10n_ro_ent_config` 1.0.0→1.1.0: opțiunea Base Accounting Pack (l10n_ro_account_pack)
+  - `deltatech_sale_payment` 1.2.1→1.3.2: sumă plătită în moneda comenzii, asistent Confirm Payment refăcut, fix securitate SALEPAY-006; fișă nouă cu 5 capturi
+  - `l10n_ro_account_chart` 1.0.0→1.1.2: 26 de conturi lipsă din nomenclatorul SAF-T
+  - `l10n_ro_anaf_d207` 1.0.1→1.1.1: toți nerezidenții (PF și PJ), cod venit propus 07, totaluri ca validatorul ANAF
+  - `l10n_ro_anaf_d205` 1.0.1→1.1.1: premisă inversată — PF rezidente (nu nerezidente), rezidență pe linie, regim fiscal corect
+  - `l10n_ro_cash_bank_enhanced` 1.1.3→1.2.3: tablou „Casă și bancă”, citări Legea 70/2015 corectate
+  - `l10n_ro_anaf_d112` 2.10.0→2.11.2: zilieri (sec. A tip 3) și drepturi de autor (sec. C tip 17), meniu mutat în Declarații ANAF
+  - `l10n_ro_balance_confirmation` 2.1.1→2.2.2: documente deschise la dată, valută, XLSX, semnatari, doar 411/413/401/403/404, grupuri de drepturi; dependența l10n_ro_report_common eliminată
+  - `l10n_ro_inventory_register` 1.3.0→1.4.2: anexa 8035 (obiecte de inventar în folosință), nr. inventar RO la mijloace fixe, drepturi Contabil Manager
+  - `l10n_ro_stock_consignment` 1.0.1→1.1.2: contrapartida 803999 (nu 8039), jurnal EXTR, migrare sold 8039; dependență nouă l10n_ro_off_balance
+  - `l10n_ro_hr_pontaj` 1.0.2→1.4.1: grid editabil (web_grid), verificările lunii, export tichete de masă BT; 17 capturi
+  - `l10n_ro_saft_validator` 1.2.1→1.3.3: 5 verificări noi pe speța A (active), doar activele din perioadă
+  - `l10n_ro_payment_instruments` 1.1.1→1.2.2: cecul primit pe 5112 (nu 5113), depunere BO/cambie Dr 5113 = Cr 413, facturi stinse la înregistrare; 16 capturi
+  - `l10n_ro_sgr` 1.6.1→1.7.1: Situația ambalajelor SGR (PDF/XLSX), tip ambalaj pe produs, produs SGR la returnare; dependență nouă account_reports
+  - `l10n_ro_inventory_items` 2.3.0→2.5.1: 8035C înlocuit cu 803999 + jurnal EXTR (l10n_ro_off_balance), imputare la lipsă, wizard casare obiecte vechi
+  - `l10n_ro_financial_statements` 1.10.0→1.12.2: meniu unic cu F10–F40 ca tab-uri, declarația de inactivitate S1046, raportul administratorilor, codJJ automat
+  - `l10n_ro_fixed_assets` 1.13.1→1.17.2: amortizare contabilă după planul fiscal, reevaluare brută, reevaluare în primul an la accelerat, D406 aliniat la ANAF
+- **Corecții față de readme / pagina veche:**
+  - `deltatech_transfer_product_to_product`: DESCRIPTION inversează sursa și destinația; pagina urmează codul.
+  - `deltatech_payment_mobilpay`: pagina veche menționa „Private Key”, eliminată în 1.3.2.
+  - `l10n_ro_anaf_d205`: pagina veche spunea „PF nerezidente”; D205 acoperă acum PF rezidente.
+  - `l10n_ro_stock_consignment`: DESCRIPTION spune că custodia dată nu face notă; codul face Dr 357 = Cr 371.
+  - `deltatech_stock_analytic`: DESCRIPTION vorbește de valuation layers, inexistente în 19.0.
+  - `l10n_ro_balance_confirmation`: dependența `l10n_ro_report_common` a dispărut din manifest.
+- **Fișe cu capturi mutate în `static/description/`:** în copiile din wiki, căile `../static/description/` au fost rescrise în `screenshots/`, iar pozele copiate de acolo (singura abatere de la copia fidelă).
+- **Titluri:** scos codul de cerință din H1 la `l10n_ro_inventory_register` (FR-50) și `l10n_ro_fixed_assets` (FR-19), ca în manifest.
+- **Fișiere actualizate:** 129 directoare de modul (`index.md`, unde e cazul `FISA_CONSULTANT.md` și `screenshots/`), `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-08] Ingestie `l10n_ro_move_template` 19.0.1.0.0 (șabloane de note contabile, FR-81)
 
 - **Acțiune:** ingestie modul nou, după PR terrabit-solutions/l10n_ro_ent#537 (merged în 19.0, `ac860db1`).

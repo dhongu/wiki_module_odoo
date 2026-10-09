@@ -74,7 +74,17 @@ Date minime pentru demo:
 3. Asigurați-vă că posturile de lucru au **calendar de lucru** și `time_efficiency` setate (intră în
    calculul RCCP al lead time-ului de producție).
 4. Verificați că furnizorii componentelor au `delay` (lead time) și, unde e cazul, `min_qty` (MOQ).
-5. Verificați că utilizatorul de test are grupul **Advanced Planner / User** (și Manager pentru
+   Verificați și **unitatea de măsură a prețului de furnizor**. În Odoo, „ml” înseamnă **mililitru**
+   (1 L = 1000 ml), nu metru liniar. Un cablu gestionat în „m” și cumpărat în „ml” ajunge pe cererea
+   de ofertă cu o cantitate de **1000 de ori mai mare** (22,5 m → 22.500 ml). Pentru metru liniar
+   folosiți „m”.
+5. **Ruta „Replenish on Order (MTO)” pe componente și semifabricate.** Planificatorul acoperă el
+   necesarul componentelor, cu comenzi planificate proprii. La confirmarea unui OF generat din
+   planificator, componentele se iau din stoc și ruta MTO nu mai planifică încă o dată (de la
+   versiunea 19.0.1.4.9). OF-urile create manual sau din reaprovizionare păstrează comportamentul
+   MTO standard: generează OF-uri și cereri de ofertă pentru componente la confirmare. Dacă operatorii
+   lansează producția doar din planificator, ruta MTO pe componente nu e necesară.
+6. Verificați că utilizatorul de test are grupul **Advanced Planner / User** (și Manager pentru
    acțiunile globale).
 
 ## 6. Flux de utilizare
@@ -114,13 +124,42 @@ cele de tip achiziție au data de lansare și recepție per componentă.
 ### Pasul 5 — Lansarea manuală a RFQ / OF
 
 Pe formularul unei comenzi planificate, butonul din antet diferă după tipul comenzii: pe o comandă
-de **producție** apare **Generează OF** (ordin de fabricație / MO), iar pe o comandă de **achiziție**
-apare **Generează RFQ** (cerere de ofertă) — ambele cu verificare de duplicat. RFQ-urile pentru
-același furnizor cu dată apropiată se **consolidează** automat într-un singur PO (fereastra
-configurabilă din Setări). Comenzile reale **nu** se creează automat — se lansează aici, după
-revizuire. Captura arată o comandă de producție blocată, cu mesajul detaliat de planificare.
+de **producție** apare **Generează OF** (ordin de fabricație / MO), iar pe o comandă de
+**achiziție** apare **Generează cerere de ofertă** — ambele cu verificare de duplicat. RFQ-urile
+pentru același furnizor cu dată apropiată se **consolidează** automat într-un singur PO aflat încă
+în ciornă (fereastra configurabilă din Setări, implicit ±3 zile; 0 dezactivează consolidarea). Pe
+PO-ul consolidat, același produs cu aceeași unitate de măsură, același preț și același discount
+apare pe **o singură linie**, cu cantitățile adunate — de exemplu, două variante de pe aceeași
+comandă de vânzare care folosesc aceeași componentă (15 + 5 buc) dau o linie de 20 buc. Dacă prețul
+diferă, liniile rămân separate. Legătura cu fiecare comandă planificată se păstrează. Din lista
+comenzilor planificate, acțiunea **Generează cereri de ofertă** lansează cererile pentru comenzile
+selectate de tip **Achiziție** (cele de producție sunt ignorate; pentru ele folosiți **Generează
+OF-uri**) și afișează la final o notificare cu numărul de cereri de ofertă create sau completate și
+comenzile planificate care au eșuat, cu motivul. Comenzile reale **nu** se creează automat — se
+lansează aici, după revizuire.
+
+Când cantitatea planificată e sub cantitatea minimă a furnizorului (de exemplu 0,6 m² dintr-o
+placă vândută de la 1 m²), cererea de ofertă se generează tot la furnizorul produsului, cu cantitatea
+planificată. Operatorul o ajustează la minimul furnizorului înainte de trimitere.
+
+Un OF generat din planificator **nu** declanșează la confirmare aprovizionarea componentelor:
+semifabricatele și materiile prime au deja comenzile lor planificate, cumulate pe produs. Componentele
+se consumă din stocul produs sau recepționat pe acele comenzi.
+
+Captura arată o comandă de producție blocată, cu mesajul detaliat de planificare.
 
 ![Formular comandă planificată de producție cu butonul Generează OF](screenshots/05_planned_order_form.png)
+
+Cererea de ofertă consolidată: două comenzi planificate pentru aceeași materie primă (15 + 5 buc),
+același furnizor, preț și unitate de măsură, au rezultat într-o singură linie de 20 buc.
+
+![Cerere de ofertă consolidată cu o singură linie de 20 buc](screenshots/05a_rfq_linie_cumulata.png)
+
+Generarea în lot din listă (selectați comenzile → **Acțiuni → Generează cereri de ofertă**):
+notificarea arată câte cereri s-au generat și, pentru fiecare comandă care a eșuat, motivul — aici
+un produs fără furnizor configurat.
+
+![Notificarea acțiunii Generează cereri de ofertă, cu o reușită și un eșec](screenshots/05b_generare_rfq_notificare.png)
 
 ### Pasul 6 — Situație Material (proiecție cronologică per produs)
 
@@ -226,6 +265,9 @@ trebuie recalculate și decizia de nivelare a capacității.
 - [ ] Backward scheduling produce date coerente (lansare PO < recepție < start producție < final).
 - [ ] O comandă cu termen imposibil este marcată **Blocat** și propune cea mai devreme dată realizabilă.
 - [ ] RFQ-ul și MO-ul se generează manual din comanda planificată, fără duplicate.
+- [ ] Două comenzi planificate pentru același produs (de exemplu două variante cu aceeași componentă), cu același furnizor, aceeași UM și același preț, cu data de lansare în fereastra de consolidare și cu prima cerere încă în ciornă, produc pe cerere o singură linie, cu cantitatea totală.
+- [ ] Pe un produs cu componente pe ruta MTO, confirmarea OF-ului generat din planificator nu creează OF-uri sau cereri de ofertă noi pentru componente (în lista OF nu apar ordine cu sursa = alt OF).
+- [ ] Prețurile de furnizor ale produselor gestionate în metri folosesc UM „m”, nu „ml” (mililitru).
 - [ ] Situația Material și Stocul Proiectat afișează proiecția cronologică și ATP corect.
 - [ ] Workcenter Load / CRP reflectă supraîncărcările; nivelarea (dry_run) previzualizează mutările.
 - [ ] Tabloul Risc de livrare listează comenzile la risc; butonul Escaladează creează o activitate.
@@ -240,6 +282,10 @@ trebuie recalculate și decizia de nivelare a capacității.
 | SO marcat **N/A** (not_applicable) la planificare | Niciun produs de pe comandă nu are listă de materiale (BOM) | Definiți BOM pentru produsul finit sau ignorați — planificatorul se aplică doar produselor cu BOM |
 | Comanda rămâne **Blocat** deși există stoc | Intrările (PO) sosesc **după** `commitment_date` — corect cronologic, nu reduc disponibilul la termen | Devansați recepția PO sau ajustați data promisă |
 | Lead time de producție pare prea mic/mare | Posturile de lucru nu au calendar/eficiență, sau produsul are `ap_production_lead_time` setat manual (ignoră RCCP) | Configurați calendarul și `time_efficiency` pe posturi; goliți lead time-ul manual de pe produs dacă vreți RCCP |
+| Notificarea „Cereri de ofertă generate: N. Comenzi planificate eșuate: M.” după **Generează cereri de ofertă** | Pentru unele comenzi planificate nu s-a putut genera cererea, de regulă pentru că produsul nu are furnizor configurat sau comanda planificată are deja o cerere ciornă | Adăugați furnizorul pe produs (tabul Achiziție) sau confirmați/anulați cererea ciornă existentă, apoi relansați pentru comenzile rămase |
+| Semifabricat planificat de două ori: pe lângă OF-ul planificatorului (sursa = comanda de vânzare) apar OF-uri cu sursa = OF-ul produsului finit | Ruta MTO pe semifabricat, iar OF-ul părinte a fost creat manual sau înainte de versiunea 19.0.1.4.9 | Actualizați modulul. Lansați OF-urile din planificator, nu manual, și anulați OF-urile duplicate aflate încă în ciornă sau confirmate fără consum |
+| Pe cererea de ofertă apar linii duble pentru aceeași materie primă, unele cu preț 0 | Linia cu preț 0 vine din ruta MTO standard, cu o cantitate sub minimul furnizorului (nu se găsește preț). Linia cu preț vine din planificator | Același remediu ca mai sus: după actualizare, OF-urile din planificator nu mai generează aceste linii. Ștergeți liniile cu preț 0 din cererile ciornă existente |
+| Cantitate de 1000 de ori mai mare pe cererea de ofertă (ex. 22.500 în loc de 22,5) | Prețul furnizorului e în „ml” (mililitru), produsul în „m” | Pe furnizorul produsului (tabul Achiziție) schimbați UM-ul în „m” și regenerați cererea |
 | Capturile nu se generează | Modulul `l10n_ro_doc_screenshots` nu este instalat | Instalați-l și rulați testul de capturi (vezi secțiunea 10) |
 
 ## 10. Capturi de ecran
@@ -254,6 +300,8 @@ secțiunea 6:
 3. `03_so_banner_confirmat.png` — tabul Planificare avansată pe SO confirmat (status + dată efectivă + risc).
 4. `04_planned_orders.png` — lista comenzilor planificate cu ierarhie BOM și status colorat.
 5. `05_planned_order_form.png` — formular comandă planificată de producție cu butonul Generează OF.
+   - `05a_rfq_linie_cumulata.png` — cerere de ofertă consolidată, cu aceeași materie primă cumulată pe o singură linie (15 + 5 → 20 buc).
+   - `05b_generare_rfq_notificare.png` — notificarea acțiunii **Generează cereri de ofertă** din listă, cu reușite și eșecuri.
 6. `06_material_situation.png` — Situație Material: stoc proiectat cronologic cu pegging.
 7. `07_stock_projection.png` — Stoc Proiectat Agregat cu elemente MRP, ATP și shortage.
 8. `08_workcenter_load.png` — Workcenter Load: pivot și grafic încărcare per săptămână.
@@ -266,7 +314,8 @@ Testul `tests/test_screenshots.py` seedează un mediu de producție determinist 
 calendar + eficiență, BOM pe 2 niveluri cu operații, furnizori cu lead time + MOQ, stoc parțial) și
 rulează planificatorul pe comenzi de vânzare (una confortabilă → On Track, una cu termen strâns →
 Critical), apoi agregă CRP, Situația Material și Stocul Proiectat, astfel încât toate ecranele să
-aibă date reale.
+aibă date reale. Pentru Pasul 5 generează o cerere de ofertă din două comenzi planificate pentru
+aceeași materie primă (15 + 5 buc) și rulează generarea în lot pe o comandă cu furnizor și una fără.
 
 Regenerare:
 

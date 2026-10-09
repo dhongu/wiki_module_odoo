@@ -1,10 +1,10 @@
 # Expenses Deduction (localizat la `deltatech_expenses/index.md`)
 
 - **Nume Tehnic:** `deltatech_expenses`
-- **Versiune:** `19.0.3.4.0`
+- **Versiune:** `19.0.3.5.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_expenses
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_expenses`
-- **Ultima Ingestie:** `2026-10-01`
+- **Ultima Ingestie:** `2026-10-09`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -21,8 +21,9 @@ Modulul gestionează decontarea cheltuielilor efectuate de angajați pe baza ava
 - **Suma liniei este mereu brută (TVA inclus)**, adică totalul de pe bon sau factură, indiferent cum e configurată taxa („inclusă în preț" sau „pe deasupra"); modulul extrage din ea baza și TVA-ul deductibil. Cu o taxă „pe deasupra" poate apărea o rotunjire de 1 ban față de bon. Tabelul de linii afișează coloanele de taxă.
 - Linii de două tipuri: „Cheltuieli" (justificată cu bon/factură; generează chitanță de achiziție `Dr 6xx + Dr 4426 = Cr 401` și nota de decontare `Dr 401 = Cr 542`, reconciliate între ele) și „Plată furnizor" (angajatul achită direct o datorie a firmei; generează `Dr 401 = Cr 542`, reconciliată cu facturile furnizor deschise).
 - **Plata directă la furnizor fără factură deschisă**: partea neacoperită de facturi deschise este un avans acordat furnizorului și se reclasifică automat `Dr 4092 = Cr 401` (reconciliat), astfel încât pe 401 nu rămâne sold debitor. Se folosește mereu 4092 (servicii); pentru bunuri (4091) sau imobilizări (4093) contabilul reclasifică manual, iar la primirea facturii compensează avansul (`Dr 401 = Cr 4092`).
-- Calcul diurnă: sumă/zi (`diem`) × număr de zile = `total_diem`, cu notă proprie `Dr 625 = Cr 542`, datată cu data cheltuielii. Valoarea implicită de 42,50 lei/zi este doar un punct de pornire, **nu un plafon**: modulul contează integral diurna introdusă și nu verifică plafonul fiscal de neimpozitare. Partea peste plafon se preia manual în salarizare ca venit impozabil; verificarea automată o oferă modulul opțional `l10n_ro_expense_allowance`.
+- Calcul diurnă: sumă/zi (`diem`) × număr de zile (acceptă o zecimală, ex. 2,5 — pentru deplasări în străinătate diurna se acordă și pe fracțiuni de zi) = `total_diem`, cu notă proprie `Dr 625 = Cr 542`, datată cu data cheltuielii. Valoarea implicită de 42,50 lei/zi este doar un punct de pornire, **nu un plafon**: modulul contează integral diurna introdusă și nu verifică plafonul fiscal de neimpozitare. Partea peste plafon se preia manual în salarizare ca venit impozabil; verificarea automată o oferă modulul opțional `l10n_ro_expense_allowance`.
 - Închiderea contului 542 prin **nota de diferență** (`Dr 5311 = Cr 542` când angajatul restituie, `Dr 542 = Cr 5311` când firma îi plătește diferența), **datată cu data decontului** (data cheltuielii), nu cu data avansului.
+- Liniile de decont sunt mereu în moneda companiei decontului: sumele se introduc în moneda companiei, iar o monedă trimisă la creare/scriere (de ex. de o integrare) este ignorată.
 - Contul de cheltuială se vede în coloana „Cont cheltuieli implicit" (implicit primul cont 623; pentru deplasări se schimbă în 625).
 - Taba **„Chitanțe"** pe decont afișează chitanțele de achiziție generate (tabul „Plăți" apare doar dacă există plăți); „Elemente jurnal" afișează toate liniile contabile.
 - Tipărire: meniul ⚙ → Tipărire → „Tipărire decont cheltuieli" (justificativul semnat de titularul avansului).

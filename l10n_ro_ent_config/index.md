@@ -1,10 +1,10 @@
 # Romania - Configurare localizare Enterprise (localizat la `l10n_ro_ent_config/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_ent_config`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_ent_config
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_ent_config`
-- **Ultima Ingestie:** `2026-09-12`
+- **Ultima Ingestie:** `2026-10-09`
 
 #### 1. Sumar
 
@@ -19,7 +19,7 @@ modul individual în Aplicații.
 
 - Pagină dedicată "România Enterprise" în **Setări → General Settings**, vizibilă doar pentru
   companiile a căror țară este România (`country_code == 'RO'`).
-- Zece categorii de setări, fiecare corespunzând unui grup funcțional din suita l10n_ro_ent:
+- Zece categorii de setări (prima opțiune din „Contabilitate & Închidere de Lună” este pachetul de bază `l10n_ro_account_pack`), fiecare corespunzând unui grup funcțional din suita l10n_ro_ent:
   ANAF - Declarații & SPV, e-Factura & e-Transport, Contabilitate & Închidere de Lună, Rapoarte
   Contabile & SAF-T, Stoc & Gestiuni Contabile, Bănci & Trezorerie, Salarizare & HR,
   Fiscalitate Specială & Mediu, Conformitate & Audit, Puncte de Vânzare (POS).
@@ -40,7 +40,7 @@ modul individual în Aplicații.
 
 **Modele**
 
-- `res.config.settings` (extindere, tranzient): adaugă peste 90 de câmpuri booleene de tip
+- `res.config.settings` (extindere, tranzient): adaugă 96 de câmpuri booleene de tip
   `module_<nume_modul>`, câte unul pentru fiecare modul instalabil din suita l10n_ro_ent;
   bifarea/debifarea lor declanșează instalarea/dezinstalarea modulului corespunzător prin
   mecanismul standard Odoo de setări.
@@ -93,6 +93,7 @@ setări, oricare dintre modulele suitei l10n_ro_ent, grupate pe categorii:
 
 **Contabilitate & Închidere de Lună**
 
+- `l10n_ro_account_pack`: pachet de bază al contabilității RO (instalează corecțiile de balanță și SAF-T, planul de conturi extins și contul de contrapartidă); fără pagină wiki.
 - [l10n_ro_account_chart](../l10n_ro_account_chart/index.md)
 - [l10n_ro_account_correspondence](../l10n_ro_account_correspondence/index.md)
 - [l10n_ro_account_return_pl_closing](../l10n_ro_account_return_pl_closing/index.md)

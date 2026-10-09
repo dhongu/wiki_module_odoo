@@ -140,9 +140,9 @@ peste toleranță. Dacă un cont nu este setat, modulul îl caută automat după
 
 ### Pasul 1 — Crearea declarației
 
-Accesați **Contabilitate → Raportare → Declarația D112**, apăsați **Nou** și completați antetul.
+Accesați **Contabilitate → Raportare → Declarații ANAF → Declarația D112**, apăsați **Nou** și completați antetul.
 
-> **Raport de previzualizare:** meniul **Contabilitate → Raportare → D112 — Obligații Preview**
+> **Raport de previzualizare:** meniul **Contabilitate → Raportare → Declarații ANAF → D112 — Previzualizare obligații**
 > afișează obligațiile lunii proiectate live din statele de plată *fără* a crea o declarație;
 > are butoanele „Generează ciornă D112" și export XML direct — util pentru o verificare rapidă
 > înainte de a materializa declarația formală.

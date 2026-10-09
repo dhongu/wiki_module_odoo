@@ -1,10 +1,10 @@
 # Marketplace Base Connector (localizat la `deltatech_marketplace/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace`
-- **Versiune:** `19.0.1.33.2`
+- **Versiune:** `19.0.1.39.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace`
-- **Ultima Ingestie:** `2026-09-29`
+- **Ultima Ingestie:** `2026-10-09`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -31,6 +31,15 @@ Marketplace Base Connector este modulul de bază al familiei de module marketpla
 - Exportul de stoc și de preț procesează acum toate backend-urile selectate (nu doar primul împărțit în joburi), iar filtrul „doar modificate” se aplică și pe calea cu joburi.
 - Starea de sănătate: joburile eșuate din canalele comune se contorizează pe backend-ul căruia îi aparțin; butonul **Run jobs** declanșează cron-urile `queue_job_cron_jobrunner`; Marketplace Manager are acces la joburi și canale.
 - Protecție la importuri concurente: `import_chain_running` / `import_chain_skipped` spun dacă un lanț de import al unui binder rulează deja pe backend, ca un al doilea import să nu parcurgă din nou toate paginile.
+- Căutare după cod de bare pe un produs nou (*Barcode lookup*, tab-ul de setări al backend-ului): la introducerea unui cod EAN-8 / EAN-13 / UPC-A valid, conectorul caută produsul în catalogul marketplace-ului și completează doar numele și imaginea **goale**; ce a scris utilizatorul nu se suprascrie, iar un marketplace care nu răspunde doar se loghează. Funcționează lângă *Product Barcode Lookup* din Enterprise. Conectorii participă prin `<provider>_find_by_barcode`.
+- Categoria din marketplace pentru fiecare ofertă: pe asocierea produsului, *Marketplace Category ID* ține categoria în care e listată oferta (așa cum o citește importul, indiferent de categoria Odoo sau de *Use category*), iar *Marketplace Category* o leagă de categoria importată; ambele se pot căuta și grupa. *Proposed Marketplace Category* arată categoria în care va merge produsul la export, din maparea categoriilor.
+- Comision pe categoria marketplace: *Commission (%)* pe categoriile importate reține rata percepută de marketplace; e informativ, nu se trimite în marketplace.
+- Prețuri ale ofertelor noi cu comisionul categoriei (*Price New Offers with the Commission*, tab-ul Preț): o ofertă creată din Odoo este marcată *Priced with the Commission* și are prețul listă / (1 − comision), ex. 100 la 13% devine 114,94, ca să nu iasă comisionul din marjă; urmărește prețul listă la fiecare export. Ofertele existente păstrează prețul din lista de prețuri, iar categoriile fără comision folosesc lista de prețuri.
+- Verificare webhook-uri pentru orice conector care gestionează webhook-uri: butonul din antet și asistentul (Matched / Missing / Orphan, înregistrarea celor lipsă, ștergerea celor orfane), mutate aici din conectorul Shopify; apar doar pe backend-urile ai căror conectori implementează funcțiile necesare.
+- *Ignore Company Without VAT* (tab-ul *Comenzi și produse*, grupul Parteneri): o adresă de facturare cu nume de firmă, dar fără CUI, se importă ca persoană fizică, pe numele persoanei; implicit dezactivat, implementat deocamdată doar în PrestaShop.
+- Controlul importului (vezi `readme/USAGE.md`): per tip de obiect, *Create* și *Update* decid dacă importul poate crea sau modifica înregistrări Odoo (cardul spune politica în clar), iar *Only Missing* sare peste înregistrările deja legate. Produsul din spatele unei oferte se găsește în ordine: asocierea existentă, cod de bare, referință internă (potrivire exactă), nume (rezervă riscantă, cu avertisment „possible variant collapse”), prima variantă a șablonului. *Strict variant match* oprește ultimii doi pași. *Ignore Import Fields* (doar pentru grupul Setări) elimină câmpuri la import, iar *Use category* și *Default category* decid dacă o categorie din marketplace ajunge vreodată în `categ_id`.
+- Export de stoc/preț fără dubluri: ofertele deja în așteptare într-un job de export nu mai sunt puse din nou în coadă (jobul citește valoarea la rulare), iar cron-ul *Marketplace: export price* trimite din nou prețurile (verificarea „fără export de preț pe conector” se potrivea greșit și pe conectorii care au export).
+- Modificarea limitei de cereri pe secundă a unui backend nu mai blochează apelurile API: noua limită se salvează pe conexiune proprie, cu commit imediat.
 
 #### 3. Dependențe
 
@@ -43,16 +52,29 @@ Marketplace Base Connector este modulul de bază al familiei de module marketpla
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, această secțiune este sintetizată din `readme/DESCRIPTION.md`. Modulul este construit cu o arhitectură modulară, structurată în:
+Conform fluxului de ingestie, secțiunile 1–2 provin din `readme/DESCRIPTION.md`, `USAGE.md` și `HISTORY.md`. Componentele de mai jos sunt un rezumat orientativ al structurii modulului.
 
-- Configurări de date (`data`)
-- Modele pentru logica de business de bază și pentru jurnalele centralizate de marketplace (`models`)
-- Vizualizări pentru interfața cu utilizatorul (`views`)
-- Controllere pentru interacțiunile web (`controller`)
-- Wizard-uri pentru procese ghidate (`wizard`)
-- Definiții de securitate (`security`)
-- Servicii JavaScript pentru funcționalitatea de frontend (`static`)
-- Suport pentru internaționalizare (`i18n`)
+**Modele**
+
+- `marketplace.backend` (`models/backend.py`): magazinul conectat, cu acces, companie, setări de business, limite de import, canale de joburi și starea de sănătate; include `backend_stock`.
+- `marketplace.product` / `marketplace.product.template`: asocierile (bindings) dintre variantele/șabloanele Odoo și ofertele din magazin, cu stoc, preț, categorie marketplace, comision.
+- Asocieri pentru clienți, categorii, atribute, valori, etichete, liste de prețuri, depozite, limbi, țări, județe, monede, furnizori și stoc (`binding_*.py`).
+- `marketplace.log` (`marketplace_log.py`): jurnalul centralizat al operațiunilor.
+- `rate_bucket.py`: găleți pentru limitarea ratei API; `queue_job.py`: extensii pentru coada de joburi.
+- Extensii pe `account.tax` (mapare TVA), `product.product`, `product.template`, `res.partner`, `stock.move`.
+
+**Vizualizări**
+
+- `views/backend_views.xml`: formularul backend-ului (carduri de obiecte, taburi *Comenzi și produse* și *Tehnic*), cu butoanele de verificare webhook și rulare joburi.
+- `views/product_view.xml`, `product_template_view.xml`: asocierile de produse, cu diferențe de stoc/preț.
+- `views/category_view.xml`, `attribute_view.xml`, `customer_view.xml`, `pricelist_view.xml`, `warehouse_view.xml`, `lang_view.xml`, `stock_view.xml`, `tax_view.xml`: asocierile pe tipuri de obiecte.
+- `views/marketplace_log_views.xml`: jurnalul operațiunilor; `views/menu.xml`: meniul Marketplace.
+- Wizard-uri: sincronizare produs (`sync_product`) și verificare webhook-uri (`webhook_checker`).
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Cron-uri (`data/ir_cron_data.xml`, livrate dezactivate): *Marketplace: export stock*, *export price*, *Export stock for all products*, *remove archived products*, *import products*.
+- Acțiuni server: *Generate Job Channels* (pe backend), *Map in Marketplace* (pe produs și pe șablon de produs).
 
 #### 5. Conexiuni
 

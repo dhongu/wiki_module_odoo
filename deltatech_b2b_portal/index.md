@@ -1,10 +1,10 @@
 # Portal Clienți B2B (B2B Customer Portal)
 
 - **Nume Tehnic:** `deltatech_b2b_portal`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_portal
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_b2b_portal`
-- **Ultima Ingestie:** `2026-10-01`
+- **Ultima Ingestie:** `2026-10-09`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -23,7 +23,8 @@ Un portal pentru clienții persoane juridice de pe website-ul Odoo: firmele cer 
 - **Meniuri** sub *Vânzări ▸ Comenzi*: *Cereri de cont B2B* (firmele în starea Solicitat, implicit) și *Clienți B2B* (conturi active și suspendate, cu sold, restanțe, credit disponibil); filtre pe contacte: *Clienți B2B*, *Cereri de cont B2B*, *B2B cu facturi restante*.
 - **Activarea unui client existent**: *Acțiune ▸ Activare cont B2B* (administrator B2B) deschide wizardul standard de acces la portal; **Suspendă** oprește comenzile din portal fără a retrage accesul la documente, **Reactivează** le repornește fără invitație nouă.
 - **Setări** (*Website ▸ Configurare ▸ Setări ▸ Portal B2B*): agentul de vânzări pentru cereri (implicit agentul website-ului) și adresa termenilor B2B. Accesul în magazin doar pentru utilizatori autentificați se face cu setarea standard *eCommerce Access*.
-- Drepturi de acces: **B2B Portal ▸ User** (aprobă, respinge, suspendă) și **B2B Portal ▸ Administrator** (activează clienți existenți, setează rolurile).
+- Drepturi de acces: **B2B Portal ▸ User** (aprobă, respinge, suspendă) și **B2B Portal ▸ Administrator** (activează clienți existenți, setează rolurile). Acțiunile de aprobare, suspendare și reactivare rulează cu drepturi de superutilizator, dar verifică mai întâi, pe utilizatorul care le apelează, rolul B2B User și dreptul de citire pe parteneri; un utilizator fără rol (inclusiv un client de portal care își reactivează singur firma suspendată) primește eroare de acces, inclusiv la apel RPC.
+- **Metode ajutătoare pentru modulele construite peste acesta** (în controller): `_b2b_inactive_redirect()` trimite pe /b2b utilizatorul fără cont B2B activ, iar `_b2b_add_to_cart()` adaugă produse în coș, doar pe cele vândute pe website-ul curent. Sunt folosite de comanda rapidă și de listele de comandă salvate.
 - Folosește mecanismele standard Odoo (agent de vânzări, limită de credit, listă de prețuri, termene de plată, invitație portal, acces eCommerce), fără duplicări. Limita de credit și facturile restante se impun prin `terrabit_partner_credit_limit` și `terrabit_partner_credit_limit_website`.
 - Neinclus (planificat): aprobarea comenzilor plasate de colegi și completarea automată a datelor firmei dintr-un registru public.
 
@@ -36,7 +37,7 @@ Un portal pentru clienții persoane juridice de pe website-ul Odoo: firmele cer 
 
 **Modele**
 
-- `res.partner` (extins): câmpurile `b2b_state`, `b2b_role`, `b2b_access_requested`, `b2b_terms_accepted_date`, `b2b_note`, plus câmpuri calculate (`b2b_balance`, `b2b_overdue_count`, `b2b_overdue_amount`, `b2b_credit_available`); logica de creare/potrivire după CUI a cererilor, aprobare, respingere, suspendare.
+- `res.partner` (extins): câmpurile `b2b_state`, `b2b_role`, `b2b_access_requested`, `b2b_terms_accepted_date`, `b2b_note`, plus câmpuri calculate (`b2b_balance`, `b2b_overdue_count`, `b2b_overdue_amount`, `b2b_credit_available`); logica de creare/potrivire după CUI a cererilor, aprobare, respingere, suspendare; `_b2b_check_action_access()` verifică rolul B2B User și dreptul de citire ale apelantului înainte ca acțiunile să ruleze ca superutilizator.
 - `website` (extins): `b2b_request_user_id` și `b2b_terms_url`.
 - `res.config.settings` (extins): expune cele două setări ale website-ului.
 - `deltatech.b2b.reject.wizard`: wizard de respingere cu motiv obligatoriu și opțiunea de arhivare a firmei.
@@ -53,6 +54,7 @@ Un portal pentru clienții persoane juridice de pe website-ul Odoo: firmele cer 
 **Controllere**
 
 - `/b2b` (public), `/b2b/request` (GET/POST): pagina și trimiterea formularului.
+- Metode ajutătoare: `_b2b_inactive_redirect()`, `_b2b_add_to_cart(quantities)`.
 - Suprascrieri: checkout, `portal_quote_accept`, `portal_order_transaction` (blocare pentru roluri fără drept de comandă) și `home` (/my) pentru tabloul de bord.
 
 **Acțiuni Automate / Acțiuni Server**
@@ -65,3 +67,7 @@ Un portal pentru clienții persoane juridice de pe website-ul Odoo: firmele cer 
 
 - [terrabit_partner_credit_limit](../terrabit_partner_credit_limit/index.md): limita de credit și toleranțele ei; portalul afișează creditul disponibil din limita standard.
 - [terrabit_partner_credit_limit_website](../terrabit_partner_credit_limit_website/index.md): impune limita și facturile restante la comanda din website.
+- [deltatech_b2b_quick_order](../deltatech_b2b_quick_order/index.md): comanda rapidă după cod, construită peste portal (folosește metodele ajutătoare).
+- [deltatech_b2b_order_list](../deltatech_b2b_order_list/index.md): liste de comandă salvate, construite peste portal (folosește metodele ajutătoare).
+- [deltatech_b2b_price_tier](../deltatech_b2b_price_tier/index.md): trepte de preț pe cantitate, modul separat din familia B2B.
+- [deltatech_b2b_website_restrict](../deltatech_b2b_website_restrict/index.md): website închis vizitatorilor: publice rămân doar pagina de prezentare B2B și formularul de cerere.

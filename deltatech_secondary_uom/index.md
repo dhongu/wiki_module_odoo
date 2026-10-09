@@ -1,10 +1,10 @@
 # Deltatech Product Secondary UoM (localizat la `deltatech_secondary_uom/index.md`)
 
 - **Nume Tehnic:** `deltatech_secondary_uom`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.2.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_secondary_uom
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_secondary_uom`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-10-09`
 
 #### 1. Sumar
 
@@ -17,6 +17,7 @@ Acest modul adaugă factori de conversie între unități de măsură definiți 
 - Pe liniile de comandă de vânzare, liniile de comandă de achiziție și pe mutările de stoc, utilizatorul poate introduce cantitatea într-o unitate alternativă (kg, m² etc.), iar cantitatea liniei se calculează automat — și invers: modificarea cantității liniei actualizează cantitatea secundară.
 - Prețul rămâne mereu în unitatea de bază: cantitatea secundară este doar informativă/de input și nu afectează niciodată prețul, facturarea sau valorizarea stocului.
 - Rotunjirea cantității de bază la numărul întreg de bucăți atunci când se introduce cantitatea în unitatea alternativă (nu se pot livra fracțiuni de bucată).
+- Recalcularea automată a cantității secundare: crearea, modificarea sau ștergerea unei conversii pe produs actualizează liniile deschise de vânzare/achiziție și mutările de stoc care o folosesc; comenzile blocate sau anulate și mutările finalizate/anulate păstrează cantitatea calculată cu raportul anterior.
 - Propagarea unității secundare alese pe linia de vânzare/achiziție către mutarea de stoc generată (inclusiv la regulile de aprovizionare `stock.rule`) și păstrarea acesteia ca și criteriu distinct la comasarea mutărilor de stoc.
 
 #### 3. Dependențe
@@ -28,7 +29,7 @@ Acest modul adaugă factori de conversie între unități de măsură definiți 
 
 **Modele**
 
-- `deltatech.product.uom.conversion`: model nou care ține conversia specifică unui produs între o unitate alternativă (`uom_id`, cu cantitatea `uom_qty`) și unitatea de bază a produsului (`base_qty`); calculează factorul de conversie și validează unicitatea per produs/unitate, cantitățile strict pozitive și faptul că unitatea alternativă diferă de unitatea de bază.
+- `deltatech.product.uom.conversion`: model nou care ține conversia specifică unui produs între o unitate alternativă (`uom_id`, cu cantitatea `uom_qty`) și unitatea de bază a produsului (`base_qty`); calculează factorul de conversie și validează unicitatea per produs/unitate, cantitățile strict pozitive și faptul că unitatea alternativă diferă de unitatea de bază. La create/write/unlink declanșează recalcularea cantității secundare pe liniile deschise ale tuturor modelelor care moștenesc mixin-ul (`_recompute_open_secondary_uom_qty`).
 - `deltatech.secondary.uom.mixin`: model abstract reutilizabil care adaugă câmpurile `secondary_uom_id` și `secondary_uom_qty` (cu compute/inverse bidirecțional) pe modelele care îl moștenesc; expune hook-uri (`_get_secondary_product`, `_get_line_qty_and_uom`, `_set_line_qty`) pe care fiecare model concret trebuie să le implementeze.
 - `product.template` (extins): adaugă câmpul `secondary_uom_ids` (Alternative Units) și metoda de căutare a conversiei pentru o unitate dată.
 - `sale.order.line` (extins cu mixin-ul): permite alegerea unei unități secundare și a cantității secundare pe linia de vânzare, propagate mai departe la aprovizionare (`_prepare_procurement_values`).

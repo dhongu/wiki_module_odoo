@@ -159,9 +159,57 @@ starea „Cedat".
 
 ![Tab „Informații RO" — identificare/localizare, amortizare fiscală, casare, reevaluări](screenshots/03_informatii_ro.png)
 
+**Amortizare contabilă după metoda fiscală.** Metoda contabilă se stabilește prin politicile
+contabile (OMFP 1802/2014 pct. 61 și pct. 240), independent de cea fiscală (Cod fiscal art. 28);
+duratele pot diferi (pct. 238 alin. (3)). La degresivă, pct. 240 alin. (1) lit. b) permite
+coeficienții din legislația fiscală. Dacă firma amortizează contabil la fel ca fiscal, pe tab-ul
+„Active” se alege **Metodă = „Conform planului fiscal (RO)”**.
+Notele lunare `Dr 6811 = Cr 281x` iau atunci sumele din planul fiscal: degresiv sau accelerat pe
+**an de utilizare** (12 luni de la luna de după PIF), cu trecerea la liniar pe valoarea și durata
+rămase. Durata contabilă se aliniază la durata fiscală. Metodele Enterprise „Declining” nu reproduc
+art. 28: lucrează pe exercițiul financiar și revin la liniarul pe valoarea inițială. După o
+reevaluare, sumele păstrează proporția lunară din planul fiscal, aplicată valorii contabile rămase
+(pct. 104: amortizarea se calculează pe valoarea reevaluată).
+
+Condiții pentru consultant:
+
+- metoda trebuie să reflecte modul de consumare a beneficiilor economice (pct. 240 alin. (2)), să
+  fie aprobată în politicile contabile (pct. 61) și aplicată consecvent activelor de aceeași natură
+  (pct. 240 alin. (3)); acceleratul e „mai puțin utilizat în scopuri contabile” (lit. c)) și trebuie
+  justificat, nu doar copiat din fiscal;
+- **superacceleratul 65%** (art. 28 alin. (8^1)) e doar fiscal: contabil, accelerata are cel mult
+  50% în primul an (pct. 240 alin. (1) lit. c)), deci programul refuză metoda RO peste 50%;
+- dacă durata economică diferă de cea fiscală, metoda „Conform planului fiscal” nu se folosește:
+  programul aliniază durata contabilă la cea fiscală;
+- trecerea unui activ deja în uz la această metodă e o modificare de estimare, cu efect prospectiv
+  (pct. 139 alin. (5));
+- **reevaluare în primul an, la accelerat**: legea nu reglementează explicit cazul. Programul
+  păstrează cota din primul an aplicată valorii de intrare (art. 28 alin. (8) lit. a) Cod fiscal,
+  pct. 240 alin. (1) lit. c)), iar creșterea din reevaluare se amortizează liniar pe durata rămasă.
+  Exemplu: 8.000 lei, accelerat 50%, reevaluat net la 9.000 pe 30.09.2026 (VNC 7.000): 333,33 +
+  2.000 / 57 = 368,42 lei/lună până în iunie 2027, apoi 118,42 lei/lună. Componenta din reevaluare
+  (35,09 lei/lună) e surplusul realizat de la pct. 109 alin. (2) (`105 → 1175`) și suma impozitată
+  concomitent după art. 26 alin. (6) Cod fiscal. Alte programe aplică 50% pe valoarea reevaluată
+  (375, apoi 117,19 lei/lună); totalul e același, doar repartizarea diferă. Această variantă se
+  obține cu setarea **Contabilitate → Configurare → Setări → Mijloace fixe (RO) → „Reevaluare în
+  primul an (accelerată)” = „Pe valoarea reevaluată”**, care se aplică planului fiscal și celui
+  contabil. E acceptabilă contabil (pct. 104 și 238 alin. (1)), dar trebuie calculată
+  separat diferența `105 → 1175` de la pct. 109 alin. (2). Varianta aleasă se menționează în
+  politica contabilă;
+- dacă valoarea contabilă și cea fiscală diverg (de exemplu, o diminuare sub cost, unde fiscalul
+  păstrează costul ca minim), cheltuiala contabilă diferă de deducerea fiscală și rămân ajustări în
+  D101.
+
+Exemplu, 8.000 lei, PIF iunie 2026, 5 ani:
+
+| Metodă fiscală | Iul 2026 – iun 2027 | Iul 2027 – iun 2028 | Din iul 2028 |
+|---|---|---|---|
+| Accelerată, 40% în primul an | 266,67 lei/lună (3.200) | 100 lei/lună | 100 lei/lună |
+| Degresivă AD1 (20% × 1,5 = 30%) | 200 lei/lună (2.400) | 140 lei/lună (1.680) | 108,89 lei/lună (3.920 / 3 ani) |
+
 ### Pasul 5 — Registrul Imobilizărilor
 
-Accesați **Contabilitate → Raportare → Statement Reports → Fixed Assets Register (RO)**. Raportul
+Accesați **Contabilitate → Raportare → Rapoarte de extras → Registrul imobilizărilor (RO)**. Raportul
 este nativ `account.report` (Enterprise), nu mai e un wizard separat: filtrul **„As of Date"** din
 antet stabilește data de referință (implicit, ziua curentă), iar situația se recalculează automat
 pentru acea dată — inclusiv amortizarea cumulată, luată doar din notele postate până atunci.
@@ -295,19 +343,45 @@ listă, cu istoricul în chatter.
   linia „închisă în activul principal”. Baza fiscală rămâne costul plus modernizările plus diferențele din
   reevaluare, cu costul plus modernizările ca minim (art. 7 pct. 44 lit. c), art. 28 alin. (12) lit. d)).
   Modernizarea închisă nu are notă de ieșire; în D406 nu mai apare ca activ separat după data închiderii,
-  dar nota ei de închidere apare în AssetTransactions (codul tranzacției e de verificat în nomenclatorul
-  SAF-T). O modernizare pe alt cont 21x decât activul principal arată de obicei o greșeală de configurare
-  (pct. 227); o componentă cu durată proprie (pct. 229) nu trebuie contopită în activul principal.
+  iar nota ei de închidere nu se raportează în AssetTransactions. O modernizare pe alt cont 21x decât
+  activul principal arată de obicei o greșeală de configurare (pct. 227); o componentă cu durată proprie
+  (pct. 229) nu trebuie contopită în activul principal.
+- **D406 Active (din 19.0.1.14.0), după nomenclatorul ANAF „Nomenclator imobilizari”, ghidul D406 și
+  exemplele ANAF pentru imobilizări:**
+  - AssetTransactions: modernizarea are codul 10 „Achiziție”; reevaluarea, un singur rând 70 (pozitivă)
+    sau 60 (negativă, cu sume negative) pe nota de reevaluare, cu diferența; la metoda brută, valoarea
+    contabilă a tranzacției include și recalcularea amortizării. Eliminarea amortizării, nota de import și
+    închiderea modernizării nu se raportează separat.
+  - MasterFiles: costurile de achiziție (la început, la sfârșit) și adăugările se raportează fără
+    reevaluări; valoarea netă le include (Ex.3: cost 90.000, valoare netă la sfârșit 100.000). Amortizarea
+    perioadei cuprinde doar amortizarea, iar aprecierea perioadei diferențele din reevaluare. **Decizie:** o
+    diminuare intră în apreciere cu semn negativ (ghidul vorbește de „reevaluări pozitive” și nu are altă
+    rubrică), ca valoarea netă la început + amortizare + apreciere să dea valoarea netă la sfârșit; dacă
+    ANAF cere altfel, se schimbă aici.
+  - Limitări cunoscute: transferul de gestiune fără notă contabilă nu se raportează, iar reclasificările între
+    conturi 21x ies cu codul 130, nu 40; reevaluarea are furnizorul activului, ca rândurile Enterprise (ANAF
+    cere datele contribuabilului la tranzacțiile care nu sunt achiziții); în anul închiderii unei modernizări
+    în activul principal, valoarea netă la început nu scade amortizarea modernizării de dinainte de perioadă;
+    în anul trecerii pe Odoo, amortizarea din programul anterior nu e în registrul-jurnal Odoo, deci D406
+    Active al acelui an nu se poate întocmi complet doar din Odoo.
 - **Metoda brută (pct. 103 lit. a)), din 19.0.1.12.0:** setarea „Revaluation Method” (Setări →
   Contabilitate → Fixed Assets (RO)) și câmpul „Method” din wizard. Brutul și amortizarea cumulată se
   recalculează proporțional (k = valoarea justă / valoarea netă), astfel încât valoarea netă să fie
-  valoarea justă: la creștere `Dr 21x = Cr 105` (diferența) și `Dr 21x = Cr 281x` (creșterea amortizării);
-  la scădere `Dr 281x` (scăderea amortizării) + `Dr 105`, sau `655` peste soldul rezervei (diferența) =
-  `Cr 21x` (scăderea brutului). Exemplu: 6.000 lei, 250 amortizați, valoarea justă 6.500 → brut 6.782,61,
-  amortizare 282,61, 750 pe 105. În wizard se introduce **valoarea justă, adică valoarea netă reevaluată**
-  din raportul evaluatorului, nu costul de înlocuire brut: OMFP cere ca valoarea netă după reevaluare să
-  fie egală cu valoarea reevaluată (pct. 103 lit. a)); brutul rezultă prin proporție și poate diferi de
-  costul de înlocuire brut din raport, diferență care nu se înregistrează. Metoda brută nu se aplică pe un
+  valoarea justă. Notele urmează funcțiunea conturilor 105 și 281 (din 19.0.1.15.0): la creștere
+  `Dr 21x = Cr 105` cu diferența brută și `Dr 105 = Cr 281x` cu creșterea amortizării; la scădere
+  `Dr 105` (sau `655` peste soldul rezervei) `= Cr 21x` cu scăderea brutului și `Dr 281x = Cr 105` (sau
+  `655`) cu scăderea amortizării. Dacă diferența netă nu atinge 105, contrapartida diferenței de
+  amortizare e 755 (compensarea unei cheltuieli anterioare) sau 655. Exemplu: 6.000 lei, 250 amortizați,
+  valoarea justă 6.500 → `Dr 21x = Cr 105` 782,61 și `Dr 105 = Cr 281x` 32,61; brut 6.782,61, amortizare
+  282,61, sold 105 750. În wizard se introduce **valoarea justă, adică valoarea netă reevaluată** din
+  raportul evaluatorului: OMFP cere ca valoarea netă după reevaluare să fie egală cu valoarea reevaluată
+  (pct. 103 lit. a)). Dacă raportul dă **costul de înlocuire brut** și deprecierea, se completează
+  câmpurile opționale „Cost de înlocuire brut” și „Depreciere (%)”, iar programul propune valoarea justă =
+  cost × (1 − depreciere). Exemplu (tichetul 9452): 7.500 lei pe 48 de luni, 3 luni amortizate (468,75),
+  cost de înlocuire 8.000, depreciere 6,25% → valoarea justă 7.500; `Dr 21x = Cr 105` 500 și
+  `Dr 105 = Cr 281x` 31,25; brut 8.000, amortizare 500, sold 105 468,75, apoi 166,67 lei/lună. Brutul
+  rezultă prin proporție și coincide cu costul de înlocuire doar dacă deprecierea din raport e egală cu
+  raportul amortizării cumulate (aici 3/48). Metoda brută nu se aplică pe un
   activ complet amortizat (folosiți metoda netă, pct. 100) și nici pe unul cu modernizări.
 - **Reevaluare (creștere):** `Dr 21x (activ) = Cr 105 (rezerve din reevaluare)`.
 - **Depreciere peste soldul 105:** `Dr 655 (cheltuieli din reevaluare) = Cr 21x (activ)`, pentru
@@ -327,7 +401,17 @@ listă, cu istoricul în chatter.
   schimbării. *Reevaluare* deschide wizardul RO (105 / 655 / 755). *Modernizare* folosește fluxul
   nativ: activul primește o majorare de valoare (activ copil) cu contrapartida aleasă (404 sau
   231), amortizată pe durata rămasă (art. 28 alin. (12) lit. d) Cod fiscal). O „modernizare” care
-  scade valoarea e refuzată.
+  scade valoarea e refuzată. Pe amortizarea lunară (din 19.0.1.15.0), luna modernizării se
+  amortizează integral pe valoarea de dinainte, într-o singură notă, iar majorarea se amortizează din
+  luna următoare, contabil și fiscal (art. 28 alin. (12) lit. a)). Data de achiziție a majorării e
+  data operațiunii. Exemplu (tichetul 9452): activ de 12.000 lei pe 24 de luni (500 lei/lună, din
+  iulie), modernizat cu 3.000 lei pe 15 septembrie. Septembrie are o singură notă de 500 lei, iar
+  din octombrie se adaugă 3.000 / 21 = 142,86 lei/lună.
+- **Valoare de intrare (din 19.0.1.15.0):** pe formularul activului, „Valoare de intrare” este costul
+  de la intrare (OMFP 1802/2014 pct. 75), care nu se schimbă la reevaluare. Valoarea brută curentă
+  (21x) e câmpul Enterprise „Original Value”. În Registrul imobilizărilor, coloana „Valoare de
+  intrare” e costul de la intrare, iar „Valoare reevaluată” e valoarea brută la data raportului. În
+  lista de inventariere, coloana devine „Valoarea contabilă brută” (pct. 82 alin. (3)).
 - **Punere în funcțiune din 231 (din 19.0.1.6.0):** Contabilitate → Active → „Commissioning from
   231”. Pe parcursul investiției costurile se strâng pe 231 (`Dr 231 = Cr 404` sau `Cr 722`); la
   recepție alegi costurile, contul 21x și data PIF, iar wizardul face `Dr 21x = Cr 231` și creează
@@ -589,6 +673,8 @@ Ce rămâne manual: validarea numărului de inventar, codului nomenclator și DN
 
 | Mesaj / simptom | Cauză probabilă | Remediere |
 |-----------------|-----------------|-----------|
+| „The accounting method “As Fiscal Board (RO)” cannot follow a fiscal board with more than 50% depreciation in the first year…" | Metoda fiscală e superaccelerată (65%), iar metoda contabilă e „Conform planului fiscal (RO)”. | Alegeți altă metodă contabilă (ex. liniară); planul fiscal păstrează 65%. |
+| „Asset … uses the accounting method “As Fiscal Board (RO)”, but it has no fiscal board…" | Metoda contabilă e „Conform planului fiscal (RO)”, dar activul nu are metodă fiscală sau durată fiscală. | Completați metoda și durata fiscală pe tab-ul „Informații RO”, apoi confirmați din nou. |
 | „Commissioning date (PIF) cannot be before the acquisition date." | Data PIF a fost setată înaintea datei de achiziție a activului. | Corectați data PIF — trebuie să fie egală sau ulterioară achiziției. |
 | „The journal entry … is linked to asset … but has no depreciation beginning date. The 'Asset' field is reserved for entries generated automatically…" *(mesaj momentan netradus în ro.po)* | O notă contabilă (ex. de reevaluare) a fost legată manual la câmpul tehnic „Asset", fără ca acesta să provină din motorul de amortizare. | Nu legați manual câmpul „Asset" pe notele contabile — el este completat automat de planul de amortizare/reevaluare. |
 | „Account 655 not found. Please fill in the 'Account 655' field on the revaluation." | Deprecierea depășește soldul disponibil în 105, iar contul 655 nu e configurat pe planul de conturi sau pe reevaluare. | Completați câmpul „Revaluation Expense Account" pe reevaluare sau adăugați contul 655 pe planul de conturi RO. |
@@ -597,7 +683,7 @@ Ce rămâne manual: validarea numărului de inventar, codului nomenclator și DN
 
 ## 10. Capturi de ecran
 
-Capturile din `readme/screenshots/` se obțin din `tests/test_screenshots.py` (mixinul `ScreenshotCase`
+Capturile din `static/description/` se obțin din `tests/test_screenshots.py` (mixinul `ScreenshotCase`
 din `l10n_ro_doc_screenshots`, HttpCase + Playwright), pe companie RO, în lei, cu plan de conturi RO.
 
 1. `00a_cont_automatizare.png` — contul de imobilizări, tab „Automatizare": „Creează în stadiu
@@ -668,7 +754,7 @@ Fixuri livrate pe acest modul, relevante pentru discuția cu clientul (ce s-a sc
 | **19.0.1.3.1** (2026-09-19) | O reevaluare (creștere sau diminuare de valoare) actualiza valoarea activului, dar **nu** regenera amortizarea viitoare — liniile de amortizare încă neconfirmate rămâneau la vechea sumă lunară, ca și cum reevaluarea nu ar fi avut loc. Raportat pe o instanță internă: după o diminuare, luna următoare continua să se amortizeze la valoarea dinaintea reevaluării. | Reevaluarea regenerează acum corect planul de amortizare de la data reevaluării încolo, pe baza noii valori — simetric la creștere și la diminuare. |
 | **19.0.1.2.0** (2026-09-14) | Legarea manuală a unei note contabile (ex. o notă de reevaluare) la câmpul tehnic „Asset" al unei note contabile, fără completarea datei de început a amortizării, bloca ulterior orice calcul de valoare reziduală a activului, inclusiv din wizard-ul „Modifică". Incident reprodus pe o instanță client. | Legarea manuală incompletă este acum respinsă explicit la salvare, cu un mesaj clar (deocamdată doar în engleză) — câmpul „Asset" rămâne rezervat notelor generate automat de motorul de amortizare. |
 | **19.0.1.1.1** (2026-07-17) | Butonul/acțiunea „Reevaluează Mijlocul Fix" din lista de active (meniu contextual) arunca o eroare la orice utilizare, blocând reevaluarea din acel punct de intrare. | Acțiunea apelează corect wizard-ul de reevaluare; funcționează identic cu butonul „Reevaluare" din formularul activului. |
-| **19.0.1.3.0** (2026-09-15) | Registrul Imobilizărilor se genera printr-un wizard separat (dată + companie), care producea un PDF static; exportul PDF putea eșua cu o eroare de server (`IndexError`, template incomplet — corectat separat, chiar înainte de această migrare). | Raportul a fost migrat la framework-ul nativ `account.report`: se accesează direct din **Contabilitate → Raportare → Statement Reports → Fixed Assets Register (RO)**, cu filtru „As of Date", grupare pe cont cu subtotaluri, drill-down pe fiecare activ și export PDF/XLSX din bara de instrumente a raportului — fără wizard intermediar. |
+| **19.0.1.3.0** (2026-09-15) | Registrul Imobilizărilor se genera printr-un wizard separat (dată + companie), care producea un PDF static; exportul PDF putea eșua cu o eroare de server (`IndexError`, template incomplet — corectat separat, chiar înainte de această migrare). | Raportul a fost migrat la framework-ul nativ `account.report`: se accesează direct din **Contabilitate → Raportare → Rapoarte de extras → Registrul imobilizărilor (RO)**, cu filtru „As of Date", grupare pe cont cu subtotaluri, drill-down pe fiecare activ și export PDF/XLSX din bara de instrumente a raportului — fără wizard intermediar. |
 | **19.0.1.3.2** (2026-09-21) | O reevaluare la mijlocul lunii genera o notă suplimentară pro-rata pe zilele rămase din acea lună, pe lângă amortizarea deja calculată la vechea valoare — dublând efectiv amortizarea lunii reevaluării, în loc să fie o singură notă lunară. În plus, deprecierea care depășea soldul rezervei 105 se înregistra pe contul **6813** (ajustări pentru depreciere/provizioane), în loc de **655** „Cheltuieli din reevaluarea imobilizărilor" (OMFP 1802/2014 pct. 111 alin. (3)). Semnalat de client cu exemple numerice concrete (tichet 9452). | Recalculul planului de amortizare la reevaluare pornește acum din prima zi a lunii **următoare** reevaluării — luna reevaluării rămâne neschimbată, la vechea valoare lunară, consecvent cu principiul amortizării strict lunare (OMFP 1802/2014 pct. 238). Câmpul de cont pentru depreciere a fost înlocuit cu **„Revaluation Expense Account"** (implicit 655, nu mai 6813); etichetele câmpurilor de cont (105/655) nu mai includ codul de cont în numele tehnic al câmpului. |
 | **19.0.1.3.3** (2026-09-21) | Nota de cedare la **vânzarea** unui mijloc fix relua linia de venit din factură ca stornare (`Dr 7583`) și înregistra doar diferența netă (preț vânzare − valoare neamortizată) pe contul de pierderi (6583) — o compensare venituri/cheltuieli interzisă de OMFP 1802/2014 pct. 56 alin. (1) și contrară pct. 243 alin. (1) (evidențiere distinctă a veniturilor și cheltuielilor la cedare). Rezultatul financiar total ieșea corect, dar rulajele conturilor 7583 și 6583 erau subevaluate cu exact valoarea vânzării, deformând contul de profit și pierdere la nivel de rând. Confirmat printr-o consultare explicită a agentului `pacioli`. | Nota de cedare la vânzare nu mai atinge deloc contul de venit din factură — înregistrează independent de preț **întreaga valoare neamortizată** pe 6583 (`loss_account_id`), identic cu monografia de la casare fără vânzare. Rezultatul (câștig/pierdere) reiese din P&L prin comparația 7583 (din factură, neschimbat) vs. 6583 (din cedare), fără nicio compensare explicită. |
 | **19.0.1.3.4** (2026-09-21) | Audit complet `pacioli` pe fișa de consultant, care a confirmat fix-urile 19.0.1.3.1-3 și a găsit erori suplimentare: (1) baza de amortizare fiscală îngheța complet la valoarea de intrare, deși L227/2015 art. 7 pct. 44 lit. c) cere ca surplusul din reevaluare să intre în baza fiscală (amortizabil, cu impozitarea concomitentă a rezervei 105 conform art. 26 alin. (6)) — doar diminuările sub costul istoric trebuie plafonate; (2) rezerva 105 afișată pe activ era suma algebrică a tuturor reevaluărilor, nu soldul real al contului — putea diverge de soldul contabil real când o diminuare depășea 105 (integral pe 655, fără să-l atingă); (3) o a doua diminuare succesivă putea consuma din 105 mai mult decât soldul real rămas (aceeași cauză); (4) lipsea mecanismul de compensare cont 755 pentru o creștere ulterioară unei diminuări recunoscute pe 655 (pct. 111 alin. (1), liniuța a doua); (5) citare greșită „pct. 103" pentru transferul 105→1175 (corect: pct. 109); (6) creanța la vânzare folosea 4111 în loc de 461 „Debitori diverși" (funcțiunea contului, Cap. 16); (7) reziduuri de text neactualizate din fix-urile anterioare (cifra „164,12" în loc de „161,54", mențiuni la „7583" în nota de cedare, wording „proporțional" pentru luna reevaluării). | Câmp nou **`l10n_ro_acquisition_value`** (cost istoric, înghețat la creare) — baza fiscală (`l10n_ro_fiscal_original_value`) e acum `max(cost istoric, valoare curentă)`, calculată prin `compute`. Rezerva 105 (`l10n_ro_revaluation_reserve`) se calculează acum din soldul REAL al liniilor contului 105 din notele de reevaluare postate, nu din suma algebrică — corectează și a doua diminuare succesivă. Adăugat câmpul **„Revaluation Income Account"** (cont 755) pe reevaluare/wizard, folosit automat când o creștere compensează o cheltuială 655 anterioară necompensată. Corectate citările (pct. 109) și contul de creanță la vânzare (461) în capturile/exemplul din fișă. Toate reziduurile de text corectate. |
@@ -679,6 +765,8 @@ Fixuri livrate pe acest modul, relevante pentru discuția cu clientul (ce s-a sc
 | **19.0.1.5.0** (2026-10-03) | Doar metoda fiscală liniară era calculată, iar degresiva și accelerata erau refuzate. Amortizarea fiscală era o cifră calculată retroactiv pe baza curentă, la data ultimei recalculări, fără plan lunar, fără conservare și fără plafonul de 1.500 lei la autoturismele M1. | Plan de amortizare fiscală lunar, cu regimurile liniar, degresiv, accelerat și superaccelerat 2026 (Cod fiscal art. 28 alin. (7), (8), (8^1)) și restricțiile lor pe clasa HG 2139. Plafonul M1 cu excepțiile lit. a)–d) și deductibilul la ieșire (HG pct. 27). Conservarea din pauză / reluare. Reevaluările și modernizările din luna următoare, fără retroactivitate. Valoarea fiscală la ieșire. Exemplul oficial HG 1/2016 pct. 25 e test automat. |
 | **19.0.1.6.0** (2026-10-04) | Analiza funcțională: lipseau punerea în funcțiune din 231, propunerea duratei din catalog și a contului de amortizare; pauza amortiza pe zile până la data pauzei și relua pe zile; luna ieșirii nu se putea amortiza. | Wizard „Commissioning from 231” (`Dr 21x = Cr 231` + activ în ciornă); categoria HG propune durata minimă, clasa și durata fiscală, iar contul 21x propune 281x; pauza / reluarea pe luni întregi; setare pe companie „Depreciate the Exit Month”, aplicată contabil și fiscal. |
 | **19.0.1.7.0** (2026-10-04) | Gestiunea era text liber, fără istoric și fără bon de mișcare; registrul arăta gestiunea de azi; lipseau fișa mijlocului fix, PV-urile de recepție și de scoatere din funcțiune și registrul numerelor de inventar (doar decizia de casare, act intern). | Gestiunea ca nomenclator, transferuri datate cu bon de mișcare (14-2-3A), transfer inițial la PIF, gestiunea la dată în registru; rapoartele 14-2-1, 14-2-2, 14-2-3/aA, 14-2-5 (/a, /b) după OMFP 2634/2015. Textele vechi din câmpul de locație au devenit gestiuni la actualizare. |
+| **19.0.1.16.0** (2026-10-08) | Cu metoda fiscală degresivă sau accelerată, planul fiscal din „Informații RO” era corect, dar notele de amortizare contabilă nu îl urmau. Metodele Enterprise „Declining” lucrează pe exercițiul financiar și revin la liniarul pe valoarea inițială (ex. 213,33 și 133,33 lei/lună în loc de 266,67 și 100). Semnalat în tichetul 9452. | Metodă contabilă nouă, **„Conform planului fiscal (RO)”**: notele lunare iau sumele din planul fiscal, pe an de utilizare. După o reevaluare se păstrează proporția lunară, pe valoarea contabilă rămasă. |
+| **19.0.1.17.0** (2026-10-08) | La accelerat, o reevaluare din primul an se calcula doar cu procentul pe valoarea de intrare. Clienții obișnuiți cu procentul aplicat valorii reevaluate vedeau alte sume lunare (368,42 în loc de 375). | Setare pe companie „Reevaluare în primul an (accelerată)”, cu opțiunile „Pe valoarea de intrare” (implicit) și „Pe valoarea reevaluată”. |
 
 > Notă: fix-urile de amortizare (din luna următoare PIF, fără prorata la vânzare) și blocarea legării
 > manuale sunt acoperite direct de teste automate (`tests/test_fixed_assets_ro.py`), reproduse cu date

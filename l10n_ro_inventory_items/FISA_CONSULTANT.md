@@ -40,15 +40,17 @@ darea în folosință.
 |---|---|
 | Recepția OI de la furnizor | `% = 401` cu `Dr 303` (valoarea fără TVA) și `Dr 4426` (TVA 21%, sau 11% la cotele reduse) |
 | Darea în folosință | `Dr 603 = Cr 303`, integral, la data dării în folosință |
-| Evidența extrabilanțieră, la darea în folosință | `Dr 8035 = Cr 8035C` |
-| Restituirea în magazie | `Dr 303 = Cr 603` (inversa dării în folosință) + `Dr 8035C = Cr 8035` |
+| Evidența extrabilanțieră, la darea în folosință | `Dr 8035 = Cr 803999` |
+| Restituirea în magazie | `Dr 303 = Cr 603` (inversa dării în folosință) + `Dr 803999 = Cr 8035` |
 | Casarea | fără notă bilanțieră — valoarea a trecut deja pe 603; se creditează doar 8035 |
-| Lipsă la inventar, **imputabilă** | `Dr 4282` (salariat) sau `Dr 461` (terț) `= Cr 7588`, plus `= Cr 4427` pentru TVA-ul aferent |
-| Lipsă la inventar, **neimputabilă** | fără notă suplimentară; cheltuiala rămâne pe 603, dar devine **nedeductibilă** dacă nu se încadrează în art. 25 alin. (4) lit. c) pct. 1–4 din Legea 227/2015 |
+| Lipsă la inventar, **imputabilă** | `Dr 4282` (salariat) sau `Dr 461` (terț) `= Cr 7588`, cu valoarea imputată, **fără TVA colectată**: sumele imputate pentru bunurile lipsă nu sunt contravaloarea unor operațiuni în sfera TVA (HG 1/2016, Titlul VII, pct. 78 alin. (6) lit. a)). Generată de modul din 19.0.2.4.0 (wizardul „Remove from Stock”, tipul „Lost / Missing”, bifa „Charged to a Person”). Valoarea implicită e valoarea de înregistrare; lipsurile se impută de regulă la valoarea de înlocuire, care se introduce în „Charged Amount” |
+| Lipsă la inventar, **neimputabilă** | fără notă suplimentară; cheltuiala rămâne pe 603, dar devine **nedeductibilă** dacă nu se încadrează în art. 25 alin. (4) lit. c) pct. 1–5 din Legea 227/2015 |
+| Ajustarea TVA dedusă la achiziție (lipsă nejustificată, imputată sau nu) | `Dr 635 = Cr 4426`, la cota la care s-a dedus TVA (19 % înainte de 1.08.2025, 21 % după) — art. 304 alin. (1) lit. c) Cod fiscal, HG 1/2016 pct. 78; nu se face pentru bunurile distruse, pierdute sau furate dovedite (art. 304 alin. (2)). **Manual**, la decizia contabilului, și raportată pe rândul de ajustări din decontul de TVA; aplicarea ei la obiectele deja trecute pe 603 e de confirmat cu consultantul fiscal |
 
-Modulul înregistrează automat primele cinci operațiuni. **Lipsa la inventar rămâne în sarcina
-contabilului**: imputabilitatea, decizia comisiei și existența asigurării sunt aprecieri pe care
-modulul nu le poate face — la scoaterea de tip *Lost / Missing* lasă în chatter ce e de înregistrat.
+Modulul înregistrează automat primele cinci operațiuni și, la cerere, imputarea. **Decizia rămâne
+a contabilului**: imputabilitatea, valoarea imputată, decizia comisiei, existența asigurării și
+ajustarea TVA sunt aprecieri pe care modulul nu le poate face. Fără bifa de imputare, scoaterea de
+tip *Lost / Missing* lasă în chatter ce e de înregistrat.
 
 **TVA la casare.** Pentru bunurile distruse, pierdute sau furate **nu se ajustează** deducerea, cu
 condiția ca situația să fie „demonstrată sau confirmată în mod corespunzător" — art. 304 alin. (2)
@@ -71,7 +73,7 @@ Roluri recomandate pentru testare:
 | `303` | materiale de natura obiectelor de inventar, la recepție |
 | `603` | cheltuiala, la darea în folosință (`603 = 303`) |
 | `8035` | evidența extrabilanțieră a OI aflate în folosință (pct. 354–356 OMFP 1802/2014) |
-| `8035C` | **cont tehnic**, creat de modul la instalare drept contrapartidă pentru nota 8035. Conturile în afara bilanțului funcționează în partidă simplă; contrapartida e o cerință a Odoo, nu a reglementării. Apare în balanță, deci consultantul trebuie să știe să-l explice |
+| `803999` | **cont tehnic** „Contrapartidă tehnică evidență extrabilanțieră” (analitic al lui 8039), comun tuturor notelor extrabilanțiere ale suitei (modulul `l10n_ro_off_balance`), în jurnalul EXTR. Conturile în afara bilanțului funcționează în partidă simplă; contrapartida e o cerință a Odoo, nu a reglementării. Apare în balanță, deci consultantul trebuie să știe să-l explice |
 
 Soldul contului 8035 se prezintă în **notele explicative** la situațiile financiare anuale
 (pct. 356 OMFP 1802/2014) — nu e o evidență pur internă.
@@ -160,6 +162,21 @@ Periodic (ex. la inventarierea anuală) rulați **„Verifică reconciliere 8035
 soldul contului 8035 diferă de valoarea OI în folosință (note 8035 modificate/șterse manual), apare
 o avertizare cu diferența.
 
+### Casarea obiectelor vechi (din 19.0.2.4.0)
+
+Inventar → Obiecte de inventar → **Scrap Old Inventory Items**: propune obiectele aflate în folosință
+de peste N luni (implicit 12), opțional ale unui responsabil, la o dată de casare. Nicio
+normă nu fixează o durată de folosință pentru obiectele de inventar: casarea se face pe constatarea
+comisiei, deci comisia și constatările ei (motivul) sunt obligatorii, iar obiectele încă folosite se
+scot din listă. După confirmare, fiecare obiect e scos din gestiune ca „casat” (`Dr 803999 = Cr 8035`),
+iar PV-ul de scoatere din gestiune se tipărește pentru toate.
+
+### Obiecte de inventar pe salariat
+
+Modulul separat **`l10n_ro_inventory_items_hr`** (instalat explicit) adaugă salariatul (`hr.employee`)
+pe fișă și în wizardul de dare în folosință; bonul, PV-ul și registrul îl arată. Modulul de bază nu
+depinde de `hr`, ca update-ul să nu instaleze aplicația Angajați la firmele care nu o folosesc.
+
 ## 7. Legături cu alte module / declarații
 
 | Modul / proces | Rol în flux |
@@ -196,7 +213,7 @@ Ce rămâne manual: verificarea pragului intern și documentele semnate de preda
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**,
 pe datele demo ale modulului (compania `base.demo_company_ro`: depozit + 5 OI în stări diferite):
 

@@ -1,10 +1,10 @@
-# Romania - Declarația D112 ANAF (FR-44) (localizat la `l10n_ro_anaf_d112/index.md`)
+# Romania - Declarația D112 ANAF (localizat la `l10n_ro_anaf_d112/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d112`
-- **Versiune:** `19.0.2.10.0`
+- **Versiune:** `19.0.2.11.2`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112`
-- **Ultima Ingestie:** `2026-10-05`
+- **Ultima Ingestie:** `2026-10-09`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -18,6 +18,7 @@ Modulul automatizează întocmirea, validarea și exportul Declarației D112 ANA
 - **Linii nominale per angajat** cu CNP, venit brut, CAS/CASS/impozit, zile lucrate, zile cu contract activ, concediu de odihnă și concediu medical.
 - **Împărțirea numelui salariaților** în nume/prenume delegă la funcția din `l10n_ro_anaf_base`, cu convenția „Nume Prenume” identică în toate declarațiile ANAF (înainte, D112 avea o funcție proprie cu convenția opusă).
 - **Calcul automat al deducerilor** (orientativ, buton „Recalculează deduceri"): sumă neimpozabilă la salariul minim (S1/S2), deducere personală de bază, deducere suplimentară tineri sub 26 ani (15% × salariu minim) și copii (100 lei/copil), contribuții CAS/CASS și impozit 10%. Parametrii fiscali sunt grupați în `SALARY_PARAMS` și se revizuiesc anual; liniile importate din statul de plată păstrează valorile autoritare. Deducerea personală de bază folosește grila oficială art. 77 pe tranșe de 50 lei (venitul rotunjit la leu), aliniată cu `l10n_ro_hr_payroll_enhancement`.
+- **Zilieri și drepturi de proprietate intelectuală** (19.0.2.11.0): linia nominală are *Natura venitului* — salariu, zilier (Legea 52/2011) sau drepturi de autor (art. 72 Cod fiscal). Zilierul se declară în secțiunea A cu tipul de asigurat 3 (doar CAS, fără CASS/CAM/bază minimă; zile peste cele lucrătoare, cel mult 25; impozit în `asiguratE2`/`E3`), CAS în creanța 412, impozit în 602. Drepturile de autor se declară în secțiunea C cu tipul 17 (CAS în `C_19`/`C_10`, CASS în `C_8`/`C_9`, baza = brut − cota forfetară 40%, creanțe 611/451/461, plus `angajatorD` și `angajatorE1`). Salariul și drepturile de autor ale aceleiași persoane apar într-un singur bloc `asigurat`; salariat și zilier în aceeași lună nu se acceptă. Zilierii și autorii nu intră în CAM, în numărul de salariați/asigurați din `angajatorB` (zilierul doar în `B_pensie`) și nici în validările bazei minime. Liniile vin din [l10n_ro_payroll_day_labourers](../l10n_ro_payroll_day_labourers/index.md) și [l10n_ro_payroll_copyright](../l10n_ro_payroll_copyright/index.md) prin punctul de extensie `_d112_collect_other_income_lines` (separat de colectarea din salarizare) sau se completează manual. Parametru fiscal nou: salariul minim brut pe oră (24,496 lei; 25,949 lei din 07/2026), pragul remunerației zilierilor. Plățile și reconcilierea includ și obligațiile din drepturi de autor (aceleași conturi 444/4315/4316). Verificat cu DUKIntegrator pe structurile 01–06/2026 și 07/2026; pentru zilier, casa de sănătate rămâne cea a angajatorului (structura cere „_N", dar XSD-ul nu mai acceptă valoarea — doar atenționare).
 - **Tichete de masă** — câmp dedicat; suportă CASS (10%) și impozit (10%), scutite de CAS și CAM; în XML se declară în `E3_10` (8.3.1), din `E3_60`, cu `E3_8` care le include (structura ANAF cere E3_8 ≥ E3_60 ≥ E3_10).
 - **CAS suplimentar angajator** pentru condiții de muncă deosebite (+4%) / speciale (+8%), raportat distinct în obligațiile de plată (coduri 481/482).
 - **Baza minimă de CAS/CASS** (art. 146 alin. (5^6) și art. 168 alin. (6^1) Cod fiscal): când baza reală e sub salariul minim pro-rata cu zilele în care contractul a fost activ (câmpul *Zile cu contract activ* de pe linia nominală, `zile_contract_activ`), se declară pragul, iar diferența de contribuție o suportă angajatorul în numele angajatului, raportată la codurile de obligație proprii **458** (CAS) și **459** (CASS). Pragul folosește salariul minim al perioadei — (4050 − 300) pe lunile 01–06/2026, (4325 − 200) de la 07/2026 — iar dacă acel câmp e gol, pragul rămâne pe zilele lucrate + CO + CM, iar zilele libere plătite și absențele nemotivate fără decizie de suspendare nu mai scad pragul când e completat; numitorul e tabelul oficial ANAF de zile lucrătoare pe lună (`WORKING_DAYS`). Declarația scrie acum și `asigExc`/`motivExc` (poziția salariatului față de prag și motivul, art. 146 alin. (5^7)) — câmpurile Odoo existau deja, dar validatorul oficial ANAF (J27.0.5) respingea declarația fiindcă nu erau scrise în XML.
@@ -29,6 +30,7 @@ Modulul automatizează întocmirea, validarea și exportul Declarației D112 ANA
 - **Raport de previzualizare** (`D112 — Previzualizare obligații` în meniu): obligațiile lunii proiectate live din statele de plată sau din declarația materializată, cu butoanele „Generează ciorna D112" și export XML.
 - **Declarație rectificativă** legată de declarația inițială exportată.
 - **Ordine de plată pentru obligații** (buton *Pregătește plăți*, din 19.0.2.9.0): câte o plată în ciornă pe obligație cu sumă de plată (602, 412, 432, 480, 481/482/458/459), către contul IBAN unic al Trezoreriei (setare pe companie), cu suma datorat − scutit, scadența 25 a lunii următoare (weekend → luni) și contul de datorie al obligației drept contrapartidă (4315, 4316, 436, 444); buton *Plăți* pe declarație; nu se pregătesc de două ori și nu din rectificativă. De verificat: structura IBAN-ului Trezoreriei și datele OP, termenul în zi nelucrătoare, codurile 458/459/481/482; fără plată de grup și fără tipărirea OP.
+- **Meniuri** (din 19.0.2.10.1): „Declarația D112” și „D112 — Previzualizare obligații” sunt în Contabilitate → Raportare → *Declarații ANAF*, lângă celelalte declarații ANAF.
 - **Integrare în tabloul de declarații** (`account.return`): tip de declarație lunar cu termen 25 a lunii următoare, pași de verificare (pregătire declarație, reconciliere, atașare XML semnat/recipisă SPV).
 - **Validări blocante** la validare: checksum CNP, CNP duplicat, dată angajare obligatorie/coerentă, zile lucrate raportate la numărul de zile LUCRĂTOARE din lună (nu cele calendaristice), ore normă 6/7/8, venit pozitiv; avertismente neblocante pentru CAS/CASS recalculate.
 - **Cod CAEN obligatoriu** pe companie (`angajator/@caen`), citit acum din `l10n_ro_anaf_base` (nu mai depinde tacit de `l10n_ro_config`); câmpul lipsă e prins de o gardă cu mesaj acționabil în locul unui fallback tăcut „0000".
@@ -54,7 +56,7 @@ Fluxul complet lunar (previzualizare → ciornă → verificare linii → reconc
 **Modele**
 
 - `l10n.ro.d112` (`mail.thread`, `mail.activity.mixin`, `l10n_ro_anaf.report.handler.mixin`): declarația D112 propriu-zisă — state machine, calculul deducerilor și al bazei minime CAS/CASS (inclusiv `asigExc`/`motivExc`), reconcilierea contabilă și generatorul de XML (profilele v6, v7-0126, v7-0726).
-- `l10n.ro.d112.employee.line`: liniile nominale per angajat (CNP, venituri, contribuții, zile lucrate/concediu, `zile_contract_activ` pentru pragul CAS/CASS, excepții de la baza minimă, condiții de muncă, ore efective calculate din tipul de contract).
+- `l10n.ro.d112.employee.line`: liniile nominale per angajat (CNP, venituri, contribuții, zile lucrate/concediu, `zile_contract_activ` pentru pragul CAS/CASS, natura venitului (salariu/zilier/drepturi de autor), excepții de la baza minimă, condiții de muncă, ore efective calculate din tipul de contract).
 - `l10n.ro.d112.medical.leave`: certificatele de concediu medical (secțiunea D) ale unei linii nominale; pagina *Concedii medicale* a declarației.
 - `l10n.ro.d112.reconcile.line`: liniile de reconciliere D112 vs. conturile contabile 4315/4316/436/444.
 - `l10n_ro_anaf_d112.report.handler` (`account.report.custom.handler`, `l10n_ro_anaf.report.handler.mixin`): handler-ul raportului de previzualizare a obligațiilor D112; sursa implicită sunt totalurile declarației persistente, iar dacă e instalat modulul-punte de salarizare contribuie o proiecție live din statele de plată.
@@ -64,7 +66,7 @@ Fluxul complet lunar (previzualizare → ciornă → verificare linii → reconc
 **Vizualizări**
 
 - `views/l10n_ro_d112_views.xml`: formularele și listele declarației D112 și ale liniilor nominale per angajat.
-- `views/menus.xml`: meniurile „D112 Declaration" și „D112 — Obligations Preview" în Rapoarte financiare.
+- `views/menus.xml`: meniurile „Declarația D112” și „D112 — Previzualizare obligații” în secțiunea „Declarații ANAF” (`l10n_ro_anaf_base.menu_account_anaf_declarations`).
 - `views/res_config_settings_views.xml`: setările de reconciliere D112 (conturi și toleranță) în Setări Contabilitate.
 
 **Acțiuni Automate / Acțiuni Server**
@@ -75,6 +77,8 @@ Fluxul complet lunar (previzualizare → ciornă → verificare linii → reconc
 
 #### 5. Conexiuni
 - [l10n_ro_payroll_tax_redirect](../l10n_ro_payroll_tax_redirect/index.md): redirecționarea de 3,5% din impozit, declarată prin punctele de extensie ale D112.
+- [l10n_ro_payroll_day_labourers](../l10n_ro_payroll_day_labourers/index.md): liniile de zilieri (Legea 52/2011) din secțiunea A, tip 3.
+- [l10n_ro_payroll_copyright](../l10n_ro_payroll_copyright/index.md): liniile de drepturi de autor (art. 72) din secțiunea C, tip 17.
 - [l10n_ro_expense_allowance_payroll](../l10n_ro_expense_allowance_payroll/index.md): diurna neimpozabilă la rândul 8.4.3 (`E3_62`) și în `E3_69`.
 
 - [l10n_ro_anaf_base](../l10n_ro_anaf_base/index.md): furnizează infrastructura comună ANAF (profilele de declarație v6/v7, mixin-ul de handler de raport, codul CAEN al companiei) folosită de D112.
@@ -83,4 +87,4 @@ Fluxul complet lunar (previzualizare → ciornă → verificare linii → reconc
 
 ---
 
-**Notă modificări față de pagina anterioară (19.0.2.3.3):** 19.0.2.4.0 (2026-09-29) adaugă pe linia nominală câmpul *Zile cu contract activ* (`zile_contract_activ`); pragul minim CAS/CASS se calculează pe zilele lucrătoare cu contract nesuspendat, nu doar pe zilele lucrate + CO + CM. Gol, se păstrează comportamentul anterior.
+**Notă modificări față de pagina anterioară (19.0.2.10.0):** 19.0.2.10.1 mută meniurile în „Declarații ANAF”; 19.0.2.11.0 adaugă zilierii și drepturile de autor (natura venitului pe linie, secțiunile A/3 și C/17, punct de extensie `_d112_collect_other_income_lines`, parametru fiscal salariu minim pe oră, plăți/reconciliere extinse); 19.0.2.11.1 elimină codul intern al cerinței din nume; 19.0.2.11.2 mută capturile fișei în `static/description/` (în wiki rămân copiate în `screenshots/`).

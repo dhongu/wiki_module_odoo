@@ -1,10 +1,10 @@
 # Conector Shopify Marketplace (localizat la `deltatech_marketplace_shopify/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_shopify`
-- **Versiune:** `19.0.1.7.5`
+- **Versiune:** `19.0.1.8.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_shopify
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_shopify`
-- **Ultima Ingestie:** `2026-09-29`
+- **Ultima Ingestie:** `2026-10-09`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -69,18 +69,22 @@ Conectorul Shopify Marketplace dezvoltat de Terrabit creează o integrare direct
   - Import și mapare a metodelor de plată (payment acquirers) din Shopify.
   - Sincronizarea stării financiare a comenzii (`financial_status`) cu tranzacția de plată din Odoo.
   - Maparea automată a curierilor și crearea/actualizarea liniilor de livrare pe comenzi.
+  - Cu linii înghețate (**Freeze Lines After Confirmation** pe backend sau comandă blocată de backend), o schimbare de curier citită din Shopify nu mai reprețuiește linia de transport — păstrează prețul cu care a fost importată; când sincronizarea de curier nu rescrie prețul (AWB emis), prețul și taxele se restabilesc ca atare, iar produsul se sincronizează doar dacă nucleul permite (`product_updatable`), scrierea fiind marcată `from_marketplace` (19.0.1.7.7; necesită `deltatech_marketplace_sale` 19.0.2.17.0).
   - Suport pentru puncte de ridicare (lockere) preluate din notele Shopify, stocate pe `marketplace.sale.order.marketplace_locker` — conectorul nu mai depinde de suita de curierat Terrabit pentru a importa punctul de ridicare; unde suita e instalată, codul e replicat pe comandă și pus pe AWB ca înainte.
   - Trimiterea numerelor de tracking (AWB) către Shopify prin API-ul `FulfillmentV2`, cu declanșator configurabil (la crearea AWB sau la validarea transferului) și suport pentru onorări parțiale; rulează asincron prin `queue_job`, cu reîncercare automată la eșec.
 
 - **Stoc și prețuri**:
   - Export al cantităților de stoc din Odoo către Shopify prin API-ul `InventoryLevel`, cu suport multi-locație (o locație Shopify = un depozit Odoo, mapare 1-la-1, fără granularitate suplimentară pe `stock.location`).
+  - O locație pe care Shopify o respinge definitiv (404 — închisă/ștearsă; 422 — articolul nu e urmărit acolo) este sărită, iar celelalte locații primesc în continuare cantitatea; se raportează o singură dată pe lot în log, cu numele locației, id-ul Shopify și numărul de produse (19.0.1.7.8). Același comportament pe calea GraphQL: când Shopify refuză mutația unică (`userErrors`), locațiile se trimit una câte una, cea refuzată e sărită. Limitările de rată și erorile 5xx se reîncearcă ca înainte. O locație dispărută din Shopify trebuie scoasă din *Marketplace Warehouses*.
   - Export al prețurilor per variantă sau la nivel de șablon de produs (un magazin sincronizat la nivel de șablon nu mai trebuie să sincronizeze și variantele doar ca să trimită un preț) din lista de prețuri Odoo, cu setare automată a `compare_at_price` la discount; pornește doar pentru variantele cu diferență de preț. Un backend cu propria listă de prețuri (`pricelist_id` + `price_per_product`, setarea Shopify obișnuită) exportă din acea listă, niciodată din prețul simplu de vânzare al produsului — modificarea prețului pe formularul obișnuit de produs nu are niciun efect vizibil asupra exportului; prețul trimis se schimbă doar prin câmpul **Odoo Price** al binding-ului sau direct pe lista de prețuri.
   - Import de preț: cu **Update Price Only** activat pe backend, webhook-ul `products/update` scrie doar prețul, lăsând referința internă, codul de bare și greutatea neatinse — util când Odoo rămâne proprietarul datelor de produs, dar prețul se decide în Shopify; **Ignore Price** are prioritate, atât pe produs cât și în lista de prețuri.
   - Suport pentru comenzi în monedă diferită de moneda magazinului (multi-valută), prin binding-uri `marketplace.product.pricelist` pe cod ISO de monedă.
   - Import al Codului Vamal (HS Code) și al Țării de Origine de pe `InventoryItem` Shopify, direct pe `product.template`; când e instalat modulul Enterprise `account_intrastat`, se completează la fel și `intrastat_code_id`/`intrastat_origin_country_id`.
 
 - **Depozite / locații**:
-  - Import al locațiilor Shopify ca binding-uri de depozit (`marketplace.warehouse`), o locație Shopify = un depozit Odoo — mapare pe care se bazează atât exportul de stoc, cât și rutarea comenzilor; depozitele Odoo trebuie create *înainte* de acest import.
+  - Import al locațiilor Shopify ca binding-uri de depozit (`marketplace.warehouse`), o locație Shopify = un depozit Odoo — mapare pe care se bazează atât exportul de stoc, cât și rutarea comenzilor.
+  - Importul **nu mai creează și nu mai redenumește depozite Odoo** (19.0.1.7.9): o locație nouă se leagă de depozitul principal al companiei cu starea de mapare *Unmapped* (comenzile primesc totuși un depozit), iar utilizatorul alege depozitul real în *Marketplace > Warehouses* (butoane **Mark as mapped** / **Ignore**; stările *Unmapped* / *Mapped* / *Ignored*, filtru **Unmapped**). O locație deja cunoscută — inclusiv cu depozit arhivat — își reîmprospătează doar numele Shopify (`binder_name`) și indicatorul `shopify_location_active`; importul listează și locațiile inactive, ca să fie marcate. Binding-urile existente rămân *Mapped*, deci exportul de stoc nu se schimbă pe bazele instalate.
+  - Exportul de stoc ajunge doar la locațiile *Mapped* și încă active în Shopify.
 
 - **Autentificare și operații automate**:
   - Suport pentru două moduri de autentificare, alese din câmpul **Access Type**: Legacy Private Apps (token permanent, `Access Token` completat manual — de la 1 ianuarie 2026 Shopify nu mai permite crearea de aplicații legacy noi, doar cele existente anterior rămân utilizabile) și Dev Dashboard Apps (OAuth `client_credentials`, `Client Id`/`Client Secret`, token cu expirare la 24h, cu reîmprospătare automată sub 30 minute rămase și proactiv la fiecare 23 de ore prin job-ul „Shopify: Refresh Access Tokens").
@@ -91,7 +95,7 @@ Conectorul Shopify Marketplace dezvoltat de Terrabit creează o integrare direct
   - Import de colecții Shopify (custom și smart) ca și categorii publice de produs.
   - Fiecare subsistem (produse, stoc, expediere, clienți, comenzi, webhook-uri) are propriul comutator GraphQL/REST pe backend, implicit oprit — tranziția se face treptat, subsistem cu subsistem, reversibilă dintr-un singur comutator.
   - Indicator de sănătate (verde/portocaliu/roșu/gri) pe cardul kanban al backend-ului, cu ora ultimei sincronizări și linkuri către log-uri/job-uri eșuate din ultimele 24h.
-  - Wizard **Check webhooks** (buton de antet) care compară webhook-urile efectiv înregistrate în Shopify cu cele așteptate de Odoo (Matched/Missing/Orphan), cu remediere directă (înregistrare sau ștergere din Shopify). Un webhook blocat pe „Missing" la nesfârșit este aproape mereu parametrul de sistem `web.base.url` setat pe `http://` în loc de `https://` — API-ul Admin al Shopify refuză tăcut să înregistreze un webhook a cărui adresă de callback nu e HTTPS, fără nicio eroare vizibilă în Odoo.
+  - Wizard **Check webhooks** (buton de antet; din 19.0.1.8.0 vine din conectorul de bază, `marketplace.webhook.checker`, partajat cu celelalte conectoare — funcționează ca înainte) care compară webhook-urile efectiv înregistrate în Shopify cu cele așteptate de Odoo (Matched/Missing/Orphan), cu remediere directă (înregistrare sau ștergere din Shopify). Un webhook blocat pe „Missing" la nesfârșit este aproape mereu parametrul de sistem `web.base.url` setat pe `http://` în loc de `https://` — API-ul Admin al Shopify refuză tăcut să înregistreze un webhook a cărui adresă de callback nu e HTTPS, fără nicio eroare vizibilă în Odoo.
   - Buton **Test connection** care validează credențialele printr-un query GraphQL `shop`, înainte de orice import.
 
 - **Rambursări** (19.0.1.3.0): import din `Order.refunds` pe comenzile rambursate / parțial rambursate din fereastra de retururi, câte un `marketplace.refund` per `Refund` — totalul raportat (`totalRefundedSet`), TVA-ul, transportul rambursat și, pe linie, suma, TVA-ul și dacă marfa s-a întors în stoc (`restockType`). Legat de retur când îl numește; o rambursare fără retur (cazul normal la Shopify) rămâne fără. Rulează din același cron ca retururile.
@@ -123,7 +127,7 @@ Dependență externă Python: `ShopifyAPI`.
 - `binding_sale_stage.py`: binding pentru fazele de vânzare (etichete/tags Shopify → `marketplace.sale.phase`).
 - `binding_payment_acquirer.py`: binding pentru metodele de plată.
 - `binding_public_category.py`: binding pentru colecțiile Shopify importate ca și categorii publice.
-- `binding_warehouse.py`: binding pentru locațiile Shopify mapate la depozitele Odoo (`marketplace.warehouse`).
+- `binding_warehouse.py`: binding pentru locațiile Shopify mapate la depozitele Odoo (`marketplace.warehouse`), cu `shopify_mapping_state` (*unmapped*/*mapped*/*ignored*), `binder_name` și `shopify_location_active`; importul nu creează depozite, iar exportul de stoc ia doar locațiile mapate și active.
 - `binding_refund.py` / `shopify_graphql_refund.py`: importul rambursărilor (`marketplace.refund`) din `Order.refunds`.
 - `binding_return_request.py` (extinde `marketplace.return.request` din `deltatech_marketplace_sale`): importul retururilor Shopify pe fereastră de dată, potrivirea liniei vândute, marcarea stărilor „settled" ca să nu se recitească la nesfârșit — fără cale de import după id, doar pe fereastră.
 - `stock_picking.py`: extensie pentru trimiterea AWB-urilor și a onorărilor (fulfillment) către Shopify la validarea transferului.
@@ -131,7 +135,8 @@ Dependență externă Python: `ShopifyAPI`.
 **Vizualizări**
 
 - `backend_views.xml`: formularul backend-ului Shopify (tab-uri Credentials, Price, Other Info, GraphQL, Objects — configurare credențiale, filtre, opțiuni de sincronizare, acțiuni de import/export, buton Test connection).
-- `shopify_webhook_checker_views.xml`: wizard-ul de comparare a webhook-urilor înregistrate în Shopify cu cele așteptate din configurația backend-ului (Matched/Missing/Orphan).
+- `warehouse_views.xml`: extinde formularul, lista și căutarea `marketplace.warehouse` cu starea de mapare Shopify (statusbar, butoanele **Mark as mapped** / **Ignore**, `binder_name`, `shopify_location_active`, filtrul **Unmapped**).
+- Wizard-ul **Check webhooks** (Matched/Missing/Orphan) nu mai e definit în acest modul: din 19.0.1.8.0 este `marketplace.webhook.checker` din `deltatech_marketplace`; modulul oferă doar webhook-urile așteptate (`_shopify_expected_webhooks`), citirea (`_shopify_fetch_webhooks`) și înregistrarea/ștergerea lor.
 
 **Acțiuni Automate / Acțiuni Server**
 

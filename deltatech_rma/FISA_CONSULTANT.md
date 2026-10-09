@@ -1,7 +1,7 @@
 # Fișă Modul: Retururi și garanții (RMA)
 
 **Modul:** `deltatech_rma`
-**Versiune:** 19.0.1.5.0
+**Versiune:** 19.0.1.7.0
 **Suită:** bitshop
 **Dependențe:** `sale_stock`, `portal`, `stock_delivery` (aduce și `delivery`)
 
@@ -161,7 +161,11 @@ plus la inventar.
 2. **Vânzări → Configurare → Setări → Retururi și garanții** — cine are acces (toți utilizatorii
    interni sau doar cei aleși), fereastra de eligibilitate (luni pentru garanție, zile pentru retur),
    termenele promise clientului (în câte zile lucrătoare răspundem și în câte verificăm coletul; zero
-   nu promite niciun termen), motiv obligatoriu sau opțional, taxa implicită.
+   nu promite niciun termen), motiv obligatoriu sau opțional, taxa implicită și **Responsabilul
+   implicit**. Responsabilul unei cereri e agentul de vânzări al comenzii; responsabilul implicit
+   preia cererile la care agentul lipsește sau nu poate fi responsabil (OdooBot, utilizator
+   arhivat). O cerere deschisă din back office fără agent valid pe comandă rămâne la colegul care o
+   deschide.
 3. **Produse** — bifa „Nu se poate returna” pe produsele de tip taxă și pe categoriile lor, ca să nu
    apară în formularul clientului. Linia de transport adăugată de metoda de livrare nu are nevoie de
    bifă: e exclusă automat.
@@ -175,6 +179,10 @@ plus la inventar.
 6. **Retururi → Configurare → Etichete** și **Motive de închidere** — opțional, pentru raportare.
 7. Verificați că firma are adresă completă și e-mail: fișa de retur tipărește adresa unde vine
    coletul, din `company_id.partner_id`.
+8. **Textele proprii pe paginile de retur** — opțional, cu modulul *Website* instalat. În editorul
+   de website, formularul de cerere are o zonă goală deasupra cartonașelor și una sub ele, iar
+   pagina unei cereri are una sub produse. Acolo designerul pune politica de retur, un telefon sau
+   alte reguli; conținutul rămâne la actualizarea modulului. Fără *Website*, zonele nu se văd.
 
 ## 6. Flux de utilizare
 
@@ -199,9 +207,13 @@ Butonul de pe comandă sare direct la pasul cu produsele, cu comanda deja aleas�
 
 ![Alegerea tipului](screenshots/03_portal_tip_cerere.png)
 
-Trei cartonașe, nu o listă de motive. Sub fiecare scrie politica: cine plătește transportul, dacă
-pozele sunt obligatorii, ce taxă se poate reține. **Textele se calculează din catalogul de motive**,
-nu sunt scrise în șablon: dacă schimbați o taxă în configurare, se schimbă și ce citește clientul.
+Trei cartonașe, câte unul pe categorie de motive (*Garanție*, *Comandă / Identificare*, *Retur
+excepțional*). Pe fiecare scrie politica: cine plătește transportul, dacă pozele sunt obligatorii,
+ce taxă se poate reține. Dedesubt sunt toate motivele categoriei, fiecare cu taxa lui (*0%*,
+*0–10%*, *minimum 10%*), iar unde nu toate motivele cer poze, cele care le cer sunt marcate. Pe un
+cartonaș fără nicio taxă, cum e de obicei *Garanție*, motivele apar fără procent.
+**Textele se calculează din catalogul de motive**, nu sunt scrise în șablon: dacă schimbați o taxă
+sau adăugați un motiv în configurare, se schimbă și ce citește clientul.
 
 #### 6.3 Din ce comandă
 
@@ -238,7 +250,8 @@ Aceeași verificare se aplică în back office, când colegul îl tastează de l
 ![Cererea trimisă](screenshots/06_portal_trimis.png)
 
 Banda cu șase pași îi arată unde e. Cât timp cererea e la noi, scrie explicit să **nu** trimită
-coletul.
+coletul. Sub produsele cererii, un chenar îi amintește că returul se face doar pentru produsele
+trecute în această fișă — aceeași frază ca pe fișa de retur tipărită.
 
 #### 6.6 Aprobată: fișa și AWB-ul
 
@@ -265,11 +278,18 @@ recepția prin scanare.
 
 #### 6.9 Registrul
 
+![Cererile de aprobat](screenshots/10a_de_aprobat.png)
+
+Cererile încă nedecise, inclusiv ciornele, stau separat în *Retururi → De aprobat*, cum stau
+ofertele separat de comenzi la Vânzări. Aici începe ziua: cererile trimise din portal așteaptă o
+decizie.
+
 ![Registrul, listă](screenshots/10_registru_lista.png)
 
-*Retururi → Retururi și garanții*, cu filtrul implicit „În lucru" și vârsta fiecărei cereri.
-Filtrele gata făcute urmează fluxul — *De decis*, *Așteptăm coletul*, *De verificat* —, plus *Ale
-mele*, *Urgent* și *Cu termenul depășit*. Steaua de pe cerere o marchează **Urgent**, iar
+După aprobare, cererea trece în *Retururi → Retururi și garanții*, cu filtrul implicit „În lucru" și
+vârsta fiecărei cereri. *Toate cererile* le arată pe
+toate, inclusiv pe cele închise. Filtrele gata făcute urmează fluxul — *Așteptăm coletul*, *De
+verificat* —, plus *Ale mele*, *Urgent* și *Cu termenul depășit*. Steaua de pe cerere o marchează **Urgent**, iar
 **Etichetele** o grupează după ce vrea echipa să urmărească (de exemplu un furnizor sau o campanie).
 
 ![Registrul, pe stări](screenshots/11_registru_kanban.png)
@@ -279,6 +299,12 @@ Aceleași cereri pe stări, pentru cine lucrează pe fluxul zilnic.
 #### 6.10 Decizia
 
 ![Cererea, cu butoanele de decizie](screenshots/12_cerere_decizie.png)
+
+O cerere deschisă de dumneavoastră pornește ca **Retur**; tipul se schimbă din formular. Pe fiecare
+produs alegeți motivul: lista arată, în dreapta fiecărui motiv, taxa lui (*0–10%*, *minimum 10%*),
+iar coloana **Taxă %** se completează cu taxa propusă și se poate muta doar în intervalul motivului.
+**Responsabilul** e agentul comenzii; fără agent, cererea rămâne la dumneavoastră (cele venite din
+portal merg la responsabilul implicit din setări).
 
 **Aprobă și trimite fișa** trimite clientului mailul cu fișa atașată. O cerere cu motiv care cere
 poze, venită fără nicio poză, e semnalată pe formular înainte de aprobare; dacă o aprobați totuși,
@@ -349,8 +375,9 @@ maximă, pozele obligatorii, cine plătește transportul, explicația pentru cli
 
 ![Setările pe companie](screenshots/18_setari.png)
 
-*Vânzări → Configurare → Setări → Retururi și garanții*: accesul colegilor, fereastra de
-eligibilitate, termenele promise clientului, motivul obligatoriu sau opțional, taxa implicită.
+*Vânzări → Configurare → Setări → Retururi și garanții*: accesul colegilor, responsabilul implicit,
+fereastra de eligibilitate, termenele promise clientului, motivul obligatoriu sau opțional, taxa
+implicită.
 
 ![Analiza](screenshots/19_analiza.png)
 
@@ -400,6 +427,11 @@ contabil, e o factură cu valori negative (art. 330 alin. (2) Cod fiscal):
 - [ ] Contabilul clientului știe să țină 8032/8033 pentru produsele primite la reparație sau
       refuzate și să evalueze la închiderea exercițiului marfa din locația de defecte (397/6814).
 - [ ] Clientul de portal vede doar cererile lui: testați cu doi clienți diferiți.
+- [ ] *Responsabilul implicit* e setat: o cerere din portal pe o comandă fără agent ajunge la cineva.
+- [ ] O cerere trimisă din portal apare în *Retururi → De aprobat*, iar după aprobare trece în
+      *Retururi și garanții*.
+- [ ] Cartonașele din portal arată toate motivele clientului, iar acolo unde se reține o taxă,
+      procentul fiecărui motiv e cel agreat.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -415,9 +447,9 @@ contabil, e o factură cu valori negative (art. 330 alin. (2) Cod fiscal):
 
 ## 10. Capturi de ecran
 
-Cele 21 de capturi din `readme/screenshots/` sunt cele folosite în secțiunea 6, în ordinea fluxului:
-zece de pe partea clientului (01–08, plus 05a fără poze și 05b cu IBAN-ul), șase de pe partea echipei (09–16) și trei de configurare și
-analiză (17–19).
+Cele 22 de capturi din `readme/screenshots/` sunt cele folosite în secțiunea 6, în ordinea fluxului:
+zece de pe partea clientului (01–08, plus 05a fără poze și 05b cu IBAN-ul), nouă de pe partea
+echipei (09, 10a cererile de aprobat, 10–16) și trei de configurare și analiză (17–19).
 
 Se generează cu testul `tests/test_screenshots.py`, în română, pe planul de conturi RO:
 

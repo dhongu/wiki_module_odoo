@@ -1,37 +1,30 @@
 # DSC Shipping (localizat la `deltatech_delivery_dsc/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_dsc`
-- **Versiune:** `19.0.1.4.0`
+- **Versiune:** `19.0.2.0.1`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_dsc`
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_dsc`
-- **Ultima Ingestie:** `2026-09-29`
+- **Ultima Ingestie:** `2026-10-09`
 
 #### 1. Sumar
 
-Acest modul integrează Odoo cu serviciul de curierat Dragon Star Curier (DSC), permițând expedierea coletelor și urmărirea lor online direct din platformă. Prin conectarea la API-ul curierului, utilizatorii pot genera automat documentul de transport (AWB) pentru livrările lor, pot obține tarife estimative, pot organiza ridicarea coletelor de la mai multe puncte de lucru și pot urmări starea expedierilor, eliminând astfel pașii manuali din procesul de expediere.
+Acest modul integrează Odoo cu serviciul de curierat Dragon Star Curier (DSC), permițând expedierea coletelor și urmărirea lor direct din livrările Odoo: tariful de transport, AWB-ul și eticheta sa, urmărirea, borderoul de sfârșit de zi și comanda de ridicare, fără reintroducerea datelor în aplicația web DSC. Funcționează cu noul API Dragon Star v1 (autentificare cu cheie API) și, până la retragerea sa de către Dragon Star, cu API-ul vechi (legacy).
 
 #### 2. Funcționalități Cheie
 
-- Generarea AWB-ului în format PDF
-- Ștergerea unui AWB, cu verificare prealabilă în Odoo: DSC permite anularea doar în 30 de minute de la creare și doar cât timp AWB-ul nu face parte dintr-un borderou; dacă nu, utilizatorul primește motivul refuzului, nu un generic „invalid request". Momentul creării se păstrează ca `awb_date` în `shipment_info`; pentru AWB-urile create înainte de 19.0.1.4.0 fereastra de 30 de minute rămâne verificată de DSC
-- Re-obținerea etichetei unui AWB existent din DSC (`dsc_get_label`), utilă când eticheta a fost ștearsă din livrare; dacă DSC refuză cererea, eroarea este afișată
-- Obținerea tarifelor pentru o expediere
-- Obținerea listei de orașe și a listei de județe
-- Expediere cu mai multe colete
-- Expediere cu valoare declarată (asigurare)
-- Expediere cu plata ramburs (cash on delivery)
-- Expediere cu nume de oraș fără id de oraș
-- Opțiune pentru livrare sâmbăta
-- Opțiune pentru colet deschis (open package)
-- Obținerea listei de puncte de ridicare (pickup point)
-- Suport pentru mai multe puncte de lucru (pcId)
-- Obținerea ultimei stări (status) pentru o expediere
-- Crearea comenzii de ridicare (cerere de colectare de către curier)
-- Crearea borderoului (rezumatul expedierilor de sfârșit de zi), printr-un job programat zilnic la 18:00 (nu la generarea AWB-ului), astfel încât fereastra de anulare a AWB-ului rămâne deschisă; numărul borderoului se salvează pe expedierile cuprinse
-- Link de urmărire (tracking) pentru expediere
-- Interogarea periodică a stării este protejată: un AWB pe care curierul îl refuză nu mai blochează interogarea livrărilor următoare, iar starea se aplică printr-o singură scriere, doar dacă s-a schimbat
+- **Două versiuni de API:** transportatorii noi folosesc API v1 (cheie API); cei existenți rămân pe API-ul vechi (utilizator și parolă) până la comutare. Dragon Star păstrează API-ul vechi disponibil cel puțin până la 31 martie 2027. Câmpul *DSC API Version* de pe metoda de livrare alege varianta
+- **Tarif pe comanda de vânzare:** costul transportului este cotat de Dragon Star (fără TVA) pentru punctul de lucru, sau se folosește un preț fix, cu un prag opțional peste care se interoghează Dragon Star. Cotarea funcționează doar dacă Dragon Star a activat-o pe contul clientului
+- **AWB și etichetă:** AWB-ul se emite la validarea transferului; eticheta se atașează ca PDF (A4 sau A6) sau ZPL. Dacă eticheta nu poate fi obținută, AWB-ul rămâne pe livrare și eticheta se poate reobține ulterior (`dsc_get_label`); butonul *Print AWB* o tipărește
+- **Opțiuni de expediere:** mai multe colete, valoare declarată, ramburs (cash on delivery, cu metodele de plată tratate drept ramburs configurabile), livrare sâmbăta, colet deschis la livrare, notificare prin SMS și cine plătește transportul (expeditor sau destinatar). Se completează din *Carrier Details* pe livrare
+- **Puncte de lucru:** punctele de lucru (sucursalele) contului DSC se importă ca locații de ridicare (buton *Initialization*), iar fiecare AWB se emite pentru punctul de lucru din care pleacă coletul
+- **Localități:** butonul *Get city* adaugă în agenda Odoo localitățile DSC care lipsesc
+- **Borderou și comandă de ridicare:** un job programat zilnic la 18:00 (*DSC: Create borderou and pickup orders*) creează borderoul și trimite comenzile de ridicare pentru expedierile zilei, astfel încât AWB-urile rămân anulabile până atunci; numărul borderoului se salvează pe expedierile cuprinse
+- **Anulare cu motiv clar:** un AWB se poate anula din Odoo (*Cancel AWB*) doar în 30 de minute de la creare și înainte de includerea în borderou; în caz contrar, Odoo spune care condiție nu este îndeplinită și unde se cere anularea. Momentul creării se păstrează ca `awb_date` în `shipment_info`; pentru AWB-urile create înainte de 19.0.1.4.0 fereastra de 30 de minute rămâne verificată de DSC
+- **Urmărire:** istoricul stărilor se citește din Dragon Star și se scrie pe livrare, până la livrare; link-ul de urmărire deschide expedierea pe site-ul Dragon Star. Interogarea periodică este protejată: un AWB refuzat de curier nu blochează interogarea livrărilor următoare, iar starea se aplică printr-o singură scriere, doar dacă s-a schimbat
+- **Configurare:** metodă de livrare cu *Provider* = Dragon Star Curier și produs de tip serviciu; cheia API se creează în aplicația DSC la *Settings > API access* (cu autentificare în doi pași), cu lista adreselor IP publice ale serverului Odoo; tipul etichetei (PDF/ZPL) și formatul paginii (A4/A6) se aleg în fila *DSC Configuration*. DSC nu are server de test, deci se folosește o cheie API separată pentru testare
+- **Date trimise către Dragon Star:** la fiecare cotare și expediere se trimit numele destinatarului, persoana de contact, adresa, județul, localitatea, codul poștal, telefonul și e-mailul, numărul de colete și greutatea, suma ramburs, valoarea declarată, nota de livrare și punctul de lucru; comanda de ridicare poartă și adresa și telefonul de ridicare
 
-Funcționalități neacoperite în versiunea curentă: obținerea istoricului complet al stărilor unei expedieri, obținerea stării AWB-ului de retur, tipărirea borderoului în format PDF, expediere cu dimensiuni (lungime, lățime, înălțime), opțiune de returnare colet și notă de restituire în AWB.
+Funcționalități neacoperite: dimensiunile coletului, returnarea coletului, nota de restituire, starea AWB-ului de retur, tipărirea borderoului în PDF, lockere și puncte de ridicare.
 
 #### 3. Dependențe
 
@@ -45,5 +38,4 @@ Conform fluxului de ingestie, secțiunea de Componente Cheie a fost omisă deoar
 
 #### 5. Conexiuni
 
-- [deltatech_delivery](../deltatech_delivery/index.md): modulul de bază pentru gestiunea livrărilor pe care `deltatech_delivery_dsc` îl extinde cu integrarea curierului Dragon Star Curier.
-- [deltatech_delivery_status](../deltatech_delivery_status/index.md): modul înrudit din suita de livrare, folosit pentru urmărirea stării expedierilor.
+- [deltatech_delivery](../deltatech_delivery/index.md): modulul de bază pentru gestiunea livrărilor pe care `deltatech_delivery_dsc` îl extinde cu integrarea curierului Dragon Star Curier; din el vine și aplicarea stării de livrare (`_apply_delivery_status`) folosită la urmărire.

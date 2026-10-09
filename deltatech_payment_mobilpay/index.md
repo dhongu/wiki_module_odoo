@@ -1,42 +1,59 @@
 # Netopia MobilPay Payment Acquirer (localizat la `deltatech_payment_mobilpay/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_mobilpay`
-- **Versiune:** `19.0.1.2.0`
+- **Versiune:** `19.0.1.3.6`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_mobilpay
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_mobilpay`
-- **Ultima Ingestie:** `2026-09-29`
+- **Ultima Ingestie:** `2026-10-09`
 
 #### 1. Sumar
 
-Acest modul conectează Odoo cu Netopia MobilPay, permițând plăți securizate cu cardul pentru comenzile online și facturile clienților. Este conceput pentru comercianții din România care doresc să centralizeze procesul de vânzare în Odoo, oferind în același timp o experiență de plată locală familiară. Integrarea folosește un flux într-un singur pas: cardul clientului este autorizat și suma este debitată imediat la finalizarea comenzii sau la plata unei facturi, fiind ideală pentru vânzările online unde se dorește colectarea imediată a fondurilor.
+Acest modul conectează Odoo cu Netopia MobilPay (NETOPIA Payments API v2), permițând plăți securizate cu cardul pentru comenzile online și facturile clienților. Este conceput pentru comercianții din România care vând online cu Odoo și vor o pagină de plată locală, familiară clienților. Cardul este autorizat și suma debitată imediat, într-un singur pas, iar rezultatul este confirmat automat de Netopia către Odoo, fără reconciliere manuală.
 
 #### 2. Funcționalități Cheie
 
-- Oferă opțiunea „Plată cu cardul (Netopia MobilPay)” în timpul finalizării comenzii în Odoo eCommerce.
-- Permite clienților să plătească facturile restante direct din portalul de client Odoo.
-- Plată cu cardul securizată via Netopia MobilPay printr-un flux prin redirecționare către pagina de plată securizată Netopia.
-- Moduri Test și Live cu punctele lor terminale (endpoints) respective (sandbox: `https://sandboxsecure.mobilpay.ro/payment/card/index`, producție: `https://secure.mobilpay.ro/payment/card/index`).
-- Puncte terminale de confirmare (IPN) și retur generate automat.
-- Securitate IPN: notificarea (`/payment/mobilpay/notify/<id>`) este acceptată doar cu antet `Verification-token` valid (JWT semnat RS512 cu cheia publică NETOPIA, emitent „NETOPIA Payments”, audiență = semnătura POS, `sub` = SHA-512 în base64 al corpului). Un token lipsă sau fals este respins, iar tranzacția rămâne neschimbată.
-- Tranzacția este identificată după `order.orderID` (referința) din corpul verificat, care trebuie să corespundă cu id-ul din URL-ul de notificare; `ntpID` trebuie să coincidă cu cel primit la inițiere. Verificarea sumei și a monedei nu mai este omisă când IPN-ul nu le conține.
-- Erorile de decodare base64 ale atașamentelor cu chei sunt înregistrate în jurnal ca avertisment, cu traceback.
-- Integrare cu site-ul web (`website_sale`) și pagina standard de stare a plății (`/payment/status`).
-- Câmpuri de configurare pentru Semnătură POS, Cheie API și chei RSA (certificat public / cheie privată), citite în mod securizat de pe înregistrarea procesatorului.
-- Verificare opțională a stării la revenire (GetStatus) folosind clientul REST / SDK-ul Netopia, ca alternativă în cazul în care IPN-ul nu a fost încă procesat.
-- Urmărirea încercărilor de plată și a stării finale de autorizare pentru comenzi/facturi, cu corelarea automată a tranzacțiilor reușite cu documentele corecte pentru a reduce reconcilierea manuală.
+- Plată cu cardul prin Netopia MobilPay la finalizarea comenzii în eCommerce: clientul este redirecționat către pagina securizată Netopia.
+- Plata facturilor deschise din portalul clientului, cu butonul **Pay Now**.
+- Captură imediată: autorizare și debitare într-un singur pas.
+- Confirmare automată: comanda sau factura este marcată ca plătită după notificarea (IPN) primită de la Netopia.
+- Notificări verificate: IPN-ul (`/payment/mobilpay/notify/<id>`) este acceptat doar cu antet `Verification-token` valid (JWT semnat RS512 cu cheia publică NETOPIA, emitent „NETOPIA Payments”, audiență = semnătura POS, `sub` = SHA-512 în base64 al corpului). Dacă tokenul nu poate fi verificat, corpul primit nu este considerat de încredere, iar Odoo interoghează direct Netopia (GetStatus, cu cheia API, folosind `ntpID` și referința proprii); dacă Netopia nu răspunde, IPN-ul primește o eroare temporară și este retrimis.
+- Tranzacția este identificată după `order.orderID` din corpul verificat, care trebuie să corespundă cu id-ul din URL; `ntpID` trebuie să coincidă cu cel de la inițiere. Verificarea sumei și a monedei nu este omisă când IPN-ul nu le conține.
+- Statusurile non-finale (nou, deschis, în așteptare, autentificare 3D, verificare fraudă) lasă tranzacția neschimbată până la un status final; fallback-ul GetStatus acoperă și tranzacțiile în eroare, ca o plată făcută după o încercare eșuată să fie recuperată. Un răspuns GetStatus fără status de plată nu mai pune tranzacția în eroare. Codul de eroare „00” („Approved”) nu este tratat ca eșec.
+- Metoda `payment.transaction.mobilpay_sync_status()` reprocesează tranzacțiile draft/pending/eroare ale căror IPN s-au pierdut.
+- Confirmarea IPN are forma folosită de SDK-ul NETOPIA (`errorType`, `errorCode`, `errorMessage`).
+- Moduri Test (sandbox) și Live (producție), cu punctele terminale corespunzătoare (`https://sandboxsecure.mobilpay.ro/payment/card/index`, respectiv `https://secure.mobilpay.ro/payment/card/index`).
+- Configurare în *Facturare > Configurare > Procesatori de plată* (MobilPay): **Semnătură** (semnătura POS), **Cheie API** (cheia REST) și **Cheie publică NETOPIA** (cheie publică PEM care semnează notificările, nu certificatul `.cer` al vechiului API v1; formularul avertizează când fișierul încărcat nu este o cheie publică PEM). Stare **Test** pentru sandbox sau **Activat** pentru plăți reale, plus publicarea procesatorului pe site.
+- Tranzacțiile, cu referința Netopia, se văd în *Facturare > Configurare > Tranzacții de plată* (mod dezvoltator).
+- Integrare cu `website_sale` și cu pagina standard de stare a plății (`/payment/status`).
+
+Cerințe: pachetele Python `netopia-sdk` (instalat cu `pip install --no-deps netopia-sdk`, ca să nu aducă dependențe incompatibile), `PyJWT` și `cryptography`.
 
 #### 3. Dependențe
 
 - `payment`
 - `website_sale`
 
-Dependențe Python externe: `pyjwt` și `cryptography` (declarate în manifest); fluxul de verificare a stării utilizează și `netopia-sdk` (vezi `odoo-addons/bitshop/requirements.txt`).
+Dependențe Python externe: `pyjwt` și `cryptography` (declarate în manifest); verificarea stării folosește și `netopia-sdk` (vezi `odoo-addons/bitshop/requirements.txt`).
 
 #### 4. Componente Cheie
 
-Documentația de business pentru acest modul provine din `readme/DESCRIPTION.md`, conform fluxului de ingestie. Componentele tehnice detaliate (modele, vizualizări, acțiuni) nu sunt enumerate aici, deoarece Readme-ul acoperă scopul și funcționalitățile fără a impune analiza codului. Pe scurt, modulul extinde framework-ul standard de plăți Odoo (`payment`) cu un procesator („provider”) dedicat MobilPay (`models/payment_provider.py`, `models/payment_transaction.py`, `models/account_payment_method.py`) și controllere web pentru punctele terminale de confirmare (IPN) și retur (`controllers/main.py`).
+**Modele**
+
+- `payment.provider` (extins): adaugă codul „mobilpay” și câmpurile `mobilpay_signature`, `mobilpay_api_key`, `mobilpay_public_cert_id` (cheia publică NETOPIA, atașament); alege endpoint-ul în funcție de stare, verifică tokenul IPN (`_mobilpay_verify_ipn`) și avertizează asupra cheii greșite.
+- `payment.transaction` (extins): valorile de redirecționare către Netopia, extragerea referinței și a sumei din IPN, aplicarea statusului (`_apply_updates`), interogarea GetStatus (`_mobilpay_fetch_status`) și `mobilpay_sync_status()`.
+- `account.payment.method` (extins): înregistrează metoda de plată MobilPay.
+
+**Vizualizări**
+
+- `acquirer_form_mobilpay`: câmpurile de credențiale în formularul procesatorului de plată.
+- `mobilpay_form`: formularul de redirecționare către Netopia.
+- `payment_confirmation_status` (moștenește `website_sale.payment_confirmation_status`) și `payment_process_page`: afișarea stării plății după revenire.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Nu există `ir.cron` sau acțiuni server. Controllere web (`controllers/main.py`): `/payment/mobilpay/notify/<transaction_id>` (IPN) și `/payment/mobilpay/return/<provider_id>` (retur client). Înregistrarea procesatorului `payment_acquirer_mobilpay` din `data/payment_acquirer_data.xml` este creată la instalare, cu `post_init_hook` și `uninstall_hook`.
 
 #### 5. Conexiuni
 
-- `payment`: framework-ul standard Odoo de procesatori de plăți, pe care acest modul îl extinde cu procesorul MobilPay.
-- `website_sale`: modulul de eCommerce Odoo, prin care metoda de plată MobilPay este disponibilă la checkout.
+- `payment`: framework-ul standard Odoo de procesatori de plăți, extins cu procesorul MobilPay.
+- `website_sale`: eCommerce-ul Odoo, prin care metoda MobilPay este disponibilă la checkout și în portal.

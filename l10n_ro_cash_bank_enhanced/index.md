@@ -1,16 +1,17 @@
 # Romania - Casă și bancă extinse (localizat la `l10n_ro_cash_bank_enhanced/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_cash_bank_enhanced`
-- **Versiune:** `19.0.1.1.3`
+- **Versiune:** `19.0.1.2.3`
 - **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cash_bank_enhanced](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cash_bank_enhanced)
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_cash_bank_enhanced`
-- **Ultima Ingestie:** `2026-09-21`
+- **Ultima Ingestie:** `2026-10-09`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
 Modulul completează funcționalitățile native de trezorerie din Odoo 19 Enterprise cu documentele
-și controalele de casierie specifice pieței din România (FR-28 — Casierie și bancă): **dispoziția
+și controalele de casierie specifice pieței din România (Casierie și bancă): un **tablou „Casă și bancă”**
+cu situația fiecărei casierii și fiecărui cont bancar, **dispoziția
 de plată / de încasare către casierie** (cod 14-4-4, respectiv 14-4-1), alertarea automată a
 tranzacțiilor bancare rămase nereconciliate și aplicarea plafoanelor legale de numerar
 prevăzute de Legea 70/2015. Scopul este să reducă riscul de amenzi și erori de conformitate
@@ -19,6 +20,13 @@ acoperite nativ de Odoo Enterprise (sincronizare bancară, OCR extrase, reconcil
 
 #### 2. Funcționalități Cheie
 
+- **Tablou „Casă și bancă”** (Contabilitate → Contabilitate → Casă și bancă): un card pe fiecare
+  casierie și cont bancar, cu soldul contabil din balanță (nu din extrase), încasările și plățile
+  din perioada aleasă (azi / săptămâna / luna / anul), linia soldului pe 30 de zile, soldul în
+  valută la conturile în valută, gradul de ocupare a plafonului de casă de 50.000 RON (bară roșie
+  peste plafon) și, la bănci, numărul de tranzacții nereconciliate și al celor întârziate. De pe
+  card se deschid mișcările contului și reconcilierea bancară. Tabloul doar citește contabilitatea:
+  o plată în numerar doar confirmată nu apare până nu e înregistrată în extrasul de casă.
 - **Dispoziție de plată / de încasare către casierie (cod 14-4-4)**: documentul de casă care
   justifică o mișcare de numerar neacoperită de chitanță — restituirea contravalorii unei mărfi
   returnate, un avans de trezorerie, o plată către o persoană fizică. Registru propriu, cu
@@ -37,14 +45,20 @@ acoperite nativ de Odoo Enterprise (sincronizare bancară, OCR extrase, reconcil
   - încasări/plăți cu persoane juridice: 5.000 RON per partener/zi;
   - încasări/plăți cu persoane fizice: 10.000 RON per partener/zi;
   - total plăți în numerar către persoane juridice: 10.000 RON/zi.
-- **Anti-fragmentare (art. 1¹)**: o factură peste plafon poate fi achitată în numerar doar
+- **Anti-fragmentare (art. 3 alin. (2)–(3) și art. 4 alin. (2))**: o factură peste plafon poate fi achitată în numerar doar
   până la plafon (cumulat, indiferent de zile); diferența trebuie plătită prin bancă —
   reconcilierea unei plăți cash care ar depăși plafonul pe factură este blocată.
 - **Plafon sold casierie**: un cron zilnic verifică soldul fiecărui jurnal de casă și
   alertează responsabilul de trezorerie când soldul depășește plafonul legal de 50.000 RON
-  (art. 4¹ — excedentul se depune la bancă în două zile lucrătoare).
+  (art. 4² — excedentul se depune la bancă în două zile lucrătoare).
 - **Plafoane configurabile**: valorile pot fi ajustate (de exemplu pentru magazinele cash and
   carry, unde plafonul legal este 10.000 RON), iar controlul poate fi dezactivat per companie.
+  Setările sunt în Contabilitate → Configurare → Setări → Casierie și bancă (RO); pragul de alertă
+  pentru nereconciliate e implicit 7 zile (0 dezactivează), iar plafonul de sold 0 dezactivează
+  alerta de sold.
+- **Mesaje și alerte localizate**: sumele și datele din mesajele de blocare apar în formatul limbii
+  utilizatorului, iar activitățile din alertele zilnice se scriu în limba responsabilului de
+  trezorerie, nu a utilizatorului care rulează cronul.
 
 - **Suma în litere cu acordul limbii române** pe dispoziția de casă: „unu" devine „un" înaintea
   substantivului, de la 20 în sus se leagă cu „de", iar substantivul se acordă (leu/lei, ban/bani).
@@ -59,12 +73,14 @@ acoperite nativ de Odoo Enterprise (sincronizare bancară, OCR extrase, reconcil
 
 #### 4. Componente Cheie
 
-*(secțiune neanalizată din cod — DESCRIPTION.md acoperă Sumarul și Funcționalitățile Cheie,
-conform fluxului de ingestie; componentele de mai jos sunt orientative, extrase direct din
-structura fișierelor modulului)*
+*(componente extrase din structura fișierelor modulului; Sumarul și Funcționalitățile Cheie provin
+din DESCRIPTION.md, USAGE.md și CONFIGURE.md)*
 
 **Modele**
 
+- `l10n.ro.cash.bank.dashboard` (model abstract): furnizează datele tabloului „Casă și bancă” —
+  per jurnal de casă/bancă: soldul contabil, rulajele perioadei, evoluția pe 30 de zile, soldul în
+  valută, ocuparea plafonului și tranzacțiile nereconciliate.
 - `account_bank_statement_line` (extindere): logica pentru identificarea liniilor
   nereconciliate și cron-ul de alertă aferent.
 - `account_journal` (extindere): cron-ul de verificare a plafonului de sold pentru jurnalele
@@ -85,6 +101,10 @@ structura fișierelor modulului)*
 
 **Vizualizări**
 
+- `action_l10n_ro_cash_bank_dashboard` + `menu_l10n_ro_cash_bank_dashboard`: acțiune client
+  (`l10n_ro_cash_bank_dashboard`) și meniul „Cash and Bank” din **Contabilitate → Contabilitate**,
+  vizibil grupului `account.group_account_readonly`; componenta OWL stă în
+  `static/src/dashboard/` (`cash_bank_dashboard.esm.js`, `.xml`, `.scss`).
 - `l10n_ro_cash_payment_order_view_list` / `_view_form` / `_view_search`: registrul dispozițiilor de
   casă, cu acțiunea și meniul din **Contabilitate → Tranzacții → Cash Orders**.
 - `action_report_cash_payment_order` + șablonul `report_cash_payment_order`: formularul tipizat

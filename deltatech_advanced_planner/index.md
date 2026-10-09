@@ -1,10 +1,10 @@
 # Deltatech Advanced Planner (localizat la `deltatech_advanced_planner/index.md`)
 
 - **Nume Tehnic:** `deltatech_advanced_planner`
-- **Versiune:** `19.0.1.3.1`
+- **Versiune:** `19.0.1.6.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_advanced_planner
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_advanced_planner`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-10-09`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -33,7 +33,15 @@ Deltatech Advanced Planner este un planificator avansat de stoc care răspunde l
 - **Planificare bulk din lista SO** — acțiune de server pe selecție multiplă; SO-urile fără BOM sunt marcate `not_applicable`.
 - **Rapoarte și export** — PDF „Plan Livrări", Excel AP-uri (toate nivelele BOM, celule colorate per status) și Excel Workcenter Load; raport de încărcare a posturilor (pivot, grafic).
 - **Banner status pe SO și notificare email** — verde/galben/roșu pe formularul SO și alertă către managerul de logistică la starea `blocked`.
-- **MOQ automat** — cantitatea de comandat este ajustată la cantitatea minimă a furnizorului.
+- **MOQ automat** — cantitatea de comandat este ajustată la cantitatea minimă a furnizorului; prețul furnizorului este convertit în UoM-ul și moneda comenzii planificate, cu discount aplicat.
+- **Mai multe depozite în aceeași companie** — fiecare comandă planificată poartă depozitul comenzii de vânzare (inclusiv subansamblele și componentele); stocul alocat la planificarea globală se numără per depozit, RFQ-urile se recepționează și se consolidează doar în depozitul comenzii planificate, iar MO-urile generate folosesc tipul de operație și locațiile depozitului. Planificarea globală fără depozit rulează reaprovizionarea pentru toate depozitele companiei.
+- **Rapoarte pe depozit** — Situația Material și Stocul Proiectat au un Depozit opțional (gol = toată compania); transferul între depozite contează ca ieșire și intrare; depozitul apare în exporturile PDF/Excel, în wizardul de snapshot și ca filtru/grupare pe comenzile planificate și pe tabloul riscurilor de livrare.
+- **Dashboard cu carduri KPI** — rândul de statistici (Blocate, Avertismente, OK, Reaprovizionări) folosește cardurile partajate din `deltatech_web_kpi_cards`; click pe card deschide înregistrările numărate; selector de depozit (când sunt mai multe depozite). Încărcarea posturilor de lucru rămâne pe toate depozitele.
+- **Tablou riscuri livrare** (Delivery Risk Board) — vedere dedicată a comenzilor planificate cu risc, filtrabilă și grupabilă pe depozit.
+- **Comenzi planificate partajate** — subansamblele și materiile prime comune mai multor linii de SO (ex. variante ale aceluiași produs finit) sunt planificate o singură dată, cu cantitatea cumulată; în Gantt, fiecare comandă care consumă o componentă comună depinde de ea.
+- **Cumulare linii în RFQ** — la consolidare, cantitatea se adaugă la linia existentă cu același produs, UoM, preț și discount, în loc să se creeze o linie duplicat; generarea în masă (acțiune pe listă) rulează fiecare AP într-un savepoint și afișează erorile într-o notificare.
+- **Multi-companie și unități de măsură** — reguli multi-companie pe comenzile planificate, încărcarea posturilor, sloturile CRP, situații material și proiecții de stoc; cantitățile din BOM, PO, MO și mișcări sunt convertite în UoM-ul de bază al produsului înainte de netting și pegging.
+- **MO generat de planificator** — la confirmarea MO-ului generat din AP, componentele nu mai sunt planificate a doua oară prin ruta MTO („Replenish on Order"); MO-urile create manual sau din reaprovizionare păstrează comportamentul MTO.
 
 #### 3. Dependențe
 
@@ -44,13 +52,32 @@ Deltatech Advanced Planner este un planificator avansat de stoc care răspunde l
 - `resource`
 - `mail`
 - `web_gantt`
+- [deltatech_web_kpi_cards](../deltatech_web_kpi_cards/index.md)
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, secțiunile de mai sus (Sumar și Funcționalități Cheie) sunt preluate din `readme/DESCRIPTION.md`, iar acesta nu solicită explicit detalierea Componentelor Cheie (Modele, Vizualizări, Acțiuni Automate). În consecință, analiza dedicată a codului pentru această secțiune a fost omisă intenționat.
+Sumarul și Funcționalitățile Cheie provin din `readme/DESCRIPTION.md` (completat cu `readme/HISTORY.md` pentru funcționalitățile apărute după redactarea lui), care nu solicită explicit detalierea componentelor; mai jos sunt doar elementele tehnice menționate explicit în documentație sau vizibile în manifest.
 
-Notă: din `readme/DESCRIPTION.md` reies, ca elemente tehnice menționate explicit, modelele `advanced.planned.order` (comanda planificată), `advanced.planner.log` (logul de execuție), precum și un job `ir.cron` zilnic de detecție a abaterilor.
+**Modele**
+
+- `advanced.planned.order`: comanda planificată (AP), cu ciclu de viață `draft → planned → done`, depozit, fixare (`is_fixed`) și legături către SO, PO și MO.
+- `advanced.planner.log`: logul de execuție al planificatorului (pas, severitate, detalii).
+- `advanced.planner.engine`: motorul de planificare (netting, explozie BOM, backward/forward scheduling, detecție abateri).
+- `advanced.workcenter.load` și `advanced.crp.slot`: încărcarea posturilor de lucru și sloturile CRP (workcenter × săptămână × companie).
+- `advanced.material.situation` și `advanced.stock.projection`: Situația Material și Stocul Proiectat Agregat (cu linii și wizard de snapshot).
+
+**Vizualizări**
+
+Meniuri sub aplicația Planificator: Dashboard, Tablou riscuri livrare, Comenzi planificate (listă, pivot, Gantt), Planificare globală, Situație Material (+ snapshot-uri), Stoc Proiectat, Încărcare posturi, CRP și nivelare, Rapoarte. Setările sunt în Setări → Inventar.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Curățare log-uri vechi: săptămânal, activ implicit.
+- Detecție abateri zilnică: zilnic, activat din Setări (parametrul comută acțiunea programată).
+- Replanificare nocturnă SO active: zilnic, dezactivat implicit.
 
 #### 5. Conexiuni
 
-Nicio conexiune către alte module documentate în wiki nu a fost confirmată în manifest sau în cod. Modulele de referință menționate în documentație pentru cerințe APS avansate (`APS4MFG`, `frePPLe`) sunt sisteme externe, nu module din acest monorepo, și nu au pagină wiki.
+- [deltatech_web_kpi_cards](../deltatech_web_kpi_cards/index.md): cardurile KPI partajate afișate pe dashboard-ul planificatorului (dependență din 19.0.1.4.0).
+
+Modulele de referință menționate în documentație pentru cerințe APS avansate (`APS4MFG`, `frePPLe`) sunt sisteme externe, nu module din acest monorepo, și nu au pagină wiki.
