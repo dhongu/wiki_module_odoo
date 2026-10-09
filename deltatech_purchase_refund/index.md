@@ -1,7 +1,7 @@
 # Refund Purchase (Notă de credit furnizor)
 
 - **Nume Tehnic:** `deltatech_purchase_refund`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_refund
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_refund`
 - **Ultima Ingestie:** `2026-10-09`

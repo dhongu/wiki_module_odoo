@@ -1,7 +1,7 @@
 # Transfer Product to Product (localizat la `deltatech_transfer_product_to_product/index.md`)
 
 - **Nume Tehnic:** `deltatech_transfer_product_to_product`
-- **Versiune:** `19.0.0.0.2`
+- **Versiune:** `19.0.0.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_transfer_product_to_product
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_transfer_product_to_product`
 - **Ultima Ingestie:** `2026-10-09`
