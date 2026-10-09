@@ -1,7 +1,7 @@
 # Romania - Sporuri, ore suplimentare și muncă de noapte (localizat la `l10n_ro_payroll_allowances/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_payroll_allowances`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.2`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_allowances
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_payroll_allowances`
 - **Ultima Ingestie:** `2026-10-09`
@@ -41,7 +41,7 @@ Aduce în brutul fluturașului sporurile plătite lunar: sporuri permanente pe a
 
 **Vizualizări**
 
-- `views/l10n_ro_salary_supplement_views.xml`: lista, formularul și meniul nomenclatorului.
+- `views/l10n_ro_salary_supplement_views.xml`: lista, formularul și meniul nomenclatorului; în listă, repausul săptămânal afișează coloana *Multiplicator* în locul procentului (care e 0 pentru acest tip).
 - `views/hr_employee_views.xml`: secțiunea *Sporuri permanente (RO)* pe fișa angajatului.
 - `data/hr_salary_rule_data.xml`: regulile `SPORPERM`, `SPOR_ORE_SUPL`, `SPOR_NOAPTE`, `SPOR_SARBATOARE`, `SPOR_REPAUS` (categoria ALW).
 

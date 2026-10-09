@@ -4,6 +4,17 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-09] Actualizare după PR-urile #583, #585, #586, #587: capturile fișelor, avans prin `account.payment`, adeverințe
+
+- **Acțiune:** fișele consultant ale celor trei module recopiate din `19.0` (căile imaginilor `../static/description/` → `screenshots/`), cu capturile noi, și paginile actualizate:
+  - [l10n_ro_payroll_advance](l10n_ro_payroll_advance/index.md) 19.0.1.0.2: plata prin bancă prin `account.payment` pe salariat (numerarul rămâne nota directă), refuz explicit când metoda de plată nu are cont de plăți în curs, anularea prin `_unlink_or_reverse`, blocarea *Setează ca ciornă* pe fluturașul care a lichidat un avans, avertizare la „Batch Account Move Lines”; descrierile modelelor extinse corectate după corpul metodelor; 10 capturi.
+  - [l10n_ro_payroll_certificates](l10n_ro_payroll_certificates/index.md) 19.0.1.1.2: lunile fără fluturaș cu celule goale și observație neutră, media zilnică doar în fila *Date*, „a calculat și a reținut” la asigurat; corectat: baza CM nu aplică plafonul de 12 salarii minime (îl aplică angajatorul care plătește concediul medical); 13 capturi.
+  - [l10n_ro_payroll_allowances](l10n_ro_payroll_allowances/index.md) 19.0.1.1.2: coloana *Multiplicator* în nomenclator; 10 capturi.
+- **De verificat:** în cazul avansului, butonul nativ *Plătește* din fluturaș poate da eroare în configurarea RO (`hr_payroll_account`, în afara modulului); în capturile adeverințelor, februarie 2026 apare cu 19 zile, probabil artefact al datelor de test.
+- **Fișiere actualizate:** `l10n_ro_payroll_advance/` (pagină, fișă, `screenshots/`), `l10n_ro_payroll_certificates/` și `l10n_ro_payroll_allowances/` (pagină, fișă, `screenshots/`), `index.md`, `log.md`, `.index/` (rebuild lexical; vectorii se regenerează separat cu `--embed`).
+
+---
+
 ## [2026-10-09] Re-ingestie `deltatech_sale_payment` 19.0.1.3.4: fișa auditată, SALEPAY-008
 
 - **Acțiune:** actualizare după PR [deltatech#3234](https://github.com/dhongu/deltatech/pull/3234) (fișa corectată în 3 ture de audit, mesajele SALEPAY-006 traduse, 19.0.1.3.3) și SALEPAY-008 (19.0.1.3.4: procesatorul companiei-mamă acceptat pe comanda unei sucursale).
