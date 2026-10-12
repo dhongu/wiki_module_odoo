@@ -157,7 +157,7 @@ cu reconcilierea analitic ↔ sintetic limitată strict la acel material.
 | `l10n_ro_inventory_closing` | inventarierea fizică (diferențe cantitative: 6588/4282-7588/6583) |
 | `l10n_ro_stock_cmp_periodic` | nota de corecție CMP perpetuu vs. periodic |
 | `l10n_ro_stock_k_coefficient` | coeficient K, diferențe de preț (348/378) |
-| `l10n_ro_stock_picking_report` | NIR / bon de consum / bon de transfer / aviz |
+| `l10n_ro_picking_report` | NIR / bon de consum / bon de transfer / aviz |
 
 **Ce e automat:** raportul, defalcarea pe cont/produs/document, reconcilierea pe material, butonul
 de regularizare. **Ce rămâne manual:** setarea conturilor de variație pe conturile de stoc;

@@ -50,5 +50,5 @@ Modulul nu definește sarcini `ir.cron`, reguli `base.automation` sau `ir.action
 
 #### 5. Conexiuni
 
-- [l10n_ro_stock_picking_report](../l10n_ro_stock_picking_report/index.md): modul înrudit din aceeași suită, care furnizează documentele de mișcare a stocurilor (NIR, bon de consum, aviz de însoțire), complementar rapoartelor de sold oferite aici.
+- [l10n_ro_picking_report](../l10n_ro_picking_report/index.md): modul înrudit din aceeași suită, care furnizează documentele de mișcare a stocurilor (NIR, bon de consum, aviz de însoțire), complementar rapoartelor de sold oferite aici.
 - `l10n_ro_stock_account`: în varianta din suita `l10n-romania-oca` (19.0.2.10.0) este dependența care aduce tipul valorizat și conturile contabile; aici NU este dependență.

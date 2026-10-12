@@ -17,12 +17,12 @@ Modulul adaugă un raport de livrare (aviz) care se tipărește direct dintr-un 
 - Titlu „Delivery of goods” cu numele lotului și data programată a acestuia.
 - Tabel cu produsele lotului, agregate pe produs: cantitate totală, preț unitar mediu și valoare, plus totalul general în moneda companiei.
 - Prețul se calculează din linia comenzii de achiziție sau de vânzare asociată mișcării de stoc.
-- Bloc de semnături preluat din raportul de aviz din `l10n_ro_stock_picking_report`.
+- Bloc de semnături preluat din raportul de aviz din `l10n_ro_picking_report`.
 - Este incompatibil (`excludes`) cu `l10n_ro_stock_picking_comment_template`.
 
 #### 3. Dependențe
 
-- [l10n_ro_stock_picking_report](../l10n_ro_stock_picking_report/index.md)
+- [l10n_ro_picking_report](../l10n_ro_picking_report/index.md)
 - `stock_picking_batch`
 
 #### 4. Componente Cheie
@@ -42,4 +42,4 @@ Modulul adaugă un raport de livrare (aviz) care se tipărește direct dintr-un 
 
 #### 5. Conexiuni
 
-- [l10n_ro_stock_picking_report](../l10n_ro_stock_picking_report/index.md): oferă raportul de aviz pe transfer și blocul de semnături refolosit aici.
+- [l10n_ro_picking_report](../l10n_ro_picking_report/index.md): oferă raportul de aviz pe transfer și blocul de semnături refolosit aici.

@@ -12,14 +12,14 @@ Acest modul este o extensie de tip „punte" care adaugă data de expirare a pro
 
 #### 2. Funcționalități Cheie
 
-- Adaugă coloana „Expiration Date" (data de expirare) în raportul de livrare/transfer (`report_delivery`) moștenit din `l10n_ro_stock_picking_report`.
+- Adaugă coloana „Expiration Date" (data de expirare) în raportul de livrare/transfer (`report_delivery`) moștenit din `l10n_ro_picking_report`.
 - Preia data de expirare din lotul/seria asociat fiecărei linii de mișcare (`move_line.lot_id.expiration_date`).
 - Afișează coloana doar dacă există cel puțin o linie cu lot ce are dată de expirare și doar pentru utilizatorii din grupul `product_expiry.group_expiry_date_on_delivery_slip`.
 - Se instalează automat (`auto_install`) când dependențele sunt prezente, fără configurare suplimentară.
 
 #### 3. Dependențe
 
-- [l10n_ro_stock_picking_report](../l10n_ro_stock_picking_report/index.md)
+- [l10n_ro_picking_report](../l10n_ro_picking_report/index.md)
 - `product_expiry`
 
 #### 4. Componente Cheie
@@ -28,9 +28,9 @@ Acest modul este o extensie de tip „punte" care adaugă data de expirare a pro
 
 **Vizualizări (rapoarte QWeb)**
 
-- `report_delivery` (moștenit din `l10n_ro_stock_picking_report.report_delivery`): adaugă antetul de coloană și celula pentru data de expirare a lotului în bonul de livrare/transfer.
+- `report_delivery` (moștenit din `l10n_ro_picking_report.report_delivery`): adaugă antetul de coloană și celula pentru data de expirare a lotului în bonul de livrare/transfer.
 
 #### 5. Conexiuni
 
-- [l10n_ro_stock_picking_report](../l10n_ro_stock_picking_report/index.md): raportul de bază (NIR/bon/aviz) pe care acest modul îl extinde cu data de expirare.
+- [l10n_ro_picking_report](../l10n_ro_picking_report/index.md): raportul de bază (NIR/bon/aviz) pe care acest modul îl extinde cu data de expirare.
 - `product_expiry`: modulul standard Odoo care introduce data de expirare pe loturi/serii și grupul de drepturi folosit pentru afișarea coloanei.

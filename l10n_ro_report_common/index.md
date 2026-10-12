@@ -46,5 +46,5 @@ Modulul oferă elementele comune folosite de rapoartele tipărite românești (f
 
 - [l10n_ro_invoice_report](../l10n_ro_invoice_report/index.md): factura folosește șabloanele comune (declară dependență de acest modul).
 - [l10n_ro_sale_order_report](../l10n_ro_sale_order_report/index.md): comanda de vânzare folosește șabloanele comune (declară dependență de acest modul).
-- [l10n_ro_stock_picking_report](../l10n_ro_stock_picking_report/index.md): avizul/transferul folosește șabloanele comune (declară dependență de acest modul).
+- [l10n_ro_picking_report](../l10n_ro_picking_report/index.md): avizul/transferul folosește șabloanele comune (declară dependență de acest modul).
 - `l10n_ro_config`: modul OCA cu aceleași câmpuri; coexistă fără conflict.

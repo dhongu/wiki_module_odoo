@@ -44,7 +44,7 @@ Fișierul `readme/DESCRIPTION.md` nu conține decât titlul „Features:", așa 
 - `l10n_ro_partner_unique`
 - [l10n_ro_efactura_enhancement](../l10n_ro_efactura_enhancement/index.md)
 - [l10n_ro_invoice_report](../l10n_ro_invoice_report/index.md)
-- [l10n_ro_stock_picking_report](../l10n_ro_stock_picking_report/index.md)
+- [l10n_ro_picking_report](../l10n_ro_picking_report/index.md)
 - [l10n_ro_cash_register](../l10n_ro_cash_register/index.md)
 - [l10n_ro_partner_create_by_vat_button](../l10n_ro_partner_create_by_vat_button/index.md)
 - [deltatech_purchase_ubl](../deltatech_purchase_ubl/index.md)

@@ -75,5 +75,5 @@ pe 418 există și note manuale cu TVA inclus, coloana amestecă sume cu și fă
 | Modul | Rol |
 |---|---|
 | `l10n_ro_stock_account` | avizul de livrare (418 = 707) și legătura notei cu transferul |
-| `l10n_ro_stock_picking_report` | tipărirea avizului de însoțire a mărfii |
+| `l10n_ro_picking_report` | tipărirea avizului de însoțire a mărfii |
 | `l10n_ro_rni_report` | perechea pentru recepții nefacturate (408) |

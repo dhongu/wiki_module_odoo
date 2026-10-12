@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-12] Redenumire: `l10n_ro_stock_picking_report` → `l10n_ro_picking_report` (19.0.2.0.0)
+
+- **Acțiune:** pagina veche `l10n_ro_stock_picking_report/` (19.0.1.3.6) e mutată și rescrisă ca [l10n_ro_picking_report](l10n_ro_picking_report/index.md). Numele tehnic vechi e ocupat pe Odoo Apps de OCA (14.0); redenumirea e în dhongu/l10n-romania#625 și terrabit-solutions/terrabit#436 (`terrabit_base`), iar cele 19 proiecte de client care moșteneau rapoartele au fost aduse la noul prefix. Pagina nouă menționează numele vechi, migrarea automată prin `pre_init_hook`, prefixul `l10n_ro_picking_report.` pentru moșteniri și componentele cheie din cod; fișa consultant și cele 13 capturi resincronizate din modul.
+- **De verificat:** `readme/DESCRIPTION.md` vorbește de „Option in settings (Romania)”, dar ecranul de setări e comentat în manifest; pagina e scrisă după cod.
+- **Referințe actualizate:** [l10n_ro_dni_report](l10n_ro_dni_report/index.md) (pagină + fișă), [l10n_ro_report_common](l10n_ro_report_common/index.md), [l10n_ro_stock_account_store](l10n_ro_stock_account_store/index.md), [l10n_ro_stock_picking_batch_report](l10n_ro_stock_picking_batch_report/index.md), [l10n_ro_stock_picking_report_product_expiry](l10n_ro_stock_picking_report_product_expiry/index.md), [l10n_ro_stock_report](l10n_ro_stock_report/index.md), [l10n_ro_stock_sheet](l10n_ro_stock_sheet/index.md) (fișă), [terrabit_base](terrabit_base/index.md).
+- **Fișiere actualizate:** `l10n_ro_picking_report/` (mutat din `l10n_ro_stock_picking_report/`, `index.md` și `FISA_CONSULTANT.md` rescrise), paginile de mai sus, `index.md`, `log.md`, `.index/` (rebuild lexical; vectorii se regenerează separat cu `--embed`).
+
+---
+
 ## [2026-10-12] l10n_ro_anaf_d112: sub-fișele `fise/` copiate în wiki
 
 - **Acțiune:** link-ul `fise/README.md` din `FISA_CONSULTANT.md` era rupt în wiki (ingestia copiase doar fișa și capturile). Copiat `readme/fise/` (README + 4 fișe de scenariu: salariu minim, part-time, pensionar, rectificativă) în `l10n_ro_anaf_d112/fise/`.

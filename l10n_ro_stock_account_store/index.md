@@ -49,4 +49,4 @@ Modulul ține contabilitatea mărfurilor păstrate la preț de vânzare, cu TVA 
 
 #### 5. Conexiuni
 
-- [l10n_ro_stock_picking_report](../l10n_ro_stock_picking_report/index.md): NIR la preț de vânzare, care folosește același preț ca nota de adaos din magazin (aliniat din 19.0.1.0.1).
+- [l10n_ro_picking_report](../l10n_ro_picking_report/index.md): NIR la preț de vânzare, care folosește același preț ca nota de adaos din magazin (aliniat din 19.0.1.0.1).

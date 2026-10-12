@@ -47,4 +47,4 @@ Raportul din spatele soldului contului 418 („Clienți — facturi de întocmit
 
 - `l10n_ro_stock_account`: avizul de livrare (418 = 707) și legătura notei contabile cu transferul; folosit opțional, dacă este instalat.
 - [l10n_ro_rni_report](../l10n_ro_rni_report/index.md): perechea pentru recepții nefacturate (408).
-- [l10n_ro_stock_picking_report](../l10n_ro_stock_picking_report/index.md): tipărirea avizului de însoțire a mărfii.
+- [l10n_ro_picking_report](../l10n_ro_picking_report/index.md): tipărirea avizului de însoțire a mărfii.
