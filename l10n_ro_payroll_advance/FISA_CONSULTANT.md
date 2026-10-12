@@ -107,7 +107,7 @@ Avansul nu intră în D112 și nu modifică baza de calcul a contribuțiilor. Av
 |---|---|
 | `l10n_ro_hr_payroll_enhancement` | fluturașii și regulile RO |
 | `l10n_ro_hr_payroll_account_enhancement` | mecanismul de conturi pe reguli (421 și contul de personal pe linie) |
-| `l10n_ro_payroll_statements` | statul de plată (doar NET, fără avans); statul de avansuri este un raport separat, al acestui modul |
+| `l10n_ro_payroll_statements` | statul de plată, cu coloanele *Avans* (avansul lichidat pe fluturaș) și *Rest de plată* (net − avans); statul de avansuri este un raport separat, al acestui modul |
 | `l10n_ro_payroll_bank_export` | fișier bancar pe fluturași (netul întreg; fără avans în v1) |
 
 **Automat:** sumele implicite, nota plății, lichidarea, plafonarea la net, avertizările. **Automat și reconcilierea 425** cu plata avansului, la postarea notei fluturașului. **Manual:** reținerea diferenței rămase pe 425 în luna următoare.
@@ -167,7 +167,7 @@ Capturile sunt în `static/description/`, în ordinea fluxului:
 - Butonul *Plătește* al fluturașului cere ca regula NET să aibă un cont de credit reconciliabil; în baza de test cu configurarea RO dă eroarea „Contul de credit din regula salariului NET nu este reconciliabil” (în engleză: „The credit account on the NET salary rule is not reconciliable”) (de verificat în baza clientului). Fără butonul, plata restului se înregistrează din liniile 421 ale notei fluturașului. Plata trece prin contul de plăți în curs până la reconcilierea extrasului.
 - Pentru mai multe loturi pe aceeași lună, avansurile se lichidează împreună pe fluturaș, în ordinea creării.
 - Recuperarea automată din luna următoare și fișierul bancar al avansului sunt în ROADMAP.
-- Statul de plată semnat din `l10n_ro_payroll_statements` (`wizard/l10n_ro_payroll_statement.py`) are doar coloana NET, fără avans și fără rest de plată, deși plata salariului se dovedește prin semnarea statelor (Codul muncii, art. 168 alin. 1): de completat într-un PR separat, nu în acest modul. Până atunci, la plata în numerar se semnează statul de avansuri la avans și statul de plată la lichidare; la plata prin bancă dovada avansului este extrasul.
+- Statul de plată semnat din `l10n_ro_payroll_statements` (de la 19.0.1.1.0) are, după *Net*, coloanele *Avans* (avansul lichidat pe fluturaș) și *Rest de plată* (net − avans). La plata în numerar se semnează statul de avansuri la avans și statul de plată la lichidare; la plata prin bancă dovada avansului este extrasul.
 - Regula *Lichidare avans* este legată doar de structura `hr_payroll_structure_ro_employee_salary`: pe alte structuri avansul rămâne *Nelichidat*.
 - Dacă o ciornă de fluturaș are deja linia de lichidare, lotul nu se poate anula până la recalcularea sau ștergerea ei.
 - Un al doilea fluturaș al aceleiași luni (corecție) nu scade din nou avansul deja lichidat pe un fluturaș validat.

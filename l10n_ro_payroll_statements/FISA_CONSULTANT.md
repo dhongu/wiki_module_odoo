@@ -18,7 +18,7 @@ Utilizator salarizare (*Utilizator salarizare*, grupul de salarizare).
 
 ## 4. Conturi și date implicate
 
-Modulul nu face note contabile. Folosește liniile fluturașilor validați sau plătiți: brut, CAS, CASS, deducere personală, impozit, rețineri și net (restul de plată).
+Modulul nu face note contabile. Folosește liniile fluturașilor validați sau plătiți: brut, CAS, CASS, deducere personală, impozit, rețineri, net și, cu `l10n_ro_payroll_advance`, avansul lichidat pe fluturaș (regula `AVANS`), din care rezultă restul de plată.
 
 ## 5. Configurare inițială
 
@@ -36,9 +36,11 @@ aplicația *Stat de plată* (Salarizare) → *Raportare → Stat de plată (RO)*
 
 Apăsați **Tipărește**. Statul are o linie pe salariat (nume, CNP, departament), cu **brut, CAS, CASS, deducere personală, impozit, alte rețineri și net**, totaluri pe coloană și coloană de semnătură (necesară la plata în numerar; la plata pe card dovada plății e extrasul bancar). Concediul medical plătit din FNUASS are coloană proprie (*CM FNUASS*), în afara brutului. Concediul medical intră în CAS, CASS și impozit prin rândurile lui de contribuții.
 
+După *Net* urmează coloanele **Avans** (avansul de salarii lichidat pe fluturaș) și **Rest de plată** (net − avans): salariatul semnează pentru restul de plată. Coloanele se completează când este instalat `l10n_ro_payroll_advance`; fără el avansul este 0, iar restul de plată este egal cu netul. Statul de avansuri, plătit la jumătatea lunii, se tipărește din `l10n_ro_payroll_advance`: *Stat de plată → Fluturași de salariu → Avansuri de salarii*, lotul de avans → **Tipărește statul**.
+
 ![Statul de plată (PDF)](screenshots/02_pdf_stat_de_plata.png)
 
-**Verificați:** numărul de linii e cel al fluturașilor lotului; pe fiecare linie, brut + CM FNUASS − CAS − CASS − impozit − alte rețineri = net; totalul brut și totalul net coincid cu lotul.
+**Verificați:** numărul de linii e cel al fluturașilor lotului; pe fiecare linie, brut + CM FNUASS − CAS − CASS − impozit − alte rețineri = net și net − avans = rest de plată; totalul brut și totalul net coincid cu lotul, iar totalul avansului coincide cu lichidarea avansului din nota contabilă a fluturașilor (`Dr 421 = Cr 425`).
 
 ### Pasul 3 — Recapitulația pe reguli
 
@@ -46,7 +48,7 @@ Apăsați **Tipărește**. Statul are o linie pe salariat (nume, CNP, departamen
 
 ![Recapitulația pe reguli (PDF)](screenshots/03_pdf_recapitulatie.png)
 
-**Verificați:** totalul regulii *Brut* este brutul total al statului; CAS, CASS și impozit coincid cu sumele din nota contabilă a salariilor și din D112 (în recapitulație reținerile apar cu semnul minus: comparați valorile absolute).
+**Verificați:** totalul regulii *Brut* este brutul total al statului; CAS, CASS și impozit coincid cu sumele din nota contabilă a salariilor și din D112 (în recapitulație reținerile apar cu semnul minus: comparați valorile absolute). Regula *Lichidare avans* (`AVANS`) apare cu minus și are același total ca coloana *Avans* din stat.
 
 ### Pasul 4 — Sporuri și rețineri
 
@@ -70,14 +72,16 @@ Modulul nu generează note contabile și nu transmite date în D112: statul și 
 |---|---|
 | `l10n_ro_hr_payroll_enhancement` | fluturașii și regulile RO (CAS, CASS, impozit, concedii medicale, prime) |
 | `hr_payroll` | lotul de fluturași și categoriile de reguli |
+| `l10n_ro_payroll_advance` (opțional) | avansul lichidat pe fluturaș (regula `AVANS`), care completează coloanele *Avans* și *Rest de plată*; statul de avansuri |
 
-**Automat:** totalurile și coloanele. **Manual:** verificarea cu nota contabilă și cu D112; statul de avansuri lipsește (nu există avans pe fluturaș).
+**Automat:** totalurile și coloanele, inclusiv avansul și restul de plată. **Manual:** verificarea cu nota contabilă și cu D112; statul de avansuri se tipărește din `l10n_ro_payroll_advance`.
 
 ## 8. Verificări pentru consultant
 
 - [ ] Numărul de linii al statului coincide cu numărul fluturașilor lotului.
 - [ ] Brut, CAS, CASS, impozit și net din stat coincid cu totalurile lotului.
 - [ ] Recapitulația are aceleași totaluri ca statul și ca nota contabilă a salariilor.
+- [ ] Pe fiecare linie, rest de plată = net − avans; fără modulul de avans, coloana *Avans* este 0 și restul de plată este netul.
 - [ ] Filtrul pe departament lasă doar salariații departamentului ales.
 - [ ] Fluturașii în ciornă apar doar cu bifa *Include fluturașii în ciornă*.
 - [ ] Exportul XLSX are aceleași sume ca PDF-ul.
@@ -93,7 +97,7 @@ Modulul nu generează note contabile și nu transmite date în D112: statul și 
 Generate automat din `tests/test_screenshots.py` (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`), în RO, pe planul RO:
 
 - `01_fereastra_stat.png`: fereastra raportului;
-- `02_pdf_stat_de_plata.png`: statul de plată (PDF);
+- `02_pdf_stat_de_plata.png`: statul de plată (PDF), cu avans la doi salariați și fără avans la al treilea;
 - `03_pdf_recapitulatie.png`: recapitulația pe reguli (PDF);
 - `04_pdf_sporuri_retineri.png`: centralizatorul de sporuri și rețineri (PDF);
 - `05_xlsx_stat_de_plata.png`: statul exportat în XLSX.
@@ -102,6 +106,6 @@ Regenerare: `odoo-bin -c <conf> -d <baza_cu_ro_RO> -i l10n_ro_payroll_statements
 
 ## 11. Observații pentru manual
 
-- Statul de avansuri (avans chenzinal) și filtrul pe analitic lipsesc: salarizarea Odoo nu are avans pe fluturaș și nici analitic pe fluturaș.
+- Statul de avansuri (avans chenzinal) nu este în acest modul: se tipărește din `l10n_ro_payroll_advance`, care lichidează și avansul pe fluturaș. Filtrul pe analitic lipsește: fluturașii nu au analitic.
 - Departamentul și punctul de lucru sunt cele din versiunea contractului în luna fluturașului.
 - În exportul XLSX sumele se afișează după setările regionale ale Excel-ului (în capturi apar cu format en-US).
