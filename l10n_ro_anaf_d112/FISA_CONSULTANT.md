@@ -311,7 +311,7 @@ reconciliere acceptate, verificarea finală în utilitarele ANAF și depunerea �
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**, pe
 planul de conturi RO:
 

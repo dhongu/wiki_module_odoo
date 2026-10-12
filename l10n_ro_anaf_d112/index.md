@@ -1,10 +1,10 @@
 # Romania - Declarația D112 ANAF (localizat la `l10n_ro_anaf_d112/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d112`
-- **Versiune:** `19.0.2.11.2`
+- **Versiune:** `19.0.2.15.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-10-12`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -29,7 +29,7 @@ Modulul automatizează întocmirea, validarea și exportul Declarației D112 ANA
 - **Reconciliere contabilă** D112 vs. rulajul conturilor 4315/4316/436/444 din perioadă, cu conturi și toleranță configurabile pe companie; opțional blocarea exportului la diferențe peste toleranță.
 - **Raport de previzualizare** (`D112 — Previzualizare obligații` în meniu): obligațiile lunii proiectate live din statele de plată sau din declarația materializată, cu butoanele „Generează ciorna D112" și export XML.
 - **Declarație rectificativă** legată de declarația inițială exportată.
-- **Ordine de plată pentru obligații** (buton *Pregătește plăți*, din 19.0.2.9.0): câte o plată în ciornă pe obligație cu sumă de plată (602, 412, 432, 480, 481/482/458/459), către contul IBAN unic al Trezoreriei (setare pe companie), cu suma datorat − scutit, scadența 25 a lunii următoare (weekend → luni) și contul de datorie al obligației drept contrapartidă (4315, 4316, 436, 444); buton *Plăți* pe declarație; nu se pregătesc de două ori și nu din rectificativă. De verificat: structura IBAN-ului Trezoreriei și datele OP, termenul în zi nelucrătoare, codurile 458/459/481/482; fără plată de grup și fără tipărirea OP.
+- **Ordine de plată pentru obligații** (buton *Pregătește plăți*, din 19.0.2.9.0): câte o plată în ciornă pe obligație cu sumă de plată (602, 412, 432, 480, 481/482/458/459), către contul IBAN unic al Trezoreriei (setare pe companie), cu suma datorat − scutit, scadența 25 a lunii următoare (weekend → luni) și contul de datorie al obligației drept contrapartidă (4315, 4316, 436, 444; pentru 481/482, contul CAS angajator din setări); buton *Plăți* pe declarație; nu se pregătesc de două ori și nu din rectificativă. De verificat: structura IBAN-ului Trezoreriei și datele OP, termenul în zi nelucrătoare, codurile 458/459/481/482; fără plată de grup și fără tipărirea OP.
 - **Meniuri** (din 19.0.2.10.1): „Declarația D112” și „D112 — Previzualizare obligații” sunt în Contabilitate → Raportare → *Declarații ANAF*, lângă celelalte declarații ANAF.
 - **Integrare în tabloul de declarații** (`account.return`): tip de declarație lunar cu termen 25 a lunii următoare, pași de verificare (pregătire declarație, reconciliere, atașare XML semnat/recipisă SPV).
 - **Validări blocante** la validare: checksum CNP, CNP duplicat, dată angajare obligatorie/coerentă, zile lucrate raportate la numărul de zile LUCRĂTOARE din lună (nu cele calendaristice), ore normă 6/7/8, venit pozitiv; avertismente neblocante pentru CAS/CASS recalculate.
@@ -38,6 +38,11 @@ Modulul automatizează întocmirea, validarea și exportul Declarației D112 ANA
 - **Concedii medicale (secțiunea D, GrupB)** (19.0.2.7.0): salariatul cu concediu medical se declară pe GrupB — `asiguratB1…B4`, câte un `asiguratD` pe certificat (`D_1`…`D_28`, cu `Data_CMI`, `D_3`/`D_4` la continuări, `D_9b`, `D_14a`, `D_20a`/`D_21a`) și `E3_1="B"`. `B2_5` = baza CAS a salariului, `B3_7` = baza CAS a indemnizațiilor (`B3_12` + `B3_13`), `B4_7` = `B2_5` + `B3_7`, `B4_14` = baza CAM fără partea din FNUASS; `E1_1`, `E3_8`, `E3_16` și baza impozabilă includ indemnizația din FNUASS. Secțiunea angajator `angajatorC2` (cazuri, zile și sume pe categorii: incapacitate 1.1–1.4, prevenire, sarcină, copil bolnav, oncologic, risc maternal; `C2_T6`, `C2_10`, `C2_140`), `C1_12` / `C1_T2` și `C1_11` pe baza salariului. Validări blocante pe secțiunea D (certificat dublat, `D_8` la copil bolnav, `D_11` / `D_12`, `D_7` în luna raportată, zile) și avertisment pentru codurile neimpozabile (08, 09, 91, 92, 15, 17). Verificat cu DUKIntegrator: declarație mixtă GrupA + GrupB, certificat inițial + continuare, carantină.
 - **`E3_8` și venituri neimpozabile** (19.0.2.6.0): de la perioada 07/2026 rândul 8 cuprinde art. 76 alin. (1)–(4¹) (OPANAF 605/2026, Anexa 6), deci `E3_8` și `E1_1` includ veniturile neimpozabile 8.4 / 8.5. Câmpuri noi pe linia nominală: venit neimpozabil alin. (4) → `E3_69`, diurnă neimpozabilă (din care, 8.4.3) → `E3_62`, venit neimpozabil alin. (4¹) → `E3_90`; nu intră în bazele CAS / CASS / impozit și nu se declară înainte de 07/2026. `A_sal2` = `E3_8` − `E3_69` (include și tichetele). Verificat cu DUKIntegrator (`E3_8` 5.200, `A_sal2` 5.085).
 - **Scutirea de impozit art. 60** (pct. 1 handicap, pct. 3 cercetare-dezvoltare), declarată (XML 09/2026 validat de DUKIntegrator): câmpul de linie *Scutire impozit (art. 60)* → `asigScu` 1/3; `E3_23`/`E3_24` sau `E3_27`/`E3_28` = baza impozabilă și impozitul care s-ar fi datorat (10%); `E3_15` = 0; la angajator obligația 602 cu `A_datorat` = reținut + scutit, `A_scutit` și `angajatorF1`; `E3_16` include tichetele; XSD 07/2026 admite tipul de asigurat 51.
+- **Beneficii suportate de angajator** (19.0.2.12.0, 19.0.2.13.0): câmpuri noi pe linia nominală pentru partea neimpozabilă la rândurile 8.5.5 (`E3_67`, pensie facultativă), 8.5.6 (`E3_97`, pensie ocupațională) și 8.5.7 (`E3_71`, asigurare de sănătate), cuprinse în totalul 8.5 (`E3_90`); excedentul impozabil la 8.3.3 (`E3_58`, prime de asigurare) și 8.3.4 (`E3_44`, alte avantaje); *Vouchere de vacanță* (8.3.1.4, `E3_75`, în `E3_8`, baza CASS și impozit), *Tichete cadou impozabile* (8.3.1.2, `E3_73`) și *Cadouri neimpozabile* (8.4.1, `E3_86`, în totalul 8.4 `E3_69`). Totalul avantajelor 8.3 (`E3_60`) cuprinde tichetele și aceste avantaje. Rândurile 8.5.x se declară de la structura 07/2026.
+- **Casa de sănătate pe salariat** (19.0.2.14.0): câmp nou *Health Insurance House* pe fișa salariatului (județ sau București); atributul `casaSn` al fiecărui asigurat ia casa de pe fișă, iar dacă lipsește rămâne casa din județul companiei. `casaAng` rămâne neschimbat.
+- **Fond de salarii brut corectat** (19.0.2.13.2): `B_brutSalarii` = ΣA_11 + ΣB4_5 (din baza CASS, deci include tichetele de masă), ca în structura ANAF; confruntat cu declarațiile depuse pe iulie și august 2026.
+- **`C1_11` la salariații cu suma neimpozabilă de 200 lei** (19.0.2.14.1): `C1_11` = Σ(`A_13` + `A_13S`), conform regulii A29 a validatorului oficial (înainte se raporta doar Σ`A_13` și declarația era respinsă); `C1_T1` urmează `C1_11`.
+- **Contul CAS angajator** (19.0.2.15.0): setare nouă în Contabilitate → Configurare → Setări, pentru obligațiile 481 / 482. Plata pregătită din D112 debitează acest cont (nu 4315), ca să nu rămână sold pe 4311, unde salarizarea înregistrează datoria; dacă nu e completat, contul se caută după cod (4311…). Reconcilierea afișează rândul „481/482” doar când declarația are această contribuție.
 - **Deduceri și în `asiguratE3`**: persoanele în întreținere și deducerile personale se declară și în `E3_11`, `E3_12`, `E3_121`, `E3_122`, `E3_1221`, `E3_1222`, `E3_13` (structura ANAF cere ca E1_x să fie sumele câmpurilor E3).
 - **Totaluri** CAS/CASS/impozit/CAM calculate automat din linii; baza CAM (`cam_baza`, `A_5`, `B1_5`, `B4_14`, `C4_baza`) = venit brut − suma neimpozabilă la salariul minim.
 
@@ -61,13 +66,15 @@ Fluxul complet lunar (previzualizare → ciornă → verificare linii → reconc
 - `l10n.ro.d112.reconcile.line`: liniile de reconciliere D112 vs. conturile contabile 4315/4316/436/444.
 - `l10n_ro_anaf_d112.report.handler` (`account.report.custom.handler`, `l10n_ro_anaf.report.handler.mixin`): handler-ul raportului de previzualizare a obligațiilor D112; sursa implicită sunt totalurile declarației persistente, iar dacă e instalat modulul-punte de salarizare contribuie o proiecție live din statele de plată.
 - `account.return` (extindere): calculul termenului legal (25 a lunii următoare) și verificările specifice D112 (declarație + reconciliere) în tabloul de declarații.
-- `res.company` / `res.config.settings` (extindere): conturile contabile și toleranța folosite la reconcilierea D112.
+- `res.company` / `res.config.settings` (extindere): conturile contabile (inclusiv contul CAS angajator pentru 481/482) și toleranța folosite la reconcilierea și plățile D112.
+- `hr.employee` (extindere): casa de sănătate a salariatului, folosită la `casaSn`.
 
 **Vizualizări**
 
 - `views/l10n_ro_d112_views.xml`: formularele și listele declarației D112 și ale liniilor nominale per angajat.
 - `views/menus.xml`: meniurile „Declarația D112” și „D112 — Previzualizare obligații” în secțiunea „Declarații ANAF” (`l10n_ro_anaf_base.menu_account_anaf_declarations`).
-- `views/res_config_settings_views.xml`: setările de reconciliere D112 (conturi și toleranță) în Setări Contabilitate.
+- `views/res_config_settings_views.xml`: setările D112 (conturi, inclusiv contul CAS angajator, și toleranța de reconciliere) în Setări Contabilitate.
+- `views/hr_employee_views.xml`: câmpul *Health Insurance House* pe fișa salariatului.
 
 **Acțiuni Automate / Acțiuni Server**
 
@@ -87,4 +94,4 @@ Fluxul complet lunar (previzualizare → ciornă → verificare linii → reconc
 
 ---
 
-**Notă modificări față de pagina anterioară (19.0.2.10.0):** 19.0.2.10.1 mută meniurile în „Declarații ANAF”; 19.0.2.11.0 adaugă zilierii și drepturile de autor (natura venitului pe linie, secțiunile A/3 și C/17, punct de extensie `_d112_collect_other_income_lines`, parametru fiscal salariu minim pe oră, plăți/reconciliere extinse); 19.0.2.11.1 elimină codul intern al cerinței din nume; 19.0.2.11.2 mută capturile fișei în `static/description/` (în wiki rămân copiate în `screenshots/`).
+**Notă modificări față de pagina anterioară (19.0.2.11.2):** 19.0.2.12.0 adaugă beneficiile 8.5.5–8.5.7 și 8.3.3/8.3.4; 19.0.2.13.0 vouchere de vacanță, tichete cadou și cadouri neimpozabile; 19.0.2.13.1 și 19.0.2.14.2 doar descrierea Apps; 19.0.2.13.2 corectează `B_brutSalarii`; 19.0.2.14.0 adaugă casa de sănătate pe salariat; 19.0.2.14.1 corectează `C1_11`; 19.0.2.15.0 adaugă contul CAS angajator (481/482).

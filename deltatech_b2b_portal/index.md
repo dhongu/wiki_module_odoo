@@ -1,10 +1,10 @@
 # Portal Clienți B2B (B2B Customer Portal)
 
 - **Nume Tehnic:** `deltatech_b2b_portal`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.3.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_portal
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_b2b_portal`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-10-12`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -13,16 +13,18 @@ Un portal pentru clienții persoane juridice de pe website-ul Odoo: firmele cer 
 
 #### 2. Funcționalități Cheie
 
-- Pagina publică **/b2b** cu formularul de cerere de cont: denumire firmă, CUI, nr. registrul comerțului, adresă, persoană de contact, cu câmp-capcană anti-spam și, opțional, acceptarea termenilor B2B.
+- Pagina publică **/b2b** cu formularul de cerere de cont: denumire firmă, CUI, nr. registrul comerțului, adresă, persoană de contact, cu câmp-capcană anti-spam și, opțional, acceptarea termenilor B2B. O cerere refuzată (câmp lipsă, e-mail sau CUI invalid, termeni neacceptați) reafișează formularul cu tot ce a introdus vizitatorul, iar câmpurile de corectat sunt marcate cu roșu. Pe un website românesc, un CNP introdus ca CUI este refuzat cu mesaj propriu (formularul e pentru firme), iar CUI-ul este pregătit pentru `l10n_ro_website_anaf_prefill` (completare automată din ANAF, dacă modulul e instalat).
+- **E-mail opțional de confirmare** către cel care a trimis formularul (setarea *Confirmă cererile prin e-mail*, dezactivată implicit): text fix, fără nimic din formular în afară de CUI, deci formularul public nu poate fi folosit pentru a trimite cuiva un text propriu. **Limită de 5 cereri pe oră** de la aceeași adresă (IP); peste limită apare „Too many requests".
 - **Cererea este chiar clientul**: formularul creează firma în starea *Solicitat* (cu contactul sub ea) și generează o activitate pentru agentul de vânzări; nu există un model separat de cereri care să dubleze datele.
 - **Potrivire după CUI** (`RO 1234 5678` și `12345678` sunt aceeași firmă): la un client existent se adaugă doar contactul; datele introduse de un vizitator anonim nu suprascriu ce e deja înregistrat. Aceeași persoană care trimite de două ori nu duplică nimic; o cerere respinsă și arhivată care revine este dezarhivată.
 - **Aprobare dintr-un clic**: contul devine activ, iar contactele care au cerut acces primesc invitația standard de portal. **Respingerea** cere motivul și poate arhiva firma (propus doar dacă nu are comenzi sau facturi).
+- **Acordare acces portal** (buton pe o firmă cu cont deja activ): când un coleg al unui client existent trimite formularul, contactul este adăugat sub firmă și marcat „a cerut acces”; butonul trimite invitația standard de portal contactelor care au cerut și închide activitatea. Vizitatorul vede același mesaj ca la o cerere nouă (formularul nu dezvăluie cine e deja client).
 - **Stare cont B2B** pe firmă (solicitat, activ, suspendat, respins) și **rol per contact**: poate comanda sau doar vizualizare (prețuri și documente). Rolul îl setează administratorul B2B.
 - **Tablou de bord pe /my**: sold, restant, credit disponibil cu bară de utilizare (verde, galben de la 70%, roșu de la 90%), oferte în așteptare, facturi de plătit cu zile întârziere și cardul agentului de vânzări.
 - **Blocarea comenzilor**: un contact „doar vizualizare" sau un cont suspendat nu poate finaliza coșul și nu poate semna sau plăti online o ofertă din portal; portalul explică motivul. Oferta deschisă din e-mail, fără autentificare, se semnează ca de obicei.
 - **Meniuri** sub *Vânzări ▸ Comenzi*: *Cereri de cont B2B* (firmele în starea Solicitat, implicit) și *Clienți B2B* (conturi active și suspendate, cu sold, restanțe, credit disponibil); filtre pe contacte: *Clienți B2B*, *Cereri de cont B2B*, *B2B cu facturi restante*.
 - **Activarea unui client existent**: *Acțiune ▸ Activare cont B2B* (administrator B2B) deschide wizardul standard de acces la portal; **Suspendă** oprește comenzile din portal fără a retrage accesul la documente, **Reactivează** le repornește fără invitație nouă.
-- **Setări** (*Website ▸ Configurare ▸ Setări ▸ Portal B2B*): agentul de vânzări pentru cereri (implicit agentul website-ului) și adresa termenilor B2B. Accesul în magazin doar pentru utilizatori autentificați se face cu setarea standard *eCommerce Access*.
+- **Setări** (*Website ▸ Configurare ▸ Setări ▸ Portal B2B*): agentul de vânzări pentru cereri (implicit agentul website-ului), adresa termenilor B2B și confirmarea prin e-mail a cererilor. Accesul în magazin doar pentru utilizatori autentificați se face cu setarea standard *eCommerce Access*.
 - Drepturi de acces: **B2B Portal ▸ User** (aprobă, respinge, suspendă) și **B2B Portal ▸ Administrator** (activează clienți existenți, setează rolurile). Acțiunile de aprobare, suspendare și reactivare rulează cu drepturi de superutilizator, dar verifică mai întâi, pe utilizatorul care le apelează, rolul B2B User și dreptul de citire pe parteneri; un utilizator fără rol (inclusiv un client de portal care își reactivează singur firma suspendată) primește eroare de acces, inclusiv la apel RPC.
 - **Metode ajutătoare pentru modulele construite peste acesta** (în controller): `_b2b_inactive_redirect()` trimite pe /b2b utilizatorul fără cont B2B activ, iar `_b2b_add_to_cart()` adaugă produse în coș, doar pe cele vândute pe website-ul curent. Sunt folosite de comanda rapidă și de listele de comandă salvate.
 - Folosește mecanismele standard Odoo (agent de vânzări, limită de credit, listă de prețuri, termene de plată, invitație portal, acces eCommerce), fără duplicări. Limita de credit și facturile restante se impun prin `terrabit_partner_credit_limit` și `terrabit_partner_credit_limit_website`.
@@ -37,14 +39,14 @@ Un portal pentru clienții persoane juridice de pe website-ul Odoo: firmele cer 
 
 **Modele**
 
-- `res.partner` (extins): câmpurile `b2b_state`, `b2b_role`, `b2b_access_requested`, `b2b_terms_accepted_date`, `b2b_note`, plus câmpuri calculate (`b2b_balance`, `b2b_overdue_count`, `b2b_overdue_amount`, `b2b_credit_available`); logica de creare/potrivire după CUI a cererilor, aprobare, respingere, suspendare; `_b2b_check_action_access()` verifică rolul B2B User și dreptul de citire ale apelantului înainte ca acțiunile să ruleze ca superutilizator.
-- `website` (extins): `b2b_request_user_id` și `b2b_terms_url`.
-- `res.config.settings` (extins): expune cele două setări ale website-ului.
+- `res.partner` (extins): câmpurile `b2b_state`, `b2b_role`, `b2b_access_requested`, `b2b_terms_accepted_date`, `b2b_note`, plus câmpuri calculate (`b2b_balance`, `b2b_overdue_count`, `b2b_overdue_amount`, `b2b_credit_available`); logica de creare/potrivire după CUI a cererilor, aprobare, respingere, suspendare, acordare acces portal (`action_b2b_grant_access`) și trimiterea confirmării (`_b2b_send_request_confirmation`); `_b2b_check_action_access()` verifică rolul B2B User și dreptul de citire ale apelantului înainte ca acțiunile să ruleze ca superutilizator.
+- `website` (extins): `b2b_request_user_id`, `b2b_terms_url` și `b2b_request_confirmation`.
+- `res.config.settings` (extins): expune cele trei setări ale website-ului.
 - `deltatech.b2b.reject.wizard`: wizard de respingere cu motiv obligatoriu și opțiunea de arhivare a firmei.
 
 **Vizualizări**
 
-- `view_partner_form_b2b`: fila B2B pe partener (stare, agent, listă de prețuri, termene, sold/restanțe/credit, butoane Aprobă / Respinge / Suspendă / Reactivează).
+- `view_partner_form_b2b`: fila B2B pe partener (stare, agent, listă de prețuri, termene, sold/restanțe/credit, butoane Aprobă / Respinge / Acordă acces portal / Suspendă / Reactivează).
 - `view_partner_b2b_request_list` și `view_partner_b2b_customer_list`: listele *Cereri de cont B2B* și *Clienți B2B*.
 - `view_res_partner_filter_b2b`: filtrele B2B din căutarea contactelor.
 - `view_b2b_reject_wizard_form`: fereastra de respingere.
@@ -60,6 +62,7 @@ Un portal pentru clienții persoane juridice de pe website-ul Odoo: firmele cer 
 **Acțiuni Automate / Acțiuni Server**
 
 - `action_server_b2b_activate`: *Activare cont B2B* pe client existent (formă sau listă).
+- `mail_template_b2b_request_received`: șablonul e-mailului de confirmare a cererii (text fix, trimis doar dacă setarea e activă).
 - `mail_activity_type_b2b_request`: tip de activitate „Cerere cont B2B", creat agentului la fiecare cerere și închis la aprobare/respingere.
 - Nu există cron-uri.
 

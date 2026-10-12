@@ -4,6 +4,42 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-12] Ingestie lot: 15 module noi + re-ingestie 21 module rămase în urmă
+
+- **Acțiune:** actualizare după PR-urile din 09–12.10.2026, câte un subagent `documentarist-wiki` per modul, în paralel (3 loturi de 12).
+  - Pentru suitele cu `19.0` local divergent față de origin (deltatech, bitshop_marketplace, bitshop_vendor, deltatech_service), sursa a fost un worktree detașat pe `origin/19.0`; „Cale Locală” rămâne `odoo-addons/<suită>/<modul>`.
+- **Module noi:** `deltatech_payment_term_working_days`, `deltatech_stock_disassembly`, `deltatech_stock_disassembly_mrp`, `deltatech_hr_pay_transparency`, `deltatech_account_bank_statement_import_paypal`, `deltatech_account_bank_statement_import_stripe`, `deltatech_advanced_planner_ai`, `deltatech_hr_pay_transparency_payroll`, `l10n_ro_website_anaf`, `l10n_ro_anaf_d094`, `l10n_ro_hr_pay_transparency`, `l10n_ro_hr_salary_increase`, `l10n_ro_payroll_audit`, `l10n_ro_payroll_garnishment`, `l10n_ro_payroll_pack`.
+- **Fișe consultant noi copiate:** `deltatech_hr_pay_transparency` (14 capturi), `l10n_ro_anaf_d094` (5), `l10n_ro_hr_pay_transparency` (5).
+- **Re-ingestii (ce s-a schimbat):**
+  - `deltatech_sale_activity_report` 1.1.0→1.2.0: jurnalul urmează accesul la comenzi (ACTIVITY-002), programarea activității nu mai cere deltatech_website_sale_status
+  - `deltatech_website_vat_validation` 0.0.1→0.2.0: verificările RO (ANAF, CNP, firmă radiată) mutate în l10n_ro_website_anaf; duplicate fără prefix de țară, fără oracol pentru anonimi
+  - `deltatech_b2b_portal` 1.1.0→1.3.0: formular refuzat reafișat, buton Acordare acces portal, CNP refuzat ca CUI, e-mail de confirmare opțional, limită 5 cereri/oră/IP
+  - `deltatech_nap` 1.8.3→1.9.0: metode de prognoză (sezonieră, Holt, Croston SBA, automată)
+  - `deltatech_account_bank_statement_import` 1.2.0→1.3.0: constructor comun de decontări (EuPlatesc, Stripe, PayPal), recunoaștere CSV, opțiuni de comision și linie de virare pe jurnal
+  - `deltatech_advanced_planner` 1.6.1→1.8.0: cea mai devreme dată de livrare (CTP), fără comenzi duble, orizont și fereastră de lansare, orderpoint „Planned by Advanced Planner”; dependență nouă purchase_stock; 18 capturi
+  - `deltatech_ai_anthropic` 1.0.0→1.1.0: modele Claude 5.x, efort din stilul de răspuns, fallback server-side, prompt caching, 16000 tokeni
+  - `deltatech_marketplace` 1.39.0→1.40.0: formular backend reorganizat (grupuri order / payment)
+  - `deltatech_marketplace_prestashop` 0.4.0→0.5.0: status recitit înainte de confirmarea automată
+  - `deltatech_mcp_server` 1.4.0→1.12.0: OAuth cu refresh rotit și scope-uri, mesaje/activități/atașamente, prompturi, multi-companie, /mcp/health, audit cu modificări; 13 capturi
+  - `deltatech_marketplace_review` 0.1.1→0.2.2: regula phase_not_allowed, câmp Auto-Confirm Only For Statuses; nu se mai instalează automat
+  - `l10n_ro_anaf_d112_payroll` 1.7.0→1.11.0: vouchere/cadouri, tip contract A_3, simulare la baza minimă, condiții deosebite/speciale (481/482)
+  - `l10n_ro_anaf_d112` 2.11.2→2.15.0: rânduri 8.5.5–8.5.7, vouchere/cadouri, casa de sănătate pe salariat, cont CAS angajator 481/482
+  - `l10n_ro_stock_report` 2.10.0→2.0.1: pagina documentează acum copia din l10n-romania (prima în addons_path), nu pe cea din l10n-romania-oca
+  - `l10n_ro_hr_payroll_account_enhancement` 1.2.0→1.5.0: pensie facultativă/ocupațională 6456/6458 = 4381, vouchere și cadouri 6422 = 5328, CAS angajator condiții deosebite 6451 = 4311, impozit redirecționat 4441 = 462
+  - `l10n_ro_partner_cnp` 1.0.1→1.1.0: CNP mutat automat din codul fiscal, PF cu CUI valid devin companie, corectare la instalare/update
+  - `l10n_ro_payroll_day_labourers` 1.0.1→1.1.0: plată în tranșe din casă/bancă, export/import CSV ITM, cod de confirmare ITM
+  - `l10n_ro_payroll_copyright` 1.0.1→1.1.0: stat de avans și lichidare (4092/4094), plată în tranșe
+  - `l10n_ro_payroll_statements` 1.0.0→1.1.0: coloane Avans și Rest de plată (cu l10n_ro_payroll_advance)
+  - `l10n_ro_leasing` 1.1.1→2.0.1: devine „Împrumuturi și leasing” — credit bancar legat de extras, dobândă angajată lunar, tipuri de contract, reclasificare termen scurt/lung, situația scadențelor; 16 capturi
+  - `l10n_ro_hr_payroll_enhancement` 2.7.0→2.16.2: prag sumă neimpozabilă, vouchere/cadouri/pensie facultativă, cotizație sindicală procentuală, PENSION corectat, exceptare bază minimă, simulator pe angajat temporar, FNUASS XLSX; 25 capturi
+- **Corecții față de pagina veche / readme:**
+  - `l10n_ro_stock_report`: pagina veche documenta copia din `l10n-romania-oca` (19.0.2.10.0); acum documentează copia din `l10n-romania` (19.0.2.0.1), care e prima în `addons_path` și deci cea încărcată.
+  - `deltatech_marketplace_review`: nu se mai instalează automat (din 0.1.3); pagina veche spunea contrariul.
+  - `l10n_ro_payroll_statements`: fișa sursă spune încă „statul de avansuri lipsește”, depășit de 1.1.0 — de corectat în `readme/`.
+  - `l10n_ro_anaf_d112`: fișa trimite la `fise/README.md`, director necopiat în wiki (link rupt).
+- **Fișe cu capturi în `static/description/`:** căile `../static/description/` rescrise în `screenshots/` în copiile din wiki.
+- **Fișiere actualizate:** 36 directoare de modul, `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-09] Actualizare după PR-urile #583, #585, #586, #587: capturile fișelor, avans prin `account.payment`, adeverințe
 
 - **Acțiune:** fișele consultant ale celor trei module recopiate din `19.0` (căile imaginilor `../static/description/` → `screenshots/`), cu capturile noi, și paginile actualizate:

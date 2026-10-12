@@ -15,8 +15,9 @@ disponibil, lead time-urile furnizorilor și durata reală a producției?"*. Por
 (`commitment_date`) a comenzii de vânzare, calculează **înapoi pe calendarul de lucru** (backward
 scheduling) datele de lansare achiziții, recepție componente, start și final producție, verifică
 **capacitatea reală a posturilor de lucru** (RCCP/CRP) și emite un verdict semaforizat: **OK /
-Avertisment / Blocat**. Pentru cererile fără SO (transferuri, consum intern) generează automat
-comenzi de reaprovizionare ca să prevină stocul negativ.
+Avertisment / Blocat**. Pentru cererile fără SO (transferuri, consum intern) și pentru regulile
+min/max pe care i le predați, propune reaprovizionarea pentru stoc **eșalonat în timp**, pe un
+orizont configurabil, fără să comande a doua oară ce este deja cerut furnizorului.
 
 Consultantul folosește documentul pentru reproducerea fluxului în baza demo și pentru pregătirea
 capitolului de manual dedicat planificării.
@@ -65,12 +66,17 @@ Date minime pentru demo:
 ## 5. Configurare inițială
 
 1. Instalați modulul `deltatech_advanced_planner` pe baza demo (depinde de `sale_management`, `mrp`,
-   `purchase`, `stock`, `resource`, `mail`).
-2. Deschideți **Setări → Inventar → Advanced Planner** și verificați parametrii: safety buffer (zile),
+   `purchase`, `purchase_stock`, `stock`, `resource`, `mail`, `web_gantt` și `deltatech_web_kpi_cards`).
+   `web_gantt` face parte din **Odoo Enterprise**: modulul nu se instalează pe Community.
+2. Deschideți **Setări → Inventar → Planificator avansat** și verificați parametrii. Bifa
+   **Planificare avansată automată** (implicit activă) pornește planificarea la confirmarea comenzii
+   de vânzare și afișează restul parametrilor; debifată, ascunde toți parametrii în afară de orizont
+   și fereastra de lansare. Parametrii sunt: safety buffer (zile),
    lead time achiziție/producție implicit, zile expediere operator→client, adâncime maximă BOM,
    comportament la dată imposibilă (avertizare sau blocare confirmare SO), retenție log-uri,
-   replanificare automată la schimbare dată, fereastră consolidare RFQ, detecție abateri zilnică,
-   prag escaladare.
+   replanificare automată la schimbare dată, fereastră consolidare RFQ, **orizont de planificare**
+   (implicit 90 de zile), **fereastră de lansare** (implicit 7 zile), detecție abateri zilnică, prag
+   escaladare.
 3. Asigurați-vă că posturile de lucru au **calendar de lucru** și `time_efficiency` setate (intră în
    calculul RCCP al lead time-ului de producție).
 4. Verificați că furnizorii componentelor au `delay` (lead time) și, unde e cazul, `min_qty` (MOQ).
@@ -84,42 +90,75 @@ Date minime pentru demo:
    versiunea 19.0.1.4.9). OF-urile create manual sau din reaprovizionare păstrează comportamentul
    MTO standard: generează OF-uri și cereri de ofertă pentru componente la confirmare. Dacă operatorii
    lansează producția doar din planificator, ruta MTO pe componente nu e necesară.
-6. Verificați că utilizatorul de test are grupul **Advanced Planner / User** (și Manager pentru
+6. **Regulile de reaprovizionare (min/max): cine comandă.** Fiecare produs are un singur
+   „proprietar” al reaprovizionării. Bifați **Planificat de Advanced Planner** pe regulă dacă vreți
+   ca planificatorul să aplice minimul și maximul eșalonat; o regulă automată sau cu minim/maxim
+   nebifată rămâne la Odoo standard, iar planificatorul sare produsul. Decideți asta înainte de prima
+   planificare globală pe o bază cu reguli existente.
+7. Verificați că utilizatorul de test are grupul **Advanced Planner / User** (și Manager pentru
    acțiunile globale).
 
 ## 6. Flux de utilizare
 
 ### Pasul 1 — Configurarea parametrilor planificatorului
 
-În **Setări → Inventar → Advanced Planner** stabiliți marja de siguranță și lead time-urile
-implicite. Acestea sunt folosite ori de câte ori datele de pe produs/furnizor lipsesc.
+În **Setări → Inventar → Planificator avansat** stabiliți marja de siguranță și lead time-urile
+implicite. Acestea sunt folosite ori de câte ori datele de pe produs/furnizor lipsesc. Tot aici sunt:
 
-![Parametrii planificatorului în Setări → Inventar](screenshots/01_setari_planificator.png)
+- **Orizont de planificare (zile)** — reaprovizionarea pentru stoc planifică cererea până la azi + N
+  zile (implicit 90); cererea de mai târziu rămâne vizibilă în Situația Material. Comenzile de vânzare
+  se planifică întotdeauna până la data lor de livrare.
+- **Fereastră de lansare (zile)** — cererile de ofertă și OF-urile se generează doar pentru comenzile
+  planificate a căror dată de lansare cade cel mult la azi + N zile (implicit 7).
+
+![Parametrii planificatorului în Setări → Inventar, cu orizontul de planificare și fereastra de lansare](screenshots/01_setari_planificator.png)
 
 ### Pasul 2 — Planificare din ofertă (simulare, SO ciornă)
 
-Pe o comandă de vânzare în stare **Ciornă**, completați `commitment_date` și apăsați **Recalculate
-Planning** (buton din antet). Planificatorul calculează backward/forward și afișează un **banner
+Pe o comandă de vânzare în stare **Ofertă**, completați data de livrare promisă și apăsați
+**Recalculează planificarea** (buton din antet). Planificatorul calculează backward/forward și afișează un **banner
 semaforizat** (verde/galben/roșu) cu data efectivă realizabilă, fără să rezerve stoc sau să genereze
 comenzi reale. Comenzile planificate se creează în stare **Ciornă** (simulare).
 
 ![Comandă de vânzare în ofertă, cu banner de status după recalcul](screenshots/02_so_recalcul_oferta.png)
 
+**Cea mai devreme dată.** Pentru un răspuns rapid clientului, butonul **Cea mai devreme dată** din
+antetul ofertei (disponibil și vânzătorilor) deschide o fereastră cu fiecare produs al comenzii:
+
+1. **Găsiți pe ecran** coloanele **Cea mai devreme dată**, **Din** (Stoc, Recepții planificate,
+   Achiziție, Producție), **Disponibil acum** și **Motiv**; sus, **Cea mai devreme dată pentru toată
+   comanda**.
+2. **Verificați** că motivul are sens: componenta critică și termenul furnizorului, fereastra de
+   producție, eventualele săptămâni pline pe un centru de lucru. **Disponibil acum** mai mare decât
+   zero înseamnă că o livrare parțială e posibilă imediat.
+3. **Treceți mai departe** cu **Setează ca dată promisă**, care pune pe comandă data pentru toată
+   comanda, sau închideți fereastra fără nicio modificare.
+
+Calculul nu creează comenzi planificate și nu rezervă nimic: două oferte simultane pot primi aceeași
+dată până la confirmare. Ca la planificare, stocul de componente nu scade necesarul altor comenzi
+confirmate pentru care nu s-a lansat încă comanda de producție. Spre deosebire de **Recalculează planificarea**, rezultatul e instant și nu
+rămâne nimic în bază.
+
+![Fereastra Cea mai devreme dată pe o ofertă: data fiecărui produs, sursa și motivul](screenshots/02a_cea_mai_devreme_data.png)
+
 ### Pasul 3 — Confirmarea comenzii și planificarea automată
 
-La **Confirmare** comanda de vânzare, planificatorul rulează automat. Tabul **Planificare avansată** de
+La **Confirmare** comanda de vânzare, planificatorul rulează automat (dacă **Planificare avansată
+automată** e bifată în Setări), iar comenzile planificate trec în starea **Planificat**. Tabul **Planificare avansată** de
 pe SO arată statusul (`OK` / `Avertisment` / `Blocat`), riscul de livrare, data efectivă calculată și
-zilele rămase până la termen.
+zilele rămase până la termen. Sub detalii, același mesaj apare și ca banner roșu când comanda e
+blocată.
 
 ![Tabul Planificare avansată pe SO confirmat](screenshots/03_so_banner_confirmat.png)
 
 ### Pasul 4 — Revizuirea comenzilor planificate
 
-Din **Producție → Planificare avansată → Planificare → Planned Orders** vedeți comenzile planificate, cu
-ierarhia BOM și statusul colorat per linie. Cele de tip producție au datele de start/final producție;
+Din **Producție → Planificare avansată → Planificare → Comenzi planificate** vedeți comenzile
+planificate, grupate pe produs (produs finit, semifabricat, materie primă), cu statusul colorat per
+linie. Cele de tip producție au datele de start/final producție;
 cele de tip achiziție au data de lansare și recepție per componentă.
 
-![Lista comenzilor planificate cu ierarhie BOM și status colorat](screenshots/04_planned_orders.png)
+![Lista comenzilor planificate grupate pe produs, cu status colorat](screenshots/04_planned_orders.png)
 
 ### Pasul 5 — Lansarea manuală a RFQ / OF
 
@@ -161,9 +200,21 @@ un produs fără furnizor configurat.
 
 ![Notificarea acțiunii Generează cereri de ofertă, cu o reușită și un eșec](screenshots/05b_generare_rfq_notificare.png)
 
+**Fereastra de lansare.** Generarea în lot (cereri de ofertă sau **Generează OF-uri**) lansează doar
+comenzile planificate a căror dată de lansare este cel mult azi + fereastra de lansare. Celelalte
+rămân în **Ciornă** și sunt enumerate în notificare, cu data limită. Pe formularul unei astfel de
+comenzi, butonul **Generează cerere de ofertă** / **Generează OF** apare secundar și cere confirmare
+înainte de lansare. Filtrul **De lansat** din lista comenzilor planificate arată comenzile deschise
+care intră în fereastră — lista de lucru zilnică a responsabilului de achiziții.
+
+În captură: două comenzi pentru tablă de oțel, una cu lansarea peste 3 zile și una peste 40 de zile.
+S-a generat o singură cerere de ofertă; a doua comandă este numită în notificare ca sărită.
+
+![Notificarea generării în lot, cu o comandă sărită pentru că se lansează după fereastra de lansare](screenshots/05c_fereastra_lansare.png)
+
 ### Pasul 6 — Situație Material (proiecție cronologică per produs)
 
-**Producție → Planificare avansată → Materiale → Material Situation** afișează stocul **proiectat
+**Producție → Planificare avansată → Materiale → Situația materialelor (MD04)** afișează stocul **proiectat
 cronologic** la fiecare mișcare, cu trasabilitate completă SO → AP → PO/MO → mișcare de stoc (coloana
 Origine / pegging). Se poate salva ca snapshot și exporta în PDF/Excel.
 
@@ -173,35 +224,72 @@ Origine / pegging). Se poate salva ca snapshot și exporta în PDF/Excel.
 
 **Materiale → Stoc Proiectat** oferă ecranul agregat cross-SO per produs: toate elementele MRP
 (comenzi client, comenzi achiziție, comenzi planificate, ordine producție, intrări) sortate
-cronologic, cu stoc proiectat cumulativ, **ATP (Available to Promise)** și detecție shortage cu banner
-roșu; pegging FIFO complet și export Excel.
+cronologic, cu stoc proiectat cumulativ, **ATP** (cantitatea disponibilă pentru promisiuni noi) și
+detecția lipsei: bifa **Are lipsă** și un banner roșu apar când o cerere nu e acoperită. Pegging FIFO
+complet și export Excel. În captură, fiecare comandă client (roșu) e acoperită de comanda planificată
+de producție (verde) dinaintea ei, deci nu există lipsă.
 
-![Stoc Proiectat Agregat cu elemente MRP, ATP și shortage](screenshots/07_stock_projection.png)
+![Stoc Proiectat Agregat cu elemente MRP, ATP și pegging](screenshots/07_stock_projection.png)
 
-### Pasul 8 — Încărcarea posturilor de lucru (Workcenter Load)
+### Pasul 8 — Încărcarea centrelor de lucru
 
-**Capacitate → Workcenter Load** arată încărcarea per (post de lucru × săptămână) cu pivot, grafic și
-liste colorate (roșu >100%, galben 80–100%, verde ≤80%). Se regenerează la fiecare planificare.
+**Capacitate → Încărcare centru de lucru** arată încărcarea per (post de lucru × săptămână) în listă
+colorată (roșu >100%, galben 80–100%, verde ≤80%), cu vederi pivot și grafic. Se regenerează la
+fiecare planificare. Capacitatea se raportează aici la intervalul de producție al fiecărei comenzi;
+pentru supraîncărcarea pe săptămână folosiți CRP (pasul 9), de aceea procentele pot diferi între cele
+două ecrane.
 
-![Workcenter Load: pivot și grafic încărcare per săptămână](screenshots/08_workcenter_load.png)
+![Încărcare centru de lucru: listă colorată per post și săptămână](screenshots/08_workcenter_load.png)
 
 ### Pasul 9 — CRP și nivelarea capacității
 
 **Capacitate → CRP — Capacitate** agregă orele cerute vs. capacitatea nominală per (post × săptămână),
 cu status `ok / warning / overloaded`. Din **Nivelare CRP** (Manager) rulați nivelarea greedy:
-comenzile cu cel mai mult slack se mută cu +7 zile, cu cascadă recursivă pe comenzile copil neFixate;
-opțiunea `dry_run` previzualizează fără a modifica.
+comenzile cu cel mai mult slack se mută cu +7 zile, cu cascadă recursivă pe comenzile copil nefixate;
+opțiunea **Doar vizualizare (fără modificări)** previzualizează fără a modifica.
 
 ![CRP: ore cerute vs. capacitate pe săptămâni](screenshots/09_crp.png)
 
 ### Pasul 10 — Planificarea globală (batch)
 
-**Planificare → Global Planning** (Manager) rulează planificatorul pe toate comenzile active, sortate
-după `commitment_date` ascendent (cele urgente au prioritate la stoc). Netting-ul componentelor
+**Planificare → Planificare globală** (Manager) rulează planificatorul pe toate comenzile active,
+sortate după data de livrare promisă, ascendent (cele urgente au prioritate la stoc). Netting-ul componentelor
 folosește o alocare globală partajată (fără supraplanificarea aceluiași stoc), iar un lock PostgreSQL
-previne rulările concurente. Butonul „Vezi blocate" deschide direct comenzile blocate după rulare.
+previne rulările concurente. Butonul **Vizualizare comenzi blocate** deschide direct comenzile blocate
+după rulare.
 
 ![Wizardul de planificare globală](screenshots/10_global_planning.png)
+
+**Reaprovizionarea pentru stoc.** Cu opțiunea **Analizare mișcări independente (reaprovizionare)**
+bifată, planificarea globală calculează și propunerile pentru stoc, per depozit:
+
+- pentru **ieșirile fără comandă de vânzare** (consum, transferuri), până la orizontul de planificare;
+- pentru produsele cu o regulă de reaprovizionare bifată **Planificat de Advanced Planner**: când
+  stocul proiectat coboară sub **minim**, propune cantitatea care îl readuce la **maxim**, rotunjită la
+  **multiplul** regulii și la cantitatea minimă a furnizorului.
+
+Regula se bifează din **Inventar → Operații → Reaprovizionare** (coloana opțională **Planificat de
+Advanced Planner**) sau din formularul regulii. O regulă bifată nu mai este lansată de Odoo: nici de
+programator, nici de butonul **Comandă**, nici dintr-o cantitate pusă manual.
+
+![Regula de reaprovizionare preluată de planificator: minim 100, maxim 300](screenshots/10a_regula_planificator.png)
+
+Rezultatul se vede în **Planificare → Comenzi planificate**, cu filtrul **Reaprovizionare pentru stoc**
+din căutare (comenzile fără comandă de vânzare):
+
+- **o propunere pentru fiecare deficit**, la data lui, nu o singură comandă azi pentru tot viitorul.
+  În captură, discul abraziv are ieșiri la 20, 60 și 150 de zile: planificatorul propune 15 buc
+  pentru prima și 25 buc pentru a doua; ieșirea de la 150 de zile e dincolo de orizontul de 90 de zile
+  și nu generează încă nimic;
+- șuruburile au 60 buc în stoc, sub minimul de 100: propunerea este de 240 buc (până la maximul de
+  300), **Blocat** pentru că nu poate sosi azi.
+
+Ce citiți înainte de a lansa: cantitatea și data de lansare pe fiecare rând, starea (**Blocat**
+înseamnă că propunerea nu poate sosi la data necesară) și dacă există deja o cerere de ofertă ciornă
+pentru același produs. Cererile de ofertă neconfirmate sunt numărate la data lor de recepție, așa că
+o a doua rulare nu mai propune aceeași cantitate.
+
+![Propunerile de reaprovizionare pentru stoc, câte una pe deficit, până la orizont](screenshots/10b_reaprovizionare_esalonata.png)
 
 ### Pasul 11 — Risc de livrare (monitorizare proactivă)
 
@@ -215,8 +303,10 @@ clientul).
 
 ### Pasul 12 — Dashboard operațional & KPI
 
-**Planificare avansată → Dashboard** sintetizează: contori SO (ok/warning/blocked/reaprovizionare),
-OTIF 30/90 zile, trend blocări noi/zi, posturi bottleneck și top produse cu blocări active.
+**Planificare avansată → Panou de control** sintetizează: contori de comenzi (blocate, avertismente,
+OK, reaprovizionări fără SO), **OTIF 30/90 zile** — ponderea comenzilor confirmate cu data promisă
+începând de acum 30/90 de zile (inclusiv cele viitoare) a căror dată efectivă calculată nu depășește
+data promisă (indicator previzionat, nu de livrări realizate) —, trend blocări noi/zi, posturi bottleneck și top produse cu blocări active.
 
 ![Dashboard cu contori și KPI de planificare](screenshots/12_dashboard.png)
 
@@ -228,13 +318,15 @@ Modulul **nu generează note contabile** (Dr/Cr). Rezultatele unei rulări sunt:
   (per componentă cu shortage), în stare `draft → planned → done / cancelled`;
 - **statusul de planificare** pe SO (`OK` / `Avertisment` / `Blocat`) + data efectivă și riscul de
   livrare;
-- **RFQ-uri și MO-uri** doar la lansare manuală (cu consolidare RFQ);
+- **comenzi de reaprovizionare pentru stoc** (fără SO), eșalonate pe deficit, pe orizontul de
+  planificare;
+- **RFQ-uri și MO-uri** doar la lansare manuală, în fereastra de lansare (cu consolidare RFQ);
 - **sincronizarea livrărilor**: pe SO confirmate, mișcările de livrare primesc legătura AP și data
   efectivă (`scheduled_date` pe picking);
 - **log de execuție** detaliat (`advanced.planner.log`).
 
-Efectul **contabil** apare ulterior, standard: recepția PO (NIR) și finalizarea MO generează notele
-contabile uzuale de stoc/producție — nu prin acest modul.
+Efectul **contabil** apare ulterior, standard: când evaluarea stocului este automată, recepția PO
+(NIR) și finalizarea MO generează notele contabile uzuale de stoc/producție — nu prin acest modul.
 
 ## 7. Legături cu alte module / declarații
 
@@ -243,18 +335,23 @@ contabile uzuale de stoc/producție — nu prin acest modul.
 | `sale_management` | comenzile de vânzare și data dorită (`commitment_date`) — punctul de pornire | dependență (manifest) |
 | `mrp` | liste de materiale, operații, posturi de lucru, ordine de producție | dependență (manifest) |
 | `purchase` | RFQ / comenzi de achiziție generate din comenzile planificate | dependență (manifest) |
+| `purchase_stock` | cererile de ofertă neconfirmate numărate în stocul proiectat; regulile de reaprovizionare (min/max) | dependență (manifest) |
 | `stock` | stoc disponibil, mișcări, picking-uri de livrare, reaprovizionare | dependență (manifest) |
 | `resource` | calendarul de lucru folosit la backward scheduling și RCCP | dependență (manifest) |
 | `mail` | chatter, activități și notificări de escaladare | dependență (manifest) |
+| `web_gantt` | vederea Gantt a planului de producție (**Odoo Enterprise**) | dependență (manifest) |
+| `deltatech_web_kpi_cards` | cardurile KPI din panoul de control | dependență (manifest) |
 | `l10n_ro_doc_screenshots` | generarea automată a capturilor pentru fișă/manual | opțional (doar testare) |
 
 **Ce este automat:** netting cronologic, backward scheduling, RCCP/CRP, statusul semaforizat,
 sincronizarea livrărilor, detecția zilnică a abaterilor și escaladarea (dacă sunt activate din Setări),
-reaprovizionarea independentă.
+calculul propunerilor de reaprovizionare pentru stoc (eșalonat, pe orizont, fără dublarea cererilor de
+ofertă neconfirmate).
 
-**Ce rămâne manual:** lansarea RFQ-urilor și a ordinelor de producție din comenzile planificate,
-revizuirea comenzilor de reaprovizionare (create în `draft`), fixarea (firming) comenzilor care nu
-trebuie recalculate și decizia de nivelare a capacității.
+**Ce rămâne manual:** lansarea RFQ-urilor și a ordinelor de producție din comenzile planificate (în
+fereastra de lansare), revizuirea comenzilor de reaprovizionare (create în `draft`), alegerea
+proprietarului fiecărei reguli de reaprovizionare (bifa **Planificat de Advanced Planner**), fixarea
+(firming) comenzilor care nu trebuie recalculate și decizia de nivelare a capacității.
 
 ## 8. Verificări pentru consultant
 
@@ -264,12 +361,19 @@ trebuie recalculate și decizia de nivelare a capacității.
 - [ ] La confirmarea SO se generează comenzi planificate (producție + achiziție per componentă).
 - [ ] Backward scheduling produce date coerente (lansare PO < recepție < start producție < final).
 - [ ] O comandă cu termen imposibil este marcată **Blocat** și propune cea mai devreme dată realizabilă.
+- [ ] **Cea mai devreme dată** pe o ofertă: un produs pe stoc apare „Stoc” cu data de mâine; un produs fabricat apare „Producție”, cu componenta critică în motiv; după **Setează ca dată promisă**, data promisă a comenzii e data pentru toată comanda și nu s-a creat nicio comandă planificată.
 - [ ] RFQ-ul și MO-ul se generează manual din comanda planificată, fără duplicate.
 - [ ] Două comenzi planificate pentru același produs (de exemplu două variante cu aceeași componentă), cu același furnizor, aceeași UM și același preț, cu data de lansare în fereastra de consolidare și cu prima cerere încă în ciornă, produc pe cerere o singură linie, cu cantitatea totală.
 - [ ] Pe un produs cu componente pe ruta MTO, confirmarea OF-ului generat din planificator nu creează OF-uri sau cereri de ofertă noi pentru componente (în lista OF nu apar ordine cu sursa = alt OF).
 - [ ] Prețurile de furnizor ale produselor gestionate în metri folosesc UM „m”, nu „ml” (mililitru).
+- [ ] Setările **Orizont de planificare** și **Fereastră de lansare** apar în Setări → Inventar → Planificator avansat (implicit 90 și 7 zile).
+- [ ] Un produs cu ieșiri fără SO la 20, 60 și 150 de zile primește după planificarea globală două propuneri (pentru 20 și 60 de zile), nu una și nu trei.
+- [ ] După generarea cererii de ofertă dintr-o propunere de reaprovizionare, o nouă planificare globală nu mai creează altă propunere pentru același deficit; propunerea deja transformată rămâne în listă, în starea **Finalizat**.
+- [ ] Pe o regulă bifată **Planificat de Advanced Planner** (min 100, max 300, stoc 60), propunerea este de 240 buc; butonul **Comandă** din Reaprovizionare refuză regula, iar programatorul nu creează cerere de ofertă pentru ea.
+- [ ] Un produs cu o regulă automată nebifată nu primește propuneri de la planificator.
+- [ ] Generarea în lot sare comenzile cu lansarea după fereastra de lansare și le numește în notificare; filtrul **De lansat** le exclude.
 - [ ] Situația Material și Stocul Proiectat afișează proiecția cronologică și ATP corect.
-- [ ] Workcenter Load / CRP reflectă supraîncărcările; nivelarea (dry_run) previzualizează mutările.
+- [ ] Încărcare centru de lucru / CRP reflectă supraîncărcările; nivelarea cu **Doar vizualizare (fără modificări)** previzualizează mutările.
 - [ ] Tabloul Risc de livrare listează comenzile la risc; butonul Escaladează creează o activitate.
 - [ ] Exporturile PDF/Excel se descarcă și conțin datele testate.
 
@@ -277,7 +381,7 @@ trebuie recalculate și decizia de nivelare a capacității.
 
 | Mesaj / simptom | Cauză probabilă | Remediere |
 |-----------------|-----------------|-----------|
-| „Order … cannot be confirmed: the requested delivery date is not achievable." | Parametrul „Comportament la dată imposibilă" este setat pe **block_so** și data promisă nu e realizabilă | Mutați `commitment_date` la data efectivă propusă sau setați comportamentul pe „doar avertizare" în Setări |
+| „Comanda … nu poate fi confirmată: data de livrare solicitată nu este realizabilă." | Parametrul **La dată imposibilă** este setat pe **Blochează confirmarea SO** și data promisă nu e realizabilă | Mutați data de livrare promisă la data efectivă propusă sau setați parametrul pe **Numai avertisment — SO se confirmă normal** |
 | O rulare globală este sărită / „o altă planificare globală rulează deja" | Lock PostgreSQL — o a doua rulare globală simultană (alt utilizator sau cron) | Așteptați finalizarea rulării curente și reluați |
 | SO marcat **N/A** (not_applicable) la planificare | Niciun produs de pe comandă nu are listă de materiale (BOM) | Definiți BOM pentru produsul finit sau ignorați — planificatorul se aplică doar produselor cu BOM |
 | Comanda rămâne **Blocat** deși există stoc | Intrările (PO) sosesc **după** `commitment_date` — corect cronologic, nu reduc disponibilul la termen | Devansați recepția PO sau ajustați data promisă |
@@ -286,6 +390,10 @@ trebuie recalculate și decizia de nivelare a capacității.
 | Semifabricat planificat de două ori: pe lângă OF-ul planificatorului (sursa = comanda de vânzare) apar OF-uri cu sursa = OF-ul produsului finit | Ruta MTO pe semifabricat, iar OF-ul părinte a fost creat manual sau înainte de versiunea 19.0.1.4.9 | Actualizați modulul. Lansați OF-urile din planificator, nu manual, și anulați OF-urile duplicate aflate încă în ciornă sau confirmate fără consum |
 | Pe cererea de ofertă apar linii duble pentru aceeași materie primă, unele cu preț 0 | Linia cu preț 0 vine din ruta MTO standard, cu o cantitate sub minimul furnizorului (nu se găsește preț). Linia cu preț vine din planificator | Același remediu ca mai sus: după actualizare, OF-urile din planificator nu mai generează aceste linii. Ștergeți liniile cu preț 0 din cererile ciornă existente |
 | Cantitate de 1000 de ori mai mare pe cererea de ofertă (ex. 22.500 în loc de 22,5) | Prețul furnizorului e în „ml” (mililitru), produsul în „m” | Pe furnizorul produsului (tabul Achiziție) schimbați UM-ul în „m” și regenerați cererea |
+| „Aceste reguli de reaprovizionare sunt planificate de Advanced Planner…” la butonul **Comandă** din Reaprovizionare | Regula e bifată **Planificat de Advanced Planner**: o comandă planificatorul | Generați cererea de ofertă din comanda planificată de reaprovizionare sau debifați regula ca s-o comande Odoo |
+| Notificarea „Comenzi planificate sărite, cu lansarea după …” la generarea în lot | Comenzile respective se lansează după fereastra de lansare | Normal: se generează când intră în fereastră. Pentru o lansare anticipată, deschideți comanda și confirmați butonul de generare |
+| Un produs cu regulă min/max nu primește propuneri de la planificator | Regula e automată sau are minim/maxim și nu e bifată: o comandă Odoo standard | Bifați **Planificat de Advanced Planner** pe regulă dacă vreți propuneri eșalonate |
+| O ieșire viitoare nu generează propunere de reaprovizionare | Data ei e după orizontul de planificare | Măriți **Orizont de planificare** în Setări sau așteptați să intre în orizont |
 | Capturile nu se generează | Modulul `l10n_ro_doc_screenshots` nu este instalat | Instalați-l și rulați testul de capturi (vezi secțiunea 10) |
 
 ## 10. Capturi de ecran
@@ -295,27 +403,34 @@ Capturile (`readme/screenshots/`) se **generează automat** dintr-un test Playwr
 defensiv), în **limba română**, pe planul de conturi RO. Ordinea corespunde exact pașilor din
 secțiunea 6:
 
-1. `01_setari_planificator.png` — parametrii planificatorului în Setări → Inventar.
+1. `01_setari_planificator.png` — parametrii planificatorului în Setări → Inventar (inclusiv orizontul și fereastra de lansare).
 2. `02_so_recalcul_oferta.png` — comandă de vânzare în ofertă, cu banner de status după recalcul.
-3. `03_so_banner_confirmat.png` — tabul Planificare avansată pe SO confirmat (status + dată efectivă + risc).
-4. `04_planned_orders.png` — lista comenzilor planificate cu ierarhie BOM și status colorat.
+   - `02a_cea_mai_devreme_data.png` — fereastra **Cea mai devreme dată**: data fiecărui produs, sursa, motivul și data pentru toată comanda.
+3. `03_so_banner_confirmat.png` — tabul Planificare avansată pe SO confirmat (status + dată efectivă + risc + banner de blocare).
+4. `04_planned_orders.png` — lista comenzilor planificate grupate pe produs, cu status colorat.
 5. `05_planned_order_form.png` — formular comandă planificată de producție cu butonul Generează OF.
    - `05a_rfq_linie_cumulata.png` — cerere de ofertă consolidată, cu aceeași materie primă cumulată pe o singură linie (15 + 5 → 20 buc).
    - `05b_generare_rfq_notificare.png` — notificarea acțiunii **Generează cereri de ofertă** din listă, cu reușite și eșecuri.
+   - `05c_fereastra_lansare.png` — generarea în lot sare comanda care se lansează după fereastra de lansare.
 6. `06_material_situation.png` — Situație Material: stoc proiectat cronologic cu pegging.
-7. `07_stock_projection.png` — Stoc Proiectat Agregat cu elemente MRP, ATP și shortage.
-8. `08_workcenter_load.png` — Workcenter Load: pivot și grafic încărcare per săptămână.
+7. `07_stock_projection.png` — Stoc Proiectat Agregat cu elemente MRP, ATP și pegging.
+8. `08_workcenter_load.png` — Încărcare centru de lucru: listă colorată per post și săptămână.
 9. `09_crp.png` — CRP: ore cerute vs. capacitate pe săptămâni.
 10. `10_global_planning.png` — wizardul de planificare globală.
+    - `10a_regula_planificator.png` — regula de reaprovizionare bifată **Planificat de Advanced Planner** (min 100 / max 300).
+    - `10b_reaprovizionare_esalonata.png` — filtrul **Reaprovizionare pentru stoc**: propunerile pentru stoc, câte una pe deficit, până la orizont.
 11. `11_delivery_risk_board.png` — tabloul Risc de livrare semaforizat.
 12. `12_dashboard.png` — dashboard cu contori și KPI de planificare.
 
 Testul `tests/test_screenshots.py` seedează un mediu de producție determinist (posturi de lucru cu
 calendar + eficiență, BOM pe 2 niveluri cu operații, furnizori cu lead time + MOQ, stoc parțial) și
-rulează planificatorul pe comenzi de vânzare (una confortabilă → On Track, una cu termen strâns →
-Critical), apoi agregă CRP, Situația Material și Stocul Proiectat, astfel încât toate ecranele să
+confirmă comenzi de vânzare (una confortabilă → **La termen**, una cu termen strâns → **Critic**),
+lasă o ofertă în simulare, apoi agregă CRP, Situația Material și Stocul Proiectat, astfel încât toate ecranele să
 aibă date reale. Pentru Pasul 5 generează o cerere de ofertă din două comenzi planificate pentru
-aceeași materie primă (15 + 5 buc) și rulează generarea în lot pe o comandă cu furnizor și una fără.
+aceeași materie primă (15 + 5 buc) și rulează generarea în lot pe o comandă cu furnizor și una fără,
+apoi pe o comandă de lansat acum și una care se lansează peste 40 de zile. Pentru Pasul 10 creează o
+regulă min/max bifată (șuruburi, stoc 60, min 100, max 300) și un consumabil cu ieșiri fără SO la 20,
+60 și 150 de zile, apoi rulează reaprovizionarea pentru stoc cu orizontul de 90 de zile.
 
 Regenerare:
 
@@ -331,5 +446,8 @@ promisă e realizabilă?), când se rulează (la ofertare, la confirmare, în ba
 trebuie pregătite (BOM, calendar posturi, lead time furnizori, `commitment_date`) și cum se citește
 verdictul (semafor OK/Avertisment/Blocat + dată efectivă). Subliniați separarea **planificare vs.
 execuție**: modulul propune și verifică, dar RFQ-urile și ordinele de producție rămân la decizia
-operatorului. Menționați explicit că modulul **nu generează note contabile** — efectul contabil apare
+operatorului. Explicați **regula „un singur proprietar”** pentru produsele cu reguli min/max (bifa
+**Planificat de Advanced Planner**) și diferența față de Odoo standard, care comandă acum tot ce cere
+orizontul său, în timp ce planificatorul propune câte o comandă pe deficit, lansată la momentul
+potrivit (fereastra de lansare). Menționați explicit că modulul **nu generează note contabile** — efectul contabil apare
 standard, la recepția achizițiilor și finalizarea producției.

@@ -1,10 +1,10 @@
 # Marketplace Base Connector (localizat la `deltatech_marketplace/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace`
-- **Versiune:** `19.0.1.39.0`
+- **Versiune:** `19.0.1.40.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-10-12`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -26,7 +26,7 @@ Marketplace Base Connector este modulul de bază al familiei de module marketpla
 - Mapare produse existente (**Map Products**, din meniul cardului *Produse* al backend-ului, și **Map in Marketplace** din meniul *Acțiune* al produselor): leagă produsele Odoo de ofertele din magazin după referință internă și cod de bare, în joburi de câte 100, fără a importa nimic (produsul Odoo își păstrează numele, prețul și codurile); conflictele de cod sunt raportate. Apare doar pe backend-urile ai căror conectori implementează căutarea după produse.
 - Asocierile duplicate sunt semnalate (câmp `duplicate_mapping`, în roșu în liste, cu filtru dedicat pe categorii) pentru categorii, atribute, valori de atribut și liste de prețuri.
 - Imaginea principală se descarcă doar când se schimbă linkul ei (linkul ultimei descărcări e ținut pe asociere), iar o descărcare eșuată nu mai șterge imaginea existentă.
-- Formularul backend-ului: tab-ul *Alte informații* este împărțit în *Comenzi și produse* (setări de business) și *Tehnic* (limite de import, canale de joburi, limitarea ratei API și lista de găleți de rată).
+- Formularul backend-ului: tab-ul *Alte informații* este împărțit în *Comenzi și produse* (setări de business) și *Tehnic* (limite de import, canale de joburi, limitarea ratei API și lista de găleți de rată). În *Comenzi și produse*, grupul *Comenzi* (`name="order"`) și grupul *Plată* (`name="payment"`) stau pe același rând, iar *Valori implicite* trece pe rândul propriu; conectorii care adăugau setări de comandă în grupul `payment` le extind acum pe `order`.
 - Securitate: parola, `client_secret`, tokenurile și linkul de webhook sunt vizibile doar pentru Marketplace Manager; conectorii le citesc cu `sudo()`, deci fluxurile utilizatorilor obișnuiți merg în continuare. Cheia API nu mai ajunge în logul serverului. Se actualizează împreună cu conectorii.
 - Exportul de stoc și de preț procesează acum toate backend-urile selectate (nu doar primul împărțit în joburi), iar filtrul „doar modificate” se aplică și pe calea cu joburi.
 - Starea de sănătate: joburile eșuate din canalele comune se contorizează pe backend-ul căruia îi aparțin; butonul **Run jobs** declanșează cron-urile `queue_job_cron_jobrunner`; Marketplace Manager are acces la joburi și canale.
@@ -65,7 +65,7 @@ Conform fluxului de ingestie, secțiunile 1–2 provin din `readme/DESCRIPTION.m
 
 **Vizualizări**
 
-- `views/backend_views.xml`: formularul backend-ului (carduri de obiecte, taburi *Comenzi și produse* și *Tehnic*), cu butoanele de verificare webhook și rulare joburi.
+- `views/backend_views.xml`: formularul backend-ului (carduri de obiecte, taburi *Comenzi și produse* — cu grupurile *Comenzi* și *Plată* — și *Tehnic*), cu butoanele de verificare webhook și rulare joburi.
 - `views/product_view.xml`, `product_template_view.xml`: asocierile de produse, cu diferențe de stoc/preț.
 - `views/category_view.xml`, `attribute_view.xml`, `customer_view.xml`, `pricelist_view.xml`, `warehouse_view.xml`, `lang_view.xml`, `stock_view.xml`, `tax_view.xml`: asocierile pe tipuri de obiecte.
 - `views/marketplace_log_views.xml`: jurnalul operațiunilor; `views/menu.xml`: meniul Marketplace.

@@ -1,10 +1,10 @@
 # Deltatech Advanced Planner (localizat la `deltatech_advanced_planner/index.md`)
 
 - **Nume Tehnic:** `deltatech_advanced_planner`
-- **Versiune:** `19.0.1.6.1`
+- **Versiune:** `19.0.1.8.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_advanced_planner
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_advanced_planner`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-10-12`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -42,12 +42,20 @@ Deltatech Advanced Planner este un planificator avansat de stoc care răspunde l
 - **Cumulare linii în RFQ** — la consolidare, cantitatea se adaugă la linia existentă cu același produs, UoM, preț și discount, în loc să se creeze o linie duplicat; generarea în masă (acțiune pe listă) rulează fiecare AP într-un savepoint și afișează erorile într-o notificare.
 - **Multi-companie și unități de măsură** — reguli multi-companie pe comenzile planificate, încărcarea posturilor, sloturile CRP, situații material și proiecții de stoc; cantitățile din BOM, PO, MO și mișcări sunt convertite în UoM-ul de bază al produsului înainte de netting și pegging.
 - **MO generat de planificator** — la confirmarea MO-ului generat din AP, componentele nu mai sunt planificate a doua oară prin ruta MTO („Replenish on Order"); MO-urile create manual sau din reaprovizionare păstrează comportamentul MTO.
+- **Cea mai devreme dată de livrare (Capable to Promise)** — buton **Earliest Date** pe oferte și comenzi de vânzare (inclusiv pentru vânzători): o fereastră arată, pentru fiecare produs, cea mai devreme dată de livrare, sursa (stoc, recepții planificate, achiziție, producție), motivul (componentă critică și lead time furnizor, fereastră de producție, săptămâni pline pe posturi) și cantitatea disponibilă imediat pentru livrare parțială; **Set as promised date** pune pe comandă cea mai târzie dată dintre linii. Calculul ține cont de stocul proiectat cu celelalte comenzi și oferte trimise, PO confirmate și RFQ-uri draft, lead time-uri, RCCP și încărcarea CRP săptămână cu săptămână; nu creează și nu rezervă nimic (două oferte pot primi aceeași dată până la confirmare).
+- **Reaprovizionare fără comenzi duble** — RFQ-urile draft, trimise sau în aprobare contează ca aprovizionare la data planificată; o comandă nouă nu poate sosi înainte de azi + lead time; la re-rulare se șterg doar AP-urile de reaprovizionare deschise (draft/planned), cele transformate în RFQ/MO rămân legate de document.
+- **Orizont de planificare** (Setări, implicit 90 zile) — reaprovizionarea planifică ieșirile până la azi + N zile, fiecare deficit cu propriul AP; comenzile de vânzare rămân planificate până la data livrării.
+- **Reguli de reaprovizionare planificate de planificator** — opțiune nouă „Planned by Advanced Planner" pe regula de stoc: planificatorul aplică minimul, maximul și multiplul regulii, iar Odoo nu mai comandă (scheduler, buton Order, cantitate manuală). O regulă automată sau cu min/max nebifată rămâne în grija Odoo, iar planificatorul sare produsul. Regulile manuale temporare (min = max = 0) numără propunerile deschise, deci butonul Order nu comandă a doua oară aceeași cantitate (schimbare de comportament).
+- **Fereastră de lansare** (Setări, implicit 7 zile) — generarea în masă de RFQ/MO sare AP-urile cu lansare după azi + N zile și le listează în notificare; butoanele din formular cer confirmare; filtre noi „To Release" și „Stock Replenishment" (combinabile). Generarea în masă de MO raportează erorile.
+- **Subansamble și materii prime în ofertă/comandă** — pentru o comandă trimisă sau confirmată sunt planificate (nu rămân în draft/simulare), deci contează în Situația Material și în detecția zilnică; confirmarea fără planificare automată activează AP-urile draft ale ofertei.
+- **Date corecte la mutarea producției** — când data promisă e prea aproape și producția e mutată mai târziu, propunerile de achiziție ajung chiar înainte de noul start de producție și se lansează cel mai devreme azi (înainte, RFQ-ul cerea furnizorului o livrare în câteva zile și apăreau abateri „PO întârziat" false).
 
 #### 3. Dependențe
 
 - `sale_management`
 - `mrp`
 - `purchase`
+- `purchase_stock`
 - `stock`
 - `resource`
 - `mail`
@@ -56,19 +64,20 @@ Deltatech Advanced Planner este un planificator avansat de stoc care răspunde l
 
 #### 4. Componente Cheie
 
-Sumarul și Funcționalitățile Cheie provin din `readme/DESCRIPTION.md` (completat cu `readme/HISTORY.md` pentru funcționalitățile apărute după redactarea lui), care nu solicită explicit detalierea componentelor; mai jos sunt doar elementele tehnice menționate explicit în documentație sau vizibile în manifest.
+Sumarul și Funcționalitățile Cheie provin din `readme/DESCRIPTION.md` (completat cu `readme/HISTORY.md` (până la 19.0.1.8.0) pentru funcționalitățile apărute după redactarea lui), care nu solicită explicit detalierea componentelor; mai jos sunt doar elementele tehnice menționate explicit în documentație sau vizibile în manifest.
 
 **Modele**
 
 - `advanced.planned.order`: comanda planificată (AP), cu ciclu de viață `draft → planned → done`, depozit, fixare (`is_fixed`) și legături către SO, PO și MO.
 - `advanced.planner.log`: logul de execuție al planificatorului (pas, severitate, detalii).
 - `advanced.planner.engine`: motorul de planificare (netting, explozie BOM, backward/forward scheduling, detecție abateri).
+- `advanced.ctp.wizard` (+ `.line`): fereastra „Earliest Date” (Capable to Promise), calculată în `advanced_planner_ctp.py`.
 - `advanced.workcenter.load` și `advanced.crp.slot`: încărcarea posturilor de lucru și sloturile CRP (workcenter × săptămână × companie).
 - `advanced.material.situation` și `advanced.stock.projection`: Situația Material și Stocul Proiectat Agregat (cu linii și wizard de snapshot).
 
 **Vizualizări**
 
-Meniuri sub aplicația Planificator: Dashboard, Tablou riscuri livrare, Comenzi planificate (listă, pivot, Gantt), Planificare globală, Situație Material (+ snapshot-uri), Stoc Proiectat, Încărcare posturi, CRP și nivelare, Rapoarte. Setările sunt în Setări → Inventar.
+Buton **Earliest Date** pe formularul ofertei/comenzii de vânzare (`advanced_ctp_wizard_views.xml`). Meniuri sub aplicația Planificator: Dashboard, Tablou riscuri livrare, Comenzi planificate (listă, pivot, Gantt), Planificare globală, Situație Material (+ snapshot-uri), Stoc Proiectat, Încărcare posturi, CRP și nivelare, Rapoarte. Setările sunt în Setări → Inventar.
 
 **Acțiuni Automate / Acțiuni Server**
 

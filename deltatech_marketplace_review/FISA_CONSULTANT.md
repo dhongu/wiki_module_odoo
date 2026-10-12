@@ -79,8 +79,9 @@ Date minime pentru demo:
 ## 5. Configurare inițială
 
 1. Instalați `deltatech_marketplace_sale` (vine cu conectorul concret) și
-   `deltatech_sale_order_review`; puntea `deltatech_marketplace_review` se instalează **automat**.
-2. Pe backend-ul de marketplace (**Marketplace → Backends**, tab **Alte informații**, grupul
+   `deltatech_sale_order_review`, apoi instalați explicit puntea `deltatech_marketplace_review` (nu se
+   mai instalează automat).
+2. Pe backend-ul de marketplace (**Marketplace → Backends**, tab **Comenzi și produse**, grupul
    **Comandă și plată**) bifați **Confirmă comanda de vânzare**, stabiliți **Auto-Confirm Wait
    (minutes)** (fereastra în care clientul mai poate adăuga un mesaj; 15 implicit) și **Max
    Auto-Confirm COD Amount** (ex. 1.000 lei). Zero înseamnă fără limită proprie.
@@ -111,7 +112,7 @@ de confirmare"), **Totalul comenzii diferă de cel din marketplace** și **Locke
 
 ### Pasul 2 — Politica de confirmare pe backend
 
-Deschideți **Marketplace → Backends → backend-ul magazinului**, tab **Alte informații**, grupul
+Deschideți **Marketplace → Backends → backend-ul magazinului**, tab **Comenzi și produse**, grupul
 **Comandă și plată**. Aici stau setările care alimentează motivele: ① **Confirmă comanda de vânzare**
 — confirmarea automată e pornită; ② **Auto-Confirm Wait (minutes)** — minutele de așteptare după
 import, în care clientul mai poate adăuga un mesaj; ③ **Max Auto-Confirm COD Amount** — limita de
@@ -239,7 +240,7 @@ Capturile (`readme/screenshots/`) sunt generate automat din `tests/test_screensh
 
 1. `01_reguli_marketplace.png` — lista regulilor de verificare, cu cele trei reguli marketplace
    evidențiate (mesaj client, total diferit, locker neales).
-2. `02_backend_confirmare.png` — backend-ul marketplace, tab „Alte informații": Confirmă comanda de
+2. `02_backend_confirmare.png` — backend-ul marketplace, tab „Comenzi și produse": Confirmă comanda de
    vânzare, Auto-Confirm Wait (minutes), Max Auto-Confirm COD Amount.
 3. `03_comanda_mesaj_client.png` — oferta importată reținută înainte de confirmare, cu bannerul
    „Reținută pentru verificare" și motivul mesajului clientului.

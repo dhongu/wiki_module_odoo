@@ -106,6 +106,7 @@ Date minime pentru demo (folosite și în capturi):
    | `deltatech_nap.use_statistical_safety_stock` | bifa **Stoc de siguranță statistic** precompletată | `False` |
    | `deltatech_nap.service_level` | nivelul de serviciu precompletat (`90` / `95` / `97` / `99`) | `95` |
    | `deltatech_nap.xyz_cv_x`, `deltatech_nap.xyz_cv_y` | pragurile coeficientului de variație pentru clasele X/Y/Z | `0.5`, `1.0` |
+   | `deltatech_nap.forecast_method` | metoda de prognoză precompletată (`average` / `seasonal` / `holt` / `sba` / `auto`) | `average` |
    | `deltatech_nap.include_min_reordering_rules` | respectă și minimul din regulile de reaprovizionare ale locației | `False` |
 
 ## 6. Flux de utilizare
@@ -127,6 +128,11 @@ Accesați **Inventar → Raportare → Raport stoc prognozat**. Se deschide asis
   - **Zile prognoză** — pentru câte zile comandați (demo: 30);
   - **Termen livrare (zile)** — adăugat la orizont (demo: 14, deci necesarul se calculează pe 44 de
     zile);
+  - **Metodă de prognoză** — *Medie* (implicit: media zilnică × orizont), *Sezonier* (aceleași săptămâni
+    de anul trecut, ajustate cu nivelul recent; cere cel puțin un an de istoric plus orizontul în
+    **Dată**), *Tendință* (Holt amortizat), *Intermitent* (Croston SBA, pentru produse vândute rar) sau
+    *Automat* (Intermitent pentru clasa Z, altfel metoda cu eroarea mai mică pe ultimele săptămâni).
+    Fără istoric suficient, metoda trece pe *Tendință*, apoi pe *Medie*, iar explicația liniei spune de ce;
   - **Produse de comandat** + **Cant de comandat mai mare** — păstrează doar liniile cu cantitate de
     comandat peste prag.
 - **Creștere**:

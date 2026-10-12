@@ -141,8 +141,8 @@ recalculați fluturașul.
 ### Pasul 5 — Verificarea liniilor: tichete de masă și suma neimpozabilă
 
 Pe fila **Calcul Salariu** citiți, în ordine (contribuțiile și impozitul sunt rotunjite la leu, de aceea coloana
-*Rata* arată ±100%, minus la rețineri): *Salariu impozabil* (brut) = 4.325; *Sumă neimpozabilă* = 200 (salariul de bază din contract este
-egal cu salariul minim); *Tichete de masă* = 20 × 45 = 900; *CAS* = 25% × (4.325 − 200) = 1.031; *CASS* =
+*Rata* arată ±100%, minus la rețineri): *Salariu brut* = 4.325; *Sumă neimpozabilă* = 200 (salariul de bază din contract este
+egal cu salariul minim, iar venitul brut nu trece de 4.600 lei); *Salariu impozabil* = 4.325 − 200 = 4.125; *Tichete de masă* = 20 × 45 = 900; *CAS* = 25% × (4.325 − 200) = 1.031; *CASS* =
 10% × (4.325 + 900 − 200) = 502,50 → 503; *Deducere personală (DPB)* = 692 — grila se citește la venitul 5.225
 (brut + tichete, fără a scădea suma neimpozabilă), unde 1 persoană în întreținere înseamnă 16% din 4.325;
 *Impozitul pe venit* = 10% × (4.325 + 900 − 200 − 1.031 − 503 − 692) = 279,90 → 280.
@@ -215,7 +215,9 @@ partener angajatul. Verificați că nota e echilibrată și că soldul lui 421 p
 
 ### Pasul 12 — Rețineri deductibile din baza de impozit (sindicat, pensie facultativă)
 
-1. **Stat de plată → Angajați → Salary Adjustments** (Ajustări salariale) **→ Nou**: angajatul, tipul **Cotizație sindicală**, suma lunară (ex. 50) și durata nelimitată.
+1. **Stat de plată → Angajați → Salary Adjustments** (Ajustări salariale) **→ Nou**: angajatul, tipul **Cotizație sindicală**, durata nelimitată și
+   *Mod de calcul*: **Sumă fixă** (suma lunară, ex. 50) sau **Procent din venitul brut** (implicit 1%). La procent, suma se recalculează pe fiecare
+   fluturaș din venitul brut realizat al lunii (cu sporuri, concediu medical și tichete), rotunjită la leu: la brut 5.000, 1% = 50.
 2. Pentru pensia facultativă plătită direct de salariat alegeți **Pensie facultativă (doar baza impozabilă)** (ex. 100); dacă o reține
    angajatorul, **Pensie facultativă (reținută)**.
 3. Generați fluturașul și citiți fila **Calcul Salariu** la Iliescu Radu (brut 5.000, iulie 2026): apare **Deduceri din baza impozabilă** = 150;
@@ -239,12 +241,25 @@ neconcordanțe în D112.
 
 ### Pasul 14 — Simulatorul brut / net
 
-**Stat de plată → Raportare → Simulator brut / net (RO)**: alegeți luna, introduceți salariul brut (aici 5.000), apăsați **Simulează**,
-apoi butonul de tipărire pentru raportul PDF. Simularea folosește aceleași reguli și parametri ca fluturașul, dar **nu creează** fluturaș
+**Stat de plată → Raportare → Simulator brut / net (RO)**: alegeți modul (**Brut → net** sau **Net → brut**), luna și suma, completați
+datele salariatului sau alegeți un angajat existent (formularul îi preia norma, excepția de la baza minimă și tichetul), apoi apăsați
+**Simulează**. Simularea folosește aceleași reguli și parametri ca fluturașul, pe o lună lucrată integral, dar **nu creează** fluturaș
 și nu atinge datele salariatului; este utilă la negocieri și oferte.
 
-Citiți pe document: *Salariu impozabil* 5.000; *CAS* −1.250; *CASS* −500; *Deducere personală (DPB)* 562; *Impozit* −269; **Net 2.981**;
-*CAM* 113; **Cost angajator** 5.113. Documentul poartă mențiunea „Simulare informativă, nu fluturaș de salarii”. Simularea nu include reținerile de la Pasul 12 (de aceea impozitul diferă de cel din Pasul 12).
+Exemplul din captură e un contract cu **timp parțial**: ① **Ore pe zi** 4, salariu brut 2.200 și ② **Primă brută** 300. Citiți în
+rezultat: *Brut* 2.500; *CAS* −625; *CASS* −250; *DPB* 865; *Impozit* −76; **Net 1.549**; *CAM* 56; *Cost angajator* din fluturaș 2.556.
+Baza de 2.500 e sub pragul minim de CAS/CASS al lunii (4.325 − 200 = 4.125), deci angajatorul plătește diferența
+(art. 146 alin. 5^6 Cod fiscal): ③ **Diferență CAS** 406 și **Diferență CASS** 163, calculate ca în D112 și rotunjite la leu; ④ **Cost
+total angajator** 3.125. Diferența apare doar cu modulul D112 din salarizare (`l10n_ro_anaf_d112_payroll`, inclus în
+`l10n_ro_payroll_pack`); fără el, la timp parțial apare o notă. Cu o **excepție de la baza minimă** (de exemplu pensionar pentru limită
+de vârstă) diferența nu se datorează.
+
+![Simulatorul la timp parțial, cu prima brută și diferența CAS/CASS până la baza minimă](screenshots/14_simulator_formular.png)
+
+Butonul **Tipărește** dă documentul simulării. Pe exemplul de control, normă întreagă și 5.000 brut, citiți: *Salariu brut* 5.000;
+*CAS* −1.250; *CASS* −500; *Deducere personală (DPB)* 562; *Impozit* −269; **Net 2.981**; *CAM* 113; **Cost angajator** 5.113.
+Documentul poartă mențiunea „Simulare informativă, nu fluturaș de salarii”. Fără angajat ales, simularea nu include reținerile de la
+Pasul 12 (de aceea impozitul diferă de cel din Pasul 12).
 
 ![Raportul simulatorului brut / net](screenshots/14_simulator_brut_net.png)
 
@@ -278,10 +293,10 @@ dată, iar baza de calcul se preia din episodul inițial. **Procentul se stabile
 ### Pasul 17 — Liniile fluturașului cu concediu medical
 
 Generați fluturașul lunii cu **Calculați bilanțul** și citiți fila **Calcul Salariu** la Marinescu Dan (septembrie 2026):
-*Concediu medical (angajator)* = 619; *Concediu medical (FNUASS)* = 464; *Salariu de bază* (partea lucrată) = 3.181,82;
-*Salariu impozabil* = 3.800,82 (partea lucrată + indemnizația angajatorului). Contribuțiile se rețin separat pe cele două surse (impozitul total al lunii, 191, se împarte proporțional cu venitul: 170 pe partea impozabilă și 21 pe indemnizația FNUASS):
-*CAS* 950 și *CASS* 380 pe salariul impozabil, plus *CAS pe concediu medical (FNUASS)* 116 și *CASS pe concediu medical (FNUASS)* 46;
-*Impozit pe concediu medical (FNUASS)* 21 se adaugă impozitului de 170. **Salariu net** = 2.581,82.
+*Concediu medical (angajator)* = 619; *Concediu medical (FNUASS)* = 464; *Salariu de bază* (partea lucrată, rotunjită la leu) = 3.182;
+*Salariu brut* = 3.801 (partea lucrată + indemnizația angajatorului). Contribuțiile se rețin separat pe cele două surse (impozitul total al lunii, 191, se împarte proporțional cu venitul: 170 pe partea impozabilă și 21 pe indemnizația FNUASS):
+*CAS* 950 și *CASS* 380 pe salariul brut, plus *CAS pe concediu medical (FNUASS)* 116 și *CASS pe concediu medical (FNUASS)* 46;
+*Impozit pe concediu medical (FNUASS)* 21 se adaugă impozitului de 170. **Salariu net** = 2.582.
 
 Indemnizația angajatorului face parte din brut (cheltuială 641), iar cea suportată din FNUASS nu: se datorează angajatului, dar se
 recuperează de la fond (vezi Pasul 18 și Pasul 21).
@@ -293,9 +308,9 @@ recuperează de la fond (vezi Pasul 18 și Pasul 21).
 La **Validează**, fluturașul lui Marinescu Dan generează nota contabilă în jurnalul **Salarii** (**Contabilitate → Note contabile**, fila *Elemente jurnal*). Pe lângă
 liniile obișnuite, apar cele pentru indemnizația din FNUASS: **Dr 4382 = Cr 423** 464 (creanța față de fond și datoria către angajat), iar contribuțiile și impozitul de pe
 indemnizația FNUASS se rețin din 423: **Dr 423 = Cr 43151** 116 (CAS), **Cr 43161** 46 (CASS), **Cr 4441** 21 (impozit). Indemnizația angajatorului intră în salariul impozabil:
-**Dr 641 = Cr 421** 3.800,82. Totalul notei este 6.033,82. Nota rămâne în **Ciornă** până apăsați **Postează**; abia după postare intră în solduri și în reconcilierea plății.
+**Dr 641 = Cr 421** 3.801. Totalul notei este 6.034. Nota rămâne în **Ciornă** până apăsați **Postează**; abia după postare intră în solduri și în reconcilierea plății.
 
-Verificați: nota e echilibrată; 641 conține doar partea suportată de angajator; **soldul netului se împarte pe două conturi**: 421 = 2.300,82 și 423 = 281 (464 − 116 − 46 − 21),
+Verificați: nota e echilibrată; 641 conține doar partea suportată de angajator; **soldul netului se împarte pe două conturi**: 421 = 2.301 și 423 = 281 (464 − 116 − 46 − 21),
 iar plata angajatului se reconciliază pe ambele conturi. Recuperarea sumei de la casa de asigurări (închiderea lui 4382) se face în afara modulului.
 
 ![Nota contabilă a fluturașului cu concediu medical](screenshots/18_nota_contabila_cm.png)
@@ -351,8 +366,8 @@ fluturașii validați salariul de bază și **sporurile permanente** (regula la 
 (250 lei) înmulțită cu cele 5 zile dă **1.250 lei**.
 
 Indemnizația **înlocuiește** salariul și sporurile permanente pentru zilele de concediu (art. 150 din Codul muncii). De aceea regula sporului trebuie scrisă **proporțional cu zilele lucrate**:
-în captură, *Salariu de bază* = 3.863,64 (17 din 22 de zile) și *Spor de vechime* = 386,36 (500 × 17/22). Brutul lunii este 5.500, ca într-o lună obișnuită:
-1.250 + 3.863,64 + 386,36. Formula din exemplu: `500 × zile lucrate / total zile`. O regulă permanentă intră în înlocuirea de la art. 150 doar dacă secvența ei este mai mică decât cea a indemnizației de concediu de odihnă (49). Dacă sporul rămâne întreg (500), el se plătește de două ori pentru zilele de concediu.
+în captură, *Salariu de bază* = 3.864 (17 din 22 de zile, rotunjit la leu) și *Spor de vechime* = 386 (500 × 17/22, rotunjit). Brutul lunii este 5.500, ca într-o lună obișnuită:
+1.250 + 3.864 + 386. Formula din exemplu: `payslip._l10n_ro_round_lei(500 × zile lucrate / total zile)`; fără rotunjire, sporul rămâne cu bani (386,36). O regulă permanentă intră în înlocuirea de la art. 150 doar dacă secvența ei este mai mică decât cea a indemnizației de concediu de odihnă (49). Dacă sporul rămâne întreg (500), el se plătește de două ori pentru zilele de concediu.
 Modulul **nu proratează** automat regulile marcate ca permanente; verificați fiecare regulă de spor din structură.
 
 Verificați: există fluturași validați pe lunile de referință (altfel media pornește de la salariul zilnic din contract); sporurile care trebuie incluse au bifa
@@ -376,7 +391,7 @@ Pentru o primă dată **în brut** folosiți intrarea **Primă (în brut)**.
 Dacă suma exactă nu se poate atinge (rotunjirea la leu, treptele deducerii), fluturașul are o avertizare cu brutul găsit și netul obținut. Prima se **recalculează la fiecare calcul**:
 dacă salariul sau deducerile se schimbă, brutul primei se schimbă și el. Scoaterea intrării și un nou calcul readuc fluturașul la netul inițial.
 
-**Limită:** dacă pragul de venit pentru suma neimpozabilă la salariul minim (parametrul `suma_neimpozabila_prag_venit`, azi nesetat: actul pentru 2026 e de confirmat) ar fi activat, o primă care trece brutul peste prag face să se piardă suma neimpozabilă și netul scade brusc; căutarea brutului ar trebui adaptată (căutare liniară în jurul pragului). Primele din profit (participarea la profit) nu trec prin acest mecanism: se înregistrează Dr 644 = Cr 424.
+**Prag:** la salariul minim, o primă care trece venitul brut peste pragul sumei neimpozabile (4.600 lei din iulie 2026) face să se piardă suma neimpozabilă, iar netul scade brusc. Căutarea brutului ține cont de prag: dacă prima cerută încape sub prag, brutul rămâne sub prag; altfel se caută peste prag. Primele din profit (participarea la profit) nu trec prin acest mecanism: se înregistrează Dr 644 = Cr 424.
 
 **Verificați:** netul fluturașului cu prima minus netul fără ea este cel puțin suma cerută (de regulă egal, uneori cu un leu în plus); linia *Primă (în net, brut calculat)* e cea din brut;
 brutul total include prima; D112 preia brutul cu tot cu primă.
@@ -438,13 +453,14 @@ codurile neimpozabile de concediu medical în D112 se verifică manual; depunere
 - [ ] În D112 (cu puntea instalată), linia fiecărui angajat are aceleași tichete, sumă neimpozabilă, deduceri și bază impozabilă ca fluturașul.
 - [ ] Un fluturaș cu CNP lipsă sau copil fără CNP afișează avertizări; după corectare bannerul dispare (Barbu Mihai).
 - [ ] Simulatorul la 5.000 brut dă net 2.981 și cost angajator 5.113, fără să creeze fluturaș.
+- [ ] La 4 ore pe zi, 2.200 brut + 300 primă: net 1.549, diferențe CAS / CASS 406 / 163, cost total angajator 3.125 (cu puntea D112).
 - [ ] Reținerile deductibile reduc impozitul, nu și deducerea personală; plafonul de 400 EUR/an se respectă (Iliescu Radu: impozit 254, net 2.946).
 - [ ] Certificat CMB 0000101, 14–23.09.2026, cod 01, bază manuală 30.000/126: media 238,10; angajator 619; FNUASS 464.
 - [ ] Continuarea (CMB 0000202) are seria/numărul inițial completate, fără a doua zi neplătită, iar suma plătită pe episod nu depășește cea datorată.
 - [ ] Nota contabilă a fluturașului cu concediu medical: Dr 4382 = Cr 423 464; Dr 423 = Cr 43151 116 / 43161 46 / 4441 21; 641 = 421 doar pe indemnizația angajatorului.
 - [ ] Decontarea FNUASS din septembrie: 11 zile, 1.964 lei = suma liniilor *Concediu medical (FNUASS)* din fluturașii validați.
 - [ ] D112 septembrie: fila *Concedii medicale* are câte o linie pe certificat, cu aceleași sume ca fluturașii.
-- [ ] Concediul de odihnă: 5 zile × media (iunie–august, cu sporul permanent de 500) = 1.250 lei, cu sporul proratat 386,36 și brut 5.500 (Preda Ioana).
+- [ ] Concediul de odihnă: 5 zile × media (iunie–august, cu sporul permanent de 500) = 1.250 lei, cu sporul proratat 386 și brut 5.500 (Preda Ioana).
 - [ ] Verificați manual condiția din art. 77: persoana în întreținere nu are venituri peste 20% din salariul minim
       (modulul nu o verifică).
 
@@ -481,7 +497,8 @@ Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixin `Scre
 11. `11_nota_contabila.png` — nota contabilă a fluturașului validat.
 12. `12_linii_retineri.png` — rețineri deductibile (sindicat, pensie facultativă).
 13. `13_avertizari_fluturas.png` — avertizările fluturașului în ciornă.
-14. `14_simulator_brut_net.png` — raportul simulatorului brut / net.
+14. `14_simulator_formular.png` — simulatorul la timp parțial, cu prima brută și diferența CAS/CASS până la baza minimă (necesită puntea D112).
+    `14_simulator_brut_net.png` — raportul simulatorului brut / net.
 15. `15_certificat_medical.png` — certificat de concediu medical confirmat.
 16. `16_certificat_continuare.png` — certificat de continuare.
 17. `17_linii_concediu_medical.png` — liniile fluturașului cu concediu medical.
@@ -513,8 +530,8 @@ Cazurile din Pașii 12–24 folosesc septembrie 2026 (pașii 12–13 iulie 2026)
   - rotunjirea pe componente (ex. diferența din luna anterioară a unui episod) poate da ±1 leu între certificat, fluturaș și decontare;
   - modulul nu proratează automat regulile de spor marcate ca permanente pentru zilele de concediu de odihnă (Pasul 23);
   - concediile medicale pe condiții deosebite sau speciale și unele coduri de indemnizație (51, 02–04 pentru procent) nu sunt tratate complet;
-  - **de confirmat de contabil, din textul OUG 89/2025 și OUG 8/2026:** valorile 300/200 lei, plafonul de 33%
-    (care, la salariul minim, nu limitează practic suma de 200 lei), eventualul prag al venitului brut fără tichete
-    (parametrul opțional `suma_neimpozabila_prag_venit`, nesetat), tratamentul concediului medical la proratare,
+  - **de confirmat de contabil, din textul OUG 89/2025 și OUG 8/2026:** valorile 300/200 lei și pragurile de
+    4.300/4.600 lei, plafonul de 33% (care, la salariul minim, nu limitează practic suma de 200 lei), tratamentul
+    concediului medical la proratare,
     rotunjirea CAS/CASS/CAM și vârsta în luna în care se împlinește;
   - suma neimpozabilă se proratează cu zilele lucrate fără concedii și cu partea din lună în care contractul este activ.

@@ -1,10 +1,10 @@
 # Conector Marketplace PrestaShop (localizat la `deltatech_marketplace_prestashop/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_prestashop`
-- **Versiune:** `19.0.0.4.0`
+- **Versiune:** `19.0.0.5.0`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_prestashop`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_prestashop`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-10-12`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -16,6 +16,7 @@ Conectorul Deltatech pentru marketplace PrestaShop permite integrarea directă �
 - **Gestionarea completă a produselor:** sincronizarea catalogului de produse între Odoo și PrestaShop, suport pentru variante, atribute și caracteristici, import/export de imagini și conținut multimedia, gestionarea categoriilor de produse și a categoriilor publice. Exportul (creare/actualizare pe PrestaShop) trimite preț, denumire, EAN, greutate și categorii publice, la cerere sau automat la scriere (comutatorul *Active On Write*). Stocul circulă într-un singur sens: **doar din PrestaShop către Odoo** — modulul nu implementează export de stoc către PrestaShop.
 - **Integrare avansată a clienților:** importul clienților PrestaShop în baza de contacte Odoo, sincronizarea datelor de client, a adreselor și a istoricului de cumpărături, gestionarea grupurilor de clienți și a asocierilor. La importul comenzilor, opțiunea *Ignore Company Without VAT* de pe backend se respectă: o adresă de facturare cu denumire de firmă dar fără CUI devine persoană fizică, denumită după nume și prenume, nu un contact cu numele firmei (fără opțiune, comportamentul rămâne cel anterior).
 - **Gestionarea cuprinzătoare a comenzilor:** importul comenzilor de vânzare din PrestaShop în Odoo, cu posibilitatea de a filtra importul după statusul comenzii (pe baza statusurilor deja sincronizate prin Sale Stage), crearea automată a comenzilor de vânzare Odoo și urmărirea îndeplinirii și livrării comenzilor.
+- **Starea comenzii reîncărcată înainte de confirmare (din 0.5.0):** când backend-ul limitează confirmarea automată la anumite statusuri (*Auto-Confirm Only For Statuses*, câmp adus de [deltatech_marketplace_review](../deltatech_marketplace_review/index.md), care nu e dependență a acestui modul), statusul comenzii se citește din nou din PrestaShop chiar înainte de decizia de confirmare, împreună cu mesajele clientului. O plată eșuată în fereastra de așteptare nu mai lasă comanda să treacă pe un status vechi.
 - **Push dinspre Odoo spre PrestaShop:** statusul comenzii se trimite către PrestaShop doar dacă *Active On Write* e activat pe elementul „Sale Order"; în schimb, numărul de tracking (la trimiterea coletului către curier) și legătura facturii (la postarea facturii) se trimit **necondiționat**, indiferent de acest comutator.
 - **Webhook de intrare (nu ieșire):** fiecare tip de date sincronizat expune un link de webhook pe care **PrestaShop îl apelează către Odoo** (nu invers) pentru a declanșa imediat importul unei comenzi, fără a aștepta cron-ul orar.
 - **Wizard „Marketplace sync":** acțiune contextuală de pe produse/șabloane de produs pentru export la cerere (implicit `Direction = Export`, `Update Mode = Stock`; comutat manual pe `All` include și preț/nume) — ignoră comutatorul Active On Write.
@@ -83,4 +84,5 @@ Documentată integral în `readme/USAGE.md` (punctul 11), derivată din `prestas
 #### 5. Conexiuni
 
 - [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md): gestionarea comenzilor de vânzare provenite din marketplace, importate și din PrestaShop.
+- [deltatech_marketplace_review](../deltatech_marketplace_review/index.md): oferă lista *Auto-Confirm Only For Statuses* și fereastra de așteptare a confirmării automate, pe care conectorul le folosește opțional (relectura statusului din PrestaShop).
 - [deltatech_marketplace_purchase](../deltatech_marketplace_purchase/index.md): latura de achiziții a ecosistemului de marketplace Deltatech.
