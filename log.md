@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-12] l10n_ro_anaf_d112: sub-fișele `fise/` copiate în wiki
+
+- **Acțiune:** link-ul `fise/README.md` din `FISA_CONSULTANT.md` era rupt în wiki (ingestia copiase doar fișa și capturile). Copiat `readme/fise/` (README + 4 fișe de scenariu: salariu minim, part-time, pensionar, rectificativă) în `l10n_ro_anaf_d112/fise/`.
+- **Imagini:** căile `../../static/description/` rescrise în `../screenshots/`; cele 4 capturi (10–13) erau deja în `screenshots/`, identice cu sursa.
+
+---
+
 ## [2026-10-12] Ingestie lot: 15 module noi + re-ingestie 21 module rămase în urmă
 
 - **Acțiune:** actualizare după PR-urile din 09–12.10.2026, câte un subagent `documentarist-wiki` per modul, în paralel (3 loturi de 12).
