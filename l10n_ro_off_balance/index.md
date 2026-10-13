@@ -1,10 +1,11 @@
 # Romania - Evidență extrabilanțieră (clasa 8)
 
 - **Nume Tehnic:** `l10n_ro_off_balance`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_off_balance
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_off_balance`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-10-13`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -19,6 +20,7 @@ Conturile din grupa 80 (în afara bilanțului) se țin în partidă simplă, dar
 - Configurare în **Facturare → Configurare → Setări**, secțiunea „Romania - Off-Balance Accounts”: **Counterpart Account** (implicit 803999) și **Journal** (implicit EXTR); se schimbă doar dacă firma folosește alt analitic tehnic sau alt jurnal.
 - Modulul nu are meniuri proprii; notele generate de modulele care îl folosesc ajung în jurnalul EXTR, cu contrapartida 803999.
 - Control: soldul creditor al contului 803999 este egal cu suma soldurilor debitoare ale conturilor de evidență înregistrate cu această contrapartidă. În balanța de verificare, opțiunea „Hide off-balance accounts” scoate toată clasa 8 din totaluri.
+- **Migrarea contrapartidelor vechi:** la actualizarea modulelor consumatoare, soldul contrapartidelor vechi (ex. 8035C) se mută pe 803999 printr-o notă de transfer **în ciornă**, la data actualizării, pe care contabilul o verifică și o postează; notele deja postate nu se rescriu. Fluxul pas-cu-pas, cu capturi, este în fișa consultant.
 
 #### 3. Dependențe
 
@@ -29,7 +31,7 @@ Conturile din grupa 80 (în afara bilanțului) se țin în partidă simplă, dar
 
 **Modele**
 
-- `res.company` (extins): câmpurile `l10n_ro_off_balance_account_id` și `l10n_ro_off_balance_journal_id` (contul și jurnalul extrabilanțier ale companiei) și logica de creare a contului, jurnalului și grupelor.
+- `res.company` (extins): câmpurile `l10n_ro_off_balance_account_id` și `l10n_ro_off_balance_journal_id` (contul și jurnalul extrabilanțier ale companiei) și logica de creare a contului, jurnalului și grupelor. Include utilitarul `_l10n_ro_off_balance_transfer`, folosit de modulele consumatoare la actualizare pentru notele de transfer în ciornă (EXTR) ale contrapartidelor vechi (8035C, 8039, 800000) cu sold.
 - `res.config.settings` (extins): expune cele două câmpuri în setări.
 - `account.chart.template` (extins): creează elementele pe companiile noi la încărcarea planului de conturi.
 

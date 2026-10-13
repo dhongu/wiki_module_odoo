@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-13] Re-ingestie: `l10n_ro_reports_fix` 19.0.0.0.14 și `l10n_ro_off_balance` 19.0.1.0.3
+
+- **Acțiune:** actualizare după terrabit-solutions/l10n_ro_ent#698 (fișe consultant complete), procesare în paralel. `l10n_ro_off_balance` are acum fișă consultant (7 capturi: setări, 803999, grupele clasei 8, jurnalul EXTR, nota de custodie, controlul pe clasa 8, nota de transfer în ciornă). `l10n_ro_reports_fix`: pagina urmează tabelul „Ce înseamnă fiecare funcționalitate” din fișă; Balanța brută explicată cu 121 (Odoo mută 6xx, 7xx și 121 pe „Result Brought Forward”); tipul de cont „În Afara bilanțului”.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md` și fișele consultant din branch-ul PR #698; capturile copiate din `static/description/`, cu căile rescrise în `screenshots/`.
+- **Dependențe/Conexiuni:** `l10n_ro_reports_fix` ↔ [l10n_ro_off_balance](l10n_ro_off_balance/index.md), [l10n_ro_storno_enhancement](l10n_ro_storno_enhancement/index.md); `l10n_ro_off_balance` ↔ [l10n_ro_stock_consignment](l10n_ro_stock_consignment/index.md), [l10n_ro_inventory_items](l10n_ro_inventory_items/index.md), [l10n_ro_move_template](l10n_ro_move_template/index.md). Scoase din conexiunile `l10n_ro_reports_fix`: `l10n_ro_account_chart`, `l10n_ro_account_fisa_cont` (fără legătură în cod).
+- **Fișiere actualizate:** `l10n_ro_reports_fix/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `l10n_ro_off_balance/` (`index.md`, `FISA_CONSULTANT.md` nou, `screenshots/` nou), `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-10-13] Re-ingestie: `l10n_ro_currency_revaluation` 19.0.1.2.6 → 19.0.1.3.1
 
 - **Acțiune:** actualizare după terrabit-solutions/l10n_ro_ent#689 și #691: reevaluare pe fiecare partener (cont + partener + valută; bancă/casă pe cont; partener și pe 665/765), tranziția automată a ajustărilor vechi fără partener (eticheta „Stornare reevaluare fără partener (tranziție)”), linii needitabile după postare, cursul BNR din PDF cu separatorii limbii, baza legală corectată (pct. 322, 325, 329, 56 în locul pct. 304).

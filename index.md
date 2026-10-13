@@ -534,7 +534,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_micro_tax](l10n_ro_micro_tax/index.md): Calcul trimestrial al impozitului micro-întreprindere (1%/3%) cu monitorizare plafon și tranziție la profit.
 - [l10n_ro_move_template](l10n_ro_move_template/index.md): Șabloane de note contabile cu sume introduse, procente, formule și sold, plus zece șabloane românești gata făcute (salarii, chirie, amortizare, comodat, TVA la încasare).
 - [l10n_ro_mrp_labour_account](l10n_ro_mrp_labour_account/index.md): Configurează conturile de manoperă producție (331/921/923) pentru contabilizarea automată din mrp_account.
-- [l10n_ro_off_balance](l10n_ro_off_balance/index.md): Cont tehnic 803999 și jurnal EXTR ca convenție unică pentru notele pe conturile din afara bilanțului (grupa 80), plus grupele clasei 8 în planul de conturi.
+- [l10n_ro_off_balance](l10n_ro_off_balance/index.md): Cont tehnic unic 803999 și jurnal EXTR pentru notele pe conturile din afara bilanțului (grupa 80), plus grupele clasei 8 în planul de conturi RO.
 - [l10n_ro_oss_threshold](l10n_ro_oss_threshold/index.md): Monitorizează pragul anual de 10.000 EUR pentru vânzările B2C UE relevante pentru regimul OSS.
 - [l10n_ro_partner_cnp](l10n_ro_partner_cnp/index.md): CNP pe partener cu validarea cifrei de control; păstrează codul fiscal doar cu CUI/CIF și marchează ca entități persoanele cu CUI valid (PFA, II, IF, ONG).
 - [l10n_ro_partner_create_by_vat_button](l10n_ro_partner_create_by_vat_button/index.md): Buton în fișa partenerului pentru recitirea datelor de la ANAF pe baza codului de TVA.
@@ -569,7 +569,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_reges](l10n_ro_reges/index.md): Integrare REGES-Online pentru transmiterea electronică a angajaților și contractelor de muncă (înlocuitor REVISAL).
 - [l10n_ro_registru_jurnal](l10n_ro_registru_jurnal/index.md): Registrul-jurnal (cod 14-1-1) ca raport nativ, listare cronologică pe toate jurnalele, cu perechea cont debitor/creditor și totaluri zilnice.
 - [l10n_ro_report_common](l10n_ro_report_common/index.md): Elemente comune pentru rapoartele tipărite românești: conturi bancare ale firmei, antet de identificare a companiei și suma în litere corectă gramatical pentru RON.
-- [l10n_ro_reports_fix](l10n_ro_reports_fix/index.md): Corectează soldul final al balanței cu 5 coloane și adaugă opțiunea „Raw trial balance" fără Result Brought Forward.
+- [l10n_ro_reports_fix](l10n_ro_reports_fix/index.md): Corectează Balanța de verificare RO (4 și 5 coloane): sold inițial și final net pe o singură coloană, plus opțiunile Balanță brută, Ascunde conturile extrabilanțiere și Conturile extrabilanțiere în bloc separat.
 - [l10n_ro_residual_balance_writeoff](l10n_ro_residual_balance_writeoff/index.md): Închide în masă resturile mici de plată pe clienți și furnizori, cu previzualizare, listă de închidere în PDF și note contabile cu reconciliere automată.
 - [l10n_ro_reverse_charge_331](l10n_ro_reverse_charge_331/index.md): Taxare inversă internă art. 331 Cod fiscal (vânzare 0% R331 și achiziție 21% R331 cu autolichidare), condiționată de înregistrarea în scopuri de TVA a părții; include mențiunea „taxare inversă" în e-Factura CIUS-RO.
 - [l10n_ro_reverse_charge_331_pos](l10n_ro_reverse_charge_331_pos/index.md): Filtrează pozițiile fiscale de taxare inversă art. 331 din selectorul POS cât timp clientul comenzii nu e înregistrat în scopuri de TVA conform art. 316.

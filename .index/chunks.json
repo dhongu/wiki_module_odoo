@@ -347,7 +347,7 @@
   {
     "path": "deltatech_account_enterprise/index.md",
     "module": "deltatech_account_enterprise",
-    "version": "19.0.0.1.1",
+    "version": "19.0.0.1.2",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_enterprise",
     "local_path": "odoo-addons/bitshop_ent/deltatech_account_enterprise",
     "last_ingest": "2026-10-09",
@@ -15671,10 +15671,10 @@
   {
     "path": "l10n_ro_off_balance/index.md",
     "module": "l10n_ro_off_balance",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_off_balance",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_off_balance",
-    "last_ingest": "2026-10-09",
+    "last_ingest": "2026-10-13",
     "friendly_name": "l10n_ro_off_balance",
     "summary": "Conturile din grupa 80 (în afara bilanțului) se țin în partidă simplă, dar Odoo cere ca orice notă contabilă să fie echilibrată. Modulul stabilește o convenție unică pentru toate modulele Terrabit care scriu note extrabilanțiere: un cont tehnic de contrapartidă, un jurnal dedicat și grupele clasei 8 în planul de conturi. Astfel, conturile de evidență își păstrează soldul real, iar notele rămân echilibrate.",
     "features": [
@@ -15684,7 +15684,8 @@
       "Crearea automată a contului, jurnalului și grupelor la instalare pe companiile cu plan de conturi RO și pe companiile noi, la încărcarea planului.",
       "Configurare în Facturare → Configurare → Setări, secțiunea „Romania - Off-Balance Accounts”: Counterpart Account (implicit 803999) și Journal (implicit EXTR); se schimbă doar dacă firma folosește alt analitic tehnic sau alt jurnal.",
       "Modulul nu are meniuri proprii; notele generate de modulele care îl folosesc ajung în jurnalul EXTR, cu contrapartida 803999.",
-      "Control: soldul creditor al contului 803999 este egal cu suma soldurilor debitoare ale conturilor de evidență înregistrate cu această contrapartidă. În balanța de verificare, opțiunea „Hide off-balance accounts” scoate toată clasa 8 din totaluri."
+      "Control: soldul creditor al contului 803999 este egal cu suma soldurilor debitoare ale conturilor de evidență înregistrate cu această contrapartidă. În balanța de verificare, opțiunea „Hide off-balance accounts” scoate toată clasa 8 din totaluri.",
+      "Migrarea contrapartidelor vechi: la actualizarea modulelor consumatoare, soldul contrapartidelor vechi (ex. 8035C) se mută pe 803999 printr-o notă de transfer în ciornă, la data actualizării, pe care contabilul o verifică și o postează; notele deja postate nu se rescriu. Fluxul pas-cu-pas, cu capturi, este în fișa consultant."
     ],
     "dependencies": [
       "account",
@@ -15696,7 +15697,7 @@
       "l10n_ro_move_template",
       "l10n_ro_reports_fix"
     ],
-    "text": "l10n_ro_off_balance\nl10n_ro_off_balance\nConturile din grupa 80 (în afara bilanțului) se țin în partidă simplă, dar Odoo cere ca orice notă contabilă să fie echilibrată. Modulul stabilește o convenție unică pentru toate modulele Terrabit care scriu note extrabilanțiere: un cont tehnic de contrapartidă, un jurnal dedicat și grupele clasei 8 în planul de conturi. Astfel, conturile de evidență își păstrează soldul real, iar notele rămân echilibrate.\nCont tehnic 803999 (Contrapartidă tehnică evidență extrabilanțieră), analitic al sinteticului 8039. Echilibrează nota (ex. Dr 8033 = Cr 803999); se încadrează în nomenclatorul de conturi SAF-T (D406). Rămâne numai pentru contrapartidă; valorile reale din 8039 (ex. mărfuri primite în consignație) se țin pe un analitic propriu, ex. 803901. Pe bazele existente ele pot rămâne pe 803900 sau se reclasifică prin Dr 803901 = Cr 803900.\nJurnal EXTR (Evidență extrabilanțieră), comun pentru toate notele din grupa 80.\nGrupele clasei 8 (8, 80, 801–809, 89) create în planul de conturi, ca balanța de verificare să nu mai afișeze conturile sub „No Group”.\nCrearea automată a contului, jurnalului și grupelor la instalare pe companiile cu plan de conturi RO și pe companiile noi, la încărcarea planului.\nConfigurare în Facturare → Configurare → Setări, secțiunea „Romania - Off-Balance Accounts”: Counterpart Account (implicit 803999) și Journal (implicit EXTR); se schimbă doar dacă firma folosește alt analitic tehnic sau alt jurnal.\nModulul nu are meniuri proprii; notele generate de modulele care îl folosesc ajung în jurnalul EXTR, cu contrapartida 803999.\nControl: soldul creditor al contului 803999 este egal cu suma soldurilor debitoare ale conturilor de evidență înregistrate cu această contrapartidă. În balanța de verificare, opțiunea „Hide off-balance accounts” scoate toată clasa 8 din totaluri."
+    "text": "l10n_ro_off_balance\nl10n_ro_off_balance\nConturile din grupa 80 (în afara bilanțului) se țin în partidă simplă, dar Odoo cere ca orice notă contabilă să fie echilibrată. Modulul stabilește o convenție unică pentru toate modulele Terrabit care scriu note extrabilanțiere: un cont tehnic de contrapartidă, un jurnal dedicat și grupele clasei 8 în planul de conturi. Astfel, conturile de evidență își păstrează soldul real, iar notele rămân echilibrate.\nCont tehnic 803999 (Contrapartidă tehnică evidență extrabilanțieră), analitic al sinteticului 8039. Echilibrează nota (ex. Dr 8033 = Cr 803999); se încadrează în nomenclatorul de conturi SAF-T (D406). Rămâne numai pentru contrapartidă; valorile reale din 8039 (ex. mărfuri primite în consignație) se țin pe un analitic propriu, ex. 803901. Pe bazele existente ele pot rămâne pe 803900 sau se reclasifică prin Dr 803901 = Cr 803900.\nJurnal EXTR (Evidență extrabilanțieră), comun pentru toate notele din grupa 80.\nGrupele clasei 8 (8, 80, 801–809, 89) create în planul de conturi, ca balanța de verificare să nu mai afișeze conturile sub „No Group”.\nCrearea automată a contului, jurnalului și grupelor la instalare pe companiile cu plan de conturi RO și pe companiile noi, la încărcarea planului.\nConfigurare în Facturare → Configurare → Setări, secțiunea „Romania - Off-Balance Accounts”: Counterpart Account (implicit 803999) și Journal (implicit EXTR); se schimbă doar dacă firma folosește alt analitic tehnic sau alt jurnal.\nModulul nu are meniuri proprii; notele generate de modulele care îl folosesc ajung în jurnalul EXTR, cu contrapartida 803999.\nControl: soldul creditor al contului 803999 este egal cu suma soldurilor debitoare ale conturilor de evidență înregistrate cu această contrapartidă. În balanța de verificare, opțiunea „Hide off-balance accounts” scoate toată clasa 8 din totaluri.\nMigrarea contrapartidelor vechi: la actualizarea modulelor consumatoare, soldul contrapartidelor vechi (ex. 8035C) se mută pe 803999 printr-o notă de transfer în ciornă, la data actualizării, pe care contabilul o verifică și o postează; notele deja postate nu se rescriu. Fluxul pas-cu-pas, cu capturi, este în fișa consultant."
   },
   {
     "path": "l10n_ro_oss_threshold/index.md",
@@ -16852,16 +16853,36 @@
   {
     "path": "l10n_ro_reports_fix/index.md",
     "module": "l10n_ro_reports_fix",
-    "version": "19.0.0.0.1",
+    "version": "19.0.0.0.14",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_reports_fix",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_reports_fix",
     "last_ingest": null,
     "friendly_name": "Romania - Corecții rapoarte contabile",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - Corecții rapoarte contabile\nl10n_ro_reports_fix"
+    "summary": "Modulul corectează **Balanța de verificare (RO)**, cu 4 și 5 coloane, din `l10n_ro_reports`, astfel încât soldul inițial și soldul final al fiecărui cont să apară pe o singură coloană (Debit sau Credit), conform contabilității românești (OMFP 1802/2014). Pe lângă corecția de calcul, oferă trei opțiuni de afișare în meniul **Opțiuni**: **Balanță brută** (fără închiderea virtuală făcută de Odoo), **Ascunde conturile extrabilanțiere** și **Conturile extrabilanțiere în bloc separat**. Se adresează contabililor care pregătesc balanța pentru situațiile financiare, pentru audit sau pentru comparația cu o balanță primită din altă aplicație.",
+    "features": [
+      "Sold inițial net: Odoo pune la soldul inițial sumele debitoare și creditoare cumulate până la începutul perioadei, deci un cont poate avea sume pe ambele coloane. Modulul afișează soldul de deschidere net, pe o singură coloană (un client facturat și încasat anul trecut începe cu 0 / 0).",
+      "Sold final: era deja net pe cont în `l10n_ro_reports`; modulul corectează grupele (fără compensare) și aplică natura contului, dacă e definită.",
+      "Suma totală recalculată: Suma totală = Soldul inițial net + rulajul perioadei; egalitatea Debit = Credit se păstrează.",
+      "Grupe și total fără compensare: pe o grupă, soldurile debitoare și cele creditoare ale conturilor se adună separat, deci o grupă poate avea sold și pe Debit, și pe Credit (de exemplu clasa 4 Conturi de terți). Valorile se propagă corect la fiecare nivel al ierarhiei.",
+      "Natura contului activ / pasiv (doar cu `l10n_ro_storno_enhancement`, câmpul `l10n_ro_usage`): contul activ își arată soldul doar pe Debit, cel pasiv doar pe Credit. Un sold „pe partea greșită” apare cu minus (de exemplu un furnizor plătit în avans), ca să iasă în evidență. Conturile fără natură completată se comportă ca bifuncționale.",
+      "Balanță brută: la începutul fiecărui exercițiu, Odoo mută soldurile din anii precedenți ale conturilor 6xx, 7xx și 121 pe linia „Result Brought Forward”. Opțiunea oprește această închidere virtuală: fiecare cont își arată soldul real, iar linia „Result Brought Forward” dispare. La firmele care înregistrează notele de închidere, e varianta corectă pentru RO (121 cu soldul lui, 6 și 7 cu zero); altfel, arată notele de închidere lipsă. Utilă la migrarea soldurilor și la comparația cu balanțe externe.",
+      "Ascunde conturile extrabilanțiere: balanța conține doar conturile din bilanț (clasele 1–7); conturile de tip „În Afara bilanțului” (clasele 8 și 9) nu apar nici în linii, nici în totaluri.",
+      "Conturile extrabilanțiere în bloc separat: grupa 80 apare sub totalul general, cu subtotal propriu, ca evidență în partidă simplă (OMFP 1802/2014, cap. 16); contrapartida tehnică 803999 nu apare, iar grupa 89 „Bilanț” rămâne în totalul general (partidă dublă).",
+      "Varianta implicită (nicio opțiune bifată): clasa 8 intră în balanță și în totalul general, inclusiv contrapartida 803999, iar balanța rămâne egală; servește reconcilierii contrapartidei.",
+      "Opțiunile se pot combina; dacă sunt bifate și „Ascunde”, și „Bloc separat”, are prioritate „Ascunde”. Ierarhia pe grupe se activează din Opțiuni → Ierarhia și subtotalurile.",
+      "Export: PDF și XLSX păstrează varianta aleasă pe ecran.",
+      "Cale de meniu: Contabilitate → Raportare → Registre → Balanța de verificare (raportul „Balanța de verificare (5 coloane) (RO)” sau varianta cu 4 coloane).",
+      "Notă extrabilanțieră: notele din grupa 80 se fac pe o contrapartidă tehnică comună, contul 803999, în jurnalul EXTR, deoarece Odoo nu acceptă o notă care amestecă conturi „În Afara bilanțului” cu conturi de bilanț. Contul și jurnalul vin din `l10n_ro_off_balance`, opțional."
+    ],
+    "dependencies": [
+      "l10n_ro_reports"
+    ],
+    "connections": [
+      "l10n_ro_off_balance",
+      "l10n_ro_storno_enhancement",
+      "l10n_ro_usage"
+    ],
+    "text": "Romania - Corecții rapoarte contabile\nl10n_ro_reports_fix\nModulul corectează **Balanța de verificare (RO)**, cu 4 și 5 coloane, din `l10n_ro_reports`, astfel încât soldul inițial și soldul final al fiecărui cont să apară pe o singură coloană (Debit sau Credit), conform contabilității românești (OMFP 1802/2014). Pe lângă corecția de calcul, oferă trei opțiuni de afișare în meniul **Opțiuni**: **Balanță brută** (fără închiderea virtuală făcută de Odoo), **Ascunde conturile extrabilanțiere** și **Conturile extrabilanțiere în bloc separat**. Se adresează contabililor care pregătesc balanța pentru situațiile financiare, pentru audit sau pentru comparația cu o balanță primită din altă aplicație.\nSold inițial net: Odoo pune la soldul inițial sumele debitoare și creditoare cumulate până la începutul perioadei, deci un cont poate avea sume pe ambele coloane. Modulul afișează soldul de deschidere net, pe o singură coloană (un client facturat și încasat anul trecut începe cu 0 / 0).\nSold final: era deja net pe cont în `l10n_ro_reports`; modulul corectează grupele (fără compensare) și aplică natura contului, dacă e definită.\nSuma totală recalculată: Suma totală = Soldul inițial net + rulajul perioadei; egalitatea Debit = Credit se păstrează.\nGrupe și total fără compensare: pe o grupă, soldurile debitoare și cele creditoare ale conturilor se adună separat, deci o grupă poate avea sold și pe Debit, și pe Credit (de exemplu clasa 4 Conturi de terți). Valorile se propagă corect la fiecare nivel al ierarhiei.\nNatura contului activ / pasiv (doar cu `l10n_ro_storno_enhancement`, câmpul `l10n_ro_usage`): contul activ își arată soldul doar pe Debit, cel pasiv doar pe Credit. Un sold „pe partea greșită” apare cu minus (de exemplu un furnizor plătit în avans), ca să iasă în evidență. Conturile fără natură completată se comportă ca bifuncționale.\nBalanță brută: la începutul fiecărui exercițiu, Odoo mută soldurile din anii precedenți ale conturilor 6xx, 7xx și 121 pe linia „Result Brought Forward”. Opțiunea oprește această închidere virtuală: fiecare cont își arată soldul real, iar linia „Result Brought Forward” dispare. La firmele care înregistrează notele de închidere, e varianta corectă pentru RO (121 cu soldul lui, 6 și 7 cu zero); altfel, arată notele de închidere lipsă. Utilă la migrarea soldurilor și la comparația cu balanțe externe.\nAscunde conturile extrabilanțiere: balanța conține doar conturile din bilanț (clasele 1–7); conturile de tip „În Afara bilanțului” (clasele 8 și 9) nu apar nici în linii, nici în totaluri.\nConturile extrabilanțiere în bloc separat: grupa 80 apare sub totalul general, cu subtotal propriu, ca evidență în partidă simplă (OMFP 1802/2014, cap. 16); contrapartida tehnică 803999 nu apare, iar grupa 89 „Bilanț” rămâne în totalul general (partidă dublă).\nVarianta implicită (nicio opțiune bifată): clasa 8 intră în balanță și în totalul general, inclusiv contrapartida 803999, iar balanța rămâne egală; servește reconcilierii contrapartidei.\nOpțiunile se pot combina; dacă sunt bifate și „Ascunde”, și „Bloc separat”, are prioritate „Ascunde”. Ierarhia pe grupe se activează din Opțiuni → Ierarhia și subtotalurile.\nExport: PDF și XLSX păstrează varianta aleasă pe ecran.\nCale de meniu: Contabilitate → Raportare → Registre → Balanța de verificare (raportul „Balanța de verificare (5 coloane) (RO)” sau varianta cu 4 coloane).\nNotă extrabilanțieră: notele din grupa 80 se fac pe o contrapartidă tehnică comună, contul 803999, în jurnalul EXTR, deoarece Odoo nu acceptă o notă care amestecă conturi „În Afara bilanțului” cu conturi de bilanț. Contul și jurnalul vin din `l10n_ro_off_balance`, opțional."
   },
   {
     "path": "l10n_ro_residual_balance_writeoff/index.md",
