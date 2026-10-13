@@ -1,0 +1,261 @@
+# Fișă Modul: Urmărire clienți cu sold rămas la zi
+
+**Modul:** `deltatech_account_enterprise`
+**Utilizator principal:** Contabil clienți, responsabil de încasări
+**Prioritate:** 🟡 Medie (rapoartele de urmărire sunt folosite zilnic, dar modulul doar corectează cifrele rapoartelor native Enterprise)
+
+---
+
+## 1. Scop business
+
+Raportul nativ de urmărire (follow-up) arăta facturile și notele de credit parțial decontate cu
+suma lor inițială, deși o parte fusese deja încasată sau compensată. Totalul afișat nu mai
+corespundea cu ce are de încasat firma. Modulul păstrează rapoartele native (urmărire, extras de
+client, creanțe pe scadențe, exporturile și fereastra de trimitere) și corectează doar cifrele: arată
+separat **Valoare inițială**, **Stins / aplicat** și **Rest**, la data aleasă în raport.
+
+## 2. Bază legală și context
+
+Modulul nu are un temei legal propriu. Este un instrument operațional de urmărire a creanțelor,
+peste contul **4111 „Clienți”** (OMFP 1802/2014). Nu modifică înregistrări contabile, nu face
+reconcilieri și nu scrie taxe: citește reconcilierile parțiale existente.
+
+## 3. Utilizatori și roluri
+
+- **Contabil clienți / responsabil de încasări** — deschide raportul de urmărire, verifică restul
+  de încasat și trimite memento-uri.
+- **Contabil șef** — compară soldul din urmărire cu extrasul de client și cu balanța pe scadențe.
+- Butoanele de pe fișa partenerului sunt vizibile pentru grupurile **Facturare** și **Contabilitate
+  (doar citire)**; regulile de acces (record rules) se aplică în continuare.
+
+## 4. Conturi și date implicate
+
+| Cont | Rol |
+|---|---|
+| 4111 „Clienți” (și 4118 etc.) | conturile de creanță pe care se bazează rapoartele din modul |
+| 5121 / 5311 | încasările care decontează facturile |
+| 707 / 4427 | venituri și TVA colectată (nu sunt afectate de modul) |
+
+Date minime pentru demo (cele din capturi):
+- companie românească, plan de conturi RO, moneda RON; facturile din capturi sunt fără TVA (cifre rotunde);
+- un client cu: factura **INV/2026/00001** de 1.000 lei, decontată prin plată de 900 lei și 100 lei din
+  nota de credit; factura **INV/2026/00002** de 1.000 lei, cu 400 lei încasați; factura
+  **INV/2026/00003** de 2.000 lei cu scadența în viitor; nota de credit **RINV/2026/00001** de
+  300 lei, din care 100 lei aplicați.
+
+## 5. Configurare inițială
+
+1. Instalați modulul `deltatech_account_enterprise` (dependențe: `account`, `account_accountant`,
+   `account_reports`, `account_followup`).
+2. Verificați că firma are planul de conturi RO și nivelurile de urmărire din **Contabilitate →
+   Configurare → Contabilitate → Invoice Reminders** (meniu pentru Administrator contabilitate; în
+   20.0 meniul nu are încă traducere în română).
+3. Opțional, în **Setări → Facturare**, sub **Automatic Invoice Reminders**, opțiunea **Reamintire
+   înainte de scadență** (în engleză „Reminder Before Due Date”) (memento cu o zi înainte de
+   scadență, adăugată de modul în versiunea 19.0.0.1.0 / 20.0.0.1.2) creează nivelul de urmărire
+   corespunzător; nu influențează cifrele descrise în această fișă.
+
+### Șabloanele memento-ului înainte de scadență
+
+Opțiunea apare doar după bifarea opțiunii native **Automatic Invoice Reminders**: în 20.0 trimiterea
+automată (cron-ul zilnic) se activează pe firmă, pentru toate nivelurile, nu pe fiecare nivel. La
+bifarea opțiunii **Reamintire înainte de scadență** și **Salvare**, modulul creează pe firma curentă un
+nivel de urmărire cu **Zile Scadente** = 1 și **Reminder Timing** = **before** (adică cu o zi înainte
+de scadență; intern, întârziere -1), **Email** și **SMS** bifate, cu cele două șabloane livrate de
+modul, ambele numite **Reamintire plată înainte de scadență** (unul de e-mail, unul de SMS). Dacă
+firma nu avea niciun nivel, Odoo creează la aceeași salvare și nivelurile native de 7, 15 și 30 de
+zile. Dacă firma are deja un nivel „before” (cu întârziere negativă), modulul nu creează altul și
+păstrează configurarea existentă.
+
+Configurarea șabloanelor:
+
+1. Deschideți **Contabilitate → Configurare → Contabilitate → Invoice Reminders** (sau, din setări,
+   butonul **Follow-up Levels** de sub opțiune) și apoi nivelul **1 days before**. Câmpurile **Șablon
+   Email** și **Șablon SMS** arată șabloanele folosite; săgeata de lângă câmp deschide șablonul.
+   Alternativ, în modul dezvoltator: **Setări → Tehnic → E-mail → Șabloane**, căutare după
+   „Reamintire plată”.
+2. În șablonul de e-mail se pot modifica **Subiectul** și textul mesajului. Odoo adaugă singur, după
+   text, tabelul cu facturile din raportul de urmărire, așa că tabelul nu se scrie în șablon. Expeditorul
+   este responsabilul de urmărire al clientului, iar semnătura lui se adaugă la final. În 20.0 PDF-urile
+   facturilor ajunse la nivel se atașează întotdeauna (nu mai există bifa **Atașează facturi**).
+3. În șablonul de SMS, expresia `{{ object._get_followup_before_due_text() }}` produce lista facturilor
+   (număr, scadență, rest de plată). Se poate muta în text, dar nu se șterge, altfel SMS-ul pleacă fără
+   facturi. Țineți textul scurt: SMS-urile lungi se taxează pe mai multe mesaje.
+4. Textele vin în engleză, cu traducere în română din modul; clientul primește mesajul în limba de pe
+   fișa lui. Pentru a schimba varianta în română, folosiți iconița de limbă din dreapta câmpului (sau
+   lucrați din interfața în română). Modificarea făcută doar pe limba engleză nu se vede la clienții
+   români.
+5. Pe nivel se pot schimba și **Zile Scadente** (de exemplu 3 cu **before**, pentru memento cu trei zile
+   înainte; orice nivel „before” rămâne recunoscut de opțiune) și bifele **Email** / **SMS**.
+6. Șabloanele nu sunt suprascrise la actualizarea modulului. Debifarea opțiunii șterge doar nivelul,
+   nu și șabloanele; la o nouă bifare, nivelul refolosește aceleași șabloane, cu modificările voastre.
+   Nu ștergeți șabloanele: reactivarea opțiunii ar da eroare. Dacă nu le mai vreți, debifați opțiunea.
+
+Verificare: pe un client cu o factură care ajunge la scadență mâine, **Urmărire → Trimite** afișează
+subiectul și mesajul din șablon, înainte de orice trimitere automată.
+
+## 6. Flux de utilizare
+
+### Pasul 1 — Deschiderea fișei partenerului
+
+Accesați **Facturare → Clienți → Clienți** și deschideți partenerul. Pe fișă apar, printre altele, butoanele
+**Facturat**, **Urmărire**, **Fișa partener**, **Creanțe pe scadențe** și **Poziții deschise actuale**. Verificați pe ecran:
+
+- butonul **Urmărire** arată soldul semnat al pozițiilor eligibile (exemplu: 2.400,00 lei), nu doar
+  partea restantă;
+- **Creanțe pe scadențe** arată același total (2.400,00 lei);
+- **Fișa partener** nu afișează un total pe buton și deschide raportul **Extras de client** (istoricul nativ);
+- **Facturat** (3.700,00 lei) este totalul facturat net, inclusiv facturile deja decontate, deci diferă de rest.
+
+![Fișa partenerului, cu butoanele de urmărire](screenshots/01_fisa_partener.png)
+
+### Pasul 2 — Raportul de urmărire (sold rămas la zi)
+
+Apăsați **Urmărire**. Raportul grupează pozițiile în **Depășit** și **Datorat** (încă în termen la data raportului). Găsiți pe ecran
+coloanele **Valoare inițială**, **Stins / aplicat** și **Rest**. Verificați:
+
+- pentru fiecare linie, **Valoare inițială − Stins / aplicat = Rest** (INV/2026/00002: 1.000 − 400 =
+  600; RINV/2026/00001: −300 − (−100) = −200);
+- subtotalul **Depășit** = 400,00 lei (600 − 200) și **Datorat** = 2.000,00 lei;
+- **Total** = 2.700,00 inițial, 300,00 stins / aplicat, 2.400,00 rest;
+- facturile complet decontate (INV/2026/00001) și plățile **nu** apar în urmărire;
+- nota de credit apare cu semn negativ, cu restul ei de −200,00 lei.
+
+![Raportul de urmărire cu sold rămas](screenshots/02_urmarire.png)
+
+### Pasul 3 — Export PDF și XLSX
+
+După ce ați citit cifrele pe ecran, apăsați **PDF** (sau **XLSX**). Fișierul trebuie să conțină exact
+aceleași valori, inclusiv subtotalurile Depășit / Datorat și Totalul (în exemplu: Depășit 400, Datorat 2.000, Total
+2.400 rest).
+
+![PDF-ul raportului de urmărire](screenshots/03_urmarire_pdf.png)
+
+### Pasul 4 — Extrasul de client (istoric)
+
+Din fișa partenerului apăsați **Fișa partener**, care deschide raportul **Extras de client**. Este raportul istoric nativ: arată și mișcările
+decontate (facturi, plăți, nota de credit) și coloana **Sold** este soldul cumulat. Verificați că
+soldul final (2.400,00 lei) este egal cu **Rest**-ul din urmărire, pentru aceeași dată.
+
+![Extrasul de client, cu mișcările decontate](screenshots/04_extras_client.png)
+
+### Pasul 5 — Creanțe pe scadențe
+
+Apăsați **Creanțe pe scadențe**, care deschide raportul **Restanțe încasări**. Raportul nativ de vechime arată pozițiile pe intervale: 2.000,00 lei
+**La zi** (nescadent) și 400,00 lei în intervalul **31-60** (600,00 factura minus 200,00 nota de
+credit). Totalul este 2.400,00 lei, ca în urmărire. Această balanță include și pozițiile marcate
+**Fără urmărire**.
+
+![Creanțe pe scadențe](screenshots/05_creante_pe_scadente.png)
+
+### Pasul 6 — Poziții deschise actuale
+
+Pe fișa partenerului apăsați butonul **Poziții deschise actuale**.
+
+![Fișa partenerului în tabul Facturare (captură de pe 19.0: acolo Poziții deschise actuale este link în secțiunea Urmăriri facturi)](screenshots/06_tab_facturare.png)
+
+Se deschide lista nativă de elemente de jurnal, intitulată **Poziții deschise actuale**, filtrată pe liniile cu rest diferit de zero, cu
+coloana **Rest (actual)** și totalul ei (2.400,00 lei). Debit, Credit și Sold rămân disponibile ca
+coloane opționale. Lista arată restul **de azi**: o reconciliere cu dată viitoare poate face ca ea să
+difere de un raport la o dată anterioară.
+
+![Lista pozițiilor deschise actuale](screenshots/07_pozitii_deschise_actuale.png)
+
+### Pasul 7 — Trimiterea memento-ului
+
+În raportul de urmărire, **Trimite** deschide fereastra nativă de trimitere, cu destinatarul,
+subiectul, mesajul și PDF-ul atașat. Modulul nu trimite mesaje singur; apăsați **Anulează** dacă doar
+verificați.
+
+![Fereastra de trimitere a raportului](screenshots/08_trimite_wizard.png)
+
+### Note de monografie și raportare
+
+Modulul nu generează note contabile. Cifrele provin din cele existente. În exemplul din capturi,
+facturile sunt fără TVA, ca să rămână cifre rotunde; la o vânzare cu TVA 21% notele sunt cele de
+mai jos, iar restul se calculează pe totalul cu TVA.
+
+| Operațiune | Dr | Cr |
+|---|---|---|
+| Factură client 1.210 lei (1.000 + TVA 210) | 4111 1.210 | 707 1.000 + 4427 210 |
+| Încasare 900 lei | 5121 / 5311 900 | 4111 900 |
+| Încasare parțială 400 lei | 5121 / 5311 400 | 4111 400 |
+| Notă de credit 363 lei (300 + TVA 63) | 707 300 + 4427 63 | 4111 363 |
+
+Decontarea dintre nota de credit și factură (în exemplu, 100 lei) este doar o reconciliere parțială,
+fără notă contabilă separată.
+
+Restul din urmărire = soldul conturilor de creanțe-clienți (4111, 4118 etc.) ale partenerului, pe
+pozițiile deschise la data raportului, fără pozițiile marcate **Fără urmărire**.
+
+## 7. Legături cu alte module / declarații
+
+| Modul | Rol |
+|---|---|
+| `account_reports` | motorul rapoartelor (urmărire, extras, vechime), exporturi, wizard Trimite |
+| `account_followup` | niveluri de urmărire, memento-uri automate / manuale |
+| `account` | reconcilierile parțiale pe care se bazează restul |
+| `account_accountant` | dependență Enterprise, widgetul de reconciliere |
+
+**Automat:** calculul restului la data raportului, subtotalurile pe stări, excluderea pozițiilor
+**Fără urmărire** din PDF și din suma de pe butonul **Urmărire** (pe ecran rămân vizibile, ca marcajul să poată fi scos).
+**Manual:** alocarea plăților, trimiterea memento-urilor, marcarea pozițiilor **Fără urmărire**.
+
+## 8. Verificări pentru consultant
+
+- [ ] Pentru fiecare linie: Valoare inițială − Stins / aplicat = Rest.
+- [ ] Totalul **Rest** din urmărire = totalul din **Creanțe pe scadențe** = soldul din **Fișa
+      partener** la aceeași dată, dacă nu există poziții **Fără urmărire** și partenerul nu are
+      solduri de furnizor (extrasul le include).
+- [ ] Butonul **Urmărire** de pe fișă = totalul **Rest** din raport.
+- [ ] Subtotalurile **Depășit** / **Datorat** rămân corecte la paginare (raport cu multe linii).
+- [ ] Factura complet decontată nu apare în urmărire, dar apare în **Fișa partener**.
+- [ ] Nota de credit parțial aplicată apare cu semn negativ și rest negativ.
+- [ ] O poziție marcată **Fără urmărire** lipsește din PDF și din butonul **Urmărire** de pe fișă, dar rămâne vizibilă pe ecran.
+- [ ] Un plătitor cu mai multe persoane de contact: raportul grupează după partenerul comercial.
+- [ ] PDF și XLSX au aceleași cifre ca ecranul.
+- [ ] Raportul funcționează la fel în română și în engleză (etichetele **Depășit / Datorat**).
+
+## 9. Mesaje de eroare frecvente
+
+| Mesaj / simptom | Cauză probabilă | Remediere |
+|---|---|---|
+| Butoanele de urmărire lipsesc de pe fișa partenerului | Utilizatorul nu are drept de facturare / contabilitate | Acordați grupul **Facturare** sau **Contabilitate (doar citire)** |
+| Totalul din urmărire diferă de lista **Poziții deschise actuale** | O reconciliere are dată ulterioară datei raportului | Setați în raport data de azi |
+| Raportul nu arată o factură deschisă | Poziția e marcată **Fără urmărire** sau contul nu e de creanță | Verificați comutatorul **Fără urmărire** și filtrul **Cont: Creanță** |
+| Coloana **Rest în valută** e goală | Pozițiile sunt în moneda companiei | Normal: coloana se completează la pozițiile în valută |
+
+## 10. Capturi de ecran
+
+Capturile (`readme/screenshots/`) au fost generate în română, pe plan de conturi RO, cu date
+sintetice (partener demonstrativ), dintr-o bază de test: un script Playwright a deschis fiecare ecran
+și l-a salvat. Modulul nu are `tests/test_screenshots.py`, deci nu se regenerează automat.
+
+1. `01_fisa_partener.png` — fișa partenerului, cu butoanele de urmărire.
+2. `02_urmarire.png` — raportul de urmărire cu Valoare inițială / Stins / Rest.
+3. `03_urmarire_pdf.png` — PDF-ul raportului de urmărire.
+4. `04_extras_client.png` — extrasul de client (istoric).
+5. `05_creante_pe_scadente.png` — creanțe pe scadențe.
+6. `06_tab_facturare.png` — tabul Facturare, linkul Poziții deschise actuale.
+7. `07_pozitii_deschise_actuale.png` — lista pozițiilor deschise actuale.
+8. `08_trimite_wizard.png` — fereastra de trimitere a raportului.
+
+**Atenție:** capturile 01–08 au fost făcute pe interfața din 19.0 și nu au fost regenerate pe 20.0
+(iconițe și aspect diferite; „Poziții deschise actuale” este acum buton, iar eticheta „Nescadent” este
+„Datorat”); cifrele sunt cele din exemplu. Regenerați-le cu `fisa-screenshots` înainte de publicarea
+manualului.
+
+Filtrul de dată arată „De la 09.10.2026”: în acest raport înseamnă „la data de 09.10.2026” (traducere nativă).
+
+Capturile `followup-residuals.jpg`, `current-open-items.jpg` și `native-aged-receivable.jpg` sunt cele
+din `USAGE.md`. Extrasul XLSX nu e inclus ca imagine; valorile lui sunt în Pasul 3.
+
+## 11. Observații pentru manual
+
+- Explicați întâi problema (suma inițială afișată pentru un document parțial decontat), apoi regula
+  **Valoare inițială − Stins / aplicat = Rest**.
+- Păstrați exemplul unic din capturi (2.700 inițial, 300 aplicat, 2.400 rest; 400 depășit, 2.000
+  datorat) în toate ecranele.
+- Subliniați diferența dintre cele trei rapoarte: urmărirea arată pozițiile deschise la dată, extrasul
+  arată istoricul cu mișcările decontate, balanța pe scadențe grupează pe intervale.
+- Precizați că **Poziții deschise actuale** reflectă restul de azi, nu un raport la o dată din trecut.

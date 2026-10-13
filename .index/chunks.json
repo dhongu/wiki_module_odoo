@@ -286,16 +286,19 @@
   {
     "path": "deltatech_account_enterprise/index.md",
     "module": "deltatech_account_enterprise",
-    "version": "19.0.0.0.4",
-    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_enterprise",
+    "version": "20.0.0.1.2",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_account_enterprise",
     "local_path": "odoo-addons/bitshop_ent/deltatech_account_enterprise",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Deltatech Account Enterprise",
-    "summary": "Acest modul extinde funcționalitățile de contabilitate din Odoo Enterprise, concentrându-se pe îmbunătățirea rapoartelor de urmărire a clienților (Customer Follow-up). Scopul său principal este să ofere o imagine mai clară asupra situației datoriilor unui partener, prin gruparea tranzacțiilor după statusul lor și prin afișarea de subtotaluri pe fiecare grup. Astfel, persoanele responsabile cu încasările văd mai ușor ce sume sunt restante și ce sume urmează să devină scadente.",
+    "last_ingest": "2026-10-13",
+    "friendly_name": "Customer Follow-up Enhancements",
+    "summary": "Modulul îmbunătățește urmărirea clienților (Customer Follow-up) din Odoo Enterprise, astfel încât responsabilul de încasări să vadă exact ce mai are de încasat. Raportul nativ arăta documentele parțial decontate cu suma lor inițială; modulul păstrează rapoartele native (urmărire, extras de client, creanțe pe scadențe, exporturi, fereastra de trimitere), dar afișează separat valoarea inițială, partea stinsă și restul la data aleasă, grupate pe restante și nescadente. Opțional, trimite clienților un memento prin email și SMS cu o zi înainte de scadența facturilor. Nu alocă plăți și nu modifică înregistrări contabile.",
     "features": [
-      "Linii de urmărire grupate: tranzacțiile din raportul de urmărire sunt grupate după statusul lor, în Restante (Overdue) și Scadente (Due).",
-      "Subtotaluri pe status: fiecare grup de status (Restante/Scadente) afișează propriile subtotaluri pentru Sumă, Sumă în valută și Sold, oferind o imagine mai clară a situației datoriilor partenerului.",
-      "Aspect îmbunătățit al raportului: șablonul raportului de urmărire este ajustat pentru a prezenta mai bine informațiile grupate."
+      "Linii grupate pe status: pozițiile deschise sunt grupate în Overdue (Depășit) și Due",
+      "Sume rămase la dată: coloanele Valoare inițială, Stins / aplicat și Rest, calculate din",
+      "Subtotaluri pe status: fiecare grup are subtotaluri proprii, calculate pe toate pozițiile, nu doar pe",
+      "Scurtături pe fișa partenerului: butoanele Urmărire (sold semnat al pozițiilor eligibile, fără",
+      "Poziții deschise actuale: lista nativă de elemente de jurnal cu restul curent diferit de zero și",
+      "Reamintire înainte de scadență (din 20.0.0.1.2): opțiune în Setări → Facturare, afișată sub"
     ],
     "dependencies": [
       "account",
@@ -304,7 +307,7 @@
       "account_followup"
     ],
     "connections": [],
-    "text": "Deltatech Account Enterprise\ndeltatech_account_enterprise\nAcest modul extinde funcționalitățile de contabilitate din Odoo Enterprise, concentrându-se pe îmbunătățirea rapoartelor de urmărire a clienților (Customer Follow-up). Scopul său principal este să ofere o imagine mai clară asupra situației datoriilor unui partener, prin gruparea tranzacțiilor după statusul lor și prin afișarea de subtotaluri pe fiecare grup. Astfel, persoanele responsabile cu încasările văd mai ușor ce sume sunt restante și ce sume urmează să devină scadente.\nLinii de urmărire grupate: tranzacțiile din raportul de urmărire sunt grupate după statusul lor, în Restante (Overdue) și Scadente (Due).\nSubtotaluri pe status: fiecare grup de status (Restante/Scadente) afișează propriile subtotaluri pentru Sumă, Sumă în valută și Sold, oferind o imagine mai clară a situației datoriilor partenerului.\nAspect îmbunătățit al raportului: șablonul raportului de urmărire este ajustat pentru a prezenta mai bine informațiile grupate."
+    "text": "Customer Follow-up Enhancements\ndeltatech_account_enterprise\nModulul îmbunătățește urmărirea clienților (Customer Follow-up) din Odoo Enterprise, astfel încât responsabilul de încasări să vadă exact ce mai are de încasat. Raportul nativ arăta documentele parțial decontate cu suma lor inițială; modulul păstrează rapoartele native (urmărire, extras de client, creanțe pe scadențe, exporturi, fereastra de trimitere), dar afișează separat valoarea inițială, partea stinsă și restul la data aleasă, grupate pe restante și nescadente. Opțional, trimite clienților un memento prin email și SMS cu o zi înainte de scadența facturilor. Nu alocă plăți și nu modifică înregistrări contabile.\nLinii grupate pe status: pozițiile deschise sunt grupate în Overdue (Depășit) și Due\nSume rămase la dată: coloanele Valoare inițială, Stins / aplicat și Rest, calculate din\nSubtotaluri pe status: fiecare grup are subtotaluri proprii, calculate pe toate pozițiile, nu doar pe\nScurtături pe fișa partenerului: butoanele Urmărire (sold semnat al pozițiilor eligibile, fără\nPoziții deschise actuale: lista nativă de elemente de jurnal cu restul curent diferit de zero și\nReamintire înainte de scadență (din 20.0.0.1.2): opțiune în Setări → Facturare, afișată sub"
   },
   {
     "path": "deltatech_account_scenario/index.md",

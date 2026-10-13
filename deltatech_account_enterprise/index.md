@@ -1,20 +1,42 @@
-# Deltatech Account Enterprise (localizat la `deltatech_account_enterprise/index.md`)
+# Customer Follow-up Enhancements (localizat la `deltatech_account_enterprise/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_enterprise`
-- **Versiune:** `19.0.0.0.4`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_enterprise
+- **Versiune:** `20.0.0.1.2`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_account_enterprise
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_account_enterprise`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-10-13`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul extinde funcționalitățile de contabilitate din Odoo Enterprise, concentrându-se pe îmbunătățirea rapoartelor de urmărire a clienților (Customer Follow-up). Scopul său principal este să ofere o imagine mai clară asupra situației datoriilor unui partener, prin gruparea tranzacțiilor după statusul lor și prin afișarea de subtotaluri pe fiecare grup. Astfel, persoanele responsabile cu încasările văd mai ușor ce sume sunt restante și ce sume urmează să devină scadente.
+Modulul îmbunătățește urmărirea clienților (Customer Follow-up) din Odoo Enterprise, astfel încât
+responsabilul de încasări să vadă exact ce mai are de încasat. Raportul nativ arăta documentele parțial
+decontate cu suma lor inițială; modulul păstrează rapoartele native (urmărire, extras de client, creanțe
+pe scadențe, exporturi, fereastra de trimitere), dar afișează separat valoarea inițială, partea stinsă și
+restul la data aleasă, grupate pe restante și nescadente. Opțional, trimite clienților un memento prin
+email și SMS cu o zi înainte de scadența facturilor. Nu alocă plăți și nu modifică înregistrări contabile.
 
 #### 2. Funcționalități Cheie
 
-- **Linii de urmărire grupate**: tranzacțiile din raportul de urmărire sunt grupate după statusul lor, în **Restante (Overdue)** și **Scadente (Due)**.
-- **Subtotaluri pe status**: fiecare grup de status (Restante/Scadente) afișează propriile subtotaluri pentru Sumă, Sumă în valută și Sold, oferind o imagine mai clară a situației datoriilor partenerului.
-- **Aspect îmbunătățit al raportului**: șablonul raportului de urmărire este ajustat pentru a prezenta mai bine informațiile grupate.
+- **Linii grupate pe status**: pozițiile deschise sunt grupate în **Overdue** (Depășit) și **Due**
+  (nescadent) față de data raportului, nu față de data curentă.
+- **Sume rămase la dată**: coloanele **Valoare inițială**, **Stins / aplicat** și **Rest**, calculate din
+  reconcilierile parțiale datate; notele de credit și plățile nealocate își păstrează semnul, iar un sold
+  net zero nu ascunde documentele deschise.
+- **Subtotaluri pe status**: fiecare grup are subtotaluri proprii, calculate pe toate pozițiile, nu doar pe
+  pagina încărcată; PDF și XLSX au aceleași cifre ca ecranul.
+- **Scurtături pe fișa partenerului**: butoanele **Urmărire** (sold semnat al pozițiilor eligibile, fără
+  cele marcate No Reminder), **Fișa partener**, **Creanțe pe scadențe** și **Poziții deschise actuale**,
+  toate pe partenerul comercial și contactele lui, în firma activă.
+- **Poziții deschise actuale**: lista nativă de elemente de jurnal cu restul curent diferit de zero și
+  totalul coloanei Rest (actual); este o listă operațională de azi, nu un raport istoric.
+- **Reamintire înainte de scadență** (din 20.0.0.1.2): opțiune în **Setări → Facturare**, afișată sub
+  **Automatic Invoice Reminders**, nebifată implicit. Bifarea creează pe firma curentă un nivel de
+  urmărire de **1 zi before** (întârziere -1) cu email și SMS; SMS-ul listează facturile neplătite ajunse
+  la nivel (număr, scadență, rest de plată). Nivelul pleacă prin cron-ul zilnic al reamintirilor
+  automate cât timp **Automatic Invoice Reminders** e activă; debifarea șterge nivelul. Dacă firma are
+  deja un nivel „before”, configurarea ei se păstrează. Configurarea șabloanelor e descrisă în fișa
+  consultant.
 
 #### 3. Dependențe
 
@@ -25,16 +47,28 @@ Acest modul extinde funcționalitățile de contabilitate din Odoo Enterprise, c
 
 #### 4. Componente Cheie
 
-Conform fișierului `readme/DESCRIPTION.md`, valoarea modulului este descrisă la nivel funcțional (rapoarte de urmărire a clienților). Deoarece codul conține și extensii tehnice relevante ce nu sunt acoperite de descriere (butoane pe fișa partenerului), acestea sunt documentate suplimentar mai jos.
-
 **Modele**
 
-- `account.followup.report.handler` (extins): exclude din raportul de urmărire liniile deja stinse (sold rezidual 0), chiar dacă nu sunt reconciliate integral, și construiește liniile de raport grupate pe status (Restante/Scadente) cu subtotaluri proprii pentru Sumă, Sumă în valută și Sold.
-- `res.partner` (extins): adaugă acțiunile `open_partner_ledger` (Fișa partenerului) și `open_aged_receivable` (Creanțe scadente) și corectează `action_open_partner_followup_journal_items` — filtrează doar liniile nereconciliate, fără limitare de perioadă, astfel încât totalul afișat să coincidă cu soldul deschis din butonul „Scadent" (evită un total negativ generat de încasări care sting facturi din anul precedent).
+- `account.followup.report.handler` (extins): interogarea pozițiilor deschise la data raportului cu rest
+  semnat din `account_partial_reconcile`, coloanele Valoare inițială / Stins-aplicat / Rest, gruparea
+  Overdue / Due și subtotalurile; face flush ORM înainte de interogările SQL directe.
+- `res.partner` (extins): câmpurile **Follow-up Balance** și **Open Receivables**, acțiunile spre
+  rapoartele native și lista Poziții deschise actuale; `_get_followup_before_due_text()` produce lista
+  de facturi din SMS-ul de memento.
+- `res.company` (extins): `_create_followup_before_due_level()` / `_get_followup_before_due_level()`.
+- `res.config.settings` (extins): `followup_before_due` — Boolean simplu, citit în `get_values()` din
+  nivelurile firmei, ca bifa să nu se piardă între salvare și aplicare.
 
 **Vizualizări**
 
-- `res_partner_view_form`: extinde formularul de partener (`base.view_partner_form`) cu butoane statistice în `button_box` — „Customer Statement" (situația clientului, evidențiind cu roșu suma restantă) și „Creanțe scadente" (deschide raportul de creanțe îmbătrânite pentru partenerul curent).
+- `res_partner_view_form`, `res_partner_followup_button`: butoanele de pe fișa partenerului.
+- `res_config_settings_view_form`: opțiunea **Reminder Before Due Date** sub **Automatic Invoice
+  Reminders**.
+
+**Date**
+
+- `email_template_followup_before_due`, `sms_template_followup_before_due` (`noupdate`): șabloanele
+  memento-ului înainte de scadență.
 
 #### 5. Conexiuni
 

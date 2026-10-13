@@ -4,6 +4,19 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-13] `deltatech_account_enterprise` — re-ingestie pe 20.0 (20.0.0.1.2, după terrabit-solutions/bitshop_ent#302)
+
+- **Acțiune:** Re-ingestie a paginii pentru Odoo 20 (până acum era copia de 19.0.0.0.4). Pagina descrie
+  restul semnat la data raportului (Valoare inițială / Stins-aplicat / Rest), scurtăturile de pe fișa
+  partenerului și opțiunea **Reminder Before Due Date** portată din 19.0.0.1.0–19.0.0.1.2, adaptată la
+  motorul de urmărire din 20 (nivel 1 zi „before”, trimis prin **Automatic Invoice Reminders**). Linkul
+  GitHub trece pe branch-ul `20.0`.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/USAGE.md`, `readme/FISA_CONSULTANT.md`, `readme/HISTORY.md`,
+  `__manifest__.py`, cod (`res_company`, `res_config_settings`, `res_partner`, handler-ul de urmărire).
+- **Dependențe/Conexiuni:** dependențe Odoo standard; nicio conexiune verificată.
+- **Fișă consultant:** copiată nouă, cu cele 8 capturi și imaginile din USAGE.
+- **Fișiere actualizate:** `deltatech_account_enterprise/*`, `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-01] `deltatech_obyc`, `deltatech_stock_valuation`, `deltatech_valuation_area` — re-ingestie pe 20.0 (după dhongu/deltatech_stock_valuation#50)
 
 - **Acțiune:** Re-ingestie a celor trei pagini pentru Odoo 20 (până acum erau copiile de 19.0), procesate în
