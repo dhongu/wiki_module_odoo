@@ -296,9 +296,11 @@ Deschideți linia de extras a rambursării (butonul **Note** al contractului). C
 CRED-2025-003 (60.000 RON, tras pe 15.01.2025), rambursat integral pe 20.02.2025, cu un comision de
 300. Verificați în **Elemente jurnal**:
 - **Dr 16211** 18.532,92 și **Dr 16212** 41.467,08 (tot principalul, pe cele două conturi);
-- **Dr 16821** 430,51 (dobânda angajată la 31.01 și la data plății);
+- **Dr 16821** 432,00 (dobânda angajată la 31.01 și la data plății). Rata 1 (15.02) nu e legată de
+  extras, deci capitalul ei e încă datorat: 372,00 pentru 15.01–15.02 + 60,00 pentru 5 zile pe tot
+  soldul de 60.000 (60.000 × 7,2% × 5 / 360);
 - **Dr 627** 300 (comisionul de rambursare anticipată);
-- **Cr 5121** 60.730,51.
+- **Cr 5121** 60.732,00.
 
 ![Nota extrasului la rambursarea anticipată](screenshots/14_inchidere_nota.png)
 
@@ -434,7 +436,7 @@ TVA-ul ratelor de leasing în declarații, reclasificarea 4711 / 4712.
       ratele rămase; anularea notei redeschide contractul.
 - [ ] Situația datoriilor la o dată: **Sub un an** = sold X1, **Între 1 și 5 ani** + **Peste 5 ani** =
       sold X2, **Dobândă** = sold 16821.
-- [ ] Închiderea anticipată CRED-2025-003: 16211 + 16212 + 16821 + 627 = 5121 60.730,51.
+- [ ] Închiderea anticipată CRED-2025-003: 16211 + 16212 + 16821 + 627 = 5121 60.732,00.
 - [ ] Analiza ratelor: principalul total pe fel de contract = suma finanțată a contractelor active
       (la leasing financiar, valoarea bunului).
 
@@ -452,6 +454,7 @@ TVA-ul ratelor de leasing în declarații, reclasificarea 4711 / 4712.
 | „Există rate înregistrate după data închiderii.” | Închidere anticipată datată înaintea unor rate deja plătite | Datați închiderea după ultima rată înregistrată |
 | Eroare de perioadă blocată la închiderea anticipată | Notele de sfârșit de lună de anulat sunt într-o perioadă blocată | Deblocați perioada sau datați închiderea după ultima notă de sfârșit de lună |
 | Diferență rămasă pe 5125 după legarea extrasului | Suma din extras diferă de rată (comision neprevăzut, curs) | Reconciliați diferența separat (627, 665 / 765) |
+| Diferență pe 5125 la închiderea anticipată cu rate restante | Dobânda pe capitalul ratelor scadente nelegate se calculează la dobânda contractuală; dobânda penalizatoare a băncii nu se calculează | Înregistrați diferența pe 666, după notificarea băncii |
 
 ## 10. Capturi de ecran
 
@@ -493,7 +496,7 @@ Necesită `playwright` în mediul Odoo + Chrome de sistem; dacă lipsește, test
 - Prezentați întâi diferența dintre credit și leasing: la credit nota pleacă din extras și dobânda
   se angajează lunar; la leasing nota pleacă din factura ratei.
 - Păstrați exemplul numeric unic (credit 120.000, 7,2%, rata 1 = 3.716,23; leasing 100.000 cu avans
-  20.000; rambursare anticipată 60.730,51) în toate capturile și notele.
+  20.000; rambursare anticipată 60.732,00) în toate capturile și notele.
 - Explicați reclasificarea X2 → X1 cu balanța: fără ea, bilanțul ar arăta toată datoria pe termen
   lung.
 - Subliniați limita de TVA de la pasul 12 (nota ratei de leasing nu alimentează D300 / D394).
