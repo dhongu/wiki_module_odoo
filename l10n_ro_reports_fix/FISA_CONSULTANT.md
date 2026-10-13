@@ -45,6 +45,25 @@ Modulul face trei lucruri:
 
 Contrapartida nu are conținut economic propriu: soldul ei este suma, cu semn opus, a celorlalte conturi din grupa 80. Varianta cu bloc separat o ascunde și calculează subtotalul grupei 80 fără ea.
 
+### Ce este linia „Result Brought Forward”
+
+„Result Brought Forward” (în română: „rezultat reportat”) este o linie pe care Odoo o calculează singur în balanța de verificare. Nu e un cont din plan și nu are în spate nicio notă contabilă. Eticheta rămâne în engleză pentru că nucleul Odoo nu o traduce.
+
+**De ce există.** Odoo nu cere note de închidere la sfârșitul anului. În schimb, la începutul fiecărui exercițiu, închide „virtual” conturile de venituri și cheltuieli:
+
+- conturile 6xx și 7xx încep anul nou cu sold zero în raport;
+- tot ce au acumulat în anii precedenți, adică rezultatul anilor anteriori, se adună pe linia „Result Brought Forward”, la **Soldul inițial**;
+- în planul RO, pe aceeași linie ajunge și soldul contului **121 „Profit sau pierdere”**: Odoo îl tratează drept rezultat nerepartizat.
+
+**Exemplu (datele din secțiunea 4).** În decembrie 2025 s-a înregistrat o vânzare de 5.000 lei pe 707, fără nota de închidere `707 = 121`. În balanța pe 2026, varianta implicită arată 707000 cu 0 la Soldul inițial și linia „Result Brought Forward” cu 5.000 lei pe Credit. Totalul balanței rămâne egal.
+
+**De ce contează în RO.** Închiderea se face prin note reale: `7xx = 121` și `121 = 6xx`, iar repartizarea profitului urmează după hotărârea AGA. Linia calculată de Odoo încurcă în ambele situații:
+
+- **firma înregistrează notele de închidere**: Odoo mută și soldul lui 121 pe „Result Brought Forward”, iar contul 121 apare cu 0 la deschidere, deși în contabilitate are sold;
+- **firma nu înregistrează notele de închidere**: linia ascunde faptul că închiderea lipsește.
+
+**Opțiunea Balanță brută** (Pasul 6) scoate linia și oprește închiderea virtuală, așa că fiecare cont își arată soldul real. Într-un an închis corect, 121 apare cu soldul lui, iar 6xx și 7xx încep cu zero. Dacă 6xx sau 7xx au sold la deschidere, ca 707000 în exemplu, lipsesc notele de închidere ale anului precedent. La o firmă care își închide anul cu note contabile, **Balanța brută e varianta de predat**. Varianta implicită coincide cu ea doar ca totaluri.
+
 ---
 
 ## 3. Utilizatori și roluri
@@ -109,7 +128,7 @@ Conturile din grupa 80 și rolul lor:
 **Găsiți pe ecran:**
 - grupurile de coloane **Soldul inițial**, perioada (**01.01.2026 – 30.09.2026**), **Suma totală** și **Sold final**, fiecare cu Debit / Credit;
 - conturile 803300, 803500 și **803999**, înainte de linia **Total**;
-- linia **Result Brought Forward**, cu rezultatul exercițiului precedent (5.000 lei, credit, la Soldul inițial). Odoo adună aici soldurile din anii precedenți ale conturilor de venituri, de cheltuieli și ale contului 121, chiar dacă anul a fost închis cu note reale; eticheta nu e tradusă în nucleu.
+- linia **Result Brought Forward**, cu rezultatul exercițiului precedent (5.000 lei, credit, la Soldul inițial). Odoo adună aici soldurile din anii precedenți ale conturilor de venituri, de cheltuieli și ale contului 121, chiar dacă anul a fost închis cu note reale; eticheta nu e tradusă în nucleu. Explicația completă e în secțiunea 2, „Ce este linia «Result Brought Forward»”.
 
 **Verificați:**
 - fiecare cont are soldul inițial și soldul final pe **o singură coloană**: 411100 Clienți e închis la 01.01.2026 (0 / 0 la Soldul inițial), 512100 are 6.050,00 doar pe Debit la Soldul inițial și 68.150,00 la Sold final, 401100 are 12.100,00 doar pe Credit la Sold final;
