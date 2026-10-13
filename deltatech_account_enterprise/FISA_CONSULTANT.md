@@ -53,6 +53,39 @@ Date minime pentru demo (cele din capturi):
    înainte de scadență, adăugată de modul în versiunea 19.0.0.1.0) creează nivelul de urmărire
    corespunzător; nu influențează cifrele descrise în această fișă.
 
+### Șabloanele memento-ului înainte de scadență
+
+La bifarea opțiunii **Reamintire înainte de scadență** și **Salvare**, modulul creează pe firma curentă
+nivelul de urmărire **Înainte de scadență**: **Zile Scadente** = -1, **Automat** bifat, **Email** și
+**SMS** bifate, cu cele două șabloane livrate de modul, ambele numite **Reamintire plată înainte de
+scadență** (unul de e-mail, unul de SMS). Dacă firma are deja un nivel cu zile negative, modulul nu
+creează altul și păstrează configurarea existentă.
+
+Configurarea șabloanelor:
+
+1. Deschideți **Facturare → Configurare → Facturare → Nivelurile Urmaririlor → Înainte de scadență**.
+   Câmpurile **Șablon Email** și **Șablon SMS** arată șabloanele folosite; săgeata de lângă câmp
+   deschide șablonul. Alternativ, în modul dezvoltator: **Setări → Tehnic → E-mail → Șabloane**,
+   căutare după „Reamintire plată”.
+2. În șablonul de e-mail se pot modifica **Subiectul** și textul mesajului. Odoo adaugă singur, după
+   text, tabelul cu facturile din raportul de urmărire, așa că tabelul nu se scrie în șablon. Expeditorul
+   este responsabilul de urmărire al clientului, iar semnătura lui se adaugă la final.
+3. În șablonul de SMS, expresia `{{ object._get_followup_before_due_text() }}` produce lista facturilor
+   (număr, scadență, rest de plată). Se poate muta în text, dar nu se șterge, altfel SMS-ul pleacă fără
+   facturi. Țineți textul scurt: SMS-urile lungi se taxează pe mai multe mesaje.
+4. Textele vin în engleză, cu traducere în română din modul; clientul primește mesajul în limba de pe
+   fișa lui. Pentru a schimba varianta în română, folosiți iconița de limbă din dreapta câmpului (sau
+   lucrați din interfața în română). Modificarea făcută doar pe limba engleză nu se vede la clienții
+   români.
+5. Pe nivel se pot schimba și **Zile Scadente** (de exemplu -3 pentru memento cu trei zile înainte; orice
+   valoare negativă rămâne recunoscută de opțiune), bifele **Email** / **SMS** și **Atașează facturi**.
+6. Șabloanele nu sunt suprascrise la actualizarea modulului. Debifarea opțiunii șterge doar nivelul,
+   nu și șabloanele; la o nouă bifare, nivelul refolosește aceleași șabloane, cu modificările voastre.
+   Nu ștergeți șabloanele: reactivarea opțiunii ar da eroare. Dacă nu le mai vreți, debifați opțiunea.
+
+Verificare: pe un client cu o factură care ajunge la scadență mâine, **Urmărire → Trimite** afișează
+subiectul și mesajul din șablon, înainte de orice trimitere automată.
+
 ## 6. Flux de utilizare
 
 ### Pasul 1 — Deschiderea fișei partenerului
