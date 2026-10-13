@@ -13,9 +13,11 @@
 
 Modulul reevaluează lunar **soldurile monetare în valută** (creanțe, datorii, disponibilități) la
 cursul BNR de la sfârșitul lunii și înregistrează diferențele de curs pe `665` (pierderi) sau `765`
-(câștiguri). Ține un **istoric** (audit trail) al reevaluărilor, cu stări ciornă → postată →
-anulată, și produce un **raport audit PDF** per reevaluare (cursuri BNR folosite, solduri
-reziduale, diferențe 665/765).
+(câștiguri). Creanțele și datoriile se reevaluează **pe fiecare partener**: câștigul de la un
+client nu se compensează cu pierderea de la altul, iar nota poartă partenerul și pe `665`/`765`,
+deci fișa partenerului în lei e la zi (băncile și casa se reevaluează pe cont). Ține un **istoric** (audit trail) al reevaluărilor, cu stări ciornă → postată →
+anulată, și produce un **raport audit PDF** per reevaluare (parteneri, cursuri BNR folosite,
+solduri reziduale, diferențe 665/765).
 
 Compania alege explicit, dintr-un **parametru de configurare**, care standard contabil se aplică
 notei de reevaluare:
@@ -23,7 +25,7 @@ notei de reevaluare:
 - **OMFP 1802/2014** (implicit pentru companiile românești) — diferența e **definitivă**, **nu se
   stornează** automat în luna următoare, iar calculul e **incremental față de ultima reevaluare**
   (nu față de cursul istoric al documentului): ajustările lunii anterioare sunt reportate în soldul
-  contabil, iar la încasarea/plata unui element partea nerealizată rămasă se **realizează**
+  contabil, iar la încasarea/plata unui element partea nerealizată rămasă se **închide**
   automat la reevaluarea următoare.
 - **IFRS (IAS 21)** — folosește wizard-ul standard Enterprise, cu stornare automată a ajustării la
   începutul perioadei următoare (comportamentul implicit Odoo).
@@ -36,9 +38,16 @@ diferite după punctul de intrare folosit.
 ## 2. Bază legală și context
 
 - **OMFP 1802/2014, pct. 325 alin. (1)-(2)** — la finele fiecărei luni, creanțele și datoriile în
-  valută se evaluează la cursul de schimb BNR din ultima zi bancară a lunii; **pct. 304 alin. (3)-(4)**
+  valută se evaluează la cursul de schimb BNR din ultima zi bancară a lunii; **pct. 325 alin. (2) lit. b)**
   — aceeași regulă pentru disponibilități și alte valori de trezorerie. Diferențele de curs se
-  recunosc în rezultat (venituri/cheltuieli financiare), **definitiv**, fără stornare.
+  recunosc în rezultat (venituri/cheltuieli financiare), **definitiv**, fără stornare;
+  **pct. 322 alin. (2)** — diferența lunară se determină din modificarea cursului în cursul
+  fiecărei luni (reevaluare incrementală).
+- **OMFP 1802/2014, pct. 322 alin. (1)** — la decontare, diferența de curs se calculează față de
+  cursul inițial sau față de valoarea la care elementul e înregistrat în contabilitate (după reevaluare).
+- **OMFP 1802/2014, pct. 329 alin. (1) și pct. 56** — evidența creanțelor și datoriilor se ține pe
+  fiecare persoană fizică sau juridică, fără compensare între ele: reevaluarea se face pe fiecare
+  partener, iar câștigul de la un client nu se compensează cu pierderea de la altul.
 - **OMFP 1802/2014, pct. 316 alin. (2)** — avansurile reflectate în conturile **409** „Furnizori-debitori"
   și **419** „Clienți-creditori" **nu fac obiectul** reevaluării la cursul valutar la finele lunii —
   modulul le exclude automat din calcul (nu doar stocurile și capitalurile).
@@ -50,9 +59,11 @@ diferite după punctul de intrare folosit.
   „ledger groups", pentru evidență paralelă multi-standard) — de aceea modulul adaugă propriul
   parametru `l10n_ro_fx_revaluation_standard`, ca sursă unică de adevăr pentru ambele căi.
 - **Element monetar vs. nemonetar:** se reevaluează doar elementele monetare în valută; **stocurile
-  (clasa 3)** și **capitalurile (clasa 1)** sunt excluse automat. Un cont este eligibil doar dacă
-  are **valută proprie setată** (`account.currency_id`) sau este de tip **client/furnizor**
-  (`asset_receivable`/`liability_payable`) — nu e suficient ca o linie a lui să provină dintr-un
+  (clasa 3)** și **capitalurile (clasa 1)** sunt excluse automat. Excepție fac împrumuturile și
+  datoriile asimilate (`16x`, fără `169`): creditele bancare (`162`), leasingul (`167`) și dobânzile
+  datorate (`168`) sunt elemente monetare și se reevaluează. Un cont este eligibil doar dacă
+  are **valută proprie setată** (`account.currency_id`), este de tip **client/furnizor**
+  (`asset_receivable`/`liability_payable`) sau este un cont de credite (`16x`, `519`) — nu e suficient ca o linie a lui să provină dintr-un
   document în valută. De exemplu, un cont de imobilizări (`205`) sau de TVA (`4426`/`4427`) rămâne
   exclus chiar dacă a fost debitat/creditat printr-o factură emisă în EUR, pentru că soldul lui
   este, prin natură, exprimat în lei.
@@ -80,7 +91,13 @@ Roluri recomandate pentru testare:
 | `665` | cheltuieli din diferențe de curs valutar (pierderi) |
 | `765` | venituri din diferențe de curs valutar (câștiguri) |
 
-Excluse automat: capitaluri (`1xx`), stocuri (`3xx`), venituri și cheltuieli, avansurile din
+Pe conturile de terți se face câte o linie pe fiecare partener, cu partenerul și pe `665`/`765`.
+Conturile de trezorerie (`5124`, `5314`, `5081`, `542` — tip „bancă și numerar”) se reevaluează pe
+cont, fără partener. `267` și `508` sunt incluse doar dacă au valută setată pe cont.
+
+Incluse automat și fără valută pe cont: creditele și datoriile asimilate (`162`, `167`, `168`, `519`).
+
+Excluse automat: capitaluri (restul clasei `1`, inclusiv `169`), stocuri (`3xx`), venituri și cheltuieli, avansurile din
 **`409`**/**`419`** (pct. 316 alin. (2)), precum și orice combinație cont+valută exclusă manual din
 raportul standard (`account.account.exclude_provision_currency_ids` — aceeași listă, comună cu
 wizard-ul Enterprise).
@@ -143,7 +160,7 @@ Fără ele, postarea reevaluării generează eroare.
 
 Reevaluarea RO poate fi lansată din două puncte de intrare echivalente:
 
-- Meniul propriu **Contabilitate → Reevaluare valutară RO** (Pasul 2 de mai jos);
+- Meniul propriu **Facturare → Contabilitate → Reevaluare valutară RO** (Pasul 2 de mai jos);
 - Raportul standard **Contabilitate → Raportare → Câștiguri/pierderi valutare nerealizate**
   (`Unrealized Currency Gains/Losses`), care are acum și butonul **„RO Currency Revaluation
   (OMFP 1802)"** — vizibil doar dacă standardul companiei e OMFP 1802 — și care deschide direct
@@ -153,7 +170,7 @@ Reevaluarea RO poate fi lansată din două puncte de intrare echivalente:
 
 ### Pasul 2 — Istoricul reevaluărilor
 
-Accesați **Contabilitate → Contabilitate → Reevaluare valutară RO**. Lista afișează reevaluările cu starea lor
+Accesați **Facturare → Contabilitate → Reevaluare valutară RO**. Lista afișează reevaluările cu starea lor
 (ciornă / postată / anulată) și totalurile de pierderi/câștiguri.
 
 ![Lista reevaluărilor valutare RO](screenshots/03_reevaluare_lista.png)
@@ -162,8 +179,12 @@ Accesați **Contabilitate → Contabilitate → Reevaluare valutară RO**. Lista
 
 Creați o reevaluare, setați **data** (ultima zi a lunii), **compania** și **jurnalul**, apoi apăsați
 **Calculează**. Modulul determină soldurile reziduale valutare (ținând cont de reconcilierile
-parțiale) și afișează, pe fiecare cont și valută: soldul în valută, soldul contabil în RON, cursul
+parțiale) și afișează, pe fiecare cont, partener și valută (băncile și casa pe cont, fără partener):
+soldul în valută, soldul contabil în RON, cursul
 BNR, soldul recalculat și **diferența** (pierdere `665` / câștig `765`).
+
+Captura arată reevaluarea după postare (Pasul 4); în ciornă, aceleași linii apar după
+**Calculează**, iar după postare nu mai pot fi modificate.
 
 ![Reevaluarea cu liniile calculate (diferențe de curs)](screenshots/04_reevaluare_form.png)
 
@@ -171,7 +192,8 @@ BNR, soldul recalculat și **diferența** (pierdere `665` / câștig `765`).
 
 Apăsați **Postează nota**. Modulul generează nota de diferențe de curs și o leagă de reevaluare
 (stare **postată**). Corecția se face **doar** prin butonul **Anulează** (storno), nu prin editarea
-notei.
+notei. Pe conturile de terți, fiecare partener are perechea lui de linii, cu partenerul și pe
+`665`/`765`.
 
 ![Nota contabilă de reevaluare (665/765)](screenshots/05_nota_contabila.png)
 
@@ -181,8 +203,8 @@ Pe reevaluare, apăsați **Raport audit (PDF)** (sau din meniul de tipărire). R
 justificativ al reevaluării, util la închidere și la control.
 
 1. **Găsiți pe ecran** — antetul afișează perioada (data reevaluării), compania și CUI, jurnalul și
-   nota contabilă legată; în tabel, fiecare rând este un cont monetar în valută, cu coloanele
-   *Sold rezidual (val.)*, *Sold contabil (RON)*, *Curs BNR*, *Sold la curs BNR* și *Diferență (Δ)*,
+   nota contabilă legată; în tabel, fiecare rând este o combinație cont + partener + valută (bancă/casă:
+   doar cont), cu coloanele *Partener*, *Sold rezidual (val.)*, *Sold contabil (RON)*, *Curs BNR*, *Sold la curs BNR* și *Diferență (Δ)*,
    plus tipul (665 pierdere / 765 câștig).
 2. **Verificați** — cursul BNR de pe fiecare rând este cel din ultima zi a lunii; *Sold la curs BNR* =
    *Sold rezidual (val.)* × *Curs BNR*; *Diferență* = *Sold la curs BNR* − *Sold contabil*; totalurile
@@ -202,9 +224,26 @@ justificativ al reevaluării, util la închidere și la control.
   soldul contabil, deci diferența nouă se calculează față de cursul ultimei reevaluări (ex.
   5,10 → 5,00 luna 1, apoi 5,00 → 4,90 luna 2), nu față de cursul istoric al documentului.
 - **Realizare la decontare:** la încasarea/plata elementului, partea nerealizată rămasă din reevaluările
-  anterioare se **realizează** (stornare) la reevaluarea următoare — rândul apare cu sold valutar zero
-  și o ajustare inversă. Astfel, diferența recunoscută în rezultat reflectă variația de curs față de
+  anterioare se **închide** la reevaluarea următoare — rândul apare cu sold valutar zero și o
+  ajustare de sens opus. Astfel, **netul** recunoscut în rezultat reflectă variația de curs față de
   ultima reevaluare, nu dubla diferența istorică.
+  ⚠️ Închiderea nu e o stornare pe contul inițial: un câștig nerealizat anterior (`765`) se închide
+  cu `Dr 665 = Cr 4111`, o pierdere anterioară (`665`) cu `Dr 4111 = Cr 765`. Rezultatul net e
+  corect, dar **rulajele brute** `665` și `765` cresc cu suma închisă. Limitarea e cunoscută și
+  acceptată; se trece în politica contabilă.
+- **Între decontare și sfârșitul lunii** fișa partenerului în lei arată un rest egal cu ajustarea
+  din reevaluarea anterioară (sold valutar zero, sold în lei diferit de zero). E normal: Odoo
+  calculează diferența la plată față de cursul facturii, iar restul se stornează la reevaluarea
+  de la sfârșitul lunii (vezi mai sus cum se închide). Netul în rezultat e diferența față de ultima
+reevaluare (pct. 322 alin. (1)).
+- **Pe fiecare partener:** pe conturile de terți se face câte o pereche de linii pe fiecare partener,
+  cu partenerul pe contul valutar și pe `665`/`765`; disponibilitățile (`5124`, `5314`) rămân pe cont.
+- **Tranziția de la versiunile anterioare lui 19.0.1.3.0:** ajustările vechi, înregistrate fără partener,
+  se închid la prima reevaluare, pe linii fără partener cu eticheta „Stornare reevaluare fără
+  partener (tranziție)”, iar fiecare partener primește diferența față de cursul istoric. Ca la
+  decontare, închiderea se face prin diferență de sens opus (o pierdere veche apare ca `765`), deci
+  în luna respectivă apar pe același cont și `665`, și `765`: netul și rezultatul nu se schimbă, dar
+  rulajele brute cresc. Treceți în politica contabilă, pentru auditor.
 
 ## 7. Legături cu alte module / declarații
 
@@ -228,8 +267,12 @@ alegerea conturilor incluse (sau excluse manual) și verificarea soldurilor.
 - [ ] Setările au secțiunea **Foreign Currency Revaluation**, vizibilă doar pe companii cu țara
       fiscală România.
 - [ ] Conturile 665/765, jurnalul de reevaluare și standardul companiei sunt configurate.
-- [ ] **Calculează** produce linii doar pe conturile monetare în valută (nu pe 3xx/1xx/409/419) și respectă
+- [ ] **Calculează** produce linii doar pe conturile monetare în valută (nu pe 3xx/409/419 și nici pe clasa 1,
+      cu excepția creditelor `16x`) și respectă
       excluderile manuale cont/valută.
+- [ ] Pe conturile de terți (`4111`, `401`, `461`, `462`, `16x` etc.) apare câte o linie pe fiecare
+      partener, iar nota contabilă poartă partenerul atât pe contul valutar, cât și pe `665`/`765`;
+      pe `5124`/`5314` apare o singură linie pe cont.
 - [ ] Conturi nemonetare (ex. `205` imobilizări, `4426`/`4427` TVA, `581` viramente interne) **nu**
       apar în liniile calculate, chiar dacă au o linie contabilă provenită dintr-un document în valută.
 - [ ] Câmpurile de provizion (665/765) din Setări → „Revaluation Provision Accounts" sunt distincte
@@ -248,7 +291,9 @@ alegerea conturilor incluse (sau excluse manual) și verificarea soldurilor.
       reutilizează draftul existent (dacă pornită din wizard).
 - [ ] **Raport audit (PDF)** se generează și totalurile 665/765 coincid cu nota contabilă.
 - [ ] În luna a doua, diferența este **incrementală** (față de cursul ultimei reevaluări), nu față de cursul istoric.
-- [ ] După încasarea/plata unui element, reevaluarea următoare **realizează** (stornează) ajustarea nerealizată rămasă.
+- [ ] După încasarea/plata unui element, reevaluarea următoare **închide** ajustarea nerealizată rămasă (rând cu sold valutar zero).
+- [ ] La prima reevaluare după actualizarea la 19.0.1.3.0, ajustările vechi apar pe linii fără partener cu eticheta
+      „Stornare reevaluare fără partener (tranziție)”, iar netul pe cont e același ca în varianta fără partener.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -260,11 +305,12 @@ alegerea conturilor incluse (sau excluse manual) și verificarea soldurilor.
 | „Calculați mai întâi liniile de reevaluare" | s-a apăsat Postează fără Calculează | apăsați mai întâi **Calculează** |
 | „This company is configured for IFRS…" | compania e pe standardul IFRS, dar s-a încercat calculul din meniul propriu RO | folosiți wizard-ul Enterprise standard, sau schimbați standardul companiei pe OMFP 1802 |
 | Reevaluare duplicată pentru aceeași lună | constrângere `UNIQUE(date, company)` | anulați reevaluarea existentă sau alegeți altă dată |
+| După încasarea/plata unui element, fișa partenerului în lei arată un rest (sold valutar zero) | Odoo calculează diferența la plată față de cursul facturii; ajustarea din reevaluarea anterioară rămâne până la reevaluarea lunii | normal — restul se închide la reevaluarea de la sfârșitul lunii |
 | Meniul nu este vizibil | utilizatorul nu are drepturi contabile | acordați grupul „Contabilitate" și reîncărcați |
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**,
 pe planul de conturi RO:
 
@@ -272,9 +318,11 @@ pe planul de conturi RO:
 2. `02_raport_standard_buton.png` — butonul „RO Currency Revaluation (OMFP 1802)" pe raportul
    standard „Unrealized Currency Gains/Losses".
 3. `03_reevaluare_lista.png` — lista reevaluărilor valutare RO (stări + totaluri).
-4. `04_reevaluare_form.png` — reevaluarea cu liniile calculate (cont, valută, curs BNR, diferență, tip).
-5. `05_nota_contabila.png` — nota contabilă de reevaluare (liniile 665/765).
-6. `06_raport_audit.png` — raportul audit PDF (cursuri BNR, solduri reziduale, totaluri 665/765).
+4. `04_reevaluare_form.png` — reevaluarea cu liniile calculate pe fiecare partener (cont, partener, valută, curs BNR,
+   diferență, tip): furnizorul cu pierdere și clientul cu câștig, pe linii separate.
+5. `05_nota_contabila.png` — nota contabilă de reevaluare: câte o pereche pe fiecare partener, cu partenerul
+   pe contul valutar și pe 665/765 (`Dr 665 = Cr 401`, `Dr 4111 = Cr 765`).
+6. `06_raport_audit.png` — raportul audit PDF (partener, cursuri BNR, solduri reziduale, totaluri 665/765).
 
 Regenerare:
 
@@ -290,4 +338,6 @@ Păstrați explicația orientată pe activitatea contabilului: când se rulează
 conturi acționează (monetare în valută, **nu** stocuri/capitaluri) și cum aleg standardul companiei
 (OMFP 1802 — definitiv, fără stornare — sau IFRS — cu stornare automată). Subliniați că, indiferent
 de punctul de pornire (meniu propriu sau raport standard), rezultatul e coerent pentru aceeași lună,
-și că la încasarea/plata ulterioară diferența se raportează la cursul reevaluării.
+și că la încasarea/plata ulterioară diferența se raportează la cursul reevaluării. Explicați că
+reevaluarea se face pe fiecare partener (creanțele și datoriile nu se compensează între ele) și ce
+se întâmplă în prima lună după actualizarea la 19.0.1.3.0 (ajustările vechi fără partener).

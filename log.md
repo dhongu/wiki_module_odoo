@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-13] Re-ingestie: `l10n_ro_currency_revaluation` 19.0.1.2.6 → 19.0.1.3.1
+
+- **Acțiune:** actualizare după terrabit-solutions/l10n_ro_ent#689 și #691: reevaluare pe fiecare partener (cont + partener + valută; bancă/casă pe cont; partener și pe 665/765), tranziția automată a ajustărilor vechi fără partener (eticheta „Stornare reevaluare fără partener (tranziție)”), linii needitabile după postare, cursul BNR din PDF cu separatorii limbii, baza legală corectată (pct. 322, 325, 329, 56 în locul pct. 304).
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `HISTORY.md` + control în cod; fișa consultant și cele 6 capturi recopiate (04–06 noi, cu partenerul).
+- **De știut:** închiderea ajustării rămase la decontare și în luna de tranziție se face prin diferență de sens opus (net corect, rulaje 665/765 mai mari) — limitare acceptată, explicată în fișă.
+- **Fișiere actualizate:** `l10n_ro_currency_revaluation/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-10-12] Redenumire: `l10n_ro_stock_picking_report` → `l10n_ro_picking_report` (19.0.2.0.0)
 
 - **Acțiune:** pagina veche `l10n_ro_stock_picking_report/` (19.0.1.3.6) e mutată și rescrisă ca [l10n_ro_picking_report](l10n_ro_picking_report/index.md). Numele tehnic vechi e ocupat pe Odoo Apps de OCA (14.0); redenumirea e în dhongu/l10n-romania#625 și terrabit-solutions/terrabit#436 (`terrabit_base`), iar cele 19 proiecte de client care moșteneau rapoartele au fost aduse la noul prefix. Pagina nouă menționează numele vechi, migrarea automată prin `pre_init_hook`, prefixul `l10n_ro_picking_report.` pentru moșteniri și componentele cheie din cod; fișa consultant și cele 13 capturi resincronizate din modul.
