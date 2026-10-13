@@ -20,6 +20,8 @@ Se lucrează în două feluri:
 - **tipărire la cerere**, pentru unul sau mai mulți parteneri aleși;
 - **campanie pe email**: un document numerotat care generează câte o linie per partener, atașează
   PDF-ul și îl trimite, urmărind starea fiecărui partener (pregătit / fără email / trimis / eroare).
+  Emailul rămâne în istoricul (chatterul) partenerului. Răspunsul partenerului intră în același
+  fir, iar linia arată dacă soldul a fost confirmat sau nu, cu diferența declarată de partener.
 
 ## 2. Bază legală și context
 
@@ -42,7 +44,8 @@ Se lucrează în două feluri:
 ## 3. Utilizatori și roluri
 
 - **Contabil clienți / furnizori** — tipărește confirmările la cerere și rulează campania pe email.
-- **Contabil-șef** — stabilește semnatarii impliciți și controlează răspunsurile.
+- **Contabil-șef** — stabilește semnatarii impliciți și controlează răspunsurile: marchează
+  soldurile confirmate și neconfirmate și urmărește diferențele.
 
 Drepturi necesare:
 - **Campania pe email** (meniul „Confirmări de sold”) și **tipărirea la cerere** (dialogul
@@ -90,6 +93,10 @@ Date minime pentru demo (cele din capturi, la 30.09.2026):
 5. Verificați că există un server de email de ieșire configurat (**Setări → Tehnic → Servere de
    email de ieșire**; meniul Tehnic apare în modul dezvoltator). Dacă trimiterea eșuează, linia
    campaniei trece în „Eroare”, cu mesajul serverului.
+6. Ca răspunsurile partenerilor să intre automat în Odoo, configurați **domeniul de alias** și
+   adresa **catchall** (**Setări → Setări generale → Discuții → Domeniu alias**) și un **server de
+   email de intrare**. Fără ele, emailul trimis apare tot în chatterul partenerului, dar răspunsul
+   ajunge doar în căsuța de email a companiei, iar linia se marchează manual (Pasul 10).
 
 ## 6. Flux de utilizare
 
@@ -204,7 +211,9 @@ Apăsați apoi **Generează PDF-urile** și **Trimite email-urile**.
 După trimitere, fiecare linie are:
 - starea **Trimis**;
 - PDF-ul atașat („Confirmare de sold - <partener> - <dată>.pdf”);
-- **data trimiterii**.
+- **data trimiterii**;
+- răspunsul **Așteaptă răspuns**. Grupul **Răspunsuri** de deasupra liniilor numără liniile pe
+  fiecare stare a răspunsului.
 
 Campania trece în **Finalizat** când toți partenerii cu email au primit documentul. O linie cu
 **Eroare** păstrează mesajul serverului de email. După corectare (serverul de email, adresa
@@ -213,6 +222,68 @@ partenerului sau emailul completat ulterior pe un partener „Fără email”), 
 campanie descarcă documentele deschise ale tuturor partenerilor din campanie.
 
 ![Campania trimisă: stări, PDF atașat, data trimiterii](screenshots/08_campanie_trimisa.png)
+
+### Pasul 9 — Emailul și răspunsul în chatterul partenerului
+
+Deschideți fișa partenerului (**Facturare → Clienți → Clienți**) sau apăsați, pe linia campaniei,
+butonul cu iconița de mesaje. În chatter, în dreapta, apare:
+- **emailul trimis** („Confirmare de sold la …”), cu textul în limba partenerului și PDF-ul
+  atașat. Emailul pleacă doar către partener: urmăritorii fișei nu primesc copie;
+- **răspunsul partenerului**, dacă a răspuns la email („Re: Confirmare de sold la …”), cu
+  atașamentele lui (de regulă extrasul semnat).
+
+Când răspunsul intră, linia campaniei trece automat din **Așteaptă răspuns** în **Răspuns
+primit**, iar în chatterul campaniei apare nota „Răspuns primit de la <partener>”.
+
+**Verificați:**
+- răspunsul stă imediat sub emailul trimis, ca răspuns la el;
+- atașamentul primit este extrasul semnat de partener;
+- textul spune dacă soldul e confirmat sau ce obiecții are partenerul.
+
+Numai răspunsul la emailul confirmării schimbă starea liniei. Un email nou de la partener, pe alt
+subiect, apare în chatter, dar nu atinge linia.
+
+![Chatterul partenerului: emailul confirmării și răspunsul lui](screenshots/09_chatter_partener_raspuns.png)
+
+### Pasul 10 — Marcarea răspunsurilor pe campanie
+
+Reveniți în campanie (**Facturare → Clienți → Confirmări de sold**). Butonul **Răspunsuri de
+verificat** din partea de sus arată câte linii au răspuns primit și încă nemarcat. Pe fiecare
+linie, după ce ați citit răspunsul:
+- **bifa** marchează soldul **Confirmat**;
+- **crucea** îl marchează **Neconfirmat**. Completați **Soldul partenerului** (suma declarată de
+  el): **Diferența** se calculează ca sold în evidența noastră minus soldul partenerului. Notați
+  explicația în **Observații răspuns**.
+
+Butoanele merg și fără răspuns pe email: dacă partenerul a trimis extrasul semnat pe altă cale
+(poștă, alt email), marcați linia direct din **Așteaptă răspuns**.
+
+**Verificați** pe exemplul din captură:
+- Alfa Distribuție are **Răspuns primit**: confirmarea de 16.586,00 lei din Pasul 9, încă
+  nemarcată;
+- Beta Export este **Neconfirmat**: partenerul declară 12.574,10 lei față de 13.071,10 lei la noi,
+  deci diferența este **497,00 lei** (100 EUR × 4,97). Observația spune de unde vine: o plată de
+  100 EUR pe care partenerul o are, iar noi nu;
+- contoarele **Răspunsuri** (Așteaptă / Primit / Confirmat / Neconfirmat) corespund liniilor.
+
+![Campania cu răspunsurile: Răspuns primit, Neconfirmat cu diferență](screenshots/10_campanie_raspunsuri.png)
+
+### Pasul 11 — Situația răspunsurilor pentru inventariere
+
+Accesați **Facturare → Clienți → Răspunsuri la confirmările de sold**. Lista arată toate liniile
+trimise, din toate campaniile: partenerul, soldul, data trimiterii, răspunsul, data răspunsului,
+soldul declarat de partener, diferența și observațiile. Marcarea Confirmat / Neconfirmat se poate
+face și de aici.
+
+1. **Găsiți** — filtrele **Așteaptă răspuns**, **Răspuns primit**, **Confirmat**, **Neconfirmat**
+   și gruparea pe **Campanie** sau pe **Răspuns** din căutare.
+2. **Verificați** — cu filtrul **Neconfirmat**, coloana **Diferență** are totalul în subsolul
+   listei: este suma diferențelor de lămurit. Cu filtrul **Așteaptă răspuns**, rămân partenerii
+   care n-au răspuns în termen.
+3. **Treceți mai departe** — bifați liniile filtrate și alegeți **Acțiuni → Exportă**: fișierul
+   este anexa la procesul-verbal de inventariere, cu soldurile neconfirmate și cele în litigiu.
+
+![Lista răspunsurilor la confirmările de sold](screenshots/11_lista_raspunsuri.png)
 
 ### Note de monografie și raportare
 
@@ -239,7 +310,7 @@ Regula de control: **soldul confirmat = suma resturilor de plată din tabel**, p
 |---|---|
 | `account` | facturi, plăți și reconcilieri; sursa soldurilor și a resturilor de plată |
 | `l10n_ro` | planul de conturi românesc (4111, 401, 409, 419) |
-| `mail` | șablonul de email bilingv și trimiterea campaniei |
+| `mail` | șablonul de email bilingv, trimiterea campaniei prin chatterul partenerului și primirea răspunsurilor |
 | `l10n_ro_inventory_register` | registrul-inventar, unde se reflectă soldurile inventariate |
 
 **Ce e automat:**
@@ -247,7 +318,10 @@ Regula de control: **soldul confirmat = suma resturilor de plată din tabel**, p
 - gruparea pe monede și contravaloarea în lei;
 - semnatarii preluați de pe companie;
 - limba documentului (română pentru partenerii din România);
-- generarea liniilor, a PDF-urilor și trimiterea pe email cu urmărirea stării.
+- generarea liniilor, a PDF-urilor și trimiterea pe email cu urmărirea stării;
+- păstrarea emailului în chatterul partenerului și legarea răspunsului de linia campaniei
+  („Răspuns primit”), când răspunsurile intră prin catchall;
+- diferența dintre soldul nostru și cel declarat de partener.
 
 Reevaluarea valutară lunară (`l10n_ro_currency_revaluation`) se înregistrează global pe cont, fără
 partener. Prin urmare, nu modifică soldul în lei din extrasul de cont, care rămâne la cursul
@@ -256,7 +330,10 @@ documentelor.
 **Ce rămâne manual:**
 - configurarea semnatarilor și a adreselor de email;
 - trimiterea extrasului către partenerii fără email;
-- urmărirea răspunsurilor și a soldurilor neconfirmate sau în litigiu;
+- citirea răspunsului și marcarea liniei **Confirmat** / **Neconfirmat**, cu soldul declarat de
+  partener;
+- marcarea răspunsurilor primite pe altă cale (poștă, alt email);
+- reamintirea partenerilor care n-au răspuns în termen;
 - regularizarea diferențelor constatate.
 
 ## 8. Verificări pentru consultant
@@ -277,6 +354,13 @@ documentelor.
 - [ ] După trimitere, liniile au starea „Trimis”, PDF atașat și data trimiterii.
 - [ ] Cu serverul de email oprit, linia trece în „Eroare” (nu „Trimis”), cu mesajul serverului.
 - [ ] Un partener „Fără email” căruia i se completează adresa primește extrasul la o nouă apăsare pe „Trimite email-urile”.
+- [ ] După trimitere, emailul cu PDF-ul atașat apare în chatterul partenerului, iar linia are răspunsul „Așteaptă răspuns”.
+- [ ] Urmăritorii fișei partenerului nu primesc copie a emailului.
+- [ ] Un răspuns al partenerului la email (cu catchall configurat) intră în chatterul lui și trece linia în „Răspuns primit”; în chatterul campaniei apare nota.
+- [ ] Un email nou al partenerului, care nu e răspuns la confirmare, nu schimbă starea liniei.
+- [ ] La „Neconfirmat” cu soldul partenerului completat, diferența = soldul nostru − soldul partenerului; la „Confirmat” diferența e zero.
+- [ ] Contoarele „Răspunsuri” din campanie și butonul „Răspunsuri de verificat” corespund liniilor.
+- [ ] Meniul „Răspunsuri la confirmările de sold” arată liniile trimise din toate campaniile, cu filtrele pe răspuns și totalul diferențelor.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -290,6 +374,9 @@ documentelor.
 | Soldul diferă de fișa partenerului pe 461 / 462 / 425 | Pe extras intră doar conturile comerciale (411/413, 401/403/404) | Normal: celelalte conturi nu se confirmă prin extrasul de cont |
 | Linie în starea „Eroare”, cu mesajul serverului de email | Server de email neconfigurat sau adresă invalidă | Verificați serverul și adresa, apoi „Trimite email-urile” |
 | Soldul în lei diferă de balanța 4111 după reevaluare | Reevaluarea lunară e înregistrată global, fără partener | Normal: extrasul arată contravaloarea la cursul documentelor; suma confirmată e cea în valută |
+| Partenerul a răspuns, dar linia rămâne „Așteaptă răspuns” | Fără domeniu de alias / catchall sau server de intrare, răspunsul n-a intrat în Odoo; ori partenerul a scris un email nou, nu un răspuns | Configurați aliasul și serverul de intrare (secțiunea 5) sau marcați linia manual |
+| Răspunsul apare în chatterul partenerului, dar linia nu se schimbă | Răspuns la un email trimis înainte de actualizarea modulului, sau linia era deja marcată | Marcați linia manual cu bifa sau crucea |
+| Diferența egală cu tot soldul la „Neconfirmat” | Soldul partenerului necompletat (zero) | Completați „Soldul partenerului” cu suma declarată |
 | Soldul diferă de fișa partenerului de azi | Documentul arată soldul la data confirmării, nu azi | Comparați cu fișa partenerului filtrată până la aceeași dată |
 
 ## 10. Capturi de ecran
@@ -307,7 +394,10 @@ Lista capturilor (în ordinea fluxului):
 5. `05_export_xlsx.png` — exportul XLSX al documentelor deschise
 6. `06_campanie_optiuni.png` — campanie nouă, fila „Document”
 7. `07_campanie_linii.png` — liniile generate, cu soldul la dată și starea
-8. `08_campanie_trimisa.png` — campania trimisă: stări, PDF atașat, data trimiterii
+8. `08_campanie_trimisa.png` — campania trimisă: stări, PDF atașat, data trimiterii, „Așteaptă răspuns”
+9. `09_chatter_partener_raspuns.png` — chatterul partenerului: emailul confirmării și răspunsul lui
+10. `10_campanie_raspunsuri.png` — campania cu răspunsurile: Răspuns primit, Neconfirmat cu diferență
+11. `11_lista_raspunsuri.png` — lista „Răspunsuri la confirmările de sold”, din toate campaniile
 
 Regenerare:
 ```
@@ -325,7 +415,13 @@ Regenerare:
 - La valută, partenerul confirmă suma **în valută**. Contravaloarea în lei e informativă, la cursul
   documentelor, fără reevaluarea lunară.
 - Avansurile 419/409 sunt conturi distincte de 4111/401: apar pe rânduri separate, nu „din care”.
-- Răspunsurile partenerilor (confirmat / neconfirmat / cu obiecții) se urmăresc în afara
-  modulului. Semnarea electronică a răspunsului este propusă în ROADMAP (E1).
+- Răspunsurile partenerilor se urmăresc pe linia campaniei: răspunsul la email marchează linia
+  automat („Răspuns primit”), iar confirmarea sau neconfirmarea o decide contabilul, după ce
+  citește răspunsul. Insistați pe configurarea aliasului și a serverului de intrare: fără ele,
+  răspunsurile nu intră în Odoo.
+- Lista „Răspunsuri la confirmările de sold”, filtrată pe „Neconfirmat” și „Așteaptă răspuns”, este
+  situația soldurilor neconfirmate și în litigiu cerută la inventariere.
+- Reamintirea automată a partenerilor fără răspuns și semnarea electronică a răspunsului sunt
+  propuse în ROADMAP.
 - Pentru inventarierea anuală, campania se rulează la data închiderii exercițiului, iar exportul
   XLSX servește ca bază pentru situația soldurilor neconfirmate.

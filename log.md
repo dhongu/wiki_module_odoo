@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-14] Re-ingestie: `l10n_ro_balance_confirmation` 19.0.2.2.2 → 19.0.2.3.0
+
+- **Acțiune:** actualizare după terrabit-solutions/l10n_ro_ent#709: emailul campaniei e postat în chatterul partenerului, răspunsul partenerului (prin catchall) marchează linia „Răspuns primit”, marcare Confirmat / Neconfirmat cu soldul partenerului și diferența, meniul „Răspunsuri la confirmările de sold”, condiția alias/catchall/server de intrare.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md` + control în cod; fișa consultant recopiată (pașii 9–11 noi), capturile 07–08 recopiate și 09–11 noi, cu căile rescrise în `screenshots/`.
+- **Fișiere actualizate:** `l10n_ro_balance_confirmation/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-10-13] Re-ingestie: `l10n_ro_reports_fix` 19.0.0.0.14 și `l10n_ro_off_balance` 19.0.1.0.3
 
 - **Acțiune:** actualizare după terrabit-solutions/l10n_ro_ent#698 (fișe consultant complete), procesare în paralel. `l10n_ro_off_balance` are acum fișă consultant (7 capturi: setări, 803999, grupele clasei 8, jurnalul EXTR, nota de custodie, controlul pe clasa 8, nota de transfer în ciornă). `l10n_ro_reports_fix`: pagina urmează tabelul „Ce înseamnă fiecare funcționalitate” din fișă; Balanța brută explicată cu 121 (Odoo mută 6xx, 7xx și 121 pe „Result Brought Forward”); tipul de cont „În Afara bilanțului”.
