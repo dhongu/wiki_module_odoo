@@ -1,31 +1,34 @@
 # Romania - Customs Import Declaration (DVI) (localizat la `l10n_ro_customs_dvi/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_customs_dvi`
-- **Versiune:** `19.0.2.1.0`
+- **Versiune:** `19.0.2.1.7`
 - **Cale:** `https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_customs_dvi`
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_customs_dvi`
-- **Ultima Ingestie:** `2026-09-29`
+- **Ultima Ingestie:** `2026-10-16`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 - **Nume anterior:** `terrabit_dvi` (redenumit la 2026-09-23; vezi [terrabit_dvi](../terrabit_dvi/index.md))
 
 #### 1. Sumar
 
-Modulul înregistrează Declarația Vamală de Import (DVI) pentru importurile din afara Uniunii Europene, legând factura furnizorului extern de costurile vamale printr-un cost de aterizare (landed cost) atașat recepției. Din wizardul deschis de pe factura furnizor se transcriu sumele din declarație — taxa vamală (poziția A00), baza de impozitare și TVA-ul din vamă (poziția B00) — iar modulul repartizează taxa în costul stocului și generează nota de TVA. Taxele vamale majorează costul mărfii, în timp ce TVA-ul la import nu atinge costul. Nota contabilă primește ca referință numărul MRN al declarației, astfel încât plata către vamă să poată fi reconciliată pe contul 4462 per declarație. Modulul acoperă atât plata efectivă a TVA-ului în vamă, cât și amânarea plății pentru firmele cu certificat de amânare.
+Modulul înregistrează Declarația Vamală de Import (DVI) pentru importurile din afara Uniunii Europene, legând factura furnizorului extern de costurile vamale printr-un cost de aterizare (landed cost) atașat recepției. Din wizardul deschis de pe factura furnizor se transcriu sumele din declarație — taxa vamală (poziția A00), baza de impozitare și TVA-ul la import (poziția B00) — iar modulul repartizează taxa în costul stocului și generează nota de TVA. Taxele vamale majorează costul mărfii, în timp ce TVA-ul la import nu atinge costul. Nota contabilă primește ca referință numărul MRN al declarației, astfel încât plata către vamă să poată fi reconciliată pe contul 4462 per declarație. Modulul acoperă atât plata efectivă a TVA-ului în vamă, cât și importul fără plata TVA în vamă (de exemplu cu certificat de amânare). Costul de aterizare rămâne legat de factura furnizorului, iar liniile de TVA sunt legate de taxă, deci apar corect în SAF-T (D406).
 
 #### 2. Funcționalități Cheie
 
 - Wizard DVI pornit cu butonul **DVI** de pe factura furnizorului extern postată, care creează un cost de aterizare legat de recepțiile comenzii de achiziție. Sumele (taxă vamală A00, bază de impozitare, TVA B00, cotă, număr DVI) se **transcriu** din declarație, nu se recalculează; baza propusă implicit (netul facturii) este doar un punct de plecare, nu baza legală de la art. 289 din Legea 227/2015.
 - Repartizează taxa vamală (A00) în costul de achiziție al mărfii, prin mecanismul nativ de cost adițional.
-- **Două regimuri de TVA în vamă, comutate prin taxa aleasă în wizard** (fără câmp de configurare):
-  - *plata efectivă* (art. 326 alin. (3)) — taxă obișnuită de achiziție, cu o singură linie de repartiție pe 4426: `Dr 4426 = Cr 4462`, datoria se stinge ulterior prin plată;
-  - *amânarea de la plată* (art. 326 alin. (4)-(5)) — taxă cu taxare inversă (două linii, 4426 și 4427, ex. „VAT Reverse Tax”): `Dr 4426 = Cr 4427`, fără 4462 și fără plată, taxa apărând în decont și ca deductibilă, și ca colectată. Firmele cu certificat de amânare trebuie să aleagă taxa corespunzătoare.
-- Nota de TVA poartă etichetele fiscale ale taxei, plus o pereche tehnică echilibrată pe contul neutru 473 care poartă eticheta de bază, ca rândul din D300 să nu iasă cu TVA și cu bază zero.
+- **Două regimuri de TVA la import, comutate prin taxa aleasă în wizard** (fără câmp de configurare):
+  - *plata efectivă în vamă* (art. 326 alin. (3)) — taxă obișnuită de achiziție, cu o singură linie de repartiție pe 4426: `Dr 4426 = Cr 4462`, datoria se stinge ulterior prin plată;
+  - *fără plata TVA în vamă* (art. 326 alin. (4)-(5)) — **nu este taxare inversă**: TVA-ul se înregistrează atât ca taxă colectată, cât și ca deductibilă. Se alege o taxă cu două linii de repartiție, pe 4426 și 4427 — „21% IMP AM” sau „11% IMP AM” din `l10n_ro_anaf_d300` (rândurile 7 și 22 din decont): `Dr 4426 = Cr 4427`, fără 4462 și fără plată. Regimul acoperă certificatul de amânare, vămuirea centralizată, înscrierea în evidențele declarantului și bunurile din art. 331 alin. (2) lit. b), c), i)–k).
+  - Condiția de deducere diferă: la plata în vamă, dovada plății (art. 299 alin. (1) lit. c)); fără plată în vamă, declarația pe numele importatorului cu TVA datorat și taxa înscrisă ca colectată în aceeași perioadă (lit. d)).
+- Liniile de TVA ale notei sunt legate de taxă (linia de repartiție a taxei), iar linia tehnică de bază poartă și ea taxa; astfel TVA-ul la import este exportat corect în SAF-T (D406), nu cu TaxCode 000000 și sumă zero, și este luat în calcul la închiderea TVA din Odoo. Nota de TVA poartă etichetele fiscale ale taxei, plus o pereche tehnică echilibrată pe contul neutru 473 care poartă eticheta de bază, ca rândul din D300 să nu iasă cu TVA și cu bază zero.
 - Taxa vamală se creditează pe **4462** „Alte impozite, taxe și vărsăminte asimilate — reluate într-o perioadă de până la un an” (datorie curentă; atenție, 4461 înseamnă peste un an). Dacă planul nu are 4462, se folosește orice cont 446.
 - Numărul declarației (MRN) devine referința notei contabile, pentru reconcilierea plății pe 4462 per declarație. Biroul vamal **nu** se creează ca partener; soldul se urmărește pe cont.
 - Câmpuri DVI pe costul de aterizare (tip, număr MRN, cotă, bază, valoare TVA), filtru dedicat și coloană în listă; meniu propriu „DVI — Costuri vamale”, cu lista filtrată pe costurile de tip DVI și grupată pe dată.
-- Ajutoare extinse pe fiecare câmp al wizardului și casetă de îndrumare cu maparea poziție din declarație → câmp. Valoarea „TVA plătit în vamă” nu se recalculează la schimbarea bazei sau a cotei — se modifică manual.
+- Etichete neutre, valabile în ambele regimuri: rândurile notei se numesc „Import VAT - <taxă>”, iar câmpul „Import VAT Amount”; eticheta veche „TVA plătit în vamă” era folosită greșit și la importurile fără plata TVA în vamă. Notele deja postate păstrează eticheta veche.
+- Costul de aterizare creat de wizard este legat de factura furnizorului prin câmpul standard **Vendor Bill**: câmpul arată factura, factura primește butonul inteligent „Landed Costs”, iar detaliile de evaluare a stocului numesc factura. Se leagă doar facturile (nu notele de credit); costurile create înainte de 2.1.7 rămân fără legătură.
+- Ajutoare extinse pe fiecare câmp al wizardului și casetă de îndrumare cu maparea poziție din declarație → câmp. Valoarea din câmpul „Import VAT Amount” (TVA la import) nu se recalculează la schimbarea bazei sau a cotei — se modifică manual.
 - **Comisionul vamal a fost eliminat** (nu există comision datorat autorității vamale; câmpul era folosit greșit pentru onorariul brokerului). Onorariul **comisionarului vamal** nu se operează prin wizard: brokerul e furnizor obișnuit cu sold pe 401, factura lui se înregistrează pe un produs serviciu marcat „Este un cost adițional”. Contul de cheltuială al produsului este **473** (tranzit) dacă onorariul se capitalizează prin butonul „Creați costuri adiționale” de pe factură, respectiv **622** dacă nu se capitalizează. Atenție: dacă onorariul a fost inclus în baza B00, poate fi facturat fără TVA.
-- Fișa consultant detaliază baza legală (art. 289, 290, 294, 299, 326), tratamentul transportului, monografia și verificările de după validare; nu sunt refăcute aici.
+- Fișa consultant detaliază baza legală (art. 289, 290, 294, 299, 326), tratamentul transportului, monografia și verificările de după validare; conține și fluxul pas cu pas pentru importul fără plata TVA în vamă („21% IMP AM” / „11% IMP AM”, cu capturi), note despre raportare (inclusiv D406) și secțiunea despre **restituirea TVA plătit în vamă**: cazurile cu temei legal, notele contabile și un model de cerere (Anexa A). Nu sunt refăcute aici.
 - Produsul de serviciu generat pentru taxa vamală e marcat ca cost adițional, deci funcționează și pe traseul nativ „factură furnizor → Creați costuri adiționale”.
 - Se exclude reciproc cu modulul OCA `l10n_ro_dvi`.
 
@@ -43,7 +46,7 @@ Modulul înregistrează Declarația Vamală de Import (DVI) pentru importurile d
 **Modele**
 
 - `account.invoice.dvi` (wizard tranzitoriu): colectează sumele din declarație și creează costul adițional. Precompletează baza cu netul facturii furnizorului — valoare orientativă. `_get_customs_payable_account()` caută întâi 4462, apoi orice 446, filtrat pe companie.
-- `stock.landed.cost` (extins): câmpurile `landed_type`, `dvi_number`, `tax_id`, `tax_base`, `tax_value`; la validare adaugă nota de TVA la import. `_prepare_tax_lines()` urmează liniile de repartiție ale taxei (plată efectivă sau amânare), `_prepare_tax_base_lines()` adaugă perechea tehnică pe 473, iar referința notei devine numărul MRN.
+- `stock.landed.cost` (extins): câmpurile `landed_type`, `dvi_number`, `tax_id`, `tax_base`, `tax_value` (etichetat „Import VAT Amount”); wizardul completează și `vendor_bill_id` cu factura furnizorului; la validare adaugă nota de TVA la import. `_prepare_tax_lines()` urmează liniile de repartiție ale taxei (plată efectivă sau fără plată în vamă), legând fiecare linie de `tax_repartition_line_id`, `_prepare_tax_base_lines()` adaugă perechea tehnică pe 473 (linia de bază poartă taxa), iar referința notei devine numărul MRN.
 - `account.move` (extins): câmpul `dvi_id` și butonul **DVI**, vizibil doar pe facturile furnizor postate. Refuză pornirea dacă partenerul nu are țara completată.
 
 **Vizualizări**
@@ -59,14 +62,21 @@ Modulul înregistrează Declarația Vamală de Import (DVI) pentru importurile d
 #### 5. Conexiuni
 
 - `stock_landed_costs`: mecanismul nativ de repartizare a costurilor adiționale în valoarea stocului, folosit pentru taxele vamale și pentru onorariul brokerului.
-- `l10n_ro`: localizarea contabilă românească, sursa pentru conturile 446/4462, 4426, 4427 și 473 și pentru taxele cu taxare inversă.
+- `l10n_ro`: localizarea contabilă românească, sursa pentru conturile 446/4462, 4426, 4427 și 473.
 - `l10n_ro_dvi`: modul OCA cu funcționalitate similară, exclus prin manifest (`excludes`) — cele două nu pot coexista pe același `addons_path`.
 - [`l10n_ro_invoice_dvi_protect`](../l10n_ro_invoice_dvi_protect/index.md): complementar; blochează resetarea facturii și anularea costului de aterizare după ce stocul a fost consumat FIFO.
 - [`terrabit_dvi`](../terrabit_dvi/index.md): numele anterior, păstrat ca modul tranzitoriu fără conținut, până la portarea pe 20.0.
-- [`l10n_ro_anaf_d300`](../l10n_ro_anaf_d300/index.md): TVA-ul la import ajunge în declarație prin etichetele fiscale ale taxei.
+- [`l10n_ro_anaf_d300`](../l10n_ro_anaf_d300/index.md): TVA-ul la import ajunge în declarație prin etichetele fiscale ale taxei; furnizează și taxele „21% IMP AM” / „11% IMP AM” pentru importul fără plata TVA în vamă.
 
 #### 6. Istoric
 
-- **19.0.2.1.0** (2026-09-23) — amânarea plății TVA în vamă (art. 326 alin. (4)-(5)): nota urmează liniile de repartiție ale taxei alese; cu taxare inversă se generează `Dr 4426 = Cr 4427`, fără datorie la buget. Fișa descrie acum cele două regimuri.
+- **19.0.2.1.7** (2026-10-16) — costul de aterizare creat de wizard este legat de factura furnizorului prin câmpul standard *Vendor Bill* (rămas până acum gol): butonul inteligent „Landed Costs” pe factură și factura numită în detaliile de evaluare. Costurile vechi rămân nelegate.
+- **19.0.2.1.6** (2026-10-16) — etichete neutre „Import VAT - <taxă>” și „Import VAT Amount”, valabile în ambele regimuri; eticheta „TVA plătit în vamă” ajungea în registrul jurnal și în SAF-T și la importurile fără plata TVA în vamă.
+- **19.0.2.1.5** (2026-10-16) — fișa consultant: flux pas cu pas pentru importul fără plata TVA în vamă („21% IMP AM” / „11% IMP AM”), două capturi noi, note despre D406 și secțiune despre restituirea TVA plătit în vamă (cazuri cu temei legal, note contabile, model de cerere — Anexa A).
+- **19.0.2.1.4** (2026-10-16) — SAF-T (D406): liniile de TVA ale notei sunt legate de taxă (linie de repartiție), iar linia tehnică de bază poartă taxa; înainte erau exportate cu TaxCode 000000 și TaxAmount 0. Etichetele din decont rămân neschimbate, iar închiderea TVA din Odoo ia acum în calcul TVA-ul DVI.
+- **19.0.2.1.3** (2026-10-09) — banner pentru Odoo Apps generat din `banner.json`.
+- **19.0.2.1.2** (2026-10-04) — documentația și ajutorul câmpului: regimul fără plata TVA în vamă acoperă toate cele patru cazuri și este descris ca TVA înregistrat atât colectat, cât și deductibil, nu ca taxare inversă; taxa de ales: „21% IMP AM” / „11% IMP AM”; condiția de deducere separată pe regimuri.
+- **19.0.2.1.1** (2026-09-30) — pictogramă proprie a modulului.
+- **19.0.2.1.0** (2026-09-23) — amânarea plății TVA în vamă (art. 326 alin. (4)-(5)): nota urmează liniile de repartiție ale taxei alese; cu taxe „IMP AM” se generează `Dr 4426 = Cr 4427`, fără datorie la buget. Fișa descrie acum cele două regimuri.
 - **19.0.2.0.0** (2026-09-23) — eliminat câmpul „Comision vamal”: nu există un comision datorat autorității vamale, cel de 0,5% a dispărut odată cu aderarea la UE. Taxa vamală trece pe analiticul **4462** (datorie curentă), onorariul brokerului se contabilizează pe 622 (sau 473 în tranzit, dacă se capitalizează), iar baza importului ajunge în decont printr-o pereche tehnică pe **473**.
 - **19.0.1.3.0** (2026-09-23) — redenumit din `terrabit_dvi`; comisionul mutat de pe 447 pe 446; ajutoare și casetă de îndrumare în wizard.

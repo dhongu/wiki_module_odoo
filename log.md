@@ -4,6 +4,19 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-16] Re-ingestie: `l10n_ro_customs_dvi` 19.0.2.1.0 → 19.0.2.1.7
+
+- **Acțiune:** actualizare după helpdesk #9592 (importuri pe regimurile vamale 4000/4200).
+  - **D406 (SAF-T):** liniile de TVA din nota DVI sunt legate de taxă (linia de repartiție), iar linia tehnică de bază poartă taxa. Înainte, TVA-ul vamal ieșea cu 000 / 000000 și TaxAmount 0 (19.0.2.1.4).
+  - **Etichete neutre:** „Import VAT - <taxă>” și „Import VAT Amount”, valabile în ambele regimuri (19.0.2.1.6).
+  - **Factura furnizorului:** costul de aterizare e legat de factură prin câmpul standard *Vendor Bill* (19.0.2.1.7).
+  - **Corectat textul vechi:** regimul fără plata TVA în vamă (art. 326 alin. (4)-(5)) nu e taxare inversă, iar taxa de ales e „21%/11% IMP AM”.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `HISTORY.md`, cu control în `models/stock_landed_cost.py` și `wizard/account_dvi.py`. Fișa consultant a fost recopiată (fluxul „IMP AM”, notele D406, restituirea TVA-ului plătit în vamă, cu Anexa A), cu 12 capturi (11 și 12 sunt noi).
+- **Dependențe/Conexiuni:** [l10n_ro_anaf_d300](l10n_ro_anaf_d300/index.md), [l10n_ro_invoice_dvi_protect](l10n_ro_invoice_dvi_protect/index.md), [terrabit_dvi](terrabit_dvi/index.md).
+- **Fișiere actualizate:** `l10n_ro_customs_dvi/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-10-16] Re-ingestie: `l10n_ro_reges` 19.0.1.2.0, `l10n_ro_hr_documents` 19.0.1.1.0, `l10n_ro_payroll_certificates` 19.0.1.3.1
 
 - **Acțiune:** actualizare după helpdesk #9660, cu procesare în paralel.
