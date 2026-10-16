@@ -4,6 +4,19 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-16] Re-ingestie: `l10n_ro_reges` 19.0.1.2.0, `l10n_ro_hr_documents` 19.0.1.1.0, `l10n_ro_payroll_certificates` 19.0.1.3.1
+
+- **Acțiune:** actualizare după helpdesk #9660, cu procesare în paralel.
+  - **Temeiurile de încetare:** au acum cele 13 coduri oficiale din nomenclatorul REGES (`TemeiIncetare`). Migrare: `Art65` → `Art65Alin1`, `Art81` → `Art81Alin1`; `Art56` se golește, cu notă pe contract sau pe document.
+  - **Act de identitate și număr CIM:** actul de identitate e pe angajat (serie, număr, emitent, dată). Numărul CIM e pe contract și pleacă la REGES ca `numarContract`.
+  - **Adeverințe:** cele de șomaj (Anexa 7, cu BC/BCIS din D112) și de creștere a copilului (Anexa 2) sunt pe formularele oficiale.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `HISTORY.md`, cu control în cod pentru câmpurile noi.
+  - Fișele consultant au fost recopiate: `l10n_ro_reges` cu 5 capturi și sub-fișa `OBTINERE_ACCES.md`, `l10n_ro_hr_documents` cu 9 capturi, `l10n_ro_payroll_certificates` cu 14 capturi (14 e nouă).
+- **Dependențe/Conexiuni:** `l10n_ro_reges` ↔ [l10n_ro_hr_documents](l10n_ro_hr_documents/index.md), [l10n_ro_payroll_certificates](l10n_ro_payroll_certificates/index.md); `l10n_ro_payroll_certificates` ↔ [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md) (verificat la rulare, fără dependență).
+- **Fișiere actualizate:** `l10n_ro_reges/`, `l10n_ro_hr_documents/`, `l10n_ro_payroll_certificates/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-10-14] Re-ingestie: `l10n_ro_balance_confirmation` 19.0.2.2.2 → 19.0.2.3.0
 
 - **Acțiune:** actualizare după terrabit-solutions/l10n_ro_ent#709: emailul campaniei e postat în chatterul partenerului, răspunsul partenerului (prin catchall) marchează linia „Răspuns primit”, marcare Confirmat / Neconfirmat cu soldul partenerului și diferența, meniul „Răspunsuri la confirmările de sold”, condiția alias/catchall/server de intrare.

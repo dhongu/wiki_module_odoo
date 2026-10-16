@@ -1,10 +1,10 @@
 # Romania - Documente HR (localizat la `l10n_ro_hr_documents/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_hr_documents`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_documents
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_hr_documents`
-- **Ultima Ingestie:** `2026-10-05`
+- **Ultima Ingestie:** `2026-10-16`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -19,9 +19,10 @@ Modulul pregătește documentele de personal direct din fișa angajatului și di
     - **Contract individual de muncă:** clauzele esențiale din Codul muncii (art. 17): părțile, funcția și codul COR, durata, perioada de probă (art. 31, cel mult 90 de zile la execuție și 120 la conducere), locul muncii, timpul de muncă, concediul de odihnă (art. 145, minimum 20 de zile lucrătoare), salariul, preavizul (art. 81 și 75); clauzele se iau din versiunea contractului aleasă (implicit prima, cea de la angajare), iar modulul avertizează dacă data documentului depășește termenul din art. 16 (ziua anterioară începerii activității);
     - **Act adițional (art. 41):** alegeți versiunea anterioară și cea nouă a contractului; tabelul din fila *Date* listează doar elementele care diferă (funcție, COR, departament, salariu, timp de muncă, normă, durată, loc de muncă); cu versiuni identice documentul nu se poate emite;
     - **Decizie de suspendare:** temeiul (art. 50, 51, 52 alin. (1) lit. c), art. 54), perioada și efectele (art. 49);
-    - **Decizie de încetare:** temeiul (art. 55 lit. b, 56, 81, 61 lit. a, c, d, art. 65), data și motivele; preavizul (minimum 20 de zile lucrătoare, art. 75) apare doar la art. 61 lit. c, d și art. 65, iar concedierea disciplinară nu are preaviz; termenul de contestare (art. 268) este de 30 de zile la sancțiunea disciplinară și de 45 la celelalte; la concediere, fără motive și instanță documentul nu se poate emite (art. 62, 76, 78);
+    - **Decizie de încetare:** temeiul, ca în nomenclatorul REGES (art. 31 alin. (3), art. 55 lit. b, art. 56 alin. (1) lit. a, c, i, art. 61 lit. a, c, d, art. 65, art. 68, art. 81 alin. (1), (7), (8)), cu textul complet al temeiului în decizie, data și motivele; preavizul (minimum 20 de zile lucrătoare, art. 75) apare doar la art. 61 lit. c, d, art. 65 și art. 68 (concediere colectivă, cu preaviz și termen de contestare), iar concedierea disciplinară nu are preaviz; termenul de contestare (art. 268) este de 30 de zile la sancțiunea disciplinară și de 45 la celelalte; la concediere, fără motive și instanță documentul nu se poate emite (art. 62, 76, 78);
     - **Cerere de demisie:** preavizul în zile lucrătoare (cel mult 20 la funcții de execuție, 45 la conducere, art. 81 alin. (4)) și data la care se împlinește, calculată automat; se semnează de salariat;
     - **Adeverință de vechime în muncă la angajator (art. 34 alin. (5)):** perioadele, funcțiile, normele și salariul din istoricul versiunilor contractului, plus vechimea la angajator calculată calendaristic.
+- **Date salariat:** în părțile documentelor apare și actul de identitate al salariatului (serie, număr, emitent, data eliberării); câmpul *Contract de muncă* se completează automat cu numărul și data CIM de pe contract (o referință scrisă manual are prioritate).
 - **Date REGES preluate** din [l10n_ro_reges](../l10n_ro_reges/index.md): COR, durată, normă, temei de încetare sau suspendare.
 - **Două semnături:** angajatorul (implicit «Administrator») și, la contract, act adițional și cerere de demisie, salariatul (completat automat); la decizii, cel care a întocmit documentul.
 - **Emitere:** la apăsarea butonului *Emite* documentul primește număr din secvență (`HR/an/nr`), iar PDF-ul se arhivează ca atașament pe fișa angajatului; un document emis nu se șterge, doar se anulează; la revenirea în ciornă și reemitere își păstrează numărul și înlocuiește PDF-ul (stări: ciornă, emis, anulat; istoric în chatter).

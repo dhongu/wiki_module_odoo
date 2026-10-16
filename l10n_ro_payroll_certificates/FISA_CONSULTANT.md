@@ -14,7 +14,9 @@ Angajații cer des adeverințe: de venit (bancă, chirie, credit), cu baza pentr
 
 - **Codul muncii, art. 34 alin. (5):** angajatorul eliberează, la cerere, document care atestă activitatea desfășurată, durata, salariul și vechimea, inclusiv pentru fost salariat.
 - **OUG 158/2005**, concediul medical: art. 7 (stagiul de asigurare), **art. 10** (baza de calcul: ultimele 6 luni din cele 12 ale stagiului, venituri pe baza cărora se calculează contribuția asiguratorie pentru muncă; indemnizațiile de concediu medical se cuprind în baza lunii respective, alin. 4 lit. a) și art. 3^1 (adeverința plătitorului de indemnizații cu zilele de concediu medical).
-- **Șomaj și concediul pentru creșterea copilului:** conținut **orientativ**, editabil în ciornă, **de confirmat cu modelul în vigoare cerut de AJOFM / AJPIS** înainte de utilizare. Regulile despre care nu avem confirmare sunt în roadmap-ul de salarizare (S9).
+- **Șomaj:** formularul oficial **Anexa nr. 7** (în antetul formularului: „Anexa nr. 26 la Normele metodologice”) de aplicare a **Legii 76/2002**; stagiul minim de cotizare (art. 34 din lege) îl stabilește AJOFM.
+- **Concediul pentru creșterea copilului:** formularul oficial **Anexa nr. 2** (model AJPIS), cu veniturile și zilele din luna nașterii și din cele 24 de luni anterioare (**OUG 111/2010**).
+- Cele două formulare se pot edita în ciornă și se emit doar după bifa *Model verificat*. Rămân de confirmat cu instituția: ce intră în BCIS (art. 19^1 din Normele Legii 76/2002), dacă lunile fără stagiu se sar, tipul zilelor (lucrătoare, din pontaj) și dacă indemnizația de maternitate intră în venitul net din Anexa 2.
 - Textele sunt documente oficiale românești: se scriu doar în limba română. **Modelul unei bănci sau al casei de asigurări prevalează** asupra modelului din modul.
 - **De verificat:** dacă există un model obligatoriu de adeverință pentru stagiu și venituri în normele de aplicare (Ordinul MS/CNAS 15/1.311/2006); articolul din actul care fixează suma neimpozabilă pentru 2026.
 
@@ -31,7 +33,8 @@ Modulul **nu face înregistrări contabile**. Citește din fluturașii validați
 
 1. Instalați `l10n_ro_payroll_certificates` (necesită `l10n_ro_hr_payroll_enhancement`).
 2. Completați pe companie denumirea, adresa, CUI și numărul din Registrul Comerțului (apar în text).
-3. Validați fluturașii lunilor pe care vreți să le adeveriți; la *Venit* și *Asigurat* lunile fără fluturaș validat nu apar; la baza pentru concediul medical, șomaj și creșterea copilului apar cu celule goale și o observație (pașii 5, 7 și 8).
+3. Validați fluturașii lunilor pe care vreți să le adeveriți; la *Venit* și *Asigurat* lunile fără fluturaș validat nu apar; la baza pentru concediul medical și la creșterea copilului apar cu celule goale (pașii 5 și 8), iar la șomaj se sar, ca și lunile cu BCIS zero (pasul 7).
+4. Pentru șomaj și creșterea copilului: completați pe angajat seria și numărul actului de identitate, adresa de domiciliu și sexul, iar pe contract numărul CIM și, la încetare, temeiul (câmpurile din `l10n_ro_reges`); codul CAEN vine din setările companiei.
 
 ## 6. Flux de utilizare
 
@@ -45,9 +48,9 @@ Modulul **nu face înregistrări contabile**. Citește din fluturașii validați
 
 Apăsați **Nou**: alegeți **angajatul** și **tipul adeverinței** (*Venit*, *Bază de calcul pentru concediul medical*, *Asigurat (sănătate)*). Pentru tipurile *Venit* și *Asigurat* completați **numărul de luni** (implicit 6; se iau lunile încheiate înainte de data emiterii), apoi **Data emiterii** și **Se eliberează pentru** (destinatarul; se tipărește în text). Completați cele două semnături (nume și funcție).
 
-Pentru *Șomaj* și *Concediu pentru creșterea copilului* numărul de luni implicit este 24; la creșterea copilului completați obligatoriu **Data nașterii copilului** (fereastra = lunile dinaintea lunii nașterii), iar la șomaj perioada se oprește la încetarea contractului, dacă acesta a încetat. Formularul afișează o notă că **conținutul este orientativ**.
+Pentru *Șomaj* (formularul Anexa 7) *Luni* este 12, iar pentru *Concediu pentru creșterea copilului* (formularul Anexa 2) este 24; la creșterea copilului completați obligatoriu **Data nașterii copilului**. Formularul afișează o notă că adeverința urmează formularul oficial și trebuie verificată cu modelul cerut de instituție (pașii 7 și 8).
 
-Fila **Text** se precompletează din fișa angajatului: CNP, funcție, data angajării, durata contractului; contractul încetat apare ca „a fost salariat(ă) … în perioada …", nu ca „în derulare". Textul se poate edita cât timp adeverința e în ciornă; dacă schimbați apoi tipul, luna sau destinatarul, textul se recalculează și editările se pierd.
+Fila **Text** se precompletează din fișa angajatului: CNP, funcție, data angajării, durata contractului; contractul încetat apare ca „a fost salariat(ă) … în perioada …", nu ca „în derulare". Textul se poate edita cât timp adeverința e în ciornă, dar se recalculează, iar editările se pierd fără avertisment, când schimbați oricare dintre câmpurile formularului: angajatul, tipul, *Luni*, data emiterii, destinatarul, semnatarii (nume și funcție), data nașterii copilului, *Numele înainte de căsătorie* sau datele din *Secțiunea I*. **Completați întâi toate câmpurile și editați fila *Text* la sfârșit**, chiar înainte de **Emite**.
 
 ![Formularul adeverinței, cu tipul și destinatarul](screenshots/02_formular_adeverinta.png)
 
@@ -83,33 +86,61 @@ Atestă că societatea a calculat și a reținut contribuția CASS pe lunile din
 
 ![Adeverința de asigurat](screenshots/06_pdf_asigurat.png)
 
-### Pasul 7 — Adeverința pentru șomaj (conținut orientativ, de confirmat cu modelul AJOFM)
+### Pasul 7 — Adeverința pentru șomaj (formularul Anexa 7)
 
-Se creează cu tipul *Șomaj*, 24 de luni implicit (*Luni*): cele 24 de luni încheiate dinaintea lunii din *Data emiterii* (la contract încetat, până la luna încetării inclusiv). Formularul arată nota „conținutul acestei adeverințe este orientativ” și bifa **Model verificat**, necompletată în ciornă.
+Se creează cu tipul *Șomaj*. Adeverința este formularul oficial **Anexa nr. 7**, la Normele metodologice de aplicare a Legii 76/2002, cu antetul „ANEXA Nr. 7 (Anexa nr. 26 la Normele metodologice)”. *Luni* este 12: tabelul B.1 cuprinde cel mult 12 luni cu stagiu, descrescător de la luna încetării contractului (de la luna anterioară, când încetarea e pe data de 1), căutate în ultimele 24 de luni; lunile fără stat de plată sau cu BCIS zero se sar. Înainte, completați pe angajat seria și numărul actului de identitate, iar pe contract numărul CIM și, la încetare, temeiul. La contract în derulare (ca în captură), tabelul pornește de la luna dinaintea emiterii, iar în secțiunea C data și temeiul încetării rămân necompletate. Formularul arată nota că adeverința urmează formularul oficial și bifa **Model verificat**, necompletată în ciornă.
 
-![Adeverința de șomaj: tip, notă orientativă și bifa Model verificat](screenshots/08_somaj_formular.png)
+![Adeverința de șomaj: tip, nota despre formularul oficial și bifa Model verificat](screenshots/08_somaj_formular.png)
 
-Fila *Date* arată toate cele 24 de luni, cu zilele plătite (lucrate, CO, CM) și salariul de bază brut din fluturaș (fără orele suplimentare, proporțional cu timpul plătit), totalul lunilor cu zile plătite și media salariului de bază pe ultimele 12 luni cu zile plătite (informativă, nu se tipărește). Lunile fără stat de plată în evidența electronică au celule goale și observația „situația se completează de angajator”; cele dinaintea datei angajării, „înainte de data angajării”. Modulul nu verifică contractul sau suspendările și nu afirmă motivul. **Atenție:** lunile dinaintea punerii în funcțiune a Odoo apar ca lipsă de stat de plată, deși salariatul a lucrat (în captură, septembrie–octombrie 2024); situația reală se completează în textul editabil. Stagiul de cotizare îl stabilește AJOFM, nu modulul.
+În fila **Date** verificați tabelul B.1:
 
-![Adeverința de șomaj, fila Date: tabelul pe 24 de luni](screenshots/09_somaj_date.png)
+- *BC* (baza de calcul a contribuției asiguratorii pentru muncă) și *BCIS* (baza de calcul a indemnizației de șomaj): din D112-ul validat al lunii, când e instalat `l10n_ro_anaf_d112`; altfel din fluturaș, cu aceeași regulă ca în D112 (brut fără tichete și fără indemnizațiile din FNUASS, minus suma neimpozabilă). În captură, martie 2026 are 4.472,00: salariul zilelor lucrate plus indemnizația de concediu medical suportată de angajator (381,00), care intră în bază;
+- *Natura veniturilor*: salariu, cu indemnizația de concediu de odihnă sau de concediu medical suportată de angajator, când există;
+- coloana 5 (numărul de înregistrare al declarației D112) rămâne goală: se completează în fila *Text* de angajator.
 
-Fără bifa *Model verificat*, **Emite** este refuzat:
+Media BCIS pe cele 12 luni apare doar în fila *Date*, informativ, nu pe document. Sub 12 luni cu stagiu apare avertismentul „Doar N luni cu venit sau zile plătite din cele 12 acoperite”; stagiul de cotizare îl stabilește AJOFM.
+
+![Adeverința de șomaj, fila Date: tabelul B.1 pe 12 luni](screenshots/09_somaj_date.png)
+
+Fără bifa *Model verificat*, **Emite** este refuzat cu eroarea „Confirmați că ați verificat textul și coloanele față de modelul cerut în prezent de instituție (AJOFM / AJPIS) înainte de a emite această adeverință.”:
 
 ![Eroarea la Emite fără Model verificat](screenshots/10_somaj_eroare_model_neverificat.png)
 
-După bifare și emitere, documentul tipărit conține tabelul, totalul lunilor cu zile plătite și cele două semnături, fără media pe el:
+După ce ați comparat adeverința cu modelul AJOFM, bifați *Model verificat* și apăsați **Emite**: numărul și data adeverinței se completează în antetul formularului. Documentul tipărit, fără antetul firmei și cu tabel cu chenar, cuprinde:
 
-![Adeverința de șomaj, la tipărire](screenshots/11_pdf_somaj.png)
+- secțiunea A: datele angajatorului (CUI, cod CAEN din setările companiei, adresă, contact);
+- secțiunea B.1: salariatul, cu CNP și actul de identitate, apoi tabelul și nota formularului;
+- secțiunea B.2: situația dinainte de 1.01.2018, de bifat de angajator;
+- secțiunea C: actul de încadrare (CIM, număr și dată), data angajării, data și temeiul încetării și perioadele de suspendare. Concediile medicale confirmate apar cu numărul de zile; în captură, 10–14.03.2026, 5 zile;
+- semnăturile: reprezentantul legal (primul semnatar) și compartimentul care a întocmit adeverința (al doilea semnatar; la funcție treceți compartimentul, de exemplu „Resurse umane”).
 
-### Pasul 8 — Adeverința pentru concediul de creștere a copilului (conținut orientativ, de confirmat cu modelul AJPIS)
+Media BCIS nu apare pe document.
 
-Se completează *Data nașterii copilului* (obligatorie); tabelul din fila *Date* cuprinde cele 24 de luni dinaintea lunii nașterii, cu brut, CAS, CASS, impozit, net și marcajul „da”. Lunile fără stat de plată în evidența electronică, inclusiv cele dinaintea punerii în funcțiune a Odoo, au **celulele cu sume goale** (nu 0,00) și observația „situația se completează de angajator” (în captură, iulie–octombrie 2024), iar cele dinaintea datei angajării, „înainte de data angajării”; nu sunt declarate „fără venit”. Textul, care se încheie cu „Răspundem pentru exactitatea datelor”, cere completarea situației lor de către angajator. Media netă pe ultimele 12 luni cu venit se vede doar în fila *Date*.
+![Adeverința de șomaj (Anexa 7), la tipărire](screenshots/11_pdf_somaj.png)
 
-![Concediu pentru creșterea copilului, fila Date](screenshots/12_crestere_copil_date.png)
+### Pasul 8 — Adeverința pentru concediul de creștere a copilului (formularul Anexa 2)
 
-Sub 12 luni cu venit apare avertismentul din partea de sus a formularului (în exemplu, 7 luni din 24):
+Se creează cu tipul *Concediu pentru creșterea copilului*. Adeverința este formularul oficial **Anexa nr. 2** (model AJPIS). Completați obligatoriu **Data nașterii copilului** și, dacă e cazul, *Numele înainte de căsătorie*. *Luni* este 24.
+
+În grupul **Secțiunea I (Anexa 2)**:
+
+- perioada indemnizației de maternitate se preia din certificatele medicale confirmate cu codul 08 care cuprind data nașterii (în captură e goală: nu există certificat 08);
+- *Ziua a 42-a de lăuzie* se calculează din data nașterii; ambele se pot corecta;
+- perioada indemnizației de creștere deja primite și *Concediu aprobat de la* se completează manual.
+
+Fila **Date** cuprinde tabelul din secțiunea II: luna nașterii și cele 24 de luni anterioare (25 de rânduri), cu zilele lucrate, de concediu medical, de concediu de odihnă, fără plată / absențe nemotivate și venitul net realizat (brut − CAS − CASS − impozit). Zilele sunt zilele lucrătoare din fluturaș. Lunile fără stat de plată, inclusiv cele dinaintea punerii în funcțiune a Odoo, au celulele goale, nu 0 (în captură, iulie–octombrie 2024). Situația lor reală se completează în fila *Text* înainte de emitere. Media venitului net pe ultimele 12 luni cu venit apare doar în fila *Date*, informativ.
+
+![Concediu pentru creșterea copilului: secțiunea I și fila Date](screenshots/12_crestere_copil_date.png)
+
+Sub 12 luni cu venit apare avertismentul din partea de sus a formularului: în exemplu, „Doar 8 luni cu venit sau zile plătite din cele 24 acoperite; verificați stagiul minim cerut de instituție.”. Numărătoarea include și luna nașterii: în exemplu, iunie 2025 și cele 7 luni anterioare cu fluturaș (noiembrie 2024 – mai 2025). Ca la șomaj, bifa **Model verificat** este obligatorie la **Emite**.
 
 ![Avertisment: sub 12 luni cu venit](screenshots/13_crestere_copil_avertisment.png)
+
+După emitere, documentul tipărit are antetul cu Nr. ORC și CUI, datele salariatului, secțiunea I, tabelul din secțiunea II și declarația pe proprie răspundere. Anexa 2 are o singură semnătură, a reprezentantului legal (primul semnatar).
+
+![Adeverința pentru creșterea copilului (Anexa 2), la tipărire](screenshots/14_pdf_crestere_copil.png)
+
+Pentru ambele tipuri puteți edita textul în ciornă dacă instituția cere altă formulare. Declarația de venituri peste salariul minim nu face parte din modul.
 
 ### Pasul 9 — Adeverința emisă
 
@@ -122,6 +153,9 @@ După emitere, câmpurile și tabelul sunt blocate (**Anulează** o scoate din u
 | Modul | Rol |
 |---|---|
 | `l10n_ro_hr_payroll_enhancement` (19.0.2.6.3+) | Fluturașii, regulile salariale și certificatele medicale din care se citesc veniturile și concediile |
+| `l10n_ro_anaf_d112` (opțional) | La șomaj, BC și BCIS din D112-ul validat al lunii |
+| `l10n_ro_config` (opțional) | Codul CAEN al companiei, în secțiunea A din Anexa 7 |
+| `l10n_ro_reges` (opțional) | Actul de identitate, numărul CIM și temeiul încetării, din Anexa 7 și Anexa 2 |
 
 **Ce e automat:** textul din fișa angajatului, tabelul din fluturașii validați, numărul, PDF-ul arhivat. **Ce rămâne manual:** destinatarul, semnăturile, verificarea modelului cerut de destinatar, concediile medicale de la alt angajator (nu apar).
 
@@ -134,10 +168,10 @@ După emitere, câmpurile și tabelul sunt blocate (**Anulează** o scoate din u
 - [ ] Contractul încetat apare la timpul trecut, fără „durată determinată".
 - [ ] Textul editat nu se pierde la emitere; tabelul nu se schimbă la retipărire.
 - [ ] Numărul urmează secvența `ADV/an/nr`; PDF-ul e pe fișa angajatului.
-- [ ] Șomaj: 24 de luni, lunile fără fluturaș marcate, avertisment sub 12 luni cu venit sau zile plătite, perioada oprită la încetarea contractului.
-- [ ] Creșterea copilului: fără data nașterii adeverința nu se salvează; fereastra se mută odată cu data; avertisment sub 12 luni cu venit; lunile fără stat de plată sunt marcate neutru, nu „fără venit”.
-- [ ] La șomaj, completați manual situația lunilor fără stat de plată; salariul de bază nu include orele suplimentare; fără *Model verificat* adeverința nu se emite.
-- [ ] Textul și coloanele celor două tipuri au fost comparate cu modelul cerut de AJOFM / AJPIS.
+- [ ] Șomaj (Anexa 7): tabelul B.1 are cel mult 12 luni cu stagiu, descrescător de la luna încetării; BC și BCIS coincid cu D112-ul validat al lunii (fără D112, cu baza CAM din fluturaș); secțiunea C are actul de încadrare, data angajării și perioadele de suspendare.
+- [ ] Creșterea copilului (Anexa 2): fără data nașterii adeverința nu se salvează; tabelul are luna nașterii și cele 24 de luni anterioare; venitul net = brut − CAS − CASS − impozit; avertisment sub 12 luni cu venit; lunile fără stat de plată au celulele goale, nu 0.
+- [ ] Pe angajat sunt seria și numărul actului de identitate, iar pe contract numărul CIM (și, la încetare, temeiul); fără *Model verificat* adeverința nu se emite.
+- [ ] Coloana 5 din Anexa 7 (numărul de înregistrare al D112) a fost completată în text; formularele au fost comparate cu modelul cerut de AJOFM / AJPIS.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -147,7 +181,7 @@ După emitere, câmpurile și tabelul sunt blocate (**Anulează** o scoate din u
 | Nu există fluturași validați pentru lunile acoperite. | Niciuna dintre lunile acoperite nu are fluturaș validat (avertisment în ciornă) | Validați fluturașii sau schimbați perioada |
 | Se pot emite doar adeverințe în ciornă. | **Emite** pe o adeverință deja emisă sau anulată | Folosiți **Setează ca ciornă** (după **Anulează**), apoi emiteți din nou |
 | Doar X din cele N luni acoperite au fluturași validați | Unele luni lipsesc (venit, asigurat) | Validați fluturașii lipsă |
-| Doar N luni cu venit sau zile plătite din cele 24 acoperite; verificați stagiul minim cerut de instituție. | Șomaj sau creșterea copilului: sub 12 luni cu venit | Verificați stagiul minim cerut de instituție; validați fluturașii lipsă |
+| Doar N luni cu venit sau zile plătite din cele M acoperite; verificați stagiul minim cerut de instituție. | Șomaj sau creșterea copilului: sub 12 luni cu venit | Verificați stagiul minim cerut de instituție; validați fluturașii lipsă |
 | Doar N din cele 6 luni ale bazei de calcul au venit. | Baza pentru concediul medical: sub 6 luni cu venit | Validați fluturașii lipsă; noul angajator calculează baza la data concediului |
 | Confirmați că ați verificat textul și coloanele față de modelul cerut în prezent de instituție (AJOFM / AJPIS) înainte de a emite această adeverință. | **Emite** la șomaj sau creșterea copilului fără bifa *Model verificat* | Comparați adeverința cu modelul instituției, apoi bifați *Model verificat* |
 | Data nașterii copilului este obligatorie pentru concediul pentru creșterea copilului. | Tip *Concediu pentru creșterea copilului* fără data nașterii | Completați *Data nașterii copilului* |
@@ -166,15 +200,16 @@ Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixin `Scre
 5. `05_pdf_baza_cm.png` — adeverința cu baza pentru concediul medical (PDF).
 6. `06_pdf_asigurat.png` — adeverința de asigurat (PDF).
 7. `07_adeverinta_emisa.png` — adeverința emisă, cu numărul și PDF-ul arhivat.
-8. `08_somaj_formular.png` — adeverința de șomaj: tip, notă orientativă, bifa *Model verificat*.
-9. `09_somaj_date.png` — adeverința de șomaj, fila *Date*: tabelul pe 24 de luni, cu lunile fără stat de plată marcate neutru.
+8. `08_somaj_formular.png` — adeverința de șomaj (Anexa 7): tip, nota despre formularul oficial, bifa *Model verificat*.
+9. `09_somaj_date.png` — adeverința de șomaj, fila *Date*: tabelul B.1 cu cele 12 luni de stagiu, BC, BCIS și natura veniturilor.
 10. `10_somaj_eroare_model_neverificat.png` — eroarea la **Emite** fără *Model verificat*.
-11. `11_pdf_somaj.png` — adeverința de șomaj (PDF).
-12. `12_crestere_copil_date.png` — concediul pentru creșterea copilului, fila *Date* (lunile fără stat de plată marcate neutru).
-13. `13_crestere_copil_avertisment.png` — avertismentul sub 12 luni cu venit (7 din 24).
+11. `11_pdf_somaj.png` — adeverința de șomaj, formularul Anexa 7 (PDF).
+12. `12_crestere_copil_date.png` — concediul pentru creșterea copilului (Anexa 2): secțiunea I și fila *Date*, cu luna nașterii și cele 24 de luni anterioare.
+13. `13_crestere_copil_avertisment.png` — avertismentul sub 12 luni cu venit (8 din 24, inclusiv luna nașterii).
+14. `14_pdf_crestere_copil.png` — adeverința pentru creșterea copilului, formularul Anexa 2 (PDF).
 
 ```bash
-./odoo/odoo-bin -c odoo.conf -d test19 --load-language=ro_RO -i l10n_ro_payroll_certificates,l10n_ro_doc_screenshots \
+./odoo/odoo-bin -c odoo.conf -d test19 --load-language=ro_RO -i l10n_ro_payroll_certificates,l10n_ro_doc_screenshots,l10n_ro_reges \
   --test-tags=/l10n_ro_payroll_certificates:TestPayrollCertificatesScreenshots --stop-after-init
 ```
 
@@ -183,11 +218,12 @@ Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixin `Scre
 - Subliniați că adeverința nu înlocuiește modelul cerut de bancă sau de casa de asigurări: textul se editează în ciornă.
 - Baza pentru concediul medical e un **document informativ pentru noul angajator**: baza efectivă o calculează el, la data concediului.
 - Limite cunoscute:
-  - șomajul și creșterea copilului au conținut orientativ, neconfirmat cu modelele oficiale (de verificat, vezi secțiunea 2);
+  - șomajul și creșterea copilului urmează formularele Anexa 7 și Anexa 2; punctele de confirmat cu instituția sunt în secțiunea 2, iar coloana 5 din Anexa 7 (numărul de înregistrare al D112) se completează manual;
   - **declarația de venituri peste salariul minim nu este implementată**: ține de cumulul de contracte (art. 146 alin. 5^7 lit. e din Codul fiscal) și de un ordin al ministerului finanțelor al cărui număr și model nu sunt confirmate;
-  - zilele plătite (la șomaj) numără doar zilele lucrate, concediul de odihnă și concediul medical; alte absențe plătite nu se numără; stagiul de cotizare îl stabilește AJOFM;
+  - la șomaj, fără D112 validat, BC și BCIS se calculează din fluturaș și sunt egale (baza CAM); stagiul de cotizare îl stabilește AJOFM;
+  - zilele din Anexa 2 sunt zilele lucrătoare din fluturaș, pe tipurile de pontaj (lucrate, concediu medical, concediu de odihnă, fără plată și absențe nemotivate);
   - la baza pentru concediul medical, zilele de concediu medical se adeveresc pe 12 luni; cazul de 24 de luni din art. 3^1 OUG 158/2005 nu e acoperit;
-  - la șomaj și la creșterea copilului, lunile dinaintea punerii în funcțiune a Odoo apar fără stat de plată, deși salariatul a lucrat: situația se completează manual în textul editabil;
+  - la șomaj, lunile fără stat de plată sau cu BCIS zero se sar; la creșterea copilului, lunile dinaintea punerii în funcțiune a Odoo apar cu celule goale, deși salariatul a lucrat: situația se completează manual în textul editabil;
   - la baza pentru concediul medical, lunile fără fluturaș (inclusiv cele dinaintea Odoo) apar cu celule goale și observație; completarea lor rămâne în sarcina angajatorului;
   - baza CM raportează venitul realizat; plafonul de 12 salarii minime îl aplică angajatorul care plătește concediul medical, nu adeverința;
   - concediile medicale înregistrate la alt angajator nu apar;
