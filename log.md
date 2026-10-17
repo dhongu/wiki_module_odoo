@@ -18,20 +18,6 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
-## [2026-10-17] Ingestie: `deltatech_chatter_quick_info` și panourile lui (5 module noi, bitshop 19.0)
-
-- **Acțiune:** documentare inițială, cu procesare în paralel (un subagent per modul):
-  - `deltatech_chatter_quick_info` 19.0.1.0.1 — cadrul (ascuns pe Apps): model `chatter.quick.info`, metode `_chatter_quick_info_*`, grupuri, condiție pe document, reîmprospătare;
-  - `deltatech_chatter_quick_info_purchase` 19.0.1.0.1 — vânzări produse pe facturi de furnizor și comenzi de achiziție;
-  - `deltatech_chatter_quick_info_sale` 19.0.1.0.1 — ultimul preț la client pe oferte;
-  - `deltatech_chatter_quick_info_stock` 19.0.1.0.1 — stoc și rezervări pe transferuri;
-  - `deltatech_chatter_quick_info_pack` 19.0.1.0.0 — pachetul care le instalează pe toate trei.
-- **Sursă:** `readme/DESCRIPTION.md`, `CONFIGURE.md`, `USAGE.md`, cu control în cod (modele, date, migrări). Fișele consultant au fost copiate pentru panourile de achiziții (3 capturi), vânzări (2 capturi) și stoc (3 capturi).
-- **Dependențe/Conexiuni:** cele trei panouri ↔ [deltatech_chatter_quick_info](deltatech_chatter_quick_info/index.md); [deltatech_chatter_quick_info_pack](deltatech_chatter_quick_info_pack/index.md) → toate trei. Generalizează panoul de vânzări din `agroamat_vanzari_chatter` (proiect Agroamat).
-- **Fișiere actualizate:** `deltatech_chatter_quick_info/`, `deltatech_chatter_quick_info_purchase/`, `deltatech_chatter_quick_info_sale/`, `deltatech_chatter_quick_info_stock/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `deltatech_chatter_quick_info_pack/index.md`, `index.md`, `log.md`, `.index/`.
-
----
-
 ## [2026-10-17] Ingestie: `deltatech_website_category_icon` 19.0.1.0.0
 
 - **Acțiune:** pagină nouă pentru modulul nou (dhongu/deltatech#3608): câmp `icon_svg` pe `product.public.category`, validat cu listă albă la salvare și afișat inline în lista de categorii și în filmstrip-ul din shop.
