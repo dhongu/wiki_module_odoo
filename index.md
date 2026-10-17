@@ -52,6 +52,11 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_category_group_equipment](deltatech_category_group_equipment/index.md): Adaugă grupare (tip și clasă) pentru echipamente, preluată din grupurile categoriei interne a produsului.
 - [deltatech_chart_of_accounts](deltatech_chart_of_accounts/index.md): Sincronizarea și corecția soldurilor inițiale din planul de conturi prin comparare cu balanțe externe și postarea diferențelor, cu suport storno.
 - [deltatech_chatter](deltatech_chatter/index.md): Panou divizat redimensionabil între conținutul formularului și zona de chatter în vizualizările Odoo.
+- [deltatech_chatter_quick_info](deltatech_chatter_quick_info/index.md): Cadru de panouri informative live în chatter-ul oricărui document, cu grupuri, ordine, interval de reîmprospătare și condiție pe document configurabile per panou.
+- [deltatech_chatter_quick_info_pack](deltatech_chatter_quick_info_pack/index.md): Pachet care instalează dintr-un pas cele trei panouri din chatter: vânzările produselor cumpărate, ultimul preț la client și stocul/rezervările pe transferuri.
+- [deltatech_chatter_quick_info_purchase](deltatech_chatter_quick_info_purchase/index.md): Panou „Vânzări produse” în chatter-ul facturilor de furnizor și al comenzilor de achiziție: cât din produsele cumpărate s-a vândut efectiv.
+- [deltatech_chatter_quick_info_sale](deltatech_chatter_quick_info_sale/index.md): Panou „Ultimul preț la client” în chatter-ul ofertelor: fiecare linie comparată cu ultimul preț vândut aceluiași client, cu diferența în procente și comanda sursă.
+- [deltatech_chatter_quick_info_stock](deltatech_chatter_quick_info_stock/index.md): Panou „Stoc și rezervări” în chatter-ul transferurilor: ce nu e acoperit, cine ține stocul rezervat, intrările așteptate și, pe recepții, livrările care așteaptă marfa.
 - [deltatech_cmr_document](deltatech_cmr_document/index.md): Generează documente de transport CMR (scrisoare de transport internațional) în format PDF din livrările de stoc.
 - [deltatech_competitors_price](deltatech_competitors_price/index.md): Urmărește prețurile concurenței pentru produsele proprii, direct pe fișa de produs, cu preluare la cerere din paginile concurenților.
 - [deltatech_contact](deltatech_contact/index.md): Extinde fișa de contact cu câmpuri pentru persoane fizice (data nașterii, CNP, carte de identitate) și opțiune de afișare a numelui doar cu denumirea proprie.
@@ -386,6 +391,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_website_blog](deltatech_website_blog/index.md): Sortează articolele de blog după data de publicare descrescător, cu secundar pe ID descrescător pentru egalități.
 - [deltatech_website_breadcrumb](deltatech_website_breadcrumb/index.md): Linie de navigare (breadcrumb) bazată pe ierarhia categoriilor publice pe pagina de produs din magazinul online.
 - [deltatech_website_category](deltatech_website_category/index.md): Arhivare a categoriilor publice de produse pe website și arbore de categorii cu încărcare leneșă, pentru performanță pe cataloage mari.
+- [deltatech_website_category_icon](deltatech_website_category_icon/index.md): Iconiță SVG pentru categoriile de eCommerce, validată la salvare și afișată în filmstrip-ul și în lista de categorii din magazin.
 - [deltatech_website_checkout_confirm](deltatech_website_checkout_confirm/index.md): Adaugă un pas obligatoriu de confirmare a comenzii între plată și pagina de succes în checkout-ul eCommerce.
 - [deltatech_website_city](deltatech_website_city/index.md): Selecție structurată a orașului (listă + mapare cod poștal) în checkout eCommerce și portal, cu base_address_extended.
 - [deltatech_website_country](deltatech_website_country/index.md): Pre-selectează automat țara companiei pe formularul de adresă de la checkout, ca bază pentru validări avansate de adresă.

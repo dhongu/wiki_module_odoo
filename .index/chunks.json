@@ -1377,6 +1377,158 @@
     "text": "deltatech_chatter\ndeltatech_chatter\nModulul Deltatech Chatter îmbunătățește vizualizarea de tip formular din Odoo prin introducerea unui panou divizat redimensionabil între conținutul formularului și zona de chatter (istoricul de comunicare). Modulul rezolvă o problemă frecventă de utilizabilitate, în care secțiunea de chatter ocupă fie prea mult, fie prea puțin spațiu pentru o urmărire eficientă a mesajelor. Astfel, fiecare utilizator poate aloca spațiul de pe ecran în funcție de propriile nevoi, glisând pur și simplu separatorul dintre cele două zone.\nInterfață divizată redimensionabilă: introduce o separare orizontală între conținutul formularului și secțiunea de chatter.\nRaport de dimensiune personalizabil: dimensionare implicită de 70% pentru conținutul formularului și 30% pentru chatter.\nRedimensionare interactivă: utilizatorii pot trage de separator pentru a ajusta proporția după preferințe.\nDesign responsiv: se adaptează automat la redimensionarea ferestrei.\nLimite minime de dimensiune: previne micșorarea excesivă a secțiunilor (300px pentru formular, 250px pentru chatter)."
   },
   {
+    "path": "deltatech_chatter_quick_info/index.md",
+    "module": "deltatech_chatter_quick_info",
+    "version": "19.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter_quick_info",
+    "local_path": "odoo-addons/bitshop/deltatech_chatter_quick_info",
+    "last_ingest": "2026-10-17",
+    "friendly_name": "deltatech_chatter_quick_info",
+    "summary": "Afișează în partea de sus a chatterului, pe orice document, panouri cu informații actualizate la zi: cifrele de care utilizatorul are nevoie cât timp se uită la document, calculate la deschiderea acestuia, fără câmpuri noi pe formular și fără a părăsi înregistrarea. Modulul este cadrul comun (framework): panourile propriu-zise vin din alte module, iar aici se stabilește cine le vede, în ce ordine apar și cât de des se reîmprospătează.",
+    "features": [
+      "Fiecare panou are un antet cu o insignă (cifra-cheie), un rând de etichete scurte cu fapte și, opțional, un tabel cu link-uri către înregistrările asociate.",
+      "Panourile se pliază și se desfac cu un click, iar starea este reținută separat pentru fiecare utilizator.",
+      "Un panou se poate reîmprospăta singur cât timp documentul rămâne deschis (interval configurabil), sau manual cu butonul de reîmprospătare.",
+      "Configurare din *Setări > Tehnic > Interfață utilizator > Chatter Quick Info* (mod dezvoltator), pentru fiecare panou:",
+      "Grupuri: doar membrii lor văd panoul; gol = toți utilizatorii care pot citi documentul;",
+      "Secvență: ordinea panourilor în chatter;",
+      "Interval de reîmprospătare (s): `0` = doar la modificarea documentului sau la cerere;",
+      "Pliat implicit: panoul se deschide pliat până îl desface utilizatorul;",
+      "Condiție: domeniu care limitează afișarea la documentele potrivite (ex. doar documente deschise).",
+      "Arhivarea unui panou îl ascunde pentru toți utilizatorii.",
+      "Un panou defect nu blochează celelalte panouri și nici chatterul (eroarea este logată, iar panoul afișează o stare de eroare).",
+      "Siguranță: doar metodele cu prefixul `_chatter_quick_info_` pot fi asociate unui panou, iar panoul rulează cu drepturile utilizatorului curent."
+    ],
+    "dependencies": [
+      "mail"
+    ],
+    "connections": [
+      "deltatech_chatter_quick_info_purchase",
+      "deltatech_chatter_quick_info_sale",
+      "deltatech_chatter_quick_info_stock",
+      "deltatech_chatter_quick_info_pack"
+    ],
+    "text": "deltatech_chatter_quick_info\ndeltatech_chatter_quick_info\nAfișează în partea de sus a chatterului, pe orice document, panouri cu informații actualizate la zi: cifrele de care utilizatorul are nevoie cât timp se uită la document, calculate la deschiderea acestuia, fără câmpuri noi pe formular și fără a părăsi înregistrarea. Modulul este cadrul comun (framework): panourile propriu-zise vin din alte module, iar aici se stabilește cine le vede, în ce ordine apar și cât de des se reîmprospătează.\nFiecare panou are un antet cu o insignă (cifra-cheie), un rând de etichete scurte cu fapte și, opțional, un tabel cu link-uri către înregistrările asociate.\nPanourile se pliază și se desfac cu un click, iar starea este reținută separat pentru fiecare utilizator.\nUn panou se poate reîmprospăta singur cât timp documentul rămâne deschis (interval configurabil), sau manual cu butonul de reîmprospătare.\nConfigurare din *Setări > Tehnic > Interfață utilizator > Chatter Quick Info* (mod dezvoltator), pentru fiecare panou:\nGrupuri: doar membrii lor văd panoul; gol = toți utilizatorii care pot citi documentul;\nSecvență: ordinea panourilor în chatter;\nInterval de reîmprospătare (s): `0` = doar la modificarea documentului sau la cerere;\nPliat implicit: panoul se deschide pliat până îl desface utilizatorul;\nCondiție: domeniu care limitează afișarea la documentele potrivite (ex. doar documente deschise).\nArhivarea unui panou îl ascunde pentru toți utilizatorii.\nUn panou defect nu blochează celelalte panouri și nici chatterul (eroarea este logată, iar panoul afișează o stare de eroare).\nSiguranță: doar metodele cu prefixul `_chatter_quick_info_` pot fi asociate unui panou, iar panoul rulează cu drepturile utilizatorului curent."
+  },
+  {
+    "path": "deltatech_chatter_quick_info_pack/index.md",
+    "module": "deltatech_chatter_quick_info_pack",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter_quick_info_pack",
+    "local_path": "odoo-addons/bitshop/deltatech_chatter_quick_info_pack",
+    "last_ingest": "2026-10-17",
+    "friendly_name": "Chatter Quick Info: Pack",
+    "summary": "Modul-pachet care instalează dintr-un singur pas trei panouri informative afișate în chatter, lângă document: cifrele de care utilizatorul are nevoie când se uită la o achiziție, o ofertă sau un transfer. Modulul nu are cod propriu; instalarea lui aduce, dacă lipsesc, și aplicațiile Vânzări, Achiziții, Facturare și Inventar.",
+    "features": [
+      "Vânzări produs (din `deltatech_chatter_quick_info_purchase`), pe facturi furnizor și comenzi de achiziție: cât din produsele cumpărate s-a vândut de la data documentului și în total, plus produsele care nu s-au vândut.",
+      "Ultimul preț către client (din `deltatech_chatter_quick_info_sale`), pe oferte: fiecare linie este comparată cu ultimul preț vândut aceluiași client; prețurile mai mici apar cu roșu.",
+      "Stoc și rezervări (din `deltatech_chatter_quick_info_stock`), pe transferuri: ce nu este acoperit, ce transferuri ține stocul rezervat, marfa în intrare și, la recepții, livrările care o așteaptă.",
+      "Toate trei se bazează pe *Chatter Quick Info*, instalat odată cu ele; din *Setări > Tehnic > Interfață utilizator > Chatter Quick Info* se alege cine vede fiecare panou, pe ce documente (condiție) și cât de des se reîmprospătează.",
+      "Panoul apare în partea de sus a chatterului pentru utilizatorii grupului potrivit (achiziții, vânzări, inventar).",
+      "Dezinstalarea pachetului nu dezinstalează modulele incluse."
+    ],
+    "dependencies": [
+      "deltatech_chatter_quick_info_purchase",
+      "deltatech_chatter_quick_info_sale",
+      "deltatech_chatter_quick_info_stock"
+    ],
+    "connections": [
+      "deltatech_chatter_quick_info",
+      "purchase",
+      "sale",
+      "account",
+      "stock"
+    ],
+    "text": "Chatter Quick Info: Pack\ndeltatech_chatter_quick_info_pack\nModul-pachet care instalează dintr-un singur pas trei panouri informative afișate în chatter, lângă document: cifrele de care utilizatorul are nevoie când se uită la o achiziție, o ofertă sau un transfer. Modulul nu are cod propriu; instalarea lui aduce, dacă lipsesc, și aplicațiile Vânzări, Achiziții, Facturare și Inventar.\nVânzări produs (din `deltatech_chatter_quick_info_purchase`), pe facturi furnizor și comenzi de achiziție: cât din produsele cumpărate s-a vândut de la data documentului și în total, plus produsele care nu s-au vândut.\nUltimul preț către client (din `deltatech_chatter_quick_info_sale`), pe oferte: fiecare linie este comparată cu ultimul preț vândut aceluiași client; prețurile mai mici apar cu roșu.\nStoc și rezervări (din `deltatech_chatter_quick_info_stock`), pe transferuri: ce nu este acoperit, ce transferuri ține stocul rezervat, marfa în intrare și, la recepții, livrările care o așteaptă.\nToate trei se bazează pe *Chatter Quick Info*, instalat odată cu ele; din *Setări > Tehnic > Interfață utilizator > Chatter Quick Info* se alege cine vede fiecare panou, pe ce documente (condiție) și cât de des se reîmprospătează.\nPanoul apare în partea de sus a chatterului pentru utilizatorii grupului potrivit (achiziții, vânzări, inventar).\nDezinstalarea pachetului nu dezinstalează modulele incluse."
+  },
+  {
+    "path": "deltatech_chatter_quick_info_purchase/index.md",
+    "module": "deltatech_chatter_quick_info_purchase",
+    "version": "19.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter_quick_info_purchase",
+    "local_path": "odoo-addons/bitshop/deltatech_chatter_quick_info_purchase",
+    "last_ingest": "2026-10-17",
+    "friendly_name": "deltatech_chatter_quick_info_purchase",
+    "summary": "Adaugă în chatter-ul facturilor de furnizor, al rambursărilor de la furnizor și al comenzilor de achiziție panoul **Vânzări produse**. Acesta arată cât din produsele de pe document s-a vândut efectiv, astfel încât achizitorul vede pe loc dacă marfa se mișcă, înainte să o comande din nou, fără să deschidă rapoarte separate de vânzări.",
+    "features": [
+      "Pentru fiecare produs de pe document: cantitatea vândută de la data documentului (din cantitatea de pe document), cantitatea vândută în total, valoarea fără TVA vândută de la data documentului și data ultimei vânzări.",
+      "Antetul panoului arată valoarea vândută de la data documentului; chip-urile arată totalurile și numărul de produse fără nicio vânzare de la acea dată (rândurile respective apar cu gri, la final).",
+      "Produsele cele mai vândute apar primele; numele produsului deschide fișa produsului.",
+      "„Vândut\" înseamnă linie de comandă de vânzare confirmată, din aceeași companie; sumele sunt fără TVA, în moneda companiei. Retururile și notele de credit nu se scad, iar cantitățile nu se convertesc între unități de măsură.",
+      "Data documentului: data facturii pentru facturile de furnizor (data contabilă pe ciorne fără dată de factură); data confirmării (altfel data comenzii) pentru comenzile de achiziție.",
+      "Panoul se vede implicit grupului Achiziții / Operator și se reîmprospătează automat la 30 de secunde, cât timp documentul e deschis; butonul ↻ recalculează imediat.",
+      "Configurare fără cod: Setări > Tehnic > Interfață utilizator > Chatter Quick Info (modul dezvoltator) — grupuri, interval de reîmprospătare, pliat implicit, condiție. Implicit panoul nu apare pe documentele anulate.",
+      "Documentele cu peste 200 de produse afișează primele 200 în tabel; totalurile le includ pe toate.",
+      "Fluxul detaliat pas cu pas este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "deltatech_chatter_quick_info",
+      "purchase",
+      "sale",
+      "account"
+    ],
+    "connections": [
+      "deltatech_chatter_quick_info"
+    ],
+    "text": "deltatech_chatter_quick_info_purchase\ndeltatech_chatter_quick_info_purchase\nAdaugă în chatter-ul facturilor de furnizor, al rambursărilor de la furnizor și al comenzilor de achiziție panoul **Vânzări produse**. Acesta arată cât din produsele de pe document s-a vândut efectiv, astfel încât achizitorul vede pe loc dacă marfa se mișcă, înainte să o comande din nou, fără să deschidă rapoarte separate de vânzări.\nPentru fiecare produs de pe document: cantitatea vândută de la data documentului (din cantitatea de pe document), cantitatea vândută în total, valoarea fără TVA vândută de la data documentului și data ultimei vânzări.\nAntetul panoului arată valoarea vândută de la data documentului; chip-urile arată totalurile și numărul de produse fără nicio vânzare de la acea dată (rândurile respective apar cu gri, la final).\nProdusele cele mai vândute apar primele; numele produsului deschide fișa produsului.\n„Vândut\" înseamnă linie de comandă de vânzare confirmată, din aceeași companie; sumele sunt fără TVA, în moneda companiei. Retururile și notele de credit nu se scad, iar cantitățile nu se convertesc între unități de măsură.\nData documentului: data facturii pentru facturile de furnizor (data contabilă pe ciorne fără dată de factură); data confirmării (altfel data comenzii) pentru comenzile de achiziție.\nPanoul se vede implicit grupului Achiziții / Operator și se reîmprospătează automat la 30 de secunde, cât timp documentul e deschis; butonul ↻ recalculează imediat.\nConfigurare fără cod: Setări > Tehnic > Interfață utilizator > Chatter Quick Info (modul dezvoltator) — grupuri, interval de reîmprospătare, pliat implicit, condiție. Implicit panoul nu apare pe documentele anulate.\nDocumentele cu peste 200 de produse afișează primele 200 în tabel; totalurile le includ pe toate.\nFluxul detaliat pas cu pas este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+  },
+  {
+    "path": "deltatech_chatter_quick_info_sale/index.md",
+    "module": "deltatech_chatter_quick_info_sale",
+    "version": "19.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter_quick_info_sale",
+    "local_path": "odoo-addons/bitshop/deltatech_chatter_quick_info_sale",
+    "last_ingest": "2026-10-17",
+    "friendly_name": "Chatter Quick Info: Last Price to the Customer",
+    "summary": "Modulul adaugă în chatter-ul ofertelor și al comenzilor de vânzare panoul **Ultimul preț la client**. Pentru fiecare produs de pe document, panoul arată prețul la care a fost vândut ultima dată aceluiași client, astfel încât agentul de vânzări vede pe loc o ofertă sub prețul anterior, fără să caute în istoric.",
+    "features": [
+      "Pentru fiecare linie de comandă: prețul unitar de acum și ultimul preț, ambele după discount și fără TVA.",
+      "Diferența în procente: roșu când prețul de acum e mai mic, verde când e mai mare (diferențele sub 0,05% rămân necolorate).",
+      "Ultima comandă (link către ea) și data ei; tooltip-ul ultimului preț indică cantitatea, unitatea și prețul din acea comandă.",
+      "Antetul numără produsele sub ultimul preț; chip-urile arată produsele vândute pentru prima dată clientului și data ultimei comenzi a clientului. Produsele noi pentru client apar estompate.",
+      "Ultimul preț provine din ultima comandă confirmată a aceleiași companii către firma-mamă a clientului (inclusiv comenzile pe persoane de contact și adrese), cu excluderea comenzii curente.",
+      "Prețul se convertește la unitatea de măsură a liniei curente și, când monedele diferă, la moneda comenzii, la cursul de azi.",
+      "Sunt luate în calcul și comenzile altor agenți, chiar dacă utilizatorul vede doar documentele proprii.",
+      "Implicit panoul se vede utilizatorilor de vânzări și doar pe oferte (ciornă și trimise); condiția și grupurile se modifică din *Setări > Tehnic > Interfață utilizator > Chatter Quick Info* (mod dezvoltator).",
+      "Panoul este informativ: nu modifică liniile ofertei sau lista de prețuri. Fluxul detaliat este în fișa consultant."
+    ],
+    "dependencies": [
+      "deltatech_chatter_quick_info",
+      "sale"
+    ],
+    "connections": [
+      "deltatech_chatter_quick_info"
+    ],
+    "text": "Chatter Quick Info: Last Price to the Customer\ndeltatech_chatter_quick_info_sale\nModulul adaugă în chatter-ul ofertelor și al comenzilor de vânzare panoul **Ultimul preț la client**. Pentru fiecare produs de pe document, panoul arată prețul la care a fost vândut ultima dată aceluiași client, astfel încât agentul de vânzări vede pe loc o ofertă sub prețul anterior, fără să caute în istoric.\nPentru fiecare linie de comandă: prețul unitar de acum și ultimul preț, ambele după discount și fără TVA.\nDiferența în procente: roșu când prețul de acum e mai mic, verde când e mai mare (diferențele sub 0,05% rămân necolorate).\nUltima comandă (link către ea) și data ei; tooltip-ul ultimului preț indică cantitatea, unitatea și prețul din acea comandă.\nAntetul numără produsele sub ultimul preț; chip-urile arată produsele vândute pentru prima dată clientului și data ultimei comenzi a clientului. Produsele noi pentru client apar estompate.\nUltimul preț provine din ultima comandă confirmată a aceleiași companii către firma-mamă a clientului (inclusiv comenzile pe persoane de contact și adrese), cu excluderea comenzii curente.\nPrețul se convertește la unitatea de măsură a liniei curente și, când monedele diferă, la moneda comenzii, la cursul de azi.\nSunt luate în calcul și comenzile altor agenți, chiar dacă utilizatorul vede doar documentele proprii.\nImplicit panoul se vede utilizatorilor de vânzări și doar pe oferte (ciornă și trimise); condiția și grupurile se modifică din *Setări > Tehnic > Interfață utilizator > Chatter Quick Info* (mod dezvoltator).\nPanoul este informativ: nu modifică liniile ofertei sau lista de prețuri. Fluxul detaliat este în fișa consultant."
+  },
+  {
+    "path": "deltatech_chatter_quick_info_stock/index.md",
+    "module": "deltatech_chatter_quick_info_stock",
+    "version": "19.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter_quick_info_stock",
+    "local_path": "odoo-addons/bitshop/deltatech_chatter_quick_info_stock",
+    "last_ingest": "2026-10-17",
+    "friendly_name": "deltatech_chatter_quick_info_stock",
+    "summary": "Adaugă în chatter-ul transferurilor de stoc panoul **Stoc și rezervări**, ca gestionarul să vadă dintr-o privire ce poate pleca și ce blochează livrarea, fără să deschidă prognoza fiecărui produs. Pe recepții arată, în plus, ce transferuri deschise așteaptă marfa care intră.",
+    "features": [
+      "Livrări și transferuri interne: pentru fiecare produs stocabil, în locația sursă și sublocațiile ei: cantitatea rezervată pe transfer din cea cerută, stocul fizic, rezervările altor transferuri (tooltip cu lista lor), stocul liber, cantitatea așteptată și data următoarei recepții.",
+      "Antetul spune dacă transferul este acoperit; chip-urile numără produsele neacoperite și pe cele care s-ar acoperi eliberând rezervările altor transferuri. Produsele neacoperite apar primele, cu stocul liber în roșu.",
+      "Recepții: calcul pe tot depozitul (la recepția în 2–3 pași marfa intră în Intrare, nu în Stoc): stoc, liber și cantitatea încă lipsă pe transferurile deschise care așteaptă produsul, cu denumirile lor.",
+      "Panoul se reîmprospătează automat la 30 de secunde cât timp transferul este deschis.",
+      "Este vizibil implicit grupului Inventar / Operator; grupurile, intervalul de reîmprospătare, starea pliată și condiția (panoul dispare după Validează / Anulează) se configurează din Setări → Tehnic → Interfață utilizator → Informații rapide în chatter (modul dezvoltator).",
+      "Panoul este doar informativ: nu rezervă, nu eliberează și nu validează nimic.",
+      "Fluxul pas-cu-pas este în [fișa consultant](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "deltatech_chatter_quick_info",
+      "stock"
+    ],
+    "connections": [
+      "deltatech_chatter_quick_info"
+    ],
+    "text": "deltatech_chatter_quick_info_stock\ndeltatech_chatter_quick_info_stock\nAdaugă în chatter-ul transferurilor de stoc panoul **Stoc și rezervări**, ca gestionarul să vadă dintr-o privire ce poate pleca și ce blochează livrarea, fără să deschidă prognoza fiecărui produs. Pe recepții arată, în plus, ce transferuri deschise așteaptă marfa care intră.\nLivrări și transferuri interne: pentru fiecare produs stocabil, în locația sursă și sublocațiile ei: cantitatea rezervată pe transfer din cea cerută, stocul fizic, rezervările altor transferuri (tooltip cu lista lor), stocul liber, cantitatea așteptată și data următoarei recepții.\nAntetul spune dacă transferul este acoperit; chip-urile numără produsele neacoperite și pe cele care s-ar acoperi eliberând rezervările altor transferuri. Produsele neacoperite apar primele, cu stocul liber în roșu.\nRecepții: calcul pe tot depozitul (la recepția în 2–3 pași marfa intră în Intrare, nu în Stoc): stoc, liber și cantitatea încă lipsă pe transferurile deschise care așteaptă produsul, cu denumirile lor.\nPanoul se reîmprospătează automat la 30 de secunde cât timp transferul este deschis.\nEste vizibil implicit grupului Inventar / Operator; grupurile, intervalul de reîmprospătare, starea pliată și condiția (panoul dispare după Validează / Anulează) se configurează din Setări → Tehnic → Interfață utilizator → Informații rapide în chatter (modul dezvoltator).\nPanoul este doar informativ: nu rezervă, nu eliberează și nu validează nimic.\nFluxul pas-cu-pas este în [fișa consultant](FISA_CONSULTANT.md)."
+  },
+  {
     "path": "deltatech_cmr_document/index.md",
     "module": "deltatech_cmr_document",
     "version": "19.0.1.0.1",
@@ -11127,6 +11279,31 @@
       "option_collapse_categories_recursive"
     ],
     "text": "eCommerce Product Category\ndeltatech_website_category\nModulul îmbunătățește administrarea categoriilor publice de produse din magazinul online (eCommerce): permite arhivarea categoriilor în loc de ștergerea lor definitivă, păstrând astfel o navigare curată pe site fără a pierde datele istorice, și optimizează performanța paginii de magazin prin încărcarea „leneșă\" (lazy) a arborelui de categorii din bara laterală — un beneficiu important pentru cataloage cu multe categorii, unde timpul de încărcare al paginii poate scădea semnificativ.\nOferă posibilitatea de a arhiva categorii publice de produse, fără a le șterge definitiv.\nMenține o navigare mai curată pe site, eliminând din meniu categoriile depășite sau temporare.\nPermite restaurarea ușoară a categoriilor arhivate, dacă sunt din nou necesare.\nCategoriile arhivate nu mai apar în meniul magazinului și nici ca opțiuni de filtrare pe pagina de listare a produselor.\nAdaugă un câmp `website_url` calculat pe categorie, cu adresa completă către pagina categoriei pe site.\nArbore de categorii cu încărcare leneșă (lazy) în bara laterală a magazinului: ramurile colapsate ale arborelui de categorii nu mai sunt randate integral pe server, ci sunt încărcate abia când vizitatorul le extinde, printr-o rută dedicată (`/shop/category_children/<id>`). Măsurat pe un catalog cu 1222 de categorii publice, timpul de răspuns al paginii de listare a scăzut de la 0,82s la 0,23s, iar volumul de HTML transferat de la 2,22 MB la 1,20 MB, fără nicio schimbare vizuală pentru vizitator. *(Notă: această funcționalitate majoră de performanță nu este menționată în `readme/DESCRIPTION.md` al modulului — descrierea readme acoperă doar arhivarea categoriilor; am completat Sumarul și lista de funcționalități cu ea pe baza codului și a `readme/HISTORY.md`, pentru ca pagina wiki să reflecte realitatea codului din 19.0.)*"
+  },
+  {
+    "path": "deltatech_website_category_icon/index.md",
+    "module": "deltatech_website_category_icon",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_category_icon",
+    "local_path": "odoo-addons/deltatech/deltatech_website_category_icon",
+    "last_ingest": "2026-10-17",
+    "friendly_name": "deltatech_website_category_icon",
+    "summary": "Modulul oferă fiecărei categorii de magazin online o iconiță proprie în format SVG și o afișează în magazin. Iconița este o alegere făcută intenționat pentru categorie, spre deosebire de imaginea categoriei, care este adesea doar fotografia primului produs. Astfel, navigarea prin categorii devine mai clară și mai unitară vizual. Iconița este verificată la salvare, deci este sigur să fie afișată pe paginile publice.",
+    "features": [
+      "Câmp nou Icon (SVG) pe categoria de eCommerce, cu previzualizare directă pe formularul categoriei. Se completează din Website > eCommerce > Categories, lipind codul SVG în câmp.",
+      "Categoriile afișate în partea de sus a magazinului (filmstrip) arată iconița în locul imaginii categoriei; categoriile fără iconiță rămân cu imaginea. Filmstrip-ul se activează din editorul de website, în pagina magazinului.",
+      "Lista de categorii din stânga afișează o iconiță mică înaintea numelui, doar pentru categoriile care o au (view-ul Category Icons in List, care poate fi arhivat dacă nu e dorit).",
+      "Validare la salvare, cu listă de elemente permise: doar forme simple (`path`, `rect`, `circle`, `ellipse`, `line`, `polyline`, `polygon`, `g`, plus `title`), cu culori, numere și `transform`. Scripturile, stilurile, linkurile, imaginile externe și handlerele de evenimente sunt refuzate, iar mesajul de eroare spune ce trebuie corectat.",
+      "Desenul trebuie să aibă `viewBox`; dimensiunea provine din pagină (CSS), iar atributele `width`/`height` sunt eliminate. Dimensiunea maximă este de 20.000 de caractere.",
+      "Iconițele pot fi desenate manual, generate în masă de Terrabit în stilul magazinului (skill-ul Claude `iconita-categorie`, din pluginul terrabit-odoo, care nu este un modul Odoo) sau scrise de orice instrument prin câmpul `icon_svg` (import, XML-RPC); validarea se aplică la fel în toate cazurile."
+    ],
+    "dependencies": [
+      "website_sale"
+    ],
+    "connections": [
+      "deltatech_website_category"
+    ],
+    "text": "deltatech_website_category_icon\ndeltatech_website_category_icon\nModulul oferă fiecărei categorii de magazin online o iconiță proprie în format SVG și o afișează în magazin. Iconița este o alegere făcută intenționat pentru categorie, spre deosebire de imaginea categoriei, care este adesea doar fotografia primului produs. Astfel, navigarea prin categorii devine mai clară și mai unitară vizual. Iconița este verificată la salvare, deci este sigur să fie afișată pe paginile publice.\nCâmp nou Icon (SVG) pe categoria de eCommerce, cu previzualizare directă pe formularul categoriei. Se completează din Website > eCommerce > Categories, lipind codul SVG în câmp.\nCategoriile afișate în partea de sus a magazinului (filmstrip) arată iconița în locul imaginii categoriei; categoriile fără iconiță rămân cu imaginea. Filmstrip-ul se activează din editorul de website, în pagina magazinului.\nLista de categorii din stânga afișează o iconiță mică înaintea numelui, doar pentru categoriile care o au (view-ul Category Icons in List, care poate fi arhivat dacă nu e dorit).\nValidare la salvare, cu listă de elemente permise: doar forme simple (`path`, `rect`, `circle`, `ellipse`, `line`, `polyline`, `polygon`, `g`, plus `title`), cu culori, numere și `transform`. Scripturile, stilurile, linkurile, imaginile externe și handlerele de evenimente sunt refuzate, iar mesajul de eroare spune ce trebuie corectat.\nDesenul trebuie să aibă `viewBox`; dimensiunea provine din pagină (CSS), iar atributele `width`/`height` sunt eliminate. Dimensiunea maximă este de 20.000 de caractere.\nIconițele pot fi desenate manual, generate în masă de Terrabit în stilul magazinului (skill-ul Claude `iconita-categorie`, din pluginul terrabit-odoo, care nu este un modul Odoo) sau scrise de orice instrument prin câmpul `icon_svg` (import, XML-RPC); validarea se aplică la fel în toate cazurile."
   },
   {
     "path": "deltatech_website_checkout_confirm/index.md",
