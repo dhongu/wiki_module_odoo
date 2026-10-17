@@ -9478,6 +9478,32 @@
     "text": "Website Searchbar Optimization\ndeltatech_website_searchbar\nAcest modul reduce numărul de cereri de autocompletare trimise de bara de căutare de pe site (endpoint-ul `/website/snippet/autocomplete`), pentru a scădea încărcarea serverului și traficul inutil generat în timp ce utilizatorul tastează. Este util mai ales pe site-uri e-commerce cu trafic ridicat, unde fiecare literă tastată în căutare poate genera altfel o cerere separată către server.\nCrește întârzierea de „debounce\" a barei de căutare de la valoarea implicită de 400ms la 800ms, astfel încât cererea de autocompletare pornește abia după ce utilizatorul se oprește din tastat.\nIntroduce o lungime minimă a termenului de căutare de 4 caractere (după eliminarea spațiilor) înainte de a trimite orice cerere către server.\nCând termenul introdus este mai scurt de 4 caractere, lista de sugestii se golește local (fără cerere către server), evitând rezultate prea multe și nespecifice.\nNu necesită nicio configurare — optimizările se aplică automat tuturor barelor de căutare de pe site după instalare.\nConstantele `MIN_SEARCH_TERM_LENGTH` (4) și `DEBOUNCE_DELAY` (800ms) pot fi ajustate direct în cod (`static/src/js/searchbar.esm.js`) dacă sunt necesare alte valori."
   },
   {
+    "path": "deltatech_website_searchbar_typing/index.md",
+    "module": "deltatech_website_searchbar_typing",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/dhongu/deltatech/tree/20.0/deltatech_website_searchbar_typing",
+    "local_path": "odoo-addons/deltatech/deltatech_website_searchbar_typing",
+    "last_ingest": "2026-10-17",
+    "friendly_name": "Website Searchbar Typing Examples",
+    "summary": "Modulul face ca textul de ajutor (placeholder-ul) dintr-o casetă de căutare a site-ului să scrie, literă cu literă, câteva exemple de căutări, unul după altul: exemplul se scrie, rămâne o clipă, se șterge și urmează următorul. Vizitatorul vede dintr-o privire ce poate căuta (un cod de piesă, o denumire de produs, un subiect din ghidurile de utilizare). Animația pornește doar pe casetele în care s-au pus exemple; instalarea singură nu schimbă nimic pe site.",
+    "features": [
+      "Opțiune per casetă: exemplele se pun în formularul de căutare, ca listă ascunsă `<ul class=\"o_searchbar_typing d-none\" aria-hidden=\"true\">`, câte un `li` pe exemplu; un `li` opțional cu clasa `o_searchbar_typing_prefix` (de ex. „ex.:”) apare în fața fiecărui exemplu.",
+      "Exemplele sunt text obișnuit al paginii, deci se traduc cu pagina: fiecare `li` e un termen de traducere separat (cu `span` s-ar traduce tot blocul ca un singur termen).",
+      "Animația se oprește definitiv la click în casetă sau la prima tastă, iar placeholder-ul inițial revine; căutarea și sugestiile standard (autocomplete) funcționează normal.",
+      "Nu rulează când vizitatorul a cerut mișcare redusă (`prefers-reduced-motion`) și se oprește dacă preferința se activează în timpul vizitei; stă pe loc cât timp tab-ul e ascuns sau caseta nu e pe ecran; nu rulează în Website Builder.",
+      "Accesibilitate: dacă și caseta nu are etichetă, placeholder-ul inițial devine `aria-label`, ca cititoarele de ecran să nu citească fiecare literă schimbată.",
+      "Viteza se reglează cu atribute pe lista de exemple, în milisecunde: `data-start-delay` (1500), `data-type-delay` (70), `data-hold-delay` (1800), `data-erase-delay` (30), `data-next-delay` (400).",
+      "Merge cu snippet-ul standard de căutare și cu șablonul `website.website_search_box_input`. Pe Odoo 20, parametrii șablonului se dau ca atribute pe `t-call` (`search_type.f`, `action.f`, `placeholder.f`), nu prin `t-set` în corpul apelului."
+    ],
+    "dependencies": [
+      "website"
+    ],
+    "connections": [
+      "deltatech_website_searchbar"
+    ],
+    "text": "Website Searchbar Typing Examples\ndeltatech_website_searchbar_typing\nModulul face ca textul de ajutor (placeholder-ul) dintr-o casetă de căutare a site-ului să scrie, literă cu literă, câteva exemple de căutări, unul după altul: exemplul se scrie, rămâne o clipă, se șterge și urmează următorul. Vizitatorul vede dintr-o privire ce poate căuta (un cod de piesă, o denumire de produs, un subiect din ghidurile de utilizare). Animația pornește doar pe casetele în care s-au pus exemple; instalarea singură nu schimbă nimic pe site.\nOpțiune per casetă: exemplele se pun în formularul de căutare, ca listă ascunsă `<ul class=\"o_searchbar_typing d-none\" aria-hidden=\"true\">`, câte un `li` pe exemplu; un `li` opțional cu clasa `o_searchbar_typing_prefix` (de ex. „ex.:”) apare în fața fiecărui exemplu.\nExemplele sunt text obișnuit al paginii, deci se traduc cu pagina: fiecare `li` e un termen de traducere separat (cu `span` s-ar traduce tot blocul ca un singur termen).\nAnimația se oprește definitiv la click în casetă sau la prima tastă, iar placeholder-ul inițial revine; căutarea și sugestiile standard (autocomplete) funcționează normal.\nNu rulează când vizitatorul a cerut mișcare redusă (`prefers-reduced-motion`) și se oprește dacă preferința se activează în timpul vizitei; stă pe loc cât timp tab-ul e ascuns sau caseta nu e pe ecran; nu rulează în Website Builder.\nAccesibilitate: dacă și caseta nu are etichetă, placeholder-ul inițial devine `aria-label`, ca cititoarele de ecran să nu citească fiecare literă schimbată.\nViteza se reglează cu atribute pe lista de exemple, în milisecunde: `data-start-delay` (1500), `data-type-delay` (70), `data-hold-delay` (1800), `data-erase-delay` (30), `data-next-delay` (400).\nMerge cu snippet-ul standard de căutare și cu șablonul `website.website_search_box_input`. Pe Odoo 20, parametrii șablonului se dau ca atribute pe `t-call` (`search_type.f`, `action.f`, `placeholder.f`), nu prin `t-set` în corpul apelului."
+  },
+  {
     "path": "deltatech_website_seo/index.md",
     "module": "deltatech_website_seo",
     "version": "19.0.1.1.0",
