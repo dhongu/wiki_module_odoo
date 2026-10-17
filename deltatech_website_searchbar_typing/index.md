@@ -1,7 +1,7 @@
 # Website Searchbar Typing Examples (localizat la `deltatech_website_searchbar_typing/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_searchbar_typing`
-- **Versiune:** `20.0.1.0.0`
+- **Versiune:** `20.0.1.1.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_website_searchbar_typing
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_searchbar_typing`
 - **Ultima Ingestie:** `2026-10-17`
@@ -14,6 +14,7 @@ Modulul face ca textul de ajutor (placeholder-ul) dintr-o casetă de căutare a 
 #### 2. Funcționalități Cheie
 
 - Opțiune per casetă: exemplele se pun în formularul de căutare, ca listă ascunsă `<ul class="o_searchbar_typing d-none" aria-hidden="true">`, câte un `li` pe exemplu; un `li` opțional cu clasa `o_searchbar_typing_prefix` (de ex. „ex.:”) apare în fața fiecărui exemplu.
+- Opțiune în Website Builder pe caseta de căutare: **Typing examples** pornește sau oprește animația, iar **Prefix** și **Examples** (adăugare, ștergere, reordonare prin tragere) se editează în panou, fără editorul HTML; opțiunea scrie aceeași listă ascunsă (20.0.1.1.0).
 - Exemplele sunt text obișnuit al paginii, deci se traduc cu pagina: fiecare `li` e un termen de traducere separat (cu `span` s-ar traduce tot blocul ca un singur termen).
 - Animația se oprește definitiv la click în casetă sau la prima tastă, iar placeholder-ul inițial revine; căutarea și sugestiile standard (autocomplete) funcționează normal.
 - Nu rulează când vizitatorul a cerut mișcare redusă (`prefers-reduced-motion`) și se oprește dacă preferința se activează în timpul vizitei; stă pe loc cât timp tab-ul e ascuns sau caseta nu e pe ecran; nu rulează în Website Builder.
@@ -39,6 +40,7 @@ Modulul nu definește modele, vizualizări sau acțiuni server/automate: este o 
 
 **Componentă JavaScript**
 
+- `static/src/website_builder/searchbar_typing_option_plugin.esm.js` + `searchbar_typing_option.xml`: opțiunea „Typing examples” din panoul Website Builder, pe `.s_searchbar_input` (fără caseta din antet).
 - `static/src/interactions/searchbar_typing.esm.js`: interacțiunea publică `SearchbarTyping` (API-ul `Interaction` din 20.0), pe `.o_searchbar_form` care conține `.o_searchbar_typing`. Testată cu Hoot (`static/tests/searchbar_typing.test.js`, rulat din `tests/test_js.py`).
 
 **Acțiuni Automate / Acțiuni Server**

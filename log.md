@@ -4,12 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
-## [2026-10-17] `deltatech_website_searchbar_typing` — ingestie pe 20.0 (20.0.1.0.0), cu fișă consultant
+## [2026-10-17] `deltatech_website_searchbar_typing` — ingestie pe 20.0 (20.0.1.1.0), cu fișă consultant
 
 - **Acțiune:** Pagină nouă pentru modulul adăugat în 19.0 (dhongu/deltatech#3606) și portat pe 20.0
   (dhongu/deltatech#3607): placeholder-ul unei casete de căutare scrie exemple de căutări, puse ca listă
   `o_searchbar_typing` în formular. Notat că pe 20.0 parametrii `website.website_search_box_input` se dau
-  ca atribute pe `t-call` (`search_type.f`, `action.f`, `placeholder.f`).
+  ca atribute pe `t-call` (`search_type.f`, `action.f`, `placeholder.f`). Inclusă opțiunea din Website Builder
+  (dhongu/deltatech#3615).
 - **Sursă:** `readme/DESCRIPTION.md`, `readme/USAGE.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`,
   `static/src/interactions/searchbar_typing.esm.js`.
 - **Dependențe/Conexiuni:** `website`; conexiune cu `deltatech_website_searchbar` (aceeași bară de căutare).
