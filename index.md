@@ -69,8 +69,8 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_customer_analysis](deltatech_customer_analysis/index.md): Tablou „ce fac azi” cu fiecare client din portofoliu (de sunat, de încasat, de vândut mai mult), pe baza segmentelor calculate noaptea.
 - [deltatech_customer_map](deltatech_customer_map/index.md): Harta 3D a clienților pe relieful real (județele României și țările Europei), colorată după vânzări, clienți sau facturi, cu orașe, top clienți și top produse, pe roluri din Customer Segment.
 - [deltatech_customer_segment](deltatech_customer_segment/index.md): Calculează noaptea, pentru fiecare client, ritmul de cumpărare, vânzările, creanțele restante și segmentul de portofoliu, față de propriul ritm al clientului.
-- [deltatech_dashboard_builder](deltatech_dashboard_builder/index.md): Tablouri de bord cu KPI și grafice construite fără cod pe orice model Odoo, cu ținte, instantanee zilnice și alerte pe praguri.
-- [deltatech_dashboard_builder_ai](deltatech_dashboard_builder_ai/index.md): Asistent AI care schițează tablouri de bord (KPI Dashboards) ca ciorne, văzând doar structura modelelor, nu datele.
+- [deltatech_dashboard_builder](deltatech_dashboard_builder/index.md): Tablouri de bord cu KPI și grafice construite fără cod pe orice model Odoo, cu ținte, instantanee zilnice, alerte pe praguri, formule între KPI-uri și mod de editare cu mutare și redimensionare.
+- [deltatech_dashboard_builder_ai](deltatech_dashboard_builder_ai/index.md): Asistent AI care schițează și modifică tablouri de bord (KPI Dashboards), văzând doar structura modelelor, nu datele.
 - [deltatech_data_sheet](deltatech_data_sheet/index.md): Atașează fișe tehnice și fișe de securitate (PDF) pe produs, în fila Vânzări.
 - [deltatech_data_sheet_website](deltatech_data_sheet_website/index.md): Expune fișele tehnice și fișele cu date de securitate ale produselor pe paginile din magazinul online.
 - [deltatech_dc](deltatech_dc/index.md): Gestionarea și tipărirea declarațiilor de conformitate pentru produse, inclusiv la facturare.

@@ -4,6 +4,17 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-17] Re-ingestie: `deltatech_dashboard_builder` și `deltatech_dashboard_builder_ai` (19.0.1.3.1)
+
+- **Acțiune:** actualizare de la 19.0.1.0.3, cu procesare în paralel (un subagent per modul):
+  - `deltatech_dashboard_builder` 19.0.1.3.1 — tipurile gauge, arie, pâlnie și bară + linie, formule între KPI-uri, perioade fără înregistrări afișate ca zero, comutator de tip în antet, mod de editare cu mutare și redimensionare;
+  - `deltatech_dashboard_builder_ai` 19.0.1.3.1 — asistentul propune tipurile noi și editează un tablou existent (citire structură, modificare, ștergere și reordonare de widgeturi, notă în chatter), buton AI și context pe widget.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, cu control în cod. Fișele consultant au fost înlocuite: builder (7 capturi), AI (21 de capturi).
+- **Dependențe/Conexiuni:** [deltatech_dashboard_builder_ai](deltatech_dashboard_builder_ai/index.md) → [deltatech_dashboard_builder](deltatech_dashboard_builder/index.md) → [deltatech_web_kpi_cards](deltatech_web_kpi_cards/index.md); AI ↔ [deltatech_ai_anthropic](deltatech_ai_anthropic/index.md).
+- **Fișiere actualizate:** `deltatech_dashboard_builder/`, `deltatech_dashboard_builder_ai/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-10-17] Ingestie: `deltatech_chatter_quick_info` și panourile lui (5 module noi, bitshop 19.0)
 
 - **Acțiune:** documentare inițială, cu procesare în paralel (un subagent per modul):

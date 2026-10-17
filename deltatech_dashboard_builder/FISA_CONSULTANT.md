@@ -1,7 +1,7 @@
 # Fișă Modul: Tablouri de bord cu KPI și grafice (Dashboard Builder)
 
 **Modul:** `deltatech_dashboard_builder`
-**Versiune:** 19.0.1.0.3
+**Versiune:** 19.0.1.3.1
 **Suită:** bitshop_ent (modulul merge și pe Community; extensia AI cere Enterprise)
 **Dependențe:** `web`, `mail`, `deltatech_web_kpi_cards`
 **Utilizator principal:** consultantul care construiește tabloul; managerul și echipa care îl citesc
@@ -17,7 +17,8 @@ să ceară un export și fără să deschidă o foaie de calcul.
 Modulul îi dă consultantului un formular cu care construiește un tablou de bord pe **orice model
 din Odoo**: alege modelul, felul cifrei (număr, sumă, medie, minim, maxim), câmpul după care se
 grupează și un filtru. Rezultatul e o bandă de indicatori (KPI) și o grilă de grafice și tabele,
-cu o singură alegere de perioadă pentru tot tabloul. Un indicator poate avea o țintă, o linie de
+cu o singură alegere de perioadă pentru tot tabloul. Un indicator poate fi și o **formulă** pe alte
+indicatoare ale tabloului (de exemplu valoarea medie pe comandă = valoarea / numărul de comenzi). Un indicator poate avea o țintă, o linie de
 tendință păstrată zi de zi și o alertă care anunță oamenii când cifra trece de un prag.
 
 Nu înlocuiește rapoartele contabile și nici foile de calcul ale Odoo Enterprise: e pentru
@@ -107,8 +108,9 @@ Completați:
 
 Alegeți, în ordine:
 
-1. **Tip widget** — *KPI* (un singur număr), *Grafic cu bare*, *cu bare orizontale*, *cu linii*,
-   *circular*, *inelar* sau *Tabel*.
+1. **Tip widget** — *KPI* (un singur număr), *Indicator cu ac* (un semicerc umplut până la țintă),
+   *Grafic cu bare*, *cu bare orizontale*, *cu linii*, *cu arii*, *cu bare și linie* (barele și, pe axa
+   lor, o linie cu a doua agregare a acelorași grupuri), *Pâlnie*, *circular*, *inelar* sau *Tabel*.
 2. **Model** ① — ce se numără (de exemplu *Contact*, *Comandă de vânzare*).
 3. **Agregare** ② — *Număr*, *Sumă*, *Medie*, *Minim* sau *Maxim*. Pentru orice în afară de
    *Număr* apare **Măsură**: câmpul numeric care se adună sau se mediază.
@@ -124,6 +126,14 @@ Alegeți, în ordine:
    calculează pe **Perioadă instantaneu** (implicit *Toată perioada*), nu pe perioada aleasă pe tablou:
    pentru un KPI de tipul „luna aceasta", alegeți aceeași perioadă și aici, ca tendința să se potrivească cu
    cifra.
+
+8. **Valoare din** (doar KPI și indicator cu ac) — *Înregistrări ale unui model* sau *Formulă pe alte KPI-uri*.
+   Pentru o formulă, dați KPI-urilor folosite un **Cod** scurt (de exemplu `clienti`, `noi`) și scrieți
+   **Formula** cu acele coduri, numere, + - * / și paranteze: `noi / clienti * 100`. Formula se verifică la
+   salvare (cod necunoscut, o formulă care se folosește pe ea însăși); o împărțire la zero golește cifra, cu
+   mesaj, doar pe perioada respectivă.
+9. Pentru un grafic grupat după o dată, **Arată perioadele fără înregistrări** (bifat implicit) pune zero pe
+   lunile sau zilele fără înregistrări, ca axa să nu aibă goluri.
 
 KPI-urile puse unul după altul formează o **bandă** deasupra graficelor. Lățimea contează doar
 pentru grafice și tabele.
@@ -156,8 +166,9 @@ complet ③. Sub ele: banda de indicatori, apoi graficele și tabelele.
 
 **Găsiți pe ecran.** Fiecare indicator ④ arată numărul mare, numele și, unde există, bara de progres
 spre țintă (*Țintă 150 (80%)*), linia de tendință și variația față de perioada anterioară, în verde când
-crește și în roșu când scade. Graficele ⑤ au titlul și, în colț, două pictograme: imagine și descărcare
-CSV; tabelele au doar CSV.
+crește și în roșu când scade. Graficele ⑤ au titlul și, în colț, pictogramele: **Afișează ca** (săgețile, redesenează
+graficul ca alt tip, doar pe ecranul vostru și cât timp tabloul e deschis), imagine și descărcare CSV; tabelele au
+doar *Afișează ca* și CSV.
 
 **Verificați.**
 
@@ -196,6 +207,28 @@ constructorii. Unul construit de mână e publicat de la salvare, dacă nu i-aț
   proprie sub **Tablouri KPI**. **Scoate din meniu** o desface. Numele, ordinea și grupurile tabloului
   urmează singure în meniu; un tablou pus înapoi pe ciornă iese din meniu.
 
+### Pasul 7 — Modul de editare: aranjare și configurare
+
+Pe tablou, creionul din bara de sus ① trece tabloul în **modul de editare**. Îl văd doar constructorii care au
+drept de modificare pe tablou; un vizualizator nu are creionul.
+
+![Modul de editare](screenshots/07_mod_editare.png)
+
+În modul de editare:
+
+- **Mutare** — fiecare widget are un mâner în stânga titlului ②; o bandă de KPI-uri se mută întreagă, de mânerul ei,
+  iar un card KPI se mută în banda lui sau într-o altă bandă (nu printre grafice);
+- **Lățime** — marginea dreaptă a unui widget se trage, în pașii grilei: 1/4, 1/3, 1/2, 2/3, toată lățimea;
+- **Dimensiune** — meniul *Dimensiune* ③ din antetul unui grafic, indicator cu ac sau tabel alege lățimea și **înălțimea**
+  (mică, medie, mare); înălțimea se poate alege și în formularul widget-ului;
+- **Configurează** — rotița ④ deschide formularul widget-ului într-o fereastră; la închidere, tabloul se redesenează;
+- cu `deltatech_dashboard_builder_ai` instalat, bagheta deschide asistentul AI pe acel widget (vezi fișa lui).
+
+Fiecare mutare sau schimbare de mărime se **salvează imediat**, cu drepturile celui care o face: dacă salvarea e
+refuzată, tabloul revine la aranjarea dinainte. Sub 992 px lățime de ecran (tabletă, telefon) widget-urile nu se trag,
+pentru că grila le lărgește singură; mărimea se alege din meniul *Dimensiune*. Un widget care afișează o eroare are și el
+butoanele: de aici se corectează. Creionul apăsat din nou închide modul de editare.
+
 #### Note de monografie și raportare
 
 Modulul nu generează note contabile și nu alimentează nicio declarație.
@@ -206,7 +239,7 @@ Modulul nu generează note contabile și nu alimentează nicio declarație.
 |---|---|
 | `deltatech_web_kpi_cards` | cardurile indicatorilor: numere mari compacte, variație, progres, tendință, modul întunecat — aceleași ca pe celelalte tablouri Terrabit |
 | `mail` | mesajele alertelor și urmărirea tabloului |
-| `deltatech_dashboard_builder_ai` | opțional: un agent din AI-ul Odoo propune tablouri ca ciorne; vede structura modelelor, nu înregistrările |
+| `deltatech_dashboard_builder_ai` | opțional: un agent din AI-ul Odoo propune tablouri ca ciorne și le modifică pe cele existente; în modul de editare, butonul AI al fiecărui widget; vede structura modelelor, nu înregistrările |
 
 Niciun raport ANAF nu se alimentează din acest modul.
 
@@ -224,10 +257,10 @@ Community; editarea cere Enterprise). Modulul acesta nu le înlocuiește:
 |---|---|---|
 | Configurare | foaie de calcul (formule, pivoturi) | formular: model, agregare, grupare, domeniu |
 | Editare | Enterprise | Community |
-| Țintă pe o cifră | da, prin graficul gauge sau scorecard | da, bară de progres pe KPI |
+| Țintă pe o cifră | da, prin graficul gauge sau scorecard | da, bară de progres pe KPI sau indicator cu ac |
 | Tendință zilnică păstrată, alerte pe prag | nu | da |
-| Flexibilitate (formule, mai multe surse pe o pagină, formatare liberă) | mare | mică: 7 tipuri de widget, un model pe widget |
-| Aranjare | liberă | după ordine și lățime, fără tragere |
+| Flexibilitate (formule, mai multe surse pe o pagină, formatare liberă) | mare | mică: 11 tipuri de widget, un model pe widget, formule doar între KPI-urile tabloului |
+| Aranjare | liberă | pe grilă: ordine, lățime și înălțime, prin tragere în modul de editare |
 | Tablouri gata făcute | da, pentru vânzări, contabilitate, stoc ș.a. | nu |
 | Joins între modele, SQL, baze externe | — | nu |
 
@@ -247,6 +280,11 @@ pentru o echipă. Pentru o analiză punctuală cu logică proprie, foaia de calc
       singur mesaj; la a doua verificare nu mai trimite.
 - [ ] Un tablou pus pe ciornă nu apare vizualizatorilor și iese din meniu; după **Publică** revine.
 - [ ] Pe un monitor de birou: ecranul complet încape fără derulare pe orizontală.
+- [ ] Un KPI cu formulă dă aceeași valoare ca un calcul de mână din KPI-urile pe care le folosește.
+- [ ] Un grafic pe luni arată și lunile fără înregistrări, cu zero.
+- [ ] Constructorul vede creionul de editare; în modul de editare, rotița deschide widget-ul, iar după salvare tabloul
+      arată modificarea. Vizualizatorul nu vede creionul.
+- [ ] Un widget mutat sau lărgit în modul de editare își păstrează locul și mărimea după reîmprospătarea paginii.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -261,10 +299,16 @@ pentru o echipă. Pentru o analiză punctuală cu logică proprie, foaia de calc
 | „Doar constructorii de tablouri de bord pot publica un tablou de bord în meniu.” | utilizator fără rolul de constructor | cereți rolul sau rugați un constructor |
 | „Nu aveți acces la datele acestui widget.” (pe tablou) | utilizatorul nu are drept de citire pe modelul widget-ului | dați dreptul pe model sau scoateți widget-ul din tabloul acelui grup |
 | „Acest widget nu poate fi calculat. Cereți unui constructor de tablouri de bord să îl verifice.” (pe tablou) | un câmp sau un model din configurație nu mai există | un constructor redeschide widget-ul și îl reconfigurează |
+| „Formula widget-ului „X” folosește …, care nu este codul altui KPI al tabloului de bord.” | formula folosește un cod pe care niciun KPI al tabloului nu-l are | dați codul KPI-ului respectiv sau corectați formula |
+| „Formula widget-ului „X” nu este validă. …” | în formulă sunt alte caractere decât coduri, numere, + - * / și paranteze | rescrieți formula |
+| „Formula widget-ului „X” se folosește pe ea însăși, prin alte KPI-uri.” | două formule se folosesc una pe alta | rupeți cercul |
+| „Codul „X” este deja folosit pe acest tablou de bord.” | doi KPI au același cod | alegeți alt cod |
+| „Formula împarte la zero pe această perioadă.” (pe tablou) | KPI-ul de la numitor e 0 pe perioada aleasă | nu e o eroare de configurare; alegeți altă perioadă |
+| „Indicatorul cu ac „X” are nevoie de o țintă: ea îi dă scala completă.” | indicator cu ac fără țintă | completați **Țintă** |
 
 ## 10. Capturi de ecran
 
-Cele șase capturi din `readme/screenshots/` sunt cele din secțiunea 6, în aceeași ordine:
+Cele șapte capturi din `readme/screenshots/` sunt cele din secțiunea 6, în aceeași ordine:
 
 | Fișier | Pasul | Ce arată |
 |---|---|---|
@@ -274,6 +318,7 @@ Cele șase capturi din `readme/screenshots/` sunt cele din secțiunea 6, în ace
 | `04_tablou.png` | 4 | tabloul deschis: banda de indicatori, grafice, tabel |
 | `05_lista_inregistrari.png` | 5 | lista înregistrărilor din spatele indicatorului |
 | `06_ciorna_publicare.png` | 6 | ciorna, cu **Publică** și **Adaugă în meniu** |
+| `07_mod_editare.png` | 7 | modul de editare: creionul, mânerul de mutare, meniul *Dimensiune* și rotița |
 
 Se generează cu testul `tests/test_screenshots.py`, în română, pe date de demonstrație create de test
 (o bază de date de test, nu una reală):
@@ -295,3 +340,7 @@ Testul se sare singur dacă lipsește `l10n_ro_doc_screenshots` sau `playwright`
 - Alerta anunță o singură dată pe depășire. Dacă vreți să primiți din nou mesajul, trebuie ca valoarea să
   revină pe partea bună a pragului, apoi să-l depășească iar.
 - Tablourile nu se trimit în afara Odoo: nu există partajare cu link public.
+- *Afișează ca* de pe un grafic nu schimbă widget-ul: e doar pentru cel care se uită, până închide tabloul. Pentru o
+  schimbare pentru toți, modificați **Tip widget** (rotița din modul de editare).
+- O formulă se calculează cu drepturile celui care se uită, ca orice KPI: dacă nu poate citi modelul unuia dintre
+  KPI-urile folosite, formula rămâne goală, cu mesaj.
