@@ -20,8 +20,10 @@ Modulul adaugă două variante ale balanței de verificare RO, detaliate pe cont
 | **Sold net pe partener** | Soldul inițial și cel final ale partenerului stau pe o singură coloană, Debit sau Credit | Pașii 2 și 3 |
 | **Sold desfășurat pe cont** | Pe rândul contului și la total, soldurile debitoare ale partenerilor se adună pe Debit, cele creditoare pe Credit, fără compensare între parteneri | Pașii 2 și 3 |
 | **Rândul „Fără partener”** | Liniile contabile fără partener se adună pe un rând separat, cu sume brute, fără compensare | Pasul 4 |
-| **Conturi alese prin prefixe** | În balanță intră doar conturile ale căror coduri încep cu prefixele configurate | Pasul 1 |
+| **Filtrul „Cont”, ca în Partner Ledger** | Conturile se aleg din filtrul standard „Cont” (parteneri comerciali: clienți și furnizori), plus două intrări noi: **Avansuri (409, 419)** și **Alte conturi de terți** (405, 408, 413, 418, 451–456). Fără nicio setare | Pasul 1 |
+| **Salariile nu ajung la bancă** | Conturile 421, 425 și 463 sunt marcate „necomerciale” la instalare, deci ies din filtrul implicit | Pasul 1 |
 | **Filtru pe parteneri și export** | Balanța pentru un singur partener sau un grup; export XLSX și PDF | Pașii 5 și 6 |
+| **Avansurile în Partner Ledger** | Același filtru „Cont” din Partner Ledger primește intrările Avansuri și Alte conturi de terți, nebifate implicit | Pasul 7 |
 
 ---
 
@@ -52,7 +54,7 @@ Pe fiecare rând, Total sume D − C = Sold final D − C. Egalitatea ține prin
 | Contabil șef | Reconciliază rândurile de cont cu balanța de verificare și semnează documentul trimis băncii |
 | Bancă / auditor | Primește balanța și o compară cu balanța de verificare |
 
-Pentru testare, folosiți un utilizator cu drepturi de contabil pe Facturare/Contabilitate. Setarea conturilor cere drept de administrator pe Contabilitate.
+Pentru testare, folosiți un utilizator cu drepturi de contabil pe Facturare/Contabilitate.
 
 ---
 
@@ -66,35 +68,45 @@ Datele demo (lei, fără TVA, pentru ca sumele să se urmărească ușor). Parte
 | 10.01.2026 | Plată Furnizor B înaintea facturii (Odoo o înregistrează pe 401) | 401 (Furnizor B) = 5121 | 300 |
 | 05.02.2026 | Încasare fără partener | 5121 = 462 | 70 |
 | 06.02.2026 | Plată fără partener | 462 = 5121 | 20 |
+| 12.02.2026 | Avans acordat Furnizor B | 4091 (Furnizor B) = 5121 | 200 |
 | 10.02.2026 | Salarii (nu intră în balanța pe parteneri) | 641 = 421 | 80 |
 | 15.02.2026 | Plată parțială Furnizor A | 401 (Furnizor A) = 5121 | 400 |
 | 20.02.2026 | Factură către Furnizor A, ca client | 4111 (Furnizor A) = 707 | 500 |
 
 Balanța se rulează pe **01.02.2026 – 28.02.2026**. Testele automate ale modulului folosesc aceleași sume (pe anul 2024).
 
-**Conturile incluse implicit** (prefixe): 401, 403, 404, 405, 408, 409, 411, 413, 418, 419, 451, 453, 455, 456, 461, 462. Un prefix aduce toate conturile care încep cu el: `409` aduce 4091–4094, `411` aduce 4111 și 4118.
+**Cum se aleg conturile.** Balanța folosește filtrul standard **Cont** din Partner Ledger, cu două intrări în plus:
 
-**Conturi care nu intră implicit**, deși în planul de conturi Odoo au tipul Creanțe sau Datorii: 421 (salarii), 425 (avansuri către personal), 4424 (TVA de recuperat), 44231 (TVA de plată), 463. Conturile de personal arată sumele pe fiecare angajat și nu se trimit băncii.
+| Intrare în filtrul „Cont” | Conturi (plan RO) | Implicit în balanță | Implicit în Partner Ledger |
+|---|---|---|---|
+| Parteneri comerciali (Creanțe, Datorii) | conturile de tip Creanțe / Datorii fără bifa „necomercial”: 401, 403, 404, 4111, 461, 4621, 4622, 45511, 45512 | bifat | bifat |
+| Creanțe / Datorii necomerciale | 421, 4211, 4212, 425, 463 (marcate de modul), 4424, 44231 | nebifat | nebifat |
+| **Avansuri (409, 419)** | 4091–4094, 419, 4191, 4192 | bifat | nebifat |
+| **Alte conturi de terți** | 405, 408, 413, 418, 4118, 451, 453, 455, 456 | bifat | nebifat |
+
+Conturile din ultimele două rânduri au în planul RO din Odoo alt tip decât Creanțe / Datorii (de exemplu 4091 și 419 sunt „Datorii curente”), deci filtrul standard nu le poate selecta. Conturile de personal (421, 425) și 463 au tipul Datorii / Creanțe; modulul le bifează „necomerciale” la instalare, ca să nu ajungă salariile pe fiecare angajat în documentul trimis băncii.
 
 ---
 
 ## 5. Configurare inițială
 
 1. Instalați `l10n_ro_partner_trial_balance`. `l10n_ro_reports_fix` și `l10n_ro_reports` se instalează automat, ca dependențe.
-2. Verificați lista de conturi: **Facturare/Contabilitate → Configurare → Setări**, secțiunea **Balanță analitică pe parteneri → Conturi detaliate pe partener**. Lista implicită acoperă cererile uzuale ale băncilor.
+2. Nu e nevoie de nicio setare. La instalare, modulul bifează **Necomercial** pe conturile 421, 425 și 463 (și pe analiticele lor) din planul de conturi. Bifa se vede în **Facturare/Contabilitate → Configurare → Plan de conturi**, pe fiecare cont. Dacă firma folosește alte conturi de personal cu tipul Creanțe / Datorii, bifați-le la fel.
 3. Completați partenerul pe notele contabile manuale pe conturile de terți. Liniile fără partener ajung pe rândul „Fără partener”.
 
 ---
 
 ## 6. Flux de utilizare
 
-### Pasul 1 — Conturile detaliate pe partener
+### Pasul 1 — Filtrul „Cont”
 
-**Facturare/Contabilitate → Configurare → Setări**, secțiunea **Balanță analitică pe parteneri**. Câmpul **Conturi detaliate pe partener** conține prefixele de cont, separate prin virgulă.
+**Facturare/Contabilitate → Raportare → Registre → Balanța de verificare**. Din butonul **Raport:** alegeți **Balanță analitică pe parteneri (5 coloane)**, apoi deschideți butonul **Cont**.
 
-![Setarea conturilor detaliate pe partener](screenshots/01_setari_conturi.png)
+![Filtrul Cont, cu intrările Avansuri și Alte conturi de terți](screenshots/01_filtru_cont.png)
 
-**Verificați:** lista conține conturile cerute de bancă. Dacă banca vrea și împrumuturile de la alte firme sau de la entitățile afiliate, adăugați `167` sau `1661` (asociații, prin 455, sunt deja incluși). Nu adăugați conturile de personal (421, 425, 4282). Salvați.
+**Găsiți pe ecran:** cele patru intrări standard (**Creanță**, **Creanțe non-comerciale**, **Datorie**, **Datorii non-comerciale**) și cele două intrări noi, **Avansuri (409, 419)** și **Alte conturi de terți (405, 408, 413, 418, 451-456)**. Eticheta butonului rezumă selecția: „Cont: Parteneri comerciali, Avansuri (409, 419), Alte conturi de terți …”.
+
+**Verificați:** sunt bifate **Creanță**, **Datorie**, **Avansuri** și **Alte conturi de terți**; intrările non-comerciale sunt nebifate. Dacă banca cere doar clienții și furnizorii, debifați **Alte conturi de terți**.
 
 ### Pasul 2 — Balanța pe parteneri cu 5 coloane
 
@@ -104,8 +116,9 @@ Balanța se rulează pe **01.02.2026 – 28.02.2026**. Testele automate ale modu
 
 **Găsiți pe ecran:**
 - grupurile de coloane, fiecare cu Debit / Credit: **Sold inițial** (la 01.01.2026), **ian. 2026** (sumele precedente), **feb. 2026** (rulajul perioadei), **Suma totală** și **Sold final**;
-- conturile 401 și 4111, fiecare cu partenerii dedesubt; numele partenerului are CUI-ul în paranteză: „Furnizor A (RO12345674)”;
-- contul 421 nu apare, deși are rulaj în februarie.
+- conturile 401, 4091, 4111 și 462, fiecare cu partenerii dedesubt; numele partenerului are CUI-ul în paranteză: „Furnizor A (RO12345674)”;
+- contul 4091 are pe Furnizor B cu avansul de 200 pe Debit;
+- contul 421 nu apare, deși are rulaj în februarie: e marcat necomercial.
 
 **Verificați, pe 401:**
 
@@ -170,6 +183,28 @@ Abia după verificările de mai sus, scoateți filtrul pe parteneri și apăsaț
 
 **Verificați în fișier:** rândurile și sumele coincid cu ecranul; partenerii au CUI-ul lângă nume; rândul „Fără partener” e prezent cu sumele brute.
 
+### Pasul 7 — Avansurile în Partner Ledger
+
+**Facturare/Contabilitate → Raportare → Registre → Fișa partenerului** (Partner Ledger), cu perioada **01.02.2026 – 28.02.2026**. Deschideți butonul **Cont** și bifați **Avansuri (409, 419)**.
+
+![Partner Ledger cu intrarea Avansuri bifată](screenshots/07_partner_ledger_avansuri.png)
+
+**Găsiți pe ecran:** câte un rând pe partener, cu soldul net pe toate conturile lui.
+
+**Verificați reconcilierea cu balanța pe parteneri** (aceleași conturi, aceeași perioadă): soldul din Partner Ledger = suma soldurilor finale nete ale partenerului din balanță.
+
+| Partener | Balanța pe parteneri, sold final | Partner Ledger |
+|---|---|---|
+| Furnizor A | 401: 600 C; 4111: 500 D → net 100 C | −100 |
+| Furnizor B | 401: 300 D; 4091: 200 D → net 500 D | 500 |
+| Partener necunoscut | 462, rândul „Fără partener”: 20 D / 70 C, brut | −50 |
+
+Partner Ledger arată liniile fără partener pe rândul **Partener necunoscut**, cu sold net; balanța pe parteneri le arată brut, pe rândul „Fără partener”. Diferența lor (70 − 20 = 50 C) e aceeași.
+
+Fără intrarea **Avansuri**, Furnizor B are 300 în Partner Ledger: avansul de pe 4091 lipsește.
+
+**Soldul net din Partner Ledger e informativ.** Desfaceți partenerul (săgeata din stânga): coloana **Cont** arată pe ce cont e fiecare sumă (Furnizor B: 300 pe 401 și 200 pe 4091). Notele rămân distincte, iar în bilanț avansul acordat rămâne creanță și datoria rămâne datorie (OMFP 1802/2014, pct. 56). De aceea intrarea **Avansuri** e nebifată implicit în Partner Ledger: fără ea, Partner Ledger se potrivește cu soldurile conturilor 401 / 4111 din balanța de verificare. Avansurile pentru imobilizări (4093, 4094) se închid pe 404, care e inclus în filtrul **Datorie**.
+
 ### Note de monografie și raportare
 
 Modulul **nu generează note contabile**: e un raport. Notele din exemplu sunt înregistrate de operator:
@@ -181,6 +216,7 @@ Modulul **nu generează note contabile**: e un raport. Notele din exemplu sunt �
 | Plată furnizor | 401 = 5121 | 400 |
 | Factură client | 4111 = 707 | 500 |
 | Încasare / plată fără partener | 5121 = 462; 462 = 5121 | 70; 20 |
+| Avans acordat furnizorului | 4091 = 5121 | 200 |
 
 Plata înaintea facturii rămâne pe 401 cât timp nu e reclasificată: `4091 = 401` la plată și `401 = 4091` la regularizare, dacă firma folosește contul de avansuri (4093 pentru imobilizări). Dacă furnizorul emite factură de avans, nota este `4091 + 4426 = 401`: TVA devine exigibilă la încasarea avansului (Codul fiscal, art. 282 alin. (2) lit. b)).
 
@@ -198,12 +234,14 @@ Plata înaintea facturii rămâne pe 401 cât timp nu e reclasificată: `4091 = 
 
 **Ce e automat:**
 - detalierea pe partener, soldul net pe partener și soldul desfășurat pe cont;
-- alegerea conturilor după prefixe și excluderea celorlalte;
+- alegerea conturilor din filtrul „Cont”, cu avansurile și celelalte conturi RO de terți incluse;
+- bifa „necomercial” pe 421, 425 și 463, la instalare;
 - rândul „Fără partener” cu sume brute;
 - codul fiscal lângă numele partenerului.
 
 **Ce rămâne manual:**
-- lista de prefixe, dacă banca cere și alte conturi;
+- debifarea intrărilor din filtrul „Cont” pe care banca nu le cere;
+- bifa „necomercial” pe alte conturi de personal cu tipul Creanțe / Datorii, dacă firma le folosește;
 - completarea partenerului pe notele fără partener;
 - reclasificarea avansurilor (401 → 409, 4111 → 419) înainte de a trimite balanța, dacă firma o face.
 
@@ -224,7 +262,8 @@ Plata înaintea facturii rămâne pe 401 cât timp nu e reclasificată: `4091 = 
 - [ ] Partenerul care e și client și furnizor apare pe 401 și pe 4111, fără compensare între conturi.
 - [ ] Rândul „Fără partener” are 20 D / 70 C la sold final, nu 50 C.
 - [ ] Varianta cu 4 coloane are același sold final ca varianta cu 5 coloane.
-- [ ] Cu prefixele schimbate la `401`, contul 4111 dispare din balanță.
+- [ ] Contul 4091 apare cu avansul lui Furnizor B (200 D); cu intrarea **Avansuri** debifată, dispare.
+- [ ] În Partner Ledger, cu **Avansuri** bifat, soldul fiecărui partener = suma soldurilor lui nete din balanță (Furnizor A −100, Furnizor B 500).
 - [ ] Exportul XLSX / PDF are aceleași rânduri și sume ca ecranul.
 
 ---
@@ -233,9 +272,10 @@ Plata înaintea facturii rămâne pe 401 cât timp nu e reclasificată: `4091 = 
 
 | Mesaj / simptom | Cauză | Remediere |
 |---|---|---|
-| Balanța e goală | Lista de prefixe e goală sau nu se potrivește cu planul de conturi | Completați **Conturi detaliate pe partener** în setări |
-| Lipsește un cont cerut de bancă (ex. 167) | Contul nu e în lista de prefixe | Adăugați prefixul în setări |
-| Apar conturile de salarii | Cineva a adăugat `42` în lista de prefixe | Scoateți prefixul; balanța ar arăta sumele pe fiecare angajat |
+| Lipsesc avansurile 409 / 419 | Intrarea **Avansuri** e debifată în filtrul „Cont” | Bifați-o |
+| Apar conturile de salarii | Intrările necomerciale sunt bifate, sau un cont de personal nu are bifa **Necomercial** | Debifați intrările necomerciale; bifați **Necomercial** pe cont |
+| Lipsește un cont cerut de bancă (ex. 167) | Contul nu e de tip Creanțe / Datorii și nu e în intrările RO | Cereți extinderea listei; până atunci, folosiți balanța de verificare analitică |
+| Partner Ledger și balanța pe parteneri dau solduri diferite pentru un partener | Filtrul „Cont” diferă între rapoarte (ex. Avansuri bifat doar în balanță) | Bifați aceleași intrări în ambele rapoarte |
 | Totalul general nu are Debit = Credit | Corect: balanța conține doar conturile de terți, nu și contrapartidele lor | Verificați egalitatea Total sume D − C = Sold final D − C pe fiecare rând |
 | Soldul inițial sau totalul sumelor de pe rândul contului diferă de balanța de verificare | Corect: soldurile (inițial, total sume, final) sunt desfășurate pe parteneri, balanța de verificare le arată nete | Comparați rulajele, care trebuie să coincidă la leu, și soldul net (Sold final D − C) |
 | Un client are sold creditor pe 4111 | Încasare nealocată sau avans nereclasificat în 419 | Alocați încasarea pe factură sau reclasificați: `4111 = 419` |
@@ -249,12 +289,13 @@ Plata înaintea facturii rămâne pe 401 cât timp nu e reclasificată: `4091 = 
 
 Capturile din `static/description/`, în ordinea pașilor din secțiunea 6:
 
-1. `01_setari_conturi.png` — setarea **Conturi detaliate pe partener**, cu lista implicită de prefixe.
-2. `02_balanta_parteneri_5_coloane.png` — balanța pe parteneri cu 5 coloane, pe februarie 2026: 401 cu Furnizor A și Furnizor B, 4111 cu Furnizor A.
+1. `01_filtru_cont.png` — filtrul **Cont** deschis, cu intrările **Avansuri (409, 419)** și **Alte conturi de terți**.
+2. `02_balanta_parteneri_5_coloane.png` — balanța pe parteneri cu 5 coloane, pe februarie 2026: 401 cu Furnizor A și Furnizor B, 4091 cu Furnizor B, 4111 cu Furnizor A.
 3. `03_balanta_parteneri_4_coloane.png` — aceeași balanță, varianta cu 4 coloane.
 4. `04_rand_fara_partener.png` — contul 462 cu rândul **Fără partener**, cu sume brute.
 5. `05_filtru_partener.png` — balanța filtrată pe Furnizor A.
 6. `06_export_xlsx.png` — conținutul fișierului XLSX exportat, redat ca tabel.
+7. `07_partner_ledger_avansuri.png` — Partner Ledger cu intrarea **Avansuri** bifată.
 
 Se generează automat din `tests/test_screenshots.py`, cu mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots` (import defensiv), în română, pe planul de conturi RO, pe datele din secțiunea 4.
 

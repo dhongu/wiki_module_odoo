@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-18] Re-ingestie: `l10n_ro_partner_trial_balance` — filtrul „Cont” și avansurile în Partner Ledger
+
+- **Acțiune:** actualizare după schimbarea de design din PR terrabit-solutions/l10n_ro_ent#799: setarea cu prefixe a fost înlocuită de filtrul standard „Cont” (ca în Partner Ledger) cu intrările noi Avansuri (409, 419) și Alte conturi de terți; aceleași intrări, opționale, în Partner Ledger; 421/425/463 marcate necomerciale (template RO + `post_init_hook`).
+- **Sursă:** `readme/DESCRIPTION.md`, `CONFIGURE.md`, `USAGE.md`, cu control în cod (`account_report.py`, `account_chart_template.py`, `hooks.py`). Fișa consultant recopiată, cu 7 capturi (fără `01_setari_conturi.png`, înlocuită de `01_filtru_cont.png`; nouă `07_partner_ledger_avansuri.png`).
+- **Dependențe/Conexiuni:** neschimbate; legătura cu [l10n_ro_partner_ledger_currency](l10n_ro_partner_ledger_currency/index.md), care extinde aceeași metodă de domeniu a filtrului „Cont”.
+- **Fișiere actualizate:** `l10n_ro_partner_trial_balance/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-10-18] Re-ingestie: `l10n_ro_partner_trial_balance` — capturile fișei consultant
 
 - **Acțiune:** actualizare a fișei consultant copiate, cu cele 6 capturi generate din `tests/test_screenshots.py` (setarea conturilor, balanța cu 5 și 4 coloane, rândul „Fără partener”, filtrul pe partener, exportul XLSX).
