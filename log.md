@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-18] Ingestie: `l10n_ro_partner_trial_balance` (19.0.1.0.0, modul nou l10n_ro_ent)
+
+- **Acțiune:** documentare inițială a modulului nou — balanța analitică pe parteneri cu 4 și 5 coloane, pe cont și partener, sold net pe partener, sold desfășurat pe cont, conturi alese doar prin prefixe configurabile, rândul „Fără partener” cu sume brute. Modulul e încă în PR (terrabit-solutions/l10n_ro_ent#799), documentat din worktree-ul branch-ului.
+- **Sursă:** `readme/DESCRIPTION.md`, `CONFIGURE.md`, `USAGE.md`, cu control în cod (modele, date). Fișa consultant copiată; cele 6 capturi planificate nu sunt încă generate, deci imaginile din fișă lipsesc până la re-ingestie.
+- **Dependențe/Conexiuni:** → [l10n_ro_reports_fix](l10n_ro_reports_fix/index.md) (→ `l10n_ro_reports`, `account_reports`); legat de [l10n_ro_partner_ledger_currency](l10n_ro_partner_ledger_currency/index.md) și `l10n_ro_balance_confirmation`.
+- **Fișiere actualizate:** `l10n_ro_partner_trial_balance/` (`index.md`, `FISA_CONSULTANT.md`), `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-10-17] Re-ingestie: `deltatech_dashboard_builder` și `deltatech_dashboard_builder_ai` (19.0.1.3.1)
 
 - **Acțiune:** actualizare de la 19.0.1.0.3, cu procesare în paralel (un subagent per modul):
