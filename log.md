@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-18] Ingestie: `deltatech_website_effects`, `deltatech_website_sale_effects`
+
+- **Acțiune:** pagini noi pentru cele două module de efecte vizuale ale suitei bitshop, documentate în paralel (câte un subagent per modul).
+- **Sursă:** `readme/DESCRIPTION.md` (rescris și grupat pe locul din editor / pe pagini), `readme/USAGE.md`, `__manifest__.py`, cu verificare în cod (`static/src`, `views`, `website_builder`). Starea documentată e a branch-ului `19.0-imp-price-small-decimals`, care include PR-urile terrabit-solutions/bitshop #3337 și #3338, încă nemerge-uite pe 19.0. Fișa consultant e în lucru, deci nu a fost copiată.
+- **Dependențe/Conexiuni:** `deltatech_website_sale_effects` depinde de [deltatech_website_effects](deltatech_website_effects/index.md) și folosește opțional iconițele din [deltatech_website_category_icon](deltatech_website_category_icon/index.md).
+- **Fișiere actualizate:** `deltatech_website_effects/index.md`, `deltatech_website_sale_effects/index.md`, `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-10-18] Conexiuni: legături spre `l10n_ro_partner_trial_balance`
 
 - **Acțiune:** secțiunea „Conexiuni” completată în paginile modulelor legate de balanța pe parteneri, după extinderea filtrului „Cont” din Partner Ledger (PR terrabit-solutions/l10n_ro_ent#799).

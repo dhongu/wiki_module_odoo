@@ -11453,6 +11453,42 @@
     "text": "deltatech_website_disable_fuzzy_search\ndeltatech_website_disable_fuzzy_search\nAcest modul dezactivează căutarea „fuzzy\" (aproximativă) din bara de căutare a magazinului online. În mod implicit, Odoo tolerează micile greșeli de scriere și returnează rezultate apropiate de termenul căutat. După instalarea acestui modul, căutarea devine exactă: clientul primește doar produsele care corespund efectiv termenului introdus, fără sugestii aproximative. Este util pentru magazinele care doresc rezultate de căutare precise și predictibile.\nDezactivează căutarea fuzzy (aproximativă) pentru bara de căutare din magazinul online."
   },
   {
+    "path": "deltatech_website_effects/index.md",
+    "module": "deltatech_website_effects",
+    "version": "19.0.1.2.2",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_effects",
+    "local_path": "odoo-addons/bitshop/deltatech_website_effects",
+    "last_ingest": "2026-10-18",
+    "friendly_name": "Website Effects",
+    "summary": "Modulul adaugă pe site-ul web o colecție de efecte vizuale și de blocuri gata făcute, care fac magazinul online mai atractiv fără intervenție de programator. Efectele se aleg din editorul de website, în opțiunile elementului selectat (sau cu o clasă CSS într-un șablon QWeb), iar pe site nu se schimbă nimic până când nu se alege un efect. Efectele se opresc pentru vizitatorii care au cerut sistemului „mișcare redusă”, iar înclinarea 3D este dezactivată pe ecranele tactile.",
+    "features": [
+      "Hover Effect: 3D Tilt (înclinare spre cursor, cu o lumină care urmărește mouse-ul; culoarea se alege la *Highlight*), Lift, Glow, Frame, Holo, Border Reveal (bandă colorată pe stânga) și Background Color (fundal care virează spre o culoare aleasă).",
+      "Imagini: trecere de la alb-negru la color sau zoom lent.",
+      "Shape:",
+      "*Price Tag*: etichetă de preț cu orificiu, cu variantă „pointed”; se leagănă la hover.",
+      "*Accent Card*: bară colorată sus și fundal în tonul cardului (culoarea temei sau unul din 8 tonuri: green, blue, amber, gold, red, olive, slate, purple); împreună cu 3D Tilt formează carduri de categorie.",
+      "*Glass*: panou mat în stil iPhone, cu Blur Light / Medium / Strong; necesită ceva colorat în spate (imagine sau gradient).",
+      "Attention: Pulse (halou care „respiră” de trei ori la încărcarea paginii) și Nudge icons (iconițele se mișcă scurt la hover).",
+      "Hover Overlay (strat de culoare peste imaginea de fundal), Background Pan (imaginea de fundal alunecă lent) și Hover Focus (celelalte coloane se estompează la hover pe una).",
+      "Hover Animation: Grow, Shrink, Pulse, Float, Bob, Wobble, Buzz, Push, Shine sau Press.",
+      "Glass: după ce header-ul rămâne lipit sus, pagina trece pe sub o bară mată (se activează din opțiunile header-ului, în modul de editare).",
+      "Menu Hover: subliniere care crește sau fundal care se umple la elementele de meniu.",
+      "Delivery Route: un vehicul (camion, cărucior, mașină, motocicletă, bicicletă, avion, vapor, rachetă) parcurge un drum punctat de la depozit la ușa clientului; etapele și iconițele sunt editabile, iar vehiculul, viteza și culoarea se setează în opțiuni.",
+      "Info List: card cu titlu și link *Details*, rânduri cu iconiță (livrare, livrare gratuită, plată, retur, ridicare personală) și linkuri de politici; casete bifabile afișează/ascund titlul, rândurile și linkurile, iar câmpuri setează suma și greutatea pentru livrare gratuită, zilele de retur și programul.",
+      "Help Box: card cu întrebare (ex. „Nu ești sigur că e piesa potrivită?”), răspuns scurt și modalități de ajutor: buton WhatsApp, buton către formularul de contact și număr de telefon.",
+      "Copy Codes: listă etichetată de coduri (numere de piesă alternative, referințe) afișate ca „chips”; click sau Enter copiază codul, iar chip-ul devine verde cu bifă. Orice element cu clasa `tb_fx_copy` se comportă la fel (ex. în șablonul paginii de produs).",
+      "Flip Card: card cu față și verso care se întoarce la hover sau la focus de la tastatură; Back Color poate fi culoare unică sau gradient; în modul de editare ambele fețe sunt afișate una sub alta.",
+      "Blocul Tabs din Odoo primește opțiunea Card Style (blocul în card, bara de tab-uri pe un antet discret, tab-ul activ ridicat pe o plăcuță albă cu subliniere de accent)."
+    ],
+    "dependencies": [
+      "website"
+    ],
+    "connections": [
+      "website"
+    ],
+    "text": "Website Effects\ndeltatech_website_effects\nModulul adaugă pe site-ul web o colecție de efecte vizuale și de blocuri gata făcute, care fac magazinul online mai atractiv fără intervenție de programator. Efectele se aleg din editorul de website, în opțiunile elementului selectat (sau cu o clasă CSS într-un șablon QWeb), iar pe site nu se schimbă nimic până când nu se alege un efect. Efectele se opresc pentru vizitatorii care au cerut sistemului „mișcare redusă”, iar înclinarea 3D este dezactivată pe ecranele tactile.\nHover Effect: 3D Tilt (înclinare spre cursor, cu o lumină care urmărește mouse-ul; culoarea se alege la *Highlight*), Lift, Glow, Frame, Holo, Border Reveal (bandă colorată pe stânga) și Background Color (fundal care virează spre o culoare aleasă).\nImagini: trecere de la alb-negru la color sau zoom lent.\nShape:\n*Price Tag*: etichetă de preț cu orificiu, cu variantă „pointed”; se leagănă la hover.\n*Accent Card*: bară colorată sus și fundal în tonul cardului (culoarea temei sau unul din 8 tonuri: green, blue, amber, gold, red, olive, slate, purple); împreună cu 3D Tilt formează carduri de categorie.\n*Glass*: panou mat în stil iPhone, cu Blur Light / Medium / Strong; necesită ceva colorat în spate (imagine sau gradient).\nAttention: Pulse (halou care „respiră” de trei ori la încărcarea paginii) și Nudge icons (iconițele se mișcă scurt la hover).\nHover Overlay (strat de culoare peste imaginea de fundal), Background Pan (imaginea de fundal alunecă lent) și Hover Focus (celelalte coloane se estompează la hover pe una).\nHover Animation: Grow, Shrink, Pulse, Float, Bob, Wobble, Buzz, Push, Shine sau Press.\nGlass: după ce header-ul rămâne lipit sus, pagina trece pe sub o bară mată (se activează din opțiunile header-ului, în modul de editare).\nMenu Hover: subliniere care crește sau fundal care se umple la elementele de meniu.\nDelivery Route: un vehicul (camion, cărucior, mașină, motocicletă, bicicletă, avion, vapor, rachetă) parcurge un drum punctat de la depozit la ușa clientului; etapele și iconițele sunt editabile, iar vehiculul, viteza și culoarea se setează în opțiuni.\nInfo List: card cu titlu și link *Details*, rânduri cu iconiță (livrare, livrare gratuită, plată, retur, ridicare personală) și linkuri de politici; casete bifabile afișează/ascund titlul, rândurile și linkurile, iar câmpuri setează suma și greutatea pentru livrare gratuită, zilele de retur și programul.\nHelp Box: card cu întrebare (ex. „Nu ești sigur că e piesa potrivită?”), răspuns scurt și modalități de ajutor: buton WhatsApp, buton către formularul de contact și număr de telefon.\nCopy Codes: listă etichetată de coduri (numere de piesă alternative, referințe) afișate ca „chips”; click sau Enter copiază codul, iar chip-ul devine verde cu bifă. Orice element cu clasa `tb_fx_copy` se comportă la fel (ex. în șablonul paginii de produs).\nFlip Card: card cu față și verso care se întoarce la hover sau la focus de la tastatură; Back Color poate fi culoare unică sau gradient; în modul de editare ambele fețe sunt afișate una sub alta.\nBlocul Tabs din Odoo primește opțiunea Card Style (blocul în card, bara de tab-uri pe un antet discret, tab-ul activ ridicat pe o plăcuță albă cu subliniere de accent)."
+  },
+  {
     "path": "deltatech_website_fixed_price/index.md",
     "module": "deltatech_website_fixed_price",
     "version": "19.0.0.0.0",
@@ -11747,6 +11783,41 @@
       "standard_price"
     ],
     "text": "Website Sale Cost Price\ndeltatech_website_sale_cost_price\nAcest modul extinde funcționalitatea standard Odoo \"Previne Vânzarea Produselor cu Preț Zero\" din magazinul online, astfel încât să blocheze și vânzarea produselor al căror preț este mai mic decât costul lor (prețul standard). Practic, protejează comercianții de vânzarea sub cost pe website, cu posibilitatea de a impune și o marjă minimă de profit configurabilă.\nPrevenire dinamică a vânzării sub cost: blochează automat adăugarea în coș a unui produs dacă prețul de vânzare este sub prețul de cost.\nMarjă configurabilă: se poate seta un procent minim de marjă în setările website-ului (ex: dacă e setat la 10%, prețul de vânzare trebuie să fie cel puțin 110% din costul produsului).\nComparație corectă cu/fără TVA: se poate configura dacă prețul de cost include sau nu taxa, pentru o comparație corectă față de prețul afișat pe website.\nConversie valutară: gestionează automat diferențele de monedă între moneda de cost a produsului și moneda listei de prețuri a website-ului."
+  },
+  {
+    "path": "deltatech_website_sale_effects/index.md",
+    "module": "deltatech_website_sale_effects",
+    "version": "19.0.1.4.1",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_sale_effects",
+    "local_path": "odoo-addons/bitshop/deltatech_website_sale_effects",
+    "last_ingest": "2026-10-18",
+    "friendly_name": "Website Sale Effects",
+    "summary": "Aduce efectele din *Website Effects* pe paginile de eCommerce: magazinul, pagina de produs și finalizarea comenzii. Fiecare efect este o opțiune în editorul de website, lângă opțiunile pe care Odoo le are deja pentru aceste pagini. Nimic nu se schimbă până când o opțiune nu este activată, iar mișcarea se oprește pentru vizitatorii care au cerut sistemului lor animații reduse. Opțiunile se salvează per website.",
+    "features": [
+      "Categories Card: lista de categorii din bara laterală într-un card alb, cu titlu, rând „All Products” pentru revenire, categoria curentă ca pastilă în culoarea primară a temei, rânduri care se aprind la hover și chevroane pentru lista pliabilă. Subcategory Count (dezactivat implicit) afișează numărul de subcategorii. Cu `deltatech_website_category_icon` instalat, iconițele categoriilor apar pe tile-uri discrete.",
+      "Filters Card: filtrele de atribute și de preț din bara laterală, într-un card în același stil.",
+      "Sidebar Corners: un singur setting pentru colțurile ambelor carduri: Large (implicit), Medium, Small sau Square.",
+      "Animated Product Cards: produsele devin carduri cu bordură și umbră, cu raza din *Products Design > Roundness*; butonul de adăugare în coș apare animat la hover.",
+      "Hover Effect (în *Products Design*): 3D Tilt (cardul se înclină spre cursor, cu o lumină care urmărește mouse-ul), Lift, Glow și Holo; funcționează cu orice design de produse.",
+      "Small Decimals: zecimalele prețului sunt mai mici și pe linia de bază, iar unitatea de măsură apare lângă preț (ex. *0.82 lei/buc*). Disponibil și pe pagina de produs.",
+      "Small Decimals: ca în magazin; prețul urmează varianta și cantitatea alese.",
+      "Box Corners: o singură rază pentru casetele coloanei de achiziție (caseta de preț din stilul *Boxed*, termenii și ruta de livrare): Theme, Small, Medium sau Large.",
+      "Terms and Conditions > Style: Boxed: în loc de trei linii de text mărunt, blocul *Info List* cu titlu, rânduri cu iconițe și linkuri către politici; se editează o singură dată pentru toate produsele.",
+      "Delivery Route: ruta animată din *Website Effects* sub termeni, editată o singură dată pentru toate produsele (texte, vehicul, viteză, culoare).",
+      "Bottom Tabs: descrierea, specificațiile (*Specification: Bottom of Page*) și recenziile devin taburi într-un card; apar doar secțiunile prezente. Linkul de rating al produsului duce la tabul de recenzii. În modul de editare secțiunile rămân neschimbate.",
+      "Description under Image: descrierea lungă se mută în coloana imaginilor, sub poze, în timp ce coloana de achiziție rămâne vizibilă; pe telefon vine după blocul de achiziție.",
+      "Animated Steps: bara de progres devine un drum punctat între pași numerotați; pe fiecare pagină un vehicul se deplasează de la pasul anterior la cel curent, iar drumul se umple cu culoarea temei. Pașii parcurși rămân clicabili. Vehicle: camion (implicit), coș de cumpărături, mașină, motocicletă, bicicletă, avion, vapor sau rachetă.",
+      "Box Corners (Theme, Small, Medium, Large) rotunjește sumarul comenzii, adresele și metodele de livrare/plată. Box Hover (None, Lift, Glow, Frame) face adresele și metodele să reacționeze la mouse; cu una activă, metodele devin casete separate."
+    ],
+    "dependencies": [
+      "website_sale",
+      "deltatech_website_effects"
+    ],
+    "connections": [
+      "deltatech_website_effects",
+      "deltatech_website_category_icon"
+    ],
+    "text": "Website Sale Effects\ndeltatech_website_sale_effects\nAduce efectele din *Website Effects* pe paginile de eCommerce: magazinul, pagina de produs și finalizarea comenzii. Fiecare efect este o opțiune în editorul de website, lângă opțiunile pe care Odoo le are deja pentru aceste pagini. Nimic nu se schimbă până când o opțiune nu este activată, iar mișcarea se oprește pentru vizitatorii care au cerut sistemului lor animații reduse. Opțiunile se salvează per website.\nCategories Card: lista de categorii din bara laterală într-un card alb, cu titlu, rând „All Products” pentru revenire, categoria curentă ca pastilă în culoarea primară a temei, rânduri care se aprind la hover și chevroane pentru lista pliabilă. Subcategory Count (dezactivat implicit) afișează numărul de subcategorii. Cu `deltatech_website_category_icon` instalat, iconițele categoriilor apar pe tile-uri discrete.\nFilters Card: filtrele de atribute și de preț din bara laterală, într-un card în același stil.\nSidebar Corners: un singur setting pentru colțurile ambelor carduri: Large (implicit), Medium, Small sau Square.\nAnimated Product Cards: produsele devin carduri cu bordură și umbră, cu raza din *Products Design > Roundness*; butonul de adăugare în coș apare animat la hover.\nHover Effect (în *Products Design*): 3D Tilt (cardul se înclină spre cursor, cu o lumină care urmărește mouse-ul), Lift, Glow și Holo; funcționează cu orice design de produse.\nSmall Decimals: zecimalele prețului sunt mai mici și pe linia de bază, iar unitatea de măsură apare lângă preț (ex. *0.82 lei/buc*). Disponibil și pe pagina de produs.\nSmall Decimals: ca în magazin; prețul urmează varianta și cantitatea alese.\nBox Corners: o singură rază pentru casetele coloanei de achiziție (caseta de preț din stilul *Boxed*, termenii și ruta de livrare): Theme, Small, Medium sau Large.\nTerms and Conditions > Style: Boxed: în loc de trei linii de text mărunt, blocul *Info List* cu titlu, rânduri cu iconițe și linkuri către politici; se editează o singură dată pentru toate produsele.\nDelivery Route: ruta animată din *Website Effects* sub termeni, editată o singură dată pentru toate produsele (texte, vehicul, viteză, culoare).\nBottom Tabs: descrierea, specificațiile (*Specification: Bottom of Page*) și recenziile devin taburi într-un card; apar doar secțiunile prezente. Linkul de rating al produsului duce la tabul de recenzii. În modul de editare secțiunile rămân neschimbate.\nDescription under Image: descrierea lungă se mută în coloana imaginilor, sub poze, în timp ce coloana de achiziție rămâne vizibilă; pe telefon vine după blocul de achiziție.\nAnimated Steps: bara de progres devine un drum punctat între pași numerotați; pe fiecare pagină un vehicul se deplasează de la pasul anterior la cel curent, iar drumul se umple cu culoarea temei. Pașii parcurși rămân clicabili. Vehicle: camion (implicit), coș de cumpărături, mașină, motocicletă, bicicletă, avion, vapor sau rachetă.\nBox Corners (Theme, Small, Medium, Large) rotunjește sumarul comenzii, adresele și metodele de livrare/plată. Box Hover (None, Lift, Glow, Frame) face adresele și metodele să reacționeze la mouse; cu una activă, metodele devin casete separate."
   },
   {
     "path": "deltatech_website_sale_portal/index.md",
