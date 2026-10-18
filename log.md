@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-18] Actualizare: `deltatech_website_effects` (19.0.1.2.5) — Hover Effect pe blocurile interioare, fișa în română
+
+- **Acțiune:** actualizare: versiunea, efectul la hover extins la blocurile interioare (Alert, Quote, Text Highlight, Help Box, Info List, Delivery Route, Copy Codes), fișa consultant și capturile reluate după traducerea în română (terrabit-solutions/bitshop#3341).
+- **Sursă:** `readme/DESCRIPTION.md`, `HISTORY.md` și `FISA_CONSULTANT.md` din PR terrabit-solutions/bitshop#3342.
+- **Dependențe/Conexiuni:** [deltatech_website_sale_effects](deltatech_website_sale_effects/index.md) → [deltatech_website_effects](deltatech_website_effects/index.md).
+- **Fișiere actualizate:** `deltatech_website_effects/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `log.md`, `.index/`.
+
 ## [2026-10-18] Re-ingestie: `deltatech_website_effects` (19.0.1.2.3) și `deltatech_website_sale_effects` (19.0.1.4.2), cu fișele consultant
 
 - **Acțiune:** actualizare, cu procesare în paralel (un subagent per modul): versiunile noi și fișele consultant copiate în wiki — `deltatech_website_effects` (14 capturi: opțiuni de bloc, secțiune, buton și antet, blocurile din Conținut intern, opțiunile Info List), `deltatech_website_sale_effects` (7 capturi: /shop, Products Design, checkout, pagina de produs).

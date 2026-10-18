@@ -1,7 +1,7 @@
 # Website Effects (localizat la `deltatech_website_effects/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_effects`
-- **Versiune:** `19.0.1.2.3`
+- **Versiune:** `19.0.1.2.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_effects
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_website_effects`
 - **Ultima Ingestie:** `2026-10-18`
@@ -13,7 +13,7 @@ Adaugă o colecție de efecte vizuale și blocuri gata făcute pentru website. E
 
 #### 2. Funcționalități Cheie
 
-- **Coloane și carduri, efect la hover:** 3D Tilt (înclinare spre cursor, cu lumină care urmărește mouse-ul; culoarea se alege la *Highlight*), Lift, Glow, Frame, Holo, Border Reveal și Background Color (cu culoare aleasă în editor).
+- **Coloane, carduri și blocuri, efect la hover** (și pe blocurile interioare desenate ca o casetă: Alert, Quote, Text Highlight, Help Box, Info List, Delivery Route, Copy Codes): 3D Tilt (înclinare spre cursor, cu lumină care urmărește mouse-ul; culoarea se alege la *Highlight*), Lift, Glow, Frame, Holo, Border Reveal și Background Color (cu culoare aleasă în editor).
 - **Imagini:** trecere din alb-negru în culoare sau zoom lent.
 - **Forme:** Price Tag (etichetă cu orificiu, variantă cu vârf), Accent Card (bară colorată sus și fundal în tonul cardului, cu 8 tonuri) și Glass (panou mat translucid în stil iPhone, cu *Blur* Light/Medium/Strong; necesită un fundal colorat sau o imagine în spate).
 - **Atenție:** Pulse (halou care „respiră” de trei ori la încărcare) și Nudge icons (iconițele se mișcă scurt la hover).
