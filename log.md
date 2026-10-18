@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-18] Re-ingestie: `deltatech_website_effects` (19.0.1.2.3) și `deltatech_website_sale_effects` (19.0.1.4.2), cu fișele consultant
+
+- **Acțiune:** actualizare, cu procesare în paralel (un subagent per modul): versiunile noi și fișele consultant copiate în wiki — `deltatech_website_effects` (14 capturi: opțiuni de bloc, secțiune, buton și antet, blocurile din Conținut intern, opțiunile Info List), `deltatech_website_sale_effects` (7 capturi: /shop, Products Design, checkout, pagina de produs).
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md` și `FISA_CONSULTANT.md` de pe branch-ul `19.0-imp-website-effects-fisa` (PR terrabit-solutions/bitshop#3340, încă nemerged).
+- **Dependențe/Conexiuni:** [deltatech_website_sale_effects](deltatech_website_sale_effects/index.md) → [deltatech_website_effects](deltatech_website_effects/index.md); opțional [deltatech_website_category_icon](deltatech_website_category_icon/index.md).
+- **Fișiere actualizate:** `deltatech_website_effects/`, `deltatech_website_sale_effects/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `log.md`, `.index/`.
+
+---
+
 ## [2026-10-18] Ingestie: `deltatech_website_effects`, `deltatech_website_sale_effects`
 
 - **Acțiune:** pagini noi pentru cele două module de efecte vizuale ale suitei bitshop, documentate în paralel (câte un subagent per modul).
