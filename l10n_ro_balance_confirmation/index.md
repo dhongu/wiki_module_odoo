@@ -63,3 +63,4 @@ Modulul generează documente de confirmare a soldului (extras de cont) pentru pa
 - `account`: sursa soldurilor și a reconcilierilor parțiale (`account.partial.reconcile`) folosite la calculul restului la dată.
 - `l10n_ro`: planul de conturi românesc, pe baza căruia se filtrează conturile comerciale.
 - `mail`: trimiterea emailurilor prin chatterul partenerului, primirea răspunsurilor prin gateway și chatter-ul campaniei.
+- [l10n_ro_partner_trial_balance](../l10n_ro_partner_trial_balance/index.md): balanța analitică pe parteneri pentru bănci, cu aceeași convenție a avansurilor 409 / 419 legate de partener; marchează 421 / 425 / 463 necomerciale, deci le scoate din filtrul comercial.

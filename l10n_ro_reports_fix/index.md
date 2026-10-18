@@ -58,3 +58,4 @@ Conform `readme/DESCRIPTION.md` și fișei consultant; detaliile de cod sunt din
 
 - [l10n_ro_off_balance](../l10n_ro_off_balance/index.md): creează contul 803999, jurnalul EXTR și grupele 8 / 80 / 801–809 / 89, folosite de opțiunile pentru conturi extrabilanțiere (opțional).
 - [l10n_ro_storno_enhancement](../l10n_ro_storno_enhancement/index.md): câmpul `l10n_ro_usage` (natura contului activ/pasiv) folosit la afișarea soldului final (opțional).
+- [l10n_ro_partner_trial_balance](../l10n_ro_partner_trial_balance/index.md): balanța analitică pe parteneri, construită pe balanța RO cu 4 / 5 coloane și pe corecțiile de sold din acest modul (sold inițial net, total sume).

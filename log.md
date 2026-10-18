@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-18] Conexiuni: legături spre `l10n_ro_partner_trial_balance`
+
+- **Acțiune:** secțiunea „Conexiuni” completată în paginile modulelor legate de balanța pe parteneri, după extinderea filtrului „Cont” din Partner Ledger (PR terrabit-solutions/l10n_ro_ent#799).
+- **Sursă:** codul modulului (`models/account_report.py`, `models/account_chart_template.py`) și testele comune cu `l10n_ro_partner_ledger_currency`.
+- **Dependențe/Conexiuni:** [l10n_ro_partner_ledger_currency](l10n_ro_partner_ledger_currency/index.md) (aceeași metodă de domeniu), [l10n_ro_reports_fix](l10n_ro_reports_fix/index.md) (baza balanței), [l10n_ro_balance_confirmation](l10n_ro_balance_confirmation/index.md) (convenția avansurilor 409 / 419).
+- **Fișiere actualizate:** `l10n_ro_partner_ledger_currency/index.md`, `l10n_ro_reports_fix/index.md`, `l10n_ro_balance_confirmation/index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-10-18] Re-ingestie: `l10n_ro_partner_trial_balance` — filtrul „Cont” și avansurile în Partner Ledger
 
 - **Acțiune:** actualizare după schimbarea de design din PR terrabit-solutions/l10n_ro_ent#799: setarea cu prefixe a fost înlocuită de filtrul standard „Cont” (ca în Partner Ledger) cu intrările noi Avansuri (409, 419) și Alte conturi de terți; aceleași intrări, opționale, în Partner Ledger; 421/425/463 marcate necomerciale (template RO + `post_init_hook`).
