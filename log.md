@@ -4,10 +4,19 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-18] Re-ingestie: `l10n_ro_partner_trial_balance` — capturile fișei consultant
+
+- **Acțiune:** actualizare a fișei consultant copiate, cu cele 6 capturi generate din `tests/test_screenshots.py` (setarea conturilor, balanța cu 5 și 4 coloane, rândul „Fără partener”, filtrul pe partener, exportul XLSX).
+- **Sursă:** `readme/FISA_CONSULTANT.md` și `static/description/0*.png` din branch-ul PR-ului terrabit-solutions/l10n_ro_ent#799; căile imaginilor rescrise în `screenshots/`.
+- **Dependențe/Conexiuni:** neschimbate.
+- **Fișiere actualizate:** `l10n_ro_partner_trial_balance/` (`FISA_CONSULTANT.md`, `screenshots/`), `log.md`, `.index/`.
+
+---
+
 ## [2026-10-18] Ingestie: `l10n_ro_partner_trial_balance` (19.0.1.0.0, modul nou l10n_ro_ent)
 
 - **Acțiune:** documentare inițială a modulului nou — balanța analitică pe parteneri cu 4 și 5 coloane, pe cont și partener, sold net pe partener, sold desfășurat pe cont, conturi alese doar prin prefixe configurabile, rândul „Fără partener” cu sume brute. Modulul e încă în PR (terrabit-solutions/l10n_ro_ent#799), documentat din worktree-ul branch-ului.
-- **Sursă:** `readme/DESCRIPTION.md`, `CONFIGURE.md`, `USAGE.md`, cu control în cod (modele, date). Fișa consultant copiată; cele 6 capturi planificate nu sunt încă generate, deci imaginile din fișă lipsesc până la re-ingestie.
+- **Sursă:** `readme/DESCRIPTION.md`, `CONFIGURE.md`, `USAGE.md`, cu control în cod (modele, date). Fișa consultant copiată (capturile au venit la re-ingestia de mai sus).
 - **Dependențe/Conexiuni:** → [l10n_ro_reports_fix](l10n_ro_reports_fix/index.md) (→ `l10n_ro_reports`, `account_reports`); legat de [l10n_ro_partner_ledger_currency](l10n_ro_partner_ledger_currency/index.md) și `l10n_ro_balance_confirmation`.
 - **Fișiere actualizate:** `l10n_ro_partner_trial_balance/` (`index.md`, `FISA_CONSULTANT.md`), `index.md`, `log.md`, `.index/`.
 

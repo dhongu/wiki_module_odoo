@@ -247,7 +247,7 @@ Plata înaintea facturii rămâne pe 401 cât timp nu e reclasificată: `4091 = 
 
 ## 10. Capturi de ecran
 
-Capturile **nu sunt încă generate**. Numele planificate, în ordinea pașilor din secțiunea 6, în `static/description/`:
+Capturile din `static/description/`, în ordinea pașilor din secțiunea 6:
 
 1. `01_setari_conturi.png` — setarea **Conturi detaliate pe partener**, cu lista implicită de prefixe.
 2. `02_balanta_parteneri_5_coloane.png` — balanța pe parteneri cu 5 coloane, pe februarie 2026: 401 cu Furnizor A și Furnizor B, 4111 cu Furnizor A.
@@ -256,7 +256,14 @@ Capturile **nu sunt încă generate**. Numele planificate, în ordinea pașilor 
 5. `05_filtru_partener.png` — balanța filtrată pe Furnizor A.
 6. `06_export_xlsx.png` — conținutul fișierului XLSX exportat, redat ca tabel.
 
-Se generează cu skill-ul `fisa-screenshots`, din `tests/test_screenshots.py` (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în română, pe planul de conturi RO, pe datele din secțiunea 4.
+Se generează automat din `tests/test_screenshots.py`, cu mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots` (import defensiv), în română, pe planul de conturi RO, pe datele din secțiunea 4.
+
+Regenerare:
+```
+./odoo/odoo-bin -c odoo.conf -d <db> -u l10n_ro_partner_trial_balance -i l10n_ro_doc_screenshots \
+    --test-tags=/l10n_ro_partner_trial_balance:TestPartnerTrialBalanceScreenshots --stop-after-init \
+    --http-port=8987 --gevent-port=8988
+```
 
 ---
 
