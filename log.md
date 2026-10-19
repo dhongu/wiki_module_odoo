@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-19] Re-ingestie: `deltatech_vendor_products_kramp` (19.0.1.1.0), `deltatech_vendor_products_website` (19.0.1.2.1), `deltatech_vendor_products` (19.0.1.2.1)
+
+- **Acțiune:** actualizare, cu procesare în paralel (un subagent per modul). Pentru Kramp: conectorul rescris pe API-ul webshop-ului (prețuri, stoc și termen din planurile de livrare, cod de bare din EAN, reînnoirea tokenului); fișa consultant copiată cu 5 capturi; secțiunea 4 completată. Pentru website: scoase funcționalitățile care nu mai există în 19.0 (interfața de căutare pe /shop), descrise rutele JSON-RPC, hook-ul `_online_search_fields()` și corecția din `get_products`. Pentru modulul de bază: versiunea nouă, coloanele specifice furnizorului în `attributes`, butonul *Load Price* pentru orice conector API.
+- **Sursă:** `readme/DESCRIPTION.md`, `CONFIGURE.md`, `HISTORY.md`, `FISA_CONSULTANT.md` și codul de pe `origin/19.0` (PR-urile terrabit-solutions/bitshop_vendor#75, #77, #78, #79, integrate) plus fișa din PR #81 (nemerged).
+- **Dependențe/Conexiuni:** [deltatech_vendor_products_kramp](deltatech_vendor_products_kramp/index.md) → [deltatech_vendor_products_website](deltatech_vendor_products_website/index.md) → [deltatech_vendor_products](deltatech_vendor_products/index.md).
+- **Fișiere actualizate:** `deltatech_vendor_products_kramp/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `deltatech_vendor_products_website/index.md`, `deltatech_vendor_products/index.md`, `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-10-18] Actualizare: `deltatech_website_effects` (19.0.1.2.5) — Hover Effect pe blocurile interioare, fișa în română
 
 - **Acțiune:** actualizare: versiunea, efectul la hover extins la blocurile interioare (Alert, Quote, Text Highlight, Help Box, Info List, Delivery Route, Copy Codes), fișa consultant și capturile reluate după traducerea în română (terrabit-solutions/bitshop#3341).
