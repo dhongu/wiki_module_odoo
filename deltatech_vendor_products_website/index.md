@@ -1,7 +1,7 @@
 # Vendor Products Website (localizat la `deltatech_vendor_products_website/index.md`)
 
 - **Nume Tehnic:** `deltatech_vendor_products_website`
-- **Versiune:** `19.0.1.3.0`
+- **Versiune:** `19.0.1.4.1`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products_website`
 - **Cale Locală:** `odoo-addons/bitshop_vendor/deltatech_vendor_products_website`
 - **Ultima Ingestie:** `2026-10-19`
@@ -19,7 +19,9 @@ Modulul leagă catalogul produselor furnizorilor de magazinul online. Un flux de
 - Reguli de afișare: se arată doar produsele furnizorului fără produs Odoo asociat (celelalte sunt găsite de căutarea standard) și doar cele cu preț la furnizor, ca să nu poată fi comandate la 0. Căutările sub 3 caractere nu se trimit, iar o căutare repetată în sesiune refolosește ultimul rezultat. Se afișează cel mult 24 de carduri.
 - Rută `/vendor_product/<id>`: creează produsul de magazin din produsul furnizorului (dacă nu există deja) și redirecționează către pagina lui din `/shop`. Produsele create sunt publicate și permit comanda chiar fără stoc (**Sell when Out-of-Stock**). Redirecționarea nu mai poartă înregistrarea în query string.
 - Securitate: ruta acceptă doar ID-uri returnate clientului în aceeași sesiune (ultimele 200) sau utilizatori interni de vânzări; orice alt ID întoarce 404. Pentru produse deja legate, ruta nu forțează republicarea, deci produsele despublicate rămân despublicate.
-- Rute JSON-RPC: `/vendor_product/online_results` (cardurile pentru blocul din `/shop`), `/vendor_product/online_search` (parametri `source`, `search`; produsele găsite cu preț formatat) și `/vendor_product/online_source` (fluxurile cu căutare online activă). Protecție de încărcare: parametrul de sistem `vendor_product_online_search_cpu` (prag CPU în procente, implicit 20; pe un server ocupat se mărește, altfel blocul nu apare).
+- Rută JSON-RPC `/vendor_product/online_results` (cardurile pentru blocul din `/shop`). Rutele vechi `/vendor_product/online_search` și `/vendor_product/online_source` au fost eliminate în 19.0.1.4.0, fiindcă ocoleau filtrele (un apel scris de mână putea publica un produs la preț 0).
+- Limită de căutări (19.0.1.4.0, în locul gărzii de CPU): cel mult 10 căutări la furnizor pe minut pentru o sesiune (`vendor_product_online_search_session_limit`) și 60 pentru o adresă IP (`vendor_product_online_search_ip_limit`); 0 dezactivează limita. O căutare repetată în sesiune nu se numără. Peste limită blocul nu apare, iar jurnalul arată „Online search … skipped, too many searches".
+- Multi-companie: sunt interogate doar fluxurile companiei website-ului, iar blocul apare doar dacă acea companie are un flux cu căutare online.
 - Configurare recomandată: **Based on** = **List Price** în grupul Price al fluxului, pentru ca actualizarea ulterioară a prețului de listă să nu schimbe prețul față de cel afișat; setarea website-ului **Display Product Prices** (Tax Excluded / Tax Included) influențează prețul din card.
 - Căutările online salvează produsele găsite în *Vendor Product Catalog*; doar rândul deschis de client primește produs Odoo asociat. Comanda către furnizor se face din reaprovizionare sau automat cu rutele *Buy* și *Replenish on Order (MTO)*.
 - Extensibilitate: câmpurile salvate din căutarea online provin din hook-ul `_online_search_fields()`, pe care un conector îl poate completa (conectorul Kramp adaugă codul de bare).
@@ -30,7 +32,7 @@ Modulul leagă catalogul produselor furnizorilor de magazinul online. Un flux de
 - [deltatech_vendor_products](../deltatech_vendor_products/index.md)
 - `website_sale`
 
-Dependență externă Python: `psutil` (măsurarea încărcării CPU).
+Nu are dependențe Python externe (`psutil` a fost eliminat în 19.0.1.4.0).
 
 #### 4. Componente Cheie
 

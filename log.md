@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-19] Actualizare: `deltatech_vendor_products_website` (19.0.1.4.1) — limita de căutări și capturile refăcute
+
+- **Acțiune:** actualizare. Garda de CPU și `psutil` înlocuite cu limita de căutări pe sesiune și pe IP; rutele vechi `online_search` / `online_source` eliminate; filtrul multi-companie al fluxurilor. Fișa consultant recopiată, cu capturile 01, 03 și 04 refăcute (formularul fluxului în română, lista catalogului fără coloana goală „Monedă").
+- **Sursă:** `readme/FISA_CONSULTANT.md`, `CONFIGURE.md`, `HISTORY.md` și codul din PR-urile terrabit-solutions/bitshop_vendor#86 și #87 (unite) plus branch-ul `19.0-doc-vendor-website-screens` (capturile și documentația, PR în curs).
+- **Dependențe/Conexiuni:** [deltatech_vendor_products](deltatech_vendor_products/index.md), [deltatech_vendor_products_kramp](deltatech_vendor_products_kramp/index.md).
+- **Fișiere actualizate:** `deltatech_vendor_products_website/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `log.md`, `.index/`.
+
+---
+
 ## [2026-10-19] Re-ingestie: `deltatech_vendor_products_website` (19.0.1.3.0) — căutarea online în /shop și fișa consultant
 
 - **Acțiune:** actualizare. Căutarea online e din nou în `/shop`, ca interacțiune Odoo 19: blocul „Disponibile de la furnizorii noștri” sub grilă, condițiile de afișare (o pagină de rezultate, minim 3 caractere, fără produs Odoo, preț la furnizor), prețul din card (reguli feed, monedă, TVA ca în magazin), crearea produsului la click. Fișa consultant copiată cu 5 capturi (căile `../static/description/` rescrise în `screenshots/`).

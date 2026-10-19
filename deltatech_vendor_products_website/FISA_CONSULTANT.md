@@ -83,11 +83,12 @@ care catalogul nu îl are încă, de exemplu `6205RS` (rulment).
 ## 5. Configurare inițială
 
 1. Instalați modulul conectorului, de exemplu `deltatech_vendor_products_kramp`. Se instalează
-   automat și `deltatech_vendor_products_website` și **eCommerce** (`website_sale`). Pe server
-   trebuie să existe biblioteca Python `psutil`.
+   automat și `deltatech_vendor_products_website` și **eCommerce** (`website_sale`).
 2. Configurați feed-ul furnizorului după fișa conectorului: **Achiziții → Produse → Feed
    Furnizor → Kramp**, cu furnizorul, moneda, tipul conexiunii și credențialele.
-3. În grupul **Conexiune**, bifați **Căutare online** și salvați.
+3. În grupul **Conexiune**, bifați **Căutare online** și salvați. Într-o bază cu mai multe
+   companii, sunt întrebate doar feed-urile companiei site-ului, iar blocul apare doar dacă acea
+   companie are un feed cu **Căutare online**.
 4. Verificați în grupul **Preț** regulile cu care prețul furnizorului devine preț de vânzare
    (Discount, Adaos, Valoare suplimentară, aplicate pe prețul de listă) și lăsați **Bazat pe** =
    Preț listă.
@@ -96,10 +97,12 @@ care catalogul nu îl are încă, de exemplu `6205RS` (rulment).
    Setări → Afișează prețurile produselor**: **Fără taxe** sau **Taxe incluse**). Cu ele se
    calculează prețul din bloc. Pentru un magazin care vinde către persoane fizice, alegeți de regulă
    **Taxe incluse**, ca prețul afișat să fie prețul final.
-6. Opțional, parametrul de sistem `vendor_product_online_search_cpu` (**Setări → Tehnic →
-   Parametri sistem**, în modul dezvoltator): pragul de încărcare a procesorului serverului peste
-   care căutarea la furnizor se sare. Implicit este 20 (%). Pe un server încărcat, ridicați-l
-   (de exemplu la 80), altfel blocul nu apare (secțiunea 9).
+6. Opțional, limitele de căutare la furnizor, ca parametri de sistem (**Setări → Tehnic →
+   Parametri sistem**, în modul dezvoltator): `vendor_product_online_search_session_limit`
+   (implicit 10 căutări pe minut pentru o sesiune) și `vendor_product_online_search_ip_limit`
+   (implicit 60 de căutări pe minut pentru o adresă IP); valoarea 0 dezactivează limita. O căutare
+   repetată în aceeași sesiune refolosește rezultatul anterior și nu se numără. Peste limită,
+   blocul nu apare (secțiunea 9).
 
 ## 6. Flux de utilizare
 
@@ -250,7 +253,8 @@ instala modulul.
 | Mesaj | Cauză | Remediere |
 |-------|-------|-----------|
 | Blocul nu apare deloc | Niciun feed nu are **Căutare online**, sau căutarea are mai multe pagini de rezultate în magazin | Bifați **Căutare online**; căutați un cod, nu un cuvânt general |
-| Blocul nu apare; în jurnalul serverului „Online search … skipped, CPU load is …" | Procesorul serverului e peste pragul `vendor_product_online_search_cpu` (implicit 20%) | Ridicați parametrul de sistem (de exemplu la 80) |
+| Blocul nu apare; în jurnalul serverului „Online search … skipped, too many searches" | Sesiunea sau adresa IP a depășit limita de căutări la furnizor pe minut (implicit 10 pe sesiune, 60 pe IP) | Normal pentru un robot sau un client care caută foarte des; dacă mulți clienți ies prin aceeași adresă IP (rețea de firmă), ridicați `vendor_product_online_search_ip_limit` |
+| Blocul nu apare într-o bază cu mai multe companii | Feed-ul cu **Căutare online** aparține altei companii decât site-ul | Creați sau mutați feed-ul în compania site-ului |
 | Blocul nu apare, deși Kramp are produsul | Feed-ul nu are credențiale, iar Kramp nu dă prețuri; produsele fără preț nu se afișează | Completați utilizatorul și parola pe feed |
 | Blocul nu apare; în jurnal „Kramp search for … failed" | Kramp nu răspunde sau a refuzat cererea | Reîncercați; verificați credențialele cu **Încarcă preț** pe feed |
 | Mesajul „Căutăm în cataloagele furnizorilor..." dispare fără rezultate | Furnizorul nu are produse pentru termenul căutat | Normal; verificați codul în magazinul furnizorului |
@@ -290,8 +294,8 @@ furnizor, îl pune în coș**, chiar dacă dealerul nu l-a avut niciodată în O
 avantajul e că vinde din tot catalogul Kramp fără să-l importe.
 
 Explicați clar trei limite: blocul apare doar la căutări care încap pe o pagină (coduri, nu cuvinte
-generale); produsele fără preț la furnizor nu se afișează; pe un server foarte încărcat căutarea la
-furnizor se sare (parametrul din secțiunea 5). Atrageți atenția că produsele create din magazin
+generale); produsele fără preț la furnizor nu se afișează; peste limita de căutări pe minut
+(parametrii din secțiunea 5) căutarea la furnizor se sare. Atrageți atenția că produsele create din magazin
 sunt **publicate și comandabile fără stoc**, deci comanda clientului trebuie urmată de comanda de
 achiziție către furnizor: din reaprovizionare sau, cu rutele Cumpără + Reaprovizionare la comandă (MTO)
 configurate (ruta MTO trebuie dezarhivată, cu setarea Trasee în mai mulți pași activă), automat.
