@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-19] Re-ingestie: `deltatech_vendor_products_website` (19.0.1.3.0) — căutarea online în /shop și fișa consultant
+
+- **Acțiune:** actualizare. Căutarea online e din nou în `/shop`, ca interacțiune Odoo 19: blocul „Disponibile de la furnizorii noștri” sub grilă, condițiile de afișare (o pagină de rezultate, minim 3 caractere, fără produs Odoo, preț la furnizor), prețul din card (reguli feed, monedă, TVA ca în magazin), crearea produsului la click. Fișa consultant copiată cu 5 capturi (căile `../static/description/` rescrise în `screenshots/`).
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `FISA_CONSULTANT.md` și codul de pe branch-ul `19.0-doc-vendor-website-fisa`, pornit din PR terrabit-solutions/bitshop_vendor#83 (încă nemerged).
+- **Dependențe/Conexiuni:** [deltatech_vendor_products](deltatech_vendor_products/index.md), [deltatech_vendor_products_kramp](deltatech_vendor_products_kramp/index.md), `website_sale`.
+- **Fișiere actualizate:** `deltatech_vendor_products_website/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-10-19] Re-ingestie: `deltatech_vendor_products_kramp` (19.0.1.1.0), `deltatech_vendor_products_website` (19.0.1.2.1), `deltatech_vendor_products` (19.0.1.2.1)
 
 - **Acțiune:** actualizare, cu procesare în paralel (un subagent per modul). Pentru Kramp: conectorul rescris pe API-ul webshop-ului (prețuri, stoc și termen din planurile de livrare, cod de bare din EAN, reînnoirea tokenului); fișa consultant copiată cu 5 capturi; secțiunea 4 completată. Pentru website: scoase funcționalitățile care nu mai există în 19.0 (interfața de căutare pe /shop), descrise rutele JSON-RPC, hook-ul `_online_search_fields()` și corecția din `get_products`. Pentru modulul de bază: versiunea nouă, coloanele specifice furnizorului în `attributes`, butonul *Load Price* pentru orice conector API.

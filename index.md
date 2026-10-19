@@ -379,7 +379,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_vendor_products_bepco](deltatech_vendor_products_bepco/index.md): Conector către catalogul Bepco (API TVH) care importă și sincronizează produsele, prețurile de achiziție și stocul în Odoo.
 - [deltatech_vendor_products_granit](deltatech_vendor_products_granit/index.md): Conector pentru importul și sincronizarea catalogului de produse al furnizorului Granit în Odoo.
 - [deltatech_vendor_products_kramp](deltatech_vendor_products_kramp/index.md): Conector Kramp pe API-ul webshop-ului: prețuri net și brut, stoc și termen de livrare din planurile de livrare, cod de bare din EAN, cu un singur buton pentru tot feed-ul.
-- [deltatech_vendor_products_website](deltatech_vendor_products_website/index.md): Căutare online în cataloagele furnizorilor și transformarea produselor găsite în produse de magazin; în Odoo 19 există doar rutele JSON-RPC, fără interfață pe /shop.
+- [deltatech_vendor_products_website](deltatech_vendor_products_website/index.md): Căutare online în `/shop` în catalogele furnizorilor: produsele găsite apar sub grilă, iar la click sunt create, publicate și pot fi comandate.
 - [deltatech_vendor_stock](deltatech_vendor_stock/index.md): Vizibilitate asupra stocului disponibil la furnizor, afișat în datele produsului și în comenzile de vânzare.
 - [deltatech_warehouse_access](deltatech_warehouse_access/index.md): Restricționează validarea transferurilor de stoc la utilizatorii autorizați per depozit; fără utilizatori definiți se aplică drepturile standard.
 - [deltatech_warehouse_arrangement](deltatech_warehouse_arrangement/index.md): Gestionează amplasamentele fizice de depozit (magazie→zonă→raft→secțiune→grilă), în paralel cu locațiile standard.

@@ -1,27 +1,29 @@
 # Vendor Products Website (localizat la `deltatech_vendor_products_website/index.md`)
 
 - **Nume Tehnic:** `deltatech_vendor_products_website`
-- **Versiune:** `19.0.1.2.1`
+- **Versiune:** `19.0.1.3.0`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products_website`
 - **Cale Locală:** `odoo-addons/bitshop_vendor/deltatech_vendor_products_website`
 - **Ultima Ingestie:** `2026-10-19`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul leagă catalogul produselor furnizorilor de magazinul online. Un flux de furnizor poate fi marcat pentru căutare online: la o căutare, produsele găsite la furnizor sunt aduse în lista de produse furnizor din Odoo, iar la accesarea unui produs, acesta este transformat într-un produs de magazin, publicat pe website și comandabil. Astfel oferta magazinului poate fi extinsă cu produsele furnizorilor fără gestionare manuală articol cu articol.
-
-**Stare actuală (Odoo 19):** interfața de căutare online de pe pagina `/shop` nu mai există. În 19.0.1.2.0 a fost eliminat codul mort din versiunile vechi, iar căutarea online pe `/shop` urmează să revină ca interacțiune Odoo 19. În prezent modulul oferă doar fundamentul de server: rutele JSON-RPC și logica de import.
+Modulul leagă catalogul produselor furnizorilor de magazinul online. Un flux de furnizor poate fi marcat pentru căutare online: când un client caută un cod în `/shop` și nu îl găsește în catalogul propriu, sub grilă apare blocul „Available from our suppliers", cu produsele găsite la furnizor. La click pe un card, produsul este creat în Odoo, publicat pe website și deschis în magazin, gata de comandat. Astfel oferta magazinului poate fi extinsă cu produsele furnizorilor, fără gestionare manuală articol cu articol.
 
 #### 2. Funcționalități Cheie
 
-- Opțiunea **Online Search** pe fluxul de furnizor (`vendor.feed`), vizibilă în formular doar când tipul conexiunii nu este `none`. Doar fluxurile cu această opțiune activă sunt folosite de căutarea online.
-- Rută JSON-RPC `/vendor_product/online_search` (parametri `source`, `search`): interoghează conectorul fluxului și întoarce produsele găsite (id, nume, cod, preț, imagine, produs asociat, URL și preț formatat în moneda website-ului). Include protecții: limită de încărcare CPU (parametrul de sistem `vendor_product_online_search_cpu`, implicit 20%) și ignorarea repetării aceleiași căutări în sesiune.
-- Rută JSON-RPC `/vendor_product/online_source`: listează fluxurile cu căutare online activă (id, nume), pentru alegerea sursei.
-- Rută `/vendor_product/<id>`: creează produsul de magazin din produsul furnizorului (dacă nu există deja) și redirecționează către pagina lui din `/shop`. Produsele create sunt publicate pe website și permit comanda chiar fără stoc.
-- Securitate (19.0.1.1.6): ruta acceptă doar ID-uri returnate de `online_search` în aceeași sesiune (ultimele 200) sau utilizatori interni de vânzări; orice alt ID întoarce 404. Pentru produse deja legate, ruta nu mai forțează publicarea, deci produsele despublicate rămân despublicate.
-- Corecție (19.0.1.2.1): `get_products` nu mai produce eroare când conectorul întoarce produse; rezultatele salvate sunt recitite după cod, cu invalidarea cache-ului ORM.
-- Extensibilitate (19.0.1.2.1): câmpurile salvate din căutarea online provin din hook-ul `_online_search_fields()`, pe care un conector le poate completa (de exemplu, conectorul Kramp adaugă codul de bare).
-- Curățare (19.0.1.2.0): eliminate modelul `vendor.product.search` (tabela se șterge la actualizare, inclusiv regula de acces fără grup care dădea drepturi complete oricărui utilizator), JS-ul vechi `online_search` și mixinurile website.
+- Opțiunea **Online Search** pe fluxul de furnizor (*Achiziții → Produse → Vendor Feed*, grupul Connection), vizibilă doar când tipul conexiunii nu este `none`. Doar fluxurile cu această opțiune activă sunt interogate din magazin.
+- **Căutare online în `/shop`** (19.0.1.3.0, interacțiune Odoo 19): când rezultatele magazinului încap pe o singură pagină, furnizorii sunt interogați după afișarea paginii (un furnizor lent nu întârzie magazinul), iar produsele găsite apar sub grilă într-un bloc „Available from our suppliers". Mesajul standard „fără rezultate" este ascuns când furnizorii găsesc produse.
+- Cardul afișează imaginea, numele, **codul** și **prețul** furnizorului, plus disponibilitatea: „Available at the supplier" (stoc la furnizor) sau „On order". Prețul pornește de la prețul de listă al furnizorului, cu regulile de preț ale fluxului, convertit în moneda website-ului și afișat cu sau fără taxe, ca restul magazinului (taxa de vânzare implicită a companiei).
+- Reguli de afișare: se arată doar produsele furnizorului fără produs Odoo asociat (celelalte sunt găsite de căutarea standard) și doar cele cu preț la furnizor, ca să nu poată fi comandate la 0. Căutările sub 3 caractere nu se trimit, iar o căutare repetată în sesiune refolosește ultimul rezultat. Se afișează cel mult 24 de carduri.
+- Rută `/vendor_product/<id>`: creează produsul de magazin din produsul furnizorului (dacă nu există deja) și redirecționează către pagina lui din `/shop`. Produsele create sunt publicate și permit comanda chiar fără stoc (**Sell when Out-of-Stock**). Redirecționarea nu mai poartă înregistrarea în query string.
+- Securitate: ruta acceptă doar ID-uri returnate clientului în aceeași sesiune (ultimele 200) sau utilizatori interni de vânzări; orice alt ID întoarce 404. Pentru produse deja legate, ruta nu forțează republicarea, deci produsele despublicate rămân despublicate.
+- Rute JSON-RPC: `/vendor_product/online_results` (cardurile pentru blocul din `/shop`), `/vendor_product/online_search` (parametri `source`, `search`; produsele găsite cu preț formatat) și `/vendor_product/online_source` (fluxurile cu căutare online activă). Protecție de încărcare: parametrul de sistem `vendor_product_online_search_cpu` (prag CPU în procente, implicit 20; pe un server ocupat se mărește, altfel blocul nu apare).
+- Configurare recomandată: **Based on** = **List Price** în grupul Price al fluxului, pentru ca actualizarea ulterioară a prețului de listă să nu schimbe prețul față de cel afișat; setarea website-ului **Display Product Prices** (Tax Excluded / Tax Included) influențează prețul din card.
+- Căutările online salvează produsele găsite în *Vendor Product Catalog*; doar rândul deschis de client primește produs Odoo asociat. Comanda către furnizor se face din reaprovizionare sau automat cu rutele *Buy* și *Replenish on Order (MTO)*.
+- Extensibilitate: câmpurile salvate din căutarea online provin din hook-ul `_online_search_fields()`, pe care un conector îl poate completa (conectorul Kramp adaugă codul de bare).
+- Fluxul pas-cu-pas, cu capturi de ecran, este în [Fișa Consultant](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -34,13 +36,16 @@ Dependență externă Python: `psutil` (măsurarea încărcării CPU).
 
 **Modele**
 
-- `vendor.feed` (extins): adaugă câmpul `online_search`, metoda `online_get_values(search)` (punct de extensie, implementat de conectori), `_online_search_fields()` și `get_products(search)`, care combină produsele deja existente cu cele aduse online.
+- `vendor.feed` (extins): adaugă câmpul `online_search`, metoda `online_get_values(search)` (punct de extensie, implementat de conectori), `_online_search_fields()` și `get_products(search)`, care combină produsele existente cu cele aduse online.
 - `vendor.product` (extins): `_prepare_values()` adaugă `website_published` și `allow_out_of_stock_order`, deci produsele create sunt publicate și comandabile.
+- `website` (extins): `_vendor_online_search_enabled()` întoarce dacă există vreun flux cu căutare online, caz în care `/shop` cere rezultatele de la furnizori.
 
 **Vizualizări**
 
-- `view_vendor_feed_form`: adaugă opțiunea `online_search` în grupul de conexiune al formularului fluxului de furnizor.
-- `products` (șablon, moștenește `website_sale.products`): afișează grila de produse și adaugă un marcaj `online_search` când există o căutare cu o singură pagină de rezultate. Nu are încă interfață asociată în Odoo 19.
+- `view_vendor_feed_form`: adaugă opțiunea `online_search` în grupul de conexiune al formularului fluxului.
+- `products` (șablon, moștenește `website_sale.products`): adaugă înaintea paginatorului containerul `o_vendor_online_search` (cu mesajul „Searching the supplier catalogs..."), afișat când există o căutare cu o singură pagină de rezultate, și marchează mesajul „fără rezultate" pentru a putea fi ascuns.
+- `online_results` (șablon): blocul „Available from our suppliers" cu cardurile produselor (imagine, nume, cod, preț, disponibilitate).
+- Interacțiunea JS `VendorOnlineSearch` (`static/src/interactions/vendor_online_search.esm.js`): apelează `/vendor_product/online_results` după afișarea paginii și inserează cardurile; erorile furnizorului nu afectează pagina.
 
 **Acțiuni Automate / Acțiuni Server**
 
