@@ -173,6 +173,10 @@ La legare, modulul:
    **Creează factură furnizor** e bifat doar dacă factura din SPV nu există încă în Odoo; altfel
    importul ar crea o a doua factură.
 
+![Factură curată: ① notificarea „Factură importată", ② comanda creată și deschisă](screenshots/02_notificare_import_direct.png)
+
+![Factură cu o linie neidentificată: previzualizarea, cu ① linia pe „Ignoră"](screenshots/03_preview_decizie_linii.png)
+
 > Înainte de 19.0.0.0.10, legarea pornea importul automat, fără fereastră, iar liniile pe care
 > sistemul nu le identifica se pierdeau de pe comandă (rămâneau doar în jurnalul din chatter).
 
@@ -328,12 +332,16 @@ localizării RO („RO Company", RON, plan de conturi RO):
 |---|--------|----------|
 | 1 | `screenshots/01_mesaj_spv_butoane.png` | Formularul mesajului SPV: ① **Găsește Comanda**, ② **Creează Comanda**, ③ câmpul **Referință achiziție** completat automat din XML |
 
-Rămân **de realizat cu `fisa-screenshots`** (extindeți testul de capturi cu shot-uri noi):
+| # | Fișier | Conținut |
+|---|--------|----------|
+| 2 | `screenshots/02_notificare_import_direct.png` | **Creează Comanda** pe o factură curată: notificarea „Factură importată" și comanda deschisă |
+| 3 | `screenshots/03_preview_decizie_linii.png` | **Creează Comanda** pe o factură cu o linie neidentificată: previzualizarea, cu linia pe **Ignoră** |
+
+Capturile `02` și `03` se generează doar cu `deltatech_purchase_ubl` instalat (instalați-l în
+comanda de mai sus). Rămân **de realizat** (extindeți testul de capturi):
 
 | # | Fișier planificat | Conținut vizat | Pas |
 |---|---|---|---|
-| 2 | `screenshots/02_notificare_import_direct.png` | Notificarea „Invoice imported" după Creează Comanda, pe o factură curată | 3 |
-| 3 | `screenshots/03_preview_decizie_linii.png` | Previzualizarea deschisă din mesaj, cu o linie neidentificată pe **Ignoră** și coloana **Acțiune** | 3 |
 | 4 | `screenshots/04_avertisment_duplicat.png` | Nota „Atenție duplicat: comanda de achiziție ... are deja factura ..." în chatter | 5 |
 | 5 | `screenshots/05_garda_reprocesare.png` | Dialogul de eroare la al doilea click pe Găsește/Creează Comanda | 6 |
 

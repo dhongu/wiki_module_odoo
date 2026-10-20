@@ -2,7 +2,7 @@
 
 **Modul:** `deltatech_purchase_ubl`
 **Utilizator principal:** Operator achiziții, contabil furnizori
-**Versiune documentată:** 19.0.1.4.14
+**Versiune documentată:** 19.0.1.4.15
 **Prioritate:** 🔴 Ridicată (parte din fluxul standard de facturare furnizori prin SPV/e-Factura pentru produse stocabile)
 
 ---
@@ -124,6 +124,8 @@ utilizatorul primește doar notificarea **„Invoice imported"**, după care se 
 Dacă oricare condiție cade, importul se anulează complet (nimic nu rămâne scris pe comandă) și se
 deschide previzualizarea de la Pasul 3.
 
+![Factură curată importată direct din mesajul SPV: ① notificarea, ② comanda deschisă](../l10n_ro_message_spv_purchase/screenshots/02_notificare_import_direct.png)
+
 > Liniile găsite doar după nume (galbene) și cele propuse de AI (albastre, cu
 > `deltatech_purchase_ubl_ai`) nu se consideră sigure: deschid previzualizarea.
 
@@ -157,9 +159,6 @@ Coloana **Acțiune** (din 19.0.1.4.14) spune ce face importul cu fiecare linie:
 | **Ignoră** | linia **nu** are produs (roșie) | linia **nu** se importă; apare în jurnal ca neasociată |
 | **Creează produs nou** | niciodată — se alege explicit | creează un produs nou din denumirea liniei din XML și îl adaugă pe comandă |
 
-> Până la actualizarea traducerii `ro.po`, etichetele noi apar în engleză: *Use product*,
-> *Create new product*, *Ignore*, butonul *Open Purchase Order* și notificarea *Invoice imported*.
-
 Pe o linie roșie aveți deci trei variante: alegeți produsul existent din coloana **Produs**
 (acțiunea trece singură pe *Folosește produsul*), alegeți **Creează produs nou**, sau lăsați
 **Ignoră**. Alegerea manuală a unui produs schimbă tipul potrivirii în „Ales manual".
@@ -174,6 +173,8 @@ Pe o linie roșie aveți deci trei variante: alegeți produsul existent din colo
 Sub tabel sunt opțiunile importului, vizibile tot în previzualizare: **Actualizează prețurile de
 furnizor**, **Creează factură furnizor**, **Validează recepția**.
 
+![Previzualizarea: ① linia roșie pe „Ignoră", ② opțiunile importului](screenshots/08_preview_actiune_linie.png)
+
 ### Pasul 4 — Confirmarea importului
 
 Apăsați **Importă**. Liniile cu *Folosește produsul* și *Creează produs nou* sunt scrise pe
@@ -187,6 +188,8 @@ opțiuni:
 
 Fereastra afișează jurnalul importului și butonul **Deschide comanda de achiziție** (din
 19.0.1.4.14), util când importul a fost pornit din mesajul SPV.
+
+![Rezultatul importului: jurnalul și ① butonul Deschide comanda de achiziție](screenshots/09_rezultat_deschide_comanda.png)
 
 ### Pasul 5 — Factura de furnizor creată
 
@@ -206,8 +209,10 @@ deschide, se verifică liniile și taxele preluate din XML, apoi se confirmă.
 Când un XML UBL ajunge pe comandă fără să treacă prin butoane (de exemplu atașat în chatter),
 importul rulează fără interfață. Rezultatul ajunge la operator pe două căi:
 
-1. **Nota din chatter**, cu jurnalul colorat (verde pentru liniile potrivite, roșu/portocaliu
-   pentru probleme);
+1. **Nota din chatter**, cu jurnalul colorat: fiecare mesaj începe cu un emoji după nivel
+   (✅ reușit, ⚠️ avertisment, ❌ eroare, ℹ️ informare) și are culoarea nivelului. Din
+   19.0.1.4.15 nivelul se păstrează și în română (înainte toate mesajele traduse ieșeau
+   albastre);
 2. **Activitatea „Import SPV necesită verificare"**, programată pe comandă când totalul nu se
    potrivește, au rămas linii neasociate, comanda nu mai are nimic de facturat sau documentul e o
    notă de creditare. Nota activității conține jurnalul complet; responsabil e cumpărătorul.
@@ -344,26 +349,22 @@ conturi RO):
 
 | # | Fișier | Conținut | Pas |
 |---|--------|----------|-----|
-| 1 | `screenshots/02_fereastra_importa_ubl.jpg` | Fereastra „Importă UBL", cu XML-ul atașat și butonul Preview | 2 |
-| 2 | `screenshots/03_preview_linie_verde.jpg` | Previzualizare — linie VERDE, găsită după codul de furnizor | 3 |
-| 3 | `screenshots/04_preview_linie_rosie.jpg` | Previzualizare — linie ROȘIE, niciun produs găsit | 3 |
-| 4 | `screenshots/06_preview_linie_galbena.png` | Previzualizare — toate trei culorile, cu linia GALBENĂ evidențiată | 3 |
-| 5 | `screenshots/05_comanda_confirmata_factura.jpg` | Comandă confirmată, cu smart-butonul „Facturi furnizor" | 5 |
-| 6 | `screenshots/07_activitate_verificare.png` | Import automat: activitatea de verificare + jurnalul colorat în chatter | 6 |
+| 1 | `../l10n_ro_message_spv_purchase/screenshots/02_notificare_import_direct.png` | Factură curată importată direct din mesajul SPV: notificarea „Factură importată" și comanda deschisă (captură a modulului SPV) | 1 |
+| 2 | `screenshots/02_fereastra_importa_ubl.jpg` | Fereastra „Importă UBL", cu XML-ul atașat și butonul Preview | 2 |
+| 3 | `screenshots/03_preview_linie_verde.jpg` | Previzualizare — linie VERDE, găsită după codul de furnizor | 3 |
+| 4 | `screenshots/04_preview_linie_rosie.jpg` | Previzualizare — linie ROȘIE, niciun produs găsit | 3 |
+| 5 | `screenshots/06_preview_linie_galbena.png` | Previzualizare — toate trei culorile, cu linia GALBENĂ evidențiată și coloana Acțiune | 3 |
+| 6 | `screenshots/08_preview_actiune_linie.png` | Previzualizarea ca dialog: linia roșie pe „Ignoră" și opțiunile importului | 3 |
+| 7 | `screenshots/09_rezultat_deschide_comanda.png` | Rezultatul importului: jurnalul și butonul „Deschide comanda de achiziție" | 4 |
+| 8 | `screenshots/05_comanda_confirmata_factura.jpg` | Comandă confirmată, cu smart-butonul „Facturi furnizor" | 5 |
+| 9 | `screenshots/07_activitate_verificare.png` | Import automat: activitatea de verificare + jurnalul colorat, cu factura amânată | 6 |
+
+Capturile `.jpg` (02–05) sunt dinainte de 19.0.1.4.14 și nu arată coloana **Acțiune**; ecranele
+noi sunt acoperite de capturile `06`, `08` și `09`, generate din test.
 
 Captura `screenshots/01_avertisment_linii_neasociate.jpg` (avertisment în chatter de la importul
 automat dintr-un mesaj SPV, înainte de 19.0.1.4.14) nu mai corespunde fluxului din mesajul SPV și
 nu mai e folosită în pași.
-
-**De regenerat cu `fisa-screenshots`** — capturile previzualizării de mai sus sunt dinainte de
-19.0.1.4.14 și nu arată coloana **Acțiune** și opțiunile de sub tabel. Shot-uri noi de adăugat în
-`tests/test_screenshots.py`:
-
-| # | Fișier planificat | Conținut vizat | Pas |
-|---|---|---|---|
-| 1 | `screenshots/08_notificare_import_direct.png` | Notificarea „Invoice imported" după Găsește/Creează Comanda pe o factură curată | 1 |
-| 2 | `screenshots/09_preview_actiune_linie.png` | Previzualizarea cu coloana **Acțiune** (*Folosește produsul* / *Ignoră* / *Creează produs nou*) și opțiunile de sub tabel | 3 |
-| 3 | `screenshots/10_rezultat_deschide_comanda.png` | Pasul de rezultat, cu jurnalul și butonul **Deschide comanda de achiziție** | 4 |
 
 ## 11. Observații pentru manual
 
