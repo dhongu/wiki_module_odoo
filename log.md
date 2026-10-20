@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-20] Re-ingestie: `l10n_ro_stock_consignment` (19.0.1.2.1), `l10n_ro_anaf_d390` (19.0.0.0.17); pagină nouă: `l10n_ro_stock_consignment_d390` (19.0.1.0.1)
+
+- **Acțiune:** actualizare plus o pagină nouă, procesate în paralel (un subagent per modul). Pentru custodie: stocurile la dispoziția clientului (call-off, art. 270^1 Cod fiscal), adică evidența `l10n.ro.call.off.line`, preluarea Dr 607 = Cr 357, returul, termenul de 12 luni cu cron; custodia dată prin contul de evaluare al locației (fără notă proprie); raportul Bunuri în custodie doar pe locații interne; `sudo()` la note. Fișa consultant recopiată cu 9 capturi (02–10). Pentru D390: hook-ul `_get_d390_stocks`, exportul lunilor doar cu `cos`, regulile validatorului J4.1.2. Puntea nouă completează secțiunea III.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `FISA_CONSULTANT.md`, ROADMAP 5b.2 și codul de pe `19.0` după PR-urile terrabit-solutions/l10n_ro_ent#810 și #812 (unite).
+- **Dependențe/Conexiuni:** [l10n_ro_stock_consignment](l10n_ro_stock_consignment/index.md) + [l10n_ro_anaf_d390](l10n_ro_anaf_d390/index.md) → [l10n_ro_stock_consignment_d390](l10n_ro_stock_consignment_d390/index.md); [l10n_ro_off_balance](l10n_ro_off_balance/index.md).
+- **Fișiere actualizate:** `l10n_ro_stock_consignment/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `l10n_ro_stock_consignment_d390/index.md`, `l10n_ro_anaf_d390/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-10-19] Actualizare: `deltatech_vendor_products_website` (19.0.1.4.1) — limita de căutări și capturile refăcute
 
 - **Acțiune:** actualizare. Garda de CPU și `psutil` înlocuite cu limita de căutări pe sesiune și pe IP; rutele vechi `online_search` / `online_source` eliminate; filtrul multi-companie al fluxurilor. Fișa consultant recopiată, cu capturile 01, 03 și 04 refăcute (formularul fluxului în română, lista catalogului fără coloana goală „Monedă").

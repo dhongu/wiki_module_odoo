@@ -461,7 +461,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_anaf_d307](l10n_ro_anaf_d307/index.md): Declarația 307 (ajustări de TVA): operațiuni de tip A/L/C, totaluri și sumă de control automate, export XML ANAF.
 - [l10n_ro_anaf_d311](l10n_ro_anaf_d311/index.md): Declarația 311 (TVA colectată de persoanele cu codul de TVA anulat sau reînregistrate), cu totaluri, verificări de corelație ANAF și export XML.
 - [l10n_ro_anaf_d318](l10n_ro_anaf_d318/index.md): Cererea de rambursare TVA din alt stat membru UE (D318), conform Directivei 2008/9/CE.
-- [l10n_ro_anaf_d390](l10n_ro_anaf_d390/index.md): Declarația recapitulativă D390 (VIES) pentru operațiunile intracomunitare de TVA.
+- [l10n_ro_anaf_d390](l10n_ro_anaf_d390/index.md): Declarația recapitulativă D390 (VIES) pentru operațiunile intracomunitare de TVA, cu export XML/XDP validat pe schema ANAF și secțiunea III (stocuri la dispoziția clientului) alimentată de puntea de consignație.
 - [l10n_ro_anaf_d392](l10n_ro_anaf_d392/index.md): Declarația 392A/392B — informativa anuală pentru persoanele cu cifră de afaceri sub plafon, cu sume completate din facturi și export XML validat ANAF.
 - [l10n_ro_anaf_d394](l10n_ro_anaf_d394/index.md): Declarația informativă D394 peste jurnalele de TVA, cu export XML validat de `D394Validator.jar` și XLSX.
 - [l10n_ro_anaf_d394_pos](l10n_ro_anaf_d394_pos/index.md): Punte care integrează bonurile fiscale din POS în declarația D394 (op1/op2).
@@ -600,7 +600,8 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_stock_account_store](l10n_ro_stock_account_store/index.md): Contabilitatea mărfurilor păstrate la preț de vânzare în locațiile de tip magazin: adaos comercial (378) și TVA neexigibilă (4428), generate separat pe fiecare mișcare de stoc.
 - [l10n_ro_stock_aged_report](l10n_ro_stock_aged_report/index.md): Raport de vechime a stocului pe intervale de zile, cu valorizare contabilă, pentru localizarea RO (fost `l10n_ro_stock_age_report`).
 - [l10n_ro_stock_cmp_periodic](l10n_ro_stock_cmp_periodic/index.md): Recalcul lunar al CMP periodic (OMFP 1802) cu notă de corecție perpetuu vs. periodic și audit trail.
-- [l10n_ro_stock_consignment](l10n_ro_stock_consignment/index.md): Bunuri primite sau date în custodie, fără transfer de proprietate: Dr 8033 = Cr 803999 pentru custodia primită și Dr 357 = Cr 371 pentru cea dată, cu storno, raport și proces-verbal.
+- [l10n_ro_stock_consignment](l10n_ro_stock_consignment/index.md): Bunuri primite sau date în custodie (8033, 35x) și stocuri la dispoziția clientului (call-off) cu evidență, termen de 12 luni și preluare Dr 607 = Cr 357.
+- [l10n_ro_stock_consignment_d390](l10n_ro_stock_consignment_d390/index.md): Secțiunea III (`cos`) din D390 din evidența call-off: tip A în luna expedierii, tip B motiv 1 în luna returului; lunile doar cu secțiunea III se exportă.
 - [l10n_ro_stock_constraints](l10n_ro_stock_constraints/index.md): Protecție integritate stocuri: blochează modificarea mișcărilor valorizate și impune stoc non-negativ pe locații interne.
 - [l10n_ro_stock_gestiune](l10n_ro_stock_gestiune/index.md): Gestiuni contabile de stoc (OMFP 2861/2009): gestionar, conturi pe gestiune, transfer valoric direct 371.B = 371.A, prin contul de tranzit sau prin 481/482 la subunități, blocarea recepțiilor și ieșirilor directe pe gestiunile cu cont propriu, recepție fără factură 371=408 cu furnizorul pe 408 și storno corect pe închiderea 408.
 - [l10n_ro_stock_gestiune_valuation](l10n_ro_stock_gestiune_valuation/index.md): Leagă 1:1 gestiunile contabile de stoc de ariile de evaluare și pune dimensiunea `valuation_area_id` pe notele RO (RNI 371=408, transferul între gestiuni oricare ar fi contrapartida, diferențe de preț).

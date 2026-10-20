@@ -1,10 +1,10 @@
 # Romania - Declarație recapitulativă (D390) (localizat la `l10n_ro_anaf_d390/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d390`
-- **Versiune:** `19.0.0.0.6`
+- **Versiune:** `19.0.0.0.17`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d390
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d390`
-- **Ultima Ingestie:** 2026-08-20
+- **Ultima Ingestie:** 2026-10-20
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -23,6 +23,9 @@ Modulul automatizează generarea Declarației recapitulative D390 (VIES) privind
 - Agregare pe perechea partener + tip operație, cu eliminarea automată a sumelor zero.
 - D390 apare în lista declarațiilor fiscale (`account.return`), cu termenul legal calculat automat (ziua 25 a lunii următoare perioadei) și cu două verificări proprii: operațiunile intracomunitare ale perioadei (cu acțiune directă către raport) și partenerii fără cod de TVA sau fără țară, care altfel ar bloca exportul.
 - Suport pentru **declarație rectificativă**: caracterul rectificativ se deduce automat din istoric (dacă declarația a fost deja depusă pentru perioadă), fără bifă manuală și fără dialog suplimentar.
+- Secțiunea III din declarație (`cos`, stocuri la dispoziția clientului, art. 270^1 Cod fiscal) are un punct de extensie dedicat. Fără alt modul secțiunea rămâne goală, ca înainte; o completează puntea [l10n_ro_stock_consignment_d390](../l10n_ro_stock_consignment_d390/index.md) din evidența stocurilor în custodie (tip A pentru clientul vizat al expedierilor din lună, tip B cu motiv 1 = retur pentru retururile din lună). Motivul 2 (înlocuirea clientului) și exportul XDP al secțiunii III sunt încă deschise.
+- Declarație doar cu secțiunea III: o lună cu expedieri în custodie, dar fără operațiuni intracomunitare, se exportă normal. Schema ANAF cere cel puțin un `operatie`, dar DUKIntegrator acceptă declarația, obligatorie în luna expedierii (art. 325 alin. (2) Cod fiscal); restul schemei se validează în continuare.
+- Regulile validatorului oficial pentru `cos` (DUKIntegrator J4.1.2) sunt documentate în ROADMAP 5b.2: tip A (clientul vizat, fără motiv) și tip B (modificări ulterioare, cu motiv 1 = retur sau 2 = înlocuire client), cu coduri de TVA fără prefixul țării și atribute inaplicabile omise.
 - Categoria de comerț triunghiular (cod `T`) este funcțională: tag fiscal dedicat (`01T - TAX BASE`) și taxă de vânzare `0% EU T`, creată automat la instalare inclusiv pe companiile RO care au deja planul de conturi instalat.
 
 #### 3. Dependențe
@@ -38,6 +41,8 @@ Modulul automatizează generarea Declarației recapitulative D390 (VIES) privind
 
 - `l10n_ro_anaf_d390.tax.report.handler`: handlerul raportului D390. Moștenește handlerul standard Odoo `account.ec.sales.report.handler` și mixin-ul `l10n_ro_anaf.report.handler.mixin` din `l10n_ro_anaf_base`. Atașat raportului `l10n_ro_d390_report` (cu rădăcina `account_reports.generic_ec_sales_report`), clasifică operațiunile pe categorii D390 după numele tag-urilor fiscale (nu prin expresiile raportului de TVA, pentru a evita o capcană tăcută de filtrare pe motor `tax_tags`), grupează partenerii UE pe tip de operațiune și adaugă butoanele de export ANAF.
 - `account.return` (extindere, `models/account_return.py`): integrează D390 în fluxul standard de declarații fiscale — calculează termenul legal de depunere, deduce declarația care acoperă perioada raportată (pentru a decide dacă exportul este inițial sau rectificativ) și rulează verificările proprii ale declarației.
+- Hook-ul `_get_d390_stocks(company, date_from, date_to)` (în handlerul raportului): punct de extensie pentru secțiunea III. Întoarce o listă de dicturi cu `tip` (A/B), `tara_m1`, `cod_m1`, `motiv`, `tara_m2`, `cod_m2` (atributele inaplicabile rămân `None` și nu apar în XML); implicit `[]`. Alimentează `data["stocks"]` din exportul XML.
+- `_validate_d390_xml_only_stocks` (în același handler): validare XSD pentru declarația doar cu `cos`, cu `operatie` marcat opțional (`minOccurs=0`) în copia în memorie a schemei; restul schemei rămâne obligatoriu.
 - `account.chart.template` (extindere, `models/account_chart_template.py`): definește taxa de vânzare `0% EU T` (referință `tvati_intrat`) pentru comerțul triunghiular intracomunitar, cu linie de repartiție purtătoare a tag-ului `01T - TAX BASE`; taxa nu este atașată la poziții fiscale, fiind aleasă explicit pe factura de livrare triunghiulară.
 - `hooks.py` (`post_init_hook`): creează taxa de comerț triunghiular și pe companiile RO care au deja planul de conturi instalat, caz neacoperit de încărcarea standard prin `@template`.
 
@@ -57,4 +62,5 @@ Modulul automatizează generarea Declarației recapitulative D390 (VIES) privind
 - [l10n_ro_anaf_base](../l10n_ro_anaf_base/index.md): infrastructura comună pentru declarațiile ANAF (mixin handler, butoane export, date declarant).
 - [l10n_ro_anaf_d300](../l10n_ro_anaf_d300/index.md): corelarea operațiunilor intracomunitare cu decontul de TVA, fără dublarea sumelor.
 - [l10n_ro_anaf_d394](../l10n_ro_anaf_d394/index.md): reconciliere cu jurnalul TVA (D394 acoperă operațiunile interne, D390 pe cele intracomunitare).
+- [l10n_ro_stock_consignment_d390](../l10n_ro_stock_consignment_d390/index.md): puntea `auto_install` care completează secțiunea III (`cos`) prin hook-ul `_get_d390_stocks`, din evidența call-off a `l10n_ro_stock_consignment`.
 - [l10n_ro_doc_screenshots](../l10n_ro_doc_screenshots/index.md): mixinul `ScreenshotCase` folosit pentru generarea automată a capturilor din fișa modulului.
