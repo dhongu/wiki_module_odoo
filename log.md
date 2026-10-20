@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-20] Pagină nouă: `deltatech_ai_website_product_image` (19.0.1.0.0); re-ingestie: `deltatech_ai_website_product` (19.0.1.2.3) cu fișa consultant
+
+- **Acțiune:** o pagină nouă și o actualizare, procesate în paralel (un subagent per modul). Căutarea după poză: vectorii Gemini (`gemini-embedding-2`, 1536) ai pozelor de produs, comparați cu poza vizitatorului, pragul de asemănare 0,75, reluarea la limita de cotă, conversia WEBP; pilotul pe 300 de produse (în primele 5 la 34 din 40 de poze). Asistentul de magazin: conversia WEBP a pozelor vizitatorilor (19.0.1.2.2) și fișa consultant copiată, cu configurarea și testarea în Live Chat; cele 11 capturi ale fișei nu există încă și nu au fost copiate.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `FISA_CONSULTANT.md` și codul de pe `19.0` după PR-urile terrabit-solutions/bitshop_ent#416, #419 și #420 (unite).
+- **Dependențe/Conexiuni:** [deltatech_ai_website_product](deltatech_ai_website_product/index.md) → [deltatech_ai_website_product_image](deltatech_ai_website_product_image/index.md); [deltatech_ai_source_sync](deltatech_ai_source_sync/index.md), [deltatech_ai_agent_delegate](deltatech_ai_agent_delegate/index.md).
+- **Fișiere actualizate:** `deltatech_ai_website_product_image/index.md`, `deltatech_ai_website_product/` (`index.md`, `FISA_CONSULTANT.md`), `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-10-20] Pagini noi: modulele AI din `bitshop_ent` — `deltatech_ai_source_sync` (19.0.1.6.1), `deltatech_ai_knowledge_sync` (19.0.1.0.2), `deltatech_ai_agent_delegate` (19.0.1.0.2), `deltatech_ai_website_product` (19.0.1.2.0), `deltatech_purchase_ubl_ai` (19.0.1.0.1)
 
 - **Acțiune:** cinci pagini noi, procesate în paralel (un subagent per modul), apoi legate între ele: dependențele de `deltatech_ai_source_sync` sunt link-uri active, iar Conexiunile leagă colecțiile, Knowledge, delegarea și asistentul de magazin. Asistentul de magazin include căutarea după model și an (PR terrabit-solutions/bitshop_ent#405) și citirea pozelor vizitatorilor (#410). Niciun modul nu are fișă consultant.

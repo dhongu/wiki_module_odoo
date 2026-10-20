@@ -1,10 +1,11 @@
 # AI - Shop Assistant
 
 - **Nume Tehnic:** `deltatech_ai_website_product`
-- **Versiune:** `19.0.1.2.0`
+- **Versiune:** `19.0.1.2.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_website_product
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_ai_website_product`
 - **Ultima Ingestie:** `2026-10-20`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -16,7 +17,7 @@ Un agent AI din Odoo 19 Enterprise răspunde vizitatorilor magazinului online pe
 - **Sincronizare automată:** un produs creat, modificat, publicat, depublicat sau arhivat se sincronizează după câteva minute; un produs nemodificat își păstrează sursa și embeddings. Un cron zilnic reverifică tot, iar un catalog mare se procesează pe etape, care continuă de unde s-au oprit.
 - **Preț și disponibilitate live:** unealta *AI: Shop Product Price and Availability* returnează prețul din magazin (lista de prețuri, taxe afișate ca pe site), disponibilitatea (în stoc, la comandă, indisponibil) și linkul produsului. Prețul și stocul vin doar din unealtă, niciodată din surse.
 - **Căutare după model și an:** unealta *AI: Shop Product Search* găsește produsele al căror nume conține toate cuvintele vizitatorului (marcă, model, tip de produs; cu sau fără diacritice) și păstrează doar produsele ai căror ani de fabricație, citiți din nume („2016 - prezent”, „02.2015 - 07.2020”, „din 2011”), se potrivesc cu anul vizitatorului. Produsele fără ani sunt indicate cu nota că trebuie verificată compatibilitatea.
-- **Citirea pozelor vizitatorilor:** cu opțiunea *Read Photos*, o poză trimisă în chat (mașină, piesă, etichetă) este descrisă de modelul de limbaj al agentului (marcă, model, generație, ani, coduri și text vizibile, cel mult 2 poze redimensionate la 1024 px). Descrierea se adaugă la întrebare și se păstrează în istoricul conversației; ce nu e sigur este marcat „uncertain”, iar agentul cere confirmarea. Pozele sunt trimise furnizorului modelului.
+- **Citirea pozelor vizitatorilor:** cu opțiunea *Read Photos*, o poză trimisă în chat (mașină, piesă, etichetă) este descrisă de modelul de limbaj al agentului (marcă, model, generație, ani, coduri și text vizibile, cel mult 2 poze redimensionate la 1024 px; o poză WEBP este convertită în JPEG înainte de trimitere). Descrierea se adaugă la întrebare și se păstrează în istoricul conversației; ce nu e sigur este marcat „uncertain”, iar agentul cere confirmarea. Pozele sunt trimise furnizorului modelului.
 - **Topicul *Shop Assistant*:** adaugă ambele unelte agentului, cu reguli: răspunde în limba vizitatorului, recomandă doar produse din surse sau din unelte, cu link, nu inventează specificații, nu dă prețuri din surse și trimite către un coleg prin butonul „Ask a Human”.
 - **Citări către magazin:** răspunsurile conțin linkul paginii produsului.
 - **Mai multe site-uri:** fiecare agent urmărește produsele unui singur website.
@@ -53,3 +54,4 @@ Un agent AI din Odoo 19 Enterprise răspunde vizitatorilor magazinului online pe
 - `ai`: modulul Enterprise de bază pentru agenți, topicuri și unelte AI.
 - [deltatech_ai_source_sync](../deltatech_ai_source_sync/index.md): oferă mecanismul de sincronizare a surselor refolosit aici.
 - [deltatech_ai_agent_delegate](../deltatech_ai_agent_delegate/index.md): un agent public (de ex. pe livechat) poate delega întrebările de produs agentului magazinului.
+- [deltatech_ai_website_product_image](../deltatech_ai_website_product_image/index.md): căutarea produselor după poză; depinde de acest modul.
