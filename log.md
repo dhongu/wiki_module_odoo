@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-20] Pagini noi: modulele AI din `bitshop_ent` — `deltatech_ai_source_sync` (19.0.1.6.1), `deltatech_ai_knowledge_sync` (19.0.1.0.2), `deltatech_ai_agent_delegate` (19.0.1.0.2), `deltatech_ai_website_product` (19.0.1.2.0), `deltatech_purchase_ubl_ai` (19.0.1.0.1)
+
+- **Acțiune:** cinci pagini noi, procesate în paralel (un subagent per modul), apoi legate între ele: dependențele de `deltatech_ai_source_sync` sunt link-uri active, iar Conexiunile leagă colecțiile, Knowledge, delegarea și asistentul de magazin. Asistentul de magazin include căutarea după model și an (PR terrabit-solutions/bitshop_ent#405) și citirea pozelor vizitatorilor (#410). Niciun modul nu are fișă consultant.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md` (și `CONFIGURE.md` la `deltatech_purchase_ubl_ai`), manifestele și lista modelelor, vizualizărilor și cron-urilor, de pe `19.0` (`c0388b36`).
+- **Dependențe/Conexiuni:** [deltatech_ai_source_sync](deltatech_ai_source_sync/index.md) → [deltatech_ai_knowledge_sync](deltatech_ai_knowledge_sync/index.md), [deltatech_ai_website_product](deltatech_ai_website_product/index.md); [deltatech_ai_agent_delegate](deltatech_ai_agent_delegate/index.md); [deltatech_purchase_ubl](deltatech_purchase_ubl/index.md) → [deltatech_purchase_ubl_ai](deltatech_purchase_ubl_ai/index.md), [deltatech_ai_anthropic](deltatech_ai_anthropic/index.md).
+- **Fișiere actualizate:** `deltatech_ai_source_sync/index.md`, `deltatech_ai_knowledge_sync/index.md`, `deltatech_ai_agent_delegate/index.md`, `deltatech_ai_website_product/index.md`, `deltatech_purchase_ubl_ai/index.md`, `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-10-20] Re-ingestie: `l10n_ro_stock_consignment` (19.0.1.2.1), `l10n_ro_anaf_d390` (19.0.0.0.17); pagină nouă: `l10n_ro_stock_consignment_d390` (19.0.1.0.1)
 
 - **Acțiune:** actualizare plus o pagină nouă, procesate în paralel (un subagent per modul). Pentru custodie: stocurile la dispoziția clientului (call-off, art. 270^1 Cod fiscal), adică evidența `l10n.ro.call.off.line`, preluarea Dr 607 = Cr 357, returul, termenul de 12 luni cu cron; custodia dată prin contul de evaluare al locației (fără notă proprie); raportul Bunuri în custodie doar pe locații interne; `sudo()` la note. Fișa consultant recopiată cu 9 capturi (02–10). Pentru D390: hook-ul `_get_d390_stocks`, exportul lunilor doar cu `cos`, regulile validatorului J4.1.2. Puntea nouă completează secțiunea III.
