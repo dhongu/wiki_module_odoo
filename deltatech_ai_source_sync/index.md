@@ -1,7 +1,7 @@
 # AI - Source Sync (colecții Markdown)
 
 - **Nume Tehnic:** `deltatech_ai_source_sync`
-- **Versiune:** `19.0.1.6.1`
+- **Versiune:** `19.0.1.6.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_source_sync
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_ai_source_sync`
 - **Ultima Ingestie:** `2026-10-20`
@@ -27,7 +27,7 @@ Alimentează agenții AI din Odoo 19 Enterprise cu documentație Markdown ținut
 - **Prefix folder:** numele sursei poate începe cu folderul fișierului (ex. numele tehnic al modulului într-un wiki de module).
 - **Indexare UTF-8** pentru toate atașamentele Markdown/text, inclusiv cele încărcate manual ca surse (fișierele încărcate înainte de instalare își păstrează indexul vechi).
 - **Flux de lucru:** *AI › Configuration › Source Collections* sau butonul inteligent *Collections* de pe agent; rezultatul (adăugate, actualizate, șterse, neschimbate, eșuate) apare pe colecție, iar sursele sunt apoi embedded de cronul standard AI.
-- **Exemple:** wiki de module (`*/index.md`, `*/FISA_CONSULTANT.md`, fără împărțire), legislație (root `references`, `*.md`, împărțire la titlul 2), documentația Odoo (`odoo/documentation`, `*.rst`, Page URL către odoo.com).
+- **Exemple:** wiki de module în două colecții cu prefix folder: paginile modulelor (`*/index.md`, împărțire la titlul 2; secțiunile sunt pe titlul 4, deci de regulă o sursă pe pagină) și fișele consultant (`*/FISA_CONSULTANT*.md`, împărțire la titlul 2, cam zece surse pe fișă, deci peste 2.000 de surse la 220 de fișe, cu citări pe secțiune), legislație (root `references`, `*.md`, împărțire la titlul 2), documentația Odoo (`odoo/documentation`, `*.rst`, Page URL către odoo.com).
 
 #### 3. Dependențe
 
