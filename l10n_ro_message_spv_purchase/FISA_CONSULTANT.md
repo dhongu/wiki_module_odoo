@@ -2,7 +2,7 @@
 
 **Modul:** `l10n_ro_message_spv_purchase`
 **Utilizator principal:** Contabil furnizori, operator achiziții
-**Versiune documentată:** 19.0.0.0.7
+**Versiune documentată:** 19.0.0.0.10
 **Prioritate:** 🔴 Ridicată (verigă centrală în fluxul de facturare furnizori prin e-Factura/SPV; sursa istorică a facturilor duplicate)
 
 ---
@@ -19,9 +19,12 @@ Modulul rezolvă asta pe trei planuri:
 1. **Identifică comanda** — extrage referința comenzii din XML-ul UBL (`OrderReference/ID`) și o
    folosește pentru a găsi comanda de achiziție corespunzătoare; dacă nu găsește, poate crea una
    nouă (ciornă) pe furnizorul mesajului.
-2. **Copiază XML-ul pe comandă** — atașamentul XML din mesajul SPV este *copiat* (nu doar
-   referențiat) pe comanda de achiziție. Această copiere este cea care declanșează importul
-   automat al liniilor prin `deltatech_purchase_ubl` (vezi [fișa acelui modul](../deltatech_purchase_ubl/FISA_CONSULTANT.md)).
+2. **Copiază XML-ul pe comandă și importă factura cu decizia utilizatorului** — atașamentul XML
+   din mesajul SPV este *copiat* (nu doar referențiat) pe comanda de achiziție. Din 19.0.0.0.10,
+   importul liniilor nu mai rulează nesupravegheat: dacă factura e curată (toate liniile
+   identificate după cod și totalul bate), se importă direct, cu o notificare; altfel se deschide
+   previzualizarea din `deltatech_purchase_ubl`, unde utilizatorul decide pentru fiecare linie
+   (vezi [fișa acelui modul](../deltatech_purchase_ubl/FISA_CONSULTANT.md)).
 3. **Leagă efectiv factura de liniile comenzii** — setează `purchase_line_id` pe liniile facturii
    prin ruta standard Odoo, ca `qty_invoiced` să crească și comanda să nu mai apară „de facturat".
    Acesta e mecanismul care oprește la rădăcină facturile duplicate.
@@ -93,9 +96,11 @@ Date minime pentru demo:
    - *Romania e-Invoicing: Download ZIP SPV Message* (zilnic, `limit=5`) — aduce ZIP-urile.
 4. Meniul de lucru: **Contabilitate → Diverse → SPV → Messages SPV**. Accesul cere grupul
    `l10n_ro_config.group_ro_menus`.
-5. **Recomandat: instalați și `deltatech_purchase_ubl` (≥ 19.0.1.2.5)**, altfel comanda legată
-   primește doar XML-ul atașat, fără importul liniilor. Versiunea minimă contează: sub 19.0.1.2.5
-   importul automat ignoră contextul `purchase_ubl_no_new_products` și creează produse duplicate.
+5. **Recomandat: instalați și `deltatech_purchase_ubl` (≥ 19.0.1.4.14)**, altfel butoanele doar
+   leagă comanda și atașează XML-ul, fără importul liniilor. Versiunea minimă contează: cu o
+   versiune mai veche, importul automat rulează la atașarea XML-ului, iar previzualizarea deschisă
+   de buton ar importa a doua oară. La actualizarea proiectelor, modulul din deltatech ajunge
+   primul.
 6. **Completați cumpărătorul** pe comenzile create din SPV (sau acceptați valoarea implicită dată
    de userul care rulează acțiunea): din `deltatech_purchase_ubl` 19.0.1.4.0, activitatea de
    verificare a importului se atribuie cumpărătorului de pe comandă.
@@ -135,25 +140,41 @@ pe trei câmpuri ale comenzii — `partner_ref` (referința furnizorului), `orig
 > afectată — o comandă care mai are ce factura rămâne candidat valid.
 
 Rezultate posibile:
-- **exact o comandă găsită** — se leagă, se postează nota cu XML-ul și se deschide comanda;
+- **exact o comandă găsită** — se leagă, se postează nota cu XML-ul și se importă factura (Pasul 3);
 - **mai multe comenzi găsite** — se deschide lista filtrată, ca să alegeți manual; nu se leagă și
   nu se creează nimic;
 - **nicio comandă** — la **Găsește** apare un mesaj informativ; la **Creează** se creează comanda
-  ciornă (`partner_ref` = referința, `origin` = numele mesajului SPV).
+  ciornă (`partner_ref` = referința, `origin` = numele mesajului SPV) și se importă factura pe ea
+  (Pasul 3).
 
-### Pasul 3 — Ce se întâmplă automat la legare
+### Pasul 3 — Importul facturii pe comandă
 
-1. Se **copiază XML-ul** pe comandă. Dacă factura nu există încă în Odoo (cazul tipic al comenzii
-   create din mesaj), XML-ul se extrage direct din **ZIP-ul brut descărcat de la ANAF** — altfel
-   atașamentul ar fi gol și comanda ar rămâne fără linii (tichet #9287).
-2. Se **postează o notă** în chatter-ul comenzii: „Legat din mesajul SPV ... (Ref: ...)", cu XML-ul
-   atașat.
-3. Postarea se face cu contextul **`purchase_ubl_no_new_products`**, ca importul automat din
-   `deltatech_purchase_ubl` să **nu creeze produse noi în tăcere** pentru liniile pe care nu le
-   poate identifica sigur (tichet #9315). Liniile rămân neasociate, semnalate în jurnalul
-   importului — și, din `deltatech_purchase_ubl` 19.0.1.4.0, printr-o activitate „Import SPV
-   necesită verificare" pe comandă.
-4. Dacă factura **există deja**, se leagă imediat de liniile comenzii (`purchase_line_id`).
+La legare, modulul:
+
+1. **Copiază XML-ul** pe comandă. Dacă factura nu există încă în Odoo (cazul tipic al comenzii
+   create din mesaj), XML-ul se extrage direct din **ZIP-ul brut descărcat de la ANAF** (tichet
+   #9287).
+2. **Postează o notă** în chatter-ul comenzii: „Legat din mesajul SPV ... (Ref: ...)", cu XML-ul
+   atașat. Postarea se face **fără importul automat** (context `purchase_ubl_skip_auto_import`):
+   importul îl pornește butonul, ca să poată decide utilizatorul.
+3. Dacă factura **există deja**, o leagă imediat de liniile comenzii (`purchase_line_id`).
+4. **Importă factura** prin `deltatech_purchase_ubl`, în unul din două moduri:
+
+   - **Factura e curată** — toate liniile sunt identificate după **cod de furnizor** sau **cod de
+     bare**, iar după import totalul comenzii bate la ban cu totalul din XML. Importul rămâne,
+     jurnalul se postează pe comandă, iar utilizatorul vede doar notificarea **„Invoice imported"**,
+     după care se deschide comanda.
+   - **Altfel** — o linie găsită doar după nume, o linie neidentificată sau un total diferit.
+     Importul de probă se anulează complet și se deschide **previzualizarea**. Pentru fiecare linie
+     utilizatorul alege: **Folosește produsul** (implicit pe liniile cu produs), **Ignoră** (implicit
+     pe liniile fără produs) sau **Creează produs nou** (doar la alegere explicită). Apoi apasă
+     **Importă**, iar din fereastra de rezultat poate deschide comanda.
+
+   **Creează factură furnizor** e bifat doar dacă factura din SPV nu există încă în Odoo; altfel
+   importul ar crea o a doua factură.
+
+> Înainte de 19.0.0.0.10, legarea pornea importul automat, fără fereastră, iar liniile pe care
+> sistemul nu le identifica se pierdeau de pe comandă (rămâneau doar în jurnalul din chatter).
 
 ### Pasul 4 — Legarea facturii de comandă (cele două ordini)
 
@@ -185,8 +206,10 @@ Modulul nu blochează niciodată, dar semnalează în chatter în trei situații
 
 Un **al doilea click** pe Găsește/Creează Comanda, pentru un mesaj deja legat la comanda găsită,
 ridică o eroare explicită în loc să reproceseze XML-ul. Motivul: reprocesarea reatașează XML-ul și
-retriggerează importul automat, care poate produce produse, linii, recepții și facturi duplicate
-(tichet #9055).
+reimportă factura, ceea ce poate produce linii, recepții și facturi duplicate (tichet #9055).
+
+> Dacă utilizatorul a închis previzualizarea fără să importe, butonul nu mai poate fi folosit pe
+> acel mesaj: importul se reia din comandă, cu **Importă UBL** (XML-ul e deja atașat).
 
 ## 7. Legături cu alte module / declarații
 
@@ -194,43 +217,49 @@ retriggerează importul automat, care poate produce produse, linii, recepții ș
 |---|---|---|
 | `l10n_ro_message_spv` (OCA) | modelul `l10n.ro.message.spv`, cronurile de descărcare din SPV, crearea facturii din mesaj | dependență (manifest) |
 | `purchase` | comenzile de achiziție și matcherul standard `_find_and_set_purchase_orders` | dependență (manifest) |
-| `deltatech_purchase_ubl` (≥ 19.0.1.2.5) | importă liniile pe comandă din XML-ul copiat de acest modul; respectă contextul `purchase_ubl_no_new_products` | **modul separat, necesar practic** — nu e în `depends` |
+| `deltatech_purchase_ubl` (≥ 19.0.1.4.14) | importul facturii pe comandă: direct pentru facturile curate, altfel previzualizarea cu decizie pe fiecare linie; respectă contextul `purchase_ubl_skip_auto_import` | **modul separat, necesar practic** — nu e în `depends` |
+| `deltatech_purchase_ubl_ai` | în previzualizare, propune cu AI produsul pentru liniile neidentificate | extensie opțională (bitshop_ent, Enterprise) |
 | `l10n_ro_efactura_dedup` | furnizează `l10n_ro_edi_dedup_key` pentru semnalizarea duplicatelor cross-stack | cuplaj slab, opțional (gardă pe existența câmpului) |
 | `l10n_ro_edi` (Enterprise) | cealaltă stivă SPV, față de care se face verificarea de duplicat | opțional, doar prin cheia de deduplicare |
 
 Ce este automat: extragerea referinței comenzii din XML, căutarea comenzii, copierea XML-ului pe
-comandă (cu fallback pe ZIP-ul ANAF), excluderea comenzilor complet facturate, legarea facturii de
-liniile comenzii în ambele ordini, semnalizarea duplicatelor, blocarea reprocesării.
+comandă (cu fallback pe ZIP-ul ANAF), excluderea comenzilor complet facturate, importul direct al
+facturilor curate, legarea facturii de liniile comenzii în ambele ordini, semnalizarea
+duplicatelor, blocarea reprocesării.
 
 Ce rămâne manual: setarea partenerului pe mesaj, apăsarea butonului Găsește/Creează, alegerea din
-listă când există mai multe candidate, verificarea liniilor importate, confirmarea comenzii,
-verificarea și postarea facturii.
+listă când există mai multe candidate, decizia în previzualizare pentru liniile neidentificate
+(produs existent, produs nou sau ignorare), confirmarea comenzii, verificarea și postarea facturii.
 
 **Limitări cunoscute — de comunicat clientului:**
 
-1. **Nu există declanșare automată.** Legarea mesaj↔comandă se face doar la apăsarea butonului
-   Găsește/Creează Comanda; nu există cron care să lege mesajele SPV de comenzi. Automat e doar
-   ce urmează după legare (importul liniilor).
+1. **Nu există declanșare automată.** Legarea mesaj↔comandă și importul facturii se fac doar la
+   apăsarea butonului Găsește/Creează Comanda; nu există cron care să lege mesajele SPV de comenzi.
 2. **`deltatech_purchase_ubl` nu e în `depends`.** Fără el, comanda primește XML-ul atașat, dar
-   **nu primește linii**. Legătura funcțională există, dependența declarată nu — de verificat la
-   fiecare implementare.
+   **nu primește linii**. Cu o versiune sub 19.0.1.4.14, importul rulează de două ori (automat la
+   atașare și din previzualizare). Legătura funcțională există, dependența declarată nu — de
+   verificat la fiecare implementare.
 3. **Căutarea e pe egalitate exactă**, pe trei câmpuri. O referință cu spații, prefixe sau
    diferențe de scriere între XML și comandă nu se potrivește, iar **Creează Comanda** va crea o
    comandă nouă în loc să o găsească pe cea existentă.
 4. **Comanda creată automat e ciornă, neconfirmată.** Consecință directă în
    `deltatech_purchase_ubl`: crearea facturii de furnizor din import se sare, iar confirmarea
-   ulterioară **nu** o declanșează retroactiv (vezi limitarea 2 din fișa acelui modul).
-5. **Semnalizarea duplicatelor e strict informativă** — nu blochează nici postarea facturii, nici
+   ulterioară **nu** o declanșează retroactiv. Se folosește factura din mesajul SPV, care se leagă
+   de comanda confirmată (Pasul 4).
+5. **Importul direct cere totalul exact, cu TVA.** Dacă produsele nu au taxele de achiziție
+   configurate, totalul nu bate și se deschide previzualizarea chiar dacă toate liniile sunt
+   identificate după cod.
+6. **Semnalizarea duplicatelor e strict informativă** — nu blochează nici postarea facturii, nici
    crearea unei a doua facturi pe comandă.
-6. **Legarea facturii de comandă înghite excepțiile** — dacă matcherul standard eșuează, se
+7. **Legarea facturii de comandă înghite excepțiile** — dacă matcherul standard eșuează, se
    loghează un `warning` în log-ul serverului și metoda întoarce `False`, fără eroare vizibilă în
    interfață. Comanda rămâne „de facturat" fără explicație pentru operator.
-7. **`countries: ["ro"]`** — modulul se propune la instalare doar pe companii românești.
+8. **`countries: ["ro"]`** — modulul se propune la instalare doar pe companii românești.
 
 ## 8. Verificări pentru consultant
 
 - [ ] Modulul se instalează fără erori (dependențe `l10n_ro_message_spv`, `purchase` prezente).
-- [ ] `deltatech_purchase_ubl` e instalat, la versiune **≥ 19.0.1.2.5**.
+- [ ] `deltatech_purchase_ubl` e instalat, la versiune **≥ 19.0.1.4.14**.
 - [ ] Cronurile *Download SPV Message* și *Download ZIP SPV Message* sunt active.
 - [ ] Pe un mesaj SPV de tip **In Invoice**, câmpurile **Purchase Reference** și **Purchase Order**
       sunt vizibile sub Reference.
@@ -247,10 +276,15 @@ verificarea și postarea facturii.
 - [ ] XML-ul apare **copiat** pe comandă (atașament cu `res_model = purchase.order`), nu doar
       referențiat, inclusiv când factura nu există încă (fallback pe ZIP-ul ANAF).
 - [ ] Reapăsarea butonului nu duplică atașamentul (dedup pe checksum).
-- [ ] Liniile comenzii **se importă** din XML după legare (dovada că `deltatech_purchase_ubl` a
-      rulat), iar totalul comenzii coincide cu `PayableAmount` din XML.
-- [ ] Importul automat **nu creează produse noi** pentru liniile fără cod de furnizor — rămân
-      neasociate, cu semnalare.
+- [ ] Atașarea XML-ului pe comandă **nu** pornește importul automat (comanda rămâne fără linii
+      până la import).
+- [ ] O factură cu toate liniile identificate după cod și totalul egal cu comanda se importă
+      **fără fereastră**, cu notificarea „Invoice imported", apoi se deschide comanda.
+- [ ] O factură cu o linie neidentificată (sau găsită doar după nume) ori cu total diferit deschide
+      **previzualizarea**, iar comanda rămâne neschimbată până la **Importă**.
+- [ ] În previzualizare, linia neidentificată are acțiunea **Ignoră**; nu se creează niciun produs
+      decât dacă utilizatorul alege **Creează produs nou** pe acea linie.
+- [ ] Când factura din SPV există deja, **Creează factură furnizor** e debifat în previzualizare.
 - [ ] Al doilea click pe Găsește/Creează pentru un mesaj deja legat ridică **UserError**, nu
       reprocesează.
 - [ ] După crearea facturii din mesaj, liniile facturii au **`purchase_line_id`** setat, iar
@@ -272,8 +306,10 @@ verificarea și postarea facturii.
 | „Nu există un partener setat pe mesaj. Setați partenerul înainte de a crea comanda de achiziție." | Mesajul SPV nu a putut identifica furnizorul după CUI | Completați partenerul pe mesaj (verificați CUI-ul furnizorului în Odoo) |
 | „Acest mesaj SPV este deja legat de comanda de achiziție ...  Documentul a fost deja procesat — nu-l reprocesați din nou." | Al doilea click pe Găsește/Creează — gardă intenționată (tichet #9055) | Deschideți comanda din câmpul **Purchase Order**; pentru completări folosiți **Importă UBL → Preview** pe comandă |
 | Se deschide o listă de comenzi în loc să lege una | Referința se potrivește pe mai multe comenzi | Alegeți manual comanda corectă și legați-o de acolo (sau restrângeți referințele pe comenzi) |
-| Comanda e legată, XML-ul e atașat, dar **comanda n-are linii** | `deltatech_purchase_ubl` nu e instalat, sau e sub 19.0.1.2.5 | Instalați/actualizați modulul; nu e declarat în `depends`, deci lipsa lui nu dă eroare |
-| Linie din factură rămasă neasociată, fără produs creat | Comportament așteptat din 19.0.0.0.7 (context `purchase_ubl_no_new_products`) — nu e o eroare | Completați linia manual din comandă, prin Importă UBL → Preview |
+| Comanda e legată, XML-ul e atașat, dar **comanda n-are linii** | `deltatech_purchase_ubl` nu e instalat, sau previzualizarea a fost închisă fără **Importă** | Instalați/actualizați modulul; reluați importul din comandă cu **Importă UBL** |
+| Linie din factură lipsă de pe comandă după import | Linia a rămas pe **Ignoră** în previzualizare (implicit pentru liniile fără produs) | Relansați **Importă UBL** pe comandă și alegeți produsul sau **Creează produs nou** |
+| Liniile apar de două ori pe comandă | `deltatech_purchase_ubl` sub 19.0.1.4.14: importul automat a rulat la atașare, apoi și din previzualizare | Actualizați `deltatech_purchase_ubl`; corectați manual comanda |
+| Se deschide previzualizarea deși toate liniile sunt identificate | Totalul comenzii nu bate cu XML-ul (frecvent: produse fără taxe de achiziție) | Verificați taxele produselor; importați din previzualizare |
 | „Atenție duplicat: comanda de achiziție ... are deja factura ..." | Liniile comenzii sunt deja legate de o altă factură ne-anulată | Verificați care factură e cea corectă înainte de a posta; nota e informativă, nu blochează |
 | „Posibil duplicat cross-stack SPV: există deja factura ... cu aceeași cheie de deduplicare" | Aceeași factură a fost preluată și de cealaltă stivă SPV (Enterprise vs OCA) | Păstrați o singură factură; anulați/ștergeți duplicatul înainte de postare |
 | „Atenție duplicat: pentru această comandă există deja factura/facturile din SPV ..." | S-a apăsat „Creează factură" pe o comandă care are deja factură din SPV | Folosiți factura existentă din SPV în loc să creați una nouă |
@@ -292,30 +328,29 @@ localizării RO („RO Company", RON, plan de conturi RO):
 |---|--------|----------|
 | 1 | `screenshots/01_mesaj_spv_butoane.png` | Formularul mesajului SPV: ① **Găsește Comanda**, ② **Creează Comanda**, ③ câmpul **Referință achiziție** completat automat din XML |
 
-Rămân **de realizat** (extindeți testul de capturi cu shot-uri noi):
+Rămân **de realizat cu `fisa-screenshots`** (extindeți testul de capturi cu shot-uri noi):
 
-| # | De capturat | Conținut vizat |
-|---|---|---|
-| 2 | Comandă legată | Chatter-ul comenzii cu nota „Legat din mesajul SPV ..." și XML-ul atașat |
-| 3 | Comandă cu linii importate | Liniile aduse din XML pe comanda creată din mesaj (dovada lanțului cu `deltatech_purchase_ubl`) |
-| 4 | Avertisment de duplicat | Nota „Atenție duplicat: comanda de achiziție ... are deja factura ..." în chatter |
-| 5 | Gardă anti-reprocesare | Dialogul de eroare la al doilea click pe Găsește/Creează Comanda |
-
-Acoperirea parțială a pasului 3 există deja în fișa modulului vecin: captura
-[`07_activitate_verificare.png`](../deltatech_purchase_ubl/screenshots/07_activitate_verificare.png)
-arată comanda din fluxul automat, cu jurnalul importului în chatter.
+| # | Fișier planificat | Conținut vizat | Pas |
+|---|---|---|---|
+| 2 | `screenshots/02_notificare_import_direct.png` | Notificarea „Invoice imported" după Creează Comanda, pe o factură curată | 3 |
+| 3 | `screenshots/03_preview_decizie_linii.png` | Previzualizarea deschisă din mesaj, cu o linie neidentificată pe **Ignoră** și coloana **Acțiune** | 3 |
+| 4 | `screenshots/04_avertisment_duplicat.png` | Nota „Atenție duplicat: comanda de achiziție ... are deja factura ..." în chatter | 5 |
+| 5 | `screenshots/05_garda_reprocesare.png` | Dialogul de eroare la al doilea click pe Găsește/Creează Comanda | 6 |
 
 ## 11. Observații pentru manual
 
 Documentația orientată pe utilizator pentru acest flux este în manualul intern, articolul
 „Gestionare facturi furnizori prin Mesaje SPV" (https://www.terrabit.ro/odoo/knowledge/686) —
-punctul 8 tratează liniile neasociate. Fișa de consultant completează manualul cu perspectiva de
+punctul 8 tratează liniile neasociate și **trebuie actualizat** pentru 19.0.0.0.10: liniile
+neidentificate se decid acum în previzualizarea deschisă de buton, iar facturile curate trec
+direct, cu notificare. Fișa de consultant completează manualul cu perspectiva de
 configurare/depanare: dependența nedeclarată de `deltatech_purchase_ubl` și versiunea minimă,
 comportamentul căutării pe egalitate exactă, excluderea comenzilor facturate, și mecanismul real
 prin care se evită facturile duplicate (`purchase_line_id`, nu doar legătura informativă
 mesaj→comandă).
 
-Cele două fișe se citesc împreună: acest modul **livrează XML-ul** pe comandă,
-[`deltatech_purchase_ubl`](../deltatech_purchase_ubl/FISA_CONSULTANT.md) **îl transformă în linii**.
+Cele două fișe se citesc împreună: acest modul **livrează XML-ul** pe comandă și pornește
+importul, [`deltatech_purchase_ubl`](../deltatech_purchase_ubl/FISA_CONSULTANT.md) **îl transformă
+în linii**.
 Un incident de tip „comanda din SPV n-are linii" sau „s-au creat produse duplicate" începe aproape
 întotdeauna la granița dintre ele.
