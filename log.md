@@ -4,6 +4,16 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-21] Pagină nouă: `deltatech_ai_purchase_pdf` (19.0.1.0.4) cu fișa consultant; re-ingestie: `deltatech_purchase_ubl` (19.0.1.4.19)
+
+- **Acțiune:** o pagină nouă și o actualizare, procesate în paralel (un subagent per modul). Importul PDF cu AI: bannerul și avertismentele previzualizării apar acum în interfață (19.0.1.0.4, `is_pdf` citit fără `bin_size`); fișa consultant copiată, cu 10 capturi generate de `tests/test_screenshots.py` (răspuns AI simulat). Purchase UBL: butonul și titlul asistentului devin „Import Invoice” / „Import factură”; corectată afirmația veche că liniile noi nu se adaugă pe o comandă cu linii.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `FISA_CONSULTANT.md` din branch-urile `19.0-fisa-ai-purchase-pdf` (bitshop_ent) și `19.0-imp-purchase-ubl-import-invoice` (deltatech), încă nemergeuite.
+- **Dependențe/Conexiuni:** [deltatech_purchase_ubl](deltatech_purchase_ubl/index.md) → [deltatech_ai_purchase_pdf](deltatech_ai_purchase_pdf/index.md); [deltatech_purchase_ubl_ai](deltatech_purchase_ubl_ai/index.md), [deltatech_ai_anthropic](deltatech_ai_anthropic/index.md).
+- **Atenție:** `deltatech_purchase_ubl` nu are `readme/FISA_CONSULTANT.md` în modul; copia veche din wiki (cu „Importă UBL”) a rămas neschimbată.
+- **Fișiere actualizate:** `deltatech_ai_purchase_pdf/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `deltatech_purchase_ubl/index.md`, `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-10-21] Re-ingestie: `l10n_ro_stock_aged_report` (19.0.1.0.4) cu fișa consultant
 
 - **Acțiune:** actualizare (un subagent). Fără produs ales raportul acoperă tot stocul (nu doar primele 10.000 de produse), liniile se creează într-un singur lot; lista de locații apare în dialog, într-o filă editabilă, iar recalculul înlocuiește liniile în loc să le dubleze. Fișa consultant copiată, cu 5 capturi: stocul de azi (data de referință mută doar intervalele), valoarea la costul actual, vechimea de la ultima intrare în locație, comparația pe conturile de stoc.
