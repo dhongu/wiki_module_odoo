@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-21] Re-ingestie: `l10n_ro_stock_aged_report` (19.0.1.0.4) cu fișa consultant
+
+- **Acțiune:** actualizare (un subagent). Fără produs ales raportul acoperă tot stocul (nu doar primele 10.000 de produse), liniile se creează într-un singur lot; lista de locații apare în dialog, într-o filă editabilă, iar recalculul înlocuiește liniile în loc să le dubleze. Fișa consultant copiată, cu 5 capturi: stocul de azi (data de referință mută doar intervalele), valoarea la costul actual, vechimea de la ultima intrare în locație, comparația pe conturile de stoc.
+- **Sursă:** `readme/DESCRIPTION.md`, `HISTORY.md`, `FISA_CONSULTANT.md` și codul de pe `19.0` după PR-urile dhongu/l10n-romania#658, #659 și #660 (unite).
+- **Dependențe/Conexiuni:** neschimbate (`stock_account`; [l10n_ro_stock_provision](l10n_ro_stock_provision/index.md), `terrabit_datus`).
+- **Fișiere actualizate:** `l10n_ro_stock_aged_report/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-10-21] Re-ingestie: `l10n_ro_grants` (19.0.1.6.0) cu fișa consultant refăcută
 
 - **Acțiune:** actualizare (un subagent). Conturile 475x/472 în locul 131/132 (inexistente în OMFP 1802); conturile contractului completate după tipul subvenției (47512/7584, 4721/—, 4721/7418, 4451); tranșa `Dr 4451 = Cr 475x/472` cu finanțatorul ca partener, încasată din extras și reconciliată, cu starea încasării și butonul Resetează pe tranșele neîncasate; cererile de rambursare rețin notele decontate și nu le mai cer a doua oară; alerta de prag unică pe categorie. Fișa consultant recopiată (10 capturi noi; cele 4 vechi șterse).
