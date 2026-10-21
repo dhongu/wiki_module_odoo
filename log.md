@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-21] Re-ingestie: `l10n_ro_grants` (19.0.1.6.0) cu fișa consultant refăcută
+
+- **Acțiune:** actualizare (un subagent). Conturile 475x/472 în locul 131/132 (inexistente în OMFP 1802); conturile contractului completate după tipul subvenției (47512/7584, 4721/—, 4721/7418, 4451); tranșa `Dr 4451 = Cr 475x/472` cu finanțatorul ca partener, încasată din extras și reconciliată, cu starea încasării și butonul Resetează pe tranșele neîncasate; cererile de rambursare rețin notele decontate și nu le mai cer a doua oară; alerta de prag unică pe categorie. Fișa consultant recopiată (10 capturi noi; cele 4 vechi șterse).
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `FISA_CONSULTANT.md` de pe `19.0` după PR-ul terrabit-solutions/l10n_ro_ent#821 (care include #817–#820), tichet helpdesk 9760.
+- **Dependențe/Conexiuni:** neschimbate.
+- **Fișiere actualizate:** `l10n_ro_grants/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `index.md`, `log.md`, `.index/`.
+
+---
+
 ## [2026-10-20] Pagină nouă: `deltatech_ai_website_product_image` (19.0.1.0.0); re-ingestie: `deltatech_ai_website_product` (19.0.1.2.3) cu fișa consultant
 
 - **Acțiune:** o pagină nouă și o actualizare, procesate în paralel (un subagent per modul). Căutarea după poză: vectorii Gemini (`gemini-embedding-2`, 1536) ai pozelor de produs, comparați cu poza vizitatorului, pragul de asemănare 0,75, reluarea la limita de cotă, conversia WEBP; pilotul pe 300 de produse (în primele 5 la 34 din 40 de poze). Asistentul de magazin: conversia WEBP a pozelor vizitatorilor (19.0.1.2.2) și fișa consultant copiată, cu configurarea și testarea în Live Chat; cele 11 capturi ale fișei nu există încă și nu au fost copiate.
