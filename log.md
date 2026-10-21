@@ -4,6 +4,11 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-21] Actualizare fișă: `deltatech_ai_website_product` (19.0.1.2.4) cu capturile de ecran
+
+- **Acțiune:** fișa consultant din wiki e înlocuită cu versiunea curentă din `readme/` (cea cu capturi, #426), iar cele 11 capturi sunt copiate în `deltatech_ai_website_product/screenshots/`; până acum fișa din wiki trimitea la poze care lipseau.
+- **Fișiere actualizate:** `deltatech_ai_website_product/FISA_CONSULTANT.md`, `deltatech_ai_website_product/screenshots/` (nou), `deltatech_ai_website_product/index.md` (versiune, data ingestiei), `log.md`.
+
 ## [2026-10-21] Pagină nouă: `deltatech_ai_purchase_pdf` (19.0.1.0.4) cu fișa consultant; re-ingestie: `deltatech_purchase_ubl` (19.0.1.4.19)
 
 - **Acțiune:** o pagină nouă și o actualizare, procesate în paralel (un subagent per modul). Importul PDF cu AI: bannerul și avertismentele previzualizării apar acum în interfață (19.0.1.0.4, `is_pdf` citit fără `bin_size`); fișa consultant copiată, cu 10 capturi generate de `tests/test_screenshots.py` (răspuns AI simulat). Purchase UBL: butonul și titlul asistentului devin „Import Invoice” / „Import factură”; corectată afirmația veche că liniile noi nu se adaugă pe o comandă cu linii.

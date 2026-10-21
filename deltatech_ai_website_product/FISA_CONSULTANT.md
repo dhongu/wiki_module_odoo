@@ -1,7 +1,7 @@
 # Fișă Modul: Asistentul AI al magazinului online, în Live Chat
 
 **Modul:** `deltatech_ai_website_product`
-**Versiune:** 19.0.1.2.3
+**Versiune:** 19.0.1.2.4
 **Suită:** bitshop_ent (necesită Odoo Enterprise, pentru aplicația AI)
 **Dependențe:** `website_sale`, `ai_app`, `deltatech_ai_source_sync`
 **Utilizator principal:** consultantul care pune asistentul pe site-ul clientului; după punerea în funcțiune, vizitatorii magazinului
@@ -27,12 +27,13 @@ Nicio obligație fiscală. Contextul care contează este **protecția datelor** 
 scrie vizitatorul în chat, poza trimisă și fragmentele de catalog găsite pleacă la **furnizorul AI** (OpenAI sau
 Google, după modelul ales pe agent), cu cheia și contul companiei.
 
-**Nu pleacă** costul produselor, furnizorii și notele interne: modulul nu le pune în textul produselor. Prețul trimis
+**Nu pleacă niciodată** costul produselor și furnizorii. Nota internă și descrierea de achiziție nu pleacă cât timp
+nu le alegeți în **Extra Fields** (pasul 2); nu le adăugați acolo. Prețul trimis
 este prețul de vânzare de pe site.
 
 Recomandare pentru client: o frază în politica de confidențialitate a site-ului, că mesajele din chat sunt
 procesate de un asistent automat. Pozele vizitatorilor se trimit furnizorului doar cu bifa *Read Photos* activă
-(vezi pasul 3).
+(vezi pasul 2).
 
 ## 3. Utilizatori și roluri
 
@@ -64,7 +65,9 @@ prezent”, „02.2015 - 07.2020”, „din 2011”).
 ## 5. Configurare inițială
 
 1. Instalați `deltatech_ai_website_product` (aduce `ai_app` și `deltatech_ai_source_sync`). Pentru Live Chat pe site
-   trebuie să fie instalate și `website_livechat` și `ai_livechat` (Live Chat cu agent AI, din Enterprise).
+   instalați `website_livechat`; `ai_livechat` (Live Chat cu agent AI, din Enterprise) se instalează singur odată cu
+   el. Pentru disponibilitatea *în stoc / la comandă* instalați și `website_sale_stock`, iar produsele trebuie să fie
+   urmărite în stoc; fără acestea, agentul spune doar „disponibil”.
 2. **AI → Configurare → Setări**: activați furnizorul (*Folosește propriul cont ChatGPT*, respectiv Google) și
    introduceți cheia API. Alternativ, cheia se dă prin variabila de mediu a serverului `ODOO_AI_CHATGPT_TOKEN`,
    respectiv `ODOO_AI_GEMINI_TOKEN`.
@@ -86,8 +89,9 @@ prezent”, „02.2015 - 07.2020”, „din 2011”).
 **AI → Agenți → Nou.** Completați:
 
 - **Nume**: cum se va prezenta în chat (ex. *Asistent magazin*);
-- **Model LLM**: un model care citește și imagini, dacă vreți căutarea după poză (testat cu *GPT-4o*);
-- **Instrucțiuni**: rolul, pe scurt, în limba clienților. Exemplu folosit la test: *„Ești asistentul magazinului
+- **Model LLM**: un model care citește și imagini, dacă vreți căutarea după poză (testat cu *GPT-4o* și cu
+  *Gemini (Auto)*, cel din capturi);
+- **Prompt de Sistem**: rolul, pe scurt, în limba clienților. Exemplu folosit la test: *„Ești asistentul magazinului
   online. Răspunzi în limba vizitatorului (implicit română), scurt și prietenos. Recomanzi doar produse din sursele
   tale, cu linkul lor. Prețul și disponibilitatea le dai doar din unealta de preț și disponibilitate.”*
 - **Subiecte**: adăugați **Shop Assistant**. Fără el, agentul nu poate citi prețul și stocul și nu poate căuta
@@ -103,12 +107,15 @@ atunci un răspuns în engleză că nu există informații în surse.
 În fișa agentului, fila **Shop**:
 
 - **Shop**: site-ul ale cărui produse publicate le urmărește agentul (câte un site pe agent);
-- **Products**: domeniul de produse; la primul test, o categorie sau `nume conține „Kia”` (pasul 5.4);
+- **Products**: domeniul de produse; la primul test, o categorie sau `nume conține „Kia”` (secțiunea 5, punctul 4);
 - **Extra Fields**: câmpuri ale produsului adăugate în textul surselor, de exemplu marca sau specificațiile;
 - **Read Photos**: bifați, dacă vizitatorii pot trimite poze (pozele pleacă la furnizorul modelului, vezi
   secțiunea 2).
 
 Salvați. Produsele se adaugă ca surse în fundal; butonul **Synchronize now** pornește sincronizarea pe loc.
+
+Butonul **Collections** din antet și fila **Source Search** vin din `deltatech_ai_source_sync` (colecții de
+documentație și glosarul de căutare); pentru magazin nu trebuie completate.
 
 ![Fila Shop a agentului](screenshots/03_agent_shop.png)
 
@@ -125,20 +132,25 @@ Salvați. Produsele se adaugă ca surse în fundal; butonul **Synchronize now** 
 
 - Numărul de surse este egal cu numărul de produse publicate și vândabile din domeniul ales (în magazin, filtrați
   la fel și comparați).
-- Toate sursele sunt **Indexat**. La test, 378 de produse au avut nevoie de aproximativ 18 minute.
+- Toate sursele sunt **Indexat**. În baza demo, cele 12 produse s-au indexat în câteva secunde; pe o bază reală,
+  378 de produse au avut nevoie de aproximativ 18 minute.
 - O sursă deschisă arată numele, codul, categoria și descrierea produsului, **fără** cost sau furnizor.
 
 **Treceți mai departe** abia când nu mai e nicio sursă în procesare: înainte de asta, agentul nu găsește produsele.
 
 ### Pasul 4 — Puneți agentul pe o pagină de test (regula de Live Chat)
 
-**Live Chat → Configurare → Canale**, deschideți canalul folosit de site (cel ales în **Website → Configurare →
+**Live Chat → Canale**, deschideți canalul folosit de site (cel ales în **Website → Configurare →
 Setări**, secțiunea Live Chat), fila **Reguli**, **Adaugă o linie**:
 
 - **Live Chat Button**: *Afișează*;
 - **Agent AI**: agentul creat la pasul 1;
+- **Enable ChatBot**: *Întotdeauna*. Cu *Only when no operator is available*, regula e sărită cât timp un operator
+  e conectat, iar agentul nu apare la test;
 - **URL Regex**: `assistant=test`, adică regula se aplică doar paginilor care au în adresă `?assistant=test`;
-- puneți regula **prima** în listă (regulile se aplică în ordine, prima care se potrivește câștigă).
+- **Țări**: lăsați gol;
+- puneți regula **prima** în listă. Odoo alege întâi dintre regulile cu țări (dacă serverul are GeoIP), apoi dintre
+  cele fără țări, în ordinea din listă; prima care se potrivește câștigă.
 
 ![Regula canalului, cu agentul AI pe URL-ul de test](screenshots/05_regula_livechat.png)
 
@@ -158,12 +170,13 @@ cauciuc aveți și cât costă?”*
 
 ![Răspunsul la o întrebare cu modelul și anul](screenshots/07_raspuns_model_an.png)
 
-**Găsiți pe ecran.** Lista de produse recomandate, fiecare cu preț, disponibilitate (în stoc, la comandă sau
+**Găsiți pe ecran.** Produsul sau produsele recomandate, fiecare cu preț, disponibilitate (în stoc, la comandă sau
 indisponibil) și link.
 
 **Verificați.**
 
-- Toate produsele recomandate sunt fabricate pentru anul cerut (anii din numele lor includ 2017).
+- Toate produsele recomandate sunt fabricate pentru anul cerut (anii din numele lor includ 2017). În captură,
+  agentul a lăsat deoparte covorașele pentru Sportage V (2022 - prezent) și pe cele din mochetă.
 - Prețul este **exact** cel de pe pagina produsului, pentru un vizitator neautentificat (lista de prețuri a site-ului,
   cu TVA dacă site-ul afișează prețuri cu TVA).
 - Disponibilitatea corespunde paginii produsului.
@@ -181,7 +194,8 @@ nu a găsit, fără să inventeze produse, și propune un coleg.
 ### Pasul 7 — Testați căutarea după poză
 
 Cu **Read Photos** bifat pe agent: în fereastra de chat, butonul **+** (Mai multe acțiuni) → **Atașează fișiere**,
-alegeți o poză a mașinii (sau a piesei, a etichetei), scrieți întrebarea și trimiteți.
+alegeți o poză a mașinii (sau a piesei, a etichetei), scrieți întrebarea și trimiteți. În capturi, vizitatorul
+întreabă de tăvițe de portbagaj „pentru mașina din poză”, fără să spună modelul.
 
 ![Meniul + al chat-ului, cu Atașează fișiere](screenshots/08_meniu_atasare.png)
 
@@ -189,18 +203,24 @@ alegeți o poză a mașinii (sau a piesei, a etichetei), scrieți întrebarea ș
 
 ![Răspunsul agentului la poză](screenshots/10_raspuns_poza.png)
 
+*Fotografia: „2016 Kia Sportage (QL MY17) Platinum wagon”, EurovisionNim, Wikimedia Commons,
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).*
+
 **Verificați.**
 
 - Agentul numește ce a recunoscut (la test: *Kia Sportage generația a patra, 2016–2021*) și recomandă produse
   potrivite.
 - Dacă poza nu e clară, agentul cere confirmarea modelului sau a anului, în loc să ghicească.
 - Cu **Read Photos** debifat, aceeași poză este ignorată: agentul răspunde doar la text.
-- La mesajul următor din aceeași conversație (*„Și tăvițe de portbagaj?”*), agentul își amintește mașina din poză.
+- La un mesaj următor din aceeași conversație (*„Și covorașe?”*), fără poză, agentul își amintește mașina din poză.
 
 ### Pasul 8 — Testați preluarea de către un om
 
-Apăsați **Întreabă un Om** în fereastra de chat. Conversația continuă cu un operator al canalului (trebuie să fie
-cel puțin un operator conectat în Live Chat).
+Pregătire: un utilizator operator, autentificat în altă fereastră, intră în canal din **Live Chat → Canale →**
+canalul site-ului → **Aderă la canal** și rămâne conectat.
+
+Apăsați **Întreabă un Om** în fereastra de chat a vizitatorului. Conversația continuă cu operatorul, care o vede în
+**Live Chat → Sesiuni**.
 
 ![Butonul Întreabă un Om](screenshots/11_intreaba_un_om.png)
 
@@ -237,7 +257,8 @@ operatorii care preiau conversațiile, verificarea răspunsurilor la punerea în
 - [ ] Fila **Shop**: site-ul corect și domeniul de produse ales pentru test.
 - [ ] Numărul de surse = numărul de produse publicate și vândabile din domeniu; toate sunt **Indexat**.
 - [ ] Nicio sursă nu conține costul sau furnizorul.
-- [ ] Regula de canal cu agentul AI e **prima** și are URL Regex `assistant=test`.
+- [ ] Regula de canal cu agentul AI e **prima**, are URL Regex `assistant=test`, *Enable ChatBot* = *Întotdeauna* și
+      nicio țară.
 - [ ] Pe `/shop?assistant=test`, în fereastră privată, apare chat-ul cu agentul; pe `/shop` fără parametru, nu.
 - [ ] La întrebarea cu model și an, toate produsele recomandate au anii potriviți.
 - [ ] Prețul din chat = prețul de pe pagina produsului, pentru un vizitator neautentificat.
@@ -262,7 +283,8 @@ operatorii care preiau conversațiile, verificarea răspunsurilor la punerea în
 | „No source information…” (în engleză) | **Restricționează la Surse** e bifat și întrebarea nu se potrivește cu nicio sursă | debifați opțiunea pe acest agent |
 | Agentul nu ține cont de poză | **Read Photos** nu e bifat, sau poza nu e JPEG, PNG, WEBP ori GIF | bifați opțiunea; cereți o poză în alt format |
 | La întrebarea „de cauciuc”, agentul propune și produse din alt material | căutarea după cuvinte citește doar numele și codul produsului; materialul scris doar în categorie nu e găsit | scrieți materialul în numele produsului sau adăugați câmpul în **Extra Fields** |
-| Nu apare butonul de chat pe pagina de test | regula cu agentul nu e prima, URL Regex nu se potrivește sau canalul nu e cel al site-ului | verificați ordinea regulilor și canalul din setările site-ului |
+| Nu apare butonul de chat pe pagina de test | regula cu agentul nu e prima, URL Regex nu se potrivește, canalul nu e cel al site-ului, *Enable ChatBot* nu e *Întotdeauna* sau o regulă cu țări are prioritate | verificați ordinea regulilor, câmpurile regulii (pasul 4) și canalul din setările site-ului |
+| Agentul spune doar „disponibil”, fără stoc | `website_sale_stock` nu e instalat sau produsul nu e urmărit în stoc | instalați `website_sale_stock`; pe produs, bifați urmărirea stocului |
 
 ## 10. Capturi de ecran
 
@@ -271,10 +293,10 @@ Capturile planificate, în ordinea din secțiunile 5 și 6, în `readme/screensh
 | Fișier | Pasul | Ce arată |
 |---|---|---|
 | `01_setari_ai.png` | 5 (configurare) | cheia furnizorului AI în setări |
-| `02_agent.png` | 1 | agentul, cu modelul LLM, instrucțiunile și subiectul *Shop Assistant* |
+| `02_agent.png` | 1 | agentul, cu modelul LLM, promptul de sistem și subiectul *Shop Assistant* |
 | `03_agent_shop.png` | 2 | fila **Shop**: site, domeniu, câmpuri suplimentare, *Read Photos*, *Synchronize now* |
 | `04_surse.png` | 3 | sursele agentului, câte una pe produs, cu starea *Indexat* |
-| `05_regula_livechat.png` | 4 | regula canalului: *Live Chat Button* = *Afișează*, *Agent AI*, URL Regex `assistant=test` |
+| `05_regula_livechat.png` | 4 | regula canalului: *Live Chat Button* = *Afișează*, *Agent AI*, *Enable ChatBot* = *Întotdeauna*, URL Regex `assistant=test` |
 | `06_buton_chat.png` | 5 | butonul de chat pe `/shop?assistant=test`, ca vizitator |
 | `07_raspuns_model_an.png` | 6 | răspunsul la întrebarea cu model și an: produse, preț, disponibilitate, linkuri |
 | `08_meniu_atasare.png` | 7 | meniul **+** al chat-ului, cu *Atașează fișiere* |
@@ -282,10 +304,15 @@ Capturile planificate, în ordinea din secțiunile 5 și 6, în `readme/screensh
 | `10_raspuns_poza.png` | 7 | răspunsul agentului la poză |
 | `11_intreaba_un_om.png` | 8 | butonul **Întreabă un Om** |
 
-**Capturile nu există încă:** trebuie generate cu skill-ul `fisa-screenshots`. Ca la asistentul de tablouri de bord,
-pașii 6–8 depind de răspunsul unui model real, care diferă de la o rulare la alta, deci capturile lor se fac pe o
-bază de demo cu o cheie reală, nu dintr-un test automat. Fluxul a fost verificat pe o copie locală a unui client,
-cu GPT-4o, ca vizitator anonim (Playwright), dar acele capturi conțin datele clientului și nu se folosesc aici.
+Capturile sunt făcute cu un script Playwright, nu dintr-un test automat: pașii 6–8 depind de răspunsul unui model
+real (*Gemini (Auto)*), care diferă de la o rulare la alta. Baza e o bază demo locală (*RO Company*, interfața în
+română, temă luminoasă, lățime 1920), cu 12 produse auto generice create pentru fișă (`DEMO-101` … `DEMO-401`, cu
+imagini desenate), nu cu datele unui client. Prețurile sunt în lei prin lista de prețuri *Magazin RON*. Capturile din
+chat sunt decupate pe fereastra de chat, ca să se citească.
+
+Fotografia mașinii din pașii 7 (capturile 09 și 10) este „2016 Kia Sportage (QL MY17) Platinum wagon” de pe
+Wikimedia Commons, autor EurovisionNim, licență [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+([pagina fișierului](https://commons.wikimedia.org/wiki/File:2016_Kia_Sportage_(QL_MY17)_Platinum_wagon_(2017-07-15)_01.jpg)).
 
 ## 11. Observații pentru manual
 
@@ -297,6 +324,9 @@ cu GPT-4o, ca vizitator anonim (Playwright), dar acele capturi conțin datele cl
 - **Costul.** Fiecare produs se indexează o dată și din nou doar la modificare. Fiecare întrebare trimite
   furnizorului instrucțiunile, fragmentele găsite și istoricul conversației; o poză adaugă un apel separat. Începeți
   cu un domeniu restrâns și lărgiți după test.
+- **Prețul din chat** este cel al listei de prețuri implicite a site-ului, cu TVA-ul produsului dacă site-ul afișează
+  prețuri cu TVA. Pe un site cu liste de prețuri alese după țară sau cu poziții fiscale, prețul văzut de un vizitator
+  poate diferi de cel din chat.
 - **Limba produselor.** Agentul citește numele produselor în limba implicită a site-ului. Dacă traducerile diferă
   (ex. alți ani în engleză decât în română), corectați traducerea, nu agentul.
 - Răspunsurile agentului pot numi butonul *Ask a Human* în engleză; în fereastra de chat, butonul apare ca
