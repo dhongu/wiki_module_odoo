@@ -4,6 +4,20 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-22] Re-ingestie: `l10n_ro_pos_fiscal_compliance` (19.0.2.3.1) cu fișa consultant și `l10n_ro_pos_fiscal_compliance_ecr` (19.0.1.2.1)
+
+- **Acțiune:** actualizare a două pagini, procesate în paralel (un subagent per modul).
+  - Modulul principal:
+    - importul AMEF citește structura ANAF A4200/A4203: nr. Z, data și NUI din identificatori, plățile pe `tipP`, cotele declarate pe poziție;
+    - NUI pe punctul de vânzare; import `.zip` sau `.p7b` direct;
+    - raportul Z completat cu cifrele aparatului; coerența internă a Z-ului; Z-uri lipsă din opis;
+    - reconciliere pe fiecare tip de plată și starea „TVA diferit".
+  - Fișa consultant e copiată din nou, cu 8 capturi (nouă: `08_raport_z_declarat.png`); sumarul paginii e rescris pentru importul ANAF.
+  - Puntea ECR: potrivirea bonurilor pe `fiscal_z` + BF salvate de driver; Z și BF de pe comandă pe rândurile „Lipsă în arhiva fiscală".
+- **Sursă:** `readme/DESCRIPTION.md`, `HISTORY.md`, `FISA_CONSULTANT.md` și codul de pe `19.0` după PR-urile terrabit-solutions/l10n_ro_ent#822, #823 și #824 (unite).
+- **Dependențe/Conexiuni:** [l10n_ro_pos_fiscal_compliance](l10n_ro_pos_fiscal_compliance/index.md) ← [l10n_ro_pos_fiscal_compliance_ecr](l10n_ro_pos_fiscal_compliance_ecr/index.md); [deltatech_pos](deltatech_pos/index.md), [l10n_ro_anaf_d394_pos](l10n_ro_anaf_d394_pos/index.md).
+- **Fișiere actualizate:** `l10n_ro_pos_fiscal_compliance/` (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `l10n_ro_pos_fiscal_compliance_ecr/index.md`, `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-21] Actualizare fișă: `deltatech_ai_website_product` (19.0.1.2.4) cu capturile de ecran
 
 - **Acțiune:** fișa consultant din wiki e înlocuită cu versiunea curentă din `readme/` (cea cu capturi, #426), iar cele 11 capturi sunt copiate în `deltatech_ai_website_product/screenshots/`; până acum fișa din wiki trimitea la poze care lipseau.

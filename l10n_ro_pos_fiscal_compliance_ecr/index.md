@@ -1,14 +1,16 @@
 # Romania - Punte POS ↔ casă de marcat (AMEF) (localizat la `l10n_ro_pos_fiscal_compliance_ecr/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_pos_fiscal_compliance_ecr`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.2.1`
 - **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_fiscal_compliance_ecr](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_fiscal_compliance_ecr)
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_pos_fiscal_compliance_ecr`
-- **Ultima Ingestie:** `2026-09-12`
+- **Ultima Ingestie:** `2026-10-22`
 
 #### 1. Sumar
 
 Modulul este puntea dintre driverul casei de marcat (`deltatech_pos` și agentul local Terrabit Connect) și evidența fiscală AMEF ținută de [l10n_ro_pos_fiscal_compliance](../l10n_ro_pos_fiscal_compliance/index.md). Driverul salvează pe comanda POS răspunsul brut al aparatului fiscal (numărul documentului fiscal, numărul bonului din raportul Z, numărul Z, starea și eventuala eroare), iar modulul de conformitate urmărește separat starea fiscală cerută de OUG 28/1999 — de fiscalizat / emis / eroare — pe care se sprijină blocarea închiderii sesiunii, raportul Z reconciliat și potrivirea cu jurnalul electronic. Fără această punte, cele două seturi de câmpuri rămân paralele: aparatul confirmă bonul, dar comanda rămâne „de fiscalizat”, iar reconcilierea cu arhiva AMEF se face doar euristic, pe dată și sumă.
+
+La importul jurnalului electronic AMEF, bonul din aparat se potrivește cu comanda POS pe numărul raportului Z (`fiscal_z`) și pe numărul bonului în Z (BF), salvate de driver — comanda păstrează seria casei și numărul documentului fiscal (NR), dar acestea nu apar în fișierele ANAF, așa că potrivirea veche (serie + număr) nu găsea nicio comandă.
 
 #### 2. Funcționalități Cheie
 
@@ -17,6 +19,8 @@ Modulul este puntea dintre driverul casei de marcat (`deltatech_pos` și agentul
 - Confirmare fără număr → eroare, nu bon emis: fără număr documentul nu poate fi reconciliat cu jurnalul electronic AMEF.
 - Bon anulat la casă sau eroare de tipărire → eroare fiscală, cu mesajul aparatului păstrat pe comandă.
 - Pentru identificarea bonului în jurnalul electronic (`idB`) folosește numărul documentului fiscal (NR), unic pe aparat, și cade pe numărul bonului din raportul Z (BF) doar dacă aparatul nu a raportat NR — BF se reia la fiecare Z și nu identifică bonul pe o perioadă mai lungă.
+- La importul jurnalului electronic AMEF (`l10n.ro.amef.journal`), potrivește bonurile din export cu comenzile POS în ordine: întâi pe identificatorul `idB`, apoi pe `fiscal_z` + numărul bonului în Z (BF) salvate de driver, în limitele punctului de vânzare (găsit după jurnal sau, la nevoie, după NUI-ul aparatului). Zerourile din față sunt tolerate (ex. `7` și `0007`). Comenzile fără răspuns de la driver (bon înregistrat manual) rămân pe potrivirea din modulul de bază, din care se exclud comenzile tipărite prin driver.
+- Pe rândurile „Lipsă în arhiva fiscală” din jurnal, numărul raportului Z și numărul bonului în Z se iau de pe comandă (din numerele salvate de driver), nu din seria casei și NR.
 - Nu are ecran de configurare propriu; se instalează automat (`auto_install`) când ambele module sunt prezente.
 - Condiție operațională pentru ca puntea să primească date: punctul de vânzare trebuie să aibă `Transport ECR` setat pe **Terrabit Connect** (nu „fișier”) în Configurare → Casă de marcat, seria aparatului fiscal (AMEF) completată pe punctul de vânzare și agentul Terrabit Connect instalat/pornit pe calculatorul casei; cât timp transportul rămâne pe „fișier”, aparatul nu întoarce niciun răspuns și comenzile rămân „de fiscalizat”, ceea ce ar bloca închiderea sesiunii dacă opțiunea „Fiscalizare AMEF obligatorie” e activă.
 
@@ -30,6 +34,7 @@ Modulul este puntea dintre driverul casei de marcat (`deltatech_pos` și agentul
 **Modele**
 
 - `pos.order`: extinde comanda POS, aplicând explicit mixinul `deltatech.ecr.fiscal.mixin` (necesar fiindcă `deltatech_ecr_fiscal` nu îl mai aplică singur pe `pos.order`, ca să nu forțeze dependența de `point_of_sale`); suprascrie `create`/`write` pentru a detecta scrierea câmpurilor driverului și a apela `_l10n_ro_sync_fiscal_state_from_driver()`, care traduce starea driverului (`done`/`canceled`/`error`) în starea fiscală AMEF prin `_l10n_ro_apply_fiscal_response()` (expusă de `l10n_ro_pos_fiscal_compliance`).
+- `l10n.ro.amef.journal`: extinde jurnalul electronic AMEF din `l10n_ro_pos_fiscal_compliance`; suprascrie `_l10n_ro_amef_find_order()` (potrivire pe `idB`, apoi pe Z + BF prin `_l10n_ro_amef_find_driver_order()`) și `_l10n_ro_amef_order_receipt_key()` (cheia Z + BF a comenzii, pentru rândurile „Lipsă în arhiva fiscală”), cu revenire la varianta de bază pentru comenzile fără răspuns de driver.
 
 #### 5. Conexiuni
 
