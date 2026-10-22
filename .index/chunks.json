@@ -12787,6 +12787,35 @@
     "text": "Romania - Punte POS ↔ casă de marcat (AMEF)\nl10n_ro_pos_fiscal_compliance_ecr\nModulul este puntea dintre driverul casei de marcat (`deltatech_pos` și agentul local Terrabit Connect) și evidența fiscală AMEF ținută de [l10n_ro_pos_fiscal_compliance](../l10n_ro_pos_fiscal_compliance/index.md). Driverul salvează pe comanda POS răspunsul brut al aparatului fiscal (numărul documentului fiscal, numărul bonului din raportul Z, numărul Z, starea și eventuala eroare), iar modulul de conformitate urmărește separat starea fiscală cerută de OUG 28/1999 — de fiscalizat / emis / eroare — pe care se sprijină blocarea închiderii sesiunii, raportul Z reconciliat și potrivirea cu jurnalul electronic. Fără această punte, cele două seturi de câmpuri rămân paralele: aparatul confirmă bonul, dar comanda rămâne „de fiscalizat”, iar reconcilierea cu arhiva AMEF se face doar euristic, pe dată și sumă.\nTraduce automat răspunsul driverului în starea fiscală urmărită de modulul de conformitate, la fiecare `create`/`write` pe comandă care atinge câmpurile driverului (`fiscal_state`, `fiscal_receipt_number`, `fiscal_doc_number`, `fiscal_z`, `fiscal_error`).\nConfirmare cu număr → bon emis, cu seria aparatului preluată din configurarea punctului de vânzare (`l10n_ro_fiscal_device_serial`).\nConfirmare fără număr → eroare, nu bon emis: fără număr documentul nu poate fi reconciliat cu jurnalul electronic AMEF.\nBon anulat la casă sau eroare de tipărire → eroare fiscală, cu mesajul aparatului păstrat pe comandă.\nPentru identificarea bonului în jurnalul electronic (`idB`) folosește numărul documentului fiscal (NR), unic pe aparat, și cade pe numărul bonului din raportul Z (BF) doar dacă aparatul nu a raportat NR — BF se reia la fiecare Z și nu identifică bonul pe o perioadă mai lungă.\nNu are ecran de configurare propriu; se instalează automat (`auto_install`) când ambele module sunt prezente.\nCondiție operațională pentru ca puntea să primească date: punctul de vânzare trebuie să aibă `Transport ECR` setat pe Terrabit Connect (nu „fișier”) în Configurare → Casă de marcat, seria aparatului fiscal (AMEF) completată pe punctul de vânzare și agentul Terrabit Connect instalat/pornit pe calculatorul casei; cât timp transportul rămâne pe „fișier”, aparatul nu întoarce niciun răspuns și comenzile rămân „de fiscalizat”, ceea ce ar bloca închiderea sesiunii dacă opțiunea „Fiscalizare AMEF obligatorie” e activă."
   },
   {
+    "path": "l10n_ro_pos_partner_efactura/index.md",
+    "module": "l10n_ro_pos_partner_efactura",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_pos_partner_efactura",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_pos_partner_efactura",
+    "last_ingest": "2026-10-22",
+    "friendly_name": "l10n_ro_pos_partner_efactura",
+    "summary": "La casă, clientul care cere factură este creat în grabă de casier din ecranul POS, iar lipsa adresei se descoperă abia la trimiterea facturii în SPV. Modulul mută controlul la momentul creării clientului: formularul de partener deschis din POS cere datele de care are nevoie o factură e-Factura (CIUS-RO), iar partenerul nu poate fi salvat până nu sunt complete.",
+    "features": [
+      "Formularul de partener deschis din POS cere stradă, localitate, județ și țară.",
+      "CUI-ul nu se cere: pe Odoo 20, tipul partenerului nu se mai alege în formular, ci se deduce din CUI (`is_company` calculat de `l10n_ro_edi`). Un client cu CUI valid este firmă; unul fără CUI este persoană fizică și se facturează fără CUI.",
+      "Pentru județul București, localitatea trebuie să fie sectorul (`Sector 1` ... `Sector 6`); `București` este refuzat la salvare.",
+      "La un client nou, țara se completează implicit cu țara companiei POS.",
+      "Datele firmei se preiau de la ANAF după CUI, dacă este instalat un modul de creare partener după CUI; când ANAF nu răspunde, câmpurile rămân editabile și casierul le completează manual.",
+      "Regulile se aplică doar formularului deschis din POS; partenerii creați din backoffice și persoanele de contact ale unei firme (adresa vine de la firmă) nu sunt verificate.",
+      "CNP-ul nu se cere; clientul persoană fizică are nevoie doar de adresa completă.",
+      "Nu există setări proprii: modulul este activ pe toate punctele de vânzare după instalare. Fluxul pas-cu-pas este în fișa consultantului."
+    ],
+    "dependencies": [
+      "point_of_sale",
+      "l10n_ro_edi"
+    ],
+    "connections": [
+      "l10n_ro_doc_screenshots",
+      "l10n_ro_partner_create_by_vat"
+    ],
+    "text": "l10n_ro_pos_partner_efactura\nl10n_ro_pos_partner_efactura\nLa casă, clientul care cere factură este creat în grabă de casier din ecranul POS, iar lipsa adresei se descoperă abia la trimiterea facturii în SPV. Modulul mută controlul la momentul creării clientului: formularul de partener deschis din POS cere datele de care are nevoie o factură e-Factura (CIUS-RO), iar partenerul nu poate fi salvat până nu sunt complete.\nFormularul de partener deschis din POS cere stradă, localitate, județ și țară.\nCUI-ul nu se cere: pe Odoo 20, tipul partenerului nu se mai alege în formular, ci se deduce din CUI (`is_company` calculat de `l10n_ro_edi`). Un client cu CUI valid este firmă; unul fără CUI este persoană fizică și se facturează fără CUI.\nPentru județul București, localitatea trebuie să fie sectorul (`Sector 1` ... `Sector 6`); `București` este refuzat la salvare.\nLa un client nou, țara se completează implicit cu țara companiei POS.\nDatele firmei se preiau de la ANAF după CUI, dacă este instalat un modul de creare partener după CUI; când ANAF nu răspunde, câmpurile rămân editabile și casierul le completează manual.\nRegulile se aplică doar formularului deschis din POS; partenerii creați din backoffice și persoanele de contact ale unei firme (adresa vine de la firmă) nu sunt verificate.\nCNP-ul nu se cere; clientul persoană fizică are nevoie doar de adresa completă.\nNu există setări proprii: modulul este activ pe toate punctele de vânzare după instalare. Fluxul pas-cu-pas este în fișa consultantului."
+  },
+  {
     "path": "l10n_ro_pos_returns/index.md",
     "module": "l10n_ro_pos_returns",
     "version": "19.0.1.1.4",

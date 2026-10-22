@@ -4,6 +4,19 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-22] `l10n_ro_pos_partner_efactura` — ingestie pe 20.0 (20.0.1.0.0), cu fișă consultant
+
+- **Acțiune:** Pagină nouă pentru modulul adăugat în 19.0 (dhongu/l10n-romania#661) și portat pe 20.0
+  (dhongu/l10n-romania#662): formularul de client deschis din POS cere adresa necesară e-Factura și sectorul
+  la București. Notat ce diferă față de 19.0: view-ul moștenește `point_of_sale.view_partner_form_pos_ui`,
+  iar CUI-ul nu mai e cerut la firme, pentru că `is_company` se deduce din CUI.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/HISTORY.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`,
+  `models/res_partner.py`, `views/res_partner_view.xml`, `static/src/app/services/pos_store.esm.js`.
+- **Dependențe/Conexiuni:** `point_of_sale`, `l10n_ro_edi`; conexiuni cu `l10n_ro_doc_screenshots` și
+  `l10n_ro_partner_create_by_vat`.
+- **Fișă consultant:** copiată nouă, cu cele 7 capturi regenerate pe 20.0.
+- **Fișiere actualizate:** `l10n_ro_pos_partner_efactura/*`, `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-17] `deltatech_website_searchbar_typing` — ingestie pe 20.0 (20.0.1.1.0), cu fișă consultant
 
 - **Acțiune:** Pagină nouă pentru modulul adăugat în 19.0 (dhongu/deltatech#3606) și portat pe 20.0
