@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-22] Pagină nouă: `deltatech_ai_product_catalog_review` (19.0.1.1.0), cu fișa consultant
+
+- **Acțiune:** pagină nouă (un subagent `documentarist-wiki`) pentru modulul care pune modelul de limbaj al agentului magazinului să propună categoria publică și produsele alternative, accesorii și opționale, cu candidații din vectorii surselor de produs; propunerile se aplică doar după acceptare. Pagina `deltatech_ai_website_product` primește legătura la *Conexiuni*.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `FISA_CONSULTANT.md`, `__manifest__.py` și codul de pe `19.0` (PR-urile terrabit-solutions/bitshop_ent#432 și #434).
+- **Fișă consultant copiată (cu capturi):** `FISA_CONSULTANT.md` + 8 capturi în `screenshots/`.
+- **Dependențe/Conexiuni:** [deltatech_ai_website_product](deltatech_ai_website_product/index.md) ↔ `deltatech_ai_product_catalog_review`; `website_sale` (text).
+- **Fișiere actualizate:** `deltatech_ai_product_catalog_review/` (index.md, FISA_CONSULTANT.md, screenshots/), `deltatech_ai_website_product/index.md`, `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-22] Re-ingestie: `deltatech_sale_margin` (19.0.1.3.0), `deltatech_sale_commission` (19.0.2.0.0), `deltatech_sale_margin_pos` (19.0.1.0.0), cu fișele consultant
 
 - **Acțiune:** actualizarea celor trei pagini (câte un subagent `documentarist-wiki`, în paralel), după separarea raportului de profit: costul pe linia facturii, raportul *Analiză profit* și recalcularea costului (asistent + cron) s-au mutat din `deltatech_sale_commission` în `deltatech_sale_margin`; comisioanele extind raportul; `deltatech_sale_margin_pos` aduce bonurile POS nefacturate, cu ratele de comision din jurnalul de facturi al casei.

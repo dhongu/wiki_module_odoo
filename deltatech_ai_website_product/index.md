@@ -55,3 +55,4 @@ Un agent AI din Odoo 19 Enterprise răspunde vizitatorilor magazinului online pe
 - [deltatech_ai_source_sync](../deltatech_ai_source_sync/index.md): oferă mecanismul de sincronizare a surselor refolosit aici.
 - [deltatech_ai_agent_delegate](../deltatech_ai_agent_delegate/index.md): un agent public (de ex. pe livechat) poate delega întrebările de produs agentului magazinului.
 - [deltatech_ai_website_product_image](../deltatech_ai_website_product_image/index.md): căutarea produselor după poză; depinde de acest modul.
+- [deltatech_ai_product_catalog_review](../deltatech_ai_product_catalog_review/index.md): folosește modelul de limbaj al agentului și vectorii surselor de produs ca să propună categoria publică și produsele alternative, accesorii și opționale; depinde de acest modul.
