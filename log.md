@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-22] Re-ingestie: `deltatech_sale_margin` (19.0.1.3.0), `deltatech_sale_commission` (19.0.2.0.0), `deltatech_sale_margin_pos` (19.0.1.0.0), cu fișele consultant
+
+- **Acțiune:** actualizarea celor trei pagini (câte un subagent `documentarist-wiki`, în paralel), după separarea raportului de profit: costul pe linia facturii, raportul *Analiză profit* și recalcularea costului (asistent + cron) s-au mutat din `deltatech_sale_commission` în `deltatech_sale_margin`; comisioanele extind raportul; `deltatech_sale_margin_pos` aduce bonurile POS nefacturate, cu ratele de comision din jurnalul de facturi al casei.
+- **Sursă:** `readme/FISA_CONSULTANT.md`, `DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `__manifest__.py` și codul de pe branch-ul `19.0-imp-sale-commission-pos` (separarea e în 19.0 prin PR dhongu/deltatech#3734; iconițele, fișele și corecturile de după merge sunt încă pe branch).
+- **Fișe consultant copiate (cu capturi):** `deltatech_sale_margin` (5 capturi, 03–05 noi), `deltatech_sale_commission` (6 capturi, renumerotate; vechile 03, 04, 07–09 șterse), `deltatech_sale_margin_pos` (3 capturi, fișă nouă).
+- **Dependențe/Conexiuni:** `deltatech_sale_margin` ↔ `deltatech_sale_commission` ↔ `deltatech_sale_margin_pos` legate între ele.
+- **Fișiere actualizate:** `deltatech_sale_margin/`, `deltatech_sale_commission/`, `deltatech_sale_margin_pos/` (index.md, FISA_CONSULTANT.md, screenshots/), `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-22] Re-ingestie: `deltatech_chart_of_accounts` (19.0.0.1.8) cu fișa consultant
 
 - **Acțiune:** actualizarea paginii (un subagent `documentarist-wiki`), de la 19.0.0.1.1 la 19.0.0.1.8. Pagina descrie acum cele două moduri de postare (*Doar solduri de deschidere* / *Potrivește totalurile debit/credit*), importul potrivit pe partener, confirmarea la resetarea notelor reconciliate și butonul *Șterge sumele externe*; afirmația că modulul importă planul de conturi a fost scoasă.
