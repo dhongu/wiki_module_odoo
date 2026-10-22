@@ -1,15 +1,15 @@
 # Vendor Products Kramp (localizat la `deltatech_vendor_products_kramp/index.md`)
 
 - **Nume Tehnic:** `deltatech_vendor_products_kramp`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.2.1`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products_kramp`
 - **Cale Locală:** `odoo-addons/bitshop_vendor/deltatech_vendor_products_kramp`
-- **Ultima Ingestie:** `2026-10-19`
+- **Ultima Ingestie:** `2026-10-22`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul conectează catalogul de produse al furnizorului la Kramp, distribuitorul de piese de schimb agricole, prin API-ul webshop-ului Kramp. Cu butonul *Încarcă preț* de pe feed, toate produsele Kramp din catalog primesc prețul net și brut al clientului, stocul, termenul de livrare și codul de bare, fără introducere manuală.
+Modulul conectează catalogul de produse al furnizorului la Kramp, distribuitorul de piese de schimb agricole, prin API-ul webshop-ului Kramp. Cu butonul *Încarcă preț* de pe feed, toate produsele Kramp din catalog primesc prețul net și brut al clientului, stocul, termenul de livrare și codul de bare, fără introducere manuală. O sincronizare nocturnă actualizează apoi automat prețurile de achiziție, stocul și prețurile de vânzare ale produselor legate de catalog.
 
 #### 2. Funcționalități Cheie
 
@@ -18,6 +18,9 @@ Modulul conectează catalogul de produse al furnizorului la Kramp, distribuitoru
 - Disponibilitate: Kramp nu publică stocul, deci conectorul îl deduce din planurile de livrare. Cantitatea livrată în maximum 10 zile devine cantitatea disponibilă (cel mult 999), iar zilele până la prima livrare devin termenul de achiziție.
 - Cod de bare: preluat din EAN-ul Kramp la căutare și la actualizarea prețurilor; un cod de bare pe care Kramp nu îl are este păstrat.
 - Configurare feed (*Achiziții > Produse > Vendor Feed*): tip conexiune **Kramp**, furnizor, moneda prețurilor Kramp (RON pentru Kramp România), utilizator și parolă ale contului de webshop, *Kramp Locale* (implicit `ro_RO`; Kramp returnează prețuri doar în locale-ul propriului magazin, altfel actualizarea prețurilor se oprește cu eroare) și bifa *Online Search*.
+- Adăugare din produse: produsele care au deja Kramp ca furnizor sunt căutate la Kramp după codul din linia de furnizor sau, în lipsa lui, după codul de bare (EAN) și adăugate în catalog legate de produs; butonul **Add from Products** de pe feed afișează într-o notificare codurile negăsite.
+- Sincronizare nocturnă: acțiunea programată *Kramp: Sync Prices and Stock* adaugă produsele Kramp noi din catalog, apoi actualizează, pentru fiecare produs furnizor legat de un produs, prețul de achiziție, cantitatea disponibilă și termenul pe linia de furnizor, plus prețul de vânzare (după regulile de preț ale feed-ului). Nu creează produse; un produs fără preț Kramp își păstrează prețul de vânzare. Poate fi rulată la cerere cu butonul **Kramp Sync** de pe feed.
+- Disponibilitate: la livrare din stoc Kramp, termenul este de 2-4 zile, restul după termenul furnizorului (circa 16 zile).
 - Autentificare eficientă: token-ul este reținut până la expirare și reînnoit fără retrimiterea parolei; fiecare cerere are timeout.
 - Fluxul pas-cu-pas, cu capturi, este în [fișa consultantului](FISA_CONSULTANT.md).
 
@@ -30,16 +33,17 @@ Modulul conectează catalogul de produse al furnizorului la Kramp, distribuitoru
 **Modele**
 
 - `vendor.feed` (extins): adaugă tipul de conexiune `kramp`, câmpurile `kramp_locale`, `token_temp`, `token_expires_in`, `token_refresh` și metodele `load_price_api`, `online_get_values`, `get_token`, plus logica de disponibilitate și valorile articolelor.
-- `vendor.product` (extins): suportă actualizarea prețurilor, a stocului și a codului de bare din Kramp.
+- `vendor.product` (extins): suportă actualizarea prețurilor, a stocului și a codului de bare din Kramp; moștenește `website.searchable.mixin` pentru căutarea online.
+- Logica de sincronizare (`models/vendor_feed_sync.py`, pe `vendor.feed`): `_kramp_add_from_catalog`, `_kramp_update_products`, `_kramp_sync`, `action_kramp_add_from_catalog`, `action_kramp_sync`, `cron_kramp_sync`.
 - `KrampWebshopClient` (clasă Python, `models/kramp_webshop.py`): client pentru login (`auth.kramp.com`), reînnoirea token-ului și interogări GraphQL pe `www.kramp.com/graphql/webshop` (căutare, articole, planuri de livrare).
 
 **Vizualizări**
 
-- `view_vendor_feed_form`: extinde formularul feed-ului cu câmpurile Kramp (locale, credențiale, căutare online).
+- `view_vendor_feed_form`: extinde formularul feed-ului cu câmpul Kramp Locale și butoanele *Add from Products* și *Kramp Sync*.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Nu există acțiuni automate sau acțiuni server.
+- `ir_cron_kramp_sync` (*Kramp: Sync Prices and Stock*): rulează zilnic (activă după instalare, prima rulare la ora 01:00) și apelează `cron_kramp_sync()` pe feed-urile Kramp.
 
 #### 5. Conexiuni
 

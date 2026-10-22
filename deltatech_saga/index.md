@@ -1,10 +1,10 @@
 # Interfață SAGA
 
 - **Nume Tehnic:** `deltatech_saga`
-- **Versiune:** `19.0.6.24.1`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga`
+- **Versiune:** `19.0.6.26.3`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_saga`
-- **Ultima Ingestie:** `2026-09-29`
+- **Ultima Ingestie:** `2026-10-22`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -32,6 +32,10 @@ Interfața Deltatech SAGA este un modul cuprinzător conceput pentru a facilita 
 - Taxarea inversă se recunoaște și pe taxă, nu doar pe poziția fiscală (ex. `0% R331` / `21% R331` cu autolichidare): coloana `TIP` devine `T` din taxele facturii, inclusiv pe note de credit; codul de pe poziția fiscală, bonul fiscal sau autofactura rămân prioritare.
 - Facturile mixte (linii cu taxare inversă împreună cu linii cu TVA normal) au opțiunea de export „Facturi mixte cu taxare inversă": *Nu exporta (introdu manual)* (implicit), *Exportă cu tip T* sau *Exportă fără tip*, fiecare cu avertisment corespunzător.
 - Furnizorii fără țară sunt exportați ca furnizori români (cu avertisment în raport), iar exportul mișcărilor de stoc nu mai pică pe produse fără referință internă.
+- Exportul are un singur buton **Export**, care rulează mereu exportul incremental, pentru volume mari de documente: fișierele se generează pas cu pas din browser (câte maximum 500 de documente per pas, parametru de sistem `deltatech_saga.export_chunk_size`), fără risc de depășire a memoriei; fișierele apar pe ecran pe măsură ce se scriu, iar la final se activează butonul **Descarcă**. Un pas eșuat poate fi reluat fără a duplica documentele.
+- Facturile de furnizor cu taxe din grupul de TVA nedeductibil (ex. *21% ND 50*) nu mai sunt confundate cu taxarea inversă; TVA autolichidat se recunoaște doar când liniile de distribuție sunt pe conturi de bilanț (4426 / 4427).
+- Import facturi: un al doilea import al aceluiași fișier de furnizor nu mai dublează liniile; import note contabile: partenerul fiecărei părți provine din contul terț SAGA (401.x / 411.x), iar nota ajunge în jurnalul de achiziții / vânzări corespunzător; import parteneri: *Sari peste partenerii existenți* îi lasă efectiv neschimbați.
+- Un asistent auxiliar de mapare a balanței SAGA (`saga.balance.mapping`) generează, dintr-un PDF de balanță pe clienți/furnizori, un XLSX de corespondență cu partenerii Odoo, util la preluarea soldurilor inițiale.
 - Pagina din Odoo Apps are un tab Prezentare cu 13 slide-uri (import coduri SAGA, configurare, export lunar, totalul de control, plăți, cazuri de TVA, import în SAGA).
 - Ordinea recomandată de import al fișierelor în SAGA: parteneri (Furnizori/Clienți) → articole → facturi (IN/IE/INV/IEV) → note contabile (NC) → încasări/plăți (I/P); nu se importă simultan fișierele DBF și XML generate din același export, pentru că ar duplica înregistrările în SAGA.
 - Pentru Odoo Community, utilizatorii trebuie incluși în grupul „Show Full Accounting Features" pentru a accesa meniul de export SAGA.

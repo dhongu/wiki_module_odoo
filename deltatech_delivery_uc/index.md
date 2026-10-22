@@ -1,39 +1,47 @@
 # Cargus Shipping (localizat la `deltatech_delivery_uc/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_uc`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_uc`
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_uc`
-- **Ultima Ingestie:** `2026-09-29`
+- **Ultima Ingestie:** `2026-10-22`
 
 #### 1. Sumar
 
-Modulul integrează în Odoo serviciul de curierat Urgent Cargus (UC), permițând expedierea coletelor și urmărirea lor online direct din platformă. Pentru fiecare livrare poate genera AWB-ul (scrisoarea de transport) în format PDF, ZPL sau HTML, poate solicita tarife de transport și poate sincroniza istoricul de stare al expedierii. Modulul aduce valoare prin automatizarea completă a relației cu Urgent Cargus pentru companiile românești, inclusiv expedierea către lockere și puncte de ridicare Cargus.
+Modulul permite expedierea coletelor cu Cargus direct din livrările Odoo: tariful de transport din tabela de prețuri a contractului dumneavoastră, AWB-ul și eticheta lui, urmărirea, anularea și decontul de ramburs, prin API-ul Cargus, fără reintroducerea datelor în portalul curierului. Valoarea de afaceri vine din automatizarea completă a relației cu Cargus pentru companiile care livrează în România și în alte țări deservite de același API.
 
 #### 2. Funcționalități Cheie
 
-- Generare AWB în format PDF, ZPL și HTML.
-- Ștergere AWB.
-- Calcul tarife pentru o expediere.
-- Obținere liste de localități, județe, lockere și puncte de ridicare.
-- Obținere istoric de stare pentru o expediere și listă de AWB-uri.
-- Import și gestiune lockere Cargus (puncte de ridicare).
-- Hartă interactivă pentru selecția lockerului în checkout.
-- Curățare automată a lockerelor cu coordonate invalide.
-- Expediere cu colete multiple și cu dimensiuni.
-- Expediere cu valoare declarată (asigurare) și cu ramburs (cash on delivery).
-- Expediere cu id localitate și id județ.
-- Opțiune de livrare sâmbăta și opțiune de colet deschis.
-- Ridicare doar din punctul de ridicare indicat și posibilitatea trimiterii id-ului de locker în AWB.
-- Expediere către alte țări deservite de Cargus pe același API, între care Polonia: țările al căror catalog se importă se configurează pe transportator (`uc_country_ids`; gol înseamnă doar România, deci configurațiile existente rămân neschimbate), iar AWB-ul transmite țara destinatarului (`CountryId`, luat din țara localității). Scurtătura sectoarelor Bucureștiului se aplică doar adreselor din România.
-- Reobținerea etichetei unui AWB existent direct de la Cargus (`uc_get_label`), utilă când eticheta livrării a fost ștearsă.
-- Lockerele care nu mai apar în lista Cargus (`PudoPoints`) sunt arhivate automat la import, iar importul se face în lot.
-- Localitățile raportate de Cargus se înregistrează în catalogul de mapări al transportatorului; cele ambigue sau necunoscute apar ca „de mapat”, fără a crea localități duplicate în nomenclator.
-- Interogarea stărilor este protejată: un AWB problematic nu mai oprește interogarea livrărilor următoare, iar istoricul se rescrie doar când starea sau istoricul s-au schimbat.
+- **Tarife din tabela proprie de prețuri:** costul transportului este calculat de Cargus cu tabela contractului dumneavoastră sau se folosește un preț fix, cu un prag opțional peste care se interoghează Cargus.
+- **AWB și etichetă:** AWB-ul se emite din livrare, cu eticheta în format PDF, ZPL sau HTML, pe A4 sau pe etichetă 10x14; eticheta unui AWB existent poate fi reobținută, iar AWB-ul poate fi anulat.
+- **Opțiuni de expediere:** mai multe colete cu dimensiuni, valoare declarată, ramburs, colet deschis, livrare sâmbăta și plătitorul transportului (expeditor sau destinatar).
+- **Puncte de ridicare ale contului:** locațiile de ridicare înregistrate la Cargus se importă, iar fiecare AWB pleacă din cea setată pe metoda de livrare.
+- **Lockere și puncte Ship & Go:** punctele Cargus se importă în catalogul de lockere; cu `deltatech_delivery_locker`, punctul ales pentru livrare se transmite în AWB.
+- **Localități în România și în străinătate:** județele și localitățile Cargus se importă pentru țările alese pe metoda de livrare (de exemplu Polonia) și se mapează pe agenda de adrese Odoo; AWB-ul transmite țara destinatarului.
+- **Urmărire și listă de AWB-uri:** istoricul de stare se citește de la Cargus și se scrie pe livrare; AWB-urile emise în portalul Cargus pot fi listate în Odoo.
+- **Decont de ramburs:** cu `deltatech_delivery_cod`, sumele plătite de Cargus devin extras bancar, datat în ziua în care banii au ieșit efectiv de la curier; se includ doar sumele deja virate.
 
-> Notă: Pentru funcționalitatea de selecție a lockerului pe hartă este necesară și instalarea modulului `deltatech_delivery_locker`. De asemenea, extensia `unaccent` trebuie instalată în baza de date (`CREATE EXTENSION IF NOT EXISTS unaccent`), deoarece unele localități din România au denumiri diferite față de baza SIRUTA (ex: Popești-Leordeni).
+**Configurare (Inventar > Configurare > Livrare > Metode de expediere):**
+
+- Se creează o metodă de livrare cu furnizorul *Cargus* și un produs de tip serviciu.
+- În fila de configurare Cargus se completează cheia de abonament (Subscription Key), utilizatorul și parola API.
+- Butonul *Initialization* importă tabelele de prețuri din contract; se aleg tabela și serviciul (Standard, Economic Standard etc.).
+- Butonul *Get Pickup Locations* importă punctele de ridicare; este necesar cel puțin unul, deoarece orice AWB pleacă dintr-un punct de ridicare Cargus.
+- La *Cargus Catalog Countries* se aleg țările de livrare (România, dacă rămâne gol), apoi *Get city* importă județele și localitățile.
+- Se aleg tipul și formatul etichetei, plătitorul expedierii și metodele de plată tratate ca ramburs.
+
+**Flux de utilizare:**
+
+- Pe comanda de vânzare se adaugă metoda de livrare Cargus; costul este calculat de Cargus cu tabela de prețuri, dacă metoda nu are preț fix sub prag.
+- Pe livrare, *Carrier Details* deschide expedierea: serviciu, număr de colete, greutate, dimensiuni, valoarea coletelor, suma de încasat și opțiuni.
+- La validarea transferului, AWB-ul se rezervă la Cargus, referința de urmărire se scrie pe livrare și eticheta se atașează; *Print AWB* o tipărește, *Cancel AWB* anulează expedierea.
+- Starea expedierii se citește de la Cargus până la livrare.
+
+**Date trimise către Cargus:** la fiecare cotație sau expediere se transmit numele, adresa, persoana de contact, telefonul și e-mailul destinatarului, coletele (număr, greutate, dimensiuni), valoarea declarată, suma de ramburs, referința comenzii și nota livrării; expeditorul este punctul de ridicare Cargus.
+
+> Notă: pentru selecția lockerului pe hartă este necesar `deltatech_delivery_locker`; pentru decontul de ramburs, `deltatech_delivery_cod`.
 >
-> Limitări cunoscute: expedierea cu nume de localitate fără id de localitate și nota de retur (restitution note) în AWB nu sunt suportate.
+> Nesuportat: adresarea după numele localității fără id-ul Cargus și nota de retur (restitution note) în AWB.
 
 #### 3. Dependențe
 
@@ -43,9 +51,10 @@ Modulul integrează în Odoo serviciul de curierat Urgent Cargus (UC), permițâ
 
 #### 4. Componente Cheie
 
-Documentația pentru Sumar și Funcționalități Cheie a fost preluată din `readme/DESCRIPTION.md`. Conform fluxului de ingestie, analiza detaliată a codului pentru această secțiune a fost omisă, întrucât Readme-ul nu o acoperă explicit.
+Sumarul și funcționalitățile au fost preluate din `readme/DESCRIPTION.md`, completate cu `readme/CONFIGURE.md` și `readme/USAGE.md`. Conform fluxului de ingestie, analiza detaliată a codului pentru această secțiune a fost omisă, întrucât Readme-ul nu o acoperă explicit.
 
 #### 5. Conexiuni
 
-- [deltatech_delivery_locker](../deltatech_delivery_locker/index.md): necesar pentru selecția lockerului Cargus pe hartă în checkout.
+- [deltatech_delivery_locker](../deltatech_delivery_locker/index.md): catalogul de lockere; punctul ales pentru livrare se transmite în AWB.
+- [deltatech_delivery_cod](../deltatech_delivery_cod/index.md): decontul de ramburs Cargus transformat în extras bancar.
 - [deltatech_delivery_status](../deltatech_delivery_status/index.md): gestionarea și urmărirea stărilor de expediere/AWB.

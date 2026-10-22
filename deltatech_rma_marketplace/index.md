@@ -1,10 +1,10 @@
 # RMA - Marketplace Returns (localizat la `deltatech_rma_marketplace/index.md`)
 
 - **Nume Tehnic:** `deltatech_rma_marketplace`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_rma_marketplace
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_rma_marketplace`
-- **Ultima Ingestie:** 2026-09-24
+- **Ultima Ingestie:** 2026-10-22
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -20,7 +20,7 @@ Un retur cerut pe eMAG sau pe Shopify se aprobă acolo și ajunge la noi ca un c
 - Buton **Deschide cererea de retur** pe returul importat, pentru un colet neidentificat la scanare; după deschidere, legătura *Cerere de retur* și coloana cererii în lista retururilor.
 - **Retururi → Configurare → Motive din marketplace**: codul motivului din marketplace (eMAG: id numeric pe țară; Shopify: numele) mapat pe motivul nostru, pe fiecare backend; nemapat → *Alt motiv (de clarificat)*.
 - Transferul de retur apare în *Transferuri* pe returul din marketplace; o schimbare ulterioară de stare în marketplace e scrisă în istoricul cererii, nu impusă.
-- *Rambursat de marketplace* pe cerere; la crearea notei de credit, un mesaj pune suma rambursată lângă totalul notei și semnalează o diferență. Rambursarea din marketplace nu devine notă de credit. Rambursările vin de la conectori: eMAG din RMA (câte o sumă pe produs, de la `deltatech_marketplace_emag` 19.0.2.8.0), Shopify din `Refund` (de la `deltatech_marketplace_shopify` 19.0.1.3.0); o rambursare Shopify fără retur nu ajunge pe nicio cerere.
+- *Rambursat de marketplace* pe cerere; la crearea notei de credit, un mesaj pune suma rambursată lângă totalul notei, **din care se scade factura comisionului de procesare** (de la `deltatech_rma` 19.0.1.9.0 nota de credit stornează valoarea întreagă, iar comisionul se facturează separat), numește ambele documente și semnalează o diferență. Rambursarea din marketplace nu devine notă de credit. Rambursările vin de la conectori: eMAG din RMA (câte o sumă pe produs, de la `deltatech_marketplace_emag` 19.0.2.8.0), Shopify din `Refund` (de la `deltatech_marketplace_shopify` 19.0.1.3.0); o rambursare Shopify fără retur nu ajunge pe nicio cerere.
 
 #### 3. Dependențe
 
@@ -33,7 +33,7 @@ Un retur cerut pe eMAG sau pe Shopify se aprobă acolo și ajunge la noi ca un c
 
 - `deltatech.rma.marketplace.reason` (nou): corespondența backend + cod de motiv din marketplace → motivul nostru de retur, cu `_reason_for`.
 - `marketplace.return.request` (extins): `deltatech_rma_id`, `_rma_open` (creează sau întoarce cererea), `_rma_prepare_values`, `_rma_fulfilled_by_marketplace` (citește `emag_fulfilment_type` dacă există) și `write`, care scrie pe cerere schimbarea de stare.
-- `deltatech.rma` (extins): `marketplace_return_id`, rambursările (`marketplace_refund_ids`, `marketplace_refunded`), `submitted_via = marketplace`, transferul de retur adăugat pe returul din marketplace și mesajul de la nota de credit; avertismentul de canal extern ascuns pe cererile născute din retur.
+- `deltatech.rma` (extins): `marketplace_return_id`, rambursările (`marketplace_refund_ids`, `marketplace_refunded`), `submitted_via = marketplace`, transferul de retur adăugat pe returul din marketplace și mesajul de la nota de credit (suma rambursată comparată cu nota minus factura comisionului); avertismentul de canal extern ascuns pe cererile născute din retur.
 - `sale.order` (extins): `_rma_marketplace_backend`, `_rma_external_return_channel` și `_rma_external_return_warning` — punctele de extindere din `deltatech_rma` 19.0.1.4.0.
 - `deltatech.rma.checkin` (extins, în `wizard/`): `_find_rma` caută și în retururile importate.
 

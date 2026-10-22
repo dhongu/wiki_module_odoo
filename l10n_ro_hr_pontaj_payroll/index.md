@@ -1,10 +1,10 @@
 # Romania - Pontaj în salarizare (localizat la `l10n_ro_hr_pontaj_payroll/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_hr_pontaj_payroll`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.2.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_pontaj_payroll
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_hr_pontaj_payroll`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-10-22`
 
 #### 1. Sumar
 
@@ -28,12 +28,15 @@ Modulul duce corecțiile din foaia colectivă de prezență (pontaj) în salariz
 - Ștergerea corecției (sau „Înapoi la codul generat” în pontaj) readuce ziua la program și concedii și în salarizare.
 - Fluturașul citește zilele din prezențe ca de obicei: fiecare cod apare ca linie de zile lucrate (ex. `L10N_RO_N` pentru absență nemotivată, `L10N_RO_D` pentru delegație, `LEAVE120` pentru concediu de odihnă). D112 ia de acolo zilele lucrate, de concediu de odihnă și de concediu medical.
 - Configurare: fiecare cod de pontaj folosit trebuie să aibă un **tip de prezență** (*Concediu* → *Configurare* → *Pontaj (RO)* → *Coduri pontaj*); un cod fără tip rămâne doar pe foaie și nu schimbă salarizarea. Regulile din structura salarială citesc liniile de zile lucrate după codul tipului (`worked_days.L10N_RO_N`, `worked_days.LEAVE120` etc.).
+- **Tichete de masă cu o singură valoare** (din 19.0.1.2.0), cea din salarizare: exportul pentru bancă din pontaj ia valoarea din contract, altfel din companie, altfel din parametrii salariali (45 lei), și doar angajații cu *Tichete de masă* bifat pe contract, ca fluturașul. Câmpul *Valoarea tichetului de masă* din pontaj e ascuns pe fișa angajatului; la instalare (`post_init_hook`), valorile existente trec pe contractul curent.
+- **Absențe neplătite ca salariu** (din 19.0.1.1.2): `L10N_RO_N`, `L10N_RO_SN`, maternitate (`L10N_RO_M`) și creștere copil (`L10N_RO_CIC`) sunt neplătite în structurile salariale din România; șomajul tehnic (`L10N_RO_ST`) rămâne plătit.
 - Flux: corecția se face în *Concediu* → *Management* → *Pontaj*; se generează fluturașul; după validarea fluturașilor se închide luna în pontaj.
 
 #### 3. Dependențe
 
 - [l10n_ro_hr_pontaj](../l10n_ro_hr_pontaj/index.md)
 - `hr_payroll`
+- [l10n_ro_hr_payroll_enhancement](../l10n_ro_hr_payroll_enhancement/index.md)
 
 #### 4. Componente Cheie
 
@@ -41,6 +44,8 @@ Modulul duce corecțiile din foaia colectivă de prezență (pontaj) în salariz
 
 - `l10n.ro.hr.pontaj.code` (extins): câmpul `overtime_work_entry_type_id` (*Tip ore suplimentare*), vizibil în lista codurilor de pontaj.
 - `l10n.ro.hr.pontaj.override` (extins): la creare, modificare și ștergere a unei corecții regenerează prezențele zilelor afectate (`_l10n_ro_regenerate_work_entries`).
+- `hr.work.entry.type` (extins): tipurile de prezență ale codurilor de pontaj (inclusiv regimul neplătit al absențelor).
+- `hr.employee` (vizualizare extinsă): ascunde câmpul de valoare a tichetului de masă din pontaj.
 - `hr.version` (extins): în generarea prezențelor (`_generate_work_entries`, `_generate_work_entries_postprocess`) înlocuiește prezențele zilelor corectate cu cele derivate din pontaj (`_l10n_ro_pontaj_vals`), inclusiv tratarea sărbătorilor legale.
 
 **Vizualizări**
@@ -49,6 +54,8 @@ Modulul duce corecțiile din foaia colectivă de prezență (pontaj) în salariz
 
 **Date**
 
+- `data/hr_work_entry_type_unpaid.xml`: marchează ca neplătite absențele nemotivate, maternitatea și creșterea copilului.
+- `views/hr_employee_views.xml`: ascunde *Valoarea tichetului de masă* din pontaj pe fișa angajatului.
 - `data/hr_work_entry_type_data.xml`: tipurile de prezență ale codurilor de pontaj, inclusiv `L10N_RO_OT_HOL`, `L10N_RO_OT_REST`, `L10N_RO_OT_COMP`, și codurile `RS` / `OC`.
 
 **Acțiuni Automate / Acțiuni Server**

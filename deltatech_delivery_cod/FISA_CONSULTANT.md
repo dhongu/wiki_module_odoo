@@ -19,6 +19,11 @@ băncii. Decontarea vine din **borderoul curierului** (fișier sau API) sau, pen
 virează **fără borderou**, din fereastra **Potrivește viramentul curierului**, care găsește coletele
 plătite numai din suma virată.
 
+Fiecare colet decontat rămâne legat de rândul de extras care l-a plătit. Pe această legătură, lista
+**Ramburs de decontat** arată ce mai datorează curierii: coletele livrate cu ramburs pe care curierul
+nu le-a decontat după perioada de decontare și pe cele decontate cu altă sumă decât rambursul. O
+alertă opțională pune pe jurnalul de clearing al fiecărui curier o activitate pentru contabil.
+
 ## 2. Bază legală și context
 
 - **OMFP 1802/2014, pct. 302 alin. (2)** — sumele virate sau depuse la bănci ori prin mandat poștal
@@ -56,11 +61,14 @@ Modulul nu are roluri proprii. Folosește drepturile standard ale contabilităț
 - **Facturare → Configurare → Contabilitate → Jurnale** — configurarea jurnalului de clearing: rol de administrator
   al contabilității;
 - **Potrivește viramentul curierului** și reconcilierea extraselor: rol de contabil (acțiunea din
-  meniul **Acțiune** al liniilor de extras este disponibilă grupului de facturare).
+  meniul **Acțiuni** al liniilor de extras este disponibilă grupului de facturare);
+- lista **Ramburs de decontat**: rol de facturare.
 
 Roluri recomandate pentru testare:
 - un **contabil** care parcurge potrivirea, creează extrasul și reconciliază;
-- un **administrator** al contabilității care configurează jurnalul de clearing.
+- un **administrator** al contabilității care configurează jurnalul de clearing;
+- contabilul care urmărește decontările, setat ca **Utilizator implicit** pe tipul de activitate
+  **Decontare ramburs**, primește alerta.
 
 ## 4. Conturi și date implicate
 
@@ -126,6 +134,14 @@ Date minime pentru demo:
 
 5. Verificați că livrările cu ramburs au AWB, sumă de ramburs și stare de livrare actualizată de
    integrarea curierului (vezi pasul 1 din secțiunea 6).
+6. Opțional, perioada după care un ramburs livrat și nedecontat apare în **Ramburs de decontat**:
+   parametrul de sistem `delivery_cod.settlement_days` (**Setări → Tehnic → Parametri → Parametri
+   sistem**, mod dezvoltator), implicit `10` zile de la livrare.
+7. Opțional, alerta pentru contabil: în **Setări → Tehnic → Activități → Tipuri de activitate**,
+   tipul **Decontare ramburs**, completați **Utilizator implicit**; apoi activați acțiunea
+   planificată **Livrare: alertă pentru rambursul nedecontat de curier** (**Setări → Tehnic →
+   Automatizare → Acțiuni planificate**). Cronul vine **inactiv** la instalare; fără utilizator
+   implicit nu pune nicio activitate.
 
 ## 6. Flux de utilizare
 
@@ -204,8 +220,8 @@ căutarea. **Creează extrasul de decontare** apare doar când diferența este z
 Apăsați **Creează extrasul de decontare**. Modulul creează, în jurnalul **Ramburs FAN Courier**,
 același extras pe care l-ar fi produs un borderou și îl deschide:
 
-- **Referință** — „FAN Courier ramburs 2026-10-06 (potrivit după sumă)”;
-- rândul de virament „FAN Courier Transfer ramburs 2026-10-06”, **−617,07** (pe ecran, primul);
+- **Referință** — „FAN Courier ramburs &lt;data viramentului&gt; (potrivit după sumă)”;
+- rândul de virament „FAN Courier Transfer ramburs &lt;data viramentului&gt;”, **−617,07** (pe ecran, primul);
 - un rând pentru fiecare AWB: „AWB ramburs 2310500123403 - Elena Marin” 516,88 și „AWB ramburs
   2310500123402 - Andrei Popescu” 100,19, cu data livrării și clientul găsit după livrare;
 - **Sold inițial** = **Sold final** = 0,00 lei: extrasul se închide la zero.
@@ -290,6 +306,60 @@ Comisionul se înregistrează în doi pași, ca orice serviciu facturat:
 
 ![Nota rândului de comision reconciliat cu factura FAN 7781: Dr 401100 = Cr 512501](screenshots/12_nota_comision.png)
 
+### Pasul 8 — Ce mai datorează curierul: Ramburs de decontat
+
+**Facturare → Clienți → Ramburs de decontat** deschide AWB-urile cu ramburs, filtrate pe
+**Nedecontat** și grupate pe curier: coletele **Livrat** de cel puțin 10 zile (parametrul
+`delivery_cod.settlement_days`) care nu apar în jurnalul de clearing al curierului.
+
+![Lista „Ramburs de decontat”, filtrul „Nedecontat”: coletul Ioanei Dumitrescu, livrat de 12 zile, nedecontat](screenshots/13_ramburs_de_decontat.png)
+
+**Găsește pe ecran.** Pe fiecare rând: AWB-ul, curierul, livrarea, **Data AWB** (de regulă cu o zi
+înaintea livrării), **Valoare ramburs**, **Sumă decontată** 0,00 și **Decontare ramburs** gol. Pe rândul de grup, totalul pe
+curier (aici 854,59 lei pentru FAN Courier).
+
+**Verifică.**
+- Ziua livrării este data validării livrării (altfel data AWB-ului), ca în fereastra de potrivire.
+- Se verifică doar curierii care au un jurnal de clearing (câmpul **Curier** pe jurnal): pentru un
+  curier fără jurnal nimic nu ar putea apărea vreodată decontat, deci nu e listat.
+- Coletele decontate prin potrivirea fără borderou (pasul 5) sau prin borderou nu mai apar aici.
+
+**Treci mai departe.** Cereți curierului decontarea coletelor listate, apoi importați-o (borderou,
+**Preia decontarea** sau potrivirea fără borderou). Filtrul **Decontat** arată, pentru fiecare
+colet plătit, rândul de extras care l-a decontat:
+
+![Filtrul „Decontat”: fiecare AWB cu suma decontată și rândul de extras din jurnalul de clearing (RFAN/2026/…)](screenshots/14_ramburs_decontat_legatura.png)
+
+Filtrul **Decontat cu diferență** păstrează coletele pentru care curierul a plătit altă sumă decât
+rambursul: diferența se lămurește cu curierul (sumă greșită pe AWB, ramburs modificat la livrare).
+În contabilitate, rândul AWB al unui astfel de colet nu se mai reconciliază automat (suma nu e egală
+cu factura): rămâne pe 512500 până când contabilul îl reconciliază manual, parțial, cu factura.
+Restul facturii rămâne pe 4111 până la clarificare; dacă se confirmă că îl datorează curierul,
+contabilul îl poate trece pe 461, pe analiticul curierului. Dacă, invers, curierul a plătit mai
+mult decât rambursul, surplusul rămâne pe 512500 până la clarificare, apoi se restituie curierului
+sau clientului, după caz.
+Legătura se face singură la crearea extrasului, oricare ar fi calea decontării; la actualizarea
+modulului, extrasele importate deja se leagă și ele.
+
+### Pasul 9 — Alerta pe jurnalul de clearing
+
+Cu cronul activ și un **Utilizator implicit** pe tipul **Decontare ramburs** (secțiunea 5, pasul
+7), o dată pe zi fiecare jurnal de clearing cu colete nedecontate primește **o singură** activitate
+**Ramburs nedecontat: &lt;curier&gt;**, pentru contabil.
+
+![Jurnalul „Ramburs FAN Courier” cu activitatea „Ramburs nedecontat: FAN Courier”: numărul de colete, suma, perioada și cea mai veche livrare](screenshots/15_alerta_jurnal.png)
+
+**Găsește pe ecran.** În panoul din dreapta al jurnalului, la **Activități planificate**: titlul și
+nota — câte expedieri livrate sunt încă nedecontate, suma lor (854,59 lei), perioada de decontare
+și ziua celei mai vechi livrări.
+
+**Verifică.** Cifrele din notă corespund listei **Ramburs de decontat** filtrate pe același
+curier. Activitatea e scrisă în limba contabilului care o primește.
+
+**Treci mai departe.** Cereți decontarea curierului. Activitatea se actualizează la fiecare rulare
+a cronului, cu cifrele zilei, și se închide singură („Închisă automat: nu mai e nimic de decontat.”)
+când curierul nu mai datorează nimic.
+
 ### Note de monografie și raportare
 
 | Operațiune | Notă contabilă | Când |
@@ -311,6 +381,10 @@ contul 581001 are sold zero; 512500 (suspensia) trebuie să aibă sold zero, dec
 rămâne doar 512501; un sold pe 512500 din jurnalul de clearing înseamnă rânduri AWB
 nereconciliate cu facturile.
 
+Lista **Ramburs de decontat** și alerta nu generează note contabile: arată doar ce colete livrate
+nu au încă rând de decontare. Rambursul încă nedecontat stă pe 4111 (factura nu e stinsă), iar
+lista îl explică pe colete.
+
 ## 7. Legături cu alte module / declarații
 
 | Modul / proces | Rol în flux |
@@ -327,7 +401,9 @@ nereconciliate cu facturile.
 Ce este automat: căutarea coletelor plătite de un virament fără borderou (lot întreg sau combinație
 exactă), crearea extrasului de decontare cu un rând pe AWB și rândul de virament, găsirea clientului
 după livrare, refuzul dublurilor, verificarea totalului de control, reconcilierea rândurilor AWB cu
-facturile când suma se potrivește.
+facturile când suma se potrivește, legarea fiecărui colet de rândul de extras care l-a decontat,
+lista coletelor nedecontate după perioada de decontare și, cu cronul activ, alerta pe jurnalul
+de clearing.
 
 Ce rămâne manual: configurarea jurnalului de clearing; importul extrasului băncii; alegerea grupului
 când două combinații dau aceeași sumă; reconcilierea rândului de virament și a liniei din bancă
@@ -356,6 +432,16 @@ comision și reconcilierea rândului de comision cu ea.
 - [ ] La **Preia decontarea** pe o perioadă cu mai multe zile de virament se creează câte un extras
       pe zi; la a doua preluare a aceleiași perioade rândurile deja importate sunt raportate ca
       sărite.
+- [ ] În **Ramburs de decontat**, filtrul **Nedecontat** arată un colet livrat de 12 zile și
+      nedecontat; un colet nedecontat livrat mai recent decât perioada nu apare, dar apare după ce
+      coborâți `delivery_cod.settlement_days` sub vârsta lui.
+- [ ] După potrivire sau import, coletele decontate au **Decontare ramburs** completat (rândul de
+      extras) și **Sumă decontată**; un curier fără jurnal de clearing nu are colete la
+      **Nedecontat**.
+- [ ] Un colet decontat cu altă sumă decât rambursul apare la **Decontat cu diferență**.
+- [ ] Cu cronul activ și **Utilizator implicit** pe **Decontare ramburs**, jurnalul de clearing are
+      o singură activitate, în limba contabilului, cu suma formatată ca monedă; după decontarea
+      ultimului colet, activitatea se închide la rularea următoare.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -372,6 +458,9 @@ comision și reconcilierea rândului de comision cu ea.
 | „AWB … apare de mai multe ori în această decontare …” / „Rândul … poartă o sumă de decontare … dar fără AWB …” | Borderou cu rânduri duble sau fără AWB | Clarificați cu curierul, apoi reimportați |
 | „… nu publică un punct de decontare. Importați în schimb fișierul borderou pe jurnal.” | Curierul nu are API de decontare | Importați fișierul borderoului sau folosiți potrivirea fără borderou |
 | „Aceste rânduri acoperă … plăți separate (…), iar un extras se poate echilibra doar pe una singură …” | Fișierul borderoului cuprinde mai multe zile de virament | Împărțiți fișierul și importați câte o zi de virament |
+| Alerta **Ramburs nedecontat** nu apare pe jurnal | Acțiunea planificată e inactivă (așa vine la instalare) sau tipul **Decontare ramburs** nu are **Utilizator implicit** | Activați acțiunea planificată și completați **Utilizator implicit** (secțiunea 5, pasul 7) |
+| Un colet decontat apare totuși la **Nedecontat** | Legătura cu rândul de extras se face doar când există **un singur** AWB cu acel număr, în compania jurnalului și la același curier (sau fără curier); AWB dublat ori la alt curier rămâne nelegat | Corectați AWB-ul dublat sau curierul livrării; legătura se face la următorul extras, iar cea veche se refă la actualizarea modulului |
+| **Ramburs de decontat** nu listează niciun colet al unui curier | Curierul nu are jurnal de clearing (câmpul **Curier** pe jurnal) | Creați jurnalul de clearing al curierului (secțiunea 5) |
 
 ## 10. Capturi de ecran
 
@@ -394,6 +483,11 @@ planul de conturi RO (`setup_country("ro")`), pe compania de test „Demo Shop S
 10. `10_nota_extras_banca.png` — nota liniei din bancă: Dr 512105 = Cr 581001.
 11. `11_extras_borderou_comision.png` — extrasul unui borderou decontat net: AWB, comision, virament.
 12. `12_nota_comision.png` — nota rândului de comision: Dr 401100 = Cr 512501.
+13. `13_ramburs_de_decontat.png` — lista **Ramburs de decontat**, filtrul **Nedecontat**: coletul
+    livrat de 12 zile.
+14. `14_ramburs_decontat_legatura.png` — filtrul **Decontat**: AWB-urile cu suma decontată și rândul
+    de extras.
+15. `15_alerta_jurnal.png` — jurnalul de clearing cu activitatea **Ramburs nedecontat: FAN Courier**.
 
 Regenerare:
 
@@ -410,4 +504,6 @@ analitic 5125, nu în bancă; rândurile AWB sting facturile prin reconcilierea 
 întâlnește cu linia din bancă pe contul de transfer (581). Pentru curierii fără borderou, explicați
 că potrivirea se face **la ban** și că, la două combinații posibile, decide operatorul. Exemplul
 617,07 = 100,19 + 516,88 se verifică ușor pe ecran. Menționați că același colet nu poate fi decontat
-de două ori, indiferent de calea prin care a venit decontarea.
+de două ori, indiferent de calea prin care a venit decontarea. Prezentați **Ramburs de decontat** ca
+răspunsul la întrebarea „ce ne mai datorează curierul”: lista pornește de la coletele livrate, nu de
+la extrase, deci arată exact ce lipsește din decontări.

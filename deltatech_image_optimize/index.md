@@ -1,10 +1,10 @@
 # Image Optimizer (localizat la `deltatech_image_optimize/index.md`)
 
 - **Nume Tehnic:** `deltatech_image_optimize`
-- **Versiune:** `19.0.1.12.0`
+- **Versiune:** `19.0.1.14.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_image_optimize
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_image_optimize`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-10-22`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -32,12 +32,28 @@ recomprimare, de aceea rezultatul se verifică înainte de aplicare.
   carouri (zonele transparente rămân vizibile). Se debifează rândurile
   nereușite, apoi **Apply**; nimic nu se scrie înainte. **Refresh Preview**
   reface previzualizarea și bifările.
-- Trei metode de decupare (`bg_method`): **uniform** (fără model AI — fundalul
+- Patru metode (`bg_method`): **uniform** (fără model AI — fundalul
   este ceea ce are culoarea marginii imaginii și o atinge; accesoriile închise
   la culoare de lângă produs și zonele albe din interiorul produsului, de ex.
   eticheta, rămân intacte), **AI** (model local de segmentare `rembg`, ISNet
-  implicit, pentru fotografii pe fundal real) și **auto** (implicit: uniform
-  când marginea are o singură culoare, altfel AI).
+  implicit, pentru fotografii pe fundal real) **auto** (implicit: uniform
+  când marginea are o singură culoare, altfel AI) și **frame** (*Frame only (keep
+  background)*, vezi mai jos).
+- **Încadrare pătrată fără eliminarea fundalului** (metoda *frame*): produsul este
+  găsit după culoare, decupat și centrat într-un pătrat umplut cu culoarea
+  fundalului; piesele mici de lângă produs (o siglă în colț) sub
+  `bg_frame_min_island` % (10) nu lărgesc pătratul. Rezultatul se salvează JPEG;
+  necesită fotografie pe fundal uniform. Util pentru pozele nepătrate, care apar
+  mici în lista magazinului.
+- Wizardul are câmpurile *Frame in a Square*, *Margin (%)* și *Background Color*
+  (preluate din `bg_crop`, `bg_margin`, `bg_color`), modificabile per rulare și
+  aplicate după **Refresh Preview**; o selecție pusă în coadă folosește parametrii
+  de sistem.
+- **Din editorul de website**: pe o imagine de produs (produs, variantă, imagine
+  din galerie) apare *Background → Remove Background*; un dialog arată imaginea
+  înainte/după, cu metoda și avertismentul, apoi **Apply** scrie imaginea și
+  editorul reîncarcă pagina. Nu apare pe imaginile paginii (bannere, blocuri).
+  Funcționează și pe imaginea proprie a variantei (`image_variant_1920`).
 - Fragmentele mici rămase lângă produs se elimină (`bg_min_island`). Când
   modelul AI pierde o parte din produs pe fundal uniform (`bg_lost_warning`),
   rândul primește avertisment și este **debifat**.
@@ -49,8 +65,10 @@ recomprimare, de aceea rezultatul se verifică înainte de aplicare.
   se setează o culoare de fundal `bg_color`), cu variantele redimensionate
   regenerate. Starea apare în câmpul *Background Removal*
   (*Pending / Removed / Failed*).
-- `rembg` este dependență Python opțională (nedeclarată în manifest); fără ea,
-  fundalurile uniforme se decupează totuși după culoare. Modelul se descarcă la
+- `rembg` este dependență Python opțională (nedeclarată în manifest); fără ea (sau
+  dacă importul eșuează, de ex. `numba`/`coverage` pe odoo.sh — pentru care se
+  adaugă `coverage>=7.6.1` lângă `rembg[cpu]`), fundalurile uniforme se decupează
+  totuși după culoare. Modelul se descarcă la
   prima utilizare și se ține încărcat un singur model per worker.
   `birefnet-general` nu mai e în lista wizardului (epuiza memoria workerului).
 
@@ -166,6 +184,10 @@ decupare) și `numpy` (eliminare filigran).
 
 **Vizualizări**
 
+- `static/src/website_builder/` (`website.website_builder_assets`): opțiunea
+  *Remove Background* și dialogul de previzualizare din editorul de website,
+  servite de controllerul `ImageBackgroundController`
+  (`/deltatech_image_optimize/bg/preview` și `/bg/apply`).
 - `view_image_background_wizard_form`: wizardul de eliminare a fundalului
   (metodă, model AI, previzualizare pe carouri, avertismente); stil în
   `static/src/scss/image_background_wizard.scss` (`web.assets_backend`).
@@ -197,7 +219,7 @@ decupare) și `numpy` (eliminare filigran).
   `target_fields`, `variant_fields`, `variant_quality`, `webp_quality`,
   `force_jpeg`, `variant_min_size`; fundal — `bg_method`, `bg_model`,
   `bg_tolerance`, `bg_min_island`, `bg_lost_warning`, `bg_crop`, `bg_margin`,
-  `bg_color`, `bg_sync_limit`, `bg_batch`; filigran — `wm_sync_limit`,
+  `bg_frame_min_island`, `bg_color`, `bg_sync_limit`, `bg_batch`; filigran — `wm_sync_limit`,
   `wm_learn_limit`, `wm_batch`.
 
 #### 5. Conexiuni

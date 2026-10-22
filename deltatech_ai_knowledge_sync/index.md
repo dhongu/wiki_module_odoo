@@ -1,10 +1,10 @@
 # AI - Knowledge Sync (localizat la `deltatech_ai_knowledge_sync/index.md`)
 
 - **Nume Tehnic:** `deltatech_ai_knowledge_sync`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_knowledge_sync
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_ai_knowledge_sync`
-- **Ultima Ingestie:** `2026-10-20`
+- **Ultima Ingestie:** `2026-10-22`
 
 #### 1. Sumar
 
@@ -16,6 +16,7 @@ Modulul păstrează articolele din aplicația **Knowledge** ca surse pentru un a
 - **Sincronizare automată:** un articol adăugat, editat, mutat, redenumit, arhivat sau șters este sincronizat după câteva minute (modificările sunt grupate, fiindcă editorul salvează în timpul scrierii). Articolele nemodificate își păstrează sursa și embedding-urile; un cron zilnic reverifică totul.
 - **Text românesc corect:** textul se stochează ca text simplu UTF-8, astfel încât ă, ș, ț, î, â se păstrează în embedding-uri (indexarea standard a HTML-ului păstrează doar caractere ASCII).
 - **Articolele private și partajate nu sunt folosite:** doar articolele din spațiul de lucru, lizibile de toți utilizatorii interni, devin surse. Un utilizator vede citarea unui articol doar dacă îl poate citi.
+- **Puncte de extensie pentru alte module:** agenții de sincronizat, articolele urmărite, numele și link-ul fiecărei surse, câmpurile unui articol care declanșează sincronizarea și cine vede citările (ex: un agent de website care răspunde doar din articolele publicate). Un link nou al unui articol nemodificat se salvează fără reindexarea articolului.
 - **Configurare:** în **AI › Agents**, fila **Knowledge**, se aleg în **Followed Articles** articolele-rădăcină ale documentației (ex: *Documentație*). La salvare, articolele sunt adăugate ca surse în fundal, apoi indexate de cron-ul standard AI; de acolo, modificările din Knowledge ajung singure la agent.
 
 #### 3. Dependențe

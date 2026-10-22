@@ -1,10 +1,10 @@
-# Fan Curier Shipping (localizat la `deltatech_delivery_fc/index.md`)
+# FAN Courier Shipping (localizat la `deltatech_delivery_fc/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_fc`
-- **Versiune:** `19.0.1.7.7`
+- **Versiune:** `19.0.1.8.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_fc
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_fc`
-- **Ultima Ingestie:** `2026-09-29`
+- **Ultima Ingestie:** `2026-10-22`
 
 #### 1. Sumar
 
@@ -25,6 +25,8 @@ Modulul Fan Curier Shipping este o extensie Odoo dezvoltată de Terrabit care as
 - Import de localități care nu mai creează dubluri în `res.city`: localitățile ambigue sau necunoscute apar ca „to map” în `delivery.carrier.city`, iar checkout-ul oferă doar localitățile deservite de Fan Courier.
 - Opțiuni de configurare dedicate integrării Fan Courier (Client ID, utilizator, parolă, în fila „Fan Courier Configuration” a metodei de livrare), personalizarea ambalării produselor conform cerințelor curierului și configurarea punctului de ridicare (din adresa contractuală).
 - Client ID pe mai multe contracte: se folosește, în ordine, Client ID de pe metoda de livrare, apoi Referința adresei de ridicare a depozitului, apoi Referința primei locații de ridicare. Pentru depozite cu contracte diferite, câmpul de pe metodă rămâne gol, iar în fila „Pickup Location” (sursa „Warehouse”) se adaugă câte o linie per depozit, cu Referința = Client ID-ul contractului. Câmpul Client ID este vizibil doar grupului Setări.
+- Comenzi de curier (colectare) FAN Courier: o comandă per predare (colete, greutate, zi și interval orar de ridicare, numărul predării ca notă), anulare și citirea comenzilor zilei. Validat pe API-ul real fără rezervări (o comandă este facturabilă); prima comandă reală urmează la un client care predă coletele la sediu.
+- Funcționare fără `deltatech_delivery_locker` instalat: contorul de reîncercări pentru lockere se resetează doar unde modulul de lockere este instalat, deci AWB-ul nu mai blochează lanțul de după emitere.
 - Erori frecvente: „The client id do not exists” (Client ID lipsă, greșit sau din alt contract decât utilizatorul/parola) și timeout după 30 de secunde către `api.fancourier.ro`.
 
 Notă: Expedierea cu ID de oraș și ID de județ nu este suportată (se folosește identificarea după nume). Pentru selectarea lockerului pe hartă este necesară și instalarea modulului [deltatech_delivery_locker](../deltatech_delivery_locker/index.md).

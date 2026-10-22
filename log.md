@@ -4,6 +4,23 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-22] Actualizare în lot: 43 de re-ingestii și 31 de pagini noi
+
+- **Acțiune:** lot procesat în paralel (un subagent `documentarist-wiki` per modul).
+  - Re-ingestie pentru modulele a căror versiune minoră sau majoră din manifest era mai nouă decât pagina: `deltatech_ai_anthropic`, `deltatech_ai_knowledge_sync`, `deltatech_alternative`, `deltatech_delivery`, `deltatech_delivery_cod`, `deltatech_delivery_dashboard`, `deltatech_delivery_dpd`, `deltatech_delivery_fc`, `deltatech_delivery_uc`, `deltatech_feed`, `deltatech_image_optimize`, `deltatech_keez`, `deltatech_marketplace_emag`, `deltatech_marketplace_prestashop`, `deltatech_marketplace_review`, `deltatech_marketplace_sale`, `deltatech_mentor`, `deltatech_product_code`, `deltatech_rma`, `deltatech_rma_marketplace`, `deltatech_saga`, `deltatech_sale_contact`, `deltatech_stock_negative`, `deltatech_uom_domain`, `deltatech_vendor_products`, `deltatech_vendor_products_kramp`, `deltatech_vendor_stock`, `deltatech_website_breadcrumb`, `deltatech_website_category_icon`, `l10n_ro_anaf_d112`, `l10n_ro_anaf_d112_payroll`, `l10n_ro_hr_payroll_account_enhancement`, `l10n_ro_hr_payroll_enhancement`, `l10n_ro_hr_pontaj_payroll`, `l10n_ro_inventory_items`, `l10n_ro_payroll_pack`, `l10n_ro_reverse_charge_331_pos`, `l10n_ro_saft_export_fix`, `l10n_ro_saft_fix`, `l10n_ro_stock_report`, `terrabit_helpdesk_ai_reply`, `terrabit_iap`, `terrabit_iap_server_ai`.
+  - Pagini noi pentru modulele din suitele proprii fără documentație: `deltatech_partner_gifts_employees`, `deltatech_smartbill`, `deltatech_website_shop_header`, `deltatech_website_shop_snippets`, `deltatech_delivery_handover`, `deltatech_ai_product_image`, `deltatech_hr_holidays_report_access`, `deltatech_change_uom`, `deltatech_invoice_delivery`, `deltatech_mrp_set_delivery`, `deltatech_picking_number`, `deltatech_pos_price_lock`, `deltatech_pos_stock_shops`, `deltatech_price_change`, `deltatech_price_change_label`, `deltatech_product_category`, `deltatech_purchase_price_history`, `deltatech_sale_commission_manufacturer`, `deltatech_sale_margin_pos`, `deltatech_saleorder_type`, `deltatech_website_llms_txt`, `deltatech_website_searchbar_typing`, `deltatech_service_maintenance_agreement`, `deltatech_stock_valuation_guard`, `deltatech_stock_valuation_guard_pos`, `l10n_ro_pos_partner_efactura`, `l10n_ro_stock_account_warehouse_journal`, `l10n_ro_storage_sheet`, `l10n_ro_website_legal_guarantee`, `l10n_ro_anaf_partner_confirm`, `l10n_ro_vat_change`.
+  - Modulele cu diferență doar de patch (519) nu au fost reprocesate.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md` și `__manifest__.py` de pe `19.0`; codul doar acolo unde readme-ul nu acoperă componentele.
+- **Fișe consultant copiate (cu capturi):** `deltatech_delivery`, `deltatech_delivery_cod`, `deltatech_delivery_dashboard`, `deltatech_image_optimize`, `deltatech_marketplace_emag`, `deltatech_marketplace_prestashop`, `deltatech_marketplace_review`, `deltatech_rma`, `deltatech_rma_marketplace`, `deltatech_saga`, `deltatech_stock_negative`, `l10n_ro_anaf_d112` (cu sub-fișele din `fise/`), `l10n_ro_anaf_d112_payroll`, `l10n_ro_hr_payroll_enhancement`, `l10n_ro_inventory_items`, `l10n_ro_saft_export_fix`, `deltatech_change_uom`, `deltatech_price_change`, `l10n_ro_pos_partner_efactura`.
+- **Dependențe/Conexiuni:** linkuri activate între paginile noi (`deltatech_website_shop_header` ↔ `deltatech_website_shop_snippets`, `deltatech_stock_valuation_guard` ↔ `deltatech_stock_valuation_guard_pos`, `deltatech_website_breadcrumb` și `deltatech_website_category_icon` → `deltatech_website_shop_snippets`).
+- **Atenție:**
+  - `deltatech_stock_negative`: fișa din modul trimite la `07_serie_check_debifat.png` și `08_inventar_corectie_negativ.png`, care lipsesc din `readme/screenshots/`.
+  - `deltatech_image_optimize`: fișa consultant nu acoperă încă metoda *Frame only* și butonul din editorul de website.
+  - `deltatech_saleorder_type` și `l10n_ro_vat_change` sunt module obsolete (carcasă goală, respectiv `installable: False`); paginile o spun explicit.
+  - `l10n_ro_anaf_d112`: meniul *Import declarație D112* vine din `HISTORY.md` și nu apare în `menus.xml`; de verificat.
+  - `deltatech_smartbill`: câmpul `smartbilll_delay` are o literă în plus în cod.
+- **Fișiere actualizate:** 74 de directoare de modul (`index.md`, plus `FISA_CONSULTANT.md` și `screenshots/` unde există), `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-22] Re-ingestie: `l10n_ro_pos_fiscal_compliance` (19.0.2.3.1) cu fișa consultant și `l10n_ro_pos_fiscal_compliance_ecr` (19.0.1.2.1)
 
 - **Acțiune:** actualizare a două pagini, procesate în paralel (un subagent per modul).

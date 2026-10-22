@@ -1,10 +1,10 @@
 # Romania - Declarația D112 ANAF (localizat la `l10n_ro_anaf_d112/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d112`
-- **Versiune:** `19.0.2.15.0`
+- **Versiune:** `19.0.2.19.4`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112`
-- **Ultima Ingestie:** `2026-10-12`
+- **Ultima Ingestie:** `2026-10-22`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -44,9 +44,13 @@ Modulul automatizează întocmirea, validarea și exportul Declarației D112 ANA
 - **`C1_11` la salariații cu suma neimpozabilă de 200 lei** (19.0.2.14.1): `C1_11` = Σ(`A_13` + `A_13S`), conform regulii A29 a validatorului oficial (înainte se raporta doar Σ`A_13` și declarația era respinsă); `C1_T1` urmează `C1_11`.
 - **Contul CAS angajator** (19.0.2.15.0): setare nouă în Contabilitate → Configurare → Setări, pentru obligațiile 481 / 482. Plata pregătită din D112 debitează acest cont (nu 4315), ca să nu rămână sold pe 4311, unde salarizarea înregistrează datoria; dacă nu e completat, contul se caută după cod (4311…). Reconcilierea afișează rândul „481/482” doar când declarația are această contribuție.
 - **Deduceri și în `asiguratE3`**: persoanele în întreținere și deducerile personale se declară și în `E3_11`, `E3_12`, `E3_121`, `E3_122`, `E3_1221`, `E3_1222`, `E3_13` (structura ANAF cere ca E1_x să fie sumele câmpurilor E3).
+- **Import D112 depusă cu alt program** (19.0.2.16.0): asistent în meniul declarațiilor ANAF (*Import declarație D112*, doar administratorul contabil) care citește XML-ul sau PDF-ul ANAF cu XML atașat și creează declarația perioadei cu liniile nominale și certificatele medicale, marcată *Importată* și blocată ca exportată; liniile se leagă de angajați după CNP (din 19.0.2.16.1 și manual, doar câmpul *Angajat*). Se refuză alt CUI sau o perioadă deja declarată; drepturile de autor și zilierii nu se importă. Folosește la trecerea salarizării în Odoo (istoric pentru rectificative, confruntări, medii de concedii).
+- **Verificarea declarației** (butonul *Verifică*, 19.0.2.17.0): recalculează din cifrele declarate (XML-ul depus pentru cele importate, cel generat pentru celelalte) deducerea personală pe grilă art. 77, impozitul de 10%, baza impozitului, scutirea art. 60, suma neimpozabilă, asigurarea de șomaj, zilele lucrate/ore suspendate și zilele de concediu medical; constatările pe asigurat (eroare / avertisment / informare, cu impactul asupra impozitului) apar în tab-ul *Verificare* și în lista *Constatări la verificarea D112*.
+- **Alte câmpuri nominale noi (19.0.2.15.1–19.0.2.19.1):** *Funcție de bază* (nebifat → `E3_3` = 2, venit în secțiunea E2, fără deduceri), *Ore suspendate* (`A_7`), pensionar neasigurat la șomaj (`asigSO` = 2, `A_9` declarat), tichete de creșă (`E3_72`) și culturale (`E3_74`), ajutoare neimpozabile (`E3_87`), beneficiile art. 76 alin. (4¹) pe toate sub-rândurile 8.5 (mobilitate, hrană, cazare, servicii turistice, abonament sport, educație timpurie), clauza de mobilitate impozabilă (`E3_85`) și beneficiile neimpozabile plătite în bani (în `E3_16` de la 07/2026). Tichetele de creșă și culturale intră în baza impozabilă (`E3_14` / `E1_6`); indemnizațiile medicale neimpozabile nu intră în baza impozitului.
+- **Corecții la baza minimă și creanțe** (19.0.2.19.2–19.0.2.19.4): zilele de concediu medical nu mai sunt zile cu contract activ, iar pragul se compară cu baza salariului fără indemnizațiile de concediu medical; creanțele 458/459 sunt suma diferențelor rotunjite pe asigurat (ΣA_14D / ΣA_12D).
 - **Totaluri** CAS/CASS/impozit/CAM calculate automat din linii; baza CAM (`cam_baza`, `A_5`, `B1_5`, `B4_14`, `C4_baza`) = venit brut − suma neimpozabilă la salariul minim.
 
-Fluxul complet lunar (previzualizare → ciornă → verificare linii → reconciliere contabilă → validare → generare/descărcare XML → înregistrarea depunerii în tabloul de declarații), precum și declarația rectificativă, sunt detaliate pas cu pas în [FISA_CONSULTANT.md](FISA_CONSULTANT.md). Setările obligatorii dinaintea primei utilizări (cod CAEN, județ, date contact ANAF, conturile și toleranța de reconciliere din Contabilitate → Configurare → Setări) sunt descrise în `readme/CONFIGURE.md`.
+Fluxul complet lunar (previzualizare → ciornă → verificare linii → reconciliere contabilă → validare → generare/descărcare XML → înregistrarea depunerii în tabloul de declarații), precum și declarația rectificativă, sunt detaliate pas cu pas în [FISA_CONSULTANT.md](FISA_CONSULTANT.md); scenarii specifice (part-time, pensionar, rectificativă, salariu minim) au fișe dedicate în [fise/README.md](fise/README.md). Setările obligatorii dinaintea primei utilizări (cod CAEN, județ, date contact ANAF, conturile și toleranța de reconciliere din Contabilitate → Configurare → Setări) sunt descrise în `readme/CONFIGURE.md`.
 
 #### 3. Dependențe
 
@@ -63,6 +67,8 @@ Fluxul complet lunar (previzualizare → ciornă → verificare linii → reconc
 - `l10n.ro.d112` (`mail.thread`, `mail.activity.mixin`, `l10n_ro_anaf.report.handler.mixin`): declarația D112 propriu-zisă — state machine, calculul deducerilor și al bazei minime CAS/CASS (inclusiv `asigExc`/`motivExc`), reconcilierea contabilă și generatorul de XML (profilele v6, v7-0126, v7-0726).
 - `l10n.ro.d112.employee.line`: liniile nominale per angajat (CNP, venituri, contribuții, zile lucrate/concediu, `zile_contract_activ` pentru pragul CAS/CASS, natura venitului (salariu/zilier/drepturi de autor), excepții de la baza minimă, condiții de muncă, ore efective calculate din tipul de contract).
 - `l10n.ro.d112.medical.leave`: certificatele de concediu medical (secțiunea D) ale unei linii nominale; pagina *Concedii medicale* a declarației.
+- `l10n.ro.d112.check`: constatările verificării D112 (pe asigurat, cu gravitate și impact fiscal); regulile sunt funcții pure peste XML (`d112_checks.py`).
+- `l10n.ro.d112.import.wizard` (tranzitoriu): asistentul de import al unei declarații D112 depuse (XML sau PDF ANAF); logica de citire e în `d112_xml_import.py`.
 - `l10n.ro.d112.reconcile.line`: liniile de reconciliere D112 vs. conturile contabile 4315/4316/436/444.
 - `l10n_ro_anaf_d112.report.handler` (`account.report.custom.handler`, `l10n_ro_anaf.report.handler.mixin`): handler-ul raportului de previzualizare a obligațiilor D112; sursa implicită sunt totalurile declarației persistente, iar dacă e instalat modulul-punte de salarizare contribuie o proiecție live din statele de plată.
 - `account.return` (extindere): calculul termenului legal (25 a lunii următoare) și verificările specifice D112 (declarație + reconciliere) în tabloul de declarații.
@@ -94,4 +100,4 @@ Fluxul complet lunar (previzualizare → ciornă → verificare linii → reconc
 
 ---
 
-**Notă modificări față de pagina anterioară (19.0.2.11.2):** 19.0.2.12.0 adaugă beneficiile 8.5.5–8.5.7 și 8.3.3/8.3.4; 19.0.2.13.0 vouchere de vacanță, tichete cadou și cadouri neimpozabile; 19.0.2.13.1 și 19.0.2.14.2 doar descrierea Apps; 19.0.2.13.2 corectează `B_brutSalarii`; 19.0.2.14.0 adaugă casa de sănătate pe salariat; 19.0.2.14.1 corectează `C1_11`; 19.0.2.15.0 adaugă contul CAS angajator (481/482).
+**Notă modificări față de pagina anterioară (19.0.2.15.0):** 19.0.2.15.1–15.4 (funcție de bază, ore suspendate, pensionar, `A_9`); 19.0.2.16.x import D112; 19.0.2.17.0 verificarea declarației; 19.0.2.18.0 și 19.0.2.19.0 beneficii 8.5.x, tichete de creșă/culturale, ajutoare; 19.0.2.19.1 baza impozabilă cu tichetele de creșă/culturale; 19.0.2.19.2–19.0.2.19.4 corecții la creanțele 458/459 și baza minimă (concediul medical). Fișa consultant are acum și sub-fișe în `fise/` (part-time, pensionar, rectificativă, salariu minim).

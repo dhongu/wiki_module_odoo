@@ -1,10 +1,10 @@
-# Deltatech Delivery Base (localizat la `deltatech_delivery/index.md`)
+# Courier Delivery Base (localizat la `deltatech_delivery/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery`
-- **Versiune:** `19.0.6.8.1`
+- **Versiune:** `19.0.6.11.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery`
-- **Ultima Ingestie:** `2026-09-28`
+- **Ultima Ingestie:** `2026-10-22`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -58,6 +58,14 @@ Modulul „Deltatech Delivery Base” este o extensie cuprinzătoare pentru Odoo
 - **Fix multi-companie pe AWB** *(19.0.6.8.1)*:
   - `delivery.awb.company_id` se calculează acum din compania livrării (sau, în lipsa ei, din compania comenzii de vânzare) în loc să rămână necompletat; cron-ul de stare crea AWB-uri fără companie, iar regula multi-companie lasă să treacă o companie goală, așa că orice companie vedea toate AWB-urile. Câmpul rămâne editabil pentru un importator care setează explicit compania; la upgrade, AWB-urile existente sunt aliniate pe livrarea lor prin SQL
 
+- **Completări 19.0.6.8.x – 6.11.x**:
+  - **Ramburs la încasat = restul de plată al facturii**: după ce comanda e facturată (factură postată), rambursul este `amount_residual` al facturii, nu totalul — un voucher de marketplace sau un avans deja decontat nu mai e încasat a doua oară (wizard-ul AWB și `sale.order.get_value_to_collect()`); o factură ciornă nu contează, decide totalul comenzii; valoarea asigurată rămâne valoarea mărfii
+  - **Autorizare automată a tranzacției Cash On Delivery** (parametru de sistem opțional `deltatech_delivery.auto_authorize_on_delivery`, implicit oprit): la generarea unui AWB cu ramburs, tranzacția de plată „Cash On Delivery” trece în *Autorizat* în loc să rămână *Ciornă*, deci factura nu mai oferă plată online pentru o sumă pe care curierul o încasează deja; `auto_done_on_delivery` are în continuare prioritate
+  - **State excluse pe metoda de livrare** (câmpul *Excluded States*, fila Disponibilitate): metoda nu e oferită pentru adrese din județele bifate, indiferent de restricția Țări/State — un curier care acoperă toată țara mai puțin câteva județe nu mai cere bifarea tuturor celorlalte
+  - **Ridicare comandată de la curier** (două capabilități noi în contractul curierului): `pickup` (comandă de ridicare pentru un întreg predat: `<tip>_order_pickup`, `<tip>_cancel_pickup`) și `pickup_status` (citirea comenzilor de ridicare dintr-o zi: `<tip>_get_pickup_orders`), cu indicatorii `can_order_pickup` și `can_read_pickup` pe curier
+  - **Detaliile coletului se păstrează**: coletul ales în detaliile livrării (ex. palet Euro) e salvat împreună cu detaliile, iar câmpul *Parcel* nu mai revine gol la redeschidere; opțiunile `open_package`, `package_return` și `sms_notification` sunt mereu prezente în detaliile expedierii (oprite implicit), inclusiv pentru detalii salvate de versiuni vechi — fără ele DPD, DSC, GLS, TNT și Urgent Cargus opreau AWB-ul
+  - **Liste și dropdown-uri**: serviciile curierului afișează codul, iar locațiile de ridicare arată curierul, orașul și referința pe a doua coloană; serviciile pot fi căutate după cod; *Validate Deliveries* își închide singur dialogul de confirmare; *View Order* de pe AWB găsește comanda și pentru AWB fără referință
+
 - **Gestionarea coletelor**:
   - Suport pentru mai multe colete într-o singură expediere
   - Gestionarea dimensiunilor și greutății coletelor
@@ -101,7 +109,7 @@ Fluxul pas-cu-pas al acțiunilor în masă și al reținerii livrărilor amânat
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie din schema wiki, secțiunea „Sumar” și „Funcționalități Cheie” provin din `readme/DESCRIPTION.md` (îmbogățit cu esențialul din `readme/USAGE.md` și din `readme/FISA_CONSULTANT.md` pentru cele două acțiuni în masă, pentru reținerea livrărilor amânate și pentru lista de ramburs refuzat), care nu solicită explicit analiza codului pentru componente. Prin urmare, această secțiune nu este detaliată din cod; ca reper minim: hook-ul central al reținerii — `stock.picking._delivery_hold_message()` — este consultat de `send_to_shipper()`, `action_send_to_carrier_one()` și `action_bulk_validate_deliveries()`; iar `delivery.awb` are acum câmpurile `cod_amount`, `cod_unpaid_refused`, `cod_open_amount` și `company_id` (calculat din livrare/comandă); tabloul de bord [deltatech_delivery_dashboard](../deltatech_delivery_dashboard/index.md) numără pe `cod_amount`, `company_id` și `poll_abandoned`.
+Conform fluxului de ingestie din schema wiki, secțiunea „Sumar” și „Funcționalități Cheie” provin din `readme/DESCRIPTION.md` (îmbogățit cu esențialul din `readme/USAGE.md` și din `readme/FISA_CONSULTANT.md` pentru cele două acțiuni în masă, pentru reținerea livrărilor amânate și pentru lista de ramburs refuzat), care nu solicită explicit analiza codului pentru componente. Prin urmare, această secțiune nu este detaliată din cod (modele principale: `delivery.awb`, `delivery.parcel`, `delivery.carrier.option`, `delivery.carrier.service`, `delivery.pickup.location`, `delivery.status.history`, `delivery.carrier.details`, `picking.mass.print`, plus extensii pe `delivery.carrier`, `stock.picking`, `sale.order`; acțiuni automate: cron „Delivery: Update delivery status” la 12 ore și „Delivery: Vacuum merged label PDFs” zilnic); ca reper minim: hook-ul central al reținerii — `stock.picking._delivery_hold_message()` — este consultat de `send_to_shipper()`, `action_send_to_carrier_one()` și `action_bulk_validate_deliveries()`; iar `delivery.awb` are acum câmpurile `cod_amount`, `cod_unpaid_refused`, `cod_open_amount` și `company_id` (calculat din livrare/comandă); tabloul de bord [deltatech_delivery_dashboard](../deltatech_delivery_dashboard/index.md) numără pe `cod_amount`, `company_id` și `poll_abandoned`.
 
 #### 5. Conexiuni
 

@@ -1,10 +1,10 @@
 # Conector Marketplace PrestaShop (localizat la `deltatech_marketplace_prestashop/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_prestashop`
-- **Versiune:** `19.0.0.5.0`
+- **Versiune:** `19.0.0.6.0`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_prestashop`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_prestashop`
-- **Ultima Ingestie:** `2026-10-12`
+- **Ultima Ingestie:** `2026-10-22`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -17,6 +17,7 @@ Conectorul Deltatech pentru marketplace PrestaShop permite integrarea directă �
 - **Integrare avansată a clienților:** importul clienților PrestaShop în baza de contacte Odoo, sincronizarea datelor de client, a adreselor și a istoricului de cumpărături, gestionarea grupurilor de clienți și a asocierilor. La importul comenzilor, opțiunea *Ignore Company Without VAT* de pe backend se respectă: o adresă de facturare cu denumire de firmă dar fără CUI devine persoană fizică, denumită după nume și prenume, nu un contact cu numele firmei (fără opțiune, comportamentul rămâne cel anterior).
 - **Gestionarea cuprinzătoare a comenzilor:** importul comenzilor de vânzare din PrestaShop în Odoo, cu posibilitatea de a filtra importul după statusul comenzii (pe baza statusurilor deja sincronizate prin Sale Stage), crearea automată a comenzilor de vânzare Odoo și urmărirea îndeplinirii și livrării comenzilor.
 - **Starea comenzii reîncărcată înainte de confirmare (din 0.5.0):** când backend-ul limitează confirmarea automată la anumite statusuri (*Auto-Confirm Only For Statuses*, câmp adus de [deltatech_marketplace_review](../deltatech_marketplace_review/index.md), care nu e dependență a acestui modul), statusul comenzii se citește din nou din PrestaShop chiar înainte de decizia de confirmare, împreună cu mesajele clientului. O plată eșuată în fereastra de așteptare nu mai lasă comanda să treacă pe un status vechi.
+- **Mesaje ale clientului după confirmare (din 0.6.0):** mesajele adăugate de client în firul „Contact us about this order" după confirmarea comenzii ajung în Odoo. Acțiunea programată *PrestaShop: Customer Messages After Confirmation* (orară, inactivă implicit) recitește firele comenzilor confirmate și încă nelivrate complet, plasate în ultimele *Re-read Messages For (days)* (câmp pe backend, implicit 30, 0 = dezactivat). Mesajele noi merg în chatter fără dubluri, iar cele ale clientului se numără pe legătură (`marketplace_late_message_count`).
 - **Push dinspre Odoo spre PrestaShop:** statusul comenzii se trimite către PrestaShop doar dacă *Active On Write* e activat pe elementul „Sale Order"; în schimb, numărul de tracking (la trimiterea coletului către curier) și legătura facturii (la postarea facturii) se trimit **necondiționat**, indiferent de acest comutator.
 - **Webhook de intrare (nu ieșire):** fiecare tip de date sincronizat expune un link de webhook pe care **PrestaShop îl apelează către Odoo** (nu invers) pentru a declanșa imediat importul unei comenzi, fără a aștepta cron-ul orar.
 - **Wizard „Marketplace sync":** acțiune contextuală de pe produse/șabloane de produs pentru export la cerere (implicit `Direction = Export`, `Update Mode = Stock`; comutat manual pe `All` include și preț/nume) — ignoră comutatorul Active On Write.
@@ -50,7 +51,7 @@ Conform fluxului de ingestie, secțiunile de componente nu au fost extrase din c
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Nu au fost extrase din cod (vezi nota de mai sus). Descrierea menționează existența unor joburi programate de sincronizare și procesare în fundal; cron-ul comun „Marketplace: Get Orders" (inactiv implicit) importă comenzile pentru backend-urile fără „Disable Import Sale Order" bifat.
+- Nu au fost extrase din cod (vezi nota de mai sus). Descrierea menționează existența unor joburi programate de sincronizare și procesare în fundal; `PrestaShop: Customer Messages After Confirmation` (`data/ir_cron_data.xml`, apelează `prestashop_cron_import_late_customer_messages()`; orar, inactiv implicit): pentru backend-urile PrestaShop cu sincronizarea mesajelor activă și *Re-read Messages For (days)* > 0, pune în coadă câte un job per comandă confirmată și nelivrată complet, ca un apel eșuat să nu le oprească pe celelalte. În plus, cron-ul comun „Marketplace: Get Orders" (inactiv implicit) importă comenzile pentru backend-urile fără „Disable Import Sale Order" bifat.
 
 **Mapare câmpuri produs**
 

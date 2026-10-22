@@ -1,28 +1,28 @@
 # Mentor Interface (localizat la `deltatech_mentor/index.md`)
 
 - **Nume Tehnic:** `deltatech_mentor`
-- **Versiune:** `19.0.2.1.8`
+- **Versiune:** `19.0.2.2.1`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_mentor`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_mentor`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-10-22`
 
 #### 1. Sumar
 
-Modulul realizează puntea de legătură între Odoo și aplicația de contabilitate WinMentor. Permite exportul datelor din Odoo (parteneri, produse și facturi) într-un format pe care WinMentor îl poate prelua prin funcția sa de „Import date din alte aplicații". Astfel, companiile care țin contabilitatea în Mentor pot transfera documentele generate în Odoo fără reintroducere manuală, pe baza unor mapări configurate în prealabil (CUI partener, cod articol, gestiune, conturi contabile și serii de facturi).
+Modulul permite companiilor care țin contabilitatea în WinMentor, dar lucrează cu vânzările, achizițiile și stocurile în Odoo, să transfere documentele fără reintroducere manuală. Pentru o perioadă aleasă, Odoo generează într-o singură arhivă ZIP fișierele text pe care WinMentor le preia prin meniul „Import date din alte aplicații": parteneri, articole, facturi de furnizor și de client, documente de stoc și producție, plăți și încasări.
 
 #### 2. Funcționalități Cheie
 
-- Export de date din Odoo pentru a fi importate în WinMentor.
-- Export de facturi de intrare, preluate în Mentor prin meniul MENTOR → Intrări → Import date din alte aplicații (submeniul „Facturi Intrare", cu opțiunea „Carnet NIR").
-- Opțiune în wizard-ul de export (`filter_intrari_by_invoice_date`, dezactivată implicit) pentru a selecta facturile de intrare furnizor și bonurile fiscale de intrare după data facturii, nu după data contabilă.
-- Maparea partenerilor existenți pe baza CUI-ului completat ca „cod extern" în Mentor.
-- Maparea articolelor din Mentor cu produsele Odoo prin codul extern.
-- Maparea categoriilor de produse din Odoo cu tipul contabil din Mentor.
-- Completarea codului de gestiune Mentor la nivelul fiecărei locații de stoc.
-- Extragerea seriei de facturi din numele documentelor (separator „/"), pentru a corespunde cu secvențele de numere din Odoo.
-- Trimiterea conturilor contabile către Mentor fără zerourile de la sfârșit.
-- Suport pentru completarea codului de vamă din Mentor la exportul facturilor trecute prin vamă.
-- Fallback: dacă un partener nu are CUI sau un produs nu are cod, se exportă id-ul intern din Odoo.
+- **Parteneri și articole:** exportate cu codurile după care WinMentor face potrivirea: codul fiscal (CUI, cu RO pentru plătitorii de TVA) sau CNP pentru persoane fizice, respectiv referința internă a produsului sau un cod pe categorie de produs. Partenerii și articolele se importă în WinMentor o singură dată; modificările ulterioare trebuie făcute în ambele sisteme.
+- **Achiziții:** facturi și note de credit de furnizor, separate în interne și intracomunitare (cu taxare inversă), importuri din afara UE (cu codul de vamă) și bonuri fiscale de intrare. Opțiunea de filtrare după data facturii (în loc de data contabilă) este dezactivată implicit.
+- **Vânzări:** facturi, note de credit și bonuri de vânzare, un fișier per jurnal, cu seria facturii preluată din jurnal (câmpul „Serie Carnet Mentor"); numărul documentului se ia din numele documentului Odoo.
+- **Stoc și producție:** bonuri de consum și recepții de producție între locația de stoc și cea de producție, avize de intrare și de ieșire, lista gestiunilor.
+- **Plăți și încasări:** opțional, plățile și încasările înregistrate în perioadă, câte un fișier per jurnal; plata către furnizor preia numărul și seria facturii reconciliate.
+- **Conturi contabile românești:** conturile Odoo sunt convertite în conturi WinMentor (cont sintetic fără zerourile de la sfârșit, sufix analitic pe numărul de cifre ales).
+- **O singură companie o dată:** se exportă doar documentele companiei alese; jurnalele și locațiile altei companii sunt refuzate.
+- **Cale de acces:** *Contabilitate > Contabilitate > Mentor > Export Mentor* (pentru managerii contabili). În wizard se aleg perioada, compania, jurnalele (toate dacă rămâne gol), locațiile de stoc și producție și opțiunile: cod de vamă pentru importuri, cod fix pentru persoane fizice, plăți și încasări, produse ca servicii, numărul de cifre analitice.
+- **Tratarea erorilor:** un partener fără cod fiscal sau un produs fără cod oprește exportul, cu numele afișat; „Ignore Errors" le listează în rezultat și continuă exportul. O factură de furnizor cu linie fără produs oprește exportul; liniile de tip secțiune, subsecțiune sau notă ajung în observațiile documentului.
+- **Configurare în Odoo:** pe categoria de produs se completează Simbol Tip Contabil, Gestiune Mentor, Way Production (pentru categorii de producție), Mentor UOM și, dacă se dorește export ca articol unic, Cod Articol (debifând „Mentor Use Article"); pe locațiile de stoc, Simbol Mentor; pe jurnale, Serie Carnet Mentor.
+- **Import în WinMentor:** se despachetează arhiva și fiecare fișier se importă din *Intrări > Import date din alte aplicații*, începând cu partenerii și articolele; pentru facturile de intrare se alege seria NIR („Carnet NIR") și fișierul „Facturi Intrare". Partenerii se mapează după codul fiscal, articolele după cod.
 
 #### 3. Dependențe
 
@@ -30,14 +30,33 @@ Modulul realizează puntea de legătură între Odoo și aplicația de contabili
 - `product`
 - [deltatech_contact](../deltatech_contact/index.md)
 - `stock`
+- `stock_account`
 - `l10n_ro`
 
 Dependență externă Python: `configparser`.
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, secțiunile de mai jos sunt acoperite de fișierul `readme/DESCRIPTION.md` la nivel de funcționalitate; analiza detaliată a codului nu a fost necesară pentru Sumar și Funcționalități Cheie. Pe baza fișierului `__manifest__.py`, modulul include un wizard de export (`wizard/export_mentor_view.xml`, model `export.mentor`) și extinde vizualizările pentru produse, locații de stoc și conturi contabile, plus un meniu dedicat Mentor (`views/mentor_menu.xml`).
+**Modele**
+
+- `export.mentor`: wizard de export; generează arhiva ZIP cu fișierele pentru WinMentor.
+- `product.category` (extins): câmpurile WinMentor (tip contabil, gestiune, unitate de măsură, cod articol).
+- `stock.location` (extins): simbolul gestiunii Mentor.
+- `account.journal` (extins): seria de carnet Mentor.
+- `res.partner` (extins): adaptări pentru exportul partenerilor.
+- `stock.picking` (extins): adaptări pentru exportul avizelor.
+
+**Vizualizări**
+
+- `view_export_mentor_form`: formularul wizardului de export.
+- `product_category_form_view`: câmpurile Mentor pe categoria de produs.
+- `view_location_form`: simbolul Mentor pe locația de stoc.
+- `view_account_journal_form`: seria de carnet Mentor pe jurnal.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- `action_export_mentor`: acțiunea de fereastră care deschide wizardul de export din meniul Mentor.
 
 #### 5. Conexiuni
 
-- [deltatech_contact](../deltatech_contact/index.md): sursa datelor de contact (partenerii) folosite la export și maparea prin cod extern / CUI.
+- [deltatech_contact](../deltatech_contact/index.md): sursa datelor de contact ale partenerilor folosite la export (CUI, potrivire în WinMentor).

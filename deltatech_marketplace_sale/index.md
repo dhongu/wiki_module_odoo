@@ -1,10 +1,10 @@
 # Comenzi de vânzare din Marketplace (localizat la `deltatech_marketplace_sale/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_sale`
-- **Versiune:** `19.0.2.18.1`
+- **Versiune:** `19.0.2.19.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_sale
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_sale`
-- **Ultima Ingestie:** 2026-10-09
+- **Ultima Ingestie:** 2026-10-22
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -31,6 +31,8 @@ Acest modul reprezintă punctul central pentru gestionarea comenzilor de vânzar
 - **Preț unitar dat cu taxe** (`price_unit_with_taxes`, 19.0.2.16.0): se convertește la prețul fără taxe cu precizia *Product Price*, nu a monedei, astfel încât un marketplace care rotunjește prețul cu TVA pe unitate să ajungă la propriul total (`_marketplace_net_unit_price`; doar taxe procentuale simple, altfel cifra motorului de taxe).
 - **Reîmprospătarea comenzii nu mai dă eroare de server când un import rulează deja** (19.0.2.18.1): cu reîmprospătarea în prim-plan activă, dacă un job din coadă importa același client în același moment, butonul *Refresh* pica cu „Concurrent creation of the same marketplace binding". Acum afișează un avertisment cu backend-ul de reîncercat mai târziu și păstrează ce au importat celelalte backend-uri.
 - Cu **Confirm Sale Order** bifat, jobul de confirmare automată (`try_to_confirm`) se programează pentru **orice** comandă importată, nu doar pentru cele confirmabile chiar la import — o comandă oprită la import (mesaj de la client, ramburs peste plafon) primea altfel jobul deloc și rămânea ofertă trimisă până observa cineva. La rulare, jobul reverifică eligibilitatea (și o reîmprospătează, unde conectorul o suportă) în loc să se bazeze pe starea de la import.
+- **Mesaje ale clientului după confirmare** (19.0.2.19.0): câmp nou pe legătura comenzii, *Customer Messages After Confirmation* (`marketplace_late_message_count`), în care conectorii care recitesc mesajele comenzii numără mesajele sosite după confirmare, cât comanda nu e încă livrată integral; [deltatech_marketplace_review](../deltatech_marketplace_review/index.md) oprește livrarea pe baza lui.
+- **Ramburs (COD) și plata raportată** (19.0.2.18.5): o tranzacție de tip ramburs (`on_delivery`) nu mai e trecută direct în `done` când marketplace-ul raportează comanda plătită, ci rămâne în așteptare; `done` vine din importul decontării curierului.
 - Integrare cu [deltatech_marketplace_review](../deltatech_marketplace_review/index.md) (punte instalată automat când ambele module sunt prezente): gărzile de confirmare automată — mesajul lăsat de client, rambursul (COD) peste **Max Auto-Confirm COD Amount** — devin motive de verificare vizibile pe comandă, în loc de o oprire tăcută; jobul de confirmare revine la interval scurt cât comanda e oprită doar de motive temporare.
 - Jobul de confirmare automată se reprogramează doar pentru o comandă încă neconfirmată (ofertă sau ofertă trimisă); `try_to_confirm()` se încheie imediat pentru o comandă confirmată sau anulată (fix 19.0.2.13.3: fiecare re-import al unei comenzi confirmate programa un job și coada crescuse de la ~40 la ~500 de joburi pe oră).
 - **Hook-uri pentru tabloul de bord** [deltatech_marketplace_dashboard](../deltatech_marketplace_dashboard/index.md), pe `marketplace.sale.order`: `_dashboard_steps()`, `_dashboard_kpis()`, `_dashboard_row_actions()` și `_dashboard_row_values()`, declarate goale aici, ca un conector să-și poată adăuga pașii proprii fără dependență de dashboard. Un pas din lista de lucru poate avea `action_label` (opțional), textul butonului de pe rând; fără el, butonul afișează eticheta pasului (19.0.2.15.0–19.0.2.15.1).

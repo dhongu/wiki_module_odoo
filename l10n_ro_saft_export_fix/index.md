@@ -1,15 +1,15 @@
 # Romania - Corecții la exportul SAF-T D406 (localizat la `l10n_ro_saft_export_fix/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_saft_export_fix`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.2.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_saft_export_fix
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_saft_export_fix`
-- **Ultima Ingestie:** `2026-10-05`
+- **Ultima Ingestie:** `2026-10-22`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul corectează trei defecte ale exportului SAF-T D406 din modulul Enterprise `l10n_ro_saft`, descoperite prin confruntarea fișierelor generate de Odoo cu validatorul oficial `D406Validator` din DUK Integrator. Primul defect face declarația nedepunabilă (secțiuni goale respinse de ANAF), al doilea lasă în afara declarației plățile care nu provin dintr-un extras bancar, iar al treilea raportează ca nedeductibil și TVA-ul efectiv dedus la deducerea limitată la 50% (autoturisme, combustibil). Corecțiile se aplică fără a modifica codul Enterprise, iar declarațiile care validează deja pe baza extraselor rămân identice. Defectele sunt raportate și către Odoo; modulul acoperă perioada până la rezolvarea în amonte.
+Modulul corectează patru defecte ale exportului SAF-T D406 din modulul Enterprise `l10n_ro_saft`, descoperite prin confruntarea fișierelor generate de Odoo cu validatorul oficial `D406Validator` din DUK Integrator. Primul defect face declarația nedepunabilă (secțiuni goale respinse de ANAF), al doilea lasă în afara declarației plățile care nu provin dintr-un extras bancar, al treilea raportează ca nedeductibil și TVA-ul efectiv dedus la deducerea limitată la 50% (autoturisme, combustibil), iar al patrulea raportează operațiunile cu taxă de 0% ca fiind în afara sferei TVA, deși taxa are cod SAF-T propriu. Corecțiile se aplică fără a modifica codul Enterprise, iar declarațiile care validează deja pe baza extraselor rămân identice. Defectele sunt raportate și către Odoo; modulul acoperă perioada până la rezolvarea în amonte.
 
 #### 2. Funcționalități Cheie
 
@@ -20,6 +20,7 @@ Modulul corectează trei defecte ale exportului SAF-T D406 din modulul Enterpris
 - **Fără dublare:** o plată reconciliată cu un extras se raportează o singură dată, prin nota extrasului (care poartă referința și data bancară).
 - **Separarea TVA cu deducere limitată la 50%:** taxa „21% ND 50%" duce jumătate din TVA în 4426 și jumătate pe cheltuială (6352), dar are un singur cod SAF-T (391104), iar exportul standard le însuma sub acesta. Modulul împarte suma după repartiția taxei: partea de pe contul de TVA primește codul deductibil (341104), restul păstrează codul nedeductibil (391104), conform notei „Situația 1" din nomenclatorul ANAF.
 - **Toate cotele:** regula se aplică la fel pe 19%, 11%, 9% și 5% (391101–391105 devin 341101–341105); codul deductibil e adăugat și în `TaxTable`, ca orice cod din tranzacții să fie definit în MasterFiles.
+- **Operațiuni cu taxă de 0%:** linia de bază iese cu tipul și codul SAF-T al taxei, cu suma zero (nu cu `000/000000`), iar taxa e adăugată în `TaxTable`. Exemple: achiziții scutite „0% EXEMPT" (308302, inclusiv nota DVI pe regimul vamal 4200) și livrări intracomunitare „0% EU G" (310301), astfel încât codurile se potrivesc cu rândurile din D300. O taxă de 0% fără tip sau cod SAF-T completat rămâne pe 000000.
 - **Fișă consultant:** exemplul pas-cu-pas (taxă, cod SAF-T, factură de achiziție, notă contabilă, export D406) este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md), cu capturi.
 - **Fără meniuri sau câmpuri noi:** declarația se generează ca înainte, din Contabilitate → Raportare → Cartea Mare, butonul „SAF-T (Declarația D406)".
 - **Verificare:** pentru o lună fără plăți prin extras, secțiunea `Payments` lipsește cu totul, iar DUK Integrator întoarce „Validare fara erori".
@@ -33,7 +34,7 @@ Modulul corectează trei defecte ale exportului SAF-T D406 din modulul Enterpris
 
 **Modele**
 
-- `account.general.ledger.report.handler` (abstract, extins): suprascrie `_l10n_ro_saft_fill_tax_values` (desparte detaliul de taxă cu cod ND 50% într-un detaliu deductibil și unul nedeductibil, pe baza repartiției cu `use_in_tax_closing`; tabelul de corespondență 3911xx → 3411xx), `_l10n_ro_saft_get_deductible_tax_amounts` (interogare SQL care calculează suma de taxă pe repartițiile deductibile, pe linie de bază și taxă), `_l10n_ro_saft_fill_payment_values` (construiește `payment_vals` și include și notele plăților fără extras, cu liniile de trezorerie corecte) și adaugă `_l10n_ro_saft_get_payment_move_ids`, care clasifică notele candidate (jurnale bancă/casă) printr-o singură căutare pe `account.payment` după `move_id`, nu prin `origin_payment_id`, gol pentru plățile create din wizardul „Înregistrează plata".
+- `account.general.ledger.report.handler` (abstract, extins): adaugă `_l10n_ro_saft_fill_zero_tax_details` (interogare SQL care găsește taxele de 0% cu tip și cod SAF-T completate pe liniile de bază și adaugă detaliul de taxă cu sumă zero, plus taxa în `tax_vals_list`); suprascrie `_l10n_ro_saft_fill_tax_values` (desparte detaliul de taxă cu cod ND 50% într-un detaliu deductibil și unul nedeductibil, pe baza repartiției cu `use_in_tax_closing`; tabelul de corespondență 3911xx → 3411xx), `_l10n_ro_saft_get_deductible_tax_amounts` (interogare SQL care calculează suma de taxă pe repartițiile deductibile, pe linie de bază și taxă), `_l10n_ro_saft_fill_payment_values` (construiește `payment_vals` și include și notele plăților fără extras, cu liniile de trezorerie corecte) și adaugă `_l10n_ro_saft_get_payment_move_ids`, care clasifică notele candidate (jurnale bancă/casă) printr-o singură căutare pe `account.payment` după `move_id`, nu prin `origin_payment_id`, gol pentru plățile create din wizardul „Înregistrează plata".
 
 **Vizualizări**
 

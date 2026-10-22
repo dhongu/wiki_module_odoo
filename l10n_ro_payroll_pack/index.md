@@ -1,14 +1,14 @@
 # Romania - Pachet salarizare (localizat la `l10n_ro_payroll_pack/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_payroll_pack`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.2.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_pack
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_payroll_pack`
-- **Ultima Ingestie:** `2026-10-12`
+- **Ultima Ingestie:** `2026-10-22`
 
 #### 1. Sumar
 
-Salarizarea unei firme din România, completă și la zi cu legislația 2026, direct în Odoo: fluturașul calculat corect, nota contabilă, statul de plată semnat și declarația D112, toate din aceiași fluturași validați. Pachetul instalează cele cinci module de salarizare Terrabit dintr-o singură mișcare și nu are cod propriu. Prețul simbolic (1 EUR) este completat de prețul modulelor incluse; nu există cost pe salariat, fluturaș sau declarație.
+Salarizarea unei firme din România, completă și la zi cu legislația 2026, direct în Odoo: fluturașul calculat corect, nota contabilă, statul de plată semnat și declarația D112, toate din aceiași fluturași validați. Pachetul instalează cele cinci module de salarizare Terrabit dintr-o singură mișcare și aduce doar o mică punte de cod pentru istoricul lunilor dinainte de Odoo. Prețul simbolic (1 EUR) este completat de prețul modulelor incluse; nu există cost pe salariat, fluturaș sau declarație.
 
 #### 2. Funcționalități Cheie
 
@@ -22,6 +22,7 @@ Salarizarea unei firme din România, completă și la zi cu legislația 2026, di
 - **Simulator brut ↔ net** pentru oferte, fără a crea fluturași; calcul invers net → brut pentru prime.
 - **Multi-companie:** fiecare companie cu salariații, parametrii, conturile și declarațiile ei.
 - **Legislație versionată pe dată:** salariul minim, suma neimpozabilă, plafoanele și valoarea tichetului sunt parametri cu dată de început (*Stat de plată → Configurare → Salariu → Regulă Parametri*, fila Istoric).
+- **Luni dinainte de Odoo, din D112 importat:** pe primul fluturaș, mediile concediului medical și de odihnă și tichetele pe luna anterioară se iau din declarația D112 importată (venit = baza CAM plus indemnizația FNUASS; concediul de odihnă pe salariul de bază proratat cu zilele lucrate). D112 nu desparte concediul de odihnă de zilele lucrate și nici primele de salariu, deci propunerea se verifică pe primul fluturaș.
 - **Configurare minimă:** companie cu țara fiscală România și planul de conturi românesc; pe angajat, grupul *Salarizare România* (funcție de bază, persoane în întreținere cu CNP, tichete, scutiri); pentru D112, pe companie CAEN, județul și persoana de contact ANAF.
 - **Cerințe:** Odoo 19 Enterprise (se bazează pe `hr_payroll`), Odoo.sh sau on-premise; nu rulează pe Odoo Online.
 - **Module opționale** (nu sunt incluse): sporuri și ore suplimentare, avans chenzinal, fișiere de plată bancare, adeverințe, REGES-Online, zilieri, drepturi de autor, pontaj, diurne.
@@ -38,11 +39,15 @@ Salarizarea unei firme din România, completă și la zi cu legislația 2026, di
 
 **Modele**
 
-Modulul nu are cod propriu (nici modele, nici vizualizări, nici date); este un pachet de dependențe. Testele din `tests/` confruntă salarizarea cu declarații D112 de referință (helper `tests/d112_reference.py`, declarație sintetică septembrie 2026).
+Modulul are cod minim; restul vine din modulele dependente.
+
+- `hr.employee` (extins, `models/hr_employee.py`): suprascrie `_l10n_ro_external_month_history`; dacă lunii nu i se găsește istoric din fluturași, îl construiește din linia angajatului din declarația D112 importată (`l10n.ro.d112.employee.line`): `cm_income`, `cm_days`, `co_amount`, `co_days`, `worked_days`.
+
+Testele din `tests/` confruntă salarizarea cu declarații D112 de referință (helper `tests/d112_reference.py`, scenarii sintetice, istoric din D112 importat, baza minimă CAS/CASS la normă parțială, simulatorul).
 
 **Vizualizări**
 
-Nu are.
+Nu are (nici date).
 
 **Acțiuni Automate / Acțiuni Server**
 

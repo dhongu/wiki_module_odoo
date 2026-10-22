@@ -104,6 +104,13 @@ Kramp în catalog (de exemplu `ACX5232920`, `6205RS`, `DH41298M2215KR`) și un c
    și **Parolă** cu datele contului din magazinul www.kramp.com și verificați **Kramp Locale**
    (implicit `ro_RO`).
 6. Salvați. Prima apăsare pe **Încarcă preț** confirmă că legătura și credențialele sunt corecte.
+7. Pentru produsele care au deja Kramp ca furnizor, cu codul Kramp completat în **Cod produs
+   furnizor** pe linia de furnizor, apăsați **Add from Products** pe feed. Le caută la Kramp după
+   acest cod sau, dacă lipsește ori nu e găsit, după codul de bare (EAN). Le adaugă în catalog, legate
+   de produs, și arată codurile negăsite.
+8. Verificați că acțiunea programată **Kramp: Sync Prices and Stock** este activă (*Setări → Tehnic →
+   Acțiuni planificate*). Rulează zilnic, noaptea, și o puteți porni oricând cu butonul **Kramp Sync**
+   de pe feed.
 
 ## 6. Flux de utilizare
 
@@ -187,8 +194,8 @@ al feed-ului (la generare se pornește mereu de la prețul brut, indiferent de *
 **Actualizează Preț Achiziție** asociază întâi rândurile selectate cu produsele existente și
 **creează produsele care lipsesc**, apoi actualizează prețul și cantitatea disponibilă pe liniile de
 furnizor. Nu îl rulați pe tot catalogul doar ca să actualizați prețuri: creează câte un produs Odoo
-pentru fiecare rând fără produs. **Termen livrare** se stabilește doar la crearea liniei de furnizor
-și nu se actualizează ulterior.
+pentru fiecare rând fără produs. Acest buton nu actualizează **Termen livrare**; îl actualizează
+sincronizarea Kramp (secțiunea 7).
 
 **Găsiți pe ecran:** pe produsul generat, fila **Achiziții**, linia cu furnizorul Kramp: prețul și
 **Termen livrare**.
@@ -219,11 +226,17 @@ Cost standard rămâne costul de evaluare până la o modificare manuală.
 - autentificarea la Kramp și reînnoirea sesiunii, fără ca parola să fie retrimisă la fiecare oră;
 - prețurile net și brut, cantitatea disponibilă, termenul de livrare și codul de bare, la
   **Încarcă preț**;
-- potrivirea codurilor indiferent de litere mari sau mici.
+- potrivirea codurilor indiferent de litere mari sau mici;
+- **sincronizarea zilnică** (acțiunea programată **Kramp: Sync Prices and Stock**, sau butonul
+  **Kramp Sync**): adaugă în catalog produsele noi care au Kramp ca furnizor, apoi, pentru toate
+  rândurile legate de un produs, încarcă prețurile și stocul și actualizează pe linia de furnizor
+  prețul de achiziție, cantitatea disponibilă și **Termen livrare**, iar pe produs prețul de vânzare
+  (după regulile din grupul **Preț** al feed-ului). Nu creează produse noi. Un produs pentru care
+  Kramp nu dă preț își păstrează prețul de vânzare.
 
 **Ce rămâne manual:**
-- aducerea codurilor în catalog (import din fișier) și rularea **Încarcă preț** când e nevoie de
-  date actuale (nu există un cron dedicat pentru prețurile Kramp);
+- completarea codului Kramp în **Cod produs furnizor** pe produsele noi; produsele fără Kramp ca
+  furnizor intră în catalog doar prin import din fișier;
 - generarea produselor și actualizarea prețurilor de achiziție, cu butoanele din catalog;
 - căutarea online după cod sau EAN: ruta există, dar căutarea din magazinul `/shop` nu are încă
   interfață în Odoo 19.
@@ -243,6 +256,11 @@ Cost standard rămâne costul de evaluare până la o modificare manuală.
   articolele fără EAN.
 - [ ] După **Generează produs**, linia de furnizor are prețul și termenul de livrare din catalog,
   iar costul produsului este prețul net Kramp.
+- [ ] **Add from Products** leagă de catalog produsele cu Kramp ca furnizor și afișează codurile
+  negăsite la Kramp.
+- [ ] După **Kramp Sync**, linia de furnizor Kramp a unui produs are prețul de achiziție, cantitatea
+  și **Termen livrare** din catalog, iar prețul de vânzare respectă regulile feed-ului.
+- [ ] Acțiunea programată **Kramp: Sync Prices and Stock** este activă și rulează zilnic.
 - [ ] Cu **Kramp Locale** schimbat pe altă țară (de exemplu `en_GB`), **Încarcă preț** se oprește
   cu eroarea de acces la prețuri.
 

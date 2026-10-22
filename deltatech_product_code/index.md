@@ -1,10 +1,10 @@
 # Codificare Produse (localizat la `deltatech_product_code/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_code`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.2.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_code
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_code`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-10-22`
 
 #### 1. Sumar
 
@@ -16,7 +16,7 @@ Acest modul îmbunătățește gestiunea produselor din Odoo, oferind instrument
 - Gestionarea îmbunătățită a codurilor de bare: pe categoria de produs se bifează generarea codului de bare și se alege „Sursa codului de bare” (Barcode Source).
   - „Internal prefix”: codul se construiește din prefixul intern (2 cifre, implicit `20`, intervalul GS1 rezervat uz intern) și din referința internă sau un număr aleatoriu.
   - „GS1 company prefix”: fiecare produs nou primește următorul GTIN-13 liber din intervalul prefixului de companie primit de la GS1 (6–11 cifre), cu cifra de control calculată automat. Se iau în calcul codurile de bare ale produselor și ale ambalajelor, inclusiv cele arhivate. Categoria afișează câte coduri mai sunt libere, iar la epuizarea intervalului se afișează o eroare.
-- Verificări de consistență pentru a preveni codurile de produs duplicate, ținând cont de companie, cu acțiunea „Find Duplicate” disponibilă pe produs și pe variantă.
+- Verificări de consistență pentru a preveni codurile de produs duplicate, ținând cont de companie. Unicitatea referinței interne se verifică în Python (nu printr-o constrângere SQL), pe șabloane și pe variante, inclusiv între un produs comun și unul al unei companii; conflictează doar produsele active, iar verificarea rulează o singură interogare per lot, deci importurile rămân rapide. Utilizatorii din grupul „Allow duplicate product codes” al modulului [deltatech_product_unique_code](../deltatech_product_unique_code/index.md) (dacă este instalat) pot salva coduri duplicate. Acțiunea „Find Duplicate” este disponibilă pe produs și pe variantă.
 - Suport atât pentru produse (șabloane), cât și pentru variantele de produs; butonul „New internal code” generează un cod nou din formular.
 
 #### 3. Dependențe
@@ -30,4 +30,4 @@ Acest modul îmbunătățește gestiunea produselor din Odoo, oferind instrument
 
 #### 5. Conexiuni
 
-- Nu au fost identificate conexiuni documentate către alte pagini wiki de module.
+- [deltatech_product_unique_code](../deltatech_product_unique_code/index.md): grupul „Allow duplicate product codes” relaxează verificarea de unicitate a referinței interne (conexiune opțională).

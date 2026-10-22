@@ -1,10 +1,10 @@
 # Terrabit Helpdesk AI Reply (localizat la `terrabit_helpdesk_ai_reply/index.md`)
 
 - **Nume Tehnic:** `terrabit_helpdesk_ai_reply`
-- **Versiune:** `19.0.1.18.1`
+- **Versiune:** `19.0.1.19.0`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_ai_reply
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_helpdesk_ai_reply`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-10-22`
 
 #### 1. Sumar
 
@@ -13,15 +13,16 @@ Modulul adaugă un agent AI (Tibi) care se ocupă de partea dinspre client a cic
 #### 2. Funcționalități Cheie
 
 - **Primul răspuns la tichet nou:** confirmă primirea, rezumă ce a înțeles, cere datele de diagnostic lipsă (pași de reproducere, eroare/traceback, capturi) și anunță preluarea de către un consultant. Poate fi restrâns la o echipă prin `filter_domain` pe automatizarea `automation_ai_reply`.
-- **Mementou la clientul care tace:** pe etapele marcate „Așteptăm clientul”, un cron zilnic trimite un mementou după `ai_reminder_day` zile de tăcere (repetat la același interval, până răspunde clientul).
-- **Retrogradarea priorității:** tichetele cu prioritate mare, fără răspuns după `ai_priority_downgrade_day` zile, trec la prioritate medie, cu notă internă explicativă.
+- **Mementou la clientul care tace** *(cronul este dezactivat implicit, din 19.0.1.17.0; se reactivează manual din Setări tehnice → Automatizare → Acțiuni programate)*: pe etapele marcate „Așteptăm clientul”, un cron zilnic trimite un mementou după `ai_reminder_day` zile de tăcere (repetat la același interval, până răspunde clientul).
+- **Retrogradarea priorității** *(cron dezactivat implicit)*: tichetele cu prioritate mare, fără răspuns după `ai_priority_downgrade_day` zile, trec la prioritate medie, cu notă internă explicativă.
 - **Fără schimbare automată de etapă la răspunsul clientului:** AI-ul nu răspunde imediat și nu mută tichetul; trecerea în lucru rămâne în sarcina utilizatorului intern (comportamentul din `deltatech_helpdesk` este suprimat).
-- **Intervenție întârziată:** dacă nimeni din echipă nu reacționează în `ai_intervene_after_hours` ore (implicit 24) de la ultimul mesaj real, AI-ul clasifică răspunsul clientului: la confirmare de rezolvare postează mesajul de încheiere și **închide tichetul** (cu notă internă), altfel trimite o scurtă confirmare de primire, fără conținut tehnic și fără schimbare de etapă. Activitatea unui consultant (răspuns sau notă internă) resetează fereastra; tichetele din etapele de tip „Așteptăm clientul” sunt excluse.
+- **Intervenție întârziată** *(cron dezactivat implicit)*: dacă nimeni din echipă nu reacționează în `ai_intervene_after_hours` ore (implicit 24) de la ultimul mesaj real, AI-ul clasifică răspunsul clientului: la confirmare de rezolvare postează mesajul de încheiere și **închide tichetul** (cu notă internă), altfel trimite o scurtă confirmare de primire, fără conținut tehnic și fără schimbare de etapă. Activitatea unui consultant (răspuns sau notă internă) resetează fereastra; tichetele din etapele de tip „Așteptăm clientul” sunt excluse.
 - **Plafon de mesaje consecutive:** după `ai_max_consecutive_messages` (implicit 3) mesaje AI la rând, fără mesaj uman între ele, agentul tace până intervine un om.
 - **Praguri per echipă:** setate în configurarea echipei de helpdesk; valoarea `0` dezactivează funcția respectivă pentru echipă.
 - **Fără răspuns AI pe tichet:** bifa `ai_mute` oprește complet agentul pe tichet; se bifează automat la tichetele deschise de colegi din backend (notificări către client).
 - **Înlocuirea confirmării standard:** la instalare, hook-ul scoate șablonul standard de confirmare din etapele care îl folosesc, ca să nu primească clientul două e-mailuri (la dezinstalare nu se restaurează).
 - **Închiderea tichetelor fără activitate:** se reutilizează mecanismul nativ Odoo (închidere automată a tichetelor inactive); se configurează `auto_close_day` mai mare decât pragul de retrogradare și se activează o dată cronul nativ.
+- **Agentul Tibi:** vine cu portret și subtitlu de prezentare livrate cu modulul (din 19.0.1.19.0), deci o instalare nouă arată ca în producție.
 - **Ancorare în documentație (RAG):** se pot adăuga Surse pe agentul Tibi (articole Knowledge, documentație, tichete rezolvate) pentru răspunsuri mai fundamentate.
 - **Cerință:** un furnizor LLM configurat în Setări / AI (cheie proprie OpenAI/Google sau conector IAP); fără el agentul raportează „No API key set”.
 
@@ -49,9 +50,9 @@ Modulul adaugă un agent AI (Tibi) care se ocupă de partea dinspre client a cic
 **Acțiuni Automate / Acțiuni Server**
 
 - `automation_ai_reply` (`base.automation`, la creare tichet) cu `action_ai_reply`: generează și trimite primul răspuns prin agentul Tibi (`ai_agent_support`).
-- `ir_cron_ai_send_reminders` (zilnic): mementouri pe tichetele care așteaptă clientul.
-- `ir_cron_ai_downgrade_priority` (zilnic): retrogradarea priorității tichetelor fără răspuns.
-- `ir_cron_ai_intervene_on_pending_replies` (orar): intervenția AI pe răspunsurile clientului rămase fără reacție.
+- `ir_cron_ai_send_reminders` (zilnic, inactiv implicit): mementouri pe tichetele care așteaptă clientul.
+- `ir_cron_ai_downgrade_priority` (zilnic, inactiv implicit): retrogradarea priorității tichetelor fără răspuns.
+- `ir_cron_ai_intervene_on_pending_replies` (orar, inactiv implicit): intervenția AI pe răspunsurile clientului rămase fără reacție.
 
 #### 5. Conexiuni
 

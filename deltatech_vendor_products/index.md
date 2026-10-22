@@ -1,10 +1,10 @@
 # Produse Furnizori (localizat la `deltatech_vendor_products/index.md`)
 
 - **Nume Tehnic:** `deltatech_vendor_products`
-- **Versiune:** `19.0.1.2.1`
+- **Versiune:** `19.0.1.3.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products
 - **Cale Locală:** `odoo-addons/bitshop_vendor/deltatech_vendor_products`
-- **Ultima Ingestie:** `2026-10-19`
+- **Ultima Ingestie:** `2026-10-22`
 
 #### 1. Sumar
 
@@ -24,6 +24,9 @@ Deltatech Vendor Products automatizează și simplifică gestiunea datelor de pr
 - Importul unui număr foarte mare de produse (50.000 în ~30 secunde) cu procesare în fundal
 - Coloanele specifice furnizorului (greutate, referințe OEM, dimensiuni etc.) sunt stocate în câmpul jsonb `attributes` al produsului de furnizor; la importul CSV, coloanele fixe (cod, denumire, prețuri, cod de bare) rămân în câmpurile proprii, iar restul ajung în `attributes`
 - Butonul *Load Price* din feed este vizibil pentru orice conector API (Kramp, Bepco, Granit etc.), nu doar pentru tipul generic `api`; rămâne ascuns pentru tipurile `none` și `url`
+- Acțiunile *Generate Product* și *Update Purchase Price* afișează, la selecții de 80 de rânduri sau mai multe, un dialog de progres: selecția e procesată în loturi de `deltatech_vendor_products.page_size` rânduri (câte o cerere pe lot), cu procent, timp estimat rămas și număr de lot; fiecare lot se salvează separat, loturile eșuate sunt listate, iar *Stop after this batch* oprește rularea. Nu necesită queue_job
+- Produsele se creează în pagini de `page_size` rânduri (în fundal dacă e instalat queue_job, direct altfel); *Update Purchase Price* creează mereu produsele înainte de a scrie prețurile
+- Codurile duplicate din același lot de import sunt îmbinate înainte de inserarea în masă (se păstrează ultimul rând, cu avertisment în log), pentru toate căile de import (CSV, xls/xlsx, Google XML, conectori API)
 - Stă la baza altor module care permit căutarea pe website după codul de produs al furnizorului
 
 #### 3. Dependențe
@@ -41,6 +44,7 @@ Sumarul și funcționalitățile cheie au fost preluate din `readme/DESCRIPTION.
 
 - `vendor.feed`: feed-ul/conectorul unui furnizor (format, mapare, reguli de preț, conexiune).
 - `vendor.product`: catalogul de produse al furnizorului, independent de produsele Odoo.
+- `vendor.product.import` (wizard): importul catalogului din fișier (CSV, xls/xlsx).
 - `product.supplierinfo` (extins): recalculează termenul de livrare din data de disponibilitate.
 
 **Acțiuni Automate / Acțiuni Server**

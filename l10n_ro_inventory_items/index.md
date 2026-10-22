@@ -1,10 +1,10 @@
 # Romania - Obiecte de inventar (303/603/8035) (localizat la `l10n_ro_inventory_items/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_inventory_items`
-- **Versiune:** `19.0.2.5.1`
+- **Versiune:** `19.0.2.6.0`
 - **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_inventory_items`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_inventory_items`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-10-22`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -17,6 +17,8 @@ Implementează fluxul complet de gestiune a obiectelor de inventar conform OMFP 
 - **Creare automată la recepție:** hook pe `stock_move._action_done()` — o recepție (`picking_type.code == "incoming"`) de produs marcat „Obiect de Inventar (RO)" creează fișa OI în starea „Recepționat (în stoc 303)", cu valoarea din prețul recepției (sau costul standard) și responsabil utilizatorul care validează; fișa e legată de mișcarea de stoc, fără dublare la re-rulare.
 - **Dare în folosință (`action_use()`):** verificare stoc 303, picking intern către locație virtuală, nota `603 = 303` și, opțional, nota extracontabilă `Dr 8035 = Cr 803999`. Se consumă întreaga cantitate a fișei (fără dare parțială). Data aleasă în wizard datează fișa, pickingul, mișcările de stoc și notele.
 - **Nota 603=303 independentă de valorizare (`_create_usage_entry()`):** dacă produsul nu e pe o categorie cu valorizare în timp real, modulul înregistrează el nota, pe conturile din categoria produsului, cu revenire pe codurile `603%` / `303%` din planul companiei. Acolo unde valorizarea o generează deja, nu se dublează. Dacă lipsesc conturile sau jurnalul, motivul e postat în chatter.
+- **Depozit pe fișă:** fișa OI are un depozit, preluat de la recepție (implicit primul depozit al companiei) și modificabil cât timp obiectul e „Recepționat”. Verificarea stocului și bonul de consum la darea în folosință folosesc doar depozitul fișei, iar la restituire obiectul revine în același depozit.
+- **Multi-companie:** regulă de acces pe obiectele de inventar — utilizatorul vede doar obiectele companiilor la care are acces.
 - **Validarea datelor operațiilor:** data dării în folosință / scoaterii nu poate fi în viitor, înaintea intrării în stoc (respectiv a dării în folosință) și nici într-o perioadă contabilă blocată.
 - **Scoatere din gestiune (`action_dispose()`):** tratament distinct pe `disposal_type` — casare (fără notă bilanțieră, valoarea e deja pe 603), restituire la magazie (picking invers + `Dr 303 = Cr 603` + revenire în „Recepționat"), lipsă la inventar. Comisia de inventariere aleasă se salvează pe fișă și apare în PV.
 - **Imputarea lipsei la inventar:** din wizardul de scoatere, dacă lipsa e imputabilă, se înregistrează `Dr 4282` (salariat) sau `Dr 461` (terț) `= Cr 7588`, cu valoarea imputată (implicit valoarea de înregistrare, editabilă), fără TVA colectată (HG 1/2016, Titlul VII, pct. 78 alin. (6) lit. a)). Fără imputare nu se înregistrează nicio notă.
@@ -41,6 +43,7 @@ Implementează fluxul complet de gestiune a obiectelor de inventar conform OMFP 
 - `l10n.ro.inventory.item`: fișa obiectului de inventar cu numerele de inventar, starea fizică, starea de flux, `disposal_type` (casat / lipsă / restituit) și metodele `action_use()` / `action_dispose()`. Notele contabile: `_create_usage_entry()` (`usage_entry_id`), `_create_off_balance_entry()` (`off_balance_entry_in_id` / `_out_id`), `_create_imputation_entry()` (`imputation_move_id`) și `_create_return_entry()`. `_check_operation_date()` validează datele operațiilor; `_get_holder_name()` e punctul de extindere pentru responsabil (folosit de bon, PV și registru). `_get_oi_consumption_location()` citește locația cu `sudo` înainte de a compara compania, ca să evite `AccessError` în multi-company.
 - `stock.move`: hook `_action_done()` → `_l10n_ro_oi_create_inventory_items()`, crearea fișei la recepție.
 - `product.template`: marcajul `l10n_ro_is_inventory_item` și contul opțional `l10n_ro_oi_off_balance_account_id` („Cont 8035").
+- `l10n.ro.inventory.item` are și câmpul depozit (`warehouse_id`) și regulă multi-companie (`security/l10n_ro_inventory_items_security.xml`).
 - `res.company`: toggle-ul `l10n_ro_use_off_balance_entries` și conturile/jurnalul `l10n_ro_oi_*`.
 - `inventory.item.use.wizard`, `inventory.item.dispose.wizard` (tip scoatere, motiv, comisie, imputare: `imputable`, `imputation_kind`, `imputation_partner_id`, `imputation_amount`) și `inventory.item.auto.dispose.wizard` (casarea obiectelor vechi) — wizard-urile din `wizard/`.
 

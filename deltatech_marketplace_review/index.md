@@ -1,10 +1,10 @@
 # Sale Order Review - Marketplace (localizat la `deltatech_marketplace_review/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_review`
-- **Versiune:** `19.0.0.2.2`
+- **Versiune:** `19.0.0.3.0`
 - **Cale:** [https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_review](https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_review)
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_review`
-- **Ultima Ingestie:** `2026-10-12`
+- **Ultima Ingestie:** `2026-10-22`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -16,6 +16,7 @@ Modulul face vizibile motivele pentru care o comandă preluată de pe un marketp
 - Transformă cele două garduri deja existente la conectori — *client a lăsat un mesaj* și *ramburs peste „Max Auto-Confirm COD Amount"* — în motive de revizuire standard, vizibile pe comandă și în coada de revizuire.
 - Mesajul clientului blochează comanda **înainte de confirmare**; ramburs-ul peste limită o blochează **înainte de livrare** (comanda e deja confirmată, stocul rezervat, coletul așteaptă aprobare).
 - Două reguli proprii modulului: **total diferit față de marketplace** (nepotrivirea deja detectată de conectori devine motiv pe poarta de livrare, nu doar o notă în chatter) și **locker nealeasă încă** (motiv temporar pentru metodele de livrare care necesită punct de ridicare; inactivă implicit, necesită modulele de livrare marketplace și locker curier).
+- Regulă nouă: **client a scris după confirmare** (`customer_message_late`, poartă `delivery`, aprobare manuală). Un mesaj al clientului contorizat de conector după confirmare blochează livrarea până când cineva îl citește și aprobă; un mesaj ulterior redeschide motivul.
 - Regulă nouă: **status marketplace nepermis pentru confirmare automată** (`phase_not_allowed`, poartă `confirm`, tip temporar). Dacă pe backend e completat câmpul *Auto-Confirm Only For Statuses*, o comandă al cărei status marketplace nu e în listă rămâne ofertă, cu motivul afișat, până când statusul devine unul permis sau o aprobă cineva. Listă goală: statusul nu contează.
 - Cât timp o comandă e blocată doar de motive temporare (fereastra de așteptare, o plată cu cardul încă în curs), conectorul reevaluează la fiecare 5 minute și confirmă automat comanda de îndată ce motivele se sting; un motiv care necesită intervenție umană oprește reîncercările. Reîncercările se opresc și la 24 de ore de la import, cu o notă pe comandă care cere confirmare manuală.
 - Limita de ramburs configurată pe backend (`auto_confirm_max_cod_amount`) rămâne pragul valabil pentru comenzile acelui backend — un singur loc de configurare per magazin, ca înainte.
@@ -32,7 +33,7 @@ Modulul face vizibile motivele pentru care o comandă preluată de pe un marketp
 
 **Modele**
 
-- `sale.order` (extindere): adaugă legătura cu binding-ul de marketplace și implementează regulile de revizuire — mesaj client (`_review_check_customer_message`), ramburs peste limită (`_review_check_cod_high`, cu prag din backend), total diferit față de marketplace (`_review_check_total_mismatch`) și locker nealeasă (`_review_check_no_locker`) și status nepermis (`_review_check_phase_not_allowed`).
+- `sale.order` (extindere): adaugă legătura cu binding-ul de marketplace și implementează regulile de revizuire — mesaj client (`_review_check_customer_message`), ramburs peste limită (`_review_check_cod_high`, cu prag din backend), total diferit față de marketplace (`_review_check_total_mismatch`) locker nealeasă (`_review_check_no_locker`), status nepermis (`_review_check_phase_not_allowed`) și mesaj client după confirmare (`_review_check_customer_message_late`).
 - `marketplace.sale.order` (extindere `binding_sale_order.py`): reevaluează regulile de revizuire imediat după `save_from_marketplace` și `check_total_amount`; în `try_to_confirm`, reprogramează o nouă încercare de confirmare peste 300 de secunde (5 minute) cât timp comanda e blocată doar de motive temporare (`review_state == "waiting"`), cu un job cu nume lizibil („Retry confirmation of order …”); după 24 de ore de la import reîncercările se opresc, cu notă pe comandă.
 
 - `marketplace.backend` (extindere `backend.py`): câmpul `auto_confirm_phase_ids` (*Auto-Confirm Only For Statuses*), lista statusurilor marketplace pentru care se confirmă automat.
@@ -43,8 +44,9 @@ Modulul face vizibile motivele pentru care o comandă preluată de pe un marketp
 
 **Date**
 
-- `data/review_rule_data.xml` (noupdate): patru reguli `sale.order.review.rule` —
+- `data/review_rule_data.xml` (noupdate): cinci reguli `sale.order.review.rule` —
   - `rule_customer_message` (poartă `confirm`, tip `manual`): mesajul clientului pe comanda marketplace.
+  - `rule_customer_message_late` (poartă `delivery`, tip `manual`): clientul a scris după confirmare; blochează livrarea până la aprobare.
   - `rule_phase_not_allowed` (poartă `confirm`, tip `temporary`): statusul marketplace nu e în lista de statusuri permise de backend; se stinge singură când statusul se schimbă.
   - `rule_total_mismatch` (poartă `delivery`, tip `manual`, prag `amount_threshold`): totalul Odoo diferă de cel raportat de marketplace.
   - `rule_no_locker` (poartă `delivery`, tip `temporary`, escaladare la 60 de minute, inactivă implicit): metoda de livrare necesită locker și comanda marketplace nu are încă unul ales.
@@ -54,4 +56,4 @@ Modulul face vizibile motivele pentru care o comandă preluată de pe un marketp
 - [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md): sursa datelor de binding (mesaj client, sumă ramburs, total extern, locker) pe care regulile de revizuire le citesc.
 - [deltatech_sale_order_review](../deltatech_sale_order_review/index.md): motorul de reguli/porți de revizuire (`sale.order.review.rule`, coada „De Revizuit”) pe care acest modul îl extinde cu reguli specifice marketplace-ului.
 - [deltatech_marketplace_sale_stage](../deltatech_marketplace_sale_stage/index.md): aduce statusurile marketplace (`marketplace.sale.phase`) pe care se bazează regula de status nepermis.
-- `deltatech_marketplace_delivery` și modulul de locker curier (ex. `deltatech_courier_locker`): necesare pentru ca regula `no_locker` să aibă efect (câmpurile `marketplace_locker` / `use_locker`); fără ele regula rămâne inactivă și fără obiect.
+- [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md) și modulul de locker curier (ex. `deltatech_courier_locker`): necesare pentru ca regula `no_locker` să aibă efect (câmpurile `marketplace_locker` / `use_locker`); fără ele regula rămâne inactivă și fără obiect.

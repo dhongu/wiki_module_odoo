@@ -257,11 +257,11 @@ Capturile sunt **generate automat** de `tests/test_screenshots.py` (mixinul `Scr
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/01_taxa_21_nd_50.png` | Taxa „21% ND 50%”, tab Definiție: repartiția 4426 („24 - VAT”) / 6352, câte 50% |
-| 2 | `screenshots/02_taxa_cod_saft.png` | Aceeași taxă, tab Opțiuni Avansate: Cod Fiscal SAF-T Roman 391104 ① și tipul SAF-T 300 ② |
-| 3 | `screenshots/03_factura_achizitie_nd_50.png` | Factura de achiziție 2 × 250 lei cu taxa „21% ND 50%”: 500,00 + 105,00 = 605,00 lei |
-| 4 | `screenshots/04_nota_contabila_nd_50.png` | Elementele de jurnal: 611 (500,00), 4426 (52,50), 6352 (52,50), 401 (605,00) |
-| 5 | `screenshots/05_carte_mare_export_d406.png` | Carte Mare pe luna facturii, cu meniul ⚙ deschis și opțiunea „SAF-T (Declarația D406)” ① evidențiată |
+| 1 | `static/description/01_taxa_21_nd_50.png` | Taxa „21% ND 50%”, tab Definiție: repartiția 4426 („24 - VAT”) / 6352, câte 50% |
+| 2 | `static/description/02_taxa_cod_saft.png` | Aceeași taxă, tab Opțiuni Avansate: Cod Fiscal SAF-T Roman 391104 ① și tipul SAF-T 300 ② |
+| 3 | `static/description/03_factura_achizitie_nd_50.png` | Factura de achiziție 2 × 250 lei cu taxa „21% ND 50%”: 500,00 + 105,00 = 605,00 lei |
+| 4 | `static/description/04_nota_contabila_nd_50.png` | Elementele de jurnal: 611 (500,00), 4426 (52,50), 6352 (52,50), 401 (605,00) |
+| 5 | `static/description/05_carte_mare_export_d406.png` | Carte Mare pe luna facturii, cu meniul ⚙ deschis și opțiunea „SAF-T (Declarația D406)” ① evidențiată |
 
 Extrasul XML din Pasul 6 e text inline, nu imagine.
 

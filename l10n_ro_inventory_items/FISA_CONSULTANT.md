@@ -202,7 +202,7 @@ Ce rămâne manual: verificarea pragului intern și documentele semnate de preda
 
 | Mesaj / simptom | Cauză probabilă | Remediere |
 |-----------------|-----------------|-----------|
-| „Insufficient stock in account 303: available …, required …" | OI-ul nu are stoc disponibil în depozit la darea în folosință | Verificați recepția și cantitatea din fișa OI |
+| „Insufficient stock in account 303 in …: available …, required …" | OI-ul nu are stoc în depozitul fișei (câmpul *Warehouse*), din care pleacă bonul de dare în folosință; stocul din alte depozite nu contează | Verificați recepția și cantitatea; dacă bunul e în alt depozit, schimbați depozitul pe fișa OI (cât e în starea „Recepționat”) |
 | Nota din chatter „Entry 603=303 was not created: the expense account (603) or the inventory account (303) is missing" | Conturile nu sunt configurate pe companie și nu au putut fi deduse | Completați-le pe fișa companiei, secțiunea *Inventory Items (RO)*, apoi înregistrați nota manual pentru fișele deja procesate |
 | Nota din chatter „Entry 603=303 was not created: no miscellaneous journal was found" | Compania nu are un jurnal de operațiuni diverse (în afara celui extrabilanțier) | Creați jurnalul și selectați-l pe fișa companiei |
 | Reconcilierea 8035 avertizează că nu există contul, deși sunt OI în folosință | Planul de conturi nu conține 8035 sau modulul a fost instalat înaintea localizării | Verificați planul de conturi; fișele deja date în folosință rămân fără evidență extrabilanțieră până la corectare |
