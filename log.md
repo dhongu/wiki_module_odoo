@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-22] Re-ingestie: `deltatech_chart_of_accounts` (19.0.0.1.8) cu fișa consultant
+
+- **Acțiune:** actualizarea paginii (un subagent `documentarist-wiki`), de la 19.0.0.1.1 la 19.0.0.1.8. Pagina descrie acum cele două moduri de postare (*Doar solduri de deschidere* / *Potrivește totalurile debit/credit*), importul potrivit pe partener, confirmarea la resetarea notelor reconciliate și butonul *Șterge sumele externe*; afirmația că modulul importă planul de conturi a fost scoasă.
+- **Sursă:** `readme/FISA_CONSULTANT.md`, `DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `__manifest__.py` și codul de pe branch-ul `19.0-fisa-chart-of-accounts` (PR terrabit-solutions/bitshop#3399, încă nemergeuit).
+- **Fișă consultant copiată (cu capturi):** `FISA_CONSULTANT.md` + 7 capturi în `screenshots/`.
+- **Dependențe/Conexiuni:** `account`, `l10n_ro`, `base_import` (fără pagină wiki, rămân text).
+- **Fișiere actualizate:** `deltatech_chart_of_accounts/index.md`, `deltatech_chart_of_accounts/FISA_CONSULTANT.md`, `deltatech_chart_of_accounts/screenshots/`, `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-22] Actualizare în lot: 43 de re-ingestii și 31 de pagini noi
 
 - **Acțiune:** lot procesat în paralel (un subagent `documentarist-wiki` per modul).
