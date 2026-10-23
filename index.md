@@ -212,7 +212,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_partner_gifts](deltatech_partner_gifts/index.md): Gestionează cadourile oferite partenerilor — generare linii de cadou, etichete de livrare, date partener și copiere/modificare în masă.
 - [deltatech_partner_gifts_agreement](deltatech_partner_gifts_agreement/index.md): Leagă cadourile pentru parteneri de contractele de service: generare în masă pentru partenerii cu contracte active și marcaj de contract activ pe liniile de cadou.
 - [deltatech_partner_gifts_employees](deltatech_partner_gifts_employees/index.md): Wizard care planifică în masă cadouri pentru angajații din HR (selecția din listă sau toți angajații), pe baza modulului de cadouri pentru parteneri.
-- [deltatech_partner_merge](deltatech_partner_merge/index.md): Unifică în masă fișele de parteneri duplicate pe același CUI, cu simulare obligatorie și verificare post-unificare a totalurilor.
+- [deltatech_partner_merge](deltatech_partner_merge/index.md): Unifică în masă partenerii cu același CUI (simulare, aplicare și verificare) și caută dubluri după CUI, telefon, email și nume asemănător, cu îmbinare prin asistentul standard Odoo.
 - [deltatech_partner_rating](deltatech_partner_rating/index.md): Permite evaluarea partenerilor de afaceri pe baza unor criterii definite de utilizator.
 - [deltatech_partner_rating_sale](deltatech_partner_rating_sale/index.md): Afișează ratingul partenerului în oferte, comenzi de vânzare și facturi.
 - [deltatech_partner_rating_service](deltatech_partner_rating_service/index.md): Afișează ratingul partenerului în echipamente, contracte de service și garanții.

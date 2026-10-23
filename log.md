@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-23] Re-ingestie: `deltatech_partner_merge` (19.0.1.1.0), cu fișa consultant
+
+- **Acțiune:** actualizarea paginii (un subagent `documentarist-wiki`) pentru *Caută dubluri*: căutarea partenerilor probabil duplicați după CUI, telefon (E.164), email și nume asemănător la aceeași stradă sau cod poștal, cu grupuri cu scor și motiv, îmbinare prin asistentul standard Odoo și perechi reținute ca „nu sunt dubluri”; lotul de comasare pe CUI rămâne neschimbat ca flux.
+- **Sursă:** `readme/DESCRIPTION.md`, `FISA_CONSULTANT.md`, `__manifest__.py` și codul de pe `19.0` (PR dhongu/deltatech#3766).
+- **Fișă consultant copiată (cu capturi):** `FISA_CONSULTANT.md` + 10 capturi în `screenshots/` (din `static/description/`, linkurile rescrise).
+- **Dependențe/Conexiuni:** `base` (text); nicio conexiune nouă.
+- **Fișiere actualizate:** `deltatech_partner_merge/` (index.md, FISA_CONSULTANT.md, screenshots/), `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-23] Re-ingestie: `deltatech_mcp_server` (19.0.1.13.0), cu fișa consultant
 
 - **Acțiune:** actualizarea paginii pentru șabloanele de politici (*Create from Template*, cele 8 șabloane livrate, *Add Template* / *Save as Template*) și câmpul *Only these writable*; notă despre 20.0, unde modulul extinde `ai_mcp`.
