@@ -7,7 +7,7 @@ This is an append-only log of all operations performed on the wiki.
 ## [2026-10-23] Pagină nouă: `deltatech_ai_sale_delivery_check` (19.0.1.0.1), cu fișa consultant
 
 - **Acțiune:** pagină nouă (un subagent `documentarist-wiki`) pentru *Sale & Delivery Daily Check AI*: verificarea zilnică și la cerere a comenzilor de vânzare și a livrărilor cu 11 reguli (C01–C11), anomalii fără dubluri și cu rezolvare automată, un singur apel AI pe rulare care grupează, prioritizează și explică anomaliile, digest pe e-mail și activități pentru agenții de vânzări.
-- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `FISA_CONSULTANT.md`, `__manifest__.py` și codul de pe `19.0` (PR-urile terrabit-solutions/bitshop_ent#441 și #442); fișa și capturile vin de pe branch-ul `19.0-fisa-ai-sale-delivery-check` (PR #455, încă neunit).
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `FISA_CONSULTANT.md`, `__manifest__.py` și codul de pe `19.0` (PR-urile terrabit-solutions/bitshop_ent#441 și #442); fișa și capturile din PR #455.
 - **Fișă consultant copiată (cu capturi):** `FISA_CONSULTANT.md` + 12 capturi în `screenshots/`.
 - **Dependențe/Conexiuni:** `sale_stock`, `stock_delivery`, `ai` (text); conexiune cu [deltatech_ai_anthropic](deltatech_ai_anthropic/index.md).
 - **Fișiere actualizate:** `deltatech_ai_sale_delivery_check/` (index.md, FISA_CONSULTANT.md, screenshots/), `index.md`, `log.md`, `.index/`.
