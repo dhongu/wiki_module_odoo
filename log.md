@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-23] Pagină nouă: `deltatech_ai_usage` (19.0.1.0.1), cu fișa consultant; re-ingestie `deltatech_ai_anthropic` (19.0.1.3.0)
+
+- **Acțiune:** pagină nouă pentru *AI Usage and Cost Tracking*: jurnalul fiecărei cereri către furnizorii AI (OpenAI, Google, Anthropic), cu tokenii pe tipuri, căutările web și costul estimat din lista de prețuri, atribuit pe apel, agent, modul de origine, utilizator și companie. Totodată, actualizarea paginii `deltatech_ai_anthropic` pentru 19.0.1.3.0, care trimite cererile Claude în jurnal. Doi subagenți `documentarist-wiki`, în paralel.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `FISA_CONSULTANT.md`, `__manifest__.py` și codul de pe `19.0` (PR terrabit-solutions/bitshop_ent#454); fișa, capturile și versiunea 19.0.1.0.1 din PR #459, încă neunit la data ingestiei.
+- **Fișă consultant copiată (cu capturi):** `FISA_CONSULTANT.md` + 8 capturi în `screenshots/` (din `static/description/`, linkurile rescrise).
+- **Dependențe/Conexiuni:** `ai_app`, `ai` (text); conexiuni între [deltatech_ai_usage](deltatech_ai_usage/index.md) și [deltatech_ai_anthropic](deltatech_ai_anthropic/index.md), plus [deltatech_ai_agent_delegate](deltatech_ai_agent_delegate/index.md) (apeluri-copil).
+- **Fișiere actualizate:** `deltatech_ai_usage/` (index.md, FISA_CONSULTANT.md, screenshots/), `deltatech_ai_anthropic/index.md`, `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-23] Pagină nouă: `deltatech_ai_sale_delivery_check` (19.0.1.0.1), cu fișa consultant
 
 - **Acțiune:** pagină nouă (un subagent `documentarist-wiki`) pentru *Sale & Delivery Daily Check AI*: verificarea zilnică și la cerere a comenzilor de vânzare și a livrărilor cu 11 reguli (C01–C11), anomalii fără dubluri și cu rezolvare automată, un singur apel AI pe rulare care grupează, prioritizează și explică anomaliile, digest pe e-mail și activități pentru agenții de vânzări.

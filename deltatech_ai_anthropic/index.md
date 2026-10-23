@@ -1,10 +1,10 @@
 # Deltatech AI - Anthropic (Claude) (localizat la `deltatech_ai_anthropic/index.md`)
 
 - **Nume Tehnic:** `deltatech_ai_anthropic`
-- **Versiune:** `19.0.1.2.0`
+- **Versiune:** `19.0.1.3.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_anthropic
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_ai_anthropic`
-- **Ultima Ingestie:** `2026-10-22`
+- **Ultima Ingestie:** `2026-10-23`
 
 #### 1. Sumar
 
@@ -18,6 +18,7 @@ Modulul adaugă Anthropic (Claude) ca furnizor de inteligență artificială în
 - Nivelul de efort Claude este dedus din stilul de răspuns al agentului: Analytical → `high`, Balanced → `medium`, Creative → `low`. Gândirea adaptivă se folosește pe toate modelele care o suportă (toate, mai puțin Haiku 4.5); parametrii de eșantionare (`temperature`, `top_p`, `top_k`) nu se trimit niciodată.
 - Refuzurile Claude (clasificatoare de siguranță) produc o eroare clară cu categoria refuzului; un răspuns tăiat de limita de ieșire, fără text, produce de asemenea eroare, nu un răspuns gol. Pe Fable 5.1, Opus 5.5 și Sonnet 5.5, cererea se reîncearcă mai întâi pe server cu modelul de rezervă recomandat de Anthropic (`fallbacks: "default"`); se dezactivează cu parametrul de sistem `ai.anthropic_fallbacks` = `False` și este omisă automat când `ANTHROPIC_BASE_URL` indică un proxy.
 - Prompt caching automat pe fiecare cerere (promptul de sistem și istoricul conversației se facturează la tarif de citire din cache); tokenii de citire/creare cache sunt înregistrați în log.
+- Consum înregistrat în jurnalul modulului [deltatech_ai_usage](../deltatech_ai_usage/index.md), când acesta este instalat: tokeni de intrare, de citire și de scriere în cache, tokeni de ieșire, căutări web și costul estimat. Se înregistrează și răspunsurile refuzate sau trunchiate, deoarece se facturează. Fără acel modul nu se schimbă nimic.
 - Căutare web (web grounding) cu versiunea uneltei suportată de modelul ales (versiunea de bază `web_search_20250305` pe modelele Haiku).
 - Limita implicită de ieșire este 16000 tokeni; se schimbă cu parametrul de sistem `ai.anthropic_max_tokens`.
 - Configurare cheie API din **Setări → General → Integrări → Anthropic**, sau prin variabila de mediu `ODOO_AI_ANTHROPIC_TOKEN`.
@@ -43,8 +44,9 @@ Modulul adaugă Anthropic (Claude) ca furnizor de inteligență artificială în
 **Alte componente tehnice**
 
 - `utils/llm_providers_patch.py`: înregistrează Anthropic ca furnizor LLM nativ, cu lista modelelor Claude (5.x primele, 4.x păstrate) și corespondența stil de răspuns → model/efort.
-- `utils/llm_api_service_patch.py`: patch peste serviciul nativ de apelare a API-urilor LLM, pentru a adăuga integrarea cu API-ul Anthropic (Messages API), inclusiv suport pentru tool use, efort/gândire adaptivă, tratarea refuzurilor, fallback pe server și prompt caching.
+- `utils/llm_api_service_patch.py`: patch peste serviciul nativ de apelare a API-urilor LLM, pentru a adăuga integrarea cu API-ul Anthropic (Messages API), inclusiv suport pentru tool use, efort/gândire adaptivă, tratarea refuzurilor, fallback pe server, prompt caching și înregistrarea consumului (`_record_usage`, către `deltatech_ai_usage`, dacă e instalat; SDK-ul Anthropic nu trece prin `LLMApiService._request`, unde se înregistrează celelalte furnizoare).
 
 #### 5. Conexiuni
 
+- [deltatech_ai_usage](../deltatech_ai_usage/index.md): dependență opțională (nu e în `depends`); când e instalat, cererile către Claude intră în jurnalul de consum și cost.
 - `ai`: modul Enterprise nativ al cărui framework de furnizori LLM este extins de acest modul; nu are încă pagină proprie în wiki.
