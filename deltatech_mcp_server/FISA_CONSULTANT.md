@@ -1,7 +1,7 @@
 # Fișă Modul: Acces AI în Odoo prin MCP (MCP Server)
 
 **Modul:** `deltatech_mcp_server`
-**Versiune:** 19.0.1.7.0
+**Versiune:** 19.0.1.13.0
 **Suită:** bitshop_ent (merge pe Community și pe Enterprise; nu depinde de modulul Odoo AI)
 **Dependențe:** `base_setup`
 **Utilizator principal:** consultantul care configurează accesul AI pentru un client; administratorul clientului
@@ -48,7 +48,7 @@ pentru verificarea acordului de prelucrare cu furnizorul AI și a transferului d
 
 | Rol | Ce poate |
 |---|---|
-| **Administrator (grupul Settings)** | creează politici, unelte (acțiuni) și prompturi, aprobă aplicațiile OAuth, vede jurnalul și consumul, schimbă setările serverului |
+| **Administrator (grupul Settings)** | creează politici (și din șabloane), șabloane de politici, unelte (acțiuni) și prompturi, aprobă aplicațiile OAuth, vede jurnalul și consumul, schimbă setările serverului |
 | **MCP Server / User** | se poate conecta la `/mcp` și își poate genera o cheie API cu scope MCP; vede meniurile „Generate API Key” și „OAuth Connections” (doar conexiunile proprii, pe care le poate revoca) |
 
 Recomandare: un **utilizator dedicat** pentru clientul AI (nu utilizatorul unui om), cu drepturile
@@ -59,6 +59,8 @@ minime necesare pe modelele expuse. Politica se atribuie lui, pe formularul util
 Modulul **nu generează note contabile**. Datele pe care le păstrează:
 
 - **politici** și modelele lor (ce se vede, ce se mascheză, ce limite);
+- **șabloane de politici**: profiluri de acces gata făcute, cu modelele scrise ca text (8 livrate cu modulul,
+  plus cele salvate de administrator);
 - **unelte (acțiuni)**: metoda sau acțiunea de server, descrierea pentru AI, parametrii și politicile în care sunt active;
 - **prompturi**: textul, argumentele (obligatorii sau cu valoare implicită) și politicile care le văd;
 - **jurnalul apelurilor**: cine, ce metodă și unealtă, argumentele (trunchiate), durata, rezultatul; se
@@ -76,7 +78,8 @@ vânzări.
 1. Creați utilizatorul AI (*Settings → Users*), cu drepturile minime necesare (ex. Sales / User) și **cu
    o parolă**: cu contul lui se generează cheia API (Pasul 6) sau se aprobă conexiunea OAuth (Pasul 7).
 2. Pe același formular, tabul *Access Rights*, secțiunea **MCP Server**, alegeți rolul **User**.
-3. În *MCP Server → Policies* creați politica (Pasul 1 de mai jos) și atribuiți-o utilizatorului.
+3. În *MCP Server → Policies* creați politica (Pasul 1 de mai jos), cel mai repede cu **Create from Template**, și
+   atribuiți-o utilizatorului.
 4. În *Settings → General Settings → Integrations → MCP Server* verificați limitele. Lăsați
    **Allow AI clients to write** debifat până la teste.
 5. Opțional, în *MCP Server → Tools* adăugați acțiunile pe care AI-ul le poate rula (Pasul 4 de mai jos) și
@@ -95,11 +98,41 @@ zilnic de înregistrări și de date, apeluri pe minut, IP-uri permise. Lăsați
 bifat. Pe tabul *Models* adăugați modelele pe care AI-ul le poate folosi și bifați doar operațiile
 necesare. Pentru fiecare model puteți ascunde câmpuri (**Hidden fields**), le puteți afișa mascat
 (**Masked fields**) sau puteți lăsa vizibile doar câteva (**Only these fields**; coloana se afișează din iconița de coloane a listei).
-Coloana **Read-only fields** (tot din iconița de coloane) ține câmpuri vizibile pe care AI-ul nu le poate scrie, iar
+Coloana **Read-only fields** (tot din iconița de coloane) ține câmpuri vizibile pe care AI-ul nu le poate scrie,
+**Only these writable** face invers: când e completată, `create` și `write` pot pune doar câmpurile din listă.
 **Notes and activities** îi permite să scrie note interne și să planifice activități pe înregistrările modelului,
 iar **Attachments** să listeze și să citească fișierele atașate înregistrărilor.
 
 ![Politica de acces: limite, modele, note și activități, câmpuri ascunse și mascate](screenshots/01_policy_form.png)
+
+#### Politica dintr-un șablon
+
+În loc să adăugați modelele unul câte unul, pe lista **MCP Server → Policies** apăsați **Create from Template**,
+alegeți unul sau mai multe șabloane și confirmați. Modulul livrează:
+
+| Șablon | Ce poate AI-ul |
+|---|---|
+| **Support** | creează și modifică tichete helpdesk (doar titlu, descriere, client, echipă, etapă, responsabil, prioritate), note, atașamente; contactele și taskurile doar le citește |
+| **Sales** | oportunități, oferte și clienți: creează, modifică, câștigă oportunitatea (`action_set_won`), confirmă oferta (`action_confirm`); marja și costul produsului rămân ascunse, facturile doar citire |
+| **Purchase** | cereri de ofertă și comenzi de achiziție, cu confirmarea lor (`button_confirm`), și prețurile furnizorilor; furnizorii, produsele și recepțiile doar citire |
+| **Product Catalog** | creează și completează produse (nume, descrieri, categorii, coduri de bare); costul rămâne ascuns |
+| **Product Prices** | schimbă doar prețul de vânzare al produsului, regulile listelor de preț și prețurile furnizorilor (preț, discount, cantitate minimă, date) |
+| **Stock (read only)** | stocuri, transferuri și mișcări; nu modifică nimic |
+| **Accounting (read only)** | facturi, note contabile, plăți, plan de conturi; nu modifică nimic |
+| **Reporting (read only)** | totaluri pe vânzări, achiziții și facturi, cu un buget de 5.000 de înregistrări pe zi; nu modifică nimic |
+
+Ce face asistentul:
+
+- modelele, câmpurile și metodele modulelor care nu sunt instalate (de exemplu Helpdesk) se sar și se afișează
+  într-o notificare **Not installed in this database, skipped**; politica se creează cu restul;
+- pentru fiecare metodă de buton se folosește unealta existentă sau se creează una nouă (Pasul 4), legată de politică;
+- mai multe șabloane alese împreună dau o singură politică: drepturile se adună, câmpurile ascunse și cele read-only
+  se păstrează din toate, iar dintre limite câștigă cea mai strictă.
+
+Pe o politică existentă, **Add Template** adaugă modelele unui șablon; modelele deja prezente primesc drepturile
+șablonului. **Save as Template** păstrează politica drept șablon nou în **MCP Server → Policy Templates**, de unde
+se poate refolosi la alt utilizator sau la alt client. Șablonul **nu dă drepturi în Odoo**: utilizatorul AI are în
+continuare nevoie de grupurile aplicațiilor (Sales / User, Purchase / User etc.).
 
 ### Pasul 2 — Politica se atribuie utilizatorului AI
 
@@ -378,6 +411,10 @@ reîmprospătarea descrierii aplicațiilor OAuth cu document de metadate.
 
 - [ ] Utilizatorul AI are rolul **MCP Server / User** și o politică activă.
 - [ ] Politica conține doar modelele necesare; câmpurile sensibile sunt ascunse sau mascate.
+- [ ] Politica făcută din șablon: notificarea arată ce s-a sărit; utilizatorul AI are grupurile aplicațiilor
+  din șablon; uneltele create pentru butoane apar pe tabul *Tools* al politicii.
+- [ ] Cu *Only these writable* (ex. șablonul *Product Prices*): `write` pe `list_price` merge, pe `name` e refuzat
+  (*Denied* în Call Log), iar `describe_model` arată doar câmpurile din listă ca `writable`.
 - [ ] **Allow AI clients to write** este debifat în Settings pe durata testelor.
 - [ ] Cheia a fost generată din contul **utilizatorului AI**, nu din cel de administrator.
 - [ ] Din clientul AI, `whoami` arată utilizatorul AI, nu un administrator.
@@ -419,6 +456,7 @@ reîmprospătarea descrierii aplicațiilor OAuth cu document de metadate.
 | Rate limit exceeded, retry in a minute | Prea multe apeluri pe minut | Măriți limita din politică |
 | The server is in read-only mode | Scrierea e oprită global | Bifați *Allow AI clients to write* în Settings, doar dacă e nevoie |
 | The field … is set by Odoo or by the workflow | AI-ul a încercat să scrie starea, un câmp calculat sau unul din *Read-only fields* | Expuneți butonul potrivit ca unealtă (Pasul 4) sau scoateți câmpul din *Read-only fields* |
+| Not installed in this database, skipped (notificare la *Create from Template*) | Șablonul conține modele, câmpuri sau metode ale unor module neinstalate | Normal; dacă e nevoie de ele, instalați modulul și aplicați din nou șablonul cu *Add Template* |
 | Notes and activities are not allowed on … | Linia din politică nu are bifat *Notes and activities* | Bifați-l, dacă AI-ul trebuie să scrie în chatter |
 | The user is not allowed to use the MCP server (HTTP 403) | Utilizatorul nu are rolul MCP Server / User | Atribuiți rolul **User** |
 | The field … cannot be written through MCP | Câmpul e mascat, ascuns sau de tip linii | Scrieți alt câmp; câmpurile de tip linii nu se pot scrie |
@@ -477,6 +515,8 @@ Regenerare:
 ## 11. Observații pentru manual
 
 - Insistați pe ideea că AI-ul vede **numai ce permite politica** și numai ce ar vedea și utilizatorul respectiv.
+- Șabloanele sunt un punct de plecare: după *Create from Template* verificați politica (câmpuri ascunse, limite)
+  pentru clientul respectiv.
 - Serverul este **doar-citire** implicit; scrierea (`create`, `write`) se activează separat din Settings și nu are încă previzualizare sau anulare.
 - Uneltele (acțiunile) sunt varianta controlată de a lăsa AI-ul să lucreze: îi dați un buton anume, nu dreptul de a
   scrie pe tot modelul. Nici ele nu au încă previzualizare sau anulare, deci activați-le pe un utilizator AI dedicat

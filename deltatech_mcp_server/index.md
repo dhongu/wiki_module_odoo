@@ -1,10 +1,10 @@
 # Deltatech MCP Server
 
 - **Nume Tehnic:** `deltatech_mcp_server`
-- **Versiune:** `19.0.1.12.0`
+- **Versiune:** `19.0.1.13.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_mcp_server
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_mcp_server`
-- **Ultima Ingestie:** `2026-10-12`
+- **Ultima Ingestie:** `2026-10-23`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -18,6 +18,8 @@ Modulul transformă Odoo într-un server MCP (Model Context Protocol), astfel î
 - **MCP Server > OAuth Connections**: fiecare utilizator își vede și își revocă propriile conexiuni, administratorul pe toate; conexiunea neutilizată mai mult decât valabilitatea din Setări (30 de zile implicit) expiră.
 - **Utilizator dedicat AI**: pot să se conecteze doar membrii grupului *MCP Server / User*; se recomandă un utilizator separat, nu un administrator. Se aplică mereu drepturile de acces și regulile de înregistrare normale.
 - **Politică de acces** per utilizator (*MCP Server > Policies*): lista modelelor permise, cu drepturi separate de citire, creare și scriere, controlul câmpurilor (ascunse, doar unele vizibile sau mascate ca `***`), câmpuri *Read-only* (ex. `active`), *Notes and activities* și *Attachments* per model.
+- **Șabloane de politici** (*MCP Server > Policy Templates*): wizardul *Create from Template* de pe lista politicilor face o politică dintr-unul sau mai multe profiluri gata făcute: *Support*, *Sales*, *Purchase*, *Product Catalog*, *Product Prices*, *Stock*, *Accounting* și *Reporting* (ultimele trei doar citire). Liniile numesc modelele ca text, deci modelele, câmpurile și metodele modulelor neinstalate se sar și se afișează într-o notificare; pentru fiecare metodă-buton se găsește sau se creează unealta. Mai multe șabloane se combină (drepturile se adună, restricțiile rămân, limita cea mai strictă câștigă). Pe o politică, *Add Template* adaugă un șablon, iar *Save as Template* o păstrează ca șablon nou. Șablonul nu dă drepturi Odoo: utilizatorul AI are nevoie în continuare de grupurile aplicațiilor.
+- **Only these writable** pe linia politicii: când e completat, `create` și `write` pot seta doar acele câmpuri, iar `describe_model` le marchează pe celelalte ca nescriibile (folosit de șablonul *Product Prices*: doar `list_price` pe produs, prețul și datele pe prețurile furnizorilor).
 - **Date personale** (CUI/TVA, IBAN, CNP, data nașterii, salariu) mascate implicit și protejate împotriva deducerii prin filtre, sortări sau agregări.
 - **Limite per politică**: înregistrări per apel, buget zilnic de înregistrări și de date, apeluri pe minut, adrese IP permise.
 - **Doar citire implicit**: uneltele de scriere rămân ascunse până la bifarea *Allow AI clients to write* în Setări și a drepturilor pe modelele dorite. Nu există unealtă de ștergere, câmpurile cu linii nu se pot scrie, iar câmpurile binare și modelele de sistem (`ir.*`, chei API, grupuri) nu se expun niciodată. `create`/`write` nu setează niciodată statusul (`state`), câmpurile calculate de Odoo sau câmpurile marcate *Read-only* în politică; statusul se schimbă doar printr-o unealtă-buton.
@@ -28,7 +30,7 @@ Modulul transformă Odoo într-un server MCP (Model Context Protocol), astfel î
 - **Monitorizare**: `GET /mcp/health` răspunde fără autentificare și fără date.
 - **Audit**: *Call Log* (utilizator, client, unealtă, argumente, durată, rezultat, aplicația OAuth; erorile în roșu; conectările refuzate sunt înregistrate ca *authentication* / *Denied*), cu secțiunea **Changes** (valoarea veche și nouă a fiecărui câmp modificat, sau statusul înainte/după pentru un buton) și filtrul *With changes*; *Daily Usage* (consum pe utilizator și zi, față de bugetul politicii). Jurnalul se șterge după 90 de zile (configurabil). Poate sprijini obligațiile de păstrare a evidenței și supraveghere umană din Regulamentul UE 2024/1689 (art. 12 și 26), fără a face sistemul conform prin el însuși.
 - **Protocol**: MCP 2026-07-28 (fără stare, fără handshake), cu suport pentru clienții din 2025-11-25 și mai vechi.
-- **Compatibilitate** cu serverul MCP integrat în Odoo 20 Enterprise: același endpoint (`/mcp`) și același scope de cheie (`mcp`), deci clienții își păstrează configurația la upgrade.
+- **Compatibilitate** cu serverul MCP integrat în Odoo 20 Enterprise: același endpoint (`/mcp`) și același scope de cheie (`mcp`), deci clienții își păstrează configurația la upgrade. Pe 20.0 modulul extinde *AI MCP Server* (`ai_mcp`) în loc să-l înlocuiască: cheile (din *My Profile > Account Security*, scope *MCP*) și serverul OAuth sunt cele standard, uneltele generice `ai_tool_*` ale aplicațiilor AI sunt ascunse pe `/mcp`, iar utilizatorii conectați prin OAuth în 19.0 se reconectează o dată.
 - Pașii de configurare pentru consultant sunt în [fișa consultant](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
@@ -40,7 +42,9 @@ Modulul transformă Odoo într-un server MCP (Model Context Protocol), astfel î
 **Modele**
 
 - `deltatech.mcp.server`: logica protocolului MCP (inițializare, listarea și apelarea uneltelor).
-- `deltatech.mcp.policy` / `deltatech.mcp.policy.line`: politica de acces și liniile ei (model, drepturi, câmpuri ascunse/mascate, limite).
+- `deltatech.mcp.policy` / `deltatech.mcp.policy.line`: politica de acces și liniile ei (model, drepturi, câmpuri ascunse/mascate/read-only, *Only these writable*, limite).
+- `deltatech.mcp.policy.template` / `deltatech.mcp.policy.template.line`: șabloanele de politici, cu modelele, câmpurile și metodele-buton scrise ca text.
+- `deltatech.mcp.policy.template.wizard` (transient): *Create from Template* / *Add Template*.
 - `deltatech.mcp.tool`: uneltele proprii definite de administrator (acțiune de server sau metodă de model).
 - `deltatech.mcp.prompt` / `deltatech.mcp.prompt.argument`: prompturile gata făcute și argumentele lor.
 - `deltatech.mcp.log`: jurnalul apelurilor, inclusiv modificările făcute (*Changes*).
@@ -53,7 +57,8 @@ Modulul transformă Odoo într-un server MCP (Model Context Protocol), astfel î
 
 **Vizualizări**
 
-- `mcp_policy_view_form` / `mcp_policy_view_list`: politicile de acces.
+- `mcp_policy_view_form` / `mcp_policy_view_list`: politicile de acces, cu butoanele *Create from Template*, *Add Template* și *Save as Template*.
+- `mcp_policy_template_view_form` / `mcp_policy_template_view_list` / `mcp_policy_template_wizard_view_form`: șabloanele și wizardul.
 - `mcp_tool_view_form` / `mcp_tool_view_list`: uneltele proprii.
 - `mcp_prompt_view_form` / `mcp_prompt_view_list` / `mcp_prompt_view_search`: prompturile.
 - `mcp_oauth_client_view_form` / `mcp_oauth_client_view_list`: aplicațiile OAuth.
@@ -67,7 +72,7 @@ Modulul transformă Odoo într-un server MCP (Model Context Protocol), astfel î
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Nu definește `ir.cron` sau acțiuni server. Endpoint-uri HTTP: `/mcp` (POST/GET/DELETE), `/mcp/health` (GET) și `/oauth/mcp/*` (`register`, `authorize`, `consent`, `token`, `revoke`).
+- Date: cele 8 șabloane livrate (`data/mcp_policy_template_data.xml`). Nu definește `ir.cron` sau acțiuni server. Endpoint-uri HTTP: `/mcp` (POST/GET/DELETE), `/mcp/health` (GET) și `/oauth/mcp/*` (`register`, `authorize`, `consent`, `token`, `revoke`).
 
 #### 5. Conexiuni
 

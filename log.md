@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-23] Re-ingestie: `deltatech_mcp_server` (19.0.1.13.0), cu fișa consultant
+
+- **Acțiune:** actualizarea paginii pentru șabloanele de politici (*Create from Template*, cele 8 șabloane livrate, *Add Template* / *Save as Template*) și câmpul *Only these writable*; notă despre 20.0, unde modulul extinde `ai_mcp`.
+- **Sursă:** `readme/HISTORY.md`, `CONFIGURE.md`, `FISA_CONSULTANT.md` și codul de pe `19.0` (PR terrabit-solutions/bitshop_ent#440); fișa actualizată e pe branch-ul `19.0-doc-mcp-fisa-templates`, portul pe 20.0 în bitshop_ent#443.
+- **Fișă consultant copiată:** `FISA_CONSULTANT.md` (capturile neschimbate).
+- **Fișiere actualizate:** `deltatech_mcp_server/` (index.md, FISA_CONSULTANT.md), `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-22] Pagină nouă: `deltatech_ai_product_catalog_review` (19.0.1.1.0), cu fișa consultant
 
 - **Acțiune:** pagină nouă (un subagent `documentarist-wiki`) pentru modulul care pune modelul de limbaj al agentului magazinului să propună categoria publică și produsele alternative, accesorii și opționale, cu candidații din vectorii surselor de produs; propunerile se aplică doar după acceptare. Pagina `deltatech_ai_website_product` primește legătura la *Conexiuni*.
