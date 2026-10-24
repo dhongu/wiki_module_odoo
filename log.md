@@ -4,6 +4,19 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-24] Re-ingestie: `deltatech_account_bank_statement_import_emag` (19.0.2.1.1), cu fișa consultant
+
+- **Acțiune:** actualizarea paginii (un subagent `documentarist-wiki`) pentru *eMAG Marketplace Statement Import*. Au intrat:
+  - borderourile în valută (eMAG HU în HUF, eMAG BG în EUR), cu nota automată de diferență de curs per payout pe 665/765 și butonul de recalculare;
+  - moneda citită și din *Local company currency*;
+  - ID-urile de import unice când liniile `ZP` repetă *SAP document ID*;
+  - voucherele eMAG în cele două variante (pe factură sau nu);
+  - codul `KM` (decont de vouchere în aceeași virare, reconciliat cu 461), confirmat pe borderourile reale eMAG HU și BG.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `FISA_CONSULTANT.md`, `__manifest__.py`, `models/account_bank_statement.py` și view-ul de extras, toate de pe branch-ul PR terrabit-solutions/bitshop_ent#473, încă neunit la data ingestiei. Codul pentru valută e pe `19.0` din PR #435.
+- **Fișă consultant copiată (cu capturi):** `FISA_CONSULTANT.md` + 5 capturi în `screenshots/`. Capturile 04 (extrasul în EUR) și 05 (nota de diferență de curs) sunt noi; 01–03 au fost regenerate pe planul de conturi RO.
+- **Dependențe/Conexiuni:** `account_accountant` adăugat la dependențe (text); conexiunile neschimbate.
+- **Fișiere actualizate:** `deltatech_account_bank_statement_import_emag/` (index.md, FISA_CONSULTANT.md, screenshots/), `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-23] Pagină nouă: `deltatech_ai_usage` (19.0.1.0.1), cu fișa consultant; re-ingestie `deltatech_ai_anthropic` (19.0.1.3.0)
 
 - **Acțiune:** pagină nouă pentru *AI Usage and Cost Tracking*: jurnalul fiecărei cereri către furnizorii AI (OpenAI, Google, Anthropic), cu tokenii pe tipuri, căutările web și costul estimat din lista de prețuri, atribuit pe apel, agent, modul de origine, utilizator și companie. Totodată, actualizarea paginii `deltatech_ai_anthropic` pentru 19.0.1.3.0, care trimite cererile Claude în jurnal. Doi subagenți `documentarist-wiki`, în paralel.

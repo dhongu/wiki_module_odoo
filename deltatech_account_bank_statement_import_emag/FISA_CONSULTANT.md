@@ -60,11 +60,27 @@ Roluri recomandate pentru testare:
 - **581 Viramente interne** — contrapartida liniei de virare (ZP), care se regăsește în extrasul băncii;
 - **5121 Conturi la bănci** — unde intră efectiv virarea eMAG.
 
+La borderourile în valută (eMAG HU în HUF, eMAG BG în EUR) se adaugă:
+
+- **5125.EMAG în valută** — câte un cont pentru fiecare jurnal în valută (de ex. „Sume în curs de decontare —
+  eMAG Ungaria", în HUF), separat de cel în lei, ca soldul fiecărei monede să se poată urmări distinct;
+- **665 Cheltuieli din diferențe de curs valutar** / **765 Venituri din diferențe de curs valutar** — nota de
+  diferență de curs a payout-ului, postată automat la import, și închiderea diferenței rămase pe 581 la virarea
+  în lei.
+
 Date minime pentru demo:
 - companie românească cu localizarea contabilă instalată;
 - un jurnal de tip **Bancă** dedicat eMAG, în RON, cu cont tranzitoriu (suspense) configurat;
 - un fișier *Account statement details* descărcat din eMAG (sau o mostră sintetică echivalentă);
 - opțional, facturi de client postate, cu numărul comenzii eMAG în referință, pentru reconciliere.
+
+Pentru borderourile în valută, în plus:
+- un jurnal de tip **Bancă** separat pentru fiecare monedă (de ex. `EMAGH` în HUF, `EMAGE` în EUR), cu
+  moneda setată pe jurnal;
+- cursurile BNR pentru moneda respectivă, pe fiecare zi din perioada borderoului (actualizarea automată a
+  cursurilor sau introducere manuală în **Contabilitate → Configurare → Monede**);
+- în **Contabilitate → Configurare → Setări**, secțiunea *Diferențe de curs*: jurnalul de diferențe de curs și
+  conturile 665 / 765 completate — fără ele, importul în valută este refuzat (vezi §9).
 
 Codurile de document care apar în borderou:
 
@@ -72,6 +88,7 @@ Codurile de document care apar în borderou:
 |-----|-------------|-------------------------|
 | `KD` | încasare card online | negativ |
 | `KX` | încasare ramburs | negativ |
+| `KM` | decont de vouchere (partea de voucher suportată de eMAG) | negativ |
 | `ZC` | restituire card online (retur) | pozitiv |
 | `DM` | factură eMAG (comisioane, servicii) | pozitiv |
 | `C3` | notificare de închidere pre-înrolare | pozitiv |
@@ -94,7 +111,7 @@ Codurile de document care apar în borderou:
 ### Definirea jurnalului eMAG
 
 Un jurnal separat pentru fiecare cont de vânzător eMAG și pentru fiecare monedă a borderoului
-(coloana *Document currency*).
+(coloana *Document currency*; dacă e goală, se ia *Local company currency*).
 
 | Câmp (fila Setări avansate / Informații) | Valoare | De ce |
 |---|---|---|
@@ -149,7 +166,7 @@ după coloanele din antet, deci **nu se mai deschide asistentul de mapare a colo
 ### Pasul 3 — Verificarea extrasului importat
 
 Se creează câte un extras pentru fiecare virare din fișier (grupare după *Clearing document*),
-numit **eMAG payout &lt;număr virare&gt;**, cu data liniei `ZP`.
+numit **Virare eMAG &lt;număr virare&gt;** (în interfața în engleză, *eMAG payout*), cu data liniei `ZP`.
 
 1. **Găsiți pe ecran**: fiecare linie poartă tipul documentului eMAG și referința (numărul comenzii
    pentru încasări, numărul facturii eMAG pentru comisioane). Clientul este completat automat acolo
@@ -168,6 +185,7 @@ eMAG sau spre bancă intră cu minus). Rândurile *Initial balance* / *Actual ba
 |---|---|---|---|---|
 | `KD` | Incasare card online | negativă → **pozitivă** | comanda cu numărul din *Reference ID* (`client_order_ref`) → clientul comenzii | reconciliază cu factura clientului (sau cu avansul, dacă s-a plătit înainte de livrare) |
 | `KX` | Incasare ramburs | negativă → **pozitivă** | la fel ca `KD` | reconciliază cu factura clientului |
+| `KM` | Decont voucher | negativă → **pozitivă** | de regulă **fără partener**: *Reference ID* este numărul decontului (`V-MKTP-…`) sau un număr intern eMAG, nu comanda | reconciliază cu creanța de voucher deschisă pe 461.EMAG (plata pe *Jurnal vouchere* sau linia de voucher de pe factură), **nu** cu factura clientului; vezi „Vouchere eMAG" |
 | `ZC` | Restituire card online | pozitivă → **negativă** | la fel ca `KD` (comanda returnată) | reconciliază cu încasarea aceleiași comenzi (se anulează reciproc) sau cu nota de credit către client |
 | `DM` | Factura (comisioane, servicii) | pozitivă → **negativă** | factura de furnizor din Odoo cu `ref` = *Reference ID* (`C-MKTP-…`, `A-MKTP-…`), dacă e unică → Dante International | reconciliază cu factura de furnizor, integral sau parțial |
 | `C3` | Notificare închidere pre-înrolare | pozitivă → **negativă** | ca `DM` (`E-MKTP-…`) | tratată ca `DM`: reconciliază cu factura de furnizor corespunzătoare |
@@ -195,13 +213,14 @@ contrapartida reală. Rezultatul final, pe tip de document:
 |---|---|---|---|
 | `KD` | încasare card online | **Dr 5125.EMAG = Cr 4111 Clienți** | factura clientului; dacă încasarea precede livrarea, vezi nota de TVA de mai jos (**Cr 419**) |
 | `KX` | încasare ramburs | **Dr 5125.EMAG = Cr 4111 Clienți** | factura clientului |
+| `KM` | decont de vouchere eMAG | **Dr 5125.EMAG = Cr 461.EMAG** | creanța de voucher a comenzii, deschisă pe 461.EMAG |
 | `ZC` | restituire card online | **Dr 4111 Clienți = Cr 5125.EMAG** (**Dr 419 = Cr 5125.EMAG** dacă încasarea inițială a mers pe avans) | de regulă se stinge cu încasarea (`KD`) a aceleiași comenzi; factura de stornare către client se emite separat |
 | `DM` | factură de comision / servicii Dante | **Dr 401 Furnizori (Dante) = Cr 5125.EMAG** | factura de furnizor deja înregistrată (OMFP 1802, pct. 56 alin. (3): compensarea se face numai după contabilizarea creanțelor și datoriilor; valoarea brută se prezintă în notele explicative) |
 | `C3` | notificare închidere pre-înrolare | **Dr 401 Furnizori (Dante) = Cr 5125.EMAG** | factura de furnizor cu `ref` = `E-MKTP-…`; tratament identic cu `DM` **doar dacă există factura Dante**. Fără factură, nota pe 401 nu are document justificativ (OMFP 1802, pct. 56 alin. (2)): provizoriu **Dr 473 = Cr 5125.EMAG**, apoi la primirea facturii **Dr 401 = Cr 473**, sau **Dr 6xx = Cr 473** dacă se stabilește că e o reținere fără factură. Natura documentului se verifică în contractul cu eMAG |
 | `ZP` | virare către bancă | **Dr 581 Viramente interne = Cr 5125.EMAG** | linia unică din extrasul băncii reale; ambele linii se închid pe 581, deci verificarea este **sold 581 = 0** (reconcilierea pe 581 se face doar dacă contul o permite în baza voastră) |
 | — | extrasul băncii reale (încasare de la Dante sau HeyBlu) | **Dr 5121 Bancă = Cr 581 Viramente interne** | linia `ZP`, prin 581 |
 
-Verificare: pe o virare completă, suma liniilor `KD`+`KX`−`ZC`−`DM`−`C3` este egală cu `ZP`, deci
+Verificare: pe o virare completă, suma liniilor `KD`+`KX`+`KM`−`ZC`−`DM`−`C3` este egală cu `ZP`, deci
 5125.EMAG iese pe zero (exemplu: 1.000,00 + 500,00 − 100,00 − 250,00 − 50,00 = 1.100,00).
 
 Nu se folosește **Dr 5121 = Cr 4111** cu partener HeyBlu sau Dante (clientul este clientul final) și nici
@@ -279,6 +298,68 @@ borderou real analizat, din 64 de potriviri, 5 diferențe erau reale (de la sub 
 **cauza lor nu a fost confirmată** — nu se presupune transport sau voucher fără să se
 verifice comanda.
 
+### Vouchere eMAG
+
+Clientul poate plăti o parte din comandă cu un voucher. Linia `KD` / `KX` din borderou vine cu suma
+**plătită efectiv de client**, adică totalul comenzii minus voucher, iar importul o aduce ca atare: modulul
+nu are nicio regulă pentru vouchere. Ce se schimbă este doar factura cu care se reconciliază linia, iar
+aceasta depinde de cine suportă voucherul și de configurarea backend-ului eMAG din conectorul
+`deltatech_marketplace_emag` (fila *Comenzi și produse*).
+
+**Voucherul acordat de vânzător** este o reducere comercială obișnuită: conectorul îl pune pe comandă ca
+linie pe **Produs de discount**, cu TVA, și scade baza de TVA. Factura are deja totalul plătit de client, deci
+linia `KD` / `KX` o închide exact. Voucherul vânzătorului nu se recuperează de la nimeni.
+
+**Voucherul suportat de eMAG** nu scade baza de TVA (voucher cu utilizări multiple, art. 274^1 și art. 286
+alin. (1) lit. f) Cod fiscal): TVA-ul rămâne pe valoarea întreagă a mărfii, iar partea voucherului este o
+creanță la eMAG, închisă de **decontul de vouchere**. eMAG îl plătește **în aceeași virare** cu
+borderoul, ca linie `KM` „Decont voucher" (cu o linie `ZP` de aceeași valoare). Există două
+variante: voucherul **nu este pus pe factură** sau **este pus pe factură**.
+
+| Variantă (backend eMAG) | Factura clientului | Ce închide linia `KD` / `KX` |
+|---|---|---|
+| **A. Voucherul nu e pe factură** (implicit): *Jurnal vouchere* completat, bifa *Import vouchers as product lines* debifată | valoarea întreagă; la postare, conectorul înregistrează partea eMAG ca plată pe *Jurnal vouchere*, cu numărul comenzii eMAG în memo | restul de plată al facturii, egal cu suma încasată |
+| **B. Voucherul e pe factură:** bifa *Import vouchers as product lines* activă și *Produs voucher* completat | are o linie negativă pe *Produs voucher*, fără TVA, deci totalul facturii este suma plătită de client | totalul facturii |
+
+În ambele variante linia din borderou se potrivește exact cu ce mai are clientul de plătit, iar 4111 se închide.
+Notele contabile, pentru un voucher eMAG de 50 lei pe o comandă de 300 lei (încasat `KD` = 250 lei):
+
+| Moment | A. Voucherul nu e pe factură | B. Voucherul e pe factură |
+|---|---|---|
+| Factura | `4111 = 707 + 4427` (300 lei) | `4111 (250) + 461.EMAG (50) = 707 + 4427` (300 lei) |
+| Postarea facturii | `461.EMAG = 4111` (50 lei, plata pe *Jurnal vouchere*) | — |
+| Linia `KD` din borderou | `5125.EMAG = 4111` (250 lei) | `5125.EMAG = 4111` (250 lei) |
+| Linia `KM` din borderou (decontul de vouchere) | `5125.EMAG = 461.EMAG` (50 lei) | `5125.EMAG = 461.EMAG` (50 lei) |
+
+„461.EMAG" este analiticul de debitori diverși pentru Dante International: în varianta A este contul
+de încasări în curs al metodelor de plată de pe *Jurnal vouchere*; în varianta B este contul de
+venit setat pe *Produs voucher*. Dacă pe *Produs voucher* rămâne un cont de venit, venitul apare micșorat,
+iar linia `KM` din borderou nu are nicio creanță pe care s-o închidă — contul se alege
+împreună cu contabilul.
+
+Varianta A este cea recomandată: linia fără TVA din varianta B este respinsă de validarea
+e-Factura (CIUS-RO cere cel puțin o taxă pe fiecare linie), iar factura apare sub valoarea mărfii. Pentru
+extrasul eMAG cele două variante dau aceeași potrivire.
+
+Cazuri speciale:
+
+- **Backend fără *Jurnal vouchere* și fără *Produs voucher*:** voucherul rămâne doar notă pe comandă. Factura
+  are valoarea întreagă, `KD` / `KX` o acoperă parțial, iar diferența egală cu voucherul rămâne pe 4111.
+  Nu se trece pe diferențe de rotunjire: se înregistrează partea eMAG pe 461.EMAG (o plată pe un jurnal
+  cu acest cont) sau se completează configurarea backend-ului pentru comenzile următoare.
+- **Comandă facturată înainte să existe voucherul pe ea:** conectorul nu modifică o factură postată și
+  postează doar un mesaj pe comandă. Diferența rămâne pe 4111, ca mai sus; dacă factura se corectează (notă
+  de creditare sau nu) este o decizie a contabilului.
+- **Livrare la locker:** partea de voucher aplicată pe taxa de transport nu intră pe factură și scade din
+  ramburs (`KX`); suma rămâne egală cu ce are clientul de plătit pe factură.
+- **Decontul de vouchere în borderou:** vine ca linie `KM` „Decont voucher" în aceeași virare, verificat pe
+  borderouri reale eMAG HU și BG (octombrie 2026). *Reference ID* este numărul decontului (`V-MKTP-HU-…`)
+  sau un număr intern eMAG, nu comanda, deci clientul nu se completează și potrivirea cu creanța de pe
+  461.EMAG se face după sumă și dată. Dacă suma decontului nu se regăsește într-o singură creanță, verificați
+  dacă acoperă voucherele mai multor comenzi și reconciliați `KM` cu toate liniile respective.
+- **Comandă anulată, cu voucher:** vezi „Vouchere pe comanda anulată" mai sus (nu e verificat pe un borderou
+  real).
+
 ### Când încasarea este deja înregistrată pe alt jurnal
 
 Borderoul presupune că factura clientului este **deschisă** până la reconciliere. Dacă firma înregistrează
@@ -306,6 +387,34 @@ borderoul eMAG (atunci plata pe celălalt jurnal nu se mai înregistrează pentr
 existent (atunci borderoul se folosește doar pentru `ZP`, `DM` și `C3`). Nu le rulați pe amândouă pentru
 aceleași comenzi.
 
+### Borderou în valută (eMAG HU, eMAG BG)
+
+Borderourile eMAG Ungaria (HUF) și eMAG Bulgaria (EUR) se importă într-un jurnal în moneda borderoului.
+Fiecare linie rămâne la data ei și se convertește în lei la cursul BNR din acea dată (OMFP 1802/2014
+pct. 319). Payout-ul se închide pe zero în valută, dar în lei pe 5125.EMAG rămâne un sold, pentru că o
+încasare (ex. ramburs KX din 28.09) și compensarea ei (ZP din 02.10) au cursuri diferite.
+
+Imediat după import, modulul postează o notă de **diferență de curs** pentru payout (pct. 322), în jurnalul
+de diferențe de curs al companiei, cu data virării:
+
+| Sold rămas pe 5125.EMAG | Notă |
+|---|---|
+| debitor | `665 = 5125.EMAG` |
+| creditor | `5125.EMAG = 765` |
+
+Nota se deschide din butonul **Diferență de curs** de pe extras. Dacă extrasul se modifică după import,
+butonul **Recalculează diferența de curs** stornează nota și o postează pe cea nouă.
+
+![Extrasul eMAG în EUR, cu butoanele Diferență de curs și Recalculează diferența de curs](screenshots/04_extras_valuta.png)
+
+![Nota de diferență de curs a payout-ului, în jurnalul de diferențe de curs](screenshots/05_nota_diferenta_curs.png)
+
+Virarea în lei se reconciliază prin contul de transfer intern **581**: liniile ZP din jurnalul în valută
+cu contrapartida 581, iar încasarea din banca în lei cu linia deschisă din 581. Diferența dintre cursul
+BNR al zilei virării și leii primiți efectiv rămâne deschisă pe 581 și se închide din
+**Contabilitate → Elemente de jurnal**, filtrat pe 581: se selectează linia, **Reconciliază**, cont
+**665** (sau **765**).
+
 ## 7. Legături cu alte module / declarații
 
 | Modul / proces | Rol în flux | Tip legătură |
@@ -316,9 +425,15 @@ aceleași comenzi.
 | `deltatech_marketplace_emag` | importă comenzile eMAG și scrie numărul comenzii în referință — baza identificării automate a clientului | complementar (recomandat) |
 | `deltatech_account_bank_statement_import_gls` / `..._euplatesc` | același tipar, pentru borderourile GLS și decontările Euplatesc | frați (opțional) |
 
+| Diferențe de curs (setările contabile ale companiei) | jurnalul și conturile 665 / 765 pe care se postează nota de diferență de curs a payout-ului în valută | configurare (obligatorie doar pentru borderourile în valută) |
+| Cursuri valutare (`res.currency.rate`) | cursul BNR al fiecărei date din borderou, la care se convertesc în lei liniile în valută | date (obligatorii doar pentru borderourile în valută) |
+
 Ce este automat: recunoașterea fișierului, sărirea rândurilor de sold, gruparea pe virări,
 inversarea semnelor, completarea clientului, verificarea închiderii pe zero și protecția la duplicate.
-Ce rămâne manual: reconcilierea liniilor cu facturile și închiderea contului 581 pe extrasul bancar.
+La borderourile în valută, tot automat: moneda extrasului din fișier, refuzul unui fișier în altă monedă
+decât jurnalul sau cu mai multe monede, și nota de diferență de curs a fiecărui payout.
+Ce rămâne manual: reconcilierea liniilor cu facturile, închiderea contului 581 pe extrasul bancar și, la
+valută, închiderea pe 665 / 765 a diferenței rămase pe 581 după virarea în lei.
 
 ## 8. Verificări pentru consultant
 
@@ -335,7 +450,20 @@ Ce rămâne manual: reconcilierea liniilor cu facturile și închiderea contului
 - [ ] După reconcilierea completă a unei virări, contul de tranzit are sold zero.
 - [ ] O comandă anulată după încasare (`KD` + `ZC` pe același *Reference ID*) se reconciliază cu ea însăși și lasă 4111 pe zero.
 - [ ] S-a verificat dacă facturile din borderou sunt deja plătite pe alt jurnal (curier, POS); dacă da, s-a decis care flux ține încasarea, ca să nu apară de două ori.
+- [ ] Pe backend-ul eMAG este completat *Jurnal vouchere* (cu 461.EMAG drept cont de încasări în curs) sau, în varianta B (voucherul pe factură), *Produs voucher* fără taxe și cu 461.EMAG drept cont de venit; o comandă cu voucher eMAG se reconciliază exact cu linia ei `KD` / `KX`.
 - [ ] Contul tranzitoriu ales are tipul *Active circulante*: domeniul jurnalului nu acceptă alt tip, deci 473000 standard (*Datorii curente*) nu poate fi ales ca atare.
+
+Pentru borderourile în valută (eMAG HU, eMAG BG):
+
+- [ ] Există câte un jurnal eMAG pentru fiecare monedă, fiecare cu propriul cont 5125.EMAG; jurnalul în lei nu primește fișiere în valută.
+- [ ] Jurnalul de diferențe de curs și conturile 665 / 765 sunt completate în setările contabile ale companiei.
+- [ ] Cursurile BNR ale monedei există pentru toate datele din borderou (nu doar pentru data virării).
+- [ ] Un fișier în HUF importat în jurnalul în EUR (sau în lei) este refuzat cu mesajul de monedă diferită; un fișier cu RON și EUR amestecate este refuzat cu mesajul de monede multiple.
+- [ ] Liniile extrasului în valută păstrează fiecare data ei (nu toate data virării).
+- [ ] Pe extras apare butonul **Diferență de curs**, iar nota deschisă are data virării, jurnalul de diferențe de curs și contul 665 sau 765.
+- [ ] Soldul 5125.EMAG al payout-ului este zero și în valută, și în lei (filtrați elementele de jurnal pe cont și urmăriți coloanele *Sold* și *Sumă în valută*).
+- [ ] După o modificare a extrasului, **Recalculează diferența de curs** stornează nota veche și postează una nouă; contul 5125.EMAG rămâne pe zero în lei.
+- [ ] Pe un jurnal eMAG în lei nu apar nici butonul, nici nota de diferență de curs.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -349,17 +477,28 @@ Ce rămâne manual: reconcilierea liniilor cu facturile și închiderea contului
 | „You can't create a new statement line without a suspense account..." | Jurnalul nu are cont tranzitoriu configurat | Setați contul tranzitoriu pe jurnal |
 | Clientul nu e completat pe unele linii de încasare | Comanda eMAG nu există în Odoo sau referința nu se potrivește unic | Completați manual partenerul la reconciliere; verificați importul comenzilor din `deltatech_marketplace_emag` |
 | Aceeași încasare apare de două ori pe client (plată pe alt jurnal + linie din borderou) | Factura era deja plătită pe alt jurnal (curier), iar borderoul a fost reconciliat peste ea după desfacerea plății | Alegeți un singur flux pentru încasare; vezi secțiunea „Când încasarea este deja înregistrată pe alt jurnal" |
+| „Valuta extrasului bancar (HUF) nu este aceeași cu valuta jurnalului (EUR)." | Fișierul a fost încărcat în jurnalul altei monede (de ex. borderoul eMAG HU în jurnalul eMAG BG sau în cel în lei) | Importați fișierul în jurnalul eMAG al monedei lui; dacă nu există, creați-l (vezi „Definirea jurnalului eMAG") |
+| „Fișierul eMAG conține sume în mai multe monede (EUR, RON). Un jurnal are o singură monedă: …" | Fișierul acoperă payout-uri în monede diferite (de ex. un payout în lei urmat de unul în EUR) | Descărcați din eMAG câte un fișier pentru fiecare monedă și importați-l în jurnalul acelei monede |
+| „Setați jurnalul de diferențe de curs și conturile de venituri și cheltuieli din diferențe de curs în setările contabile ale companiei … înainte de a importa borderouri eMAG în valută." | Compania nu are jurnal de diferențe de curs sau conturile 665 / 765 în setările contabile | Completați-le în **Contabilitate → Configurare → Setări**, secțiunea *Diferențe de curs*, și reluați importul |
+| „Liniile extrasului … nu se închid pe zero în EUR, deci diferența nu este doar de curs. Completați mai întâi extrasul." | La **Recalculează diferența de curs**: extrasul a fost modificat după import (linie adăugată, ștearsă sau cu altă sumă) și nu mai e un payout complet | Readuceți extrasul la liniile borderoului (sau ștergeți-l și reimportați fișierul), apoi recalculați |
+| În valută, 5125.EMAG are sold zero în valută, dar nu și în lei | Nota de diferență de curs lipsește (extras importat înainte de versiunea 19.0.2.1.0) sau extrasul a fost modificat după import | Apăsați **Recalculează diferența de curs** pe extras |
+| Liniile în lei ale extrasului în valută au sume greșite | Lipsesc cursurile BNR pentru unele date din borderou, iar Odoo a convertit acele linii la cel mai apropiat curs anterior | Completați cursurile lipsă, ștergeți extrasul și reimportați fișierul |
+| Factura clientului rămâne cu rest de plată egal cu valoarea unui voucher, după reconcilierea liniei `KD` / `KX` | Backend-ul eMAG nu are nici *Jurnal vouchere*, nici *Produs voucher*, sau factura a fost emisă înainte ca voucherul să ajungă pe comandă | Înregistrați partea eMAG pe 461.EMAG și completați configurarea backend-ului; vezi „Vouchere eMAG" |
 | Contul de tranzit rămâne cu sold după reconciliere | O linie a rămas nereconciliată (frecvent o comandă neîncasată integral sau un voucher eMAG) | Identificați linia rămasă în widgetul de reconciliere |
 
 ## 10. Capturi de ecran
 
 Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**, pe
-compania „RO Company" în RON (`prepare_ro_company`):
+compania „RO Company" în RON (`prepare_ro_company`); capturile 04–05 folosesc un borderou eMAG BG în EUR
+cu cursuri diferite pe datele liniilor:
 
 1. `01_configurare_jurnal.png` — jurnalul eMAG: conturile și formatele de import, între care „eMAG Marketplace".
 2. `02_incarcare_borderou.png` — lista Extrase bancă, de unde se încarcă fișierul original.
 3. `03_extras_importat.png` — extrasul importat: liniile borderoului, semnele inversate, soldul zero.
+4. `04_extras_valuta.png` — extrasul în EUR: liniile la datele lor, butonul **Diferență de curs** și
+   **Recalculează diferența de curs**.
+5. `05_nota_diferenta_curs.png` — nota de diferență de curs a payout-ului, pe 5125.EMAG și 765 (sau 665).
 
 Regenerare:
 

@@ -1,10 +1,10 @@
 # eMAG Marketplace Statement Import (localizat la `deltatech_account_bank_statement_import_emag/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_bank_statement_import_emag`
-- **Versiune:** `19.0.2.0.7`
+- **Versiune:** `19.0.2.1.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import_emag
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_account_bank_statement_import_emag`
-- **Ultima Ingestie:** `2026-10-02`
+- **Ultima Ingestie:** `2026-10-24`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -44,11 +44,40 @@ liniile pregătite pentru reconciliere și clientul completat automat acolo unde
   comision), referința este numărul facturii, căutat în facturile de furnizor deja înregistrate.
   Potrivirile ambigue lasă linia neasignată, pentru decizia operatorului.
 - **Protecție la duplicate**: fiecare linie primește un identificator unic de import bazat pe *SAP
-  document ID*; reimportul aceluiași fișier este detectat.
+  document ID*; reimportul aceluiași fișier este detectat. eMAG dă tuturor liniilor `ZP` ale unei
+  virări același *SAP document ID* (numărul virării); liniile al căror ID se repetă în fișier primesc
+  în identificator și suma, plus un număr de apariție, ca importul să nu cadă pe constrângerea de
+  unicitate. Liniile cu ID unic își păstrează identificatorul, deci extrasele deja importate sunt în
+  continuare recunoscute la reimport.
+- **Borderouri în valută** (eMAG HU în HUF, eMAG BG în EUR): se importă într-un jurnal în moneda
+  borderoului (câte un jurnal și un cont 5125.EMAG separat pentru fiecare monedă). Fiecare linie se
+  convertește la cursul BNR din data ei, deci virarea se închide pe zero în valută, dar lasă un sold
+  în lei pe contul de decontare. Imediat după import se postează automat o **notă de diferență de
+  curs** per payout, datată cu data virării, în jurnalul de diferențe de curs al companiei:
+  `665 = 5125.EMAG` pentru sold debitor, `5125.EMAG = 765` pentru sold creditor. Pe extras apar
+  butonul **Diferență de curs** (deschide nota) și **Recalculează diferența de curs** (storno al
+  notei și postarea alteia din liniile curente). Jurnalele în moneda companiei nu sunt afectate. Fără
+  jurnalul de diferențe de curs și conturile 665/765 din setările contabilității, importul în
+  valută este refuzat.
+- **Moneda extrasului**: se citește și din coloana *Local company currency* când celula *Document
+  currency* este goală; un fișier a cărui monedă diferă de cea a jurnalului este refuzat și în acest
+  caz (înainte, un fișier EUR putea intra necontrolat într-un jurnal RON).
+- **Vouchere eMAG**: linia `KD` / `KX` vine cu suma plătită efectiv de client, iar importul nu are
+  reguli speciale pentru vouchere; diferă doar factura cu care se reconciliază. Voucherul vânzătorului
+  este reducere comercială obișnuită. Voucherul suportat de eMAG are două variante în conectorul
+  eMAG: **pe factură** (linie negativă pe *Produs voucher*, fără TVA) sau **nu pe factură**
+  (factura la valoarea întreagă, partea eMAG ca plată pe *Jurnal vouchere*); în ambele cazuri
+  creanța la eMAG stă pe 461.EMAG. Cazurile speciale (backend fără configurare de voucher, factură
+  postată înaintea voucherului, livrare în locker) sunt în fișa consultant.
+- **Codul `KM` (Decont voucher)**: decontul de vouchere al eMAG vine în aceeași virare cu restul
+  borderoului, cu o linie `ZP` de aceeași valoare; intră cu sumă pozitivă, de regulă fără partener,
+  și se reconciliază cu creanța de voucher deschisă pe 461.EMAG (`Dr 5125.EMAG = Cr 461.EMAG`), nu cu
+  factura clientului. Verificarea de închidere pe zero include `KM`: `KD`+`KX`+`KM`−`ZC`−`DM`−`C3` = `ZP`.
 - **Interfață în română**: mesajele de eroare ale importului sunt traduse (`i18n/ro.po`).
 - **Tratament pe Document code** (detaliat în fișa consultant): `KD` (încasare card) și `KX`
   (ramburs) intră cu sumă pozitivă, cu numărul comenzii eMAG, și se reconciliază cu factura
-  clientului; `ZC` (restituire) intră negativ și, dacă anulează o încasare a aceleiași comenzi, se
+  clientului; `KM` (decont de vouchere) intră pozitiv și se reconciliază cu creanța de voucher
+  de pe 461, nu cu factura; `ZC` (restituire) intră negativ și, dacă anulează o încasare a aceleiași comenzi, se
   reconciliază cu ea, fără factură; `DM` (facturi eMAG) și `C3` (notificări) intră negativ și se
   reconciliază cu factura de furnizor deja înregistrată, parțial când eMAG reține doar o parte;
   `ZP` este suma efectiv virată, reconciliată cu extrasul bancar real prin contul de viramente
@@ -79,6 +108,7 @@ liniile pregătite pentru reconciliere și clientul completat automat acolo unde
 #### 3. Dependențe
 
 - `account_bank_statement_import`
+- `account_accountant` (formularul extrasului, butoanele de diferență de curs)
 - `account_bank_statement_import_csv`
 - [deltatech_account_bank_statement_import](../deltatech_account_bank_statement_import/index.md)
 
@@ -88,7 +118,8 @@ override-ul modulului trebuie să ruleze înaintea interceptorului CSV/XLSX stan
 #### 4. Componente Cheie
 
 Sumarul și funcționalitățile din secțiunile 1–2 provin din `readme/DESCRIPTION.md`, completate din
-`readme/USAGE.md`, `readme/CONFIGURE.md` și fișa consultant; pentru această secțiune s-a analizat suplimentar `models/account_journal.py`,
+`readme/USAGE.md`, `readme/CONFIGURE.md`, `readme/HISTORY.md` și fișa consultant; pentru această secțiune s-au analizat suplimentar
+`models/account_journal.py`, `models/account_bank_statement.py` și `views/account_bank_statement_views.xml`,
 fiindcă DESCRIPTION.md nu detaliază implementarea tehnică.
 
 **Modele**
@@ -103,9 +134,25 @@ fiindcă DESCRIPTION.md nu detaliază implementarea tehnică.
   partenerul fiecărei linii după numărul comenzii sau numărul facturii de furnizor
   (`_emag_partner_from_row`).
 
-*Nu mai există câmpuri sau vizualizări proprii pe jurnal în această versiune: câmpul
-`emag_check_balance` și view-ul care îl afișa (`views/account_journal_views.xml`) au fost
+- `account.bank.statement` (extins): `emag_exchange_move_id` (nota de diferență de curs a payout-ului),
+  `emag_exchange_applicable` (calculat: extras eMAG importat într-un jurnal în altă monedă decât a
+  companiei); `_emag_exchange_difference()` calculează soldul în lei al liniilor de pe contul
+  jurnalului (doar dacă liniile se închid în valută), `_emag_post_exchange_difference()` postează nota
+  pe 665/765 în jurnalul de diferențe de curs, `action_emag_recompute_exchange_difference()`
+  stornează nota și o postează din nou, `action_emag_open_exchange_move()` deschide nota.
+
+*Jurnalul nu mai are câmpuri sau vizualizări proprii: `emag_check_balance` și view-ul său au fost
 eliminate odată cu scoaterea opțiunii de dezactivare a verificării de sold.*
+
+**Vizualizări**
+
+- `view_bank_statement_form_emag_exchange`: moștenește formularul extrasului din `account_accountant`;
+  adaugă butonul **Recalculează diferența de curs** (cu confirmare, vizibil doar pe extrasele în
+  valută) și butonul statistic **Diferență de curs** către nota postată.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Nu există cron-uri sau acțiuni server; nota de diferență de curs se postează din fluxul de import.
 
 #### 5. Conexiuni
 
