@@ -4,6 +4,17 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-24] Re-ingestie: `deltatech_mcp_server` (19.0.1.15.0), cu fișa consultant
+
+- **Acțiune:** actualizarea paginii (un subagent `documentarist-wiki`) de la 19.0.1.13.0 la 19.0.1.15.0. Au intrat:
+  - cererile de acces (19.0.1.14.0): *Access Requests*, aprobatorul din Setări, tool-ul `request_access`, liniile personale limitate în timp din tab-ul *Personal Access*, *Revoke* și curățarea liniilor expirate;
+  - meniul grupat pe roluri (19.0.1.15.0): *My Access*, *Reporting* și *Configuration*; căile de meniu din pagină sunt scrise complet;
+  - secțiunea de acțiuni automate corectată: modulul nu are `ir.cron`, curățările sunt `@api.autovacuum`.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `FISA_CONSULTANT.md`, `__manifest__.py` și codul de pe `origin/19.0` (PR terrabit-solutions/bitshop_ent#477, #479 și #483).
+- **Fișă consultant copiată (cu capturi):** `FISA_CONSULTANT.md` + 17 capturi în `screenshots/`, dintre care 14–17 (cererile de acces) sunt noi.
+- **Dependențe/Conexiuni:** neschimbate (`base_setup` rămâne text).
+- **Fișiere actualizate:** `deltatech_mcp_server/` (index.md, FISA_CONSULTANT.md, screenshots/), `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-24] Re-ingestie: `deltatech_account_bank_statement_import_emag` (19.0.2.1.1), cu fișa consultant
 
 - **Acțiune:** actualizarea paginii (un subagent `documentarist-wiki`) pentru *eMAG Marketplace Statement Import*. Au intrat:

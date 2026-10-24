@@ -1,7 +1,7 @@
 # Fișă Modul: Acces AI în Odoo prin MCP (MCP Server)
 
 **Modul:** `deltatech_mcp_server`
-**Versiune:** 19.0.1.13.0
+**Versiune:** 19.0.1.14.0
 **Suită:** bitshop_ent (merge pe Community și pe Enterprise; nu depinde de modulul Odoo AI)
 **Dependențe:** `base_setup`
 **Utilizator principal:** consultantul care configurează accesul AI pentru un client; administratorul clientului
@@ -29,6 +29,10 @@ Consultantul poate pregăti și **prompturi**: întrebări gata făcute (de exem
 utilizatorul le alege din lista de comenzi a clientului AI, completează un nume sau o perioadă și le trimite fără
 să le mai scrie.
 
+Când politica nu acoperă o nevoie nouă (de exemplu AI-ul trebuie să citească listele de prețuri), politica nu
+trebuie schimbată pentru toți. Utilizatorul sau chiar clientul AI **cere accesul**, cu un motiv, iar administratorul
+îl aprobă **doar pentru acel utilizator și doar până la o dată**. După această dată accesul se oprește singur.
+
 Nu înlocuiește integrările custom și nu rulează un model AI în Odoo: Odoo doar răspunde clientului AI.
 
 ## 2. Bază legală și context
@@ -48,8 +52,9 @@ pentru verificarea acordului de prelucrare cu furnizorul AI și a transferului d
 
 | Rol | Ce poate |
 |---|---|
-| **Administrator (grupul Settings)** | creează politici (și din șabloane), șabloane de politici, unelte (acțiuni) și prompturi, aprobă aplicațiile OAuth, vede jurnalul și consumul, schimbă setările serverului |
-| **MCP Server / User** | se poate conecta la `/mcp` și își poate genera o cheie API cu scope MCP; vede meniurile „Generate API Key” și „OAuth Connections” (doar conexiunile proprii, pe care le poate revoca) |
+| **Administrator (grupul Settings)** | creează politici (și din șabloane), șabloane de politici, unelte (acțiuni) și prompturi, aprobă aplicațiile OAuth, aprobă sau refuză cererile de acces și revocă accesul personal, vede jurnalul și consumul, schimbă setările serverului |
+| **Aprobatorul cererilor** (opțional, ales în Settings) | primește notificarea fiecărei cereri noi; pentru a o aproba trebuie să fie și administrator |
+| **MCP Server / User** | se poate conecta la `/mcp` și își poate genera o cheie API cu scope MCP; vede doar meniul „My Access”, cu „Generate API Key”, „Access Requests” și „OAuth Connections” (doar cererile și conexiunile proprii; poate anula o cerere în așteptare și revoca o conexiune) |
 
 Recomandare: un **utilizator dedicat** pentru clientul AI (nu utilizatorul unui om), cu drepturile
 minime necesare pe modelele expuse. Politica se atribuie lui, pe formularul utilizatorului.
@@ -63,6 +68,10 @@ Modulul **nu generează note contabile**. Datele pe care le păstrează:
   plus cele salvate de administrator);
 - **unelte (acțiuni)**: metoda sau acțiunea de server, descrierea pentru AI, parametrii și politicile în care sunt active;
 - **prompturi**: textul, argumentele (obligatorii sau cu valoare implicită) și politicile care le văd;
+- **cererile de acces**: utilizatorul, modelul, operația (citire, creare, modificare), motivul, zilele cerute, sursa
+  (din Odoo sau de la clientul AI), starea, cine a decis și când;
+- **accesul personal**: linii ale politicii valabile doar pentru un utilizator, cu data de final; se șterg automat
+  după ce expiră;
 - **jurnalul apelurilor**: cine, ce metodă și unealtă, argumentele (trunchiate), durata, rezultatul; se
   șterge automat după 90 de zile (configurabil);
 - **consumul zilnic** pe utilizator: apeluri, înregistrări, octeți;
@@ -78,14 +87,17 @@ vânzări.
 1. Creați utilizatorul AI (*Settings → Users*), cu drepturile minime necesare (ex. Sales / User) și **cu
    o parolă**: cu contul lui se generează cheia API (Pasul 6) sau se aprobă conexiunea OAuth (Pasul 7).
 2. Pe același formular, tabul *Access Rights*, secțiunea **MCP Server**, alegeți rolul **User**.
-3. În *MCP Server → Policies* creați politica (Pasul 1 de mai jos), cel mai repede cu **Create from Template**, și
+3. În *MCP Server → Configuration → Policies* creați politica (Pasul 1 de mai jos), cel mai repede cu **Create from Template**, și
    atribuiți-o utilizatorului.
-4. În *Settings → General Settings → Integrations → MCP Server* verificați limitele. Lăsați
+4. În *Settings → General Settings → Integrations → MCP Server* (scurtătura: *MCP Server → Configuration →
+   Settings*) verificați limitele. Lăsați
    **Allow AI clients to write** debifat până la teste.
-5. Opțional, în *MCP Server → Tools* adăugați acțiunile pe care AI-ul le poate rula (Pasul 4 de mai jos) și
+5. Opțional, în *MCP Server → Configuration → Tools* adăugați acțiunile pe care AI-ul le poate rula (Pasul 4 de mai jos) și
    activați-le în politică.
-6. Opțional, în *MCP Server → Prompts* pregătiți întrebările gata făcute pentru echipă (Pasul 5 de mai jos).
-7. Pentru clienți web (Claude.ai, ChatGPT) și pentru Claude Code prin OAuth: `web.base.url` trebuie să fie adresa
+6. Opțional, în *MCP Server → Configuration → Prompts* pregătiți întrebările gata făcute pentru echipă (Pasul 5 de mai jos).
+7. Opțional, în aceleași setări bifați **MCP access requests** și alegeți **MCP access approver**, dacă utilizatorii
+   pot cere acces la modele pe care politica nu le dă (Pasul 9 de mai jos).
+8. Pentru clienți web (Claude.ai, ChatGPT) și pentru Claude Code prin OAuth: `web.base.url` trebuie să fie adresa
    publică HTTPS a instanței, iar *MCP OAuth client metadata documents* și *MCP OAuth self-registration* se bifează
    (Pasul 7).
 
@@ -93,7 +105,7 @@ vânzări.
 
 ### Pasul 1 — Politica de acces
 
-**MCP Server → Policies → New.** Numiți politica și completați limitele: înregistrări pe apel, buget
+**MCP Server → Configuration → Policies → New.** Numiți politica și completați limitele: înregistrări pe apel, buget
 zilnic de înregistrări și de date, apeluri pe minut, IP-uri permise. Lăsați **Mask personal data**
 bifat. Pe tabul *Models* adăugați modelele pe care AI-ul le poate folosi și bifați doar operațiile
 necesare. Pentru fiecare model puteți ascunde câmpuri (**Hidden fields**), le puteți afișa mascat
@@ -107,7 +119,7 @@ iar **Attachments** să listeze și să citească fișierele atașate înregistr
 
 #### Politica dintr-un șablon
 
-În loc să adăugați modelele unul câte unul, pe lista **MCP Server → Policies** apăsați **Create from Template**,
+În loc să adăugați modelele unul câte unul, pe lista **MCP Server → Configuration → Policies** apăsați **Create from Template**,
 alegeți unul sau mai multe șabloane și confirmați. Modulul livrează:
 
 | Șablon | Ce poate AI-ul |
@@ -130,7 +142,7 @@ Ce face asistentul:
   se păstrează din toate, iar dintre limite câștigă cea mai strictă.
 
 Pe o politică existentă, **Add Template** adaugă modelele unui șablon; modelele deja prezente primesc drepturile
-șablonului. **Save as Template** păstrează politica drept șablon nou în **MCP Server → Policy Templates**, de unde
+șablonului. **Save as Template** păstrează politica drept șablon nou în **MCP Server → Configuration → Policy Templates**, de unde
 se poate refolosi la alt utilizator sau la alt client. Șablonul **nu dă drepturi în Odoo**: utilizatorul AI are în
 continuare nevoie de grupurile aplicațiilor (Sales / User, Purchase / User etc.).
 
@@ -145,7 +157,7 @@ unealtă.
 ### Pasul 3 — Setările serverului
 
 **Settings → General Settings → Integrations → MCP Server.** Aici sunt valorile globale: **Allow AI clients to write** (implicit debifat: serverul e doar-citire și
-uneltele de scriere nici nu apar clientului), numărul maxim de înregistrări pe apel, cât se păstrează
+uneltele de scriere nici nu apar clientului), **MCP access requests** și **MCP access approver** (Pasul 9), numărul maxim de înregistrări pe apel, cât se păstrează
 jurnalul, auto-înregistrarea OAuth, documentele de metadate ale clienților OAuth, gazdele permise pentru OAuth, valabilitatea tokenului de acces (minute) și a conexiunii (zile) și originile
 de browser acceptate (clienții AI fără antet `Origin` sunt acceptați oricum).
 
@@ -153,7 +165,7 @@ de browser acceptate (clienții AI fără antet `Origin` sunt acceptați oricum)
 
 ### Pasul 4 — Acțiunile pe care AI-ul le poate rula (unelte)
 
-**MCP Server → Tools → New.** O unealtă este un buton sau o acțiune de server pe care AI-ul o poate rula pe
+**MCP Server → Configuration → Tools → New.** O unealtă este un buton sau o acțiune de server pe care AI-ul o poate rula pe
 înregistrări, la fel cum ar apăsa-o un om:
 
 - **Name**: numele văzut de AI, cu litere mici, cifre și `_` (ex. `confirm_sale_order`); nu poate fi numele unei
@@ -183,7 +195,7 @@ apar și pe tabul *Tools* al politicii.
 
 ### Pasul 5 — Prompturi: întrebări gata făcute
 
-**MCP Server → Prompts → New.** Un prompt este un text pe care utilizatorul îl alege din clientul AI în loc să
+**MCP Server → Configuration → Prompts → New.** Un prompt este un text pe care utilizatorul îl alege din clientul AI în loc să
 îl scrie de fiecare dată:
 
 - **Prompt name**: numele tehnic, cu litere mici, cifre și `_` (ex. `customer_review`); clientul AI îl arată ca
@@ -211,7 +223,7 @@ adăugarea promptului îl vede după reconectare.
 
 ### Pasul 6 — Cheia API pentru clientul AI
 
-**MCP Server → Generate API Key**, autentificat **ca utilizatorul AI**. Cheia se generează întotdeauna
+**MCP Server → My Access → Generate API Key**, autentificat **ca utilizatorul AI**. Cheia se generează întotdeauna
 pentru utilizatorul conectat: dacă o generați din contul dumneavoastră de administrator, AI-ul va lucra
 cu drepturile dumneavoastră. Dați un nume cheii, alegeți durata și apăsați **Generate key**; Odoo cere
 parola utilizatorului. Cheia se arată o singură dată. Cheia este valabilă doar pe `/mcp`, nu și pe XML-RPC.
@@ -233,7 +245,7 @@ Denumirile din clienții AI se schimbă des; dacă o etichetă diferă, verifica
 Claude.ai și ChatGPT nu primesc o cheie lipită de mână. Clientul deschide o pagină Odoo; **utilizatorul AI**
 se autentifică și apasă **Allow**. Dacă aplicația cere și scriere, iar serverul o permite, pagina oferă și
 **Read only**: aplicația vede atunci doar uneltele de citire. Odoo deschide o conexiune OAuth, vizibilă în
-**MCP Server → OAuth Connections** și revocabilă oricând. Tokenul de acces expiră după o oră și clientul îl
+**MCP Server → My Access → OAuth Connections** și revocabilă oricând. Tokenul de acces expiră după o oră și clientul îl
 reînnoiește singur; o conexiune nefolosită 30 de zile cere din nou aprobarea. Utilizatorul trebuie să fie în
 rolul **MCP Server / User** și să aibă o politică.
 
@@ -270,7 +282,7 @@ Conectarea, de făcut de utilizator în clientul AI:
      mediu și scrieți numele variabilei în *Bearer token env var*.
 2. Clientul deschide pagina Odoo de mai jos. Autentificați-vă **ca utilizatorul AI**, nu ca administrator,
    verificați numele aplicației și adresa la care se revine, apoi apăsați **Allow**. **Deny** anulează conexiunea.
-3. În client, conectorul e gata de folosit. Conexiunea apare în **MCP Server → OAuth Connections**, de unde se
+3. În client, conectorul e gata de folosit. Conexiunea apare în **MCP Server → My Access → OAuth Connections**, de unde se
    poate revoca. Tokenul de acces expiră după o oră și clientul îl reînnoiește singur; o conexiune nefolosită
    numărul de zile din Settings (30 implicit) expiră, iar clientul cere din nou aprobarea.
 
@@ -293,7 +305,7 @@ pornit el conectarea.
 
 ![Consimțământ pentru Claude Code: gazda care descrie aplicația și avertismentul localhost](screenshots/11_oauth_consent_metadata.png)
 
-Aplicațiile care se pot conecta sunt cele din **MCP Server → OAuth Applications**. Cele care se
+Aplicațiile care se pot conecta sunt cele din **MCP Server → Configuration → OAuth Applications**. Cele care se
 înregistrează singure apar acolo cu sursa „Self-registered”, iar cele descrise de un document de metadate cu
 sursa „Metadata document” (descrierea se recitește după cel mult o zi). Ambele mecanisme sunt oprite implicit
 și acceptă doar gazdele din listă. **Arhivarea** unei aplicații o blochează: Odoo nu o mai acceptă și nu îi mai
@@ -301,7 +313,7 @@ citește descrierea.
 
 ![Aplicațiile OAuth](screenshots/06_oauth_applications.png)
 
-**MCP Server → OAuth Connections** arată aprobările date: aplicația, utilizatorul, scope-ul (`mcp:read` sau
+**MCP Server → My Access → OAuth Connections** arată aprobările date: aplicația, utilizatorul, scope-ul (`mcp:read` sau
 `mcp:read mcp:write`), când s-a conectat, ultima folosire și până când e valabilă. Fiecare utilizator își vede
 și își revocă propriile conexiuni; administratorul le vede pe toate. Conexiunile revocate se văd cu filtrul
 **Revoked**, cu motivul: de utilizator, de administrator, de aplicație sau „Refresh token used twice”, când
@@ -311,7 +323,7 @@ același token de reînnoire a fost folosit de două ori (semn că a fost furat)
 
 ### Pasul 8 — Ce a făcut AI-ul: jurnal și consum
 
-**MCP Server → Call Log** arată fiecare apel: data, utilizatorul, metoda, unealta, rezultatul și durata
+**MCP Server → Reporting → Call Log** arată fiecare apel: data, utilizatorul, metoda, unealta, rezultatul și durata
 (în secunde). Numele clientului apare pe rândul `initialize` la clienții mai vechi și pe fiecare apel la clienții
 care folosesc protocolul MCP 2026-07-28. Deschiderea unui prompt apare ca metodă `prompts/get`, cu numele
 promptului. Erorile apar cu roșu (de exemplu o căutare
@@ -331,11 +343,62 @@ OAuth.
 
 ![Jurnalul apelurilor](screenshots/07_call_log.png)
 
-**MCP Server → Daily Usage** arată, pe zi și pe utilizator, câte apeluri **reușite** de unelte, înregistrări
+**MCP Server → Reporting → Daily Usage** arată, pe zi și pe utilizator, câte apeluri **reușite** de unelte, înregistrări
 și octeți s-au consumat; comparați cu bugetul din politică. Cifra diferă de Call Log, care numără toate
 apelurile, inclusiv erorile și cele de protocol.
 
 ![Consumul zilnic](screenshots/08_daily_usage.png)
+
+### Pasul 9 — Cereri de acces: acces personal, limitat în timp
+
+Funcția e oprită implicit. Se pornește din *Settings → General Settings → Integrations → MCP Server*, cu
+**MCP access requests**. **MCP access approver** alege cine primește notificarea fiecărei cereri; lăsat gol, o
+primesc toți administratorii. Notificarea apare în inbox-ul Discuss, dacă modulul e instalat; altfel cererile se
+văd doar în meniu.
+
+**Cererea.** Când AI-ul încearcă un model pe care politica nu îl dă, răspunsul de refuz îi spune că poate cere acces
+cu unealta `request_access`. AI-ul trimite modelul, operația (**Read**, **Create** sau **Write**), motivul și numărul de
+zile (7 dacă nu spune altfel). Utilizatorul poate face aceeași cerere din **MCP Server → My Access → Access Requests → New**.
+Până la aprobare nu se schimbă nimic. Utilizatorul își vede cererile în același meniu, cu sursa (**AI client** sau
+**Odoo**) și starea, și poate anula o cerere cât timp e în așteptare (**Cancel Request**).
+
+![Cererea făcută de clientul AI, văzută de utilizator: motivul și sursa](screenshots/14_access_request_user.png)
+
+**Lista de aprobat.** Administratorul deschide **MCP Server → My Access → Access Requests**. Lista pornește cu filtrul
+**To Approve**. Pe fiecare rând verifică utilizatorul, modelul, operația cerută, câte zile și motivul. Cererile
+venite de la AI se găsesc cu filtrul **From AI clients**.
+
+![Cererile care așteaptă aprobarea](screenshots/15_access_requests_to_approve.png)
+
+**Aprobarea.** Pe formularul cererii, administratorul poate schimba **Valid Until** înainte de aprobare. Lăsat gol,
+accesul ține numărul de zile cerut, socotit de la aprobare. Apoi apasă **Approve** sau **Refuse**. Câmpul **Policy**
+arată politica în care intră accesul.
+
+![O cerere deschisă de administrator: data de final și butonul Approve](screenshots/16_access_request_approve.png)
+
+**Accesul aprobat** apare pe politică, în tabul **Personal Access**, ca o linie cu **Only for User** și **Valid Until**:
+
+- se aplică doar acelui utilizator; ceilalți utilizatori ai politicii nu primesc nimic;
+- pentru acel utilizator înlocuiește linia politicii pentru modelul respectiv. Dacă modelul era deja în politică
+  (de exemplu doar citire), linia personală preia câmpurile ascunse, mascate și read-only de acolo și adaugă doar
+  dreptul cerut;
+- o a doua cerere aprobată pe același model completează aceeași linie: drepturile se adună, iar data de final
+  rămâne cea mai târzie;
+- la **Valid Until** accesul se oprește singur, chiar dacă linia mai e vizibilă până la curățarea zilnică;
+- **Revoke** pe cerere oprește accesul imediat și șterge linia.
+
+Din clientul AI, `list_models` arată modelul cu `valid_until`.
+
+![Accesul aprobat: o linie personală a politicii, cu data de final](screenshots/17_policy_personal_access.png)
+
+Drepturile Odoo ale utilizatorului rămân limita:
+
+- nu se poate cere un model pe care utilizatorul nu îl poate deschide în Odoo;
+- nu se pot cere modelele de sistem (`ir.*`, cheile API, grupurile);
+- cât timp serverul e doar-citire, se poate cere doar citire;
+- același acces nu poate aștepta de două ori, iar un utilizator are cel mult cinci cereri în așteptare.
+
+Dacă utilizatorul trece pe altă politică, accesul personal rămâne pe politica veche și nu i se mai aplică.
 
 ### Primele întrebări în clientul AI
 
@@ -348,8 +411,8 @@ pe ele este refuzat.
 
 ### Uneltele pe care le vede clientul AI
 
-`whoami`, `list_models`, `describe_model`, `search`, `read`, `aggregate` (citire) și, doar când
-scrierea este activată, `create` și `write`. Nu există o unealtă de ștergere. Câmpurile de tip linii
+`whoami`, `list_models`, `describe_model`, `search`, `read`, `aggregate` (citire), `request_access` când cererile de
+acces sunt pornite (Pasul 9) și, doar când scrierea este activată, `create` și `write`. Nu există o unealtă de ștergere. Câmpurile de tip linii
 (one2many, many2many), câmpul de stare (`state`) și câmpurile calculate de Odoo nu se pot scrie prin MCP: o
 ofertă se confirmă doar prin unealta de tip buton (Pasul 4), ca o comandă să treacă prin aceleași verificări ca
 atunci când apasă un om butonul. Alte câmpuri pe care AI-ul le vede, dar nu are voie să le schimbe, se pun în
@@ -378,8 +441,8 @@ produsului). Se aplică drepturile utilizatorului pe înregistrare și pe fișie
 *MCP max attachment size (KB)* din Settings (implicit 5 MB) apar în listă, dar nu se trimit; octeții citiți intră
 în bugetul zilnic de date al politicii.
 
-În plus, AI-ul vede uneltele din *MCP Server → Tools* active în politica lui (Pasul 4), cu descrierea și
-parametrii lor, iar utilizatorul vede prompturile din *MCP Server → Prompts* (Pasul 5). Când e posibil, preferați o unealtă (un buton anume) în locul lui `write` pe tot modelul.
+În plus, AI-ul vede uneltele din *MCP Server → Configuration → Tools* active în politica lui (Pasul 4), cu descrierea și
+parametrii lor, iar utilizatorul vede prompturile din *MCP Server → Configuration → Prompts* (Pasul 5). Când e posibil, preferați o unealtă (un buton anume) în locul lui `write` pe tot modelul.
 
 ### Mai multe companii
 
@@ -401,11 +464,14 @@ etc.).
 |---|---|
 | Drepturile și regulile de acces Odoo | se aplică mereu peste politică |
 | Acțiunile de server (*Settings → Technical → Server Actions*) | pot fi expuse ca unelte |
+| Discuss (`mail`) | dacă e instalat, aprobatorul primește notificarea cererilor în inbox; nu e o dependență |
 | Modulul Odoo AI (Enterprise) | nu e necesar; în Odoo 20 Enterprise există un server MCP propriu, pe aceeași adresă `/mcp` |
 
 **Ce e automat:** mascarea datelor personale, limitele, jurnalul, curățarea jurnalului, expirarea cheilor, citirea și
-reîmprospătarea descrierii aplicațiilor OAuth cu document de metadate.
-**Ce rămâne manual:** alegerea modelelor, câmpurilor, uneltelor și prompturilor, atribuirea politicii, configurarea clientului AI.
+reîmprospătarea descrierii aplicațiilor OAuth cu document de metadate, notificarea cererilor de acces, oprirea și
+ștergerea accesului personal expirat.
+**Ce rămâne manual:** alegerea modelelor, câmpurilor, uneltelor și prompturilor, atribuirea politicii, aprobarea sau
+refuzul fiecărei cereri de acces, configurarea clientului AI.
 
 ## 8. Verificări pentru consultant
 
@@ -432,6 +498,14 @@ reîmprospătarea descrierii aplicațiilor OAuth cu document de metadate.
   doar utilizatorilor ei.
 - [ ] Din Claude Code, `/mcp__odoo__<prompt>` cere argumentele declarate și trimite textul completat; în Call Log
   apare rândul `prompts/get`.
+- [ ] Cu *MCP access requests* bifat: un model din afara politicii întoarce un refuz care pomenește `request_access`;
+  după `request_access` cererea apare în *Access Requests* cu sursa *AI client*, iar aprobatorul (sau administratorii)
+  are o notificare în inbox.
+- [ ] Înainte de aprobare modelul cerut rămâne refuzat; după **Approve** utilizatorul îl poate folosi, iar un alt
+  utilizator al aceleiași politici nu.
+- [ ] Accesul personal pe un model deja în politică păstrează câmpurile ascunse și mascate ale politicii.
+- [ ] După **Revoke** (sau după *Valid Until*) modelul e refuzat din nou.
+- [ ] Cu serverul doar-citire, o cerere de *Write* e refuzată; una de *Read* trece.
 - [ ] Apelurile apar în **Call Log**; consumul apare în **Daily Usage**.
 - [ ] La Codex (OpenAI): conectorul se adaugă din *Plugins → MCPs*; după conectare, „Codex” apare în *OAuth Connections*.
 - [ ] La ChatGPT: *Developer mode* este activat (și permis de administratorul workspace-ului, dacă e cazul), iar conectorul
@@ -450,7 +524,14 @@ reîmprospătarea descrierii aplicațiilor OAuth cu document de metadate.
 | Mesaj | Cauză | Remediere |
 |---|---|---|
 | No MCP policy is assigned to your user | Utilizatorul nu are politică | Atribuiți politica pe formularul utilizatorului |
-| The model … is not available for read/create/write | Modelul nu e în politică sau operația nu e bifată | Adăugați modelul în politică |
+| The model … is not available for read/create/write | Modelul nu e în politică sau operația nu e bifată | Adăugați modelul în politică sau, pentru un singur utilizator, aprobați o cerere de acces (Pasul 9) |
+| … has no access to this model in Odoo: MCP cannot give more than that. | Cererea e pentru un model pe care utilizatorul nu îl poate deschide în Odoo | Dați întâi utilizatorului grupul aplicației, apoi refaceți cererea |
+| The same access is already waiting for approval. | Aceeași cerere (utilizator, model, operație) e deja în așteptare | Aprobați sau refuzați cererea existentă |
+| Too many requests are waiting for approval. | Utilizatorul are cinci cereri în așteptare | Decideți asupra cererilor existente |
+| This model cannot be asked for. | Model de sistem sau inexistent | Nu se poate expune prin MCP |
+| No MCP policy is assigned to the user. Ask an administrator for one first. | Cererea vine de la un utilizator fără politică | Atribuiți întâi o politică |
+| Only an administrator can decide on MCP access requests. | Aprobarea a fost încercată de un ne-administrator | Aprobarea o face un administrator |
+| The end of the access must be in the future. | *Valid Until* e în trecut | Corectați data sau lăsați câmpul gol |
 | The field … is not available / cannot be used in filters | Câmpul e ascuns sau mascat | Scoateți-l din lista de câmpuri ascunse/mascate, dacă e legitim |
 | The daily data budget of this connection is used up | S-a atins bugetul zilnic | Măriți bugetul politicii sau așteptați ziua următoare |
 | Rate limit exceeded, retry in a minute | Prea multe apeluri pe minut | Măriți limita din politică |
@@ -504,6 +585,10 @@ Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixinul `Sc
 | `11_oauth_consent_metadata.png` | consimțământ pentru Claude Code: gazda care descrie aplicația și avertismentul localhost |
 | `12_oauth_consent_write.png` | consimțământ cu alegerea „Read only”, când aplicația cere și scriere |
 | `13_oauth_connections.png` | conexiunile OAuth: aplicația, utilizatorul, scope-ul, ultima folosire, butonul Revoke |
+| `14_access_request_user.png` | cererea făcută de clientul AI, văzută de utilizator: motivul și sursa *AI client* |
+| `15_access_requests_to_approve.png` | cererile care așteaptă aprobarea (filtrul *To Approve*) |
+| `16_access_request_approve.png` | cererea deschisă de administrator: *Valid Until* și butonul *Approve* |
+| `17_policy_personal_access.png` | tabul *Personal Access* al politicii: accesul aprobat, doar pentru utilizatorul AI, cu data de final |
 
 Regenerare:
 
@@ -522,6 +607,8 @@ Regenerare:
   scrie pe tot modelul. Nici ele nu au încă previzualizare sau anulare, deci activați-le pe un utilizator AI dedicat
   și începeți cu puține.
 - Cheile OAuth expiră (30 de zile implicit); clientul cere din nou aprobarea.
+- Cererile de acces sunt soluția pentru „îmi trebuie doar mie, doar luna asta”: nu modificați politica comună pentru o
+  nevoie a unui singur utilizator. Explicați că AI-ul doar **cere**; nimic nu se schimbă fără un administrator.
 - Prompturile sunt doar text: nu dau drepturi și nu ocolesc politica. Scrieți-le în limba în care lucrează echipa.
 - Serverul vorbește protocolul MCP 2026-07-28 și, în paralel, versiunile mai vechi (2025-11-25 și anterioare), deci
   clienții existenți nu trebuie reconfigurați.
