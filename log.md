@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-24] Re-ingestie: `l10n_ro_stock_sheet` (19.0.1.1.12), cu fișa consultant
+
+- **Acțiune:** actualizarea paginii (un subagent `documentarist-wiki`) de la 19.0.1.1.11 la 19.0.1.1.12. A intrat alinierea produselor FIFO: stocul inițial și final din stiva FIFO nativă la data raportului, diferența de cost în Ieșiri, rând „Ajustare cost FIFO" în fișa de magazie; nu se aplică pe filtru de locații sau pe mai multe companii.
+- **Sursă:** `readme/DESCRIPTION.md`, `HISTORY.md`, `FISA_CONSULTANT.md`, `__manifest__.py` și `models/stock_sheet_handler.py` (PR terrabit-solutions/l10n_ro_ent#841).
+- **Fișă consultant copiată (cu capturi):** `FISA_CONSULTANT.md` + 8 capturi în `screenshots/`; capturile nu arată rândul de ajustare FIFO, doar textul îl descrie.
+- **Dependențe/Conexiuni:** neschimbate.
+- **Fișiere actualizate:** `l10n_ro_stock_sheet/` (index.md, FISA_CONSULTANT.md, screenshots/), `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-24] Re-ingestie: `deltatech_mcp_server` (19.0.1.15.0), cu fișa consultant
 
 - **Acțiune:** actualizarea paginii (un subagent `documentarist-wiki`) de la 19.0.1.13.0 la 19.0.1.15.0. Au intrat:

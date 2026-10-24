@@ -189,11 +189,11 @@ postarea/aprobarea notei de regularizare; corectarea erorilor de valorizare la n
 
 ## 10. Capturi de ecran
 
-Capturile din `readme/screenshots/` se obțin din `tests/test_screenshots.py` (mixinul
+Capturile din `static/description/` se obțin din `tests/test_screenshots.py` (mixinul
 `ScreenshotCase` din `l10n_ro_doc_screenshots`, HttpCase + Playwright, import defensiv), pe
 companie RO, cu plan de conturi RO.
 
-Toate capturile există în `readme/screenshots/` (în ordinea fluxului):
+Toate capturile există în `static/description/` (în ordinea fluxului):
 1. `01_balanta_conturi.png` — raportul, defalcare pe conturi + coloanele Sold sintetic / Diferență
 2. `02_drill_produse.png` — cont (371000 Mărfuri) desfășurat pe produse
 3. `03_fisa_magazie_documente.png` — raport desfășurat complet: cont → produse → documente
@@ -222,5 +222,8 @@ Regenerare:
   corecțiile RO specifice (CMP, diferențe de preț) se fac cu modulele dedicate.
 - Regula de aur: **închideți/regularizați la o dată ≤ azi** și **vizualizați raportul la aceeași
   dată** — altfel apar diferențe de sincronizare.
-- La cost mediu/FIFO, `Stoc inițial + Intrări − Ieșiri ≠ Stoc final` în valoare (firesc — costul
-  se schimbă); reconcilierea se face pe valoarea de inventar (`Stoc final`).
+- Produsele evaluate **FIFO** au stocul inițial și cel final luate din stiva FIFO la data
+  raportului (ca în „Evaluare stoc"). Dacă o factură la alt preț sau un landed cost schimbă costul
+  unei intrări după ce marfa a fost livrată, diferența apare în **Ieșiri** (în fișa de magazie, ca
+  rând „Ajustare cost FIFO"), iar `Stoc inițial + Intrări − Ieșiri = Stoc final` rămâne adevărat.
+  Corecția nu se aplică pe filtrul de locații sau pe mai multe companii selectate odată.
