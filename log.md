@@ -4,6 +4,16 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-24] Ingestie nouă `l10n_ro_customs_dvi_import` (19.0.1.0.1) și re-ingestie `l10n_ro_customs_dvi` (19.0.2.1.13), cu fișele consultant
+
+- **Acțiune:** doi subagenți `documentarist-wiki`, în paralel:
+  - pagină nouă pentru `l10n_ro_customs_dvi_import`: wizardul DVI completat din PDF-ul SNI, cu verificările dinainte de completare și refuzul declarațiilor cu cote de TVA diferite;
+  - actualizarea paginii `l10n_ro_customs_dvi` de la 19.0.2.1.7 la 19.0.2.1.13: regimul vamal și garanția la 4200 (2.1.8–9), furnizorul extern pe antetul notei (2.1.10–11), contul 4462 pe multi-company (2.1.12, issue #685) și trimiterea din fișă către importul din PDF (2.1.13). Versiunea 2.1.14 are doar teste.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `HISTORY.md`, `FISA_CONSULTANT.md`, `__manifest__.py` și codul unit în 19.0 (PR dhongu/l10n-romania#684, #686, #687).
+- **Fișe consultant copiate (cu capturi):** `l10n_ro_customs_dvi_import` (6 capturi, căile mutate din `../static/description/` în `screenshots/`) și `l10n_ro_customs_dvi` (14 capturi, recopiate).
+- **Dependențe/Conexiuni:** `l10n_ro_customs_dvi_import` depinde de `l10n_ro_customs_dvi` (link activ); legătură reciprocă la Conexiuni. `pdfminer.six` e dependență Python externă, ca text.
+- **Fișiere actualizate:** `l10n_ro_customs_dvi_import/` (nou: index.md, FISA_CONSULTANT.md, screenshots/), `l10n_ro_customs_dvi/` (index.md, FISA_CONSULTANT.md, screenshots/), `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-24] Re-ingestie: `l10n_ro_stock_sheet` (19.0.1.1.12), cu fișa consultant
 
 - **Acțiune:** actualizarea paginii (un subagent `documentarist-wiki`) de la 19.0.1.1.11 la 19.0.1.1.12. A intrat alinierea produselor FIFO: stocul inițial și final din stiva FIFO nativă la data raportului, diferența de cost în Ieșiri, rând „Ajustare cost FIFO" în fișa de magazie; nu se aplică pe filtru de locații sau pe mai multe companii.
