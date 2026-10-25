@@ -98,6 +98,8 @@ jobs:
               pașii 6–7, dar păstrează linia „Fișă Consultant” din pagină, dacă există.
             - Câmpul `reason` spune de ce reingestezi modulul; verifică în special acel aspect.
             - Păstrează și actualizează secțiunile în plus ale paginii (ex. `#### 6. Istoric`).
+            - Metadatele și titlurile exact ca în `schema.md`: date și versiuni între backticks,
+              secțiunile cu `####`, chiar dacă pagina veche le avea altfel.
             - Nu atinge `wiki_module_odoo/index.md`, `log.md` sau `schema.md` și nu face commit.
 
             După fiecare modul terminat, rescrie `.wiki-ingest-report.json` ca listă JSON cu un

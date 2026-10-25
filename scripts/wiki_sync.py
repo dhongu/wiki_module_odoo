@@ -60,7 +60,8 @@ SUITES = {
 
 RE_VERSION = re.compile(r"^(- \*\*Versiune:\*\* `)([^`]+)(`)", re.M)
 RE_LOCAL = re.compile(r"^- \*\*Cale Local[ăa]:\*\* `([^`]+)`", re.M)
-RE_INGEST = re.compile(r"^(- \*\*Ultima Ingestie:\*\* `)([^`]+)(`.*)$", re.M)
+# Data apare și fără backticks în paginile mai vechi.
+RE_INGEST = re.compile(r"^(- \*\*Ultima Ingestie:\*\* `?)(\d{4}-\d{2}-\d{2})(`?.*)$", re.M)
 RE_FISA_LINE = "- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)"
 RE_IMG = re.compile(r"\]\(((?:\.\./)*)(static/description|screenshots)/([^)]+\.(?:png|jpe?g|gif|svg|webp))\)")
 RE_LOCAL_LINK = re.compile(r"\]\(([^)#\s]+\.md)\)")
@@ -77,7 +78,8 @@ def read_manifest(path: Path) -> dict:
 
 
 def section(text: str, number: int) -> str:
-    m = re.search(rf"^#### {number}\..*?(?=^#### |\Z)", text, re.M | re.S)
+    # Paginile mai vechi au secțiunile cu `##` în loc de `####`.
+    m = re.search(rf"^#{{2,4}} {number}\..*?(?=^#{{2,4}} \d|\Z)", text, re.M | re.S)
     return m.group(0) if m else ""
 
 
