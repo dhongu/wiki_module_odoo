@@ -4,6 +4,12 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-25] Actualizare: `l10n_ro_customs_dvi` (19.0.2.1.14)
+
+- **Acțiune:** versiunea paginii adusă la 19.0.2.1.14 și intrarea nouă în istoric; versiunea are doar teste (căutări limitate la compania testului), fără efect asupra funcționării.
+- **Sursă:** `readme/HISTORY.md` (PR dhongu/l10n-romania#689).
+- **Fișiere actualizate:** `l10n_ro_customs_dvi/index.md`, `log.md`, `.index/`.
+
 ## [2026-10-24] Ingestie nouă `l10n_ro_customs_dvi_import` (19.0.1.0.1) și re-ingestie `l10n_ro_customs_dvi` (19.0.2.1.13), cu fișele consultant
 
 - **Acțiune:** doi subagenți `documentarist-wiki`, în paralel:

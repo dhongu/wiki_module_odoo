@@ -1,7 +1,7 @@
 # Romania - Customs Import Declaration (DVI) (localizat la `l10n_ro_customs_dvi/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_customs_dvi`
-- **Versiune:** `19.0.2.1.13`
+- **Versiune:** `19.0.2.1.14`
 - **Cale:** `https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_customs_dvi`
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_customs_dvi`
 - **Ultima Ingestie:** `2026-10-24`
@@ -76,6 +76,7 @@ Modulul înregistrează Declarația Vamală de Import (DVI) pentru importurile d
 
 #### 6. Istoric
 
+- **19.0.2.1.14** (2026-10-24) — doar teste: căutările de jurnal și de cont din teste sunt limitate la compania testului, ca testele să treacă și pe o bază cu mai multe companii RO (PR #689).
 - **19.0.2.1.13** (2026-10-24) — fișa consultant, Pasul 5: trimitere către `l10n_ro_customs_dvi_import` pentru completarea DVI din PDF-ul SNI.
 - **19.0.2.1.12** (2026-10-24) — fix multi-company (#685): contul 4462 se ia din planul companiei DVI, nu din contul de cheltuială al categoriei produsului (607).
 - **19.0.2.1.11** (2026-10-24) — fișa: furnizorul pe antetul notei DVI (Pasul 7, §2.6), jurnalul de cumpărări afișează importul o singură dată, D394 îl exclude (§7), două verificări noi (§8).

@@ -15201,7 +15201,7 @@
   {
     "path": "l10n_ro_customs_dvi/index.md",
     "module": "l10n_ro_customs_dvi",
-    "version": "19.0.2.1.13",
+    "version": "19.0.2.1.14",
     "github": "`https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_customs_dvi`",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_customs_dvi",
     "last_ingest": "2026-10-24",
