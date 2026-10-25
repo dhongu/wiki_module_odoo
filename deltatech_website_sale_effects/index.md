@@ -1,7 +1,7 @@
 # Website Sale Effects
 
 - **Nume Tehnic:** `deltatech_website_sale_effects`
-- **Versiune:** `19.0.1.4.2`
+- **Versiune:** `19.0.1.4.7`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_sale_effects
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_website_sale_effects`
 - **Ultima Ingestie:** `2026-10-18`

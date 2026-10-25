@@ -1,7 +1,7 @@
 # Deltatech Project Pricelist (localizat la `deltatech_project_price_list/index.md`)
 
 - **Nume Tehnic:** `deltatech_project_price_list`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_project_price_list
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_project_price_list`
 - **Ultima Ingestie:** `2026-06-03`

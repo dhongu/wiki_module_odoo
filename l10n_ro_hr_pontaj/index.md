@@ -1,7 +1,7 @@
 # Romania - Foaie colectivă de prezență (pontaj)
 
 - **Nume Tehnic:** `l10n_ro_hr_pontaj`
-- **Versiune:** `19.0.1.4.1`
+- **Versiune:** `19.0.1.4.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_pontaj
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_hr_pontaj`
 - **Ultima Ingestie:** `2026-10-09`

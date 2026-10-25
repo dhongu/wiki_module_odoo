@@ -1,7 +1,7 @@
 # Supplier Price Comparison (localizat la `deltatech_purchase_price_compare/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_price_compare`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_purchase_price_compare`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_purchase_price_compare`
 - **Ultima Ingestie:** `2026-09-03`

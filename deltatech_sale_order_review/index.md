@@ -1,7 +1,7 @@
 # Sale Order Review (localizat la `deltatech_sale_order_review/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_order_review`
-- **Versiune:** `19.0.0.1.1`
+- **Versiune:** `19.0.0.1.7`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_order_review
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_order_review`
 - **Ultima Ingestie:** `2026-09-24`

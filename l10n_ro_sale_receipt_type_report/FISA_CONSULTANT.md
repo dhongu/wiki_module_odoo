@@ -79,14 +79,14 @@ Roluri recomandate pentru testare:
    `account_reports` — și modulele `point_of_sale` + `payment`, deja prezente la Damira).
 2. Verificați că metodele de plată POS folosite au un **jurnal** configurat (tip Numerar sau
    Bancă) — raportul clasifică după tipul jurnalului metodei de plată, nu după numele ei.
-3. Verificați accesul la meniul **Contabilitate → Raportare → Vânzări pe tipuri de încasări**
-   (sub grupul „Rapoarte de situații").
+3. Verificați accesul la meniul **Contabilitate → Raportare → Rapoarte de extras → Vânzări pe tipuri
+   de încasări (RO)**.
 
 ## 6. Flux de utilizare
 
 ### Pasul 1 — Deschiderea raportului
 
-Accesați **Contabilitate → Raportare → Vânzări pe tipuri de încasări**. Raportul se deschide
+Accesați **Contabilitate → Raportare → Rapoarte de extras → Vânzări pe tipuri de încasări (RO)**. Raportul se deschide
 pe luna curentă și afișează câte o secțiune pentru fiecare tip de încasare **care are date în
 perioadă** — secțiunile fără nicio încasare nu apar (raportul rămâne concis). Rândul de
 **Total** de la final însumează toate secțiunile.
@@ -142,7 +142,7 @@ platforme online); configurarea corectă a jurnalelor pe metodele de plată POS.
 
 ## 8. Verificări pentru consultant
 
-- [ ] Raportul se deschide din **Contabilitate → Raportare → Vânzări pe tipuri de încasări**.
+- [ ] Raportul se deschide din **Contabilitate → Raportare → Rapoarte de extras → Vânzări pe tipuri de încasări (RO)**.
 - [ ] O comandă POS plătită cu numerar apare la secțiunea **Casă — Numerar**.
 - [ ] O comandă POS plătită cu cardul apare la secțiunea **Casă — Card**.
 - [ ] O comandă POS cu metoda „Cont client" (pay later) **nu** apare deloc în raport.
@@ -172,12 +172,12 @@ platforme online); configurarea corectă a jurnalelor pe metodele de plată POS.
 
 ## 10. Capturi de ecran
 
-Capturile din `readme/screenshots/` sunt generate din `tests/test_screenshots.py` (mixinul
+Capturile din `static/description/` sunt generate din `tests/test_screenshots.py` (mixinul
 `ScreenshotCase` din `l10n_ro_doc_screenshots`, HttpCase + Playwright), pe companie RO, cu
 un magazin demo (jurnal casă + jurnal bancă, o comandă POS cash, o comandă POS card, o
 factură încasată prin OP). Modulul de infrastructură `l10n_ro_doc_screenshots` există doar
 pe 19.0 — pe 18.0 testul face import defensiv și sare grațios; capturile au fost generate pe
-19.0 și copiate manual în `readme/screenshots/` pe ambele branch-uri.
+19.0 și copiate manual în `static/description/` pe ambele branch-uri.
 
 Lista capturilor (în ordinea fluxului):
 1. `01_raport_deschis.png` — raportul deschis pe luna curentă, cele 3 secțiuni cu date

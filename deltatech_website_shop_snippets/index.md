@@ -1,7 +1,7 @@
 # Website Shop Blocks (localizat la `deltatech_website_shop_snippets/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_shop_snippets`
-- **Versiune:** `19.0.1.1.3`
+- **Versiune:** `19.0.1.1.9`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_shop_snippets
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_website_shop_snippets`
 - **Ultima Ingestie:** `2026-10-22`

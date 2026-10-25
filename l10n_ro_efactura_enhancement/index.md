@@ -1,7 +1,7 @@
 # eFactura Enhancement (localizat la `l10n_ro_efactura_enhancement/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_efactura_enhancement`
-- **Versiune:** `19.0.0.5.3`
+- **Versiune:** `19.0.0.5.8`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_efactura_enhancement
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_efactura_enhancement`
 - **Ultima Ingestie:** `2026-09-29`

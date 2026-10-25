@@ -1,7 +1,7 @@
 # DSC Shipping (localizat la `deltatech_delivery_dsc/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_dsc`
-- **Versiune:** `19.0.2.0.1`
+- **Versiune:** `19.0.2.0.4`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_dsc`
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_dsc`
 - **Ultima Ingestie:** `2026-10-09`

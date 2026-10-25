@@ -21,10 +21,30 @@ din bara de instrumente.
 
 ## 2. Bază legală și context
 
-- **Registrul de casă** — cod 14-4-7A, OMFP 2634/2015 (registre și documente financiar-contabile).
-- **Obligația de evidență a operațiunilor de casă** — Legea contabilității 82/1991.
-- Formatul tipizat nu mai este obligatoriu (OMFP 2634/2015); obligatoriu rămâne **conținutul minim**:
-  data, soldul de report, încasările și plățile zilei, soldul final.
+- **Registrul de casă** — cod **14-4-7A**, poziția 27 în Nomenclatorul documentelor
+  financiar-contabile (**OMFP 2634/2015, Anexa 2**, Grupa a IV-a „Mijloace bănești și decontări").
+  Variante: 14-4-7/bA (lei), 14-4-7/aA și 14-4-7/cA (valută).
+- **Norma specifică** (OMFP 2634/2015, Anexa 2) — Registrul de casă servește ca document de
+  înregistrare *operativă* a încasărilor și plăților în numerar, document de stabilire **la
+  sfârșitul fiecărei zile** a soldului de casă și document de înregistrare în contabilitate a
+  operațiunilor de casă; **se întocmește zilnic**, pe baza documentelor justificative.
+- **Obligația de evidență a operațiunilor de casă** — Legea contabilității 82/1991. Registrul de
+  casă este registru **auxiliar**: registrele obligatorii sunt doar Registrul-jurnal (14-1-1),
+  Registrul-inventar (14-1-2) și Cartea mare (14-1-3) — pct. 44, Anexa 1.
+- **Formatul grafic nu este impus.** Art. 4 alin. (2) din ordin: „*Fiecare entitate poate adapta,
+  în funcție de necesități, modelele documentelor financiar-contabile.*" Obligatoriu rămâne
+  **conținutul minim** (pct. 2 și 10 din Anexa 1): contul „casa", data, nr. act de casă, nr. anexe,
+  explicații, încasările și plățile zilei, soldul de report și soldul final, plus semnăturile
+  persoanelor răspunzătoare.
+
+> **Surse** (verificate pe text extras la 2026-09-21):
+> [Anexele 2 și 3 — MFinanțe (PDF)](https://mfinante.gov.ro/documents/35673/219198/anexe2_3ordin2634_2015.pdf)
+> · [Anexa 2 actualizată — Portal Legislativ](https://legislatie.just.ro/Public/DetaliiDocument/173807)
+> · [Anexa 1 + Anexa 4 — ANAF (PDF)](https://static.anaf.ro/static/10/Anaf/legislatie/OMFP_2634_2015.pdf)
+>
+> ⚠️ PDF-ul de pe ANAF este **parțial** (doar Anexele 1 și 4) — nu conține Nomenclatorul, care e
+> în Anexa 2, publicată în M.Of. 910 **bis**. Detalii și corecturi de coduri:
+> [`readme/casierie/FORMULARE_TIPIZATE_CASIERIE.md`](../../readme/casierie/FORMULARE_TIPIZATE_CASIERIE.md).
 
 ## 3. Utilizatori și roluri
 
@@ -52,14 +72,14 @@ Roluri recomandate pentru testare:
 1. Instalați modulul `l10n_ro_cash_register_report` pe baza demo (necesită Enterprise — `account_reports`).
 2. Verificați că există cel puțin un **jurnal de casă** (tip „Numerar") cu cont implicit 5311.
 3. Postați câteva operațiuni de casă în perioada de test (încasări și plăți).
-4. Verificați că utilizatorul are acces la meniul **Contabilitate → Raportare → Registru de casă**
-   (sub grupul „Rapoarte de situații" / „Statement Reports").
+4. Verificați că utilizatorul are acces la meniul **Contabilitate → Raportare → Rapoarte de extras →
+   Registru de casă**.
 
 ## 6. Flux de utilizare
 
 ### Pasul 1 — Deschiderea Registrului de casă
 
-Accesați **Contabilitate → Raportare → Registru de casă**. Raportul se deschide pe luna curentă și
+Accesați **Contabilitate → Raportare → Rapoarte de extras → Registru de casă**. Raportul se deschide pe luna curentă și
 afișează, pentru jurnalele de casă, câte o **secțiune per zi** cu totalurile zilei: Încasări, Plăți
 și Sold final.
 
@@ -77,7 +97,7 @@ selecta casa dorită și filtrul de **dată** pentru a fixa intervalul (de regul
 Desfășurați o zi pentru a vedea structura registrului:
 - rândul **„Report (sold ziua precedentă)"** — soldul de la care pleacă ziua;
 - **liniile de mișcare** — numărul documentului și explicația, cu **Încasări** pe debit, **Plăți**
-  pe credit și **Sold** cumulat după fiecare operațiune;
+  pe credit, **Cont corespondent** și **Sold** cumulat după fiecare operațiune;
 - rândul **„Sold final (report ziua următoare)"** — soldul de închidere al zilei.
 
 Reportul primei zile din interval (în captură, 500,00) **nu** provine din interval, ci este
@@ -91,6 +111,10 @@ astfel încât registrul pornește de la soldul real, nu de la zero.
   `Dr 5311 = Cr 70x + Cr 4427`) → apare pe coloana **Încasări**. În captură: încasare de la client,
   `Dr 5311 = Cr 4111`.
 - Plată în numerar: `Dr 401 / 542 / 6xx … = Cr 5311` → apare pe coloana **Plăți**.
+- **Cont corespondent:** la încasare, contul creditat al notei (`Dr 5311 = Cr 4111` → „4111”); la
+  plată, contul debitat (`Dr 401 = Cr 5311` → „401”). La o notă compusă apar toate conturile, în
+  ordinea sumelor: `% = 5311 121` cu `628 100` și `4426 21` → „628, 4426” (cel mult trei conturi,
+  apoi „…”). Avansul spre decontare arată „542”, depunerea la bancă „581”.
 - **Sold final zi** = Report (sold ziua precedentă) + Total încasări − Total plăți; devine reportul
   zilei următoare. Soldul casei nu poate fi negativ — un sold negativ semnalează operațiuni lipsă
   sau greșit datate.
@@ -130,13 +154,15 @@ greșit datate care produc sold negativ.
 
 ## 8. Verificări pentru consultant
 
-- [ ] Raportul se deschide din **Contabilitate → Raportare → Registru de casă**.
+- [ ] Raportul se deschide din **Contabilitate → Raportare → Rapoarte de extras → Registru de casă**.
 - [ ] Filtrul „Jurnale" afișează **doar** jurnalele de tip casă.
 - [ ] Fiecare zi are rândul **„Report (sold ziua precedentă)"** și **„Sold final"**.
 - [ ] Pe fiecare zi: `Report + Total încasări − Total plăți = Sold final`.
 - [ ] Soldul de report al unei zile = soldul final al zilei precedente cu mișcări.
 - [ ] Reportul primei zile preia rulajul casei dinainte de data de început a intervalului.
 - [ ] Soldul cumulat pe coloana „Sold" nu devine negativ.
+- [ ] Fiecare linie de mișcare are **Cont corespondent** (ex. 4111 la încasarea de la client,
+  401 la plata furnizorului); rândurile de report și de sold final nu au.
 - [ ] Caretul „Înregistrări contabile" deschide `account.move.line` ale operațiunii.
 - [ ] Export PDF / XLSX / Print din bara raportului produce registrul pe interval.
 
@@ -151,7 +177,7 @@ greșit datate care produc sold negativ.
 
 ## 10. Capturi de ecran
 
-Capturile din `readme/screenshots/` se obțin din `tests/test_screenshots.py` (mixinul
+Capturile din `static/description/` se obțin din `tests/test_screenshots.py` (mixinul
 `ScreenshotCase` din `l10n_ro_doc_screenshots`, HttpCase + Playwright, import defensiv), pe
 companie RO, cu plan de conturi RO.
 

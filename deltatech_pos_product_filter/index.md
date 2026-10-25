@@ -1,7 +1,7 @@
 # POS Order Product Filter (localizat la `deltatech_pos_product_filter/index.md`)
 
 - **Nume Tehnic:** `deltatech_pos_product_filter`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_pos_product_filter](https://github.com/dhongu/deltatech/tree/19.0/deltatech_pos_product_filter)
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_pos_product_filter`
 - **Ultima Ingestie:** `2026-07-31`

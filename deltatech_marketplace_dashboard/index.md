@@ -1,7 +1,7 @@
 # Marketplace Dashboard
 
 - **Nume Tehnic:** `deltatech_marketplace_dashboard`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_dashboard
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_dashboard`
 - **Ultima Ingestie:** `2026-09-29`

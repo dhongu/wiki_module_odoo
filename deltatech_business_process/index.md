@@ -1,7 +1,7 @@
 # Business process (localizat la `deltatech_business_process/index.md`)
 
 - **Nume Tehnic:** `deltatech_business_process`
-- **Versiune:** `19.0.1.9.2`
+- **Versiune:** `19.0.1.9.19`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_business_process
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_business_process`
 - **Ultima Ingestie:** `2026-09-24`

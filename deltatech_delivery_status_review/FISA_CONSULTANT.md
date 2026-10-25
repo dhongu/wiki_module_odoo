@@ -90,8 +90,8 @@ Date minime pentru demo:
 
 ## 5. Configurare inițială
 
-1. Modulul se instalează **automat** când `deltatech_sale_order_review` și `deltatech_delivery_status`
-   sunt amândouă instalate (`auto_install`). Nu are meniu propriu.
+1. Instalați modulul explicit, doar la clienții care folosesc verificarea comenzilor (nu se mai
+   instalează automat). Cere `deltatech_sale_order_review` și `deltatech_delivery_status`. Nu are meniu propriu.
 2. Accesați **Vânzări → Configurare → Reguli de verificare comenzi** și verificați cele trei reguli
    adăugate, toate pe poarta **Înainte de livrare**: *Livrare amânată de un operator* (aprobare
    manuală), *Furnizorul de plată reține livrarea* și *Transfer bancar neprimit* (temporare). Sunt

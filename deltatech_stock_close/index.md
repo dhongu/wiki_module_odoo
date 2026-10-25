@@ -1,7 +1,7 @@
 # Deltatech Stock Close (localizat la `deltatech_stock_close/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_close`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_close
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_close`
 - **Ultima Ingestie:** `2026-07-31`

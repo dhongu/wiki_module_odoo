@@ -1,7 +1,7 @@
 # Invoice Followup (localizat la `deltatech_followup/index.md`)
 
 - **Nume Tehnic:** `deltatech_followup`
-- **Versiune:** `19.0.0.1.1`
+- **Versiune:** `19.0.0.1.3`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_followup`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_followup`
 - **Ultima Ingestie:** `2026-06-02`

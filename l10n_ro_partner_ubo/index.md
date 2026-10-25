@@ -1,7 +1,7 @@
 # Romania - Beneficiarul real al partenerului (localizat la `l10n_ro_partner_ubo/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_partner_ubo`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** [odoo-addons/l10n_ro_ent/l10n_ro_partner_ubo](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_partner_ubo)
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_partner_ubo`
 - **Ultima Ingestie:** `2026-09-12`

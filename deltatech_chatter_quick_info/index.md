@@ -1,7 +1,7 @@
 # Chatter Quick Info
 
 - **Nume Tehnic:** `deltatech_chatter_quick_info`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter_quick_info
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_chatter_quick_info`
 - **Ultima Ingestie:** `2026-10-17`

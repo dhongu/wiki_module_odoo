@@ -1,7 +1,7 @@
 # Romania - Taxare inversă art. 331 pe comenzile de achiziție (localizat la `l10n_ro_reverse_charge_331_purchase/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_reverse_charge_331_purchase`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_reverse_charge_331_purchase
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_reverse_charge_331_purchase`
 - **Ultima Ingestie:** `2026-09-29`

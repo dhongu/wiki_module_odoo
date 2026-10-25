@@ -54,7 +54,7 @@ pentru verificarea acordului de prelucrare cu furnizorul AI și a transferului d
 |---|---|
 | **Administrator (grupul Settings)** | creează politici (și din șabloane), șabloane de politici, unelte (acțiuni) și prompturi, aprobă aplicațiile OAuth, aprobă sau refuză cererile de acces și revocă accesul personal, vede jurnalul și consumul, schimbă setările serverului |
 | **Aprobatorul cererilor** (opțional, ales în Settings) | primește notificarea fiecărei cereri noi; pentru a o aproba trebuie să fie și administrator |
-| **MCP Server / User** | se poate conecta la `/mcp` și își poate genera o cheie API cu scope MCP; vede doar meniul „My Access”, cu „Generate API Key”, „Access Requests” și „OAuth Connections” (doar cererile și conexiunile proprii; poate anula o cerere în așteptare și revoca o conexiune) |
+| **MCP Server / User** | se poate conecta la `/mcp` și își poate genera o cheie API cu scope MCP; vede doar meniul „My Access”, cu „OAuth Connections” (aplicația se deschide aici), „Access Requests” și „Generate API Key” (doar cererile și conexiunile proprii; poate anula o cerere în așteptare și revoca o conexiune) |
 
 Recomandare: un **utilizator dedicat** pentru clientul AI (nu utilizatorul unui om), cu drepturile
 minime necesare pe modelele expuse. Politica se atribuie lui, pe formularul utilizatorului.

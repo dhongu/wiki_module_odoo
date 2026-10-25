@@ -1,7 +1,7 @@
 # eCommerce Sale Order status (localizat la `deltatech_website_sale_status/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_sale_status`
-- **Versiune:** `19.0.2.0.5`
+- **Versiune:** `19.0.2.0.13`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_status`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_sale_status`
 - **Ultima Ingestie:** `2026-08-20`

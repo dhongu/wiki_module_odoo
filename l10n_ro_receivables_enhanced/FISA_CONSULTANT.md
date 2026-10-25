@@ -131,8 +131,8 @@ oprită cu un mesaj clar; lăsată dezactivată, limita rămâne doar un reper d
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/01_compensare_form.png` | Compensare — linii creanțe (411) / datorii (401) și suma compensată |
-| 2 | `screenshots/02_nota_compensare.png` | Nota contabilă de compensare (Dr 401 = Cr 411) |
-| 3 | `screenshots/03_proces_verbal.png` | Proces-verbal de compensare (PDF) cu liniile și suma |
-| 4 | `screenshots/04_partener_config.png` | Partener — rata penalității și limita de credit (fila Creanțe RO) |
-| 5 | `screenshots/05_setare_blocaj_credit.png` | Setare — blocaj opt-in postare peste limita de credit (FR-29) |
+| 1 | `static/description/01_compensare_form.png` | Compensare — linii creanțe (411) / datorii (401) și suma compensată |
+| 2 | `static/description/02_nota_compensare.png` | Nota contabilă de compensare (Dr 401 = Cr 411) |
+| 3 | `static/description/03_proces_verbal.png` | Proces-verbal de compensare (PDF) cu liniile și suma |
+| 4 | `static/description/04_partener_config.png` | Partener — rata penalității și limita de credit (fila Creanțe RO) |
+| 5 | `static/description/05_setare_blocaj_credit.png` | Setare — blocaj opt-in postare peste limita de credit (FR-29) |

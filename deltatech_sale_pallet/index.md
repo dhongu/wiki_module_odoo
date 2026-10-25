@@ -1,7 +1,7 @@
 # Paleți pe comenzi de vânzare (localizat la `deltatech_sale_pallet/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_pallet`
-- **Versiune:** `19.0.1.0.9`
+- **Versiune:** `19.0.1.0.13`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_pallet`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_pallet`
 - **Ultima Ingestie:** `2026-08-20`

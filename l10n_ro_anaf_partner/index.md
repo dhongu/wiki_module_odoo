@@ -1,7 +1,7 @@
 # Romania - Monitorizare modificări date ANAF parteneri (FR-23) (localizat la `l10n_ro_anaf_partner/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_partner`
-- **Versiune:** `19.0.2.3.2`
+- **Versiune:** `19.0.2.3.8`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_partner
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_partner`
 - **Ultima Ingestie:** 2026-09-12

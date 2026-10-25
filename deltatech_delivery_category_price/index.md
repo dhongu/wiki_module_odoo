@@ -1,7 +1,7 @@
 # Deltatech Delivery Category Price (localizat la `deltatech_delivery_category_price/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_category_price`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.6`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_category_price
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_category_price`
 - **Ultima Ingestie:** `2026-07-31`

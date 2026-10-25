@@ -1,7 +1,7 @@
 # Services Equipment Base (localizat la `deltatech_service_equipment_base/index.md`)
 
 - **Nume Tehnic:** `deltatech_service_equipment_base`
-- **Versiune:** `19.0.1.2.7`
+- **Versiune:** `19.0.1.2.12`
 - **Cale:** https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_equipment_base
 - **Cale Locală:** `odoo-addons/deltatech_service/deltatech_service_equipment_base`
 - **Ultima Ingestie:** `2026-09-24`

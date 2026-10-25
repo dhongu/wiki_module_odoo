@@ -1,7 +1,7 @@
 # Deltatech Purchase Order Stage (localizat la `deltatech_purchase_phase/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_phase`
-- **Versiune:** `19.0.1.2.6`
+- **Versiune:** `19.0.1.2.9`
 - **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_phase](https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_phase)
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_phase`
 - **Ultima Ingestie:** `2026-07-31`

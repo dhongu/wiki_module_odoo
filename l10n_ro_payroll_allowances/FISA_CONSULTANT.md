@@ -102,11 +102,11 @@ Cu ore de sărbătoare și de repaus apar și liniile `SPOR_SARBATOARE` și `SPO
 
 **Verificați** cifrele din exemplu (salariu 6.000 lei, septembrie 2026 cu 176 de ore normale):
 
-- tarif orar: 6.000 / 176 = 34,09 lei/oră; salariul de bază cu cele 10 ore suplimentare la 100%: 6.000 + 10 × 34,09 = 6.340,91;
+- tarif orar: 6.000 / 176 = 34,09 lei/oră; salariul de bază cu cele 10 ore suplimentare la 100%: 6.000 + 10 × 34,09 = 6.340,91 → 6.341 (rotunjit la leu);
 - sporuri permanente: vechime 10% × 6.000 = 600, condiții vătămătoare 5% din timpul lucrat = 300, total 900;
 - tarif pentru sporurile de ore suplimentare și de noapte: (6.000 + 600 vechime marcată «în baza orelor suplimentare») / 176 = 37,50 lei/oră;
-- spor ore suplimentare: 10 × 37,50 × 75% = 281,25; spor noapte: 24 × 37,50 × 25% = 225,00;
-- *Salariu impozabil* = 6.340,91 + 900 + 281,25 + 225 = 7.747,16; CAS 1.937, CASS 775, impozit 503, net 4.532,16.
+- spor ore suplimentare: 10 × 37,50 × 75% = 281,25 → 281; spor noapte: 24 × 37,50 × 25% = 225 (sporurile se rotunjesc la leu);
+- *Salariu impozabil* = 6.341 + 900 + 281 + 225 = 7.747; CAS 1.937, CASS 775, impozit 503, net 4.532.
 
 **Exemplu pentru sărbătoare, repaus și ore compensate** (alt angajat, salariu 6.000 lei, iunie 2026: 21 de zile lucrătoare = 168 de ore normale; 1 iunie este sărbătoare legală; 8 ore lucrate pe 1 iunie, 6 ore `RS` sâmbătă 13 iunie, 10 ore pe 17 iunie cu codul `OC`, deci 2 ore compensate):
 

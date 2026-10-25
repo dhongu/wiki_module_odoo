@@ -1,7 +1,7 @@
 # RMA - Marketplace Returns (localizat la `deltatech_rma_marketplace/index.md`)
 
 - **Nume Tehnic:** `deltatech_rma_marketplace`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_rma_marketplace
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_rma_marketplace`
 - **Ultima Ingestie:** 2026-10-22

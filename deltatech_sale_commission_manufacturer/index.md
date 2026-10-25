@@ -1,10 +1,11 @@
 # Sale Margin Report by Manufacturer
 
 - **Nume Tehnic:** `deltatech_sale_commission_manufacturer`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_commission_manufacturer
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_commission_manufacturer`
 - **Ultima Ingestie:** `2026-10-22`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

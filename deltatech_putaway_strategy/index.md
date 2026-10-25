@@ -1,7 +1,7 @@
 # Deltatech Putaway Strategy (localizat la `deltatech_putaway_strategy/index.md`)
 
 - **Nume Tehnic:** `deltatech_putaway_strategy`
-- **Versiune:** `19.0.1.1.1`
+- **Versiune:** `19.0.1.1.3`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_putaway_strategy`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_putaway_strategy`
 - **Ultima Ingestie:** `2026-09-29`

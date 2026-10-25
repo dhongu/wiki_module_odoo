@@ -1,7 +1,7 @@
 # Picking Split (Împărțirea livrării)
 
 - **Nume Tehnic:** `deltatech_picking_split`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_picking_split
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_picking_split`
 - **Ultima Ingestie:** `2026-10-09`

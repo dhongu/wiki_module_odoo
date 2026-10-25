@@ -1,7 +1,7 @@
 # Partner Credit Limit - Sale Order Review (localizat la `terrabit_partner_credit_limit_review/index.md`)
 
 - **Nume Tehnic:** `terrabit_partner_credit_limit_review`
-- **Versiune:** `19.0.0.1.3`
+- **Versiune:** `19.0.0.1.6`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_partner_credit_limit_review
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_partner_credit_limit_review`
 - **Ultima Ingestie:** `2026-10-01`

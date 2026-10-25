@@ -213,7 +213,7 @@ autorizațiilor și actualizarea cotelor la HG nou.
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba
 română**, pe planul de conturi RO; seedul postează o factură cu produs accizabil și
 calculează declarația D103 — fără conexiuni externe:
@@ -225,7 +225,7 @@ calculează declarația D103 — fără conexiuni externe:
 5. `05_declaratie_d103.png` — declarația D103 calculată (linii + total + butoane).
 6. `06_wizard_cote.png` — wizardul de actualizare cote cu indexare procentuală.
 
-Extrasul XML din Pasul 4 e text inline (nu fișier în `screenshots/`).
+Extrasul XML din Pasul 4 e text inline (nu fișier în `static/description/`).
 
 Regenerare:
 

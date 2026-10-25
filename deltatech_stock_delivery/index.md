@@ -1,7 +1,7 @@
 # Livrare / Recepție din Factură (localizat la `deltatech_stock_delivery/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_delivery`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_delivery`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_delivery`
 - **Ultima Ingestie:** `2026-06-03`

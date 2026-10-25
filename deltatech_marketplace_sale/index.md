@@ -1,7 +1,7 @@
 # Comenzi de vânzare din Marketplace (localizat la `deltatech_marketplace_sale/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_sale`
-- **Versiune:** `19.0.2.19.0`
+- **Versiune:** `19.0.2.19.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_sale
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_sale`
 - **Ultima Ingestie:** 2026-10-22

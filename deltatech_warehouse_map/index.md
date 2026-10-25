@@ -1,7 +1,7 @@
 # Deltatech Warehouse Map (localizat la `deltatech_warehouse_map/index.md`)
 
 - **Nume Tehnic:** `deltatech_warehouse_map`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_warehouse_map
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_warehouse_map`
 - **Ultima Ingestie:** `2026-06-01`

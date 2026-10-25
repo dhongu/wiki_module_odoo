@@ -1,7 +1,7 @@
 # POS Price Lock (localizat la `deltatech_pos_price_lock/index.md`)
 
 - **Nume Tehnic:** `deltatech_pos_price_lock`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_pos_price_lock
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_pos_price_lock`
 - **Ultima Ingestie:** `2026-10-22`

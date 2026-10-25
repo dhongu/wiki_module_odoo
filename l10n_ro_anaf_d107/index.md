@@ -1,7 +1,7 @@
 # Romania - Declarația 107 ANAF (sponsorizări) (localizat la `l10n_ro_anaf_d107/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d107`
-- **Versiune:** `19.0.2.0.0`
+- **Versiune:** `19.0.2.0.5`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d107
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d107`
 - **Ultima Ingestie:** 2026-09-12

@@ -91,23 +91,23 @@ La final apare o notificare cu numărul de comenzi validate cu succes și, dacă
 
 A doua funcționalitate nouă acoperă cazul opus: comenzile sunt deja livrate (sau nu necesită validare separată), dar operatorul trebuie să le trimită efectiv la curier și să genereze AWB-urile, pentru un lot întreg, cu vizibilitate pas-cu-pas asupra fiecărei comenzi.
 
-Din **Vânzări → Comenzi → Comenzi**, selectați comenzile dorite și deschideți meniul **Acțiuni (⚙)** → **Send to Carrier**. Se deschide un dialog OWL cu o linie per comandă selectată, toate în starea inițială „—" (în așteptare).
+Din **Vânzări → Comenzi → Comenzi**, selectați comenzile dorite și deschideți meniul **Acțiuni (⚙)** → **Send to Carrier**. Se deschide dialogul de progres (modulul tehnic `deltatech_task_progress`), cu numărul de comenzi de trimis și o linie per comandă selectată, toate în starea inițială „—" (în așteptare).
 
 ![Dialogul „Send to Carrier" nou deschis, cu comenzile în așteptare](screenshots/06_dialog_send_to_carrier_initial.png)
 
-La **Send to Carrier**, comenzile sunt trimise **secvențial, una câte una** (nu în paralel, ca să nu bombardeze API-ul curierului), fiecare printr-un apel RPC independent (`action_send_to_carrier_one`). Nu e nevoie de **Carrier Details → Aplică** pe fiecare livrare înainte: pentru o livrare la care detaliile nu au fost aplicate încă, dialogul le calculează și le aplică automat chiar înainte de trimitere, din datele de atunci ale livrării (adresă, greutate, colete, ramburs) — exact ce ar fi calculat butonul **Aplică**. O livrare la care operatorul a aplicat deja detaliile (eventual corectate manual) este trimisă cu datele lui, neatinse. Butonul **Send to Shipper** de pe o livrare individuală cere în continuare detaliile curierului întâi. Cât durează procesarea, în capul ferestrei apare un banner albastru cu o rotiță animată („Se procesează, vă rugăm așteptați… Comanda X/N se trimite la curier. Nu închideți această fereastră.”), butonul de trimitere arată o rotiță, iar **Închide** e dezactivat până la final — operatorul vede că acțiunea rulează și trebuie să aștepte. Fiecare linie își schimbă starea live, în timp real:
+La **Send to Carrier**, comenzile sunt trimise **secvențial, una câte una** (nu în paralel, ca să nu bombardeze API-ul curierului), fiecare printr-un apel RPC independent (`action_send_to_carrier_one`). Nu e nevoie de **Carrier Details → Aplică** pe fiecare livrare înainte: pentru o livrare la care detaliile nu au fost aplicate încă, dialogul le calculează și le aplică automat chiar înainte de trimitere, din datele de atunci ale livrării (adresă, greutate, colete, ramburs) — exact ce ar fi calculat butonul **Aplică**. O livrare la care operatorul a aplicat deja detaliile (eventual corectate manual) este trimisă cu datele lui, neatinse. Butonul **Send to Shipper** de pe o livrare individuală cere în continuare detaliile curierului întâi. Cât durează procesarea, în capul ferestrei apare starea „Se procesează, vă rugăm așteptați…”, o bară de progres animată cu timpul estimat rămas și contorul „X / N comandă(comenzi) procesată(e)”; **Închide** și Escape sunt dezactivate până la final — operatorul vede că acțiunea rulează și trebuie să aștepte. Butonul **Oprește după comanda în lucru** oprește lotul fără să întrerupă comanda aflată deja la curier. Fiecare linie își schimbă starea live, în timp real:
 - rotița de încărcare cât timp cererea e în curs;
 - ✅ verde cu numărul AWB, la succes (inclusiv atunci când livrarea avea deja AWB — caz tratat ca succes, fără resend);
 - ❌ roșu cu mesajul de eroare, la un eșec clar (ex. lipsă livrare de ieșire, mai multe livrări de ieșire, configurare curier incompletă);
 - ⚠️ galben „rezultat incert", când răspunsul curierului s-a pierdut și nu se știe sigur dacă expedierea a fost înregistrată — acest caz **nu se reîncearcă automat**, tocmai ca să nu se genereze un AWB dublu la curier.
 
-![Dialogul în timpul procesării: banner animat „Se procesează…”, prima comandă în curs, celelalte în așteptare](screenshots/07_dialog_send_to_carrier_progres.png)
+![Dialogul în timpul procesării: bara de progres, prima comandă în curs, celelalte în așteptare](screenshots/07_dialog_send_to_carrier_progres.png)
 
 Dacă o cerere eșuează la jumătatea lotului (ex. se închide browserul), comenzile deja marcate „success" rămân trimise — fiecare apel e propria tranzacție, redeschiderea dialogului pe aceeași selecție nu retrimite comenzile care au deja AWB.
 
-La final, banner-ul devine verde („Finalizat: X/N comandă(comenzi) trimisă(e).”), fiecare linie arată rezultatul ei (succes, eroare sau rezultat incert), iar butonul **Print AWBs** devine activ (doar dacă există cel puțin un succes) și apelează `action_download_awb_labels()`: **nu generează** nimic nou, ci doar combină într-un singur PDF etichetele deja obținute la trimitere, pentru comenzile reușite din acest lot.
+La final, starea devine „Gata” (bara verde) sau „Neterminat” (bara galbenă, dacă există erori sau rezultate incerte), fiecare linie arată rezultatul ei (succes, eroare sau rezultat incert), iar butonul **Print AWBs** apare dacă există cel puțin o comandă procesată și apelează `action_download_awb_labels()` pe comenzile reușite: **nu generează** nimic nou, ci doar combină într-un singur PDF etichetele deja obținute la trimitere. Comenzile cu eroare pot fi retrimise cu **Trimite comenzile rămase**, după ce s-a corectat cauza; o comandă cu rezultat incert nu se mai retrimite din dialog.
 
-![Dialog finalizat: banner „Finalizat”, succes, eroare și rezultat incert pe linii diferite, butonul Print AWBs activ](screenshots/08_dialog_send_to_carrier_finalizat_print.png)
+![Dialog finalizat: succes, eroare și rezultat incert pe linii diferite, butoanele Trimite comenzile rămase și Print AWBs](screenshots/08_dialog_send_to_carrier_finalizat_print.png)
 
 ### Pasul 4 — Livrarea amânată nu pleacă din depozit
 
@@ -117,7 +117,7 @@ Din acest moment, livrarea **nu mai poate pleca la curier**, oricare ar fi buton
 
 - **Trimite la curier** de pe livrare (butonul Send to Shipper din Pasul 1) refuză cu mesajul „Livrarea WH/OUT/… este amânată. Eliberați-o pe comanda de vânzare înainte de a o trimite la curier." — curierul nu este apelat, nu se generează AWB;
 - **Validare Livrări** (Pasul 2) nu încearcă rezervarea/validarea, ci listează comanda în notificarea de rezultat cu același mesaj de reținere, în locul erorii seci „Transferul este amânat";
-- **Trimite la curier** (Pasul 3) marchează rândul comenzii ca **reținut** — ❌ roșu cu mesajul de reținere — fără niciun apel la curier și fără reîncercare; celelalte comenzi din lot sunt procesate normal.
+- **Trimite la curier** (Pasul 3) marchează rândul comenzii ca **reținut** — ❌ roșu cu mesajul de reținere — fără niciun apel la curier; celelalte comenzi din lot sunt procesate normal. **Trimite comenzile rămase** o reîncearcă, dar rămâne reținută până la eliberare.
 
 **Găsește pe ecran:** pe livrare, ribbon-ul **Amânată** și bifa **Amânată** de sub „Document sursă"; butonul **Trimite la curier** este vizibil în antet, dar apăsarea lui întoarce mesajul de mai sus.
 
@@ -163,7 +163,8 @@ Ce rămâne manual: configurarea curierului (credențiale, servicii), deciziile 
 - [ ] La o comandă fără stoc suficient în lot, **Validate Deliveries** raportează problema fără să blocheze celelalte comenzi din selecție.
 - [ ] **Send to Carrier** apare în meniul Acțiuni al listei de comenzi, procesează comenzile secvențial și afișează corect cele trei stări (succes/eroare/incert).
 - [ ] O comandă deja trimisă (cu AWB existent) este raportată drept succes (`already_sent`), fără să genereze un al doilea AWB.
-- [ ] **Print AWBs** din dialogul „Send to Carrier" devine activ doar după procesare și doar dacă există cel puțin o comandă cu succes; PDF-ul descărcat conține etichetele comenzilor reușite.
+- [ ] **Print AWBs** din dialogul „Send to Carrier" apare doar după procesare; PDF-ul descărcat conține doar etichetele comenzilor reușite.
+- [ ] **Trimite comenzile rămase** retrimite doar comenzile cu eroare; o comandă cu rezultat incert nu se retrimite.
 - [ ] Mesajele de eroare din ambele acțiuni bulk sunt clare pentru un utilizator non-tehnic (motiv + nume comandă).
 - [ ] Pe o comandă confirmată, **Amână** pune ribbon-ul **Amânată** pe livrarea de ieșire; **Trimite la curier** de pe acea livrare refuză cu „Livrarea … este amânată. Eliberați-o pe comanda de vânzare…" și nu apare niciun AWB.
 - [ ] Aceeași comandă, selectată în **Trimite la curier**, apare ca rând reținut (❌ cu mesajul de reținere), fără apel la curier; comenzile neamânate din același lot sunt trimise normal.
@@ -197,8 +198,8 @@ Capturile (`readme/screenshots/`) sunt generate automat din `tests/test_screensh
 4. `04_wizard_confirmare_validare.png` — wizard-ul de confirmare al validării în masă.
 5. `05_notificare_rezultat_validare.png` — notificarea finală cu numărul de comenzi validate și eventualele probleme.
 6. `06_dialog_send_to_carrier_initial.png` — dialogul „Trimite la curier" nou deschis, comenzi în așteptare.
-7. `07_dialog_send_to_carrier_progres.png` — dialogul în timpul procesării, cu banner-ul animat „Se procesează…” și comanda curentă în curs.
-8. `08_dialog_send_to_carrier_finalizat_print.png` — dialogul finalizat, cu succes/eroare/incert pe linii diferite și butonul Tipărire AWB-uri activ.
+7. `07_dialog_send_to_carrier_progres.png` — dialogul în timpul procesării, cu starea „Se procesează…”, bara de progres și comanda curentă în curs.
+8. `08_dialog_send_to_carrier_finalizat_print.png` — dialogul finalizat, cu succes/eroare/incert pe linii diferite și butoanele Trimite comenzile rămase și Tipărire AWB-uri.
 9. `09_livrare_amanata_ribbon.png` — livrarea amânată: ribbon-ul „Amânată", bifa Amânată și butonul Trimite la curier (refuzat la apăsare).
 10. `10_dialog_send_to_carrier_retinut.png` — dialogul „Trimite la curier" finalizat pe comanda amânată: rândul reținut cu mesajul de reținere, fără AWB.
 

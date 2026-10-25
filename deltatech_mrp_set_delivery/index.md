@@ -1,7 +1,7 @@
 # Deltatech restrict incomplete set deliveries (localizat la `deltatech_mrp_set_delivery/index.md`)
 
 - **Nume Tehnic:** `deltatech_mrp_set_delivery`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_set_delivery
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_mrp_set_delivery`
 - **Ultima Ingestie:** `2026-10-22`

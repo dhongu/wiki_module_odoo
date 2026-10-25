@@ -29,7 +29,7 @@ ecranele existente de impozit pe profit.
 > „art. 26 alin. (1) lit. c)". Pentru o creanță încadrată la **lit. j)**, ridicați cota pe dosar la
 > 100%, dar **corectați manual temeiul legal** pe rândul din registru — altfel documentul prezintă o
 > încadrare greșită.
-| **OMFP 870/2005** | Registrul de evidență fiscală: document cronologic, cu **temei legal pentru fiecare rând** |
+| **OMF 808/2026** | Registrul de evidență fiscală: înscriere cronologică, pe modelul din anexă (Nr. crt. / Explicații / Valoarea), astfel încât operațiunile să poată fi **identificate și controlate** (art. 2–3) |
 
 > **De ce un rând per creanță, nu un total pe cont.** În același an, un dosar poate fi deductibil
 > 30% (condițiile îndeplinite), altul 0% (sub 270 de zile) și altul 100% (debitor în insolvență) —
@@ -160,10 +160,9 @@ Din registru, apăsați **Tipărește registrul**. Documentul include rândurile
 legal complet — mențiunea „condiții neîndeplinite" se citește integral aici, spre deosebire de lista
 de pe ecran, unde coloana e îngustă.
 
-> ⚠️ **De verificat înainte de a prezenta documentul la control:** antetul raportului (generat de
-> `l10n_ro_profit_tax`) citează „art. 19 alin. (5)". Obligația registrului de evidență fiscală este
-> la **art. 19 alin. (7)**; alin. (5) tratează altceva. Corecția ține de modulul de impozit pe
-> profit, nu de acesta.
+> Registrul tipărit urmează modelul din anexa OMF 808/2026, cu trei coloane. Temeiul legal, contul,
+> valoarea contabilă și cea fiscală ale fiecărei creanțe apar în coloana „Explicații". Detaliul pe
+> coloane rămâne disponibil în **Situația analitică a ajustărilor fiscale**, din același meniu de tipărire.
 
 ![Registrul de evidență fiscală tipărit](screenshots/06_registru_pdf.png)
 
@@ -227,7 +226,7 @@ neîncasate (art. 287 lit. d) și declararea ei în D300; evidența extracontabi
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**, pe
 planul de conturi RO:
 
@@ -252,8 +251,8 @@ Trei idei de păstrat în manual:
 1. **Modulul nu decide încadrarea, o transportă.** Deductibilitatea se stabilește pe dosarul de
    creanță incertă; aici doar ajunge în registru și în declarație. Corecțiile se fac pe dosar, apoi
    se regenerează registrul.
-2. **Un rând per creanță nu e un moft de raportare** — e cerința OMFP 870/2005 de temei legal per
-   rând, imposibil de satisfăcut cu un total pe cont când deductibilitatea diferă de la o creanță la
-   alta.
+2. **Un rând per creanță nu e un moft de raportare** — OMF 808/2026 cere ca operațiunile din
+   registru să poată fi identificate și controlate. Ordinul nu impune un rând per creanță, dar un
+   total pe cont e greu de justificat când deductibilitatea diferă de la o creanță la alta.
 3. **Avertismentul de dublă numărare merită citit, nu închis.** Este singurul loc unde sistemul
    semnalează că aceeași cheltuială ar intra de două ori în baza impozabilă.

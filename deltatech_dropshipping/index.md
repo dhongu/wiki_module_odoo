@@ -1,7 +1,7 @@
 # Deltatech Drop Shipping (localizat la `deltatech_dropshipping/index.md`)
 
 - **Nume Tehnic:** `deltatech_dropshipping`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_dropshipping
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_dropshipping`
 - **Ultima Ingestie:** `2026-08-20`

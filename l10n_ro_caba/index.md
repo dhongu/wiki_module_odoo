@@ -1,7 +1,7 @@
 # Romania - TVA la încasare (CABA) (FR-16) (localizat la `l10n_ro_caba/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_caba`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.5`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_caba
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_caba`
 - **Ultima Ingestie:** `2026-09-25`

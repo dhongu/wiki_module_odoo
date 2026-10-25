@@ -1,7 +1,7 @@
 # Sale Product Reference (localizat la `deltatech_sale_product_reference/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_product_reference`
-- **Versiune:** `19.0.2.2.0`
+- **Versiune:** `19.0.2.2.4`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_product_reference`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_product_reference`
 - **Ultima Ingestie:** `2026-09-29`

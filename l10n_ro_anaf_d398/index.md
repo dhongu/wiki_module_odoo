@@ -1,7 +1,7 @@
 # Romania - Declarația D398 ANAF (TVA OSS) (localizat la `l10n_ro_anaf_d398/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d398`
-- **Versiune:** `19.0.0.0.2`
+- **Versiune:** `19.0.0.0.13`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d398
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d398`
 - **Ultima Ingestie:** 2026-06-09

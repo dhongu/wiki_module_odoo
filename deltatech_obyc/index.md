@@ -1,7 +1,7 @@
 # Deltatech OBYC - Account Determination (localizat la `deltatech_obyc/index.md`)
 
 - **Nume Tehnic:** `deltatech_obyc`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.18`
 - **Cale:** https://github.com/dhongu/deltatech_stock_valuation/tree/19.0/deltatech_obyc
 - **Cale Locală:** `odoo-addons/deltatech_stock_valuation/deltatech_obyc`
 - **Ultima Ingestie:** `2026-10-01`

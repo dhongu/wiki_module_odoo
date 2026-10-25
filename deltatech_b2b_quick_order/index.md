@@ -1,7 +1,7 @@
 # B2B Quick Order (localizat la `deltatech_b2b_quick_order/index.md`)
 
 - **Nume Tehnic:** `deltatech_b2b_quick_order`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_quick_order
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_b2b_quick_order`
 - **Ultima Ingestie:** `2026-10-09`

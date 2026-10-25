@@ -1,7 +1,7 @@
 # Deltatech - Restrict Reports Access (localizat la `deltatech_restrict_reports/index.md`)
 
 - **Nume Tehnic:** `deltatech_restrict_reports`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_restrict_reports
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_restrict_reports`
 - **Ultima Ingestie:** `2026-08-20`

@@ -1,7 +1,7 @@
 # eCommerce Afișare Preț Fix ca Reducere (localizat la `deltatech_website_fixed_price/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_fixed_price`
-- **Versiune:** `19.0.0.0.0`
+- **Versiune:** `19.0.0.0.1`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_fixed_price`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_fixed_price`
 - **Ultima Ingestie:** `2026-06-03`

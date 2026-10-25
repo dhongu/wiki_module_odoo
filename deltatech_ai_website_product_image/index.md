@@ -1,7 +1,7 @@
 # AI - Shop Assistant: Search by Photo (localizat la `deltatech_ai_website_product_image/index.md`)
 
 - **Nume Tehnic:** `deltatech_ai_website_product_image`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_website_product_image
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_ai_website_product_image`
 - **Ultima Ingestie:** `2026-10-20`

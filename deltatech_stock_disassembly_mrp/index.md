@@ -1,7 +1,7 @@
 # Free Disassembly - Bill of Materials (localizat la `deltatech_stock_disassembly_mrp/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_disassembly_mrp`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_disassembly_mrp
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_disassembly_mrp`
 - **Ultima Ingestie:** `2026-10-12`

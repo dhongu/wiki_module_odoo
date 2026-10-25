@@ -1,7 +1,7 @@
 # eTransport UIT Actions - Batch
 
 - **Nume Tehnic:** `l10n_ro_etransport_uit_actions_batch`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_etransport_uit_actions_batch
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_etransport_uit_actions_batch`
 - **Ultima Ingestie:** `2026-10-09`

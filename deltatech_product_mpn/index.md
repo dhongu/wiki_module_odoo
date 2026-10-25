@@ -1,7 +1,7 @@
 # Product MPN (localizat la `deltatech_product_mpn/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_mpn`
-- **Versiune:** `19.0.0.0.1`
+- **Versiune:** `19.0.0.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_mpn
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_mpn`
 - **Ultima Ingestie:** `2026-06-03`

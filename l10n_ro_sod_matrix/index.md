@@ -1,7 +1,7 @@
 # Romania - Matrice de segregare a atribuțiilor (SoD) (localizat la `l10n_ro_sod_matrix/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_sod_matrix`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.5`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_sod_matrix
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_sod_matrix`
 - **Ultima Ingestie:** 2026-08-20

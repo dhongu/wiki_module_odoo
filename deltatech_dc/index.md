@@ -1,7 +1,7 @@
 # Declaration of Conformity (localizat la `deltatech_dc/index.md`)
 
 - **Nume Tehnic:** `deltatech_dc`
-- **Versiune:** `19.0.1.0.12`
+- **Versiune:** `19.0.1.0.14`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_dc
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_dc`
 - **Ultima Ingestie:** `2026-08-20`

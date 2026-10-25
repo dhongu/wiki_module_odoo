@@ -1,7 +1,7 @@
 # RAL (localizat la `deltatech_ral/index.md`)
 
 - **Nume Tehnic:** `deltatech_ral`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.7`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_ral`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_ral`
 - **Ultima Ingestie:** `2026-08-20`

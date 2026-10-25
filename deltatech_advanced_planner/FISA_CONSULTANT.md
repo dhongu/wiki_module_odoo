@@ -307,8 +307,37 @@ clientul).
 OK, reaprovizionări fără SO), **OTIF 30/90 zile** — ponderea comenzilor confirmate cu data promisă
 începând de acum 30/90 de zile (inclusiv cele viitoare) a căror dată efectivă calculată nu depășește
 data promisă (indicator previzionat, nu de livrări realizate) —, trend blocări noi/zi, posturi bottleneck și top produse cu blocări active.
+În **Top produse cu blocări active** (pe rândul indicatorilor, între graficul blocărilor noi și
+posturile bottleneck), bara fiecărui produs arată ponderea lui în toate blocările
+active (ex. 2 blocări din 5 → bară de 40%), iar cifra din dreapta e numărul de comenzi planificate
+blocate ale produsului.
 
 ![Dashboard cu contori și KPI de planificare](screenshots/12_dashboard.png)
+
+Sub indicatori, tabelul **Comenzi planificate active** urmărește fiecare comandă de la planificare
+până la recepție sau producție. O comandă planificată rămâne pe listă și după ce din ea s-a generat
+comanda de achiziție sau de producție:
+
+1. **Găsiți pe ecran** — coloana **Document** arată comanda generată (ex. `P00012` pentru achiziție,
+   `WH/MO/00007` pentru producție); un clic pe ea o deschide. Coloana **Stare doc.** arată etapa:
+   - **Generat** — cerere de ofertă trimisă sau nu, respectiv comandă de producție în ciornă;
+   - **Confirmat** — comanda de achiziție sau de producție este confirmată;
+   - **Recepționat parțial** — o parte din marfă a intrat în stoc (doar la achiziție);
+   - **În lucru** — producția a început (doar la producție).
+   O comandă lansată are starea AP **Finalizat**; comenzile planificate încă nelansate au coloanele
+   goale (—) și starea AP **Ciornă** / **Planificat**.
+2. **Verificați** — fiecare comandă lansată are documentul ei; starea documentului corespunde celei
+   din comanda de achiziție / producție; o comandă recepționată integral sau produsă nu mai apare.
+3. **Treceți mai departe** — deschideți documentul din coloana **Document** pentru confirmare,
+   recepție sau lansarea producției. Căutarea de deasupra tabelului găsește și după referința
+   documentului.
+
+Linia dispare din tabel la recepția completă a mărfii, la terminarea producției sau la anularea
+documentului. La o cerere de ofertă comasată (mai multe materii prime), recepția se judecă doar pe
+liniile produsului comenzii planificate. Dacă din aceeași comandă planificată s-au generat mai multe
+documente, se afișează cel aflat cel mai „în urmă”.
+
+![Tabelul comenzilor planificate cu documentul generat și starea lui](screenshots/12a_dashboard_documente.png)
 
 ### Ce generează planificatorul (rezultate operaționale)
 
@@ -375,6 +404,10 @@ proprietarului fiecărei reguli de reaprovizionare (bifa **Planificat de Advance
 - [ ] Situația Material și Stocul Proiectat afișează proiecția cronologică și ATP corect.
 - [ ] Încărcare centru de lucru / CRP reflectă supraîncărcările; nivelarea cu **Doar vizualizare (fără modificări)** previzualizează mutările.
 - [ ] Tabloul Risc de livrare listează comenzile la risc; butonul Escaladează creează o activitate.
+- [ ] În Panoul de control, după generarea cererii de ofertă dintr-o comandă planificată, linia rămâne în tabel cu documentul în coloana **Document** și starea **Generat**; după confirmare apare **Confirmat**; după recepția a 2 din 5 buc apare **Recepționat parțial**; după recepția completă linia dispare.
+- [ ] O comandă de producție generată din planificator apare cu **Generat**, apoi **Confirmat** / **În lucru**; după terminare sau anulare linia dispare.
+- [ ] Un clic pe referința din coloana **Document** deschide comanda de achiziție / producție.
+- [ ] O comandă planificată marcată manual **Finalizat** (comanda reală creată în afara planificatorului) nu apare în tabel.
 - [ ] Exporturile PDF/Excel se descarcă și conțin datele testate.
 
 ## 9. Mesaje de eroare frecvente
@@ -394,6 +427,8 @@ proprietarului fiecărei reguli de reaprovizionare (bifa **Planificat de Advance
 | Notificarea „Comenzi planificate sărite, cu lansarea după …” la generarea în lot | Comenzile respective se lansează după fereastra de lansare | Normal: se generează când intră în fereastră. Pentru o lansare anticipată, deschideți comanda și confirmați butonul de generare |
 | Un produs cu regulă min/max nu primește propuneri de la planificator | Regula e automată sau are minim/maxim și nu e bifată: o comandă Odoo standard | Bifați **Planificat de Advanced Planner** pe regulă dacă vreți propuneri eșalonate |
 | O ieșire viitoare nu generează propunere de reaprovizionare | Data ei e după orizontul de planificare | Măriți **Orizont de planificare** în Setări sau așteptați să intre în orizont |
+| În Panoul de control, o comandă recepționată rămâne în tabel cu **Recepționat parțial** | Recepția a fost validată fără cantitatea completă (cu backorder) pentru produsul comenzii planificate | Normal: linia dispare la recepția restului. Dacă restul nu mai vine, anulați backorder-ul și cantitatea rămasă din comanda de achiziție |
+| O comandă lansată nu mai apare în tabelul din Panoul de control | Documentul generat e recepționat integral, produs sau anulat, ori comanda planificată a fost marcată manual **Finalizat**, fără document | Normal. Istoricul rămâne în **Comenzi planificate** (filtrul Finalizat) și în documentul generat |
 | Capturile nu se generează | Modulul `l10n_ro_doc_screenshots` nu este instalat | Instalați-l și rulați testul de capturi (vezi secțiunea 10) |
 
 ## 10. Capturi de ecran
@@ -421,6 +456,7 @@ secțiunea 6:
     - `10b_reaprovizionare_esalonata.png` — filtrul **Reaprovizionare pentru stoc**: propunerile pentru stoc, câte una pe deficit, până la orizont.
 11. `11_delivery_risk_board.png` — tabloul Risc de livrare semaforizat.
 12. `12_dashboard.png` — dashboard cu contori și KPI de planificare.
+    - `12a_dashboard_documente.png` — tabelul comenzilor planificate, cu documentul generat și starea lui evidențiate pe prima linie.
 
 Testul `tests/test_screenshots.py` seedează un mediu de producție determinist (posturi de lucru cu
 calendar + eficiență, BOM pe 2 niveluri cu operații, furnizori cu lead time + MOQ, stoc parțial) și
@@ -430,7 +466,8 @@ aibă date reale. Pentru Pasul 5 generează o cerere de ofertă din două comenz
 aceeași materie primă (15 + 5 buc) și rulează generarea în lot pe o comandă cu furnizor și una fără,
 apoi pe o comandă de lansat acum și una care se lansează peste 40 de zile. Pentru Pasul 10 creează o
 regulă min/max bifată (șuruburi, stoc 60, min 100, max 300) și un consumabil cu ieșiri fără SO la 20,
-60 și 150 de zile, apoi rulează reaprovizionarea pentru stoc cu orizontul de 90 de zile.
+60 și 150 de zile, apoi rulează reaprovizionarea pentru stoc cu orizontul de 90 de zile. Pentru
+Pasul 12 confirmă o comandă de achiziție și una de producție generate din comenzi planificate.
 
 Regenerare:
 

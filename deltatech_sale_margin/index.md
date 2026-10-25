@@ -1,7 +1,7 @@
 # Sale Margin (localizat la `deltatech_sale_margin/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_margin`
-- **Versiune:** `19.0.1.3.0`
+- **Versiune:** `19.0.1.3.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_margin
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_margin`
 - **Ultima Ingestie:** `2026-10-22`

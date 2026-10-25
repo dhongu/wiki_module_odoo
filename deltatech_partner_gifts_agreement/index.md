@@ -1,7 +1,7 @@
 # Deltatech Partner Gifts Service Agreement (localizat la `deltatech_partner_gifts_agreement/index.md`)
 
 - **Nume Tehnic:** `deltatech_partner_gifts_agreement`
-- **Versiune:** `19.0.0.0.8`
+- **Versiune:** `19.0.0.0.10`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_gifts_agreement
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_partner_gifts_agreement`
 - **Ultima Ingestie:** `2026-10-01`

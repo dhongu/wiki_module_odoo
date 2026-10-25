@@ -1,7 +1,7 @@
 # Product Data Sheet Website (localizat la `deltatech_data_sheet_website/index.md`)
 
 - **Nume Tehnic:** `deltatech_data_sheet_website`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_data_sheet_website
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_data_sheet_website`
 - **Ultima Ingestie:** `2026-06-02`

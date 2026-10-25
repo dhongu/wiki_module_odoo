@@ -1,7 +1,7 @@
 # Fast Purchase (localizat la `deltatech_fast_purchase/index.md`)
 
 - **Nume Tehnic:** `deltatech_fast_purchase`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_fast_purchase`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_fast_purchase`
 - **Ultima Ingestie:** `2026-06-02`

@@ -1,10 +1,11 @@
 # Tip comandă de vânzare Marketplace (localizat la `deltatech_marketplace_sale_type/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_sale_type`
-- **Versiune:** `19.0.0.0.2`
+- **Versiune:** `19.0.0.0.6`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_sale_type`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_sale_type`
 - **Ultima Ingestie:** `2026-08-20`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

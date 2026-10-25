@@ -1,7 +1,7 @@
 # Stock Account Extension (localizat la `deltatech_stock_account/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_account`
-- **Versiune:** `19.0.1.0.5`
+- **Versiune:** `19.0.1.0.9`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_account
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_account`
 - **Ultima Ingestie:** `2026-06-01`

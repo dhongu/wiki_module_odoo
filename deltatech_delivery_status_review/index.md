@@ -1,7 +1,7 @@
 # Verificarea Comenzilor — Livrări Reținute (localizat la `deltatech_delivery_status_review/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_status_review`
-- **Versiune:** `19.0.0.1.1`
+- **Versiune:** `19.0.0.1.9`
 - **Cale:** [https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_status_review](https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_status_review)
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_delivery_status_review`
 - **Ultima Ingestie:** `2026-09-24`

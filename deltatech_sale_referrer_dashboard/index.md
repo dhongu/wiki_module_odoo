@@ -1,7 +1,7 @@
 # Sale Referrer Margin Dashboard (localizat la `deltatech_sale_referrer_dashboard/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_referrer_dashboard`
-- **Versiune:** `19.0.1.2.1`
+- **Versiune:** `19.0.1.2.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_sale_referrer_dashboard
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_sale_referrer_dashboard`
 - **Ultima Ingestie:** `2026-09-29`

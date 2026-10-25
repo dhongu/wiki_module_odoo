@@ -1,7 +1,7 @@
 # Romania - Raport de alocare a plăților
 
 - **Nume Tehnic:** `l10n_ro_payment_allocation_report`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payment_allocation_report
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_payment_allocation_report`
 - **Ultima Ingestie:** `2026-08-31`

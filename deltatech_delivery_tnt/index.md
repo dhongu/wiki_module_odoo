@@ -1,7 +1,7 @@
 # TNT Shipping (localizat la `deltatech_delivery_tnt/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_tnt`
-- **Versiune:** `19.0.0.1.2`
+- **Versiune:** `19.0.0.1.7`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_tnt
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_tnt`
 - **Ultima Ingestie:** `2026-07-31`

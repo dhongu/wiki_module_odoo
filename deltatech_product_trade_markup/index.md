@@ -1,7 +1,7 @@
 # Product trade markup (localizat la `deltatech_product_trade_markup/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_trade_markup`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_trade_markup
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_trade_markup`
 - **Ultima Ingestie:** `2026-06-03`

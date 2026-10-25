@@ -1,7 +1,7 @@
 # MT940 CEC Format Bank Statements Import (localizat la `l10n_ro_account_bank_statement_import_mt940_cec/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_account_bank_statement_import_mt940_cec`
-- **Versiune:** `19.0.0.2.3`
+- **Versiune:** `19.0.0.2.4`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_account_bank_statement_import_mt940_cec
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_account_bank_statement_import_mt940_cec`
 - **Ultima Ingestie:** `2026-10-09`

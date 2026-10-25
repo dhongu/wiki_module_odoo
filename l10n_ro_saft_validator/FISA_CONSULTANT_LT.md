@@ -175,5 +175,5 @@ icon-ul de cog (engrenaj) lângă titlul raportului:
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/01_saft_validator_wizard_lt.png` | Wizard cu **Tip declarație = LT** ① — radio LT selectat, sumar Errors/Warnings, listă probleme pe parteneri/conturi |
-| 2 | `screenshots/03_saft_export_button_lt.png` | Cog menu deschis pe Carte Mare ② cu opțiunea **„SAF-T (Declarația D406)"** evidențiată — export-ul D406 lunar/trimestrial |
+| 1 | `static/description/01_saft_validator_wizard_lt.png` | Wizard cu **Tip declarație = LT** ① — radio LT selectat, sumar Errors/Warnings, listă probleme pe parteneri/conturi |
+| 2 | `static/description/03_saft_export_button_lt.png` | Cog menu deschis pe Carte Mare ② cu opțiunea **„SAF-T (Declarația D406)"** evidențiată — export-ul D406 lunar/trimestrial |

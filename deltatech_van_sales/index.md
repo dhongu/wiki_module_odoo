@@ -1,7 +1,7 @@
 # Van Sales (localizat la `deltatech_van_sales/index.md`)
 
 - **Nume Tehnic:** `deltatech_van_sales`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.6`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_van_sales
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_van_sales`
 - **Ultima Ingestie:** `2026-09-13`

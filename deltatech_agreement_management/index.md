@@ -1,7 +1,7 @@
 # Agreement Management (localizat la `deltatech_agreement_management/index.md`)
 
 - **Nume Tehnic:** `deltatech_agreement_management`
-- **Versiune:** `19.0.0.0.3`
+- **Versiune:** `19.0.0.0.8`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_agreement_management
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_agreement_management`
 - **Ultima Ingestie:** `2026-09-03`

@@ -1,7 +1,7 @@
 # Romania - Invoice Report Terrabit (localizat la `l10n_ro_invoice_report/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_invoice_report`
-- **Versiune:** `19.0.3.4.23`
+- **Versiune:** `19.0.3.4.27`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_invoice_report
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_invoice_report`
 - **Ultima Ingestie:** `2026-09-21`

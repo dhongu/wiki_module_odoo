@@ -1,7 +1,7 @@
 # Bank Statements Import Extension (localizat la `deltatech_account_bank_statement_import/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_bank_statement_import`
-- **Versiune:** `19.0.1.3.0`
+- **Versiune:** `19.0.1.3.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_account_bank_statement_import`
 - **Ultima Ingestie:** `2026-10-12`

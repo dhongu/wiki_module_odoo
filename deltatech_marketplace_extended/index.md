@@ -1,7 +1,7 @@
 # Extended Marketplace Connector (localizat la `deltatech_marketplace_extended/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_extended`
-- **Versiune:** `19.0.0.0.19`
+- **Versiune:** `19.0.0.0.33`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_extended`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_extended`
 - **Ultima Ingestie:** `2026-09-23`

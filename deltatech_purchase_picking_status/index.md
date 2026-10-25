@@ -1,7 +1,7 @@
 # Purchase Picking Status (localizat la `deltatech_purchase_picking_status/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_picking_status`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_picking_status`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_picking_status`
 - **Ultima Ingestie:** `2026-07-31`

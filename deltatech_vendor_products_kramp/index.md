@@ -1,7 +1,7 @@
 # Vendor Products Kramp (localizat la `deltatech_vendor_products_kramp/index.md`)
 
 - **Nume Tehnic:** `deltatech_vendor_products_kramp`
-- **Versiune:** `19.0.1.2.1`
+- **Versiune:** `19.0.1.2.2`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products_kramp`
 - **Cale Locală:** `odoo-addons/bitshop_vendor/deltatech_vendor_products_kramp`
 - **Ultima Ingestie:** `2026-10-22`

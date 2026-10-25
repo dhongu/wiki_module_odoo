@@ -1,7 +1,7 @@
 # Business process handover document (localizat la `deltatech_business_process_handover_document/index.md`)
 
 - **Nume Tehnic:** `deltatech_business_process_handover_document`
-- **Versiune:** `19.0.0.0.4`
+- **Versiune:** `19.0.0.0.8`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_business_process_handover_document`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_business_process_handover_document`
 - **Ultima Ingestie:** `2026-08-20`

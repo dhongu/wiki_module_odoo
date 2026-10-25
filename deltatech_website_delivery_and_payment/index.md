@@ -1,7 +1,7 @@
 # Delivery and Payment (localizat la `deltatech_website_delivery_and_payment/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_delivery_and_payment`
-- **Versiune:** `19.0.2.1.4`
+- **Versiune:** `19.0.2.1.7`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_delivery_and_payment
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_delivery_and_payment`
 - **Ultima Ingestie:** `2026-06-01`

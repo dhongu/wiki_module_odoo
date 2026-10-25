@@ -1,7 +1,7 @@
 # Registru de casă RO (localizat la `l10n_ro_cash_register/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_cash_register`
-- **Versiune:** `19.0.1.4.0`
+- **Versiune:** `19.0.1.4.3`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_cash_register
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_cash_register`
 - **Ultima Ingestie:** `2026-10-08`

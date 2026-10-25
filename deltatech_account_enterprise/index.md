@@ -1,7 +1,7 @@
 # Deltatech Account Enterprise (localizat la `deltatech_account_enterprise/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_enterprise`
-- **Versiune:** `19.0.0.1.2`
+- **Versiune:** `19.0.0.1.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_enterprise
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_account_enterprise`
 - **Ultima Ingestie:** `2026-10-09`

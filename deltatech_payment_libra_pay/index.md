@@ -1,7 +1,7 @@
 # LibraPay Acquirer (localizat la `deltatech_payment_libra_pay/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_libra_pay`
-- **Versiune:** `19.0.1.0.8`
+- **Versiune:** `19.0.1.0.13`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_libra_pay`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_libra_pay`
 - **Ultima Ingestie:** `2026-08-20`

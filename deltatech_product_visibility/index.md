@@ -1,7 +1,7 @@
 # Product Website Visibility Score (localizat la `deltatech_product_visibility/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_visibility`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_visibility
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_visibility`
 - **Ultima Ingestie:** `2026-07-31`

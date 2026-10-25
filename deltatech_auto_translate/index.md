@@ -1,7 +1,7 @@
 # Deltatech Auto Translate (localizat la `deltatech_auto_translate/index.md`)
 
 - **Nume Tehnic:** `deltatech_auto_translate`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_auto_translate
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_auto_translate`
 - **Ultima Ingestie:** `2026-10-01`

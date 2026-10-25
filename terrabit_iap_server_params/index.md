@@ -1,7 +1,7 @@
 # Terrabit IAP Server Params
 
 - **Nume Tehnic:** `terrabit_iap_server_params`
-- **Versiune:** `19.0.1.3.0`
+- **Versiune:** `19.0.1.3.1`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_params
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server_params`
 - **Ultima Ingestie:** `2026-10-09`

@@ -1,7 +1,7 @@
 # Asistent Generare Rate Termen de Plată (localizat la `deltatech_payment_term/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_term`
-- **Versiune:** `19.0.2.0.1`
+- **Versiune:** `19.0.2.0.8`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_payment_term`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_payment_term`
 - **Ultima Ingestie:** `2026-06-03`

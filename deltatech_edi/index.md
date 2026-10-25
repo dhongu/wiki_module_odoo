@@ -1,7 +1,7 @@
 # Deltatech EDI Base Connector (localizat la `deltatech_edi/index.md`)
 
 - **Nume Tehnic:** `deltatech_edi`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edi
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_edi`
 - **Ultima Ingestie:** `2026-09-29`

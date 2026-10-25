@@ -1,7 +1,7 @@
 # Romania - EU Legal Guarantee Notice (localizat la `l10n_ro_website_legal_guarantee/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_website_legal_guarantee`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_website_legal_guarantee
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_website_legal_guarantee`
 - **Ultima Ingestie:** `2026-10-22`

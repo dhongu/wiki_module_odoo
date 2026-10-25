@@ -1,7 +1,7 @@
 # Romania - Registru de casă (localizat la `l10n_ro_cash_register_report/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_cash_register_report`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.7`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cash_register_report
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_cash_register_report`
 - **Ultima Ingestie:** `2026-09-11`

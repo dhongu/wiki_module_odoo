@@ -1,7 +1,7 @@
 # Romania - Audit corelare declarații fiscale (localizat la `l10n_ro_fiscal_audit/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_fiscal_audit`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_fiscal_audit
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_fiscal_audit`
 - **Ultima Ingestie:** `2026-07-02`

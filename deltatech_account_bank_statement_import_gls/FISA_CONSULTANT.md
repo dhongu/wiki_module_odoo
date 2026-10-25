@@ -117,7 +117,8 @@ reconcilierea standard Odoo (widget bancar + reguli de reconciliere).
 |---|---|---|
 | `account_bank_statement_import` (Enterprise) | mecanismul standard de import extrase | dependență (manifest) |
 | `account_bank_statement_import_csv` (Enterprise) | interceptorul de wizard peste care modulul are prioritate | dependență (manifest) |
-| `deltatech_account_bank_statement_import_euplatesc` | același tipar pentru decontările Euplatesc | frate (opțional) |
+| `deltatech_account_bank_statement_import_euplatesc` | același tipar pentru decontările Euplatesc (recunoscute însă după coloanele din antet, fișierul lor neavând marcaj de emitent) | frate (opțional) |
+| `deltatech_account_bank_statement_import_emag` | același tipar pentru borderourile de plăți eMAG | frate (opțional) |
 | `l10n_ro_account_bank_statement_import_ing_csv` | extrasul ING în care sosește transferul GLS | complementar (opțional) |
 | `stock_delivery` / integrare GLS | AWB-ul (`carrier_tracking_ref`) pe livrări — baza identificării automate a partenerului (faza următoare) | opțional |
 

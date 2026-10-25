@@ -132,10 +132,10 @@ Ce rămâne manual: verificarea cursului folosit și documentelor justificative 
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/01_avans_acordat.png` | Avans în stare Acordat — suma EUR, curs acordare, suma RON, link notă |
-| 2 | `screenshots/02_nota_acordare.png` | Nota Dr 542 = Cr 5121 (acordare avans valută) |
-| 3 | `screenshots/03_nota_justificare.png` | Nota Dr 624 + Dr 665 = Cr 542 (justificare cu pierdere de curs) |
-| 4 | `screenshots/04_avans_inchis.png` | Avans închis — diferența de curs și link-ul la nota de justificare |
+| 1 | `static/description/01_avans_acordat.png` | Avans în stare Acordat — suma EUR, curs acordare, suma RON, link notă |
+| 2 | `static/description/02_nota_acordare.png` | Nota Dr 542 = Cr 5121 (acordare avans valută) |
+| 3 | `static/description/03_nota_justificare.png` | Nota Dr 624 + Dr 665 = Cr 542 (justificare cu pierdere de curs) |
+| 4 | `static/description/04_avans_inchis.png` | Avans închis — diferența de curs și link-ul la nota de justificare |
 
 ## 11. Observații pentru manual
 

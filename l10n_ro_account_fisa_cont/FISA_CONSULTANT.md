@@ -135,7 +135,7 @@ Ce rămâne manual: interpretarea notelor cu mai multe linii și verificarea doc
 
 ## 10. Capturi de ecran
 
-Capturile din `readme/screenshots/` se obțin din `tests/test_screenshots.py` (mixinul `ScreenshotCase`
+Capturile din `static/description/` se obțin din `tests/test_screenshots.py` (mixinul `ScreenshotCase`
 din `l10n_ro_doc_screenshots`, HttpCase + Playwright), pe companie RO, în lei, cu plan de conturi RO.
 
 1. `01_fisa_pliat.png` — Fișa de cont la deschidere, conturi pliate.

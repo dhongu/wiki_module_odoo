@@ -1,7 +1,7 @@
 # Stock Orderpoint Qty Multiple (localizat la `deltatech_stock_orderpoint_multiple/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_orderpoint_multiple`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_orderpoint_multiple
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_orderpoint_multiple`
 - **Ultima Ingestie:** `2026-10-09`

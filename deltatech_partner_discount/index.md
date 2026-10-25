@@ -1,7 +1,7 @@
 # Deltatech Partner Discount (localizat la `deltatech_partner_discount/index.md`)
 
 - **Nume Tehnic:** `deltatech_partner_discount`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_partner_discount
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_partner_discount`
 - **Ultima Ingestie:** `2026-10-09`

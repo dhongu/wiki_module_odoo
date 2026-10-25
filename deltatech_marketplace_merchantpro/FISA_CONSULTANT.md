@@ -28,7 +28,7 @@ framework-ului cu `Access Type = Client_id and client_secret`, trimisă codifica
 Fiecare apel trece întâi prin token-bucket-ul comun al backend-ului
 (`_rate_limit_acquire`), calibrat automat la limitele publicate de MerchantPro (4 cereri/secundă,
 80/minut, 3600/oră, 60000/zi) — la alegerea `Provider = MerchantPro`, aceste patru valori sunt
-completate automat pe grupul **Rate Limit** al tab-ului **Other Info**. Dacă MerchantPro răspunde
+completate automat pe grupul **Rate Limit** al tab-ului **Technical**. Dacă MerchantPro răspunde
 totuși cu **HTTP 429**, conectorul citește timpul de așteptare din `error.details.reset_time` al
 răspunsului, când e prezent; altfel folosește un timp de rezervă de 60 de secunde (5 secunde dacă
 timpul calculat e zero sau negativ) și ridică `RetryableJobError`, astfel încât `queue_job`
@@ -81,12 +81,12 @@ pregătit înainte de prima sincronizare:
   domeniul „de exportat"), nu ce preț se trimite. Valoarea trimisă efectiv ca `price_net` este
   **`list_price` al produsului**, calculat fără TVA (`taxes_id.compute_all(...)["total_excluded"]`),
   indiferent de taxă (`price_include`).
-- **„Sale Order Days"** (câmp comun al framework-ului, grupul **Limits**, tab **Other Info**) —
+- **„Sale Order Days"** (câmp comun al framework-ului, grupul **Limits**, tab **Technical**) —
   implicit **2 zile**: fereastra de căutare `created_after` pentru importul paginat de comenzi. Nu
   este o plasă de siguranță completă — vezi §6 Pasul 8: importul paginat sare orice comandă al cărei
   `shipping_status` nu e `cancelled`/`delivered`/`shipped`/`returned`, deci nu recuperează o comandă
   nouă/în procesare ratată de webhook.
-- **Comutatoarele din grupul „Products"** al tab-ului **Other Info** (**Use Category**, **Use
+- **Comutatoarele din grupul „Products"** al tab-ului **Orders and Products** (**Use Category**, **Use
   Attribute**, **Use Configurable**, **Strict Variant Match**, **Ignore image**) — vizibile pe
   formular (fac parte din view-ul comun al framework-ului), dar **niciunul, inclusiv Ignore image,
   nu are efect la MerchantPro**: importul de produs setează `image_1920` direct din imaginea
@@ -110,8 +110,8 @@ categorie și un produs cu barcode, o comandă existentă în cont.
 2. Instalați modulul `deltatech_marketplace_merchantpro` (nu necesită nicio bibliotecă Python
    externă în afara celor deja incluse în Odoo).
 3. Creați un backend nou: **Marketplace → Backends → Nou**, `Provider = MerchantPro` — alegerea
-   provider-ului completează automat limitele de rată din grupul **Rate Limit** (tab **Other
-   Info**).
+   provider-ului completează automat limitele de rată din grupul **Rate Limit** (tab
+   **Technical**).
 4. În tab-ul **Credentials**, completați **Location** (URL-ul magazinului), **Access Type =
    Client_id and client_secret**, apoi **Client Id** / **Client Secret / API key**.
 5. Apăsați **Test connection** din antet — apelează efectiv `GET /api/v2/categories` (o pagină de
@@ -122,7 +122,7 @@ categorie și un produs cu barcode, o comandă existentă în cont.
 7. Din tab-ul **Objects**, rulați ÎNTÂI **Import** pe cardul **Public category** (arborele de
    categorii), apoi **Import** pe cardul **Product Template** — ordinea contează: importul de
    produse nu atașează singur categoria pe legătura Odoo (vezi §6 Pasul 4).
-8. Pe tab-ul **Other Info**, bifați **Can send stock** dacă doriți exportul de stoc, și activați
+8. Pe tab-ul **Orders and Products**, bifați **Can send stock** dacă doriți exportul de stoc, și activați
    comutatorul **Active On Write** pe cardurile relevante din **Objects** dacă vreți export automat
    la salvare, nu doar manual.
 
@@ -144,13 +144,13 @@ introduse; la succes, starea (`State`) backend-ului trece pe **Confirmed** — c
 indicatorul de sănătate să poată deveni verde mai târziu. Un Client ID/Secret invalid ridică
 eroarea MerchantPro/HTTP direct pe ecran, ca mesaj de validare.
 
-### Pasul 3 — Limitele de rată (tab Other Info)
+### Pasul 3 — Limitele de rată (tab Technical)
 
-Alegerea `Provider = MerchantPro` a completat automat grupul **Rate Limit** de pe tab-ul **Other
-Info**: 4 cereri/secundă, 80/minut, 3600/oră, 60000/zi — limitele publicate de MerchantPro. Aceste
+Alegerea `Provider = MerchantPro` a completat automat grupul **Rate Limit** de pe tab-ul
+**Technical**: 4 cereri/secundă, 80/minut, 3600/oră, 60000/zi — limitele publicate de MerchantPro. Aceste
 valori pot fi ajustate manual dacă platforma vă alocă o cotă diferită.
 
-![Tab Other Info: grupul Rate Limit completat automat cu limitele MerchantPro](screenshots/02_rate_limit.png)
+![Tab Technical: grupul Rate Limit completat automat cu limitele MerchantPro](screenshots/02_rate_limit.png)
 
 ### Pasul 4 — Import categorii, apoi produse (ordinea contează)
 
@@ -169,7 +169,7 @@ id, nume, SKU (`default_code`), cod de bare (`ean`), preț fără TVA (`price_ne
 din răspuns — **fără** descriere sau imagini la acest pas. Descrierea, imaginea implicită (dacă un
 element din lista de imagini are `default: true`, devine `image_1920`) și imaginile suplimentare
 ajung doar la un **import individual** al produsului (de exemplu prin **Reimport** pe legătură) sau
-prin fluxul **Only Missing** (opțiune pe backend, tab **Other Info**, grupul **Limits**), care aduce
+prin fluxul **Only Missing** (opțiune pe backend, tab **Technical**, grupul **Limits**), care aduce
 produsul complet, nu doar câmpurile minime ale listei. **Atenție:** orice import (listă sau
 individual) **suprascrie** `list_price`-ul Odoo al produsului cu `price_net` de la MerchantPro, dacă
 opțiunea **Ignore Price** nu e bifată pe backend — un preț modificat manual în Odoo poate reveni la
@@ -179,7 +179,7 @@ valoarea de pe MerchantPro la următorul import.
 
 ### Pasul 5 — Sincronizarea stocului (necesită cronul activ)
 
-Pe tab-ul **Other Info**, grupul **Stock**, bifați **Can send stock** pentru a permite exportul de
+Pe tab-ul **Orders and Products**, grupul **Stock**, bifați **Can send stock** pentru a permite exportul de
 stoc pentru acest backend. **Atenție — stocul NU pleacă automat la o mișcare de stoc, în ciuda
 aparențelor din cod.** O mișcare de stoc confirmată/anulată/reasignată declanșează doar `_trigger()`
 pe cronul comun **Marketplace: export stock** (`ir_cron_marketplace_export_stock`) — restul codului
@@ -368,7 +368,7 @@ buton propriu, se populează doar din comenzi/produse; validarea mapării jurnal
 - [ ] Modulul se instalează fără erori (nu necesită bibliotecă Python externă).
 - [ ] **Test connection** confirmă credențialele (`State = Confirmed`) — verifică apelul real la
       lista de categorii MerchantPro, nu doar completarea câmpurilor — înainte de orice import.
-- [ ] Limitele din grupul **Rate Limit** (tab **Other Info**) au fost completate automat la
+- [ ] Limitele din grupul **Rate Limit** (tab **Technical**) au fost completate automat la
       `Provider = MerchantPro` (4/s, 80/min, 3600/oră, 60000/zi) — verificați că nu au fost
       suprascrise accidental cu valori mai mari decât cota reală alocată de MerchantPro.
 - [ ] Clientul știe că exportul unui produs **nu** trimite imaginea principală (`image_1920`) și
@@ -396,7 +396,7 @@ buton propriu, se populează doar din comenzi/produse; validarea mapării jurnal
       NU e o plasă de siguranță completă: sare orice comandă al cărei status nu e deja
       `cancelled`/`delivered`/`shipped`/`returned`, deci nu recuperează o comandă nouă/„în procesare"
       ratată de webhook.
-- [ ] **Can send stock** (tab **Other Info**, grupul **Stock**) e bifat ȘI cronul **Marketplace:
+- [ ] **Can send stock** (tab **Orders and Products**, grupul **Stock**) e bifat ȘI cronul **Marketplace:
       export stock** e activat manual din **Setări → Tehnic → Acțiuni programate** — cu setarea
       implicită (cron dezactivat), o mișcare de stoc nu exportă nimic automat, oricât de des se
       repetă vânzarea; singura cale rămasă e butonul **Export Stock** manual.
@@ -448,7 +448,7 @@ test de marketing existent):
 
 1. `01_credentials.png` — backend MerchantPro, tab Credentials completat (Location, Access Type =
    Client_id and client_secret, Client Id/Client Secret).
-2. `02_rate_limit.png` — tab Other Info: grupul Rate Limit completat automat cu limitele
+2. `02_rate_limit.png` — tab Technical: grupul Rate Limit completat automat cu limitele
    MerchantPro.
 3. `03_objects.png` — tab Objects: cele 7 carduri de tipuri de date — Sale Order, Product Template și Public category cu meniu de import, Customers/Delivery Carrier/Product Image/Payment Acquirer fără.
 4. `04_health_badge.png` — indicatorul de sănătate pe cardul kanban al backend-ului.

@@ -1,7 +1,7 @@
 # Website Searchbar Optimization (localizat la `deltatech_website_searchbar/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_searchbar`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/deltatech_website_searchbar
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_searchbar`
 - **Ultima Ingestie:** `2026-08-20`

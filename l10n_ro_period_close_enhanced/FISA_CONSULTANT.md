@@ -45,10 +45,13 @@ sunt cele pe care le citește, fiecare configurabil prin prefix (vezi secțiunea
 | 3xx | conturile de stoc, confruntate cu valorizarea |
 
 > **Despre verificarea lui 408.** Cu modulul `l10n_ro_rni_report` instalat, verificarea
-> confruntă *sume*: soldul contabil față de ce vede raportul ca rămas deschis pe furnizori.
-> Butonul verificării deschide chiar raportul, cu lista recepțiilor și vechimea lor. Fără
-> modul, cade pe o verificare de consistență — sold fără nicio recepție pe aviz în evidență,
-> sau invers — care nu prinde un sold greșit la o companie cu recepții în istoric.
+> confruntă soldul din checklist cu ce vede raportul ca rămas deschis pe furnizori. Cele două
+> nu sunt surse independente — amândouă citesc înregistrări de pe 408 — dar nu citesc aceleași
+> conturi: checklistul folosește prefixul configurat în Setări, raportul contul de recepție
+> fără factură de pe gestiune sau companie. **Divergența dintre aceste două configurări e ceea
+> ce prinde verificarea**, și e o eroare care altfel se vede abia când cineva confruntă manual
+> raportul cu balanța. Butonul deschide raportul. Fără modul, cade pe o verificare de
+> consistență între sold și existența recepțiilor pe aviz.
 
 > **Despre 4428.** În România contul nu ține doar TVA-ul la încasare, ci și contrapartida de TVA a
 > facturilor nesosite (408) și a celor de întocmit (418). De aceea verificarea nu cere egalitate — ar
@@ -148,6 +151,12 @@ pe 25 ale lunii următoare.
 
 ![Verificările lunii, grupate pe ciclu](screenshots/03_verificari_fisa.png)
 
+Verificările cu cod stau mai jos în listă, sub bifele manuale. Mesajul fiecăreia poartă ambele
+sume comparate și diferența dintre ele — inclusiv atunci când verificarea trece, fiindcă la
+audit contează ce s-a confruntat, nu doar verdictul:
+
+![Confruntările de sold, cu sumele și diferența](screenshots/04_confruntare_sold.png)
+
 ### Pasul 3 — Rezolvarea anomaliilor
 
 Fiecare verificare are un buton care deschide exact înregistrările vinovate: liniile contabile de pe
@@ -156,6 +165,23 @@ manual — porniți din verificare.
 
 Rezolvați anomalia în modulul ei (postați documentul, reconciliați, rulați coeficientul K), apoi
 reîmprospătați verificările pe fișa lunii. Valorile se recalculează de la zero, nu se memorează.
+
+Butonul duce în trei feluri de ecrane, după natura verificării.
+
+**Confruntările de sold** deschid înregistrările de pe conturile comparate — aici, nota manuală de
+190 lei postată direct pe TVA deductibilă, cea care a produs divergența:
+
+![Liniile contabile din spatele unei confruntări](screenshots/05_drill_linii_contabile.png)
+
+**Verificarea recepțiilor fără factură** deschide raportul dedicat, cu soldul lui 408 desfăcut pe
+furnizori și cu vechimea fiecărei recepții:
+
+![Raportul recepțiilor fără factură](screenshots/06_drill_raport_408.png)
+
+**Verificările de completitudine** deschid documentele rămase neterminate — factura în ciornă,
+mesajul SPV neprocesat, cantitatea negativă:
+
+![Documentele rămase în lucru](screenshots/07_drill_documente.png)
 
 Pe fiecare verificare există și butonul **De revizuit**, care o marchează manual ca verificată. E
 calea pentru bifele care nu pot fi confruntate automat — cele care țin de decizia contabilului — și
@@ -167,7 +193,7 @@ următoarea reîmprospătare, care o reevaluează dacă are cod în spate.
 Raportul listează toate verificările cu rezultatul lor și sumele comparate, plus loc de semnături.
 Este documentul care arată **ce s-a verificat**, nu doar că s-a închis luna.
 
-![Proces-verbal de închidere](screenshots/04_raport_pv.png)
+![Proces-verbal de închidere](screenshots/08_raport_pv.png)
 
 ### Pasul 5 — Validarea și blocarea
 
@@ -186,7 +212,7 @@ proprie. Astfel se pot bloca, de exemplu, jurnalele de TVA după depunerea D300,
 jurnalul de salarii. Accesați **Contabilitate → Configurare → Jurnale**, deschideți un jurnal și
 completați câmpul **Dată blocare jurnal** ①.
 
-![Câmpul „Dată blocare jurnal" pe formularul jurnalului](screenshots/05_blocare_jurnal.png)
+![Câmpul „Dată blocare jurnal" pe formularul jurnalului](screenshots/09_blocare_jurnal.png)
 
 Postarea unei înregistrări datate la sau înainte de această dată, în jurnalul respectiv, este blocată
 cu un mesaj clar — independent de blocările la nivel de companie.
@@ -277,17 +303,23 @@ Validare:
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/01_setari_conturi_control.png` | Conturile de control în Setări — cele nouă prefixe care alimentează verificările |
-| 2 | `screenshots/02_checklist_kanban.png` | Lista checklist-urilor de închidere, câte unul pe lună |
-| 3 | `screenshots/03_verificari_fisa.png` | Verificările lunii, grupate pe ciclu, cu rezultatul fiecăreia |
-| 4 | `screenshots/04_raport_pv.png` | Procesul-verbal de pre-închidere (PDF), cu totalurile verificat / anomalie / în așteptare |
-| 5 | `screenshots/05_blocare_jurnal.png` | Câmpul „Dată blocare jurnal" ① pe formularul jurnalului (FR-27) |
+| 1 | `static/description/01_setari_conturi_control.png` | Conturile de control în Setări — cele nouă prefixe care alimentează verificările |
+| 2 | `static/description/02_checklist_kanban.png` | Lista checklist-urilor de închidere, câte unul pe lună |
+| 3 | `static/description/03_verificari_fisa.png` | Verificările lunii, grupate pe ciclu, cu rezultatul fiecăreia |
+| 4 | `static/description/04_confruntare_sold.png` | Confruntările de sold — jurnale TVA, casă, balanță, avansuri, 4428 — cu sumele și diferența |
+| 5 | `static/description/05_drill_linii_contabile.png` | Drill-down dintr-o confruntare de sold: înregistrările de pe conturile comparate |
+| 6 | `static/description/06_drill_raport_408.png` | Drill-down din verificarea de 408: raportul recepțiilor fără factură, pe furnizori |
+| 7 | `static/description/07_drill_documente.png` | Drill-down către documentele rămase neterminate |
+| 8 | `static/description/08_raport_pv.png` | Procesul-verbal de pre-închidere (PDF), cu totalurile verificat / anomalie / în așteptare |
+| 9 | `static/description/09_blocare_jurnal.png` | Câmpul „Dată blocare jurnal" ① pe formularul jurnalului (FR-27) |
 
 Capturile sunt generate automat din `tests/test_screenshots.py` (mixinul `ScreenshotCase` din
 `l10n_ro_doc_screenshots`), în română, pe planul de conturi RO. Baza demo conține deliberat două
 anomalii — o factură rămasă în ciornă și o notă postată direct pe contul de TVA deductibilă, cu
 contrapartidă pe contul tehnic 473 — la care se adaugă a treia, D300 nedepus, fiindcă perioada demo
 e ianuarie 2025. Procesul-verbal arată astfel și verificări căzute, nu doar verificări trecute.
+Raportul recepțiilor fără factură are propriul seed, datat în luna curentă: filtrul lui implicit
+e luna în curs, deci pe date din 2025 s-ar captura gol.
 
 Regenerare:
 

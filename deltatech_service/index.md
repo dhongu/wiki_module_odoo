@@ -1,7 +1,7 @@
 # Services Agreement Obsolete (localizat la `deltatech_service/index.md`)
 
 - **Nume Tehnic:** `deltatech_service`
-- **Versiune:** `19.0.2.0.4`
+- **Versiune:** `19.0.2.0.6`
 - **Cale:** `https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service`
 - **Cale Locală:** `odoo-addons/deltatech_service/deltatech_service`
 - **Ultima Ingestie:** `2026-06-08`

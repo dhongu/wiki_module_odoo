@@ -74,9 +74,9 @@ Date minime pentru demo:
 
 ## 5. Configurare inițială
 
-1. Modulul se instalează **automat** când `deltatech_delivery` și `deltatech_sale_order_review` sunt
-   amândouă instalate (`auto_install`). Nu are meniu și nu are setări proprii.
-2. Instalați și `deltatech_delivery_status_review` (la fel, automat, cu `deltatech_delivery_status`):
+1. Instalați modulul explicit, doar la clienții care folosesc verificarea comenzilor (nu se mai
+   instalează automat). Cere `deltatech_delivery` și `deltatech_sale_order_review`. Nu are meniu și nu are setări proprii.
+2. Instalați și `deltatech_delivery_status_review` (tot explicit; cere `deltatech_delivery_status`):
    fără el motivul apare pe comandă, dar livrarea nu este amânată și dialogurile nu au ce refuza.
 3. Accesați **Vânzări → Configurare → Reguli de verificare comenzi** și verificați regula **Ramburs
    mare**: activă, cu **Prag valoare** potrivit și cu grupul de aprobare dorit.

@@ -1,7 +1,7 @@
 # Conector Marketplace Odoo către Odoo (localizat la `deltatech_marketplace_odoo/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_odoo`
-- **Versiune:** `19.0.0.2.1`
+- **Versiune:** `19.0.0.2.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_odoo
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_odoo`
 - **Ultima Ingestie:** `2026-09-29`

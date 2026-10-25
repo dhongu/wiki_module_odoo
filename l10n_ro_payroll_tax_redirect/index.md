@@ -1,7 +1,7 @@
 # Romania - Redirecționarea a 3,5% din impozit (localizat la `l10n_ro_payroll_tax_redirect/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_payroll_tax_redirect`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_tax_redirect
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_payroll_tax_redirect`
 - **Ultima Ingestie:** `2026-10-05`

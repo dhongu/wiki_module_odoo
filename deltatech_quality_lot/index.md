@@ -1,7 +1,7 @@
 # Deltatech Quality Lot (localizat la `deltatech_quality_lot/index.md`)
 
 - **Nume Tehnic:** `deltatech_quality_lot`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_quality_lot
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_quality_lot`
 - **Ultima Ingestie:** `2026-08-20`

@@ -108,8 +108,8 @@ Date minime pentru demo:
 
 ### Pasul 1 — Activarea opțiunilor pe companie
 
-Meniu: **Contabilitate → Configurare → Setări**. În secțiunea de conturi implicite
-apar cele două opțiuni RO; activați-le pentru compania curentă și salvați.
+Meniu: **Contabilitate → Configurare → Setări**. În secțiunea „Plan de conturi România" (după
+„Conturi implicite") apar cele două opțiuni RO; activați-le pentru compania curentă și salvați.
 
 ![Setări contabilitate cu cele două opțiuni RO activate](screenshots/01_setari_companie.png)
 
@@ -213,7 +213,7 @@ analitic obligatoriu, plus activarea opțiunilor în Setări.
 
 ## 10. Capturi de ecran
 
-Capturile (`screenshots/`) sunt **generate automat** din
+Capturile (`static/description/`) sunt **generate automat** din
 `tests/test_screenshots.py` (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`,
 import defensiv), în **limba română**, pe planul de conturi RO:
 

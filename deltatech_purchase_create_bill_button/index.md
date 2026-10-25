@@ -1,7 +1,7 @@
 # Purchase Create Bill Button (localizat la `deltatech_purchase_create_bill_button/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_create_bill_button`
-- **Versiune:** `19.0.1.1.1`
+- **Versiune:** `19.0.1.1.4`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_create_bill_button`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_create_bill_button`
 - **Ultima Ingestie:** `2026-09-29`

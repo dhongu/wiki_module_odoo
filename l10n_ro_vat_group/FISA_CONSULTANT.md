@@ -51,7 +51,7 @@ din baza TVA.
 
 ### Pasul 1 — Creare grup
 
-**Contabilitate → Grup TVA → Grupuri Fiscale TVA → Nou**
+**Contabilitate → Configurare → Contabilitate → Grupuri Fiscale TVA → Nou**
 
 **Formularul grupului fiscal activ** — CUI grup, membrul raportor și companiile membre cu marcajul
 de raportor (✓):
@@ -101,7 +101,7 @@ indicând că tranzacția va fi exclusă din D300 consolidat:
 
 ### Pasul 2 — Raport TVA consolidat
 
-**Contabilitate → Grup TVA → Raport TVA Consolidat**
+**Fișa grupului → butonul „Raport TVA Consolidat"** (vizibil când grupul este `Activ`)
 
 Wizard cu:
 - **Perioadă**: luna/trimestrul pentru D300
@@ -159,6 +159,6 @@ Ce rămâne gap: generarea XML D300 cu CUI de grup și Formularul 045.
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/01_grup_fiscal.png` | Grup fiscal activ — CUI grup, membrul raportor, companiile membre cu marcaj raportor |
-| 2 | `screenshots/02_factura_intragroup.png` | Factură intra-grup cu bannerul de avertizare (excludere din D300 consolidat) |
-| 3 | `screenshots/03_raport_consolidat.png` | Wizard raport TVA consolidat — linii per companie, coloane intra-grup, TVA net total |
+| 1 | `static/description/01_grup_fiscal.png` | Grup fiscal activ — CUI grup, membrul raportor, companiile membre cu marcaj raportor |
+| 2 | `static/description/02_factura_intragroup.png` | Factură intra-grup cu bannerul de avertizare (excludere din D300 consolidat) |
+| 3 | `static/description/03_raport_consolidat.png` | Wizard raport TVA consolidat — linii per companie, coloane intra-grup, TVA net total |

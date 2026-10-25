@@ -1,7 +1,7 @@
 # Deltatech POS Fix (localizat la `deltatech_pos_fix/index.md`)
 
 - **Nume Tehnic:** `deltatech_pos_fix`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_pos_fix
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_pos_fix`
 - **Ultima Ingestie:** `2026-08-20`

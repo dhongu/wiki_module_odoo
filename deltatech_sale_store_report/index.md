@@ -1,7 +1,7 @@
 # Deltatech Sale from Store Z Report (localizat la `deltatech_sale_store_report/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_store_report`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.8`
 - **Cale:** [https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_store_report](https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_store_report)
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_store_report`
 - **Ultima Ingestie:** `2026-07-31`

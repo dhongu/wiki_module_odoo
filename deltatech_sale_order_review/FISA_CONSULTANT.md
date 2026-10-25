@@ -91,8 +91,8 @@ Date minime pentru demo:
    livrate. Pentru fiecare, verificați **Poartă**, **Tip**, **Prag valoare** (3.500 la ramburs),
    **Minute** (fereastra de așteptare), **Escaladează după** (120 min la plata online) și **Grup de
    aprobare**.
-3. Activați regulile de care aveți nevoie. **Fereastra de așteptare** și **Ridicarea la comandă
-   online** sunt inactive implicit — le porniți doar dacă fluxul clientului le cere.
+3. Activați regulile de care aveți nevoie. **Toate regulile sunt inactive după instalare**: modulul
+   nu reține nicio comandă până nu porniți cel puțin o regulă din comutatorul **Activ**.
 4. Pe metodele de livrare la care clientul ridică personal marfa (**Inventar → Configurare → Metode
    de livrare**), bifați **Ridicare de către client**. Metodele Click & Collect standard sunt
    recunoscute și fără bifă.
@@ -211,8 +211,8 @@ reținută înainte de confirmare, stabilirea pragurilor și a grupurilor.
 
 - [ ] Modulul se instalează fără erori pe baza demo (dependențe: `sale`, `delivery`).
 - [ ] Meniul **Vânzări → Configurare → Reguli de verificare comenzi** apare pentru managerul de
-      vânzări și listează cele cinci reguli, cu „Fereastră de așteptare" și „Ridicare la comandă
-      online" inactive implicit.
+      vânzări și listează cele cinci reguli, toate inactive după instalare; nicio comandă nu primește
+      motive până nu e activată o regulă.
 - [ ] O comandă cu ramburs peste prag primește motivul „Ramburs … peste limita de …", badge-ul
       **De verificat** și nota în chatter; comanda se confirmă totuși (poartă „Înainte de livrare").
 - [ ] Un client fără localitate/cod poștal/telefon generează motivul „Adresă de livrare

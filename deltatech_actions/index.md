@@ -1,7 +1,7 @@
 # Deltatech Actions (localizat la `deltatech_actions/index.md`)
 
 - **Nume Tehnic:** `deltatech_actions`
-- **Versiune:** `19.0.0.9.3`
+- **Versiune:** `19.0.0.9.11`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_actions
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_actions`
 - **Ultima Ingestie:** `2026-09-29`

@@ -160,7 +160,7 @@ celorlalte documente.
 Pentru arhivarea fișei detaliate (toate liniile, nu doar soldurile), folosiți butoanele standard
 **PDF** / **XLSX** din antetul raportului — exportă raportul așa cum este afișat (cu grupurile de
 valută, dacă partenerii sunt desfăcuți). Ecranul este același din Pasul 1
-(vezi `screenshots/01_raport_valuta.png`).
+(vezi `static/description/01_raport_valuta.png`).
 
 ### Note de monografie și raportare
 
@@ -251,7 +251,7 @@ Ce rămâne manual: trimiterea confirmării către partener și compararea cu ex
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**,
 pe planul de conturi RO (`setup_country("ro")`), cu un furnizor în două valute (EUR + USD, plus
 un avans pe cont 409 în EUR) și un client RON:

@@ -1,7 +1,7 @@
 # Deltatech Stock Count Zero (localizat la `deltatech_stock_count_zero/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_count_zero`
-- **Versiune:** `19.0.0.0.0`
+- **Versiune:** `19.0.0.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_count_zero
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_count_zero`
 - **Ultima Ingestie:** `2026-06-03`

@@ -153,7 +153,7 @@ reconciliere); identificarea automată a partenerului după CUI vine în faza ur
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**,
 pe compania „RO Company" în RON (`prepare_ro_company`):
 

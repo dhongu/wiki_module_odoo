@@ -1,7 +1,7 @@
 # Advanced Planner AI Assistant (localizat la `deltatech_advanced_planner_ai/index.md`)
 
 - **Nume Tehnic:** `deltatech_advanced_planner_ai`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_advanced_planner_ai
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_advanced_planner_ai`
 - **Ultima Ingestie:** `2026-10-12`

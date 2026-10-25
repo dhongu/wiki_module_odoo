@@ -58,7 +58,7 @@ Date minime pentru demo:
 ## 5. Configurare inițială
 
 1. Instalați modulul `l10n_ro_anaf_partner` (dependențe: `l10n_ro_anaf_base`, `account` — fără module OCA).
-2. Verificați că utilizatorul de test are **grupul de acces RO** (altfel fila ANAF și meniul Log Modificări nu sunt vizibile).
+2. Verificați că utilizatorul de test are **grupul de acces RO** (altfel meniul Log Modificări nu este vizibil; fila „Monitorizare ANAF” de pe partener se vede pentru toți utilizatorii).
 3. Opțional, activați blocajele din **Setări → Configurări generale → Monitorizare parteneri ANAF (RO)**:
    **Blochează partenerii inactivi ANAF** și/sau **Blochează partenerii radiați la ANAF**.
    Cele două sunt **independente** — activarea unuia nu îl activează pe celălalt.
@@ -82,7 +82,7 @@ Inactiv ANAF, ultima verificare) și **starea de înregistrare** în dreapta (st
 ANAF, indicatorul Radiat la ANAF, data radierii). Când partenerul figurează în registrul
 contribuabililor inactivi, în antetul fișei apare banda roșie **INACTIV ANAF**.
 
-![Fișa partenerului — fila ANAF cu statutul și istoricul de stare](screenshots/01_partener_tab_anaf.png)
+![Fișa partenerului — fila „Monitorizare ANAF” cu statutul și istoricul de stare](screenshots/01_partener_tab_anaf.png)
 
 ### Pasul 3 — Partener radiat: banda de avertizare și starea de înregistrare
 
@@ -98,7 +98,7 @@ verificat doar pe acel câmp, ar fi trecut drept client în regulă.
 
 ### Pasul 4 — Log global al modificărilor ANAF (valori vechi → noi)
 
-Meniu **Contabilitate → Raportare → Log Modificări ANAF** — lista globală a tuturor evenimentelor
+Meniu **Contabilitate → Configurare → Contabilitate → Log Modificări ANAF** — lista globală a tuturor evenimentelor
 detectate la sincronizare, cu coloanele **Câmp**, **Valoare veche** și **Valoare nouă** (adresă, status
 TVA, inactivare, radiere).
 
@@ -155,7 +155,7 @@ decizia de a bloca sau doar avertiza.
 - [ ] Un partener radiat afișează banda roșie **RADIAT ANAF**, cu starea exactă întoarsă de ANAF.
 - [ ] Un partener **radiat dar neinactiv** este totuși semnalat (verificarea nu se bazează doar pe registrul inactivilor).
 - [ ] Un partener în **TRANSFER** *nu* este marcat ca radiat.
-- [ ] Logul global **Contabilitate → Raportare → Log Modificări ANAF** listează modificările cu valori vechi/noi, filtrat implicit pe „Stare neconformă", și cuprinde ambele stări.
+- [ ] Logul global **Contabilitate → Configurare → Contabilitate → Log Modificări ANAF** listează modificările cu valori vechi/noi, filtrat implicit pe „Stare neconformă", și cuprinde ambele stări.
 - [ ] Cu **Blochează partenerii inactivi ANAF** activ, postarea pe un partener inactiv este oprită cu mesaj clar; dezactivat, rămâne avertismentul soft.
 - [ ] Cu **Blochează partenerii radiați la ANAF** activ, postarea pe un partener radiat este oprită; dezactivat, rămâne avertismentul soft.
 - [ ] Activarea unui blocaj **nu** îl activează pe celălalt.
@@ -168,14 +168,15 @@ decizia de a bloca sau doar avertiza.
 | Postare blocată: partener RADIAT la ANAF | Bifa **Blochează partenerii radiați la ANAF** e activă și ANAF raportează radiere/dizolvare | Verificați starea la ANAF; dacă partenerul chiar e radiat, tranzacția nu trebuie facturată către el |
 | Partener radiat, dar nesemnalat | Starea întoarsă de ANAF nu e acoperită de lista de cuvinte-cheie | Adăugați starea în parametrul `l10n_ro_anaf_partner.struck_off_keywords` |
 | Preluarea datelor după CUI nu returnează nimic | CUI invalid sau webservice ANAF indisponibil | Verificați CUI-ul și reîncercați; ANAF poate fi temporar indisponibil |
-| Fila ANAF / meniul Log Modificări nu sunt vizibile | Lipsesc drepturile RO, sau partenerul nu e companie din România | Acordați grupul de acces RO și reîncărcați aplicațiile; verificați **Companie** și **Țara = România** pe partener |
+| Fila „Monitorizare ANAF” nu apare pe partener | Partenerul nu are **Țara = România**, sau nu e companie și nu are CUI | Verificați **Țara = România** și **Companie** (sau CUI completat) pe partener |
+| Meniul Log Modificări nu este vizibil | Lipsesc drepturile RO | Acordați grupul de acces RO și reîncărcați aplicațiile |
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**:
 
-1. `01_partener_tab_anaf.png` — fișa partenerului, fila ANAF cu banda INACTIV ANAF, statutul și istoricul.
+1. `01_partener_tab_anaf.png` — fișa partenerului, fila „Monitorizare ANAF” cu banda INACTIV ANAF, statutul și istoricul.
 2. `02_log_modificari_anaf.png` — logul global al modificărilor ANAF (Câmp / Valoare veche / Valoare nouă).
 3. `03_setari_blocaje_anaf.png` — cele două blocaje opt-in la postare: partener inactiv (FR-23) și partener radiat.
 4. `04_partener_radiat.png` — partener radiat la ANAF: banda RADIAT ANAF și starea de înregistrare, cu **Inactiv ANAF oprit**.

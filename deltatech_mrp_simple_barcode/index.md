@@ -1,7 +1,7 @@
 # Simple MRP barcode (localizat la `deltatech_mrp_simple_barcode/index.md`)
 
 - **Nume Tehnic:** `deltatech_mrp_simple_barcode`
-- **Versiune:** `19.0.0.0.1`
+- **Versiune:** `19.0.0.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_simple_barcode
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_mrp_simple_barcode`
 - **Ultima Ingestie:** `2026-07-31`

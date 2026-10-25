@@ -19,6 +19,11 @@ pentru pregătirea capitolului Cap 3.5 din manualul utilizator.
 
 Codul Fiscal Titlul II — 16% impozit profit; ajustări nedeductibile/neimpozabile
 
+Registrul de evidență fiscală: art. 19 alin. (7) Cod fiscal, pct. 8 din Normele metodologice
+(Titlul II) aprobate prin HG 1/2016 și **OMF 808/2026** (MO nr. 556 din 7 iulie 2026), care a abrogat OMFP 870/2005. Modelul
+din anexa ordinului are trei coloane — Nr. crt., Explicații, Valoarea (lei) — și este obligatoriu și
+în forma electronică (art. 5).
+
 ## 3. Utilizatori și roluri
 
 Contabil, Responsabil Fiscal
@@ -71,7 +76,7 @@ Apăsați **Calculează din contabilitate** ①. Modulul preia, cumulat de la 1 
 
 Opțional, apăsați **Sugerează deducere pierdere** pentru a aplica FIFO pierderile reportate (în limita
 a 70% din profitul impozabil, art.31 CF). Rezultatul: `Bază impozabilă × 16% = Impozit calculat`,
-ajustat cu creditul de sponsorizare și plățile anterioare → **De plată**.
+ajustat cu creditul de sponsorizare și impozitul datorat pentru trimestrele anterioare → **De plată**.
 
 ---
 
@@ -93,11 +98,40 @@ Dr 691   32.000 RON   (Cheltuieli cu impozitul pe profit)
 
 ---
 
-### Pasul 4 — Registrul de evidență fiscală (OMFP 870/2005)
+### Pasul 4 — Registrul de evidență fiscală (OMF 808/2026)
 
 Din **Contabilitate → Contabilitate → Registru de evidență fiscală** creați un registru pentru anul
-fiscal, selectați calculul anual (D101) și apăsați **Generează din FR-30**. Registrul listează
+fiscal, selectați calculul anual (D101) și apăsați **Generează din calculul D101**. Registrul listează
 ajustările fiscale pe rânduri (cu temei legal) și se **reconciliază** automat cu calculul de impozit.
+
+**Tipărește registrul** produce documentul pe modelul din anexa OMF 808/2026, cu trei coloane:
+Nr. crt., Explicații, Valoarea (lei). Rândurile urmăresc trecerea de la rezultatul contabil la
+impozit:
+
+1. venituri și cheltuieli pe conturi, cu totalurile lor;
+2. rezultatul contabil;
+3. ajustările fiscale — în explicație apar contul (după caz), temeiul legal, valoarea contabilă și
+   cea fiscală;
+4. rezultatul fiscal, pierderea fiscală recuperată și profitul impozabil;
+5. impozitul de 16%, sumele scăzute din impozit (sponsorizări), impozitul declarat în perioadele
+   anterioare și impozitul de plată (sau de recuperat).
+
+Valorile sunt cu semn; fiecare subtotal se obține din rândurile grupului său. Când rezultatul fiscal
+e negativ, pierderea de reportat apare ca rând informativ, iar profitul impozabil este zero.
+
+Două rânduri apar doar când e cazul:
+
+- **Diferență față de calculul D101** sub cheltuieli — s-au postat sau anulat note după rularea
+  calculului. Rulați din nou calculul și regenerați registrul înainte de tipărire.
+- **Diferență față de baza impozabilă din calculul D101** — de regulă diferența de amortizare
+  fiscală/contabilă, pe care calculul D101 nu o cuprinde încă. Rândul arată ce bază s-a folosit
+  pentru impozit; detaliul e în situația analitică.
+
+> ⚠️ **Limită:** modulul produce azi doar registrul **anual**. Plătitorii trimestriali (D100) și
+> firmele trecute de la micro la profit în cursul anului nu sunt încă acoperite (vezi ROADMAP).
+
+Tabelul detaliat pe coloane (valoare contabilă, valoare fiscală, ajustare, temei) se tipărește
+separat, din meniul de tipărire, ca **Situație analitică a ajustărilor fiscale** — notă de lucru, nu registrul.
 
 ![Registrul de evidență fiscală, reconciliat cu calculul D101](screenshots/05_registru_evidenta_fiscala.png)
 
@@ -135,7 +169,7 @@ Ce rămâne manual: validarea nedeductibilelor, neimpozabilelor și pierderilor 
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**,
 pe planul de conturi RO:
 

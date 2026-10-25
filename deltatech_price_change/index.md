@@ -1,7 +1,7 @@
 # Price Change (Modificare preț)
 
 - **Nume Tehnic:** `deltatech_price_change`
-- **Versiune:** `19.0.1.2.1`
+- **Versiune:** `19.0.1.2.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_price_change
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_price_change`
 - **Ultima Ingestie:** `2026-10-22`

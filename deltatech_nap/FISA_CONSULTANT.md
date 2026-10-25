@@ -105,6 +105,7 @@ Date minime pentru demo (folosite și în capturi):
    |---|---|---|
    | `deltatech_nap.use_statistical_safety_stock` | bifa **Stoc de siguranță statistic** precompletată | `False` |
    | `deltatech_nap.service_level` | nivelul de serviciu precompletat (`90` / `95` / `97` / `99`) | `95` |
+   | `deltatech_nap.use_measured_lead_time` | bifa **Lead time măsurat** precompletată | `False` |
    | `deltatech_nap.xyz_cv_x`, `deltatech_nap.xyz_cv_y` | pragurile coeficientului de variație pentru clasele X/Y/Z | `0.5`, `1.0` |
    | `deltatech_nap.forecast_method` | metoda de prognoză precompletată (`average` / `seasonal` / `holt` / `sba` / `auto`) | `average` |
    | `deltatech_nap.include_min_reordering_rules` | respectă și minimul din regulile de reaprovizionare ale locației | `False` |

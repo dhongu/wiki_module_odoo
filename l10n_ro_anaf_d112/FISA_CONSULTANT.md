@@ -241,6 +241,23 @@ După export, apăsați **Pregătește plăți** (declarația inițială, în st
 
 **Verificați înainte de a posta:** suma fiecărei plăți coincide cu *A_plata* din XML; contul de contrapartidă e cel al obligației; jurnalul e contul bancar din care se plătește (se poate schimba pe ciornă); IBAN-ul Trezoreriei e cel din lista ANAF pentru unitatea de care ține firma. Apoi postați plățile (nota **Dr 4315 / 4316 / 436 / 444 = Cr 5121**) și transmiteți banca ordinul de plată; plata în contul unic trebuie făcută până la scadență (25 a lunii următoare, prima zi lucrătoare dacă cade în weekend sau sărbătoare legală).
 
+### Import declarație D112 depusă cu alt program (preluare istoric)
+
+Când salarizarea trece în Odoo, declarațiile depuse anterior din alt program se preiau ca istoric:
+**Contabilitate → Raportare → Declarații ANAF → Import declarație D112** (meniu vizibil doar pentru
+`account.group_account_manager`). Se încarcă **XML-ul declarației** sau **PDF-ul ANAF** cu XML-ul
+atașat și se apasă **Import**.
+
+Rezultatul este declarația perioadei, marcată **Importată** și blocată ca exportată: liniile nominale
+(venit, contribuții, deduceri, impozit, tichete, zile, ore suspendate, pensionar, funcție de bază,
+scutire, exceptare) și certificatele de concediu medical, cu fișierul original atașat. Liniile se leagă
+de angajați după CNP. Drepturile de autor și zilierii nu se importă (au surse proprii) și sunt trecuți
+în istoricul declarației.
+
+Pe declarația importată, **Verifică** confruntă cifrele depuse cu regulile fiscale, iar cu
+`l10n_ro_anaf_d112_payroll` butonul **Creează / actualizează angajații** creează angajații lipsă din
+declarație. Importul **nu generează note contabile**.
+
 ### Note de monografie și raportare
 
 - D112 **nu generează note contabile** — citește datele salariale și obligațiile deja înregistrate în
@@ -268,6 +285,7 @@ După export, apăsați **Pregătește plăți** (declarația inițială, în st
 | `l10n_ro_payroll_import` | nota contabilă de salarii pentru reconciliere |
 | `account` | rulajul conturilor 421, 4315, 4316, 436, 444 |
 | `l10n_ro_config` (OCA) | furnizează codul CAEN al companiei (obligatoriu în XML) |
+| `l10n_ro_anaf_d112_payroll` | liniile din fluturași și, pe declarația importată, crearea angajaților |
 | `l10n_ro_anaf_submission` | flux viitor de depunere electronică, dacă va exista |
 
 Ce este automat: preluarea din payslip-uri, calculul totalurilor, reconcilierea cu contabilitatea,
@@ -290,6 +308,7 @@ reconciliere acceptate, verificarea finală în utilitarele ANAF și depunerea �
 - [ ] Namespace-ul XML corespunde perioadei: `v6` pentru luni ≤ dec 2025, `v7` de la ian 2026.
 - [ ] XML-ul trece validatorul oficial ANAF **DUKIntegrator** fără erori `E:` pentru angajați normali.
 - [ ] După export declarația se blochează; rectificativa se poate crea legată de inițială.
+- [ ] Importul unui XML D112 depus (sau al PDF-ului ANAF) creează declarația *Importată*, blocată, cu liniile legate de angajați după CNP; un XML al altui CUI sau al unei perioade deja declarate este refuzat.
 
 ---
 
@@ -305,6 +324,9 @@ reconciliere acceptate, verificarea finală în utilitarele ANAF și depunerea �
 | `Declarația exportată nu poate fi resetată. Creați o rectificativă.` | reset după export | creați o declarație rectificativă |
 | `Liniile unei declarații exportate nu pot fi modificate. Creați o rectificativă.` | editare după export | lucrați pe un document rectificativ nou |
 | DUK: `eroare regula: S9: cisAsig este obligatoriu` | angajat fără casă de sănătate derivată (județ firmă lipsă) | completați județul pe adresa firmei; `casaSn` se deduce din `casaAng` |
+| `Fișierul nu este o declarație D112 (XML sau PDF ANAF): ...` | la import, fișier care nu e XML D112 sau PDF fără XML atașat | încărcați XML-ul depus sau PDF-ul generat de DUKIntegrator |
+| `Declarația aparține CUI-ului ..., nu companiei ...` | la import, declarația altei firme | alegeți compania corectă în asistent |
+| `Există deja o declarație D112 pe această perioadă: ...` | la import, perioada are deja declarație | o lună declarată nu se importă a doua oară; dacă e o ciornă creată din greșeală, ștergeți-o și reimportați |
 | DUK: `eroare namespace` | XML generat cu `v6` depus pe o perioadă 2026 (sau invers) | versiunea XML se selectează automat după perioadă; verificați că perioada declarației e corectă |
 
 ---

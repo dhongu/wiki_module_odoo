@@ -1,7 +1,7 @@
 # eCommerce Country (localizat la `deltatech_website_country/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_country`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_country`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_country`
 - **Ultima Ingestie:** `2026-07-31`

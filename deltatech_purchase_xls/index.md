@@ -1,7 +1,7 @@
 # Deltatech Purchase XLS (localizat la `deltatech_purchase_xls/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_xls`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.6`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_xls`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_xls`
 - **Ultima Ingestie:** `2026-07-31`

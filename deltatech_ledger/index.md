@@ -1,7 +1,7 @@
 # Deltatech Ledger (localizat la `deltatech_ledger/index.md`)
 
 - **Nume Tehnic:** `deltatech_ledger`
-- **Versiune:** `19.0.0.1.0`
+- **Versiune:** `19.0.0.1.1`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_ledger`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_ledger`
 - **Ultima Ingestie:** `2026-10-09`

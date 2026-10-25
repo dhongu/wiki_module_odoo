@@ -1,7 +1,7 @@
 # Terrabit Base
 
 - **Nume Tehnic:** `terrabit_base`
-- **Versiune:** `19.0.1.0.10`
+- **Versiune:** `19.0.1.0.12`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_base
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_base`
 - **Ultima Ingestie:** `2026-10-09`

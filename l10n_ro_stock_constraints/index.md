@@ -1,7 +1,7 @@
 # Romania - Constrângeri de integritate a stocului (localizat la `l10n_ro_stock_constraints/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_constraints`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_constraints
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_constraints`
 - **Ultima Ingestie:** 2026-06-01

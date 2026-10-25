@@ -1,7 +1,7 @@
 # Deltatech Hierarchy Many2one Widget (localizat la `deltatech_widget_hierarchy_m2o/index.md`)
 
 - **Nume Tehnic:** `deltatech_widget_hierarchy_m2o`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_widget_hierarchy_m2o
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_widget_hierarchy_m2o`
 - **Ultima Ingestie:** `2026-07-31`

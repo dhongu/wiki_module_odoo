@@ -1,7 +1,7 @@
 # Romania - Repartizarea cheltuielilor indirecte pe centre de cost (localizat la `l10n_ro_cost_centers/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_cost_centers`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cost_centers
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_cost_centers`
 - **Ultima Ingestie:** `2026-06-08`

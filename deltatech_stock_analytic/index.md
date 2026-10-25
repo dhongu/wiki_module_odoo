@@ -1,7 +1,7 @@
 # Deltatech stock move analytic (localizat la `deltatech_stock_analytic/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_analytic`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_analytic
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_analytic`
 - **Ultima Ingestie:** `2026-10-09`

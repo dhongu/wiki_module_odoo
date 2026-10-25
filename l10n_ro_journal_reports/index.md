@@ -1,7 +1,7 @@
 # Romania - Cont corespondent în Cartea mare (localizat la `l10n_ro_journal_reports/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_journal_reports`
-- **Versiune:** `19.0.2.0.0`
+- **Versiune:** `19.0.2.0.6`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_journal_reports
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_journal_reports`
 - **Ultima Ingestie:** 2026-06-01

@@ -1,7 +1,7 @@
 # Deltatech ECR Connect (shared) (localizat la `deltatech_ecr_connect/index.md`)
 
 - **Nume Tehnic:** `deltatech_ecr_connect`
-- **Versiune:** `19.0.1.1.2`
+- **Versiune:** `19.0.1.1.7`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_ecr_connect
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_ecr_connect`
 - **Ultima Ingestie:** `2026-08-20`

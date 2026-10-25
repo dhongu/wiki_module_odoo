@@ -1,7 +1,7 @@
 # RMA Withdrawal (localizat la `deltatech_rma_withdrawal/index.md`)
 
 - **Nume Tehnic:** `deltatech_rma_withdrawal`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma_withdrawal
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_rma_withdrawal`
 - **Ultima Ingestie:** 2026-09-24

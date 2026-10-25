@@ -1,7 +1,7 @@
 # Helpdesk Tag Primary & Team Filter (localizat la `deltatech_helpdesk_tag_primary/index.md`)
 
 - **Nume Tehnic:** `deltatech_helpdesk_tag_primary`
-- **Versiune:** `19.0.0.0.0`
+- **Versiune:** `19.0.0.0.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_helpdesk_tag_primary
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_helpdesk_tag_primary`
 - **Ultima Ingestie:** `2026-06-09`

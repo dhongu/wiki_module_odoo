@@ -1,7 +1,7 @@
 # MRP Bom (localizat la `deltatech_mrp_bom/index.md`)
 
 - **Nume Tehnic:** `deltatech_mrp_bom`
-- **Versiune:** `19.0.1.0.5`
+- **Versiune:** `19.0.1.0.8`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_bom
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_mrp_bom`
 - **Ultima Ingestie:** `2026-07-31`

@@ -1,7 +1,7 @@
 # Notification Sound (localizat la `deltatech_notification_sound/index.md`)
 
 - **Nume Tehnic:** `deltatech_notification_sound`
-- **Versiune:** `19.0.2.0.0`
+- **Versiune:** `19.0.2.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_notification_sound
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_notification_sound`
 - **Ultima Ingestie:** `2026-08-20`

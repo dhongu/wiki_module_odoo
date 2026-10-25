@@ -1,7 +1,7 @@
 # Products Alternative (localizat la `deltatech_alternative/index.md`)
 
 - **Nume Tehnic:** `deltatech_alternative`
-- **Versiune:** `19.0.2.2.0`
+- **Versiune:** `19.0.2.2.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_alternative
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_alternative`
 - **Ultima Ingestie:** `2026-10-22`

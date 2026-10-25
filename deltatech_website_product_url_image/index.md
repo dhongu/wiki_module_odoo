@@ -1,7 +1,7 @@
 # eCommerce Product Image URL Link (localizat la `deltatech_website_product_url_image/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_product_url_image`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.6`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_product_url_image`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_product_url_image`
 - **Ultima Ingestie:** `2026-06-03`

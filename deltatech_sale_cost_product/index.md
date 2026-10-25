@@ -1,7 +1,7 @@
 # Deltatech Sale Cost on Order (localizat la `deltatech_sale_cost_product/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_cost_product`
-- **Versiune:** `19.0.0.0.2`
+- **Versiune:** `19.0.0.0.4`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_cost_product`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_cost_product`
 - **Ultima Ingestie:** `2026-06-03`

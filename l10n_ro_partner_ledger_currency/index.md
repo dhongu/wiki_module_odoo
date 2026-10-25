@@ -1,7 +1,7 @@
 # Romania - Fișa partenerului în valută (localizat la `l10n_ro_partner_ledger_currency/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_partner_ledger_currency`
-- **Versiune:** `19.0.1.4.5`
+- **Versiune:** `19.0.1.4.8`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_partner_ledger_currency
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_partner_ledger_currency`
 - **Ultima Ingestie:** 2026-09-24

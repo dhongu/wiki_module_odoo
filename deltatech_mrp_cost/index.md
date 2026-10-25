@@ -1,7 +1,7 @@
 # MRP Cost (localizat la `deltatech_mrp_cost/index.md`)
 
 - **Nume Tehnic:** `deltatech_mrp_cost`
-- **Versiune:** `19.0.2.0.6`
+- **Versiune:** `19.0.2.0.9`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_cost
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_mrp_cost`
 - **Ultima Ingestie:** `2026-06-02`

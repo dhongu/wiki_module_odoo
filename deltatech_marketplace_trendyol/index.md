@@ -1,7 +1,7 @@
 # Conector Trendyol Marketplace (localizat la `deltatech_marketplace_trendyol/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_trendyol`
-- **Versiune:** `19.0.1.4.1`
+- **Versiune:** `19.0.1.4.5`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_trendyol`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_trendyol`
 - **Ultima Ingestie:** `2026-09-29`

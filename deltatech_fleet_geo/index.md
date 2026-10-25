@@ -1,7 +1,7 @@
 # Deltatech Fleet Geo (localizat la `deltatech_fleet_geo/index.md`)
 
 - **Nume Tehnic:** `deltatech_fleet_geo`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_fleet_geo
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_fleet_geo`
 - **Ultima Ingestie:** `2026-10-09`

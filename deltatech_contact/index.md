@@ -1,7 +1,7 @@
 # Deltatech Contacts (localizat la `deltatech_contact/index.md`)
 
 - **Nume Tehnic:** `deltatech_contact`
-- **Versiune:** `19.0.1.4.8`
+- **Versiune:** `19.0.1.4.12`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_contact`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_contact`
 - **Ultima Ingestie:** `2026-08-20`

@@ -12,8 +12,7 @@
 ## 1. Scop business
 
 Modulul permite importul lunar al notei contabile de salarii din aplicații externe
-de salarizare, precum SAGA Salarii, Nexus HR, Charisma sau fișiere interne exportate
-în format generic.
+de salarizare sau din fișiere interne exportate în format generic.
 
 Scopul este ca departamentul financiar să poată prelua rapid nota de salarii în
 Odoo, cu mapare pe conturi contabile și centre de cost, fără reintroducere manuală
@@ -60,7 +59,7 @@ separată, tratată în FR-44.
 
 ### 4.2 Mapare conturi salarii
 
-**Contabilitate → Configurare → Mapare Conturi Salarii → Nou**
+**Contabilitate → Contabilitate → Note Salarii → Configurare Mapare Conturi → Nou**
 
 | Câmp | Exemplu |
 |------|---------|
@@ -134,7 +133,7 @@ Separatorul poate fi virgulă sau punct și virgulă.
 
 ### Pasul 1 — Deschidere wizard import
 
-**Contabilitate → Înregistrări → Import Note Salarii**
+**Contabilitate → Contabilitate → Note Salarii → Import Note Salarii**
 
 Selectați:
 
@@ -157,7 +156,7 @@ Sistemul:
 - aplică distribuția analitică pentru centrele de cost;
 - creează documentul de import în starea **Schiță**.
 
-Documentele importate se regăsesc în **Note Salarii → Import Note Salarii**:
+Documentele importate se regăsesc în **Contabilitate → Contabilitate → Note Salarii → Import Note Salarii**:
 
 ![Lista notelor de salarii importate](screenshots/02_lista_importuri.png)
 
@@ -243,7 +242,7 @@ Ce rămâne manual: validarea semantică a salariilor și reconcilierea cu D112/
 
 ## 11. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**,
 pe planul de conturi RO:
 

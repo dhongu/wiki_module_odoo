@@ -1,7 +1,7 @@
 # eCommerce Portal (localizat la `deltatech_website_sale_portal/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_sale_portal`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_portal`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_sale_portal`
 - **Ultima Ingestie:** `2026-07-31`

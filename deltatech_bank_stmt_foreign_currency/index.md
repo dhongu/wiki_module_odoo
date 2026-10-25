@@ -1,7 +1,7 @@
 # Bank Statement Foreign Currency (localizat la `deltatech_bank_stmt_foreign_currency/index.md`)
 
 - **Nume Tehnic:** `deltatech_bank_stmt_foreign_currency`
-- **Versiune:** `19.0.0.0.2`
+- **Versiune:** `19.0.0.0.6`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_bank_stmt_foreign_currency
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_bank_stmt_foreign_currency`
 - **Ultima Ingestie:** `2026-06-09`

@@ -1,7 +1,7 @@
 # Partner Merge in Bulk (localizat la `deltatech_partner_merge/index.md`)
 
 - **Nume Tehnic:** `deltatech_partner_merge`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.2.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_partner_merge
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_partner_merge`
 - **Ultima Ingestie:** `2026-10-23`

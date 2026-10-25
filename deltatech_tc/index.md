@@ -1,7 +1,7 @@
 # Terrabit Connect - Base (localizat la `deltatech_tc/index.md`)
 
 - **Nume Tehnic:** `deltatech_tc`
-- **Versiune:** `19.0.1.2.1`
+- **Versiune:** `19.0.1.2.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_tc
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_tc`
 - **Ultima Ingestie:** `2026-09-29`

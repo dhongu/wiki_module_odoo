@@ -1,7 +1,7 @@
 # Romania - Cash Sequence (localizat la `l10n_ro_account_sequence/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_account_sequence`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.6`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_account_sequence
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_account_sequence`
 - **Ultima Ingestie:** `2026-06-08`

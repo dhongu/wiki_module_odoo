@@ -1,7 +1,7 @@
 # Deltatech Sale Order Stage Route (localizat la `deltatech_sale_stage_route/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_stage_route`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** [https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_sale_stage_route](https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_sale_stage_route)
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_sale_stage_route`
 - **Ultima Ingestie:** `2026-08-20`

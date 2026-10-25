@@ -1,7 +1,7 @@
 # eCommerce Product Price Without Tax (localizat la `deltatech_website_price_without_tax/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_price_without_tax`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.7`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_price_without_tax`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_price_without_tax`
 - **Ultima Ingestie:** `2026-06-03`

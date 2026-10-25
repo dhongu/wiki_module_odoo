@@ -1,7 +1,7 @@
 # Deltatech Average Payment Period (localizat la `deltatech_average_payment_period/index.md`)
 
 - **Nume Tehnic:** `deltatech_average_payment_period`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_average_payment_period`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_average_payment_period`
 - **Ultima Ingestie:** `2026-06-02`

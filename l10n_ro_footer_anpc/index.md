@@ -1,7 +1,7 @@
 # România - Footer ANPC (localizat la `l10n_ro_footer_anpc/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_footer_anpc`
-- **Versiune:** `19.0.0.0.1`
+- **Versiune:** `19.0.0.0.5`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_footer_anpc
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_footer_anpc`
 - **Ultima Ingestie:** `2026-06-08`

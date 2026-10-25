@@ -1,7 +1,7 @@
 # Stock Reports (localizat la `deltatech_stock_report/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_report`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.8`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_report
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_report`
 - **Ultima Ingestie:** `2026-08-20`

@@ -1,7 +1,7 @@
 # Deltatech Sale Order Search by Partner Fields (localizat la `deltatech_saleorder_search/index.md`)
 
 - **Nume Tehnic:** `deltatech_saleorder_search`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_saleorder_search`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_saleorder_search`
 - **Ultima Ingestie:** `2026-07-31`

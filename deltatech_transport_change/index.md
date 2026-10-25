@@ -1,7 +1,7 @@
 # DeltaTech Transport Change (localizat la `deltatech_transport_change/index.md`)
 
 - **Nume Tehnic:** `deltatech_transport_change`
-- **Versiune:** `19.0.0.1.4`
+- **Versiune:** `19.0.0.1.8`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_transport_change`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_transport_change`
 - **Ultima Ingestie:** `2026-06-03`

@@ -190,7 +190,7 @@ recipisei + **Marchează acceptată** (la metoda manuală), activarea cron-ului.
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**,
 pe planul de conturi RO; depunerile demo sunt create direct în baza de test, fără conexiune la ANAF:
 

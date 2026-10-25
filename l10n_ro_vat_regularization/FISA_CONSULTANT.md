@@ -13,7 +13,7 @@ La finele fiecărei perioade de TVA, conturile **4426** (TVA deductibilă) și *
 se închid între ele, iar diferența se reflectă în **4423** (TVA de plată) sau **4424** (TVA de
 recuperat). Modulul calculează automat soldurile perioadei din notele postate și generează, cu un
 singur clic, **nota de regularizare** corespunzătoare. Include un flux ciornă → postată → anulată și
-o verificare în checklistul de închidere (account.return / D300).
+o verificare în checklistul de închidere (`l10n_ro_period_close_enhanced` / D300).
 
 ## 2. Bază legală și context
 
@@ -99,7 +99,7 @@ contabilă), apoi **Resetată la ciornă** pentru refacere.
 - nota este echilibrată și legată de regularizare (buton „Notă contabilă");
 - soldurile se calculează **numai din înregistrările postate** ale perioadei;
 - rezultatul trebuie să corespundă **decontului D300** al perioadei; dacă este instalat modulul de
-  închidere (account.return), checklistul semnalează lipsa regularizării pentru perioadă.
+  închidere a perioadei (`l10n_ro_period_close_enhanced`), checklistul semnalează lipsa regularizării pentru perioadă.
 
 ## 7. Legături cu alte module / declarații
 
@@ -107,7 +107,7 @@ contabilă), apoi **Resetată la ciornă** pentru refacere.
 |---|---|---|
 | `account` | nota de regularizare și soldurile conturilor | dependență (manifest) |
 | `l10n_ro` | plan de conturi RO (4426/4427/44231/4424) | dependență (manifest) |
-| `account.return` / D300 | checklistul de închidere verifică existența regularizării postate pentru perioadă | integrare (detectată la runtime) |
+| `l10n_ro_period_close_enhanced` / D300 | checklistul de închidere verifică existența regularizării postate pentru perioadă | integrare (în modulul de închidere) |
 | `l10n_ro_anaf_d300` | decontul de TVA al perioadei — rezultatul regularizării trebuie să coincidă | corelare manuală |
 
 Ce este automat: precompletarea conturilor/jurnalului, calculul soldurilor 4426/4427, determinarea
@@ -138,7 +138,7 @@ de anulare/refacere.
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**,
 pe planul de conturi RO (`setup_country("ro")`):
 

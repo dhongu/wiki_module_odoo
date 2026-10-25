@@ -1,7 +1,7 @@
 # Terrabit Sale Order Report (localizat la `l10n_ro_sale_order_report/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_sale_order_report`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.14`
 - **Cale:** `https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_sale_order_report`
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_sale_order_report`
 - **Ultima Ingestie:** `2026-06-08`

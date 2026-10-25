@@ -1,7 +1,7 @@
 # Invoice Weight (localizat la `deltatech_invoice_weight/index.md`)
 
 - **Nume Tehnic:** `deltatech_invoice_weight`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_weight
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_invoice_weight`
 - **Ultima Ingestie:** `2026-06-02`

@@ -1,7 +1,7 @@
 # Terrabit Picking Flow (localizat la `terrabit_picking_flow/index.md`)
 
 - **Nume Tehnic:** `terrabit_picking_flow`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_picking_flow`
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_picking_flow`
 - **Ultima Ingestie:** `2026-07-31`

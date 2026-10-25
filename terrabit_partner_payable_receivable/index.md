@@ -1,7 +1,7 @@
 # Terrabit Payable and Receivable in Partner Form (localizat la `terrabit_partner_payable_receivable/index.md`)
 
 - **Nume Tehnic:** `terrabit_partner_payable_receivable`
-- **Versiune:** `19.0.1.2.1`
+- **Versiune:** `19.0.1.2.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_partner_payable_receivable
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_partner_payable_receivable`
 - **Ultima Ingestie:** `2026-08-20`

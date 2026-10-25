@@ -108,5 +108,5 @@ Ce rămâne manual: configurarea tarifelor pe centrele de lucru și verificarea 
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/01_setari_mrp_labour.png` | Setări Contabilitate — secțiunea Manoperă Producție cu conturile 331 și 921 configurate |
-| 2 | `screenshots/02_locatie_productie.png` | Locația Production — câmpul Costul producției setat pe 331000 |
+| 1 | `static/description/01_setari_mrp_labour.png` | Setări Contabilitate — secțiunea Manoperă Producție cu conturile 331 și 921 configurate |
+| 2 | `static/description/02_locatie_productie.png` | Locația Production — câmpul Costul producției setat pe 331000 |

@@ -1,7 +1,7 @@
 # Deltatech UBL Despatch Advice (localizat la `deltatech_account_edi_ubl_advice/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_edi_ubl_advice`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_account_edi_ubl_advice`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_account_edi_ubl_advice`
 - **Ultima Ingestie:** `2026-07-31`

@@ -1,7 +1,7 @@
 # Deltatech Invoice Receipt (localizat la `deltatech_invoice_receipt/index.md`)
 
 - **Nume Tehnic:** `deltatech_invoice_receipt`
-- **Versiune:** `19.0.2.0.0`
+- **Versiune:** `19.0.2.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_receipt
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_invoice_receipt`
 - **Ultima Ingestie:** `2026-06-02`

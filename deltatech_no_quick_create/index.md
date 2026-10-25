@@ -1,7 +1,7 @@
 # No quick_create (localizat la `deltatech_no_quick_create/index.md`)
 
 - **Nume Tehnic:** `deltatech_no_quick_create`
-- **Versiune:** `19.0.2.0.1`
+- **Versiune:** `19.0.2.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_no_quick_create
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_no_quick_create`
 - **Ultima Ingestie:** `2026-08-20`

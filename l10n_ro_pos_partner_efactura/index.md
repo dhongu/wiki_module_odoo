@@ -1,7 +1,7 @@
 # Romania - POS Partner e-Factura Check
 
 - **Nume Tehnic:** `l10n_ro_pos_partner_efactura`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.1.2`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_pos_partner_efactura
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_pos_partner_efactura`
 - **Ultima Ingestie:** `2026-10-22`

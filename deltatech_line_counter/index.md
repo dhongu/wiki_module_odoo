@@ -1,7 +1,7 @@
 # Deltatech Line Counter (localizat la `deltatech_line_counter/index.md`)
 
 - **Nume Tehnic:** `deltatech_line_counter`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_line_counter](https://github.com/dhongu/deltatech/tree/19.0/deltatech_line_counter)
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_line_counter`
 - **Ultima Ingestie:** `2026-07-31`

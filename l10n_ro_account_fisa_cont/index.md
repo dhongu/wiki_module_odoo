@@ -1,7 +1,7 @@
 # Romania - Fișă de cont (localizat la `l10n_ro_account_fisa_cont/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_account_fisa_cont`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.7`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_fisa_cont
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_account_fisa_cont`
 - **Ultima Ingestie:** `2026-08-20`

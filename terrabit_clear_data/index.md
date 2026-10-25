@@ -1,7 +1,7 @@
 # Terrabit Clear Data (localizat la `terrabit_clear_data/index.md`)
 
 - **Nume Tehnic:** `terrabit_clear_data`
-- **Versiune:** `19.0.1.0.11`
+- **Versiune:** `19.0.1.0.12`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_clear_data
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_clear_data`
 - **Ultima Ingestie:** `2026-10-09`

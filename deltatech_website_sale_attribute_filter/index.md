@@ -1,7 +1,7 @@
 # Website Sale Attribute Filter (localizat la `deltatech_website_sale_attribute_filter/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_sale_attribute_filter`
-- **Versiune:** `19.0.0.1.0`
+- **Versiune:** `19.0.0.1.2`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_attribute_filter`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_sale_attribute_filter`
 - **Ultima Ingestie:** `2026-07-31`

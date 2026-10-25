@@ -1,7 +1,7 @@
 # Deltatech Delivery IOT (localizat la `deltatech_delivery_iot/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_iot`
-- **Versiune:** `19.0.0.0.2`
+- **Versiune:** `19.0.0.0.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_delivery_iot
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_delivery_iot`
 - **Ultima Ingestie:** `2026-08-20`

@@ -1,7 +1,7 @@
 # Invoice Files Export (Export fișiere facturi SPV)
 
 - **Nume Tehnic:** `l10n_ro_einvoice_download`
-- **Versiune:** `19.0.0.0.4`
+- **Versiune:** `19.0.0.0.5`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_einvoice_download
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_einvoice_download`
 - **Ultima Ingestie:** `2026-10-09`

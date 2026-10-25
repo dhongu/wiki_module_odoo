@@ -1,7 +1,7 @@
 # POS Online Payment Safeguards (localizat la `deltatech_pos_online_payment/index.md`)
 
 - **Nume Tehnic:** `deltatech_pos_online_payment`
-- **Versiune:** `19.0.0.0.1`
+- **Versiune:** `19.0.0.0.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos_online_payment
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_pos_online_payment`
 - **Ultima Ingestie:** `2026-08-20`

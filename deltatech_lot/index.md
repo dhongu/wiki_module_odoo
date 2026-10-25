@@ -1,7 +1,7 @@
 # Generare/Selectare Lot (localizat la `deltatech_lot/index.md`)
 
 - **Nume Tehnic:** `deltatech_lot`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_lot](https://github.com/dhongu/deltatech/tree/19.0/deltatech_lot)
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_lot`
 - **Ultima Ingestie:** `2026-07-31`

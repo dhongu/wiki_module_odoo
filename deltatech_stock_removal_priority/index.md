@@ -1,7 +1,7 @@
 # Stock Removal Location by Priority (localizat la `deltatech_stock_removal_priority/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_removal_priority`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_removal_priority
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_removal_priority`
 - **Ultima Ingestie:** `2026-07-31`

@@ -1,7 +1,7 @@
 # Romania - Pachet contabilitate de bază (localizat la `l10n_ro_account_pack/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_account_pack`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_pack
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_account_pack`
 - **Ultima Ingestie:** `2026-10-09`

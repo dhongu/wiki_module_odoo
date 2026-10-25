@@ -1,7 +1,7 @@
 # Terrabit Google Tag Manager (localizat la `terrabit_google_tag/index.md`)
 
 - **Nume Tehnic:** `terrabit_google_tag`
-- **Versiune:** `19.0.0.1.0`
+- **Versiune:** `19.0.0.1.3`
 - **Cale:** [https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_google_tag](https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_google_tag)
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_google_tag`
 - **Ultima Ingestie:** `2026-07-31`

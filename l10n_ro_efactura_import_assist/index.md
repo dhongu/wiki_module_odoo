@@ -1,7 +1,7 @@
 # Romania - Asistent import e-Factura (verificare față de comandă) (localizat la `l10n_ro_efactura_import_assist/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_efactura_import_assist`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_efactura_import_assist
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_efactura_import_assist`
 - **Ultima Ingestie:** `2026-09-12`

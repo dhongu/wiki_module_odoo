@@ -1,7 +1,7 @@
 # Services Consumable (localizat la `deltatech_service_consumable/index.md`)
 
 - **Nume Tehnic:** `deltatech_service_consumable`
-- **Versiune:** `19.0.1.1.6`
+- **Versiune:** `19.0.1.1.11`
 - **Cale:** `https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_consumable`
 - **Cale Locală:** `odoo-addons/deltatech_service/deltatech_service_consumable`
 - **Ultima Ingestie:** `2026-06-08`

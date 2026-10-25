@@ -1,7 +1,7 @@
 # IAP Server - Service SMS
 
 - **Nume Tehnic:** `terrabit_iap_server_sms`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.6`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_sms
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server_sms`
 - **Ultima Ingestie:** `2026-10-09`

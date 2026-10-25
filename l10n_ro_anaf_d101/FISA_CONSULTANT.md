@@ -16,7 +16,7 @@ nu reintroduce date: alege înregistrarea de calcul anual, apasă un buton și o
 ## 2. Bază legală și context
 
 Legea 227/2015 (Codul fiscal), Titlul II — impozit pe profit; structura XML conform **OPANAF
-206/11.02.2025** (declarație 101, schema v3). Termen de depunere: 25 a celei de-a treia/șasea luni
+206/11.02.2025** (declarație 101, structura v10 — cea citită de validatorul oficial). Termen de depunere: 25 a celei de-a treia/șasea luni
 de la închiderea exercițiului (regula generală pentru plătitorii de impozit pe profit).
 
 ## 3. Utilizatori și roluri
@@ -44,7 +44,7 @@ pentru demo:
 
 ## 6. Flux de utilizare
 
-> **Capturi:** se generează cu `fisa-screenshots` (vezi secțiunea 10); încă nu există în `readme/screenshots/`.
+> **Capturi:** se generează cu `fisa-screenshots` (vezi secțiunea 10); încă nu există în `static/description/`.
 
 ### Pasul 1 — Calculul anual de impozit pe profit
 
@@ -64,15 +64,15 @@ e corect. Acestea devin indicatorii P1–P53 ai declarației.
 
 ### Pasul 3 — Exportul XML D101
 
-Apăsați butonul **Export D101 XML**. Sistemul construiește elementul `declaratie101` (schema v3),
+Apăsați butonul **Export D101 XML**. Sistemul construiește elementul `declaratie101` (structura v10),
 calculează numărul de evidență a plății și scadența, **validează XML-ul împotriva XSD-ului oficial**
 și oferă fișierul spre descărcare. Importați-l în **DUKIntegrator** pentru depunere. Exemplu de
 fișier generat (pentru venituri 1.000.000, cheltuieli 700.000, cheltuieli nedeductibile 50.000 lei):
 
 ```xml
-<declaratie101 xmlns="mfp:anaf:dgti:d101:declaratie:v3" an="2026" an_i="2026" luna="12" luna_i="1"
-               cod_obligatie="103" data_i="01.01.2026" data_s="31.12.2026" scadenta="251826"
-               cod_bug="20470101" nr_evid="11103011226251826000042" totalPlata_A="3868000"
+<declaratie101 xmlns="mfp:anaf:dgti:d101:declaratie:v10" an="2026" an_i="2026" luna="12" luna_i="1"
+               cod_obligatie="103" Data_I="01.01.2026" Data_S="31.12.2026" scadenta="250327"
+               d_reg="0" cod_bug="20470101" nr_evid="11103011226250327000037" totalPlata_A="3868000"
                cif="14399840" caen="6201" denumire="RO Company"
                P1="1000000" P2="700000" P3="300000" P7="300000" P10="300000"
                P22="300000" P34="50000" P35="350000" P40="350000"

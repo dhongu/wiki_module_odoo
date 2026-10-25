@@ -78,7 +78,7 @@ Date minime pentru demo:
 
 1. Instalați modulul `l10n_ro_payment_allocation_report` pe baza demo.
 2. Verificați că modulul `account_reports` (Enterprise) este instalat — este cerut de manifest.
-3. Confirmați apariția celor două intrări în **Contabilitate → Raportare → Rapoarte partener**
+3. Confirmați apariția celor două intrări în **Contabilitate → Raportare → Rapoarte parteneri**
    (în lipsa modulului *Accounting*, aplicația apare ca **Facturare**): **Alocarea plăților** și
    **Stingerea facturilor**.
 4. Postați setul minim de documente din secțiunea 4 și reconciliați-le (din extras sau manual).
@@ -90,8 +90,8 @@ Nu există parametri de configurare — raportul citește direct reconcilierile 
 
 ### Pasul 1 — Deschiderea raportului pe luna de verificat
 
-Accesați **Contabilitate → Raportare → Rapoarte partener → Alocarea plăților**. Dacă modulul
-*Accounting* nu este instalat, aplicația se numește **Facturare** în loc de **Contabilitate**. Raportul se
+Accesați **Contabilitate → Raportare → Rapoarte parteneri → Alocarea plăților**. Dacă modulul
+*Accounting* nu este instalat, aplicația apare ca **Facturare** în loc de **Contabilitate**. Raportul se
 deschide pe **luna curentă** și grupează alocările în **până la patru secțiuni**, fiecare cu
 subtotalul ei. O secțiune apare **doar dacă are conținut** — pe o bază fără POS veți vedea de
 regulă doar primele trei, iar dacă nu s-au emis note de credit, doar primele două:
@@ -109,7 +109,7 @@ contrapartidă. Sensul — plată sau încasare — se ia din contul de terți (
 
 **Găsiți pe ecran:** rândurile de secțiune, îngroșate, cu suma alocată pe fiecare; la finalul
 raportului, câte un total per flux — **Total plăți către furnizori**, **Total încasări de la
-clienți** — și, când există mai multe fluxuri, **Total stins (toate secțiunile de mai sus)**.
+clienți** — și, când există mai multe fluxuri, **Total stins (plăți, încasări și alte stingeri)**.
 
 **Verificați înainte de a continua:** perioada selectată este luna de verificat; **Total plăți
 către furnizori** corespunde **rulajului creditor** al conturilor de trezorerie din extrasele
@@ -159,7 +159,7 @@ partidele care rămân deschise pe 401/4111 la finalul lunii.
 
 ### Pasul 5 — Invers: ce a închis o factură
 
-Accesați **Contabilitate → Raportare → Rapoarte partener → Stingerea facturilor**. Aceleași alocări,
+Accesați **Contabilitate → Raportare → Rapoarte parteneri → Stingerea facturilor**. Aceleași alocări,
 grupate **pornind de la factură**: sub fiecare factură apar documentele care au închis-o.
 
 **Găsiți pe ecran:** factura la primul nivel, cu *Valoare document* și *Sold restant*; sub ea,
@@ -236,7 +236,7 @@ fost reconciliat — o factură plătită, dar nereconciliată, nu apare.
 ## 8. Verificări pentru consultant
 
 - [ ] Modulul se instalează fără erori pe baza demo.
-- [ ] Ambele rapoarte apar în **Contabilitate → Raportare → Rapoarte partener**.
+- [ ] Ambele rapoarte apar în **Contabilitate → Raportare → Rapoarte parteneri**.
 - [ ] Pe o plată care stinge mai multe facturi, suma alocărilor de pe facturi este egală cu suma
       alocată pe plată.
 - [ ] Pe scenariul factură + storno + plată pentru diferență, storno-ul apare sub factură, iar
@@ -270,7 +270,7 @@ interpretare a datelor:
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**, pe
 planul de conturi RO (`setup_country("ro")` → conturile 401/4111/5121):
 
@@ -300,5 +300,6 @@ explicație, operatorul îl caută lângă plată și trage concluzia că raport
 
 De asemenea, subliniați că fiecare flux are totalul lui: **Total plăți către furnizori** se
 confruntă cu rulajul creditor al trezoreriei, **Total încasări de la clienți** cu cel debitor, iar
-**Total stins** le adună pe toate, împreună cu stingerile fără numerar. Adunarea plăților cu
+**Total stins** adună plățile, încasările și stingerile fără numerar. Reconcilierile fără factură
+**nu** intră în el: nu sting facturi, deci nu au ce căuta într-un total de documente stinse. Adunarea plăților cu
 încasările într-o singură cifră duce la raportarea unei ieșiri de bani mai mari decât cea reală.

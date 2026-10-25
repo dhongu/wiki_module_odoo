@@ -115,5 +115,5 @@ Ce rămâne manual: corecțiile legitime prin documente dedicate.
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/01_receptie_validata.png` | Recepție în stare Efectuat — mișcări valorificate, linii blocate la editare |
-| 2 | `screenshots/02_produs_cantitate_stoc.png` | Produsul cu Cantitate în stoc 10,00 ① — constraint SQL pozitiv activ |
+| 1 | `static/description/01_receptie_validata.png` | Recepție în stare Efectuat — mișcări valorificate, linii blocate la editare |
+| 2 | `static/description/02_produs_cantitate_stoc.png` | Produsul cu Cantitate în stoc 10,00 ① — constraint SQL pozitiv activ |

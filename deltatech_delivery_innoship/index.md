@@ -1,7 +1,7 @@
 # Innoship Shipping (localizat la `deltatech_delivery_innoship/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_innoship`
-- **Versiune:** `19.0.1.2.1`
+- **Versiune:** `19.0.1.2.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_innoship
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_innoship`
 - **Ultima Ingestie:** `2026-09-29`

@@ -1,7 +1,7 @@
 # Website Sale Cost Price (localizat la `deltatech_website_sale_cost_price/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_sale_cost_price`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_cost_price
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_sale_cost_price`
 - **Ultima Ingestie:** `2026-07-31`

@@ -1,7 +1,7 @@
 # Sale Order activity type search (localizat la `deltatech_sale_activity_search/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_activity_search`
-- **Versiune:** `19.0.0.0.0`
+- **Versiune:** `19.0.0.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_activity_search
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_activity_search`
 - **Ultima Ingestie:** `2026-07-31`

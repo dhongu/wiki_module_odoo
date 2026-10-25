@@ -1,10 +1,11 @@
 # Product Labels (localizat la `deltatech_product_labels/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_labels`
-- **Versiune:** `19.0.1.1.4`
+- **Versiune:** `19.0.1.3.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_labels
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_labels`
 - **Ultima Ingestie:** `2026-06-01`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

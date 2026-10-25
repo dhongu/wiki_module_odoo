@@ -1,7 +1,7 @@
 # Deltatech Competitors Price (localizat la `deltatech_competitors_price/index.md`)
 
 - **Nume Tehnic:** `deltatech_competitors_price`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_competitors_price
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_competitors_price`
 - **Ultima Ingestie:** `2026-07-31`

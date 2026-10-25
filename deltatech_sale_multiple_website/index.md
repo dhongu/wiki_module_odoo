@@ -1,7 +1,7 @@
 # eCommerce Qty Multiple (localizat la `deltatech_sale_multiple_website/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_multiple_website`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.3`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_multiple_website`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_multiple_website`
 - **Ultima Ingestie:** `2026-07-31`

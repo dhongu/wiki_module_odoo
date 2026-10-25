@@ -1,7 +1,7 @@
 # Stock Inventory (localizat la `deltatech_stock_inventory/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_inventory`
-- **Versiune:** `19.0.2.10.0`
+- **Versiune:** `19.0.2.10.9`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_inventory
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_inventory`
 - **Ultima Ingestie:** `2026-09-24`

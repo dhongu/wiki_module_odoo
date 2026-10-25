@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `l10n_ro_excise_duty`
 - **Nume anterior:** `l10n_ro_excise` (redenumit pe 23.09.2026: numele vechi e ocupat pe Odoo Apps de alt furnizor)
-- **Versiune:** `19.0.1.4.1`
+- **Versiune:** `19.0.1.4.5`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_excise_duty
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_excise_duty`
 - **Ultima Ingestie:** 2026-09-23

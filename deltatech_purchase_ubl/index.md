@@ -1,7 +1,7 @@
 # Purchase UBL (localizat la `deltatech_purchase_ubl/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_ubl`
-- **Versiune:** `19.0.1.4.19`
+- **Versiune:** `19.0.1.4.21`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_ubl
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_ubl`
 - **Ultima Ingestie:** `2026-10-21`

@@ -1,7 +1,7 @@
 # Deltatech Delivery Dropshiping (localizat la `deltatech_delivery_dropshiping/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_dropshiping`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_dropshiping
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_dropshiping`
 - **Ultima Ingestie:** `2026-08-20`

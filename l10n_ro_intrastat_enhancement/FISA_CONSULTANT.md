@@ -149,8 +149,10 @@ companiei în forma cerută de INS — și o descarcă, gata de încărcat pe po
 Dacă suita include modulul D390, în bara de instrumente a raportului Intrastat apare și
 butonul **Reconciliere D390**. Apăsarea lui compară, pentru aceeași perioadă, valoarea
 bunurilor din Intrastat cu declarația recapitulativă D390: **sosiri Intrastat ↔ achiziții
-intracomunitare de bunuri D390 (cod „A")** și **expedieri Intrastat ↔ livrări + operațiuni
-triunghiulare D390 (coduri „L"+„T")**. Fereastra afișează cele două valori, diferența absolută
+intracomunitare de bunuri D390 (cod „A")** și **expedieri Intrastat ↔ livrări intracomunitare
+de bunuri D390 (cod „L")**. Operațiunile triunghiulare D390 (cod „T") apar separat, informativ:
+intermediarul nu le declară în Intrastat, pentru că marfa nu trece prin România. Valorile D390
+au semnul din declarație (note de credit nete = valoare negativă). Fereastra afișează cele două valori, diferența absolută
 și procentuală, plus un status: **Concordant** / **Diferență minoră** (sub 5%) / **De
 verificat** (peste 5%).
 
@@ -220,7 +222,7 @@ efectivă a fișierului pe portalul INS, ajustarea pragurilor la valorile INS al
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**,
 pe planul de conturi RO; seedul postează facturi intra-UE și exersează verificarea de prag și
 de erori — fără conexiune la INS:

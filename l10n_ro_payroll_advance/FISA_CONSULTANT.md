@@ -73,9 +73,11 @@ Butonul **Plăți / Notă** al lotului deschide plățile (jurnal de bancă) sau
 
 ### Pasul 4 — Lichidarea pe fluturaș
 
-La calculul fluturașului lunii apare regula *Lichidare avans*, cu minus. La validare se creează nota fluturașului cu `Dr 421 = Cr 425`; linia lotului devine *Lichidat*. Nota fluturașului se postează ca de obicei: la postare, linia `Cr 425` se reconciliază automat cu liniile `Dr 425` ale lotului de avans (parțial, dacă sumele diferă), așa că în nota fluturașului rămân deschise doar 421 și contul de plată (vezi secțiunea 11 pentru butonul *Plătește*). Restul de plată nu apare ca rând pe fluturaș: este soldul contului 421 al salariatului (net − avans), pe care îl achită plata fluturașului. Fluturașul se **anulează** cu butonul **Anulează** (nota fluturașului se șterge, se anulează sau se stornează, după blocarea perioadei și audit trail, iar reconcilierea pe 425 se desface), apoi **Setează ca ciornă** de pe formular; acțiunea *Setează ca ciornă* din meniul *Acțiuni* al listei nu desface nimic și este blocată pe un fluturaș care a lichidat un avans.
+La calculul fluturașului lunii apare regula *Lichidare avans*, cu minus. La validare se creează nota fluturașului cu `Dr 421 = Cr 425`; linia lotului devine *Lichidat*. Nota fluturașului se postează ca de obicei: la postare, linia `Cr 425` se reconciliază automat cu liniile `Dr 425` ale lotului de avans (parțial, dacă sumele diferă), așa că în nota fluturașului rămân deschise doar 421 și contul de plată (vezi secțiunea 11 pentru butonul *Plătește*). Fluturașul tipărit are, după *Lichidare avans*, rândul **Rest de plată** (net − avans), iar suma de plătit de la final („De plătit în contul …”) este restul de plată, nu netul; fișierul bancar al fluturașilor plătește tot restul de plată. În contabilitate, restul de plată este soldul contului 421 al salariatului, pe care îl achită plata fluturașului. Fluturașul se **anulează** cu butonul **Anulează** (nota fluturașului se șterge, se anulează sau se stornează, după blocarea perioadei și audit trail, iar reconcilierea pe 425 se desface), apoi **Setează ca ciornă** de pe formular; acțiunea *Setează ca ciornă* din meniul *Acțiuni* al listei nu desface nimic și este blocată pe un fluturaș care a lichidat un avans.
 
 ![Fluturașul cu linia Lichidare avans](screenshots/06_fluturas_lichidare_avans.png)
+
+![Fluturașul tipărit: după Lichidare avans, rândul Rest de plată (net − avans), iar suma de plătit în cont este restul de plată](screenshots/11_fluturas_tiparit_rest_de_plata.png)
 
 ![Nota fluturașului: Dr 421 = Cr 425 pe linia de lichidare](screenshots/07_nota_fluturas_421_425.png)
 
@@ -156,6 +158,7 @@ Capturile sunt în `static/description/`, în ordinea fluxului:
 | `08_fluturas_avans_peste_net.png` | avans peste net: avertizare, lichidare plafonată la net |
 | `09_nota_fluturas_avans_peste_net.png` | nota fluturașului cu avans peste net: `Dr 421 = Cr 425` de 1.842,00 |
 | `10_lot_lichidat.png` | lotul după lichidare: *Lichidat* și *Parțial lichidat*, cu restul de 658,00 pe 425 |
+| `11_fluturas_tiparit_rest_de_plata.png` | fluturașul tipărit: rândul *Rest de plată* după *Lichidare avans* și suma de plătit în cont = restul de plată |
 
 ## 11. Observații pentru manual
 

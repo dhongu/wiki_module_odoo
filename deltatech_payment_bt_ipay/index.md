@@ -1,7 +1,7 @@
 # Banca Transilvania iPay Payment Acquirer (localizat la `deltatech_payment_bt_ipay/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_bt_ipay`
-- **Versiune:** `19.0.0.0.8`
+- **Versiune:** `19.0.0.0.14`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_bt_ipay`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_bt_ipay`
 - **Ultima Ingestie:** `2026-08-20`

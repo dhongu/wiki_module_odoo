@@ -1,7 +1,7 @@
 # Product Reordering Limit (localizat la `deltatech_product_reordering_limit/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_reordering_limit`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.6`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_reordering_limit
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_reordering_limit`
 - **Ultima Ingestie:** `2026-08-20`

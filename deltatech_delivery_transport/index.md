@@ -1,7 +1,7 @@
 # Deltatech Delivery Auto Transport (localizat la `deltatech_delivery_transport/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_transport`
-- **Versiune:** `19.0.2.0.4`
+- **Versiune:** `19.0.2.0.6`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_transport`
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_transport`
 - **Ultima Ingestie:** `2026-08-20`

@@ -98,10 +98,13 @@ Structura XML generată (extras ilustrativ — antet companie + câteva rânduri
 <declaratie120 xmlns="mfp:anaf:dgti:d120:declaratie:v5"
                an="2026" luna="12" d_rec="0"
                den="Importator Accize SRL" cui="20603502" caen="..."
-               adresa="..." totalPlata_A="...">
-  <accize R0_C1="500.000"  R0_C2="hl/1 grad Plato" R0_C3="..."
-          R9_C1="100.000"  R9_C2="hl alcool pur"   R9_C3="..."
+               adresa="..." totalPlata_A="0">
+  <accize R0_C1="500.000"   R0_C2="hl/1 grad Plato" R0_C3="..."
+          R9_C1="100.000"   R9_C2="hl alcool pur"   R9_C3="..."
+          R20_1_C1="2000.000" R20_1_C2="tona"       R20_1_C3="..."
           R20_C1="2000.000" R20_C2="tona"           R20_C3="..."
+          R10_C3="..."   <!-- Subtotal alcool + bere -->
+          R16_C3="..."   <!-- Subtotal produse energetice -->
           R33_C3="..."   <!-- Total I — accize armonizate -->
           R40_C3="0"     <!-- Total II — accize nearmonizate -->
           R41_C3="..."/> <!-- Total general I + II -->
@@ -109,8 +112,11 @@ Structura XML generată (extras ilustrativ — antet companie + câteva rânduri
 ```
 
 > Pentru fiecare rând: `_C1` = cantitatea, `_C2` = unitatea de măsură fiscală, `_C3` = acciza datorată
-> (lei, întreg). Rândurile sumare R33 (Total I), R40 (Total II) și R41 (Total general) sunt calculate
-> automat din liniile declarației.
+> (lei, întreg). Datele se înscriu pe rândurile-frunză (ex. R20_1 pentru motorină), iar subtotalurile
+> (R2, R5, R10, R11, R16, R20, R21, R25, R27, R28, R29, R30) și totalurile R33/R40/R41 sunt calculate
+> automat, exact cu formulele verificate de validatorul oficial.
+> Atributul `totalPlata_A` din antet este o sumă de control care, la D120, trebuie să fie **întotdeauna 0**
+> (regula R16 a validatorului); totalul efectiv de plată se declară pe rândul R41_C3.
 
 ### Note de monografie și raportare
 
@@ -118,7 +124,10 @@ Structura XML generată (extras ilustrativ — antet companie + câteva rânduri
   înregistrează la momentul exigibilității prin documentele curente (achiziție/import/producție), nu
   prin decont.
 - Maparea categoriilor de accize pe rândurile D120 este automată: B→R0, C→R3, D→R6, E→R8, A→R9,
-  F1–F4→R12–R15, G1–G7→R17–R30, H1–H6→R34–R39.
+  F1–F4→R12–R15, G1→R17, G2→R18, G4→R19, G3→R20_1, G5→R22, G6→R26, G7→R31, H1–H6→R34–R39.
+  Categoriile energetice merg pe subrândul de utilizare uzual (combustibil pentru motor, respectiv
+  energie electrică în scop comercial); pentru alte utilizări, rândul se corectează în XML sau se
+  adaugă o categorie dedicată.
 - Totalurile R33 (armonizate), R40 (nearmonizate) și R41 (general) se calculează din sumarele
   liniilor și se înscriu în XML.
 
@@ -155,7 +164,7 @@ prin DUKIntegrator.
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**,
 pe planul de conturi RO:
 

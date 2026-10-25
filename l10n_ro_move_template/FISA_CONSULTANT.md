@@ -33,9 +33,10 @@ Butonul **Încarcă șabloanele românești** creează zece șabloane gata făcu
 - **Conturile din afara bilanțului** (grupa 80, de ex. 8031 „Imobilizări corporale primite cu chirie
   sau în baza altor contracte similare”, care cuprinde și comodatul) se țin în **partidă simplă**:
   înregistrarea contabilă este doar **Dr 8031** la primire și **Cr 8031** la restituire. Odoo cere însă
-  ca fiecare notă să fie echilibrată, așa că șabloanele de comodat adaugă o linie pe un cont tehnic,
-  **800000**, creat de modul. Contul 800000 nu face parte din planul de conturi oficial și nu are
-  semnificație contabilă: este doar un artefact al Odoo.
+  ca fiecare notă să fie echilibrată, așa că șabloanele de comodat adaugă o linie pe contul tehnic
+  **803999 — Contrapartidă tehnică evidență extrabilanțieră** (analitic al lui 8039), comun pentru
+  toate modulele suitei (`l10n_ro_off_balance`), în jurnalul **EXTR**. Contul nu are semnificație
+  contabilă: este doar un artefact al Odoo.
 - **Contribuțiile salariale** (Codul fiscal): CAS 25% (art. 138), CASS 10% (art. 156), CAM 2,25%
   (art. 220^3). În șablonul de salarii ele sunt doar **propuse** din brut; totalurile din statul de
   plată au prioritate (normă parțială, rotunjire pe salariat).
@@ -68,7 +69,7 @@ Roluri recomandate pentru testare:
 | Chirie lunară - factură de întocmit (locator) | 418 = 706 + 4428 (44281) | chiria, cota TVA |
 | Amortizare - imobilizări corporale | 6811 = 2813 | amortizarea lunii |
 | Amortizare - imobilizări necorporale | 6811 = 2808 | amortizarea lunii |
-| Bun primit în folosință - intrare / restituire | Dr 8031, respectiv Cr 8031 (partidă simplă; în Odoo, contrapartida tehnică 800000) | valoarea din procesul-verbal |
+| Bun primit în folosință - intrare / restituire | Dr 8031, respectiv Cr 8031 (partidă simplă; în Odoo, contrapartida tehnică 803999) | valoarea din procesul-verbal |
 | Salarii - stat de plată extern | 641000 = 421000; 421000 = 431510 + 431610 + 444100 + 425000 + 427100; 646000 = 436100 | brut, impozit, avansuri, popriri (CAS, CASS, CAM propuse) |
 | Tichete de masă acordate | 6422 = 5328 | valoarea tichetelor |
 | TVA la încasare - exigibilizare la încasare | 4428 (44281) = 4427 | suma încasată cu TVA, cota |
@@ -233,7 +234,7 @@ nou.
 | Chirie de facturat, la locator | `418 = 706 + 4428` | șablon |
 | Emiterea facturii de chirie | factură de client pe 418, cu taxă: `4111 = 418 + 4427`; apoi `4428 = 418` | manual (factura clientului + notă) |
 | Amortizare manuală | `6811 = 2813` / `6811 = 2808` | șablon |
-| Bun primit în folosință | Dr 8031 la intrare, Cr 8031 la restituire (partidă simplă; Odoo adaugă contrapartida tehnică 800000) | șablon |
+| Bun primit în folosință | Dr 8031 la intrare, Cr 8031 la restituire (partidă simplă; Odoo adaugă contrapartida tehnică 803999) | șablon |
 | Tichete de masă acordate | `6422 = 5328` | șablon |
 | TVA la încasare | `4428 = 4427` (încasare), `4426 = 4428` (plată) | șablon (doar solduri inițiale / corecții; fără grile D300, vezi secțiunea 7) |
 | Asigurare plătită în avans, lunar | `613 = 471` | șablon propriu |
@@ -308,7 +309,7 @@ nu are linie pe care să poarte grila de bază; baza se ajustează direct în de
 
 ## 10. Capturi de ecran
 
-Capturile din `readme/screenshots/` se generează automat din `tests/test_screenshots.py`
+Capturile din `static/description/` se generează automat din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, HttpCase + Playwright, import defensiv),
 în limba română, pe o companie cu plan de conturi RO.
 
@@ -341,10 +342,10 @@ Regenerare:
   condiția să fie actualizate și formulele care le folosesc.
 - Șabloanele de **TVA la încasare** sunt pentru solduri inițiale și corecții: taxele Odoo cu TVA la
   încasare fac deja exigibilizarea la reconcilierea plății.
-- Contul **800000** este doar contrapartida tehnică a conturilor din afara bilanțului; precizați-l
-  în procedura de închidere, pentru că apare în balanța clasei 8. Alte module ale suitei folosesc alte
-  contrapartide tehnice (consignația: 8039; obiectele de inventar: 8035C); tratamentul lor în balanță și
-  în D406 este încă de verificat.
+- Contul **803999** este doar contrapartida tehnică a conturilor din afara bilanțului; precizați-l
+  în procedura de închidere, pentru că apare în balanța clasei 8. Aceeași contrapartidă o folosesc
+  custodia (8033) și obiectele de inventar (8035). Soldul creditor al lui 803999 este egal cu suma
+  soldurilor debitoare ale conturilor de evidență înregistrate cu această contrapartidă. În D406 (SAF-T) contul se exportă ca analitic al lui 8039.
 - În capturi data apare „30 sept.”, fără an: Odoo omite anul pentru anul curent. Data notelor din
   exemplu este 30.09.2026.
 - Nu folosiți șablonul de amortizare pentru imobilizările gestionate cu modulul de active.

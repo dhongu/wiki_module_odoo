@@ -1,7 +1,7 @@
 # Sale Referrer Report (localizat la `deltatech_sale_referrer_raport/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_referrer_raport`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_sale_referrer_raport
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_sale_referrer_raport`
 - **Ultima Ingestie:** `2026-08-20`

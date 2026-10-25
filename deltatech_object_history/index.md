@@ -1,7 +1,7 @@
 # Deltatech Object History (localizat la `deltatech_object_history/index.md`)
 
 - **Nume Tehnic:** `deltatech_object_history`
-- **Versiune:** `19.0.0.0.1`
+- **Versiune:** `19.0.0.0.4`
 - **Cale:** https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_object_history
 - **Cale Locală:** `odoo-addons/deltatech_service/deltatech_object_history`
 - **Ultima Ingestie:** `2026-06-08`

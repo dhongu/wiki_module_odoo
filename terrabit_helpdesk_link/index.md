@@ -1,7 +1,7 @@
 # Terrabit Helpdesk Link (localizat la `terrabit_helpdesk_link/index.md`)
 
 - **Nume Tehnic:** `terrabit_helpdesk_link`
-- **Versiune:** `19.0.0.0.8`
+- **Versiune:** `19.0.0.0.11`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_link
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_helpdesk_link`
 - **Ultima Ingestie:** `2026-08-20`

@@ -1,7 +1,7 @@
 # Deltatech POS Price Sync (localizat la `deltatech_pos_price_sync/index.md`)
 
 - **Nume Tehnic:** `deltatech_pos_price_sync`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_pos_price_sync
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_pos_price_sync`
 - **Ultima Ingestie:** `2026-08-20`

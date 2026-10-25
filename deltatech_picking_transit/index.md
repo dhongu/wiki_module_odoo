@@ -1,7 +1,7 @@
 # Stock Auto Transfer (localizat la `deltatech_picking_transit/index.md`)
 
 - **Nume Tehnic:** `deltatech_picking_transit`
-- **Versiune:** `19.0.0.0.9`
+- **Versiune:** `19.0.0.0.15`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_picking_transit`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_picking_transit`
 - **Ultima Ingestie:** `2026-06-03`

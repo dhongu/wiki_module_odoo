@@ -1,7 +1,7 @@
 # Website alternative code (localizat la `deltatech_alternative_website/index.md`)
 
 - **Nume Tehnic:** `deltatech_alternative_website`
-- **Versiune:** `19.0.1.0.8`
+- **Versiune:** `19.0.1.0.13`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_alternative_website`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_alternative_website`
 - **Ultima Ingestie:** `2026-08-20`

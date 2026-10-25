@@ -1,7 +1,7 @@
 # Notă de Recepție pe Bază de Cereri de Ofertă (localizat la `deltatech_reception_note/index.md`)
 
 - **Nume Tehnic:** `deltatech_reception_note`
-- **Versiune:** `19.0.0.1.2`
+- **Versiune:** `19.0.0.1.7`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_reception_note`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_reception_note`
 - **Ultima Ingestie:** `2026-08-20`

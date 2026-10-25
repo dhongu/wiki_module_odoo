@@ -1,7 +1,7 @@
 # Self-Billing Message SPV (Autofacturare mesaje SPV)
 
 - **Nume Tehnic:** `l10n_ro_message_spv_self_billing`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_message_spv_self_billing
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_message_spv_self_billing`
 - **Ultima Ingestie:** `2026-10-09`

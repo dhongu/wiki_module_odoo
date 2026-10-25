@@ -1,7 +1,7 @@
 # Deltatech Sale from Store UBL (localizat la `l10n_ro_edi_ubl_sale_store/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_edi_ubl_sale_store`
-- **Versiune:** `19.0.1.0.6`
+- **Versiune:** `19.0.1.0.10`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_edi_ubl_sale_store
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_edi_ubl_sale_store`
 - **Ultima Ingestie:** `2026-06-08`

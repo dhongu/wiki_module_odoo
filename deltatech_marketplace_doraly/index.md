@@ -1,10 +1,11 @@
 # Conector Doraly (localizat la `deltatech_marketplace_doraly/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_doraly`
-- **Versiune:** `19.0.0.0.7`
+- **Versiune:** `19.0.0.0.12`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_doraly`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_doraly`
 - **Ultima Ingestie:** `2026-08-20`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

@@ -1,7 +1,7 @@
 # FontAwesome Widget (localizat la `deltatech_widget_fontawesome/index.md`)
 
 - **Nume Tehnic:** `deltatech_widget_fontawesome`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_widget_fontawesome`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_widget_fontawesome`
 - **Ultima Ingestie:** `2026-06-03`

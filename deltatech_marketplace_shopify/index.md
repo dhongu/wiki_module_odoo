@@ -1,7 +1,7 @@
 # Conector Shopify Marketplace (localizat la `deltatech_marketplace_shopify/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_shopify`
-- **Versiune:** `19.0.1.8.0`
+- **Versiune:** `19.0.1.8.10`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_shopify
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_shopify`
 - **Ultima Ingestie:** `2026-10-09`

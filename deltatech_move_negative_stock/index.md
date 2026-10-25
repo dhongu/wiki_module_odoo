@@ -1,7 +1,7 @@
 # Realimentare Stoc Negativ (localizat la `deltatech_move_negative_stock/index.md`)
 
 - **Nume Tehnic:** `deltatech_move_negative_stock`
-- **Versiune:** `19.0.1.1.1`
+- **Versiune:** `19.0.1.1.5`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_move_negative_stock`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_move_negative_stock`
 - **Ultima Ingestie:** `2026-07-31`

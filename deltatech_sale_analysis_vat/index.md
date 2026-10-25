@@ -1,7 +1,7 @@
 # Sale Analysis by VAT (localizat la `deltatech_sale_analysis_vat/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_analysis_vat`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_analysis_vat](https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_analysis_vat)
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_analysis_vat`
 - **Ultima Ingestie:** `2026-08-20`

@@ -1,7 +1,7 @@
 # Raport PRN - Zebra (Browser Print / Terrabit Connect) (localizat la `deltatech_report_prn_zebra_sdk/index.md`)
 
 - **Nume Tehnic:** `deltatech_report_prn_zebra_sdk`
-- **Versiune:** `19.0.1.3.0`
+- **Versiune:** `19.0.1.3.2`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_report_prn_zebra_sdk`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_report_prn_zebra_sdk`
 - **Ultima Ingestie:** `2026-07-31`

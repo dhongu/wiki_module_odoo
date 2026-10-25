@@ -1,7 +1,7 @@
 # Backup Attachments (localizat la `deltatech_backup_attachment/index.md`)
 
 - **Nume Tehnic:** `deltatech_backup_attachment`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_backup_attachment
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_backup_attachment`
 - **Ultima Ingestie:** `2026-06-02`

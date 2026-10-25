@@ -1,7 +1,7 @@
 # eCommerce Sale Short Description (localizat la `deltatech_website_short_description/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_short_description`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_short_description`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_short_description`
 - **Ultima Ingestie:** `2026-08-20`

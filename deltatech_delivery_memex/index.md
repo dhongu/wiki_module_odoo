@@ -1,7 +1,7 @@
 # PTT Express (Memex) Shipping (localizat la `deltatech_delivery_memex/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_memex`
-- **Versiune:** `19.0.1.0.10`
+- **Versiune:** `19.0.1.0.17`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_memex`
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_memex`
 - **Ultima Ingestie:** `2026-08-20`

@@ -1,7 +1,7 @@
 # Raport Stoc pentru Reselleri (localizat la `deltatech_stock_reseller/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_reseller`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.7`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_reseller`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_reseller`
 - **Ultima Ingestie:** `2026-06-03`

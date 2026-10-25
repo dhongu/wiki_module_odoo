@@ -1,7 +1,7 @@
 # Terrabit Sale Cancel Order (localizat la `deltatech_sale_cancel_order/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_cancel_order`
-- **Versiune:** `19.0.0.2.0`
+- **Versiune:** `19.0.0.2.7`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_cancel_order`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_cancel_order`
 - **Ultima Ingestie:** `2026-08-20`

@@ -1,7 +1,7 @@
 # Deltatech Customer Segment (localizat la `deltatech_customer_segment/index.md`)
 
 - **Nume Tehnic:** `deltatech_customer_segment`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_customer_segment
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_customer_segment`
 - **Ultima Ingestie:** `2026-09-29`

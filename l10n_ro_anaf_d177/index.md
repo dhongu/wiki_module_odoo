@@ -1,7 +1,7 @@
 # Romania - Cerere de redirecționare a impozitului (D177) (localizat la `l10n_ro_anaf_d177/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d177`
-- **Versiune:** `19.0.1.1.3`
+- **Versiune:** `19.0.1.1.6`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d177
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d177`
 - **Ultima Ingestie:** `2026-09-29`

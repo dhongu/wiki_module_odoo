@@ -1,7 +1,7 @@
 # Deltatech Sale Invoice Status (localizat la `deltatech_sale_invoice_status/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_invoice_status`
-- **Versiune:** `19.0.0.0.1`
+- **Versiune:** `19.0.0.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_invoice_status
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_invoice_status`
 - **Ultima Ingestie:** `2026-07-31`

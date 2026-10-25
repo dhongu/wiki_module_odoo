@@ -1,7 +1,7 @@
 # Services Base (localizat la `deltatech_service_base/index.md`)
 
 - **Nume Tehnic:** `deltatech_service_base`
-- **Versiune:** `19.0.2.0.6`
+- **Versiune:** `19.0.2.0.9`
 - **Cale:** https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_base
 - **Cale Locală:** `odoo-addons/deltatech_service/deltatech_service_base`
 - **Ultima Ingestie:** `2026-06-08`

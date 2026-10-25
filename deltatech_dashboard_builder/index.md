@@ -1,7 +1,7 @@
 # Dashboard Builder (localizat la `deltatech_dashboard_builder/index.md`)
 
 - **Nume Tehnic:** `deltatech_dashboard_builder`
-- **Versiune:** `19.0.1.3.1`
+- **Versiune:** `19.0.1.3.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_dashboard_builder
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_dashboard_builder`
 - **Ultima Ingestie:** `2026-10-17`

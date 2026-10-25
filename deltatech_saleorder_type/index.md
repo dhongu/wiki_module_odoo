@@ -1,7 +1,7 @@
 # Terrabit - Sale Order Type - Obsolete (localizat la `deltatech_saleorder_type/index.md`)
 
 - **Nume Tehnic:** `deltatech_saleorder_type`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_saleorder_type
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_saleorder_type`
 - **Ultima Ingestie:** `2026-10-22`

@@ -1,7 +1,7 @@
 # Sale Report Additional Info (localizat la `deltatech_sale_report/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_report`
-- **Versiune:** `19.0.0.0.0`
+- **Versiune:** `19.0.0.0.1`
 - **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_report](https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_report)
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_report`
 - **Ultima Ingestie:** `2026-07-31`

@@ -1,7 +1,7 @@
 # Terrabit Clean Chatter (localizat la `terrabit_clean_chatter/index.md`)
 
 - **Nume Tehnic:** `terrabit_clean_chatter`
-- **Versiune:** `19.0.1.0.12`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_clean_chatter
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_clean_chatter`
 - **Ultima Ingestie:** `2026-10-09`

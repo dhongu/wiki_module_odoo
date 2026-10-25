@@ -1,7 +1,7 @@
 # Many2one Badge Widget (localizat la `deltatech_widget_many2one_badge/index.md`)
 
 - **Nume Tehnic:** `deltatech_widget_many2one_badge`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_widget_many2one_badge`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_widget_many2one_badge`
 - **Ultima Ingestie:** `2026-06-03`

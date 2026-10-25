@@ -1,7 +1,7 @@
 # Purchase Add Extra Line (localizat la `deltatech_purchase_add_extra_line/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_add_extra_line`
-- **Versiune:** `19.0.1.5.0`
+- **Versiune:** `19.0.1.5.1`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_add_extra_line`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_add_extra_line`
 - **Ultima Ingestie:** `2026-10-09`

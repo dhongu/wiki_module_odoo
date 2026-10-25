@@ -1,7 +1,7 @@
 # Deltatech Test System (localizat la `deltatech_test_system/index.md`)
 
 - **Nume Tehnic:** `deltatech_test_system`
-- **Versiune:** `19.0.0.0.9`
+- **Versiune:** `19.0.0.0.11`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_test_system`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_test_system`
 - **Ultima Ingestie:** `2026-08-20`

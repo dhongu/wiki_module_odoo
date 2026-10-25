@@ -1,7 +1,7 @@
 # RMA Helpdesk (localizat la `deltatech_rma_helpdesk/index.md`)
 
 - **Nume Tehnic:** `deltatech_rma_helpdesk`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_rma_helpdesk
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_rma_helpdesk`
 - **Ultima Ingestie:** 2026-09-24

@@ -1,7 +1,7 @@
 # Romania - Declarație Intrastat (localizat la `l10n_ro_intrastat_enhancement/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_intrastat_enhancement`
-- **Versiune:** `19.0.1.9.1`
+- **Versiune:** `19.0.1.9.7`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_intrastat_enhancement
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_intrastat_enhancement`
 - **Ultima Ingestie:** `2026-09-29`

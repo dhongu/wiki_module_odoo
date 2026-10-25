@@ -37,7 +37,7 @@ monitorizează starea (ultima conectare, joburi în eroare).
 Roluri recomandate pentru testare:
 - Administrator funcțional: creează înregistrarea TC, descarcă configurația, instalează TC
   la stație;
-- Contabil/manager (grup `account.group_account_manager`): meniurile Terrabit Connect /
+- Contabil/manager (grup `account.group_account_manager`): meniurile Stație ANAF /
   Joburi TC sunt vizibile doar pentru acest grup;
 - Utilizator operațional: nu interacționează direct — folosește modulele consumatoare.
 
@@ -54,17 +54,17 @@ Date minime pentru demo:
 
 ## 5. Configurare inițială
 
-1. Instalați modulul `l10n_ro_anaf_agent` (aduce automat `l10n_ro_anaf_base`).
-2. Deschideți **Contabilitate → Raportare → Declarații ANAF → Terrabit Connect** și
+1. Instalați modulul `l10n_ro_anaf_agent` (aduce automat `l10n_ro_anaf_base` și `deltatech_tc`, pe care
+   se sprijină: stațiile și joburile Terrabit Connect sunt modelele din `deltatech_tc`).
+2. Deschideți **Contabilitate → Configurare → Stație ANAF** și
    creați o înregistrare: nume (ex. „Stația contabilitate"), compania.
    **Cheia API** se generează automat.
-3. Apăsați **Descarcă config TC** — obțineți un `agent.conf` pre-completat (URL-ul
+3. Apăsați **Descarcă config** — obțineți un `agent.conf` pre-completat (URL-ul
    instanței Odoo + cheia API).
-4. Descărcați installerul Terrabit Connect de pe
-   [GitHub Releases](https://github.com/dhongu/terrabit-anaf-agent/releases) pentru
-   sistemul de operare al stației (Windows / macOS / Linux).
-5. Instalați TC la stația cu tokenul fizic și puneți `agent.conf` în
-   `~/.terrabit-anaf-agent/` (sau importați-l din Setări → Importă agent.conf).
+4. Instalați aplicația Terrabit Connect pe stația cu tokenul fizic (kitul de instalare se
+   primește de la Terrabit, pentru Windows / macOS / Linux).
+5. Puneți `agent.conf` în `~/.terrabit-anaf-agent/` pe stație (sau importați-l din setările
+   aplicației Terrabit Connect).
    La pornire, TC trimite **heartbeat**: în Odoo se completează „Văzut ultima dată" și
    subiectul certificatului detectat pe token.
 
@@ -72,7 +72,7 @@ Date minime pentru demo:
 
 ### Pasul 1 — Registrul Terrabit Connect
 
-Accesați **Contabilitate → Raportare → Declarații ANAF → Terrabit Connect**. **Găsiți pe
+Accesați **Contabilitate → Configurare → Stație ANAF**. **Găsiți pe
 ecran**: fiecare rând este o instanță TC înrolată, cu compania, subiectul certificatului
 raportat la heartbeat și momentul ultimei conectări. **Verificați**: instanța stației
 active are „Văzut ultima dată" recent (minute, nu zile) — altfel TC de la stație e oprit
@@ -90,13 +90,13 @@ Acțiunile din antet:
   ultimele 30 de zile);
 - **Regenerează cheia** — invalidează cheia veche (cu confirmare; TC de la stație
   trebuie reconfigurat cu noua cheie);
-- **Descarcă config TC** — `agent.conf` pre-completat.
+- **Descarcă config** — `agent.conf` pre-completat.
 
 ![Fișa TC, cu cheia API și acțiunile din antet](screenshots/02_agent_form.png)
 
 ### Pasul 3 — Coada de joburi
 
-Accesați **Declarații ANAF → Joburi TC** (sau butonul **Joburi** de pe fișa TC).
+Accesați **Contabilitate → Configurare → Joburi TC** (sau butonul **Joburi** de pe fișa TC).
 **Găsiți pe ecran**: fiecare job are tipul (`sync_messages` / `download` / `submit`),
 parametrii (JSON), starea și momentele de preluare/finalizare. Ciclul de viață:
 **În așteptare** (creat de Odoo) → **Preluat** (TC l-a ridicat la poll) →
@@ -119,7 +119,8 @@ Efectele vizibile contabil apar în modulele consumatoare: mesajele SPV (recipis
 
 | Modul / proces | Rol în flux | Tip legătură |
 |---|---|---|
-| `l10n_ro_anaf_base` | meniul „Declarații ANAF" + infrastructura comună | dependență (manifest) |
+| `l10n_ro_anaf_base` | infrastructura comună a declarațiilor ANAF | dependență (manifest) |
+| `deltatech_tc` | stațiile și joburile Terrabit Connect (modelele, cheia API, coada) | dependență (manifest) |
 | `l10n_ro_anaf_messages` | creează joburi `sync_messages` și ingestează mesajele din rezultat | consumator |
 | `l10n_ro_anaf_submission` | poate folosi joburi pentru depuneri în modelul cloud | consumator |
 | Terrabit Connect (aplicație desktop) | apelează API-ul: poll / result / messages / heartbeat | client API (cheie `X-Station-Key`) |
@@ -132,10 +133,10 @@ nevoie, supravegherea joburilor în eroare.
 ## 8. Verificări pentru consultant
 
 - [ ] Modulul se instalează fără erori pe baza demo.
-- [ ] Meniurile **Terrabit Connect** și **Joburi TC** apar sub Declarații ANAF, doar pentru
+- [ ] Meniurile **Stație ANAF** și **Joburi TC** apar sub Contabilitate → Configurare, doar pentru
       grupul Contabil șef.
 - [ ] La crearea unei înregistrări TC, cheia API se generează automat.
-- [ ] **Descarcă config TC** livrează un `agent.conf` cu URL-ul instanței și cheia.
+- [ ] **Descarcă config** livrează un `agent.conf` cu URL-ul instanței și cheia.
 - [ ] **Regenerează cheia** cere confirmare și schimbă cheia (cea veche nu mai e acceptată).
 - [ ] **Cere sincronizare mesaje** creează un job `sync_messages` În așteptare.
 - [ ] Butonul inteligent **Joburi** filtrează joburile instanței TC curente.
@@ -153,7 +154,7 @@ nevoie, supravegherea joburilor în eroare.
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`,
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`,
 în **limba română**; înregistrarea TC și joburile demo sunt create direct în baza de test,
 fără TC real sau conexiune la ANAF:
 

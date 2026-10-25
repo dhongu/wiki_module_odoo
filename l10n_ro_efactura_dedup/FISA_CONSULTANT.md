@@ -99,10 +99,10 @@ Ce rămâne manual: decizia de păstrare/ignorare când există documente simila
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/01_factura_cheie.png` | Factură furnizor cu cheia de deduplicare (fila Deduplicare SPV) |
-| 2 | `screenshots/02_banner_duplicat.png` | Factură marcată duplicat — banner de avertizare în antet |
-| 3 | `screenshots/03_tab_duplicat.png` | Comutator „Duplicat SPV" + cheie pe factura duplicat |
-| 4 | `screenshots/04_lista_duplicate.png` | Lista facturilor posibil duplicate SPV |
+| 1 | `static/description/01_factura_cheie.png` | Factură furnizor cu cheia de deduplicare (fila Deduplicare SPV) |
+| 2 | `static/description/02_banner_duplicat.png` | Factură marcată duplicat — banner de avertizare în antet |
+| 3 | `static/description/03_tab_duplicat.png` | Comutator „Duplicat SPV" + cheie pe factura duplicat |
+| 4 | `static/description/04_lista_duplicate.png` | Lista facturilor posibil duplicate SPV |
 
 > Notă i18n: textul liber al banner-ului galben apare încă în engleză — traducerea există în
 > `i18n/ro.po` (`model_terms`) dar nu se aplică la runtime pe view-ul moștenit. De rezolvat separat

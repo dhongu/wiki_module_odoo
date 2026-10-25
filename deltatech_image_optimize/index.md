@@ -1,7 +1,7 @@
 # Image Optimizer (localizat la `deltatech_image_optimize/index.md`)
 
 - **Nume Tehnic:** `deltatech_image_optimize`
-- **Versiune:** `19.0.1.14.0`
+- **Versiune:** `19.0.1.14.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_image_optimize
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_image_optimize`
 - **Ultima Ingestie:** `2026-10-22`

@@ -1,7 +1,7 @@
 # Purchase Portal (localizat la `deltatech_purchase_portal/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_portal`
-- **Versiune:** `19.0.1.2.0`
+- **Versiune:** `19.0.1.2.5`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_purchase_portal`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_purchase_portal`
 - **Ultima Ingestie:** `2026-07-31`

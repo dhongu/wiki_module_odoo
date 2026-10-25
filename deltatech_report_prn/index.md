@@ -1,7 +1,7 @@
 # Raport PRN (localizat la `deltatech_report_prn/index.md`)
 
 - **Nume Tehnic:** `deltatech_report_prn`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.2`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_report_prn`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_report_prn`
 - **Ultima Ingestie:** `2026-08-20`

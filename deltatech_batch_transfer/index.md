@@ -1,7 +1,7 @@
 # Deltatech Batch Transfer (localizat la `deltatech_batch_transfer/index.md`)
 
 - **Nume Tehnic:** `deltatech_batch_transfer`
-- **Versiune:** `19.0.0.0.2`
+- **Versiune:** `19.0.0.0.8`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_batch_transfer`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_batch_transfer`
 - **Ultima Ingestie:** `2026-06-02`

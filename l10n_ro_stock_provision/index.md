@@ -1,7 +1,7 @@
 # Romania - Ajustări pentru deprecierea stocurilor (39x) (localizat la `l10n_ro_stock_provision/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_provision`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.7`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_provision
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_provision`
 - **Ultima Ingestie:** 2026-06-01

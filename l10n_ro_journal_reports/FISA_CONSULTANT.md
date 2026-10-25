@@ -110,7 +110,7 @@ citită pe nota contabilă.
 
 ## 10. Capturi de ecran
 
-Capturile din `readme/screenshots/` se obțin din `tests/test_screenshots.py` (mixinul `ScreenshotCase`
+Capturile din `static/description/` se obțin din `tests/test_screenshots.py` (mixinul `ScreenshotCase`
 din `l10n_ro_doc_screenshots`, HttpCase + Playwright), pe companie RO, în lei, cu plan de conturi RO.
 
 1. `01_carte_mare_pliat.png` — Cartea Mare la deschidere, conturi pliate, coloana „Cont Corespondent".

@@ -1,7 +1,7 @@
 # Sale Withdrawal (localizat la `deltatech_sale_withdrawal/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_withdrawal`
-- **Versiune:** `19.0.0.3.2`
+- **Versiune:** `19.0.0.3.6`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_withdrawal
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_withdrawal`
 - **Ultima Ingestie:** 2026-09-24

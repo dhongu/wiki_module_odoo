@@ -1,7 +1,7 @@
 # Deltatech Analytic distribution enforcer (localizat la `deltatech_analytic_distribution/index.md`)
 
 - **Nume Tehnic:** `deltatech_analytic_distribution`
-- **Versiune:** `19.0.0.0.2`
+- **Versiune:** `19.0.0.0.7`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_analytic_distribution
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_analytic_distribution`
 - **Ultima Ingestie:** `2026-06-02`

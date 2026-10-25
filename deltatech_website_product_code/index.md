@@ -1,7 +1,7 @@
 # eCommerce Product Code (localizat la `deltatech_website_product_code/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_product_code`
-- **Versiune:** `19.0.1.3.1`
+- **Versiune:** `19.0.1.3.7`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_product_code
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_product_code`
 - **Ultima Ingestie:** `2026-08-20`

@@ -1,7 +1,7 @@
 # Purchase Stock (localizat la `deltatech_purchase_stock/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_stock`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_stock](https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_stock)
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_stock`
 - **Ultima Ingestie:** `2026-07-31`

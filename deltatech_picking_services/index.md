@@ -1,7 +1,7 @@
 # Deltatech Picking Service Lines (localizat la `deltatech_picking_services/index.md`)
 
 - **Nume Tehnic:** `deltatech_picking_services`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_picking_services`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_picking_services`
 - **Ultima Ingestie:** `2026-07-31`

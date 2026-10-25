@@ -1,7 +1,7 @@
 # Deltatech Generic Partner (localizat la `deltatech_partner_generic/index.md`)
 
 - **Nume Tehnic:** `deltatech_partner_generic`
-- **Versiune:** `19.0.2.0.0`
+- **Versiune:** `19.0.2.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_partner_generic
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_partner_generic`
 - **Ultima Ingestie:** `2026-08-31`

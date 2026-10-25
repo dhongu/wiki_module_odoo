@@ -1,7 +1,7 @@
 # Confidential Salary Payments in Bank Statements (localizat la `deltatech_bank_salary_confidential/index.md`)
 
 - **Nume Tehnic:** `deltatech_bank_salary_confidential`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** [https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_bank_salary_confidential](https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_bank_salary_confidential)
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_bank_salary_confidential`
 - **Ultima Ingestie:** `2026-08-20`

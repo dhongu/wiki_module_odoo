@@ -1,7 +1,7 @@
 # Terrabit - DVI (moved to l10n_ro_customs_dvi) (localizat la `terrabit_dvi/index.md`)
 
 - **Nume Tehnic:** `terrabit_dvi`
-- **Versiune:** `19.0.1.3.0`
+- **Versiune:** `19.0.1.3.2`
 - **Cale:** `https://github.com/dhongu/l10n-romania/tree/19.0/terrabit_dvi`
 - **Cale Locală:** `odoo-addons/l10n-romania/terrabit_dvi`
 - **Ultima Ingestie:** `2026-09-23`

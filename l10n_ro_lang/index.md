@@ -1,7 +1,7 @@
 # Romania - Set Lang to Romanian (localizat la `l10n_ro_lang/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_lang`
-- **Versiune:** `19.0.0.0.2`
+- **Versiune:** `19.0.0.0.6`
 - **Cale:** `https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_lang`
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_lang`
 - **Ultima Ingestie:** `2026-06-08`

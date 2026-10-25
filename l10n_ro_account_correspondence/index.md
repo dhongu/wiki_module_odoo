@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `l10n_ro_account_correspondence`
 - **Nume anterior:** `l10n_ro_account_counterpart` (redenumit pe 23.09.2026: numele vechi e ocupat pe Odoo Apps de alt furnizor)
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_correspondence
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_account_correspondence`
 - **Ultima Ingestie:** 2026-09-23

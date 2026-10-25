@@ -1,7 +1,7 @@
 # MRP Validation Date (localizat la `deltatech_mrp_validation_date/index.md`)
 
 - **Nume Tehnic:** `deltatech_mrp_validation_date`
-- **Versiune:** `19.0.0.0.1`
+- **Versiune:** `19.0.0.0.4`
 - **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_validation_date](https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_validation_date)
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_mrp_validation_date`
 - **Ultima Ingestie:** `2026-07-31`

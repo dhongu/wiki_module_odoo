@@ -183,15 +183,15 @@ reclasificare de către contabil.
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/01_configurare_sgr.png` | Configurare SGR pe companie (produs 0,50 + conturi 462102/461002/461003 + taxă 0%) |
-| 2 | `screenshots/02_produs_cu_sgr.png` | Produs comercial cu garanție SGR atașată (Extra Line) |
-| 3 | `screenshots/03_factura_linie_sgr.png` | Factură cu linia SGR inserată automat, în afara sferei TVA |
-| 4 | `screenshots/04_raport_sold_sgr.png` | Raport sold SGR per partener (garanții încasate / plătite / de recuperat) |
-| 5 | `screenshots/05_wizard_returnare.png` | Wizard returnare ambalaje (numerar sau notă de credit, produsul SGR returnat) |
-| 6 | `screenshots/06_wizard_decontare.png` | Wizard autofactură RetuRO (garanții + tarif de gestionare + TVA) |
-| 7 | `screenshots/07_situatie_ambalaje_sgr.png` | Situația ambalajelor SGR pe documente: pline (stoc) și goale nedecontate de RetuRO |
-| 8 | `screenshots/08_situatie_ambalaje_sgr_zile.png` | Situația ambalajelor SGR, varianta cumulată pe zile |
-| 9 | `screenshots/09_produs_tip_ambalaj.png` | Produs de garanție SGR cu tipul ambalajului (metal) |
+| 1 | `static/description/01_configurare_sgr.png` | Configurare SGR pe companie (produs 0,50 + conturi 462102/461002/461003 + taxă 0%) |
+| 2 | `static/description/02_produs_cu_sgr.png` | Produs comercial cu garanție SGR atașată (Extra Line) |
+| 3 | `static/description/03_factura_linie_sgr.png` | Factură cu linia SGR inserată automat, în afara sferei TVA |
+| 4 | `static/description/04_raport_sold_sgr.png` | Raport sold SGR per partener (garanții încasate / plătite / de recuperat) |
+| 5 | `static/description/05_wizard_returnare.png` | Wizard returnare ambalaje (numerar sau notă de credit, produsul SGR returnat) |
+| 6 | `static/description/06_wizard_decontare.png` | Wizard autofactură RetuRO (garanții + tarif de gestionare + TVA) |
+| 7 | `static/description/07_situatie_ambalaje_sgr.png` | Situația ambalajelor SGR pe documente: pline (stoc) și goale nedecontate de RetuRO |
+| 8 | `static/description/08_situatie_ambalaje_sgr_zile.png` | Situația ambalajelor SGR, varianta cumulată pe zile |
+| 9 | `static/description/09_produs_tip_ambalaj.png` | Produs de garanție SGR cu tipul ambalajului (metal) |
 
 > Notă i18n: câteva etichete auxiliare apar încă în engleză — `Extra Product/Qty` (din
 > `deltatech_sale_add_extra_line`), `Company` și `Date From/To` (câmpuri comune pe raport/wizard).

@@ -1,7 +1,7 @@
 # eCommerce Warehouse Stock (localizat la `deltatech_website_warehouse_stock/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_warehouse_stock`
-- **Versiune:** `19.0.0.0.1`
+- **Versiune:** `19.0.0.0.7`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_warehouse_stock`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_warehouse_stock`
 - **Ultima Ingestie:** `2026-06-03`

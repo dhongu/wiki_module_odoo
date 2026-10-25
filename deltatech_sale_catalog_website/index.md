@@ -1,7 +1,7 @@
 # Sale Catalog Website Categories & Image Zoom (Categorii website și mărire imagine în catalogul de vânzări)
 
 - **Nume Tehnic:** `deltatech_sale_catalog_website`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_catalog_website
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_catalog_website`
 - **Ultima Ingestie:** `2026-10-09`

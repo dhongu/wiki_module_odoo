@@ -1,7 +1,7 @@
 # Terrabit Facebook Pixel (localizat la `terrabit_facebook_pixel/index.md`)
 
 - **Nume Tehnic:** `terrabit_facebook_pixel`
-- **Versiune:** `19.0.0.1.5`
+- **Versiune:** `19.0.0.1.8`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_facebook_pixel
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_facebook_pixel`
 - **Ultima Ingestie:** 2026-09-03

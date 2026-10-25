@@ -1,7 +1,7 @@
 # Restricție Jurnale pentru Partenerul Generic (localizat la `deltatech_generic_partner_restriction/index.md`)
 
 - **Nume Tehnic:** `deltatech_generic_partner_restriction`
-- **Versiune:** `19.0.3.0.0`
+- **Versiune:** `19.0.3.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_generic_partner_restriction
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_generic_partner_restriction`
 - **Ultima Ingestie:** `2026-08-31`

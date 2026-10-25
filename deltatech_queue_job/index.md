@@ -1,7 +1,7 @@
 # Joburi în coadă (Queue Job Enhancements) (localizat la `deltatech_queue_job/index.md`)
 
 - **Nume Tehnic:** `deltatech_queue_job`
-- **Versiune:** `19.0.1.4.0`
+- **Versiune:** `19.0.1.4.5`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_queue_job`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_queue_job`
 - **Ultima Ingestie:** `2026-08-20`

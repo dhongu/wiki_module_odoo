@@ -1,7 +1,7 @@
 # Deltatech Fleet
 
 - **Nume Tehnic:** `deltatech_fleet`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_fleet
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_fleet`
 - **Ultima Ingestie:** `2026-10-09`

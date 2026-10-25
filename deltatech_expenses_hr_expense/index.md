@@ -1,7 +1,7 @@
 # Expenses Deduction - HR Expense Bridge (localizat la `deltatech_expenses_hr_expense/index.md`)
 
 - **Nume Tehnic:** `deltatech_expenses_hr_expense`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_expenses_hr_expense
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_expenses_hr_expense`
 - **Ultima Ingestie:** `2026-10-01`

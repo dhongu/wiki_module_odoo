@@ -1,7 +1,7 @@
 # Purchase Message SPV (localizat la `l10n_ro_message_spv_purchase/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_message_spv_purchase`
-- **Versiune:** `19.0.0.0.1`
+- **Versiune:** `19.0.0.0.12`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_message_spv_purchase
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_message_spv_purchase`
 - **Ultima Ingestie:** `2026-06-08`

@@ -1,7 +1,7 @@
 # Creare Partener după CUI din OpenAPI (localizat la `l10n_ro_partner_create_by_vat_openapi/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_partner_create_by_vat_openapi`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** `https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_partner_create_by_vat_openapi`
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_partner_create_by_vat_openapi`
 - **Ultima Ingestie:** `2026-06-08`

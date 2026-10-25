@@ -1,7 +1,7 @@
 # Terrabit Payment Forecast (localizat la `deltatech_payment_forecast/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_forecast`
-- **Versiune:** `19.0.0.0.1`
+- **Versiune:** `19.0.0.0.3`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_payment_forecast`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_payment_forecast`
 - **Ultima Ingestie:** `2026-07-31`

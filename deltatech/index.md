@@ -1,7 +1,7 @@
 # Deltatech (localizat la `deltatech/index.md`)
 
 - **Nume Tehnic:** `deltatech`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech
 - **Cale Locală:** `odoo-addons/deltatech/deltatech`
 - **Ultima Ingestie:** `2026-06-01`

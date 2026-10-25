@@ -1,7 +1,7 @@
 # Analiză Clienți (Deltatech Customer Analysis)
 
 - **Nume Tehnic:** `deltatech_customer_analysis`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_customer_analysis
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_customer_analysis`
 - **Ultima Ingestie:** `2026-09-29`

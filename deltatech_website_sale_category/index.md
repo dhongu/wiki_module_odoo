@@ -1,7 +1,7 @@
 # Terrabit Website Sale Category Selection (localizat la `deltatech_website_sale_category/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_sale_category`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** [https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_sale_category](https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_sale_category)
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_website_sale_category`
 - **Ultima Ingestie:** `2026-07-31`

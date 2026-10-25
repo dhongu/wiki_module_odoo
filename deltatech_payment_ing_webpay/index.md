@@ -1,7 +1,7 @@
 # ING WebPay Payment Acquirer (localizat la `deltatech_payment_ing_webpay/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_ing_webpay`
-- **Versiune:** `19.0.0.0.4`
+- **Versiune:** `19.0.0.0.6`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_ing_webpay`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_ing_webpay`
 - **Ultima Ingestie:** `2026-08-20`

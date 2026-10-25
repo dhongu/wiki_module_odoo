@@ -1,7 +1,7 @@
 # Netopia MobilPay Payment Acquirer (localizat la `deltatech_payment_mobilpay/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_mobilpay`
-- **Versiune:** `19.0.1.3.6`
+- **Versiune:** `19.0.1.3.9`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_mobilpay
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_mobilpay`
 - **Ultima Ingestie:** `2026-10-09`

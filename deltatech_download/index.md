@@ -1,7 +1,7 @@
 # Download File (localizat la `deltatech_download/index.md`)
 
 - **Nume Tehnic:** `deltatech_download`
-- **Versiune:** `19.0.0.1.2`
+- **Versiune:** `19.0.0.1.5`
 - **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_download](https://github.com/dhongu/deltatech/tree/19.0/deltatech_download)
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_download`
 - **Ultima Ingestie:** `2026-06-02`

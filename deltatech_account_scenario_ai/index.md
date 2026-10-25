@@ -1,7 +1,7 @@
 # Accounting Scenario AI Generator (localizat la `deltatech_account_scenario_ai/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_scenario_ai`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_scenario_ai
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_account_scenario_ai`
 - **Ultima Ingestie:** `2026-06-09`

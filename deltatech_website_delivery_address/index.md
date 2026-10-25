@@ -1,7 +1,7 @@
 # eCommerce Delivery Address (localizat la `deltatech_website_delivery_address/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_delivery_address`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_delivery_address
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_delivery_address`
 - **Ultima Ingestie:** `2026-10-09`

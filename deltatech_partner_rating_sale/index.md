@@ -1,7 +1,7 @@
 # Rating partener în comenzi de vânzare și facturi (localizat la `deltatech_partner_rating_sale/index.md`)
 
 - **Nume Tehnic:** `deltatech_partner_rating_sale`
-- **Versiune:** `19.0.0.0.2`
+- **Versiune:** `19.0.0.0.4`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_rating_sale`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_partner_rating_sale`
 - **Ultima Ingestie:** `2026-06-03`

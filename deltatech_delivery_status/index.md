@@ -1,7 +1,7 @@
 # Deltatech Delivery Status (localizat la `deltatech_delivery_status/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_status`
-- **Versiune:** `19.0.2.3.0`
+- **Versiune:** `19.0.2.3.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_delivery_status
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_delivery_status`
 - **Ultima Ingestie:** `2026-08-20`

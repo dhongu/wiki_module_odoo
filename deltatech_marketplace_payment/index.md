@@ -1,7 +1,7 @@
 # Marketplace Payment Acquirer addon (localizat la `deltatech_marketplace_payment/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_payment`
-- **Versiune:** `19.0.0.1.2`
+- **Versiune:** `19.0.0.1.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_payment
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_payment`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)

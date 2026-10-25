@@ -1,7 +1,7 @@
 # Limită de Credit pe Partener — Website (localizat la `terrabit_partner_credit_limit_website/index.md`)
 
 - **Nume Tehnic:** `terrabit_partner_credit_limit_website`
-- **Versiune:** `19.0.0.0.2`
+- **Versiune:** `19.0.0.0.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_partner_credit_limit_website
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_partner_credit_limit_website`
 - **Ultima Ingestie:** `2026-09-14`

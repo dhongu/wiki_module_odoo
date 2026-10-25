@@ -1,7 +1,7 @@
 # Romania - Localization Config Fix
 
 - **Nume Tehnic:** `l10n_ro_config_fix`
-- **Versiune:** `19.0.0.0.3`
+- **Versiune:** `19.0.0.0.4`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_config_fix
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_config_fix`
 - **Ultima Ingestie:** `2026-10-09`

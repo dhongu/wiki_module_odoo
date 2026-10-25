@@ -1,7 +1,7 @@
 # MRP Concentration (localizat la `deltatech_mrp_concentration/index.md`)
 
 - **Nume Tehnic:** `deltatech_mrp_concentration`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_concentration
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_mrp_concentration`
 - **Ultima Ingestie:** `2026-06-02`

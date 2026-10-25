@@ -1,7 +1,7 @@
 # Price Category (localizat la `deltatech_price_categ/index.md`)
 
 - **Nume Tehnic:** `deltatech_price_categ`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_price_categ
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_price_categ`
 - **Ultima Ingestie:** `2026-06-03`

@@ -1,7 +1,7 @@
 # Deltatech Kit Price (localizat la `deltatech_kit_price/index.md`)
 
 - **Nume Tehnic:** `deltatech_kit_price`
-- **Versiune:** `19.0.0.0.2`
+- **Versiune:** `19.0.0.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_kit_price
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_kit_price`
 - **Ultima Ingestie:** `2026-08-20`

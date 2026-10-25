@@ -1,7 +1,7 @@
 # Deltatech Invoice to Draft (localizat la `deltatech_invoice_to_draft/index.md`)
 
 - **Nume Tehnic:** `deltatech_invoice_to_draft`
-- **Versiune:** `19.0.2.0.1`
+- **Versiune:** `19.0.2.0.4`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_to_draft`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_invoice_to_draft`
 - **Ultima Ingestie:** `2026-07-31`

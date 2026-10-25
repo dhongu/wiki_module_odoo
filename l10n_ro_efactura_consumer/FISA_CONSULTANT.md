@@ -100,5 +100,5 @@ Ce rămâne manual: completarea CNP-ului pe fișa partenerului.
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/01_partener_cnp.png` | Partener persoană fizică RO — câmpul CNP ① completat și valid sub TVA |
-| 2 | `screenshots/02_partener_fara_cnp.png` | Partener fără CNP — câmpul ① gol (induce avertizare la trimitere SPV) |
+| 1 | `static/description/01_partener_cnp.png` | Partener persoană fizică RO — câmpul CNP ① completat și valid sub TVA |
+| 2 | `static/description/02_partener_fara_cnp.png` | Partener fără CNP — câmpul ① gol (induce avertizare la trimitere SPV) |

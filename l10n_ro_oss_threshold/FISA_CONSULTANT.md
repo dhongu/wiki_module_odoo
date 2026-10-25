@@ -111,5 +111,5 @@ Ce rămâne manual: decizia de înregistrare OSS, aplicarea TVA statului de cons
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/01_setari_oss.png` | Setări Contabilitate — secțiunea OSS cu pragul €10.000 și procentul 80% |
-| 2 | `screenshots/02_oss_check_wizard.png` | Wizardul Verificare Prag OSS — dialog cu Anul și butonul Verifică |
+| 1 | `static/description/01_setari_oss.png` | Setări Contabilitate — secțiunea OSS cu pragul €10.000 și procentul 80% |
+| 2 | `static/description/02_oss_check_wizard.png` | Wizardul Verificare Prag OSS — dialog cu Anul și butonul Verifică |

@@ -179,9 +179,9 @@ Ce rămâne manual: validarea ordinii operațiunilor lunare și rerularea după 
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/01_config_tip_return.png` | Configurarea tipului de return: jurnal de închidere + cont 121 + conturi bypass (609/711) |
-| 2 | `screenshots/02_inchidere_kanban.png` | Lista închiderilor P&L (kanban) cu starea și verificările |
-| 3 | `screenshots/03_nota_inchidere.png` | Nota contabilă de închidere (6xx creditat, 7xx debitat, 121 rezultatul) |
+| 1 | `static/description/01_config_tip_return.png` | Configurarea tipului de return: jurnal de închidere + cont 121 + conturi bypass (609/711) |
+| 2 | `static/description/02_inchidere_kanban.png` | Lista închiderilor P&L (kanban) cu starea și verificările |
+| 3 | `static/description/03_nota_inchidere.png` | Nota contabilă de închidere (6xx creditat, 7xx debitat, 121 rezultatul) |
 
 > Notă: valoarea Profit / Pierdere apare pe cardul kanban după rularea completă a verificărilor
 > (Review → Validate); rezultatul perioadei este vizibil direct în nota de închidere (captura 3).

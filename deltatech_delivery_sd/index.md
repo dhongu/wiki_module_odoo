@@ -1,7 +1,7 @@
 # Sameday Shipping (localizat la `deltatech_delivery_sd/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_sd`
-- **Versiune:** `19.0.1.13.3`
+- **Versiune:** `19.0.1.13.9`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_sd
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_sd`
 - **Ultima Ingestie:** `2026-09-29`

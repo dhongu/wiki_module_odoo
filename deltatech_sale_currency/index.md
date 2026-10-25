@@ -1,7 +1,7 @@
 # Deltatech Sale Currency (localizat la `deltatech_sale_currency/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_currency`
-- **Versiune:** `19.0.0.0.0`
+- **Versiune:** `19.0.0.0.4`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_currency`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_currency`
 - **Ultima Ingestie:** `2026-06-03`

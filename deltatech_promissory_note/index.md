@@ -1,7 +1,7 @@
 # Bilete la Ordin / CEC (localizat la `deltatech_promissory_note/index.md`)
 
 - **Nume Tehnic:** `deltatech_promissory_note`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.9`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_promissory_note`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_promissory_note`
 - **Ultima Ingestie:** `2026-06-03`

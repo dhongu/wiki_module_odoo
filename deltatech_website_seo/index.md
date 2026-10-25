@@ -1,7 +1,7 @@
 # Deltatech Website SEO (localizat la `deltatech_website_seo/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_seo`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_seo
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_website_seo`
 - **Ultima Ingestie:** `2026-07-31`

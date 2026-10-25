@@ -1,10 +1,11 @@
 # Deltatech Products Extension (localizat la `deltatech_product_extension/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_extension`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_extension
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_extension`
 - **Ultima Ingestie:** `2026-06-01`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

@@ -139,7 +139,7 @@ liniile de comandă să găsească deja produsele și clienții importați.
 ### Pasul 5 — Ce rulează automat după prima sincronizare
 
 Comenzile și produsele se actualizează prin webhook-urile Shopify (`orders/create`,
-`orders/updated`, `orders/paid`, `orders/cancelled`, `products/update`), fără cron de așteptat.
+`orders/updated`, `orders/paid`, `orders/cancelled`, `products/update`, `products/create`), fără cron de așteptat.
 Exportul de stoc și de preț rulează pe acțiunile programate ale framework-ului comun
 (dezactivate implicit — vizibile în **Marketplace → Configuration → Crons**, se activează de
 acolo), iar reînnoirea tokenului OAuth (**„Shopify: Refresh Access Tokens”**, la fiecare 23h,

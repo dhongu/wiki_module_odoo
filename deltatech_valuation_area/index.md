@@ -1,7 +1,7 @@
 # Deltatech Stock Valuation Area (localizat la `deltatech_valuation_area/index.md`)
 
 - **Nume Tehnic:** `deltatech_valuation_area`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.6`
 - **Cale:** [https://github.com/dhongu/deltatech_stock_valuation/tree/19.0/deltatech_valuation_area](https://github.com/dhongu/deltatech_stock_valuation/tree/19.0/deltatech_valuation_area)
 - **Cale Locală:** `odoo-addons/deltatech_stock_valuation/deltatech_valuation_area`
 - **Ultima Ingestie:** `2026-10-01`

@@ -1,7 +1,7 @@
 # Deltatech Category Group (localizat la `deltatech_category_group/index.md`)
 
 - **Nume Tehnic:** `deltatech_category_group`
-- **Versiune:** `19.0.0.0.3`
+- **Versiune:** `19.0.0.0.7`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_category_group`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_category_group`
 - **Ultima Ingestie:** `2026-06-02`

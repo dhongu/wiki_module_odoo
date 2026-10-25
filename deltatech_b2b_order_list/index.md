@@ -1,7 +1,7 @@
 # B2B Order Lists (localizat la `deltatech_b2b_order_list/index.md`)
 
 - **Nume Tehnic:** `deltatech_b2b_order_list`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_order_list
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_b2b_order_list`
 - **Ultima Ingestie:** `2026-10-09`

@@ -43,8 +43,10 @@ Date minime pentru demo:
 - un partener website cu `credit_limit` setat și sold curent care depășește limita (vezi fișa
   modulului de bază pentru cum se generează soldul);
 - cel puțin doi furnizori de plată activi și publicați: unul online funcțional (ex. modulul de
-  test `payment_demo`) și unul de tip transfer bancar (`custom_mode = wire_transfer`) sau plată la
-  livrare (`code = on_delivery`), ca să se observe diferența de listă înainte/după restricție;
+  test `payment_demo`) și unul de tip transfer bancar (`custom_mode = wire_transfer`, din
+  `payment_custom`, deja dependență a modulului) — plata la livrare (`code = on_delivery`) este o
+  a doua excepție posibilă, dar provine din modulul separat `deltatech_payment_on_delivery`
+  (opțional, nu e dependență); fără el, demo-ul se face doar cu transfer bancar;
 - comanda trebuie să aibă un termen de plată **diferit de „Immediate Payment"** — dacă parametrul
   `credit_limit.skip_term_immediate` e activ (implicit **da**), o comandă cu plată imediată sare
   complet verificarea limitei, inclusiv la checkout;
@@ -58,7 +60,8 @@ Date minime pentru demo:
 3. Verificați parametrul nou din **Website → Configurare → Setări**, secțiunea de plăți:
    „Restrict All Providers".
 4. Pregătiți cel puțin doi furnizori de plată publicați pe website: unul online funcțional și unul
-   de tip transfer bancar (`custom_mode = wire_transfer`) sau plată la livrare (`code = on_delivery`).
+   de tip transfer bancar (`custom_mode = wire_transfer`); plata la livrare (`code = on_delivery`)
+   necesită în plus modulul opțional `deltatech_payment_on_delivery`.
 5. Autentificați-vă pe website ca partenerul de test și adăugați produse în coș peste limita de
    credit disponibilă, cu un termen de plată diferit de „Immediate Payment" pe comandă.
 
@@ -137,6 +140,10 @@ altfel un client peste limită rămâne fără nicio opțiune de plată chiar ș
 - [ ] Un partener care nu depășește limita vede lista completă de metode de plată, neafectată.
 - [ ] O comandă cu termen de plată „Immediate Payment" NU este supusă verificării (comportament
       implicit, din `credit_limit.skip_term_immediate`) — testați cu alt termen de plată.
+- [ ] O comandă cu **orice** tranzacție de plată deja înregistrată (chiar eșuată/anulată) NU mai
+      este supusă restricției la o reîncărcare ulterioară a `/shop/payment` — comportament din
+      `can_skip_credit_limit()` (modulul de bază), controlat de parametrul
+      `terrabit_partner_credit_limit.skip_only_card`.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -145,7 +152,7 @@ altfel un client peste limită rămâne fără nicio opțiune de plată chiar ș
 | Pe pagina de plată nu apare nicio metodă de plată | Limita de credit e depășită și „Restrict All Providers" e activat, **sau** nu există niciun furnizor de plată online publicat (au rămas doar transfer bancar/ramburs, tocmai eliminate) | Dezactivați „Restrict All Providers" sau publicați un furnizor de plată online funcțional |
 | Bara de progres/rezumatul de credit nu apare deloc pe pagina de plată | Partenerul nu are `credit_limit` setat (câmp gol/zero) | Setați limita de credit pe partener din backend (vezi fișa `terrabit_partner_credit_limit`) |
 | Clientul e restricționat deși limita pare respectată | Verificarea include și facturile restante, nu doar soldul curent — o factură scadentă poate declanșa restricția chiar sub limită | Verificați secțiunea „Facturi restante" a rezumatului și modulul de bază pentru zilele de grație configurate |
-| Restricția nu se aplică deloc pentru un partener peste limită | Comanda/echipa de vânzări are activă o excepție (`allow_overcredit`, `over_credit` sau echipă cu „Ignore credit limits") din modulul de bază, **sau** comanda are termenul de plată „Immediate Payment" (sărit implicit din `credit_limit.skip_term_immediate`) | Verificați excepțiile din `terrabit_partner_credit_limit` aplicabile comenzii/partenerului și termenul de plată al comenzii |
+| Restricția nu se aplică deloc pentru un partener peste limită | Comanda/echipa de vânzări are activă o excepție (`allow_overcredit`, `over_credit` sau echipă cu „Ignore credit limits") din modulul de bază, **sau** comanda are termenul de plată „Immediate Payment" (sărit implicit din `credit_limit.skip_term_immediate`), **sau** comanda are deja o tranzacție de plată înregistrată (chiar eșuată) — `can_skip_credit_limit()` o consideră excepție dacă `terrabit_partner_credit_limit.skip_only_card` nu e activat | Verificați excepțiile din `terrabit_partner_credit_limit` aplicabile comenzii/partenerului, termenul de plată și tranzacțiile existente pe comandă |
 
 ## 10. Capturi de ecran
 

@@ -1,7 +1,7 @@
 # Deltatech Payment Report (localizat la `deltatech_payment_report/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_report`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.6`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_payment_report
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_payment_report`
 - **Ultima Ingestie:** `2026-10-09`

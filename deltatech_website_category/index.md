@@ -1,7 +1,7 @@
 # eCommerce Product Category (localizat la `deltatech_website_category/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_category`
-- **Versiune:** `19.0.1.1.1`
+- **Versiune:** `19.0.1.1.2`
 - **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_category](https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_category)
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_category`
 - **Ultima Ingestie:** `2026-07-31`

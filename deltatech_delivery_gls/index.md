@@ -1,7 +1,7 @@
 # GLS Shipping (localizat la `deltatech_delivery_gls/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_gls`
-- **Versiune:** `19.0.2.1.1`
+- **Versiune:** `19.0.2.1.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_gls
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_gls`
 - **Ultima Ingestie:** `2026-09-29`

@@ -119,7 +119,7 @@ Ce rămâne manual: validarea comisiei și documentele semnate.
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`), pe date seedate determinist:
 
 1. `01_lista_inventarieri.png` — lista inventarierilor RO (pasul 1)

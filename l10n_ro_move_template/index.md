@@ -1,7 +1,7 @@
 # Romania - Șabloane note contabile (localizat la `l10n_ro_move_template/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_move_template`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_move_template
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_move_template`
 - **Ultima Ingestie:** `2026-10-08`

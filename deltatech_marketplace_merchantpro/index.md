@@ -1,7 +1,7 @@
 # Conector Marketplace MerchantPro (localizat la `deltatech_marketplace_merchantpro/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_merchantpro`
-- **Versiune:** `19.0.0.0.17`
+- **Versiune:** `19.0.0.0.23`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_merchantpro
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_merchantpro`
 - **Ultima Ingestie:** `2026-09-11`

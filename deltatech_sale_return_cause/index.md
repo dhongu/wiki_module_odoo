@@ -1,7 +1,7 @@
 # Sale Return Cause (localizat la `deltatech_sale_return_cause/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_return_cause`
-- **Versiune:** `19.0.0.0.8`
+- **Versiune:** `19.0.0.0.12`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_return_cause`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_return_cause`
 - **Ultima Ingestie:** `2026-08-20`

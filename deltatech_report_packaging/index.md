@@ -1,7 +1,7 @@
 # Report Packaging (localizat la `deltatech_report_packaging/index.md`)
 
 - **Nume Tehnic:** `deltatech_report_packaging`
-- **Versiune:** `19.0.1.3.1`
+- **Versiune:** `19.0.1.3.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_report_packaging
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_report_packaging`
 - **Ultima Ingestie:** `2026-09-29`

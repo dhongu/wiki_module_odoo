@@ -1,7 +1,7 @@
 # Simple MRP (localizat la `deltatech_mrp_simple/index.md`)
 
 - **Nume Tehnic:** `deltatech_mrp_simple`
-- **Versiune:** `19.0.1.1.1`
+- **Versiune:** `19.0.1.1.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_simple
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_mrp_simple`
 - **Ultima Ingestie:** `2026-06-03`

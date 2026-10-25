@@ -1,7 +1,7 @@
 # Picking Validation Restrict Entry Exit (localizat la `deltatech_picking_restrict_entry_exit/index.md`)
 
 - **Nume Tehnic:** `deltatech_picking_restrict_entry_exit`
-- **Versiune:** `19.0.0.0.8`
+- **Versiune:** `19.0.0.0.14`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_picking_restrict_entry_exit
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_picking_restrict_entry_exit`
 - **Ultima Ingestie:** `2026-07-31`

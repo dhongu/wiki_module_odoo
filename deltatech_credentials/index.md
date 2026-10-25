@@ -1,7 +1,7 @@
 # Credentials (localizat la `deltatech_credentials/index.md`)
 
 - **Nume Tehnic:** `deltatech_credentials`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_credentials
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_credentials`
 - **Ultima Ingestie:** `2026-06-02`

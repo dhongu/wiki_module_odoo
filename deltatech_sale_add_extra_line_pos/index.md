@@ -1,7 +1,7 @@
 # POS Add Extra Line (localizat la `deltatech_sale_add_extra_line_pos/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_add_extra_line_pos`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_add_extra_line_pos`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_add_extra_line_pos`
 - **Ultima Ingestie:** `2026-07-31`

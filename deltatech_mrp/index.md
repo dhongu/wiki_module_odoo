@@ -1,7 +1,7 @@
 # MRP Extension (localizat la `deltatech_mrp/index.md`)
 
 - **Nume Tehnic:** `deltatech_mrp`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.9`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_mrp`
 - **Ultima Ingestie:** `2026-08-20`

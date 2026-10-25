@@ -47,7 +47,7 @@ Pentru demonstrație sunt suficiente note contabile existente:
 
 > **Capturi:** capturile din această secțiune se generează automat cu skill-ul `fisa-screenshots`
 > (test Playwright pe planul RO). Numele fișierelor sunt stabilite mai jos și în secțiunea 10; până
-> la rularea generării, ele nu există încă în `readme/screenshots/`.
+> la rularea generării, ele nu există încă în `static/description/`.
 
 ### Pasul 1 — Deschiderea Pozițiilor contabile
 
@@ -111,7 +111,7 @@ coloanei „Cont Corespondent" afișată dinamic în Cartea Mare (`l10n_ro_journ
 
 Capturile se **generează automat** din `tests/test_screenshots.py` (mixinul `ScreenshotCase` din
 `l10n_ro_doc_screenshots`), în RO, pe planul de conturi RO. La momentul redactării **nu există încă**
-în `readme/screenshots/` — rulați skill-ul `fisa-screenshots` pentru a le produce. Lista planificată,
+în `static/description/` — rulați skill-ul `fisa-screenshots` pentru a le produce. Lista planificată,
 în ordinea fluxului din secțiunea 6:
 
 1. `01_pozitii_corespondent.png` — lista Poziții contabile cu coloana Cont corespondent.

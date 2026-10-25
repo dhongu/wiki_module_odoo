@@ -220,7 +220,7 @@ inversă), plaja de serii facturi și verificarea operațiunilor excluse din D39
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py` (mixinul
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py` (mixinul
 `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), cu interfața Odoo în **limba română**,
 folosind **datele demo ale localizării RO** (compania `base.demo_company_ro`, facturi datate în luna
 trecută). Titlurile și coloanele apar în română („Jurnal TVA Vânzări (RO)", „Jurnal", „Furnizor"/

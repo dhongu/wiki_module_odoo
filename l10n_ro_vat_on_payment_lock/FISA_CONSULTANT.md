@@ -59,10 +59,12 @@ Date minime pentru demo:
 3. Configurați o taxă de vânzare (fila **Opțiuni Avansate**) cu **Exigibilitatea taxei = Pe baza plății** și **Cont de tranziție a bazei de numerar** `4428`.
 4. **Setați contul de bază pentru notele cash-basis** — câmpul **„Base Tax Received Account"**
    (`account_cash_basis_base_account_id`) pe companie, în Setări → Contabilitate (secțiunea Taxe).
-   Recomandat: un **cont tehnic neutru**, ex. **`473` „Decontări din operații în curs de clarificare"**.
+   Recomandat: un **cont tehnic cu sold zero**, **`442830` „Bază TVA - cont tehnic (sold zero)"**,
+   analitic al lui 4428 (îl creează și îl setează automat `l10n_ro_caba`). Nu `473`, care înseamnă
+   sume neclarificate, și nu contul de tranziție 44281/44282.
    Liniile de bază din nota de exigibilitate sunt o mișcare în oglindă (Dr = Cr, sold 0) folosită doar
    pentru raportarea bazei în grilele de TVA; dacă acest câmp este gol, baza rulează pe **contul de
-   venituri/cheltuieli** al facturii (ex. 7xx), ceea ce nu este corect. Setând `473`, baza nu mai
+   venituri/cheltuieli** al facturii (ex. 7xx), ceea ce nu este corect. Setând `442830`, baza nu mai
    atinge conturile de rezultat.
 5. Asigurați-vă că utilizatorul de test are drepturi de Contabilitate.
 6. Nu este nevoie de meniuri noi — modulul nu adaugă interfață proprie; acționează automat.
@@ -83,7 +85,7 @@ Emiteți și postați o factură client cu taxa de mai sus, apoi înregistrați 
 (**Înregistrează plata**). La reconcilierea încasării cu factura, Odoo generează automat **nota de
 exigibilitate** (cash-basis): TVA-ul trece din **4428** (neexigibil) în **4427** (colectat),
 proporțional cu suma încasată. Liniile de **bază** apar în oglindă pe contul tehnic configurat la
-Pasul 4 (ex. `473`) — se anulează între ele și servesc doar la raportarea bazei în grilele de TVA.
+Pasul 4 (`442830`) — se anulează între ele și servesc doar la raportarea bazei în grilele de TVA.
 
 ![Nota de exigibilitate TVA generată la încasare (4428 → 4427)](screenshots/02_nota_exigibilitate.png)
 
@@ -143,7 +145,7 @@ Ce rămâne manual: setarea/retragerea `tax_lock_date` (validarea D300, respecti
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**,
 pe planul de conturi RO (`setup_country("ro")`):
 

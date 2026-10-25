@@ -20,9 +20,11 @@ Euplatesc (configurabil) și, opțional, linia de echilibrare cu netul virat că
 
 Nu există un temei legal specific — este un flux operațional de **reconciliere a încasărilor
 prin procesator de plăți**. Contextul contabil: sumele decontate de Euplatesc tranzitează un
-cont de „bani la procesator" (jurnal dedicat), comisionul se înregistrează pe cheltuieli
+cont de „bani la procesator" (jurnal dedicat, analitic **461 „Debitori diverși"**: creanță asupra
+procesatorului până la virare), comisionul se înregistrează pe cheltuieli
 (**627 „Cheltuieli cu serviciile bancare și asimilate"**), iar virarea netului către contul
-bancar real se închide prin **581 „Viramente interne"** (OMFP 1802/2014, funcțiunea conturilor).
+bancar real stinge creanța asupra procesatorului (efect net Dr 5121 = Cr 461), cu **581 „Viramente
+interne"** ca punte tehnică între jurnale (OMFP 1802/2014, funcțiunea conturilor).
 
 ## 3. Utilizatori și roluri
 
@@ -35,11 +37,21 @@ Roluri recomandate pentru testare:
 
 ## 4. Conturi și date implicate
 
-- **cont dedicat jurnalului Euplatesc** (ex. 5125 analitic „Euplatesc" — banii la procesator);
+- **cont dedicat jurnalului Euplatesc**: analitic **461 Debitori diverși** „Euplatesc" — banii aflați
+  la procesator sunt o creanță asupra lui până la virare, nu sume în drum spre bancă (5125 se
+  folosește doar pentru sume virate sau depuse la bancă și neapărute încă în extras, pct. 302
+  alin. (2) din OMFP 1802/2014). Contul se creează cu tipul **Bancă și numerar**, altfel nu poate
+  fi ales ca cont implicit al unui jurnal de tip Bancă;
 - **4111 Clienți** — se închide la reconcilierea fiecărei plăți cu cardul;
 - **627 Cheltuieli cu serviciile bancare** — contrapartida liniei de comision;
 - **581 Viramente interne** — contrapartida liniei de transfer către bancă;
 - **512x Conturi la bănci** — unde intră efectiv decontarea (pe extrasul băncii).
+
+Contul tranzitoriu al jurnalului (implicit un 5125 din planul Odoo RO) păstrează doar liniile
+nereconciliate și trebuie să fie fără sold la închiderea perioadei. Tipul *Bancă și numerar* al
+contului 461 face ca rapoartele Odoo pe tip de cont (fluxul de numerar, soldurile de numerar din
+tabloul de bord) să trateze creanța asupra Euplatesc ca numerar; balanța și bilanțul pe conturi RO
+nu sunt afectate.
 
 Date minime pentru demo:
 - companie românească cu localizarea contabilă instalată;
@@ -51,7 +63,8 @@ Date minime pentru demo:
 
 1. Instalați modulul `deltatech_account_bank_statement_import_euplatesc` pe baza demo.
 2. Creați un jurnal **Contabilitate → Configurare → Jurnale** de tip *Bancă*, numit de ex.
-   „Jurnal Euplatesc", în moneda RON, cu un cont dedicat (ex. 5125 analitic).
+   „Jurnal Euplatesc", în moneda RON, cu un cont dedicat (analitic 461 „Euplatesc", tip
+   *Bancă și numerar*).
 3. Pe formularul jurnalului, tabul **Note contabile**, configurați:
    - **Euplatesc: Fees** — cum se importă comisioanele (Minim1RON + Diff1RON):
      *o linie agregată per extras* (implicit), *o linie per tranzacție* sau *deloc*;
@@ -112,14 +125,16 @@ După import se creează extrasul **Euplatesc <FPS...>**, cu data încasării (d
 
 La reconcilierea extrasului de pe jurnalul Euplatesc:
 
-- încasare card (per tranzacție): **Dr 5125 (Euplatesc) = Cr 4111 Clienți**;
-- refund: **Dr 4111 Clienți = Cr 5125 (Euplatesc)**;
-- comision Euplatesc: **Dr 627 Cheltuieli servicii bancare = Cr 5125 (Euplatesc)**
-  (TVA nu se aplică — comision de procesare scutit, art. 292 alin. (2) lit. a) Cod Fiscal).
+- încasare card (per tranzacție): **Dr 461 (Euplatesc) = Cr 4111 Clienți**;
+- refund: **Dr 4111 Clienți = Cr 461 (Euplatesc)**;
+- comision Euplatesc: **Dr 627 Cheltuieli servicii bancare = Cr 461 (Euplatesc)**
+  (TVA nu se aplică — comision de procesare scutit, art. 292 alin. (2) lit. a) pct. 3 din Codul fiscal).
   Dacă totuși Euplatesc emite factură cu TVA pentru comision, comisionul se preia din
   factura de la furnizor (**Dr 627 + Dr 4426 = Cr 401**), nu direct din linia de extras;
-- linia de transfer: **Dr 581 Viramente interne = Cr 5125 (Euplatesc)**;
-- pe extrasul băncii reale, decontarea Euplatesc se închide: **Dr 5121 Bancă = Cr 581**.
+- linia de transfer: **Dr 581 Viramente interne = Cr 461 (Euplatesc)**, iar pe extrasul băncii reale
+  **Dr 5121 Bancă = Cr 581**. Contul 581 e folosit aici doar ca punte tehnică între cele două jurnale
+  și rămâne fără sold; efectul net este încasarea creanței de la procesator, **Dr 5121 = Cr 461
+  (Euplatesc)**, conform funcțiunii contului 461 („valoarea debitelor încasate").
 
 Modulul **nu postează** note contabile singur — creează liniile de extras; notele rezultă din
 reconcilierea standard Odoo (widget bancar + reguli de reconciliere, ex. regulă pe 627 pentru

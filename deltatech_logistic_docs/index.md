@@ -1,7 +1,7 @@
 # Logistic Documents (localizat la `deltatech_logistic_docs/index.md`)
 
 - **Nume Tehnic:** `deltatech_logistic_docs`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_logistic_docs`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_logistic_docs`
 - **Ultima Ingestie:** `2026-06-02`

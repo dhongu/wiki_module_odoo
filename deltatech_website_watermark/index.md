@@ -1,7 +1,7 @@
 # Website Watermark Image (localizat la `deltatech_website_watermark/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_watermark`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.10`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_watermark
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_website_watermark`
 - **Ultima Ingestie:** `2026-06-03`

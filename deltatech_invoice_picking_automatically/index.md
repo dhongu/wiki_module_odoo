@@ -1,7 +1,7 @@
 # Invoice Pickings Automatically (localizat la `deltatech_invoice_picking_automatically/index.md`)
 
 - **Nume Tehnic:** `deltatech_invoice_picking_automatically`
-- **Versiune:** `19.0.0.0.4`
+- **Versiune:** `19.0.0.0.7`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_picking_automatically`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_invoice_picking_automatically`
 - **Ultima Ingestie:** `2026-06-02`

@@ -1,7 +1,7 @@
 # Deltatech Services Task (localizat la `deltatech_service_task/index.md`)
 
 - **Nume Tehnic:** `deltatech_service_task`
-- **Versiune:** `19.0.0.0.18`
+- **Versiune:** `19.0.0.0.24`
 - **Cale:** `https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_task`
 - **Cale Locală:** `odoo-addons/deltatech_service/deltatech_service_task`
 - **Ultima Ingestie:** `2026-06-08`

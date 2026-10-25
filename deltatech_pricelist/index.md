@@ -1,7 +1,7 @@
 # Price List Currency Extension (localizat la `deltatech_pricelist/index.md`)
 
 - **Nume Tehnic:** `deltatech_pricelist`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_pricelist
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_pricelist`
 - **Ultima Ingestie:** `2026-07-31`

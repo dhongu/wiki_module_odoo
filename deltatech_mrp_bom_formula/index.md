@@ -1,7 +1,7 @@
 # MRP BoM Formula (localizat la `deltatech_mrp_bom_formula/index.md`)
 
 - **Nume Tehnic:** `deltatech_mrp_bom_formula`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_bom_formula
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_mrp_bom_formula`
 - **Ultima Ingestie:** `2026-08-14`

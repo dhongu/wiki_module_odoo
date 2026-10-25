@@ -142,7 +142,7 @@ arhivare lângă raportul Z fizic.
 | `deltatech_sale_store` | fluxul de vânzare din magazin: bon fiscal, `receipt_print`, jurnale `fiscal_receipt`, `cod_ecr` | dependență (manifest) |
 | Fișierul pentru ECR (`account.invoice.export.bf`) | sursa bonului tipărit; raportul grupează TVA identic cu acest fișier | corelare (date) |
 | `deltatech_payment_report` | raport generic de încasări pe interval; util ca verificare complementară, dar fără cote de TVA | complementar |
-| Registrul de casă / SAGA | punctajul Z ↔ Odoo precede predarea datelor către contabilitate | proces client |
+| Registrul de casă / contabilitate | punctajul Z ↔ Odoo precede predarea datelor către contabilitate | proces client |
 
 Ce este automat: selecția documentelor cu bon tipărit, gruparea pe cote de TVA și pe coduri ECR,
 semnul negativ la stornări, calculul diferenței față de plăți.

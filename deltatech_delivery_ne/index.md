@@ -1,7 +1,7 @@
 # Nemo Express Shipping (localizat la `deltatech_delivery_ne/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_ne`
-- **Versiune:** `19.0.0.0.3`
+- **Versiune:** `19.0.0.0.8`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_ne
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_ne`
 - **Ultima Ingestie:** `2026-08-20`

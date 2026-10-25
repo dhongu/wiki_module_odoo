@@ -1,7 +1,7 @@
 # Deltatech Services Maintenance (localizat la `deltatech_service_maintenance/index.md`)
 
 - **Nume Tehnic:** `deltatech_service_maintenance`
-- **Versiune:** `19.0.1.2.1`
+- **Versiune:** `19.0.1.2.10`
 - **Cale:** https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_maintenance
 - **Cale Locală:** `odoo-addons/deltatech_service/deltatech_service_maintenance`
 - **Ultima Ingestie:** `2026-06-08`

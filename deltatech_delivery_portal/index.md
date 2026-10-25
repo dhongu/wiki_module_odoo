@@ -1,7 +1,7 @@
 # Delivery Status in Customer Portal (localizat la `deltatech_delivery_portal/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_portal`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_portal
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_portal`
 - **Ultima Ingestie:** `2026-09-03`

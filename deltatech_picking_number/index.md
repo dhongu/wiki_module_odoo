@@ -1,7 +1,7 @@
 # Picking Number (Număr oficial la cerere pentru transferuri)
 
 - **Nume Tehnic:** `deltatech_picking_number`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_picking_number
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_picking_number`
 - **Ultima Ingestie:** `2026-10-22`

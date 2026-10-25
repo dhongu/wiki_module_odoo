@@ -1,7 +1,7 @@
 # Deltatech Warehouse Arrangement (localizat la `deltatech_warehouse_arrangement/index.md`)
 
 - **Nume Tehnic:** `deltatech_warehouse_arrangement`
-- **Versiune:** `19.0.0.1.2`
+- **Versiune:** `19.0.0.1.8`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_warehouse_arrangement`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_warehouse_arrangement`
 - **Ultima Ingestie:** `2026-06-03`

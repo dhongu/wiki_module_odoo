@@ -139,5 +139,5 @@ Ce rămâne manual: analiza evenimentelor și justificarea excepțiilor.
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/01_pista_audit_lista.png` | Pistă audit ① — INSERT pe account.move/line/tax cu timestamp, user, model, câmp, valoare veche/nouă |
-| 2 | `screenshots/02_verificare_integritate.png` | Butonul „Verifică integritatea" ① + notificarea de rezultat (lanț de hash inviolat) |
+| 1 | `static/description/01_pista_audit_lista.png` | Pistă audit ① — INSERT pe account.move/line/tax cu timestamp, user, model, câmp, valoare veche/nouă |
+| 2 | `static/description/02_verificare_integritate.png` | Butonul „Verifică integritatea" ① + notificarea de rezultat (lanț de hash inviolat) |

@@ -1,7 +1,7 @@
 # Deltatech CRM FSM (localizat la `deltatech_crm_fsm/index.md`)
 
 - **Nume Tehnic:** `deltatech_crm_fsm`
-- **Versiune:** `19.0.0.0.1`
+- **Versiune:** `19.0.0.0.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_crm_fsm
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_crm_fsm`
 - **Ultima Ingestie:** `2026-06-09`

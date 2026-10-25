@@ -1,7 +1,7 @@
 # Romania - Picking Reports - Product Expiry (localizat la `l10n_ro_stock_picking_report_product_expiry/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_picking_report_product_expiry`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** `https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_picking_report_product_expiry`
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_stock_picking_report_product_expiry`
 - **Ultima Ingestie:** `2026-06-08`

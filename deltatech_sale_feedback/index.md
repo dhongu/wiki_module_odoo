@@ -1,7 +1,7 @@
 # Sale Feedback (localizat la `deltatech_sale_feedback/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_feedback`
-- **Versiune:** `19.0.1.0.5`
+- **Versiune:** `19.0.1.0.7`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_feedback`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_feedback`
 - **Ultima Ingestie:** `2026-06-03`

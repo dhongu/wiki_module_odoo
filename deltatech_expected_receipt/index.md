@@ -1,7 +1,7 @@
 # Deltatech Expected Receipts (Încasări așteptate cu cardul)
 
 - **Nume Tehnic:** `deltatech_expected_receipt`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_expected_receipt
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_expected_receipt`
 - **Ultima Ingestie:** `2026-10-09`

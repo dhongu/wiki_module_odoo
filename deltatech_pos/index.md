@@ -1,7 +1,7 @@
 # Print to ECR from POS (localizat la `deltatech_pos/index.md`)
 
 - **Nume Tehnic:** `deltatech_pos`
-- **Versiune:** `19.0.2.10.3`
+- **Versiune:** `19.0.2.10.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_pos`
 - **Ultima Ingestie:** `2026-10-09`

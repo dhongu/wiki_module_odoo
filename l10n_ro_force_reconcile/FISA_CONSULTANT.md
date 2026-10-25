@@ -93,6 +93,6 @@ Ce rămâne manual: aprobarea și documentarea motivului reconcilierii.
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/01_wizard_compensare.png` | Wizardul de reconciliere forțată (conturile selectate + suma compensată) |
-| 2 | `screenshots/02_nota_compensare.png` | Nota de compensare generată (debit cont 1 / credit cont 2) |
-| 3 | `screenshots/03_linie_reconciliata.png` | Nota inițială cu linia reconciliată după compensare |
+| 1 | `static/description/01_wizard_compensare.png` | Wizardul de reconciliere forțată (conturile selectate + suma compensată) |
+| 2 | `static/description/02_nota_compensare.png` | Nota de compensare generată (debit cont 1 / credit cont 2) |
+| 3 | `static/description/03_linie_reconciliata.png` | Nota inițială cu linia reconciliată după compensare |

@@ -259,7 +259,7 @@ datări care ar strica ordinea straturilor).
 
 ## 10. Capturi de ecran
 
-Capturile din `readme/screenshots/` sunt **generate automat** din
+Capturile din `static/description/` sunt **generate automat** din
 `tests/test_screenshots.py` (mixinul `ScreenshotCase` din
 `l10n_ro_doc_screenshots`, import defensiv), în limba română, pe planul de
 conturi RO, cu același scenariu ca testul de flux:

@@ -181,7 +181,7 @@ Ce rămâne de verificat manual: regularizarea contabilă 4426/4427/4423/4424, r
 
 ## 12. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase`), în **limba română**, folosind **datele demo ale localizării**
 (compania `base.demo_company_ro`):
 

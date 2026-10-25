@@ -120,7 +120,16 @@ cea calculată, deci trebuie rescrisă cu cifrele din Z, altfel diferența iese 
 altfel trece în **Diferențe**.
 
 Raportul pornește de la ipoteza **o sesiune = un raport Z = o zi**, pe fiecare casă: se calculează din
-toate comenzile sesiunii, iar importul (Pasul 5) caută comenzile unui Z după ziua lui.
+vânzările sesiunii, iar importul (Pasul 5) caută comenzile unui Z după ziua lui.
+
+> **Retururile nu intră în comparația cu aparatul.** Casa de marcat nu înregistrează vânzări
+> negative: returul se face cu **factură storno** (notă de credit) către client și cu **scoatere de
+> numerar**. De aceea, comenzile de retur ale sesiunii (total negativ) nu intră în cotele și plățile
+> calculate, ci apar separat în câmpul **Retururi (în afara aparatului)**. Pentru ca sertarul să
+> corespundă cu raportul Z, scoaterea de numerar se face și pe aparat, ca **sume de serviciu scoase**,
+> în aceeași zi, pe lângă dispoziția de plată din registrul de casă. Comenzile de retur trebuie
+> facturate pe client, ca factura storno să fie singura reducere a vânzărilor și să nu se dubleze cu
+> nota contabilă a sesiunii.
 Dacă sesiunea rămâne deschisă peste noapte (mai multe Z-uri), diferențele apar pe fiecare raport Z;
 închideți sesiunea la sfârșitul zilei.
 
@@ -154,9 +163,9 @@ zilele lipsă înainte de a trage concluzii.
 > sumar. Tratați-l ca sursă de lucru, nu ca substitut al arhivei oficiale.
 > Cota de TVA a fiecărei linii se ia din **prima taxă procentuală** a liniei — vânzările scutite și
 > cele cu taxe fixe (fără procent) apar toate cumulat pe rândul „0", care merită verificat separat.
-> Agregarea include orice comandă a sesiunii care nu e ciornă/anulată, deci și comenzile POS
-> facturate — pentru un total strict pe bonuri fiscale, verificați și distincția factură/bon din
-> Pasul 2.
+> Agregarea include vânzările sesiunii care nu sunt ciornă/anulate, deci și comenzile POS
+> facturate, dar nu și retururile (raportate separat prin factura storno, vezi Pasul 3) — pentru un
+> total strict pe bonuri fiscale, verificați și distincția factură/bon din Pasul 2.
 
 **Treci mai departe** — pentru detaliere pe bon individual sau pe sesiune, treceți din pivot în
 vederea **listă** (butonul din colțul din dreapta sus): fiecare linie arată raportul Z sursă,
@@ -251,8 +260,9 @@ fila **Defalcare pe tipuri de plată**, fiecare tip are suma calculată și cea 
 - fiecare tip de plată din **Defalcare pe tipuri de plată** are suma declarată egală cu cea calculată
   (un plus pe card și un minus egal pe numerar nu se compensează);
 - starea raportului este **Reconciliat**. Starea **Diferențe** cere lămurire în Pasul 7. Partea
-  calculată cuprinde toate comenzile sesiunii, inclusiv cele „Lipsă în arhiva fiscală": acestea apar ca
-  diferență pe cotă până sunt lămurite.
+  calculată cuprinde vânzările sesiunii, inclusiv cele „Lipsă în arhiva fiscală": acestea apar ca
+  diferență pe cotă până sunt lămurite. Retururile nu intră în ea: le vedeți în **Retururi (în afara
+  aparatului)** și le verificați cu facturile storno ale zilei.
 
 **Treci mai departe** — la lista discrepanțelor bon cu bon (Pasul 7).
 
@@ -282,6 +292,18 @@ Modulul **nu produce note contabile** — nota contabilă agregată a sesiunii P
 **blocarea închiderii sesiunii** dacă există comenzi plătite nefiscalizate fără eroare justificată,
 raportul Z reconciliat (pe cote TVA și metode de plată) și arhiva jurnalului electronic AMEF.
 Returul fiscal referențiază bonul inițial (câmpurile „Bon inițial (retur)").
+
+Returul unei vânzări cu bon fiscal nu trece prin aparat. Se documentează cu factură storno către
+client, la cota de TVA a vânzării inițiale, și cu restituirea numerarului pe dispoziție de plată.
+Exemplu: un retur de 240 lei la 21% (bază 198,35, TVA 41,65):
+
+- factura storno: `4111 = 707 / 4427`, în roșu (−240,00 = −198,35 / −41,65);
+- restituirea numerarului: `4111 = 5311` (240,00);
+- reintrarea în stoc, la cost: `607 = 371`, în roșu.
+
+Vânzările zilei se iau din raportul Z, iar returul intră separat, prin factura storno. Dacă comanda
+de retur din POS nu e facturată, ea rămâne în nota contabilă a sesiunii și, împreună cu o factură
+storno emisă separat, reducerea vânzărilor s-ar înregistra de două ori.
 
 La importul exportului (Pasul 5), raportul Z al fiecărei zile se completează și reconciliază automat
 (Pasul 6): totalul declarat este totalul Z-ului din aparat; plățile declarate vin pe tipul de plată
@@ -364,6 +386,8 @@ justificare), și justificarea erorilor de fiscalizare.
 - [ ] Un raport Z creat manual pentru zi, fără număr Z, e completat de import; nu apare un al doilea
       raport Z pe aceeași zi și casă.
 - [ ] Un raport Z cu plăți declarate care diferă pe tipuri, dar dau același total, rămâne **Diferențe**.
+- [ ] Pe o sesiune cu un retur, raportul Z calculează doar vânzările, arată returul în **Retururi (în
+      afara aparatului)** și iese **Reconciliat** față de Z-ul aparatului.
 - [ ] Jurnalul nou preia **Serie aparat fiscal (AMEF)** și **NUI aparat fiscal (AMEF)** din punctul de
       lucru.
 - [ ] Un fișier care nu e nici `.zip`, nici `.p7b` semnat produce un mesaj de eroare clar, nu o eroare

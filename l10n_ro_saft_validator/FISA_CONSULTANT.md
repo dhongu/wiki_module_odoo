@@ -105,4 +105,4 @@ Capturile per variantă sunt în fișele dedicate (`FISA_CONSULTANT_LT.md`, `_A.
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/01_saft_validator_wizard.png` | Wizard validare ① — radio Tip declarație (LT/A/C) + sumar Errors/Warnings + lista problemelor |
+| 1 | `static/description/01_saft_validator_wizard.png` | Wizard validare ① — radio Tip declarație (LT/A/C) + sumar Errors/Warnings + lista problemelor |

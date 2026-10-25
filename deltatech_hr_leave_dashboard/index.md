@@ -1,7 +1,7 @@
 # Deltatech Leave Dashboard (Tablou de bord concedii echipă)
 
 - **Nume Tehnic:** `deltatech_hr_leave_dashboard`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_hr_leave_dashboard
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_hr_leave_dashboard`
 - **Ultima Ingestie:** `2026-09-29`

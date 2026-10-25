@@ -1,7 +1,7 @@
 # eTransport Enhancement (localizat la `l10n_ro_etransport_enhancement/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_etransport_enhancement`
-- **Versiune:** `19.0.0.9.2`
+- **Versiune:** `19.0.0.9.5`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_etransport_enhancement
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_etransport_enhancement`
 - **Ultima Ingestie:** `2026-09-21`

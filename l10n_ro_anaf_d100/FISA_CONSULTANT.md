@@ -49,8 +49,11 @@ Meniu: **Contabilitate → Raportare → Declarații ANAF → Declarație 100**.
 
 ### Pasul 2 — Verificarea sumelor
 
-Selectați perioada (lună/trimestru). Sumele se calculează automat din soldurile conturilor de obligații
-fiscale (ex. linia **102 — Impozit pe profit** din conturile 4411/691). Comparați cu calculul fiscal suport.
+Selectați perioada (lună/trimestru). Două linii se calculează automat din rulajele conturilor de
+obligații fiscale: **103 — Impozit pe profit** (definitiv) din 44111/44112 și **121 — Impozit pe
+veniturile microîntreprinderilor** din 44118/44182. Liniile **102** (plăți anticipate de impozit pe
+profit), **150** (impozit pe dividende către persoane juridice) și **604** (impozit pe dividende ale
+persoanelor fizice) nu au sursă automată și se completează manual. Comparați cu calculul fiscal suport.
 
 ### Pasul 3 — Export ANAF
 
@@ -85,7 +88,7 @@ Ce rămâne manual: validarea sumelor fiscale și a termenelor de plată.
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**,
 pe planul de conturi RO:
 

@@ -1,7 +1,7 @@
 # Relay Delivery Shipping (localizat la `deltatech_delivery_relay/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_relay`
-- **Versiune:** `19.0.0.0.4`
+- **Versiune:** `19.0.0.0.7`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_relay
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_relay`
 - **Ultima Ingestie:** `2026-08-20`

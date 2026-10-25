@@ -1,7 +1,7 @@
 # Terrabit TikTok Pixel (localizat la `terrabit_tiktok_pixel/index.md`)
 
 - **Nume Tehnic:** `terrabit_tiktok_pixel`
-- **Versiune:** `19.0.0.1.2`
+- **Versiune:** `19.0.0.1.7`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_tiktok_pixel
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_tiktok_pixel`
 - **Ultima Ingestie:** 2026-08-20

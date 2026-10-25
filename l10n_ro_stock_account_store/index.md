@@ -1,7 +1,7 @@
 # România - Contabilitate stocuri la magazin (preț de vânzare)
 
 - **Nume Tehnic:** `l10n_ro_stock_account_store`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_account_store
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_stock_account_store`
 - **Ultima Ingestie:** `2026-10-09`

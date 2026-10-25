@@ -1,7 +1,7 @@
 # Romania - Registru de conformitate AML (localizat la `l10n_ro_aml_register/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_aml_register`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_aml_register
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_aml_register`
 - **Ultima Ingestie:** `2026-09-12`

@@ -1,7 +1,7 @@
 # Deltatech Product Chatter (localizat la `deltatech_product_chatter/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_chatter`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.7`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_chatter
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_chatter`
 - **Ultima Ingestie:** `2026-08-20`

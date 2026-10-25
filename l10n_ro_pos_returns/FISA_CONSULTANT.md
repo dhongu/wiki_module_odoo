@@ -30,9 +30,12 @@ separat de încasări. Soldul casei nu se schimbă — se schimbă doar felul î
   **Nota de credit este acest document.** Odoo emite o notă de credit (tip 381 în CIUS-RO) cu valori
   pozitive și sens de creditare — semnul îl dă tipul documentului, nu valorile de pe linii. Nu
   căutați o factură cu cifre negative: efectul fiscal este identic și acceptat.
-- **Registrul de casă, cod 14-4-7A (OMFP 2634/2015)** — formularul cere încasările pe rândul de
-  încasări și plățile pe rândul de plăți; o valoare netă pe un singur rând nu respectă formularul.
-- **Dispoziția de plată/încasare către casierie, cod 14-4-4 (OMFP 2634/2015)** — formular
+- **Registrul de casă, cod 14-4-7A (OMFP 2634/2015, Anexa 2 poz. 27; model în Anexa 3)** —
+  modelul are coloane distincte **Încasări** și **Plăți**; o valoare netă pe un singur rând nu
+  reflectă corect operațiunile zilei. Vezi
+  [`readme/casierie/FORMULARE_TIPIZATE_CASIERIE.md`](../../readme/casierie/FORMULARE_TIPIZATE_CASIERIE.md)
+  pentru rubricile complete și sursele primare.
+- **Dispoziția de plată/încasare către casierie, cod 14-4-4 (OMFP 2634/2015, Anexa 2 poz. 26)** — formular
   bidirecțional, folosit aici pe sensul de plată; documentul de disciplină de casă pentru ieșirea
   efectivă a numerarului. Nu este emis de acest modul, ci de modulul de casierie
   (vezi secțiunea 7).
@@ -273,7 +276,7 @@ tipărirea dispoziției de casă.
 
 ## 10. Capturi de ecran
 
-Capturile din `readme/screenshots/` sunt **generate automat** din `tests/test_screenshots.py`
+Capturile din `static/description/` sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**, pe
 planul de conturi RO:
 

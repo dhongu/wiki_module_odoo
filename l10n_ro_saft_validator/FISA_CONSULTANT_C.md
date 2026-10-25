@@ -143,6 +143,6 @@ butonul **„SAF-T (D406 Stocks Declaration)"** generează XML-ul pentru speța 
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/03_saft_validator_wizard_c.png` | Wizard cu **Tip declarație = C** ① — radio La cerere selectat, listă cu tip operație fără cod SAF-T și UoM fără mapping UNECE |
-| 2 | `screenshots/02_picking_type_movement_code.png` | Formular `stock.picking.type` ② — câmpul **Movement type (RO)** populat cu codul SAF-T (50 = Receipts / 40 = Deliveries / etc.) |
-| 3 | `screenshots/03_saft_export_button_c.png` | Cog menu pe Carte Mare ③ cu opțiunea **„SAF-T (D406 Stocks Declaration)"** evidențiată — export-ul D406 Stocuri |
+| 1 | `static/description/03_saft_validator_wizard_c.png` | Wizard cu **Tip declarație = C** ① — radio La cerere selectat, listă cu tip operație fără cod SAF-T și UoM fără mapping UNECE |
+| 2 | `static/description/02_picking_type_movement_code.png` | Formular `stock.picking.type` ② — câmpul **Movement type (RO)** populat cu codul SAF-T (50 = Receipts / 40 = Deliveries / etc.) |
+| 3 | `static/description/03_saft_export_button_c.png` | Cog menu pe Carte Mare ③ cu opțiunea **„SAF-T (D406 Stocks Declaration)"** evidențiată — export-ul D406 Stocuri |

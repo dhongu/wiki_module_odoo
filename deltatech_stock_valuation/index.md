@@ -1,7 +1,7 @@
 # Product Valuation (localizat la `deltatech_stock_valuation/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_valuation`
-- **Versiune:** `19.0.0.0.10`
+- **Versiune:** `19.0.0.0.14`
 - **Cale:** [https://github.com/dhongu/deltatech_stock_valuation/tree/19.0/deltatech_stock_valuation](https://github.com/dhongu/deltatech_stock_valuation/tree/19.0/deltatech_stock_valuation)
 - **Cale Locală:** `odoo-addons/deltatech_stock_valuation/deltatech_stock_valuation`
 - **Ultima Ingestie:** `2026-10-01`

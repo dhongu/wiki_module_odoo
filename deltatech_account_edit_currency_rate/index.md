@@ -1,7 +1,7 @@
 # Deltatech Edit Currency Rate (localizat la `deltatech_account_edit_currency_rate/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_edit_currency_rate`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_account_edit_currency_rate](https://github.com/dhongu/deltatech/tree/19.0/deltatech_account_edit_currency_rate)
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_account_edit_currency_rate`
 - **Ultima Ingestie:** `2026-07-31`

@@ -1,7 +1,7 @@
 # Website Dezactivare Căutare Fuzzy
 
 - **Nume Tehnic:** `deltatech_website_disable_fuzzy_search`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_disable_fuzzy_search`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_disable_fuzzy_search`
 - **Ultima Ingestie:** `2026-06-03`

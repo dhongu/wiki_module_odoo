@@ -1,7 +1,7 @@
 # Deltatech Account (localizat la `deltatech_account/index.md`)
 
 - **Nume Tehnic:** `deltatech_account`
-- **Versiune:** `19.0.2.0.0`
+- **Versiune:** `19.0.2.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_account
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_account`
 - **Ultima Ingestie:** `2026-06-01`

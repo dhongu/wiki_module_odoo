@@ -1,7 +1,7 @@
 # RPC Audit Log (localizat la `deltatech_rpc_audit/index.md`)
 
 - **Nume Tehnic:** `deltatech_rpc_audit`
-- **Versiune:** `19.0.1.2.0`
+- **Versiune:** `19.0.1.2.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_rpc_audit
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_rpc_audit`
 - **Ultima Ingestie:** `2026-08-20`

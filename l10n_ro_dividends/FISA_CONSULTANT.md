@@ -164,7 +164,7 @@ CASS pentru persoane fizice nu se calculează în nota societății. Consultantu
 
 ## 8. Capturi de ecran
 
-Capturile din această fișă (`readme/screenshots/`) sunt **generate automat** din testul
+Capturile din această fișă (`static/description/`) sunt **generate automat** din testul
 `tests/test_screenshots.py` (HttpCase + Playwright), pe date seedate determinist. Regenerare:
 
 ```bash

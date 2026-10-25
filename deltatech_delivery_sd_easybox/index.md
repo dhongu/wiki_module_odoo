@@ -1,7 +1,7 @@
 # Sameday Shipping EasyBox (localizat la `deltatech_delivery_sd_easybox/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_sd_easybox`
-- **Versiune:** `19.0.0.0.10`
+- **Versiune:** `19.0.0.0.21`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_sd_easybox
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_sd_easybox`
 - **Ultima Ingestie:** `2026-08-20`

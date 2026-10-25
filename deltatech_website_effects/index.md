@@ -1,7 +1,7 @@
 # Website Effects (localizat la `deltatech_website_effects/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_effects`
-- **Versiune:** `19.0.1.2.5`
+- **Versiune:** `19.0.1.2.23`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_effects
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_website_effects`
 - **Ultima Ingestie:** `2026-10-18`

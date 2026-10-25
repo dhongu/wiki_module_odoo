@@ -1,7 +1,7 @@
 # Work Days Report (localizat la `deltatech_work_days_report/index.md`)
 
 - **Nume Tehnic:** `deltatech_work_days_report`
-- **Versiune:** `19.0.0.0.3`
+- **Versiune:** `19.0.0.0.9`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_work_days_report
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_work_days_report`
 - **Ultima Ingestie:** `2026-08-20`

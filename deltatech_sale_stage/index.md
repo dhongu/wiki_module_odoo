@@ -1,7 +1,7 @@
 # Deltatech Sale Order Stage (localizat la `deltatech_sale_stage/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_stage`
-- **Versiune:** `19.0.1.2.5`
+- **Versiune:** `19.0.1.2.9`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_stage`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_stage`
 - **Ultima Ingestie:** `2026-08-20`

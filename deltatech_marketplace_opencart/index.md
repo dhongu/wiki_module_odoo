@@ -1,7 +1,7 @@
 # OpenCart Marketplace Connector (localizat la `deltatech_marketplace_opencart/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_opencart`
-- **Versiune:** `19.0.0.2.3`
+- **Versiune:** `19.0.0.2.15`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_opencart
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_opencart`
 - **Ultima Ingestie:** `2026-08-20`

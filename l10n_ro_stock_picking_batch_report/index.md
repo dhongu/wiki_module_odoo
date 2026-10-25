@@ -1,7 +1,7 @@
 # Romania - Terrabit - Picking batch Report (localizat la `l10n_ro_stock_picking_batch_report/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_picking_batch_report`
-- **Versiune:** `19.0.0.0.3`
+- **Versiune:** `19.0.0.0.6`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_picking_batch_report
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_stock_picking_batch_report`
 - **Ultima Ingestie:** `2026-10-09`

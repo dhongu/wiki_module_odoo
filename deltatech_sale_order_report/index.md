@@ -1,7 +1,7 @@
 # Deltatech Sale Order Report - Obsolete (localizat la `deltatech_sale_order_report/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_order_report`
-- **Versiune:** `19.0.1.0.7`
+- **Versiune:** `19.0.1.0.9`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/deltatech_sale_order_report
 - **Cale Locală:** `odoo-addons/terrabit/deltatech_sale_order_report`
 - **Ultima Ingestie:** `2026-10-09`

@@ -1,7 +1,7 @@
 # Romania - Gestiuni contabile de stoc (FR-54) (localizat la `l10n_ro_stock_gestiune/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_gestiune`
-- **Versiune:** `19.0.3.1.0`
+- **Versiune:** `19.0.3.1.7`
 - **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_gestiune`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_gestiune`
 - **Ultima Ingestie:** `2026-09-25`

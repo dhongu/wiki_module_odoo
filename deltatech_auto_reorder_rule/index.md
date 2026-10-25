@@ -1,7 +1,7 @@
 # Deltatech Auto Reorder Rule (localizat la `deltatech_auto_reorder_rule/index.md`)
 
 - **Nume Tehnic:** `deltatech_auto_reorder_rule`
-- **Versiune:** `19.0.0.1.3`
+- **Versiune:** `19.0.0.1.11`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_auto_reorder_rule`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_auto_reorder_rule`
 - **Ultima Ingestie:** `2026-06-02`

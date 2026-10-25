@@ -1,7 +1,7 @@
 # Romania - e-Factura: reguli XML per client (localizat la `l10n_ro_efactura_xml_rules/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_efactura_xml_rules`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_efactura_xml_rules
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_efactura_xml_rules`
 - **Ultima Ingestie:** `2026-10-09`

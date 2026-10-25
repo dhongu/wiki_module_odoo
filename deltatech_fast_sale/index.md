@@ -1,7 +1,7 @@
 # Fast Sale (localizat la `deltatech_fast_sale/index.md`)
 
 - **Nume Tehnic:** `deltatech_fast_sale`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_fast_sale
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_fast_sale`
 - **Ultima Ingestie:** `2026-06-01`

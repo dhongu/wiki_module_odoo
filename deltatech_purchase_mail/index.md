@@ -1,7 +1,7 @@
 # Achiziții: Trimitere comenzi multiple pe email cu XLSX (localizat la `deltatech_purchase_mail/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_mail`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.5`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_mail`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_mail`
 - **Ultima Ingestie:** `2026-06-03`

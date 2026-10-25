@@ -1,7 +1,7 @@
 # Etichete pentru modificarea de preț (Price Change Labels)
 
 - **Nume Tehnic:** `deltatech_price_change_label`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_price_change_label
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_price_change_label`
 - **Ultima Ingestie:** `2026-10-22`

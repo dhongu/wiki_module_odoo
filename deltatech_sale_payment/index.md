@@ -1,7 +1,7 @@
 # Sale Payment (localizat la `deltatech_sale_payment/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_payment`
-- **Versiune:** `19.0.1.3.4`
+- **Versiune:** `19.0.1.3.6`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_payment`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_payment`
 - **Ultima Ingestie:** `2026-10-09`

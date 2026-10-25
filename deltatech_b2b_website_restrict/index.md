@@ -1,7 +1,7 @@
 # B2B Website for Companies Only (localizat la `deltatech_b2b_website_restrict/index.md`)
 
 - **Nume Tehnic:** `deltatech_b2b_website_restrict`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_website_restrict
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_b2b_website_restrict`
 - **Ultima Ingestie:** `2026-10-09`

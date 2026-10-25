@@ -1,7 +1,7 @@
 # Products Category User Group (localizat la `deltatech_product_category_group/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_category_group`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.9`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_category_group`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_category_group`
 - **Ultima Ingestie:** `2026-07-31`

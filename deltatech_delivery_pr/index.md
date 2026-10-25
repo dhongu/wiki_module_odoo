@@ -1,7 +1,7 @@
 # Poșta Română Shipping (localizat la `deltatech_delivery_pr/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_pr`
-- **Versiune:** `19.0.1.2.1`
+- **Versiune:** `19.0.1.2.5`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_pr`
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_pr`
 - **Ultima Ingestie:** `2026-09-29`

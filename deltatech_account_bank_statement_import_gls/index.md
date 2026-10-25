@@ -1,7 +1,7 @@
 # GLS Borderou Bank Statements Import (localizat la `deltatech_account_bank_statement_import_gls/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_bank_statement_import_gls`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import_gls
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_account_bank_statement_import_gls`
 - **Ultima Ingestie:** `2026-08-20`

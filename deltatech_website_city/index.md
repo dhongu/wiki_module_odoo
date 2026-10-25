@@ -1,7 +1,7 @@
 # Website City (localizat la `deltatech_website_city/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_city`
-- **Versiune:** `19.0.1.2.1`
+- **Versiune:** `19.0.1.2.5`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_city`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_city`
 - **Ultima Ingestie:** `2026-08-20`

@@ -1,7 +1,7 @@
 # Sincronizare Calendar CalDAV
 
 - **Nume Tehnic:** `deltatech_calendar_caldav`
-- **Versiune:** `19.0.3.2.4`
+- **Versiune:** `19.0.3.2.7`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_calendar_caldav`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_calendar_caldav`
 - **Ultima Ingestie:** `2026-09-29`

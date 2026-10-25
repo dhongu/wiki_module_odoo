@@ -1,7 +1,7 @@
 # Romania - Partner Create by VAT Button (localizat la `l10n_ro_partner_create_by_vat_button/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_partner_create_by_vat_button`
-- **Versiune:** `19.0.1.1.7`
+- **Versiune:** `19.0.1.1.12`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_partner_create_by_vat_button
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_partner_create_by_vat_button`
 - **Ultima Ingestie:** `2026-06-08`

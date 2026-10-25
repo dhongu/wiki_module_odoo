@@ -1,7 +1,7 @@
 # Rating partener în service (localizat la `deltatech_partner_rating_service/index.md`)
 
 - **Nume Tehnic:** `deltatech_partner_rating_service`
-- **Versiune:** `19.0.0.0.3`
+- **Versiune:** `19.0.0.0.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_rating_service
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_partner_rating_service`
 - **Ultima Ingestie:** `2026-06-03`

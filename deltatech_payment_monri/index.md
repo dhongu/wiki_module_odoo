@@ -1,7 +1,7 @@
 # Monri (Payten) Payment Provider (localizat la `deltatech_payment_monri/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_monri`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.6`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_monri
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_monri`
 - **Ultima Ingestie:** `2026-09-29`

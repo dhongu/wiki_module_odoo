@@ -1,7 +1,7 @@
 # Romania - Bază ANAF (localizat la `l10n_ro_anaf_base/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_base`
-- **Versiune:** `19.0.1.3.2`
+- **Versiune:** `19.0.1.3.5`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_base
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_base`
 - **Ultima Ingestie:** `2026-09-29`

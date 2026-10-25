@@ -87,7 +87,7 @@ sincronizare:
     clienți, coșuri sau cupoane. O cheie dedicată integrării Odoo, cu MCP oprit, se poate suspenda
     din Manager fără să atingă alte integrări.
 - **Secretul webhook-ului** — nu se completează manual și nu apare pe formular: Extended îl afișează
-  **o singură dată**, la crearea abonamentului, iar butonul **Register Webhooks** îl păstrează intern. Cu secretul salvat, orice apel de webhook fără semnătură validă
+  **o singură dată**, la crearea abonamentului, iar Odoo îl păstrează intern la înregistrarea webhook-ului. Cu secretul salvat, orice apel de webhook fără semnătură validă
   e respins.
 - **Extended Supplier Code** (implicit `1`) — codul de furnizor sub care Odoo publică stocul propriu
   la export. Prin convenție, `1` înseamnă stocul propriu al magazinului; furnizorii externi, gestionați
@@ -144,22 +144,22 @@ permisiunile de mai sus; câțiva furnizori și produse, un client și o comand�
    pentru cheie nu apare), **Location** = adresa API V1 a magazinului (`https://www.<magazin>.ro/api`)
    și **Client Secret / API key** = cheia V1. **Client Id** rămâne gol — Extended nu îl folosește.
 4. Salvați — tab-ul **Objects** se populează automat cu tipurile de date ale conectorului.
-5. Tab **Other Info**, grupul **Settings**, completați câmpurile Extended:
+5. Tab **Orders and Products**, grupul **Settings**, completați câmpurile Extended:
    - **Extended Products Number** — câte produse cere importul (implicit 10, aduse paginat);
    - **Extended Start Date** — de când se importă clienții (goală = ultimii 10 ani);
-   - **Sale Order Days** (grupul **Limits**) — câte zile în urmă caută importul de comenzi, pe ambele
+   - **Sale Order Days** (tab **Technical**, grupul **Limits**) — câte zile în urmă caută importul de comenzi, pe ambele
      versiuni;
    - **Extended Supplier Code** — codul propriu de furnizor pentru exportul de stoc (implicit `1`);
    - opțional **Send Delivery Term**, **Delivery Term Margin (days)**, **Fall Back on Supplier Lead
      Time**, **Auto replenishment**.
-6. **Pentru V2**: în același grup, **Extended API Version = V2** și **Extended API V2 Key** = cheia V2.
-   Grupul **Rate Limit** se aliniază automat la limitele V2 (4/secundă, 80/minut, 3.600/oră,
+6. **Pentru V2**: tab **Credentials**, sub **Access Type**, **Extended API Version = V2** și **Extended API V2 Key** = cheia V2.
+   Grupul **Rate Limit** (tab **Technical**) se aliniază automat la limitele V2 (4/secundă, 80/minut, 3.600/oră,
    60.000/zi); nu le măriți.
 7. **Pentru webhook-uri (doar V2)**: verificați că parametrul de sistem `web.base.url` e adresa
-   publică HTTPS a Odoo (Extended livrează doar către adrese publice), apoi apăsați **Register
-   Webhooks**. Cardul **Sale Order** din Objects (meniul ⋮ → **Edit**) trebuie să aibă **Use Webhook**
+   publică HTTPS a Odoo (Extended livrează doar către adrese publice), apoi apăsați **Import basic
+   data** (sau **Check webhooks** → **Register selected**). Cardul **Sale Order** din Objects (meniul ⋮ → **Edit**) trebuie să aibă **Use Webhook**
    bifat (implicit da).
-8. **Pentru exportul de stoc**: tab **Other Info**, grupul **Stock**, bifați **Can send stock** —
+8. **Pentru exportul de stoc**: tab **Orders and Products**, grupul **Stock**, bifați **Can send stock** —
    fără ea, exportul de stoc e sărit (doar un avertisment în log).
 9. Verificați câmpurile comune ale framework-ului: **Discount Product** (obligatoriu dacă apar reduceri
    pe comandă) și, dacă doriți, **Confirm Sale Order** pentru confirmarea automată a comenzilor. O
@@ -176,27 +176,32 @@ permisiunile de mai sus; câțiva furnizori și produse, un client și o comand�
 
 **Marketplace → Backends → <backend-ul Extended>**, tab **Credentials**: **Access Type** este
 „Client_id and client_secret" — altfel câmpul pentru cheie nu e afișat —, **Location** conține adresa
-API V1 a magazinului, iar **Client Secret / API key** cheia V1 (afișată mascat). Adresa V2 nu se completează separat —
-se obține automat din Location (`…/api` → `…/api/v2`).
+API V1 a magazinului, iar **Client Secret / API key** cheia V1 (afișată mascat). Sub **Access Type** stau
+**Extended API Version** și, cu **V2** selectat, **Extended API V2 Key** (afișată mascat, obligatorie pe V2).
+Adresa V2 nu se completează separat — se obține automat din Location (`…/api` → `…/api/v2`).
 
-![Tab Credentials: tipul de acces, Location și cheia V1](screenshots/01_credentials.png)
+![Tab Credentials: tipul de acces, Location, cheia V1, versiunea API și cheia V2](screenshots/01_credentials.png)
 
-### Pasul 2 — Setările Extended și versiunea API (tab Other Info)
+### Pasul 2 — Setările Extended și webhook-urile (tab Orders and Products)
 
-Tab **Other Info**, grupul **Settings**: câmpurile specifice conectorului, inclusiv **Extended API
-Version**. Cu **V2** selectat apar **Extended API V2 Key** (afișată mascat), **Extended Webhook ID** și
-butoanele **Register Webhooks** / **Unregister Webhooks**. Grupul **Rate Limit** arată limitele V2
-aplicate automat. Verificați pe ecran, înainte de a continua:
+Tab **Orders and Products**, grupul **Settings**: câmpurile specifice conectorului. Cu **V2** selectat, în
+antetul formularului apare butonul **Check webhooks**. Grupul **Rate Limit**, din tab-ul
+**Technical**, arată limitele V2 aplicate automat. Verificați pe ecran, înainte de a continua:
 - versiunea selectată este cea dorită (V1 rămâne implicită; V2 se alege explicit);
 - cheia V2 este completată (câmpul e obligatoriu pe V2);
 - limitele din **Rate Limit** nu depășesc 4/secundă și 80/minut.
 
-După **Register Webhooks**, câmpul **Extended Webhook ID** se completează cu id-ul abonamentului
-creat în Extended, iar în chatter-ul backend-ului apare adresa înregistrată. **Unregister Webhooks**
-(după confirmare) șterge abonamentul din Extended și uită id-ul și secretul salvate. **Test connection**
+**Import basic data** înregistrează abonamentul de comenzi dacă lipsește din Extended, iar în chatter-ul
+backend-ului apare adresa înregistrată. **Check webhooks** deschide același wizard ca la Shopify, care
+compară abonamentele din Extended cu cel așteptat: **Matched**, **Missing** (se înregistrează cu
+**Register selected**) și **Orphan** (abonamente ale altui server sau unul al cărui secret Odoo nu-l
+are — se șterg cu **Delete selected orphans** și abonamentul se înregistrează din nou). Ștergerea
+abonamentului curent uită și secretul salvat. **Test connection**
 verifică doar cheia V2; pe V1 nu face niciun apel, deci cheia V1 se validează prin primul import.
 
-![Tab Other Info: setările Extended pe V2, cheia V2, webhook-ul înregistrat și limitele de ritm](screenshots/02_extended_settings.png)
+![Tab Orders and Products: setările Extended și butonul Check webhooks](screenshots/02_extended_settings.png)
+
+![Tab Technical: grupul Rate Limit cu limitele V2 aplicate automat](screenshots/02b_extended_rate_limit.png)
 
 ### Pasul 3 — Prima sincronizare (tab Objects)
 
@@ -220,7 +225,7 @@ pe ambele API-uri, deci trecerea unui backend existent de pe V1 pe V2 nu dubleaz
 
 ### Pasul 4 — Dicționarul de stoc informativ (rol per intrare)
 
-Tab **Other Info**, grupul **Settings**, lista cu coloanele **Extended ID**, **Message** și **Role**:
+Tab **Orders and Products**, grupul **Settings**, lista cu coloanele **Extended ID**, **Message** și **Role**:
 perechile id → text învățate la import. Alegeți pentru intrările relevante un **Role** — In stock, Out of stock, Delivery
 interval (weeks), Delivery period (month half) — ca exportul de stoc să trimită id-ul Extended potrivit
 împreună cu mesajul calculat în Odoo. Dacă lista e goală, rulați Import pe cardul **Extended Stock
@@ -231,7 +236,7 @@ Info** din Objects.
 ### Pasul 5 — Webhook-ul de comenzi (cardul Sale Order)
 
 Din **Objects**, meniul ⋮ al cardului **Sale Order** → **Edit**: **Use Webhook** activează recepția, iar **Web Hook
-Link** arată adresa de recepție a comenzilor. Pe V2, **Register Webhooks** abonează la evenimentele
+Link** arată adresa de recepție a comenzilor. Pe V2, **Import basic data** abonează la evenimentele
 „comandă nouă" și „schimbare de status" varianta HTTP a acestei adrese
 (`…/marketplace/sale_order/webhook?apikey=…`) — chiar și când **Webhook Type** e `json`, variantă pe
 care Extended nu o poate apela. Adresa exact înregistrată apare în chatter-ul backend-ului. Fiecare apel
@@ -255,7 +260,7 @@ din statusul Extended. Verificați pe ecran:
 
 ### Pasul 7 — Exportul de stoc și mesajul de disponibilitate
 
-Exportul de stoc pleacă doar dacă **Can send stock** este bifat (tab **Other Info**, grupul
+Exportul de stoc pleacă doar dacă **Can send stock** este bifat (tab **Orders and Products**, grupul
 **Stock**). Se declanșează prin acțiunile programate **Marketplace: export stock** și **Marketplace:
 Export stock for all products**, sau manual, de pe un produs: **Action → Marketplace sync**, cu modul
 **Stock**. Cardul **Products** din Objects nu are Export. Pentru fiecare produs se trimite cantitatea și un mesaj: „In stoc" dacă există
@@ -341,7 +346,7 @@ Ce este automat necondiționat: AWB-ul și factura ajung mereu la Extended; furn
 dicționarul se actualizează la fiecare import de produse; pe V2 cu webhook-uri înregistrate, comenzile
 noi și schimbările de status intră în Odoo la câteva secunde.
 Ce este automat **doar cu Active On Write** pe cardul Sale Order: trimiterea statusului.
-Ce rămâne manual: generarea cheilor în Extended Manager, alegerea versiunii, **Register Webhooks**,
+Ce rămâne manual: generarea cheilor în Extended Manager, alegerea versiunii, **Import basic data**,
 prima sincronizare, rolurile din dicționar, taxele incluse în preț pe produse, jurnalele de încasare pe
 metodele de plată, activarea **Can send stock**, **Send Delivery Term** și **Auto replenishment**.
 
@@ -353,8 +358,8 @@ metodele de plată, activarea **Can send stock**, **Send Delivery Term** și **A
 - [ ] Pe V2: cheia V2 are exact permisiunile din §4; **Test connection** reușește; grupul **Rate
       Limit** arată 4/secundă și 80/minut.
 - [ ] Pe V2: cheia V1 a rămas completată — produsele și stocul o folosesc în continuare.
-- [ ] Pe V2 cu webhook-uri: `web.base.url` e adresa publică HTTPS; după **Register Webhooks**,
-      **Extended Webhook ID** e completat; o comandă de test plasată pe magazin apare în Odoo fără să
+- [ ] Pe V2 cu webhook-uri: `web.base.url` e adresa publică HTTPS; după **Import basic data**,
+      **Check webhooks** arată abonamentul **Matched**; o comandă de test plasată pe magazin apare în Odoo fără să
       aștepte importul programat.
 - [ ] Prima sincronizare respectă ordinea din Pasul 3.
 - [ ] **Extended Supplier Code** corespunde codului sub care Extended așteaptă stocul propriu.
@@ -385,7 +390,7 @@ metodele de plată, activarea **Can send stock**, **Send Delivery Term** și **A
 | „Extended API V2 403 missing_scope: …" | Cheii V2 îi lipsește permisiunea numită în mesaj | Adăugați permisiunea în Manager (vezi §4) |
 | „Extended API V2 403 module_inactive" | Integrarea V2 e oprită pe magazin sau pachetul nu include webhook-urile | Activați Extended API V2 în Manager / verificați pachetul |
 | „The Extended API V2 key is not set on backend …" | Versiunea e V2, dar cheia V2 lipsește | Completați **Extended API V2 Key** |
-| „Enable the webhook on the orders item of backend … first." | **Use Webhook** e debifat pe cardul Sale Order | Bifați Use Webhook, apoi **Register Webhooks** |
+| **Check webhooks** nu arată niciun webhook așteptat (nicio linie Matched/Missing) | **Use Webhook** e debifat pe cardul Sale Order | Bifați Use Webhook, apoi **Import basic data** |
 | „Extended API V2 … without a JSON body" | Cererea a fost oprită de filtrul serverului magazinului, înainte de API | Verificați adresa (Location) și accesul la internet al serverului Odoo |
 | Job reprogramat cu „too many requests" | S-a atins limita de cereri a cheii V2 | Nicio acțiune: job-ul se reia singur; nu măriți limitele din Rate Limit |
 | „Courier mapping is not done" (job eșuat, în **Jobs**) | Transportatorul folosit la expediere nu e mapat pe backend | Importați/mapați Delivery Carrier, apoi reluați job-ul |
@@ -409,7 +414,8 @@ marketplace, deci etichetele din capturi sunt cele citate în fișă. Regenerare
 ```
 
 1. `01_credentials.png` — tab Credentials: tipul de acces, Location și cheia V1.
-2. `02_extended_settings.png` — tab Other Info: setările Extended pe V2, cheia V2, webhook-ul înregistrat, limitele de ritm.
+2. `02_extended_settings.png` — tab Orders and Products: setările Extended pe V2, cheia V2, webhook-ul înregistrat.
+   `02b_extended_rate_limit.png` — tab Technical: grupul Rate Limit cu limitele V2.
 3. `03_objects.png` — tab Objects, cardurile tipurilor de date.
 4. `04_stock_info_dictionary.png` — dicționarul de stoc informativ, cu rolurile atribuite.
 5. `05_orders_webhook.png` — cardul Sale Order: Use Webhook și Web Hook Link.

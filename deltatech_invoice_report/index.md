@@ -1,7 +1,7 @@
 # Invoice Report (localizat la `deltatech_invoice_report/index.md`)
 
 - **Nume Tehnic:** `deltatech_invoice_report`
-- **Versiune:** `19.0.1.0.8`
+- **Versiune:** `19.0.1.0.11`
 - **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_report](https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_report)
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_invoice_report`
 - **Ultima Ingestie:** `2026-07-31`

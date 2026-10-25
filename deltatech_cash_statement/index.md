@@ -1,7 +1,7 @@
 # Deltatech Cash Statement Extension (localizat la `deltatech_cash_statement/index.md`)
 
 - **Nume Tehnic:** `deltatech_cash_statement`
-- **Versiune:** `19.0.3.1.1`
+- **Versiune:** `19.0.3.1.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_cash_statement
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_cash_statement`
 - **Ultima Ingestie:** `2026-10-09`

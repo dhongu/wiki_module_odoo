@@ -354,9 +354,9 @@ Accesați **Contabilitate → Raportare → Taxe și fiscalitate → Jurnal TVA 
 - coloanele afișate mereu: **Achiziții 21%** / **Achiziții 11%** (bază și TVA deductibilă),
   autolichidarea pentru **achiziții intracomunitare de bunuri**, **achiziții intracomunitare de
   servicii art. 307 alin. (2)** și **taxare inversă art. 331 - 21%** — fiecare cu **Bază**, **TVA
-  deductibilă** și **TVA colectată** —, și **Scutite și alte achiziții fără TVA (D300 rd. 29)**;
+  deductibilă** și **TVA colectată** —, și **Achiziții de bunuri din țară și din import scutite în România sau care sunt supuse regimului special de vânzător**;
 - coloanele care apar doar în perioadele cu operațiuni: cotele anterioare, **alte achiziții cu
-  taxare inversă (D300 rd. 7)** (servicii de la prestatori din afara UE — „21% EX S” / „11% EX S”, import
+  taxare inversă - art. 307** (D300 rd. 7: servicii de la prestatori din afara UE — „21% EX S” / „11% EX S”, import
   cu art. 326 alin. (4) și (5)), taxare inversă
   art. 331 pe 11% și pe cote anterioare, achiziții intracomunitare scutite, neimpozabile, alte
   operațiuni.
@@ -366,9 +366,13 @@ Accesați **Contabilitate → Raportare → Taxe și fiscalitate → Jurnal TVA 
 - la taxele cu deducere limitată (ex. 50%), coloana TVA a regimului arată doar partea dedusă (=
   D300 rd. 31); partea nededusă e în `TVA nededusă`, iar baza e întreagă. D300 rd. 24 și
   recapitulația au TVA-ul brut (dedus + nededus);
-- serviciile de la prestatori din afara UE nu apar la „intracomunitare”; factura furnizorului extern
-  la import („0% EX G”) e la „Neimpozabile” (TVA-ul de import se declară din DVI, pe rd. 24 / 25),
-  iar „0% EX S” (servicii scutite din afara UE) la „Scutite și alte achiziții fără TVA”.
+- serviciile de la prestatori din afara UE nu apar la „intracomunitare”; „0% EX S” (servicii scutite
+  din afara UE) e la „Achiziții de bunuri din țară și din import scutite în România sau care sunt
+  supuse regimului special de vânzător”;
+- importul de bunuri apare o singură dată, pe nota DVI (achizițiile pe cotă, rd. 24 / 25), cu
+  furnizorul extern. Liniile cu „0% EX G” de pe factura furnizorului extern nu intră în niciun
+  jurnal de cumpărări: baza și TVA-ul importului vin din DVI (art. 299 alin. (1) lit. c) și d) Cod
+  fiscal).
 
 ![Jurnalul de cumpărări pe regimuri: 21%, 11% și taxare inversă art. 331 cu cele trei valori](screenshots/09_jurnal_cumparari_regimuri.png)
 
@@ -586,7 +590,7 @@ totalurilor față de balanță, evidența taxei nededuse și a pro-ratei, și d
 
 ## 10. Capturi de ecran
 
-Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py`
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**, pe
 planul de conturi RO, cu documente datate în luna anterioară (perioada implicită a rapoartelor).
 Excepție: capturile 11–13 folosesc o factură separată, datată fix în mai–iulie 2026, ca să nu schimbe

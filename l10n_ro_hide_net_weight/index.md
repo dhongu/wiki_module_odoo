@@ -1,7 +1,7 @@
 # Romania - Hide Net Weight (localizat la `l10n_ro_hide_net_weight/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_hide_net_weight`
-- **Versiune:** `19.0.0.0.3`
+- **Versiune:** `19.0.0.0.4`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_hide_net_weight
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_hide_net_weight`
 - **Ultima Ingestie:** `2026-10-09`

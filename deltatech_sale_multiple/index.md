@@ -1,7 +1,7 @@
 # Sale Qty Multiple (localizat la `deltatech_sale_multiple/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_multiple`
-- **Versiune:** `19.0.1.1.1`
+- **Versiune:** `19.0.1.1.4`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_multiple`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_multiple`
 - **Ultima Ingestie:** `2026-08-20`

@@ -84,9 +84,9 @@ nomenclatorul de factori, ci îl extinde.
      contabilă a obligației (opțional, doar dacă generați note contabile).
 
    ![Setări CBAM](screenshots/02_setari_cbam.png)
-3. Verificați nomenclatorul de factori (`CBAM → Factori emisie CBAM`): 9 factori impliciți sunt
+3. Verificați nomenclatorul de factori (`ESG → CBAM → Factori emisie CBAM`): 9 factori impliciți sunt
    încărcați conform Reg. delegat 2024/3212 (oțel, aluminiu, ciment, îngrășăminte, hidrogen).
-4. Introduceți **prețurile de referință** publicate de Comisie în `CBAM → Prețuri certificate CBAM`,
+4. Introduceți **prețurile de referință** publicate de Comisie în `ESG → CBAM → Prețuri certificate CBAM`,
    pe măsură ce devin disponibile (an, tip perioadă — trimestrial pentru 2026 / săptămânal din 2027
    — și valoarea EUR/tCO₂e). Acestea au prioritate față de prețul de rezervă al companiei.
 5. Pe produsele importate supuse CBAM, în tab-ul **Contabilitate** setați **codul CN** (câmpul
@@ -114,7 +114,7 @@ nomenclatorul de factori, ci îl extinde.
 3. Pe factură apare smart button-ul **„Linii CBAM"** → lista emisiilor capturate.
 
    ![Factură import CBAM](screenshots/03_factura_import.png)
-4. Deschideți lista liniilor (`CBAM → Linii import CBAM`). Pe fiecare linie verificați **emisii
+4. Deschideți lista liniilor (`ESG → CBAM → Linii import CBAM`). Pe fiecare linie verificați **emisii
    încorporate**, **preț certificat aplicabil** (media perioadei), **emisii acoperite** de carbonul
    certificat, **emisii nete** și **cost certificate**. Dacă bifa de certificare lipsește, emisiile
    acoperite sunt 0 și nu se aplică nicio reducere.
@@ -124,7 +124,7 @@ nomenclatorul de factori, ci îl extinde.
 
 ### Pasul 2 — Prețurile de referință ale certificatelor
 
-1. Mergeți la `CBAM → Prețuri certificate CBAM` și introduceți mediile publicate de Comisie:
+1. Mergeți la `ESG → CBAM → Prețuri certificate CBAM` și introduceți mediile publicate de Comisie:
    pentru 2026 câte o **medie trimestrială** (an + trimestru + valoare), iar din 2027 mediile
    **săptămânale**.
 2. La calculul declarației, fiecare linie folosește automat prețul perioadei sale; dacă lipsește,
@@ -134,7 +134,7 @@ nomenclatorul de factori, ci îl extinde.
 
 ### Pasul 3 — Declarația anuală (predare certificate)
 
-1. Mergeți la `CBAM → Declarații CBAM` și creați o declarație **Definitiv**, cu **anul** completat
+1. Mergeți la `ESG → CBAM → Declarații CBAM` și creați o declarație **Definitiv**, cu **anul** completat
    și **fără trimestru**.
 2. Apăsați **Calculează** — toate liniile de import din an se atașează declarației.
 3. **Găsiți pe ecran și verificați** înainte de a continua:
@@ -186,7 +186,7 @@ trimestriale.
 
 ### Pasul 5 — Analiză
 
-Meniul `CBAM → Analiză CBAM` oferă view-uri **graph** (emisii pe lună/categorie) și **pivot**
+Meniul `ESG → CBAM → Analiză CBAM` oferă view-uri **graph** (emisii pe lună/categorie) și **pivot**
 (categorie/origine × lună) peste liniile de import — pentru monitorizarea emisiilor cumulate.
 
 ## 7. Reguli funcționale

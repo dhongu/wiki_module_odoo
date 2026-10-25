@@ -1,7 +1,7 @@
 # IAP Server (localizat la `terrabit_iap_server/index.md`)
 
 - **Nume Tehnic:** `terrabit_iap_server`
-- **Versiune:** `19.0.0.1.5`
+- **Versiune:** `19.0.0.1.10`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server`
 - **Ultima Ingestie:** `2026-10-09`

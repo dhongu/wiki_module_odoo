@@ -41,7 +41,7 @@ un partener transportator, un număr de înmatriculare, opțional un UIT e-Trans
 
 ## 6. Flux de utilizare
 
-> **Capturi:** se generează cu `fisa-screenshots` (secțiunea 10); încă nu există în `readme/screenshots/`.
+> **Capturi:** se generează cu `fisa-screenshots` (secțiunea 10); încă nu există în `static/description/`.
 
 ### Pasul 1 — Înregistrarea unui sigiliu
 

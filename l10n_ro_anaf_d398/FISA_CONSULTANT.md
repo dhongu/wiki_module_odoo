@@ -65,8 +65,9 @@ Date minime pentru demo:
 2. Configurați **pozițiile fiscale OSS** pentru statele membre UE și taxele OSS aferente.
 3. Verificați tax tags-urile taxelor OSS.
 4. Completați **CUI și adresa companiei** — cerute la generarea XML/XDP.
-5. Asigurați disponibilitatea **cursului BCE/ECB** pentru data de raportare (modulul îl preia din
-   feed-ul BCE pentru ultima zi a trimestrului).
+5. Asigurați disponibilitatea **cursului BCE/ECB** pentru data de raportare. Modulul îl preia din
+   feed-ul BCE pentru ultima zi a trimestrului și îl păstrează în **Contabilitate → Configurare →
+   Cursuri de schimb BCE**; dacă BCE nu răspunde, introduceți-l acolo manual. Fără el, exportul este refuzat.
 6. Pregătiți tranzacții demo **B2C UE fără cod TVA client**, în trimestrul de raportare.
 
 ## 6. Flux de utilizare
@@ -181,7 +182,7 @@ depunerea în portalul ANAF (dacă nu există infrastructură de submission loca
 
 ## 10. Capturi de ecran
 
-Captura (`readme/screenshots/`) este **generată automat** din `tests/test_screenshots.py` (mixinul
+Captura (`static/description/`) este **generată automat** din `tests/test_screenshots.py` (mixinul
 `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), cu interfața Odoo în **limba română**,
 pe planul de conturi RO:
 

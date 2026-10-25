@@ -1,7 +1,7 @@
 # Deltatech Team Logo (localizat la `deltatech_team_logo/index.md`)
 
 - **Nume Tehnic:** `deltatech_team_logo`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_team_logo
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_team_logo`
 - **Ultima Ingestie:** `2026-06-03`

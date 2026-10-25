@@ -1,7 +1,7 @@
 # Listă de prețuri pe baza costului cu TVA (localizat la `deltatech_pricelist_vat_cost/index.md`)
 
 - **Nume Tehnic:** `deltatech_pricelist_vat_cost`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.6`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_pricelist_vat_cost
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_pricelist_vat_cost`
 - **Ultima Ingestie:** `2026-10-09`

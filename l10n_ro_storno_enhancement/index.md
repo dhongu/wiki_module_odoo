@@ -2,7 +2,7 @@
 
 - **Nume Tehnic:** `l10n_ro_storno_enhancement`
 - **Fost nume tehnic:** `l10n_ro_account_storno` (redenumit pe 07.10.2026)
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_storno_enhancement
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_storno_enhancement`
 - **Ultima Ingestie:** `2026-10-07`

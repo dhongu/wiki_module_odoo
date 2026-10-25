@@ -1,7 +1,7 @@
 # ANAF IAP Client (localizat la `terrabit_iap_anaf/index.md`)
 
 - **Nume Tehnic:** `terrabit_iap_anaf`
-- **Versiune:** `19.0.1.3.3`
+- **Versiune:** `19.0.1.3.4`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_anaf
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_anaf`
 - **Ultima Ingestie:** `2026-10-09`

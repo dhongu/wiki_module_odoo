@@ -1,10 +1,11 @@
 # Marketplace Sales Order Stage addon (localizat la `deltatech_marketplace_sale_stage/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_sale_stage`
-- **Versiune:** `19.0.1.1.3`
+- **Versiune:** `19.0.1.1.10`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_sale_stage
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_sale_stage`
 - **Ultima Ingestie:** `2026-08-20`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

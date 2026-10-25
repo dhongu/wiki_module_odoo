@@ -130,6 +130,6 @@ butonul **„SAF-T (Declarația D406 pentru mijloace fixe)"** generează XML-ul 
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/02_saft_validator_wizard_a.png` | Wizard cu **Tip declarație = A** ① — radio Anual selectat, listă cu activele fără categorie SAF-T |
-| 2 | `screenshots/02_asset_form_categorie_saft.png` | Formular activ fix ② — câmpul **Categorie active** populat cu o clasă SAF-T (nomenclator ANAF) |
-| 3 | `screenshots/03_saft_export_button_a.png` | Cog menu pe Carte Mare ③ cu opțiunea **„SAF-T (Declarația D406 pentru mijloace fixe)"** evidențiată — export-ul D406 Active |
+| 1 | `static/description/02_saft_validator_wizard_a.png` | Wizard cu **Tip declarație = A** ① — radio Anual selectat, listă cu activele fără categorie SAF-T |
+| 2 | `static/description/02_asset_form_categorie_saft.png` | Formular activ fix ② — câmpul **Categorie active** populat cu o clasă SAF-T (nomenclator ANAF) |
+| 3 | `static/description/03_saft_export_button_a.png` | Cog menu pe Carte Mare ③ cu opțiunea **„SAF-T (Declarația D406 pentru mijloace fixe)"** evidențiată — export-ul D406 Active |

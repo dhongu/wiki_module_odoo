@@ -1,7 +1,7 @@
 # Sale → Purchase RFQ (Alternative Purchase Orders) (localizat la `deltatech_sale_purchase_requisition/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_purchase_requisition`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.2`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_purchase_requisition`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_purchase_requisition`
 - **Ultima Ingestie:** `2026-06-03`

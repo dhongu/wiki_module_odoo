@@ -1,10 +1,11 @@
 # Courier Handover Report (Proces-verbal de predare-primire colete)
 
 - **Nume Tehnic:** `deltatech_delivery_handover`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_handover
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_handover`
 - **Ultima Ingestie:** `2026-10-22`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

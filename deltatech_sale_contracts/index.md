@@ -1,7 +1,7 @@
 # Deltatech Sale Contracts (localizat la `deltatech_sale_contracts/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_contracts`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.6`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_contracts`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_contracts`
 - **Ultima Ingestie:** `2026-06-03`

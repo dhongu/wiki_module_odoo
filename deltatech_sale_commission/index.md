@@ -1,7 +1,7 @@
 # Sale Commission (localizat la `deltatech_sale_commission/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_commission`
-- **Versiune:** `19.0.2.0.0`
+- **Versiune:** `19.0.2.0.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_commission
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_commission`
 - **Ultima Ingestie:** `2026-10-22`

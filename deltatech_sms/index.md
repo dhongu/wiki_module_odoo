@@ -1,7 +1,7 @@
 # Deltatech SMS (localizat la `deltatech_sms/index.md`)
 
 - **Nume Tehnic:** `deltatech_sms`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sms`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sms`
 - **Ultima Ingestie:** `2026-06-03`

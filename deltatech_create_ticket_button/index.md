@@ -1,7 +1,7 @@
 # Error Dialog (Create Ticket Button)
 
 - **Nume Tehnic:** `deltatech_create_ticket_button`
-- **Versiune:** `19.0.0.1.8`
+- **Versiune:** `19.0.0.1.10`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_create_ticket_button
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_create_ticket_button`
 - **Ultima Ingestie:** `2026-10-01`

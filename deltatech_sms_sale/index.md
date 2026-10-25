@@ -1,7 +1,7 @@
 # Deltatech SMS Sale
 
 - **Nume Tehnic:** `deltatech_sms_sale`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sms_sale
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sms_sale`
 - **Ultima Ingestie:** `2026-06-03`

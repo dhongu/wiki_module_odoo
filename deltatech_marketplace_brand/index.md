@@ -1,10 +1,11 @@
 # Marketplace Brand addon (localizat la `deltatech_marketplace_brand/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_brand`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.6`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_brand
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_brand`
 - **Ultima Ingestie:** `2026-08-20`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

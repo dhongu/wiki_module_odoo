@@ -1,7 +1,7 @@
 # Delivery in locker - Base (localizat la `deltatech_delivery_locker/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_locker`
-- **Versiune:** `19.0.1.8.4`
+- **Versiune:** `19.0.1.8.7`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_locker
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_locker`
 - **Ultima Ingestie:** `2026-09-29`

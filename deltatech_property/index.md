@@ -1,7 +1,7 @@
 # Property Management (Administrare proprietăți)
 
 - **Nume Tehnic:** `deltatech_property`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_property
 - **Cale Locală:** `odoo-addons/deltatech_service/deltatech_property`
 - **Ultima Ingestie:** `2026-10-09`
