@@ -1,0 +1,126 @@
+name: wiki-nightly
+
+# Sincronizarea de noapte a wiki-ului cu sursele modulelor (19.0):
+#  1. treapta mecanică, fără AI: versiuni, fișe consultant, coada de reingestie;
+#  2. reingestie AI pentru cel mult `limit` module din coadă (abonamentul Claude);
+#  3. index.md, log.md și indexul de căutare, apoi commit direct pe 19.0.
+# Wiki-ul e public, deci rulează pe mașinile GitHub, fără cost de minute.
+
+on:
+  schedule:
+    - cron: "0 1 * * *"  # 04:00 ora României (vara), 03:00 iarna
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Câte module se reingestează cu AI (0 = doar treapta mecanică)"
+        default: "10"
+
+concurrency:
+  group: wiki-nightly
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout wiki
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          path: wiki_module_odoo
+          # Claude may read the workspace: keep the token out of .git/config.
+          persist-credentials: false
+      # Read-only token of the Argus Terrabit app for the private suites.
+      - name: Token for the private suites
+        id: app
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          app-id: ${{ secrets.ARGUS_APP_ID }}
+          private-key: ${{ secrets.ARGUS_APP_PRIVATE_KEY }}
+          owner: terrabit-solutions
+          repositories: terrabit,l10n_ro_ent,bitshop,bitshop_ent,bitshop_delivery,bitshop_marketplace,bitshop_vendor
+          permission-contents: read
+      - name: Clone the suites (19.0, full history, no blobs)
+        env:
+          APP_TOKEN: ${{ steps.app.outputs.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p odoo-addons
+          while read -r suite repo; do
+            url="https://github.com/${repo}.git"
+            case "$repo" in
+              terrabit-solutions/*) auth="https://x-access-token:${APP_TOKEN}@github.com/${repo}.git" ;;
+              *) auth="$url" ;;
+            esac
+            git clone --quiet --filter=blob:none --branch 19.0 --single-branch "$auth" "odoo-addons/$suite"
+            # No token left in .git/config for Claude to read.
+            git -C "odoo-addons/$suite" remote set-url origin "$url"
+          done <<'EOF'
+          terrabit terrabit-solutions/terrabit
+          l10n_ro_ent terrabit-solutions/l10n_ro_ent
+          bitshop terrabit-solutions/bitshop
+          bitshop_ent terrabit-solutions/bitshop_ent
+          bitshop_delivery terrabit-solutions/bitshop_delivery
+          bitshop_marketplace terrabit-solutions/bitshop_marketplace
+          bitshop_vendor terrabit-solutions/bitshop_vendor
+          deltatech dhongu/deltatech
+          deltatech_service dhongu/deltatech_service
+          deltatech_stock_valuation dhongu/deltatech_stock_valuation
+          l10n-romania dhongu/l10n-romania
+          l10n-romania-oca terrabit-ro/l10n-romania
+          l10n-moldova dhongu/l10n-moldova
+          EOF
+      - name: Mechanical sync and AI queue
+        id: plan
+        run: |
+          python3 wiki_module_odoo/scripts/wiki_sync.py plan --limit "${{ inputs.limit || '10' }}"
+          echo "queued=$(python3 -c 'import json;print(len(json.load(open(".wiki-queue.json"))))')" >> "$GITHUB_OUTPUT"
+      - name: AI re-ingestion
+        if: steps.plan.outputs.queued != '0'
+        # A failed or partial run keeps the mechanical sync and the pages done.
+        continue-on-error: true
+        uses: anthropics/claude-code-action@16f9f71ab9c490faf367f94dd294897edc25be33 # v1.0.261
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: |
+            Reingestezi în wiki modulele din `.wiki-queue.json`, în ordinea din listă.
+
+            Pentru fiecare modul urmează `wiki_module_odoo/.claude/agents/documentarist-wiki.md`
+            și `wiki_module_odoo/schema.md`, cu precizările pentru rularea din CI:
+            - Rulezi din rădăcina unui layout de tip monorepo: pagina e
+              `wiki_module_odoo/<modul>/index.md`, iar sursa modulului e câmpul `path` din coadă.
+            - Repo-ul GitHub pentru „Cale” îl iei din tabelul de mapare din agent; nu rula Bash.
+            - Fișa consultant, capturile și sub-fișele sunt deja copiate de script: sari peste
+              pașii 6–7, dar păstrează linia „Fișă Consultant” din pagină, dacă există.
+            - Câmpul `reason` spune de ce reingestezi modulul; verifică în special acel aspect.
+            - Păstrează și actualizează secțiunile în plus ale paginii (ex. `#### 6. Istoric`).
+            - Nu atinge `wiki_module_odoo/index.md`, `log.md` sau `schema.md` și nu face commit.
+
+            După fiecare modul terminat, rescrie `.wiki-ingest-report.json` ca listă JSON cu un
+            obiect pe modul: `{"module", "line", "reason", "notes"}`. `line` e descrierea de o
+            linie pentru `index.md`, `notes` avertismentele din raportul tău final (sau "").
+          claude_args: |
+            --model sonnet
+            --max-turns 300
+            --allowedTools "Read(./**),Grep(./**),Glob(./**),Edit(./wiki_module_odoo/**),Write(./wiki_module_odoo/**),Edit(./.wiki-ingest-report.json),Write(./.wiki-ingest-report.json)"
+            --disallowedTools "Bash,Read(~/.*),Read(~/.*/**),Read(//etc/**),Read(//proc/**),Read(//root/**)"
+      - name: Index, log and search index
+        run: python3 wiki_module_odoo/scripts/wiki_sync.py finalize
+      - name: Commit and push to 19.0
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          cd wiki_module_odoo
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "Nimic de actualizat."; exit 0; fi
+          git commit --quiet -m "[UPD] wiki: sincronizare automată de noapte ($(date -u +%F))"
+          remote="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git pull --quiet --rebase "$remote" 19.0
+          git push --quiet "$remote" HEAD:19.0

@@ -84,3 +84,21 @@ Generating/updating pages reads the actual module source, so **ingestion runs fr
 monorepo**, not from this standalone repo — use the `wiki-module` skill there. It writes the
 `<module>/index.md` pages here and rebuilds `.index/`. Commit and push this repo afterwards so
 colleagues get the refreshed knowledge base.
+### Nightly automatic sync
+
+`.github/workflows/wiki-nightly.yml` runs every night (and on demand from *Actions ▸ wiki-nightly ▸
+Run workflow*). It clones the suites at `19.0` into a monorepo-like layout and runs
+`scripts/wiki_sync.py`:
+
+1. **Mechanical, no AI** (`plan`): sets each page's `Versiune` to the manifest version and re-copies
+   `FISA_CONSULTANT.md` with its screenshots and linked sub-sheets.
+2. **AI re-ingestion**, at most `limit` modules per night (default 10), with the
+   `documentarist-wiki` agent: pages whose manifest dependencies differ from the page, whose
+   `readme/DESCRIPTION|USAGE|CONFIGURE.md` changed after *Ultima Ingestie*, modules without
+   `DESCRIPTION.md` whose models/views/data changed, then new modules without a page.
+3. **Finalize** (`finalize`): updates `index.md`, adds one dated entry to `log.md`, rebuilds
+   `.index/`, and commits directly to `19.0`.
+
+Modules that must never be ingested automatically go in `scripts/wiki_sync_exclude.txt`, one per
+line. Secrets on this repo: `CLAUDE_CODE_OAUTH_TOKEN`, `ARGUS_APP_ID`, `ARGUS_APP_PRIVATE_KEY`
+(the Argus Terrabit GitHub App reads the private `terrabit-solutions` suites).

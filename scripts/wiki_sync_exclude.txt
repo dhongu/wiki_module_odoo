@@ -1,0 +1,1 @@
+# Module care nu se ingestează automat (unul pe rând).
