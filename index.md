@@ -472,7 +472,6 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_account_correspondence](l10n_ro_account_correspondence/index.md): Calculează și stochează pe fiecare poziție contabilă contul corespondent (conform OMFP 1802/2014), pentru fișe de cont, registru-jurnal și rapoarte.
 - [l10n_ro_account_fisa_cont](l10n_ro_account_fisa_cont/index.md): Oferă raportul 'Fișă de Cont' conform OMFP 1802/2014.
 - [l10n_ro_account_pack](l10n_ro_account_pack/index.md): Modul-pălărie care instalează dintr-o singură mișcare corecțiile de localizare RO (balanță, SAF-T) și completările planului de conturi (conturi SAF-T, cont corespondent).
-- [l10n_ro_account_report](l10n_ro_account_report/index.md): Rapoarte contabile pentru localizarea România (momentan registrul de casă).
 - [l10n_ro_account_return_pl_closing](l10n_ro_account_return_pl_closing/index.md): Închiderea lunară a conturilor de venituri și cheltuieli prin contul 121, pe framework-ul Enterprise `account.return`.
 - [l10n_ro_account_sequence](l10n_ro_account_sequence/index.md): Numerotare separată a documentelor din jurnalul de casă, conform localizării RO.
 - [l10n_ro_account_vat_journal](l10n_ro_account_vat_journal/index.md): Jurnalele de TVA de vânzări și cumpărări, standard și pe regimuri, ca rapoarte contabile native, cu TVA la încasare, taxare inversă, TVA nededusă, recapitulație pe rânduri D300 și export XLSX/PDF tipizat.

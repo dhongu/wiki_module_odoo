@@ -4,6 +4,12 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-25] Eliminare: `l10n_ro_account_report` (modul șters din l10n-romania 19.0)
+
+- **Acțiune:** pagina `l10n_ro_account_report/` e ștearsă. Modulul a fost eliminat din `dhongu/l10n-romania` pe 19.0 (75d73d012, 2026-10-07): numele tehnic e înregistrat pe Odoo Apps de alt publicator (16.0–19.0), deci scanarea Apps îl respingea. Singura funcție, tipărirea „Cash/Bank Statement” pe extrase, e acoperită de raportul standard *Statement* din `account` și de [l10n_ro_cash_register](l10n_ro_cash_register/index.md) (formularul 14-4-7A).
+- **Semnalat de:** sincronizarea automată de noapte (pagină fără sursă).
+- **Fișiere actualizate:** `l10n_ro_account_report/` (șters), `index.md`, `log.md`, `.index/` (rebuild lexical).
+
 ## [2026-10-25] Sincronizare automată de noapte
 
 - **Versiuni aduse la zi** (575): `deltatech 19.0.1.0.1 → 19.0.1.0.3`, `deltatech_access 19.0.0.0.3 → 19.0.0.0.8`, `deltatech_account 19.0.2.0.0 → 19.0.2.0.2`, `deltatech_account_analytic 19.0.0.0.6 → 19.0.0.0.10`, `deltatech_account_bank_statement_import 19.0.1.3.0 → 19.0.1.3.1`, `deltatech_account_bank_statement_import_euplatesc 19.0.1.2.0 → 19.0.1.2.8`, `deltatech_account_bank_statement_import_gls 19.0.1.1.0 → 19.0.1.1.4`, `deltatech_account_edi_ubl_advice 19.0.1.0.1 → 19.0.1.0.3`, `deltatech_account_edit_currency_rate 19.0.1.0.0 → 19.0.1.0.3`, `deltatech_account_enterprise 19.0.0.1.2 → 19.0.0.1.3`, `deltatech_account_scenario 19.0.1.0.0 → 19.0.1.0.3`, `deltatech_account_scenario_ai 19.0.1.0.0 → 19.0.1.0.1`, `deltatech_actions 19.0.0.9.3 → 19.0.0.9.11`, `deltatech_advanced_planner 19.0.1.8.0 → 19.0.1.12.0`, `deltatech_advanced_planner_ai 19.0.1.0.0 → 19.0.1.0.1`, `deltatech_agreement_management 19.0.0.0.3 → 19.0.0.0.8`, `deltatech_ai_agent_delegate 19.0.1.0.2 → 19.0.1.0.4`, `deltatech_ai_purchase_pdf 19.0.1.0.4 → 19.0.1.1.0`, `deltatech_ai_sale_delivery_check 19.0.1.0.1 → 19.0.1.0.2`, `deltatech_ai_source_sync 19.0.1.6.2 → 19.0.1.7.0`, `deltatech_ai_usage 19.0.1.0.1 → 19.0.1.0.2`, `deltatech_ai_website_product_image 19.0.1.0.0 → 19.0.1.0.1`, `deltatech_alternative 19.0.2.2.0 → 19.0.2.2.1`, `deltatech_alternative_website 19.0.1.0.8 → 19.0.1.0.13`, `deltatech_analytic_distribution 19.0.0.0.2 → 19.0.0.0.7`, `deltatech_auto_reorder_rule 19.0.0.1.3 → 19.0.0.1.11`, `deltatech_auto_translate 19.0.1.0.0 → 19.0.1.0.2`, `deltatech_average_payment_period 19.0.1.0.1 → 19.0.1.0.5`, `deltatech_b2b_order_list 19.0.1.0.0 → 19.0.1.0.1`, `deltatech_b2b_price_tier 19.0.1.0.0 → 19.0.1.0.1` și încă 545.
