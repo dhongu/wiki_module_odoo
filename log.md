@@ -4,6 +4,11 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-25] Sincronizare automată de noapte
+
+- **Reingestie AI:** [l10n_ro_dividends](l10n_ro_dividends/index.md) (dependențele din manifest diferă de pagină). Motivul nu s-a confirmat: dependențele din manifest (account, l10n_ro) coincid cu pagina anterioară și nu au pagini wiki, deci rămân text cod. Corectate față de pagina veche: titluri #### în loc de ##, legături [[...]] înlocuite cu linkuri Markdown, Componente Cheie completate cu numele reale ale modelelor/vizualizărilor, adăugată conexiunea cu l10n_ro_shareholder_loan (depinde de acest modul). Secțiunile #### 6 nu existau în pagina veche. Fișa consultant și capturile nu au fost copiate (le face scriptul); linia Fișă Consultant păstrată.
+- **Rămase pentru nopțile următoare:** 372.
+
 ## [2026-10-25] Eliminare: `l10n_ro_account_report` (modul șters din l10n-romania 19.0)
 
 - **Acțiune:** pagina `l10n_ro_account_report/` e ștearsă. Modulul a fost eliminat din `dhongu/l10n-romania` pe 19.0 (75d73d012, 2026-10-07): numele tehnic e înregistrat pe Odoo Apps de alt publicator (16.0–19.0), deci scanarea Apps îl respingea. Singura funcție, tipărirea „Cash/Bank Statement” pe extrase, e acoperită de raportul standard *Statement* din `account` și de [l10n_ro_cash_register](l10n_ro_cash_register/index.md) (formularul 14-4-7A).

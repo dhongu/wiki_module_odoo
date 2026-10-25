@@ -15300,11 +15300,27 @@
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_dividends",
     "last_ingest": null,
     "friendly_name": "Romania - Dividende și registru acționari",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - Dividende și registru acționari\nl10n_ro_dividends"
+    "summary": "Modul pentru gestionarea completă a distribuirii de dividende conform legislației românești (Cod Fiscal art. 97). Acoperă registrul acționarilor/asociaților, hotărârea AGA de distribuire, calculul dividendului brut și net per acționar, reținerea impozitului la sursă cu cote istorice (10% pentru 2025, 16% din 1 ianuarie 2026) și generarea automată a notelor contabile aferente.",
+    "features": [
+      "Registru Acționari / Asociați (Contabilitate → Dividende → Registru Acționari): înregistrarea acționarilor cu partener, număr de acțiuni/părți sociale și valoare nominală; procentul de participare se calculează automat din totalul acțiunilor; istoric al modificărilor structurii de acționariat.",
+      "Distribuire Dividende (Contabilitate → Dividende → Distribuiri Dividende): hotărâre AGA cu referință, dată, exercițiu financiar și profit net aprobat; butonul *Preia acționari din registru* completează liniile cu procentele din registru, iar *Recalculează* reface calculul (ambele doar în Ciornă). Procentele și sumele pot fi ajustate manual când distribuirea nu e proporțională cu participarea.",
+      "Calcul dividend: brut (profit × % participare), impozit reținut și net de plată, per acționar și în total.",
+      "Reținere impozit la sursă în funcție de data hotărârii AGA: 10% pentru 2025, 16% începând cu 1 ianuarie 2026; nu necesită configurare.",
+      "Note contabile automate: la confirmare `Dr 117 = Cr 457` (profit → dividende de plată); la înregistrarea plății `Dr 457 = Cr 446` (impozit reținut) și `Dr 457 = Cr 5121` (net plătit). Conturile și jurnalele (operațiuni diverse pentru AGA, bancă/casă pentru plată) se precompletează după planul de conturi al companiei și merită verificate la prima utilizare.",
+      "Validări: confirmarea cere cel puțin un acționar, conturile 117 și 457 și jurnalul; plata cere conturile 446 și 5121, jurnalul de plată și data plății efective.",
+      "Flux de lucru: Ciornă → Confirmat AGA → Plătit, cu anulare înainte de plată și resetare la Ciornă.",
+      "CASS: pentru persoane fizice nu se reține de societate; beneficiarul o declară prin Declarația Unică dacă veniturile extrasalariale cumulate ating plafoanele legale. Impozitul din contul 446 se declară prin D100, iar datele alimentează D205."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_shareholder_loan",
+      "l10n_ro_financial_notes",
+      "l10n_ro_financial_statements"
+    ],
+    "text": "Romania - Dividende și registru acționari\nl10n_ro_dividends\nModul pentru gestionarea completă a distribuirii de dividende conform legislației românești (Cod Fiscal art. 97). Acoperă registrul acționarilor/asociaților, hotărârea AGA de distribuire, calculul dividendului brut și net per acționar, reținerea impozitului la sursă cu cote istorice (10% pentru 2025, 16% din 1 ianuarie 2026) și generarea automată a notelor contabile aferente.\nRegistru Acționari / Asociați (Contabilitate → Dividende → Registru Acționari): înregistrarea acționarilor cu partener, număr de acțiuni/părți sociale și valoare nominală; procentul de participare se calculează automat din totalul acțiunilor; istoric al modificărilor structurii de acționariat.\nDistribuire Dividende (Contabilitate → Dividende → Distribuiri Dividende): hotărâre AGA cu referință, dată, exercițiu financiar și profit net aprobat; butonul *Preia acționari din registru* completează liniile cu procentele din registru, iar *Recalculează* reface calculul (ambele doar în Ciornă). Procentele și sumele pot fi ajustate manual când distribuirea nu e proporțională cu participarea.\nCalcul dividend: brut (profit × % participare), impozit reținut și net de plată, per acționar și în total.\nReținere impozit la sursă în funcție de data hotărârii AGA: 10% pentru 2025, 16% începând cu 1 ianuarie 2026; nu necesită configurare.\nNote contabile automate: la confirmare `Dr 117 = Cr 457` (profit → dividende de plată); la înregistrarea plății `Dr 457 = Cr 446` (impozit reținut) și `Dr 457 = Cr 5121` (net plătit). Conturile și jurnalele (operațiuni diverse pentru AGA, bancă/casă pentru plată) se precompletează după planul de conturi al companiei și merită verificate la prima utilizare.\nValidări: confirmarea cere cel puțin un acționar, conturile 117 și 457 și jurnalul; plata cere conturile 446 și 5121, jurnalul de plată și data plății efective.\nFlux de lucru: Ciornă → Confirmat AGA → Plătit, cu anulare înainte de plată și resetare la Ciornă.\nCASS: pentru persoane fizice nu se reține de societate; beneficiarul o declară prin Declarația Unică dacă veniturile extrasalariale cumulate ating plafoanele legale. Impozitul din contul 446 se declară prin D100, iar datele alimentează D205."
   },
   {
     "path": "l10n_ro_dni_report/index.md",
