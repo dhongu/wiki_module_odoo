@@ -57,6 +57,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_business_process_handover_document](deltatech_business_process_handover_document/index.md): Generează documentul de predare-primire (proces verbal) pentru un proces de business, direct dintr-un Proiect de Business, ca PDF.
 - [deltatech_calendar_caldav](deltatech_calendar_caldav/index.md): Sincronizare bidirecțională între calendarul Odoo și orice server CalDAV (cPanel, Nextcloud, SOGo), cu serii recurente, remindere, participanți și ecran personal „My Calendars".
 - [deltatech_card_payment](deltatech_card_payment/index.md): Adaugă metoda de plată „Card Payment” (încasări, jurnale de tip bancă), implicită pe jurnalele noi.
+- [deltatech_cash_flow_forecast](deltatech_cash_flow_forecast/index.md): Prognoză de încasări și plăți pe scadență, cu soldul de trezorerie estimat.
 - [deltatech_cash_statement](deltatech_cash_statement/index.md): Asistent pe lista extraselor de casă care aliniază soldurile cu contabilitatea sau înregistrează o diferență de casă la inventar printr-o linie datată (7588/6588/4282).
 - [deltatech_category_group](deltatech_category_group/index.md): Adaugă două niveluri de grupare (tip și clasă) pentru categoriile interne de produse, utilizabile în rapoartele de marjă, stoc și facturi.
 - [deltatech_category_group_equipment](deltatech_category_group_equipment/index.md): Adaugă grupare (tip și clasă) pentru echipamente, preluată din grupurile categoriei interne a produsului.

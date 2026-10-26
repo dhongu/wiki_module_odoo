@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-26] Ingestie: `deltatech_cash_flow_forecast` (19.0.1.0.0)
+
+- **Acțiune:** pagină nouă [deltatech_cash_flow_forecast](deltatech_cash_flow_forecast/index.md); fișa consultant copiată cu 4 capturi.
+- **Sursă:** `readme/DESCRIPTION.md`, `__manifest__.py`, cod (model și vizualizări), `readme/FISA_CONSULTANT.md`.
+- **Dependențe/Conexiuni:** `account` (fără pagină wiki, rămas text).
+- **Fișiere actualizate:** `deltatech_cash_flow_forecast/index.md`, `deltatech_cash_flow_forecast/FISA_CONSULTANT.md`, `deltatech_cash_flow_forecast/screenshots/`, `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-26] Sincronizare automată de noapte
 
 - **Versiuni aduse la zi** (9): `deltatech_ai_source_sync 19.0.1.7.0 → 19.0.1.8.1`, `deltatech_document_template 19.0.1.0.3 → 19.0.1.0.4`, `deltatech_pos_stock 19.0.1.2.3 → 19.0.1.2.4`, `deltatech_replenishment_explain 19.0.1.1.6 → 19.0.1.1.7`, `deltatech_saga 19.0.6.27.0 → 19.0.6.28.0`, `deltatech_vendor_products_website 19.0.1.4.1 → 19.0.1.4.2`, `l10n_ro_anaf_d112 19.0.2.19.5 → 19.0.2.22.0`, `l10n_ro_doc_screenshots 19.0.1.1.9 → 19.0.1.2.1`, `l10n_ro_payroll_tax_redirect 19.0.1.0.4 → 19.0.1.1.0`.

@@ -1573,6 +1573,31 @@
     "text": "deltatech_card_payment\ndeltatech_card_payment\nModulul adaugă în configurarea contabilă o metodă de plată generică „Card Payment”, pentru încasări. Astfel plățile făcute cu cardul pot fi clasificate și urmărite separat de celelalte încasări, iar reconcilierea bancară este simplificată pentru firmele care procesează multe tranzacții cu cardul (retail, servicii).\nCreează automat metoda de plată „Card Payment” (cod `card_payment`), de tip încasare (inbound).\nPermite distingerea clară a încasărilor cu cardul de celelalte tipuri de încasări.\nMetoda este disponibilă doar pe jurnale de tip bancă, în mod „multi” (poate fi folosită pe mai multe jurnale).\nJurnalele noi primesc implicit metoda „Card Payment” printre metodele de încasare.\nMetoda poate fi selectată la înregistrarea plăților clienților sau în configurarea jurnalelor."
   },
   {
+    "path": "deltatech_cash_flow_forecast/index.md",
+    "module": "deltatech_cash_flow_forecast",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_cash_flow_forecast",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_cash_flow_forecast",
+    "last_ingest": "2026-10-26",
+    "friendly_name": "deltatech_cash_flow_forecast",
+    "summary": "Modulul arată încasările și plățile așteptate în zilele următoare, pe baza scadențelor facturilor și a obligațiilor deschise, precum și soldul de trezorerie la care duc acestea. Ajută la anticiparea golurilor de numerar și la planificarea plăților.",
+    "features": [
+      "Prognoză pe scadență: fiecare element contabilizat pe un cont de creanțe sau datorii, cu sumă rămasă de plătit (facturi clienți, facturi furnizori, dar și salarii sau alți creditori), apare la data scadenței. Conturile non-comerciale (TVA de plată sau de recuperat) sunt excluse. Plățile parțiale, plățile nereconciliate și notele de credit reduc sumele, deoarece prognoza lucrează pe suma reziduală în moneda companiei.",
+      "Restanțe pe ziua curentă: elementele scadente în trecut sunt afișate la data de azi, astfel încât graficul pornește de la azi; filtrul Overdue le izolează.",
+      "Grafic încasări și plăți: bare zilnice, cu încasările deasupra axei și plățile dedesubt, plus pivot pe zi, săptămână sau lună și lista documentelor din spatele fiecărei sume, cu buton de deschidere a documentului.",
+      "Sold estimat de trezorerie: linie cumulată care pornește de la soldul curent al conturilor din jurnalele de bancă și casă (împrumuturile pe termen scurt și avansele de trezorerie nu sunt luate în calcul) și adaugă zi de zi încasările minus plățile.",
+      "Filtre pentru următoarele 7, 30 și 90 de zile, după partener, jurnal și companie; regulă multi-company.",
+      "Meniu: Contabilitate / Raportare / Management / Cash Flow Forecast și Projected Cash Balance."
+    ],
+    "dependencies": [
+      "account"
+    ],
+    "connections": [
+      "account"
+    ],
+    "text": "deltatech_cash_flow_forecast\ndeltatech_cash_flow_forecast\nModulul arată încasările și plățile așteptate în zilele următoare, pe baza scadențelor facturilor și a obligațiilor deschise, precum și soldul de trezorerie la care duc acestea. Ajută la anticiparea golurilor de numerar și la planificarea plăților.\nPrognoză pe scadență: fiecare element contabilizat pe un cont de creanțe sau datorii, cu sumă rămasă de plătit (facturi clienți, facturi furnizori, dar și salarii sau alți creditori), apare la data scadenței. Conturile non-comerciale (TVA de plată sau de recuperat) sunt excluse. Plățile parțiale, plățile nereconciliate și notele de credit reduc sumele, deoarece prognoza lucrează pe suma reziduală în moneda companiei.\nRestanțe pe ziua curentă: elementele scadente în trecut sunt afișate la data de azi, astfel încât graficul pornește de la azi; filtrul Overdue le izolează.\nGrafic încasări și plăți: bare zilnice, cu încasările deasupra axei și plățile dedesubt, plus pivot pe zi, săptămână sau lună și lista documentelor din spatele fiecărei sume, cu buton de deschidere a documentului.\nSold estimat de trezorerie: linie cumulată care pornește de la soldul curent al conturilor din jurnalele de bancă și casă (împrumuturile pe termen scurt și avansele de trezorerie nu sunt luate în calcul) și adaugă zi de zi încasările minus plățile.\nFiltre pentru următoarele 7, 30 și 90 de zile, după partener, jurnal și companie; regulă multi-company.\nMeniu: Contabilitate / Raportare / Management / Cash Flow Forecast și Projected Cash Balance."
+  },
+  {
     "path": "deltatech_cash_statement/index.md",
     "module": "deltatech_cash_statement",
     "version": "19.0.3.1.4",
