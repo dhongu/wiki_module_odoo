@@ -13925,20 +13925,23 @@
   {
     "path": "l10n_ro_anaf_d101/index.md",
     "module": "l10n_ro_anaf_d101",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.1.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d101",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d101",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-10-27",
     "friendly_name": "Romania - Declarația D101 ANAF",
-    "summary": "Modulul generează fișierul XML al Declarației 101 (impozitul pe profit anual) pentru depunerea la ANAF, pornind de la calculul de impozit pe profit deja existent în modulul `l10n_ro_profit_tax`. Contabilul nu reintroduce date: alege înregistrarea de calcul anual, apasă un buton și obține direct XML-ul validat conform schemei oficiale ANAF, gata de import în DUKIntegrator.",
+    "summary": "Modulul generează Declarația 101 (impozitul pe profit anual) pentru depunerea la ANAF, pornind de la calculul de impozit pe profit deja existent în modulul `l10n_ro_profit_tax`. Contabilul nu reintroduce date: alege înregistrarea de calcul anual, apasă un buton și obține fie fișierul XML validat conform schemei ANAF, gata de import în DUKIntegrator, fie formularul PDF oficial ANAF completat (XDP), pe care îl verifică, îl semnează și îl depune.",
     "features": [
-      "Buton Export D101 XML pe înregistrarea de calcul impozit pe profit",
-      "Generează elementul `declaratie101` cu indicatorii principali (P1–P53): venituri și",
-      "XML-ul respectă schema oficială ANAF v3 (OPANAF 206/11.02.2025) și este validat",
-      "Calculează automat numărul de evidență a plății și scadența, conform structurii ANAF.",
+      "Butoane Export D101 XML și Export D101 XDP pe înregistrarea de calcul impozit pe",
+      "XML: elementul `declaratie101` cu indicatorii principali (P1–P53): venituri și",
+      "XDP: aceleași date sunt puse în formularul PDF oficial ANAF",
+      "Setarea Tip export (Contabilitate → Configurare → Setări, blocul *Declarații ANAF",
+      "Schema folosită este v10 (OPANAF 206/11.02.2025, `d101_v10.xsd`), structura citită de",
+      "Scadență și număr de evidență a plății: calculate automat; de la exercițiul 2021",
       "Reutilizează infrastructura ANAF comună din `l10n_ro_anaf_base`: datele declarantului,",
-      "Câmp Tip obligație D101 pe înregistrarea de calcul (coduri 102/103/104/105,",
-      "Limitare: exportul automat acoperă doar scenariul de profit. Pentru exerciții cu"
+      "Tipul obligației este tratat intern: câmpul `l10n_ro_d101_cod_obligatie` (102/103/104/105,",
+      "Modulul nu generează note contabile (nota de impozit aparține `l10n_ro_profit_tax`).",
+      "Limitări: exportul automat acoperă doar scenariul de profit; dacă un indicator ar"
     ],
     "dependencies": [
       "l10n_ro_profit_tax",
@@ -13949,7 +13952,7 @@
       "l10n_ro_anaf_d100",
       "l10n_ro_anaf_base"
     ],
-    "text": "Romania - Declarația D101 ANAF\nl10n_ro_anaf_d101\nModulul generează fișierul XML al Declarației 101 (impozitul pe profit anual) pentru depunerea la ANAF, pornind de la calculul de impozit pe profit deja existent în modulul `l10n_ro_profit_tax`. Contabilul nu reintroduce date: alege înregistrarea de calcul anual, apasă un buton și obține direct XML-ul validat conform schemei oficiale ANAF, gata de import în DUKIntegrator.\nButon Export D101 XML pe înregistrarea de calcul impozit pe profit\nGenerează elementul `declaratie101` cu indicatorii principali (P1–P53): venituri și\nXML-ul respectă schema oficială ANAF v3 (OPANAF 206/11.02.2025) și este validat\nCalculează automat numărul de evidență a plății și scadența, conform structurii ANAF.\nReutilizează infrastructura ANAF comună din `l10n_ro_anaf_base`: datele declarantului,\nCâmp Tip obligație D101 pe înregistrarea de calcul (coduri 102/103/104/105,\nLimitare: exportul automat acoperă doar scenariul de profit. Pentru exerciții cu"
+    "text": "Romania - Declarația D101 ANAF\nl10n_ro_anaf_d101\nModulul generează Declarația 101 (impozitul pe profit anual) pentru depunerea la ANAF, pornind de la calculul de impozit pe profit deja existent în modulul `l10n_ro_profit_tax`. Contabilul nu reintroduce date: alege înregistrarea de calcul anual, apasă un buton și obține fie fișierul XML validat conform schemei ANAF, gata de import în DUKIntegrator, fie formularul PDF oficial ANAF completat (XDP), pe care îl verifică, îl semnează și îl depune.\nButoane Export D101 XML și Export D101 XDP pe înregistrarea de calcul impozit pe\nXML: elementul `declaratie101` cu indicatorii principali (P1–P53): venituri și\nXDP: aceleași date sunt puse în formularul PDF oficial ANAF\nSetarea Tip export (Contabilitate → Configurare → Setări, blocul *Declarații ANAF\nSchema folosită este v10 (OPANAF 206/11.02.2025, `d101_v10.xsd`), structura citită de\nScadență și număr de evidență a plății: calculate automat; de la exercițiul 2021\nReutilizează infrastructura ANAF comună din `l10n_ro_anaf_base`: datele declarantului,\nTipul obligației este tratat intern: câmpul `l10n_ro_d101_cod_obligatie` (102/103/104/105,\nModulul nu generează note contabile (nota de impozit aparține `l10n_ro_profit_tax`).\nLimitări: exportul automat acoperă doar scenariul de profit; dacă un indicator ar"
   },
   {
     "path": "l10n_ro_anaf_d103/index.md",

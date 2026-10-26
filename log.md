@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-27] Reingestie: `l10n_ro_anaf_d101` (19.0.1.0.5 → 19.0.1.1.2)
+
+- **Acțiune:** actualizare [l10n_ro_anaf_d101](l10n_ro_anaf_d101/index.md): exportul XDP pe formularul ANAF `D101_XML_2025_091026` și setarea Tip export; schema v10 (nu v3) și validatorul J11.0.4; scadența 25 iunie anul următor de la exercițiul 2021 (art. 42 alin. (1) CF, OUG 8/2026); limitările mapării pe rânduri. Corectat: câmpul „Tip obligație D101” nu apare în niciun view, descris ca intern (implicit 103). Componentele Cheie scrise din cod. Fișa consultant recopiată, cu 3 capturi (`03_tip_export.png` nouă).
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `__manifest__.py`, `models/l10n_ro_profit_tax_compute.py`, `views/`, `readme/FISA_CONSULTANT.md` (origin/19.0, după PR-urile l10n_ro_ent #885, #897, #898).
+- **Dependențe/Conexiuni:** l10n_ro_profit_tax, l10n_ro_anaf_base, l10n_ro_anaf_partner, l10n_ro_anaf_d100 — toate linkuri active.
+- **Fișiere actualizate:** `l10n_ro_anaf_d101/index.md`, `l10n_ro_anaf_d101/FISA_CONSULTANT.md`, `l10n_ro_anaf_d101/screenshots/`, `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-26] Ingestie: `deltatech_cash_flow_forecast` (19.0.1.0.0)
 
 - **Acțiune:** pagină nouă [deltatech_cash_flow_forecast](deltatech_cash_flow_forecast/index.md); fișa consultant copiată cu 4 capturi.

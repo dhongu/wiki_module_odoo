@@ -482,7 +482,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_anaf_base](l10n_ro_anaf_base/index.md): Infrastructură comună (modul ascuns) pentru declarațiile ANAF din `l10n_ro_ent`: mixin de handler, validări, export XML/XDP, setări de declarant, cod CAEN și convenția „Nume Prenume".
 - [l10n_ro_anaf_d094](l10n_ro_anaf_d094/index.md): Declarația 094 (cifra de afaceri a plătitorilor de TVA trimestriali), calculată din deconturile de TVA, cu verificarea plafonului de 100.000 EUR, export XML ANAF și tipărire PDF.
 - [l10n_ro_anaf_d100](l10n_ro_anaf_d100/index.md): Generarea Declarației 100 privind obligațiile de plată la bugetul de stat, cu export XML/XDP.
-- [l10n_ro_anaf_d101](l10n_ro_anaf_d101/index.md): Generează XML-ul Declarației 101 (impozit pe profit anual) pentru ANAF, pornind de la calculul din `l10n_ro_profit_tax`, validat automat împotriva XSD-ului oficial.
+- [l10n_ro_anaf_d101](l10n_ro_anaf_d101/index.md): Export XML (schema v10) și XDP (formularul PDF oficial ANAF) pentru declarația anuală D101 de impozit pe profit, pornind din calculul `l10n_ro_profit_tax`.
 - [l10n_ro_anaf_d103](l10n_ro_anaf_d103/index.md): Export XML al Decontului lunar privind accizele (D103) din declarația de accize Odoo, gata de depus pe portalul ANAF.
 - [l10n_ro_anaf_d107](l10n_ro_anaf_d107/index.md): Declarația 107 privind sponsorizările și bursele private, cu calculul scăzământului de impozit și export XML pe structura oficială ANAF (`<d107>`), validat cu D107Validator.
 - [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md): Generare, validare XSD, verificare și export XML al declarației D112 ANAF (CAS/CASS/CAM, impozit pe venit, evidență nominală), cu import al declarațiilor depuse în alte programe.
