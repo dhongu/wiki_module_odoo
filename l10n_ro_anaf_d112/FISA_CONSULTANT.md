@@ -33,7 +33,14 @@ Modulul nu înlocuiește motorul de salarizare și nu depune automat declarația
   Titlul V (impozit pe veniturile din salarii).
 - **Ordinul ANAF pentru formularul D112** și specificațiile XML (`declaratieUnica`, versiunea curentă).
 - **OMFP 1802/2014**: conturile de evidență a obligațiilor salariale (431x, 436, 444).
-- **Termen operațional uzual:** depunere lunară până la data de 25 a lunii următoare.
+- **Termen:** depunere și plată până la data de 25 a lunii următoare (Codul fiscal art. 80, art. 147 alin. (1)).
+- **Regim trimestrial** (art. 80 alin. (2)–(3), art. 147 alin. (4)–(11)): ONG-urile, microîntreprinderile cu sub 3
+  salariați, plătitorii de impozit pe profit cu venituri ≤ 100.000 EUR și sub 3 salariați, PFA, II, profesiile libere și
+  persoanele fizice angajatoare depun câte o declarație pe lună, dar toate trei până la 25 a lunii de după trimestru,
+  când plătesc și obligațiile. Numărul mediu de salariați se ia din D112-urile anului anterior (alin. (6)), venitul din
+  situațiile financiare (alin. (7)). Regimul lunar se poate alege prin opțiune depusă până la 31 ianuarie (alin. (8)).
+  Excepție (alin. (11)): concediu medical sau încetarea calității de asigurat în lună → declarația lunii se depune până
+  la 25 a lunii următoare.
 
 ---
 
@@ -126,7 +133,28 @@ peste toleranță. Dacă un cont nu este setat, modulul îl caută automat după
 
 ![Setări reconciliere D112: conturi, toleranță, politică strictă](screenshots/05_setari_reconciliere.png)
 
-### 5.4 Date salariale minime
+### 5.4 Sedii secundare plătitoare de salarii
+
+Doar pentru firmele cu sedii secundare înregistrate fiscal ca plătitoare de salarii: **Contabilitate → Configurare → Sedii
+secundare D112** (denumire, CIF-ul sediului, adresele de lucru). Angajații cu aceste adrese de lucru primesc sediul pe fișă,
+iar liniile D112 îl preiau. În XML, impozitul pe salarii (obligația 602) se împarte pe **F1** (sediul principal) și câte un
+rând **F2** pe sediu; ANAF verifică A_datorat / A_deductibil / A_scutit(602) = F1 + ΣF2. Sediile din aceeași localitate cu
+sediul social nu au CIF propriu din 2026 (OG 6/2026) și rămân pe sediul principal. La plată, impozitul fiecărui sediu
+secundar are o plată proprie, cu CIF-ul sediului în explicație.
+
+### 5.5 Regimul de depunere (lunar / trimestrial)
+
+Setați **D112 — Tip entitate** în setări, apoi în **Contabilitate → Raportare → Declarații ANAF → Regim depunere D112**
+câte o înregistrare pe an: *Lunar*, *Trimestrial* sau *Lunar prin opțiune* (cu data și numărul opțiunii). Formularul
+calculează numărul mediu de salariați din D112-urile inițiale ale anului anterior (Σ salariați / 12) și, cu venitul
+anului anterior în EUR (doar la impozit pe profit), regimul sugerat; dacă regimul ales diferă, apare un avertisment.
+Sugestia nu se aplică singură: regimul lunar prin opțiune nu e vizibil aplicației. Fără înregistrare pe an, declarațiile
+sunt lunare. Schimbarea regimului trece pe declarațiile în ciornă ale anului și pe termenele din tabloul de declarații.
+
+**De confirmat cu contabilul:** cursul folosit la pragul de 100.000 EUR (venitul se introduce direct în EUR), codul
+formularului de opțiune și termenul când 25 cade într-o sărbătoare legală (se mută doar din weekend pe luni).
+
+### 5.6 Date salariale minime
 
 | Obiect | Cerință minimă |
 |--------|----------------|
@@ -235,11 +263,18 @@ fi modificate și declarația nu mai poate fi resetată în ciornă. Pentru core
 
 ### Pasul 8 — Plata obligațiilor la Trezorerie
 
-După export, apăsați **Pregătește plăți** (declarația inițială, în starea Validat sau Exportat). Se creează câte o **plată în ciornă** pentru fiecare obligație cu sumă de plată (impozit 602, CAS 412, CASS 432, CAM 480 și, după caz, 481/482/458/459), către contul unic al Trezoreriei din setări, cu suma `datorat − scutit` (impozitul scutit conform art. 60 nu se plătește), data = **25 a lunii următoare** (o scadență în weekend se mută în prima zi de luni), explicația *D112 LL/AAAA - cod obligație* și **contul de datorie al obligației** drept cont de contrapartidă (4315, 4316, 436, 444). Butonul *Plăți* de pe declarație deschide plățile.
+După export, apăsați **Pregătește plăți** (declarația inițială, în starea Validat sau Exportat). Se creează câte o **plată în ciornă** pentru fiecare obligație cu sumă de plată (impozit 602, CAS 412, CASS 432, CAM 480 și, după caz, 481/482/458/459), către contul unic al Trezoreriei din setări (impozit, CAS, CASS) sau către contul CAM al Trezoreriei (CAM 480, cont distinct 20.A.47.03.00, Codul fiscal art. 220^6 alin. (1)), cu suma `datorat − scutit` (impozitul scutit conform art. 60 nu se plătește), data = **25 a lunii următoare** (o scadență în weekend se mută în prima zi de luni), explicația *D112 LL/AAAA - cod obligație* și **contul de datorie al obligației** drept cont de contrapartidă (4315, 4316, 436, 444). Butonul *Plăți* de pe declarație deschide plățile.
 
 ![Plățile pregătite din D112, în ciornă](screenshots/16_plati_trezorerie.png)
 
-**Verificați înainte de a posta:** suma fiecărei plăți coincide cu *A_plata* din XML; contul de contrapartidă e cel al obligației; jurnalul e contul bancar din care se plătește (se poate schimba pe ciornă); IBAN-ul Trezoreriei e cel din lista ANAF pentru unitatea de care ține firma. Apoi postați plățile (nota **Dr 4315 / 4316 / 436 / 444 = Cr 5121**) și transmiteți banca ordinul de plată; plata în contul unic trebuie făcută până la scadență (25 a lunii următoare, prima zi lucrătoare dacă cade în weekend sau sărbătoare legală).
+**Regim trimestrial:** butonul se apasă după ce există declarațiile inițiale ale tuturor celor trei luni din trimestru
+(din oricare dintre ele). Sumele de plată se adună pe obligație (și pe sediu secundar) și se creează o singură plată pe
+obligație pentru trimestru, cu data = 25 a lunii de după trimestru și explicația *D112 Tn/AAAA - cod obligație*, legată
+de toate cele trei declarații. Concediul medical sau încetarea calității de asigurat aduc doar **depunerea** declarației
+lunii la 25 a lunii următoare (alin. (11)); plata rămâne la termenul trimestrului — textul legii nu spune că se mută și
+plata (de confirmat cu contabilul).
+
+**Verificați înainte de a posta:** suma fiecărei plăți coincide cu *A_plata* din XML; contul de contrapartidă e cel al obligației; jurnalul e contul bancar din care se plătește (se poate schimba pe ciornă); IBAN-urile Trezoreriei (contul unic și contul CAM, cu `20A470300`) sunt cele din lista ANAF pentru unitatea de care ține firma. Apoi postați plățile (nota **Dr 4315 / 4316 / 436 / 444 = Cr 5121**) și transmiteți banca ordinul de plată; plata în contul unic și în contul CAM trebuie făcută până la scadență (25 a lunii următoare, prima zi lucrătoare dacă cade în weekend sau sărbătoare legală).
 
 ### Import declarație D112 depusă cu alt program (preluare istoric)
 
@@ -308,6 +343,7 @@ reconciliere acceptate, verificarea finală în utilitarele ANAF și depunerea �
 - [ ] Namespace-ul XML corespunde perioadei: `v6` pentru luni ≤ dec 2025, `v7` de la ian 2026.
 - [ ] XML-ul trece validatorul oficial ANAF **DUKIntegrator** fără erori `E:` pentru angajați normali.
 - [ ] După export declarația se blochează; rectificativa se poate crea legată de inițială.
+- [ ] Regim trimestrial: cele trei declarații ale trimestrului au termenul 25 a lunii de după trimestru; o lună cu concediu medical sau încetare are termenul de depunere 25 a lunii următoare; *Pregătește plăți* face o plată pe obligație pentru trimestru.
 - [ ] Importul unui XML D112 depus (sau al PDF-ului ANAF) creează declarația *Importată*, blocată, cu liniile legate de angajați după CNP; un XML al altui CUI sau al unei perioade deja declarate este refuzat.
 
 ---
@@ -327,6 +363,9 @@ reconciliere acceptate, verificarea finală în utilitarele ANAF și depunerea �
 | `Fișierul nu este o declarație D112 (XML sau PDF ANAF): ...` | la import, fișier care nu e XML D112 sau PDF fără XML atașat | încărcați XML-ul depus sau PDF-ul generat de DUKIntegrator |
 | `Declarația aparține CUI-ului ..., nu companiei ...` | la import, declarația altei firme | alegeți compania corectă în asistent |
 | `Există deja o declarație D112 pe această perioadă: ...` | la import, perioada are deja declarație | o lună declarată nu se importă a doua oară; dacă e o ciornă creată din greșeală, ștergeți-o și reimportați |
+| `Plata trimestrului se pregătește când există declarațiile tuturor lunilor lui. Lipsesc: ...` | regim trimestrial, lipsește o declarație din trimestru | creați și calculați declarațiile lunilor lipsă |
+| `Declarațiile trimestrului trebuie să fie toate în regim trimestrial: ...` | o lună are regimul lunar | corectați *Regim* pe declarația în ciornă sau regimul anului |
+| `Instituțiile publice depun D112 lunar.` | regim trimestrial pe o instituție publică | alegeți *Lunar* |
 | DUK: `eroare namespace` | XML generat cu `v6` depus pe o perioadă 2026 (sau invers) | versiunea XML se selectează automat după perioadă; verificați că perioada declarației e corectă |
 
 ---

@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.1.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_simple
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_mrp_simple`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-10-26`
 
 #### 1. Sumar
 
@@ -14,13 +14,13 @@ Modulul oferă o variantă simplificată de producție, gândită pentru cazuril
 
 - Crearea unei producții simple, cu componente și produse rezultate configurabile, fără a fi nevoie de o listă de materiale.
 - Generarea a două ridicări de stoc (stock pickings), cu tip de operațiune configurabil; ridicările pot fi accesate direct din ecranul de producție simplă și pot fi validate automat sau manual.
-- Calcularea automată a prețului de stoc al produsului/produselor rezultate pornind de la prețul de stoc al componentelor. Dacă rezultă mai multe produse, prețul se introduce manual.
+- Calcularea automată a prețului de stoc al produsului/produselor rezultate pornind de la prețul de stoc al componentelor. Dacă rezultă mai multe produse, costul se împarte proporțional cu valoarea lor standard, iar prețul poate fi modificat manual. Produsele rezultate intră în evaluarea stocului la acest preț, nu la costul lor curent.
 - Dacă prețul produsului rezultat este 0, se generează o eroare. Comportamentul poate fi suprascris setând parametrul de sistem `simple_production_allow_zero_cost` la o valoare diferită de zero.
 - Crearea automată a unui produs nou și a unei comenzi de vânzare pentru produsul rezultat (utilizatorul trebuie să facă parte din grupul „Sale simple production"). Prețul de vânzare al produsului rezultat este calculat pe baza prețului de vânzare al componentelor.
 
 #### 3. Dependențe
 
-- `stock`
+- `stock_account`
 - `sale`
 
 #### 4. Componente Cheie
@@ -30,8 +30,9 @@ Modulul oferă o variantă simplificată de producție, gândită pentru cazuril
 - `mrp.simple`: Documentul central de producție simplă; grupează componentele consumate și produsele rezultate, calculează prețurile și gestionează ridicările de stoc asociate.
 - `mrp.simple.line.in`: Liniile cu componentele care intră în producție (materialele consumate).
 - `mrp.simple.line.out`: Liniile cu produsele care rezultă din producție.
+- `add.multi.mrp.lines` și `add.multi.mrp.lines.product`: Wizard pentru adăugarea în masă a mai multor linii.
 - `sale.order` (extins): Permite crearea automată a unei comenzi de vânzare pentru produsul rezultat.
-- `stock.picking` (extins): Integrare cu ridicările de stoc generate de producția simplă.
+- `stock.picking` și `stock.move` (extinse): Integrare cu ridicările și mișcările de stoc generate de producția simplă.
 
 **Vizualizări**
 
@@ -42,6 +43,7 @@ Modulul oferă o variantă simplificată de producție, gândită pentru cazuril
 **Acțiuni Automate / Acțiuni Server**
 
 - `data/ir_config_parameter.xml`: Definește parametrul de sistem `simple_production_allow_zero_cost`, care permite continuarea producției cu cost zero al produsului rezultat.
+- `security/groups.xml`: Grupul „Sale simple production" (`group_sale_simple_production`), necesar pentru crearea automată a produsului și a comenzii de vânzare.
 
 #### 5. Conexiuni
 

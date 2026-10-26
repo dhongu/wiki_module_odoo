@@ -1,7 +1,7 @@
 # Vendor Products Website (localizat la `deltatech_vendor_products_website/index.md`)
 
 - **Nume Tehnic:** `deltatech_vendor_products_website`
-- **Versiune:** `19.0.1.4.1`
+- **Versiune:** `19.0.1.4.2`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products_website`
 - **Cale Locală:** `odoo-addons/bitshop_vendor/deltatech_vendor_products_website`
 - **Ultima Ingestie:** `2026-10-19`

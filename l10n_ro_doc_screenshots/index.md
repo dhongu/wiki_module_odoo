@@ -1,7 +1,7 @@
 # Romania - Tooling capturi fișe consultant (localizat la `l10n_ro_doc_screenshots/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_doc_screenshots`
-- **Versiune:** `19.0.1.1.9`
+- **Versiune:** `19.0.1.2.1`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_doc_screenshots
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_doc_screenshots`
 - **Ultima Ingestie:** 2026-09-25

@@ -2,9 +2,9 @@
 
 - **Nume Tehnic:** `deltatech_stock_delivery`
 - **Versiune:** `19.0.1.0.3`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_delivery`
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_delivery
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_delivery`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-10-26`
 
 #### 1. Sumar
 
@@ -12,8 +12,9 @@ Acest modul îmbunătățește integrarea dintre Contabilitatea Odoo și Inventa
 
 #### 2. Funcționalități Cheie
 
-- Adaugă un buton „Livrare" (Delivery) sau „Recepție" (Reception) în vizualizarea facturii, în funcție de tipul acesteia (factură client sau factură furnizor).
-- Permite utilizatorilor să vizualizeze rapid toate transferurile de stoc (livrări sau recepții) asociate facturii curente.
+- Adaugă un buton „Livrare" (Delivery) sau „Recepție" (Reception) în vizualizarea facturii, în funcție de tipul acesteia (factură client/notă de credit client sau factură furnizor/notă de credit furnizor).
+- Permite utilizatorilor să vizualizeze rapid transferurile de stoc finalizate (livrări sau recepții) asociate facturii curente, identificate prin liniile de comandă de vânzare/cumpărare legate de liniile facturii. Dacă există un singur transfer, se deschide direct formularul acestuia; dacă sunt mai multe, o listă filtrată.
+- Dacă factura nu are niciun transfer finalizat asociat, afișează eroarea „This invoice has no deliveries".
 - Fluidizează fluxul de lucru pentru contabili și gestionarii de depozit care trebuie să verifice expedierile fizice față de documentele financiare.
 - Îmbunătățește trasabilitatea și reduce timpul petrecut căutând documentele legate.
 
@@ -23,12 +24,22 @@ Acest modul îmbunătățește integrarea dintre Contabilitatea Odoo și Inventa
 - `stock`
 - `purchase`
 - `sale`
+- `sale_stock`
+- `purchase_stock`
 
 #### 4. Componente Cheie
 
+**Modele**
+
+- `account.move` (extins, `models/account_invoice.py`): metoda `invoice_print_delivery` colectează transferurile finalizate legate de liniile facturii (prin `sale_line_ids` și `purchase_line_id`) și întoarce acțiunea de afișare a lor.
+
 **Vizualizări**
 
-- `views/account_invoice_view.xml`: Extinde formularul de factură (`account.move`) pentru a adăuga butonul de acces rapid către livrările/recepțiile asociate.
+- `views/account_invoice_view.xml` (`invoice_form`): Extinde formularul de factură (`account.view_move_form`) cu butoane de tip stat în caseta de butoane, „Delivery" pentru facturile client și „Reception" pentru cele furnizor.
+
+**Acțiuni Automate / Acțiuni Server**
+
+*Nu există acțiuni automate.*
 
 #### 5. Conexiuni
 

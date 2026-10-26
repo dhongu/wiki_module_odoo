@@ -1,7 +1,7 @@
 # Deltatech POS Stock (localizat la `deltatech_pos_stock/index.md`)
 
 - **Nume Tehnic:** `deltatech_pos_stock`
-- **Versiune:** `19.0.1.2.3`
+- **Versiune:** `19.0.1.2.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_pos_stock
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_pos_stock`
 - **Ultima Ingestie:** `2026-10-09`

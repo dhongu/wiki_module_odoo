@@ -818,7 +818,7 @@
   {
     "path": "deltatech_ai_source_sync/index.md",
     "module": "deltatech_ai_source_sync",
-    "version": "19.0.1.7.0",
+    "version": "19.0.1.8.1",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_source_sync",
     "local_path": "odoo-addons/bitshop_ent/deltatech_ai_source_sync",
     "last_ingest": "2026-10-20",
@@ -3599,7 +3599,7 @@
   {
     "path": "deltatech_document_template/index.md",
     "module": "deltatech_document_template",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_document_template",
     "local_path": "odoo-addons/bitshop/deltatech_document_template",
     "last_ingest": "2026-06-03",
@@ -4420,16 +4420,16 @@
     "version": "19.0.1.0.16",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_picking",
     "local_path": "odoo-addons/deltatech/deltatech_invoice_picking",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-10-26",
     "friendly_name": "Invoice Pickings",
     "summary": "Acest modul permite generarea facturilor direct din livrări (pickings), oferind o alternativă la facturarea pornind de la comanda de vânzare sau de achiziție. Pe factură sunt preluate doar produsele din livrare împreună cu cantitățile efectiv realizate (done), ceea ce asigură o corelare exactă între ce s-a livrat și ce se facturează. Modulul aduce valoare în special în fluxurile unde cantitatea livrată poate diferi de cea comandată, simplificând munca echipelor de logistică și facturare.",
     "features": [
-      "O factură poate fi creată dintr-una sau mai multe livrări.",
-      "O factură poate fi creată dintr-un lot de livrări (batch).",
+      "O factură poate fi creată dintr-una sau mai multe livrări (acțiuni server „Create Sale Invoices\" și „Create Purchase Invoices\" pe transferuri, plus butoane „Invoice\"/„Bill\" în formularul livrării).",
+      "O factură poate fi creată dintr-un lot de livrări (batch), cu buton „Invoice\" în formularul lotului.",
       "Pe factură sunt adăugate doar produsele din livrare, cu cantitățile lor realizate (done).",
       "Pot fi facturate doar livrările care provin dintr-o comandă de vânzare sau de achiziție.",
       "O livrare trebuie să fie în starea „done\" pentru a putea fi facturată.",
-      "Pe livrări este adăugat un câmp „to invoice\", util pentru filtrare: este setat pe True la crearea unei livrări de vânzare, devine False la crearea facturii și revine la True dacă factura este anulată sau ștearsă.",
+      "Pe livrări este adăugat un câmp „to invoice\", util pentru filtrare (filtrul „To invoice\" în căutare): este setat pe True la crearea unei livrări de vânzare, devine False la crearea facturii și revine la True dacă factura este anulată sau ștearsă.",
       "Pe livrări este adăugat un câmp cu legătură către factură, calculat pentru a indica factura generată din livrarea respectivă.",
       "Dacă se fac modificări asupra facturii (linii șterse, cantități modificate), câmpurile facturii din livrările asociate nu vor fi actualizate."
     ],
@@ -4439,17 +4439,15 @@
       "stock",
       "sale_stock",
       "stock_picking_batch",
-      "purchase"
+      "purchase",
+      "purchase_stock"
     ],
     "connections": [
-      "account",
-      "sale_management",
-      "stock",
-      "sale_stock",
-      "stock_picking_batch",
-      "purchase"
+      "deltatech_invoice_picking_automatically",
+      "deltatech_stock_delivery",
+      "deltatech_invoice_receipt"
     ],
-    "text": "Invoice Pickings\ndeltatech_invoice_picking\nAcest modul permite generarea facturilor direct din livrări (pickings), oferind o alternativă la facturarea pornind de la comanda de vânzare sau de achiziție. Pe factură sunt preluate doar produsele din livrare împreună cu cantitățile efectiv realizate (done), ceea ce asigură o corelare exactă între ce s-a livrat și ce se facturează. Modulul aduce valoare în special în fluxurile unde cantitatea livrată poate diferi de cea comandată, simplificând munca echipelor de logistică și facturare.\nO factură poate fi creată dintr-una sau mai multe livrări.\nO factură poate fi creată dintr-un lot de livrări (batch).\nPe factură sunt adăugate doar produsele din livrare, cu cantitățile lor realizate (done).\nPot fi facturate doar livrările care provin dintr-o comandă de vânzare sau de achiziție.\nO livrare trebuie să fie în starea „done\" pentru a putea fi facturată.\nPe livrări este adăugat un câmp „to invoice\", util pentru filtrare: este setat pe True la crearea unei livrări de vânzare, devine False la crearea facturii și revine la True dacă factura este anulată sau ștearsă.\nPe livrări este adăugat un câmp cu legătură către factură, calculat pentru a indica factura generată din livrarea respectivă.\nDacă se fac modificări asupra facturii (linii șterse, cantități modificate), câmpurile facturii din livrările asociate nu vor fi actualizate."
+    "text": "Invoice Pickings\ndeltatech_invoice_picking\nAcest modul permite generarea facturilor direct din livrări (pickings), oferind o alternativă la facturarea pornind de la comanda de vânzare sau de achiziție. Pe factură sunt preluate doar produsele din livrare împreună cu cantitățile efectiv realizate (done), ceea ce asigură o corelare exactă între ce s-a livrat și ce se facturează. Modulul aduce valoare în special în fluxurile unde cantitatea livrată poate diferi de cea comandată, simplificând munca echipelor de logistică și facturare.\nO factură poate fi creată dintr-una sau mai multe livrări (acțiuni server „Create Sale Invoices\" și „Create Purchase Invoices\" pe transferuri, plus butoane „Invoice\"/„Bill\" în formularul livrării).\nO factură poate fi creată dintr-un lot de livrări (batch), cu buton „Invoice\" în formularul lotului.\nPe factură sunt adăugate doar produsele din livrare, cu cantitățile lor realizate (done).\nPot fi facturate doar livrările care provin dintr-o comandă de vânzare sau de achiziție.\nO livrare trebuie să fie în starea „done\" pentru a putea fi facturată.\nPe livrări este adăugat un câmp „to invoice\", util pentru filtrare (filtrul „To invoice\" în căutare): este setat pe True la crearea unei livrări de vânzare, devine False la crearea facturii și revine la True dacă factura este anulată sau ștearsă.\nPe livrări este adăugat un câmp cu legătură către factură, calculat pentru a indica factura generată din livrarea respectivă.\nDacă se fac modificări asupra facturii (linii șterse, cantități modificate), câmpurile facturii din livrările asociate nu vor fi actualizate."
   },
   {
     "path": "deltatech_invoice_picking_automatically/index.md",
@@ -6117,18 +6115,18 @@
     "version": "19.0.1.1.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_simple",
     "local_path": "odoo-addons/deltatech/deltatech_mrp_simple",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-10-26",
     "friendly_name": "Simple MRP",
     "summary": "Modulul oferă o variantă simplificată de producție, gândită pentru cazurile în care întocmirea unei liste de materiale (BOM) complete este inutil de complexă. Utilizatorul definește direct, pe un singur ecran, ce componente intră în producție și ce produse rezultă, fără să creeze în prealabil structuri de fabricație. Modulul generează automat mișcările de stoc necesare și calculează prețul produselor rezultate pe baza prețului componentelor consumate, putând chiar să creeze automat un produs nou și o comandă de vânzare pentru rezultat. Este util pentru ambalări, reambalări, asamblări ad-hoc sau transformări simple de stoc.",
     "features": [
       "Crearea unei producții simple, cu componente și produse rezultate configurabile, fără a fi nevoie de o listă de materiale.",
       "Generarea a două ridicări de stoc (stock pickings), cu tip de operațiune configurabil; ridicările pot fi accesate direct din ecranul de producție simplă și pot fi validate automat sau manual.",
-      "Calcularea automată a prețului de stoc al produsului/produselor rezultate pornind de la prețul de stoc al componentelor. Dacă rezultă mai multe produse, prețul se introduce manual.",
+      "Calcularea automată a prețului de stoc al produsului/produselor rezultate pornind de la prețul de stoc al componentelor. Dacă rezultă mai multe produse, costul se împarte proporțional cu valoarea lor standard, iar prețul poate fi modificat manual. Produsele rezultate intră în evaluarea stocului la acest preț, nu la costul lor curent.",
       "Dacă prețul produsului rezultat este 0, se generează o eroare. Comportamentul poate fi suprascris setând parametrul de sistem `simple_production_allow_zero_cost` la o valoare diferită de zero.",
       "Crearea automată a unui produs nou și a unei comenzi de vânzare pentru produsul rezultat (utilizatorul trebuie să facă parte din grupul „Sale simple production\"). Prețul de vânzare al produsului rezultat este calculat pe baza prețului de vânzare al componentelor."
     ],
     "dependencies": [
-      "stock",
+      "stock_account",
       "sale"
     ],
     "connections": [
@@ -6136,7 +6134,7 @@
       "deltatech_mrp_simple",
       "deltatech_mrp_cost"
     ],
-    "text": "Simple MRP\ndeltatech_mrp_simple\nModulul oferă o variantă simplificată de producție, gândită pentru cazurile în care întocmirea unei liste de materiale (BOM) complete este inutil de complexă. Utilizatorul definește direct, pe un singur ecran, ce componente intră în producție și ce produse rezultă, fără să creeze în prealabil structuri de fabricație. Modulul generează automat mișcările de stoc necesare și calculează prețul produselor rezultate pe baza prețului componentelor consumate, putând chiar să creeze automat un produs nou și o comandă de vânzare pentru rezultat. Este util pentru ambalări, reambalări, asamblări ad-hoc sau transformări simple de stoc.\nCrearea unei producții simple, cu componente și produse rezultate configurabile, fără a fi nevoie de o listă de materiale.\nGenerarea a două ridicări de stoc (stock pickings), cu tip de operațiune configurabil; ridicările pot fi accesate direct din ecranul de producție simplă și pot fi validate automat sau manual.\nCalcularea automată a prețului de stoc al produsului/produselor rezultate pornind de la prețul de stoc al componentelor. Dacă rezultă mai multe produse, prețul se introduce manual.\nDacă prețul produsului rezultat este 0, se generează o eroare. Comportamentul poate fi suprascris setând parametrul de sistem `simple_production_allow_zero_cost` la o valoare diferită de zero.\nCrearea automată a unui produs nou și a unei comenzi de vânzare pentru produsul rezultat (utilizatorul trebuie să facă parte din grupul „Sale simple production\"). Prețul de vânzare al produsului rezultat este calculat pe baza prețului de vânzare al componentelor."
+    "text": "Simple MRP\ndeltatech_mrp_simple\nModulul oferă o variantă simplificată de producție, gândită pentru cazurile în care întocmirea unei liste de materiale (BOM) complete este inutil de complexă. Utilizatorul definește direct, pe un singur ecran, ce componente intră în producție și ce produse rezultă, fără să creeze în prealabil structuri de fabricație. Modulul generează automat mișcările de stoc necesare și calculează prețul produselor rezultate pe baza prețului componentelor consumate, putând chiar să creeze automat un produs nou și o comandă de vânzare pentru rezultat. Este util pentru ambalări, reambalări, asamblări ad-hoc sau transformări simple de stoc.\nCrearea unei producții simple, cu componente și produse rezultate configurabile, fără a fi nevoie de o listă de materiale.\nGenerarea a două ridicări de stoc (stock pickings), cu tip de operațiune configurabil; ridicările pot fi accesate direct din ecranul de producție simplă și pot fi validate automat sau manual.\nCalcularea automată a prețului de stoc al produsului/produselor rezultate pornind de la prețul de stoc al componentelor. Dacă rezultă mai multe produse, costul se împarte proporțional cu valoarea lor standard, iar prețul poate fi modificat manual. Produsele rezultate intră în evaluarea stocului la acest preț, nu la costul lor curent.\nDacă prețul produsului rezultat este 0, se generează o eroare. Comportamentul poate fi suprascris setând parametrul de sistem `simple_production_allow_zero_cost` la o valoare diferită de zero.\nCrearea automată a unui produs nou și a unei comenzi de vânzare pentru produsul rezultat (utilizatorul trebuie să facă parte din grupul „Sale simple production\"). Prețul de vânzare al produsului rezultat este calculat pe baza prețului de vânzare al componentelor."
   },
   {
     "path": "deltatech_mrp_simple_barcode/index.md",
@@ -6750,26 +6748,28 @@
     "version": "19.0.0.1.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_eu_platesc",
     "local_path": "odoo-addons/bitshop/deltatech_payment_eu_platesc",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Eu Platesc Payment Provider",
-    "summary": "Acest modul conectează Odoo cu EuPlătesc, un procesator de plăți românesc de top, permițând afacerilor să accepte plăți online cu carduri de credit și debit (Visa, Mastercard) atât pentru comenzile din eCommerce, cât și pentru facturile din portalul de client. Oferă clienților din România o experiență de plată sigură și familiară, iar echipei de contabilitate îi reduce munca de reconciliere manuală prin actualizarea automată a stării plăților.",
+    "last_ingest": "2026-10-26",
+    "friendly_name": "EuPlatesc.ro Payment",
+    "summary": "Acest modul conectează Odoo cu EuPlătesc, un procesator de plăți românesc, permițând afacerilor să accepte plăți online cu carduri Visa și Mastercard atât pentru comenzile din eCommerce, cât și pentru facturile din portalul de client. Oferă clienților din România o experiență de plată sigură și familiară, iar echipei de contabilitate îi reduce munca de reconciliere manuală prin actualizarea automată a stării plăților. Necesită un cont de comerciant EuPlatesc.ro activ, cu Merchant ID și cheie.",
     "features": [
-      "Oferă opțiunea „Pay with card (EuPlatesc)” ca metodă de plată în timpul finalizării comenzii în Odoo eCommerce.",
-      "Permite clienților să plătească facturile restante direct din portalul de client Odoo.",
-      "Actualizează automat starea comenzilor de vânzare și a facturilor pe baza răspunsului în timp real primit de la EuPlătesc.",
-      "Folosește notificări securizate server-to-server (S2S) prin URL-uri „silent” (callback), astfel încât starea plății se actualizează corect chiar dacă sesiunea browserului clientului este întreruptă.",
-      "Flux prin redirecționare securizată: la checkout, Odoo generează o cerere semnată cu un cod MAC unic, clientul introduce datele cardului direct pe pagina securizată EuPlătesc, iar la finalizare este redirecționat înapoi în Odoo (Success URL), în paralel cu notificarea asincronă (Silent URL) care confirmă tranzacția.",
-      "Suportă atât Modul de Test cât și Modul Live (producție), configurabile din fișa procesatorului de plăți.",
-      "Verificarea integrității datelor prin semnătură HMAC-MD5, datele cardului nefiind niciodată stocate sau procesate în Odoo (conformitate PCI)."
+      "Oferă EuPlatesc.ro ca metodă de plată la finalizarea comenzii în Odoo eCommerce; clientul plătește pe pagina securizată EuPlatesc.ro, iar datele cardului nu ajung niciodată în Odoo.",
+      "Permite clienților să plătească facturile deschise direct din portalul de client Odoo, cu butonul Pay Now.",
+      "Captură imediată: cardul este debitat într-un singur pas, iar comanda sau factura este marcată ca plătită.",
+      "Actualizează automat starea comenzilor de vânzare și a facturilor pe baza răspunsului primit de la EuPlătesc.",
+      "Confirmare în fundal prin notificare server-to-server (URL „silent\"), astfel încât starea plății se actualizează corect chiar dacă clientul închide browserul; clientul este redirecționat înapoi în Odoo (Success URL), spre pagina standard `/payment/status`.",
+      "Mesajele sunt semnate cu cheia comerciantului (HMAC-MD5): un răspuns nesemnat sau semnat greșit este respins, iar suma și moneda se verifică față de tranzacție.",
+      "Configurare: Facturare → Configurare → Procesatori de plăți → EuPlatesc.ro; se introduc Merchant ID și cheia, se alege jurnalul în care se înregistrează plățile, apoi starea se setează pe Activat și procesatorul se publică pe site. Adresele de întoarcere și de notificare sunt trimise de Odoo către EuPlatesc.ro la fiecare plată. Pentru teste înainte de producție se folosește un cont de comerciant de test de la EuPlatesc.ro."
     ],
     "dependencies": [
+      "account",
       "payment"
     ],
     "connections": [
       "payment",
-      "website_sale"
+      "website_sale",
+      "deltatech_account_bank_statement_import_euplatesc"
     ],
-    "text": "Eu Platesc Payment Provider\ndeltatech_payment_eu_platesc\nAcest modul conectează Odoo cu EuPlătesc, un procesator de plăți românesc de top, permițând afacerilor să accepte plăți online cu carduri de credit și debit (Visa, Mastercard) atât pentru comenzile din eCommerce, cât și pentru facturile din portalul de client. Oferă clienților din România o experiență de plată sigură și familiară, iar echipei de contabilitate îi reduce munca de reconciliere manuală prin actualizarea automată a stării plăților.\nOferă opțiunea „Pay with card (EuPlatesc)” ca metodă de plată în timpul finalizării comenzii în Odoo eCommerce.\nPermite clienților să plătească facturile restante direct din portalul de client Odoo.\nActualizează automat starea comenzilor de vânzare și a facturilor pe baza răspunsului în timp real primit de la EuPlătesc.\nFolosește notificări securizate server-to-server (S2S) prin URL-uri „silent” (callback), astfel încât starea plății se actualizează corect chiar dacă sesiunea browserului clientului este întreruptă.\nFlux prin redirecționare securizată: la checkout, Odoo generează o cerere semnată cu un cod MAC unic, clientul introduce datele cardului direct pe pagina securizată EuPlătesc, iar la finalizare este redirecționat înapoi în Odoo (Success URL), în paralel cu notificarea asincronă (Silent URL) care confirmă tranzacția.\nSuportă atât Modul de Test cât și Modul Live (producție), configurabile din fișa procesatorului de plăți.\nVerificarea integrității datelor prin semnătură HMAC-MD5, datele cardului nefiind niciodată stocate sau procesate în Odoo (conformitate PCI)."
+    "text": "EuPlatesc.ro Payment\ndeltatech_payment_eu_platesc\nAcest modul conectează Odoo cu EuPlătesc, un procesator de plăți românesc, permițând afacerilor să accepte plăți online cu carduri Visa și Mastercard atât pentru comenzile din eCommerce, cât și pentru facturile din portalul de client. Oferă clienților din România o experiență de plată sigură și familiară, iar echipei de contabilitate îi reduce munca de reconciliere manuală prin actualizarea automată a stării plăților. Necesită un cont de comerciant EuPlatesc.ro activ, cu Merchant ID și cheie.\nOferă EuPlatesc.ro ca metodă de plată la finalizarea comenzii în Odoo eCommerce; clientul plătește pe pagina securizată EuPlatesc.ro, iar datele cardului nu ajung niciodată în Odoo.\nPermite clienților să plătească facturile deschise direct din portalul de client Odoo, cu butonul Pay Now.\nCaptură imediată: cardul este debitat într-un singur pas, iar comanda sau factura este marcată ca plătită.\nActualizează automat starea comenzilor de vânzare și a facturilor pe baza răspunsului primit de la EuPlătesc.\nConfirmare în fundal prin notificare server-to-server (URL „silent\"), astfel încât starea plății se actualizează corect chiar dacă clientul închide browserul; clientul este redirecționat înapoi în Odoo (Success URL), spre pagina standard `/payment/status`.\nMesajele sunt semnate cu cheia comerciantului (HMAC-MD5): un răspuns nesemnat sau semnat greșit este respins, iar suma și moneda se verifică față de tranzacție.\nConfigurare: Facturare → Configurare → Procesatori de plăți → EuPlatesc.ro; se introduc Merchant ID și cheia, se alege jurnalul în care se înregistrează plățile, apoi starea se setează pe Activat și procesatorul se publică pe site. Adresele de întoarcere și de notificare sunt trimise de Odoo către EuPlatesc.ro la fiecare plată. Pentru teste înainte de producție se folosește un cont de comerciant de test de la EuPlatesc.ro."
   },
   {
     "path": "deltatech_payment_forecast/index.md",
@@ -7438,7 +7438,7 @@
   {
     "path": "deltatech_pos_stock/index.md",
     "module": "deltatech_pos_stock",
-    "version": "19.0.1.2.3",
+    "version": "19.0.1.2.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_pos_stock",
     "local_path": "odoo-addons/deltatech/deltatech_pos_stock",
     "last_ingest": "2026-10-09",
@@ -8805,7 +8805,7 @@
   {
     "path": "deltatech_replenishment_explain/index.md",
     "module": "deltatech_replenishment_explain",
-    "version": "19.0.1.1.6",
+    "version": "19.0.1.1.7",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_replenishment_explain`",
     "local_path": "odoo-addons/deltatech/deltatech_replenishment_explain",
     "last_ingest": "2026-07-31",
@@ -9180,7 +9180,7 @@
   {
     "path": "deltatech_saga/index.md",
     "module": "deltatech_saga",
-    "version": "19.0.6.27.0",
+    "version": "19.0.6.28.0",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga",
     "local_path": "odoo-addons/bitshop/deltatech_saga",
     "last_ingest": "2026-10-22",
@@ -10133,19 +10133,21 @@
     "path": "deltatech_sale_purchase/index.md",
     "module": "deltatech_sale_purchase",
     "version": "19.0.1.0.3",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_purchase`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_purchase",
     "local_path": "odoo-addons/deltatech/deltatech_sale_purchase",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Sale Purchase",
+    "last_ingest": "2026-10-26",
+    "friendly_name": "Sale-Purchase Sync",
     "summary": "Modulul curăță automat comenzile de achiziție generate prin regulile de aprovizionare (procurement) atunci când oferta de vânzare care le-a declanșat este anulată. Astfel se evită liniile de achiziție „orfane\" — comenzi de achiziție netrimise furnizorului, rămase în ciornă fără o comandă de vânzare corespunzătoare — și se păstrează sincronizarea între echipa de vânzări și cea de aprovizionare.",
     "features": [
       "La anularea unei oferte/comenzi de vânzare, elimină automat liniile de achiziție legate care se află încă în comenzi de achiziție în starea ciornă (draft).",
-      "O comandă de achiziție deja confirmată (trimisă furnizorului) NU este atinsă — rămâne în sarcina cumpărătorului să decidă ce face cu ea.",
+      "O comandă de achiziție deja confirmată (trimisă furnizorului) NU este atinsă — rămâne în sarcina cumpărătorului să decidă ce face cu ea, inclusiv când linia ei deservește și alte comenzi de vânzare.",
+      "Dacă o linie de achiziție ciornă deservește și mișcări ale altor comenzi de vânzare (grupare pe furnizor Zilnic/Săptămânal/Întotdeauna), linia se păstrează: mișcările anulate sunt detașate de ea, iar cantitatea lor (convertită în unitatea de măsură a liniei) se scade din cantitatea de achiziție.",
       "Previne acumularea de comenzi de achiziție ciornă fără corespondent activ în vânzări, menținând curat modulul de aprovizionare."
     ],
     "dependencies": [
       "sale_purchase",
-      "sale_stock"
+      "sale_stock",
+      "purchase_stock"
     ],
     "connections": [
       "sale_stock",
@@ -10153,7 +10155,7 @@
       "purchase_stock",
       "created_purchase_line_ids"
     ],
-    "text": "Sale Purchase\ndeltatech_sale_purchase\nModulul curăță automat comenzile de achiziție generate prin regulile de aprovizionare (procurement) atunci când oferta de vânzare care le-a declanșat este anulată. Astfel se evită liniile de achiziție „orfane\" — comenzi de achiziție netrimise furnizorului, rămase în ciornă fără o comandă de vânzare corespunzătoare — și se păstrează sincronizarea între echipa de vânzări și cea de aprovizionare.\nLa anularea unei oferte/comenzi de vânzare, elimină automat liniile de achiziție legate care se află încă în comenzi de achiziție în starea ciornă (draft).\nO comandă de achiziție deja confirmată (trimisă furnizorului) NU este atinsă — rămâne în sarcina cumpărătorului să decidă ce face cu ea.\nPrevine acumularea de comenzi de achiziție ciornă fără corespondent activ în vânzări, menținând curat modulul de aprovizionare."
+    "text": "Sale-Purchase Sync\ndeltatech_sale_purchase\nModulul curăță automat comenzile de achiziție generate prin regulile de aprovizionare (procurement) atunci când oferta de vânzare care le-a declanșat este anulată. Astfel se evită liniile de achiziție „orfane\" — comenzi de achiziție netrimise furnizorului, rămase în ciornă fără o comandă de vânzare corespunzătoare — și se păstrează sincronizarea între echipa de vânzări și cea de aprovizionare.\nLa anularea unei oferte/comenzi de vânzare, elimină automat liniile de achiziție legate care se află încă în comenzi de achiziție în starea ciornă (draft).\nO comandă de achiziție deja confirmată (trimisă furnizorului) NU este atinsă — rămâne în sarcina cumpărătorului să decidă ce face cu ea, inclusiv când linia ei deservește și alte comenzi de vânzare.\nDacă o linie de achiziție ciornă deservește și mișcări ale altor comenzi de vânzare (grupare pe furnizor Zilnic/Săptămânal/Întotdeauna), linia se păstrează: mișcările anulate sunt detașate de ea, iar cantitatea lor (convertită în unitatea de măsură a liniei) se scade din cantitatea de achiziție.\nPrevine acumularea de comenzi de achiziție ciornă fără corespondent activ în vânzări, menținând curat modulul de aprovizionare."
   },
   {
     "path": "deltatech_sale_purchase_requisition/index.md",
@@ -11134,14 +11136,15 @@
     "path": "deltatech_stock_delivery/index.md",
     "module": "deltatech_stock_delivery",
     "version": "19.0.1.0.3",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_delivery`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_delivery",
     "local_path": "odoo-addons/deltatech/deltatech_stock_delivery",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-10-26",
     "friendly_name": "Livrare / Recepție din Factură",
     "summary": "Acest modul îmbunătățește integrarea dintre Contabilitatea Odoo și Inventar, oferind acces rapid la operațiunile de depozit asociate, direct din factură. Adaugă un buton de „Livrare\" sau „Recepție\" în formularul de factură, în funcție de tipul documentului (factură client sau factură furnizor), permițând utilizatorilor să vizualizeze imediat transferurile de stoc legate de comenzile de vânzare/cumpărare ale facturii respective. Astfel, contabilii și gestionarii de depozit pot verifica mai ușor livrările fizice față de documentele financiare, îmbunătățind trasabilitatea și reducând timpul pierdut la căutarea documentelor conexe.",
     "features": [
-      "Adaugă un buton „Livrare\" (Delivery) sau „Recepție\" (Reception) în vizualizarea facturii, în funcție de tipul acesteia (factură client sau factură furnizor).",
-      "Permite utilizatorilor să vizualizeze rapid toate transferurile de stoc (livrări sau recepții) asociate facturii curente.",
+      "Adaugă un buton „Livrare\" (Delivery) sau „Recepție\" (Reception) în vizualizarea facturii, în funcție de tipul acesteia (factură client/notă de credit client sau factură furnizor/notă de credit furnizor).",
+      "Permite utilizatorilor să vizualizeze rapid transferurile de stoc finalizate (livrări sau recepții) asociate facturii curente, identificate prin liniile de comandă de vânzare/cumpărare legate de liniile facturii. Dacă există un singur transfer, se deschide direct formularul acestuia; dacă sunt mai multe, o listă filtrată.",
+      "Dacă factura nu are niciun transfer finalizat asociat, afișează eroarea „This invoice has no deliveries\".",
       "Fluidizează fluxul de lucru pentru contabili și gestionarii de depozit care trebuie să verifice expedierile fizice față de documentele financiare.",
       "Îmbunătățește trasabilitatea și reduce timpul petrecut căutând documentele legate."
     ],
@@ -11149,7 +11152,9 @@
       "account",
       "stock",
       "purchase",
-      "sale"
+      "sale",
+      "sale_stock",
+      "purchase_stock"
     ],
     "connections": [
       "deltatech_invoice_picking",
@@ -11157,7 +11162,7 @@
       "deltatech_invoice_receipt",
       "deltatech_account"
     ],
-    "text": "Livrare / Recepție din Factură\ndeltatech_stock_delivery\nAcest modul îmbunătățește integrarea dintre Contabilitatea Odoo și Inventar, oferind acces rapid la operațiunile de depozit asociate, direct din factură. Adaugă un buton de „Livrare\" sau „Recepție\" în formularul de factură, în funcție de tipul documentului (factură client sau factură furnizor), permițând utilizatorilor să vizualizeze imediat transferurile de stoc legate de comenzile de vânzare/cumpărare ale facturii respective. Astfel, contabilii și gestionarii de depozit pot verifica mai ușor livrările fizice față de documentele financiare, îmbunătățind trasabilitatea și reducând timpul pierdut la căutarea documentelor conexe.\nAdaugă un buton „Livrare\" (Delivery) sau „Recepție\" (Reception) în vizualizarea facturii, în funcție de tipul acesteia (factură client sau factură furnizor).\nPermite utilizatorilor să vizualizeze rapid toate transferurile de stoc (livrări sau recepții) asociate facturii curente.\nFluidizează fluxul de lucru pentru contabili și gestionarii de depozit care trebuie să verifice expedierile fizice față de documentele financiare.\nÎmbunătățește trasabilitatea și reduce timpul petrecut căutând documentele legate."
+    "text": "Livrare / Recepție din Factură\ndeltatech_stock_delivery\nAcest modul îmbunătățește integrarea dintre Contabilitatea Odoo și Inventar, oferind acces rapid la operațiunile de depozit asociate, direct din factură. Adaugă un buton de „Livrare\" sau „Recepție\" în formularul de factură, în funcție de tipul documentului (factură client sau factură furnizor), permițând utilizatorilor să vizualizeze imediat transferurile de stoc legate de comenzile de vânzare/cumpărare ale facturii respective. Astfel, contabilii și gestionarii de depozit pot verifica mai ușor livrările fizice față de documentele financiare, îmbunătățind trasabilitatea și reducând timpul pierdut la căutarea documentelor conexe.\nAdaugă un buton „Livrare\" (Delivery) sau „Recepție\" (Reception) în vizualizarea facturii, în funcție de tipul acesteia (factură client/notă de credit client sau factură furnizor/notă de credit furnizor).\nPermite utilizatorilor să vizualizeze rapid transferurile de stoc finalizate (livrări sau recepții) asociate facturii curente, identificate prin liniile de comandă de vânzare/cumpărare legate de liniile facturii. Dacă există un singur transfer, se deschide direct formularul acestuia; dacă sunt mai multe, o listă filtrată.\nDacă factura nu are niciun transfer finalizat asociat, afișează eroarea „This invoice has no deliveries\".\nFluidizează fluxul de lucru pentru contabili și gestionarii de depozit care trebuie să verifice expedierile fizice față de documentele financiare.\nÎmbunătățește trasabilitatea și reduce timpul petrecut căutând documentele legate."
   },
   {
     "path": "deltatech_stock_disassembly/index.md",
@@ -11964,7 +11969,7 @@
   {
     "path": "deltatech_vendor_products_website/index.md",
     "module": "deltatech_vendor_products_website",
-    "version": "19.0.1.4.1",
+    "version": "19.0.1.4.2",
     "github": "`https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products_website`",
     "local_path": "odoo-addons/bitshop_vendor/deltatech_vendor_products_website",
     "last_ingest": "2026-10-19",
@@ -13983,7 +13988,7 @@
   {
     "path": "l10n_ro_anaf_d112/index.md",
     "module": "l10n_ro_anaf_d112",
-    "version": "19.0.2.19.5",
+    "version": "19.0.2.22.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112",
     "last_ingest": "2026-10-22",
@@ -14801,26 +14806,32 @@
     "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_submission",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_submission",
-    "last_ingest": "2026-06-08",
+    "last_ingest": "2026-10-26",
     "friendly_name": "Romania - Depunere electronică a declarațiilor ANAF (FR-53)",
     "summary": "Modulul oferă infrastructura comună pentru depunerea electronică a declarațiilor fiscale ANAF generate în Odoo (D112, D300, D394, D406 etc.), conform cerinței FR-53. El nu generează declarațiile — acestea sunt produse de modulele dedicate (`l10n_ro_anaf_d112`, `l10n_ro_anaf_d300`, ...) — ci adaugă stratul de urmărire a depunerii și a recipisei. O înregistrare de depunere păstrează fișierul depus, amprenta SHA-256, ID-ul solicitării ANAF, starea, eventualele erori, recipisa și pista de audit (cine și când a depus), iar declarațiile rectificative păstrează legătura cu depunerea inițială.",
     "features": [
-      "Depunere manuală (SPV / e-guvernare) — fluxul disponibil azi, funcțional complet: contabilul depune fișierul în SPV cu certificatul calificat, introduce ID-ul solicitării în Odoo, iar sistemul verifică starea și păstrează recipisa.",
-      "Depunere prin Terrabit Agent (Terrabit Connect) — conector complet implementat: Odoo pune fișierul într-o coadă de job-uri (`deltatech.tc.job`); agentul local Terrabit, cu certificatul calificat pe stația contabilului, îl semnează și îl urcă direct la ANAF (SPVWS2), iar starea și recipisa se sincronizează înapoi în Odoo.",
+      "Registrul depunerilor — meniu Contabilitate → Raportare → Declarații ANAF → Depuneri electronice. Starea urmărește ciclul de viață: Ciornă, Depusă, În prelucrare, Acceptată (recipisă primită), Respinsă, Eroare. O depunere se creează manual sau din butonul „Create ANAF submission\" din raportul declarației.",
+      "Depunere manuală (SPV / e-guvernare) — fluxul disponibil azi, funcțional complet: contabilul depune fișierul în SPV cu certificatul calificat, introduce ID-ul solicitării în Odoo (fără el, depunerea manuală este refuzată) și apasă Depune; sistemul verifică starea și păstrează recipisa (butonul Marchează acceptată apare după atașarea recipisei).",
+      "Depunere prin Terrabit Agent (Terrabit Connect) — conector complet implementat: Depune pune fișierul într-o coadă de job-uri (`deltatech.tc.job`); agentul local Terrabit, cu certificatul calificat pe stația contabilului, îl semnează și îl urcă direct la ANAF (SPVWS2), iar ID-ul solicitării, starea și recipisa se sincronizează înapoi în Odoo.",
       "Depunere certSIGN Cloud (API) — conector de semnare PAdES + upload automat direct; interfața și configurarea există, însă conectorul propriu-zis este un *stub* care necesită API-ul comercial certSIGN și se activează când acesta devine disponibil.",
-      "Verificarea stării — interoghează endpoint-ul public ANAF de stare prin ID solicitare (nu necesită certificat) și poate rula automat printr-un cron dezactivat implicit.",
-      "Urmărirea depunerii și a recipisei — păstrarea fișierului depus, a amprentei SHA-256, a ID-ului solicitării ANAF, a stării, a erorilor și a recipisei.",
-      "Pistă de audit — înregistrarea utilizatorului și a momentului depunerii.",
-      "Declarații rectificative — păstrarea legăturii cu depunerea inițială."
+      "Verificarea stării — butonul Verifică stare interoghează endpoint-ul public ANAF de stare prin ID solicitare (nu necesită certificat); un cron dezactivat implicit (la 6 ore) verifică automat depunerile aflate în lucru.",
+      "Urmărirea depunerii și a recipisei — păstrarea fișierului depus, a amprentei SHA-256 (calculată automat), a ID-ului solicitării ANAF, a stării, a erorilor și a recipisei.",
+      "Pistă de audit — înregistrarea utilizatorului (Depus de) și a momentului depunerii (Data depunerii), plus mesajele din chatter.",
+      "Declarații rectificative — butonul Creează rectificativă generează o depunere legată de original; butonul inteligent Rectificative numără corecțiile.",
+      "Configurare — în Setări → Contabilitate, blocul „Depunere electronică declarații ANAF\": metoda de depunere implicită (Manual, Agent Terrabit sau certSIGN Cloud) și URL-ul de stare ANAF (precompletat).",
+      "Dacă este instalat modulul complementar `l10n_ro_anaf_duk`, fiecare depunere are în plus butonul Validare DUK și un status unificat."
     ],
     "dependencies": [
-      "l10n_ro_anaf_base"
+      "l10n_ro_anaf_base",
+      "l10n_ro_anaf_agent"
     ],
     "connections": [
       "l10n_ro_anaf_d112",
-      "l10n_ro_anaf_d300"
+      "l10n_ro_anaf_d300",
+      "l10n_ro_anaf_d394",
+      "l10n_ro_anaf_duk"
     ],
-    "text": "Romania - Depunere electronică a declarațiilor ANAF (FR-53)\nl10n_ro_anaf_submission\nModulul oferă infrastructura comună pentru depunerea electronică a declarațiilor fiscale ANAF generate în Odoo (D112, D300, D394, D406 etc.), conform cerinței FR-53. El nu generează declarațiile — acestea sunt produse de modulele dedicate (`l10n_ro_anaf_d112`, `l10n_ro_anaf_d300`, ...) — ci adaugă stratul de urmărire a depunerii și a recipisei. O înregistrare de depunere păstrează fișierul depus, amprenta SHA-256, ID-ul solicitării ANAF, starea, eventualele erori, recipisa și pista de audit (cine și când a depus), iar declarațiile rectificative păstrează legătura cu depunerea inițială.\nDepunere manuală (SPV / e-guvernare) — fluxul disponibil azi, funcțional complet: contabilul depune fișierul în SPV cu certificatul calificat, introduce ID-ul solicitării în Odoo, iar sistemul verifică starea și păstrează recipisa.\nDepunere prin Terrabit Agent (Terrabit Connect) — conector complet implementat: Odoo pune fișierul într-o coadă de job-uri (`deltatech.tc.job`); agentul local Terrabit, cu certificatul calificat pe stația contabilului, îl semnează și îl urcă direct la ANAF (SPVWS2), iar starea și recipisa se sincronizează înapoi în Odoo.\nDepunere certSIGN Cloud (API) — conector de semnare PAdES + upload automat direct; interfața și configurarea există, însă conectorul propriu-zis este un *stub* care necesită API-ul comercial certSIGN și se activează când acesta devine disponibil.\nVerificarea stării — interoghează endpoint-ul public ANAF de stare prin ID solicitare (nu necesită certificat) și poate rula automat printr-un cron dezactivat implicit.\nUrmărirea depunerii și a recipisei — păstrarea fișierului depus, a amprentei SHA-256, a ID-ului solicitării ANAF, a stării, a erorilor și a recipisei.\nPistă de audit — înregistrarea utilizatorului și a momentului depunerii.\nDeclarații rectificative — păstrarea legăturii cu depunerea inițială."
+    "text": "Romania - Depunere electronică a declarațiilor ANAF (FR-53)\nl10n_ro_anaf_submission\nModulul oferă infrastructura comună pentru depunerea electronică a declarațiilor fiscale ANAF generate în Odoo (D112, D300, D394, D406 etc.), conform cerinței FR-53. El nu generează declarațiile — acestea sunt produse de modulele dedicate (`l10n_ro_anaf_d112`, `l10n_ro_anaf_d300`, ...) — ci adaugă stratul de urmărire a depunerii și a recipisei. O înregistrare de depunere păstrează fișierul depus, amprenta SHA-256, ID-ul solicitării ANAF, starea, eventualele erori, recipisa și pista de audit (cine și când a depus), iar declarațiile rectificative păstrează legătura cu depunerea inițială.\nRegistrul depunerilor — meniu Contabilitate → Raportare → Declarații ANAF → Depuneri electronice. Starea urmărește ciclul de viață: Ciornă, Depusă, În prelucrare, Acceptată (recipisă primită), Respinsă, Eroare. O depunere se creează manual sau din butonul „Create ANAF submission\" din raportul declarației.\nDepunere manuală (SPV / e-guvernare) — fluxul disponibil azi, funcțional complet: contabilul depune fișierul în SPV cu certificatul calificat, introduce ID-ul solicitării în Odoo (fără el, depunerea manuală este refuzată) și apasă Depune; sistemul verifică starea și păstrează recipisa (butonul Marchează acceptată apare după atașarea recipisei).\nDepunere prin Terrabit Agent (Terrabit Connect) — conector complet implementat: Depune pune fișierul într-o coadă de job-uri (`deltatech.tc.job`); agentul local Terrabit, cu certificatul calificat pe stația contabilului, îl semnează și îl urcă direct la ANAF (SPVWS2), iar ID-ul solicitării, starea și recipisa se sincronizează înapoi în Odoo.\nDepunere certSIGN Cloud (API) — conector de semnare PAdES + upload automat direct; interfața și configurarea există, însă conectorul propriu-zis este un *stub* care necesită API-ul comercial certSIGN și se activează când acesta devine disponibil.\nVerificarea stării — butonul Verifică stare interoghează endpoint-ul public ANAF de stare prin ID solicitare (nu necesită certificat); un cron dezactivat implicit (la 6 ore) verifică automat depunerile aflate în lucru.\nUrmărirea depunerii și a recipisei — păstrarea fișierului depus, a amprentei SHA-256 (calculată automat), a ID-ului solicitării ANAF, a stării, a erorilor și a recipisei.\nPistă de audit — înregistrarea utilizatorului (Depus de) și a momentului depunerii (Data depunerii), plus mesajele din chatter.\nDeclarații rectificative — butonul Creează rectificativă generează o depunere legată de original; butonul inteligent Rectificative numără corecțiile.\nConfigurare — în Setări → Contabilitate, blocul „Depunere electronică declarații ANAF\": metoda de depunere implicită (Manual, Agent Terrabit sau certSIGN Cloud) și URL-ul de stare ANAF (precompletat).\nDacă este instalat modulul complementar `l10n_ro_anaf_duk`, fiecare depunere are în plus butonul Validare DUK și un status unificat."
   },
   {
     "path": "l10n_ro_audit_immutable/index.md",
@@ -15356,7 +15367,7 @@
   {
     "path": "l10n_ro_doc_screenshots/index.md",
     "module": "l10n_ro_doc_screenshots",
-    "version": "19.0.1.1.9",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_doc_screenshots",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_doc_screenshots",
     "last_ingest": null,
@@ -16909,24 +16920,28 @@
     "version": "19.0.2.0.6",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_journal_reports",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_journal_reports",
-    "last_ingest": null,
+    "last_ingest": "2026-10-26",
     "friendly_name": "Romania - Cont corespondent în Cartea mare",
     "summary": "Modulul completează Cartea Mare standard din Odoo Enterprise (General Ledger din `account_reports`) cu coloana **Cont Corespondent**, cerută de OMFP 1802/2014 (art. 7 și art. 9). Acoperă exclusiv acest decalaj real față de reglementarea românească, lăsând Registrul Jurnal și Cartea Mare de bază pe seama rapoartelor standard Odoo, fără a duplica funcționalitate.",
     "features": [
-      "Coloana \"Cont Corespondent\" apare automat în Cartea Mare, imediat după coloana Credit.",
-      "Pentru un singur cont corespondent afișează codul acestuia; pentru conturi multiple afișează \"Diverși\", conform standardului OMFP 1802.",
+      "Coloana \"Cont Corespondent\" apare automat în Cartea Mare (Contabilitate → Raportare → Cartea Mare), imediat după coloana Credit; la nivel de cont este goală, iar pe liniile de mișcare se completează.",
+      "Pentru o linie debitoare, corespondentul este contul creditor din aceeași notă contabilă, și invers. Pentru un singur cont corespondent afișează codul acestuia (codul complet la conturi analitice); pentru conturi multiple afișează \"Diverși\", conform standardului OMFP 1802.",
+      "Coloana este pur informativă: nu modifică solduri sau înregistrări.",
       "Calcul SQL în batch pe toate liniile vizibile, evitând interogările N+1.",
       "Funcționează atât la desfășurarea (unfold) interactivă, cât și la exportul PDF/XLSX.",
+      "Nu necesită configurare; utilizatorul trebuie să aibă acces la rapoartele contabile (grupul Contabilitate: Contabil sau Utilizator financiar).",
       "Temei legal: OMFP 1802/2014, art. 7 (Registrul-jurnal) și art. 9 (Cartea mare)."
     ],
     "dependencies": [
-      "account_reports"
+      "account_reports",
+      "l10n_ro"
     ],
     "connections": [
       "l10n_ro_anaf_d394",
-      "l10n_ro_journal_tva"
+      "l10n_ro_journal_tva",
+      "l10n_ro_partner_ledger_currency"
     ],
-    "text": "Romania - Cont corespondent în Cartea mare\nl10n_ro_journal_reports\nModulul completează Cartea Mare standard din Odoo Enterprise (General Ledger din `account_reports`) cu coloana **Cont Corespondent**, cerută de OMFP 1802/2014 (art. 7 și art. 9). Acoperă exclusiv acest decalaj real față de reglementarea românească, lăsând Registrul Jurnal și Cartea Mare de bază pe seama rapoartelor standard Odoo, fără a duplica funcționalitate.\nColoana \"Cont Corespondent\" apare automat în Cartea Mare, imediat după coloana Credit.\nPentru un singur cont corespondent afișează codul acestuia; pentru conturi multiple afișează \"Diverși\", conform standardului OMFP 1802.\nCalcul SQL în batch pe toate liniile vizibile, evitând interogările N+1.\nFuncționează atât la desfășurarea (unfold) interactivă, cât și la exportul PDF/XLSX.\nTemei legal: OMFP 1802/2014, art. 7 (Registrul-jurnal) și art. 9 (Cartea mare)."
+    "text": "Romania - Cont corespondent în Cartea mare\nl10n_ro_journal_reports\nModulul completează Cartea Mare standard din Odoo Enterprise (General Ledger din `account_reports`) cu coloana **Cont Corespondent**, cerută de OMFP 1802/2014 (art. 7 și art. 9). Acoperă exclusiv acest decalaj real față de reglementarea românească, lăsând Registrul Jurnal și Cartea Mare de bază pe seama rapoartelor standard Odoo, fără a duplica funcționalitate.\nColoana \"Cont Corespondent\" apare automat în Cartea Mare (Contabilitate → Raportare → Cartea Mare), imediat după coloana Credit; la nivel de cont este goală, iar pe liniile de mișcare se completează.\nPentru o linie debitoare, corespondentul este contul creditor din aceeași notă contabilă, și invers. Pentru un singur cont corespondent afișează codul acestuia (codul complet la conturi analitice); pentru conturi multiple afișează \"Diverși\", conform standardului OMFP 1802.\nColoana este pur informativă: nu modifică solduri sau înregistrări.\nCalcul SQL în batch pe toate liniile vizibile, evitând interogările N+1.\nFuncționează atât la desfășurarea (unfold) interactivă, cât și la exportul PDF/XLSX.\nNu necesită configurare; utilizatorul trebuie să aibă acces la rapoartele contabile (grupul Contabilitate: Contabil sau Utilizator financiar).\nTemei legal: OMFP 1802/2014, art. 7 (Registrul-jurnal) și art. 9 (Cartea mare)."
   },
   {
     "path": "l10n_ro_lang/index.md",
@@ -17121,21 +17136,27 @@
     "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_mrp_labour_account",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_mrp_labour_account",
-    "last_ingest": null,
+    "last_ingest": "2026-10-26",
     "friendly_name": "Romania - Cont de manoperă în producție",
-    "summary": "Modulul configurează conturile contabile pentru manopera de producție conform OMFP 1802/2014, astfel încât mecanismul standard Odoo 19 (`mrp_account._post_labour()`) să genereze corect nota de cost al manoperei la finalizarea comenzilor de producție. La instalare detectează și setează contul 331 pe locația de producție și expune conturile utilizate în Settings, asigurând conformitatea evidenței costurilor de producție în context românesc.",
+    "summary": "Modulul configurează conturile contabile pentru manopera de producție conform OMFP 1802/2014, astfel încât mecanismul standard Odoo 19 (`mrp_account._post_labour()`) să genereze corect nota de cost al manoperei la finalizarea comenzilor de producție. La instalare detectează și setează contul 331 pe locația de producție și expune conturile utilizate în Setări, asigurând conformitatea evidenței costurilor de producție în context românesc.",
     "features": [
-      "`post_init_hook`: la instalare detectează contul 331 din planul de conturi RO și îl setează automat ca `valuation_account_id` pe locația de producție, dacă nu era deja configurat.",
-      "Câmpuri pe companie cu referințe la conturile de manoperă, vizibile în Setări → Contabilitate → Manoperă Producție.",
-      "Sincronizare: modificarea contului de locație producție în Settings actualizează automat `valuation_account_id` pe locația de stoc.",
-      "Suport pentru monografia standard Odoo 19: Dr cont cheltuieli workcenter (921/923) = Cr cont evaluare locație producție (331).",
-      "Integrare cu `l10n_ro_wip_closing`: notele generate de `_post_labour()` intră în `wip_move_ids` ale comenzii de producție și sunt incluse în închiderea WIP lunară."
+      "`post_init_hook`: la instalare detectează contul 331 din planul de conturi RO și îl setează automat ca `valuation_account_id` pe locația de producție, pentru companiile cu țara România, dacă nu era deja configurat. Dacă planul de conturi nu include 331, nu setează nimic și contul se configurează manual.",
+      "Câmpuri pe companie cu referințe la conturile de manoperă, vizibile în Setări → Contabilitate → Manoperă Producție (OMFP 1802), secțiune afișată doar pentru companiile cu țara România:",
+      "*Cont locație producție (Cr)*, recomandat `331`: contul creditat de `_post_labour()`;",
+      "*Cont cheltuieli manoperă implicit (Dr)*, recomandat `921` (cheltuieli directe) sau `923` (indirecte): propus la crearea unui centru de lucru nou, fără a suprascrie centrele existente.",
+      "Sincronizare: modificarea contului de locație producție în Setări actualizează automat `valuation_account_id` pe locația de stoc de tip producție a companiei.",
+      "Suport pentru monografia standard Odoo 19: Dr cont cheltuieli workcenter (921/923) = Cr cont evaluare locație producție (331); valoarea = ore efectuate × cost pe oră al centrului de lucru. Fără cost pe oră configurat, nota ajunge la 0 RON.",
+      "Fiecare centru de lucru poate avea propriul cont de cheltuieli (Producție → Configurare → Centre de lucru → fila „Contabilitate\"); dacă e gol, se folosește contul implicit de pe companie.",
+      "Integrare cu [l10n_ro_wip_closing](../l10n_ro_wip_closing/index.md): notele generate de `_post_labour()` intră în `wip_move_ids` ale comenzii de producție și sunt incluse în închiderea WIP lunară."
     ],
     "dependencies": [
-      "mrp_account"
+      "mrp_account",
+      "l10n_ro"
     ],
-    "connections": [],
-    "text": "Romania - Cont de manoperă în producție\nl10n_ro_mrp_labour_account\nModulul configurează conturile contabile pentru manopera de producție conform OMFP 1802/2014, astfel încât mecanismul standard Odoo 19 (`mrp_account._post_labour()`) să genereze corect nota de cost al manoperei la finalizarea comenzilor de producție. La instalare detectează și setează contul 331 pe locația de producție și expune conturile utilizate în Settings, asigurând conformitatea evidenței costurilor de producție în context românesc.\n`post_init_hook`: la instalare detectează contul 331 din planul de conturi RO și îl setează automat ca `valuation_account_id` pe locația de producție, dacă nu era deja configurat.\nCâmpuri pe companie cu referințe la conturile de manoperă, vizibile în Setări → Contabilitate → Manoperă Producție.\nSincronizare: modificarea contului de locație producție în Settings actualizează automat `valuation_account_id` pe locația de stoc.\nSuport pentru monografia standard Odoo 19: Dr cont cheltuieli workcenter (921/923) = Cr cont evaluare locație producție (331).\nIntegrare cu `l10n_ro_wip_closing`: notele generate de `_post_labour()` intră în `wip_move_ids` ale comenzii de producție și sunt incluse în închiderea WIP lunară."
+    "connections": [
+      "l10n_ro_wip_closing"
+    ],
+    "text": "Romania - Cont de manoperă în producție\nl10n_ro_mrp_labour_account\nModulul configurează conturile contabile pentru manopera de producție conform OMFP 1802/2014, astfel încât mecanismul standard Odoo 19 (`mrp_account._post_labour()`) să genereze corect nota de cost al manoperei la finalizarea comenzilor de producție. La instalare detectează și setează contul 331 pe locația de producție și expune conturile utilizate în Setări, asigurând conformitatea evidenței costurilor de producție în context românesc.\n`post_init_hook`: la instalare detectează contul 331 din planul de conturi RO și îl setează automat ca `valuation_account_id` pe locația de producție, pentru companiile cu țara România, dacă nu era deja configurat. Dacă planul de conturi nu include 331, nu setează nimic și contul se configurează manual.\nCâmpuri pe companie cu referințe la conturile de manoperă, vizibile în Setări → Contabilitate → Manoperă Producție (OMFP 1802), secțiune afișată doar pentru companiile cu țara România:\n*Cont locație producție (Cr)*, recomandat `331`: contul creditat de `_post_labour()`;\n*Cont cheltuieli manoperă implicit (Dr)*, recomandat `921` (cheltuieli directe) sau `923` (indirecte): propus la crearea unui centru de lucru nou, fără a suprascrie centrele existente.\nSincronizare: modificarea contului de locație producție în Setări actualizează automat `valuation_account_id` pe locația de stoc de tip producție a companiei.\nSuport pentru monografia standard Odoo 19: Dr cont cheltuieli workcenter (921/923) = Cr cont evaluare locație producție (331); valoarea = ore efectuate × cost pe oră al centrului de lucru. Fără cost pe oră configurat, nota ajunge la 0 RON.\nFiecare centru de lucru poate avea propriul cont de cheltuieli (Producție → Configurare → Centre de lucru → fila „Contabilitate\"); dacă e gol, se folosește contul implicit de pe companie.\nIntegrare cu [l10n_ro_wip_closing](../l10n_ro_wip_closing/index.md): notele generate de `_post_labour()` intră în `wip_move_ids` ale comenzii de producție și sunt incluse în închiderea WIP lunară."
   },
   {
     "path": "l10n_ro_off_balance/index.md",
@@ -17889,7 +17910,7 @@
   {
     "path": "l10n_ro_payroll_tax_redirect/index.md",
     "module": "l10n_ro_payroll_tax_redirect",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_tax_redirect",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_payroll_tax_redirect",
     "last_ingest": "2026-10-05",
@@ -18247,22 +18268,28 @@
     "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_provisions",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_provisions",
-    "last_ingest": null,
+    "last_ingest": "2026-10-26",
     "friendly_name": "Romania - Provizioane pentru litigii și riscuri (151)",
     "summary": "Modulul urmărește provizioanele pentru litigii și riscuri (conturi 151x) conform OMFP 1802/2014 pct. 373-381. Gestionează dosare de provizion pe tipuri, cu workflow de constituire, ajustare (majorare/diminuare) și soluționare, generând automat monografia contabilă la fiecare etapă. Păstrează istoricul modificărilor de estimare și include un cron trimestrial de alertă pentru revizuirea provizioanelor vechi.",
     "features": [
-      "Dosare de provizion per tip: litigii (1511), garanții (1512), dezafectare (1513), restructurare (1514), alte (1518).",
-      "Monografie automată la fiecare etapă: constituire Dr 6812 = Cr 151x; majorare Dr 6812 = Cr 151x (diferență); diminuare Dr 151x = Cr 7812 (diferență); soluționare favorabilă Dr 151x = Cr 7812; soluționare nefavorabilă Dr 151x = Cr 5121 + Cr 7812 (rest).",
+      "Dosare de provizion per tip: litigii (1511), garanții (1512), dezafectare (1513), restructurare (1514), alte (1518). Meniu: Contabilitate → Înregistrări → Provizioane Litigii (vizibil pentru grupul Contabilitate / Utilizator; crearea și modificarea cer Contabilitate / Manager).",
+      "La selectarea tipului, conturile 151x, 6812 și 7812 se completează automat din planul de conturi RO al companiei.",
+      "Stări: Ciornă, Aprobat, Actualizat, Soluționat favorabil, Soluționat nefavorabil, Anulat.",
+      "Monografie automată la fiecare etapă: constituire Dr 6812 = Cr 151x; majorare Dr 6812 = Cr 151x (diferență); diminuare Dr 151x = Cr 7812 (diferență); soluționare favorabilă Dr 151x = Cr 7812; soluționare nefavorabilă Dr 151x = Cr cont plată (ex. 5121) pentru suma plătită + Dr 151x = Cr 7812 pentru restul.",
+      "Wizard de actualizare estimare (estimare nouă și motiv obligatoriu) și wizard de soluționare nefavorabilă (suma plătită efectiv și contul de plată).",
       "Istoric complet al modificărilor de estimare, cu motivație și referință la nota contabilă.",
-      "Probabilitate de materializare cu calcul automat al valorii așteptate.",
-      "Cron trimestrial de alertă pentru revizuirea estimărilor mai vechi de 90 de zile."
+      "Probabilitate de materializare (implicit 50%) cu calcul automat al valorii așteptate (estimare × probabilitate / 100).",
+      "Cron trimestrial de alertă (activitate pentru creatorul dosarului) pentru estimări mai vechi de 90 de zile; este instalat inactiv și se activează din Setări → Tehnic → Automatizare → Acțiuni programate."
     ],
     "dependencies": [
       "account",
+      "l10n_ro",
       "mail"
     ],
-    "connections": [],
-    "text": "Romania - Provizioane pentru litigii și riscuri (151)\nl10n_ro_provisions\nModulul urmărește provizioanele pentru litigii și riscuri (conturi 151x) conform OMFP 1802/2014 pct. 373-381. Gestionează dosare de provizion pe tipuri, cu workflow de constituire, ajustare (majorare/diminuare) și soluționare, generând automat monografia contabilă la fiecare etapă. Păstrează istoricul modificărilor de estimare și include un cron trimestrial de alertă pentru revizuirea provizioanelor vechi.\nDosare de provizion per tip: litigii (1511), garanții (1512), dezafectare (1513), restructurare (1514), alte (1518).\nMonografie automată la fiecare etapă: constituire Dr 6812 = Cr 151x; majorare Dr 6812 = Cr 151x (diferență); diminuare Dr 151x = Cr 7812 (diferență); soluționare favorabilă Dr 151x = Cr 7812; soluționare nefavorabilă Dr 151x = Cr 5121 + Cr 7812 (rest).\nIstoric complet al modificărilor de estimare, cu motivație și referință la nota contabilă.\nProbabilitate de materializare cu calcul automat al valorii așteptate.\nCron trimestrial de alertă pentru revizuirea estimărilor mai vechi de 90 de zile."
+    "connections": [
+      "l10n_ro_period_close_enhanced"
+    ],
+    "text": "Romania - Provizioane pentru litigii și riscuri (151)\nl10n_ro_provisions\nModulul urmărește provizioanele pentru litigii și riscuri (conturi 151x) conform OMFP 1802/2014 pct. 373-381. Gestionează dosare de provizion pe tipuri, cu workflow de constituire, ajustare (majorare/diminuare) și soluționare, generând automat monografia contabilă la fiecare etapă. Păstrează istoricul modificărilor de estimare și include un cron trimestrial de alertă pentru revizuirea provizioanelor vechi.\nDosare de provizion per tip: litigii (1511), garanții (1512), dezafectare (1513), restructurare (1514), alte (1518). Meniu: Contabilitate → Înregistrări → Provizioane Litigii (vizibil pentru grupul Contabilitate / Utilizator; crearea și modificarea cer Contabilitate / Manager).\nLa selectarea tipului, conturile 151x, 6812 și 7812 se completează automat din planul de conturi RO al companiei.\nStări: Ciornă, Aprobat, Actualizat, Soluționat favorabil, Soluționat nefavorabil, Anulat.\nMonografie automată la fiecare etapă: constituire Dr 6812 = Cr 151x; majorare Dr 6812 = Cr 151x (diferență); diminuare Dr 151x = Cr 7812 (diferență); soluționare favorabilă Dr 151x = Cr 7812; soluționare nefavorabilă Dr 151x = Cr cont plată (ex. 5121) pentru suma plătită + Dr 151x = Cr 7812 pentru restul.\nWizard de actualizare estimare (estimare nouă și motiv obligatoriu) și wizard de soluționare nefavorabilă (suma plătită efectiv și contul de plată).\nIstoric complet al modificărilor de estimare, cu motivație și referință la nota contabilă.\nProbabilitate de materializare (implicit 50%) cu calcul automat al valorii așteptate (estimare × probabilitate / 100).\nCron trimestrial de alertă (activitate pentru creatorul dosarului) pentru estimări mai vechi de 90 de zile; este instalat inactiv și se activează din Setări → Tehnic → Automatizare → Acțiuni programate."
   },
   {
     "path": "l10n_ro_receivables_enhanced/index.md",
@@ -18759,23 +18786,30 @@
     "path": "l10n_ro_sale_order_report/index.md",
     "module": "l10n_ro_sale_order_report",
     "version": "19.0.1.0.14",
-    "github": "`https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_sale_order_report`",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_sale_order_report",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_sale_order_report",
-    "last_ingest": "2026-06-08",
-    "friendly_name": "Terrabit Sale Order Report",
-    "summary": "Acest modul permite tipărirea de facturi proforme direct din oferta (cotația) de vânzare. Sunt disponibile două tipuri de proformă: o proformă inițială, al cărei cuantum este calculat din liniile termenului de plată (prima linie de tip „procent\" sau „fix\"), și o proformă finală, care reflectă suma rămasă de încasat. Modulul este util pentru companiile care lucrează cu avansuri și plăți eșalonate, oferind clienților documente de plată clare înainte de emiterea facturii fiscale.",
+    "last_ingest": "2026-10-26",
+    "friendly_name": "Romania - Proforma Invoice Report",
+    "summary": "Acest modul permite tipărirea de facturi proforme direct din oferta (cotația) de vânzare. Sunt disponibile două tipuri de proformă: o proformă inițială, al cărei cuantum este calculat din liniile termenului de plată (prima linie de tip „procent\" sau „fix\"), și o proformă finală, care reflectă suma rămasă de încasat. Modulul este util pentru companiile care lucrează cu avansuri și plăți eșalonate, oferind clienților documente de plată clare înainte de emiterea facturii fiscale. În plus, personalizează formularul standard al ofertei de vânzare (adresă companie, numerotare, imagini, coloane suplimentare), pe baza unor opțiuni din setări.",
     "features": [
-      "Tipărirea unei facturi proforme inițiale din cotație, cu suma calculată din prima linie a termenului de plată (de tip „procent\" sau „fix\").",
-      "Tipărirea unei facturi proforme finale, cu suma rămasă de încasat (necesită procesarea prealabilă a unei plăți prin modulul Deltatech Sale Payment)."
+      "Tipărirea unei facturi proforme inițiale („Percent Proforma - first\") din cotație, cu suma calculată din prima linie a termenului de plată (de tip „procent\" sau „fix\").",
+      "Tipărirea unei facturi proforme finale („Percent Proforma - last\"), cu suma rămasă de încasat (necesită procesarea prealabilă a unei plăți prin modulul Deltatech Sale Payment; fără plată, se tipărește suma întreagă).",
+      "Opțiuni pe companie, în Setări, la blocul de cotații (setările comenzilor de vânzare), pentru formularul ofertei:",
+      "numărător al liniilor (activ implicit) și imaginea produsului pe linie (activă implicit);",
+      "excluderea numelui produsului din descrierea liniei, sau reducerea mărimii descrierii;",
+      "afișarea valorii taxelor și a totalului cu taxe pe fiecare linie;",
+      "afișarea termenului de livrare (lead time) în zile, doar dacă vreo linie îl are.",
+      "Blocul de adresă al formularului ofertei folosește datele companiei din `l10n_ro_report_common`.",
+      "La termene de plată cu două linii, formularul ofertei afișează tranșele de plată și valoarea fiecăreia."
     ],
     "dependencies": [
       "sale",
-      "l10n_ro_config"
+      "l10n_ro_report_common"
     ],
     "connections": [
       "deltatech_sale_payment"
     ],
-    "text": "Terrabit Sale Order Report\nl10n_ro_sale_order_report\nAcest modul permite tipărirea de facturi proforme direct din oferta (cotația) de vânzare. Sunt disponibile două tipuri de proformă: o proformă inițială, al cărei cuantum este calculat din liniile termenului de plată (prima linie de tip „procent\" sau „fix\"), și o proformă finală, care reflectă suma rămasă de încasat. Modulul este util pentru companiile care lucrează cu avansuri și plăți eșalonate, oferind clienților documente de plată clare înainte de emiterea facturii fiscale.\nTipărirea unei facturi proforme inițiale din cotație, cu suma calculată din prima linie a termenului de plată (de tip „procent\" sau „fix\").\nTipărirea unei facturi proforme finale, cu suma rămasă de încasat (necesită procesarea prealabilă a unei plăți prin modulul Deltatech Sale Payment)."
+    "text": "Romania - Proforma Invoice Report\nl10n_ro_sale_order_report\nAcest modul permite tipărirea de facturi proforme direct din oferta (cotația) de vânzare. Sunt disponibile două tipuri de proformă: o proformă inițială, al cărei cuantum este calculat din liniile termenului de plată (prima linie de tip „procent\" sau „fix\"), și o proformă finală, care reflectă suma rămasă de încasat. Modulul este util pentru companiile care lucrează cu avansuri și plăți eșalonate, oferind clienților documente de plată clare înainte de emiterea facturii fiscale. În plus, personalizează formularul standard al ofertei de vânzare (adresă companie, numerotare, imagini, coloane suplimentare), pe baza unor opțiuni din setări.\nTipărirea unei facturi proforme inițiale („Percent Proforma - first\") din cotație, cu suma calculată din prima linie a termenului de plată (de tip „procent\" sau „fix\").\nTipărirea unei facturi proforme finale („Percent Proforma - last\"), cu suma rămasă de încasat (necesită procesarea prealabilă a unei plăți prin modulul Deltatech Sale Payment; fără plată, se tipărește suma întreagă).\nOpțiuni pe companie, în Setări, la blocul de cotații (setările comenzilor de vânzare), pentru formularul ofertei:\nnumărător al liniilor (activ implicit) și imaginea produsului pe linie (activă implicit);\nexcluderea numelui produsului din descrierea liniei, sau reducerea mărimii descrierii;\nafișarea valorii taxelor și a totalului cu taxe pe fiecare linie;\nafișarea termenului de livrare (lead time) în zile, doar dacă vreo linie îl are.\nBlocul de adresă al formularului ofertei folosește datele companiei din `l10n_ro_report_common`.\nLa termene de plată cu două linii, formularul ofertei afișează tranșele de plată și valoarea fiecăreia."
   },
   {
     "path": "l10n_ro_sale_receipt_type_report/index.md",

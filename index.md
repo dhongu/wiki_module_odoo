@@ -150,7 +150,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_instastat_tax_risk](deltatech_instastat_tax_risk/index.md): Marchează codurile Intrastat supuse riscului fiscal, cu câmp în formular, coloană opțională în listă și filtru de căutare.
 - [deltatech_invoice_delivery](deltatech_invoice_delivery/index.md): Livrează marfa direct din factura de client: la validare se creează și se confirmă comanda de vânzare și se validează livrarea, într-un singur pas, cu verificare de stoc, activat per jurnal.
 - [deltatech_invoice_number](deltatech_invoice_number/index.md): Renumerotare facturi și validare a ordinii cronologice de emitere pe jurnalele de vânzare.
-- [deltatech_invoice_picking](deltatech_invoice_picking/index.md): Generează facturi direct din livrări (pickings) sau din loturi, preluând doar produsele și cantitățile efectiv realizate.
+- [deltatech_invoice_picking](deltatech_invoice_picking/index.md): Creează facturi direct din livrări sau loturi de livrări, cu cantitățile efectiv realizate (done).
 - [deltatech_invoice_picking_automatically](deltatech_invoice_picking_automatically/index.md): Generează automat facturile din livrări după validare, cu configurare pe tipul de operațiune și proces planificat.
 - [deltatech_invoice_product_filter](deltatech_invoice_product_filter/index.md): Adaugă în căutarea facturilor filtre după produsul din linii și după furnizorul produsului.
 - [deltatech_invoice_receipt](deltatech_invoice_receipt/index.md): Generează automat comanda de achiziție și recepția la validarea unei facturi de furnizor.
@@ -199,7 +199,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_mrp_concentration](deltatech_mrp_concentration/index.md): Gestionarea concentrației ingredientelor active în BoM și comenzile de producție, pentru ajustarea cantităților consumate (industrii chimică/alimentară/farmaceutică).
 - [deltatech_mrp_cost](deltatech_mrp_cost/index.md): Adaugă costuri suplimentare (regie, utilități, manoperă) în comanda de producție pentru un preț de cost mai precis al produsului finit.
 - [deltatech_mrp_set_delivery](deltatech_mrp_set_delivery/index.md): Blochează validarea livrărilor care conțin kituri incomplete sau cu componente în proporții greșite, pentru listele de materiale de tip Kit marcate ca restricționate.
-- [deltatech_mrp_simple](deltatech_mrp_simple/index.md): Producție simplă fără listă de materiale: componente și produse rezultate pe un singur ecran, cu generare automată de mișcări de stoc și calcul de preț.
+- [deltatech_mrp_simple](deltatech_mrp_simple/index.md): Producție simplă fără listă de materiale: componente consumate, produse rezultate, ridicări de stoc și cost calculat automat.
 - [deltatech_mrp_simple_barcode](deltatech_mrp_simple_barcode/index.md): Extinde producția simplă cu scanare de coduri de bare pentru adăugarea/incrementarea rapidă a produselor consumate.
 - [deltatech_mrp_validation_date](deltatech_mrp_validation_date/index.md): Adaugă un câmp „Dată Validare" pe comanda de fabricație, completat automat la marcarea „Efectuată", pentru trasabilitatea finalizării producției.
 - [deltatech_nap](deltatech_nap/index.md): NAP, raport la cerere „ce trebuie comandat” din istoric de vânzări, cu stoc de siguranță statistic, clasificare XYZ, metode de prognoză și reaprovizionare consolidată pe furnizor.
@@ -222,7 +222,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_payment_advice](deltatech_payment_advice/index.md): Generează și trimite pe e-mail furnizorilor un aviz de plată (remittance advice) PDF, grupat per furnizor, pornind de la o plată în lot (`account.batch.payment`).
 - [deltatech_payment_bt_ipay](deltatech_payment_bt_ipay/index.md): Integrare cu BT iPay pentru plăți online cu cardul (eCommerce și portal facturi), cu suport pentru captură 1-Phase/2-Phase.
 - [deltatech_payment_card_dummy](deltatech_payment_card_dummy/index.md): Furnizor de plată cu cardul fictiv (dummy) pentru testarea fluxurilor de plată în eCommerce și portal, fără integrare bancară reală.
-- [deltatech_payment_eu_platesc](deltatech_payment_eu_platesc/index.md): Integrare cu EuPlătesc pentru plăți online cu cardul (comenzi eCommerce și facturi din portal), cu confirmare automată a stării prin callback server-to-server.
+- [deltatech_payment_eu_platesc](deltatech_payment_eu_platesc/index.md): Plăți cu cardul prin EuPlatesc.ro (Visa/Mastercard) la checkout-ul eCommerce și pentru facturi din portal, cu confirmare server-to-server semnată.
 - [deltatech_payment_forecast](deltatech_payment_forecast/index.md): Raport de prognoză a plăților/încasărilor așteptate până la o dată dată, folosind durata medie de plată calculată per partener.
 - [deltatech_payment_ing_webpay](deltatech_payment_ing_webpay/index.md): Modul de plăți online cu cardul prin ING WebPay pentru eCommerce, facturi din portal și POS (via `pos_online_payment`), cu verificare server-la-server și 3-D Secure 2.
 - [deltatech_payment_libra_pay](deltatech_payment_libra_pay/index.md): Gateway de plată LibraPay (Libra Internet Bank, RO) — plăți cu cardul în eCommerce și portal, cu flux de redirecționare securizat și IPN.
@@ -345,7 +345,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_sale_phone](deltatech_sale_phone/index.md): Afișează numărul de telefon al partenerului pe comenzile de vânzare și pe facturi.
 - [deltatech_sale_picking_status](deltatech_sale_picking_status/index.md): Adaugă pe comanda de vânzare o stare de livrare (Done/In Progress) calculată automat din starea transferurilor de stoc asociate.
 - [deltatech_sale_product_reference](deltatech_sale_product_reference/index.md): Păstrează pentru fiecare produs codul și denumirea sub care îl cunoaște fiecare client, le pune pe descrierea liniei de comandă și permite căutarea produsului după codul clientului.
-- [deltatech_sale_purchase](deltatech_sale_purchase/index.md): Elimină automat liniile de achiziție ciornă generate din procurement când oferta de vânzare aferentă este anulată, evitând comenzi de achiziție orfane.
+- [deltatech_sale_purchase](deltatech_sale_purchase/index.md): La anularea unei oferte de vânzare elimină liniile de achiziție ciornă generate prin aprovizionare, evitând comenzile de achiziție orfane.
 - [deltatech_sale_purchase_requisition](deltatech_sale_purchase_requisition/index.md): Creează cereri de ofertă (RFQ) către furnizori din ofertele de vânzare și le leagă înapoi de cotație.
 - [deltatech_sale_qty_available](deltatech_sale_qty_available/index.md): Evidențiază în lista de comenzi de vânzare, cu verde, comenzile gata de livrare în funcție de stocul disponibil.
 - [deltatech_sale_referrer_dashboard](deltatech_sale_referrer_dashboard/index.md): Dashboard spreadsheet „Profitabilitate Vânzări" cu vânzări confirmate, comision referrer, cost marfă și un cont de cheltuială; calculează rezultatul, marja, rata de conversie și convertește corect comenzile în valută.
@@ -382,7 +382,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_stock_barcode](deltatech_stock_barcode/index.md): Extinde Stock Barcode (Enterprise) cu greutate/colete, etichete AWB, detalii de amplasare, listă de prețuri la scanare, inventar rapid pe baze mari și amplasare fără raftul sursă.
 - [deltatech_stock_close](deltatech_stock_close/index.md): Marchează valorizările mișcărilor de stoc drept închise la o dată dată, pentru a le exclude din fișa de magazie după perioada de raportare sau la închiderea exercițiului.
 - [deltatech_stock_count_zero](deltatech_stock_count_zero/index.md): Setează automat cantitatea inventariată la zero la o numărare goală de stoc (articole negăsite la inventar).
-- [deltatech_stock_delivery](deltatech_stock_delivery/index.md): Adaugă în factură un buton de Livrare/Recepție pentru a vedea rapid transferurile de stoc asociate.
+- [deltatech_stock_delivery](deltatech_stock_delivery/index.md): Adaugă în factură butoanele Livrare/Recepție pentru accesul rapid la transferurile de stoc finalizate asociate.
 - [deltatech_stock_disassembly](deltatech_stock_disassembly/index.md): Proces-verbal de dezmembrare fără listă de materiale (BoM): costul real se repartizează pe produsele rezultate, cu o singură notă contabilă per document.
 - [deltatech_stock_disassembly_mrp](deltatech_stock_disassembly_mrp/index.md): Punte între dezmembrarea liberă și producție: completează produsele rezultate dintr-un proces-verbal de dezmembrare pe baza unei liste de materiale (buton „Load from BoM”).
 - [deltatech_stock_inventory](deltatech_stock_inventory/index.md): Documentul de inventar clasic (`stock.inventory`), cu listă de numărare, valorile diferențelor înainte de validare, unire de inventare, stoc pe depozite în kanban și amplasamente manuale.
@@ -507,7 +507,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_anaf_messages](l10n_ro_anaf_messages/index.md): Preia mesajele generale din SPV ANAF (notificări și recipise ale declarațiilor fiscale), separat de mesajele e-Factura.
 - [l10n_ro_anaf_partner](l10n_ro_anaf_partner/index.md): Sincronizare zilnică cu registrul ANAF a datelor partenerilor (denumire, adresă, CAEN, TVA), cu jurnal de modificări și alerte/blocare la facturarea partenerilor inactivi sau radiați.
 - [l10n_ro_anaf_partner_confirm](l10n_ro_anaf_partner_confirm/index.md): Adresa partenerului preluată din ANAF rămâne „de confirmat” până o verifică un om, cu avertizare sau blocare opțională la validarea facturilor către client.
-- [l10n_ro_anaf_submission](l10n_ro_anaf_submission/index.md): Infrastructură comună de urmărire a depunerii electronice și a recipisei pentru declarațiile fiscale ANAF (D112, D300, D394, D406 etc.).
+- [l10n_ro_anaf_submission](l10n_ro_anaf_submission/index.md): Infrastructură comună pentru depunerea electronică a declarațiilor ANAF: urmărirea depunerii, verificarea stării, recipisă și pistă de audit.
 - [l10n_ro_audit_immutable](l10n_ro_audit_immutable/index.md): Pistă de audit imuabilă cu triggere PostgreSQL și hash chain SHA-256 pe documentele financiare (FR-14, OMFP 1802).
 - [l10n_ro_balance_confirmation](l10n_ro_balance_confirmation/index.md): Confirmări de sold pentru parteneri: tipărire la cerere și trimitere în masă pe email, cu documente deschise la dată, valută, export XLSX, urmărire pe linie și urmărirea răspunsurilor partenerilor.
 - [l10n_ro_bank_register_report](l10n_ro_bank_register_report/index.md): Jurnalul de bancă românesc ca raport nativ, per cont bancar și zi, cu sold reportat — extinde `l10n_ro_cash_register_report`.
@@ -570,14 +570,14 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_inventory_register](l10n_ro_inventory_register/index.md): Registrul inventar anual (OMFP 2634/2015, formular 14-1-2): recapitulație pe 12 categorii patrimoniale, anexe analitice, detaliere mijloace fixe și anexă 8035, cu export PDF/XLSX.
 - [l10n_ro_invoice_dvi_protect](l10n_ro_invoice_dvi_protect/index.md): Blochează resetarea la ciornă a facturilor furnizor și anularea DVI când stocul FIFO recepționat a fost deja parțial consumat.
 - [l10n_ro_invoice_report](l10n_ro_invoice_report/index.md): Extinde rapoartele de factură și documentele de plată pentru conformitate RO (TVA pe linie, delegat, mențiuni legale), iar chitanța și dispoziția de casă ies ca formular de casierie: cod 14-4-4/14-4-1, casierie, act de identitate și părțile etichetate după rolul real (Plătitor/Beneficiar), fără rubrici de semnătură.
-- [l10n_ro_journal_reports](l10n_ro_journal_reports/index.md): Adaugă coloana Cont Corespondent (OMFP 1802/2014) în Cartea Mare standard Odoo Enterprise.
+- [l10n_ro_journal_reports](l10n_ro_journal_reports/index.md): Adaugă coloana Cont Corespondent (OMFP 1802/2014) în Cartea Mare standard din Odoo Enterprise.
 - [l10n_ro_lang](l10n_ro_lang/index.md): Setează automat limba site-ului pe română dacă IP-ul vizitatorului provine din România.
 - [l10n_ro_leasing](l10n_ro_leasing/index.md): Credite bancare și leasing financiar/operațional (OMFP 1802/2014): grafic de rambursare, note contabile automate, dobândă angajată lunar, legătura cu extrasul de cont și repartizarea datoriilor pe termen scurt și lung.
 - [l10n_ro_message_spv_purchase](l10n_ro_message_spv_purchase/index.md): Leagă mesajele SPV (e-Factura ANAF) de comenzile de achiziție și sincronizează chatter + atașament XML.
 - [l10n_ro_message_spv_self_billing](l10n_ro_message_spv_self_billing/index.md): Numerotează ciornele de autofacturare cu numărul alocat de client, luat din mesajul SPV, printr-o opțiune pe jurnalele de vânzări și de achiziții.
 - [l10n_ro_micro_tax](l10n_ro_micro_tax/index.md): Calcul trimestrial al impozitului micro-întreprindere (1%/3%) cu monitorizare plafon și tranziție la profit.
 - [l10n_ro_move_template](l10n_ro_move_template/index.md): Șabloane de note contabile cu sume introduse, procente, formule și sold, plus zece șabloane românești gata făcute (salarii, chirie, amortizare, comodat, TVA la încasare).
-- [l10n_ro_mrp_labour_account](l10n_ro_mrp_labour_account/index.md): Configurează conturile de manoperă producție (331/921/923) pentru contabilizarea automată din mrp_account.
+- [l10n_ro_mrp_labour_account](l10n_ro_mrp_labour_account/index.md): Configurează conturile de manoperă din producție (331 și 921/923, OMFP 1802/2014) pentru nota de cost generată la finalizarea ordinelor de fabricație.
 - [l10n_ro_off_balance](l10n_ro_off_balance/index.md): Cont tehnic unic 803999 și jurnal EXTR pentru notele pe conturile din afara bilanțului (grupa 80), plus grupele clasei 8 în planul de conturi RO.
 - [l10n_ro_oss_threshold](l10n_ro_oss_threshold/index.md): Monitorizează pragul anual de 10.000 EUR pentru vânzările B2C UE relevante pentru regimul OSS.
 - [l10n_ro_partner_cnp](l10n_ro_partner_cnp/index.md): CNP pe partener cu validarea cifrei de control; păstrează codul fiscal doar cu CUI/CIF și marchează ca entități persoanele cu CUI valid (PFA, II, IF, ONG).
@@ -610,7 +610,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_pos_returns](l10n_ro_pos_returns/index.md): Retururile din POS tratate conform legislației RO — factură de retur automată pentru ajustarea bazei de TVA, cumpărător identificat obligatoriu și restituirile de numerar pe rândul de plăți al registrului de casă.
 - [l10n_ro_process_library](l10n_ro_process_library/index.md): Bibliotecă versionată de procese de implementare importabile selectiv în deltatech_business_process, cu fișe PDF și capturi proprii per pas.
 - [l10n_ro_profit_tax](l10n_ro_profit_tax/index.md): Calcul impozit pe profit D100/D101 cu ajustări fiscale, pierdere reportată și credit sponsorizări.
-- [l10n_ro_provisions](l10n_ro_provisions/index.md): Urmărire provizioane 151x cu workflow aprobare/ajustare/soluționare și monografie automată OMFP 1802.
+- [l10n_ro_provisions](l10n_ro_provisions/index.md): Urmărește provizioanele pentru litigii și riscuri (151x, OMFP 1802/2014) cu note contabile automate la constituire, ajustare și soluționare.
 - [l10n_ro_receivables_enhanced](l10n_ro_receivables_enhanced/index.md): Compensare client-furnizor cu proces-verbal și penalități de întârziere conform Legii 72/2013.
 - [l10n_ro_reges](l10n_ro_reges/index.md): Integrare REGES-Online pentru transmiterea electronică a angajaților și contractelor de muncă (înlocuitor REVISAL), cu temeiurile de încetare oficiale, actul de identitate pe angajat și numărul CIM trimis ca `numarContract`.
 - [l10n_ro_registru_jurnal](l10n_ro_registru_jurnal/index.md): Registrul-jurnal (cod 14-1-1) ca raport nativ, listare cronologică pe toate jurnalele, cu perechea cont debitor/creditor și totaluri zilnice.
@@ -626,7 +626,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_saft_export_fix](l10n_ro_saft_export_fix/index.md): Corectează exportul SAF-T D406 din `l10n_ro_saft`: elimină secțiunile goale respinse de ANAF, raportează plățile fără extras, separă TVA deductibil de nedeductibil la deducerea limitată și raportează cu cod propriu operațiunile cu taxă de 0%.
 - [l10n_ro_saft_fix](l10n_ro_saft_fix/index.md): Previne eșecul instalării `l10n_ro_saft` (taxe create fără nume) și corectează codurile SAF-T TaxCode greșite care ajungeau în D406; fix temporar.
 - [l10n_ro_saft_validator](l10n_ro_saft_validator/index.md): Pre-validator SAF-T D406: verifică înainte de export datele care ar duce la respingerea fișierului, pentru spețele L/T, A (active) și C (stocuri).
-- [l10n_ro_sale_order_report](l10n_ro_sale_order_report/index.md): Tipărirea facturilor proforme (inițială și finală) direct din oferta de vânzare.
+- [l10n_ro_sale_order_report](l10n_ro_sale_order_report/index.md): Tipărește proforme (inițială și finală) din oferta de vânzare și personalizează formularul ofertei cu opțiuni din setări.
 - [l10n_ro_sale_receipt_type_report](l10n_ro_sale_receipt_type_report/index.md): Situația periodică „Vânzări pe tipuri de încasări” ca raport nativ, unificând încasările POS (numerar/card) cu cele contabile (OP, platformă online, numerar), cu coloană de factură.
 - [l10n_ro_sgr](l10n_ro_sgr/index.md): SGR complet: garanții încasate pe 462 și plătite pe 461, taxă în afara sferei TVA (categoria E în e-Factura), raport sold, situația ambalajelor, returnare ambalaje și autofactură RetuRO.
 - [l10n_ro_shareholder_loan](l10n_ro_shareholder_loan/index.md): Evidența împrumuturilor de la asociați pe bază de contract de creditare: tranșe și rambursări legate din casă și bancă, sold pe asociat, contract PDF.

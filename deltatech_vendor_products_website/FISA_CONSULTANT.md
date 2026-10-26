@@ -83,7 +83,9 @@ care catalogul nu îl are încă, de exemplu `6205RS` (rulment).
 ## 5. Configurare inițială
 
 1. Instalați modulul conectorului, de exemplu `deltatech_vendor_products_kramp`. Se instalează
-   automat și `deltatech_vendor_products_website` și **eCommerce** (`website_sale`).
+   automat și `deltatech_vendor_products_website`, împreună cu **eCommerce** (`website_sale`) și
+   **eCommerce Stoc** (`website_sale_stock`). Acesta din urmă aduce opțiunea **Vindeți când stocul
+   este epuizat**, pe care o bifează modulul la produsele create din catalogul furnizorului.
 2. Configurați feed-ul furnizorului după fișa conectorului: **Achiziții → Produse → Feed
    Furnizor → Kramp**, cu furnizorul, moneda, tipul conexiunii și credențialele.
 3. În grupul **Conexiune**, bifați **Căutare online** și salvați. Într-o bază cu mai multe
@@ -212,6 +214,7 @@ pasul 3 (din reaprovizionare sau, cu rutele de la pasul 5, automat din comanda c
 | `deltatech_vendor_products` | Catalogul produselor furnizor, feed-ul, regulile de preț și crearea produselor |
 | `deltatech_vendor_products_kramp` | Conectorul Kramp: căutarea online, prețurile, stocul și EAN-ul |
 | `website_sale` | Magazinul `/shop`, pagina produsului și coșul |
+| `website_sale_stock` | Opțiunea **Vindeți când stocul este epuizat** a produsului, bifată la produsele create din catalogul furnizorului; fără el, pagina produsului din magazin nu se deschidea |
 | `purchase` | Linia de furnizor folosită la comanda de achiziție către Kramp |
 
 **Ce e automat:**

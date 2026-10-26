@@ -1,7 +1,7 @@
 # Explicație Reaprovizionare (localizat la `deltatech_replenishment_explain/index.md`)
 
 - **Nume Tehnic:** `deltatech_replenishment_explain`
-- **Versiune:** `19.0.1.1.6`
+- **Versiune:** `19.0.1.1.7`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_replenishment_explain`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_replenishment_explain`
 - **Ultima Ingestie:** `2026-07-31`
