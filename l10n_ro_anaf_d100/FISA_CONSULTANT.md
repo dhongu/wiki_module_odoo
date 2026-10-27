@@ -77,6 +77,7 @@ Ce rămâne manual: validarea sumelor fiscale și a termenelor de plată.
 - [ ] Datele companiei sunt preluate corect.
 - [ ] Obligația fiscală are suma așteptată.
 - [ ] Exportul se generează.
+- [ ] XML-ul exportat trece validatorul oficial ANAF (DUKIntegrator) fără erori (`E:`) sau erori fatale (`F:`); atenționările (`A:`) nu opresc depunerea. Testul modulului face această probă automat, doar pe stația cu kit-ul ANAF instalat.
 - [ ] Declarația se poate arhiva împreună cu calculul suport.
 
 ## 9. Mesaje frecvente

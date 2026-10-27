@@ -11,7 +11,7 @@
 
 ## 1. Scop business
 
-Modulul adaugă **exportul XML ANAF al Decontului anual privind accizele (D120)** peste declarația de
+Modulul adaugă **exportul XML și PDF ANAF al Decontului anual privind accizele (D120)** peste declarația de
 accize din `l10n_ro_excise_duty`. D120 este decontul **anual** depus de plătitorii de accize
 (antrepozitari autorizați, importatori, destinatari înregistrați, utilizatori industriali) pentru
 produsele accizabile (alcool, bere, produse energetice, tutun etc.), distinct de **D103** (decontul
@@ -19,7 +19,8 @@ lunar al antrepozitului fiscal).
 
 Practic, modulul nu adaugă un ecran nou: pe o declarație de accize de tip **D120**, butonul
 **Export XML** generează fișierul în formatul ANAF D120 (namespace `mfp:anaf:dgti:d120:declaratie:v5`),
-în loc de template-ul D103.
+în loc de template-ul D103. Alături de el, butonul **Export XDP** completează formularul PDF inteligent
+ANAF D120 (`D120_XML_2025_160326.pdf`) cu aceleași date, pentru depunerea pe varianta Soft A.
 
 ## 2. Bază legală și context
 
@@ -84,6 +85,8 @@ categorii de accize. Aveți două căi, **alternative**, de a popula liniile:
 
 ![Decontul de accize D120 (confirmat) cu liniile pe categorii și butonul Export XML](screenshots/01_declaratie_d120.png)
 
+Pe o declarație D120 confirmată, lângă **Export XML** apare și butonul **Export XDP** (descris în Pasul 3).
+
 ### Pasul 2 — Export XML ANAF
 
 Pe o declarație **confirmată**, apăsați **Export XML** (buton evidențiat în captura de mai sus).
@@ -118,6 +121,35 @@ Structura XML generată (extras ilustrativ — antet companie + câteva rânduri
 > Atributul `totalPlata_A` din antet este o sumă de control care, la D120, trebuie să fie **întotdeauna 0**
 > (regula R16 a validatorului); totalul efectiv de plată se declară pe rândul R41_C3.
 
+### Pasul 3 (alternativ) — Export formular PDF ANAF (Soft A)
+
+Pe o declarație D120 **confirmată** (butonul nu apare în Ciornă și nici la alte tipuri de declarație),
+apăsați **Export XDP**. Rezultatul depinde de tipul de export ales în **Setări → Contabilitate →
+Declarații ANAF România → Tip export** (aceeași setare ca la celelalte declarații ANAF):
+
+| Tip export | Ce se descarcă |
+|---|---|
+| **PDF cu datele incluse** (implicit) | formularul ANAF D120 completat cu datele declarației (`D120_<CUI>_<AAAA>12.pdf`) |
+| **ZIP archive with XDP and PDF** (arhivă ZIP cu XDP și PDF) | fișierul de date XDP și formularul ANAF gol |
+| **Direct XDP download** (descărcare directă XDP) | doar fișierul de date (`D120_<CUI>_<AAAA>12.xdp`) |
+
+Datele sunt cele din exportul XML (antet, identificarea contribuabilului, declarantul și rândurile
+R0–R41), construite din aceeași sursă; exportul XML rămâne neschimbat. După export, declarația confirmată
+trece în starea **Exportată**.
+
+**Găsește pe ecran → verifică → continuă:**
+1. **Găsește** — deschideți PDF-ul în Adobe Reader (la ZIP, deschideți XDP-ul, care încarcă datele în
+   formular) și parcurgeți antetul, secțiunea de identificare și tabelul cu rânduri.
+2. **Verifică** — anul este cel de raportare și luna 12; CUI, denumire, CAEN și adresă sunt cele ale
+   companiei; rândurile completate (de ex. R9 alcool, R0 bere, R20_1 motorină) au aceleași cantități și
+   accize ca în **Total acciză** din declarație; R41 (total general) e egal cu totalul declarației.
+   Formularul recalculează singur subtotalurile, cu aceleași reguli ca validatorul din exportul XML.
+3. **Continuă** — în Adobe Reader apăsați **Validează formularul**, semnați și depuneți formularul pe
+   portalul ANAF.
+
+Dacă serverul nu are biblioteca `pypdf` ≥ 5.0, opțiunea PDF revine la arhiva ZIP, iar Setările afișează
+un avertisment.
+
 ### Note de monografie și raportare
 
 - D120 **nu generează note contabile proprii** — este o declarație de raportare; acciza datorată se
@@ -141,8 +173,9 @@ Structura XML generată (extras ilustrativ — antet companie + câteva rânduri
 
 Ce este automat: maparea categoriilor de accize pe rândurile XML D120 (R0, R9, R20 etc.) și totalurile
 (R33/R40/R41).
-Ce rămâne manual: verificarea cantităților, a cotelor în vigoare, a încadrării produselor și depunerea
-prin DUKIntegrator.
+Ce rămâne manual: verificarea cantităților, a cotelor în vigoare, a încadrării produselor, validarea și
+semnarea formularului PDF în Adobe Reader și depunerea (prin DUKIntegrator pentru XML, pe portalul ANAF
+pentru PDF).
 
 ## 8. Verificări pentru consultant
 
@@ -153,6 +186,11 @@ prin DUKIntegrator.
 - [ ] XML-ul exportat conține elementul `declaratie120` și atributele `an` + `luna="12"`.
 - [ ] XML-ul trece validarea XSD (CUI, CAEN și adresă completate pe companie).
 - [ ] Numele fișierului are forma `D120_<CUI>_<AAAA>12.xml`.
+- [ ] Butonul **Export XDP** apare doar pe D120 confirmată sau exportată, nu pe Ciornă și nu pe D103.
+- [ ] Cu tipul de export **PDF cu datele incluse**, se descarcă `D120_<CUI>_<AAAA>12.pdf`, iar formularul
+  se deschide în Adobe Reader cu datele completate.
+- [ ] Cu tipul **ZIP**, arhiva conține XDP-ul și `D120_XML_2025_160326.pdf`; cu tipul **XDP**, doar XDP-ul.
+- [ ] Cantitățile, accizele și R41 din formular coincid cu cele din XML și cu **Total acciză**.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -161,6 +199,9 @@ prin DUKIntegrator.
 | Butonul Export XML nu apare | Declarația este în Ciornă | Apăsați **Calculează** pentru a o confirma |
 | Export gol / fără linii | Nu există linii pe categorii de accize | Adăugați linii sau rulați Calculează pe facturi accizabile |
 | Eroare validare XSD | Date companie incomplete (CUI/CAEN/adresă) | Completați datele de identificare ale companiei |
+| Butonul Export XDP nu apare | Declarația este în Ciornă sau nu e de tip D120 | Confirmați declarația și verificați că tipul este D120 |
+| Se descarcă ZIP, deși e ales „PDF cu datele incluse" | Serverul nu are `pypdf` ≥ 5.0 (Setările afișează avertisment) | Instalați `pypdf` ≥ 5.0 pe server |
+| Exportul PDF este disponibil doar pentru declarația D120 | `Export XDP` apelat pe altă declarație | Folosiți exportul propriu declarației (D103 are fluxul său) |
 
 ## 10. Capturi de ecran
 
@@ -169,7 +210,8 @@ Capturile (`static/description/`) sunt **generate automat** din `tests/test_scre
 pe planul de conturi RO:
 
 1. `01_declaratie_d120.png` — Decontul de accize D120 (confirmat) cu liniile pe categorii și butonul
-   Export XML evidențiat.
+   Export XML evidențiat (butonul **Export XDP** apare lângă el; PDF-ul și XDP-ul exportate nu sunt
+   capturi, ci fișiere descărcate, descrise în Pasul 3).
 
 Regenerare:
 
@@ -182,6 +224,7 @@ Regenerare:
 
 În manualul final, păstrați explicația orientată pe activitatea utilizatorului: D120 este **decontul
 anual de accize**, distinct de declarația lunară D103. Subliniați că modulul doar generează exportul
-XML conform XSD v5 peste declarația de accize existentă, că perioada este anuală (`luna="12"` în XML)
-și că depunerea efectivă se face prin DUKIntegrator. Reamintiți verificarea datelor de identificare
+XML conform XSD v5 și formularul PDF ANAF completat (Soft A) peste declarația de accize existentă, că
+perioada este anuală (`luna="12"` în XML) și că depunerea efectivă se face prin DUKIntegrator (XML) sau
+pe portalul ANAF, după validarea și semnarea formularului PDF. Reamintiți verificarea datelor de identificare
 ale companiei (CUI/CAEN/adresă), fără de care validarea XSD eșuează.

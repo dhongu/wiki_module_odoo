@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.2.0`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_website_anaf
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_website_anaf`
-- **Ultima Ingestie:** `2026-10-12`
+- **Ultima Ingestie:** `2026-10-27`
 
 #### 1. Sumar
 
@@ -29,12 +29,12 @@ Modulul aduce interogarea ANAF în formularele de adresă din website (finalizar
 **Reutilizare și configurare:**
 
 - Orice formular poate folosi căutarea: un input marcat cu `data-anaf-lookup` și o hartă `data-anaf-fill` a câmpurilor de completat (o folosește și formularul de cerere cont B2B din `deltatech_b2b_portal`).
-- Nu necesită configurare; adresa ANAF și cheia API (dacă există) sunt cele din `l10n_ro_partner_create_by_vat` (parametri de sistem `l10n_ro_partner_create_by_vat.*`).
+- Nu necesită configurare; adresa serviciului ANAF este cea din `l10n_ro_anaf_partner_lookup` (parametrul de sistem `l10n_ro_anaf_partner_lookup.url`); site-ul așteaptă cel mult 5 secunde un răspuns.
 
 #### 3. Dependențe
 
 - `website_sale`
-- `l10n_ro_partner_create_by_vat`
+- `l10n_ro_anaf_partner_lookup`
 
 #### 4. Componente Cheie
 

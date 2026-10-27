@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.10.0`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_nap`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_nap`
-- **Ultima Ingestie:** `2026-10-12`
+- **Ultima Ingestie:** `2026-10-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -35,6 +35,7 @@ NAP (Necesar de Aprovizionare / Purchase requirements) este o unealtă simplă �
 - `stock`
 - `purchase_stock`
 - `sale`
+- `deltatech_purchase_lead_time`
 
 #### 4. Componente Cheie
 

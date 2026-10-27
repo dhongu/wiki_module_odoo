@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.6.12.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery`
-- **Ultima Ingestie:** `2026-10-22`
+- **Ultima Ingestie:** `2026-10-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -106,6 +106,7 @@ Fluxul pas-cu-pas al acțiunilor în masă și al reținerii livrărilor amânat
 - `stock`
 - `purchase`
 - `purchase_stock`
+- `deltatech_task_progress`
 
 #### 4. Componente Cheie
 

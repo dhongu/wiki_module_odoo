@@ -800,14 +800,16 @@
     "version": "19.0.1.1.0",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_purchase_pdf",
     "local_path": "odoo-addons/bitshop_ent/deltatech_ai_purchase_pdf",
-    "last_ingest": "2026-10-21",
+    "last_ingest": "2026-10-27",
     "friendly_name": "deltatech_ai_purchase_pdf",
     "summary": "Nu toți furnizorii trimit factura în format e-Factura XML. Acest modul permite importul facturii de furnizor în format **PDF** direct din comanda de achiziție, în același mod ca la XML: un agent AI citește antetul, liniile și totalurile documentului, iar asistentul de import din *Purchase UBL* face restul (potrivirea produselor, prețurile furnizorului, recepția și factura de achiziție). Utilizatorul verifică întotdeauna rezultatul într-o previzualizare înainte de import.",
     "features": [
       "Același asistent, XML sau PDF: butonul Import Invoice (în română „Import factură”, din `deltatech_purchase_ubl` 19.0.1.4.19) de pe comanda de achiziție acceptă și un PDF. Dacă la comandă nu există un XML UBL atașat, asistentul preia ultimul PDF atașat; fișierul poate fi ales și direct în asistent.",
       "AI citește, Odoo decide: agentul doar transcrie documentul într-un JSON strict (antet, linii, totaluri). Potrivirea produselor (cod de bare, cod furnizor, denumire), acțiunea pe fiecare linie, actualizarea prețurilor furnizorului, recepția și factura sunt pașii deterministi din *Purchase UBL*.",
       "Mereu verificat: un PDF nu se importă niciodată direct. Previzualizarea se deschide cu un banner de avertizare și listează ce nu se potrivește: linie la care cantitate × preț diferă de valoare, linii care nu însumează totalul indicat, TVA plus bază diferite de totalul de plată, CUI-ul furnizorului necitit.",
-      "Progres la citire: pentru PDF-uri cu mai multe pagini, un dialog arată paginile citite, liniile găsite și timpul rămas; o pagină eșuată poate fi recitită.",
+      "Progres la citire: pentru PDF-uri cu mai multe pagini, un dialog generic de progres (din `deltatech_task_progress`) arată paginile citite, liniile găsite și timpul rămas; o pagină eșuată poate fi recitită.",
+      "Verificare față de textul PDF-ului: cantitatea, prețul, valoarea și codul fiecărei linii, precum și totalurile, sunt căutate în textul PDF-ului (fără apel AI, cu `deltatech_ai_pdf_base`); o cifră transcrisă greșit care totuși însumează corect este listată. CUI-ul furnizorului se verifică prin cifra de control (CUI, CNP, VAT UE). Un PDF scanat nu se verifică față de text, iar previzualizarea o spune.",
+      "Recitire selectivă: fiecare linie păstrează pagina din care a fost citită (coloana *Page*); Read Again Pages with Warnings sau paginile alese în *Pages to read again* recitesc doar acele pagini, păstrând produsele alese pe celelalte. Recitirea parțială nu se numără în limita zilnică.",
       "Un apel AI per document: extracția se păstrează pe asistent, deci previzualizarea și importul citesc PDF-ul o singură dată.",
       "Compatibil cu potrivirea AI a produselor: cu [deltatech_purchase_ubl_ai](../deltatech_purchase_ubl_ai/index.md) instalat, liniile rămase neplasate primesc o sugestie de produs, ca la XML.",
       "Costuri sub control: activare opțională per companie (implicit dezactivat) și limită zilnică de documente citite cu AI (implicit 50 per companie, 0 = nelimitat), din Setări → Achiziții → Facturare → PDF Invoice Import with AI.",
@@ -817,13 +819,15 @@
     ],
     "dependencies": [
       "deltatech_purchase_ubl",
-      "ai"
+      "ai",
+      "deltatech_ai_pdf_base",
+      "deltatech_task_progress"
     ],
     "connections": [
       "deltatech_purchase_ubl_ai",
       "deltatech_ai_anthropic"
     ],
-    "text": "deltatech_ai_purchase_pdf\ndeltatech_ai_purchase_pdf\nNu toți furnizorii trimit factura în format e-Factura XML. Acest modul permite importul facturii de furnizor în format **PDF** direct din comanda de achiziție, în același mod ca la XML: un agent AI citește antetul, liniile și totalurile documentului, iar asistentul de import din *Purchase UBL* face restul (potrivirea produselor, prețurile furnizorului, recepția și factura de achiziție). Utilizatorul verifică întotdeauna rezultatul într-o previzualizare înainte de import.\nAcelași asistent, XML sau PDF: butonul Import Invoice (în română „Import factură”, din `deltatech_purchase_ubl` 19.0.1.4.19) de pe comanda de achiziție acceptă și un PDF. Dacă la comandă nu există un XML UBL atașat, asistentul preia ultimul PDF atașat; fișierul poate fi ales și direct în asistent.\nAI citește, Odoo decide: agentul doar transcrie documentul într-un JSON strict (antet, linii, totaluri). Potrivirea produselor (cod de bare, cod furnizor, denumire), acțiunea pe fiecare linie, actualizarea prețurilor furnizorului, recepția și factura sunt pașii deterministi din *Purchase UBL*.\nMereu verificat: un PDF nu se importă niciodată direct. Previzualizarea se deschide cu un banner de avertizare și listează ce nu se potrivește: linie la care cantitate × preț diferă de valoare, linii care nu însumează totalul indicat, TVA plus bază diferite de totalul de plată, CUI-ul furnizorului necitit.\nProgres la citire: pentru PDF-uri cu mai multe pagini, un dialog arată paginile citite, liniile găsite și timpul rămas; o pagină eșuată poate fi recitită.\nUn apel AI per document: extracția se păstrează pe asistent, deci previzualizarea și importul citesc PDF-ul o singură dată.\nCompatibil cu potrivirea AI a produselor: cu [deltatech_purchase_ubl_ai](../deltatech_purchase_ubl_ai/index.md) instalat, liniile rămase neplasate primesc o sugestie de produs, ca la XML.\nCosturi sub control: activare opțională per companie (implicit dezactivat) și limită zilnică de documente citite cu AI (implicit 50 per companie, 0 = nelimitat), din Setări → Achiziții → Facturare → PDF Invoice Import with AI.\nFurnizorul tău de AI: folosește cadrul AI nativ Odoo și cheia din Setări → AI; modelul trebuie să accepte fișiere PDF (OpenAI GPT-4o sau mai nou, Google Gemini sau Claude cu [deltatech_ai_anthropic](../deltatech_ai_anthropic/index.md)). Modelul agentului se poate schimba din AI → Agents → Purchase Invoice PDF Reader AI; instrucțiunile sunt traductibile.\nSigur prin construcție: documentul este tratat ca date; agentului i se spune să nu urmeze niciodată instrucțiuni scrise în el.\nParametri de sistem opționali: `deltatech_ai_purchase_pdf.timeout` (secunde de așteptare pentru un răspuns, implicit 300), `deltatech_ai_purchase_pdf.pages_per_call` (pagini citite la o cerere, implicit 1; mai multe pagini pierd linii la facturi lungi), `deltatech_ai_purchase_pdf.parallel_calls` (pagini citite simultan de dialogul de progres, implicit 3)."
+    "text": "deltatech_ai_purchase_pdf\ndeltatech_ai_purchase_pdf\nNu toți furnizorii trimit factura în format e-Factura XML. Acest modul permite importul facturii de furnizor în format **PDF** direct din comanda de achiziție, în același mod ca la XML: un agent AI citește antetul, liniile și totalurile documentului, iar asistentul de import din *Purchase UBL* face restul (potrivirea produselor, prețurile furnizorului, recepția și factura de achiziție). Utilizatorul verifică întotdeauna rezultatul într-o previzualizare înainte de import.\nAcelași asistent, XML sau PDF: butonul Import Invoice (în română „Import factură”, din `deltatech_purchase_ubl` 19.0.1.4.19) de pe comanda de achiziție acceptă și un PDF. Dacă la comandă nu există un XML UBL atașat, asistentul preia ultimul PDF atașat; fișierul poate fi ales și direct în asistent.\nAI citește, Odoo decide: agentul doar transcrie documentul într-un JSON strict (antet, linii, totaluri). Potrivirea produselor (cod de bare, cod furnizor, denumire), acțiunea pe fiecare linie, actualizarea prețurilor furnizorului, recepția și factura sunt pașii deterministi din *Purchase UBL*.\nMereu verificat: un PDF nu se importă niciodată direct. Previzualizarea se deschide cu un banner de avertizare și listează ce nu se potrivește: linie la care cantitate × preț diferă de valoare, linii care nu însumează totalul indicat, TVA plus bază diferite de totalul de plată, CUI-ul furnizorului necitit.\nProgres la citire: pentru PDF-uri cu mai multe pagini, un dialog generic de progres (din `deltatech_task_progress`) arată paginile citite, liniile găsite și timpul rămas; o pagină eșuată poate fi recitită.\nVerificare față de textul PDF-ului: cantitatea, prețul, valoarea și codul fiecărei linii, precum și totalurile, sunt căutate în textul PDF-ului (fără apel AI, cu `deltatech_ai_pdf_base`); o cifră transcrisă greșit care totuși însumează corect este listată. CUI-ul furnizorului se verifică prin cifra de control (CUI, CNP, VAT UE). Un PDF scanat nu se verifică față de text, iar previzualizarea o spune.\nRecitire selectivă: fiecare linie păstrează pagina din care a fost citită (coloana *Page*); Read Again Pages with Warnings sau paginile alese în *Pages to read again* recitesc doar acele pagini, păstrând produsele alese pe celelalte. Recitirea parțială nu se numără în limita zilnică.\nUn apel AI per document: extracția se păstrează pe asistent, deci previzualizarea și importul citesc PDF-ul o singură dată.\nCompatibil cu potrivirea AI a produselor: cu [deltatech_purchase_ubl_ai](../deltatech_purchase_ubl_ai/index.md) instalat, liniile rămase neplasate primesc o sugestie de produs, ca la XML.\nCosturi sub control: activare opțională per companie (implicit dezactivat) și limită zilnică de documente citite cu AI (implicit 50 per companie, 0 = nelimitat), din Setări → Achiziții → Facturare → PDF Invoice Import with AI.\nFurnizorul tău de AI: folosește cadrul AI nativ Odoo și cheia din Setări → AI; modelul trebuie să accepte fișiere PDF (OpenAI GPT-4o sau mai nou, Google Gemini sau Claude cu [deltatech_ai_anthropic](../deltatech_ai_anthropic/index.md)). Modelul agentului se poate schimba din AI → Agents → Purchase Invoice PDF Reader AI; instrucțiunile sunt traductibile.\nSigur prin construcție: documentul este tratat ca date; agentului i se spune să nu urmeze niciodată instrucțiuni scrise în el.\nParametri de sistem opționali: `deltatech_ai_purchase_pdf.timeout` (secunde de așteptare pentru un răspuns, implicit 300), `deltatech_ai_purchase_pdf.pages_per_call` (pagini citite la o cerere, implicit 1; mai multe pagini pierd linii la facturi lungi), `deltatech_ai_purchase_pdf.parallel_calls` (pagini citite simultan de dialogul de progres, implicit 3)."
   },
   {
     "path": "deltatech_ai_sale_delivery_check/index.md",
@@ -860,7 +864,7 @@
   {
     "path": "deltatech_ai_source_sync/index.md",
     "module": "deltatech_ai_source_sync",
-    "version": "19.0.1.9.0",
+    "version": "19.0.1.9.1",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_source_sync",
     "local_path": "odoo-addons/bitshop_ent/deltatech_ai_source_sync",
     "last_ingest": "2026-10-20",
@@ -1953,6 +1957,35 @@
     "text": "deltatech_chatter_quick_info_stock\ndeltatech_chatter_quick_info_stock\nAdaugă în chatter-ul transferurilor de stoc panoul **Stoc și rezervări**, ca gestionarul să vadă dintr-o privire ce poate pleca și ce blochează livrarea, fără să deschidă prognoza fiecărui produs. Pe recepții arată, în plus, ce transferuri deschise așteaptă marfa care intră.\nLivrări și transferuri interne: pentru fiecare produs stocabil, în locația sursă și sublocațiile ei: cantitatea rezervată pe transfer din cea cerută, stocul fizic, rezervările altor transferuri (tooltip cu lista lor), stocul liber, cantitatea așteptată și data următoarei recepții.\nAntetul spune dacă transferul este acoperit; chip-urile numără produsele neacoperite și pe cele care s-ar acoperi eliberând rezervările altor transferuri. Produsele neacoperite apar primele, cu stocul liber în roșu.\nRecepții: calcul pe tot depozitul (la recepția în 2–3 pași marfa intră în Intrare, nu în Stoc): stoc, liber și cantitatea încă lipsă pe transferurile deschise care așteaptă produsul, cu denumirile lor.\nPanoul se reîmprospătează automat la 30 de secunde cât timp transferul este deschis.\nEste vizibil implicit grupului Inventar / Operator; grupurile, intervalul de reîmprospătare, starea pliată și condiția (panoul dispare după Validează / Anulează) se configurează din Setări → Tehnic → Interfață utilizator → Informații rapide în chatter (modul dezvoltator).\nPanoul este doar informativ: nu rezervă, nu eliberează și nu validează nimic.\nFluxul pas-cu-pas este în [fișa consultant](FISA_CONSULTANT.md)."
   },
   {
+    "path": "deltatech_cloud_storage_r2/index.md",
+    "module": "deltatech_cloud_storage_r2",
+    "version": "19.0.1.0.3",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_cloud_storage_r2",
+    "local_path": "odoo-addons/bitshop/deltatech_cloud_storage_r2",
+    "last_ingest": "2026-10-27",
+    "friendly_name": "Cloud Storage Cloudflare R2",
+    "summary": "Adaugă **Cloudflare R2** (și orice alt serviciu compatibil S3) ca furnizor în cadrul framework-ului Odoo *Cloud Storage*, alături de furnizorii Google și Azure livrați cu Odoo. Atașamentele mari din chatter sunt încărcate direct din browser în bucket, prin URL-uri presemnate, iar descărcarea se face la fel, deci fișierele nu mai trec prin serverul Odoo. R2 nu are taxe de egress, ceea ce reduce costul de stocare și transfer.",
+    "features": [
+      "Încărcare și descărcare directă browser ↔ bucket, cu URL-uri presemnate AWS Signature Version 4, semnate cu biblioteca standard Python (fără dependențe externe).",
+      "Cloudflare R2: sunt necesare doar ID-ul contului, bucket-ul și un token API (access key + secret).",
+      "Alte servicii compatibile S3 (Backblaze B2, AWS S3, Bunny etc.) prin endpoint personalizat și regiune, în locul ID-ului de cont.",
+      "Domeniu public personalizat opțional pentru descărcări; descărcările devin nesemnate, deci se folosește doar pentru un bucket intenționat public.",
+      "Cheia secretă este write-only: nu e trimisă înapoi în browser și nu apare în loguri; lăsând câmpul gol se păstrează secretul salvat.",
+      "Configurare în *Setări > Integrări > Cloud Storage*, alegând furnizorul Cloudflare R2 / S3-compatible.",
+      "La salvare se verifică conexiunea (încărcare, descărcare și ștergere a unui obiect `TEST`) și se încearcă setarea automată a regulilor CORS; dacă nu reușește, politica CORS se adaugă manual în bucket. Tokenul R2 are nevoie de drepturi *Object Read & Write* (plus *Admin* pentru CORS automat).",
+      "Avertisment la schimbarea bucket-ului sau a endpoint-ului: atașamentele existente rămân în bucket-ul în care au fost create.",
+      "Script de curățare `utils/cleanup_cloud_storage_r2.py`: Odoo nu șterge obiectele din bucket la ștergerea atașamentelor, iar scriptul (XML-RPC, cu cheie API) listează bucket-ul, verifică în Odoo ce obiecte mai sunt referite și le șterge pe celelalte. Rulează implicit în mod dry run (ștergere doar cu `--delete`), atinge doar chei de forma `<id>/<uuid>/<nume>` și păstrează obiectele mai noi de 24 de ore (`--min-age-hours`).",
+      "Ghidul pas-cu-pas, cu capturi de ecran, este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "cloud_storage"
+    ],
+    "connections": [
+      "cloud_storage"
+    ],
+    "text": "Cloud Storage Cloudflare R2\ndeltatech_cloud_storage_r2\nAdaugă **Cloudflare R2** (și orice alt serviciu compatibil S3) ca furnizor în cadrul framework-ului Odoo *Cloud Storage*, alături de furnizorii Google și Azure livrați cu Odoo. Atașamentele mari din chatter sunt încărcate direct din browser în bucket, prin URL-uri presemnate, iar descărcarea se face la fel, deci fișierele nu mai trec prin serverul Odoo. R2 nu are taxe de egress, ceea ce reduce costul de stocare și transfer.\nÎncărcare și descărcare directă browser ↔ bucket, cu URL-uri presemnate AWS Signature Version 4, semnate cu biblioteca standard Python (fără dependențe externe).\nCloudflare R2: sunt necesare doar ID-ul contului, bucket-ul și un token API (access key + secret).\nAlte servicii compatibile S3 (Backblaze B2, AWS S3, Bunny etc.) prin endpoint personalizat și regiune, în locul ID-ului de cont.\nDomeniu public personalizat opțional pentru descărcări; descărcările devin nesemnate, deci se folosește doar pentru un bucket intenționat public.\nCheia secretă este write-only: nu e trimisă înapoi în browser și nu apare în loguri; lăsând câmpul gol se păstrează secretul salvat.\nConfigurare în *Setări > Integrări > Cloud Storage*, alegând furnizorul Cloudflare R2 / S3-compatible.\nLa salvare se verifică conexiunea (încărcare, descărcare și ștergere a unui obiect `TEST`) și se încearcă setarea automată a regulilor CORS; dacă nu reușește, politica CORS se adaugă manual în bucket. Tokenul R2 are nevoie de drepturi *Object Read & Write* (plus *Admin* pentru CORS automat).\nAvertisment la schimbarea bucket-ului sau a endpoint-ului: atașamentele existente rămân în bucket-ul în care au fost create.\nScript de curățare `utils/cleanup_cloud_storage_r2.py`: Odoo nu șterge obiectele din bucket la ștergerea atașamentelor, iar scriptul (XML-RPC, cu cheie API) listează bucket-ul, verifică în Odoo ce obiecte mai sunt referite și le șterge pe celelalte. Rulează implicit în mod dry run (ștergere doar cu `--delete`), atinge doar chei de forma `<id>/<uuid>/<nume>` și păstrează obiectele mai noi de 24 de ore (`--min-age-hours`).\nGhidul pas-cu-pas, cu capturi de ecran, este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+  },
+  {
     "path": "deltatech_cmr_document/index.md",
     "module": "deltatech_cmr_document",
     "version": "19.0.1.0.4",
@@ -2430,7 +2463,7 @@
     "version": "19.0.6.12.2",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery",
-    "last_ingest": "2026-10-22",
+    "last_ingest": "2026-10-27",
     "friendly_name": "Courier Delivery Base",
     "summary": "Modulul „Deltatech Delivery Base” este o extensie cuprinzătoare pentru Odoo care îmbunătățește și optimizează capacitățile de gestionare a livrărilor din ecosistemul Odoo. Modulul servește drept fundație pentru diverse integrări specifice fiecărui curier și oferă un cadru robust pentru gestionarea expedierilor către mai mulți furnizori de servicii de livrare. Modulul de bază pune la dispoziție și un cadru partajat de opțiuni de livrare pentru serviciile legate de AWB: opțiuni standard precum livrarea sâmbăta, deschiderea coletului, returul coletului, livrarea personală și notificarea prin SMS sunt definite centralizat și pot fi expuse per curier, în funcție de capabilitățile conectorului. Operatorul selectează doar opțiunile permise de curierul ales, în timp ce structura existentă `shipment_info` rămâne neschimbată pentru compatibilitate retroactivă. Pentru volume mari de comenzi, modulul oferă acum și trei acțiuni în masă direct din lista de comenzi de vânzare: validarea rapidă a livrărilor deja pregătite, trimiterea la curier cu urmărire vizuală a progresului și afișarea facturilor comenzilor selectate. O livrare **amânată** — de operator, de regula de plată sau de verificarea comenzii — este acum respectată peste tot: nu poate pleca la curier prin niciun buton și nicio acțiune în masă, ci este raportată ca reținută, cu motivul.",
     "features": [
@@ -2508,7 +2541,8 @@
       "deltatech_delivery_status",
       "stock",
       "purchase",
-      "purchase_stock"
+      "purchase_stock",
+      "deltatech_task_progress"
     ],
     "connections": [
       "deltatech_delivery_status",
@@ -3745,7 +3779,7 @@
   {
     "path": "deltatech_ecr_connect/index.md",
     "module": "deltatech_ecr_connect",
-    "version": "19.0.1.1.7",
+    "version": "19.0.1.1.8",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_ecr_connect",
     "local_path": "odoo-addons/bitshop/deltatech_ecr_connect",
     "last_ingest": "2026-08-20",
@@ -6453,7 +6487,7 @@
     "version": "19.0.1.10.0",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_nap`",
     "local_path": "odoo-addons/bitshop/deltatech_nap",
-    "last_ingest": "2026-10-12",
+    "last_ingest": "2026-10-27",
     "friendly_name": "NAP",
     "summary": "NAP (Necesar de Aprovizionare / Purchase requirements) este o unealtă simplă și rapidă pentru determinarea necesarului de achiziție în Odoo, dezvoltată de Terrabit. Utilizatorul deschide un raport, obține o listă justificată de „ce trebuie comandat” și lansează direct reaprovizionarea, fără obiecte de planificare permanente și fără un flux de lucru greoi. Nucleul modulului este Raportul de Prognoză Stoc (Stock Forecast Report): pentru o perioadă, un depozit/locație și, opțional, un furnizor sau un produs selectat, se calculează cererea medie zilnică din istoric și se determină, pentru fiecare produs, cantitatea de comandat pentru orizontul de prognoză, ținând cont de stocul disponibil, de intrări, ieșiri și de cantitățile aflate deja în circuitul de aprovizionare.",
     "features": [
@@ -6477,7 +6511,8 @@
       "product",
       "stock",
       "purchase_stock",
-      "sale"
+      "sale",
+      "deltatech_purchase_lead_time"
     ],
     "connections": [
       "deltatech_nap_website"
@@ -6783,7 +6818,7 @@
     "version": "19.0.1.2.0",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_partner_merge",
     "local_path": "odoo-addons/deltatech/deltatech_partner_merge",
-    "last_ingest": "2026-10-23",
+    "last_ingest": "2026-10-27",
     "friendly_name": "Partner Merge in Bulk",
     "summary": "Modulul curăță duplicatele din nomenclatorul de parteneri cu două unelte complementare. **Loturile de comasare** unifică în masă fișele care au același CUI, în minute în loc de ore. **Caută dubluri** găsește partenerii probabil duplicați (după CUI, telefon, email sau nume asemănător) și lasă operatorului decizia, grup cu grup. Wizardul standard de unificare din Odoo parcurge foaie cu foaie fiecare pereche de duplicate, prin toate cele ~158 de coloane care referă `res_partner` — abordare suficientă pentru câteva duplicate, dar nefezabilă pe mii de grupuri. Acest modul inversează logica — o singură instrucțiune SQL per coloană, pentru tot lotul deodată — și păstrează cheile externe active pe tot parcursul, astfel încât integritatea e garantată de PostgreSQL, nu de corectitudinea procedurii. Pe o bază de producție cu 538.000 de parteneri, unificarea a 5.350 de fișe a durat aproximativ patru minute și jumătate.",
     "features": [
@@ -6804,11 +6839,12 @@
       "Aceeași procedură e disponibilă și ca scripturi SQL simple în `deltatech/scripts/partner_merge/`, pentru rulare directă din psql, în afara Odoo."
     ],
     "dependencies": [
-      "base"
+      "base",
+      "deltatech_partner_match"
     ],
     "connections": [
-      "to_regclass",
-      "base"
+      "deltatech_partner_match",
+      "to_regclass"
     ],
     "text": "Partner Merge in Bulk\ndeltatech_partner_merge\nModulul curăță duplicatele din nomenclatorul de parteneri cu două unelte complementare. **Loturile de comasare** unifică în masă fișele care au același CUI, în minute în loc de ore. **Caută dubluri** găsește partenerii probabil duplicați (după CUI, telefon, email sau nume asemănător) și lasă operatorului decizia, grup cu grup. Wizardul standard de unificare din Odoo parcurge foaie cu foaie fiecare pereche de duplicate, prin toate cele ~158 de coloane care referă `res_partner` — abordare suficientă pentru câteva duplicate, dar nefezabilă pe mii de grupuri. Acest modul inversează logica — o singură instrucțiune SQL per coloană, pentru tot lotul deodată — și păstrează cheile externe active pe tot parcursul, astfel încât integritatea e garantată de PostgreSQL, nu de corectitudinea procedurii. Pe o bază de producție cu 538.000 de parteneri, unificarea a 5.350 de fișe a durat aproximativ patru minute și jumătate.\nPotriviri exacte pe CUI (fără prefixul de țară), telefon în format E.164 (`0722 …` și `+40 722 …` se întâlnesc) și email (litere mici).\nNume asemănătoare (fără diacritice și forme juridice, cuvinte sortate) la aceeași stradă sau același cod poștal, sau doar după nume, dacă operatorul alege așa. Compararea se face doar în interiorul unui bloc (același oraș sau aceleași prime litere), ca să nu se compare tot cu tot pe baze mari.\nFiecare grup are scor (0–100) și motiv („același telefon +40722…”, „nume 92% + aceeași stradă”). Îmbină deschide asistentul standard Odoo pe grup, unde operatorul alege fișa păstrată; Nu sunt dubluri reține perechea, iar căutările următoare o sar. Un utilizator non-administrator poate îmbina doar fișe cu același email.\nExcluse: partenerii utilizatorilor interni și ai companiilor proprii, un partener și propriile contacte, adresele de facturare/livrare ale aceluiași client, partenerii din companii diferite și valorile comune prea multor parteneri (placeholdere, centrale telefonice), care apar în raport.\nFolosește opțional `rapidfuzz`, `phonenumbers` și `unidecode`, dacă sunt instalate; fără ele revine la `difflib` (mai lent, blocuri de maximum 1.500 parteneri, cele mai mari fiind listate în raport). Niciuna nu e obligatorie.\nTraducere în română inclusă (`i18n/ro.po`). Pașii detaliați și capturile sunt în fișa consultant.\nGrupează automat partenerii companii active cu același CUI (normalizat) și îi clasifică în 4 categorii: A (restul fișelor sunt complet goale), B (documente pe o singură fișă), C (facturi pe mai multe fișe) și D (sold nereconciliat pe mai multe fișe) — ultimele două se lasă pe mâna contabilului, deoarece mută bani între jurnale.\nAlege automat fișa păstrată după volumul de documente (facturi, apoi comenzi de vânzare, apoi vechime), și semnalează cu un steag fișele al căror nume pare corupt la import, alături de numele fișelor absorbite pentru corectare ulterioară.\nExclude automat din unificare grupurile care conțin compania proprie, grupurile cu utilizatori portal pe mai multe fișe și grupurile ale căror denumiri diferă complet pe același CUI.\nEtapă de simulare obligatorie: rulează întreaga unificare pe un savepoint separat și îl anulează, deci nu poate scrie date chiar dacă procedura ar avea o eroare; aplicarea efectivă e un pas distinct, protejat de un grup de securitate propriu.\nRefuză să finalizeze aplicarea dacă a rămas vreo referință care încă indică o fișă absorbită.\nVerificare post-unificare: compară totalurile reale ale fișelor păstrate (facturi, comenzi, sold) cu o fotografie luată înainte de unificare.\nOpțiune de arhivare în loc de ștergere a fișelor absorbite (recomandat pentru primele rulări în producție, recuperabil fără restaurare din backup).\nDetectează și oferă creare cu un click pentru coloanele cheie externă către `res_partner` care nu au index — altfel ștergerea partenerilor devine lentă din cauza scanărilor complete de tabel.\nAceeași procedură e disponibilă și ca scripturi SQL simple în `deltatech/scripts/partner_merge/`, pentru rulare directă din psql, în afara Odoo."
   },
@@ -7533,7 +7569,7 @@
   {
     "path": "deltatech_pos/index.md",
     "module": "deltatech_pos",
-    "version": "19.0.2.10.6",
+    "version": "19.0.2.12.0",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos",
     "local_path": "odoo-addons/bitshop/deltatech_pos",
     "last_ingest": "2026-10-09",
@@ -9473,7 +9509,7 @@
     "version": "19.0.6.29.0",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga",
     "local_path": "odoo-addons/bitshop/deltatech_saga",
-    "last_ingest": "2026-10-22",
+    "last_ingest": "2026-10-27",
     "friendly_name": "deltatech_saga",
     "summary": "Interfața Deltatech SAGA este un modul cuprinzător conceput pentru a facilita schimbul de date între Odoo și SAGA, un program de contabilitate larg răspândit în România. Această punte de integrare asigură transferul fără probleme al datelor contabile și de stoc între cele două sisteme, eliminând necesitatea introducerii manuale a datelor și reducând riscul de erori. Modulul se adresează companiilor care își gestionează operațiunile în Odoo, dar își păstrează evidența contabilă în SAGA, și este adaptat specific cerințelor fiscale și contabile din România. Integrarea este bazată pe fișiere (export/import), nu pe sincronizare în timp real prin API.",
     "features": [
@@ -9511,7 +9547,8 @@
       "purchase_stock",
       "sale_stock",
       "deltatech_contact",
-      "l10n_ro"
+      "l10n_ro",
+      "deltatech_task_progress"
     ],
     "connections": [
       "deltatech_contwin",
@@ -12263,7 +12300,7 @@
     "version": "19.0.1.4.2",
     "github": "`https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products_website`",
     "local_path": "odoo-addons/bitshop_vendor/deltatech_vendor_products_website",
-    "last_ingest": "2026-10-19",
+    "last_ingest": "2026-10-27",
     "friendly_name": "Vendor Products Website",
     "summary": "Modulul leagă catalogul produselor furnizorilor de magazinul online. Un flux de furnizor poate fi marcat pentru căutare online: când un client caută un cod în `/shop` și nu îl găsește în catalogul propriu, sub grilă apare blocul „Available from our suppliers\", cu produsele găsite la furnizor. La click pe un card, produsul este creat în Odoo, publicat pe website și deschis în magazin, gata de comandat. Astfel oferta magazinului poate fi extinsă cu produsele furnizorilor, fără gestionare manuală articol cu articol.",
     "features": [
@@ -12284,12 +12321,15 @@
     "dependencies": [
       "deltatech_vendor_products",
       "website_sale",
+      "website_sale_stock",
       "psutil"
     ],
     "connections": [
       "deltatech_vendor_products",
       "deltatech_vendor_products_kramp",
-      "website_sale"
+      "website_sale",
+      "website_sale_stock",
+      "allow_out_of_stock_order"
     ],
     "text": "Vendor Products Website\ndeltatech_vendor_products_website\nModulul leagă catalogul produselor furnizorilor de magazinul online. Un flux de furnizor poate fi marcat pentru căutare online: când un client caută un cod în `/shop` și nu îl găsește în catalogul propriu, sub grilă apare blocul „Available from our suppliers\", cu produsele găsite la furnizor. La click pe un card, produsul este creat în Odoo, publicat pe website și deschis în magazin, gata de comandat. Astfel oferta magazinului poate fi extinsă cu produsele furnizorilor, fără gestionare manuală articol cu articol.\nOpțiunea Online Search pe fluxul de furnizor (*Achiziții → Produse → Vendor Feed*, grupul Connection), vizibilă doar când tipul conexiunii nu este `none`. Doar fluxurile cu această opțiune activă sunt interogate din magazin.\nCăutare online în `/shop` (19.0.1.3.0, interacțiune Odoo 19): când rezultatele magazinului încap pe o singură pagină, furnizorii sunt interogați după afișarea paginii (un furnizor lent nu întârzie magazinul), iar produsele găsite apar sub grilă într-un bloc „Available from our suppliers\". Mesajul standard „fără rezultate\" este ascuns când furnizorii găsesc produse.\nCardul afișează imaginea, numele, codul și prețul furnizorului, plus disponibilitatea: „Available at the supplier\" (stoc la furnizor) sau „On order\". Prețul pornește de la prețul de listă al furnizorului, cu regulile de preț ale fluxului, convertit în moneda website-ului și afișat cu sau fără taxe, ca restul magazinului (taxa de vânzare implicită a companiei).\nReguli de afișare: se arată doar produsele furnizorului fără produs Odoo asociat (celelalte sunt găsite de căutarea standard) și doar cele cu preț la furnizor, ca să nu poată fi comandate la 0. Căutările sub 3 caractere nu se trimit, iar o căutare repetată în sesiune refolosește ultimul rezultat. Se afișează cel mult 24 de carduri.\nRută `/vendor_product/<id>`: creează produsul de magazin din produsul furnizorului (dacă nu există deja) și redirecționează către pagina lui din `/shop`. Produsele create sunt publicate și permit comanda chiar fără stoc (Sell when Out-of-Stock). Redirecționarea nu mai poartă înregistrarea în query string.\nSecuritate: ruta acceptă doar ID-uri returnate clientului în aceeași sesiune (ultimele 200) sau utilizatori interni de vânzări; orice alt ID întoarce 404. Pentru produse deja legate, ruta nu forțează republicarea, deci produsele despublicate rămân despublicate.\nRută JSON-RPC `/vendor_product/online_results` (cardurile pentru blocul din `/shop`). Rutele vechi `/vendor_product/online_search` și `/vendor_product/online_source` au fost eliminate în 19.0.1.4.0, fiindcă ocoleau filtrele (un apel scris de mână putea publica un produs la preț 0).\nLimită de căutări (19.0.1.4.0, în locul gărzii de CPU): cel mult 10 căutări la furnizor pe minut pentru o sesiune (`vendor_product_online_search_session_limit`) și 60 pentru o adresă IP (`vendor_product_online_search_ip_limit`); 0 dezactivează limita. O căutare repetată în sesiune nu se numără. Peste limită blocul nu apare, iar jurnalul arată „Online search … skipped, too many searches\".\nMulti-companie: sunt interogate doar fluxurile companiei website-ului, iar blocul apare doar dacă acea companie are un flux cu căutare online.\nConfigurare recomandată: Based on = List Price în grupul Price al fluxului, pentru ca actualizarea ulterioară a prețului de listă să nu schimbe prețul față de cel afișat; setarea website-ului Display Product Prices (Tax Excluded / Tax Included) influențează prețul din card.\nCăutările online salvează produsele găsite în *Vendor Product Catalog*; doar rândul deschis de client primește produs Odoo asociat. Comanda către furnizor se face din reaprovizionare sau automat cu rutele *Buy* și *Replenish on Order (MTO)*.\nExtensibilitate: câmpurile salvate din căutarea online provin din hook-ul `_online_search_fields()`, pe care un conector îl poate completa (conectorul Kramp adaugă codul de bare).\nFluxul pas-cu-pas, cu capturi de ecran, este în [Fișa Consultant](FISA_CONSULTANT.md)."
   },
@@ -14135,7 +14175,7 @@
   {
     "path": "l10n_ro_anaf_base/index.md",
     "module": "l10n_ro_anaf_base",
-    "version": "19.0.1.3.5",
+    "version": "19.0.1.3.7",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_base",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_base",
     "last_ingest": "2026-09-29",
@@ -14218,7 +14258,7 @@
   {
     "path": "l10n_ro_anaf_d100/index.md",
     "module": "l10n_ro_anaf_d100",
-    "version": "19.0.0.0.10",
+    "version": "19.0.0.0.12",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d100",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d100",
     "last_ingest": null,
@@ -14250,7 +14290,7 @@
   {
     "path": "l10n_ro_anaf_d101/index.md",
     "module": "l10n_ro_anaf_d101",
-    "version": "19.0.1.1.3",
+    "version": "19.0.1.1.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d101",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d101",
     "last_ingest": "2026-10-27",
@@ -14341,7 +14381,7 @@
   {
     "path": "l10n_ro_anaf_d112/index.md",
     "module": "l10n_ro_anaf_d112",
-    "version": "19.0.2.22.0",
+    "version": "19.0.2.23.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112",
     "last_ingest": "2026-10-22",
@@ -14456,7 +14496,7 @@
   {
     "path": "l10n_ro_anaf_d120/index.md",
     "module": "l10n_ro_anaf_d120",
-    "version": "19.0.1.1.6",
+    "version": "19.0.1.2.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d120",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d120",
     "last_ingest": null,
@@ -14513,7 +14553,7 @@
   {
     "path": "l10n_ro_anaf_d205/index.md",
     "module": "l10n_ro_anaf_d205",
-    "version": "19.0.1.1.3",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d205",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d205",
     "last_ingest": null,
@@ -14550,7 +14590,7 @@
   {
     "path": "l10n_ro_anaf_d207/index.md",
     "module": "l10n_ro_anaf_d207",
-    "version": "19.0.1.1.3",
+    "version": "19.0.1.2.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d207",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d207",
     "last_ingest": null,
@@ -14589,7 +14629,7 @@
   {
     "path": "l10n_ro_anaf_d300/index.md",
     "module": "l10n_ro_anaf_d300",
-    "version": "19.0.0.0.30",
+    "version": "19.0.0.0.31",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d300",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d300",
     "last_ingest": null,
@@ -14758,7 +14798,7 @@
   {
     "path": "l10n_ro_anaf_d390/index.md",
     "module": "l10n_ro_anaf_d390",
-    "version": "19.0.0.0.17",
+    "version": "19.0.0.0.18",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d390",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d390",
     "last_ingest": null,
@@ -14966,7 +15006,7 @@
   {
     "path": "l10n_ro_anaf_d710/index.md",
     "module": "l10n_ro_anaf_d710",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.7",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d710",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d710",
     "last_ingest": "2026-09-29",
@@ -17319,7 +17359,7 @@
   {
     "path": "l10n_ro_leasing/index.md",
     "module": "l10n_ro_leasing",
-    "version": "19.0.2.0.2",
+    "version": "19.0.2.1.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_leasing",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_leasing",
     "last_ingest": null,
@@ -18483,27 +18523,38 @@
     "version": "19.0.1.1.2",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_pos_partner_efactura",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_pos_partner_efactura",
-    "last_ingest": "2026-10-22",
+    "last_ingest": "2026-10-27",
     "friendly_name": "l10n_ro_pos_partner_efactura",
-    "summary": "La casă, clientul care cere factură este creat în grabă de casier din ecranul POS, iar lipsa adresei sau a CUI-ului se descoperă abia la trimiterea facturii în SPV. Modulul mută controlul la momentul creării clientului: formularul de partener deschis din POS cere datele de care are nevoie o factură e-Factura (CIUS-RO), iar partenerul nu poate fi salvat până nu sunt complete.",
+    "summary": "La casă, clientul care cere factură este creat în grabă de casier din ecranul POS, iar lipsa adresei sau a CUI-ului se descoperă abia la trimiterea facturii în SPV. Modulul mută controlul la momentul creării clientului: casierul găsește firma după CUI direct din ecranul *Alege clientul* (preluare de la ANAF), iar formularul de partener deschis din POS cere datele de care are nevoie o factură e-Factura (CIUS-RO); partenerul nu poate fi salvat până nu sunt complete. Bonul fiscal rămâne bon: alegerea unei firme nu bifează factura.",
     "features": [
       "Formularul de partener deschis din POS cere stradă, localitate, județ și țară; pentru firme cere și CUI-ul (Tax ID).",
       "Pentru județul București, localitatea trebuie să fie sectorul (`Sector 1` ... `Sector 6`); `București` este refuzat la salvare.",
       "La un client nou, țara se completează implicit cu țara companiei POS.",
-      "Datele firmei se preiau de la ANAF după CUI, dacă este instalat un modul de creare partener după CUI; când ANAF nu răspunde, câmpurile rămân editabile și casierul le completează manual.",
+      "Client după CUI: dacă în căutarea din *Alege clientul* se tastează un CUI (cu sau fără `RO`) și nu se găsește nimeni, apare butonul Caută în ANAF. Un client existent pe acel CUI este oferit chiar dacă nu e încărcat în POS; altfel firma este preluată de la ANAF și creată.",
+      "După preluare, formularul de partener se deschide cu datele ANAF și o avertizare cu ce pare greșit: date lipsă, stradă fără număr, localitate care nu aparține județului. Clientul ajunge pe comandă doar după Salvare; dacă formularul se închide, clientul rămâne neconfirmat și la următoarea alegere din listă formularul se deschide din nou. Un client existent pe care e-Factura l-ar refuza este tratat ca unul nou.",
+      "O firmă radiată la ANAF este refuzată; „ANAF nu răspunde\" este deosebit de „firma nu există\". Pentru firme inactive fiscal se lasă o notă în chatter.",
+      "Cu modulul de autocompletare ANAF instalat, aceleași date sunt oferite și la tastarea CUI-ului în câmpul *Tax ID* din formularul clientului, ca în backoffice.",
+      "Când ANAF nu răspunde, câmpurile rămân editabile și casierul le completează manual.",
       "Regulile se aplică doar formularului deschis din POS; partenerii creați din backoffice și persoanele de contact ale unei firme (adresa vine de la firmă) nu sunt verificate.",
       "CNP-ul nu se cere; clientul persoană fizică are nevoie doar de adresa completă.",
+      "În România, alegerea unei firme drept client nu bifează „Factură\": bonul fiscal încheie vânzarea, iar factura se emite doar la cerere.",
+      "Modulul exclude `l10n_ro_pos_partner` (OCA, aceeași căutare după CUI la casă), ca să nu existe două butoane ANAF.",
       "Nu există setări proprii: modulul este activ pe toate punctele de vânzare după instalare. Fluxul pas-cu-pas este în fișa consultantului."
     ],
     "dependencies": [
       "point_of_sale",
-      "l10n_ro_edi"
+      "l10n_ro_edi",
+      "l10n_ro_anaf_partner_lookup"
     ],
     "connections": [
+      "l10n_ro_anaf_partner_lookup",
+      "l10n_ro_edi",
+      "l10n_ro_pos_partner",
+      "excludes",
       "l10n_ro_doc_screenshots",
       "l10n_ro_partner_create_by_vat"
     ],
-    "text": "l10n_ro_pos_partner_efactura\nl10n_ro_pos_partner_efactura\nLa casă, clientul care cere factură este creat în grabă de casier din ecranul POS, iar lipsa adresei sau a CUI-ului se descoperă abia la trimiterea facturii în SPV. Modulul mută controlul la momentul creării clientului: formularul de partener deschis din POS cere datele de care are nevoie o factură e-Factura (CIUS-RO), iar partenerul nu poate fi salvat până nu sunt complete.\nFormularul de partener deschis din POS cere stradă, localitate, județ și țară; pentru firme cere și CUI-ul (Tax ID).\nPentru județul București, localitatea trebuie să fie sectorul (`Sector 1` ... `Sector 6`); `București` este refuzat la salvare.\nLa un client nou, țara se completează implicit cu țara companiei POS.\nDatele firmei se preiau de la ANAF după CUI, dacă este instalat un modul de creare partener după CUI; când ANAF nu răspunde, câmpurile rămân editabile și casierul le completează manual.\nRegulile se aplică doar formularului deschis din POS; partenerii creați din backoffice și persoanele de contact ale unei firme (adresa vine de la firmă) nu sunt verificate.\nCNP-ul nu se cere; clientul persoană fizică are nevoie doar de adresa completă.\nNu există setări proprii: modulul este activ pe toate punctele de vânzare după instalare. Fluxul pas-cu-pas este în fișa consultantului."
+    "text": "l10n_ro_pos_partner_efactura\nl10n_ro_pos_partner_efactura\nLa casă, clientul care cere factură este creat în grabă de casier din ecranul POS, iar lipsa adresei sau a CUI-ului se descoperă abia la trimiterea facturii în SPV. Modulul mută controlul la momentul creării clientului: casierul găsește firma după CUI direct din ecranul *Alege clientul* (preluare de la ANAF), iar formularul de partener deschis din POS cere datele de care are nevoie o factură e-Factura (CIUS-RO); partenerul nu poate fi salvat până nu sunt complete. Bonul fiscal rămâne bon: alegerea unei firme nu bifează factura.\nFormularul de partener deschis din POS cere stradă, localitate, județ și țară; pentru firme cere și CUI-ul (Tax ID).\nPentru județul București, localitatea trebuie să fie sectorul (`Sector 1` ... `Sector 6`); `București` este refuzat la salvare.\nLa un client nou, țara se completează implicit cu țara companiei POS.\nClient după CUI: dacă în căutarea din *Alege clientul* se tastează un CUI (cu sau fără `RO`) și nu se găsește nimeni, apare butonul Caută în ANAF. Un client existent pe acel CUI este oferit chiar dacă nu e încărcat în POS; altfel firma este preluată de la ANAF și creată.\nDupă preluare, formularul de partener se deschide cu datele ANAF și o avertizare cu ce pare greșit: date lipsă, stradă fără număr, localitate care nu aparține județului. Clientul ajunge pe comandă doar după Salvare; dacă formularul se închide, clientul rămâne neconfirmat și la următoarea alegere din listă formularul se deschide din nou. Un client existent pe care e-Factura l-ar refuza este tratat ca unul nou.\nO firmă radiată la ANAF este refuzată; „ANAF nu răspunde\" este deosebit de „firma nu există\". Pentru firme inactive fiscal se lasă o notă în chatter.\nCu modulul de autocompletare ANAF instalat, aceleași date sunt oferite și la tastarea CUI-ului în câmpul *Tax ID* din formularul clientului, ca în backoffice.\nCând ANAF nu răspunde, câmpurile rămân editabile și casierul le completează manual.\nRegulile se aplică doar formularului deschis din POS; partenerii creați din backoffice și persoanele de contact ale unei firme (adresa vine de la firmă) nu sunt verificate.\nCNP-ul nu se cere; clientul persoană fizică are nevoie doar de adresa completă.\nÎn România, alegerea unei firme drept client nu bifează „Factură\": bonul fiscal încheie vânzarea, iar factura se emite doar la cerere.\nModulul exclude `l10n_ro_pos_partner` (OCA, aceeași căutare după CUI la casă), ca să nu existe două butoane ANAF.\nNu există setări proprii: modulul este activ pe toate punctele de vânzare după instalare. Fluxul pas-cu-pas este în fișa consultantului."
   },
   {
     "path": "l10n_ro_pos_returns/index.md",
@@ -20263,7 +20314,7 @@
     "version": "19.0.1.2.0",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_website_anaf",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_website_anaf",
-    "last_ingest": "2026-10-12",
+    "last_ingest": "2026-10-27",
     "friendly_name": "Romania - Website ANAF",
     "summary": "Modulul aduce interogarea ANAF în formularele de adresă din website (finalizarea comenzii și portalul clientului), pentru o adresă de facturare din România. Pe măsură ce clientul tastează codul fiscal (CUI), îi sunt afișate firma găsită la ANAF și datele ei, iar câmpurile goale se completează automat; la trimiterea adresei, codul fiscal este verificat, astfel încât factura și e-Factura să fie emise pe denumirea legală corectă.",
     "features": [
@@ -20276,16 +20327,16 @@
       "O firmă inactivă fiscal poate comanda: coșul primește o notă internă pentru vânzător (cod TVA anulat: factură cu TVA, fără taxare inversă, de verificat încasarea).",
       "Dacă ANAF nu răspunde, vânzarea nu este oprită: numărul este acceptat ca introdus, iar coșul primește o notă.",
       "Orice formular poate folosi căutarea: un input marcat cu `data-anaf-lookup` și o hartă `data-anaf-fill` a câmpurilor de completat (o folosește și formularul de cerere cont B2B din `deltatech_b2b_portal`).",
-      "Nu necesită configurare; adresa ANAF și cheia API (dacă există) sunt cele din `l10n_ro_partner_create_by_vat` (parametri de sistem `l10n_ro_partner_create_by_vat.*`)."
+      "Nu necesită configurare; adresa serviciului ANAF este cea din `l10n_ro_anaf_partner_lookup` (parametrul de sistem `l10n_ro_anaf_partner_lookup.url`); site-ul așteaptă cel mult 5 secunde un răspuns."
     ],
     "dependencies": [
       "website_sale",
-      "l10n_ro_partner_create_by_vat"
+      "l10n_ro_anaf_partner_lookup"
     ],
     "connections": [
       "deltatech_b2b_portal"
     ],
-    "text": "Romania - Website ANAF\nl10n_ro_website_anaf\nModulul aduce interogarea ANAF în formularele de adresă din website (finalizarea comenzii și portalul clientului), pentru o adresă de facturare din România. Pe măsură ce clientul tastează codul fiscal (CUI), îi sunt afișate firma găsită la ANAF și datele ei, iar câmpurile goale se completează automat; la trimiterea adresei, codul fiscal este verificat, astfel încât factura și e-Factura să fie emise pe denumirea legală corectă.\nSub câmpul de cod fiscal apare firma găsită la ANAF: denumirea pe care se emite factura, adresa și dacă este plătitoare de TVA.\nCâmpurile goale (denumire firmă, nr. de înregistrare la registrul comerțului, stradă, oraș, cod poștal, județ) se completează imediat; butonul Fill in from ANAF înlocuiește și ce a introdus clientul, doar la cerere.\nO firmă inactivă fiscal primește un avertisment, o firmă radiată este informată că nu poate comanda, iar un CNP introdus din greșeală are mesaj propriu.\nRută publică cu limită pe vizitator (20 de interogări la 10 minute) și cache de o zi per cod fiscal: ANAF nu este întrebat de două ori pentru aceeași firmă.\nO firmă negăsită sau radiată la ANAF este refuzată; un CNP are mesaj propriu.\nO firmă găsită primește pe partener denumirea legală (pe ea se emit factura și e-Factura); adresa tastată de client se păstrează, ANAF completează doar câmpurile goale.\nO firmă inactivă fiscal poate comanda: coșul primește o notă internă pentru vânzător (cod TVA anulat: factură cu TVA, fără taxare inversă, de verificat încasarea).\nDacă ANAF nu răspunde, vânzarea nu este oprită: numărul este acceptat ca introdus, iar coșul primește o notă.\nOrice formular poate folosi căutarea: un input marcat cu `data-anaf-lookup` și o hartă `data-anaf-fill` a câmpurilor de completat (o folosește și formularul de cerere cont B2B din `deltatech_b2b_portal`).\nNu necesită configurare; adresa ANAF și cheia API (dacă există) sunt cele din `l10n_ro_partner_create_by_vat` (parametri de sistem `l10n_ro_partner_create_by_vat.*`)."
+    "text": "Romania - Website ANAF\nl10n_ro_website_anaf\nModulul aduce interogarea ANAF în formularele de adresă din website (finalizarea comenzii și portalul clientului), pentru o adresă de facturare din România. Pe măsură ce clientul tastează codul fiscal (CUI), îi sunt afișate firma găsită la ANAF și datele ei, iar câmpurile goale se completează automat; la trimiterea adresei, codul fiscal este verificat, astfel încât factura și e-Factura să fie emise pe denumirea legală corectă.\nSub câmpul de cod fiscal apare firma găsită la ANAF: denumirea pe care se emite factura, adresa și dacă este plătitoare de TVA.\nCâmpurile goale (denumire firmă, nr. de înregistrare la registrul comerțului, stradă, oraș, cod poștal, județ) se completează imediat; butonul Fill in from ANAF înlocuiește și ce a introdus clientul, doar la cerere.\nO firmă inactivă fiscal primește un avertisment, o firmă radiată este informată că nu poate comanda, iar un CNP introdus din greșeală are mesaj propriu.\nRută publică cu limită pe vizitator (20 de interogări la 10 minute) și cache de o zi per cod fiscal: ANAF nu este întrebat de două ori pentru aceeași firmă.\nO firmă negăsită sau radiată la ANAF este refuzată; un CNP are mesaj propriu.\nO firmă găsită primește pe partener denumirea legală (pe ea se emit factura și e-Factura); adresa tastată de client se păstrează, ANAF completează doar câmpurile goale.\nO firmă inactivă fiscal poate comanda: coșul primește o notă internă pentru vânzător (cod TVA anulat: factură cu TVA, fără taxare inversă, de verificat încasarea).\nDacă ANAF nu răspunde, vânzarea nu este oprită: numărul este acceptat ca introdus, iar coșul primește o notă.\nOrice formular poate folosi căutarea: un input marcat cu `data-anaf-lookup` și o hartă `data-anaf-fill` a câmpurilor de completat (o folosește și formularul de cerere cont B2B din `deltatech_b2b_portal`).\nNu necesită configurare; adresa serviciului ANAF este cea din `l10n_ro_anaf_partner_lookup` (parametrul de sistem `l10n_ro_anaf_partner_lookup.url`); site-ul așteaptă cel mult 5 secunde un răspuns."
   },
   {
     "path": "l10n_ro_website_legal_guarantee/index.md",

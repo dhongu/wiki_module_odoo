@@ -1,7 +1,7 @@
 # Romania - Decont de TVA (D300) (localizat la `l10n_ro_anaf_d300/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d300`
-- **Versiune:** `19.0.0.0.30`
+- **Versiune:** `19.0.0.0.31`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d300
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d300`
 - **Ultima Ingestie:** 2026-10-05

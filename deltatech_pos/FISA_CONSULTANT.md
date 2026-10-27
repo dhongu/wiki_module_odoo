@@ -68,12 +68,25 @@ Configurați:
 
 - **Type of electronic cash register**: `FiscalWire`, `Optima`, `Daisy`, `Succes`,
   `FiscalNet` sau `Incotex`;
-- **Trim long product name** și lungimea maximă, dacă modelul casei are limită strictă;
+- **Trim long product name** și lungimea maximă din **Trim to** (apare doar cu opțiunea activă), dacă modelul casei are limită strictă;
 - **File prefix** și **File extension** pentru fișierul preluat de driver;
 - **Cash In/Out** pentru operațiuni de numerar din POS;
 - **Cash In/Out to ECR** pentru tipărirea dispozițiilor pe casa de marcat;
 - **Print duplicate payment disposal** pentru al doilea exemplar la dispoziție;
-- **Print order number as barcode** dacă driverul/modelul folosit suportă acest format.
+- **Print order number as barcode** dacă driverul/modelul folosit suportă acest format — codul conține numărul bonului
+  (**Receipt Number**, ex. `250-3-000012`);
+  **Order barcode type** alege **Normal** sau **QR** (QR doar pe Datecs FiscalWire și Daisy,
+  la celelalte rămâne codul normal). Selecția **Order barcode type** apare în Settings doar cât
+  timp **Print order number as barcode** este bifată; implicit este **Normal**. Codul se poate
+  scana în lista de comenzi din POS, fără a intra în câmpul de căutare, ca să găsești comanda după
+  numărul bonului (vezi Pasul 3 din Flux de utilizare).
+- **Tipărește codul intern al produsului** (în interfața în engleză **Print product internal
+  reference**; eticheta românească vine din traducerea modulului; implicit dezactivată) dacă pe bon trebuie să apară și
+  codul intern al produsului, în paranteză după denumire (ex. `Grinzi 10/10x4m (172006)`), ca
+  marfa să poată fi eliberată din depozit după cod. Cu **Trim long product name** activ,
+  denumirea se scurtează ca să încapă codul în lungimea din **Trim to**; codul nu se taie. Dacă codul
+  (cu paranteze) ocupă toată lungimea din **Trim to**, nu se mai tipărește, iar linia rămâne doar cu
+  denumirea, tăiată la limită — alegeți în **Trim to** o lungime care lasă loc și denumirii.
 
 ### Pasul 3 — Configurare metode de plată
 
@@ -99,8 +112,11 @@ vânzarea trebuie facturată normal, nu pe bon cu CIF.
 ### Pasul 1 — Configurarea ECR pe punctul de lucru
 
 Mergeți la **Point of Sale → Configuration → Settings**, selectați POS-ul dorit și completați
-secțiunea ECR: tipul aparatului, prefixul/extensia fișierului și opțiunile de cash in/out (detaliate
-la secțiunea 5, Configurare inițială).
+secțiunea ECR: tipul aparatului, prefixul/extensia fișierului, opțiunile de cash in/out și ce se
+tipărește pe bon (**Print order number as barcode**, **Tipărește codul intern al produsului**), detaliate
+la secțiunea 5, Configurare inițială. Dacă bonul trebuie să poarte numărul comenzii ca cod de bare,
+bifați **Print order number as barcode**; imediat dedesubt apare **Order barcode type** (**Normal**
+sau **QR**), vizibil doar cât timp bifa este activă. Efectul opțiunilor pe bon e descris la Pasul 3.
 
 ![Setări POS — secțiunea ECR](screenshots/01_config_ecr.png)
 
@@ -119,6 +135,15 @@ prefixul și extensia configurate, iar driverul AMEF îl preia și îl tipăreș
 numele clientului (dacă e selectat), referința comenzii, notele, liniile de produs cu TVA,
 discounturile și totalurile pe tipuri de plată.
 
+Cu **Tipărește codul intern al produsului** activ, fiecare linie de produs are pe bon codul intern în
+paranteză după denumire, de exemplu `Grinzi 10/10x4m (172006)`; produsele fără cod intern se
+tipăresc doar cu denumirea. Opțiunea schimbă doar bonul fiscal: în ecranul de vânzare din POS și
+pe factură linia rămâne cu denumirea produsului.
+
+Cu **Print order number as barcode** activ, la finalul bonului se tipărește un cod de bare cu
+numărul bonului (**Receipt Number**, ex. `250-3-000012`), același cu referința din antet; scanat în
+lista de comenzi din POS, găsește comanda (de exemplu pentru un retur).
+
 Rezultatul se vede și din backoffice: în **Point of Sale → Orders**, comanda plătită are tabul
 **ECR data** cu textul fișierului generat (referința comenzii apare separat, în tabul „Informații
 suplimentare"). Cât timp comanda e `paid` și bonul **nu a fost încă tipărit**, butonul
@@ -135,6 +160,13 @@ deci un bon mai vechi (peste una-două zile) se găsește chiar dacă nu face pa
 comenzi încărcate pe pagină — de exemplu pentru un retur. Se poate căuta după **Receipt Number**,
 **Order Number**, **Date**, **Customer** și, când câmpul e afișat, **Cardholder Name**. Până la
 versiunea 19.0.2.10.6 căutarea filtra doar comenzile deja încărcate.
+
+**Scanarea bonului în ecranul de comenzi.** Dacă pe bon s-a tipărit numărul comenzii ca cod de bare
+sau QR (**Print order number as barcode**), codul se poate scana direct în ecranul de comenzi din
+POS, fără să faceți clic în câmpul de căutare. POS-ul trece pe comenzile sincronizate, caută după
+**Receipt Number** valoarea scanată și selectează comanda găsită, de exemplu pentru un retur. Dacă
+nicio comandă nu corespunde codului, apare avertismentul „No order found for <cod>". Scanerul trebuie
+să citească tipul de cod tipărit; unele scanere au QR dezactivat din fabrică.
 
 ### Pasul 4 — Rapoarte X și Z, cash in / cash out
 
@@ -195,7 +227,8 @@ comanda sursă).
 | Metodă de plată non-cash | totalul folosește `cod_ecr` al metodei de plată |
 | Metodă de plată cash | totalul cash se trimite separat în fișierul ECR |
 | Comandă cu note | nota generală și notele din structura bonului merg în fișierul ECR |
-| Denumire produs prea lungă | se taie sau se continuă pe linii suplimentare, după setarea de trim |
+| Denumire produs prea lungă | se taie sau se continuă pe linii suplimentare, după setarea de trim; cu **Tipărește codul intern al produsului** activ se taie denumirea, nu codul din paranteză; fără trim, la bonul trimis prin fișier, codul care nu mai încape pe rând trece întreg pe rândul următor, nu se rupe |
+| **Tipărește codul intern al produsului** activ | codul intern apare în paranteză după denumire pe bon; produsele fără cod intern rămân doar cu denumirea |
 | Caractere cu diacritice | sunt transformate în ASCII pentru compatibilitate cu driverul |
 | Comandă negativă / restituire | validarea cere client selectat înainte de finalizare |
 | Cash in / cash out fără client | utilizatorul este obligat să selecteze clientul înainte de operațiune |
@@ -215,6 +248,13 @@ comanda sursă).
 | AMEF-08 | Restituire cu total negativ și fără client | validarea este blocată până la selectarea clientului |
 | AMEF-09 | Reimprimare din backoffice | butonul **Print Fiscal Receipt** oferă fișierul comenzii |
 | AMEF-10 | Căutare în ecranul de comenzi POS după numărul unui bon mai vechi, neîncărcat pe prima pagină | bonul este găsit (căutarea se face pe server) |
+| AMEF-11 | Bon cu **Tipărește codul intern al produsului** activ, produs cu cod intern `172006` | linia de pe bon este `Grinzi 10/10x4m (172006)`; un produs fără cod intern apare doar cu denumirea |
+| AMEF-12 | Ca AMEF-11, cu **Trim long product name** activ și **Trim to** = 20 | linia devine `Grinzi 10/1 (172006)` — se scurtează denumirea, codul rămâne întreg |
+| AMEF-12b | Cod intern `GRINDA-BRAD-10X10`, **Trim long product name** activ, **Trim to** = 12 | codul nu încape: linia este `Grinzi 10/10`, fără cod, nu un cod tăiat |
+| AMEF-13 | Bon cu **Print order number as barcode** activ | codul de bare conține numărul bonului (ex. `250-3-000012`); scanat în lista de comenzi din POS, găsește comanda |
+| AMEF-14 | **Print order number as barcode** bifat, **Order barcode type** = Normal (apoi QR) pe un Datecs sau Daisy | selecția apare doar cu bifa activă; bonul tipărește codul normal, respectiv QR-ul, cu numărul comenzii |
+| AMEF-15 | Scanarea bonului (cod normal, apoi QR) în ecranul de comenzi, fără clic în câmpul de căutare | comanda se găsește după numărul bonului și se selectează |
+| AMEF-16 | Scanarea unui cod care nu aparține niciunei comenzi, în ecranul de comenzi | apare avertismentul „No order found for <cod>" |
 
 ## 9. Legături cu alte module
 
@@ -230,9 +270,13 @@ comanda sursă).
 - [ ] Fiecare metodă de plată are `Cod ECR` corect pentru driverul casei.
 - [ ] Tipul de ECR configurat în POS corespunde modelului real din magazin.
 - [ ] Fișierele descărcate au prefixul și extensia cerute de utilitarul local.
+- [ ] Dacă magazinul eliberează marfa după cod, **Tipărește codul intern al produsului** e activă și
+      produsele vândute au **Internal Reference** completat.
 - [ ] Bonul fiscal se tipărește după validarea comenzii, fără pași manuali suplimentari în Odoo.
 - [ ] Cash in / cash out funcționează atât contabil în sesiune, cât și pe AMEF dacă opțiunea e activă.
 - [ ] Căutarea în ecranul de comenzi POS găsește și bonurile mai vechi de una-două zile (necesar pentru retur).
+- [ ] Dacă se folosește codul de bare pe bon: **Order barcode type** este ales corect (QR doar pe
+      Datecs și Daisy), aparatul îl tipărește, iar scanerul îl citește în ecranul de comenzi.
 - [ ] Rapoartele X și Z pot fi generate de utilizatorii operaționali.
 - [ ] Pentru retururi și dispoziții de plată există partener selectat.
 - [ ] D394 POS este documentată separat când clientul cere și raportarea fiscală a bonurilor.

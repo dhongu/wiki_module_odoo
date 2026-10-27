@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.4.2`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products_website`
 - **Cale Locală:** `odoo-addons/bitshop_vendor/deltatech_vendor_products_website`
-- **Ultima Ingestie:** `2026-10-19`
+- **Ultima Ingestie:** `2026-10-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -31,6 +31,7 @@ Modulul leagă catalogul produselor furnizorilor de magazinul online. Un flux de
 
 - [deltatech_vendor_products](../deltatech_vendor_products/index.md)
 - `website_sale`
+- `website_sale_stock`
 
 Nu are dependențe Python externe (`psutil` a fost eliminat în 19.0.1.4.0).
 
@@ -58,3 +59,4 @@ Nu are dependențe Python externe (`psutil` a fost eliminat în 19.0.1.4.0).
 - [deltatech_vendor_products](../deltatech_vendor_products/index.md): modulul de bază cu produsele și fluxurile furnizorilor; acest modul îi adaugă expunerea în magazinul online.
 - [deltatech_vendor_products_kramp](../deltatech_vendor_products_kramp/index.md): conector care folosește `_online_search_fields()` pentru a adăuga codul de bare (conform istoricului modulului).
 - `website_sale`: infrastructura de magazin online (coș, comenzi, pagini de produs).
+- `website_sale_stock`: stocul din magazin; necesar pentru opțiunea **Sell when Out-of-Stock** (`allow_out_of_stock_order`) setată pe produsele create.

@@ -17,8 +17,9 @@ de rambursare vine de la bancă sau de la societatea de leasing, iar contabilul 
 împartă datoria în partea scadentă într-un an și partea pe termen lung. Modulul ține contractul și
 graficul în Odoo și generează notele din grafic și din extrasul de cont: ratele creditului se leagă
 direct de linia de extras, dobânda se angajează lunar, iar datoria se reclasifică automat între
-contul „peste un an” și contul „sub un an”. La leasing, generează nota de activare a bunului și
-nota contabilă a fiecărei rate (pe baza facturii locatorului). Situația datoriilor pe scadențe dă, la orice dată, cifrele pentru bilanț și pentru
+contul „peste un an” și contul „sub un an”. La leasing, generează nota de activare a bunului, iar
+rata o leagă de factura de furnizor a locatorului (importată din e-Factura sau creată din grafic),
+ca TVA-ul ei să ajungă în declarații. Situația datoriilor pe scadențe dă, la orice dată, cifrele pentru bilanț și pentru
 nota explicativă privind datoriile.
 
 ## 2. Bază legală și context
@@ -51,8 +52,8 @@ notă contabilă, ca balanța să arate repartizarea corectă.
 
 - **Contabil trezorerie** — creditele: contractul, tragerea și ratele din extras, notele de sfârșit
   de lună, schimbarea dobânzii, rambursarea anticipată.
-- **Contabil imobilizări / furnizori** — leasingul: contractul, activarea bunului, notele ratelor (din
-  facturile locatorului).
+- **Contabil imobilizări / furnizori** — leasingul: contractul, activarea bunului, legarea ratelor de
+  facturile locatorului.
 - **Contabil șef** — tipurile de contract, situația datoriilor pe scadențe la închidere.
 
 Roluri recomandate pentru testare:
@@ -75,7 +76,7 @@ Roluri recomandate pentru testare:
 | 4711 | comisionul de acordare eșalonat |
 | 4041 / 401 | furnizori de imobilizări (leasing financiar) / furnizori (leasing operațional) |
 | 612 | chirie (leasing operațional) |
-| 4426 | TVA deductibilă (leasing) |
+| 4426 | TVA deductibilă (leasing), cu taxă și grile de decont când rata vine prin factura locatorului: „S” (servicii) pe rate și avans, „G” (bunuri) pe valoarea reziduală; taxele de 19% au grile doar cu `l10n_ro_anaf_d300` |
 | 5121 | contul bancar al creditului |
 | 665 / 765 | diferențe de curs (prin reevaluarea valutară) |
 
@@ -83,7 +84,9 @@ Date minime pentru demo:
 - companie românească, cu planul de conturi RO;
 - o bancă (partener) și o societate de leasing (partener);
 - un jurnal de bancă și un jurnal de operațiuni diverse;
-- un extras de cont cu linia de tragere a creditului și liniile ratelor.
+- un extras de cont cu linia de tragere a creditului și liniile ratelor;
+- pentru leasing: o factură de furnizor a locatorului (importată din e-Factura sau introdusă
+  manual), cu taxa de TVA deductibil pentru servicii.
 
 Exemplul din fișă: **credit de 120.000 RON**, 36 de rate, dobândă 7,2%, zile reale/360, tras pe
 15.01.2025, comision de acordare 600 RON reținut din tragere; **leasing financiar** pentru o
@@ -220,7 +223,16 @@ dobândă** și în istoricul contractului, cu dobânda rămasă înainte și du
 Creați un contract cu **Tip contract** = *Leasing financiar*. Completați **Denumire bun**, **Dată
 start** (01.01.2025), **Număr rate lunare** (48), **Sumă finanțată** (80.000), **Avans** (20.000),
 **Tip valoare reziduală** = *Procent din valoarea bunului*, **Valoare reziduală (%)** = 10,
-**Dobândă anuală** (8,5) și, în pagina **Contabilitate**, **Cont imobilizare (21x)** = 2133. Apăsați **Generează grafic**. Verificați pe ecran:
+**Dobândă anuală** (8,5) și, în pagina **Contabilitate**, **Cont imobilizare (21x)** = 2133.
+Câmpul **Înregistrare rate** (lângă finanțator) alege cum se înregistrează ratele, pentru tot
+contractul: **Factura de furnizor a locatorului** (implicit la contractele noi) sau **Notă contabilă
+din contract** (rămân pe ea contractele create înainte de 19.0.2.1.0). Pentru alt regim de TVA
+decât deducerea integrală (de exemplu 50% la autoturisme), alegeți **Taxă achiziție** în pagina
+**Contabilitate**, la **Alte conturi**. Apăsați **Generează grafic**.
+
+Captura arată contractul după activare (pasul 11), pe factura locatorului, cu avansul și ratele
+până la 01.03.2026 facturate (**Înregistrată**); pe ratele **În așteptare** apare butonul **Creează
+factură furnizor**. Verificați pe ecran:
 - **Valoare bun** = 100.000 (avans + sumă finanțată);
 - linia 0 este **Avans** (20.000, TVA 3.800); ultima linie (a doua pagină a graficului) este
   **Valoare reziduală** (10.000), separată;
@@ -241,44 +253,119 @@ rate).
 
 ![Nota de activare: 2133 = 1672](screenshots/11_leasing_nota_activare.png)
 
-### Pasul 12 — Nota ratei de leasing
+### Pasul 12 — Rata de leasing: factura locatorului
 
-La primirea facturii locatorului, pe rata scadentă apăsați **Înregistrează** (sau **Înregistrează
-rate scadente** pentru toate). Modulul creează o **notă contabilă** (nu o factură de furnizor) în
-jurnalul de operațiuni diverse. Captura arată rata 2 (01.03.2025). Verificați nota ratei:
+Varianta se alege pe contract, în câmpul **Înregistrare rate** (pasul 10).
+
+**A. Factura de furnizor a locatorului** (implicit la contractele noi). Modulul nu mai creează notă
+pentru rată; rata se leagă de factura locatorului, iar TVA-ul facturii, cu taxă și grile de decont,
+ajunge în D300, D394, jurnalul de cumpărări și SAF-T (D406).
+
+- *Factura vine din e-Factura (SPV):* deschideți factura de furnizor importată (ciornă) și, în
+  câmpul **Rate leasing** din partea de sus a formularului, alegeți rata sau ratele facturate.
+  Sumele facturii se păstrează; verificați conturile liniilor: principalul pe 1671, dobânda pe 666
+  (la leasing operațional, rata pe 612), cu TVA deductibil. O factură care acoperă mai multe
+  contracte (mai multe bunuri la același locator) cere contractul pe fiecare linie, în coloana
+  **Contract de împrumut / leasing** (opțională în lista liniilor facturii).
+- *Factură de furnizor creată manual, goală:* alegeți rata în **Rate leasing**; liniile facturii
+  (principal, dobândă, TVA) se completează automat din grafic, dacă rata e a unui singur contract.
+- *Factura nu vine din e-Factura:* în grafic, pe linia ratei, apăsați **Creează factură furnizor**
+  (pasul 10). Se deschide o factură în ciornă, completată din grafic (principal, dobândă, TVA cu cota
+  ratei) și legată de rată; completați numărul și data facturii locatorului și confirmați.
+- Dacă rata e deja pe o factură în ciornă, **Creează factură furnizor** deschide acea ciornă, nu face
+  o a doua factură, iar rata nu mai apare în **Rate leasing** pe altă factură. Dacă ați creat ciorna
+  din grafic și factura vine apoi din e-Factura, ștergeți ciorna și alegeți rata pe factura importată.
+- Taxa folosită implicit este TVA deductibil pentru servicii („S”), cu cota ratei (19% / 21%);
+  valoarea reziduală, la care se transferă proprietatea bunului, primește TVA deductibil pentru
+  bunuri („G”, HG 1/2016, Titlul VII, pct. 8). Pentru alt regim (de exemplu deducerea de 50% la
+  autoturisme), alegeți **Taxă achiziție** pe contract: pe ratele cu altă cotă se folosește aceeași
+  taxă la cota ratei (ND 50% 19% pentru scadențele de dinainte de 01.08.2025). Dacă taxa aleasă nu
+  are echivalent la cota ratei, **Creează factură furnizor** dă eroare: introduceți factura manual,
+  cu taxa pe linii, și alegeți rata în **Rate leasing**.
+
+La confirmarea facturii, verificați:
+- rata trece în **Înregistrată**, cu factura ca document (coloana opțională **Document contabil** din grafic);
+- contul de furnizor al facturii devine cel din contract (**4041** la leasing financiar), dar doar
+  când factura are un singur contract. La o factură pe mai multe contracte datoria rămâne pe contul
+  implicit al locatorului (401): treceți 4041 manual, în fila **Elemente jurnal**, înainte de confirmare;
+- liniile facturii primesc contractul, deci intră în soldurile 1671 / 1672, în reclasificarea lunară
+  și în situația datoriilor; butonul **Facturi furnizor** de pe contract le listează;
+- dacă principalul facturat diferă de cel din grafic, contractul primește un mesaj în istoric.
+
+Captura arată factura locatorului pentru rata 7 (01.08.2025, prima cu cota de 21%), creată din
+grafic și confirmată, cu rata aleasă în **Rate leasing**. În **Elemente jurnal**:
+- **Dr 1671** 1.282,73 (principalul) și **Dr 666** 513,48 (dobânda), cu grila *24 - TAX BASE*;
+- **Dr 4426** 377,20 (taxa *21% S*), cu grila *24 - VAT*;
+- **Cr 4041** 2.173,41 (contul de furnizor din contract, nu 401).
+
+> **Cota de 19%.** În planul de conturi RO taxele de 19% sunt arhivate și nu au grile de decont: o
+> factură primită acum pentru o rată scadentă înainte de 01.08.2025 ajunge în D300 doar cu modulul
+> `l10n_ro_anaf_d300` instalat (rd. 33, regularizări taxă dedusă).
+
+![Factura locatorului pentru rata 7, legată în Rate leasing: 1671 + 666 + 4426 = 4041](screenshots/12_leasing_factura_rata.png)
+
+Dacă factura trece în ciornă sau se șterge, rata revine **În așteptare**; la o nouă confirmare a
+facturii, rata se leagă din nou. O rată care nu trebuie facturată (de exemplu în perioada de grație)
+se marchează cu **Omite**. Pe un contract pe această variantă, butoanele **Înregistrează** și
+**Înregistrează rate scadente** nu mai sunt disponibile, iar acțiunea programată nu mai postează
+ratele (rulează în continuare notele de sfârșit de lună).
+
+**B. Notă contabilă din contract** (contractele existente). La primirea facturii, pe rata scadentă
+apăsați **Înregistrează** (sau **Înregistrează rate scadente** pentru toate). Modulul creează o
+**notă contabilă** (nu o factură de furnizor) în jurnalul de operațiuni diverse. Verificați nota
+ratei:
 - **Dr 1671** (principalul), **Dr 666** (dobânda), **Dr 4426** (TVA cu cota ratei);
 - **Cr 4041** (totalul facturii locatorului).
 
 > **Atenție la TVA.** Linia 4426 a notei nu are taxă și grile de decont: TVA-ul nu ajunge automat în
-> D300, D394, jurnalul de cumpărări sau secțiunea de taxe din SAF-T (D406). Alegeți una dintre
-> variante, pentru tot contractul:
-> - **Nota din contract** (recomandat): înregistrați rata din contract și adăugați manual TVA-ul
->   facturii în D300 / D394 (dreptul de deducere se exercită pe baza facturii locatorului, art. 299
->   și 301 CF). În SAF-T (D406), soldul 4426 al acestor note nu are corespondent în secțiunea de
->   taxe; diferența se justifică prin facturile locatorului, păstrate la dosar.
-> - **Factura din e-Factura:** înregistrați factura locatorului ca factură de furnizor, cu liniile pe
->   1671 (principal) și 666 (dobândă) și taxa de TVA deductibilă; în contract, marcați fiecare rată cu
->   **Omite** imediat ce primiți factura, ca să nu se dubleze. Factura de furnizor nu este legată de
->   contract, deci **debifați Reclasificare sub un an** pe contract înainte de prima notă de sfârșit
->   de lună: altfel reclasificarea automată mută din nou în 1671 principalul deja descărcat de
->   factură și repartizarea 1671 / 1672 din bilanț iese greșită. Reclasificarea 1672 → 1671 se face
->   atunci manual, la închiderea perioadei, după situația datoriilor pe scadențe. Acțiunea
->   programată rulează și notele de sfârșit de lună ale creditelor: dacă o dezactivați, rulați
->   manual **Note de sfârșit de lună** pe fiecare contract. O rată rămasă „În așteptare” apare
->   restantă în situația datoriilor. La închiderea anticipată, înregistrați factura de închidere a
->   locatorului tot ca factură de furnizor, marcați ratele rămase **Omite** și finalizați contractul
->   cu **Finalizează**; nu folosiți asistentul **Închidere anticipată**, care citește doar notele
->   legate de contract.
+> D300, D394, jurnalul de cumpărări sau secțiunea de taxe din SAF-T (D406). Adăugați manual TVA-ul
+> facturii în D300 / D394 (dreptul de deducere se exercită pe baza facturii locatorului, art. 299
+> și 301 CF); în SAF-T, soldul 4426 al acestor note nu are corespondent în secțiunea de taxe, iar
+> diferența se justifică prin facturile locatorului, păstrate la dosar. Dacă factura locatorului se
+> importă și din e-Factura, operația s-ar dubla: treceți contractul pe varianta A.
 
-![Nota ratei de leasing: 1671 + 666 + 4426 = 4041](screenshots/12_leasing_nota_rata.png)
+Ca să treceți un contract existent pe factura locatorului, schimbați **Înregistrare rate**; schimbarea
+se aplică doar ratelor încă **În așteptare**.
 
 ### Pasul 13 — Închiderea anticipată
 
-Apăsați **Închidere anticipată**. La credit, alegeți **Linie de extras** a rambursării: data
-închiderii devine data plății. Asistentul arată **Principal sub un an**, **Principal peste un an** și
-**Dobândă angajată**; completați **Comision de rambursare anticipată** și **Cont comision** (627,
-sau 6581 dacă contractul îl califică drept penalitate). La leasing financiar completați **Dobândă
-facturată**; TVA-ul se calculează. Apăsați **Închide contractul**.
+Apăsați **Închidere anticipată**. Asistentul arată **Principal sub un an** și **Principal peste un
+an**.
+
+La credit, alegeți **Linie de extras** a rambursării: data închiderii devine data plății. Asistentul
+arată și **Dobândă angajată**; completați **Comision de rambursare anticipată** și **Cont comision**
+(627, sau 6581 dacă contractul îl califică drept penalitate).
+
+La leasing financiar:
+- *cu factura locatorului:* introduceți factura de închidere a locatorului (principalul rămas pe
+  1671, dobânda pe 666, comisionul), cu TVA deductibil pentru bunuri („G”, transferul proprietății),
+  la cota de la data facturii. Factura de închidere nu are rate în **Rate leasing**, deci contul de
+  furnizor nu se schimbă automat: **înainte de confirmare**, în fila **Elemente jurnal**, treceți
+  contul de furnizor pe cel din contract (4041), inclusiv la factura importată din e-Factura, care
+  vine cu contul implicit al locatorului (401); altfel asistentul refuză factura. Confirmați factura,
+  apoi alegeți-o în **Factura de închidere a locatorului**; data închiderii devine data facturii, iar câmpurile de dobândă,
+  comision, penalitate și TVA dispar din asistent. Modulul trece soldul 1672 pe 1671 (notă de diferență), pe care factura îl
+  stinge; nu se creează notă de închidere. Dacă după factură rămâne sold pe datorie, contractul
+  primește un mesaj în istoric (verificați conturile liniilor facturii);
+- *cu nota din contract:* completați **Dobândă facturată**, **Comision de rambursare anticipată** și
+  **Cont comision**; TVA-ul se calculează.
+
+Apăsați **Închide contractul**.
+
+![Asistentul de închidere anticipată a creditului](screenshots/13_inchidere_anticipata.png)
+
+A doua captură arată asistentul pe contractul de leasing LEAS-2025-001, cu factura de închidere a
+locatorului din 31.03.2026 aleasă (după ratele facturate până la 01.03.2026): **Principal sub un
+an** 15.469,88 și **Principal peste un an** 46.501,09, în total principalul rămas, 61.970,97. Factura
+de închidere are:
+- **Dr 1671** 61.970,97 (principalul rămas) și **Dr 666** 450,00 (dobânda);
+- **Dr 4426** 13.108,40 (taxa *21% G*);
+- **Cr 4041** 75.529,37.
+
+La confirmarea asistentului, nota de diferență trece 46.501,09 de pe 1672 pe 1671 (Dr 1672 = Cr 1671),
+iar factura stinge 1671.
+
+![Asistentul de închidere anticipată a leasingului, cu factura de închidere a locatorului](screenshots/13_inchidere_leasing_factura.png)
 
 Verificați după închidere:
 - soldurile 16211 / 16212 / 16821 (la leasing 1671 / 1672) ale contractului sunt zero;
@@ -286,9 +373,8 @@ Verificați după închidere:
 - la credit cu comision eșalonat, restul de pe 4711 a trecut pe 627;
 - notele de sfârșit de lună datate după închidere au fost anulate (mesaj în istoricul contractului).
 
-Dacă anulați nota de închidere (sau reconcilierea extrasului), contractul se redeschide.
-
-![Asistentul de închidere anticipată a creditului](screenshots/13_inchidere_anticipata.png)
+Dacă anulați nota de închidere (factura de închidere sau reconcilierea extrasului), contractul se
+redeschide.
 
 ### Pasul 14 — Nota extrasului la închiderea anticipată
 
@@ -364,11 +450,16 @@ Comision eșalonat (lunar): Dr 627               =  Cr 4711
 ```
 Activare:                  Dr 2133   100.000    =  Cr 1672  100.000
 Reclasificare 12 luni:     Dr 1672              =  Cr 1671
-Nota avansului (factura):  Dr 1671    20.000    =  Cr 4041
+Avansul (factura):         Dr 1671    20.000    =  Cr 4041
                            Dr 4426   (TVA)
-Nota ratei (factura):      Dr 1671 (principal) + Dr 666 (dobândă) + Dr 4426 (TVA) = Cr 4041
+Rata (factura locatorului): Dr 1671 (principal) + Dr 666 (dobândă) + Dr 4426 (TVA „S”) = Cr 4041
+Valoarea reziduală (factura): Dr 1671    10.000    =  Cr 4041
+                           Dr 4426   (TVA „G”)
 Plata facturii:            Dr 4041              =  Cr 5121
 ```
+
+La varianta cu factura locatorului, liniile de mai sus sunt liniile facturii (cu taxă și grile de
+decont); la varianta cu nota din contract, ele sunt liniile notei generate de modul.
 
 **Leasing operațional:** Dr 612 + Dr 4426 = Cr 401.
 
@@ -380,7 +471,10 @@ Comision eșalonat rămas:       Dr 627              =  Cr 4711     (dacă se e�
 Nota extrasului:               Dr 16211 + Dr 16212 + Dr 16821 + Dr 627  =  Cr 5121
 ```
 
-**Închidere anticipată, leasing financiar:** Dr 1671 + 1672 + 666 + 627 / 6581 + 4426 = Cr 4041.
+**Închidere anticipată, leasing financiar:**
+- cu nota din contract: Dr 1671 + 1672 + 666 + 627 / 6581 + 4426 = Cr 4041;
+- cu factura de închidere a locatorului: nota de diferență Dr 1672 = Cr 1671 (soldul peste un an trece pe sub un an),
+  apoi factura locatorului (Dr 1671 + 666 + 627 + 4426 cu TVA „G” = Cr 4041) stinge 1671; fără notă de închidere.
 
 - Schimbarea dobânzii și preluarea unui contract în curs nu generează note.
 - Soldurile în valută din 162 / 167 / 168 / 519 se reevaluează lunar prin
@@ -404,17 +498,21 @@ Nota extrasului:               Dr 16211 + Dr 16212 + Dr 16821 + Dr 627  =  Cr 51
 | `l10n_ro_currency_revaluation` | reevaluarea lunară a soldurilor în valută 16x / 519 | opțional, automat dacă e instalat |
 | `account_asset` (Enterprise) | amortizarea bunului în leasing financiar | manual (fișa mijlocului fix) |
 | Bilanț / note explicative | repartizarea datoriilor sub / peste un an, peste 5 ani, garanții | din raportul de scadențe și din conturile X1 / X2 |
-| D300 / D394 / SAF-T D406 (taxe) | TVA-ul ratelor de leasing | **nealimentat automat** de nota ratei (vezi pasul 12) |
+| `l10n_ro_anaf_d300` / `l10n_ro_anaf_d394` / SAF-T D406 (taxe) | TVA-ul ratelor de leasing | automat prin factura locatorului; **nealimentat** de nota din contract (vezi pasul 12) |
+| e-Factura (factura locatorului importată din SPV) | documentul de care se leagă rata | manual: alegerea ratei pe factură |
 
-**Ce e automat:** graficul de rambursare, nota de activare a leasingului, notele ratelor de
-leasing, contrapartida tragerii și a ratelor de credit pe extras, dobânda angajată lunar, comisionul
+**Ce e automat:** graficul de rambursare, nota de activare a leasingului, factura ratei creată din
+grafic (**Creează factură furnizor**), legarea ratei la confirmarea facturii (stare, cont 4041,
+contractul pe liniile facturii), notele ratelor de leasing la contractele pe nota din contract,
+contrapartida tragerii și a ratelor de credit pe extras, dobânda angajată lunar, comisionul
 eșalonat, reclasificarea lunară, închiderea anticipată și situația datoriilor pe scadențe.
 
 **Ce rămâne manual:** clasificarea leasingului ca financiar sau operațional, alegerea contului 21x,
 compararea graficului cu cel primit de la finanțator (și editarea lui, dacă diferă), legarea
-fiecărei linii de extras de rată, fișa de mijloc fix, diferența dintre cursul băncii și cursul BNR
-la plată (rămâne pe suspens), angajarea dobânzii de leasing la sfârșitul perioadei (cu stornare),
-TVA-ul ratelor de leasing în declarații, reclasificarea 4711 / 4712.
+fiecărei linii de extras de rată, alegerea ratei pe factura importată din e-Factura (nu se propune
+automat) și verificarea conturilor liniilor ei, fișa de mijloc fix, diferența dintre cursul băncii
+și cursul BNR la plată (rămâne pe suspens), angajarea dobânzii de leasing la sfârșitul perioadei
+(cu stornare), TVA-ul ratelor la contractele pe nota din contract, reclasificarea 4711 / 4712.
 
 ## 8. Verificări pentru consultant
 
@@ -431,7 +529,21 @@ TVA-ul ratelor de leasing în declarații, reclasificarea 4711 / 4712.
 - [ ] Schimbarea dobânzii nu modifică ratele înregistrate și nu creează notă.
 - [ ] Leasing: valoarea bunului 100.000, avans în linia 0, reziduala separată, cota TVA 19 până la
       rata din 01.07.2025 și 21 de la rata din 01.08.2025.
-- [ ] Nota de activare: Dr 2133 = Cr 1672 100.000; rata: 1671 + 666 + 4426 = 4041.
+- [ ] Nota de activare: Dr 2133 = Cr 1672 100.000; factura ratei: 1671 + 666 + 4426 = 4041.
+- [ ] Contract nou de leasing: **Înregistrare rate** = *Factura de furnizor a locatorului*; pe o
+      factură de furnizor în ciornă, rata aleasă în **Rate leasing**, la confirmare, trece în
+      **Înregistrată**, contul de furnizor e 4041 (la o factură pe mai multe contracte, 4041 se
+      pune manual), iar liniile facturii au contractul.
+- [ ] Linia 4426 a facturii are taxă și grile (la 19%, doar cu `l10n_ro_anaf_d300`): TVA-ul apare în
+      D300 / D394; valoarea reziduală are taxa „G”, ratele „S”; trecută în ciornă,
+      factura readuce rata **În așteptare**.
+- [ ] **Creează factură furnizor** din grafic produce o factură în ciornă cu principal, dobândă și
+      TVA cu cota ratei.
+- [ ] Contract existent (creat înainte de 19.0.2.1.0): **Înregistrare rate** = *Notă contabilă din
+      contract*; **Înregistrează** funcționează, iar pe contractul pe factură butoanele
+      **Înregistrează** / **Înregistrează rate scadente** nu apar.
+- [ ] Închidere anticipată cu factura locatorului: soldurile 1671 / 1672 ale contractului ajung la
+      zero, fără notă de închidere.
 - [ ] Închiderea anticipată aduce la zero 16211 / 16212 / 16821 (1671 / 1672 la leasing) și anulează
       ratele rămase; anularea notei redeschide contractul.
 - [ ] Situația datoriilor la o dată: **Sub un an** = sold X1, **Între 1 și 5 ani** + **Peste 5 ani** =
@@ -450,6 +562,21 @@ TVA-ul ratelor de leasing în declarații, reclasificarea 4711 / 4712.
 | „Linia de extras este deja reconciliată.” | Linia a fost deja legată sau reconciliată | Alegeți altă linie sau anulați reconcilierea existentă |
 | Nu apare nicio linie de extras în asistent | Suma sau data diferă mult de rată, ori alt jurnal de bancă | Bifați **Afișează toate liniile nereconciliate** sau verificați **Jurnal bancă** |
 | „Ratele creditului bancar se înregistrează din linia de extras.” | **Înregistrează** pe o rată de credit | Folosiți **Leagă de extras** |
+| „Ratele contractului … se înregistrează prin factura locatorului: alegeți rata pe factură sau folosiți Creează factură furnizor.” | Înregistrarea ratei din contract (import, automatizare, apel din cod) la un contract pe varianta factură; în interfață butonul nu apare | Alegeți rata în **Rate leasing** pe factura locatorului sau apăsați **Creează factură furnizor** |
+| „Unele dintre ratele de leasing selectate sunt deja înregistrate sau omise.” | Rata aleasă pe factură are altă stare decât **În așteptare** | Alegeți ratele încă în așteptare |
+| „Ratele de leasing se pot lega doar de o factură de furnizor.” | Rate alese pe altceva decât o factură de furnizor | Folosiți o factură de furnizor |
+| „Doar contractele de leasing înregistrate prin factura locatorului se pot lega de o factură.” | Rata aparține unui contract pe nota din contract | Treceți contractul pe **Factura de furnizor a locatorului** sau folosiți nota din contract |
+| „Ratele selectate aparțin altui locator.” / „Ratele selectate aparțin unui contract al altei firme.” | Factura și contractul au parteneri sau firme diferite | Verificați furnizorul și firma facturii |
+| „Contul de furnizor al facturii de închidere trebuie să fie …, ca pe contract.” | Factura de închidere are datoria pe alt cont decât 4041 | Treceți factura în ciornă și schimbați contul în fila **Elemente jurnal**, apoi confirmați-o din nou |
+| „Factura a închis deja alt contract de leasing.” | Factura de închidere aleasă a fost folosită la alt contract | Alegeți factura de închidere a acestui contract |
+| „Taxa de achiziție … a contractului … nu are echivalent pentru cota de TVA …” | **Taxă achiziție** de pe contract nu are o variantă la cota ratei (19% / 21%) în planul de conturi | Introduceți factura manual, cu taxa pe linii, și alegeți rata în **Rate leasing** |
+| „Nu există taxă de achiziție pentru cota de TVA …” | Planul de conturi nu are TVA deductibil la cota ratei | Alegeți **Taxă achiziție** pe contract |
+| „Factura trebuie să fie în moneda contractului de leasing.” | Factura are altă monedă decât contractul | Corectați moneda facturii |
+| „Factura acoperă mai multe contracte de leasing: completați contractul pe fiecare linie a facturii.” | Rate din mai multe contracte pe aceeași factură, linii fără contract | Completați **Contract de împrumut / leasing** pe fiecare linie |
+| „Nicio linie a facturii nu este atribuită contractului …” | Factură pe mai multe contracte, fără linii pentru unul dintre ele | Atribuiți contractului cel puțin o linie |
+| „Selectați factura de închidere confirmată a locatorului.” | Închidere anticipată la leasing pe factură, fără factură aleasă | Confirmați factura de închidere și alegeți-o în asistent |
+| „Factura de închidere trebuie să fie o factură de furnizor confirmată.” / „… aparține altui partener decât locatorul.” / „Factura este deja legată de rate de leasing.” | Factura aleasă la închidere nu e confirmată, e de la alt partener sau a fost folosită pentru rate | Alegeți factura de închidere corectă a locatorului |
+| „Nu există rate în așteptare de facturat.” | **Creează factură furnizor** pe o rată deja înregistrată, omisă sau anulată | Alegeți o rată **În așteptare** |
 | „Data aplicării trebuie să fie după ultima rată înregistrată” | Schimbare de dobândă retroactivă | Alegeți o dată după ultima rată înregistrată |
 | „Există rate înregistrate după data închiderii.” | Închidere anticipată datată înaintea unor rate deja plătite | Datați închiderea după ultima rată înregistrată |
 | Eroare de perioadă blocată la închiderea anticipată | Notele de sfârșit de lună de anulat sunt într-o perioadă blocată | Deblocați perioada sau datați închiderea după ultima notă de sfârșit de lună |
@@ -473,14 +600,16 @@ planul de conturi RO, pe compania „RO Company” în RON:
 9. `09_schimbare_dobanda.png` — fereastra de schimbare a dobânzii.
 10. `10_leasing_contract.png` — contractul de leasing financiar, cu avans, reziduală și cota TVA pe rată.
 11. `11_leasing_nota_activare.png` — nota de activare: 2133 = 1672.
-12. `12_leasing_nota_rata.png` — nota ratei de leasing: 1671 + 666 + 4426 = 4041.
+12. `12_leasing_factura_rata.png` — factura locatorului pentru rata 7 (01.08.2025, 21% S, grile rd. 24), legată în **Rate leasing**: 1671 + 666 + 4426 = 4041.
 13. `13_inchidere_anticipata.png` — asistentul de închidere anticipată a creditului.
-14. `14_inchidere_nota.png` — nota extrasului la rambursarea anticipată.
-15. `15_situatia_datoriilor.png` — situația datoriilor pe scadențe.
-16. `16_analiza_rate.png` — analiza ratelor în pivot.
+14. `13_inchidere_leasing_factura.png` — asistentul de închidere anticipată a leasingului, cu factura de închidere a locatorului.
+15. `14_inchidere_nota.png` — nota extrasului la rambursarea anticipată a creditului.
+16. `15_situatia_datoriilor.png` — situația datoriilor pe scadențe.
+17. `16_analiza_rate.png` — analiza ratelor în pivot.
 
-În listele graficului, datele din anul în care s-au generat capturile apar fără an (convenția
-Odoo pentru anul curent).
+În liste și în câmpurile de dată, datele din anul în care s-au generat capturile (2026) apar fără
+an, după convenția Odoo pentru anul curent: de exemplu „31 mar.” în asistentul de închidere a
+leasingului înseamnă 31.03.2026.
 
 Regenerare:
 
@@ -499,7 +628,10 @@ Necesită `playwright` în mediul Odoo + Chrome de sistem; dacă lipsește, test
   20.000; rambursare anticipată 60.732,00) în toate capturile și notele.
 - Explicați reclasificarea X2 → X1 cu balanța: fără ea, bilanțul ar arăta toată datoria pe termen
   lung.
-- Subliniați limita de TVA de la pasul 12 (nota ratei de leasing nu alimentează D300 / D394).
+- Prezentați la pasul 12 varianta implicită (factura locatorului, cu TVA în D300 / D394) și, separat,
+  limita notei din contract, care nu alimentează D300 / D394. Capturile arată varianta pe factură:
+  butonul **Creează factură furnizor** (pasul 10), câmpul **Rate leasing** pe factură (pasul 12) și
+  factura de închidere în asistent (pasul 13); varianta pe nota din contract nu are captură.
 - Pentru contractele preluate în derulare, explicați câmpurile din pagina **Preluare și comisioane**:
   ratele deja înregistrate (rambursate la credit, facturate la leasing), principalul rămas, partea
   sub un an și dobânda deja angajată.

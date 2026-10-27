@@ -172,7 +172,7 @@ Accesați **Contabilitate → Raportare → Declarații ANAF → Declarația D11
 
 > **Raport de previzualizare:** meniul **Contabilitate → Raportare → Declarații ANAF → D112 — Previzualizare obligații**
 > afișează obligațiile lunii proiectate live din statele de plată *fără* a crea o declarație;
-> are butoanele „Generează ciornă D112" și export XML direct — util pentru o verificare rapidă
+> are butoanele „Generează ciornă D112", export XML și, din 2026, export Soft A direct — util pentru o verificare rapidă
 > înainte de a materializa declarația formală.
 
 | Câmp | Exemplu | Observație |
@@ -261,6 +261,30 @@ fi modificate și declarația nu mai poate fi resetată în ciornă. Pentru core
 
 ![Declarația în starea Exportat](screenshots/08_d112_exportat.png)
 
+### Pasul 7 bis — Formularul PDF ANAF (Soft A), pentru perioadele din 2026
+
+Pentru perioadele din 2026 (structura v7) declarația se poate descărca și ca **formular PDF ANAF** completat. Butonul
+**Descarcă PDF (Soft A)** apare în antetul declarației, încă din starea Ciornă (vezi capturile de la pașii 1–3), doar
+pentru declarațiile cu anul perioadei 2026 sau mai mare. **Descarcă XML** nu depinde de an: apare pentru orice
+declarație după **Generează XML**, când există fișierul XML. Același export e în raportul **D112 — Previzualizare
+obligații**, cu butonul *D112 file XDP (Soft A)*, tot doar din 2026.
+
+1. Apăsați **Descarcă PDF (Soft A)**. Modulul generează XML-ul, cu aceleași verificări ca la pasul 6 (o declarație
+   deja exportată își păstrează XML-ul depus), și îl scrie în formularul ANAF D112. Declarația nu trece în *Exportat*.
+2. Deschideți fișierul în **Adobe Reader**: apar completate identificarea angajatorului, obligațiile din secțiunea A,
+   secțiunile B–F și câte o pagină pentru fiecare asigurat (secțiunile A, B, C, D și E, cele bifate cum sunt în XML).
+   Sumele vin calculate din Odoo; formularul nu le recalculează din venitul brut.
+3. Verificați pe ecran că numărul de pagini de asigurat și totalurile din secțiunea A coincid cu declarația din Odoo,
+   apoi apăsați **Validează formularul**, semnați și depuneți, ca pe un formular completat manual.
+
+Ce se descarcă depinde de **Tip export** din *Setări → Contabilitate → Declarații ANAF* (se vede în captura
+`05_setari_reconciliere.png`): *PDF cu datele incluse*, *Descărcare directă XDP* sau *Arhivă ZIP cu XDP și PDF*. PDF-ul completat cere pe server biblioteca
+`pypdf` 5.0 sau mai nouă; fără ea se descarcă ZIP-ul, iar setarea afișează un avertisment.
+
+**Limitări:** pentru perioadele din 2025 și anterioare ANAF nu are formular PDF, butonul nu apare, iar exportul apelat altfel e refuzat; pentru 07/2026
+ANAF n-a publicat alt formular, se folosește cel existent. Câteva atribute XML nu au câmp în formular și nu apar în PDF
+(`D_9b`, `D_14a`, `D_15a`, `D_16a` din concediul medical, `B4_3`, `E3_21`, `bifa_CAM`); ele rămân în XML.
+
 ### Pasul 8 — Plata obligațiilor la Trezorerie
 
 După export, apăsați **Pregătește plăți** (declarația inițială, în starea Validat sau Exportat). Se creează câte o **plată în ciornă** pentru fiecare obligație cu sumă de plată (impozit 602, CAS 412, CASS 432, CAM 480 și, după caz, 481/482/458/459), către contul unic al Trezoreriei din setări (impozit, CAS, CASS) sau către contul CAM al Trezoreriei (CAM 480, cont distinct 20.A.47.03.00, Codul fiscal art. 220^6 alin. (1)), cu suma `datorat − scutit` (impozitul scutit conform art. 60 nu se plătește), data = **25 a lunii următoare** (o scadență în weekend se mută în prima zi de luni), explicația *D112 LL/AAAA - cod obligație* și **contul de datorie al obligației** drept cont de contrapartidă (4315, 4316, 436, 444). Butonul *Plăți* de pe declarație deschide plățile.
@@ -296,9 +320,9 @@ declarație. Importul **nu generează note contabile**.
 ### Note de monografie și raportare
 
 - D112 **nu generează note contabile** — citește datele salariale și obligațiile deja înregistrate în
-  contabilitate prin nota de salarii (lunar, uzual): **Dr 641 = Cr 421** (salarii), **Cr 4315** (CAS),
-  **Cr 4316** (CASS), **Cr 444** (impozit), iar CAM **Dr 646 = Cr 436**.
-- Reconcilierea verifică egalitatea: *total obligație D112* ≈ *rulaj credit cont aferent în lună* ≈
+  contabilitate prin nota de salarii (lunar, uzual): **Dr 641 = Cr 421** (salariul brut), apoi rețineri
+  **Dr 421 = Cr 4315** (CAS), **Cr 4316** (CASS), **Cr 444** (impozit), iar CAM **Dr 646 = Cr 436**.
+- Reconcilierea verifică egalitatea: *total obligație D112* ≈ *rulajul net (credit − debit) al contului aferent în lună* ≈
   *total din nota de salarii importată*.
 - Sumele din XML sunt exprimate în **RON întregi** (rotunjire), conform cerinței ANAF.
 - **Tichete de masă:** suportă impozit 10% și CASS 10%, dar sunt scutite de CAS și CAM — modulul le
@@ -342,6 +366,7 @@ reconciliere acceptate, verificarea finală în utilitarele ANAF și depunerea �
 - [ ] XML-ul se generează, trece validarea XSD și se descarcă cu nume corect.
 - [ ] Namespace-ul XML corespunde perioadei: `v6` pentru luni ≤ dec 2025, `v7` de la ian 2026.
 - [ ] XML-ul trece validatorul oficial ANAF **DUKIntegrator** fără erori `E:` pentru angajați normali.
+- [ ] Pe o declarație din 2026, **Descarcă PDF (Soft A)** dă formularul ANAF completat (după *Tip export*), cu o pagină per asigurat; pe o declarație din 2025 butonul lipsește, atât pe declarație, cât și în raport.
 - [ ] După export declarația se blochează; rectificativa se poate crea legată de inițială.
 - [ ] Regim trimestrial: cele trei declarații ale trimestrului au termenul 25 a lunii de după trimestru; o lună cu concediu medical sau încetare are termenul de depunere 25 a lunii următoare; *Pregătește plăți* face o plată pe obligație pentru trimestru.
 - [ ] Importul unui XML D112 depus (sau al PDF-ului ANAF) creează declarația *Importată*, blocată, cu liniile legate de angajați după CNP; un XML al altui CUI sau al unei perioade deja declarate este refuzat.
@@ -357,6 +382,7 @@ reconciliere acceptate, verificarea finală în utilitarele ANAF și depunerea �
 | `Angajatul '...' nu are CNP completat.` | angajat fără identificator | completați CNP-ul și recalculați |
 | `Reconcilierea D112 vs. contabilitate are diferențe peste toleranță` | politică strictă + diferențe | corectați nota contabilă / liniile D112 sau ajustați toleranța |
 | `The generated XML is not valid according to the ANAF schema` | date neconforme (ex. CAEN invalid, CNP greșit) | corectați datele semnalate și regenerați |
+| `ANAF nu are formular PDF (Soft A) pentru structura D112 a perioadei LL/AAAA. Folosiți exportul XML.` | export Soft A pe o perioadă din 2025 sau anterioară (structura v6) | descărcați XML-ul; formularul PDF există doar din 2026 |
 | `Declarația exportată nu poate fi resetată. Creați o rectificativă.` | reset după export | creați o declarație rectificativă |
 | `Liniile unei declarații exportate nu pot fi modificate. Creați o rectificativă.` | editare după export | lucrați pe un document rectificativ nou |
 | DUK: `eroare regula: S9: cisAsig este obligatoriu` | angajat fără casă de sănătate derivată (județ firmă lipsă) | completați județul pe adresa firmei; `casaSn` se deduce din `casaAng` |
@@ -386,8 +412,7 @@ planul de conturi RO:
 8. `08_d112_exportat.png` — declarația în starea Exportat.
 9. `10_scenariu_salariu_minim.png` … `13_scenariu_rectificativa.png` — capturi pentru fișele per scenariu.
 10. `14_angajat_date.png` — fișa angajatului (Loc de muncă, data de început a contractului).
-11. `15_angajat_cnp.png` — fila REGES a angajatului: **CNP** și datele preluate la importul nominal.
-12. `16_plati_trezorerie.png` — plățile pregătite din declarația exportată, în ciornă.
+11. `16_plati_trezorerie.png` — plățile pregătite din declarația exportată, în ciornă.
 
 ### Date sursă din fișa angajatului
 

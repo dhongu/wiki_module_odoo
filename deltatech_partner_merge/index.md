@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.2.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_partner_merge
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_partner_merge`
-- **Ultima Ingestie:** `2026-10-23`
+- **Ultima Ingestie:** `2026-10-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -37,6 +37,7 @@ Modulul curăță duplicatele din nomenclatorul de parteneri cu două unelte com
 #### 3. Dependențe
 
 - `base`
+- `deltatech_partner_match` (funcțiile de normalizare și potrivire folosite la căutarea de dubluri)
 
 #### 4. Componente Cheie
 
@@ -45,7 +46,7 @@ Modulul curăță duplicatele din nomenclatorul de parteneri cu două unelte com
 - `partner.duplicate.scan`: o căutare de dubluri — opțiunile (inclusiv `use_name` pentru nume asemănător), rularea potrivirilor pe CUI/telefon/email/nume și raportul căutării.
 - `partner.duplicate.group`: un grup de parteneri probabil duplicați, cu scor, tip de potrivire, motiv și stare; de aici se deschide asistentul standard de îmbinare.
 - `partner.duplicate.ignore`: perechile marcate „nu sunt dubluri”, excluse din căutările viitoare.
-- `models/duplicate_tools.py`: funcții ajutătoare de normalizare (nume, telefon, CUI) pentru potrivire.
+- `models/duplicate_tools.py`: funcții ajutătoare de normalizare (nume, telefon, CUI) pentru potrivire; căutarea folosește și utilitarele `tools.partner_match` din `deltatech_partner_match`.
 - `partner.merge.batch`: modelul central al unui lot de unificare — configurează categoriile și limita de grupuri, rulează analiza (construiește tabelele de lucru `pm_face`/`pm_group`/`pm_map`/`pm_snapshot`), simularea (pe savepoint, cu rollback garantat), aplicarea efectivă (remap FK-uri și legături polimorfe, completare câmpuri goale pe fișa păstrată, ștergere/arhivare fișe absorbite) și verificarea finală a totalurilor.
 - `partner.merge.batch.line`: o linie per grup de duplicate dintr-un lot — reține fișa păstrată, CUI-ul normalizat, categoria, numărul și ID-urile fișelor absorbite, numele lor (capturate înainte de ștergere) și un indicator calculat `name_suspect` pentru nume care par corupte la import.
 - `models/sql_queries.py`: nu e model Odoo, ci modulul Python cu toate interogările SQL brute folosite de unificare (construirea tabelelor de lucru, deduplicarea coliziunilor pe indecși unici, remap-ul cheilor externe și al legăturilor polimorfe, completarea câmpurilor goale, ștergerea/arhivarea și verificarea totalurilor) — sincronizat manual cu scripturile psql din `deltatech/scripts/partner_merge/`.
@@ -65,4 +66,4 @@ Nu sunt definite `ir.cron`, `base.automation` sau `ir.actions.server` — fluxul
 
 #### 5. Conexiuni
 
-Nu au fost identificate module cu pagină wiki proprie legate funcțional de acest modul; el interoperează direct la nivel de tabele SQL cu modelele `account.move`, `sale.order`, `purchase.order`, `stock.picking` și `res.users` (verificate condiționat prin `to_regclass`, ca modulul să rămână dependent doar de `base`), fără a le declara ca dependențe Odoo.
+Depinde funcțional de `deltatech_partner_match` (fără pagină wiki), de la care importă utilitarele de normalizare/potrivire (`tools.partner_match`) folosite de căutarea de dubluri. În plus, interoperează direct la nivel de tabele SQL cu modelele `account.move`, `sale.order`, `purchase.order`, `stock.picking` și `res.users` (verificate condiționat prin `to_regclass`, ca unificarea să nu depindă de modulele respective), fără a le declara ca dependențe Odoo.

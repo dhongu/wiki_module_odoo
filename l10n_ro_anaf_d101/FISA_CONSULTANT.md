@@ -53,7 +53,9 @@ pentru demo:
    poate schimba și după postare: nu atinge nota contabilă, doar declarația.
 4. Aveți o înregistrare de calcul impozit pe profit anuală, **postată**.
 5. Pentru exportul XDP: **Contabilitate → Configurare → Setări**, blocul **Declarații ANAF România**,
-   alegeți **Tip export** — *Descărcare directă XDP* sau *Arhivă ZIP cu XDP și PDF* (implicit).
+   alegeți **Tip export** — *Descărcare directă XDP*, *Arhivă ZIP cu XDP și PDF* sau
+   *PDF cu datele incluse* (implicit). Ultima opțiune cere biblioteca Python `pypdf` 5.0 sau mai nouă pe server;
+   fără ea, exportul revine la arhiva ZIP.
    Setarea e pe companie și se aplică tuturor declarațiilor exportate în XDP (D100, D300, D390, D394, D398, D101).
    Se citește de pe firma înregistrării de calcul, nu de pe firma activă în interfață.
 
@@ -107,9 +109,10 @@ plată; impozitul de plată este pe rândul 52 (`P52`).
 Verificați întâi **Tip export** în **Contabilitate → Configurare → Setări**, blocul **Declarații ANAF
 România**: *Arhivă ZIP cu XDP și PDF* descarcă împreună datele și formularul oficial
 `D101_XML_2025_091026.pdf`; *Descărcare directă XDP* descarcă doar fișierul de date, pentru cine
-are deja formularul salvat în același folder.
+are deja formularul salvat în același folder; *PDF cu datele incluse* descarcă direct formularul
+oficial completat, fără arhivă și fără pași de dezarhivare.
 
-![Setarea Tip export, din Declarații ANAF România](screenshots/03_tip_export.png)
+![Setarea Tip export, din Declarații ANAF România; captura arată doar opțiunile XDP direct și ZIP cu XDP și PDF](screenshots/03_tip_export.png)
 
 Pe calculul anual postat apăsați **Export D101 XDP**. Se aplică aceleași verificări ca la XML
 (perioada Anual, calcul postat, datele companiei); XDP-ul nu trece prin validarea XSD în Odoo, ci se
@@ -119,9 +122,16 @@ validează din formular. Fișierul descărcat depinde de **Tip export**:
 |---|---|
 | Descărcare directă XDP | `D101_<CUI>_<an>.xdp` |
 | Arhivă ZIP cu XDP și PDF | arhivă ZIP cu `D101_<CUI>_<an>.xdp` și `D101_XML_2025_091026.pdf` |
+| PDF cu datele incluse | `D101_<CUI>_<an>.pdf`, formularul oficial ANAF cu datele deja scrise în el |
 
-Dezarhivați în același folder și deschideți fișierul `.xdp` în **Adobe Reader**:
-formularul se deschide completat. Pe formular verificați:
+Cu *PDF cu datele incluse*, deschideți direct fișierul `.pdf` în **Adobe Reader**. Datele se scriu în
+formular printr-o actualizare incrementală, care păstrează extensiile Adobe Reader ale formularului
+ANAF, deci acesta se poate valida și semna ca de obicei. Dacă serverul nu are `pypdf` 5.0 sau mai
+nou, se descarcă în schimb arhiva ZIP, ca la opțiunea *Arhivă ZIP cu XDP și PDF*.
+
+La *Arhivă ZIP cu XDP și PDF*, dezarhivați în același folder; la *Descărcare directă XDP*, puneți
+fișierul `.xdp` în același folder cu formularul PDF deja salvat. Apoi deschideți fișierul `.xdp` în
+**Adobe Reader**. În ambele cazuri formularul se deschide completat. Pe formular verificați:
 
 1. **Găsiți** antetul (anul, tipul de impozit 103, CUI, CAEN, denumirea, adresa firmei pe un singur
    rând, cu părțile separate prin virgulă, scadența 25.06 a anului următor) și tabelul indicatorilor (rândurile 1–53).
@@ -207,6 +217,8 @@ ajustărilor); impozitul minim pe cifra de afaceri.
 - [ ] Fișierul descărcat se importă fără erori în DUKIntegrator.
 - [ ] Cu **Tip export** = *Arhivă ZIP cu XDP și PDF*, arhiva conține `D101_<CUI>_<an>.xdp` și `D101_XML_2025_091026.pdf`.
 - [ ] Cu **Tip export** = *Descărcare directă XDP*, se descarcă doar fișierul `.xdp`.
+- [ ] Cu **Tip export** = *PDF cu datele incluse*, se descarcă `D101_<CUI>_<an>.pdf`, care se deschide în Adobe Reader cu antetul și indicatorii completați.
+- [ ] Fără `pypdf` 5.0 sau mai nou pe server, aceeași opțiune descarcă arhiva ZIP.
 - [ ] Într-o bază cu mai multe firme, tipul de export aplicat este cel al firmei înregistrării de calcul.
 - [ ] Deschis în Adobe Reader, formularul are antetul și rândurile 3, 35, 41.1 și 52 egale cu cele din XML.
 
@@ -219,6 +231,8 @@ ajustărilor); impozitul minim pe cifra de afaceri.
 | Eroare validare companie (CUI/CAEN/județ) | Date fiscale incomplete | Completați CUI, adresă, CAEN, județ pe companie |
 | „Exportul automat D101 acoperă momentan doar scenariul de profit…" | Exercițiu cu pierdere fiscală | Completați D101 manual pentru scenariul de pierdere |
 | „Resursa ANAF … PDF lipsește sau este invalidă…" | Lipsește formularul PDF din modul (instalare incompletă) | Actualizați modulul; temporar alegeți *Descărcare directă XDP* |
+| „Formularul PDF ANAF nu conține pachete XFA." / „… pachetul XFA datasets." | Formularul PDF din modul nu e un formular ANAF valid | Actualizați modulul; temporar alegeți *Arhivă ZIP cu XDP și PDF* |
+| „Fișierul XDP generat nu conține pachetul XFA datasets." | Macheta XDP a declarației nu are pachetul de date | Actualizați modulul; temporar alegeți *Descărcare directă XDP* |
 
 ## 10. Capturi de ecran
 
@@ -227,7 +241,7 @@ Se **generează automat** din `tests/test_screenshots.py` (mixin `ScreenshotCase
 
 1. `01_calcul_anual.png` — calcul impozit profit, perioada Anual, postat, cu butoanele ① Export D101 XML și ② Export D101 XDP și ③ câmpul Tip impozit D101.
 2. `02_indicatori.png` — blocurile de pierdere reportată, calcul impozit și de plată: ① impozitul calculat, ② suma de plată.
-3. `03_tip_export.png` — setarea **Tip export** din **Declarații ANAF România** (XDP direct sau ZIP cu PDF).
+3. `03_tip_export.png` — setarea **Tip export** din **Declarații ANAF România** (captura existentă arată doar opțiunile *Descărcare directă XDP* și *Arhivă ZIP cu XDP și PDF*; opțiunea implicită *PDF cu datele incluse* nu apare în ea).
 
 Fișierele XML și XDP rezultate sunt redate ca **extrase de cod** în pașii 3 și 4 (nu ca imagini;
 formularul PDF ANAF e XFA și se deschide doar în Adobe Reader).
@@ -243,5 +257,5 @@ formularul PDF ANAF e XFA și se deschide doar în Adobe Reader).
 - Menționați validarea XSD la export (garanție că fișierul e acceptat de ANAF/DUKIntegrator).
 - Documentați explicit limitarea pe scenariul de pierdere (completare manuală).
 - Explicați codurile de obligație (102/103/104/105) din câmpul **Tip impozit D101** și când se aleg.
-- Explicați diferența XML (import în DUKIntegrator) / XDP (formularul PDF completat, deschis în Adobe
-  Reader) și setarea **Tip export**, comună tuturor declarațiilor exportate în XDP.
+- Explicați diferența XML (import în DUKIntegrator) / XDP sau PDF cu datele incluse (formularul PDF
+  completat, deschis în Adobe Reader) și setarea **Tip export**, comună tuturor declarațiilor exportate în XDP.

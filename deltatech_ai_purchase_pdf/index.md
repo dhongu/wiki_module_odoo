@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_purchase_pdf
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_ai_purchase_pdf`
-- **Ultima Ingestie:** `2026-10-21`
+- **Ultima Ingestie:** `2026-10-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -16,7 +16,9 @@ Nu toți furnizorii trimit factura în format e-Factura XML. Acest modul permite
 - **Același asistent, XML sau PDF**: butonul **Import Invoice** (în română „Import factură”, din `deltatech_purchase_ubl` 19.0.1.4.19) de pe comanda de achiziție acceptă și un PDF. Dacă la comandă nu există un XML UBL atașat, asistentul preia ultimul PDF atașat; fișierul poate fi ales și direct în asistent.
 - **AI citește, Odoo decide**: agentul doar transcrie documentul într-un JSON strict (antet, linii, totaluri). Potrivirea produselor (cod de bare, cod furnizor, denumire), acțiunea pe fiecare linie, actualizarea prețurilor furnizorului, recepția și factura sunt pașii deterministi din *Purchase UBL*.
 - **Mereu verificat**: un PDF nu se importă niciodată direct. Previzualizarea se deschide cu un banner de avertizare și listează ce nu se potrivește: linie la care cantitate × preț diferă de valoare, linii care nu însumează totalul indicat, TVA plus bază diferite de totalul de plată, CUI-ul furnizorului necitit.
-- **Progres la citire**: pentru PDF-uri cu mai multe pagini, un dialog arată paginile citite, liniile găsite și timpul rămas; o pagină eșuată poate fi recitită.
+- **Progres la citire**: pentru PDF-uri cu mai multe pagini, un dialog generic de progres (din `deltatech_task_progress`) arată paginile citite, liniile găsite și timpul rămas; o pagină eșuată poate fi recitită.
+- **Verificare față de textul PDF-ului**: cantitatea, prețul, valoarea și codul fiecărei linii, precum și totalurile, sunt căutate în textul PDF-ului (fără apel AI, cu `deltatech_ai_pdf_base`); o cifră transcrisă greșit care totuși însumează corect este listată. CUI-ul furnizorului se verifică prin cifra de control (CUI, CNP, VAT UE). Un PDF scanat nu se verifică față de text, iar previzualizarea o spune.
+- **Recitire selectivă**: fiecare linie păstrează pagina din care a fost citită (coloana *Page*); **Read Again Pages with Warnings** sau paginile alese în *Pages to read again* recitesc doar acele pagini, păstrând produsele alese pe celelalte. Recitirea parțială nu se numără în limita zilnică.
 - **Un apel AI per document**: extracția se păstrează pe asistent, deci previzualizarea și importul citesc PDF-ul o singură dată.
 - **Compatibil cu potrivirea AI a produselor**: cu [deltatech_purchase_ubl_ai](../deltatech_purchase_ubl_ai/index.md) instalat, liniile rămase neplasate primesc o sugestie de produs, ca la XML.
 - **Costuri sub control**: activare opțională per companie (implicit dezactivat) și limită zilnică de documente citite cu AI (implicit 50 per companie, 0 = nelimitat), din **Setări → Achiziții → Facturare → PDF Invoice Import with AI**.
@@ -28,6 +30,8 @@ Nu toți furnizorii trimit factura în format e-Factura XML. Acest modul permite
 
 - [deltatech_purchase_ubl](../deltatech_purchase_ubl/index.md)
 - `ai`
+- `deltatech_ai_pdf_base`
+- `deltatech_task_progress`
 
 #### 4. Componente Cheie
 
@@ -43,7 +47,7 @@ Nu toți furnizorii trimit factura în format e-Factura XML. Acest modul permite
 
 - `view_purchase_ubl_import_wizard_inherit_pdf_ai`: moștenește asistentul de import; adaugă bannerul de avertizare și lista diferențelor pentru PDF.
 - `res_config_settings_view_form_purchase_pdf_ai`: opțiunile din Setări → Achiziții.
-- Componentă JS `read_progress` (`static/src/read_progress/`): dialogul de progres la citirea paginilor.
+- Dialogul de progres la citirea paginilor provine din `deltatech_task_progress` (asistentul moștenește `task.progress.mixin`); modulul nu mai are componentă JS proprie.
 
 **Acțiuni Automate / Acțiuni Server**
 

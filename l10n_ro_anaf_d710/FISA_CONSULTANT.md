@@ -131,6 +131,7 @@ D100), numărul de evidență de pe recipisă, și corecțiile contabile aferent
 - [ ] O declarație fără nicio linie **nu** se poate exporta.
 - [ ] Sumele negative sunt respinse.
 - [ ] XML-ul generat validează contra `d710_20012025.xsd`.
+- [ ] XML-ul generat trece validatorul oficial ANAF (DUKIntegrator) fără erori (`E:`) sau erori fatale (`F:`); atenționările (`A:`) nu opresc depunerea. Testul modulului face această probă automat, doar pe stația cu kit-ul ANAF instalat.
 - [ ] Interfața este în limba română.
 
 ## 9. Mesaje de eroare frecvente

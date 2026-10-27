@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.6.29.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_saga`
-- **Ultima Ingestie:** `2026-10-22`
+- **Ultima Ingestie:** `2026-10-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -49,6 +49,7 @@ Interfața Deltatech SAGA este un modul cuprinzător conceput pentru a facilita 
 - `sale_stock`
 - [deltatech_contact](../deltatech_contact/index.md)
 - `l10n_ro`
+- `deltatech_task_progress`
 
 #### 4. Componente Cheie
 
