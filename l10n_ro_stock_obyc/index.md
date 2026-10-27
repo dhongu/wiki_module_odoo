@@ -2,13 +2,13 @@
 
 - **Nume Tehnic:** `l10n_ro_stock_obyc`
 - **Versiune:** `19.0.1.0.5`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_obyc
+- **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_obyc`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_obyc`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-10-27`
 
 #### 1. Sumar
 
-Punte între localizarea românească de stoc și determinarea conturilor pe reguli OBYC. Pentru produsele cu clasă de evaluare, conturile operațiilor românești (consum, dare în folosință, recepție prin RNI) se iau din regulile OBYC, nu din categoria produsului, astfel că fiecare clasă (materiale, marfă, obiecte de inventar) are propriul cont de cheltuială. Modulul se instalează automat când `l10n_ro_stock`, `l10n_ro_stock_gestiune` și `deltatech_obyc` sunt prezente. Produsele fără clasă de evaluare rămân pe conturile categoriei, ca înainte.
+Punte între localizarea românească de stoc și determinarea conturilor pe reguli OBYC. Pentru produsele cu clasă de evaluare, conturile operațiilor românești (consum, dare în folosință, recepție prin RNI) se iau din regulile OBYC, nu din categoria produsului, astfel că fiecare clasă (materiale, marfă, obiecte de inventar) are propriul cont de cheltuială. Modulul se instalează automat când `l10n_ro_stock_gestiune` și `deltatech_obyc` sunt prezente. Produsele fără clasă de evaluare rămân pe conturile categoriei, ca înainte.
 
 #### 2. Funcționalități Cheie
 
@@ -22,7 +22,7 @@ Punte între localizarea românească de stoc și determinarea conturilor pe reg
 - **Analitic pe linia de cheltuială:** distribuția analitică a mișcării (ex. proiectul de pe bonul de consum, din `project_stock_account`) ajunge pe linia de cheltuială / venit a notei OBYC, nu pe linii analitice separate; consumul apare în rapoartele contabile pe analitic, iar la retur storno costul proiectului scade.
 - **Conturile gestiunii din OBYC:** contul de stoc folosit de `l10n_ro_stock_gestiune` (verificarea gestiunilor cu cont propriu, nota RNI 371 = 408, stornarea ei) este cel din regula OBYC a mișcării.
 - **Prioritate RNI:** când recepția e contată prin RNI, OBYC nu mai generează a doua notă pentru aceeași mișcare; la fel la returul către furnizor stornat prin RNI.
-- **Diferența de preț RNI:** pentru produsele cu clasă, diferența de preț de la factură merge pe contul de stoc din regula OBYC a recepției (la cost standard rămâne contul nativ de diferențe de preț).
+- **Diferența de preț RNI:** pentru produsele cu clasă, diferența de preț de la factură merge pe contul de stoc din regula OBYC a recepției (la cost standard rămâne contul nativ de diferențe de preț). Partea din diferență aferentă cantității deja ieșite din stoc merge pe contul de cheltuială (`acc_dest_id`) din regula `stock_receipt_price_difference` a clasei, ca stocul contabil să rămână egal cu valoarea stocului din Odoo; fără regulă, toată diferența rămâne pe stoc.
 - **Configurare:**
   - clase de evaluare: `Inventar → Configurare → Account Determination Config → Evaluation Class`;
   - câmpul *Valuation Class* pe produsul stocabil;
@@ -35,9 +35,10 @@ Punte între localizarea românească de stoc și determinarea conturilor pe reg
 
 #### 3. Dependențe
 
-- `l10n_ro_stock`
 - [l10n_ro_stock_gestiune](../l10n_ro_stock_gestiune/index.md)
 - [deltatech_obyc](../deltatech_obyc/index.md)
+
+Modulul nu depinde de `l10n_ro_stock` (AGPL-3), ca să poată fi publicat sub licență OPL-1; tipurile de locație „Consum” și „Utilizare” (`consume`, `usage_giving`) sunt declarate și aici și se contopesc cu cele din `l10n_ro_stock`, dacă acesta e instalat.
 
 #### 4. Componente Cheie
 
@@ -45,7 +46,8 @@ Punte între localizarea românească de stoc și determinarea conturilor pe reg
 
 - `product.account.determination` (extins): adaugă în câmpul `transaction_key` cheile `consumption`, `consumption_return`, `usage_giving`, `usage_giving_return`.
 - `stock.move` (extins): `_compute_transaction_key` mapează perechile de usage (internal/consume, internal/usage_giving și inversele) la cheile RO; `_l10n_ro_get_stock_account` ia contul de stoc din regula OBYC; `_get_account_move_line_vals` pune analiticul pe liniile de cheltuială / venit; `_create_analytic_move` evită liniile analitice duplicate; `_should_create_account_move` dă prioritate notei RNI.
-- `account.move` (extins): `_l10n_ro_get_price_diff_account_for_line` duce diferența de preț RNI pe contul de stoc din regula OBYC a recepției.
+- `account.move` (extins): `_l10n_ro_get_price_diff_account_for_line` duce diferența de preț RNI pe contul de stoc din regula OBYC a recepției, iar `_l10n_ro_get_price_diff_expense_account_for_line` pe cel de cheltuială pentru partea deja ieșită din stoc.
+- `stock.location` (extins): declară tipurile de locație „Consum” și „Utilizare”.
 
 **Vizualizări**
 

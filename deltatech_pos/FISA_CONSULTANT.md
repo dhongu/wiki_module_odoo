@@ -130,6 +130,12 @@ local, nu reveniți pe aceeași comandă din Odoo.
 
 ![Comanda POS — tabul ECR data și butonul Print Fiscal Receipt](screenshots/03_comanda_ecr_data.png)
 
+**Căutarea bonurilor în POS (ecranul de comenzi).** Termenul tastat în căutare se trimite la server,
+deci un bon mai vechi (peste una-două zile) se găsește chiar dacă nu face parte din cele 30 de
+comenzi încărcate pe pagină — de exemplu pentru un retur. Se poate căuta după **Receipt Number**,
+**Order Number**, **Date**, **Customer** și, când câmpul e afișat, **Cardholder Name**. Până la
+versiunea 19.0.2.10.6 căutarea filtra doar comenzile deja încărcate.
+
 ### Pasul 4 — Rapoarte X și Z, cash in / cash out
 
 Din sesiunea POS din backoffice (**Point of Sale → Orders → Sessions**) se pot genera rapoartele
@@ -208,6 +214,7 @@ comanda sursă).
 | AMEF-07 | Raport X / raport Z | se descarcă fișierele dedicate din popup/sesiune |
 | AMEF-08 | Restituire cu total negativ și fără client | validarea este blocată până la selectarea clientului |
 | AMEF-09 | Reimprimare din backoffice | butonul **Print Fiscal Receipt** oferă fișierul comenzii |
+| AMEF-10 | Căutare în ecranul de comenzi POS după numărul unui bon mai vechi, neîncărcat pe prima pagină | bonul este găsit (căutarea se face pe server) |
 
 ## 9. Legături cu alte module
 
@@ -225,6 +232,7 @@ comanda sursă).
 - [ ] Fișierele descărcate au prefixul și extensia cerute de utilitarul local.
 - [ ] Bonul fiscal se tipărește după validarea comenzii, fără pași manuali suplimentari în Odoo.
 - [ ] Cash in / cash out funcționează atât contabil în sesiune, cât și pe AMEF dacă opțiunea e activă.
+- [ ] Căutarea în ecranul de comenzi POS găsește și bonurile mai vechi de una-două zile (necesar pentru retur).
 - [ ] Rapoartele X și Z pot fi generate de utilizatorii operaționali.
 - [ ] Pentru retururi și dispoziții de plată există partener selectat.
 - [ ] D394 POS este documentată separat când clientul cere și raportarea fiscală a bonurilor.

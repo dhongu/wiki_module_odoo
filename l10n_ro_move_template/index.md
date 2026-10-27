@@ -2,9 +2,9 @@
 
 - **Nume Tehnic:** `l10n_ro_move_template`
 - **Versiune:** `19.0.1.0.5`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_move_template
+- **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_move_template`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_move_template`
-- **Ultima Ingestie:** `2026-10-08`
+- **Ultima Ingestie:** `2026-10-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -26,13 +26,15 @@ Modulul permite contabilului să definească o singură dată șabloane de note 
 - O sumă negativă trece pe partea cealaltă a contului; liniile cu sumă zero sunt omise.
 - Generarea se face din **Facturare → Contabilitate → Tranzacții → Notă din șablon** sau cu butonul **Generează nota** de pe șablon; se aleg șablonul, data, referința și partenerul (pus pe liniile fără partener), apoi nota se poate lăsa în ciornă sau valida imediat (**Validează nota**).
 - Nota generată rămâne legată de șablon: filtrul **Din șablon** pe notele contabile și butonul **Note** pe șablon.
-- Șabloanele se administrează din **Configurare → Contabilitate → Șabloane note contabile**; butonul **Încarcă șabloanele românești** creează cele zece șabloane: chirie la chiriaș și la locator, amortizare manuală (corporale și necorporale), bunuri primite în folosință (comodat sau chirie, în afara bilanțului; la nevoie se creează contul tehnic de contrapartidă 800000), salarii dintr-un stat de plată extern, tichete de masă și exigibilizarea / deducerea TVA la încasare. Șabloanele pentru care lipsește un cont din plan sunt omise, iar o nouă încărcare nu creează dubluri.
+- Șabloanele se administrează din **Configurare → Contabilitate → Șabloane note contabile**; butonul **Încarcă șabloanele românești** creează cele zece șabloane: chirie la chiriaș și la locator, amortizare manuală (corporale și necorporale), bunuri primite în folosință (comodat sau chirie, în afara bilanțului; folosesc contrapartida tehnică comună 803999 și jurnalul EXTR din `l10n_ro_off_balance`), salarii dintr-un stat de plată extern, tichete de masă și exigibilizarea / deducerea TVA la încasare. Șabloanele pentru care lipsește un cont din plan sunt omise, iar o nouă încărcare nu creează dubluri.
+- Șabloanele „TVA la încasare” livrate nu au grile de taxe, deci nota generată nu intră în D300; sunt gândite pentru solduri inițiale și corecții. Dacă suma trebuie declarată, se completează grilele pe liniile 4427 / 4426 înainte de generare. Șablonul de amortizare nu se folosește pentru imobilizările gestionate cu modulul de active.
 - Fluxul pas-cu-pas, cu capturi de ecran, este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
 - `account`
 - `l10n_ro`
+- [l10n_ro_off_balance](../l10n_ro_off_balance/index.md)
 
 #### 4. Componente Cheie
 
@@ -59,5 +61,5 @@ Modulul permite contabilului să definească o singură dată șabloane de note 
 - [l10n_ro_deferred_entries](../l10n_ro_deferred_entries/index.md): înregistrările 471/472 se generează automat acolo; șabloanele de aici acoperă cazurile manuale.
 - [l10n_ro_anaf_d300](../l10n_ro_anaf_d300/index.md): grilele de taxe puse pe liniile șablonului (TVA la încasare) ajung în decontul D300.
 - [l10n_ro_stock_consignment](../l10n_ro_stock_consignment/index.md): alte contrapartide tehnice în afara bilanțului (8039).
-- [l10n_ro_inventory_items](../l10n_ro_inventory_items/index.md): alte contrapartide tehnice în afara bilanțului (8035C), alături de contul 800000 din șabloanele de comodat.
+- [l10n_ro_inventory_items](../l10n_ro_inventory_items/index.md): alte contrapartide tehnice în afara bilanțului (8035C), alături de contrapartida comună 803999 din șabloanele de comodat.
 - `account_move_template` (OCA): modul similar; modelele de aici sunt `l10n.ro.move.template*`, deci cele două pot coexista.

@@ -1,10 +1,10 @@
 # Deltatech Advanced Planner (localizat la `deltatech_advanced_planner/index.md`)
 
 - **Nume Tehnic:** `deltatech_advanced_planner`
-- **Versiune:** `19.0.1.12.0`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_advanced_planner
+- **Versiune:** `19.0.1.12.1`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_advanced_planner`
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_advanced_planner`
-- **Ultima Ingestie:** `2026-10-12`
+- **Ultima Ingestie:** `2026-10-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -48,11 +48,17 @@ Deltatech Advanced Planner este un planificator avansat de stoc care răspunde l
 - **Reguli de reaprovizionare planificate de planificator** — opțiune nouă „Planned by Advanced Planner" pe regula de stoc: planificatorul aplică minimul, maximul și multiplul regulii, iar Odoo nu mai comandă (scheduler, buton Order, cantitate manuală). O regulă automată sau cu min/max nebifată rămâne în grija Odoo, iar planificatorul sare produsul. Regulile manuale temporare (min = max = 0) numără propunerile deschise, deci butonul Order nu comandă a doua oară aceeași cantitate (schimbare de comportament).
 - **Fereastră de lansare** (Setări, implicit 7 zile) — generarea în masă de RFQ/MO sare AP-urile cu lansare după azi + N zile și le listează în notificare; butoanele din formular cer confirmare; filtre noi „To Release" și „Stock Replenishment" (combinabile). Generarea în masă de MO raportează erorile.
 - **Subansamble și materii prime în ofertă/comandă** — pentru o comandă trimisă sau confirmată sunt planificate (nu rămân în draft/simulare), deci contează în Situația Material și în detecția zilnică; confirmarea fără planificare automată activează AP-urile draft ale ofertei.
+- **Lead time furnizor măsurat** (Setări, dezactivat implicit) — lead time-ul furnizorului din planificare, din cea mai devreme dată de livrare și din reaprovizionare se ia din istoricul de achiziții (percentila zilelor de la confirmarea comenzii la prima recepție), prin `deltatech_purchase_lead_time`; fără suficiente recepții se folosește lead time-ul configurat. Lead time-ul furnizorului se numără în zile calendaristice, ca în Odoo; zilele de producție, recepție și expediere rămân zile lucrătoare.
+- **Eficiență măsurată a posturilor de lucru** — sugestie calculată din ordinele de lucru terminate (fereastră de 90 de zile, minimum 10 ordine, în Setări), afișată pe postul de lucru lângă eficiența configurată și în lista *Capacity ▸ Workcenter Efficiency*; nu se scrie nimic automat, planificarea folosește eficiența configurată.
+- **Durata operațiilor ca în ordinele de lucru** — durata calculată din ultimele ordine terminate (la *Duration Computation = Computed*), capacitățile pe produs ale postului, timpii de pregătire și curățare pe operație și operațiile restricționate la alte variante sunt luate în calcul la lead time-ul de producție, la data de livrare și la încărcarea posturilor.
+- **Dashboard îmbunătățit** — o comandă planificată rămâne în tabel după generarea PO/MO, cu coloanele *Document* și *Doc. Status*; clasamentul produselor cu blocaje arată ponderea din totalul blocajelor.
+- **Curățare date tranzacționale** — cu `terrabit_clear_data`, comenzile planificate, încărcările, sloturile CRP, proiecțiile și situațiile material ale companiei pot fi șterse (`data/clear_data_transactional.sql`).
 - **Date corecte la mutarea producției** — când data promisă e prea aproape și producția e mutată mai târziu, propunerile de achiziție ajung chiar înainte de noul start de producție și se lansează cel mai devreme azi (înainte, RFQ-ul cerea furnizorului o livrare în câteva zile și apăreau abateri „PO întârziat" false).
 
 #### 3. Dependențe
 
 - `sale_management`
+- `sale_stock`
 - `mrp`
 - `purchase`
 - `purchase_stock`
@@ -61,10 +67,11 @@ Deltatech Advanced Planner este un planificator avansat de stoc care răspunde l
 - `mail`
 - `web_gantt`
 - [deltatech_web_kpi_cards](../deltatech_web_kpi_cards/index.md)
+- `deltatech_purchase_lead_time`
 
 #### 4. Componente Cheie
 
-Sumarul și Funcționalitățile Cheie provin din `readme/DESCRIPTION.md` (completat cu `readme/HISTORY.md` (până la 19.0.1.8.0) pentru funcționalitățile apărute după redactarea lui), care nu solicită explicit detalierea componentelor; mai jos sunt doar elementele tehnice menționate explicit în documentație sau vizibile în manifest.
+Sumarul și Funcționalitățile Cheie provin din `readme/DESCRIPTION.md` (completat cu `readme/HISTORY.md` (până la 19.0.1.12.1) pentru funcționalitățile apărute după redactarea lui), care nu solicită explicit detalierea componentelor; mai jos sunt doar elementele tehnice menționate explicit în documentație sau vizibile în manifest.
 
 **Modele**
 
@@ -73,6 +80,7 @@ Sumarul și Funcționalitățile Cheie provin din `readme/DESCRIPTION.md` (compl
 - `advanced.planner.engine`: motorul de planificare (netting, explozie BOM, backward/forward scheduling, detecție abateri).
 - `advanced.ctp.wizard` (+ `.line`): fereastra „Earliest Date” (Capable to Promise), calculată în `advanced_planner_ctp.py`.
 - `advanced.workcenter.load` și `advanced.crp.slot`: încărcarea posturilor de lucru și sloturile CRP (workcenter × săptămână × companie).
+- `advanced.workcenter.efficiency`: eficiența măsurată a posturilor de lucru, ca sugestie.
 - `advanced.material.situation` și `advanced.stock.projection`: Situația Material și Stocul Proiectat Agregat (cu linii și wizard de snapshot).
 
 **Vizualizări**
@@ -88,5 +96,6 @@ Buton **Earliest Date** pe formularul ofertei/comenzii de vânzare (`advanced_ct
 #### 5. Conexiuni
 
 - [deltatech_web_kpi_cards](../deltatech_web_kpi_cards/index.md): cardurile KPI partajate afișate pe dashboard-ul planificatorului (dependență din 19.0.1.4.0).
+- `deltatech_purchase_lead_time`: lead time-ul furnizorului măsurat din istoricul de achiziții, folosit când opțiunea este activată (dependență din 19.0.1.11.0; fără pagină wiki).
 
 Modulele de referință menționate în documentație pentru cerințe APS avansate (`APS4MFG`, `frePPLe`) sunt sisteme externe, nu module din acest monorepo, și nu au pagină wiki.

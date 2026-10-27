@@ -40,8 +40,9 @@ privată (vizitator anonim) pentru verificarea rezultatului, inclusiv pe telefon
 ## 4. Conturi și date implicate
 
 Modulul nu are conturi contabile, modele sau câmpuri noi — lucrează doar pe conținutul paginilor
-(HTML-ul salvat) și pe trei vederi opționale ale antetului (**Sticlă**, **Meniu la trecerea
-mouse-ului › Subliniere**, **… › Umplere**), activate per website.
+(HTML-ul salvat) și pe vederi opționale ale website-ului, activate per website: trei pentru antet
+(**Sticlă**, **Meniu la trecerea mouse-ului › Subliniere**, **… › Umplere**) și trei pentru
+**Culoarea barei browserului** (*Temă*, *Antet*, *Personalizat*).
 
 Date minime pentru demo: un website cu o pagină editabilă care are o secțiune cu coloane sau
 carduri (de exemplu blocul *Coloane* sau *Carduri*), o secțiune cu imagine de fundal (pentru
@@ -140,7 +141,7 @@ variante: *Mărire*, *Micșorare*, *Puls*, *Plutire*, *Legănare*, *Clătinare*,
 
 ### Pasul 7 — Antetul: Sticlă și Meniu la trecerea mouse-ului
 
-Dați clic pe **antet**. La finalul panoului apar:
+Dați clic pe **antet**. În panoul antetului apar:
 
 - **Sticlă** — antetul devine din sticlă mată când pagina este derulată și antetul rămâne deasupra
   conținutului. Depinde de opțiunea nativă a antetului **Efect de derulare**: cu *Fix* antetul
@@ -153,6 +154,18 @@ Dați clic pe **antet**. La finalul panoului apar:
 Ambele sunt setări ale **website-ului** (se aplică pe toate paginile), nu ale paginii curente.
 
 ![Opțiunile antetului: Sticlă activ și Meniu la trecerea mouse-ului = Subliniere](screenshots/07_antet_glass_menu_hover.png)
+
+### Pasul 7 bis — Culoarea barei browserului (tab-ul Temă › Efecte)
+
+Această opțiune nu e în panoul antetului. În editor, deschideți tab-ul **Temă** și, în blocul
+**Efecte**, setați **Culoarea barei browserului** (*Browser Bar Color*) — culoarea barei
+browserului din jurul adresei (Safari pe iPhone, iPad și Mac, Chrome pe Android). Valori:
+*Implicit* (*Default*, browserul își păstrează alegerea), *Temă* (*Theme*, prima culoare a
+temei), *Antet* (*Header*, culoarea antetului; urmărește antetul și când acesta se lipește de
+marginea de sus a paginii) și *Personalizat* (*Custom*, o culoare aleasă în editor). Cu
+*Personalizat* apare dedesubt rândul **Culoare**. Pe Mac, Safari o afișează doar dacă în setările
+lui este activată opțiunea *Show color in tab bar*. Este o setare a **website-ului**, nu a paginii
+curente.
 
 ### Pasul 8 — Antetul pe site
 
@@ -289,6 +302,9 @@ linkurile *Casetei de ajutor* (WhatsApp, telefon) și ale *Listei de informații
 - [ ] *Animație la trecerea mouse-ului* pe un buton se vede doar pe acel buton.
 - [ ] *Meniu la trecerea mouse-ului* și *Sticlă* pe antet se aplică pe toate paginile website-ului; cu *Efect de
       derulare* = *Fix*, antetul este din sticlă cât timp pagina e derulată.
+- [ ] *Culoarea barei browserului*: pe telefon (Chrome pe Android sau Safari pe iPhone), cu *Temă*
+      bara are prima culoare a temei, cu *Antet* culoarea antetului (și după derulare, când antetul
+      se lipește sus), cu *Personalizat* culoarea aleasă; cu *Implicit* site-ul nu o schimbă.
 - [ ] *Traseu livrare*: schimbarea *Vehicul*, *Viteză*, *Culoare* se vede pe site după salvare.
 - [ ] *Listă de informații*: *Peste* = *300 lei* schimbă textul rândului de livrare gratuită;
       debifarea lui *Ridicare din magazin* ascunde rândul pe site.

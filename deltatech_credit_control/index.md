@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.0.0.4`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_credit_control`
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_credit_control`
-- **Ultima Ingestie:** `2026-09-08`
+- **Ultima Ingestie:** `2026-10-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -31,11 +31,30 @@ Modulul construiește un clasament al clienților cu restanțe și arată clar c
 #### 3. Dependențe
 
 - `account`
+- `accountant` (Enterprise; fără ea meniul rămâne în aplicația „Invoicing”, nu în „Accounting”)
 - `sales_team`
 
 #### 4. Componente Cheie
 
-Documentația pentru 'Sumar' și 'Funcționalități Cheie' a fost preluată din fișierul `readme/DESCRIPTION.md` (completată cu detalii operaționale din `readme/USAGE.md` și `readme/CONFIGURE.md`). Conform fluxului de ingestie, analiza detaliată a componentelor (Modele, Vizualizări, Acțiuni) din cod este omisă, deoarece nu este menționată explicit în Readme.
+Documentația pentru 'Sumar' și 'Funcționalități Cheie' a fost preluată din `readme/DESCRIPTION.md` (completată cu detalii din `readme/USAGE.md` și `readme/CONFIGURE.md`); Readme-ul nu cere explicit analiza componentelor, deci mai jos este doar structura, din manifest și fișierele modulului.
+
+**Modele**
+
+- `deltatech.credit.control` (`_auto=False`): clasamentul clienților cu restanțe, interogare SQL live.
+- `deltatech.credit.control.line` (`_auto=False`): liniile contabile de creanță deschise, cu tranșa de vechime.
+- `res.company` și `res.config.settings` (extinse): ponderile scorului, pragurile de saturație și de risc, pragul minim de ignorare a restanțelor și includerea facturilor contestate.
+
+**Vizualizări**
+
+- `view_credit_control_list`, `view_credit_control_kanban`, `view_credit_control_form`, `view_credit_control_search`, `view_credit_control_graph`, `view_credit_control_pivot`: lista „Clienți de urmărit”, cardurile „Cazuri critice”, fișa clientului și rapoartele.
+- `view_credit_control_line_list`, `view_credit_control_line_search`, `view_credit_control_line_pivot`: „Documente neîncasate”.
+- `res_config_settings_view_form`: blocul de configurare „Control creanțe”.
+- `action_report_credit_control`: raportul PDF „Situație control creanțe”.
+- Meniuri sub `accountant.menu_accounting`: Clienți de urmărit, Cazuri critice, Documente neîncasate și un grup Raportare (vechimi, agent de vânzări, stare, evoluție).
+
+**Acțiuni Automate / Acțiuni Server**
+
+Modulul nu definește sarcini `ir.cron`, reguli `base.automation` sau acțiuni server. Securitate: grupul `group_credit_control` (acces read-only) și reguli multi-companie pe ambele modele.
 
 #### 5. Conexiuni
 

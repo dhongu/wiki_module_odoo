@@ -1,10 +1,10 @@
-# Romania - Invoice Report Terrabit (localizat la `l10n_ro_invoice_report/index.md`)
+# Romania - Invoice Report (localizat la `l10n_ro_invoice_report/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_invoice_report`
 - **Versiune:** `19.0.3.4.27`
-- **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_invoice_report
+- **Cale:** `https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_invoice_report`
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_invoice_report`
-- **Ultima Ingestie:** `2026-09-21`
+- **Ultima Ingestie:** `2026-10-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -45,18 +45,34 @@ Acest modul extinde raportul de factură standard din Odoo pentru a se conforma 
 
 - `base`
 - `account`
-- `l10n_ro_config`
+- [l10n_ro_report_common](../l10n_ro_report_common/index.md)
 - `purchase`
 - `sale`
 - `stock_delivery`
 
 #### 4. Componente Cheie
 
-> Secțiune omisă: fișierul `readme/DESCRIPTION.md` acoperă deja Sumarul și Funcționalitățile Cheie, iar conform schemei de ingestie analiza codului pentru Componente Cheie (Modele, Vizualizări, Acțiuni Automate / Acțiuni Server) nu se efectuează decât dacă este cerută explicit în Readme.
+Conform schemei de ingestie, `readme/DESCRIPTION.md` acoperă Sumarul și Funcționalitățile Cheie, iar analiza detaliată a codului nu este cerută explicit; mai jos este doar structura modulului.
+
+**Modele**
+
+- `account.move` și `account.move.line` (extinse): delegat (`delegate_id`, indexat), mijloc de transport și informațiile de livrare afișate pe factură.
+- `res.partner`, `res.company`, `res.config.settings`, `account.journal`, `account.bank.statement` (extinse): opțiunile de afișare, textul adițional al partenerului (`info_for_invoice`) și setările documentelor de casă.
+- `report.account.report_invoice` (extins) și `report.l10n_ro_invoice_report.report_invoice_company_language`: raportul de factură, inclusiv varianta în limba companiei.
+- `report.l10n_ro_invoice_report.report_payment`: raportul „Voucher / Payment” pe `account.payment`.
+
+**Vizualizări**
+
+- `views/invoice_report.xml`, `views/payment_report.xml`, `views/account_voucher_report.xml`: șabloanele rapoartelor de factură și de chitanță / dispoziții.
+- `views/account_invoice_view.xml`, `views/account_journal_view.xml`, `views/res_partner_view.xml`, `views/account_bank_statement_view.xml`, `views/res_config_view.xml`: câmpurile și opțiunile adăugate în formulare și în setările de facturare.
+
+**Acțiuni Automate / Acțiuni Server**
+
+Modulul nu definește sarcini `ir.cron`, reguli `base.automation` sau acțiuni server.
 
 #### 5. Conexiuni
 
-- `l10n_ro_config`: modulul de configurare al localizării românești care găzduiește setările de facturare valorificate de acest raport.
+- [l10n_ro_report_common](../l10n_ro_report_common/index.md): modulul comun de rapoarte al localizării, de care depinde acest raport.
 - `stock_delivery`: sursa informațiilor despre livrări (Pickings) și AWB-uri afișate pe factură.
 - [l10n_ro_cash_bank_enhanced](../l10n_ro_cash_bank_enhanced/index.md): registrul numerotat al dispozițiilor de casă, pentru mișcările de numerar care nu trec printr-o plată contabilă; documentul de aici acoperă cazul `account.payment`, iar cele două nu se dublează.
 - [l10n_ro_pos_returns](../l10n_ro_pos_returns/index.md): restituirile de la casa de marcat, care nu produc `account.payment` și își iau dispoziția de plată din registrul modulului de casierie.

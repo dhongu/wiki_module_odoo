@@ -58,7 +58,10 @@ Roluri recomandate pentru testare:
 
 Conturile RO care apar în fișierele exportate sau sunt cerute de mapare:
 - **4111 / 401** — clienți și furnizori; codurile SAGA de client/furnizor identifică partenerul
-  în fișierele `Clienti` și `Furnizori`; opțional se exportă cu analitic pe partener.
+  în fișierele `Clienti` și `Furnizori`; opțional se exportă cu analitic pe partener. Din notele
+  contabile intră în nomenclatoare doar partenerii de pe **4111/4191** (clienți) și **401/4011/4091**
+  (furnizori), conturile pe care partenerul primește analiticul; partenerii de pe alte conturi (ex.
+  607/371 din notele de stoc) nu se exportă și nu primesc cod.
 - **4426 / 4427** — TVA deductibilă/colectată, cu tipul de deducere SAGA (`N50`, `I`) pe taxă.
 - **Clasa 7 (704, 707, 709 etc.)** — totalul de control după export compară veniturile postate
   în perioadă cu totalul documentelor exportate.
@@ -218,7 +221,24 @@ de meniuri contabile și conține **Export SAGA** și **Import SAGA**.
 
 ![Asistentul Export SAGA completat](screenshots/07_export_wizard.png)
 
-Apăsați **Aplică**. Odoo generează o singură arhivă `ExportOdoo_<de la>_<până la>.zip`.
+Apăsați **Export**. Odoo generează o singură arhivă `ExportOdoo_<de la>_<până la>.zip`, pe pași, într-un
+dialog de progres (câte un fișier, pe bucăți de documente, fiecare bucată într-o cerere proprie), ca
+exportul să nu se oprească pe o lună cu multe documente. Pornirea exportului doar caută documentele și
+stabilește planul; următoarele două lucruri sunt **pași ai exportului**, nu se mai fac la deschidere:
+
+- **Completarea codurilor de partener lipsă** (dacă e bifat *Setează cod SAGA la export*): pași
+  *Coduri parteneri (furnizori)* și *Coduri parteneri (clienți)*, rulați **înaintea tuturor
+  fișierelor**. Codurile deja folosite se citesc o singură dată pentru fiecare pas, nu printr-o căutare
+  pe fiecare partener, așa că pe o lună cu mii de clienți noi codurile se completează în secunde; codurile
+  atribuite sunt aceleași ca înainte;
+- **Clasificarea încasărilor și plăților**: câte un pas *Încasări și plăți <cod jurnal>* pentru fiecare
+  jurnal de bancă sau casă, rulat **înaintea notelor contabile** (`NC_`). Tot în acești pași se stabilește
+  ce note de diferență de curs pleacă în `I_`/`P_`, ca ele să fie scoase din `NC_`.
+
+Dacă un pas pornește înaintea pașilor de care depinde, eșuează cu mesajul „Această parte poate fi
+generată doar după părțile: …" (vezi secțiunea 9); după ce pașii ceruți sunt făcuți, el se
+reia cu **Generează bucățile rămase**. Arhiva și rezultatul exportului sunt aceleași ca înainte;
+numărul de încasări și plăți din sumar apare la final, după pașii lor.
 
 ### Pasul 6 — Citirea rezultatului și controlul total
 
@@ -553,6 +573,18 @@ corespondent în SAGA); ele ajung în SAGA doar prin facturile și notele contab
       diferență de curs care închide contul de plăți în curs **nu** apare în `NC_` al jurnalului de
       diferențe de curs. Clientul se stinge cu suma integrală a plății, contul de plăți în curs rămâne
       fără sold în SAGA.
+- [ ] Pe o lună cu multe extrase de bancă, exportul pornește fără eroarea „Connection … couldn't be
+      established or was interrupted"; în dialogul de progres apar pașii *Coduri parteneri* (dacă
+      *Setează cod SAGA la export* e bifat) și *Încasări și plăți <jurnal>*, înaintea fișierelor `NC_*`.
+- [ ] Cu *Setează cod SAGA la export* bifat, un partener fără cod din perioadă are codul completat după
+      export, iar sumarul „Au fost exportate" arată numărul corect de încasări și plăți.
+- [ ] O notă contabilă cu un partener pe 607/371 nu duce partenerul în `Clienti`/`Furnizori` și nu îi
+      dă cod; un partener de pe 4111 apare doar în `Clienti`, unul de pe 401 doar în `Furnizori`.
+- [ ] Pe o lună cu mulți clienți noi, pașii *Coduri parteneri* se termină în secunde, iar codurile noi
+      sunt unice și continuă secvența (fără a relua un cod deja ocupat, nici scris fără zerouri).
+- [ ] Un pas lansat înaintea pașilor de care depinde eșuează cu „Această parte poate fi generată doar după
+      părțile: …" și se reia cu **Generează bucățile rămase**; arhiva finală e identică cu cea a unui export
+      fără întreruperi.
 - [ ] Pe o firmă cu TVA la încasare, `NC_*` nu conține linii din jurnalul `CABA` (cont debitor =
       cont creditor).
 - [ ] Raportul de export nu are mesaje „peste limita SAGA de 16" caractere; dacă are, documentul
@@ -579,6 +611,7 @@ corespondent în SAGA); ele ajung în SAGA doar prin facturile și notele contab
 | „Categoria … a produsului … nu are cod SAGA" | Categorie fără cod la export cantitativ-valoric | Completați **Cod SAGA** pe categoria de produs |
 | „Locația … nu are setat un cod SAGA (Gestiune)" | Locație internă fără cod la export cantitativ-valoric | Completați **Cod SAGA** pe locația de stoc |
 | „Documentul …: câmpul NDP/NR_DOC are N caractere (…), peste limita SAGA de 16" | Număr de notă prea lung (NDP, mai ales cu sufixul `*N`) sau referință prea lungă | Pentru `NR_DOC`: bifați *Scurtează anul la 2 cifre* și reexportați. Pentru `NDP` opțiunea nu ajută, iar scurtarea codului de jurnal nu schimbă notele deja înregistrate — singura remediere e renumerotarea notei. Cu *Ignoră erorile* bifat (implicit) exportul continuă, dar valoarea e tăiată la 16 caractere și poate coincide cu a altei note — **nu predați arhiva** cu astfel de mesaje |
+| „Această parte poate fi generată doar după părțile: …" (cu numele pașilor, ex. *Coduri parteneri (clienți)*, *Încasări și plăți BNK1*) | Un pas al exportului a pornit înaintea pașilor de care depinde (codurile partenerilor, sau încasările/plățile pentru `NC_`) | Apăsați **Generează bucățile rămase**: pașii ceruți se fac, iar pasul eșuat se reia |
 | SAGA preia o singură plată din mai multe cu același număr | Arhivă generată cu o versiune mai veche a modulului (fără sufixul `*N`) | Actualizați modulul și regenerați exportul pentru perioadă |
 | Sold furnizor rămas deschis în SAGA deși plata s-a importat | Factura de furnizor nu are *Referință furnizor* sau plata nu e reconciliată în Odoo | Completați referința, reconciliați plata și reexportați |
 | Partener nou creat fără cod SAGA (în jurnalul serverului: „no free code found for sequence …") | Secvența nu a găsit un cod liber după mai multe încercări | Completați codul manual pe partener și verificați secvența `saga.ref.customer`/`saga.ref.supplier` |

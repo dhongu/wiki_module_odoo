@@ -2,9 +2,9 @@
 
 - **Nume Tehnic:** `deltatech_marketplace`
 - **Versiune:** `19.0.1.42.0`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace
+- **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace`
-- **Ultima Ingestie:** `2026-10-12`
+- **Ultima Ingestie:** `2026-10-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -39,6 +39,7 @@ Marketplace Base Connector este modulul de bază al familiei de module marketpla
 - *Ignore Company Without VAT* (tab-ul *Comenzi și produse*, grupul Parteneri): o adresă de facturare cu nume de firmă, dar fără CUI, se importă ca persoană fizică, pe numele persoanei; implicit dezactivat, implementat deocamdată doar în PrestaShop.
 - Controlul importului (vezi `readme/USAGE.md`): per tip de obiect, *Create* și *Update* decid dacă importul poate crea sau modifica înregistrări Odoo (cardul spune politica în clar), iar *Only Missing* sare peste înregistrările deja legate. Produsul din spatele unei oferte se găsește în ordine: asocierea existentă, cod de bare, referință internă (potrivire exactă), nume (rezervă riscantă, cu avertisment „possible variant collapse”), prima variantă a șablonului. *Strict variant match* oprește ultimii doi pași. *Ignore Import Fields* (doar pentru grupul Setări) elimină câmpuri la import, iar *Use category* și *Default category* decid dacă o categorie din marketplace ajunge vreodată în `categ_id`.
 - Export de stoc/preț fără dubluri: ofertele deja în așteptare într-un job de export nu mai sunt puse din nou în coadă (jobul citește valoarea la rulare), iar cron-ul *Marketplace: export price* trimite din nou prețurile (verificarea „fără export de preț pe conector” se potrivea greșit și pe conectorii care au export).
+- Potrivirea clienților la import (fără contacte duplicate): un client persoană fizică negăsit după nume exact și e-mail / telefon este comparat cu contactele care au același telefon normalizat (E.164) sau același e-mail, după nume (orice ordine a cuvintelor, fără diacritice), stradă și oraș. Un contact cu scor cel puțin egal cu *Match Threshold* (0,85) este refolosit; în zona gri (de la 0,60) se creează un contact nou, iar clientul din marketplace este marcat *Possible Duplicate Of* (filtru *Possible Duplicates*) pentru verificare manuală. Regulile de potrivire (telefon, e-mail, nume fără forme juridice precum SRL, KFT, PFA) vin din `deltatech_partner_match`; pragurile se setează pe backend (`partner_match_fuzzy`, `partner_match_threshold`, `partner_match_grey_threshold`).
 - Modificarea limitei de cereri pe secundă a unui backend nu mai blochează apelurile API: noua limită se salvează pe conexiune proprie, cu commit imediat.
 
 #### 3. Dependențe
@@ -49,6 +50,7 @@ Marketplace Base Connector este modulul de bază al familiei de module marketpla
 - `stock`
 - `queue_job`
 - `base_address_extended`
+- `deltatech_partner_match`
 
 #### 4. Componente Cheie
 
@@ -90,3 +92,5 @@ Modulul servește ca fundație pentru un ecosistem complet de management al mark
 - [deltatech_marketplace_opencart](../deltatech_marketplace_opencart/index.md): conector pentru platforma OpenCart.
 - [deltatech_marketplace_doraly](../deltatech_marketplace_doraly/index.md): conector pentru platforma Doraly.
 - [deltatech_marketplace_odoo](../deltatech_marketplace_odoo/index.md): conector pentru sincronizare Odoo-la-Odoo.
+
+Alte module marketplace care se sprijină pe această fundație: [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md) (comenzile), [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md) (plățile), [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md) (livrarea) și [deltatech_marketplace_website](../deltatech_marketplace_website/index.md) (categoriile publice).

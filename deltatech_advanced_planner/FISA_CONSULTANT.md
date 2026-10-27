@@ -357,6 +357,20 @@ Modulul **nu generează note contabile** (Dr/Cr). Rezultatele unei rulări sunt:
 Efectul **contabil** apare ulterior, standard: când evaluarea stocului este automată, recepția PO
 (NIR) și finalizarea MO generează notele contabile uzuale de stoc/producție — nu prin acest modul.
 
+### Curățarea datelor de test (modulul `terrabit_clear_data`)
+
+Când pe baza de test se rulează opțiunea **Sterge date tranzactionale din module** a modulului
+`terrabit_clear_data`, planificatorul își curăță singur datele pentru compania selectată:
+
+- comenzile planificate, împreună cu încărcările centrelor de lucru, log-urile și comenzile planificate copil;
+- sloturile CRP, proiecțiile de stoc și situațiile de material.
+
+Comenzile de vânzare, de achiziție și de producție, transferurile și mișcările de stoc **nu se șterg**:
+doar legătura lor cu comenzile planificate se golește. Log-urile fără comandă planificată și
+numerotarea comenzilor planificate (revine la 1) se curăță doar când se șterg și datele fără companie
+sau când compania selectată este singura din baza de date. Operația nu se folosește pe o bază de
+producție.
+
 ## 7. Legături cu alte module / declarații
 
 | Modul / proces | Rol în flux | Tip legătură |
@@ -371,6 +385,7 @@ Efectul **contabil** apare ulterior, standard: când evaluarea stocului este aut
 | `web_gantt` | vederea Gantt a planului de producție (**Odoo Enterprise**) | dependență (manifest) |
 | `deltatech_web_kpi_cards` | cardurile KPI din panoul de control | dependență (manifest) |
 | `l10n_ro_doc_screenshots` | generarea automată a capturilor pentru fișă/manual | opțional (doar testare) |
+| `terrabit_clear_data` | opțiunea **Sterge date tranzactionale din module** șterge datele planificatorului | opțional (doar baze de test) |
 
 **Ce este automat:** netting cronologic, backward scheduling, RCCP/CRP, statusul semaforizat,
 sincronizarea livrărilor, detecția zilnică a abaterilor și escaladarea (dacă sunt activate din Setări),
@@ -409,6 +424,7 @@ proprietarului fiecărei reguli de reaprovizionare (bifa **Planificat de Advance
 - [ ] Un clic pe referința din coloana **Document** deschide comanda de achiziție / producție.
 - [ ] O comandă planificată marcată manual **Finalizat** (comanda reală creată în afara planificatorului) nu apare în tabel.
 - [ ] Exporturile PDF/Excel se descarcă și conțin datele testate.
+- [ ] Pe o bază de test cu mai multe companii, **Sterge date tranzactionale din module** pe o singură companie șterge comenzile planificate, sloturile CRP, proiecțiile și situațiile de material ale acesteia, lasă intacte comenzile de vânzare, achiziție și producție (cu legătura către comanda planificată goală) și nu atinge datele celorlalte companii.
 
 ## 9. Mesaje de eroare frecvente
 

@@ -1,7 +1,7 @@
 # Courier Delivery Base (localizat la `deltatech_delivery/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery`
-- **Versiune:** `19.0.6.12.1`
+- **Versiune:** `19.0.6.12.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery`
 - **Ultima Ingestie:** `2026-10-22`

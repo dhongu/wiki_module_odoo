@@ -46,8 +46,11 @@ pentru demo:
 
 1. Instalați `l10n_ro_anaf_d101` (atrage `l10n_ro_profit_tax`, `l10n_ro_anaf_base` și `l10n_ro_anaf_partner`).
 2. Completați datele companiei: CUI, adresă, **cod CAEN**, județ și contactul de declarație.
-3. Codul de obligație al declarației este **103** (persoane juridice române) și nu se poate schimba
-   din interfață: câmpul nu apare în formularul înregistrării de calcul.
+3. Pe înregistrarea de calcul anuală, în grupul **Configurare**, verificați **Tip impozit D101**
+   (codul de obligație ANAF): implicit **103** — impozit pe profit, persoane juridice române. Alegeți
+   102 (plăți anticipate, societăți bancare), 104 (impozit anual, agricultori / ONG) sau 105 (persoane
+   juridice străine) doar dacă firma se încadrează acolo. Câmpul apare doar pe perioada Anual și se
+   poate schimba și după postare: nu atinge nota contabilă, doar declarația.
 4. Aveți o înregistrare de calcul impozit pe profit anuală, **postată**.
 5. Pentru exportul XDP: **Contabilitate → Configurare → Setări**, blocul **Declarații ANAF România**,
    alegeți **Tip export** — *Descărcare directă XDP* sau *Arhivă ZIP cu XDP și PDF* (implicit).
@@ -60,7 +63,8 @@ pentru demo:
 
 Accesați **Contabilitate → Contabilitate → Impozit pe Profit** și deschideți înregistrarea de calcul
 pentru perioada **Anual**, verificați valorile (venituri, cheltuieli, ajustări, pierdere dedusă, impozit) și
-**postați-o**. După postare apar două butoane: ① **Export D101 XML** și ② **Export D101 XDP**.
+**postați-o**. După postare apar două butoane: ① **Export D101 XML** și ② **Export D101 XDP**;
+în grupul Configurare, ③ **Tip impozit D101** arată codul de obligație al declarației (implicit 103).
 Exportul D101 este disponibil doar pe perioada Anual și doar după postare.
 
 ![Calcul impozit profit — perioada Anual, postat](screenshots/01_calcul_anual.png)
@@ -68,7 +72,9 @@ Exportul D101 este disponibil doar pe perioada Anual și doar după postare.
 ### Pasul 2 — Verificarea indicatorilor înainte de export
 
 În corpul înregistrării, verificați pe ecran că: profitul impozabil, baza impozabilă și impozitul
-calculat corespund balanței; pierderea dedusă respectă limita de 70%. Acestea devin indicatorii P1–P53 ai declarației.
+calculat corespund balanței; pierderea dedusă respectă limita de 70%; **Tip impozit D101** din grupul
+Configurare e cel corect (vezi captura de la pasul 1). Acestea devin indicatorii P1–P53 ai declarației,
+iar tipul de impozit devine `cod_obligatie` și intră în numărul de evidență a plății.
 
 ![Indicatorii de calcul: pierdere reportată, ① impozit calculat, ② de plată](screenshots/02_indicatori.png)
 
@@ -219,7 +225,7 @@ ajustărilor); impozitul minim pe cifra de afaceri.
 Se **generează automat** din `tests/test_screenshots.py` (mixin `ScreenshotCase`), în RO, pe planul RO,
 în `static/description/`:
 
-1. `01_calcul_anual.png` — calcul impozit profit, perioada Anual, postat, cu butoanele ① Export D101 XML și ② Export D101 XDP.
+1. `01_calcul_anual.png` — calcul impozit profit, perioada Anual, postat, cu butoanele ① Export D101 XML și ② Export D101 XDP și ③ câmpul Tip impozit D101.
 2. `02_indicatori.png` — blocurile de pierdere reportată, calcul impozit și de plată: ① impozitul calculat, ② suma de plată.
 3. `03_tip_export.png` — setarea **Tip export** din **Declarații ANAF România** (XDP direct sau ZIP cu PDF).
 
@@ -236,6 +242,6 @@ formularul PDF ANAF e XFA și se deschide doar în Adobe Reader).
 - Subliniați că D101 reutilizează calculul din `l10n_ro_profit_tax` — nu se reintroduc date.
 - Menționați validarea XSD la export (garanție că fișierul e acceptat de ANAF/DUKIntegrator).
 - Documentați explicit limitarea pe scenariul de pierdere (completare manuală).
-- Precizați că exportul folosește codul de obligație 103 și că nu se poate alege din interfață.
+- Explicați codurile de obligație (102/103/104/105) din câmpul **Tip impozit D101** și când se aleg.
 - Explicați diferența XML (import în DUKIntegrator) / XDP (formularul PDF completat, deschis în Adobe
   Reader) și setarea **Tip export**, comună tuturor declarațiilor exportate în XDP.

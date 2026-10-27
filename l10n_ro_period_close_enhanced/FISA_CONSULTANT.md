@@ -195,17 +195,62 @@ Este documentul care arată **ce s-a verificat**, nu doar că s-a închis luna.
 
 ![Proces-verbal de închidere](screenshots/08_raport_pv.png)
 
-### Pasul 5 — Validarea și blocarea
+### Pasul 5 — Situațiile lunare
+
+**Pregătire (o singură dată).** Setul propus de asistent se stabilește pe companie, în
+**Contabilitate → Configurare → Setări**, blocul **Situații lunare (RO)**: rapoartele bifate
+implicit, conturile pentru fișele de cont, formatul (PDF, XLSX sau PDF și XLSX) și bifa
+**Generează situațiile lunare la validare** (implicit oprită).
+
+![Blocul Situații lunare (RO) în Setări](screenshots/10_setari_situatii_lunare.png)
+
+**Generarea.** Pe cardul lunii din **Contabilitate → Închidere → Închidere Perioadă (RO)**, din
+meniul **⋮** alegeți **Situații lunare** (intrarea apare doar pe checklist-ul de închidere
+lunară și doar pentru utilizatorii cu drept de contabil). Se deschide asistentul, cu perioada
+checklist-ului, formatul și rapoartele bifate din Setări; completați ce diferă pentru luna
+curentă și apăsați **Generează**.
+
+![Asistentul Situații lunare](screenshots/11_asistent_situatii_lunare.png)
+
+| Raport | Modul |
+|---|---|
+| Balanța de verificare | `l10n_ro_reports` (balanța cu 5 coloane); altfel balanța standard |
+| Jurnalul de vânzări, jurnalul de cumpărări | `l10n_ro_account_vat_journal` |
+| Registrul-jurnal | `l10n_ro_registru_jurnal` |
+| Registrul de casă | `l10n_ro_cash_register_report` |
+| Jurnalul de bancă | `l10n_ro_bank_register_report` |
+| Fișa de cont — câte o fișă pe fiecare cont ales | `l10n_ro_account_fisa_cont`; altfel Cartea mare standard |
+
+Perioada și compania vin din checklist și nu se modifică în asistent (compania se afișează doar
+într-un mediu multi-companie). Rapoartele al căror modul nu e instalat nu apar în asistent;
+balanța și fișa de cont sunt mereu disponibile, datorită rapoartelor standard de rezervă.
+Câmpul **Conturi** apare doar cu **Fișe de cont** bifat și atunci e obligatoriu.
+
+**Rezultatul.** Browserul descarcă arhiva `Situatii_lunare_<an>-<lună>.zip`, atașată și pe
+checklist și anunțată în istoricul lui. Fișierele din arhivă sunt numerotate în ordinea
+rapoartelor (`01_...`, `02_...`), cu câte un fișier pe format ales, iar fișele de cont poartă
+codul contului. O nouă generare pe aceeași lună înlocuiește arhiva anterioară. Un raport care
+nu se poate genera e sărit și numit în mesajul **Sărite: …** din istoric; restul arhivei se
+generează. Dacă niciun raport nu iese, asistentul afișează eroarea.
+
+![Arhiva situațiilor lunare atașată pe checklist](screenshots/12_arhiva_situatii_lunare.png)
+
+Cu **Generează situațiile lunare la validare** bifată, la validarea checklist-ului se generează
+automat arhiva cu setul implicit din Setări; aici nu apare asistent, iar un eșec total se vede
+doar ca mesaj în istoric, fără să blocheze validarea.
+
+### Pasul 6 — Validarea și blocarea
 
 Validați fișa lunii. La validare, modulul aplică blocarea perioadei: la închiderea lunii **decembrie**
 setează blocarea exercițiului (`fiscalyear_lock_date`), avansând-o doar, niciodată retrăgând-o.
-Pentru ianuarie–noiembrie blocarea de TVA rămâne pe seama fluxului D300.
+Pentru ianuarie–noiembrie blocarea de TVA rămâne pe seama fluxului D300. Cu bifa **Generează
+situațiile lunare la validare** din Setări, validarea generează și arhiva situațiilor lunare.
 
 Validarea nu trece cât timp o verificare a stadiului curent e în **anomalie** sau **în așteptare** —
 acesta e rostul controalelor blocante. Practic: anomaliile se rezolvă, iar cele rămase în așteptare
 se marchează cu **De revizuit** înainte de validare. Mesajul afișat altfel este „Unele verificări au eșuat în această etapă".
 
-### Pasul 6 — Blocare configurabilă per jurnal (FR-27)
+### Pasul 7 — Blocare configurabilă per jurnal (FR-27)
 
 Pe lângă blocarea anuală a exercițiului, fiecare **jurnal** poate avea o **Dată blocare jurnal**
 proprie. Astfel se pot bloca, de exemplu, jurnalele de TVA după depunerea D300, păstrând deschis
@@ -221,7 +266,7 @@ cu un mesaj clar — independent de blocările la nivel de companie.
 
 Modulul **nu generează note contabile proprii**. Verificările sunt read-only: citesc rulaje, solduri,
 mișcări de stoc și mesaje, fără să scrie nimic în contabilitate. Singurele scrieri sunt data de
-blocare a perioadei, la validare, și procesul-verbal atașat în chatter.
+blocare a perioadei, la validare, procesul-verbal și arhiva situațiilor lunare, atașate pe checklist.
 
 Notele contabile ale închiderii rămân în modulele care le produc: regularizarea TVA în
 `l10n_ro_vat_regularization`, închiderea 6xx/7xx în `l10n_ro_account_return_pl_closing`, reevaluarea
@@ -246,9 +291,10 @@ dacă acela lipsește.
 | `l10n_ro_anaf_d300` / `_d390` / `_d112` | declarațiile cu tip propriu de raportare |
 | `l10n_ro_anaf_submission` | registrul de depuneri și recipisele ANAF |
 | `account_asset` | registrul de imobilizări și notele de amortizare |
+| `l10n_ro_reports`, `l10n_ro_account_vat_journal`, `l10n_ro_registru_jurnal`, `l10n_ro_cash_register_report`, `l10n_ro_bank_register_report`, `l10n_ro_account_fisa_cont` | rapoartele strânse în arhiva situațiilor lunare |
 
 **Ce e automat:** cele 23 de verificări cu cod, recalculate la fiecare reîmprospătare; blocarea perioadei la
-validare; procesul-verbal atașat în chatter.
+validare; procesul-verbal atașat în chatter; arhiva situațiilor lunare, la cerere sau la validare.
 
 **Ce rămâne manual:** rezolvarea anomaliilor în modulele lor, bifele pentru pașii care țin de
 decizia contabilului, și decizia finală de validare a lunii.
@@ -285,6 +331,14 @@ Validare:
 - [ ] Închiderea lunii decembrie avansează blocarea exercițiului; ianuarie–noiembrie nu o ating.
 - [ ] Verificările modulelor neinstalate nu apar deloc în listă.
 
+Situații lunare:
+- [ ] Asistentul ia perioada din checklist și bifează setul implicit din Setări.
+- [ ] Rapoartele fără modul instalat nu apar în asistent.
+- [ ] Arhiva ZIP are câte un fișier pe raport și câte o fișă pe fiecare cont ales.
+- [ ] Arhiva e atașată pe checklist; o a doua generare pe aceeași lună o înlocuiește.
+- [ ] Fără niciun raport bifat, sau cu fișe de cont fără conturi, **Generează** afișează eroare.
+- [ ] Cu **Generează situațiile lunare la validare** bifată, validarea atașează arhiva; fără bifă, nu.
+
 ## 9. Mesaje de eroare frecvente
 
 | Mesaj / simptom | Cauză probabilă | Remediere |
@@ -297,6 +351,12 @@ Validare:
 | Anomalie pe jurnalele de TVA fără nicio postare manuală | O taxă e mapată pe alt cont decât cel din prefix | Verificați repartizarea taxei, sau extindeți prefixul configurat |
 | Declarație marcată „în așteptare" deși a fost depusă | Depunerea nu e înregistrată nici ca `account.return`, nici în registrul ANAF | Înregistrați depunerea pe calea pe care o folosește compania |
 | Validarea nu trece | O verificare e în anomalie | Rezolvați anomalia; acesta e rostul controalelor blocante |
+| Un raport lipsește din asistentul Situații lunare | Modulul raportului nu e instalat | Instalați modulul raportului (vezi tabelul de la Pasul 5) |
+| Mesajul „Situațiile lunare nu au putut fi generate” după validare | Generarea automată de la validare a eșuat; checklist-ul e totuși validat | Generați arhiva din meniul **⋮** → **Situații lunare** și verificați motivul din mesaj |
+| Mesajul „Sărite: …” după generarea situațiilor lunare | Exportul unui raport a eșuat, de exemplu PDF fără wkhtmltopdf | Generați raportul în XLSX sau verificați motivul din mesaj; restul arhivei e valid |
+| „Selectați cel puțin un raport." la Generează | Niciun raport nu e bifat în asistent | Bifați cel puțin un raport |
+| „Selectați conturile pentru fișele de cont." | Doar **Fișe de cont** e bifat și lista de conturi e goală | Alegeți conturile, sau completați-le implicit în Setări |
+| „Nu s-a putut genera nicio situație lunară." | Toate exporturile au eșuat; motivele sunt în mesaj | Corectați cauza (de exemplu wkhtmltopdf pentru PDF) sau alegeți XLSX |
 | Verificarea de valorizare durează mult | Confruntă toate mișcările perioadei | Normal pe baze mari; rulează pe intervalul lunii, nu pe istoric |
 
 ## 10. Capturi de ecran
@@ -311,6 +371,9 @@ Validare:
 | 6 | `static/description/06_drill_raport_408.png` | Drill-down din verificarea de 408: raportul recepțiilor fără factură, pe furnizori |
 | 7 | `static/description/07_drill_documente.png` | Drill-down către documentele rămase neterminate |
 | 8 | `static/description/08_raport_pv.png` | Procesul-verbal de pre-închidere (PDF), cu totalurile verificat / anomalie / în așteptare |
+| 10 | `static/description/10_setari_situatii_lunare.png` | Blocul „Situații lunare (RO)" în Setări (Pasul 5) |
+| 11 | `static/description/11_asistent_situatii_lunare.png` | Asistentul „Situații lunare", cu perioada, formatul și rapoartele (Pasul 5) |
+| 12 | `static/description/12_arhiva_situatii_lunare.png` | Mesajul din istoricul checklist-ului cu arhiva ZIP atașată (Pasul 5) |
 | 9 | `static/description/09_blocare_jurnal.png` | Câmpul „Dată blocare jurnal" ① pe formularul jurnalului (FR-27) |
 
 Capturile sunt generate automat din `tests/test_screenshots.py` (mixinul `ScreenshotCase` din

@@ -81,8 +81,9 @@ achiziții postate pe 214/208 față de 404 cu distribuție analitică pe proiec
 6. Opțional: cronul **Recunoaștere lunară subvenții active (475→7584)** (*Setări → Tehnic → Acțiuni
    planificate*, în modul dezvoltator) este inactiv implicit. Activați-l doar dacă activele
    finanțate se amortizează liniar pe durata proiectului: cronul împarte **valoarea nerambursabilă a
-   contractului** la lunile proiectului, nu la durata de amortizare și nu la tranșele înregistrate,
-   deci poate recunoaște mai mult decât s-a înregistrat.
+   contractului** la lunile proiectului, nu la durata de amortizare. Se oprește la veniturile
+   amânate rămase, deci nu recunoaște mai mult decât s-a înregistrat din tranșe, și rulează doar pe
+   contractele în derulare.
 
 ## 6. Flux de utilizare
 
@@ -158,7 +159,8 @@ numărată în totaluri.
 
 Pe fila **Recunoașteri venituri** adăugați descrierea, data și suma și apăsați **Contabilizează**.
 Nota este **Dr 475x = Cr 7584** la active, respectiv **Dr 472 = Cr 741x/7418** la exploatare și
-dobânzi. Câmpul **Venituri amânate rămase** scade cu aceeași sumă. La subvențiile pentru active,
+dobânzi. Câmpul **Venituri amânate rămase** scade cu aceeași sumă. Recunoașterea nu poate depăși
+veniturile amânate rămase. La subvențiile pentru active,
 suma lunară = amortizarea lunii a activelor finanțate × procentul finanțat, începând cu luna
 următoare punerii în funcțiune. În demo, activele finanțate (50.000 lei, fără achiziția afiliatului)
 sunt puse în funcțiune în iunie 2025 și se amortizează în 36 de luni: pentru iulie 2025,
@@ -222,6 +224,36 @@ eliberează și pot fi cerute din nou.
 
 ![Cererea următoare: doar cheltuielile noi](screenshots/10_cerere_urmatoare.png)
 
+### Pasul 9 — Finalizarea contractului
+
+La încheierea proiectului apăsați **Finalizează**. Ce se cere depinde de tipul subvenției:
+
+- **Exploatare și dobânzi (472):** cheltuielile compensate sunt deja efectuate, deci **Venituri
+  amânate rămase** trebuie să fie zero. Altfel finalizarea se oprește și mesajul arată suma rămasă;
+  contabilizați recunoașterea rămasă, apoi finalizați. Recunoașterea rămasă se face doar pentru
+  venit care se cuvine efectiv; **nu** o folosiți pentru a acoperi o sumă neaprobată (vezi mai jos).
+- **Active (475):** soldul rămas la sfârșitul proiectului e normal. Venitul amânat se reia
+  la 7584 în ritmul amortizării activelor finanțate, și după finalizare, până la amortizarea
+  completă, casarea sau cedarea lor (OMFP 1802/2014, pct. 399 alin. (1), pct. 402 alin. (2)). Pe
+  contractul finalizat continuați recunoașterile de pe fila **Recunoașteri venituri**.
+- **Mixte:** finalizarea nu este blocată. Dacă partea de exploatare a unei subvenții mixte e pe 472,
+  soldul de pe 472 poate rămâne după finalizare; de aceea se recomandă contracte separate pentru
+  exploatare și active (vezi secțiunea 11).
+
+Pe un contract **Finalizat** se mai pot contabiliza tranșa decontului final (aprobată după
+încheierea proiectului) și recunoașterile. Pe un contract **Anulat / Reziliat** nu se mai
+contabilizează și nu se mai resetează tranșe și recunoașteri. Recunoașterea nu poate depăși
+veniturile amânate rămase.
+
+Regularizările sumelor neaprobate și restituirile (vezi tabelul de mai jos) se înregistrează manual
+și **nu** scad „Venituri amânate rămase”, care se calculează doar din tranșele și recunoașterile
+contractului. **Limitare cunoscută:** dacă ați regularizat manual o sumă neaprobată (Dr 472 =
+Cr 4451), finalizarea la exploatare/dobânzi rămâne blocată de diferența respectivă, iar o recunoaștere
+cu aceeași sumă ar crea venit fictiv. Evitați situația: dacă tranșa e încă **neîncasată**, apăsați
+**Resetează** pe linia ei și recontabilizați-o la suma aprobată, înainte de a regulariza diferența.
+Dacă regularizarea a fost deja făcută, contactați suportul pentru a corecta contractul; nu forțați
+finalizarea printr-o recunoaștere.
+
 ### Note de monografie și raportare
 
 | Operațiune | Debit | Credit | Generată de |
@@ -280,6 +312,9 @@ tipul *Mixtă*; depunerea dosarului la finanțator.
       procent nerambursabil.
 - [ ] O a doua cerere cu perioadă suprapusă nu mai conține notele unei cereri depuse/rambursate.
 - [ ] Cererea de rambursare nu a generat note contabile.
+- [ ] La exploatare/dobânzi, „Venituri amânate rămase” = 0 la finalizare; la active, soldul 475
+      rămas se reia în continuare, în ritmul amortizării.
+- [ ] Pe un contract anulat nu se pot contabiliza sau reseta tranșe și recunoașteri.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -293,6 +328,10 @@ tipul *Mixtă*; depunerea dosarului la finanțator.
 | „Generați liniile cererii înainte de depunere.” | cerere fără linii | apăsați „Generează liniile” |
 | „Configurați conturile 'Venituri amânate' și 'Venituri recunoscute' pe grant.” | recunoaștere pe un contract fără cont de venit (ex. exploatare, unde 741x se alege manual) | alegeți contul 741x potrivit |
 | „Liniile pot fi regenerate doar pe o cerere în ciornă.” | cererea e depusă, aprobată sau rambursată | readuceți-o în ciornă (din Depusă sau Respinsă) sau faceți o cerere nouă |
+| „Grantul … mai are venituri amânate de … Contabilizați recunoașterea finală …” | finalizarea unei subvenții de exploatare sau pentru dobânzi cu sold pe 472 | contabilizați recunoașterea rămasă dacă venitul se cuvine; dacă diferența e o sumă neaprobată regularizată manual, vezi limitarea din Pasul 9 |
+| „Grantul … este anulat …” | tranșă sau recunoaștere contabilizată ori resetată pe un contract anulat | nu se mai înregistrează pe contract; corecțiile se fac manual, prin notă contabilă |
+| „Suma recunoscută … depășește veniturile amânate rămase …” | recunoaștere peste subvenția înregistrată | reduceți suma sau înregistrați întâi tranșa |
+| „Suma recunoscută trebuie să fie pozitivă.” | recunoaștere cu sumă zero sau negativă | corectați suma înainte de a apăsa **Contabilizează** pe linia recunoașterii |
 | Realizat 0 pe categorie | facturile nu au distribuție analitică pe proiect sau sunt în afara perioadei | puneți contul analitic pe liniile facturilor; verificați perioada |
 | Coloana „Exclus” goală | furnizorul afiliat nu e în excluderile contractului (TVA-ul 4426 apare acolo doar dacă e cont eligibil al categoriei) | completați excluderile |
 
