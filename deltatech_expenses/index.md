@@ -1,10 +1,10 @@
 # Expenses Deduction (localizat la `deltatech_expenses/index.md`)
 
 - **Nume Tehnic:** `deltatech_expenses`
-- **Versiune:** `19.0.3.6.0`
+- **Versiune:** `19.0.3.7.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_expenses
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_expenses`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-10-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -23,7 +23,10 @@ Modulul gestionează decontarea cheltuielilor efectuate de angajați pe baza ava
 - **Plata directă la furnizor fără factură deschisă**: partea neacoperită de facturi deschise este un avans acordat furnizorului și se reclasifică automat `Dr 4092 = Cr 401` (reconciliat), astfel încât pe 401 nu rămâne sold debitor. Se folosește mereu 4092 (servicii); pentru bunuri (4091) sau imobilizări (4093) contabilul reclasifică manual, iar la primirea facturii compensează avansul (`Dr 401 = Cr 4092`).
 - Calcul diurnă: sumă/zi (`diem`) × număr de zile (acceptă o zecimală, ex. 2,5 — pentru deplasări în străinătate diurna se acordă și pe fracțiuni de zi) = `total_diem`, cu notă proprie `Dr 625 = Cr 542`, datată cu data cheltuielii. Valoarea implicită de 42,50 lei/zi este doar un punct de pornire, **nu un plafon**: modulul contează integral diurna introdusă și nu verifică plafonul fiscal de neimpozitare. Partea peste plafon se preia manual în salarizare ca venit impozabil; verificarea automată o oferă modulul opțional `l10n_ro_expense_allowance`.
 - Închiderea contului 542 prin **nota de diferență** (`Dr 5311 = Cr 542` când angajatul restituie, `Dr 542 = Cr 5311` când firma îi plătește diferența), **datată cu data decontului** (data cheltuielii), nu cu data avansului.
-- Liniile de decont sunt mereu în moneda companiei decontului: sumele se introduc în moneda companiei, iar o monedă trimisă la creare/scriere (de ex. de o integrare) este ignorată.
+- **Mod de decontare** (`settlement_mode`, pe decont): **Numerar** (avansul se plătește din casă, `Dr 542 = Cr 5311`); **Virament (card personal)** (avansul se plătește dintr-un jurnal bancar prin contul de plăți în curs 5125 al jurnalului: `Dr 542 = Cr 5125`, apoi se potrivește cu extrasul `Dr 5125 = Cr 5121`; restituirea e `Dr 5125 = Cr 542`); **Card de firmă** (fără avans: fiecare chitanță se decontează `Dr 401 = Cr 5125` al jurnalului cardului, potrivit apoi cu extrasul cardului; din jurnalul de plată se achită doar diurna datorată angajatului). Retragerea de numerar cu cardul firmei este un decont separat, în modul Virament (`Dr 542 = Cr 5121`).
+- **Jurnal card firmă**: pe decont (`card_journal_id`) și pe angajat (tabul „Setări", `expenses_card_journal_id`), din care se preia implicit la alegerea modului „Card de firmă". Jurnalele băncii/cardului au nevoie de conturi de plăți/încasări în curs 5125 pe metodele de plată.
+- **Decont în valută**: moneda decontului este cea a jurnalului de plată (sau a jurnalului cardului, la „Card de firmă"); dacă e diferită de moneda companiei, avansul, liniile, diurna și diferența se introduc în valută, iar fiecare notă poartă suma în valută (`amount_currency`) și contravaloarea la cursul (BNR) de la data ei: avansul la data avansului, fiecare chitanță la data ei, diurna și diferența la data cheltuielii. La validare, 542 se închide în valută, iar soldul rămas în RON se contabilizează ca diferență de curs: `Dr 665 = Cr 542` (pierdere) sau `Dr 542 = Cr 765` (câștig). Cere jurnal de casă în valută (5314), jurnal de cheltuieli pe un 542 în valută, cursuri la zi și conturile de diferențe de curs din Setări contabilitate. La „Card de firmă" în valută, jurnalul de plată al diurnei trebuie să fie în aceeași valută sau în moneda companiei.
+- Moneda liniei de decont este calculată din decont (`currency_id` de pe linie derivă din decont) și nu este un câmp independent: o monedă trimisă la creare/scriere (de ex. de o integrare) este ignorată, dar moneda decontului poate fi acum și valută, nu doar moneda companiei.
 - Contul de cheltuială se vede în coloana „Cont cheltuieli implicit" (implicit primul cont 623; pentru deplasări se schimbă în 625).
 - Taba **„Chitanțe"** pe decont afișează chitanțele de achiziție generate (tabul „Plăți" apare doar dacă există plăți); „Elemente jurnal" afișează toate liniile contabile.
 - Tipărire: meniul ⚙ → Tipărire → „Tipărire decont cheltuieli" (justificativul semnat de titularul avansului).
@@ -43,7 +46,22 @@ Modulul gestionează decontarea cheltuielilor efectuate de angajați pe baza ava
 
 #### 4. Componente Cheie
 
-Informațiile pentru Componente Cheie nu sunt acoperite de `readme/DESCRIPTION.md`, iar conform fluxului de ingestie analiza suplimentară a codului se omite atunci când Sumarul și Funcționalitățile Cheie sunt preluate din Readme. Model central: `deltatech.expenses.deduction` (cu liniile `deltatech.expenses.deduction.line`); extinderi pe `account.move`, `account.journal`, `account.payment` și `hr.employee`.
+**Modele**
+
+- `deltatech.expenses.deduction`: decontul de cheltuieli (stări, avans, diurnă, `settlement_mode`, `card_journal_id`, moneda și diferențele de curs, notele contabile generate).
+- `deltatech.expenses.deduction.line`: linia de decont (bon sau plată furnizor), cu moneda derivată din decont.
+- `account.move`, `account.journal`, `account.payment`: extinderi pentru legătura cu decontul.
+- `hr.employee`: butonul „Deconturi" și câmpul `expenses_card_journal_id` (Jurnal card firmă).
+
+**Vizualizări**
+
+- `views/deltatech_expenses_deduction_view.xml`: formular, listă, căutare și meniul „Decont Cheltuieli".
+- `views/hr_employee_view.xml`, `views/account_journal_view.xml`: extinderi pe angajat și jurnal.
+- `views/deltatech_expenses_deduction_report.xml`, `views/report_expenses.xml`: raportul tipărit al decontului.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Nu are `ir.cron` sau acțiuni server; `data/data.xml` conține datele implicite (secvența `DEC/…`).
 
 #### 5. Conexiuni
 

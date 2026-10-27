@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-27] Actualizare deltatech_expenses: monedă și mod de decontare
+
+- **Acțiune:** Reingestie a paginii [deltatech_expenses](deltatech_expenses/index.md) după PR-urile dhongu/deltatech#3807–#3810 (19.0.3.7.0 / 20.0.3.6.0): decont în valută (curs BNR la data fiecărei note, diferențele RON pe 542 închise pe 665/765) și câmpul „Mod de decontare” (numerar; virament pe card personal prin contul de plăți în curs 5125; card de firmă `Dr 401 = Cr 5125`, fără avans), plus „Jurnal card firmă” pe angajat. Eliminată afirmația veche că liniile sunt mereu în moneda companiei; secțiunea Componente Cheie completată din cod. Subagent `documentarist-wiki`, un singur modul.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md` + cod (`models/deltatech_expenses_deduction.py`, `models/hr_employee.py`).
+- **Dependențe/Conexiuni:** neschimbate (`deltatech_partner_generic`, `deltatech_expenses_hr_expense`, `l10n_ro_expense_allowance`).
+- **Fișiere actualizate:** `deltatech_expenses/index.md`, `deltatech_expenses/FISA_CONSULTANT.md`, `deltatech_expenses/screenshots/` (8 capturi regenerate de Mentor), `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-27] Sincronizare automată de noapte
 
 - **Versiuni aduse la zi** (16): `deltatech_advanced_planner 19.0.1.12.0 → 19.0.1.12.1`, `deltatech_advanced_planner_ai 19.0.1.0.1 → 19.0.1.0.2`, `deltatech_ai_source_sync 19.0.1.8.1 → 19.0.1.9.0`, `deltatech_delivery 19.0.6.12.1 → 19.0.6.12.2`, `deltatech_expenses 19.0.3.5.2 → 19.0.3.6.0`, `deltatech_pos 19.0.2.10.5 → 19.0.2.10.6`, `deltatech_saga 19.0.6.28.0 → 19.0.6.29.0`, `deltatech_sale_cost_product 19.0.0.0.4 → 19.0.0.0.5`, `deltatech_website_effects 19.0.1.2.23 → 19.0.1.2.24`, `l10n_ro_anaf_d094 19.0.1.0.3 → 19.0.1.0.4`, `l10n_ro_anaf_d101 19.0.1.1.2 → 19.0.1.1.3`, `l10n_ro_anaf_d394 19.0.1.3.8 → 19.0.1.3.12`, `l10n_ro_grants 19.0.1.6.0 → 19.0.1.6.1`, `l10n_ro_period_close_enhanced 19.0.1.12.3 → 19.0.1.13.1`, `terrabit_clear_data 19.0.1.0.12 → 19.0.1.0.14`, `terrabit_helpdesk_connector 19.0.0.3.1 → 19.0.0.3.2`.

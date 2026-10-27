@@ -132,7 +132,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_edinet](deltatech_edinet/index.md): Conector Odoo–Infinite EDINET: import automat de comenzi, export de facturi și import manual de comenzi din fișiere Excel (.xls).
 - [deltatech_event](deltatech_event/index.md): Adaugă numere pe insigne (badge-uri) în managementul evenimentelor Odoo.
 - [deltatech_expected_receipt](deltatech_expected_receipt/index.md): Plățile cu cardul se înregistrează la încasare și se decontează la bănuț față de transferul bancar grupat.
-- [deltatech_expenses](deltatech_expenses/index.md): Decontarea cheltuielilor angajaților din avansuri de trezorerie (contul 542), cu chitanțe de achiziție, diurnă și închiderea diferenței.
+- [deltatech_expenses](deltatech_expenses/index.md): Decontarea cheltuielilor angajaților din avansuri de trezorerie (contul 542), cu chitanțe de achiziție, diurnă și închiderea diferenței; decont și în valută, cu mod de decontare numerar, virament sau card de firmă.
 - [deltatech_expenses_hr_expense](deltatech_expenses_hr_expense/index.md): Punte auto-instalată între `hr_expense` și Decontul de cheltuieli — preia cheltuielile standard în decont, cu totalul cu TVA inclus, fără dublă contabilizare.
 - [deltatech_fast_purchase](deltatech_fast_purchase/index.md): Accelerează achizițiile prin butoane care parcurg rapid confirmarea, recepția și facturarea unei comenzi de achiziție.
 - [deltatech_fast_sale](deltatech_fast_sale/index.md): Vânzare rapidă: buton în comanda de vânzare care parcurge într-un singur pas confirmarea, livrarea și facturarea.
