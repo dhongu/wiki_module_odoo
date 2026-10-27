@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-27] Ingestie: analiza financiară și Plutus (4 module)
+
+- **Acțiune:** Pagini noi pentru [deltatech_financial_analysis](deltatech_financial_analysis/index.md) (19.0.1.2.2), [deltatech_ai_financial_analysis](deltatech_ai_financial_analysis/index.md) (19.0.1.2.1), [l10n_ro_ai_administrators_report](l10n_ro_ai_administrators_report/index.md) (19.0.1.0.1) și [l10n_ro_ai_partner_financials](l10n_ro_ai_partner_financials/index.md) (19.0.1.0.1), după unirea fișelor consultant cu capturi (bitshop_ent#518, #530, l10n_ro_ent#921). Câte un subagent `documentarist-wiki` per modul, în paralel; legăturile încrucișate dintre cele patru pagini adăugate la consolidare.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md` (unde există) + cod pentru Componente Cheie. Fișele consultant copiate cu capturile: 15 + 9 + 7 + 5.
+- **Dependențe/Conexiuni:** `deltatech_web_kpi_cards`, `l10n_ro_period_close_enhanced`, `deltatech_mcp_server`, `deltatech_ai_agent_delegate`, `deltatech_ai_anthropic`, `l10n_ro_financial_statements`, `l10n_ro_partner_financials` (pagini existente); `account_reports` și `ai` rămân text. `l10n_ro_ai_partner_financials` extinde `financial.analysis` fără să declare `deltatech_financial_analysis` în manifest (vine prin `deltatech_ai_financial_analysis`).
+- **Fișiere actualizate:** cele 4 directoare de modul (`index.md`, `FISA_CONSULTANT.md`, `screenshots/`), `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-27] Actualizare deltatech_expenses: monedă și mod de decontare
 
 - **Acțiune:** Reingestie a paginii [deltatech_expenses](deltatech_expenses/index.md) după PR-urile dhongu/deltatech#3807–#3810 (19.0.3.7.0 / 20.0.3.6.0): decont în valută (curs BNR la data fiecărei note, diferențele RON pe 542 închise pe 665/765) și câmpul „Mod de decontare” (numerar; virament pe card personal prin contul de plăți în curs 5125; card de firmă `Dr 401 = Cr 5125`, fără avans), plus „Jurnal card firmă” pe angajat. Eliminată afirmația veche că liniile sunt mereu în moneda companiei; secțiunea Componente Cheie completată din cod. Subagent `documentarist-wiki`, un singur modul.
