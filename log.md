@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-27] Ingestie: `deltatech_payment_default`, `deltatech_import_lines` (+ 4 module-punte); reingestie `l10n_ro_period_close_enhanced` (19.0.1.12.3 → 19.0.1.13.1)
+
+- **Acțiune:** lot procesat în paralel (un subagent `documentarist-wiki` per modul). Pagini noi: [deltatech_payment_default](deltatech_payment_default/index.md) (fișă + 4 capturi), [deltatech_import_lines](deltatech_import_lines/index.md) (fișă + 13 capturi), [deltatech_import_lines_sale](deltatech_import_lines_sale/index.md), [deltatech_import_lines_purchase](deltatech_import_lines_purchase/index.md), [deltatech_import_lines_mrp](deltatech_import_lines_mrp/index.md), [deltatech_import_lines_stock](deltatech_import_lines_stock/index.md) (fișă; cele 5 capturi sunt ale modulului de bază, legate către `../deltatech_import_lines/screenshots/`). Actualizare [l10n_ro_period_close_enhanced](l10n_ro_period_close_enhanced/index.md): Situațiile lunare (arhivă ZIP din meniul cardului lunii, setări pe companie, generare opțională la validare); corectat numărul de șabloane de verificare la 23 (nu 20); `screenshots/` refăcut (eliminate `04_raport_pv.png`, `05_blocare_jurnal.png`, rămase dintr-o versiune veche).
+- **Sursă:** `readme/` (DESCRIPTION, USAGE, CONFIGURE, HISTORY, FISA_CONSULTANT) și codul, din origin/19.0 (deltatech după PR-urile #3795 și #3806; l10n_ro_ent după #869 și #872).
+- **Dependențe/Conexiuni:** punțile `_sale`, `_purchase`, `_mrp`, `_stock` → `deltatech_import_lines` (linkuri active). `account`, `sale`, `purchase`, `mrp`, `stock`, `product`, `base_import` și `l10n_ro_cash_register_report` fără pagină wiki, rămase text.
+- **Avertismente:** fișa din `l10n_ro_period_close_enhanced` referă capturile `10_setari_situatii_lunare.png`, `11_asistent_situatii_lunare.png` și `12_arhiva_situatii_lunare.png`, care lipsesc din modul; de completat în modul, apoi reingestie.
+- **Fișiere actualizate:** `deltatech_payment_default/`, `deltatech_import_lines/`, `deltatech_import_lines_sale/`, `deltatech_import_lines_purchase/`, `deltatech_import_lines_mrp/`, `deltatech_import_lines_stock/`, `l10n_ro_period_close_enhanced/`, `index.md`, `log.md`, `.index/`.
+
 ## [2026-10-27] Ingestie: analiza financiară și Plutus (4 module)
 
 - **Acțiune:** Pagini noi pentru [deltatech_financial_analysis](deltatech_financial_analysis/index.md) (19.0.1.2.2), [deltatech_ai_financial_analysis](deltatech_ai_financial_analysis/index.md) (19.0.1.2.1), [l10n_ro_ai_administrators_report](l10n_ro_ai_administrators_report/index.md) (19.0.1.0.1) și [l10n_ro_ai_partner_financials](l10n_ro_ai_partner_financials/index.md) (19.0.1.0.1), după unirea fișelor consultant cu capturi (bitshop_ent#518, #530, l10n_ro_ent#921). Câte un subagent `documentarist-wiki` per modul, în paralel; legăturile încrucișate dintre cele patru pagini adăugate la consolidare.
