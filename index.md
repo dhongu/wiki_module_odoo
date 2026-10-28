@@ -4,9 +4,9 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 
 ## Module
 
-- [deltatech](deltatech/index.md): Modul de bază (fundație) al suitei Deltatech, oferind utilitare partajate, structură unitară și extinderi comune pentru celelalte module Deltatech.
+- [deltatech](deltatech/index.md): Dependență tehnică de bază a suitei Deltatech: câmp `model_name` și widget de domeniu pe regulile de înregistrare, formular de modul curățat.
 - [deltatech_access](deltatech_access/index.md): Control granular al accesului la câmpuri din vederile Odoo (readonly / required / invisible) pe bază de grupuri de utilizatori.
-- [deltatech_account](deltatech_account/index.md): Îmbunătățiri pentru contabilitatea și facturarea Odoo: vizibilitate extinsă a facturilor, configurare flexibilă a jurnalelor/conturilor și sincronizare între documente.
+- [deltatech_account](deltatech_account/index.md): Setare Anglo-Saxon Accounting (cost de vânzare la facturare) în setările de contabilitate și redenumiri de meniuri contabile.
 - [deltatech_account_analytic](deltatech_account_analytic/index.md): Leagă liniile/distribuțiile analitice de pe facturi de echipa de vânzări și oferă un asistent de împărțire a sumelor pe conturi analitice conform unor șabloane procentuale.
 - [deltatech_account_bank_statement_import](deltatech_account_bank_statement_import/index.md): Import XLSX de extrase bancare cu detectarea partenerului; baza comună a importurilor de decontări (EuPlatesc, Stripe, PayPal, eMAG), cu antet recunoscut, comisioane și linie de virare.
 - [deltatech_account_bank_statement_import_emag](deltatech_account_bank_statement_import_emag/index.md): Importă raportul eMAG „Account statement details” (XLSX) ca extrase bancare, câte unul pe virare, inclusiv borderouri în valută (HUF, EUR) cu notă automată de diferență de curs (665/765), vouchere eMAG și decontul de vouchere `KM`.
@@ -137,7 +137,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_expenses](deltatech_expenses/index.md): Decontarea cheltuielilor angajaților din avansuri de trezorerie (contul 542), cu chitanțe de achiziție, diurnă și închiderea diferenței; decont și în valută, cu mod de decontare numerar, virament sau card de firmă.
 - [deltatech_expenses_hr_expense](deltatech_expenses_hr_expense/index.md): Punte auto-instalată între `hr_expense` și Decontul de cheltuieli — preia cheltuielile standard în decont, cu totalul cu TVA inclus, fără dublă contabilizare.
 - [deltatech_fast_purchase](deltatech_fast_purchase/index.md): Accelerează achizițiile prin butoane care parcurg rapid confirmarea, recepția și facturarea unei comenzi de achiziție.
-- [deltatech_fast_sale](deltatech_fast_sale/index.md): Vânzare rapidă: buton în comanda de vânzare care parcurge într-un singur pas confirmarea, livrarea și facturarea.
+- [deltatech_fast_sale](deltatech_fast_sale/index.md): Confirmare, livrare și facturare a comenzii de vânzare dintr-un singur click, cu livrare pe bază de aviz și buton de facturare pe transfer.
 - [deltatech_feed](deltatech_feed/index.md): Generează feed-uri de produse (Google, Facebook, eMAG, Compari, 2performant, e-licitatie și altele) din listele de produse, cu cache separat pe fiecare rută și generare serializată prin lock.
 - [deltatech_financial_analysis](deltatech_financial_analysis/index.md): Analiză financiară lunară, trimestrială și anuală din balanța de verificare: indicatori, comparații cu perioadele anterioare, abateri semnificative cu conturile și partenerii din spatele lor, verificarea închiderii perioadei.
 - [deltatech_fleet](deltatech_fleet/index.md): Extinde Flota cu foi de parcurs, jurnale de alimentare, carduri de combustibil, rute și raport de cost pe kilometru.
@@ -277,7 +277,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_product_code](deltatech_product_code/index.md): Generare automată a referinței interne și a codurilor de bare pe categorii (prefix intern sau GTIN-13 din prefixul GS1 al companiei), cu verificare a duplicatelor la produse și variante.
 - [deltatech_product_dimension](deltatech_product_dimension/index.md): Extinde fișa produsului cu dimensiuni fizice (lungime, lățime, înălțime).
 - [deltatech_product_extension](deltatech_product_extension/index.md): Extinde produsul cu câmpuri pentru producător, dimensiuni fizice și termen de valabilitate, și marchează partenerii ca producători.
-- [deltatech_product_labels](deltatech_product_labels/index.md): Tipărește etichete pentru produse, comenzi de vânzare și livrări, inclusiv pentru toate loturile aflate pe stoc, cu aspecte personalizabile.
+- [deltatech_product_labels](deltatech_product_labels/index.md): Tipărire etichete de produs și de lot (A4 3x8, termice 100x50 și 40x25, ZPL cu previzualizare) din produse, comenzi, transferuri, loturi și stoc.
 - [deltatech_product_list](deltatech_product_list/index.md): Definirea de liste de produse printr-un filtru (domeniu) configurabil, cu limită ajustabilă.
 - [deltatech_product_mpn](deltatech_product_mpn/index.md): Adaugă pe produs codul producătorului (MPN — Manufacturer Part Number) și permite căutarea produselor după acest cod.
 - [deltatech_product_reordering_limit](deltatech_product_reordering_limit/index.md): Adaugă praguri globale de minim/maxim stoc pe fișa produsului, filtru „Below Minimum" și raport Excel de reaprovizionare.
@@ -541,7 +541,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_doubtful_receivables_profit_tax](l10n_ro_doubtful_receivables_profit_tax/index.md): Modul-punte care preia partea nedeductibilă a ajustărilor 491 pentru creanțe incerte în calculul D101 și în registrul de evidență fiscală, cu un rând și temei legal per creanță.
 - [l10n_ro_edi_ubl_sale_store](l10n_ro_edi_ubl_sale_store/index.md): Setează automat tipul de e-factură la codul 751 pentru vânzările însoțite de bon fiscal.
 - [l10n_ro_efactura_consumer](l10n_ro_efactura_consumer/index.md): e-Factura către persoane fizice cu CNP valid în XML CIUS-RO (validare Luhn RO, schemeID CNP).
-- [l10n_ro_efactura_dedup](l10n_ro_efactura_dedup/index.md): Prevenire duplicate facturi SPV prin cheie extinsă SHA-256 (CUI + serie/nr + dată + valoare).
+- [l10n_ro_efactura_dedup](l10n_ro_efactura_dedup/index.md): Previne facturile duplicate din SPV ANAF printr-o cheie extinsă SHA-256 (CUI, număr factură, dată, sumă), la import și la trimitere.
 - [l10n_ro_efactura_enhancement](l10n_ro_efactura_enhancement/index.md): Extinde e-Factura RO cu validări, trimitere și preluare automată din SPV, trunchieri UBL/CIUS-RO, tip 751 pentru POS, blocaj pentru firme fără CUI și import SPV controlat.
 - [l10n_ro_efactura_import_assist](l10n_ro_efactura_import_assist/index.md): Verifică la importul din SPV diferențele de cantitate/preț față de comanda de achiziție și blochează postarea până la o decizie explicită de acceptare sau refuz, cu notificarea furnizorului.
 - [l10n_ro_efactura_product_match](l10n_ro_efactura_product_match/index.md): Adaugă la importul e-Factura din SPV căutarea articolului după codul propriu (`BuyersItemIdentification`, BT-156), pe lângă codul furnizorului.
@@ -551,20 +551,20 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_environmental_tax](l10n_ro_environmental_tax/index.md): Profiluri și cote AFM pentru ambalaje cu declarație de taxe de mediu calculată din facturi (FR-48).
 - [l10n_ro_esigiliu](l10n_ro_esigiliu/index.md): Evidența sigiliilor electronice ANAF/Vamă aplicate pe transporturile rutiere monitorizate, asociate transferurilor de stoc, cu ciclu de viață Ciornă → Aplicat → Eliminat.
 - [l10n_ro_etransport_batch_enhancement](l10n_ro_etransport_batch_enhancement/index.md): Extinde e-Transport la loturile de transferuri: partener de transport, curier și greutăți gestionate pe lot, cu propagare către transferuri și avertisment pentru greutăți incomplete.
-- [l10n_ro_etransport_block](l10n_ro_etransport_block/index.md): Blocarea validării avizelor cu produse cu risc fiscal ridicat fără UIT confirmat și actualizare automată status UIT.
+- [l10n_ro_etransport_block](l10n_ro_etransport_block/index.md): Blochează validarea avizelor cu produse cu risc fiscal ridicat până la confirmarea UIT de ANAF și actualizează automat starea UIT.
 - [l10n_ro_etransport_enhancement](l10n_ro_etransport_enhancement/index.md): Extinde e-Transport (SPV) cu timeout configurabil, gestionarea erorilor de rețea ANAF, alinierea unității/cantității declarate, greutăți cântărite și suport pentru dropship (furnizor → client) pe operațiunile 10/20/30/40/50.
 - [l10n_ro_etransport_uit_actions](l10n_ro_etransport_uit_actions/index.md): Trimite către ANAF, din transferul de stoc, evenimentele de ștergere, confirmare sau schimbare a vehiculului pentru un UIT eTransport validat, cu urmărirea stării fiecărui eveniment.
 - [l10n_ro_etransport_uit_actions_batch](l10n_ro_etransport_uit_actions_batch/index.md): Aduce acțiunile UIT din eTransport (ștergere, confirmare, schimbarea vehiculului) la loturile de transfer cu UIT unic per camion.
 - [l10n_ro_excise_duty](l10n_ro_excise_duty/index.md): Categorii de produse accizabile, rate și declarații D103/D120 cu export XML (Titlul VIII CF, FR-42).
 - [l10n_ro_expense_allowance](l10n_ro_expense_allowance/index.md): Calcul limită deductibilă diurnă 2,5× și surplus impozabil pentru deplasări interne/externe (Cod Fiscal art. 76).
 - [l10n_ro_expense_allowance_payroll](l10n_ro_expense_allowance_payroll/index.md): Diurna din decont în fluturaș: surplusul impozabil intră în brut, partea neimpozabilă în D112 (rândul 8.4.3), cu plafonul de 3 salarii pe lună.
-- [l10n_ro_expense_currency](l10n_ro_expense_currency/index.md): Avansuri de trezorerie în valută (cont 542) cu justificare și diferențe de curs 665/765 (OMFP 1802).
+- [l10n_ro_expense_currency](l10n_ro_expense_currency/index.md): Avansuri de trezorerie în valută (cont 542): acordare, justificare cu diferențe de curs 665/765 și retur rest, conform OMFP 1802/2014.
 - [l10n_ro_financial_notes](l10n_ro_financial_notes/index.md): Generare automată a Notelor explicative 1–10 la situațiile financiare anuale cu export PDF (OMFP 1802).
 - [l10n_ro_financial_statements](l10n_ro_financial_statements/index.md): Documentul de depunere `<Bilant1003>` (F10, F20, F30, F40) în formatul validatorului ANAF, cu pre-validarea corelațiilor, declarația de inactivitate S1046 și raportul administratorilor.
 - [l10n_ro_fiscal_audit](l10n_ro_fiscal_audit/index.md): Raport de audit preventiv care corelează totalurile declarațiilor fiscale RO (D300↔Jurnale TVA, SAF-T, e-Factura) și listează neconcordanțele înainte de depunere sau control ANAF.
 - [l10n_ro_fixed_assets](l10n_ro_fixed_assets/index.md): Mijloace fixe complete pentru România: număr de inventar și dată PIF pentru SAF-T D406, amortizare fiscală separată de cea contabilă, reevaluare netă sau brută, casare și vânzare, registrul imobilizărilor, documente tipizate și import de registru.
 - [l10n_ro_footer_anpc](l10n_ro_footer_anpc/index.md): Afișează pozele și link-urile ANPC în footer-ul site-ului, pentru conformitate cu protecția consumatorului.
-- [l10n_ro_force_reconcile](l10n_ro_force_reconcile/index.md): Wizard de reconciliere forțată între conturi diferite (409↔401, 419↔411, compensare client-furnizor).
+- [l10n_ro_force_reconcile](l10n_ro_force_reconcile/index.md): Asistent de reconciliere forțată între conturi diferite (409↔401, 419↔411, 411↔401, 542↔401) prin notă de compensare.
 - [l10n_ro_grants](l10n_ro_grants/index.md): Subvenții și fonduri nerambursabile (OMFP 1802/2014, IAS 20): conturi 475x/472, tranșe pe 4451 încasate din extras, recunoaștere venituri, buget eligibil și cereri de rambursare fără dublă decontare (FR-38).
 - [l10n_ro_hide_net_weight](l10n_ro_hide_net_weight/index.md): Ascunde câmpul „Greutate netă” (`l10n_ro_net_weight`) de pe formularul produsului; modul de tranziție peste `l10n_ro_stock`.
 - [l10n_ro_hr_documents](l10n_ro_hr_documents/index.md): Contract individual de muncă, act adițional, decizii de suspendare și de încetare (cu temeiurile din nomenclatorul REGES), cerere de demisie și adeverință de vechime, emise din fișa angajatului, cu actul de identitate și numărul CIM preluate automat, număr de înregistrare și PDF arhivat.
@@ -576,11 +576,11 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_hr_pontaj_payroll](l10n_ro_hr_pontaj_payroll/index.md): Corecțiile din foaia colectivă de prezență (pontaj) devin prezențe (work entries), iar fluturașul și D112 primesc zilele pe drumul standard; include ore suplimentare pe tipuri și valoarea unică a tichetelor de masă.
 - [l10n_ro_hr_salary_increase](l10n_ro_hr_salary_increase/index.md): Asistent de majorare colectivă a salariilor (procent, sumă fixă, salariu nou sau noul salariu minim), cu versiuni noi de contract, acte adiționale și transmitere în REGES.
 - [l10n_ro_intrastat_enhancement](l10n_ro_intrastat_enhancement/index.md): Declarația Intrastat pentru România: export XML INS, praguri anuale cu avertizări, verificare erori „INS Validation" (inclusiv antet și TVA partener), reconciliere D390 și actualizare nomenclator CN.
-- [l10n_ro_inventory_closing](l10n_ro_inventory_closing/index.md): Înregistrări contabile ale inventarierii și PV-uri PDF pentru cele 4 tipuri de diferențe (OMFP 1802 + 2861/2009, FR-18).
+- [l10n_ro_inventory_closing](l10n_ro_inventory_closing/index.md): Note contabile de inventar (plus, minus neimputabil/imputabil cu TVA, casare) și procesul-verbal de inventariere conform OMFP 1802/2014 și 2861/2009.
 - [l10n_ro_inventory_items](l10n_ro_inventory_items/index.md): Gestiunea obiectelor de inventar conform OMFP 1802/2014: recepție 303=401, dare în folosință 603=303, evidență extrabilanțieră 8035, scoatere din gestiune, cu bon, PV și registru PDF.
 - [l10n_ro_inventory_items_hr](l10n_ro_inventory_items_hr/index.md): Extinde obiectele de inventar cu darea în folosință pe salariat (`hr.employee`), inclusiv pentru salariații fără cont Odoo.
 - [l10n_ro_inventory_register](l10n_ro_inventory_register/index.md): Registrul inventar anual (OMFP 2634/2015, formular 14-1-2): recapitulație pe 12 categorii patrimoniale, anexe analitice, detaliere mijloace fixe și anexă 8035, cu export PDF/XLSX.
-- [l10n_ro_invoice_dvi_protect](l10n_ro_invoice_dvi_protect/index.md): Blochează resetarea la ciornă a facturilor furnizor și anularea DVI când stocul FIFO recepționat a fost deja parțial consumat.
+- [l10n_ro_invoice_dvi_protect](l10n_ro_invoice_dvi_protect/index.md): Blochează resetarea la ciornă a facturilor de furnizor și anularea DVI când stocul recepționat a fost deja parțial consumat (FIFO).
 - [l10n_ro_invoice_report](l10n_ro_invoice_report/index.md): Raportul de factură românesc: detalii pe linii, delegat și mijloc de transport, chitanță și dispoziții de plată/încasare, în limba companiei.
 - [l10n_ro_journal_reports](l10n_ro_journal_reports/index.md): Adaugă coloana Cont Corespondent (OMFP 1802/2014) în Cartea Mare standard din Odoo Enterprise.
 - [l10n_ro_lang](l10n_ro_lang/index.md): Setează automat limba site-ului pe română dacă IP-ul vizitatorului provine din România.

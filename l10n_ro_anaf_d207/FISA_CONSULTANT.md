@@ -125,15 +125,16 @@ Se poate reveni la ciornă cu „Resetează la ciornă".
 
 ### Pasul 5 — Exportul pentru ANAF: XML (Soft J) sau PDF ANAF (Soft A)
 
-Apăsați **„Export XML ANAF"** (din formular) sau butonul de export din raport. Modulul grupează
+Apăsați **„Export XML ANAF"** din formularul declarației sau butonul **„D207 file XML (Soft J)"** din
+raportul de previzualizare. Butoanele din raport (XML și Soft A) lucrează pe declarația anului din raport,
+deci ciorna trebuie să existe deja (Pasul 2). Modulul grupează
 beneficiarii pe **tip de venit** (`sect_II`: baza veniturilor scutite în `Tscutit`, a celor
 impozabile în `Tbaza`, impozitul reținut și cel suportat), reverifică regulile de beneficiar, validează față
 de **XSD-ul ANAF** și descarcă fișierul XML (nume standardizat `D207_<CUI>_<an>12.xml`), gata de
 încărcat în Soft J / SPV.
 
 Pentru **formularul oficial ANAF** (Soft A), apăsați **„Export PDF ANAF (Soft A)"** din formularul declarației
-sau butonul **„D207 file XDP (Soft A)"** din raportul de previzualizare. Pentru butonul din raport,
-ciorna anului trebuie să existe deja. Fișierul depinde de **Setări → Contabilitate → Declarații ANAF
+sau butonul **„D207 file XDP (Soft A)"** din raportul de previzualizare. Fișierul depinde de **Setări → Contabilitate → Declarații ANAF
 România → Tip export** (implicit **PDF cu datele incluse**):
 
 | Tip export | Fișier descărcat |
@@ -143,16 +144,21 @@ România → Tip export** (implicit **PDF cu datele incluse**):
 | Arhivă ZIP cu XDP și PDF | arhivă cu fișierul XDP și formularul PDF gol |
 
 Dacă serverul nu are biblioteca `pypdf` (versiunea 5.0 sau mai nouă), tipul **PDF cu datele incluse**
-revine la arhiva ZIP. Exportul Soft A, din formular sau din raport, reverifică regulile de beneficiar de
-la Pasul 4 și cere cel puțin un beneficiar; datele sunt aceleași ca în XML, care rămâne neschimbat.
+revine la arhiva ZIP. Ambele exporturi, din formular sau din raport, reverifică regulile de beneficiar de
+la Pasul 4 și cer cel puțin un beneficiar; datele Soft A sunt aceleași ca în XML, care rămâne neschimbat.
+
+![Butoanele de export din formularul declarației: ① XML (Soft J), ② PDF ANAF (Soft A)](screenshots/06_export_formular.png)
+
+![Butoanele de export din raportul de previzualizare: ① XML (Soft J), ② Soft A](screenshots/07_export_raport.png)
 
 **Găsește pe ecran, verifică, apoi exportă.** Înainte de export, în formularul declarației (lista de
 beneficiari și totalurile) și în raportul de previzualizare:
 
 1. *Găsește* coloanele **tip venit**, **bază**, **impozit reținut** și **impozit suportat** pentru fiecare
    beneficiar.
-2. *Verifică* că fiecare tip de venit are beneficiarii corecți, că totalurile corespund sumelor din 446x și că
-   anul fiscal este cel dorit.
+2. *Verifică* că fiecare tip de venit are beneficiarii corecți, că totalul impozitelor (reținut plus suportat)
+   corespunde creditului conturilor 446x pe nerezidenți din anul declarat și că anul fiscal este cel dorit.
+   Baza nu vine din 446x: importul o pune 0 și o completați din documentele de plată.
 3. *Exportă* abia apoi. Deschideți PDF-ul în Adobe Reader și verificați: identificarea plătitorului, bifele
    din „III. Natura veniturilor" (câte una pentru fiecare tip de venit folosit), rezumatul pe tip de venit
    cu totalurile și suma de control, beneficiarii grupați pe tip de venit, statul afișat ca „DE--Germania".
@@ -213,7 +219,8 @@ baza legală (CEDI), confirmarea, exportul și atașarea dovezii de depunere în
 - [ ] Confirmarea e blocată pe o linie cu cod 12–21 și impozit nenul, ori cu țara România.
 - [ ] Confirmarea fără beneficiari este blocată; a doua confirmare este blocată.
 - [ ] Export XML produce tag-ul `declaratie207`, `sect_II` per tip de venit și `benef` per beneficiar.
-- [ ] Pe un cod scutit (12–21) baza apare în `Tscutit`, iar `Tbaza` e 0; impozitul suportat apare în `Timps`.
+- [ ] Pe un cod scutit (12–21) baza apare în `Tscutit`, iar `Tbaza`, `Timp` și `Timps` sunt 0; pe un cod
+  impozabil impozitul suportat apare în `Timps`.
 - [ ] XML-ul exportat trece validarea DUKIntegrator (`java -jar DUKIntegrator.jar -v D207 <xml> <err.txt>`).
 - [ ] Numele fișierului respectă formatul `D207_<CUI>_<an>12.xml`.
 - [ ] Cu tipul de export **PDF cu datele incluse**, **Export PDF ANAF (Soft A)** descarcă `D207_<CUI>_<an>12.pdf`
@@ -221,7 +228,10 @@ baza legală (CEDI), confirmarea, exportul și atașarea dovezii de depunere în
 - [ ] Bifele din „III. Natura veniturilor" corespund exact tipurilor de venit folosite în declarație.
 - [ ] Totalurile și suma de control din PDF coincid cu cele din declarație și din XML.
 - [ ] Cu tipul **Descărcare directă XDP** se descarcă `.xdp`, iar cu **Arhivă ZIP cu XDP și PDF** o arhivă ZIP.
-- [ ] Butonul **D207 file XDP (Soft A)** din raport funcționează doar după generarea ciornei.
+- [ ] Butoanele **D207 file XML (Soft J)** și **D207 file XDP (Soft A)** din raport funcționează doar după
+      generarea ciornei.
+- [ ] Exportul XML din raport este blocat, ca cel din formular, pe o declarație fără beneficiari sau cu o linie
+      care încalcă regulile de la confirmare (de ex. cod 12–21 cu impozit nenul).
 
 ## 9. Mesaje de eroare frecvente
 
@@ -250,6 +260,8 @@ pe planul de conturi RO (`setup_country("ro")`), cu datele demo de mai sus:
 3. `03_declaratie_d207.png` — formularul cu beneficiari persoane juridice și o persoană fizică, cu totaluri.
 4. `04_declaratie_confirmata.png` — declarația în starea Confirmată.
 5. `05_lista_d207.png` — lista declarațiilor D207.
+6. `06_export_formular.png` — butoanele de export din formularul declarației (XML și Soft A), evidențiate.
+7. `07_export_raport.png` — butoanele de export din raportul de previzualizare (XML și Soft A), evidențiate.
 
 Regenerare:
 

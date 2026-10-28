@@ -90,7 +90,7 @@ antet (dispare după finalizare sau anulare). În pasul de coloane, mapați o co
   - pe livrări și transferuri interne, lotul trebuie să existe deja.
 - Apăsați **Importă** (sau bifați mai întâi **Omite rândurile cu erori**).
 
-![Previzualizarea pe recepție, cu loturile](../deltatech_import_lines/screenshots/08_receptie_loturi.png)
+![Previzualizarea pe recepție, cu loturile](../../deltatech_import_lines/static/description/08_receptie_loturi.png)
 
 ### Pasul 2 — Recepția cu liniile importate
 
@@ -98,13 +98,13 @@ Recepția are câte o linie pe produs. Rândurile aceluiași produs cu loturi di
 cu câte o operațiune detaliată pe lot. Mișcările adăugate într-un transfer confirmat se confirmă imediat, iar
 Odoo le unește cu liniile existente ale aceluiași produs. Validarea rămâne pasul standard (**Validează**).
 
-![Recepția, cu liniile importate](../deltatech_import_lines/screenshots/09_receptie_linii_importate.png)
+![Recepția, cu liniile importate](../../deltatech_import_lines/static/description/09_receptie_linii_importate.png)
 
 ### Pasul 3 — Inventar: butonul „Import cantități numărate"
 
 **Inventar → Operațiuni → Inventariere fizică** → butonul **Import cantități numărate** din antetul listei.
 
-![Inventarul fizic, cu butonul de import](../deltatech_import_lines/screenshots/10_inventar_buton_import.png)
+![Inventarul fizic, cu butonul de import](../../deltatech_import_lines/static/description/10_inventar_buton_import.png)
 
 ### Pasul 4 — Locația numărată și previzualizarea
 
@@ -120,7 +120,7 @@ previzualizare, ci doar în pasul **Fișier**.
   - cantitatea 0 e acceptată, pentru produsele numărate și găsite lipsă;
   - rândurile aceluiași produs și lot se adună.
 
-![Asistentul de inventar, previzualizarea](../deltatech_import_lines/screenshots/11_inventar_previzualizare.png)
+![Asistentul de inventar, previzualizarea](../../deltatech_import_lines/static/description/11_inventar_previzualizare.png)
 
 ### Pasul 5 — Cantitățile numărate în inventarul fizic
 
@@ -135,7 +135,7 @@ După import, lista **Inventariere fizică** arată cantitățile din fișier î
   - diferențele mari sunt explicate înainte de aplicare.
 - Abia apoi apăsați **Aplică tot** (sau **Aplică** pe rând).
 
-![Inventarul fizic, cu cantitățile numărate importate](../deltatech_import_lines/screenshots/12_inventar_cantitati_numarate.png)
+![Inventarul fizic, cu cantitățile numărate importate](../../deltatech_import_lines/static/description/12_inventar_cantitati_numarate.png)
 
 ### Note de monografie și raportare
 

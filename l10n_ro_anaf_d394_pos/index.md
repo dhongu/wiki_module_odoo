@@ -1,7 +1,7 @@
 # Romania - D394 pentru punctul de vânzare (localizat la `l10n_ro_anaf_d394_pos/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d394_pos`
-- **Versiune:** `19.0.1.1.4`
+- **Versiune:** `19.0.1.3.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d394_pos
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d394_pos`
 - **Ultima Ingestie:** 2026-08-20

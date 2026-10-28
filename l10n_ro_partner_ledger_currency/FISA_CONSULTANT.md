@@ -85,11 +85,26 @@ Reconciliere, Debit/Credit/Sold în RON), raportul afișează coloanele **Valut�
 cu mai multe valute apare câte un grup per valută („Valută EUR", „Valută USD"), fiecare cu
 propriul **Sold Inițial** și propriul sold rulant; antetul grupului arată soldul final al valutei.
 
+**Rândul partenerului:** la un partener cu **o singură valută străină**, **Sold Valută** arată
+soldul valutar de la început până la sfârșitul perioadei selectate — sold inițial plus mișcările din
+perioadă. Coloana **Valută** însumează în schimb doar mișcările din perioadă, deci cele două diferă
+când există sold inițial (de exemplu, la un raport pe 2026 cu un sold de -199,99 € la 31.12.2025,
+**Valută** arată mișcările din 2026, iar **Sold Valută** include și cei -199,99 €). La partenerii
+cu mai multe valute străine, **Sold Valută** rămâne **gol** pe rândul partenerului (valutele nu se
+adună între ele); soldurile sunt pe grupurile de valută de dedesubt. Liniile în lei nu modifică soldul
+valutar; dacă în perioadă partenerul are mișcări atât în valută, cât și în lei, **Valută** rămâne
+goală pe rândul partenerului (suma nu se poate afișa într-o singură monedă), dar **Sold Valută** se
+completează. Pe linia **Sold Inițial**, **Sold Valută** apare în valuta partenerului
+(ex. `-199,99 €`), nu în moneda companiei.
+
 ![Fișa Partenerului în Valută — raport desfășurat cu coloane RON și valutare](screenshots/01_raport_valuta.png)
 
 **Verificați:**
 - la furnizorul cu două valute (`Global Trading GmbH`) există grupurile **EUR** și **USD**,
   fiecare cu Sold Inițial propriu (mișcarea din anul anterior) și sold rulant coerent în moneda lui;
+- pe rândul acestui partener multi-valută, **Sold Valută** este gol;
+- la un partener cu o singură valută străină, **Sold Valută** de pe rândul partenerului este egal cu
+  sold inițial plus mișcările din perioadă, iar **Valută** arată doar mișcările din perioadă;
 - la partenerul doar în RON (`Client Intern SRL`) coloanele valutare sunt **goale** — convenție
   intenționată, pentru vizibilitatea tranzacțiilor cu valută efectivă;
 - soldul RON al partenerului (linia de antet) este suma tuturor valutelor.
@@ -101,7 +116,12 @@ propriul **Sold Inițial** și propriul sold rulant; antetul grupului arată sol
 1. În același raport, filtrați pe **Partener** (bara de căutare) și setați perioada de confirmare
    (ex. `01.01.2026 – 31.12.2026`).
 2. **Găsiți pe ecran:** prima linie a fiecărui grup de valută este **Sold Inițial** (soldul la
-   intrarea în perioadă), iar antetul grupului arată **soldul final** în valută și în RON.
+   intrarea în perioadă), iar antetul grupului arată **soldul final** în valută și în RON. Dacă
+   partenerul are tranzacții într-o singură monedă (de exemplu doar EUR), nu există grupuri:
+   **Sold Inițial** este prima linie de sub partener (cu **Sold Valută** în valuta lui), iar soldul
+   final în valută este **Sold Valută** de pe rândul partenerului. Dacă are o valută străină plus
+   tranzacții în lei, apar grupurile „Valută RON" și „Valută EUR": soldul în EUR se citește pe
+   antetul grupului EUR (identic cu **Sold Valută** de pe rândul partenerului).
 3. **Verificați:** soldul final în valută corespunde extrasului de cont comunicat de partener;
    perioada selectată este cea de confirmare; partenerul filtrat este cel corect.
 4. Abia apoi exportați: apăsați butonul **Confirmare sold (PDF)** din antetul raportului
@@ -159,8 +179,9 @@ celorlalte documente.
 
 Pentru arhivarea fișei detaliate (toate liniile, nu doar soldurile), folosiți butoanele standard
 **PDF** / **XLSX** din antetul raportului — exportă raportul așa cum este afișat (cu grupurile de
-valută, dacă partenerii sunt desfăcuți). Ecranul este același din Pasul 1
-(vezi `static/description/01_raport_valuta.png`).
+valută, dacă partenerii sunt desfăcuți). Ecranul exportat este același din Pasul 1.
+
+![Raportul din antetul căruia se exportă PDF/XLSX — același ecran ca în Pasul 1](screenshots/01_raport_valuta.png)
 
 ### Note de monografie și raportare
 
@@ -215,6 +236,13 @@ Ce rămâne manual: trimiterea confirmării către partener și compararea cu ex
 - [ ] Coloanele Debit/Credit/Sold Valută apar când multi-valuta este activă.
 - [ ] La un partener cu EUR + USD, raportul grupează pe valută, cu Sold Inițial per valută.
 - [ ] Soldul rulant al grupului EUR = Sold Inițial EUR + mișcările EUR din perioadă.
+- [ ] La un partener cu o singură valută străină, **Sold Valută** de pe rândul partenerului = sold
+      inițial + mișcările din perioadă (soldul valutar până la sfârșitul perioadei), iar **Valută**
+      arată doar mișcările din perioadă.
+- [ ] La un partener cu mai multe valute străine, **Sold Valută** de pe rândul partenerului rămâne gol;
+      soldurile sunt pe grupurile de valută.
+- [ ] Pe linia **Sold Inițial**, **Sold Valută** apare cu simbolul valutei partenerului
+      (ex. `-199,99 €`), nu cu cel al monedei companiei.
 - [ ] La tranzacțiile RON coloanele valutare sunt goale.
 - [ ] Butonul **Confirmare sold (PDF)** generează documentul: o pagină per partener, o linie per
       valută și tip de sold, cu rândul „Poziție netă totală (RON)" — suma soldurilor finale în RON
@@ -245,6 +273,8 @@ Ce rămâne manual: trimiterea confirmării către partener și compararea cu ex
 | Coloanele valutare lipsesc | Multi-valuta nu este activă | Activați multi-valuta în Setări → Contabilitate |
 | Coloanele valutare sunt goale pe toate liniile | Tranzacțiile sunt în RON | Normal; verificați că facturile au fost emise în valută |
 | Soldul valutar pare amestecat | Partener cu mai multe valute, raport vechi în cache | Reîncărcați raportul; gruparea pe valută separă soldurile per monedă |
+| **Valută** și **Sold Valută** diferă pe rândul partenerului | **Valută** însumează doar mișcările din perioadă, iar **Sold Valută** include și soldul inițial | Normal; soldul de confirmat este **Sold Valută** (sau antetul grupului de valută), valabil când încasările și plățile sunt în aceeași valută. Dacă partenerul plătește în lei, liniile în lei nu modifică soldul valutar, iar nici **Confirmare sold (PDF)** nu le compensează cu soldul în EUR (arată un rând EUR și un rând RON, separate): confirmați soldul în lei (rândul RON și **Poziție netă totală (RON)**), știind că soldul în EUR nu reflectă plățile în lei |
+| **Sold Valută** este gol pe rândul partenerului | Partenerul are mai multe valute străine | Normal; soldurile sunt pe grupurile de valută de dedesubt |
 | PDF-ul de confirmare iese gol | Filtrele exclud toți partenerii (perioadă/partener) | Lărgiți perioada sau scoateți filtrul de partener |
 | Sold Inițial 0 deși există istoric | Mișcările istorice sunt în ciornă | Postați documentele din perioadele anterioare |
 | Contul 409/419 nu apare deși are sold | Filtrul „Cont" e restrâns la o singură latură | 409 apare doar cu Datorie bifată, 419 doar cu Creanță bifată — starea implicită „Cont: Parteneri comerciali" le include pe ambele |
@@ -256,7 +286,9 @@ Capturile (`static/description/`) sunt **generate automat** din `tests/test_scre
 pe planul de conturi RO (`setup_country("ro")`), cu un furnizor în două valute (EUR + USD, plus
 un avans pe cont 409 în EUR) și un client RON:
 
-1. `01_raport_valuta.png` — raportul desfășurat: furnizor cu EUR + USD grupat pe valută
+1. `01_raport_valuta.png` — (refolosită și la Pasul 4; nu conține un partener cu o singură valută
+   străină, deci acel comportament se verifică pe un partener propriu) raportul desfășurat:
+   furnizor cu EUR + USD grupat pe valută
    (Sold Inițial + sold rulant per valută) și partener RON cu coloanele valutare goale.
 2. `02_confirmare_sold.png` — documentul **Confirmare sold (PDF)** (randarea HTML a aceluiași
    layout tipărit): o linie per valută și tip de sold pentru soldul comercial, plus rândul separat de avans
@@ -279,7 +311,8 @@ Regenerare:
 
 În manual, păstrați orientarea pe activitatea utilizatorului: problema dublei evidențe
 RON + valută (OMFP 1802/2014 Pct. 7 alin. (2)), citirea raportului (grupurile de valută, soldul inițial și
-rulant per monedă, convenția coloanelor goale pe RON) și fluxul de confirmare de sold de la
+rulant per monedă, convenția coloanelor goale pe RON, diferența dintre **Valută** — doar perioada —
+și **Sold Valută** — cumulat) și fluxul de confirmare de sold de la
 sfârșit de an (filtrare partener → verificare pe ecran → **Confirmare sold (PDF)** → semnare și
 transmitere). Menționați convenția de semn (pozitiv = de încasat) și complementaritatea cu
 reevaluarea valutară lunară.

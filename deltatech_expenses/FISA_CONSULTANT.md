@@ -1,7 +1,7 @@
 # Fișă Modul: Decont de cheltuieli din avans de trezorerie (542) și diurnă
 
 **Modul:** `deltatech_expenses`
-**Utilizator principal:** Contabil, Aprobator (casier / șef ierarhic), Angajat
+**Utilizator principal:** Contabil (operează decontul), Aprobator (aprobă avansul)
 **Prioritate:** 🔴 Ridicată (flux frecvent în practica românească)
 
 ---
@@ -15,9 +15,9 @@ automat diferența de restituit sau de încasat și generează notele contabile 
 decontarea din avans, diurna și regularizarea diferenței în casă), închizând soldul contului 542 al
 angajatului.
 
-Decontul are trei **moduri de decontare**: **Numerar** (avansul se dă din casă), **Virament (card
-personal)** (avansul se virează din bancă pe cardul personal al angajatului) și **Card de firmă**
-(cheltuielile se plătesc direct cu cardul firmei, fără avans pe 542).
+Avansul poate ajunge la angajat din casă (**Numerar**), prin virament pe cardul lui personal
+(**Virament (card personal)**) sau deloc, când cheltuielile se plătesc direct cu **cardul de firmă**;
+modul de decontare se alege pe fiecare decont.
 
 ## 2. Bază legală și context
 
@@ -27,9 +27,6 @@ personal)** (avansul se virează din bancă pe cardul personal al angajatului) �
   deplasări, detașări și transferări", 623 „Cheltuieli de protocol, reclamă și publicitate",
   4426 „TVA deductibilă", 409 „Furnizori - debitori" (4091 bunuri de natura stocurilor, 4092
   servicii, 4093/4094 imobilizări).
-- OMFP 1802/2014 pct. 319 și 322 — pentru decontul în valută, operațiunile se înregistrează în
-  valută și în lei la cursul BNR din data fiecăreia, iar diferența de curs rămasă pe 542 la decontare
-  se trece pe cheltuieli (665) sau venituri (765) din diferențe de curs.
 - Legea 82/1991 art. 6 alin. (1) — operațiunea se înregistrează la data efectuării ei, pe baza unui
   document justificativ.
 - Codul fiscal art. 76 alin. (2) lit. k) — diurna este neimpozabilă doar în limita a **2,5 ori**
@@ -39,53 +36,63 @@ personal)** (avansul se virează din bancă pe cardul personal al angajatului) �
 - Codul fiscal art. 319 alin. (12) lit. a) și Normele metodologice (HG 1/2016) pct. 69 alin. (6) —
   bonul fiscal ține loc de factură simplificată, deci dă drept de deducere a TVA, doar dacă are
   tipărit **codul de TVA (RO…) al firmei** și valoarea lui, cu TVA, **nu depășește 100 euro**.
+- OMFP 1802/2014 pct. 135 — pentru deconturile în valută, operațiunile se înregistrează în
+  valută și în lei, la cursul BNR din data fiecărei operațiuni; diferența de curs rămasă pe 542 la
+  decontare se înregistrează pe 665 (nefavorabilă) sau 765 (favorabilă).
+- OMFP 1802/2014 pct. 302 alin. (2) — contul 5125 „Sume în curs de decontare": sumele virate sau
+  depuse la bănci, pe bază de documente prezentate entității și neapărute încă în extrasul de cont, se
+  înregistrează distinct; modulul îl folosește ca cont de plăți / încasări în curs pentru avansul virat
+  și pentru plățile cu cardul, până la reconcilierea cu extrasul.
+- OMFP 1802/2014 pct. 302 alin. (3) și nota *18) la contul 542 — sumele acordate personalului prin
+  sistemul de carduri, ca avansuri spre decontare pentru achiziții sau prestări de servicii, se
+  evidențiază în 542 „Avansuri de trezorerie", analitic distinct. La „Card de firmă" modulul **nu**
+  trece decontarea prin 542 (vezi secțiunea 6), deci diferă de această monografie.
 - Cote TVA 2026: 21% standard, 11% redusă (inclusiv cazarea hotelieră).
 
 ## 3. Utilizatori și roluri
 
-Modulul are trei roluri proprii, alese pe utilizator în **Setări → Utilizatori și companii →
-Utilizatori**, secțiunea **„Decont Cheltuieli"**. Fiecare rol îl include pe cel anterior:
+Decontul îl operează **contabilul**, nu angajatul: angajatul predă documentele justificative (ordinul
+de deplasare, bonurile, facturile, decontul semnat), iar contabilul introduce decontul în Odoo.
+Angajatul nu are nevoie de utilizator în Odoo pentru acest flux.
 
-| Rol | Ce poate face |
-|---|---|
-| **Angajat** | vede și completează doar deconturile proprii |
-| **Aprobator** | vede toate deconturile; apasă **Avans** (aprobă și contabilizează acordarea avansului) |
-| **Contabil** | apasă **Validează** (contabilizează decontul) și **Invalidare**; poate șterge deconturi în Ciornă |
+Rolurile se aleg pe utilizator în **Setări → Utilizatori și companii → Utilizatori**, secțiunea
+**„Decont Cheltuieli"**. Fiecare rol îl include pe cel anterior:
 
-Administratorii (grupul „Setări") primesc automat rolul de Contabil. Fără rolul potrivit,
-butoanele respective nu apar pe formular.
+| Rol | Cine îl primește | Ce poate face |
+|---|---|---|
+| **Aprobator** | casierul sau persoana care aprobă avansul | vede toate deconturile; apasă **Avans** (aprobă și contabilizează acordarea avansului) |
+| **Contabil** | contabilul care operează deconturile | introduce decontul și liniile; apasă **Validează** și **Invalidare**; poate șterge deconturi în Ciornă |
 
-Meniul decontului se află în aplicația Facturare/Contabilitate, deci utilizatorul are nevoie și de un
-drept de acces în Facturare. Butonul „Deconturi" de pe fișa angajatului apare doar utilizatorilor care
-văd fișa completă a angajatului (drepturi în aplicația Angajați).
+Rolul **Angajat** există în modul (acces doar la deconturile proprii), dar nu face parte din fluxul
+recomandat și nu trebuie atribuit. Administratorii (grupul „Setări") primesc automat rolul de
+Contabil. Fără rolul potrivit, butoanele respective nu apar pe formular. Meniul decontului se află în
+aplicația Facturare/Contabilitate, deci utilizatorii au nevoie și de acces în Facturare.
 
 ## 4. Conturi și date implicate
 
 - **542** — Avansuri de trezorerie (contul angajatului care se închide la final).
-- **5311** — Casa (sursa avansului în modul Numerar).
-- **5125** — Sume în curs de decontare: contul de plăți / încasări în curs al metodei de plată a
-  jurnalului de bancă sau de card. Pe el se contabilizează avansul prin virament, restituirea
-  diferenței și decontarea chitanțelor plătite cu cardul firmei; se închide la importul extrasului
-  (Dr 5125 = Cr 5121 sau Dr 5121 = Cr 5125), nu direct pe 5121, ca nota să nu se dubleze cu extrasul.
+- **5311** — Casa (sursa avansului la modul „Numerar").
+- **5125** — Sume în curs de decontare: contul de plăți / încasări în curs al metodelor de plată ale
+  jurnalului de bancă sau de card, folosit la „Virament (card personal)" și „Card de firmă". Notele nu
+  se postează direct pe 5121, ca să nu se dubleze cu linia din extras; la importul extrasului se face
+  5125 = 5121 și linia se reconciliază.
+- **5121** — Conturi la bănci în lei: contrapartida lui 5125 la importul extrasului; pe deconturile
+  migrate deja în starea „Avans" nota de avans a rămas postată direct pe el (Dr 542 = Cr 5121).
 - **625 / 623** — Cheltuieli cu deplasări / de protocol (contul se alege pe fiecare linie).
 - **4426** — TVA deductibilă aferentă cheltuielilor.
+- **5314** — Casa în valută (sursa avansului la deconturile în valută; contul 542 al jurnalului de
+  avans este și el în valută).
+- **665 / 765** — Cheltuieli / Venituri din diferențe de curs valutar (conturile de diferențe de curs
+  din setările companiei, folosite la închiderea 542 în deconturile în valută).
 - **401** — Furnizori (chitanțele de achiziție și plățile directe din avans).
 - **4092** — Furnizori-debitori pentru servicii (plată directă din avans fără factură deschisă;
-  pentru bunuri se reclasifică manual pe 4091, pentru imobilizări pe 4093).
-
-Pentru deconturile în valută:
-- **5314** — Casa în valută (contul registrului de casă în valută, sursa avansului);
-- **542 în valută** — contul jurnalului de avansuri, ținut în moneda decontului;
-- **665 / 765** — Cheltuieli / Venituri din diferențe de curs valutar (diferența de curs rămasă pe 542
-  la validare).
+  pentru bunuri se reclasifică manual pe 4091; pentru imobilizări pe 4093, prin 404 în loc de 401).
 
 Date minime pentru demo:
 - companie românească cu localizarea contabilă instalată (RON);
 - un angajat `hr.employee` cu „Work Contact" completat (partenerul folosit pe notele contabile);
 - jurnal de numerar (Casă), un jurnal general cu **contul implicit = 542** (pentru avans/decont) și
-  un jurnal pentru diurnă;
-- pentru modurile Virament și Card de firmă: un jurnal de bancă / card cu contul 5125 setat pe metodele
-  de plată (vezi secțiunea 5, pasul 9).
+  un jurnal pentru diurnă.
 
 ## 5. Configurare inițială
 
@@ -96,58 +103,79 @@ Date minime pentru demo:
    implicit este 542** (de ex. „Avansuri trezorerie"). Pe decont îl alegeți în tabul **„Alte
    informații"**, câmpul **„Jurnal avansuri (542)"**.
 3. Verificați jurnalul de numerar (Casă) și contul său implicit (5311); pe decont este câmpul
-   **„Jurnal de plată"** din antet (în modul Numerar alegeți jurnalul de numerar, în modul Virament
-   un jurnal de bancă).
+   **„Jurnal de plată"** din antet (casa la modul „Numerar", banca la „Virament").
 4. Pe decont, **„Cont diurnă"** (implicit primul cont 625) se află în antet, iar **„Jurnal diurnă"**
    (implicit primul jurnal „Diverse") în tabul „Alte informații".
 5. Atribuiți utilizatorilor rolurile din secțiunea 3.
 6. Asigurați-vă că angajații au „Work Contact" completat (sau lăsați-l gol pentru note interne, fără
    partener).
-7. Opțional, pentru verificarea automată a plafonului fiscal al diurnei, instalați
+7. Pentru deconturi în valută: creați un jurnal de numerar cu **moneda** respectivă (cont 5314) și un
+   jurnal de avans pe un cont 542 în valută, țineți la zi cursurile valutare și setați conturile de
+   diferențe de curs (765/665) în **Contabilitate → Setări**, pentru compania curentă.
+8. Pentru virament pe cardul personal și pentru cardul de firmă: pe **metodele de plată** ale
+   jurnalului de bancă / card setați un cont de **plăți în curs** și unul de **încasări în curs**
+   (5125). Fără ele, avansul sau plata nu se pot contabiliza. Jurnalul cardului de firmă se poate seta
+   pe fișa angajatului, în fila **Setări** (câmpul **Jurnal card firmă**, vizibil doar utilizatorilor
+   cu drepturi de Angajați) și se propune automat pe deconturile lui. Jurnalul trebuie să fie al companiei angajatului
+   (altfel se refuză la salvare) și se propune pe decont doar dacă e al companiei decontului.
+9. Opțional, pentru verificarea automată a plafonului fiscal al diurnei, instalați
    `l10n_ro_expense_allowance`.
-8. Doar pentru deconturi în valută: creați un registru de casă cu **Moneda** respectivă (cont 5314) și
-   un jurnal de avansuri pe un cont 542 în valută, actualizați cursurile valutare și setați conturile
-   de diferențe de curs (765/665) în **Contabilitate → Configurare → Setări**. Fără aceste conturi,
-   validarea unui decont în valută cu diferență de curs se oprește cu o eroare (vezi secțiunea 9).
-9. Doar pentru modurile Virament și Card de firmă: pe metodele de plată ale jurnalului de bancă / card
-   setați un cont de **plăți în curs** și unul de **încasări în curs** (5125 „Sume în curs de
-   decontare"). Jurnalul cardului de firmă se poate seta o dată pe angajat, în fișa angajatului
-   (câmpul **„Jurnal card firmă"**, vizibil doar utilizatorilor cu drepturi de Facturare), și se
-   propune apoi pe fiecare decont, la alegerea angajatului sau a modului Card de firmă.
-10. La actualizarea modulului la versiunea 20.0.3.6.0, deconturile existente al căror jurnal de plată
-    este de bancă sau de card trec automat pe modul **Virament**; restul rămân pe **Numerar**. Un
-    decont deja în starea „Avans" își păstrează nota de avans (Dr 542 = Cr 5121, postată direct pe
-    bancă); diferența lui se postează la validare pe 5125, deci jurnalul de bancă trebuie să aibă
-    contul 5125 setat pe metodele de plată (pasul 9).
 
 ## 6. Flux de utilizare
 
 ### Pasul 1 — Crearea decontului și acordarea avansului
 
 Meniul este **Facturare → Furnizori → Decont Cheltuieli** (cu Enterprise: **Contabilitate →
-Furnizori → Decont Cheltuieli**). Apăsați **Nou**, alegeți **angajatul**, **modul de decontare**
-(implicit **Numerar**) și **jurnalul de plată** (jurnalul de numerar), completați **data avansului**,
-**data cheltuielii** (data decontului; se completează din data avansului dacă e goală), **ordinul de
-deplasare**, **avansul** acordat și, dacă e cazul, **diurna** (sumă/zi și număr de zile). În tabul
-„Alte informații" verificați **jurnalul de avansuri (542)**.
+Furnizori → Decont Cheltuieli**). Contabilul apasă **Nou**, alege **angajatul**, **modul de decontare** și **jurnalul de plată**,
+apoi completează **data avansului**, **data cheltuielii** (data decontului; se completează din data
+avansului dacă e goală), **ordinul de deplasare**, **avansul** acordat și, dacă e cazul, **diurna**
+(sumă/zi și număr de zile). În tabul „Alte informații" verifică **jurnalul de avansuri (542)**.
 
-**Moneda decontului** (câmpul **„Monedă"**, în antet, după jurnale; apare utilizatorilor cu
-monede multiple activate) se preia din registrul de casă ales: moneda registrului, sau moneda
-companiei dacă registrul nu are una; în modul Card de firmă se preia din jurnalul cardului. Se poate
-schimba doar în Ciornă și se blochează după **Avans**.
-Avansul, liniile de cheltuieli, diurna și diferența se introduc în această monedă, iar lista
-deconturilor are o coloană „Monedă". Un decont în valută este descris la „Decont în valută" mai jos.
+**Modul de decontare.** Câmpul **„Mod de decontare"** (modificabil doar în Ciornă) are trei valori:
+
+- **Numerar** (implicit) — avansul iese din casă; **jurnalul de plată** trebuie să fie de tip numerar;
+- **Virament (card personal)** — avansul se virează pe cardul personal al angajatului; **jurnalul de
+  plată** trebuie să fie un jurnal de bancă;
+- **Card de firmă** — angajatul plătește cu cardul firmei, deci nu există avans (câmpul dispare) și
+  apare **„Jurnal card firmă"**, obligatoriu și de tip bancă sau card. **Jurnalul de plată** servește
+  atunci doar plății diurnei către angajat și trebuie să fie în moneda cardului sau în moneda
+  companiei. Diferența de plată devine doar diurna: chitanțele sunt plătite direct furnizorilor, nu se
+  datorează angajatului.
+
+La schimbarea modului, jurnalul de plată se înlocuiește cu primul jurnal al companiei de tipul potrivit
+doar dacă cel curent nu se potrivește: bancă pentru „Virament (card personal)", numerar pentru
+„Numerar" și, tot numerar, pentru „Card de firmă" (unde jurnalul de plată servește diurnei). La „Card
+de firmă" avansul se golește și se propune jurnalul cardului din fișa angajatului. La schimbarea angajatului, „Jurnal card firmă" se reînnoiește mereu din fișa noului
+angajat și rămâne gol dacă acesta nu are card, ca să nu rămână cardul angajatului precedent. Jurnalele
+decontului (de plată și al cardului) trebuie să fie ale companiei decontului. Un jurnal de alt tip decât
+cel cerut de mod blochează acordarea avansului și validarea.
+La actualizarea modulului, deconturile existente al căror jurnal de plată este de bancă sau de card
+trec automat pe „Virament (card personal)"; celelalte rămân pe „Numerar". Un decont deja în starea
+„Avans" își păstrează nota de avans postată direct pe contul băncii (Dr 542 = Cr 5121); diferența lui se
+postează la validare pe 5125, deci contul 5125 trebuie setat pe metodele de plată ale jurnalului de bancă.
+
+**Moneda decontului.** Câmpul **„Moneda"** (vizibil utilizatorilor cu moneda multiplă activă, lângă
+jurnalul de plată) preia moneda jurnalului de plată ales, sau moneda companiei dacă jurnalul nu
+are una; la „Card de firmă" preia moneda **jurnalului cardului**. Un jurnal (de plată sau al cardului)
+în altă monedă decât cea a decontului blochează acordarea avansului și validarea. Se poate schimba
+doar în Ciornă. Avansul, liniile de cheltuieli, diurna și diferența se
+introduc în moneda decontului. Pe un decont în valută, liniile din „Elemente jurnal" arată și suma în
+valută. Deconturile existente la actualizarea modulului rămân în moneda companiei.
 
 Aprobatorul apasă **Avans**: documentul primește număr (`DEC/…`) și trece în starea „Avans". Pe
-măsură ce adăugați liniile de cheltuieli, se calculează automat totalul și **diferența** față de
+măsură ce contabilul adaugă liniile de cheltuieli din documentele predate de angajat, se calculează automat totalul și **diferența** față de
 avans: o valoare **pozitivă** înseamnă că firma îi mai datorează angajatului, una **negativă** că
 angajatul restituie restul în casă.
 
 ![Decontul în starea „Avans": avans, linii de cheltuieli cu TVA, diurnă și diferență](screenshots/01_decont_avans.png)
 
-În modul Numerar, acordarea avansului generează nota contabilă **Dr 542 = Cr 5311** (avansul iese din
-casă în contul de avansuri de trezorerie al angajatului); în modul Virament nota este Dr 542 = Cr 5125
-(vezi „Moduri de decontare").
+Acordarea avansului generează nota contabilă **Dr 542 = Cr 5311** (avansul iese din casă în contul de
+avansuri de trezorerie al angajatului). La „Virament (card personal)" nota este **Dr 542 = Cr 5125**
+(plăți în curs), care se reconciliază apoi cu linia din extrasul de cont (5125 = 5121). La „Card de
+firmă" nu se acordă avans și nu apare nicio notă de avans, dar aprobatorul apasă totuși **Avans** (cu
+avans zero, fără notă): doar așa decontul primește numărul și trece în starea „Avans", singura în care
+apar liniile de cheltuieli și butonul **Validează**. La un decont în valută, nota are suma în valută și
+contravaloarea în lei la cursul BNR din data avansului (casa este 5314).
 
 ![Nota contabilă de acordare a avansului (542 = 5311)](screenshots/02_nota_avans.png)
 
@@ -176,17 +204,31 @@ Fiecare linie are un **tip**:
   decontarea din avans (vezi mai jos);
 - **Plată furnizor** — angajatul a achitat direct o datorie a firmei către un furnizor (fără chitanță
   proprie); la validare se generează nota `Dr 401 = Cr 542`, care se **reconciliază cu facturile
-  furnizor deschise** ale aceluiași furnizor (stinge datoria, ca o plată). Partea neacoperită de
-  facturi deschise este un **avans acordat furnizorului** și se reclasifică automat
-  `Dr 4092 = Cr 401`. De exemplu, o plată de 300 lei către un furnizor fără facturi deschise dă
+  furnizor deschise** ale aceluiași furnizor (stinge datoria, ca o plată), întâi pe cele mai vechi
+  după scadență. Partea neacoperită de facturi deschise este un **avans acordat furnizorului** și se
+  reclasifică automat `Dr 4092 = Cr 401`. De exemplu, o plată de 300 lei către un furnizor fără facturi deschise dă
   `Dr 401 = Cr 542` 300 lei și `Dr 4092 = Cr 401` 300 lei. La primirea facturii, contabilul compensează
-  avansul (`Dr 401 = Cr 4092`). Modulul folosește mereu 4092 (servicii); dacă avansul e pentru bunuri
-  (4091) sau imobilizări (4093), contabilul îl reclasifică manual.
+  avansul (`Dr 401 = Cr 4092`). Modulul folosește mereu 4092 (servicii); dacă avansul e pentru bunuri,
+  contabilul îl reclasifică manual pe 4091. La imobilizări se corectează și contul furnizorului:
+  avansul trece pe 4093 prin 404, nu prin 401.
+
+  Ordinea „întâi cele mai vechi” aplică regula legală de imputație a plății, cea folosită când nici
+  plătitorul, nici furnizorul nu indică ce factură se stinge. Dacă ordinul de plată sau chitanța
+  furnizorului indică o anumită factură, contabilul anulează reconcilierea automată și reconciliază
+  manual plata cu factura indicată. Dacă furnizorul emite o **factură de avans**, aceasta nu se mai
+  înregistrează o dată prin 401, pentru că avansul e deja pe 4092 cu TVA inclus. Se înregistrează
+  doar TVA-ul, exigibil la data plății avansului: `Dr 4426 = Cr 4092`.
 
 Contabilul apasă **Validează**: decontul trece în starea „Efectuat", iar modulul generează
 chitanțele de achiziție, notele de decontare din avans, nota de diurnă și nota de regularizare a
 diferenței, închizând soldul contului 542. Chitanțele se văd în tabul **„Chitanțe"**, iar toate
 liniile contabile în tabul **„Elemente jurnal"**.
+
+La un decont în valută, fiecare notă poartă suma în valută și contravaloarea în lei la cursul din data
+ei: chitanța la data liniei, decontarea din avans cu aceleași sume ca datoria chitanței (ca
+reconcilierea să o închidă complet), diurna și diferența la data cheltuielii. Pentru că avansul și
+cheltuielile sunt la cursuri diferite, 542 se închide în valută, dar poate rămâne un sold în lei:
+diferența de curs, descrisă mai jos.
 
 ![Decontul validat (starea „Efectuat")](screenshots/06_decont_validat.png)
 
@@ -198,13 +240,50 @@ chitanța de achiziție. Linia de 542 poartă partenerul angajatului, cea de 401
 
 ![Nota de decontare din avans (Dr 401 = Cr 542)](screenshots/07_nota_decontare.png)
 
-Diurna se înregistrează cu data cheltuielii (**Dr 625 = Cr 542**), iar diferența dintre avans și
-total se regularizează în casă cu aceeași dată, cea a decontului: în exemplu, angajatul restituie
-239 lei (**Dr 5311 = Cr 542**).
+**Card de firmă.** Chitanța de achiziție se generează la fel (Dr 6xx + Dr 4426 = Cr 401), dar
+decontarea nu trece prin 542: nota se face pe jurnalul cardului, **Dr 401 = Cr 5125** (plăți în curs
+ale jurnalului cardului, cu partenerul furnizor), și se reconciliază cu chitanța. În exemplul cu
+cazarea de 555 lei, nota este Dr 401 = Cr 5125, 555 lei. La importul
+extrasului cardului, 5125 se închide cu 5121 și linia din extras se reconciliază. Aceeași decontare se
+aplică liniilor „Plată furnizor": se stinge factura deschisă a furnizorului din 5125, nu din 542.
+Doar diurna se datorează angajatului (Dr 625 = Cr 542) și se plătește din jurnalul de plată. O retragere
+de numerar cu cardul de firmă se înregistrează într-un decont separat, cu modul „Virament" (Dr 542 =
+Cr 5125, apoi 5125 = 5121 la importul extrasului); mesajul de eroare din modul vorbește despre
+Dr 542 = Cr 5121, adică același efect final, fără contul intermediar 5125.
+
+> **Atenție — abatere de la monografie:** OMFP 1802/2014 pct. 302 alin. (3) și nota *18) la contul
+> 542 cer ca sumele puse la dispoziția personalului prin carduri, pentru achiziții, să fie evidențiate
+> în 542, analitic distinct. Decontarea Dr 401 = Cr 5125 de mai sus ocolește 542, deci nu urmează
+> această monografie. Consultantul stabilește împreună cu contabilul-șef dacă politica firmei acceptă
+> varianta modulului (care nu are un temei confirmat în OMFP 1802/2014) sau dacă plățile cu
+> cardul trebuie ținute în 542; în al doilea caz se folosește modul „Virament (card personal)" sau
+> se cere alinierea modulului.
+
+Diurna se înregistrează cu data cheltuielii (**Dr 625 = Cr 542**; dacă data cheltuielii lipsește, se
+folosește data de azi), iar diferența dintre avans și
+total se regularizează cu aceeași dată, cea a decontului, prin jurnalul de plată: în exemplu,
+angajatul restituie 239 lei în casă (**Dr 5311 = Cr 542**). La „Virament", restituirea este
+**Dr 5125 = Cr 542** (încasări în curs), iar plata suplimentară **Dr 542 = Cr 5125** (plăți în curs).
+Exemplu la „Virament", cu aceleași cifre (avans 1.000 lei, total 761 lei): avansul este
+**Dr 542 = Cr 5125, 1.000 lei**; decontul consumă 542 prin **Dr 401 = Cr 542** și diurna
+(**Dr 625 = Cr 542**), iar angajatul restituie diferența de 239 lei prin
+**Dr 5125 = Cr 542, 239 lei**. Dacă totalul ar depăși avansul, de pildă 1.200 lei, firma ar plăti
+diferența de 200 lei prin **Dr 542 = Cr 5125, 200 lei**. Modul nu are capturi „Elemente jurnal" proprii;
+notele se verifică pe decont, la butonul de note contabile, după aceste sume.
 
 ![Nota de diurnă (Dr 625 = Cr 542)](screenshots/10_nota_diurna.png)
 
 ![Restituirea diferenței în casă (Dr 5311 = Cr 542)](screenshots/09_nota_restituire.png)
+
+**Diferența de curs (decont în valută).** Dacă la validare pe 542 rămâne un sold în lei, modulul
+înregistrează automat nota „Diferență de curs avans", cu data cheltuielii, pe jurnalul de diferențe de
+curs al companiei (în lipsa lui, pe jurnalul de avansuri), ca soldul 542 să devină zero și în lei.
+Dacă 542 rămâne cu sold în lei și în setările companiei lipsește contul de diferențe de curs necesar
+sensului diferenței (665 sau 765), validarea se oprește cu un mesaj care cere setarea lui.
+
+Exemplu: avans de 100 EUR la cursul 5,00 = 500 lei; cheltuiala de 100 EUR decontată la cursul 5,10 =
+510 lei. În valută 542 este zero, dar în lei rămâne un sold creditor de 10 lei, închis cu nota
+**Dr 542 = Cr 765**, 10 lei.
 
 **Atenție la diurnă:** modulul contează integral diurna introdusă și **nu verifică plafonul fiscal**.
 Valoarea implicită de 42,50 lei/zi e doar un punct de pornire, nu plafonul legal. Ce depășește
@@ -219,70 +298,27 @@ declarată sau închisă: acolo corecția se face prin stornare.
 Decontul se tipărește din meniul cu rotița (⚙) → **Tipărire → Tipărire decont cheltuieli**; documentul tipărit e
 justificativul semnat de titularul avansului.
 
-### Moduri de decontare
-
-Câmpul **„Mod de decontare"** din antet (editabil doar în Ciornă) stabilește cum ajung banii la
-angajat. Schimbarea lui propune automat un jurnal de plată potrivit (de numerar sau de bancă).
-
-- **Numerar** — fluxul descris mai sus: avansul și diferența trec prin casă (5311). Jurnalul de plată
-  trebuie să fie de numerar.
-- **Virament (card personal)** — avansul se virează pe cardul personal al angajatului. Jurnalul de
-  plată trebuie să fie de bancă. Nota de avans este **Dr 542 = Cr 5125** (plăți în curs ale metodei
-  de plată), nu direct pe 5121; restituirea diferenței este **Dr 5125 = Cr 542** (încasări în curs),
-  plata suplimentară **Dr 542 = Cr 5125**. Notele se reconciliază apoi cu liniile extrasului
-  (Dr 5125 = Cr 5121), deci banca nu se contabilizează de două ori.
-- **Card de firmă** — angajatul plătește cu cardul firmei, deci **nu există avans** (câmpul **Avans**
-  se ascunde și se pune pe zero) și chitanțele nu trec prin 542. Se alege **„Jurnal card firmă"**
-  (obligatoriu; se propune din fișa angajatului, inclusiv pentru utilizatorii care nu văd câmpul
-  pe angajat). La validare, chitanța de achiziție (Dr 6xx + Dr 4426 = Cr 401) se decontează
-  **Dr 401 = Cr 5125** al jurnalului cardului, cu partenerul furnizor, și se reconciliază cu extrasul
-  cardului; la fel, o linie „Plată furnizor" plătită cu cardul stinge factura furnizorului prin
-  **Dr 401 = Cr 5125**, fără 542. Angajatului i se datorează doar **diurna**:
-  **Diferența** din antet este egală cu totalul diurnei, iar plata ei se face din jurnalul de plată
-  (Dr 542 = Cr casă; dacă jurnalul de plată este de bancă, Dr 542 = Cr 5125). O retragere de numerar
-  cu cardul firmei nu face parte din decontul cu card, ci este un decont separat, în modul **Virament**.
-  Jurnalul de plată și jurnalul cardului trebuie să fie în moneda decontului (sau în moneda
-  companiei, pentru jurnalul de plată al diurnei), iar jurnalul cardului trebuie să fie al companiei
-  decontului.
-
-### Decont în valută
-
-Când registrul de casă este în valută, fiecare notă contabilă poartă **suma în valută** și
-**contravaloarea în lei**, la cursul BNR din data ei: avansul la data avansului, fiecare chitanță la
-data ei, diurna și diferența la data cheltuielii (a decontului). În tabul „Elemente jurnal" apare
-coloana cu **suma în valută** (doar pentru decontul în valută). Chitanțele de achiziție sunt emise în
-moneda decontului, iar nota de decontare din avans preia aceleași sume (în valută și în lei) ca datoria
-chitanței, ca reconcilierea să o închidă complet.
-
-Cursurile diferă între data avansului și cea a cheltuielilor, deci 542 se închide în valută, dar
-poate rămâne un sold în lei. La validare, acesta se înregistrează ca **diferență de curs**
-(**Dr 665 = Cr 542** nefavorabilă sau **Dr 542 = Cr 765** favorabilă), în jurnalul de diferențe de
-curs al companiei (dacă nu e setat, în jurnalul de avansuri 542). Exemplu: avans 100 la 5,00 lei și
-cheltuială 121 la 5,10 lei, cu plata suplimentară de 21: 542 este zero în valută, iar cei 100 × (5,00 −
-5,10) = −10 lei rămași se trec pe **765**.
-
 ### Note de monografie și raportare (notele generate la fiecare pas)
 
-- **Acordare avans** (Pasul 1): **Dr 542 = Cr 5311** în modul Numerar, **Dr 542 = Cr 5125** în modul
-  Virament (suma avansului); în modul Card de firmă nu există avans;
+- **Acordare avans** (Pasul 1): **Dr 542 = Cr 5311/5314** (suma avansului; 5314 pentru casa în valută);
+  la „Virament (card personal)": **Dr 542 = Cr 5125**; la „Card de firmă" nu există avans;
 - **Decontare cheltuieli** (Pasul 2, la validare), pentru liniile de tip „Cheltuieli", în două note:
   - chitanța de achiziție: **Dr 6xx + Dr 4426 = Cr 401** (cheltuială fără TVA + TVA deductibil),
     cu data liniei;
-  - decontarea din avans: **Dr 401 = Cr 542** (reconciliată cu chitanța); în modul Card de firmă,
-    **Dr 401 = Cr 5125** al jurnalului cardului (partenerul furnizor), fără 542;
-- **Plată furnizor** (Pasul 2, liniile de tip „Plată furnizor"): **Dr 401 = Cr 542**, reconciliată cu
-  facturile furnizor deschise (în modul Card de firmă: **Dr 401 = Cr 5125** al jurnalului cardului);
-  restul neacoperit: **Dr 4092 = Cr 401**;
+  - decontarea din avans: **Dr 401 = Cr 542** (reconciliată cu chitanța); la „Card de firmă":
+    **Dr 401 = Cr 5125** al jurnalului cardului, cu partenerul furnizor (abatere de la OMFP
+    1802/2014 pct. 302 alin. (3), vezi mai sus);
+- **Plată furnizor** (Pasul 2, liniile de tip „Plată furnizor"): **Dr 401 = Cr 542** (la „Card de
+  firmă", **Dr 401 = Cr 5125**), reconciliată cu facturile furnizor deschise; restul neacoperit:
+  **Dr 4092 = Cr 401**;
 - **Diurnă** (la validare): **Dr 625 = Cr 542** (totalul diurnei), cu data cheltuielii;
+- **Diferență de curs** (doar la deconturi în valută, la validare, dacă 542 are sold în lei):
+  **Dr 665 = Cr 542** (nefavorabilă) sau **Dr 542 = Cr 765** (favorabilă);
 - **Diferență** (la validare), cu data cheltuielii (a decontului), ca soldul 542 al angajatului să
   devină **zero**:
-  - angajatul restituie restul avansului: **Dr 5311 = Cr 542** (în modul Virament: **Dr 5125 = Cr 542**);
-  - firma îi plătește angajatului diferența: **Dr 542 = Cr 5311** (în modul Virament: **Dr 542 = Cr 5125**);
-  - cu cardul de firmă, diferența este doar diurna: **Dr 542 = Cr casă** (jurnalul de plată; **Cr 5125**
-    dacă jurnalul de plată este de bancă);
-- **Decont în valută** (la validare): casa este **5314**, iar toate notele de mai sus poartă suma în
-  valută și contravaloarea în lei la cursul din data lor; în plus, soldul în lei rămas pe 542 se
-  închide cu **Dr 665 = Cr 542** (diferență nefavorabilă) sau **Dr 542 = Cr 765** (favorabilă).
+  - angajatul restituie restul avansului: **Dr 5311/5314 = Cr 542** (la „Virament": **Dr 5125 = Cr 542**);
+  - firma îi plătește angajatului diferența: **Dr 542 = Cr 5311/5314** (la „Virament": **Dr 542 = Cr 5125**);
+  - la „Card de firmă", diferența este doar diurna, plătită din jurnalul de plată.
 
 ### Pasul 3 — Urmărirea deconturilor pe angajat
 
@@ -304,34 +340,37 @@ lista filtrată pentru acel angajat.
 | Salarizare / D112 | surplusul de diurnă peste plafon se declară manual ca venit salarial |
 | D300 | chitanțele cu TVA intră în decontul de TVA prin grilele taxei de achiziție |
 
-Ce este automat: generarea notelor contabile, calculul diferenței și al diurnei, închiderea contului 542,
-conversia în lei la cursul din data fiecărei note și diferența de curs la decontul în valută.
-Ce rămâne manual: configurarea jurnalelor/conturilor, alegerea cotei TVA și a contului pe fiecare
+Ce este automat: generarea notelor contabile, calculul diferenței și al diurnei, conversia în lei la cursul din data fiecărei note, diferența de
+curs pe 665/765, închiderea contului 542.
+Ce rămâne manual: configurarea jurnalelor/conturilor (inclusiv a conturilor de diferențe de curs),
+actualizarea cursurilor valutare, alegerea cotei TVA și a contului pe fiecare
 linie, plafonul fiscal al diurnei (fără `l10n_ro_expense_allowance`), reclasificarea avansului la
-furnizor pe 4091/4093 când nu e pentru servicii, compensarea lui la primirea facturii și verificarea
-soldului 542 după validare.
+furnizor pe 4091 (bunuri) sau pe 4093 prin 404 (imobilizări) când nu e pentru servicii, TVA-ul de pe
+factura de avans (`Dr 4426 = Cr 4092`), compensarea avansului la primirea facturii, reconcilierea
+manuală a unei plăți furnizor cu factura indicată pe documentul de plată și verificarea soldului 542
+după validare.
 
 ## 8. Verificări pentru consultant
 
 - [ ] Modulul se instalează fără erori pe baza demo.
 - [ ] „Jurnal avansuri (542)" are contul implicit 542.
-- [ ] În modul Numerar, acordarea avansului produce nota Dr 542 = Cr 5311.
-- [ ] Utilizatorii au rolurile potrivite (Angajat / Aprobator / Contabil).
+- [ ] Acordarea avansului produce nota Dr 542 = Cr 5311.
+- [ ] Contabilul are rolul Contabil, iar cel care aprobă avansul rolul Aprobator; angajații nu au roluri în modul.
 - [ ] Liniile de deplasare au contul 625, nu 623 implicit.
 - [ ] Un bon de 555 lei cu TVA 11% dă bază 500 și TVA 55; „Total chitanțe" este egal cu suma bonurilor.
 - [ ] Diferența = cheltuieli + diurnă − avans (negativă = angajatul restituie).
 - [ ] Nota de diferență din casă are data decontului, nu data avansului.
 - [ ] O plată furnizor fără factură deschisă ajunge pe 4092, iar pe 401 nu rămâne sold debitor.
+- [ ] O plată furnizor mai mică decât facturile deschise stinge întâi factura cea mai veche.
+- [ ] Virament: pe metodele de plată ale jurnalului de bancă sunt setate conturile 5125; avansul produce Dr 542 = Cr 5125, nu o notă directă pe 5121.
+- [ ] Virament: restituirea diferenței este Dr 5125 = Cr 542, iar soldul 542 devine zero.
+- [ ] Card de firmă: decontul nu are avans, are „Jurnal card firmă", iar „Diferența" este egală cu diurna.
+- [ ] Card de firmă: decontarea chitanței este Dr 401 = Cr 5125 pe jurnalul cardului, fără linii pe 542 pentru sumele de pe chitanță, iar chitanța e plătită.
 - [ ] Diurna se încadrează în plafonul fiscal sau surplusul a fost transmis la salarizare.
 - [ ] După validare, soldul contului 542 al angajatului este zero.
-- [ ] Virament: avansul ajunge pe 5125 (plăți în curs), nu pe contul băncii, iar jurnalul de plată este de bancă.
-- [ ] Card de firmă: avansul este zero, chitanțele sunt decontate pe 5125 al cardului, fără sold pe 542,
-  iar diferența din antet este egală cu diurna.
-- [ ] Card de firmă: „Jurnal card firmă" este completat (sau propus din fișa angajatului).
-- [ ] Decont în valută: moneda decontului este cea a registrului de casă, iar liniile o preiau.
-- [ ] Decont în valută: nota de avans are suma în valută și contravaloarea în lei la cursul din data avansului.
-- [ ] Decont în valută: după validare, 542 este zero atât în valută, cât și în lei; diferența de curs
-  este pe 665 (nefavorabilă) sau 765 (favorabilă).
+- [ ] Decont în valută: moneda decontului este cea a jurnalului de plată (la „Card de firmă", a jurnalului cardului).
+- [ ] Decont în valută: fiecare notă are suma în valută și contravaloarea în lei la cursul BNR din data ei (avans — data avansului, chitanță — data liniei, diurnă și diferență — data cheltuielii).
+- [ ] Decont în valută: după validare, soldul 542 este zero în valută și în lei; diferența de curs, dacă există, este pe 665 sau 765.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -341,16 +380,20 @@ soldului 542 după validare.
 | Contul 542 nu se închide | „Jurnal avansuri (542)" nu are contul implicit 542 | Setați contul implicit 542 pe jurnal |
 | „Furnizorul ... nu are un cont de datorii (401)" | Linie „Plată furnizor" cu un furnizor fără cont de plătit configurat | Completați „Cont de plătit" pe fișa furnizorului |
 | „Nu aveți rolul necesar pentru a ... decontul" / lipsesc butoanele Avans, Validează | Utilizatorul nu are rolul Aprobator sau Contabil | Atribuiți rolul în Setări → Utilizatori, secțiunea „Decont Cheltuieli" |
-| „Set an outstanding payments (or receipts) account (5125) on the … payment method of the journal …" | Jurnalul de bancă / card nu are cont de plăți (încasări) în curs pe metoda de plată | Setați contul 5125 pe metodele de plată ale jurnalului |
-| „The expenses deduction … is settled in cash: choose a cash journal." / „… is settled by bank transfer: choose a bank journal." | Jurnalul de plată nu corespunde modului de decontare | Alegeți un jurnal de numerar (Numerar) sau de bancă (Virament) |
-| „The expenses deduction … is paid with a company card: choose the company card journal." | Mod Card de firmă fără „Jurnal card firmă" | Completați jurnalul cardului pe decont sau pe fișa angajatului |
-| „… is paid with a company card: it has no advance …" | Mod Card de firmă cu avans diferit de zero | Lăsați avansul 0; retragerea de numerar cu cardul este un decont separat în modul Virament |
-| „The journal … is in <monedă>, but the expenses deduction … is in <monedă>." | Jurnalul de plată sau al cardului este în altă monedă decât decontul (jurnalul în valută primește doar note în moneda lui) | Alegeți un jurnal în moneda decontului; moneda decontului urmează jurnalul ales, deci nu o schimbați manual după aceea |
-| „The expenses deduction … is paid with a company card in <monedă>: the per diem is paid from the payment journal …, which is in <monedă>." | Mod Card de firmă cu jurnal de plată (cel din care se plătește diurna) într-o altă valută decât cardul | Alegeți un jurnal de plată în moneda cardului sau în moneda companiei |
+| Mesaj la validare care cere setarea conturilor de diferențe de curs (765/665) | Decont în valută cu sold în lei pe 542, iar compania nu are conturile de diferențe de curs setate | Setați conturile în Contabilitate → Setări, apoi validați din nou |
+| „Set an outstanding payments (receipts) account (5125) on the payments (receipts) payment method of the journal ..." | Virament sau card de firmă, iar jurnalul de bancă nu are cont de plăți / încasări în curs pe metodele de plată | Setați contul 5125 pe metoda de plată de ieșire (și de intrare, pentru restituiri) a jurnalului |
+| „The expenses deduction ... is settled in cash: choose a cash journal." | Mod „Numerar" cu jurnal de plată de bancă | Alegeți un jurnal de numerar sau schimbați modul |
+| „The expenses deduction ... is settled by bank transfer: choose a bank journal." | Mod „Virament" cu jurnal de plată de numerar | Alegeți un jurnal de bancă sau schimbați modul |
+| „The expenses deduction ... is paid with a company card: choose the company card journal." | Mod „Card de firmă" fără „Jurnal card firmă", sau cu un jurnal care nu e de bancă / card (de ex. de numerar) | Completați un jurnal de bancă sau de card pe decont sau pe fișa angajatului |
+| „The expenses deduction ... is paid with a company card in ...: the per diem is paid from the payment journal ..., which is in ..." | Mod „Card de firmă", iar jurnalul de plată (din care se plătește diurna) este în altă monedă decât cardul | Alegeți un jurnal de plată în moneda cardului sau în moneda companiei |
+| „The expenses deduction ... is paid with a company card: it has no advance. ..." | Mod „Card de firmă" cu avans diferit de zero | Goliți avansul; o retragere de numerar cu cardul este un decont separat, cu modul „Virament" |
+| „The journal ... is in ..., but the expenses deduction ... is in ..." | Jurnalul de plată sau al cardului este în altă monedă decât decontul | Alegeți un jurnal în moneda decontului (sau fără monedă, pentru moneda companiei) |
 | Plata furnizor rămâne cu sold debitor pe 401 | Planul de conturi nu are un cont 4092 | Creați contul 4092 sau reclasificați manual |
-| „Set the gain and loss exchange rate accounts (765/665) in the accounting settings of the company …" | Decont în valută cu diferență de curs la validare, iar compania nu are setate conturile de diferențe de curs | Setați conturile de câștig/pierdere din diferențe de curs (765/665) în Contabilitate → Configurare → Setări |
-| Contravaloarea în lei a unei note în valută este neașteptată | Cursul BNR lipsește sau este vechi pentru data notei (Odoo ia cursul zilei precedente) | Actualizați cursurile valutare și reluați decontul (Invalidare, apoi Avans / Validează) |
 | „Total chitanțe" diferă cu 1 ban de bon | Taxă „pe deasupra": TVA-ul se recalculează pe baza rotunjită | Folosiți o taxă „inclusă în preț" pentru potrivire exactă |
+
+Mesajele despre contul 5125, jurnalul de numerar / bancă și cardul de firmă nu au încă traducere în
+română și apar în engleză, chiar și în interfața în română. În ele, „...” din locul numărului decontului este numărul `DEC/…`,
+iar înainte de acordarea avansului (numărul e încă „/”) este angajatul și data avansului.
 
 Pentru mesajele legate de preluarea cheltuielilor standard (`hr_expense`), vezi fișa modulului
 `deltatech_expenses_hr_expense`.
@@ -358,10 +401,10 @@ Pentru mesajele legate de preluarea cheltuielilor standard (`hr_expense`), vezi 
 ## 10. Capturi de ecran
 
 Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_screenshots.py` al acestui
-modul (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**,
+modul (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**, în moneda companiei (RON),
 pe planul de conturi RO (`setup_country("ro")`), pe o bază **fără** `hr_expense`:
 
-1. `01_decont_avans.png` — decontul în starea „Avans": avans 1.000 lei, cazare 555 lei (TVA 11%) și
+1. `01_decont_avans.png` — decontul în starea „Avans", mod „Numerar": avans 1.000 lei, cazare 555 lei (TVA 11%) și
    bilet de tren 121 lei (TVA 21%), cu TVA inclus, diurnă 2 zile × 42,50 lei și diferența −239 lei.
 2. `02_nota_avans.png` — nota contabilă de acordare a avansului (Dr 542 = Cr 5311).
 3. `05_angajat_deconturi.png` — antetul fișei angajatului, cu butonul smart „Deconturi".
@@ -370,6 +413,10 @@ pe planul de conturi RO (`setup_country("ro")`), pe o bază **fără** `hr_expen
 6. `08_chitanta_achizitie.png` — chitanța de achiziție pentru cazare (Dr 625 + Dr 4426 = Cr 401).
 7. `09_nota_restituire.png` — restituirea diferenței în casă (Dr 5311 = Cr 542).
 8. `10_nota_diurna.png` — nota de diurnă (Dr 625 = Cr 542).
+
+Capturile existente arată modul „Numerar"; câmpurile „Mod de decontare" și „Jurnal de plată" apar în
+antetul capturii `01`. Modurile „Virament" și „Card de firmă" nu au capturi proprii: folosesc aceleași
+ecrane, doar cu alte conturi (5125) în notele contabile.
 
 Capturile wizard-ului „Preia cheltuieli HR" (`03`/`04`) sunt în modulul
 `deltatech_expenses_hr_expense`, generate de testul de capturi al acelui modul.
@@ -384,8 +431,7 @@ Regenerare (pe o bază fără `hr_expense`, altfel apare și butonul „Preia ch
 ## 11. Observații pentru manual
 
 În manualul final, păstrați explicația orientată pe activitatea utilizatorului: când se acordă avansul,
-ce documente justificative se adaugă, ce mod de decontare se alege (numerar, virament pe cardul personal
-sau card de firmă) și de ce banii în tranzit trec prin 5125, cum se citește diferența de restituit/încasat și cum se verifică
-închiderea contului 542; pentru decontul în valută, explicați cursul din data fiecărei note și diferența de
-curs de la validare. Notele contabile se prezintă în detaliu (liniile Dr/Cr), iar integrarea cu
+cum se alege modul de decontare (numerar, virament pe cardul personal, card de firmă) și ce conturi
+implică fiecare, ce documente justificative se adaugă, cum se citește diferența de restituit/încasat și cum se verifică
+închiderea contului 542. Notele contabile se prezintă în detaliu (liniile Dr/Cr), iar integrarea cu
 `hr_expense` se menționează ca opțiune pentru companiile care folosesc și fluxul standard de cheltuieli.

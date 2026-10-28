@@ -5,6 +5,7 @@
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_mail`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_mail`
 - **Ultima Ingestie:** `2026-06-03`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

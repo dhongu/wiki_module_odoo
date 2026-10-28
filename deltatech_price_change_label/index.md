@@ -5,6 +5,7 @@
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_price_change_label
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_price_change_label`
 - **Ultima Ingestie:** `2026-10-22`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

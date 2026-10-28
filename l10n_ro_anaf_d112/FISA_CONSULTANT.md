@@ -269,6 +269,8 @@ pentru declarațiile cu anul perioadei 2026 sau mai mare. **Descarcă XML** nu d
 declarație după **Generează XML**, când există fișierul XML. Același export e în raportul **D112 — Previzualizare
 obligații**, cu butonul *D112 file XDP (Soft A)*, tot doar din 2026.
 
+![Butonul Descarcă PDF (Soft A) în antetul declarației D112 din 2026](screenshots/08_d112_exportat.png)
+
 1. Apăsați **Descarcă PDF (Soft A)**. Modulul generează XML-ul, cu aceleași verificări ca la pasul 6 (o declarație
    deja exportată își păstrează XML-ul depus), și îl scrie în formularul ANAF D112. Declarația nu trece în *Exportat*.
 2. Deschideți fișierul în **Adobe Reader**: apar completate identificarea angajatorului, obligațiile din secțiunea A,
@@ -281,9 +283,12 @@ Ce se descarcă depinde de **Tip export** din *Setări → Contabilitate → Dec
 `05_setari_reconciliere.png`): *PDF cu datele incluse*, *Descărcare directă XDP* sau *Arhivă ZIP cu XDP și PDF*. PDF-ul completat cere pe server biblioteca
 `pypdf` 5.0 sau mai nouă; fără ea se descarcă ZIP-ul, iar setarea afișează un avertisment.
 
-**Limitări:** pentru perioadele din 2025 și anterioare ANAF nu are formular PDF, butonul nu apare, iar exportul apelat altfel e refuzat; pentru 07/2026
-ANAF n-a publicat alt formular, se folosește cel existent. Câteva atribute XML nu au câmp în formular și nu apar în PDF
-(`D_9b`, `D_14a`, `D_15a`, `D_16a` din concediul medical, `B4_3`, `E3_21`, `bifa_CAM`); ele rămân în XML.
+**Formularul se alege după perioadă**, ca structura XML: lunile 01–06/2026 folosesc formularul ANAF
+`D112_XML_2026_0126_250526.pdf`, iar lunile de la 07/2026 formularul `D112_XML_2026_0726_070926.pdf`.
+
+**Limitări:** pentru perioadele din 2025 și anterioare ANAF nu are formular PDF, butonul nu apare, iar exportul apelat altfel e refuzat.
+În formularul 0126 câteva atribute XML nu au câmp și nu apar în PDF (`D_9b`, `D_14a`, `D_15a`, `D_16a` din concediul medical,
+`B4_3`, `E3_21`, `bifa_CAM`); ele rămân în XML. Formularul 0726 le are pe toate cele din structura lunilor de la 07/2026.
 
 ### Pasul 8 — Plata obligațiilor la Trezorerie
 
@@ -367,6 +372,7 @@ reconciliere acceptate, verificarea finală în utilitarele ANAF și depunerea �
 - [ ] Namespace-ul XML corespunde perioadei: `v6` pentru luni ≤ dec 2025, `v7` de la ian 2026.
 - [ ] XML-ul trece validatorul oficial ANAF **DUKIntegrator** fără erori `E:` pentru angajați normali.
 - [ ] Pe o declarație din 2026, **Descarcă PDF (Soft A)** dă formularul ANAF completat (după *Tip export*), cu o pagină per asigurat; pe o declarație din 2025 butonul lipsește, atât pe declarație, cât și în raport.
+- [ ] Formularul PDF descărcat e cel al structurii perioadei: pe o declarație din 01–06/2026 numele formularului din XDP/ZIP este `D112_XML_2026_0126_250526.pdf`, iar pe una din 07/2026 sau mai târziu `D112_XML_2026_0726_070926.pdf`; în PDF-ul din 07/2026 apar și câmpurile noi ale concediului medical (`D_9b`, `D_14a`).
 - [ ] După export declarația se blochează; rectificativa se poate crea legată de inițială.
 - [ ] Regim trimestrial: cele trei declarații ale trimestrului au termenul 25 a lunii de după trimestru; o lună cu concediu medical sau încetare are termenul de depunere 25 a lunii următoare; *Pregătește plăți* face o plată pe obligație pentru trimestru.
 - [ ] Importul unui XML D112 depus (sau al PDF-ului ANAF) creează declarația *Importată*, blocată, cu liniile legate de angajați după CNP; un XML al altui CUI sau al unei perioade deja declarate este refuzat.

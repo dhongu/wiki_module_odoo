@@ -4,44 +4,47 @@
 - **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_etransport_block
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_etransport_block`
-- **Ultima Ingestie:** 2026-06-01
+- **Ultima Ingestie:** `2026-10-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
-## 1. Sumar
+#### 1. Sumar
 
-Extinde modulul `l10n_ro_edi_stock` pentru a bloca validarea avizelor care conțin produse cu risc fiscal ridicat până la confirmarea UIT-ului de către ANAF, și pentru a actualiza automat statusul UIT printr-un job programat. Asigură astfel conformitatea cu reglementările e-Transport pentru categoriile de mărfuri cu risc fiscal ridicat.
+Modulul extinde `l10n_ro_edi_stock` și blochează validarea avizelor care conțin produse cu risc fiscal ridicat până când ANAF confirmă codul UIT. În plus, actualizează automat starea UIT printr-un job programat, fără apăsarea manuală a butonului de preluare a stării. Ajută companiile să respecte obligația e-Transport pentru mărfurile cu risc fiscal ridicat.
 
-## 2. Funcționalități Cheie
+#### 2. Funcționalități Cheie
 
-- **Blocare hard la validare:** câmpul „Risc fiscal ridicat" pe fișa produsului; dacă avizul conține cel puțin un astfel de produs, validarea (`button_validate`) este blocată până când UIT-ul intră în starea „Validat" (`stock_validated`).
-- **Categorii cu risc fiscal ridicat** conform ANAF: combustibili, tutun, alcool, metale prețioase, produse electrocasnice, echipamente IT etc.
-- **Actualizare automată status UIT:** job programat (la fiecare 30 de minute) care interoghează ANAF pentru avizele cu UIT în așteptare (`stock_sent`) și actualizează starea, eliminând actualizarea manuală.
+- **Marcarea produselor:** câmpul **Risc fiscal ridicat (e-Transport obligatoriu)** pe fișa produsului, în fila **Contabilitate**, secțiunea „România — e-Transport”. Implicit este debifat. Categorii tipice: combustibili, tutun, alcool, metale prețioase, echipamente IT (peste pragul de valoare).
+- **Blocare la validare:** dacă avizul are e-Transport activ și conține cel puțin un produs marcat, validarea este oprită cu o eroare care numește produsele, până când UIT-ul ajunge în starea **Validat** (`stock_validated`). Avizele fără produse marcate nu sunt afectate. Blocarea se aplică pe orice aviz cu e-Transport activ, inclusiv cele de intrare, și este dezactivată în contextul `demo_mode` (date demo, teste).
+- **Banner pe aviz:** avertisment portocaliu cât timp validarea este blocată.
+- **Avertisment în amonte:** banner informativ pe comenzile de vânzare și de achiziție care conțin produse marcate.
+- **Flux:** se marchează produsul, se trimite declarația e-Transport de pe aviz (ANAF returnează UIT, starea devine **Trimis**), UIT-ul este confirmat (**Validat**), apoi avizul se validează. Dacă ANAF respinge declarația, avizul rămâne blocat până la corectarea datelor și retrimitere.
+- **Actualizare automată a stării UIT:** acțiunea programată „RO e-Transport: Automatic UIT Status Update” rulează la 30 de minute pentru avizele în starea `stock_sent` ale companiilor cu țara fiscală România. Starea se poate forța și manual cu butonul **Preluare stare**. Erorile ANAF se înregistrează în documentul e-Transport al avizului (fila e-Transport → Documents).
 
-## 3. Dependențe
+#### 3. Dependențe
 
 - `l10n_ro_edi_stock`
 - `purchase`
 - `sale`
 
-## 4. Componente Cheie
+#### 4. Componente Cheie
 
-### Modele
+**Modele**
 
-- `product.template`: extins cu câmpul „Risc fiscal ridicat".
-- `stock.picking`: extins cu blocarea validării în funcție de starea UIT.
-- `purchase.order` / `sale.order`: extinse pentru afișarea informațiilor de risc fiscal/UIT.
+- `product.template` (extins): câmpul `l10n_ro_high_fiscal_risk`.
+- `stock.picking` (extins): câmpul calculat `l10n_ro_high_risk_blocked`, verificarea `_l10n_ro_etransport_check_high_risk`, `button_validate` (apelează verificarea, în afara contextului `demo_mode`) și metoda cron `_l10n_ro_etransport_block_auto_fetch`.
+- `sale.order` (extins): câmpul calculat `l10n_ro_has_high_fiscal_risk`, folosit pentru banner.
+- `purchase.order` (extins): indicator similar pentru comenzile de achiziție.
 
-### Vizualizări / Date
+**Vizualizări**
 
-- `views/product_template_view.xml`: câmpul de risc fiscal pe produs.
-- `views/stock_picking_view.xml`, `views/purchase_order_view.xml`, `views/sale_order_view.xml`: interfețele extinse.
-- `data/ir_cron.xml`: jobul programat de actualizare a statusului UIT.
+- `product_template_view.xml`: câmpul de risc fiscal pe produs.
+- `stock_picking_view.xml`: bannerul de blocare pe aviz.
+- `sale_order_view.xml`, `purchase_order_view.xml`: bannerul informativ pe comenzi.
 
-### Acțiuni Automate / Acțiuni Server
+**Acțiuni Automate / Acțiuni Server**
 
-- Cron (la fiecare 30 de minute): interoghează ANAF pentru avizele cu UIT în starea `stock_sent` și actualizează starea în Odoo.
+- `ir_cron_etransport_fetch_status`: „RO e-Transport: Automatic UIT Status Update”, la fiecare 30 de minute, activ implicit; actualizează starea UIT a avizelor în starea `stock_sent`.
 
-## 5. Conexiuni
+#### 5. Conexiuni
 
-- `[[l10n_ro_efactura_consumer]]`
-- `[[l10n_ro_efactura_dedup]]`
+- `l10n_ro_edi_stock`: infrastructura RO e-Transport (UIT, stări, preluarea stării), peste care se aplică blocarea.

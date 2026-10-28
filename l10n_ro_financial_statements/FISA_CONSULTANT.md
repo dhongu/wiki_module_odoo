@@ -99,9 +99,21 @@ Date minime pentru demo:
 2. Completați **antetul de depunere** pe companie — vezi Pasul 1; fără el exportul se oprește.
 3. Verificați că adresa fiscală a companiei e completă (stradă, oraș, cod poștal, județ, țară) și
    că are CUI și număr de înregistrare la Registrul Comerțului.
+   Pentru PDF-ul Soft A, adresa trece pe câmpurile formularului astfel: Județ din județul
+   companiei, Localitate din oraș, Stradă din stradă (plus a doua linie de adresă). La București,
+   sectorul se ia din textul orașului sau al străzii („Sector 3”, „Sectorul 3”) și se scoate din
+   localitate. Numărul străzii are câmp separat doar cu modulul `base_address_extended`; altfel
+   rămâne în textul străzii.
 4. Postați toate documentele exercițiului. **Generați situațiile financiare ÎNAINTE de nota
    anuală de închidere prin 121** — vezi avertismentul de la Pasul 6.
 5. Verificați că utilizatorul de test are grupul **Contabilitate / Consilier**.
+6. Pentru exportul Soft A, alegeți **Tip export** în Setări → Contabilitate → Declarații ANAF
+   România: „PDF cu datele incluse” (implicit), XDP sau ZIP cu XDP și PDF-ul gol. Varianta PDF cere
+   pe server biblioteca pypdf, versiunea 5.0 sau mai nouă. Fără ea, exportul dă ZIP-ul și pune un
+   avertisment în setări.
+7. Verificați **exercițiul financiar** al companiei (Setări → Contabilitate → Perioade fiscale → An fiscal:
+   „Ultima Zi”). Perioada din antetul PDF-ului de bilanț (început, sfârșit, exercițiul
+   precedent) se ia de aici, nu din filtrul de dată al raportului.
 
 ## 6. Flux de utilizare
 
@@ -152,8 +164,9 @@ corespund balanței de verificare de închidere.
 Sub bara de butoane apare o notă: formularul ANAF are **două coloane pe rând** (sold la începutul și
 la sfârșitul exercițiului), iar fișierul de pre-completare duce doar coloana de închidere.
 
-Butonul **„Export depunere ANAF (set complet)"** ② este cel care produce fișierul de depus; îl
-folosiți la Pasul 6, după ce verificați toate formularele.
+Butonul **„Export depunere ANAF (set complet)"** ② este cel care produce fișierul de depus (XML); îl
+folosiți la Pasul 6, după ce verificați toate formularele. Butonul de lângă el, **„Export formular
+ANAF (Soft A)"**, produce același document în formularul PDF ANAF (vezi Pasul 7, varianta Soft A).
 
 ### Pasul 3 — Verificarea Contului de Profit și Pierdere (F20)
 
@@ -251,6 +264,29 @@ bilanțul prescurtat) și depuneți-l prin SPV.
 > Jar-urile de bilanț **nu vin** în kitul DUKIntegrator: se descarcă separat de pe site-ul ANAF,
 > se copiază în folderul `lib/` al instalării și se șterge `config/versiuniCurente.txt`.
 
+#### Varianta Soft A: formularul PDF ANAF completat
+
+**Contabilitate → Raportare → Rapoarte de extras → Situații financiare anuale**, tab-ul **Cod 10 -
+Bilanț**, butonul **„Export formular ANAF (Soft A)"**, lângă „Export depunere ANAF (set complet)".
+
+![Butonul de export Soft A pe tab-ul Cod 10 - Bilanț](screenshots/11_export_soft_a_bilant.png)
+
+Butonul scrie același document în formularul PDF oficial al exercițiului: SC_1225 pentru 2025,
+SC_1224 pentru 2024. Rulează aceleași verificări ca exportul XML (antet, corelații). Ce primiți
+depinde de **Tip export** din Setări → Contabilitate → Declarații ANAF România: PDF-ul cu datele
+incluse (implicit), XDP sau ZIP cu XDP și PDF-ul gol.
+
+1. **Deschideți** PDF-ul în Adobe Reader. Antetul, adresa (Județ, Sector, Localitate, Stradă, Număr),
+   F10, F20 și F30 sunt completate; tipul de bilanț e „prescurtat".
+2. **Apăsați „Validare"**. Formularul recalculează totalurile și atașează XML-ul.
+3. **Atașați arhiva ZIP** cu documentele cerute de lege (prima pagină semnată, raportul
+   administratorilor etc.). Butonul apare după o validare fără erori. Odoo nu atașează ZIP-ul.
+4. **Semnați** și depuneți pe e-guvernare.ro.
+
+> Exportul se oprește dacă exercițiul nu are formular PDF în modul (2026, până îl publică ANAF) sau
+> dacă o valoare nenulă cade pe un rând pe care formularul anului nu-l are. Mesajele, cu cauza și
+> remedierea, sunt în secțiunea 9.
+
 ### Pasul 8 — Declarația de inactivitate: completarea și verificarea activității
 
 Folosiți acest pas **numai** pentru o entitate care nu a desfășurat activitate de la constituire până
@@ -281,7 +317,16 @@ la sfârșitul exercițiului. Ea nu parcurge pașii 2–7, ci depune declarația
    răspunderea sunt ale administratorului, luate împreună cu contabilul. În captură, compania demo
    are facturi, deci avertismentul arată 6 linii contabile, din 2 facturi. Exact acesta e cazul în
    care declarația **nu** trebuie depusă.
-4. **Exportați** cu **Export XML ANAF (S1046)**. Fișierul se descarcă și rămâne atașat în chatter.
+4. **Exportați** din antetul formularului declarației. Aveți două butoane:
+   - **Export XML ANAF (S1046)** dă fișierul XML, de validat în DUKIntegrator (Pasul 9). Fișierul se
+     descarcă și rămâne atașat în chatter;
+   - **Export formular ANAF (Soft A)** dă formularul PDF ANAF al declarației, completat cu aceleași
+     date, sau XDP / ZIP, după **Tip export**. Fișierul se descarcă și rămâne atașat în chatter, cu
+     nota „Formularul ANAF S1046 (Soft A) a fost generat: …”. Îl deschideți în Adobe Reader,
+     apăsați **Validare**, îl semnați și îl depuneți; nu mai e nevoie de DUKIntegrator.
+
+![Butonul de export Soft A pe declarația de inactivitate](screenshots/12_export_soft_a_inactivitate.png)
+
    Exemplul de mai jos e fixture-ul validat cu DUKIntegrator, nu compania din capturi:
 
 ```xml
@@ -325,6 +370,10 @@ java -jar DUKIntegrator.jar -p S1046 declaratie.xml erori.txt
 Ca la bilanț, `S1046Validator.jar` și `S1046Pdf.jar` se descarcă separat de pe site-ul ANAF, se
 copiază în `lib/` și se șterge `config/versiuniCurente.txt`. Termenul de depunere este de 60 de zile
 de la încheierea exercițiului.
+
+Dacă ați exportat cu **Export formular ANAF (Soft A)** (Pasul 8), pașii DUKIntegrator de mai sus nu
+mai sunt necesari: verificați în Adobe Reader datele de identificare și adresa (Județ, Sector la București, Localitate,
+Stradă, Număr), apăsați **Validare**, semnați și depuneți PDF-ul.
 
 ### Pasul 10 — Raportul administratorilor: indicatorii
 
@@ -431,12 +480,17 @@ declarațiile de inactivitate, rapoartele administratorilor și fișierele XML a
 - avertismentele despre ce nu ajunge în fișier;
 - XML-ul S1046 al declarației de inactivitate, cu capitalul precompletat și verificarea liniilor de
   activitate;
+- formularul PDF ANAF (Soft A) completat, pentru bilanțul S1003 (exercițiile 2024 și 2025) și pentru
+  declarația S1046: antetul, adresa pe câmpurile formularului și valorile F10, F20, F30;
 - indicatorii raportului administratorilor, cu rândurile corespunzătoare de pe ecran, și prima
   secțiune precompletată.
 
 **Ce rămâne manual:** decizia de eligibilitate pentru declarația de inactivitate; secțiunile narative
 ale raportului administratorilor; rândurile statistice din F30; cele **14 poziții F30** fără număr oficial
-confirmat; Formularul 40; validarea în DUKIntegrator și depunerea prin SPV.
+confirmat; Formularul 40; validarea în DUKIntegrator și depunerea prin SPV; la Soft A, „Validare" în
+Adobe Reader, atașarea arhivei ZIP cu documentele cerute de lege, semnarea și depunerea pe
+e-guvernare.ro. Pentru exercițiile fără formular PDF în modul (de exemplu 2026, până la publicarea
+ANAF) rămâne exportul XML.
 
 > A nu se confunda cu cele **13 reguli** de corelație ANAF pe care pre-validarea nu le acoperă —
 > sunt două numere diferite, despre lucruri diferite.
@@ -455,11 +509,21 @@ confirmat; Formularul 40; validarea în DUKIntegrator și depunerea prin SPV.
 - [ ] Rândurile statistice F30 sunt completate (număr de salariați cel puțin).
 - [ ] Exportul „Export depunere ANAF (set complet)" se termină fără eroare de corelație.
 - [ ] Fișierul generat trece validatorul ANAF în DUKIntegrator.
+- [ ] Soft A: **Tip export** din Setări → Contabilitate → Declarații ANAF România e „PDF cu datele incluse".
+- [ ] Soft A: PDF-ul bilanțului se deschide în Adobe Reader fără mesajul despre funcțiile extinse
+      dezactivate, are tipul „bilanț prescurtat", iar F10 și F20 sunt vizibile și completate.
+- [ ] Soft A: adresa din PDF (Județ, Sector la București, Localitate, Stradă, Număr) corespunde
+      sediului; completați în Reader ce lipsește (de exemplu sectorul, dacă nu apare în oraș).
+- [ ] Soft A: în antetul PDF-ului, perioada exercițiului (început, sfârșit, exercițiul precedent)
+      corespunde exercițiului financiar al companiei.
+- [ ] Soft A: „Validare" trece fără erori, iar după ea se atașează arhiva ZIP și se semnează.
 - [ ] Fișierul XML e arhivat împreună cu PDF-ul raportului (Legea 82/1991 — 10 ani).
 - [ ] Declarația de inactivitate: butonul „Linii de activitate” lipsește sau liniile listate sunt doar
       operațiuni de capital analizate; altfel se depun situații financiare, nu declarație.
 - [ ] Declarația de inactivitate: capitalul social coincide cu actul constitutiv, iar XML-ul S1046 trece
       DUKIntegrator fără erori.
+- [ ] Declarația de inactivitate, Soft A: PDF-ul are CUI-ul, adresa (Județ, Sector la București, Localitate, Stradă,
+      Număr), capitalul și administratorul, iar „Validare" trece în Adobe Reader.
 - [ ] Raportul administratorilor: cifra de afaceri, total active și rezultatul net din tab-ul Indicatori
       coincid cu rândurile din coloana „Rânduri pe raport” pe ecranele Cod 10 / Cod 20.
 - [ ] Raportul administratorilor: secțiunile pct. 489 și pct. 491 alin. (2) a), b), d) sunt completate,
@@ -480,6 +544,11 @@ confirmat; Formularul 40; validarea în DUKIntegrator și depunerea prin SPV.
 | „Raportul administratorilor trebuie să prezinte: …" | Lipsește o secțiune obligatorie | Completați secțiunile enumerate; dacă nu e cazul, scrieți expres („Entitatea nu are sucursale”) |
 | „Secțiunea privind dezvoltarea conține doar cifrele precompletate…" | Prima secțiune n-a fost redactată | Adăugați analiza propriu-zisă a activității |
 | „Calculați indicatorii înainte de confirmarea raportului." | Confirmare fără indicatori | Apăsați **Calculează indicatorii** |
+| „Nu există formular PDF ANAF pentru S1003 la data de …" | Exercițiul bilanțului nu are formular PDF în modul (de exemplu 2026, până la publicarea ANAF). Apare doar la bilanț: formularul S1046 al declarației de inactivitate e unic și acoperă orice exercițiu din 2014 | Folosiți „Export depunere ANAF (set complet)" (XML) sau actualizați modulul după ce ANAF publică formularul |
+| „Formularul PDF ANAF … nu are câmp pentru: …" | O valoare nenulă cade pe un rând pe care formularul anului nu-l are (de exemplu F30 rd. 326–327 în formularul 2024) | Verificați rândul enumerat; dacă valoarea e corectă, depuneți prin XML |
+| „Formularul PDF ANAF … nu are harta câmpurilor pentru tipul de bilanț …" | S-a cerut un tip de bilanț fără hartă (doar BS e acoperit) | Folosiți exportul XML |
+| „Formularul PDF ANAF … nu are harta câmpurilor." | La exportul Soft A al declarației de inactivitate (S1046) lipsește din modul harta câmpurilor formularului (instalare incompletă) | Actualizați sau reinstalați modulul; între timp folosiți „Export XML ANAF (S1046)" |
+| „Resursa ANAF S1046 A1.0.0 PDF lipsește sau este invalidă: …" (sau S1003 SC_1225 / SC_1224) | Formularul PDF ANAF lipsește din modul (instalare incompletă); apare la exportul Soft A când Tip export nu e XDP | Actualizați sau reinstalați modulul; între timp alegeți Tip export „XDP” sau folosiți exportul XML |
 | „Niciun validator ANAF nu e mapat pentru tipul de bilanț …" | S-a cerut bilanț complet (BL) sau simplificat (UU) | Deocamdată e acoperit doar bilanțul prescurtat (BS / S1003) |
 
 ## 10. Capturi de ecran
@@ -499,6 +568,8 @@ Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixinul `Sc
 | `08_raport_administratori_indicatori.png` | Raportul administratorilor: tab-ul Indicatori, cu rândul oficial și rândul de pe ecran pentru fiecare valoare |
 | `09_raport_administratori_sectiuni.png` | Raportul administratorilor — secțiunile narative de la pct. 489 |
 | `10_raport_administratori_pdf.png` | Raportul administratorilor tipărit (PDF) |
+| `11_export_soft_a_bilant.png` | Tab-ul Cod 10 - Bilanț, cu butonul „Export formular ANAF (Soft A)" |
+| `12_export_soft_a_inactivitate.png` | Declarația de inactivitate, cu butonul „Export formular ANAF (Soft A)" |
 
 Regenerare:
 
@@ -517,9 +588,11 @@ FISE_SCREENSHOTS=1 ./odoo/odoo-bin -c odoo.conf -d <db> \
 - Insistați pe **Pasul 1**: antetul de depunere e o configurare unică, dar blochează tot fluxul
   dacă lipsește. Merită un tabel cu cele 11 câmpuri și de unde se ia fiecare valoare, marcând clar
   care șase sunt blocante.
-- Explicați diferența dintre **cele două butoane**: „Export depunere ANAF (set complet)" produce
-  fișierul de depus; „Export XML ANAF (pre-completare, un formular)" produce un fișier de lucru pe
-  un singur formular, **care nu se depune**.
+- Explicați diferența dintre **cele trei butoane** de pe Cod 10: „Export depunere ANAF (set complet)"
+  produce fișierul XML de depus, validat cu DUKIntegrator; „Export formular ANAF (Soft A)" produce
+  același document în formularul PDF ANAF, care se validează, se completează cu ZIP-ul și se
+  semnează în Adobe Reader; „Export XML ANAF (pre-completare, un formular)" produce un fișier de
+  lucru pe un singur formular, **care nu se depune**.
 - Cele două bannere de pe F30 nu sunt decor: ele sunt singurul loc în care se vede diferența dintre
   ce arată ecranul și ce ajunge în fișier. Manualul ar trebui să ceară explicit citirea lor.
 - Menționați că numerotarea rândurilor și regulile de corelație se **regenerează din validatorul

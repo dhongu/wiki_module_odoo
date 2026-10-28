@@ -28,8 +28,8 @@ straturi care lucrează împreună**, consecvent cu celelalte declarații ANAF:
   în **ultima zi a lunii februarie a anului următor**. Veniturile declarate în D112 (salarii, pensii,
   drepturi de proprietate intelectuală, arendă) nu intră în D205.
 - **Art. 97 Cod fiscal** — impozitul pe veniturile din investiții. Cota pe dividende se stabilește
-  după data **distribuirii** (aprobarea AGA), nu a plății: 5% pentru dividendele distribuite în 2016–2023,
-  8% pentru cele distribuite în 2024, 10% pentru cele distribuite în 2025 (inclusiv dividendele
+  după data **distribuirii** (aprobarea AGA), nu a plății: 5% pentru dividendele distribuite în 2016–2022,
+  8% pentru cele distribuite în 2023–2024 (OG 16/2022), 10% pentru cele distribuite în 2025 (inclusiv dividendele
   interimare, fără recalculare la regularizarea din 2026) și 16% pentru cele distribuite din
   1.01.2026 (Legea 141/2025). Impozitul reținut se declară și se plătește lunar prin D100; D205 îl repartizează
   anual pe beneficiari.

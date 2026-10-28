@@ -5,6 +5,7 @@
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_auto_reorder_rule`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_auto_reorder_rule`
 - **Ultima Ingestie:** `2026-06-02`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

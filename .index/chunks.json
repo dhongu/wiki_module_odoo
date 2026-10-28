@@ -5,21 +5,21 @@
     "version": "19.0.1.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech",
     "local_path": "odoo-addons/deltatech/deltatech",
-    "last_ingest": "2026-06-01",
+    "last_ingest": "2026-10-28",
     "friendly_name": "Deltatech",
-    "summary": "Modulul `deltatech` este componenta de bază (fundație) a suitei de module Deltatech pentru Odoo. Rolul său principal este să ofere utilitare comune, structuri partajate și o convenție unitară care asigură consistența și interoperabilitatea între toate funcționalitățile dezvoltate de Deltatech. În mod normal nu necesită configurare directă din partea utilizatorului final și se instalează automat ca dependență tehnică atunci când este adăugat orice alt modul din suita Deltatech.",
+    "summary": "Modulul `deltatech` este dependența tehnică de bază a întregii suite de module Deltatech pentru Odoo. Oferă extensii comune și mici îmbunătățiri de infrastructură pe care se sprijină celelalte module din suită, pentru un comportament unitar. Nu are meniuri sau fluxuri pentru utilizatorul final; este destinat dezvoltatorilor și administratorilor de sistem care întrețin suita, iar instalarea oricărui alt modul Deltatech îl aduce automat.",
     "features": [
-      "Utilitare și helpere partajate pentru gestionarea și validarea consistentă a datelor, plus un cadru standard pentru extinderea modelelor de bază Odoo.",
-      "Consistență la nivel de suită: impune o convenție comună de denumire și o structură unitară pentru toate modulele Deltatech, simplificând instalarea și administrarea trusei de instrumente.",
-      "Funcționează ca dependență centrală pentru module mai avansate din suită.",
-      "Punct comun pentru comunicarea și schimbul de date între diferitele module Deltatech."
+      "Adaugă câmpul de conveniență `model_name` pe regulile de înregistrare (`ir.rule`), afișat pe formular lângă domeniu, astfel încât numele tehnic al modelului să fie vizibil direct la configurarea regulilor de acces.",
+      "Activează widget-ul interactiv de domeniu pentru editorul domeniului din regulile de înregistrare, ceea ce reduce erorile la scrierea regulilor de acces.",
+      "Elimină legătura externă din formularul modulului, pentru o interfață Apps mai curată în instanțele Odoo private.",
+      "Punct unic de instalare: instalarea oricărui alt modul Deltatech îl instalează automat și pe acesta."
     ],
     "dependencies": [
       "web",
       "base"
     ],
     "connections": [],
-    "text": "Deltatech\ndeltatech\nModulul `deltatech` este componenta de bază (fundație) a suitei de module Deltatech pentru Odoo. Rolul său principal este să ofere utilitare comune, structuri partajate și o convenție unitară care asigură consistența și interoperabilitatea între toate funcționalitățile dezvoltate de Deltatech. În mod normal nu necesită configurare directă din partea utilizatorului final și se instalează automat ca dependență tehnică atunci când este adăugat orice alt modul din suita Deltatech.\nUtilitare și helpere partajate pentru gestionarea și validarea consistentă a datelor, plus un cadru standard pentru extinderea modelelor de bază Odoo.\nConsistență la nivel de suită: impune o convenție comună de denumire și o structură unitară pentru toate modulele Deltatech, simplificând instalarea și administrarea trusei de instrumente.\nFuncționează ca dependență centrală pentru module mai avansate din suită.\nPunct comun pentru comunicarea și schimbul de date între diferitele module Deltatech."
+    "text": "Deltatech\ndeltatech\nModulul `deltatech` este dependența tehnică de bază a întregii suite de module Deltatech pentru Odoo. Oferă extensii comune și mici îmbunătățiri de infrastructură pe care se sprijină celelalte module din suită, pentru un comportament unitar. Nu are meniuri sau fluxuri pentru utilizatorul final; este destinat dezvoltatorilor și administratorilor de sistem care întrețin suita, iar instalarea oricărui alt modul Deltatech îl aduce automat.\nAdaugă câmpul de conveniență `model_name` pe regulile de înregistrare (`ir.rule`), afișat pe formular lângă domeniu, astfel încât numele tehnic al modelului să fie vizibil direct la configurarea regulilor de acces.\nActivează widget-ul interactiv de domeniu pentru editorul domeniului din regulile de înregistrare, ceea ce reduce erorile la scrierea regulilor de acces.\nElimină legătura externă din formularul modulului, pentru o interfață Apps mai curată în instanțele Odoo private.\nPunct unic de instalare: instalarea oricărui alt modul Deltatech îl instalează automat și pe acesta."
   },
   {
     "path": "deltatech_access/index.md",
@@ -52,13 +52,14 @@
     "version": "19.0.2.0.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_account",
     "local_path": "odoo-addons/deltatech/deltatech_account",
-    "last_ingest": "2026-06-01",
-    "friendly_name": "Deltatech Account",
-    "summary": "Modulul oferă o serie de îmbunătățiri aduse modelelor standard de contabilitate și facturare din Odoo. Este conceput pentru a fluidiza fluxul financiar al companiilor, oferind o vizibilitate mai bună asupra facturilor și opțiuni de configurare mai flexibile. Practic, completează zona de facturi client și facturi furnizor cu informații suplimentare relevante pentru operațiunile contabile zilnice și adaugă opțiuni de configurare pentru jurnale și conturi.",
+    "last_ingest": "2026-10-28",
+    "friendly_name": "Accounting Extensions",
+    "summary": "Modulul completează contabilitatea standard Odoo cu o setare pentru recunoașterea costurilor în sistem anglo-saxon și cu mici ajustări de meniu, utile companiilor care vor un control mai strâns asupra fluxurilor financiare. Setarea permite înregistrarea costului mărfurilor vândute direct în notele contabile, în momentul facturării, iar redenumirea unor meniuri face interfața mai clară.",
     "features": [
-      "Vizibilitate extinsă a facturilor: adaugă câmpuri suplimentare și coloane specializate în vizualizările pentru facturile client și facturile furnizor; îmbunătățește vizualizarea de tip listă a facturilor cu informații mai relevante pentru operațiunile contabile zilnice.",
-      "Gestionare flexibilă a jurnalelor și conturilor: oferă opțiuni suplimentare de configurare pentru jurnalele contabile și pentru conturile individuale; include un model rafinat de securitate și permisiuni pentru câmpurile contabile sensibile.",
-      "Sincronizare între documente: asigură curgerea corectă a datelor contabile între documentele conexe (de exemplu, de la facturi către plăți); include logică specifică pentru gestionarea închiderilor de perioadă și a suprascrierilor datei contabile."
+      "Adaugă comutatorul Anglo-Saxon Accounting în Contabilitate > Configurare > Setări, secțiunea *Localizare fiscală*. Când e activ, costul mărfurilor vândute se înregistrează în notele contabile la facturare, nu la livrare.",
+      "Setarea este vizibilă doar utilizatorilor din grupul tehnic `base.group_no_one` (mod dezvoltator) și depinde de companie: în configurații multi-companie, fiecare companie o poate activa sau dezactiva independent.",
+      "Redenumește meniuri contabile standard pentru claritate (de exemplu, meniul plăților de încasat apare ca „Incoming payments”).",
+      "Oferă punctul de plecare pentru personalizări ulterioare ale formularului de factură; fișierul de vizualizări pentru facturi este în prezent gol."
     ],
     "dependencies": [
       "account"
@@ -67,7 +68,7 @@
       "account",
       "deltatech_account"
     ],
-    "text": "Deltatech Account\ndeltatech_account\nModulul oferă o serie de îmbunătățiri aduse modelelor standard de contabilitate și facturare din Odoo. Este conceput pentru a fluidiza fluxul financiar al companiilor, oferind o vizibilitate mai bună asupra facturilor și opțiuni de configurare mai flexibile. Practic, completează zona de facturi client și facturi furnizor cu informații suplimentare relevante pentru operațiunile contabile zilnice și adaugă opțiuni de configurare pentru jurnale și conturi.\nVizibilitate extinsă a facturilor: adaugă câmpuri suplimentare și coloane specializate în vizualizările pentru facturile client și facturile furnizor; îmbunătățește vizualizarea de tip listă a facturilor cu informații mai relevante pentru operațiunile contabile zilnice.\nGestionare flexibilă a jurnalelor și conturilor: oferă opțiuni suplimentare de configurare pentru jurnalele contabile și pentru conturile individuale; include un model rafinat de securitate și permisiuni pentru câmpurile contabile sensibile.\nSincronizare între documente: asigură curgerea corectă a datelor contabile între documentele conexe (de exemplu, de la facturi către plăți); include logică specifică pentru gestionarea închiderilor de perioadă și a suprascrierilor datei contabile."
+    "text": "Accounting Extensions\ndeltatech_account\nModulul completează contabilitatea standard Odoo cu o setare pentru recunoașterea costurilor în sistem anglo-saxon și cu mici ajustări de meniu, utile companiilor care vor un control mai strâns asupra fluxurilor financiare. Setarea permite înregistrarea costului mărfurilor vândute direct în notele contabile, în momentul facturării, iar redenumirea unor meniuri face interfața mai clară.\nAdaugă comutatorul Anglo-Saxon Accounting în Contabilitate > Configurare > Setări, secțiunea *Localizare fiscală*. Când e activ, costul mărfurilor vândute se înregistrează în notele contabile la facturare, nu la livrare.\nSetarea este vizibilă doar utilizatorilor din grupul tehnic `base.group_no_one` (mod dezvoltator) și depinde de companie: în configurații multi-companie, fiecare companie o poate activa sau dezactiva independent.\nRedenumește meniuri contabile standard pentru claritate (de exemplu, meniul plăților de încasat apare ca „Incoming payments”).\nOferă punctul de plecare pentru personalizări ulterioare ale formularului de factură; fișierul de vizualizări pentru facturi este în prezent gol."
   },
   {
     "path": "deltatech_account_analytic/index.md",
@@ -864,7 +865,7 @@
   {
     "path": "deltatech_ai_source_sync/index.md",
     "module": "deltatech_ai_source_sync",
-    "version": "19.0.1.9.1",
+    "version": "19.0.1.10.0",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_source_sync",
     "local_path": "odoo-addons/bitshop_ent/deltatech_ai_source_sync",
     "last_ingest": "2026-10-20",
@@ -3990,7 +3991,7 @@
   {
     "path": "deltatech_expenses/index.md",
     "module": "deltatech_expenses",
-    "version": "19.0.3.7.0",
+    "version": "19.0.3.7.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_expenses",
     "local_path": "odoo-addons/deltatech/deltatech_expenses",
     "last_ingest": "2026-10-27",
@@ -4088,13 +4089,18 @@
     "version": "19.0.1.0.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_fast_sale",
     "local_path": "odoo-addons/deltatech/deltatech_fast_sale",
-    "last_ingest": "2026-06-01",
+    "last_ingest": "2026-10-28",
     "friendly_name": "Fast Sale",
-    "summary": "Fast Sale (Vânzare rapidă) accelerează procesul de vânzare din Odoo, comprimând pașii de confirmare a comenzii, livrare și facturare într-o singură acțiune. Modulul adaugă butoane dedicate în comanda de vânzare, astfel încât un operator poate confirma comanda, valida automat livrarea cu cantitățile și prețurile din comandă și deschide direct fluxul de facturare, fără a parcurge manual fiecare etapă. Este util în special acolo unde livrarea coincide cu vânzarea (vânzare la tejghea, livrare imediată), reducând numărul de clicuri și timpul necesar pentru finalizarea unei tranzacții.",
+    "summary": "Fast Sale (Vânzare rapidă) accelerează procesul de vânzare din Odoo, comprimând confirmarea comenzii, livrarea și facturarea într-un singur click direct pe comanda de vânzare. Operatorul nu mai validează separat transferul și nu mai parcurge manual pașii asistentului de facturare. Modulul este util acolo unde livrarea coincide cu vânzarea (vânzare la tejghea, livrare imediată), reducând numărul de clicuri și timpul necesar finalizării unei tranzacții.",
     "features": [
-      "Buton în comanda de vânzare care parcurge într-un singur pas confirmarea comenzii, livrarea și facturarea.",
-      "Validare automată a livrării folosind cantitățile și prețurile din comanda de vânzare.",
-      "Opțiune separată de livrare pe bază de aviz (\"Deliver Notice\"), care marchează transferurile ca aviz."
+      "Confirm, Deliver and Invoice: buton pe comenzile în stare *Draft* sau *Sent* (meniul Sales > Orders > Orders), care confirmă comanda, validează livrarea cu cantitățile comandate și deschide asistentul standard de creare a facturii.",
+      "Deliver and Invoice: același flux, disponibil pe comenzile deja confirmate (stare *Sale Order*).",
+      "Livrări în mai mulți pași: pentru rute de tip pick + ship sau pick + pack + ship, fiecare etapă este validată în ordine, astfel încât marfa ajunge la client și cantitățile livrate sunt setate.",
+      "Deliver Notice: pe comenzile confirmate, marchează transferurile pregătite ca aviz (`notice = True`), fără a crea factură, și deschide transferul rezultat pentru verificare sau tipărire; dacă există mai multe transferuri, se deschide lista lor.",
+      "Buton Invoice pe transfer: în formularul transferului (Inventory > Operations > Transfers), pentru livrări în stare *Done* legate de o comandă de vânzare, deschide asistentul de facturare al comenzii.",
+      "Verificarea stocului: dacă vreun produs nu este disponibil integral, acțiunea este blocată cu mesajul „Not all products are available.”",
+      "Data facturii este setată automat la data de azi.",
+      "Pe formularul comenzii apar și câmpurile `client_order_ref` și `date_order`, după termenul de plată."
     ],
     "dependencies": [
       "base",
@@ -4106,7 +4112,7 @@
       "sale_stock",
       "account"
     ],
-    "text": "Fast Sale\ndeltatech_fast_sale\nFast Sale (Vânzare rapidă) accelerează procesul de vânzare din Odoo, comprimând pașii de confirmare a comenzii, livrare și facturare într-o singură acțiune. Modulul adaugă butoane dedicate în comanda de vânzare, astfel încât un operator poate confirma comanda, valida automat livrarea cu cantitățile și prețurile din comandă și deschide direct fluxul de facturare, fără a parcurge manual fiecare etapă. Este util în special acolo unde livrarea coincide cu vânzarea (vânzare la tejghea, livrare imediată), reducând numărul de clicuri și timpul necesar pentru finalizarea unei tranzacții.\nButon în comanda de vânzare care parcurge într-un singur pas confirmarea comenzii, livrarea și facturarea.\nValidare automată a livrării folosind cantitățile și prețurile din comanda de vânzare.\nOpțiune separată de livrare pe bază de aviz (\"Deliver Notice\"), care marchează transferurile ca aviz."
+    "text": "Fast Sale\ndeltatech_fast_sale\nFast Sale (Vânzare rapidă) accelerează procesul de vânzare din Odoo, comprimând confirmarea comenzii, livrarea și facturarea într-un singur click direct pe comanda de vânzare. Operatorul nu mai validează separat transferul și nu mai parcurge manual pașii asistentului de facturare. Modulul este util acolo unde livrarea coincide cu vânzarea (vânzare la tejghea, livrare imediată), reducând numărul de clicuri și timpul necesar finalizării unei tranzacții.\nConfirm, Deliver and Invoice: buton pe comenzile în stare *Draft* sau *Sent* (meniul Sales > Orders > Orders), care confirmă comanda, validează livrarea cu cantitățile comandate și deschide asistentul standard de creare a facturii.\nDeliver and Invoice: același flux, disponibil pe comenzile deja confirmate (stare *Sale Order*).\nLivrări în mai mulți pași: pentru rute de tip pick + ship sau pick + pack + ship, fiecare etapă este validată în ordine, astfel încât marfa ajunge la client și cantitățile livrate sunt setate.\nDeliver Notice: pe comenzile confirmate, marchează transferurile pregătite ca aviz (`notice = True`), fără a crea factură, și deschide transferul rezultat pentru verificare sau tipărire; dacă există mai multe transferuri, se deschide lista lor.\nButon Invoice pe transfer: în formularul transferului (Inventory > Operations > Transfers), pentru livrări în stare *Done* legate de o comandă de vânzare, deschide asistentul de facturare al comenzii.\nVerificarea stocului: dacă vreun produs nu este disponibil integral, acțiunea este blocată cu mesajul „Not all products are available.”\nData facturii este setată automat la data de azi.\nPe formularul comenzii apar și câmpurile `client_order_ref` și `date_order`, după termenul de plată."
   },
   {
     "path": "deltatech_feed/index.md",
@@ -5100,7 +5106,7 @@
   {
     "path": "deltatech_marketplace/index.md",
     "module": "deltatech_marketplace",
-    "version": "19.0.1.42.0",
+    "version": "19.0.1.42.1",
     "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace`",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace",
     "last_ingest": "2026-10-27",
@@ -8276,22 +8282,31 @@
     "version": "19.0.1.3.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_labels",
     "local_path": "odoo-addons/deltatech/deltatech_product_labels",
-    "last_ingest": "2026-06-01",
+    "last_ingest": "2026-10-28",
     "friendly_name": "Product Labels",
-    "summary": "Modulul permite tipărirea etichetelor pentru produse direct din mai multe puncte ale fluxului de lucru: din fișa produsului, din comenzile de vânzare și din livrările (pickings). Atunci când tipărirea pornește dintr-un produs și este selectată doar opțiunea de loturi, modulul tipărește automat etichetele pentru toate loturile aflate pe stoc. Astfel, echipele de depozit și de vânzări pot genera rapid etichetele necesare, cu posibilitatea de a personaliza aspectul acestora în funcție de nevoile companiei.",
+    "summary": "Modulul permite tipărirea etichetelor de produs și de lot dintr-un singur asistent, deschis din produse, comenzi de vânzare, transferuri, loturi și linii de stoc. Machetele implicite includ denumirea, referința internă, codul de bare, lotul și prețul cu TVA, pe formate gata făcute pentru imprimanta de birou (coală A4) și pentru imprimantele termice. Echipele de depozit și de vânzări pot eticheta rapid marfa la recepție și pe raft, iar companiile își pot adăuga propriile machete.",
     "features": [
-      "Tipărire etichete pornind de la produse, comenzi de vânzare și livrări (pickings).",
+      "Tipărire etichete din produse, comenzi de vânzare, transferuri, loturi și linii de stoc (quants).",
+      "Machete implicite, fiecare cu formatul ei de hârtie: coală A4 cu 3x8 etichete (70x37 mm), 100x50 mm și 40x25 mm (o etichetă pe pagină, pentru imprimante termice) și machetă continuă, fără format de hârtie.",
+      "Machetele implicite A4 3x8, 100x50 și 40x25 tipăresc prețul cu TVA, cu moneda și unitatea de măsură, alături de denumire, referință internă, cod de bare și lot. Fără preț, nu se tipărește blocul de preț. Fără listă de prețuri, se folosește moneda produsului.",
+      "Asistentul propune macheta tipărită ultima dată de utilizator; prima dată, coala A4 3x8.",
       "Dacă este selectată doar opțiunea de lot, iar tipărirea pornește dintr-un produs, se tipăresc etichetele pentru toate loturile aflate pe stoc.",
-      "În mod implicit, suprascrie butonul standard de tipărire a etichetelor din produse. Pentru a reveni la funcția standard de tipărire, parametrul de sistem `terrabit_labels.override_print_button` trebuie setat la `False`.",
-      "Se pot crea aspecte (layout-uri) personalizate prin definirea unui raport pe modelul `product.product.label`."
+      "Din transferuri de tip recepție, opțiunea „Generează loturile automat” completează numele loturilor înainte de tipărire.",
+      "Machetele ZPL (raport de tip text) au buton Previzualizare: ZPL-ul este trimis la serviciul extern Labelary (`api.labelary.com`) și returnat ca PDF. Dimensiunea etichetei se setează pe raport (lățime, înălțime, rezoluție imprimantă) sau se citește din numele lui, de exemplu „Labels 40x30 ZPL (300 DPI)”.",
+      "În mod implicit, suprascrie butonul standard de tipărire a etichetelor din produse. Pentru a reveni la funcția standard, parametrul de sistem `terrabit_labels.override_print_button` trebuie setat la `False`.",
+      "Se pot crea machete personalizate prin definirea unui raport pe modelul `product.product.label`."
     ],
     "dependencies": [
       "product",
       "sale",
       "stock"
     ],
-    "connections": [],
-    "text": "Product Labels\ndeltatech_product_labels\nModulul permite tipărirea etichetelor pentru produse direct din mai multe puncte ale fluxului de lucru: din fișa produsului, din comenzile de vânzare și din livrările (pickings). Atunci când tipărirea pornește dintr-un produs și este selectată doar opțiunea de loturi, modulul tipărește automat etichetele pentru toate loturile aflate pe stoc. Astfel, echipele de depozit și de vânzări pot genera rapid etichetele necesare, cu posibilitatea de a personaliza aspectul acestora în funcție de nevoile companiei.\nTipărire etichete pornind de la produse, comenzi de vânzare și livrări (pickings).\nDacă este selectată doar opțiunea de lot, iar tipărirea pornește dintr-un produs, se tipăresc etichetele pentru toate loturile aflate pe stoc.\nÎn mod implicit, suprascrie butonul standard de tipărire a etichetelor din produse. Pentru a reveni la funcția standard de tipărire, parametrul de sistem `terrabit_labels.override_print_button` trebuie setat la `False`.\nSe pot crea aspecte (layout-uri) personalizate prin definirea unui raport pe modelul `product.product.label`."
+    "connections": [
+      "deltatech_price_change_label",
+      "price_incl",
+      "deltatech_product_labels"
+    ],
+    "text": "Product Labels\ndeltatech_product_labels\nModulul permite tipărirea etichetelor de produs și de lot dintr-un singur asistent, deschis din produse, comenzi de vânzare, transferuri, loturi și linii de stoc. Machetele implicite includ denumirea, referința internă, codul de bare, lotul și prețul cu TVA, pe formate gata făcute pentru imprimanta de birou (coală A4) și pentru imprimantele termice. Echipele de depozit și de vânzări pot eticheta rapid marfa la recepție și pe raft, iar companiile își pot adăuga propriile machete.\nTipărire etichete din produse, comenzi de vânzare, transferuri, loturi și linii de stoc (quants).\nMachete implicite, fiecare cu formatul ei de hârtie: coală A4 cu 3x8 etichete (70x37 mm), 100x50 mm și 40x25 mm (o etichetă pe pagină, pentru imprimante termice) și machetă continuă, fără format de hârtie.\nMachetele implicite A4 3x8, 100x50 și 40x25 tipăresc prețul cu TVA, cu moneda și unitatea de măsură, alături de denumire, referință internă, cod de bare și lot. Fără preț, nu se tipărește blocul de preț. Fără listă de prețuri, se folosește moneda produsului.\nAsistentul propune macheta tipărită ultima dată de utilizator; prima dată, coala A4 3x8.\nDacă este selectată doar opțiunea de lot, iar tipărirea pornește dintr-un produs, se tipăresc etichetele pentru toate loturile aflate pe stoc.\nDin transferuri de tip recepție, opțiunea „Generează loturile automat” completează numele loturilor înainte de tipărire.\nMachetele ZPL (raport de tip text) au buton Previzualizare: ZPL-ul este trimis la serviciul extern Labelary (`api.labelary.com`) și returnat ca PDF. Dimensiunea etichetei se setează pe raport (lățime, înălțime, rezoluție imprimantă) sau se citește din numele lui, de exemplu „Labels 40x30 ZPL (300 DPI)”.\nÎn mod implicit, suprascrie butonul standard de tipărire a etichetelor din produse. Pentru a reveni la funcția standard, parametrul de sistem `terrabit_labels.override_print_button` trebuie setat la `False`.\nSe pot crea machete personalizate prin definirea unui raport pe modelul `product.product.label`."
   },
   {
     "path": "deltatech_product_list/index.md",
@@ -14381,7 +14396,7 @@
   {
     "path": "l10n_ro_anaf_d112/index.md",
     "module": "l10n_ro_anaf_d112",
-    "version": "19.0.2.23.0",
+    "version": "19.0.2.23.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112",
     "last_ingest": "2026-10-22",
@@ -14553,7 +14568,7 @@
   {
     "path": "l10n_ro_anaf_d205/index.md",
     "module": "l10n_ro_anaf_d205",
-    "version": "19.0.1.2.1",
+    "version": "19.0.1.2.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d205",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d205",
     "last_ingest": null,
@@ -14590,7 +14605,7 @@
   {
     "path": "l10n_ro_anaf_d207/index.md",
     "module": "l10n_ro_anaf_d207",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d207",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d207",
     "last_ingest": null,
@@ -14911,7 +14926,7 @@
   {
     "path": "l10n_ro_anaf_d394_pos/index.md",
     "module": "l10n_ro_anaf_d394_pos",
-    "version": "19.0.1.1.4",
+    "version": "19.0.1.3.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d394_pos",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d394_pos",
     "last_ingest": null,
@@ -15911,18 +15926,31 @@
     "version": "19.0.1.0.6",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_efactura_dedup",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_efactura_dedup",
-    "last_ingest": null,
+    "last_ingest": "2026-10-28",
     "friendly_name": "Romania - Deduplicare facturi din SPV",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - Deduplicare facturi din SPV\nl10n_ro_efactura_dedup"
+    "summary": "Modulul previne duplicatele la importul și la trimiterea facturilor prin SPV ANAF. Odoo standard (`l10n_ro_edi`) folosește o cheie simplă (CUI furnizor, sumă totală, dată), care poate rata duplicate sau poate confunda două facturi diferite. Modulul înlocuiește cheia cu una extinsă, un SHA-256 din CUI, numărul facturii, dată și sumă, astfel încât același document să fie recunoscut chiar dacă reapare în SPV, iar facturile diferite să nu se confunde.",
+    "features": [
+      "Cheie de deduplicare extinsă: câmpul `l10n_ro_edi_dedup_key` pe factură, calculat automat ca SHA-256 din CUI-ul partenerului, numărul facturii, dată și suma totală, indexat în baza de date. CUI-ul se compară normalizat: `RO20603502`, `20603502` și `RO 20603502` dau aceeași cheie.",
+      "Numărul din cheie: la facturile și notele de credit de achiziție se folosește numărul furnizorului (câmpul *Referință*, BT-1 din XML), la documentele emise numărul propriu. Pe achiziții, înainte de versiunea `19.0.1.0.1`, se folosea secvența internă, iar deduplicarea nu prindea nimic.",
+      "Deduplicare la import (inbound): la sincronizarea inbox-ului SPV, un mesaj cu o cheie deja existentă este ignorat, factura existentă este marcată Duplicat SPV, iar în chatter apare o notă despre mesajul ignorat.",
+      "Avertisment la trimitere (outbound): dacă există deja o altă factură validată de SPV, din aceeași companie, cu aceeași cheie, trimiterea se oprește cu mesajul „Possible SPV duplicate”.",
+      "Revizuire manuală: banner de avertizare pe factura marcată, fila Deduplicare SPV cu comutatorul de duplicat și cheia (readonly), și lista *Facturi posibil duplicate SPV*. Lista nu are intrare de meniu proprie. La un fals pozitiv, comutatorul se dezactivează manual.",
+      "Fără setări proprii: deduplicarea funcționează imediat după instalare. Facturile create înainte de instalare nu sunt detectate retroactiv; cheia se calculează la modificarea numărului, referinței, datei, sumei sau CUI-ului partenerului.",
+      "Bază legală: Cod Fiscal art. 319 alin. (7) (unicitatea facturii prin număr) și CIUS-RO v1.0.1."
+    ],
+    "dependencies": [
+      "l10n_ro_edi"
+    ],
+    "connections": [
+      "l10n_ro_efactura_consumer",
+      "account"
+    ],
+    "text": "Romania - Deduplicare facturi din SPV\nl10n_ro_efactura_dedup\nModulul previne duplicatele la importul și la trimiterea facturilor prin SPV ANAF. Odoo standard (`l10n_ro_edi`) folosește o cheie simplă (CUI furnizor, sumă totală, dată), care poate rata duplicate sau poate confunda două facturi diferite. Modulul înlocuiește cheia cu una extinsă, un SHA-256 din CUI, numărul facturii, dată și sumă, astfel încât același document să fie recunoscut chiar dacă reapare în SPV, iar facturile diferite să nu se confunde.\nCheie de deduplicare extinsă: câmpul `l10n_ro_edi_dedup_key` pe factură, calculat automat ca SHA-256 din CUI-ul partenerului, numărul facturii, dată și suma totală, indexat în baza de date. CUI-ul se compară normalizat: `RO20603502`, `20603502` și `RO 20603502` dau aceeași cheie.\nNumărul din cheie: la facturile și notele de credit de achiziție se folosește numărul furnizorului (câmpul *Referință*, BT-1 din XML), la documentele emise numărul propriu. Pe achiziții, înainte de versiunea `19.0.1.0.1`, se folosea secvența internă, iar deduplicarea nu prindea nimic.\nDeduplicare la import (inbound): la sincronizarea inbox-ului SPV, un mesaj cu o cheie deja existentă este ignorat, factura existentă este marcată Duplicat SPV, iar în chatter apare o notă despre mesajul ignorat.\nAvertisment la trimitere (outbound): dacă există deja o altă factură validată de SPV, din aceeași companie, cu aceeași cheie, trimiterea se oprește cu mesajul „Possible SPV duplicate”.\nRevizuire manuală: banner de avertizare pe factura marcată, fila Deduplicare SPV cu comutatorul de duplicat și cheia (readonly), și lista *Facturi posibil duplicate SPV*. Lista nu are intrare de meniu proprie. La un fals pozitiv, comutatorul se dezactivează manual.\nFără setări proprii: deduplicarea funcționează imediat după instalare. Facturile create înainte de instalare nu sunt detectate retroactiv; cheia se calculează la modificarea numărului, referinței, datei, sumei sau CUI-ului partenerului.\nBază legală: Cod Fiscal art. 319 alin. (7) (unicitatea facturii prin număr) și CIUS-RO v1.0.1."
   },
   {
     "path": "l10n_ro_efactura_enhancement/index.md",
     "module": "l10n_ro_efactura_enhancement",
-    "version": "19.0.0.5.8",
+    "version": "19.0.0.5.9",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_efactura_enhancement",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_efactura_enhancement",
     "last_ingest": "2026-09-29",
@@ -16306,13 +16334,26 @@
     "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_etransport_block",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_etransport_block",
-    "last_ingest": null,
+    "last_ingest": "2026-10-28",
     "friendly_name": "Romania - Blocare e-Transport",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - Blocare e-Transport\nl10n_ro_etransport_block"
+    "summary": "Modulul extinde `l10n_ro_edi_stock` și blochează validarea avizelor care conțin produse cu risc fiscal ridicat până când ANAF confirmă codul UIT. În plus, actualizează automat starea UIT printr-un job programat, fără apăsarea manuală a butonului de preluare a stării. Ajută companiile să respecte obligația e-Transport pentru mărfurile cu risc fiscal ridicat.",
+    "features": [
+      "Marcarea produselor: câmpul Risc fiscal ridicat (e-Transport obligatoriu) pe fișa produsului, în fila Contabilitate, secțiunea „România — e-Transport”. Implicit este debifat. Categorii tipice: combustibili, tutun, alcool, metale prețioase, echipamente IT (peste pragul de valoare).",
+      "Blocare la validare: dacă avizul are e-Transport activ și conține cel puțin un produs marcat, validarea este oprită cu o eroare care numește produsele, până când UIT-ul ajunge în starea Validat (`stock_validated`). Avizele fără produse marcate nu sunt afectate. Blocarea se aplică pe orice aviz cu e-Transport activ, inclusiv cele de intrare, și este dezactivată în contextul `demo_mode` (date demo, teste).",
+      "Banner pe aviz: avertisment portocaliu cât timp validarea este blocată.",
+      "Avertisment în amonte: banner informativ pe comenzile de vânzare și de achiziție care conțin produse marcate.",
+      "Flux: se marchează produsul, se trimite declarația e-Transport de pe aviz (ANAF returnează UIT, starea devine Trimis), UIT-ul este confirmat (Validat), apoi avizul se validează. Dacă ANAF respinge declarația, avizul rămâne blocat până la corectarea datelor și retrimitere.",
+      "Actualizare automată a stării UIT: acțiunea programată „RO e-Transport: Automatic UIT Status Update” rulează la 30 de minute pentru avizele în starea `stock_sent` ale companiilor cu țara fiscală România. Starea se poate forța și manual cu butonul Preluare stare. Erorile ANAF se înregistrează în documentul e-Transport al avizului (fila e-Transport → Documents)."
+    ],
+    "dependencies": [
+      "l10n_ro_edi_stock",
+      "purchase",
+      "sale"
+    ],
+    "connections": [
+      "l10n_ro_edi_stock"
+    ],
+    "text": "Romania - Blocare e-Transport\nl10n_ro_etransport_block\nModulul extinde `l10n_ro_edi_stock` și blochează validarea avizelor care conțin produse cu risc fiscal ridicat până când ANAF confirmă codul UIT. În plus, actualizează automat starea UIT printr-un job programat, fără apăsarea manuală a butonului de preluare a stării. Ajută companiile să respecte obligația e-Transport pentru mărfurile cu risc fiscal ridicat.\nMarcarea produselor: câmpul Risc fiscal ridicat (e-Transport obligatoriu) pe fișa produsului, în fila Contabilitate, secțiunea „România — e-Transport”. Implicit este debifat. Categorii tipice: combustibili, tutun, alcool, metale prețioase, echipamente IT (peste pragul de valoare).\nBlocare la validare: dacă avizul are e-Transport activ și conține cel puțin un produs marcat, validarea este oprită cu o eroare care numește produsele, până când UIT-ul ajunge în starea Validat (`stock_validated`). Avizele fără produse marcate nu sunt afectate. Blocarea se aplică pe orice aviz cu e-Transport activ, inclusiv cele de intrare, și este dezactivată în contextul `demo_mode` (date demo, teste).\nBanner pe aviz: avertisment portocaliu cât timp validarea este blocată.\nAvertisment în amonte: banner informativ pe comenzile de vânzare și de achiziție care conțin produse marcate.\nFlux: se marchează produsul, se trimite declarația e-Transport de pe aviz (ANAF returnează UIT, starea devine Trimis), UIT-ul este confirmat (Validat), apoi avizul se validează. Dacă ANAF respinge declarația, avizul rămâne blocat până la corectarea datelor și retrimitere.\nActualizare automată a stării UIT: acțiunea programată „RO e-Transport: Automatic UIT Status Update” rulează la 30 de minute pentru avizele în starea `stock_sent` ale companiilor cu țara fiscală România. Starea se poate forța și manual cu butonul Preluare stare. Erorile ANAF se înregistrează în documentul e-Transport al avizului (fila e-Transport → Documents)."
   },
   {
     "path": "l10n_ro_etransport_enhancement/index.md",
@@ -16504,13 +16545,27 @@
     "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_expense_currency",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_expense_currency",
-    "last_ingest": null,
+    "last_ingest": "2026-10-28",
     "friendly_name": "Romania - Avansuri de trezorerie în valută (542)",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - Avansuri de trezorerie în valută (542)\nl10n_ro_expense_currency"
+    "summary": "Modulul gestionează avansurile de trezorerie acordate angajaților în valută, cu justificarea decontului și recunoașterea diferențelor de curs valutar conform OMFP 1802/2014. Acoperă tot fluxul: acordarea avansului (Dr 542 = Cr bancă/casă), justificarea cu diferența de curs (665/765) și returul restului nejustificat. Este util companiilor ai căror angajați primesc avansuri în EUR, USD etc., de exemplu pentru deplasări externe.",
+    "features": [
+      "Acordare avans: nota contabilă Dr 542 = Cr cont de bancă sau casă, la cursul BNR din data acordării (editabil). Se completează referința, angajatul, valuta, data și suma acordată.",
+      "Justificare decont: se completează data justificării, suma justificată, cursul la data justificării și contul de cheltuieli (de exemplu 625 sau 624). Nota recunoaște cheltuiala, stinge contul 542 și înregistrează diferența de curs: pierdere pe 665, câștig pe 765. Suma justificată nu poate depăși suma acordată; este permisă o singură justificare pe avans. Dacă suma justificată este egală cu cea acordată, avansul se închide direct.",
+      "Retur rest: dacă suma justificată este mai mică, butonul Retur rest generează nota pentru partea nejustificată, la cursul avansului, iar avansul se închide.",
+      "Anulare: notele generate se anulează în ordine inversă (retur, justificare, acordare); un avans anulat poate fi readus în Schiță cu Resetează în Schiță. Dacă perioada este blocată fiscal, notele nu pot fi anulate.",
+      "Stări: Schiță → Acordat → Justificat → Închis, plus Anulat.",
+      "Configurare: în Contabilitate → Configurare → Setări, secțiunea *Avansuri Trezorerie Valutare (542)*: conturile 542, 665, 765 și jurnalul de acordare (bancă sau casă). Conturile 665 și 765 sunt necesare doar la o diferență de curs diferită de zero. Cursurile se iau din tabelul de cursuri Odoo (provider BNR); dacă lipsește cursul unei date, se preia ultima valoare disponibilă.",
+      "Meniu: Contabilitate → Contabilitate → Avansuri 542 → Avansuri Trezorerie Valutare."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro",
+      "hr"
+    ],
+    "connections": [
+      "l10n_ro_currency_revaluation"
+    ],
+    "text": "Romania - Avansuri de trezorerie în valută (542)\nl10n_ro_expense_currency\nModulul gestionează avansurile de trezorerie acordate angajaților în valută, cu justificarea decontului și recunoașterea diferențelor de curs valutar conform OMFP 1802/2014. Acoperă tot fluxul: acordarea avansului (Dr 542 = Cr bancă/casă), justificarea cu diferența de curs (665/765) și returul restului nejustificat. Este util companiilor ai căror angajați primesc avansuri în EUR, USD etc., de exemplu pentru deplasări externe.\nAcordare avans: nota contabilă Dr 542 = Cr cont de bancă sau casă, la cursul BNR din data acordării (editabil). Se completează referința, angajatul, valuta, data și suma acordată.\nJustificare decont: se completează data justificării, suma justificată, cursul la data justificării și contul de cheltuieli (de exemplu 625 sau 624). Nota recunoaște cheltuiala, stinge contul 542 și înregistrează diferența de curs: pierdere pe 665, câștig pe 765. Suma justificată nu poate depăși suma acordată; este permisă o singură justificare pe avans. Dacă suma justificată este egală cu cea acordată, avansul se închide direct.\nRetur rest: dacă suma justificată este mai mică, butonul Retur rest generează nota pentru partea nejustificată, la cursul avansului, iar avansul se închide.\nAnulare: notele generate se anulează în ordine inversă (retur, justificare, acordare); un avans anulat poate fi readus în Schiță cu Resetează în Schiță. Dacă perioada este blocată fiscal, notele nu pot fi anulate.\nStări: Schiță → Acordat → Justificat → Închis, plus Anulat.\nConfigurare: în Contabilitate → Configurare → Setări, secțiunea *Avansuri Trezorerie Valutare (542)*: conturile 542, 665, 765 și jurnalul de acordare (bancă sau casă). Conturile 665 și 765 sunt necesare doar la o diferență de curs diferită de zero. Cursurile se iau din tabelul de cursuri Odoo (provider BNR); dacă lipsește cursul unei date, se preia ultima valoare disponibilă.\nMeniu: Contabilitate → Contabilitate → Avansuri 542 → Avansuri Trezorerie Valutare."
   },
   {
     "path": "l10n_ro_financial_notes/index.md",
@@ -16551,7 +16606,7 @@
   {
     "path": "l10n_ro_financial_statements/index.md",
     "module": "l10n_ro_financial_statements",
-    "version": "19.0.1.12.2",
+    "version": "19.0.1.13.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_financial_statements",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_financial_statements",
     "last_ingest": null,
@@ -16697,13 +16752,26 @@
     "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_force_reconcile",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_force_reconcile",
-    "last_ingest": null,
+    "last_ingest": "2026-10-28",
     "friendly_name": "Romania - Reconciliere forțată între conturi diferite",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - Reconciliere forțată între conturi diferite\nl10n_ro_force_reconcile"
+    "summary": "Modulul oferă un asistent pentru reconcilierea a două elemente de jurnal din conturi diferite, deși Odoo standard permite reconcilierea doar între linii din același cont. Asistentul generează o notă de compensare cu câte o linie pe fiecare cont și reconciliază liniile originale cu liniile corespunzătoare. Acoperă cazuri frecvente în contabilitatea românească, precum avansul furnizor față de factură sau compensarea client-furnizor.",
+    "features": [
+      "Cazuri de utilizare: avans furnizor ↔ factură furnizor (409 ↔ 401), avans client ↔ factură client (419 ↔ 411), compensare client-furnizor pentru același partener (411 ↔ 401), decontare avans angajat ↔ furnizor (542 ↔ 401).",
+      "Lansare: din lista Elemente jurnal (de exemplu Contabilitate → Examinare → Control → Elemente jurnal), cu exact 2 linii bifate, din Acțiuni → Reconciliere forțată (conturi diferite). Acțiunea este disponibilă doar utilizatorilor din grupul Contabilitate / Manager (`account.group_account_manager`).",
+      "Verificări la deschidere: ambele linii trebuie să fie postate, nereconciliate complet, din aceeași companie, iar conturile lor să aibă bifat Permite reconcilierea (de activat doar pe conturile de terți 4xx/5xx).",
+      "Câmpuri completate automat în asistent: conturile și reziduurile celor două linii, Sumă compensată (minimul celor două reziduuri), partenerul comun, Jurnal (primul jurnal de tip *Diverse* al companiei), Data notei (azi) și Etichetă (`COMPENSARE`). Suma, jurnalul, data și eticheta se pot modifica.",
+      "Reconciliere parțială: dacă suma compensată este mai mică decât rezidualul, linia rămâne parțial reconciliată; asistentul poate fi relansat pe aceleași linii.",
+      "Rezultat: la Reconciliază se creează și se postează nota de compensare, iar fiecare linie originală este reconciliată cu linia de pe același cont din notă; se deschide nota generată.",
+      "Limitare: asistentul lucrează în moneda companiei; diferențele de curs nu se gestionează automat și se tratează separat, prin reevaluarea valutară."
+    ],
+    "dependencies": [
+      "account"
+    ],
+    "connections": [
+      "l10n_ro_currency_revaluation",
+      "l10n_ro_expense_currency"
+    ],
+    "text": "Romania - Reconciliere forțată între conturi diferite\nl10n_ro_force_reconcile\nModulul oferă un asistent pentru reconcilierea a două elemente de jurnal din conturi diferite, deși Odoo standard permite reconcilierea doar între linii din același cont. Asistentul generează o notă de compensare cu câte o linie pe fiecare cont și reconciliază liniile originale cu liniile corespunzătoare. Acoperă cazuri frecvente în contabilitatea românească, precum avansul furnizor față de factură sau compensarea client-furnizor.\nCazuri de utilizare: avans furnizor ↔ factură furnizor (409 ↔ 401), avans client ↔ factură client (419 ↔ 411), compensare client-furnizor pentru același partener (411 ↔ 401), decontare avans angajat ↔ furnizor (542 ↔ 401).\nLansare: din lista Elemente jurnal (de exemplu Contabilitate → Examinare → Control → Elemente jurnal), cu exact 2 linii bifate, din Acțiuni → Reconciliere forțată (conturi diferite). Acțiunea este disponibilă doar utilizatorilor din grupul Contabilitate / Manager (`account.group_account_manager`).\nVerificări la deschidere: ambele linii trebuie să fie postate, nereconciliate complet, din aceeași companie, iar conturile lor să aibă bifat Permite reconcilierea (de activat doar pe conturile de terți 4xx/5xx).\nCâmpuri completate automat în asistent: conturile și reziduurile celor două linii, Sumă compensată (minimul celor două reziduuri), partenerul comun, Jurnal (primul jurnal de tip *Diverse* al companiei), Data notei (azi) și Etichetă (`COMPENSARE`). Suma, jurnalul, data și eticheta se pot modifica.\nReconciliere parțială: dacă suma compensată este mai mică decât rezidualul, linia rămâne parțial reconciliată; asistentul poate fi relansat pe aceleași linii.\nRezultat: la Reconciliază se creează și se postează nota de compensare, iar fiecare linie originală este reconciliată cu linia de pe același cont din notă; se deschide nota generată.\nLimitare: asistentul lucrează în moneda companiei; diferențele de curs nu se gestionează automat și se tratează separat, prin reevaluarea valutară."
   },
   {
     "path": "l10n_ro_grants/index.md",
@@ -17129,13 +17197,30 @@
     "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_inventory_closing",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_inventory_closing",
-    "last_ingest": null,
-    "friendly_name": "Romania - Închidere de inventar și note contabile (FR-18)",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - Închidere de inventar și note contabile (FR-18)\nl10n_ro_inventory_closing"
+    "last_ingest": "2026-10-28",
+    "friendly_name": "Romania - Închidere de inventar și note contabile",
+    "summary": "Modulul înregistrează contabil rezultatele inventarierii stocurilor conform legislației românești: OMFP 1802/2014 pentru tratamentul diferențelor și OMFP 2861/2009 pentru procesul-verbal de inventariere. Este destinat contabililor și gestionarilor care fac inventarierea periodică. După validarea inventarului, generează notele contabile pentru cele patru tipuri de diferențe (plus, minus neimputabil, minus imputabil cu TVA, casare) și tipărește documentele aferente: procesul-verbal, decizia de imputare și decizia de casare.",
+    "features": [
+      "Flux: în Inventar → Operații → Ajustări → Documente inventariere se pornește inventarul, se completează Cantitate fizică pe linii, se completează comisia, se validează inventarul (stocul se ajustează la cantitățile numărate), apoi Generare note contabile.",
+      "Tipul diferenței pe linie: setat automat (fără diferență, plus inventar, minus neimputabil implicit la minus) și modificabil manual la minus în *minus imputabil* sau *casare*. Valoarea diferenței = |diferență| × prețul standard al produsului; liniile cu valoare zero nu generează note.",
+      "Note contabile pe tip: plus inventar (Dr 3xx / Cr cont de plusuri, de regulă 607), minus neimputabil (Dr cont de minusuri, de regulă 607 / Cr 3xx), minus imputabil (scoatere din gestiune, plus o notă de imputare cu creanță pe 4282, venit pe 7588 și TVA pe 4427), casare (Dr 6583 / Cr 3xx). Contul de stoc 3xx se ia din categoria produsului; dacă lipsește, generarea se oprește cu un mesaj.",
+      "Imputare cu TVA: pentru minusurile imputabile se completează Persoană responsabilă și Valoare imputată; TVA se calculează cu o cotă configurabilă pe companie (implicit 21%).",
+      "Fereastra de generare: se alege jurnalul (tip *Operațiuni diverse*) și data notei, iar sumarul arată numărul de plusuri, minusuri neimputabile, minusuri imputabile și casări. Se creează câte o notă pe tip, postată imediat.",
+      "Stare contabilă a inventarului: Necontabilizat → Parțial contabilizat → Complet contabilizat; la complet, câmpurile devin readonly, iar butonul Note rămâne link către notele generate. Notele se pot anula (resetare la ciornă și anulare), iar liniile revin la necontabilizat.",
+      "Comisia de inventariere: președinte, membri, gestionar, număr și dată proces-verbal, locul inventarierii.",
+      "Rapoarte PDF: Proces-Verbal Inventariere (OMFP 2861/2009), Decizie Imputare, Decizie Casare.",
+      "Configurare: în Setări → Companie (tab *Inventariere RO*) sau Contabilitate → Configurare → Setări (secțiunea *Inventariere RO*): conturile de plusuri, minusuri neimputabile, imputare (4282), venituri imputare (7588), TVA colectată (4427), cheltuieli TVA (635), casare (6583) și cota TVA."
+    ],
+    "dependencies": [
+      "deltatech_stock_inventory",
+      "stock_account",
+      "l10n_ro",
+      "account"
+    ],
+    "connections": [
+      "deltatech_stock_inventory"
+    ],
+    "text": "Romania - Închidere de inventar și note contabile\nl10n_ro_inventory_closing\nModulul înregistrează contabil rezultatele inventarierii stocurilor conform legislației românești: OMFP 1802/2014 pentru tratamentul diferențelor și OMFP 2861/2009 pentru procesul-verbal de inventariere. Este destinat contabililor și gestionarilor care fac inventarierea periodică. După validarea inventarului, generează notele contabile pentru cele patru tipuri de diferențe (plus, minus neimputabil, minus imputabil cu TVA, casare) și tipărește documentele aferente: procesul-verbal, decizia de imputare și decizia de casare.\nFlux: în Inventar → Operații → Ajustări → Documente inventariere se pornește inventarul, se completează Cantitate fizică pe linii, se completează comisia, se validează inventarul (stocul se ajustează la cantitățile numărate), apoi Generare note contabile.\nTipul diferenței pe linie: setat automat (fără diferență, plus inventar, minus neimputabil implicit la minus) și modificabil manual la minus în *minus imputabil* sau *casare*. Valoarea diferenței = |diferență| × prețul standard al produsului; liniile cu valoare zero nu generează note.\nNote contabile pe tip: plus inventar (Dr 3xx / Cr cont de plusuri, de regulă 607), minus neimputabil (Dr cont de minusuri, de regulă 607 / Cr 3xx), minus imputabil (scoatere din gestiune, plus o notă de imputare cu creanță pe 4282, venit pe 7588 și TVA pe 4427), casare (Dr 6583 / Cr 3xx). Contul de stoc 3xx se ia din categoria produsului; dacă lipsește, generarea se oprește cu un mesaj.\nImputare cu TVA: pentru minusurile imputabile se completează Persoană responsabilă și Valoare imputată; TVA se calculează cu o cotă configurabilă pe companie (implicit 21%).\nFereastra de generare: se alege jurnalul (tip *Operațiuni diverse*) și data notei, iar sumarul arată numărul de plusuri, minusuri neimputabile, minusuri imputabile și casări. Se creează câte o notă pe tip, postată imediat.\nStare contabilă a inventarului: Necontabilizat → Parțial contabilizat → Complet contabilizat; la complet, câmpurile devin readonly, iar butonul Note rămâne link către notele generate. Notele se pot anula (resetare la ciornă și anulare), iar liniile revin la necontabilizat.\nComisia de inventariere: președinte, membri, gestionar, număr și dată proces-verbal, locul inventarierii.\nRapoarte PDF: Proces-Verbal Inventariere (OMFP 2861/2009), Decizie Imputare, Decizie Casare.\nConfigurare: în Setări → Companie (tab *Inventariere RO*) sau Contabilitate → Configurare → Setări (secțiunea *Inventariere RO*): conturile de plusuri, minusuri neimputabile, imputare (4282), venituri imputare (7588), TVA colectată (4427), cheltuieli TVA (635), casare (6583) și cota TVA."
   },
   {
     "path": "l10n_ro_inventory_items/index.md",
@@ -17239,21 +17324,26 @@
     "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_invoice_dvi_protect",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_invoice_dvi_protect",
-    "last_ingest": null,
+    "last_ingest": "2026-10-28",
     "friendly_name": "Romania - Protecție la resetarea facturilor de furnizor și DVI",
-    "summary": "Modulul protejează integritatea contabilă a stocurilor evaluate FIFO, blocând resetarea la ciornă a facturilor furnizor și anularea documentelor DVI (costuri de aterizare) atunci când stocul recepționat a fost deja parțial consumat. În Odoo, costul de achiziție FIFO se propagă către ieșirile de stoc; dacă factura de intrare ar fi resetată după consum, costul aplicat ieșirilor ar deveni orfan, generând inconsistențe. Modulul previne acest scenariu.",
+    "summary": "Modulul protejează costurile stocurilor evaluate FIFO, blocând resetarea la ciornă a facturilor de furnizor și anularea costurilor de aterizare (DVI) după ce stocul recepționat a fost deja parțial consumat. Costul de achiziție se propagă în costul ieșirilor de stoc; dacă documentul de intrare ar fi resetat după consum, costul aplicat ieșirilor ar rămâne fără legătură cu el. Modulul se adresează companiilor care importă mărfuri și își evaluează stocul prin FIFO.",
     "features": [
-      "Blochează butonul Resetare la ciornă pe facturile furnizor (`in_invoice`, `in_refund`) dacă vreo mișcare de stoc asociată comenzii de achiziție are `remaining_qty < quantity` (stoc deja parțial consumat).",
-      "Mesaj de eroare explicit care indică produsul și cantitățile implicate.",
-      "Blochează butonul Anulare pe documentele DVI / costuri de aterizare (`stock.landed.cost`) când factura furnizor asociată (`vendor_bill_id`) nu trece verificarea de consum.",
-      "Protecție automată, fără configurare, integrată în fluxul standard de achiziție și recepție."
+      "Blocarea resetării facturii: butonul Resetare la ciornă este blocat pe facturile și notele de credit de furnizor (`in_invoice`, `in_refund`) dacă vreo mișcare de intrare asociată liniilor de comandă de achiziție ale facturii are cantitatea rămasă mai mică decât cea recepționată.",
+      "Mesaj explicit: eroarea numește produsul, cantitatea consumată și cea totală, de exemplu „cantitate consumată: 15,00 din 20,00 buc”; la mai multe produse se arată primul găsit.",
+      "Blocarea anulării DVI: butonul Anulează de pe costul de aterizare (în ciornă) aplică aceeași verificare facturii asociate: fie `vendor_bill_id`, fie factura legată prin `dvi_id` (dacă este instalat `l10n_ro_customs_dvi`). Fără factură asociată, anularea este permisă, de aceea factura trebuie asociată mereu pe costul de aterizare.",
+      "Doar liniile legate de comandă: serviciile sau cheltuielile adăugate manual pe factură sunt ignorate; la o factură mixtă cu stoc consumat, resetarea întregii facturi este blocată.",
+      "Fără configurare: protecția este activă imediat după instalare. Se recomandă metoda de cost FIFO pe categoria produselor importate și bifarea Este cost de aterizare pe produsele de cost DVI.",
+      "Corecții după consum: factură de stornare, cost de aterizare suplimentar (pozitiv sau negativ) sau ajustare de stoc prin inventariere, nu resetarea sau anularea documentului sursă."
     ],
     "dependencies": [
       "purchase_stock",
       "stock_landed_costs"
     ],
-    "connections": [],
-    "text": "Romania - Protecție la resetarea facturilor de furnizor și DVI\nl10n_ro_invoice_dvi_protect\nModulul protejează integritatea contabilă a stocurilor evaluate FIFO, blocând resetarea la ciornă a facturilor furnizor și anularea documentelor DVI (costuri de aterizare) atunci când stocul recepționat a fost deja parțial consumat. În Odoo, costul de achiziție FIFO se propagă către ieșirile de stoc; dacă factura de intrare ar fi resetată după consum, costul aplicat ieșirilor ar deveni orfan, generând inconsistențe. Modulul previne acest scenariu.\nBlochează butonul Resetare la ciornă pe facturile furnizor (`in_invoice`, `in_refund`) dacă vreo mișcare de stoc asociată comenzii de achiziție are `remaining_qty < quantity` (stoc deja parțial consumat).\nMesaj de eroare explicit care indică produsul și cantitățile implicate.\nBlochează butonul Anulare pe documentele DVI / costuri de aterizare (`stock.landed.cost`) când factura furnizor asociată (`vendor_bill_id`) nu trece verificarea de consum.\nProtecție automată, fără configurare, integrată în fluxul standard de achiziție și recepție."
+    "connections": [
+      "l10n_ro_customs_dvi",
+      "dvi_id"
+    ],
+    "text": "Romania - Protecție la resetarea facturilor de furnizor și DVI\nl10n_ro_invoice_dvi_protect\nModulul protejează costurile stocurilor evaluate FIFO, blocând resetarea la ciornă a facturilor de furnizor și anularea costurilor de aterizare (DVI) după ce stocul recepționat a fost deja parțial consumat. Costul de achiziție se propagă în costul ieșirilor de stoc; dacă documentul de intrare ar fi resetat după consum, costul aplicat ieșirilor ar rămâne fără legătură cu el. Modulul se adresează companiilor care importă mărfuri și își evaluează stocul prin FIFO.\nBlocarea resetării facturii: butonul Resetare la ciornă este blocat pe facturile și notele de credit de furnizor (`in_invoice`, `in_refund`) dacă vreo mișcare de intrare asociată liniilor de comandă de achiziție ale facturii are cantitatea rămasă mai mică decât cea recepționată.\nMesaj explicit: eroarea numește produsul, cantitatea consumată și cea totală, de exemplu „cantitate consumată: 15,00 din 20,00 buc”; la mai multe produse se arată primul găsit.\nBlocarea anulării DVI: butonul Anulează de pe costul de aterizare (în ciornă) aplică aceeași verificare facturii asociate: fie `vendor_bill_id`, fie factura legată prin `dvi_id` (dacă este instalat `l10n_ro_customs_dvi`). Fără factură asociată, anularea este permisă, de aceea factura trebuie asociată mereu pe costul de aterizare.\nDoar liniile legate de comandă: serviciile sau cheltuielile adăugate manual pe factură sunt ignorate; la o factură mixtă cu stoc consumat, resetarea întregii facturi este blocată.\nFără configurare: protecția este activă imediat după instalare. Se recomandă metoda de cost FIFO pe categoria produselor importate și bifarea Este cost de aterizare pe produsele de cost DVI.\nCorecții după consum: factură de stornare, cost de aterizare suplimentar (pozitiv sau negativ) sau ajustare de stoc prin inventariere, nu resetarea sau anularea documentului sursă."
   },
   {
     "path": "l10n_ro_invoice_report/index.md",
@@ -17725,7 +17815,7 @@
   {
     "path": "l10n_ro_partner_ledger_currency/index.md",
     "module": "l10n_ro_partner_ledger_currency",
-    "version": "19.0.1.4.8",
+    "version": "19.0.1.4.9",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_partner_ledger_currency",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_partner_ledger_currency",
     "last_ingest": null,
@@ -18446,7 +18536,7 @@
   {
     "path": "l10n_ro_pos_fiscal_compliance/index.md",
     "module": "l10n_ro_pos_fiscal_compliance",
-    "version": "19.0.2.3.3",
+    "version": "19.0.2.3.4",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_fiscal_compliance`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_pos_fiscal_compliance",
     "last_ingest": "2026-10-22",
@@ -18484,7 +18574,7 @@
   {
     "path": "l10n_ro_pos_fiscal_compliance_ecr/index.md",
     "module": "l10n_ro_pos_fiscal_compliance_ecr",
-    "version": "19.0.1.2.1",
+    "version": "19.0.1.3.0",
     "github": "[https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_fiscal_compliance_ecr](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_fiscal_compliance_ecr)",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_pos_fiscal_compliance_ecr",
     "last_ingest": "2026-10-22",
@@ -20674,7 +20764,7 @@
   {
     "path": "terrabit_helpdesk_ai_reply/index.md",
     "module": "terrabit_helpdesk_ai_reply",
-    "version": "19.0.1.19.0",
+    "version": "19.0.1.20.0",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_ai_reply",
     "local_path": "odoo-addons/terrabit/terrabit_helpdesk_ai_reply",
     "last_ingest": "2026-10-22",

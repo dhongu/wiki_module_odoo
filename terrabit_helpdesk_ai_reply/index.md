@@ -1,7 +1,7 @@
 # Terrabit Helpdesk AI Reply (localizat la `terrabit_helpdesk_ai_reply/index.md`)
 
 - **Nume Tehnic:** `terrabit_helpdesk_ai_reply`
-- **Versiune:** `19.0.1.19.0`
+- **Versiune:** `19.0.1.20.0`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_ai_reply
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_helpdesk_ai_reply`
 - **Ultima Ingestie:** `2026-10-22`

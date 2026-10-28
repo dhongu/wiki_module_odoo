@@ -4,18 +4,18 @@
 - **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech
 - **Cale Locală:** `odoo-addons/deltatech/deltatech`
-- **Ultima Ingestie:** `2026-06-01`
+- **Ultima Ingestie:** `2026-10-28`
 
 #### 1. Sumar
 
-Modulul `deltatech` este componenta de bază (fundație) a suitei de module Deltatech pentru Odoo. Rolul său principal este să ofere utilitare comune, structuri partajate și o convenție unitară care asigură consistența și interoperabilitatea între toate funcționalitățile dezvoltate de Deltatech. În mod normal nu necesită configurare directă din partea utilizatorului final și se instalează automat ca dependență tehnică atunci când este adăugat orice alt modul din suita Deltatech.
+Modulul `deltatech` este dependența tehnică de bază a întregii suite de module Deltatech pentru Odoo. Oferă extensii comune și mici îmbunătățiri de infrastructură pe care se sprijină celelalte module din suită, pentru un comportament unitar. Nu are meniuri sau fluxuri pentru utilizatorul final; este destinat dezvoltatorilor și administratorilor de sistem care întrețin suita, iar instalarea oricărui alt modul Deltatech îl aduce automat.
 
 #### 2. Funcționalități Cheie
 
-- Utilitare și helpere partajate pentru gestionarea și validarea consistentă a datelor, plus un cadru standard pentru extinderea modelelor de bază Odoo.
-- Consistență la nivel de suită: impune o convenție comună de denumire și o structură unitară pentru toate modulele Deltatech, simplificând instalarea și administrarea trusei de instrumente.
-- Funcționează ca dependență centrală pentru module mai avansate din suită.
-- Punct comun pentru comunicarea și schimbul de date între diferitele module Deltatech.
+- Adaugă câmpul de conveniență `model_name` pe regulile de înregistrare (`ir.rule`), afișat pe formular lângă domeniu, astfel încât numele tehnic al modelului să fie vizibil direct la configurarea regulilor de acces.
+- Activează widget-ul interactiv de domeniu pentru editorul domeniului din regulile de înregistrare, ceea ce reduce erorile la scrierea regulilor de acces.
+- Elimină legătura externă din formularul modulului, pentru o interfață Apps mai curată în instanțele Odoo private.
+- Punct unic de instalare: instalarea oricărui alt modul Deltatech îl instalează automat și pe acesta.
 
 #### 3. Dependențe
 
@@ -24,16 +24,16 @@ Modulul `deltatech` este componenta de bază (fundație) a suitei de module Delt
 
 #### 4. Componente Cheie
 
-DESCRIPTION.md acoperă Sumarul și Funcționalitățile Cheie. Pentru completitudine, componentele tehnice efective prezente în codul modulului de bază sunt minimale:
+DESCRIPTION.md acoperă Sumarul și Funcționalitățile Cheie. Componentele tehnice din codul modulului sunt minimale:
 
 **Modele**
 
-- `ir.rule` (extins): adaugă câmpul calculat `model_name` (preluat din `model_id.model`), folosit pentru a configura mai ușor regulile de înregistrare prin widget-ul de domeniu.
+- `ir.rule` (extins): adaugă câmpul calculat `model_name` (preluat din `model_id.model`), folosit de widget-ul de domeniu pentru a configura mai ușor regulile de înregistrare.
 
 **Vizualizări**
 
-- `base_view_rule_form_inherit`: extinde formularul standard de reguli de înregistrare (`base.view_rule_form`), afișează câmpul `model_name` și activează widget-ul `domain` pe `domain_force`.
-- `module_form`: ajustare a formularului de modul (`base.module_form`).
+- `base_view_rule_form_inherit`: extinde formularul standard de reguli de înregistrare (`base.view_rule_form`), afișează câmpul `model_name` după `model_id` și activează widget-ul `domain` pe `domain_force` (deschis în dialog).
+- `module_form`: extinde formularul de modul (`base.module_form`) și elimină legătura externă din el.
 
 **Acțiuni Automate / Acțiuni Server**
 
@@ -41,4 +41,4 @@ DESCRIPTION.md acoperă Sumarul și Funcționalitățile Cheie. Pentru completit
 
 #### 5. Conexiuni
 
-- Modul fundație al suitei Deltatech: este referit ca dependență de numeroase module `deltatech_*` din monorepo. Aceste module nu au încă pagină wiki, deci nu sunt incluse aici ca link-uri active.
+- Modul fundație al suitei Deltatech: este referit ca dependență de numeroase module `deltatech_*` din monorepo. Acestea nu sunt listate aici individual.

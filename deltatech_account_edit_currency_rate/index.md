@@ -5,6 +5,7 @@
 - **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_account_edit_currency_rate](https://github.com/dhongu/deltatech/tree/19.0/deltatech_account_edit_currency_rate)
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_account_edit_currency_rate`
 - **Ultima Ingestie:** `2026-07-31`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

@@ -49,22 +49,44 @@ fluxul normal de facturi). Modulul citește direct `pos.order` pentru a evita du
 
 1. Instalați `point_of_sale`; modulul `l10n_ro_anaf_d394_pos` se instalează automat alături de D394.
 2. Configurați punctele de vânzare (`pos.config`) cu jurnalul POS corect.
-3. (Opțional, recomandat) completați **Seria AMEF** pe fiecare configurație POS
-   (`Point of Sale → Configurație → Declarația D394 → Seria AMEF`):
+3. Verificați seria aparatului pentru fiecare punct de vânzare, în `Punct de vânzare → Configurare → Setări`, după ce
+   alegeți punctul de vânzare în bara de sus (fără el, blocul **Declarația D394** nu apare). **Seria AMEF** din blocul
+   **Declarația D394** se completează doar pentru o serie diferită de cea din conformitatea fiscală:
    - dacă este completată, `nrAMEF` numără serii distincte de aparat fiscal;
-   - dacă este goală, `nrAMEF` folosește jurnalul POS ca aproximare.
+   - dacă este goală, se folosește **Serie aparat fiscal (AMEF)** din setările punctului de vânzare,
+     când e instalat modulul de conformitate fiscală AMEF (`l10n_ro_pos_fiscal_compliance`); câmpul
+     apare acolo doar cu **Fiscalizare AMEF obligatorie** bifată;
+   - fără nicio serie, `nrAMEF` folosește jurnalul POS ca aproximare.
 4. Pregătiți date demo: o sesiune POS cu un bon anonim, un bon cu client cu CUI și un retur.
 
 ## 6. Flux de utilizare
 
-### Pasul 1 — Accesare
+### Pasul 1 — Seria aparatului și preluarea bonurilor în D394
 
-Bonurile POS se reflectă automat în raportul D394 (`Contabilitate → Raportare → Declarații ANAF
-→ D394`), la export XDP/XML, pentru perioada selectată.
+`nrAMEF` numără aparatele fiscale după seria lor, luată în această ordine:
+
+1. **Seria AMEF** din blocul **Declarația D394** al setărilor punctului de vânzare (**Punct de vânzare →
+   Configurare → Setări**, după ce alegeți punctul de vânzare în bara de sus; fără el, blocul nu apare), dacă e
+   completată;
+2. altfel, **Serie aparat fiscal (AMEF)** din setările de conformitate fiscală ale punctului de vânzare
+   (**Punct de vânzare → Configurare → Setări**, secțiunea *Conformitate fiscală RO (AMEF)*), când e
+   instalat `l10n_ro_pos_fiscal_compliance`. Câmpul apare doar după ce bifați **Fiscalizare AMEF
+   obligatorie**, dar o valoare completată anterior se folosește și după ce bifa e scoasă; ecranul e în fișa
+   acelui modul (captura `01_config_fiscal.png`);
+3. altfel, jurnalul POS, ca aproximare.
+
+Dacă seria e deja completată în conformitatea fiscală, lăsați *Seria AMEF* goală; o completați doar
+pentru o serie diferită.
+
+![Setările POS: câmpul Seria AMEF, în blocul Declarația D394](screenshots/01_pos_config_amef.png)
+
+Bonurile POS se reflectă apoi automat în raportul D394 (`Contabilitate → Raportare → Declarații ANAF
+→ D394`), la export XDP/XML, pentru perioada selectată:
 
 1. Finalizați și plătiți comenzile POS din perioadă; închideți sesiunile.
 2. Deschideți D394 și selectați perioada.
-3. Verificați secțiunea `op2` (bonuri anonime): `nrBF`, `nrAMEF`, baza/TVA pe cote.
+3. Verificați secțiunea `op2` (bonuri anonime): `nrBF`, `nrAMEF` (după regula de mai sus), baza/TVA pe
+   cote.
 4. Verificați `op1` pentru bonurile cu CUI.
 5. Exportați D394; bonurile POS sunt incluse fără dublarea notei de sesiune.
 
@@ -90,6 +112,8 @@ Bonurile POS se reflectă automat în raportul D394 (`Contabilitate → Raportar
 | POS-04 | Retur POS al unui bon | baza/TVA se compensează; `nrBF` numără și returul |
 | POS-05 | Două POS cu serii AMEF diferite | `nrAMEF=2` (pe serie de aparat) |
 | POS-06 | Sesiune închisă | nota de sesiune nu dublează vânzările POS în D394 |
+| POS-07 | *Seria AMEF* goală, *Serie aparat fiscal (AMEF)* completată în conformitatea fiscală | `nrAMEF` numără după seria din conformitatea fiscală |
+| POS-08 | Ambele serii completate, diferite | *Seria AMEF* are prioritate |
 
 ## 9. Legături cu alte module / declarații
 
@@ -98,15 +122,19 @@ Bonurile POS se reflectă automat în raportul D394 (`Contabilitate → Raportar
 | `l10n_ro_anaf_d394` | declarația țintă; modulul extinde mixinul de export D394 |
 | `point_of_sale` | sursa bonurilor fiscale (`pos.order`, `pos.session`, `pos.config`) |
 | `l10n_ro_anaf_d394` (Tax Sale Report) | jurnalul TVA normal păstrează vânzările POS (nu sunt excluse de aici) |
+| `l10n_ro_pos_fiscal_compliance` (opțional) | sursa seriei aparatului (*Serie aparat fiscal (AMEF)*) când *Seria AMEF* e goală |
 
 Ce este automat: colectarea bonurilor POS în op1/op2, `nrBF`/`nrAMEF`, retururile, dedup nota de sesiune.
-Ce rămâne de verificat manual: seria AMEF pe configurații, comenzile facturate în altă perioadă,
+Ce rămâne de verificat manual: seria aparatului pe fiecare punct de vânzare (*Seria AMEF* sau, dacă e
+goală, *Serie aparat fiscal (AMEF)* din conformitatea fiscală), comenzile facturate în altă perioadă,
 eventualele tranzacții în valută.
 
 ## 10. Verificări pentru consultant
 
 - [ ] Bonurile anonime apar în op2 cu baza/TVA pe cotele corecte.
 - [ ] `nrAMEF` reflectă aparatele fiscale (serie sau jurnal), nu numărul de bonuri.
+- [ ] Cu *Seria AMEF* goală și seria completată în conformitatea fiscală, `nrAMEF` numără după aceasta;
+      cu ambele completate, *Seria AMEF* are prioritate.
 - [ ] Bonurile cu CUI apar în op1 și în info `nr_BF_i1`/`incasari_i1`.
 - [ ] Retururile reduc corect baza/TVA.
 - [ ] Vânzările POS nu sunt dublate prin nota de sesiune.
@@ -117,14 +145,17 @@ eventualele tranzacții în valută.
 | Simptom | Cauză probabilă | Remediere |
 |---|---|---|
 | Vânzări POS dublate în D394 | nota de sesiune și bonurile numărate de două ori | verificați că modulul este instalat (dedup nota de sesiune) |
-| `nrAMEF` prea mare/mic | serie AMEF necompletată sau jurnale multiple | completați seria AMEF pe configurațiile POS |
+| `nrAMEF` prea mare/mic | nicio serie pe punctul de vânzare (se numără jurnalele) sau *Seria AMEF* diferită de seria din conformitatea fiscală | completați *Serie aparat fiscal (AMEF)* în conformitatea fiscală sau *Seria AMEF*; verificați că aceeași casă nu are serii diferite în cele două locuri |
+| `nrAMEF` numără o serie veche, care nu se mai vede în setări | *Serie aparat fiscal (AMEF)* a rămas completată după ce s-a debifat *Fiscalizare AMEF obligatorie*; câmpul e ascuns, dar valoarea se folosește în continuare | bifați temporar *Fiscalizare AMEF obligatorie*, corectați sau ștergeți seria, apoi debifați; sau completați *Seria AMEF* din blocul *Declarația D394* al setărilor, care are prioritate |
 | Bon POS absent din D394 | comandă nefinalizată sau facturată | finalizați comanda; dacă e facturată, apare prin factură |
 | Retur necompensat | comandă de retur nefinalizată | finalizați și plătiți returul |
 
 ## 12. Capturi de ecran
 
-### Configurație POS — câmpul Seria AMEF
+Capturile din `static/description/` sunt generate automat din `tests/test_screenshots.py`:
 
-![POS Config Seria AMEF](screenshots/01_pos_config_amef.png)
+1. `01_pos_config_amef.png` — blocul **Declarația D394** din setările punctului de vânzare, cu câmpul **Seria
+   AMEF** (pasul 1).
 
-**Point of Sale → Configurație → (deschideți un punct de vânzare)** — secțiunea **Declarația D394** adăugată de modul: câmpul **Seria AMEF** identifică aparatul de marcat electronic fiscal pentru raportarea `nrAMEF` în D394.
+Câmpul **Serie aparat fiscal (AMEF)** aparține modulului `l10n_ro_pos_fiscal_compliance`, de care acest
+modul nu depinde; ecranul lui e captura `01_config_fiscal.png` din fișa acelui modul.

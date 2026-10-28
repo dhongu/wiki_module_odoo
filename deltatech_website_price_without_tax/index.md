@@ -5,6 +5,7 @@
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_price_without_tax`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_price_without_tax`
 - **Ultima Ingestie:** `2026-06-03`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
