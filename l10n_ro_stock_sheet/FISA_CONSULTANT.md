@@ -226,4 +226,5 @@ Regenerare:
   raportului (ca în „Evaluare stoc"). Dacă o factură la alt preț sau un landed cost schimbă costul
   unei intrări după ce marfa a fost livrată, diferența apare în **Ieșiri** (în fișa de magazie, ca
   rând „Ajustare cost FIFO"), iar `Stoc inițial + Intrări − Ieșiri = Stoc final` rămâne adevărat.
-  Corecția nu se aplică pe filtrul de locații sau pe mai multe companii selectate odată.
+  Corecția nu se aplică pe filtrul de locații, pe mai multe companii selectate odată sau când
+  compania are FIFO pe locație (`l10n_ro_stock_account`).

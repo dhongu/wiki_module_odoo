@@ -1,7 +1,7 @@
 # Sale Margin - POS (localizat la `deltatech_sale_margin_pos/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_margin_pos`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_margin_pos
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_margin_pos`
 - **Ultima Ingestie:** `2026-10-22`

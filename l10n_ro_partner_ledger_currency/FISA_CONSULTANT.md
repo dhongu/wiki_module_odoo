@@ -87,14 +87,13 @@ propriul **Sold Inițial** și propriul sold rulant; antetul grupului arată sol
 
 **Rândul partenerului:** la un partener cu **o singură valută străină**, **Sold Valută** arată
 soldul valutar de la început până la sfârșitul perioadei selectate — sold inițial plus mișcările din
-perioadă. Coloana **Valută** însumează în schimb doar mișcările din perioadă, deci cele două diferă
-când există sold inițial (de exemplu, la un raport pe 2026 cu un sold de -199,99 € la 31.12.2025,
-**Valută** arată mișcările din 2026, iar **Sold Valută** include și cei -199,99 €). La partenerii
-cu mai multe valute străine, **Sold Valută** rămâne **gol** pe rândul partenerului (valutele nu se
-adună între ele); soldurile sunt pe grupurile de valută de dedesubt. Liniile în lei nu modifică soldul
-valutar; dacă în perioadă partenerul are mișcări atât în valută, cât și în lei, **Valută** rămâne
-goală pe rândul partenerului (suma nu se poate afișa într-o singură monedă), dar **Sold Valută** se
-completează. Pe linia **Sold Inițial**, **Sold Valută** apare în valuta partenerului
+perioadă (de exemplu, la un raport pe 2026 cu un sold de -199,99 € la 31.12.2025, **Sold Valută**
+include și cei -199,99 €). Coloana **Valută**, care însumează doar mișcările din perioadă, este
+**goală** pe rândul partenerului, ca să nu fie citită drept sold final (ar da valori diferite la
+rapoarte pe perioade diferite, deși soldul e același); ea apare pe liniile de detaliu, unde este suma
+documentului. La partenerii cu mai multe valute străine, **Sold Valută** rămâne **gol** pe rândul
+partenerului (valutele nu se adună între ele); soldurile sunt pe grupurile de valută de dedesubt.
+Liniile în lei nu modifică soldul valutar. Pe linia **Sold Inițial**, **Sold Valută** apare în valuta partenerului
 (ex. `-199,99 €`), nu în moneda companiei.
 
 ![Fișa Partenerului în Valută — raport desfășurat cu coloane RON și valutare](screenshots/01_raport_valuta.png)
@@ -104,7 +103,8 @@ completează. Pe linia **Sold Inițial**, **Sold Valută** apare în valuta part
   fiecare cu Sold Inițial propriu (mișcarea din anul anterior) și sold rulant coerent în moneda lui;
 - pe rândul acestui partener multi-valută, **Sold Valută** este gol;
 - la un partener cu o singură valută străină, **Sold Valută** de pe rândul partenerului este egal cu
-  sold inițial plus mișcările din perioadă, iar **Valută** arată doar mișcările din perioadă;
+  sold inițial plus mișcările din perioadă, iar **Valută** este goală pe rândul partenerului și apare
+  pe liniile de detaliu;
 - la partenerul doar în RON (`Client Intern SRL`) coloanele valutare sunt **goale** — convenție
   intenționată, pentru vizibilitatea tranzacțiilor cu valută efectivă;
 - soldul RON al partenerului (linia de antet) este suma tuturor valutelor.
@@ -122,7 +122,12 @@ completează. Pe linia **Sold Inițial**, **Sold Valută** apare în valuta part
    final în valută este **Sold Valută** de pe rândul partenerului. Dacă are o valută străină plus
    tranzacții în lei, apar grupurile „Valută RON" și „Valută EUR": soldul în EUR se citește pe
    antetul grupului EUR (identic cu **Sold Valută** de pe rândul partenerului).
-3. **Verificați:** soldul final în valută corespunde extrasului de cont comunicat de partener;
+   **Atenție la avansuri:** antetul grupului și **Sold Valută** adună toate liniile partenerului în
+   acea valută, deci și avansul de pe 409/419 (de exemplu, soldul comercial -1.800 € plus avansul
+   +200 € dau -1.600 € în antet). Soldul de confirmat nu este acest total, ci cel de pe fiecare rând
+   din PDF (soldul comercial și avansul sunt rânduri separate, vezi mai jos).
+3. **Verificați:** soldul final în valută corespunde extrasului de cont comunicat de partener; la un
+   partener cu avans, comparați cu extrasul soldul comercial din PDF, nu totalul din antet;
    perioada selectată este cea de confirmare; partenerul filtrat este cel corect.
 4. Abia apoi exportați: apăsați butonul **Confirmare sold (PDF)** din antetul raportului
    (alături de PDF/XLSX standard).
@@ -170,8 +175,10 @@ celorlalte documente.
 
 **Verificați:**
 - fișa este în moneda tranzacției (ex. EUR), fără valori în lei, fără scadență/jurnal/reconciliere;
-- soldul final corespunde antetului de grup din raportul de pe ecran (ex. `Global Trading GmbH`,
-  cont 401, EUR: sold final creditor);
+- soldul final al fișei de cont este suma liniilor contului respectiv din grupul de valută și
+  coincide cu antetul grupului din raportul de pe ecran doar dacă partenerul nu are sold pe 409/419
+  în aceeași valută (ex. `Global Trading GmbH`, cont 401, EUR: fișa arată sold final creditor
+  1.800,00 €, iar antetul grupului -1.600,00 €, pentru că include și avansul de 200 € de pe 409);
 - tranzacțiile în moneda companiei apar ca **fișe separate în RON**;
 - funcționează și pe conturile de **avans** (419/409) prin filtrarea pe cont.
 
@@ -238,7 +245,7 @@ Ce rămâne manual: trimiterea confirmării către partener și compararea cu ex
 - [ ] Soldul rulant al grupului EUR = Sold Inițial EUR + mișcările EUR din perioadă.
 - [ ] La un partener cu o singură valută străină, **Sold Valută** de pe rândul partenerului = sold
       inițial + mișcările din perioadă (soldul valutar până la sfârșitul perioadei), iar **Valută**
-      arată doar mișcările din perioadă.
+      este goală pe rândul partenerului și apare pe liniile de detaliu.
 - [ ] La un partener cu mai multe valute străine, **Sold Valută** de pe rândul partenerului rămâne gol;
       soldurile sunt pe grupurile de valută.
 - [ ] Pe linia **Sold Inițial**, **Sold Valută** apare cu simbolul valutei partenerului
@@ -247,7 +254,9 @@ Ce rămâne manual: trimiterea confirmării către partener și compararea cu ex
 - [ ] Butonul **Confirmare sold (PDF)** generează documentul: o pagină per partener, o linie per
       valută și tip de sold, cu rândul „Poziție netă totală (RON)" — suma soldurilor finale în RON
       ale tuturor rândurilor, cu titlu strict informativ (nu se compensează rândurile).
-- [ ] Soldul final din PDF corespunde antetului de grup din raportul de pe ecran.
+- [ ] Soldul final din PDF corespunde antetului de grup din raportul de pe ecran, când partenerul nu
+      are avans pe 409/419 în aceeași valută; altfel antetul = suma rândului comercial și a rândului
+      de avans din PDF, iar soldul de confirmat este cel de pe fiecare rând.
 - [ ] Un partener cu sold pe 401 ȘI pe 409 (sau 4111 ȘI 419), în aceeași valută, apare în
       „Confirmare sold" cu **DOUĂ rânduri distincte** — soldul comercial și avansul NU sunt
       adunate pe un singur rând (Tichet #9575).
@@ -273,7 +282,7 @@ Ce rămâne manual: trimiterea confirmării către partener și compararea cu ex
 | Coloanele valutare lipsesc | Multi-valuta nu este activă | Activați multi-valuta în Setări → Contabilitate |
 | Coloanele valutare sunt goale pe toate liniile | Tranzacțiile sunt în RON | Normal; verificați că facturile au fost emise în valută |
 | Soldul valutar pare amestecat | Partener cu mai multe valute, raport vechi în cache | Reîncărcați raportul; gruparea pe valută separă soldurile per monedă |
-| **Valută** și **Sold Valută** diferă pe rândul partenerului | **Valută** însumează doar mișcările din perioadă, iar **Sold Valută** include și soldul inițial | Normal; soldul de confirmat este **Sold Valută** (sau antetul grupului de valută), valabil când încasările și plățile sunt în aceeași valută. Dacă partenerul plătește în lei, liniile în lei nu modifică soldul valutar, iar nici **Confirmare sold (PDF)** nu le compensează cu soldul în EUR (arată un rând EUR și un rând RON, separate): confirmați soldul în lei (rândul RON și **Poziție netă totală (RON)**), știind că soldul în EUR nu reflectă plățile în lei |
+| **Valută** este goală pe rândul partenerului | Coloana însumează doar mișcările din perioadă și nu se afișează pe rândul partenerului, ca să nu fie citită drept sold final | Normal; soldul de confirmat este **Sold Valută** (sau antetul grupului de valută), valabil când încasările și plățile sunt în aceeași valută. Dacă partenerul plătește în lei, liniile în lei nu modifică soldul valutar, iar nici **Confirmare sold (PDF)** nu le compensează cu soldul în EUR (arată un rând EUR și un rând RON, separate): confirmați soldul în lei (rândul RON și **Poziție netă totală (RON)**), știind că soldul în EUR nu reflectă plățile în lei |
 | **Sold Valută** este gol pe rândul partenerului | Partenerul are mai multe valute străine | Normal; soldurile sunt pe grupurile de valută de dedesubt |
 | PDF-ul de confirmare iese gol | Filtrele exclud toți partenerii (perioadă/partener) | Lărgiți perioada sau scoateți filtrul de partener |
 | Sold Inițial 0 deși există istoric | Mișcările istorice sunt în ciornă | Postați documentele din perioadele anterioare |
@@ -311,8 +320,8 @@ Regenerare:
 
 În manual, păstrați orientarea pe activitatea utilizatorului: problema dublei evidențe
 RON + valută (OMFP 1802/2014 Pct. 7 alin. (2)), citirea raportului (grupurile de valută, soldul inițial și
-rulant per monedă, convenția coloanelor goale pe RON, diferența dintre **Valută** — doar perioada —
-și **Sold Valută** — cumulat) și fluxul de confirmare de sold de la
+rulant per monedă, convenția coloanelor goale pe RON, soldul valutar din **Sold Valută** de pe
+rândul partenerului, cu **Valută** doar pe liniile de detaliu) și fluxul de confirmare de sold de la
 sfârșit de an (filtrare partener → verificare pe ecran → **Confirmare sold (PDF)** → semnare și
 transmitere). Menționați convenția de semn (pozitiv = de încasat) și complementaritatea cu
 reevaluarea valutară lunară.

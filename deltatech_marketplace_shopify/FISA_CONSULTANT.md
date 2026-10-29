@@ -147,6 +147,14 @@ pentru backend-urile Dev Dashboard App) e o acțiune programată obișnuită, vi
 **Settings → Technical → Scheduled Actions** (necesită modul dezvoltator) — nu apare în meniul
 Marketplace → Configuration → Crons, care filtrează doar acțiunile numite „Marketplace: …”.
 
+Tot automat pleacă spre Shopify și **expedierea (fulfillment-ul) cu AWB-ul**: la generarea AWB-ului
+sau la validarea livrării, după setarea **Fulfillment Trigger** de pe backend, printr-un job în
+fundal. Dacă Shopify a repartizat comanda pe **mai multe locații** (de exemplu, două depozite din
+Shopify), conectorul creează **câte un fulfillment pe fiecare locație**, toate cu același AWB — în
+Shopify comanda apare cu atâtea expedieri câte locații are, nu cu una singură. Dacă Shopify refuză
+expedierea, jobul eșuează imediat, fără reîncercări, și rămâne în lista de job-uri eșuate ale
+backend-ului; problemele de rețea sau limitele de apeluri se reîncearcă singure.
+
 ### Pasul 6 — Citirea stării de sănătate
 
 Cardul kanban al backend-ului din **Marketplace → Backends** arată un indicator de sănătate
@@ -253,6 +261,8 @@ vânzare (tag-uri Shopify), verificarea periodică a webhook-urilor.
       webhook-urilor primite să se verifice.
 - [ ] Exportul de stoc/preț (dacă activat manual din **Marketplace → Configuration → Crons**)
       reflectă corect mapările de depozit/listă de prețuri.
+- [ ] O comandă repartizată în Shopify pe două locații primește, după expediere, câte un
+      fulfillment pe fiecare locație, cu același AWB, iar comanda apare ca expediată în Shopify.
 
 ### Ce NU pleacă spre Shopify: prețul liniei
 
@@ -279,6 +289,7 @@ mesaj care spune că prețul nu a fost trimis și că cele două părți diferă
 | O comandă nouă nu ajunge deloc în Odoo | Webhook `orders/create` lipsă sau expirat (Shopify a revocat/nu a găsit endpoint-ul) | **Check webhooks**, înregistrați ce apare ca `Missing`; între timp, rulați **Import** manual pe cardul Sale Order |
 | Prețul exportat către Shopify nu se schimbă | Job în eroare (rate limit `429`/GraphQL `THROTTLED`) sau varianta nu are diferență de preț față de ultima exportare | Verificați job-urile eșuate din cardul kanban al backend-ului; exportul pornește doar pentru variante cu preț schimbat |
 | Token expirat brusc pe un backend Dev Dashboard App | Cron-ul „Shopify: Refresh Access Tokens” nu a rulat (dezactivat sau Scheduled Actions oprit) | Verificați că acțiunea programată e activă; fiecare apel API reîmprospătează oricum tokenul dacă expiră în < 30 min |
+| Job eșuat „*Shopify rejected the fulfillment of order … (location …): …*” | Shopify a refuzat expedierea pe acea locație (de exemplu, cantitatea a fost deja marcată ca expediată manual în Shopify, sau comanda e închisă) | Citiți motivul din mesaj, corectați în Shopify sau în Odoo, apoi reporniți jobul (**Requeue**); cantitățile deja expediate nu se trimit a doua oară |
 | Comandă anulată în Odoo, dar rămâne activă în Shopify | Anularea nu a ajuns la Shopify (job eșuat) | Verificați job-urile eșuate ale backend-ului; reîncercați anularea |
 
 ## 10. Capturi de ecran

@@ -1,7 +1,7 @@
 # Romania - Reevaluare valutară (OMFP 1802) (localizat la `l10n_ro_currency_revaluation/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_currency_revaluation`
-- **Versiune:** `19.0.1.3.1`
+- **Versiune:** `19.0.1.3.2`
 - **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_currency_revaluation`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_currency_revaluation`
 - **Ultima Ingestie:** `2026-10-13`

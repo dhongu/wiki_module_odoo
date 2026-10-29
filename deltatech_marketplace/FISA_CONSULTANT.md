@@ -243,7 +243,9 @@ Tab-ul **Comenzi și produse** grupează regulile de date:
   - **Refuză la import conflictele de cod de bare/SKU** — importul eșuează explicit în loc să
     lege două oferte de același produs;
   - **Ignoră imaginea**;
-  - **Partajează produsul** — produsele importate nu primesc companie (multi-companie).
+  - **Partajează produsul** — produsele create din magazin nu primesc companie (multi-companie);
+    debifat, primesc compania backend-ului. Un produs Odoo existent, legat de o ofertă, își
+    păstrează compania în ambele cazuri.
 - **Stoc**:
   - **Poate trimite stocul** — comutatorul principal. Fără el, niciun stoc nu pleacă spre magazin;
   - **Nivel de stoc** — pe variantă sau pe șablon, după cum ține magazinul stocul;
@@ -458,6 +460,9 @@ Modulul **nu generează note contabile**. Contabilitatea apare în fluxurile con
 - [ ] Acțiunile programate sunt inactive la instalare și sunt activate abia după verificarea
       importului.
 - [ ] Runner-ul de joburi rulează: un job nou trece din *În așteptare* în *Efectuat*.
+- [ ] Cu **Partajează produsul** debifat, legarea sau reimportul unui produs Odoo existent, cu
+      mișcări de stoc în altă companie, nu îi schimbă compania, iar un produs nou creat din
+      magazin primește compania backend-ului.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -473,6 +478,7 @@ Modulul **nu generează note contabile**. Contabilitatea apare în fluxurile con
 | Backend-ul arată *Erori* fără erori recente în jurnal | Joburi eșuate ale backend-ului (pe canalele lui sau pe cele comune, cu înregistrări ale lui), un job comun tuturor backend-urilor, sau token expirat | Linkul **joburi eșuate** de pe card; reautentificați backend-ul |
 | O ofertă din magazin legată de varianta greșită | Potrivire după nume (fără **Potrivire strictă a variantei**) | Bifați potrivirea strictă, completați codurile de bare / referințele identice cu magazinul și corectați legătura |
 | Importul schimbă categoria produselor existente | Categoriile magazinului se leagă după nume de categorii Odoo | Debifați **Folosește categoriile** sau adăugați `categ_id` la **Câmpuri ignorate la import** (**Categorie implicită** nu oprește schimbarea) |
+| „Compania acestui produs nu poate fi schimbată atâta timp cât există mișcări de stoc ale acestuia aparținând altei companii” la importul comenzilor | Versiune a modulului mai veche de 19.0.1.42.3: importul scria compania backend-ului peste compania unui produs existent cu mișcări de stoc în altă companie | Actualizați modulul și reluați joburile eșuate din **Joburi**; ca soluție temporară, bifați **Partajează produsul** |
 | Prețul de vânzare al produsului s-a schimbat „singur” | Cineva a editat **Preț Odoo** pe o legătură | Editați prețul pe produs sau în lista de prețuri, nu pe legătură |
 
 ## 10. Capturi de ecran

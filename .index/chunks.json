@@ -865,7 +865,7 @@
   {
     "path": "deltatech_ai_source_sync/index.md",
     "module": "deltatech_ai_source_sync",
-    "version": "19.0.1.10.0",
+    "version": "19.0.1.11.2",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_source_sync",
     "local_path": "odoo-addons/bitshop_ent/deltatech_ai_source_sync",
     "last_ingest": "2026-10-20",
@@ -5106,7 +5106,7 @@
   {
     "path": "deltatech_marketplace/index.md",
     "module": "deltatech_marketplace",
-    "version": "19.0.1.42.1",
+    "version": "19.0.1.42.5",
     "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace`",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace",
     "last_ingest": "2026-10-27",
@@ -5898,7 +5898,7 @@
   {
     "path": "deltatech_marketplace_shopify/index.md",
     "module": "deltatech_marketplace_shopify",
-    "version": "19.0.1.8.10",
+    "version": "19.0.1.8.12",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_shopify",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_shopify",
     "last_ingest": "2026-10-09",
@@ -6490,7 +6490,7 @@
   {
     "path": "deltatech_nap/index.md",
     "module": "deltatech_nap",
-    "version": "19.0.1.10.0",
+    "version": "19.0.1.10.2",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_nap`",
     "local_path": "odoo-addons/bitshop/deltatech_nap",
     "last_ingest": "2026-10-27",
@@ -7857,7 +7857,7 @@
   {
     "path": "deltatech_price_change/index.md",
     "module": "deltatech_price_change",
-    "version": "19.0.1.2.2",
+    "version": "19.0.1.2.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_price_change",
     "local_path": "odoo-addons/deltatech/deltatech_price_change",
     "last_ingest": "2026-10-22",
@@ -10088,7 +10088,7 @@
   {
     "path": "deltatech_sale_margin/index.md",
     "module": "deltatech_sale_margin",
-    "version": "19.0.1.3.3",
+    "version": "19.0.1.3.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_margin",
     "local_path": "odoo-addons/deltatech/deltatech_sale_margin",
     "last_ingest": "2026-10-22",
@@ -10130,7 +10130,7 @@
   {
     "path": "deltatech_sale_margin_pos/index.md",
     "module": "deltatech_sale_margin_pos",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_margin_pos",
     "local_path": "odoo-addons/deltatech/deltatech_sale_margin_pos",
     "last_ingest": "2026-10-22",
@@ -15565,7 +15565,7 @@
   {
     "path": "l10n_ro_currency_revaluation/index.md",
     "module": "l10n_ro_currency_revaluation",
-    "version": "19.0.1.3.1",
+    "version": "19.0.1.3.2",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_currency_revaluation`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_currency_revaluation",
     "last_ingest": "2026-10-13",
@@ -16298,7 +16298,7 @@
   {
     "path": "l10n_ro_etransport_batch_enhancement/index.md",
     "module": "l10n_ro_etransport_batch_enhancement",
-    "version": "19.0.0.3.5",
+    "version": "19.0.0.4.0",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_etransport_batch_enhancement",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_etransport_batch_enhancement",
     "last_ingest": "2026-10-09",
@@ -16358,7 +16358,7 @@
   {
     "path": "l10n_ro_etransport_enhancement/index.md",
     "module": "l10n_ro_etransport_enhancement",
-    "version": "19.0.0.9.5",
+    "version": "19.0.0.10.0",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_etransport_enhancement",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_etransport_enhancement",
     "last_ingest": "2026-09-21",
@@ -17679,16 +17679,19 @@
     "module": "l10n_ro_oss_threshold",
     "version": "19.0.1.0.6",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_oss_threshold",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_oss_threshold",
-    "last_ingest": null,
-    "friendly_name": "Romania - Prag OSS 10.000 € (FR-22)",
-    "summary": "Modulul monitorizează pragul anual de 10.000 EUR pentru vânzările B2C către alte state membre UE, relevant pentru regimul OSS (One Stop Shop). Urmărește cumulat valoarea vânzărilor intracomunitare către consumatori și avertizează compania la apropierea sau depășirea pragului, peste care taxarea trebuie să se facă cu cota TVA din statul de consum. Include un cron de verificare lunară și un wizard de control la cerere.",
+    "local_path": null,
+    "last_ingest": "2026-10-29",
+    "friendly_name": "Romania - Prag OSS 10.000 €",
+    "summary": "Modulul monitorizează pragul anual de 10.000 EUR pentru vânzările B2C intracomunitare (bunuri și servicii TBE), peste care firma trebuie să aplice TVA-ul statului de consum și să se înregistreze în regimul OSS (One Stop Shop), conform Directivelor (UE) 2017/2455 și 2019/1995. Este un instrument de avertizare timpurie: cumulează valoarea anuală a vânzărilor și avertizează direct pe factură, și prin activități lunare pe fișa companiei, când pragul se apropie sau este depășit.",
     "features": [
-      "Monitorizarea cumulată a vânzărilor B2C către UE pentru raportare la pragul anual de 10.000 EUR.",
-      "Avertismente pe facturi și la nivel de companie privind apropierea sau depășirea pragului OSS.",
-      "Cron lunar de verificare automată a pragului.",
-      "Wizard de verificare la cerere a situației curente față de prag.",
-      "Configurare a parametrilor OSS în setările companiei și în setările generale de contabilitate."
+      "Cumul anual al vânzărilor B2C intracomunitare, convertit în EUR, calculat din facturile cu poziție fiscală cu aplicare automată (OSS).",
+      "Prag configurabil (implicit 10.000 EUR) și procent de avertizare (implicit 80%, adică 8.000 EUR), setate pe companie.",
+      "Avertizare pe factura către client, la apropierea de prag și la depășirea lui (avertizarea dispare dacă firma este marcată ca înregistrată OSS).",
+      "Status „Înregistrat OSS\" pe companie, pentru monitorizare informativă după înregistrarea în regim; decizia de înregistrare și aplicarea TVA-ului statului de consum rămân manuale.",
+      "Sarcină `ir.cron` lunară care creează o activitate de tip Avertizare pe fișa companiei (fără duplicate) pentru companiile din România neînregistrate OSS.",
+      "Verificare la cerere din Contabilitate → Rapoarte → Verificare Prag OSS: se aleg compania și anul, iar rezultatul arată vânzările B2C UE (EUR), pragul, procentul și statusul (sub prag, atenție, depășit, înregistrat OSS).",
+      "Configurare în Contabilitate → Configurare → Setări (secțiunea OSS — Prag €10.000) și în tab-ul „OSS Prag €10.000\" al fișei companiei, vizibile doar pentru companii cu țara România.",
+      "Dacă verificarea returnează 0 EUR, trebuie verificat că `l10n_eu_oss` este instalat și că există poziții fiscale OSS cu aplicare automată."
     ],
     "dependencies": [
       "account",
@@ -17696,10 +17699,9 @@
     ],
     "connections": [
       "l10n_ro_anaf_d398",
-      "l10n_eu_oss",
-      "l10n_eu_oss_reports"
+      "l10n_eu_oss"
     ],
-    "text": "Romania - Prag OSS 10.000 € (FR-22)\nl10n_ro_oss_threshold\nModulul monitorizează pragul anual de 10.000 EUR pentru vânzările B2C către alte state membre UE, relevant pentru regimul OSS (One Stop Shop). Urmărește cumulat valoarea vânzărilor intracomunitare către consumatori și avertizează compania la apropierea sau depășirea pragului, peste care taxarea trebuie să se facă cu cota TVA din statul de consum. Include un cron de verificare lunară și un wizard de control la cerere.\nMonitorizarea cumulată a vânzărilor B2C către UE pentru raportare la pragul anual de 10.000 EUR.\nAvertismente pe facturi și la nivel de companie privind apropierea sau depășirea pragului OSS.\nCron lunar de verificare automată a pragului.\nWizard de verificare la cerere a situației curente față de prag.\nConfigurare a parametrilor OSS în setările companiei și în setările generale de contabilitate."
+    "text": "Romania - Prag OSS 10.000 €\nl10n_ro_oss_threshold\nModulul monitorizează pragul anual de 10.000 EUR pentru vânzările B2C intracomunitare (bunuri și servicii TBE), peste care firma trebuie să aplice TVA-ul statului de consum și să se înregistreze în regimul OSS (One Stop Shop), conform Directivelor (UE) 2017/2455 și 2019/1995. Este un instrument de avertizare timpurie: cumulează valoarea anuală a vânzărilor și avertizează direct pe factură, și prin activități lunare pe fișa companiei, când pragul se apropie sau este depășit.\nCumul anual al vânzărilor B2C intracomunitare, convertit în EUR, calculat din facturile cu poziție fiscală cu aplicare automată (OSS).\nPrag configurabil (implicit 10.000 EUR) și procent de avertizare (implicit 80%, adică 8.000 EUR), setate pe companie.\nAvertizare pe factura către client, la apropierea de prag și la depășirea lui (avertizarea dispare dacă firma este marcată ca înregistrată OSS).\nStatus „Înregistrat OSS\" pe companie, pentru monitorizare informativă după înregistrarea în regim; decizia de înregistrare și aplicarea TVA-ului statului de consum rămân manuale.\nSarcină `ir.cron` lunară care creează o activitate de tip Avertizare pe fișa companiei (fără duplicate) pentru companiile din România neînregistrate OSS.\nVerificare la cerere din Contabilitate → Rapoarte → Verificare Prag OSS: se aleg compania și anul, iar rezultatul arată vânzările B2C UE (EUR), pragul, procentul și statusul (sub prag, atenție, depășit, înregistrat OSS).\nConfigurare în Contabilitate → Configurare → Setări (secțiunea OSS — Prag €10.000) și în tab-ul „OSS Prag €10.000\" al fișei companiei, vizibile doar pentru companii cu țara România.\nDacă verificarea returnează 0 EUR, trebuie verificat că `l10n_eu_oss` este instalat și că există poziții fiscale OSS cu aplicare automată."
   },
   {
     "path": "l10n_ro_partner_cnp/index.md",
@@ -17815,7 +17817,7 @@
   {
     "path": "l10n_ro_partner_ledger_currency/index.md",
     "module": "l10n_ro_partner_ledger_currency",
-    "version": "19.0.1.4.9",
+    "version": "19.0.1.4.11",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_partner_ledger_currency",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_partner_ledger_currency",
     "last_ingest": null,
@@ -19625,14 +19627,29 @@
     "module": "l10n_ro_stock_cmp_periodic",
     "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_cmp_periodic",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_cmp_periodic",
-    "last_ingest": null,
+    "local_path": null,
+    "last_ingest": "2026-10-29",
     "friendly_name": "Romania - CMP periodic lunar",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - CMP periodic lunar\nl10n_ro_stock_cmp_periodic"
+    "summary": "Modulul recalculează lunar Costul Mediu Ponderat (CMP) conform OMFP 1802/2014, pentru firmele care folosesc CMP periodic (lunar) în locul CMP perpetuu folosit implicit de Odoo 19. La finele lunii, modulul calculează CMP-ul lunar din stocul inițial și toate intrările, determină diferența față de valoarea perpetuă deja postată și generează o singură notă contabilă de corecție, fără să modifice notele postate anterior, cu audit trail complet. Firmele care folosesc FIFO sau acceptă CMP perpetuu nu au nevoie de el.",
+    "features": [
+      "Recalcul CMP lunar: `CMP_lunar = (Val_stoc_inițial + Val_intrări) / (Cant_stoc_inițial + Cant_intrări)`; la numitor zero se folosește `standard_price` ca fallback.",
+      "Notă de corecție (Abordarea B): o singură notă echilibrată `602/607 ↔ 302/371`, datată în ultima zi a lunii, cu două linii per produs cu Δ ≠ 0; conturile se iau din fișa produsului. Δ pozitiv înseamnă ieșiri subevaluate, Δ negativ ieșiri supraevaluate, iar la Δ = 0 nu se generează linie. Corecția nu afectează TVA.",
+      "Wizard cu previzualizare: Contabilitate → CMP Periodic Lunar → Recalcul CMP Periodic; perioada implicită este luna curentă, produsele se pot restrânge opțional, iar tabelul arată per produs stocul inițial, intrările, ieșirile, CMP perpetuu și periodic, valorile și Δ corecție, înainte de confirmare.",
+      "Activare per categorie de produs: pe companie se activează opțiunea și se alege un jurnal de tip *Operațiuni diverse*; se procesează doar categoriile bifate „CMP periodic lunar\", cu metoda de cost Cost mediu (AVCO).",
+      "Audit trail: Registru CMP Periodic (stări draft/calculat/postat) cu stoc inițial, intrări, CMP perpetuu vs. periodic, Δ corecție și nota asociată; fiecare mișcare de ieșire din lună este marcată cu valoarea provizorie (CMP perpetuu) și valoarea finală (CMP periodic).",
+      "Protecții: recalculul este blocat dacă luna este deja postată sau perioada este blocată fiscal; pentru a recalcula, nota se anulează și liniile lunii se șterg sau se resetează din registru.",
+      "Recalcul automat opțional: job lunar, inactiv implicit, care rulează în ultima zi a lunii (bifa „Recalcul automat la închidere lună\"); mișcările înregistrate după rulare nu intră în corecție.",
+      "Coexistă cu coeficientul K (metode independente, pot fi active simultan)."
+    ],
+    "dependencies": [
+      "account",
+      "stock_account",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_stock_k_coefficient"
+    ],
+    "text": "Romania - CMP periodic lunar\nl10n_ro_stock_cmp_periodic\nModulul recalculează lunar Costul Mediu Ponderat (CMP) conform OMFP 1802/2014, pentru firmele care folosesc CMP periodic (lunar) în locul CMP perpetuu folosit implicit de Odoo 19. La finele lunii, modulul calculează CMP-ul lunar din stocul inițial și toate intrările, determină diferența față de valoarea perpetuă deja postată și generează o singură notă contabilă de corecție, fără să modifice notele postate anterior, cu audit trail complet. Firmele care folosesc FIFO sau acceptă CMP perpetuu nu au nevoie de el.\nRecalcul CMP lunar: `CMP_lunar = (Val_stoc_inițial + Val_intrări) / (Cant_stoc_inițial + Cant_intrări)`; la numitor zero se folosește `standard_price` ca fallback.\nNotă de corecție (Abordarea B): o singură notă echilibrată `602/607 ↔ 302/371`, datată în ultima zi a lunii, cu două linii per produs cu Δ ≠ 0; conturile se iau din fișa produsului. Δ pozitiv înseamnă ieșiri subevaluate, Δ negativ ieșiri supraevaluate, iar la Δ = 0 nu se generează linie. Corecția nu afectează TVA.\nWizard cu previzualizare: Contabilitate → CMP Periodic Lunar → Recalcul CMP Periodic; perioada implicită este luna curentă, produsele se pot restrânge opțional, iar tabelul arată per produs stocul inițial, intrările, ieșirile, CMP perpetuu și periodic, valorile și Δ corecție, înainte de confirmare.\nActivare per categorie de produs: pe companie se activează opțiunea și se alege un jurnal de tip *Operațiuni diverse*; se procesează doar categoriile bifate „CMP periodic lunar\", cu metoda de cost Cost mediu (AVCO).\nAudit trail: Registru CMP Periodic (stări draft/calculat/postat) cu stoc inițial, intrări, CMP perpetuu vs. periodic, Δ corecție și nota asociată; fiecare mișcare de ieșire din lună este marcată cu valoarea provizorie (CMP perpetuu) și valoarea finală (CMP periodic).\nProtecții: recalculul este blocat dacă luna este deja postată sau perioada este blocată fiscal; pentru a recalcula, nota se anulează și liniile lunii se șterg sau se resetează din registru.\nRecalcul automat opțional: job lunar, inactiv implicit, care rulează în ultima zi a lunii (bifa „Recalcul automat la închidere lună\"); mișcările înregistrate după rulare nu intră în corecție.\nCoexistă cu coeficientul K (metode independente, pot fi active simultan)."
   },
   {
     "path": "l10n_ro_stock_consignment/index.md",
@@ -19709,14 +19726,25 @@
     "module": "l10n_ro_stock_constraints",
     "version": "19.0.1.0.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_constraints",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_constraints",
-    "last_ingest": null,
+    "local_path": null,
+    "last_ingest": "2026-10-29",
     "friendly_name": "Romania - Constrângeri de integritate a stocului",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - Constrângeri de integritate a stocului\nl10n_ro_stock_constraints"
+    "summary": "Modulul protejează integritatea datelor de stoc după validare: împiedică modificarea mișcărilor de stoc deja înregistrate contabil și stocul negativ pe locațiile interne. Este complementar cu [deltatech_stock_negative](../deltatech_stock_negative/index.md), care blochează stocul negativ înainte de validare. Nu are meniuri sau ecrane proprii și nu cere configurare: protecțiile sunt active imediat după instalare.",
+    "features": [
+      "Blocare modificare mișcări valorizate: interzice modificarea cantității pe liniile unei mișcări finalizate cu valorizare contabilă și adăugarea de linii noi pe o astfel de mișcare, ca să nu apară discrepanțe între cantitățile fizice și cele contabile.",
+      "Stoc non-negativ pe locații interne: constrângere PostgreSQL pe `stock.quant` (`quantity >= 0`) pentru locațiile de tip intern, instalată la instalarea modulului; locațiile de tranzit, input sau virtuale (producție, pierderi, clienți, furnizori) nu sunt afectate. Încălcarea ei se vede la utilizator ca o eroare internă a bazei de date.",
+      "Mesaje de blocare: „Nu se poate modifica cantitatea pe o mișcare/transfer finalizat cu valorizare contabilă.\" și „Nu se poate crea o linie pe o mișcare finalizată cu valorizare contabilă existentă.\"",
+      "Corecții permise: un transfer finalizat se corectează doar prin ajustare de inventar (Inventar → Operațiuni → Ajustări fizice), retur sau storno.",
+      "Mereu activ: nu există opțiune de dezactivare din interfață; pentru situații speciale (de exemplu migrări de date) se contactează administratorul tehnic.",
+      "Adaptat pentru Odoo 19: valorizarea este pe `stock.move` (`is_valued`), nu pe `stock.valuation.layer`, eliminat în această versiune."
+    ],
+    "dependencies": [
+      "stock_account"
+    ],
+    "connections": [
+      "deltatech_stock_negative"
+    ],
+    "text": "Romania - Constrângeri de integritate a stocului\nl10n_ro_stock_constraints\nModulul protejează integritatea datelor de stoc după validare: împiedică modificarea mișcărilor de stoc deja înregistrate contabil și stocul negativ pe locațiile interne. Este complementar cu [deltatech_stock_negative](../deltatech_stock_negative/index.md), care blochează stocul negativ înainte de validare. Nu are meniuri sau ecrane proprii și nu cere configurare: protecțiile sunt active imediat după instalare.\nBlocare modificare mișcări valorizate: interzice modificarea cantității pe liniile unei mișcări finalizate cu valorizare contabilă și adăugarea de linii noi pe o astfel de mișcare, ca să nu apară discrepanțe între cantitățile fizice și cele contabile.\nStoc non-negativ pe locații interne: constrângere PostgreSQL pe `stock.quant` (`quantity >= 0`) pentru locațiile de tip intern, instalată la instalarea modulului; locațiile de tranzit, input sau virtuale (producție, pierderi, clienți, furnizori) nu sunt afectate. Încălcarea ei se vede la utilizator ca o eroare internă a bazei de date.\nMesaje de blocare: „Nu se poate modifica cantitatea pe o mișcare/transfer finalizat cu valorizare contabilă.\" și „Nu se poate crea o linie pe o mișcare finalizată cu valorizare contabilă existentă.\"\nCorecții permise: un transfer finalizat se corectează doar prin ajustare de inventar (Inventar → Operațiuni → Ajustări fizice), retur sau storno.\nMereu activ: nu există opțiune de dezactivare din interfață; pentru situații speciale (de exemplu migrări de date) se contactează administratorul tehnic.\nAdaptat pentru Odoo 19: valorizarea este pe `stock.move` (`is_valued`), nu pe `stock.valuation.layer`, eliminat în această versiune."
   },
   {
     "path": "l10n_ro_stock_gestiune/index.md",
@@ -19792,14 +19820,33 @@
     "module": "l10n_ro_stock_k_coefficient",
     "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_k_coefficient",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_k_coefficient",
-    "last_ingest": null,
+    "local_path": null,
+    "last_ingest": "2026-10-29",
     "friendly_name": "Romania - Coeficient K pentru diferențe de preț la stocuri",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - Coeficient K pentru diferențe de preț la stocuri\nl10n_ro_stock_k_coefficient"
+    "summary": "Modulul implementează calculul lunar al coeficientului K de repartizare a diferențelor de preț la stocuri, conform OMFP 1802/2014, pentru entitățile care evaluează stocurile la prețuri de înregistrare standard (prestabilite), cu stocul în `302`/`371` și diferențele de preț în `3028`/`378`. La finele lunii, diferențele acumulate se repartizează proporțional cu ieșirile din stoc, iar modulul generează nota contabilă și, opțional, stornarea în roșu la începutul lunii următoare. Firmele care evaluează la cost efectiv (CMP sau FIFO) nu au nevoie de el.",
+    "features": [
+      "Wizard de calcul lunar din Contabilitate → Contabilitate → Coeficient K Stocuri → Calcul Coeficient K: perioada implicită este luna anterioară, iar previzualizarea arată per pereche de conturi soldul inițial și rulajul debit pe stoc și pe diferențe, ieșirile din stoc (Rc), numitorul, K (6 zecimale) și Suma K.",
+      "Formula: `K = (Si dif. + Rd dif.) / (Si stoc + Rd stoc)`, iar `Suma K = K × ieșiri stoc`; dacă numitorul este zero, K = 0 (marcaj Div/0) și pentru acea pereche nu se generează notă.",
+      "Perechi de conturi configurabile (cont stoc, cont diferențe, cont cheltuieli), de exemplu 302↔3028↔602 și 371↔378↔607, din setările de contabilitate sau din Coeficient K Stocuri → Perechi conturi K.",
+      "Nota K: postată în jurnalul K (de tip *Operațiuni diverse*), în ultima zi a lunii; cheltuiala (602/607) se debitează și diferențele (3028/378) se creditează.",
+      "Stornare automată în roșu la 1 a lunii următoare (opțiune implicit activă): aceleași conturi cu valori negative, care reduc rulajele în loc să le inverseze.",
+      "Registru Coeficient K cu istoricul calculelor (stări Calculat / Postat / Stornat) și legături la nota K și la stornare.",
+      "Protecții: recalculul este blocat pentru o lună deja postată; nota nu se generează dacă perioada este blocată fiscal.",
+      "Blocarea recepțiilor cu preț standard zero (opțional, pe categoria de produs, metoda Preț standard): refuză validarea recepțiilor pentru produse fără cost standard, premisa unui K corect.",
+      "Cerințe pe produs și categorie: metoda de cost Preț standard, „Cont diferențe preț\" identic cu contul de diferențe din pereche, iar prețul standard stabilit o dată pe an (modificarea lui în cursul lunii reevaluează stocul și distorsionează K).",
+      "Job lunar opțional, inactiv implicit, care calculează și postează automat K pentru luna precedentă.",
+      "Modulul nu generează note la recepție sau vânzare; acestea rămân în sarcina `stock_account` și `purchase_stock`, iar K repartizează doar diferențele deja înregistrate în 3028/378."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro",
+      "stock",
+      "stock_account"
+    ],
+    "connections": [
+      "l10n_ro_stock_cmp_periodic"
+    ],
+    "text": "Romania - Coeficient K pentru diferențe de preț la stocuri\nl10n_ro_stock_k_coefficient\nModulul implementează calculul lunar al coeficientului K de repartizare a diferențelor de preț la stocuri, conform OMFP 1802/2014, pentru entitățile care evaluează stocurile la prețuri de înregistrare standard (prestabilite), cu stocul în `302`/`371` și diferențele de preț în `3028`/`378`. La finele lunii, diferențele acumulate se repartizează proporțional cu ieșirile din stoc, iar modulul generează nota contabilă și, opțional, stornarea în roșu la începutul lunii următoare. Firmele care evaluează la cost efectiv (CMP sau FIFO) nu au nevoie de el.\nWizard de calcul lunar din Contabilitate → Contabilitate → Coeficient K Stocuri → Calcul Coeficient K: perioada implicită este luna anterioară, iar previzualizarea arată per pereche de conturi soldul inițial și rulajul debit pe stoc și pe diferențe, ieșirile din stoc (Rc), numitorul, K (6 zecimale) și Suma K.\nFormula: `K = (Si dif. + Rd dif.) / (Si stoc + Rd stoc)`, iar `Suma K = K × ieșiri stoc`; dacă numitorul este zero, K = 0 (marcaj Div/0) și pentru acea pereche nu se generează notă.\nPerechi de conturi configurabile (cont stoc, cont diferențe, cont cheltuieli), de exemplu 302↔3028↔602 și 371↔378↔607, din setările de contabilitate sau din Coeficient K Stocuri → Perechi conturi K.\nNota K: postată în jurnalul K (de tip *Operațiuni diverse*), în ultima zi a lunii; cheltuiala (602/607) se debitează și diferențele (3028/378) se creditează.\nStornare automată în roșu la 1 a lunii următoare (opțiune implicit activă): aceleași conturi cu valori negative, care reduc rulajele în loc să le inverseze.\nRegistru Coeficient K cu istoricul calculelor (stări Calculat / Postat / Stornat) și legături la nota K și la stornare.\nProtecții: recalculul este blocat pentru o lună deja postată; nota nu se generează dacă perioada este blocată fiscal.\nBlocarea recepțiilor cu preț standard zero (opțional, pe categoria de produs, metoda Preț standard): refuză validarea recepțiilor pentru produse fără cost standard, premisa unui K corect.\nCerințe pe produs și categorie: metoda de cost Preț standard, „Cont diferențe preț\" identic cu contul de diferențe din pereche, iar prețul standard stabilit o dată pe an (modificarea lui în cursul lunii reevaluează stocul și distorsionează K).\nJob lunar opțional, inactiv implicit, care calculează și postează automat K pentru luna precedentă.\nModulul nu generează note la recepție sau vânzare; acestea rămân în sarcina `stock_account` și `purchase_stock`, iar K repartizează doar diferențele deja înregistrate în 3028/378."
   },
   {
     "path": "l10n_ro_stock_obyc/index.md",
@@ -19999,14 +20046,34 @@
     "module": "l10n_ro_stock_provision",
     "version": "19.0.1.0.7",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_provision",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_provision",
-    "last_ingest": null,
+    "local_path": null,
+    "last_ingest": "2026-10-29",
     "friendly_name": "Romania - Ajustări pentru deprecierea stocurilor (39x)",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - Ajustări pentru deprecierea stocurilor (39x)\nl10n_ro_stock_provision"
+    "summary": "Modulul identifică automat stocurile fără rulaj (slow-moving) și generează note contabile de ajustare pentru depreciere, conform OMFP 1802/2014, pct. 143–148. Contabilul stabilește numărul de zile fără mișcare și procentul de depreciere, sistemul scanează stocurile și propune ajustările per produs, iar la confirmare se generează o singură notă: Dr 6814 = Cr 39x la constituire sau majorare și Dr 39x = Cr 7814 la diminuare sau reluare. Operațiunea mișcă doar conturi de clasa 3, 6 și 7 și nu afectează TVA.",
+    "features": [
+      "Identificare automată slow-moving: scanează stocurile interne cu cantitate și valoare pozitive, fără mișcare de intrare peste pragul configurat (implicit 180 de zile).",
+      "Calcul pe diferență: provizionul propus (valoarea contabilă × procentul de depreciere) se compară cu cel existent (soldul contului 39x pentru produs), iar nota înregistrează doar diferența: constituire, majorare, diminuare, reluare sau fără ajustare.",
+      "Flux de aprobare: Analiză → Confirmat → Note generate (plus Anulat); în lista Contabilitate → Închidere → Provizioane Stocuri (39x) se completează data analizei, jurnalul, zilele fără mișcare și procentul de depreciere, apoi Calculează. Fiecare linie are bifa „Aprobat\" (implicit activă) și o observație internă; liniile debifate nu generează notă.",
+      "Generare note contabile: după Confirmă propunerile (cel puțin o linie aprobată cu ajustare nenulă), Generează Note Contabile postează o singură notă în jurnalul ales; analiza cu notă postată nu se anulează direct, nota se stornează mai întâi.",
+      "Mapare conturi 39x per categorie de produs (de exemplu 391 materii prime, 392 consumabile, 394 produse finite, 397 mărfuri), în secțiunea „Provizioane Stocuri RO (39x)\" din categorie; categoriile fără cont 39x sunt ignorate de analiză.",
+      "Procent și prag per categorie: procentul de depreciere și zilele slow-moving pot fi suprascrise pe categorie (`0` la zile înseamnă valoarea globală).",
+      "Setări generale: în Contabilitate → Configurare → Setări, secțiunea „Provizioane Stocuri Slow-Moving\": conturile 6814 și 7814 și zilele implicite fără mișcare.",
+      "Surse de date flexibile: folosește `product.valuation.history` din `deltatech_stock_valuation` dacă e instalat, altfel stocul curent, cu data ultimei intrări din `l10n_ro_last_in_date` (dacă e instalat `l10n_ro_stock_aged_report`) sau din `in_date`.",
+      "Cron lunar opțional, dezactivat implicit, care creează pe fiecare companie românească o analiză în starea Analiză, fără să posteze note.",
+      "Limitare: un produs ieșit complet din stoc, dar cu sold 39x rămas, nu apare în analiză; soldul se reia printr-o notă contabilă directă."
+    ],
+    "dependencies": [
+      "stock",
+      "account",
+      "l10n_ro_stock_aged_report",
+      "deltatech_stock_valuation"
+    ],
+    "connections": [
+      "l10n_ro_stock_aged_report",
+      "l10n_ro_last_in_date",
+      "deltatech_stock_valuation"
+    ],
+    "text": "Romania - Ajustări pentru deprecierea stocurilor (39x)\nl10n_ro_stock_provision\nModulul identifică automat stocurile fără rulaj (slow-moving) și generează note contabile de ajustare pentru depreciere, conform OMFP 1802/2014, pct. 143–148. Contabilul stabilește numărul de zile fără mișcare și procentul de depreciere, sistemul scanează stocurile și propune ajustările per produs, iar la confirmare se generează o singură notă: Dr 6814 = Cr 39x la constituire sau majorare și Dr 39x = Cr 7814 la diminuare sau reluare. Operațiunea mișcă doar conturi de clasa 3, 6 și 7 și nu afectează TVA.\nIdentificare automată slow-moving: scanează stocurile interne cu cantitate și valoare pozitive, fără mișcare de intrare peste pragul configurat (implicit 180 de zile).\nCalcul pe diferență: provizionul propus (valoarea contabilă × procentul de depreciere) se compară cu cel existent (soldul contului 39x pentru produs), iar nota înregistrează doar diferența: constituire, majorare, diminuare, reluare sau fără ajustare.\nFlux de aprobare: Analiză → Confirmat → Note generate (plus Anulat); în lista Contabilitate → Închidere → Provizioane Stocuri (39x) se completează data analizei, jurnalul, zilele fără mișcare și procentul de depreciere, apoi Calculează. Fiecare linie are bifa „Aprobat\" (implicit activă) și o observație internă; liniile debifate nu generează notă.\nGenerare note contabile: după Confirmă propunerile (cel puțin o linie aprobată cu ajustare nenulă), Generează Note Contabile postează o singură notă în jurnalul ales; analiza cu notă postată nu se anulează direct, nota se stornează mai întâi.\nMapare conturi 39x per categorie de produs (de exemplu 391 materii prime, 392 consumabile, 394 produse finite, 397 mărfuri), în secțiunea „Provizioane Stocuri RO (39x)\" din categorie; categoriile fără cont 39x sunt ignorate de analiză.\nProcent și prag per categorie: procentul de depreciere și zilele slow-moving pot fi suprascrise pe categorie (`0` la zile înseamnă valoarea globală).\nSetări generale: în Contabilitate → Configurare → Setări, secțiunea „Provizioane Stocuri Slow-Moving\": conturile 6814 și 7814 și zilele implicite fără mișcare.\nSurse de date flexibile: folosește `product.valuation.history` din `deltatech_stock_valuation` dacă e instalat, altfel stocul curent, cu data ultimei intrări din `l10n_ro_last_in_date` (dacă e instalat `l10n_ro_stock_aged_report`) sau din `in_date`.\nCron lunar opțional, dezactivat implicit, care creează pe fiecare companie românească o analiză în starea Analiză, fără să posteze note.\nLimitare: un produs ieșit complet din stoc, dar cu sold 39x rămas, nu apare în analiză; soldul se reia printr-o notă contabilă directă."
   },
   {
     "path": "l10n_ro_stock_report/index.md",
@@ -20071,7 +20138,7 @@
   {
     "path": "l10n_ro_stock_sheet/index.md",
     "module": "l10n_ro_stock_sheet",
-    "version": "19.0.1.1.12",
+    "version": "19.0.1.1.13",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_sheet`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_sheet",
     "last_ingest": "2026-10-24",
@@ -20335,14 +20402,29 @@
     "module": "l10n_ro_vat_group",
     "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_vat_group",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_vat_group",
-    "last_ingest": null,
+    "local_path": null,
+    "last_ingest": "2026-10-29",
     "friendly_name": "Romania - Grup fiscal TVA consolidat",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - Grup fiscal TVA consolidat\nl10n_ro_vat_group"
+    "summary": "Modulul gestionează grupurile fiscale TVA conform art. 269² Cod Fiscal și OPANAF 2731/2016. Permite definirea unui grup de companii cu relații de control ca un singur subiect fiscal TVA, cu CUI unic, marcarea automată a tranzacțiilor intra-grup, excluse din baza TVA, și generarea unui raport TVA consolidat per companie membră, pentru D300-ul unic depus de membrul raportor.",
+    "features": [
+      "Grup fiscal TVA (Contabilitate → Configurare → Contabilitate → Grupuri Fiscale TVA, vizibil pentru rolul Contabilitate / Administrator): denumire, CUI de grup (`RO_GRP_XXXXXX`), data înregistrării la ANAF, membrul raportor și companiile membre; stările `În constituire → Activ → Dizolvat`.",
+      "Activare cu validări: cel puțin 2 companii membre, membru raportor inclus între membri și CUI de grup completat; la activare câmpul „Grup fiscal TVA\" se setează pe toate companiile membre.",
+      "Marcare automată intra-grup: la postarea unei facturi către o companie membră (partenerul asociat exact companiei), factura primește bifa „Tranzacție intra-grup TVA\" și un banner de avertizare; bifa rămâne editabilă manual, inclusiv după postare.",
+      "Marcare retroactivă: butonul „Marchează retroactiv intra-grup\" marchează facturile postate dintre membri care nu erau încă marcate; se rulează la activarea inițială și după adăugarea unui membru.",
+      "Raport TVA consolidat (wizard, pe o perioadă): per companie membră TVA colectată (4427), TVA deductibilă (4426), intra-grup colectat și deductibil, TVA net, plus total consolidat fără intra-grup; toate companiile trebuie să lucreze în RON.",
+      "Blocare perioadă sincronizată: după validarea D300 consolidat, „Blochează perioada\" setează data de blocare fiscală pe toate companiile membre (necesită drept de administrator).",
+      "Buton smart „Intra-grup\": lista facturilor marcate intra-grup, pentru audit și corecții.",
+      "Membru nou sau dizolvare: pentru un membru nou se resetează grupul la ciornă, se adaugă compania și se reactivează; la dizolvare facturile ulterioare nu mai sunt marcate, iar raportul consolidat nu mai este disponibil.",
+      "Ce nu include: generarea XML-ului D300 consolidat cu CUI de grup (necesită extensia `l10n_ro_anaf_d300`) și formularul 045 de constituire a grupului, planificat pentru o versiune ulterioară."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_anaf_d300"
+    ],
+    "text": "Romania - Grup fiscal TVA consolidat\nl10n_ro_vat_group\nModulul gestionează grupurile fiscale TVA conform art. 269² Cod Fiscal și OPANAF 2731/2016. Permite definirea unui grup de companii cu relații de control ca un singur subiect fiscal TVA, cu CUI unic, marcarea automată a tranzacțiilor intra-grup, excluse din baza TVA, și generarea unui raport TVA consolidat per companie membră, pentru D300-ul unic depus de membrul raportor.\nGrup fiscal TVA (Contabilitate → Configurare → Contabilitate → Grupuri Fiscale TVA, vizibil pentru rolul Contabilitate / Administrator): denumire, CUI de grup (`RO_GRP_XXXXXX`), data înregistrării la ANAF, membrul raportor și companiile membre; stările `În constituire → Activ → Dizolvat`.\nActivare cu validări: cel puțin 2 companii membre, membru raportor inclus între membri și CUI de grup completat; la activare câmpul „Grup fiscal TVA\" se setează pe toate companiile membre.\nMarcare automată intra-grup: la postarea unei facturi către o companie membră (partenerul asociat exact companiei), factura primește bifa „Tranzacție intra-grup TVA\" și un banner de avertizare; bifa rămâne editabilă manual, inclusiv după postare.\nMarcare retroactivă: butonul „Marchează retroactiv intra-grup\" marchează facturile postate dintre membri care nu erau încă marcate; se rulează la activarea inițială și după adăugarea unui membru.\nRaport TVA consolidat (wizard, pe o perioadă): per companie membră TVA colectată (4427), TVA deductibilă (4426), intra-grup colectat și deductibil, TVA net, plus total consolidat fără intra-grup; toate companiile trebuie să lucreze în RON.\nBlocare perioadă sincronizată: după validarea D300 consolidat, „Blochează perioada\" setează data de blocare fiscală pe toate companiile membre (necesită drept de administrator).\nButon smart „Intra-grup\": lista facturilor marcate intra-grup, pentru audit și corecții.\nMembru nou sau dizolvare: pentru un membru nou se resetează grupul la ciornă, se adaugă compania și se reactivează; la dizolvare facturile ulterioare nu mai sunt marcate, iar raportul consolidat nu mai este disponibil.\nCe nu include: generarea XML-ului D300 consolidat cu CUI de grup (necesită extensia `l10n_ro_anaf_d300`) și formularul 045 de constituire a grupului, planificat pentru o versiune ulterioară."
   },
   {
     "path": "l10n_ro_vat_on_payment_lock/index.md",
@@ -20375,28 +20457,58 @@
     "module": "l10n_ro_vat_refund",
     "version": "19.0.1.0.7",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_vat_refund",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_vat_refund",
-    "last_ingest": null,
+    "local_path": null,
+    "last_ingest": "2026-10-29",
     "friendly_name": "Romania - Rambursare TVA (sold negativ D300)",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - Rambursare TVA (sold negativ D300)\nl10n_ro_vat_refund"
+    "summary": "Modulul urmărește cererile de rambursare a TVA rezultate din soldul negativ al decontului D300, conform Codului Fiscal art. 303: termen ANAF de 45 de zile, cu dobânzi de 0,02%/zi la depășire. Gestionează ciclul cererii printr-o mașină de stări (cerere → inspecție → rambursată/compensată) și generează notele contabile aferente. Depunerea documentației și comunicarea cu ANAF rămân pași manuali.",
+    "features": [
+      "Alegerea opțiunii pe D300: pe închiderea de TVA a perioadei, verificarea „TVA de recuperat — alegere opțiune\" deschide un asistent pentru reportarea soldului sau cererea de rambursare; alegerea „rambursare\" creează cererea și bifează rambursarea în D300 (`solicit_ramb = D`, cu primul cont bancar al companiei, schimbabil din verificarea „Opțiuni decont D300\"). Asistentul se confirmă înainte de generarea fișierului D300.",
+      "Lista cererilor: Contabilitate → Raportare → Declarații ANAF → Rambursare TVA, cu stare colorată (roșu pentru termen expirat sau cerere respinsă, verde pentru cele soluționate favorabil); numărul cererii vine dintr-o secvență dedicată.",
+      "Formularul cererii: compania, luna D300, D300-ul aferent (opțional, recomandat), suma solicitată, jurnalul contabil (primul jurnal general, schimbabil) și zona de termene ANAF cu data depunerii, termenul de 45 de zile, data soluționării, zilele de depășire și dobânzile.",
+      "Mașină de stări: Ciornă → Depusă la ANAF → În inspecție fiscală → Aprobată / Aprobată parțial / Respinsă → Virată de ANAF / Compensată, prin butoanele „Depune la ANAF\", „În inspecție fiscală\", „Aprobat integral\", „Aprobat parțial\", „Respins\", „Înregistrează virat ANAF\" și „Înregistrează compensare\". Data depunerii se poate completa manual dacă cererea a fost depusă înainte de înregistrarea în Odoo.",
+      "Dobânzi de întârziere: suma solicitată × 0,02% × zilele de depășire a termenului de 45 de zile, și în cazul aprobării parțiale (se calculează pe suma solicitată integral).",
+      "Note contabile: la virament, încasarea în 5121 și stingerea TVA de recuperat 4424, cu linie suplimentară pentru dobânzi, în venituri 7588; la compensare, stingerea 4424, cu contrapartida (de exemplu 4423 sau 4481) completată manual pe notă. Conturile se caută automat în planul de conturi românesc.",
+      "Urmărirea termenelor: o verificare programată creează activități de avertizare pe cererile aflate în stare Depusă sau În inspecție, cu termenul depășit.",
+      "Mai multe luni: se creează câte o cerere pentru fiecare lună D300 cu sold negativ."
+    ],
+    "dependencies": [
+      "l10n_ro_anaf_d300",
+      "mail"
+    ],
+    "connections": [
+      "l10n_ro_anaf_d300",
+      "l10n_ro_reports",
+      "ro_tax_return_type"
+    ],
+    "text": "Romania - Rambursare TVA (sold negativ D300)\nl10n_ro_vat_refund\nModulul urmărește cererile de rambursare a TVA rezultate din soldul negativ al decontului D300, conform Codului Fiscal art. 303: termen ANAF de 45 de zile, cu dobânzi de 0,02%/zi la depășire. Gestionează ciclul cererii printr-o mașină de stări (cerere → inspecție → rambursată/compensată) și generează notele contabile aferente. Depunerea documentației și comunicarea cu ANAF rămân pași manuali.\nAlegerea opțiunii pe D300: pe închiderea de TVA a perioadei, verificarea „TVA de recuperat — alegere opțiune\" deschide un asistent pentru reportarea soldului sau cererea de rambursare; alegerea „rambursare\" creează cererea și bifează rambursarea în D300 (`solicit_ramb = D`, cu primul cont bancar al companiei, schimbabil din verificarea „Opțiuni decont D300\"). Asistentul se confirmă înainte de generarea fișierului D300.\nLista cererilor: Contabilitate → Raportare → Declarații ANAF → Rambursare TVA, cu stare colorată (roșu pentru termen expirat sau cerere respinsă, verde pentru cele soluționate favorabil); numărul cererii vine dintr-o secvență dedicată.\nFormularul cererii: compania, luna D300, D300-ul aferent (opțional, recomandat), suma solicitată, jurnalul contabil (primul jurnal general, schimbabil) și zona de termene ANAF cu data depunerii, termenul de 45 de zile, data soluționării, zilele de depășire și dobânzile.\nMașină de stări: Ciornă → Depusă la ANAF → În inspecție fiscală → Aprobată / Aprobată parțial / Respinsă → Virată de ANAF / Compensată, prin butoanele „Depune la ANAF\", „În inspecție fiscală\", „Aprobat integral\", „Aprobat parțial\", „Respins\", „Înregistrează virat ANAF\" și „Înregistrează compensare\". Data depunerii se poate completa manual dacă cererea a fost depusă înainte de înregistrarea în Odoo.\nDobânzi de întârziere: suma solicitată × 0,02% × zilele de depășire a termenului de 45 de zile, și în cazul aprobării parțiale (se calculează pe suma solicitată integral).\nNote contabile: la virament, încasarea în 5121 și stingerea TVA de recuperat 4424, cu linie suplimentară pentru dobânzi, în venituri 7588; la compensare, stingerea 4424, cu contrapartida (de exemplu 4423 sau 4481) completată manual pe notă. Conturile se caută automat în planul de conturi românesc.\nUrmărirea termenelor: o verificare programată creează activități de avertizare pe cererile aflate în stare Depusă sau În inspecție, cu termenul depășit.\nMai multe luni: se creează câte o cerere pentru fiecare lună D300 cu sold negativ."
   },
   {
     "path": "l10n_ro_vat_regularization/index.md",
     "module": "l10n_ro_vat_regularization",
     "version": "19.0.1.0.6",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_vat_regularization",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_vat_regularization",
-    "last_ingest": null,
+    "local_path": null,
+    "last_ingest": "2026-10-29",
     "friendly_name": "Romania - Regularizare TVA",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - Regularizare TVA\nl10n_ro_vat_regularization"
+    "summary": "Modulul automatizează regularizarea TVA la finele perioadei fiscale (lună sau trimestru), conform OMFP 1802/2014. Calculează soldurile conturilor de TVA deductibilă (4426) și colectată (4427) din înregistrările postate și generează cu un singur clic nota contabilă de închidere, stabilind dacă firma are TVA de plată (4423) sau TVA de recuperat (4424). Rezultatul trebuie să corespundă decontului D300 al perioadei; regularizarea îl pregătește contabil, dar nu înlocuiește depunerea declarației.",
+    "features": [
+      "Creare regularizare: Contabilitate → Contabilitate → Regularizare TVA → Nou, cu perioada (De la / Până la), data notei (de obicei ultima zi a perioadei), conturile și jurnalul de operațiuni diverse; se pot crea mai multe regularizări, pentru perioade diferite, fiecare cu nota ei.",
+      "Calcul solduri: „Calculează solduri\" afișează TVA deductibilă (4426), TVA colectată (4427), TVA net și rezultatul (TVA de plată, de recuperat sau zero), cu un banner explicativ; la TVA net zero nu se generează notă.",
+      "TVA de plată: când 4427 depășește 4426, nota închide 4427 în 4426 și trece diferența în 4423 (implicit 44231, TVA de plată curentă); pentru scadență peste un an, contul 44231 se înlocuiește manual cu 44232, înainte de postare.",
+      "TVA de recuperat: când 4426 depășește 4427, nota închide ambele conturi, iar diferența rămâne de recuperat în 4424.",
+      "Preluare automată din planul de conturi: conturile 4426, 4427, 44231 și 4424 și primul jurnal de tip General se precompletează la creare; pot fi schimbate cât timp regularizarea este în ciornă.",
+      "Anulare și resetare: o regularizare postată se poate anula (se anulează și nota contabilă) și apoi reseta la ciornă.",
+      "Acces: meniul este vizibil pentru Contabilitate / Utilizator sau superior; crearea și postarea cer rolul Contabilitate / Manager.",
+      "Integrare cu închiderea perioadei: dacă este instalat `l10n_ro_period_close_enhanced`, checklistul semnalează lipsa regularizării pentru perioadă."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_period_close_enhanced"
+    ],
+    "text": "Romania - Regularizare TVA\nl10n_ro_vat_regularization\nModulul automatizează regularizarea TVA la finele perioadei fiscale (lună sau trimestru), conform OMFP 1802/2014. Calculează soldurile conturilor de TVA deductibilă (4426) și colectată (4427) din înregistrările postate și generează cu un singur clic nota contabilă de închidere, stabilind dacă firma are TVA de plată (4423) sau TVA de recuperat (4424). Rezultatul trebuie să corespundă decontului D300 al perioadei; regularizarea îl pregătește contabil, dar nu înlocuiește depunerea declarației.\nCreare regularizare: Contabilitate → Contabilitate → Regularizare TVA → Nou, cu perioada (De la / Până la), data notei (de obicei ultima zi a perioadei), conturile și jurnalul de operațiuni diverse; se pot crea mai multe regularizări, pentru perioade diferite, fiecare cu nota ei.\nCalcul solduri: „Calculează solduri\" afișează TVA deductibilă (4426), TVA colectată (4427), TVA net și rezultatul (TVA de plată, de recuperat sau zero), cu un banner explicativ; la TVA net zero nu se generează notă.\nTVA de plată: când 4427 depășește 4426, nota închide 4427 în 4426 și trece diferența în 4423 (implicit 44231, TVA de plată curentă); pentru scadență peste un an, contul 44231 se înlocuiește manual cu 44232, înainte de postare.\nTVA de recuperat: când 4426 depășește 4427, nota închide ambele conturi, iar diferența rămâne de recuperat în 4424.\nPreluare automată din planul de conturi: conturile 4426, 4427, 44231 și 4424 și primul jurnal de tip General se precompletează la creare; pot fi schimbate cât timp regularizarea este în ciornă.\nAnulare și resetare: o regularizare postată se poate anula (se anulează și nota contabilă) și apoi reseta la ciornă.\nAcces: meniul este vizibil pentru Contabilitate / Utilizator sau superior; crearea și postarea cer rolul Contabilitate / Manager.\nIntegrare cu închiderea perioadei: dacă este instalat `l10n_ro_period_close_enhanced`, checklistul semnalează lipsa regularizării pentru perioadă."
   },
   {
     "path": "l10n_ro_website_anaf/index.md",
@@ -20458,14 +20570,29 @@
     "module": "l10n_ro_wip_closing",
     "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_wip_closing",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_wip_closing",
-    "last_ingest": null,
+    "local_path": null,
+    "last_ingest": "2026-10-29",
     "friendly_name": "Romania - Producție în curs (331/711) OMFP 1802",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Romania - Producție în curs (331/711) OMFP 1802\nl10n_ro_wip_closing"
+    "summary": "Modulul implementează evaluarea și stornarea în roșu a producției în curs de execuție (WIP) conform OMFP 1802/2014 pct. 302–305, pentru companiile cu activitate de producție. Lunar, calculează valoarea ordinelor de fabricație neterminate, postează nota `Dr 331 = Cr 711` și, la 1 a lunii următoare, stornarea ei în roșu; corectează astfel comportamentul nativ Odoo, care stornează la data + 1 zi. Produce și un Proces-Verbal de Evaluare în PDF. Operațiunea mișcă doar conturile 331 și 711 și nu intră în D300 sau D394.",
+    "features": [
+      "Evaluare WIP persistentă: Contabilitate → Închidere → WIP Producție în Curs (OMFP 1802), cu stări Ciornă → Postată → Anulată și audit trail; data stornării (1 a lunii următoare) se calculează automat și nu se modifică.",
+      "Calcul automat din ordinele de fabricație confirmate, în producție sau de finalizat: valoarea componentelor (cantitatea consumată × prețul standard, sau prețul lotului la valorizare pe lot) plus manopera (operațiile finalizate până la data evaluării, la costul pe oră al centrului de lucru; fără cost pe oră, manopera este zero, fără eroare). Un ordin fără componente preluate are valoare zero și nu apare în tabel.",
+      "Nota WIP și storno: „Postează\" generează `331 Producție în curs = 711 Variația stocurilor` la data evaluării și, în același pas, stornarea în roșu la 1 a lunii următoare, cu valori negative (nu o notă inversă).",
+      "Corectarea datei de stornare în wizardul nativ `mrp.account.wip.accounting` pentru companiile cu țara România.",
+      "PV PDF: Procesul-Verbal de Evaluare cu semnături Director Economic / Contabil Șef, conform OMFP 2861/2009, din butonul „PV PDF\".",
+      "Anulare: „Anulează\" anulează ambele note, dacă sunt postate; dacă storno-ul este în luna curentă și reflectat în balanță, anularea îi elimină efectul din balanța lunii.",
+      "Configurare: în Contabilitate → Configurare → Setări, secțiunea „Închidere WIP (OMFP 1802)\": jurnalul WIP (de tip Diverse) și închiderea automată; conturile 331 și 711 se caută automat prin prefix, iar la lipsa lor postarea eșuează.",
+      "Cron opțional, inactiv implicit, care rulează zilnic și postează WIP-ul în ultima zi a lunii dacă închiderea automată este activată; rularea manuală oferă control complet.",
+      "Integrare cu închiderea de perioadă: la fiecare WIP postat se actualizează data ultimei închideri WIP pe companie, folosită de `l10n_ro_period_close_enhanced`."
+    ],
+    "dependencies": [
+      "mrp_account",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_period_close_enhanced"
+    ],
+    "text": "Romania - Producție în curs (331/711) OMFP 1802\nl10n_ro_wip_closing\nModulul implementează evaluarea și stornarea în roșu a producției în curs de execuție (WIP) conform OMFP 1802/2014 pct. 302–305, pentru companiile cu activitate de producție. Lunar, calculează valoarea ordinelor de fabricație neterminate, postează nota `Dr 331 = Cr 711` și, la 1 a lunii următoare, stornarea ei în roșu; corectează astfel comportamentul nativ Odoo, care stornează la data + 1 zi. Produce și un Proces-Verbal de Evaluare în PDF. Operațiunea mișcă doar conturile 331 și 711 și nu intră în D300 sau D394.\nEvaluare WIP persistentă: Contabilitate → Închidere → WIP Producție în Curs (OMFP 1802), cu stări Ciornă → Postată → Anulată și audit trail; data stornării (1 a lunii următoare) se calculează automat și nu se modifică.\nCalcul automat din ordinele de fabricație confirmate, în producție sau de finalizat: valoarea componentelor (cantitatea consumată × prețul standard, sau prețul lotului la valorizare pe lot) plus manopera (operațiile finalizate până la data evaluării, la costul pe oră al centrului de lucru; fără cost pe oră, manopera este zero, fără eroare). Un ordin fără componente preluate are valoare zero și nu apare în tabel.\nNota WIP și storno: „Postează\" generează `331 Producție în curs = 711 Variația stocurilor` la data evaluării și, în același pas, stornarea în roșu la 1 a lunii următoare, cu valori negative (nu o notă inversă).\nCorectarea datei de stornare în wizardul nativ `mrp.account.wip.accounting` pentru companiile cu țara România.\nPV PDF: Procesul-Verbal de Evaluare cu semnături Director Economic / Contabil Șef, conform OMFP 2861/2009, din butonul „PV PDF\".\nAnulare: „Anulează\" anulează ambele note, dacă sunt postate; dacă storno-ul este în luna curentă și reflectat în balanță, anularea îi elimină efectul din balanța lunii.\nConfigurare: în Contabilitate → Configurare → Setări, secțiunea „Închidere WIP (OMFP 1802)\": jurnalul WIP (de tip Diverse) și închiderea automată; conturile 331 și 711 se caută automat prin prefix, iar la lipsa lor postarea eșuează.\nCron opțional, inactiv implicit, care rulează zilnic și postează WIP-ul în ultima zi a lunii dacă închiderea automată este activată; rularea manuală oferă control complet.\nIntegrare cu închiderea de perioadă: la fiecare WIP postat se actualizează data ultimei închideri WIP pe companie, folosită de `l10n_ro_period_close_enhanced`."
   },
   {
     "path": "l10n_ro_zip/index.md",
@@ -21538,13 +21665,25 @@
     "module": "terrabit_website_sale_tracking_base",
     "version": "19.0.1.0.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_website_sale_tracking_base",
-    "local_path": "odoo-addons/bitshop/terrabit_website_sale_tracking_base",
-    "last_ingest": null,
+    "local_path": null,
+    "last_ingest": "2026-10-29",
     "friendly_name": "Website Sale Tracking Base",
-    "summary": "",
-    "features": [],
-    "dependencies": [],
-    "connections": [],
-    "text": "Website Sale Tracking Base\nterrabit_website_sale_tracking_base"
+    "summary": "Modul de fundație care centralizează și standardizează urmărirea evenimentelor de eCommerce pentru mai multe platforme de marketing (Meta/Facebook, TikTok, Google etc.) într-un magazin Odoo 19. Oferă o configurație globală unică, pe website (tipul de identificator de produs și excluderea livrării din valoarea conversiilor), și evenimente normalizate pe care modulele de pixel le consumă, ca logica să nu fie duplicată în fiecare modul de tracking.",
+    "features": [
+      "Configurare centralizată: în Website → Configurare → Setări, per website, Item ID Type (Product Variant ID / Product Template ID / Internal Reference (SKU); implicit variantă) și Exclude Delivery (excluderea costului de livrare din valoarea evenimentelor de tracking: Purchase, AddToCart etc.).",
+      "Evenimente normalizate: capturează acțiunile utilizatorului neacoperite de core (begin checkout, add payment info, search, contact pe linkuri `tel:`, form submit) și le re-emite ca `CustomEvent`-uri DOM cu prefix `terrabit_tracking:*` pe rădăcina `.oe_website_sale`; fiecare eveniment poartă în `detail.options` setările de tracking (`excludeDelivery`, `itemIdType`).",
+      "View item și add to cart: nu sunt re-emise; modulele de pixel folosesc direct evenimentele core `view_item_event` și `add_to_cart_event`, pentru a evita duplicarea.",
+      "Îmbogățire payload tracking: extinde datele de tracking ale core-ului (view item, add to cart, purchase) cu `item_tmpl_id` și `item_sku`, astfel încât `Item ID Type` să poată fi respectat de pixeli în browser. Datele pentru view item se populează și fără o cheie Google Analytics configurată.",
+      "Sursă unică de adevăr: helperul `_get_tracking_data` returnează valoarea comenzii (fără livrare, dacă opțiunea e activă) și moneda, ca valorile să fie identice între Pixel (client) și Conversion API (server) în modulele dependente."
+    ],
+    "dependencies": [
+      "website_sale"
+    ],
+    "connections": [
+      "terrabit_facebook_pixel",
+      "terrabit_tiktok_pixel",
+      "terrabit_google_tag"
+    ],
+    "text": "Website Sale Tracking Base\nterrabit_website_sale_tracking_base\nModul de fundație care centralizează și standardizează urmărirea evenimentelor de eCommerce pentru mai multe platforme de marketing (Meta/Facebook, TikTok, Google etc.) într-un magazin Odoo 19. Oferă o configurație globală unică, pe website (tipul de identificator de produs și excluderea livrării din valoarea conversiilor), și evenimente normalizate pe care modulele de pixel le consumă, ca logica să nu fie duplicată în fiecare modul de tracking.\nConfigurare centralizată: în Website → Configurare → Setări, per website, Item ID Type (Product Variant ID / Product Template ID / Internal Reference (SKU); implicit variantă) și Exclude Delivery (excluderea costului de livrare din valoarea evenimentelor de tracking: Purchase, AddToCart etc.).\nEvenimente normalizate: capturează acțiunile utilizatorului neacoperite de core (begin checkout, add payment info, search, contact pe linkuri `tel:`, form submit) și le re-emite ca `CustomEvent`-uri DOM cu prefix `terrabit_tracking:*` pe rădăcina `.oe_website_sale`; fiecare eveniment poartă în `detail.options` setările de tracking (`excludeDelivery`, `itemIdType`).\nView item și add to cart: nu sunt re-emise; modulele de pixel folosesc direct evenimentele core `view_item_event` și `add_to_cart_event`, pentru a evita duplicarea.\nÎmbogățire payload tracking: extinde datele de tracking ale core-ului (view item, add to cart, purchase) cu `item_tmpl_id` și `item_sku`, astfel încât `Item ID Type` să poată fi respectat de pixeli în browser. Datele pentru view item se populează și fără o cheie Google Analytics configurată.\nSursă unică de adevăr: helperul `_get_tracking_data` returnează valoarea comenzii (fără livrare, dacă opțiunea e activă) și moneda, ca valorile să fie identice între Pixel (client) și Conversion API (server) în modulele dependente."
   }
 ]

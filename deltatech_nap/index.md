@@ -1,7 +1,7 @@
 # NAP (localizat la `deltatech_nap/index.md`)
 
 - **Nume Tehnic:** `deltatech_nap`
-- **Versiune:** `19.0.1.10.0`
+- **Versiune:** `19.0.1.10.2`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_nap`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_nap`
 - **Ultima Ingestie:** `2026-10-27`

@@ -1,7 +1,7 @@
 # eTransport Batch Enhancement (localizat la `l10n_ro_etransport_batch_enhancement/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_etransport_batch_enhancement`
-- **Versiune:** `19.0.0.3.5`
+- **Versiune:** `19.0.0.4.0`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_etransport_batch_enhancement
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_etransport_batch_enhancement`
 - **Ultima Ingestie:** `2026-10-09`

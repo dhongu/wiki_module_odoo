@@ -1,7 +1,7 @@
 # Romania - Fișă de magazie și balanță analitică a stocurilor (localizat la `l10n_ro_stock_sheet/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_sheet`
-- **Versiune:** `19.0.1.1.12`
+- **Versiune:** `19.0.1.1.13`
 - **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_sheet`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_sheet`
 - **Ultima Ingestie:** `2026-10-24`
