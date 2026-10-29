@@ -1,7 +1,7 @@
 # Romania - Instrumente de plată (cecuri, bilete la ordin) (localizat la `l10n_ro_payment_instruments/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_payment_instruments`
-- **Versiune:** `19.0.1.2.2`
+- **Versiune:** `19.0.1.3.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payment_instruments
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_payment_instruments`
 - **Ultima Ingestie:** 2026-10-09

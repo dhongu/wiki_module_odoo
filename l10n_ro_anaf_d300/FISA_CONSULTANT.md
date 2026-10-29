@@ -49,6 +49,9 @@ D300 este decontul de taxă pe valoarea adăugată depus de persoanele impozabil
    - document cu cotă redusă 11%;
    - storno;
    - taxare inversă, dacă se testează scenarii IC/RC.
+6. Pentru TVA la încasare: activați „Cash Basis" pe companie și folosiți taxe cu exigibilitate
+   „La plată" (`tax_exigibility = on_payment`) pe facturile respective. Doar aceste facturi intră în
+   rândurile informative A / A1 / B / B1.
 
 ## 6. Flux de utilizare
 
@@ -81,8 +84,18 @@ Exporturile ANAF se găsesc în meniul **rotiță (⚙)** din bara raportului:
 
 6. Apăsați rotița ⚙ și alegeți **„D300 file XML (Soft J)"** pentru validare în DUKIntegrator.
    Înainte de generare, modulul validează datele companiei (CUI, județ, adresă, reprezentant) și,
-   pentru XML, structura față de schema XSD; o eroare oprește exportul cu mesaj explicit.
-7. Alegeți **„D300 file XDP (Soft A)"** dacă se folosește formularul PDF inteligent ANAF.
+   pentru XML, structura față de schema XSD; o eroare oprește exportul cu mesaj explicit. XML-ul
+   conține și rândurile informative A / A1 / B / B1 (atributele `valoare_a` … `tva_b1`), cu aceleași
+   valori ca în PDF.
+7. Alegeți **„D300 file XDP (Soft A)"** dacă se folosește formularul PDF inteligent ANAF. În
+   formular verificați secțiunea „Regularizări conform art. 303": rd. 38 preia TVA de plată din
+   decontul precedent neachitat (sold creditor 4423, minus plățile din perioadă), rd. 41 soldul
+   negativ reportat (sold debitor 4424, dacă nu s-a cerut rambursarea), iar rd. 39 și rd. 42
+   (diferențe stabilite prin decizie ANAF) nu se calculează din solduri: preiau doar notele
+   înregistrate cu grilele „39 - TVA” / „42 - TVA”, deci rămân goale dacă nu există o decizie
+   comunicată înregistrată astfel. Rândurile informative **A / A1 / B / B1** (TVA la încasare) sunt
+   completate automat, la finalul formularului (secțiunea „TVA neexigibilă”, rândurile A, A1, B, B1,
+   cu bază și TVA) — vezi secțiunea 7.
 8. Atașați fișierul validat și recipisa în dosarul lunii.
 
 ### Pasul 3 — Fluxul „Returns" (declarații fiscale și checklist)
@@ -108,6 +121,8 @@ dedicate — „Generează D300 (TVA)" (deschide raportul pre-filtrat pe perioad
 | TVA colectată mai mare decât TVA deductibilă | sold de plată; trebuie corelat cu 4423 |
 | TVA deductibilă mai mare decât TVA colectată | sold negativ; se decide reportare sau rambursare |
 | Taxe cu exigibilitate la plată/încasare | verificați 4428 și înregistrările CABA înainte de D300 |
+| Rd. A / A1 (facturi emise cu TVA la încasare) | sold neexigibil la sfârșitul perioadei (art. 282 alin. (3)-(8)): toate facturile emise neîncasate, nu doar cele din lună, inclusiv cele încasate după perioadă; notele de credit emise intră cu minus. TVA din rd. A ≈ soldul creditor 4428 „TVA neexigibilă colectată". A1 = din care facturile din ultimele 6 luni / 2 trimestre calendaristice (după data facturii) |
+| Rd. B / B1 (facturi primite cu TVA la încasare) | sold nededus la sfârșitul perioadei (art. 297 alin. (2)-(3)); TVA din rd. B ≈ soldul debitor 4428 „TVA neexigibilă deductibilă". O notă de credit primită, încasată parțial, rămâne cu minus doar pentru partea neîncasată (rd. B crește față de decontul anterior, ca în jurnalul de cumpărări). B1 = din care ultimele 6 luni / 2 trimestre |
 | Taxare inversă | verificați simetria 4426/4427 și rândurile D300 aferente |
 | Import fără plata efectivă a TVA în vamă (art. 326 alin. (4)-(5): certificat de amânare, vămuire centralizată, înscriere în evidențele declarantului, bunurile din art. 331 alin. (2) lit. b), c), i)–k)) | pe DVI se alege „21% IMP AM” / „11% IMP AM”: Dr 4426 = Cr 4427 (taxă colectată și deductibilă simultan, art. 326 alin. (5)), fără 446 și fără plată în vamă; baza de impozitare TVA din DVI (art. 289) și TVA-ul pe rd. 7 și 22, în perioada datei DVI (art. 285). Deducerea cere DVI-ul cu importatorul și suma taxei datorate și înscrierea taxei colectate în aceeași perioadă (art. 299 alin. (1) lit. d)). Factura furnizorului extern rămâne pe „0% EX G”, fără grile. Importul cu plata efectivă în vamă (art. 326 alin. (3)) rămâne pe rd. 24 / 25 |
 | TVA parțial/nedeductibil | rd. 24 / 25 și rd. 30 au TVA-ul deductibil brut (inclusiv partea nededusă: art. 298; art. 297 alin. (4) a contrario, respectiv art. 300 la regim mixt); rd. 31 doar taxa efectiv dedusă — instrucțiunile D300 (OPANAF 174/2026) |
@@ -140,8 +155,10 @@ Notarea exactă depinde de soldurile lunii și de politica modulului de închide
 | D300-08 | Generare XML Soft J (rotița ⚙) | fișierul XML se generează și trece validarea XSD; cu date companie incomplete → eroare blocantă cu mesaj |
 | D300-09 | Generare XDP Soft A | fișierul XDP se generează pentru formularul inteligent ANAF |
 | D300-10 | Apăsare buton „Declarații" (Returns) | se deschide tabloul declarațiilor pe perioade; checklist-ul perioadei afișează „Generează D300 (TVA)" și „Atașează D300 (XML semnat)" |
-| D300-12 | DVI fără plata TVA în vamă (taxa „21% IMP AM”), bază 1.000 lei | rd. 7 și rd. 22: bază 1.000, TVA 210; nimic pe rd. 7.1 / 22.1 sau 24 |
 | D300-11 | Atașare D300 semnat în checklist | fișierul semnat se atașează la declarație, verificarea se marchează revizuită, declarația avansează prin etape |
+| D300-12 | DVI fără plata TVA în vamă (taxa „21% IMP AM”), bază 1.000 lei | rd. 7 și rd. 22: bază 1.000, TVA 210; nimic pe rd. 7.1 / 22.1 sau 24 |
+| D300-13 | Factură emisă și factură primită cu TVA la încasare, neîncasate; o notă de credit primită de 93,56 lei încasată cu 20 lei | factura emisă apare în rd. A / A1, cea primită în rd. B / B1; nota de credit scade rd. B doar cu partea neîncasată (bază 60,79 / TVA 12,77) |
+| D300-14 | Decont precedent cu sold negativ 522 (4424), decont curent cu TVA de plată 1.483, export XDP | în PDF: rd. 39 gol, rd. 41 = 522, rd. 40 = 1.483, rd. 43 = 522, rd. 44 = 961 |
 
 ## 9. Legături cu alte module / declarații
 
@@ -165,6 +182,8 @@ Ce rămâne de verificat manual: regularizarea contabilă 4426/4427/4423/4424, r
 - [ ] Totalurile corespund jurnalelor TVA și balanței.
 - [ ] XML Soft J se generează și poate fi validat.
 - [ ] XDP se deschide în formularul ANAF.
+- [ ] În PDF, rd. 38 / 41 preiau soldurile decontului precedent, iar rd. 39 / 42 sunt goale fără decizie ANAF.
+- [ ] Rd. A / B corespund soldului 4428 la sfârșitul perioadei (facturi emise în A, primite în B).
 - [ ] Datele companiei sunt completate corect.
 - [ ] Perioada închisă nu mai permite modificări fără procedură de corecție.
 - [ ] Fluxul de rambursare/reportare este clar dacă soldul este negativ.
@@ -176,7 +195,7 @@ Ce rămâne de verificat manual: regularizarea contabilă 4426/4427/4423/4424, r
 | Rânduri D300 goale | Tax tags lipsă sau documente nepostate | Verificați taxele și postați documentele |
 | Export respins | CUI/județ/date companie incomplete | Completați datele companiei și delegatul |
 | Diferență față de balanță | Note manuale fără tax tags sau perioadă greșită | Verificați liniile contabile și data fiscală |
-| TVA la încasare incorectă | 4428/CABA nereconciliat | Verificați plățile și înregistrările cash basis |
+| TVA la încasare incorectă | 4428/CABA nereconciliat | Verificați plățile și înregistrările cash basis. Rd. A / B sunt solduri la sfârșitul perioadei: includ și facturile încasate / plătite după perioadă, iar notele de credit încasate parțial intră cu minus doar pentru restul neîncasat |
 | TVA deductibilă prea mare | TVA nedeductibilă tratată ca 4426 | Verificați regimul de deductibilitate al taxei |
 
 ## 12. Capturi de ecran

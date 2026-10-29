@@ -1,7 +1,7 @@
 # Deltatech Advanced Planner (localizat la `deltatech_advanced_planner/index.md`)
 
 - **Nume Tehnic:** `deltatech_advanced_planner`
-- **Versiune:** `19.0.1.12.1`
+- **Versiune:** `19.0.1.13.0`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_advanced_planner`
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_advanced_planner`
 - **Ultima Ingestie:** `2026-10-27`

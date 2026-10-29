@@ -1,7 +1,7 @@
 # Deltatech MCP Server
 
 - **Nume Tehnic:** `deltatech_mcp_server`
-- **Versiune:** `19.0.1.15.1`
+- **Versiune:** `19.0.1.15.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_mcp_server
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_mcp_server`
 - **Ultima Ingestie:** `2026-10-24`

@@ -106,6 +106,8 @@ dobândă 8,5%.
 5. Opțional: activați acțiunea programată **Împrumuturi și leasing RO: rate scadente și note de
    sfârșit de lună** din **Setări → Tehnic → Automatizare → Acțiuni planificate** (cu modul
    dezvoltator activ).
+6. Înainte de **Activează contractul**, verificați tipul și felul contractului, moneda și parametrii
+   financiari: după activare nu se mai pot modifica direct pe contract (pasul 11).
 
 ## 6. Flux de utilizare
 
@@ -139,7 +141,9 @@ conturile, durata și calculul zilelor se completează din tip. Completați **Nu
 **Comision de acordare** = 600; în pagina **Contabilitate**, **Jurnal bancă** = contul pe care se
 trage creditul.
 
-Apăsați **Generează grafic**, apoi **Activează contractul**. Verificați pe ecran:
+Apăsați **Generează grafic**, apoi **Activează contractul**. De la activare, parametrii financiari și
+graficul nu se mai modifică direct, la credit ca și la leasing (detalii și căile de corecție la pasul 11).
+Verificați pe ecran:
 - rata 1 (15.02.2025) are principal 2.972,23 și dobândă 744,00 (120.000 × 7,2% × 31 / 360), total
   3.716,23; coloana TVA lipsește (creditul e scutit);
 - **Sold după rată** scade de la 117.027,77 până la zero la ultima rată;
@@ -216,6 +220,9 @@ așteptare** cu scadența de la data aplicării, pornind de la principalul lor; 
 rămân neschimbate. Nu se generează notă contabilă. Schimbarea apare în pagina **Schimbări de
 dobândă** și în istoricul contractului, cu dobânda rămasă înainte și după.
 
+Pe un contract activ, câmpul **Dobândă anuală** nu se poate edita: **Schimbă dobânda** este singura
+cale de a modifica dobânda.
+
 ![Schimbarea dobânzii](screenshots/09_schimbare_dobanda.png)
 
 ### Pasul 10 — Contractul de leasing financiar
@@ -250,6 +257,19 @@ Apăsați **Activează contractul** și deschideți **Notă activare**. Verifica
 
 Imediat după, reclasificarea mută în **1671** principalul scadent în 12 luni (avansul și primele
 rate).
+
+De la activare, contractul nu mai acceptă modificări ale parametrilor din care s-a calculat graficul:
+tip și fel de contract, monedă, dată start, dată sfârșit, număr de rate, sumă finanțată, avans, valoare reziduală,
+dobândă, metodă, convenție de zile, regim și cotă TVA, câmpurile din pagina **Preluare și comisioane**.
+Câmpurile devin needitabile, iar în grafic nu se mai pot adăuga sau șterge rate. Rămân disponibile
+**Omite** pe o rată, **Schimbă dobânda** (pasul 9) și **Închidere anticipată** (pasul 13). O greșeală
+de introducere se corectează cu **Resetează la ciornă**, apoi **Generează grafic** și o nouă activare.
+Resetarea e posibilă doar cât contractul nu are note înregistrate: la leasingul financiar nou, anulați
+întâi **Nota de activare**; după ce s-au înregistrat rate, butonul rămâne vizibil, dar resetarea e
+refuzată cu mesajul din secțiunea 9, iar corecțiile se fac doar prin **Omite**, **Schimbă dobânda** și **Închidere anticipată**.
+Un contract **Închis** nu are **Resetează la ciornă**: apăsați întâi **Redeschide** (contractul revine
+**Activ**), apoi continuați ca mai sus. Un contract închis anticipat se redeschide abia după anularea
+notei de închidere anticipată (sau a reconcilierii extrasului de închidere).
 
 ![Nota de activare: 2133 = 1672](screenshots/11_leasing_nota_activare.png)
 
@@ -527,6 +547,12 @@ automat) și verificarea conturilor liniilor ei, fișa de mijloc fix, diferența
 - [ ] Rata 1 din extras: Dr 16211 2.972,23 + Dr 16821 744 = Cr 5121 3.716,23; soldul 16821 = 0.
 - [ ] Anularea reconcilierii extrasului readuce rata în **În așteptare**.
 - [ ] Schimbarea dobânzii nu modifică ratele înregistrate și nu creează notă.
+- [ ] Pe un contract activ, parametrii financiari (tip, fel, monedă, dată start, dată sfârșit, număr de rate, sumă
+      finanțată, avans, reziduală, dobândă, metodă, zile, TVA, preluare, comisioane) sunt needitabili,
+      iar în grafic nu se pot adăuga sau șterge rate.
+- [ ] **Schimbă dobânda** funcționează pe contractul activ și actualizează **Dobândă anuală**.
+- [ ] După **Resetează la ciornă** (contract fără note înregistrate), câmpurile se pot edita și graficul
+      se poate regenera.
 - [ ] Leasing: valoarea bunului 100.000, avans în linia 0, reziduala separată, cota TVA 19 până la
       rata din 01.07.2025 și 21 de la rata din 01.08.2025.
 - [ ] Nota de activare: Dr 2133 = Cr 1672 100.000; factura ratei: 1671 + 666 + 4426 = 4041.
@@ -577,6 +603,10 @@ automat) și verificarea conturilor liniilor ei, fișa de mijloc fix, diferența
 | „Selectați factura de închidere confirmată a locatorului.” | Închidere anticipată la leasing pe factură, fără factură aleasă | Confirmați factura de închidere și alegeți-o în asistent |
 | „Factura de închidere trebuie să fie o factură de furnizor confirmată.” / „… aparține altui partener decât locatorul.” / „Factura este deja legată de rate de leasing.” | Factura aleasă la închidere nu e confirmată, e de la alt partener sau a fost folosită pentru rate | Alegeți factura de închidere corectă a locatorului |
 | „Nu există rate în așteptare de facturat.” | **Creează factură furnizor** pe o rată deja înregistrată, omisă sau anulată | Alegeți o rată **În așteptare** |
+| „Parametrii financiari ai contractului … nu mai pot fi modificați după activare (…)” | Modificare pe un contract activ sau închis a unui parametru din care s-a calculat graficul (de exemplu prin import) | Pentru dobândă folosiți **Schimbă dobânda**; altfel **Resetează la ciornă**, corectați și regenerați graficul |
+| „Ratele unui contract activ sau închis nu pot fi șterse …” / „Nu se pot adăuga rate la un contract activ sau închis …” | Ștergere sau adăugare de rate pe un contract activ sau închis prin import sau automatizare (în interfață butoanele sunt ascunse) | **Omite** rata, **Schimbă dobânda** sau **Resetează la ciornă** și **Generează grafic** |
+| „Contractul are note înregistrate și nu poate fi readus la ciornă. Anulați întâi notele.” | **Resetează la ciornă** pe un contract cu nota de activare, rate înregistrate sau tragere din extras | Anulați întâi nota de activare sau tragerea; cu rate înregistrate corectați prin **Schimbă dobânda**, **Omite** sau **Închidere anticipată** |
+| „Contractul a fost închis anticipat. Anulați nota de închidere anticipată (sau reconcilierea extrasului) ca să-l redeschideți.” | **Redeschide** pe un contract închis prin **Închidere anticipată** | Anulați nota de închidere anticipată sau reconcilierea extrasului de închidere; contractul revine singur **Activ** |
 | „Data aplicării trebuie să fie după ultima rată înregistrată” | Schimbare de dobândă retroactivă | Alegeți o dată după ultima rată înregistrată |
 | „Există rate înregistrate după data închiderii.” | Închidere anticipată datată înaintea unor rate deja plătite | Datați închiderea după ultima rată înregistrată |
 | Eroare de perioadă blocată la închiderea anticipată | Notele de sfârșit de lună de anulat sunt într-o perioadă blocată | Deblocați perioada sau datați închiderea după ultima notă de sfârșit de lună |
@@ -634,4 +664,7 @@ Necesită `playwright` în mediul Odoo + Chrome de sistem; dacă lipsește, test
   factura de închidere în asistent (pasul 13); varianta pe nota din contract nu are captură.
 - Pentru contractele preluate în derulare, explicați câmpurile din pagina **Preluare și comisioane**:
   ratele deja înregistrate (rambursate la credit, facturate la leasing), principalul rămas, partea
-  sub un an și dobânda deja angajată.
+  sub un an și dobânda deja angajată. Se completează înainte de activare: după activare devin
+  needitabile.
+- Subliniați că după activare contractul e „înghețat”: corecturile trec prin **Schimbă dobânda**,
+  **Omite** sau **Resetează la ciornă**, niciodată prin editarea directă a sumelor.

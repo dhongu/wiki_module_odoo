@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-10-29] Sincronizare manuală: versiuni și fișe consultant
+
+- **Acțiune:** Doar treapta mecanică din `wiki_sync.py plan` (fără reingestie AI), pe sursele proaspete din `origin/19.0` ale tuturor suitelor.
+- **Versiuni aduse la zi** (12): `deltatech_advanced_planner 19.0.1.12.1 → 19.0.1.13.0`, `deltatech_expenses 19.0.3.7.2 → 19.0.3.8.0`, `deltatech_mcp_server 19.0.1.15.1 → 19.0.1.15.3`, `deltatech_saga 19.0.6.29.0 → 19.0.6.29.1`, `l10n_ro_anaf_d300 19.0.0.0.31 → 19.0.0.0.32`, `l10n_ro_etransport_batch_enhancement 19.0.0.4.0 → 19.0.0.4.1`, `l10n_ro_etransport_enhancement 19.0.0.10.0 → 19.0.0.10.1`, `l10n_ro_leasing 19.0.2.1.0 → 19.0.2.1.1`, `l10n_ro_partner_financials 19.0.1.0.3 → 19.0.1.0.4`, `l10n_ro_partner_ubo 19.0.1.0.3 → 19.0.1.0.4`, `l10n_ro_payment_instruments 19.0.1.2.2 → 19.0.1.3.0`, `l10n_ro_website_anaf 19.0.1.2.0 → 19.0.1.2.1`.
+- **Fișe consultant resincronizate** (14): `deltatech_advanced_planner`, `deltatech_expenses`, `deltatech_marketplace_shopify`, `deltatech_mcp_server`, `deltatech_saga`, `deltatech_website_warehouse_stock`, `l10n_ro_anaf_d300`, `l10n_ro_etransport_batch_enhancement`, `l10n_ro_etransport_enhancement`, `l10n_ro_leasing`, `l10n_ro_partner_financials`, `l10n_ro_partner_ubo`, `l10n_ro_payment_instruments`, `l10n_ro_website_anaf` (unele copiate pentru prima dată, cu linia „Fișă Consultant” adăugată în pagină).
+- **Rămase pentru reingestie AI:** 321 (56 module noi, 265 cu readme modificat după ultima ingestie, dintre care 75 doar cosmetic).
+- **Fișiere actualizate:** `index.md`-urile celor 12 module, fișele și capturile celor 14, `log.md`, `.index/chunks.json`.
+
 ## [2026-10-29] Sincronizare automată de noapte
 
 - **Versiuni aduse la zi** (12): `deltatech_ai_source_sync 19.0.1.10.0 → 19.0.1.11.2`, `deltatech_marketplace 19.0.1.42.1 → 19.0.1.42.5`, `deltatech_marketplace_shopify 19.0.1.8.10 → 19.0.1.8.12`, `deltatech_nap 19.0.1.10.0 → 19.0.1.10.2`, `deltatech_price_change 19.0.1.2.2 → 19.0.1.2.3`, `deltatech_sale_margin 19.0.1.3.3 → 19.0.1.3.4`, `deltatech_sale_margin_pos 19.0.1.0.0 → 19.0.1.0.1`, `l10n_ro_currency_revaluation 19.0.1.3.1 → 19.0.1.3.2`, `l10n_ro_etransport_batch_enhancement 19.0.0.3.5 → 19.0.0.4.0`, `l10n_ro_etransport_enhancement 19.0.0.9.5 → 19.0.0.10.0`, `l10n_ro_partner_ledger_currency 19.0.1.4.9 → 19.0.1.4.11`, `l10n_ro_stock_sheet 19.0.1.1.12 → 19.0.1.1.13`.

@@ -68,7 +68,8 @@ Modulul **nu generează note contabile**. Datele pe care le păstrează:
   plus cele salvate de administrator);
 - **unelte (acțiuni)**: metoda sau acțiunea de server, descrierea pentru AI, parametrii și politicile în care sunt active;
 - **prompturi**: textul, argumentele (obligatorii sau cu valoare implicită) și politicile care le văd;
-- **cererile de acces**: utilizatorul, modelul, operația (citire, creare, modificare), motivul, zilele cerute, sursa
+- **cererile de acces**: utilizatorul, modelul, operația (citire, creare, modificare, note și activități, atașamente),
+  motivul, zilele cerute, sursa
   (din Odoo sau de la clientul AI), starea, cine a decis și când;
 - **accesul personal**: linii ale politicii valabile doar pentru un utilizator, cu data de final; se șterg automat
   după ce expiră;
@@ -113,7 +114,10 @@ necesare. Pentru fiecare model puteți ascunde câmpuri (**Hidden fields**), le 
 Coloana **Read-only fields** (tot din iconița de coloane) ține câmpuri vizibile pe care AI-ul nu le poate scrie,
 **Only these writable** face invers: când e completată, `create` și `write` pot pune doar câmpurile din listă.
 **Notes and activities** îi permite să scrie note interne și să planifice activități pe înregistrările modelului,
-iar **Attachments** să listeze și să citească fișierele atașate înregistrărilor.
+iar **Attachments** să listeze și să citească fișierele atașate înregistrărilor. **Notes and activities** se bifează
+pe linia modelului documentului (de exemplu *Helpdesk Ticket*), nu pe *Message* sau *Activity*: AI-ul primește
+uneltele `post_message` și `schedule_activity` (doar cu **Allow AI clients to write** bifat în Settings, Pasul 3),
+iar un `create` pe `mail.activity` rămâne refuzat.
 
 ![Politica de acces: limite, modele, note și activități, câmpuri ascunse și mascate](screenshots/01_policy_form.png)
 
@@ -357,12 +361,15 @@ primesc toți administratorii. Notificarea apare în inbox-ul Discuss, dacă mod
 văd doar în meniu.
 
 **Cererea.** Când AI-ul încearcă un model pe care politica nu îl dă, răspunsul de refuz îi spune că poate cere acces
-cu unealta `request_access`. AI-ul trimite modelul, operația (**Read**, **Create** sau **Write**), motivul și numărul de
-zile (7 dacă nu spune altfel). Utilizatorul poate face aceeași cerere din **MCP Server → My Access → Access Requests → New**.
+cu unealta `request_access`. Excepție: un refuz la creare sau modificare pe `mail.activity`, `mail.message` sau
+`mail.followers` (citirea primește refuzul obișnuit) îl trimite la `post_message` / `schedule_activity` pe document
+și îi recomandă `request_access` cu operația `chatter` pe modelul documentului (de exemplu `helpdesk.ticket`), nu pe
+modelul refuzat. AI-ul trimite modelul, operația (**Read**, **Create**, **Write**, **Notes and activities** sau
+**Attachments**), motivul și numărul de zile (7 dacă nu spune altfel). Utilizatorul poate face aceeași cerere din **MCP Server → My Access → Access Requests → New**.
 Până la aprobare nu se schimbă nimic. Utilizatorul își vede cererile în același meniu, cu sursa (**AI client** sau
 **Odoo**) și starea, și poate anula o cerere cât timp e în așteptare (**Cancel Request**).
 
-![Cererea făcută de clientul AI, văzută de utilizator: motivul și sursa](screenshots/14_access_request_user.png)
+![Cererea făcută de clientul AI, văzută de utilizator: Notes and activities pe tichetele helpdesk, motivul și sursa](screenshots/14_access_request_user.png)
 
 **Lista de aprobat.** Administratorul deschide **MCP Server → My Access → Access Requests**. Lista pornește cu filtrul
 **To Approve**. Pe fiecare rând verifică utilizatorul, modelul, operația cerută, câte zile și motivul. Cererile
@@ -374,7 +381,7 @@ venite de la AI se găsesc cu filtrul **From AI clients**.
 accesul ține numărul de zile cerut, socotit de la aprobare. Apoi apasă **Approve** sau **Refuse**. Câmpul **Policy**
 arată politica în care intră accesul.
 
-![O cerere deschisă de administrator: data de final și butonul Approve](screenshots/16_access_request_approve.png)
+![O cerere deschisă de administrator: operația, data de final și butonul Approve](screenshots/16_access_request_approve.png)
 
 **Accesul aprobat** apare pe politică, în tabul **Personal Access**, ca o linie cu **Only for User** și **Valid Until**:
 
@@ -389,13 +396,15 @@ arată politica în care intră accesul.
 
 Din clientul AI, `list_models` arată modelul cu `valid_until`.
 
-![Accesul aprobat: o linie personală a politicii, cu data de final](screenshots/17_policy_personal_access.png)
+![Accesul aprobat: linii personale ale politicii, cu Notes and activities pe oferte și data de final](screenshots/17_policy_personal_access.png)
 
 Drepturile Odoo ale utilizatorului rămân limita:
 
 - nu se poate cere un model pe care utilizatorul nu îl poate deschide în Odoo;
 - nu se pot cere modelele de sistem (`ir.*`, cheile API, grupurile);
-- cât timp serverul e doar-citire, se poate cere doar citire;
+- cât timp serverul e doar-citire, se pot cere doar citire și **Attachments**; **Notes and activities**, creare și
+  modificare sunt refuzate;
+- **Notes and activities** se poate cere doar pe un model cu chatter; altfel răspunsul e „The model … has no chatter.”;
 - același acces nu poate aștepta de două ori, iar un utilizator are cel mult cinci cereri în așteptare.
 
 Dacă utilizatorul trece pe altă politică, accesul personal rămâne pe politica veche și nu i se mai aplică.
@@ -428,7 +437,9 @@ AI-ul mai vede două unelte:
   utilizatorul AI).
 
 Ambele rulează cu drepturile utilizatorului conectat: Odoo cere același drept ca atunci când un om scrie pe
-înregistrare (de regulă dreptul de modificare). Uneltele cer modulul Discuss (`mail`).
+înregistrare (de regulă dreptul de modificare). Uneltele cer modulul Discuss (`mail`). Fără bifă, cele două unelte
+lipsesc, iar `list_models` arată `notes_and_activities: false` pe model; refuzurile îi spun AI-ului ce bifă lipsește
+și, cu cererile de acces pornite, să ceară operația `chatter` (Pasul 9).
 
 Pe modelele cu **Attachments** bifat, AI-ul mai vede, chiar dacă serverul e doar-citire:
 
@@ -505,7 +516,13 @@ refuzul fiecărei cereri de acces, configurarea clientului AI.
   utilizator al aceleiași politici nu.
 - [ ] Accesul personal pe un model deja în politică păstrează câmpurile ascunse și mascate ale politicii.
 - [ ] După **Revoke** (sau după *Valid Until*) modelul e refuzat din nou.
-- [ ] Cu serverul doar-citire, o cerere de *Write* e refuzată; una de *Read* trece.
+- [ ] Cu serverul doar-citire, o cerere de *Write* sau *Notes and activities* e refuzată; una de *Read* sau
+  *Attachments* trece.
+- [ ] O cerere aprobată cu operația *Notes and activities* dă o linie personală cu citire și *Notes and activities*:
+  `post_message` și `schedule_activity` apar abia după aprobare. Cu *Attachments*, la fel pentru `list_attachments`.
+- [ ] Un `create` pe `mail.activity` e refuzat cu îndrumarea spre `post_message` / `schedule_activity` și spre bifa
+  *Notes and activities* din politică; cu *MCP access requests* bifat, refuzul recomandă `request_access` cu
+  operația `chatter` pe modelul documentului.
 - [ ] Apelurile apar în **Call Log**; consumul apare în **Daily Usage**.
 - [ ] La Codex (OpenAI): conectorul se adaugă din *Plugins → MCPs*; după conectare, „Codex” apare în *OAuth Connections*.
 - [ ] La ChatGPT: *Developer mode* este activat (și permis de administratorul workspace-ului, dacă e cazul), iar conectorul
@@ -528,6 +545,7 @@ refuzul fiecărei cereri de acces, configurarea clientului AI.
 | … has no access to this model in Odoo: MCP cannot give more than that. | Cererea e pentru un model pe care utilizatorul nu îl poate deschide în Odoo | Dați întâi utilizatorului grupul aplicației, apoi refaceți cererea |
 | The same access is already waiting for approval. | Aceeași cerere (utilizator, model, operație) e deja în așteptare | Aprobați sau refuzați cererea existentă |
 | Too many requests are waiting for approval. | Utilizatorul are cinci cereri în așteptare | Decideți asupra cererilor existente |
+| operation must be read, create, write, chatter or attachments. | `request_access` a primit o operație necunoscută | AI-ul refă cererea cu una dintre operațiile listate (`chatter` pentru *Notes and activities*) |
 | This model cannot be asked for. | Model de sistem sau inexistent | Nu se poate expune prin MCP |
 | No MCP policy is assigned to the user. Ask an administrator for one first. | Cererea vine de la un utilizator fără politică | Atribuiți întâi o politică |
 | Only an administrator can decide on MCP access requests. | Aprobarea a fost încercată de un ne-administrator | Aprobarea o face un administrator |
@@ -538,7 +556,9 @@ refuzul fiecărei cereri de acces, configurarea clientului AI.
 | The server is in read-only mode | Scrierea e oprită global | Bifați *Allow AI clients to write* în Settings, doar dacă e nevoie |
 | The field … is set by Odoo or by the workflow | AI-ul a încercat să scrie starea, un câmp calculat sau unul din *Read-only fields* | Expuneți butonul potrivit ca unealtă (Pasul 4) sau scoateți câmpul din *Read-only fields* |
 | Not installed in this database, skipped (notificare la *Create from Template*) | Șablonul conține modele, câmpuri sau metode ale unor module neinstalate | Normal; dacă e nevoie de ele, instalați modulul și aplicați din nou șablonul cu *Add Template* |
-| Notes and activities are not allowed on … | Linia din politică nu are bifat *Notes and activities* | Bifați-l, dacă AI-ul trebuie să scrie în chatter |
+| Notes and activities are not allowed on … | Linia modelului din politică nu are bifat *Notes and activities*; mesajul numește politica și linia | Bifați-l pe linia modelului sau, cu *MCP access requests* bifat, aprobați cererea `request_access` cu operația `chatter` |
+| The model mail.activity (mail.message, mail.followers) is not available for create/write | AI-ul a încercat să creeze direct activitatea sau mesajul | Normal: mesajul îl trimite la `post_message` / `schedule_activity` pe document; bifați *Notes and activities* pe linia modelului documentului |
+| The model … has no chatter. | Cerere *Notes and activities* (sau notă/activitate) pe un model fără chatter | Cereți opțiunea pe modelul documentului care are chatter |
 | The user is not allowed to use the MCP server (HTTP 403) | Utilizatorul nu are rolul MCP Server / User | Atribuiți rolul **User** |
 | The field … cannot be written through MCP | Câmpul e mascat, ascuns sau de tip linii | Scrieți alt câmp; câmpurile de tip linii nu se pot scrie |
 | Only methods starting with action_ or button_ … can be used as tools | Metoda nu e un buton sau nu e declarată în `_mcp_methods` | Alegeți metoda butonului (`action_…`/`button_…`) sau o acțiune de server |
@@ -568,11 +588,12 @@ refuzul fiecărei cereri de acces, configurarea clientului AI.
 ## 10. Capturi de ecran
 
 Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixinul `ScreenshotCase` din
-`l10n_ro_doc_screenshots`), în engleză, cu date de demo.
+`deltatech_doc_screenshots`, prin puntea `l10n_ro_doc_screenshots`), în engleză, cu date de demo, și stau în
+`static/description/`, de unde le folosesc și fișa, și `USAGE.md`.
 
 | Fișier | Ce arată |
 |---|---|
-| `01_policy_form.png` | politica: limite, modele, câmpuri ascunse și mascate |
+| `01_policy_form.png` | politica: limite, modele, *Notes and activities* bifat pe *Contact*, câmpuri ascunse și mascate |
 | `02_user_policy.png` | politica atribuită pe formularul utilizatorului |
 | `03_settings.png` | setările MCP Server |
 | `04_key_wizard.png` | generarea cheii API |
@@ -585,10 +606,10 @@ Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixinul `Sc
 | `11_oauth_consent_metadata.png` | consimțământ pentru Claude Code: gazda care descrie aplicația și avertismentul localhost |
 | `12_oauth_consent_write.png` | consimțământ cu alegerea „Read only”, când aplicația cere și scriere |
 | `13_oauth_connections.png` | conexiunile OAuth: aplicația, utilizatorul, scope-ul, ultima folosire, butonul Revoke |
-| `14_access_request_user.png` | cererea făcută de clientul AI, văzută de utilizator: motivul și sursa *AI client* |
-| `15_access_requests_to_approve.png` | cererile care așteaptă aprobarea (filtrul *To Approve*) |
-| `16_access_request_approve.png` | cererea deschisă de administrator: *Valid Until* și butonul *Approve* |
-| `17_policy_personal_access.png` | tabul *Personal Access* al politicii: accesul aprobat, doar pentru utilizatorul AI, cu data de final |
+| `14_access_request_user.png` | cererea făcută de clientul AI, văzută de utilizator: operația *Notes and activities* pe tichetele helpdesk, motivul și sursa *AI client* |
+| `15_access_requests_to_approve.png` | cererile care așteaptă aprobarea (filtrul *To Approve*): *Notes and activities* și *Write* |
+| `16_access_request_approve.png` | cererea deschisă de administrator: operația *Notes and activities*, *Valid Until* și butonul *Approve* |
+| `17_policy_personal_access.png` | tabul *Personal Access* al politicii: accesul aprobat doar pentru utilizatorul AI (*Notes and activities* pe oferte, citire pe liste de prețuri), cu data de final |
 
 Regenerare:
 

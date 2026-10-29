@@ -304,7 +304,7 @@ clientul).
 ### Pasul 12 — Dashboard operațional & KPI
 
 **Planificare avansată → Panou de control** sintetizează: contori de comenzi (blocate, avertismente,
-OK, reaprovizionări fără SO), **OTIF 30/90 zile** — ponderea comenzilor confirmate cu data promisă
+OK, reaprovizionări fără SO, arhivă), **OTIF 30/90 zile** — ponderea comenzilor confirmate cu data promisă
 începând de acum 30/90 de zile (inclusiv cele viitoare) a căror dată efectivă calculată nu depășește
 data promisă (indicator previzionat, nu de livrări realizate) —, trend blocări noi/zi, posturi bottleneck și top produse cu blocări active.
 În **Top produse cu blocări active** (pe rândul indicatorilor, între graficul blocărilor noi și
@@ -314,16 +314,44 @@ blocate ale produsului.
 
 ![Dashboard cu contori și KPI de planificare](screenshots/12_dashboard.png)
 
+Cardul **Comenzi OK** numără comenzile de vânzare planificate fără probleme și încă nefacturate
+integral. O comandă OK facturată integral trece în cardul **Arhivă** și nu mai încarcă lista de lucru.
+Atenție: la produsele facturate pe cantitățile comandate (avans sau factură la confirmare), comanda
+poate ajunge în **Arhivă** cu achiziția sau producția încă deschise; urmăriți-le în coloanele de mai
+jos (lista din **Arhivă** le are și ea) sau în tabelul **Comenzi planificate active**.
+Un clic pe oricare dintre cele două carduri deschide lista comenzilor numărate, cu două coloane
+proprii planificatorului:
+
+1. **Găsiți pe ecran** — coloana **Achiziție** arată etapa comenzilor de achiziție generate din
+   comenzile planificate ale comenzii de vânzare, iar coloana **Producție** etapa comenzilor de
+   producție. Când sunt mai multe, se afișează cea aflată cel mai „în urmă”. **Finalizat** apare când
+   toată marfa a fost recepționată, respectiv toate produsele au fost fabricate. Coloana rămâne goală
+   dacă nu s-a generat niciun document de acel tip (sau dacă documentele au fost anulate).
+2. **Verificați** — etapele corespund celor din comenzile de achiziție / producție; o comandă cu
+   toate documentele închise are **Finalizat** pe fiecare coloană pentru care s-au generat documente.
+3. **Treceți mai departe** — după facturarea integrală, comanda dispare din **Comenzi OK** și se
+   regăsește în **Arhivă**.
+
+![Lista Comenzi OK cu etapa achiziției și a producției](screenshots/12b_comenzi_ok_etape.png)
+
+În captură, comanda cu documente generate arată **De aprovizionat** la achiziție, deși în tabelul de
+mai jos (12a) comanda ei de achiziție e **De comandat**: aceeași comandă de vânzare are și o cerere de
+ofertă încă în ciornă (de la Pasul 5), iar coloana arată documentul cel mai „în urmă”.
+
 Sub indicatori, tabelul **Comenzi planificate active** urmărește fiecare comandă de la planificare
 până la recepție sau producție. O comandă planificată rămâne pe listă și după ce din ea s-a generat
 comanda de achiziție sau de producție:
 
 1. **Găsiți pe ecran** — coloana **Document** arată comanda generată (ex. `P00012` pentru achiziție,
-   `WH/MO/00007` pentru producție); un clic pe ea o deschide. Coloana **Stare doc.** arată etapa:
-   - **Generat** — cerere de ofertă trimisă sau nu, respectiv comandă de producție în ciornă;
-   - **Confirmat** — comanda de achiziție sau de producție este confirmată;
-   - **Recepționat parțial** — o parte din marfă a intrat în stoc (doar la achiziție);
-   - **În lucru** — producția a început (doar la producție).
+   `WH/MO/00007` pentru producție); un clic pe ea o deschide. Coloana **Stare doc.** arată etapa, cu
+   denumiri diferite pe tipul documentului:
+   - la achiziție: **De aprovizionat** — cerere de ofertă (trimisă sau nu), comanda către furnizor
+     nu e încă confirmată; **De comandat** — comanda de achiziție este confirmată și se așteaptă
+     recepția mărfii; **Recepționat parțial** — o parte din marfă a intrat în stoc;
+   - la producție: **De fabricat** — comandă de producție în ciornă; **În producție** — comanda
+     este confirmată, dar producția nu a început; **În lucru** — producția a început (sau toate
+     operațiile sunt gata și comanda așteaptă închiderea). Un clic pe **În lucru** deschide comenzile
+     de lucru ale comenzii de producție.
    O comandă lansată are starea AP **Finalizat**; comenzile planificate încă nelansate au coloanele
    goale (—) și starea AP **Ciornă** / **Planificat**.
 2. **Verificați** — fiecare comandă lansată are documentul ei; starea documentului corespunde celei
@@ -419,8 +447,11 @@ proprietarului fiecărei reguli de reaprovizionare (bifa **Planificat de Advance
 - [ ] Situația Material și Stocul Proiectat afișează proiecția cronologică și ATP corect.
 - [ ] Încărcare centru de lucru / CRP reflectă supraîncărcările; nivelarea cu **Doar vizualizare (fără modificări)** previzualizează mutările.
 - [ ] Tabloul Risc de livrare listează comenzile la risc; butonul Escaladează creează o activitate.
-- [ ] În Panoul de control, după generarea cererii de ofertă dintr-o comandă planificată, linia rămâne în tabel cu documentul în coloana **Document** și starea **Generat**; după confirmare apare **Confirmat**; după recepția a 2 din 5 buc apare **Recepționat parțial**; după recepția completă linia dispare.
-- [ ] O comandă de producție generată din planificator apare cu **Generat**, apoi **Confirmat** / **În lucru**; după terminare sau anulare linia dispare.
+- [ ] În Panoul de control, după generarea cererii de ofertă dintr-o comandă planificată, linia rămâne în tabel cu documentul în coloana **Document** și starea **De aprovizionat**; după confirmare apare **De comandat**; după recepția a 2 din 5 buc apare **Recepționat parțial**; după recepția completă linia dispare.
+- [ ] O comandă de producție generată din planificator apare cu **De fabricat**, apoi **În producție** după confirmare și **În lucru** după începerea producției; după terminare sau anulare linia dispare.
+- [ ] Un clic pe starea **În lucru** a unei comenzi de producție deschide comenzile ei de lucru.
+- [ ] În lista deschisă din cardul **Comenzi OK**, coloanele **Achiziție** și **Producție** arată etapa documentelor generate pentru fiecare comandă de vânzare; după recepția completă, respectiv fabricarea produselor, apare **Finalizat**.
+- [ ] O comandă OK facturată integral dispare din **Comenzi OK** și apare în **Arhivă**; cifrele celor două carduri se modifică în consecință.
 - [ ] Un clic pe referința din coloana **Document** deschide comanda de achiziție / producție.
 - [ ] O comandă planificată marcată manual **Finalizat** (comanda reală creată în afara planificatorului) nu apare în tabel.
 - [ ] Exporturile PDF/Excel se descarcă și conțin datele testate.
@@ -432,6 +463,8 @@ proprietarului fiecărei reguli de reaprovizionare (bifa **Planificat de Advance
 |-----------------|-----------------|-----------|
 | „Comanda … nu poate fi confirmată: data de livrare solicitată nu este realizabilă." | Parametrul **La dată imposibilă** este setat pe **Blochează confirmarea SO** și data promisă nu e realizabilă | Mutați data de livrare promisă la data efectivă propusă sau setați parametrul pe **Numai avertisment — SO se confirmă normal** |
 | O rulare globală este sărită / „o altă planificare globală rulează deja" | Lock PostgreSQL — o a doua rulare globală simultană (alt utilizator sau cron) | Așteptați finalizarea rulării curente și reluați |
+| O comandă de vânzare a dispărut din cardul **Comenzi OK** | Comanda a fost facturată integral și a trecut în **Arhivă** | Normal; deschideți cardul **Arhivă** |
+| Clic pe **În lucru** în Panoul de control → listă de comenzi de lucru goală | Comanda de producție nu are operații în lista de materiale | Normal; deschideți comanda de producție din coloana **Document** |
 | SO marcat **N/A** (not_applicable) la planificare | Niciun produs de pe comandă nu are listă de materiale (BOM) | Definiți BOM pentru produsul finit sau ignorați — planificatorul se aplică doar produselor cu BOM |
 | Comanda rămâne **Blocat** deși există stoc | Intrările (PO) sosesc **după** `commitment_date` — corect cronologic, nu reduc disponibilul la termen | Devansați recepția PO sau ajustați data promisă |
 | Lead time de producție pare prea mic/mare | Posturile de lucru nu au calendar/eficiență, sau produsul are `ap_production_lead_time` setat manual (ignoră RCCP) | Configurați calendarul și `time_efficiency` pe posturi; goliți lead time-ul manual de pe produs dacă vreți RCCP |
@@ -471,8 +504,9 @@ secțiunea 6:
     - `10a_regula_planificator.png` — regula de reaprovizionare bifată **Planificat de Advanced Planner** (min 100 / max 300).
     - `10b_reaprovizionare_esalonata.png` — filtrul **Reaprovizionare pentru stoc**: propunerile pentru stoc, câte una pe deficit, până la orizont.
 11. `11_delivery_risk_board.png` — tabloul Risc de livrare semaforizat.
-12. `12_dashboard.png` — dashboard cu contori și KPI de planificare.
+12. `12_dashboard.png` — dashboard cu contori (inclusiv cardul **Arhivă**) și KPI de planificare.
     - `12a_dashboard_documente.png` — tabelul comenzilor planificate, cu documentul generat și starea lui evidențiate pe prima linie.
+    - `12b_comenzi_ok_etape.png` — lista deschisă din cardul **Comenzi OK**, cu coloanele **Achiziție** și **Producție** evidențiate.
 
 Testul `tests/test_screenshots.py` seedează un mediu de producție determinist (posturi de lucru cu
 calendar + eficiență, BOM pe 2 niveluri cu operații, furnizori cu lead time + MOQ, stoc parțial) și
@@ -483,7 +517,8 @@ aceeași materie primă (15 + 5 buc) și rulează generarea în lot pe o comand�
 apoi pe o comandă de lansat acum și una care se lansează peste 40 de zile. Pentru Pasul 10 creează o
 regulă min/max bifată (șuruburi, stoc 60, min 100, max 300) și un consumabil cu ieșiri fără SO la 20,
 60 și 150 de zile, apoi rulează reaprovizionarea pentru stoc cu orizontul de 90 de zile. Pentru
-Pasul 12 confirmă o comandă de achiziție și una de producție generate din comenzi planificate.
+Pasul 12 confirmă o comandă de achiziție și una de producție generate din comenzi planificate,
+apoi deschide lista din cardul **Comenzi OK**.
 
 Regenerare:
 

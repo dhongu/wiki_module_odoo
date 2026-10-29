@@ -92,6 +92,12 @@ Date minime pentru demo (cele din capturi):
 6. Dacă extrasele bancare se importă în Odoo, stabiliți contul de încasare al instrumentelor
    (vezi pasul 2, „Încasarea și extrasul bancar").
 7. Opțional: activați blocajul facturării partenerilor cu instrumente refuzate (pasul 9).
+8. Opțional: în **Setări → Contabilitate → Instrumente de plată (RO)** bifați **Andosare prin
+   403** dacă politica contabilă a clientului cere rulaj pe 403 pentru efectele girate (pasul 5).
+   Implicit andosarea face `401 = 413`, monografia uzuală; 403 e contul efectelor de plătit ale
+   firmei, deci bifa se pune doar la cererea contabilului clientului. Verificați că 403 are bifat
+   **Permite reconcilierea** (implicit în planul RO), ca liniile 403 ale andosării să se închidă
+   între ele.
 
 ## 6. Flux de utilizare
 
@@ -212,6 +218,13 @@ operației** și apăsați **Andosează**. Starea devine **Andosat**, iar nota e
 `401 Furnizori (furnizorul) = 413 (clientul emitent)`: datoria față de furnizor scade, iar efectul
 iese din soldul 413 al clientului.
 
+Dacă în **Setări → Contabilitate → Instrumente de plată (RO)** e bifată **Andosare prin 403**, nota
+are patru linii: `401 = 403` și `403 = 413`, cu furnizorul pe 403. Cele două linii 403 se
+reconciliază automat între ele, deci 403 are rulaj, dar nu și sold. Reconcilierea se face doar dacă
+contul 403 are bifat **Permite reconcilierea**; în planul de conturi RO, 403 e cont de datorii și are
+bifa implicit (Odoo o cere pe conturile de datorii). Dacă 403 a fost trecut pe alt tip de cont, fără
+bifă, liniile rămân nereconciliate, dar nici nu apar ca sume nealocate pe furnizor.
+
 **Atenție:** andosarea **nu stinge automat factura furnizorului** (instrumentul nu are câmp pentru
 ea). După andosare, deschideți factura furnizorului: sub totaluri, în caseta **Debit nealocat**,
 apare linia 401 a notei de andosare; apăsați **Adaugă** ca să o reconciliați cu factura. Altfel factura rămâne „De plată" și poate fi plătită a doua oară.
@@ -272,6 +285,7 @@ implicit 5). Activitatea se atribuie celui care a creat instrumentul și se trim
 | Refuz BO / cambie depuse | 4111 = 5113 | clientul |
 | Refuz BO / cambie nedepuse | 4111 = 413 | clientul |
 | Andosare BO / cambie | 401 = 413 | furnizorul pe 401, clientul pe 413 |
+| Andosare BO / cambie, prin 403 (opțional) | 401 = 403, 403 = 413 | furnizorul pe 401 și 403, clientul pe 413 |
 | Înregistrare BO / cambie emise | 401 = 403 | furnizorul |
 | Plată BO / cambie emise | 403 = 5121 | furnizorul |
 | Refuz BO / cambie emise | 403 = 401 | furnizorul |
@@ -282,6 +296,13 @@ Cu extrase bancare importate, 5121 din tabel se înlocuiește cu contul de înca
 Toate notele sunt în jurnalul **Diverse**, datate cu **Data operației**, fără TVA (TVA-ul e deja
 pe facturi). Instrumentul nu se poate anula cât are note postate nestornate; anularea cere întâi
 stornarea notelor din formularul notei (**Intrare inversă**).
+
+Pentru raportare, deschideți **Contabilitate → Contabilitate → Elemente de jurnal**, filtrați pe
+jurnalul **Diverse** și grupați după **Cont**: fiecare cont al instrumentelor (401, 403, 413, 4111,
+5112, 5113, 5121) arată totalul debit, credit și soldul. Cu **Andosare prin 403** bifată, debitul
+403 ① vine din andosări, iar soldul 403 ② vine doar din BO emise încă neplătite.
+
+![Notele instrumentelor pe conturi: rulaj și sold](screenshots/17_note_instrumente_pe_conturi.png)
 
 ### Pasul 9 — Blocarea facturării partenerilor cu instrumente refuzate (FR-39)
 
@@ -332,6 +353,9 @@ Scontarea efectelor (5114, 667) nu este acoperită de modul.
       nou valoare scadentă; există activitatea „Instrument refuzat".
 - [ ] Andosare: `401` cu furnizorul, `413` cu clientul; soldul 413 al clientului se închide; după
       reconcilierea manuală, factura furnizorului apare **Plătit**.
+- [ ] Andosare cu **Andosare prin 403** bifată: nota are patru linii, `401 = 403` și `403 = 413`,
+      cu furnizorul pe 401 și 403 și clientul pe 413; cele două linii 403 sunt reconciliate între
+      ele, deci în balanță 403 are rulaj, dar nu și sold.
 - [ ] Acțiunea programată „Instrumente de plată RO: alertă scadență" este activă; un instrument
       scadent în următoarele 5 zile primește activitatea de alertă după rularea ei.
 - [ ] Cu extrase importate: linia de extras se potrivește cu nota de încasare a instrumentului, iar
@@ -351,6 +375,7 @@ Scontarea efectelor (5114, 667) nu este acoperită de modul.
 | „Instrumentul are note contabile postate: stornați-le înainte de a-l anula." | Anulare pe un instrument înregistrat | Stornați notele (**Intrare inversă**), apoi anulați |
 | „Instrumentul are nota de înregistrare postată; nu poate fi resetat la ciornă." | Revenirea la ciornă e posibilă doar fără notă de înregistrare (butonul **Resetează la Ciornă** nu mai apare după înregistrare) | Stornați notele (**Intrare inversă**), apoi **Anulează**, și creați un instrument nou |
 | „Completați câmpul 'Andosat către' înainte de andosare." | Andosare fără furnizor ales | Completați **Andosat către** în tab-ul **Andosare** |
+| „Contul 403 trebuie să existe în planul de conturi." | Andosare cu **Andosare prin 403** bifată, dar planul de conturi nu are contul 403 | Adăugați contul 403 în planul de conturi sau debifați setarea |
 | „Partenerul X are N instrument(e) de plată refuzat(e)." la confirmarea facturii | Blocajul FR-39 e activ și partenerul are un instrument **Refuzat** | Rezolvați instrumentul refuzat sau dezactivați temporar opțiunea |
 | Nota are data de azi în loc de data extrasului | **Data operației** nu a fost completată înaintea pasului | Stornați nota și refaceți pasul cu data corectă |
 | Nu apare nicio alertă de scadență | Acțiunea programată de alertă e inactivă (așa se instalează) | Activați-o (secțiunea 5, pasul 4) |
@@ -385,6 +410,7 @@ Trezorerie SRL" în RON, cu date relative la ziua rulării. Regenerare:
 | 14 | `static/description/14_lista_instrumente.png` | Scadențarul, cu toate stările și culorile |
 | 15 | `static/description/15_setare_blocaj_refuzat.png` | Setarea blocajului pentru partenerii cu instrumente refuzate |
 | 16 | `static/description/16_blocaj_factura_partener_refuzat.png` | Mesajul de blocaj la confirmarea facturii |
+| 17 | `static/description/17_note_instrumente_pe_conturi.png` | Notele instrumentelor grupate pe cont: rulaj și sold, inclusiv 403 din andosarea prin 403 |
 
 ## 11. Observații pentru manual
 

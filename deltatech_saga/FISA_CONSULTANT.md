@@ -67,8 +67,8 @@ Conturile RO care apar în fișierele exportate sau sunt cerute de mapare:
   în perioadă cu totalul documentelor exportate.
 - **Tipuri de articole SAGA** pe categoria de produs: 371, 301, 3021, 3022, 3024, 3028, 303, 341,
   345, 346, 381, 4091/4092 avansuri, 419 avans clienți, 609/709 discount comercial.
-- **Gestiune** (cod SAGA pe locația de stoc, 4 caractere) — folosită numai la exportul
-  cantitativ-valoric.
+- **Gestiune** (cod SAGA pe locația de stoc, 4 caractere) — folosită la exportul
+  cantitativ-valoric și la **Comparație stoc** (Pasul 10).
 
 Date minime pentru demo:
 - companie românească cu planul de conturi RO (`l10n_ro`), CUI completat;
@@ -83,7 +83,7 @@ Date minime pentru demo:
 
 1. Instalați `deltatech_saga` (trage după el `account`, `stock`, `sale_stock`, `purchase_stock`,
    `l10n_ro` și `deltatech_contact`). Bibliotecile Python `xlrd`, `openpyxl`, `xlsxwriter`, `xlwt`,
-   `dicttoxml` și `unidecode` trebuie instalate pe server.
+   `dicttoxml`, `unidecode` și `requests` trebuie instalate pe server.
 2. **Contabilitate → Configurare → Setări**, secțiunea **SAGA**: decideți cum se generează codurile de
    partener — **Folosește codul TVA drept cod** (CUI drept cod SAGA), **Folosește lungimea coloanei
    pentru codul furnizorului/clientului** (implicit 8 caractere), **Setează cod SAGA la export**
@@ -115,8 +115,8 @@ Date minime pentru demo:
    acea corecție.
 7. **Poziții fiscale**: completați **Cod SAGA** (`T` taxare inversă, `A` aviz) și bifați **TVA la
    încasare** unde este cazul. Codul de pe poziția fiscală are prioritate la stabilirea coloanei `TIP`.
-8. **Locații de stoc** (doar pentru export cantitativ-valoric): completați **Cod SAGA** (4 caractere)
-   pe locațiile interne.
+8. **Locații de stoc** (pentru export cantitativ-valoric și pentru **Comparație stoc**): completați
+   **Cod SAGA** (4 caractere) pe locațiile interne; fiecare cod pe o singură locație.
 9. Pentru bonuri fiscale: configurați jurnalele de bonuri fiscale și partenerul generic conform
    ghidului `deltatech_sale_store`; nu marcați jurnalele obișnuite de vânzări drept jurnale de bonuri.
 10. Verificați că utilizatorul de test este în grupul **Contabilitate / Administrator**.
@@ -181,7 +181,7 @@ Pentru fiecare factură mixtă, rezultatul exportului spune ce linii trebuie cor
 ### Pasul 4 — Deschiderea asistentului de export
 
 Accesați **Contabilitate → Contabilitate → SAGA → Export SAGA**. Meniul **SAGA** apare în grupul
-de meniuri contabile și conține **Export SAGA** și **Import SAGA**.
+de meniuri contabile și conține **Export SAGA**, **Import SAGA** și **Comparație stoc** (Pasul 10).
 
 ![Meniul SAGA din Contabilitate](screenshots/06_meniu_saga.png)
 
@@ -484,6 +484,82 @@ modulul `deltatech_chart_of_accounts`, care trebuie instalat separat), iar nota 
 butonul **Postează diferența**. Acest pas se face o singură dată, la implementare, nu la fiecare
 export lunar.
 
+### Pasul 9 — Trimiterea exportului în SAGA prin API
+
+În locul încărcării manuale a fișierelor, exportul în format XML poate fi trimis direct în SAGA Web.
+
+**Conectarea.** În **Contabilitate → Configurare → Setări**, secțiunea **SAGA**, blocul **API SAGA
+Web**: completați **URL API SAGA** (adresa de bază a API-ului; lăsat gol, se folosește
+`https://web.sagasoft.ro/api/v20260225`), **Cod fiscal API SAGA** (codul fiscal al
+companiei în SAGA Web) și **Cheie de acces API SAGA** (generată în SAGA Web, *Utilizatori → Integrare API*).
+Cheia nu se afișează niciodată; indicatorul **Cheia de acces API SAGA este setată** arată doar dacă există una.
+Lăsată goală la salvare, cheia curentă rămâne neschimbată. SAGA înnoiește cheia la fiecare apel, iar
+Odoo o păstrează automat; dacă cheia înnoită se pierde, trebuie generată una nouă în SAGA Web.
+Conexiunea e comună întregii baze de date și servește **o singură companie**: codul fiscal configurat
+trebuie să fie al companiei care trimite, altfel API-ul refuză cererea.
+
+**Trimiterea.** După ce exportul e finalizat (Pasul 6), în formular apare bifa **Finalizează importul în
+SAGA** și butonul **Trimite în SAGA**, vizibile doar grupului **Contabilitate / Administrator**. Fiecare
+fișier XML din arhivă se trimite într-o cerere proprie, în ordinea: furnizori (`FUR_`), clienți (`CLI_`),
+articole (`ART_`), facturi, încasări (`I_`), plăți (`P_`).
+Cu bifa activă, SAGA finalizează importul singur;
+altfel importul se finalizează în SAGA Web, *Diverse → Import date*. Răspunsul fiecărui fișier
+(importat / importat parțial / eșuat, cu raportul de import pentru cele parțiale sau eșuate) apare în
+formular. Dacă o cerere cade la mijloc (de exemplu SAGA nu răspunde), fișierul apare cu *eroare*, iar
+cele de după el ca *netrimis*. Compania verificată e cea a exportului, nu cea curentă.
+
+**Atenție — nu apăsați a doua oară Trimite în SAGA.** Butonul retrimite **toate** fișierele XML din
+arhivă, inclusiv cele deja acceptate, deci facturile, încasările și plățile s-ar dubla în SAGA.
+Fișierele *eșuate*, cu *eroare* sau *netrimise* se importă manual în SAGA Web (*Diverse → Import
+date*), din arhiva descărcată.
+
+![Exportul trimis în SAGA, cu răspunsul pe fiecare fișier XML](screenshots/10_trimitere_saga.png)
+
+**Ce nu pleacă prin API.** Butonul trimite doar fișierele XML din arhivă: parteneri, articole,
+facturi, încasări și plăți. Notele contabile `NC_<jurnal>` se scriu numai în DBF, deci nu pleacă
+prin API; la fel `BC_` și `PRODUCTIE_` (doar DBF). Notele din jurnalele care nu sunt de bancă sau
+casă (diverse, salarii, amortizări) se importă în continuare manual în SAGA, din fișierele DBF ale
+arhivei (vezi tabelul de la Pasul 6).
+
+**Limitare cunoscută (octombrie 2026).** Pe sistemul de test SAGA, fișierul de clienți este respins
+de API cu „Structura XML invalida”, în timp ce articolele și facturile sunt acceptate. Importul
+facturilor nu e afectat: la importul unei facturi, SAGA creează clientul din antetul ei. Până la
+clarificarea cu SAGA, verificați în raportul trimiterii starea fișierului de clienți. Dacă a eșuat,
+verificați în SAGA că clienții creați din facturi au **același cod** ca în Odoo (*Cod client SAGA*)
+înainte de a finaliza importul încasărilor, altfel încasările se pot lega de alt partener. Când vreți
+să importați întâi clienții manual, trimiteți fără bifa **Finalizează importul în SAGA** și finalizați
+importul în SAGA Web după ce ați importat fișierul de clienți din arhivă.
+
+### Pasul 10 — Compararea stocului cu SAGA
+
+**Contabilitate → Contabilitate → SAGA → Comparație stoc** (vizibil doar grupului **Contabilitate /
+Administrator**) compară stocul din Odoo cu situația stocurilor gestiunilor SAGA, citită prin API (are
+nevoie de conexiunea de la Pasul 9 și de **Cod SAGA** pe locațiile de stoc, secțiunea 5, punctul 8).
+Alegeți opțional **Data** (implicit azi) și **Gestiune** (o locație cu cod SAGA; goală = toate
+locațiile cu cod SAGA ale companiei curente), apoi apăsați **Compară**.
+
+**Găsiți pe ecran** lista de linii, câte una pe articol și gestiune, cu coloanele gestiune SAGA, cod
+articol SAGA, denumire, cantitate Odoo, cantitate SAGA, diferență (Odoo minus SAGA) și starea, colorată:
+*Egal*, *Cantitate diferită*, *Negăsit în Odoo*, *Negăsit în SAGA*; **Număr de diferențe** numără
+liniile care nu sunt *Egal*. Cantitatea SAGA e stocul final la data aleasă.
+
+![Comparația stocului Odoo cu SAGA, cu toate stările](screenshots/11_comparatie_stoc.png)
+
+**Verificați** înainte de a corecta ceva:
+- articolele se potrivesc după **Referința internă** (primele 16 caractere), iar gestiunile după *Cod
+  SAGA* al locației, cu sublocațiile incluse;
+- compararea cuprinde doar produsele stocabile; dacă mai multe produse au aceleași 16 caractere de
+  început ale referinței, un avertisment galben le listează și se folosește primul;
+- *Negăsit în Odoo* apare și când produsul există, dar nu e stocabil (bifa *Urmărește stocul*) sau are
+  altă referință internă;
+- cantitățile se compară fără conversie: unitatea de măsură a articolului trebuie să fie aceeași în
+  Odoo și în SAGA;
+- un cod SAGA setat pe mai multe locații oprește compararea: dați fiecărei gestiuni SAGA o singură
+  locație.
+
+Comparația e doar informativă: nu corectează nimic. Diferențele se rezolvă prin inventar, în Odoo sau
+în SAGA.
+
 ### Note de monografie și raportare
 
 Modulul **nu generează note contabile proprii la export**; el transcrie documentele deja postate în
@@ -517,15 +593,18 @@ fiscale configurate.
 | `deltatech_sale_store` | flagul *Vânzare din magazin* care stabilește `TIP` = `f` pe facturile cu bon fiscal | opțional |
 | `deltatech_saga_mrp` | exportul consumurilor și al producției din MRP | extensie opțională |
 | `deltatech_chart_of_accounts` | importul soldurilor inițiale (`import.chart.of.accounts`, butonul *Postează diferența*) din Pasul 8 | necesar doar pentru Pasul 8 |
+| SAGA Web (API) | trimiterea fișierelor XML (Pasul 9), situația stocurilor (Pasul 10) | extern, opțional (biblioteca `requests` și cheie de acces API) |
 | Declarații ANAF (D300, D394) | rămân în SAGA, pe baza datelor importate | în afara Odoo |
 
 Ce este automat: colectarea documentelor din perioadă, generarea codurilor de partener (dacă e
 configurată) fără duplicate, realinierea secvențelor de cod după importul de parteneri, împachetarea
 în ZIP, legarea plăților de facturi pe baza reconcilierii din Odoo (câte o linie pe factură, cu suma
 stinsă), conversia plăților în valută în lei, excluderea jurnalului de TVA la încasare din note,
-controlul total pe clasa 7, detectarea tipului de fișier la import.
+controlul total pe clasa 7, detectarea tipului de fișier la import, trimiterea fișierelor XML în SAGA
+Web prin API (la cerere, cu butonul **Trimite în SAGA**) și compararea stocului cu situația din SAGA.
 Ce rămâne manual: maparea inițială a codurilor SAGA, reconcilierea plăților cu facturile în Odoo
-înainte de export, importul propriu-zis în SAGA, analiza diferenței din reconciliere și corectarea
+înainte de export, importul în SAGA al fișierelor DBF (`NC_`, `BC_`, `PRODUCTIE_`) și, fără API, al
+celor XML, al fișierelor eșuate la trimitere, analiza diferenței din reconciliere și corectarea
 documentelor semnalate la *Ignoră erorile*.
 Ce nu se exportă niciodată: comenzi de vânzare și achiziție, oferte, recepții și livrări (fără
 corespondent în SAGA); ele ajung în SAGA doar prin facturile și notele contabile generate.
@@ -600,6 +679,18 @@ corespondent în SAGA); ele ajung în SAGA doar prin facturile și notele contab
       operațiuni bancare dublate.
 - [ ] Importul fișierelor de test `Clienti.DBF`/`IE.DBF` creează partenerii și facturile în jurnalul ales.
 - [ ] Mesajele de eroare sunt în română și indică partenerul/categoria problematică.
+- [ ] Setările SAGA Web API: după salvare, **Cheia de acces API SAGA este setată** e bifată, iar cheia nu e
+      afișată; salvarea setărilor cu cheia goală nu o șterge.
+- [ ] Cu codul fiscal API diferit de cel al companiei, **Trimite în SAGA** și **Compară** refuză cererea cu
+      un mesaj despre codul fiscal.
+- [ ] **Trimite în SAGA** apare doar pentru Contabilitate / Administrator; după trimitere, fiecare fișier
+      XML are în formular starea lui (importat / importat parțial / eșuat / eroare / netrimis).
+- [ ] **Comparație stoc**: o diferență introdusă intenționat în Odoo apare cu starea *Cantitate
+      diferită* și diferența Odoo minus SAGA; un produs doar în SAGA apare ca *Negăsit în Odoo*.
+- [ ] După **Trimite în SAGA**, raportul nu conține fișiere `NC_*` (pleacă doar XML), iar starea
+      fișierului de clienți e verificată (limitarea cunoscută de la Pasul 9).
+- [ ] **Comparație stoc**: un articol SAGA al cărui produs din Odoo nu e stocabil apare *Negăsit în
+      Odoo*; același cod SAGA pe două locații oprește comparația cu mesaj.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -623,6 +714,18 @@ corespondent în SAGA); ele ajung în SAGA doar prin facturile și notele contab
 | „Partenerul având cod … de SAGA nu se găsește în Odoo" | Fișierul de facturi importat înaintea fișierului de parteneri | Importați întâi Furnizori/Clienți, apoi facturile |
 | „În Odoo nu se găsește contul …" | Contul din fișierul NC lipsește din planul de conturi | Creați contul sau corectați fișierul |
 | „Compania trebuie setată pentru a folosi contabilitatea în storno" | Import cu *Contabilitate negativă* fără companie selectată | Selectați compania în asistentul de import |
+| „Setați cheia de acces și codul fiscal pentru API-ul SAGA în setările de contabilitate." | Conexiunea API nu e completată | Completați codul fiscal și cheia în Setări → SAGA (Pasul 9) |
+| „Conexiunea API SAGA este configurată pentru codul fiscal …, dar firma curentă … are codul fiscal …" | Compania nu e cea a conexiunii | La **Trimite în SAGA** se verifică compania exportului: refaceți exportul pe compania configurată. La **Comparație stoc**: treceți pe compania configurată. Sau corectați codul fiscal din Setări |
+| „Doar administratorii de facturare pot folosi API-ul SAGA." | Utilizatorul nu e în grupul administrator contabil | Acordați grupul |
+| „API-ul SAGA nu poate fi accesat: …" / „Răspuns neașteptat de la SAGA (HTTP …)" / „SAGA: …" | SAGA nu răspunde, a refuzat cererea sau a întors o eroare | Verificați adresa API și reîncercați (la trimitere, doar fișierele netrimise, manual — vezi Pasul 9) |
+| „SAGA a refuzat cererea: prea multe cereri. Reîncercați peste câteva minute." | Limita de cereri a API-ului SAGA (HTTP 429), după reîncercările automate | Așteptați câteva minute și reîncercați |
+| „Situația stocurilor primită de la SAGA nu este un XML valid." | Răspuns neașteptat al SAGA la **Compară** | Reîncercați; dacă persistă, verificați adresa API |
+| Avertisment „Mai multe produse au aceleași primele 16 caractere ale referinței interne; este folosit primul pentru: …" | Referințe interne care încep la fel pe primele 16 caractere | Se folosește primul produs; diferențiați referințele în primele 16 caractere |
+| „Exportă mai întâi datele." | **Trimite în SAGA** fără arhivă generată | Rulați exportul, apoi trimiteți |
+| „Exportul nu are niciun fișier XML de trimis; alegeți formatul XML." | Export generat doar în DBF | Reexportați cu **Format XML** |
+| „Nicio locație internă de stoc nu are cod SAGA." | Comparare stoc fără **Cod SAGA** pe locații | Completați codul pe locațiile de stoc |
+| „Codul SAGA … este setat pe mai multe locații de stoc …" | Același cod SAGA pe două locații | Lăsați codul pe o singură locație |
+| În raportul **Trimite în SAGA**, fișierul de clienți apare *eșuat* (sau *eroare*) cu textul „Structura XML invalida” | Limitare cunoscută a API-ului SAGA pentru fișierul de clienți (Pasul 9) | Facturile se importă oricum; dacă e nevoie, importați fișierul de clienți manual în SAGA Web |
 
 ## 10. Capturi de ecran
 
@@ -630,16 +733,24 @@ Capturile (`readme/screenshots/`) sunt **generate automat** din `tests/test_scre
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**, pe
 planul de conturi RO:
 
-1. `01_setari_saga.png` — secțiunea SAGA din Contabilitate → Configurare → Setări.
+1. `01_setari_saga.png` — secțiunea SAGA din Contabilitate → Configurare → Setări, cu blocul **API SAGA
+   Web** completat (codul fiscal al companiei și o cheie de test).
 2. `02_partener_coduri_saga.png` — partener, tabul Vânzări și achiziții cu codurile SAGA.
 3. `03_categorie_produs_cod_saga.png` — categorie de produs cu Cod SAGA / Cod standard SAGA.
 4. `04_taxa_cod_deducere.png` — taxă cu Cod SAGA deducere `N50`.
 5. `05_pozitie_fiscala_saga.png` — poziție fiscală de taxare inversă cu Cod SAGA `T` (bifa TVA la
    încasare rămâne nesetată pe acest tip de poziție — vezi Pasul 3).
-6. `06_meniu_saga.png` — meniul Contabilitate → Contabilitate → SAGA.
+6. `06_meniu_saga.png` — meniul Contabilitate → Contabilitate → SAGA, cu submeniul **Comparație stoc**.
 7. `07_export_wizard.png` — asistentul Export SAGA completat.
-8. `08_export_rezultat.png` — dialogul de rezultat al exportului: arhiva, sumarul și reconcilierea pe clasa 7.
+8. `08_export_rezultat.png` — dialogul de rezultat al exportului: arhiva, sumarul, bifa **Finalizează
+   importul în SAGA**, reconcilierea pe clasa 7 și butonul **Trimite în SAGA**.
 9. `09_import_wizard.png` — asistentul Import SAGA cu fișierul de test încărcat.
+10. `10_trimitere_saga.png` — exportul trimis în SAGA prin API, cu răspunsul pe fiecare fișier XML;
+    fișierul de clienți apare *eșuat* cu „Structura XML invalida” (limitarea cunoscută de la Pasul 9).
+11. `11_comparatie_stoc.png` — comparația stocului Odoo cu SAGA, cu câte o linie pe fiecare stare.
+
+Pentru capturile `10` și `11` testul simulează răspunsurile API-ului SAGA (fișierele acceptate și
+fișierul de clienți respins, respectiv situația stocurilor gestiunii `0001`); nu se face niciun apel real către SAGA Web.
 
 Seed-ul testului conține, pe lângă facturi, o încasare de bancă reconciliată cu două facturi de
 vânzare și o plată reconciliată cu factura furnizorului (cu *Referință furnizor* `FAS26294`); de

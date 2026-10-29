@@ -59,7 +59,8 @@ sincronizare:
   fals, în Odoo).
 - **Lista de prețuri** (`pricelist_id`) — pentru exportul de preț către Shopify.
 - **Taxa implicită** (`tax_id`) — aplicată produselor importate.
-- **Categoria/atributele** — opționale (`Use Category`, `Options as Attributes`); dacă
+- **Categoria/atributele** — opționale (`Use Category`, `Product Type as Internal Category`,
+  `Options as Attributes`); dacă
   `Options as Attributes` rămâne oprit, **produsul tot se importă**, dar **variantele lui** Shopify
   sunt sărite (nu fuzionate tăcut într-o singură variantă) — avertismentul apare doar în log-ul
   serverului, nu vizibil pentru operator în interfață.
@@ -79,15 +80,23 @@ cu variante, un client și o comandă existentă în magazin.
    direct `Access Token` pentru o Private App clasică.
 5. Setați tab-ul **Price** (lista de prețuri, `Update Price Only`/`Ignore Price` după caz) și
    filtrele de comandă din tab-ul **Orders and Products** (status, plată, livrare).
-6. Opțional, activați comutatoarele GraphQL dorite din tab-ul **GraphQL** (toate pornesc oprite).
-7. Apăsați **Test connection** din antet — validează credențialele printr-un query GraphQL `shop`.
-8. Apăsați **Import basic data** — înregistrează webhook-urile Shopify necesare.
-9. Verificați câmpul **Granted Access Scopes** (apare după **Test connection**): e lista pe care
-   Shopify o raportează pentru instalarea curentă. Dacă **Missing Scopes** e completat, o opțiune
-   pornită pe backend nu are dreptul de care are nevoie — vezi Pasul 8 de mai jos. Excepție:
-   `read_all_orders` apare mereu cât lipsește. Fără el, Shopify arată aplicației doar comenzile
-   din ultimele 60 de zile, iar conectorul nu mai trimite nimic pe comenzile mai vechi (fază,
-   anulare, AWB). Dreptul îl aprobă Shopify, la cererea din contul magazinului.
+6. Opțional, în tab-ul **Orders and Products**, bifați **Product Type as Internal Category**:
+   la importul unui produs, tipul de produs din Shopify (*Product type*) devine categoria internă
+   Odoo cu același nume, creată dacă lipsește. Shopify trimite doar numele categoriei, fără
+   părinte, iar la export Odoo trimite tot numele simplu. De aceea un produs deja legat își
+   păstrează categoria când numele ei coincide cu tipul de produs, chiar dacă există și alte
+   categorii cu același nume. Categoria se schimbă doar când se schimbă tipul de produs în
+   Shopify. Atunci produsul trece în prima categorie cu noul nume, de aceea e bine ca numele
+   categoriilor folosite pentru Shopify să fie unice.
+7. Opțional, activați comutatoarele GraphQL dorite din tab-ul **GraphQL** (toate pornesc oprite).
+8. Apăsați **Test connection** din antet — validează credențialele printr-un query GraphQL `shop`.
+9. Apăsați **Import basic data** — înregistrează webhook-urile Shopify necesare.
+10. Verificați câmpul **Granted Access Scopes** (apare după **Test connection**): e lista pe care
+    Shopify o raportează pentru instalarea curentă. Dacă **Missing Scopes** e completat, o opțiune
+    pornită pe backend nu are dreptul de care are nevoie — vezi Pasul 8 de mai jos. Excepție:
+    `read_all_orders` apare mereu cât lipsește. Fără el, Shopify arată aplicației doar comenzile
+    din ultimele 60 de zile, iar conectorul nu mai trimite nimic pe comenzile mai vechi (fază,
+    anulare, AWB). Dreptul îl aprobă Shopify, la cererea din contul magazinului.
 
 ## 6. Flux de utilizare
 
