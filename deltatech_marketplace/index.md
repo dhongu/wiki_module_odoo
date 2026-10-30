@@ -1,7 +1,7 @@
 # Marketplace Base Connector (localizat la `deltatech_marketplace/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace`
-- **Versiune:** `19.0.1.42.6`
+- **Versiune:** `19.0.1.42.7`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace`
 - **Ultima Ingestie:** `2026-10-27`
@@ -50,7 +50,7 @@ Marketplace Base Connector este modulul de bază al familiei de module marketpla
 - `stock`
 - `queue_job`
 - `base_address_extended`
-- `deltatech_partner_match`
+- [deltatech_partner_match](../deltatech_partner_match/index.md)
 
 #### 4. Componente Cheie
 

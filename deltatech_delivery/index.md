@@ -106,7 +106,7 @@ Fluxul pas-cu-pas al acțiunilor în masă și al reținerii livrărilor amânat
 - `stock`
 - `purchase`
 - `purchase_stock`
-- `deltatech_task_progress`
+- [deltatech_task_progress](../deltatech_task_progress/index.md)
 
 #### 4. Componente Cheie
 

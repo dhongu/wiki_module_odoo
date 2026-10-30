@@ -1,7 +1,7 @@
 # EMAG Marketplace Connector (localizat la `deltatech_marketplace_emag/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_emag`
-- **Versiune:** `19.0.2.21.0`
+- **Versiune:** `19.0.2.21.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_emag
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_emag`
 - **Ultima Ingestie:** `2026-10-22`

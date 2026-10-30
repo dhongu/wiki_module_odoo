@@ -67,7 +67,7 @@ Deltatech Advanced Planner este un planificator avansat de stoc care răspunde l
 - `mail`
 - `web_gantt`
 - [deltatech_web_kpi_cards](../deltatech_web_kpi_cards/index.md)
-- `deltatech_purchase_lead_time`
+- [deltatech_purchase_lead_time](../deltatech_purchase_lead_time/index.md)
 
 #### 4. Componente Cheie
 
@@ -96,6 +96,6 @@ Buton **Earliest Date** pe formularul ofertei/comenzii de vânzare (`advanced_ct
 #### 5. Conexiuni
 
 - [deltatech_web_kpi_cards](../deltatech_web_kpi_cards/index.md): cardurile KPI partajate afișate pe dashboard-ul planificatorului (dependență din 19.0.1.4.0).
-- `deltatech_purchase_lead_time`: lead time-ul furnizorului măsurat din istoricul de achiziții, folosit când opțiunea este activată (dependență din 19.0.1.11.0; fără pagină wiki).
+- [deltatech_purchase_lead_time](../deltatech_purchase_lead_time/index.md): lead time-ul furnizorului măsurat din istoricul de achiziții, folosit când opțiunea este activată (dependență din 19.0.1.11.0; fără pagină wiki).
 
 Modulele de referință menționate în documentație pentru cerințe APS avansate (`APS4MFG`, `frePPLe`) sunt sisteme externe, nu module din acest monorepo, și nu au pagină wiki.

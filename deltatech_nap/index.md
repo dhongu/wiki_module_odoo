@@ -35,7 +35,7 @@ NAP (Necesar de Aprovizionare / Purchase requirements) este o unealtă simplă �
 - `stock`
 - `purchase_stock`
 - `sale`
-- `deltatech_purchase_lead_time`
+- [deltatech_purchase_lead_time](../deltatech_purchase_lead_time/index.md)
 
 #### 4. Componente Cheie
 

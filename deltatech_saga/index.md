@@ -49,7 +49,7 @@ Interfața Deltatech SAGA este un modul cuprinzător conceput pentru a facilita 
 - `sale_stock`
 - [deltatech_contact](../deltatech_contact/index.md)
 - `l10n_ro`
-- `deltatech_task_progress`
+- [deltatech_task_progress](../deltatech_task_progress/index.md)
 
 #### 4. Componente Cheie
 

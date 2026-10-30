@@ -30,7 +30,7 @@ Modulul dă documentelor din jurnalul de casă numerotare separată pe tip de do
 
 - `account`
 - `l10n_ro`
-- `l10n_ro_account_move_document_type`
+- [l10n_ro_account_move_document_type](../l10n_ro_account_move_document_type/index.md)
 
 #### 4. Componente Cheie
 
@@ -55,4 +55,4 @@ Modulul dă documentelor din jurnalul de casă numerotare separată pe tip de do
 
 - [l10n_ro_cash_register](../l10n_ro_cash_register/index.md): registrul de casă tipărit; numărul documentului din registru este numărul plății, cu prefixul seriei.
 - [l10n_ro_account_vat_journal](../l10n_ro_account_vat_journal/index.md): coloana „Tip document” din jurnalul de TVA citește documentul justificativ al notei.
-- `l10n_ro_account_move_document_type`: furnizează documentul justificativ pus pe nota plății de casă (dependență; fără pagină wiki).
+- [l10n_ro_account_move_document_type](../l10n_ro_account_move_document_type/index.md): furnizează documentul justificativ pus pe nota plății de casă (dependență; fără pagină wiki).

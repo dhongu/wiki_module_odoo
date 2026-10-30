@@ -46,7 +46,7 @@ Modulul înregistrează Declarația Vamală de Import (DVI) pentru importurile d
 - `l10n_ro`
 - `purchase_stock`
 - `stock_landed_costs`
-- `l10n_ro_account_move_document_type`
+- [l10n_ro_account_move_document_type](../l10n_ro_account_move_document_type/index.md)
 
 #### 4. Componente Cheie
 
@@ -70,7 +70,7 @@ Modulul înregistrează Declarația Vamală de Import (DVI) pentru importurile d
 
 - `stock_landed_costs`: mecanismul nativ de repartizare a costurilor adiționale în valoarea stocului, folosit pentru taxele vamale și pentru onorariul brokerului.
 - `l10n_ro`: localizarea contabilă românească, sursa pentru conturile 446/4462, 4426, 4427 și 473.
-- `l10n_ro_account_move_document_type`: furnizează tipul de document „Import (DVI)” folosit pe nota DVI și afișat în jurnalul de TVA la cumpărări (dependență; fără pagină wiki).
+- [l10n_ro_account_move_document_type](../l10n_ro_account_move_document_type/index.md): furnizează tipul de document „Import (DVI)” folosit pe nota DVI și afișat în jurnalul de TVA la cumpărări (dependență; fără pagină wiki).
 - `l10n_ro_dvi`: modul OCA cu funcționalitate similară, exclus prin manifest (`excludes`) — cele două nu pot coexista pe același `addons_path`.
 - [`l10n_ro_invoice_dvi_protect`](../l10n_ro_invoice_dvi_protect/index.md): complementar; blochează resetarea facturii și anularea costului de aterizare după ce stocul a fost consumat FIFO.
 - [`terrabit_dvi`](../terrabit_dvi/index.md): numele anterior, păstrat ca modul tranzitoriu fără conținut, până la portarea pe 20.0.

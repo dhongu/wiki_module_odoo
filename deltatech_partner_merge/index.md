@@ -37,7 +37,7 @@ Modulul curăță duplicatele din nomenclatorul de parteneri cu două unelte com
 #### 3. Dependențe
 
 - `base`
-- `deltatech_partner_match` (funcțiile de normalizare și potrivire folosite la căutarea de dubluri)
+- [deltatech_partner_match](../deltatech_partner_match/index.md) (funcțiile de normalizare și potrivire folosite la căutarea de dubluri)
 
 #### 4. Componente Cheie
 

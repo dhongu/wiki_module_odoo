@@ -146,10 +146,14 @@ condiție necesară ca indicatorul de sănătate să poată deveni verde mai tâ
 Odoo nu e whitelist-at la eMAG, eroarea *„You are not allowed to use this API"* apare aici, nu mai
 târziu la import — se rezolvă din panoul eMAG, nu din Odoo.
 
+![Butonul Test connection din antetul backend-ului; starea trece din Not Confirmed în Confirmed](screenshots/03_test_connection.png)
+
 ### Pasul 4 — Import basic data
 
 Apăsați **Import basic data** din antet — importă cotele de TVA (`taxes`) definite pe contul eMAG,
 necesare mai târziu la exportul de produse.
+
+![Butonul Import basic data din antetul backend-ului confirmat](screenshots/04_import_basic_data.png)
 
 ### Pasul 5 — Categorii ÎNAINTE de produse (obligatoriu în această ordine)
 
@@ -168,7 +172,7 @@ exportul de produse să știe ce atribute cere eMAG pe acea categorie. Exportul 
 cardului **Products → Export**) **refuză** să trimită oferta dacă produsul aparține unei categorii
 Odoo fără corespondent eMAG deja importat — eroarea numește explicit categoria lipsă.
 
-![Tab Objects: cardurile cu contoare și etichete informative per tip de date](screenshots/03_objects.png)
+![Tab Objects: meniul „⋮” al cardului Categories, cu acțiunea Import](screenshots/05_objects.png)
 
 ### Pasul 6 — Prima sincronizare de produse
 
@@ -183,6 +187,8 @@ extern. O ofertă **inactivă** pe eMAG (`status != 1`) care nu are deja un prod
 **sărită complet** la import — nu creează un produs nou; una care are deja o legătură rămâne totuși
 salvată, dar fără cod de bare/cod intern preluat de la eMAG.
 
+![Tab Objects: meniul „⋮” al cardului Products, cu acțiunea Import](screenshots/06_products_import.png)
+
 ### Pasul 7 — Import geografie (localități) — obligatoriu pentru AWB
 
 Localitățile eMAG (inclusiv sectoarele Bucureștiului) **nu** se importă automat cu restul datelor.
@@ -191,7 +197,7 @@ city** din antetul formularului — pornește importul paginat, care leagă fiec
 un `res.city` prin `emag_id`. Rulați-l o singură dată per backend, înainte de primul AWB; județele
 (`res.country.state`) se creează automat, pe măsură ce sunt referite.
 
-![Metoda de livrare EMAG — butonul Get city din antet, folosit pentru importul de localități](screenshots/04_delivery_carrier.png)
+![Metoda de livrare EMAG — butonul Get city din antet, folosit pentru importul de localități](screenshots/07_delivery_carrier.png)
 
 ### Pasul 8 — Curieri și maparea metodelor de livrare (obligatoriu manual)
 
@@ -213,6 +219,8 @@ Tab-ul **EMag Configuration** de pe fiecare metodă de livrare (`delivery.carrie
 Label Format** (`A4`/`A5`/`A6` pentru PDF, `zpl` pentru imprimantă termică Zebra), transportatorul de
 plată la livrare (**Cash On Delivery**) și backend-ul asociat.
 
+![Curierii importați pentru backend (contorul cardului Delivery Carrier), cu Code mapat pe courier și pickup](screenshots/08_courier_mapping.png)
+
 ### Pasul 9 — Prețul pe fiecare ofertă (marketplace.product)
 
 Pe o înregistrare `marketplace.product` legată de eMAG apar butoanele **Set price** (trimite
@@ -229,7 +237,7 @@ următorul export, dacă nu e reflectată și în lista de prețuri. Excepție: 
 și cu **Max sale price** completat — exportul le trimite propriul preț și propriile limite min/max,
 în care lucrează auto-pricing-ul.
 
-![Fișa produsului marketplace: Odoo Price/External Price, Sale Price, Auto Price, Buy Button Rank, Min/Max Sale Price, butoanele Set price/Get price](screenshots/05_product_pricing.png)
+![Fișa produsului marketplace: Odoo Price/External Price, Sale Price, Auto Price, Buy Button Rank, Min/Max Sale Price, butoanele Set price/Get price](screenshots/09_product_pricing.png)
 
 ### Pasul 10 — Import comenzi și acknowledge automat
 
@@ -253,6 +261,8 @@ nebifată (implicit), comanda tot ajunge în Odoo, dar rămâne neconfirmată pe
 manual: cu `deltatech_marketplace_dashboard` instalat, comanda apare în tabloul marketplace la pasul
 *De acceptat*, cu butonul **Acceptă** pe rând (formularul comenzii nu are un asemenea buton). Bifa
 nebifată e utilă în testare, ca eMAG să nu considere comanda preluată.
+
+![Tab Objects: meniul „⋮” al cardului Sale Order, cu acțiunea Import](screenshots/10_orders_import.png)
 
 O comandă care are `cancellation_request` fără nicio expediție deja finalizată se anulează automat
 și pe comanda de vânzare Odoo, la orice import (inclusiv webhook), iar anularea se trimite și la
@@ -297,6 +307,8 @@ link-ul trebuie comunicat către eMAG.
 Dacă token-ul este regenerat sau adresa publică a instanței se schimbă, link-ul se schimbă și
 el și trebuie retrimis către eMAG.
 
+![Item-ul orders: bifa Use Webhook și Web Hook Link de trimis către eMAG](screenshots/11_webhook.png)
+
 ### Pasul 11 — Emiterea AWB-ului
 
 La confirmarea unei expediții cu o metodă de livrare `EMAG`, apăsați **Send to Shipper** — conectorul
@@ -308,6 +320,8 @@ cumpărătorului. Eticheta (PDF sau ZPL, după **Emag Label Format**) se atașea
 ulterior, butonul **Print AWB** o re-descarcă la cerere. Dacă localitatea expeditorului sau (pentru
 comenzi din România) a destinatarului lipsește din nomenclatorul eMAG deja importat, emiterea AWB-ului
 eșuează cu o eroare explicită, nu tăcut.
+
+![Livrare validată cu metoda EMAG: butonul Send to Shipper emite AWB-ul](screenshots/12_awb.png)
 
 Starea coletului **nu** se împinge în timp real spre Odoo: codurile de stare AWB ale eMAG (`PU`,
 `INT`, `INW`, `OFD`, `DLV`, `RTS`, `REF`, `CAN`, `AWB`) sunt interogate periodic prin cron-ul comun de
@@ -337,6 +351,8 @@ le-ar suprascrie cu prețul din lista de prețuri.
 > un preț țintă spre limita de 0, îl plafonează la 0 și **trimite prețul 0 la eMAG**, scriindu-l și
 > pe câmpul din Odoo. Nu activați Auto Price pe niciun produs fără să completați întâi ambele limite.
 
+![Acțiunea programată EMAG: Set Price, dezactivată implicit (comutatorul Active)](screenshots/13_auto_price_cron.png)
+
 ### Pasul 13 — Push-ul facturii către eMAG
 
 Când o factură legată de o comandă eMAG e validată în Odoo — cu **Enable Order Push Invoice** activ
@@ -346,6 +362,8 @@ trebuie ambele) — conectorul trimite către eMAG **link-ul portalului Odoo** c
 Aceasta cere ca **URL-ul de bază al instanței Odoo (`web.base.url`) să fie public și accesibil din
 afară** — pe o instanță fără acces public din internet, push-ul „reușește" (apelul API nu dă eroare),
 dar eMAG nu poate obține efectiv factura.
+
+![Item-ul orders: bifa Active On Write, a doua condiție a push-ului de factură](screenshots/14_invoice_push.png)
 
 ### Pasul 13b — Starea comenzii trimisă înapoi la eMAG
 
@@ -375,6 +393,8 @@ eMAG.
 Starea eMAG a comenzii se păstrează pe comanda marketplace (**eMAG Status**, **eMAG Status Since**),
 actualizată la fiecare citire a comenzii și după fiecare stare trimisă de Odoo.
 
+![Comanda marketplace: eMAG Status și eMAG Status Since](screenshots/15_order_status.png)
+
 ### Pasul 14 — Citirea stării de sănătate
 
 Cardul kanban al backend-ului din **Marketplace → Backends** arată un indicator de sănătate
@@ -384,7 +404,7 @@ erori în ultimele 24h, fără job-uri eșuate, și cel puțin un tip de date ar
 înregistrată. Un backend confirmat dar neimportat încă rămâne cu starea „Never synchronized", nu
 „Healthy".
 
-![Indicatorul de sănătate pe cardul kanban al backend-ului](screenshots/06_health_badge.png)
+![Indicatorul de sănătate pe cardul kanban al backend-ului](screenshots/16_health_badge.png)
 
 > Kanban-ul **Marketplace → Backends** e comun tuturor conectorilor instalați — pe o instanță cu mai
 > multe conectoare de test/demo e normal să apară și cardurile lor alături de cel eMAG. Urmăriți
@@ -395,7 +415,7 @@ erori în ultimele 24h, fără job-uri eșuate, și cel puțin un tip de date ar
 Cererile de retur (RMA) deschise de cumpărători pe eMAG apar în Odoo la
 **Marketplace → Bindings → Return Requests**, ca înregistrări `marketplace.return.request` legate de
 comanda de vânzare — cine a cerut ce, în ce cantitate, din ce motiv, și starea cererii
-(`requested`/`approved`/`refused`/`cancelled`/`received`/`done`), sincronizată periodic din statusul
+(`requested`/`approved`/`received`/`done`/`rejected`/`cancelled`), sincronizată periodic din statusul
 eMAG. Importul e **doar de citire**: conectorul nu trimite nimic înapoi la eMAG pentru o cerere de
 retur — aprobarea, refuzul sau recepția se fac tot în panoul eMAG, iar Odoo doar reflectă starea.
 
@@ -404,6 +424,8 @@ decizia deliberată a conectorului este să nu ghicească cine trebuie să iniț
 Odoo. Consultantul/operatorul creează manual nota de credit și recepția, pornind de la informațiile
 din cererea de retur importată. Starea de livrare a AWB-ului „Return to Sender" (§6, Pasul 11) se
 reflectă în continuare separat, ca stare de livrare pe expediție, nu ca parte din acest flux RMA.
+
+![Marketplace → Bindings → Return Requests: cererea de retur importată, în starea Requested](screenshots/17_return_requests.png)
 
 ### Note privind vouchere pe comanda importată
 
@@ -529,20 +551,31 @@ cron-ului de auto-pricing.
 > la ceilalți conectori din suită) — etichetele reale de pe ecran sunt cele englezești, deși modulul
 > are și o traducere parțială în `i18n/ro.po`.
 
-Capturile (`readme/screenshots/`) ilustrează fluxul din secțiunea 6, generate cu
+Capturile (`static/description/`, de unde le folosește și USAGE.md pe Odoo Apps) ilustrează fluxul din secțiunea 6, generate cu
 `ScreenshotCase`/Playwright (`tests/test_screenshots.py`, import defensiv, clasă separată de orice
 test de marketing existent):
 
-1. `01_credentials.png` — backend eMAG, tab Credentials completat, înainte de Test connection
+1. `01_credentials.png` — Pasul 1: backend eMAG, tab Credentials completat, înainte de Test connection
    (`Not Confirmed`).
-2. `02_provider_details.png` — grupul de câmpuri specifice eMAG (tab Orders and Products → Settings): Enable Order Push
-   Invoice, Mapping Product Code, Safe stock, Odoo ID is External ID.
-3. `03_objects.png` — tab Objects: cardurile cu contoare și etichete informative per tip de date.
-4. `04_delivery_carrier.png` — metoda de livrare EMAG: butonul **Get city** din antet (import
-   geografie) și tab-ul EMag Configuration (Emag Label Format, Backend).
-5. `05_product_pricing.png` — fișa produsului marketplace: Odoo Price/External Price, Sale Price,
-   Auto Price, Buy Button Rank, Min/Max Sale Price, butoanele Set price/Get price.
-6. `06_health_badge.png` — indicatorul de sănătate pe cardul kanban al backend-ului.
+2. `02_provider_details.png` — Pasul 2: grupul de câmpuri specifice eMAG (tab Orders and Products →
+   Settings): Enable Order Push Invoice, Mapping Product Code, Safe stock, Odoo ID is External ID.
+3. `03_test_connection.png` — Pasul 3: butonul **Test connection** și starea backend-ului.
+4. `04_import_basic_data.png` — Pasul 4: butonul **Import basic data**, pe backend-ul confirmat.
+5. `05_objects.png` — Pasul 5: tab Objects, meniul „⋮" al cardului **Categories** cu **Import**.
+6. `06_products_import.png` — Pasul 6: meniul „⋮" al cardului **Products** cu **Import**.
+7. `07_delivery_carrier.png` — Pasul 7: metoda de livrare EMAG, butonul **Get city** din antet și
+   tab-ul EMag Configuration (Emag Label Format, Backend).
+8. `08_courier_mapping.png` — Pasul 8: curierii importați, cu **Code** mapat pe `courier`/`pickup`.
+9. `09_product_pricing.png` — Pasul 9: fișa produsului marketplace: Odoo Price/External Price, Sale
+   Price, Auto Price, Buy Button Rank, Min/Max Sale Price, butoanele Set price/Get price.
+10. `10_orders_import.png` — Pasul 10: meniul „⋮" al cardului **Sale Order** cu **Import**.
+11. `11_webhook.png` — Pasul 10b: item-ul `orders`, **Use Webhook** și **Web Hook Link**.
+12. `12_awb.png` — Pasul 11: livrarea validată cu metoda EMAG și butonul **Send to Shipper**.
+13. `13_auto_price_cron.png` — Pasul 12: acțiunea programată **EMAG: Set Price**, dezactivată implicit.
+14. `14_invoice_push.png` — Pasul 13: item-ul `orders`, bifa **Active On Write**.
+15. `15_order_status.png` — Pasul 13b: comanda marketplace cu **eMAG Status** și **eMAG Status Since**.
+16. `16_health_badge.png` — Pasul 14: indicatorul de sănătate pe cardul kanban al backend-ului.
+17. `17_return_requests.png` — Pasul 15: lista **Return Requests** cu o cerere importată.
 
 Regenerare:
 

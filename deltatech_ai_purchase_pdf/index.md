@@ -30,8 +30,8 @@ Nu toți furnizorii trimit factura în format e-Factura XML. Acest modul permite
 
 - [deltatech_purchase_ubl](../deltatech_purchase_ubl/index.md)
 - `ai`
-- `deltatech_ai_pdf_base`
-- `deltatech_task_progress`
+- [deltatech_ai_pdf_base](../deltatech_ai_pdf_base/index.md)
+- [deltatech_task_progress](../deltatech_task_progress/index.md)
 
 #### 4. Componente Cheie
 

@@ -35,7 +35,7 @@ Modulul aduce interogarea ANAF în formularele de adresă din website (finalizar
 #### 3. Dependențe
 
 - `website_sale`
-- `l10n_ro_anaf_partner_lookup`
+- [l10n_ro_anaf_partner_lookup](../l10n_ro_anaf_partner_lookup/index.md)
 
 #### 4. Componente Cheie
 

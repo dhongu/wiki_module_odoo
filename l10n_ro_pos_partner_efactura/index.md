@@ -31,7 +31,7 @@ La casă, clientul care cere factură este creat în grabă de casier din ecranu
 
 - `point_of_sale`
 - `l10n_ro_edi`
-- `l10n_ro_anaf_partner_lookup`
+- [l10n_ro_anaf_partner_lookup](../l10n_ro_anaf_partner_lookup/index.md)
 
 #### 4. Componente Cheie
 
@@ -58,7 +58,7 @@ La casă, clientul care cere factură este creat în grabă de casier din ecranu
 
 #### 5. Conexiuni
 
-- `l10n_ro_anaf_partner_lookup`: furnizează `l10n.ro.anaf.partner.lookup` (normalizare și validare CUI, căutare la ANAF, stări găsit / indisponibil / radiat / inactiv).
+- [l10n_ro_anaf_partner_lookup](../l10n_ro_anaf_partner_lookup/index.md): furnizează `l10n.ro.anaf.partner.lookup` (normalizare și validare CUI, căutare la ANAF, stări găsit / indisponibil / radiat / inactiv).
 - `l10n_ro_edi`: regulile CIUS-RO (sectoarele Bucureștiului) pentru e-Factura în SPV.
 - `l10n_ro_pos_partner` (OCA): exclus (`excludes`), aceeași căutare după CUI la casă; nu se instalează împreună.
 - [l10n_ro_doc_screenshots](../l10n_ro_doc_screenshots/index.md): mixinul `ScreenshotCase` folosit de testul care generează capturile fișei (import defensiv; testul folosește opțional și `l10n_ro_partner_create_by_vat`).
