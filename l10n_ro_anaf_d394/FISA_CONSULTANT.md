@@ -83,6 +83,13 @@ Date minime pentru demo:
    - **D394 Period** (`tip_D394`): L / T / S / A, după periodicitatea TVA a firmei (la T/S/A, luna
      declarației este ultima lună a perioadei selectate în raport);
    - **D394 VAT on Collection** (`sistemTVA`): bifați dacă firma aplică sistemul TVA la încasare;
+     atunci `tvaDedAI` (rd. 139–142) primește TVA-ul facturilor de la furnizori cu TVA la încasare
+     achitate în perioadă, din notele de exigibilitate generate la plată; nebifat, `tvaDedAI` rămâne 0.
+     Regimul furnizorului se ia din istoricul ANAF al modulului `l10n_ro_vat_on_payment` (bifa
+     **TVA la încasare** de pe partener), la data facturii. Fără acest modul regimul furnizorilor nu e
+     cunoscut și `tvaDedAI` rămâne 0: o firmă cu TVA la încasare folosește taxe „la încasare” la toate
+     achizițiile, deci taxa nu arată regimul furnizorului. Doar partea deductibilă a TVA-ului intră;
+     la plata parțială intră TVA-ul proporțional cu suma plătită;
    - **D394 Option** (`optiune`) și **D394 Affiliated Persons** (`prsAfiliat`), după caz.
    (`op_efectuate` se calculează automat: 1 dacă există operațiuni, 0 pentru declarație nulă.)
 5. Verificați partenerii: companii RO cu CUI valid; persoane fizice fără CUI, cu nume/adresă completă;
@@ -132,7 +139,7 @@ Furnizor, CUI furnizor**, coloanele pe cotă
 *Verifică:* TVA deductibilă pe cotă corespunde jurnalului de cumpărări; achizițiile de la furnizori RO
 cu taxare inversă au TVA autotaxată pe cota reală. Jurnalul nu afișează tipul D394 al operațiunii:
 încadrarea ca **C** se verifică în XML (`op1 tip="C"`, pasul 4). Achizițiile intracomunitare (în demo,
-furnizorul din Franța) **nu intră în D394** — se declară în D390. Rândul `BILL/2026/09/0006` (ELY-CONTAB
+furnizorul din Franța) **nu intră în D394** — se declară în D390 — și nici în `tvaDedAI`. Rândul `BILL/2026/09/0006` (ELY-CONTAB
 SRL), fără rând D300, este o achiziție de la un furnizor cu TVA la încasare (TVA neexigibilă, 4428):
 modulul nu o raportează încă în D394 (vezi „Limitări cunoscute"). Coloanele cu sume sunt în dreapta,
 în afara cadrului capturii — derulați tabelul.
@@ -173,6 +180,18 @@ sunt completate — altfel validarea ridică o eroare blocantă; perioada este c
 validatorul ANAF (R04) la aceste periodicități. Înainte de scriere, modulul
 rulează și regulile validatorului ANAF (codurile R04, R17, R35, R84, R96–R104 etc.) și oprește exportul
 dacă găsește erori.
+
+*Verifică în XML (blocul `informatii`):* `tvaDedAI21`, `tvaDedAI11` etc. sunt 0 dacă firma nu aplică TVA
+la încasare. Dacă aplică, fiecare valoare este TVA-ul facturilor de la furnizori cu TVA la încasare
+**achitate în perioadă**, pe cotă: suma liniilor de TVA din notele de exigibilitate create la plată
+(4428 → 4426). O factură neachitată sau o achiziție intracomunitară nu apare aici.
+
+*Verifică în formularul PDF (după importul XDP):* secțiunea cu partenerii și facturile are câte un rând
+pe document, cu tipul de partener (1 – cu CUI, 2 – fără CUI), CUI-ul, denumirea, baza și TVA-ul; la
+partenerii fără CUI se completează adresa; la taxarea inversă apar rândurile de produs (cod, număr
+facturi, bază, TVA). Plaja de facturi emise (serie, număr inițial și final) și numele reprezentantului
+sunt completate. Periodicitatea, TVA la încasare, opțiunea, persoanele afiliate, rezumatele și `op2`
+nu sunt încă preluate în XDP: le verificați în XML.
 
 *Treci mai departe (export):*
 - **„D394 file XML (Soft J)"** — fișierul de referință, pentru validare și semnare în DUKIntegrator;
@@ -251,6 +270,7 @@ sunt cerute. Modulul le emite astfel, deci nu vă mirați că unele atribute lip
   acestor operațiuni.
 - Taxarea inversă **trebuie inclusă**: livrarea (**V**) pe cota 0, fără TVA; achiziția (**C**) pe cota
   reală, cu TVA autotaxată în `tvaC`. Nu trebuie omisă și nici nu dublează TVA.
+- **`tvaDedAI`** (rd. 139–142): se ia din linia de TVA a notei de exigibilitate generate la plata facturii furnizorului (`Dr 4426 = Cr 4428`), proporțional cu suma plătită, doar pentru furnizorii cu TVA la încasare la data facturii.
 
 ## 7. Legături cu alte module / declarații
 
@@ -263,6 +283,7 @@ sunt cerute. Modulul le emite astfel, deci nu vă mirați că unele atribute lip
 | `l10n_ro_anaf_base` | infrastructură comună ANAF (validare XSD, butoane XML/XDP, date companie) | dependență (manifest) |
 | `l10n_ro_anaf_d300` | la generarea D300, jurnalele TVA sunt reconciliate automat cu decontul (rd. 17/27 + rând cu rând), cu avertisment la neconcordanță; D394 detaliază partea națională | integrare automată |
 | `l10n_ro_anaf_d390` | operațiunile intracomunitare se verifică separat, nu se dublează în D394 | corelare |
+| `l10n_ro_vat_on_payment` | regimul „TVA la încasare” al furnizorilor (istoric ANAF) din care se calculează `tvaDedAI`; fără el `tvaDedAI` rămâne 0 | corelare |
 | `l10n_ro_anaf_d394_pos` | (auto-install cu POS) aduce bonurile fiscale POS în op2 / op1 | extensie |
 
 **Ce este automat:** preluarea datelor din facturile postate, clasificarea pe tipuri de partener (1 și 2;
@@ -278,8 +299,10 @@ raportează separat.
 - **Achiziții de la furnizori cu TVA la încasare (tip AI):** nu sunt raportate, indiferent de regimul
   firmei declarante — inclusiv pentru firmele în regim normal. În demo, `BILL/2026/09/0006` (ELY-CONTAB
   SRL, TVA neexigibilă în 4428) lipsește din D394. Adăugați-le manual.
-- **Firme care aplică TVA la încasare:** setarea pune doar `sistemTVA=1`; rubricile pe facturi
-  achitate/încasate și operațiunile de tip AI nu sunt încă generate.
+- **Firme care aplică TVA la încasare:** setarea pune `sistemTVA=1` și calculează `tvaDedAI`; celelalte
+  rubrici pe facturi achitate/încasate (`tvaDed*`, `tvaCol*`) și operațiunile de tip AI nu sunt încă
+  generate. Fără modulul `l10n_ro_vat_on_payment` (istoricul ANAF „TVA la încasare" al furnizorilor),
+  regimul furnizorilor nu e cunoscut și `tvaDedAI` rămâne 0.
 - **Regim special (LS / AS):** livrările și achizițiile în regim special (agenții de turism, bunuri
   second-hand, art. 311 și 312 din Codul fiscal) sunt operațiuni pe cota 0, nu scutiri. Dacă apar astfel
   de operațiuni în `op1`, grupurile LS/AS din `rezumat1` se calculează din ele; modulul nu le generează
@@ -292,10 +315,9 @@ raportează separat.
   `tip_partener=2`, ca operațiuni A.
 - **`nrFacturi`** din blocul `informatii` numără doar livrările naționale incluse în D394, nu toate
   facturile emise în perioadă (cum cere rubrica ANAF și cum arată plaja `serieFacturi`).
-- **XDP (Soft A):** fișierul are valori fixe pentru periodicitate, TVA la încasare, opțiune și persoane
-  afiliate și nu cuprinde secțiunile de rezumat și `op2`. Folosiți XML-ul (Soft J) ca fișier de referință.
-- **`tvaDedAI`** din blocul `informatii` se calculează din achizițiile intracomunitare, deși rubrica
-  ANAF privește TVA deductibilă din facturile achitate la furnizori cu TVA la încasare.
+- **XDP (Soft A):** cuprinde facturile pe parteneri și plaja de facturi emise, dar are valori fixe
+  pentru periodicitate, TVA la încasare, opțiune și persoane afiliate și nu cuprinde secțiunile de
+  rezumat și `op2`. Folosiți XML-ul (Soft J) ca fișier de referință.
 
 ## 8. Verificări pentru consultant
 
@@ -313,7 +335,11 @@ raportează separat.
 - [ ] „D394 file XML (Soft J)" se generează și trece validarea XSD, inclusiv cu `op2` (vânzări către parteneri fără CUI sau bonuri fiscale: un `rezumat2` pe fiecare cotă); cu date companie/partener incomplete → eroare blocantă.
 - [ ] La D394 trimestrial (setarea „D394 Period" = T, perioada = trimestrul), `luna` din XML este ultima lună a trimestrului și exportul nu se oprește cu R04; încasările `op2` din luni diferite apar în secțiuni separate.
 - [ ] Pentru partenerii cu CUI, `op1` nu are atribute de adresă; `rezumat1` nu conține grupuri de atribute neadmise pe combinația tip partener/cotă.
-- [ ] „D394 file XDP (Soft A)" se generează pentru formularul inteligent ANAF (cu limitările din secțiunea 7).
+- [ ] „D394 file XDP (Soft A)" se generează pentru formularul inteligent ANAF și cuprinde facturile pe
+  parteneri și plaja de facturi emise (cu limitările din secțiunea 7).
+- [ ] La o firmă cu TVA la încasare, `tvaDedAI` cuprinde doar facturile achitate în perioadă de la
+  furnizori cu TVA la încasare la data facturii (istoricul ANAF din `l10n_ro_vat_on_payment`);
+  facturile de la furnizori în regim normal nu intră (rubrica `tvaDed` nu e încă generată).
 - [ ] Exportul XLSX de detaliu se descarcă cu coloanele pe cotă ordonate determinist.
 
 ## 9. Mesaje de eroare frecvente
@@ -332,6 +358,7 @@ raportează separat.
 | „Validare pre-flight D394: N erori detectate…", cu coduri ANAF (ex. R04, R17, R35, R84, R96–R104) | Datele încalcă o regulă a validatorului ANAF (ex. R04 = periodicitatea nu admite luna declarației — la T/S/A, setați în raport perioada completă, astfel încât luna să fie ultima lună a perioadei; R84 = operațiune fără rezumat pe cotă) | Corectați elementul indicat în mesaj (setări, partener, document) și regenerați |
 | DUKIntegrator respinge XML-ul pentru un atribut de adresă sau un grup de atribute lipsă/în plus în `op1` / `rezumat1` | Fișier generat cu un modul sub 19.0.1.3.11, care emitea atribute goale sau grupuri neconforme | Actualizați modulul `l10n_ro_anaf_d394` și regenerați XML-ul |
 | Rapoartele apar goale („Nu există date de afișat!") | Perioada selectată nu conține documente postate | Selectați luna/trimestrul cu facturi postate (implicit luna trecută) |
+| `tvaDedAI` rămâne 0 deși există facturi achitate de la furnizori cu TVA la încasare | Firma nu are bifat **D394 VAT on Collection**; modulul `l10n_ro_vat_on_payment` nu e instalat; sau furnizorul nu apare cu TVA la încasare la data facturii (istoric ANAF / bifa de pe partener) | Bifați setarea firmei, instalați `l10n_ro_vat_on_payment` și actualizați regimul furnizorului, apoi regenerați |
 
 ## 10. Capturi de ecran
 

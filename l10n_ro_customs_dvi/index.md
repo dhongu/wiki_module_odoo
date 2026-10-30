@@ -1,10 +1,10 @@
 # Romania - Customs Import Declaration (DVI) (localizat la `l10n_ro_customs_dvi/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_customs_dvi`
-- **Versiune:** `19.0.2.1.14`
-- **Cale:** `https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_customs_dvi`
-- **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_customs_dvi`
-- **Ultima Ingestie:** `2026-10-24`
+- **Versiune:** `19.0.2.2.0`
+- **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_customs_dvi
+- **Cale Locală:** odoo-addons/l10n-romania/l10n_ro_customs_dvi
+- **Ultima Ingestie:** `2026-10-30`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 - **Nume anterior:** `terrabit_dvi` (redenumit la 2026-09-23; vezi [terrabit_dvi](../terrabit_dvi/index.md))
 
@@ -35,6 +35,7 @@ Modulul înregistrează Declarația Vamală de Import (DVI) pentru importurile d
 - **Multi-company (#685)**: contul de decontare cu bugetul (4462) se ia direct din planul companiei DVI, iar contul de cheltuială al produsului „Taxă vamală” se completează pentru acea companie la prima utilizare; înainte, la o companie diferită de cea care a creat produsul, TVA-ul plătit în vamă și taxa vamală ajungeau pe contul de cheltuială al categoriei (607).
 - Dacă DVI-ul nu are taxă vamală, nota pentru TVA la import (sau baza scutită) se postează automat, nu rămâne în ciornă.
 - Fișa consultant (Pasul 5) trimite la modulul [`l10n_ro_customs_dvi_import`](../l10n_ro_customs_dvi_import/index.md) pentru completarea DVI din PDF-ul declarației tipărite din SNI; transcrierea manuală rămâne pentru declarațiile primite fără acel PDF.
+- **Tip document „Import (DVI)” pe nota DVI**: nota contabilă a DVI primește tipul de document `customs_declaration`, astfel că jurnalul de TVA la cumpărări arată declarația vamală ca document justificativ al TVA-ului la import, nu „Notă contabilă”. Notele DVI deja validate se actualizează la upgrade; fișa consultant arată tipul în Pasul 7 (cu captură) și în jurnalul de TVA, are o verificare nouă în §8, iar Pasul 12 (regim 4200) primește captura facturii intracomunitare cu „0% EU G”.
 - Se exclude reciproc cu modulul OCA `l10n_ro_dvi`.
 
 #### 3. Dependențe
@@ -45,13 +46,14 @@ Modulul înregistrează Declarația Vamală de Import (DVI) pentru importurile d
 - `l10n_ro`
 - `purchase_stock`
 - `stock_landed_costs`
+- `l10n_ro_account_move_document_type`
 
 #### 4. Componente Cheie
 
 **Modele**
 
 - `account.invoice.dvi` (wizard tranzitoriu): colectează sumele din declarație și creează costul adițional. Precompletează baza cu netul facturii furnizorului — valoare orientativă. `_get_customs_payable_account()` caută întâi 4462, apoi orice 446, filtrat pe companie.
-- `stock.landed.cost` (extins): câmpurile `landed_type`, `dvi_number`, `customs_regime`, `tax_id`, `tax_base`, `tax_value` (etichetat „Import VAT Amount”), `vat_guarantee_amount`, `vat_guarantee_state` (acțiunea `action_release_vat_guarantee`); `_set_dvi_move_partner()` completează partenerul antetului notei; wizardul completează și `vendor_bill_id` cu factura furnizorului; la validare adaugă nota de TVA la import. `_prepare_tax_lines()` urmează liniile de repartiție ale taxei (plată efectivă sau fără plată în vamă), legând fiecare linie de `tax_repartition_line_id`, `_prepare_tax_base_lines()` adaugă perechea tehnică pe 473 (linia de bază poartă taxa), iar referința notei devine numărul MRN.
+- `stock.landed.cost` (extins): `_set_dvi_move_document_type()` pune tipul de document „Import (DVI)” pe nota DVI; câmpurile `landed_type`, `dvi_number`, `customs_regime`, `tax_id`, `tax_base`, `tax_value` (etichetat „Import VAT Amount”), `vat_guarantee_amount`, `vat_guarantee_state` (acțiunea `action_release_vat_guarantee`); `_set_dvi_move_partner()` completează partenerul antetului notei; wizardul completează și `vendor_bill_id` cu factura furnizorului; la validare adaugă nota de TVA la import. `_prepare_tax_lines()` urmează liniile de repartiție ale taxei (plată efectivă sau fără plată în vamă), legând fiecare linie de `tax_repartition_line_id`, `_prepare_tax_base_lines()` adaugă perechea tehnică pe 473 (linia de bază poartă taxa), iar referința notei devine numărul MRN.
 - `account.move` (extins): câmpul `dvi_id` și butonul **DVI**, vizibil doar pe facturile furnizor postate. Refuză pornirea dacă partenerul nu are țara completată.
 
 **Vizualizări**
@@ -62,12 +64,13 @@ Modulul înregistrează Declarația Vamală de Import (DVI) pentru importurile d
 
 **Acțiuni Automate / Acțiuni Server**
 
-- `pre_init_hook`: la instalare preia înregistrările `ir_model_data` ale modulului redenumit `terrabit_dvi`, ca actualizarea să nu producă view-uri, acțiuni și meniuri duplicate. Nu există cron-uri. O migrare `post-migrate` completează partenerul pe notele DVI 2026 postate fără partener (în afara perioadelor blocate).
+- `pre_init_hook`: la instalare preia înregistrările `ir_model_data` ale modulului redenumit `terrabit_dvi`, ca actualizarea să nu producă view-uri, acțiuni și meniuri duplicate. Nu există cron-uri. Migrările `post-migrate` completează partenerul pe notele DVI 2026 postate fără partener (în afara perioadelor blocate, 19.0.2.1.10) și setează tipul de document „Import (DVI)” pe notele DVI deja validate (19.0.2.2.0).
 
 #### 5. Conexiuni
 
 - `stock_landed_costs`: mecanismul nativ de repartizare a costurilor adiționale în valoarea stocului, folosit pentru taxele vamale și pentru onorariul brokerului.
 - `l10n_ro`: localizarea contabilă românească, sursa pentru conturile 446/4462, 4426, 4427 și 473.
+- `l10n_ro_account_move_document_type`: furnizează tipul de document „Import (DVI)” folosit pe nota DVI și afișat în jurnalul de TVA la cumpărări (dependență; fără pagină wiki).
 - `l10n_ro_dvi`: modul OCA cu funcționalitate similară, exclus prin manifest (`excludes`) — cele două nu pot coexista pe același `addons_path`.
 - [`l10n_ro_invoice_dvi_protect`](../l10n_ro_invoice_dvi_protect/index.md): complementar; blochează resetarea facturii și anularea costului de aterizare după ce stocul a fost consumat FIFO.
 - [`terrabit_dvi`](../terrabit_dvi/index.md): numele anterior, păstrat ca modul tranzitoriu fără conținut, până la portarea pe 20.0.
@@ -76,6 +79,7 @@ Modulul înregistrează Declarația Vamală de Import (DVI) pentru importurile d
 
 #### 6. Istoric
 
+- **19.0.2.2.0** (2026-10-29) — nota DVI are tipul de document „Import (DVI)” (`l10n_ro_account_move_document_type`, instalat ca dependență), deci jurnalul de TVA la cumpărări arată declarația vamală ca document justificativ în loc de „Notă contabilă” (tichet #9568); notele DVI deja validate se actualizează la upgrade. Fișa consultant: Pasul 7 arată tipul de document (evidențiat în captură) și upgrade-ul, dependență nouă în §7, verificare nouă în §8, captură nouă la Pasul 12.
 - **19.0.2.1.14** (2026-10-24) — doar teste: căutările de jurnal și de cont din teste sunt limitate la compania testului, ca testele să treacă și pe o bază cu mai multe companii RO (PR #689).
 - **19.0.2.1.13** (2026-10-24) — fișa consultant, Pasul 5: trimitere către `l10n_ro_customs_dvi_import` pentru completarea DVI din PDF-ul SNI.
 - **19.0.2.1.12** (2026-10-24) — fix multi-company (#685): contul 4462 se ia din planul companiei DVI, nu din contul de cheltuială al categoriei produsului (607).

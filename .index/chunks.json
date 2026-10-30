@@ -1061,33 +1061,44 @@
     "module": "deltatech_analytic_distribution",
     "version": "19.0.0.0.7",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_analytic_distribution",
-    "local_path": "odoo-addons/deltatech/deltatech_analytic_distribution",
-    "last_ingest": "2026-06-02",
-    "friendly_name": "Deltatech Analytic distribution enforcer",
-    "summary": "Acest modul impune completarea corectă a distribuției analitice pe facturile de la furnizori. Atunci când validarea este activată, fiecare linie de pe o factură de furnizor trebuie să aibă distribuția analitică completată integral, cu toate dimensiunile cerute (Locație, Departament, Linie de business), iar procentele de pe fiecare linie trebuie să însumeze exact 100%. Astfel se asigură o repartizare analitică completă și coerentă a cheltuielilor, evitând înregistrările incomplete care ar denatura analiza de costuri.",
+    "local_path": null,
+    "last_ingest": "2026-10-30",
+    "friendly_name": "Analytic Distribution Enforcer",
+    "summary": "Modulul blochează postarea facturilor de la furnizori până când fiecare linie are distribuția analitică completă. Când validarea este activată pentru o companie, fiecare linie trebuie să aibă distribuția analitică completată cu toate cele trei dimensiuni cerute (Locație, Departament, Linie de business), iar procentele să însumeze exact 100%. Astfel cheltuielile sunt repartizate complet și coerent, iar înregistrările incomplete nu mai denaturează analiza de costuri.",
     "features": [
-      "Facturile de la furnizori vor cere ca distribuția analitică să însumeze 100% pe fiecare linie, iar toate câmpurile să fie completate (Locație, Departament, Linie de business).",
-      "Pentru a activa această validare se bifează opțiunea „Enable Analytic Distribution Validation\" din configurare, în blocul Vendor Bills (Facturi furnizori)."
+      "Blochează postarea facturilor de furnizor, a notelor de credit furnizor și a bonurilor de achiziție (`in_invoice`, `in_refund`, `in_receipt`) dacă o linie nu are distribuție analitică.",
+      "Verifică ca procentele distribuției de pe fiecare linie să însumeze exact 100%.",
+      "Cere ca fiecare intrare de distribuție să acopere exact trei dimensiuni analitice: Locație, Departament și Linie de business.",
+      "Setare specifică companiei: se activează din Contabilitate → Configurare → Setări, în blocul Vendor Bills (Facturi furnizori), cu bifa Enable Analytic Distribution Validation, independent pentru fiecare companie dintr-un mediu multi-company.",
+      "Validarea urmează compania facturii, nu compania curentă a utilizatorului, inclusiv când se postează în lot facturi din companii diferite; alte tipuri de documente din același lot se postează fără verificare."
     ],
     "dependencies": [
       "account"
     ],
-    "connections": [],
-    "text": "Deltatech Analytic distribution enforcer\ndeltatech_analytic_distribution\nAcest modul impune completarea corectă a distribuției analitice pe facturile de la furnizori. Atunci când validarea este activată, fiecare linie de pe o factură de furnizor trebuie să aibă distribuția analitică completată integral, cu toate dimensiunile cerute (Locație, Departament, Linie de business), iar procentele de pe fiecare linie trebuie să însumeze exact 100%. Astfel se asigură o repartizare analitică completă și coerentă a cheltuielilor, evitând înregistrările incomplete care ar denatura analiza de costuri.\nFacturile de la furnizori vor cere ca distribuția analitică să însumeze 100% pe fiecare linie, iar toate câmpurile să fie completate (Locație, Departament, Linie de business).\nPentru a activa această validare se bifează opțiunea „Enable Analytic Distribution Validation\" din configurare, în blocul Vendor Bills (Facturi furnizori)."
+    "connections": [
+      "account"
+    ],
+    "text": "Analytic Distribution Enforcer\ndeltatech_analytic_distribution\nModulul blochează postarea facturilor de la furnizori până când fiecare linie are distribuția analitică completă. Când validarea este activată pentru o companie, fiecare linie trebuie să aibă distribuția analitică completată cu toate cele trei dimensiuni cerute (Locație, Departament, Linie de business), iar procentele să însumeze exact 100%. Astfel cheltuielile sunt repartizate complet și coerent, iar înregistrările incomplete nu mai denaturează analiza de costuri.\nBlochează postarea facturilor de furnizor, a notelor de credit furnizor și a bonurilor de achiziție (`in_invoice`, `in_refund`, `in_receipt`) dacă o linie nu are distribuție analitică.\nVerifică ca procentele distribuției de pe fiecare linie să însumeze exact 100%.\nCere ca fiecare intrare de distribuție să acopere exact trei dimensiuni analitice: Locație, Departament și Linie de business.\nSetare specifică companiei: se activează din Contabilitate → Configurare → Setări, în blocul Vendor Bills (Facturi furnizori), cu bifa Enable Analytic Distribution Validation, independent pentru fiecare companie dintr-un mediu multi-company.\nValidarea urmează compania facturii, nu compania curentă a utilizatorului, inclusiv când se postează în lot facturi din companii diferite; alte tipuri de documente din același lot se postează fără verificare."
   },
   {
     "path": "deltatech_auto_reorder_rule/index.md",
     "module": "deltatech_auto_reorder_rule",
     "version": "19.0.0.1.11",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_auto_reorder_rule`",
-    "local_path": "odoo-addons/deltatech/deltatech_auto_reorder_rule",
-    "last_ingest": "2026-06-02",
-    "friendly_name": "Deltatech Auto Reorder Rule",
-    "summary": "Modulul automatizează crearea regulilor de reaprovizionare (reordering rules) pentru produse. La adăugarea unui produs nou, modulul generează automat o regulă de reaprovizionare cu valori implicite, eliminând astfel un pas manual repetitiv. Pentru produsele deja existente, oferă o metodă dedicată prin care regulile pot fi create în masă. Astfel, echipa de achiziții și logistică se asigură că fiecare produs gestionat are definite pragurile de stoc necesare pentru reaprovizionarea automată.",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_auto_reorder_rule",
+    "local_path": null,
+    "last_ingest": "2026-10-30",
+    "friendly_name": "Auto Reorder Rules",
+    "summary": "Modulul automatizează crearea regulilor de reaprovizionare pentru produse, ca echipa de achiziții și logistică să nu mai definească manual pragurile de stoc pe cataloagele mari. La crearea unui produs nou se generează automat o regulă în fiecare depozit care are opțiunea activată; pentru produsele deja existente, regulile lipsă se pot crea în masă sau cu un asistent care permite cantități proprii. Regulile automate pornesc cu minim și maxim 0 și declanșare manuală, deci fac produsul vizibil în ecranul de reaprovizionare fără să genereze singure cereri de ofertă.",
     "features": [
-      "Creează automat o regulă de reaprovizionare cu valori implicite atunci când este creat un produs nou.",
-      "Oferă metoda `create_rule()` pe modelul `product.product` pentru a crea reguli pentru produsele deja existente.",
-      "Regulile sunt create doar pentru produsele de tip stocabil (`type='product'`)."
+      "Creează automat o regulă de reaprovizionare (`stock.warehouse.orderpoint`) la crearea unui produs, pentru fiecare depozit cu opțiunea Generate Reorder Rules activă (implicit activă pe depozitele noi), cu minim 0, maxim 0 și declanșare manuală, pe ruta marcată pentru reguli automate.",
+      "Regulile se creează pentru orice produs nou, nu doar pentru cele stocabile (corectat față de pagina veche: în 19.0 nu există filtrare pe tipul produsului). Un produs cu regulă nu mai poate avea listă de materiale de tip kit, deci pentru produsele kit sau nestocate regula trebuie ștearsă.",
+      "Acțiunea Create rule (lista de produse): completează în masă regulile lipsă pentru produsele selectate. Fiecare depozit se verifică separat: se creează doar regulile lipsă, cele existente rămân și nu se dublează.",
+      "Acțiunea Open Rules Wizard (formularul produsului): creează reguli pentru locații alese, cu Minimum Quantity, Maximum Quantity, Trigger (*Automatic* sau *Manual*) și Stock Locations; se creează câte o regulă pentru fiecare variantă și fiecare locație, în compania locației.",
+      "Parametrul de sistem `deltatech_auto_reorder_rule.dont_auto_create_rule` dezactivează crearea automată la salvarea produsului, fără dezinstalarea modulului; doar `True`/`1`/`yes` o dezactivează, `False` o lasă activă.",
+      "Opțiunea Use This for Auto Rules pe rută (Inventar → Configurare → Rute) stabilește ruta atribuită regulilor automate; dacă nu e setată, regulile se creează fără rută. Opțiunea depozitului se setează în Inventar → Configurare → Depozite.",
+      "Regulile create se văd și se completează în Inventar → Operațiuni → Reaprovizionare.",
+      "Regulile se creează în compania produsului sau, pentru produsele comune, în compania activă.",
+      "Fișa consultant detaliază configurarea, utilizarea și cazurile frecvente; nu sunt refăcute aici."
     ],
     "dependencies": [
       "stock",
@@ -1099,7 +1110,7 @@
       "purchase_stock",
       "sale_stock"
     ],
-    "text": "Deltatech Auto Reorder Rule\ndeltatech_auto_reorder_rule\nModulul automatizează crearea regulilor de reaprovizionare (reordering rules) pentru produse. La adăugarea unui produs nou, modulul generează automat o regulă de reaprovizionare cu valori implicite, eliminând astfel un pas manual repetitiv. Pentru produsele deja existente, oferă o metodă dedicată prin care regulile pot fi create în masă. Astfel, echipa de achiziții și logistică se asigură că fiecare produs gestionat are definite pragurile de stoc necesare pentru reaprovizionarea automată.\nCreează automat o regulă de reaprovizionare cu valori implicite atunci când este creat un produs nou.\nOferă metoda `create_rule()` pe modelul `product.product` pentru a crea reguli pentru produsele deja existente.\nRegulile sunt create doar pentru produsele de tip stocabil (`type='product'`)."
+    "text": "Auto Reorder Rules\ndeltatech_auto_reorder_rule\nModulul automatizează crearea regulilor de reaprovizionare pentru produse, ca echipa de achiziții și logistică să nu mai definească manual pragurile de stoc pe cataloagele mari. La crearea unui produs nou se generează automat o regulă în fiecare depozit care are opțiunea activată; pentru produsele deja existente, regulile lipsă se pot crea în masă sau cu un asistent care permite cantități proprii. Regulile automate pornesc cu minim și maxim 0 și declanșare manuală, deci fac produsul vizibil în ecranul de reaprovizionare fără să genereze singure cereri de ofertă.\nCreează automat o regulă de reaprovizionare (`stock.warehouse.orderpoint`) la crearea unui produs, pentru fiecare depozit cu opțiunea Generate Reorder Rules activă (implicit activă pe depozitele noi), cu minim 0, maxim 0 și declanșare manuală, pe ruta marcată pentru reguli automate.\nRegulile se creează pentru orice produs nou, nu doar pentru cele stocabile (corectat față de pagina veche: în 19.0 nu există filtrare pe tipul produsului). Un produs cu regulă nu mai poate avea listă de materiale de tip kit, deci pentru produsele kit sau nestocate regula trebuie ștearsă.\nAcțiunea Create rule (lista de produse): completează în masă regulile lipsă pentru produsele selectate. Fiecare depozit se verifică separat: se creează doar regulile lipsă, cele existente rămân și nu se dublează.\nAcțiunea Open Rules Wizard (formularul produsului): creează reguli pentru locații alese, cu Minimum Quantity, Maximum Quantity, Trigger (*Automatic* sau *Manual*) și Stock Locations; se creează câte o regulă pentru fiecare variantă și fiecare locație, în compania locației.\nParametrul de sistem `deltatech_auto_reorder_rule.dont_auto_create_rule` dezactivează crearea automată la salvarea produsului, fără dezinstalarea modulului; doar `True`/`1`/`yes` o dezactivează, `False` o lasă activă.\nOpțiunea Use This for Auto Rules pe rută (Inventar → Configurare → Rute) stabilește ruta atribuită regulilor automate; dacă nu e setată, regulile se creează fără rută. Opțiunea depozitului se setează în Inventar → Configurare → Depozite.\nRegulile create se văd și se completează în Inventar → Operațiuni → Reaprovizionare.\nRegulile se creează în compania produsului sau, pentru produsele comune, în compania activă.\nFișa consultant detaliază configurarea, utilizarea și cazurile frecvente; nu sunt refăcute aici."
   },
   {
     "path": "deltatech_auto_translate/index.md",
@@ -1133,15 +1144,19 @@
     "path": "deltatech_average_payment_period/index.md",
     "module": "deltatech_average_payment_period",
     "version": "19.0.1.0.5",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_average_payment_period`",
-    "local_path": "odoo-addons/deltatech/deltatech_average_payment_period",
-    "last_ingest": "2026-06-02",
-    "friendly_name": "Deltatech Average Payment Period",
-    "summary": "Modulul calculează durata medie de încasare și de plată a companiei, adică perioada medie scursă între data facturii și data efectivă a decontării. Această informație ajută echipa financiară să înțeleagă cât de repede își încasează banii de la clienți și cât de repede își plătește furnizorii, oferind un indicator util pentru gestionarea cash-flow-ului.",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_average_payment_period",
+    "local_path": null,
+    "last_ingest": "2026-10-30",
+    "friendly_name": "Average Payment Period",
+    "summary": "Modulul măsoară cât durează în realitate până când clienții plătesc și până când firma își plătește furnizorii, oferind echipei financiare un indicator concret al eficienței încasărilor și plăților. Pentru fiecare linie de jurnal reconciliată se înregistrează data efectivă a plății și numărul de zile scurse de la data facturii. Un raport pivot/grafic, **Average Payment Period**, permite analiza pe partener, jurnal sau perioadă și ajută la gestionarea cash-flow-ului.",
     "features": [
-      "Calculează durata medie a contabilității de casă (perioada medie de plată/încasare).",
-      "Zile de plată (\"Payment Days\"): diferența dintre data facturii și data plății, ponderată cu suma decontată.",
-      "Zile de plată simple (\"Payment days simple\"): diferența dintre data facturii și data plății, doar pentru facturile de furnizor și client, fără notele de credit."
+      "Data plății (`Payment Date`): se determină automat din linia de contrapartidă a reconcilierii și se stochează pe fiecare linie de jurnal.",
+      "Zile de plată (`Payment Days`): diferența în zile dintre data facturii și data plății, ponderată cu suma liniei, pentru medii corecte pe date grupate.",
+      "Zile de plată simple (`Plain payment days`): variantă limitată la facturi client (`out_invoice`) și facturi furnizor (`in_invoice`), fără note de credit, pentru indicatori mai curați.",
+      "Raport pivot și grafic Average Payment Period (Contabilitate → Raportare → Average Payment Period), grupat implicit pe partener, cu măsurile Balance, Payment Days și Plain payment days; se poate filtra după dată (lună, trimestru, an), partener și referință și regrupa pe dată sau jurnal.",
+      "Media pe grupuri este ponderată, `sum(sumă × zile) / sum(sumă)`, nu o medie aritmetică simplă, ca sumele mici să nu distorsioneze rezultatul.",
+      "Valorile se actualizează singure la reconciliere și la dereconciliere, fără acțiuni manuale; raportul ia în calcul doar notele postate, cu linii complet reconciliate, din jurnale de vânzări și achiziții.",
+      "Raportul are regulă multi-company: utilizatorii văd doar liniile companiilor active (19.0.1.0.4)."
     ],
     "dependencies": [
       "account"
@@ -1149,7 +1164,7 @@
     "connections": [
       "account"
     ],
-    "text": "Deltatech Average Payment Period\ndeltatech_average_payment_period\nModulul calculează durata medie de încasare și de plată a companiei, adică perioada medie scursă între data facturii și data efectivă a decontării. Această informație ajută echipa financiară să înțeleagă cât de repede își încasează banii de la clienți și cât de repede își plătește furnizorii, oferind un indicator util pentru gestionarea cash-flow-ului.\nCalculează durata medie a contabilității de casă (perioada medie de plată/încasare).\nZile de plată (\"Payment Days\"): diferența dintre data facturii și data plății, ponderată cu suma decontată.\nZile de plată simple (\"Payment days simple\"): diferența dintre data facturii și data plății, doar pentru facturile de furnizor și client, fără notele de credit."
+    "text": "Average Payment Period\ndeltatech_average_payment_period\nModulul măsoară cât durează în realitate până când clienții plătesc și până când firma își plătește furnizorii, oferind echipei financiare un indicator concret al eficienței încasărilor și plăților. Pentru fiecare linie de jurnal reconciliată se înregistrează data efectivă a plății și numărul de zile scurse de la data facturii. Un raport pivot/grafic, **Average Payment Period**, permite analiza pe partener, jurnal sau perioadă și ajută la gestionarea cash-flow-ului.\nData plății (`Payment Date`): se determină automat din linia de contrapartidă a reconcilierii și se stochează pe fiecare linie de jurnal.\nZile de plată (`Payment Days`): diferența în zile dintre data facturii și data plății, ponderată cu suma liniei, pentru medii corecte pe date grupate.\nZile de plată simple (`Plain payment days`): variantă limitată la facturi client (`out_invoice`) și facturi furnizor (`in_invoice`), fără note de credit, pentru indicatori mai curați.\nRaport pivot și grafic Average Payment Period (Contabilitate → Raportare → Average Payment Period), grupat implicit pe partener, cu măsurile Balance, Payment Days și Plain payment days; se poate filtra după dată (lună, trimestru, an), partener și referință și regrupa pe dată sau jurnal.\nMedia pe grupuri este ponderată, `sum(sumă × zile) / sum(sumă)`, nu o medie aritmetică simplă, ca sumele mici să nu distorsioneze rezultatul.\nValorile se actualizează singure la reconciliere și la dereconciliere, fără acțiuni manuale; raportul ia în calcul doar notele postate, cu linii complet reconciliate, din jurnale de vânzări și achiziții.\nRaportul are regulă multi-company: utilizatorii văd doar liniile companiilor active (19.0.1.0.4)."
   },
   {
     "path": "deltatech_b2b_order_list/index.md",
@@ -1304,21 +1319,25 @@
     "module": "deltatech_backup_attachment",
     "version": "19.0.1.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_backup_attachment",
-    "local_path": "odoo-addons/deltatech/deltatech_backup_attachment",
-    "last_ingest": "2026-06-02",
+    "local_path": null,
+    "last_ingest": "2026-10-30",
     "friendly_name": "Backup Attachments",
-    "summary": "Modulul permite salvarea (backup) a atașamentelor din Odoo pe baza unui filtru de tip domeniu. Utilizatorul alege ce categorii de fișiere dorește să exporte (de exemplu, excluzând imaginile PNG/JPEG sau fișierele PDF) și obține o arhivă cu fișierele selectate. Este util pentru a face copii de siguranță selective ale documentelor stocate, fără a descărca toate atașamentele din sistem.",
+    "summary": "Modulul permite administratorilor să exporte selectiv atașamentele din Odoo într-o singură arhivă ZIP. Utilizatorul alege fișierele printr-un filtru de tip domeniu — de exemplu doar un anumit tip de fișier, doar cele legate de anumite înregistrări sau stocate pe un anumit câmp — și descarcă arhiva rezultată. Este util pentru copii de siguranță selective, în afara sistemului, sau pentru migrări, fără a descărca toate atașamentele.",
     "features": [
-      "Selectarea atașamentelor de exportat pe baza unui filtru de tip domeniu (ex.: `[(\"mimetype\",\"not in\",[\"image/png\", \"image/jpeg\",\"application/pdf\"])]`).",
-      "Filtrare avansată după model, câmp sau alte criterii (ex.: `[('res_model','not ilike','product'),('res_field','like','%')]`).",
-      "Generarea unei arhive cu fișierele care corespund filtrului."
+      "Export al atașamentelor filtrate cu orice expresie de domeniu Odoo (tip MIME, model asociat, câmp etc.), din Setări → Tehnic → Structura bazei de date → Export attachment.",
+      "Domeniul implicit, `[(\"mimetype\",\"not in\",[\"application/pdf\"])]`, exportă toate atașamentele care nu sunt PDF; exemple utile: `[(\"mimetype\",\"not in\",[\"image/png\",\"image/jpeg\",\"application/pdf\"])]` (fără imagini și PDF-uri) sau `[(\"res_model\",\"not ilike\",\"product\"),(\"res_model\",\"!=\",\"export.attachment\"),(\"res_field\",\"like\",\"%\")]` (atașamente legate de câmpuri, fără produse și fără asistentul însuși).",
+      "Fișierele găsite se adună într-o singură arhivă, `ExportOdooAttachment.zip`, descărcabilă din câmpul File după mesajul „Export Complete”; Cancel închide asistentul.",
+      "Arhiva păstrează calea internă de stocare a fiecărui fișier (`store_fname`), deci e potrivită pentru backup în afara sistemului sau migrare.",
+      "Se includ doar fișierele existente fizic în filestore (`store_fname` completat și fișier prezent pe disc); atașamentele stocate în baza de date sunt omise fără avertisment."
     ],
     "dependencies": [
       "web",
       "base"
     ],
-    "connections": [],
-    "text": "Backup Attachments\ndeltatech_backup_attachment\nModulul permite salvarea (backup) a atașamentelor din Odoo pe baza unui filtru de tip domeniu. Utilizatorul alege ce categorii de fișiere dorește să exporte (de exemplu, excluzând imaginile PNG/JPEG sau fișierele PDF) și obține o arhivă cu fișierele selectate. Este util pentru a face copii de siguranță selective ale documentelor stocate, fără a descărca toate atașamentele din sistem.\nSelectarea atașamentelor de exportat pe baza unui filtru de tip domeniu (ex.: `[(\"mimetype\",\"not in\",[\"image/png\", \"image/jpeg\",\"application/pdf\"])]`).\nFiltrare avansată după model, câmp sau alte criterii (ex.: `[('res_model','not ilike','product'),('res_field','like','%')]`).\nGenerarea unei arhive cu fișierele care corespund filtrului."
+    "connections": [
+      "base"
+    ],
+    "text": "Backup Attachments\ndeltatech_backup_attachment\nModulul permite administratorilor să exporte selectiv atașamentele din Odoo într-o singură arhivă ZIP. Utilizatorul alege fișierele printr-un filtru de tip domeniu — de exemplu doar un anumit tip de fișier, doar cele legate de anumite înregistrări sau stocate pe un anumit câmp — și descarcă arhiva rezultată. Este util pentru copii de siguranță selective, în afara sistemului, sau pentru migrări, fără a descărca toate atașamentele.\nExport al atașamentelor filtrate cu orice expresie de domeniu Odoo (tip MIME, model asociat, câmp etc.), din Setări → Tehnic → Structura bazei de date → Export attachment.\nDomeniul implicit, `[(\"mimetype\",\"not in\",[\"application/pdf\"])]`, exportă toate atașamentele care nu sunt PDF; exemple utile: `[(\"mimetype\",\"not in\",[\"image/png\",\"image/jpeg\",\"application/pdf\"])]` (fără imagini și PDF-uri) sau `[(\"res_model\",\"not ilike\",\"product\"),(\"res_model\",\"!=\",\"export.attachment\"),(\"res_field\",\"like\",\"%\")]` (atașamente legate de câmpuri, fără produse și fără asistentul însuși).\nFișierele găsite se adună într-o singură arhivă, `ExportOdooAttachment.zip`, descărcabilă din câmpul File după mesajul „Export Complete”; Cancel închide asistentul.\nArhiva păstrează calea internă de stocare a fiecărui fișier (`store_fname`), deci e potrivită pentru backup în afara sistemului sau migrare.\nSe includ doar fișierele existente fizic în filestore (`store_fname` completat și fișier prezent pe disc); atașamentele stocate în baza de date sunt omise fără avertisment."
   },
   {
     "path": "deltatech_bank_reconcile_ai/index.md",
@@ -1455,16 +1474,21 @@
     "path": "deltatech_batch_transfer/index.md",
     "module": "deltatech_batch_transfer",
     "version": "19.0.0.0.8",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_batch_transfer`",
-    "local_path": "odoo-addons/deltatech/deltatech_batch_transfer",
-    "last_ingest": "2026-06-02",
-    "friendly_name": "Deltatech Batch Transfer",
-    "summary": "Modulul îmbunătățește funcționalitatea de transfer în lot (batch picking) din Odoo, oferind o gestionare inteligentă a livrărilor „goale” — adică acele transferuri din lot la care toate cantitățile procesate sunt zero. În mod standard, Odoo procesează toate cantitățile pentru aceste livrări atunci când lotul este validat, ceea ce poate duce la rezultate nedorite. Acest modul permite excluderea automată a livrărilor goale din lot la validare, astfel încât doar transferurile cu cantități reale să fie procesate, restul putând fi tratate ulterior. Pe lângă acest comportament, modulul adaugă și câmpuri suplimentare utile pentru organizarea loturilor.",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_batch_transfer",
+    "local_path": null,
+    "last_ingest": "2026-10-30",
+    "friendly_name": "Batch Transfer Extension",
+    "summary": "Modulul extinde transferurile în lot (batch picking) din Odoo și oferă operatorilor de depozit mai mult control asupra loturilor cu transferuri „goale” sau procesate parțial. Evită comportamentul standard, în care la validarea lotului sunt validate și transferurile cu toate cantitățile zero, și adaugă un asistent „Prepare Batch” care grupează rapid recepțiile sau livrările din comenzile de achiziție/vânzare într-un singur lot. Câmpuri suplimentare, un tab cu liniile recepționate și un raport de livrări ajută la organizarea și trasabilitatea loturilor.",
     "features": [
-      "Gestionează automat livrările „goale” (transferuri cu toate cantitățile zero) dintr-un lot la apăsarea butonului „Validează”.",
-      "Dacă parametrul de sistem `deltatech_batch_keep_pickings` nu este prezent: livrările goale sunt eliminate din lot la validare și sunt procesate doar transferurile ne-goale (comportament recomandat). Livrările goale pot fi adăugate manual într-un alt lot. Dacă toate livrările din lot sunt goale, lotul devine gol.",
-      "Dacă parametrul de sistem `deltatech_batch_keep_pickings` este prezent: livrarea goală nu este procesată, dar rămâne în lot pentru a fi tratată ulterior (nerecomandat, întrucât nu funcționează corect în interfața barcode).",
-      "Adaugă câmpurile suplimentare `direction`, `reference` și `note` pe transferul în lot."
+      "Gestionarea transferurilor goale la validare: la apăsarea butonului Validate pe lot, transferurile fără nicio cantitate efectuată se tratează după parametrul de sistem `deltatech_batch_keep_pickings` (Setări → Tehnic → Parametri → Parametri de sistem):",
+      "*parametru absent* (implicit, recomandat) — transferurile goale sunt scoase din lot și se validează doar cele cu cantități; cele scoase pot fi adăugate manual într-un alt lot; dacă toate sunt goale, lotul rămâne gol;",
+      "*parametru `True`* — transferurile goale rămân în lot, dar nu sunt procesate, ca să fie tratate ulterior (nerecomandat în interfața barcode).",
+      "Asistentul Prepare Batch (Inventar → Managementul depozitului → Prepare batch, sau acțiunea „Prepare batch” din lista comenzilor de vânzare, care precompletează clientul și modul *Sale*): se aleg Partner, Responsible, Reference, Mode (*Purchase* = recepții, *Sale* = livrări) și opțional Set done qty, cu o listă de produse/cantități (în modul Purchase) care limitează produsele incluse. La confirmare se creează un lot confirmat cu transferurile deschise ale partenerului, se rezervă stocul și se deschide lotul. Cu *Set done qty* liniile primesc cantitatea alocată și sunt marcate ca procesate; fără bifă rămân doar cantitățile cerute, rezervate. Cantitatea peste cea rezervată apare ca cantitate suplimentară.",
+      "Buton Add to batch pe transferul care nu e încă în lot și nu e finalizat sau anulat; deschide dialogul standard Odoo.",
+      "Câmpuri suplimentare pe lot: Direction (*Incoming* / *Outgoing*, doar citire), Reference și Note.",
+      "Tab Received pe loturile de intrare, cu liniile de mișcare cu cantitate peste zero (cu aldine) față de cele cu cantitate zero (estompate).",
+      "Raport PDF Deliveries (Print → Deliveries pe lot), cu documentele de livrare ale tuturor transferurilor din lot într-o singură acțiune.",
+      "Fișa consultant detaliază fluxul pas cu pas; nu este refăcută aici."
     ],
     "dependencies": [
       "stock",
@@ -1473,9 +1497,11 @@
       "purchase_stock"
     ],
     "connections": [
-      "stock_picking_batch"
+      "stock_picking_batch",
+      "sale_stock",
+      "purchase_stock"
     ],
-    "text": "Deltatech Batch Transfer\ndeltatech_batch_transfer\nModulul îmbunătățește funcționalitatea de transfer în lot (batch picking) din Odoo, oferind o gestionare inteligentă a livrărilor „goale” — adică acele transferuri din lot la care toate cantitățile procesate sunt zero. În mod standard, Odoo procesează toate cantitățile pentru aceste livrări atunci când lotul este validat, ceea ce poate duce la rezultate nedorite. Acest modul permite excluderea automată a livrărilor goale din lot la validare, astfel încât doar transferurile cu cantități reale să fie procesate, restul putând fi tratate ulterior. Pe lângă acest comportament, modulul adaugă și câmpuri suplimentare utile pentru organizarea loturilor.\nGestionează automat livrările „goale” (transferuri cu toate cantitățile zero) dintr-un lot la apăsarea butonului „Validează”.\nDacă parametrul de sistem `deltatech_batch_keep_pickings` nu este prezent: livrările goale sunt eliminate din lot la validare și sunt procesate doar transferurile ne-goale (comportament recomandat). Livrările goale pot fi adăugate manual într-un alt lot. Dacă toate livrările din lot sunt goale, lotul devine gol.\nDacă parametrul de sistem `deltatech_batch_keep_pickings` este prezent: livrarea goală nu este procesată, dar rămâne în lot pentru a fi tratată ulterior (nerecomandat, întrucât nu funcționează corect în interfața barcode).\nAdaugă câmpurile suplimentare `direction`, `reference` și `note` pe transferul în lot."
+    "text": "Batch Transfer Extension\ndeltatech_batch_transfer\nModulul extinde transferurile în lot (batch picking) din Odoo și oferă operatorilor de depozit mai mult control asupra loturilor cu transferuri „goale” sau procesate parțial. Evită comportamentul standard, în care la validarea lotului sunt validate și transferurile cu toate cantitățile zero, și adaugă un asistent „Prepare Batch” care grupează rapid recepțiile sau livrările din comenzile de achiziție/vânzare într-un singur lot. Câmpuri suplimentare, un tab cu liniile recepționate și un raport de livrări ajută la organizarea și trasabilitatea loturilor.\nGestionarea transferurilor goale la validare: la apăsarea butonului Validate pe lot, transferurile fără nicio cantitate efectuată se tratează după parametrul de sistem `deltatech_batch_keep_pickings` (Setări → Tehnic → Parametri → Parametri de sistem):\n*parametru absent* (implicit, recomandat) — transferurile goale sunt scoase din lot și se validează doar cele cu cantități; cele scoase pot fi adăugate manual într-un alt lot; dacă toate sunt goale, lotul rămâne gol;\n*parametru `True`* — transferurile goale rămân în lot, dar nu sunt procesate, ca să fie tratate ulterior (nerecomandat în interfața barcode).\nAsistentul Prepare Batch (Inventar → Managementul depozitului → Prepare batch, sau acțiunea „Prepare batch” din lista comenzilor de vânzare, care precompletează clientul și modul *Sale*): se aleg Partner, Responsible, Reference, Mode (*Purchase* = recepții, *Sale* = livrări) și opțional Set done qty, cu o listă de produse/cantități (în modul Purchase) care limitează produsele incluse. La confirmare se creează un lot confirmat cu transferurile deschise ale partenerului, se rezervă stocul și se deschide lotul. Cu *Set done qty* liniile primesc cantitatea alocată și sunt marcate ca procesate; fără bifă rămân doar cantitățile cerute, rezervate. Cantitatea peste cea rezervată apare ca cantitate suplimentară.\nButon Add to batch pe transferul care nu e încă în lot și nu e finalizat sau anulat; deschide dialogul standard Odoo.\nCâmpuri suplimentare pe lot: Direction (*Incoming* / *Outgoing*, doar citire), Reference și Note.\nTab Received pe loturile de intrare, cu liniile de mișcare cu cantitate peste zero (cu aldine) față de cele cu cantitate zero (estompate).\nRaport PDF Deliveries (Print → Deliveries pe lot), cu documentele de livrare ale tuturor transferurilor din lot într-o singură acțiune.\nFișa consultant detaliază fluxul pas cu pas; nu este refăcută aici."
   },
   {
     "path": "deltatech_brand_field/index.md",
@@ -1676,26 +1702,28 @@
     "path": "deltatech_category_group/index.md",
     "module": "deltatech_category_group",
     "version": "19.0.0.0.7",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_category_group`",
-    "local_path": "odoo-addons/deltatech/deltatech_category_group",
-    "last_ingest": "2026-06-02",
-    "friendly_name": "Deltatech Category Group",
-    "summary": "Modulul adaugă două elemente suplimentare de grupare pentru categoriile interne de produse: „Tipul categoriei\" și „Clasa categoriei\". Aceste niveluri suplimentare permit organizarea produselor în structuri mai detaliate decât oferă categoria internă standard, oferind o vedere mai clară asupra portofoliului de produse. Valoarea principală este în raportare: utilizatorul poate analiza marja de vânzare, stocurile și facturile grupate după aceste două noi criterii, fără a fi nevoit să modifice structura existentă a categoriilor.",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_category_group",
+    "local_path": null,
+    "last_ingest": "2026-10-30",
+    "friendly_name": "Internal Category Groups",
+    "summary": "Modulul adaugă două dimensiuni de grupare categoriilor interne de produse: „Tipul categoriei” și „Clasa categoriei”. Ele permit segmentarea portofoliului la un nivel mai fin decât ierarhia standard de categorii, fără a modifica structura existentă. Valoarea principală este în raportare: marja de vânzare, stocurile și facturile pot fi analizate grupat după aceste două criterii.",
     "features": [
-      "Adaugă două elemente de grupare pentru categoriile interne: „Tipul categoriei\" (Category type) și „Clasa categoriei\" (Category class).",
-      "Permite gruparea după aceste două elemente în raportul de marjă de vânzare (Sale margin report).",
-      "Permite gruparea după aceste două elemente în analiza stocurilor (Stock quant).",
-      "Permite gruparea după aceste două elemente în raportul de facturi (Account invoice report)."
+      "Câmpurile Category type și Category class pe fiecare categorie de produs, ca relații către liste de configurare dedicate.",
+      "Liste configurabile de tipuri și clase, cu secvență (ordonare prin drag-and-drop), în Inventar → Configurare → Category options → Category types / Category classes.",
+      "Căutare și grupare după tip și clasă în raportul de marjă de vânzare (Sale Margin), în analiza stocurilor (`stock.quant`, Inventar → Raportare → Inventar) și în analiza facturilor (Contabilitate → Raportare → Invoice Analysis).",
+      "Accesul la listele de configurare este controlat de grupul Manage category groups, atribuit implicit administratorului; alți utilizatori se adaugă din Setări → Utilizatori și companii → Grupuri.",
+      "Pași de configurare: se definesc tipurile și clasele, apoi se atribuie pe categorii (Inventar → Configurare → Product Categories); filtrele de grupare devin utile doar după ce categoriile sunt etichetate."
     ],
     "dependencies": [
       "deltatech_sale_commission"
     ],
     "connections": [
       "deltatech_sale_margin",
+      "deltatech_sale_commission",
       "stock",
       "account"
     ],
-    "text": "Deltatech Category Group\ndeltatech_category_group\nModulul adaugă două elemente suplimentare de grupare pentru categoriile interne de produse: „Tipul categoriei\" și „Clasa categoriei\". Aceste niveluri suplimentare permit organizarea produselor în structuri mai detaliate decât oferă categoria internă standard, oferind o vedere mai clară asupra portofoliului de produse. Valoarea principală este în raportare: utilizatorul poate analiza marja de vânzare, stocurile și facturile grupate după aceste două noi criterii, fără a fi nevoit să modifice structura existentă a categoriilor.\nAdaugă două elemente de grupare pentru categoriile interne: „Tipul categoriei\" (Category type) și „Clasa categoriei\" (Category class).\nPermite gruparea după aceste două elemente în raportul de marjă de vânzare (Sale margin report).\nPermite gruparea după aceste două elemente în analiza stocurilor (Stock quant).\nPermite gruparea după aceste două elemente în raportul de facturi (Account invoice report)."
+    "text": "Internal Category Groups\ndeltatech_category_group\nModulul adaugă două dimensiuni de grupare categoriilor interne de produse: „Tipul categoriei” și „Clasa categoriei”. Ele permit segmentarea portofoliului la un nivel mai fin decât ierarhia standard de categorii, fără a modifica structura existentă. Valoarea principală este în raportare: marja de vânzare, stocurile și facturile pot fi analizate grupat după aceste două criterii.\nCâmpurile Category type și Category class pe fiecare categorie de produs, ca relații către liste de configurare dedicate.\nListe configurabile de tipuri și clase, cu secvență (ordonare prin drag-and-drop), în Inventar → Configurare → Category options → Category types / Category classes.\nCăutare și grupare după tip și clasă în raportul de marjă de vânzare (Sale Margin), în analiza stocurilor (`stock.quant`, Inventar → Raportare → Inventar) și în analiza facturilor (Contabilitate → Raportare → Invoice Analysis).\nAccesul la listele de configurare este controlat de grupul Manage category groups, atribuit implicit administratorului; alți utilizatori se adaugă din Setări → Utilizatori și companii → Grupuri.\nPași de configurare: se definesc tipurile și clasele, apoi se atribuie pe categorii (Inventar → Configurare → Product Categories); filtrele de grupare devin utile doar după ce categoriile sunt etichetate."
   },
   {
     "path": "deltatech_category_group_equipment/index.md",
@@ -2127,21 +2155,26 @@
     "module": "deltatech_credentials",
     "version": "19.0.1.0.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_credentials",
-    "local_path": "odoo-addons/deltatech/deltatech_credentials",
-    "last_ingest": "2026-06-02",
-    "friendly_name": "Credentials",
-    "summary": "Modulul oferă un loc centralizat în Odoo pentru păstrarea și gestionarea acreditărilor (credențialelor) folosite la conectarea cu servicii externe. Adaugă o secțiune dedicată „Credentials\" sub Setări / Utilizatori și Companii, unde administratorii pot înregistra date de autentificare precum nume de utilizator și parolă, perechi client_id / client_secret sau token-uri de acces. Scopul este să țină aceste informații sensibile la un loc, ușor de administrat, în loc să fie risipite prin diferite configurări.",
+    "local_path": null,
+    "last_ingest": "2026-10-30",
+    "friendly_name": "Credentials Store",
+    "summary": "Modulul oferă un loc centralizat în Odoo pentru păstrarea acreditărilor folosite la conectarea cu servicii externe. În loc ca cheile API, token-urile și perechile de autentificare să fie risipite prin parametri de sistem sau fișiere de configurare, administratorii le gestionează într-un singur loc, sub **Setări → Utilizatori și companii → Credentials**. Modulul e gândit ca dependență comună pentru integrări, conectori EDI și punți API.",
     "features": [
-      "Adaugă fila/meniul „Credentials\" sub Setări / Utilizatori și Companii.",
-      "Permite definirea de acreditări pentru servicii externe, cu un cod unic de identificare.",
-      "Suportă trei tipuri de autentificare: utilizator și parolă, client_id și client_secret (cheie API), respectiv token de acces.",
-      "Afișează doar câmpurile relevante pentru tipul de acces selectat (parola este mascată)."
+      "Acreditări pentru orice serviciu extern, cu Name (obligatoriu) și un Code opțional, prin care alte module pot căuta înregistrarea programatic (codul nu are constrângere de unicitate în model).",
+      "Trei tipuri de acces (Access Type), cu afișarea doar a câmpurilor relevante:",
+      "*User and password* — Username și Password (mascată în interfață);",
+      "*Client ID and Client Secret* — Client Id și Client Secret / API key;",
+      "*Access token* — Access Token.",
+      "Acces rezervat implicit administratorilor (`base.group_system`); o acreditare se modifică sau se revocă din listă.",
+      "Fișa consultant detaliază utilizarea; nu este refăcută aici."
     ],
     "dependencies": [
       "base"
     ],
-    "connections": [],
-    "text": "Credentials\ndeltatech_credentials\nModulul oferă un loc centralizat în Odoo pentru păstrarea și gestionarea acreditărilor (credențialelor) folosite la conectarea cu servicii externe. Adaugă o secțiune dedicată „Credentials\" sub Setări / Utilizatori și Companii, unde administratorii pot înregistra date de autentificare precum nume de utilizator și parolă, perechi client_id / client_secret sau token-uri de acces. Scopul este să țină aceste informații sensibile la un loc, ușor de administrat, în loc să fie risipite prin diferite configurări.\nAdaugă fila/meniul „Credentials\" sub Setări / Utilizatori și Companii.\nPermite definirea de acreditări pentru servicii externe, cu un cod unic de identificare.\nSuportă trei tipuri de autentificare: utilizator și parolă, client_id și client_secret (cheie API), respectiv token de acces.\nAfișează doar câmpurile relevante pentru tipul de acces selectat (parola este mascată)."
+    "connections": [
+      "deltatech"
+    ],
+    "text": "Credentials Store\ndeltatech_credentials\nModulul oferă un loc centralizat în Odoo pentru păstrarea acreditărilor folosite la conectarea cu servicii externe. În loc ca cheile API, token-urile și perechile de autentificare să fie risipite prin parametri de sistem sau fișiere de configurare, administratorii le gestionează într-un singur loc, sub **Setări → Utilizatori și companii → Credentials**. Modulul e gândit ca dependență comună pentru integrări, conectori EDI și punți API.\nAcreditări pentru orice serviciu extern, cu Name (obligatoriu) și un Code opțional, prin care alte module pot căuta înregistrarea programatic (codul nu are constrângere de unicitate în model).\nTrei tipuri de acces (Access Type), cu afișarea doar a câmpurilor relevante:\n*User and password* — Username și Password (mascată în interfață);\n*Client ID and Client Secret* — Client Id și Client Secret / API key;\n*Access token* — Access Token.\nAcces rezervat implicit administratorilor (`base.group_system`); o acreditare se modifică sau se revocă din listă.\nFișa consultant detaliază utilizarea; nu este refăcută aici."
   },
   {
     "path": "deltatech_credit_control/index.md",
@@ -2207,7 +2240,7 @@
   {
     "path": "deltatech_cron_monitor_webhook/index.md",
     "module": "deltatech_cron_monitor_webhook",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_cron_monitor_webhook",
     "local_path": "odoo-addons/deltatech/deltatech_cron_monitor_webhook",
     "last_ingest": "2026-07-31",
@@ -2329,7 +2362,7 @@
   {
     "path": "deltatech_dashboard_builder/index.md",
     "module": "deltatech_dashboard_builder",
-    "version": "19.0.1.3.2",
+    "version": "19.0.1.3.3",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_dashboard_builder",
     "local_path": "odoo-addons/bitshop_ent/deltatech_dashboard_builder",
     "last_ingest": "2026-10-17",
@@ -2396,21 +2429,25 @@
     "path": "deltatech_data_sheet/index.md",
     "module": "deltatech_data_sheet",
     "version": "19.0.1.0.2",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_data_sheet`",
-    "local_path": "odoo-addons/deltatech/deltatech_data_sheet",
-    "last_ingest": "2026-06-02",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_data_sheet",
+    "local_path": null,
+    "last_ingest": "2026-10-30",
     "friendly_name": "Product Data Sheet",
-    "summary": "Modulul adaugă posibilitatea de a atașa fișe tehnice și fișe de securitate (în format PDF) direct pe produs. Astfel, documentația tehnică a unui produs este păstrată chiar pe șablonul de produs, în fila „Vânzări\", fiind ușor accesibilă echipei comerciale și clienților. Scopul principal este centralizarea documentelor de produs relevante pentru procesul de vânzare.",
+    "summary": "Modulul permite atașarea fișelor tehnice și a fișelor de securitate (PDF) direct pe produs. Documentația tehnică rămâne astfel pe șablonul de produs, ușor de accesat de echipele de vânzări și de logistică, iar documentele publice pot fi partajate în siguranță cu clienții și portalurile.",
     "features": [
-      "Adaugă câmpul „Data Sheet Attachment\" (fișa tehnică) pe șablonul de produs.",
-      "Adaugă câmpul „Safety Data Sheet\" (fișa de securitate) pe șablonul de produs.",
-      "Ambele câmpuri sunt afișate în fila „Vânzări\" a produsului și acceptă fișiere PDF."
+      "Grup nou Data Sheet pe formularul produsului, după grupul Description, cu două câmpuri de atașament PDF.",
+      "Data Sheet Attachment — leagă un atașament PDF public (specificații tehnice, pagină de catalog).",
+      "Safety Data Sheet — leagă un atașament PDF public pentru documentele de conformitate MSDS / SDS.",
+      "Ambele câmpuri acceptă doar atașamente publice de tip PDF (`application/pdf`, `public = True`); la încărcarea unui fișier nou din câmp, atașamentul se creează public implicit.",
+      "Câmpurile sunt stocate pe `product.template`, deci sunt comune tuturor variantelor produsului."
     ],
     "dependencies": [
       "product"
     ],
-    "connections": [],
-    "text": "Product Data Sheet\ndeltatech_data_sheet\nModulul adaugă posibilitatea de a atașa fișe tehnice și fișe de securitate (în format PDF) direct pe produs. Astfel, documentația tehnică a unui produs este păstrată chiar pe șablonul de produs, în fila „Vânzări\", fiind ușor accesibilă echipei comerciale și clienților. Scopul principal este centralizarea documentelor de produs relevante pentru procesul de vânzare.\nAdaugă câmpul „Data Sheet Attachment\" (fișa tehnică) pe șablonul de produs.\nAdaugă câmpul „Safety Data Sheet\" (fișa de securitate) pe șablonul de produs.\nAmbele câmpuri sunt afișate în fila „Vânzări\" a produsului și acceptă fișiere PDF."
+    "connections": [
+      "deltatech_data_sheet_website"
+    ],
+    "text": "Product Data Sheet\ndeltatech_data_sheet\nModulul permite atașarea fișelor tehnice și a fișelor de securitate (PDF) direct pe produs. Documentația tehnică rămâne astfel pe șablonul de produs, ușor de accesat de echipele de vânzări și de logistică, iar documentele publice pot fi partajate în siguranță cu clienții și portalurile.\nGrup nou Data Sheet pe formularul produsului, după grupul Description, cu două câmpuri de atașament PDF.\nData Sheet Attachment — leagă un atașament PDF public (specificații tehnice, pagină de catalog).\nSafety Data Sheet — leagă un atașament PDF public pentru documentele de conformitate MSDS / SDS.\nAmbele câmpuri acceptă doar atașamente publice de tip PDF (`application/pdf`, `public = True`); la încărcarea unui fișier nou din câmp, atașamentul se creează public implicit.\nCâmpurile sunt stocate pe `product.template`, deci sunt comune tuturor variantelor produsului."
   },
   {
     "path": "deltatech_data_sheet_website/index.md",
@@ -3902,7 +3939,7 @@
   {
     "path": "deltatech_edinet/index.md",
     "module": "deltatech_edinet",
-    "version": "19.0.1.6.6",
+    "version": "19.0.1.6.7",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edinet`",
     "local_path": "odoo-addons/bitshop/deltatech_edinet",
     "last_ingest": "2026-09-29",
@@ -4239,7 +4276,7 @@
   {
     "path": "deltatech_followup/index.md",
     "module": "deltatech_followup",
-    "version": "19.0.0.1.3",
+    "version": "19.0.0.1.4",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_followup`",
     "local_path": "odoo-addons/deltatech/deltatech_followup",
     "last_ingest": "2026-06-02",
@@ -5106,7 +5143,7 @@
   {
     "path": "deltatech_marketplace/index.md",
     "module": "deltatech_marketplace",
-    "version": "19.0.1.42.5",
+    "version": "19.0.1.42.6",
     "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace`",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace",
     "last_ingest": "2026-10-27",
@@ -5793,7 +5830,7 @@
   {
     "path": "deltatech_marketplace_sale/index.md",
     "module": "deltatech_marketplace_sale",
-    "version": "19.0.2.19.1",
+    "version": "19.0.2.19.2",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_sale",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_sale",
     "last_ingest": null,
@@ -13983,29 +14020,42 @@
   {
     "path": "l10n_ro_account_sequence/index.md",
     "module": "l10n_ro_account_sequence",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_account_sequence",
-    "local_path": "odoo-addons/l10n-romania/l10n_ro_account_sequence",
-    "last_ingest": "2026-06-08",
-    "friendly_name": "Romania - Cash Sequence",
-    "summary": "Acest modul asigură numerotarea separată a documentelor din jurnalul de casă, în conformitate cu cerințele de evidență din localizarea contabilă pentru România. Pe scurt, documentele de casă primesc o secvență de numerotare distinctă față de alte tipuri de documente, astfel încât registrul de casă să fie corect și ușor de urmărit.",
+    "local_path": null,
+    "last_ingest": "2026-10-30",
+    "friendly_name": "Romania - Cash Journal Numbering",
+    "summary": "Modulul dă documentelor din jurnalul de casă numerotare separată pe tip de document, așa cum cere evidența casieriei într-o firmă românească: chitanțe emise, chitanțe primite de la furnizori, dispoziții de plată și dispoziții de încasare. Fiecare tip are propria serie, cu prefix, iar numerele rămân consecutive și reîncep de la 1 în fiecare an, ceea ce face registrul de casă corect și ușor de verificat. Plățile prin casă se înregistrează direct în contul casei, iar nota contabilă primește documentul justificativ potrivit în loc de „Notă contabilă”.",
     "features": [
-      "Numerotarea separată a documentelor din jurnalul de casă."
+      "Câmp nou Tip document pe plățile din jurnalele de casă (nu apare pe cele bancare), propus automat după sensul plății și tipul partenerului și modificabil cât timp plata e în ciornă:",
+      "*Chitanță client* (prefix CH) — încasare de la client;",
+      "*Chitanță furnizor* (PL) — plată către furnizor;",
+      "*Dispoziție de plată* (DP) — plată către un client, de exemplu restituirea unui avans;",
+      "*Dispoziție de încasare* (DI) — încasare de la un furnizor;",
+      "*Transfer intern* (IT) — doar ales manual; *Altele* — fără prefix.",
+      "Serie separată pentru fiecare tip, de forma `<prefix><cod jurnal>/<an>/<nr. de ordine>` (ex. `CHCSH1/2026/00001`); numărul se dă la confirmare. Plățile prin bancă rămân pe numerotarea standard. Seriile se aplică doar companiilor cu planul de conturi `ro`.",
+      "Metodele de plată ale jurnalului de casă înregistrează direct în contul casei (5311), fără cont intermediar de plăți în curs. Sincronizarea rulează la crearea jurnalului și la modificarea contului implicit sau a metodelor de plată; liniile deja înregistrate pe vechiul cont se mută pe contul casei, inclusiv cele din perioade închise.",
+      "Nota contabilă a plății primește documentul justificativ corespunzător (Chitanță client, Chitanță furnizor, Dispoziție de plată, Dispoziție de încasare), afișat în jurnalele românești; notele existente se completează la actualizarea la 19.0.1.1.0.",
+      "Coloană, filtru și grupare după Tip document în lista de plăți (Facturare → Clienți / Furnizori → Plăți); tipul apare și pe nota contabilă.",
+      "Meniul „Plăți de primit” (`account.menu_action_account_payments_receivable`) este redenumit „Receivable payments”.",
+      "Fișa consultant detaliază fluxul pas cu pas, monografia (ex. `Dr 5311 = Cr 4111` la chitanța client), verificările și mesajele de eroare frecvente; nu sunt refăcute aici."
     ],
     "dependencies": [
       "account",
-      "l10n_ro"
+      "l10n_ro",
+      "l10n_ro_account_move_document_type"
     ],
     "connections": [
-      "account",
-      "l10n_ro"
+      "l10n_ro_cash_register",
+      "l10n_ro_account_vat_journal",
+      "l10n_ro_account_move_document_type"
     ],
-    "text": "Romania - Cash Sequence\nl10n_ro_account_sequence\nAcest modul asigură numerotarea separată a documentelor din jurnalul de casă, în conformitate cu cerințele de evidență din localizarea contabilă pentru România. Pe scurt, documentele de casă primesc o secvență de numerotare distinctă față de alte tipuri de documente, astfel încât registrul de casă să fie corect și ușor de urmărit.\nNumerotarea separată a documentelor din jurnalul de casă."
+    "text": "Romania - Cash Journal Numbering\nl10n_ro_account_sequence\nModulul dă documentelor din jurnalul de casă numerotare separată pe tip de document, așa cum cere evidența casieriei într-o firmă românească: chitanțe emise, chitanțe primite de la furnizori, dispoziții de plată și dispoziții de încasare. Fiecare tip are propria serie, cu prefix, iar numerele rămân consecutive și reîncep de la 1 în fiecare an, ceea ce face registrul de casă corect și ușor de verificat. Plățile prin casă se înregistrează direct în contul casei, iar nota contabilă primește documentul justificativ potrivit în loc de „Notă contabilă”.\nCâmp nou Tip document pe plățile din jurnalele de casă (nu apare pe cele bancare), propus automat după sensul plății și tipul partenerului și modificabil cât timp plata e în ciornă:\n*Chitanță client* (prefix CH) — încasare de la client;\n*Chitanță furnizor* (PL) — plată către furnizor;\n*Dispoziție de plată* (DP) — plată către un client, de exemplu restituirea unui avans;\n*Dispoziție de încasare* (DI) — încasare de la un furnizor;\n*Transfer intern* (IT) — doar ales manual; *Altele* — fără prefix.\nSerie separată pentru fiecare tip, de forma `<prefix><cod jurnal>/<an>/<nr. de ordine>` (ex. `CHCSH1/2026/00001`); numărul se dă la confirmare. Plățile prin bancă rămân pe numerotarea standard. Seriile se aplică doar companiilor cu planul de conturi `ro`.\nMetodele de plată ale jurnalului de casă înregistrează direct în contul casei (5311), fără cont intermediar de plăți în curs. Sincronizarea rulează la crearea jurnalului și la modificarea contului implicit sau a metodelor de plată; liniile deja înregistrate pe vechiul cont se mută pe contul casei, inclusiv cele din perioade închise.\nNota contabilă a plății primește documentul justificativ corespunzător (Chitanță client, Chitanță furnizor, Dispoziție de plată, Dispoziție de încasare), afișat în jurnalele românești; notele existente se completează la actualizarea la 19.0.1.1.0.\nColoană, filtru și grupare după Tip document în lista de plăți (Facturare → Clienți / Furnizori → Plăți); tipul apare și pe nota contabilă.\nMeniul „Plăți de primit” (`account.menu_action_account_payments_receivable`) este redenumit „Receivable payments”.\nFișa consultant detaliază fluxul pas cu pas, monografia (ex. `Dr 5311 = Cr 4111` la chitanța client), verificările și mesajele de eroare frecvente; nu sunt refăcute aici."
   },
   {
     "path": "l10n_ro_account_vat_journal/index.md",
     "module": "l10n_ro_account_vat_journal",
-    "version": "19.0.1.6.0",
+    "version": "19.0.1.7.0",
     "github": "[https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal)",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_account_vat_journal",
     "last_ingest": "2026-10-05",
@@ -14305,7 +14355,7 @@
   {
     "path": "l10n_ro_anaf_d101/index.md",
     "module": "l10n_ro_anaf_d101",
-    "version": "19.0.1.1.4",
+    "version": "19.0.1.2.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d101",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d101",
     "last_ingest": "2026-10-27",
@@ -14886,7 +14936,7 @@
   {
     "path": "l10n_ro_anaf_d394/index.md",
     "module": "l10n_ro_anaf_d394",
-    "version": "19.0.1.3.12",
+    "version": "19.0.1.3.13",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d394",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d394",
     "last_ingest": null,
@@ -15602,10 +15652,10 @@
   {
     "path": "l10n_ro_customs_dvi/index.md",
     "module": "l10n_ro_customs_dvi",
-    "version": "19.0.2.1.14",
-    "github": "`https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_customs_dvi`",
-    "local_path": "odoo-addons/l10n-romania/l10n_ro_customs_dvi",
-    "last_ingest": "2026-10-24",
+    "version": "19.0.2.2.0",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_customs_dvi",
+    "local_path": null,
+    "last_ingest": "2026-10-30",
     "friendly_name": "Romania - Customs Import Declaration (DVI)",
     "summary": "Modulul înregistrează Declarația Vamală de Import (DVI) pentru importurile din afara Uniunii Europene, legând factura furnizorului extern de costurile vamale printr-un cost de aterizare (landed cost) atașat recepției. Din wizardul deschis de pe factura furnizor se transcriu sumele din declarație — taxa vamală (poziția A00), baza de impozitare și TVA-ul la import (poziția B00) — iar modulul repartizează taxa în costul stocului și generează nota de TVA. Taxele vamale majorează costul mărfii, în timp ce TVA-ul la import nu atinge costul. Nota contabilă primește ca referință numărul MRN al declarației, astfel încât plata către vamă să poată fi reconciliată pe contul 4462 per declarație. Modulul acoperă atât plata efectivă a TVA-ului în vamă, cât și importul fără plata TVA în vamă (de exemplu cu certificat de amânare). Costul de aterizare rămâne legat de factura furnizorului, iar liniile de TVA sunt legate de taxă, deci apar corect în SAF-T (D406).",
     "features": [
@@ -15630,6 +15680,7 @@
       "Multi-company (#685): contul de decontare cu bugetul (4462) se ia direct din planul companiei DVI, iar contul de cheltuială al produsului „Taxă vamală” se completează pentru acea companie la prima utilizare; înainte, la o companie diferită de cea care a creat produsul, TVA-ul plătit în vamă și taxa vamală ajungeau pe contul de cheltuială al categoriei (607).",
       "Dacă DVI-ul nu are taxă vamală, nota pentru TVA la import (sau baza scutită) se postează automat, nu rămâne în ciornă.",
       "Fișa consultant (Pasul 5) trimite la modulul [`l10n_ro_customs_dvi_import`](../l10n_ro_customs_dvi_import/index.md) pentru completarea DVI din PDF-ul declarației tipărite din SNI; transcrierea manuală rămâne pentru declarațiile primite fără acel PDF.",
+      "Tip document „Import (DVI)” pe nota DVI: nota contabilă a DVI primește tipul de document `customs_declaration`, astfel că jurnalul de TVA la cumpărări arată declarația vamală ca document justificativ al TVA-ului la import, nu „Notă contabilă”. Notele DVI deja validate se actualizează la upgrade; fișa consultant arată tipul în Pasul 7 (cu captură) și în jurnalul de TVA, are o verificare nouă în §8, iar Pasul 12 (regim 4200) primește captura facturii intracomunitare cu „0% EU G”.",
       "Se exclude reciproc cu modulul OCA `l10n_ro_dvi`."
     ],
     "dependencies": [
@@ -15638,11 +15689,13 @@
       "sale",
       "l10n_ro",
       "purchase_stock",
-      "stock_landed_costs"
+      "stock_landed_costs",
+      "l10n_ro_account_move_document_type"
     ],
     "connections": [
       "stock_landed_costs",
       "l10n_ro",
+      "l10n_ro_account_move_document_type",
       "l10n_ro_dvi",
       "excludes",
       "addons_path",
@@ -15651,7 +15704,7 @@
       "`l10n_ro_customs_dvi_import`",
       "`l10n_ro_anaf_d300`"
     ],
-    "text": "Romania - Customs Import Declaration (DVI)\nl10n_ro_customs_dvi\nModulul înregistrează Declarația Vamală de Import (DVI) pentru importurile din afara Uniunii Europene, legând factura furnizorului extern de costurile vamale printr-un cost de aterizare (landed cost) atașat recepției. Din wizardul deschis de pe factura furnizor se transcriu sumele din declarație — taxa vamală (poziția A00), baza de impozitare și TVA-ul la import (poziția B00) — iar modulul repartizează taxa în costul stocului și generează nota de TVA. Taxele vamale majorează costul mărfii, în timp ce TVA-ul la import nu atinge costul. Nota contabilă primește ca referință numărul MRN al declarației, astfel încât plata către vamă să poată fi reconciliată pe contul 4462 per declarație. Modulul acoperă atât plata efectivă a TVA-ului în vamă, cât și importul fără plata TVA în vamă (de exemplu cu certificat de amânare). Costul de aterizare rămâne legat de factura furnizorului, iar liniile de TVA sunt legate de taxă, deci apar corect în SAF-T (D406).\nWizard DVI pornit cu butonul DVI de pe factura furnizorului extern postată, care creează un cost de aterizare legat de recepțiile comenzii de achiziție. Sumele (taxă vamală A00, bază de impozitare, TVA B00, cotă, număr DVI) se transcriu din declarație, nu se recalculează; baza propusă implicit (netul facturii) este doar un punct de plecare, nu baza legală de la art. 289 din Legea 227/2015.\nRepartizează taxa vamală (A00) în costul de achiziție al mărfii, prin mecanismul nativ de cost adițional.\nDouă regimuri de TVA la import, comutate prin taxa aleasă în wizard (fără câmp de configurare):\n*plata efectivă în vamă* (art. 326 alin. (3)) — taxă obișnuită de achiziție, cu o singură linie de repartiție pe 4426: `Dr 4426 = Cr 4462`, datoria se stinge ulterior prin plată;\n*fără plata TVA în vamă* (art. 326 alin. (4)-(5)) — nu este taxare inversă: TVA-ul se înregistrează atât ca taxă colectată, cât și ca deductibilă. Se alege o taxă cu două linii de repartiție, pe 4426 și 4427 — „21% IMP AM” sau „11% IMP AM” din `l10n_ro_anaf_d300` (rândurile 7 și 22 din decont): `Dr 4426 = Cr 4427`, fără 4462 și fără plată. Regimul acoperă certificatul de amânare, vămuirea centralizată, înscrierea în evidențele declarantului și bunurile din art. 331 alin. (2) lit. b), c), i)–k).\nCondiția de deducere diferă: la plata în vamă, dovada plății (art. 299 alin. (1) lit. c)); fără plată în vamă, declarația pe numele importatorului cu TVA datorat și taxa înscrisă ca colectată în aceeași perioadă (lit. d)).\nLiniile de TVA ale notei sunt legate de taxă (linia de repartiție a taxei), iar linia tehnică de bază poartă și ea taxa; astfel TVA-ul la import este exportat corect în SAF-T (D406), nu cu TaxCode 000000 și sumă zero, și este luat în calcul la închiderea TVA din Odoo. Nota de TVA poartă etichetele fiscale ale taxei, plus o pereche tehnică echilibrată pe contul neutru 473 care poartă eticheta de bază, ca rândul din D300 să nu iasă cu TVA și cu bază zero.\nTaxa vamală se creditează pe 4462 „Alte impozite, taxe și vărsăminte asimilate — reluate într-o perioadă de până la un an” (datorie curentă; atenție, 4461 înseamnă peste un an). Dacă planul nu are 4462, se folosește orice cont 446.\nNumărul declarației (MRN) devine referința notei contabile, pentru reconcilierea plății pe 4462 per declarație. Biroul vamal nu se creează ca partener; soldul se urmărește pe cont.\nCâmpuri DVI pe costul de aterizare (tip, număr MRN, cotă, bază, valoare TVA), filtru dedicat și coloană în listă; meniu propriu „DVI — Costuri vamale”, cu lista filtrată pe costurile de tip DVI și grupată pe dată.\nEtichete neutre, valabile în ambele regimuri: rândurile notei se numesc „Import VAT - <taxă>”, iar câmpul „Import VAT Amount”; eticheta veche „TVA plătit în vamă” era folosită greșit și la importurile fără plata TVA în vamă. Notele deja postate păstrează eticheta veche.\nCostul de aterizare creat de wizard este legat de factura furnizorului prin câmpul standard Vendor Bill: câmpul arată factura, factura primește butonul inteligent „Landed Costs”, iar detaliile de evaluare a stocului numesc factura. Se leagă doar facturile (nu notele de credit); costurile create înainte de 2.1.7 rămân fără legătură.\nAjutoare extinse pe fiecare câmp al wizardului și casetă de îndrumare cu maparea poziție din declarație → câmp. Valoarea din câmpul „Import VAT Amount” (TVA la import) nu se recalculează la schimbarea bazei sau a cotei — se modifică manual.\nComisionul vamal a fost eliminat (nu există comision datorat autorității vamale; câmpul era folosit greșit pentru onorariul brokerului). Onorariul comisionarului vamal nu se operează prin wizard: brokerul e furnizor obișnuit cu sold pe 401, factura lui se înregistrează pe un produs serviciu marcat „Este un cost adițional”. Contul de cheltuială al produsului este 473 (tranzit) dacă onorariul se capitalizează prin butonul „Creați costuri adiționale” de pe factură, respectiv 622 dacă nu se capitalizează. Atenție: dacă onorariul a fost inclus în baza B00, poate fi facturat fără TVA.\nFișa consultant detaliază baza legală (art. 289, 290, 294, 299, 326), tratamentul transportului, monografia și verificările de după validare; conține și fluxul pas cu pas pentru importul fără plata TVA în vamă („21% IMP AM” / „11% IMP AM”, cu capturi), note despre raportare (inclusiv D406) și secțiunea despre restituirea TVA plătit în vamă: cazurile cu temei legal, notele contabile și un model de cerere (Anexa A). Nu sunt refăcute aici.\nProdusul de serviciu generat pentru taxa vamală e marcat ca cost adițional, deci funcționează și pe traseul nativ „factură furnizor → Creați costuri adiționale”.\nRegim vamal (4000 / 4200 / altul), pe wizard și pe costul de aterizare. La regimul 4200 (import scutit de TVA, art. 293 alin. (1) lit. m), urmat de livrare intracomunitară) wizardul propune taxa scutită „0% EXEMPT”, fără TVA la import, iar nota conține doar baza, pe rândul 29 din D300, prin perechea tehnică pe 473. TVA-ul reținut de vamă ca garanție nu se contabilizează; un DVI 4200 cu TVA la import este refuzat. Câmpuri informative „TVA reținut ca garanție” și „Stare garanție” (Blocată / Eliberată), buton „Marcat ca eliberat” și filtru dedicat; fără notă contabilă (înregistrările pe 2678 rămân manuale).\nFurnizorul extern pe antetul notei DVI: nota primește ca partener furnizorul facturii, astfel că jurnalul de cumpărări afișează importul cu numele și codul fiscal al furnizorului; se schimbă doar antetul, liniile de TVA și taxă vamală își păstrează partenerul. Fișa precizează că importul apare o singură dată în jurnalul de cumpărări, pe nota DVI, și este exclus din D394.\nMulti-company (#685): contul de decontare cu bugetul (4462) se ia direct din planul companiei DVI, iar contul de cheltuială al produsului „Taxă vamală” se completează pentru acea companie la prima utilizare; înainte, la o companie diferită de cea care a creat produsul, TVA-ul plătit în vamă și taxa vamală ajungeau pe contul de cheltuială al categoriei (607).\nDacă DVI-ul nu are taxă vamală, nota pentru TVA la import (sau baza scutită) se postează automat, nu rămâne în ciornă.\nFișa consultant (Pasul 5) trimite la modulul [`l10n_ro_customs_dvi_import`](../l10n_ro_customs_dvi_import/index.md) pentru completarea DVI din PDF-ul declarației tipărite din SNI; transcrierea manuală rămâne pentru declarațiile primite fără acel PDF.\nSe exclude reciproc cu modulul OCA `l10n_ro_dvi`."
+    "text": "Romania - Customs Import Declaration (DVI)\nl10n_ro_customs_dvi\nModulul înregistrează Declarația Vamală de Import (DVI) pentru importurile din afara Uniunii Europene, legând factura furnizorului extern de costurile vamale printr-un cost de aterizare (landed cost) atașat recepției. Din wizardul deschis de pe factura furnizor se transcriu sumele din declarație — taxa vamală (poziția A00), baza de impozitare și TVA-ul la import (poziția B00) — iar modulul repartizează taxa în costul stocului și generează nota de TVA. Taxele vamale majorează costul mărfii, în timp ce TVA-ul la import nu atinge costul. Nota contabilă primește ca referință numărul MRN al declarației, astfel încât plata către vamă să poată fi reconciliată pe contul 4462 per declarație. Modulul acoperă atât plata efectivă a TVA-ului în vamă, cât și importul fără plata TVA în vamă (de exemplu cu certificat de amânare). Costul de aterizare rămâne legat de factura furnizorului, iar liniile de TVA sunt legate de taxă, deci apar corect în SAF-T (D406).\nWizard DVI pornit cu butonul DVI de pe factura furnizorului extern postată, care creează un cost de aterizare legat de recepțiile comenzii de achiziție. Sumele (taxă vamală A00, bază de impozitare, TVA B00, cotă, număr DVI) se transcriu din declarație, nu se recalculează; baza propusă implicit (netul facturii) este doar un punct de plecare, nu baza legală de la art. 289 din Legea 227/2015.\nRepartizează taxa vamală (A00) în costul de achiziție al mărfii, prin mecanismul nativ de cost adițional.\nDouă regimuri de TVA la import, comutate prin taxa aleasă în wizard (fără câmp de configurare):\n*plata efectivă în vamă* (art. 326 alin. (3)) — taxă obișnuită de achiziție, cu o singură linie de repartiție pe 4426: `Dr 4426 = Cr 4462`, datoria se stinge ulterior prin plată;\n*fără plata TVA în vamă* (art. 326 alin. (4)-(5)) — nu este taxare inversă: TVA-ul se înregistrează atât ca taxă colectată, cât și ca deductibilă. Se alege o taxă cu două linii de repartiție, pe 4426 și 4427 — „21% IMP AM” sau „11% IMP AM” din `l10n_ro_anaf_d300` (rândurile 7 și 22 din decont): `Dr 4426 = Cr 4427`, fără 4462 și fără plată. Regimul acoperă certificatul de amânare, vămuirea centralizată, înscrierea în evidențele declarantului și bunurile din art. 331 alin. (2) lit. b), c), i)–k).\nCondiția de deducere diferă: la plata în vamă, dovada plății (art. 299 alin. (1) lit. c)); fără plată în vamă, declarația pe numele importatorului cu TVA datorat și taxa înscrisă ca colectată în aceeași perioadă (lit. d)).\nLiniile de TVA ale notei sunt legate de taxă (linia de repartiție a taxei), iar linia tehnică de bază poartă și ea taxa; astfel TVA-ul la import este exportat corect în SAF-T (D406), nu cu TaxCode 000000 și sumă zero, și este luat în calcul la închiderea TVA din Odoo. Nota de TVA poartă etichetele fiscale ale taxei, plus o pereche tehnică echilibrată pe contul neutru 473 care poartă eticheta de bază, ca rândul din D300 să nu iasă cu TVA și cu bază zero.\nTaxa vamală se creditează pe 4462 „Alte impozite, taxe și vărsăminte asimilate — reluate într-o perioadă de până la un an” (datorie curentă; atenție, 4461 înseamnă peste un an). Dacă planul nu are 4462, se folosește orice cont 446.\nNumărul declarației (MRN) devine referința notei contabile, pentru reconcilierea plății pe 4462 per declarație. Biroul vamal nu se creează ca partener; soldul se urmărește pe cont.\nCâmpuri DVI pe costul de aterizare (tip, număr MRN, cotă, bază, valoare TVA), filtru dedicat și coloană în listă; meniu propriu „DVI — Costuri vamale”, cu lista filtrată pe costurile de tip DVI și grupată pe dată.\nEtichete neutre, valabile în ambele regimuri: rândurile notei se numesc „Import VAT - <taxă>”, iar câmpul „Import VAT Amount”; eticheta veche „TVA plătit în vamă” era folosită greșit și la importurile fără plata TVA în vamă. Notele deja postate păstrează eticheta veche.\nCostul de aterizare creat de wizard este legat de factura furnizorului prin câmpul standard Vendor Bill: câmpul arată factura, factura primește butonul inteligent „Landed Costs”, iar detaliile de evaluare a stocului numesc factura. Se leagă doar facturile (nu notele de credit); costurile create înainte de 2.1.7 rămân fără legătură.\nAjutoare extinse pe fiecare câmp al wizardului și casetă de îndrumare cu maparea poziție din declarație → câmp. Valoarea din câmpul „Import VAT Amount” (TVA la import) nu se recalculează la schimbarea bazei sau a cotei — se modifică manual.\nComisionul vamal a fost eliminat (nu există comision datorat autorității vamale; câmpul era folosit greșit pentru onorariul brokerului). Onorariul comisionarului vamal nu se operează prin wizard: brokerul e furnizor obișnuit cu sold pe 401, factura lui se înregistrează pe un produs serviciu marcat „Este un cost adițional”. Contul de cheltuială al produsului este 473 (tranzit) dacă onorariul se capitalizează prin butonul „Creați costuri adiționale” de pe factură, respectiv 622 dacă nu se capitalizează. Atenție: dacă onorariul a fost inclus în baza B00, poate fi facturat fără TVA.\nFișa consultant detaliază baza legală (art. 289, 290, 294, 299, 326), tratamentul transportului, monografia și verificările de după validare; conține și fluxul pas cu pas pentru importul fără plata TVA în vamă („21% IMP AM” / „11% IMP AM”, cu capturi), note despre raportare (inclusiv D406) și secțiunea despre restituirea TVA plătit în vamă: cazurile cu temei legal, notele contabile și un model de cerere (Anexa A). Nu sunt refăcute aici.\nProdusul de serviciu generat pentru taxa vamală e marcat ca cost adițional, deci funcționează și pe traseul nativ „factură furnizor → Creați costuri adiționale”.\nRegim vamal (4000 / 4200 / altul), pe wizard și pe costul de aterizare. La regimul 4200 (import scutit de TVA, art. 293 alin. (1) lit. m), urmat de livrare intracomunitară) wizardul propune taxa scutită „0% EXEMPT”, fără TVA la import, iar nota conține doar baza, pe rândul 29 din D300, prin perechea tehnică pe 473. TVA-ul reținut de vamă ca garanție nu se contabilizează; un DVI 4200 cu TVA la import este refuzat. Câmpuri informative „TVA reținut ca garanție” și „Stare garanție” (Blocată / Eliberată), buton „Marcat ca eliberat” și filtru dedicat; fără notă contabilă (înregistrările pe 2678 rămân manuale).\nFurnizorul extern pe antetul notei DVI: nota primește ca partener furnizorul facturii, astfel că jurnalul de cumpărări afișează importul cu numele și codul fiscal al furnizorului; se schimbă doar antetul, liniile de TVA și taxă vamală își păstrează partenerul. Fișa precizează că importul apare o singură dată în jurnalul de cumpărări, pe nota DVI, și este exclus din D394.\nMulti-company (#685): contul de decontare cu bugetul (4462) se ia direct din planul companiei DVI, iar contul de cheltuială al produsului „Taxă vamală” se completează pentru acea companie la prima utilizare; înainte, la o companie diferită de cea care a creat produsul, TVA-ul plătit în vamă și taxa vamală ajungeau pe contul de cheltuială al categoriei (607).\nDacă DVI-ul nu are taxă vamală, nota pentru TVA la import (sau baza scutită) se postează automat, nu rămâne în ciornă.\nFișa consultant (Pasul 5) trimite la modulul [`l10n_ro_customs_dvi_import`](../l10n_ro_customs_dvi_import/index.md) pentru completarea DVI din PDF-ul declarației tipărite din SNI; transcrierea manuală rămâne pentru declarațiile primite fără acel PDF.\nTip document „Import (DVI)” pe nota DVI: nota contabilă a DVI primește tipul de document `customs_declaration`, astfel că jurnalul de TVA la cumpărări arată declarația vamală ca document justificativ al TVA-ului la import, nu „Notă contabilă”. Notele DVI deja validate se actualizează la upgrade; fișa consultant arată tipul în Pasul 7 (cu captură) și în jurnalul de TVA, are o verificare nouă în §8, iar Pasul 12 (regim 4200) primește captura facturii intracomunitare cu „0% EU G”.\nSe exclude reciproc cu modulul OCA `l10n_ro_dvi`."
   },
   {
     "path": "l10n_ro_customs_dvi_import/index.md",
@@ -18431,7 +18484,7 @@
   {
     "path": "l10n_ro_period_close_enhanced/index.md",
     "module": "l10n_ro_period_close_enhanced",
-    "version": "19.0.1.13.1",
+    "version": "19.0.1.14.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_period_close_enhanced",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_period_close_enhanced",
     "last_ingest": null,
@@ -18732,7 +18785,7 @@
   {
     "path": "l10n_ro_profit_tax/index.md",
     "module": "l10n_ro_profit_tax",
-    "version": "19.0.1.1.9",
+    "version": "19.0.1.2.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_profit_tax",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_profit_tax",
     "last_ingest": null,
@@ -19961,7 +20014,7 @@
   {
     "path": "l10n_ro_stock_picking_batch_report/index.md",
     "module": "l10n_ro_stock_picking_batch_report",
-    "version": "19.0.0.0.6",
+    "version": "19.0.0.0.7",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_picking_batch_report",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_picking_batch_report",
     "last_ingest": "2026-10-09",
@@ -21521,7 +21574,7 @@
   {
     "path": "terrabit_picking_flow/index.md",
     "module": "terrabit_picking_flow",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_picking_flow`",
     "local_path": "odoo-addons/bitshop/terrabit_picking_flow",
     "last_ingest": "2026-07-31",

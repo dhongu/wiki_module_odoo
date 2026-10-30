@@ -130,7 +130,11 @@ Date minime pentru demo:
    jurnale de TVA (RO)** (necesită grupul *Administrator contabilitate*). Lista vine precompletată;
    ajustați-o doar dacă clientul are taxe proprii sau grile vechi (ex. etichete „09a" moștenite).
    Configurarea nu se suprascrie la actualizarea modulului.
-7. Semnăturile de pe jurnalele tipărite: în **Contabilitate → Configurare → Setări**, secțiunea
+7. **Tipul documentului pe notele contabile** (opțional): instalați `l10n_ro_account_move_document_type`
+   (suita l10n-romania; vine automat cu `l10n_ro_customs_dvi` sau `l10n_ro_account_sequence`).
+   Coloana `Tip document` arată atunci documentul justificativ al notelor contabile (ex.
+   „Import (DVI)”). Fără el, toate notele contabile apar ca „Notă contabilă”.
+8. Semnăturile de pe jurnalele tipărite: în **Contabilitate → Configurare → Setări**, secțiunea
    declarațiilor ANAF, **Semnături pe jurnalele de TVA** — numele și funcția pentru *Întocmit* și
    *Verificat*. Apar la finalul PDF-ului și al XLSX-ului; dacă rămân goale, se tipăresc linii de
    semnat de mână.
@@ -168,9 +172,13 @@ rând de **Total** și, sub el, **recapitulația pe rânduri D300**.
 - `Tip document` distinge factura, stornoul, bonul fiscal, **sesiunea POS** (nota de închidere a
   sesiunii, care totalizează bonurile fiscale, cu punctul de vânzare în locul partenerului; ea
   corespunde raportului Z doar dacă sesiunea acoperă o zi pe o singură casă de marcat) și nota
-  contabilă;
+  contabilă. Pe o notă contabilă, coloana arată **documentul justificativ** ales pe notă, dacă e
+  instalat modulul opțional `l10n_ro_account_move_document_type`: nota de TVA la import generată din
+  DVI apare ca „Import (DVI)”, nu ca „Notă contabilă”, iar pe o notă introdusă manual tipul îl alege
+  contabilul, din câmpul **Tip document** al notei. Tipul e doar o etichetă: baza, TVA-ul și
+  `Rând D300` vin tot din grilele notei. Fără modul, notele apar ca „Notă contabilă”;
 - `TVA fără grile D300` arată TVA-ul de pe 4426 (cumpărări) / 4427 (vânzări) fără grile fiscale —
-  de regulă note contabile, care apar ca rânduri „Notă contabilă”. Sumele lipsesc din D300 și se
+  de regulă note contabile, care apar ca rânduri „Notă contabilă” (sau cu tipul ales pe notă). Sumele lipsesc din D300 și se
   verifică fiecare: se pun grilele fiscale (dacă e TVA de declarat) sau se justifică nota. `TVA` +
   `TVA fără grile D300` se compară cu rulajul contului fără notele de închidere și regularizare a
   TVA; la vânzări se adaugă TVA colectată prin taxare inversă din jurnalul de cumpărări;
@@ -561,6 +569,9 @@ totalurilor față de balanță, evidența taxei nededuse și a pro-ratei, și d
       sesiunilor POS din zi se compară cu rapoartele Z ale caselor de marcat.
 - [ ] O notă contabilă pe 4426 / 4427 fără grile apare ca „Notă contabilă”, cu suma în `TVA fără
       grile D300`, și e justificată sau completată cu grile; nota de închidere a TVA nu apare.
+- [ ] Cu `l10n_ro_account_move_document_type` instalat: nota de TVA la import generată din DVI (sau
+      o notă manuală pe care contabilul a ales „Import (DVI)”) are în `Tip document` „Import (DVI)”,
+      pe ecran și în XLSX; o notă fără tip ales rămâne „Notă contabilă”.
 - [ ] Fiecare document are `Rând D300`; recapitulația de sub Total are, pe rândurile alimentate din
       grile, aceleași valori ca D300 generat de Odoo pentru perioadă (dacă toate documentele cu grile
       sunt în jurnal).

@@ -265,6 +265,21 @@ Tab-ul **Comenzi și produse** grupează regulile de date:
   - **Păstrează adresa contactului** — la reimport nu se suprascrie adresa unui contact existent,
     se creează un contact nou pentru adresa diferită. Documentele emise își păstrează adresa;
   - **Email unic**.
+
+  Localitatea contactului importat se leagă automat de lista de localități (*Localitate*), după
+  regulile:
+  - **România** — după numele orașului și județ; la București, sectorul se deduce din stradă,
+    din al doilea rând de adresă sau din codul poștal;
+  - **alte țări** — întâi după **codul poștal**, când acesta duce la o singură localitate
+    (Budapesta, 1124 → *Budapest XII*). Un cod poștal comun mai multor localități se restrânge
+    după numele orașului. Județul (regiunea) localității găsite îl înlocuiește pe cel introdus de
+    client;
+  - **fără cod poștal potrivit** — după numele orașului, dar numai dacă se potrivește cu o singură
+    localitate. Un nume comun mai multor localități (de exemplu *Budapest*, cu 23 de districte)
+    lasă *Localitate* goală și păstrează orașul scris de client, în loc să aleagă prima localitate.
+
+  Codul poștal ajută doar în țările ale căror localități au cod poștal în Odoo (de exemplu Ungaria,
+  cu modulul `l10n_hu_city`).
 - **Valori implicite**:
   - **Categorie implicită** — categoria primită de produsele **noi** create de import fără categorie.
     La reimport, categoria unui produs nu se rescrie doar dacă e chiar aceasta. Nu leagă categoriile
@@ -460,6 +475,9 @@ Modulul **nu generează note contabile**. Contabilitatea apare în fluxurile con
 - [ ] Acțiunile programate sunt inactive la instalare și sunt activate abia după verificarea
       importului.
 - [ ] Runner-ul de joburi rulează: un job nou trece din *În așteptare* în *Efectuat*.
+- [ ] O comandă cu adresă din Budapesta și codul poștal 1124 creează contactul cu *Localitate*
+      **Budapest XII** și județul *Budapest*, chiar dacă clientul a scris doar „Budapest” sau alt
+      județ; aceeași adresă fără cod poștal lasă *Localitate* goală, cu orașul „Budapest”.
 - [ ] Cu **Partajează produsul** debifat, legarea sau reimportul unui produs Odoo existent, cu
       mișcări de stoc în altă companie, nu îi schimbă compania, iar un produs nou creat din
       magazin primește compania backend-ului.
@@ -546,3 +564,6 @@ pașii specifici fiecărei platforme, trimiteți la fișa conectorului.
 - **Reluarea sau anularea joburilor** din coadă cere în continuare grupul *Job Queue Manager*;
   **Administrator marketplace** le poate doar vedea.
 - **Webhook cu job** are efect doar la conectorii care îl citesc (de exemplu Brickweb).
+- **Localitatea în afara României** se completează din codul poștal doar dacă localitățile țării au
+  cod poștal în Odoo. Altfel, un oraș cu mai multe localități de același nume (*Budapest*) rămâne
+  fără *Localitate* și se completează manual.

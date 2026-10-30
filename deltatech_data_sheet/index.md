@@ -2,19 +2,21 @@
 
 - **Nume Tehnic:** `deltatech_data_sheet`
 - **Versiune:** `19.0.1.0.2`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_data_sheet`
-- **Cale Locală:** `odoo-addons/deltatech/deltatech_data_sheet`
-- **Ultima Ingestie:** `2026-06-02`
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_data_sheet
+- **Cale Locală:** odoo-addons/deltatech/deltatech_data_sheet
+- **Ultima Ingestie:** `2026-10-30`
 
 #### 1. Sumar
 
-Modulul adaugă posibilitatea de a atașa fișe tehnice și fișe de securitate (în format PDF) direct pe produs. Astfel, documentația tehnică a unui produs este păstrată chiar pe șablonul de produs, în fila „Vânzări", fiind ușor accesibilă echipei comerciale și clienților. Scopul principal este centralizarea documentelor de produs relevante pentru procesul de vânzare.
+Modulul permite atașarea fișelor tehnice și a fișelor de securitate (PDF) direct pe produs. Documentația tehnică rămâne astfel pe șablonul de produs, ușor de accesat de echipele de vânzări și de logistică, iar documentele publice pot fi partajate în siguranță cu clienții și portalurile.
 
 #### 2. Funcționalități Cheie
 
-- Adaugă câmpul „Data Sheet Attachment" (fișa tehnică) pe șablonul de produs.
-- Adaugă câmpul „Safety Data Sheet" (fișa de securitate) pe șablonul de produs.
-- Ambele câmpuri sunt afișate în fila „Vânzări" a produsului și acceptă fișiere PDF.
+- Grup nou **Data Sheet** pe formularul produsului, după grupul Description, cu două câmpuri de atașament PDF.
+- **Data Sheet Attachment** — leagă un atașament PDF public (specificații tehnice, pagină de catalog).
+- **Safety Data Sheet** — leagă un atașament PDF public pentru documentele de conformitate MSDS / SDS.
+- Ambele câmpuri acceptă doar atașamente publice de tip PDF (`application/pdf`, `public = True`); la încărcarea unui fișier nou din câmp, atașamentul se creează public implicit.
+- Câmpurile sunt stocate pe `product.template`, deci sunt comune tuturor variantelor produsului.
 
 #### 3. Dependențe
 
@@ -22,8 +24,18 @@ Modulul adaugă posibilitatea de a atașa fișe tehnice și fișe de securitate 
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, această secțiune este omisă deoarece documentația modulului (`readme/DESCRIPTION.md`) acoperă Sumarul și Funcționalitățile Cheie și nu solicită explicit analiza componentelor tehnice.
+**Modele**
+
+- `product.template` (extins): `data_sheet_id` și `safety_data_sheet_id`, relații către `ir.attachment` cu domeniul PDF public.
+
+**Vizualizări**
+
+- `product_template_form_view`: grupul **Data Sheet** pe formularul produsului, după grupul `description`.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Nu există cron-uri sau acțiuni server.
 
 #### 5. Conexiuni
 
-Nu au fost identificate conexiuni funcționale cu alte module documentate în acest wiki.
+- [deltatech_data_sheet_website](../deltatech_data_sheet_website/index.md): depinde de acest modul în manifest și folosește fișele atașate pe produs în magazinul online.

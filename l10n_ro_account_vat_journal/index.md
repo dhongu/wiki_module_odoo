@@ -1,7 +1,7 @@
 # Romania - Jurnale de TVA (vânzări și cumpărări) (localizat la `l10n_ro_account_vat_journal/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_account_vat_journal`
-- **Versiune:** `19.0.1.6.0`
+- **Versiune:** `19.0.1.7.0`
 - **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal)
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_account_vat_journal`
 - **Ultima Ingestie:** `2026-10-05`
