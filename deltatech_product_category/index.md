@@ -1,7 +1,7 @@
 # Products Category (Categorii de produse pe companie)
 
 - **Nume Tehnic:** `deltatech_product_category`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_category
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_category`
 - **Ultima Ingestie:** `2026-10-22`

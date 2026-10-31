@@ -1,10 +1,11 @@
 # Deltatech EDI Base Connector (localizat la `deltatech_edi/index.md`)
 
 - **Nume Tehnic:** `deltatech_edi`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edi
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_edi`
 - **Ultima Ingestie:** `2026-09-29`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

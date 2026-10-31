@@ -1,26 +1,25 @@
-# Deltatech EDIConnect (localizat la `deltatech_ediconnect/index.md`)
+# EDIConnect Connector (localizat la `deltatech_ediconnect/index.md`)
 
 - **Nume Tehnic:** `deltatech_ediconnect`
 - **Versiune:** `19.0.1.1.13`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_ediconnect`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_ediconnect
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_ediconnect`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-10-31`
 
 #### 1. Sumar
 
-Modulul oferă un conector EDI (Electronic Data Interchange) robust și scalabil, care facilitează schimbul automat și fără cusur de date între Odoo și diverse sisteme externe sau parteneri de afaceri, prin intermediul platformei EDIConnect. Din perspectivă de business, este o componentă de infrastructură critică pentru companiile care au nevoie să automatizeze tranzacții de volum mare, precum facturi, comenzi de achiziție și detalii de livrare, eliminând introducerea manuală a datelor și oferind vizibilitate în timp real asupra schimburilor electronice direct în Odoo.
+Modulul oferă un conector EDI (Electronic Data Interchange) robust și scalabil, care facilitează schimbul automat de date între Odoo și diverși parteneri de afaceri sau sisteme externe, prin platforma EDIConnect. Din perspectivă de business, este o componentă de infrastructură pentru companiile care automatizează tranzacții de volum mare, precum facturi și comenzi de achiziție, eliminând introducerea manuală a datelor. Pe Odoo Apps modulul apare sub numele „EDIConnect Connector” (anterior „EDIConnect”); numele tehnic nu s-a schimbat.
 
 #### 2. Funcționalități Cheie
 
-- **Schimb automat de documente**: încărcarea și descărcarea fără cusur a fișierelor EDI.
-- **Integrare flexibilă**: suportă mai multe tipuri de documente printr-un API standardizat.
-- **Autentificare securizată**: folosește autentificare bazată pe token (Basic Auth + cheie API).
-- **Gestionarea fișierelor**: capabilități integrate pentru listarea, recuperarea și ștergerea fișierelor procesate de pe serverul EDI.
-- **Comunicare B2B automatizată**: automatizează schimbul de documente electronice cu partenerii de afaceri.
-- **Integritate îmbunătățită a datelor**: elimină erorile de introducere manuală prin utilizarea formatelor EDI standardizate.
-- **Vizibilitate în timp real**: oferă o imagine imediată asupra stării tuturor schimburilor de date electronice.
-
-**Configurare:** integrarea EDIConnect se configurează din setările EDI din Odoo, furnizând: URL-ul API (de regulă `https://portal.ediconnect.ro/api/v1`), numele de utilizator și parola contului EDIConnect, precum și cheia API furnizată de prestatorul serviciului EDIConnect.
+- **Schimb automat de documente:** încărcarea și descărcarea fișierelor EDI; comenzile primite se importă ca comenzi de vânzare, iar facturile se trimit partenerilor care folosesc EDI Connect.
+- **Integrare flexibilă:** suportă mai multe tipuri de documente printr-un API standardizat.
+- **Autentificare securizată:** autentificare bazată pe token (Basic Auth + cheie API).
+- **Gestionarea fișierelor:** listarea, recuperarea și ștergerea fișierelor de pe serverul EDI.
+- **Comunicare B2B automatizată** și **integritate îmbunătățită a datelor**, prin formate EDI standardizate în locul introducerii manuale.
+- **Configurare:** în setările EDI din Odoo se completează URL-ul API (documentația indică de regulă `https://portal.ediconnect.ro/api/v1`), numele de utilizator, parola și cheia API furnizate de prestatorul EDIConnect; credențialele se rețin per companie.
+- **Import comenzi pe companie:** acțiunea programată importă comenzile fiecărei companii în compania credențialelor sale. Un fișier ORDER nu mai este sărit doar fiindcă există un atașament cu același nume în altă parte; contează doar cel stocat de acest import pe `sale.order` pentru compania respectivă. O comandă primită din nou sub alt nume de fișier (același număr de comandă și GLN al cumpărătorului, în aceeași companie) se leagă de comanda existentă, nu se dublează.
+- **Partener:** valoarea „EDI Connect” din câmpul `edi_system` al partenerului determină trimiterea facturii prin acest conector la exportul EDI.
 
 #### 3. Dependențe
 
@@ -30,9 +29,25 @@ Dependențe Python externe: `zeep`, `xmltodict`.
 
 #### 4. Componente Cheie
 
-Componentele detaliate sunt acoperite prin fișierul `readme/DESCRIPTION.md` (vezi secțiunile 1 și 2). Conform fluxului de ingestie, analiza suplimentară a codului a fost omisă, întrucât Readme-ul este prezent. La nivel de manifest, modulul livrează vizualizarea de configurare `views/res_config_settings_view.xml` (parametrii de conectare EDIConnect) și o sarcină programată `ir.cron` definită în `data/ir_cron_data.xml` (sincronizarea fișierelor EDI).
+*Conform fluxului de ingestie, analiza detaliată a codului este omisă, deoarece `readme/DESCRIPTION.md` este prezent. Mai jos sunt doar reperele confirmate în manifest și cod.*
+
+**Modele**
+
+- `sale.order` (extins): `corn_import_edi_connect()` descarcă fișierele ORDER și importă comenzile.
+- `account.move` (extins): `button_export_edi()` trimite factura prin EDI Connect când partenerul comercial are `edi_system = edi_connect`.
+- `res.partner` (extins): adaugă „EDI Connect” în `edi_system`.
+- `res.company` (extins): URL, utilizator, parolă și cheie API EDI Connect.
+- Clasa client `EDIConnect` (`models/ediconnect.py`): autentificare și operații pe fișiere (`file_put`, `file_get_list`, `file_get`, `file_delete`).
+
+**Vizualizări**
+
+- `views/res_config_settings_view.xml`: parametrii de conectare EDIConnect în setări.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- `ir_cron_ed_connect_get_order` („Edi Connect: Get Orders”): rulează din oră în oră `model.corn_import_edi_connect()`; este livrată **inactivă** și trebuie activată.
 
 #### 5. Conexiuni
 
 - [deltatech_edi](../deltatech_edi/index.md): modulul de bază EDI pe care se construiește acest conector (dependență directă).
-- [deltatech_edinet](../deltatech_edinet/index.md): conector EDI înrudit din aceeași suită, alternativă/complement pentru schimbul electronic de documente.
+- [deltatech_edinet](../deltatech_edinet/index.md): conector EDI înrudit (EDI Net), tot peste `deltatech_edi`, care adaugă la rândul său o valoare în `edi_system` și preia `button_export_edi` pentru partenerii lui.

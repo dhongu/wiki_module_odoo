@@ -1789,9 +1789,9 @@
     "path": "deltatech_brand_field/index.md",
     "module": "deltatech_brand_field",
     "version": "19.0.0.0.6",
-    "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_brand_field`",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_brand_field",
     "local_path": "odoo-addons/bitshop/deltatech_brand_field",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-10-31",
     "friendly_name": "Câmp Marcă Produs (Deltatech Brand Field)",
     "summary": "Acest modul oferă un mecanism centralizat pentru gestionarea mărcilor de produse în mai multe module Odoo, asigurând că toate informațiile legate de marcă sunt stocate într-un câmp dedicat, consecvent. Din perspectivă de business, modulul rezolvă complexitatea generată de faptul că diverse module își definesc propriile câmpuri de marcă, creând un sistem unificat și ușor de căutat pentru marca produselor, valabil pentru toate funcțiile integrate.",
     "features": [
@@ -1799,16 +1799,17 @@
       "Consecvență îmbunătățită a datelor: asigură uniformitatea datelor de marcă în întregul sistem, ducând la raportări și filtrări mai precise.",
       "Catalogare îmbunătățită a produselor: construiește o bază de date de produse mai structurată și profesională, ușor de gestionat și de navigat după marcă.",
       "Aliniere strategică a mărcii: folosește un câmp de marcă consecvent pentru a sprijini strategii mai eficiente de marketing, vânzări și inventar.",
-      "Gestionare scalabilă: permite administrarea cu ușurință a unui număr mare de mărci de produse dintr-o locație centrală, facilitând extinderea catalogului."
+      "Gestionare scalabilă: permite administrarea cu ușurință a unui număr mare de mărci de produse dintr-o locație centrală, facilitând extinderea catalogului.",
+      "Câmp de marcă configurabil: în setările Website se alege câmpul de produs folosit ca marcă (parametrul de sistem `product.brand_field`); poate fi atât un câmp Many2one, cât și Char/Text.",
+      "Marcă goală tratată corect: dacă marca nu este completată pe produs (Char/Text sau Many2one), rezultatul este un șir gol, iar feed-urile de produse nu mai răspund cu eroare HTTP 500 (corecție din versiunea `19.0.0.0.6`)."
     ],
     "dependencies": [
       "website_sale_stock"
     ],
     "connections": [
-      "deltatech_feed",
-      "deltatech_product_brand"
+      "deltatech_feed"
     ],
-    "text": "Câmp Marcă Produs (Deltatech Brand Field)\ndeltatech_brand_field\nAcest modul oferă un mecanism centralizat pentru gestionarea mărcilor de produse în mai multe module Odoo, asigurând că toate informațiile legate de marcă sunt stocate într-un câmp dedicat, consecvent. Din perspectivă de business, modulul rezolvă complexitatea generată de faptul că diverse module își definesc propriile câmpuri de marcă, creând un sistem unificat și ușor de căutat pentru marca produselor, valabil pentru toate funcțiile integrate.\nIdentitate de marcă unificată: consolidează informațiile despre marcă într-un singur câmp standardizat, valabil în toate modulele și procesele Odoo relevante.\nConsecvență îmbunătățită a datelor: asigură uniformitatea datelor de marcă în întregul sistem, ducând la raportări și filtrări mai precise.\nCatalogare îmbunătățită a produselor: construiește o bază de date de produse mai structurată și profesională, ușor de gestionat și de navigat după marcă.\nAliniere strategică a mărcii: folosește un câmp de marcă consecvent pentru a sprijini strategii mai eficiente de marketing, vânzări și inventar.\nGestionare scalabilă: permite administrarea cu ușurință a unui număr mare de mărci de produse dintr-o locație centrală, facilitând extinderea catalogului."
+    "text": "Câmp Marcă Produs (Deltatech Brand Field)\ndeltatech_brand_field\nAcest modul oferă un mecanism centralizat pentru gestionarea mărcilor de produse în mai multe module Odoo, asigurând că toate informațiile legate de marcă sunt stocate într-un câmp dedicat, consecvent. Din perspectivă de business, modulul rezolvă complexitatea generată de faptul că diverse module își definesc propriile câmpuri de marcă, creând un sistem unificat și ușor de căutat pentru marca produselor, valabil pentru toate funcțiile integrate.\nIdentitate de marcă unificată: consolidează informațiile despre marcă într-un singur câmp standardizat, valabil în toate modulele și procesele Odoo relevante.\nConsecvență îmbunătățită a datelor: asigură uniformitatea datelor de marcă în întregul sistem, ducând la raportări și filtrări mai precise.\nCatalogare îmbunătățită a produselor: construiește o bază de date de produse mai structurată și profesională, ușor de gestionat și de navigat după marcă.\nAliniere strategică a mărcii: folosește un câmp de marcă consecvent pentru a sprijini strategii mai eficiente de marketing, vânzări și inventar.\nGestionare scalabilă: permite administrarea cu ușurință a unui număr mare de mărci de produse dintr-o locație centrală, facilitând extinderea catalogului.\nCâmp de marcă configurabil: în setările Website se alege câmpul de produs folosit ca marcă (parametrul de sistem `product.brand_field`); poate fi atât un câmp Many2one, cât și Char/Text.\nMarcă goală tratată corect: dacă marca nu este completată pe produs (Char/Text sau Many2one), rezultatul este un șir gol, iar feed-urile de produse nu mai răspund cu eroare HTTP 500 (corecție din versiunea `19.0.0.0.6`)."
   },
   {
     "path": "deltatech_business_process/index.md",
@@ -2099,21 +2100,21 @@
     "version": "19.0.0.0.6",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter",
     "local_path": "odoo-addons/bitshop/deltatech_chatter",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "deltatech_chatter",
-    "summary": "Modulul Deltatech Chatter îmbunătățește vizualizarea de tip formular din Odoo prin introducerea unui panou divizat redimensionabil între conținutul formularului și zona de chatter (istoricul de comunicare). Modulul rezolvă o problemă frecventă de utilizabilitate, în care secțiunea de chatter ocupă fie prea mult, fie prea puțin spațiu pentru o urmărire eficientă a mesajelor. Astfel, fiecare utilizator poate aloca spațiul de pe ecran în funcție de propriile nevoi, glisând pur și simplu separatorul dintre cele două zone.",
+    "last_ingest": "2026-10-31",
+    "friendly_name": "Resizable Chatter Panel",
+    "summary": "Modulul îmbunătățește vizualizarea de tip formular din Odoo prin introducerea unui panou divizat redimensionabil între conținutul formularului și zona de chatter (istoricul de comunicare). Rezolvă o problemă frecventă de utilizabilitate, în care secțiunea de chatter ocupă fie prea mult, fie prea puțin spațiu pentru o urmărire eficientă a mesajelor. Astfel, fiecare utilizator poate aloca spațiul de pe ecran în funcție de propriile nevoi, glisând separatorul dintre cele două zone. Pe Odoo Apps modulul apare sub numele „Resizable Chatter Panel” (anterior „Resizable Chatter”); numele tehnic nu s-a schimbat.",
     "features": [
       "Interfață divizată redimensionabilă: introduce o separare orizontală între conținutul formularului și secțiunea de chatter.",
       "Raport de dimensiune personalizabil: dimensionare implicită de 70% pentru conținutul formularului și 30% pentru chatter.",
-      "Redimensionare interactivă: utilizatorii pot trage de separator pentru a ajusta proporția după preferințe.",
-      "Design responsiv: se adaptează automat la redimensionarea ferestrei.",
+      "Redimensionare interactivă: utilizatorii pot trage de separator pentru a ajusta proporția după preferințe; la finalul tragerii, proporția se reține în browser (`localStorage`) și se reaplică la următoarele deschideri.",
+      "Design responsiv: se adaptează automat la redimensionarea ferestrei; separatorul apare doar în formularele afișate pe ecran foarte lat (clasa `.o_xxl_form_view`, chatter lângă formular) și se elimină când condiția nu mai e îndeplinită.",
       "Limite minime de dimensiune: previne micșorarea excesivă a secțiunilor (300px pentru formular, 250px pentru chatter)."
     ],
     "dependencies": [
       "base"
     ],
     "connections": [],
-    "text": "deltatech_chatter\ndeltatech_chatter\nModulul Deltatech Chatter îmbunătățește vizualizarea de tip formular din Odoo prin introducerea unui panou divizat redimensionabil între conținutul formularului și zona de chatter (istoricul de comunicare). Modulul rezolvă o problemă frecventă de utilizabilitate, în care secțiunea de chatter ocupă fie prea mult, fie prea puțin spațiu pentru o urmărire eficientă a mesajelor. Astfel, fiecare utilizator poate aloca spațiul de pe ecran în funcție de propriile nevoi, glisând pur și simplu separatorul dintre cele două zone.\nInterfață divizată redimensionabilă: introduce o separare orizontală între conținutul formularului și secțiunea de chatter.\nRaport de dimensiune personalizabil: dimensionare implicită de 70% pentru conținutul formularului și 30% pentru chatter.\nRedimensionare interactivă: utilizatorii pot trage de separator pentru a ajusta proporția după preferințe.\nDesign responsiv: se adaptează automat la redimensionarea ferestrei.\nLimite minime de dimensiune: previne micșorarea excesivă a secțiunilor (300px pentru formular, 250px pentru chatter)."
+    "text": "Resizable Chatter Panel\ndeltatech_chatter\nModulul îmbunătățește vizualizarea de tip formular din Odoo prin introducerea unui panou divizat redimensionabil între conținutul formularului și zona de chatter (istoricul de comunicare). Rezolvă o problemă frecventă de utilizabilitate, în care secțiunea de chatter ocupă fie prea mult, fie prea puțin spațiu pentru o urmărire eficientă a mesajelor. Astfel, fiecare utilizator poate aloca spațiul de pe ecran în funcție de propriile nevoi, glisând separatorul dintre cele două zone. Pe Odoo Apps modulul apare sub numele „Resizable Chatter Panel” (anterior „Resizable Chatter”); numele tehnic nu s-a schimbat.\nInterfață divizată redimensionabilă: introduce o separare orizontală între conținutul formularului și secțiunea de chatter.\nRaport de dimensiune personalizabil: dimensionare implicită de 70% pentru conținutul formularului și 30% pentru chatter.\nRedimensionare interactivă: utilizatorii pot trage de separator pentru a ajusta proporția după preferințe; la finalul tragerii, proporția se reține în browser (`localStorage`) și se reaplică la următoarele deschideri.\nDesign responsiv: se adaptează automat la redimensionarea ferestrei; separatorul apare doar în formularele afișate pe ecran foarte lat (clasa `.o_xxl_form_view`, chatter lângă formular) și se elimină când condiția nu mai e îndeplinită.\nLimite minime de dimensiune: previne micșorarea excesivă a secțiunilor (300px pentru formular, 250px pentru chatter)."
   },
   {
     "path": "deltatech_chatter_quick_info/index.md",
@@ -2383,20 +2384,28 @@
     "path": "deltatech_contwin/index.md",
     "module": "deltatech_contwin",
     "version": "19.0.1.0.15",
-    "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_contwin`",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_contwin",
     "local_path": "odoo-addons/bitshop/deltatech_contwin",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-10-31",
     "friendly_name": "Interfață ContWin",
-    "summary": "Modulul „Interfață ContWin\" este o extensie Odoo specializată, dezvoltată de Terrabit, care facilitează exportul datelor din Odoo către programul de contabilitate ContWin. ContWin este o aplicație de contabilitate dezvoltată de Omnidata (Petrescu), utilizată frecvent în România. Modulul funcționează ca o punte între funcționalitatea ERP modernă a Odoo și sistemul de contabilitate ContWin, permițând companiilor să folosească Odoo pentru operațiunile zilnice, păstrând totodată compatibilitatea cu ContWin pentru evidența contabilă și raportarea fiscală.",
+    "summary": "Modulul „ContWin Interface\" permite ca evidența contabilă să rămână în ContWin, programul de contabilitate românesc, în timp ce facturarea, achizițiile și stocurile se gestionează în Odoo. Pentru o perioadă aleasă, modulul exportă documentele postate ale unei singure companii în formatul text pe care îl importă ContWin și, la nevoie, în tabele pregătite pentru SAF-T, toate împachetate într-un singur fișier ZIP. Astfel, firmele pot folosi Odoo pentru operațiunile zilnice, păstrând compatibilitatea cu ContWin pentru contabilitate și raportare fiscală.",
     "features": [
-      "Export complet de facturi: exportă atât facturile de intrare (achiziții), cât și cele de ieșire (vânzări) din Odoo către ContWin.",
-      "Formate multiple de export:",
-      "format ContWin (fișiere `.fis`) cu câmpuri delimitate prin punct și virgulă;",
-      "format SAF-T (Standard Audit File for Tax) pentru raportare standardizată.",
-      "Mapare detaliată a datelor: corelarea atentă a câmpurilor Odoo cu formatul așteptat de ContWin, inclusiv coduri de cont, informații despre parteneri, tipuri de TVA și altele.",
-      "Opțiuni de export configurabile: filtrare după interval de date, jurnale, unități operaționale și alte criterii.",
-      "Suport pentru specificul contabil românesc: tratarea cazurilor speciale precum taxarea inversă și TVA la încasare.",
-      "Date tranzacționale complete: exportul detaliilor complete ale tranzacțiilor, inclusiv termene de plată, numere de document, sume, monede și cursuri de schimb."
+      "Achiziții și vânzări: facturi de furnizor și de client, note de credit și recepții, cu conturi, sume în RON și în valută, curs de schimb, scadență, tip și cotă de TVA.",
+      "Plăți și încasări: înregistrările de bancă și de casă din perioadă, câte un fișier pe jurnal, cu contul jurnalului sau al plății.",
+      "Transferuri între depozite: pentru un depozit ales, intrările de stoc ale mărfurilor care au intrat în el și au ieșit din el către alte locații.",
+      "Tabele SAF-T: unități de măsură, produse, linii de facturi de intrare și de ieșire cu tipul și codul de taxă SAF-T și numerele de înregistrare ale partenerilor, pregătite pentru fișierul D406.",
+      "Specific TVA românesc: TVA la încasare se recunoaște din poziția fiscală a facturii; CNP-ul persoanelor fizice este validat înainte de export.",
+      "Filtre: jurnale, unitate operațională (jurnalele unei filiale) și depozit.",
+      "O singură companie o dată: se includ doar documentele companiei alese în export, iar jurnalele altei companii sunt refuzate.",
+      "Utilizare: *Contabilitate > Contabilitate > ContWin > Export ContWin* (manageri de contabilitate). Se aleg perioada, Compania, Modul (*Contwin*, *SAFT* sau *All*) și, la nevoie, jurnalele, unitatea operațională și depozitul; apoi Apply și se descarcă ZIP-ul:",
+      "*Contwin*: `IN_…` și `IE_…` (facturi), `INT_…` și `IET_…` (transferuri între depozite), `TOT_…` (totul într-un fișier) și un fișier pe jurnal de bancă sau de casă;",
+      "*SAFT*: `UM_SAFT_…`, `PRODUCTS_SAFT_…`, `IN_SAFT_…`, `IE_SAFT_…` și `TOT_SAFT_…`;",
+      "*All*: ambele seturi.",
+      "Configurare prealabilă: planul de conturi românesc (`l10n_ro`) instalat, parteneri cu cod fiscal (sau CNP pentru persoane fizice, din `deltatech_contact`); pentru filiale se setează Operating Unit pe jurnalele fiecărei filiale, iar alegerea ei în export selectează acele jurnale; poziția fiscală pentru TVA la încasare este găsită după nume („incasare”) și propusă în wizard, unde poate fi schimbată; pentru tabelele SAF-T se instalează localizarea SAF-T românească, care adaugă tipurile și codurile de taxă.",
+      "De știut:",
+      "fișierul `IN_…` conține doar facturile de furnizor cu cont din clasa 3 (mărfuri și materiale); facturile doar de servicii se înregistrează altfel în ContWin;",
+      "în fișierele de bancă, orice cont în afară de bancă și partener se exportă ca `5125` (inclusiv comisionul bancar), deci un comision necesită nota 627 = 5125 în ContWin; în cele de casă se exportă drept contul de casă, deci o înregistrare de casă cu alte conturi decât casa și partenerul (comision, diferență) trebuie corectată manual în ContWin;",
+      "codul de TVA este A pentru cota standard (21%, 19%), B pentru cota redusă (11%, 9%) și C pentru restul; liniile de TVA (4426/4427) preiau codul taxei lor."
     ],
     "dependencies": [
       "base",
@@ -2408,7 +2417,7 @@
     "connections": [
       "deltatech_saga"
     ],
-    "text": "Interfață ContWin\ndeltatech_contwin\nModulul „Interfață ContWin\" este o extensie Odoo specializată, dezvoltată de Terrabit, care facilitează exportul datelor din Odoo către programul de contabilitate ContWin. ContWin este o aplicație de contabilitate dezvoltată de Omnidata (Petrescu), utilizată frecvent în România. Modulul funcționează ca o punte între funcționalitatea ERP modernă a Odoo și sistemul de contabilitate ContWin, permițând companiilor să folosească Odoo pentru operațiunile zilnice, păstrând totodată compatibilitatea cu ContWin pentru evidența contabilă și raportarea fiscală.\nExport complet de facturi: exportă atât facturile de intrare (achiziții), cât și cele de ieșire (vânzări) din Odoo către ContWin.\nFormate multiple de export:\nformat ContWin (fișiere `.fis`) cu câmpuri delimitate prin punct și virgulă;\nformat SAF-T (Standard Audit File for Tax) pentru raportare standardizată.\nMapare detaliată a datelor: corelarea atentă a câmpurilor Odoo cu formatul așteptat de ContWin, inclusiv coduri de cont, informații despre parteneri, tipuri de TVA și altele.\nOpțiuni de export configurabile: filtrare după interval de date, jurnale, unități operaționale și alte criterii.\nSuport pentru specificul contabil românesc: tratarea cazurilor speciale precum taxarea inversă și TVA la încasare.\nDate tranzacționale complete: exportul detaliilor complete ale tranzacțiilor, inclusiv termene de plată, numere de document, sume, monede și cursuri de schimb."
+    "text": "Interfață ContWin\ndeltatech_contwin\nModulul „ContWin Interface\" permite ca evidența contabilă să rămână în ContWin, programul de contabilitate românesc, în timp ce facturarea, achizițiile și stocurile se gestionează în Odoo. Pentru o perioadă aleasă, modulul exportă documentele postate ale unei singure companii în formatul text pe care îl importă ContWin și, la nevoie, în tabele pregătite pentru SAF-T, toate împachetate într-un singur fișier ZIP. Astfel, firmele pot folosi Odoo pentru operațiunile zilnice, păstrând compatibilitatea cu ContWin pentru contabilitate și raportare fiscală.\nAchiziții și vânzări: facturi de furnizor și de client, note de credit și recepții, cu conturi, sume în RON și în valută, curs de schimb, scadență, tip și cotă de TVA.\nPlăți și încasări: înregistrările de bancă și de casă din perioadă, câte un fișier pe jurnal, cu contul jurnalului sau al plății.\nTransferuri între depozite: pentru un depozit ales, intrările de stoc ale mărfurilor care au intrat în el și au ieșit din el către alte locații.\nTabele SAF-T: unități de măsură, produse, linii de facturi de intrare și de ieșire cu tipul și codul de taxă SAF-T și numerele de înregistrare ale partenerilor, pregătite pentru fișierul D406.\nSpecific TVA românesc: TVA la încasare se recunoaște din poziția fiscală a facturii; CNP-ul persoanelor fizice este validat înainte de export.\nFiltre: jurnale, unitate operațională (jurnalele unei filiale) și depozit.\nO singură companie o dată: se includ doar documentele companiei alese în export, iar jurnalele altei companii sunt refuzate.\nUtilizare: *Contabilitate > Contabilitate > ContWin > Export ContWin* (manageri de contabilitate). Se aleg perioada, Compania, Modul (*Contwin*, *SAFT* sau *All*) și, la nevoie, jurnalele, unitatea operațională și depozitul; apoi Apply și se descarcă ZIP-ul:\n*Contwin*: `IN_…` și `IE_…` (facturi), `INT_…` și `IET_…` (transferuri între depozite), `TOT_…` (totul într-un fișier) și un fișier pe jurnal de bancă sau de casă;\n*SAFT*: `UM_SAFT_…`, `PRODUCTS_SAFT_…`, `IN_SAFT_…`, `IE_SAFT_…` și `TOT_SAFT_…`;\n*All*: ambele seturi.\nConfigurare prealabilă: planul de conturi românesc (`l10n_ro`) instalat, parteneri cu cod fiscal (sau CNP pentru persoane fizice, din `deltatech_contact`); pentru filiale se setează Operating Unit pe jurnalele fiecărei filiale, iar alegerea ei în export selectează acele jurnale; poziția fiscală pentru TVA la încasare este găsită după nume („incasare”) și propusă în wizard, unde poate fi schimbată; pentru tabelele SAF-T se instalează localizarea SAF-T românească, care adaugă tipurile și codurile de taxă.\nDe știut:\nfișierul `IN_…` conține doar facturile de furnizor cu cont din clasa 3 (mărfuri și materiale); facturile doar de servicii se înregistrează altfel în ContWin;\nîn fișierele de bancă, orice cont în afară de bancă și partener se exportă ca `5125` (inclusiv comisionul bancar), deci un comision necesită nota 627 = 5125 în ContWin; în cele de casă se exportă drept contul de casă, deci o înregistrare de casă cu alte conturi decât casa și partenerul (comision, diferență) trebuie corectată manual în ContWin;\ncodul de TVA este A pentru cota standard (21%, 19%), B pentru cota redusă (11%, 9%) și C pentru restul; liniile de TVA (4426/4427) preiau codul taxei lor."
   },
   {
     "path": "deltatech_create_ticket_button/index.md",
@@ -2737,12 +2746,15 @@
     "version": "19.0.1.0.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_data_sheet_website",
     "local_path": "odoo-addons/deltatech/deltatech_data_sheet_website",
-    "last_ingest": "2026-06-02",
+    "last_ingest": "2026-10-31",
     "friendly_name": "Product Data Sheet Website",
-    "summary": "Acest modul extinde magazinul online (website e-commerce) pentru a pune la dispoziția clienților fișele tehnice și fișele cu date de securitate ale produselor. Pe pagina publică a unui produs, vizitatorul primește butoane dedicate prin care poate deschide și consulta documentația asociată produsului, fără a fi nevoie de asistență din partea vânzătorului. Astfel, informația tehnică relevantă pentru decizia de cumpărare devine direct accesibilă online.",
+    "summary": "Acest modul extinde magazinul online (website e-commerce) pentru a pune la dispoziția clienților fișele tehnice și fișele cu date de securitate ale produselor. Pe pagina publică a unui produs, vizitatorul primește butoane dedicate prin care poate deschide sau descărca documentația asociată produsului, fără a fi nevoie de asistență din partea vânzătorului. Butoanele apar automat, fără configurare suplimentară, doar pentru produsele care au documente atașate.",
     "features": [
-      "Adaugă pe pagina de produs din website butonul „Show Data Sheet\" (Afișare fișă tehnică), care permite vizualizarea fișei tehnice asociate șablonului de produs.",
-      "Adaugă pe pagina de produs din website butonul „Show Safety Data Sheet\" (Afișare fișă cu date de securitate), care permite vizualizarea fișei cu date de securitate asociate șablonului de produs."
+      "Adaugă pe pagina de produs din website butonul „Show Data Sheet\" (Afișare fișă tehnică), afișat doar dacă șablonul de produs are o fișă tehnică atașată.",
+      "Adaugă pe pagina de produs din website butonul „Show Safety Data Sheet\" (Afișare fișă cu date de securitate), afișat doar dacă șablonul de produs are o fișă cu date de securitate atașată.",
+      "Butoanele trimit direct la document, iar vizitatorul îl poate deschide sau descărca în browser; produsele fără documente nu afișează niciun buton.",
+      "Pregătirea datelor se face în backend: fișele se atașează șablonului de produs din Inventar > Produse > Produse (sau Vânzări > Produse), folosind câmpurile din modulul [deltatech_data_sheet](../deltatech_data_sheet/index.md).",
+      "Pe site, butoanele se văd în secțiunea de documente de sub descrierea produsului, din pagina de detaliu accesată prin `/shop`."
     ],
     "dependencies": [
       "website_sale",
@@ -2751,7 +2763,7 @@
     "connections": [
       "deltatech_data_sheet"
     ],
-    "text": "Product Data Sheet Website\ndeltatech_data_sheet_website\nAcest modul extinde magazinul online (website e-commerce) pentru a pune la dispoziția clienților fișele tehnice și fișele cu date de securitate ale produselor. Pe pagina publică a unui produs, vizitatorul primește butoane dedicate prin care poate deschide și consulta documentația asociată produsului, fără a fi nevoie de asistență din partea vânzătorului. Astfel, informația tehnică relevantă pentru decizia de cumpărare devine direct accesibilă online.\nAdaugă pe pagina de produs din website butonul „Show Data Sheet\" (Afișare fișă tehnică), care permite vizualizarea fișei tehnice asociate șablonului de produs.\nAdaugă pe pagina de produs din website butonul „Show Safety Data Sheet\" (Afișare fișă cu date de securitate), care permite vizualizarea fișei cu date de securitate asociate șablonului de produs."
+    "text": "Product Data Sheet Website\ndeltatech_data_sheet_website\nAcest modul extinde magazinul online (website e-commerce) pentru a pune la dispoziția clienților fișele tehnice și fișele cu date de securitate ale produselor. Pe pagina publică a unui produs, vizitatorul primește butoane dedicate prin care poate deschide sau descărca documentația asociată produsului, fără a fi nevoie de asistență din partea vânzătorului. Butoanele apar automat, fără configurare suplimentară, doar pentru produsele care au documente atașate.\nAdaugă pe pagina de produs din website butonul „Show Data Sheet\" (Afișare fișă tehnică), afișat doar dacă șablonul de produs are o fișă tehnică atașată.\nAdaugă pe pagina de produs din website butonul „Show Safety Data Sheet\" (Afișare fișă cu date de securitate), afișat doar dacă șablonul de produs are o fișă cu date de securitate atașată.\nButoanele trimit direct la document, iar vizitatorul îl poate deschide sau descărca în browser; produsele fără documente nu afișează niciun buton.\nPregătirea datelor se face în backend: fișele se atașează șablonului de produs din Inventar > Produse > Produse (sau Vânzări > Produse), folosind câmpurile din modulul [deltatech_data_sheet](../deltatech_data_sheet/index.md).\nPe site, butoanele se văd în secțiunea de documente de sub descrierea produsului, din pagina de detaliu accesată prin `/shop`."
   },
   {
     "path": "deltatech_dc/index.md",
@@ -4053,21 +4065,23 @@
     "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_document_template",
     "local_path": "odoo-addons/bitshop/deltatech_document_template",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Deltatech Document Template",
-    "summary": "`deltatech_document_template` oferă un motor generic și reutilizabil pentru definirea de șabloane de documente și generarea de documente finale pornind de la acestea, în Odoo 19. Modulul este agnostic față de domeniul de business și poate viza orice model prin `res_model`/`res_id`. Suportă conținut mixt (HTML manual, rapoarte QWeb încorporate sau vizualizări QWeb), un flux de lucru simplu pe documentele generate și o integrare cu meniul Print care deschide sau reutilizează un document generat unic pentru fiecare șablon și înregistrare țintă.",
+    "last_ingest": "2026-10-31",
+    "friendly_name": "Document Template Engine",
+    "summary": "`deltatech_document_template` oferă un motor generic și reutilizabil pentru definirea de șabloane de documente și generarea de documente finale pornind de la acestea, în Odoo 19. Modulul este agnostic față de domeniul de business și poate viza orice model prin `res_model`/`res_id`. Suportă conținut mixt (HTML manual, rapoarte QWeb încorporate sau vizualizări QWeb), un flux de lucru simplu pe documentele generate și o integrare cu meniul Print, care deschide sau reutilizează un document generat unic pentru fiecare șablon și înregistrare țintă. Pe Odoo Apps modulul apare sub numele „Document Template Engine” (anterior „Document Template”); numele tehnic nu s-a schimbat.",
     "features": [
       "Agnostic față de model: vizează orice model prin setarea `res_model` pe șablon și `res_id` pe documentul generat.",
       "Asamblare de conținut mixt cu randare QWeb:",
-      "Secțiuni HTML manuale (fragment QWeb cu substituenți și condiționale).",
-      "Secțiuni cu rapoarte încorporate (`ir.actions.report` existente pe modelul țintă), curățate pentru a evita învelișurile imbricate `external_layout`/`div.page`.",
-      "Secțiuni cu vizualizări QWeb încorporate prin `view_id`.",
+      "secțiuni HTML manuale (fragment QWeb cu substituenți și condiționale);",
+      "secțiuni cu rapoarte încorporate (`ir.actions.report` existente pe modelul țintă), curățate pentru a evita învelișurile imbricate `external_layout`/`div.page`; dacă raportul nu are randare HTML, secțiunea revine la `body_html`;",
+      "secțiuni cu vizualizări QWeb încorporate prin `view_id`.",
       "Întreruperi de pagină între secțiuni (`page-break-before`) atunci când `page_break_after` este setat (niciodată după ultima secțiune).",
       "Integrare cu meniul Print (acțiune server cu `binding_type = 'report'`): deschide un `document.generated` existent pentru înregistrarea și șablonul active, sau pornește unul nou dacă nu există încă.",
       "Unicitate impusă: un singur document generat per (`template_id`, `res_model`, `res_id`), printr-o constrângere Python (fără `_sql_constraints` în Odoo 19).",
-      "Flux de lucru clar cu vizibilitate a butoanelor în funcție de stare: Generate (Draft/Generated), Validate (doar Generated), Reset to Draft (Generated/Validated), Print PDF (Generated/Validated).",
+      "Flux de lucru cu vizibilitatea butoanelor în funcție de stare (Draft → Generated → Validated): Generate (Draft/Generated), Validate (doar Generated), Reset to Draft (Generated/Validated), Print PDF (Generated/Validated).",
       "Tipărirea atașează automat PDF-ul rezultat (sau HTML ca alternativă) la înregistrarea țintă `res_model`/`res_id`.",
-      "Integrare cu chatter-ul: la crearea unui document generat se postează automat o notă cu link către documentul generat pe chatter-ul înregistrării țintă."
+      "Integrare cu chatter-ul: la crearea unui document generat se postează automat o notă cu link către document pe chatter-ul înregistrării țintă; la crearea mai multor documente într-un singur apel (import, RPC cu listă de valori), fiecare își verifică accesul la propria țintă și postează pe chatter-ul propriei ținte.",
+      "Drepturi: secțiunile se randează cu drepturile utilizatorului curent (fără `sudo`), deci utilizatorul trebuie să poată citi înregistrarea țintă. Doar administratorii (`base.group_system`) pot crea sau edita șabloane și secțiuni; utilizatorii interni au doar citire pe ele și pot genera documente. Înregistrarea sau eliminarea acțiunii din meniul Print cere drept de scriere pe șablon.",
+      "Pagină web independentă pentru documentul generat (`/document/generated/<id>`), cu editare inline a `body` dacă utilizatorul are drept de scriere și documentul nu e validat."
     ],
     "dependencies": [
       "base",
@@ -4080,26 +4094,29 @@
       "res_model",
       "res_id"
     ],
-    "text": "Deltatech Document Template\ndeltatech_document_template\n`deltatech_document_template` oferă un motor generic și reutilizabil pentru definirea de șabloane de documente și generarea de documente finale pornind de la acestea, în Odoo 19. Modulul este agnostic față de domeniul de business și poate viza orice model prin `res_model`/`res_id`. Suportă conținut mixt (HTML manual, rapoarte QWeb încorporate sau vizualizări QWeb), un flux de lucru simplu pe documentele generate și o integrare cu meniul Print care deschide sau reutilizează un document generat unic pentru fiecare șablon și înregistrare țintă.\nAgnostic față de model: vizează orice model prin setarea `res_model` pe șablon și `res_id` pe documentul generat.\nAsamblare de conținut mixt cu randare QWeb:\nSecțiuni HTML manuale (fragment QWeb cu substituenți și condiționale).\nSecțiuni cu rapoarte încorporate (`ir.actions.report` existente pe modelul țintă), curățate pentru a evita învelișurile imbricate `external_layout`/`div.page`.\nSecțiuni cu vizualizări QWeb încorporate prin `view_id`.\nÎntreruperi de pagină între secțiuni (`page-break-before`) atunci când `page_break_after` este setat (niciodată după ultima secțiune).\nIntegrare cu meniul Print (acțiune server cu `binding_type = 'report'`): deschide un `document.generated` existent pentru înregistrarea și șablonul active, sau pornește unul nou dacă nu există încă.\nUnicitate impusă: un singur document generat per (`template_id`, `res_model`, `res_id`), printr-o constrângere Python (fără `_sql_constraints` în Odoo 19).\nFlux de lucru clar cu vizibilitate a butoanelor în funcție de stare: Generate (Draft/Generated), Validate (doar Generated), Reset to Draft (Generated/Validated), Print PDF (Generated/Validated).\nTipărirea atașează automat PDF-ul rezultat (sau HTML ca alternativă) la înregistrarea țintă `res_model`/`res_id`.\nIntegrare cu chatter-ul: la crearea unui document generat se postează automat o notă cu link către documentul generat pe chatter-ul înregistrării țintă."
+    "text": "Document Template Engine\ndeltatech_document_template\n`deltatech_document_template` oferă un motor generic și reutilizabil pentru definirea de șabloane de documente și generarea de documente finale pornind de la acestea, în Odoo 19. Modulul este agnostic față de domeniul de business și poate viza orice model prin `res_model`/`res_id`. Suportă conținut mixt (HTML manual, rapoarte QWeb încorporate sau vizualizări QWeb), un flux de lucru simplu pe documentele generate și o integrare cu meniul Print, care deschide sau reutilizează un document generat unic pentru fiecare șablon și înregistrare țintă. Pe Odoo Apps modulul apare sub numele „Document Template Engine” (anterior „Document Template”); numele tehnic nu s-a schimbat.\nAgnostic față de model: vizează orice model prin setarea `res_model` pe șablon și `res_id` pe documentul generat.\nAsamblare de conținut mixt cu randare QWeb:\nsecțiuni HTML manuale (fragment QWeb cu substituenți și condiționale);\nsecțiuni cu rapoarte încorporate (`ir.actions.report` existente pe modelul țintă), curățate pentru a evita învelișurile imbricate `external_layout`/`div.page`; dacă raportul nu are randare HTML, secțiunea revine la `body_html`;\nsecțiuni cu vizualizări QWeb încorporate prin `view_id`.\nÎntreruperi de pagină între secțiuni (`page-break-before`) atunci când `page_break_after` este setat (niciodată după ultima secțiune).\nIntegrare cu meniul Print (acțiune server cu `binding_type = 'report'`): deschide un `document.generated` existent pentru înregistrarea și șablonul active, sau pornește unul nou dacă nu există încă.\nUnicitate impusă: un singur document generat per (`template_id`, `res_model`, `res_id`), printr-o constrângere Python (fără `_sql_constraints` în Odoo 19).\nFlux de lucru cu vizibilitatea butoanelor în funcție de stare (Draft → Generated → Validated): Generate (Draft/Generated), Validate (doar Generated), Reset to Draft (Generated/Validated), Print PDF (Generated/Validated).\nTipărirea atașează automat PDF-ul rezultat (sau HTML ca alternativă) la înregistrarea țintă `res_model`/`res_id`.\nIntegrare cu chatter-ul: la crearea unui document generat se postează automat o notă cu link către document pe chatter-ul înregistrării țintă; la crearea mai multor documente într-un singur apel (import, RPC cu listă de valori), fiecare își verifică accesul la propria țintă și postează pe chatter-ul propriei ținte.\nDrepturi: secțiunile se randează cu drepturile utilizatorului curent (fără `sudo`), deci utilizatorul trebuie să poată citi înregistrarea țintă. Doar administratorii (`base.group_system`) pot crea sau edita șabloane și secțiuni; utilizatorii interni au doar citire pe ele și pot genera documente. Înregistrarea sau eliminarea acțiunii din meniul Print cere drept de scriere pe șablon.\nPagină web independentă pentru documentul generat (`/document/generated/<id>`), cu editare inline a `body` dacă utilizatorul are drept de scriere și documentul nu e validat."
   },
   {
     "path": "deltatech_download/index.md",
     "module": "deltatech_download",
     "version": "19.0.0.1.5",
-    "github": "[https://github.com/dhongu/deltatech/tree/19.0/deltatech_download](https://github.com/dhongu/deltatech/tree/19.0/deltatech_download)",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_download",
     "local_path": "odoo-addons/deltatech/deltatech_download",
-    "last_ingest": "2026-06-02",
+    "last_ingest": "2026-10-31",
     "friendly_name": "Download File",
-    "summary": "Modulul oferă un mecanism simplu de descărcare a fișierelor generate de Odoo. Principala sa valoare de afaceri constă în posibilitatea de a marca un raport astfel încât rezultatul acestuia să fie oferit utilizatorului direct ca descărcare de fișier, în loc să fie afișat în interfață. Astfel, utilizatorii obțin fișierele de care au nevoie într-un mod mai rapid și mai comod.",
+    "summary": "În mod normal, Odoo descarcă fiecare raport PDF ca fișier, iar utilizatorul trebuie să îl deschidă din folderul de descărcări ca să îl citească sau să îl tipărească. Cu acest modul, rapoartele PDF se deschid direct într-o filă nouă a browserului, gata de citit sau de tipărit, iar folderul de descărcări nu se mai umple de fișiere.",
     "features": [
-      "Descărcarea fișierelor generate de sistem.",
-      "Posibilitatea de a configura, la nivelul unui raport, opțiunea de descărcare directă a fișierului."
+      "Rapoarte PDF în filă nouă: facturi, oferte, avize de livrare și orice alt raport PDF se deschid în vizualizatorul PDF al browserului, în loc să fie descărcate.",
+      "Descărcare directă per raport: rapoartele care trebuie totuși salvate ca fișier se marchează individual cu opțiunea Direct Download.",
+      "Mobil și IoT neschimbate: pe telefoane și tablete, precum și pentru rapoartele tipărite printr-un IoT Box, rămâne comportamentul standard Odoo.",
+      "Fără erori la blocarea ferestrelor pop-up: dacă browserul blochează fila nouă, utilizatorul nu primește eroare.",
+      "Fără configurare: după instalare, rapoartele PDF se deschid în filă nouă. Pentru a păstra descărcarea standard la un raport, se activează modul dezvoltator, apoi Setări > Tehnic > Acțiuni > Rapoarte, se deschide raportul și se bifează Direct Download."
     ],
     "dependencies": [
       "web"
     ],
     "connections": [],
-    "text": "Download File\ndeltatech_download\nModulul oferă un mecanism simplu de descărcare a fișierelor generate de Odoo. Principala sa valoare de afaceri constă în posibilitatea de a marca un raport astfel încât rezultatul acestuia să fie oferit utilizatorului direct ca descărcare de fișier, în loc să fie afișat în interfață. Astfel, utilizatorii obțin fișierele de care au nevoie într-un mod mai rapid și mai comod.\nDescărcarea fișierelor generate de sistem.\nPosibilitatea de a configura, la nivelul unui raport, opțiunea de descărcare directă a fișierului."
+    "text": "Download File\ndeltatech_download\nÎn mod normal, Odoo descarcă fiecare raport PDF ca fișier, iar utilizatorul trebuie să îl deschidă din folderul de descărcări ca să îl citească sau să îl tipărească. Cu acest modul, rapoartele PDF se deschid direct într-o filă nouă a browserului, gata de citit sau de tipărit, iar folderul de descărcări nu se mai umple de fișiere.\nRapoarte PDF în filă nouă: facturi, oferte, avize de livrare și orice alt raport PDF se deschid în vizualizatorul PDF al browserului, în loc să fie descărcate.\nDescărcare directă per raport: rapoartele care trebuie totuși salvate ca fișier se marchează individual cu opțiunea Direct Download.\nMobil și IoT neschimbate: pe telefoane și tablete, precum și pentru rapoartele tipărite printr-un IoT Box, rămâne comportamentul standard Odoo.\nFără erori la blocarea ferestrelor pop-up: dacă browserul blochează fila nouă, utilizatorul nu primește eroare.\nFără configurare: după instalare, rapoartele PDF se deschid în filă nouă. Pentru a păstra descărcarea standard la un raport, se activează modul dezvoltator, apoi Setări > Tehnic > Acțiuni > Rapoarte, se deschide raportul și se bifează Direct Download."
   },
   {
     "path": "deltatech_dropshipping/index.md",
@@ -4187,7 +4204,7 @@
   {
     "path": "deltatech_edi/index.md",
     "module": "deltatech_edi",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edi",
     "local_path": "odoo-addons/bitshop/deltatech_edi",
     "last_ingest": "2026-09-29",
@@ -4222,19 +4239,20 @@
     "path": "deltatech_ediconnect/index.md",
     "module": "deltatech_ediconnect",
     "version": "19.0.1.1.13",
-    "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_ediconnect`",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_ediconnect",
     "local_path": "odoo-addons/bitshop/deltatech_ediconnect",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Deltatech EDIConnect",
-    "summary": "Modulul oferă un conector EDI (Electronic Data Interchange) robust și scalabil, care facilitează schimbul automat și fără cusur de date între Odoo și diverse sisteme externe sau parteneri de afaceri, prin intermediul platformei EDIConnect. Din perspectivă de business, este o componentă de infrastructură critică pentru companiile care au nevoie să automatizeze tranzacții de volum mare, precum facturi, comenzi de achiziție și detalii de livrare, eliminând introducerea manuală a datelor și oferind vizibilitate în timp real asupra schimburilor electronice direct în Odoo.",
+    "last_ingest": "2026-10-31",
+    "friendly_name": "EDIConnect Connector",
+    "summary": "Modulul oferă un conector EDI (Electronic Data Interchange) robust și scalabil, care facilitează schimbul automat de date între Odoo și diverși parteneri de afaceri sau sisteme externe, prin platforma EDIConnect. Din perspectivă de business, este o componentă de infrastructură pentru companiile care automatizează tranzacții de volum mare, precum facturi și comenzi de achiziție, eliminând introducerea manuală a datelor. Pe Odoo Apps modulul apare sub numele „EDIConnect Connector” (anterior „EDIConnect”); numele tehnic nu s-a schimbat.",
     "features": [
-      "Schimb automat de documente: încărcarea și descărcarea fără cusur a fișierelor EDI.",
+      "Schimb automat de documente: încărcarea și descărcarea fișierelor EDI; comenzile primite se importă ca comenzi de vânzare, iar facturile se trimit partenerilor care folosesc EDI Connect.",
       "Integrare flexibilă: suportă mai multe tipuri de documente printr-un API standardizat.",
-      "Autentificare securizată: folosește autentificare bazată pe token (Basic Auth + cheie API).",
-      "Gestionarea fișierelor: capabilități integrate pentru listarea, recuperarea și ștergerea fișierelor procesate de pe serverul EDI.",
-      "Comunicare B2B automatizată: automatizează schimbul de documente electronice cu partenerii de afaceri.",
-      "Integritate îmbunătățită a datelor: elimină erorile de introducere manuală prin utilizarea formatelor EDI standardizate.",
-      "Vizibilitate în timp real: oferă o imagine imediată asupra stării tuturor schimburilor de date electronice."
+      "Autentificare securizată: autentificare bazată pe token (Basic Auth + cheie API).",
+      "Gestionarea fișierelor: listarea, recuperarea și ștergerea fișierelor de pe serverul EDI.",
+      "Comunicare B2B automatizată și integritate îmbunătățită a datelor, prin formate EDI standardizate în locul introducerii manuale.",
+      "Configurare: în setările EDI din Odoo se completează URL-ul API (documentația indică de regulă `https://portal.ediconnect.ro/api/v1`), numele de utilizator, parola și cheia API furnizate de prestatorul EDIConnect; credențialele se rețin per companie.",
+      "Import comenzi pe companie: acțiunea programată importă comenzile fiecărei companii în compania credențialelor sale. Un fișier ORDER nu mai este sărit doar fiindcă există un atașament cu același nume în altă parte; contează doar cel stocat de acest import pe `sale.order` pentru compania respectivă. O comandă primită din nou sub alt nume de fișier (același număr de comandă și GLN al cumpărătorului, în aceeași companie) se leagă de comanda existentă, nu se dublează.",
+      "Partener: valoarea „EDI Connect” din câmpul `edi_system` al partenerului determină trimiterea facturii prin acest conector la exportul EDI."
     ],
     "dependencies": [
       "deltatech_edi",
@@ -4243,9 +4261,11 @@
     ],
     "connections": [
       "deltatech_edi",
-      "deltatech_edinet"
+      "deltatech_edinet",
+      "edi_system",
+      "button_export_edi"
     ],
-    "text": "Deltatech EDIConnect\ndeltatech_ediconnect\nModulul oferă un conector EDI (Electronic Data Interchange) robust și scalabil, care facilitează schimbul automat și fără cusur de date între Odoo și diverse sisteme externe sau parteneri de afaceri, prin intermediul platformei EDIConnect. Din perspectivă de business, este o componentă de infrastructură critică pentru companiile care au nevoie să automatizeze tranzacții de volum mare, precum facturi, comenzi de achiziție și detalii de livrare, eliminând introducerea manuală a datelor și oferind vizibilitate în timp real asupra schimburilor electronice direct în Odoo.\nSchimb automat de documente: încărcarea și descărcarea fără cusur a fișierelor EDI.\nIntegrare flexibilă: suportă mai multe tipuri de documente printr-un API standardizat.\nAutentificare securizată: folosește autentificare bazată pe token (Basic Auth + cheie API).\nGestionarea fișierelor: capabilități integrate pentru listarea, recuperarea și ștergerea fișierelor procesate de pe serverul EDI.\nComunicare B2B automatizată: automatizează schimbul de documente electronice cu partenerii de afaceri.\nIntegritate îmbunătățită a datelor: elimină erorile de introducere manuală prin utilizarea formatelor EDI standardizate.\nVizibilitate în timp real: oferă o imagine imediată asupra stării tuturor schimburilor de date electronice."
+    "text": "EDIConnect Connector\ndeltatech_ediconnect\nModulul oferă un conector EDI (Electronic Data Interchange) robust și scalabil, care facilitează schimbul automat de date între Odoo și diverși parteneri de afaceri sau sisteme externe, prin platforma EDIConnect. Din perspectivă de business, este o componentă de infrastructură pentru companiile care automatizează tranzacții de volum mare, precum facturi și comenzi de achiziție, eliminând introducerea manuală a datelor. Pe Odoo Apps modulul apare sub numele „EDIConnect Connector” (anterior „EDIConnect”); numele tehnic nu s-a schimbat.\nSchimb automat de documente: încărcarea și descărcarea fișierelor EDI; comenzile primite se importă ca comenzi de vânzare, iar facturile se trimit partenerilor care folosesc EDI Connect.\nIntegrare flexibilă: suportă mai multe tipuri de documente printr-un API standardizat.\nAutentificare securizată: autentificare bazată pe token (Basic Auth + cheie API).\nGestionarea fișierelor: listarea, recuperarea și ștergerea fișierelor de pe serverul EDI.\nComunicare B2B automatizată și integritate îmbunătățită a datelor, prin formate EDI standardizate în locul introducerii manuale.\nConfigurare: în setările EDI din Odoo se completează URL-ul API (documentația indică de regulă `https://portal.ediconnect.ro/api/v1`), numele de utilizator, parola și cheia API furnizate de prestatorul EDIConnect; credențialele se rețin per companie.\nImport comenzi pe companie: acțiunea programată importă comenzile fiecărei companii în compania credențialelor sale. Un fișier ORDER nu mai este sărit doar fiindcă există un atașament cu același nume în altă parte; contează doar cel stocat de acest import pe `sale.order` pentru compania respectivă. O comandă primită din nou sub alt nume de fișier (același număr de comandă și GLN al cumpărătorului, în aceeași companie) se leagă de comanda existentă, nu se dublează.\nPartener: valoarea „EDI Connect” din câmpul `edi_system` al partenerului determină trimiterea facturii prin acest conector la exportul EDI."
   },
   {
     "path": "deltatech_edinet/index.md",
@@ -4286,21 +4306,21 @@
     "version": "19.0.0.0.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_event",
     "local_path": "odoo-addons/bitshop/deltatech_event",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Deltatech Event",
-    "summary": "Acest modul îmbunătățește sistemul de management al evenimentelor din Odoo prin adăugarea de funcționalități specializate de numerotare și identificare a insignelor (badge-urilor) pentru organizatorii de evenimente. Din punct de vedere business, extensia ușurează organizarea evenimentelor și identificarea participanților prin automatizarea numerotării și etichetării insignelor, contribuind la o administrare mai ordonată și mai profesionistă a evenimentelor, inclusiv a celor de mare amploare.",
+    "last_ingest": "2026-10-31",
+    "friendly_name": "Event Badge Numbers",
+    "summary": "Acest modul îmbunătățește sistemul de management al evenimentelor din Odoo prin adăugarea unui cod scurt de bilet, tipărit mare pe insigne și pe biletele pe pagină întreagă, pentru identificarea rapidă a participanților. Din punct de vedere business, organizatorii pot recunoaște și verifica ușor participanții pe baza codului afișat, în loc să scaneze sau să citească tot codul de bare, ceea ce ajută la un eveniment mai ordonat, inclusiv la cele de mare amploare. Pe Odoo Apps modulul apare sub numele „Event Badge Numbers” (anterior „Event Insignia Numbering”).",
     "features": [
-      "Numerotare automată a insignelor: generează și atribuie automat numere unice insignelor și badge-urilor de eveniment.",
-      "Urmărire îmbunătățită a participanților: identificarea și urmărirea participanților pe baza numerelor de insignă atribuite.",
-      "Profesionalism crescut: menținerea unui mediu de eveniment structurat și ordonat prin etichetare consistentă a insignelor.",
-      "Administrare simplificată a evenimentelor: fluidizarea sarcinilor administrative asociate generării insignelor și înregistrării participanților.",
-      "Management scalabil al evenimentelor: gestionarea facilă a evenimentelor de mare amploare, cu număr mare de participanți, prin automatizarea sarcinilor de identificare de rutină."
+      "Cod de bilet scurt pe insignă: fiecare înregistrare primește un cod de bilet, preluat din ultimele caractere ale codului de bare al înregistrării, și tipărit cu litere mari, cu spații între caractere, pe insigna participantului și pe biletul pe pagină întreagă.",
+      "Complexitate configurabilă pe eveniment: câmpul Ticket Code Complexity din formularul evenimentului (lângă formatul insignei) stabilește lungimea codului: *Low* (2 caractere), *Medium* (4), *High* (6) sau *Very High* (9). Dacă nu este ales nimic, se folosesc 2 caractere.",
+      "Coduri de bare cu caractere distincte: codurile de bare noi generate pentru înregistrări au ultimele 9 caractere toate diferite, astfel încât codul scurt să fie mai ușor de citit.",
+      "Identificare mai ușoară a participanților: codul de bilet apare și în formularul înregistrării, sub codul de bare.",
+      "Administrare simplificată: nu necesită pași suplimentari la înregistrare; codul se calculează automat."
     ],
     "dependencies": [
       "event"
     ],
     "connections": [],
-    "text": "Deltatech Event\ndeltatech_event\nAcest modul îmbunătățește sistemul de management al evenimentelor din Odoo prin adăugarea de funcționalități specializate de numerotare și identificare a insignelor (badge-urilor) pentru organizatorii de evenimente. Din punct de vedere business, extensia ușurează organizarea evenimentelor și identificarea participanților prin automatizarea numerotării și etichetării insignelor, contribuind la o administrare mai ordonată și mai profesionistă a evenimentelor, inclusiv a celor de mare amploare.\nNumerotare automată a insignelor: generează și atribuie automat numere unice insignelor și badge-urilor de eveniment.\nUrmărire îmbunătățită a participanților: identificarea și urmărirea participanților pe baza numerelor de insignă atribuite.\nProfesionalism crescut: menținerea unui mediu de eveniment structurat și ordonat prin etichetare consistentă a insignelor.\nAdministrare simplificată a evenimentelor: fluidizarea sarcinilor administrative asociate generării insignelor și înregistrării participanților.\nManagement scalabil al evenimentelor: gestionarea facilă a evenimentelor de mare amploare, cu număr mare de participanți, prin automatizarea sarcinilor de identificare de rutină."
+    "text": "Event Badge Numbers\ndeltatech_event\nAcest modul îmbunătățește sistemul de management al evenimentelor din Odoo prin adăugarea unui cod scurt de bilet, tipărit mare pe insigne și pe biletele pe pagină întreagă, pentru identificarea rapidă a participanților. Din punct de vedere business, organizatorii pot recunoaște și verifica ușor participanții pe baza codului afișat, în loc să scaneze sau să citească tot codul de bare, ceea ce ajută la un eveniment mai ordonat, inclusiv la cele de mare amploare. Pe Odoo Apps modulul apare sub numele „Event Badge Numbers” (anterior „Event Insignia Numbering”).\nCod de bilet scurt pe insignă: fiecare înregistrare primește un cod de bilet, preluat din ultimele caractere ale codului de bare al înregistrării, și tipărit cu litere mari, cu spații între caractere, pe insigna participantului și pe biletul pe pagină întreagă.\nComplexitate configurabilă pe eveniment: câmpul Ticket Code Complexity din formularul evenimentului (lângă formatul insignei) stabilește lungimea codului: *Low* (2 caractere), *Medium* (4), *High* (6) sau *Very High* (9). Dacă nu este ales nimic, se folosesc 2 caractere.\nCoduri de bare cu caractere distincte: codurile de bare noi generate pentru înregistrări au ultimele 9 caractere toate diferite, astfel încât codul scurt să fie mai ușor de citit.\nIdentificare mai ușoară a participanților: codul de bilet apare și în formularul înregistrării, sub codul de bare.\nAdministrare simplificată: nu necesită pași suplimentari la înregistrare; codul se calculează automat."
   },
   {
     "path": "deltatech_expected_receipt/index.md",
@@ -4588,17 +4608,24 @@
     "path": "deltatech_followup/index.md",
     "module": "deltatech_followup",
     "version": "19.0.0.1.4",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_followup`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_followup",
     "local_path": "odoo-addons/deltatech/deltatech_followup",
-    "last_ingest": "2026-06-02",
+    "last_ingest": "2026-10-31",
     "friendly_name": "Invoice Followup",
-    "summary": "Modulul oferă un sistem simplu de urmărire a facturilor neîncasate (followup), prin trimiterea automată de e-mailuri către clienți. Fiecare element de followup definește când și cum se trimite notificarea, raportându-se la data facturii sau la data scadenței, cu un decalaj configurabil în zile (înainte sau după). Trimiterea se face programat, printr-o sarcină cron, fie pentru toate elementele de followup, fie doar pentru cele selectate prin cod. Valoarea de afaceri constă în reducerea efortului manual de relaționare cu clienții pentru încasarea creanțelor și în îmbunătățirea fluxului de numerar.",
+    "summary": "Modulul trimite clienților mesaje e-mail automate de reamintire pentru facturile neîncasate: cu câteva zile înainte de scadență, chiar în ziua scadenței sau după aceasta. Pentru fiecare pas de reamintire (un *followup*) se aleg data de referință, decalajul în zile și șablonul de e-mail, iar mesajul poate lista facturile vizate împreună cu totalurile clientului. Valoarea de afaceri constă în reducerea efortului manual de relaționare cu clienții pentru încasarea creanțelor și în îmbunătățirea fluxului de numerar.",
     "features": [
-      "Configurarea elementelor de followup cu: nume, cod (utilizabil în cron pentru a rula doar anumite followup-uri), stare activă, câmpul de dată de referință (data facturii sau data scadenței) și numărul relativ de zile față de acea dată (ex. `-5` = cu 5 zile înainte, `3` = la 3 zile după).",
-      "Personalizarea mesajului trimis: subiectul e-mailului, adresa expeditorului și corpul mesajului (cu blocuri preconfigurate disponibile prin ajutorul câmpului).",
-      "Marcarea partenerilor care vor primi followup-uri, printr-o opțiune dedicată la nivel de partener.",
-      "Programarea trimiterii prin cron, folosind modelul `followup.send.wizard`: `model.run_followup()` pentru toate elementele sau `model.run_followup([\"12D\", \"20D\"])` pentru cele selectate prin cod.",
-      "Configurarea unui partener de test (override), prin parametrul de sistem `followup.override_partner_id`, pentru a redirecționa e-mailurile în scop de testare."
+      "Pași de reamintire configurabili: data folosită (data facturii sau data scadenței), decalajul în zile (`-2` = cu două zile înainte, `3` = la trei zile după) și comparatorul: Equal procesează doar ziua exactă (o zi în care acțiunea programată nu rulează se pierde), iar Greater or equal procesează toate facturile de la acea zi încolo, deci reamintirea se repetă zilnic.",
+      "Doar facturi deschise: opțiunea Only open invoices (implicit activă); notele de credit sunt opționale (Parse refund invoices), iar totalurile se pot afișa în moneda companiei sau în moneda clientului (Use customer currency).",
+      "Șablon de e-mail propriu: se creează pe modelul Contact și se alege în followup (câmp obligatoriu). Facturile se inserează în locul marcajului `[invoices]`, câte un rând per factură (număr, date, termen de plată, sume), definit în câmpul Invoices placeholder cu `$number`, `$payment_term_id`, `$date_invoice`, `$date_due`, `$amount_untaxed`, `$amount_tax`, `$amount_total`, `$amount_due`, `$currency`. În corpul șablonului se pot folosi `${object.name}`, `$total_debit`, `$total_all_debit`, `$total_due_debit` și `$currency`.",
+      "Doar clienții marcați: primesc reamintiri partenerii cu opțiunea Send followup e-mails bifată (sub câmpul Tags); bifa trebuie pusă pe contactul care apare pe factură, nu pe compania-părinte.",
+      "Marjă de sumă: nu se trimite nimic dacă facturile din e-mail însumează marja configurată sau mai puțin (ori o sumă negativă, când notele de credit depășesc facturile), iar pe client se postează o notă cu motivul.",
+      "Sume și date în limba clientului: notele de credit apar cu semn negativ și se scad din total.",
+      "Erorile rămân locale: dacă un client nu poate fi procesat (de exemplu un marcaj necunoscut), eroarea se loghează și se notează pe acel client, iar ceilalți clienți sunt procesați în continuare.",
+      "Rulare dintr-o acțiune programată: pe modelul `followup.send.wizard`, cu `model.run_followup()` pentru toate followup-urile sau `model.run_followup([\"f-1\", \"AZI\"])` pentru cele cu codurile date, astfel încât pași diferiți să ruleze la momente diferite. Utilizatorul acțiunii programate are nevoie de grupul Followup manager.",
+      "Configurare: followup-urile se definesc în Facturare > Configurare > Followups (drepturi de manager contabilitate și grupul Followup manager).",
+      "E-mailurile trimise apar în Setări > Tehnic > Email > Emails până la expediere; cu Auto Delete activ pe șablon se șterg după trimitere.",
+      "Testare: parametrul de sistem `followup.override_partner_id` (id de contact) redirecționează e-mailurile către acel contact; se șterge înainte de intrarea în producție.",
+      "O reamintire nu înlocuiește o notificare formală de neplată. Fluxul pas cu pas este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
       "account"
@@ -4606,7 +4633,7 @@
     "connections": [
       "account"
     ],
-    "text": "Invoice Followup\ndeltatech_followup\nModulul oferă un sistem simplu de urmărire a facturilor neîncasate (followup), prin trimiterea automată de e-mailuri către clienți. Fiecare element de followup definește când și cum se trimite notificarea, raportându-se la data facturii sau la data scadenței, cu un decalaj configurabil în zile (înainte sau după). Trimiterea se face programat, printr-o sarcină cron, fie pentru toate elementele de followup, fie doar pentru cele selectate prin cod. Valoarea de afaceri constă în reducerea efortului manual de relaționare cu clienții pentru încasarea creanțelor și în îmbunătățirea fluxului de numerar.\nConfigurarea elementelor de followup cu: nume, cod (utilizabil în cron pentru a rula doar anumite followup-uri), stare activă, câmpul de dată de referință (data facturii sau data scadenței) și numărul relativ de zile față de acea dată (ex. `-5` = cu 5 zile înainte, `3` = la 3 zile după).\nPersonalizarea mesajului trimis: subiectul e-mailului, adresa expeditorului și corpul mesajului (cu blocuri preconfigurate disponibile prin ajutorul câmpului).\nMarcarea partenerilor care vor primi followup-uri, printr-o opțiune dedicată la nivel de partener.\nProgramarea trimiterii prin cron, folosind modelul `followup.send.wizard`: `model.run_followup()` pentru toate elementele sau `model.run_followup([\"12D\", \"20D\"])` pentru cele selectate prin cod.\nConfigurarea unui partener de test (override), prin parametrul de sistem `followup.override_partner_id`, pentru a redirecționa e-mailurile în scop de testare."
+    "text": "Invoice Followup\ndeltatech_followup\nModulul trimite clienților mesaje e-mail automate de reamintire pentru facturile neîncasate: cu câteva zile înainte de scadență, chiar în ziua scadenței sau după aceasta. Pentru fiecare pas de reamintire (un *followup*) se aleg data de referință, decalajul în zile și șablonul de e-mail, iar mesajul poate lista facturile vizate împreună cu totalurile clientului. Valoarea de afaceri constă în reducerea efortului manual de relaționare cu clienții pentru încasarea creanțelor și în îmbunătățirea fluxului de numerar.\nPași de reamintire configurabili: data folosită (data facturii sau data scadenței), decalajul în zile (`-2` = cu două zile înainte, `3` = la trei zile după) și comparatorul: Equal procesează doar ziua exactă (o zi în care acțiunea programată nu rulează se pierde), iar Greater or equal procesează toate facturile de la acea zi încolo, deci reamintirea se repetă zilnic.\nDoar facturi deschise: opțiunea Only open invoices (implicit activă); notele de credit sunt opționale (Parse refund invoices), iar totalurile se pot afișa în moneda companiei sau în moneda clientului (Use customer currency).\nȘablon de e-mail propriu: se creează pe modelul Contact și se alege în followup (câmp obligatoriu). Facturile se inserează în locul marcajului `[invoices]`, câte un rând per factură (număr, date, termen de plată, sume), definit în câmpul Invoices placeholder cu `$number`, `$payment_term_id`, `$date_invoice`, `$date_due`, `$amount_untaxed`, `$amount_tax`, `$amount_total`, `$amount_due`, `$currency`. În corpul șablonului se pot folosi `${object.name}`, `$total_debit`, `$total_all_debit`, `$total_due_debit` și `$currency`.\nDoar clienții marcați: primesc reamintiri partenerii cu opțiunea Send followup e-mails bifată (sub câmpul Tags); bifa trebuie pusă pe contactul care apare pe factură, nu pe compania-părinte.\nMarjă de sumă: nu se trimite nimic dacă facturile din e-mail însumează marja configurată sau mai puțin (ori o sumă negativă, când notele de credit depășesc facturile), iar pe client se postează o notă cu motivul.\nSume și date în limba clientului: notele de credit apar cu semn negativ și se scad din total.\nErorile rămân locale: dacă un client nu poate fi procesat (de exemplu un marcaj necunoscut), eroarea se loghează și se notează pe acel client, iar ceilalți clienți sunt procesați în continuare.\nRulare dintr-o acțiune programată: pe modelul `followup.send.wizard`, cu `model.run_followup()` pentru toate followup-urile sau `model.run_followup([\"f-1\", \"AZI\"])` pentru cele cu codurile date, astfel încât pași diferiți să ruleze la momente diferite. Utilizatorul acțiunii programate are nevoie de grupul Followup manager.\nConfigurare: followup-urile se definesc în Facturare > Configurare > Followups (drepturi de manager contabilitate și grupul Followup manager).\nE-mailurile trimise apar în Setări > Tehnic > Email > Emails până la expediere; cu Auto Delete activ pe șablon se șterg după trimitere.\nTestare: parametrul de sistem `followup.override_partner_id` (id de contact) redirecționează e-mailurile către acel contact; se șterge înainte de intrarea în producție.\nO reamintire nu înlocuiește o notificare formală de neplată. Fluxul pas cu pas este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_generic_partner_restriction/index.md",
@@ -5347,19 +5374,20 @@
     "version": "19.0.1.0.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_list_view",
     "local_path": "odoo-addons/deltatech/deltatech_list_view",
-    "last_ingest": "2026-06-02",
+    "last_ingest": "2026-10-31",
     "friendly_name": "List View Select Text",
-    "summary": "Acest modul îmbunătățește experiența de utilizare a vizualizărilor de tip listă din Odoo. În mod implicit, un simplu clic pe un rând dintr-o listă deschide înregistrarea respectivă, ceea ce face dificilă selectarea și copierea textului dintr-o celulă. Modulul rezolvă acest neajuns: atunci când utilizatorul selectează text într-un rând, deschiderea înregistrării este blocată, permițând astfel copierea comodă a informațiilor direct din listă.",
+    "summary": "Acest modul îmbunătățește experiența de utilizare a vizualizărilor de tip listă din Odoo. În mod implicit, un simplu clic pe un rând dintr-o listă deschide înregistrarea respectivă, ceea ce face dificilă selectarea și copierea textului dintr-o celulă. Modulul rezolvă acest neajuns: atunci când utilizatorul selectează text într-un rând, deschiderea înregistrării este blocată, permițând copierea comodă a informațiilor direct din listă. În plus, corectează o eroare la ștergerea repetată a unei linii nesalvate dintr-un câmp one2many.",
     "features": [
       "Blochează deschiderea unei înregistrări din listă atunci când utilizatorul selectează (evidențiază) text într-un rând.",
       "Permite copierea facilă a textului din celulele listei, fără a deschide accidental înregistrarea.",
+      "Ștergerea de două ori a unei linii one2many nesalvate (de exemplu, Enter apăsat de două ori pe pictograma de ștergere) nu mai blochează salvarea formularului cu eroarea `virtual_N`.",
       "Include o ajustare de stil pentru modul de afișare întunecat (dark mode)."
     ],
     "dependencies": [
       "web"
     ],
     "connections": [],
-    "text": "List View Select Text\ndeltatech_list_view\nAcest modul îmbunătățește experiența de utilizare a vizualizărilor de tip listă din Odoo. În mod implicit, un simplu clic pe un rând dintr-o listă deschide înregistrarea respectivă, ceea ce face dificilă selectarea și copierea textului dintr-o celulă. Modulul rezolvă acest neajuns: atunci când utilizatorul selectează text într-un rând, deschiderea înregistrării este blocată, permițând astfel copierea comodă a informațiilor direct din listă.\nBlochează deschiderea unei înregistrări din listă atunci când utilizatorul selectează (evidențiază) text într-un rând.\nPermite copierea facilă a textului din celulele listei, fără a deschide accidental înregistrarea.\nInclude o ajustare de stil pentru modul de afișare întunecat (dark mode)."
+    "text": "List View Select Text\ndeltatech_list_view\nAcest modul îmbunătățește experiența de utilizare a vizualizărilor de tip listă din Odoo. În mod implicit, un simplu clic pe un rând dintr-o listă deschide înregistrarea respectivă, ceea ce face dificilă selectarea și copierea textului dintr-o celulă. Modulul rezolvă acest neajuns: atunci când utilizatorul selectează text într-un rând, deschiderea înregistrării este blocată, permițând copierea comodă a informațiilor direct din listă. În plus, corectează o eroare la ștergerea repetată a unei linii nesalvate dintr-un câmp one2many.\nBlochează deschiderea unei înregistrări din listă atunci când utilizatorul selectează (evidențiază) text într-un rând.\nPermite copierea facilă a textului din celulele listei, fără a deschide accidental înregistrarea.\nȘtergerea de două ori a unei linii one2many nesalvate (de exemplu, Enter apăsat de două ori pe pictograma de ștergere) nu mai blochează salvarea formularului cu eroarea `virtual_N`.\nInclude o ajustare de stil pentru modul de afișare întunecat (dark mode)."
   },
   {
     "path": "deltatech_logistic_docs/index.md",
@@ -8580,7 +8608,7 @@
   {
     "path": "deltatech_product_category/index.md",
     "module": "deltatech_product_category",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_category",
     "local_path": "odoo-addons/deltatech/deltatech_product_category",
     "last_ingest": "2026-10-22",
@@ -16684,7 +16712,7 @@
   {
     "path": "l10n_ro_efactura_enhancement/index.md",
     "module": "l10n_ro_efactura_enhancement",
-    "version": "19.0.0.5.10",
+    "version": "19.0.0.5.11",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_efactura_enhancement",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_efactura_enhancement",
     "last_ingest": "2026-09-29",
