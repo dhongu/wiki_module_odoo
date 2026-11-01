@@ -4204,7 +4204,7 @@
   {
     "path": "deltatech_edi/index.md",
     "module": "deltatech_edi",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edi",
     "local_path": "odoo-addons/bitshop/deltatech_edi",
     "last_ingest": "2026-09-29",
@@ -6934,7 +6934,7 @@
     "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_nap_website",
     "local_path": "odoo-addons/bitshop/deltatech_nap_website",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-11-01",
     "friendly_name": "NAP Public Category",
     "summary": "Acest modul extinde raportul NAP (Necesar Achiziții Produse) adăugând categoria publică de produse, oferind o imagine mai detaliată asupra cerințelor de aprovizionare. Din perspectivă de business, extensia ajută departamentele de achiziții să își organizeze și să își prioritizeze mai bine activitatea pe categorii de produse, pentru o eficiență operațională mai bună.",
     "features": [
@@ -7324,10 +7324,10 @@
     "path": "deltatech_partner_rating_sale/index.md",
     "module": "deltatech_partner_rating_sale",
     "version": "19.0.0.0.4",
-    "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_rating_sale`",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_rating_sale",
     "local_path": "odoo-addons/bitshop/deltatech_partner_rating_sale",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Rating partener în comenzi de vânzare și facturi",
+    "last_ingest": "2026-11-01",
+    "friendly_name": "Partner Rating – Sales",
     "summary": "Acest modul afișează un indicator vizual al ratingului partenerului direct în fluxul de vânzări și facturare, ajutând echipele de vânzări să ia decizii informate pe baza istoricului și a gradului de încredere al clientului. Din perspectivă de business, accesul imediat la ratingul clientului în procesul de ofertare și facturare reduce riscul financiar și îmbunătățește calitatea interacțiunilor comerciale.",
     "features": [
       "Decizii de vânzare mai bune: vizualizarea instantanee a ratingului partenerului pe oferte, comenzi de vânzare și facturi, pentru negociere și evaluare a riscului.",
@@ -7345,7 +7345,7 @@
     "connections": [
       "deltatech_partner_rating"
     ],
-    "text": "Rating partener în comenzi de vânzare și facturi\ndeltatech_partner_rating_sale\nAcest modul afișează un indicator vizual al ratingului partenerului direct în fluxul de vânzări și facturare, ajutând echipele de vânzări să ia decizii informate pe baza istoricului și a gradului de încredere al clientului. Din perspectivă de business, accesul imediat la ratingul clientului în procesul de ofertare și facturare reduce riscul financiar și îmbunătățește calitatea interacțiunilor comerciale.\nDecizii de vânzare mai bune: vizualizarea instantanee a ratingului partenerului pe oferte, comenzi de vânzare și facturi, pentru negociere și evaluare a riscului.\nManagement îmbunătățit al creditului: folosirea ratingului pentru identificarea clienților cu risc ridicat înainte de finalizarea comenzilor mari sau a termenelor de plată.\nLivrare informată: vizibilitate asupra ratingului clientului pe livrări (pickings), pentru ca echipele de depozit și logistică să prioritizeze sau să ajusteze procesarea.\nStrategii comerciale țintite: adaptarea tacticilor de vânzare și a condițiilor în funcție de ratingul și performanța fiecărui partener.\nVizibilitate centralizată a partenerilor: o imagine consecventă și accesibilă asupra fiabilității clienților în toate funcțiile integrate de vânzări și contabilitate."
+    "text": "Partner Rating – Sales\ndeltatech_partner_rating_sale\nAcest modul afișează un indicator vizual al ratingului partenerului direct în fluxul de vânzări și facturare, ajutând echipele de vânzări să ia decizii informate pe baza istoricului și a gradului de încredere al clientului. Din perspectivă de business, accesul imediat la ratingul clientului în procesul de ofertare și facturare reduce riscul financiar și îmbunătățește calitatea interacțiunilor comerciale.\nDecizii de vânzare mai bune: vizualizarea instantanee a ratingului partenerului pe oferte, comenzi de vânzare și facturi, pentru negociere și evaluare a riscului.\nManagement îmbunătățit al creditului: folosirea ratingului pentru identificarea clienților cu risc ridicat înainte de finalizarea comenzilor mari sau a termenelor de plată.\nLivrare informată: vizibilitate asupra ratingului clientului pe livrări (pickings), pentru ca echipele de depozit și logistică să prioritizeze sau să ajusteze procesarea.\nStrategii comerciale țintite: adaptarea tacticilor de vânzare și a condițiilor în funcție de ratingul și performanța fiecărui partener.\nVizibilitate centralizată a partenerilor: o imagine consecventă și accesibilă asupra fiabilității clienților în toate funcțiile integrate de vânzări și contabilitate."
   },
   {
     "path": "deltatech_partner_rating_service/index.md",
@@ -7353,8 +7353,8 @@
     "version": "19.0.0.0.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_rating_service",
     "local_path": "odoo-addons/bitshop/deltatech_partner_rating_service",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Rating partener în service",
+    "last_ingest": "2026-11-01",
+    "friendly_name": "Partner rating in service",
     "summary": "Acest modul extinde vizibilitatea rating-ului de partener în modulele Odoo de gestiune a service-ului și a echipamentelor, permițând echipelor de service să vadă scorul de fiabilitate al partenerilor pe care îi deservesc. Din punct de vedere business, această transparență permite departamentelor de service să își adapteze activitățile de suport și mentenanță în funcție de poziția generală și istoricul clientului cu compania.",
     "features": [
       "Livrare de servicii informată: vizualizarea rating-ului partenerului direct pe fișele de echipament, pe contractele de service și pe informațiile de garanție.",
@@ -7370,9 +7370,11 @@
       "deltatech_service_maintenance"
     ],
     "connections": [
-      "deltatech_partner_rating"
+      "deltatech_partner_rating",
+      "deltatech_service_agreement",
+      "deltatech_service_equipment_base"
     ],
-    "text": "Rating partener în service\ndeltatech_partner_rating_service\nAcest modul extinde vizibilitatea rating-ului de partener în modulele Odoo de gestiune a service-ului și a echipamentelor, permițând echipelor de service să vadă scorul de fiabilitate al partenerilor pe care îi deservesc. Din punct de vedere business, această transparență permite departamentelor de service să își adapteze activitățile de suport și mentenanță în funcție de poziția generală și istoricul clientului cu compania.\nLivrare de servicii informată: vizualizarea rating-ului partenerului direct pe fișele de echipament, pe contractele de service și pe informațiile de garanție.\nFluxuri de suport prioritizate: utilizarea datelor de fiabilitate a partenerului pentru a prioritiza sarcinile de service sau pentru a ajusta nivelul de servicii așteptat.\nManagement proactiv al garanției: decizii mai bune privind cererile de garanție și mentenanța, pe baza istoricului clientului.\nInteracțiune de service îmbunătățită: personalul tehnic poate avea o conversație mai bine informată cu partenerii, cunoscând rating-ul lor general.\nStrategie de service integrată: alinierea activităților de service și mentenanță cu politicile mai largi de relație cu partenerii și de management al riscului."
+    "text": "Partner rating in service\ndeltatech_partner_rating_service\nAcest modul extinde vizibilitatea rating-ului de partener în modulele Odoo de gestiune a service-ului și a echipamentelor, permițând echipelor de service să vadă scorul de fiabilitate al partenerilor pe care îi deservesc. Din punct de vedere business, această transparență permite departamentelor de service să își adapteze activitățile de suport și mentenanță în funcție de poziția generală și istoricul clientului cu compania.\nLivrare de servicii informată: vizualizarea rating-ului partenerului direct pe fișele de echipament, pe contractele de service și pe informațiile de garanție.\nFluxuri de suport prioritizate: utilizarea datelor de fiabilitate a partenerului pentru a prioritiza sarcinile de service sau pentru a ajusta nivelul de servicii așteptat.\nManagement proactiv al garanției: decizii mai bune privind cererile de garanție și mentenanța, pe baza istoricului clientului.\nInteracțiune de service îmbunătățită: personalul tehnic poate avea o conversație mai bine informată cu partenerii, cunoscând rating-ul lor general.\nStrategie de service integrată: alinierea activităților de service și mentenanță cu politicile mai largi de relație cu partenerii și de management al riscului."
   },
   {
     "path": "deltatech_payment/index.md",
@@ -7465,18 +7467,19 @@
     "version": "19.0.0.0.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_card_dummy",
     "local_path": "odoo-addons/bitshop/deltatech_payment_card_dummy",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Payment Card Dummy",
-    "summary": "Modulul Payment Card Dummy oferă un furnizor de plată cu cardul simulat (fictiv) pentru Odoo. Este destinat în principal testării fluxurilor de plată sau scenariilor în care plățile cu cardul sunt procesate printr-un terminal extern și trebuie înregistrate rapid în Odoo, fără o integrare bancară directă. Tranzacțiile sunt marcate instant ca finalizate, ceea ce permite verificarea rapidă a tranzițiilor de stare a comenzilor și facturilor, precum și a acțiunilor declanșate după plată (livrări automate, notificări pe e-mail), fără bani reali și fără configurări complexe de sandbox.",
+    "last_ingest": "2026-11-01",
+    "friendly_name": "Card Dummy Payment",
+    "summary": "Modulul Card Dummy Payment oferă un furnizor de plată cu cardul simulat (fictiv) pentru Odoo. Este destinat în principal testării fluxurilor de plată sau scenariilor în care plățile cu cardul sunt procesate printr-un terminal extern și trebuie înregistrate rapid în Odoo, fără o integrare bancară directă. Tranzacțiile sunt marcate instant ca finalizate, ceea ce permite verificarea rapidă a tranzițiilor de stare a comenzilor și facturilor, precum și a acțiunilor declanșate după plată (livrări automate, notificări pe e-mail), fără bani reali și fără configurări complexe de sandbox.",
     "features": [
       "Simulează plăți cu cardul în timpul procesului de checkout din eCommerce.",
       "Înregistrează plăți cu cardul pentru facturile din portal, fără a necesita date reale de card.",
       "Permite testarea fluxului complet comandă-spre-plată într-un mediu de dezvoltare sau staging.",
       "Poate fi folosit ca substitut (placeholder) pentru tranzacții manuale cu cardul gestionate prin terminale POS fizice.",
-      "Flux de plată simulat care imită experiența unui furnizor de plată real.",
+      "Flux de plată simulat care imită experiența unui furnizor de plată real: clientul confirmă plata, se creează o tranzacție simulată marcată imediat ca reușită, iar comanda sau factura își actualizează automat starea.",
       "Suport pentru capturarea manuală (manual capture) a tranzacțiilor autorizate.",
       "Configurare minimă: nu necesită chei API sau credențiale externe — funcționează imediat.",
-      "Integrare completă cu modulele standard Odoo `payment` și `website_sale`."
+      "Integrare completă cu modulele standard Odoo `payment` și `website_sale`.",
+      "Configurare: din Contabilitate (sau Facturare) > Configurare > Furnizori de plată se deschide furnizorul „Card Dummy”, se setează Starea pe Mod test (dezvoltare) sau Activat (producție), se alege jurnalul de plată în care se înregistrează tranzacțiile și, dacă e nevoie, se publică furnizorul pe site."
     ],
     "dependencies": [
       "payment",
@@ -7484,9 +7487,9 @@
       "payment_custom"
     ],
     "connections": [
-      "deltatech_payment"
+      "website_sale"
     ],
-    "text": "Payment Card Dummy\ndeltatech_payment_card_dummy\nModulul Payment Card Dummy oferă un furnizor de plată cu cardul simulat (fictiv) pentru Odoo. Este destinat în principal testării fluxurilor de plată sau scenariilor în care plățile cu cardul sunt procesate printr-un terminal extern și trebuie înregistrate rapid în Odoo, fără o integrare bancară directă. Tranzacțiile sunt marcate instant ca finalizate, ceea ce permite verificarea rapidă a tranzițiilor de stare a comenzilor și facturilor, precum și a acțiunilor declanșate după plată (livrări automate, notificări pe e-mail), fără bani reali și fără configurări complexe de sandbox.\nSimulează plăți cu cardul în timpul procesului de checkout din eCommerce.\nÎnregistrează plăți cu cardul pentru facturile din portal, fără a necesita date reale de card.\nPermite testarea fluxului complet comandă-spre-plată într-un mediu de dezvoltare sau staging.\nPoate fi folosit ca substitut (placeholder) pentru tranzacții manuale cu cardul gestionate prin terminale POS fizice.\nFlux de plată simulat care imită experiența unui furnizor de plată real.\nSuport pentru capturarea manuală (manual capture) a tranzacțiilor autorizate.\nConfigurare minimă: nu necesită chei API sau credențiale externe — funcționează imediat.\nIntegrare completă cu modulele standard Odoo `payment` și `website_sale`."
+    "text": "Card Dummy Payment\ndeltatech_payment_card_dummy\nModulul Card Dummy Payment oferă un furnizor de plată cu cardul simulat (fictiv) pentru Odoo. Este destinat în principal testării fluxurilor de plată sau scenariilor în care plățile cu cardul sunt procesate printr-un terminal extern și trebuie înregistrate rapid în Odoo, fără o integrare bancară directă. Tranzacțiile sunt marcate instant ca finalizate, ceea ce permite verificarea rapidă a tranzițiilor de stare a comenzilor și facturilor, precum și a acțiunilor declanșate după plată (livrări automate, notificări pe e-mail), fără bani reali și fără configurări complexe de sandbox.\nSimulează plăți cu cardul în timpul procesului de checkout din eCommerce.\nÎnregistrează plăți cu cardul pentru facturile din portal, fără a necesita date reale de card.\nPermite testarea fluxului complet comandă-spre-plată într-un mediu de dezvoltare sau staging.\nPoate fi folosit ca substitut (placeholder) pentru tranzacții manuale cu cardul gestionate prin terminale POS fizice.\nFlux de plată simulat care imită experiența unui furnizor de plată real: clientul confirmă plata, se creează o tranzacție simulată marcată imediat ca reușită, iar comanda sau factura își actualizează automat starea.\nSuport pentru capturarea manuală (manual capture) a tranzacțiilor autorizate.\nConfigurare minimă: nu necesită chei API sau credențiale externe — funcționează imediat.\nIntegrare completă cu modulele standard Odoo `payment` și `website_sale`.\nConfigurare: din Contabilitate (sau Facturare) > Configurare > Furnizori de plată se deschide furnizorul „Card Dummy”, se setează Starea pe Mod test (dezvoltare) sau Activat (producție), se alege jurnalul de plată în care se înregistrează tranzacțiile și, dacă e nevoie, se publică furnizorul pe site."
   },
   {
     "path": "deltatech_payment_default/index.md",
@@ -7821,17 +7824,18 @@
     "path": "deltatech_payment_term/index.md",
     "module": "deltatech_payment_term",
     "version": "19.0.2.0.8",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_payment_term`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_payment_term",
     "local_path": "odoo-addons/deltatech/deltatech_payment_term",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Asistent Generare Rate Termen de Plată",
-    "summary": "Modulul simplifică crearea termenilor de plată în rate, eliminând introducerea manuală a fiecărei linii de scadență. Printr-un asistent dedicat, utilizatorul stabilește numărul de rate, eventualul avans și ziua de scadență din lună, iar modulul generează automat liniile termenului de plată cu sumele distribuite proporțional. În plus, facturile, comenzile de vânzare și partenerii primesc indicatori și butoane care evidențiază rapid documentele plătibile în rate.",
+    "last_ingest": "2026-11-01",
+    "friendly_name": "Payment Term Rate Wizard",
+    "summary": "Modulul ajută echipele de finanțe și vânzări să genereze rapid termeni de plată în rate, eliminând crearea manuală a fiecărei linii de scadență. Printr-un asistent dedicat, utilizatorul completează numele, tipul, avansul, numărul de rate și ziua din lună, iar modulul generează automat termenul complet, cu avansul, ratele și scadențele corecte. În plus, facturile, comenzile de vânzare și partenerii primesc indicatori și butoane care evidențiază rapid documentele plătibile în rate.",
     "features": [
-      "Generarea automată a ratelor (liniilor) unui termen de plată printr-un asistent.",
-      "Definirea avansului și a numărului de rate, cu distribuirea procentuală sau pe sumă fixă a valorilor.",
-      "Configurarea zilei din lună la care devin scadente ratele.",
-      "Indicator pe comanda de vânzare și pe factură care semnalează dacă documentul este plătit în rate.",
-      "Buton statistic „Rates” pe partener și pe factură pentru vizualizarea rapidă a documentelor cu plata în rate."
+      "Asistent de generare a ratelor: un singur formular (nume, tip, avans, număr de rate, ziua din lună) creează un termen de plată complet într-un clic; ratele existente ale termenului sunt înlocuite cu cele generate.",
+      "Moduri procent și sumă fixă: ratele pot fi un procent din total sau o valoare fixă (câmpul „Rate Value” apare doar la tipul „Fixed Amount”); ultima linie este mereu de tip sold („balance”), ca să preia diferențele de rotunjire.",
+      "Avansul se plătește imediat (ziua 0, la data facturii), iar rata N scade în ziua aleasă din a N-a lună după factură (ziua e limitată la sfârșitul lunii, de ex. ziua 31 devine 28/29 în februarie). Corecție din 19.0.2.0.8: până atunci ziua din lună era ignorată și ratele cădeau la 30, 60, 90... de zile. Liniile folosesc acum tipul de scadență „Days end of month on the”, cu noul câmp „Extra Months” pe liniile termenului de plată.",
+      "Indicator „In Rates” pe factură și „Sale in Rates” pe comanda de vânzare: semnalează documentele al căror termen de plată are mai multe linii, util la filtrare și raportare.",
+      "Butonul „Rates” de pe factură listează liniile termenului de plată ale facturii (câte una per rată, cu scadența și suma rămasă); cel de pe partener listează ratele deschise de încasat din facturile postate.",
+      "Wizardul se lansează din meniul Acțiune al comenzilor de vânzare și al facturilor (Payment Term Rate Wizard) sau din butonul „Create Rate” din formularul termenului de plată (Contabilitate > Configurare > Termeni de plată)."
     ],
     "dependencies": [
       "account",
@@ -7841,7 +7845,7 @@
       "account",
       "sale"
     ],
-    "text": "Asistent Generare Rate Termen de Plată\ndeltatech_payment_term\nModulul simplifică crearea termenilor de plată în rate, eliminând introducerea manuală a fiecărei linii de scadență. Printr-un asistent dedicat, utilizatorul stabilește numărul de rate, eventualul avans și ziua de scadență din lună, iar modulul generează automat liniile termenului de plată cu sumele distribuite proporțional. În plus, facturile, comenzile de vânzare și partenerii primesc indicatori și butoane care evidențiază rapid documentele plătibile în rate.\nGenerarea automată a ratelor (liniilor) unui termen de plată printr-un asistent.\nDefinirea avansului și a numărului de rate, cu distribuirea procentuală sau pe sumă fixă a valorilor.\nConfigurarea zilei din lună la care devin scadente ratele.\nIndicator pe comanda de vânzare și pe factură care semnalează dacă documentul este plătit în rate.\nButon statistic „Rates” pe partener și pe factură pentru vizualizarea rapidă a documentelor cu plata în rate."
+    "text": "Payment Term Rate Wizard\ndeltatech_payment_term\nModulul ajută echipele de finanțe și vânzări să genereze rapid termeni de plată în rate, eliminând crearea manuală a fiecărei linii de scadență. Printr-un asistent dedicat, utilizatorul completează numele, tipul, avansul, numărul de rate și ziua din lună, iar modulul generează automat termenul complet, cu avansul, ratele și scadențele corecte. În plus, facturile, comenzile de vânzare și partenerii primesc indicatori și butoane care evidențiază rapid documentele plătibile în rate.\nAsistent de generare a ratelor: un singur formular (nume, tip, avans, număr de rate, ziua din lună) creează un termen de plată complet într-un clic; ratele existente ale termenului sunt înlocuite cu cele generate.\nModuri procent și sumă fixă: ratele pot fi un procent din total sau o valoare fixă (câmpul „Rate Value” apare doar la tipul „Fixed Amount”); ultima linie este mereu de tip sold („balance”), ca să preia diferențele de rotunjire.\nAvansul se plătește imediat (ziua 0, la data facturii), iar rata N scade în ziua aleasă din a N-a lună după factură (ziua e limitată la sfârșitul lunii, de ex. ziua 31 devine 28/29 în februarie). Corecție din 19.0.2.0.8: până atunci ziua din lună era ignorată și ratele cădeau la 30, 60, 90... de zile. Liniile folosesc acum tipul de scadență „Days end of month on the”, cu noul câmp „Extra Months” pe liniile termenului de plată.\nIndicator „In Rates” pe factură și „Sale in Rates” pe comanda de vânzare: semnalează documentele al căror termen de plată are mai multe linii, util la filtrare și raportare.\nButonul „Rates” de pe factură listează liniile termenului de plată ale facturii (câte una per rată, cu scadența și suma rămasă); cel de pe partener listează ratele deschise de încasat din facturile postate.\nWizardul se lansează din meniul Acțiune al comenzilor de vânzare și al facturilor (Payment Term Rate Wizard) sau din butonul „Create Rate” din formularul termenului de plată (Contabilitate > Configurare > Termeni de plată)."
   },
   {
     "path": "deltatech_payment_term_working_days/index.md",
@@ -8948,15 +8952,16 @@
     "version": "19.0.1.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_project_price_list",
     "local_path": "odoo-addons/deltatech/deltatech_project_price_list",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Deltatech Project Pricelist",
-    "summary": "Modulul permite definirea unei liste de prețuri implicite la nivel de proiect, astfel încât orice comandă de vânzare creată dintr-un proiect (sau dintr-o sarcină a acestuia) să folosească automat lista de prețuri corectă. Scopul este eliminarea erorilor de selecție manuală și menținerea unei politici de prețuri consecvente pentru fiecare proiect, fără ca alegerea explicită făcută de utilizator să fie suprascrisă.",
+    "last_ingest": "2026-11-01",
+    "friendly_name": "Project Pricelist",
+    "summary": "Modulul permite definirea unei liste de prețuri implicite la nivel de proiect, astfel încât orice comandă de vânzare creată dintr-un proiect (sau dintr-o sarcină a acestuia) să folosească automat lista de prețuri corectă. Scopul este eliminarea erorilor de selecție manuală și menținerea unei politici de prețuri consecvente pentru fiecare proiect, fără ca alegerea explicită făcută de utilizator să fie suprascrisă. Modul nou în 19.0.",
     "features": [
       "Câmp nou pe proiecte: `Pricelist` (`project.project.pricelist_id`).",
       "Acțiunea de Comenzi de Vânzare a proiectului injectează `default_pricelist_id`, astfel încât ofertele noi sunt precompletate cu lista de prețuri a proiectului.",
       "La deschiderea unei oferte dintr-un proiect sau o sarcină, `sale.order.default_get` propune lista de prețuri a proiectului înainte de salvare.",
       "Siguranță pe server: în timpul `sale.order.create`, dacă o comandă este creată dintr-un proiect/sarcină și nu este furnizată o listă de prețuri, se aplică lista proiectului.",
-      "Lista de prețuri aleasă explicit de utilizator sau furnizată prin context nu este niciodată suprascrisă."
+      "Lista de prețuri aleasă explicit de utilizator sau furnizată prin context (`default_pricelist_id`) nu este niciodată suprascrisă, nici la creare (corecție din 19.0.1.0.3), nici la propunerea din formular.",
+      "Mod de lucru: se deschide proiectul și se setează câmpul `Pricelist`, apoi se creează o ofertă din butonul inteligent de comenzi de vânzare al proiectului sau dintr-o sarcină a proiectului; oferta vine precompletată cu lista de prețuri a proiectului."
     ],
     "dependencies": [
       "sale_project"
@@ -8964,7 +8969,7 @@
     "connections": [
       "sale_project"
     ],
-    "text": "Deltatech Project Pricelist\ndeltatech_project_price_list\nModulul permite definirea unei liste de prețuri implicite la nivel de proiect, astfel încât orice comandă de vânzare creată dintr-un proiect (sau dintr-o sarcină a acestuia) să folosească automat lista de prețuri corectă. Scopul este eliminarea erorilor de selecție manuală și menținerea unei politici de prețuri consecvente pentru fiecare proiect, fără ca alegerea explicită făcută de utilizator să fie suprascrisă.\nCâmp nou pe proiecte: `Pricelist` (`project.project.pricelist_id`).\nAcțiunea de Comenzi de Vânzare a proiectului injectează `default_pricelist_id`, astfel încât ofertele noi sunt precompletate cu lista de prețuri a proiectului.\nLa deschiderea unei oferte dintr-un proiect sau o sarcină, `sale.order.default_get` propune lista de prețuri a proiectului înainte de salvare.\nSiguranță pe server: în timpul `sale.order.create`, dacă o comandă este creată dintr-un proiect/sarcină și nu este furnizată o listă de prețuri, se aplică lista proiectului.\nLista de prețuri aleasă explicit de utilizator sau furnizată prin context nu este niciodată suprascrisă."
+    "text": "Project Pricelist\ndeltatech_project_price_list\nModulul permite definirea unei liste de prețuri implicite la nivel de proiect, astfel încât orice comandă de vânzare creată dintr-un proiect (sau dintr-o sarcină a acestuia) să folosească automat lista de prețuri corectă. Scopul este eliminarea erorilor de selecție manuală și menținerea unei politici de prețuri consecvente pentru fiecare proiect, fără ca alegerea explicită făcută de utilizator să fie suprascrisă. Modul nou în 19.0.\nCâmp nou pe proiecte: `Pricelist` (`project.project.pricelist_id`).\nAcțiunea de Comenzi de Vânzare a proiectului injectează `default_pricelist_id`, astfel încât ofertele noi sunt precompletate cu lista de prețuri a proiectului.\nLa deschiderea unei oferte dintr-un proiect sau o sarcină, `sale.order.default_get` propune lista de prețuri a proiectului înainte de salvare.\nSiguranță pe server: în timpul `sale.order.create`, dacă o comandă este creată dintr-un proiect/sarcină și nu este furnizată o listă de prețuri, se aplică lista proiectului.\nLista de prețuri aleasă explicit de utilizator sau furnizată prin context (`default_pricelist_id`) nu este niciodată suprascrisă, nici la creare (corecție din 19.0.1.0.3), nici la propunerea din formular.\nMod de lucru: se deschide proiectul și se setează câmpul `Pricelist`, apoi se creează o ofertă din butonul inteligent de comenzi de vânzare al proiectului sau dintr-o sarcină a proiectului; oferta vine precompletată cu lista de prețuri a proiectului."
   },
   {
     "path": "deltatech_promissory_note/index.md",
@@ -11059,17 +11064,17 @@
     "path": "deltatech_sale_purchase_requisition/index.md",
     "module": "deltatech_sale_purchase_requisition",
     "version": "19.0.1.1.2",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_purchase_requisition`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_purchase_requisition",
     "local_path": "odoo-addons/deltatech/deltatech_sale_purchase_requisition",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-11-01",
     "friendly_name": "Sale → Purchase RFQ (Alternative Purchase Orders)",
-    "summary": "Modulul adaugă un buton pe oferta de vânzare (cotația) care permite crearea de cereri de ofertă către furnizori (RFQ-uri) pornind de la liniile cotației, legându-le apoi înapoi de oferta de vânzare. Fluxul este unul simplu, aliniat la abordarea standard Odoo de achiziții alternative (alternative purchase orders), fără a folosi acorduri de achiziție (purchase requisition/agreements). Astfel, agentul de vânzări poate iniția rapid procesul de aprovizionare pentru produsele dintr-o ofertă, iar cumpărătorul alege furnizorul și finalizează cererea de ofertă.",
+    "summary": "Modulul adaugă un buton pe oferta de vânzare (cotația) care permite crearea de cereri de ofertă către furnizori (RFQ-uri) pornind de la liniile cotației, legându-le apoi înapoi de oferta de vânzare. Fluxul este unul simplu, aliniat la abordarea standard Odoo de achiziții alternative (alternative purchase orders), fără a folosi acorduri de achiziție (purchase requisition/agreements). Astfel, agentul de vânzări poate iniția rapid procesul de aprovizionare pentru produsele dintr-o ofertă, iar cumpărătorul alege furnizorul și finalizează cererea de ofertă. Modul nou în 19.0.",
     "features": [
-      "Buton în antetul ofertei de vânzare: „Create Purchase Order(s)\" / „Create RFQ\", pentru a genera cereri de ofertă din liniile cotației.",
-      "Deschide formularul de comandă de achiziție în mod creare, precompletat cu produsele eligibile din ofertă (fără creare automată).",
-      "Cumpărătorul selectează furnizorul și salvează cererea de ofertă (comandă de achiziție în starea draft).",
-      "Buton inteligent (smart button) „Purchase Orders\" / „RFQs\" pe ofertă, care afișează numărul și deschide cererile de ofertă legate.",
-      "Reguli de eligibilitate pentru linii: produsul trebuie să fie achiziționabil (`purchase_ok = True`), cantitatea trebuie să fie strict mai mare decât 0, iar liniile de secțiune/notă/afișaj sunt ignorate.",
+      "Buton în antetul ofertei de vânzare, „Create RFQ”, pentru a genera cereri de ofertă din liniile cotației; este vizibil doar în stările ciornă/trimisă și doar pentru utilizatorii de achiziții.",
+      "Deschide formularul de comandă de achiziție în mod creare, precompletat cu produsele eligibile din ofertă (fără creare automată); originea și oferta sursă sunt completate automat.",
+      "Cumpărătorul selectează furnizorul și salvează cererea de ofertă (comandă de achiziție în starea draft); prețul unitar rămâne de completat de cumpărător.",
+      "Buton inteligent (smart button) „RFQs” pe ofertă, care afișează numărul și deschide cererile de ofertă legate (direct formularul, dacă există una singură).",
+      "Reguli de eligibilitate pentru linii: produsul trebuie să fie achiziționabil (`purchase_ok = True`), cantitatea trebuie să fie strict mai mare decât 0, iar liniile de secțiune/notă/afișaj sunt ignorate. Dacă oferta nu are linii sau nicio linie nu e eligibilă, utilizatorul primește un mesaj de eroare.",
       "Compatibil cu comenzile de achiziție alternative, fără a introduce acorduri de achiziție."
     ],
     "dependencies": [
@@ -11080,7 +11085,7 @@
       "purchase",
       "sale"
     ],
-    "text": "Sale → Purchase RFQ (Alternative Purchase Orders)\ndeltatech_sale_purchase_requisition\nModulul adaugă un buton pe oferta de vânzare (cotația) care permite crearea de cereri de ofertă către furnizori (RFQ-uri) pornind de la liniile cotației, legându-le apoi înapoi de oferta de vânzare. Fluxul este unul simplu, aliniat la abordarea standard Odoo de achiziții alternative (alternative purchase orders), fără a folosi acorduri de achiziție (purchase requisition/agreements). Astfel, agentul de vânzări poate iniția rapid procesul de aprovizionare pentru produsele dintr-o ofertă, iar cumpărătorul alege furnizorul și finalizează cererea de ofertă.\nButon în antetul ofertei de vânzare: „Create Purchase Order(s)\" / „Create RFQ\", pentru a genera cereri de ofertă din liniile cotației.\nDeschide formularul de comandă de achiziție în mod creare, precompletat cu produsele eligibile din ofertă (fără creare automată).\nCumpărătorul selectează furnizorul și salvează cererea de ofertă (comandă de achiziție în starea draft).\nButon inteligent (smart button) „Purchase Orders\" / „RFQs\" pe ofertă, care afișează numărul și deschide cererile de ofertă legate.\nReguli de eligibilitate pentru linii: produsul trebuie să fie achiziționabil (`purchase_ok = True`), cantitatea trebuie să fie strict mai mare decât 0, iar liniile de secțiune/notă/afișaj sunt ignorate.\nCompatibil cu comenzile de achiziție alternative, fără a introduce acorduri de achiziție."
+    "text": "Sale → Purchase RFQ (Alternative Purchase Orders)\ndeltatech_sale_purchase_requisition\nModulul adaugă un buton pe oferta de vânzare (cotația) care permite crearea de cereri de ofertă către furnizori (RFQ-uri) pornind de la liniile cotației, legându-le apoi înapoi de oferta de vânzare. Fluxul este unul simplu, aliniat la abordarea standard Odoo de achiziții alternative (alternative purchase orders), fără a folosi acorduri de achiziție (purchase requisition/agreements). Astfel, agentul de vânzări poate iniția rapid procesul de aprovizionare pentru produsele dintr-o ofertă, iar cumpărătorul alege furnizorul și finalizează cererea de ofertă. Modul nou în 19.0.\nButon în antetul ofertei de vânzare, „Create RFQ”, pentru a genera cereri de ofertă din liniile cotației; este vizibil doar în stările ciornă/trimisă și doar pentru utilizatorii de achiziții.\nDeschide formularul de comandă de achiziție în mod creare, precompletat cu produsele eligibile din ofertă (fără creare automată); originea și oferta sursă sunt completate automat.\nCumpărătorul selectează furnizorul și salvează cererea de ofertă (comandă de achiziție în starea draft); prețul unitar rămâne de completat de cumpărător.\nButon inteligent (smart button) „RFQs” pe ofertă, care afișează numărul și deschide cererile de ofertă legate (direct formularul, dacă există una singură).\nReguli de eligibilitate pentru linii: produsul trebuie să fie achiziționabil (`purchase_ok = True`), cantitatea trebuie să fie strict mai mare decât 0, iar liniile de secțiune/notă/afișaj sunt ignorate. Dacă oferta nu are linii sau nicio linie nu e eligibilă, utilizatorul primește un mesaj de eroare.\nCompatibil cu comenzile de achiziție alternative, fără a introduce acorduri de achiziție."
   },
   {
     "path": "deltatech_sale_qty_available/index.md",
@@ -12015,20 +12020,23 @@
     "version": "19.0.0.0.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_count_zero",
     "local_path": "odoo-addons/deltatech/deltatech_stock_count_zero",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Deltatech Stock Count Zero",
+    "last_ingest": "2026-11-01",
+    "friendly_name": "Stock Count Zero",
     "summary": "Acest modul adaugă o opțiune care permite stabilirea automată a cantității inventariate la zero atunci când se solicită o numărare a stocului. Este util în timpul inventarierii fizice, unde produsele care nu sunt găsite trebuie marcate explicit cu cantitate zero, simplificând astfel procesul de ajustare a stocului prin reducerea introducerii manuale a datelor pentru articolele lipsă.",
     "features": [
-      "Adaugă bifa „Set Count to Zero\" (Setează numărarea la zero) în asistentul de solicitare a inventarului.",
-      "Setează automat cantitatea la 0.0 pentru liniile de inventar selectate atunci când bifa este activată.",
+      "Adaugă bifa „Set Count to Zero” (Setează numărarea la zero) în asistentul de solicitare a inventarului.",
+      "Setează automat cantitatea la 0.0 pentru liniile de inventar selectate atunci când bifa este activată, apoi aplică ajustarea.",
       "Simplifică procesul de ajustare a stocului prin reducerea introducerii manuale a datelor pentru articolele lipsă.",
-      "Flux de utilizare: Inventar > Operațiuni > Inventar fizic, se selectează liniile de inventar și se apasă butonul „Request Count\" (Solicită numărare); în asistentul afișat se bifează „Set Count to Zero\", iar la confirmare sistemul setează cantitatea inventariată la zero și aplică ajustarea."
+      "Doar liniile selectate sunt aduse la zero: pentru produsele urmărite pe lot/serie, celelalte loturi ale produsului din aceeași locație nu sunt modificate.",
+      "Opțiunea este disponibilă doar administratorilor de inventar (grupul `stock.group_stock_manager`), ca și „Set to 0” standard; ceilalți utilizatori primesc o eroare de acces dacă încearcă să o folosească.",
+      "Dacă o linie selectată s-a mișcat după numărare (cantitate depășită), se deschide fereastra standard de conflict, în care se alege ce cantitate se păstrează.",
+      "Flux de utilizare: Inventar > Operațiuni > Inventar fizic, se selectează liniile de inventar și se apasă „Request Count” (Solicită numărare); în asistentul afișat se bifează „Set Count to Zero”, iar la confirmare sistemul setează cantitatea inventariată la zero și aplică ajustarea."
     ],
     "dependencies": [
       "stock"
     ],
     "connections": [],
-    "text": "Deltatech Stock Count Zero\ndeltatech_stock_count_zero\nAcest modul adaugă o opțiune care permite stabilirea automată a cantității inventariate la zero atunci când se solicită o numărare a stocului. Este util în timpul inventarierii fizice, unde produsele care nu sunt găsite trebuie marcate explicit cu cantitate zero, simplificând astfel procesul de ajustare a stocului prin reducerea introducerii manuale a datelor pentru articolele lipsă.\nAdaugă bifa „Set Count to Zero\" (Setează numărarea la zero) în asistentul de solicitare a inventarului.\nSetează automat cantitatea la 0.0 pentru liniile de inventar selectate atunci când bifa este activată.\nSimplifică procesul de ajustare a stocului prin reducerea introducerii manuale a datelor pentru articolele lipsă.\nFlux de utilizare: Inventar > Operațiuni > Inventar fizic, se selectează liniile de inventar și se apasă butonul „Request Count\" (Solicită numărare); în asistentul afișat se bifează „Set Count to Zero\", iar la confirmare sistemul setează cantitatea inventariată la zero și aplică ajustarea."
+    "text": "Stock Count Zero\ndeltatech_stock_count_zero\nAcest modul adaugă o opțiune care permite stabilirea automată a cantității inventariate la zero atunci când se solicită o numărare a stocului. Este util în timpul inventarierii fizice, unde produsele care nu sunt găsite trebuie marcate explicit cu cantitate zero, simplificând astfel procesul de ajustare a stocului prin reducerea introducerii manuale a datelor pentru articolele lipsă.\nAdaugă bifa „Set Count to Zero” (Setează numărarea la zero) în asistentul de solicitare a inventarului.\nSetează automat cantitatea la 0.0 pentru liniile de inventar selectate atunci când bifa este activată, apoi aplică ajustarea.\nSimplifică procesul de ajustare a stocului prin reducerea introducerii manuale a datelor pentru articolele lipsă.\nDoar liniile selectate sunt aduse la zero: pentru produsele urmărite pe lot/serie, celelalte loturi ale produsului din aceeași locație nu sunt modificate.\nOpțiunea este disponibilă doar administratorilor de inventar (grupul `stock.group_stock_manager`), ca și „Set to 0” standard; ceilalți utilizatori primesc o eroare de acces dacă încearcă să o folosească.\nDacă o linie selectată s-a mișcat după numărare (cantitate depășită), se deschide fereastra standard de conflict, în care se alege ce cantitate se păstrează.\nFlux de utilizare: Inventar > Operațiuni > Inventar fizic, se selectează liniile de inventar și se apasă „Request Count” (Solicită numărare); în asistentul afișat se bifează „Set Count to Zero”, iar la confirmare sistemul setează cantitatea inventariată la zero și aplică ajustarea."
   },
   {
     "path": "deltatech_stock_delivery/index.md",
@@ -12321,16 +12329,18 @@
     "path": "deltatech_stock_reseller/index.md",
     "module": "deltatech_stock_reseller",
     "version": "19.0.1.0.7",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_reseller`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_reseller",
     "local_path": "odoo-addons/deltatech/deltatech_stock_reseller",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Raport Stoc pentru Reselleri",
-    "summary": "Modulul oferă un raport de stoc gândit pentru partenerii revânzători (reselleri). Pornind de la o locație de stoc aleasă, generează o listă a produselor disponibile, afișând atât prețul de catalog, cât și prețul de revânzare calculat pe baza unei liste de prețuri sau a unui partener. Pentru situațiile în care cantitatea exactă nu trebuie comunicată revânzătorului, raportul poate înlocui cifrele cu etichete text (de exemplu „Stoc limitat\", „În stoc\"), pe baza unor praguri configurabile. Astfel, echipa de vânzări poate trimite rapid unui reseller o ofertă cu disponibilitate și prețuri adaptate fără a expune informații interne sensibile.",
+    "last_ingest": "2026-11-01",
+    "friendly_name": "Stock Report for Resellers",
+    "summary": "Modulul oferă un raport de stoc gândit pentru partenerii revânzători (reselleri). Pornind de la o locație de stoc aleasă, generează o listă a produselor disponibile, afișând atât prețul de catalog, cât și prețul de revânzare calculat pe baza unei liste de prețuri sau a unui partener. Pentru situațiile în care cantitatea exactă nu trebuie comunicată revânzătorului, raportul poate înlocui cifrele cu etichete text (de exemplu „Stoc limitat”, „În stoc”), pe baza unor praguri configurabile. Astfel, echipa de vânzări poate trimite rapid unui reseller o ofertă cu disponibilitate și prețuri adaptate fără a expune informații interne sensibile.",
     "features": [
-      "Raport cu pozițiile dintr-o locație de stoc, însoțit de lista de prețuri.",
-      "Alegerea locației de stoc pentru care se generează raportul.",
-      "Alegerea unui partener sau a unei liste de prețuri pentru calculul prețului de revânzare.",
-      "Două praguri configurabile pentru afișarea cantităților ca text (ex. Stoc redus, Stoc limitat, În stoc), fiecare cu textul aferent."
+      "Raport cu produsele dintr-o locație de stoc (doar cele cu cantitate liberă pozitivă), însoțit de prețuri.",
+      "Alegerea locației de stoc pentru care se generează raportul (locații interne), din meniul Vânzări > Raportare > Location Stock.",
+      "Alegerea unui partener (care propune lista lui de prețuri) sau direct a unei liste de prețuri pentru calculul prețului de revânzare. Fără listă de prețuri, prețul de revânzare apare în moneda companiei (corecție din 19.0.1.0.6).",
+      "Două praguri configurabile pentru afișarea cantităților ca text (implicit 5 și 20), cu trei texte: sub primul prag, între praguri și peste al doilea prag (ex. Stoc redus, Stoc limitat, În stoc).",
+      "Opțiunea „Refresh Report”: dacă e debifată, se refolosește un raport deja generat, dar numai dacă a fost creat cu aceeași locație, același partener, aceeași listă de prețuri și aceleași setări de praguri (corecție din 19.0.1.0.4).",
+      "Rezultatul e o listă (cu variantă pivot) grupabilă pe produs sau categorie internă, cu cantitate sau text, preț de revânzare și preț de catalog."
     ],
     "dependencies": [
       "sale_stock"
@@ -12338,7 +12348,7 @@
     "connections": [
       "sale_stock"
     ],
-    "text": "Raport Stoc pentru Reselleri\ndeltatech_stock_reseller\nModulul oferă un raport de stoc gândit pentru partenerii revânzători (reselleri). Pornind de la o locație de stoc aleasă, generează o listă a produselor disponibile, afișând atât prețul de catalog, cât și prețul de revânzare calculat pe baza unei liste de prețuri sau a unui partener. Pentru situațiile în care cantitatea exactă nu trebuie comunicată revânzătorului, raportul poate înlocui cifrele cu etichete text (de exemplu „Stoc limitat\", „În stoc\"), pe baza unor praguri configurabile. Astfel, echipa de vânzări poate trimite rapid unui reseller o ofertă cu disponibilitate și prețuri adaptate fără a expune informații interne sensibile.\nRaport cu pozițiile dintr-o locație de stoc, însoțit de lista de prețuri.\nAlegerea locației de stoc pentru care se generează raportul.\nAlegerea unui partener sau a unei liste de prețuri pentru calculul prețului de revânzare.\nDouă praguri configurabile pentru afișarea cantităților ca text (ex. Stoc redus, Stoc limitat, În stoc), fiecare cu textul aferent."
+    "text": "Stock Report for Resellers\ndeltatech_stock_reseller\nModulul oferă un raport de stoc gândit pentru partenerii revânzători (reselleri). Pornind de la o locație de stoc aleasă, generează o listă a produselor disponibile, afișând atât prețul de catalog, cât și prețul de revânzare calculat pe baza unei liste de prețuri sau a unui partener. Pentru situațiile în care cantitatea exactă nu trebuie comunicată revânzătorului, raportul poate înlocui cifrele cu etichete text (de exemplu „Stoc limitat”, „În stoc”), pe baza unor praguri configurabile. Astfel, echipa de vânzări poate trimite rapid unui reseller o ofertă cu disponibilitate și prețuri adaptate fără a expune informații interne sensibile.\nRaport cu produsele dintr-o locație de stoc (doar cele cu cantitate liberă pozitivă), însoțit de prețuri.\nAlegerea locației de stoc pentru care se generează raportul (locații interne), din meniul Vânzări > Raportare > Location Stock.\nAlegerea unui partener (care propune lista lui de prețuri) sau direct a unei liste de prețuri pentru calculul prețului de revânzare. Fără listă de prețuri, prețul de revânzare apare în moneda companiei (corecție din 19.0.1.0.6).\nDouă praguri configurabile pentru afișarea cantităților ca text (implicit 5 și 20), cu trei texte: sub primul prag, între praguri și peste al doilea prag (ex. Stoc redus, Stoc limitat, În stoc).\nOpțiunea „Refresh Report”: dacă e debifată, se refolosește un raport deja generat, dar numai dacă a fost creat cu aceeași locație, același partener, aceeași listă de prețuri și aceleași setări de praguri (corecție din 19.0.1.0.4).\nRezultatul e o listă (cu variantă pivot) grupabilă pe produs sau categorie internă, cu cantitate sau text, preț de revânzare și preț de catalog."
   },
   {
     "path": "deltatech_stock_valuation/index.md",
@@ -12517,16 +12527,16 @@
     "version": "19.0.1.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_team_logo",
     "local_path": "odoo-addons/deltatech/deltatech_team_logo",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Deltatech Team Logo",
-    "summary": "Modulul permite afișarea unui logo diferit în rapoartele PDF (factură, ofertă/comandă, aviz de livrare) în funcție de echipa de vânzare a documentului. Este util pentru companiile care operează mai multe branduri sub aceeași firmă juridică: fiecare echipă de vânzare poate avea propriul logo, iar acesta este folosit automat în antetul rapoartelor. Dacă echipa nu are un logo configurat, comportamentul rămâne identic cu cel standard, folosind logo-ul firmei.",
+    "last_ingest": "2026-11-01",
+    "friendly_name": "Sales Team Logo",
+    "summary": "Modulul permite afișarea unui logo diferit în rapoartele PDF (factură, ofertă/comandă, aviz de livrare) în funcție de echipa de vânzare a documentului. Este util pentru companiile care operează mai multe branduri sub aceeași firmă juridică: fiecare echipă de vânzare poate avea propriul logo, iar acesta este folosit automat în antetul rapoartelor. Dacă echipa nu are un logo configurat, comportamentul rămâne identic cu cel standard, folosind logo-ul firmei. Modul nou în 19.0.",
     "features": [
-      "Adaugă un câmp Logo pe echipa de vânzare (`crm.team`).",
-      "La randarea raportului, dacă documentul are o echipă de vânzare cu logo propriu, se folosește acel logo; altfel se folosește logo-ul firmei.",
-      "Mecanism generic implementat în dispecerul `web.external_layout`, care acoperă toate variantele de layout (standard, striped, boxed, bold, folder, wave, bubble) și orice document care are câmpul `team_id`:",
-      "`sale.order` (ofertă/comandă) — `team_id` nativ.",
-      "`account.move` (factură) — `team_id` nativ.",
-      "`stock.picking` (aviz/livrare) — `team_id` calculat din comanda sursă."
+      "Adaugă un câmp Logo pe echipa de vânzare (`crm.team`), completat ca logo-ul companiei, în Vânzări > Configurare > Echipe de vânzări.",
+      "La randarea raportului, dacă documentul are o echipă de vânzare cu logo propriu, se folosește acel logo; altfel (echipa fără logo sau document fără echipă) se folosește logo-ul firmei.",
+      "Funcționează pentru oferte și comenzi de vânzare, facturi și avize/livrări provenite dintr-o comandă de vânzare; livrarea preia echipa comenzii sursă.",
+      "Mecanism generic implementat în dispecerul `web.external_layout`, care acoperă toate variantele de layout (Standard, Striped, Boxed, Bold, Folder, Wave, Bubble) și orice document care are câmpul `team_id`.",
+      "Fără logo pe echipă, rapoartele se tipăresc exact ca în Odoo standard.",
+      "Pașii detaliați de configurare și utilizare sunt în [fișa consultantului](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
       "sale_stock"
@@ -12535,7 +12545,7 @@
       "sale_stock",
       "team_id"
     ],
-    "text": "Deltatech Team Logo\ndeltatech_team_logo\nModulul permite afișarea unui logo diferit în rapoartele PDF (factură, ofertă/comandă, aviz de livrare) în funcție de echipa de vânzare a documentului. Este util pentru companiile care operează mai multe branduri sub aceeași firmă juridică: fiecare echipă de vânzare poate avea propriul logo, iar acesta este folosit automat în antetul rapoartelor. Dacă echipa nu are un logo configurat, comportamentul rămâne identic cu cel standard, folosind logo-ul firmei.\nAdaugă un câmp Logo pe echipa de vânzare (`crm.team`).\nLa randarea raportului, dacă documentul are o echipă de vânzare cu logo propriu, se folosește acel logo; altfel se folosește logo-ul firmei.\nMecanism generic implementat în dispecerul `web.external_layout`, care acoperă toate variantele de layout (standard, striped, boxed, bold, folder, wave, bubble) și orice document care are câmpul `team_id`:\n`sale.order` (ofertă/comandă) — `team_id` nativ.\n`account.move` (factură) — `team_id` nativ.\n`stock.picking` (aviz/livrare) — `team_id` calculat din comanda sursă."
+    "text": "Sales Team Logo\ndeltatech_team_logo\nModulul permite afișarea unui logo diferit în rapoartele PDF (factură, ofertă/comandă, aviz de livrare) în funcție de echipa de vânzare a documentului. Este util pentru companiile care operează mai multe branduri sub aceeași firmă juridică: fiecare echipă de vânzare poate avea propriul logo, iar acesta este folosit automat în antetul rapoartelor. Dacă echipa nu are un logo configurat, comportamentul rămâne identic cu cel standard, folosind logo-ul firmei. Modul nou în 19.0.\nAdaugă un câmp Logo pe echipa de vânzare (`crm.team`), completat ca logo-ul companiei, în Vânzări > Configurare > Echipe de vânzări.\nLa randarea raportului, dacă documentul are o echipă de vânzare cu logo propriu, se folosește acel logo; altfel (echipa fără logo sau document fără echipă) se folosește logo-ul firmei.\nFuncționează pentru oferte și comenzi de vânzare, facturi și avize/livrări provenite dintr-o comandă de vânzare; livrarea preia echipa comenzii sursă.\nMecanism generic implementat în dispecerul `web.external_layout`, care acoperă toate variantele de layout (Standard, Striped, Boxed, Bold, Folder, Wave, Bubble) și orice document care are câmpul `team_id`.\nFără logo pe echipă, rapoartele se tipăresc exact ca în Odoo standard.\nPașii detaliați de configurare și utilizare sunt în [fișa consultantului](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_test_system/index.md",

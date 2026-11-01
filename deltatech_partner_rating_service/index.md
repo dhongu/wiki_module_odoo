@@ -1,10 +1,10 @@
-# Rating partener în service (localizat la `deltatech_partner_rating_service/index.md`)
+# Partner rating in service (localizat la `deltatech_partner_rating_service/index.md`)
 
 - **Nume Tehnic:** `deltatech_partner_rating_service`
 - **Versiune:** `19.0.0.0.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_rating_service
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_partner_rating_service`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-01`
 
 #### 1. Sumar
 
@@ -21,16 +21,32 @@ Acest modul extinde vizibilitatea rating-ului de partener în modulele Odoo de g
 #### 3. Dependențe
 
 - [deltatech_partner_rating](../deltatech_partner_rating/index.md)
-- `deltatech_service_agreement`
-- `deltatech_service_equipment_base`
-- `deltatech_service_maintenance`
+- [deltatech_service_agreement](../deltatech_service_agreement/index.md)
+- [deltatech_service_equipment_base](../deltatech_service_equipment_base/index.md)
+- [deltatech_service_maintenance](../deltatech_service_maintenance/index.md)
 
 #### 4. Componente Cheie
 
-Documentația pentru Sumar și Funcționalități Cheie a fost preluată din fișierul `readme/DESCRIPTION.md`. Conform fluxului de ingestie, analiza detaliată a codului pentru această secțiune a fost omisă, deoarece Readme-ul nu o solicită explicit.
+Modulul adaugă pe modelele și vizualizările existente de service afișarea rating-ului partenerului provenit din modulul de bază `deltatech_partner_rating`. Readme-ul nu cere explicit detalierea componentelor; extensia e mică și a fost verificată în cod.
 
-Pe scurt, modulul adaugă pe vizualizările existente (contracte de service, echipamente și garanții) afișarea rating-ului partenerului provenit din modulul de bază `deltatech_partner_rating`.
+**Modele**
+
+- `service.equipment` (extins): câmpul `partner_rating` („Customer rating”), citit de la partenerul comercial al echipamentului.
+- `service.agreement` (extins): câmpul `partner_rating`, citit de la partenerul comercial al contractului de service.
+- `service.warranty` (extins): câmpul `partner_rating`, citit de la partenerul comercial al garanției.
+
+**Vizualizări**
+
+- `views/service_equipment.xml`: afișează rating-ul în formularul de echipament.
+- `views/service_agreement.xml`: afișează rating-ul în formularul contractului de service.
+- `views/service_warranty.xml`: afișează rating-ul în formularul de garanție.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Niciuna.
 
 #### 5. Conexiuni
 
 - [deltatech_partner_rating](../deltatech_partner_rating/index.md): modulul de bază care definește rating-ul de partener afișat de acest modul.
+- [deltatech_service_agreement](../deltatech_service_agreement/index.md): contractele de service pe care este afișat rating-ul.
+- [deltatech_service_equipment_base](../deltatech_service_equipment_base/index.md): echipamentele și garanțiile pe care este afișat rating-ul.

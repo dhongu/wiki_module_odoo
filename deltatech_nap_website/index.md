@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_nap_website
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_nap_website`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-01`
 
 #### 1. Sumar
 
@@ -25,7 +25,20 @@ Acest modul extinde raportul NAP (Necesar Achiziții Produse) adăugând categor
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, această secțiune este derivată din readme. Modulul nu definește modele, vizualizări sau acțiuni automate proprii dedicate; el extinde raportul existent NAP (asistentul de forecast de stoc) cu dimensiunea categoriei publice de produse furnizate de `website_sale`.
+Modulul nu definește modele noi; extinde raportul NAP existent. Readme-ul nu cere explicit detalierea componentelor, dar extensia e mică și verificată în cod.
+
+**Modele**
+
+- `stock.forecast.report.line` (extins): adaugă câmpul `public_categ_id` (categoria publică, `product.public.category`), calculat și stocat din prima categorie publică a produsului; rămâne gol dacă produsul nu are categorie publică.
+
+**Vizualizări**
+
+- `view_stock_forecast_report_line_tree`: extinde lista liniilor raportului NAP, afișând categoria publică după categoria de produs.
+- `view_stock_forecast_report_line_search`: extinde căutarea, permițând filtrarea după categoria publică.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Niciuna.
 
 #### 5. Conexiuni
 

@@ -1,10 +1,10 @@
-# Rating partener în comenzi de vânzare și facturi (localizat la `deltatech_partner_rating_sale/index.md`)
+# Partner Rating – Sales (localizat la `deltatech_partner_rating_sale/index.md`)
 
 - **Nume Tehnic:** `deltatech_partner_rating_sale`
 - **Versiune:** `19.0.0.0.4`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_rating_sale`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_rating_sale
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_partner_rating_sale`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-01`
 
 #### 1. Sumar
 
@@ -27,19 +27,23 @@ Acest modul afișează un indicator vizual al ratingului partenerului direct în
 
 #### 4. Componente Cheie
 
-Modulul extinde modelele existente de vânzări, facturare și logistică pentru a expune ratingul partenerului preluat din modulul de bază `deltatech_partner_rating`.
+Modulul extinde modelele existente de vânzări, facturare și logistică pentru a expune ratingul partenerului preluat din modulul de bază `deltatech_partner_rating`. Ratingul se citește de la partenerul comercial (`commercial_partner_id`).
 
 **Modele**
 
-- `sale.order`: extins pentru a afișa ratingul partenerului pe oferte și comenzi de vânzare.
-- `account.move`: extins pentru a afișa ratingul partenerului pe facturi.
-- `stock.picking`: extins pentru a afișa ratingul partenerului pe livrări.
+- `sale.order`: extins cu câmpul `partner_rating` („Customer rating”), afișat pe oferte și comenzi de vânzare.
+- `account.move`: extins cu câmpul `partner_rating`, afișat pe facturi.
+- `stock.picking`: extins cu câmpul `partner_rating`, afișat pe livrări.
 
 **Vizualizări**
 
 - `views/sale_order_view.xml`: adaugă indicatorul de rating în formularul de comandă de vânzare/ofertă.
 - `views/account_move_view.xml`: adaugă indicatorul de rating în formularul de factură.
 - `views/stock_picking_view.xml`: adaugă indicatorul de rating în formularul de livrare.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Niciuna.
 
 #### 5. Conexiuni
 
