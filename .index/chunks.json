@@ -383,15 +383,20 @@
     "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_scenario",
     "local_path": "odoo-addons/bitshop_ent/deltatech_account_scenario",
-    "last_ingest": "2026-06-09",
+    "last_ingest": "2026-11-02",
     "friendly_name": "Accounting Scenario Framework",
-    "summary": "`deltatech_account_scenario` este un modul Odoo 19 care oferă un cadru bazat pe JSON pentru rularea și validarea unor scenarii contabile complete. Modulul permite dezvoltatorilor și contabililor să definească procese de afaceri (facturi, plăți, note contabile, mijloace fixe, recepții de stoc, livrări etc.) sub formă de scenarii JSON, să le execute pe o bază de date Odoo activă și să valideze automat înregistrările contabile și valorizările de stoc rezultate. Modulul funcționează în două moduri: modul „test\", în care execută un scenariu și verifică dacă notele contabile și valorile de stoc generate corespund celor așteptate definite în JSON, și modul „demo\", în care execută un scenariu pentru a genera date demonstrative fără validare contabilă strictă.",
+    "summary": "`deltatech_account_scenario` oferă un cadru bazat pe JSON pentru rularea și validarea unor scenarii contabile complete. Procesele de afaceri (facturi, plăți, note contabile, mijloace fixe, recepții de stoc, livrări etc.) se descriu ca scenarii JSON, se execută pe o bază de date Odoo activă, iar notele contabile și valorizările de stoc rezultate se verifică automat. Este util pentru validarea unei configurări contabile înainte de punerea în funcțiune și pentru demonstrații reproductibile. Modulul funcționează în două moduri: „test\", în care scenariul este rulat și comparat cu notele contabile și valorile de stoc așteptate din JSON, și „demo\", în care scenariul generează date demonstrative fără validare contabilă strictă. Este un modul nou în 19.0.",
     "features": [
-      "Scenarii definite prin JSON — procese de afaceri complete descrise ca JSON structurat, cu pași (acțiuni) și înregistrări contabile/de stoc așteptate. Pașii se împart în pași de date master (creează sau identifică date de referință: conturi, parteneri, categorii de produse, produse) și pași tranzacționali (comenzi de aprovizionare, recepții de stoc, facturi furnizor, comenzi de vânzare, facturi, transferuri de stoc, note contabile, plăți). Fiecare pas poate include un câmp `_comment` folosit ca mesaj de jurnal.",
-      "Validare contabilă și de stoc — după execuția pașilor, motorul compară liniile `account.move.line` generate cu secțiunea `expected_account_moves` din JSON, validând coduri de cont, sume debit/credit și conturi analitice; validează și cantitățile și valorile de stoc per produs prin secțiunea `checks` din fiecare pas, raportând clar neconcordanțele în jurnalul rulării.",
-      "Integrare în interfață — listă de scenarii cu import de fișiere JSON (buton „Import Scenarios\"), formular de scenariu cu export JSON, istoric al rulărilor (fiecare execuție înregistrată ca `account.test.run` cu jurnal complet și rezultat), navigare din jurnal direct către documentul aferent (factură, transfer, plată), butoane „Set Ready\", „Execute Scenario\", „Re-run Scenario\", „View Runs\", și meniu sub Accounting → Account Scenarios (Test Scenarios și Test Runs).",
-      "Bibliotecă de scenarii inclusă — date de bază (`00_base_data.json`) cu categorii de produse, parteneri și produse comune, scenarii demo pentru fluxuri de achiziție/vânzare, transferuri și recepții, plus 140 de scenarii de testare a contabilității de stoc românești sub `data/scenarios/ro_stock/`: 70 de scenarii FIFO și 70 de scenarii cost mediu ponderat (CMP), acoperind cazuri-limită conform reglementărilor contabile din România.",
-      "Teste automate — teste `TransactionCase` sub `tests/test_stock_scenarios.py` și `tests/common.py` care acoperă crearea de categorii, parteneri și produse, crearea și postarea facturilor, execuția completă a scenariilor, achiziții și vânzări cu verificări contabile, precum și gestionarea erorilor pentru tipuri de pași necunoscute."
+      "Scenarii definite prin JSON: procese complete descrise ca JSON structurat, cu pași și înregistrări contabile/de stoc așteptate.",
+      "Pașii de date master creează sau identifică datele de referință: conturi, parteneri, categorii de produse, produse (reutilizate dacă există deja).",
+      "Pașii tranzacționali execută operațiuni: comenzi de aprovizionare, recepții și retururi de stoc, facturi furnizor, comenzi de vânzare și facturi, inventar, transferuri, consum, note contabile, plăți, mijloace fixe.",
+      "Fiecare pas poate avea un câmp `_comment`, folosit ca mesaj în jurnal. Pașii pot seta taxele de pe liniile de comandă și de factură și datele documentelor (comandă, factură, programată), ca scenariul să reproducă situații de final de lună sau de exercițiu.",
+      "Validare contabilă și de stoc: după execuție, liniile `account.move.line` generate sunt comparate cu secțiunea `expected_account_moves` (coduri de cont, sume debit/credit sau sold, conturi analitice); cantitățile și valorile de stoc pe produs se verifică prin secțiunea `checks` a fiecărui pas. Valorile sunt validate ca diferențe față de starea de la începutul scenariului, deci scenariile rulează corect și pe baze de date cu mișcări anterioare. Neconcordanțele apar clar în jurnalul rulării.",
+      "Rulare în compania scenariului: rularea folosește compania scenariului, nu compania activă; scenariile, rulările și jurnalele altor companii sunt ascunse. Accesul este limitat la utilizatorii de contabilitate (cei cu drept doar de citire pot doar consulta), iar ștergerea cere rolul Administrator de contabilitate.",
+      "Integrare în interfață: meniul Accounting → Account Scenarios (Test Scenarios și Test Runs); lista de scenarii cu butonul Import Scenarios (import de fișiere JSON, mereu vizibil); formular cu export JSON și butoanele „Set Ready\", „Execute Scenario\", „Re-run Scenario\", „View Runs\"; fiecare execuție este o rulare `account.test.run` cu jurnal complet și rezultat, descărcabil ca Markdown sau HTML; din jurnal se deschide direct documentul creat (factură, transfer, plată).",
+      "Bibliotecă de scenarii inclusă: date de bază (`00_base_data.json`) cu categorii de produse, parteneri și produse comune; scenarii demo pentru fluxuri de achiziție/vânzare, transferuri și recepții; 140 de scenarii de contabilitate de stoc românească în `data/scenarios/ro_stock/` (70 FIFO și 70 cost mediu ponderat, cu cazuri-limită conform reglementărilor din România); plus scenarii OBYC în `data/scenarios/deltatech_obyc/`. Scenariile demo se încarcă la instalarea cu date demo.",
+      "Teste automate: teste `TransactionCase` pentru pașii de creare a datelor master, execuția completă a scenariilor, achiziții și vânzări cu verificări contabile și gestionarea pașilor necunoscuți.",
+      "Formatul JSON al pașilor (câmpuri, valori) este descris în `readme/USAGE.MD` al modulului."
     ],
     "dependencies": [
       "account",
@@ -406,7 +411,7 @@
       "purchase_stock",
       "sale_stock"
     ],
-    "text": "Accounting Scenario Framework\ndeltatech_account_scenario\n`deltatech_account_scenario` este un modul Odoo 19 care oferă un cadru bazat pe JSON pentru rularea și validarea unor scenarii contabile complete. Modulul permite dezvoltatorilor și contabililor să definească procese de afaceri (facturi, plăți, note contabile, mijloace fixe, recepții de stoc, livrări etc.) sub formă de scenarii JSON, să le execute pe o bază de date Odoo activă și să valideze automat înregistrările contabile și valorizările de stoc rezultate. Modulul funcționează în două moduri: modul „test\", în care execută un scenariu și verifică dacă notele contabile și valorile de stoc generate corespund celor așteptate definite în JSON, și modul „demo\", în care execută un scenariu pentru a genera date demonstrative fără validare contabilă strictă.\nScenarii definite prin JSON — procese de afaceri complete descrise ca JSON structurat, cu pași (acțiuni) și înregistrări contabile/de stoc așteptate. Pașii se împart în pași de date master (creează sau identifică date de referință: conturi, parteneri, categorii de produse, produse) și pași tranzacționali (comenzi de aprovizionare, recepții de stoc, facturi furnizor, comenzi de vânzare, facturi, transferuri de stoc, note contabile, plăți). Fiecare pas poate include un câmp `_comment` folosit ca mesaj de jurnal.\nValidare contabilă și de stoc — după execuția pașilor, motorul compară liniile `account.move.line` generate cu secțiunea `expected_account_moves` din JSON, validând coduri de cont, sume debit/credit și conturi analitice; validează și cantitățile și valorile de stoc per produs prin secțiunea `checks` din fiecare pas, raportând clar neconcordanțele în jurnalul rulării.\nIntegrare în interfață — listă de scenarii cu import de fișiere JSON (buton „Import Scenarios\"), formular de scenariu cu export JSON, istoric al rulărilor (fiecare execuție înregistrată ca `account.test.run` cu jurnal complet și rezultat), navigare din jurnal direct către documentul aferent (factură, transfer, plată), butoane „Set Ready\", „Execute Scenario\", „Re-run Scenario\", „View Runs\", și meniu sub Accounting → Account Scenarios (Test Scenarios și Test Runs).\nBibliotecă de scenarii inclusă — date de bază (`00_base_data.json`) cu categorii de produse, parteneri și produse comune, scenarii demo pentru fluxuri de achiziție/vânzare, transferuri și recepții, plus 140 de scenarii de testare a contabilității de stoc românești sub `data/scenarios/ro_stock/`: 70 de scenarii FIFO și 70 de scenarii cost mediu ponderat (CMP), acoperind cazuri-limită conform reglementărilor contabile din România.\nTeste automate — teste `TransactionCase` sub `tests/test_stock_scenarios.py` și `tests/common.py` care acoperă crearea de categorii, parteneri și produse, crearea și postarea facturilor, execuția completă a scenariilor, achiziții și vânzări cu verificări contabile, precum și gestionarea erorilor pentru tipuri de pași necunoscute."
+    "text": "Accounting Scenario Framework\ndeltatech_account_scenario\n`deltatech_account_scenario` oferă un cadru bazat pe JSON pentru rularea și validarea unor scenarii contabile complete. Procesele de afaceri (facturi, plăți, note contabile, mijloace fixe, recepții de stoc, livrări etc.) se descriu ca scenarii JSON, se execută pe o bază de date Odoo activă, iar notele contabile și valorizările de stoc rezultate se verifică automat. Este util pentru validarea unei configurări contabile înainte de punerea în funcțiune și pentru demonstrații reproductibile. Modulul funcționează în două moduri: „test\", în care scenariul este rulat și comparat cu notele contabile și valorile de stoc așteptate din JSON, și „demo\", în care scenariul generează date demonstrative fără validare contabilă strictă. Este un modul nou în 19.0.\nScenarii definite prin JSON: procese complete descrise ca JSON structurat, cu pași și înregistrări contabile/de stoc așteptate.\nPașii de date master creează sau identifică datele de referință: conturi, parteneri, categorii de produse, produse (reutilizate dacă există deja).\nPașii tranzacționali execută operațiuni: comenzi de aprovizionare, recepții și retururi de stoc, facturi furnizor, comenzi de vânzare și facturi, inventar, transferuri, consum, note contabile, plăți, mijloace fixe.\nFiecare pas poate avea un câmp `_comment`, folosit ca mesaj în jurnal. Pașii pot seta taxele de pe liniile de comandă și de factură și datele documentelor (comandă, factură, programată), ca scenariul să reproducă situații de final de lună sau de exercițiu.\nValidare contabilă și de stoc: după execuție, liniile `account.move.line` generate sunt comparate cu secțiunea `expected_account_moves` (coduri de cont, sume debit/credit sau sold, conturi analitice); cantitățile și valorile de stoc pe produs se verifică prin secțiunea `checks` a fiecărui pas. Valorile sunt validate ca diferențe față de starea de la începutul scenariului, deci scenariile rulează corect și pe baze de date cu mișcări anterioare. Neconcordanțele apar clar în jurnalul rulării.\nRulare în compania scenariului: rularea folosește compania scenariului, nu compania activă; scenariile, rulările și jurnalele altor companii sunt ascunse. Accesul este limitat la utilizatorii de contabilitate (cei cu drept doar de citire pot doar consulta), iar ștergerea cere rolul Administrator de contabilitate.\nIntegrare în interfață: meniul Accounting → Account Scenarios (Test Scenarios și Test Runs); lista de scenarii cu butonul Import Scenarios (import de fișiere JSON, mereu vizibil); formular cu export JSON și butoanele „Set Ready\", „Execute Scenario\", „Re-run Scenario\", „View Runs\"; fiecare execuție este o rulare `account.test.run` cu jurnal complet și rezultat, descărcabil ca Markdown sau HTML; din jurnal se deschide direct documentul creat (factură, transfer, plată).\nBibliotecă de scenarii inclusă: date de bază (`00_base_data.json`) cu categorii de produse, parteneri și produse comune; scenarii demo pentru fluxuri de achiziție/vânzare, transferuri și recepții; 140 de scenarii de contabilitate de stoc românească în `data/scenarios/ro_stock/` (70 FIFO și 70 cost mediu ponderat, cu cazuri-limită conform reglementărilor din România); plus scenarii OBYC în `data/scenarios/deltatech_obyc/`. Scenariile demo se încarcă la instalarea cu date demo.\nTeste automate: teste `TransactionCase` pentru pașii de creare a datelor master, execuția completă a scenariilor, achiziții și vânzări cu verificări contabile și gestionarea pașilor necunoscuți.\nFormatul JSON al pașilor (câmpuri, valori) este descris în `readme/USAGE.MD` al modulului."
   },
   {
     "path": "deltatech_account_scenario_ai/index.md",
@@ -1682,12 +1687,13 @@
     "version": "19.0.0.0.6",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_bank_stmt_foreign_currency",
     "local_path": "odoo-addons/bitshop_ent/deltatech_bank_stmt_foreign_currency",
-    "last_ingest": "2026-06-09",
+    "last_ingest": "2026-11-02",
     "friendly_name": "Bank Statement Foreign Currency",
-    "summary": "Acest modul extinde funcționalitatea de import al extraselor bancare pentru a gestiona tranzacțiile efectuate în valută. Atunci când extrasul conține sume într-o monedă diferită de cea a jurnalului (sau a companiei), modulul realizează automat conversia pe baza cursului de schimb valabil la data tranzacției. Astfel, contabilii pot importa fără efort suplimentar extrase cu operațiuni multi-valutare, sumele fiind aduse corect în moneda de lucru.",
+    "summary": "Acest modul extinde importul extraselor bancare pentru tranzacțiile efectuate în valută. Când extrasul conține sume într-o monedă diferită de cea a jurnalului (sau a companiei), modulul le convertește automat pe baza cursului de schimb de la data tranzacției. Astfel, contabilii importă fără efort suplimentar extrase cu operațiuni multi-valutare, iar sumele sunt aduse corect în moneda de lucru. Este în uz la clienți de mult timp și are statutul de dezvoltare Production/Stable.",
     "features": [
-      "Conversie valutară automată: convertește sumele dintr-o valută străină în moneda jurnalului (sau a companiei) pe baza cursului de schimb de la data tranzacției.",
-      "Suport multi-valutar: permite importul fișierelor care conțin tranzacții în monede diferite, prin maparea câmpurilor `foreign_currency_id` și `amount_currency`.",
+      "Conversie valutară automată: convertește sumele din valută străină în moneda jurnalului (sau a companiei) pe baza cursului de schimb de la data tranzacției.",
+      "Suport multi-valutar: permite importul fișierelor cu tranzacții în monede diferite, prin maparea câmpurilor `foreign_currency_id` (moneda tranzacției) și `amount_currency` (suma în acea monedă); suma convertită se completează în coloana `amount`.",
+      "Doar pentru importurile care au nevoie: sunt pre-procesate numai importurile de extrase bancare din CSV, cu o coloană de monedă străină mapată; orice alt import (importuri obișnuite, extrase cu debit/credit sau doar cu sumă) folosește parsarea standard, deci datele, numerele localizate și valorile relaționale sunt normalizate ca fără modul.",
       "Detectare îmbunătățită a partenerilor: moștenește identificarea automată a partenerului (după nume sau după referința comenzii de vânzare) din modulul de bază."
     ],
     "dependencies": [
@@ -1696,7 +1702,7 @@
     "connections": [
       "deltatech_account_bank_statement_import"
     ],
-    "text": "Bank Statement Foreign Currency\ndeltatech_bank_stmt_foreign_currency\nAcest modul extinde funcționalitatea de import al extraselor bancare pentru a gestiona tranzacțiile efectuate în valută. Atunci când extrasul conține sume într-o monedă diferită de cea a jurnalului (sau a companiei), modulul realizează automat conversia pe baza cursului de schimb valabil la data tranzacției. Astfel, contabilii pot importa fără efort suplimentar extrase cu operațiuni multi-valutare, sumele fiind aduse corect în moneda de lucru.\nConversie valutară automată: convertește sumele dintr-o valută străină în moneda jurnalului (sau a companiei) pe baza cursului de schimb de la data tranzacției.\nSuport multi-valutar: permite importul fișierelor care conțin tranzacții în monede diferite, prin maparea câmpurilor `foreign_currency_id` și `amount_currency`.\nDetectare îmbunătățită a partenerilor: moștenește identificarea automată a partenerului (după nume sau după referința comenzii de vânzare) din modulul de bază."
+    "text": "Bank Statement Foreign Currency\ndeltatech_bank_stmt_foreign_currency\nAcest modul extinde importul extraselor bancare pentru tranzacțiile efectuate în valută. Când extrasul conține sume într-o monedă diferită de cea a jurnalului (sau a companiei), modulul le convertește automat pe baza cursului de schimb de la data tranzacției. Astfel, contabilii importă fără efort suplimentar extrase cu operațiuni multi-valutare, iar sumele sunt aduse corect în moneda de lucru. Este în uz la clienți de mult timp și are statutul de dezvoltare Production/Stable.\nConversie valutară automată: convertește sumele din valută străină în moneda jurnalului (sau a companiei) pe baza cursului de schimb de la data tranzacției.\nSuport multi-valutar: permite importul fișierelor cu tranzacții în monede diferite, prin maparea câmpurilor `foreign_currency_id` (moneda tranzacției) și `amount_currency` (suma în acea monedă); suma convertită se completează în coloana `amount`.\nDoar pentru importurile care au nevoie: sunt pre-procesate numai importurile de extrase bancare din CSV, cu o coloană de monedă străină mapată; orice alt import (importuri obișnuite, extrase cu debit/credit sau doar cu sumă) folosește parsarea standard, deci datele, numerele localizate și valorile relaționale sunt normalizate ca fără modul.\nDetectare îmbunătățită a partenerilor: moștenește identificarea automată a partenerului (după nume sau după referința comenzii de vânzare) din modulul de bază."
   },
   {
     "path": "deltatech_barcode_picking/index.md",
@@ -2014,12 +2020,13 @@
     "version": "19.0.0.0.4",
     "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_category_group_equipment",
     "local_path": "odoo-addons/deltatech_service/deltatech_category_group_equipment",
-    "last_ingest": "2026-06-08",
-    "friendly_name": "Deltatech Equipment Category Group",
+    "last_ingest": "2026-11-02",
+    "friendly_name": "Equipment Category Group",
     "summary": "Modulul adaugă elemente de grupare pentru echipamente, preluate din grupurile definite pe categoria internă a produsului asociat echipamentului. Astfel, echipamentele pot fi organizate și filtrate după „tipul categoriei\" și „clasa categoriei\", facilitând clasificarea și raportarea parcului de echipamente în mod consecvent cu categoriile de produse.",
     "features": [
-      "Adaugă două elemente de grupare pentru echipamente: „tipul categoriei\" (Category type) și „clasa categoriei\" (Category class).",
-      "Aceste grupări sunt legate de categoria internă a produsului echipamentului."
+      "Adaugă două elemente de grupare pentru echipamente: „tipul categoriei\" (Category type) și „clasa categoriei\" (Category class), legate de categoria internă a produsului echipamentului.",
+      "Filtre și grupări suplimentare în ecranul de echipamente (grupare după *Category Type* și *Category Class*), astfel încât un tehnician găsește mai repede echipamentele unei categorii.",
+      "Coloanele și câmpurile de căutare pentru tip și clasă sunt ascunse implicit și se pot afișa din selectorul de coloane."
     ],
     "dependencies": [
       "deltatech_category_group",
@@ -2029,7 +2036,7 @@
       "deltatech_category_group",
       "deltatech_service_equipment"
     ],
-    "text": "Deltatech Equipment Category Group\ndeltatech_category_group_equipment\nModulul adaugă elemente de grupare pentru echipamente, preluate din grupurile definite pe categoria internă a produsului asociat echipamentului. Astfel, echipamentele pot fi organizate și filtrate după „tipul categoriei\" și „clasa categoriei\", facilitând clasificarea și raportarea parcului de echipamente în mod consecvent cu categoriile de produse.\nAdaugă două elemente de grupare pentru echipamente: „tipul categoriei\" (Category type) și „clasa categoriei\" (Category class).\nAceste grupări sunt legate de categoria internă a produsului echipamentului."
+    "text": "Equipment Category Group\ndeltatech_category_group_equipment\nModulul adaugă elemente de grupare pentru echipamente, preluate din grupurile definite pe categoria internă a produsului asociat echipamentului. Astfel, echipamentele pot fi organizate și filtrate după „tipul categoriei\" și „clasa categoriei\", facilitând clasificarea și raportarea parcului de echipamente în mod consecvent cu categoriile de produse.\nAdaugă două elemente de grupare pentru echipamente: „tipul categoriei\" (Category type) și „clasa categoriei\" (Category class), legate de categoria internă a produsului echipamentului.\nFiltre și grupări suplimentare în ecranul de echipamente (grupare după *Category Type* și *Category Class*), astfel încât un tehnician găsește mai repede echipamentele unei categorii.\nColoanele și câmpurile de căutare pentru tip și clasă sunt ascunse implicit și se pot afișa din selectorul de coloane."
   },
   {
     "path": "deltatech_change_uom/index.md",
@@ -4555,7 +4562,7 @@
   {
     "path": "deltatech_fleet/index.md",
     "module": "deltatech_fleet",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_fleet",
     "local_path": "odoo-addons/deltatech/deltatech_fleet",
     "last_ingest": "2026-10-09",
@@ -9055,7 +9062,7 @@
   {
     "path": "deltatech_purchase_add_extra_line/index.md",
     "module": "deltatech_purchase_add_extra_line",
-    "version": "19.0.1.5.1",
+    "version": "19.0.1.6.0",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_add_extra_line`",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_add_extra_line",
     "last_ingest": "2026-10-09",
@@ -9563,7 +9570,7 @@
   {
     "path": "deltatech_queue_job/index.md",
     "module": "deltatech_queue_job",
-    "version": "19.0.1.4.5",
+    "version": "19.0.1.4.6",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_queue_job`",
     "local_path": "odoo-addons/deltatech/deltatech_queue_job",
     "last_ingest": "2026-08-20",
@@ -10216,7 +10223,7 @@
   {
     "path": "deltatech_sale_add_extra_line/index.md",
     "module": "deltatech_sale_add_extra_line",
-    "version": "19.0.1.5.3",
+    "version": "19.0.1.6.0",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_add_extra_line`",
     "local_path": "odoo-addons/deltatech/deltatech_sale_add_extra_line",
     "last_ingest": "2026-10-09",
@@ -11655,18 +11662,22 @@
     "path": "deltatech_service_consumable/index.md",
     "module": "deltatech_service_consumable",
     "version": "19.0.1.1.11",
-    "github": "`https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_consumable`",
+    "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_consumable",
     "local_path": "odoo-addons/deltatech_service/deltatech_service_consumable",
-    "last_ingest": "2026-06-08",
+    "last_ingest": "2026-11-02",
     "friendly_name": "Services Consumable",
-    "summary": "Modulul extinde suita de service Deltatech cu gestiunea consumabilelor măsurate prin contoare. Permite urmărirea echipamentelor și a contoarelor asociate, înregistrarea citirilor de contor și facturarea pe baza acestor citiri. Pentru perioadele în care nu există o citire reală, modulul poate calcula estimări de consum și poate introduce automat, la sfârșitul perioadei, valori estimate. Valoarea principală constă în legarea consumului real (sau estimat) de procesul de facturare a serviciilor, reducând efortul manual și erorile.",
+    "summary": "Modulul urmărește consumabilele echipamentelor aflate sub un contract de service: ce s-a livrat, cât a mai rămas și cât costă livrările. Pentru fiecare echipament se văd consumabilele sub formă de indicatori, livrările pentru service se pregătesc direct din echipament, iar costul total al livrărilor se adună pe contract și se compară cu valoarea facturată. Un raport de eficiență pune în paralel consumabilele livrate și consumul citit de pe contoarele echipamentelor.",
     "features": [
-      "Gestiunea echipamentelor.",
-      "Gestiunea contoarelor.",
-      "Gestiunea citirilor de contor.",
-      "Facturare pe baza citirilor.",
-      "Calculul estimat al citirilor.",
-      "Introducerea automată, la sfârșitul perioadei, a valorilor estimate."
+      "Pentru fiecare tip de echipament se definesc consumabilele (produse stocabile), cu cantitatea maximă permisă.",
+      "Formularul echipamentului arată consumabilele ca indicatori: cantitatea rămasă este cantitatea livrată înmulțită cu durata de viață a produsului (de exemplu paginile unui toner), minus consumul citit de pe contorul echipamentului, în aceeași unitate de măsură.",
+      "Livrările pentru service se pregătesc din echipament, cu consumabilele, adresa și contractul acestuia; produsele livrate sunt listate pe echipament.",
+      "O verificare raportează consumabilele a căror cantitate ar depăși maximul permis.",
+      "Tipul de operațiune pentru livrările de service se setează în setările de stoc (parametrul `service.picking_type_for_service`).",
+      "Fiecare livrare pentru service validată adaugă valoarea de stoc la costul contractului (retururile îl scad) și reîmprospătează totalurile echipamentului.",
+      "Contractul afișează costul total și costul ca procent din suma facturată, recalculat la postarea unei facturi; acțiunea „Recompute costs\" reconstruiește totalul din livrări.",
+      "`service.efficiency.report` pune consumabilele livrate pe echipament și contract lângă consumul citit de pe contoare, pentru o perioadă; este limitat la companiile active ale utilizatorului.",
+      "Costul total se calculează mai rapid, iar raportul de eficiență filtrează corect pe unități de măsură.",
+      "Manipularea mișcărilor de stoc este aliniată la modul standard din Odoo 19 (colete/pachete)."
     ],
     "dependencies": [
       "deltatech_service_agreement",
@@ -11677,9 +11688,10 @@
     "connections": [
       "deltatech_service_agreement",
       "deltatech_service_equipment",
-      "deltatech_stock_report"
+      "deltatech_stock_report",
+      "deltatech_product_extension"
     ],
-    "text": "Services Consumable\ndeltatech_service_consumable\nModulul extinde suita de service Deltatech cu gestiunea consumabilelor măsurate prin contoare. Permite urmărirea echipamentelor și a contoarelor asociate, înregistrarea citirilor de contor și facturarea pe baza acestor citiri. Pentru perioadele în care nu există o citire reală, modulul poate calcula estimări de consum și poate introduce automat, la sfârșitul perioadei, valori estimate. Valoarea principală constă în legarea consumului real (sau estimat) de procesul de facturare a serviciilor, reducând efortul manual și erorile.\nGestiunea echipamentelor.\nGestiunea contoarelor.\nGestiunea citirilor de contor.\nFacturare pe baza citirilor.\nCalculul estimat al citirilor.\nIntroducerea automată, la sfârșitul perioadei, a valorilor estimate."
+    "text": "Services Consumable\ndeltatech_service_consumable\nModulul urmărește consumabilele echipamentelor aflate sub un contract de service: ce s-a livrat, cât a mai rămas și cât costă livrările. Pentru fiecare echipament se văd consumabilele sub formă de indicatori, livrările pentru service se pregătesc direct din echipament, iar costul total al livrărilor se adună pe contract și se compară cu valoarea facturată. Un raport de eficiență pune în paralel consumabilele livrate și consumul citit de pe contoarele echipamentelor.\nPentru fiecare tip de echipament se definesc consumabilele (produse stocabile), cu cantitatea maximă permisă.\nFormularul echipamentului arată consumabilele ca indicatori: cantitatea rămasă este cantitatea livrată înmulțită cu durata de viață a produsului (de exemplu paginile unui toner), minus consumul citit de pe contorul echipamentului, în aceeași unitate de măsură.\nLivrările pentru service se pregătesc din echipament, cu consumabilele, adresa și contractul acestuia; produsele livrate sunt listate pe echipament.\nO verificare raportează consumabilele a căror cantitate ar depăși maximul permis.\nTipul de operațiune pentru livrările de service se setează în setările de stoc (parametrul `service.picking_type_for_service`).\nFiecare livrare pentru service validată adaugă valoarea de stoc la costul contractului (retururile îl scad) și reîmprospătează totalurile echipamentului.\nContractul afișează costul total și costul ca procent din suma facturată, recalculat la postarea unei facturi; acțiunea „Recompute costs\" reconstruiește totalul din livrări.\n`service.efficiency.report` pune consumabilele livrate pe echipament și contract lângă consumul citit de pe contoare, pentru o perioadă; este limitat la companiile active ale utilizatorului.\nCostul total se calculează mai rapid, iar raportul de eficiență filtrează corect pe unități de măsură.\nManipularea mișcărilor de stoc este aliniată la modul standard din Odoo 19 (colete/pachete)."
   },
   {
     "path": "deltatech_service_equipment/index.md",
@@ -11758,14 +11770,26 @@
     "version": "19.0.1.2.10",
     "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_maintenance",
     "local_path": "odoo-addons/deltatech_service/deltatech_service_maintenance",
-    "last_ingest": "2026-06-08",
-    "friendly_name": "Deltatech Services Maintenance",
-    "summary": "Modulul gestionează activitatea de service și mentenanță a echipamentelor. Permite înregistrarea sesizărilor primite de la clienți, transformarea lor în comenzi de service și planificarea reviziilor periodice ale echipamentelor. Pe baza planurilor de revizii, comenzile de service pot fi generate automat, ceea ce ajută echipa de service să țină evidența intervențiilor și să respecte termenele de mentenanță.",
+    "last_ingest": "2026-11-02",
+    "friendly_name": "Services Maintenance",
+    "summary": "Modulul gestionează service-ul corectiv și preventiv pentru echipamentele și locațiile clienților, de la prima sesizare până la procesul-verbal de predare. Sesizările primite de la clienți se transformă în comenzi de service, livrări, transferuri interne sau comenzi de vânzare, iar comenzile de service urmăresc operațiile, piesele folosite și semnătura clientului. Modulul gestionează și garanțiile și recondiționările, cu aprobare dedicată, și oferă rapoartele de predare-primire. Nu include planuri de revizii și nici generare automată de comenzi de service.",
     "features": [
-      "Gestionare sesizări",
-      "Gestionare comenzi de service",
-      "Gestionare planuri de revizii",
-      "Generare automată a comenzilor de service pe baza planului"
+      "Înregistrarea unei sesizări pentru un echipament sau o locație de service, cu client, contact, adresă, responsabil, centru de lucru, prioritate, subiect și note.",
+      "Categoria sesizării: constatare defect, livrare, transfer sau vânzare; tip extern sau intern.",
+      "Flux: Nouă, Alocată, În lucru, Finalizată, cu datele de alocare, început și finalizare completate automat.",
+      "Linii cu produsele cerute și operațiile planificate; disponibilitatea în stoc a fiecărui produs este afișată pe linie.",
+      "Din sesizare se creează comanda de service, o livrare, un transfer intern sau o comandă de vânzare, toate legate înapoi de sesizare.",
+      "Tip de comandă cu categorie Corectivă sau Preventivă, plus opțiunile pentru deplasare, livrare și vânzare.",
+      "Flux: Draft, Acknowledge, On the way, In Progress, Work Done, Completed, cu Rejected și Cancel; date de deplasare, început și finalizare.",
+      "Operații (cu durată și produsul de serviciu asociat), componente (piesele folosite, cu disponibilitate în stoc), motiv, parametri de funcționare ai echipamentului după intervenție și semnătura clientului.",
+      "Livrări și comenzi de vânzare create din comandă și legate de ea.",
+      "Dosare de garanție sau recondiționare pentru un echipament, cu clientul, produsele folosite și suma totală.",
+      "Flux: New, Assigned, In Progress, Approval requested, Approved, Done; aprobarea și validarea livrărilor de garanție sunt rezervate grupului de aprobare a garanțiilor.",
+      "Produsele livrate actualizează liniile garanției cu costul real.",
+      "Stare de clarificări și legături către livrare, comanda de vânzare și factură.",
+      "Service Order, Handover report și Minutes of receipt, tipărite din comanda de service; Notification, tipărit din sesizare.",
+      "Centre de lucru cu locație de stoc, tip de operațiune, rute de vânzare și transfer și cost pe oră; locația de stoc se poate seta și pe locația de service.",
+      "Tipuri de sesizări, tipuri de comenzi, motive, operații și parametri de funcționare."
     ],
     "dependencies": [
       "deltatech_service_equipment_base",
@@ -11778,7 +11802,7 @@
       "deltatech_service_equipment_base",
       "sale_stock"
     ],
-    "text": "Deltatech Services Maintenance\ndeltatech_service_maintenance\nModulul gestionează activitatea de service și mentenanță a echipamentelor. Permite înregistrarea sesizărilor primite de la clienți, transformarea lor în comenzi de service și planificarea reviziilor periodice ale echipamentelor. Pe baza planurilor de revizii, comenzile de service pot fi generate automat, ceea ce ajută echipa de service să țină evidența intervențiilor și să respecte termenele de mentenanță.\nGestionare sesizări\nGestionare comenzi de service\nGestionare planuri de revizii\nGenerare automată a comenzilor de service pe baza planului"
+    "text": "Services Maintenance\ndeltatech_service_maintenance\nModulul gestionează service-ul corectiv și preventiv pentru echipamentele și locațiile clienților, de la prima sesizare până la procesul-verbal de predare. Sesizările primite de la clienți se transformă în comenzi de service, livrări, transferuri interne sau comenzi de vânzare, iar comenzile de service urmăresc operațiile, piesele folosite și semnătura clientului. Modulul gestionează și garanțiile și recondiționările, cu aprobare dedicată, și oferă rapoartele de predare-primire. Nu include planuri de revizii și nici generare automată de comenzi de service.\nÎnregistrarea unei sesizări pentru un echipament sau o locație de service, cu client, contact, adresă, responsabil, centru de lucru, prioritate, subiect și note.\nCategoria sesizării: constatare defect, livrare, transfer sau vânzare; tip extern sau intern.\nFlux: Nouă, Alocată, În lucru, Finalizată, cu datele de alocare, început și finalizare completate automat.\nLinii cu produsele cerute și operațiile planificate; disponibilitatea în stoc a fiecărui produs este afișată pe linie.\nDin sesizare se creează comanda de service, o livrare, un transfer intern sau o comandă de vânzare, toate legate înapoi de sesizare.\nTip de comandă cu categorie Corectivă sau Preventivă, plus opțiunile pentru deplasare, livrare și vânzare.\nFlux: Draft, Acknowledge, On the way, In Progress, Work Done, Completed, cu Rejected și Cancel; date de deplasare, început și finalizare.\nOperații (cu durată și produsul de serviciu asociat), componente (piesele folosite, cu disponibilitate în stoc), motiv, parametri de funcționare ai echipamentului după intervenție și semnătura clientului.\nLivrări și comenzi de vânzare create din comandă și legate de ea.\nDosare de garanție sau recondiționare pentru un echipament, cu clientul, produsele folosite și suma totală.\nFlux: New, Assigned, In Progress, Approval requested, Approved, Done; aprobarea și validarea livrărilor de garanție sunt rezervate grupului de aprobare a garanțiilor.\nProdusele livrate actualizează liniile garanției cu costul real.\nStare de clarificări și legături către livrare, comanda de vânzare și factură.\nService Order, Handover report și Minutes of receipt, tipărite din comanda de service; Notification, tipărit din sesizare.\nCentre de lucru cu locație de stoc, tip de operațiune, rute de vânzare și transfer și cost pe oră; locația de stoc se poate seta și pe locația de service.\nTipuri de sesizări, tipuri de comenzi, motive, operații și parametri de funcționare."
   },
   {
     "path": "deltatech_service_maintenance_agreement/index.md",
@@ -13146,15 +13170,16 @@
     "path": "deltatech_watermark/index.md",
     "module": "deltatech_watermark",
     "version": "19.0.3.0.2",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_watermark`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_watermark",
     "local_path": "odoo-addons/deltatech/deltatech_watermark",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-11-02",
     "friendly_name": "Watermark (Filigran)",
-    "summary": "Acest modul oferă un câmp de bază pentru imaginea sau textul de filigran (watermark) în Odoo. Este conceput să acționeze ca un punct centralizat de stocare și configurare a filigranului, folosit în diferite zone ale sistemului, în special în rapoarte și pe website. Modulul nu aplică el însuși filigranul pe documente sau imagini — el doar pune la dispoziție câmpurile și configurarea necesare, urmând ca module de extensie specifice să realizeze efectiv aplicarea filigranului.",
+    "summary": "Acest modul permite încărcarea o singură dată, în setări, a imaginii de filigran (watermark) a companiei, pentru ca alte module să o folosească acolo unde este nevoie. Modulul stochează imaginea pe fiecare companie și o afișează în Setări generale. El nu modifică singur nicio pagină sau vreun document: modulul [deltatech_website_watermark](../deltatech_website_watermark/index.md) o folosește pentru a marca pozele de produs din magazinul online.",
     "features": [
-      "Stocare centralizată a filigranului: adaugă un câmp dedicat Watermark (de obicei pe modelul companiei), oferind un loc standardizat pentru încărcarea imaginii sau definirea textului folosit la filigranarea documentelor sau mediilor corporative.",
-      "Setări de configurare: se integrează cu setările standard Odoo (Settings > General Settings) pentru o administrare ușoară, permițând actualizarea rapidă și globală a filigranului corporativ.",
-      "Fundament pentru extensii: acționează ca dependență necesară pentru module de filigranare mai specifice, precum cele care aplică filigranul pe imaginile de website sau pe rapoartele PDF generate."
+      "Un filigran pentru fiecare companie: fiecare companie își păstrează propria imagine de filigran. Într-o bază de date multi-company, setarea se aplică companiei curente.",
+      "Configurare în Setări generale: imaginea se încarcă în *Settings > General Settings*, secțiunea *Companies*, câmpul Watermark image, cu previzualizare. Pentru companii cu filigrane diferite, se schimbă compania activă și se repetă încărcarea.",
+      "Bază pentru Website Watermark: modulul de website aplică filigranul pe pozele de produs ale magazinului la afișare, astfel încât imaginile originale rămân curate. Dacă imaginea este goală, modulele dependente afișează pozele nemodificate.",
+      "Dependențe minime: depinde doar de setările standard (`base_setup` și `web`), deci alte module pot construi pe el fără să aducă website-ul."
     ],
     "dependencies": [
       "base_setup",
@@ -13163,7 +13188,7 @@
     "connections": [
       "deltatech_website_watermark"
     ],
-    "text": "Watermark (Filigran)\ndeltatech_watermark\nAcest modul oferă un câmp de bază pentru imaginea sau textul de filigran (watermark) în Odoo. Este conceput să acționeze ca un punct centralizat de stocare și configurare a filigranului, folosit în diferite zone ale sistemului, în special în rapoarte și pe website. Modulul nu aplică el însuși filigranul pe documente sau imagini — el doar pune la dispoziție câmpurile și configurarea necesare, urmând ca module de extensie specifice să realizeze efectiv aplicarea filigranului.\nStocare centralizată a filigranului: adaugă un câmp dedicat Watermark (de obicei pe modelul companiei), oferind un loc standardizat pentru încărcarea imaginii sau definirea textului folosit la filigranarea documentelor sau mediilor corporative.\nSetări de configurare: se integrează cu setările standard Odoo (Settings > General Settings) pentru o administrare ușoară, permițând actualizarea rapidă și globală a filigranului corporativ.\nFundament pentru extensii: acționează ca dependență necesară pentru module de filigranare mai specifice, precum cele care aplică filigranul pe imaginile de website sau pe rapoartele PDF generate."
+    "text": "Watermark (Filigran)\ndeltatech_watermark\nAcest modul permite încărcarea o singură dată, în setări, a imaginii de filigran (watermark) a companiei, pentru ca alte module să o folosească acolo unde este nevoie. Modulul stochează imaginea pe fiecare companie și o afișează în Setări generale. El nu modifică singur nicio pagină sau vreun document: modulul [deltatech_website_watermark](../deltatech_website_watermark/index.md) o folosește pentru a marca pozele de produs din magazinul online.\nUn filigran pentru fiecare companie: fiecare companie își păstrează propria imagine de filigran. Într-o bază de date multi-company, setarea se aplică companiei curente.\nConfigurare în Setări generale: imaginea se încarcă în *Settings > General Settings*, secțiunea *Companies*, câmpul Watermark image, cu previzualizare. Pentru companii cu filigrane diferite, se schimbă compania activă și se repetă încărcarea.\nBază pentru Website Watermark: modulul de website aplică filigranul pe pozele de produs ale magazinului la afișare, astfel încât imaginile originale rămân curate. Dacă imaginea este goală, modulele dependente afișează pozele nemodificate.\nDependențe minime: depinde doar de setările standard (`base_setup` și `web`), deci alte module pot construi pe el fără să aducă website-ul."
   },
   {
     "path": "deltatech_web_kpi_cards/index.md",
@@ -14219,20 +14244,23 @@
     "path": "deltatech_website_warehouse_stock/index.md",
     "module": "deltatech_website_warehouse_stock",
     "version": "19.0.0.0.7",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_warehouse_stock`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_warehouse_stock",
     "local_path": "odoo-addons/deltatech/deltatech_website_warehouse_stock",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-11-02",
     "friendly_name": "eCommerce Warehouse Stock",
-    "summary": "Acest modul îmbunătățește experiența de eCommerce afișând disponibilitatea în stoc, în timp real, pentru fiecare depozit, direct pe pagina produsului din website. Clienții văd dacă un produs este în stoc, are stoc redus sau este indisponibil la anumite locații, ceea ce îi ajută să ia decizii de cumpărare informate, în funcție de proximitatea sau disponibilitatea depozitului. Spre deosebire de funcția standard „Click & Collect\" din Odoo 18/19 (bazată pe selector pe hartă), acest modul oferă o abordare complementară, cu vizibilitate ridicată: starea stocului este afișată static pe pagina produsului, fără clicuri sau popup-uri, iar datele exacte de inventar sunt protejate printr-un prag configurabil.",
+    "summary": "Acest modul afișează pe pagina produsului din magazinul online disponibilitatea în stoc a fiecărui depozit. Clienții văd dintr-o privire dacă un produs este în stoc, are stoc redus sau este indisponibil la anumite locații, ceea ce îi ajută să decidă mai ușor. Spre deosebire de funcția standard „Click & Collect\" din Odoo 18/19 (selector pe hartă), starea stocului este afișată direct pe pagină, fără clicuri sau ferestre suplimentare, iar cantitățile exacte mari sunt protejate printr-un prag configurabil. Aspectul blocului se alege per site, din setări sau din editorul de website.",
     "features": [
-      "Adaugă stocul locației principale a fiecărui depozit pe pagina produsului (product template) din website.",
-      "Dacă stocul este < 0, afișează „Out of stock\" (indisponibil) pentru acel depozit.",
-      "Dacă stocul este între 0 și 10 (inclusiv), afișează cantitatea efectivă a produsului.",
-      "Dacă stocul este > 10, afișează „Available\" (disponibil) pentru acel depozit, fără a dezvălui cantitatea exactă.",
-      "Pragul de stoc (implicit 10) este configurabil din setările site-ului, protejând datele de inventar și imaginea brandului.",
-      "Numele depozitului afișat este preluat din formularul depozitului (stock.warehouse).",
-      "Există o bifă pe depozit pentru a alege dacă stocul respectiv este afișat pe pagina produsului.",
-      "Funcționează ca addon informativ complementar funcției standard Odoo „Click & Collect\" (`website_sale_collect`), oferind clienților vizibilitate asupra distribuției stocului înainte de a începe procesul de checkout."
+      "Stoc pe depozit pe pagina produsului: pentru fiecare depozit bifat, se afișează stocul locației principale; numele depozitului este cel din formularul depozitului. Pe fiecare depozit există bifa Afișare pe site (activă implicit, inclusiv pe depozitele noi); se iau în calcul doar depozitele companiei site-ului.",
+      "Cantitate calculată: stocul disponibil din locația de stoc principală minus ieșirile planificate (confirmate, dar nevalidate).",
+      "Prag configurabil: peste prag (implicit 10, unic pe bază, în setările site-ului) se afișează „Disponibil\", fără cantitatea exactă; între 0 și prag, inclusiv, se afișează cantitatea; la 0 sau negativ, „Stoc epuizat\" sau „La comandă\".",
+      "Opțiuni de aspect, per site (*Website > Configuration > Settings*, grupul *Warehouse Stock Design*, sau din editorul de website, cu clic pe blocul din pagina produsului):",
+      "Poziție: în detaliile produsului (implicit) sau imediat după preț;",
+      "Stil: etichete (implicit), listă cu pictograme, card sau selector de depozit (clientul alege depozitul și apasă „Verifică stocul\"; cantitățile sunt deja în pagină, fără cerere suplimentară la server);",
+      "Mesaj la stoc zero: „Stoc epuizat\" (implicit) sau „La comandă\", opțional urmat de o notă scurtă (de exemplu termenul de livrare; nota se completează doar din setări);",
+      "Afișarea cantității: cantitatea exactă sub prag (implicit) sau doar „În stoc\";",
+      "Culorile temei: etichete nuanțate pe culorile paginii, lizibile pe teme întunecate, în loc de verde, gri și roșu pline.",
+      "Addon informativ complementar: completează funcția standard „Click & Collect\" (`website_sale_collect`), care alege punctul de ridicare abia la finalizarea comenzii. Stocul afișat este orientativ (calculat la încărcarea paginii), nu o rezervare.",
+      "Fluxul pas-cu-pas, verificările și erorile frecvente sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
       "website",
@@ -14241,7 +14269,7 @@
     "connections": [
       "website_sale_collect"
     ],
-    "text": "eCommerce Warehouse Stock\ndeltatech_website_warehouse_stock\nAcest modul îmbunătățește experiența de eCommerce afișând disponibilitatea în stoc, în timp real, pentru fiecare depozit, direct pe pagina produsului din website. Clienții văd dacă un produs este în stoc, are stoc redus sau este indisponibil la anumite locații, ceea ce îi ajută să ia decizii de cumpărare informate, în funcție de proximitatea sau disponibilitatea depozitului. Spre deosebire de funcția standard „Click & Collect\" din Odoo 18/19 (bazată pe selector pe hartă), acest modul oferă o abordare complementară, cu vizibilitate ridicată: starea stocului este afișată static pe pagina produsului, fără clicuri sau popup-uri, iar datele exacte de inventar sunt protejate printr-un prag configurabil.\nAdaugă stocul locației principale a fiecărui depozit pe pagina produsului (product template) din website.\nDacă stocul este < 0, afișează „Out of stock\" (indisponibil) pentru acel depozit.\nDacă stocul este între 0 și 10 (inclusiv), afișează cantitatea efectivă a produsului.\nDacă stocul este > 10, afișează „Available\" (disponibil) pentru acel depozit, fără a dezvălui cantitatea exactă.\nPragul de stoc (implicit 10) este configurabil din setările site-ului, protejând datele de inventar și imaginea brandului.\nNumele depozitului afișat este preluat din formularul depozitului (stock.warehouse).\nExistă o bifă pe depozit pentru a alege dacă stocul respectiv este afișat pe pagina produsului.\nFuncționează ca addon informativ complementar funcției standard Odoo „Click & Collect\" (`website_sale_collect`), oferind clienților vizibilitate asupra distribuției stocului înainte de a începe procesul de checkout."
+    "text": "eCommerce Warehouse Stock\ndeltatech_website_warehouse_stock\nAcest modul afișează pe pagina produsului din magazinul online disponibilitatea în stoc a fiecărui depozit. Clienții văd dintr-o privire dacă un produs este în stoc, are stoc redus sau este indisponibil la anumite locații, ceea ce îi ajută să decidă mai ușor. Spre deosebire de funcția standard „Click & Collect\" din Odoo 18/19 (selector pe hartă), starea stocului este afișată direct pe pagină, fără clicuri sau ferestre suplimentare, iar cantitățile exacte mari sunt protejate printr-un prag configurabil. Aspectul blocului se alege per site, din setări sau din editorul de website.\nStoc pe depozit pe pagina produsului: pentru fiecare depozit bifat, se afișează stocul locației principale; numele depozitului este cel din formularul depozitului. Pe fiecare depozit există bifa Afișare pe site (activă implicit, inclusiv pe depozitele noi); se iau în calcul doar depozitele companiei site-ului.\nCantitate calculată: stocul disponibil din locația de stoc principală minus ieșirile planificate (confirmate, dar nevalidate).\nPrag configurabil: peste prag (implicit 10, unic pe bază, în setările site-ului) se afișează „Disponibil\", fără cantitatea exactă; între 0 și prag, inclusiv, se afișează cantitatea; la 0 sau negativ, „Stoc epuizat\" sau „La comandă\".\nOpțiuni de aspect, per site (*Website > Configuration > Settings*, grupul *Warehouse Stock Design*, sau din editorul de website, cu clic pe blocul din pagina produsului):\nPoziție: în detaliile produsului (implicit) sau imediat după preț;\nStil: etichete (implicit), listă cu pictograme, card sau selector de depozit (clientul alege depozitul și apasă „Verifică stocul\"; cantitățile sunt deja în pagină, fără cerere suplimentară la server);\nMesaj la stoc zero: „Stoc epuizat\" (implicit) sau „La comandă\", opțional urmat de o notă scurtă (de exemplu termenul de livrare; nota se completează doar din setări);\nAfișarea cantității: cantitatea exactă sub prag (implicit) sau doar „În stoc\";\nCulorile temei: etichete nuanțate pe culorile paginii, lizibile pe teme întunecate, în loc de verde, gri și roșu pline.\nAddon informativ complementar: completează funcția standard „Click & Collect\" (`website_sale_collect`), care alege punctul de ridicare abia la finalizarea comenzii. Stocul afișat este orientativ (calculat la încărcarea paginii), nu o rezervare.\nFluxul pas-cu-pas, verificările și erorile frecvente sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_website_watermark/index.md",
@@ -16308,17 +16336,21 @@
     "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cost_centers",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_cost_centers",
-    "last_ingest": "2026-06-08",
+    "last_ingest": "2026-11-02",
     "friendly_name": "Romania - Repartizarea cheltuielilor indirecte pe centre de cost",
-    "summary": "Modulul automatizează repartizarea cheltuielilor indirecte pe centre de cost (conturi analitice), conform contabilității de gestiune din România (OMFP 1802/2014). Costurile colectate pe un centru comun/indirect se redistribuie pe centrele productive printr-o notă contabilă care păstrează un impact financiar zero pe contul de cheltuială (creditul 6xx de pe centrul comun este egal cu debitele 6xx de pe centrele țintă), mutând costul doar pe dimensiunea analitică — fără a folosi obligatoriu conturile din clasa 9. Este un instrument de control de gestiune, neutru financiar, care nu modifică balanța contabilă.",
+    "summary": "Modulul automatizează repartizarea cheltuielilor indirecte pe centre de cost (conturi analitice), conform contabilității de gestiune din România (OMFP 1802/2014). Costurile colectate pe un centru comun sau indirect se redistribuie pe centrele productive printr-o notă contabilă cu impact financiar zero pe contul de cheltuială (creditul 6xx de pe centrul comun este egal cu debitele 6xx de pe centrele țintă): costul se mută doar pe dimensiunea analitică, fără a folosi obligatoriu conturile din clasa 9. Este un instrument de control de gestiune, neutru financiar, care nu modifică balanța contabilă. Este un modul nou în 19.0.",
     "features": [
-      "Repartizarea automată a cheltuielilor indirecte de pe un centru de cost sursă (comun/indirect) pe mai multe centre țintă (productive).",
-      "Cheie de repartizare configurabilă: manual (procente fixe), suprafață (m²), nr. angajați sau cifră de afaceri (venituri 7xx pe centru).",
+      "Repartizarea cheltuielilor indirecte de pe un centru de cost sursă (comun/indirect) pe mai multe centre țintă (productive).",
+      "Cheie de repartizare configurabilă: manual (procente fixe, care trebuie să însumeze 100%), suprafață (m²), nr. angajați sau cifră de afaceri (rulajul creditor al conturilor de venituri 7xx de pe fiecare centru țintă, în perioadă).",
       "Câmpuri proprii pe centrul de cost (cont analitic): Suprafață (m²) și Nr. angajați, folosite ca baze de repartizare.",
-      "Colectarea costului de pe centrul sursă pe o perioadă aleasă și calculul automat al procentelor și sumelor per centru țintă.",
-      "Generarea unei note contabile de redistribuire analitică echilibrată, cu impact financiar zero pe contul de cheltuială (costul migrează doar pe dimensiunea analitică).",
-      "Anularea repartizării readuce nota în ciornă și anulează nota contabilă generată.",
-      "Bazat pe contabilitatea analitică nativă Odoo; planurile analitice ierarhice, distribuția analitică obligatorie la postare, bugetele pe centre și rapoartele P&L pe dimensiuni rămân acoperite de baza nativă (analytic + Enterprise account_budget / account_reports)."
+      "Flux de lucru, în *Contabilitate → Contabilitate → Repartizare costuri indirecte*:",
+      "se completează centrul sursă, conturile de cheltuieli 6xx repartizate, jurnalul de tip Diverse (obligatoriu), perioada, cheia de repartizare și centrele țintă;",
+      "Calculează colectează totalul de pe centrul sursă în perioadă (Total de repartizat) și calculează procentele și sumele pe fiecare centru țintă;",
+      "Postează nota generează, pentru fiecare cont de cheltuială, o notă de redistribuire analitică echilibrată: o linie scoate costul de pe centrul comun, iar câte o linie îl încarcă pe fiecare centru țintă, cu distribuție analitică 100%;",
+      "Anulează readuce repartizarea în ciornă și anulează nota generată; Resetare la ciornă permite reluarea.",
+      "Utilizatorul care postează repartizările are nevoie de grupul Contabilitate / Contabil; cheltuielile de repartizat trebuie să fie deja postate pe centrul sursă, cu distribuție analitică.",
+      "Rezultatul se vede în rapoartele analitice native (profit și pierdere pe centre de cost). Planurile analitice ierarhice, distribuția analitică obligatorie la postare, bugetele pe centre și rapoartele P&L pe dimensiuni rămân acoperite de baza nativă Odoo (analytic + Enterprise `account_budget` / `account_reports`).",
+      "Pașii detaliați, cu capturi de ecran, sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
       "account",
@@ -16329,7 +16361,7 @@
       "account_budget",
       "account_reports"
     ],
-    "text": "Romania - Repartizarea cheltuielilor indirecte pe centre de cost\nl10n_ro_cost_centers\nModulul automatizează repartizarea cheltuielilor indirecte pe centre de cost (conturi analitice), conform contabilității de gestiune din România (OMFP 1802/2014). Costurile colectate pe un centru comun/indirect se redistribuie pe centrele productive printr-o notă contabilă care păstrează un impact financiar zero pe contul de cheltuială (creditul 6xx de pe centrul comun este egal cu debitele 6xx de pe centrele țintă), mutând costul doar pe dimensiunea analitică — fără a folosi obligatoriu conturile din clasa 9. Este un instrument de control de gestiune, neutru financiar, care nu modifică balanța contabilă.\nRepartizarea automată a cheltuielilor indirecte de pe un centru de cost sursă (comun/indirect) pe mai multe centre țintă (productive).\nCheie de repartizare configurabilă: manual (procente fixe), suprafață (m²), nr. angajați sau cifră de afaceri (venituri 7xx pe centru).\nCâmpuri proprii pe centrul de cost (cont analitic): Suprafață (m²) și Nr. angajați, folosite ca baze de repartizare.\nColectarea costului de pe centrul sursă pe o perioadă aleasă și calculul automat al procentelor și sumelor per centru țintă.\nGenerarea unei note contabile de redistribuire analitică echilibrată, cu impact financiar zero pe contul de cheltuială (costul migrează doar pe dimensiunea analitică).\nAnularea repartizării readuce nota în ciornă și anulează nota contabilă generată.\nBazat pe contabilitatea analitică nativă Odoo; planurile analitice ierarhice, distribuția analitică obligatorie la postare, bugetele pe centre și rapoartele P&L pe dimensiuni rămân acoperite de baza nativă (analytic + Enterprise account_budget / account_reports)."
+    "text": "Romania - Repartizarea cheltuielilor indirecte pe centre de cost\nl10n_ro_cost_centers\nModulul automatizează repartizarea cheltuielilor indirecte pe centre de cost (conturi analitice), conform contabilității de gestiune din România (OMFP 1802/2014). Costurile colectate pe un centru comun sau indirect se redistribuie pe centrele productive printr-o notă contabilă cu impact financiar zero pe contul de cheltuială (creditul 6xx de pe centrul comun este egal cu debitele 6xx de pe centrele țintă): costul se mută doar pe dimensiunea analitică, fără a folosi obligatoriu conturile din clasa 9. Este un instrument de control de gestiune, neutru financiar, care nu modifică balanța contabilă. Este un modul nou în 19.0.\nRepartizarea cheltuielilor indirecte de pe un centru de cost sursă (comun/indirect) pe mai multe centre țintă (productive).\nCheie de repartizare configurabilă: manual (procente fixe, care trebuie să însumeze 100%), suprafață (m²), nr. angajați sau cifră de afaceri (rulajul creditor al conturilor de venituri 7xx de pe fiecare centru țintă, în perioadă).\nCâmpuri proprii pe centrul de cost (cont analitic): Suprafață (m²) și Nr. angajați, folosite ca baze de repartizare.\nFlux de lucru, în *Contabilitate → Contabilitate → Repartizare costuri indirecte*:\nse completează centrul sursă, conturile de cheltuieli 6xx repartizate, jurnalul de tip Diverse (obligatoriu), perioada, cheia de repartizare și centrele țintă;\nCalculează colectează totalul de pe centrul sursă în perioadă (Total de repartizat) și calculează procentele și sumele pe fiecare centru țintă;\nPostează nota generează, pentru fiecare cont de cheltuială, o notă de redistribuire analitică echilibrată: o linie scoate costul de pe centrul comun, iar câte o linie îl încarcă pe fiecare centru țintă, cu distribuție analitică 100%;\nAnulează readuce repartizarea în ciornă și anulează nota generată; Resetare la ciornă permite reluarea.\nUtilizatorul care postează repartizările are nevoie de grupul Contabilitate / Contabil; cheltuielile de repartizat trebuie să fie deja postate pe centrul sursă, cu distribuție analitică.\nRezultatul se vede în rapoartele analitice native (profit și pierdere pe centre de cost). Planurile analitice ierarhice, distribuția analitică obligatorie la postare, bugetele pe centre și rapoartele P&L pe dimensiuni rămân acoperite de baza nativă Odoo (analytic + Enterprise `account_budget` / `account_reports`).\nPașii detaliați, cu capturi de ecran, sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
   },
   {
     "path": "l10n_ro_currency_revaluation/index.md",
@@ -17011,7 +17043,7 @@
   {
     "path": "l10n_ro_environmental_tax/index.md",
     "module": "l10n_ro_environmental_tax",
-    "version": "19.0.1.5.4",
+    "version": "19.0.1.5.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_environmental_tax",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_environmental_tax",
     "last_ingest": null,
@@ -17503,12 +17535,13 @@
     "version": "19.0.0.0.5",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_footer_anpc",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_footer_anpc",
-    "last_ingest": "2026-06-08",
-    "friendly_name": "România - Footer ANPC",
-    "summary": "Acest modul adaugă în footer-ul site-ului web pozele și link-urile ANPC (Autoritatea Națională pentru Protecția Consumatorilor). Scopul său este să ajute magazinele online din România să afișeze elementele obligatorii de protecția consumatorului — pictogramele ANPC pentru Soluționarea Alternativă a Litigiilor (SAL) și Soluționarea Online a Litigiilor (SOL) — direct în subsolul paginilor, conform cerințelor legale.",
+    "last_ingest": "2026-11-02",
+    "friendly_name": "Romania - ANPC footer",
+    "summary": "Acest modul afișează în footer-ul site-ului, pe rândul de copyright, pictograma ANPC „Soluționarea alternativă a litigiilor\" (SAL), cu link către platforma `https://reclamatiisal.anpc.ro`. Ajută magazinele online din România să respecte obligația de informare a consumatorilor prevăzută de Ordinul ANPC nr. 449/2022, modificat prin Ordinul ANPC nr. 270/2026 (Monitorul Oficial nr. 420 din 19 mai 2026). Nu necesită configurare: după instalare, pictograma apare în subsolul tuturor paginilor.",
     "features": [
-      "Afișează pozele (logo-urile) ANPC în footer-ul site-ului web.",
-      "Adaugă link-urile ANPC către platformele de soluționare a litigiilor în subsolul paginilor."
+      "Afișează în footer, pe rândul de copyright, pictograma SAL oficială publicată de ANPC (pe `https://www.anpc.ro/sal`), într-o casetă de 250 x 50 pixeli, cu link către `https://reclamatiisal.anpc.ro/` (se deschide într-o filă nouă).",
+      "Pictograma SOL (platforma europeană ODR) nu mai este afișată: platforma a fost închisă la 20 iulie 2025 (Regulamentul (UE) 2024/3228), iar Ordinul ANPC nr. 270/2026 a eliminat-o din obligația de afișare.",
+      "Blocul ANPC urmează rândul de copyright și este aliniat la dreapta pe ecrane medii și mari (Bootstrap 5); imaginea are text alternativ."
     ],
     "dependencies": [
       "website"
@@ -17516,7 +17549,7 @@
     "connections": [
       "website"
     ],
-    "text": "România - Footer ANPC\nl10n_ro_footer_anpc\nAcest modul adaugă în footer-ul site-ului web pozele și link-urile ANPC (Autoritatea Națională pentru Protecția Consumatorilor). Scopul său este să ajute magazinele online din România să afișeze elementele obligatorii de protecția consumatorului — pictogramele ANPC pentru Soluționarea Alternativă a Litigiilor (SAL) și Soluționarea Online a Litigiilor (SOL) — direct în subsolul paginilor, conform cerințelor legale.\nAfișează pozele (logo-urile) ANPC în footer-ul site-ului web.\nAdaugă link-urile ANPC către platformele de soluționare a litigiilor în subsolul paginilor."
+    "text": "Romania - ANPC footer\nl10n_ro_footer_anpc\nAcest modul afișează în footer-ul site-ului, pe rândul de copyright, pictograma ANPC „Soluționarea alternativă a litigiilor\" (SAL), cu link către platforma `https://reclamatiisal.anpc.ro`. Ajută magazinele online din România să respecte obligația de informare a consumatorilor prevăzută de Ordinul ANPC nr. 449/2022, modificat prin Ordinul ANPC nr. 270/2026 (Monitorul Oficial nr. 420 din 19 mai 2026). Nu necesită configurare: după instalare, pictograma apare în subsolul tuturor paginilor.\nAfișează în footer, pe rândul de copyright, pictograma SAL oficială publicată de ANPC (pe `https://www.anpc.ro/sal`), într-o casetă de 250 x 50 pixeli, cu link către `https://reclamatiisal.anpc.ro/` (se deschide într-o filă nouă).\nPictograma SOL (platforma europeană ODR) nu mai este afișată: platforma a fost închisă la 20 iulie 2025 (Regulamentul (UE) 2024/3228), iar Ordinul ANPC nr. 270/2026 a eliminat-o din obligația de afișare.\nBlocul ANPC urmează rândul de copyright și este aliniat la dreapta pe ecrane medii și mari (Bootstrap 5); imaginea are text alternativ."
   },
   {
     "path": "l10n_ro_force_reconcile/index.md",
@@ -21447,27 +21480,31 @@
   {
     "path": "l10n_ro_zip/index.md",
     "module": "l10n_ro_zip",
-    "version": "19.0.0.0.6",
-    "github": "`https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_zip`",
+    "version": "19.0.0.0.11",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_zip",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_zip",
-    "last_ingest": "2026-06-08",
-    "friendly_name": "Romania - Coduri Poștale",
-    "summary": "Modulul oferă o bază de date completă a codurilor poștale din România, gata de folosit imediat după instalare. Sunt importate automat aproximativ 52.000 de coduri poștale, fiecare legat de județul și localitatea corespunzătoare. La completarea adresei unui partener, utilizatorul poate alege codul poștal dintr-o listă filtrată după localitate, iar câmpul standard de cod poștal se completează automat. Astfel se elimină erorile de introducere manuală și se asigură date de adresă corecte și consistente, utile pentru livrări, facturare și raportări.",
+    "last_ingest": "2026-11-02",
+    "friendly_name": "Romania - Postal Codes",
+    "summary": "Modulul oferă o bază de date cu codurile poștale din România, gata de folosit imediat după instalare. Sunt importate automat aproximativ 52.000 de coduri poștale, fiecare legat de județul și localitatea corespunzătoare, în marile orașe la nivel de stradă. La completarea adresei unui partener, utilizatorul caută strada în câmpul de cod poștal, iar codul, localitatea, județul și țara se completează automat. Astfel se elimină erorile de introducere manuală și se asigură date de adresă corecte, utile pentru livrări, facturare și e-Factura.",
     "features": [
-      "Adaugă modelul `res.zip` cu ~52.000 de înregistrări de coduri poștale românești, fiecare conținând: cod poștal, localitate, județ, tip stradă, nume stradă, sector (București), oficiu poștal.",
-      "Datele sunt importate automat la instalare dintr-un fișier SQL și sunt corelate cu județele și localitățile din modulul `l10n_ro_city`.",
-      "Extinde formularul partenerului (`res.partner`) cu câmpul `Cod Poștal (zip_id)`, filtrat după localitate, care completează automat câmpul standard `zip` la selecție.",
-      "Căutarea codurilor poștale funcționează atât după codul numeric, cât și după numele străzii.",
-      "Suportă sectoarele municipiului București (1–6) cu legătură directă la localitățile corespunzătoare."
+      "Adaugă modelul `res.zip` cu ~52.000 de înregistrări de coduri poștale românești, fiecare conținând: cod poștal, localitate, județ, țară, tip stradă, nume stradă, sector (București), oficiu poștal și adresa oficiului.",
+      "Datele sunt importate automat la instalare dintr-un fișier SQL, corelate cu județele și localitățile din `l10n_ro_city`, și se actualizează la upgrade printr-o migrare; partenerii își păstrează codul poștal. Ultima actualizare (19.0.0.0.11) aduce date reîmprospătate de pe posta-romana.ro pentru Sfântu Gheorghe, Bacău și Iași, plus străzi din OpenStreetMap (licență ODbL) pentru orașe mici, precum Huși, Negrești, Murgeni, Tecuci, Târgu Bujor și Berești.",
+      "Consultare: *Contacts → Configuration → Localization → Zip Codes*, cu căutare după primele cifre ale codului.",
+      "Extinde formularul partenerului (`res.partner`) cu câmpul `Cod Poștal (zip_id)`, sub localitate, filtrat după localitatea partenerului. La selecție completează codul poștal standard (`zip`), localitatea, județul și țara; strada și numărul adresei rămân cum au fost introduse. Dacă se schimbă localitatea ulterior, strada se alege din nou.",
+      "Căutarea funcționează după codul numeric, după numele străzii sau după tipul străzii. Ordinea cuvintelor nu contează („Nicolae Balcescu\" găsește „Balcescu Nicolae\"), iar datele oficiului poștal nu au diacritice, deci căutarea fără diacritice este mai sigură.",
+      "Lista derulantă arată strada și, estompat, codul poștal, localitatea, sectorul și județul.",
+      "Suportă sectoarele municipiului București (1–6): localitatea este sectorul, iar câmpul Sector reține numărul lui.",
+      "Pașii detaliați, cu capturi de ecran, sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
       "base_address_extended",
       "l10n_ro_city"
     ],
     "connections": [
-      "l10n_ro_city"
+      "l10n_ro_city",
+      "base_address_extended"
     ],
-    "text": "Romania - Coduri Poștale\nl10n_ro_zip\nModulul oferă o bază de date completă a codurilor poștale din România, gata de folosit imediat după instalare. Sunt importate automat aproximativ 52.000 de coduri poștale, fiecare legat de județul și localitatea corespunzătoare. La completarea adresei unui partener, utilizatorul poate alege codul poștal dintr-o listă filtrată după localitate, iar câmpul standard de cod poștal se completează automat. Astfel se elimină erorile de introducere manuală și se asigură date de adresă corecte și consistente, utile pentru livrări, facturare și raportări.\nAdaugă modelul `res.zip` cu ~52.000 de înregistrări de coduri poștale românești, fiecare conținând: cod poștal, localitate, județ, tip stradă, nume stradă, sector (București), oficiu poștal.\nDatele sunt importate automat la instalare dintr-un fișier SQL și sunt corelate cu județele și localitățile din modulul `l10n_ro_city`.\nExtinde formularul partenerului (`res.partner`) cu câmpul `Cod Poștal (zip_id)`, filtrat după localitate, care completează automat câmpul standard `zip` la selecție.\nCăutarea codurilor poștale funcționează atât după codul numeric, cât și după numele străzii.\nSuportă sectoarele municipiului București (1–6) cu legătură directă la localitățile corespunzătoare."
+    "text": "Romania - Postal Codes\nl10n_ro_zip\nModulul oferă o bază de date cu codurile poștale din România, gata de folosit imediat după instalare. Sunt importate automat aproximativ 52.000 de coduri poștale, fiecare legat de județul și localitatea corespunzătoare, în marile orașe la nivel de stradă. La completarea adresei unui partener, utilizatorul caută strada în câmpul de cod poștal, iar codul, localitatea, județul și țara se completează automat. Astfel se elimină erorile de introducere manuală și se asigură date de adresă corecte, utile pentru livrări, facturare și e-Factura.\nAdaugă modelul `res.zip` cu ~52.000 de înregistrări de coduri poștale românești, fiecare conținând: cod poștal, localitate, județ, țară, tip stradă, nume stradă, sector (București), oficiu poștal și adresa oficiului.\nDatele sunt importate automat la instalare dintr-un fișier SQL, corelate cu județele și localitățile din `l10n_ro_city`, și se actualizează la upgrade printr-o migrare; partenerii își păstrează codul poștal. Ultima actualizare (19.0.0.0.11) aduce date reîmprospătate de pe posta-romana.ro pentru Sfântu Gheorghe, Bacău și Iași, plus străzi din OpenStreetMap (licență ODbL) pentru orașe mici, precum Huși, Negrești, Murgeni, Tecuci, Târgu Bujor și Berești.\nConsultare: *Contacts → Configuration → Localization → Zip Codes*, cu căutare după primele cifre ale codului.\nExtinde formularul partenerului (`res.partner`) cu câmpul `Cod Poștal (zip_id)`, sub localitate, filtrat după localitatea partenerului. La selecție completează codul poștal standard (`zip`), localitatea, județul și țara; strada și numărul adresei rămân cum au fost introduse. Dacă se schimbă localitatea ulterior, strada se alege din nou.\nCăutarea funcționează după codul numeric, după numele străzii sau după tipul străzii. Ordinea cuvintelor nu contează („Nicolae Balcescu\" găsește „Balcescu Nicolae\"), iar datele oficiului poștal nu au diacritice, deci căutarea fără diacritice este mai sigură.\nLista derulantă arată strada și, estompat, codul poștal, localitatea, sectorul și județul.\nSuportă sectoarele municipiului București (1–6): localitatea este sectorul, iar câmpul Sector reține numărul lui.\nPașii detaliați, cu capturi de ecran, sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
   },
   {
     "path": "terrabit_ai_olg/index.md",
