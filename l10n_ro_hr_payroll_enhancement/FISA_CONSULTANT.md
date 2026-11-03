@@ -274,6 +274,9 @@ rezultatul sau fac salariatul de nedeclarat. La Barbu Mihai apar două: **CNP li
 și **copil înscris în învățământ fără CNP valid** (deducerea pentru copil nu se acordă). Fiecare mesaj are un link către
 fișa angajatului, unde se corectează datele; apoi recalculați fluturașul cu **Calculați bilanțul**.
 
+Zilele de **concediu medical fără certificat confirmat** apar și ele în banner, cu datele lor: tipul *Concediu medical*
+nu se plătește ca salariu, iar indemnizația se calculează doar din certificate. Linkul deschide certificatele angajatului.
+
 Verificați că bannerul nu mai conține mesaje înainte de **Validează**; un fluturaș validat cu avertizări rămase produce
 neconcordanțe în D112.
 
@@ -309,7 +312,10 @@ Pasul 12 (de aceea impozitul diferă de cel din Pasul 12).
 **Stat de plată → Angajați → Certificate medicale (RO) → Nou**: completați angajatul, **seria și numărul certificatului** (D_1, D_2),
 data eliberării, perioada **De la / Până la** (D_6, D_7), **Codul de indemnizație** (D_9; aici 01 – boală obișnuită), locul de
 prescriere, codul de diagnostic și, după caz, urgența, boala infecto-contagioasă, spitalizarea sau programul național. Apăsați **Confirmă**.
-La confirmare se creează automat concediul medical al angajatului (câmpul *Concediu*).
+La confirmare, certificatul se leagă de concediul medical al angajatului (câmpul *Concediu*). Dacă salariatul a cerut concediul
+medical în **Time Off** și managerul l-a aprobat pentru toată perioada certificatului, se folosește acel concediu. Altfel se creează
+automat. Când perioada se suprapune cu un alt concediu (alt tip, neaprobat sau doar o parte din zile), confirmarea se oprește și mesajul
+numește concediul de ajustat. Un al doilea certificat confirmat pe aceleași zile ale salariatului este refuzat: anulați duplicatul.
 
 Secțiunea **Baza de calcul (art. 10)** arată venitul pe ultimele 6 luni (D_17), zilele (D_18) și **media zilnică** (D_19). Baza vine din
 fluturașii validați; când angajatul vine de la alt angajator se alege sursa *Manual* și se introduc valorile din adeverință (aici 30.000 lei
@@ -317,7 +323,29 @@ fluturașii validați; când angajatul vine de la alt angajator se alege sursa *
 cele două indemnizații se calculează singure: **zile angajator** (D_14a) = 5, din care 4 plătite, și **zile FNUASS** (D_15) = 3;
 indemnizația angajatorului **619 lei** (4 × 238,10 × 65%) și cea din FNUASS **464 lei** (3 × 238,10 × 65%).
 
-Verificați: perioada nu se suprapune cu alt certificat al angajatului, seria/numărul sunt cele din certificat, iar baza de calcul nu e goală.
+Sursa bazei are trei variante (art. 10, art. 7 OUG 158/2005):
+- **Din fluturașii validați**: ultimele 6 luni cu venit din 12. La codurile plătite fără stagiu minim (urgențe, TBC, boli
+  infecto-contagioase din grupa A, cancer, SIDA, carantină, arsuri, risc maternal, accident de muncă, accident pe traseu și boală
+  profesională; bifa *Fără stagiu minim* din nomenclator), un angajat fără niciun fluturaș validat primește baza din **salariul din
+  contract pe zilele lucrătoare ale lunii** (art. 10 alin. 6, prima lună de activitate).
+- **Manual**: venitul și zilele din adeverința angajatorului anterior, când stagiul s-a realizat la alt angajator. Alegeți *Manual*
+  ori de câte ori există adeverință de stagiu, **și la codurile fără stagiu minim**: cu 6 luni de stagiu dovedite, baza e media pe 6
+  luni (art. 10 alin. 1), nu salariul primei luni.
+- **Fără drept la indemnizație**: stagiu sub 6 luni din ultimele 12 la un cod care îl cere (de exemplu 01, art. 7). Certificatul se
+  confirmă, concediul se înregistrează, iar indemnizațiile sunt 0. Opțiunea e refuzată la codurile fără stagiu minim.
+
+Cu sursa *Din fluturașii validați*, un angajat fără fluturași la un cod care cere stagiu (angajat nou) **nu se poate confirma**: Confirmă
+afișează mesajul despre baza de calcul lipsă (secțiunea 9). Alegeți *Manual*, cu valorile din adeverință, sau *Fără drept la indemnizație*,
+dacă stagiul total e sub 6 luni.
+
+Stagiul se poate realiza și la alt angajator (art. 8), de aceea modulul nu blochează, ci afișează o **avertizare** în capul certificatului
+când sursa nu se potrivește cu lunile cu venit de la acest angajator: *Fără drept la indemnizație* cu 6 luni cu venit în ultimele 12,
+sau *Din fluturașii validați* cu 1–5 luni la un cod care cere stagiu. Zilele unui certificat fără drept nu sunt stagiu (fără indemnizație nu sunt perioadă asimilată
+stagiului, art. 8 alin. 2 lit. a): nu intră în zilele bazei la certificatele următoare. În D112 certificatul fără drept **nu are secțiunea D** (validatorul ANAF
+respinge zilele de indemnizație cu baza de calcul 0); zilele lui apar ca zile de concediu medical, în afara zilelor cu contract activ.
+
+Verificați: perioada nu se suprapune cu alt certificat al angajatului, seria/numărul sunt cele din certificat, iar baza de calcul nu e goală
+(cu excepția certificatelor fără drept la indemnizație).
 
 ![Certificat de concediu medical confirmat, cu baza de calcul și indemnizațiile](screenshots/15_certificat_medical.png)
 
@@ -616,6 +644,18 @@ plata ajutoarelor și a transportului, care se fac în afara statului.
 - [ ] La 4 ore pe zi, 2.200 brut + 300 primă: net 1.549, diferențe CAS / CASS 406 / 163, cost total angajator 3.125 (cu puntea D112).
 - [ ] Reținerile deductibile reduc impozitul, nu și deducerea personală; plafonul de 400 EUR/an se respectă (Iliescu Radu: impozit 254, net 2.946).
 - [ ] Certificat CMB 0000101, 14–23.09.2026, cod 01, bază manuală 30.000/126: media 238,10; angajator 619; FNUASS 464.
+- [ ] Angajat nou, fără fluturași, cod 01, sursa *Din fluturașii validați*: Confirmă e refuzat cu mesajul despre baza lipsă; cu sursa
+      *Fără drept la indemnizație* se confirmă, indemnizațiile sunt 0, fluturașul nu are linii de concediu medical cu sumă, iar D112 nu
+      are secțiunea D pentru el și trece de DUKIntegrator.
+- [ ] Același angajat, cod 06 (urgență), sursa *Din fluturașii validați*: baza = salariul din contract pe zilele lucrătoare ale lunii
+      (5.000 / 22 = 227,27 lei/zi în septembrie 2026); sursa *Fără drept la indemnizație* este refuzată.
+- [ ] Angajat cu 2 luni de fluturași, cod 01, sursa *Din fluturașii validați*: certificatul arată avertizarea despre stagiu, dar se poate
+      trece pe *Fără drept la indemnizație*; zilele lui nu intră în zilele bazei unui certificat ulterior.
+- [ ] Concediu medical cerut în Time Off și aprobat pe toată perioada certificatului: la **Confirmă**, câmpul *Concediu* arată acel
+      concediu și nu apare un al doilea concediu medical pe aceleași zile. Un al doilea certificat pe aceleași zile nu se poate confirma.
+- [ ] Concediu medical aprobat în Time Off pe 14–15.09.2026, fără certificat: bannerul fluturașului din septembrie arată
+      „2 zi(le) de concediu medical fără certificat confirmat (14.09.2026, 15.09.2026)”, cu linkul *Certificate medicale*.
+      După confirmarea certificatului pe aceleași zile și **Calculați bilanțul**, mesajul dispare.
 - [ ] Continuarea (CMB 0000202) are seria/numărul inițial completate, fără a doua zi neplătită, iar suma plătită pe episod nu depășește cea datorată.
 - [ ] Normă întreagă, 1 zi lucrată + 21 de zile de concediu medical: fără *Diferență CAS / CASS până la baza minimă* (pragul 188 e
       sub salariul pe ziua lucrată); la normă parțială cu concediu medical, diferența se calculează doar pe salariu.
@@ -646,7 +686,11 @@ plata ajutoarelor și a transportului, care se fac în afara statului.
 | Avertisment la data nașterii | Data nașterii diferă de cea din CNP | Corectați una dintre ele; se folosește câmpul Data nașterii |
 | Tichetele nu apar pe fluturaș | Angajatul nu are bifa Tichete de masă | Bifați-o pe fila Stat de plată |
 | CNP lipsă: salariatul nu poate fi declarat în D112 | Angajatul nu are CNP completat | Completați CNP-ul pe fișa angajatului |
-| Fluturașul nu arată concediul medical | Certificatul nu e confirmat sau perioada nu intră în luna fluturașului | Confirmați certificatul și recalculați fluturașul |
+| Certificatul … nu are bază de calcul: nu există fluturași validați; introduceți baza manual. | Sursa *Din fluturașii validați* la un angajat fără fluturași în ultimele 12 luni, la un cod care cere stagiu (apare la Confirmă și la calculul fluturașului) | Sursa *Manual*, cu valorile din adeverința angajatorului anterior, sau *Fără drept la indemnizație* dacă stagiul e sub 6 luni (art. 7) |
+| Codul … se plătește fără stagiu minim de asigurare … certificatul nu poate fi marcat fără drept la indemnizație. | Sursa *Fără drept la indemnizație* la un cod plătit fără stagiu (art. 9 și 31) | Lăsați sursa *Din fluturașii validați* (baza din salariul primei luni) sau *Manual* |
+| Avertizare „zi(le) de concediu medical fără certificat confirmat” | Concediul medical e în Time Off sau în pontaj, dar certificatul lipsește, nu e confirmat sau nu acoperă zilele | Introduceți și confirmați certificatul, apoi recalculați fluturașul |
+| Perioada certificatului … se suprapune cu concediul …, care nu o acoperă ca concediu medical aprobat | Pe zilele certificatului există un concediu de alt tip, neaprobat încă sau care acoperă doar o parte din perioadă | Ajustați concediul din Time Off (tipul, aprobarea sau datele), apoi confirmați certificatul |
+| Perioada certificatului … se suprapune cu certificatul confirmat … al aceluiași angajat | Pe aceleași zile există deja un certificat confirmat | Anulați duplicatul sau corectați datele |
 | Decontarea FNUASS spune că nu există indemnizații | Nu există fluturași validați cu concedii medicale | Validați fluturașii lunii înainte de export |
 | Concediul de odihnă se plătește pe salariul curent | Lipsesc fluturașii validați pe lunile de referință | Validați fluturașii lunilor anterioare sau acceptați baza din contract |
 | Parametri lipsă la o dată | Lipsește valoarea parametrului pentru perioada respectivă | Adăugați o valoare nouă cu data de început corectă |

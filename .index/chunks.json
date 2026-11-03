@@ -24,27 +24,26 @@
   {
     "path": "deltatech_access/index.md",
     "module": "deltatech_access",
-    "version": "19.0.0.0.8",
-    "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_access`",
+    "version": "19.0.0.0.9",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_access",
     "local_path": "odoo-addons/bitshop/deltatech_access",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Access Field",
-    "summary": "Modulul **Access Field** oferă administratorilor Odoo posibilitatea de a controla, în mod granular, accesul la câmpuri specifice din vederi (views), în funcție de grupurile de utilizatori. Astfel, se poate limita capacitatea utilizatorilor de a vizualiza sau modifica anumite câmpuri sensibile, fără a fi necesare modificări complexe de cod sau personalizări avansate. Modulul se integrează direct cu sistemul de drepturi de acces Odoo și este ușor de configurat prin interfața administrativă.",
+    "last_ingest": "2026-11-03",
+    "friendly_name": "Access Field Control",
+    "summary": "Modulul **Access Field Control** permite administratorilor să restrângă ce pot vedea sau modifica anumite grupuri de utilizatori pe produse, fără formulare personalizate și fără cod. Pentru fiecare regulă se alege câmpul, grupul și restricția dorită, iar regulile se definesc direct pe vizualizarea produsului. Astfel, de exemplu, un agent de vânzări poate vedea prețul de vânzare doar în citire, fără costul produsului, iar referința poate deveni obligatorie.",
     "features": [
-      "Permite controlul detaliat al accesului la câmpuri specifice în vederile (views) Odoo",
-      "Configurarea drepturilor de acces pe bază de grupuri de utilizatori",
-      "Posibilitatea de a marca câmpuri ca fiind `readonly` (doar citire) pentru grupuri specifice",
-      "Posibilitatea de a seta câmpuri ca fiind `required` (obligatorii) pentru anumite grupuri",
-      "Posibilitatea de a ascunde complet câmpuri prin marcarea lor ca `invisible` în funcție de grupul utilizatorului",
-      "Restricționarea accesului la câmpuri sensibile pentru anumite grupuri de utilizatori",
-      "Interfață simplă pentru gestionarea accesului la câmpuri, integrată cu sistemul de drepturi de acces Odoo"
+      "Reguli pe grupuri de utilizatori: un câmp poate fi marcat pentru un grup ca `readonly` (se vede, dar nu se modifică), `required` (trebuie completat) sau `invisible` (ascuns). O regulă fără grup se aplică tuturor utilizatorilor, inclusiv administratorului. Regulile se aplică și utilizatorilor care au grupul prin alt grup (grupuri implicate).",
+      "Reguli pe vizualizare: regulile se definesc în fila Access Field a vizualizării, din Settings > Technical > User Interface > Views (în modul dezvoltator); nu există un meniu separat. La o linie nouă se aleg Group și Field (Field Name se completează automat), apoi Readonly, Required sau Invisible.",
+      "Container și XPath: în Field Name se poate introduce și numele sau id-ul unui grup, bloc sau pagină din formular (cu Field gol și Invisible bifat, elementul se ascunde) sau o expresie XPath (orice text care conține `//`).",
+      "Domeniu de aplicare: regulile se aplică formularelor și listelor de produs (`product.template` și `product.product`); regulile salvate pe alte modele nu au efect încă.",
+      "Alegerea vizualizării: dacă un meniu deschide produsul fără o vizualizare anume, se aplică regulile tuturor vizualizărilor de produs; dacă o numește, se aplică doar regulile salvate pe ea. Listele de produse din Invoicing > Customers > Products / Sales > Products > Products și din Invoicing > Vendors > Products își numesc vizualizarea, deci pentru a ascunde Cost și acolo se adaugă aceeași regulă pe ambele liste.",
+      "Limitări: sunt restricții de interfață, nu drepturi de acces (câmpurile pot fi modificate prin import sau API); după schimbarea unei reguli, utilizatorul restricționat reîncarcă pagina (F5); orice utilizator intern poate modifica regulile (drepturile pe model sunt acordate grupului Internal User)."
     ],
     "dependencies": [
       "base",
       "product"
     ],
     "connections": [],
-    "text": "Access Field\ndeltatech_access\nModulul **Access Field** oferă administratorilor Odoo posibilitatea de a controla, în mod granular, accesul la câmpuri specifice din vederi (views), în funcție de grupurile de utilizatori. Astfel, se poate limita capacitatea utilizatorilor de a vizualiza sau modifica anumite câmpuri sensibile, fără a fi necesare modificări complexe de cod sau personalizări avansate. Modulul se integrează direct cu sistemul de drepturi de acces Odoo și este ușor de configurat prin interfața administrativă.\nPermite controlul detaliat al accesului la câmpuri specifice în vederile (views) Odoo\nConfigurarea drepturilor de acces pe bază de grupuri de utilizatori\nPosibilitatea de a marca câmpuri ca fiind `readonly` (doar citire) pentru grupuri specifice\nPosibilitatea de a seta câmpuri ca fiind `required` (obligatorii) pentru anumite grupuri\nPosibilitatea de a ascunde complet câmpuri prin marcarea lor ca `invisible` în funcție de grupul utilizatorului\nRestricționarea accesului la câmpuri sensibile pentru anumite grupuri de utilizatori\nInterfață simplă pentru gestionarea accesului la câmpuri, integrată cu sistemul de drepturi de acces Odoo"
+    "text": "Access Field Control\ndeltatech_access\nModulul **Access Field Control** permite administratorilor să restrângă ce pot vedea sau modifica anumite grupuri de utilizatori pe produse, fără formulare personalizate și fără cod. Pentru fiecare regulă se alege câmpul, grupul și restricția dorită, iar regulile se definesc direct pe vizualizarea produsului. Astfel, de exemplu, un agent de vânzări poate vedea prețul de vânzare doar în citire, fără costul produsului, iar referința poate deveni obligatorie.\nReguli pe grupuri de utilizatori: un câmp poate fi marcat pentru un grup ca `readonly` (se vede, dar nu se modifică), `required` (trebuie completat) sau `invisible` (ascuns). O regulă fără grup se aplică tuturor utilizatorilor, inclusiv administratorului. Regulile se aplică și utilizatorilor care au grupul prin alt grup (grupuri implicate).\nReguli pe vizualizare: regulile se definesc în fila Access Field a vizualizării, din Settings > Technical > User Interface > Views (în modul dezvoltator); nu există un meniu separat. La o linie nouă se aleg Group și Field (Field Name se completează automat), apoi Readonly, Required sau Invisible.\nContainer și XPath: în Field Name se poate introduce și numele sau id-ul unui grup, bloc sau pagină din formular (cu Field gol și Invisible bifat, elementul se ascunde) sau o expresie XPath (orice text care conține `//`).\nDomeniu de aplicare: regulile se aplică formularelor și listelor de produs (`product.template` și `product.product`); regulile salvate pe alte modele nu au efect încă.\nAlegerea vizualizării: dacă un meniu deschide produsul fără o vizualizare anume, se aplică regulile tuturor vizualizărilor de produs; dacă o numește, se aplică doar regulile salvate pe ea. Listele de produse din Invoicing > Customers > Products / Sales > Products > Products și din Invoicing > Vendors > Products își numesc vizualizarea, deci pentru a ascunde Cost și acolo se adaugă aceeași regulă pe ambele liste.\nLimitări: sunt restricții de interfață, nu drepturi de acces (câmpurile pot fi modificate prin import sau API); după schimbarea unei reguli, utilizatorul restricționat reîncarcă pagina (F5); orice utilizator intern poate modifica regulile (drepturile pe model sunt acordate grupului Internal User)."
   },
   {
     "path": "deltatech_account/index.md",
@@ -443,7 +442,7 @@
   {
     "path": "deltatech_actions/index.md",
     "module": "deltatech_actions",
-    "version": "19.0.0.9.12",
+    "version": "19.0.0.9.13",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_actions",
     "local_path": "odoo-addons/deltatech/deltatech_actions",
     "last_ingest": "2026-09-29",
@@ -486,7 +485,7 @@
   {
     "path": "deltatech_advanced_planner/index.md",
     "module": "deltatech_advanced_planner",
-    "version": "19.0.1.13.0",
+    "version": "19.0.1.14.0",
     "github": "`https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_advanced_planner`",
     "local_path": "odoo-addons/bitshop_ent/deltatech_advanced_planner",
     "last_ingest": "2026-10-27",
@@ -1707,7 +1706,7 @@
   {
     "path": "deltatech_barcode_picking/index.md",
     "module": "deltatech_barcode_picking",
-    "version": "19.0.2.2.8",
+    "version": "19.0.2.2.9",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_barcode_picking",
     "local_path": "odoo-addons/bitshop/deltatech_barcode_picking",
     "last_ingest": "2026-07-31",
@@ -1794,7 +1793,7 @@
   {
     "path": "deltatech_brand_field/index.md",
     "module": "deltatech_brand_field",
-    "version": "19.0.0.0.6",
+    "version": "19.0.0.0.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_brand_field",
     "local_path": "odoo-addons/bitshop/deltatech_brand_field",
     "last_ingest": "2026-10-31",
@@ -2307,7 +2306,7 @@
   {
     "path": "deltatech_cmr_document/index.md",
     "module": "deltatech_cmr_document",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_cmr_document",
     "local_path": "odoo-addons/bitshop/deltatech_cmr_document",
     "last_ingest": "2026-08-20",
@@ -2515,15 +2514,17 @@
     "version": "19.0.0.0.3",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_crm_fsm",
     "local_path": "odoo-addons/bitshop_ent/deltatech_crm_fsm",
-    "last_ingest": "2026-06-09",
-    "friendly_name": "Deltatech CRM FSM",
+    "last_ingest": "2026-11-03",
+    "friendly_name": "CRM + FSM Bridge",
     "summary": "Acest modul leagă oportunitățile din CRM de sarcinile din Project/FSM și permite crearea rapidă a unei sarcini direct dintr-o oportunitate. În multe fluxuri de vânzare este necesară o vizită pe teren înainte de a întocmi o ofertă (recunoaștere la fața locului, colectare de date, măsurători). Pornind de la oportunitate, utilizatorii pot crea o sarcină asociată pentru echipa de teren și pot urmări ulterior toate sarcinile conectate la acea oportunitate.",
     "features": [
-      "Adaugă un câmp „Oportunitate\" pe sarcinile de proiect (`project.task.lead_id`).",
+      "Adaugă un câmp Lead (oportunitate) pe sarcinile de proiect (`project.task.lead_id`).",
       "Pe formularul oportunității:",
-      "Buton inteligent „Tasks\" care afișează numărul de sarcini asociate și le deschide; dacă există o singură sarcină, aceasta se deschide direct în vizualizare formular.",
-      "Buton de antet „Create FSM Task\" pentru a crea rapid o sarcină precompletată cu oportunitatea, partenerul și un nume contextual.",
-      "Căutare și grupare după Oportunitate în vizualizările de sarcini. Oportunitatea este vizibilă și ca o coloană în listele de sarcini."
+      "Buton inteligent Tasks, care afișează numărul de sarcini asociate și le deschide; dacă există o singură sarcină, aceasta se deschide direct în vizualizare formular.",
+      "Buton de antet Create FSM Task, pentru a crea rapid o sarcină precompletată cu oportunitatea, partenerul și un nume contextual (`[Lead] <nume oportunitate>`); sarcina rămâne legată de oportunitate.",
+      "Căutare și grupare după Lead în vizualizările de sarcini; Lead apare și ca o coloană în listele de sarcini.",
+      "Fluxul de utilizare: se deschide o oportunitate din CRM, se apasă Create FSM Task, apoi se folosește butonul Tasks pentru a naviga și a gestiona sarcinile aferente.",
+      "Securitate: butoanele și accesul la sarcini urmează permisiunile din Project, de regulă disponibile utilizatorilor din grupul Project User."
     ],
     "dependencies": [
       "crm",
@@ -2533,7 +2534,7 @@
       "crm",
       "project"
     ],
-    "text": "Deltatech CRM FSM\ndeltatech_crm_fsm\nAcest modul leagă oportunitățile din CRM de sarcinile din Project/FSM și permite crearea rapidă a unei sarcini direct dintr-o oportunitate. În multe fluxuri de vânzare este necesară o vizită pe teren înainte de a întocmi o ofertă (recunoaștere la fața locului, colectare de date, măsurători). Pornind de la oportunitate, utilizatorii pot crea o sarcină asociată pentru echipa de teren și pot urmări ulterior toate sarcinile conectate la acea oportunitate.\nAdaugă un câmp „Oportunitate\" pe sarcinile de proiect (`project.task.lead_id`).\nPe formularul oportunității:\nButon inteligent „Tasks\" care afișează numărul de sarcini asociate și le deschide; dacă există o singură sarcină, aceasta se deschide direct în vizualizare formular.\nButon de antet „Create FSM Task\" pentru a crea rapid o sarcină precompletată cu oportunitatea, partenerul și un nume contextual.\nCăutare și grupare după Oportunitate în vizualizările de sarcini. Oportunitatea este vizibilă și ca o coloană în listele de sarcini."
+    "text": "CRM + FSM Bridge\ndeltatech_crm_fsm\nAcest modul leagă oportunitățile din CRM de sarcinile din Project/FSM și permite crearea rapidă a unei sarcini direct dintr-o oportunitate. În multe fluxuri de vânzare este necesară o vizită pe teren înainte de a întocmi o ofertă (recunoaștere la fața locului, colectare de date, măsurători). Pornind de la oportunitate, utilizatorii pot crea o sarcină asociată pentru echipa de teren și pot urmări ulterior toate sarcinile conectate la acea oportunitate.\nAdaugă un câmp Lead (oportunitate) pe sarcinile de proiect (`project.task.lead_id`).\nPe formularul oportunității:\nButon inteligent Tasks, care afișează numărul de sarcini asociate și le deschide; dacă există o singură sarcină, aceasta se deschide direct în vizualizare formular.\nButon de antet Create FSM Task, pentru a crea rapid o sarcină precompletată cu oportunitatea, partenerul și un nume contextual (`[Lead] <nume oportunitate>`); sarcina rămâne legată de oportunitate.\nCăutare și grupare după Lead în vizualizările de sarcini; Lead apare și ca o coloană în listele de sarcini.\nFluxul de utilizare: se deschide o oportunitate din CRM, se apasă Create FSM Task, apoi se folosește butonul Tasks pentru a naviga și a gestiona sarcinile aferente.\nSecuritate: butoanele și accesul la sarcini urmează permisiunile din Project, de regulă disponibile utilizatorilor din grupul Project User."
   },
   {
     "path": "deltatech_cron_monitor_webhook/index.md",
@@ -3185,7 +3186,7 @@
   {
     "path": "deltatech_delivery_fc/index.md",
     "module": "deltatech_delivery_fc",
-    "version": "19.0.1.8.2",
+    "version": "19.0.1.8.3",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_fc",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_fc",
     "last_ingest": "2026-10-22",
@@ -3736,7 +3737,7 @@
   {
     "path": "deltatech_delivery_sd/index.md",
     "module": "deltatech_delivery_sd",
-    "version": "19.0.1.13.9",
+    "version": "19.0.1.13.10",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_sd",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_sd",
     "last_ingest": "2026-09-29",
@@ -4069,7 +4070,7 @@
   {
     "path": "deltatech_document_template/index.md",
     "module": "deltatech_document_template",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_document_template",
     "local_path": "odoo-addons/bitshop/deltatech_document_template",
     "last_ingest": "2026-10-31",
@@ -4245,7 +4246,7 @@
   {
     "path": "deltatech_ediconnect/index.md",
     "module": "deltatech_ediconnect",
-    "version": "19.0.1.1.13",
+    "version": "19.0.1.1.14",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_ediconnect",
     "local_path": "odoo-addons/bitshop/deltatech_ediconnect",
     "last_ingest": "2026-10-31",
@@ -4310,7 +4311,7 @@
   {
     "path": "deltatech_event/index.md",
     "module": "deltatech_event",
-    "version": "19.0.0.0.4",
+    "version": "19.0.0.0.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_event",
     "local_path": "odoo-addons/bitshop/deltatech_event",
     "last_ingest": "2026-10-31",
@@ -5650,7 +5651,7 @@
   {
     "path": "deltatech_marketplace_doraly/index.md",
     "module": "deltatech_marketplace_doraly",
-    "version": "19.0.0.0.12",
+    "version": "19.0.0.0.13",
     "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_doraly`",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_doraly",
     "last_ingest": "2026-08-20",
@@ -5684,7 +5685,7 @@
   {
     "path": "deltatech_marketplace_emag/index.md",
     "module": "deltatech_marketplace_emag",
-    "version": "19.0.2.21.1",
+    "version": "19.0.2.21.2",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_emag",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_emag",
     "last_ingest": "2026-10-22",
@@ -6227,7 +6228,7 @@
   {
     "path": "deltatech_marketplace_sale_stage/index.md",
     "module": "deltatech_marketplace_sale_stage",
-    "version": "19.0.1.1.10",
+    "version": "19.0.1.1.11",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_sale_stage",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_sale_stage",
     "last_ingest": "2026-08-20",
@@ -6281,7 +6282,7 @@
   {
     "path": "deltatech_marketplace_shopify/index.md",
     "module": "deltatech_marketplace_shopify",
-    "version": "19.0.1.8.12",
+    "version": "19.0.1.8.14",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_shopify",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_shopify",
     "last_ingest": "2026-10-09",
@@ -6428,7 +6429,7 @@
   {
     "path": "deltatech_marketplace_website/index.md",
     "module": "deltatech_marketplace_website",
-    "version": "19.0.0.2.0",
+    "version": "19.0.0.2.1",
     "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_website`",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_website",
     "last_ingest": "2026-10-09",
@@ -6501,7 +6502,7 @@
   {
     "path": "deltatech_mcp_server/index.md",
     "module": "deltatech_mcp_server",
-    "version": "19.0.1.15.3",
+    "version": "19.0.1.15.4",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_mcp_server",
     "local_path": "odoo-addons/bitshop_ent/deltatech_mcp_server",
     "last_ingest": "2026-10-24",
@@ -8026,7 +8027,7 @@
   {
     "path": "deltatech_pos/index.md",
     "module": "deltatech_pos",
-    "version": "19.0.2.12.0",
+    "version": "19.0.2.13.0",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos",
     "local_path": "odoo-addons/bitshop/deltatech_pos",
     "last_ingest": "2026-10-09",
@@ -8755,17 +8756,19 @@
   {
     "path": "deltatech_product_extension/index.md",
     "module": "deltatech_product_extension",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.1.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_extension",
     "local_path": "odoo-addons/deltatech/deltatech_product_extension",
-    "last_ingest": "2026-06-01",
+    "last_ingest": "2026-11-03",
     "friendly_name": "Deltatech Products Extension",
-    "summary": "Acest modul extinde modelul standard de produs din Odoo prin adăugarea unor câmpuri tehnice și logistice esențiale. Este destinat companiilor care au nevoie de o urmărire detaliată a atributelor produselor, cum ar fi termenul de valabilitate (durata de viață pe raft), informațiile despre producător și dimensiunile fizice. Astfel, devine mai ușor de gestionat stocul perisabil sau sensibil la timp, de planificat livrările și depozitarea și de organizat partenerii în funcție de calitatea de producător.",
+    "summary": "Acest modul extinde modelul standard de produs din Odoo cu câteva informații utile în activitatea zilnică: termenul de valabilitate (durata de viață pe raft), producătorul și dimensiunile produsului, introduse ca text liber. Este destinat companiilor care au nevoie de o urmărire mai detaliată a atributelor produselor, de exemplu pentru stocul perisabil sau sensibil la timp, pentru documente și cataloage sau pentru organizarea partenerilor în funcție de calitatea de producător.",
     "features": [
-      "Urmărire logistică îmbunătățită: adaugă pe șablonul de produs câmpurile Termen de valabilitate (Shelf Life) și Unitate de măsură pentru termenul de valabilitate, permițând o mai bună gestionare a stocului perisabil sau sensibil la timp.",
-      "Informații detaliate despre producător: integrează direct pe fișa produsului o legătură către Producător (partener), oferind acces rapid la originea de fabricație și la datele de contact.",
-      "Dimensiuni fizice: adaugă câmpuri pentru specificarea dimensiunilor produsului (Lungime, Lățime, Înălțime) direct pe înregistrarea produsului, utile pentru expediere, planificarea depozitării și afișarea în catalog.",
-      "Integrare cu partenerii: extinde modelul de partener cu o bifă Producător, permițând categorizarea ușoară a vânzătorilor și furnizorilor și o filtrare mai bună în modulul Contacte."
+      "Urmărire logistică îmbunătățită: adaugă pe șablonul de produs câmpurile Termen de valabilitate (Shelf Life) și Unitate de măsură pentru termenul de valabilitate, pentru o gestionare mai bună a stocului perisabil sau sensibil la timp.",
+      "Informații despre producător: pe fișa produsului apare câmpul Producător (partener), sub categoria produsului, cu acces rapid la originea de fabricație și la datele de contact.",
+      "Dimensiuni ca text liber: câmpul Dimensiuni se completează liber (de exemplu „120 x 60 x 75 cm”) și este util în documente, cataloage și ca referință rapidă. Câmpul nu calculează volumul produsului; pentru lungime, lățime și înălțime numerice care completează volumul se folosește modulul Product Dimensions (`deltatech_product_dimension`).",
+      "Poziționare pe formular: Dimensiunile și Termenul de valabilitate apar în fila General Information, lângă cost; produsele se deschid din Sales > Products > Products sau Inventory > Products > Products.",
+      "Integrare cu partenerii: modelul de partener primește bifa Producător, pentru etichetarea furnizorilor și filtrarea mai ușoară în aplicația Contacte.",
+      "Analiza facturilor: în Invoice Analysis se poate căuta și grupa după producător (Group By > Manufacturer)."
     ],
     "dependencies": [
       "product",
@@ -8773,9 +8776,10 @@
     ],
     "connections": [
       "product",
-      "account"
+      "account",
+      "deltatech_product_dimension"
     ],
-    "text": "Deltatech Products Extension\ndeltatech_product_extension\nAcest modul extinde modelul standard de produs din Odoo prin adăugarea unor câmpuri tehnice și logistice esențiale. Este destinat companiilor care au nevoie de o urmărire detaliată a atributelor produselor, cum ar fi termenul de valabilitate (durata de viață pe raft), informațiile despre producător și dimensiunile fizice. Astfel, devine mai ușor de gestionat stocul perisabil sau sensibil la timp, de planificat livrările și depozitarea și de organizat partenerii în funcție de calitatea de producător.\nUrmărire logistică îmbunătățită: adaugă pe șablonul de produs câmpurile Termen de valabilitate (Shelf Life) și Unitate de măsură pentru termenul de valabilitate, permițând o mai bună gestionare a stocului perisabil sau sensibil la timp.\nInformații detaliate despre producător: integrează direct pe fișa produsului o legătură către Producător (partener), oferind acces rapid la originea de fabricație și la datele de contact.\nDimensiuni fizice: adaugă câmpuri pentru specificarea dimensiunilor produsului (Lungime, Lățime, Înălțime) direct pe înregistrarea produsului, utile pentru expediere, planificarea depozitării și afișarea în catalog.\nIntegrare cu partenerii: extinde modelul de partener cu o bifă Producător, permițând categorizarea ușoară a vânzătorilor și furnizorilor și o filtrare mai bună în modulul Contacte."
+    "text": "Deltatech Products Extension\ndeltatech_product_extension\nAcest modul extinde modelul standard de produs din Odoo cu câteva informații utile în activitatea zilnică: termenul de valabilitate (durata de viață pe raft), producătorul și dimensiunile produsului, introduse ca text liber. Este destinat companiilor care au nevoie de o urmărire mai detaliată a atributelor produselor, de exemplu pentru stocul perisabil sau sensibil la timp, pentru documente și cataloage sau pentru organizarea partenerilor în funcție de calitatea de producător.\nUrmărire logistică îmbunătățită: adaugă pe șablonul de produs câmpurile Termen de valabilitate (Shelf Life) și Unitate de măsură pentru termenul de valabilitate, pentru o gestionare mai bună a stocului perisabil sau sensibil la timp.\nInformații despre producător: pe fișa produsului apare câmpul Producător (partener), sub categoria produsului, cu acces rapid la originea de fabricație și la datele de contact.\nDimensiuni ca text liber: câmpul Dimensiuni se completează liber (de exemplu „120 x 60 x 75 cm”) și este util în documente, cataloage și ca referință rapidă. Câmpul nu calculează volumul produsului; pentru lungime, lățime și înălțime numerice care completează volumul se folosește modulul Product Dimensions (`deltatech_product_dimension`).\nPoziționare pe formular: Dimensiunile și Termenul de valabilitate apar în fila General Information, lângă cost; produsele se deschid din Sales > Products > Products sau Inventory > Products > Products.\nIntegrare cu partenerii: modelul de partener primește bifa Producător, pentru etichetarea furnizorilor și filtrarea mai ușoară în aplicația Contacte.\nAnaliza facturilor: în Invoice Analysis se poate căuta și grupa după producător (Group By > Manufacturer)."
   },
   {
     "path": "deltatech_product_labels/index.md",
@@ -9115,7 +9119,7 @@
   {
     "path": "deltatech_purchase_lead_time/index.md",
     "module": "deltatech_purchase_lead_time",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_purchase_lead_time",
     "local_path": "odoo-addons/bitshop/deltatech_purchase_lead_time",
     "last_ingest": "2026-10-30",
@@ -9413,7 +9417,7 @@
   {
     "path": "deltatech_purchase_ubl/index.md",
     "module": "deltatech_purchase_ubl",
-    "version": "19.0.1.4.21",
+    "version": "19.0.1.4.22",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_ubl",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_ubl",
     "last_ingest": "2026-10-21",
@@ -9838,7 +9842,7 @@
   {
     "path": "deltatech_restrict_ip/index.md",
     "module": "deltatech_restrict_ip",
-    "version": "19.0.1.3.4",
+    "version": "19.0.1.3.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_restrict_ip",
     "local_path": "odoo-addons/bitshop/deltatech_restrict_ip",
     "last_ingest": "2026-08-20",
@@ -13601,7 +13605,7 @@
   {
     "path": "deltatech_website_llms_txt/index.md",
     "module": "deltatech_website_llms_txt",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_llms_txt",
     "local_path": "odoo-addons/deltatech/deltatech_website_llms_txt",
     "last_ingest": "2026-10-22",
@@ -14127,7 +14131,7 @@
   {
     "path": "deltatech_website_shop_snippets/index.md",
     "module": "deltatech_website_shop_snippets",
-    "version": "19.0.1.1.9",
+    "version": "19.0.1.1.10",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_shop_snippets",
     "local_path": "odoo-addons/bitshop/deltatech_website_shop_snippets",
     "last_ingest": "2026-10-22",
@@ -14350,26 +14354,30 @@
   {
     "path": "deltatech_widget_many2one_badge/index.md",
     "module": "deltatech_widget_many2one_badge",
-    "version": "19.0.1.0.3",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_widget_many2one_badge`",
+    "version": "19.0.1.0.4",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_widget_many2one_badge",
     "local_path": "odoo-addons/deltatech/deltatech_widget_many2one_badge",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-11-03",
     "friendly_name": "Many2one Badge Widget",
-    "summary": "Modulul adaugă un widget web personalizat care afișează câmpurile de tip Many2one sub forma unor etichete (badge-uri) colorate, într-un mod similar cu widget-ul standard `many2many_tags`. Scopul este de a îmbunătăți lizibilitatea și aspectul vizual al interfețelor Odoo, permițând utilizatorilor să distingă rapid valorile prin culoare, atât în formulare cât și în liste. Culoarea poate fi modificată direct din interfață, fiind salvată pe înregistrarea relaționată.",
+    "summary": "Modulul adaugă un widget care afișează câmpurile de tip Many2one sub forma unor etichete (badge-uri) colorate, asemănător widget-ului standard `many2many_tags`. Utilizatorii disting rapid valorile prin culoare, atât în formulare, cât și în liste, iar culoarea poate fi schimbată direct din interfață. Culoarea se salvează pe înregistrarea relaționată, deci toate documentele care folosesc aceeași valoare (de exemplu aceeași fază a comenzii) afișează noua culoare.",
     "features": [
-      "Afișează câmpul Many2one ca badge colorat în modul readonly.",
-      "Permite schimbarea culorii prin click pe badge, folosind un selector de culori (popover) în modul de editare.",
-      "Buton de ștergere (`×`) care apare la trecerea cu mouse-ul peste badge.",
-      "Câmp de autocomplete pentru selectarea unei noi valori atunci când câmpul este gol.",
-      "Opțiune configurabilă `color_field` pentru a indica numele câmpului care stochează indexul de culoare.",
-      "Compatibil cu toate cele 12 culori standard Odoo (indecșii 0–11).",
-      "Design modern, cu badge rotunjit."
+      "Afișează câmpul Many2one ca badge colorat, în formulare și în liste.",
+      "Modulul nu are meniuri proprii: badge-ul apare pe câmpurile unde îl folosesc alte module, de exemplu coloana Phase din Sales → Orders → Orders (faza comenzii din `deltatech_sale_stage`) sau faza comenzii de achiziție (`deltatech_purchase_phase`).",
+      "Schimbarea culorii: click pe badge deschide un selector de culori (popover) cu 11 culori (indecșii 1–11); culoarea aleasă se scrie imediat pe înregistrarea relaționată, nu pe document. Pentru salvare e nevoie de drept de scriere pe modelul relaționat (de exemplu Sales / Administrator pentru fazele comenzilor). Indexul 0 (fără culoare, gri) se setează din formularul înregistrării relaționate.",
+      "Buton de ștergere (`×`) care apare la trecerea cu mouse-ul peste badge și golește valoarea, readucând câmpul de căutare pentru a alege alta.",
+      "Câmp de autocomplete pentru selectarea unei valori noi când câmpul este gol.",
+      "Opțiunea `color_field` indică câmpul întreg al modelului relaționat care stochează indexul culorii.",
+      "Compatibil cu cele 12 culori standard Odoo (indecșii 0–11).",
+      "Performanță: culorile tuturor badge-urilor afișate pe ecran se citesc cu un singur apel către server (o listă de 80 de comenzi nu mai generează 80 de cereri), iar culoarea nu se recitește dacă valoarea câmpului rămâne aceeași."
     ],
     "dependencies": [
       "web"
     ],
-    "connections": [],
-    "text": "Many2one Badge Widget\ndeltatech_widget_many2one_badge\nModulul adaugă un widget web personalizat care afișează câmpurile de tip Many2one sub forma unor etichete (badge-uri) colorate, într-un mod similar cu widget-ul standard `many2many_tags`. Scopul este de a îmbunătăți lizibilitatea și aspectul vizual al interfețelor Odoo, permițând utilizatorilor să distingă rapid valorile prin culoare, atât în formulare cât și în liste. Culoarea poate fi modificată direct din interfață, fiind salvată pe înregistrarea relaționată.\nAfișează câmpul Many2one ca badge colorat în modul readonly.\nPermite schimbarea culorii prin click pe badge, folosind un selector de culori (popover) în modul de editare.\nButon de ștergere (`×`) care apare la trecerea cu mouse-ul peste badge.\nCâmp de autocomplete pentru selectarea unei noi valori atunci când câmpul este gol.\nOpțiune configurabilă `color_field` pentru a indica numele câmpului care stochează indexul de culoare.\nCompatibil cu toate cele 12 culori standard Odoo (indecșii 0–11).\nDesign modern, cu badge rotunjit."
+    "connections": [
+      "deltatech_sale_stage",
+      "deltatech_purchase_phase"
+    ],
+    "text": "Many2one Badge Widget\ndeltatech_widget_many2one_badge\nModulul adaugă un widget care afișează câmpurile de tip Many2one sub forma unor etichete (badge-uri) colorate, asemănător widget-ului standard `many2many_tags`. Utilizatorii disting rapid valorile prin culoare, atât în formulare, cât și în liste, iar culoarea poate fi schimbată direct din interfață. Culoarea se salvează pe înregistrarea relaționată, deci toate documentele care folosesc aceeași valoare (de exemplu aceeași fază a comenzii) afișează noua culoare.\nAfișează câmpul Many2one ca badge colorat, în formulare și în liste.\nModulul nu are meniuri proprii: badge-ul apare pe câmpurile unde îl folosesc alte module, de exemplu coloana Phase din Sales → Orders → Orders (faza comenzii din `deltatech_sale_stage`) sau faza comenzii de achiziție (`deltatech_purchase_phase`).\nSchimbarea culorii: click pe badge deschide un selector de culori (popover) cu 11 culori (indecșii 1–11); culoarea aleasă se scrie imediat pe înregistrarea relaționată, nu pe document. Pentru salvare e nevoie de drept de scriere pe modelul relaționat (de exemplu Sales / Administrator pentru fazele comenzilor). Indexul 0 (fără culoare, gri) se setează din formularul înregistrării relaționate.\nButon de ștergere (`×`) care apare la trecerea cu mouse-ul peste badge și golește valoarea, readucând câmpul de căutare pentru a alege alta.\nCâmp de autocomplete pentru selectarea unei valori noi când câmpul este gol.\nOpțiunea `color_field` indică câmpul întreg al modelului relaționat care stochează indexul culorii.\nCompatibil cu cele 12 culori standard Odoo (indecșii 0–11).\nPerformanță: culorile tuturor badge-urilor afișate pe ecran se citesc cu un singur apel către server (o listă de 80 de comenzi nu mai generează 80 de cereri), iar culoarea nu se recitește dacă valoarea câmpului rămâne aceeași."
   },
   {
     "path": "deltatech_work_days_report/index.md",
@@ -15040,16 +15048,21 @@
     "version": "19.0.0.0.12",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d100",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d100",
-    "last_ingest": null,
+    "last_ingest": "2026-11-03",
     "friendly_name": "Romania - Declarația D100 ANAF",
-    "summary": "Acest modul permite companiilor românești să genereze și să exporte **Declarația 100 — Declarația privind obligațiile de plată la bugetul de stat** direct din Odoo Enterprise, eliminând introducerea manuală a datelor în DUKIntegrator sau în formularul PDF ANAF. Se adresează plătitorilor de impozit pe profit, impozit pe veniturile microîntreprinderilor, impozit pe dividende și altor obligații fiscale raportate lunar sau trimestrial la ANAF, conform nomenclatorului de coduri bugetare.",
+    "summary": "Acest modul permite companiilor românești să genereze și să exporte **Declarația 100 — Declarația privind obligațiile de plată la bugetul de stat** direct din Odoo Enterprise, eliminând introducerea manuală a datelor în DUKIntegrator sau în formularul PDF ANAF. Se adresează plătitorilor de impozit pe profit, impozit pe veniturile microîntreprinderilor, impozit pe dividende și altor obligații fiscale raportate lunar sau trimestrial la ANAF.",
     "features": [
-      "Raport interactiv D100 integrat în rapoartele contabile Enterprise, cu linii predefinite pe coduri ANAF (102 impozit pe profit, 121 impozit micro, 150/604 impozit pe dividende) și filtrare pe perioadă (lunar sau trimestrial).",
-      "Coloane dedicate: Suma datorată, Suma de plată și Cod bugetar, sumele fiind citite automat din soldurile conturilor de obligații fiscale (ex. 4411/691).",
-      "Export XML (Soft J) — fișier XML conform schemei oficiale ANAF, validat automat față de XSD înainte de descărcare, gata pentru import în DUKIntegrator.",
-      "Export XDP (Soft A) — fișier XDP pentru formularul PDF inteligent ANAF, importabil direct în Adobe Acrobat Reader.",
+      "Raport interactiv D100 integrat în rapoartele contabile Enterprise (Contabilitate → Raportare → Declarații ANAF → Declarație 100), cu linii predefinite pe coduri ANAF (102, 103, 121, 150, 604) și filtrare pe perioadă (lunar sau trimestrial). Liniile cu suma zero sunt ascunse.",
+      "Coloane dedicate: Suma datorată (lei), Suma de plată (lei) și Cod bugetar.",
+      "Surse ale sumelor: linia 103 (impozit pe profit) se calculează automat din conturile 44111 / 44112, iar linia 121 (impozit micro) din conturile 44118 / 44182, pe baza notelor postate. Liniile 102 (plăți anticipate, specific instituțiilor de credit), 150 (dividende persoane juridice) și 604 (dividende persoane fizice) nu au sursă automată și rămân la zero până când administratorul configurează domeniul lor pe conturile folosite de firmă.",
+      "Export XML (Soft J) — fișier XML conform schemei oficiale ANAF (`d100_24022022.xsd`), validat automat față de XSD înainte de descărcare, gata pentru import în DUKIntegrator.",
+      "Export XDP (Soft A) — fișier XDP pentru formularul PDF inteligent ANAF (`D100_710_XML_0126_191026.pdf`, din 19.10.2026), importabil prin funcția *Importă date* din Adobe Acrobat Reader.",
+      "Versiune de formular acceptată: OPANAF 57/19.01.2026; fișierul XML trece validarea cu DUKIntegrator fără erori.",
       "Calcul automat scadență — data de 25 a lunii următoare perioadei de raportare, derivată din filtrul de dată al raportului.",
-      "Preluare automată date companie — CUI (cu eliminarea automată a prefixului „RO\"), denumire, adresă, telefon, e-mail și datele declarantului din contul utilizatorului curent."
+      "Preluare automată date companie — CUI (cu eliminarea prefixului „RO\"), denumire, adresă, telefon, e-mail și datele declarantului (nume și funcție) din contul utilizatorului care exportă. Pentru obligația 121 se raportează și cota de impozit micro (1% sau 3%) setată în Setări → Contabilitate.",
+      "Creanțe trimestriale: obligațiile 102, 103 și 121 se declară doar pentru martie, iunie, septembrie sau decembrie.",
+      "Opriri cu mesaj explicit: nu există nicio obligație de declarat pentru perioadă, o obligație trimestrială este exportată pentru o lună care nu e de final de trimestru, sau o linie a raportului nu figurează în nomenclatorul obligațiilor. Exportul se oprește și pentru o companie cu datele de identificare incomplete.",
+      "Declarație inițială: exportul generează întotdeauna o declarație inițială; pentru anulare sau rectificare se urmează procedura ANAF în DUKIntegrator, modulul neavând buton dedicat."
     ],
     "dependencies": [
       "l10n_ro",
@@ -15064,7 +15077,7 @@
       "l10n_ro_micro_tax",
       "l10n_ro_dividends"
     ],
-    "text": "Romania - Declarația D100 ANAF\nl10n_ro_anaf_d100\nAcest modul permite companiilor românești să genereze și să exporte **Declarația 100 — Declarația privind obligațiile de plată la bugetul de stat** direct din Odoo Enterprise, eliminând introducerea manuală a datelor în DUKIntegrator sau în formularul PDF ANAF. Se adresează plătitorilor de impozit pe profit, impozit pe veniturile microîntreprinderilor, impozit pe dividende și altor obligații fiscale raportate lunar sau trimestrial la ANAF, conform nomenclatorului de coduri bugetare.\nRaport interactiv D100 integrat în rapoartele contabile Enterprise, cu linii predefinite pe coduri ANAF (102 impozit pe profit, 121 impozit micro, 150/604 impozit pe dividende) și filtrare pe perioadă (lunar sau trimestrial).\nColoane dedicate: Suma datorată, Suma de plată și Cod bugetar, sumele fiind citite automat din soldurile conturilor de obligații fiscale (ex. 4411/691).\nExport XML (Soft J) — fișier XML conform schemei oficiale ANAF, validat automat față de XSD înainte de descărcare, gata pentru import în DUKIntegrator.\nExport XDP (Soft A) — fișier XDP pentru formularul PDF inteligent ANAF, importabil direct în Adobe Acrobat Reader.\nCalcul automat scadență — data de 25 a lunii următoare perioadei de raportare, derivată din filtrul de dată al raportului.\nPreluare automată date companie — CUI (cu eliminarea automată a prefixului „RO\"), denumire, adresă, telefon, e-mail și datele declarantului din contul utilizatorului curent."
+    "text": "Romania - Declarația D100 ANAF\nl10n_ro_anaf_d100\nAcest modul permite companiilor românești să genereze și să exporte **Declarația 100 — Declarația privind obligațiile de plată la bugetul de stat** direct din Odoo Enterprise, eliminând introducerea manuală a datelor în DUKIntegrator sau în formularul PDF ANAF. Se adresează plătitorilor de impozit pe profit, impozit pe veniturile microîntreprinderilor, impozit pe dividende și altor obligații fiscale raportate lunar sau trimestrial la ANAF.\nRaport interactiv D100 integrat în rapoartele contabile Enterprise (Contabilitate → Raportare → Declarații ANAF → Declarație 100), cu linii predefinite pe coduri ANAF (102, 103, 121, 150, 604) și filtrare pe perioadă (lunar sau trimestrial). Liniile cu suma zero sunt ascunse.\nColoane dedicate: Suma datorată (lei), Suma de plată (lei) și Cod bugetar.\nSurse ale sumelor: linia 103 (impozit pe profit) se calculează automat din conturile 44111 / 44112, iar linia 121 (impozit micro) din conturile 44118 / 44182, pe baza notelor postate. Liniile 102 (plăți anticipate, specific instituțiilor de credit), 150 (dividende persoane juridice) și 604 (dividende persoane fizice) nu au sursă automată și rămân la zero până când administratorul configurează domeniul lor pe conturile folosite de firmă.\nExport XML (Soft J) — fișier XML conform schemei oficiale ANAF (`d100_24022022.xsd`), validat automat față de XSD înainte de descărcare, gata pentru import în DUKIntegrator.\nExport XDP (Soft A) — fișier XDP pentru formularul PDF inteligent ANAF (`D100_710_XML_0126_191026.pdf`, din 19.10.2026), importabil prin funcția *Importă date* din Adobe Acrobat Reader.\nVersiune de formular acceptată: OPANAF 57/19.01.2026; fișierul XML trece validarea cu DUKIntegrator fără erori.\nCalcul automat scadență — data de 25 a lunii următoare perioadei de raportare, derivată din filtrul de dată al raportului.\nPreluare automată date companie — CUI (cu eliminarea prefixului „RO\"), denumire, adresă, telefon, e-mail și datele declarantului (nume și funcție) din contul utilizatorului care exportă. Pentru obligația 121 se raportează și cota de impozit micro (1% sau 3%) setată în Setări → Contabilitate.\nCreanțe trimestriale: obligațiile 102, 103 și 121 se declară doar pentru martie, iunie, septembrie sau decembrie.\nOpriri cu mesaj explicit: nu există nicio obligație de declarat pentru perioadă, o obligație trimestrială este exportată pentru o lună care nu e de final de trimestru, sau o linie a raportului nu figurează în nomenclatorul obligațiilor. Exportul se oprește și pentru o companie cu datele de identificare incomplete.\nDeclarație inițială: exportul generează întotdeauna o declarație inițială; pentru anulare sau rectificare se urmează procedura ANAF în DUKIntegrator, modulul neavând buton dedicat."
   },
   {
     "path": "l10n_ro_anaf_d101/index.md",
@@ -15160,7 +15173,7 @@
   {
     "path": "l10n_ro_anaf_d112/index.md",
     "module": "l10n_ro_anaf_d112",
-    "version": "19.0.2.23.1",
+    "version": "19.0.2.23.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112",
     "last_ingest": "2026-10-22",
@@ -15227,7 +15240,7 @@
   {
     "path": "l10n_ro_anaf_d112_payroll/index.md",
     "module": "l10n_ro_anaf_d112_payroll",
-    "version": "19.0.1.15.1",
+    "version": "19.0.1.15.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112_payroll",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112_payroll",
     "last_ingest": null,
@@ -15278,14 +15291,19 @@
     "version": "19.0.1.2.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d120",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d120",
-    "last_ingest": null,
+    "last_ingest": "2026-11-03",
     "friendly_name": "Romania - Declarația D120 ANAF",
-    "summary": "Modulul adaugă exportul în format XML ANAF al **Decontului privind accizele (D120)**, peste declarația de accize gestionată de modulul `l10n_ro_excise_duty`. D120 este decontul depus de importatorii și operatorii de produse accizabile (alcool, bere, produse energetice, tutun etc.), reglementat de Codul Fiscal Titlul VIII. Modulul nu adaugă un ecran nou: pe o declarație de accize de tip D120, butonul „Export XML\" generează fișierul în formatul ANAF D120 (namespace `mfp:anaf:dgti:d120:declaratie:v5`), validat față de schema XSD oficială, în locul template-ului D103. Astfel, responsabilul fiscal obține fișierul de depunere fără operare manuală.",
+    "summary": "Modulul adaugă exportul ANAF al **Decontului privind accizele (D120)**, peste declarația de accize gestionată de modulul [l10n_ro_excise_duty](../l10n_ro_excise_duty/index.md). D120 este decontul de accize al antrepozitarilor autorizați, importatorilor, destinatarilor înregistrați și utilizatorilor industriali de produse accizabile (alcool, bere, produse energetice, tutun, energie electrică), reglementat de Codul Fiscal Titlul VIII. Modulul nu adaugă un ecran nou: pe o declarație de accize de tip D120 apar exporturile în format XML ANAF și în formularul PDF inteligent, validate față de schema oficială, astfel încât responsabilul fiscal obține fișierul de depunere fără operare manuală.",
     "features": [
-      "Export XML D120: generarea decontului de accize în formatul ANAF (`D120_<CUI>_<AAAALL>.xml`), pe baza liniilor declarației de accize.",
-      "Mapare automată pe rândurile D120: fiecare categorie de acciză (bere, vin, alcool etilic, țigarete, motorină, GPL, gaz natural, energie electrică, plus categoriile nearmonizate din Legea 296/2023) este pusă pe rândul corespunzător din formular (R0, R3, R9, R20 etc.).",
-      "Calcul totaluri: subtotaluri și totaluri (accize armonizate, nearmonizate, total general) calculate automat din liniile declarației.",
-      "Validare XSD: XML-ul este validat față de schema oficială ANAF v5 (`d120_13052025.xsd`) înainte de livrare; datele de identificare ale companiei (CUI, CAEN, adresă) sunt verificate la export."
+      "Declarația D120: pe declarația de accize existentă se alege tipul D120 — decont anual, cu perioada anului de raportare (1 ianuarie – 31 decembrie); pentru aceeași companie, perioadă și tip poate exista o singură declarație. În XML apare cu `luna=\"12\"`. Declarația se întocmește din Contabilitate → Raportare → Accize → Declarații accize.",
+      "Liniile declarației: se populează automat cu Calculează (din facturile postate cu produse accizabile, notele de credit scad; declarația devine *Confirmată*, iar liniile existente sunt șterse) sau manual, în fila Linii accize. Cât timp declarația e confirmată și neexportată, se poate readuce în ciornă cu Reset to Draft.",
+      "Export XML D120 v5: butonul Export XML generează fișierul `D120_<CUI>_<AAAA>12.xml`, validat față de schema XSD ANAF v5 (`d120_13052025.xsd`) înainte de descărcare, pentru import în DUKIntegrator; după export declarația trece în starea Exportată. Datele de identificare ale companiei (CUI, CAEN, adresă) sunt verificate la export.",
+      "Export XDP / formular PDF ANAF (Soft A): butonul Export XDP completează formularul ANAF `D120_XML_2025_160326.pdf` cu datele declarației, după Setări → Contabilitate → Declarații ANAF România → Tip export: PDF cu datele incluse (implicit, de validat și semnat în Adobe Reader), arhivă ZIP cu XDP și PDF sau doar XDP. Dacă serverul nu are `pypdf` ≥ 5.0, opțiunea PDF revine la arhiva ZIP.",
+      "Mapare automată pe rândurile D120: 20+ categorii de accize (B, C, D, E, A, F1–F4, G1–G7, H1–H6) sunt puse pe rândurile R0–R41 (de exemplu B → R0, A → R9, G3 → R20_1, G7 → R31, H1–H6 → R34–R39), în unitățile fiscale corespunzătoare (hl/grad Plato, hl alcool pur, tone, GJ, MWh, 1.000 bucăți, kg, ml, hl). Categoriile energetice merg pe subrândul de utilizare uzuală; pentru alte utilizări rândul se corectează în XML sau se adaugă o categorie dedicată.",
+      "Calcul totaluri: subtotalurile R10, R11, R16, totalul I armonizate (R33), totalul II nearmonizate (R40) și totalul general (R41) se calculează automat din linii; `totalPlata_A` din antet este o sumă de control, întotdeauna 0.",
+      "Configurare necesară: datele companiei (CUI, denumire, adresă, telefon, e-mail, cod CAEN obligatoriu), taxele de accize cu categoriile corecte (altfel sumele nu apar în D120) și unitățile de măsură fiscale ale produselor (grade Plato la bere, concentrație alcoolică la alcool).",
+      "Acoperire: accize armonizate și nearmonizate (Legea 296/2023); versiune de formular acceptată OPANAF 1330/14.06.2024, verificată cu DUKIntegrator.",
+      "Izolare față de D103: exportul D120 nu afectează logica declarației D103; fiecare tip folosește propriul template XML."
     ],
     "dependencies": [
       "l10n_ro_excise_duty",
@@ -15296,7 +15314,7 @@
       "l10n_ro_anaf_base",
       "cod"
     ],
-    "text": "Romania - Declarația D120 ANAF\nl10n_ro_anaf_d120\nModulul adaugă exportul în format XML ANAF al **Decontului privind accizele (D120)**, peste declarația de accize gestionată de modulul `l10n_ro_excise_duty`. D120 este decontul depus de importatorii și operatorii de produse accizabile (alcool, bere, produse energetice, tutun etc.), reglementat de Codul Fiscal Titlul VIII. Modulul nu adaugă un ecran nou: pe o declarație de accize de tip D120, butonul „Export XML\" generează fișierul în formatul ANAF D120 (namespace `mfp:anaf:dgti:d120:declaratie:v5`), validat față de schema XSD oficială, în locul template-ului D103. Astfel, responsabilul fiscal obține fișierul de depunere fără operare manuală.\nExport XML D120: generarea decontului de accize în formatul ANAF (`D120_<CUI>_<AAAALL>.xml`), pe baza liniilor declarației de accize.\nMapare automată pe rândurile D120: fiecare categorie de acciză (bere, vin, alcool etilic, țigarete, motorină, GPL, gaz natural, energie electrică, plus categoriile nearmonizate din Legea 296/2023) este pusă pe rândul corespunzător din formular (R0, R3, R9, R20 etc.).\nCalcul totaluri: subtotaluri și totaluri (accize armonizate, nearmonizate, total general) calculate automat din liniile declarației.\nValidare XSD: XML-ul este validat față de schema oficială ANAF v5 (`d120_13052025.xsd`) înainte de livrare; datele de identificare ale companiei (CUI, CAEN, adresă) sunt verificate la export."
+    "text": "Romania - Declarația D120 ANAF\nl10n_ro_anaf_d120\nModulul adaugă exportul ANAF al **Decontului privind accizele (D120)**, peste declarația de accize gestionată de modulul [l10n_ro_excise_duty](../l10n_ro_excise_duty/index.md). D120 este decontul de accize al antrepozitarilor autorizați, importatorilor, destinatarilor înregistrați și utilizatorilor industriali de produse accizabile (alcool, bere, produse energetice, tutun, energie electrică), reglementat de Codul Fiscal Titlul VIII. Modulul nu adaugă un ecran nou: pe o declarație de accize de tip D120 apar exporturile în format XML ANAF și în formularul PDF inteligent, validate față de schema oficială, astfel încât responsabilul fiscal obține fișierul de depunere fără operare manuală.\nDeclarația D120: pe declarația de accize existentă se alege tipul D120 — decont anual, cu perioada anului de raportare (1 ianuarie – 31 decembrie); pentru aceeași companie, perioadă și tip poate exista o singură declarație. În XML apare cu `luna=\"12\"`. Declarația se întocmește din Contabilitate → Raportare → Accize → Declarații accize.\nLiniile declarației: se populează automat cu Calculează (din facturile postate cu produse accizabile, notele de credit scad; declarația devine *Confirmată*, iar liniile existente sunt șterse) sau manual, în fila Linii accize. Cât timp declarația e confirmată și neexportată, se poate readuce în ciornă cu Reset to Draft.\nExport XML D120 v5: butonul Export XML generează fișierul `D120_<CUI>_<AAAA>12.xml`, validat față de schema XSD ANAF v5 (`d120_13052025.xsd`) înainte de descărcare, pentru import în DUKIntegrator; după export declarația trece în starea Exportată. Datele de identificare ale companiei (CUI, CAEN, adresă) sunt verificate la export.\nExport XDP / formular PDF ANAF (Soft A): butonul Export XDP completează formularul ANAF `D120_XML_2025_160326.pdf` cu datele declarației, după Setări → Contabilitate → Declarații ANAF România → Tip export: PDF cu datele incluse (implicit, de validat și semnat în Adobe Reader), arhivă ZIP cu XDP și PDF sau doar XDP. Dacă serverul nu are `pypdf` ≥ 5.0, opțiunea PDF revine la arhiva ZIP.\nMapare automată pe rândurile D120: 20+ categorii de accize (B, C, D, E, A, F1–F4, G1–G7, H1–H6) sunt puse pe rândurile R0–R41 (de exemplu B → R0, A → R9, G3 → R20_1, G7 → R31, H1–H6 → R34–R39), în unitățile fiscale corespunzătoare (hl/grad Plato, hl alcool pur, tone, GJ, MWh, 1.000 bucăți, kg, ml, hl). Categoriile energetice merg pe subrândul de utilizare uzuală; pentru alte utilizări rândul se corectează în XML sau se adaugă o categorie dedicată.\nCalcul totaluri: subtotalurile R10, R11, R16, totalul I armonizate (R33), totalul II nearmonizate (R40) și totalul general (R41) se calculează automat din linii; `totalPlata_A` din antet este o sumă de control, întotdeauna 0.\nConfigurare necesară: datele companiei (CUI, denumire, adresă, telefon, e-mail, cod CAEN obligatoriu), taxele de accize cu categoriile corecte (altfel sumele nu apar în D120) și unitățile de măsură fiscale ale produselor (grade Plato la bere, concentrație alcoolică la alcool).\nAcoperire: accize armonizate și nearmonizate (Legea 296/2023); versiune de formular acceptată OPANAF 1330/14.06.2024, verificată cu DUKIntegrator.\nIzolare față de D103: exportul D120 nu afectează logica declarației D103; fiecare tip folosește propriul template XML."
   },
   {
     "path": "l10n_ro_anaf_d177/index.md",
@@ -15724,18 +15742,18 @@
     "version": "19.0.0.0.13",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d398",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d398",
-    "last_ingest": null,
+    "last_ingest": "2026-11-03",
     "friendly_name": "Romania - Declarația D398 ANAF (TVA OSS)",
-    "summary": "Modulul permite generarea Declarației Speciale de TVA (D398) direct din Odoo, conform formatului solicitat de ANAF pentru regimul special One Stop Shop (OSS). Este destinat companiilor din România care efectuează livrări de bunuri sau prestări de servicii către consumatori finali (B2C) din alte state membre UE și sunt înregistrate în regimul OSS. Modulul **nu adaugă un ecran propriu**: extinde raportul standard OSS din Enterprise, adăugând butoanele de export ANAF (XML Soft J / XDP Soft A) și coloane de control în EUR (conversie la cursul BCE). Contabilitatea rămâne în RON — modulul adaugă doar conversia de raportare în EUR pentru declarația OSS. Implementarea este aliniată la infrastructura comună din `l10n_ro_anaf_base` (date companie/declarant, registru de profile de declarații, validări pentru resursele de export și pentru datele minime ale companiei).",
+    "summary": "Modulul permite generarea Declarației Speciale de TVA (D398) direct din Odoo, conform formatului solicitat de ANAF pentru regimul special One Stop Shop (OSS). Este destinat companiilor din România care efectuează livrări de bunuri sau prestări de servicii către consumatori finali (B2C) din alte state membre UE și sunt înregistrate în regimul OSS. Modulul **nu adaugă un ecran propriu**: extinde raportul standard OSS din Enterprise, adăugând butoanele de export ANAF (XML Soft J / XDP Soft A) și coloane de control în EUR, la cursul BCE. Contabilitatea rămâne în RON; conversia în EUR este doar pentru raportarea declarației OSS.",
     "features": [
-      "Export XML D398 (Soft J) — fișier validat automat față de schema XSD oficială ANAF, compatibil cu DUKIntegrator pentru semnare digitală.",
-      "Export XDP D398 (Soft A) — fișier de date pentru import în formularul PDF inteligent ANAF (versiunea 1.0.11+); disponibil și ca ZIP cu PDF inclus.",
-      "Conversie automată în EUR — sumele sunt convertite folosind cursul de schimb publicat de Banca Centrală Europeană (BCE) din ultima zi a perioadei fiscale, fără a afecta furnizorul de cursuri BNR configurat pentru restul înregistrărilor contabile.",
-      "Coloane suplimentare în raportul OSS — „Net (EUR)\" și „Tax (EUR)\" vizibile direct în interfața rapoartelor OSS Enterprise, pentru verificarea sumelor înainte de export.",
-      "Grupare automată pe state membre de consum (MSCON), tip livrare (bunuri/servicii) și cotă TVA (standard/redusă).",
-      "Validare date companie — verifică prezența datelor obligatorii (CUI, județ, date contact) înainte de generarea fișierului.",
-      "Meniu dedicat — „Declarație 398\" disponibil sub meniul „Declarații ANAF\" din modulul Contabilitate.",
-      "Limitări cunoscute: avertizarea pentru pragul OSS de 10.000 EUR/an și depunerea automată în portalul ANAF nu sunt încă implementate."
+      "Raport Declarație 398, la Contabilitate → Raportare → Declarații ANAF → Declarație 398: liniile sunt grupate pe stat membru de consum (MSCON), tip livrare (bunuri/servicii) și cotă TVA a statului de consum. Apar doar dacă în perioadă există facturi B2C intra-UE cu poziția fiscală OSS; butoanele de export rămân vizibile și când raportul e gol.",
+      "Perioade: regimul UE (OSS) se declară trimestrial, iar regimul de import (IOSS) lunar; exportul se oprește cu mesaj explicit dacă perioada nu corespunde regimului, fiindcă validatorul ANAF ar respinge declarația.",
+      "Export XML D398 (Soft J) — fișier validat automat față de schema XSD oficială ANAF (`d398_20211101.xsd`, structura v1.0.11), pentru DUKIntegrator (validare și semnare); sumele sunt convertite în EUR. Opțional se pot exporta PDF sau XLSX pentru arhivă.",
+      "Export XDP D398 (Soft A) — fișier de date pentru formularul PDF inteligent ANAF (versiunea 1.0.11+), importat cu *Import Date*; disponibil și ca ZIP cu PDF inclus.",
+      "Conversie în EUR la cursul BCE din ultima zi a perioadei, fără a afecta furnizorul de cursuri BNR al restului contabilității. Cursul se descarcă o singură dată pe zi de sfârșit de perioadă și se păstrează în Contabilitate → Configurare → Cursuri de schimb BCE, cu ziua publicării; dacă BCE nu poate fi accesată, cursul se introduce manual (cel din ziua de sfârșit sau, dacă nu s-a publicat, din următoarea zi publicată). Fără curs BCE, exportul este refuzat, iar raportul afișează un avertisment și folosește temporar cursul din Odoo.",
+      "Coloane în raportul OSS: „Net (EUR)\" și „Tax (EUR)\", lângă „Amount excl. VAT\" și „VAT\" în RON; pe subtotalurile pe stat membru coloana Net (EUR) apare goală, ca în raportul OSS standard.",
+      "Configurare: bifa Interfață electronică în Contabilitate → Configurare → Setări → Declarații ANAF (ajunge în atributul `e_int` pentru regimul UE), Numărul IOSS pe companie pentru regimul de import (fără el exportul se oprește), CUI și adresa companiei (altfel exportul este respins), plus pozițiile fiscale și taxele OSS ale statelor membre.",
+      "Limitări: modulul nu generează note contabile (contabilitatea OSS rămâne cea din `l10n_eu_oss`), nu depune declarația și nu generează referința de plată; avertizarea pentru pragul de 10.000 EUR/an nu e implementată aici (se folosește [l10n_ro_oss_threshold](../l10n_ro_oss_threshold/index.md))."
     ],
     "dependencies": [
       "l10n_ro",
@@ -15747,10 +15765,11 @@
       "l10n_ro_anaf_base",
       "l10n_ro_anaf_d300",
       "l10n_ro_anaf_d318",
+      "l10n_ro_oss_threshold",
       "l10n_eu_oss",
       "l10n_eu_oss_reports"
     ],
-    "text": "Romania - Declarația D398 ANAF (TVA OSS)\nl10n_ro_anaf_d398\nModulul permite generarea Declarației Speciale de TVA (D398) direct din Odoo, conform formatului solicitat de ANAF pentru regimul special One Stop Shop (OSS). Este destinat companiilor din România care efectuează livrări de bunuri sau prestări de servicii către consumatori finali (B2C) din alte state membre UE și sunt înregistrate în regimul OSS. Modulul **nu adaugă un ecran propriu**: extinde raportul standard OSS din Enterprise, adăugând butoanele de export ANAF (XML Soft J / XDP Soft A) și coloane de control în EUR (conversie la cursul BCE). Contabilitatea rămâne în RON — modulul adaugă doar conversia de raportare în EUR pentru declarația OSS. Implementarea este aliniată la infrastructura comună din `l10n_ro_anaf_base` (date companie/declarant, registru de profile de declarații, validări pentru resursele de export și pentru datele minime ale companiei).\nExport XML D398 (Soft J) — fișier validat automat față de schema XSD oficială ANAF, compatibil cu DUKIntegrator pentru semnare digitală.\nExport XDP D398 (Soft A) — fișier de date pentru import în formularul PDF inteligent ANAF (versiunea 1.0.11+); disponibil și ca ZIP cu PDF inclus.\nConversie automată în EUR — sumele sunt convertite folosind cursul de schimb publicat de Banca Centrală Europeană (BCE) din ultima zi a perioadei fiscale, fără a afecta furnizorul de cursuri BNR configurat pentru restul înregistrărilor contabile.\nColoane suplimentare în raportul OSS — „Net (EUR)\" și „Tax (EUR)\" vizibile direct în interfața rapoartelor OSS Enterprise, pentru verificarea sumelor înainte de export.\nGrupare automată pe state membre de consum (MSCON), tip livrare (bunuri/servicii) și cotă TVA (standard/redusă).\nValidare date companie — verifică prezența datelor obligatorii (CUI, județ, date contact) înainte de generarea fișierului.\nMeniu dedicat — „Declarație 398\" disponibil sub meniul „Declarații ANAF\" din modulul Contabilitate.\nLimitări cunoscute: avertizarea pentru pragul OSS de 10.000 EUR/an și depunerea automată în portalul ANAF nu sunt încă implementate."
+    "text": "Romania - Declarația D398 ANAF (TVA OSS)\nl10n_ro_anaf_d398\nModulul permite generarea Declarației Speciale de TVA (D398) direct din Odoo, conform formatului solicitat de ANAF pentru regimul special One Stop Shop (OSS). Este destinat companiilor din România care efectuează livrări de bunuri sau prestări de servicii către consumatori finali (B2C) din alte state membre UE și sunt înregistrate în regimul OSS. Modulul **nu adaugă un ecran propriu**: extinde raportul standard OSS din Enterprise, adăugând butoanele de export ANAF (XML Soft J / XDP Soft A) și coloane de control în EUR, la cursul BCE. Contabilitatea rămâne în RON; conversia în EUR este doar pentru raportarea declarației OSS.\nRaport Declarație 398, la Contabilitate → Raportare → Declarații ANAF → Declarație 398: liniile sunt grupate pe stat membru de consum (MSCON), tip livrare (bunuri/servicii) și cotă TVA a statului de consum. Apar doar dacă în perioadă există facturi B2C intra-UE cu poziția fiscală OSS; butoanele de export rămân vizibile și când raportul e gol.\nPerioade: regimul UE (OSS) se declară trimestrial, iar regimul de import (IOSS) lunar; exportul se oprește cu mesaj explicit dacă perioada nu corespunde regimului, fiindcă validatorul ANAF ar respinge declarația.\nExport XML D398 (Soft J) — fișier validat automat față de schema XSD oficială ANAF (`d398_20211101.xsd`, structura v1.0.11), pentru DUKIntegrator (validare și semnare); sumele sunt convertite în EUR. Opțional se pot exporta PDF sau XLSX pentru arhivă.\nExport XDP D398 (Soft A) — fișier de date pentru formularul PDF inteligent ANAF (versiunea 1.0.11+), importat cu *Import Date*; disponibil și ca ZIP cu PDF inclus.\nConversie în EUR la cursul BCE din ultima zi a perioadei, fără a afecta furnizorul de cursuri BNR al restului contabilității. Cursul se descarcă o singură dată pe zi de sfârșit de perioadă și se păstrează în Contabilitate → Configurare → Cursuri de schimb BCE, cu ziua publicării; dacă BCE nu poate fi accesată, cursul se introduce manual (cel din ziua de sfârșit sau, dacă nu s-a publicat, din următoarea zi publicată). Fără curs BCE, exportul este refuzat, iar raportul afișează un avertisment și folosește temporar cursul din Odoo.\nColoane în raportul OSS: „Net (EUR)\" și „Tax (EUR)\", lângă „Amount excl. VAT\" și „VAT\" în RON; pe subtotalurile pe stat membru coloana Net (EUR) apare goală, ca în raportul OSS standard.\nConfigurare: bifa Interfață electronică în Contabilitate → Configurare → Setări → Declarații ANAF (ajunge în atributul `e_int` pentru regimul UE), Numărul IOSS pe companie pentru regimul de import (fără el exportul se oprește), CUI și adresa companiei (altfel exportul este respins), plus pozițiile fiscale și taxele OSS ale statelor membre.\nLimitări: modulul nu generează note contabile (contabilitatea OSS rămâne cea din `l10n_eu_oss`), nu depune declarația și nu generează referința de plată; avertizarea pentru pragul de 10.000 EUR/an nu e implementată aici (se folosește [l10n_ro_oss_threshold](../l10n_ro_oss_threshold/index.md))."
   },
   {
     "path": "l10n_ro_anaf_d700/index.md",
@@ -17377,23 +17396,24 @@
     "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_financial_notes",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_financial_notes",
-    "last_ingest": null,
+    "last_ingest": "2026-11-03",
     "friendly_name": "Romania - Note explicative la situațiile financiare",
     "summary": "Modul care generează Notele explicative 1–10 la situațiile financiare anuale, conform OMFP 1802/2014. Este adresat contabililor și directorilor financiari care trebuie să atașeze notele explicative la bilanțul anual depus la ANAF. O parte dintre note sunt calculate automat din înregistrările contabile la data de referință (active imobilizate, provizioane, analiza rezultatului din exploatare, scadențarul creanțelor și datoriilor), iar restul oferă câmpuri de completare manuală. Toate cele 10 note se exportă într-un singur document PDF gata de atașat la dosarul de situații financiare anuale.",
     "features": [
-      "Note calculate automat din contabilitate:",
-      "Nota 1 — Active imobilizate: mișcări (intrări, ieșiri) și amortizare per categorie (necorporale `20x`/`280x`, corporale `21x`/`281x`, financiare `26x`/`296x`).",
+      "Set de note pe perioadă, la Contabilitate → Contabilitate → Note Explicative: lista afișează seturile cu starea Ciornă sau Confirmată; se creează cu Nou, completând intervalul De la / Până la (de obicei exercițiul 01.01.AAAA – 31.12.AAAA). Modulul nu cere configurare specială, dar necesită anul fiscal și balanța finală a exercițiului.",
+      "Butonul Calculează automat populează notele derivate din contabilitate (doar din note postate):",
+      "Nota 1 — Active imobilizate: mișcări (intrări, ieșiri) și amortizare per categorie (necorporale `20x`/`280x`, corporale `21x`/`281x`, financiare `26x`/`296x`), citite direct din conturi, fără modulul de active.",
       "Nota 2 — Provizioane: constituiri, utilizări și anulări per cont `151x`.",
-      "Nota 4 — Analiza rezultatului din exploatare: venituri și cheltuieli pe categorii (`6xx`/`7xx`).",
-      "Nota 5 — Creanțe și datorii: scadențar (sub 1 an / 1–5 ani / peste 5 ani) din soldurile nereconciliate la data de referință.",
+      "Nota 4 — Analiza rezultatului din exploatare: venituri (`70x`/`74x`/`75x`) și cheltuieli (`60x`–`68x`) pe categorii.",
+      "Nota 5 — Creanțe și datorii: scadențar (sub 1 an / 1–5 ani / peste 5 ani) din soldurile nereconciliate la data de referință; sumele pot diferi de bilanț dacă există reconcilieri parțiale.",
       "Note cu completare manuală:",
       "Nota 3 — Repartizarea profitului (câmpuri numerice).",
-      "Nota 6 — Principii și politici contabile (text — precompletat cu text standard OMFP 1802).",
+      "Nota 6 — Principii și politici contabile (text precompletat cu textul standard OMFP 1802, de editat conform politicilor companiei).",
       "Nota 7 — Participații și surse de finanțare (câmpuri numerice).",
       "Nota 8 — Salariați și organe de administrare (câmpuri numerice).",
-      "Nota 9 — Exemple de calcul (text liber).",
-      "Nota 10 — Alte informații (text liber).",
-      "Export PDF unic cu toate cele 10 note, gata de atașat la dosarul de situații financiare anuale."
+      "Nota 9 — Exemple de calcul (text liber, opțional).",
+      "Nota 10 — Alte informații (text liber, opțional).",
+      "Export PDF unic cu toate cele 10 note (butonul Tipărește PDF), gata de atașat la dosarul de situații financiare anuale; după verificarea față de balanță, Confirmă blochează setul (cu posibilitate de revenire în ciornă)."
     ],
     "dependencies": [
       "account",
@@ -17405,7 +17425,7 @@
       "l10n_ro_provisions",
       "l10n_ro_dividends"
     ],
-    "text": "Romania - Note explicative la situațiile financiare\nl10n_ro_financial_notes\nModul care generează Notele explicative 1–10 la situațiile financiare anuale, conform OMFP 1802/2014. Este adresat contabililor și directorilor financiari care trebuie să atașeze notele explicative la bilanțul anual depus la ANAF. O parte dintre note sunt calculate automat din înregistrările contabile la data de referință (active imobilizate, provizioane, analiza rezultatului din exploatare, scadențarul creanțelor și datoriilor), iar restul oferă câmpuri de completare manuală. Toate cele 10 note se exportă într-un singur document PDF gata de atașat la dosarul de situații financiare anuale.\nNote calculate automat din contabilitate:\nNota 1 — Active imobilizate: mișcări (intrări, ieșiri) și amortizare per categorie (necorporale `20x`/`280x`, corporale `21x`/`281x`, financiare `26x`/`296x`).\nNota 2 — Provizioane: constituiri, utilizări și anulări per cont `151x`.\nNota 4 — Analiza rezultatului din exploatare: venituri și cheltuieli pe categorii (`6xx`/`7xx`).\nNota 5 — Creanțe și datorii: scadențar (sub 1 an / 1–5 ani / peste 5 ani) din soldurile nereconciliate la data de referință.\nNote cu completare manuală:\nNota 3 — Repartizarea profitului (câmpuri numerice).\nNota 6 — Principii și politici contabile (text — precompletat cu text standard OMFP 1802).\nNota 7 — Participații și surse de finanțare (câmpuri numerice).\nNota 8 — Salariați și organe de administrare (câmpuri numerice).\nNota 9 — Exemple de calcul (text liber).\nNota 10 — Alte informații (text liber).\nExport PDF unic cu toate cele 10 note, gata de atașat la dosarul de situații financiare anuale."
+    "text": "Romania - Note explicative la situațiile financiare\nl10n_ro_financial_notes\nModul care generează Notele explicative 1–10 la situațiile financiare anuale, conform OMFP 1802/2014. Este adresat contabililor și directorilor financiari care trebuie să atașeze notele explicative la bilanțul anual depus la ANAF. O parte dintre note sunt calculate automat din înregistrările contabile la data de referință (active imobilizate, provizioane, analiza rezultatului din exploatare, scadențarul creanțelor și datoriilor), iar restul oferă câmpuri de completare manuală. Toate cele 10 note se exportă într-un singur document PDF gata de atașat la dosarul de situații financiare anuale.\nSet de note pe perioadă, la Contabilitate → Contabilitate → Note Explicative: lista afișează seturile cu starea Ciornă sau Confirmată; se creează cu Nou, completând intervalul De la / Până la (de obicei exercițiul 01.01.AAAA – 31.12.AAAA). Modulul nu cere configurare specială, dar necesită anul fiscal și balanța finală a exercițiului.\nButonul Calculează automat populează notele derivate din contabilitate (doar din note postate):\nNota 1 — Active imobilizate: mișcări (intrări, ieșiri) și amortizare per categorie (necorporale `20x`/`280x`, corporale `21x`/`281x`, financiare `26x`/`296x`), citite direct din conturi, fără modulul de active.\nNota 2 — Provizioane: constituiri, utilizări și anulări per cont `151x`.\nNota 4 — Analiza rezultatului din exploatare: venituri (`70x`/`74x`/`75x`) și cheltuieli (`60x`–`68x`) pe categorii.\nNota 5 — Creanțe și datorii: scadențar (sub 1 an / 1–5 ani / peste 5 ani) din soldurile nereconciliate la data de referință; sumele pot diferi de bilanț dacă există reconcilieri parțiale.\nNote cu completare manuală:\nNota 3 — Repartizarea profitului (câmpuri numerice).\nNota 6 — Principii și politici contabile (text precompletat cu textul standard OMFP 1802, de editat conform politicilor companiei).\nNota 7 — Participații și surse de finanțare (câmpuri numerice).\nNota 8 — Salariați și organe de administrare (câmpuri numerice).\nNota 9 — Exemple de calcul (text liber, opțional).\nNota 10 — Alte informații (text liber, opțional).\nExport PDF unic cu toate cele 10 note (butonul Tipărește PDF), gata de atașat la dosarul de situații financiare anuale; după verificarea față de balanță, Confirmă blochează setul (cu posibilitate de revenire în ciornă)."
   },
   {
     "path": "l10n_ro_financial_statements/index.md",
@@ -17478,7 +17498,7 @@
   {
     "path": "l10n_ro_fixed_assets/index.md",
     "module": "l10n_ro_fixed_assets",
-    "version": "19.0.1.17.3",
+    "version": "19.0.1.17.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_fixed_assets",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_fixed_assets",
     "last_ingest": null,
@@ -17751,7 +17771,7 @@
   {
     "path": "l10n_ro_hr_payroll_enhancement/index.md",
     "module": "l10n_ro_hr_payroll_enhancement",
-    "version": "19.0.2.23.4",
+    "version": "19.0.2.24.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_payroll_enhancement",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_hr_payroll_enhancement",
     "last_ingest": "2026-10-22",
@@ -18352,19 +18372,20 @@
     "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_micro_tax",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_micro_tax",
-    "last_ingest": null,
+    "last_ingest": "2026-11-03",
     "friendly_name": "Romania - Impozit pe veniturile microîntreprinderilor",
-    "summary": "Modulul calculează și înregistrează trimestrial impozitul pe veniturile micro-întreprinderilor conform Legii 227/2015 Titlul III, actualizat prin OUG 115/2023 și OUG 21/2024. Se adresează companiilor cu cifra de afaceri sub 500.000 EUR/an care aplică cota de 1% (cu cel puțin un salariat) sau 3% (fără salariat). Determină automat baza impozabilă din veniturile din exploatare (cu excluderi configurabile), aplică cota corectă în funcție de numărul de salariați și generează automat nota contabilă aferentă. Include monitorizarea plafonului de 500.000 EUR cu alerte și tranziție automată la regimul de impozit pe profit la depășire.",
+    "summary": "Modulul calculează și înregistrează trimestrial impozitul pe veniturile microîntreprinderilor conform Legii 227/2015 Titlul III, actualizat prin OUG 115/2023 și OUG 21/2024. Se adresează companiilor cu cifra de afaceri sub 500.000 EUR/an care aplică cota de 1% (cu cel puțin un salariat) sau 3% (fără salariat). Determină automat baza impozabilă din veniturile din exploatare (cu excluderi configurabile), aplică cota corectă în funcție de numărul de salariați și generează nota contabilă aferentă. Include monitorizarea plafonului de 500.000 EUR, cu alertă și tranziție automată la impozitul pe profit la depășire.",
     "features": [
-      "Model persistent `l10n.ro.micro.tax.compute` cu mașină de stări `draft → posted → cancelled`.",
-      "Calcul automat al veniturilor impozabile din `account.move.line` pentru conturile de tip `income` / `income_other`, filtrând înregistrările postate în trimestrul selectat.",
-      "Conturi excluse din baza de calcul, configurabile pe companie (dividende 761, subvenții 7411/7584 etc.).",
-      "Număr de salariați preluat automat din modulul HR dacă este instalat sau completat manual.",
-      "Cotă automată: 1% (cel puțin un salariat) sau 3% (zero salariați), conform legii.",
-      "Generare automată a notei contabile Dr 698 = Cr 4418 la postare.",
-      "Cron lunar de monitorizare a plafonului: alertă la 80% și tranziție automată la impozit pe profit la depășirea pragului de 500.000 EUR.",
-      "Configurare în Setări Contabilitate — regim fiscal, prag EUR, conturi excluse.",
-      "9 teste automate (TC-01 → TC-09)."
+      "Calcul trimestrial, la Contabilitate → Contabilitate → Impozit Micro-Întreprindere: se aleg anul fiscal, trimestrul (T1–T4) și jurnalul de operațiuni diverse; datele de început și sfârșit se completează din trimestru. Model persistent `l10n.ro.micro.tax.compute` cu stările `draft → posted → cancelled`.",
+      "Butonul Calculează venituri (doar în ciornă) citește notele postate în trimestru pe conturile de venituri (tip `income` / `income_other`) și completează veniturile totale, veniturile excluse, baza impozabilă (minimum 0), numărul de salariați (din aplicația Angajați dacă e instalată, altfel manual) și cota: 1% cu cel puțin un salariat, 3% fără salariați.",
+      "Formula: impozit calculat = bază impozabilă × cotă; de plată = impozit calculat − Plăți anterioare în an (minimum 0). Plățile anterioare nu se completează automat, se introduc manual (la T1 rămân 0; la T2 impozitul achitat pentru T1).",
+      "Conturi excluse din bază, configurabile pe companie (de exemplu 761 dividende, 7411 / 7584 subvenții, 765 diferențe de curs favorabile, 786 reluări de provizioane); lista e orientativă și se verifică cu consultantul fiscal (Cod Fiscal art. 53 alin. 1).",
+      "Postare: Postează nota trece calculul în starea Postată și generează nota contabilă Dr 698 = Cr 4418, datată în ultima zi a trimestrului, accesibilă prin Vezi nota contabilă. Postarea e refuzată dacă impozitul de plată este zero sau dacă lipsesc conturile 698 / 4418.",
+      "Rectificare: Anulează (anulează și nota postată, doar dacă perioada nu e blocată), apoi Resetează la ciornă, corectare și repostare.",
+      "Plata impozitului (scadentă pe 25 ale lunii următoare trimestrului) se înregistrează separat prin jurnalul de bancă; nu o generează modulul. Impozitul din calcul alimentează declarația D100 trimestrială.",
+      "Monitorizarea plafonului: job lunar, dezactivat implicit (se activează din Setări → Tehnic → Automatizări): la cifră de afaceri cumulată ≥ 80% din plafon postează o avertizare pe fișa companiei, iar la depășire trece regimul fiscal la impozit pe profit și înregistrează *Data ieșirii din regimul micro*. Conversia în EUR se face la cursul zilei. Dacă jobul nu e activ, regimul se schimbă manual în setări.",
+      "Configurare în Contabilitate → Configurare → Setări → Regim Fiscal Micro-Întreprindere (RO): Regim fiscal RO (Impozit micro-întreprindere 1%/3%), Plafon micro (EUR) (implicit 500.000) și Conturi excluse micro; este necesar și un jurnal de tip Operațiuni diverse pentru notele de impozit.",
+      "Multicompanie: calculele sunt filtrate pe compania activă, iar jurnalul ales trebuie să îi aparțină. Modulul are 9 teste automate (TC-01 → TC-09)."
     ],
     "dependencies": [
       "account",
@@ -18376,7 +18397,7 @@
       "l10n_ro_anaf_d107",
       "l10n_ro_period_close_enhanced"
     ],
-    "text": "Romania - Impozit pe veniturile microîntreprinderilor\nl10n_ro_micro_tax\nModulul calculează și înregistrează trimestrial impozitul pe veniturile micro-întreprinderilor conform Legii 227/2015 Titlul III, actualizat prin OUG 115/2023 și OUG 21/2024. Se adresează companiilor cu cifra de afaceri sub 500.000 EUR/an care aplică cota de 1% (cu cel puțin un salariat) sau 3% (fără salariat). Determină automat baza impozabilă din veniturile din exploatare (cu excluderi configurabile), aplică cota corectă în funcție de numărul de salariați și generează automat nota contabilă aferentă. Include monitorizarea plafonului de 500.000 EUR cu alerte și tranziție automată la regimul de impozit pe profit la depășire.\nModel persistent `l10n.ro.micro.tax.compute` cu mașină de stări `draft → posted → cancelled`.\nCalcul automat al veniturilor impozabile din `account.move.line` pentru conturile de tip `income` / `income_other`, filtrând înregistrările postate în trimestrul selectat.\nConturi excluse din baza de calcul, configurabile pe companie (dividende 761, subvenții 7411/7584 etc.).\nNumăr de salariați preluat automat din modulul HR dacă este instalat sau completat manual.\nCotă automată: 1% (cel puțin un salariat) sau 3% (zero salariați), conform legii.\nGenerare automată a notei contabile Dr 698 = Cr 4418 la postare.\nCron lunar de monitorizare a plafonului: alertă la 80% și tranziție automată la impozit pe profit la depășirea pragului de 500.000 EUR.\nConfigurare în Setări Contabilitate — regim fiscal, prag EUR, conturi excluse.\n9 teste automate (TC-01 → TC-09)."
+    "text": "Romania - Impozit pe veniturile microîntreprinderilor\nl10n_ro_micro_tax\nModulul calculează și înregistrează trimestrial impozitul pe veniturile microîntreprinderilor conform Legii 227/2015 Titlul III, actualizat prin OUG 115/2023 și OUG 21/2024. Se adresează companiilor cu cifra de afaceri sub 500.000 EUR/an care aplică cota de 1% (cu cel puțin un salariat) sau 3% (fără salariat). Determină automat baza impozabilă din veniturile din exploatare (cu excluderi configurabile), aplică cota corectă în funcție de numărul de salariați și generează nota contabilă aferentă. Include monitorizarea plafonului de 500.000 EUR, cu alertă și tranziție automată la impozitul pe profit la depășire.\nCalcul trimestrial, la Contabilitate → Contabilitate → Impozit Micro-Întreprindere: se aleg anul fiscal, trimestrul (T1–T4) și jurnalul de operațiuni diverse; datele de început și sfârșit se completează din trimestru. Model persistent `l10n.ro.micro.tax.compute` cu stările `draft → posted → cancelled`.\nButonul Calculează venituri (doar în ciornă) citește notele postate în trimestru pe conturile de venituri (tip `income` / `income_other`) și completează veniturile totale, veniturile excluse, baza impozabilă (minimum 0), numărul de salariați (din aplicația Angajați dacă e instalată, altfel manual) și cota: 1% cu cel puțin un salariat, 3% fără salariați.\nFormula: impozit calculat = bază impozabilă × cotă; de plată = impozit calculat − Plăți anterioare în an (minimum 0). Plățile anterioare nu se completează automat, se introduc manual (la T1 rămân 0; la T2 impozitul achitat pentru T1).\nConturi excluse din bază, configurabile pe companie (de exemplu 761 dividende, 7411 / 7584 subvenții, 765 diferențe de curs favorabile, 786 reluări de provizioane); lista e orientativă și se verifică cu consultantul fiscal (Cod Fiscal art. 53 alin. 1).\nPostare: Postează nota trece calculul în starea Postată și generează nota contabilă Dr 698 = Cr 4418, datată în ultima zi a trimestrului, accesibilă prin Vezi nota contabilă. Postarea e refuzată dacă impozitul de plată este zero sau dacă lipsesc conturile 698 / 4418.\nRectificare: Anulează (anulează și nota postată, doar dacă perioada nu e blocată), apoi Resetează la ciornă, corectare și repostare.\nPlata impozitului (scadentă pe 25 ale lunii următoare trimestrului) se înregistrează separat prin jurnalul de bancă; nu o generează modulul. Impozitul din calcul alimentează declarația D100 trimestrială.\nMonitorizarea plafonului: job lunar, dezactivat implicit (se activează din Setări → Tehnic → Automatizări): la cifră de afaceri cumulată ≥ 80% din plafon postează o avertizare pe fișa companiei, iar la depășire trece regimul fiscal la impozit pe profit și înregistrează *Data ieșirii din regimul micro*. Conversia în EUR se face la cursul zilei. Dacă jobul nu e activ, regimul se schimbă manual în setări.\nConfigurare în Contabilitate → Configurare → Setări → Regim Fiscal Micro-Întreprindere (RO): Regim fiscal RO (Impozit micro-întreprindere 1%/3%), Plafon micro (EUR) (implicit 500.000) și Conturi excluse micro; este necesar și un jurnal de tip Operațiuni diverse pentru notele de impozit.\nMulticompanie: calculele sunt filtrate pe compania activă, iar jurnalul ales trebuie să îi aparțină. Modulul are 9 teste automate (TC-01 → TC-09)."
   },
   {
     "path": "l10n_ro_move_template/index.md",
@@ -19268,7 +19289,7 @@
   {
     "path": "l10n_ro_period_close_enhanced/index.md",
     "module": "l10n_ro_period_close_enhanced",
-    "version": "19.0.1.14.0",
+    "version": "19.0.1.15.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_period_close_enhanced",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_period_close_enhanced",
     "last_ingest": null,
@@ -19618,18 +19639,20 @@
     "version": "19.0.1.2.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_profit_tax",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_profit_tax",
-    "last_ingest": null,
+    "last_ingest": "2026-11-03",
     "friendly_name": "Romania - Impozit pe profit (D100/D101)",
-    "summary": "Modulul calculează automat impozitul pe profit conform Legii 227/2015 Titlul II, cu sprijin pentru D100 trimestrial (cumulat YTD) și D101 anual. Pornind de la profitul contabil (venituri 7xx − cheltuieli 6xx, cumulat de la 1 ianuarie), aplică ajustări fiscale configurabile per cont, gestionează pierderea fiscală reportată (carry-forward 7 ani, deducere FIFO, limita 70%) și creditul fiscal pentru sponsorizări, generând nota contabilă Dr 691 = Cr 441 la postare. Modulul include și un Registru de evidență fiscală (OMFP 870/2005) care listează ajustările pe rânduri, cu temei legal, și se reconciliază cu calculul anual. Se adresează companiilor plătitoare de impozit pe profit la cota de 16%.",
+    "summary": "Modulul calculează automat impozitul pe profit conform Legii 227/2015 Titlul II, cu sprijin pentru D100 trimestrial (cumulat de la 1 ianuarie) și D101 anual. Pornind de la profitul contabil (venituri clasa 7 − cheltuieli clasa 6), aplică ajustări fiscale configurabile per cont, gestionează pierderea fiscală reportată (deducere FIFO, limita 70%) și creditul fiscal pentru sponsorizări, generând nota contabilă Dr 691 = Cr 441 la postare. Include și un Registru de evidență fiscală, pe modelul din OMF 808/2026, care listează ajustările pe rânduri, cu temei legal, și se reconciliază cu calculul anual. Se adresează companiilor plătitoare de impozit pe profit la cota de 16%.",
     "features": [
-      "Calcul profit contabil YTD din `account.move.line` (venituri 7xx − cheltuieli 6xx), cumulat de la 1 ianuarie.",
-      "Ajustări fiscale configurabile per cont contabil: cheltuieli nedeductibile (amenzi, protocol 50%), venituri neimpozabile (dividende subsidiare), deduceri suplimentare (C-D).",
-      "Pierdere fiscală reportată (art. 31 CF): carry-forward 7 ani, deducere FIFO, limita 70% din profitul impozabil, cu tracking complet al utilizărilor per calcul.",
-      "Credit fiscal sponsorizări (art. 25¹ CF) calculat pe contul 6582: `min(0,75% CA, 20% impozit calculat, cheltuieli efective)`.",
-      "Model persistent cu mașină de stări `draft → posted → cancelled`; anularea eliberează automat utilizările de pierdere.",
-      "Notă contabilă automată Dr 691 = Cr 441 la postare, cu verificări (conturi existente, impozit > 0, limita 70% respectată).",
-      "Registru de evidență fiscală (OMFP 870/2005): generare din calculul anual, reconciliere automată, închidere imutabilă pe an.",
-      "Periodicitate YTD: D100 T1–T3 cumulativ de la 1 ianuarie (art. 41 CF) și D101 anual independent."
+      "Calcul pe perioadă, la Contabilitate → Contabilitate → Impozit pe Profit: se aleg anul fiscal, perioada (T1, T2, T3 pentru D100, cu scadențe 25 apr / 25 iul / 25 oct, sau anual pentru D101, scadent 25 martie anul următor) și jurnalul de operațiuni diverse. Fiecare perioadă este cumulată de la 1 ianuarie; calculul anual este independent de cele trimestriale. La trecerea de la micro la profit în cursul anului se modifică manual Data de la.",
+      "Butonul Calculează din contabilitate preia din rulajele perioadei, fără notele de închidere pe contul 121: venituri și cheltuieli (partea financiară separată pe prefixe de cont configurabile în setări, implicit 761–768, 786 și 663–668, 686), ajustările fiscale, sponsorizarea și cifra de afaceri netă (701–708 minus 709). Toate câmpurile de ajustare pot fi suprascrise manual.",
+      "Rânduri calculate direct din conturi: impozitul pe profit (691, 692, 694, 697; nedeductibil, D101 rd. 23), protocolul (6231) peste limita de 2% din profitul contabil majorat cu impozitul și protocolul (rd. 26), sponsorizarea (6582), integral nedeductibilă (rd. 27), și amortizarea contabilă (6811) cu amortizarea fiscală editabilă. Regulile de ajustare pe aceste conturi sunt ignorate, ca să nu se numere de două ori.",
+      "Ajustări fiscale configurabile per cont, la Configurare → Impozit Profit → Ajustări fiscale: cheltuieli nedeductibile (+, de exemplu amenzi pe 6581), venituri neimpozabile (−, dividende pe 761) și deduceri suplimentare (−, de exemplu cercetare-dezvoltare), cu procent per regulă.",
+      "Pierdere fiscală reportată (art. 31 CF), la Configurare → Impozit Profit → Pierderi reportate: 5 ani pentru pierderile din 2024 încoace și 7 ani pentru cele de până în 2023, cu starea Activă / Epuizată / Expirată. Sugerează deducere pierdere aplică FIFO și limita de 70% din profitul impozabil; câmpul (-) Pierdere dedusă efectiv se poate modifica în limita impusă. Anularea calculului eliberează utilizările de pierdere.",
+      "Credit fiscal sponsorizări (art. 25 alin. (4) lit. i) CF): cel mai mic dintre cheltuiala efectivă, 0,75% din cifra de afaceri netă și 20% din impozitul calculat, rotunjit în jos la leu.",
+      "Rotunjire: impozitul se rotunjește la leu (0,50 în sus), iar nota are aceeași sumă ca declarația. Cotă impozit (%) se poate modifica pe calculul curent (de exemplu cotă redusă prin tratat). De plată scade creditul de sponsorizare și impozitul datorat pentru trimestrele anterioare, introdus manual cu valoarea declarată prin D100 (afișat 0 dacă rezultatul ar fi negativ).",
+      "Postare: Postează nota Dr 691 = Cr 441 (în practică pe 4411), datată în ultima zi a perioadei, cu verificări (stare ciornă, impozit de plată pozitiv, conturi existente, limita de 70% respectată); calculul devine doar pentru citire, iar Vezi nota contabilă deschide nota. Cu bază zero sau negativă postarea este refuzată („Impozitul de plată este zero\"). Rectificare: Anulează, Resetează la ciornă, corectare și repostare (într-o perioadă blocată fiscal este nevoie de deblocare prealabilă).",
+      "Registru de evidență fiscală (OMF 808/2026, care a abrogat OMFP 870/2005), la Contabilitate → Contabilitate → Registru de evidență fiscală: se creează pentru un an fiscal, se alege calculul anual și se apasă Generează din calculul D101; se reconciliază automat cu calculul. Tipărește registrul dă documentul cu Nr. crt., Explicații, Valoarea (lei), iar Situație analitică a ajustărilor fiscale este raportul detaliat pe coloane. Închide anul face registrul imutabil, Redeschide îl readuce în lucru. Deocamdată doar registrul anual; cel trimestral nu este acoperit.",
+      "Limitări: impozitul minim pe cifra de afaceri (OUG 115/2023) nu e calculat automat (ajustare manuală a sumei De plată); pierderea fiscală a exercițiului se înregistrează manual în Pierderi reportate."
     ],
     "dependencies": [
       "account",
@@ -19639,11 +19662,10 @@
       "l10n_ro_micro_tax",
       "l10n_ro_account_return_pl_closing",
       "l10n_ro_anaf_d100",
-      "l10n_ro_anaf_d120",
       "l10n_ro_anaf_d107",
       "l10n_ro_financial_statements"
     ],
-    "text": "Romania - Impozit pe profit (D100/D101)\nl10n_ro_profit_tax\nModulul calculează automat impozitul pe profit conform Legii 227/2015 Titlul II, cu sprijin pentru D100 trimestrial (cumulat YTD) și D101 anual. Pornind de la profitul contabil (venituri 7xx − cheltuieli 6xx, cumulat de la 1 ianuarie), aplică ajustări fiscale configurabile per cont, gestionează pierderea fiscală reportată (carry-forward 7 ani, deducere FIFO, limita 70%) și creditul fiscal pentru sponsorizări, generând nota contabilă Dr 691 = Cr 441 la postare. Modulul include și un Registru de evidență fiscală (OMFP 870/2005) care listează ajustările pe rânduri, cu temei legal, și se reconciliază cu calculul anual. Se adresează companiilor plătitoare de impozit pe profit la cota de 16%.\nCalcul profit contabil YTD din `account.move.line` (venituri 7xx − cheltuieli 6xx), cumulat de la 1 ianuarie.\nAjustări fiscale configurabile per cont contabil: cheltuieli nedeductibile (amenzi, protocol 50%), venituri neimpozabile (dividende subsidiare), deduceri suplimentare (C-D).\nPierdere fiscală reportată (art. 31 CF): carry-forward 7 ani, deducere FIFO, limita 70% din profitul impozabil, cu tracking complet al utilizărilor per calcul.\nCredit fiscal sponsorizări (art. 25¹ CF) calculat pe contul 6582: `min(0,75% CA, 20% impozit calculat, cheltuieli efective)`.\nModel persistent cu mașină de stări `draft → posted → cancelled`; anularea eliberează automat utilizările de pierdere.\nNotă contabilă automată Dr 691 = Cr 441 la postare, cu verificări (conturi existente, impozit > 0, limita 70% respectată).\nRegistru de evidență fiscală (OMFP 870/2005): generare din calculul anual, reconciliere automată, închidere imutabilă pe an.\nPeriodicitate YTD: D100 T1–T3 cumulativ de la 1 ianuarie (art. 41 CF) și D101 anual independent."
+    "text": "Romania - Impozit pe profit (D100/D101)\nl10n_ro_profit_tax\nModulul calculează automat impozitul pe profit conform Legii 227/2015 Titlul II, cu sprijin pentru D100 trimestrial (cumulat de la 1 ianuarie) și D101 anual. Pornind de la profitul contabil (venituri clasa 7 − cheltuieli clasa 6), aplică ajustări fiscale configurabile per cont, gestionează pierderea fiscală reportată (deducere FIFO, limita 70%) și creditul fiscal pentru sponsorizări, generând nota contabilă Dr 691 = Cr 441 la postare. Include și un Registru de evidență fiscală, pe modelul din OMF 808/2026, care listează ajustările pe rânduri, cu temei legal, și se reconciliază cu calculul anual. Se adresează companiilor plătitoare de impozit pe profit la cota de 16%.\nCalcul pe perioadă, la Contabilitate → Contabilitate → Impozit pe Profit: se aleg anul fiscal, perioada (T1, T2, T3 pentru D100, cu scadențe 25 apr / 25 iul / 25 oct, sau anual pentru D101, scadent 25 martie anul următor) și jurnalul de operațiuni diverse. Fiecare perioadă este cumulată de la 1 ianuarie; calculul anual este independent de cele trimestriale. La trecerea de la micro la profit în cursul anului se modifică manual Data de la.\nButonul Calculează din contabilitate preia din rulajele perioadei, fără notele de închidere pe contul 121: venituri și cheltuieli (partea financiară separată pe prefixe de cont configurabile în setări, implicit 761–768, 786 și 663–668, 686), ajustările fiscale, sponsorizarea și cifra de afaceri netă (701–708 minus 709). Toate câmpurile de ajustare pot fi suprascrise manual.\nRânduri calculate direct din conturi: impozitul pe profit (691, 692, 694, 697; nedeductibil, D101 rd. 23), protocolul (6231) peste limita de 2% din profitul contabil majorat cu impozitul și protocolul (rd. 26), sponsorizarea (6582), integral nedeductibilă (rd. 27), și amortizarea contabilă (6811) cu amortizarea fiscală editabilă. Regulile de ajustare pe aceste conturi sunt ignorate, ca să nu se numere de două ori.\nAjustări fiscale configurabile per cont, la Configurare → Impozit Profit → Ajustări fiscale: cheltuieli nedeductibile (+, de exemplu amenzi pe 6581), venituri neimpozabile (−, dividende pe 761) și deduceri suplimentare (−, de exemplu cercetare-dezvoltare), cu procent per regulă.\nPierdere fiscală reportată (art. 31 CF), la Configurare → Impozit Profit → Pierderi reportate: 5 ani pentru pierderile din 2024 încoace și 7 ani pentru cele de până în 2023, cu starea Activă / Epuizată / Expirată. Sugerează deducere pierdere aplică FIFO și limita de 70% din profitul impozabil; câmpul (-) Pierdere dedusă efectiv se poate modifica în limita impusă. Anularea calculului eliberează utilizările de pierdere.\nCredit fiscal sponsorizări (art. 25 alin. (4) lit. i) CF): cel mai mic dintre cheltuiala efectivă, 0,75% din cifra de afaceri netă și 20% din impozitul calculat, rotunjit în jos la leu.\nRotunjire: impozitul se rotunjește la leu (0,50 în sus), iar nota are aceeași sumă ca declarația. Cotă impozit (%) se poate modifica pe calculul curent (de exemplu cotă redusă prin tratat). De plată scade creditul de sponsorizare și impozitul datorat pentru trimestrele anterioare, introdus manual cu valoarea declarată prin D100 (afișat 0 dacă rezultatul ar fi negativ).\nPostare: Postează nota Dr 691 = Cr 441 (în practică pe 4411), datată în ultima zi a perioadei, cu verificări (stare ciornă, impozit de plată pozitiv, conturi existente, limita de 70% respectată); calculul devine doar pentru citire, iar Vezi nota contabilă deschide nota. Cu bază zero sau negativă postarea este refuzată („Impozitul de plată este zero\"). Rectificare: Anulează, Resetează la ciornă, corectare și repostare (într-o perioadă blocată fiscal este nevoie de deblocare prealabilă).\nRegistru de evidență fiscală (OMF 808/2026, care a abrogat OMFP 870/2005), la Contabilitate → Contabilitate → Registru de evidență fiscală: se creează pentru un an fiscal, se alege calculul anual și se apasă Generează din calculul D101; se reconciliază automat cu calculul. Tipărește registrul dă documentul cu Nr. crt., Explicații, Valoarea (lei), iar Situație analitică a ajustărilor fiscale este raportul detaliat pe coloane. Închide anul face registrul imutabil, Redeschide îl readuce în lucru. Deocamdată doar registrul anual; cel trimestral nu este acoperit.\nLimitări: impozitul minim pe cifra de afaceri (OUG 115/2023) nu e calculat automat (ajustare manuală a sumei De plată); pierderea fiscală a exercițiului se înregistrează manual în Pierderi reportate."
   },
   {
     "path": "l10n_ro_provisions/index.md",

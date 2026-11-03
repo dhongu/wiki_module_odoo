@@ -1,10 +1,11 @@
 # Document Template Engine (localizat la `deltatech_document_template/index.md`)
 
 - **Nume Tehnic:** `deltatech_document_template`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_document_template
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_document_template`
 - **Ultima Ingestie:** `2026-10-31`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

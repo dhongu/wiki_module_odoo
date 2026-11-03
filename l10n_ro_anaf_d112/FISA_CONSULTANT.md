@@ -197,6 +197,23 @@ declarația rămâne în **Calculat** și liniile se completează manual în tab
 
 (Captura ilustrează o declarație cu doi angajați.)
 
+**Liniile completate manual, cu bifa *Calcul automat deduceri*.** Butonul **Recalculează deduceri**
+calculează suma neimpozabilă, CAS, CASS, deducerea personală și impozitul cu parametrii perioadei
+declarației (S1/S2 = câmpul *Nivel salariu minim* de pe linie):
+
+| Perioada | Salariul minim brut | Sumă neimpozabilă | Bază legală salariu minim |
+|----------|---------------------|-------------------|---------------------------|
+| 01–06/2026 | 4.050 lei (S1) / 4.325 lei (S2) | 300 lei (S1) / 200 lei (S2) | HG 1.506/2024 (4.050 lei) |
+| de la 07/2026 | 4.325 lei (S1 și S2) | 200 lei, plafonată la 33% din salariul de bază (OUG 89/2025 + OUG 8/2026; Ordin 605/95/928/2.314/2026) | HG 146/2026 |
+
+Suma neimpozabilă se acordă doar când venitul brut este egal cu salariul minim al perioadei, pe
+funcția de bază. De la 07/2026, un brut de 4.050 lei este sub salariul minim și nu mai primește suma
+neimpozabilă; linia este și sub baza minimă de CAS/CASS de 4.125 lei (4.325 − 200), iar dacă nu e
+exceptată (art. 146 alin. (5^7) Cod fiscal) declarația adaugă diferența în blocul P. La normă
+întreagă, un astfel de brut indică o eroare de salarizare. Deducerea personală de bază se calculează pe grila salariului minim al perioadei
+(art. 77 Cod fiscal). Liniile preluate din statele de plată nu se recalculează: valorile vin din
+salarizare.
+
 ![Tab Angajați completat](screenshots/02_d112_angajati.png)
 
 ### Pasul 3 — Verificare totaluri
@@ -366,6 +383,12 @@ reconciliere acceptate, verificarea finală în utilitarele ANAF și depunerea �
 - [ ] Compania are CAEN valid, județ și persoană responsabilă ANAF configurate.
 - [ ] Declarația se creează și calculează (din payslip sau manual) cu 1-2 angajați de test.
 - [ ] Totalurile (CAS/CASS/impozit/CAM) corespund liniilor nominale.
+- [ ] Pe o declarație din 07/2026, o linie cu *Calcul automat deduceri*, *Funcție de bază* bifată și
+      *Salariu de bază* necompletat (sau egal cu brutul) primește la **Recalculează deduceri**, la brut
+      4.325 lei, suma neimpozabilă de 200 lei și baza CAS 4.125 lei; la brut 4.050 lei nu primește sumă
+      neimpozabilă (baza CAS pe linie 4.050 lei, iar diferența până la baza minimă de 4.125 lei intră în
+      blocul P). Coloanele *Sumă neimpozabilă*, *Baza CAS* și *Nivel salariu minim* se afișează din
+      meniul de coloane opționale al listei Angajați.
 - [ ] Reconcilierea marchează liniile ca reconciliate când contabilitatea = D112.
 - [ ] Cu politica strictă activă, o diferență blochează generarea XML.
 - [ ] XML-ul se generează, trece validarea XSD și se descarcă cu nume corect.
@@ -430,6 +453,8 @@ câmpuri sunt completate înainte de a rula *Calculează* pe declarație.
 
 Pentru scenarii de business specifice există fișe dedicate în [`fise/`](fise/README.md):
 salariu minim (deduceri automate), contract part-time, pensionar activ și declarație rectificativă.
+Scenariul „salariu minim” folosește salariul minim al perioadei: 4.050 lei până în 06/2026 și
+4.325 lei de la 07/2026.
 
 Regenerare:
 

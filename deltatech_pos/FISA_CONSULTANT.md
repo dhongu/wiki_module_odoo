@@ -87,6 +87,17 @@ Configurați:
   denumirea se scurtează ca să încapă codul în lungimea din **Trim to**; codul nu se taie. Dacă codul
   (cu paranteze) ocupă toată lungimea din **Trim to**, nu se mai tipărește, iar linia rămâne doar cu
   denumirea, tăiată la limită — alegeți în **Trim to** o lungime care lasă loc și denumirii.
+- **Customer Account only for refunds** (în interfața în română: **Cont client doar pentru retur**;
+  implicit dezactivată) dacă metoda de plată **Customer Account** (**Cont client**) trebuie folosită
+  doar pentru diferența unui retur lăsată ca sold pe client, nu pentru vânzări pe credit. Cu opțiunea
+  activă, metoda apare pe ecranul de plată doar când totalul comenzii este negativ (vezi Pasul 6 din
+  Flux de utilizare). Metoda **Customer Account** trebuie să existe în **Point of Sale → Configuration →
+  Payment Methods** și să fie legată de punctul de vânzare. Opțiunea privește **orice** metodă de plată
+  fără jurnal (tipul „Customer Account”), nu doar pe cea numită așa. Pe metodă, **Identify Customer**
+  (**Identificare client**) trebuie să fie bifat: doar atunci creditul se înregistrează pe contul de
+  creanțe al clientului; fără bifă, creditul ajunge pe contul de încasări POS implicit (sau pe **Cont
+  Intermediar** al metodei, dacă e completat), fără client. Metoda creată automat de Odoo are bifa
+  activă.
 
 ### Pasul 3 — Configurare metode de plată
 
@@ -219,6 +230,45 @@ comanda sursă).
 > fiscal (`deltatech_sale_store`, neinstalat împreună cu acest modul la majoritatea clienților),
 > acele vânzări nu apar aici.
 
+### Pasul 6 — Retur lăsat ca sold pe client (Customer Account)
+
+Când o comandă de retur are totalul negativ, diferența se poate: da clientului în numerar (se emite
+dispoziție de plată), returna pe card (pe un punct de vânzare fără terminal de plată legat la POS,
+rambursarea se face manual, pe terminalul bancar) sau lăsa ca sold pe contul clientului, cu metoda de
+plată **Customer Account** (**Cont client**). Pentru **Customer Account** trebuie selectat clientul pe
+comandă. Cu modulul enterprise **POS Settle Due** instalat, POS afișează la alegerea clientului și
+soldul lui.
+
+O plată negativă pe **Customer Account** nu scoate bani din sertar și nu trimite niciun document la casa
+de marcat (ca la rambursarea pe card). Contabil, la închiderea sesiunii se înregistrează o linie de
+credit pe contul de creanțe al clientului, nereconciliată, cu condiția ca **Identify Customer** să fie
+bifat pe metodă (Pasul 2 din Configurare inițială).
+
+**Atenție — produse noi pe o comandă cu total negativ.** Când returul e combinat cu produse noi și
+totalul rămâne negativ, produsele noi nu se tipăresc pe niciun bon fiscal: pe numerar casa primește
+doar dispoziția de plată pentru diferență, iar pe card sau **Customer Account** nu primește nimic. Odoo
+înregistrează totuși vânzarea în sesiune. De aceea, la un schimb de produse recomandați două comenzi:
+returul separat, iar vânzarea nouă pe bon fiscal propriu (aceeași recomandare o dă dialogul „Negative
+VAT total”). Cum se tratează fiscal un schimb, cu contabilul.
+
+Cu **Customer Account only for refunds** (**Cont client doar pentru retur**) activă:
+
+- pe ecranul de plată, metoda **Customer Account** este oferită doar când totalul comenzii este negativ;
+  la total zero sau pozitiv nu mai apare în lista metodelor de plată;
+- dacă pe comandă rămâne o plată pe **Customer Account** și totalul devine zero sau pozitiv (de exemplu
+  după ce adăugați produse, sau cu un buton de plată rapidă, care nu trece prin ecranul de plată),
+  validarea este blocată cu dialogul **Customer Account not allowed** (**Cont client nu este
+  permis**); ștergeți linia de plată sau modificați comanda;
+- linia care a rămas pe comandă se șterge din ecranul de plată. Cu **Identify Customer** bifat, Odoo nu
+  permite metoda la **One-click Payment** (**Plată cu un singur clic**); doar fără bifă ar putea fi
+  adăugată de un buton de plată rapidă la un total pozitiv, iar validarea ar fi blocată;
+- consecință: din POS nu se mai pot lăsa vânzări pe credit pe **Customer Account**;
+- depunerea de bani și achitarea soldului clientului din **POS Settle Due** (enterprise) nu sunt
+  afectate: comenzile formate numai din linii de depunere sau de achitare sunt exceptate de la regulă.
+  Dacă pe o astfel de comandă se adaugă și produse, regula se aplică din nou.
+
+![Setări POS — Cont client doar pentru retur](screenshots/06_cont_client_doar_retur.png)
+
 ## 7. Reguli funcționale
 
 | Situație | Comportament |
@@ -233,6 +283,12 @@ comanda sursă).
 | Comandă negativă / restituire | validarea cere client selectat înainte de finalizare |
 | Cash in / cash out fără client | utilizatorul este obligat să selecteze clientul înainte de operațiune |
 | Sesiune închisă cu pickinguri rămase | există acțiunea **Check Picking** pentru încercare de validare a livrărilor |
+| Retur cu plată negativă pe metodă non-cash (card, **Customer Account**) | nu se trimite niciun document la casa de marcat; pe numerar se emite dispoziție de plată |
+| **Customer Account only for refunds** activă, total negativ | metoda **Customer Account** apare în lista metodelor de plată |
+| **Customer Account only for refunds** activă, total zero sau pozitiv | metoda **Customer Account** nu apare în lista metodelor de plată |
+| **Customer Account only for refunds** activă, plată pe **Customer Account** rămasă pe o comandă cu total zero sau pozitiv | validarea este blocată cu dialogul **Customer Account not allowed**; nu se trimite nimic la casă |
+| **Customer Account only for refunds** activă, comandă de depunere de bani sau de achitare a soldului (**POS Settle Due**) | nu este afectată: comanda se validează ca fără opțiune; dacă pe comandă se adaugă și produse, exceptarea nu se mai aplică |
+| Comandă cu total negativ și produse noi | produsele noi nu se tipăresc pe niciun bon fiscal (pe numerar doar dispoziția de plată, pe card sau **Customer Account** nimic) |
 
 ## 8. Scenarii de test pentru consultant
 
@@ -255,6 +311,11 @@ comanda sursă).
 | AMEF-14 | **Print order number as barcode** bifat, **Order barcode type** = Normal (apoi QR) pe un Datecs sau Daisy | selecția apare doar cu bifa activă; bonul tipărește codul normal, respectiv QR-ul, cu numărul comenzii |
 | AMEF-15 | Scanarea bonului (cod normal, apoi QR) în ecranul de comenzi, fără clic în câmpul de căutare | comanda se găsește după numărul bonului și se selectează |
 | AMEF-16 | Scanarea unui cod care nu aparține niciunei comenzi, în ecranul de comenzi | apare avertismentul „No order found for <cod>" |
+| AMEF-17 | **Customer Account only for refunds** activă; retur pur de 40 lei (total −40, fără produse noi), client selectat, plată de −40 pe **Customer Account** cu **Identify Customer** bifat | metoda este oferită; validarea reușește; nu se trimite niciun document la casă; după închiderea sesiunii clientul are un credit de 40 lei pe contul de creanțe |
+| AMEF-18 | Opțiunea activă; retur de 100 lei plus produse noi de 150 lei (total +50), apoi cu produse noi de 100 lei (total 0) | **Customer Account** nu apare în lista metodelor de plată |
+| AMEF-19 | Opțiunea activă; plată de −40 pe **Customer Account**, apoi adăugați produse până când totalul devine pozitiv, fără să ștergeți linia de plată | validarea este blocată cu dialogul **Customer Account not allowed** |
+| AMEF-20 | Opțiunea dezactivată (implicit); orice total | **Customer Account** apare în lista metodelor de plată, ca înainte |
+| AMEF-21 | Opțiunea activă, **POS Settle Due** instalat; depunere de bani pentru un client | depunerea se validează, nu apare dialogul **Customer Account not allowed** |
 
 ## 9. Legături cu alte module
 
@@ -277,6 +338,16 @@ comanda sursă).
 - [ ] Căutarea în ecranul de comenzi POS găsește și bonurile mai vechi de una-două zile (necesar pentru retur).
 - [ ] Dacă se folosește codul de bare pe bon: **Order barcode type** este ales corect (QR doar pe
       Datecs și Daisy), aparatul îl tipărește, iar scanerul îl citește în ecranul de comenzi.
+- [ ] Dacă la client **Customer Account** trebuie folosită doar pentru retur, **Customer Account only for
+      refunds** este bifată pe fiecare punct de vânzare vizat, iar metoda **Customer Account** este
+      legată de punctul de vânzare; casierii știu că nu se mai pot lăsa vânzări pe credit din POS.
+- [ ] Metoda **Customer Account** are **Identify Customer** bifat; la un retur lăsat ca sold pe client,
+      clientul este selectat pe comandă, iar creditul apare pe contul lui de creanțe după închiderea
+      sesiunii (fără bifă, ajunge pe contul de încasări POS, fără client).
+- [ ] Schimbul de produse (retur plus produse noi) se face în două comenzi, nu pe o comandă cu total
+      negativ, ca vânzarea nouă să ajungă pe bon fiscal.
+- [ ] Rambursarea pe card și pe **Customer Account** nu trimite niciun document la casa de marcat:
+      procedura fiscală a clientului pentru aceste cazuri este stabilită separat cu contabilul.
 - [ ] Rapoartele X și Z pot fi generate de utilizatorii operaționali.
 - [ ] Pentru retururi și dispoziții de plată există partener selectat.
 - [ ] D394 POS este documentată separat când clientul cere și raportarea fiscală a bonurilor.
@@ -299,6 +370,9 @@ comanda sursă).
 | Odoo nu importă răspunsul fiscal de la AMEF | seria/numărul bonului fiscal nu se întorc automat în comanda POS |
 | Nu există import de jurnal electronic / XML de la casa de marcat | reconcilierea fiscală detaliată rămâne în afara acestui modul |
 | Reconcilierea raportului Z și fiscalizarea e-commerce nu sunt acoperite aici | necesită extensii suplimentare |
+| Retur cu plată negativă pe card sau pe **Customer Account** | nu se trimite niciun document la casa de marcat; evidența fiscală a returului trebuie stabilită separat |
+| Comandă cu total negativ care include și produse noi | produsele noi nu se tipăresc pe niciun bon fiscal, deși Odoo le înregistrează în sesiune; schimbul se face în două comenzi |
+| Rambursarea pe card pe un punct de vânzare fără terminal de plată legat la POS | POS doar înregistrează plata negativă: banii se returnează manual, pe terminalul bancar |
 | „Print X" și „Print Z" generează fișierul cu același nume pe sesiune | a doua apăsare șterge atașamentul creat de prima — vezi Pasul 4 |
 | Raportul „Vânzări TVA pe casă de marcat" citește doar `pos.order`, nu jurnalul/arhiva ANAF a aparatului | nu e o citire directă a arhivei oficiale — folosiți-l ca punct de plecare pentru reconciliere |
 | Raportul nu acoperă vânzările din fluxul separat `deltatech_sale_store` (facturare la bon fiscal, fără POS) | dacă acel modul e instalat la client, vânzările lui rămân neagregat aici |
@@ -315,6 +389,10 @@ conturi RO:
 3. `03_comanda_ecr_data.png` — comanda POS, tabul „ECR data" și butonul Print Fiscal Receipt.
 4. `04_session_print_xz.png` — sesiune POS, rapoartele Print X / Print Z.
 5. `05_vat_report.png` — raportul Vânzări TVA pe casă de marcat, pivot pe punct de lucru și taxă.
+6. `06_cont_client_doar_retur.png` — setări POS, opțiunea **Cont client doar pentru retur**.
+
+Ecranul de plată din POS (metoda ascunsă sau oferită după total) nu se poate captura din acest test,
+care redă doar ecrane din backoffice.
 
 Regenerare:
 

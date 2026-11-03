@@ -150,8 +150,10 @@ târziu la import — se rezolvă din panoul eMAG, nu din Odoo.
 
 ### Pasul 4 — Import basic data
 
-Apăsați **Import basic data** din antet — importă cotele de TVA (`taxes`) definite pe contul eMAG,
-necesare mai târziu la exportul de produse.
+Apăsați **Import basic data** din antet — importă cotele de TVA (`taxes`) definite pe contul eMAG.
+La exportul ofertelor, cota de TVA (`vat_id`) se citește direct de la eMAG (`/vat/read`): cota
+egală cu taxa de vânzare a produsului, altfel cota implicită a platformei (pe eMAG HU și BG se
+aplică TVA-ul țării de livrare).
 
 ![Butonul Import basic data din antetul backend-ului confirmat](screenshots/04_import_basic_data.png)
 
@@ -531,6 +533,7 @@ cron-ului de auto-pricing.
 | Mesaj / simptom | Cauză probabilă | Remediere |
 |---|---|---|
 | `Test connection` eșuează cu „You are not allowed to use this API" | IP-ul serverului Odoo nu e whitelist-at la eMAG, sau contul de webservice nu are API activat | Adăugați IP-ul în **Technical Details → Add a new IP**, verificați activarea API-ului la eMAG |
+| Exportul unei oferte e refuzat cu „The VAT value must be in accordance with the delivery country VAT rates" | Cota de TVA trimisă nu există pe platforma eMAG (până la 19.0.2.21.2 se trimitea mereu `vat_id` 1) | Actualizați modulul; dacă eroarea rămâne, verificați taxa de vânzare a produsului și cotele contului eMAG (**Test connection**) |
 | Exportul unui produs eșuează cu eroare de categorie lipsă | Categoria Odoo a produsului nu are corespondent eMAG deja importat | Rulați **Categories → Import** (meniul „⋮"), mapați categoria, reîncercați exportul |
 | O comandă importată nu poate emite AWB (transportator „Livrare gratuită") | Codul `courier`/`pickup` nu e mapat pe niciun `marketplace.delivery.carrier`, sau a fost rescris de un re-import de curieri | Deschideți lista de curieri (contorul cardului **Delivery Carrier**) și remapați **Code**-ul |
 | Emiterea AWB-ului eșuează cu eroare de localitate | **Get city** nu a rulat încă pentru geografia respectivă | Rulați **Get city** pe metoda de livrare eMAG |

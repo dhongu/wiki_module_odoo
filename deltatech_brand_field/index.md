@@ -1,10 +1,11 @@
 # Câmp Marcă Produs (Deltatech Brand Field) (localizat la `deltatech_brand_field/index.md`)
 
 - **Nume Tehnic:** `deltatech_brand_field`
-- **Versiune:** `19.0.0.0.6`
+- **Versiune:** `19.0.0.0.7`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_brand_field
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_brand_field`
 - **Ultima Ingestie:** `2026-10-31`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

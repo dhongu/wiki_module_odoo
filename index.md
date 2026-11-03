@@ -5,7 +5,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 ## Module
 
 - [deltatech](deltatech/index.md): Dependență tehnică de bază a suitei Deltatech: câmp `model_name` și widget de domeniu pe regulile de înregistrare, formular de modul curățat.
-- [deltatech_access](deltatech_access/index.md): Control granular al accesului la câmpuri din vederile Odoo (readonly / required / invisible) pe bază de grupuri de utilizatori.
+- [deltatech_access](deltatech_access/index.md): Reguli pe grupuri de utilizatori care fac câmpurile din formularele și listele de produs readonly, required sau invisible, fără cod.
 - [deltatech_account](deltatech_account/index.md): Setare Anglo-Saxon Accounting (cost de vânzare la facturare) în setările de contabilitate și redenumiri de meniuri contabile.
 - [deltatech_account_analytic](deltatech_account_analytic/index.md): Leagă liniile/distribuțiile analitice de pe facturi de echipa de vânzări și oferă un asistent de împărțire a sumelor pe conturi analitice conform unor șabloane procentuale.
 - [deltatech_account_bank_statement_import](deltatech_account_bank_statement_import/index.md): Import XLSX de extrase bancare cu detectarea partenerului; baza comună a importurilor de decontări (EuPlatesc, Stripe, PayPal, eMAG), cu antet recunoscut, comisioane și linie de virare.
@@ -87,7 +87,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_create_ticket_button](deltatech_create_ticket_button/index.md): Adaugă butonul „Open ticket” în fereastra de eroare Odoo, care deschide pagina de suport Terrabit.
 - [deltatech_credentials](deltatech_credentials/index.md): Depozit centralizat de acreditări pentru servicii externe (utilizator/parolă, client id/secret, token), accesibil doar administratorilor.
 - [deltatech_credit_control](deltatech_credit_control/index.md): Clasament al clienților cu restanțe după scor de risc 0-100, cu comportament la plată și listă de apeluri, calculat live din liniile de creanță.
-- [deltatech_crm_fsm](deltatech_crm_fsm/index.md): Leagă oportunitățile CRM de sarcinile Project/FSM și permite crearea rapidă a unei sarcini de teren dintr-o oportunitate.
+- [deltatech_crm_fsm](deltatech_crm_fsm/index.md): Leagă oportunitățile CRM de sarcinile Project/FSM: buton „Create FSM Task” și contor de sarcini pe oportunitate.
 - [deltatech_cron_monitor_webhook](deltatech_cron_monitor_webhook/index.md): Declanșează sarcinile cron prin webhook-uri securizate cu token global, pentru integrare cu servicii externe de monitorizare/scheduling.
 - [deltatech_customer_analysis](deltatech_customer_analysis/index.md): Tablou „ce fac azi” cu fiecare client din portofoliu (de sunat, de încasat, de vândut mai mult), pe baza segmentelor calculate noaptea.
 - [deltatech_customer_map](deltatech_customer_map/index.md): Harta 3D a clienților pe relieful real (județele României și țările Europei), colorată după vânzări, clienți sau facturi, cu orașe, top clienți și top produse, pe roluri din Customer Segment.
@@ -290,7 +290,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_product_chatter](deltatech_product_chatter/index.md): Restricționează ștergerea/editarea mesajelor din chatter-ul produselor (șablon și variantă) doar la utilizatorii dintr-un grup de securitate dedicat.
 - [deltatech_product_code](deltatech_product_code/index.md): Generare automată a referinței interne și a codurilor de bare pe categorii (prefix intern sau GTIN-13 din prefixul GS1 al companiei), cu verificare a duplicatelor la produse și variante.
 - [deltatech_product_dimension](deltatech_product_dimension/index.md): Extinde fișa produsului cu dimensiuni fizice (lungime, lățime, înălțime).
-- [deltatech_product_extension](deltatech_product_extension/index.md): Extinde produsul cu câmpuri pentru producător, dimensiuni fizice și termen de valabilitate, și marchează partenerii ca producători.
+- [deltatech_product_extension](deltatech_product_extension/index.md): Câmpuri noi pe produs (producător, dimensiuni ca text liber, termen de valabilitate) și bifa Producător pe parteneri, cu căutare și grupare în Invoice Analysis.
 - [deltatech_product_labels](deltatech_product_labels/index.md): Tipărire etichete de produs și de lot (A4 3x8, termice 100x50 și 40x25, ZPL cu previzualizare) din produse, comenzi, transferuri, loturi și stoc.
 - [deltatech_product_list](deltatech_product_list/index.md): Definirea de liste de produse printr-un filtru (domeniu) configurabil, cu limită ajustabilă.
 - [deltatech_product_mpn](deltatech_product_mpn/index.md): Adaugă pe produs codul producătorului (MPN — Manufacturer Part Number) și permite căutarea produselor după acest cod.
@@ -490,7 +490,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_website_watermark](deltatech_website_watermark/index.md): Aplică automat un filigran (watermark) pe imaginile de produs din magazinul online, păstrând curate fișierele sursă.
 - [deltatech_widget_fontawesome](deltatech_widget_fontawesome/index.md): Widget OWL care afișează valoarea unui câmp ca pictogramă Font Awesome în formulare (widget="fontawesome").
 - [deltatech_widget_hierarchy_m2o](deltatech_widget_hierarchy_m2o/index.md): Widget OWL care afișează câmpurile many2one ca arbore expandabil părinte/copil, cu lazy loading și căutare, în locul listei derulante plate.
-- [deltatech_widget_many2one_badge](deltatech_widget_many2one_badge/index.md): Widget web care afișează câmpurile Many2one ca badge-uri colorate, similar cu many2many_tags.
+- [deltatech_widget_many2one_badge](deltatech_widget_many2one_badge/index.md): Widget care afișează câmpurile Many2one ca badge-uri colorate, cu selector de culoare salvat pe înregistrarea relaționată.
 - [deltatech_work_days_report](deltatech_work_days_report/index.md): Generează rapoarte Excel pentru prezența angajaților și gestionarea tichetelor de masă.
 - [l10n_md](l10n_md/index.md): Localizare contabilă pentru Republica Moldova: plan de conturi (Ordinul MF 119/2013), TVA 20%/8%/0%, jurnale, poziții fiscale, bănci locale și câmpurile IDNO/IBAN pe companie.
 - [l10n_ro_account_bank_statement_import_ing_csv](l10n_ro_account_bank_statement_import_ing_csv/index.md): Importă fișierele „Istoric conturi" (CSV) exportate din ING Business direct ca extrase de cont, fără nicio prelucrare manuală, cu detecție automată a fișierului, solduri și date de contrapartidă pentru reconciliere.
@@ -513,13 +513,13 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_anaf_agent](l10n_ro_anaf_agent/index.md): Fundația modelului cloud de comunicare cu ANAF prin Agentul Terrabit (registru de agenți, coadă de joburi, API apelat de agent).
 - [l10n_ro_anaf_base](l10n_ro_anaf_base/index.md): Infrastructură comună (modul ascuns) pentru declarațiile ANAF din `l10n_ro_ent`: mixin de handler, validări, export XML/XDP, setări de declarant, cod CAEN și convenția „Nume Prenume".
 - [l10n_ro_anaf_d094](l10n_ro_anaf_d094/index.md): Declarația 094 (cifra de afaceri a plătitorilor de TVA trimestriali), calculată din deconturile de TVA, cu verificarea plafonului de 100.000 EUR, export XML ANAF și tipărire PDF.
-- [l10n_ro_anaf_d100](l10n_ro_anaf_d100/index.md): Generarea Declarației 100 privind obligațiile de plată la bugetul de stat, cu export XML/XDP.
+- [l10n_ro_anaf_d100](l10n_ro_anaf_d100/index.md): Raport și export XML (Soft J) / XDP (Soft A) pentru Declarația 100 ANAF, obligații de plată la bugetul de stat.
 - [l10n_ro_anaf_d101](l10n_ro_anaf_d101/index.md): Export XML (schema v10) și XDP (formularul PDF oficial ANAF) pentru declarația anuală D101 de impozit pe profit, pornind din calculul `l10n_ro_profit_tax`.
 - [l10n_ro_anaf_d103](l10n_ro_anaf_d103/index.md): Export XML al Decontului lunar privind accizele (D103) din declarația de accize Odoo, gata de depus pe portalul ANAF.
 - [l10n_ro_anaf_d107](l10n_ro_anaf_d107/index.md): Declarația 107 privind sponsorizările și bursele private, cu calculul scăzământului de impozit și export XML pe structura oficială ANAF (`<d107>`), validat cu D107Validator.
 - [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md): Generare, validare XSD, verificare și export XML al declarației D112 ANAF (CAS/CASS/CAM, impozit pe venit, evidență nominală), cu import al declarațiilor depuse în alte programe.
 - [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md): Punte între declarația D112 și salarizarea Odoo (`hr_payroll`): evidența nominală și obligațiile se preiau din fluturașii validați, plus crearea angajaților dintr-o declarație importată.
-- [l10n_ro_anaf_d120](l10n_ro_anaf_d120/index.md): Decontul anual privind accizele (D120), cu raportare cantitativă și export XML.
+- [l10n_ro_anaf_d120](l10n_ro_anaf_d120/index.md): Export XML ANAF D120 v5 și formular PDF/XDP pentru decontul de accize, peste declarația din l10n_ro_excise_duty.
 - [l10n_ro_anaf_d177](l10n_ro_anaf_d177/index.md): Cererea 177 de redirecționare a unei părți din impozitul pe profit/micro către beneficiarii sponsorizărilor, cu rest disponibil calculat automat și export XML validat ANAF.
 - [l10n_ro_anaf_d205](l10n_ro_anaf_d205/index.md): Declarația 205 ANAF: impozit reținut la sursă și câștiguri din investiții pe beneficiari persoane fizice (în principal rezidenți); previzualizare 446x, validări ANAF și export XML.
 - [l10n_ro_anaf_d207](l10n_ro_anaf_d207/index.md): Declarația 207 ANAF: impozit reținut la sursă pe veniturile nerezidenților, persoane fizice și juridice; import din 446x, validare XSD, export XML.
@@ -532,7 +532,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_anaf_d392](l10n_ro_anaf_d392/index.md): Declarația 392A/392B — informativa anuală pentru persoanele cu cifră de afaceri sub plafon, cu sume completate din facturi și export XML validat ANAF.
 - [l10n_ro_anaf_d394](l10n_ro_anaf_d394/index.md): Declarația informativă D394 peste jurnalele de TVA, cu export XML validat de `D394Validator.jar` și XLSX.
 - [l10n_ro_anaf_d394_pos](l10n_ro_anaf_d394_pos/index.md): Punte care integrează bonurile fiscale din POS în declarația D394 (op1/op2).
-- [l10n_ro_anaf_d398](l10n_ro_anaf_d398/index.md): Declarația specială de TVA D398 pentru regimul One Stop Shop (OSS), cu conversie EURO.
+- [l10n_ro_anaf_d398](l10n_ro_anaf_d398/index.md): Export XML (Soft J) și XDP (Soft A) pentru declarația specială de TVA OSS/IOSS (D398), cu coloane în EUR la cursul BCE.
 - [l10n_ro_anaf_d700](l10n_ro_anaf_d700/index.md): Declarația 700 (vector fiscal): înregistrarea/modificarea obligațiilor declarative (secțiunile D, E, F și bifele B de TVA), cu export XML ANAF.
 - [l10n_ro_anaf_d710](l10n_ro_anaf_d710/index.md): Declarația 710 — rectificarea obligațiilor de plată declarate la bugetul de stat (D100, D112 etc.), cu sume inițiale/corectate pe fiecare obligație și export XML validat cu schema ANAF.
 - [l10n_ro_anaf_duk](l10n_ro_anaf_duk/index.md): Validează declarațiile ANAF cu aplicația oficială DUKIntegrator, delegând execuția Java agentului Terrabit de pe stația contabilului (cloud-safe).
@@ -581,7 +581,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_expense_allowance](l10n_ro_expense_allowance/index.md): Calcul limită deductibilă diurnă 2,5× și surplus impozabil pentru deplasări interne/externe (Cod Fiscal art. 76).
 - [l10n_ro_expense_allowance_payroll](l10n_ro_expense_allowance_payroll/index.md): Diurna din decont în fluturaș: surplusul impozabil intră în brut, partea neimpozabilă în D112 (rândul 8.4.3), cu plafonul de 3 salarii pe lună.
 - [l10n_ro_expense_currency](l10n_ro_expense_currency/index.md): Avansuri de trezorerie în valută (cont 542): acordare, justificare cu diferențe de curs 665/765 și retur rest, conform OMFP 1802/2014.
-- [l10n_ro_financial_notes](l10n_ro_financial_notes/index.md): Generare automată a Notelor explicative 1–10 la situațiile financiare anuale cu export PDF (OMFP 1802).
+- [l10n_ro_financial_notes](l10n_ro_financial_notes/index.md): Notele explicative 1–10 la situațiile financiare anuale (OMFP 1802/2014): calcul automat din contabilitate, completare manuală și PDF unic.
 - [l10n_ro_financial_statements](l10n_ro_financial_statements/index.md): Documentul de depunere `<Bilant1003>` (F10, F20, F30, F40) în formatul validatorului ANAF, cu pre-validarea corelațiilor, declarația de inactivitate S1046 și raportul administratorilor.
 - [l10n_ro_fiscal_audit](l10n_ro_fiscal_audit/index.md): Raport de audit preventiv care corelează totalurile declarațiilor fiscale RO (D300↔Jurnale TVA, SAF-T, e-Factura) și listează neconcordanțele înainte de depunere sau control ANAF.
 - [l10n_ro_fixed_assets](l10n_ro_fixed_assets/index.md): Mijloace fixe complete pentru România: număr de inventar și dată PIF pentru SAF-T D406, amortizare fiscală separată de cea contabilă, reevaluare netă sau brută, casare și vânzare, registrul imobilizărilor, documente tipizate și import de registru.
@@ -609,7 +609,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_leasing](l10n_ro_leasing/index.md): Credite bancare și leasing financiar/operațional (OMFP 1802/2014): grafic de rambursare, note contabile automate, dobândă angajată lunar, legătura cu extrasul de cont și repartizarea datoriilor pe termen scurt și lung.
 - [l10n_ro_message_spv_purchase](l10n_ro_message_spv_purchase/index.md): Leagă mesajele SPV (e-Factura ANAF) de comenzile de achiziție și sincronizează chatter + atașament XML.
 - [l10n_ro_message_spv_self_billing](l10n_ro_message_spv_self_billing/index.md): Numerotează ciornele de autofacturare cu numărul alocat de client, luat din mesajul SPV, printr-o opțiune pe jurnalele de vânzări și de achiziții.
-- [l10n_ro_micro_tax](l10n_ro_micro_tax/index.md): Calcul trimestrial al impozitului micro-întreprindere (1%/3%) cu monitorizare plafon și tranziție la profit.
+- [l10n_ro_micro_tax](l10n_ro_micro_tax/index.md): Calcul trimestrial al impozitului micro (1%/3%), notă contabilă 698 = 4418 și monitorizarea plafonului de 500.000 EUR.
 - [l10n_ro_move_template](l10n_ro_move_template/index.md): Șabloane de note contabile cu sume introduse, procente, formule și sold, plus zece șabloane românești (salarii, chirie, amortizare, comodat, TVA la încasare).
 - [l10n_ro_mrp_labour_account](l10n_ro_mrp_labour_account/index.md): Configurează conturile de manoperă din producție (331 și 921/923, OMFP 1802/2014) pentru nota de cost generată la finalizarea ordinelor de fabricație.
 - [l10n_ro_off_balance](l10n_ro_off_balance/index.md): Cont tehnic unic 803999 și jurnal EXTR pentru notele pe conturile din afara bilanțului (grupa 80), plus grupele clasei 8 în planul de conturi RO.
@@ -645,7 +645,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_pos_partner_efactura](l10n_ro_pos_partner_efactura/index.md): Clientul după CUI de la ANAF direct la casa POS, cu datele pe care e-Factura (SPV) le cere; bonul fiscal rămâne bon, fără factură bifată automat.
 - [l10n_ro_pos_returns](l10n_ro_pos_returns/index.md): Retururile din POS tratate conform legislației RO — factură de retur automată pentru ajustarea bazei de TVA, cumpărător identificat obligatoriu și restituirile de numerar pe rândul de plăți al registrului de casă.
 - [l10n_ro_process_library](l10n_ro_process_library/index.md): Bibliotecă versionată de procese de implementare importabile selectiv în deltatech_business_process, cu fișe PDF și capturi proprii per pas.
-- [l10n_ro_profit_tax](l10n_ro_profit_tax/index.md): Calcul impozit pe profit D100/D101 cu ajustări fiscale, pierdere reportată și credit sponsorizări.
+- [l10n_ro_profit_tax](l10n_ro_profit_tax/index.md): Calcul impozit pe profit (D100 trimestrial cumulat / D101 anual), ajustări fiscale, pierdere reportată, credit sponsorizări și registru de evidență fiscală.
 - [l10n_ro_provisions](l10n_ro_provisions/index.md): Urmărește provizioanele pentru litigii și riscuri (151x, OMFP 1802/2014) cu note contabile automate la constituire, ajustare și soluționare.
 - [l10n_ro_receivables_enhanced](l10n_ro_receivables_enhanced/index.md): Compensare client-furnizor cu proces-verbal și penalități de întârziere conform Legii 72/2013.
 - [l10n_ro_reges](l10n_ro_reges/index.md): Integrare REGES-Online pentru transmiterea electronică a angajaților și contractelor de muncă (înlocuitor REVISAL), cu temeiurile de încetare oficiale, actul de identitate pe angajat și numărul CIM trimis ca `numarContract`.

@@ -29,6 +29,9 @@ pentru pregătirea capitolului Cap 11.1 din manualul utilizator.
 - **Context operațional.** Închiderea în 121 se poate face lunar sau doar la sfârșitul anului.
   Verificarea claselor 6 și 7 pleacă de la închiderea lunară. La firmele care închid doar anual, se
   dezactivează golind prefixul (secțiunea 5).
+- **e-Factura (OUG 120/2021)** — facturile emise către clienți stabiliți în România (firme și
+  persoane fizice) se transmit în SPV în 5 zile lucrătoare de la emitere. Clienții din străinătate
+  nu intră sub obligație și nu sunt verificați.
 
 ## 3. Utilizatori și roluri
 
@@ -123,7 +126,7 @@ Date minime pentru demo:
 ## 6. Flux de utilizare
 
 Modulul transformă procedura de închidere lunară într-o sarcină cu stări, termen și verificări în
-Odoo. **26 de verificări rulează cod** și se recalculează la fiecare reîmprospătare; restul rămân
+Odoo. **27 de verificări rulează cod** și se recalculează la fiecare reîmprospătare; restul rămân
 bife manuale pentru pașii care țin de decizia contabilului. Câte apar efectiv depinde de modulele
 instalate: o verificare pe care instalarea curentă n-o poate evalua nu e afișată deloc.
 
@@ -138,7 +141,7 @@ fost generată automat.
 ### Pasul 2 — Citirea verificărilor
 
 Fișa lunii afișează verificările grupate pe cicluri, cu etichetele din interfață — „Conformitate
-reglementară", „Trezorerie și finanțare", „Inventar", „Active fixe", „Salarizare", „Achiziții".
+reglementară", „Trezorerie și finanțare", „Inventar", „Active fixe", „Salarizare", „Achiziții", „Vânzări".
 Fiecare verificare are unul din trei rezultate:
 
 | Rezultat | Sens | Ce faceți |
@@ -170,6 +173,7 @@ contabil, iar mesajul arată ambele sume și diferența dintre ele:
 | Recepții fără factură (408) | soldul contului nu corespunde recepțiilor rămase nefacturate, furnizor cu furnizor |
 | Valorizare vs conturi de stoc | produse cu diferență între valorizare și 3xx |
 | Mesaje SPV | e-factură descărcată și netransformată în factură |
+| Facturi emise validate în e-Factura | factură sau notă de credit emisă în lună către un client din România, netransmisă, neindexată, respinsă sau încă nevalidată în SPV; apare în ciclul „Vânzări”, doar cu `l10n_ro_edi` instalat |
 | Avansuri (409/419) | linii rămase nereconciliate deși soldul e zero |
 
 **Verificările de declarații** — D300, D390, D394, D112 și recipisele ANAF. O declarație nedepusă
@@ -246,7 +250,9 @@ furnizori și cu vechimea fiecărei recepții:
 ![Raportul recepțiilor fără factură](screenshots/06_drill_raport_408.png)
 
 **Verificările de completitudine** deschid documentele rămase neterminate — factura în ciornă,
-mesajul SPV neprocesat, cantitatea negativă:
+mesajul SPV neprocesat, cantitatea negativă. Verificarea e-Factura deschide lista **Facturi
+nevalidate în e-Factura**: facturile și notele de credit ale lunii către clienți din România care nu
+sunt validate în SPV; din fiecare factură se retransmite sau se corectează documentul:
 
 ![Documentele rămase în lucru](screenshots/07_drill_documente.png)
 
@@ -406,12 +412,13 @@ dacă acela lipsește.
 | `l10n_ro_stock_account` | mecanismul recepției pe aviz, în spatele contului 408 |
 | `l10n_ro_stock_account_check` | raportul care confruntă valorizarea cu conturile de stoc |
 | `l10n_ro_message_spv` | mesajele e-Factura din SPV |
+| `l10n_ro_edi` | starea e-Factura a facturilor emise |
 | `l10n_ro_anaf_d300` / `_d390` / `_d112` | declarațiile cu tip propriu de raportare |
 | `l10n_ro_anaf_submission` | registrul de depuneri și recipisele ANAF |
 | `account_asset` | registrul de imobilizări și notele de amortizare |
 | `l10n_ro_reports`, `l10n_ro_account_vat_journal`, `l10n_ro_registru_jurnal`, `l10n_ro_cash_register_report`, `l10n_ro_bank_register_report`, `l10n_ro_account_fisa_cont` | rapoartele strânse în arhiva situațiilor lunare |
 
-**Ce e automat:** cele 26 de verificări cu cod, recalculate la fiecare reîmprospătare; blocarea perioadei la
+**Ce e automat:** cele 27 de verificări cu cod, recalculate la fiecare reîmprospătare; blocarea perioadei la
 validare; procesul-verbal atașat în chatter; arhiva situațiilor lunare, la cerere sau la validare.
 
 **Ce rămâne manual:** rezolvarea anomaliilor în modulele lor (extrasul care închide 581, închiderea
@@ -451,6 +458,9 @@ Verificări operaționale:
 - [ ] O cantitate negativă pe locație internă → anomalie pe stoc.
 - [ ] Sold pe 408 care nu se regăsește în raportul recepțiilor fără factură → anomalie.
 - [ ] Un mesaj SPV descărcat și netransformat în factură → anomalie.
+- [ ] O factură către un client din România, postată și netransmisă în SPV → anomalie, cu
+      „Netransmise: 1” în mesaj; după validarea în SPV → Revizuit. O factură către un client din străinătate nu se
+      numără.
 - [ ] Linii de avans care se anulează între ele, rămase nereconciliate → anomalie.
 
 Declarații:
@@ -487,6 +497,8 @@ Situații lunare:
 | Anomalie pe 6xx/7xx după închiderea în 121 | O cheltuială sau un venit a fost postat după nota de închidere | Reluați închiderea lunii în 121 |
 | Anomalie pe 471/472 deși notele de repartizare există | Nota lunii e în ciornă (așteaptă postarea automată la dată), a fost ștearsă, sau nota grupată a lunii nu e generată | Postați nota din documentul original, sau generați nota grupată a lunii |
 | Verificarea 471/472 nu apare în listă, deși prefixul `471,472` e completat | Contul de repartizare al companiei nu e în prefix (de exemplu 301, pus de Odoo la încărcarea planului fără `l10n_ro_deferred_entries`), deci nimic nu poate fi urmărit | Corectați contul de repartizare al companiei instalând `l10n_ro_deferred_entries`; **nu** extindeți prefixul cu un cont de stoc |
+| Anomalie pe „Facturi emise validate în e-Factura” | Mesajul dă numărul pe stări: **netransmise** (factura nu a plecat în SPV), **neindexate** (SPV nu a răspuns la timp cu indexul), **în așteptarea validării** (trimisă, fără răspuns încă), **respinse** (SPV a refuzat XML-ul) | Deschideți lista din verificare: trimiteți facturile netransmise, preluați starea pentru cele neindexate sau în așteptare, corectați și retransmiteți-le pe cele respinse |
+| Verificarea e-Factura nu apare în listă | Modulul `l10n_ro_edi` nu e instalat | Instalați `l10n_ro_edi`; fără el, starea e-Factura a facturilor nu există și verificarea e omisă |
 | Termenul unei declarații pare greșit | Periodicitatea fiscală a companiei nu corespunde realității | Verificați „Periodicitate declarație fiscală" în Setări — termenul se calculează pe perioada de raportare, nu pe lună |
 | Anomalie pe soldul casei, deși registrul pare corect | Cineva a postat pe contul de casă dintr-un alt jurnal | Deschideți liniile din verificare și mutați-le pe jurnalul de casă |
 | Anomalie pe jurnalele de TVA fără nicio postare manuală | O taxă e mapată pe alt cont decât cel din prefix | Verificați repartizarea taxei, sau extindeți prefixul configurat |

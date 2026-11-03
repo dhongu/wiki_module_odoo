@@ -1,7 +1,7 @@
 # Romania - Impozit pe salarii și deducere personală (localizat la `l10n_ro_hr_payroll_enhancement/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_hr_payroll_enhancement`
-- **Versiune:** `19.0.2.23.4`
+- **Versiune:** `19.0.2.24.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_payroll_enhancement
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_hr_payroll_enhancement`
 - **Ultima Ingestie:** `2026-10-22`

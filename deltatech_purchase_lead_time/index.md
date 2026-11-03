@@ -1,10 +1,11 @@
 # Measured Vendor Lead Time (Termen de livrare măsurat al furnizorului)
 
 - **Nume Tehnic:** `deltatech_purchase_lead_time`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_purchase_lead_time
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_purchase_lead_time`
 - **Ultima Ingestie:** `2026-10-30`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

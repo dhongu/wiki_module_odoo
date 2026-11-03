@@ -1,10 +1,11 @@
 # EDIConnect Connector (localizat la `deltatech_ediconnect/index.md`)
 
 - **Nume Tehnic:** `deltatech_ediconnect`
-- **Versiune:** `19.0.1.1.13`
+- **Versiune:** `19.0.1.1.14`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_ediconnect
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_ediconnect`
 - **Ultima Ingestie:** `2026-10-31`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

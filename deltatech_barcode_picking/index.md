@@ -1,10 +1,11 @@
 # Barcode Picking (localizat la `deltatech_barcode_picking/index.md`)
 
 - **Nume Tehnic:** `deltatech_barcode_picking`
-- **Versiune:** `19.0.2.2.8`
+- **Versiune:** `19.0.2.2.9`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_barcode_picking
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_barcode_picking`
 - **Ultima Ingestie:** `2026-07-31`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

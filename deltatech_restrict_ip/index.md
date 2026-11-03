@@ -1,10 +1,11 @@
 # Deltatech Restrict IP Login (localizat la `deltatech_restrict_ip/index.md`)
 
 - **Nume Tehnic:** `deltatech_restrict_ip`
-- **Versiune:** `19.0.1.3.4`
+- **Versiune:** `19.0.1.3.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_restrict_ip
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_restrict_ip`
 - **Ultima Ingestie:** `2026-08-20`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

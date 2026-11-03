@@ -1,10 +1,11 @@
 # Event Badge Numbers (localizat la `deltatech_event/index.md`)
 
 - **Nume Tehnic:** `deltatech_event`
-- **Versiune:** `19.0.0.0.4`
+- **Versiune:** `19.0.0.0.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_event
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_event`
 - **Ultima Ingestie:** `2026-10-31`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

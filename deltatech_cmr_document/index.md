@@ -1,10 +1,11 @@
 # CMR Document (localizat la `deltatech_cmr_document/index.md`)
 
 - **Nume Tehnic:** `deltatech_cmr_document`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_cmr_document
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_cmr_document`
 - **Ultima Ingestie:** `2026-08-20`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

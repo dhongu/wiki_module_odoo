@@ -1,10 +1,10 @@
-# Deltatech CRM FSM (localizat la `deltatech_crm_fsm/index.md`)
+# CRM + FSM Bridge (localizat la `deltatech_crm_fsm/index.md`)
 
 - **Nume Tehnic:** `deltatech_crm_fsm`
 - **Versiune:** `19.0.0.0.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_crm_fsm
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_crm_fsm`
-- **Ultima Ingestie:** `2026-06-09`
+- **Ultima Ingestie:** `2026-11-03`
 
 #### 1. Sumar
 
@@ -12,11 +12,13 @@ Acest modul leagă oportunitățile din CRM de sarcinile din Project/FSM și per
 
 #### 2. Funcționalități Cheie
 
-- Adaugă un câmp „Oportunitate" pe sarcinile de proiect (`project.task.lead_id`).
+- Adaugă un câmp **Lead** (oportunitate) pe sarcinile de proiect (`project.task.lead_id`).
 - Pe formularul oportunității:
-  - Buton inteligent „Tasks" care afișează numărul de sarcini asociate și le deschide; dacă există o singură sarcină, aceasta se deschide direct în vizualizare formular.
-  - Buton de antet „Create FSM Task" pentru a crea rapid o sarcină precompletată cu oportunitatea, partenerul și un nume contextual.
-- Căutare și grupare după Oportunitate în vizualizările de sarcini. Oportunitatea este vizibilă și ca o coloană în listele de sarcini.
+  - Buton inteligent **Tasks**, care afișează numărul de sarcini asociate și le deschide; dacă există o singură sarcină, aceasta se deschide direct în vizualizare formular.
+  - Buton de antet **Create FSM Task**, pentru a crea rapid o sarcină precompletată cu oportunitatea, partenerul și un nume contextual (`[Lead] <nume oportunitate>`); sarcina rămâne legată de oportunitate.
+- Căutare și grupare după Lead în vizualizările de sarcini; Lead apare și ca o coloană în listele de sarcini.
+- Fluxul de utilizare: se deschide o oportunitate din CRM, se apasă **Create FSM Task**, apoi se folosește butonul **Tasks** pentru a naviga și a gestiona sarcinile aferente.
+- Securitate: butoanele și accesul la sarcini urmează permisiunile din Project, de regulă disponibile utilizatorilor din grupul Project User.
 
 #### 3. Dependențe
 
