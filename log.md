@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-03] Ingestie: deltatech_stock_consumption_report
+
+- **Acțiune:** pagină nouă [deltatech_stock_consumption_report](deltatech_stock_consumption_report/index.md) (un subagent `documentarist-wiki`), modul nou unit în deltatech 19.0 (dhongu/deltatech#3929); fișa consultant copiată, cu 7 capturi.
+- **Sursă:** `readme/` (DESCRIPTION, USAGE, CONFIGURE, FISA_CONSULTANT, HISTORY) + `__manifest__.py`, modele, wizard și view-uri, din `origin/19.0` (checkout-ul local era în urmă).
+- **Dependențe/Conexiuni:** → [l10n_ro_picking_report](l10n_ro_picking_report/index.md) (tipărirea bonului de consum). Rămân text: `stock_account`, `l10n_ro_stock_account` (fără pagină wiki).
+- **Fișiere actualizate:** `deltatech_stock_consumption_report/`, `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-11-03] Ingestie: 6 module noi din suitele Terrabit, l10n_ro_zip mutat în l10n_ro_ent; 12 versiuni aduse la zi
 
 - **Acțiune:** lot procesat în paralel (un subagent `documentarist-wiki` per modul), sursa extrasă din `origin/19.0` (checkout-urile locale erau în urmă). Pagini noi: [deltatech_cron_progress](deltatech_cron_progress/index.md) (fișă + 4 capturi), [deltatech_website_indexnow](deltatech_website_indexnow/index.md) (fișă + 3 capturi), [deltatech_website_store_selector](deltatech_website_store_selector/index.md) (fișă + 15 capturi) cu puntea [deltatech_website_store_selector_collect](deltatech_website_store_selector_collect/index.md) (fișă + 8 capturi), [l10n_ro_green_stamp](l10n_ro_green_stamp/index.md) (fișă + 8 capturi), [l10n_ro_zip_osm](l10n_ro_zip_osm/index.md) (fișă + 3 capturi).
