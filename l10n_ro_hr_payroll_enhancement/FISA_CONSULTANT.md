@@ -315,7 +315,19 @@ prescriere, codul de diagnostic și, după caz, urgența, boala infecto-contagio
 La confirmare, certificatul se leagă de concediul medical al angajatului (câmpul *Concediu*). Dacă salariatul a cerut concediul
 medical în **Time Off** și managerul l-a aprobat pentru toată perioada certificatului, se folosește acel concediu. Altfel se creează
 automat. Când perioada se suprapune cu un alt concediu (alt tip, neaprobat sau doar o parte din zile), confirmarea se oprește și mesajul
-numește concediul de ajustat. Un al doilea certificat confirmat pe aceleași zile ale salariatului este refuzat: anulați duplicatul.
+numește concediul de ajustat.
+
+Când medicul dă un certificat nou, pentru altă boală, care începe în timpul celui confirmat (art. 33 alin. (3) din Normele de aplicare a
+OUG 158/2005), confirmați-l pe cel nou cu datele de pe hârtie. Certificatul anterior primește câmpurile **Plătit până la** (ziua dinaintea
+celui nou) și **Suprapunere** („Suprapunere cu CM seria … nr. …”), afișate sub perioadă; zilele și sumele lui se opresc acolo, iar concediul
+lui din Time Off se scurtează. Când certificatul nou începe în aceeași zi cu cel anterior, acesta rămâne cu 0 zile plătite și concediul lui
+din Time Off se anulează. Se refuză un certificat care începe înaintea celui confirmat (la aceeași dată de început: unul eliberat
+înaintea celui confirmat), unul cuprins integral în el (medicul corectează certificatul) și suprapunerea peste un certificat care are deja
+continuare.
+
+**Anulează** pe un certificat confirmat anulează și concediul din Time Off creat de el; concediul cerut de salariat în Time Off și legat
+de certificat rămâne. Dacă certificatul anulat scurta un certificat anterior, acela revine
+la perioada întreagă: *Plătit până la* și observația dispar, zilele și sumele se recalculează, iar concediul lui se reface până la D_7.
 
 Secțiunea **Baza de calcul (art. 10)** arată venitul pe ultimele 6 luni (D_17), zilele (D_18) și **media zilnică** (D_19). Baza vine din
 fluturașii validați; când angajatul vine de la alt angajator se alege sursa *Manual* și se introduc valorile din adeverință (aici 30.000 lei
@@ -344,7 +356,8 @@ sau *Din fluturașii validați* cu 1–5 luni la un cod care cere stagiu. Zilele
 stagiului, art. 8 alin. 2 lit. a): nu intră în zilele bazei la certificatele următoare. În D112 certificatul fără drept **nu are secțiunea D** (validatorul ANAF
 respinge zilele de indemnizație cu baza de calcul 0); zilele lui apar ca zile de concediu medical, în afara zilelor cu contract activ.
 
-Verificați: perioada nu se suprapune cu alt certificat al angajatului, seria/numărul sunt cele din certificat, iar baza de calcul nu e goală
+Verificați: perioada nu se suprapune cu alt certificat al angajatului (sau, la o suprapunere din art. 33 alin. (3), certificatul
+anterior are *Plătit până la* completat), seria/numărul sunt cele din certificat, iar baza de calcul nu e goală
 (cu excepția certificatelor fără drept la indemnizație).
 
 ![Certificat de concediu medical confirmat, cu baza de calcul și indemnizațiile](screenshots/15_certificat_medical.png)
@@ -366,6 +379,10 @@ Generați fluturașul lunii cu **Calculați bilanțul** și citiți fila **Calcu
 *Salariu brut* = 3.801 (partea lucrată + indemnizația angajatorului). Contribuțiile se rețin separat pe cele două surse (impozitul total al lunii, 191, se împarte proporțional cu venitul: 170 pe partea impozabilă și 21 pe indemnizația FNUASS):
 *CAS* 950 și *CASS* 380 pe salariul brut, plus *CAS pe concediu medical (FNUASS)* 116 și *CASS pe concediu medical (FNUASS)* 46;
 *Impozit pe concediu medical (FNUASS)* 21 se adaugă impozitului de 170. **Salariu net** = 2.582.
+
+La un certificat scurtat de unul nou (*Plătit până la* completat, Pasul 15), indemnizațiile *Concediu medical (angajator)* și *Concediu medical
+(FNUASS)* se calculează doar pe zilele până la *Plătit până la*; zilele de după se plătesc din certificatul nou, cu zilele angajatorului și
+prima zi neplătită ale lui.
 
 Indemnizația angajatorului face parte din brut (cheltuială 641), iar cea suportată din FNUASS nu: se datorează angajatului, dar se
 recuperează de la fond (vezi Pasul 18 și Pasul 21).
@@ -396,8 +413,10 @@ iar plata angajatului se reconciliază pe ambele conturi. Recuperarea sumei de l
 
 La Stoica Ana, în septembrie: *Concediu medical (angajator)* = 95 și *Concediu medical (FNUASS)* = 1.500. Sumele includ **diferențele din
 luna anterioară a episodului** (art. 17 alin. 1^2 din OUG 158/2005): la o continuare, indemnizațiile lunilor precedente se recalculează
-cu procentul și baza episodului, iar diferența se plătește pe fluturașul curent. Verificați că suma plătită pe episod (suma indemnizațiilor
-din fluturașii validați) nu depășește cea datorată.
+cu procentul și baza episodului, iar diferența se plătește pe fluturașul curent. Din fluturașii validați se scade **doar ce a primit
+episodul continuat**: indemnizația altui episod de boală din aceeași lună (alt certificat inițial) nu reduce continuarea. Fluturașii
+validați înainte de versiunea 19.0.2.24.1 rețin doar totalul lunii; dacă au avut două episoade distincte, verificați manual continuarea
+din luna următoare. Verificați că suma plătită pe episod nu depășește cea datorată.
 
 ![Fluturaș cu continuare: diferențele lunii anterioare incluse în indemnizații](screenshots/19_linii_continuare.png)
 
@@ -426,7 +445,9 @@ fluturași (464 + 1.500 = 1.964); fiecare certificat apare o singură dată.
 
 Cu puntea `l10n_ro_anaf_d112_payroll`: **Contabilitate → Raportare → Declarația D112 → Nou** (luna 9, 2026) și **Calculează**. Pe lângă fila *Angajați*,
 apare fila **Concedii medicale**, cu o linie pe certificat: serie și număr (D_1, D_2), perioadă (D_6, D_7), codul D_9, zilele plătite de angajator,
-din FNUASS și totale, indemnizațiile și procentul (D_28). Liniile se pot corecta manual, iar **Validează** semnalează certificatele care nu respectă
+din FNUASS și totale, indemnizațiile și procentul (D_28). La un certificat scurtat de unul nou (art. 33 alin. (3)), D_7 rămâne cel de pe
+certificat, iar zilele și sumele (D_14, D_15, D_16, D_20, D_21) sunt cele până la *Plătit până la*; când certificatul nou începe în aceeași zi,
+cel anterior apare cu 0 zile și 0 lei. Liniile se pot corecta manual, iar **Validează** semnalează certificatele care nu respectă
 structura cerută de declarație.
 
 Verificați pe fila *Concedii medicale*: același număr de linii ca certificatele lunii; indemnizațiile sunt cele din fluturași (619 + 95 angajator,
@@ -652,11 +673,18 @@ plata ajutoarelor și a transportului, care se fac în afara statului.
 - [ ] Angajat cu 2 luni de fluturași, cod 01, sursa *Din fluturașii validați*: certificatul arată avertizarea despre stagiu, dar se poate
       trece pe *Fără drept la indemnizație*; zilele lui nu intră în zilele bazei unui certificat ulterior.
 - [ ] Concediu medical cerut în Time Off și aprobat pe toată perioada certificatului: la **Confirmă**, câmpul *Concediu* arată acel
-      concediu și nu apare un al doilea concediu medical pe aceleași zile. Un al doilea certificat pe aceleași zile nu se poate confirma.
+      concediu și nu apare un al doilea concediu medical pe aceleași zile.
 - [ ] Concediu medical aprobat în Time Off pe 14–15.09.2026, fără certificat: bannerul fluturașului din septembrie arată
       „2 zi(le) de concediu medical fără certificat confirmat (14.09.2026, 15.09.2026)”, cu linkul *Certificate medicale*.
       După confirmarea certificatului pe aceleași zile și **Calculați bilanțul**, mesajul dispare.
+- [ ] Certificat 14–23.09 confirmat, apoi unul nou 18–25.09: primul are *Plătit până la* 17.09 și *Suprapunere* cu seria și numărul celui nou, 4 zile lucrătoare (3 ale angajatorului,
+      55%), concediul până la 17.09; al doilea are 6 zile lucrătoare, 5 ale angajatorului și prima zi neplătită. La anularea celui nou,
+      primul revine la 8 zile și concediul la 23.09.
 - [ ] Continuarea (CMB 0000202) are seria/numărul inițial completate, fără a doua zi neplătită, iar suma plătită pe episod nu depășește cea datorată.
+- [ ] Două episoade distincte în aceeași lună (unul 05–07.10, altul 21–31.10 continuat în noiembrie): în noiembrie, indemnizația
+      continuării = cuvenitul cumulat al episodului continuat − ce a primit el în octombrie; indemnizația celuilalt episod nu se scade.
+- [ ] Fluturașul cu două certificate suprapuse (14–23.09 și 18–25.09): *Concediu medical (angajator)* = suma indemnizațiilor celor două
+      certificate (393 + 774), fără zilele 18–23.09 plătite de două ori.
 - [ ] Normă întreagă, 1 zi lucrată + 21 de zile de concediu medical: fără *Diferență CAS / CASS până la baza minimă* (pragul 188 e
       sub salariul pe ziua lucrată); la normă parțială cu concediu medical, diferența se calculează doar pe salariu.
 - [ ] Nota contabilă a fluturașului cu concediu medical: Dr 4382 = Cr 423 464; Dr 423 = Cr 43151 116 / 43161 46 / 4441 21; 641 = 421 doar pe indemnizația angajatorului.
@@ -690,7 +718,9 @@ plata ajutoarelor și a transportului, care se fac în afara statului.
 | Codul … se plătește fără stagiu minim de asigurare … certificatul nu poate fi marcat fără drept la indemnizație. | Sursa *Fără drept la indemnizație* la un cod plătit fără stagiu (art. 9 și 31) | Lăsați sursa *Din fluturașii validați* (baza din salariul primei luni) sau *Manual* |
 | Avertizare „zi(le) de concediu medical fără certificat confirmat” | Concediul medical e în Time Off sau în pontaj, dar certificatul lipsește, nu e confirmat sau nu acoperă zilele | Introduceți și confirmați certificatul, apoi recalculați fluturașul |
 | Perioada certificatului … se suprapune cu concediul …, care nu o acoperă ca concediu medical aprobat | Pe zilele certificatului există un concediu de alt tip, neaprobat încă sau care acoperă doar o parte din perioadă | Ajustați concediul din Time Off (tipul, aprobarea sau datele), apoi confirmați certificatul |
-| Perioada certificatului … se suprapune cu certificatul confirmat … al aceluiași angajat | Pe aceleași zile există deja un certificat confirmat | Anulați duplicatul sau corectați datele |
+| Certificatul … începe înaintea certificatului confirmat … care se suprapune cu el | Certificatul introdus acum e, după date, primul dintre cele două (începe mai devreme sau, la aceeași dată de început, a fost eliberat mai devreme) | Anulați certificatul confirmat, confirmați-l pe cel care începe mai devreme, apoi confirmați-l din nou pe celălalt |
+| Certificatul … e cuprins integral în certificatul confirmat … | Normele nu tratează acest caz | Medicul corectează unul dintre certificate |
+| Certificatul … se suprapune cu certificatul confirmat …, care are deja o continuare | Certificatul anterior are o continuare, deci scurtarea lui ar rupe episodul | Corectați manual certificatele (anulați continuarea sau ajustați datele) |
 | Decontarea FNUASS spune că nu există indemnizații | Nu există fluturași validați cu concedii medicale | Validați fluturașii lunii înainte de export |
 | Concediul de odihnă se plătește pe salariul curent | Lipsesc fluturașii validați pe lunile de referință | Validați fluturașii lunilor anterioare sau acceptați baza din contract |
 | Parametri lipsă la o dată | Lipsește valoarea parametrului pentru perioada respectivă | Adăugați o valoare nouă cu data de început corectă |

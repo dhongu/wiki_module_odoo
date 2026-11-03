@@ -60,7 +60,7 @@ Deschideți fila **Date**: aici se vede tabelul exact cum se va tipări. Verific
 
 1. **Avertismentul** din partea de sus (dacă există): „Doar X din cele N luni acoperite au fluturași validați" — validați fluturașii lipsă sau micșorați numărul de luni;
 2. la **Venit**: *Venit net* = *Venit brut* − CAS − CASS − impozit; coloanele *Tichete de masă*, *Rețineri / popriri* și *din care indemnizații CM* apar doar când există;
-3. la **Bază pentru concediul medical**: toate cele 12 luni anterioare lunii emiterii, inclusiv cele fără venit; *Venit realizat* este baza contribuției asiguratorii (fără suma neimpozabilă, cu indemnizațiile de concediu medical din FNUASS), iar al doilea tabel listează concediile medicale confirmate din perioadă, cu codul de indemnizație și zilele. *Venit mediu zilnic pe 12 luni (informativ)* apare doar în fila *Date*, nu pe documentul tipărit; al doilea tabel apare doar dacă există concedii medicale confirmate. Noul angajator își calculează baza la data concediului medical de la el;
+3. la **Bază pentru concediul medical**: toate cele 12 luni anterioare lunii emiterii, inclusiv cele fără venit; *Venit realizat* este baza contribuției asiguratorii (fără suma neimpozabilă, cu indemnizațiile de concediu medical din FNUASS), iar al doilea tabel listează concediile medicale confirmate din perioadă, cu codul de indemnizație și zilele (la certificatele suprapuse, până la *Plătit până la*; cel rămas cu 0 zile nu apare). *Venit mediu zilnic pe 12 luni (informativ)* apare doar în fila *Date*, nu pe documentul tipărit; al doilea tabel apare doar dacă există concedii medicale confirmate. Noul angajator își calculează baza la data concediului medical de la el;
 4. la **Asigurat**: contribuția CASS reținută pe luni;
 5. la **Șomaj**: vezi pasul 7;
 6. la **Concediu pentru creșterea copilului**: vezi pasul 8;
@@ -111,7 +111,7 @@ După ce ați comparat adeverința cu modelul AJOFM, bifați *Model verificat* �
 - secțiunea A: datele angajatorului (CUI, cod CAEN din setările companiei, adresă, contact);
 - secțiunea B.1: salariatul, cu CNP și actul de identitate, apoi tabelul și nota formularului;
 - secțiunea B.2: situația dinainte de 1.01.2018, de bifat de angajator;
-- secțiunea C: actul de încadrare (CIM, număr și dată), data angajării, data și temeiul încetării și perioadele de suspendare. Concediile medicale confirmate apar cu numărul de zile; în captură, 10–14.03.2026, 5 zile;
+- secțiunea C: actul de încadrare (CIM, număr și dată), data angajării, data și temeiul încetării și perioadele de suspendare. Concediile medicale confirmate apar cu numărul de zile; în captură, 10–14.03.2026, 5 zile. Un certificat scurtat de unul nou (art. 33 alin. (3) din Normele OUG 158/2005, câmpul *Plătit până la* pe certificat) apare până la *Plătit până la*, iar unul rămas cu 0 zile (certificatul nou începe în aceeași zi) nu apare, ca zilele comune să nu fie numărate de două ori;
 - semnăturile: reprezentantul legal (primul semnatar) și compartimentul care a întocmit adeverința (al doilea semnatar; la funcție treceți compartimentul, de exemplu „Resurse umane”).
 
 Media BCIS nu apare pe document.
@@ -164,6 +164,7 @@ După emitere, câmpurile și tabelul sunt blocate (**Anulează** o scoate din u
 - [ ] Adeverința de venit pe 6 luni are câte o linie pe lună cu fluturaș validat; lunile cu ciornă sau fără fluturaș lipsesc și apare avertismentul.
 - [ ] *Venit net* = brut − CAS − CASS − impozit; reținerile (sindicat, popriri) apar separat.
 - [ ] La baza pentru concediul medical sunt 12 luni, cu zilele de stagiu și concediile medicale din perioadă (cu cod de indemnizație).
+- [ ] La certificatele suprapuse, zilele de concediu medical (baza CM și secțiunea C) se numără până la *Plătit până la* al certificatului anterior; certificatul rămas cu 0 zile nu apare.
 - [ ] La un salariat plătit cu salariul minim, venitul din baza CM nu include suma neimpozabilă, iar certificatul medical din `l10n_ro_hr_payroll_enhancement` dă aceeași bază.
 - [ ] Contractul încetat apare la timpul trecut, fără „durată determinată".
 - [ ] Textul editat nu se pierde la emitere; tabelul nu se schimbă la retipărire.

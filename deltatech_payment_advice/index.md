@@ -1,7 +1,7 @@
 # Deltatech Payment Advice (localizat la `deltatech_payment_advice/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_advice`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_payment_advice
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_payment_advice`
 - **Ultima Ingestie:** `2026-07-31`

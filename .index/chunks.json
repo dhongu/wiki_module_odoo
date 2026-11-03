@@ -2306,7 +2306,7 @@
   {
     "path": "deltatech_cmr_document/index.md",
     "module": "deltatech_cmr_document",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_cmr_document",
     "local_path": "odoo-addons/bitshop/deltatech_cmr_document",
     "last_ingest": "2026-08-20",
@@ -2561,6 +2561,34 @@
     ],
     "connections": [],
     "text": "Deltatech Cron Monitor Webhook\ndeltatech_cron_monitor_webhook\nModulul oferă o soluție simplă și sigură pentru a declanșa sarcinile programate (cron) din Odoo prin webhook-uri, folosind un token de acces global. Astfel, execuția sarcinilor poate fi controlată din platforme externe de monitorizare și programare (ex. cron-job.org, healthchecks.io, EasyCron), independent de planificatorul intern al Odoo.\nActivare webhook per sarcină cron: fiecare acțiune programată poate fi configurată să permită declanșarea externă.\nCod unic de webhook: se definește un cod unic pentru fiecare cron, folosit pentru a construi URL-ul dedicat de endpoint.\nSecuritate prin token global: protecție printr-un token de acces global (Bearer sau parametru), fără semnături HMAC complexe.\nEndpoint-uri dedicate:\nDeclanșare: `/cron/webhook/<webhook_code>` (POST/GET)\nStare: `/cron/webhook/<webhook_code>/status` (GET)\nConfigurare simplă: un singur token global gestionează accesul pentru toate webhook-urile activate, simplificând integrarea cu servicii externe."
+  },
+  {
+    "path": "deltatech_cron_progress/index.md",
+    "module": "deltatech_cron_progress",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_cron_progress",
+    "local_path": "odoo-addons/deltatech/deltatech_cron_progress",
+    "last_ingest": "2026-11-03",
+    "friendly_name": "deltatech_cron_progress",
+    "summary": "Modul tehnic care oferă o regulă comună pentru acțiunile programate ce lucrează pe loturi. După fiecare lot, acțiunea spune câte înregistrări a procesat și câte au rămas; progresul se salvează, iar planificatorul reia lotul următor imediat, până se termină tot. Un lot care nu a procesat nimic oprește rularea, ca acțiunea să nu fie reluată la nesfârșit. Regula are aceeași formă pe 18.0, 19.0 și 20.0, deci codul modulelor care o folosesc nu se schimbă la migrare.",
+    "features": [
+      "Metodă comună `ir.cron._cron_report_progress(done, remaining)`, apelată o singură dată, la finalul lotului, în metoda rulată de acțiunea programată; `done` este numărul procesat în lotul curent, nu un total cumulat.",
+      "Folosește mecanismul nativ de progres din Odoo 19 (`_commit_progress`): cât timp `remaining > 0`, planificatorul rulează din nou acțiunea imediat (cel puțin 10 rulări și 10 secunde la o preluare, apoi la următoarea interogare), deci acțiunea nu mai trebuie să se autodeclanșeze cu `_trigger()` după fiecare lot. Butonul Rulează manual se comportă la fel.",
+      "Un lot cu `done == 0` forțează `remaining = 0`, deci se oprește (în 19.0, `done == 0` cu `remaining > 0` ar fi reluat imediat).",
+      "În rularea unei acțiuni progresul este salvat (commit), deci supraviețuiește unui timeout la un lot ulterior; de aceea se apelează după lot, nu în mijlocul unei operații care trebuie să rămână atomică.",
+      "La apel direct din cod, în afara unei rulări a acțiunii, nu se face commit; dacă mai e de lucru, acțiunea pe care s-a apelat metoda este pornită în fundal (`_trigger()`) pentru rest.",
+      "Parametru opțional `deactivate`: dezactivează acțiunea după procesarea completă (acțiuni care rulează o singură dată, ex. migrări de date).",
+      "Raportați `remaining = 0` în mod dry run sau când restul nu poate fi procesat.",
+      "Modulul nu are ecrane, setări sau meniuri proprii; verificarea se face pe Setări → Tehnic → Automatizare → Acțiuni planificate (mod dezvoltator) și în jurnalul serverului (`fully done` / `partially done` / `failed`). Pas-cu-pas, cu acțiuni demo de test: vezi [fișa consultant](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "base"
+    ],
+    "connections": [
+      "deltatech_actions",
+      "deltatech_cron_monitor_webhook"
+    ],
+    "text": "deltatech_cron_progress\ndeltatech_cron_progress\nModul tehnic care oferă o regulă comună pentru acțiunile programate ce lucrează pe loturi. După fiecare lot, acțiunea spune câte înregistrări a procesat și câte au rămas; progresul se salvează, iar planificatorul reia lotul următor imediat, până se termină tot. Un lot care nu a procesat nimic oprește rularea, ca acțiunea să nu fie reluată la nesfârșit. Regula are aceeași formă pe 18.0, 19.0 și 20.0, deci codul modulelor care o folosesc nu se schimbă la migrare.\nMetodă comună `ir.cron._cron_report_progress(done, remaining)`, apelată o singură dată, la finalul lotului, în metoda rulată de acțiunea programată; `done` este numărul procesat în lotul curent, nu un total cumulat.\nFolosește mecanismul nativ de progres din Odoo 19 (`_commit_progress`): cât timp `remaining > 0`, planificatorul rulează din nou acțiunea imediat (cel puțin 10 rulări și 10 secunde la o preluare, apoi la următoarea interogare), deci acțiunea nu mai trebuie să se autodeclanșeze cu `_trigger()` după fiecare lot. Butonul Rulează manual se comportă la fel.\nUn lot cu `done == 0` forțează `remaining = 0`, deci se oprește (în 19.0, `done == 0` cu `remaining > 0` ar fi reluat imediat).\nÎn rularea unei acțiuni progresul este salvat (commit), deci supraviețuiește unui timeout la un lot ulterior; de aceea se apelează după lot, nu în mijlocul unei operații care trebuie să rămână atomică.\nLa apel direct din cod, în afara unei rulări a acțiunii, nu se face commit; dacă mai e de lucru, acțiunea pe care s-a apelat metoda este pornită în fundal (`_trigger()`) pentru rest.\nParametru opțional `deactivate`: dezactivează acțiunea după procesarea completă (acțiuni care rulează o singură dată, ex. migrări de date).\nRaportați `remaining = 0` în mod dry run sau când restul nu poate fi procesat.\nModulul nu are ecrane, setări sau meniuri proprii; verificarea se face pe Setări → Tehnic → Automatizare → Acțiuni planificate (mod dezvoltator) și în jurnalul serverului (`fully done` / `partially done` / `failed`). Pas-cu-pas, cu acțiuni demo de test: vezi [fișa consultant](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_customer_analysis/index.md",
@@ -4690,7 +4718,7 @@
   {
     "path": "deltatech_helpdesk_tag_primary/index.md",
     "module": "deltatech_helpdesk_tag_primary",
-    "version": "19.0.0.0.1",
+    "version": "19.0.0.0.2",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_helpdesk_tag_primary",
     "local_path": "odoo-addons/bitshop_ent/deltatech_helpdesk_tag_primary",
     "last_ingest": "2026-06-09",
@@ -5084,7 +5112,7 @@
   {
     "path": "deltatech_invoice_picking/index.md",
     "module": "deltatech_invoice_picking",
-    "version": "19.0.1.0.16",
+    "version": "19.0.1.0.19",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_picking",
     "local_path": "odoo-addons/deltatech/deltatech_invoice_picking",
     "last_ingest": "2026-10-26",
@@ -5651,7 +5679,7 @@
   {
     "path": "deltatech_marketplace_doraly/index.md",
     "module": "deltatech_marketplace_doraly",
-    "version": "19.0.0.0.13",
+    "version": "19.0.0.0.14",
     "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_doraly`",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_doraly",
     "last_ingest": "2026-08-20",
@@ -7414,7 +7442,7 @@
   {
     "path": "deltatech_payment_advice/index.md",
     "module": "deltatech_payment_advice",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_payment_advice",
     "local_path": "odoo-addons/bitshop_ent/deltatech_payment_advice",
     "last_ingest": "2026-07-31",
@@ -12852,7 +12880,7 @@
   {
     "path": "deltatech_vendor_products_bepco/index.md",
     "module": "deltatech_vendor_products_bepco",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products_bepco",
     "local_path": "odoo-addons/bitshop_vendor/deltatech_vendor_products_bepco",
     "last_ingest": "2026-10-09",
@@ -12880,7 +12908,7 @@
   {
     "path": "deltatech_vendor_products_granit/index.md",
     "module": "deltatech_vendor_products_granit",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "`https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products_granit`",
     "local_path": "odoo-addons/bitshop_vendor/deltatech_vendor_products_granit",
     "last_ingest": "2026-09-29",
@@ -13603,6 +13631,32 @@
     "text": "deltatech_website_floating_widgets\ndeltatech_website_floating_widgets\nModulul adaugă pe site butoane de contact fixe, în marginea din dreapta, care rămân pe ecran indiferent cât derulează vizitatorul: telefon, e-mail, WhatsApp, rețele sociale sau orice altă adresă. Butoanele se configurează din backend, fără cod, iar fiecare are pictograma, culorile și forma proprii, ceea ce face contactarea firmei mai rapidă și păstrează aspectul site-ului în linie cu identitatea vizuală.\nButoane personalizabile, afișate în dreapta site-ului; pictograma se alege dintr-o listă predefinită (Phone, Email, WhatsApp, Facebook, Instagram, TikTok, LinkedIn, Map Marker etc.), cu previzualizare live în formular.\nTipuri de legătură: URL, telefon (`tel:`) sau e-mail (`mailto:`) — prefixul pentru telefon și e-mail este adăugat automat de modul.\nPentru legăturile externe se introduce protocolul complet (ex. `https://`); altfel adresa este tratată ca legătură relativă în site.\nOpțiune de deschidere în filă nouă, per buton.\nVizibilitate separată pe desktop și pe mobil.\nFormă a butonului: cerc, pătrat sau colțuri rotunjite; culoare de fundal și de text configurabile (implicit `#875A7B` / `#FFFFFF`).\nOrdinea se stabilește prin secvență (drag and drop în listă); butoanele pot fi dezactivate (arhivate) fără ștergere.\nConfigurare din meniul Site → Floating Widgets (`website.menu_site`)."
   },
   {
+    "path": "deltatech_website_indexnow/index.md",
+    "module": "deltatech_website_indexnow",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_indexnow",
+    "local_path": "odoo-addons/deltatech/deltatech_website_indexnow",
+    "last_ingest": "2026-11-03",
+    "friendly_name": "Website IndexNow",
+    "summary": "Modulul anunță motoarele de căutare care folosesc protocolul IndexNow (Bing, Yandex, Seznam, Naver) ce pagini ale site-ului Odoo au fost publicate sau modificate, astfel încât acestea să fie reindexate în câteva minute, nu la următoarea vizită a robotului. Bing alimentează și căutarea web din ChatGPT și Copilot, deci modificările apar mai repede și acolo. Google nu folosește IndexNow, deci sitemap-ul trebuie trimis în continuare în Google Search Console.",
+    "features": [
+      "Fișier-cheie servit de Odoo: cheia care dovedește că site-ul este al dumneavoastră se generează la activarea IndexNow și este servită la `https://<domeniu>/<cheie>.txt`; se poate lipi și o cheie existentă (8–128 litere, cifre sau cratime).",
+      "Doar ce s-a schimbat, la fiecare oră: o acțiune programată trimite paginile publicate modificate de la ultima rulare, inclusiv conținutul editat în website builder, plus produsele, articolele de blog, evenimentele, joburile și cursurile publicate din aplicațiile instalate.",
+      "Tot, la cerere: *Send all pages now* trimite o dată toate paginile publicate, după prima configurare sau după o modificare mare.",
+      "Rezultat la vedere: în setări apar data/ora și rezultatul ultimei trimiteri, cu mesaje clare când fișierul-cheie nu e găsit sau URL-urile nu aparțin domeniului.",
+      "O cheie per website: în bazele multi-website fiecare domeniu are cheia proprie și trimite doar paginile proprii.",
+      "Configurare: se setează *Domain* pe website, apoi *Website > Configuration > Settings*, secțiunea *Tracking & SEO*: se bifează *IndexNow*, se salvează, se verifică fișierul prin *View key file* (trebuie să afișeze doar cheia) și se apasă o dată *Send all pages now*.",
+      "Date trimise: doar adresele paginilor deja publice, domeniul și cheia. Fluxul pas-cu-pas, cu capturi, este în fișa consultantului."
+    ],
+    "dependencies": [
+      "website"
+    ],
+    "connections": [
+      "deltatech_website_seo"
+    ],
+    "text": "Website IndexNow\ndeltatech_website_indexnow\nModulul anunță motoarele de căutare care folosesc protocolul IndexNow (Bing, Yandex, Seznam, Naver) ce pagini ale site-ului Odoo au fost publicate sau modificate, astfel încât acestea să fie reindexate în câteva minute, nu la următoarea vizită a robotului. Bing alimentează și căutarea web din ChatGPT și Copilot, deci modificările apar mai repede și acolo. Google nu folosește IndexNow, deci sitemap-ul trebuie trimis în continuare în Google Search Console.\nFișier-cheie servit de Odoo: cheia care dovedește că site-ul este al dumneavoastră se generează la activarea IndexNow și este servită la `https://<domeniu>/<cheie>.txt`; se poate lipi și o cheie existentă (8–128 litere, cifre sau cratime).\nDoar ce s-a schimbat, la fiecare oră: o acțiune programată trimite paginile publicate modificate de la ultima rulare, inclusiv conținutul editat în website builder, plus produsele, articolele de blog, evenimentele, joburile și cursurile publicate din aplicațiile instalate.\nTot, la cerere: *Send all pages now* trimite o dată toate paginile publicate, după prima configurare sau după o modificare mare.\nRezultat la vedere: în setări apar data/ora și rezultatul ultimei trimiteri, cu mesaje clare când fișierul-cheie nu e găsit sau URL-urile nu aparțin domeniului.\nO cheie per website: în bazele multi-website fiecare domeniu are cheia proprie și trimite doar paginile proprii.\nConfigurare: se setează *Domain* pe website, apoi *Website > Configuration > Settings*, secțiunea *Tracking & SEO*: se bifează *IndexNow*, se salvează, se verifică fișierul prin *View key file* (trebuie să afișeze doar cheia) și se apasă o dată *Send all pages now*.\nDate trimise: doar adresele paginilor deja publice, domeniul și cheia. Fluxul pas-cu-pas, cu capturi, este în fișa consultantului."
+  },
+  {
     "path": "deltatech_website_llms_txt/index.md",
     "module": "deltatech_website_llms_txt",
     "version": "19.0.1.1.0",
@@ -14131,7 +14185,7 @@
   {
     "path": "deltatech_website_shop_snippets/index.md",
     "module": "deltatech_website_shop_snippets",
-    "version": "19.0.1.1.10",
+    "version": "19.0.1.1.11",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_shop_snippets",
     "local_path": "odoo-addons/bitshop/deltatech_website_shop_snippets",
     "last_ingest": "2026-10-22",
@@ -14212,6 +14266,67 @@
       "deltatech_vendor_stock"
     ],
     "text": "eCommerce Stock Availability\ndeltatech_website_stock_availability\nModulul permite afișarea stocului pe website sub un anumit prag, oferind clienților posibilitatea de a comanda un produs chiar dacă stocul disponibil nu este suficient. Pe lângă disponibilitate, modulul estimează și numărul de zile în care se va face livrarea, luând în calcul timpul de livrare definit pe produs, numărul de zile de siguranță și numărul de zile de livrare de la furnizor pentru produsele care nu se află pe stoc. Astfel, magazinul online comunică transparent atât cantitatea disponibilă, cât și termenul realist de livrare.\nAfișarea stocului pe website doar atunci când acesta scade sub un anumit prag configurabil.\nPosibilitatea de a comanda produse chiar dacă stocul curent nu este suficient.\nCalculul automat al numărului de zile estimate până la livrare.\nEstimarea termenului de livrare ține cont de timpul de livrare definit pe produs, de numărul de zile de siguranță și de timpul de livrare de la furnizor pentru produsele care nu sunt pe stoc."
+  },
+  {
+    "path": "deltatech_website_store_selector/index.md",
+    "module": "deltatech_website_store_selector",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_store_selector",
+    "local_path": "odoo-addons/bitshop/deltatech_website_store_selector",
+    "last_ingest": "2026-11-03",
+    "friendly_name": "deltatech_website_store_selector",
+    "summary": "Modulul îi permite vizitatorului magazinului online să-și aleagă **magazinul fizic** preferat, ca pe site-urile marilor rețele de bricolaj. Din acel moment, site-ul lucrează pentru magazinul ales: stocul afișat este cel al magazinului, coșul și comanda se creează pe magazinul respectiv, iar livrarea pleacă de acolo. Fără magazine configurate, site-ul păstrează comportamentul standard Odoo.",
+    "features": [
+      "Buton „Magazinul tău” în header (toate variantele de header, desktop și mobil): arată magazinul ales și deschide lista magazinelor, cu căutare, adresă, telefon și, dacă poziția vizitatorului este cunoscută din GeoIP și magazinele sunt geolocalizate, distanța (cele mai apropiate primele). Lista nu apelează niciun serviciu extern de geolocalizare.",
+      "Stocul urmează magazinul: disponibilitatea de pe pagina de produs, panglica „stoc epuizat”, butonul de adăugare rapidă, limita de cantitate la adăugarea în coș și avertizările din coș se calculează pe stocul liber al magazinului ales.",
+      "Pagina de produs: afișează disponibilitatea variantei selectate în magazin (în stoc, stoc limitat, disponibil la comandă, indisponibil) și permite verificarea celorlalte magazine.",
+      "Cardurile din magazinul online afișează disponibilitatea fiecărui produs în magazin, calculată dintr-o dată pentru toată pagina.",
+      "Comanda urmează magazinul: coșul se creează pe magazinul ales, depozitul comenzii este magazinul, deci livrarea pleacă de acolo. Schimbarea magazinului mută coșul și avertizează vizitatorul dacă noul magazin nu poate livra tot conținutul.",
+      "Click & Collect (`website_sale_collect`): puntea `deltatech_website_store_selector_collect` se instalează automat; magazinul devine locația de ridicare propusă la finalizarea comenzii, iar alegerea altui magazin de ridicare schimbă și magazinul vizitatorului.",
+      "Alegerea este păstrată într-un cookie pentru un an (rezistă sesiunii și deconectării).",
+      "Fără impact asupra performanței: nicio interogare suplimentară pe pagini (magazinul se citește din cookie), stocul tuturor magazinelor se calculează doar când se deschide lista, iar paginile publice din cache-ul de pagini Odoo rămân partajate (se păstrează în cache doar versiunea fără magazin, numele magazinului fiind pus în header la servire).",
+      "Configurare (detalii în fișa consultantului):",
+      "câte un depozit pe magazin, în *Inventar > Configurare > Depozite*, cu adresa (și telefonul) pe partenerul depozitului;",
+      "în *Website > Configurare > Setări > Shop - Inventory*, câmpul Store Selector (vizibil când există mai multe depozite) primește magazinele selectabile;",
+      "pe produsele vândute per magazin se debifează *Sell when Out-of-Stock* și, opțional, se bifează *Show Available Quantity*;",
+      "pentru ridicare din magazin se adaugă aceleași depozite metodei de livrare *Pick up in store*."
+    ],
+    "dependencies": [
+      "website_sale_stock"
+    ],
+    "connections": [
+      "deltatech_website_store_selector_collect",
+      "website_sale_collect"
+    ],
+    "text": "deltatech_website_store_selector\ndeltatech_website_store_selector\nModulul îi permite vizitatorului magazinului online să-și aleagă **magazinul fizic** preferat, ca pe site-urile marilor rețele de bricolaj. Din acel moment, site-ul lucrează pentru magazinul ales: stocul afișat este cel al magazinului, coșul și comanda se creează pe magazinul respectiv, iar livrarea pleacă de acolo. Fără magazine configurate, site-ul păstrează comportamentul standard Odoo.\nButon „Magazinul tău” în header (toate variantele de header, desktop și mobil): arată magazinul ales și deschide lista magazinelor, cu căutare, adresă, telefon și, dacă poziția vizitatorului este cunoscută din GeoIP și magazinele sunt geolocalizate, distanța (cele mai apropiate primele). Lista nu apelează niciun serviciu extern de geolocalizare.\nStocul urmează magazinul: disponibilitatea de pe pagina de produs, panglica „stoc epuizat”, butonul de adăugare rapidă, limita de cantitate la adăugarea în coș și avertizările din coș se calculează pe stocul liber al magazinului ales.\nPagina de produs: afișează disponibilitatea variantei selectate în magazin (în stoc, stoc limitat, disponibil la comandă, indisponibil) și permite verificarea celorlalte magazine.\nCardurile din magazinul online afișează disponibilitatea fiecărui produs în magazin, calculată dintr-o dată pentru toată pagina.\nComanda urmează magazinul: coșul se creează pe magazinul ales, depozitul comenzii este magazinul, deci livrarea pleacă de acolo. Schimbarea magazinului mută coșul și avertizează vizitatorul dacă noul magazin nu poate livra tot conținutul.\nClick & Collect (`website_sale_collect`): puntea `deltatech_website_store_selector_collect` se instalează automat; magazinul devine locația de ridicare propusă la finalizarea comenzii, iar alegerea altui magazin de ridicare schimbă și magazinul vizitatorului.\nAlegerea este păstrată într-un cookie pentru un an (rezistă sesiunii și deconectării).\nFără impact asupra performanței: nicio interogare suplimentară pe pagini (magazinul se citește din cookie), stocul tuturor magazinelor se calculează doar când se deschide lista, iar paginile publice din cache-ul de pagini Odoo rămân partajate (se păstrează în cache doar versiunea fără magazin, numele magazinului fiind pus în header la servire).\nConfigurare (detalii în fișa consultantului):\ncâte un depozit pe magazin, în *Inventar > Configurare > Depozite*, cu adresa (și telefonul) pe partenerul depozitului;\nîn *Website > Configurare > Setări > Shop - Inventory*, câmpul Store Selector (vizibil când există mai multe depozite) primește magazinele selectabile;\npe produsele vândute per magazin se debifează *Sell when Out-of-Stock* și, opțional, se bifează *Show Available Quantity*;\npentru ridicare din magazin se adaugă aceleași depozite metodei de livrare *Pick up in store*."
+  },
+  {
+    "path": "deltatech_website_store_selector_collect/index.md",
+    "module": "deltatech_website_store_selector_collect",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_store_selector_collect",
+    "local_path": "odoo-addons/bitshop/deltatech_website_store_selector_collect",
+    "last_ingest": "2026-11-03",
+    "friendly_name": "deltatech_website_store_selector_collect",
+    "summary": "Modulul face legătura dintre alegerea magazinului pe website și ridicarea din magazin (Click & Collect) din Odoo. Magazinul ales de client rămâne același de la pagina de produs până la predarea comenzii: este propus automat ca punct de ridicare la checkout, iar stocul afișat și verificat este al acestui magazin. Se instalează automat când sunt prezente ambele module de care depinde.",
+    "features": [
+      "Magazinul ales pe website este punctul de ridicare propus la checkout pentru metoda „Ridicare de la sediu”, chiar dacă metoda deservește mai multe magazine.",
+      "Alegerea altui punct de ridicare pe harta de la checkout face din acel magazin magazinul clientului (header, stoc afișat, depozitul comenzii).",
+      "Schimbarea magazinului din header mută ridicarea comenzii pe noul magazin sau o golește, dacă metoda de ridicare nu deservește acel magazin.",
+      "Stocul afișat și verificat este cel al magazinului ales, nu cel mai bun stoc dintre toate magazinele de ridicare; se evită și calculul stocului pentru fiecare magazin pe paginile de produs.",
+      "Listarea punctelor de ridicare (harta de la checkout) nu mai lasă pe liniile coșului avertizările magazinelor fără stoc: decide doar magazinul ales.",
+      "Pagina de produs afișează blocul „Magazinul tău” în locul blocului Click & Collect, care ignoră magazinul vizitatorului; punctul de ridicare se alege astfel la checkout.",
+      "Configurare: pe metoda de ridicare se lasă în fila Magazine aceleași magazine ca în „Alegerea magazinului”, iar furnizorul „Plata la fața locului” trebuie să fie activ și publicat (detalii în fișa consultant)."
+    ],
+    "dependencies": [
+      "deltatech_website_store_selector",
+      "website_sale_collect"
+    ],
+    "connections": [
+      "deltatech_website_store_selector",
+      "website_sale_collect"
+    ],
+    "text": "deltatech_website_store_selector_collect\ndeltatech_website_store_selector_collect\nModulul face legătura dintre alegerea magazinului pe website și ridicarea din magazin (Click & Collect) din Odoo. Magazinul ales de client rămâne același de la pagina de produs până la predarea comenzii: este propus automat ca punct de ridicare la checkout, iar stocul afișat și verificat este al acestui magazin. Se instalează automat când sunt prezente ambele module de care depinde.\nMagazinul ales pe website este punctul de ridicare propus la checkout pentru metoda „Ridicare de la sediu”, chiar dacă metoda deservește mai multe magazine.\nAlegerea altui punct de ridicare pe harta de la checkout face din acel magazin magazinul clientului (header, stoc afișat, depozitul comenzii).\nSchimbarea magazinului din header mută ridicarea comenzii pe noul magazin sau o golește, dacă metoda de ridicare nu deservește acel magazin.\nStocul afișat și verificat este cel al magazinului ales, nu cel mai bun stoc dintre toate magazinele de ridicare; se evită și calculul stocului pentru fiecare magazin pe paginile de produs.\nListarea punctelor de ridicare (harta de la checkout) nu mai lasă pe liniile coșului avertizările magazinelor fără stoc: decide doar magazinul ales.\nPagina de produs afișează blocul „Magazinul tău” în locul blocului Click & Collect, care ignoră magazinul vizitatorului; punctul de ridicare se alege astfel la checkout.\nConfigurare: pe metoda de ridicare se lasă în fila Magazine aceleași magazine ca în „Alegerea magazinului”, iar furnizorul „Plata la fața locului” trebuie să fie activ și publicat (detalii în fișa consultant)."
   },
   {
     "path": "deltatech_website_vat_validation/index.md",
@@ -15082,7 +15197,7 @@
   {
     "path": "l10n_ro_anaf_d101/index.md",
     "module": "l10n_ro_anaf_d101",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d101",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d101",
     "last_ingest": "2026-10-27",
@@ -17633,6 +17748,38 @@
     "text": "Romania - Subvenții și fonduri nerambursabile (FR-38)\nl10n_ro_grants\nSubvenții și fonduri nerambursabile conform OMFP 1802/2014 și IAS 20. Modulul urmărește un contract de finanțare de la semnare până la cererea de rambursare: tranșele de finanțare cu nota contabilă `Dr 4451 = Cr 475x/472` (finanțatorul ca partener, încasarea venind din extrasul bancar), recunoașterea veniturilor din subvenție (manuală sau prin cron lunar liniar), bugetul pe categorii de cheltuieli eligibile și cererile de rambursare pentru finanțator. Conturile 131/132 din planul vechi nu mai sunt folosite. Acoperă surse precum PNRR, Fonduri Structurale UE (FEDR/FSE/FEADR), programe naționale (Start-Up Nation, IMM Invest) și ajutoare de minimis.\nContract de finanțare nerambursabilă cu state machine (draft → contractat → în derulare → finalizat; anulare/resetare), cu tipuri de subvenție: active, exploatare, dobânzi, mixtă.\nConturi completate automat după tipul subvenției (active: 47512 / 7584; exploatare: 4721 / 741x ales după natura cheltuielii; dobânzi: 4721 / 7418; 4451 pentru subvenții de primit, cu „Permite reconcilierea” bifat). Pentru tipul mixtă conturile se completează manual, de preferat prin contracte distincte.\nTranșe de finanțare cu notă automată `Dr 4451 = Cr 475x/472`; încasarea (`Dr 5121 = Cr 4451`) se face o singură dată, din extrasul bancar reconciliat cu tranșa. Starea încasării (neîncasată / parțial / încasată) și restul de încasat sunt vizibile pe tranșă; totalurile pe contract numără doar sumele încasate.\nButon Resetează pe tranșele neîncasate, pentru readucerea în ciornă (nota se anulează); pe o tranșă încasată se anulează întâi reconcilierea.\nRecunoaștere venituri (`Dr 475x = Cr 7584`, `Dr 472 = Cr 741x/7418`) — manuală sau prin cron lunar liniar, inactiv implicit.\nBuget pe categorii de cheltuieli eligibile cu realizat vs. aprobat, calculat din înregistrările contabile cu distribuție analitică pe proiect; alertă de prag unică pe categorie (o singură activitate, actualizată la fiecare recalcul, care dispare sub prag).\nCereri de rambursare generate pe perioadă, cu linii per categorie bugetară (eligibil net, exclus, cheltuit brut), excluderi (conturi neeligibile precum 4426, furnizori afiliați) și suma solicitată = eligibil net × procent nerambursabil. Fără dublă decontare: cheltuielile din cereri depuse/aprobate/rambursate nu se mai cer, cele din cereri respinse pot fi cerute din nou; perioada propusă începe după ultima cerere nerespinsă; o cerere cu cheltuieli deja incluse în alta nu se poate depune.\nRapoarte PDF/Excel ale cererii, pentru dosarul depus la finanțator. Cererea e document justificativ, fără notă contabilă.\nFișă consultant pas-cu-pas cu 10 capturi de ecran (vezi mai sus)."
   },
   {
+    "path": "l10n_ro_green_stamp/index.md",
+    "module": "l10n_ro_green_stamp",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_green_stamp",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_green_stamp",
+    "last_ingest": "2026-11-03",
+    "friendly_name": "l10n_ro_green_stamp",
+    "summary": "Modulul adaugă timbrul verde pe o linie separată în comenzile și facturile de vânzare și de achiziție, pentru echipamentele electrice și electronice (EEE) vândute sau cumpărate în România. Producătorii și distribuitorii de EEE trebuie să arate separat cumpărătorului costurile de colectare, tratare și eliminare a deșeurilor (art. 34 din OUG nr. 5/2015). Suma se setează o singură dată pe produs, iar linia de timbru se generează automat, în același mod ca garanția SGR.",
+    "features": [
+      "Timbru pe produs: suma pe unitate, în moneda companiei, se setează pe produs (fila Vânzări, grupul „Timbru verde (DEEE)”), fără TVA. Nu se completează pentru bateriile portabile (art. 12 alin. (4) din HG nr. 1132/2008).",
+      "Linie automată: pe comanda de vânzare, în coșul magazinului online și pe comanda de achiziție, fiecare produs cu timbru primește linia „Timbru verde”, cu cantitatea liniei principale. Linia urmează cantitatea și dispare odată cu linia principală.",
+      "TVA corect: linia ia taxele liniei principale, cu poziția fiscală aplicată; timbrul intră în baza TVA cu cota echipamentului (art. 286 Cod fiscal) și pleacă în e-Factura ca linie obișnuită, în aceeași categorie de TVA.",
+      "Fără timbru la extern: partenerii din altă țară decât compania nu primesc linia.",
+      "Cost de achiziție: cu `stock_landed_costs` instalat, produsul „Timbru verde” este cost suplimentar; din factura furnizorului (buton Creați costuri adiționale) se repartizează pe recepție și intră în costul mărfii (cont 371).",
+      "Raport: Contabilitate (sau Facturare) → Raportare → Timbru verde: liniile de timbru din facturile postate, cu produsul generator, în listă și pivot (pe produs, partener, lună), cu filtre Vânzări / Achiziții (implicit Vânzări); stornările apar cu minus.",
+      "Configurare automată: produsul „Timbru verde” (cod `TIMBRU-VERDE`, politică de facturare „Cantități comandate”) se creează la instalare pentru companiile din România și la încărcarea planului de conturi RO pe o companie nouă; contul de venit se poate rafina (ex. 707.TV).",
+      "Limitări: factura creată direct, fără comandă, nu primește linia automat; POS nu folosește suma de pe produs; fără `stock_landed_costs`, timbrul din factura furnizorului merge pe contul de cheltuieli implicit; o linie principală are o singură linie suplimentară, timbrul având întâietate."
+    ],
+    "dependencies": [
+      "deltatech_sale_add_extra_line",
+      "deltatech_purchase_add_extra_line",
+      "account",
+      "l10n_ro"
+    ],
+    "connections": [
+      "deltatech_sale_add_extra_line",
+      "deltatech_purchase_add_extra_line",
+      "stock_landed_costs"
+    ],
+    "text": "l10n_ro_green_stamp\nl10n_ro_green_stamp\nModulul adaugă timbrul verde pe o linie separată în comenzile și facturile de vânzare și de achiziție, pentru echipamentele electrice și electronice (EEE) vândute sau cumpărate în România. Producătorii și distribuitorii de EEE trebuie să arate separat cumpărătorului costurile de colectare, tratare și eliminare a deșeurilor (art. 34 din OUG nr. 5/2015). Suma se setează o singură dată pe produs, iar linia de timbru se generează automat, în același mod ca garanția SGR.\nTimbru pe produs: suma pe unitate, în moneda companiei, se setează pe produs (fila Vânzări, grupul „Timbru verde (DEEE)”), fără TVA. Nu se completează pentru bateriile portabile (art. 12 alin. (4) din HG nr. 1132/2008).\nLinie automată: pe comanda de vânzare, în coșul magazinului online și pe comanda de achiziție, fiecare produs cu timbru primește linia „Timbru verde”, cu cantitatea liniei principale. Linia urmează cantitatea și dispare odată cu linia principală.\nTVA corect: linia ia taxele liniei principale, cu poziția fiscală aplicată; timbrul intră în baza TVA cu cota echipamentului (art. 286 Cod fiscal) și pleacă în e-Factura ca linie obișnuită, în aceeași categorie de TVA.\nFără timbru la extern: partenerii din altă țară decât compania nu primesc linia.\nCost de achiziție: cu `stock_landed_costs` instalat, produsul „Timbru verde” este cost suplimentar; din factura furnizorului (buton Creați costuri adiționale) se repartizează pe recepție și intră în costul mărfii (cont 371).\nRaport: Contabilitate (sau Facturare) → Raportare → Timbru verde: liniile de timbru din facturile postate, cu produsul generator, în listă și pivot (pe produs, partener, lună), cu filtre Vânzări / Achiziții (implicit Vânzări); stornările apar cu minus.\nConfigurare automată: produsul „Timbru verde” (cod `TIMBRU-VERDE`, politică de facturare „Cantități comandate”) se creează la instalare pentru companiile din România și la încărcarea planului de conturi RO pe o companie nouă; contul de venit se poate rafina (ex. 707.TV).\nLimitări: factura creată direct, fără comandă, nu primește linia automat; POS nu folosește suma de pe produs; fără `stock_landed_costs`, timbrul din factura furnizorului merge pe contul de cheltuieli implicit; o linie principală are o singură linie suplimentară, timbrul având întâietate."
+  },
+  {
     "path": "l10n_ro_hide_net_weight/index.md",
     "module": "l10n_ro_hide_net_weight",
     "version": "19.0.0.0.4",
@@ -17771,7 +17918,7 @@
   {
     "path": "l10n_ro_hr_payroll_enhancement/index.md",
     "module": "l10n_ro_hr_payroll_enhancement",
-    "version": "19.0.2.24.0",
+    "version": "19.0.2.24.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_payroll_enhancement",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_hr_payroll_enhancement",
     "last_ingest": "2026-10-22",
@@ -19012,7 +19159,7 @@
   {
     "path": "l10n_ro_payroll_certificates/index.md",
     "module": "l10n_ro_payroll_certificates",
-    "version": "19.0.1.3.1",
+    "version": "19.0.1.3.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_certificates",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_payroll_certificates",
     "last_ingest": "2026-10-16",
@@ -19636,7 +19783,7 @@
   {
     "path": "l10n_ro_profit_tax/index.md",
     "module": "l10n_ro_profit_tax",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_profit_tax",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_profit_tax",
     "last_ingest": "2026-11-03",
@@ -21502,31 +21649,60 @@
   {
     "path": "l10n_ro_zip/index.md",
     "module": "l10n_ro_zip",
-    "version": "19.0.0.0.11",
-    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_zip",
-    "local_path": "odoo-addons/l10n-romania/l10n_ro_zip",
-    "last_ingest": "2026-11-02",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_zip",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_zip",
+    "last_ingest": "2026-11-03",
     "friendly_name": "Romania - Postal Codes",
-    "summary": "Modulul oferă o bază de date cu codurile poștale din România, gata de folosit imediat după instalare. Sunt importate automat aproximativ 52.000 de coduri poștale, fiecare legat de județul și localitatea corespunzătoare, în marile orașe la nivel de stradă. La completarea adresei unui partener, utilizatorul caută strada în câmpul de cod poștal, iar codul, localitatea, județul și țara se completează automat. Astfel se elimină erorile de introducere manuală și se asigură date de adresă corecte, utile pentru livrări, facturare și e-Factura.",
+    "summary": "Modulul oferă o bază de date cu codurile poștale din România, gata de folosit imediat după instalare. Sunt importate automat circa 73.000 de coduri poștale, fiecare legat de județul și, acolo unde este posibil, de localitatea corespunzătoare; în orașele mari codurile sunt la nivel de stradă. La completarea adresei unui partener, utilizatorul caută strada în câmpul de cod poștal, iar codul, localitatea, județul și țara se completează automat. Astfel se elimină erorile de introducere manuală și se asigură date de adresă corecte, utile pentru livrări, facturare și e-Factura. Modulul este comercial (licență OPL-1, disponibil pe Odoo Apps) și face parte din suita `l10n_ro_ent`.",
     "features": [
-      "Adaugă modelul `res.zip` cu ~52.000 de înregistrări de coduri poștale românești, fiecare conținând: cod poștal, localitate, județ, țară, tip stradă, nume stradă, sector (București), oficiu poștal și adresa oficiului.",
-      "Datele sunt importate automat la instalare dintr-un fișier SQL, corelate cu județele și localitățile din `l10n_ro_city`, și se actualizează la upgrade printr-o migrare; partenerii își păstrează codul poștal. Ultima actualizare (19.0.0.0.11) aduce date reîmprospătate de pe posta-romana.ro pentru Sfântu Gheorghe, Bacău și Iași, plus străzi din OpenStreetMap (licență ODbL) pentru orașe mici, precum Huși, Negrești, Murgeni, Tecuci, Târgu Bujor și Berești.",
+      "Adaugă modelul `res.zip` cu circa 73.000 de înregistrări de coduri poștale românești, fiecare conținând: cod poștal, localitate, județ, țară, tip stradă, nume stradă, sector (București), oficiu poștal și adresa oficiului.",
+      "Nomenclatorul este actualizat după posta-romana.ro (noiembrie 2026) pentru toate cele 42 de județe: străzile celor 54 de orașe cu coduri pe stradă și oficiul poștal al fiecărei localități. Străzile celor 269 de orașe mici, la care Poșta are un singur cod, vin din OpenStreetMap (licență ODbL) prin modulul separat [`l10n_ro_zip_osm`](../l10n_ro_zip_osm/index.md), care se instalează automat odată cu acesta.",
+      "Datele sunt importate automat la instalare dintr-un fișier SQL, peste care se aplică un fișier de actualizare (delta); la upgrade, migrările reaplică delta și refac legăturile, iar partenerii își păstrează codul poștal. Județul fiecărui cod se stabilește după primele două cifre, dintr-o listă proprie a modulului (București 01–06, Giurgiu 08).",
+      "Modulul nu mai depinde de `l10n_ro_city`: când acesta este instalat (în aceeași rulare sau ulterior), codurile fără localitate se leagă de localitățile românești din nomenclatorul lui, inclusiv numele scrise cu cratimă sau în forma „Sat (Comună)”. Fără `l10n_ro_city`, codurile au doar județul.",
       "Consultare: *Contacts → Configuration → Localization → Zip Codes*, cu căutare după primele cifre ale codului.",
-      "Extinde formularul partenerului (`res.partner`) cu câmpul `Cod Poștal (zip_id)`, sub localitate, filtrat după localitatea partenerului. La selecție completează codul poștal standard (`zip`), localitatea, județul și țara; strada și numărul adresei rămân cum au fost introduse. Dacă se schimbă localitatea ulterior, strada se alege din nou.",
-      "Căutarea funcționează după codul numeric, după numele străzii sau după tipul străzii. Ordinea cuvintelor nu contează („Nicolae Balcescu\" găsește „Balcescu Nicolae\"), iar datele oficiului poștal nu au diacritice, deci căutarea fără diacritice este mai sigură.",
+      "Extinde formularul partenerului (`res.partner`) cu câmpul `Cod Poștal (zip_id)`, sub localitate, filtrat după localitatea partenerului. La selecție completează codul poștal standard (`zip`), localitatea, județul și țara; strada și numărul adresei rămân cum au fost introduse. Dacă se schimbă localitatea ulterior sau o actualizare a modulului schimbă codul străzii, strada se alege din nou.",
+      "Căutarea funcționează după codul numeric, după numele străzii sau după tipul străzii. Ordinea cuvintelor nu contează („Nicolae Balcescu” găsește „Balcescu Nicolae”), iar datele oficiului poștal nu au diacritice, deci căutarea fără diacritice este mai sigură.",
       "Lista derulantă arată strada și, estompat, codul poștal, localitatea, sectorul și județul.",
       "Suportă sectoarele municipiului București (1–6): localitatea este sectorul, iar câmpul Sector reține numărul lui.",
       "Pașii detaliați, cu capturi de ecran, sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
-      "base_address_extended",
-      "l10n_ro_city"
+      "base_address_extended"
     ],
     "connections": [
+      "l10n_ro_zip_osm",
       "l10n_ro_city",
       "base_address_extended"
     ],
-    "text": "Romania - Postal Codes\nl10n_ro_zip\nModulul oferă o bază de date cu codurile poștale din România, gata de folosit imediat după instalare. Sunt importate automat aproximativ 52.000 de coduri poștale, fiecare legat de județul și localitatea corespunzătoare, în marile orașe la nivel de stradă. La completarea adresei unui partener, utilizatorul caută strada în câmpul de cod poștal, iar codul, localitatea, județul și țara se completează automat. Astfel se elimină erorile de introducere manuală și se asigură date de adresă corecte, utile pentru livrări, facturare și e-Factura.\nAdaugă modelul `res.zip` cu ~52.000 de înregistrări de coduri poștale românești, fiecare conținând: cod poștal, localitate, județ, țară, tip stradă, nume stradă, sector (București), oficiu poștal și adresa oficiului.\nDatele sunt importate automat la instalare dintr-un fișier SQL, corelate cu județele și localitățile din `l10n_ro_city`, și se actualizează la upgrade printr-o migrare; partenerii își păstrează codul poștal. Ultima actualizare (19.0.0.0.11) aduce date reîmprospătate de pe posta-romana.ro pentru Sfântu Gheorghe, Bacău și Iași, plus străzi din OpenStreetMap (licență ODbL) pentru orașe mici, precum Huși, Negrești, Murgeni, Tecuci, Târgu Bujor și Berești.\nConsultare: *Contacts → Configuration → Localization → Zip Codes*, cu căutare după primele cifre ale codului.\nExtinde formularul partenerului (`res.partner`) cu câmpul `Cod Poștal (zip_id)`, sub localitate, filtrat după localitatea partenerului. La selecție completează codul poștal standard (`zip`), localitatea, județul și țara; strada și numărul adresei rămân cum au fost introduse. Dacă se schimbă localitatea ulterior, strada se alege din nou.\nCăutarea funcționează după codul numeric, după numele străzii sau după tipul străzii. Ordinea cuvintelor nu contează („Nicolae Balcescu\" găsește „Balcescu Nicolae\"), iar datele oficiului poștal nu au diacritice, deci căutarea fără diacritice este mai sigură.\nLista derulantă arată strada și, estompat, codul poștal, localitatea, sectorul și județul.\nSuportă sectoarele municipiului București (1–6): localitatea este sectorul, iar câmpul Sector reține numărul lui.\nPașii detaliați, cu capturi de ecran, sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+    "text": "Romania - Postal Codes\nl10n_ro_zip\nModulul oferă o bază de date cu codurile poștale din România, gata de folosit imediat după instalare. Sunt importate automat circa 73.000 de coduri poștale, fiecare legat de județul și, acolo unde este posibil, de localitatea corespunzătoare; în orașele mari codurile sunt la nivel de stradă. La completarea adresei unui partener, utilizatorul caută strada în câmpul de cod poștal, iar codul, localitatea, județul și țara se completează automat. Astfel se elimină erorile de introducere manuală și se asigură date de adresă corecte, utile pentru livrări, facturare și e-Factura. Modulul este comercial (licență OPL-1, disponibil pe Odoo Apps) și face parte din suita `l10n_ro_ent`.\nAdaugă modelul `res.zip` cu circa 73.000 de înregistrări de coduri poștale românești, fiecare conținând: cod poștal, localitate, județ, țară, tip stradă, nume stradă, sector (București), oficiu poștal și adresa oficiului.\nNomenclatorul este actualizat după posta-romana.ro (noiembrie 2026) pentru toate cele 42 de județe: străzile celor 54 de orașe cu coduri pe stradă și oficiul poștal al fiecărei localități. Străzile celor 269 de orașe mici, la care Poșta are un singur cod, vin din OpenStreetMap (licență ODbL) prin modulul separat [`l10n_ro_zip_osm`](../l10n_ro_zip_osm/index.md), care se instalează automat odată cu acesta.\nDatele sunt importate automat la instalare dintr-un fișier SQL, peste care se aplică un fișier de actualizare (delta); la upgrade, migrările reaplică delta și refac legăturile, iar partenerii își păstrează codul poștal. Județul fiecărui cod se stabilește după primele două cifre, dintr-o listă proprie a modulului (București 01–06, Giurgiu 08).\nModulul nu mai depinde de `l10n_ro_city`: când acesta este instalat (în aceeași rulare sau ulterior), codurile fără localitate se leagă de localitățile românești din nomenclatorul lui, inclusiv numele scrise cu cratimă sau în forma „Sat (Comună)”. Fără `l10n_ro_city`, codurile au doar județul.\nConsultare: *Contacts → Configuration → Localization → Zip Codes*, cu căutare după primele cifre ale codului.\nExtinde formularul partenerului (`res.partner`) cu câmpul `Cod Poștal (zip_id)`, sub localitate, filtrat după localitatea partenerului. La selecție completează codul poștal standard (`zip`), localitatea, județul și țara; strada și numărul adresei rămân cum au fost introduse. Dacă se schimbă localitatea ulterior sau o actualizare a modulului schimbă codul străzii, strada se alege din nou.\nCăutarea funcționează după codul numeric, după numele străzii sau după tipul străzii. Ordinea cuvintelor nu contează („Nicolae Balcescu” găsește „Balcescu Nicolae”), iar datele oficiului poștal nu au diacritice, deci căutarea fără diacritice este mai sigură.\nLista derulantă arată strada și, estompat, codul poștal, localitatea, sectorul și județul.\nSuportă sectoarele municipiului București (1–6): localitatea este sectorul, iar câmpul Sector reține numărul lui.\nPașii detaliați, cu capturi de ecran, sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+  },
+  {
+    "path": "l10n_ro_zip_osm/index.md",
+    "module": "l10n_ro_zip_osm",
+    "version": "19.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_zip_osm",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_zip_osm",
+    "last_ingest": "2026-11-03",
+    "friendly_name": "Romania - Postal Codes, Streets of Small Towns",
+    "summary": "Poșta Română are un singur cod poștal pentru orașele sub 50.000 de locuitori și nu publică străzile lor, așa că nomenclatorul de coduri poștale din `l10n_ro_zip` nu are pentru ele nicio stradă. Acest modul adaugă în nomenclator străzile acestor orașe, preluate din OpenStreetMap, fiecare cu codul poștal unic al orașului. Operatorul de parteneri poate astfel căuta strada pe fișa partenerului la fel ca într-un oraș mare, iar codul poștal se completează corect.",
+    "features": [
+      "15.968 de străzi pentru 269 de orașe mici (Pantelimon, Voluntari, Lugoj, Râmnicu Sărat, Tecuci, Câmpina, Bușteni, Huși și altele), toate cu codul poștal al orașului.",
+      "Numele străzilor provin din OpenStreetMap (licența ODbL), iar codurile poștale de la posta-romana.ro; atribuirea este în Credits. Numele sunt scrise fără diacritice, ca în restul nomenclatorului.",
+      "Se instalează automat împreună cu `l10n_ro_zip` pe o bază nouă; pe o bază unde `l10n_ro_zip` era deja instalat, se instalează manual din Aplicații.",
+      "La instalare, străzile se leagă de județ și, dacă `l10n_ro_city` e instalat, de localitate (și la o instalare ulterioară a acestuia). O stradă deja existentă nu se adaugă a doua oară.",
+      "Nu are meniuri, câmpuri sau setări proprii. Lista se vede în Contacte → Configurare → Localizare → Coduri poștale; pe partener, strada se caută în câmpul Cod poștal de sub localitate (se alege întâi localitatea).",
+      "Lista OpenStreetMap poate fi incompletă; rezerva este rândul orașului, fără stradă (același cod poștal). Orașele care lipsesc din `l10n_ro_city` (de ex. Breaza, Băile Govora) au străzile doar în nomenclator, fără localitate.",
+      "Fluxul pas-cu-pas, cu capturi, este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "l10n_ro_zip"
+    ],
+    "connections": [
+      "l10n_ro_zip",
+      "l10n_ro_city"
+    ],
+    "text": "Romania - Postal Codes, Streets of Small Towns\nl10n_ro_zip_osm\nPoșta Română are un singur cod poștal pentru orașele sub 50.000 de locuitori și nu publică străzile lor, așa că nomenclatorul de coduri poștale din `l10n_ro_zip` nu are pentru ele nicio stradă. Acest modul adaugă în nomenclator străzile acestor orașe, preluate din OpenStreetMap, fiecare cu codul poștal unic al orașului. Operatorul de parteneri poate astfel căuta strada pe fișa partenerului la fel ca într-un oraș mare, iar codul poștal se completează corect.\n15.968 de străzi pentru 269 de orașe mici (Pantelimon, Voluntari, Lugoj, Râmnicu Sărat, Tecuci, Câmpina, Bușteni, Huși și altele), toate cu codul poștal al orașului.\nNumele străzilor provin din OpenStreetMap (licența ODbL), iar codurile poștale de la posta-romana.ro; atribuirea este în Credits. Numele sunt scrise fără diacritice, ca în restul nomenclatorului.\nSe instalează automat împreună cu `l10n_ro_zip` pe o bază nouă; pe o bază unde `l10n_ro_zip` era deja instalat, se instalează manual din Aplicații.\nLa instalare, străzile se leagă de județ și, dacă `l10n_ro_city` e instalat, de localitate (și la o instalare ulterioară a acestuia). O stradă deja existentă nu se adaugă a doua oară.\nNu are meniuri, câmpuri sau setări proprii. Lista se vede în Contacte → Configurare → Localizare → Coduri poștale; pe partener, strada se caută în câmpul Cod poștal de sub localitate (se alege întâi localitatea).\nLista OpenStreetMap poate fi incompletă; rezerva este rândul orașului, fără stradă (același cod poștal). Orașele care lipsesc din `l10n_ro_city` (de ex. Breaza, Băile Govora) au străzile doar în nomenclator, fără localitate.\nFluxul pas-cu-pas, cu capturi, este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
   },
   {
     "path": "terrabit_ai_olg/index.md",

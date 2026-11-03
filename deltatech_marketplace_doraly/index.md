@@ -1,7 +1,7 @@
 # Conector Doraly (localizat la `deltatech_marketplace_doraly/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_doraly`
-- **Versiune:** `19.0.0.0.13`
+- **Versiune:** `19.0.0.0.14`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_doraly`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_doraly`
 - **Ultima Ingestie:** `2026-08-20`

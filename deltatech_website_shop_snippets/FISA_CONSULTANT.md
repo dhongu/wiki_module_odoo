@@ -98,7 +98,7 @@ pentru lichidări și un produs cu cod intern.
 ### Pasul 1 — Setările de pe website
 
 Deschideți **Pagină web → Configurare → Setări**. Înaintea secțiunii de afișare a prețurilor,
-modulul adaugă patru setări:
+modulul adaugă cinci setări:
 
 1. **Livrare estimată** (*Estimated Delivery*): *De la* / *Până la* — numărul de zile lucrătoare de
    la comandă până la prima și ultima zi de livrare; *Expediere în aceeași zi până la ora* — după
@@ -110,10 +110,13 @@ modulul adaugă patru setări:
 4. **Pedestal pentru poze** (*Picture Pedestal*): pentru pozele decupate pe fundal transparent,
    afișate pe o temă închisă; pe o temă deschisă pedestalul rămâne alb. Porniți-l doar după ce
    pozele sunt decupate (pozele cu fundal alb apar ca niște casete albe pe pedestal).
+5. **Comandă direct** (*Order Directly*): *Telefon* — numărul apelat de butonul *Telefonic* (gol:
+   telefonul companiei); *WhatsApp* — numărul de WhatsApp în format internațional, fără „+"
+   (ex. `40753046790`; gol: fără butonul WhatsApp).
 
 Apăsați **Salvează**.
 
-![Setările Pagină web: casetele Livrare estimată (De la 1, Până la 3, Expediere în aceeași zi până la ora 14, Pagina condițiilor de livrare /terms), Colecția Lichidări de stoc cu eticheta Lichidare, Colecția Reduceri goală și Pedestal pentru poze nebifat, numerotate 1–4](screenshots/01_setari_website.png)
+![Setările Pagină web: casetele Livrare estimată (De la 1, Până la 3, Expediere în aceeași zi până la ora 14, Pagina condițiilor de livrare /terms), Colecția Lichidări de stoc cu eticheta Lichidare, Colecția Reduceri goală și Pedestal pentru poze nebifat și Comandă direct cu Telefon 0753046790 și WhatsApp 40753046790, numerotate 1–5](screenshots/01_setari_website.png)
 
 ### Pasul 2 — Meniul de categorii (mega-meniu automat)
 
@@ -318,6 +321,7 @@ porniți **Activ**; se aplică pe toate website-urile:
 | **Product Code Chips** | sub titlu: codul intern și codul echivalent (copiate la clic), marca și recenziile |
 | **Estimated Delivery** | sub *Adaugă în coș*: intervalul de livrare, linkul la condiții și siglele metodelor de livrare |
 | **Product Benefits** | sub livrarea estimată: cinci avantaje cu iconiță, editabile pe site |
+| **Order Directly** | sub *Adaugă în coș* și favorite: butoanele *Telefonic*, *WhatsApp* și *Chat* |
 
 Pentru eticheta de recenzii, porniți și recenziile produselor: în editorul paginii de produs,
 opțiunea standard **Opinii** (*Reviews*).
@@ -344,7 +348,7 @@ Textul standard de sub butonul de coș (*Termeni și condiții*, *Livrare: 2-3 z
 captură) nu e legat de *Livrarea estimată*: editați-l sau opriți-l din editorul paginii de produs,
 ca să nu contrazică intervalul afișat de modul.
 
-![Pagina produsului Scaun de Birou: sub titlu pastila Cod FURN_7777 și eticheta cu cinci stele (1 recenzie) (1), caseta Livrare estimată marți, 3 nov. – joi, 5 nov. cu linkul la condiții (2) și lista de avantaje (3)](screenshots/16_pagina_produs.png)
+![Pagina produsului Scaun de Birou: sub titlu pastila Cod FURN_7777 și eticheta cu cinci stele (1 recenzie) (1), blocul Sau comandă direct, caseta Livrare estimată cu linkul la condiții (2) și lista de avantaje (3)](screenshots/16_pagina_produs.png)
 
 ### Pasul 17 — Eticheta de recenzii deschide recenziile
 
@@ -359,6 +363,27 @@ Pentru un produs fără nicio recenzie, în locul stelelor apare eticheta **Scri
 duce tot la secțiunea **Recenziile clienților**, unde se poate lăsa o recenzie.
 
 ![Pagina produsului Lampă de Birou: lângă pastila Cod FURN_8888, eticheta Scrie o recenzie cu o stea goală (1)](screenshots/18_produs_fara_recenzii.png)
+
+### Pasul 19 — Sau comandă direct
+
+Cu vizualizarea **Order Directly** pornită (pasul 15), sub butoanele *Adaugă în coș* și *Adaugă la
+lista de dorințe* apare blocul **SAU COMANDĂ DIRECT**, cu trei butoane egale, ușor de apăsat pe
+telefon:
+
+1. **Telefonic** — apelează numărul de la *Comandă direct → Telefon* (pasul 1).
+2. **WhatsApp** — deschide o conversație cu numărul setat, cu mesajul completat: *Bună ziua, aș dori
+   să comand <produs> (cod <cod intern>): <linkul paginii>*. Clientul doar apasă *Trimite*.
+3. **Chat** — deschide pe loc fereastra de chat a site-ului (aplicația **Chat live**), dacă un
+   operator e disponibil; altfel deschide pagina de contact, ca vizitatorul să poată lăsa un mesaj.
+
+Un buton fără număr setat nu apare; butonul *Chat* apare doar dacă site-ul are un canal de chat
+live (**Pagină web → Configurare → Setări**, *Chat live*). Blocul stă deasupra livrării estimate.
+
+Verificați: pe telefon, *Telefonic* propune apelul către numărul setat; mesajul WhatsApp conține
+numele și codul produsului deschis și linkul lui; cu un operator conectat, *Chat* deschide
+conversația fără să părăsească pagina.
+
+![Pagina produsului Scaun de Birou: sub Adaugă în coș și inimioara de favorite, blocul SAU COMANDĂ DIRECT cu butoanele Telefonic, WhatsApp și Chat (1), deasupra casetei Livrare estimată](screenshots/19_comanda_directa.png)
 
 ### Note de monografie și raportare
 
@@ -378,6 +403,7 @@ zilei vine din lista de prețuri. Modulul nu creează reguli de preț.
 | modul de mărci cu `product_brand_id` (opțional) | pastila *Brand* |
 | `deltatech_website_category_icon` (opțional) | iconițele categoriilor în meniu și în lista de subcategorii |
 | `deltatech_website_shop_header` (opțional) | antetul *Shop* afișează elementul de meniu de categorii ca buton |
+| `website_livechat` (opțional) | butonul *Chat* al blocului *Sau comandă direct* deschide chatul live al site-ului |
 
 **Ce e automat:** numărul de produse pe categorii, arborele meniului de categorii (construit o dată și
 păstrat în memorie per website și limbă, reconstruit la schimbarea unei categorii sau a publicării
@@ -406,6 +432,7 @@ textele avantajelor și prețurile de comparație.
 - [ ] Pagina de produs: *Cod* se copiază la clic; eticheta de recenzii deschide *Recenziile clienților*; un produs fără recenzii arată *Scrie o recenzie*.
 - [ ] *Livrare estimată*: intervalul sare peste weekend și se mută cu o zi după ora limită; nu apare pentru un produs stocabil fără stoc.
 - [ ] Textul standard *Termeni și condiții* de pe pagina de produs nu contrazice intervalul *Livrare estimată*.
+- [ ] *Sau comandă direct*: *Telefonic* are numărul din setări; mesajul WhatsApp conține numele, codul și linkul produsului deschis; *Chat* deschide chatul cu un operator conectat și pagina de contact fără operator.
 - [ ] Vizitator anonim (fereastră privată): pagina de produs și blocurile se deschid fără eroare.
 
 ## 9. Mesaje de eroare frecvente
@@ -415,6 +442,7 @@ textele avantajelor și prețurile de comparație.
 | Meniurile **Meniuri** sau **Vizualizări** nu apar | modul dezvoltator oprit | **Setări → Activați modul dezvoltator** |
 | *Livrare estimată* nu apare pe pagina de produs | vizualizarea *Estimated Delivery* inactivă, *Până la* = 0 sau produs stocabil fără stoc | porniți vizualizarea (pasul 15), completați intervalul (pasul 1) sau verificați stocul |
 | Eticheta de recenzii nu apare | opțiunea standard **Opinii** (*Reviews*) a paginii de produs e oprită | porniți **Opinii** din editorul paginii de produs |
+| Blocul *Sau comandă direct* nu apare sau îi lipsește un buton | vizualizarea *Order Directly* inactivă, *Telefon* și *WhatsApp* goale (iar compania fără telefon) sau site fără canal de chat live | porniți vizualizarea (pasul 15), completați numerele (pasul 1) sau alegeți canalul de chat live al site-ului |
 | Fila *Lichidări de stoc* lipsește din colecții | nicio etichetă la *Colecția Lichidări de stoc* | alegeți eticheta în setări (pasul 1) |
 | Blocul *Oferta zilei* nu apare pe site | niciun produs ales, nicio *Colecție Reduceri* și niciun produs cu preț de comparație peste prețul de vânzare | alegeți un produs în opțiunea *Produs*, setați *Colecția Reduceri* sau completați *Preț de comparație* |
 | Prețul tăiat și *-N%* nu apar pe cardul uniform sau în Oferta zilei | lista de prețuri a vizitatorului nu dă nicio reducere (prețul de comparație nu se afișează acolo) | puneți reducerea într-o regulă a listei de prețuri a website-ului |
@@ -447,19 +475,21 @@ blocurile modulului, o recenzie). Aceleași shot-uri, cu interfața în engleză
 | `16_pagina_produs.png` | 16 | pagina de produs: cipuri, livrare estimată, avantaje |
 | `17_recenzii_deschise.png` | 17 | secțiunea Recenziile clienților deschisă din etichetă |
 | `18_produs_fara_recenzii.png` | 18 | eticheta Scrie o recenzie |
+| `19_comanda_directa.png` | 19 | blocul Sau comandă direct pe pagina de produs |
 
 Regenerare (RO și EN):
 
 ```bash
-./odoo/odoo-bin -c odoo.conf -d <db> -i deltatech_website_shop_snippets,l10n_ro_doc_screenshots \
+./odoo/odoo-bin -c odoo.conf -d <db> -i deltatech_website_shop_snippets,l10n_ro_doc_screenshots,website_livechat \
     --test-tags=fise_screenshots --stop-after-init
 ```
 
-Datele de livrare din capturile 16 și 18 depind de ziua rulării.
+Datele de livrare din capturile 16 și 18 depind de ziua rulării. Butonul *Chat* din captura 19
+apare doar cu `website_livechat` instalat.
 
 ## 11. Observații pentru manual
 
-- Capitolul „Magazinul online" poate prelua pașii 4–14 ca „navigare în catalog" și pașii 15–18 ca
+- Capitolul „Magazinul online" poate prelua pașii 4–14 ca „navigare în catalog" și pașii 15–19 ca
   „pagina de produs"; setările (pasul 1) și meniul (pașii 2–3) merg la configurarea site-ului.
 - Subliniați că livrarea estimată nu exclude sărbătorile legale și că avantajele sunt texte
   editabile, de aliniat cu condițiile comerciale reale ale magazinului.

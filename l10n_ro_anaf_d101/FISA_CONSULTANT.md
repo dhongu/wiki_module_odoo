@@ -73,6 +73,15 @@ pentru perioada **Anual**, verificați valorile (venituri, cheltuieli, ajustări
 în grupul Configurare, ③ **Tip impozit D101** arată codul de obligație al declarației (implicit 103).
 Exportul D101 este disponibil doar pe perioada Anual și doar după postare.
 
+Postarea merge și când impozitul de plată este zero:
+
+- **impozit zero cu profit** (impozit acoperit de D100, de credit sau de pierderea reportată):
+  calculul se postează fără notă contabilă (mesaj în istoric), iar exportul merge normal, cu rd. 52 = 0;
+- **impozit de recuperat** (D100 peste impozitul anual): nota este storno în roșu Dr 691 = Cr 4411 cu
+  suma negativă, iar exportul are rd. 53 = diferența;
+- **pierdere fiscală**: calculul se postează, dar exportul automat nu este încă disponibil (rândurile
+  de rezultat ar fi negative); declarația se completează manual (art. 42 alin. (1) CF).
+
 ![Calcul impozit profit — perioada Anual, postat](screenshots/01_calcul_anual.png)
 
 ### Pasul 2 — Verificarea indicatorilor înainte de export
@@ -95,7 +104,7 @@ completate automat din calcul:
 | 20 / 21 | *Venituri neimpozabile* |
 | 23 | *Cheltuieli cu impozitul pe profit* (691, 692, 694, 697) |
 | 26 | *Cheltuieli de protocol nedeductibile* (peste limita de 2%) |
-| 27 | *Cheltuieli cu sponsorizarea* (6582); creditul fiscal merge la rd. 43 |
+| 27 | *Cheltuieli cu sponsorizarea* — conturile din setarea **Conturi de sponsorizare D101** din `l10n_ro_profit_tax` (implicit 6584; poate include un analitic 6582.xx folosit pentru mecenat); creditul fiscal merge la rd. 43 |
 | 28 | *Amortizare contabilă* (6811) |
 | 33 | *Cheltuieli nedeductibile* din regulile de ajustare |
 | 39 | *Pierdere de recuperat la începutul anului*: soldul la 1 ianuarie al pierderilor din anii anteriori, fără cele expirate |
@@ -220,13 +229,21 @@ Modulul **nu generează note contabile** — nota `Dr 691 = Cr 4411` aparține m
 
 Reguli de mapare:
 
-- Valorile vin din **rulajele anului, fără notele de închidere pe 121** (orice notă cu o linie pe
-  contul 121), deci închiderea lunară a conturilor de venituri și cheltuieli nu golește declarația.
+- Valorile vin din **rulajele anului, fără notele de închidere pe 121** (cele legate de închiderea
+  care le-a generat sau notele cu 121 și doar conturi de venituri și cheltuieli), deci închiderea
+  lunară a conturilor de venituri și cheltuieli nu golește declarația. Nota de preluare a soldurilor,
+  făcută într-o singură notă cu conturile de bilanț, rămâne în calcul.
+- Cu impozit de plată zero și profit (impozit acoperit de D100, de credit sau de pierderea
+  reportată), calculul se postează fără notă și D101 se exportă normal; cu impozit de recuperat
+  (rd. 53), nota este storno în roșu Dr 691 = Cr 4411 (−). Pe pierdere fiscală, exportul automat nu
+  este încă disponibil și declarația se completează manual (art. 42 alin. (1) CF).
 - **Nota 691 = 4411 a calculului postat** se adaugă la rd. 2 (cheltuieli) și la rd. 23 (cheltuieli
   cu impozitul pe profit). Astfel rd. 7 este egal cu rezultatul din balanță, iar profitul impozabil
   nu se schimbă (impozitul e cheltuială nedeductibilă).
 - **Rd. 41.1 = rd. 40 × 16%**, rotunjit la leu; calculul adună baza din aceleași rânduri rotunjite,
-  deci rd. 41.1, rd. 48 și rd. 52 au aceleași sume ca nota 691 = 4411.
+  deci rd. 41.1 și rd. 48 au aceeași sumă ca impozitul calculat. Nota anuală 691 = 4411 este
+  rd. 52 − rd. 53 (diferența față de impozitul declarat prin D100, rd. 50); fără D100 anterior,
+  nota este egală cu rd. 48.
 - Rd. 39.1 nu poate depăși rd. 39 (regula V1 a validatorului ANAF): dacă pierderea dedusă e mai mare
   decât soldul înregistrat, rd. 39 ia valoarea rd. 39.1; verificați atunci pierderile reportate.
 
@@ -271,10 +288,12 @@ unde diferă de cea contabilă (rd. 11, pe calcul); scenariul de pierdere; rd. 1
 - [ ] Deschis în Adobe Reader, formularul are antetul și rândurile 3, 35, 41.1 și 52 egale cu cele din XML.
 - [ ] Cu închidere lunară pe 121, rd. 1 și rd. 2 au rulajele anului, nu 0.
 - [ ] Rd. 4 și rd. 5 au sumele de pe conturile financiare (766, 665 etc.), iar rd. 7 este egal cu rezultatul din balanță.
-- [ ] Toate sumele sunt întregi, rotunjite 0,50 în sus; rd. 41.1 = rd. 40 × 16%, iar rd. 52 este egal cu nota 691 = 4411.
+- [ ] Toate sumele sunt întregi, rotunjite 0,50 în sus; rd. 41.1 = rd. 40 × 16%, iar nota anuală 691 = 4411 este rd. 52 − rd. 53.
 - [ ] Rd. 11 = rd. 28 = rulajul 6811, dacă amortizarea fiscală nu a fost modificată pe calcul.
 - [ ] Rd. 23 = rulajul 691 (+ 692, 694, 697), iar rd. 26 = protocolul peste limita de 2%.
-- [ ] Rd. 27 = rulajul 6582 (sponsorizarea), iar rd. 34 = rd. 23 + rd. 26 + rd. 27 + rd. 28 + rd. 33.
+- [ ] Rd. 27 = rulajul conturilor de sponsorizare din setări (implicit 6584), iar rd. 34 = rd. 23 + rd. 26 + rd. 27 + rd. 28 + rd. 33.
+- [ ] Cu impozit zero și profit, calculul se postează fără notă, iar exportul are rd. 52 = 0.
+- [ ] Cu impozit de recuperat, nota e storno în roșu Dr 691 = Cr 4411 (−): rd. 2 și rd. 23 scad cu suma stornată, rd. 50 = impozitul din D100, rd. 52 = 0 și rd. 53 = rd. 50 − rd. 48.
 - [ ] Rd. 15.1 e gol.
 - [ ] Rd. 39 este soldul pierderilor la 1 ianuarie, iar rd. 39.1 partea recuperată în an (rd. 39.1 ≤ rd. 39).
 

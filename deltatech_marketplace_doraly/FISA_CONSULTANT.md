@@ -2,8 +2,7 @@
 
 **Modul:** `deltatech_marketplace_doraly`
 **Utilizator principal:** Operator marketplace / administrator vânzări online
-**Prioritate:** 🟡 Medie (conector în uz activ, dar cu limitări cunoscute — vezi secțiunile 8 și 9;
-în versiunea curentă un backend Doraly nou **nu se poate salva**, vezi secțiunea 2)
+**Prioritate:** 🟡 Medie (conector în uz activ, dar cu limitări cunoscute — vezi secțiunile 8 și 9)
 
 ---
 
@@ -30,21 +29,10 @@ acest conector).
 > retryable pierdut la erori temporare de rețea etc.) — vezi secțiunea 8. Consultantul trebuie
 > să cunoască aceste limitări înainte de a promite clientului un flux „complet automat".
 
-> **Blocaj la configurare (versiunea curentă):** la salvarea unui backend cu platforma
-> **Doraly**, modulul cere un obiect de tipul `product`, care nu există în lista de obiecte a
-> framework-ului (tipul corect este `products`). Salvarea cade cu eroarea
-> „Wrong value for marketplace.backend.item.item_type: 'product'", deci un backend Doraly nou
-> nu poate fi creat, iar unul existent nu mai poate fi modificat, până la corectarea codului.
-> Capturile din această fișă sunt făcute pe un backend creat prin test, cu acest defect ocolit.
-
-> **Prețul liniilor (versiunea curentă):** prețul unitar al liniei se calculează din
-> `totalClient` (valoarea **cu TVA** din Doraly), iar Odoo aplică apoi TVA-ul produsului peste
-> el. Comanda din Odoo iese deci cu o valoare mai mare decât cea plătită de client în Doraly
-> (în exemplul din pasul 6: 308,19 lei în Odoo față de 257,85 lei în Doraly). Diferența de
-> 50,34 lei vine din TVA-ul Doraly de 41,60 lei, intrat în baza de impozitare (venitul pe 707
-> iese umflat), plus TVA-ul de 8,74 lei calculat de Odoo peste el. Linia de transport e corectă: ia suma
-> fără TVA (`totalNoTva`). Până la corectarea codului, prețurile produselor se corectează
-> manual înainte de facturare (pasul 7).
+> **Prețul liniilor:** Doraly trimite pentru fiecare linie valoarea plătită de client **cu TVA**
+> (`totalClient`). Conectorul o împarte la cantitate și o trimite ca preț cu TVA, iar Odoo scoate
+> din ea prețul fără TVA după taxa produsului. Totalul comenzii din Odoo este astfel egal cu cel
+> din Doraly. Linia de transport ia suma fără TVA (`totalNoTva`).
 
 ## 3. Utilizatori și roluri
 
@@ -99,9 +87,6 @@ Date minime pentru demo:
 7. Mapați cel puțin o categorie de produse Odoo pe o categorie Doraly (sau setați
    **Categorie implicită în marketplace** pe backend), altfel exportul de produse va da eroare de
    mapare lipsă.
-
-> Atenție: în versiunea curentă, pașii 2–4 se opresc la salvare cu eroarea descrisă în
-> secțiunea 2. Până la corectarea codului, backend-ul nu poate fi configurat din interfață.
 
 ## 6. Flux de utilizare
 
@@ -159,29 +144,26 @@ Importul de comenzi (`/orders`, GET) creează sau actualizează, pentru fiecare 
 clientul (identificat după telefon sau email), adresa de facturare (cu CIF, dacă există),
 adresa de livrare, comanda de vânzare cu numărul Doraly și faza mapată din statusul Doraly,
 linia de transport (pe transportatorul implicit al backend-ului, cu suma fără TVA din Doraly) și
-liniile de produs. Comanda se deschide din **Marketplace → Asocieri → Comenzi de vânzare** sau
+liniile de produs, cu prețul unitar fără TVA scos din valoarea cu TVA din Doraly. O linie cu
+cantitatea 0 (anulată în Doraly) intră pe comandă cu prețul 0 și nu oprește importul. Comanda se
+deschide din **Marketplace → Asocieri → Comenzi de vânzare** sau
 direct din **Vânzări**.
 
-![Comanda de vânzare DRL-2026-000154 confirmată, încă nefacturată: clientul Maria Ionescu din Cluj-Napoca (1), adresa de facturare (2) și de livrare (3), faza Confirmata preluată din Doraly (4); linia Transport cu descrierea Curier Doraly la 15,00 lei, termometrul cu infraroșu 2 buc. × 89,90 lei și cel de baie 1 buc. × 59,90 lei; total 308,19 lei cu TVA 21%](screenshots/06_comanda_importata.png)
+![Comanda de vânzare DRL-2026-000154 confirmată, încă nefacturată: clientul Maria Ionescu din Cluj-Napoca (1), adresa de facturare (2) și de livrare (3), faza Confirmata preluată din Doraly (4); linia Transport cu descrierea Curier Doraly la 15,00 lei, termometrul cu infraroșu 2 buc. × 74,30 lei și cel de baie 1 buc. × 49,50 lei, prețuri fără TVA; valoare fără taxe 213,10 lei, TVA 21% 44,75 lei, total 257,85 lei](screenshots/06_comanda_importata.png)
 
-Verificați totalul: prețurile de 89,90 și 59,90 lei sunt valorile **cu TVA** din Doraly, iar
-Odoo adaugă TVA 21% peste ele (vezi secțiunea 2). **Data comenzii** devine data confirmării în
+Verificați totalul: prețurile de 74,30 și 49,50 lei sunt fără TVA (89,90 și 59,90 lei cu TVA în
+Doraly), iar totalul comenzii, 257,85 lei, este egal cu cel din Doraly. **Data comenzii** devine data confirmării în
 Odoo, nu data plasării comenzii în Doraly.
 
-### Pasul 7 — Corectarea prețurilor și confirmarea facturii
+### Pasul 7 — Factura comenzii
 
-1. Pe comandă, în tabul **Linii comandă**, corectați **Preț unitar** al fiecărui produs la
-   valoarea **fără TVA** din Doraly (`clientTotalNoTVA` / cantitate). În exemplu: 74,30 lei în
-   loc de 89,90 lei la termometrul cu infraroșu și 49,50 lei în loc de 59,90 lei la cel de baie.
-   Linia de transport rămâne neschimbată.
-2. Apăsați **Creează factura**, păstrați **Factură normală** în fereastra care se deschide și
-   creați factura; verificați că totalul ei este egal cu totalul comenzii din Doraly
-   (257,85 lei). Prețul se poate modifica pe comanda confirmată doar dacă bifa **Liniile
-   înghețate după confirmare** din tabul **Comenzi și produse** al backend-ului e debifată.
-3. Apăsați **Confirmă** pe factură. La confirmare, conectorul programează trimiterea facturii
+1. Pe comandă, apăsați **Creează factura**, păstrați **Factură normală** în fereastra care se
+   deschide și creați factura; verificați că totalul ei este egal cu totalul comenzii din Doraly
+   (257,85 lei).
+2. Apăsați **Confirmă** pe factură. La confirmare, conectorul programează trimiterea facturii
    către Doraly.
 
-![Factura client în ciornă pentru comanda DRL-2026-000154, cu prețurile corectate: Transport 15,00 lei pe contul 704000, termometrele la 74,30 și 49,50 lei pe contul 707000; valoare fără taxe 213,10 lei, TVA 21% 44,75 lei, total 257,85 lei; butonul Confirmă (1)](screenshots/07_factura_de_confirmat.png)
+![Factura client în ciornă pentru comanda DRL-2026-000154, cu prețurile fără TVA din Doraly: Transport 15,00 lei pe contul 704000, termometrele la 74,30 și 49,50 lei pe contul 707000; valoare fără taxe 213,10 lei, TVA 21% 44,75 lei, total 257,85 lei; butonul Confirmă (1)](screenshots/07_factura_de_confirmat.png)
 
 ### Pasul 8 — Trimiterea facturii către Doraly
 
@@ -232,15 +214,17 @@ exportul de comenzi/stoc către Doraly (nu sunt implementate).
 ## 8. Verificări pentru consultant
 
 - [ ] Modulul se instalează fără erori, cu toate dependențele.
-- [ ] Backend-ul Doraly se salvează (în versiunea curentă **nu** se salvează — secțiunea 2) și
+- [ ] Backend-ul Doraly se salvează fără eroare, iar
       **Testează conexiunea** îl trece în **Confirmat**.
 - [ ] Transportatorul implicit (**Default Carrier**) este setat pe backend înainte de primul
       import de comenzi.
 - [ ] Importul de produse creează legăturile `marketplace.product` cu codul corect.
 - [ ] Importul de comenzi creează comanda, clientul și adresele de livrare/facturare corect.
 - [ ] Linia de transport apare pe comanda importată, cu suma fără TVA din payload-ul Doraly.
-- [ ] Prețurile produselor au fost corectate la valoarea fără TVA înainte de facturare, iar
-      totalul facturii este egal cu totalul comenzii din Doraly (secțiunea 2, pasul 7).
+- [ ] O linie anulată în Doraly (cantitate 0) apare pe comandă cu cantitatea și prețul 0, iar
+      restul comenzii se importă.
+- [ ] Prețurile produselor de pe comandă sunt fără TVA, iar totalul comenzii și al facturii este
+      egal cu totalul comenzii din Doraly (secțiunea 6, pașii 6 și 7).
 - [ ] Produsul transportatorului implicit are contul de venit potrivit (704 pentru transportul
       refacturat).
 - [ ] La confirmarea facturii, jobul de trimitere către Doraly ajunge în starea **Finalizat**
@@ -256,11 +240,11 @@ exportul de comenzi/stoc către Doraly (nu sunt implementate).
 
 | Mesaj / simptom | Cauză probabilă | Remediere |
 |-----------------|-----------------|-----------|
-| „Wrong value for marketplace.backend.item.item_type: 'product'" la salvarea backend-ului | Defect de cod: conectorul cere obiectul `product` în loc de `products` | Nu se poate ocoli din interfață; necesită corectarea codului |
 | Eroare de autentificare la **Testează conexiunea** | Email/parolă greșite sau adresă API incorectă | Verificați credențialele și câmpul **Locație** pe backend |
 | „Fără mapare pentru categoria Doraly" | Produsul exportat nu are o categorie mapată și backend-ul nu are categorie implicită | Mapați categoria produsului la o `marketplace.product.category` sau setați **Categorie implicită în marketplace** pe backend |
 | Comanda importată fără linie de transport | Backend-ul nu are **Default Carrier** setat: linia de transport se sare fără mesaj | Setați **Default Carrier** pe backend și reimportați comanda |
-| Totalul comenzii din Odoo mai mare decât cel din Doraly | Prețul liniei e luat cu TVA (`totalClient`), iar Odoo adaugă TVA-ul produsului peste el | Înainte de facturare, puneți pe fiecare linie de produs prețul fără TVA din Doraly (`clientTotalNoTVA` / cantitate), până la corectarea codului (ROADMAP P1.9) |
+| Totalul comenzii din Odoo diferă de cel din Doraly | Taxa produsului din Odoo are altă cotă decât TVA-ul aplicat de Doraly; prețul fără TVA se scoate după taxa produsului din Odoo | Corectați taxa produsului pentru comenzile următoare; pe comanda deja importată, corectați prețul unitar înainte de facturare |
+| Linie de produs cu cantitatea 0 și prețul 0 pe comanda importată | Linia a fost anulată în Doraly (cantitatea clientului e 0) | Nu e o eroare: linia are cantitatea 0, deci nu se livrează și nu se facturează |
 | Job blocat definitiv la erori HTTP 429/5xx | Eroarea temporară de rețea nu este reîncercată automat (limitare cunoscută, P0.3) | Reporniți manual jobul din butonul **Joburi** al backend-ului (**Repune jobul în coadă**), sau reîncercați importul |
 | Produsele importate nu au descriere/preț | Importul Doraly mapează doar cod și nume produs; celelalte câmpuri nu sunt sincronizate din API | Completați manual sau prin alt flux datele lipsă (preț, descriere) |
 | Toate categoriile importate ies identice („Termometre") | Defect cunoscut — importul de categorii ignoră răspunsul real al API-ului (P0.1) | Nu folosiți acest flux în producție până la corectarea în cod |
@@ -271,9 +255,7 @@ Capturile din `static/description/` sunt **generate automat** din `tests/test_sc
 (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**,
 pe planul de conturi RO (`setup_country("ro")`), pe compania de test „Demo Magazin Online SRL”.
 API-ul Doraly nu se apelează: răspunsurile lui sunt simulate în test, iar importurile rulează
-codul real al conectorului. Defectul de la salvarea backend-ului (secțiunea 2) e ocolit doar în
-seed-ul testului. Prețurile produselor se corectează în test între capturile 06 și 07, ca în
-pasul 7.
+codul real al conectorului.
 
 1. `01_backend_doraly.png` — backend-ul Doraly, tabul **Date de autentificare**, cu **Testează conexiunea**.
 2. `02_transportator_implicit.png` — tabul **Comenzi și produse**, câmpul **Default Carrier**.
@@ -281,7 +263,7 @@ pasul 7.
 4. `04_import_categorii.png` — lista categoriilor de marketplace importate.
 5. `05_import_produse.png` — lista produselor de marketplace legate la produsele Odoo.
 6. `06_comanda_importata.png` — comanda de vânzare importată din Doraly.
-7. `07_factura_de_confirmat.png` — factura comenzii în ciornă, cu prețurile corectate și butonul **Confirmă**.
+7. `07_factura_de_confirmat.png` — factura comenzii în ciornă, cu prețurile fără TVA și butonul **Confirmă**.
 8. `08_trimitere_factura.png` — jobul de trimitere a facturii către Doraly, în starea **Finalizat**.
 
 Regenerare:
@@ -299,8 +281,7 @@ Comanda generează capturile RO (`test_capture_fise`) și pe cele EN pentru `rea
 
 În manualul final, precizați clar că acest conector este **funcțional pentru fluxul de bază**
 (autentificare, import produse/comenzi, trimitere factură), dar are **limitări cunoscute și
-documentate** (backend-ul nu se poate salva în versiunea curentă, prețul liniilor luat cu TVA,
-import categorii simulat, brand fix la export, livrare nefuncțională, fără export de
+documentate** (import categorii simulat, brand fix la export, livrare nefuncțională, fără export de
 stoc/comenzi) — listate integral în `readme/ROADMAP.md` al modulului și în secțiunea 2 a
 acestei fișe. Redactorul manualului trebuie să evite formulări care promit un flux „complet
 automat" până la corectarea acestor puncte.

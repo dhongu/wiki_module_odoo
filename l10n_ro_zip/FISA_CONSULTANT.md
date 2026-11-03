@@ -12,7 +12,7 @@
 clădirii): Iașiul, Clujul sau Bucureștiul au sute de coduri. Operatorii îl completează de mână,
 din memorie sau de pe site-ul Poștei, și greșesc des, iar codul greșit ajunge pe factură, pe
 eticheta de curier și pe adresa trimisă în e-Factura. Modulul aduce în Odoo **nomenclatorul
-codurilor poștale din România** (circa 52.800 de rânduri: cod, localitate, județ, tip și nume de
+codurilor poștale din România** (circa 73.000 de rânduri: cod, localitate, județ, tip și nume de
 stradă, sector, oficiu poștal) și adaugă pe partener un câmp în care operatorul tastează strada și
 alege codul din listă; Odoo completează apoi codul poștal, localitatea și județul partenerului.
 
@@ -23,10 +23,10 @@ alege codul din listă; Odoo completează apoi codul poștal, localitatea și ju
   transmisă în e-Factura, iar curierii îl folosesc la rutare.
 - **Sursa datelor**: nomenclatorul public al codurilor poștale de pe
   [posta-romana.ro](https://www.posta-romana.ro), încărcat la instalare. Pentru orașele sub
-  50.000 de locuitori, Poșta are un singur cod pe oraș și nu publică străzile; pentru unele dintre
-  ele (de ex. Huși, Negrești, Murgeni, Tecuci, Târgu Bujor, Berești), denumirile străzilor vin din
-  [OpenStreetMap](https://www.openstreetmap.org/copyright) (licența ODbL, menționată în
-  `readme/CREDITS.md`) și primesc codul poștal unic al orașului.
+  50.000 de locuitori, Poșta are un singur cod pe oraș și nu publică străzile; pentru 269 dintre
+  ele (de ex. Pantelimon, Voluntari, Lugoj, Tecuci, Câmpina, Huși), denumirile străzilor vin din
+  [OpenStreetMap](https://www.openstreetmap.org/copyright) (licența ODbL), prin modulul
+  `l10n_ro_zip_osm`, instalat automat, și primesc codul poștal unic al orașului.
 - Actualizările nomenclatorului vin cu versiunile noi ale modulului: la actualizare, rândurile
   existente se corectează pe loc, iar partenerii rămân legați de rândul ales. Dacă Poșta a
   schimbat codul unei străzi, câmpul din nomenclator arată codul nou, dar codul din adresa
@@ -50,7 +50,7 @@ Modulul **nu generează note contabile** și nu atinge conturi. Datele implicate
 | Dată | Unde | Observație |
 |---|---|---|
 | Nomenclatorul de coduri poștale | **Coduri poștale** | cod, tip și nume stradă, localitate, județ, țară, sector, oficiu poștal și adresa oficiului |
-| Localitățile și județele | nomenclatorul de localități din `l10n_ro_city` | fiecare cod poștal e legat, unde se poate, de o localitate și un județ din listă |
+| Localitățile și județele | județele României (din Odoo) și localitățile din `l10n_ro_city`, dacă e instalat | fiecare cod poștal e legat de județul lui, după primele două cifre, și, unde se poate, de o localitate din listă |
 | Codul poștal ales pe partener | câmpul **Cod poștal** din nomenclator, sub localitate, în blocul de adresă | listă cu căutare, filtrată după localitatea partenerului |
 | Codul poștal tipărit | câmpul standard de cod poștal al adresei (text) | primește valoarea codului ales; el apare pe documente |
 
@@ -59,12 +59,15 @@ Date minime pentru demo: un partener firmă din România, cu județul și locali
 
 ## 5. Configurare inițială
 
-1. Instalați modulul: aduce automat `l10n_ro_city` (localitățile României) și
-   `base_address_extended` (localitatea ca listă pe partener).
+1. Instalați modulul: aduce automat `base_address_extended` (localitatea ca listă pe partener).
+   Localitățile României vin cu `l10n_ro_city`, instalat de localizarea română; fără el, codurile
+   poștale sunt legate doar de județ.
 2. Nomenclatorul se încarcă **la instalare**, fără pași manuali; durează câteva zeci de secunde.
    După instalare, codurile sunt legate automat de județe, localități și de sectoarele Bucureștiului.
 3. Verificați că țara **România** cere localitatea din listă (pe partener apare câmpul de localitate
    cu căutare, nu un câmp de text liber); `l10n_ro_city` face această setare la instalare.
+   Instalați `l10n_ro_city` înainte de acest modul: la instalare, codurile se leagă de localitățile
+   existente atunci.
 4. Nu există parametri de configurat.
 
 ## 6. Flux de utilizare
@@ -142,8 +145,9 @@ poștal din adresa partenerului (câmpul standard, ③ din pasul 4).
 
 | Modul | Rol în flux |
 |---|---|
-| `l10n_ro_city` | localitățile și județele României, de care se leagă fiecare cod poștal; localitatea din listă pe partener |
+| `l10n_ro_city` (opțional) | localitățile României, de care se leagă fiecare cod poștal; localitatea din listă pe partener |
 | `base_address_extended` | câmpul de localitate din listă pe partener, sub care modulul pune codul poștal din nomenclator |
+| `l10n_ro_zip_osm` (automat) | străzile din OpenStreetMap ale orașelor mici cu un singur cod poștal |
 | `l10n_ro_anaf_partner_lookup` (opțional) | la crearea firmei după CUI, codul poștal vine de la ANAF; nomenclatorul ajută la găsirea localității după acel cod, când numele dat de ANAF nu se potrivește cu lista, și, când ANAF nu trimite cod, dă codul străzii din nomenclator (dacă găsește un singur rând potrivit). Câmpul din nomenclator rămâne gol |
 | e-Factura / rapoartele de factură | preiau codul poștal din adresa partenerului |
 

@@ -1,10 +1,11 @@
 # Vendor Products Bepco (localizat la `deltatech_vendor_products_bepco/index.md`)
 
 - **Nume Tehnic:** `deltatech_vendor_products_bepco`
-- **Versiune:** `19.0.1.0.5`
+- **Versiune:** `19.0.1.0.6`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products_bepco
 - **Cale Locală:** `odoo-addons/bitshop_vendor/deltatech_vendor_products_bepco`
 - **Ultima Ingestie:** `2026-10-09`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

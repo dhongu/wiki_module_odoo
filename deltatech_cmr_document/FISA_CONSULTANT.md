@@ -108,9 +108,10 @@ Pentru comparație, al doilea CMR este al unei livrări către **Alfa Construct 
 
 **Inventar → Produse → Produse**, deschideți produsul, tabul **Inventar**, grupul **Logistică**.
 Completați **Masă** (greutatea unei unități, în kg), **Volum** (m³) și **Cod SH** (codul vamal HS).
-Modulul nu are câmpuri proprii pe produs: folosește câmpurile standard Odoo. Pe CMR, greutatea brută și
-volumul unei linii se calculează ca valoarea de pe produs înmulțită cu cantitatea livrată, iar codul SH
-se tipărește în căsuța 10.
+CMR-ul folosește doar aceste câmpuri standard Odoo. Modulul adaugă pe produs și câmpul **Net Weight**,
+pe care raportul nu îl citește; vizualizarea lui este inactivă implicit (vezi `readme/ROADMAP.md`). Pe
+CMR, greutatea brută și volumul unei linii se calculează ca valoarea de pe produs înmulțită cu
+cantitatea livrată, iar codul SH se tipărește în căsuța 10.
 
 ![Formularul produsului Robinet sferic 1/2, tabul Inventar, grupul Logistică: Masă 0,35 kg (1), Volum 0,01 m³ (2) și Cod SH 84818081 (3) evidențiate](screenshots/01_produs_greutate_cod_hs.png)
 
@@ -191,7 +192,11 @@ raportului).
      din alt loc;
    - căsuța 16 conține doar numele metodei de livrare, fără adresa și țara transportatorului;
    - căsuța 21 este data planificată a livrării, nu data validării; verificați-o când încărcarea se
-     face în altă zi;
+     face în altă zi. Data se tipărește în ora UTC, deci o livrare programată după miezul nopții (până
+     la 02:59 iarna, 03:59 vara, ora României) apare cu ziua precedentă;
+   - căsuțele 11 și 12 înmulțesc masa și volumul produsului cu cantitatea în **unitatea de măsură a
+     liniei**, fără conversie: dacă vindeți în altă unitate decât cea a produsului (ex. bax sau
+     duzină), corectați de mână greutatea și volumul;
    - numerele se tipăresc cu punct zecimal (70.00), indiferent de limbă;
    - greutatea brută nu include greutatea paletului (tara);
    - căsuțele 3 și 4 nu au data; căsuța 21 are doar data, fără loc;
@@ -259,6 +264,8 @@ Modulul nu ridică mesaje de eroare proprii. Situațiile frecvente sunt câmpuri
 |---|---|---|
 | Căsuțele 2 și 3 sunt goale | Livrarea nu provine dintr-o comandă de vânzare (transfer creat manual) | Livrați din comanda de vânzare sau completați căsuțele de mână |
 | Căsuța 11 sau 12 arată 0.00 | Produsul nu are **Masă** sau **Volum** | Completați-le pe produs (pasul 1) și retipăriți |
+| Căsuța 11 sau 12 are o valoare prea mare sau prea mică | Linia e într-o altă unitate de măsură decât produsul (ex. bax), iar cantitatea nu se convertește | Corectați de mână greutatea și volumul |
+| Căsuța 21 arată ziua dinaintea datei programate | Data se tipărește în ora UTC; livrarea e programată după miezul nopții, ora României | Corectați data de mână sau programați livrarea după ora 03:00 |
 | Căsuța 16 este goală | Livrarea nu are **Transportator** | Completați-l înainte de validare; după validare câmpul nu mai e editabil |
 | Căsuțele 6 și 8 sunt goale, căsuța 7 arată 0 | Marfa nu a fost pusă în pachete la livrare | Folosiți **Pune în Pachet** înainte de validare, dacă CMR-ul trebuie să arate paleții |
 | Etichetele CMR-ului sunt în altă limbă decât cea dorită | **Limba** partenerului de pe livrare (adresa de livrare) | Corectați limba adresei de livrare și retipăriți |
