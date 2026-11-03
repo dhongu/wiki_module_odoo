@@ -4,6 +4,12 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-03] Reingestie: deltatech_stock_consumption_report (marfa folosită intern)
+
+- **Acțiune:** actualizare [deltatech_stock_consumption_report](deltatech_stock_consumption_report/index.md) după dhongu/deltatech#3931: versiune `19.0.1.0.0 → 19.0.1.0.1`, funcționalitate nouă în pagină (marfa folosită intern trece prin gestiunea de materiale; marfa dată direct pe consum e anomalie), fișa consultant resincronizată cu 9 capturi (noi: `04_transfer_marfa`, `09_nota_anomalie`; celelalte renumerotate).
+- **Sursă:** `readme/FISA_CONSULTANT.md` și `static/description/` din `origin/19.0`; monografii verificate de Pacioli pe `98858aa`.
+- **Fișiere actualizate:** `deltatech_stock_consumption_report/` (index.md, FISA_CONSULTANT.md, screenshots/), `log.md`, `.index/chunks.json`.
+
 ## [2026-11-03] Ingestie: deltatech_stock_consumption_report
 
 - **Acțiune:** pagină nouă [deltatech_stock_consumption_report](deltatech_stock_consumption_report/index.md) (un subagent `documentarist-wiki`), modul nou unit în deltatech 19.0 (dhongu/deltatech#3929); fișa consultant copiată, cu 7 capturi.

@@ -1,7 +1,7 @@
 # Stock Consumption Report (Raport consumuri stoc)
 
 - **Nume Tehnic:** `deltatech_stock_consumption_report`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_consumption_report
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_consumption_report`
 - **Ultima Ingestie:** `2026-11-03`
@@ -19,6 +19,7 @@ Modulul oferă contabilului un raport lunar al bonurilor de consum (transferuril
 - **Valoare din contabilitate**: valoarea unui consum este creditul liniilor de produs din nota contabilă a bonului (stocul care iese din contul de stoc); dacă nu există notă contabilă, se folosește valoarea de stoc a mișcării.
 - **Pivot pe ecran** pe magazin, destinație și produs, cu cantitate și valoare; rândurile „Nedefinit” sunt bonuri fără destinație.
 - **Export XLSX** cu două foi: *centralizat* pe magazin și destinație (produse, cantitate, valoare) și *detaliat* pe magazin, destinație și produs, cu categorie, cost mediu, marcajul „se poate vinde” și cantitatea livrată clienților în ultimele 6 luni, ca să se observe marfa destinată vânzării ieșită pe consum.
+- **Marfa folosită intern** trece întâi, la cost, într-o locație de materiale a magazinului (Dr 3028 = Cr 371, prin contul de transfer stoc al companiei), apoi se dă în consum din materiale (Dr 6028 = Cr 3028); marfa dată direct din stocul de vânzare (Dr 607 = Cr 371) e o anomalie, găsită în elementele de jurnal pe 607 cu eticheta `/CNS/` (detalii și corecție în fișa consultant).
 - **Acces**: raportul este disponibil rolurilor Inventar / Administrator; destinațiile pot fi citite de orice utilizator de inventar (pentru alegerea pe bon) și modificate doar de administratori. Destinațiile sunt filtrate multi-company.
 - Fluxul pas-cu-pas, cu capturi, este în [Fișa consultant](FISA_CONSULTANT.md).
 
