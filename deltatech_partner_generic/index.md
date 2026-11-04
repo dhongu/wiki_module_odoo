@@ -1,10 +1,11 @@
 # Deltatech Generic Partner (localizat la `deltatech_partner_generic/index.md`)
 
 - **Nume Tehnic:** `deltatech_partner_generic`
-- **Versiune:** `19.0.2.0.2`
+- **Versiune:** `19.0.2.0.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_partner_generic
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_partner_generic`
 - **Ultima Ingestie:** `2026-08-31`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

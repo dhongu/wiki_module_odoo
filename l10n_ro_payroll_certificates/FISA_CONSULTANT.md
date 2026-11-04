@@ -34,7 +34,7 @@ Modulul **nu face înregistrări contabile**. Citește din fluturașii validați
 1. Instalați `l10n_ro_payroll_certificates` (necesită `l10n_ro_hr_payroll_enhancement`).
 2. Completați pe companie denumirea, adresa, CUI și numărul din Registrul Comerțului (apar în text).
 3. Validați fluturașii lunilor pe care vreți să le adeveriți; la *Venit* și *Asigurat* lunile fără fluturaș validat nu apar; la baza pentru concediul medical și la creșterea copilului apar cu celule goale (pașii 5 și 8), iar la șomaj se sar, ca și lunile cu BCIS zero (pasul 7).
-4. Pentru șomaj și creșterea copilului: completați pe angajat seria și numărul actului de identitate, adresa de domiciliu și sexul, iar pe contract numărul CIM și, la încetare, temeiul (câmpurile din `l10n_ro_reges`); codul CAEN vine din setările companiei.
+4. Pentru șomaj și creșterea copilului: completați pe angajat seria și numărul actului de identitate, adresa de domiciliu și sexul, iar pe contract numărul CIM și, la încetare, temeiul (câmpurile din `l10n_ro_reges`); codul CAEN vine de pe companie (formularul companiei sau **Setări → Contabilitate → Declarații ANAF**).
 
 ## 6. Flux de utilizare
 
@@ -108,7 +108,7 @@ Fără bifa *Model verificat*, **Emite** este refuzat cu eroarea „Confirmați 
 
 După ce ați comparat adeverința cu modelul AJOFM, bifați *Model verificat* și apăsați **Emite**: numărul și data adeverinței se completează în antetul formularului. Documentul tipărit, fără antetul firmei și cu tabel cu chenar, cuprinde:
 
-- secțiunea A: datele angajatorului (CUI, cod CAEN din setările companiei, adresă, contact);
+- secțiunea A: datele angajatorului (CUI, cod CAEN de pe companie, completat în **Setări → Contabilitate → Declarații ANAF**, adresă, contact);
 - secțiunea B.1: salariatul, cu CNP și actul de identitate, apoi tabelul și nota formularului;
 - secțiunea B.2: situația dinainte de 1.01.2018, de bifat de angajator;
 - secțiunea C: actul de încadrare (CIM, număr și dată), data angajării, data și temeiul încetării și perioadele de suspendare. Concediile medicale confirmate apar cu numărul de zile; în captură, 10–14.03.2026, 5 zile. Un certificat scurtat de unul nou (art. 33 alin. (3) din Normele OUG 158/2005, câmpul *Plătit până la* pe certificat) apare până la *Plătit până la*, iar unul rămas cu 0 zile (certificatul nou începe în aceeași zi) nu apare, ca zilele comune să nu fie numărate de două ori;
@@ -154,7 +154,7 @@ După emitere, câmpurile și tabelul sunt blocate (**Anulează** o scoate din u
 |---|---|
 | `l10n_ro_hr_payroll_enhancement` (19.0.2.6.3+) | Fluturașii, regulile salariale și certificatele medicale din care se citesc veniturile și concediile |
 | `l10n_ro_anaf_d112` (opțional) | La șomaj, BC și BCIS din D112-ul validat al lunii |
-| `l10n_ro_config` (opțional) | Codul CAEN al companiei, în secțiunea A din Anexa 7 |
+| `l10n_ro_anaf_base` (opțional) | Codul CAEN al companiei pentru declarațiile ANAF, în secțiunea A din Anexa 7 (fără modul, codul CAEN din `l10n_ro_config`, dacă e instalat); fără modul, cu codul gol sau `0000`, secțiunea A rămâne cu loc de completat |
 | `l10n_ro_reges` (opțional) | Actul de identitate, numărul CIM și temeiul încetării, din Anexa 7 și Anexa 2 |
 
 **Ce e automat:** textul din fișa angajatului, tabelul din fluturașii validați, numărul, PDF-ul arhivat. **Ce rămâne manual:** destinatarul, semnăturile, verificarea modelului cerut de destinatar, concediile medicale de la alt angajator (nu apar).

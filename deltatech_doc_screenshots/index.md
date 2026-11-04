@@ -1,7 +1,7 @@
 # Doc Screenshots
 
 - **Nume Tehnic:** `deltatech_doc_screenshots`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.2.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_doc_screenshots
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_doc_screenshots`
 - **Ultima Ingestie:** `2026-10-30`

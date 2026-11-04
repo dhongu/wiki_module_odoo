@@ -124,22 +124,24 @@ România"**.
 
 Documentul cerut de ANAF are în antet 22 de atribute obligatorii. O parte se deduc singure (luna,
 bifa de aprobare), o parte se iau din datele companiei (CUI, Registrul Comerțului, CAEN, județ),
-iar restul — cele de aici — nu se pot deduce din contabilitate:
+iar restul — cele de aici — nu se pot deduce din contabilitate. Codul CAEN nu mai e în acest bloc: se completează
+în blocul **Declarații ANAF** al acelorași setări sau pe formularul companiei.
 
 ![Configurarea antetului de depunere în setările de contabilitate](screenshots/01_configurare_antet.png)
 
 - **Formă de proprietate** ① — nomenclatorul ANAF (ex. „SC cu raspundere limitata").
 - **Administrator** și **Întocmitor** — numele așa cum apar pe situațiile depuse, plus calitatea
   întocmitorului (director economic, contabil șef, membru CECCAR etc.).
-- **Cod CAEN** — se completează doar dacă modulul OCA `l10n_ro_config` nu e instalat; când e
-  instalat, codul de pe partenerul companiei are prioritate.
+- **Cod CAEN** — se ia din codul CAEN al companiei pentru declarațiile ANAF, din blocul
+  **Declarații ANAF** al acelorași setări sau de pe formularul companiei.
 - **Entitate de interes public** și **bifele din antetul ANAF** — validatorul ANAF nu poartă
   semnificația acestor bife; se completează după formularul oficial. Excepție: **bifaMC** =
   mare contribuabil; când e bifată, județul de depunere (`codJJ`) devine 41 (DGAMC).
 - **Județul de depunere (`codJJ`)** nu se configurează: este județul sediului (`codTT`) sau 41
   pentru marii contribuabili.
 
-> **Șase câmpuri opresc exportul dacă lipsesc:** codul CAEN, numărul de la Registrul Comerțului,
+> **Șase câmpuri opresc exportul dacă lipsesc:** codul CAEN (completat în blocul **Declarații ANAF**,
+> nu în blocul acestui modul), numărul de la Registrul Comerțului,
 > forma de proprietate, numele administratorului, numele și calitatea întocmitorului. Mesajul de
 > eroare le enumeră exact. Restul (bifele, entitate de interes public, nr. CECCAR) nu
 > blochează, dar se completează după formularul oficial.
@@ -471,7 +473,7 @@ declarațiile de inactivitate, rapoartele administratorilor și fișierele XML a
 | `l10n_ro_anaf_base` | datele de identificare a companiei folosite în antet și validarea completitudinii lor |
 | `l10n_ro_account_return_pl_closing` | închiderea 6xx/7xx prin 121, pre-condiție a rezultatului |
 | `l10n_ro_financial_notes` | notele explicative 1–10, complementare formularelor; Nota 3 acoperă repartizarea profitului, document separat de raportul administratorilor |
-| `l10n_ro_config` (OCA, opțional) | codul CAEN de pe partener; dacă lipsește, se folosește câmpul de rezervă de pe companie |
+| `l10n_ro_anaf_base` | codul CAEN al companiei pentru declarațiile ANAF |
 
 **Ce e automat:**
 - valorile rândurilor F10, F20 și rândurile derivabile din F30;
@@ -499,6 +501,10 @@ ANAF) rămâne exportul XML.
 
 - [ ] Antetul de depunere e completat pe companie (formă de proprietate, administrator, întocmitor).
 - [ ] Adresa fiscală, CUI-ul și numărul de la Registrul Comerțului sunt complete.
+- [ ] Codul CAEN din antetul documentului (`caen`, `caenE`) este cel de pe companie (blocul **Declarații ANAF**).
+- [ ] După actualizare, codul CAEN de pe companie are valoarea așteptată: fostul cod de rezervă al modulului
+      (`Cod CAEN (rezervă)`) e preluat de migrare doar când compania nu avea cod pe partener; altfel rămâne codul
+      de pe partener.
 - [ ] Documentul de depunere e generat **înainte** de nota anuală de închidere prin 121 (sau aceasta nu cade în perioada raportată).
 - [ ] Pe Bilanț, data selectată e 31 decembrie a exercițiului raportat.
 - [ ] Total Activ = Total Pasiv pe raportul Bilanț.
@@ -536,7 +542,7 @@ ANAF) rămâne exportul XML.
 | „Antetul depunerii ANAF e incomplet pentru compania … Completați, în setările de contabilitate: …" | Lipsesc câmpuri obligatorii de antet | Completați câmpurile enumerate în mesaj (Pasul 1) |
 | „Bilanț dezechilibrat: Total Activ … ≠ Total Pasiv …" | Balanța de verificare nu se închide | Verificați balanța și închiderea prin 121 înainte de export |
 | „Situațiile financiare își contrazic propriile totaluri…" | Un total nu corespunde componentelor lui | Mesajul enumeră regulile încălcate, cu valoarea așteptată și cea găsită; verificați formulele raportului și balanța |
-| „Compania … nu are configurat un cod CAEN" | Lipsește codul CAEN | Completați-l pe partenerul companiei (`l10n_ro_config`) sau în câmpul de rezervă din setări |
+| „Antetul depunerii ANAF e incomplet…”, cu „cod CAEN” în listă | Codul CAEN al companiei e gol, `0000` sau fără exact 4 cifre (nu se mai citește de pe partener, iar codul de rezervă al modulului nu mai există) | Completați un cod CAEN real de 4 cifre în blocul **Declarații ANAF** din setări sau pe formularul companiei |
 | „Declarația de inactivitate nu poate fi generată pentru compania … Completați: …" | Lipsește nr. Registrului Comerțului sau administratorul | Completați câmpurile enumerate (antetul de la Pasul 1) |
 | „Compania … nu are configurat un județ/stat valid din România." | Adresa companiei fără județ | Completați județul pe compania (adresa fiscală) |
 | „ANAF respinge valorile mai lungi decât permite formularul: …" | Denumirea/adresa > 200 caractere, telefonul > 15, nr. ORC > 18, administratorul > 75 | Scurtați valoarea indicată |

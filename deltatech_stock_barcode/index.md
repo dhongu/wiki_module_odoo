@@ -1,10 +1,11 @@
 # Deltatech Stock Barcode (localizat la `deltatech_stock_barcode/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_barcode`
-- **Versiune:** `19.0.0.1.4`
+- **Versiune:** `19.0.0.1.6`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_stock_barcode
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_stock_barcode`
 - **Ultima Ingestie:** `2026-09-29`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

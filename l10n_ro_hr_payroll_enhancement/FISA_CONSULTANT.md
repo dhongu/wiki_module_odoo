@@ -305,6 +305,13 @@ Butonul **Tipărește** dă documentul simulării. Pe exemplul de control, norm�
 Documentul poartă mențiunea „Simulare informativă, nu fluturaș de salarii”. Fără angajat ales, simularea nu include reținerile de la
 Pasul 12 (de aceea impozitul diferă de cel din Pasul 12).
 
+**Net → brut** caută **cel mai mic brut întreg** al cărui net atinge suma cerută. Netul nu crește strict cu brutul: scade brusc
+imediat peste salariul minim, fiindcă suma neimpozabilă se acordă doar când salariul de bază e egal cu minimul, și peste venitul de
+salariul minim + 2.000 lei, unde se pierd deducerea de bază și cea pentru tineri (art. 77). Căutarea ține cont de aceste praguri,
+deci un net cu puțin sub cel al salariului minim dă ca brut chiar salariul minim (4.325 din iulie 2026), nu un brut cu câteva
+zeci sau sute de lei peste el. Cu o **Primă netă** în simulator, suma cerută include prima: brutul afișat conține brutul primei
+(Pasul 24), iar salariul de bază rămas poate fi sub suma cerută.
+
 ![Raportul simulatorului brut / net](screenshots/14_simulator_brut_net.png)
 
 ### Pasul 15 — Certificatul de concediu medical
@@ -354,7 +361,8 @@ Stagiul se poate realiza și la alt angajator (art. 8), de aceea modulul nu bloc
 când sursa nu se potrivește cu lunile cu venit de la acest angajator: *Fără drept la indemnizație* cu 6 luni cu venit în ultimele 12,
 sau *Din fluturașii validați* cu 1–5 luni la un cod care cere stagiu. Zilele unui certificat fără drept nu sunt stagiu (fără indemnizație nu sunt perioadă asimilată
 stagiului, art. 8 alin. 2 lit. a): nu intră în zilele bazei la certificatele următoare. În D112 certificatul fără drept **nu are secțiunea D** (validatorul ANAF
-respinge zilele de indemnizație cu baza de calcul 0); zilele lui apar ca zile de concediu medical, în afara zilelor cu contract activ.
+respinge zilele de indemnizație cu baza de calcul 0), nici când în aceeași lună salariatul are și un certificat plătit: secțiunea D apare
+doar pentru certificatul plătit. Zilele lui apar ca zile de concediu medical, în afara zilelor cu contract activ.
 
 Verificați: perioada nu se suprapune cu alt certificat al angajatului (sau, la o suprapunere din art. 33 alin. (3), certificatul
 anterior are *Plătit până la* completat), seria/numărul sunt cele din certificat, iar baza de calcul nu e goală
@@ -437,7 +445,9 @@ procent, **indemnizația FNUASS** și **din care diferența lunii precedente** �
 cererea de recuperare către Casa de Asigurări de Sănătate.
 
 Verificați înainte de depunere: sunt incluși doar fluturașii **validați** ai lunii; totalul zilelor și al sumelor coincide cu rândurile *Concediu medical (FNUASS)* din
-fluturași (464 + 1.500 = 1.964); fiecare certificat apare o singură dată.
+fluturași (464 + 1.500 = 1.964); fiecare certificat apare o singură dată. Un certificat **fără drept la indemnizație** nu apare în
+decontare, pentru că nu are sume din FNUASS. Îl găsiți în **Export centralizator**, care listează toate certificatele lunii, cu zilele și
+sumele 0, deși în D112 nu are secțiunea D: e de așteptat, nu e o eroare a exportului.
 
 ![Decontarea FNUASS exportată în Excel](screenshots/21_decontare_fnuass.png)
 
@@ -489,7 +499,7 @@ Pentru o primă dată **în brut** folosiți intrarea **Primă (în brut)**.
 Dacă suma exactă nu se poate atinge (rotunjirea la leu, treptele deducerii), fluturașul are o avertizare cu brutul găsit și netul obținut. Prima se **recalculează la fiecare calcul**:
 dacă salariul sau deducerile se schimbă, brutul primei se schimbă și el. Scoaterea intrării și un nou calcul readuc fluturașul la netul inițial.
 
-**Prag:** la salariul minim, o primă care trece venitul brut peste pragul sumei neimpozabile (4.600 lei din iulie 2026) face să se piardă suma neimpozabilă, iar netul scade brusc. Căutarea brutului ține cont de prag: dacă prima cerută încape sub prag, brutul rămâne sub prag; altfel se caută peste prag. Primele din profit (participarea la profit) nu trec prin acest mecanism: se înregistrează Dr 644 = Cr 424.
+**Praguri:** netul scade brusc în două locuri, iar căutarea brutului ține cont de amândouă: (1) la salariul minim, o primă care trece venitul brut peste pragul sumei neimpozabile (4.600 lei din iulie 2026) face să se piardă suma neimpozabilă; (2) o primă care trece venitul lunar (brut + tichete) peste salariul minim + 2.000 lei face să se piardă deducerea personală de bază și cea pentru tineri (art. 77), adică ~85–110 lei de net la un salariat cu persoane în întreținere sau sub 26 de ani. Dacă prima cerută încape sub prag, brutul rămâne sub prag; altfel se caută peste prag, tot cel mai mic brut care o atinge. Primele din profit (participarea la profit) nu trec prin acest mecanism: se înregistrează Dr 644 = Cr 424.
 
 **Verificați:** netul fluturașului cu prima minus netul fără ea este cel puțin suma cerută (de regulă egal, uneori cu un leu în plus); linia *Primă (în net, brut calculat)* e cea din brut;
 brutul total include prima; D112 preia brutul cu tot cu primă.
@@ -662,12 +672,17 @@ plata ajutoarelor și a transportului, care se fac în afara statului.
 - [ ] În D112 (cu puntea instalată), linia fiecărui angajat are aceleași tichete, sumă neimpozabilă, deduceri și bază impozabilă ca fluturașul.
 - [ ] Un fluturaș cu CNP lipsă sau copil fără CNP afișează avertizări; după corectare bannerul dispare (Barbu Mihai).
 - [ ] Simulatorul la 5.000 brut dă net 2.981 și cost angajator 5.113, fără să creeze fluturaș.
+- [ ] Simulatorul **Net → brut**, septembrie 2026, normă întreagă: simulați întâi brut → net la 4.325 și notați netul; cu netul acela
+      minus 30 lei, Net → brut dă brutul **4.325** (salariul minim, cu suma neimpozabilă), nu ~4.390.
+- [ ] Prima în net lângă praguri: la salariul minim, o primă mică rămâne sub pragul sumei neimpozabile (linia *Sumă neimpozabilă* rămâne);
+      un brut al primei cu un leu mai mic nu mai atinge suma cerută.
 - [ ] La 4 ore pe zi, 2.200 brut + 300 primă: net 1.549, diferențe CAS / CASS 406 / 163, cost total angajator 3.125 (cu puntea D112).
 - [ ] Reținerile deductibile reduc impozitul, nu și deducerea personală; plafonul de 400 EUR/an se respectă (Iliescu Radu: impozit 254, net 2.946).
 - [ ] Certificat CMB 0000101, 14–23.09.2026, cod 01, bază manuală 30.000/126: media 238,10; angajator 619; FNUASS 464.
 - [ ] Angajat nou, fără fluturași, cod 01, sursa *Din fluturașii validați*: Confirmă e refuzat cu mesajul despre baza lipsă; cu sursa
       *Fără drept la indemnizație* se confirmă, indemnizațiile sunt 0, fluturașul nu are linii de concediu medical cu sumă, iar D112 nu
-      are secțiunea D pentru el și trece de DUKIntegrator.
+      are secțiunea D pentru el și trece de DUKIntegrator; dacă în aceeași lună are și un certificat plătit (de exemplu cod 12), D112
+      are secțiunea D doar pentru cel plătit.
 - [ ] Același angajat, cod 06 (urgență), sursa *Din fluturașii validați*: baza = salariul din contract pe zilele lucrătoare ale lunii
       (5.000 / 22 = 227,27 lei/zi în septembrie 2026); sursa *Fără drept la indemnizație* este refuzată.
 - [ ] Angajat cu 2 luni de fluturași, cod 01, sursa *Din fluturașii validați*: certificatul arată avertizarea despre stagiu, dar se poate
@@ -722,6 +737,7 @@ plata ajutoarelor și a transportului, care se fac în afara statului.
 | Certificatul … e cuprins integral în certificatul confirmat … | Normele nu tratează acest caz | Medicul corectează unul dintre certificate |
 | Certificatul … se suprapune cu certificatul confirmat …, care are deja o continuare | Certificatul anterior are o continuare, deci scurtarea lui ar rupe episodul | Corectați manual certificatele (anulați continuarea sau ajustați datele) |
 | Decontarea FNUASS spune că nu există indemnizații | Nu există fluturași validați cu concedii medicale | Validați fluturașii lunii înainte de export |
+| Prima cerută în net de … nu poate fi atinsă pentru … | Nici cu brutul maxim căutat al primei (2,5 × suma cerută) netul fluturașului nu crește cu suma cerută | Verificați suma și celelalte intrări ale fluturașului; pentru o sumă exactă în brut folosiți intrarea *Primă (în brut)* |
 | Concediul de odihnă se plătește pe salariul curent | Lipsesc fluturașii validați pe lunile de referință | Validați fluturașii lunilor anterioare sau acceptați baza din contract |
 | Parametri lipsă la o dată | Lipsește valoarea parametrului pentru perioada respectivă | Adăugați o valoare nouă cu data de început corectă |
 | Plafonul anual al deducerilor este în EUR, dar compania nu are curs EUR | Pensii, asigurare de sănătate sau abonament sport fără curs EUR în sistem | Adăugați cursul EUR (Contabilitate → Configurare → Monede) și recalculați |

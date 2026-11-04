@@ -1,19 +1,19 @@
-# Fișă Modul: Protecție resetare facturi furnizor și DVI (consum FIFO)
+# Fișă Modul: Protecție resetare facturi furnizor și DVI (stoc consumat)
 
 **Poziție plan:** C12
 **Modul:** `l10n_ro_invoice_dvi_protect`
 **FR:** FR-15
 **Capitol manual:** Cap 12.9
 **Utilizator principal:** Contabil importuri, Responsabil stocuri
-**Prioritate:** 🔴 Ridicată (protejează integritatea costurilor FIFO)
+**Prioritate:** 🔴 Ridicată (protejează integritatea costurilor de stoc)
 
 ---
 
 ## 1. Scop business
 
-Modulul protejează integritatea valorizării stocurilor evaluate FIFO: blochează **resetarea la
+Modulul protejează integritatea valorizării stocurilor (FIFO, AVCO sau preț standard): blochează **resetarea la
 ciornă** a facturilor furnizor și **anularea costurilor de aterizare (DVI)** atunci când stocul
-recepționat a fost deja parțial consumat. Fără acest blocaj, costul FIFO aplicat ieșirilor
+recepționat a fost deja parțial consumat. Fără acest blocaj, costul aplicat ieșirilor
 (livrări, consum în producție) ar rămâne „orfan" față de documentul de intrare modificat,
 generând inconsistențe contabile greu de remediat.
 
@@ -56,7 +56,7 @@ din fluxul standard de import pe planul RO:
 
 Date minime pentru demo:
 - companie românească cu planul de conturi RO instalat;
-- produs stocabil cu **metoda de cost FIFO** pe categoria de produs;
+- produs stocabil, cu orice metodă de cost pe categoria de produs (exemplul folosește **FIFO**);
 - furnizor (ideal non-UE) și o comandă de achiziție cu recepție validată;
 - factură furnizor postată legată de comanda de achiziție;
 - cost de aterizare validat pe recepție, cu factura furnizor asociată;
@@ -65,7 +65,8 @@ Date minime pentru demo:
 ## 5. Configurare inițială
 
 1. Instalați `l10n_ro_invoice_dvi_protect` (dependențe: `purchase_stock`, `stock_landed_costs`).
-2. Setați metoda de cost **FIFO** pe categoria produselor importate
+2. Setați metoda de cost pe categoria produselor importate (în exemplu **FIFO**; blocajul funcționează
+   la fel pentru AVCO și preț standard)
    (**Inventar → Configurare → Categorii de produse**).
 3. Pe produsul de cost folosit pentru DVI (taxă vamală, transport), bifați
    **Este cost de aterizare** în fila Achiziții.
@@ -87,21 +88,26 @@ creează mișcarea de intrare valorizată: inițial `remaining_qty = quantity` (
 
 ![Recepția validată a mărfii importate](screenshots/02_receptie.png)
 
-### Pasul 2 — Înregistrarea DVI ca cost de aterizare
-
-Accesați **Inventar → Operațiuni → Costuri de aterizare** și creați un document nou: selectați
-recepția la **Transferuri**, factura de taxe la **Factura furnizor**, adăugați liniile de cost
-(taxă vamală, transport, comision vamal) și metoda de repartizare, apoi **Validați**. Valoarea
-costurilor intră în costul FIFO al stocului recepționat.
-
-![Costul de aterizare (DVI) validat pe recepție](screenshots/03_landed_cost.png)
-
-### Pasul 3 — Postarea facturii furnizor
+### Pasul 2 — Postarea facturii furnizor
 
 Accesați **Contabilitate → Furnizori → Facturi**, creați factura din comanda de achiziție
 (liniile au legătură cu comanda) și **Confirmați**-o.
 
 ![Factura furnizor de import postată](screenshots/04_factura_furnizor.png)
+
+### Pasul 3 — Înregistrarea DVI ca cost de aterizare
+
+Accesați **Inventar → Operațiuni → Ajustări → Costuri adiționale** (în interfața în română,
+costurile de aterizare se numesc **Costuri adiționale**) și creați un document nou: selectați
+recepția la **Transferuri**, factura mărfii (cea creată din comanda de achiziție) la **Factura
+furnizor**, adăugați liniile de cost (taxă vamală, transport, comision vamal) și metoda de
+repartizare, apoi **Validați**. Valoarea costurilor intră în costul stocului recepționat.
+
+Protecția costului adițional verifică liniile din comanda de achiziție ale facturii legate: dacă la
+**Factura furnizor** legați o factură de taxe sau de transport fără linii din comanda mărfii,
+anularea costului adițional nu mai este blocată.
+
+![Costul de aterizare (DVI) validat pe recepție](screenshots/03_landed_cost.png)
 
 ### Pasul 4 — Consumul parțial al stocului
 
@@ -115,7 +121,8 @@ din **Inventar → Operațiuni → Livrări**. După validare, pe mișcarea de i
 
 Pe factura furnizor postată, apăsați **Resetare la ciornă**. Modulul verifică mișcările de
 intrare aferente comenzii de achiziție și, găsind consum parțial, blochează acțiunea cu un mesaj
-care precizează produsul, cantitatea consumată și cantitatea totală.
+care precizează produsul, cantitatea consumată și cantitatea totală. Aceeași verificare se face și
+la **Resetare la ciornă** pe o **notă de credit (storno) de furnizor** legată de comandă.
 
 ![Mesajul de blocare la resetarea facturii](screenshots/06_blocare_factura.png)
 
@@ -138,11 +145,23 @@ aceeași recepție pentru corecții vamale.
 Modulul nu generează note contabile proprii; notele de mai jos aparțin fluxului standard pe care
 îl protejează:
 
-- recepție marfă (la cost de achiziție): **Dr 371 = Cr 408**;
-- cost de aterizare (DVI) repartizat în stoc: **Dr 371 = Cr cont intermediar al produsului de
-  cost** (contul setat pe produsul „taxă vamală"/„transport");
-- factura de taxe vamale: **Dr cont intermediar + Dr 4426 = Cr 446/401**;
-- la consum/livrare, costul FIFO (inclusiv DVI) trece pe ieșire: **Dr 607 = Cr 371**.
+- recepție marfă (la cost de achiziție), înainte de factura furnizorului: **Dr 371/301 = Cr 408**
+  (după natura stocului: mărfuri sau materii prime), iar la primirea facturii **Dr 408 = Cr 401**;
+  dacă factura e deja primită, direct **Dr 371/301 = Cr 401**;
+- cost de aterizare (DVI) repartizat în stoc: **Dr 371/301 = Cr cont intermediar** (cont tehnic de
+  bilanț setat pe produsul „taxă vamală"/„transport", nu un cont de cheltuieli); taxa vamală intră în
+  costul de achiziție (OMFP 1802/2014, pct. 6);
+- taxa vamală din DVI: **Dr cont intermediar = Cr 446** (datorie la bugetul vamal), iar la plată
+  **Dr 446 = Cr 5121**;
+- TVA-ul de import din DVI: **Dr 4426 = Cr 446** la plata în vamă (Codul fiscal art. 326 alin. (3)),
+  sau **Dr 4426 = Cr 4427** cu certificat de amânare a plății TVA în vamă ori la vămuire centralizată
+  (art. 326 alin. (4));
+- factura de transport sau de comision vamal legată direct de import, cuprinsă în baza TVA a
+  importului: **Dr cont intermediar = Cr 401**, fără TVA (scutită, Codul fiscal art. 294 alin. (1)
+  lit. d); TVA-ul ei se plătește prin DVI); un serviciu necuprins în baza de import se înregistrează
+  **Dr cont intermediar + Dr 4426 = Cr 401**;
+- la livrarea mărfii, costul ei (inclusiv DVI) trece pe ieșire: **Dr 607 = Cr 371**; la consumul
+  materiilor prime în producție, **Dr 601 = Cr 301**.
 
 Blocajul garantează că aceste note istorice nu mai pot fi alterate retroactiv prin resetarea
 documentelor sursă. TVA-ul deductibil la import intră în D300 prin tag-urile taxelor — neafectat
@@ -170,7 +189,7 @@ contabilă privind includerea transportului/comisionului în cost.
 - [ ] Anularea costului de aterizare cu factură asociată este blocată în aceeași situație.
 - [ ] O factură fără consum (recepție intactă) poate fi resetată normal.
 - [ ] Un cost de aterizare **fără** factură furnizor asociată poate fi anulat normal.
-- [ ] Produsele AVCO/preț standard nu declanșează blocajul.
+- [ ] Blocajul apare și pe o notă de credit de furnizor legată de o recepție consumată.
 - [ ] Procedura de corecție (document nou, nu anulare) este clară pentru contabil.
 
 ## 9. Mesaje de eroare frecvente
@@ -179,9 +198,10 @@ contabilă privind includerea transportului/comisionului în cost.
 |-----------------|-----------------|-----------|
 | „Nu se poate reseta la ciornă această factură! Stocul recepționat a fost deja parțial consumat (cantitate consumată: … din … pentru …)." | Stocul din recepția aferentă facturii a fost consumat în lanțul FIFO | Nu resetați; emiteți factură de stornare pentru corecții |
 | Același mesaj la anularea costului de aterizare | Factura furnizor asociată DVI are stoc consumat | Creați un cost de aterizare suplimentar de corecție pe aceeași recepție |
-| Blocajul nu apare deși stocul e consumat | Produsul are metoda AVCO/preț standard, nu FIFO | Comportament corect — blocajul vizează doar FIFO |
+| Blocajul nu apare deși stocul e consumat | Liniile facturii nu sunt legate de comanda de achiziție (factură creată manual) sau produsul nu e stocabil | Creați factura din comanda de achiziție; verificați tipul produsului |
+| Același mesaj la resetarea unei note de credit de furnizor | Nota de credit e legată de o comandă a cărei recepție a fost consumată | Nu resetați; emiteți un document nou de corecție |
 | Blocajul apare pe o factură mixtă (produse + servicii) | Liniile de produs din comanda de achiziție au stoc consumat | Separați documentele: factura de servicii nu e supusă blocajului |
-| Costul de aterizare se anulează deși factura are consum | Câmpul Factura furnizor nu era completat pe costul de aterizare | Asociați întotdeauna factura pe costul de aterizare pentru protecție |
+| Costul de aterizare se anulează deși factura are consum | Câmpul Factura furnizor nu era completat pe costul de aterizare sau era legată o factură fără linii din comanda mărfii | Legați pe costul de aterizare factura mărfii, creată din comanda de achiziție |
 
 ## 10. Capturi de ecran
 
@@ -208,4 +228,6 @@ Regenerare:
 
 În manualul final, păstrați explicația orientată pe activitatea utilizatorului: de ce nu se
 resetează factura după consum, care este procedura corectă de corecție (document nou) și cum se
-recunoaște mesajul de blocare. Subliniați diferența FIFO vs AVCO — blocajul este specific FIFO.
+recunoaște mesajul de blocare. Blocajul nu depinde de metoda de cost: în Odoo 19 cantitatea rămasă
+pe recepție (`remaining_qty`) se urmărește pentru FIFO, AVCO și preț standard, iar orice consum
+parțial blochează resetarea.

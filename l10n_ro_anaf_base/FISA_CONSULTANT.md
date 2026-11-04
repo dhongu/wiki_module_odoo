@@ -39,10 +39,10 @@ Declarațiile fiscale se pregătesc în formatele publicate de ANAF. Modulul nu 
 
 | Câmp | Valoare așteptată |
 |---|---|
-| Cod CAEN (în Setări poate apărea în engleză, „CAEN Code”) | codul de 4 cifre al activității principale; este cerut la export de D300, D394, D112, D120 și D101; la aceste declarații un cod gol sau `0000` blochează exportul |
+| Cod CAEN | codul de 4 cifre al activității principale; este cerut la export de D300, D394, D112, D120, D101 și D392; la aceste declarații un cod gol, `0000` sau care nu are exact 4 cifre blochează exportul; se completează și pe formularul companiei, iar căutarea partenerului în registrul ANAF nu îl schimbă |
 | Contact declarații | persoana responsabilă de declarații; dacă rămâne necompletat, exportul folosește utilizatorul curent drept declarant, iar numele, funcția (implicit „accountant”, dacă lipsește), e-mailul și telefonul acestuia ajung în declarație |
 | Identificator declarație | CUI sau CNP al declarantului, folosit în exporturi; are prioritate; dacă rămâne necompletat, se folosește CNP-ul contactului de declarații, iar în lipsa lui CUI-ul contactului |
-| Tip export | `Descărcare directă XDP` sau `Arhivă ZIP cu XDP și PDF` (valoarea implicită); în interfața în engleză apar ca `Direct XDP download` și `ZIP archive with XDP and PDF` |
+| Tip export | `Descărcare directă XDP`, `Arhivă ZIP cu XDP și PDF` sau `PDF cu datele incluse` (valoarea implicită); în interfața în engleză apar ca `Direct XDP download`, `ZIP archive with XDP and PDF` și `PDF with the data included` |
 
 4. Bifați, după nevoie, declarațiile de instalat din același bloc: D300, D390, D394, D398.
 5. Verificați că modulele de declarații folosesc aceeași companie și aceeași localizare RO.
@@ -57,6 +57,15 @@ Meniuri:
 - `Contabilitate → Configurare → Setări → Declarații ANAF România`.
 
 1. Deschideți setările și verificați datele declarantului (CAEN, contact, identificator, tip export).
+
+   ![Blocul Declarații ANAF România din setările contabile: Cod CAEN 6201, Contact declarații Popescu Ana, Identificator declarație 14399840 și Tip export cu opțiunea PDF cu datele incluse aleasă, sub care apare avertismentul că serverul de capturi nu are biblioteca pypdf; dedesubt, bifele de instalare D300, D390, D394 și D398](screenshots/01_setari_declaratii_anaf.png)
+
+   Codul CAEN se poate completa și pe formularul companiei: `Setări → Utilizatori & Companii → Companii → [compania]`, câmpul
+   **Cod CAEN**, imediat după **ID Companie** (numărul de la Registrul Comerțului). Este același câmp,
+   al companiei, nu al partenerului ei: căutarea partenerului în registrul ANAF actualizează codul CAEN
+   de pe partener, dar nu și pe cel declarat.
+
+   ![Formularul companiei, fila Informații generale: câmpul Cod CAEN cu valoarea 6201, sub ID Companie J33/1234/2010 și deasupra monedei RON](screenshots/02_companie_cod_caen.png)
 2. Instalați modulul declarației necesare, de exemplu `l10n_ro_anaf_d300`, bifând-o în același bloc.
 3. Deschideți meniul `Declarații ANAF` și generați declarația din modulul specific.
 4. Verificați că exportul preia datele comune din baza ANAF și că are formatul ales la `Tip export`.
@@ -92,6 +101,11 @@ Ce rămâne manual: verificarea datelor companiei și a declarantului, precum ș
 - [ ] Modulul se instalează fără erori.
 - [ ] Meniurile ANAF sunt vizibile.
 - [ ] Datele companiei sunt completate și corecte.
+- [ ] După actualizarea la 19.0.1.4.0, **Cod CAEN** de pe companie este completat: migrarea preia codul de pe
+      partenerul companiei, ignorând `0000`; dacă acolo nu e un cod, preia codul de rezervă al situațiilor financiare.
+      Câmpul rămâne gol doar când ambele lipsesc, iar atunci se completează manual.
+- [ ] La o firmă trecută pe CAEN Rev.3, codul de pe companie este cel acceptat de schema declarației (de exemplu
+      în D112), chiar dacă registrul ANAF întoarce codul nou pe partener.
 - [ ] Un modul de declarație dependent poate genera export folosind baza ANAF.
 - [ ] Fără `pypdf` 5.0 sau mai nou pe server, cu *PDF cu datele incluse* ales, setările afișează avertismentul despre arhiva ZIP.
 - [ ] Cu **Tip export** = *PDF cu datele incluse*, butonul de export XDP descarcă un `.pdf` completat; fără `pypdf` 5.0 sau mai nou pe server, descarcă arhiva ZIP.
@@ -101,17 +115,32 @@ Ce rămâne manual: verificarea datelor companiei și a declarantului, precum ș
 | Simptom | Cauză probabilă | Remediere |
 |---------|-----------------|-----------|
 | Lipsesc date declarant | Compania nu are CUI/adresă completă | Completați datele companiei |
-| Eroare la export: compania nu are un cod CAEN valid | Codul CAEN este gol sau `0000` (la D300, D394, D112, D120, D101) | Completați `Cod CAEN` în Setări |
+| „Compania „…” nu are configurat un cod CAEN valid. Completați-l pe companie…” | Codul CAEN al companiei este gol, `0000` sau nu are 4 cifre (la D300, D394, D112, D120, D101, D392) | Completați `Cod CAEN` în Setări sau pe formularul companiei (`Setări → Utilizatori & Companii → Companii`); codul nu se mai citește de pe partenerul companiei |
 | Eroare la export: compania nu are identificator de declarație (apare doar la declarațiile care îl cer, în prezent D112) | Nici `Identificator declarație`, nici CUI/CNP-ul contactului nu sunt completate | Completați identificatorul sau CUI/CNP-ul contactului de declarații |
-| Eroare la export: Compania nu are configurat un județ/stat valid din România (apare la declarațiile care îl cer, de exemplu D300 și D101) | Adresa companiei nu are județ sau județul nu este unul românesc recunoscut | Completați județul în fișa partenerului companiei |
+| Eroare la export: Compania nu are configurat un județ/stat valid din România (apare la declarațiile care îl cer, de exemplu D300 și D101) | Adresa companiei nu are județ sau județul nu este unul românesc recunoscut | Completați județul în adresa companiei (formularul companiei sau fișa partenerului ei; adresa e comună) |
 | Modulul declarației nu apare | Declarația individuală nu este instalată | Instalați modulul `l10n_ro_anaf_dxxx` necesar |
 | Cu *PDF cu datele incluse* se descarcă ZIP; setările arată avertisment despre biblioteca `pypdf` | Serverul nu are `pypdf` 5.0 sau mai nou | Instalați `pypdf` ≥ 5.0 pe server |
 | „Formularul PDF ANAF nu conține pachete XFA." / „… pachetul XFA datasets." | Formularul PDF din modulul declarației nu e un formular ANAF valid | Actualizați modulul declarației; temporar alegeți *Arhivă ZIP cu XDP și PDF* |
 | „Fișierul XDP generat nu conține pachetul XFA datasets." | Macheta XDP a declarației nu are pachetul de date | Actualizați modulul declarației; temporar alegeți *Descărcare directă XDP* |
 
-## 10. Capturi recomandate
+## 10. Capturi de ecran
 
-- [ ] Meniul `Declarații ANAF`
-- [ ] Blocul `Declarații ANAF România` din Setări
-- [ ] Setări comune folosite de declarații
-- [ ] Exemplu de declarație care preia datele declarantului
+Capturile (`static/description/`) sunt **generate automat** din `tests/test_screenshots.py`
+(mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în **limba română**:
+
+1. `01_setari_declaratii_anaf.png` — blocul **Declarații ANAF România** din setările contabile.
+2. `02_companie_cod_caen.png` — codul CAEN pe formularul companiei.
+
+Regenerare:
+
+```bash
+./odoo/odoo-bin -c odoo.conf -d <db> -i l10n_ro_anaf_base,l10n_ro_doc_screenshots \
+    --test-tags=fise_screenshots --stop-after-init
+```
+
+## 11. Observații pentru manual
+
+Subliniați că datele comune ale declarațiilor (cod CAEN, contact, identificator, tip export) se
+completează o singură dată, pe companie, și sunt folosite de toate declarațiile ANAF. Codul CAEN declarat
+este al companiei, separat de codul CAEN din registrul ANAF afișat pe partener: la firmele trecute pe
+CAEN Rev.3, consultantul verifică ce cod acceptă schema fiecărei declarații.

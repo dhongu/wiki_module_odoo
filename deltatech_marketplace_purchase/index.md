@@ -1,7 +1,7 @@
 # Marketplace Purchase Order addon (localizat la `deltatech_marketplace_purchase/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_purchase`
-- **Versiune:** `19.0.1.0.8`
+- **Versiune:** `19.0.1.0.9`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_purchase
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_purchase`
 - **Ultima Ingestie:** `2026-08-20`

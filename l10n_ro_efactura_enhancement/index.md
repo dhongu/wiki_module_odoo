@@ -1,10 +1,10 @@
-# eFactura Enhancement (localizat la `l10n_ro_efactura_enhancement/index.md`)
+# e-Factura Enhancements (localizat la `l10n_ro_efactura_enhancement/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_efactura_enhancement`
-- **Versiune:** `19.0.0.5.11`
+- **Versiune:** `19.0.0.5.12`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_efactura_enhancement
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_efactura_enhancement`
-- **Ultima Ingestie:** `2026-09-29`
+- **Ultima Ingestie:** `2026-11-04`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -17,9 +17,10 @@ Modulul `l10n_ro_efactura_enhancement` extinde funcționalitatea standard de e-F
 - **Validare îmbunătățită a adresei**: verifică automat că partenerii români au definite țara, județul, orașul și strada înainte de postarea facturii.
 - **Sugestie format EDI**: sugerează automat formatul `ciusro` pentru partenerii români.
 - **Operațiuni automate pentru e-Factură**:
-    - Sarcină cron pentru **trimiterea automată** a facturilor postate în SPV.
-    - Sarcină cron pentru **preluarea statusului** din SPV pentru facturile trimise.
+    - Sarcină cron pentru **trimiterea automată** a facturilor postate în SPV. Limita de 3 reîncercări are efect: eșecurile se numără pe factură (câmpul „Trimiteri SPV eșuate (cron)"), iar după 3 eșecuri factura apare la „Sărite — reîncercări epuizate" în raport. Facturile netrimise încă au prioritate în lot, iar readucerea facturii în ciornă resetează contorul. Cronul se reia la 5 minute doar dacă a avansat (cel puțin o factură a ajuns în SPV).
+    - Sarcină cron pentru **preluarea statusului** din SPV pentru facturile trimise; se reia după 2 minute doar dacă lotul a fost plin și cel puțin o factură a ieșit din `invoice_sent`.
     - **Acțiune server „Trimite in SPV"**: permite trimiterea directă în SPV a facturilor selectate din lista de facturi, fără a declanșa trimiterea emailului.
+    - **Buton „Resetează trimiterea SPV"**: apare doar pentru facturile rămase fără index (SPV nu a returnat indexul la trimitere). Cere confirmare și sincronizează întâi cu ANAF; dacă factura e găsită în SPV i se completează starea, fără resetare (nu apare dublet). Altfel trimiterea e marcată ca eșuată, cu notă în chatter, iar factura se retrimite din „Trimite" sau „Retrimite în SPV".
     - **Opțiune de configurare**: o setare în pagina de configurare Contabilitate controlează dacă jobul cron automat de SPV suprimă trimiterea de email (trimite doar în SPV).
     - **Email separat de SPV**: un cron dedicat („E-Factura: Trimite email facturi validate") trimite clientului emailul după validarea în SPV; factura nu mai e trimisă de două ori prin email (flagul de trimitere se setează pe orice cale de trimitere), iar un raport de rulare a cronului se poate trimite pe email.
     - **Import automat oprit implicit**: opțiunea per companie „Nu importa automat facturile primite din SPV" (Setări → Contabilitate → eFactura SPV) sare peste crearea automată de ciorne din cronul nativ „E-Factura: Synchronize with ANAF", păstrând sincronizarea statusului facturilor trimise. E bifată implicit pentru companiile noi (evită dublurile cu factura introdusă din comanda de achiziție); companiile existente își păstrează valoarea.
@@ -31,20 +32,22 @@ Modulul `l10n_ro_efactura_enhancement` extinde funcționalitatea standard de e-F
     - Trunchiază notele la 300 de caractere.
     - Trunchiază referințele comenzii (BT-13) și avizul de expediere (BT-16) la 200 de caractere.
     - Trunchiază avizul de plată (BT-83, `PaymentID`/`InstructionID`) la 140 de caractere (regula BR-RO-L140).
+- **Stornouri cu referința facturii corectate**: nota de credit pleacă în SPV cu `cac:BillingReference` (BT-25 / BT-26), număr și dată luate din factura stornată (`reversed_entry_id`).
 - **Sume de plată în XML**: `PrepaidAmount` = 0 și `PayableAmount` = totalul facturii cât timp factura nu e stinsă, independent de plățile alocate în Odoo (necesar pentru livrările cu ramburs); facturile stinse rămân pe comportamentul standard EN16931.
-- **Import factură din SPV**: linia se recalculează din `cbc:LineExtensionAmount`; descrierea nu mai apare dublată, iar `cbc:Description` este omis când linia nu are descriere proprie.
-- **Integrare POS**: schimbă automat codul tipului de document la 751 (Factură specializată) pentru facturile legate de o comandă POS (regulă restaurată în 0.5.2; stornourile 381 și autofacturarea 389 rămân neschimbate).
+- **Import factură din SPV**: linia se recalculează din `cbc:LineExtensionAmount`; descrierea nu mai apare dublată, iar `cbc:Description` este omis când linia nu are descriere proprie. Furnizorul nu se mai dublează când CUI-ul diferă doar prin prefixul `RO` (se compară doar CUI-uri românești valide).
+- **Integrare POS**: schimbă automat codul tipului de document la 751 (Factură specializată) pentru facturile legate de o comandă POS (stornourile 381 și autofacturarea 389 rămân neschimbate).
 - **Parametri de sistem configurabili**:
     - `efactura.embed_pdf`: controlează includerea PDF-ului încorporat în e-factură (implicit: True).
     - `efactura.use_line_description`: dacă e activat, folosește descrierea liniei de factură în locul numelui/descrierii produsului (implicit: False).
     - `efactura.replace_unit_uom`: permite specificarea unui cod de unitate de înlocuire pentru unitatea standard „C62" (implicit: False).
-    - `efactura.get_all_banks`: dacă e activat, include toate băncile marcate cu `l10n_ro_print_report` care corespund monedei facturii (implicit: False).
+    - `efactura.get_all_banks`: dacă e activat, include toate conturile bancare marcate cu `l10n_ro_print_report` care corespund monedei facturii (implicit: False); câmpul provine din `l10n_ro_report_common`.
 - **Urmărirea lungimii liniilor**: adaugă câmpuri calculate pe liniile de factură pentru a urmări lungimea descrierilor și a denumirilor de produse, ajutând utilizatorii să identifice posibilele probleme de trunchiere.
+- **Dashboard e-Factura SPV** (foaie de calcul), definit în `oca_data_manual`; vizualizarea lui este momentan dezactivată în manifest, până la testarea pe live.
 
 #### 3. Dependențe
 
 - `l10n_ro_edi`
-- `l10n_ro_config`
+- [l10n_ro_report_common](../l10n_ro_report_common/index.md)
 - `spreadsheet_dashboard`
 - `l10n_ro_message_spv`
 - `account_edi_ubl_cii`
@@ -56,9 +59,9 @@ Conform secțiunii „Technical Implementation" din `readme/DESCRIPTION.md`, mod
 
 **Modele**
 
-- `account.move`: adaugă validări, joburile cron și gestionarea tipului de document pentru POS.
+- `account.move`: adaugă validări, joburile cron, contorul de trimiteri eșuate, resetarea trimiterii SPV și gestionarea tipului de document pentru POS.
 - `account.edi.xml.ubl_ro`: îmbunătățește generarea UBL cu logică custom pentru adrese, descrieri de produse și suport multi-bancă.
-- `account.edi.ubl`, `account.edi.xml.ubl_bis3`: trunchieri, sume de plată și import factură din SPV.
+- `account.edi.ubl`, `account.edi.xml.ubl_bis3`: trunchieri, referința stornoului, sume de plată și import factură din SPV.
 - `res.company` / `res.config.settings`: opțiunea de import automat din SPV.
 - `res.partner`: suprascrie sugestia de format EDI pentru entitățile românești.
 - `account.move.line`: adaugă elemente UI ajutătoare pentru lungimea etichetelor.
@@ -74,4 +77,4 @@ Conform secțiunii „Technical Implementation" din `readme/DESCRIPTION.md`, mod
 
 - `l10n_ro_edi`: nucleul EDI/OAuth2 ANAF pentru localizarea românească, peste care acest modul adaugă automatizări.
 - `l10n_ro_message_spv`: gestionarea mesajelor SPV, folosită la trimiterea și urmărirea facturilor.
-- `l10n_ro_config`: configurarea de bază a localizării românești.
+- [l10n_ro_report_common](../l10n_ro_report_common/index.md): definește bifa `l10n_ro_print_report` de pe contul bancar, folosită pentru `efactura.get_all_banks`.

@@ -278,7 +278,7 @@ sunt cerute. Modulul le emite astfel, deci nu vă mirați că unele atribute lip
 |---|---|---|
 | `l10n_ro` | plan de conturi RO și localizare | dependență (manifest) |
 | `account_reports` | framework pentru jurnalele de vânzări/cumpărări | dependență (manifest) |
-| `l10n_ro_anaf_partner` | aduce codul CAEN pe partener, cerut la export | dependență (manifest) |
+| `l10n_ro_anaf_base` | codul CAEN al companiei pentru declarațiile ANAF, cerut la export | dependență (manifest) |
 | `l10n_ro_account_vat_journal` | definește jurnalele TVA (vânzări/cumpărări, inclusiv pe regimuri) pe care D394 adaugă exporturile | dependență (manifest) |
 | `l10n_ro_anaf_base` | infrastructură comună ANAF (validare XSD, butoane XML/XDP, date companie) | dependență (manifest) |
 | `l10n_ro_anaf_d300` | la generarea D300, jurnalele TVA sunt reconciliate automat cu decontul (rd. 17/27 + rând cu rând), cu avertisment la neconcordanță; D394 detaliază partea națională | integrare automată |

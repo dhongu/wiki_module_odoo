@@ -102,10 +102,9 @@ Date minime pentru demo:
 Dacă payroll nu este instalat, butonul **Calculează** nu aduce state de plată și liniile se
 completează manual.
 
-> **Notă CAEN:** codul CAEN al companiei (`l10n_ro_caen_code`) este obligatoriu în XML și provine din
-> stack-ul de localizare RO (OCA `l10n_ro_config`). Modulul nu îl declară explicit ca dependență
-> (consistent cu celelalte module ANAF), dar câmpul trebuie să existe și să fie completat cu un cod
-> valid pe instanțele unde se generează D112.
+> **Notă CAEN:** codul CAEN al companiei (`l10n_ro_anaf_caen_code`, din `l10n_ro_anaf_base`) este
+> obligatoriu în XML. Se completează pe formularul companiei sau în **Setări → Contabilitate → Declarații ANAF**. Căutarea
+> ANAF a partenerului nu îl schimbă: la o firmă trecută pe CAEN Rev.3 se declară codul acceptat de schema D112.
 
 ### 5.2 Date companie și declarant ANAF
 
@@ -114,7 +113,7 @@ completează manual.
 | Câmp | Unde se verifică | Obligatoriu la export |
 |------|------------------|-----------------------|
 | CUI | Companie | Da |
-| **Cod CAEN** (`l10n_ro_caen_code`) | Contact companie | **Da** — cod valid din nomenclatorul ANAF; altfel exportul eșuează la validarea XSD |
+| **Cod CAEN** (`l10n_ro_anaf_caen_code`) | Companie (formular sau Setări ANAF) | **Da** — gol, `0000` sau fără exact 4 cifre, exportul se oprește cu eroarea de date ale companiei; un cod care nu e în nomenclatorul schemei D112 e respins la validarea XSD |
 | Stradă, Localitate, Cod poștal, Țară | Contact companie | Da |
 | Județ (derivă casa de sănătate `casaAng`) | Contact companie | Da |
 | Persoană responsabilă declarații | Setări ANAF | Da |
@@ -365,7 +364,7 @@ declarație. Importul **nu generează note contabile**.
 | `hr_payroll` / `hr.payslip` | sursa automată a liniilor salariale |
 | `l10n_ro_payroll_import` | nota contabilă de salarii pentru reconciliere |
 | `account` | rulajul conturilor 421, 4315, 4316, 436, 444 |
-| `l10n_ro_config` (OCA) | furnizează codul CAEN al companiei (obligatoriu în XML) |
+| `l10n_ro_anaf_base` | codul CAEN al companiei pentru declarațiile ANAF (obligatoriu în XML) |
 | `l10n_ro_anaf_d112_payroll` | liniile din fluturași și, pe declarația importată, crearea angajaților |
 | `l10n_ro_anaf_submission` | flux viitor de depunere electronică, dacă va exista |
 
@@ -410,6 +409,7 @@ reconciliere acceptate, verificarea finală în utilitarele ANAF și depunerea �
 | `Luna trebuie să fie între 1 și 12.` | lună greșită | corectați perioada |
 | `Angajatul '...' nu are CNP completat.` | angajat fără identificator | completați CNP-ul și recalculați |
 | `Reconcilierea D112 vs. contabilitate are diferențe peste toleranță` | politică strictă + diferențe | corectați nota contabilă / liniile D112 sau ajustați toleranța |
+| „Compania „…” nu are configurat un cod CAEN valid. Completați-l pe companie (4 cifre, de exemplu 6201).” | codul CAEN al companiei e gol, `0000` sau fără exact 4 cifre | completați **Cod CAEN** pe companie sau în Setări → Contabilitate → Declarații ANAF |
 | `The generated XML is not valid according to the ANAF schema` | date neconforme (ex. CAEN invalid, CNP greșit) | corectați datele semnalate și regenerați |
 | `ANAF nu are formular PDF (Soft A) pentru structura D112 a perioadei LL/AAAA. Folosiți exportul XML.` | export Soft A pe o perioadă din 2025 sau anterioară (structura v6) | descărcați XML-ul; formularul PDF există doar din 2026 |
 | `Declarația exportată nu poate fi resetată. Creați o rectificativă.` | reset după export | creați o declarație rectificativă |
@@ -440,7 +440,7 @@ planul de conturi RO:
 7. `07_d112_xml.png` — fișierul XML generat și numele fișierului.
 8. `08_d112_exportat.png` — declarația în starea Exportat.
 9. `10_scenariu_salariu_minim.png` … `13_scenariu_rectificativa.png` — capturi pentru fișele per scenariu.
-10. `14_angajat_date.png` — fișa angajatului (Loc de muncă, data de început a contractului).
+10. `14_angajat_date.png` — fișa angajatului (Loc de muncă, data de început a contractului); CNP-ul e pe fila *REGES*, cu `l10n_ro_reges`.
 11. `16_plati_trezorerie.png` — plățile pregătite din declarația exportată, în ciornă.
 
 ### Date sursă din fișa angajatului
@@ -449,12 +449,22 @@ Importul nominal preia din `hr.employee`: **CNP-ul** (`l10n_ro_cnp`, fila *REGES
 angajării** (din versiunea de contract, vizibilă pe fișa angajatului). Asigurați-vă că aceste
 câmpuri sunt completate înainte de a rula *Calculează* pe declarație.
 
+![Fișa angajatului Popescu Ion, fila Loc de muncă: compania Demo Salarii SRL, adresa locului de muncă din Alba Iulia și, sus în dreapta, data de început a versiunii de contract, 15 ian. 2024](screenshots/14_angajat_date.png)
+
 ### Fișe per scenariu
 
 Pentru scenarii de business specifice există fișe dedicate în [`fise/`](fise/README.md):
 salariu minim (deduceri automate), contract part-time, pensionar activ și declarație rectificativă.
 Scenariul „salariu minim” folosește salariul minim al perioadei: 4.050 lei până în 06/2026 și
 4.325 lei de la 07/2026.
+
+![Scenariul salariu minim: declarația D112 din 05/2026 în ciornă, cu un salariat la 4.325 lei brut, deducerea personală de 865 lei, impozit 181,62 lei și CAM 92,81 lei în totaluri](screenshots/10_scenariu_salariu_minim.png)
+
+![Scenariul contract part-time: declarația D112 din 06/2026 în ciornă, cu un salariat la 2.500 lei brut, deducerea personală de 810 lei și impozit 81,50 lei](screenshots/11_scenariu_part_time.png)
+
+![Scenariul pensionar activ: declarația D112 din 07/2026 în ciornă, cu linia pensionarului (tip asigurat 02) la 5.000 lei brut, deducerea personală de 425 lei și impozit 282,50 lei](screenshots/12_scenariu_pensionar.png)
+
+![Scenariul declarație rectificativă: declarația D112 din 04/2026 de tip Rectificativă, validată, legată de declarația inițială D112/2026/04/20603502/D, cu Popescu Ion la 5.200 lei brut și impozit 338 lei](screenshots/13_scenariu_rectificativa.png)
 
 Regenerare:
 
@@ -464,7 +474,7 @@ Regenerare:
     --test-tags=fise_screenshots --stop-after-init
 ```
 
-(`l10n_ro_config` furnizează codul CAEN necesar la generarea XML; `l10n_ro_doc_screenshots` este
+(`l10n_ro_doc_screenshots` este
 tooling-ul de capturi.)
 
 ---

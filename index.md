@@ -62,7 +62,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_barcode_picking](deltatech_barcode_picking/index.md): Adaugă produse pe transferuri de stoc (picking) prin scanarea codului de bare, inclusiv coduri combinate produs+lot.
 - [deltatech_barcode_sale](deltatech_barcode_sale/index.md): Adăugarea produselor pe comanda de vânzare prin scanarea codurilor de bare.
 - [deltatech_batch_transfer](deltatech_batch_transfer/index.md): Extinde transferurile în lot: scoate transferurile goale la validare, asistent Prepare Batch din comenzi de vânzare/achiziție, câmpuri suplimentare, tab Received și raport Deliveries.
-- [deltatech_brand_field](deltatech_brand_field/index.md): Câmp unic de marcă pentru produse, configurabil din setările Website și folosit de modulele care afișează marca (feed-uri etc.).
+- [deltatech_brand_field](deltatech_brand_field/index.md): Setare unică a câmpului de produs care ține marca, citit de feed-uri, SEO și Google Tag, cu rezervă pe atributul cu rolul „Brand”.
 - [deltatech_business_process](deltatech_business_process/index.md): Organizează proiectele de implementare Odoo (procese, pași, teste, probleme) cu bibliotecă de procese reutilizabilă și export/import JSON.
 - [deltatech_business_process_handover_document](deltatech_business_process_handover_document/index.md): Generează documentul de predare-primire (proces verbal) pentru un proces de business, direct dintr-un Proiect de Business, ca PDF.
 - [deltatech_calendar_caldav](deltatech_calendar_caldav/index.md): Sincronizare bidirecțională între calendarul Odoo și orice server CalDAV (cPanel, Nextcloud, SOGo), cu serii recurente, remindere, participanți și ecran personal „My Calendars".
@@ -173,16 +173,16 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_invoice_picking](deltatech_invoice_picking/index.md): Creează facturi direct din livrări sau loturi de livrări, cu cantitățile efectiv realizate (done).
 - [deltatech_invoice_picking_automatically](deltatech_invoice_picking_automatically/index.md): Generează automat facturile din livrări după validare, cu configurare pe tipul de operațiune și proces planificat.
 - [deltatech_invoice_product_filter](deltatech_invoice_product_filter/index.md): Adaugă în căutarea facturilor filtre după produsul din linii și după furnizorul produsului.
-- [deltatech_invoice_receipt](deltatech_invoice_receipt/index.md): Generează automat comanda de achiziție și recepția la validarea unei facturi de furnizor.
+- [deltatech_invoice_receipt](deltatech_invoice_receipt/index.md): Creează comanda de achiziție din factura de furnizor pentru produsele stocabile și validează recepția la postarea facturii; suportă retur prin cantități negative.
 - [deltatech_invoice_report](deltatech_invoice_report/index.md): Extinde raportul de analiză a facturilor și fișa produsului cu istoric anual al cantităților cumpărate/vândute, plus dimensiuni Regiune și Furnizor Implicit.
 - [deltatech_invoice_to_draft](deltatech_invoice_to_draft/index.md): Restricționează, printr-un grup dedicat, dreptul de a readuce facturile/notele contabile în starea de ciornă și adaugă un buton de anulare directă.
-- [deltatech_invoice_weight](deltatech_invoice_weight/index.md): Urmărirea greutății nete și brute pe facturi, comenzi de achiziție și de vânzare, cu raportare Pivot.
+- [deltatech_invoice_weight](deltatech_invoice_weight/index.md): Greutate netă și brută totală pe comenzi de vânzare, comenzi de achiziție și facturi, tipărită pe factură.
 - [deltatech_keez](deltatech_keez/index.md): Export în Excel (ZIP) al facturilor, recepțiilor și notelor contabile înregistrate, în formatul de import Keez.
 - [deltatech_kit_price](deltatech_kit_price/index.md): Calculează automat costul de kit (BoM phantom) pe liniile comenzii de vânzare, pentru marje corecte.
 - [deltatech_ledger](deltatech_ledger/index.md): Registru de intrări-ieșiri pentru documente, cu numerotare comună fără goluri, resetată anual, cu rezervări, anulare cu motiv și raport PDF.
 - [deltatech_line_counter](deltatech_line_counter/index.md): Asistent de administrare care numără liniile de cod (.py/.xml/.js/.css/.scss, fără teste) ale modulelor Odoo selectate, cu total per modul și general.
 - [deltatech_list_view](deltatech_list_view/index.md): Permite selectarea textului în listele Odoo fără a deschide înregistrarea și repară ștergerea dublă a liniilor one2many nesalvate.
-- [deltatech_logistic_docs](deltatech_logistic_docs/index.md): Depozit centralizat pentru documentele logistice și de transport (CMR, certificate, avize) legate de comenzi, livrări și facturi.
+- [deltatech_logistic_docs](deltatech_logistic_docs/index.md): Buton „Documents” pe comenzi, transferuri și facturi, care arată atașamentele documentelor înrudite din fluxul Comandă → Livrare → Factură.
 - [deltatech_lot](deltatech_lot/index.md): Automatizează generarea numărului de lot la recepția produselor de la furnizor și adaugă un câmp de locație pe lot pentru trasabilitate.
 - [deltatech_mail](deltatech_mail/index.md): Filtrarea și redirecționarea emailurilor către o adresă de substituție.
 - [deltatech_markdown_field](deltatech_markdown_field/index.md): Widget WYSIWYG (OWL) pentru câmpuri Text care stochează conținutul ca Markdown brut, cu conversie MD↔HTML client-side, fără CDN.
@@ -404,7 +404,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_smartbill](deltatech_smartbill/index.md): Trimite facturile de client din Odoo către SmartBill (manual sau zilnic, cu notele de credit emise ca stornare), cu seria luată din codul jurnalului.
 - [deltatech_sms](deltatech_sms/index.md): Trimite SMS din Odoo prin gateway-uri externe configurabile (4Pay / Wapi), înlocuind serviciul IAP nativ.
 - [deltatech_sms_sale](deltatech_sms_sale/index.md): Trimite automat SMS clientului la confirmarea și postarea comenzii de vânzare, configurabil per companie.
-- [deltatech_stock_account](deltatech_stock_account/index.md): Extinde evaluarea stocurilor afișând valoarea contabilă direct la nivelul transferurilor de marfă (picking).
+- [deltatech_stock_account](deltatech_stock_account/index.md): Valoarea transferurilor în lista de transferuri, propagarea conturilor categoriei către subcategorii și controlul modificării costului produselor din stoc.
 - [deltatech_stock_analytic](deltatech_stock_analytic/index.md): Creează automat linii analitice (sursă și destinație) din mișcările de stoc finalizate, pe baza conturilor analitice ale locațiilor.
 - [deltatech_stock_barcode](deltatech_stock_barcode/index.md): Extinde Stock Barcode (Enterprise) cu greutate/colete, etichete AWB, detalii de amplasare, listă de prețuri la scanare, inventar rapid pe baze mari și amplasare fără raftul sursă.
 - [deltatech_stock_close](deltatech_stock_close/index.md): Marchează valorizările mișcărilor de stoc drept închise la o dată dată, pentru a le exclude din fișa de magazie după perioada de raportare sau la închiderea exercițiului.
@@ -445,7 +445,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_vendor_stock](deltatech_vendor_stock/index.md): Stocul disponibil la furnizor, afișat pe liniile comenzii de vânzare, plus stocul liber pe depozite într-un popover cu culori configurabile.
 - [deltatech_warehouse_access](deltatech_warehouse_access/index.md): Restricționează validarea transferurilor de stoc la utilizatorii autorizați per depozit; fără utilizatori definiți se aplică drepturile standard.
 - [deltatech_warehouse_arrangement](deltatech_warehouse_arrangement/index.md): Gestionează amplasamentele fizice de depozit (magazie→zonă→raft→secțiune→grilă), în paralel cu locațiile standard.
-- [deltatech_warehouse_map](deltatech_warehouse_map/index.md): Hartă vizuală a depozitului pentru navigarea ierarhică a amplasamentelor de stoc, cu afișarea grafică a gradului de ocupare.
+- [deltatech_warehouse_map](deltatech_warehouse_map/index.md): Hartă vizuală a ierarhiei de amplasamente din depozit, colorată după gradul de ocupare, cu drill-down până la produsele dintr-o celulă.
 - [deltatech_warranty](deltatech_warranty/index.md): Perioadă de garanție (în luni) pe produs și pagină de garanție tipărită automat în oferta/comanda de vânzare.
 - [deltatech_watermark](deltatech_watermark/index.md): Imaginea de filigran a companiei, încărcată o singură dată în Setări generale și folosită de alte module (ex. filigran pe pozele de produs din website).
 - [deltatech_web_kpi_cards](deltatech_web_kpi_cards/index.md): Bandă reutilizabilă de carduri KPI pentru vizualizările backend, cu variație față de perioada anterioară, progres spre țintă și tendință; clic pe card activează filtrul corespunzător.
@@ -459,7 +459,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_website_city](deltatech_website_city/index.md): Selecție structurată a orașului (listă + mapare cod poștal) în checkout eCommerce și portal, cu base_address_extended.
 - [deltatech_website_country](deltatech_website_country/index.md): Pre-selectează automat țara companiei pe formularul de adresă de la checkout, ca bază pentru validări avansate de adresă.
 - [deltatech_website_delivery_address](deltatech_website_delivery_address/index.md): Adresă de livrare implicită per utilizator de website, preselectată automat la checkout.
-- [deltatech_website_delivery_and_payment](deltatech_website_delivery_and_payment/index.md): Reguli eCommerce care leagă metodele de plată de cele de livrare și le restricționează în funcție de etichetele partenerilor.
+- [deltatech_website_delivery_and_payment](deltatech_website_delivery_and_payment/index.md): Limitează metodele de livrare și furnizorii de plată din checkout după metoda de livrare, valoarea și greutatea comenzii și etichetele clientului.
 - [deltatech_website_disable_fuzzy_search](deltatech_website_disable_fuzzy_search/index.md): Dezactivează căutarea aproximativă (fuzzy) din magazinul online, oferind rezultate exacte.
 - [deltatech_website_effects](deltatech_website_effects/index.md): Efecte la hover, forme, sticlă mată și blocuri animate (rută de livrare, listă de informații configurabilă, card care se întoarce, coduri copiabile, casetă de ajutor), setate din editorul de website.
 - [deltatech_website_fixed_price](deltatech_website_fixed_price/index.md): Afișează prețul barat de comparație și pentru regulile de listă de prețuri cu preț fix, doar când e mai mic decât prețul de listă.
@@ -569,7 +569,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_edi_ubl_sale_store](l10n_ro_edi_ubl_sale_store/index.md): Setează automat tipul de e-factură la codul 751 pentru vânzările însoțite de bon fiscal.
 - [l10n_ro_efactura_consumer](l10n_ro_efactura_consumer/index.md): e-Factura către persoane fizice cu CNP valid în XML CIUS-RO (validare Luhn RO, schemeID CNP).
 - [l10n_ro_efactura_dedup](l10n_ro_efactura_dedup/index.md): Previne facturile duplicate din SPV ANAF printr-o cheie extinsă SHA-256 (CUI, număr factură, dată, sumă), la import și la trimitere.
-- [l10n_ro_efactura_enhancement](l10n_ro_efactura_enhancement/index.md): Extinde e-Factura RO cu validări, trimitere și preluare automată din SPV, trunchieri UBL/CIUS-RO, tip 751 pentru POS, blocaj pentru firme fără CUI și import SPV controlat.
+- [l10n_ro_efactura_enhancement](l10n_ro_efactura_enhancement/index.md): Automatizări și îmbunătățiri e-Factura: trimitere și status automat în SPV, reset trimitere, validări, trunchieri UBL, stornouri și tip 751 pentru POS.
 - [l10n_ro_efactura_import_assist](l10n_ro_efactura_import_assist/index.md): Verifică la importul din SPV diferențele de cantitate/preț față de comanda de achiziție și blochează postarea până la o decizie explicită de acceptare sau refuz, cu notificarea furnizorului.
 - [l10n_ro_efactura_product_match](l10n_ro_efactura_product_match/index.md): Adaugă la importul e-Factura din SPV căutarea articolului după codul propriu (`BuyersItemIdentification`, BT-156), pe lângă codul furnizorului.
 - [l10n_ro_efactura_xml_rules](l10n_ro_efactura_xml_rules/index.md): Tag-urile CIUS-RO cerute de fiecare cumpărător (comandă, cod articol, contract, lot) se configurează din interfață, pe partener și în profiluri, fără dezvoltare.
@@ -594,7 +594,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_force_reconcile](l10n_ro_force_reconcile/index.md): Asistent de reconciliere forțată între conturi diferite (409↔401, 419↔411, 411↔401, 542↔401) prin notă de compensare.
 - [l10n_ro_grants](l10n_ro_grants/index.md): Subvenții și fonduri nerambursabile (OMFP 1802/2014, IAS 20): conturi 475x/472, tranșe pe 4451 încasate din extras, recunoaștere venituri, buget eligibil și cereri de rambursare fără dublă decontare (FR-38).
 - [l10n_ro_green_stamp](l10n_ro_green_stamp/index.md): Timbrul verde (DEEE) pe linie separată în comenzi și facturi, din suma setată pe produs, cu TVA corect, cost suplimentar la achiziție și raport pe linie.
-- [l10n_ro_hide_net_weight](l10n_ro_hide_net_weight/index.md): Ascunde câmpul „Greutate netă” (`l10n_ro_net_weight`) de pe formularul produsului; modul de tranziție peste `l10n_ro_stock`.
+- [l10n_ro_hide_net_weight](l10n_ro_hide_net_weight/index.md): Ascunde câmpul „Greutate netă” (`l10n_ro_net_weight`) de pe formularul produsului.
 - [l10n_ro_hr_documents](l10n_ro_hr_documents/index.md): Contract individual de muncă, act adițional, decizii de suspendare și de încetare (cu temeiurile din nomenclatorul REGES), cerere de demisie și adeverință de vechime, emise din fișa angajatului, cu actul de identitate și numărul CIM preluate automat, număr de înregistrare și PDF arhivat.
 - [l10n_ro_hr_pay_transparency](l10n_ro_hr_pay_transparency/index.md): Puntea dintre transparența salarială (Directiva UE 2023/970) și salarizarea RO: fiecare componentă (sporuri, CO, tichete, beneficii, diurnă) mapată o dată pe remunerația din directivă, categorii propuse din codul COR.
 - [l10n_ro_hr_payroll_account_enhancement](l10n_ro_hr_payroll_account_enhancement/index.md): Nota contabilă a statului de plată RO: conturile implicite pe regulile salariale (brut, rețineri, CAM, tichete, beneficii, concedii medicale), completate automat la instalare.
@@ -714,7 +714,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_zip](l10n_ro_zip/index.md): Nomenclator de circa 73.000 de coduri poștale românești legat de județ și localitate, cu căutare după stradă pe partener, care completează codul, localitatea, județul și țara.
 - [l10n_ro_zip_osm](l10n_ro_zip_osm/index.md): Străzile a 269 de orașe mici din România (cu un singur cod poștal), din OpenStreetMap, adăugate în nomenclatorul de coduri poștale din l10n_ro_zip.
 - [terrabit_ai_olg](terrabit_ai_olg/index.md): Furnizor Odoo OLG (serviciu text găzduit de Odoo) pentru agenți AI conversaționali, fără cheie OpenAI sau Gemini.
-- [terrabit_base](terrabit_base/index.md): Metapachet Terrabit care instalează dintr-o dată aplicațiile de bază (stoc, vânzări, achiziții, contabilitate) și modulele de localizare pentru România.
+- [terrabit_base](terrabit_base/index.md): Metapachet Terrabit: instalează setul de bază Odoo (stocuri, vânzări, achiziții, contabilitate) și modulele de localizare pentru România.
 - [terrabit_clean_chatter](terrabit_clean_chatter/index.md): Curăță automat chatter-ul tichetelor helpdesk (și al task-urilor și lead-urilor) de citate, semnături și disclaimere, deduplică atașamentele și permite rollback.
 - [terrabit_clear_data](terrabit_clear_data/index.md): Wizard pentru administratori care curăță datele tranzacționale (stoc, vânzări, achiziții, facturi, producție, mailuri) și opțional produsele și partenerii, pe companie sau global.
 - [terrabit_delivery_staff](terrabit_delivery_staff/index.md): Distribuirea livrărilor către personalul propriu de livrare (curieri/șoferi interni), cu acces restricționat și raport PDF dedicat.

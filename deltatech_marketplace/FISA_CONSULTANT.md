@@ -262,6 +262,13 @@ Tab-ul **Comenzi și produse** grupează regulile de date:
   Stocul negativ se trimite ca 0.
 - **Parteneri**:
   - **Actualizează partenerul după codul fiscal** — clientul existent cu același CUI e actualizat;
+    codul fiscal primit din magazin se scrie pe partener. O **firmă din România** (țara România sau
+    cod fiscal cu `RO`) e apoi reîmprospătată din **ANAF**, ca la linkul **Actualizează din ANAF**
+    al modulului `l10n_ro_partner_autocomplete`: denumire, adresă, NRC, **Plătitor TVA**, cu lista
+    modificărilor în istoricul partenerului. Un cumpărător din altă țară nu e căutat la ANAF. Dacă
+    ANAF nu răspunde sau nu are firma, importul continuă: codul fiscal rămâne scris, iar eroarea
+    ajunge în jurnalul serverului. Fără `l10n_ro_partner_autocomplete` (nici modulul OCA
+    `l10n_ro_partner_create_by_vat`, pe care îl înlocuiește), se scrie doar codul fiscal;
   - **Păstrează adresa contactului** — la reimport nu se suprascrie adresa unui contact existent,
     se creează un contact nou pentru adresa diferită. Documentele emise își păstrează adresa;
   - **Email unic**.
@@ -430,6 +437,7 @@ Modulul **nu generează note contabile**. Contabilitatea apare în fluxurile con
 | `deltatech_marketplace_sale` | importul comenzilor (TVA din taxele produselor și poziția fiscală) | extensie |
 | `deltatech_marketplace_emag`, `_shopify`, `_woocommerce`, `_prestashop`, `_magento`, `_trendyol`, `_merchantpro`, `_odoo`, `_doraly` | conectorii de platformă: apelurile API, pașii specifici | extensii (fișă proprie fiecare) |
 | `deltatech_marketplace_delivery`, `_payment`, `_brand`, `_website`, `_extended` | livrare, plăți, mărci, site, câmpuri suplimentare | extensii |
+| `l10n_ro_partner_autocomplete` | reîmprospătarea din ANAF a cumpărătorului firmă din România, cu **Actualizează partenerul după codul fiscal** | opțional (folosit dacă e instalat) |
 
 **Ce e automat:**
 - canalele de coadă și cardurile de obiecte la crearea backend-ului;
@@ -478,6 +486,11 @@ Modulul **nu generează note contabile**. Contabilitatea apare în fluxurile con
 - [ ] O comandă cu adresă din Budapesta și codul poștal 1124 creează contactul cu *Localitate*
       **Budapest XII** și județul *Budapest*, chiar dacă clientul a scris doar „Budapest” sau alt
       județ; aceeași adresă fără cod poștal lasă *Localitate* goală, cu orașul „Budapest”.
+- [ ] Cu **Actualizează partenerul după codul fiscal** bifat și `l10n_ro_partner_autocomplete`
+      instalat, un cumpărător firmă din România primește din ANAF denumirea, adresa, NRC-ul și
+      **Plătitor TVA**, iar istoricul lui arată nota **Actualizat din ANAF**; un cumpărător cu cod
+      fiscal din altă țară (ex. `DE…`) păstrează datele din magazin, fără notă ANAF.
+- [ ] Cu ANAF indisponibil, comanda se importă totuși, iar codul fiscal al clientului rămâne scris.
 - [ ] Cu **Partajează produsul** debifat, legarea sau reimportul unui produs Odoo existent, cu
       mișcări de stoc în altă companie, nu îi schimbă compania, iar un produs nou creat din
       magazin primește compania backend-ului.
@@ -497,6 +510,7 @@ Modulul **nu generează note contabile**. Contabilitatea apare în fluxurile con
 | O ofertă din magazin legată de varianta greșită | Potrivire după nume (fără **Potrivire strictă a variantei**) | Bifați potrivirea strictă, completați codurile de bare / referințele identice cu magazinul și corectați legătura |
 | Importul schimbă categoria produselor existente | Categoriile magazinului se leagă după nume de categorii Odoo | Debifați **Folosește categoriile** sau adăugați `categ_id` la **Câmpuri ignorate la import** (**Categorie implicită** nu oprește schimbarea) |
 | „Compania acestui produs nu poate fi schimbată atâta timp cât există mișcări de stoc ale acestuia aparținând altei companii” la importul comenzilor | Versiune a modulului mai veche de 19.0.1.42.3: importul scria compania backend-ului peste compania unui produs existent cu mișcări de stoc în altă companie | Actualizați modulul și reluați joburile eșuate din **Joburi**; ca soluție temporară, bifați **Partajează produsul** |
+| Cumpărătorul firmă din România nu e completat din ANAF (fără notă **Actualizat din ANAF** în istoric) | **Actualizează partenerul după codul fiscal** debifat, `l10n_ro_partner_autocomplete` neinstalat, ANAF nu a răspuns sau codul fiscal nu e un CUI valid (eroarea e în jurnalul serverului) | Bifați opțiunea, instalați modulul; pe partener, apăsați **Actualizează din ANAF** |
 | Prețul de vânzare al produsului s-a schimbat „singur” | Cineva a editat **Preț Odoo** pe o legătură | Editați prețul pe produs sau în lista de prețuri, nu pe legătură |
 
 ## 10. Capturi de ecran

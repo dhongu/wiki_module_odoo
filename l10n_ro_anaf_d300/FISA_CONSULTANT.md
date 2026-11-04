@@ -42,7 +42,9 @@ D300 este decontul de taxă pe valoarea adăugată depus de persoanele impozabil
 1. Instalați `l10n_ro_anaf_d300`, `l10n_ro_anaf_base`, `account_reports` și localizarea RO.
 2. Verificați că raportul de taxe RO este disponibil pentru companie.
 3. Verificați taxele de vânzare/cumpărare: fiecare cotă trebuie să alimenteze rândul D300 corect prin tax tags.
-4. Completați datele companiei: CUI, județ, oraș, adresă și date reprezentant.
+4. Completați datele companiei: CUI, județ, oraș, adresă, **cod CAEN** și date reprezentant. Codul CAEN
+   (atributul `caen` din XML) se completează pe formularul companiei sau în **Setări → Contabilitate → Declarații ANAF**;
+   căutarea ANAF a partenerului nu îl schimbă.
 5. Pregătiți un set demo cu minimum:
    - factură vânzare 21%;
    - factură cumpărare 21%;
@@ -58,6 +60,9 @@ D300 este decontul de taxă pe valoarea adăugată depus de persoanele impozabil
 ### Pasul 1 — Accesare și verificare raport
 
 Meniu: `Contabilitate → Raportare → Declarații ANAF → D300`.
+
+Înainte de export, verificați că pe companie e completat un **Cod CAEN** real de 4 cifre (nu `0000`): altfel
+exportul se oprește (vezi secțiunea 5 și mesajele din secțiunea 11).
 
 Raportul afișează rândurile declarației pe **două coloane — Bază și TVA** (similar formularului
 oficial ANAF), grupate pe secțiuni (I. TVA colectată, II. TVA deductibilă, III. Regularizări): rd. 9 —
@@ -185,6 +190,7 @@ Ce rămâne de verificat manual: regularizarea contabilă 4426/4427/4423/4424, r
 - [ ] În PDF, rd. 38 / 41 preiau soldurile decontului precedent, iar rd. 39 / 42 sunt goale fără decizie ANAF.
 - [ ] Rd. A / B corespund soldului 4428 la sfârșitul perioadei (facturi emise în A, primite în B).
 - [ ] Datele companiei sunt completate corect.
+- [ ] Atributul `caen` din XML-ul exportat este codul CAEN de pe companie (formularul companiei sau Setări → Contabilitate → Declarații ANAF).
 - [ ] Perioada închisă nu mai permite modificări fără procedură de corecție.
 - [ ] Fluxul de rambursare/reportare este clar dacă soldul este negativ.
 
@@ -194,6 +200,7 @@ Ce rămâne de verificat manual: regularizarea contabilă 4426/4427/4423/4424, r
 |---|---|---|
 | Rânduri D300 goale | Tax tags lipsă sau documente nepostate | Verificați taxele și postați documentele |
 | Export respins | CUI/județ/date companie incomplete | Completați datele companiei și delegatul |
+| „Compania „…” nu are configurat un cod CAEN valid. Completați-l pe companie (4 cifre, de exemplu 6201).” | Codul CAEN al companiei e gol, `0000` sau fără exact 4 cifre | Completați **Cod CAEN** pe formularul companiei sau în Setări → Contabilitate → Declarații ANAF |
 | Diferență față de balanță | Note manuale fără tax tags sau perioadă greșită | Verificați liniile contabile și data fiscală |
 | TVA la încasare incorectă | 4428/CABA nereconciliat | Verificați plățile și înregistrările cash basis. Rd. A / B sunt solduri la sfârșitul perioadei: includ și facturile încasate / plătite după perioadă, iar notele de credit încasate parțial intră cu minus doar pentru restul neîncasat |
 | TVA deductibilă prea mare | TVA nedeductibilă tratată ca 4426 | Verificați regimul de deductibilitate al taxei |

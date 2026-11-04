@@ -1,7 +1,7 @@
 # Romania - Corecții la exportul SAF-T D406 (localizat la `l10n_ro_saft_export_fix/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_saft_export_fix`
-- **Versiune:** `19.0.1.2.0`
+- **Versiune:** `19.0.1.2.1`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_saft_export_fix
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_saft_export_fix`
 - **Ultima Ingestie:** `2026-10-22`

@@ -1,7 +1,7 @@
 # Deltatech Account Analytic (localizat la `deltatech_account_analytic/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_analytic`
-- **Versiune:** `19.0.0.0.10`
+- **Versiune:** `19.0.0.0.11`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_account_analytic
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_account_analytic`
 - **Ultima Ingestie:** `2026-08-20`

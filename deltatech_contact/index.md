@@ -1,10 +1,11 @@
 # Deltatech Contacts (localizat la `deltatech_contact/index.md`)
 
 - **Nume Tehnic:** `deltatech_contact`
-- **Versiune:** `19.0.1.4.12`
+- **Versiune:** `19.0.1.4.14`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_contact`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_contact`
 - **Ultima Ingestie:** `2026-08-20`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

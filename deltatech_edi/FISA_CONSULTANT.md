@@ -104,6 +104,9 @@ Date minime pentru demo:
    în Odoo este refuzată. Cu parametrul de sistem `deltatech_edi.create_product` = `True`
    (**Setări → Tehnic → Parametri de sistem**, în modul dezvoltator), importul creează produsul din
    datele mesajului. Folosiți-l doar dacă nomenclatorul retailerului e sigur.
+7. **Opțional — semnalarea prețurilor diferite de lista de prețuri.** Activați **Liste de prețuri**
+   (**Vânzări → Configurare → Setări**) și puneți pe retailer lista lui de prețuri (tabul **Vânzări &
+   Achiziții**). Fără ele comanda nu are listă de prețuri și nota de la Pasul 3 nu apare.
 
 ## 6. Flux de utilizare
 
@@ -154,11 +157,26 @@ Deschideți comanda din **Vânzări → Comenzi → Comenzi**.
    clientului**, în tabul **Alte informații**.
    Pe linii, produsele noastre, cu denumirea din mesajul retailerului, cantitățile și prețurile din
    mesaj.
-2. **Verificați** că adresa de livrare este magazinul din comandă, nu sediul firmei, și că prețurile
-   corespund listingului. Dacă mesajul nu are prețuri (unii retaileri nu le trimit), prețul se ia din
-   **Referințe client**, apoi din lista de prețuri a clientului. Comentariul retailerului din mesaj,
-   dacă există, se scrie în chatter-ul comenzii.
-3. Abia apoi **confirmați** comanda.
+2. **Verificați** că adresa de livrare este magazinul din comandă, nu sediul firmei. Dacă mesajul nu
+   are prețuri (unii retaileri nu le trimit), prețul se ia din **Referințe client**, apoi din lista de
+   prețuri a clientului. Comentariul retailerului din mesaj, dacă există, se scrie în chatter-ul
+   comenzii.
+3. **Citiți nota de preț din chatter**, dacă există (doar cu opțiunea **Liste de prețuri** activă,
+   vezi secțiunea 5). Importul compară prețul net al fiecărei linii (prețul unitar minus discountul
+   liniei, dacă există) cu prețul dat de o regulă din lista de prețuri a comenzii (câmpul **Listă de
+   prețuri** din antet, cea a retailerului). La diferență, scrie o notă internă, în limba companiei,
+   „Prețurile EDI diferă de lista de prețuri …; verificați prețul și actualizați lista de prețuri, dacă
+   este cazul:", cu produsul și ambele prețuri (ex. *42,50 lei în comandă, 40,00 lei în lista de
+   prețuri*). Comanda păstrează prețul de pe linie, iar lista de prețuri nu se modifică: dacă prețul
+   retailerului e cel corect, actualizați regula din lista de prețuri; dacă nu, clarificați cu
+   retailerul înainte de confirmare. Produsele fără regulă în lista de prețuri nu sunt raportate, iar
+   la prețuri egale nu apare nicio notă. Nota reflectă situația de la import; cu EDINET, **Verificare
+   Edinet** raportează din nou diferențele.
+
+   > **Discountul liniei:** prețul din mesaj este prețul net, deci importul pune linia fără discount,
+   > chiar dacă lista de prețuri are o regulă procentuală. Un discount adăugat manual pe linie intră în
+   > comparația de mai sus.
+4. Abia apoi **confirmați** comanda.
 
 Același număr de comandă de la același retailer nu creează o a doua comandă: un mesaj primit din nou
 este ignorat dacă există deja o comandă cu linii. Dacă există doar antetul (comandă fără linii), liniile
@@ -168,7 +186,7 @@ Captura arată comanda demo după confirmare, livrare și facturare (de aici but
 **Facturi**); antetul și liniile sunt cele create de import. **Referința clientului** `05004215` este în
 tabul **Alte informații**, neafișat în captură.
 
-![Comanda de vânzare creată din mesajul EDI pentru Hipermag Retail SRL, confirmată, cu adresa de livrare Hipermag Magazin Militari evidențiată; două linii cu codul și denumirea retailerului sub produs, cantitățile și prețurile din mesaj](screenshots/03_comanda_importata_edi.png)
+![Comanda de vânzare creată din mesajul EDI pentru Hipermag Retail SRL, confirmată, cu adresa de livrare Hipermag Magazin Militari evidențiată; două linii cu codul și denumirea retailerului sub produs, cantitățile și prețurile din mesaj; în chatter, nota Prețurile EDI diferă de lista de prețuri Hipermag 2026 pentru Cafea boabe Arabica 1 kg, 42,50 lei în comandă, 40,00 lei în lista de prețuri](screenshots/03_comanda_importata_edi.png)
 
 ### Pasul 4 — Codurile articolelor la retailer
 
@@ -393,9 +411,11 @@ corectarea unei erori); stabiliți-l cu contabilul clientului.
 
 **Ce e automat:** crearea comenzii din mesaj, recunoașterea retailerului și a magazinului după GLN,
 găsirea produselor, actualizarea codurilor retailerului, prețul de rezervă când mesajul nu are prețuri,
-generarea și validarea XML-urilor DESADV și INVOICE.
+nota din chatter pentru prețurile diferite de lista de prețuri a comenzii, generarea și validarea
+XML-urilor DESADV și INVOICE.
 
-**Ce rămâne manual:** GLN-urile, **Sistem EDI** pe retailer, **Cod EDI** pe grupurile de taxe,
+**Ce rămâne manual:** decizia asupra prețurilor semnalate și actualizarea listei de prețuri,
+GLN-urile, **Sistem EDI** pe retailer, **Cod EDI** pe grupurile de taxe,
 apăsarea **Export EDI** pe livrare și pe factură (dacă conectorul nu o face automat), completarea
 **Număr comandă EDI** pe facturi, alegerea **Tip factură EDI** și completarea **Referinței** pe notele
 de credit, citirea chatter-ului după export.
@@ -412,6 +432,13 @@ de credit, citirea chatter-ului după export.
 - [ ] O comandă primită are **Referința clientului** egală cu numărul comenzii retailerului, clientul
       firma și adresa de livrare magazinul din mesaj.
 - [ ] Al doilea import al aceluiași mesaj **nu** creează o comandă nouă.
+- [ ] Cu opțiunea **Discounturi** activă și o regulă procentuală în lista de prețuri, linia importată are
+      **Discount %** 0 și prețul unitar din mesaj.
+- [ ] Lista de prețuri a comenzii (cea a retailerului) are o regulă pentru un articol, cu alt preț decât cel din mesaj:
+      după import, chatter-ul comenzii are nota „Prețurile EDI diferă de lista de prețuri …" cu
+      ambele prețuri, linia are prețul din mesaj, iar regula rămâne neschimbată. La preț egal nu apare
+      nicio notă. (Necesită opțiunea **Liste de prețuri** activă în **Vânzări → Configurare →
+      Setări**.)
 - [ ] Un articol necunoscut oprește importul cu „Produsul … nu a fost găsit!" (fără
       `deltatech_edi.create_product`).
 - [ ] După import, **Referințe client** conține codul retailerului pentru fiecare articol; un cod legat
@@ -431,6 +458,7 @@ de credit, citirea chatter-ului după export.
 | Mesaj / simptom | Cauză probabilă | Remediere |
 |-----------------|-----------------|-----------|
 | „Selectați un sistem EDI pentru partenerul …" | Retailerul nu are **Sistem EDI** | Completați câmpul pe fișa retailerului (Pasul 2) |
+| Notă internă „Prețurile EDI diferă de lista de prețuri …" pe comandă | Prețul net al liniei (din mesaj sau, dacă mesajul nu are prețuri, din **Referințe client**) diferă de prețul unei reguli din lista de prețuri a comenzii | Dacă prețul a venit din mesaj, verificați-l cu retailerul și, dacă e corect, actualizați regula din lista de prețuri; dacă a venit din **Referințe client**, aliniați rândul de acolo cu lista de prețuri. Comanda rămâne cu prețul de pe linie |
 | „Produsul … nu a fost găsit!" la import | Articolul nu are în Odoo codul de bare, referința internă sau codul retailerului din mesaj | Completați codul de bare sau referința internă pe produs, ori adăugați codul în **Referințe client**; reimportați |
 | Importul creează un partener nou pentru un retailer existent | GLN lipsă sau diferit pe partener; sau partenerul nu are completată **Compania** (căutarea se face doar în compania curentă) | Corectați GLN-ul sau compania pe firmă și pe magazin; uniți partenerii duplicați |
 | „Eroare validare: …" în chatter-ul facturii sau al livrării | XML-ul nu respectă schema (dată, câmp obligatoriu gol). Documentul a plecat oricum | Citiți elementul numit în mesaj, completați data lipsă și reexportați |
@@ -452,7 +480,7 @@ conturi RO, cu date de demonstrație inventate (retailer „Hipermag Retail SRL"
 1. `01_grupuri_taxe_cod_edi.png` — lista grupurilor de taxe, cu **Cod EDI** și **Procent EDI**.
 2. `02_partener_gln_sistem_edi.png` — fișa retailerului, tabul **Vânzări & Achiziții**: **GLN** și
    **Sistem EDI**.
-3. `03_comanda_importata_edi.png` — comanda de vânzare creată din mesajul EDI.
+3. `03_comanda_importata_edi.png` — comanda de vânzare creată din mesajul EDI, cu nota de preț din chatter.
 4. `04_referinte_client_edi.png` — **Referințe client** scrise de import.
 5. `05_livrare_export_edi.png` — livrarea validată, cu butonul **Export EDI**.
 6. `06_factura_export_edi.png` — factura înregistrată, cu butonul **Export EDI**.

@@ -1,7 +1,7 @@
 # Schimbare unitate de măsură (Change Unit of measure)
 
 - **Nume Tehnic:** `deltatech_change_uom`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_change_uom
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_change_uom`
 - **Ultima Ingestie:** `2026-10-22`

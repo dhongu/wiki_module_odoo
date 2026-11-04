@@ -1,10 +1,11 @@
 # Deltatech EDINET (localizat la `deltatech_edinet/index.md`)
 
 - **Nume Tehnic:** `deltatech_edinet`
-- **Versiune:** `19.0.1.6.7`
+- **Versiune:** `19.0.1.6.8`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edinet`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_edinet`
 - **Ultima Ingestie:** `2026-09-29`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

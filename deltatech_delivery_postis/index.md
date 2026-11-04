@@ -5,6 +5,7 @@
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_postis
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_postis`
 - **Ultima Ingestie:** `2026-09-03`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

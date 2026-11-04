@@ -13,7 +13,7 @@ Pentru bunurile cu **risc fiscal ridicat**, transportul nu este permis fără un
 ANAF prin sistemul **RO e-Transport**. Modulul extinde `l10n_ro_edi_stock` cu o **blocare „hard"**: dacă
 un aviz (picking) conține cel puțin un produs marcat „risc fiscal ridicat" și declarația e-Transport
 nu a primit confirmarea UIT (stare „Validat"), validarea avizului este **împiedicată**. În plus, un job
-automat actualizează periodic starea UIT, eliminând nevoia de „Fetch Status" manual.
+automat actualizează periodic starea UIT, eliminând nevoia de „Preluare stare” manual.
 
 ## 2. Bază legală și context
 
@@ -35,6 +35,7 @@ fișa produsului (marcarea riscului fiscal, de regulă de către contabil/respon
 Modulul **nu are impact contabil** (nu generează note). Date implicate:
 - `product.template.l10n_ro_high_fiscal_risk` — marcaj „risc fiscal ridicat" pe produs;
 - pe **stock.picking**: indicatorul `l10n_ro_high_risk_blocked` (blocat) + blocarea la `button_validate`;
+  câmpul `l10n_ro_supplier_uit` (UIT-ul furnizorului, la recepțiile interne);
 - pe **sale.order** / **purchase.order**: indicatorul `l10n_ro_has_high_fiscal_risk` (avertisment în amonte);
 - stările UIT din `l10n_ro_edi_stock` (`stock_sent` → `stock_validated`).
 
@@ -50,8 +51,12 @@ Date minime pentru demo:
    `l10n_ro_edi_stock`).
 3. Marcați produsele relevante cu **„Risc fiscal ridicat (e-Transport obligatoriu)"** —
    **Inventar/Vânzări → Produse → fila „Contabilitate" → secțiunea „România — e-Transport"**.
-4. Opțional, cron-ul **„Actualizare automată status UIT"** (la 30 min) este livrat — verificați că este
-   activ dacă doriți actualizare automată a stărilor.
+4. Opțional, acțiunea planificată **„RO e-Transport: Actualizare automată status UIT”** (la 30 de
+   minute) este livrată — verificați-o în **Setări → Tehnic → Automatizare → Acțiuni planificate**
+   (cu modul dezvoltator activ) și lăsați-o activă dacă doriți actualizarea automată a stărilor.
+5. Completați țara pe furnizori: la recepții, țara furnizorului decide dacă declarația e a companiei
+   (furnizor din UE sau din afara UE) sau a furnizorului român. Câmpul **„UIT furnizor”** de pe
+   recepție nu cere configurare.
 
 ## 6. Flux de utilizare
 
@@ -69,34 +74,78 @@ e-Transport obligatoriu, obțineți UIT înainte de validarea avizului.
 
 ![Comandă de vânzare cu avertisment e-Transport](screenshots/02_comanda_vanzare.png)
 
-### Pasul 3 — Avizul blocat la validare
+### Pasul 3 — Transferul blocat la validare (aviz, recepție intracomunitară sau din import)
 
-Pe avizul de expediție (picking) care conține produsul cu risc fiscal ridicat și fără UIT confirmat
-apare un **banner de avertizare** („Validarea este blocată până la primirea confirmării UIT"). La
-apăsarea „Validează", sistemul ridică o eroare și împiedică validarea.
+Deschideți avizul din **Inventar → Operațiuni → Livrări**. Pe transferul care conține produsul cu risc
+fiscal ridicat, fără UIT confirmat, apare un **banner de avertizare** („Transferul conține produse cu
+risc fiscal ridicat. Validarea este blocată până la primirea confirmării UIT de la ANAF…”). La apăsarea
+„Validează", sistemul ridică eroarea „Transferul … nu poate fi validat” și împiedică validarea.
+Bannerul și eroarea sunt aceleași pe recepțiile din achiziții intracomunitare și din import (Pasul 4),
+unde declarația e tot a companiei.
 
 ![Aviz blocat — risc fiscal ridicat fără UIT](screenshots/03_aviz_blocat.png)
 
-### Pasul 4 — Comanda de achiziție
+### Pasul 4 — Comanda de achiziție și recepția
 
-Același avertisment apare și pe comenzile de achiziție care conțin produse cu risc fiscal ridicat,
-pentru a anticipa obligația e-Transport la recepție/transport.
+Cine declară transportul în e-Transport depinde de proveniența mărfii (OUG 41/2022, art. 8 alin. (1)):
+
+| Recepție | Cine declară | Ce face Odoo la validarea recepției |
+|---|---|---|
+| achiziție internă (furnizor român) | **furnizorul** (lit. c) | nu blochează; UIT-ul primit de la furnizor se trece în câmpul **„UIT furnizor”** din fila **eTransport** |
+| achiziție intracomunitară (furnizor din UE) | **compania** (lit. b) | blochează până la UIT „Validat” pe recepție |
+| import | **compania**, ca destinatar în declarația vamală (lit. a) | blochează până la UIT „Validat” pe recepție |
+
+Dacă pe recepție e completat **Tipul operațiunii** din fila **eTransport**, el decide: `10`, `12`, `14`,
+`40` și `60` înseamnă declarație proprie, iar `30` (transport pe teritoriul național) înseamnă declarația
+furnizorului. Altfel decide țara furnizorului; un furnizor fără țară completată e tratat după țara
+companiei (România), deci ca furnizor român: recepția nu se blochează. Pe comanda de achiziție apare bannerul potrivit cazului:
+la furnizorul român vă cere UIT-ul furnizorului, la furnizorul străin vă anunță blocarea recepției.
+
+Pași de lucru la o achiziție internă:
+
+1. Deschideți comanda din **Achiziții → Comenzi → Comenzi de achiziție**: bannerul vă cere UIT-ul
+   furnizorului.
+2. Deschideți recepția din **Inventar → Operațiuni → Recepții** (sau din butonul **Recepție** al
+   comenzii): un banner informativ cere UIT-ul furnizorului.
+3. În fila **eTransport** a recepției completați câmpul **„UIT furnizor”** cu codul primit de la
+   furnizor; bannerul dispare.
+4. Validați recepția. Câmpul e doar pentru audit: validarea merge și cu el necompletat.
+
+La achiziția intracomunitară și la import recepția se comportă ca avizul din Pasul 3: trimiteți
+declarația din fila **eTransport** a recepției (cu recepția în starea **Pregătit**) și validați după
+UIT „Validat”.
+e-Transport nu este o bifă separată: în Odoo 19 este activ pe orice transfer care nu e intern și nu e
+într-un transfer grupat (batch), într-o companie cu țara fiscală România (`l10n_ro_edi_stock`).
+
+![Recepție de la furnizor român cu câmpul UIT furnizor](screenshots/05_receptie_uit_furnizor.png)
 
 ![Comandă de achiziție cu avertisment e-Transport](screenshots/04_comanda_achizitie.png)
+
+### Pasul 5 — Actualizarea automată a stării UIT
+
+Acțiunea planificată **„RO e-Transport: Actualizare automată status UIT”** rulează la 30 de minute și
+interoghează ANAF doar pentru avizele cu starea UIT **„Trimis”** (`stock_sent`) din companiile cu țara
+fiscală România. Când UIT-ul devine „Validat”, bannerul dispare și avizul se poate valida. O găsiți în
+**Setări → Tehnic → Automatizare → Acțiuni planificate** (modul dezvoltator); **Rulează manual**
+forțează o actualizare imediată.
+
+![Acțiunea planificată de actualizare automată a stării UIT](screenshots/06_actiune_planificata.png)
 
 ### Note de monografie și raportare
 
 - Modulul **nu produce note contabile** — este un control operațional preventiv.
-- Blocarea se aplică doar avizelor cu e-Transport activ (`l10n_ro_edi_stock_enable`) care **nu** au
-  starea UIT „Validat" (`stock_validated`) și conțin produse cu risc fiscal ridicat.
-- După confirmarea UIT (manual prin „Fetch Status" sau automat prin cron), avizul se poate valida normal.
+- Blocarea se aplică doar transferurilor cu e-Transport activ (`l10n_ro_edi_stock_enable`) pe care le
+  declară compania (avize, recepții intracomunitare și din import), care **nu** au starea UIT „Validat"
+  (`stock_validated`) și conțin produse cu risc fiscal ridicat. Recepțiile de la furnizori români nu se
+  blochează.
+- După confirmarea UIT (manual prin „Preluare stare” sau automat prin cron), avizul se poate valida normal.
 - Contextul `demo_mode` dezactivează blocarea (util la importuri/teste).
 
 ## 7. Legături cu alte module / declarații
 
 | Modul / proces | Rol în flux | Tip legătură |
 |---|---|---|
-| `l10n_ro_edi_stock` | infrastructura RO e-Transport (UIT, stări, „Fetch Status") | dependență (manifest) |
+| `l10n_ro_edi_stock` | infrastructura RO e-Transport (UIT, stări, „Preluare stare”) | dependență (manifest) |
 | `sale` / `purchase` | avertismentul în amonte pe comenzi | dependență (manifest) |
 | `stock` | avizul de expediție și validarea blocată | (prin `l10n_ro_edi_stock`) |
 
@@ -114,14 +163,22 @@ obținerea UIT.
 - [ ] Validarea avizului blocat ridică o eroare clară (cu numele produselor).
 - [ ] Avizul cu UIT „Validat" se validează fără blocaj.
 - [ ] Avizul cu produse normale (fără risc) se validează normal.
+- [ ] Recepția de la un furnizor român cu produs marcat se validează fără UIT propriu; bannerul cere
+      UIT-ul furnizorului și dispare după completarea câmpului „UIT furnizor”.
+- [ ] Câmpul „UIT furnizor” e doar pentru audit: recepția internă se validează și cu el necompletat,
+      iar completarea lui nu deblochează un aviz sau o recepție intracomunitară fără UIT „Validat”.
+- [ ] Recepția de la un furnizor din UE cu produs marcat și fără UIT validat e blocată.
+- [ ] Acțiunea planificată „RO e-Transport: Actualizare automată status UIT” este activă și, rulată
+      manual, trece avizele „Trimis” cu UIT confirmat la „Validat”.
 
 ## 9. Mesaje de eroare frecvente
 
 | Mesaj / simptom | Cauză probabilă | Remediere |
 |-----------------|-----------------|-----------|
-| „Avizul … nu poate fi validat. Produsele cu risc fiscal ridicat (…) necesită un UIT confirmat…" | Aviz cu produs risc ridicat, fără UIT validat | Trimiteți declarația e-Transport, așteptați confirmarea UIT, apoi validați |
-| Bannerul de blocare nu dispare după confirmarea UIT | Starea UIT nu s-a actualizat | Apăsați „Fetch Status" sau așteptați cron-ul; verificați starea `stock_validated` |
-| Avizul nu se blochează deși are produs cu risc | e-Transport nu este activ pe aviz (companie non-RO / tip aviz neeligibil) | Verificați configurarea e-Transport și țara fiscală a companiei |
+| „Transferul … nu poate fi validat. Produsele cu risc fiscal ridicat (…) necesită un UIT confirmat…" | Aviz sau recepție intracomunitară/din import cu produs risc ridicat, fără UIT validat | Trimiteți declarația e-Transport, așteptați confirmarea UIT, apoi validați |
+| Bannerul de blocare nu dispare după confirmarea UIT | Starea UIT nu s-a actualizat | Apăsați „Preluare stare” sau așteptați cron-ul; verificați starea `stock_validated` |
+| Avizul nu se blochează deși are produs cu risc | Transferul este intern sau compania nu are țara fiscală România (e-Transport nu e activ pe el) | Verificați configurarea e-Transport și țara fiscală a companiei |
+| Recepția de la un furnizor român e blocată | Pe recepție e completat un tip de operațiune propriu (de ex. `10`) sau furnizorul are completată altă țară decât România (fără țară, contează țara companiei) | Corectați **Tipul operațiunii** în fila eTransport (`30`) sau țara furnizorului |
 | Câmpul „Risc fiscal ridicat" nu apare pe produs | Modulul nu este instalat sau fila Contabilitate ascunsă | Verificați instalarea și drepturile de acces la fila Contabilitate |
 
 ## 10. Capturi de ecran
@@ -134,6 +191,8 @@ pe planul de conturi RO (`setup_country("ro")`):
 2. `02_comanda_vanzare.png` — comandă de vânzare cu avertismentul e-Transport.
 3. `03_aviz_blocat.png` — aviz de expediție blocat (banner de avertizare).
 4. `04_comanda_achizitie.png` — comandă de achiziție cu avertismentul e-Transport.
+5. `05_receptie_uit_furnizor.png` — recepție de la furnizor român, cu câmpul „UIT furnizor”.
+6. `06_actiune_planificata.png` — acțiunea planificată de actualizare automată a stării UIT.
 
 Regenerare:
 

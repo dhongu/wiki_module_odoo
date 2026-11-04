@@ -94,6 +94,11 @@ Un profil grupează regulile cerute de un tip de client. Exemplu, **Lanț retail
 | BT-156 — Codul articolului la client | Sursă predefinită | Codul articolului la client | |
 
 - **Se aplică pe**: facturi, note de credit sau ambele.
+- **Companie** pe profil (vizibil doar cu mai multe companii): dacă e completată, profilul este
+  vizibil și se poate alege doar când lucrați în compania respectivă; gol = disponibil în toate
+  companiile.
+- Un profil **arhivat** nu se mai aplică: facturile clienților care îl au primesc doar regulile proprii
+  ale partenerului și ale firmei-mamă.
 - **Suprascrie** bifat înlocuiește valoarea pusă de Odoo. Debifat, regula completează doar dacă
   Odoo a lăsat tag-ul gol. Dacă regula nu dă nicio valoare și nu e obligatorie, rămâne valoarea pusă
   de Odoo: la BT-13 aceasta este numărul facturii. De aceea BT-13 se marchează **Obligatoriu**.
@@ -117,7 +122,8 @@ Un profil grupează regulile cerute de un tip de client. Exemplu, **Lanț retail
    de la firma-mamă; pentru cele din profil e goală.
 
 Ordinea de aplicare pentru același tag: regula contactului facturat (de exemplu adresa de facturare
-a unui magazin), apoi regula firmei-mamă, apoi regula din profil.
+a unui magazin), apoi regula firmei-mamă, apoi regula din profil. Profilul se ia de pe contactul
+facturat; dacă acesta nu are profil propriu, se folosește profilul firmei-mamă.
 
 ![Tab-ul e-Factura XML pe client](screenshots/03_partener_efactura_xml.png)
 
@@ -328,6 +334,8 @@ clientului pe factură, codurile articolelor la client.
 - [ ] O regulă BT-11 cu „Se aplică pe” = Note de credit este refuzată la salvare.
 - [ ] XML-ul unei facturi cu Referință Client conține acea referință în `cac:OrderReference/cbc:ID`.
 - [ ] Regula BT-12 de pe client apare în `cac:ContractDocumentReference/cbc:ID`.
+- [ ] După arhivarea profilului, regulile lui nu mai apar în XML; un profil cu altă companie nu apare
+      în lista de profiluri când lucrați doar în această companie.
 - [ ] Fiecare linie are `cac:BuyersItemIdentification/cbc:ID` cu codul articolului la client.
 - [ ] `cbc:BuyerReference` lipsește când clientul are regula „Elimină tag-ul” pe BT-10.
 - [ ] O regulă pe contactul facturat are prioritate față de regula firmei-mamă pentru același tag.

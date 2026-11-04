@@ -1,7 +1,7 @@
 # Romania - Adeverințe salariale (localizat la `l10n_ro_payroll_certificates/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_payroll_certificates`
-- **Versiune:** `19.0.1.3.2`
+- **Versiune:** `19.0.1.3.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_certificates
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_payroll_certificates`
 - **Ultima Ingestie:** `2026-10-16`

@@ -1,10 +1,11 @@
 # Website VAT Validation (localizat la `deltatech_website_vat_validation/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_vat_validation`
-- **Versiune:** `19.0.0.2.0`
+- **Versiune:** `19.0.0.2.1`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_vat_validation`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_vat_validation`
 - **Ultima Ingestie:** `2026-10-12`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

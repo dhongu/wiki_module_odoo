@@ -1,7 +1,7 @@
 # Romania - D112 ANAF: punte salarizare Odoo (localizat la `l10n_ro_anaf_d112_payroll/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d112_payroll`
-- **Versiune:** `19.0.1.15.2`
+- **Versiune:** `19.0.1.15.4`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112_payroll
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112_payroll`
 - **Ultima Ingestie:** 2026-10-22

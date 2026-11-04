@@ -1,10 +1,11 @@
 # DPD Romania Shipping (localizat la `deltatech_delivery_dpd/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_dpd`
-- **Versiune:** `19.0.0.6.7`
+- **Versiune:** `19.0.0.7.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_dpd
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_dpd`
 - **Ultima Ingestie:** `2026-10-22`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

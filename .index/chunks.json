@@ -72,7 +72,7 @@
   {
     "path": "deltatech_account_analytic/index.md",
     "module": "deltatech_account_analytic",
-    "version": "19.0.0.0.10",
+    "version": "19.0.0.0.11",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_account_analytic",
     "local_path": "odoo-addons/deltatech/deltatech_account_analytic",
     "last_ingest": "2026-08-20",
@@ -1793,28 +1793,32 @@
   {
     "path": "deltatech_brand_field/index.md",
     "module": "deltatech_brand_field",
-    "version": "19.0.0.0.7",
+    "version": "19.0.0.1.0",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_brand_field",
     "local_path": "odoo-addons/bitshop/deltatech_brand_field",
-    "last_ingest": "2026-10-31",
-    "friendly_name": "Câmp Marcă Produs (Deltatech Brand Field)",
-    "summary": "Acest modul oferă un mecanism centralizat pentru gestionarea mărcilor de produse în mai multe module Odoo, asigurând că toate informațiile legate de marcă sunt stocate într-un câmp dedicat, consecvent. Din perspectivă de business, modulul rezolvă complexitatea generată de faptul că diverse module își definesc propriile câmpuri de marcă, creând un sistem unificat și ușor de căutat pentru marca produselor, valabil pentru toate funcțiile integrate.",
+    "last_ingest": "2026-11-04",
+    "friendly_name": "Brand Field",
+    "summary": "Modul tehnic care spune celorlalte module în ce câmp al produsului se află marca. Mai multe module (feed-uri de produse, SEO pentru website, Google Tag) au nevoie de marca produsului, dar aceasta poate sta în câmpuri diferite, în funcție de ce e instalat: un Many2one către un model de mărci din alt modul sau un simplu câmp text. În Setări se alege o singură dată numele tehnic al câmpului, iar toate modulele integrate citesc marca din el, prin `brand_name` / `get_brand_name()`.",
     "features": [
-      "Identitate de marcă unificată: consolidează informațiile despre marcă într-un singur câmp standardizat, valabil în toate modulele și procesele Odoo relevante.",
-      "Consecvență îmbunătățită a datelor: asigură uniformitatea datelor de marcă în întregul sistem, ducând la raportări și filtrări mai precise.",
-      "Catalogare îmbunătățită a produselor: construiește o bază de date de produse mai structurată și profesională, ușor de gestionat și de navigat după marcă.",
-      "Aliniere strategică a mărcii: folosește un câmp de marcă consecvent pentru a sprijini strategii mai eficiente de marketing, vânzări și inventar.",
-      "Gestionare scalabilă: permite administrarea cu ușurință a unui număr mare de mărci de produse dintr-o locație centrală, facilitând extinderea catalogului.",
-      "Câmp de marcă configurabil: în setările Website se alege câmpul de produs folosit ca marcă (parametrul de sistem `product.brand_field`); poate fi atât un câmp Many2one, cât și Char/Text.",
-      "Marcă goală tratată corect: dacă marca nu este completată pe produs (Char/Text sau Many2one), rezultatul este un șir gol, iar feed-urile de produse nu mai răspund cu eroare HTTP 500 (corecție din versiunea `19.0.0.0.6`)."
+      "O singură setare pentru toate modulele integrate, în loc de un câmp de marcă pentru fiecare modul. Se completează în Website → Configurare → Setări, secțiunea „Shop - Products\", la Brand Field (parametrul de sistem `product.brand_field`), cu numele tehnic al câmpului de produs care ține marca (de exemplu `product_brand_id` din `deltatech_product_brand`).",
+      "Funcționează cu câmpuri Many2one (se folosește numele mărcii) și cu câmpuri Char/Text.",
+      "**Rezervă pe atributul cu rolul *Brand***: dacă în câmpul configurat marca lipsește sau e goală pe produs, se folosește valoarea atributului de produs cu rolul *Brand* (din `deltatech_product_attribute_role`), astfel încât și marca ținută ca atribut (Barcode Lookup, importuri) ajunge în feed-uri și în marcajul SEO. Se setează la Vânzări → Configurare → Produse → Atribute, câmpul Rol; doar un atribut poate avea rolul. Pe șablonul de produs marca se cunoaște dacă linia de atribut are o singură valoare, iar pe variantă e valoarea variantei pentru atribut.",
+      "Produsele fără marcă întorc o valoare goală; o marcă goală (Char/Text sau Many2one) dă șir gol, iar feed-urile de produse nu mai răspund cu eroare HTTP 500.",
+      "Modulele `deltatech_feed`, `deltatech_website_seo` și `terrabit_google_tag` îl instalează singure; lângă conectorii marketplace eMAG sau Shopify se instalează separat (fără el, conectorul eMAG trimite numele companiei ca marcă).",
+      "După schimbarea setării se apasă Refresh Feeds pe feed, ca acesta să nu fie servit din cache.",
+      "Limitări: modulul nu adaugă un model de mărci sau ecrane de administrare; `brand_name` e calculat și nestocat, deci nu poate fi folosit în căutări, filtre sau grupări. Numele câmpului din Setări nu e validat: un nume greșit dă marcă goală peste tot, cu excepția produselor cu atribut de marcă. Căsuța „Module Brand Field\" trebuie lăsată bifată: debifarea și salvarea deschide fereastra de dezinstalare a modulului."
     ],
     "dependencies": [
-      "website_sale_stock"
+      "website_sale_stock",
+      "deltatech_product_attribute_role"
     ],
     "connections": [
-      "deltatech_feed"
+      "deltatech_feed",
+      "deltatech_product_attribute_role",
+      "deltatech_product_brand",
+      "product_brand_id"
     ],
-    "text": "Câmp Marcă Produs (Deltatech Brand Field)\ndeltatech_brand_field\nAcest modul oferă un mecanism centralizat pentru gestionarea mărcilor de produse în mai multe module Odoo, asigurând că toate informațiile legate de marcă sunt stocate într-un câmp dedicat, consecvent. Din perspectivă de business, modulul rezolvă complexitatea generată de faptul că diverse module își definesc propriile câmpuri de marcă, creând un sistem unificat și ușor de căutat pentru marca produselor, valabil pentru toate funcțiile integrate.\nIdentitate de marcă unificată: consolidează informațiile despre marcă într-un singur câmp standardizat, valabil în toate modulele și procesele Odoo relevante.\nConsecvență îmbunătățită a datelor: asigură uniformitatea datelor de marcă în întregul sistem, ducând la raportări și filtrări mai precise.\nCatalogare îmbunătățită a produselor: construiește o bază de date de produse mai structurată și profesională, ușor de gestionat și de navigat după marcă.\nAliniere strategică a mărcii: folosește un câmp de marcă consecvent pentru a sprijini strategii mai eficiente de marketing, vânzări și inventar.\nGestionare scalabilă: permite administrarea cu ușurință a unui număr mare de mărci de produse dintr-o locație centrală, facilitând extinderea catalogului.\nCâmp de marcă configurabil: în setările Website se alege câmpul de produs folosit ca marcă (parametrul de sistem `product.brand_field`); poate fi atât un câmp Many2one, cât și Char/Text.\nMarcă goală tratată corect: dacă marca nu este completată pe produs (Char/Text sau Many2one), rezultatul este un șir gol, iar feed-urile de produse nu mai răspund cu eroare HTTP 500 (corecție din versiunea `19.0.0.0.6`)."
+    "text": "Brand Field\ndeltatech_brand_field\nModul tehnic care spune celorlalte module în ce câmp al produsului se află marca. Mai multe module (feed-uri de produse, SEO pentru website, Google Tag) au nevoie de marca produsului, dar aceasta poate sta în câmpuri diferite, în funcție de ce e instalat: un Many2one către un model de mărci din alt modul sau un simplu câmp text. În Setări se alege o singură dată numele tehnic al câmpului, iar toate modulele integrate citesc marca din el, prin `brand_name` / `get_brand_name()`.\nO singură setare pentru toate modulele integrate, în loc de un câmp de marcă pentru fiecare modul. Se completează în Website → Configurare → Setări, secțiunea „Shop - Products\", la Brand Field (parametrul de sistem `product.brand_field`), cu numele tehnic al câmpului de produs care ține marca (de exemplu `product_brand_id` din `deltatech_product_brand`).\nFuncționează cu câmpuri Many2one (se folosește numele mărcii) și cu câmpuri Char/Text.\n**Rezervă pe atributul cu rolul *Brand***: dacă în câmpul configurat marca lipsește sau e goală pe produs, se folosește valoarea atributului de produs cu rolul *Brand* (din `deltatech_product_attribute_role`), astfel încât și marca ținută ca atribut (Barcode Lookup, importuri) ajunge în feed-uri și în marcajul SEO. Se setează la Vânzări → Configurare → Produse → Atribute, câmpul Rol; doar un atribut poate avea rolul. Pe șablonul de produs marca se cunoaște dacă linia de atribut are o singură valoare, iar pe variantă e valoarea variantei pentru atribut.\nProdusele fără marcă întorc o valoare goală; o marcă goală (Char/Text sau Many2one) dă șir gol, iar feed-urile de produse nu mai răspund cu eroare HTTP 500.\nModulele `deltatech_feed`, `deltatech_website_seo` și `terrabit_google_tag` îl instalează singure; lângă conectorii marketplace eMAG sau Shopify se instalează separat (fără el, conectorul eMAG trimite numele companiei ca marcă).\nDupă schimbarea setării se apasă Refresh Feeds pe feed, ca acesta să nu fie servit din cache.\nLimitări: modulul nu adaugă un model de mărci sau ecrane de administrare; `brand_name` e calculat și nestocat, deci nu poate fi folosit în căutări, filtre sau grupări. Numele câmpului din Setări nu e validat: un nume greșit dă marcă goală peste tot, cu excepția produselor cu atribut de marcă. Căsuța „Module Brand Field\" trebuie lăsată bifată: debifarea și salvarea deschide fereastra de dezinstalare a modulului."
   },
   {
     "path": "deltatech_business_process/index.md",
@@ -2040,7 +2044,7 @@
   {
     "path": "deltatech_change_uom/index.md",
     "module": "deltatech_change_uom",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_change_uom",
     "local_path": "odoo-addons/deltatech/deltatech_change_uom",
     "last_ingest": "2026-10-22",
@@ -2306,7 +2310,7 @@
   {
     "path": "deltatech_cmr_document/index.md",
     "module": "deltatech_cmr_document",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_cmr_document",
     "local_path": "odoo-addons/bitshop/deltatech_cmr_document",
     "last_ingest": "2026-08-20",
@@ -2338,7 +2342,7 @@
   {
     "path": "deltatech_competitors_price/index.md",
     "module": "deltatech_competitors_price",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_competitors_price",
     "local_path": "odoo-addons/deltatech/deltatech_competitors_price",
     "last_ingest": "2026-07-31",
@@ -2364,7 +2368,7 @@
   {
     "path": "deltatech_contact/index.md",
     "module": "deltatech_contact",
-    "version": "19.0.1.4.12",
+    "version": "19.0.1.4.14",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_contact`",
     "local_path": "odoo-addons/deltatech/deltatech_contact",
     "last_ingest": "2026-08-20",
@@ -3099,7 +3103,7 @@
   {
     "path": "deltatech_delivery_dpd/index.md",
     "module": "deltatech_delivery_dpd",
-    "version": "19.0.0.6.7",
+    "version": "19.0.0.7.0",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_dpd",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_dpd",
     "last_ingest": "2026-10-22",
@@ -4069,7 +4073,7 @@
   {
     "path": "deltatech_doc_screenshots/index.md",
     "module": "deltatech_doc_screenshots",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.2.0",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_doc_screenshots",
     "local_path": "odoo-addons/deltatech/deltatech_doc_screenshots",
     "last_ingest": "2026-10-30",
@@ -4240,7 +4244,7 @@
   {
     "path": "deltatech_edi/index.md",
     "module": "deltatech_edi",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edi",
     "local_path": "odoo-addons/bitshop/deltatech_edi",
     "last_ingest": "2026-09-29",
@@ -4306,7 +4310,7 @@
   {
     "path": "deltatech_edinet/index.md",
     "module": "deltatech_edinet",
-    "version": "19.0.1.6.7",
+    "version": "19.0.1.6.8",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edinet`",
     "local_path": "odoo-addons/bitshop/deltatech_edinet",
     "last_ingest": "2026-09-29",
@@ -4521,7 +4525,7 @@
   {
     "path": "deltatech_feed/index.md",
     "module": "deltatech_feed",
-    "version": "19.0.3.7.1",
+    "version": "19.0.3.8.0",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_feed",
     "local_path": "odoo-addons/bitshop/deltatech_feed",
     "last_ingest": "2026-10-22",
@@ -5090,7 +5094,7 @@
   {
     "path": "deltatech_invoice_number/index.md",
     "module": "deltatech_invoice_number",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_number",
     "local_path": "odoo-addons/deltatech/deltatech_invoice_number",
     "last_ingest": "2026-07-31",
@@ -5195,15 +5199,18 @@
   {
     "path": "deltatech_invoice_receipt/index.md",
     "module": "deltatech_invoice_receipt",
-    "version": "19.0.2.0.4",
+    "version": "19.0.2.0.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_receipt",
     "local_path": "odoo-addons/deltatech/deltatech_invoice_receipt",
-    "last_ingest": "2026-06-02",
-    "friendly_name": "Deltatech Invoice Receipt",
-    "summary": "Modulul automatizează crearea documentelor de aprovizionare pornind de la o factură de achiziție. Atunci când o factură de furnizor este validată, modulul generează automat comanda de achiziție și recepția aferentă, eliminând introducerea manuală a acestor documente. Este util în situațiile în care factura sosește înaintea recepției efective sau când fluxul de lucru pornește direct de la factură, asigurând astfel coerența între documentele contabile și cele de stoc.",
+    "last_ingest": "2026-11-04",
+    "friendly_name": "Invoice Receipt",
+    "summary": "Modulul permite recepția mărfii în stoc pornind de la factura de furnizor: când factura conține produse stocabile care nu se află pe nicio comandă de achiziție, modulul creează comanda de achiziție, iar recepția se validează la postarea facturii. Elimină introducerea manuală a acestor documente și păstrează coerența dintre documentele contabile și cele de stoc, mai ales când factura sosește înaintea recepției.",
     "features": [
-      "Generarea automată a unei comenzi de achiziție și a unei recepții la validarea unei facturi de furnizor.",
-      "Permite cantități negative în comanda de achiziție (necesar pentru ajustări sau retururi)."
+      "Comandă de achiziție creată din factură: la Confirmă pe o factură de furnizor, fiecare linie cu produs stocabil care nu e legată de o comandă de achiziție este pusă pe o comandă: una nouă, cu furnizorul, data, referința, poziția fiscală și moneda facturii, sau, dacă celelalte linii ale facturii provin deja dintr-o singură comandă, acea comandă. Liniile comenzii preiau produsul, unitatea, cantitatea, prețul unitar, discountul și taxele liniilor facturii, iar liniile facturii se leagă de ele. Pe factură se postează o notă cu link către comanda nouă. Dacă lipsește data facturii, apare eroare.",
+      "Confirmarea comenzii, apoi postarea facturii: comanda nouă rămâne cerere de ofertă, deci postarea se oprește cu mesajul *Please confirm purchase order before posting invoice*. Se deschide comanda, se apasă Confirmă comanda, apoi se apasă din nou Confirmă pe factură.",
+      "Recepție validată odată cu factura: la postarea facturii se validează recepțiile comenzilor create din facturi, cu cantitățile comandate, iar mișcările de stoc sunt datate la data comenzii (data facturii).",
+      "Cantități negative pe comanda de achiziție: o linie cu cantitate negativă a unui produs stocabil creează, la confirmarea comenzii, un transfer separat de retur către furnizor, cu tipul de operațiune de retur al recepției. Dacă ulterior se mărește cantitatea negativă, se adaugă la retur doar diferența.",
+      "Limitări: comanda și recepția automate funcționează doar pentru facturile de furnizor (notele de credit nu se procesează la postare); liniile adăugate pe o comandă obișnuită (nu cea creată din factură) nu se recepționează automat; comanda nu se confirmă automat."
     ],
     "dependencies": [
       "purchase_stock"
@@ -5211,7 +5218,7 @@
     "connections": [
       "deltatech_invoice_picking"
     ],
-    "text": "Deltatech Invoice Receipt\ndeltatech_invoice_receipt\nModulul automatizează crearea documentelor de aprovizionare pornind de la o factură de achiziție. Atunci când o factură de furnizor este validată, modulul generează automat comanda de achiziție și recepția aferentă, eliminând introducerea manuală a acestor documente. Este util în situațiile în care factura sosește înaintea recepției efective sau când fluxul de lucru pornește direct de la factură, asigurând astfel coerența între documentele contabile și cele de stoc.\nGenerarea automată a unei comenzi de achiziție și a unei recepții la validarea unei facturi de furnizor.\nPermite cantități negative în comanda de achiziție (necesar pentru ajustări sau retururi)."
+    "text": "Invoice Receipt\ndeltatech_invoice_receipt\nModulul permite recepția mărfii în stoc pornind de la factura de furnizor: când factura conține produse stocabile care nu se află pe nicio comandă de achiziție, modulul creează comanda de achiziție, iar recepția se validează la postarea facturii. Elimină introducerea manuală a acestor documente și păstrează coerența dintre documentele contabile și cele de stoc, mai ales când factura sosește înaintea recepției.\nComandă de achiziție creată din factură: la Confirmă pe o factură de furnizor, fiecare linie cu produs stocabil care nu e legată de o comandă de achiziție este pusă pe o comandă: una nouă, cu furnizorul, data, referința, poziția fiscală și moneda facturii, sau, dacă celelalte linii ale facturii provin deja dintr-o singură comandă, acea comandă. Liniile comenzii preiau produsul, unitatea, cantitatea, prețul unitar, discountul și taxele liniilor facturii, iar liniile facturii se leagă de ele. Pe factură se postează o notă cu link către comanda nouă. Dacă lipsește data facturii, apare eroare.\nConfirmarea comenzii, apoi postarea facturii: comanda nouă rămâne cerere de ofertă, deci postarea se oprește cu mesajul *Please confirm purchase order before posting invoice*. Se deschide comanda, se apasă Confirmă comanda, apoi se apasă din nou Confirmă pe factură.\nRecepție validată odată cu factura: la postarea facturii se validează recepțiile comenzilor create din facturi, cu cantitățile comandate, iar mișcările de stoc sunt datate la data comenzii (data facturii).\nCantități negative pe comanda de achiziție: o linie cu cantitate negativă a unui produs stocabil creează, la confirmarea comenzii, un transfer separat de retur către furnizor, cu tipul de operațiune de retur al recepției. Dacă ulterior se mărește cantitatea negativă, se adaugă la retur doar diferența.\nLimitări: comanda și recepția automate funcționează doar pentru facturile de furnizor (notele de credit nu se procesează la postare); liniile adăugate pe o comandă obișnuită (nu cea creată din factură) nu se recepționează automat; comanda nu se confirmă automat."
   },
   {
     "path": "deltatech_invoice_report/index.md",
@@ -5261,17 +5268,19 @@
   {
     "path": "deltatech_invoice_weight/index.md",
     "module": "deltatech_invoice_weight",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_weight",
     "local_path": "odoo-addons/deltatech/deltatech_invoice_weight",
-    "last_ingest": "2026-06-02",
+    "last_ingest": "2026-11-04",
     "friendly_name": "Invoice Weight",
-    "summary": "Modulul adaugă urmărirea greutății logistice direct în sistemele de facturare și de gestiune a comenzilor din Odoo. Este destinat companiilor care au nevoie să monitorizeze și să raporteze greutatea netă și greutatea brută totală a articolelor facturate, achiziționate sau vândute, oferind astfel o transparență suplimentară pentru operațiunile logistice și de transport.",
+    "summary": "Modulul afișează greutatea netă și brută totală a mărfurilor pe comenzile de vânzare, comenzile de achiziție și facturi și tipărește greutățile pe factură, pentru documentele de transport și pentru cererile clienților. Este util companiilor care trebuie să raporteze greutatea articolelor facturate, achiziționate sau vândute.",
     "features": [
-      "Câmpuri de greutate pe documente: adaugă câmpurile Greutate Netă și Greutate Brută pe facturi, comenzi de achiziție și comenzi de vânzare, cu calculul automat al greutăților totale ale documentului pe baza articolelor incluse.",
-      "Raportare și analiză: activează raportarea pe bază de greutate în vizualizarea de analiză a facturilor și suportă vizualizări de tip Pivot, permițând agregarea greutăților pe partener, produs sau perioadă.",
-      "Greutate pe raportul tipărit: afișează informațiile de greutate pe raportul tipărit al facturii, pentru transparență logistică.",
-      "Consistență între documente: asigură menținerea și transferul corect al datelor de greutate între documentele de vânzare/achiziție și factura finală."
+      "Greutăți pe documente: adaugă Gross Weight și Net Weight pe comenzile de vânzare și de achiziție (într-o filă nouă Weight) și pe facturi (în fila *Other Info*, după *Fiscal Position*). Facturile primesc și câmpul Package Weight, completat manual.",
+      "Calcul la crearea documentului: totalurile sunt suma pe liniile de produs; cantitatea liniei se convertește în unitatea de măsură a produsului și se înmulțește cu greutatea produsului (o duzină dintr-un produs de 2 kg dă 24 kg). Greutatea brută vine din câmpul standard Weight al produsului și se convertește în kg când greutățile sunt configurate în livre. Greutatea netă vine din câmpul `l10n_ro_net_weight` al produsului; modulul nu îl afișează pe formularul produsului, ci alte module (de exemplu localizarea română de stoc).",
+      "Totaluri editabile: câmpurile de greutate sunt câmpuri obișnuite, deci pot fi corectate manual pe document.",
+      "Greutate pe factura tipărită: când factura are greutate brută, greutățile brută și netă se tipăresc sub comunicarea de plată.",
+      "Configurare: Weight se setează pe fiecare produs, fila *Inventory*; unitatea de greutate (kilograme sau livre) se alege la Inventar → Configurare → Setări.",
+      "Limitări: greutățile se calculează o singură dată, la crearea comenzii sau a facturii, deci liniile adăugate sau modificate ulterior nu le actualizează; greutățile nu sunt disponibile în *Analiza facturilor* sau în rapoartele de analiză a vânzărilor și achizițiilor (corecție față de descrierea veche, care promitea analiză pivot); pe factura tipărită greutatea netă apare cu eticheta „New weight\"."
     ],
     "dependencies": [
       "account",
@@ -5280,12 +5289,11 @@
       "sale"
     ],
     "connections": [
-      "account",
-      "purchase",
-      "stock",
-      "sale"
+      "l10n_ro_hide_net_weight",
+      "l10n_ro_net_weight",
+      "l10n_ro_stock_base"
     ],
-    "text": "Invoice Weight\ndeltatech_invoice_weight\nModulul adaugă urmărirea greutății logistice direct în sistemele de facturare și de gestiune a comenzilor din Odoo. Este destinat companiilor care au nevoie să monitorizeze și să raporteze greutatea netă și greutatea brută totală a articolelor facturate, achiziționate sau vândute, oferind astfel o transparență suplimentară pentru operațiunile logistice și de transport.\nCâmpuri de greutate pe documente: adaugă câmpurile Greutate Netă și Greutate Brută pe facturi, comenzi de achiziție și comenzi de vânzare, cu calculul automat al greutăților totale ale documentului pe baza articolelor incluse.\nRaportare și analiză: activează raportarea pe bază de greutate în vizualizarea de analiză a facturilor și suportă vizualizări de tip Pivot, permițând agregarea greutăților pe partener, produs sau perioadă.\nGreutate pe raportul tipărit: afișează informațiile de greutate pe raportul tipărit al facturii, pentru transparență logistică.\nConsistență între documente: asigură menținerea și transferul corect al datelor de greutate între documentele de vânzare/achiziție și factura finală."
+    "text": "Invoice Weight\ndeltatech_invoice_weight\nModulul afișează greutatea netă și brută totală a mărfurilor pe comenzile de vânzare, comenzile de achiziție și facturi și tipărește greutățile pe factură, pentru documentele de transport și pentru cererile clienților. Este util companiilor care trebuie să raporteze greutatea articolelor facturate, achiziționate sau vândute.\nGreutăți pe documente: adaugă Gross Weight și Net Weight pe comenzile de vânzare și de achiziție (într-o filă nouă Weight) și pe facturi (în fila *Other Info*, după *Fiscal Position*). Facturile primesc și câmpul Package Weight, completat manual.\nCalcul la crearea documentului: totalurile sunt suma pe liniile de produs; cantitatea liniei se convertește în unitatea de măsură a produsului și se înmulțește cu greutatea produsului (o duzină dintr-un produs de 2 kg dă 24 kg). Greutatea brută vine din câmpul standard Weight al produsului și se convertește în kg când greutățile sunt configurate în livre. Greutatea netă vine din câmpul `l10n_ro_net_weight` al produsului; modulul nu îl afișează pe formularul produsului, ci alte module (de exemplu localizarea română de stoc).\nTotaluri editabile: câmpurile de greutate sunt câmpuri obișnuite, deci pot fi corectate manual pe document.\nGreutate pe factura tipărită: când factura are greutate brută, greutățile brută și netă se tipăresc sub comunicarea de plată.\nConfigurare: Weight se setează pe fiecare produs, fila *Inventory*; unitatea de greutate (kilograme sau livre) se alege la Inventar → Configurare → Setări.\nLimitări: greutățile se calculează o singură dată, la crearea comenzii sau a facturii, deci liniile adăugate sau modificate ulterior nu le actualizează; greutățile nu sunt disponibile în *Analiza facturilor* sau în rapoartele de analiză a vânzărilor și achizițiilor (corecție față de descrierea veche, care promitea analiză pivot); pe factura tipărită greutatea netă apare cu eticheta „New weight\"."
   },
   {
     "path": "deltatech_keez/index.md",
@@ -5428,17 +5436,23 @@
   {
     "path": "deltatech_logistic_docs/index.md",
     "module": "deltatech_logistic_docs",
-    "version": "19.0.1.0.4",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_logistic_docs`",
+    "version": "19.0.1.0.5",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_logistic_docs",
     "local_path": "odoo-addons/deltatech/deltatech_logistic_docs",
-    "last_ingest": "2026-06-02",
+    "last_ingest": "2026-11-04",
     "friendly_name": "Logistic Documents",
-    "summary": "Acest modul oferă un depozit centralizat pentru documentația logistică și de transport în Odoo. Este conceput pentru a simplifica gestionarea documentelor fizice (precum scrisori de trăsură CMR, certificate de origine sau avize de însoțire a mărfii) de-a lungul diferitelor etape ale lanțului de aprovizionare. În loc ca fișierele să fie risipite pe comenzi, livrări și facturi separate, echipele de logistică au un singur loc din care pot accesa și verifica toate documentele relevante pentru o expediere sau o tranzacție.",
+    "summary": "Documentele de expediere (CMR, certificate de origine, avize semnate) sunt adesea atașate altei înregistrări decât cea deschisă de utilizator: CMR-ul pe livrare, certificatul pe comanda de achiziție, PDF-ul furnizorului pe factură. Modulul arată, din orice document al fluxului, și fișierele atașate documentelor înrudite, astfel încât echipele de logistică găsesc într-un singur loc tot ce ține de o expediere sau o tranzacție.",
     "features": [
-      "Hub unificat de documentație: adaugă o vizualizare dedicată Documente Logistică care agregă atașamentele din mai multe modele și urmărește documentele legate de Comenzi de Vânzare, Comenzi de Achiziție, Transferuri de Stoc și Facturi într-un singur loc.",
-      "Legare inteligentă: identifică și leagă automat documentele pe baza fluxului logic al documentelor Odoo (de la Comandă la Livrare și apoi la Factură), permițând echipelor de logistică să acceseze rapid toate fișierele relevante pentru o anumită expediere sau tranzacție.",
-      "Categorizarea documentelor: permite etichetarea și clasificarea fișierelor logistice pentru o filtrare și o căutare mai ușoară în timpul auditurilor.",
-      "Utilizare: documentele se accesează dintr-un meniu dedicat, cu opțiuni de căutare și filtrare după Partener, Comandă sau Livrare; fișierele noi se încarcă direct pe documentul relevant (comandă de vânzare, livrare etc.) și apar în vizualizatorul central, de unde pot fi descărcate sau vizualizate pentru verificare în timpul procesului de expediere și livrare."
+      "Buton inteligent „Documents” pe formularul comenzii de vânzare, comenzii de achiziție, transferului și facturii sau facturii de furnizor. Arată numărul de atașamente găsite de-a lungul fluxului și le deschide în vizualizare kanban, listă sau formular.",
+      "Atașamente colectate de-a lungul fluxului:",
+      "*Comanda de vânzare*: atașamentele proprii, ale transferurilor și ale facturilor ei.",
+      "*Comanda de achiziție*: atașamentele proprii, ale recepțiilor și ale facturilor de furnizor.",
+      "*Transferul*: atașamentele proprii, ale comenzii de vânzare sau de achiziție asociate și ale facturilor comenzii.",
+      "*Factura sau factura de furnizor*: atașamentele proprii și ale comenzilor de vânzare și de achiziție legate de liniile ei, împreună cu transferurile lor. Pentru alte note contabile se numără doar atașamentele proprii.",
+      "Fișiere noi pe documentul potrivit: un atașament creat din vizualizarea deschisă de buton este legat implicit de documentul pe care s-a apăsat butonul.",
+      "Buton „Download” pe cardul kanban al atașamentului; fișierele cu extensia `.zplpdf` se descarcă ca date brute, pentru imprimantele de etichete.",
+      "Factura originală de furnizor: dacă o factură de furnizor nu are atașament principal, raportul „Original Vendor Bill” folosește primul atașament găsit în fluxul documentelor.",
+      "Modulul nu adaugă meniu și nu necesită configurare. Corecție față de descrierea veche: nu există un meniu central „Documente Logistică” și nici etichetare/categorizare a documentelor."
     ],
     "dependencies": [
       "purchase_stock",
@@ -5447,7 +5461,7 @@
     "connections": [
       "deltatech_invoice_picking"
     ],
-    "text": "Logistic Documents\ndeltatech_logistic_docs\nAcest modul oferă un depozit centralizat pentru documentația logistică și de transport în Odoo. Este conceput pentru a simplifica gestionarea documentelor fizice (precum scrisori de trăsură CMR, certificate de origine sau avize de însoțire a mărfii) de-a lungul diferitelor etape ale lanțului de aprovizionare. În loc ca fișierele să fie risipite pe comenzi, livrări și facturi separate, echipele de logistică au un singur loc din care pot accesa și verifica toate documentele relevante pentru o expediere sau o tranzacție.\nHub unificat de documentație: adaugă o vizualizare dedicată Documente Logistică care agregă atașamentele din mai multe modele și urmărește documentele legate de Comenzi de Vânzare, Comenzi de Achiziție, Transferuri de Stoc și Facturi într-un singur loc.\nLegare inteligentă: identifică și leagă automat documentele pe baza fluxului logic al documentelor Odoo (de la Comandă la Livrare și apoi la Factură), permițând echipelor de logistică să acceseze rapid toate fișierele relevante pentru o anumită expediere sau tranzacție.\nCategorizarea documentelor: permite etichetarea și clasificarea fișierelor logistice pentru o filtrare și o căutare mai ușoară în timpul auditurilor.\nUtilizare: documentele se accesează dintr-un meniu dedicat, cu opțiuni de căutare și filtrare după Partener, Comandă sau Livrare; fișierele noi se încarcă direct pe documentul relevant (comandă de vânzare, livrare etc.) și apar în vizualizatorul central, de unde pot fi descărcate sau vizualizate pentru verificare în timpul procesului de expediere și livrare."
+    "text": "Logistic Documents\ndeltatech_logistic_docs\nDocumentele de expediere (CMR, certificate de origine, avize semnate) sunt adesea atașate altei înregistrări decât cea deschisă de utilizator: CMR-ul pe livrare, certificatul pe comanda de achiziție, PDF-ul furnizorului pe factură. Modulul arată, din orice document al fluxului, și fișierele atașate documentelor înrudite, astfel încât echipele de logistică găsesc într-un singur loc tot ce ține de o expediere sau o tranzacție.\nButon inteligent „Documents” pe formularul comenzii de vânzare, comenzii de achiziție, transferului și facturii sau facturii de furnizor. Arată numărul de atașamente găsite de-a lungul fluxului și le deschide în vizualizare kanban, listă sau formular.\nAtașamente colectate de-a lungul fluxului:\n*Comanda de vânzare*: atașamentele proprii, ale transferurilor și ale facturilor ei.\n*Comanda de achiziție*: atașamentele proprii, ale recepțiilor și ale facturilor de furnizor.\n*Transferul*: atașamentele proprii, ale comenzii de vânzare sau de achiziție asociate și ale facturilor comenzii.\n*Factura sau factura de furnizor*: atașamentele proprii și ale comenzilor de vânzare și de achiziție legate de liniile ei, împreună cu transferurile lor. Pentru alte note contabile se numără doar atașamentele proprii.\nFișiere noi pe documentul potrivit: un atașament creat din vizualizarea deschisă de buton este legat implicit de documentul pe care s-a apăsat butonul.\nButon „Download” pe cardul kanban al atașamentului; fișierele cu extensia `.zplpdf` se descarcă ca date brute, pentru imprimantele de etichete.\nFactura originală de furnizor: dacă o factură de furnizor nu are atașament principal, raportul „Original Vendor Bill” folosește primul atașament găsit în fluxul documentelor.\nModulul nu adaugă meniu și nu necesită configurare. Corecție față de descrierea veche: nu există un meniu central „Documente Logistică” și nici etichetare/categorizare a documentelor."
   },
   {
     "path": "deltatech_lot/index.md",
@@ -5518,7 +5532,7 @@
   {
     "path": "deltatech_marketplace/index.md",
     "module": "deltatech_marketplace",
-    "version": "19.0.1.42.7",
+    "version": "19.0.1.43.0",
     "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace`",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace",
     "last_ingest": "2026-10-27",
@@ -6141,7 +6155,7 @@
   {
     "path": "deltatech_marketplace_purchase/index.md",
     "module": "deltatech_marketplace_purchase",
-    "version": "19.0.1.0.8",
+    "version": "19.0.1.0.9",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_purchase",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_purchase",
     "last_ingest": "2026-08-20",
@@ -6310,7 +6324,7 @@
   {
     "path": "deltatech_marketplace_shopify/index.md",
     "module": "deltatech_marketplace_shopify",
-    "version": "19.0.1.8.14",
+    "version": "19.0.1.8.15",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_shopify",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_shopify",
     "last_ingest": "2026-10-09",
@@ -6658,7 +6672,7 @@
   {
     "path": "deltatech_mrp/index.md",
     "module": "deltatech_mrp",
-    "version": "19.0.1.0.9",
+    "version": "19.0.1.0.10",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp`",
     "local_path": "odoo-addons/deltatech/deltatech_mrp",
     "last_ingest": "2026-10-27",
@@ -6779,7 +6793,7 @@
   {
     "path": "deltatech_mrp_concentration/index.md",
     "module": "deltatech_mrp_concentration",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_concentration",
     "local_path": "odoo-addons/deltatech/deltatech_mrp_concentration",
     "last_ingest": "2026-06-02",
@@ -6855,7 +6869,7 @@
   {
     "path": "deltatech_mrp_simple/index.md",
     "module": "deltatech_mrp_simple",
-    "version": "19.0.1.1.4",
+    "version": "19.0.1.1.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_simple",
     "local_path": "odoo-addons/deltatech/deltatech_mrp_simple",
     "last_ingest": "2026-10-26",
@@ -7011,7 +7025,7 @@
   {
     "path": "deltatech_notification_sound/index.md",
     "module": "deltatech_notification_sound",
-    "version": "19.0.2.0.3",
+    "version": "19.0.2.0.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_notification_sound",
     "local_path": "odoo-addons/deltatech/deltatech_notification_sound",
     "last_ingest": "2026-08-20",
@@ -7157,7 +7171,7 @@
   {
     "path": "deltatech_partner_generic/index.md",
     "module": "deltatech_partner_generic",
-    "version": "19.0.2.0.2",
+    "version": "19.0.2.0.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_partner_generic",
     "local_path": "odoo-addons/deltatech/deltatech_partner_generic",
     "last_ingest": "2026-08-31",
@@ -7297,7 +7311,7 @@
   {
     "path": "deltatech_partner_merge/index.md",
     "module": "deltatech_partner_merge",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_partner_merge",
     "local_path": "odoo-addons/deltatech/deltatech_partner_merge",
     "last_ingest": "2026-10-27",
@@ -7500,7 +7514,7 @@
   {
     "path": "deltatech_payment_card_dummy/index.md",
     "module": "deltatech_payment_card_dummy",
-    "version": "19.0.0.0.5",
+    "version": "19.0.0.0.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_card_dummy",
     "local_path": "odoo-addons/bitshop/deltatech_payment_card_dummy",
     "last_ingest": "2026-11-01",
@@ -7776,7 +7790,7 @@
   {
     "path": "deltatech_payment_report/index.md",
     "module": "deltatech_payment_report",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.7",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_payment_report",
     "local_path": "odoo-addons/deltatech/deltatech_payment_report",
     "last_ingest": "2026-10-09",
@@ -7962,7 +7976,7 @@
   {
     "path": "deltatech_picking_restrict_entry_exit/index.md",
     "module": "deltatech_picking_restrict_entry_exit",
-    "version": "19.0.0.0.14",
+    "version": "19.0.0.0.15",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_picking_restrict_entry_exit",
     "local_path": "odoo-addons/deltatech/deltatech_picking_restrict_entry_exit",
     "last_ingest": "2026-07-31",
@@ -8028,7 +8042,7 @@
   {
     "path": "deltatech_picking_transit/index.md",
     "module": "deltatech_picking_transit",
-    "version": "19.0.0.0.15",
+    "version": "19.0.0.0.16",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_picking_transit`",
     "local_path": "odoo-addons/deltatech/deltatech_picking_transit",
     "last_ingest": "2026-06-03",
@@ -8055,7 +8069,7 @@
   {
     "path": "deltatech_pos/index.md",
     "module": "deltatech_pos",
-    "version": "19.0.2.13.0",
+    "version": "19.0.2.13.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos",
     "local_path": "odoo-addons/bitshop/deltatech_pos",
     "last_ingest": "2026-10-09",
@@ -8422,7 +8436,7 @@
   {
     "path": "deltatech_pricelist/index.md",
     "module": "deltatech_pricelist",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_pricelist",
     "local_path": "odoo-addons/deltatech/deltatech_pricelist",
     "last_ingest": "2026-07-31",
@@ -8692,7 +8706,7 @@
   {
     "path": "deltatech_product_category_group/index.md",
     "module": "deltatech_product_category_group",
-    "version": "19.0.1.0.9",
+    "version": "19.0.1.0.10",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_category_group`",
     "local_path": "odoo-addons/deltatech/deltatech_product_category_group",
     "last_ingest": "2026-07-31",
@@ -8914,7 +8928,7 @@
   {
     "path": "deltatech_product_trade_markup/index.md",
     "module": "deltatech_product_trade_markup",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_trade_markup",
     "local_path": "odoo-addons/deltatech/deltatech_product_trade_markup",
     "last_ingest": "2026-06-03",
@@ -9180,7 +9194,7 @@
   {
     "path": "deltatech_purchase_mail/index.md",
     "module": "deltatech_purchase_mail",
-    "version": "19.0.1.1.5",
+    "version": "19.0.1.1.6",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_mail`",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_mail",
     "last_ingest": "2026-06-03",
@@ -9516,7 +9530,7 @@
   {
     "path": "deltatech_purchase_xls/index.md",
     "module": "deltatech_purchase_xls",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.7",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_xls`",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_xls",
     "last_ingest": "2026-07-31",
@@ -9538,7 +9552,7 @@
   {
     "path": "deltatech_putaway_strategy/index.md",
     "module": "deltatech_putaway_strategy",
-    "version": "19.0.1.1.3",
+    "version": "19.0.1.1.4",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_putaway_strategy`",
     "local_path": "odoo-addons/deltatech/deltatech_putaway_strategy",
     "last_ingest": "2026-09-29",
@@ -9634,7 +9648,7 @@
   {
     "path": "deltatech_ral/index.md",
     "module": "deltatech_ral",
-    "version": "19.0.1.0.7",
+    "version": "19.0.1.0.8",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_ral`",
     "local_path": "odoo-addons/deltatech/deltatech_ral",
     "last_ingest": "2026-08-20",
@@ -9664,7 +9678,7 @@
   {
     "path": "deltatech_reception_note/index.md",
     "module": "deltatech_reception_note",
-    "version": "19.0.0.1.7",
+    "version": "19.0.0.1.8",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_reception_note`",
     "local_path": "odoo-addons/deltatech/deltatech_reception_note",
     "last_ingest": "2026-08-20",
@@ -10205,7 +10219,7 @@
   {
     "path": "deltatech_sale_activity_report/index.md",
     "module": "deltatech_sale_activity_report",
-    "version": "19.0.1.2.1",
+    "version": "19.0.1.2.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_activity_report",
     "local_path": "odoo-addons/deltatech/deltatech_sale_activity_report",
     "last_ingest": "2026-10-12",
@@ -10232,7 +10246,7 @@
   {
     "path": "deltatech_sale_activity_search/index.md",
     "module": "deltatech_sale_activity_search",
-    "version": "19.0.0.0.2",
+    "version": "19.0.0.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_activity_search",
     "local_path": "odoo-addons/deltatech/deltatech_sale_activity_search",
     "last_ingest": "2026-07-31",
@@ -10639,7 +10653,7 @@
   {
     "path": "deltatech_sale_feedback/index.md",
     "module": "deltatech_sale_feedback",
-    "version": "19.0.1.0.7",
+    "version": "19.0.1.0.8",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_feedback`",
     "local_path": "odoo-addons/deltatech/deltatech_sale_feedback",
     "last_ingest": "2026-06-03",
@@ -10923,7 +10937,7 @@
   {
     "path": "deltatech_sale_pallet_website/index.md",
     "module": "deltatech_sale_pallet_website",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_pallet_website`",
     "local_path": "odoo-addons/deltatech/deltatech_sale_pallet_website",
     "last_ingest": "2026-07-31",
@@ -11074,7 +11088,7 @@
   {
     "path": "deltatech_sale_purchase/index.md",
     "module": "deltatech_sale_purchase",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_purchase",
     "local_path": "odoo-addons/deltatech/deltatech_sale_purchase",
     "last_ingest": "2026-10-26",
@@ -11102,7 +11116,7 @@
   {
     "path": "deltatech_sale_purchase_requisition/index.md",
     "module": "deltatech_sale_purchase_requisition",
-    "version": "19.0.1.1.2",
+    "version": "19.0.1.1.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_purchase_requisition",
     "local_path": "odoo-addons/deltatech/deltatech_sale_purchase_requisition",
     "last_ingest": "2026-11-01",
@@ -11507,7 +11521,7 @@
   {
     "path": "deltatech_sale_xls/index.md",
     "module": "deltatech_sale_xls",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_xls`",
     "local_path": "odoo-addons/deltatech/deltatech_sale_xls",
     "last_ingest": "2026-08-20",
@@ -11552,7 +11566,7 @@
   {
     "path": "deltatech_saleorder_search/index.md",
     "module": "deltatech_saleorder_search",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_saleorder_search`",
     "local_path": "odoo-addons/deltatech/deltatech_saleorder_search",
     "last_ingest": "2026-07-31",
@@ -11916,7 +11930,7 @@
   {
     "path": "deltatech_sms/index.md",
     "module": "deltatech_sms",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sms`",
     "local_path": "odoo-addons/deltatech/deltatech_sms",
     "last_ingest": "2026-06-03",
@@ -11969,15 +11983,18 @@
   {
     "path": "deltatech_stock_account/index.md",
     "module": "deltatech_stock_account",
-    "version": "19.0.1.0.9",
+    "version": "19.0.1.0.10",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_account",
     "local_path": "odoo-addons/deltatech/deltatech_stock_account",
-    "last_ingest": "2026-06-01",
+    "last_ingest": "2026-11-04",
     "friendly_name": "Stock Account Extension",
-    "summary": "Acest modul extinde funcționalitatea de evaluare a stocurilor din Odoo, aducând informația de valoare a stocului direct la nivelul transferurilor de marfă (livrări/recepții). Astfel, utilizatorii care gestionează mișcările de stoc pot vedea imediat valoarea contabilă asociată unui transfer, fără a fi nevoie să caute aceste date în alte rapoarte sau ecrane. Beneficiul principal este o vizibilitate mai bună asupra valorii bunurilor în mișcare, util pentru echipele de logistică și contabilitate.",
+    "summary": "Mici completări la evaluarea stocurilor din Odoo: valoarea fiecărui transfer afișată în lista de transferuri, setările contabile ale unei categorii de produse transmise subcategoriilor și controlul asupra cine poate schimba costul unui produs aflat în stoc. Echipele de logistică și contabilitate văd imediat valoarea bunurilor în mișcare, iar costurile nu pot fi modificate de oricine.",
     "features": [
-      "Adaugă evaluarea stocului la nivelul transferului de marfă (picking).",
-      "Afișează valoarea evaluării stocului direct în formularul transferului."
+      "Valoarea transferurilor: adaugă coloana Amount în lista de transferuri (de exemplu Inventar → Operațiuni → Transferuri → Recepții), cu total la subsol. Suma este totalul Valorii de evaluare a mișcărilor de stoc ale transferului; mișcările neevaluate (de exemplu transferurile interne) contează zero.",
+      "Conturi propagate către subcategorii: când se schimbă Stock Account pe o categorie de produse, setările contabile ale categoriei se copiază în toate subcategoriile: Income Account, Expense Account, Stock Account, Price Difference Account, Stock Journal, Costing Method și Inventory Valuation. Aceeași copiere se poate rula oricând cu acțiunea Propagate Accounts de pe formularul categoriei (mod dezvoltator).",
+      "Setări moștenite de la categoria părinte: la alegerea unei Parent Category, aceleași setări contabile se copiază de la părinte.",
+      "Modificarea costului restricționată: doar utilizatorii din grupul Change Product Price pot schimba Costul unui produs care are cantitate în stoc; ceilalți primesc o eroare de acces. Administratorul e în grup implicit. Utilizatorii se adaugă în grup la Setări → Utilizatori și companii → Grupuri (mod dezvoltator).",
+      "Limitări: valoarea transferului apare doar în lista de transferuri, nu și pe formularul transferului; Stock Variation Account al categoriei nu se propagă."
     ],
     "dependencies": [
       "stock_account"
@@ -11985,7 +12002,7 @@
     "connections": [
       "stock_account"
     ],
-    "text": "Stock Account Extension\ndeltatech_stock_account\nAcest modul extinde funcționalitatea de evaluare a stocurilor din Odoo, aducând informația de valoare a stocului direct la nivelul transferurilor de marfă (livrări/recepții). Astfel, utilizatorii care gestionează mișcările de stoc pot vedea imediat valoarea contabilă asociată unui transfer, fără a fi nevoie să caute aceste date în alte rapoarte sau ecrane. Beneficiul principal este o vizibilitate mai bună asupra valorii bunurilor în mișcare, util pentru echipele de logistică și contabilitate.\nAdaugă evaluarea stocului la nivelul transferului de marfă (picking).\nAfișează valoarea evaluării stocului direct în formularul transferului."
+    "text": "Stock Account Extension\ndeltatech_stock_account\nMici completări la evaluarea stocurilor din Odoo: valoarea fiecărui transfer afișată în lista de transferuri, setările contabile ale unei categorii de produse transmise subcategoriilor și controlul asupra cine poate schimba costul unui produs aflat în stoc. Echipele de logistică și contabilitate văd imediat valoarea bunurilor în mișcare, iar costurile nu pot fi modificate de oricine.\nValoarea transferurilor: adaugă coloana Amount în lista de transferuri (de exemplu Inventar → Operațiuni → Transferuri → Recepții), cu total la subsol. Suma este totalul Valorii de evaluare a mișcărilor de stoc ale transferului; mișcările neevaluate (de exemplu transferurile interne) contează zero.\nConturi propagate către subcategorii: când se schimbă Stock Account pe o categorie de produse, setările contabile ale categoriei se copiază în toate subcategoriile: Income Account, Expense Account, Stock Account, Price Difference Account, Stock Journal, Costing Method și Inventory Valuation. Aceeași copiere se poate rula oricând cu acțiunea Propagate Accounts de pe formularul categoriei (mod dezvoltator).\nSetări moștenite de la categoria părinte: la alegerea unei Parent Category, aceleași setări contabile se copiază de la părinte.\nModificarea costului restricționată: doar utilizatorii din grupul Change Product Price pot schimba Costul unui produs care are cantitate în stoc; ceilalți primesc o eroare de acces. Administratorul e în grup implicit. Utilizatorii se adaugă în grup la Setări → Utilizatori și companii → Grupuri (mod dezvoltator).\nLimitări: valoarea transferului apare doar în lista de transferuri, nu și pe formularul transferului; Stock Variation Account al categoriei nu se propagă."
   },
   {
     "path": "deltatech_stock_analytic/index.md",
@@ -12017,7 +12034,7 @@
   {
     "path": "deltatech_stock_barcode/index.md",
     "module": "deltatech_stock_barcode",
-    "version": "19.0.0.1.4",
+    "version": "19.0.0.1.6",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_stock_barcode",
     "local_path": "odoo-addons/bitshop_ent/deltatech_stock_barcode",
     "last_ingest": "2026-09-29",
@@ -12683,7 +12700,7 @@
   {
     "path": "deltatech_transport_change/index.md",
     "module": "deltatech_transport_change",
-    "version": "19.0.0.1.8",
+    "version": "19.0.0.1.9",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_transport_change`",
     "local_path": "odoo-addons/deltatech/deltatech_transport_change",
     "last_ingest": "2026-06-03",
@@ -12707,7 +12724,7 @@
   {
     "path": "deltatech_uom_domain/index.md",
     "module": "deltatech_uom_domain",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_uom_domain",
     "local_path": "odoo-addons/deltatech/deltatech_uom_domain",
     "last_ingest": "2026-10-22",
@@ -13099,7 +13116,7 @@
   {
     "path": "deltatech_vendor_stock/index.md",
     "module": "deltatech_vendor_stock",
-    "version": "19.0.1.2.1",
+    "version": "19.0.1.2.2",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_vendor_stock`",
     "local_path": "odoo-addons/deltatech/deltatech_vendor_stock",
     "last_ingest": "2026-10-22",
@@ -13180,22 +13197,20 @@
   {
     "path": "deltatech_warehouse_map/index.md",
     "module": "deltatech_warehouse_map",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_warehouse_map",
     "local_path": "odoo-addons/deltatech/deltatech_warehouse_map",
-    "last_ingest": "2026-06-01",
-    "friendly_name": "Deltatech Warehouse Map",
-    "summary": "Modulul oferă o hartă vizuală a depozitului, care permite navigarea ierarhică prin amplasamentele de stoc (niveluri, linii, rafturi, polițe, celule). Pornind de la un amplasament, utilizatorul vede amplasamentele direct subordonate sub formă de rânduri, fiecare rând fiind o bară împărțită în segmente egale pentru nivelul următor, ceea ce permite o explorare rapidă în adâncime. Fiecare segment afișează gradul de ocupare al sub-amplasamentului printr-o bară de progres colorată, astfel încât utilizatorul să identifice imediat zonele aglomerate sau libere. Valoarea de afaceri constă în vizualizarea intuitivă a capacității și ocupării depozitului, facilitând planificarea spațiului și deciziile de stocare.",
+    "last_ingest": "2026-11-04",
+    "friendly_name": "Warehouse Map",
+    "summary": "Într-un depozit organizat ca arbore adânc de amplasamente (zone, linii, rafturi, polițe, celule), lista standard de amplasamente nu arată unde mai este loc. Modulul adaugă o hartă vizuală a ierarhiei de amplasamente, colorată după gradul de ocupare, astfel încât să se vadă dintr-o privire ce rafturi și celule sunt pline și să se poată coborî până la produsele stocate într-o celulă. Valoarea de afaceri constă în planificarea mai ușoară a spațiului și a deciziilor de stocare.",
     "features": [
-      "Hartă generică a depozitului pentru orice amplasament (`stock.location`), în backend prin QWeb: selectarea unui amplasament și afișarea copiilor direcți ca rânduri.",
-      "Fiecare rând este o bară pe toată lățimea, împărțită în segmente egale pentru nivelul următor (nepoți), pentru explorare rapidă în adâncime.",
-      "Clic pe orice segment deschide vizualizarea grafică a sub-amplasamentului respectiv; un link \"Back\" revine la părinte.",
-      "Ocupare vizuală pe fiecare sub-amplasament: fiecare segment conține o bară de progres internă care reprezintă procentul de ocupare.",
-      "Praguri de culoare: verde (<60%), galben (60–90%), roșu (≥90%), cu etichete de contrast ridicat ce afișează numele și valorile `(curent/maxim)` și borduri clare între segmente.",
-      "Urmărirea capacității și ocupării pe `stock.location`: maxim manual pentru amplasamentele frunză, maxim calculat pentru cele non-frunză (sumă a copiilor), cantitate curentă calculată și raport de ocupare = curent/maxim (protejat la împărțirea cu zero).",
-      "Integrare în interfață: buton \"Map\" în vizualizarea listă a Amplasamentelor și buton inteligent \"Open Map\" în formular.",
-      "Meniu: Inventar → Warehouse Map deschide rădăcina Stock în vizualizarea generică.",
-      "Generare opțională de date demo: un hook post-init poate crea o structură ierarhică de probă sub amplasamentul Stock pentru testare rapidă."
+      "Harta amplasamentului: pentru un amplasament ales, fiecare copil apare ca o bară, iar toți descendenții lui sunt afișați dedesubt, nivel cu nivel. Clic pe numele unui amplasament deschide harta cu un nivel mai jos; butonul înapoi din antet revine la părinte.",
+      "Culori de ocupare: fiecare bară este umplută proporțional cu ocuparea amplasamentului și arată procentul și cantitatea curentă. Umplerea este verde sub 60%, galbenă între 60% și 90% și roșie de la 90%. Un tooltip arată numele complet al amplasamentului, ocuparea și cantitatea curentă / maximă.",
+      "Conținutul celulei: când amplasamentul ales nu are copii, harta listează produsele stocate în el, cu cantitatea disponibilă.",
+      "Deschiderea hărții: butonul Map de pe fiecare linie din Inventar → Configurare → Amplasamente și butonul inteligent Open Map de pe formularul amplasamentului. Harta amplasamentului principal *Stock* este disponibilă și la URL-ul `/deltatech/warehouse_map`.",
+      "Capacitate și ocupare provin din `deltatech_putaway_strategy`: se setează Max products (leaf) pe amplasamentele frunză (celulele); maximul, cantitatea curentă și ocuparea amplasamentelor părinte se însumează din copii. Ocuparea este cantitatea disponibilă a amplasamentului împărțită la maximul lui.",
+      "Acces: harta e disponibilă doar utilizatorilor din grupul *Inventory / User* (ceilalți primesc 404); se aplică drepturile de acces și regulile multi-companie pentru amplasamentele și cantitățile afișate.",
+      "Limitări: nu există intrare de meniu pentru hartă (se deschide dintr-un amplasament sau prin URL); etichetele paginii hărții sunt în română și nu sunt traduse; linkurile de procent și cantitate de pe bare trimit la o acțiune de stoc care nu mai există în Odoo 19, deci nu deschid stocul amplasamentului."
     ],
     "dependencies": [
       "stock",
@@ -13206,12 +13221,12 @@
       "deltatech_putaway_strategy",
       "stock"
     ],
-    "text": "Deltatech Warehouse Map\ndeltatech_warehouse_map\nModulul oferă o hartă vizuală a depozitului, care permite navigarea ierarhică prin amplasamentele de stoc (niveluri, linii, rafturi, polițe, celule). Pornind de la un amplasament, utilizatorul vede amplasamentele direct subordonate sub formă de rânduri, fiecare rând fiind o bară împărțită în segmente egale pentru nivelul următor, ceea ce permite o explorare rapidă în adâncime. Fiecare segment afișează gradul de ocupare al sub-amplasamentului printr-o bară de progres colorată, astfel încât utilizatorul să identifice imediat zonele aglomerate sau libere. Valoarea de afaceri constă în vizualizarea intuitivă a capacității și ocupării depozitului, facilitând planificarea spațiului și deciziile de stocare.\nHartă generică a depozitului pentru orice amplasament (`stock.location`), în backend prin QWeb: selectarea unui amplasament și afișarea copiilor direcți ca rânduri.\nFiecare rând este o bară pe toată lățimea, împărțită în segmente egale pentru nivelul următor (nepoți), pentru explorare rapidă în adâncime.\nClic pe orice segment deschide vizualizarea grafică a sub-amplasamentului respectiv; un link \"Back\" revine la părinte.\nOcupare vizuală pe fiecare sub-amplasament: fiecare segment conține o bară de progres internă care reprezintă procentul de ocupare.\nPraguri de culoare: verde (<60%), galben (60–90%), roșu (≥90%), cu etichete de contrast ridicat ce afișează numele și valorile `(curent/maxim)` și borduri clare între segmente.\nUrmărirea capacității și ocupării pe `stock.location`: maxim manual pentru amplasamentele frunză, maxim calculat pentru cele non-frunză (sumă a copiilor), cantitate curentă calculată și raport de ocupare = curent/maxim (protejat la împărțirea cu zero).\nIntegrare în interfață: buton \"Map\" în vizualizarea listă a Amplasamentelor și buton inteligent \"Open Map\" în formular.\nMeniu: Inventar → Warehouse Map deschide rădăcina Stock în vizualizarea generică.\nGenerare opțională de date demo: un hook post-init poate crea o structură ierarhică de probă sub amplasamentul Stock pentru testare rapidă."
+    "text": "Warehouse Map\ndeltatech_warehouse_map\nÎntr-un depozit organizat ca arbore adânc de amplasamente (zone, linii, rafturi, polițe, celule), lista standard de amplasamente nu arată unde mai este loc. Modulul adaugă o hartă vizuală a ierarhiei de amplasamente, colorată după gradul de ocupare, astfel încât să se vadă dintr-o privire ce rafturi și celule sunt pline și să se poată coborî până la produsele stocate într-o celulă. Valoarea de afaceri constă în planificarea mai ușoară a spațiului și a deciziilor de stocare.\nHarta amplasamentului: pentru un amplasament ales, fiecare copil apare ca o bară, iar toți descendenții lui sunt afișați dedesubt, nivel cu nivel. Clic pe numele unui amplasament deschide harta cu un nivel mai jos; butonul înapoi din antet revine la părinte.\nCulori de ocupare: fiecare bară este umplută proporțional cu ocuparea amplasamentului și arată procentul și cantitatea curentă. Umplerea este verde sub 60%, galbenă între 60% și 90% și roșie de la 90%. Un tooltip arată numele complet al amplasamentului, ocuparea și cantitatea curentă / maximă.\nConținutul celulei: când amplasamentul ales nu are copii, harta listează produsele stocate în el, cu cantitatea disponibilă.\nDeschiderea hărții: butonul Map de pe fiecare linie din Inventar → Configurare → Amplasamente și butonul inteligent Open Map de pe formularul amplasamentului. Harta amplasamentului principal *Stock* este disponibilă și la URL-ul `/deltatech/warehouse_map`.\nCapacitate și ocupare provin din `deltatech_putaway_strategy`: se setează Max products (leaf) pe amplasamentele frunză (celulele); maximul, cantitatea curentă și ocuparea amplasamentelor părinte se însumează din copii. Ocuparea este cantitatea disponibilă a amplasamentului împărțită la maximul lui.\nAcces: harta e disponibilă doar utilizatorilor din grupul *Inventory / User* (ceilalți primesc 404); se aplică drepturile de acces și regulile multi-companie pentru amplasamentele și cantitățile afișate.\nLimitări: nu există intrare de meniu pentru hartă (se deschide dintr-un amplasament sau prin URL); etichetele paginii hărții sunt în română și nu sunt traduse; linkurile de procent și cantitate de pe bare trimit la o acțiune de stoc care nu mai există în Odoo 19, deci nu deschid stocul amplasamentului."
   },
   {
     "path": "deltatech_warranty/index.md",
     "module": "deltatech_warranty",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_warranty",
     "local_path": "odoo-addons/deltatech/deltatech_warranty",
     "last_ingest": "2026-10-09",
@@ -13317,7 +13332,7 @@
   {
     "path": "deltatech_website_access_design/index.md",
     "module": "deltatech_website_access_design",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_access_design",
     "local_path": "odoo-addons/deltatech/deltatech_website_access_design",
     "last_ingest": "2026-10-09",
@@ -13448,7 +13463,7 @@
   {
     "path": "deltatech_website_checkout_confirm/index.md",
     "module": "deltatech_website_checkout_confirm",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_checkout_confirm`",
     "local_path": "odoo-addons/deltatech/deltatech_website_checkout_confirm",
     "last_ingest": "2026-06-03",
@@ -13545,22 +13560,32 @@
   {
     "path": "deltatech_website_delivery_and_payment/index.md",
     "module": "deltatech_website_delivery_and_payment",
-    "version": "19.0.2.1.7",
+    "version": "19.0.2.1.8",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_delivery_and_payment",
     "local_path": "odoo-addons/deltatech/deltatech_website_delivery_and_payment",
-    "last_ingest": "2026-06-01",
+    "last_ingest": "2026-11-04",
     "friendly_name": "Delivery and Payment",
-    "summary": "Acest modul adaugă în magazinul online (eCommerce) reguli care controlează ce metode de plată și de livrare sunt disponibile clienților în timpul finalizării comenzii. Pe de o parte, leagă metodele de plată de metodele de livrare, astfel încât clientul să vadă doar combinațiile valide. Pe de altă parte, permite restricționarea metodelor de plată și de livrare în funcție de etichetele atribuite partenerilor (asociați utilizatorilor autentificați), oferind astfel un control fin asupra experienței de cumpărare pentru anumite categorii de clienți.",
+    "summary": "Modulul limitează metodele de livrare și furnizorii de plată oferiți în finalizarea comenzii din magazinul online (eCommerce), în funcție de metoda de livrare aleasă, valoarea și greutatea comenzii și etichetele clientului. Clientul vede doar combinațiile valide, iar magazinul controlează fin experiența de cumpărare pentru anumite categorii de clienți.",
     "features": [
-      "Restricționarea metodelor de plată disponibile în funcție de metoda de livrare aleasă.",
-      "Restricționarea procesatorilor de plată (payment acquirers) pentru partenerii (asociați utilizatorului autentificat) care au o anumită etichetă.",
-      "Restricționarea metodelor de livrare pentru partenerii (asociați utilizatorului autentificat) care au o anumită etichetă."
+      "Furnizori de plată în funcție de metoda de livrare: o metodă de livrare poate lista furnizorii de plată permiși cu ea (de exemplu ramburs doar cu curierul). La pasul de plată clientul vede doar acești furnizori; o metodă fără listă îi permite pe toți.",
+      "Limită de valoare pentru furnizorul de plată: peste acest total al comenzii (taxe incluse) furnizorul nu mai este oferit; un total egal cu limita încă e permis. Limita se compară cu totalul în moneda comenzii, fără conversie.",
+      "Limite de greutate pentru metoda de livrare: metoda e oferită doar când greutatea estimată a coșului (greutatea produsului × cantitatea, doar bunuri) e între minim și maxim. O limită goală sau 0 nu se verifică (50 - 0 înseamnă „de la 50 kg în sus\").",
+      "Restricții după etichetele clientului: o metodă de livrare sau un furnizor de plată pot fi ascunse clienților care au una dintre etichetele lor. Pentru metodele de livrare se citesc etichetele companiei clientului (partenerul comercial); pentru furnizorii de plată, etichetele clientului din comandă. Pentru o persoană de contact, o etichetă setată doar pe companie ascunde metoda de livrare, dar nu și furnizorul de plată: eticheta se setează pe ambele când trebuie ascunse amândouă.",
+      "Unde se configurează:",
+      "Website → Configurare → eCommerce → Metode de livrare, pe metoda de livrare: *Weight limits* lângă preț; fila *Payment Acquirer*: *Payments Provider Allowed* și *Restrict for partners with label*.",
+      "Website → Configurare → eCommerce → Furnizori de plată, pe furnizor, grupul *Restrictions*: *Value Limit* și *Restrict Label*.",
+      "Clienții se etichetează la Website → eCommerce → Clienți, câmpul Tags.",
+      "Reguli standard care se aplică în continuare: ramburs doar la metodele de livrare cu opțiunea standard *Cash on Delivery* și, dacă lista e completată, doar dacă e în *Payments Provider Allowed*; se aplică și *Maximum Amount* al furnizorului și *Max Weight* al metodei de livrare. Regulile doar ascund opțiuni, nu adaugă furnizori sau metode nepublicate.",
+      "Dacă regulile nu lasă nicio metodă de livrare, magazinul afișează „Sorry, we are unable to ship your order.\"; dacă nu lasă niciun furnizor, pasul de plată arată *No payment method available*. Se păstrează o metodă de livrare și un furnizor fără restricții ca rezervă.",
+      "Modulul mai adaugă un *Logo* pe formularul metodei de livrare și un câmp *Payment Provider* pe fila *Sales & Purchase* a contactului; sunt păstrate pentru alte module și rapoarte și nu sunt folosite în finalizarea comenzii."
     ],
     "dependencies": [
       "website_sale_stock"
     ],
-    "connections": [],
-    "text": "Delivery and Payment\ndeltatech_website_delivery_and_payment\nAcest modul adaugă în magazinul online (eCommerce) reguli care controlează ce metode de plată și de livrare sunt disponibile clienților în timpul finalizării comenzii. Pe de o parte, leagă metodele de plată de metodele de livrare, astfel încât clientul să vadă doar combinațiile valide. Pe de altă parte, permite restricționarea metodelor de plată și de livrare în funcție de etichetele atribuite partenerilor (asociați utilizatorilor autentificați), oferind astfel un control fin asupra experienței de cumpărare pentru anumite categorii de clienți.\nRestricționarea metodelor de plată disponibile în funcție de metoda de livrare aleasă.\nRestricționarea procesatorilor de plată (payment acquirers) pentru partenerii (asociați utilizatorului autentificat) care au o anumită etichetă.\nRestricționarea metodelor de livrare pentru partenerii (asociați utilizatorului autentificat) care au o anumită etichetă."
+    "connections": [
+      "website_sale_stock"
+    ],
+    "text": "Delivery and Payment\ndeltatech_website_delivery_and_payment\nModulul limitează metodele de livrare și furnizorii de plată oferiți în finalizarea comenzii din magazinul online (eCommerce), în funcție de metoda de livrare aleasă, valoarea și greutatea comenzii și etichetele clientului. Clientul vede doar combinațiile valide, iar magazinul controlează fin experiența de cumpărare pentru anumite categorii de clienți.\nFurnizori de plată în funcție de metoda de livrare: o metodă de livrare poate lista furnizorii de plată permiși cu ea (de exemplu ramburs doar cu curierul). La pasul de plată clientul vede doar acești furnizori; o metodă fără listă îi permite pe toți.\nLimită de valoare pentru furnizorul de plată: peste acest total al comenzii (taxe incluse) furnizorul nu mai este oferit; un total egal cu limita încă e permis. Limita se compară cu totalul în moneda comenzii, fără conversie.\nLimite de greutate pentru metoda de livrare: metoda e oferită doar când greutatea estimată a coșului (greutatea produsului × cantitatea, doar bunuri) e între minim și maxim. O limită goală sau 0 nu se verifică (50 - 0 înseamnă „de la 50 kg în sus\").\nRestricții după etichetele clientului: o metodă de livrare sau un furnizor de plată pot fi ascunse clienților care au una dintre etichetele lor. Pentru metodele de livrare se citesc etichetele companiei clientului (partenerul comercial); pentru furnizorii de plată, etichetele clientului din comandă. Pentru o persoană de contact, o etichetă setată doar pe companie ascunde metoda de livrare, dar nu și furnizorul de plată: eticheta se setează pe ambele când trebuie ascunse amândouă.\nUnde se configurează:\nWebsite → Configurare → eCommerce → Metode de livrare, pe metoda de livrare: *Weight limits* lângă preț; fila *Payment Acquirer*: *Payments Provider Allowed* și *Restrict for partners with label*.\nWebsite → Configurare → eCommerce → Furnizori de plată, pe furnizor, grupul *Restrictions*: *Value Limit* și *Restrict Label*.\nClienții se etichetează la Website → eCommerce → Clienți, câmpul Tags.\nReguli standard care se aplică în continuare: ramburs doar la metodele de livrare cu opțiunea standard *Cash on Delivery* și, dacă lista e completată, doar dacă e în *Payments Provider Allowed*; se aplică și *Maximum Amount* al furnizorului și *Max Weight* al metodei de livrare. Regulile doar ascund opțiuni, nu adaugă furnizori sau metode nepublicate.\nDacă regulile nu lasă nicio metodă de livrare, magazinul afișează „Sorry, we are unable to ship your order.\"; dacă nu lasă niciun furnizor, pasul de plată arată *No payment method available*. Se păstrează o metodă de livrare și un furnizor fără restricții ca rezervă.\nModulul mai adaugă un *Logo* pe formularul metodei de livrare și un câmp *Payment Provider* pe fila *Sales & Purchase* a contactului; sunt păstrate pentru alte module și rapoarte și nu sunt folosite în finalizarea comenzii."
   },
   {
     "path": "deltatech_website_disable_fuzzy_search/index.md",
@@ -13889,7 +13914,7 @@
   {
     "path": "deltatech_website_sale_attributes/index.md",
     "module": "deltatech_website_sale_attributes",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_attributes",
     "local_path": "odoo-addons/deltatech/deltatech_website_sale_attributes",
     "last_ingest": "2026-08-20",
@@ -14046,7 +14071,7 @@
   {
     "path": "deltatech_website_sale_status/index.md",
     "module": "deltatech_website_sale_status",
-    "version": "19.0.2.0.13",
+    "version": "19.0.2.0.14",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_status`",
     "local_path": "odoo-addons/deltatech/deltatech_website_sale_status",
     "last_ingest": "2026-08-20",
@@ -14361,7 +14386,7 @@
   {
     "path": "deltatech_website_vat_validation/index.md",
     "module": "deltatech_website_vat_validation",
-    "version": "19.0.0.2.0",
+    "version": "19.0.0.2.1",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_vat_validation`",
     "local_path": "odoo-addons/deltatech/deltatech_website_vat_validation",
     "last_ingest": "2026-10-12",
@@ -14452,7 +14477,7 @@
   {
     "path": "deltatech_widget_fontawesome/index.md",
     "module": "deltatech_widget_fontawesome",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_widget_fontawesome`",
     "local_path": "odoo-addons/deltatech/deltatech_widget_fontawesome",
     "last_ingest": "2026-06-03",
@@ -15107,7 +15132,7 @@
   {
     "path": "l10n_ro_anaf_base/index.md",
     "module": "l10n_ro_anaf_base",
-    "version": "19.0.1.3.7",
+    "version": "19.0.1.4.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_base",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_base",
     "last_ingest": "2026-09-29",
@@ -15227,7 +15252,7 @@
   {
     "path": "l10n_ro_anaf_d101/index.md",
     "module": "l10n_ro_anaf_d101",
-    "version": "19.0.1.2.1",
+    "version": "19.0.1.2.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d101",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d101",
     "last_ingest": "2026-10-27",
@@ -15318,7 +15343,7 @@
   {
     "path": "l10n_ro_anaf_d112/index.md",
     "module": "l10n_ro_anaf_d112",
-    "version": "19.0.2.23.2",
+    "version": "19.0.2.23.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112",
     "last_ingest": "2026-10-22",
@@ -15385,7 +15410,7 @@
   {
     "path": "l10n_ro_anaf_d112_payroll/index.md",
     "module": "l10n_ro_anaf_d112_payroll",
-    "version": "19.0.1.15.2",
+    "version": "19.0.1.15.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112_payroll",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112_payroll",
     "last_ingest": null,
@@ -15571,7 +15596,7 @@
   {
     "path": "l10n_ro_anaf_d300/index.md",
     "module": "l10n_ro_anaf_d300",
-    "version": "19.0.0.0.32",
+    "version": "19.0.0.0.33",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d300",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d300",
     "last_ingest": null,
@@ -15784,7 +15809,7 @@
   {
     "path": "l10n_ro_anaf_d392/index.md",
     "module": "l10n_ro_anaf_d392",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.7",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d392",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d392",
     "last_ingest": "2026-09-29",
@@ -15813,7 +15838,7 @@
   {
     "path": "l10n_ro_anaf_d394/index.md",
     "module": "l10n_ro_anaf_d394",
-    "version": "19.0.1.3.13",
+    "version": "19.0.1.3.14",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d394",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d394",
     "last_ingest": null,
@@ -16067,7 +16092,7 @@
   {
     "path": "l10n_ro_anaf_partner/index.md",
     "module": "l10n_ro_anaf_partner",
-    "version": "19.0.2.3.8",
+    "version": "19.0.2.3.9",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_partner",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_partner",
     "last_ingest": null,
@@ -16877,7 +16902,7 @@
   {
     "path": "l10n_ro_efactura_consumer/index.md",
     "module": "l10n_ro_efactura_consumer",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.7",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_efactura_consumer",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_efactura_consumer",
     "last_ingest": null,
@@ -16918,20 +16943,21 @@
   {
     "path": "l10n_ro_efactura_enhancement/index.md",
     "module": "l10n_ro_efactura_enhancement",
-    "version": "19.0.0.5.11",
+    "version": "19.0.0.5.12",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_efactura_enhancement",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_efactura_enhancement",
-    "last_ingest": "2026-09-29",
-    "friendly_name": "eFactura Enhancement",
+    "last_ingest": "2026-11-04",
+    "friendly_name": "e-Factura Enhancements",
     "summary": "Modulul `l10n_ro_efactura_enhancement` extinde funcționalitatea standard de e-Facturare (e-Factura) din Odoo pentru piața din România, adăugând îmbunătățiri și automatizări care optimizează experiența utilizatorului și acoperă nevoi specifice de conformitate fiscală. Acesta validează datele obligatorii ale partenerilor români, automatizează trimiterea și urmărirea facturilor în SPV și asigură că fișierele XML generate respectă constrângerile standardului UBL, reducând astfel erorile și efortul manual.",
     "features": [
       "Completare automată cu 13 de zero în câmpul de TVA pentru persoanele fizice, la generarea e-facturii.",
       "Validare îmbunătățită a adresei: verifică automat că partenerii români au definite țara, județul, orașul și strada înainte de postarea facturii.",
       "Sugestie format EDI: sugerează automat formatul `ciusro` pentru partenerii români.",
       "Operațiuni automate pentru e-Factură:",
-      "Sarcină cron pentru trimiterea automată a facturilor postate în SPV.",
-      "Sarcină cron pentru preluarea statusului din SPV pentru facturile trimise.",
+      "Sarcină cron pentru trimiterea automată a facturilor postate în SPV. Limita de 3 reîncercări are efect: eșecurile se numără pe factură (câmpul „Trimiteri SPV eșuate (cron)\"), iar după 3 eșecuri factura apare la „Sărite — reîncercări epuizate\" în raport. Facturile netrimise încă au prioritate în lot, iar readucerea facturii în ciornă resetează contorul. Cronul se reia la 5 minute doar dacă a avansat (cel puțin o factură a ajuns în SPV).",
+      "Sarcină cron pentru preluarea statusului din SPV pentru facturile trimise; se reia după 2 minute doar dacă lotul a fost plin și cel puțin o factură a ieșit din `invoice_sent`.",
       "Acțiune server „Trimite in SPV\": permite trimiterea directă în SPV a facturilor selectate din lista de facturi, fără a declanșa trimiterea emailului.",
+      "Buton „Resetează trimiterea SPV\": apare doar pentru facturile rămase fără index (SPV nu a returnat indexul la trimitere). Cere confirmare și sincronizează întâi cu ANAF; dacă factura e găsită în SPV i se completează starea, fără resetare (nu apare dublet). Altfel trimiterea e marcată ca eșuată, cu notă în chatter, iar factura se retrimite din „Trimite\" sau „Retrimite în SPV\".",
       "Opțiune de configurare: o setare în pagina de configurare Contabilitate controlează dacă jobul cron automat de SPV suprimă trimiterea de email (trimite doar în SPV).",
       "Email separat de SPV: un cron dedicat („E-Factura: Trimite email facturi validate\") trimite clientului emailul după validarea în SPV; factura nu mai e trimisă de două ori prin email (flagul de trimitere se setează pe orice cale de trimitere), iar un raport de rulare a cronului se poate trimite pe email.",
       "Import automat oprit implicit: opțiunea per companie „Nu importa automat facturile primite din SPV\" (Setări → Contabilitate → eFactura SPV) sare peste crearea automată de ciorne din cronul nativ „E-Factura: Synchronize with ANAF\", păstrând sincronizarea statusului facturilor trimise. E bifată implicit pentru companiile noi (evită dublurile cu factura introdusă din comanda de achiziție); companiile existente își păstrează valoarea.",
@@ -16943,19 +16969,21 @@
       "Trunchiază notele la 300 de caractere.",
       "Trunchiază referințele comenzii (BT-13) și avizul de expediere (BT-16) la 200 de caractere.",
       "Trunchiază avizul de plată (BT-83, `PaymentID`/`InstructionID`) la 140 de caractere (regula BR-RO-L140).",
+      "Stornouri cu referința facturii corectate: nota de credit pleacă în SPV cu `cac:BillingReference` (BT-25 / BT-26), număr și dată luate din factura stornată (`reversed_entry_id`).",
       "Sume de plată în XML: `PrepaidAmount` = 0 și `PayableAmount` = totalul facturii cât timp factura nu e stinsă, independent de plățile alocate în Odoo (necesar pentru livrările cu ramburs); facturile stinse rămân pe comportamentul standard EN16931.",
-      "Import factură din SPV: linia se recalculează din `cbc:LineExtensionAmount`; descrierea nu mai apare dublată, iar `cbc:Description` este omis când linia nu are descriere proprie.",
-      "Integrare POS: schimbă automat codul tipului de document la 751 (Factură specializată) pentru facturile legate de o comandă POS (regulă restaurată în 0.5.2; stornourile 381 și autofacturarea 389 rămân neschimbate).",
+      "Import factură din SPV: linia se recalculează din `cbc:LineExtensionAmount`; descrierea nu mai apare dublată, iar `cbc:Description` este omis când linia nu are descriere proprie. Furnizorul nu se mai dublează când CUI-ul diferă doar prin prefixul `RO` (se compară doar CUI-uri românești valide).",
+      "Integrare POS: schimbă automat codul tipului de document la 751 (Factură specializată) pentru facturile legate de o comandă POS (stornourile 381 și autofacturarea 389 rămân neschimbate).",
       "Parametri de sistem configurabili:",
       "`efactura.embed_pdf`: controlează includerea PDF-ului încorporat în e-factură (implicit: True).",
       "`efactura.use_line_description`: dacă e activat, folosește descrierea liniei de factură în locul numelui/descrierii produsului (implicit: False).",
       "`efactura.replace_unit_uom`: permite specificarea unui cod de unitate de înlocuire pentru unitatea standard „C62\" (implicit: False).",
-      "`efactura.get_all_banks`: dacă e activat, include toate băncile marcate cu `l10n_ro_print_report` care corespund monedei facturii (implicit: False).",
-      "Urmărirea lungimii liniilor: adaugă câmpuri calculate pe liniile de factură pentru a urmări lungimea descrierilor și a denumirilor de produse, ajutând utilizatorii să identifice posibilele probleme de trunchiere."
+      "`efactura.get_all_banks`: dacă e activat, include toate conturile bancare marcate cu `l10n_ro_print_report` care corespund monedei facturii (implicit: False); câmpul provine din `l10n_ro_report_common`.",
+      "Urmărirea lungimii liniilor: adaugă câmpuri calculate pe liniile de factură pentru a urmări lungimea descrierilor și a denumirilor de produse, ajutând utilizatorii să identifice posibilele probleme de trunchiere.",
+      "Dashboard e-Factura SPV (foaie de calcul), definit în `oca_data_manual`; vizualizarea lui este momentan dezactivată în manifest, până la testarea pe live."
     ],
     "dependencies": [
       "l10n_ro_edi",
-      "l10n_ro_config",
+      "l10n_ro_report_common",
       "spreadsheet_dashboard",
       "l10n_ro_message_spv",
       "account_edi_ubl_cii",
@@ -16964,9 +16992,10 @@
     "connections": [
       "l10n_ro_edi",
       "l10n_ro_message_spv",
-      "l10n_ro_config"
+      "l10n_ro_report_common",
+      "l10n_ro_print_report"
     ],
-    "text": "eFactura Enhancement\nl10n_ro_efactura_enhancement\nModulul `l10n_ro_efactura_enhancement` extinde funcționalitatea standard de e-Facturare (e-Factura) din Odoo pentru piața din România, adăugând îmbunătățiri și automatizări care optimizează experiența utilizatorului și acoperă nevoi specifice de conformitate fiscală. Acesta validează datele obligatorii ale partenerilor români, automatizează trimiterea și urmărirea facturilor în SPV și asigură că fișierele XML generate respectă constrângerile standardului UBL, reducând astfel erorile și efortul manual.\nCompletare automată cu 13 de zero în câmpul de TVA pentru persoanele fizice, la generarea e-facturii.\nValidare îmbunătățită a adresei: verifică automat că partenerii români au definite țara, județul, orașul și strada înainte de postarea facturii.\nSugestie format EDI: sugerează automat formatul `ciusro` pentru partenerii români.\nOperațiuni automate pentru e-Factură:\nSarcină cron pentru trimiterea automată a facturilor postate în SPV.\nSarcină cron pentru preluarea statusului din SPV pentru facturile trimise.\nAcțiune server „Trimite in SPV\": permite trimiterea directă în SPV a facturilor selectate din lista de facturi, fără a declanșa trimiterea emailului.\nOpțiune de configurare: o setare în pagina de configurare Contabilitate controlează dacă jobul cron automat de SPV suprimă trimiterea de email (trimite doar în SPV).\nEmail separat de SPV: un cron dedicat („E-Factura: Trimite email facturi validate\") trimite clientului emailul după validarea în SPV; factura nu mai e trimisă de două ori prin email (flagul de trimitere se setează pe orice cale de trimitere), iar un raport de rulare a cronului se poate trimite pe email.\nImport automat oprit implicit: opțiunea per companie „Nu importa automat facturile primite din SPV\" (Setări → Contabilitate → eFactura SPV) sare peste crearea automată de ciorne din cronul nativ „E-Factura: Synchronize with ANAF\", păstrând sincronizarea statusului facturilor trimise. E bifată implicit pentru companiile noi (evită dublurile cu factura introdusă din comanda de achiziție); companiile existente își păstrează valoarea.\nRegulă unică de eligibilitate SPV: `_l10n_ro_is_spv_target()` decide dacă o factură merge în SPV, identic pentru wizardul „Send & Print\", butonul manual, cronul și dashboard. Clienții cu altă țară decât RO sunt excluși; partenerul fără țară facturat în RON e tratat ca român.\nBlocaj pentru firme românești fără CUI: o factură către un client marcat firmă, din România, fără CUI (sau cu `0000000000000`) nu mai pleacă în SPV; verificarea apare la generarea XML-ului și din nou înainte de transmitere, iar motivul se scrie în chatter.\nRăspunsuri neașteptate de la SPV (HTTP 200 cu corp neașteptat) nu mai blochează interfața.\nTrunchiere și sanitizare a datelor:\nTrunchiază denumirile produselor la 100 de caractere și descrierile la 200 de caractere, pentru conformitate cu standardul UBL.\nTrunchiază notele la 300 de caractere.\nTrunchiază referințele comenzii (BT-13) și avizul de expediere (BT-16) la 200 de caractere.\nTrunchiază avizul de plată (BT-83, `PaymentID`/`InstructionID`) la 140 de caractere (regula BR-RO-L140).\nSume de plată în XML: `PrepaidAmount` = 0 și `PayableAmount` = totalul facturii cât timp factura nu e stinsă, independent de plățile alocate în Odoo (necesar pentru livrările cu ramburs); facturile stinse rămân pe comportamentul standard EN16931.\nImport factură din SPV: linia se recalculează din `cbc:LineExtensionAmount`; descrierea nu mai apare dublată, iar `cbc:Description` este omis când linia nu are descriere proprie.\nIntegrare POS: schimbă automat codul tipului de document la 751 (Factură specializată) pentru facturile legate de o comandă POS (regulă restaurată în 0.5.2; stornourile 381 și autofacturarea 389 rămân neschimbate).\nParametri de sistem configurabili:\n`efactura.embed_pdf`: controlează includerea PDF-ului încorporat în e-factură (implicit: True).\n`efactura.use_line_description`: dacă e activat, folosește descrierea liniei de factură în locul numelui/descrierii produsului (implicit: False).\n`efactura.replace_unit_uom`: permite specificarea unui cod de unitate de înlocuire pentru unitatea standard „C62\" (implicit: False).\n`efactura.get_all_banks`: dacă e activat, include toate băncile marcate cu `l10n_ro_print_report` care corespund monedei facturii (implicit: False).\nUrmărirea lungimii liniilor: adaugă câmpuri calculate pe liniile de factură pentru a urmări lungimea descrierilor și a denumirilor de produse, ajutând utilizatorii să identifice posibilele probleme de trunchiere."
+    "text": "e-Factura Enhancements\nl10n_ro_efactura_enhancement\nModulul `l10n_ro_efactura_enhancement` extinde funcționalitatea standard de e-Facturare (e-Factura) din Odoo pentru piața din România, adăugând îmbunătățiri și automatizări care optimizează experiența utilizatorului și acoperă nevoi specifice de conformitate fiscală. Acesta validează datele obligatorii ale partenerilor români, automatizează trimiterea și urmărirea facturilor în SPV și asigură că fișierele XML generate respectă constrângerile standardului UBL, reducând astfel erorile și efortul manual.\nCompletare automată cu 13 de zero în câmpul de TVA pentru persoanele fizice, la generarea e-facturii.\nValidare îmbunătățită a adresei: verifică automat că partenerii români au definite țara, județul, orașul și strada înainte de postarea facturii.\nSugestie format EDI: sugerează automat formatul `ciusro` pentru partenerii români.\nOperațiuni automate pentru e-Factură:\nSarcină cron pentru trimiterea automată a facturilor postate în SPV. Limita de 3 reîncercări are efect: eșecurile se numără pe factură (câmpul „Trimiteri SPV eșuate (cron)\"), iar după 3 eșecuri factura apare la „Sărite — reîncercări epuizate\" în raport. Facturile netrimise încă au prioritate în lot, iar readucerea facturii în ciornă resetează contorul. Cronul se reia la 5 minute doar dacă a avansat (cel puțin o factură a ajuns în SPV).\nSarcină cron pentru preluarea statusului din SPV pentru facturile trimise; se reia după 2 minute doar dacă lotul a fost plin și cel puțin o factură a ieșit din `invoice_sent`.\nAcțiune server „Trimite in SPV\": permite trimiterea directă în SPV a facturilor selectate din lista de facturi, fără a declanșa trimiterea emailului.\nButon „Resetează trimiterea SPV\": apare doar pentru facturile rămase fără index (SPV nu a returnat indexul la trimitere). Cere confirmare și sincronizează întâi cu ANAF; dacă factura e găsită în SPV i se completează starea, fără resetare (nu apare dublet). Altfel trimiterea e marcată ca eșuată, cu notă în chatter, iar factura se retrimite din „Trimite\" sau „Retrimite în SPV\".\nOpțiune de configurare: o setare în pagina de configurare Contabilitate controlează dacă jobul cron automat de SPV suprimă trimiterea de email (trimite doar în SPV).\nEmail separat de SPV: un cron dedicat („E-Factura: Trimite email facturi validate\") trimite clientului emailul după validarea în SPV; factura nu mai e trimisă de două ori prin email (flagul de trimitere se setează pe orice cale de trimitere), iar un raport de rulare a cronului se poate trimite pe email.\nImport automat oprit implicit: opțiunea per companie „Nu importa automat facturile primite din SPV\" (Setări → Contabilitate → eFactura SPV) sare peste crearea automată de ciorne din cronul nativ „E-Factura: Synchronize with ANAF\", păstrând sincronizarea statusului facturilor trimise. E bifată implicit pentru companiile noi (evită dublurile cu factura introdusă din comanda de achiziție); companiile existente își păstrează valoarea.\nRegulă unică de eligibilitate SPV: `_l10n_ro_is_spv_target()` decide dacă o factură merge în SPV, identic pentru wizardul „Send & Print\", butonul manual, cronul și dashboard. Clienții cu altă țară decât RO sunt excluși; partenerul fără țară facturat în RON e tratat ca român.\nBlocaj pentru firme românești fără CUI: o factură către un client marcat firmă, din România, fără CUI (sau cu `0000000000000`) nu mai pleacă în SPV; verificarea apare la generarea XML-ului și din nou înainte de transmitere, iar motivul se scrie în chatter.\nRăspunsuri neașteptate de la SPV (HTTP 200 cu corp neașteptat) nu mai blochează interfața.\nTrunchiere și sanitizare a datelor:\nTrunchiază denumirile produselor la 100 de caractere și descrierile la 200 de caractere, pentru conformitate cu standardul UBL.\nTrunchiază notele la 300 de caractere.\nTrunchiază referințele comenzii (BT-13) și avizul de expediere (BT-16) la 200 de caractere.\nTrunchiază avizul de plată (BT-83, `PaymentID`/`InstructionID`) la 140 de caractere (regula BR-RO-L140).\nStornouri cu referința facturii corectate: nota de credit pleacă în SPV cu `cac:BillingReference` (BT-25 / BT-26), număr și dată luate din factura stornată (`reversed_entry_id`).\nSume de plată în XML: `PrepaidAmount` = 0 și `PayableAmount` = totalul facturii cât timp factura nu e stinsă, independent de plățile alocate în Odoo (necesar pentru livrările cu ramburs); facturile stinse rămân pe comportamentul standard EN16931.\nImport factură din SPV: linia se recalculează din `cbc:LineExtensionAmount`; descrierea nu mai apare dublată, iar `cbc:Description` este omis când linia nu are descriere proprie. Furnizorul nu se mai dublează când CUI-ul diferă doar prin prefixul `RO` (se compară doar CUI-uri românești valide).\nIntegrare POS: schimbă automat codul tipului de document la 751 (Factură specializată) pentru facturile legate de o comandă POS (stornourile 381 și autofacturarea 389 rămân neschimbate).\nParametri de sistem configurabili:\n`efactura.embed_pdf`: controlează includerea PDF-ului încorporat în e-factură (implicit: True).\n`efactura.use_line_description`: dacă e activat, folosește descrierea liniei de factură în locul numelui/descrierii produsului (implicit: False).\n`efactura.replace_unit_uom`: permite specificarea unui cod de unitate de înlocuire pentru unitatea standard „C62\" (implicit: False).\n`efactura.get_all_banks`: dacă e activat, include toate conturile bancare marcate cu `l10n_ro_print_report` care corespund monedei facturii (implicit: False); câmpul provine din `l10n_ro_report_common`.\nUrmărirea lungimii liniilor: adaugă câmpuri calculate pe liniile de factură pentru a urmări lungimea descrierilor și a denumirilor de produse, ajutând utilizatorii să identifice posibilele probleme de trunchiere.\nDashboard e-Factura SPV (foaie de calcul), definit în `oca_data_manual`; vizualizarea lui este momentan dezactivată în manifest, până la testarea pe live."
   },
   {
     "path": "l10n_ro_efactura_import_assist/index.md",
@@ -17029,7 +17058,7 @@
   {
     "path": "l10n_ro_efactura_xml_rules/index.md",
     "module": "l10n_ro_efactura_xml_rules",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_efactura_xml_rules",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_efactura_xml_rules",
     "last_ingest": "2026-10-09",
@@ -17240,7 +17269,7 @@
   {
     "path": "l10n_ro_esigiliu/index.md",
     "module": "l10n_ro_esigiliu",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_esigiliu",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_esigiliu",
     "last_ingest": "2026-07-02",
@@ -17299,7 +17328,7 @@
   {
     "path": "l10n_ro_etransport_block/index.md",
     "module": "l10n_ro_etransport_block",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_etransport_block",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_etransport_block",
     "last_ingest": "2026-10-28",
@@ -17575,7 +17604,7 @@
   {
     "path": "l10n_ro_financial_statements/index.md",
     "module": "l10n_ro_financial_statements",
-    "version": "19.0.1.13.0",
+    "version": "19.0.1.13.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_financial_statements",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_financial_statements",
     "last_ingest": null,
@@ -17812,28 +17841,29 @@
   {
     "path": "l10n_ro_hide_net_weight/index.md",
     "module": "l10n_ro_hide_net_weight",
-    "version": "19.0.0.0.4",
+    "version": "19.0.0.0.5",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_hide_net_weight",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_hide_net_weight",
-    "last_ingest": "2026-10-09",
+    "last_ingest": "2026-11-04",
     "friendly_name": "Romania - Hide Net Weight",
     "summary": "Modulul ascunde câmpul „Greutate netă” (`l10n_ro_net_weight`) de pe formularul produsului, deoarece generează confuzii de interpretare pentru utilizatori. Datele din câmp nu sunt șterse sau modificate, doar eticheta și câmpul nu mai apar în interfață.",
     "features": [
-      "Ascunde pe formularul de produs (`product.template`) câmpul „Greutate netă” definit de `l10n_ro_stock`, împreună cu eticheta lui.",
-      "Nu adaugă logică nouă: este un modul de tranziție, păstrat cât timp `l10n_ro_stock` definește câmpul.",
-      "Planul de retragere: după ce câmpul este scos din `l10n_ro_stock`, vederile ascunse nu mai au țintă, modulul se declară învechit și se elimină (inclusiv din `depends` ale proiectelor care îl folosesc).",
-      "Pentru e-Transport se folosește greutatea standard a produsului (`product.weight`), nu greutatea netă."
+      "Ascunde pe formularul de produs (`product.template`) câmpul „Greutate netă” definit de `l10n_ro_stock_base`, împreună cu eticheta lui (Inventar → Produse → Produse, fila Inventar, grupul Logistică: rămân vizibile doar Greutate și Volum). Câmpul e ascuns și pe formularul variantei de produs.",
+      "Nu necesită configurare: se instalează când firma nu folosește greutatea netă a produselor. Greutatea se introduce în câmpul Greutate (greutatea brută, folosită la transport).",
+      "Valorile deja salvate rămân în baza de date, pot fi exportate din lista de produse și reapar dacă modulul este dezinstalat.",
+      "Atenție la e-Transport: dacă firma folosește liniile de greutăți la expediere din `l10n_ro_etransport_enhancement`, greutatea netă a produselor se folosește în continuare pentru greutatea netă din declarația e-Transport, chiar și când câmpul e ascuns. Valorile salvate se golesc mai întâi (export, setare la 0, import; pentru produse cu variante, din Inventar → Produse → Variante de produs) sau modulul nu se instalează.",
+      "Nu adaugă logică nouă: este un modul de tranziție, păstrat cât timp `l10n_ro_stock_base` definește câmpul. Dacă câmpul este scos de acolo, vederile ascunse nu mai au țintă, modulul se declară învechit și se elimină (inclusiv din `depends` ale proiectelor care îl folosesc)."
     ],
     "dependencies": [
-      "l10n_ro_stock"
+      "l10n_ro_stock_base"
     ],
     "connections": [
-      "l10n_ro_stock",
+      "l10n_ro_stock_base",
       "l10n_ro_net_weight",
-      "l10n_ro_edi_stock",
+      "l10n_ro_stock",
       "l10n_ro_etransport_enhancement"
     ],
-    "text": "Romania - Hide Net Weight\nl10n_ro_hide_net_weight\nModulul ascunde câmpul „Greutate netă” (`l10n_ro_net_weight`) de pe formularul produsului, deoarece generează confuzii de interpretare pentru utilizatori. Datele din câmp nu sunt șterse sau modificate, doar eticheta și câmpul nu mai apar în interfață.\nAscunde pe formularul de produs (`product.template`) câmpul „Greutate netă” definit de `l10n_ro_stock`, împreună cu eticheta lui.\nNu adaugă logică nouă: este un modul de tranziție, păstrat cât timp `l10n_ro_stock` definește câmpul.\nPlanul de retragere: după ce câmpul este scos din `l10n_ro_stock`, vederile ascunse nu mai au țintă, modulul se declară învechit și se elimină (inclusiv din `depends` ale proiectelor care îl folosesc).\nPentru e-Transport se folosește greutatea standard a produsului (`product.weight`), nu greutatea netă."
+    "text": "Romania - Hide Net Weight\nl10n_ro_hide_net_weight\nModulul ascunde câmpul „Greutate netă” (`l10n_ro_net_weight`) de pe formularul produsului, deoarece generează confuzii de interpretare pentru utilizatori. Datele din câmp nu sunt șterse sau modificate, doar eticheta și câmpul nu mai apar în interfață.\nAscunde pe formularul de produs (`product.template`) câmpul „Greutate netă” definit de `l10n_ro_stock_base`, împreună cu eticheta lui (Inventar → Produse → Produse, fila Inventar, grupul Logistică: rămân vizibile doar Greutate și Volum). Câmpul e ascuns și pe formularul variantei de produs.\nNu necesită configurare: se instalează când firma nu folosește greutatea netă a produselor. Greutatea se introduce în câmpul Greutate (greutatea brută, folosită la transport).\nValorile deja salvate rămân în baza de date, pot fi exportate din lista de produse și reapar dacă modulul este dezinstalat.\nAtenție la e-Transport: dacă firma folosește liniile de greutăți la expediere din `l10n_ro_etransport_enhancement`, greutatea netă a produselor se folosește în continuare pentru greutatea netă din declarația e-Transport, chiar și când câmpul e ascuns. Valorile salvate se golesc mai întâi (export, setare la 0, import; pentru produse cu variante, din Inventar → Produse → Variante de produs) sau modulul nu se instalează.\nNu adaugă logică nouă: este un modul de tranziție, păstrat cât timp `l10n_ro_stock_base` definește câmpul. Dacă câmpul este scos de acolo, vederile ascunse nu mai au țintă, modulul se declară învechit și se elimină (inclusiv din `depends` ale proiectelor care îl folosesc)."
   },
   {
     "path": "l10n_ro_hr_documents/index.md",
@@ -17948,7 +17978,7 @@
   {
     "path": "l10n_ro_hr_payroll_enhancement/index.md",
     "module": "l10n_ro_hr_payroll_enhancement",
-    "version": "19.0.2.24.2",
+    "version": "19.0.2.24.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_payroll_enhancement",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_hr_payroll_enhancement",
     "last_ingest": "2026-10-22",
@@ -18323,7 +18353,7 @@
   {
     "path": "l10n_ro_invoice_dvi_protect/index.md",
     "module": "l10n_ro_invoice_dvi_protect",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_invoice_dvi_protect",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_invoice_dvi_protect",
     "last_ingest": "2026-10-28",
@@ -18709,7 +18739,7 @@
   {
     "path": "l10n_ro_partner_autocomplete/index.md",
     "module": "l10n_ro_partner_autocomplete",
-    "version": "19.0.1.3.1",
+    "version": "19.0.1.4.1",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_partner_autocomplete",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_partner_autocomplete",
     "last_ingest": "2026-10-30",
@@ -18774,7 +18804,7 @@
   {
     "path": "l10n_ro_partner_create_by_vat_button/index.md",
     "module": "l10n_ro_partner_create_by_vat_button",
-    "version": "19.0.1.1.12",
+    "version": "19.0.1.1.13",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_partner_create_by_vat_button",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_partner_create_by_vat_button",
     "last_ingest": "2026-06-08",
@@ -18795,7 +18825,7 @@
   {
     "path": "l10n_ro_partner_create_by_vat_openapi/index.md",
     "module": "l10n_ro_partner_create_by_vat_openapi",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "`https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_partner_create_by_vat_openapi`",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_partner_create_by_vat_openapi",
     "last_ingest": "2026-06-08",
@@ -19189,7 +19219,7 @@
   {
     "path": "l10n_ro_payroll_certificates/index.md",
     "module": "l10n_ro_payroll_certificates",
-    "version": "19.0.1.3.2",
+    "version": "19.0.1.3.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_certificates",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_payroll_certificates",
     "last_ingest": "2026-10-16",
@@ -19432,7 +19462,7 @@
   {
     "path": "l10n_ro_payroll_tax_redirect/index.md",
     "module": "l10n_ro_payroll_tax_redirect",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.1.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_tax_redirect",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_payroll_tax_redirect",
     "last_ingest": "2026-10-05",
@@ -20261,7 +20291,7 @@
   {
     "path": "l10n_ro_saft_export_fix/index.md",
     "module": "l10n_ro_saft_export_fix",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_saft_export_fix",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_saft_export_fix",
     "last_ingest": "2026-10-22",
@@ -21449,7 +21479,7 @@
   {
     "path": "l10n_ro_vat_deductibility/index.md",
     "module": "l10n_ro_vat_deductibility",
-    "version": "19.0.1.5.3",
+    "version": "19.0.1.5.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_vat_deductibility",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_vat_deductibility",
     "last_ingest": null,
@@ -21511,7 +21541,7 @@
   {
     "path": "l10n_ro_vat_on_payment_lock/index.md",
     "module": "l10n_ro_vat_on_payment_lock",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_vat_on_payment_lock`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_vat_on_payment_lock",
     "last_ingest": "2026-07-02",
@@ -21767,17 +21797,18 @@
   {
     "path": "terrabit_base/index.md",
     "module": "terrabit_base",
-    "version": "19.0.1.0.12",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_base",
     "local_path": "odoo-addons/terrabit/terrabit_base",
-    "last_ingest": "2026-10-09",
-    "friendly_name": "terrabit_base",
+    "last_ingest": "2026-11-04",
+    "friendly_name": "Terrabit Base",
     "summary": "Terrabit Base este un modul de tip „metapachet\": nu adaugă logică proprie, ci instalează dintr-o singură mișcare setul de bază de aplicații Odoo (stocuri, vânzări, achiziții, contabilitate) și modulele de localizare pentru România și extensiile Terrabit de care au nevoie aproape toți clienții locali. Valoarea lui este o configurare inițială rapidă și uniformă a unei baze de date noi.",
     "features": [
       "Fluxuri de bază pentru stocuri (inclusiv evaluarea stocului și costurile suplimentare de achiziție), vânzări și achiziții.",
-      "Contabilitate (`accountant`) și localizarea română Odoo (`l10n_ro`, `l10n_ro_edi`) completată cu modulele OCA: orașe, configurare, creare parteneri după CUI, TVA la încasare, unicitate parteneri.",
-      "Extensii Terrabit pentru România: îmbunătățiri e-Factura, rapoarte de factură și de livrare, registru de casă, buton de creare partener după CUI, mesaje SPV pentru achiziții.",
+      "Contabilitate (`accountant`) și localizarea română Odoo (`l10n_ro`, `l10n_ro_edi`) completată cu modulele OCA: orașe, configurare, TVA la încasare, unicitate parteneri.",
+      "Extensii Terrabit pentru România: îmbunătățiri e-Factura, rapoarte de factură și de livrare, registru de casă, mesaje SPV pentru achiziții.",
       "Module deltatech de uz general: blocarea creării rapide, procese de business, inventar de stoc, creare factură din comanda de achiziție, import UBL în achiziții.",
+      "Completarea partenerului după CUI nu mai vine din acest pachet: de la 19.0.1.1.0 modulul nu mai depinde de `l10n_ro_partner_create_by_vat` (OCA) și `l10n_ro_partner_create_by_vat_button`, deoarece partenerul este completat din ANAF de `l10n_ro_partner_autocomplete`, care nu poate fi instalat împreună cu ele. Scoaterea dependenței nu dezinstalează nimic; fiecare bază de date trece pe noul modul printr-o migrare proprie.",
       "Modulul este marcat ca aplicație (`application: True`) și nu se instalează automat (`auto_install: False`).",
       "Câteva module sunt lăsate comentate în manifest (de ex. `l10n_ro_stock_account`, `l10n_ro_stock_report`, `l10n_ro_stock_account_notice`, `deltatech_sale_store`); nu fac parte din pachetul de bază și se instalează separat, după caz."
     ],
@@ -21798,22 +21829,22 @@
       "l10n_ro",
       "l10n_ro_city",
       "l10n_ro_config",
-      "l10n_ro_partner_create_by_vat",
       "l10n_ro_vat_on_payment",
       "l10n_ro_partner_unique",
       "l10n_ro_efactura_enhancement",
       "l10n_ro_invoice_report",
       "l10n_ro_picking_report",
       "l10n_ro_cash_register",
-      "l10n_ro_partner_create_by_vat_button",
       "deltatech_purchase_ubl",
       "l10n_ro_message_spv_purchase"
     ],
     "connections": [
       "l10n_ro_efactura_enhancement",
-      "deltatech_purchase_ubl"
+      "deltatech_purchase_ubl",
+      "l10n_ro_partner_create_by_vat_button",
+      "l10n_ro_partner_autocomplete"
     ],
-    "text": "terrabit_base\nterrabit_base\nTerrabit Base este un modul de tip „metapachet\": nu adaugă logică proprie, ci instalează dintr-o singură mișcare setul de bază de aplicații Odoo (stocuri, vânzări, achiziții, contabilitate) și modulele de localizare pentru România și extensiile Terrabit de care au nevoie aproape toți clienții locali. Valoarea lui este o configurare inițială rapidă și uniformă a unei baze de date noi.\nFluxuri de bază pentru stocuri (inclusiv evaluarea stocului și costurile suplimentare de achiziție), vânzări și achiziții.\nContabilitate (`accountant`) și localizarea română Odoo (`l10n_ro`, `l10n_ro_edi`) completată cu modulele OCA: orașe, configurare, creare parteneri după CUI, TVA la încasare, unicitate parteneri.\nExtensii Terrabit pentru România: îmbunătățiri e-Factura, rapoarte de factură și de livrare, registru de casă, buton de creare partener după CUI, mesaje SPV pentru achiziții.\nModule deltatech de uz general: blocarea creării rapide, procese de business, inventar de stoc, creare factură din comanda de achiziție, import UBL în achiziții.\nModulul este marcat ca aplicație (`application: True`) și nu se instalează automat (`auto_install: False`).\nCâteva module sunt lăsate comentate în manifest (de ex. `l10n_ro_stock_account`, `l10n_ro_stock_report`, `l10n_ro_stock_account_notice`, `deltatech_sale_store`); nu fac parte din pachetul de bază și se instalează separat, după caz."
+    "text": "Terrabit Base\nterrabit_base\nTerrabit Base este un modul de tip „metapachet\": nu adaugă logică proprie, ci instalează dintr-o singură mișcare setul de bază de aplicații Odoo (stocuri, vânzări, achiziții, contabilitate) și modulele de localizare pentru România și extensiile Terrabit de care au nevoie aproape toți clienții locali. Valoarea lui este o configurare inițială rapidă și uniformă a unei baze de date noi.\nFluxuri de bază pentru stocuri (inclusiv evaluarea stocului și costurile suplimentare de achiziție), vânzări și achiziții.\nContabilitate (`accountant`) și localizarea română Odoo (`l10n_ro`, `l10n_ro_edi`) completată cu modulele OCA: orașe, configurare, TVA la încasare, unicitate parteneri.\nExtensii Terrabit pentru România: îmbunătățiri e-Factura, rapoarte de factură și de livrare, registru de casă, mesaje SPV pentru achiziții.\nModule deltatech de uz general: blocarea creării rapide, procese de business, inventar de stoc, creare factură din comanda de achiziție, import UBL în achiziții.\nCompletarea partenerului după CUI nu mai vine din acest pachet: de la 19.0.1.1.0 modulul nu mai depinde de `l10n_ro_partner_create_by_vat` (OCA) și `l10n_ro_partner_create_by_vat_button`, deoarece partenerul este completat din ANAF de `l10n_ro_partner_autocomplete`, care nu poate fi instalat împreună cu ele. Scoaterea dependenței nu dezinstalează nimic; fiecare bază de date trece pe noul modul printr-o migrare proprie.\nModulul este marcat ca aplicație (`application: True`) și nu se instalează automat (`auto_install: False`).\nCâteva module sunt lăsate comentate în manifest (de ex. `l10n_ro_stock_account`, `l10n_ro_stock_report`, `l10n_ro_stock_account_notice`, `deltatech_sale_store`); nu fac parte din pachetul de bază și se instalează separat, după caz."
   },
   {
     "path": "terrabit_clean_chatter/index.md",

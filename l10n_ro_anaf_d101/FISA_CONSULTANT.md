@@ -45,7 +45,8 @@ pentru demo:
 ## 5. Configurare inițială
 
 1. Instalați `l10n_ro_anaf_d101` (atrage `l10n_ro_profit_tax`, `l10n_ro_anaf_base` și `l10n_ro_anaf_partner`).
-2. Completați datele companiei: CUI, adresă, **cod CAEN**, județ și contactul de declarație.
+2. Completați datele companiei: CUI, adresă, **cod CAEN**, județ și contactul de declarație. Codul CAEN
+   se completează pe formularul companiei sau în **Setări → Contabilitate → Declarații ANAF**; căutarea ANAF a partenerului nu îl schimbă.
 3. Pe înregistrarea de calcul anuală, în grupul **Configurare**, verificați **Tip impozit D101**
    (codul de obligație ANAF): implicit **103** — impozit pe profit, persoane juridice române. Alegeți
    102 (plăți anticipate, societăți bancare), 104 (impozit anual, agricultori / ONG) sau 105 (persoane
@@ -262,8 +263,7 @@ Reguli de mapare:
 | Modul | Rol |
 |---|---|
 | `l10n_ro_profit_tax` | Sursa calculului (venituri, cheltuieli, ajustări, pierdere, impozit). |
-| `l10n_ro_anaf_partner` | Codul CAEN pe partenerul companiei, cerut la export. |
-| `l10n_ro_anaf_base` | Infrastructura ANAF: date declarant, validare companie, validare XSD, profile versionate. |
+| `l10n_ro_anaf_base` | Infrastructura ANAF: codul CAEN al companiei (cerut la export), date declarant, validare companie, validare XSD, profile versionate. |
 | `l10n_ro_anaf_d100` | Declarația trimestrială D100 (plăți anticipate), complementară D101 anual. |
 
 **Ce e automat:** maparea pe indicatori (exploatare și financiar, rd. 11, 23, 26, 27, 28, 39 și 39.1),
@@ -303,7 +303,7 @@ unde diferă de cea contabilă (rd. 11, pe calcul); scenariul de pierdere; rd. 1
 |---|---|---|
 | „Declarația 101 este anuală — poate fi exportată doar pentru perioada Anual." | Export încercat pe o perioadă trimestrială | Selectați înregistrarea anuală |
 | „Calculați și postați impozitul pe profit înainte de exportul D101." | Înregistrare în ciornă | Postați calculul de impozit pe profit |
-| Eroare validare companie (CUI/CAEN/județ) | Date fiscale incomplete | Completați CUI, adresă, CAEN, județ pe companie |
+| Eroare validare companie (CUI/CAEN/județ) | Date fiscale incomplete sau cod CAEN gol, `0000` sau fără exact 4 cifre | Completați CUI, adresă, un cod CAEN real de 4 cifre și județul pe companie |
 | „Exportul automat D101 acoperă momentan doar scenariul de profit…" | Exercițiu cu pierdere fiscală (rd. 3 și rd. 6 negative nu declanșează mesajul) | Completați D101 manual pentru scenariul de pierdere |
 | „Resursa ANAF … PDF lipsește sau este invalidă…" | Lipsește formularul PDF din modul (instalare incompletă) | Actualizați modulul; temporar alegeți *Descărcare directă XDP* |
 | „Formularul PDF ANAF nu conține pachete XFA." / „… pachetul XFA datasets." | Formularul PDF din modul nu e un formular ANAF valid | Actualizați modulul; temporar alegeți *Arhivă ZIP cu XDP și PDF* |

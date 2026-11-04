@@ -103,6 +103,12 @@ cu variante, un client și o comandă existentă în magazin.
     `read_all_orders` apare mereu cât lipsește. Fără el, Shopify arată aplicației doar comenzile
     din ultimele 60 de zile, iar conectorul nu mai trimite nimic pe comenzile mai vechi (fază,
     anulare, AWB). Dreptul îl aprobă Shopify, la cererea din contul magazinului.
+    Tot lista aceasta decide cum se grupează expedierile cu **Fulfillment prin GraphQL**: cu unul
+    dintre `read_locations`, `read_inventory` sau `read_markets_home`, conectorul face câte un
+    fulfillment pe fiecare locație; fără niciunul, face câte unul pe fiecare fulfillment order
+    (vezi Pasul 5). Cât timp **Granted Access Scopes** e gol (backend pe care încă nu s-a apăsat
+    **Testează conexiunea**), conectorul nu știe ce drepturi are și cere locația, ca pe un backend
+    cu scope de locații.
 
 ## 6. Flux de utilizare
 
@@ -207,7 +213,13 @@ Tot automat pleacă spre Shopify și **expedierea (fulfillment-ul) cu AWB-ul**: 
 sau la validarea livrării, după setarea **Declanșator fulfillment** de pe backend, printr-un job în
 fundal. Dacă Shopify a repartizat comanda pe **mai multe locații** (de exemplu, două depozite din
 Shopify), conectorul creează **câte un fulfillment pe fiecare locație**, toate cu același AWB — în
-Shopify comanda apare cu atâtea expedieri câte locații are, nu cu una singură. Dacă Shopify refuză
+Shopify comanda apare cu atâtea expedieri câte locații are, nu cu una singură. Excepție: cu
+**Fulfillment prin GraphQL** bifat, locația se citește doar dacă **Granted Access Scopes** conține
+`read_locations`, `read_inventory` sau `read_markets_home`, ori dacă lista e încă goală (backend pe
+care nu s-a apăsat **Testează conexiunea**). Când lista e citită și nu conține niciunul, conectorul creează **câte un
+fulfillment pe fiecare fulfillment order** (comanda de expediere pe care Shopify o face pentru o
+singură locație), tot cu același AWB; o comandă cu două fulfillment orders pe aceeași locație apare
+atunci cu două expedieri în loc de una. Dacă Shopify refuză
 expedierea, jobul eșuează imediat, fără reîncercări, și rămâne în lista de job-uri eșuate ale
 backend-ului; problemele de rețea sau limitele de apeluri se reîncearcă singure.
 
@@ -325,6 +337,8 @@ vânzare (tag-uri Shopify), verificarea periodică a webhook-urilor.
       reflectă corect mapările de depozit/listă de prețuri.
 - [ ] O comandă repartizată în Shopify pe două locații primește, după expediere, câte un
       fulfillment pe fiecare locație, cu același AWB, iar comanda apare ca expediată în Shopify.
+      Dacă **Granted Access Scopes** nu are niciun scope de locații și **Fulfillment prin GraphQL**
+      e bifat, comanda apare cu câte o expediere pe fiecare fulfillment order, tot cu același AWB.
 
 ### Ce NU pleacă spre Shopify: prețul liniei
 
@@ -352,6 +366,7 @@ mesaj care spune că prețul nu a fost trimis și că cele două părți diferă
 | Prețul exportat către Shopify nu se schimbă | Job în eroare (rate limit `429`/GraphQL `THROTTLED`) sau varianta nu are diferență de preț față de ultima exportare | Verificați job-urile eșuate din cardul kanban al backend-ului; exportul pornește doar pentru variante cu preț schimbat |
 | Token expirat brusc pe un backend Dev Dashboard App | Acțiunea programată „Shopify: Reînnoiește token-urile de acces” nu a rulat (dezactivată) | Verificați că acțiunea programată e activă; fiecare apel API reîmprospătează oricum tokenul dacă expiră în < 30 min |
 | Job eșuat „*Shopify rejected the fulfillment of order … (location …): …*” | Shopify a refuzat expedierea pe acea locație (de exemplu, cantitatea a fost deja marcată ca expediată manual în Shopify, sau comanda e închisă) | Citiți motivul din mesaj, corectați în Shopify sau în Odoo, apoi reporniți jobul (**Repune în coadă**); cantitățile deja expediate nu se trimit a doua oară |
+| Job eșuat „*Access denied for location field. Required access: `read_locations` …*” la expediere | Versiune a modulului anterioară 19.0.1.8.15, cu **Fulfillment prin GraphQL** bifat și fără scope de locații în **Granted Access Scopes** | Actualizați modulul, apoi reporniți joburile eșuate (**Repune în coadă**); alternativ, acordați aplicației `read_locations` (Pasul 8) |
 | Comandă anulată în Odoo, dar rămâne activă în Shopify | Anularea nu a ajuns la Shopify (job eșuat) | Verificați job-urile eșuate ale backend-ului; reîncercați anularea |
 
 ## 10. Capturi de ecran
