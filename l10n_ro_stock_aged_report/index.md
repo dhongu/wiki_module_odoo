@@ -5,7 +5,8 @@
 - **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_aged_report
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_stock_aged_report`
-- **Ultima Ingestie:** `2026-10-21`
+- **Ultima Ingestie:** `2026-11-04`
+- **Odoo 20:** `20.0.1.0.5`, migrat prin dhongu/l10n-romania#756 (https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_stock_aged_report)
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -16,11 +17,12 @@ Modulul oferă un raport de vechime a stocului (Stock Aged Report) pentru locali
 
 #### 2. Funcționalități Cheie
 
-- **Data ultimei intrări / ieșiri pe quant:** câmpurile `l10n_ro_last_in_date` și `l10n_ro_last_out_date` pe `stock.quant` se actualizează automat când cantitatea crește, respectiv scade.
+- **Data ultimei intrări / ieșiri pe quant:** câmpurile `l10n_ro_last_in_date` și `l10n_ro_last_out_date` pe `stock.quant` se actualizează automat când cantitatea crește, respectiv scade. Pe 20.0, la o cantitate scrisă pe mai multe quant-uri deodată, data de intrare se pune doar pe cele care cresc, iar cea de ieșire doar pe cele care scad. Pe 19.0, ambele date pot ajunge pe toate quant-urile din apel (dhongu/l10n-romania#755, necorectat pe 19.0).
 - **Wizard de raport:** din **Inventar → Raportare → Raport vechime stoc** se alege depozitul, data de referință și intervalul de vechime (15, 30, 90, 180 sau 365 de zile); opțional, un produs anume. Fără produs, raportul acoperă tot stocul locațiilor alese.
 - **Lista de locații editabilă:** în fila *Locații* a dialogului, implicit sunt locațiile depozitului; lista poate fi editată pentru a restrânge raportul la o parte din ele.
 - **Defalcare pe intervale:** cantitatea și valoarea stocului sunt împărțite pe tranșe de vechime (de ex. [1] 0-15 zile, [2] 15-30 zile etc.).
 - **Cont contabil:** fiecare linie arată contul de evaluare a stocului; se folosește contul de pe produs dacă există câmpul OCA `l10n_ro_property_stock_valuation_account_id` (citit defensiv), altfel contul de pe categoria produsului. Pivotul se poate regrupa pe conturi pentru comparația cu contabilitatea.
+- **Filtru pe firmă (20.0):** raportul citește doar quant-urile firmei raportului, chiar dacă lista de locații e editată manual.
 - **Analiză:** rezultatul se deschide în vizualizare pivot și listă, cu data ultimei ieșiri pe fiecare linie.
 - **Recalculare sigură:** rularea repetată a raportului pe același dialog înlocuiește liniile anterioare (nu le dublează); liniile se creează într-un singur lot, rapid și pe depozite mari.
 - **Date istorice la instalare:** `post_init_hook` completează datele goale pe quant-urile existente din ultimele mișcări de stoc efectuate.

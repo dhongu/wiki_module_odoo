@@ -4,6 +4,11 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-04] Actualizare: `l10n_ro_stock_aged_report` migrat pe 20.0 (20.0.1.0.5)
+
+- **Acțiune:** pagina rămâne pe sursa 19.0 (`19.0.1.0.4`), cu linia „Odoo 20” nouă: modulul e pe 20.0 prin dhongu/l10n-romania#756. Pe 20.0 datele de ultimă intrare/ieșire se scriu per quant, iar raportul filtrează quant-urile pe firma raportului. Pe 19.0 bug-ul cu datele puse pe toate quant-urile unui write multiplu rămâne deschis (dhongu/l10n-romania#755).
+- **Fișiere actualizate:** `l10n_ro_stock_aged_report/index.md`, `log.md`.
+
 ## [2026-11-04] Sincronizare automată de noapte
 
 - **Versiuni aduse la zi** (86): `deltatech_account_analytic 19.0.0.0.10 → 19.0.0.0.11`, `deltatech_brand_field 19.0.0.0.7 → 19.0.0.1.0`, `deltatech_change_uom 19.0.1.0.0 → 19.0.1.0.1`, `deltatech_cmr_document 19.0.1.0.6 → 19.0.1.0.7`, `deltatech_competitors_price 19.0.1.0.3 → 19.0.1.0.4`, `deltatech_contact 19.0.1.4.12 → 19.0.1.4.14`, `deltatech_delivery_dpd 19.0.0.6.7 → 19.0.0.7.0`, `deltatech_doc_screenshots 19.0.1.1.0 → 19.0.1.2.0`, `deltatech_edi 19.0.1.0.6 → 19.0.1.0.7`, `deltatech_edinet 19.0.1.6.7 → 19.0.1.6.8`, `deltatech_feed 19.0.3.7.1 → 19.0.3.8.0`, `deltatech_invoice_number 19.0.1.0.3 → 19.0.1.0.4`, `deltatech_invoice_receipt 19.0.2.0.4 → 19.0.2.0.5`, `deltatech_invoice_weight 19.0.1.0.5 → 19.0.1.0.6`, `deltatech_logistic_docs 19.0.1.0.4 → 19.0.1.0.5`, `deltatech_marketplace 19.0.1.42.7 → 19.0.1.43.0`, `deltatech_marketplace_purchase 19.0.1.0.8 → 19.0.1.0.9`, `deltatech_marketplace_shopify 19.0.1.8.14 → 19.0.1.8.15`, `deltatech_mrp 19.0.1.0.9 → 19.0.1.0.10`, `deltatech_mrp_concentration 19.0.1.0.4 → 19.0.1.0.5`, `deltatech_mrp_simple 19.0.1.1.4 → 19.0.1.1.5`, `deltatech_notification_sound 19.0.2.0.3 → 19.0.2.0.4`, `deltatech_partner_generic 19.0.2.0.2 → 19.0.2.0.5`, `deltatech_partner_merge 19.0.1.2.0 → 19.0.1.2.1`, `deltatech_payment_card_dummy 19.0.0.0.5 → 19.0.0.0.7`, `deltatech_payment_report 19.0.1.0.6 → 19.0.1.0.7`, `deltatech_picking_restrict_entry_exit 19.0.0.0.14 → 19.0.0.0.15`, `deltatech_picking_transit 19.0.0.0.15 → 19.0.0.0.16`, `deltatech_pos 19.0.2.13.0 → 19.0.2.13.1`, `deltatech_pricelist 19.0.1.0.2 → 19.0.1.0.3` și încă 56.
