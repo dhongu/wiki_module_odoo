@@ -4,6 +4,12 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-05] Reingestie: `deltatech_expenses` 19.0.3.11.0 (plată furnizor pe 401, varianta prin extras per jurnal, Sold 542)
+
+- **Acțiune:** reingestie a paginii la 19.0.3.11.0, după dhongu/deltatech#3971–#3973 și dhongu/deltatech#3979. Linia „Plată furnizor” ia contul 401 din „Cont de plătit” al furnizorului, fără TVA. Bifa „Avansul și lichidarea prin extras de bancă / registru de casă” e acum per jurnal (`account.journal.expenses_no_payment_moves`), iar decontul o păstrează în `no_payment_moves`; migrarea se face la 19.0.3.11.0. Am adăugat butonul „Sold 542” cu fișa 542 a angajatului și subpunctul „Operarea în extrasul de bancă” (Enterprise). Linia „Odoo 20” nouă: `20.0.3.8.0` prin dhongu/deltatech#3974 și dhongu/deltatech#3980; pe 20.0 soldul cumulat din fișa 542 e câmpul propriu `expenses_cumulated_balance`.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `FISA_CONSULTANT.md` și codul (origin/19.0). DESCRIPTION.md nu acoperă încă soldul 542 și varianta prin extras.
+- **Dependențe/Conexiuni:** neschimbate.
+- **Fișiere actualizate:** `deltatech_expenses/index.md`, `deltatech_expenses/FISA_CONSULTANT.md`, `deltatech_expenses/screenshots/` (capturile 11–17 noi), `index.md`, `log.md`.
 ## [2026-11-05] Sincronizare automată de noapte
 
 - **Versiuni aduse la zi** (20): `deltatech_delivery 19.0.6.12.2 → 19.0.6.12.4`, `deltatech_delivery_dpd 19.0.0.7.0 → 19.0.0.7.1`, `deltatech_expenses 19.0.3.8.0 → 19.0.3.9.1`, `deltatech_marketplace_shopify 19.0.1.8.15 → 19.0.1.8.17`, `deltatech_mentor 19.0.2.2.2 → 19.0.2.2.3`, `deltatech_obyc 19.0.1.0.18 → 19.0.1.0.19`, `deltatech_pos 19.0.2.13.1 → 19.0.2.13.2`, `deltatech_stock_valuation_guard 19.0.1.0.1 → 19.0.1.0.3`, `deltatech_stock_valuation_guard_pos 19.0.1.0.1 → 19.0.1.0.3`, `deltatech_valuation_area 19.0.1.0.6 → 19.0.1.0.7`, `deltatech_website_product_url_image 19.0.1.0.6 → 19.0.1.0.7`, `l10n_ro_anaf_d112 19.0.2.23.4 → 19.0.2.23.5`, `l10n_ro_anaf_d394 19.0.1.3.14 → 19.0.1.3.15`, `l10n_ro_anaf_partner 19.0.2.3.9 → 19.0.2.5.0`, `l10n_ro_anaf_partner_lookup 19.0.1.2.2 → 19.0.1.3.0`, `l10n_ro_caba 19.0.1.1.5 → 19.0.1.2.0`, `l10n_ro_partner_autocomplete 19.0.1.4.1 → 19.0.1.5.0`, `l10n_ro_payroll_allowances 19.0.1.1.4 → 19.0.1.1.5`, `l10n_ro_reges 19.0.1.2.0 → 19.0.1.2.1`, `terrabit_base 19.0.1.1.0 → 19.0.1.2.0`.

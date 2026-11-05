@@ -1,10 +1,11 @@
 # Expenses Deduction (localizat la `deltatech_expenses/index.md`)
 
 - **Nume Tehnic:** `deltatech_expenses`
-- **Versiune:** `19.0.3.9.1`
+- **Versiune:** `19.0.3.11.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_expenses
+- **Odoo 20:** `20.0.3.8.0`, portat prin dhongu/deltatech#3974 și dhongu/deltatech#3980 (https://github.com/dhongu/deltatech/tree/20.0/deltatech_expenses)
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_expenses`
-- **Ultima Ingestie:** `2026-10-27`
+- **Ultima Ingestie:** `2026-11-05`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -21,6 +22,10 @@ Modulul gestionează decontarea cheltuielilor efectuate de angajați pe baza ava
 - **Suma liniei este mereu brută (TVA inclus)**, adică totalul de pe bon sau factură, indiferent cum e configurată taxa („inclusă în preț" sau „pe deasupra"); modulul extrage din ea baza și TVA-ul deductibil. Cu o taxă „pe deasupra" poate apărea o rotunjire de 1 ban față de bon. Tabelul de linii afișează coloanele de taxă.
 - Linii de două tipuri: „Cheltuieli" (justificată cu bon/factură; generează chitanță de achiziție `Dr 6xx + Dr 4426 = Cr 401` și nota de decontare `Dr 401 = Cr 542`, reconciliate între ele) și „Plată furnizor" (angajatul achită direct o datorie a firmei; generează `Dr 401 = Cr 542`, reconciliată cu facturile furnizor deschise).
 - **Plata directă la furnizor fără factură deschisă**: partea neacoperită de facturi deschise este un avans acordat furnizorului și se reclasifică automat `Dr 4092 = Cr 401` (reconciliat), astfel încât pe 401 nu rămâne sold debitor. Se folosește mereu 4092 (servicii); pentru bunuri (4091) sau imobilizări (4093) contabilul reclasifică manual, iar la primirea facturii compensează avansul (`Dr 401 = Cr 4092`).
+- Linia „Plată furnizor” ia contul de datorii 401 din „Cont de plătit” al furnizorului (completat automat, doar citire) și nu are TVA: taxele nu se pot completa și sunt ignorate, iar nota `Dr 401 = Cr 542` e pe totalul liniei. Opțional, linia poate numi facturile plătite (butonul „Bills Paid”), cu suma alocată pe fiecare.
+- **Varianta „Avansul și lichidarea prin extras de bancă / registru de casă”**: bifa e **per jurnal** (`account.journal.expenses_no_payment_moves`, jurnal de casă, bancă sau card, fila „Note contabile”), nu pe companie. Decontul preia varianta din jurnalul modului de decontare (jurnalul cardului la „Card de firmă”, jurnalul de plată altfel) și o ține stocat în `no_payment_moves`: deconturile în Ciornă urmează modificarea bifei, cele în „Avans” sau „Efectuat” își păstrează fluxul. În această variantă decontul contabilizează doar cheltuielile, mereu pe 542 cu angajatul ca partener (chitanțe, plăți furnizor, diurnă), fără note de avans, restituire, plată suplimentară sau diferență de curs; nu are pasul „Avans” (se validează direct din Ciornă, bara de stare arată doar Ciornă și Efectuat), iar notele de decontare se numesc „Decontare cheltuieli”. Banii dați angajatului și restituirile se operează din registrul de casă sau extrasul de bancă, reconciliate pe 542 (contul trebuie să permită reconcilierea, partenerul e contactul de lucru al angajatului). Migrarea 19.0.3.11.0 mută bifa veche de pe companie pe jurnalele de casă, bancă și card, iar deconturile existente își păstrează varianta.
+- Buton smart **„Sold 542”** pe decont: soldul angajatului pe contul 542 al decontului (în valuta contului, dacă 542 e în valută), cu toate deconturile și operațiunile de casă/bancă; deschide fișa 542 a angajatului (notele postate, cu sold cumulat). Utilizatorii fără drept de citire în contabilitate văd soldul ca simplu câmp. Câmpul **„Sold angajat (542)”** apare pentru angajat și aprobator doar în varianta prin extras/registru.
+- **Operarea în extrasul de bancă** (fișă, doar Enterprise, ecranul „Potrivire bancă”): „Setează partenerul” = contactul de lucru al angajatului; apoi „Reconciliază” pe notele deschise de pe 542 (plata diferenței către angajat `Dr 542 = Cr 5121`, restituirea `Dr 5121 = Cr 542`) sau „Setează contul” 542 când decontul nu există încă (retragere de numerar, plată cu cardul). La final, soldurile deschise se potrivesc din Contabilitate → Reconciliază.
 - Calcul diurnă: sumă/zi (`diem`) × număr de zile (acceptă o zecimală, ex. 2,5 — pentru deplasări în străinătate diurna se acordă și pe fracțiuni de zi) = `total_diem`, cu notă proprie `Dr 625 = Cr 542`, datată cu data cheltuielii. Valoarea implicită de 42,50 lei/zi este doar un punct de pornire, **nu un plafon**: modulul contează integral diurna introdusă și nu verifică plafonul fiscal de neimpozitare. Partea peste plafon se preia manual în salarizare ca venit impozabil; verificarea automată o oferă modulul opțional `l10n_ro_expense_allowance`.
 - Închiderea contului 542 prin **nota de diferență** (`Dr 5311 = Cr 542` când angajatul restituie, `Dr 542 = Cr 5311` când firma îi plătește diferența), **datată cu data decontului** (data cheltuielii), nu cu data avansului.
 - **Mod de decontare** (`settlement_mode`, pe decont): **Numerar** (avansul se plătește din casă, `Dr 542 = Cr 5311`); **Virament (card personal)** (avansul se plătește dintr-un jurnal bancar prin contul de plăți în curs 5125 al jurnalului: `Dr 542 = Cr 5125`, apoi se potrivește cu extrasul `Dr 5125 = Cr 5121`; restituirea e `Dr 5125 = Cr 542`); **Card de firmă** (fără avans: fiecare chitanță se decontează `Dr 401 = Cr 5125` al jurnalului cardului, potrivit apoi cu extrasul cardului; din jurnalul de plată se achită doar diurna datorată angajatului). Retragerea de numerar cu cardul firmei este un decont separat, în modul Virament (`Dr 542 = Cr 5121`).
@@ -32,6 +37,7 @@ Modulul gestionează decontarea cheltuielilor efectuate de angajați pe baza ava
 - Tipărire: meniul ⚙ → Tipărire → „Tipărire decont cheltuieli" (justificativul semnat de titularul avansului).
 - Meniu: Facturare → Furnizori → Decont Cheltuieli (cu Enterprise: Contabilitate → Furnizori → Decont Cheltuieli).
 - Buton smart „Deconturi" pe fișa angajatului (`hr.employee`), cu numărul deconturilor și listă filtrată; vizibil doar grupurilor modulului.
+- **Diferență pe Odoo 20:** coloana „Sold cumulat” din fișa 542 e câmpul propriu `expenses_cumulated_balance`, deoarece în Odoo 20 `cumulated_balance` standard se calculează doar pe un domeniu cu un singur cont (pe 19.0 se folosește `cumulated_balance`).
 - Partenerul contabil de pe note derivă din „Work Contact" (`work_contact_id`); dacă lipsește, notele se generează fără partener (înregistrări interne), iar validarea funcționează în ambele cazuri.
 
 > **Configurare:** pe decont, „Jurnal avansuri (542)" (tabul „Alte informații") trebuie să aibă drept cont implicit 542; jurnalul de numerar (Casă) trebuie să aibă contul 5311; „Cont diurnă" (implicit primul 625) e în antet, „Jurnal diurnă" în „Alte informații". Alegerea cotei TVA se face pe linie: taxa se pune doar dacă documentul dă drept de deducere (factură sau bon fiscal ≤ 100 euro cu codul de TVA al firmei tipărit).
@@ -50,13 +56,14 @@ Modulul gestionează decontarea cheltuielilor efectuate de angajați pe baza ava
 
 - `deltatech.expenses.deduction`: decontul de cheltuieli (stări, avans, diurnă, `settlement_mode`, `card_journal_id`, moneda și diferențele de curs, notele contabile generate).
 - `deltatech.expenses.deduction.line`: linia de decont (bon sau plată furnizor), cu moneda derivată din decont.
-- `account.move`, `account.journal`, `account.payment`: extinderi pentru legătura cu decontul.
+- `account.move`, `account.journal`, `account.payment`: extinderi pentru legătura cu decontul; `account.journal` poartă bifa `expenses_no_payment_moves`.
+- Câmpuri pe decont: `no_payment_moves` (stocat), `employee_balance` și `employee_balance_currency_id` (butonul „Sold 542”).
 - `hr.employee`: butonul „Deconturi" și câmpul `expenses_card_journal_id` (Jurnal card firmă).
 
 **Vizualizări**
 
 - `views/deltatech_expenses_deduction_view.xml`: formular, listă, căutare și meniul „Decont Cheltuieli".
-- `views/hr_employee_view.xml`, `views/account_journal_view.xml`: extinderi pe angajat și jurnal.
+- `views/hr_employee_view.xml`, `views/account_journal_view.xml`: extinderi pe angajat și jurnal, plus lista fișei 542 a angajatului.
 - `views/deltatech_expenses_deduction_report.xml`, `views/report_expenses.xml`: raportul tipărit al decontului.
 
 **Acțiuni Automate / Acțiuni Server**
