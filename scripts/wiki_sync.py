@@ -12,8 +12,8 @@ Două comenzi:
             și scrie coada pentru reingestia AI (`.wiki-queue.json`), cel mult
             `--limit` module, în ordinea priorității:
               1. dependențele din manifest diferă de cele din pagină;
-              2. `readme/DESCRIPTION|USAGE|CONFIGURE.md` modificate după
-                 „Ultima Ingestie”;
+              2. `readme/DESCRIPTION|USAGE|CONFIGURE|FISA_CONSULTANT.md`
+                 modificate după „Ultima Ingestie”;
               3. modul fără DESCRIPTION.md cu modele/view-uri/date modificate;
               4. modul nou, fără pagină.
   finalize  După reingestie: actualizează `index.md` și `log.md` din raportul
@@ -67,7 +67,14 @@ RE_IMG = re.compile(r"\]\(((?:\.\./)*)(static/description|screenshots)/([^)]+\.(
 RE_LOCAL_LINK = re.compile(r"\]\(([^)#\s]+\.md)\)")
 
 CODE_PATHS = ("models", "views", "wizard", "wizards", "data", "report")
-README_PATHS = ("readme/DESCRIPTION.md", "readme/USAGE.md", "readme/CONFIGURE.md")
+README_PATHS = (
+    "readme/DESCRIPTION.md",
+    "readme/USAGE.md",
+    "readme/CONFIGURE.md",
+    # fișa aduce funcționalități pe care DESCRIPTION.md adesea nu le prinde; HISTORY.md nu e aici:
+    # se schimbă la fiecare bump de versiune și ar ține coada plină, înaintea modulelor noi
+    "readme/FISA_CONSULTANT.md",
+)
 
 
 def read_manifest(path: Path) -> dict:
