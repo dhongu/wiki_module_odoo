@@ -1,10 +1,11 @@
 # Stock Valuation Guard (localizat la `deltatech_stock_valuation_guard/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_valuation_guard`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/deltatech_stock_valuation/tree/19.0/deltatech_stock_valuation_guard
 - **Cale Locală:** `odoo-addons/deltatech_stock_valuation/deltatech_stock_valuation_guard`
 - **Ultima Ingestie:** `2026-10-22`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

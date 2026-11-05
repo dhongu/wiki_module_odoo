@@ -4,17 +4,22 @@
 - **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_concentration
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_mrp_concentration`
-- **Ultima Ingestie:** `2026-06-02`
+- **Ultima Ingestie:** `2026-11-05`
 
 #### 1. Sumar
 
-Acest modul introduce o funcționalitate specializată de gestionare a concentrației pentru procesele de producție din Odoo. Este conceput pentru industrii (precum cea chimică, alimentară sau farmaceutică) unde concentrația reală a unui ingredient activ dintr-o componentă poate varia, necesitând ajustarea cantităților de producție pentru a menține calitatea produsului finit.
+Modulul recalculează cantitatea ingredientului principal dintr-o rețetă pornind de la concentrația dorită în produsul finit și de la concentrația ingredientului disponibil, apoi echilibrează lotul cu un diluant sau cu un produs secundar. Este destinat produselor chimice, alimentare sau farmaceutice obținute prin diluarea sau concentrarea unui ingredient activ.
 
 #### 2. Funcționalități Cheie
 
-- **Urmărirea concentrației componentelor**: adaugă un câmp **Concentrație** direct pe liniile listei de materiale (BoM), permițând inginerilor de producție să specifice concentrația necesară pentru fiecare materie primă sau ingredient.
-- **Ajustări dinamice ale producției**: se integrează cu modulul de bază de Producție (MRP) din Odoo pentru a se asigura că, în timpul producției, cantitățile efectiv consumate țin cont de concentrația specificată, compensând variațiile de concentrație ale componentelor pentru calitate și potență consecvente ale produselor finite.
-- **Trasabilitate și documentare**: include datele de concentrație atât pe lista de materiale (BoM), cât și pe comenzile de producție (MO) individuale, pentru o mai bună auditabilitate și control al calității.
+- **Concentrații pe lista de materiale (BoM)**: formularul BoM primește două câmpuri lângă produs, *Concentration* (a produsului finit) și *Concentration Primary* (a ingredientului principal). Sunt numere simple, deci se folosește aceeași unitate pentru ambele (de ex. procente).
+- **Tip de ingredient pe componente**: fiecare linie de componentă are *Ingredient Type*: *Primary* (ingredientul activ), *Secondary* (diluantul) sau *Normal* (implicit, nu se recalculează).
+- **Recalculare pe BoM**: la modificarea oricărei concentrații sau a cantității din BoM, cantitatea componentei *Primary* devine cantitate BoM × *Concentration* / *Concentration Primary*. Restul lotului se echilibrează:
+  - diluare (rezultatul e sub cantitatea BoM): componenta *Secondary* primește diferența;
+  - concentrare (rezultatul e peste cantitatea BoM): produsele secundare (by-products) primesc excesul, iar componenta *Secondary* devine zero.
+- **Recalculare pe comanda de producție (MO)**: formularul MO afișează aceleași două câmpuri, copiate din BoM la alegerea acesteia. Modificarea unei concentrații sau a cantității de produs recalculează necesarul componentelor principală și secundară și al produselor secundare ale comenzii, cu aceeași regulă; astfel concentrația reală a unui lot primit se poate folosi pentru o singură comandă, fără a modifica BoM-ul.
+- **Unde se găsește**: *Manufacturing > Products > Bills of Materials* pentru BoM și *Manufacturing > Operations > Manufacturing Orders* pentru comenzi. Produsele secundare se introduc în fila *By-products* a BoM-ului, disponibilă când opțiunea *By-Products* e activată în setările Manufacturing.
+- **Limitări**: recalcularea rulează doar la editarea formularului de BoM sau de MO; comenzile create automat (din comandă de vânzare sau regulă de reaprovizionare) nu primesc concentrațiile și păstrează cantitățile din BoM până când câmpurile sunt modificate pe formular. Când BoM-ul are mai multe produse secundare, toate primesc aceeași cantitate în exces.
 
 #### 3. Dependențe
 
@@ -26,8 +31,8 @@ Acest modul introduce o funcționalitate specializată de gestionare a concentra
 
 #### 4. Componente Cheie
 
-Documentația pentru Sumar și Funcționalități Cheie a fost preluată din `readme/DESCRIPTION.md`. Conform fluxului de ingestie, analiza detaliată a codului pentru această secțiune este omisă, deoarece Readme-ul nu o solicită explicit.
+Sumarul și Funcționalitățile Cheie provin din `readme/DESCRIPTION.md`; conform fluxului de ingestie, analiza detaliată a codului pentru această secțiune este omisă, Readme-ul nu o solicită explicit. Verificare punctuală în cod: modelele extinse sunt `mrp.bom` (câmpurile `concentration`, `concentration_primary`), `mrp.bom.line` (`ingredient_type`) și `mrp.production`; vizualizările sunt în `views/mrp_bom_view.xml` și `views/mrp_production_view.xml`. Modulul nu definește acțiuni automate sau acțiuni server.
 
 #### 5. Conexiuni
 
-- [deltatech_mrp](../deltatech_mrp/index.md): suită de extensii personalizate pentru modulul de Producție (MRP), cu care acest modul împărtășește aria funcțională a listelor de materiale și a comenzilor de producție.
+Nu există legături funcționale verificate cu alte module cu pagină wiki, dincolo de dependențele de mai sus.

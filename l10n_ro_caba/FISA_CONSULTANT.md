@@ -34,9 +34,11 @@ setările sunt împrăștiate și prost traduse. Modulul:
 - redenumește câmpul „Cont de primire fiscală de bază" (traducere greșită din nucleu) în
   **„Cont tehnic pentru baza TVA la încasare"**, cu explicație.
 
-Modulul **nu depinde** de OCA `l10n_ro_vat_on_payment`. Acela citește regimul partenerilor din
-lista ANAF, cu datele de intrare și ieșire; se poate instala în paralel. Fără el, bifa de pe
-partener se pune manual (vezi pasul 2).
+Modulul **nu depinde** de OCA `l10n_ro_vat_on_payment` și nici de `l10n_ro_anaf_partner`. Oricare
+dintre ele aduce regimul furnizorilor din registrul ANAF, cu datele de intrare și ieșire, și se
+poate instala în paralel. Cu `l10n_ro_anaf_partner`, factura de achiziție primește singură poziția
+la încasare când furnizorul e în registrul RTVAI la data facturii (vezi pasul 2). Fără niciunul,
+poziția se pune manual pe furnizor.
 
 ---
 
@@ -247,9 +249,24 @@ primită: un furnizor în sistem din același grup cu dvs. nu o pune.
 
 ![Furnizorul cu poziția fiscală Sistem de colectare TVA](screenshots/05_furnizor_tva_incasare.png)
 
-Regimul partenerilor se verifică în lista ANAF a contribuabililor în sistemul TVA la încasare. Cu
-OCA `l10n_ro_vat_on_payment` instalat, lista se descarcă și se aplică automat, cu datele de intrare
-și ieșire din sistem.
+Regimul partenerilor se verifică în lista ANAF a contribuabililor în sistemul TVA la încasare
+(registrul RTVAI). Pe firma normală, poziția se poate alege și automat, la data facturii:
+
+- **Cu `l10n_ro_anaf_partner`** (și fără OCA): sincronizarea ANAF a furnizorului (butonul
+  **Sincronizează cu ANAF** sau cronul zilnic) păstrează perioadele lui RTVAI în lista **Perioade
+  TVA** din fila **Monitorizare ANAF**. O factură de achiziție de la un furnizor **fără poziție pusă
+  de mână** primește poziția **Sistem de colectare TVA** dacă **Data facturii** cade într-o perioadă
+  RTVAI (de la început inclusiv până la sfârșit exclusiv), iar taxele trec pe cele la încasare.
+  Dacă schimbați **Data facturii** pe ciornă, poziția se recalculează. Treceți în **Data facturii**
+  data emiterii de către furnizor, nu data primirii: regimul se judecă la data emiterii (Norme,
+  pct. 67 alin. (6)). Storno-ul creat cu **Notă de credit** din factură urmează regimul facturii
+  pe care o corectează, chiar dacă furnizorul a ieșit între timp din sistem (art. 282 alin. (10)
+  și art. 287 Cod fiscal: ajustarea ia regimul operațiunii de bază).
+- **Cu OCA `l10n_ro_vat_on_payment`**: lista ANAF se descarcă și OCA alege poziția pe factură.
+
+Poziția pusă de mână pe furnizor are întâietate: o poziție specială (taxare inversă, scutire) sau
+una aleasă intenționat rămâne. Comenzile de achiziție nu se calculează după registru: poziția se
+stabilește pe factură.
 
 ### Pasul 3 — Factura de vânzare
 
@@ -325,7 +342,8 @@ Meniu: **Contabilitate → Raportare → Declarații fiscale**, raportul **VAT R
 |---|---|
 | D300 (`l10n_ro_anaf_d300`) | Rândurile de bază și TVA se alimentează din grilele de pe nota CABA, în luna încasării. |
 | `l10n_ro_vat_on_payment_lock` | Blochează desfacerea reconcilierii dacă nota CABA e într-o perioadă deja declarată. |
-| OCA `l10n_ro_vat_on_payment` | Opțional: lista ANAF și poziția fiscală automată pe factură. |
+| OCA `l10n_ro_vat_on_payment` | Opțional: lista ANAF și poziția fiscală automată pe factură. Când e instalat, el alege poziția pe achiziții. |
+| `l10n_ro_anaf_partner` | Opțional: perioadele RTVAI ale furnizorului din sincronizarea ANAF; la firma normală, factura de achiziție primește poziția la încasare la data facturii. Verificarea din Setări semnalează furnizorii cu poziție manuală care contrazice registrul. |
 | Vânzări / Achiziții (comenzi) | La firma în sistem, comenzile de vânzare și de achiziție primesc poziția la încasare, iar facturile create din ele o preiau. La firma normală, comenzile de achiziție preiau poziția furnizorului. |
 | Comenzi de vânzare / POS, firmă normală | **Limitare:** către un furnizor în sistem care e și client, comanda preia poziția la încasare de pe partener, iar factura creată din ea o păstrează. Schimbați poziția în **Regimul național (TVA)** pe comandă sau pe factură. |
 | OCA `l10n_ro_dvi`, `l10n_ro_nondeductible_vat` | Folosesc același cont tehnic pentru liniile lor de bază. TVA-ul nedeductibil nu trece prin 44282 — se amână doar partea deductibilă (Norme, pct. 67 alin. (8)). |
@@ -358,11 +376,23 @@ pentru suma facturată înainte (art. 282 alin. (7) lit. b)), iar încasările p
 emise înainte de intrare nu intră în sistem (art. 282 alin. (7) lit. a)). La achiziții, TVA-ul de pe
 facturile primite cât ați aplicat sistemul se deduce tot la plată.
 
+**Alegerea automată după registrul RTVAI** (firma normală, cu `l10n_ro_anaf_partner`) nu acoperă:
+
+- **persoanele afiliate** — sistemul nu se aplică livrărilor către o persoană afiliată furnizorului
+  (art. 282 alin. (6) lit. d) Cod fiscal; Norme, pct. 26 alin. (14)); puneți de mână **Regimul
+  național (TVA)** pe furnizorul afiliat;
+- **avansurile** — avansul facturat cât furnizorul era în sistem rămâne la încasare (art. 282
+  alin. (7) lit. b)), dar factura finală emisă după ieșire ia regimul de la data ei; stornarea
+  avansului pe factura finală se verifică manual;
+- **notele de credit introduse manual** (fără legătură cu factura inițială) — iau regimul de la data
+  lor; creați-le din factură, cu **Notă de credit**.
+
 **Bifa și poziția nu au dată:** schimbați **Compania aplică TVA la încasare** exact la data de efect,
 după ce ați confirmat ciornele; comenzile și ciornele create înainte păstrează poziția veche —
 verificați-le. La fel, scoateți poziția **Sistem de colectare TVA** de pe furnizor la data ieșirii
-lui din registrul ANAF (automat cu OCA `l10n_ro_vat_on_payment`). Facturile confirmate nu se modifică, iar
-soldul 4428 nu se reclasifică.
+lui din registrul ANAF, dacă ați pus-o de mână (fără poziție manuală, alegerea e automată la data
+facturii cu `l10n_ro_anaf_partner` sau cu OCA `l10n_ro_vat_on_payment`). Facturile confirmate nu
+se modifică, iar soldul 4428 nu se reclasifică.
 
 **Facturi neîncasate:** nu există un termen după care TVA-ul devine exigibil automat; soldul rămâne
 pe 4428 până la încasare, compensare sau cesiune, ori până la o ajustare după art. 287.
@@ -381,6 +411,8 @@ Mesajele apar în blocul de verificare din Setări.
 | Contul tehnic pentru bază este și cont de tranziție | Pe câmp e pus 44281 / 44282 | Puneți 442830 |
 | Nu e setat contul tehnic pentru bază | Câmpul e gol, baza rulează pe 7xx / 6xx | **Completează configurarea** (setează 442830) |
 | Contul tehnic pentru bază este un cont de venituri/cheltuieli | Pe câmp e un cont de clasa 6 / 7 | Puneți 442830 |
+| Furnizori cu poziția la încasare pusă de mână, dar neînscriși în registrul RTVAI | Poziția manuală a rămas după ieșirea furnizorului din sistem, sau furnizorul n-a fost niciodată în RTVAI | Scoateți poziția de pe furnizor (alegerea devine automată) sau verificați registrul pe site-ul ANAF |
+| Furnizori înscriși în registrul RTVAI, cu poziția națională pusă de mână | Poziția manuală oprește alegerea automată: TVA-ul se deduce la emitere, deși se deduce la plată | Scoateți poziția națională de pe furnizor |
 | Taxe interne nemapate de poziția fiscală | Taxe taxabile fără echivalent la încasare | Pe factură rămân exigibile la emitere. Planul RO nu mapează 9% art. 3 și TVA nedeductibil 50%; dacă le folosiți în sistem, creați taxa la încasare și legați-o de poziție |
 
 ---

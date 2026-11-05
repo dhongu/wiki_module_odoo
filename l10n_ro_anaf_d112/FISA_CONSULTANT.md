@@ -56,6 +56,11 @@ Modulul nu înlocuiește motorul de salarizare și nu depune automat declarația
 Roluri Odoo recomandate la testare: `account.group_account_user` (citire) și
 `account.group_account_manager` (creare/validare/reset).
 
+Câmpul **Sediu secundar D112** de pe fișa angajatului e vizibil doar utilizatorilor cu drept HR
+(**Angajați → Ofițer: Gestionează toți angajații**, `hr.group_hr_user`). Contabilul care
+completează sau corectează sediul pe angajat are nevoie și de acest drept; declarația o
+generează și fără el, pentru că liniile D112 citesc sediul cu drepturi de sistem.
+
 ---
 
 ## 4. Conturi și date implicate
@@ -140,6 +145,9 @@ iar liniile D112 îl preiau. În XML, impozitul pe salarii (obligația 602) se �
 rând **F2** pe sediu; ANAF verifică A_datorat / A_deductibil / A_scutit(602) = F1 + ΣF2. Sediile din aceeași localitate cu
 sediul social nu au CIF propriu din 2026 (OG 6/2026) și rămân pe sediul principal. La plată, impozitul fiecărui sediu
 secundar are o plată proprie, cu CIF-ul sediului în explicație.
+
+Sediul propus se poate schimba de mână pe fișa angajatului (fila **Personal**, lângă
+CNP), de către un utilizator cu drept HR (`hr.group_hr_user`); fără acest drept câmpul nu apare.
 
 ### 5.5 Regimul de depunere (lunar / trimestrial)
 
@@ -408,6 +416,7 @@ reconciliere acceptate, verificarea finală în utilitarele ANAF și depunerea �
 | `Există deja o declarație D112 pentru această companie, perioadă și tip.` | declarație duplicată | păstrați una pe tip `D` sau creați rectificativă `R` |
 | `Luna trebuie să fie între 1 și 12.` | lună greșită | corectați perioada |
 | `Angajatul '...' nu are CNP completat.` | angajat fără identificator | completați CNP-ul și recalculați |
+| Câmpul **Sediu secundar D112** nu apare pe fișa angajatului | utilizatorul nu are drept HR (`hr.group_hr_user`) | dați dreptul **Angajați → Ofițer** sau lăsați completarea în seama HR |
 | `Reconcilierea D112 vs. contabilitate are diferențe peste toleranță` | politică strictă + diferențe | corectați nota contabilă / liniile D112 sau ajustați toleranța |
 | „Compania „…” nu are configurat un cod CAEN valid. Completați-l pe companie (4 cifre, de exemplu 6201).” | codul CAEN al companiei e gol, `0000` sau fără exact 4 cifre | completați **Cod CAEN** pe companie sau în Setări → Contabilitate → Declarații ANAF |
 | `The generated XML is not valid according to the ANAF schema` | date neconforme (ex. CAEN invalid, CNP greșit) | corectați datele semnalate și regenerați |

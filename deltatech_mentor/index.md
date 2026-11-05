@@ -1,10 +1,11 @@
 # Mentor Interface (localizat la `deltatech_mentor/index.md`)
 
 - **Nume Tehnic:** `deltatech_mentor`
-- **Versiune:** `19.0.2.2.2`
+- **Versiune:** `19.0.2.2.3`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_mentor`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_mentor`
 - **Ultima Ingestie:** `2026-10-22`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

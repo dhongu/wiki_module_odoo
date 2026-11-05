@@ -22,6 +22,10 @@ Aduce în brutul fluturașului sporurile pe care firmele din România le plătes
 - **Utilizator salarizare:** adaugă sporurile pe angajat și introduce orele de noapte.
 - **Administrator salarizare:** configurează nomenclatorul de sporuri.
 
+**Sporuri permanente** de pe fișa angajatului sunt vizibile doar utilizatorilor cu drept HR
+(**Angajați → Ofițer: Gestionează toți angajații**, `hr.group_hr_user`). **Utilizator salarizare** include deja acest drept;
+un utilizator care are doar acces la contabilitate sau la vânzări nu vede sporurile angajatului.
+
 ## 4. Conturi și date implicate
 
 - **641** Cheltuieli cu salariile personalului = **421** Personal – salarii datorate, prin linia `GROSS` (sporurile nu au conturi proprii).
@@ -163,6 +167,7 @@ Cu ore de sărbătoare și de repaus apar și liniile `SPOR_SARBATOARE` și `SPO
 | Minimul legal al acestui spor este %(minimum)s%% (Codul muncii art. 123, 126 și 142). În mesaj procentul apare cu zecimală, de exemplu „75.0%” | procent sub minim la ore suplimentare, noapte sau sărbătoare | folosiți cel puțin minimul legal |
 | Sporul de repaus săptămânal este de cel puțin %(minimum)s ori sporul de ore suplimentare (Codul muncii art. 137 și 138). În mesaj apare „2.0” | multiplicator sub 2 | folosiți cel puțin 2 |
 | Procentul unui spor nu poate fi negativ. | procent negativ pe spor în nomenclator | folosiți o valoare pozitivă |
+| Grupul **Sporuri permanente (RO)** nu apare pe fișa angajatului | utilizatorul nu are drept HR (`hr.group_hr_user`) | dați dreptul **Utilizator salarizare** sau **Angajați → Ofițer** |
 | Procentul și suma unui spor nu pot fi negative. | valori negative pe rândul sporului din fișa angajatului | folosiți valori pozitive |
 | Sporurile pentru ore suplimentare, muncă de noapte, sărbători legale și repaus săptămânal nu se pot arhiva: procentul lor ar fi 0. | arhivarea acestor sporuri | lăsați-le active |
 | Completați un procent sau o sumă fixă pentru spor. | rând de spor fără procent și fără sumă | completați unul dintre ele |

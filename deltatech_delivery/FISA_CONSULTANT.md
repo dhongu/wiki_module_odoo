@@ -69,6 +69,10 @@ Pe livrarea de ieșire (**Inventar → Transferuri → Livrări**), butoanele di
 
 ![Livrarea de ieșire cu butoanele Carrier Details / Send to Shipper / Print AWB](screenshots/02_transfer_butoane_awb.png)
 
+**Adresa din Carrier Details.** În wizard-ul **Carrier Details**, adresa de livrare poate fi corectată înainte de trimitere. Când operatorul scrie **codul poștal**, orașul și județul se completează automat după regulile de cod poștal ale țării destinatarului, aceleași ca pe fișa contactului: România (`l10n_ro_city`), Ungaria (`l10n_hu_zip`), Italia (`l10n_it_zip`, provincia din CAP). Un cod poștal comun mai multor localități completează doar județul; orașul se alege apoi din listă. Când operatorul alege **orașul** din listă, se completează și județul lui, iar codul poștal, dacă lipsește. Pentru țările cu județ obligatoriu (ex. Italia), operatorul nu mai trebuie să caute provincia de mână. Contactul clientului nu este modificat: o adresă schimbată aici se salvează doar ca adresă de livrare.
+
+**Retur prin curier.** Pe o recepție (de exemplu, returul unei livrări) cu metodă de livrare, același wizard inversează părțile: clientul devine expeditorul, iar compania destinatarul. Câmpul **Locație de ridicare** se poate lăsa gol: la **Send to Shipper**, punctul de ridicare al companiei se recalculează din metoda de livrare, deci compania rămâne destinatar, iar transportul îl plătește tot ea (cu plătitorul Terț).
+
 ### Pasul 2 — Validarea în masă a livrărilor ("Validate Deliveries")
 
 Această funcționalitate este nouă și rezolvă cazul unui operator care are zeci de comenzi confirmate, cu stoc disponibil, și vrea să le încheie livrarea dintr-o singură acțiune, fără să deschidă fiecare transfer.
@@ -159,6 +163,8 @@ Ce rămâne manual: configurarea curierului (credențiale, servicii), deciziile 
 
 - [ ] Modulul se instalează fără erori pe baza demo, împreună cu cel puțin un submodul de curier de test.
 - [ ] Butonul **AWB** apare pe comanda confirmată și butoanele de livrare (Carrier Details / Send to Shipper / Print AWB / Cancel AWB) apar corect condiționat de starea AWB-ului.
+- [ ] În **Carrier Details**, la o adresă din România, Ungaria sau Italia (cu modulul de localizare instalat), introducerea codului poștal completează orașul și județul; la un cod poștal comun mai multor localități se completează doar județul.
+- [ ] În **Carrier Details**, alegerea orașului din listă completează și județul; contactul clientului rămâne neschimbat după **Aplică**.
 - [ ] **Validate Deliveries** apare în meniul Acțiuni al listei de comenzi și validează corect o selecție cu stoc disponibil.
 - [ ] La o comandă fără stoc suficient în lot, **Validate Deliveries** raportează problema fără să blocheze celelalte comenzi din selecție.
 - [ ] **Send to Carrier** apare în meniul Acțiuni al listei de comenzi, procesează comenzile secvențial și afișează corect cele trei stări (succes/eroare/incert).
@@ -171,6 +177,7 @@ Ce rămâne manual: configurarea curierului (credențiale, servicii), deciziile 
 - [ ] Aceeași comandă, selectată în **Validare Livrări**, este listată în notificare cu mesajul de reținere, iar livrarea rămâne nevalidată.
 - [ ] După **Eliberează** pe comandă, retrimiterea prin **Trimite la curier** reușește și livrarea primește AWB.
 - [ ] (Cu `deltatech_delivery_review`) la o comandă reținută de verificare, mesajul de reținere enumeră motivele („reținută pentru verificare: …"), nu doar faptul amânării.
+- [ ] Retur (recepție) cu metodă de livrare, cu **Carrier Details** aplicat fără **Locație de ridicare**: după **Send to Shipper**, AWB-ul are clientul ca expeditor și compania ca destinatar.
 
 ## 9. Mesaje de eroare frecvente
 

@@ -16,7 +16,7 @@ bonului sau a operațiunilor de numerar. Consultantul trebuie să îl prezinte c
 integrare operațională pentru retail fiscal: Odoo pregătește fișierul în formatul așteptat de
 driverul AMEF, iar aplicația/driverul local al casei de marcat îl preia și îl tipărește.
 
-Modulul nu face comunicare hardware directă și nu citește răspunsul fiscal înapoi în Odoo.
+Modulul nu face comunicare hardware directă. Pe transportul prin fișier nu citește răspunsul fiscal înapoi în Odoo; prin Terrabit Connect, numărul bonului, documentul fiscal, raportul Z și starea tipăririi se salvează pe comandă.
 
 ## 2. Bază legală și context
 
@@ -69,6 +69,9 @@ Configurați:
 - **Type of electronic cash register**: `FiscalWire`, `Optima`, `Daisy`, `Succes`,
   `FiscalNet` sau `Incotex`;
 - **Trim long product name** și lungimea maximă din **Trim to** (apare doar cu opțiunea activă), dacă modelul casei are limită strictă;
+- **ECR transport**: `File (.prn/.inp download)` (implicit), fișierul se descarcă și îl preia driverul local,
+  sau `Terrabit Connect (local agent)`, comanda se trimite agentului local, care tipărește și întoarce
+  rezultatul; dacă agentul nu răspunde, se descarcă fișierul;
 - **File prefix** și **File extension** pentru fișierul preluat de driver;
 - **Cash In/Out** pentru operațiuni de numerar din POS;
 - **Cash In/Out to ECR** pentru tipărirea dispozițiilor pe casa de marcat;
@@ -134,15 +137,16 @@ sau **QR**), vizibil doar cât timp bifa este activă. Efectul opțiunilor pe bo
 ### Pasul 2 — Codul ECR pe metodele de plată
 
 În **Point of Sale → Configuration → Payment Methods**, fiecare metodă de plată are câmpul
-**Cod ECR** — valoarea pe care driverul o trimite aparatului pentru acea metodă (de regulă 1 pentru
-numerar, 2 pentru card etc., conform documentației driverului).
+**Cod ECR** — valoarea pe care driverul o trimite aparatului pentru acea metodă. Pe Datecs FiscalWire 2018,
+0 înseamnă numerar și 1 card; pe celelalte modele de casă valorile se iau din documentația driverului.
 
 ![Metodă de plată — câmpul Cod ECR](screenshots/02_payment_cod_ecr.png)
 
 ### Pasul 3 — Emiterea și reimprimarea bonului fiscal
 
-La validarea comenzii în POS, modulul pregătește fișierul ECR (bon fiscal), îl descarcă local cu
-prefixul și extensia configurate, iar driverul AMEF îl preia și îl tipărește. Pe bon se trimit
+La validarea comenzii în POS, modulul pregătește fișierul ECR (bon fiscal), pe transportul prin fișier îl
+descarcă local cu prefixul și extensia configurate, iar driverul AMEF îl preia și îl tipărește; prin
+Terrabit Connect îl trimite agentului local și salvează pe comandă rezultatul. Pe bon se trimit
 numele clientului (dacă e selectat), referința comenzii, notele, liniile de produs cu TVA,
 discounturile și totalurile pe tipuri de plată.
 
@@ -246,10 +250,13 @@ bifat pe metodă (Pasul 2 din Configurare inițială).
 
 **Atenție — produse noi pe o comandă cu total negativ.** Când returul e combinat cu produse noi și
 totalul rămâne negativ, produsele noi nu se tipăresc pe niciun bon fiscal: pe numerar casa primește
-doar dispoziția de plată pentru diferență, iar pe card sau **Customer Account** nu primește nimic. Odoo
-înregistrează totuși vânzarea în sesiune. De aceea, la un schimb de produse recomandați două comenzi:
-returul separat, iar vânzarea nouă pe bon fiscal propriu (aceeași recomandare o dă dialogul „Negative
-VAT total”). Cum se tratează fiscal un schimb, cu contabilul.
+doar dispoziția de plată pentru diferență, iar pe card sau **Customer Account** nu primește nimic.
+Odoo înregistrează totuși vânzarea în sesiune. De aceea, la un schimb cu total negativ recomandați
+două comenzi: returul separat, iar vânzarea nouă pe bon fiscal propriu (aceeași recomandare o dă
+dialogul **Negative VAT total** (**Total TVA negativ**), când pe comandă sunt cote de TVA diferite). La
+un schimb cu total pozitiv sau zero produsele noi și returul se tipăresc pe un singur bon fiscal
+(Pasul 7). Dialogul „Negative VAT total” blochează și un retur pur care are linii la două cote de
+TVA (câte un retur pe cotă; vezi Pasul 7). Cum se tratează fiscal un schimb, cu contabilul.
 
 Cu **Customer Account only for refunds** (**Cont client doar pentru retur**) activă:
 
@@ -268,6 +275,41 @@ Cu **Customer Account only for refunds** (**Cont client doar pentru retur**) act
   Dacă pe o astfel de comandă se adaugă și produse, regula se aplică din nou.
 
 ![Setări POS — Cont client doar pentru retur](screenshots/06_cont_client_doar_retur.png)
+
+### Pasul 7 — Retur schimbat pe produse noi: bon fiscal cu retur
+
+Când returul se combină cu produse noi, iar totalul comenzii rămâne **pozitiv sau zero**, comanda se
+tipărește pe **un singur bon fiscal**. Pe Datecs FiscalWire și Incotex produsele noi apar ca
+vânzare, iar produsele returnate ca linii cu cantitate negativă. Pe FiscalNet returul se
+tipărește ca reducere pe subtotal, fără numele produsului returnat; pe Succes comanda de reducere
+există, dar sensul ei nu e confirmat, deci se verifică pe casă. Pe Optima și Daisy un retur pe același
+bon cu produse noi nu e suportat (lipsește șablonul de subtotal, iar în fișier ajunge text în loc de
+comandă): returul se face pe o comandă separată. Cu totalul negativ se aplică Pasul 6.
+
+**Ordinea liniilor pe bon.** Pe casele care tipăresc returul ca linie de vânzare cu cantitate
+negativă (Datecs FiscalWire, Incotex), liniile cu total negativ se trimit **după** cele pozitive,
+indiferent de ordinea din POS; ordinea relativă din fiecare grup se păstrează. Casa refuză un bon
+care începe cu o linie negativă. Pe celelalte tipuri de casă ordinea rămâne cea din comandă, pentru
+că acolo o linie negativă devine reducere, iar poziția ei contează: pe FiscalNet și Succes adăugați
+întâi produsele noi și abia apoi returul, ca reducerea să se aplice pe un subtotal existent.
+
+**Bonul cu total 0.** La un schimb de produse de aceeași valoare (retur de 100 lei, produse noi de
+100 lei) comanda nu are nicio plată: POS-ul șterge liniile de plată cu suma 0 la validare, deci
+operatorul nu trebuie să aleagă nicio metodă. Bonul se încheie automat cu o linie de total de **0.00
+în numerar**, cu codul 0 trimis fix, nu cel din **Cod ECR** al metodei de numerar. Codul 0 înseamnă
+numerar pe Datecs FiscalWire 2018; pe celelalte modele de casă trebuie verificat. Dacă pe comandă
+există o plată reală, nu se mai adaugă nimic.
+
+![Comandă de schimb cu total 0 — tabul ECR data: produsul nou, returul la final, totalul 0.00](screenshots/07_schimb_bon_total_0.png)
+
+**Cote de TVA diferite.** Dacă o cotă iese negativă pe total (de exemplu retur la 21% și produse noi
+la 11%), POS blochează validarea cu dialogul **Negative VAT total** (**Total TVA negativ**), indiferent de suma finală a
+comenzii: și la total pozitiv, zero sau negativ. Blocajul se aplică și unui **retur pur** care are
+linii la două cote (de exemplu un produs la 21% și unul la 11%): ambele cote ies negative, deci se
+face câte un retur pe cotă. O linie fără TVA sau cu cota 0% (inclusiv garanția SGR) contează ca o cotă separată: un retur pur cu un produs la 21% și garanția SGR la 0% este blocat. Pentru schimb, returul se face pe o comandă separată sau se ajustează
+liniile, ca fiecare cotă să rămână pozitivă. Verificarea se face după cota procentuală, nu după
+**Cod ECR**: două taxe cu aceeași cotă (de exemplu 0% taxare inversă și 0% bunuri) se însumează în
+aceeași grupă.
 
 ## 7. Reguli funcționale
 
@@ -289,6 +331,10 @@ Cu **Customer Account only for refunds** (**Cont client doar pentru retur**) act
 | **Customer Account only for refunds** activă, plată pe **Customer Account** rămasă pe o comandă cu total zero sau pozitiv | validarea este blocată cu dialogul **Customer Account not allowed**; nu se trimite nimic la casă |
 | **Customer Account only for refunds** activă, comandă de depunere de bani sau de achitare a soldului (**POS Settle Due**) | nu este afectată: comanda se validează ca fără opțiune; dacă pe comandă se adaugă și produse, exceptarea nu se mai aplică |
 | Comandă cu total negativ și produse noi | produsele noi nu se tipăresc pe niciun bon fiscal (pe numerar doar dispoziția de plată, pe card sau **Customer Account** nimic) |
+| Bon fiscal cu linii cu total negativ (retur) pe o casă Datecs FiscalWire sau Incotex | liniile negative se trimit după cele pozitive, cu ordinea relativă păstrată; pe celelalte tipuri de casă ordinea rămâne cea din comandă |
+| Comandă cu total 0 și fără plată (retur schimbat pe produse de aceeași valoare) | bonul se încheie cu o linie de total de 0.00 în numerar (cod 0); operatorul nu alege nicio metodă de plată |
+| Retur și produse noi la cote de TVA diferite, o cotă iese negativă | validarea este blocată cu dialogul **Negative VAT total**, la orice total final (pozitiv, zero sau negativ) |
+| Retur pur cu linii la două cote de TVA | validarea este blocată cu dialogul **Negative VAT total** (ambele cote ies negative); se face câte un retur pe cotă |
 
 ## 8. Scenarii de test pentru consultant
 
@@ -316,12 +362,19 @@ Cu **Customer Account only for refunds** (**Cont client doar pentru retur**) act
 | AMEF-19 | Opțiunea activă; plată de −40 pe **Customer Account**, apoi adăugați produse până când totalul devine pozitiv, fără să ștergeți linia de plată | validarea este blocată cu dialogul **Customer Account not allowed** |
 | AMEF-20 | Opțiunea dezactivată (implicit); orice total | **Customer Account** apare în lista metodelor de plată, ca înainte |
 | AMEF-21 | Opțiunea activă, **POS Settle Due** instalat; depunere de bani pentru un client | depunerea se validează, nu apare dialogul **Customer Account not allowed** |
+| AMEF-22 | Retur de 100 lei și produse noi de 150 lei, plată de 50 lei în numerar, pe o casă Datecs FiscalWire | un singur bon fiscal: întâi produsul nou, apoi linia returnată cu cantitate negativă, apoi totalul de 50.00 în numerar; casa nu refuză bonul |
+| AMEF-23 | Pe o casă Datecs FiscalWire: retur de 100 lei și produse noi de 100 lei (total 0), fără nicio metodă de plată aleasă | validarea reușește; bonul are produsul nou, apoi linia returnată, apoi `T` de 0.00 în numerar (cod 0); se verifică pe casa reală că bonul se închide |
+| AMEF-24 | Retur de 48 lei la 21% și produse noi de 60 lei la 11% (total +12) | validarea este blocată cu dialogul **Negative VAT total** (**Total TVA negativ**), cu mențiunea „21%: -48.00”; nu se generează bon |
+| AMEF-25 | Retur pur: un produs la 21% (48 lei) și unul la 11% (3 lei), plată în numerar | validarea este blocată cu dialogul **Negative VAT total**; returul se face pe două comenzi, câte una pe cotă |
+| AMEF-26 | Retur pur: un produs la 21% (48 lei) și garanția SGR la 0% (0,50 lei), plată în numerar | validarea este blocată cu dialogul **Negative VAT total**; produsul și garanția se returnează pe comenzi separate |
 
 ## 9. Legături cu alte module
 
 | Modul | Rol |
 |---|---|
 | `deltatech_pos_base` | configurare bază ECR: tip casă, prefix/extensie fișier, cod ECR pe metodele de plată |
+| `deltatech_ecr_connect` | șabloanele de comenzi pe tip de casă; stabilește care case primesc returul ca linie de vânzare negativă (ordinea liniilor din Pasul 7) și transportul Terrabit Connect |
+| `deltatech_ecr_fiscal` | câmpurile de audit ale tipăririi pe casa de marcat (număr bon, document fiscal, raport Z, stare, eroare), comune pentru POS, facturare și localizări |
 | `point_of_sale` | fluxul de vânzare și sesiuni POS |
 | `l10n_ro_anaf_d394_pos` | duce bonurile POS în declarația D394 |
 | `deltatech_sale_store` / `deltatech_sale_store_report` | fluxul separat de facturare la bon fiscal (nu POS) — raportul de la Pasul 5 nu îl acoperă |
@@ -344,8 +397,11 @@ Cu **Customer Account only for refunds** (**Cont client doar pentru retur**) act
 - [ ] Metoda **Customer Account** are **Identify Customer** bifat; la un retur lăsat ca sold pe client,
       clientul este selectat pe comandă, iar creditul apare pe contul lui de creanțe după închiderea
       sesiunii (fără bifă, ajunge pe contul de încasări POS, fără client).
-- [ ] Schimbul de produse (retur plus produse noi) se face în două comenzi, nu pe o comandă cu total
-      negativ, ca vânzarea nouă să ajungă pe bon fiscal.
+- [ ] Schimbul de produse (retur plus produse noi) cu total negativ se face în două comenzi, ca vânzarea
+      nouă să ajungă pe bon fiscal; cu total pozitiv sau zero se poate face pe o singură comandă (Pasul 7).
+- [ ] La un schimb cu total pozitiv sau zero, pe Datecs FiscalWire și Incotex bonul fiscal începe cu
+      produsele noi și se încheie cu returul; casa nu îl refuză. Pentru bonul cu total 0, casa
+      acceptă linia de total de 0.00.
 - [ ] Rambursarea pe card și pe **Customer Account** nu trimite niciun document la casa de marcat:
       procedura fiscală a clientului pentru aceste cazuri este stabilită separat cu contabilul.
 - [ ] Rapoartele X și Z pot fi generate de utilizatorii operaționali.
@@ -367,11 +423,14 @@ Cu **Customer Account only for refunds** (**Cont client doar pentru retur**) act
 | Limitare | Impact |
 |---|---|
 | Modulul generează fișier pentru driver, nu comunică direct cu AMEF | depinde de stația locală și de utilitarul casei de marcat |
-| Odoo nu importă răspunsul fiscal de la AMEF | seria/numărul bonului fiscal nu se întorc automat în comanda POS |
+| Pe transportul prin fișier, Odoo nu importă răspunsul fiscal de la AMEF | seria/numărul bonului fiscal nu se întorc automat în comanda POS; prin Terrabit Connect se salvează pe comandă numărul bonului, documentul fiscal, raportul Z și starea |
 | Nu există import de jurnal electronic / XML de la casa de marcat | reconcilierea fiscală detaliată rămâne în afara acestui modul |
 | Reconcilierea raportului Z și fiscalizarea e-commerce nu sunt acoperite aici | necesită extensii suplimentare |
 | Retur cu plată negativă pe card sau pe **Customer Account** | nu se trimite niciun document la casa de marcat; evidența fiscală a returului trebuie stabilită separat |
 | Comandă cu total negativ care include și produse noi | produsele noi nu se tipăresc pe niciun bon fiscal, deși Odoo le înregistrează în sesiune; schimbul se face în două comenzi |
+| Bon fiscal cu total 0 (linia de total 0.00 în numerar, adăugată automat) | codul 0 e fix, nu vine din **Cod ECR** al metodei de numerar; e confirmat ca numerar doar pe Datecs FiscalWire 2018, iar pe Incotex, Optima, Daisy, Succes și FiscalNet trebuie verificat; comportamentul pe o casă reală nu e încă testat |
+| Retur pe același bon cu produse noi, pe Optima și Daisy | nu e suportat: șablonul de subtotal lipsește, deci în locul comenzii de subtotal ajunge în fișier textul „undefined”, iar pe Optima și reducerea se tipărește ca text (defect cunoscut în `deltatech_ecr_connect`); returul se face pe o comandă separată |
+| Retur pur cu linii la două cote de TVA | validarea e blocată cu dialogul **Negative VAT total**; returul se face câte unul pe cotă |
 | Rambursarea pe card pe un punct de vânzare fără terminal de plată legat la POS | POS doar înregistrează plata negativă: banii se returnează manual, pe terminalul bancar |
 | „Print X" și „Print Z" generează fișierul cu același nume pe sesiune | a doua apăsare șterge atașamentul creat de prima — vezi Pasul 4 |
 | Raportul „Vânzări TVA pe casă de marcat" citește doar `pos.order`, nu jurnalul/arhiva ANAF a aparatului | nu e o citire directă a arhivei oficiale — folosiți-l ca punct de plecare pentru reconciliere |
@@ -390,6 +449,7 @@ conturi RO:
 4. `04_session_print_xz.png` — sesiune POS, rapoartele Print X / Print Z.
 5. `05_vat_report.png` — raportul Vânzări TVA pe casă de marcat, pivot pe punct de lucru și taxă.
 6. `06_cont_client_doar_retur.png` — setări POS, opțiunea **Cont client doar pentru retur**.
+7. `07_schimb_bon_total_0.png` — comandă de schimb cu total 0, tabul „ECR data": produsul nou, returul la final, totalul 0.00 în numerar.
 
 Ecranul de plată din POS (metoda ascunsă sau oferită după total) nu se poate captura din acest test,
 care redă doar ecrane din backoffice.

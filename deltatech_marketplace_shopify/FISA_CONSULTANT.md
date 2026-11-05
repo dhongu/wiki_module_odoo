@@ -223,6 +223,16 @@ atunci cu două expedieri în loc de una. Dacă Shopify refuză
 expedierea, jobul eșuează imediat, fără reîncercări, și rămâne în lista de job-uri eșuate ale
 backend-ului; problemele de rețea sau limitele de apeluri se reîncearcă singure.
 
+Dacă AWB-ul se **regenerează** după ce livrarea a plecat deja în Shopify, conectorul nu mai creează
+o a doua expediere (Shopify ar refuza-o, fiindcă nu mai are nimic de expediat), ci **înlocuiește
+AWB-ul** pe expedierea existentă, fără să anunțe clientul. Un job rămas în coadă cu AWB-ul vechi
+nu mai trimite nimic: livrarea are deja AWB-ul nou. Pentru o livrare trimisă în Shopify înainte de
+19.0.1.8.16, conectorul nu știe ce AWB a plecat; înlocuiește AWB-ul doar dacă comanda are o singură
+expediere în Shopify, altfel lasă în chatter-ul comenzii un mesaj cu AWB-ul de pus manual. Dacă
+Shopify refuză înlocuirea AWB-ului (de exemplu, expedierea a fost anulată între timp), cu
+**Fulfillment prin GraphQL** bifat jobul eșuează imediat, fără reîncercări, ca la crearea
+expedierii; fără GraphQL, refuzul se reîncearcă de câteva ori înainte ca jobul să eșueze.
+
 ### Pasul 6 — Citirea stării de sănătate
 
 Cardul kanban al backend-ului din **Marketplace → Backend-uri** arată un indicator de sănătate
@@ -339,6 +349,8 @@ vânzare (tag-uri Shopify), verificarea periodică a webhook-urilor.
       fulfillment pe fiecare locație, cu același AWB, iar comanda apare ca expediată în Shopify.
       Dacă **Granted Access Scopes** nu are niciun scope de locații și **Fulfillment prin GraphQL**
       e bifat, comanda apare cu câte o expediere pe fiecare fulfillment order, tot cu același AWB.
+- [ ] După regenerarea AWB-ului pe o livrare deja trimisă, expedierea din Shopify arată AWB-ul nou,
+      iar comanda nu are o a doua expediere.
 
 ### Ce NU pleacă spre Shopify: prețul liniei
 
@@ -366,6 +378,9 @@ mesaj care spune că prețul nu a fost trimis și că cele două părți diferă
 | Prețul exportat către Shopify nu se schimbă | Job în eroare (rate limit `429`/GraphQL `THROTTLED`) sau varianta nu are diferență de preț față de ultima exportare | Verificați job-urile eșuate din cardul kanban al backend-ului; exportul pornește doar pentru variante cu preț schimbat |
 | Token expirat brusc pe un backend Dev Dashboard App | Acțiunea programată „Shopify: Reînnoiește token-urile de acces” nu a rulat (dezactivată) | Verificați că acțiunea programată e activă; fiecare apel API reîmprospătează oricum tokenul dacă expiră în < 30 min |
 | Job eșuat „*Shopify rejected the fulfillment of order … (location …): …*” | Shopify a refuzat expedierea pe acea locație (de exemplu, cantitatea a fost deja marcată ca expediată manual în Shopify, sau comanda e închisă) | Citiți motivul din mesaj, corectați în Shopify sau în Odoo, apoi reporniți jobul (**Repune în coadă**); cantitățile deja expediate nu se trimit a doua oară |
+| Job eșuat „*Invalid fulfillment order line item quantity requested*” după regenerarea AWB-ului | Versiune a modulului anterioară 19.0.1.8.16: livrarea plecase deja în Shopify cu AWB-ul vechi, iar jobul AWB-ului nou a încercat o a doua expediere | Actualizați modulul și reporniți jobul (**Repune în coadă**): AWB-ul nou înlocuiește AWB-ul vechi pe expedierea existentă |
+| Mesaj în chatter-ul comenzii „*The tracking number … was NOT sent to Shopify: the transfer is already fulfilled there and no fulfillment matches the number sent before …*” | AWB-ul livrării s-a regenerat, iar conectorul nu știe ce expediere din Shopify să actualizeze: livrarea a plecat înainte de 19.0.1.8.16 și comanda are mai multe expedieri, sau nicio expediere nu mai are AWB-ul trimis anterior | În Shopify, deschideți comanda și puneți AWB-ul din mesaj pe expedierea livrării respective |
+| Job eșuat „*Shopify rejected the tracking update of order … (fulfillment …)*” | Cu **Fulfillment prin GraphQL** bifat, Shopify a refuzat înlocuirea AWB-ului pe expedierea existentă (de exemplu, expedierea a fost anulată); jobul nu se reîncearcă. Fără GraphQL, același refuz apare în job ca eroarea primită de la Shopify, după reîncercări | Verificați expedierea în Shopify: dacă e anulată, creați expedierea din Shopify cu AWB-ul nou; altfel, citiți motivul din job și corectați AWB-ul manual |
 | Job eșuat „*Access denied for location field. Required access: `read_locations` …*” la expediere | Versiune a modulului anterioară 19.0.1.8.15, cu **Fulfillment prin GraphQL** bifat și fără scope de locații în **Granted Access Scopes** | Actualizați modulul, apoi reporniți joburile eșuate (**Repune în coadă**); alternativ, acordați aplicației `read_locations` (Pasul 8) |
 | Comandă anulată în Odoo, dar rămâne activă în Shopify | Anularea nu a ajuns la Shopify (job eșuat) | Verificați job-urile eșuate ale backend-ului; reîncercați anularea |
 

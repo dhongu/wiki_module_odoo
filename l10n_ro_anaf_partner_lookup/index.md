@@ -1,7 +1,7 @@
 # Romania - ANAF Partner Lookup
 
 - **Nume Tehnic:** `l10n_ro_anaf_partner_lookup`
-- **Versiune:** `19.0.1.2.2`
+- **Versiune:** `19.0.1.3.0`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_anaf_partner_lookup
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_anaf_partner_lookup`
 - **Ultima Ingestie:** `2026-10-30`

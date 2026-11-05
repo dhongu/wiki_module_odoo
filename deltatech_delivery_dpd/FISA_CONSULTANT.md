@@ -85,7 +85,7 @@ Prețul se stabilește în grupul de preț al metodei de livrare:
 
 Tariful DPD se cere fără ramburs, iar câmpul **Preț adițional pentru ramburs** nu apare pe formularul DPD: costul rambursului nu ajunge pe comandă.
 
-![Metoda de livrare DPD, tabul Configurare DPD: Utilizator, Parolă mascată, Tip etichetă pdf, Format A4, Conținut Marfa, Plătitorul expedierii Expeditor și Serviciu încă necompletat](screenshots/01_metoda_livrare_dpd.png)
+![Metoda de livrare DPD, tabul Configurare DPD: Utilizator, Parolă mascată, Tip etichetă pdf, Format A6, Conținut Marfa, Plătitorul expedierii Expeditor și Serviciu încă necompletat](screenshots/01_metoda_livrare_dpd.png)
 
 ### Pasul 2 — Inițializarea contului
 
@@ -139,7 +139,7 @@ Din **Vânzări → Comenzi → Comenzi**, pe comanda clientului, **Adăugați t
 
 Dacă **Plătitorul expedierii** = Destinatar, prețul rămâne zero și apare mesajul „Valoarea transportului este plătită de destinatar”.
 
-![Comanda de vânzare cu linia de transport DPD și tariful calculat de DPD](screenshots/05_comanda_tarif_dpd.png)
+![Comanda de vânzare cu linia de transport DPD (prețul fix al metodei), în lei, cu TVA 21%](screenshots/05_comanda_tarif_dpd.png)
 
 ### Pasul 6 — Detaliile expedierii
 
@@ -155,7 +155,9 @@ Pe livrarea de ieșire (**Inventar → Operații → Transferuri → Livrări**)
 
 **Aplică** salvează detaliile pe livrare.
 
-![Fereastra Detalii metodă de livrare pentru o livrare DPD: 1 colet, greutatea, Valoare asigurată, Sumă de încasat egală cu totalul comenzii, serviciul și opțiunile Saturday Delivery, Open Package și Package Return](screenshots/06_detalii_expediere_dpd.png)
+**Retur prin DPD.** Pe o recepție (de exemplu, returul unei livrări, cu metoda de livrare DPD) fereastra se deschide la fel, dar părțile se inversează: clientul devine expeditorul, iar adresa companiei devine destinatarul. **Locație de ridicare** rămâne adresa companiei. Cu **Plătitorul expedierii** = Terț, transportul îl plătește tot compania: DPD primește ca plătitor id-ul de client al adresei de ridicare, nu clientul care trimite coletul.
+
+![Fereastra Detalii metodă de livrare pentru o livrare DPD: adresa clientului, 1 colet, greutatea, serviciul DPD Standard, adresa și referința de ridicare, Total comandă și Sumă de încasat egală cu totalul comenzii, în lei](screenshots/06_detalii_expediere_dpd.png)
 
 ### Pasul 7 — Emiterea AWB-ului
 
@@ -167,7 +169,7 @@ Apăsați **Trimite la curier** pe livrare (sau validați livrarea). Odoo trimit
 
 AWB-ul se salvează înainte de cererea etichetei. Dacă eticheta nu poate fi preluată, AWB-ul rămâne valabil, iar istoricul spune: „AWB-ul este valid -- tipăriți din nou eticheta din livrare, nu retrimiteți expedierea.” Dacă răspunsul DPD se pierde, operația e marcată **rezultat incert**: verificați în portalul DPD înainte de a reîncerca.
 
-![Livrarea după trimiterea la DPD: Referință de urmărire, Stare livrare Avizat, butoanele Tipărire AWB și Anulează AWB, mesajul de expediere creată și eticheta atașată în istoric](screenshots/07_livrare_awb_dpd.png)
+![Livrarea după trimiterea la DPD, tabul Informații suplimentare: Referință de urmărire, butoanele Tipărire AWB și Anulează AWB și eticheta atașată, afișată în dreapta](screenshots/07_livrare_awb_dpd.png)
 
 ### Pasul 8 — Eticheta
 
@@ -179,7 +181,7 @@ AWB-ul se salvează înainte de cererea etichetei. Dacă eticheta nu poate fi pr
 
 **Treci mai departe.** Lipiți eticheta pe colet și predați coletul curierului.
 
-![Eticheta DPD în format A4: numărul expedierii cu codul de bare, expeditorul, destinatarul, serviciul și rambursul](screenshots/08_eticheta_dpd.png)
+![Eticheta DPD (exemplul de test al DPD): numărul expedierii cu codul de bare, expeditorul, destinatarul, serviciul și rambursul](screenshots/08_eticheta_dpd.png)
 
 ### Pasul 9 — Urmărirea stării
 
@@ -191,7 +193,7 @@ Acțiunea planificată citește starea coletelor de la DPD. Pe livrare, tabul **
 
 **Treci mai departe.** Un colet **Refuzat** cu ramburs se urmărește în **Inventar → Operații → AWB de livrare → Ramburs refuzat - factură deschisă**.
 
-![Livrarea DPD, tabul Istoric: operațiunile coletului cu dată, descriere și locație; Stare livrare În livrare](screenshots/09_istoric_stare_dpd.png)
+![Livrarea DPD, tabul Istoric: operațiunile coletului cu dată, descriere și locație și butonul Reîmprospătează](screenshots/09_istoric_stare_dpd.png)
 
 ### Pasul 10 — Anularea AWB-ului
 
@@ -233,6 +235,7 @@ Lockerele și punctele de ridicare DPD nu sunt suportate.
 - [ ] Cu **Preț fix** completat și **Limită preț** goală, pe comandă ajunge prețul fix, fără nicio cerere la DPD.
 - [ ] Cu **Preț fix** și **Limită preț** completate, un tarif DPD sub limită e înlocuit de prețul fix.
 - [ ] **Trimite la curier** completează **Referință de urmărire**, pune **Stare livrare** = Avizat și atașează eticheta.
+- [ ] Retur (recepție) cu **Plătitorul expedierii** = Terț: **Trimite la curier** emite AWB-ul, cu clientul ca expeditor și compania ca destinatar, fără eroarea DPD „Platitor: Este necesara selectarea metodei de plata”.
 - [ ] Fără sumă de încasat, AWB-ul pleacă fără ramburs.
 - [ ] Pe contul de test, cu **Plătitorul expedierii** = Expeditor: comparați rambursul de pe etichetă cu **Sumă de încasat**. Dacă DPD a adăugat transportul la ramburs, cele două diferă cu valoarea transportului; notați rezultatul pentru client.
 - [ ] O adresă de client cu **Referință** completată pleacă la DPD ca id de client (destinatarul din Odoo nu apare pe etichetă).
@@ -249,7 +252,8 @@ Lockerele și punctele de ridicare DPD nu sunt suportate.
 
 | Mesaj | Cauză | Remediere |
 |---|---|---|
-| „Adresa de ridicare … are ID-ul de client DPD …, care nu aparține contului DPD … al metodei de livrare … Fiecare cont DPD are nevoie de propria adresă de ridicare …” | Adresa de ridicare e a altui cont DPD (de exemplu, a unui cont DPD din altă țară) | În tabul **Locație de ridicare** alegeți adresa importată de **Inițializare** sau apăsați din nou **Inițializare** |
+| „Adresa de ridicare … are ID-ul de client DPD …, care nu aparține contului DPD … al metodei de livrare … Fiecare cont DPD are nevoie de propria adresă de ridicare …” | Adresa de ridicare e a altui cont DPD (de exemplu, a unui cont DPD din altă țară) | În tabul **Locație de ridicare** alegeți adresa importată de **Inițializare** sau apăsați din nou **Inițializare**. Pe un retur se verifică tot adresa de ridicare a companiei, nu adresa clientului care trimite coletul |
+| Mesajul DPD „Platitor: Este necesara selectarea metodei de plata” la un retur | Versiune a modulului anterioară corecției: pe retur, cu **Plătitorul expedierii** = Terț, id-ul de client al plătitorului se lua de la clientul care trimite coletul și ajungea gol la DPD | Actualizați modulul; plătitorul se ia din adresa de ridicare a companiei. Verificați că adresa de ridicare are **Referință** completată |
 | „Eroare la serverul DPD. …: …” | DPD a refuzat cererea; motivul DPD urmează în mesaj (date de acces, adresă, serviciu) | Corectați datele indicate de DPD și trimiteți din nou |
 | Mesajul DPD „Dimensiunea paletului Nr.1 nu a fost furnizata” | Serviciu de palet fără dimensiunile coletului | Bifați **Folosește dimensiunile coletului** pe metoda de livrare și completați **Dimensiune** în fereastra de detalii |
 | „DPD nu a returnat niciun preț pentru acest serviciu.” | Serviciul ales nu se aplică pe ruta sau pe greutatea comenzii | Alegeți alt serviciu sau un preț fix |
@@ -260,7 +264,7 @@ Lockerele și punctele de ridicare DPD nu sunt suportate.
 
 ## 10. Capturi de ecran
 
-Capturile **nu sunt încă generate**. Ele se vor genera automat din `tests/test_screenshots.py` (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în limba română, pe o companie RO, cu apelurile la DPD simulate. Eticheta poate folosi PDF-ul de test existent (`tests/label.pdf`). Trebuie rulat skill-ul `fisa-screenshots`. Numele planificate, în ordinea pașilor din secțiunea 6, în `static/description/`:
+Capturile se generează din `tests/test_screenshots.py` (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în limba română, cu apelurile la DPD simulate. Eticheta este exemplul de test al DPD (`tests/label.pdf`), nu o etichetă a companiei. Capturile, în ordinea pașilor din secțiunea 6, în `static/description/`:
 
 1. `01_metoda_livrare_dpd.png` — metoda de livrare, tabul **Configurare DPD**.
 2. `02_initializare_dpd.png` — notificarea după **Inițializare** și câmpurile completate.
@@ -273,7 +277,7 @@ Capturile **nu sunt încă generate**. Ele se vor genera automat din `tests/test
 9. `09_istoric_stare_dpd.png` — tabul **Istoric** al livrării.
 10. `10_anulare_awb_dpd.png` — confirmarea **Anulează AWB**.
 
-Comanda de generare, după ce testul există:
+Comanda de generare:
 
 ```bash
 ./odoo/odoo-bin -c odoo.conf -d <db> -i deltatech_delivery_dpd,l10n_ro,l10n_ro_doc_screenshots \

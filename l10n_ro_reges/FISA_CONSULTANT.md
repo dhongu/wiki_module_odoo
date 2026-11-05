@@ -41,6 +41,12 @@ Grupuri de acces livrate de modul:
 - **Administrator REGES** (`group_reges_manager`) — configurează credențialele, rulează sincronizarea
   COR și operațiunile manuale.
 
+Câmpurile REGES de pe angajat (starea REGES, CNP, actul de identitate, nivelul studiilor,
+transmisiile) și de pe contract (cod COR, tip durată și normă, loc de muncă, număr contract,
+temeiuri și perioade de suspendare sau încetare, transmisiile) sunt vizibile doar utilizatorilor cu
+drept HR (**Angajați → Ofițer: Gestionează toți angajații**, `hr.group_hr_user`). **Utilizator REGES** include deja acest drept.
+Ceilalți utilizatori interni văd doar profilul public al angajatului, fără CNP și act de identitate.
+
 Roluri recomandate la testare:
 - Administrator funcțional: instalează modulul, configurează accesul în Setări, sincronizează COR.
 - Operator HR: înregistrează angajați și contracte, urmărește confirmările.
@@ -172,6 +178,7 @@ adeverințelor / rapoartelor** (vezi limitarea de la final), gestiunea propuneri
 | „Completați adresa privată (domiciliul) angajatului …" | Lipsește adresa de domiciliu | Completați adresa privată pe fișa angajatului |
 | Contractul rămâne „în așteptare" mult timp | REGES procesează asincron / rezultatul nu a fost încă citit | Apăsați „Actualizează din REGES" sau așteptați cron-ul de polling |
 | „Contractul nu este în starea Activ sau Reactivat!" (la încetare) | Contractul e suspendat sau deja încetat | Aduceți contractul în stare activă înainte de încetare |
+| Câmpurile REGES, CNP-ul și actul de identitate nu apar pe angajat | Utilizatorul nu are drept HR (`hr.group_hr_user`) | Dați dreptul **Utilizator REGES** sau **Angajați → Ofițer** |
 
 ## 10. Capturi de ecran
 
