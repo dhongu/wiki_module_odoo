@@ -50,7 +50,7 @@ Date minime pentru demo:
 - un cont GLS de test, cu **ID expeditor**, utilizator și parolă (pentru MyGLS, contul de test GLS al țării);
 - un produs de livrare de tip serviciu (de exemplu „Transport GLS”);
 - un produs stocabil cu greutate și stoc disponibil;
-- un client cu adresă completă, telefon și e-mail (obligatorii la livrarea în punct de ridicare);
+- un client cu adresă completă, telefon și e-mail (obligatorii la livrarea în punct de ridicare), cu a doua linie a adresei completată (apartament, bloc, scară), ca să se vadă pe etichetă;
 - o comandă de vânzare confirmată, cu plata la livrare, ca să apară suma de încasat (ramburs).
 
 ## 5. Configurare inițială
@@ -135,7 +135,7 @@ Dacă răspunsul GLS se pierde pe drum (eroare de rețea), operația e marcată 
 
 **Tipărire AWB** descarcă eticheta salvată pe livrare. Meniul **Tipărire → Tipărire AWB-uri** din lista de livrări funcționează tot pe o singură livrare: cu mai multe livrări selectate dă eroare. Pentru o selecție, alegeți **Tipărire → Descărcare livrări**: în fereastra **Descărcare livrare** alegeți **Raport** (de exemplu bonul de livrare) și apăsați **Aplică**. Se descarcă un singur PDF cu eticheta și raportul fiecărei livrări, pentru cel mult 100 de livrări odată (parametrul de sistem `deltatech_delivery.max_labels_per_download`).
 
-**Găsește pe ecran.** Pe etichetă: numărul AWB-ului și codul de bare, expeditorul, destinatarul cu adresa și telefonul, numărul de colete și, dacă există, suma rambursului.
+**Găsește pe ecran.** Pe etichetă: numărul AWB-ului și codul de bare, expeditorul, destinatarul cu adresa și telefonul, numărul de colete și, dacă există, suma rambursului. A doua linie a adresei (apartament, bloc, scară) apare în adresa de pe etichetă: pe MyGLS se trimite ca informație suplimentară a adresei (`HouseNumberInfo`), atât la expeditor, cât și la destinatar. Pe versiunea **online** a doua linie nu se transmite.
 
 **Verifică.** Suma de pe etichetă corespunde cu **Sumă de încasat** de la pasul 4. Formatul se potrivește cu imprimanta (A4 cu 4 etichete sau etichetă termică).
 
@@ -217,6 +217,7 @@ Modulul **nu generează note contabile**. Legăturile cu contabilitatea sunt ind
 - [ ] Cu supliment de ramburs în grilă și **Preț adițional pentru ramburs** completat, taxa de ramburs apare de două ori: lăsați doar unul.
 - [ ] **Trimite la curier** completează **Referință de urmărire**, pune **Stare livrare** = Avizat și atașează eticheta.
 - [ ] Suma rambursului de pe etichetă este cea din **Sumă de încasat**.
+- [ ] Pe MyGLS, a doua linie a adresei destinatarului (de exemplu „4/3”) apare pe etichetă.
 - [ ] Comandă creată din backend, fără nicio plată înregistrată: **Sumă de încasat** = totalul comenzii, inclusiv transportul.
 - [ ] Comandă cu plată prin transfer bancar încă neîncasată: **Sumă de încasat** = 0; rambursul se corectează doar cu **Sumă de încasat stabilită manual**.
 - [ ] Cu serviciul PSD și fără punct ales, AWB-ul este refuzat cu mesajul despre parcel shop, fără apel la GLS.

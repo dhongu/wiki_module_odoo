@@ -1,10 +1,10 @@
-# Listă de Produse (localizat la `deltatech_product_list/index.md`)
+# Product Lists (localizat la `deltatech_product_list/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_list`
 - **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_list
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_list`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-06`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -17,6 +17,10 @@ Modulul permite definirea de liste de produse — colecții denumite de produse 
 - Selectarea produselor pe baza unui filtru (domeniu) configurabil, în loc de selecție manuală.
 - Stabilirea unei limite a numărului de produse returnate de listă.
 - Listele pot fi arhivate (dezactivate) fără a fi șterse.
+- Lista nu memorează produse, ci regula: la fiecare folosire conține produsele care îndeplinesc filtrul în acel moment. Filtrul se aplică pe variantele de produs (`product.product`), iar limita (implicit 80) este aplicată de modulul care folosește lista.
+- Meniul se află în **Vânzări → Produse → Listă produse**; listele sunt pe companie.
+- Drepturi: orice utilizator intern citește listele; agenții de vânzări (**Vânzări: Utilizator: Numai documente proprii** sau mai mult) le pot crea, modifica și șterge.
+- Fără efect fiscal sau contabil; este o fundație pentru alte module.
 
 #### 3. Dependențe
 

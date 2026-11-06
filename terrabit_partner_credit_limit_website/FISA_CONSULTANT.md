@@ -47,9 +47,12 @@ Date minime pentru demo:
   `payment_custom`, deja dependență a modulului) — plata la livrare (`code = on_delivery`) este o
   a doua excepție posibilă, dar provine din modulul separat `deltatech_payment_on_delivery`
   (opțional, nu e dependență); fără el, demo-ul se face doar cu transfer bancar;
-- comanda trebuie să aibă un termen de plată **diferit de „Immediate Payment"** — dacă parametrul
-  `credit_limit.skip_term_immediate` e activ (implicit **da**), o comandă cu plată imediată sare
-  complet verificarea limitei, inclusiv la checkout;
+- comanda trebuie să aibă un termen de plată **diferit de „Plată imediată"** — setarea „Comenzi cu
+  termen de plată imediat" (`credit_limit.skip_term_immediate`, din modulul de bază) are trei
+  valori: cu **„Scutită de orice verificare de credit"** (implicit) o comandă cu plată imediată sare
+  complet verificarea, inclusiv la checkout; cu **„Scutită doar de limită"** nu e comparată cu
+  limita, dar restanțele clientului rămân verificate; cu **„Verificată ca oricare alta"** e
+  verificată ca orice altă comandă;
 - un coș de cumpărături (comandă de vânzare din website) cu valoare care depășește limita.
 
 ## 5. Configurare inițială
@@ -63,7 +66,7 @@ Date minime pentru demo:
    de tip transfer bancar (`custom_mode = wire_transfer`); plata la livrare (`code = on_delivery`)
    necesită în plus modulul opțional `deltatech_payment_on_delivery`.
 5. Autentificați-vă pe website ca partenerul de test și adăugați produse în coș peste limita de
-   credit disponibilă, cu un termen de plată diferit de „Immediate Payment" pe comandă.
+   credit disponibilă, cu un termen de plată diferit de „Plată imediată" pe comandă.
 
 ## 6. Flux de utilizare
 
@@ -80,23 +83,40 @@ online.
 ### Pasul 2 — Rezumatul soldului pe pagina de plată
 
 Autentificat ca partenerul de test, adăugați produse în coș și mergeți la pagina de plată
-(`/shop/payment`). Modulul afișează o bară de progres (sold curent față de limita de credit) și un
-rezumat text cu „Credit limit" și „Sold", calculate din același `check_limit()` folosit la
-confirmarea comenzilor din backend.
+(`/shop/payment`). Modulul afișează o bară de progres și un rezumat text cu „Limita de credit" și
+„Sold", calculate din același `check_limit()` folosit la confirmarea comenzilor din backend. Eticheta
+barei arată **valoarea comenzii față de limită**, iar bara se umple în funcție de **sold + comandă**;
+soldul curent apare separat, în caseta verde. Comparația cu limita ține cont și de toleranță și, dacă
+sunt activate în modulul de bază, de comenzile confirmate nefacturate și de conturile suplimentare
+(care măresc și „Sold"-ul afișat); detaliile sunt în fișa modulului de bază.
 
 ![Bara de progres și rezumatul soldului pe pagina de plată](screenshots/02_checkout_progress.png)
 
 ### Pasul 3 — Alerta de facturi restante
 
-Dacă partenerul are facturi scadente neîncasate (peste zilele de grație configurate în modulul de
-bază), pagina de plată afișează o alertă roșie cu suma restantă și lista facturilor, urmată de un
-mesaj cu telefonul departamentului de contabilitate pentru clarificări.
+Dacă clientul (firma, nu persoana de contact) are sume scadente neîncasate — fiecare rată e
+socotită la propria scadență, peste „Zile de grație" de pe fișa clientului — pagina de plată
+afișează o alertă roșie cu suma restantă și lista documentelor, urmată de un mesaj cu telefonul
+departamentului de contabilitate pentru clarificări. Plățile și notele de credit încă nealocate
+scad suma restantă. Cu setarea „Comenzi cu termen de plată imediat" pe „Scutită de orice verificare
+de credit" (implicit), facturile cu termen „Plată imediată" nu intră în suma restantă.
+
+Alerta roșie apare doar dacă limita **nu** e deja depășită: când e depășită, clientul vede doar
+caseta albastră cu telefonul (verificarea se oprește la limită), dar metodele de plată se restrâng
+oricum. Un client cu limita 0 e verificat doar dacă în modulul de bază „Clienți fără limită de
+credit" nu e pe „Nimic":
+- „Doar facturile restante": apare alerta roșie, fără bară de progres (nu există limită de afișat);
+- „Tot ce e deschis": metodele de plată se restrâng dacă clientul are orice factură neplătită
+  (chiar nescadentă), o factură ciornă sau o comandă confirmată nefacturată, iar pe pagină apare
+  doar caseta albastră cu telefonul, **fără** alerta roșie și fără motiv detaliat.
 
 ![Alerta de facturi restante și telefonul de contact al contabilității](screenshots/03_checkout_overdue.png)
 
 ### Pasul 4 — Restricționarea metodelor de plată
 
-Când soldul plus valoarea comenzii depășesc limita de credit (sau există facturi restante), lista
+Când soldul plus valoarea comenzii depășesc limita de credit (sau există facturi restante, sau —
+la un client fără limită, cu „Clienți fără limită de credit" pe „Tot ce e deschis" — documente
+deschise), lista
 de metode de plată disponibile la checkout se restrânge: transferul bancar și/sau plata la livrare
 (metodele „pe încredere", fără confirmare imediată a încasării) **dispar**, rămânând doar metodele
 de plată online — cu excepția cazului în care „Restrict All Providers" e activat, situație în care
@@ -130,20 +150,32 @@ altfel un client peste limită rămâne fără nicio opțiune de plată chiar ș
 - [ ] Modulul se instalează fără erori pe baza demo (dependențe: `terrabit_partner_credit_limit`,
       `website_sale`, `payment_custom`).
 - [ ] Parametrul „Restrict All Providers" din Website → Configurare → Setări se salvează corect.
-- [ ] Pe pagina de plată, bara de progres și rezumatul „Credit limit / Sold" apar doar când
+- [ ] Pe pagina de plată, bara de progres și rezumatul „Limita de credit / Sold" apar doar când
       partenerul are o limită de credit setată.
-- [ ] Alerta de facturi restante apare doar când există facturi scadente neîncasate peste zilele de
-      grație.
+- [ ] Alerta roșie de facturi restante apare doar când există sume scadente neîncasate peste „Zile
+      de grație" și limita nu e deja depășită (altfel clientul vede doar caseta albastră).
+- [ ] Un client cu limita 0 și „Clienți fără limită de credit" pe „Tot ce e deschis" are metodele de
+      plată restrânse dacă are facturi neplătite, ciorne sau comenzi nefacturate, fără alertă roșie.
 - [ ] Cu „Restrict All Providers" dezactivat, la depășirea limitei dispar transferul bancar și/sau
       plata la livrare, rămânând disponibile metodele de plată online.
 - [ ] Cu „Restrict All Providers" activat, la depășirea limitei nu mai apare nicio metodă de plată.
 - [ ] Un partener care nu depășește limita vede lista completă de metode de plată, neafectată.
-- [ ] O comandă cu termen de plată „Immediate Payment" NU este supusă verificării (comportament
-      implicit, din `credit_limit.skip_term_immediate`) — testați cu alt termen de plată.
-- [ ] O comandă cu **orice** tranzacție de plată deja înregistrată (chiar eșuată/anulată) NU mai
-      este supusă restricției la o reîncărcare ulterioară a `/shop/payment` — comportament din
-      `can_skip_credit_limit()` (modulul de bază), controlat de parametrul
-      `terrabit_partner_credit_limit.skip_only_card`.
+- [ ] O comandă cu termen de plată „Plată imediată" NU este supusă verificării cât timp setarea
+      „Comenzi cu termen de plată imediat" e pe „Scutită de orice verificare de credit" (implicit).
+      Cu „Scutită doar de limită", restricția se aplică totuși dacă clientul are restanțe; cu
+      „Verificată ca oricare alta", se aplică ca la orice comandă — testați fiecare valoare.
+- [ ] O comandă cu o tranzacție de plată deja înregistrată NU mai este supusă restricției la o
+      reîncărcare ulterioară a `/shop/payment`. Ce tranzacții contează depinde de setarea „Comenzi cu
+      o tranzacție de plată" din modulul de bază: „Orice tranzacție" (implicit, inclusiv una
+      eșuată/anulată), „O plată care nu a eșuat" sau „O plată finalizată care acoperă totalul".
+      Parametrul de sistem `terrabit_partner_credit_limit.skip_only_card` (fără câmp în Setări; se
+      editează din Setări → Tehnic → Parametri → Parametri de sistem) exclude în plus tranzacțiile
+      transferului bancar și ale plății la livrare.
+- [ ] O comandă aprobată în backend (bifa „Permite vânzare peste credit?") scapă de restricție doar
+      până la suma aprobată: dacă după aprobare valoarea comenzii crește, bifa se scoate și restricția
+      se aplică din nou. O aprobare veche, fără sumă reținută, acoperă orice total.
+- [ ] O persoană de contact a unei firme e verificată pe soldul și limita **firmei** (partenerul
+      comercial), nu pe ale contactului.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -151,8 +183,10 @@ altfel un client peste limită rămâne fără nicio opțiune de plată chiar ș
 |-----------------|-----------------|-----------|
 | Pe pagina de plată nu apare nicio metodă de plată | Limita de credit e depășită și „Restrict All Providers" e activat, **sau** nu există niciun furnizor de plată online publicat (au rămas doar transfer bancar/ramburs, tocmai eliminate) | Dezactivați „Restrict All Providers" sau publicați un furnizor de plată online funcțional |
 | Bara de progres/rezumatul de credit nu apare deloc pe pagina de plată | Partenerul nu are `credit_limit` setat (câmp gol/zero) | Setați limita de credit pe partener din backend (vezi fișa `terrabit_partner_credit_limit`) |
-| Clientul e restricționat deși limita pare respectată | Verificarea include și facturile restante, nu doar soldul curent — o factură scadentă poate declanșa restricția chiar sub limită | Verificați secțiunea „Facturi restante" a rezumatului și modulul de bază pentru zilele de grație configurate |
-| Restricția nu se aplică deloc pentru un partener peste limită | Comanda/echipa de vânzări are activă o excepție (`allow_overcredit`, `over_credit` sau echipă cu „Ignore credit limits") din modulul de bază, **sau** comanda are termenul de plată „Immediate Payment" (sărit implicit din `credit_limit.skip_term_immediate`), **sau** comanda are deja o tranzacție de plată înregistrată (chiar eșuată) — `can_skip_credit_limit()` o consideră excepție dacă `terrabit_partner_credit_limit.skip_only_card` nu e activat | Verificați excepțiile din `terrabit_partner_credit_limit` aplicabile comenzii/partenerului, termenul de plată și tranzacțiile existente pe comandă |
+| Clientul e restricționat deși limita pare respectată | Verificarea include și facturile restante, nu doar soldul curent — o factură scadentă poate declanșa restricția chiar sub limită | Verificați alerta „Suma restantă / Facturi restante" de pe pagina de plată și „Zile de grație" de pe fișa clientului (firma) |
+| Un client fără limită și fără restanțe rămâne doar cu plata online, fără nicio alertă roșie | „Clienți fără limită de credit" e pe „Tot ce e deschis" și clientul are facturi neplătite (chiar nescadente), ciorne sau comenzi confirmate nefacturate | Regularizați documentele deschise sau treceți setarea pe „Doar facturile restante" / „Nimic" |
+| Restricția nu se aplică deloc pentru un partener peste limită | Comanda/echipa de vânzări are activă o excepție (comanda aprobată în limita sumei aprobate, `over_credit` pe partener sau echipă cu „Ignoră limita de credit") din modulul de bază, **sau** comanda are termenul de plată „Plată imediată" și setarea „Comenzi cu termen de plată imediat" e pe „Scutită de orice verificare de credit" (implicit), **sau** comanda are deja o tranzacție de plată care contează după setarea „Comenzi cu o tranzacție de plată" (implicit orice tranzacție, chiar eșuată) | Verificați excepțiile din `terrabit_partner_credit_limit` aplicabile comenzii/partenerului, termenul de plată și tranzacțiile existente pe comandă |
+| Clientul vede în continuare caseta albastră sau alerta roșie, deși are toate metodele de plată | Pagina afișează rezultatul `check_limit()` și nu ține cont de excepția echipei „Ignoră limita de credit" sau a tranzacției; restricția însă se ridică | Comportament așteptat: afișarea și restricția sunt evaluate separat. O comandă aprobată în limita sumei aprobate nu mai afișează alertele |
 
 ## 10. Capturi de ecran
 
@@ -179,5 +213,7 @@ demo — nu e dependență a modulului):
 comenzii, ci se **elimină metodele de plată „pe încredere"** (transfer bancar, ramburs) atunci când
 clientul depășește limita, lăsând doar plata online (care confirmă încasarea imediat); clientul
 vede proactiv motivul (sold, limită, facturi restante) direct pe pagina de plată, înainte de a
-alege o metodă. Atrageți atenția și asupra parametrului `credit_limit.skip_term_immediate`
-(implicit activ): o comandă cu termen de plată „Immediate Payment" nu e supusă deloc verificării.
+alege o metodă. Atrageți atenția și asupra setării „Comenzi cu termen de plată imediat" din modulul
+de bază (implicit „Scutită de orice verificare de credit"): o comandă cu termen de plată „Plată
+imediată" nu e supusă deloc verificării, iar celelalte două valori o supun total sau doar
+restanțelor.

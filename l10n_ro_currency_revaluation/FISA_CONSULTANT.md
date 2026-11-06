@@ -114,8 +114,17 @@ Date minime pentru demo:
 
 Meniu: **Contabilitate → Configurare → Valute**
 
-Verificați că pentru fiecare valută folosită există cursul BNR la data reevaluării (ultima zi
-lucrătoare a lunii). Cursurile se pot actualiza manual sau automat.
+Verificați că pentru fiecare valută folosită există cursul BNR din ultima zi lucrătoare a lunii.
+Cursurile se pot actualiza manual sau automat.
+
+Atenție la dată: Odoo salvează cursul BNR cu data de la care e valabil, adică ziua de după
+publicare. Cursul publicat pe 31 mai apare cu data de 1 iunie. Reevaluarea din 31 mai folosește
+cursul valabil pe 1 iunie, deci exact pe cel publicat în ultima zi bancară a lui mai
+(pct. 325 alin. (2) din OMFP 1802/2014). La introducerea manuală, puneți cursul tot cu data
+zilei următoare publicării.
+
+Calculați reevaluarea abia după importul cursului din ultima zi bancară (BNR îl publică în jurul
+orei 13). Altfel, reevaluarea ia fără avertizare cursul din ziua bancară anterioară.
 
 ### 5.2 Standardul de reevaluare al companiei
 
@@ -183,6 +192,10 @@ parțiale) și afișează, pe fiecare cont, partener și valută (băncile și c
 soldul în valută, soldul contabil în RON, cursul
 BNR, soldul recalculat și **diferența** (pierdere `665` / câștig `765`).
 
+**Calculează** convertește soldurile la cursul valabil în ziua de după data reevaluării, adică la
+cursul publicat de BNR în ultima zi bancară a lunii (vezi 5.1). Importați acest curs înainte de
+calcul: dacă lipsește, butonul ia fără avertizare cursul din ziua bancară anterioară.
+
 Captura arată reevaluarea după postare (Pasul 4); în ciornă, aceleași linii apar după
 **Calculează**, iar după postare nu mai pot fi modificate.
 
@@ -206,7 +219,7 @@ justificativ al reevaluării, util la închidere și la control.
    nota contabilă legată; în tabel, fiecare rând este o combinație cont + partener + valută (bancă/casă:
    doar cont), cu coloanele *Partener*, *Sold rezidual (val.)*, *Sold contabil (RON)*, *Curs BNR*, *Sold la curs BNR* și *Diferență (Δ)*,
    plus tipul (665 pierdere / 765 câștig).
-2. **Verificați** — cursul BNR de pe fiecare rând este cel din ultima zi a lunii; *Sold la curs BNR* =
+2. **Verificați** — cursul BNR de pe fiecare rând este cel publicat în ultima zi bancară a lunii (în lista de cursuri, cu data de 1 a lunii următoare); *Sold la curs BNR* =
    *Sold rezidual (val.)* × *Curs BNR*; *Diferență* = *Sold la curs BNR* − *Sold contabil*; totalurile
    *Total pierderi (665)* și *Total câștiguri (765)* coincid cu liniile notei contabile de la Pasul 4.
 3. **Tipăriți / exportați** — abia după ce datele corespund, generați PDF-ul pentru dosarul lunii.
@@ -244,6 +257,14 @@ reevaluare (pct. 322 alin. (1)).
   decontare, închiderea se face prin diferență de sens opus (o pierdere veche apare ca `765`), deci
   în luna respectivă apar pe același cont și `665`, și `765`: netul și rezultatul nu se schimbă, dar
   rulajele brute cresc. Treceți în politica contabilă, pentru auditor.
+- **Reevaluare din 31.12 făcută cu cursul greșit (versiunile anterioare lui 19.0.1.3.3):** până la
+  această versiune, cu cursurile importate automat, reevaluarea lua cursul din penultima zi bancară.
+  În exercițiul curent nu e nevoie de o notă separată: reevaluarea următoare e incrementală și
+  aduce soldul la cursul corect, prin `665`/`765` (pct. 65 alin. (2), pct. 67 alin. (1) din
+  OMFP 1802/2014). Pentru 31.12 al unui exercițiu **închis**, bilanțul acelui an a preluat cursul
+  greșit: dacă diferența e semnificativă, corecția se face pe `1174` (pct. 67 alin. (2)-(3)) și se
+  prezintă în notele explicative (pct. 68 alin. (3)); dacă e nesemnificativă și politica contabilă
+  permite, rămâne în rezultatul anului curent.
 
 ## 7. Legături cu alte module / declarații
 
@@ -278,6 +299,8 @@ alegerea conturilor incluse (sau excluse manual) și verificarea soldurilor.
 - [ ] Câmpurile de provizion (665/765) din Setări → „Revaluation Provision Accounts" sunt distincte
       de câmpurile „Gain/Loss Exchange Rate Account" (curs realizat) — verificați că nu sunt
       confundate la configurare, mai ales pe instalări mai vechi.
+- [ ] Cursul BNR de pe fiecare linie este cel publicat în ultima zi bancară a lunii, care apare în
+      lista de cursuri cu data de 1 a lunii următoare (nu cel cu data ultimei zile a lunii).
 - [ ] **Postează nota** generează o notă echilibrată pe 665/765, pe jurnalul de reevaluare.
 - [ ] Pe standard OMFP 1802, nota **nu** are stornare automată în luna următoare.
 - [ ] Pe standard IFRS, meniul propriu **Reevaluare valutară RO** refuză calculul, cu mesaj către
@@ -306,6 +329,7 @@ alegerea conturilor incluse (sau excluse manual) și verificarea soldurilor.
 | „This company is configured for IFRS…" | compania e pe standardul IFRS, dar s-a încercat calculul din meniul propriu RO | folosiți wizard-ul Enterprise standard, sau schimbați standardul companiei pe OMFP 1802 |
 | Reevaluare duplicată pentru aceeași lună | constrângere `UNIQUE(date, company)` | anulați reevaluarea existentă sau alegeți altă dată |
 | După încasarea/plata unui element, fișa partenerului în lei arată un rest (sold valutar zero) | Odoo calculează diferența la plată față de cursul facturii; ajustarea din reevaluarea anterioară rămâne până la reevaluarea lunii | normal — restul se închide la reevaluarea de la sfârșitul lunii |
+| Diferențele 665/765 nu corespund cursului BNR din ultima zi bancară a lunii | reevaluarea s-a calculat înainte de importul cursului din ultima zi bancară (BNR îl publică în jurul orei 13); modulul nu avertizează și ia cursul zilei bancare anterioare | importați cursul (cu data de 1 a lunii următoare), apoi apăsați din nou **Calculează** pe reevaluarea în ciornă; dacă e deja postată, apăsați **Anulează** (storno), ștergeți reevaluarea anulată și creați-o din nou pentru aceeași dată |
 | Meniul nu este vizibil | utilizatorul nu are drepturi contabile | acordați grupul „Contabilitate" și reîncărcați |
 
 ## 10. Capturi de ecran

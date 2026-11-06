@@ -87,7 +87,10 @@ produse**) și creați o listă pentru fiecare platformă:
   primește atunci un cod de acces.
 - grupul **FEEDS FORMAT**: **Tip feed** (Google, eMAG, Compari, Cel, Bizoo, VidaXL, E-licitatie,
   OpenAI etc.) și **Tip format**, completat automat după tipul ales. La un catalog Google mare, bifați
-  **Use subfeeds**: feed-ul devine un index care trimite la pagini de câte **Limit subfeeds** produse.
+  **Use subfeeds**: feed-ul devine un index care trimite la pagini de câte **Limit subfeeds** variante.
+  Filtrul **Produse**, **Limită** și paginarea se aplică pe variante: fiecare pagină conține doar
+  variantele selectate pentru ea, o variantă apare pe o singură pagină, iar totalul nu depășește
+  **Limită**. Două variante ale aceluiași produs pot ajunge pe pagini diferite.
 - grupul **FIELDS**: sursa descrierii (**Use Html**, **Folosește descriere scurtă**, **Folosește numele
   ca descriere**) și **Câmp identificare** (`id` sau alt câmp al produsului folosit ca identificator).
 - grupul **FEEDS GENERATION**: **Cache Hours** (cât timp e valabil fișierul, implicit 12 ore) și
@@ -148,7 +151,9 @@ Extras din feed-ul Google generat (etichete scurtate). Prețul vine din lista de
 disponibilitatea din stoc: cu stoc pozitiv, `g:availability` este `in_stock`, iar cantitatea se trimite
 ca 9999 (valoare convențională). Excepție: la produsele cu **Afișează disponibil** bifat, un stoc sub
 pragul produsului se trimite ca atare. Valorile `g:id` sunt ID-urile din baza
-de date și diferă de la o bază la alta.
+de date și diferă de la o bază la alta. La un produs cu variante, prima variantă păstrează ID-ul
+produsului (de exemplu `12`), iar celelalte primesc ID-ul produsului urmat de „-” și ID-ul variantei
+(de exemplu `12-57`), pe orice pagină ar fi: ID-urile rămân unice și nu se schimbă între generări.
 
 ```xml
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
@@ -221,6 +226,8 @@ de platforme (categorie Google, cod de bare, brand), introducerea adresei în co
 - [ ] Schimbați prețul unui produs, apăsați **Reîmprospătare feed-uri**: câmpurile generării se golesc, adresa arată încă prețul vechi până la rularea acțiunii **Feed: refresh**, apoi pe cel nou, iar **Feed Generated At** se completează din nou.
 - [ ] Acțiunea programată **Feed: refresh** este activă și are utilizatorul OdooBot.
 - [ ] La un catalog Google cu **Use subfeeds**, adresa principală arată lista de pagini (`feed_link`), iar fiecare pagină se deschide.
+- [ ] La **Use subfeeds**, o variantă apare pe o singură pagină (căutați-i `g:id` în toate paginile), iar numărul total de `item` din pagini nu depășește **Limită** (când e diferită de 0).
+- [ ] O variantă exclusă prin filtrul **Produse** nu apare în feed, chiar dacă alte variante ale aceluiași produs apar.
 
 ## 9. Mesaje de eroare frecvente
 

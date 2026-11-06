@@ -88,9 +88,15 @@ iar **Total** corespunde sumei plății către acel furnizor.
 
 > Imaginea de mai sus este previzualizarea HTML a raportului, identică cu PDF-ul tipărit.
 
-> Suma pe fiecare factură se preia din reconcilierea plății când aceasta este finalizată; dacă avizul
-> se emite înainte ca plata să fie confirmată prin extras (starea `in_process`), se afișează valoarea
-> **brută** a facturii — la fel ca în avizul de tip retail.
+> Suma pe fiecare factură se preia din reconcilierea plății, deci o plată parțială apare cu suma
+> efectiv stinsă. Dacă avizul se emite înainte de reconciliere (plata e confirmată, în starea
+> `in_process`, dar nu e încă potrivită cu factura), suma plătită se **repartizează** pe facturile
+> plății, în ordinea scadenței: fiecare factură primește cel mult restul ei de plată, iar ce depășește
+> facturile (un avans) nu apare în aviz.
+
+> Sumele din aviz sunt în **moneda companiei**: o plată în valută se convertește la cursul din data
+> plății. Avizul cuprinde și **notele de credit furnizor** stinse prin plată, cu valoarea lor
+> absolută.
 
 ### Pasul 3 — Trimiterea avizului pe e-mail către furnizori
 
@@ -131,6 +137,9 @@ contact pe furnizor, declanșarea tipăririi sau trimiterii.
 - [ ] Butonul **Trimite avizul de plată** apare pe plata în lot de tip ieșire (Tip Lot = „Apel efectuat"), cu plăți adăugate.
 - [ ] Acțiunea **Tipărire → Aviz de plată** produce un PDF cu câte o pagină per furnizor.
 - [ ] Facturile listate și sumele corespund plăților din lot; **Total** = suma plătită furnizorului.
+- [ ] O plată nereconciliată (`in_process`), mai mică decât facturile, apare repartizată în ordinea scadenței; avansul (excesul peste facturi) nu apare.
+- [ ] O plată în valută apare în aviz în moneda companiei, la cursul din data plății.
+- [ ] O notă de credit furnizor stinsă prin plată apare în aviz cu valoarea absolută.
 - [ ] Antetul avizului arată corect IBAN-ul, banca și codul intern al furnizorului.
 - [ ] La trimiterea pe e-mail, se creează câte un mesaj per furnizor, cu PDF-ul atașat.
 - [ ] Avizul unui furnizor cu limba `ro_RO` este randat în română; al unuia cu altă limbă, în limba lui.

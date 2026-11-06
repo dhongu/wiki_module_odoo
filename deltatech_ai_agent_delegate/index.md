@@ -1,10 +1,11 @@
 # AI - Agent Delegation (localizat la `deltatech_ai_agent_delegate/index.md`)
 
 - **Nume Tehnic:** `deltatech_ai_agent_delegate`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_agent_delegate
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_ai_agent_delegate`
 - **Ultima Ingestie:** `2026-10-20`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

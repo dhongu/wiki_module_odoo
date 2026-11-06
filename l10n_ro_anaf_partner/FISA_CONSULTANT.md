@@ -71,8 +71,8 @@ Date minime pentru demo:
 1. Instalați modulul `l10n_ro_anaf_partner` (dependențe: `l10n_ro_anaf_base`, `account`). Modulul nu
    depinde de module OCA; poate fi instalat și **împreună** cu OCA `l10n_ro_vat_on_payment`, cu care
    împarte câmpul „TVA la încasare (RTVAI)” (vezi secțiunea 7).
-   Modulul **nu se instalează** alături de `l10n_ro_fiscal_validation` (OCA), care sincroniza
-   aceiași parteneri cu ANAF fără log și alerte: pe o bază care îl are, dezinstalați întâi modulul OCA.
+   Dacă pe bază e instalat și `l10n_ro_fiscal_validation` (OCA), modulul se instalează, dar cronul OCA
+   sincronizează aceiași parteneri cu ANAF fără log și alerte: dezactivați-l sau dezinstalați modulul OCA.
 2. Verificați că utilizatorul de test are **grupul de acces RO** (altfel meniul Log Modificări nu este vizibil; fila „Monitorizare ANAF” de pe partener se vede pentru toți utilizatorii).
 3. Opțional, activați blocajele din **Setări → Contabilitate → Monitorizare parteneri ANAF (RO)**:
    **Blochează partenerii inactivi ANAF** și/sau **Blochează partenerii radiați la ANAF**.
@@ -243,7 +243,6 @@ citirea RTVAI, ca să primească perioadele.
 | Bifa **TVA la încasare (RTVAI)** nu se poate modifica | Câmpul e doar citire: îl scrie sincronizarea ANAF (sau OCA `l10n_ro_vat_on_payment`) | Apăsați **Sincronizează cu ANAF**; dacă ANAF arată alt regim decât știți, verificați registrul RTVAI pe portalul ANAF |
 | Furnizor în RTVAI, dar fără **Perioade TVA** | Partenerul n-a mai fost sincronizat de la instalarea versiunii care citește RTVAI, sau răspunsul ANAF n-a conținut blocul RTVAI | Apăsați **Sincronizează cu ANAF** pe furnizor; perioadele mai vechi decât cea curentă nu pot fi recuperate din ANAF și se adună de acum înainte |
 | Fila „Monitorizare ANAF” nu apare pe partener | Partenerul nu are **Țara = România**, sau nu e companie și nu are CUI | Verificați **Țara = România** și **Companie** (sau CUI completat) pe partener |
-| La instalare: „Modules … and "Romania - Fiscal Validation" are incompatible" | Pe bază e instalat `l10n_ro_fiscal_validation` (OCA) | Dezinstalați `l10n_ro_fiscal_validation`, apoi instalați modulul |
 | Butonul **Sincronizează cu ANAF** lipsește | Partenerul nu are CUI, e contact al unei firme sau e partenerul unei companii din baza de date | Completați CUI-ul pe firma-mamă; partenerii companiilor proprii sunt excluși intenționat |
 | Meniul Log Modificări nu este vizibil | Lipsesc drepturile RO | Acordați grupul de acces RO și reîncărcați aplicațiile |
 

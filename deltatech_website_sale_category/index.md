@@ -5,6 +5,7 @@
 - **Cale:** [https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_sale_category](https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_sale_category)
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_website_sale_category`
 - **Ultima Ingestie:** `2026-07-31`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

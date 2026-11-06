@@ -8,10 +8,11 @@
 
 ## 1. Scop business
 
-Această fișă descrie utilizarea modulului `terrabit_partner_credit_limit` pentru scenariul
+Această fișă descrie utilizarea modulului `terrabit_partner_credit_limit_review` (peste `terrabit_partner_credit_limit`) pentru scenariul
 **Control limită de credit pentru parteneri**. Modulul reține confirmarea comenzilor de vânzare
-atunci când soldul de încasat al clientului (facturi neîncasate, opțional și cele restante) ar
-depăși limita de credit stabilită pe partener, cu posibilitatea de derogare controlată prin roluri
+atunci când soldul de încasat al clientului (facturi neîncasate, opțional și comenzile confirmate
+nefacturate) ar depăși limita de credit stabilită pe firma clientului, sau când clientul are
+restanțe, cu posibilitatea de derogare controlată prin roluri
 și de excepții pe echipă de vânzări sau pe partener. Depășirea limitei și facturile restante sunt
 **motive de verificare** pe comandă (modulul `deltatech_sale_order_review`, poarta *Înainte de
 confirmare*): oferta rămâne ofertă, arată într-un banner de ce, iar utilizatorul cu drept de
@@ -56,9 +57,10 @@ Roluri recomandate pentru testare:
 ## 4. Conturi și date implicate
 
 Modulul nu introduce conturi noi — folosește soldul de încasat calculat de Odoo (`credit` pe
-`res.partner`, alimentat din facturile de client `out_invoice`/`out_refund` postate și
-neîncasate) sau, opțional, direct din facturi (`account.move`) dacă parametrul
-`credit_limit_from_invoices` este activat.
+`res.partner`, adică soldul liniilor de creanță ale firmei: facturi, plăți nealocate, solduri
+inițiale, note manuale) sau, opțional, direct din facturi (`account.move`) dacă parametrul
+`credit_limit_from_invoices` este activat. La acesta se pot adăuga, din setările modulului de bază,
+soldul unor conturi suplimentare (ex. 4118, 413, 418) și comenzile confirmate nefacturate.
 
 Date minime pentru demo:
 - companie cu localizare contabilă instalată și jurnal de vânzări funcțional;
@@ -78,9 +80,11 @@ Date minime pentru demo:
    **Facturi restante**, amândouă pe poarta *Înainte de confirmare*, tip *Aprobare manuală*, cu
    grupul de aprobare „Can approve sale order over credit limit". Ambele vin **inactive** după
    instalare: porniți-le din comutatorul **Activ**.
-3. Setați parametrii globali din Setări: toleranța, telefonul departamentului contabil și dacă
-   termenele imediate sar peste verificare (implicit **activ** — vine setat `True` din
-   `data/ir.config_parameter.xml` la instalare, deși câmpul din formular are default `False`).
+3. Setați parametrii globali din Setări: toleranța, telefonul departamentului contabil și ce se
+   întâmplă cu comenzile cu termen de plată imediat (implicit **„Scutită de orice verificare de credit"** —
+   vine setat `all` din `data/ir.config_parameter.xml` la instalare). Celelalte setări (clienți fără
+   limită, comenzi cu tranzacție, conturi suplimentare, comenzi nefacturate) sunt descrise în fișa
+   modulului `terrabit_partner_credit_limit`.
 4. Configurați `credit_limit` pe partenerul de test și, dacă e cazul, bifați „Ignoră limita de
    credit" pe echipa de vânzări folosită la testare.
 5. Verificați că utilizatorul de test are/nu are grupurile „Manage credit limits" și „Can approve
@@ -90,11 +94,13 @@ Date minime pentru demo:
 
 ### Pasul 1 — Setarea limitei de credit pe partener
 
-Accesați **Contacte → deschideți partenerul → tab Vânzări & Achiziții**, secțiunea
+Accesați **Contacte → deschideți firma clientului → tab Vânzări & Achiziții**, secțiunea
 **Informație fiscală**, și completați **Limită de credit**. Câmpurile **Permite vânzare peste
-credit?** (`Allow Over Credit?`, ignoră permanent limita pentru acest partener) și **Zile de grație**
-(`Clemency Days`, zile înainte ca o factură scadentă să conteze ca restantă) sunt editabile doar de
-utilizatorii din grupul „Manage credit limits" — pentru ceilalți apar needitabile (`readonly`).
+credit?** (`Allow Over Credit?`, ignoră permanent limita și restanța pentru acest partener) și
+**Zile de grație** (`Clemency Days`, zile înainte ca o rată scadentă să conteze ca restantă) sunt
+editabile doar de utilizatorii din grupul „Manage credit limits" — pentru ceilalți apar needitabile
+(`readonly`). Limita se pune pe **firmă**: verificarea citește datoria și limita firmei și pentru
+comenzile făcute pe un contact sau pe o adresă a ei.
 
 ![Formularul partenerului cu limita de credit, Permite vânzare peste credit și Zile de grație](screenshots/01_partner_credit_limit.png)
 
@@ -102,9 +108,13 @@ utilizatorii din grupul „Manage credit limits" — pentru ceilalți apar needi
 
 Accesați **Vânzări → Configurare → Setări**, secțiunea **Limită de credit**: toleranța admisă
 (`credit_limit.tolerance`, implicit 1), telefonul departamentului contabil afișat în mesajul de
-eroare, opțiunea de a sări verificarea pentru termene de plată imediate
-(`credit_limit.skip_term_immediate`) și opțiunea de a calcula soldul din facturi neplătite în loc
-de soldul de încasat contabil (`credit_limit_from_invoices`).
+eroare, **Comenzi cu termen de plată imediat** (`credit_limit.skip_term_immediate`: „Scutită de
+orice verificare de credit" — implicit —, „Scutită doar de limită" sau „Verificată ca oricare alta"), calculul
+soldului din facturi neplătite în loc de soldul de încasat contabil (`credit_limit_from_invoices`),
+precum și setările pentru clienții fără limită, comenzile cu tranzacție de plată, conturile
+suplimentare și comenzile nefacturate. Fiecare setare, cu efectul valorilor ei, e explicată în fișa
+modulului `terrabit_partner_credit_limit`; aici contează pentru că decid **ce motive primește
+comanda**.
 
 ![Setările globale de limită de credit din Vânzări → Configurare → Setări](screenshots/02_settings_credit_limit.png)
 
@@ -127,8 +137,22 @@ Creați o comandă de vânzare pentru partenerul de test, cu o valoare care, adu
 depășește limita de credit plus toleranța (ex. sold 900 + comandă 300 > limită 1.000). La salvare,
 comanda primește motivele de verificare și rămâne **ofertă**: bannerul **Reținută pentru verificare**
 listează „Limită de credit depășită: de încasat 900,00 lei, comanda curentă 300,00 lei, limită
-1.000,00 lei." și, dacă există facturi scadente peste zilele de grație, „Facturi restante:
-INV/2026/00001 (900,00 lei)." Deasupra rămân și avertizările de sold ale modulului
+1.000,00 lei." și, dacă există rate scadente peste zilele de grație, „Facturi restante:
+INV/2026/00001 (900,00 lei)." Cele două motive sunt independente: un client care are doar restanțe,
+fără să depășească limita, primește doar „Facturi restante"; restanța se verifică și la clienții
+fără limită, dacă setarea „Clienți fără limită de credit" nu e pe „Nimic". Din suma restantă se
+scad plățile și notele de credit încă nealocate, deci o restanță acoperită de ele nu mai produce
+motiv. Lista din „Facturi restante" poate conține și note contabile sau solduri inițiale cu
+scadența depășită, nu doar facturi.
+
+**Comportamente de reținut (așa funcționează codul acum):**
+- Motivul „Facturi restante" se evaluează și pe o comandă cu termen de plată imediat, indiferent de
+  „Comenzi cu termen de plată imediat" (inclusiv pe „Scutită de orice verificare de credit"): setarea
+  scutește comanda doar de „Limită de credit depășită". Numai facturile cu termen „Plată imediată"
+  ale clientului rămân în afara sumei restante, pe valoarea implicită.
+- La un client cu limita 0 și „Clienți fără limită de credit" pe „Tot ce e deschis", motivul
+  apare ca „Limită de credit depășită … limită 0,00 lei", fără lista documentelor deschise
+  (comenzi nefacturate, facturi ciorne sau neplătite). Deasupra rămân și avertizările de sold ale modulului
 `terrabit_partner_payable_receivable`. Smart button-ul **Verificări** deschide istoricul motivelor, iar
 în lista de comenzi oferta are badge-ul **De verificat**.
 
@@ -165,7 +189,12 @@ de pe partener) și cu decizia comercială luată (plata promisă, limita de mă
 
 După aprobare, comanda este în starea **Comandă de vânzare**, iar în tabul **Alte informații** bifa
 **Permite vânzare peste credit?** este pusă automat — derogarea pe care modulul o avea și înainte,
-acum lăsată de wizard, nu de o mână. Smart button-ul **Verificări** arată cele două motive
+acum lăsată de wizard, nu de o mână. Odată cu bifa se reține **valoarea comenzii** ca sumă aprobată.
+Aceasta contează pe **oferta aprobată fără confirmare** (**Aprobă verificările**) sau cu bifa pusă
+direct pe ofertă: dacă ulterior oferta crește peste suma aprobată (plus toleranța), bifa se scoate
+singură, în chatter apare mesajul „Bifa „Allow Over Credit?" a fost scoasă. Aprobarea acoperea …,
+comanda are acum …", iar motivele se redeschid la următoarea evaluare, deci aprobarea se dă din nou.
+Pe o comandă **deja confirmată** suma nu se mai verifică. Smart button-ul **Verificări** arată cele două motive
 **Aprobate**, cu numele aprobatorului, data și nota. Utilizatorii din grupul de aprobare pot bifa
 „Permite vânzare peste credit?" și direct pe ofertă, înainte de confirmare, dacă vor să sară
 wizardul; o comandă cu bifa pusă nu mai primește motive de credit.
@@ -228,8 +257,18 @@ limitei de credit per partener și a parametrilor globali.
       închide motivele și permite confirmarea.
 - [ ] Butonul „Cere confirmare" apare doar pentru utilizatorii fără grupul „Manage credit limits",
       pe ofertă, când există motive, și deschide corect activitatea către responsabilul echipei.
-- [ ] Parametrii din Setări (toleranță, telefon contabilitate, termen imediat, calcul din facturi)
-      se salvează și influențează verificarea așa cum este descris.
+- [ ] Parametrii din Setări (toleranță, telefon contabilitate, termen imediat, calcul din facturi,
+      clienți fără limită, comenzi cu tranzacție) se salvează și influențează verificarea așa cum
+      este descris în fișa modulului de bază.
+- [ ] O comandă cu termen imediat nu primește „Limită de credit depășită" pe „Scutită de orice
+      verificare de credit" sau „Scutită doar de limită", dar primește „Facturi restante" dacă
+      clientul are restanțe; pe „Verificată ca oricare alta" primește ambele motive.
+- [ ] O ofertă aprobată prin **Aprobă verificările** (fără confirmare) și apoi mărită peste suma
+      aprobată pierde bifa „Permite vânzare peste credit?", iar motivele se redeschid. Pe o comandă
+      confirmată suma nu se mai verifică.
+- [ ] Schimbarea termenului de plată al unei comenzi confirmate din „imediat" în altul e refuzată
+      utilizatorilor fără grupul „Can approve sale order over credit limit" (nu se aplică pe
+      „Verificată ca oricare alta").
 
 ## 9. Mesaje de eroare frecvente
 
@@ -242,7 +281,9 @@ limitei de credit per partener și a parametrilor globali.
 | Câmpul „Limită de credit" apare needitabil pe partener | Utilizatorul curent nu are grupul „Manage credit limits" | Adăugați utilizatorul în grupul „Manage credit limits" |
 | Câmpul „Permite vânzare peste credit?" nu apare pe comanda de vânzare | Utilizatorul nu are grupul „Can approve sale order over credit limit" | Adăugați utilizatorul în grupul respectiv sau folosiți butonul „Cere confirmare" |
 | Un motiv aprobat a reapărut ca „Deschis" | Valoarea comenzii a crescut după aprobare | Aprobați din nou; comportamentul e intenționat |
-| Verificarea nu ține cont de o comandă plătită cu cardul la confirmare | Parametrul `terrabit_partner_credit_limit.skip_only_card` limitează sărirea verificării doar la tranzacții altfel decât transfer bancar/ramburs | Verificați valoarea parametrului de sistem `terrabit_partner_credit_limit.skip_only_card` |
+| Comanda cu tranzacție de plată nu primește motive de credit (sau, invers, le primește deși are tranzacție) | Ce tranzacții scutesc comanda depinde de setarea „Comenzi cu o tranzacție de plată" (implicit orice tranzacție, chiar eșuată) și de parametrul `terrabit_partner_credit_limit.skip_only_card`, care exclude transferul bancar și ramburs | Verificați setarea și valoarea parametrului de sistem `terrabit_partner_credit_limit.skip_only_card` |
+| Comanda cu termen imediat primește „Facturi restante" deși setarea „Comenzi cu termen de plată imediat" e pe „Scutită de orice verificare de credit" | În acest modul setarea scutește comanda doar de motivul „Limită de credit depășită"; restanțele clientului se evaluează oricum | Aprobați prin wizard sau regularizați restanțele; comportamentul e al codului actual |
+| Motivul „Limită de credit depășită … limită 0,00 lei" la un client fără limită | „Clienți fără limită de credit" e pe „Tot ce e deschis" și clientul are documente deschise; mesajul nu le listează | Verificați facturile ciorne/neplătite și comenzile nefacturate ale clientului |
 
 ## 10. Capturi de ecran
 
@@ -278,5 +319,5 @@ comandă, nu ca erori: operatorul vede în banner ce e de rezolvat, managerul ap
 care lasă urmă (cine, când, de ce), iar bifa „Permite vânzare peste credit?" este rezultatul
 aprobării, nu gestul în sine. Insistați pe distincția dintre cele două grupuri de acces
 (administrare limită vs. aprobare depășire pe comandă), pe rolul echipei de vânzări ca excepție
-rapidă pentru canale fără risc de credit (plată la livrare/card) și pe faptul că o comandă editată
-după aprobare (valoare mai mare) se redeschide singură.
+rapidă pentru canale fără risc de credit (plată la livrare/card) și pe faptul că o ofertă aprobată
+fără confirmare și apoi mărită peste suma aprobată se redeschide singură.

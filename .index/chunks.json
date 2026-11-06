@@ -615,7 +615,7 @@
   {
     "path": "deltatech_ai_agent_delegate/index.md",
     "module": "deltatech_ai_agent_delegate",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_agent_delegate",
     "local_path": "odoo-addons/bitshop_ent/deltatech_ai_agent_delegate",
     "last_ingest": "2026-10-20",
@@ -779,7 +779,7 @@
   {
     "path": "deltatech_ai_knowledge_sync/index.md",
     "module": "deltatech_ai_knowledge_sync",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.1.1",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_knowledge_sync",
     "local_path": "odoo-addons/bitshop_ent/deltatech_ai_knowledge_sync",
     "last_ingest": "2026-10-22",
@@ -1657,7 +1657,7 @@
   {
     "path": "deltatech_bank_salary_confidential/index.md",
     "module": "deltatech_bank_salary_confidential",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "[https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_bank_salary_confidential](https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_bank_salary_confidential)",
     "local_path": "odoo-addons/bitshop_ent/deltatech_bank_salary_confidential",
     "last_ingest": "2026-08-20",
@@ -3257,7 +3257,7 @@
   {
     "path": "deltatech_delivery_gls/index.md",
     "module": "deltatech_delivery_gls",
-    "version": "19.0.2.1.5",
+    "version": "19.0.2.1.6",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_gls",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_gls",
     "last_ingest": "2026-09-29",
@@ -4530,7 +4530,7 @@
   {
     "path": "deltatech_feed/index.md",
     "module": "deltatech_feed",
-    "version": "19.0.3.8.0",
+    "version": "19.0.3.8.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_feed",
     "local_path": "odoo-addons/bitshop/deltatech_feed",
     "last_ingest": "2026-10-22",
@@ -7464,7 +7464,7 @@
   {
     "path": "deltatech_payment_advice/index.md",
     "module": "deltatech_payment_advice",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_payment_advice",
     "local_path": "odoo-addons/bitshop_ent/deltatech_payment_advice",
     "last_ingest": "2026-07-31",
@@ -7698,7 +7698,7 @@
   {
     "path": "deltatech_payment_mobilpay/index.md",
     "module": "deltatech_payment_mobilpay",
-    "version": "19.0.1.3.9",
+    "version": "19.0.1.3.11",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_mobilpay",
     "local_path": "odoo-addons/bitshop/deltatech_payment_mobilpay",
     "last_ingest": "2026-10-09",
@@ -8076,7 +8076,7 @@
   {
     "path": "deltatech_pos/index.md",
     "module": "deltatech_pos",
-    "version": "19.0.2.13.2",
+    "version": "19.0.2.14.0",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos",
     "local_path": "odoo-addons/bitshop/deltatech_pos",
     "last_ingest": "2026-10-09",
@@ -8794,17 +8794,26 @@
     "version": "19.0.1.0.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_dimension",
     "local_path": "odoo-addons/deltatech/deltatech_product_dimension",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Products Dimension",
-    "summary": "Acest modul extinde fișa produsului din Odoo cu informații despre dimensiunile fizice ale produsului. Adaugă câmpuri suplimentare pentru lungime, lățime și înălțime, oferind o evidență mai completă a caracteristicilor fizice ale articolelor. Este util în special pentru companiile care au nevoie de aceste date pentru calcule de ambalare, depozitare sau logistică.",
+    "last_ingest": "2026-11-06",
+    "friendly_name": "Product Dimensions",
+    "summary": "Acest modul extinde fișa produsului din Odoo cu dimensiunile fizice ale produsului: lungime, lățime și înălțime, exprimate în centimetri. Din aceste dimensiuni se calculează automat volumul produsului, în unitatea de volum aleasă în setări. Este util companiilor care au nevoie de aceste date pentru ambalare, depozitare sau transport.",
     "features": [
-      "Câmpuri suplimentare pe produs pentru dimensiunile fizice: lungime (length), lățime (width) și înălțime (height)."
+      "Câmpuri suplimentare pe produs: lungime (length), lățime (width) și înălțime (height), în cm, cu valoarea implicită 1 × 1 × 1.",
+      "Rândul Dimensiune apare în fila Inventar a produsului, în grupul Logistică, deasupra rândului Volum.",
+      "La modificarea oricărei dimensiuni, Volum se recalculează (lungime × lățime × înălțime / 1.000.000, în m³) și se convertește în unitatea de volum din Setări → Configurări generale → Unități de măsură (m³ sau ft³). Dacă o dimensiune este 0, volumul devine 0.",
+      "Volumul poate fi corectat manual; la următoarea modificare a dimensiunilor se recalculează din nou. La importuri volumul nu se calculează din dimensiuni.",
+      "Dimensiunile sunt ale produsului (șablonului), nu ale variantei: toate variantele aceluiași produs au aceleași dimensiuni.",
+      "Fila Inventar și grupul Logistică apar doar la produsele de tip Bunuri.",
+      "Modulul nu are efect fiscal sau contabil; dimensiunile pot fi folosite de alte module (transport, feed-uri pentru marketplace-uri)."
     ],
     "dependencies": [
       "product"
     ],
-    "connections": [],
-    "text": "Products Dimension\ndeltatech_product_dimension\nAcest modul extinde fișa produsului din Odoo cu informații despre dimensiunile fizice ale produsului. Adaugă câmpuri suplimentare pentru lungime, lățime și înălțime, oferind o evidență mai completă a caracteristicilor fizice ale articolelor. Este util în special pentru companiile care au nevoie de aceste date pentru calcule de ambalare, depozitare sau logistică.\nCâmpuri suplimentare pe produs pentru dimensiunile fizice: lungime (length), lățime (width) și înălțime (height)."
+    "connections": [
+      "stock",
+      "delivery"
+    ],
+    "text": "Product Dimensions\ndeltatech_product_dimension\nAcest modul extinde fișa produsului din Odoo cu dimensiunile fizice ale produsului: lungime, lățime și înălțime, exprimate în centimetri. Din aceste dimensiuni se calculează automat volumul produsului, în unitatea de volum aleasă în setări. Este util companiilor care au nevoie de aceste date pentru ambalare, depozitare sau transport.\nCâmpuri suplimentare pe produs: lungime (length), lățime (width) și înălțime (height), în cm, cu valoarea implicită 1 × 1 × 1.\nRândul Dimensiune apare în fila Inventar a produsului, în grupul Logistică, deasupra rândului Volum.\nLa modificarea oricărei dimensiuni, Volum se recalculează (lungime × lățime × înălțime / 1.000.000, în m³) și se convertește în unitatea de volum din Setări → Configurări generale → Unități de măsură (m³ sau ft³). Dacă o dimensiune este 0, volumul devine 0.\nVolumul poate fi corectat manual; la următoarea modificare a dimensiunilor se recalculează din nou. La importuri volumul nu se calculează din dimensiuni.\nDimensiunile sunt ale produsului (șablonului), nu ale variantei: toate variantele aceluiași produs au aceleași dimensiuni.\nFila Inventar și grupul Logistică apar doar la produsele de tip Bunuri.\nModulul nu are efect fiscal sau contabil; dimensiunile pot fi folosite de alte module (transport, feed-uri pentru marketplace-uri)."
   },
   {
     "path": "deltatech_product_extension/index.md",
@@ -8872,14 +8881,18 @@
     "version": "19.0.1.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_list",
     "local_path": "odoo-addons/deltatech/deltatech_product_list",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Listă de Produse",
+    "last_ingest": "2026-11-06",
+    "friendly_name": "Product Lists",
     "summary": "Modulul permite definirea de liste de produse — colecții denumite de produse selectate printr-un filtru (domeniu) configurabil. În loc să întrețină manual o listă fixă de produse, utilizatorul descrie odată criteriile (de exemplu „produsele vandabile\" sau o anumită categorie), iar lista returnează automat produsele care le îndeplinesc, până la o limită stabilită. Modulul oferă structura de bază pe care alte module o folosesc pentru a expune grupuri de produse, fără să introducă el însuși o funcționalitate vizibilă suplimentară.",
     "features": [
       "Definirea de liste de produse, fiecare cu un nume propriu.",
       "Selectarea produselor pe baza unui filtru (domeniu) configurabil, în loc de selecție manuală.",
       "Stabilirea unei limite a numărului de produse returnate de listă.",
-      "Listele pot fi arhivate (dezactivate) fără a fi șterse."
+      "Listele pot fi arhivate (dezactivate) fără a fi șterse.",
+      "Lista nu memorează produse, ci regula: la fiecare folosire conține produsele care îndeplinesc filtrul în acel moment. Filtrul se aplică pe variantele de produs (`product.product`), iar limita (implicit 80) este aplicată de modulul care folosește lista.",
+      "Meniul se află în Vânzări → Produse → Listă produse; listele sunt pe companie.",
+      "Drepturi: orice utilizator intern citește listele; agenții de vânzări (Vânzări: Utilizator: Numai documente proprii sau mai mult) le pot crea, modifica și șterge.",
+      "Fără efect fiscal sau contabil; este o fundație pentru alte module."
     ],
     "dependencies": [
       "product",
@@ -8888,7 +8901,7 @@
     "connections": [
       "deltatech_feed"
     ],
-    "text": "Listă de Produse\ndeltatech_product_list\nModulul permite definirea de liste de produse — colecții denumite de produse selectate printr-un filtru (domeniu) configurabil. În loc să întrețină manual o listă fixă de produse, utilizatorul descrie odată criteriile (de exemplu „produsele vandabile\" sau o anumită categorie), iar lista returnează automat produsele care le îndeplinesc, până la o limită stabilită. Modulul oferă structura de bază pe care alte module o folosesc pentru a expune grupuri de produse, fără să introducă el însuși o funcționalitate vizibilă suplimentară.\nDefinirea de liste de produse, fiecare cu un nume propriu.\nSelectarea produselor pe baza unui filtru (domeniu) configurabil, în loc de selecție manuală.\nStabilirea unei limite a numărului de produse returnate de listă.\nListele pot fi arhivate (dezactivate) fără a fi șterse."
+    "text": "Product Lists\ndeltatech_product_list\nModulul permite definirea de liste de produse — colecții denumite de produse selectate printr-un filtru (domeniu) configurabil. În loc să întrețină manual o listă fixă de produse, utilizatorul descrie odată criteriile (de exemplu „produsele vandabile\" sau o anumită categorie), iar lista returnează automat produsele care le îndeplinesc, până la o limită stabilită. Modulul oferă structura de bază pe care alte module o folosesc pentru a expune grupuri de produse, fără să introducă el însuși o funcționalitate vizibilă suplimentară.\nDefinirea de liste de produse, fiecare cu un nume propriu.\nSelectarea produselor pe baza unui filtru (domeniu) configurabil, în loc de selecție manuală.\nStabilirea unei limite a numărului de produse returnate de listă.\nListele pot fi arhivate (dezactivate) fără a fi șterse.\nLista nu memorează produse, ci regula: la fiecare folosire conține produsele care îndeplinesc filtrul în acel moment. Filtrul se aplică pe variantele de produs (`product.product`), iar limita (implicit 80) este aplicată de modulul care folosește lista.\nMeniul se află în Vânzări → Produse → Listă produse; listele sunt pe companie.\nDrepturi: orice utilizator intern citește listele; agenții de vânzări (Vânzări: Utilizator: Numai documente proprii sau mai mult) le pot crea, modifica și șterge.\nFără efect fiscal sau contabil; este o fundație pentru alte module."
   },
   {
     "path": "deltatech_product_mpn/index.md",
@@ -9439,7 +9452,7 @@
   {
     "path": "deltatech_purchase_target/index.md",
     "module": "deltatech_purchase_target",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_target",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_target",
     "last_ingest": "2026-10-30",
@@ -10535,47 +10548,49 @@
     "path": "deltatech_sale_cost_product/index.md",
     "module": "deltatech_sale_cost_product",
     "version": "19.0.0.0.5",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_cost_product`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_cost_product",
     "local_path": "odoo-addons/deltatech/deltatech_sale_cost_product",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Deltatech Sale Cost on Order",
-    "summary": "Acest modul oferă instrumente specializate pentru monitorizarea și analiza costurilor și a marjelor comenzilor de vânzare în Odoo. Este destinat managerilor de vânzări și controllerilor care au nevoie de o vizibilitate sporită asupra profitabilității tranzacțiilor, atât la nivel de comandă, cât și la nivel de linie de comandă. Modulul aduce costul de achiziție direct în comanda de vânzare, facilitând identificarea rapidă a comenzilor cu marjă redusă sau a produselor vândute sub cost.",
+    "last_ingest": "2026-11-06",
+    "friendly_name": "Sale Cost on Order",
+    "summary": "Acest modul oferă managerilor de vânzări și controllerilor vizibilitate asupra costului mărfurilor din comenzile de vânzare. Costul comenzii se calculează în momentul confirmării, din prețul de cost al produselor, se păstrează pe comandă și apare ca o coloană în listele de comenzi și cotații, cu total pe grup. Costul este vizibil doar utilizatorilor din grupul dedicat, ceilalți vânzători neputându-l citi.",
     "features": [
-      "Vizibilitate detaliată a costurilor: adaugă un câmp dedicat Cost de achiziție direct pe liniile comenzii de vânzare și completează automat costul pe baza prețului de cost curent al produsului în momentul creării comenzii.",
-      "Analiză de marjă și ierarhie: se integrează cu modulul standard de marjă din Odoo pentru o imagine mai clară a ierarhiei profitului între echipele de vânzări, ajutând la depistarea rapidă a comenzilor sau produselor cu marjă mică.",
-      "Raportare și acțiuni server fără cod: include acțiuni server preconfigurate pentru recalcularea sau actualizarea în masă a costurilor pe mai multe comenzi de vânzare.",
-      "Model de securitate rafinat: controlează ce utilizatori pot vizualiza sau modifica datele sensibile privind costul și marja, prin grupul de acces dedicat."
+      "Costul mărfurilor pe comandă: la trecerea comenzii în starea „Comandă de vânzare” se calculează suma (cost produs × cantitate) pentru fiecare linie, cu costul convertit în unitatea de măsură a liniei și în moneda comenzii, citit în compania comenzii. Cotațiile neconfirmate au costul 0.",
+      "Coloană în liste: coloana opțională Costul mărfurilor (afișată implicit, îngroșată) în listele de Vânzări → Comenzi → Comenzi și Cotații, cu total la subsol (Total Cost of Goods).",
+      "Securitate: câmpul este restricționat grupului Poate vedea costul mărfurilor (`Can See Cost Of Goods`); utilizatorii din afara grupului nu îl pot citi nici prin export sau RPC.",
+      "Duplicare fără eroare de acces: costul nu se copiază la duplicarea comenzii, deci și un vânzător fără grupul de cost poate duplica o comandă.",
+      "Recalculare în masă: acțiunea de server Calculează costul mărfurilor (doar administratori) recalculează costul tuturor comenzilor confirmate, cu prețurile de cost de la momentul rulării; utilă la instalare sau după schimbarea prețurilor de cost. Costul nu se actualizează singur după confirmare.",
+      "Este un cost de management (câmpul Cost al produsului), nu o evaluare contabilă a stocului; modulul nu generează note contabile."
     ],
     "dependencies": [
       "sale",
       "product"
     ],
-    "connections": [
-      "deltatech_sale_margin"
-    ],
-    "text": "Deltatech Sale Cost on Order\ndeltatech_sale_cost_product\nAcest modul oferă instrumente specializate pentru monitorizarea și analiza costurilor și a marjelor comenzilor de vânzare în Odoo. Este destinat managerilor de vânzări și controllerilor care au nevoie de o vizibilitate sporită asupra profitabilității tranzacțiilor, atât la nivel de comandă, cât și la nivel de linie de comandă. Modulul aduce costul de achiziție direct în comanda de vânzare, facilitând identificarea rapidă a comenzilor cu marjă redusă sau a produselor vândute sub cost.\nVizibilitate detaliată a costurilor: adaugă un câmp dedicat Cost de achiziție direct pe liniile comenzii de vânzare și completează automat costul pe baza prețului de cost curent al produsului în momentul creării comenzii.\nAnaliză de marjă și ierarhie: se integrează cu modulul standard de marjă din Odoo pentru o imagine mai clară a ierarhiei profitului între echipele de vânzări, ajutând la depistarea rapidă a comenzilor sau produselor cu marjă mică.\nRaportare și acțiuni server fără cod: include acțiuni server preconfigurate pentru recalcularea sau actualizarea în masă a costurilor pe mai multe comenzi de vânzare.\nModel de securitate rafinat: controlează ce utilizatori pot vizualiza sau modifica datele sensibile privind costul și marja, prin grupul de acces dedicat."
+    "connections": [],
+    "text": "Sale Cost on Order\ndeltatech_sale_cost_product\nAcest modul oferă managerilor de vânzări și controllerilor vizibilitate asupra costului mărfurilor din comenzile de vânzare. Costul comenzii se calculează în momentul confirmării, din prețul de cost al produselor, se păstrează pe comandă și apare ca o coloană în listele de comenzi și cotații, cu total pe grup. Costul este vizibil doar utilizatorilor din grupul dedicat, ceilalți vânzători neputându-l citi.\nCostul mărfurilor pe comandă: la trecerea comenzii în starea „Comandă de vânzare” se calculează suma (cost produs × cantitate) pentru fiecare linie, cu costul convertit în unitatea de măsură a liniei și în moneda comenzii, citit în compania comenzii. Cotațiile neconfirmate au costul 0.\nColoană în liste: coloana opțională Costul mărfurilor (afișată implicit, îngroșată) în listele de Vânzări → Comenzi → Comenzi și Cotații, cu total la subsol (Total Cost of Goods).\nSecuritate: câmpul este restricționat grupului Poate vedea costul mărfurilor (`Can See Cost Of Goods`); utilizatorii din afara grupului nu îl pot citi nici prin export sau RPC.\nDuplicare fără eroare de acces: costul nu se copiază la duplicarea comenzii, deci și un vânzător fără grupul de cost poate duplica o comandă.\nRecalculare în masă: acțiunea de server Calculează costul mărfurilor (doar administratori) recalculează costul tuturor comenzilor confirmate, cu prețurile de cost de la momentul rulării; utilă la instalare sau după schimbarea prețurilor de cost. Costul nu se actualizează singur după confirmare.\nEste un cost de management (câmpul Cost al produsului), nu o evaluare contabilă a stocului; modulul nu generează note contabile."
   },
   {
     "path": "deltatech_sale_currency/index.md",
     "module": "deltatech_sale_currency",
     "version": "19.0.0.0.4",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_currency`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_currency",
     "local_path": "odoo-addons/deltatech/deltatech_sale_currency",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Deltatech Sale Currency",
-    "summary": "Acest modul oferă o gestionare specializată a conversiei valutare între comenzile de vânzare și facturile generate din acestea. Este util în special pentru companiile care își mențin listele de prețuri într-o monedă (de exemplu EUR), dar doresc să emită facturile într-o altă monedă (de exemplu moneda jurnalului de vânzări sau moneda funcțională a companiei, cum ar fi RON). Astfel, prețurile sunt convertite automat la momentul facturării, iar înregistrările financiare reflectă valorile corecte în moneda dorită.",
+    "last_ingest": "2026-11-06",
+    "friendly_name": "Sale Invoice Currency",
+    "summary": "Acest modul permite ca o comandă de vânzare să fie în altă monedă decât factura generată din ea. Este util companiilor care ofertează în valută (de exemplu EUR), dar facturează în lei: factura primește moneda jurnalului de vânzări, iar prețurile se convertesc automat din moneda comenzii în moneda facturii, la cursul valabil la data facturii.",
     "features": [
-      "Moneda facturii bazată pe jurnal: setează automat moneda facturii generate în funcție de moneda jurnalului de vânzări selectat, înlocuind comportamentul implicit Odoo de a folosi moneda comenzii de vânzare.",
-      "Conversie automată a prețurilor: convertește prețurile unitare din moneda comenzii de vânzare în moneda facturii pe parcursul procesului de facturare, folosind cursul de schimb valabil la data conversiei.",
-      "Coerență financiară: asigură că înregistrările din jurnalul contabil reflectă valorile corecte în moneda dorită.",
-      "Integrare între module: se integrează cu modulele de Vânzări și Contabilitate pentru un flux de date consistent."
+      "Moneda facturii bazată pe jurnal: factura creată din comandă primește moneda jurnalului de vânzări al comenzii sau, dacă jurnalul nu are monedă, moneda companiei; comportamentul standard Odoo (moneda comenzii) este înlocuit.",
+      "Conversie automată a prețurilor: la crearea facturii, prețul unitar din moneda listei de prețuri a comenzii se convertește în moneda facturii, la cursul zilei. Liniile fără legătură cu o comandă nu sunt convertite.",
+      "Reconversie la schimbarea datei sau a monedei: la modificarea Datei facturii sau a Monedei, prețul liniilor provenite din comandă se recalculează pornind de la prețul din comandă, la cursul noii date. Dacă unitatea de măsură a liniei de factură diferă de cea din comandă, prețul se convertește întâi în unitatea facturii (ex. 10 per Unitate devine 120 per Duzină), apoi în moneda facturii.",
+      "Avansuri: suma deja facturată prin facturi de avans se reconvertește în moneda comenzii, la cursul de la data facturii de avans, ca la factura finală avansul să se deducă corect.",
+      "Protecție: o linie de factură legată de linii de comandă în monede diferite generează o eroare („You cannot have multiple currencies in the same invoice line.”).",
+      "Configurare: moneda se stabilește din câmpul Monedă al jurnalului de vânzări (Contabilitate → Configurare → Jurnale); cursurile se țin în Contabilitate → Configurare → Monede. Modulul nu adaugă grupuri de securitate."
     ],
     "dependencies": [
       "sale",
       "account"
     ],
     "connections": [],
-    "text": "Deltatech Sale Currency\ndeltatech_sale_currency\nAcest modul oferă o gestionare specializată a conversiei valutare între comenzile de vânzare și facturile generate din acestea. Este util în special pentru companiile care își mențin listele de prețuri într-o monedă (de exemplu EUR), dar doresc să emită facturile într-o altă monedă (de exemplu moneda jurnalului de vânzări sau moneda funcțională a companiei, cum ar fi RON). Astfel, prețurile sunt convertite automat la momentul facturării, iar înregistrările financiare reflectă valorile corecte în moneda dorită.\nMoneda facturii bazată pe jurnal: setează automat moneda facturii generate în funcție de moneda jurnalului de vânzări selectat, înlocuind comportamentul implicit Odoo de a folosi moneda comenzii de vânzare.\nConversie automată a prețurilor: convertește prețurile unitare din moneda comenzii de vânzare în moneda facturii pe parcursul procesului de facturare, folosind cursul de schimb valabil la data conversiei.\nCoerență financiară: asigură că înregistrările din jurnalul contabil reflectă valorile corecte în moneda dorită.\nIntegrare între module: se integrează cu modulele de Vânzări și Contabilitate pentru un flux de date consistent."
+    "text": "Sale Invoice Currency\ndeltatech_sale_currency\nAcest modul permite ca o comandă de vânzare să fie în altă monedă decât factura generată din ea. Este util companiilor care ofertează în valută (de exemplu EUR), dar facturează în lei: factura primește moneda jurnalului de vânzări, iar prețurile se convertesc automat din moneda comenzii în moneda facturii, la cursul valabil la data facturii.\nMoneda facturii bazată pe jurnal: factura creată din comandă primește moneda jurnalului de vânzări al comenzii sau, dacă jurnalul nu are monedă, moneda companiei; comportamentul standard Odoo (moneda comenzii) este înlocuit.\nConversie automată a prețurilor: la crearea facturii, prețul unitar din moneda listei de prețuri a comenzii se convertește în moneda facturii, la cursul zilei. Liniile fără legătură cu o comandă nu sunt convertite.\nReconversie la schimbarea datei sau a monedei: la modificarea Datei facturii sau a Monedei, prețul liniilor provenite din comandă se recalculează pornind de la prețul din comandă, la cursul noii date. Dacă unitatea de măsură a liniei de factură diferă de cea din comandă, prețul se convertește întâi în unitatea facturii (ex. 10 per Unitate devine 120 per Duzină), apoi în moneda facturii.\nAvansuri: suma deja facturată prin facturi de avans se reconvertește în moneda comenzii, la cursul de la data facturii de avans, ca la factura finală avansul să se deducă corect.\nProtecție: o linie de factură legată de linii de comandă în monede diferite generează o eroare („You cannot have multiple currencies in the same invoice line.”).\nConfigurare: moneda se stabilește din câmpul Monedă al jurnalului de vânzări (Contabilitate → Configurare → Jurnale); cursurile se țin în Contabilitate → Configurare → Monede. Modulul nu adaugă grupuri de securitate."
   },
   {
     "path": "deltatech_sale_dashboard/index.md",
@@ -11428,18 +11443,21 @@
     "path": "deltatech_sale_team/index.md",
     "module": "deltatech_sale_team",
     "version": "19.0.1.0.4",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_team`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_team",
     "local_path": "odoo-addons/deltatech/deltatech_sale_team",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Sale Team Access",
-    "summary": "Modulul restricționează accesul utilizatorilor la documentele asociate echipei de vânzări din care fac parte. Un agent de vânzări vede doar ofertele, comenzile și facturile propriei echipe, în timp ce un coordonator de echipă obține un grup dedicat ce îi oferă vizibilitate asupra tuturor documentelor echipei sale. Suplimentar, modulul permite asocierea unui depozit implicit fiecărei echipe, astfel încât comenzile de vânzare preiau automat depozitul echipei selectate.",
+    "last_ingest": "2026-11-06",
+    "friendly_name": "Sale Team Access Control",
+    "summary": "Modulul restricționează accesul utilizatorilor la documentele asociate echipei de vânzări din care fac parte. Un agent de vânzări vede doar propriile documente, în timp ce un șef de echipă obține un grup dedicat (Team Manager) ce îi oferă vizibilitate asupra tuturor documentelor echipei sale. Suplimentar, modulul permite asocierea unui depozit implicit fiecărei echipe, astfel încât comenzile de vânzare preiau automat depozitul echipei selectate.",
     "features": [
-      "Restricționarea accesului la documentele de vânzare (oferte, comenzi, linii de comandă, analize vânzări) în funcție de echipa de vânzări a utilizatorului.",
-      "Restricționarea accesului la facturi (`account.move`) pe baza echipei de vânzări.",
-      "Grup de securitate nou „Team Manager\", care oferă acces la documentele echipei din care face parte utilizatorul.",
-      "Setarea unui depozit implicit (`Default Warehouse`) la nivel de echipă de vânzări.",
+      "Restricționarea accesului la documentele de vânzare (comenzi, linii de comandă, analiza vânzărilor) la echipa de vânzări a utilizatorului, plus documentele fără echipă.",
+      "Restricționarea accesului la facturi (`account.move`): agentul vede doar facturile proprii, șeful de echipă pe cele ale echipei, iar utilizatorii cu Vânzări: Utilizator: Toate documentele le văd pe toate.",
+      "Grup de securitate nou Team Manager, care include drepturile de agent de vânzări; grupul Toate documentele îl include automat. Nu are categorie proprie în formularul utilizatorului (se atribuie din Grupuri, cu modul dezvoltator activ).",
+      "Un șef de echipă vede doar propria echipă în lista echipelor de vânzări.",
+      "Partenerii: agenții de vânzări văd partenerii proprii (cei urmăriți de ei, cu ei ca responsabil sau fără responsabil), iar managerii de vânzări pe cei care nu sunt de tip privat.",
+      "Setarea unui depozit implicit (Default Warehouse) la nivel de echipă de vânzări, în formularul echipei.",
       "Preluarea automată a depozitului echipei pe comanda de vânzare la schimbarea echipei.",
-      "Tip de echipă (`Team Type`: Sales / Website) pentru diferențierea resurselor folosite de echipă."
+      "Tip de echipă (`Team Type`: Sales / Website), vizibil doar în modul dezvoltator, pentru diferențierea resurselor folosite de echipă.",
+      "La atribuire manuală: alocarea membrilor pe echipe și a grupului Team Manager rămân în sarcina administratorului."
     ],
     "dependencies": [
       "sales_team",
@@ -11448,7 +11466,7 @@
       "sale_stock"
     ],
     "connections": [],
-    "text": "Sale Team Access\ndeltatech_sale_team\nModulul restricționează accesul utilizatorilor la documentele asociate echipei de vânzări din care fac parte. Un agent de vânzări vede doar ofertele, comenzile și facturile propriei echipe, în timp ce un coordonator de echipă obține un grup dedicat ce îi oferă vizibilitate asupra tuturor documentelor echipei sale. Suplimentar, modulul permite asocierea unui depozit implicit fiecărei echipe, astfel încât comenzile de vânzare preiau automat depozitul echipei selectate.\nRestricționarea accesului la documentele de vânzare (oferte, comenzi, linii de comandă, analize vânzări) în funcție de echipa de vânzări a utilizatorului.\nRestricționarea accesului la facturi (`account.move`) pe baza echipei de vânzări.\nGrup de securitate nou „Team Manager\", care oferă acces la documentele echipei din care face parte utilizatorul.\nSetarea unui depozit implicit (`Default Warehouse`) la nivel de echipă de vânzări.\nPreluarea automată a depozitului echipei pe comanda de vânzare la schimbarea echipei.\nTip de echipă (`Team Type`: Sales / Website) pentru diferențierea resurselor folosite de echipă."
+    "text": "Sale Team Access Control\ndeltatech_sale_team\nModulul restricționează accesul utilizatorilor la documentele asociate echipei de vânzări din care fac parte. Un agent de vânzări vede doar propriile documente, în timp ce un șef de echipă obține un grup dedicat (Team Manager) ce îi oferă vizibilitate asupra tuturor documentelor echipei sale. Suplimentar, modulul permite asocierea unui depozit implicit fiecărei echipe, astfel încât comenzile de vânzare preiau automat depozitul echipei selectate.\nRestricționarea accesului la documentele de vânzare (comenzi, linii de comandă, analiza vânzărilor) la echipa de vânzări a utilizatorului, plus documentele fără echipă.\nRestricționarea accesului la facturi (`account.move`): agentul vede doar facturile proprii, șeful de echipă pe cele ale echipei, iar utilizatorii cu Vânzări: Utilizator: Toate documentele le văd pe toate.\nGrup de securitate nou Team Manager, care include drepturile de agent de vânzări; grupul Toate documentele îl include automat. Nu are categorie proprie în formularul utilizatorului (se atribuie din Grupuri, cu modul dezvoltator activ).\nUn șef de echipă vede doar propria echipă în lista echipelor de vânzări.\nPartenerii: agenții de vânzări văd partenerii proprii (cei urmăriți de ei, cu ei ca responsabil sau fără responsabil), iar managerii de vânzări pe cei care nu sunt de tip privat.\nSetarea unui depozit implicit (Default Warehouse) la nivel de echipă de vânzări, în formularul echipei.\nPreluarea automată a depozitului echipei pe comanda de vânzare la schimbarea echipei.\nTip de echipă (`Team Type`: Sales / Website), vizibil doar în modul dezvoltator, pentru diferențierea resurselor folosite de echipă.\nLa atribuire manuală: alocarea membrilor pe echipe și a grupului Team Manager rămân în sarcina administratorului."
   },
   {
     "path": "deltatech_sale_transfer/index.md",
@@ -13187,19 +13205,21 @@
     "path": "deltatech_warehouse_arrangement/index.md",
     "module": "deltatech_warehouse_arrangement",
     "version": "19.0.0.1.8",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_warehouse_arrangement`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_warehouse_arrangement",
     "local_path": "odoo-addons/deltatech/deltatech_warehouse_arrangement",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Deltatech Warehouse Arrangement",
-    "summary": "Modulul oferă un sistem propriu de organizare fizică a depozitului, în paralel cu locațiile standard din Odoo. Permite definirea unei ierarhii de amplasamente — magazie, zonă, raft, secțiune și grilă (rack) — și asocierea acestora la produse, loturi/numere de serie și cantitățile din stoc. Astfel, personalul de depozit poate ști rapid unde anume este așezat fizic un produs sau un lot, fără a modifica structura logistică standard a stocului.",
+    "last_ingest": "2026-11-06",
+    "friendly_name": "Warehouse Arrangement",
+    "summary": "Modulul ține evidența așezării fizice a mărfurilor în depozit, în paralel cu locațiile standard din Odoo, pe cinci niveluri: magazie, zonă, raft, secțiune și grilă (rack). Marfa este găsită pe grila potrivită fără a crea câte o locație de stoc Odoo pentru fiecare. Amplasamentul se asociază produselor și loturilor/numerelor de serie, iar personalul de depozit vede rapid unde se află fizic un lot, fără a modifica structura logistică standard a stocului.",
     "features": [
-      "Gestionează amplasamentele de depozit în paralel cu locațiile standard Odoo, printr-o ierarhie pe cinci niveluri: Magazie (Storehouse) → Zonă (Zone) → Raft (Shelf) → Secțiune (Section) → Grilă (Rack).",
-      "Asociază amplasamentul implicit la nivel de produs (pe fișa produsului), care este apoi propagat automat către loturi/numere de serie la crearea acestora.",
-      "Actualizează automat amplasamentul lotului la recepție: când un lot/serie intră în locația-master a produsului, primește amplasamentul definit pe produs.",
-      "Eliberează automat amplasamentul lotului la epuizare: când cantitatea lotului în locația-master ajunge la zero, câmpurile de amplasament sunt golite.",
-      "Wizard de relocare prin scanare cod de bare: se scanează lotul/seria, apoi codul de bare al grilei (rack), iar amplasamentul lotului este reasignat.",
-      "Vizualizează amplasamentul fizic direct în stoc (`stock.quant`), cu posibilitatea de filtrare/grupare după nivelurile ierarhiei.",
-      "Raport tipăribil pentru grile (rack), util pentru etichetare."
+      "Ierarhie pe cinci niveluri — Magazie (Storehouse) → Zonă (Zone) → Raft (Shelf) → Secțiune (Section) → Grilă (Rack), în Inventar → Locații (în Odoo, meniul se numește *Locations*); fiecare nivel arată calea completă. Magazia se leagă de locația principală de stoc Odoo (de exemplu `WH/Stock`).",
+      "Cod de bare și etichete: grila are cod de bare; etichetele tipăribile (Code128 și calea completă) se tipăresc din listă (Print → Rack Labels) sau din formularul grilei.",
+      "Amplasament implicit pe produs, în fila Locations a produsului; fiecare lot/serie își păstrează propriul amplasament, preluat de la produs la creare (valorile date explicit pentru lot nu sunt înlocuite).",
+      "Actualizare la recepție: un lot recepționat în locația principală a magaziei primește din nou amplasamentul produsului.",
+      "Eliberare la epuizare: când cantitatea lotului din locația principală ajunge la zero, amplasamentul lotului se golește (doar pentru ieșiri din locația principală însăși, nu din sublocațiile ei).",
+      "Stoc pe amplasamente: coloane, câmpuri de căutare și grupări după magazie/zonă/raft/secțiune/grilă în lista de stoc (Inventar → Raportare → Locații; vizibilă cu opțiunea de locații de stocare, cu consignația sau în modul dezvoltator; altfel, butonul On Hand al produsului deschide aceeași listă).",
+      "Relocare prin scanare: ecranul Inventar → Operațiuni → Ajustări → Change lot — se scanează lotul, apoi grila nouă. Scanarea unui lot nou golește grila aleasă pentru lotul anterior; un nume de lot ambiguu dă eroare. Conform fișei, în Odoo 19 ecranul se deschide pe pagină întreagă, iar butoanele Apply / Reset nu se afișează, deci scanarea nu modifică lotul: până la remediere, grila se alege direct pe lot (fila Locations, câmpul Rack Location).",
+      "Drepturi: doar grupul Warehouse Locations manager poate crea sau modifica ierarhia; ceilalți utilizatori interni o pot citi.",
+      "Amplasamentul este doar informativ: nu schimbă locațiile de stoc Odoo, cantitățile sau evaluarea stocului."
     ],
     "dependencies": [
       "stock",
@@ -13208,7 +13228,7 @@
     "connections": [
       "deltatech_warehouse_map"
     ],
-    "text": "Deltatech Warehouse Arrangement\ndeltatech_warehouse_arrangement\nModulul oferă un sistem propriu de organizare fizică a depozitului, în paralel cu locațiile standard din Odoo. Permite definirea unei ierarhii de amplasamente — magazie, zonă, raft, secțiune și grilă (rack) — și asocierea acestora la produse, loturi/numere de serie și cantitățile din stoc. Astfel, personalul de depozit poate ști rapid unde anume este așezat fizic un produs sau un lot, fără a modifica structura logistică standard a stocului.\nGestionează amplasamentele de depozit în paralel cu locațiile standard Odoo, printr-o ierarhie pe cinci niveluri: Magazie (Storehouse) → Zonă (Zone) → Raft (Shelf) → Secțiune (Section) → Grilă (Rack).\nAsociază amplasamentul implicit la nivel de produs (pe fișa produsului), care este apoi propagat automat către loturi/numere de serie la crearea acestora.\nActualizează automat amplasamentul lotului la recepție: când un lot/serie intră în locația-master a produsului, primește amplasamentul definit pe produs.\nEliberează automat amplasamentul lotului la epuizare: când cantitatea lotului în locația-master ajunge la zero, câmpurile de amplasament sunt golite.\nWizard de relocare prin scanare cod de bare: se scanează lotul/seria, apoi codul de bare al grilei (rack), iar amplasamentul lotului este reasignat.\nVizualizează amplasamentul fizic direct în stoc (`stock.quant`), cu posibilitatea de filtrare/grupare după nivelurile ierarhiei.\nRaport tipăribil pentru grile (rack), util pentru etichetare."
+    "text": "Warehouse Arrangement\ndeltatech_warehouse_arrangement\nModulul ține evidența așezării fizice a mărfurilor în depozit, în paralel cu locațiile standard din Odoo, pe cinci niveluri: magazie, zonă, raft, secțiune și grilă (rack). Marfa este găsită pe grila potrivită fără a crea câte o locație de stoc Odoo pentru fiecare. Amplasamentul se asociază produselor și loturilor/numerelor de serie, iar personalul de depozit vede rapid unde se află fizic un lot, fără a modifica structura logistică standard a stocului.\nIerarhie pe cinci niveluri — Magazie (Storehouse) → Zonă (Zone) → Raft (Shelf) → Secțiune (Section) → Grilă (Rack), în Inventar → Locații (în Odoo, meniul se numește *Locations*); fiecare nivel arată calea completă. Magazia se leagă de locația principală de stoc Odoo (de exemplu `WH/Stock`).\nCod de bare și etichete: grila are cod de bare; etichetele tipăribile (Code128 și calea completă) se tipăresc din listă (Print → Rack Labels) sau din formularul grilei.\nAmplasament implicit pe produs, în fila Locations a produsului; fiecare lot/serie își păstrează propriul amplasament, preluat de la produs la creare (valorile date explicit pentru lot nu sunt înlocuite).\nActualizare la recepție: un lot recepționat în locația principală a magaziei primește din nou amplasamentul produsului.\nEliberare la epuizare: când cantitatea lotului din locația principală ajunge la zero, amplasamentul lotului se golește (doar pentru ieșiri din locația principală însăși, nu din sublocațiile ei).\nStoc pe amplasamente: coloane, câmpuri de căutare și grupări după magazie/zonă/raft/secțiune/grilă în lista de stoc (Inventar → Raportare → Locații; vizibilă cu opțiunea de locații de stocare, cu consignația sau în modul dezvoltator; altfel, butonul On Hand al produsului deschide aceeași listă).\nRelocare prin scanare: ecranul Inventar → Operațiuni → Ajustări → Change lot — se scanează lotul, apoi grila nouă. Scanarea unui lot nou golește grila aleasă pentru lotul anterior; un nume de lot ambiguu dă eroare. Conform fișei, în Odoo 19 ecranul se deschide pe pagină întreagă, iar butoanele Apply / Reset nu se afișează, deci scanarea nu modifică lotul: până la remediere, grila se alege direct pe lot (fila Locations, câmpul Rack Location).\nDrepturi: doar grupul Warehouse Locations manager poate crea sau modifica ierarhia; ceilalți utilizatori interni o pot citi.\nAmplasamentul este doar informativ: nu schimbă locațiile de stoc Odoo, cantitățile sau evaluarea stocului."
   },
   {
     "path": "deltatech_warehouse_map/index.md",
@@ -13480,16 +13500,18 @@
     "path": "deltatech_website_checkout_confirm/index.md",
     "module": "deltatech_website_checkout_confirm",
     "version": "19.0.1.0.5",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_checkout_confirm`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_checkout_confirm",
     "local_path": "odoo-addons/deltatech/deltatech_website_checkout_confirm",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Confirmare Comandă la Checkout eCommerce",
-    "summary": "Acest modul adaugă un strat suplimentar de confirmare a comenzii în procesul de checkout al magazinului online Odoo. Este destinat companiilor care doresc să se asigure că, înainte de finalizarea comenzii și transmiterea ei spre procesare, clientul are o ultimă ocazie de a-și revizui achiziția. Practic, între pasul de plată și pagina finală de succes se introduce o etapă dedicată de confirmare, ceea ce crește încrederea clientului și reduce riscul comenzilor trimise din greșeală.",
+    "last_ingest": "2026-11-06",
+    "friendly_name": "eCommerce Checkout Confirm Order",
+    "summary": "În magazinul online standard Odoo, o comandă plătită prin transfer bancar sau ramburs rămâne cotație după checkout, fiindcă tranzacția este doar în așteptare, iar confirmarea se face mai târziu, manual sau la încasare. Acest modul confirmă comanda imediat ce clientul ajunge pe pagina de confirmare a comenzii, la finalul checkout-ului, astfel încât livrarea și restul fluxului de vânzare pornesc de îndată. Nu adaugă nicio pagină sau buton suplimentar.",
     "features": [
-      "Pas obligatoriu de confirmare: inserează o etapă dedicată de confirmare între plată și pagina finală de succes a comenzii, afișând un sumar al detaliilor comenzii pentru o ultimă verificare.",
-      "Rafinarea fluxului de comandă: se integrează fără probleme cu fluxul standard de checkout `website_sale`, asigurând că doar comenzile confirmate explicit de client ajung în backend pentru procesare.",
-      "Experiență de utilizare îmbunătățită: oferă clientului un sumar clar și final al comenzii înainte de încheierea tranzacției, crescând încrederea în procesul de cumpărare.",
-      "Redirecționare standard: după apăsarea butonului de confirmare, clientul este redirecționat către pagina obișnuită „Order Success\" din Odoo."
+      "Confirmare automată la finalul checkout-ului: când clientul ajunge pe pagina de confirmare (`/shop/confirmation`), ultima comandă din sesiune este confirmată (starea „Comandă de vânzare”).",
+      "Metode de plată offline incluse: o tranzacție în așteptare (`pending`) la un furnizor fără procesare online (transfer bancar, ramburs) este suficientă pentru confirmare. Furnizorii online cer o tranzacție confirmată sau autorizată.",
+      "Aceleași verificări ca la fluxul standard de plată: comanda se confirmă doar dacă este încă cotație, nu așteaptă o semnătură online, iar tranzacțiile eligibile, legate doar de această comandă, acoperă suma necesară confirmării (suma integrală sau procentul de preplată setat pe cotație).",
+      "Reîncărcarea paginii pe o comandă deja confirmată nu face nimic.",
+      "Limitare: o tranzacție care plătește mai multe comenzi deodată nu este luată în calcul, ca la post-procesarea standard.",
+      "Descrierea din 19.0.1.0.5 corectează o formulare veche (pas suplimentar de confirmare cu buton): modulul lucrează pe ruta standard, fără pagină suplimentară."
     ],
     "dependencies": [
       "website_sale"
@@ -13497,7 +13519,7 @@
     "connections": [
       "website_sale"
     ],
-    "text": "Confirmare Comandă la Checkout eCommerce\ndeltatech_website_checkout_confirm\nAcest modul adaugă un strat suplimentar de confirmare a comenzii în procesul de checkout al magazinului online Odoo. Este destinat companiilor care doresc să se asigure că, înainte de finalizarea comenzii și transmiterea ei spre procesare, clientul are o ultimă ocazie de a-și revizui achiziția. Practic, între pasul de plată și pagina finală de succes se introduce o etapă dedicată de confirmare, ceea ce crește încrederea clientului și reduce riscul comenzilor trimise din greșeală.\nPas obligatoriu de confirmare: inserează o etapă dedicată de confirmare între plată și pagina finală de succes a comenzii, afișând un sumar al detaliilor comenzii pentru o ultimă verificare.\nRafinarea fluxului de comandă: se integrează fără probleme cu fluxul standard de checkout `website_sale`, asigurând că doar comenzile confirmate explicit de client ajung în backend pentru procesare.\nExperiență de utilizare îmbunătățită: oferă clientului un sumar clar și final al comenzii înainte de încheierea tranzacției, crescând încrederea în procesul de cumpărare.\nRedirecționare standard: după apăsarea butonului de confirmare, clientul este redirecționat către pagina obișnuită „Order Success\" din Odoo."
+    "text": "eCommerce Checkout Confirm Order\ndeltatech_website_checkout_confirm\nÎn magazinul online standard Odoo, o comandă plătită prin transfer bancar sau ramburs rămâne cotație după checkout, fiindcă tranzacția este doar în așteptare, iar confirmarea se face mai târziu, manual sau la încasare. Acest modul confirmă comanda imediat ce clientul ajunge pe pagina de confirmare a comenzii, la finalul checkout-ului, astfel încât livrarea și restul fluxului de vânzare pornesc de îndată. Nu adaugă nicio pagină sau buton suplimentar.\nConfirmare automată la finalul checkout-ului: când clientul ajunge pe pagina de confirmare (`/shop/confirmation`), ultima comandă din sesiune este confirmată (starea „Comandă de vânzare”).\nMetode de plată offline incluse: o tranzacție în așteptare (`pending`) la un furnizor fără procesare online (transfer bancar, ramburs) este suficientă pentru confirmare. Furnizorii online cer o tranzacție confirmată sau autorizată.\nAceleași verificări ca la fluxul standard de plată: comanda se confirmă doar dacă este încă cotație, nu așteaptă o semnătură online, iar tranzacțiile eligibile, legate doar de această comandă, acoperă suma necesară confirmării (suma integrală sau procentul de preplată setat pe cotație).\nReîncărcarea paginii pe o comandă deja confirmată nu face nimic.\nLimitare: o tranzacție care plătește mai multe comenzi deodată nu este luată în calcul, ca la post-procesarea standard.\nDescrierea din 19.0.1.0.5 corectează o formulare veche (pas suplimentar de confirmare cu buton): modulul lucrează pe ruta standard, fără pagină suplimentară."
   },
   {
     "path": "deltatech_website_city/index.md",
@@ -13809,15 +13831,18 @@
     "path": "deltatech_website_price_without_tax/index.md",
     "module": "deltatech_website_price_without_tax",
     "version": "19.0.1.0.7",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_price_without_tax`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_price_without_tax",
     "local_path": "odoo-addons/deltatech/deltatech_website_price_without_tax",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "eCommerce Product Price Without Tax",
-    "summary": "Acest modul extinde magazinul online Odoo (eCommerce) pentru a pune la dispoziție prețul produselor fără taxe (fără TVA) în paginile site-ului. Este util în special pentru magazinele orientate către clienți de tip business (B2B), unde prețurile relevante sunt cele fără TVA. Modulul calculează automat prețul fără taxe pentru fiecare variantă afișată și permite expunerea acestuia în interfața magazinului.",
+    "last_ingest": "2026-11-06",
+    "friendly_name": "Price Without Tax on Website",
+    "summary": "Acest modul afișează, pe pagina produsului din magazinul online Odoo, un rând suplimentar cu prețul fără TVA, sub prețul principal. Este util în special pentru site-urile cu clienți atât persoane fizice, cât și firme (B2B), unde prețul fără TVA este cel relevant pentru firme. Prețul net se calculează automat pentru varianta afișată, indiferent de modul în care este configurată taxa pe produs.",
     "features": [
-      "Afișarea prețului produsului fără taxe (fără TVA) în paginile magazinului online.",
-      "Calcul automat al prețului fără taxe pe baza taxelor configurate pe produs, integrat în informațiile de combinație ale variantei.",
-      "Afișarea opțională a prețului unitar de bază fără taxe lângă prețul unitar standard."
+      "Rândul Preț fără TVA: apare imediat după instalare pe pagina produsului, sub prețul principal, în moneda website-ului.",
+      "Calcul după modul de afișare al website-ului (Website → Configurare → Setări → Display Product Prices): cu Tax Excluded, prețul afișat este deja net și rândul îl repetă; cu Tax Included, taxele produsului se scad din prețul afișat, ca și cum ar fi incluse în preț, oricum ar fi configurată taxa (de exemplu 121 lei cu TVA 21% → 100 lei).",
+      "Valoarea se calculează la încărcarea paginii, pentru varianta afișată; la produsele cu variante de prețuri diferite, reîncărcarea paginii variantei confirmă rândul.",
+      "Rândul este o vizualizare opțională (`customize_show`), activă după instalare. În Odoo 19 nu are comutator în panoul editorului de website: se oprește din Setări → Tehnic → Interfață utilizator → Vizualizări (modul dezvoltator), căutând „Product Price without tax” și debifând Activ; dacă website-ul are o copie proprie, se oprește copia acelui website.",
+      "Prețul este doar afișat: comanda, factura și TVA-ul se calculează în continuare de Odoo; fără efect contabil.",
+      "La upgrade din 18.0, scripturile de migrare 19.0.1.0.4 dezactivează temporar vizualizarea generică veche și o reactivează după încărcarea noii structuri; copiile specifice website-urilor rămân neatinse."
     ],
     "dependencies": [
       "website",
@@ -13826,7 +13851,7 @@
     "connections": [
       "website_sale"
     ],
-    "text": "eCommerce Product Price Without Tax\ndeltatech_website_price_without_tax\nAcest modul extinde magazinul online Odoo (eCommerce) pentru a pune la dispoziție prețul produselor fără taxe (fără TVA) în paginile site-ului. Este util în special pentru magazinele orientate către clienți de tip business (B2B), unde prețurile relevante sunt cele fără TVA. Modulul calculează automat prețul fără taxe pentru fiecare variantă afișată și permite expunerea acestuia în interfața magazinului.\nAfișarea prețului produsului fără taxe (fără TVA) în paginile magazinului online.\nCalcul automat al prețului fără taxe pe baza taxelor configurate pe produs, integrat în informațiile de combinație ale variantei.\nAfișarea opțională a prețului unitar de bază fără taxe lângă prețul unitar standard."
+    "text": "Price Without Tax on Website\ndeltatech_website_price_without_tax\nAcest modul afișează, pe pagina produsului din magazinul online Odoo, un rând suplimentar cu prețul fără TVA, sub prețul principal. Este util în special pentru site-urile cu clienți atât persoane fizice, cât și firme (B2B), unde prețul fără TVA este cel relevant pentru firme. Prețul net se calculează automat pentru varianta afișată, indiferent de modul în care este configurată taxa pe produs.\nRândul Preț fără TVA: apare imediat după instalare pe pagina produsului, sub prețul principal, în moneda website-ului.\nCalcul după modul de afișare al website-ului (Website → Configurare → Setări → Display Product Prices): cu Tax Excluded, prețul afișat este deja net și rândul îl repetă; cu Tax Included, taxele produsului se scad din prețul afișat, ca și cum ar fi incluse în preț, oricum ar fi configurată taxa (de exemplu 121 lei cu TVA 21% → 100 lei).\nValoarea se calculează la încărcarea paginii, pentru varianta afișată; la produsele cu variante de prețuri diferite, reîncărcarea paginii variantei confirmă rândul.\nRândul este o vizualizare opțională (`customize_show`), activă după instalare. În Odoo 19 nu are comutator în panoul editorului de website: se oprește din Setări → Tehnic → Interfață utilizator → Vizualizări (modul dezvoltator), căutând „Product Price without tax” și debifând Activ; dacă website-ul are o copie proprie, se oprește copia acelui website.\nPrețul este doar afișat: comanda, factura și TVA-ul se calculează în continuare de Odoo; fără efect contabil.\nLa upgrade din 18.0, scripturile de migrare 19.0.1.0.4 dezactivează temporar vizualizarea generică veche și o reactivează după încărcarea noii structuri; copiile specifice website-urilor rămân neatinse."
   },
   {
     "path": "deltatech_website_product_code/index.md",
@@ -13883,21 +13908,23 @@
     "path": "deltatech_website_product_url_image/index.md",
     "module": "deltatech_website_product_url_image",
     "version": "19.0.1.0.7",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_product_url_image`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_product_url_image",
     "local_path": "odoo-addons/deltatech/deltatech_website_product_url_image",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "eCommerce Product Image URL Link",
-    "summary": "Acest modul simplifică gestionarea imaginilor de produs în magazinul online, permițând încărcarea unei poze direct dintr-un link (URL) extern, fără a fi nevoie să descarci manual fișierul și apoi să-l urci în Odoo. Este util mai ales la importul în masă al cataloagelor de produse, când imaginile sunt deja găzduite pe site-ul unui furnizor sau pe un server propriu, scurtând astfel timpul de pregătire a produselor pentru publicare în eCommerce.",
+    "last_ingest": "2026-11-06",
+    "friendly_name": "Product Image from URL",
+    "summary": "Acest modul simplifică gestionarea imaginilor de produs în magazinul online, permițând încărcarea unei poze direct dintr-o adresă web (URL), fără a descărca manual fișierul și a-l urca apoi în Odoo. Este util mai ales la importul în masă al cataloagelor de produse, când imaginile sunt deja găzduite pe site-ul unui furnizor sau pe un server propriu, scurtând timpul de pregătire a produselor pentru publicare.",
     "features": [
-      "Încărcarea imaginii principale a produsului dintr-un URL extern (introducerea adresei descarcă automat poza).",
-      "Încărcarea imaginilor suplimentare din galeria produsului tot pe baza unui URL.",
-      "Curățarea automată a numelui fișierului (din URL se păstrează doar numele imaginii)."
+      "Imaginea principală: adresa lipită în Image File Name (formularul produsului, fila Sales, grupul Ecommerce Shop) descarcă imaginea și o setează ca imagine a produsului; câmpul păstrează apoi doar numele fișierului. Dacă adresa rămâne în câmp, imaginea nu a putut fi încărcată.",
+      "Imagini suplimentare: adresa lipită în Image Name al unei imagini din Ecommerce Media încarcă acea imagine; se apasă Save în fereastra imaginii, apoi se salvează produsul.",
+      "Import: actualizarea produselor existente prin import (cu coloana ID) și coloana Image File Name cu adrese web încarcă imaginile; produsele create prin import păstrează adresa ca text, fără imagine.",
+      "Descărcare sigură: se accesează doar adrese publice `http`/`https` (protecție SSRF, cu verificarea fiecărei redirecționări, maximum 5), răspunsul trebuie să fie o imagine de cel mult 10 MB, cu timp limitat (15 s), iar descărcarea o pot declanșa doar utilizatorii care au drept de modificare a produselor.",
+      "Verificare: pagina produsului din magazin (Go to Website) afișează imaginea principală și cea suplimentară provenite din adrese."
     ],
     "dependencies": [
       "website_sale"
     ],
     "connections": [],
-    "text": "eCommerce Product Image URL Link\ndeltatech_website_product_url_image\nAcest modul simplifică gestionarea imaginilor de produs în magazinul online, permițând încărcarea unei poze direct dintr-un link (URL) extern, fără a fi nevoie să descarci manual fișierul și apoi să-l urci în Odoo. Este util mai ales la importul în masă al cataloagelor de produse, când imaginile sunt deja găzduite pe site-ul unui furnizor sau pe un server propriu, scurtând astfel timpul de pregătire a produselor pentru publicare în eCommerce.\nÎncărcarea imaginii principale a produsului dintr-un URL extern (introducerea adresei descarcă automat poza).\nÎncărcarea imaginilor suplimentare din galeria produsului tot pe baza unui URL.\nCurățarea automată a numelui fișierului (din URL se păstrează doar numele imaginii)."
+    "text": "Product Image from URL\ndeltatech_website_product_url_image\nAcest modul simplifică gestionarea imaginilor de produs în magazinul online, permițând încărcarea unei poze direct dintr-o adresă web (URL), fără a descărca manual fișierul și a-l urca apoi în Odoo. Este util mai ales la importul în masă al cataloagelor de produse, când imaginile sunt deja găzduite pe site-ul unui furnizor sau pe un server propriu, scurtând timpul de pregătire a produselor pentru publicare.\nImaginea principală: adresa lipită în Image File Name (formularul produsului, fila Sales, grupul Ecommerce Shop) descarcă imaginea și o setează ca imagine a produsului; câmpul păstrează apoi doar numele fișierului. Dacă adresa rămâne în câmp, imaginea nu a putut fi încărcată.\nImagini suplimentare: adresa lipită în Image Name al unei imagini din Ecommerce Media încarcă acea imagine; se apasă Save în fereastra imaginii, apoi se salvează produsul.\nImport: actualizarea produselor existente prin import (cu coloana ID) și coloana Image File Name cu adrese web încarcă imaginile; produsele create prin import păstrează adresa ca text, fără imagine.\nDescărcare sigură: se accesează doar adrese publice `http`/`https` (protecție SSRF, cu verificarea fiecărei redirecționări, maximum 5), răspunsul trebuie să fie o imagine de cel mult 10 MB, cu timp limitat (15 s), iar descărcarea o pot declanșa doar utilizatorii care au drept de modificare a produselor.\nVerificare: pagina produsului din magazin (Go to Website) afișează imaginea principală și cea suplimentară provenite din adrese."
   },
   {
     "path": "deltatech_website_sale_attribute_filter/index.md",
@@ -14256,7 +14283,7 @@
   {
     "path": "deltatech_website_shop_snippets/index.md",
     "module": "deltatech_website_shop_snippets",
-    "version": "19.0.1.1.11",
+    "version": "19.0.1.1.12",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_shop_snippets",
     "local_path": "odoo-addons/bitshop/deltatech_website_shop_snippets",
     "last_ingest": "2026-10-22",
@@ -14494,22 +14521,22 @@
     "path": "deltatech_widget_fontawesome/index.md",
     "module": "deltatech_widget_fontawesome",
     "version": "19.0.1.0.3",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_widget_fontawesome`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_widget_fontawesome",
     "local_path": "odoo-addons/deltatech/deltatech_widget_fontawesome",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-11-06",
     "friendly_name": "FontAwesome Widget",
-    "summary": "Modulul adaugă un widget de tip „fontawesome” care permite afișarea unei pictograme Font Awesome direct într-un câmp dintr-o vizualizare formular. Se folosește atașând atributul `widget=\"fontawesome\"` unui câmp text, astfel încât valoarea câmpului (numele clasei pictogramei) să fie redată ca pictogramă vizuală în interfața utilizatorului. Este un modul tehnic, mic, destinat dezvoltatorilor care vor să prezinte pictograme într-un mod prietenos în interfața backend Odoo.",
+    "summary": "Odoo stochează pictogramele Font Awesome ca simple nume de clase (de exemplu `fa-truck`), iar un formular le arată ca text brut. Acest modul adaugă un widget de câmp care afișează pictograma în sine, în locul numelui clasei. Este un modul tehnic, mic, destinat altor module și personalizărilor de vizualizări: nu adaugă meniuri sau setări.",
     "features": [
-      "Pune la dispoziție widgetul `fontawesome` pentru câmpuri în vizualizările formular.",
-      "Se aplică prin `<field name=\"icon\" widget=\"fontawesome\" />`.",
-      "Redă valoarea câmpului ca pictogramă Font Awesome (prefix `fa`).",
-      "Suportă tipurile de câmp `char`, `text` și `selection`."
+      "Previzualizare pictogramă: un câmp `char`, `text` sau `selection` care conține numele unei clase Font Awesome este redat ca pictogramă (prefix `fa`), cu numele clasei ca tooltip.",
+      "Un singur atribut: se folosește în orice vizualizare formular sau listă prin `<field name=\"icon\" widget=\"fontawesome\"/>`.",
+      "Limitări: widgetul doar afișează pictograma, fără selector sau casetă de introducere, deci valoarea se setează din cod, prin import sau cu alt widget într-o altă vizualizare; câmpul nu trebuie să fie gol, deoarece tooltip-ul se construiește din valoarea stocată, iar o valoare goală generează o eroare JavaScript în vizualizare.",
+      "Descrierea din 19.0.1.0.3 corectează o formulare veche: widgetul este o previzualizare, nu un selector de pictograme."
     ],
     "dependencies": [
       "web"
     ],
     "connections": [],
-    "text": "FontAwesome Widget\ndeltatech_widget_fontawesome\nModulul adaugă un widget de tip „fontawesome” care permite afișarea unei pictograme Font Awesome direct într-un câmp dintr-o vizualizare formular. Se folosește atașând atributul `widget=\"fontawesome\"` unui câmp text, astfel încât valoarea câmpului (numele clasei pictogramei) să fie redată ca pictogramă vizuală în interfața utilizatorului. Este un modul tehnic, mic, destinat dezvoltatorilor care vor să prezinte pictograme într-un mod prietenos în interfața backend Odoo.\nPune la dispoziție widgetul `fontawesome` pentru câmpuri în vizualizările formular.\nSe aplică prin `<field name=\"icon\" widget=\"fontawesome\" />`.\nRedă valoarea câmpului ca pictogramă Font Awesome (prefix `fa`).\nSuportă tipurile de câmp `char`, `text` și `selection`."
+    "text": "FontAwesome Widget\ndeltatech_widget_fontawesome\nOdoo stochează pictogramele Font Awesome ca simple nume de clase (de exemplu `fa-truck`), iar un formular le arată ca text brut. Acest modul adaugă un widget de câmp care afișează pictograma în sine, în locul numelui clasei. Este un modul tehnic, mic, destinat altor module și personalizărilor de vizualizări: nu adaugă meniuri sau setări.\nPrevizualizare pictogramă: un câmp `char`, `text` sau `selection` care conține numele unei clase Font Awesome este redat ca pictogramă (prefix `fa`), cu numele clasei ca tooltip.\nUn singur atribut: se folosește în orice vizualizare formular sau listă prin `<field name=\"icon\" widget=\"fontawesome\"/>`.\nLimitări: widgetul doar afișează pictograma, fără selector sau casetă de introducere, deci valoarea se setează din cod, prin import sau cu alt widget într-o altă vizualizare; câmpul nu trebuie să fie gol, deoarece tooltip-ul se construiește din valoarea stocată, iar o valoare goală generează o eroare JavaScript în vizualizare.\nDescrierea din 19.0.1.0.3 corectează o formulare veche: widgetul este o previzualizare, nu un selector de pictograme."
   },
   {
     "path": "deltatech_widget_hierarchy_m2o/index.md",
@@ -14963,7 +14990,7 @@
   {
     "path": "l10n_ro_account_vat_journal/index.md",
     "module": "l10n_ro_account_vat_journal",
-    "version": "19.0.1.7.0",
+    "version": "19.0.1.7.1",
     "github": "[https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal)",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_account_vat_journal",
     "last_ingest": "2026-10-05",
@@ -15268,7 +15295,7 @@
   {
     "path": "l10n_ro_anaf_d101/index.md",
     "module": "l10n_ro_anaf_d101",
-    "version": "19.0.1.2.2",
+    "version": "19.0.1.2.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d101",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d101",
     "last_ingest": "2026-10-27",
@@ -16108,7 +16135,7 @@
   {
     "path": "l10n_ro_anaf_partner/index.md",
     "module": "l10n_ro_anaf_partner",
-    "version": "19.0.2.5.0",
+    "version": "19.0.2.5.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_partner",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_partner",
     "last_ingest": null,
@@ -16571,7 +16598,7 @@
   {
     "path": "l10n_ro_currency_revaluation/index.md",
     "module": "l10n_ro_currency_revaluation",
-    "version": "19.0.1.3.2",
+    "version": "19.0.1.3.3",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_currency_revaluation`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_currency_revaluation",
     "last_ingest": "2026-10-13",
@@ -16723,7 +16750,7 @@
   {
     "path": "l10n_ro_dividends/index.md",
     "module": "l10n_ro_dividends",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_dividends",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_dividends",
     "last_ingest": null,
@@ -17555,7 +17582,7 @@
   {
     "path": "l10n_ro_expense_currency/index.md",
     "module": "l10n_ro_expense_currency",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_expense_currency",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_expense_currency",
     "last_ingest": "2026-10-28",
@@ -17583,7 +17610,7 @@
   {
     "path": "l10n_ro_financial_notes/index.md",
     "module": "l10n_ro_financial_notes",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_financial_notes",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_financial_notes",
     "last_ingest": "2026-11-03",
@@ -17764,7 +17791,7 @@
   {
     "path": "l10n_ro_force_reconcile/index.md",
     "module": "l10n_ro_force_reconcile",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_force_reconcile",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_force_reconcile",
     "last_ingest": "2026-10-28",
@@ -18592,7 +18619,7 @@
   {
     "path": "l10n_ro_micro_tax/index.md",
     "module": "l10n_ro_micro_tax",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_micro_tax",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_micro_tax",
     "last_ingest": "2026-11-03",
@@ -18755,7 +18782,7 @@
   {
     "path": "l10n_ro_partner_autocomplete/index.md",
     "module": "l10n_ro_partner_autocomplete",
-    "version": "19.0.1.5.0",
+    "version": "19.0.1.5.1",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_partner_autocomplete",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_partner_autocomplete",
     "last_ingest": "2026-10-30",
@@ -19059,7 +19086,7 @@
   {
     "path": "l10n_ro_payment_instruments/index.md",
     "module": "l10n_ro_payment_instruments",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.3.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payment_instruments",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_payment_instruments",
     "last_ingest": null,
@@ -19859,7 +19886,7 @@
   {
     "path": "l10n_ro_profit_tax/index.md",
     "module": "l10n_ro_profit_tax",
-    "version": "19.0.1.2.1",
+    "version": "19.0.1.2.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_profit_tax",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_profit_tax",
     "last_ingest": "2026-11-03",
@@ -19922,7 +19949,7 @@
   {
     "path": "l10n_ro_receivables_enhanced/index.md",
     "module": "l10n_ro_receivables_enhanced",
-    "version": "19.0.1.2.5",
+    "version": "19.0.1.4.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_receivables_enhanced",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_receivables_enhanced",
     "last_ingest": null,
@@ -22215,7 +22242,7 @@
   {
     "path": "terrabit_iap_anaf/index.md",
     "module": "terrabit_iap_anaf",
-    "version": "19.0.1.3.4",
+    "version": "19.0.1.3.5",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_anaf",
     "local_path": "odoo-addons/terrabit/terrabit_iap_anaf",
     "last_ingest": "2026-10-09",
@@ -22557,7 +22584,7 @@
   {
     "path": "terrabit_partner_credit_limit/index.md",
     "module": "terrabit_partner_credit_limit",
-    "version": "19.0.1.4.5",
+    "version": "19.0.1.5.0",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_partner_credit_limit",
     "local_path": "odoo-addons/bitshop/terrabit_partner_credit_limit",
     "last_ingest": "2026-09-29",

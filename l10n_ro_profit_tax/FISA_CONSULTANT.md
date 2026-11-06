@@ -90,7 +90,12 @@ sau, în rest, notele cu 121 și doar conturi de venituri și cheltuieli; nota d
 făcută într-o singură notă cu conturile de bilanț, rămâne în calcul).
 Astfel, închiderea lunară a conturilor de venituri și cheltuieli nu golește calculul. Se completează:
 - **veniturile** și **cheltuielile** din conturile de clasa 7, respectiv 6, cu **din care venituri /
-  cheltuieli financiare** pe prefixele din setări (D101 rd. 4 și 5). Cât calculul e în ciornă, aceste
+  cheltuieli financiare** pe prefixele din setări (D101 rd. 4 și 5). Conturile 28x și 29x (amortizări
+  și ajustări pentru depreciere) nu intră la cheltuieli: sunt conturi de bilanț, deși în planul de
+  conturi RO din Odoo au tipul *Amortizare*. Amortizarea anului se ia din 6811, iar regula se aplică
+  și în registrul de evidență fiscală. Totalurile, inclusiv cele financiare, se păstrează **cu semn**:
+  un total negativ (de exemplu 711/712 pe debit) apare negativ, nu 0, astfel încât **Rezultat
+  contabil** = venituri − cheltuieli este cel din balanță. Cât calculul e în ciornă, aceste
   câmpuri se pot corecta manual, dar un nou **Calculează din contabilitate** le suprascrie; pentru o
   corecție permanentă schimbați prefixele din setări;
 - **ajustările fiscale** configurate per cont (nedeductibile, neimpozabile, deduceri suplimentare);
@@ -254,6 +259,8 @@ neimpozabilelor și pierderilor reportate; TVA colectată pe cadourile de protoc
 - [ ] Exporturile sau rapoartele se descarcă și conțin datele testate.
 - [ ] Cu închidere lunară pe 121, veniturile și cheltuielile din calcul sunt rulajele anului, nu 0.
 - [ ] Nota de preluare a soldurilor (pe 121, într-o singură notă cu conturile de bilanț) intră în venituri și cheltuieli.
+- [ ] Un cont 28x cu sold creditor (de exemplu 2813 din soldurile inițiale) nu micșorează *Total cheltuieli*; amortizarea din 6811 rămâne la cheltuieli.
+- [ ] Cu 712 pe debit peste celelalte venituri, *Total venituri* este negativ (nu 0), iar *Profit / pierdere contabilă* = venituri − cheltuieli.
 - [ ] Cu impozit zero, **Postează** trece calculul în *Postată* fără notă contabilă, cu mesaj în istoric.
 - [ ] Cu impozit declarat în D100 peste cel anual, **De recuperat** = diferența, iar nota e storno în roșu Dr 691 = Cr 4411 (−).
 - [ ] Un analitic adăugat în *Conturi de sponsorizare D101* (de ex. 6582.02) intră la sponsorizare și la creditul fiscal.

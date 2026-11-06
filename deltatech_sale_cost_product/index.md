@@ -1,22 +1,24 @@
-# Deltatech Sale Cost on Order (localizat la `deltatech_sale_cost_product/index.md`)
+# Sale Cost on Order (localizat la `deltatech_sale_cost_product/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_cost_product`
 - **Versiune:** `19.0.0.0.5`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_cost_product`
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_cost_product
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_cost_product`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-06`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul oferă instrumente specializate pentru monitorizarea și analiza costurilor și a marjelor comenzilor de vânzare în Odoo. Este destinat managerilor de vânzări și controllerilor care au nevoie de o vizibilitate sporită asupra profitabilității tranzacțiilor, atât la nivel de comandă, cât și la nivel de linie de comandă. Modulul aduce costul de achiziție direct în comanda de vânzare, facilitând identificarea rapidă a comenzilor cu marjă redusă sau a produselor vândute sub cost.
+Acest modul oferă managerilor de vânzări și controllerilor vizibilitate asupra costului mărfurilor din comenzile de vânzare. Costul comenzii se calculează în momentul confirmării, din prețul de cost al produselor, se păstrează pe comandă și apare ca o coloană în listele de comenzi și cotații, cu total pe grup. Costul este vizibil doar utilizatorilor din grupul dedicat, ceilalți vânzători neputându-l citi.
 
 #### 2. Funcționalități Cheie
 
-- **Vizibilitate detaliată a costurilor**: adaugă un câmp dedicat **Cost de achiziție** direct pe liniile comenzii de vânzare și completează automat costul pe baza prețului de cost curent al produsului în momentul creării comenzii.
-- **Analiză de marjă și ierarhie**: se integrează cu modulul standard de marjă din Odoo pentru o imagine mai clară a ierarhiei profitului între echipele de vânzări, ajutând la depistarea rapidă a comenzilor sau produselor cu marjă mică.
-- **Raportare și acțiuni server fără cod**: include acțiuni server preconfigurate pentru recalcularea sau actualizarea în masă a costurilor pe mai multe comenzi de vânzare.
-- **Model de securitate rafinat**: controlează ce utilizatori pot vizualiza sau modifica datele sensibile privind costul și marja, prin grupul de acces dedicat.
+- **Costul mărfurilor pe comandă**: la trecerea comenzii în starea „Comandă de vânzare” se calculează suma (cost produs × cantitate) pentru fiecare linie, cu costul convertit în unitatea de măsură a liniei și în moneda comenzii, citit în compania comenzii. Cotațiile neconfirmate au costul 0.
+- **Coloană în liste**: coloana opțională **Costul mărfurilor** (afișată implicit, îngroșată) în listele de **Vânzări → Comenzi → Comenzi** și **Cotații**, cu total la subsol (**Total Cost of Goods**).
+- **Securitate**: câmpul este restricționat grupului **Poate vedea costul mărfurilor** (`Can See Cost Of Goods`); utilizatorii din afara grupului nu îl pot citi nici prin export sau RPC.
+- **Duplicare fără eroare de acces**: costul nu se copiază la duplicarea comenzii, deci și un vânzător fără grupul de cost poate duplica o comandă.
+- **Recalculare în masă**: acțiunea de server **Calculează costul mărfurilor** (doar administratori) recalculează costul tuturor comenzilor confirmate, cu prețurile de cost de la momentul rulării; utilă la instalare sau după schimbarea prețurilor de cost. Costul nu se actualizează singur după confirmare.
+- Este un cost de management (câmpul **Cost** al produsului), nu o evaluare contabilă a stocului; modulul nu generează note contabile.
 
 #### 3. Dependențe
 
@@ -27,17 +29,17 @@ Acest modul oferă instrumente specializate pentru monitorizarea și analiza cos
 
 **Modele**
 
-- `sale.order`: model extins pentru a adăuga costul bunurilor (`cost_of_goods`) la nivel de comandă și metoda de calcul al costului pentru comenzile confirmate (`calculate_cost_of_goods_for_confirmed_orders`).
+- `sale.order`: model extins cu câmpul `cost_of_goods` (monetar, `copy=False`, restricționat grupului `group_view_cost_on_sale`); costul se calculează la confirmare (`_update_cost_of_goods`) sau prin `calculate_cost_of_goods_for_confirmed_orders`.
 
 **Vizualizări**
 
-- `view_order_list_inherit`: extinde lista de comenzi de vânzare cu coloana **Total Cost of Goods**, vizibilă doar pentru grupul de acces dedicat.
-- `view_quotation_list_inherit`: extinde lista de oferte (quotations) cu aceeași coloană de cost al bunurilor.
+- `view_order_list_inherit`: extinde lista comenzilor de vânzare cu coloana **Total Cost of Goods**, vizibilă doar pentru grupul dedicat.
+- `view_quotation_list_inherit`: aceeași coloană în lista de cotații.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- `action_calculate_cost_of_goods` (Calculate Cost of Goods): acțiune server legată de modelul `sale.order`, disponibilă utilizatorilor din grupul de sistem, care apelează `calculate_cost_of_goods_for_confirmed_orders()` pentru recalcularea costurilor comenzilor confirmate.
+- `action_calculate_cost_of_goods` (Calculate Cost of Goods): acțiune server pe `sale.order`, rezervată grupului de administrare (`base.group_system`), care apelează `calculate_cost_of_goods_for_confirmed_orders()`.
 
 #### 5. Conexiuni
 
-- [deltatech_sale_margin](../deltatech_sale_margin/index.md): modul complementar pentru analiza marjelor pe comenzile de vânzare.
+- Nu au fost identificate conexiuni funcționale verificate către alte module documentate în wiki.

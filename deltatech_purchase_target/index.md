@@ -1,7 +1,7 @@
 # Purchase Targets by Manufacturer (Ținte de achiziții pe producători)
 
 - **Nume Tehnic:** `deltatech_purchase_target`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_target
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_target`
 - **Ultima Ingestie:** `2026-10-30`

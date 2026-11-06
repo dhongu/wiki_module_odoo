@@ -1,7 +1,7 @@
 # Romania - Partner Autocomplete from ANAF (localizat la `l10n_ro_partner_autocomplete/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_partner_autocomplete`
-- **Versiune:** `19.0.1.5.0`
+- **Versiune:** `19.0.1.5.1`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_partner_autocomplete
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_partner_autocomplete`
 - **Ultima Ingestie:** `2026-10-30`

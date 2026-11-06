@@ -97,8 +97,8 @@ completate automat din calcul:
 
 | Rând D101 | Sursa (câmpul din calcul) |
 |---|---|
-| 1–3 | Exploatare: totalul veniturilor și cheltuielilor minus partea financiară |
-| 4–6 | Financiar: *din care venituri / cheltuieli financiare* (prefixele din setări) |
+| 1–3 | Exploatare: totalul veniturilor și cheltuielilor minus partea financiară; o sumă negativă trece pe rândul pereche |
+| 4–6 | Financiar: *din care venituri / cheltuieli financiare* (prefixele din setări); o sumă negativă trece pe rândul pereche |
 | 7 | Rezultatul brut = rezultatul contabil din balanță |
 | 11 (11.1–11.3) | *Amortizare fiscală* și rândurile „din care” |
 | 15 | *Deduceri suplimentare*; rd. 15.1 (cercetare-dezvoltare) rămâne gol, se completează manual |
@@ -238,6 +238,10 @@ Reguli de mapare:
   reportată), calculul se postează fără notă și D101 se exportă normal; cu impozit de recuperat
   (rd. 53), nota este storno în roșu Dr 691 = Cr 4411 (−). Pe pierdere fiscală, exportul automat nu
   este încă disponibil și declarația se completează manual (art. 42 alin. (1) CF).
+- **Rd. 1, 2, 4 și 5 nu pot fi negative** (XSD-ul ANAF). Când veniturile din exploatare ies negative
+  (de exemplu 711/712 pe debit), rd. 1 = 0, iar suma în valoare absolută se adaugă la rd. 2; la fel
+  pentru cheltuieli negative (se adaugă la rd. 1) și pentru rd. 4 / rd. 5. Rd. 3, 6 și 7 rămân
+  neschimbate.
 - **Nota 691 = 4411 a calculului postat** se adaugă la rd. 2 (cheltuieli) și la rd. 23 (cheltuieli
   cu impozitul pe profit). Astfel rd. 7 este egal cu rezultatul din balanță, iar profitul impozabil
   nu se schimbă (impozitul e cheltuială nedeductibilă).
@@ -287,6 +291,7 @@ unde diferă de cea contabilă (rd. 11, pe calcul); scenariul de pierdere; rd. 1
 - [ ] Într-o bază cu mai multe firme, tipul de export aplicat este cel al firmei înregistrării de calcul.
 - [ ] Deschis în Adobe Reader, formularul are antetul și rândurile 3, 35, 41.1 și 52 egale cu cele din XML.
 - [ ] Cu închidere lunară pe 121, rd. 1 și rd. 2 au rulajele anului, nu 0.
+- [ ] Cu venituri din exploatare negative (de exemplu 712 pe debit), rd. 1 = 0, rd. 2 crește cu suma, iar rd. 3 este același ca înainte (rd. 1 − rd. 2 calculat cu semn).
 - [ ] Rd. 4 și rd. 5 au sumele de pe conturile financiare (766, 665 etc.), iar rd. 7 este egal cu rezultatul din balanță.
 - [ ] Toate sumele sunt întregi, rotunjite 0,50 în sus; rd. 41.1 = rd. 40 × 16%, iar nota anuală 691 = 4411 este rd. 52 − rd. 53.
 - [ ] Rd. 11 = rd. 28 = rulajul 6811, dacă amortizarea fiscală nu a fost modificată pe calcul.

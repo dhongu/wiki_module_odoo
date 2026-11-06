@@ -118,6 +118,11 @@ Accesați **Contabilitate → Contabilitate → Instrumente de Plată → Nou**.
 și **Data operației** ③ = data primirii. În tab-ul **Facturi acoperite** ④ adăugați facturile
 plătite cu acest BO. Apăsați **Înregistrează** ⑤.
 
+Completați **Emitent / Beneficiar** înainte de facturi: dialogul **Adaugă** din **Facturi
+acoperite** arată doar facturile acestui partener (și ale contactelor firmei lui), de client pe
+instrumentele primite și de furnizor pe cele emise, înregistrate și neachitate sau achitate
+parțial, cu coloana **Partener**. Ciornele, facturile achitate și cele ale altor parteneri nu apar.
+
 ![BO primit în ciornă, cu factura acoperită](screenshots/01_bo_primit_ciorna.png)
 
 Instrumentul trece în starea **În portofoliu** și se generează nota de înregistrare
@@ -236,7 +241,8 @@ Dacă linia nu apare în casetă, verificați că factura și nota de andosare f
 ### Pasul 6 — Biletul la ordin emis către un furnizor
 
 Pentru un BO emis, alegeți tipul **Bilet la ordin de plătit (403)**, furnizorul ca beneficiar și
-factura de achiziție în **Facturi acoperite**, apoi **Înregistrează**. Nota este
+factura de achiziție în **Facturi acoperite** (dialogul arată doar facturile de furnizor neachitate
+ale acestui furnizor), apoi **Înregistrează**. Nota este
 `401 Furnizori = 403 Efecte de plătit`, iar factura furnizorului se stinge.
 
 ![Nota BO emis: 401 = 403](screenshots/13_nota_bo_emis.png)
@@ -379,7 +385,8 @@ Scontarea efectelor (5114, 667) nu este acoperită de modul.
 | „Partenerul X are N instrument(e) de plată refuzat(e)." la confirmarea facturii | Blocajul FR-39 e activ și partenerul are un instrument **Refuzat** | Rezolvați instrumentul refuzat sau dezactivați temporar opțiunea |
 | Nota are data de azi în loc de data extrasului | **Data operației** nu a fost completată înaintea pasului | Stornați nota și refaceți pasul cu data corectă |
 | Nu apare nicio alertă de scadență | Acțiunea programată de alertă e inactivă (așa se instalează) | Activați-o (secțiunea 5, pasul 4) |
-| Factura acoperită nu se stinge la înregistrare | Factura nu e postată, e pe alt partener sau alt cont decât 4111 / 401 | Verificați factura și partenerul instrumentului |
+| „Instrumentul … poate acoperi doar facturi de client / facturi de furnizor înregistrate ale partenerului …. Nu sunt permise: …" | Factură a altui partener, de sens opus (de furnizor pe un instrument primit sau invers) sau în ciornă, adăugată prin import sau după schimbarea partenerului sau a tipului instrumentului | Scoateți factura din **Facturi acoperite** sau corectați **Emitent / Beneficiar** și **Tip instrument** |
+| Factura acoperită nu se stinge la înregistrare | Factura e pe alt cont decât 4111 / 401 sau era deja achitată (adusă prin import, unde starea de plată nu se verifică) | Verificați contul și plățile facturii |
 
 ## 10. Capturi de ecran
 
