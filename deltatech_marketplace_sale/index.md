@@ -1,10 +1,10 @@
 # Comenzi de vânzare din Marketplace (localizat la `deltatech_marketplace_sale/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_sale`
-- **Versiune:** `19.0.2.19.2`
+- **Versiune:** `19.0.2.19.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_sale
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_sale`
-- **Ultima Ingestie:** 2026-10-22
+- **Ultima Ingestie:** `2026-11-07`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -40,6 +40,7 @@ Acest modul reprezintă punctul central pentru gestionarea comenzilor de vânzar
 
 #### 3. Dependențe
 
+- `account_payment`
 - [deltatech_marketplace](../deltatech_marketplace/index.md)
 - `sale_stock`
 - `stock_delivery`

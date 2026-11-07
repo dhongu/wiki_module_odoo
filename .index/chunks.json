@@ -4730,7 +4730,7 @@
     "version": "19.0.0.0.2",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_helpdesk_tag_primary",
     "local_path": "odoo-addons/bitshop_ent/deltatech_helpdesk_tag_primary",
-    "last_ingest": "2026-06-09",
+    "last_ingest": "2026-11-07",
     "friendly_name": "Helpdesk Tag Primary & Team Filter",
     "summary": "Modulul aduce o organizare pe două niveluri a etichetelor (tag-urilor) folosite la clasificarea tichetelor din Helpdesk. Pe lângă eticheta standard, fiecare etichetă poate fi marcată ca subordonată unei etichete principale și poate fi asociată unei anumite echipe Helpdesk. Astfel, atunci când se completează un tichet, lista de etichete disponibilă devine mai scurtă și mai relevantă: utilizatorul vede întâi doar etichetele principale potrivite pentru echipa tichetului, iar apoi un câmp suplimentar de etichete secundare, dependente de selecția făcută. Rezultatul este o taxonomie mai curată a tichetelor și o selecție mai rapidă și mai corectă pentru agenții de suport.",
     "features": [
@@ -5732,7 +5732,7 @@
   {
     "path": "deltatech_marketplace_emag/index.md",
     "module": "deltatech_marketplace_emag",
-    "version": "19.0.2.21.2",
+    "version": "19.0.2.21.3",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_emag",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_emag",
     "last_ingest": "2026-10-22",
@@ -6224,10 +6224,10 @@
   {
     "path": "deltatech_marketplace_sale/index.md",
     "module": "deltatech_marketplace_sale",
-    "version": "19.0.2.19.2",
+    "version": "19.0.2.19.3",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_sale",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_sale",
-    "last_ingest": null,
+    "last_ingest": "2026-11-07",
     "friendly_name": "Comenzi de vânzare din Marketplace",
     "summary": "Acest modul reprezintă punctul central pentru gestionarea comenzilor de vânzare provenite din diferiți conectori de marketplace, simplificând procesul de la comandă la încasare (order-to-cash) pentru retailerii care vând pe mai multe canale. Din perspectiva afacerii, elimină introducerea manuală a comenzilor și reduce erorile prin automatizarea importului și procesării vânzărilor din mai multe canale (de exemplu eMAG, Shopify, Magento etc.) direct în Odoo, oferind o imagine unificată asupra vânzărilor și menținând sincronizate statusurile comenzilor și nivelurile de stoc.",
     "features": [
@@ -6257,6 +6257,7 @@
       "Traduceri românești complete pentru toate mesajele modulului (19.0.2.13.2); pictogramă proprie a modulului, în stilul plat al celorlalte (19.0.2.16.1)."
     ],
     "dependencies": [
+      "account_payment",
       "deltatech_marketplace",
       "sale_stock",
       "stock_delivery"
@@ -9319,7 +9320,7 @@
   {
     "path": "deltatech_purchase_price/index.md",
     "module": "deltatech_purchase_price",
-    "version": "19.0.1.2.13",
+    "version": "19.0.1.2.14",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_price",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_price",
     "last_ingest": "2026-08-20",
@@ -15328,14 +15329,17 @@
     "path": "l10n_ro_anaf_d103/index.md",
     "module": "l10n_ro_anaf_d103",
     "version": "19.0.1.0.5",
-    "github": "[https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d103](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d103)",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d103",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d103",
-    "last_ingest": "2026-07-02",
+    "last_ingest": "2026-11-07",
     "friendly_name": "Romania - Declarația D103 ANAF",
     "summary": "Modulul generează exportul XML al Decontului lunar privind accizele (D103) direct din Odoo Enterprise, pentru antrepozitarii fiscali autorizați obligați să raporteze lunar la ANAF accizele datorate (Codul Fiscal Titlul VIII). Se așază peste infrastructura de accize din `l10n_ro_excise_duty` (categorii de produse accizabile, marcarea produselor, cotele și modelul de declarație) și produce fișierul XML D103, gata de depus pe portalul ANAF.",
     "features": [
       "Export XML D103: generare fișier XML pentru decontul lunar, din liniile declarației de accize (categorie, cantitate, U.M., cotă, acciză), cu antet de identificare a companiei (CUI, denumire, lună, an).",
-      "Calcul automat al liniilor: prin acțiunea „Calculează\" a declarației, liniile sunt agregate per categorie de acciză din facturile postate ale perioadei (vânzări, cu storno pe note de credit).",
+      "Calcul automat al liniilor: prin acțiunea „Calculează\" a declarației, liniile sunt agregate per categorie de acciză din facturile client postate ale perioadei (notele de credit intră cu semn negativ); liniile existente se șterg la recalculare. Alternativ, liniile se pot completa manual și apoi confirma, fără „Calculează\".",
+      "Flux pe stări: declarația de tip „D103 — lunar (antrepozit fiscal)\" (cu antrepozit fiscal opțional) trece din Ciornă în Confirmată, apoi în Exportată după „Export XML\"; una exportată nu mai poate fi recalculată, iar pentru aceeași companie, tip și perioadă nu pot exista două declarații. Termenul de depunere este 25 ale lunii următoare, iar depunerea pe portalul ANAF se face separat. Decontul nu generează note contabile.",
+      "Pregătire (în `l10n_ro_excise_duty`): produsele se marchează în tab-ul „Accize (RO)\" cu o categorie de acciză, iar cotele se actualizează la fiecare HG cu wizardul „Actualizare cote (HG)\" (cote manuale sau indexare procentuală; declarațiile deja calculate păstrează cotele istorice). Compania are nevoie de CUI, CAEN și adresă. Pentru categoriile pe alcool pur (A, E) cantitatea se aduce manual la unitatea fiscală, fiindcă modulul nu convertește concentrația.",
+      "Atenție la versiunea formularului: D103 a fost retras de ANAF; ultima versiune publicată e din 2010, fără XSD și fără soft J. Exportul urmează structura istorică și nu poate fi verificat cu DUKIntegrator, deci se confirmă cu ANAF dacă declarația mai e solicitată.",
       "Izolare față de D120: exportul D103 folosește propriul template XML; decontul anual D120 este tratat de modulul-soră [l10n_ro_anaf_d120](../l10n_ro_anaf_d120/index.md), peste aceeași infrastructură [l10n_ro_excise_duty](../l10n_ro_excise_duty/index.md)."
     ],
     "dependencies": [
@@ -15348,7 +15352,7 @@
       "export_to_xml",
       "l10n_ro_anaf_base"
     ],
-    "text": "Romania - Declarația D103 ANAF\nl10n_ro_anaf_d103\nModulul generează exportul XML al Decontului lunar privind accizele (D103) direct din Odoo Enterprise, pentru antrepozitarii fiscali autorizați obligați să raporteze lunar la ANAF accizele datorate (Codul Fiscal Titlul VIII). Se așază peste infrastructura de accize din `l10n_ro_excise_duty` (categorii de produse accizabile, marcarea produselor, cotele și modelul de declarație) și produce fișierul XML D103, gata de depus pe portalul ANAF.\nExport XML D103: generare fișier XML pentru decontul lunar, din liniile declarației de accize (categorie, cantitate, U.M., cotă, acciză), cu antet de identificare a companiei (CUI, denumire, lună, an).\nCalcul automat al liniilor: prin acțiunea „Calculează\" a declarației, liniile sunt agregate per categorie de acciză din facturile postate ale perioadei (vânzări, cu storno pe note de credit).\nIzolare față de D120: exportul D103 folosește propriul template XML; decontul anual D120 este tratat de modulul-soră [l10n_ro_anaf_d120](../l10n_ro_anaf_d120/index.md), peste aceeași infrastructură [l10n_ro_excise_duty](../l10n_ro_excise_duty/index.md)."
+    "text": "Romania - Declarația D103 ANAF\nl10n_ro_anaf_d103\nModulul generează exportul XML al Decontului lunar privind accizele (D103) direct din Odoo Enterprise, pentru antrepozitarii fiscali autorizați obligați să raporteze lunar la ANAF accizele datorate (Codul Fiscal Titlul VIII). Se așază peste infrastructura de accize din `l10n_ro_excise_duty` (categorii de produse accizabile, marcarea produselor, cotele și modelul de declarație) și produce fișierul XML D103, gata de depus pe portalul ANAF.\nExport XML D103: generare fișier XML pentru decontul lunar, din liniile declarației de accize (categorie, cantitate, U.M., cotă, acciză), cu antet de identificare a companiei (CUI, denumire, lună, an).\nCalcul automat al liniilor: prin acțiunea „Calculează\" a declarației, liniile sunt agregate per categorie de acciză din facturile client postate ale perioadei (notele de credit intră cu semn negativ); liniile existente se șterg la recalculare. Alternativ, liniile se pot completa manual și apoi confirma, fără „Calculează\".\nFlux pe stări: declarația de tip „D103 — lunar (antrepozit fiscal)\" (cu antrepozit fiscal opțional) trece din Ciornă în Confirmată, apoi în Exportată după „Export XML\"; una exportată nu mai poate fi recalculată, iar pentru aceeași companie, tip și perioadă nu pot exista două declarații. Termenul de depunere este 25 ale lunii următoare, iar depunerea pe portalul ANAF se face separat. Decontul nu generează note contabile.\nPregătire (în `l10n_ro_excise_duty`): produsele se marchează în tab-ul „Accize (RO)\" cu o categorie de acciză, iar cotele se actualizează la fiecare HG cu wizardul „Actualizare cote (HG)\" (cote manuale sau indexare procentuală; declarațiile deja calculate păstrează cotele istorice). Compania are nevoie de CUI, CAEN și adresă. Pentru categoriile pe alcool pur (A, E) cantitatea se aduce manual la unitatea fiscală, fiindcă modulul nu convertește concentrația.\nAtenție la versiunea formularului: D103 a fost retras de ANAF; ultima versiune publicată e din 2010, fără XSD și fără soft J. Exportul urmează structura istorică și nu poate fi verificat cu DUKIntegrator, deci se confirmă cu ANAF dacă declarația mai e solicitată.\nIzolare față de D120: exportul D103 folosește propriul template XML; decontul anual D120 este tratat de modulul-soră [l10n_ro_anaf_d120](../l10n_ro_anaf_d120/index.md), peste aceeași infrastructură [l10n_ro_excise_duty](../l10n_ro_excise_duty/index.md)."
   },
   {
     "path": "l10n_ro_anaf_d107/index.md",
@@ -16077,9 +16081,9 @@
     "path": "l10n_ro_anaf_fiscal_status/index.md",
     "module": "l10n_ro_anaf_fiscal_status",
     "version": "19.0.1.0.3",
-    "github": "[https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_fiscal_status](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_fiscal_status)",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_fiscal_status",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_fiscal_status",
-    "last_ingest": "2026-07-02",
+    "last_ingest": "2026-11-07",
     "friendly_name": "Romania - Vector fiscal și Fișa pe rol (SPV ANAF)",
     "summary": "Modulul descarcă automat, din Spațiul Privat Virtual (SPV) al ANAF, pentru fiecare companie și punct de lucru, două evidențe esențiale: vectorul fiscal (ce obligații declarative are contribuabilul și cu ce periodicitate) și fișa pe rol (ce sume are de plătit, restanțe și accesorii). Datele sunt păstrate cu istoric, oferind echipei financiare o imagine clară și la zi asupra situației fiscale a companiei, fără a mai fi nevoie de verificări manuale în portalul ANAF.",
     "features": [
@@ -16089,7 +16093,10 @@
       "Păstrarea documentului-sursă ANAF (PDF/registru) atașat la fiecare snapshot, pentru audit.",
       "Transport prin infrastructura existentă Terrabit Connect (mTLS la SPVWS2, fără OAuth2 Bearer) și coada de joburi din `l10n_ro_anaf_agent` (tip job `fiscal_status`) — modulul nu reinventează transportul, adaugă doar tipul de cerere și cele două modele de evidență.",
       "Cron zilnic de descărcare (dezactivat implicit) și cron zilnic de remindere pentru termenele de depunere apropiate (activitate `mail.activity`), pe baza mapării categorie fiscală → declarație Odoo (D300, D112, D101, D100, D103, D390).",
-      "Alimentează calendarul real de declarații (FR-60) și auditul de corelare a declarațiilor (FR-65)."
+      "Alimentează calendarul real de declarații (FR-60) și auditul de corelare a declarațiilor (FR-65).",
+      "Stare Beta, modul informativ: transportul către SPV e funcțional, dar formatul exact al răspunsului ANAF se validează pe un cont SPV real; modulul nu generează note contabile.",
+      "Declanșare și meniuri: descărcarea se pornește din Contabilitate → Raportare → Declarații ANAF → ANAF Agents, cu butonul „Descarcă vector + fișă rol\" (creează un job *Fiscal Status* în coadă), sau zilnic prin acțiunea planificată „ANAF SPV: download fiscal status (vector + ledger)\", livrată dezactivată. Rezultatele se citesc în Vector fiscal (implicit doar obligațiile în vigoare, cu categorie fiscală, declarație mapată, periodicitate și valabilitate) și Fișa pe rol (grupată pe data snapshot; total datorat = sumă de plată + restanță + accesorii, restanțele în roșu). O nouă descărcare în aceeași zi nu duplică liniile.",
+      "Configurare: URL-ul și tokenul Terrabit Connect se setează în Setări → Contabilitate (blocul mesajelor SPV ANAF; serviciul SPVWS2 cere certificat pe token fizic, nu OAuth2), iar agentul ANAF primește cheia API automat. Contabilii citesc evidențele; managerii de contabilitate declanșează descărcarea și pot corecta maparea categorie → declarație."
     ],
     "dependencies": [
       "l10n_ro_anaf_base",
@@ -16101,7 +16108,7 @@
       "l10n_ro_anaf_agent",
       "l10n_ro_anaf_messages"
     ],
-    "text": "Romania - Vector fiscal și Fișa pe rol (SPV ANAF)\nl10n_ro_anaf_fiscal_status\nModulul descarcă automat, din Spațiul Privat Virtual (SPV) al ANAF, pentru fiecare companie și punct de lucru, două evidențe esențiale: vectorul fiscal (ce obligații declarative are contribuabilul și cu ce periodicitate) și fișa pe rol (ce sume are de plătit, restanțe și accesorii). Datele sunt păstrate cu istoric, oferind echipei financiare o imagine clară și la zi asupra situației fiscale a companiei, fără a mai fi nevoie de verificări manuale în portalul ANAF.\nDescărcare automată din SPV a vectorului fiscal (`l10n.ro.fiscal.vector`) — obligațiile declarative active: TVA lunar/trimestrial, impozit pe profit vs. micro, salarii (D112), accize, dividende, nerezidenți.\nArhivare automată a obligațiilor ieșite din vigoare (prin D700), cu păstrarea istoricului (`active=False`).\nDescărcare automată a fișei pe rol (`l10n.ro.fiscal.ledger`) — sume de plată, restanțe și accesorii pe fiecare cod de creanță bugetară, ca snapshot append-only cu istoric pe ani.\nPăstrarea documentului-sursă ANAF (PDF/registru) atașat la fiecare snapshot, pentru audit.\nTransport prin infrastructura existentă Terrabit Connect (mTLS la SPVWS2, fără OAuth2 Bearer) și coada de joburi din `l10n_ro_anaf_agent` (tip job `fiscal_status`) — modulul nu reinventează transportul, adaugă doar tipul de cerere și cele două modele de evidență.\nCron zilnic de descărcare (dezactivat implicit) și cron zilnic de remindere pentru termenele de depunere apropiate (activitate `mail.activity`), pe baza mapării categorie fiscală → declarație Odoo (D300, D112, D101, D100, D103, D390).\nAlimentează calendarul real de declarații (FR-60) și auditul de corelare a declarațiilor (FR-65)."
+    "text": "Romania - Vector fiscal și Fișa pe rol (SPV ANAF)\nl10n_ro_anaf_fiscal_status\nModulul descarcă automat, din Spațiul Privat Virtual (SPV) al ANAF, pentru fiecare companie și punct de lucru, două evidențe esențiale: vectorul fiscal (ce obligații declarative are contribuabilul și cu ce periodicitate) și fișa pe rol (ce sume are de plătit, restanțe și accesorii). Datele sunt păstrate cu istoric, oferind echipei financiare o imagine clară și la zi asupra situației fiscale a companiei, fără a mai fi nevoie de verificări manuale în portalul ANAF.\nDescărcare automată din SPV a vectorului fiscal (`l10n.ro.fiscal.vector`) — obligațiile declarative active: TVA lunar/trimestrial, impozit pe profit vs. micro, salarii (D112), accize, dividende, nerezidenți.\nArhivare automată a obligațiilor ieșite din vigoare (prin D700), cu păstrarea istoricului (`active=False`).\nDescărcare automată a fișei pe rol (`l10n.ro.fiscal.ledger`) — sume de plată, restanțe și accesorii pe fiecare cod de creanță bugetară, ca snapshot append-only cu istoric pe ani.\nPăstrarea documentului-sursă ANAF (PDF/registru) atașat la fiecare snapshot, pentru audit.\nTransport prin infrastructura existentă Terrabit Connect (mTLS la SPVWS2, fără OAuth2 Bearer) și coada de joburi din `l10n_ro_anaf_agent` (tip job `fiscal_status`) — modulul nu reinventează transportul, adaugă doar tipul de cerere și cele două modele de evidență.\nCron zilnic de descărcare (dezactivat implicit) și cron zilnic de remindere pentru termenele de depunere apropiate (activitate `mail.activity`), pe baza mapării categorie fiscală → declarație Odoo (D300, D112, D101, D100, D103, D390).\nAlimentează calendarul real de declarații (FR-60) și auditul de corelare a declarațiilor (FR-65).\nStare Beta, modul informativ: transportul către SPV e funcțional, dar formatul exact al răspunsului ANAF se validează pe un cont SPV real; modulul nu generează note contabile.\nDeclanșare și meniuri: descărcarea se pornește din Contabilitate → Raportare → Declarații ANAF → ANAF Agents, cu butonul „Descarcă vector + fișă rol\" (creează un job *Fiscal Status* în coadă), sau zilnic prin acțiunea planificată „ANAF SPV: download fiscal status (vector + ledger)\", livrată dezactivată. Rezultatele se citesc în Vector fiscal (implicit doar obligațiile în vigoare, cu categorie fiscală, declarație mapată, periodicitate și valabilitate) și Fișa pe rol (grupată pe data snapshot; total datorat = sumă de plată + restanță + accesorii, restanțele în roșu). O nouă descărcare în aceeași zi nu duplică liniile.\nConfigurare: URL-ul și tokenul Terrabit Connect se setează în Setări → Contabilitate (blocul mesajelor SPV ANAF; serviciul SPVWS2 cere certificat pe token fizic, nu OAuth2), iar agentul ANAF primește cheia API automat. Contabilii citesc evidențele; managerii de contabilitate declanșează descărcarea și pot corecta maparea categorie → declarație."
   },
   {
     "path": "l10n_ro_anaf_messages/index.md",
@@ -17315,7 +17322,7 @@
     "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_esigiliu",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_esigiliu",
-    "last_ingest": "2026-07-02",
+    "last_ingest": "2026-11-07",
     "friendly_name": "Romania - e-Sigiliu (sigilii electronice)",
     "summary": "Modulul gestionează sigiliile electronice e-Sigiliu aplicate de autorități (ANAF/Vamă) pe transporturile rutiere de bunuri monitorizate, conform reglementărilor românești privind supravegherea fiscală a mărfurilor în tranzit.",
     "features": [
@@ -17324,7 +17331,9 @@
       "Ciclu de viață complet: Ciornă → Aplicat → Eliminat, cu înregistrarea automată a datei de aplicare și de eliminare.",
       "Buton statistic e-Sigiliu pe formularul de transfer, cu numărul de sigilii asociate.",
       "Meniu dedicat Inventar → Raportare → e-Sigiliu Seals pentru vizualizarea centralizată a tuturor sigiliilor.",
-      "Acces bazat pe grupurile standard Inventar (utilizator/manager)."
+      "Acces bazat pe grupurile standard Inventar (utilizator/manager); modulul nu necesită configurare și nu generează note contabile.",
+      "Flux operațional: sigiliul se creează din butonul e-Sigiliu al transferului (Inventar → Transferuri), cu Număr sigiliu (codul comunicat de autoritate), Transportator, Număr de înmatriculare, Rută monitorizată, UIT e-Transport și observații; Aplică sigiliul completează „Aplicat la\", iar Elimină sigiliul (la finalul transportului) completează „Eliminat la\". Lista centralizată ajută la găsirea sigiliilor aplicate și încă neeliminate.",
+      "Context legal: e-Sigiliu face parte din infrastructura ANAF de monitorizare a transporturilor rutiere, alături de e-Transport (OG 41/2022); câmpul UIT permite legarea sigiliului de declarația e-Transport."
     ],
     "dependencies": [
       "stock",
@@ -17333,7 +17342,7 @@
     "connections": [
       "uit"
     ],
-    "text": "Romania - e-Sigiliu (sigilii electronice)\nl10n_ro_esigiliu\nModulul gestionează sigiliile electronice e-Sigiliu aplicate de autorități (ANAF/Vamă) pe transporturile rutiere de bunuri monitorizate, conform reglementărilor românești privind supravegherea fiscală a mărfurilor în tranzit.\nÎnregistrarea sigiliului electronic cu număr unic per companie, validat printr-o constrângere SQL.\nAsocierea sigiliului la un transfer de stoc (`stock.picking`): transportator, număr de înmatriculare, rută monitorizată și UIT e-Transport.\nCiclu de viață complet: Ciornă → Aplicat → Eliminat, cu înregistrarea automată a datei de aplicare și de eliminare.\nButon statistic e-Sigiliu pe formularul de transfer, cu numărul de sigilii asociate.\nMeniu dedicat Inventar → Raportare → e-Sigiliu Seals pentru vizualizarea centralizată a tuturor sigiliilor.\nAcces bazat pe grupurile standard Inventar (utilizator/manager)."
+    "text": "Romania - e-Sigiliu (sigilii electronice)\nl10n_ro_esigiliu\nModulul gestionează sigiliile electronice e-Sigiliu aplicate de autorități (ANAF/Vamă) pe transporturile rutiere de bunuri monitorizate, conform reglementărilor românești privind supravegherea fiscală a mărfurilor în tranzit.\nÎnregistrarea sigiliului electronic cu număr unic per companie, validat printr-o constrângere SQL.\nAsocierea sigiliului la un transfer de stoc (`stock.picking`): transportator, număr de înmatriculare, rută monitorizată și UIT e-Transport.\nCiclu de viață complet: Ciornă → Aplicat → Eliminat, cu înregistrarea automată a datei de aplicare și de eliminare.\nButon statistic e-Sigiliu pe formularul de transfer, cu numărul de sigilii asociate.\nMeniu dedicat Inventar → Raportare → e-Sigiliu Seals pentru vizualizarea centralizată a tuturor sigiliilor.\nAcces bazat pe grupurile standard Inventar (utilizator/manager); modulul nu necesită configurare și nu generează note contabile.\nFlux operațional: sigiliul se creează din butonul e-Sigiliu al transferului (Inventar → Transferuri), cu Număr sigiliu (codul comunicat de autoritate), Transportator, Număr de înmatriculare, Rută monitorizată, UIT e-Transport și observații; Aplică sigiliul completează „Aplicat la\", iar Elimină sigiliul (la finalul transportului) completează „Eliminat la\". Lista centralizată ajută la găsirea sigiliilor aplicate și încă neeliminate.\nContext legal: e-Sigiliu face parte din infrastructura ANAF de monitorizare a transporturilor rutiere, alături de e-Transport (OG 41/2022); câmpul UIT permite legarea sigiliului de declarația e-Transport."
   },
   {
     "path": "l10n_ro_etransport_batch_enhancement/index.md",
@@ -17690,7 +17699,7 @@
     "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_fiscal_audit",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_fiscal_audit",
-    "last_ingest": "2026-07-02",
+    "last_ingest": "2026-11-07",
     "friendly_name": "Romania - Audit corelare declarații fiscale",
     "summary": "Modulul oferă un raport de audit preventiv care corelează automat, pentru o perioadă dată, totalurile dintre declarațiile fiscale românești și sursele de date din contabilitate, semnalând neconcordanțele înainte de depunere sau înainte de un control ANAF. Practic, oferă un „semafor\" de consistență fiscală pe mai multe căi de calcul independente (TVA, SAF-T, e-Factura), astfel încât echipa financiară să corecteze eventualele diferențe din timp, fără să aștepte o eroare la depunere sau o notificare de la ANAF.",
     "features": [
@@ -17699,7 +17708,9 @@
       "Detectează facturi furnizor e-Factura recepționate în dublu exemplar (aceeași amprentă: CUI + serie/nr + dată + sumă), refolosind `l10n_ro_efactura_dedup`.",
       "Prezintă neconcordanțele grupate pe arii, cu valoare așteptată, valoare găsită, diferență și drill-down către documentul vizat, pe framework-ul standard `account.report` (export PDF/XLSX inclus).",
       "Constatările sunt avertismente de verificat (necesită confirmare umană), nu verdicte automate; când datele sunt consistente, lista de neconcordanțe este goală.",
-      "Fiecare verificare degradează grațios (afișează „indisponibil\", nu eroare) dacă modulul-sursă corespunzător nu este instalat, fără a reimplementa logica declarațiilor existente."
+      "Fiecare verificare degradează grațios (afișează „indisponibil\", nu eroare) dacă modulul-sursă corespunzător nu este instalat, fără a reimplementa logica declarațiilor existente.",
+      "Modul în stare Beta, fără configurare suplimentară: raportul se deschide din Contabilitate → Raportare → Rapoarte de extras → Audit corelare declarații, cu filtrul standard de perioadă (implicit luna curentă). Fiecare arie se activează automat dacă modulul ei sursă (`l10n_ro_anaf_d300`, `l10n_ro_saft_validator`, `l10n_ro_efactura_dedup`) este instalat.",
+      "Titlul fiecărei arii arată numărul de neconcordanțe (⚠ N); „Concordant — nicio neconcordanță\" e în regulă, iar „Verificare indisponibilă\" înseamnă doar că modulul-sursă lipsește. Toleranța la rotunjiri este de 1 leu. Un clic pe o linie deschide documentul sursă; după remediere (de ex. anularea unei facturi introduse de două ori) se reia auditul, iar când lista e goală perioada e gata de depunere. Exportul PDF/XLSX se atașează dosarului perioadei; modulul nu generează note contabile."
     ],
     "dependencies": [
       "account_reports",
@@ -17710,7 +17721,7 @@
       "l10n_ro_saft_validator",
       "l10n_ro_efactura_dedup"
     ],
-    "text": "Romania - Audit corelare declarații fiscale\nl10n_ro_fiscal_audit\nModulul oferă un raport de audit preventiv care corelează automat, pentru o perioadă dată, totalurile dintre declarațiile fiscale românești și sursele de date din contabilitate, semnalând neconcordanțele înainte de depunere sau înainte de un control ANAF. Practic, oferă un „semafor\" de consistență fiscală pe mai multe căi de calcul independente (TVA, SAF-T, e-Factura), astfel încât echipa financiară să corecteze eventualele diferențe din timp, fără să aștepte o eroare la depunere sau o notificare de la ANAF.\nCorelează TVA colectată (rd. 17) și deductibilă (rd. 27) din D300 cu totalurile din jurnalele de TVA (D394), refolosind reconcilierea FR-49 din `l10n_ro_anaf_d300`.\nPre-validează datele pentru SAF-T (D406): parteneri fără CUI, conturi nemapate, taxe fără tip SAF-T, refolosind `l10n_ro_saft_validator`.\nDetectează facturi furnizor e-Factura recepționate în dublu exemplar (aceeași amprentă: CUI + serie/nr + dată + sumă), refolosind `l10n_ro_efactura_dedup`.\nPrezintă neconcordanțele grupate pe arii, cu valoare așteptată, valoare găsită, diferență și drill-down către documentul vizat, pe framework-ul standard `account.report` (export PDF/XLSX inclus).\nConstatările sunt avertismente de verificat (necesită confirmare umană), nu verdicte automate; când datele sunt consistente, lista de neconcordanțe este goală.\nFiecare verificare degradează grațios (afișează „indisponibil\", nu eroare) dacă modulul-sursă corespunzător nu este instalat, fără a reimplementa logica declarațiilor existente."
+    "text": "Romania - Audit corelare declarații fiscale\nl10n_ro_fiscal_audit\nModulul oferă un raport de audit preventiv care corelează automat, pentru o perioadă dată, totalurile dintre declarațiile fiscale românești și sursele de date din contabilitate, semnalând neconcordanțele înainte de depunere sau înainte de un control ANAF. Practic, oferă un „semafor\" de consistență fiscală pe mai multe căi de calcul independente (TVA, SAF-T, e-Factura), astfel încât echipa financiară să corecteze eventualele diferențe din timp, fără să aștepte o eroare la depunere sau o notificare de la ANAF.\nCorelează TVA colectată (rd. 17) și deductibilă (rd. 27) din D300 cu totalurile din jurnalele de TVA (D394), refolosind reconcilierea FR-49 din `l10n_ro_anaf_d300`.\nPre-validează datele pentru SAF-T (D406): parteneri fără CUI, conturi nemapate, taxe fără tip SAF-T, refolosind `l10n_ro_saft_validator`.\nDetectează facturi furnizor e-Factura recepționate în dublu exemplar (aceeași amprentă: CUI + serie/nr + dată + sumă), refolosind `l10n_ro_efactura_dedup`.\nPrezintă neconcordanțele grupate pe arii, cu valoare așteptată, valoare găsită, diferență și drill-down către documentul vizat, pe framework-ul standard `account.report` (export PDF/XLSX inclus).\nConstatările sunt avertismente de verificat (necesită confirmare umană), nu verdicte automate; când datele sunt consistente, lista de neconcordanțe este goală.\nFiecare verificare degradează grațios (afișează „indisponibil\", nu eroare) dacă modulul-sursă corespunzător nu este instalat, fără a reimplementa logica declarațiilor existente.\nModul în stare Beta, fără configurare suplimentară: raportul se deschide din Contabilitate → Raportare → Rapoarte de extras → Audit corelare declarații, cu filtrul standard de perioadă (implicit luna curentă). Fiecare arie se activează automat dacă modulul ei sursă (`l10n_ro_anaf_d300`, `l10n_ro_saft_validator`, `l10n_ro_efactura_dedup`) este instalat.\nTitlul fiecărei arii arată numărul de neconcordanțe (⚠ N); „Concordant — nicio neconcordanță\" e în regulă, iar „Verificare indisponibilă\" înseamnă doar că modulul-sursă lipsește. Toleranța la rotunjiri este de 1 leu. Un clic pe o linie deschide documentul sursă; după remediere (de ex. anularea unei facturi introduse de două ori) se reia auditul, iar când lista e goală perioada e gata de depunere. Exportul PDF/XLSX se atașează dosarului perioadei; modulul nu generează note contabile."
   },
   {
     "path": "l10n_ro_fixed_assets/index.md",
@@ -18850,35 +18861,40 @@
     "version": "19.0.1.1.13",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_partner_create_by_vat_button",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_partner_create_by_vat_button",
-    "last_ingest": "2026-06-08",
+    "last_ingest": "2026-11-07",
     "friendly_name": "Romania - Partner Create by VAT Button",
-    "summary": "Acest modul adaugă un buton în ecranul partenerului care permite recitirea (reîncărcarea) datelor de la ANAF pe baza codului de TVA. Astfel, utilizatorii pot actualiza manual informațiile unui partener (de exemplu denumire, adresă, status TVA) preluate din registrul ANAF, fără a fi nevoiți să recreeze fișa partenerului.",
+    "summary": "Acest modul adaugă un buton în ecranul partenerului care permite recitirea (reîncărcarea) datelor de la ANAF pe baza codului de TVA și completează un partener nou din CUI-ul scris în denumire. Astfel, utilizatorii pot actualiza manual informațiile unui partener (de exemplu denumire, adresă, status TVA), fără a fi nevoiți să recreeze fișa partenerului. **Modulul nu mai este dezvoltat**: primește doar corecturi, până când bazele de date care îl folosesc trec pe [l10n_ro_partner_autocomplete](../l10n_ro_partner_autocomplete/index.md).",
     "features": [
-      "Buton în formularul partenerului pentru recitirea datelor de la ANAF pe baza codului de TVA."
+      "Buton în formularul partenerului pentru recitirea datelor de la ANAF pe baza codului de TVA; pentru un partener dintr-o altă țară UE datele se citesc de la VIES.",
+      "Completarea unui partener nou pe baza CUI-ului scris în denumire.",
+      "Modul în curs de înlocuire: [l10n_ro_partner_autocomplete](../l10n_ro_partner_autocomplete/index.md) completează partenerul din ANAF gratuit, din CUI-ul scris în denumire sau în Tax ID, și are butonul „Update from ANAF\" pe partener. Nu depinde de modulul OCA `l10n_ro_partner_create_by_vat`, de care are nevoie acest modul, și nu poate fi instalat împreună cu el."
     ],
     "dependencies": [
       "l10n_ro_config",
       "l10n_ro_partner_create_by_vat"
     ],
     "connections": [
+      "l10n_ro_partner_autocomplete",
+      "l10n_ro_partner_create_by_vat_openapi",
       "l10n_ro_partner_create_by_vat"
     ],
-    "text": "Romania - Partner Create by VAT Button\nl10n_ro_partner_create_by_vat_button\nAcest modul adaugă un buton în ecranul partenerului care permite recitirea (reîncărcarea) datelor de la ANAF pe baza codului de TVA. Astfel, utilizatorii pot actualiza manual informațiile unui partener (de exemplu denumire, adresă, status TVA) preluate din registrul ANAF, fără a fi nevoiți să recreeze fișa partenerului.\nButon în formularul partenerului pentru recitirea datelor de la ANAF pe baza codului de TVA."
+    "text": "Romania - Partner Create by VAT Button\nl10n_ro_partner_create_by_vat_button\nAcest modul adaugă un buton în ecranul partenerului care permite recitirea (reîncărcarea) datelor de la ANAF pe baza codului de TVA și completează un partener nou din CUI-ul scris în denumire. Astfel, utilizatorii pot actualiza manual informațiile unui partener (de exemplu denumire, adresă, status TVA), fără a fi nevoiți să recreeze fișa partenerului. **Modulul nu mai este dezvoltat**: primește doar corecturi, până când bazele de date care îl folosesc trec pe [l10n_ro_partner_autocomplete](../l10n_ro_partner_autocomplete/index.md).\nButon în formularul partenerului pentru recitirea datelor de la ANAF pe baza codului de TVA; pentru un partener dintr-o altă țară UE datele se citesc de la VIES.\nCompletarea unui partener nou pe baza CUI-ului scris în denumire.\nModul în curs de înlocuire: [l10n_ro_partner_autocomplete](../l10n_ro_partner_autocomplete/index.md) completează partenerul din ANAF gratuit, din CUI-ul scris în denumire sau în Tax ID, și are butonul „Update from ANAF\" pe partener. Nu depinde de modulul OCA `l10n_ro_partner_create_by_vat`, de care are nevoie acest modul, și nu poate fi instalat împreună cu el."
   },
   {
     "path": "l10n_ro_partner_create_by_vat_openapi/index.md",
     "module": "l10n_ro_partner_create_by_vat_openapi",
     "version": "19.0.1.0.6",
-    "github": "`https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_partner_create_by_vat_openapi`",
+    "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_partner_create_by_vat_openapi",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_partner_create_by_vat_openapi",
-    "last_ingest": "2026-06-08",
+    "last_ingest": "2026-11-07",
     "friendly_name": "Creare Partener după CUI din OpenAPI",
-    "summary": "Acest modul adaugă în formularul de contact acțiunea „Get Partner Data OpenAPI\", care permite completarea automată a datelor unui partener pe baza codului de identificare fiscală (CUI). Utilizatorul introduce numărul de TVA în câmpul de nume, apasă butonul, iar modulul pornește o căutare folosind cheia OpenAPI și completează informațiile lipsă în câmpurile goale ale contactului. Astfel, crearea partenerilor români devine mai rapidă și mai puțin predispusă la erori de introducere manuală.",
+    "summary": "Acest modul adaugă în formularul de contact acțiunea „Get Partner Data OpenAPI\", care permite completarea automată a datelor unui partener pe baza codului de identificare fiscală (CUI). Utilizatorul introduce numărul de TVA în câmpul de nume, apasă butonul, iar modulul pornește o căutare folosind cheia OpenAPI și completează informațiile lipsă în câmpurile goale ale contactului. **Modulul nu mai este dezvoltat**: primește doar corecturi, până când bazele de date care îl folosesc trec pe [l10n_ro_partner_autocomplete](../l10n_ro_partner_autocomplete/index.md).",
     "features": [
       "Adaugă acțiunea „Get Partner Data OpenAPI\" în formularul de contact.",
       "Permite introducerea numărului de TVA (CUI) direct în câmpul de nume.",
       "Pornește o căutare folosind cheia OpenAPI proprie la apăsarea butonului.",
-      "Completează automat câmpurile goale ale contactului cu informațiile preluate."
+      "Completează automat câmpurile goale ale contactului cu informațiile preluate.",
+      "Modul în curs de înlocuire: pentru o companie românească se recomandă [l10n_ro_partner_autocomplete](../l10n_ro_partner_autocomplete/index.md), care completează partenerul din ANAF gratuit și fără cheie OpenAPI, și nu depinde de modulul OCA `l10n_ro_partner_create_by_vat`, de care are nevoie acest modul."
     ],
     "dependencies": [
       "base_vat",
@@ -18887,11 +18903,12 @@
       "l10n_ro_partner_create_by_vat_button"
     ],
     "connections": [
+      "l10n_ro_partner_autocomplete",
       "l10n_ro_partner_create_by_vat",
       "l10n_ro_partner_create_by_vat_button",
       "l10n_ro_config"
     ],
-    "text": "Creare Partener după CUI din OpenAPI\nl10n_ro_partner_create_by_vat_openapi\nAcest modul adaugă în formularul de contact acțiunea „Get Partner Data OpenAPI\", care permite completarea automată a datelor unui partener pe baza codului de identificare fiscală (CUI). Utilizatorul introduce numărul de TVA în câmpul de nume, apasă butonul, iar modulul pornește o căutare folosind cheia OpenAPI și completează informațiile lipsă în câmpurile goale ale contactului. Astfel, crearea partenerilor români devine mai rapidă și mai puțin predispusă la erori de introducere manuală.\nAdaugă acțiunea „Get Partner Data OpenAPI\" în formularul de contact.\nPermite introducerea numărului de TVA (CUI) direct în câmpul de nume.\nPornește o căutare folosind cheia OpenAPI proprie la apăsarea butonului.\nCompletează automat câmpurile goale ale contactului cu informațiile preluate."
+    "text": "Creare Partener după CUI din OpenAPI\nl10n_ro_partner_create_by_vat_openapi\nAcest modul adaugă în formularul de contact acțiunea „Get Partner Data OpenAPI\", care permite completarea automată a datelor unui partener pe baza codului de identificare fiscală (CUI). Utilizatorul introduce numărul de TVA în câmpul de nume, apasă butonul, iar modulul pornește o căutare folosind cheia OpenAPI și completează informațiile lipsă în câmpurile goale ale contactului. **Modulul nu mai este dezvoltat**: primește doar corecturi, până când bazele de date care îl folosesc trec pe [l10n_ro_partner_autocomplete](../l10n_ro_partner_autocomplete/index.md).\nAdaugă acțiunea „Get Partner Data OpenAPI\" în formularul de contact.\nPermite introducerea numărului de TVA (CUI) direct în câmpul de nume.\nPornește o căutare folosind cheia OpenAPI proprie la apăsarea butonului.\nCompletează automat câmpurile goale ale contactului cu informațiile preluate.\nModul în curs de înlocuire: pentru o companie românească se recomandă [l10n_ro_partner_autocomplete](../l10n_ro_partner_autocomplete/index.md), care completează partenerul din ANAF gratuit și fără cheie OpenAPI, și nu depinde de modulul OCA `l10n_ro_partner_create_by_vat`, de care are nevoie acest modul."
   },
   {
     "path": "l10n_ro_partner_financials/index.md",
@@ -21265,7 +21282,7 @@
   {
     "path": "l10n_ro_stock_report_dropship/index.md",
     "module": "l10n_ro_stock_report_dropship",
-    "version": "19.0.1.1.2",
+    "version": "19.0.1.1.3",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_report_dropship",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_report_dropship",
     "last_ingest": "2026-10-09",
@@ -21359,15 +21376,15 @@
   {
     "path": "l10n_ro_storage_sheet/index.md",
     "module": "l10n_ro_storage_sheet",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_storage_sheet",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_storage_sheet",
-    "last_ingest": "2026-10-22",
+    "last_ingest": "2026-11-07",
     "friendly_name": "Romania - Storage Sheet (Fișă Magazie)",
     "summary": "Modulul adaugă raportul românesc „Fișă de magazie”: pentru o perioadă și o gestiune, arată pentru fiecare produs soldul inițial, intrările, ieșirile și soldul final, în cantitate și în valoare. Raportul poate fi consultat ca analiză pivot în Odoo sau tipărit în PDF. Funcționează pe valorizarea de stoc nativă din Odoo și nu depinde de motorul de valorizare OCA (`l10n_ro_stock_account`), fiind varianta potrivită pentru bazele de date care nu îl folosesc.",
     "features": [
       "Raport de tip fișă de magazie: sold inițial, intrări, ieșiri, sold final pe produs și locație, în cantitate și valoare (inclusiv prețuri unitare de intrare și de ieșire).",
-      "Vizualizare ca analiză pivot în Odoo sau tipărire în PDF (cu opțiunea „un produs pe pagină”).",
+      "Vizualizare ca analiză pivot în Odoo (butonul „Show Sheet”, cu export XLSX și vedere listă cu o linie pe mișcare, plus rândurile INITIAL și FINAL pe produs) sau tipărire în PDF („Show Sheet Pdf”, cu stocul după fiecare operațiune și opțiunea „un produs pe pagină”).",
       "Filtre în formularul raportului: gestiune/locație, produse alese, perioadă (dată început / dată sfârșit), doar produse cu mișcări, includere sub-locații, detaliere pe locații și afișarea locației.",
       "Meniu: Inventar > Raportare > „Romanian Stock Sheet Report” (acces pentru utilizatorii de stoc).",
       "Înlocuiește copia Terrabit a modulului `l10n_ro_stock_report`, redenumit pentru a evita conflictul cu modulul OCA omonim. Modelele raportului sunt tranzitorii, deci nu se migrează date. Pe bazele unde fișa de magazie era instalată fără `l10n_ro_stock_account`, se instalează `l10n_ro_storage_sheet` și se dezinstalează `l10n_ro_stock_report` înainte de actualizare, altfel actualizarea aduce și motorul OCA de valorizare.",
@@ -21376,15 +21393,15 @@
     "dependencies": [
       "stock",
       "account",
+      "stock_account",
       "purchase",
-      "sale",
-      "l10n_ro_config"
+      "sale"
     ],
     "connections": [
       "l10n_ro_stock_report",
       "l10n_ro_stock_account"
     ],
-    "text": "Romania - Storage Sheet (Fișă Magazie)\nl10n_ro_storage_sheet\nModulul adaugă raportul românesc „Fișă de magazie”: pentru o perioadă și o gestiune, arată pentru fiecare produs soldul inițial, intrările, ieșirile și soldul final, în cantitate și în valoare. Raportul poate fi consultat ca analiză pivot în Odoo sau tipărit în PDF. Funcționează pe valorizarea de stoc nativă din Odoo și nu depinde de motorul de valorizare OCA (`l10n_ro_stock_account`), fiind varianta potrivită pentru bazele de date care nu îl folosesc.\nRaport de tip fișă de magazie: sold inițial, intrări, ieșiri, sold final pe produs și locație, în cantitate și valoare (inclusiv prețuri unitare de intrare și de ieșire).\nVizualizare ca analiză pivot în Odoo sau tipărire în PDF (cu opțiunea „un produs pe pagină”).\nFiltre în formularul raportului: gestiune/locație, produse alese, perioadă (dată început / dată sfârșit), doar produse cu mișcări, includere sub-locații, detaliere pe locații și afișarea locației.\nMeniu: Inventar > Raportare > „Romanian Stock Sheet Report” (acces pentru utilizatorii de stoc).\nÎnlocuiește copia Terrabit a modulului `l10n_ro_stock_report`, redenumit pentru a evita conflictul cu modulul OCA omonim. Modelele raportului sunt tranzitorii, deci nu se migrează date. Pe bazele unde fișa de magazie era instalată fără `l10n_ro_stock_account`, se instalează `l10n_ro_storage_sheet` și se dezinstalează `l10n_ro_stock_report` înainte de actualizare, altfel actualizarea aduce și motorul OCA de valorizare.\nPentru tipurile de mișcare valorizate din motorul OCA se folosește în continuare modulul OCA `l10n_ro_stock_report`."
+    "text": "Romania - Storage Sheet (Fișă Magazie)\nl10n_ro_storage_sheet\nModulul adaugă raportul românesc „Fișă de magazie”: pentru o perioadă și o gestiune, arată pentru fiecare produs soldul inițial, intrările, ieșirile și soldul final, în cantitate și în valoare. Raportul poate fi consultat ca analiză pivot în Odoo sau tipărit în PDF. Funcționează pe valorizarea de stoc nativă din Odoo și nu depinde de motorul de valorizare OCA (`l10n_ro_stock_account`), fiind varianta potrivită pentru bazele de date care nu îl folosesc.\nRaport de tip fișă de magazie: sold inițial, intrări, ieșiri, sold final pe produs și locație, în cantitate și valoare (inclusiv prețuri unitare de intrare și de ieșire).\nVizualizare ca analiză pivot în Odoo (butonul „Show Sheet”, cu export XLSX și vedere listă cu o linie pe mișcare, plus rândurile INITIAL și FINAL pe produs) sau tipărire în PDF („Show Sheet Pdf”, cu stocul după fiecare operațiune și opțiunea „un produs pe pagină”).\nFiltre în formularul raportului: gestiune/locație, produse alese, perioadă (dată început / dată sfârșit), doar produse cu mișcări, includere sub-locații, detaliere pe locații și afișarea locației.\nMeniu: Inventar > Raportare > „Romanian Stock Sheet Report” (acces pentru utilizatorii de stoc).\nÎnlocuiește copia Terrabit a modulului `l10n_ro_stock_report`, redenumit pentru a evita conflictul cu modulul OCA omonim. Modelele raportului sunt tranzitorii, deci nu se migrează date. Pe bazele unde fișa de magazie era instalată fără `l10n_ro_stock_account`, se instalează `l10n_ro_storage_sheet` și se dezinstalează `l10n_ro_stock_report` înainte de actualizare, altfel actualizarea aduce și motorul OCA de valorizare.\nPentru tipurile de mișcare valorizate din motorul OCA se folosește în continuare modulul OCA `l10n_ro_stock_report`."
   },
   {
     "path": "l10n_ro_storno_enhancement/index.md",
@@ -21841,16 +21858,16 @@
   {
     "path": "terrabit_base/index.md",
     "module": "terrabit_base",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.3.0",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_base",
     "local_path": "odoo-addons/terrabit/terrabit_base",
-    "last_ingest": "2026-11-05",
+    "last_ingest": "2026-11-07",
     "friendly_name": "Terrabit Base",
     "summary": "Terrabit Base este un modul de tip „metapachet\": nu adaugă logică proprie, ci instalează dintr-o singură mișcare setul de bază de aplicații Odoo (stocuri, vânzări, achiziții, contabilitate) și modulele de localizare pentru România și extensiile Terrabit de care au nevoie aproape toți clienții locali. Valoarea lui este o configurare inițială rapidă și uniformă a unei baze de date noi.",
     "features": [
       "Fluxuri de bază pentru stocuri (inclusiv evaluarea stocului și costurile suplimentare de achiziție), vânzări și achiziții.",
       "Contabilitate (`accountant`) și localizarea română Odoo (`l10n_ro`, `l10n_ro_edi`), completată din OCA doar cu `l10n_ro_city` (orașe).",
-      "Extensii Terrabit pentru România: îmbunătățiri e-Factura, rapoarte de factură și de livrare, registru de casă, mesaje SPV pentru achiziții.",
+      "Extensii Terrabit pentru România: îmbunătățiri e-Factura, rapoarte de factură și de livrare, registru de casă, taxare serviciu (`l10n_ro_service_tax`), mesaje SPV pentru achiziții.",
       "Module deltatech de uz general: blocarea creării rapide, procese de business, inventar de stoc, creare factură din comanda de achiziție, import UBL în achiziții.",
       "De la 19.0.1.2.0 modulul nu mai depinde de modulele OCA `l10n_ro_config`, `l10n_ro_vat_on_payment` și `l10n_ro_partner_unique` (comentate în manifest); `l10n_ro_city` rămâne. Scoaterea dependențelor nu dezinstalează nimic pe bazele de date existente.",
       "De la 19.0.1.1.0 modulul nu mai depinde de `l10n_ro_partner_create_by_vat` (OCA) și [l10n_ro_partner_create_by_vat_button](../l10n_ro_partner_create_by_vat_button/index.md), deoarece partenerul este completat din ANAF de [l10n_ro_partner_autocomplete](../l10n_ro_partner_autocomplete/index.md), care nu poate fi instalat împreună cu ele. Scoaterea dependenței nu dezinstalează nimic; fiecare bază de date trece pe noul modul printr-o migrare proprie.",
@@ -21874,6 +21891,7 @@
       "l10n_ro",
       "l10n_ro_city",
       "l10n_ro_efactura_enhancement",
+      "l10n_ro_service_tax",
       "l10n_ro_invoice_report",
       "l10n_ro_picking_report",
       "l10n_ro_cash_register",
@@ -21886,7 +21904,7 @@
       "l10n_ro_partner_create_by_vat_button",
       "l10n_ro_partner_autocomplete"
     ],
-    "text": "Terrabit Base\nterrabit_base\nTerrabit Base este un modul de tip „metapachet\": nu adaugă logică proprie, ci instalează dintr-o singură mișcare setul de bază de aplicații Odoo (stocuri, vânzări, achiziții, contabilitate) și modulele de localizare pentru România și extensiile Terrabit de care au nevoie aproape toți clienții locali. Valoarea lui este o configurare inițială rapidă și uniformă a unei baze de date noi.\nFluxuri de bază pentru stocuri (inclusiv evaluarea stocului și costurile suplimentare de achiziție), vânzări și achiziții.\nContabilitate (`accountant`) și localizarea română Odoo (`l10n_ro`, `l10n_ro_edi`), completată din OCA doar cu `l10n_ro_city` (orașe).\nExtensii Terrabit pentru România: îmbunătățiri e-Factura, rapoarte de factură și de livrare, registru de casă, mesaje SPV pentru achiziții.\nModule deltatech de uz general: blocarea creării rapide, procese de business, inventar de stoc, creare factură din comanda de achiziție, import UBL în achiziții.\nDe la 19.0.1.2.0 modulul nu mai depinde de modulele OCA `l10n_ro_config`, `l10n_ro_vat_on_payment` și `l10n_ro_partner_unique` (comentate în manifest); `l10n_ro_city` rămâne. Scoaterea dependențelor nu dezinstalează nimic pe bazele de date existente.\nDe la 19.0.1.1.0 modulul nu mai depinde de `l10n_ro_partner_create_by_vat` (OCA) și [l10n_ro_partner_create_by_vat_button](../l10n_ro_partner_create_by_vat_button/index.md), deoarece partenerul este completat din ANAF de [l10n_ro_partner_autocomplete](../l10n_ro_partner_autocomplete/index.md), care nu poate fi instalat împreună cu ele. Scoaterea dependenței nu dezinstalează nimic; fiecare bază de date trece pe noul modul printr-o migrare proprie.\nModulul este marcat ca aplicație (`application: True`) și nu se instalează automat (`auto_install: False`).\nCâteva module sunt lăsate comentate în manifest (de ex. `l10n_ro_stock_account`, [l10n_ro_stock_report](../l10n_ro_stock_report/index.md), `l10n_ro_stock_account_notice`, [deltatech_sale_store](../deltatech_sale_store/index.md)); nu fac parte din pachetul de bază și se instalează separat, după caz."
+    "text": "Terrabit Base\nterrabit_base\nTerrabit Base este un modul de tip „metapachet\": nu adaugă logică proprie, ci instalează dintr-o singură mișcare setul de bază de aplicații Odoo (stocuri, vânzări, achiziții, contabilitate) și modulele de localizare pentru România și extensiile Terrabit de care au nevoie aproape toți clienții locali. Valoarea lui este o configurare inițială rapidă și uniformă a unei baze de date noi.\nFluxuri de bază pentru stocuri (inclusiv evaluarea stocului și costurile suplimentare de achiziție), vânzări și achiziții.\nContabilitate (`accountant`) și localizarea română Odoo (`l10n_ro`, `l10n_ro_edi`), completată din OCA doar cu `l10n_ro_city` (orașe).\nExtensii Terrabit pentru România: îmbunătățiri e-Factura, rapoarte de factură și de livrare, registru de casă, taxare serviciu (`l10n_ro_service_tax`), mesaje SPV pentru achiziții.\nModule deltatech de uz general: blocarea creării rapide, procese de business, inventar de stoc, creare factură din comanda de achiziție, import UBL în achiziții.\nDe la 19.0.1.2.0 modulul nu mai depinde de modulele OCA `l10n_ro_config`, `l10n_ro_vat_on_payment` și `l10n_ro_partner_unique` (comentate în manifest); `l10n_ro_city` rămâne. Scoaterea dependențelor nu dezinstalează nimic pe bazele de date existente.\nDe la 19.0.1.1.0 modulul nu mai depinde de `l10n_ro_partner_create_by_vat` (OCA) și [l10n_ro_partner_create_by_vat_button](../l10n_ro_partner_create_by_vat_button/index.md), deoarece partenerul este completat din ANAF de [l10n_ro_partner_autocomplete](../l10n_ro_partner_autocomplete/index.md), care nu poate fi instalat împreună cu ele. Scoaterea dependenței nu dezinstalează nimic; fiecare bază de date trece pe noul modul printr-o migrare proprie.\nModulul este marcat ca aplicație (`application: True`) și nu se instalează automat (`auto_install: False`).\nCâteva module sunt lăsate comentate în manifest (de ex. `l10n_ro_stock_account`, [l10n_ro_stock_report](../l10n_ro_stock_report/index.md), `l10n_ro_stock_account_notice`, [deltatech_sale_store](../deltatech_sale_store/index.md)); nu fac parte din pachetul de bază și se instalează separat, după caz."
   },
   {
     "path": "terrabit_clean_chatter/index.md",

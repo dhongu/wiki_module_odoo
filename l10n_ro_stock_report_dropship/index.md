@@ -1,10 +1,11 @@
 # Romania - Fișa de magazie cu Dropship
 
 - **Nume Tehnic:** `l10n_ro_stock_report_dropship`
-- **Versiune:** `19.0.1.1.2`
+- **Versiune:** `19.0.1.1.3`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_report_dropship
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_stock_report_dropship`
 - **Ultima Ingestie:** `2026-10-09`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_esigiliu
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_esigiliu`
-- **Ultima Ingestie:** `2026-07-02`
+- **Ultima Ingestie:** `2026-11-07`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -18,7 +18,9 @@ Modulul gestionează sigiliile electronice e-Sigiliu aplicate de autorități (A
 - Ciclu de viață complet: **Ciornă → Aplicat → Eliminat**, cu înregistrarea automată a datei de aplicare și de eliminare.
 - Buton statistic **e-Sigiliu** pe formularul de transfer, cu numărul de sigilii asociate.
 - Meniu dedicat **Inventar → Raportare → e-Sigiliu Seals** pentru vizualizarea centralizată a tuturor sigiliilor.
-- Acces bazat pe grupurile standard Inventar (utilizator/manager).
+- Acces bazat pe grupurile standard Inventar (utilizator/manager); modulul nu necesită configurare și nu generează note contabile.
+- Flux operațional: sigiliul se creează din butonul **e-Sigiliu** al transferului (**Inventar → Transferuri**), cu **Număr sigiliu** (codul comunicat de autoritate), **Transportator**, **Număr de înmatriculare**, **Rută monitorizată**, **UIT e-Transport** și observații; **Aplică sigiliul** completează „Aplicat la", iar **Elimină sigiliul** (la finalul transportului) completează „Eliminat la". Lista centralizată ajută la găsirea sigiliilor aplicate și încă neeliminate.
+- Context legal: e-Sigiliu face parte din infrastructura ANAF de monitorizare a transporturilor rutiere, alături de e-Transport (OG 41/2022); câmpul UIT permite legarea sigiliului de declarația e-Transport.
 
 > **Notă (faza 1):** modulul acoperă evidența locală a sigiliilor. Integrarea directă cu API-ul ANAF e-Sigiliu (sincronizare automată a statusului) este planificată pentru faza 2, pe același mecanism OAuth2 folosit de `l10n_ro_edi`.
 

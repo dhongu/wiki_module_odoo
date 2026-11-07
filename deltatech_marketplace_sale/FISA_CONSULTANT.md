@@ -68,8 +68,10 @@ Roluri recomandate la testare:
 ## 4. Date și mapări implicate
 
 Nu există note contabile Dr/Cr generate direct de acest modul — factura rezultată din comanda de
-vânzare urmează contabilizarea standard Odoo (`sale`/`account`), neatinsă de acest hub. Ce trebuie
-pregătit înainte de a testa fluxul:
+vânzare urmează contabilizarea standard Odoo (`sale`/`account`). Singura intervenție asupra plăților
+este **aplicarea plății online pe factură** atunci când factura există deja (vezi „Note de monografie
+și raportare"); ea reconciliază o plată existentă, nu creează o notă nouă. Ce trebuie pregătit înainte
+de a testa fluxul:
 
 - **Backend de marketplace** (`marketplace.backend`, din `deltatech_marketplace`) — pe care acest
   modul adaugă, **vizibile în formular**: **Sales Journal**, **Confirm Sale Order**, **Max
@@ -118,6 +120,10 @@ pregătit înainte de a testa fluxul:
 6. Creați cel puțin un item de backend cu **Item Type = Sale Order** — fără el, importul de comenzi
    nu are unde să scrie binding-ul.
 7. Pregătiți un client și un produs vandabil pentru comanda de test.
+8. Pentru plățile online care trebuie aplicate automat pe factură: verificați că furnizorul de plată pe
+   care e mapat codul de plată al canalului (`deltatech_marketplace_payment`) are un **jurnal** și, în
+   acel jurnal, o **linie de metodă de plată** pentru furnizor, de preferat cu cont de încasări
+   restante. Fără jurnal nu se creează nicio plată Odoo, iar încasarea se face prin extras/borderou.
 
 ## 6. Flux de utilizare
 
@@ -190,11 +196,62 @@ rambursării (`compute_amount_total`).
 
 ![Formularul unei rambursări — sumele, indicatorul Total Computed și produsele rambursate](screenshots/08_refund_form.png)
 
+### Pasul 8 — Plata online aplicată pe factura existentă
+
+Se vede pe factură și pe tranzacția de plată.
+
+1. Din **Vânzări → Comenzi → Comenzi**, deschideți o comandă plătită online și creați factura cu
+   **Crează factura**, apoi confirmați-o **înainte** ca plata să fie confirmată de canal. Factura
+   apare **Neplătită**.
+2. După confirmarea plății (importul sau reîmprospătarea comenzii), redeschideți factura: starea de
+   plată devine **Plătită** sau **În plată**, iar în zona de plăți de sub totaluri apare plata online.
+3. Pe factură apare butonul inteligent **Tranzacție plată**: tranzacția online a comenzii e acum
+   legată de factură.
+
+![Factura creată înainte de plată, după confirmarea plății online: stare plătită și butonul Tranzacție plată](screenshots/09_payment_applied_on_invoice.png)
+
+4. Pentru o factură creată dintr-o singură operațiune pe mai multe comenzi, factura păstrează
+   tranzacțiile tuturor comenzilor; la confirmarea facturii, plățile deja încasate se aplică pe ea, iar
+   restul rămâne de plată.
+
+Dacă factura rămâne **Neplătită**, verificați condițiile din „Note de monografie și raportare" de mai
+jos (furnizorul mapat, contul de clienți, compania).
+
 ### Note de monografie și raportare
 
-Nu se aplică — acest modul nu generează note contabile proprii. Comanda de vânzare importată, retururile
-și rambursările urmează contabilizarea standard Odoo (`sale`/`account`/`stock`), declanșată normal la
-confirmare/facturare, neatinsă de acest hub.
+Acest modul nu generează note contabile proprii. Comanda de vânzare importată, retururile și
+rambursările urmează contabilizarea standard Odoo (`sale`/`account`/`stock`), declanșată normal la
+confirmare/facturare.
+
+**Aplicarea plăților online pe facturi.** Odoo leagă plata unei comenzi de factură doar în momentul în
+care factura se creează. Două situații rămâneau astfel cu factura „neplătită", deși banii erau încasați,
+iar modulul le acoperă:
+
+- **Plata se confirmă după ce factura există deja** (de exemplu factură creată manual din comandă, apoi
+  confirmarea plății de către canal). La crearea plății, aceasta se leagă de facturile postate și
+  neplătite ale comenzii și se reconciliază cu ele, cea mai veche întâi. Factura devine plătită (sau
+  „în plată", dacă plata trece printr-un cont de încasări restante).
+- **Factură creată din mai multe comenzi.** Factura păstrează acum plățile tuturor comenzilor, nu doar
+  pe ale primeia; plata se aplică la postarea facturii, ca în fluxul standard.
+
+Reguli:
+
+- Se folosesc doar **facturile de client postate** ale comenzii, în starea de plată **Neplătită** sau
+  **Parțial plătită**, din aceeași companie cu tranzacția. Nu se ating facturile plătite, „în plată"
+  sau stornate integral, nici notele de credit. O factură stornată doar parțial printr-o notă de credit
+  rămâne „Parțial plătită" și primește plata pe suma rămasă.
+- Plata acoperă cel mult suma rămasă pe factură; dacă clientul a plătit mai mult, diferența rămâne ca
+  **credit nealocat pe client** (nu se pierde și nu se aplică pe altă comandă).
+- Plata se aplică doar pe facturile cu creanța în **același cont** ca plata; o factură emisă pe alt
+  partener de facturare, cu alt cont de clienți, rămâne neatinsă și se reconciliază manual.
+
+Trei situații diferite, după cum e configurat furnizorul de plată mapat:
+
+| Situație | Ce creează Odoo | Ce face modulul |
+|----------|-----------------|-----------------|
+| Furnizor **cu jurnal** și cont de încasări restante pe linia de metodă de plată | plată cu notă contabilă | reconciliază plata cu factura (plătită sau „în plată") |
+| Furnizor **cu jurnal**, fără cont de încasări restante (doar cu contabilitatea Enterprise) | plată **fără notă contabilă** | leagă plata doar de facturile pe care le acoperă integral, cea mai veche întâi; factura apare „în plată" până la reconcilierea extrasului |
+| Furnizor **fără jurnal** (de regulă ramburs și transfer) | **nicio plată Odoo** | nimic: încasarea rămâne pe linia de extras/borderou, reconciliată pe factură ca până acum |
 
 ## 7. Legături cu alte module / declarații
 
@@ -204,6 +261,7 @@ confirmare/facturare, neatinsă de acest hub.
 | `sale_stock` / `stock_delivery` | comanda de vânzare cu livrare, transportator, expediție | dependență (manifest) |
 | `deltatech_marketplace_emag` / `_shopify` / `_woocommerce` / `_magento` / `_prestashop` / `_merchantpro` / `_trendyol` | conectorii concreți care implementează `<provider>_import` și hook-urile `after_*` peste acest hub | dependent de acest modul |
 | `account` | factura generată la confirmarea/facturarea comenzii importate (`after_invoice_post`) | flux standard Odoo |
+| `account_payment` / `payment` | tranzacția de plată online a comenzii și plata creată pe ea; modulul o aplică pe factura existentă (plată confirmată după factură) și păstrează plățile tuturor comenzilor pe o factură unită | extensie peste fluxul standard |
 | `stock` | expedițiile generate din comanda de vânzare (`after_send_to_shipper`, `after_picking_set_status`) | flux standard Odoo |
 | `deltatech_marketplace_review` (+ `deltatech_sale_order_review`) | gărzile de confirmare automată (mesaj client, ramburs peste plafon) devin motive de verificare vizibile pe comandă; jobul de confirmare revine la 5 minute cât comanda e doar „În așteptare" | punte, instalată automat |
 
@@ -245,6 +303,20 @@ importată, alegerea explicită „notific marketplace-ul sau doar anulez în Od
       fost sumat din linii, nu raportat de marketplace ca atare.
 - [ ] Discount Product/Voucher Product sunt completate pe backend dacă un conector concret le
       folosește — altfel adăugarea liniei de discount/voucher eșuează cu eroare explicită.
+- [ ] Pentru fiecare cod de plată al canalului (maparea codului extern pe un furnizor de plată Odoo,
+      din `deltatech_marketplace_payment`) se știe dacă furnizorul mapat are **jurnal** și linie de
+      metodă de plată: doar atunci se creează o plată Odoo, care poate fi aplicată pe factură.
+      Ramburs/transfer fără jurnal rămân pe extras/borderou.
+- [ ] O comandă plătită online, facturată manual **înainte** ca plata să fie confirmată: după
+      confirmarea plății, factura apare plătită (sau „în plată") și tranzacția are factura legată.
+- [ ] O factură creată dintr-o singură operațiune pentru două comenzi, dintre care a doua are plata
+      online: factura păstrează plata celei de-a doua și rămâne parțial plătită cu restul primei.
+- [ ] O plată mai mare decât factura închide factura, iar diferența rămâne ca credit nealocat pe client
+      (se vede pe plata respectivă și în soldul clientului) — clientul știe că nu e o greșeală și că
+      diferența se rambursează sau se alocă separat.
+- [ ] La clienții care încasează și prin borderou: pentru plățile aplicate pe factură, linia din extras
+      trebuie potrivită cu **plata** (contul ei de încasări restante), nu cu factura, care e deja
+      plătită. Verificați pe un caz real că operatorii nu reconciliază aceeași încasare de două ori.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -257,6 +329,8 @@ importată, alegerea explicită „notific marketplace-ul sau doar anulez în Od
 | O rambursare nu poate fi creată fără `marketplace_order_id` | Câmpul e obligatoriu — o rambursare nu poate exista fără comanda pe care s-a făcut vânzarea | Legați rambursarea de comanda de marketplace corectă înainte de a o salva |
 | Comanda importată rămâne „sent" deși se aștepta confirmare automată | **Confirm Sale Order** e dezactivat pe backend | Activați bifa, sau confirmați manual comanda |
 | Comanda importată rămâne ofertă cu **Confirm Sale Order** activ, fără explicație | O gardă a oprit confirmarea (mesaj de la client, ramburs peste **Max Auto-Confirm COD Amount**) și puntea `deltatech_marketplace_review` nu e instalată | Instalați `deltatech_sale_order_review` (puntea vine automat): motivul apare pe comandă și jobul de confirmare revine singur |
+| Factura rămâne „neplătită" deși plata online e confirmată | Furnizorul de plată mapat nu are jurnal (nu s-a creat nicio plată Odoo), sau plata e a altei companii decât factura, sau factura e deja stornată/plătită | Verificați furnizorul mapat și jurnalul lui; pentru plăți fără jurnal reconciliați din extras. Plățile mai vechi decât această versiune nu se aplică retroactiv singure |
+| După plată rămâne un credit pe client | Clientul a plătit mai mult decât factura (comandă modificată după plată) | Normal: factura e închisă, diferența se rambursează sau se alocă manual pe altă factură |
 
 ## 10. Capturi de ecran
 
@@ -303,3 +377,8 @@ zisă (produse, stoc, AWB) e descrisă în fișa fiecărui conector. Insistați 
 de stoc — și asupra alegerii explicite la anularea unei comenzi de marketplace (notific canalul sau
 anulez doar în Odoo), gândită special pentru a nu declanșa o rambursare nedorită pe o comandă deja
 plătită.
+
+Adăugați și o notă despre **plățile online și facturile create manual**: o plată confirmată după
+facturare se aplică acum singură pe factură, iar o factură unită pe mai multe comenzi păstrează plățile
+tuturor; rămân în afara acestui mecanism ramburs, transfer și orice furnizor fără jurnal, care se
+încasează tot prin extras/borderou.

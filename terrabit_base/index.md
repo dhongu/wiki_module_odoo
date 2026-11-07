@@ -1,10 +1,10 @@
 # Terrabit Base (localizat la `terrabit_base/index.md`)
 
 - **Nume Tehnic:** `terrabit_base`
-- **Versiune:** `19.0.1.2.0`
+- **Versiune:** `19.0.1.3.0`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_base
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_base`
-- **Ultima Ingestie:** `2026-11-05`
+- **Ultima Ingestie:** `2026-11-07`
 
 #### 1. Sumar
 
@@ -16,7 +16,7 @@ Fișierul `readme/DESCRIPTION.md` nu conține decât titlul „Features:", așa 
 
 - Fluxuri de bază pentru stocuri (inclusiv evaluarea stocului și costurile suplimentare de achiziție), vânzări și achiziții.
 - Contabilitate (`accountant`) și localizarea română Odoo (`l10n_ro`, `l10n_ro_edi`), completată din OCA doar cu `l10n_ro_city` (orașe).
-- Extensii Terrabit pentru România: îmbunătățiri e-Factura, rapoarte de factură și de livrare, registru de casă, mesaje SPV pentru achiziții.
+- Extensii Terrabit pentru România: îmbunătățiri e-Factura, rapoarte de factură și de livrare, registru de casă, taxare serviciu (`l10n_ro_service_tax`), mesaje SPV pentru achiziții.
 - Module deltatech de uz general: blocarea creării rapide, procese de business, inventar de stoc, creare factură din comanda de achiziție, import UBL în achiziții.
 - De la 19.0.1.2.0 modulul nu mai depinde de modulele OCA `l10n_ro_config`, `l10n_ro_vat_on_payment` și `l10n_ro_partner_unique` (comentate în manifest); `l10n_ro_city` rămâne. Scoaterea dependențelor nu dezinstalează nimic pe bazele de date existente.
 - De la 19.0.1.1.0 modulul nu mai depinde de `l10n_ro_partner_create_by_vat` (OCA) și [l10n_ro_partner_create_by_vat_button](../l10n_ro_partner_create_by_vat_button/index.md), deoarece partenerul este completat din ANAF de [l10n_ro_partner_autocomplete](../l10n_ro_partner_autocomplete/index.md), care nu poate fi instalat împreună cu ele. Scoaterea dependenței nu dezinstalează nimic; fiecare bază de date trece pe noul modul printr-o migrare proprie.
@@ -41,6 +41,7 @@ Fișierul `readme/DESCRIPTION.md` nu conține decât titlul „Features:", așa 
 - `l10n_ro`
 - `l10n_ro_city`
 - [l10n_ro_efactura_enhancement](../l10n_ro_efactura_enhancement/index.md)
+- `l10n_ro_service_tax`
 - [l10n_ro_invoice_report](../l10n_ro_invoice_report/index.md)
 - [l10n_ro_picking_report](../l10n_ro_picking_report/index.md)
 - [l10n_ro_cash_register](../l10n_ro_cash_register/index.md)

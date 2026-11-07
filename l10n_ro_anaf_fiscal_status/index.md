@@ -2,9 +2,9 @@
 
 - **Nume Tehnic:** `l10n_ro_anaf_fiscal_status`
 - **Versiune:** `19.0.1.0.3`
-- **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_fiscal_status](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_fiscal_status)
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_fiscal_status
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_fiscal_status`
-- **Ultima Ingestie:** `2026-07-02`
+- **Ultima Ingestie:** `2026-11-07`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -20,6 +20,9 @@ Modulul descarcă automat, din Spațiul Privat Virtual (SPV) al ANAF, pentru fie
 - Transport prin infrastructura existentă Terrabit Connect (mTLS la SPVWS2, fără OAuth2 Bearer) și coada de joburi din `l10n_ro_anaf_agent` (tip job `fiscal_status`) — modulul nu reinventează transportul, adaugă doar tipul de cerere și cele două modele de evidență.
 - Cron zilnic de descărcare (dezactivat implicit) și cron zilnic de remindere pentru termenele de depunere apropiate (activitate `mail.activity`), pe baza mapării categorie fiscală → declarație Odoo (D300, D112, D101, D100, D103, D390).
 - Alimentează calendarul real de declarații (FR-60) și auditul de corelare a declarațiilor (FR-65).
+- **Stare Beta, modul informativ**: transportul către SPV e funcțional, dar formatul exact al răspunsului ANAF se validează pe un cont SPV real; modulul nu generează note contabile.
+- **Declanșare și meniuri**: descărcarea se pornește din **Contabilitate → Raportare → Declarații ANAF → ANAF Agents**, cu butonul „Descarcă vector + fișă rol" (creează un job *Fiscal Status* în coadă), sau zilnic prin acțiunea planificată „ANAF SPV: download fiscal status (vector + ledger)", livrată dezactivată. Rezultatele se citesc în **Vector fiscal** (implicit doar obligațiile în vigoare, cu categorie fiscală, declarație mapată, periodicitate și valabilitate) și **Fișa pe rol** (grupată pe data snapshot; total datorat = sumă de plată + restanță + accesorii, restanțele în roșu). O nouă descărcare în aceeași zi nu duplică liniile.
+- **Configurare**: URL-ul și tokenul Terrabit Connect se setează în **Setări → Contabilitate** (blocul mesajelor SPV ANAF; serviciul SPVWS2 cere certificat pe token fizic, nu OAuth2), iar agentul ANAF primește cheia API automat. Contabilii citesc evidențele; managerii de contabilitate declanșează descărcarea și pot corecta maparea categorie → declarație.
 
 #### 3. Dependențe
 

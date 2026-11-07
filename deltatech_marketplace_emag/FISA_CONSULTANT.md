@@ -174,6 +174,16 @@ exportul de produse să știe ce atribute cere eMAG pe acea categorie. Exportul 
 cardului **Products → Export**) **refuză** să trimită oferta dacă produsul aparține unei categorii
 Odoo fără corespondent eMAG deja importat — eroarea numește explicit categoria lipsă.
 
+**Dimensiunile și greutatea.** Când produsele Odoo au câmpurile de dimensiuni (lungime, lățime,
+înălțime, adăugate de modulul de dimensiuni ale produsului), după exportul ofertei se pune în coadă
+un job separat, „eMAG measurements of product <produs>”, care trimite dimensiunile în mm și
+greutatea în grame (greutatea din fișa produsului, în kg, × 1000). Valorile se citesc din produs
+**în momentul în care rulează job-ul**, nu la exportul ofertei. eMAG cere o greutate de **cel puțin
+1 g**: valorile de tipul 0,250 kg sunt corecte (250 g), dar un produs fără greutate (0) sau cu sub
+0,001 kg nu se trimite, iar job-ul eșuează cu un mesaj care numește produsul (nume, id Odoo, id
+eMAG și link). După corectarea greutății pe produs, **Requeue** pe job-ul eșuat din **Jobs**
+trimite valorile corectate.
+
 ![Tab Objects: meniul „⋮” al cardului Categories, cu acțiunea Import](screenshots/05_objects.png)
 
 ### Pasul 6 — Prima sincronizare de produse
@@ -524,6 +534,10 @@ cron-ului de auto-pricing.
       urmărește statusul în **Bindings → Return Requests**, dar recepția, nota de credit și
       rambursarea rămân manuale; statusul AWB „Return to Sender" se reflectă separat, doar ca stare
       de livrare.
+- [ ] Produsele publicate pe eMAG au greutatea completată (în kg, cel puțin 0,001): un produs fără
+      greutate nu își trimite dimensiunile, iar job-ul „eMAG measurements of product …” eșuează cu
+      numele și linkul produsului; după corectare, **Requeue** pe job-ul din **Jobs** trimite
+      valorile noi, fără un nou export al ofertei.
 - [ ] Dacă totalul unei comenzi importate pare inconsistent cu suma produselor, s-a verificat întâi
       dacă pe comandă există o linie de voucher (redusă din `amount_total`) înainte de a raporta
       import greșit.
@@ -543,6 +557,8 @@ cron-ului de auto-pricing.
 | Comanda ajunge în Odoo dar nu e confirmată pe eMAG (rămâne „new") | **Active On Write** e dezactivat pe item-ul `orders` | Activați bifa, sau acceptați comanda din tabloul marketplace (butonul **Acceptă**, pasul *De acceptat*) |
 | Factura nu ajunge la eMAG deși a fost validată | **Enable Order Push Invoice** dezactivat, **Active On Write** dezactivat pe `orders`, sau `web.base.url` nu e accesibil din exterior | Verificați toate trei — primele două sunt independente, iar link-ul trimis trebuie să fie public |
 | Prețul unui produs scade neașteptat la 0 pe eMAG | **Auto Price** bifat fără **Min/Max sale price** completate, pe o ofertă cu Buy Button Rank cunoscut (o deține sau nu buy box-ul, ambele cazuri sunt afectate) | Completați limitele înainte de a activa Auto Price; corectați manual prețul curent |
+| Job-ul de dimensiuni eșuează cu „eMAG measurements not sent for <produs> (Odoo id …, eMAG id …) - <link>: the weight must be at least 0.001 kg (1 g)" | Produsul nu are greutate (0) sau are sub 0,001 kg; eMAG cere cel puțin 1 g | Deschideți produsul din link, completați greutatea în kg, apoi **Requeue** pe job din **Jobs** |
+| Job-ul de dimensiuni eșuează cu „eMAG refused the measurements of <produs> …" | eMAG a refuzat o altă valoare (ex. o dimensiune); motivul eMAG urmează după numele produsului | Corectați pe produsul din link valoarea numită de eMAG, apoi **Requeue** pe job |
 | Job în coadă rămâne „failed" cu eroare HTTP 429 | Limita de 3 apeluri/secundă a fost depășită, iar reîncercările s-au epuizat | Requeue manual din **Jobs** — un job „failed" NU se mai reîncearcă singur |
 | Job în coadă rămâne „failed" (alt motiv) | Câmp obligatoriu lipsă sau eroare eMAG netratată | Verificați traceback-ul job-ului din **Jobs**, corectați configurarea, requeue |
 | Totalul comenzii importate pare mai mic decât suma produselor | Comanda are un voucher eMAG aplicat, scăzut deja din `amount_total` | Comportament normal — verificați liniile comenzii pentru linia de voucher |

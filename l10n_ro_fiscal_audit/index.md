@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_fiscal_audit
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_fiscal_audit`
-- **Ultima Ingestie:** `2026-07-02`
+- **Ultima Ingestie:** `2026-11-07`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -19,6 +19,8 @@ Modulul oferă un raport de audit preventiv care corelează automat, pentru o pe
 - Prezintă neconcordanțele grupate pe arii, cu valoare așteptată, valoare găsită, diferență și drill-down către documentul vizat, pe framework-ul standard `account.report` (export PDF/XLSX inclus).
 - Constatările sunt avertismente de verificat (necesită confirmare umană), nu verdicte automate; când datele sunt consistente, lista de neconcordanțe este goală.
 - Fiecare verificare degradează grațios (afișează „indisponibil", nu eroare) dacă modulul-sursă corespunzător nu este instalat, fără a reimplementa logica declarațiilor existente.
+- Modul în stare Beta, fără configurare suplimentară: raportul se deschide din **Contabilitate → Raportare → Rapoarte de extras → Audit corelare declarații**, cu filtrul standard de perioadă (implicit luna curentă). Fiecare arie se activează automat dacă modulul ei sursă (`l10n_ro_anaf_d300`, `l10n_ro_saft_validator`, `l10n_ro_efactura_dedup`) este instalat.
+- Titlul fiecărei arii arată numărul de neconcordanțe (⚠ N); „Concordant — nicio neconcordanță" e în regulă, iar „Verificare indisponibilă" înseamnă doar că modulul-sursă lipsește. Toleranța la rotunjiri este de 1 leu. Un clic pe o linie deschide documentul sursă; după remediere (de ex. anularea unei facturi introduse de două ori) se reia auditul, iar când lista e goală perioada e gata de depunere. Exportul PDF/XLSX se atașează dosarului perioadei; modulul nu generează note contabile.
 
 #### 3. Dependențe
 

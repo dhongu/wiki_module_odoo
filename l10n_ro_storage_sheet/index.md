@@ -1,10 +1,11 @@
 # Romania - Storage Sheet (Fișă Magazie) (localizat la `l10n_ro_storage_sheet/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_storage_sheet`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_storage_sheet
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_storage_sheet`
-- **Ultima Ingestie:** `2026-10-22`
+- **Ultima Ingestie:** `2026-11-07`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -13,7 +14,7 @@ Modulul adaugă raportul românesc „Fișă de magazie”: pentru o perioadă �
 #### 2. Funcționalități Cheie
 
 - Raport de tip fișă de magazie: sold inițial, intrări, ieșiri, sold final pe produs și locație, în cantitate și valoare (inclusiv prețuri unitare de intrare și de ieșire).
-- Vizualizare ca analiză pivot în Odoo sau tipărire în PDF (cu opțiunea „un produs pe pagină”).
+- Vizualizare ca analiză pivot în Odoo (butonul „Show Sheet”, cu export XLSX și vedere listă cu o linie pe mișcare, plus rândurile INITIAL și FINAL pe produs) sau tipărire în PDF („Show Sheet Pdf”, cu stocul după fiecare operațiune și opțiunea „un produs pe pagină”).
 - Filtre în formularul raportului: gestiune/locație, produse alese, perioadă (dată început / dată sfârșit), doar produse cu mișcări, includere sub-locații, detaliere pe locații și afișarea locației.
 - Meniu: Inventar > Raportare > „Romanian Stock Sheet Report” (acces pentru utilizatorii de stoc).
 - Înlocuiește copia Terrabit a modulului `l10n_ro_stock_report`, redenumit pentru a evita conflictul cu modulul OCA omonim. Modelele raportului sunt tranzitorii, deci nu se migrează date. Pe bazele unde fișa de magazie era instalată fără `l10n_ro_stock_account`, se instalează `l10n_ro_storage_sheet` și se dezinstalează `l10n_ro_stock_report` înainte de actualizare, altfel actualizarea aduce și motorul OCA de valorizare.
@@ -23,9 +24,9 @@ Modulul adaugă raportul românesc „Fișă de magazie”: pentru o perioadă �
 
 - `stock`
 - `account`
+- `stock_account`
 - `purchase`
 - `sale`
-- `l10n_ro_config`
 
 #### 4. Componente Cheie
 
