@@ -332,22 +332,27 @@
     "path": "deltatech_account_edit_currency_rate/index.md",
     "module": "deltatech_account_edit_currency_rate",
     "version": "19.0.1.0.3",
-    "github": "[https://github.com/dhongu/deltatech/tree/19.0/deltatech_account_edit_currency_rate](https://github.com/dhongu/deltatech/tree/19.0/deltatech_account_edit_currency_rate)",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_account_edit_currency_rate",
     "local_path": "odoo-addons/deltatech/deltatech_account_edit_currency_rate",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Deltatech Edit Currency Rate",
-    "summary": "Acest modul permite editarea manuală a cursului valutar direct pe documentele de factură (facturi client și facturi furnizor). Este util atunci când o factură în valută trebuie înregistrată la un curs specific, diferit de cursul zilnic standard, asigurând că sumele contabile reflectă exact cursul convenit cu partenerul sau cel din documentul original.",
+    "last_ingest": "2026-11-08",
+    "friendly_name": "Custom Invoice Exchange Rate",
+    "summary": "Modulul permite introducerea unui curs valutar propriu direct pe factura client sau furnizor în valută. Este util atunci când factura trebuie înregistrată la alt curs decât cel oficial din ziua facturii: cursul BCE în loc de cel BNR, cursul băncii prin care se face decontarea sau cursul din factura furnizorului. Cât timp câmpul este completat, toate valorile în lei (liniile, TVA-ul, totalurile, nota contabilă) se calculează la acel curs; dacă este golit, factura revine la cursul oficial.",
     "features": [
-      "Editare manuală a cursului de schimb valutar pe facturile client și facturile furnizor.",
-      "Recalcularea automată a sumelor contabile (în moneda companiei) pe baza cursului introdus de utilizator.",
-      "Suport pentru medii multi-valută în Odoo.",
-      "Asigură consistența între documentul de factură și sumele financiare înregistrate."
+      "Câmpul Curs valutar (`currency_rate_custom`) apare pe formularul facturii, în tabul Alte informații, grupul Contabilitate, după Poziție fiscală, și doar dacă moneda facturii diferă de cea a companiei.",
+      "Cursul se introduce ca lei pentru o unitate de valută (ex. `5,0000`), cu până la 4 zecimale.",
+      "Recalcularea se face și pe server, nu doar în formular: la creare sau modificare prin RPC, import sau ORM se recalculează cursurile liniilor, soldurile în moneda companiei și taxele, ca la editarea din formular.",
+      "Golirea câmpului readuce factura la cursul oficial.",
+      "Pe factura confirmată câmpul este needitabil, iar modificarea este blocată și la scriere; pentru corecție, factura se readuce în ciornă (Resetare la ciornă), se schimbă cursul și se confirmă din nou.",
+      "La duplicarea facturii cursul propriu nu se copiază; nota de credit păstrează cursul facturii originale, ca stornarea să se facă la aceleași valori în lei.",
+      "Diferențele de curs de la încasare sau plată se calculează față de valorile în lei ale facturii (deci față de cursul propriu); baza și TVA-ul în lei ajung în jurnalele de TVA și declarații (D300, D394, SAF-T) cu valorile de la cursul propriu.",
+      "Textul de ajutor al câmpului trimite la art. 290 din Codul fiscal; modulul nu validează cursul ales, răspunderea alegerii rămâne a contabilului.",
+      "Nu adaugă grupuri sau drepturi și nu are setări proprii. Pentru detalii pas cu pas și monografii, vezi [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
       "account"
     ],
     "connections": [],
-    "text": "Deltatech Edit Currency Rate\ndeltatech_account_edit_currency_rate\nAcest modul permite editarea manuală a cursului valutar direct pe documentele de factură (facturi client și facturi furnizor). Este util atunci când o factură în valută trebuie înregistrată la un curs specific, diferit de cursul zilnic standard, asigurând că sumele contabile reflectă exact cursul convenit cu partenerul sau cel din documentul original.\nEditare manuală a cursului de schimb valutar pe facturile client și facturile furnizor.\nRecalcularea automată a sumelor contabile (în moneda companiei) pe baza cursului introdus de utilizator.\nSuport pentru medii multi-valută în Odoo.\nAsigură consistența între documentul de factură și sumele financiare înregistrate."
+    "text": "Custom Invoice Exchange Rate\ndeltatech_account_edit_currency_rate\nModulul permite introducerea unui curs valutar propriu direct pe factura client sau furnizor în valută. Este util atunci când factura trebuie înregistrată la alt curs decât cel oficial din ziua facturii: cursul BCE în loc de cel BNR, cursul băncii prin care se face decontarea sau cursul din factura furnizorului. Cât timp câmpul este completat, toate valorile în lei (liniile, TVA-ul, totalurile, nota contabilă) se calculează la acel curs; dacă este golit, factura revine la cursul oficial.\nCâmpul Curs valutar (`currency_rate_custom`) apare pe formularul facturii, în tabul Alte informații, grupul Contabilitate, după Poziție fiscală, și doar dacă moneda facturii diferă de cea a companiei.\nCursul se introduce ca lei pentru o unitate de valută (ex. `5,0000`), cu până la 4 zecimale.\nRecalcularea se face și pe server, nu doar în formular: la creare sau modificare prin RPC, import sau ORM se recalculează cursurile liniilor, soldurile în moneda companiei și taxele, ca la editarea din formular.\nGolirea câmpului readuce factura la cursul oficial.\nPe factura confirmată câmpul este needitabil, iar modificarea este blocată și la scriere; pentru corecție, factura se readuce în ciornă (Resetare la ciornă), se schimbă cursul și se confirmă din nou.\nLa duplicarea facturii cursul propriu nu se copiază; nota de credit păstrează cursul facturii originale, ca stornarea să se facă la aceleași valori în lei.\nDiferențele de curs de la încasare sau plată se calculează față de valorile în lei ale facturii (deci față de cursul propriu); baza și TVA-ul în lei ajung în jurnalele de TVA și declarații (D300, D394, SAF-T) cu valorile de la cursul propriu.\nTextul de ajutor al câmpului trimite la art. 290 din Codul fiscal; modulul nu validează cursul ales, răspunderea alegerii rămâne a contabilului.\nNu adaugă grupuri sau drepturi și nu are setări proprii. Pentru detalii pas cu pas și monografii, vezi [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_account_enterprise/index.md",
@@ -1481,7 +1486,7 @@
   {
     "path": "deltatech_b2b_portal/index.md",
     "module": "deltatech_b2b_portal",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.4.0",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_portal",
     "local_path": "odoo-addons/bitshop/deltatech_b2b_portal",
     "last_ingest": "2026-10-12",
@@ -1522,7 +1527,7 @@
   {
     "path": "deltatech_b2b_price_tier/index.md",
     "module": "deltatech_b2b_price_tier",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_price_tier",
     "local_path": "odoo-addons/bitshop/deltatech_b2b_price_tier",
     "last_ingest": "2026-10-09",
@@ -1709,14 +1714,19 @@
     "version": "19.0.2.2.9",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_barcode_picking",
     "local_path": "odoo-addons/bitshop/deltatech_barcode_picking",
-    "last_ingest": "2026-07-31",
+    "last_ingest": "2026-11-08",
     "friendly_name": "Barcode Picking",
-    "summary": "Acest modul permite operatorilor de depozit să adauge produse pe un transfer de stoc (picking) direct prin scanarea codului de bare, fără să mai completeze manual liniile de operare. Scanarea recunoaște atât codul de bare al produsului, cât și cel al lotului/seriei, inclusiv formatul combinat \"cod produs + separator + cod lot\" (separatori acceptați: `-`, `/`, spațiu), accelerând semnificativ pregătirea comenzilor și reducând erorile de introducere manuală a datelor.",
+    "summary": "Acest modul permite operatorilor de depozit să adauge produse pe recepții și livrări direct prin scanarea codului de bare, fără să mai completeze manual liniile. Scanarea recunoaște codul de bare al produsului și etichetele combinate „cod produs + separator + nume lot\", accelerând pregătirea comenzilor și reducând erorile de introducere manuală.",
     "features": [
-      "Adăugarea produselor pe un transfer de stoc (picking) prin scanarea codului de bare.",
-      "Recunoașterea codurilor de bare combinate produs+lot, folosind separatorii `-`, `/` sau spațiu; pentru a scana coduri cu lot pe picking este necesar ca tipul de operațiune să aibă activată opțiunea \"Afișează detalii operațiune\".",
-      "Adăugarea produselor și în inventarul de stoc (`stock.inventory`) prin scanarea codului de bare al produsului sau al lotului/seriei (funcționalitate deja implementată în cod, nu doar planificată — vezi corecția de mai jos).",
-      "Configurare per tip de operațiune (`stock.picking.type`) a permisiunii de scanare cu barcode-ul, printr-un câmp dedicat."
+      "Adaugă produse pe recepții și livrări prin scanarea codului de bare, cu orice cititor care funcționează ca tastatură (scrie codul și trimite Enter). Cursorul trebuie ținut în afara câmpurilor text. Fiecare scanare adaugă o unitate.",
+      "Citește etichete combinate produs + lot, cu separatorii `-` sau `/` (ex. `5940000000024/LOT26`); codul se desparte la ultimul separator și cantitatea se pune pe acel lot. Dacă numele loturilor conțin `-`, se folosește `/` ca separator. Se poate scana și doar numele lotului, dacă este unic.",
+      "Lotul scanat trebuie să existe deja. Pentru loturi pe recepții se bifează Use Existing ones (grupul Lots/Serial Numbers) la tipul de operațiune Recepții, în Inventar → Configurare → Tipuri de operațiuni, ca loturile scanate să apară în Detailed Operations.",
+      "Pe recepție în ciornă, fiecare scanare crește Demand; pe recepția pregătită (Ready) cantitatea poate depăși cererea (recepție în plus), iar un produs scanat fără mișcare se adaugă ca mișcare nouă.",
+      "Pe livrare pregătită, cererea rezervată este limită: o scanare peste ea este refuzată cu „Your reserved quantity has already been reached\". Pentru a număra marfa scanând, se setează Quantity la 0 pe linie și se salvează (eliberează rezervarea), apoi se scanează fiecare unitate; nu se apasă Check Availability înainte de scanare.",
+      "Cod necunoscut: transferul rămâne neschimbat, cu mesajul „There is no product with barcode …\". Un transfer Done sau Cancelled nu poate fi scanat (mesaj Invalid Operation), indiferent de context.",
+      "Scanarea în ajustările de inventar nu este disponibilă în această versiune (codul există, dar este dezactivat).",
+      "Câmpurile Allowed to add products by scanning și Request Effective Date, adăugate pe tipul de operațiune, nu au efect în această versiune.",
+      "Limitări cunoscute: o scanare în plus nu se anulează prin scanare (se corectează manual); pe o recepție din comandă de achiziție (Ready, cantitate = cerere) scanarea se adaugă peste cantitate, deci cantitatea se setează întâi la 0; un cod produs + lot cu lot inexistent adaugă unitatea fără lot, fără avertisment; la prima scanare a unui produs încă absent din transfer apare mesajul „Lotul este deja prezent in lista\", deși linia se adaugă. Fluxul pas cu pas rămâne în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
       "stock",
@@ -1727,7 +1737,7 @@
       "deltatech_barcode_sale",
       "deltatech_stock_barcode"
     ],
-    "text": "Barcode Picking\ndeltatech_barcode_picking\nAcest modul permite operatorilor de depozit să adauge produse pe un transfer de stoc (picking) direct prin scanarea codului de bare, fără să mai completeze manual liniile de operare. Scanarea recunoaște atât codul de bare al produsului, cât și cel al lotului/seriei, inclusiv formatul combinat \"cod produs + separator + cod lot\" (separatori acceptați: `-`, `/`, spațiu), accelerând semnificativ pregătirea comenzilor și reducând erorile de introducere manuală a datelor.\nAdăugarea produselor pe un transfer de stoc (picking) prin scanarea codului de bare.\nRecunoașterea codurilor de bare combinate produs+lot, folosind separatorii `-`, `/` sau spațiu; pentru a scana coduri cu lot pe picking este necesar ca tipul de operațiune să aibă activată opțiunea \"Afișează detalii operațiune\".\nAdăugarea produselor și în inventarul de stoc (`stock.inventory`) prin scanarea codului de bare al produsului sau al lotului/seriei (funcționalitate deja implementată în cod, nu doar planificată — vezi corecția de mai jos).\nConfigurare per tip de operațiune (`stock.picking.type`) a permisiunii de scanare cu barcode-ul, printr-un câmp dedicat."
+    "text": "Barcode Picking\ndeltatech_barcode_picking\nAcest modul permite operatorilor de depozit să adauge produse pe recepții și livrări direct prin scanarea codului de bare, fără să mai completeze manual liniile. Scanarea recunoaște codul de bare al produsului și etichetele combinate „cod produs + separator + nume lot\", accelerând pregătirea comenzilor și reducând erorile de introducere manuală.\nAdaugă produse pe recepții și livrări prin scanarea codului de bare, cu orice cititor care funcționează ca tastatură (scrie codul și trimite Enter). Cursorul trebuie ținut în afara câmpurilor text. Fiecare scanare adaugă o unitate.\nCitește etichete combinate produs + lot, cu separatorii `-` sau `/` (ex. `5940000000024/LOT26`); codul se desparte la ultimul separator și cantitatea se pune pe acel lot. Dacă numele loturilor conțin `-`, se folosește `/` ca separator. Se poate scana și doar numele lotului, dacă este unic.\nLotul scanat trebuie să existe deja. Pentru loturi pe recepții se bifează Use Existing ones (grupul Lots/Serial Numbers) la tipul de operațiune Recepții, în Inventar → Configurare → Tipuri de operațiuni, ca loturile scanate să apară în Detailed Operations.\nPe recepție în ciornă, fiecare scanare crește Demand; pe recepția pregătită (Ready) cantitatea poate depăși cererea (recepție în plus), iar un produs scanat fără mișcare se adaugă ca mișcare nouă.\nPe livrare pregătită, cererea rezervată este limită: o scanare peste ea este refuzată cu „Your reserved quantity has already been reached\". Pentru a număra marfa scanând, se setează Quantity la 0 pe linie și se salvează (eliberează rezervarea), apoi se scanează fiecare unitate; nu se apasă Check Availability înainte de scanare.\nCod necunoscut: transferul rămâne neschimbat, cu mesajul „There is no product with barcode …\". Un transfer Done sau Cancelled nu poate fi scanat (mesaj Invalid Operation), indiferent de context.\nScanarea în ajustările de inventar nu este disponibilă în această versiune (codul există, dar este dezactivat).\nCâmpurile Allowed to add products by scanning și Request Effective Date, adăugate pe tipul de operațiune, nu au efect în această versiune.\nLimitări cunoscute: o scanare în plus nu se anulează prin scanare (se corectează manual); pe o recepție din comandă de achiziție (Ready, cantitate = cerere) scanarea se adaugă peste cantitate, deci cantitatea se setează întâi la 0; un cod produs + lot cu lot inexistent adaugă unitatea fără lot, fără avertisment; la prima scanare a unui produs încă absent din transfer apare mesajul „Lotul este deja prezent in lista\", deși linia se adaugă. Fluxul pas cu pas rămâne în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_barcode_sale/index.md",
@@ -2345,25 +2355,28 @@
     "version": "19.0.1.0.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_competitors_price",
     "local_path": "odoo-addons/deltatech/deltatech_competitors_price",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Deltatech Competitors Price",
-    "summary": "Acest modul permite urmărirea prețurilor practicate de concurență pentru produsele proprii, direct din fișa de produs. Pentru fiecare produs se pot înregistra una sau mai multe adrese URL către paginile concurenților, iar prețul afișat acolo poate fi adus automat, la cerere, printr-un simplu clic pe butonul de preluare. Este util echipelor de vânzări și achiziții pentru a compara rapid poziționarea propriilor prețuri față de piață, fără a mai căuta manual pe site-urile concurenților.",
+    "last_ingest": "2026-11-08",
+    "friendly_name": "Competitors Price Tracker",
+    "summary": "Acest modul permite urmărirea prețurilor practicate de concurență pentru produsele proprii, direct din fișa de produs. Pentru fiecare produs se pot înregistra una sau mai multe adrese URL către paginile concurenților, iar prețul afișat acolo poate fi adus la cerere, printr-un clic pe butonul de preluare al liniei. Este util echipelor de vânzări și achiziții pentru a compara rapid poziționarea propriilor prețuri față de piață, fără a mai căuta manual pe site-urile concurenților sau a copia prețurile în foi de calcul.",
     "features": [
-      "Linii de concurenți pe fișa produsului (Product Template), fiecare cu: nume concurent, URL-ul produsului pe site-ul concurentului, ultimul preț preluat și moneda acestuia, data/ora ultimei preluări și un mesaj de stare, plus un marcaj „Auto Fetch\" pentru o eventuală preluare automată programată ulterior.",
-      "Preluare la cerere: buton „Fetch\" pe fiecare linie, plus un buton la nivel de produs („Aducere preț concurență\") care preia deodată toate liniile.",
-      "Extragere robustă a prețului: se încearcă întâi date structurate (JSON-LD / Microdata) via `extruct`, dacă biblioteca este instalată, apoi se trece la euristici pe HTML (meta tag-uri, elemente cu clase/atribute de preț) folosind `lxml`.",
-      "Detectarea și actualizarea automată a monedei liniei, dacă codul valutar identificat pe pagină există în baza de date.",
-      "Gestionare clară a erorilor: fiecare linie păstrează un mesaj de stare (ex. „Price not found on page” sau eroarea tehnică întâmpinată), astfel utilizatorul vede imediat de ce o preluare nu a reușit.",
-      "Funcționează și fără `extruct` instalat — se aplică doar fallback-ul euristic pe HTML."
+      "Tab-ul Competitor Prices pe fișa produsului, cu linii de concurenți: Competitor (nume), Product URL (adresa produsului pe site-ul concurentului), Last Price și Currency, Last Fetch (data ultimei preluări) și Fetch Status (mesaj de stare).",
+      "Preluare la cerere, linie cu linie: butonul Fetch de pe linie descarcă pagina concurentului și scrie prețul găsit, momentul preluării și starea *OK*. Nu există un buton care să preia deodată toate liniile unui produs.",
+      "Dacă pagina indică o monedă care există în baza de date (ex. EUR, USD), moneda liniei se actualizează automat.",
+      "Extragerea prețului: se citesc întâi datele structurate ale paginii (JSON-LD sau Microdata, *Offer* și *AggregateOffer*); dacă lipsesc, se încearcă tipare HTML uzuale (meta tag-ul `product:price:amount`, atributul `itemprop=\"price\"`, elemente cu clasa „price\"). Sunt înțelese ambele stiluri de zecimale (1.234,56 și 1,234.56).",
+      "Erori clare: dacă nu se găsește prețul sau pagina nu se poate încărca (ex. 403, 404), linia își păstrează ultimul preț, iar motivul apare în Fetch Status.",
+      "Doar adrese publice: serverul preia numai adrese http(s) care se rezolvă exclusiv la adrese IP publice și verifică fiecare redirecționare (cel mult 5), deci un URL nu poate fi folosit pentru a ajunge la servicii interne. URL-urile din intranet sau de pe adrese private nu mai sunt preluate.",
+      "Utilizatorii interni pot citi, crea, modifica și șterge liniile de concurenți.",
+      "Limitări: coloana Auto Fetch (ascunsă implicit) doar marchează liniile și nu are efect, nu există preluare programată; site-urile care încarcă prețul prin JavaScript sau blochează cererile automate nu returnează preț."
     ],
     "dependencies": [
-      "product"
+      "product",
+      "extruct",
+      "w3lib"
     ],
     "connections": [
-      "product",
-      "cod"
+      "product"
     ],
-    "text": "Deltatech Competitors Price\ndeltatech_competitors_price\nAcest modul permite urmărirea prețurilor practicate de concurență pentru produsele proprii, direct din fișa de produs. Pentru fiecare produs se pot înregistra una sau mai multe adrese URL către paginile concurenților, iar prețul afișat acolo poate fi adus automat, la cerere, printr-un simplu clic pe butonul de preluare. Este util echipelor de vânzări și achiziții pentru a compara rapid poziționarea propriilor prețuri față de piață, fără a mai căuta manual pe site-urile concurenților.\nLinii de concurenți pe fișa produsului (Product Template), fiecare cu: nume concurent, URL-ul produsului pe site-ul concurentului, ultimul preț preluat și moneda acestuia, data/ora ultimei preluări și un mesaj de stare, plus un marcaj „Auto Fetch\" pentru o eventuală preluare automată programată ulterior.\nPreluare la cerere: buton „Fetch\" pe fiecare linie, plus un buton la nivel de produs („Aducere preț concurență\") care preia deodată toate liniile.\nExtragere robustă a prețului: se încearcă întâi date structurate (JSON-LD / Microdata) via `extruct`, dacă biblioteca este instalată, apoi se trece la euristici pe HTML (meta tag-uri, elemente cu clase/atribute de preț) folosind `lxml`.\nDetectarea și actualizarea automată a monedei liniei, dacă codul valutar identificat pe pagină există în baza de date.\nGestionare clară a erorilor: fiecare linie păstrează un mesaj de stare (ex. „Price not found on page” sau eroarea tehnică întâmpinată), astfel utilizatorul vede imediat de ce o preluare nu a reușit.\nFuncționează și fără `extruct` instalat — se aplică doar fallback-ul euristic pe HTML."
+    "text": "Competitors Price Tracker\ndeltatech_competitors_price\nAcest modul permite urmărirea prețurilor practicate de concurență pentru produsele proprii, direct din fișa de produs. Pentru fiecare produs se pot înregistra una sau mai multe adrese URL către paginile concurenților, iar prețul afișat acolo poate fi adus la cerere, printr-un clic pe butonul de preluare al liniei. Este util echipelor de vânzări și achiziții pentru a compara rapid poziționarea propriilor prețuri față de piață, fără a mai căuta manual pe site-urile concurenților sau a copia prețurile în foi de calcul.\nTab-ul Competitor Prices pe fișa produsului, cu linii de concurenți: Competitor (nume), Product URL (adresa produsului pe site-ul concurentului), Last Price și Currency, Last Fetch (data ultimei preluări) și Fetch Status (mesaj de stare).\nPreluare la cerere, linie cu linie: butonul Fetch de pe linie descarcă pagina concurentului și scrie prețul găsit, momentul preluării și starea *OK*. Nu există un buton care să preia deodată toate liniile unui produs.\nDacă pagina indică o monedă care există în baza de date (ex. EUR, USD), moneda liniei se actualizează automat.\nExtragerea prețului: se citesc întâi datele structurate ale paginii (JSON-LD sau Microdata, *Offer* și *AggregateOffer*); dacă lipsesc, se încearcă tipare HTML uzuale (meta tag-ul `product:price:amount`, atributul `itemprop=\"price\"`, elemente cu clasa „price\"). Sunt înțelese ambele stiluri de zecimale (1.234,56 și 1,234.56).\nErori clare: dacă nu se găsește prețul sau pagina nu se poate încărca (ex. 403, 404), linia își păstrează ultimul preț, iar motivul apare în Fetch Status.\nDoar adrese publice: serverul preia numai adrese http(s) care se rezolvă exclusiv la adrese IP publice și verifică fiecare redirecționare (cel mult 5), deci un URL nu poate fi folosit pentru a ajunge la servicii interne. URL-urile din intranet sau de pe adrese private nu mai sunt preluate.\nUtilizatorii interni pot citi, crea, modifica și șterge liniile de concurenți.\nLimitări: coloana Auto Fetch (ascunsă implicit) doar marchează liniile și nu are efect, nu există preluare programată; site-urile care încarcă prețul prin JavaScript sau blochează cererile automate nu returnează preț."
   },
   {
     "path": "deltatech_contact/index.md",
@@ -2546,17 +2559,23 @@
     "version": "19.0.1.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_cron_monitor_webhook",
     "local_path": "odoo-addons/deltatech/deltatech_cron_monitor_webhook",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Deltatech Cron Monitor Webhook",
+    "last_ingest": "2026-11-08",
+    "friendly_name": "Cron Monitor Webhook",
     "summary": "Modulul oferă o soluție simplă și sigură pentru a declanșa sarcinile programate (cron) din Odoo prin webhook-uri, folosind un token de acces global. Astfel, execuția sarcinilor poate fi controlată din platforme externe de monitorizare și programare (ex. cron-job.org, healthchecks.io, EasyCron), independent de planificatorul intern al Odoo.",
     "features": [
-      "Activare webhook per sarcină cron: fiecare acțiune programată poate fi configurată să permită declanșarea externă.",
-      "Cod unic de webhook: se definește un cod unic pentru fiecare cron, folosit pentru a construi URL-ul dedicat de endpoint.",
-      "Securitate prin token global: protecție printr-un token de acces global (Bearer sau parametru), fără semnături HMAC complexe.",
+      "Activare webhook per sarcină cron: în Setări → Tehnic → Automatizare → Acțiuni programate, pe tab-ul Webhook Configuration, se bifează Enable Webhook, se completează un Webhook Code unic (ex. `sync_partners`) și se copiază Webhook URL, care conține deja tokenul global.",
+      "Securitate prin token global, fără semnături HMAC: un singur token gestionează accesul pentru toate webhook-urile activate. Se setează în Setări → Setări generale (căutare „Cron Monitor\"), câmpul Global Webhook Token, cu butonul Generate Token (UUID).",
+      "Autentificare, la alegere (una singură):",
+      "parametru în URL `?token=...` (recomandat);",
+      "antet HTTP `X-Access-Token`;",
+      "corp JSON cu cheia `token` (doar POST, `Content-Type: application/json`).",
       "Endpoint-uri dedicate:",
-      "Declanșare: `/cron/webhook/<webhook_code>` (POST/GET)",
-      "Stare: `/cron/webhook/<webhook_code>/status` (GET)",
-      "Configurare simplă: un singur token global gestionează accesul pentru toate webhook-urile activate, simplificând integrarea cu servicii externe."
+      "Declanșare: `/cron/webhook/<webhook_code>` (POST/GET);",
+      "Stare: `/cron/webhook/<webhook_code>/status` (GET), care cere același token (HTTP 401 fără el), la fel ca declanșarea.",
+      "Tokenul se verifică înaintea codului webhook-ului, deci un cod necunoscut nu se poate deosebi de un token greșit.",
+      "Răspuns JSON: la succes (HTTP 200) `status: success`, `job_name`, `execution_time`, `timestamp`; la eroare `status: error` și `message` (HTTP 401 token invalid, 404 cod invalid sau dezactivat, 500 excepția apărută la rulare). Apelul GET al endpoint-ului de declanșare nu mai eșuează cu HTTP 500 (*read-only transaction*).",
+      "Verificare: Run now în cron-job.org sau deschiderea URL-ului în browser.",
+      "Endpoint public de sănătate `/cron/healthcheck` (GET), care răspunde `OK`, fără token."
     ],
     "dependencies": [
       "base",
@@ -2564,7 +2583,7 @@
       "web"
     ],
     "connections": [],
-    "text": "Deltatech Cron Monitor Webhook\ndeltatech_cron_monitor_webhook\nModulul oferă o soluție simplă și sigură pentru a declanșa sarcinile programate (cron) din Odoo prin webhook-uri, folosind un token de acces global. Astfel, execuția sarcinilor poate fi controlată din platforme externe de monitorizare și programare (ex. cron-job.org, healthchecks.io, EasyCron), independent de planificatorul intern al Odoo.\nActivare webhook per sarcină cron: fiecare acțiune programată poate fi configurată să permită declanșarea externă.\nCod unic de webhook: se definește un cod unic pentru fiecare cron, folosit pentru a construi URL-ul dedicat de endpoint.\nSecuritate prin token global: protecție printr-un token de acces global (Bearer sau parametru), fără semnături HMAC complexe.\nEndpoint-uri dedicate:\nDeclanșare: `/cron/webhook/<webhook_code>` (POST/GET)\nStare: `/cron/webhook/<webhook_code>/status` (GET)\nConfigurare simplă: un singur token global gestionează accesul pentru toate webhook-urile activate, simplificând integrarea cu servicii externe."
+    "text": "Cron Monitor Webhook\ndeltatech_cron_monitor_webhook\nModulul oferă o soluție simplă și sigură pentru a declanșa sarcinile programate (cron) din Odoo prin webhook-uri, folosind un token de acces global. Astfel, execuția sarcinilor poate fi controlată din platforme externe de monitorizare și programare (ex. cron-job.org, healthchecks.io, EasyCron), independent de planificatorul intern al Odoo.\nActivare webhook per sarcină cron: în Setări → Tehnic → Automatizare → Acțiuni programate, pe tab-ul Webhook Configuration, se bifează Enable Webhook, se completează un Webhook Code unic (ex. `sync_partners`) și se copiază Webhook URL, care conține deja tokenul global.\nSecuritate prin token global, fără semnături HMAC: un singur token gestionează accesul pentru toate webhook-urile activate. Se setează în Setări → Setări generale (căutare „Cron Monitor\"), câmpul Global Webhook Token, cu butonul Generate Token (UUID).\nAutentificare, la alegere (una singură):\nparametru în URL `?token=...` (recomandat);\nantet HTTP `X-Access-Token`;\ncorp JSON cu cheia `token` (doar POST, `Content-Type: application/json`).\nEndpoint-uri dedicate:\nDeclanșare: `/cron/webhook/<webhook_code>` (POST/GET);\nStare: `/cron/webhook/<webhook_code>/status` (GET), care cere același token (HTTP 401 fără el), la fel ca declanșarea.\nTokenul se verifică înaintea codului webhook-ului, deci un cod necunoscut nu se poate deosebi de un token greșit.\nRăspuns JSON: la succes (HTTP 200) `status: success`, `job_name`, `execution_time`, `timestamp`; la eroare `status: error` și `message` (HTTP 401 token invalid, 404 cod invalid sau dezactivat, 500 excepția apărută la rulare). Apelul GET al endpoint-ului de declanșare nu mai eșuează cu HTTP 500 (*read-only transaction*).\nVerificare: Run now în cron-job.org sau deschiderea URL-ului în browser.\nEndpoint public de sănătate `/cron/healthcheck` (GET), care răspunde `OK`, fără token."
   },
   {
     "path": "deltatech_cron_progress/index.md",
@@ -2935,15 +2954,16 @@
     "version": "19.0.1.0.8",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_batch",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_batch",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Deltatech Delivery Batch",
-    "summary": "Modulul „Deltatech Delivery Batch” fluidizează logistica de depozit prin generarea automată a AWB-urilor (scrisorilor de transport) pentru mai multe livrări simultan, folosind procesare în lot. Din perspectivă de business, această automatizare crește semnificativ productivitatea departamentului de expediere, permițând unui singur operator să proceseze un volum mare de comenzi în minute, nu în ore.",
+    "last_ingest": "2026-11-08",
+    "friendly_name": "Delivery Batch AWB",
+    "summary": "Modulul „Delivery Batch AWB\" fluidizează logistica de depozit prin generarea AWB-urilor (scrisorilor de transport) direct dintr-un transfer în lot, pentru mai multe livrări deodată. Din perspectivă de business, automatizarea crește productivitatea departamentului de expediere, permițând unui singur operator să proceseze un volum mare de comenzi în minute, nu în ore.",
     "features": [
-      "Onorare accelerată a comenzilor: procesează mai multe expedieri deodată, reducând drastic timpul petrecut pe generarea manuală de AWB-uri.",
-      "Scalabilitate operațională îmbunătățită: gestionează eficient vârfurile de volum de comenzi prin automatizarea sarcinilor de expediere de rutină, folosind acțiuni în lot.",
-      "Acuratețe logistică sporită: reduce erorile umane la crearea etichetelor de expediere prin extragere de date consistentă și automatizată pentru toate comenzile dintr-un lot.",
-      "Comunicare integrată cu curierii: coordonează fără cusur cu furnizorii de servicii de livrare pentru expedieri la scară largă, direct din Odoo.",
-      "Distribuție eficientă din punct de vedere al costurilor: maximizează eficiența personalului și reduce timpul până la livrare prin fluxuri de lucru optimizate în lot."
+      "Onorare accelerată a comenzilor: procesează mai multe expedieri deodată, reducând timpul petrecut pe generarea manuală de AWB-uri.",
+      "Scalabilitate operațională îmbunătățită: gestionează vârfurile de volum prin acțiuni în lot asupra loturilor de ridicări (`stock.picking.batch`).",
+      "Acuratețe logistică sporită: reduce erorile umane la crearea etichetelor de expediere prin date consistente pentru toate comenzile dintr-un lot.",
+      "Comunicare integrată cu curierii: trimite expedierea către curier direct din Odoo, prin butoanele de pe formularul lotului: Send to Shipper, Carrier Details, Print AWB și Cancel (anulează și expedierea).",
+      "Distribuție eficientă din punct de vedere al costurilor: maximizează eficiența personalului și reduce timpul până la livrare prin fluxuri de lucru în lot.",
+      "Trimiterea se face o singură dată pe lot, prin prima livrare din lot; numărul de urmărire și curierul rezultate se copiază apoi pe toate livrările lotului. La anularea lotului, expedierea se anulează întâi (doar dacă există număr de urmărire), apoi livrările se detașează din lot."
     ],
     "dependencies": [
       "deltatech_delivery",
@@ -2957,7 +2977,7 @@
       "carrier_generate_label",
       "stock_picking_batch"
     ],
-    "text": "Deltatech Delivery Batch\ndeltatech_delivery_batch\nModulul „Deltatech Delivery Batch” fluidizează logistica de depozit prin generarea automată a AWB-urilor (scrisorilor de transport) pentru mai multe livrări simultan, folosind procesare în lot. Din perspectivă de business, această automatizare crește semnificativ productivitatea departamentului de expediere, permițând unui singur operator să proceseze un volum mare de comenzi în minute, nu în ore.\nOnorare accelerată a comenzilor: procesează mai multe expedieri deodată, reducând drastic timpul petrecut pe generarea manuală de AWB-uri.\nScalabilitate operațională îmbunătățită: gestionează eficient vârfurile de volum de comenzi prin automatizarea sarcinilor de expediere de rutină, folosind acțiuni în lot.\nAcuratețe logistică sporită: reduce erorile umane la crearea etichetelor de expediere prin extragere de date consistentă și automatizată pentru toate comenzile dintr-un lot.\nComunicare integrată cu curierii: coordonează fără cusur cu furnizorii de servicii de livrare pentru expedieri la scară largă, direct din Odoo.\nDistribuție eficientă din punct de vedere al costurilor: maximizează eficiența personalului și reduce timpul până la livrare prin fluxuri de lucru optimizate în lot."
+    "text": "Delivery Batch AWB\ndeltatech_delivery_batch\nModulul „Delivery Batch AWB\" fluidizează logistica de depozit prin generarea AWB-urilor (scrisorilor de transport) direct dintr-un transfer în lot, pentru mai multe livrări deodată. Din perspectivă de business, automatizarea crește productivitatea departamentului de expediere, permițând unui singur operator să proceseze un volum mare de comenzi în minute, nu în ore.\nOnorare accelerată a comenzilor: procesează mai multe expedieri deodată, reducând timpul petrecut pe generarea manuală de AWB-uri.\nScalabilitate operațională îmbunătățită: gestionează vârfurile de volum prin acțiuni în lot asupra loturilor de ridicări (`stock.picking.batch`).\nAcuratețe logistică sporită: reduce erorile umane la crearea etichetelor de expediere prin date consistente pentru toate comenzile dintr-un lot.\nComunicare integrată cu curierii: trimite expedierea către curier direct din Odoo, prin butoanele de pe formularul lotului: Send to Shipper, Carrier Details, Print AWB și Cancel (anulează și expedierea).\nDistribuție eficientă din punct de vedere al costurilor: maximizează eficiența personalului și reduce timpul până la livrare prin fluxuri de lucru în lot.\nTrimiterea se face o singură dată pe lot, prin prima livrare din lot; numărul de urmărire și curierul rezultate se copiază apoi pe toate livrările lotului. La anularea lotului, expedierea se anulează întâi (doar dacă există număr de urmărire), apoi livrările se detașează din lot."
   },
   {
     "path": "deltatech_delivery_category_price/index.md",
@@ -4185,7 +4205,7 @@
   {
     "path": "deltatech_ecr_connect/index.md",
     "module": "deltatech_ecr_connect",
-    "version": "19.0.1.1.8",
+    "version": "19.0.1.3.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_ecr_connect",
     "local_path": "odoo-addons/bitshop/deltatech_ecr_connect",
     "last_ingest": "2026-08-20",
@@ -4214,7 +4234,7 @@
   {
     "path": "deltatech_ecr_fiscal/index.md",
     "module": "deltatech_ecr_fiscal",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_ecr_fiscal",
     "local_path": "odoo-addons/deltatech/deltatech_ecr_fiscal",
     "last_ingest": "2026-10-09",
@@ -5495,26 +5515,32 @@
   {
     "path": "deltatech_mail/index.md",
     "module": "deltatech_mail",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.7",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_mail",
     "local_path": "odoo-addons/deltatech/deltatech_mail",
-    "last_ingest": "2026-06-01",
+    "last_ingest": "2026-11-08",
     "friendly_name": "Mail Substitution",
-    "summary": "Modulul oferă posibilitatea de a filtra emailurile și de a le redirecționa către o altă adresă. Este util în special în scenarii unde mesajele trebuie interceptate și trimise la o adresă de substituție, de exemplu pentru testare sau pentru centralizarea corespondenței către un destinatar diferit de cel original.",
+    "summary": "Modulul permite filtrarea emailurilor și redirecționarea lor către o altă adresă. Este util mai ales pe bazele de date de test sau de instruire, unde clienții și furnizorii nu trebuie să primească mesajele reale, dar și pentru centralizarea corespondenței către un alt destinatar. Poate înlocui și expeditorul, poate corecta automat texte din mesajele postate și poate trimite mesajele de pe adresa de email a companiei.",
     "features": [
-      "Filtrarea emailurilor.",
-      "Redirecționarea emailurilor către o altă adresă (substituție)."
+      "Regulile se gestionează în modul dezvoltator, la Setări → Tehnic → Email, și se aplică tuturor utilizatorilor și companiilor din baza de date.",
+      "Substituție email (tip *Destinatar* sau *Expeditor*), opțional pe un anumit model de document; fără model, regula se aplică tuturor emailurilor:",
+      "*Receiver* înlocuiește toți destinatarii emailului și elimină copiile CC, deci destinatarii originali nu sunt contactați;",
+      "*Sender* înlocuiește expeditorul.",
+      "Pe bazele de test se recomandă o regulă generică *Receiver*, care se șterge înainte de trecerea în producție.",
+      "Substituție în corpul mesajelor: textul din *Body Part* este înlocuit cu textul din *Substitution* în fiecare mesaj postat din chatter; mesajele deja postate nu se modifică.",
+      "Email companie ca expeditor: cu parametrul de sistem `mail.use_company_email` setat pe `True` (Setări → Tehnic → Parametri → Parametri de sistem), mesajele postate și emailurile din coadă pleacă de pe adresa de email a companiei autorului; un expeditor explicit (email primit, șablon) se păstrează. Compania trebuie să aibă adresă de email, altfel postarea mesajului este refuzată.",
+      "Securitate (din versiunea `19.0.1.0.7`): doar administratorii (*Administrare: Setări*) pot crea sau modifica regulile; utilizatorii interni le pot doar citi. Înainte, orice utilizator intern putea adăuga o regulă *Receiver* care redirecționa toate emailurile bazei de date. Substituțiile din corp se citesc cu `sudo` la postare, deci se aplică și autorilor fără acces la reguli (ex. portal)."
     ],
     "dependencies": [
       "mail"
     ],
     "connections": [],
-    "text": "Mail Substitution\ndeltatech_mail\nModulul oferă posibilitatea de a filtra emailurile și de a le redirecționa către o altă adresă. Este util în special în scenarii unde mesajele trebuie interceptate și trimise la o adresă de substituție, de exemplu pentru testare sau pentru centralizarea corespondenței către un destinatar diferit de cel original.\nFiltrarea emailurilor.\nRedirecționarea emailurilor către o altă adresă (substituție)."
+    "text": "Mail Substitution\ndeltatech_mail\nModulul permite filtrarea emailurilor și redirecționarea lor către o altă adresă. Este util mai ales pe bazele de date de test sau de instruire, unde clienții și furnizorii nu trebuie să primească mesajele reale, dar și pentru centralizarea corespondenței către un alt destinatar. Poate înlocui și expeditorul, poate corecta automat texte din mesajele postate și poate trimite mesajele de pe adresa de email a companiei.\nRegulile se gestionează în modul dezvoltator, la Setări → Tehnic → Email, și se aplică tuturor utilizatorilor și companiilor din baza de date.\nSubstituție email (tip *Destinatar* sau *Expeditor*), opțional pe un anumit model de document; fără model, regula se aplică tuturor emailurilor:\n*Receiver* înlocuiește toți destinatarii emailului și elimină copiile CC, deci destinatarii originali nu sunt contactați;\n*Sender* înlocuiește expeditorul.\nPe bazele de test se recomandă o regulă generică *Receiver*, care se șterge înainte de trecerea în producție.\nSubstituție în corpul mesajelor: textul din *Body Part* este înlocuit cu textul din *Substitution* în fiecare mesaj postat din chatter; mesajele deja postate nu se modifică.\nEmail companie ca expeditor: cu parametrul de sistem `mail.use_company_email` setat pe `True` (Setări → Tehnic → Parametri → Parametri de sistem), mesajele postate și emailurile din coadă pleacă de pe adresa de email a companiei autorului; un expeditor explicit (email primit, șablon) se păstrează. Compania trebuie să aibă adresă de email, altfel postarea mesajului este refuzată.\nSecuritate (din versiunea `19.0.1.0.7`): doar administratorii (*Administrare: Setări*) pot crea sau modifica regulile; utilizatorii interni le pot doar citi. Înainte, orice utilizator intern putea adăuga o regulă *Receiver* care redirecționa toate emailurile bazei de date. Substituțiile din corp se citesc cu `sudo` la postare, deci se aplică și autorilor fără acces la reguli (ex. portal)."
   },
   {
     "path": "deltatech_markdown_field/index.md",
     "module": "deltatech_markdown_field",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_markdown_field",
     "local_path": "odoo-addons/deltatech/deltatech_markdown_field",
     "last_ingest": "2026-07-31",
@@ -8077,7 +8103,7 @@
   {
     "path": "deltatech_pos/index.md",
     "module": "deltatech_pos",
-    "version": "19.0.2.14.0",
+    "version": "19.0.2.16.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos",
     "local_path": "odoo-addons/bitshop/deltatech_pos",
     "last_ingest": "2026-10-09",
@@ -8132,7 +8158,7 @@
   {
     "path": "deltatech_pos_base/index.md",
     "module": "deltatech_pos_base",
-    "version": "19.0.1.0.10",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos_base",
     "local_path": "odoo-addons/bitshop/deltatech_pos_base",
     "last_ingest": "2026-08-20",
@@ -11371,7 +11397,7 @@
   {
     "path": "deltatech_sale_store/index.md",
     "module": "deltatech_sale_store",
-    "version": "19.0.2.5.16",
+    "version": "19.0.2.6.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_store",
     "local_path": "odoo-addons/bitshop/deltatech_sale_store",
     "last_ingest": "2026-09-29",
@@ -12621,7 +12647,7 @@
   {
     "path": "deltatech_tc/index.md",
     "module": "deltatech_tc",
-    "version": "19.0.1.2.4",
+    "version": "19.0.1.2.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_tc",
     "local_path": "odoo-addons/deltatech/deltatech_tc",
     "last_ingest": "2026-09-29",
@@ -13369,7 +13395,7 @@
   {
     "path": "deltatech_website_access_design/index.md",
     "module": "deltatech_website_access_design",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_access_design",
     "local_path": "odoo-addons/deltatech/deltatech_website_access_design",
     "last_ingest": "2026-10-09",
@@ -13649,7 +13675,7 @@
   {
     "path": "deltatech_website_effects/index.md",
     "module": "deltatech_website_effects",
-    "version": "19.0.1.2.24",
+    "version": "19.0.1.3.2",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_effects",
     "local_path": "odoo-addons/bitshop/deltatech_website_effects",
     "last_ingest": "2026-10-18",
@@ -16344,13 +16370,14 @@
     "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_bank_register_report",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_bank_register_report",
-    "last_ingest": "2026-07-19",
+    "last_ingest": "2026-11-08",
     "friendly_name": "Romania - Registru de bancă",
     "summary": "Modulul aduce Jurnalul de bancă românesc ca raport nativ Odoo (`account.report`), cu aceeași structură zilnică ca Registrul de casă (modulul `l10n_ro_cash_register_report`, pe care îl extinde direct — moștenește handler-ul acestuia). Soldurile se calculează pe contul jurnalului de bancă (`default_account_id`, ex. 5121.x), din mișcările contabile postate, cu report automat al soldului între zile, astfel încât soldul contabil 512x se confruntă direct cu extrasul bancar. Spre deosebire de Registrul de casă (formular tipizat 14-4-7A), jurnalul de bancă nu are un formular impus prin lege — raportul urmează forma uzuală din practica contabilă românească.",
     "features": [
       "Secțiune per (jurnal, zi), cu antet care afișează contul și jurnalul (ex. „5121.2 BANCA TRANSILVANIA — 26.01.2026\") și totalurile zilei: încasări, plăți, sold final.",
       "Rând de report al soldului din ziua precedentă.",
-      "Linii de mișcare ale contului bancar, cu încasările pe debit, plățile pe credit și sold cumulat.",
+      "Linii de mișcare ale contului bancar, cu încasările pe debit, plățile pe credit, contul corespondent și sold cumulat.",
+      "Contul corespondent (ex. 4111, 401, 627) este contul creditat la încasare și cel debitat la plată; la o notă compusă apar conturile distincte, în ordinea sumelor (ex. „628, 4426”), cel mult trei; la o plată trecută prin contul intermediar de încasări/plăți se afișează contul plății reconciliate, iar pe contul de așteptare linia este marcată „nereconciliat\".",
       "Rând de sold final, folosit drept report pentru ziua următoare.",
       "Filtrul de jurnale limitat automat la jurnalele de tip bancă (câte unul per cont bancar/monedă).",
       "Drill-down din liniile de mișcare direct către înregistrarea contabilă (`account.move.line`).",
@@ -16365,7 +16392,7 @@
       "l10n_ro_sale_receipt_type_report",
       "account_reports"
     ],
-    "text": "Romania - Registru de bancă\nl10n_ro_bank_register_report\nModulul aduce Jurnalul de bancă românesc ca raport nativ Odoo (`account.report`), cu aceeași structură zilnică ca Registrul de casă (modulul `l10n_ro_cash_register_report`, pe care îl extinde direct — moștenește handler-ul acestuia). Soldurile se calculează pe contul jurnalului de bancă (`default_account_id`, ex. 5121.x), din mișcările contabile postate, cu report automat al soldului între zile, astfel încât soldul contabil 512x se confruntă direct cu extrasul bancar. Spre deosebire de Registrul de casă (formular tipizat 14-4-7A), jurnalul de bancă nu are un formular impus prin lege — raportul urmează forma uzuală din practica contabilă românească.\nSecțiune per (jurnal, zi), cu antet care afișează contul și jurnalul (ex. „5121.2 BANCA TRANSILVANIA — 26.01.2026\") și totalurile zilei: încasări, plăți, sold final.\nRând de report al soldului din ziua precedentă.\nLinii de mișcare ale contului bancar, cu încasările pe debit, plățile pe credit și sold cumulat.\nRând de sold final, folosit drept report pentru ziua următoare.\nFiltrul de jurnale limitat automat la jurnalele de tip bancă (câte unul per cont bancar/monedă).\nDrill-down din liniile de mișcare direct către înregistrarea contabilă (`account.move.line`).\nFiltru de interval de dată, selector de jurnale și selector multi-companie, moștenite din framework-ul `account_reports`.\nExport PDF/XLSX și tipărire, disponibile nativ din bara de instrumente a raportului."
+    "text": "Romania - Registru de bancă\nl10n_ro_bank_register_report\nModulul aduce Jurnalul de bancă românesc ca raport nativ Odoo (`account.report`), cu aceeași structură zilnică ca Registrul de casă (modulul `l10n_ro_cash_register_report`, pe care îl extinde direct — moștenește handler-ul acestuia). Soldurile se calculează pe contul jurnalului de bancă (`default_account_id`, ex. 5121.x), din mișcările contabile postate, cu report automat al soldului între zile, astfel încât soldul contabil 512x se confruntă direct cu extrasul bancar. Spre deosebire de Registrul de casă (formular tipizat 14-4-7A), jurnalul de bancă nu are un formular impus prin lege — raportul urmează forma uzuală din practica contabilă românească.\nSecțiune per (jurnal, zi), cu antet care afișează contul și jurnalul (ex. „5121.2 BANCA TRANSILVANIA — 26.01.2026\") și totalurile zilei: încasări, plăți, sold final.\nRând de report al soldului din ziua precedentă.\nLinii de mișcare ale contului bancar, cu încasările pe debit, plățile pe credit, contul corespondent și sold cumulat.\nContul corespondent (ex. 4111, 401, 627) este contul creditat la încasare și cel debitat la plată; la o notă compusă apar conturile distincte, în ordinea sumelor (ex. „628, 4426”), cel mult trei; la o plată trecută prin contul intermediar de încasări/plăți se afișează contul plății reconciliate, iar pe contul de așteptare linia este marcată „nereconciliat\".\nRând de sold final, folosit drept report pentru ziua următoare.\nFiltrul de jurnale limitat automat la jurnalele de tip bancă (câte unul per cont bancar/monedă).\nDrill-down din liniile de mișcare direct către înregistrarea contabilă (`account.move.line`).\nFiltru de interval de dată, selector de jurnale și selector multi-companie, moștenite din framework-ul `account_reports`.\nExport PDF/XLSX și tipărire, disponibile nativ din bara de instrumente a raportului."
   },
   {
     "path": "l10n_ro_caba/index.md",
@@ -19663,7 +19690,7 @@
   {
     "path": "l10n_ro_pos_fiscal_compliance/index.md",
     "module": "l10n_ro_pos_fiscal_compliance",
-    "version": "19.0.2.3.4",
+    "version": "19.0.2.3.5",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_fiscal_compliance`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_pos_fiscal_compliance",
     "last_ingest": "2026-10-22",
@@ -19701,7 +19728,7 @@
   {
     "path": "l10n_ro_pos_fiscal_compliance_ecr/index.md",
     "module": "l10n_ro_pos_fiscal_compliance_ecr",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.3.1",
     "github": "[https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_fiscal_compliance_ecr](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_fiscal_compliance_ecr)",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_pos_fiscal_compliance_ecr",
     "last_ingest": "2026-10-22",
@@ -20039,17 +20066,20 @@
     "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_registru_jurnal",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_registru_jurnal",
-    "last_ingest": "2026-07-19",
+    "last_ingest": "2026-11-08",
     "friendly_name": "Romania - Registrul-jurnal",
     "summary": "Modulul aduce Registrul-jurnal (cod 14-1-1) ca raport nativ Odoo (`account.report`), conform Legii contabilității nr. 82/1991 art. 20 și OMFP 2634/2015: listarea cronologică a tuturor notelor contabile postate, din toate jurnalele, cu perechea cont debitor/cont creditor pe fiecare rând și totaluri zilnice. Rapoartele standard Enterprise nu acoperă acest gol — *Journal Report* grupează pe jurnal, iar *General Ledger* grupează pe cont — niciunul nu produce registrul cronologic unic cerut de lege. Modulul e vizibil automat doar pentru companiile cu Țara = România.",
     "features": [
       "Secțiune per zi, pliabilă, cu totalul zilei (Debit = Credit).",
       "Rând numerotat per notă contabilă: Nr. crt. continuu pe toată perioada, Data, Explicație, Document, Cont debitor, Cont creditor, Debit, Credit, Jurnal.",
-      "Note compuse (1:N sau M:N): partea multiplă se afișează cu convenția „%\" pe rândul numerotat (aceeași convenție folosită și de exportul SAGA), iar conturile componente apar dedesubt ca rânduri nenumerotate, cu sumele lor.",
+      "Note compuse (1:N sau M:N): partea multiplă se afișează cu convenția „%\" pe rândul numerotat (convenția registrului manual), iar conturile componente apar dedesubt ca rânduri nenumerotate, cu sumele lor.",
       "Rând de total perioadă — egalitatea Debit = Credit se verifică la fiecare nivel; totalurile însumează doar rândurile numerotate, fără dublarea sumelor componentelor.",
       "Filtru de interval de dată, selector de jurnale, selector multi-companie și unfold all, moștenite din framework-ul `account_reports`.",
       "Drill-down la nota contabilă (rând numerotat, către `account.move`) sau la linia contabilă componentă (rând nenumerotat, către `account.move.line`).",
-      "Export PDF/XLSX direct din bara de instrumente a raportului."
+      "Export PDF/XLSX direct din bara de instrumente a raportului.",
+      "Comparația de perioade și cea de creștere sunt oprite pe raport: pornite, fiecare grup de coloane repeta perioada curentă, cu numerotare și conturi duplicate.",
+      "Multi-company cu monede diferite: notele și componentele se afișează în moneda companiei lor, iar totalurile zilei și ale perioadei se convertesc în moneda companiei curente cu tabelul de curs al rapoartelor contabile.",
+      "Vizibil automat doar pentru companiile cu Țara = România."
     ],
     "dependencies": [
       "account_reports",
@@ -20062,7 +20092,7 @@
       "l10n_ro_bank_register_report",
       "account_reports"
     ],
-    "text": "Romania - Registrul-jurnal\nl10n_ro_registru_jurnal\nModulul aduce Registrul-jurnal (cod 14-1-1) ca raport nativ Odoo (`account.report`), conform Legii contabilității nr. 82/1991 art. 20 și OMFP 2634/2015: listarea cronologică a tuturor notelor contabile postate, din toate jurnalele, cu perechea cont debitor/cont creditor pe fiecare rând și totaluri zilnice. Rapoartele standard Enterprise nu acoperă acest gol — *Journal Report* grupează pe jurnal, iar *General Ledger* grupează pe cont — niciunul nu produce registrul cronologic unic cerut de lege. Modulul e vizibil automat doar pentru companiile cu Țara = România.\nSecțiune per zi, pliabilă, cu totalul zilei (Debit = Credit).\nRând numerotat per notă contabilă: Nr. crt. continuu pe toată perioada, Data, Explicație, Document, Cont debitor, Cont creditor, Debit, Credit, Jurnal.\nNote compuse (1:N sau M:N): partea multiplă se afișează cu convenția „%\" pe rândul numerotat (aceeași convenție folosită și de exportul SAGA), iar conturile componente apar dedesubt ca rânduri nenumerotate, cu sumele lor.\nRând de total perioadă — egalitatea Debit = Credit se verifică la fiecare nivel; totalurile însumează doar rândurile numerotate, fără dublarea sumelor componentelor.\nFiltru de interval de dată, selector de jurnale, selector multi-companie și unfold all, moștenite din framework-ul `account_reports`.\nDrill-down la nota contabilă (rând numerotat, către `account.move`) sau la linia contabilă componentă (rând nenumerotat, către `account.move.line`).\nExport PDF/XLSX direct din bara de instrumente a raportului."
+    "text": "Romania - Registrul-jurnal\nl10n_ro_registru_jurnal\nModulul aduce Registrul-jurnal (cod 14-1-1) ca raport nativ Odoo (`account.report`), conform Legii contabilității nr. 82/1991 art. 20 și OMFP 2634/2015: listarea cronologică a tuturor notelor contabile postate, din toate jurnalele, cu perechea cont debitor/cont creditor pe fiecare rând și totaluri zilnice. Rapoartele standard Enterprise nu acoperă acest gol — *Journal Report* grupează pe jurnal, iar *General Ledger* grupează pe cont — niciunul nu produce registrul cronologic unic cerut de lege. Modulul e vizibil automat doar pentru companiile cu Țara = România.\nSecțiune per zi, pliabilă, cu totalul zilei (Debit = Credit).\nRând numerotat per notă contabilă: Nr. crt. continuu pe toată perioada, Data, Explicație, Document, Cont debitor, Cont creditor, Debit, Credit, Jurnal.\nNote compuse (1:N sau M:N): partea multiplă se afișează cu convenția „%\" pe rândul numerotat (convenția registrului manual), iar conturile componente apar dedesubt ca rânduri nenumerotate, cu sumele lor.\nRând de total perioadă — egalitatea Debit = Credit se verifică la fiecare nivel; totalurile însumează doar rândurile numerotate, fără dublarea sumelor componentelor.\nFiltru de interval de dată, selector de jurnale, selector multi-companie și unfold all, moștenite din framework-ul `account_reports`.\nDrill-down la nota contabilă (rând numerotat, către `account.move`) sau la linia contabilă componentă (rând nenumerotat, către `account.move.line`).\nExport PDF/XLSX direct din bara de instrumente a raportului.\nComparația de perioade și cea de creștere sunt oprite pe raport: pornite, fiecare grup de coloane repeta perioada curentă, cu numerotare și conturi duplicate.\nMulti-company cu monede diferite: notele și componentele se afișează în moneda companiei lor, iar totalurile zilei și ale perioadei se convertesc în moneda companiei curente cu tabelul de curs al rapoartelor contabile.\nVizibil automat doar pentru companiile cu Țara = România."
   },
   {
     "path": "l10n_ro_report_common/index.md",
@@ -21187,9 +21217,9 @@
     "path": "l10n_ro_stock_posting_date/index.md",
     "module": "l10n_ro_stock_posting_date",
     "version": "19.0.1.0.2",
-    "github": "[https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_posting_date](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_posting_date)",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_posting_date",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_posting_date",
-    "last_ingest": "2026-07-02",
+    "last_ingest": "2026-11-08",
     "friendly_name": "Romania - Data contabilă a mișcărilor de stoc",
     "summary": "Modulul adaugă o **dată contabilă (Posting Date)** pe operațiile de stoc — similar conceptului din SAP — pentru companiile din România, și o pune sub un control care împiedică datarea ce ar strica ordinea cronologică a valorizării. Astfel, echipa de contabilitate poate stabili exact în ce zi contabilă se înregistrează o recepție, o livrare sau un transfer, fără riscul de a rupe ordinea costurilor FIFO/CMP prin operații datate necorespunzător.",
     "features": [
@@ -21202,7 +21232,11 @@
       "cade într-o perioadă contabilă blocată (lock date fiscal/TVA/hard lock);",
       "opțional, este mai devreme de prima zi a lunii precedente.",
       "Granularitatea verificării „ultimei postări\" urmează granularitatea valorizării native Odoo 19: implicit pe `(produs, companie)`.",
-      "Setări dedicate în Configurare Inventar/Contabilitate pentru activarea controlului și a restricției pe luna precedentă."
+      "Se activează din Inventar → Configurare → Setări, la secțiunea de evaluare: Control dată contabilă stoc și, opțional, Restricționează data contabilă la luna precedentă. De aici, operațiile de stoc afișează câmpul Dată contabilă, iar validarea verifică automat data introdusă.",
+      "Configurare necesară: cel puțin un produs stocabil cu valorizare perpetuă (FIFO sau CMP) și un jurnal de evaluare a stocului setat pe companie; utilizatorii care validează operațiile au nevoie de acces la aplicația Inventar.",
+      "Permite înregistrarea unei mișcări cu dată din trecut (ex. o recepție primită ieri, operată azi); efectul se vede în balanță, în fișa contului de stoc și în jurnalul de stoc, în perioada datei alese.",
+      "La retur (către furnizor sau de la client), data contabilă trebuie să fie cel puțin egală cu data mișcării originale; un retur datat înaintea ei este blocat indiferent de celelalte reguli.",
+      "Modulul nu schimbă liniile notelor contabile, ci doar data lor; data contabilă nu se confundă cu data programată din logistică. Datele de blocare contabilă se gestionează separat, de utilizatorii cu drepturile aferente."
     ],
     "dependencies": [
       "stock_account",
@@ -21212,7 +21246,7 @@
       "l10n_ro_stock_gestiune",
       "force_period_date"
     ],
-    "text": "Romania - Data contabilă a mișcărilor de stoc\nl10n_ro_stock_posting_date\nModulul adaugă o **dată contabilă (Posting Date)** pe operațiile de stoc — similar conceptului din SAP — pentru companiile din România, și o pune sub un control care împiedică datarea ce ar strica ordinea cronologică a valorizării. Astfel, echipa de contabilitate poate stabili exact în ce zi contabilă se înregistrează o recepție, o livrare sau un transfer, fără riscul de a rupe ordinea costurilor FIFO/CMP prin operații datate necorespunzător.\nExpune un câmp „Posting Date\" (dată contabilă) pe operațiile de stoc (`stock.picking`), separat de data efectivă de validare.\nLa validare, data contabilă aleasă este propagată către toate notele generate: valorizarea nativă Odoo, recepția fără factură (371 = 408), transferul valoric între gestiuni și storno-ul de retur — printr-un mecanism unic bazat pe contextul `force_period_date`.\nControl activabil per companie care blochează o dată contabilă atunci când:\neste în viitor;\neste înainte de ultima mișcare valorizată a aceluiași produs (ar desincroniza ordinea costurilor FIFO/CMP);\nla retur, este înainte de mișcarea originală pe care o stornează (barieră absolută — un retur nu poate precede recepția/livrarea inversată);\ncade într-o perioadă contabilă blocată (lock date fiscal/TVA/hard lock);\nopțional, este mai devreme de prima zi a lunii precedente.\nGranularitatea verificării „ultimei postări\" urmează granularitatea valorizării native Odoo 19: implicit pe `(produs, companie)`.\nSetări dedicate în Configurare Inventar/Contabilitate pentru activarea controlului și a restricției pe luna precedentă."
+    "text": "Romania - Data contabilă a mișcărilor de stoc\nl10n_ro_stock_posting_date\nModulul adaugă o **dată contabilă (Posting Date)** pe operațiile de stoc — similar conceptului din SAP — pentru companiile din România, și o pune sub un control care împiedică datarea ce ar strica ordinea cronologică a valorizării. Astfel, echipa de contabilitate poate stabili exact în ce zi contabilă se înregistrează o recepție, o livrare sau un transfer, fără riscul de a rupe ordinea costurilor FIFO/CMP prin operații datate necorespunzător.\nExpune un câmp „Posting Date\" (dată contabilă) pe operațiile de stoc (`stock.picking`), separat de data efectivă de validare.\nLa validare, data contabilă aleasă este propagată către toate notele generate: valorizarea nativă Odoo, recepția fără factură (371 = 408), transferul valoric între gestiuni și storno-ul de retur — printr-un mecanism unic bazat pe contextul `force_period_date`.\nControl activabil per companie care blochează o dată contabilă atunci când:\neste în viitor;\neste înainte de ultima mișcare valorizată a aceluiași produs (ar desincroniza ordinea costurilor FIFO/CMP);\nla retur, este înainte de mișcarea originală pe care o stornează (barieră absolută — un retur nu poate precede recepția/livrarea inversată);\ncade într-o perioadă contabilă blocată (lock date fiscal/TVA/hard lock);\nopțional, este mai devreme de prima zi a lunii precedente.\nGranularitatea verificării „ultimei postări\" urmează granularitatea valorizării native Odoo 19: implicit pe `(produs, companie)`.\nSe activează din Inventar → Configurare → Setări, la secțiunea de evaluare: Control dată contabilă stoc și, opțional, Restricționează data contabilă la luna precedentă. De aici, operațiile de stoc afișează câmpul Dată contabilă, iar validarea verifică automat data introdusă.\nConfigurare necesară: cel puțin un produs stocabil cu valorizare perpetuă (FIFO sau CMP) și un jurnal de evaluare a stocului setat pe companie; utilizatorii care validează operațiile au nevoie de acces la aplicația Inventar.\nPermite înregistrarea unei mișcări cu dată din trecut (ex. o recepție primită ieri, operată azi); efectul se vede în balanță, în fișa contului de stoc și în jurnalul de stoc, în perioada datei alese.\nLa retur (către furnizor sau de la client), data contabilă trebuie să fie cel puțin egală cu data mișcării originale; un retur datat înaintea ei este blocat indiferent de celelalte reguli.\nModulul nu schimbă liniile notelor contabile, ci doar data lor; data contabilă nu se confundă cu data programată din logistică. Datele de blocare contabilă se gestionează separat, de utilizatorii cu drepturile aferente."
   },
   {
     "path": "l10n_ro_stock_provision/index.md",
@@ -21603,27 +21637,39 @@
     "path": "l10n_ro_vat_on_payment_lock/index.md",
     "module": "l10n_ro_vat_on_payment_lock",
     "version": "19.0.1.0.5",
-    "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_vat_on_payment_lock`",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_vat_on_payment_lock",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_vat_on_payment_lock",
-    "last_ingest": "2026-07-02",
-    "friendly_name": "Romania - Blocare stornare TVA la încasare declarat (FR-16)",
-    "summary": "Modulul blochează desfacerea reconcilierii unei încasări atunci când TVA la încasare aferentă (exigibilitate amânată pe contul 4428, mecanismul cash-basis) este deja inclusă într-un decont D300 declarat. Conform FR-16 / art. 282 Cod Fiscal, exigibilitatea TVA la încasare devine definitivă odată raportată într-un D300 validat, iar desfacerea ulterioară a reconcilierii ar storna retroactiv TVA-ul deja declarat — ceea ce nu este permis. Astfel, modulul protejează integritatea declarațiilor fiscale deja depuse la ANAF.",
+    "last_ingest": "2026-11-08",
+    "friendly_name": "Romania - Blocare stornare TVA la încasare declarat",
+    "summary": "Modulul blochează desfacerea reconcilierii unei încasări atunci când TVA la încasare aferentă (exigibilitate amânată pe contul 4428, mecanismul cash-basis) este deja inclusă într-un decont D300 declarat. Conform art. 282 Cod Fiscal, exigibilitatea TVA la încasare devine definitivă odată raportată într-un D300 validat, iar desfacerea ulterioară a reconcilierii ar storna retroactiv TVA-ul deja declarat, ceea ce nu este permis. Astfel, modulul protejează integritatea declarațiilor fiscale deja depuse la ANAF.",
     "features": [
-      "Blochează desfacerea reconcilierii (`account.partial.reconcile`) — fie prin reset plată la ciornă, fie prin desfacere manuală din widgetul de reconciliere — atunci când aceasta a generat o notă de exigibilitate TVA cash-basis (cont 4428).",
-      "Verifică dacă nota de exigibilitate TVA are dată mai mică sau egală decât data de blocare fiscală a companiei (`tax_lock_date`), setată la validarea D300.",
-      "Afișează un mesaj de eroare explicit, cu referință la nota contabilă, data acesteia și data blocării fiscale.",
-      "Perioadele nedeclarate (ulterioare datei de blocare) rămân editabile — controlul nu restricționează fluxul normal de lucru.",
+      "Este un control de conformitate fără ecran propriu: nu adaugă meniuri sau vizualizări și acționează automat.",
+      "Blochează desfacerea reconcilierii (`account.partial.reconcile`) dacă aceasta a generat o notă de exigibilitate TVA cash-basis (cont 4428), de exemplu:",
+      "pe factură, pictograma ⓘ de lângă „Plătit pe …\" → Anulare reconciliere;",
+      "modificarea sumei sau ștergerea unei încasări readuse la ciornă.",
+      "Resetarea la ciornă a încasării rămâne permisă: în Odoo 19 plata revine în ciornă păstrând reconcilierea, iar nota de exigibilitate rămâne postată.",
+      "Verifică dacă nota de exigibilitate TVA are dată mai mică sau egală cu data de blocare fiscală a companiei (`tax_lock_date`), setată la validarea D300.",
+      "Afișează dialogul Operație invalidă, cu mesaj în română, cu referință la nota contabilă, data acesteia și data blocării fiscale.",
+      "Perioadele nedeclarate (ulterioare datei de blocare) rămân editabile.",
       "Se aplică exclusiv companiilor cu țara fiscală România.",
-      "Completează regimul de TVA la încasare furnizat de `l10n_ro_vat_on_payment` (OCA) și mecanismul nativ Odoo de exigibilitate pe încasare, fără a-l dubla."
+      "Completează regimul de TVA la încasare furnizat de `l10n_ro_vat_on_payment` (OCA) și mecanismul nativ Odoo de exigibilitate pe încasare, fără a-l dubla.",
+      "Configurare necesară:",
+      "activarea Contabilitate → Configurare → Setări → Taxe → Exigibilitate TVA la încasare pe companie;",
+      "taxa de vânzare, pe fila Opțiuni Avansate, cu Exigibilitatea taxei = Pe baza plății și Cont de tranziție a bazei de numerar 4428;",
+      "contul de bază pentru notele cash-basis (câmpul „Base Tax Received Account\") setat pe companie, în Setări → Contabilitate, secțiunea Taxe. Liniile de bază din nota de exigibilitate sunt o mișcare în oglindă (debit = credit, sold zero), folosită doar pentru raportarea bazei în grilele de TVA; se folosește un cont tehnic neutru (cu `l10n_ro_caba`, contul 442830 se setează automat). Dacă lipsește, baza rulează pe contul de venituri sau cheltuieli al facturii, ceea ce nu este corect;",
+      "utilizatorul are drepturi de Contabilitate.",
+      "La încasare, nota de exigibilitate mută TVA-ul din 4428 în 4427 (la achiziții, din 4428 în 4426), proporțional cu suma încasată.",
+      "Pentru o corecție legitimă, contabilul-șef mută mai întâi Blochează declarația fiscală înaintea lunii, din Contabilitate → Contabilitate → Închidere → Blochează datele… (resetarea D300 nu mută data de blocare TVA a companiei, iar o excepție de blocare nu ridică blocajul); apoi se depune un D300 rectificativ."
     ],
     "dependencies": [
       "account",
       "l10n_ro"
     ],
     "connections": [
-      "l10n_ro_vat_on_payment"
+      "l10n_ro_vat_on_payment",
+      "l10n_ro_caba"
     ],
-    "text": "Romania - Blocare stornare TVA la încasare declarat (FR-16)\nl10n_ro_vat_on_payment_lock\nModulul blochează desfacerea reconcilierii unei încasări atunci când TVA la încasare aferentă (exigibilitate amânată pe contul 4428, mecanismul cash-basis) este deja inclusă într-un decont D300 declarat. Conform FR-16 / art. 282 Cod Fiscal, exigibilitatea TVA la încasare devine definitivă odată raportată într-un D300 validat, iar desfacerea ulterioară a reconcilierii ar storna retroactiv TVA-ul deja declarat — ceea ce nu este permis. Astfel, modulul protejează integritatea declarațiilor fiscale deja depuse la ANAF.\nBlochează desfacerea reconcilierii (`account.partial.reconcile`) — fie prin reset plată la ciornă, fie prin desfacere manuală din widgetul de reconciliere — atunci când aceasta a generat o notă de exigibilitate TVA cash-basis (cont 4428).\nVerifică dacă nota de exigibilitate TVA are dată mai mică sau egală decât data de blocare fiscală a companiei (`tax_lock_date`), setată la validarea D300.\nAfișează un mesaj de eroare explicit, cu referință la nota contabilă, data acesteia și data blocării fiscale.\nPerioadele nedeclarate (ulterioare datei de blocare) rămân editabile — controlul nu restricționează fluxul normal de lucru.\nSe aplică exclusiv companiilor cu țara fiscală România.\nCompletează regimul de TVA la încasare furnizat de `l10n_ro_vat_on_payment` (OCA) și mecanismul nativ Odoo de exigibilitate pe încasare, fără a-l dubla."
+    "text": "Romania - Blocare stornare TVA la încasare declarat\nl10n_ro_vat_on_payment_lock\nModulul blochează desfacerea reconcilierii unei încasări atunci când TVA la încasare aferentă (exigibilitate amânată pe contul 4428, mecanismul cash-basis) este deja inclusă într-un decont D300 declarat. Conform art. 282 Cod Fiscal, exigibilitatea TVA la încasare devine definitivă odată raportată într-un D300 validat, iar desfacerea ulterioară a reconcilierii ar storna retroactiv TVA-ul deja declarat, ceea ce nu este permis. Astfel, modulul protejează integritatea declarațiilor fiscale deja depuse la ANAF.\nEste un control de conformitate fără ecran propriu: nu adaugă meniuri sau vizualizări și acționează automat.\nBlochează desfacerea reconcilierii (`account.partial.reconcile`) dacă aceasta a generat o notă de exigibilitate TVA cash-basis (cont 4428), de exemplu:\npe factură, pictograma ⓘ de lângă „Plătit pe …\" → Anulare reconciliere;\nmodificarea sumei sau ștergerea unei încasări readuse la ciornă.\nResetarea la ciornă a încasării rămâne permisă: în Odoo 19 plata revine în ciornă păstrând reconcilierea, iar nota de exigibilitate rămâne postată.\nVerifică dacă nota de exigibilitate TVA are dată mai mică sau egală cu data de blocare fiscală a companiei (`tax_lock_date`), setată la validarea D300.\nAfișează dialogul Operație invalidă, cu mesaj în română, cu referință la nota contabilă, data acesteia și data blocării fiscale.\nPerioadele nedeclarate (ulterioare datei de blocare) rămân editabile.\nSe aplică exclusiv companiilor cu țara fiscală România.\nCompletează regimul de TVA la încasare furnizat de `l10n_ro_vat_on_payment` (OCA) și mecanismul nativ Odoo de exigibilitate pe încasare, fără a-l dubla.\nConfigurare necesară:\nactivarea Contabilitate → Configurare → Setări → Taxe → Exigibilitate TVA la încasare pe companie;\ntaxa de vânzare, pe fila Opțiuni Avansate, cu Exigibilitatea taxei = Pe baza plății și Cont de tranziție a bazei de numerar 4428;\ncontul de bază pentru notele cash-basis (câmpul „Base Tax Received Account\") setat pe companie, în Setări → Contabilitate, secțiunea Taxe. Liniile de bază din nota de exigibilitate sunt o mișcare în oglindă (debit = credit, sold zero), folosită doar pentru raportarea bazei în grilele de TVA; se folosește un cont tehnic neutru (cu `l10n_ro_caba`, contul 442830 se setează automat). Dacă lipsește, baza rulează pe contul de venituri sau cheltuieli al facturii, ceea ce nu este corect;\nutilizatorul are drepturi de Contabilitate.\nLa încasare, nota de exigibilitate mută TVA-ul din 4428 în 4427 (la achiziții, din 4428 în 4426), proporțional cu suma încasată.\nPentru o corecție legitimă, contabilul-șef mută mai întâi Blochează declarația fiscală înaintea lunii, din Contabilitate → Contabilitate → Închidere → Blochează datele… (resetarea D300 nu mută data de blocare TVA a companiei, iar o excepție de blocare nu ridică blocajul); apoi se depune un D300 rectificativ."
   },
   {
     "path": "l10n_ro_vat_refund/index.md",
@@ -22203,7 +22249,7 @@
   {
     "path": "terrabit_iap/index.md",
     "module": "terrabit_iap",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.4.0",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap",
     "local_path": "odoo-addons/terrabit/terrabit_iap",
     "last_ingest": "2026-10-22",
@@ -22260,7 +22306,7 @@
   {
     "path": "terrabit_iap_anaf/index.md",
     "module": "terrabit_iap_anaf",
-    "version": "19.0.1.3.5",
+    "version": "19.0.1.4.0",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_anaf",
     "local_path": "odoo-addons/terrabit/terrabit_iap_anaf",
     "last_ingest": "2026-10-09",
@@ -22340,7 +22386,7 @@
   {
     "path": "terrabit_iap_server/index.md",
     "module": "terrabit_iap_server",
-    "version": "19.0.0.1.10",
+    "version": "19.0.0.1.11",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server",
     "last_ingest": "2026-10-09",
@@ -22410,7 +22456,7 @@
   {
     "path": "terrabit_iap_server_anaf/index.md",
     "module": "terrabit_iap_server_anaf",
-    "version": "19.0.1.4.7",
+    "version": "19.0.1.4.8",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_anaf",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_anaf",
     "last_ingest": "2026-10-09",

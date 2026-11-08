@@ -1,22 +1,23 @@
-# Deltatech Delivery Batch (localizat la `deltatech_delivery_batch/index.md`)
+# Delivery Batch AWB (localizat la `deltatech_delivery_batch/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_batch`
 - **Versiune:** `19.0.1.0.8`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_batch
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_batch`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-08`
 
 #### 1. Sumar
 
-Modulul „Deltatech Delivery Batch” fluidizează logistica de depozit prin generarea automată a AWB-urilor (scrisorilor de transport) pentru mai multe livrări simultan, folosind procesare în lot. Din perspectivă de business, această automatizare crește semnificativ productivitatea departamentului de expediere, permițând unui singur operator să proceseze un volum mare de comenzi în minute, nu în ore.
+Modulul „Delivery Batch AWB" fluidizează logistica de depozit prin generarea AWB-urilor (scrisorilor de transport) direct dintr-un transfer în lot, pentru mai multe livrări deodată. Din perspectivă de business, automatizarea crește productivitatea departamentului de expediere, permițând unui singur operator să proceseze un volum mare de comenzi în minute, nu în ore.
 
 #### 2. Funcționalități Cheie
 
-- **Onorare accelerată a comenzilor**: procesează mai multe expedieri deodată, reducând drastic timpul petrecut pe generarea manuală de AWB-uri.
-- **Scalabilitate operațională îmbunătățită**: gestionează eficient vârfurile de volum de comenzi prin automatizarea sarcinilor de expediere de rutină, folosind acțiuni în lot.
-- **Acuratețe logistică sporită**: reduce erorile umane la crearea etichetelor de expediere prin extragere de date consistentă și automatizată pentru toate comenzile dintr-un lot.
-- **Comunicare integrată cu curierii**: coordonează fără cusur cu furnizorii de servicii de livrare pentru expedieri la scară largă, direct din Odoo.
-- **Distribuție eficientă din punct de vedere al costurilor**: maximizează eficiența personalului și reduce timpul până la livrare prin fluxuri de lucru optimizate în lot.
+- **Onorare accelerată a comenzilor**: procesează mai multe expedieri deodată, reducând timpul petrecut pe generarea manuală de AWB-uri.
+- **Scalabilitate operațională îmbunătățită**: gestionează vârfurile de volum prin acțiuni în lot asupra loturilor de ridicări (`stock.picking.batch`).
+- **Acuratețe logistică sporită**: reduce erorile umane la crearea etichetelor de expediere prin date consistente pentru toate comenzile dintr-un lot.
+- **Comunicare integrată cu curierii**: trimite expedierea către curier direct din Odoo, prin butoanele de pe formularul lotului: **Send to Shipper**, **Carrier Details**, **Print AWB** și **Cancel** (anulează și expedierea).
+- **Distribuție eficientă din punct de vedere al costurilor**: maximizează eficiența personalului și reduce timpul până la livrare prin fluxuri de lucru în lot.
+- Trimiterea se face o singură dată pe lot, prin prima livrare din lot; numărul de urmărire și curierul rezultate se copiază apoi pe toate livrările lotului. La anularea lotului, expedierea se anulează întâi (doar dacă există număr de urmărire), apoi livrările se detașează din lot.
 
 #### 3. Dependențe
 
@@ -25,7 +26,17 @@ Modulul „Deltatech Delivery Batch” fluidizează logistica de depozit prin ge
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie din schema wiki, secțiunea „Sumar” și „Funcționalități Cheie” provin din `readme/DESCRIPTION.md`, care nu solicită explicit analiza codului pentru componente. Prin urmare, această secțiune nu este detaliată din cod.
+**Modele**
+
+- `stock.picking.batch` (extins): câmpurile calculate `carrier_ready` și `carrier_tracking_ref` (agregate din livrările lotului) și metodele `send_to_shipper()`, `carrier_details()`, `carrier_print_label()` (apelează `carrier_generate_label` pe prima livrare), `cancel_shipment()` și `action_cancel()` (anulează expedierea înainte ca `super()` să detașeze livrările din lot).
+
+**Vizualizări**
+
+- `stock_picking_batch_form`: extinde formularul lotului de ridicări cu butoanele **Send to Shipper**, **Carrier Details**, **Print AWB** și **Cancel**.
+
+**Acțiuni Automate / Acțiuni Server**
+
+Modulul nu definește `ir.cron`, `base.automation` sau `ir.actions.server`.
 
 #### 5. Conexiuni
 

@@ -36,7 +36,12 @@ Context operațional:
   altă parte), singura ieșire este o nouă autorizare cu certificatul digital.
 - **Serviciu extern:** baza clientului schimbă tokenul cu serverul Terrabit IAP
   (`https://terrabit.odoo.com`). Serverul trimite tokenul după autorizare și, la nevoie, cere
-  tokenul curent al bazei (recuperare). Comunicarea e protejată de cheia contului IAP.
+  tokenul curent al bazei (recuperare). Comunicarea e protejată de un **secret de apel invers**:
+  baza clientului îl generează și îl trimite serverului doar în corpul cererii de înregistrare a
+  contului IAP, niciodată într-o adresă. După ce serverul confirmă că îl are, baza clientului
+  refuză orice apel care nu îl conține, deci cheia contului IAP (care apare în adresa paginii de
+  autorizare) nu mai ajunge ca să citească sau să înlocuiască tokenul. Tot din acel moment,
+  serverul nu mai acceptă mutarea contului pe altă adresă fără același secret.
 - În jurnalul serverului clientului nu ajung valorile tokenurilor: se scriu doar numele
   câmpurilor primite și datele de expirare.
 
@@ -78,8 +83,9 @@ date de expirare.
    serviciului **ANAF SPV Token**. Câmpul **Endpoint IAP** trebuie să fie
    `https://terrabit.odoo.com`, iar compania să fie cea corectă; **URL Service** e doar informativ.
    Ecranul e tehnic, din modulul standard IAP, și are câteva etichete rămase în engleză („Register
-   on Server", „URL Service", „Hash IAP token", „Service"). Nu introduceți niciun cod: contul se înregistrează pe server la prima generare a
-   tokenului.
+   on Server", „URL Service", „Hash IAP token", „Service"). Bifa **Secret de apel invers
+   înregistrat** se pune singură după ce serverul confirmă secretul bazei (vezi secțiunea 2).
+   Nu introduceți niciun cod: contul se înregistrează pe server la prima generare a tokenului.
 4. Nu completați manual **ID Client** și **Secret Client** în setările e-Factura: le scrie serverul
    Terrabit după autorizare.
 5. **În producție, debifați Utilizează mediu de testare** (blocul **E-Factura România**) și salvați.
@@ -90,7 +96,7 @@ date de expirare.
    butonul poate alege contul IAP al altei companii, iar tokenul ajunge pe aceea. Pentru o companie
    creată după instalare, contul IAP se creează la prima apăsare a butonului.
 
-![Contul IAP al serviciului ANAF SPV Token: câmpul Endpoint IAP are valoarea https://terrabit.odoo.com, compania este RO Company, iar în antet se vede butonul Register on Server](screenshots/01_cont_iap_anaf.png)
+![Contul IAP al serviciului ANAF SPV Token: câmpul Endpoint IAP are valoarea https://terrabit.odoo.com, bifa Secret de apel invers înregistrat e încă debifată, compania este RO Company, iar în antet se vede butonul Register on Server](screenshots/01_cont_iap_anaf.png)
 
 ## 6. Flux de utilizare
 
@@ -103,8 +109,9 @@ Câmpurile tokenului sunt goale. Butonul standard **Generare token** e ascuns, i
 apare **Generează token IAP**. Instrucțiunile standard de deasupra (înregistrarea unei aplicații
 în profilul ANAF) nu se aplică: cu modulul nu se mai creează aplicație OAuth.
 
-Apăsați **Generează token IAP**. Odoo înregistrează contul pe serverul Terrabit (după CUI) și
-deschide, într-o filă nouă, pagina de autorizare a serverului.
+Apăsați **Generează token IAP**. Odoo înregistrează contul pe serverul Terrabit (după CUI),
+împreună cu secretul de apel invers al bazei, și deschide, într-o filă nouă, pagina de autorizare
+a serverului.
 
 ![Setările E-Factura România cu câmpurile tokenului goale și butonul Generează token IAP evidențiat sub câmpul Importă facturi de la furnizori în, deasupra bifei Utilizează mediu de testare, debifată](screenshots/02_setari_generare_token.png)
 
@@ -152,6 +159,12 @@ filtrul **Arhivat**, acțiunea **E-Factura: Reîmprospătare token de acces** ar
 
 ![Acțiunea planificată E-Factura: Reîmprospătare token de acces, cu comutatorul Activ oprit după predarea reînnoirii către serverul Terrabit](screenshots/04_cron_reinnoire_oprit.png)
 
+Pe bazele care aveau deja tokenul înainte de actualizarea modulului, secretul de apel invers se
+înregistrează singur, fără o nouă autorizare: acțiunea planificată
+**IAP ANAF: Înregistrare secret de apel invers** (în engleză „IAP ANAF: Register Callback
+Secret"), din același meniu, rulează imediat după actualizare și apoi zilnic, până când serverul
+confirmă secretul.
+
 ### Pasul 5 — Tokenul expirat: re-autorizare
 
 Dacă tokenul de acces a expirat și serverul nu l-a mai putut reînnoi, butonul **Generează token
@@ -175,8 +188,10 @@ Nu se aplică: modulul nu generează note contabile și nici raportări.
 | `terrabit_iap_server_anaf` *(la Terrabit, nu la client)* | aplicația înregistrată la ANAF: autorizarea, reînnoirea și trimiterea tokenului |
 
 **Ce e automat:** crearea contului IAP la instalare, înregistrarea lui pe server la prima
-generare, completarea tokenului pe companie, reînnoirea pe server, oprirea acțiunii planificate
-locale după preluarea de către server, afișarea butonului când tokenul a expirat.
+generare, împreună cu secretul de apel invers (pe bazele deja autorizate, prin acțiunea
+planificată **IAP ANAF: Înregistrare secret de apel invers**), completarea tokenului pe companie,
+reînnoirea pe server, oprirea acțiunii planificate locale după preluarea de către server,
+afișarea butonului când tokenul a expirat.
 
 **Ce rămâne manual:** codul fiscal al companiei; debifarea **Utilizează mediu de testare** în
 producție; o singură companie activă în selector la generarea tokenului; autentificarea cu
@@ -201,6 +216,11 @@ certificatul digital, la autorizare și la fiecare re-autorizare.
       expirare, iar butonul **Generează token IAP** dispare.
 - [ ] După preluarea de către server, acțiunea planificată locală e **arhivată** (inactivă).
 - [ ] O factură trimisă în e-Factura pleacă fără eroare de autentificare.
+- [ ] Acțiunea planificată **IAP ANAF: Înregistrare secret de apel invers** există și e activă. După
+      **Generează token IAP** (sau după rularea ei, pe o bază deja autorizată), contul IAP **ANAF
+      SPV Token** are bifat **Secret de apel invers înregistrat** (modul dezvoltator, **Setări → Tehnic →
+      IAP → Conturi IAP**).
+- [ ] Tokenul trimis ulterior de server (reînnoire) ajunge în continuare pe companie.
 - [ ] Cu data de expirare a tokenului de acces în trecut, butonul reapare, cu mesajul roșu de
       re-autorizare.
 - [ ] În jurnalul serverului clientului, mesajul de primire a tokenului conține doar numele
@@ -215,6 +235,7 @@ certificatul digital, la autorizare și la fiecare re-autorizare.
 | „Cont neasociat unei firme" | pagina de autorizare a serverului Terrabit | contul IAP n-a fost legat de firma clientului la Terrabit | contactați suportul Terrabit; nu continuați autorizarea |
 | mesajul roșu „Token expirat — este necesară re-autorizarea cu certificatul digital." | setările **E-Factura România** | tokenul de acces a expirat și serverul nu l-a mai putut reînnoi | reluați autorizarea cu **Generează token IAP** și certificatul digital |
 | „Acțiune disponibilă doar pentru serviciul de token ANAF (anaf_token)" | nu în interfață: în jurnalul serverului clientului, raportat de suportul Terrabit | serverul a apelat ruta pe alt cont IAP decât cel al serviciului ANAF | contactați suportul Terrabit |
+| „This IAP account is already registered by another database. Please contact Terrabit support." | fereastră de eroare, la **Generează token IAP** sau **Register on Server**, ori în jurnal, la acțiunea **IAP ANAF: Înregistrare secret de apel invers**; mesajul vine de pe serverul Terrabit, în engleză | contul are deja un alt secret de apel invers pe server (de ex. baza a fost restaurată dintr-o copie mai veche decât înregistrarea) | contactați suportul Terrabit, care resetează secretul contului pe server; apoi apăsați **Register on Server** pe contul IAP **ANAF SPV Token** (modul dezvoltator) sau așteptați rularea zilnică a acțiunii planificate. Nu e nevoie de o nouă autorizare cu certificatul |
 | „Nicio companie găsită" | nu în interfață: în jurnalul serverului clientului, raportat de suportul Terrabit | contul IAP ANAF nu are nicio companie | deschideți contul IAP și adăugați compania, sau apăsați din nou **Generează token IAP** din setările companiei |
 
 ## 10. Capturi de ecran
@@ -257,8 +278,13 @@ Regenerare (Odoo 19):
   copia serverului a devenit invalidă. Serverul Terrabit își recuperează atunci tokenul din baza
   clientului și abia apoi oprește acțiunea locală. Dacă după actualizare apar erori de
   autentificare în e-Factura, contactați suportul Terrabit înainte de a re-autoriza.
-- **Copii de test ale producției:** o copie restaurată are același cont IAP și același token.
-  Nu apăsați **Generează token IAP** pe copie fără a anunța Terrabit: contul e același cu al
-  producției, iar o nouă autorizare schimbă tokenul pe care îl folosește și producția.
+- **Copii de test ale producției:** o copie restaurată are același cont IAP, același token și
+  același secret de apel invers. Nu apăsați **Generează token IAP** pe copie fără a anunța
+  Terrabit: contul e același cu al producției, iar o nouă autorizare schimbă tokenul pe care îl
+  folosește și producția. Secretul nu protejează aici: copia îl are, deci la înregistrarea de pe
+  copie serverul mută adresa contului pe copie, iar reînnoirile nu mai ajung în producție.
+- **Cheia contului IAP nu e un secret suficient:** apare în adresa paginii de autorizare, deci în
+  istoricul browserului. De aceea baza clientului cere și secretul de apel invers. Bazele rămase pe
+  18.0 nu au acest secret și sunt apelate de server ca înainte, până la actualizarea pe 19.0.
 - Ecranul tehnic al contului IAP are câteva etichete în engleză („Register on Server", „URL
   Service", „Hash IAP token", „Service"); ecranul de setări e tradus integral.

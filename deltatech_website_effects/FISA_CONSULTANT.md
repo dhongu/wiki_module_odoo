@@ -54,6 +54,11 @@ carduri (de exemplu blocul *Coloane* sau *Carduri*), o secțiune cu imagine de f
 2. Nu există setări de modul: opțiunile apar direct în editorul website, în panoul **Stil** al
    blocului selectat.
 3. Deschideți site-ul, apăsați **Editează** și selectați un bloc pentru a vedea opțiunile noi.
+4. Pentru **Formă plutitoare** cu *Logo*: sigla website-ului (cea din antet, care se schimbă în
+   editor cu un clic pe ea și înlocuirea imaginii) trebuie să aibă fundal transparent (PNG sau
+   SVG). Sigla servește drept contur al formei, așa că
+   o siglă pe fundal plin (de exemplu un JPG) apare ca un dreptunghi; în acest caz alegeți una
+   dintre formele modulului (*Pată*, *Inel*, *Arc*, *Pătrat rotunjit*).
 
 > Modulul are traducere în română (`i18n/ro.po`): în interfața RO etichetele opțiunilor, valorile
 > lor, numele blocurilor noi și textele lor implicite apar în română. Fișa folosește etichetele
@@ -167,6 +172,8 @@ marginea de sus a paginii) și *Personalizat* (*Custom*, o culoare aleasă în e
 lui este activată opțiunea *Show color in tab bar*. Este o setare a **website-ului**, nu a paginii
 curente.
 
+![Tab-ul Temă, blocul Efecte: Culoarea barei browserului = Antet](screenshots/07b_culoare_bara_browser.png)
+
 ### Pasul 8 — Antetul pe site
 
 Salvați și derulați pagina. Cu *Efect de derulare* = *Fix*, antetul rămâne sus, iar conținutul
@@ -254,6 +261,30 @@ linie de accent.
 
 ![Blocul Tab-uri cu Stil card activ](screenshots/14_tabs_card_style.png)
 
+### Pasul 15 — Formă plutitoare (*Floating Shape*)
+
+O formă mare, într-un colț al blocului și ieșită pe jumătate din el, colorată cu o culoare care
+se stinge spre transparent, plutește lent în spatele conținutului (de exemplu pe o secțiune de tip
+„Aveți nevoie de ajutor?"). Selectați **secțiunea** (sau o **coloană** ori un **card**) și, în
+panoul **Stil**, alegeți **Formă plutitoare**:
+
+| Opțiune | Valori |
+|---|---|
+| **Formă plutitoare** (*Floating Shape*) | *Fără*, *Logo* (sigla website-ului), *Pată* (*Blob*), *Inel* (*Ring*), *Arc*, *Pătrat rotunjit* (*Rounded Square*) |
+| **Poziție** (*Position*) | *Dreapta jos* (implicit), *Stânga jos*, *Dreapta sus*, *Stânga sus* |
+| **Mărime** (*Size*) | *Mică*, *Medie* (implicit), *Mare* |
+| **Culoare** (*Color*) | implicit prima culoare a temei; orice culoare din editor |
+
+Rândurile *Poziție*, *Mărime* și *Culoare* apar doar după ce a fost aleasă o formă. Forma se vede și
+în editor, iar schimbarea unei opțiuni se aplică imediat.
+
+![Secțiunea selectată: Formă plutitoare = Pată, Poziție = Dreapta jos, Mărime = Mare, Culoare roșie](screenshots/15_forma_plutitoare_optiuni.png)
+
+Pe pagina salvată, forma plutește încet (un ciclu de 20 de secunde) și se oprește cât timp blocul
+nu este pe ecran. Pe carduri, forma stă peste fundalul cardului și sub text.
+
+![Pagina salvată: pata roșie în colțul secțiunii și cele trei carduri cu Inel, Arc și Pătrat rotunjit](screenshots/16_forma_plutitoare_site.png)
+
 ### Note de monografie și raportare
 
 Modulul nu generează note contabile, documente sau rapoarte: efectele se salvează în conținutul
@@ -305,13 +336,18 @@ linkurile *Casetei de ajutor* (WhatsApp, telefon) și ale *Listei de informații
 - [ ] *Culoarea barei browserului*: pe telefon (Chrome pe Android sau Safari pe iPhone), cu *Temă*
       bara are prima culoare a temei, cu *Antet* culoarea antetului (și după derulare, când antetul
       se lipește sus), cu *Personalizat* culoarea aleasă; cu *Implicit* site-ul nu o schimbă.
+- [ ] *Formă plutitoare* pe o secțiune: forma apare în colțul ales la *Poziție*, ieșită pe jumătate
+      din secțiune, în culoarea aleasă (fără culoare, în prima culoare a temei); *Mărime* = *Mare*
+      o face vizibil mai mare decât *Mică*. Pe un card, forma se vede peste fundalul cardului.
+- [ ] *Formă plutitoare* = *Logo*: cu o siglă PNG sau SVG transparentă, forma are conturul siglei;
+      cu o siglă pe fundal plin apare un dreptunghi (comportament așteptat).
 - [ ] *Traseu livrare*: schimbarea *Vehicul*, *Viteză*, *Culoare* se vede pe site după salvare.
 - [ ] *Listă de informații*: *Peste* = *300 lei* schimbă textul rândului de livrare gratuită;
       debifarea lui *Ridicare din magazin* ascunde rândul pe site.
 - [ ] *Coduri de copiat*: clic pe un cod îl copiază (lipiți într-un câmp text ca să verificați).
 - [ ] *Card reversibil* se întoarce la hover; în editor ambele fețe sunt vizibile.
 - [ ] În setările de accesibilitate ale sistemului, cu „reducerea mișcării" activă, animațiile
-      (*Puls*, *Înclinare 3D*, *Animație la trecerea mouse-ului*) nu mai rulează.
+      (*Puls*, *Înclinare 3D*, *Animație la trecerea mouse-ului*, *Formă plutitoare*) nu mai rulează.
 - [ ] Blocurile din *Conținut intern* pot fi trase într-o coloană a paginii, iar grupul lor din
       panoul *Stil* le poartă numele.
 
@@ -324,13 +360,15 @@ linkurile *Casetei de ajutor* (WhatsApp, telefon) și ale *Listei de informații
 | *Sticlă* arată ca un card alb obișnuit | în spatele blocului nu este nimic colorat | puneți o imagine de fundal sau un degrade pe secțiune |
 | *Înclinare 3D* nu se mișcă | ecran tactil, sau vizitatorul are „reducerea mișcării" activă | comportament voit; verificați cu mouse pe un calculator fără acea setare |
 | Efectul nu apare pe card, ci pe toată coloana | efectul a fost ales pe grupul *Coloană*, nu pe *Bloc* | alegeți *Fără* la coloană și setați efectul pe grupul cardului |
+| *Formă plutitoare* = *Logo* arată ca un dreptunghi | sigla website-ului are fundal plin (JPG sau PNG fără transparență) | încărcați o siglă PNG sau SVG cu fundal transparent, sau alegeți o formă a modulului |
 | Antetul nu devine din sticlă | antetul are **Efect de derulare** = *Derulați*, deci nu rămâne sus | setați la antet **Efect de derulare** = *Fix* (sau *Standard*, unde antetul apare din sticlă la derularea în sus) |
 
 ## 10. Capturi de ecran
 
 Capturile (`readme/screenshots/`) sunt generate automat din `tests/test_screenshots.py` (mixinul
 `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), cu interfața în română. Testul
-creează patru pagini demo (`/efecte-hover`, `/efecte-forme`, `/efecte-glass`, `/efecte-blocuri`) și
+creează cinci pagini demo (`/efecte-hover`, `/efecte-forme`, `/efecte-glass`, `/efecte-blocuri`,
+`/efecte-forma-plutitoare`) și
 fotografiază site-ul și editorul, cu rândurile modulului evidențiate:
 
 1. `01_optiuni_bloc.png` — opțiunile modulului în panoul Stil al unui card (Înclinare 3D, Reflexie,
@@ -342,6 +380,7 @@ fotografiază site-ul și editorul, cu rândurile modulului evidențiate:
    Panoramare fundal, Focalizare la trecerea mouse-ului.
 6. `06_buton_hover_animation.png` — Animație la trecerea mouse-ului pe un buton.
 7. `07_antet_glass_menu_hover.png` — Sticlă și Meniu la trecerea mouse-ului pe antet.
+7. bis `07b_culoare_bara_browser.png` — tab-ul Temă, blocul Efecte, cu Culoarea barei browserului.
 8. `08_antet_site.png` — pagina derulată, cu antetul din sticlă și Subliniere la meniu.
 9. `09_blocuri_continut_intern.png` — cele cinci blocuri ale modulului în panoul Blocuri.
 10. `10_delivery_route.png` — opțiunile blocului Traseu livrare.
@@ -350,6 +389,10 @@ fotografiază site-ul și editorul, cu rândurile modulului evidențiate:
 12. `12_info_list_optiuni.png` — opțiunile blocului Listă de informații: rânduri și valori.
 13. `13_flip_card.png` — Card reversibil în editor, cu Culoare verso.
 14. `14_tabs_card_style.png` — blocul Tab-uri cu Stil card.
+15. `15_forma_plutitoare_optiuni.png` — opțiunile Formă plutitoare, Poziție, Mărime și Culoare pe o
+    secțiune.
+16. `16_forma_plutitoare_site.png` — Forma plutitoare pe site: pata din colțul secțiunii și trei
+    carduri cu Inel, Arc și Pătrat rotunjit.
 
 Regenerare:
 

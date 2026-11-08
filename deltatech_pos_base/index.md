@@ -1,10 +1,11 @@
 # Deltatech POS Base (localizat la `deltatech_pos_base/index.md`)
 
 - **Nume Tehnic:** `deltatech_pos_base`
-- **Versiune:** `19.0.1.0.10`
+- **Versiune:** `19.0.1.2.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos_base
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_pos_base`
 - **Ultima Ingestie:** `2026-08-20`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

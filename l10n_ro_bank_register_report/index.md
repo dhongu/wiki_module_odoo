@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_bank_register_report
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_bank_register_report`
-- **Ultima Ingestie:** `2026-07-19`
+- **Ultima Ingestie:** `2026-11-08`
 
 #### 1. Sumar
 
@@ -14,7 +14,8 @@ Modulul aduce Jurnalul de bancă românesc ca raport nativ Odoo (`account.report
 
 - Secțiune per (jurnal, zi), cu antet care afișează **contul și jurnalul** (ex. „5121.2 BANCA TRANSILVANIA — 26.01.2026") și totalurile zilei: încasări, plăți, sold final.
 - Rând de report al soldului din ziua precedentă.
-- Linii de mișcare ale contului bancar, cu încasările pe debit, plățile pe credit și sold cumulat.
+- Linii de mișcare ale contului bancar, cu încasările pe debit, plățile pe credit, **contul corespondent** și sold cumulat.
+- Contul corespondent (ex. 4111, 401, 627) este contul creditat la încasare și cel debitat la plată; la o notă compusă apar conturile distincte, în ordinea sumelor (ex. „628, 4426”), cel mult trei; la o plată trecută prin contul intermediar de încasări/plăți se afișează contul plății reconciliate, iar pe contul de așteptare linia este marcată „nereconciliat".
 - Rând de sold final, folosit drept report pentru ziua următoare.
 - Filtrul de jurnale limitat automat la jurnalele de tip **bancă** (câte unul per cont bancar/monedă).
 - Drill-down din liniile de mișcare direct către înregistrarea contabilă (`account.move.line`).
@@ -39,7 +40,7 @@ Nu există vizualizări (`views/`) proprii; interfața este generată integral d
 
 Nu există `ir.cron`, `base.automation` sau `ir.actions.server`. Modulul definește în schimb configurația raportului prin date (`data/bank_register_report.xml`):
 
-- `l10n_ro_bank_register_report` (`account.report`): definește raportul „Bank Journal (RO)", cu filtre de interval de dată, jurnale (bancă) și multi-companie (selector), și coloanele Receipts/Payments/Balance.
+- `l10n_ro_bank_register_report` (`account.report`): definește raportul „Bank Journal (RO)", cu filtre de interval de dată, jurnale (bancă) și multi-companie (selector), și coloanele Receipts/Payments/Counterpart Account/Balance.
 - `action_l10n_ro_bank_register_report` (`ir.actions.client`, tag `account_report`): acțiunea client care deschide raportul.
 - `menu_l10n_ro_bank_register_report`: meniul „Bank Journal", sub „Legal Statements" din meniul Contabilitate.
 

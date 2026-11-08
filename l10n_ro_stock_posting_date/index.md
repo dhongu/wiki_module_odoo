@@ -2,9 +2,9 @@
 
 - **Nume Tehnic:** `l10n_ro_stock_posting_date`
 - **Versiune:** `19.0.1.0.2`
-- **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_posting_date](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_posting_date)
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_posting_date
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_posting_date`
-- **Ultima Ingestie:** `2026-07-02`
+- **Ultima Ingestie:** `2026-11-08`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -22,7 +22,11 @@ Modulul adaugă o **dată contabilă (Posting Date)** pe operațiile de stoc —
   - cade într-o **perioadă contabilă blocată** (lock date fiscal/TVA/hard lock);
   - opțional, este mai devreme de **prima zi a lunii precedente**.
 - Granularitatea verificării „ultimei postări" urmează granularitatea valorizării native Odoo 19: implicit pe `(produs, companie)`.
-- Setări dedicate în Configurare Inventar/Contabilitate pentru activarea controlului și a restricției pe luna precedentă.
+- Se activează din **Inventar → Configurare → Setări**, la secțiunea de evaluare: **Control dată contabilă stoc** și, opțional, **Restricționează data contabilă la luna precedentă**. De aici, operațiile de stoc afișează câmpul **Dată contabilă**, iar validarea verifică automat data introdusă.
+- Configurare necesară: cel puțin un produs stocabil cu valorizare perpetuă (FIFO sau CMP) și un jurnal de evaluare a stocului setat pe companie; utilizatorii care validează operațiile au nevoie de acces la aplicația Inventar.
+- Permite înregistrarea unei mișcări cu dată din trecut (ex. o recepție primită ieri, operată azi); efectul se vede în balanță, în fișa contului de stoc și în jurnalul de stoc, în perioada datei alese.
+- La retur (către furnizor sau de la client), data contabilă trebuie să fie cel puțin egală cu data mișcării originale; un retur datat înaintea ei este blocat indiferent de celelalte reguli.
+- Modulul nu schimbă liniile notelor contabile, ci doar data lor; data contabilă nu se confundă cu data programată din logistică. Datele de blocare contabilă se gestionează separat, de utilizatorii cu drepturile aferente.
 
 #### 3. Dependențe
 

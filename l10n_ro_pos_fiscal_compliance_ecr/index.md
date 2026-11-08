@@ -1,7 +1,7 @@
 # Romania - Punte POS ↔ casă de marcat (AMEF) (localizat la `l10n_ro_pos_fiscal_compliance_ecr/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_pos_fiscal_compliance_ecr`
-- **Versiune:** `19.0.1.3.0`
+- **Versiune:** `19.0.1.3.1`
 - **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_fiscal_compliance_ecr](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_fiscal_compliance_ecr)
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_pos_fiscal_compliance_ecr`
 - **Ultima Ingestie:** `2026-10-22`

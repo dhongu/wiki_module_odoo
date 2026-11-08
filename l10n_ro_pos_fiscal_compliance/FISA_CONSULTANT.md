@@ -106,6 +106,10 @@ eroare, comanda rămâne **Eroare fiscalizare** și poate fi marcată drept eroa
 
 ![Comanda POS — fila Fiscalizare AMEF](screenshots/02_comanda_fiscal.png)
 
+**Bon simulat.** Un bon tipărit pe o casă de marcat simulată (teste, demonstrații) primește starea *Bon simulat*
+(insignă albastră), fără serie: nu e document fiscal. O astfel de comandă nu blochează închiderea sesiunii, iar
+pe o bază de producție nu trebuie să apară.
+
 ### Pasul 3 — Raportul Z fiscal
 
 La finalul zilei, în **Punct de vânzare → Fiscalizare AMEF → Rapoarte Z**, apăsați **Nou**, alegeți
@@ -134,6 +138,9 @@ Dacă sesiunea rămâne deschisă peste noapte (mai multe Z-uri), diferențele a
 închideți sesiunea la sfârșitul zilei.
 
 ![Raport Z fiscal — defalcare TVA + plăți, reconciliere](screenshots/03_raport_z.png)
+
+Comenzile cu *Bon simulat* nu intră în calculul raportului Z: nici în cote, nici în plăți, nici în total. Nu sunt
+pe aparatul fiscal, deci nu au ce compara cu raportul Z al aparatului.
 
 ### Pasul 4 — Raportul TVA pe interval, per casă de marcat
 
@@ -232,6 +239,9 @@ abaterile de coerență ale fiecărui Z și fișierele ignorate.
 > `OPIS_fiscalwire_*.xml`. Acesta e o copie a opisului salvată ca text, care nu se mai poate citi:
 > importul îl ignoră și lasă o notă în fila **Observații**. Opisul se citește din
 > `Perioada_raportare.p7b`.
+
+La import, comenzile cu *Bon simulat* nu sunt candidate la potrivirea cu bonurile din jurnal, nici la potrivirea
+de rezervă după zi și sumă.
 
 ### Pasul 6 — Raportul Z completat din export
 
@@ -392,6 +402,8 @@ justificare), și justificarea erorilor de fiscalizare.
       lucru.
 - [ ] Un fișier care nu e nici `.zip`, nici `.p7b` semnat produce un mesaj de eroare clar, nu o eroare
       tehnică.
+- [ ] O comandă cu *Bon simulat* (insignă albastră, fără serie) nu blochează închiderea sesiunii, nu intră în totalurile
+      raportului Z și nu e potrivită cu bonurile din jurnalul AMEF.
 
 ## 9. Mesaje de eroare frecvente
 

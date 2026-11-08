@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_registru_jurnal
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_registru_jurnal`
-- **Ultima Ingestie:** `2026-07-19`
+- **Ultima Ingestie:** `2026-11-08`
 
 #### 1. Sumar
 
@@ -14,11 +14,14 @@ Modulul aduce Registrul-jurnal (cod 14-1-1) ca raport nativ Odoo (`account.repor
 
 - Secțiune per zi, pliabilă, cu totalul zilei (Debit = Credit).
 - Rând numerotat per notă contabilă: Nr. crt. continuu pe toată perioada, Data, Explicație, Document, **Cont debitor**, **Cont creditor**, Debit, Credit, Jurnal.
-- Note compuse (1:N sau M:N): partea multiplă se afișează cu convenția **„%"** pe rândul numerotat (aceeași convenție folosită și de exportul SAGA), iar conturile componente apar dedesubt ca rânduri nenumerotate, cu sumele lor.
+- Note compuse (1:N sau M:N): partea multiplă se afișează cu convenția **„%"** pe rândul numerotat (convenția registrului manual), iar conturile componente apar dedesubt ca rânduri nenumerotate, cu sumele lor.
 - Rând de total perioadă — egalitatea Debit = Credit se verifică la fiecare nivel; totalurile însumează doar rândurile numerotate, fără dublarea sumelor componentelor.
 - Filtru de interval de dată, selector de jurnale, selector multi-companie și unfold all, moștenite din framework-ul `account_reports`.
 - Drill-down la nota contabilă (rând numerotat, către `account.move`) sau la linia contabilă componentă (rând nenumerotat, către `account.move.line`).
 - Export PDF/XLSX direct din bara de instrumente a raportului.
+- Comparația de perioade și cea de creștere sunt oprite pe raport: pornite, fiecare grup de coloane repeta perioada curentă, cu numerotare și conturi duplicate.
+- Multi-company cu monede diferite: notele și componentele se afișează în moneda companiei lor, iar totalurile zilei și ale perioadei se convertesc în moneda companiei curente cu tabelul de curs al rapoartelor contabile.
+- Vizibil automat doar pentru companiile cu Țara = România.
 
 #### 3. Dependențe
 
@@ -47,6 +50,6 @@ Nu există `ir.cron`, `base.automation` sau `ir.actions.server`. Modulul define�
 
 - [l10n_ro_journal_reports](../l10n_ro_journal_reports/index.md): acoperă coloana „Cont Corespondent" în Cartea Mare standard — complementar acestui registru, care produce lista cronologică pe toate jurnalele, nu detalierea per cont.
 - [l10n_ro_cash_register](../l10n_ro_cash_register/index.md): modulul operațional de registru de casă zilnic; ambele documentează operațiuni contabile, dar acesta din urmă e limitat la casă, în timp ce registrul-jurnal acoperă toate jurnalele.
-- [deltatech_saga](../deltatech_saga/index.md): folosește aceeași convenție „%" pentru notele compuse la exportul către SAGA — semnalul de compatibilitate menționat explicit în cod.
+- [deltatech_saga](../deltatech_saga/index.md): tratează aceeași convenție „%" pentru rândurile compuse ale notelor din SAGA (verificat în testele de import ale modulului); codul registrului-jurnal nu face referire explicită la SAGA.
 - [l10n_ro_bank_register_report](../l10n_ro_bank_register_report/index.md): oferă o vedere alternativă, per cont bancar și pe zile, cu sold reportat; acest registru rămâne cronologic, pe toate jurnalele, fără solduri cumulate.
 - `account_reports`: framework-ul Enterprise de raportare contabilă folosit ca bază tehnică (filtre, coloane, export PDF/XLSX).

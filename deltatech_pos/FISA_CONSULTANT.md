@@ -16,7 +16,7 @@ bonului sau a operațiunilor de numerar. Consultantul trebuie să îl prezinte c
 integrare operațională pentru retail fiscal: Odoo pregătește fișierul în formatul așteptat de
 driverul AMEF, iar aplicația/driverul local al casei de marcat îl preia și îl tipărește.
 
-Modulul nu face comunicare hardware directă. Pe transportul prin fișier nu citește răspunsul fiscal înapoi în Odoo; prin Terrabit Connect, numărul bonului, documentul fiscal, raportul Z și starea tipăririi se salvează pe comandă.
+Modulul nu face comunicare hardware directă. Pe transportul prin fișier nu citește răspunsul fiscal înapoi în Odoo; prin Terrabit Connect, numărul bonului, documentul fiscal, raportul Z și starea tipăririi se salvează pe comandă, iar prin driverul DxPrint (casele Datecs și Daisy) se salvează numărul bonului, raportul Z și starea.
 
 ## 2. Bază legală și context
 
@@ -66,12 +66,16 @@ Mergeți la **Point of Sale → Configuration → Settings** și selectați POS-
 
 Configurați:
 
-- **Type of electronic cash register**: `FiscalWire`, `Optima`, `Daisy`, `Succes`,
+- **Tip casa marcat**: `FiscalWire`, `Optima`, `Daisy`, `Succes`,
   `FiscalNet` sau `Incotex`;
 - **Trim long product name** și lungimea maximă din **Trim to** (apare doar cu opțiunea activă), dacă modelul casei are limită strictă;
-- **ECR transport**: `File (.prn/.inp download)` (implicit), fișierul se descarcă și îl preia driverul local,
-  sau `Terrabit Connect (local agent)`, comanda se trimite agentului local, care tipărește și întoarce
-  rezultatul; dacă agentul nu răspunde, se descarcă fișierul;
+- **Transport ECR**: `Fișier (descărcare .prn/.inp)` (implicit), fișierul se descarcă și îl preia driverul local,
+  sau `Terrabit Connect (agent local)`, comanda se trimite agentului local, care tipărește și întoarce
+  rezultatul; dacă agentul nu răspunde, se descarcă fișierul; sau `DxPrint (driver local)`, bonul se
+  trimite ca JSON driverului DxPrint (Datecs și Daisy, modul embedded), care tipărește și întoarce
+  rezultatul; dacă driverul nu poate fi contactat, se descarcă fișierul. Cu DxPrint completați și
+  **URL driver** (implicit `http://127.0.0.1:8080`) și, doar dacă driverul cere autentificare,
+  **Utilizator** și **Parolă** (detalii în fișa `deltatech_ecr_connect`);
 - **File prefix** și **File extension** pentru fișierul preluat de driver;
 - **Cash In/Out** pentru operațiuni de numerar din POS;
 - **Cash In/Out to ECR** pentru tipărirea dispozițiilor pe casa de marcat;
@@ -101,6 +105,20 @@ Configurați:
   creanțe al clientului; fără bifă, creditul ajunge pe contul de încasări POS implicit (sau pe **Cont
   Intermediar** al metodei, dacă e completat), fără client. Metoda creată automat de Odoo are bifa
   activă.
+
+### Pasul 2b — Casa de marcat simulată (opțional, pentru teste și instruire)
+
+Pe un punct de vânzare de test, cu **Transport ECR** = `Terrabit Connect (agent local)`, câmpul
+**Simulare** (din `deltatech_pos_base`) pornește casa de marcat simulată:
+
+- **Simulată în Odoo (fără agent)** — browserul joacă rolul casei; nu e nevoie de agent pe stație;
+- **Simulată prin agent** — agentul Terrabit Connect de pe stație trebuie pornit cu variabila de mediu
+  `TERRABIT_FISCAL_DRIVER=simulated`; un agent pe driverul real nu primește niciun bon;
+- **Întârziere (ms)** — cât așteaptă casa simulată înainte să răspundă.
+
+Simularea citește doar formatul FiscalWire, deci **Tip casa marcat** rămâne
+`FiscalWire`. Nimic din ce se tipărește în simulare nu este bon fiscal: casele magazinelor în
+funcțiune nu se lasă niciodată în simulare. Pașii de folosire sunt la Pașii 8–9 din Flux de utilizare.
 
 ### Pasul 3 — Configurare metode de plată
 
@@ -146,7 +164,8 @@ sau **QR**), vizibil doar cât timp bifa este activă. Efectul opțiunilor pe bo
 
 La validarea comenzii în POS, modulul pregătește fișierul ECR (bon fiscal), pe transportul prin fișier îl
 descarcă local cu prefixul și extensia configurate, iar driverul AMEF îl preia și îl tipărește; prin
-Terrabit Connect îl trimite agentului local și salvează pe comandă rezultatul. Pe bon se trimit
+Terrabit Connect îl trimite agentului local și salvează pe comandă rezultatul; prin DxPrint îl trimite
+ca JSON driverului local și salvează pe comandă numărul bonului și raportul Z (Pasul 10). Pe bon se trimit
 numele clientului (dacă e selectat), referința comenzii, notele, liniile de produs cu TVA,
 discounturile și totalurile pe tipuri de plată.
 
@@ -191,6 +210,11 @@ Din sesiunea POS din backoffice (**Point of Sale → Orders → Sessions**) se p
 de deschidere e pozitivă, se descarcă automat și `cash_open.<ext>`; pentru operațiuni ulterioare de
 numerar (**Cash collection**/**Payment disposal**, din POS), sistemul cere partener pe comandă și
 descarcă `cash_move.<ext>` pentru tipărire pe AMEF, dacă opțiunea e activă.
+
+Pe transportul DxPrint, aceleași operațiuni pornite din POS nu mai descarcă fișiere, ci trimit cereri
+proprii driverului (Pasul 10): rapoartele X și Z din fereastra de închidere a sesiunii, numerarul de la
+deschidere, intrările/ieșirile de numerar și încasarea/plata cu chitanța pentru client. Butoanele
+**Print X** și **Print Z** din sesiunea din backoffice descarcă în continuare fișierul.
 
 > **Atenție**: „Print X" și „Print Z" generează fișierul **cu același nume** pe aceeași sesiune —
 > a doua apăsare șterge atașamentul creat de prima. Descărcarea imediată (la momentul apăsării) nu
@@ -337,6 +361,87 @@ liniile, ca fiecare cotă să rămână pozitivă. Verificarea se face după cot
 **Cod ECR**: două taxe cu aceeași cotă (de exemplu 0% taxare inversă și 0% bunuri) se însumează în
 aceeași grupă.
 
+### Pasul 8 — Bara POS pe o casă de marcat simulată
+
+Pe un punct de vânzare cu **Simulare** pornită (Pasul 2b din Configurare inițială), bara de sus a POS
+arată, numerotate pe captură:
+
+1. butonul galben **Simulare**, care deschide panoul **Dispozitive virtuale** (Pasul 9);
+2. butonul casei de marcat: cu **Simulată în Odoo (fără agent)** e galben, cu textul **Casă de marcat
+   simulată**; cu **Simulată prin agent** și agentul pornit e verde, cu textul **Casă de marcat
+   (simulată)** — eticheta arată doar că agentul răspunde, nu că rulează în mod simulat: dovada este
+   bonul de pe rola panoului sau dialogul de refuz (AMEF-31); pe o casă reală e verde, **Casă de marcat**, sau roșu, **Casa de marcat e offline**;
+3. la clic pe butonul casei, în modul fără agent, apare avertismentul „Casă de marcat simulată: nu se
+   tipărește nimic real.” — nu se mai interoghează niciun agent.
+
+Casierul vinde ca de obicei. După **Validează**, mesajul „Bon fiscal tipărit #1” arată numărul dat de
+casa simulată; pe comandă se salvează, ca la o casă reală prin Terrabit Connect, numărul bonului, al
+documentului și al raportului Z. În plus, comanda primește bifa **Bon simulat** (`fiscal_simulated`,
+câmp din `deltatech_ecr_fiscal`), tot din răspunsul casei simulate (cu **Simulată în Odoo (fără agent)**
+sau cu agentul în mod simulat): bonul nu e un document fiscal. Modulele de conformitate fiscală
+(`l10n_ro_pos_fiscal_compliance` și `l10n_ro_pos_fiscal_compliance_ecr`) dau unei astfel de comenzi
+starea **Bon simulat** și o lasă în afara raportului Z și a potrivirii cu jurnalul AMEF.
+
+![Ecranul de bon din POS după o plată de 6,05 lei: butoanele galbene Simulare și Casă de marcat simulată din bara de sus și, dedesubt, mesajele Bon fiscal tipărit #1 și Casă de marcat simulată: nu se tipărește nimic real., numerotate 1-3](screenshots/08_bara_pos_simulare.png)
+
+### Pasul 9 — Panoul Dispozitive virtuale din POS
+
+Apăsați **Simulare**. În dreapta se deschide panoul **Dispozitive virtuale** cu casa punctului de
+vânzare deschis. Pe captură sunt evidențiate:
+
+1. **rola** casei simulate: fiecare document cu antetul `*** SIMULARE ***`, liniile cu grupa de TVA
+   (A = 21%, B = 11%, C/D/E = 0%), totalul, plățile și numerele **BF**, **NR**, **Z**; verificați aici
+   că produsele și metodele de plată ajung pe grupa și tipul de plată așteptate;
+2. **Următorul răspuns** — implicit **După sumă (automat)**; alegeți o eroare (de exemplu **Lipsă
+   hârtie**) ca să exersați cu casierul dialogul **Eroare casă de marcat**; cu **Până la oprire**
+   bifat răspunsul rămâne până îl schimbați.
+
+Tot în panou: **Întârziere**, **Raport X**, **Raport Z** și **Resetează ziua** (detaliate în fișa
+`deltatech_ecr_connect`). Rapoartele X și Z cerute la închiderea sesiunii ajung pe aceeași rolă. Același
+panou se deschide și din backend, din butonul **Simulare** din bara de sus a Odoo.
+
+![Panoul Dispozitive virtuale deschis în POS peste ecranul de bon: casa Magazin Centru, Simulată în Odoo, rândul Ziua fiscală Z 1 BF 2 NR 2 numerar 12.10, rola cu al doilea bon Apa plata 0 5 L de 6.05 pe grupa A și Următorul răspuns pe După sumă (automat), evidențiate](screenshots/09_panou_dispozitive_virtuale.png)
+
+**Mesaje pe casa simulată.**
+
+| Mesaj | Cauză | Remediere |
+|---|---|---|
+| Casă de marcat simulată: nu se tipărește nimic real. (avertisment) | clic pe butonul casei, cu **Simulată în Odoo (fără agent)** | informativ; casa nu e reală |
+| Agentul Terrabit Connect nu e în mod simulat (TERRABIT_FISCAL_DRIVER=simulated): bonul nu a fost trimis. | **Simulată prin agent**, iar agentul rulează cu driverul real | reporniți agentul cu `TERRABIT_FISCAL_DRIVER=simulated` și apăsați **Reîncercați**, sau treceți pe **Simulată în Odoo (fără agent)** |
+| Lipsă hârtie / Casa de marcat e deconectată / Niciun răspuns de la casa de marcat | răspunsul ales în panou, sau totalul terminat în `,91`, `,92`, `,94` | scenariul cerut; **Reîncercați** după ce răspunsul „o singură dată” s-a consumat |
+| Format nesuportat de simulator: … | **Tip casa marcat** nu este FiscalWire | alegeți `FiscalWire` pe punctul de vânzare de test |
+
+Lista completă a mesajelor casei simulate este în fișa `deltatech_ecr_connect`.
+
+### Pasul 10 — Tipărirea prin driverul DxPrint
+
+Pe un punct de vânzare cu **Transport ECR** = `DxPrint (driver local)` (Pasul 2 din Configurare
+inițială), casierul lucrează ca de obicei; diferența e doar în ce primește casa:
+
+| Operațiune în POS | Ce se trimite driverului DxPrint |
+|---|---|
+| **Validează** pe o vânzare | bonul fiscal ca JSON: produsele cu cota TVA (sau **Cod ECR** al taxei), unitatea și discountul pe linie, plățile după **Cod ECR** al metodei, CIF-ul, notele și codul de bare; o linie cu total negativ (retur într-un schimb) devine discount valoric pe bon. Numărul bonului și raportul Z întoarse de driver se salvează pe comandă, ca la Terrabit Connect |
+| **Validează** pe un retur plătit înapoi în numerar | în locul dispoziției de plată, fiecare plată a comenzii devine o mișcare de numerar: plata negativă în numerar o scoatere de numerar, o plată pozitivă o introducere |
+| Raport X / raport Z din fereastra de închidere a sesiunii | raportul X, respectiv Z, cerut direct driverului |
+| Deschiderea sesiunii cu sumă inițială pozitivă și **Cash In/Out to ECR** activ | o introducere de numerar cu suma de deschidere |
+| Intrare / ieșire de numerar din POS (**Cash In/Out to ECR** activ) | introducerea, respectiv scoaterea de numerar |
+| **Cash collection** / **Payment disposal** | introducerea, respectiv scoaterea de numerar, apoi un bon nefiscal cu chitanța pentru client (titlul, clientul, suma și rândurile de semnătură, ca în fișier) |
+
+Rezultatul se vede ca la Terrabit Connect: mesajul „Bon fiscal tipărit #<număr>” sau dialogul **Eroare
+casă de marcat**, cu mesajul casei. Dacă driverul nu poate fi contactat deloc (oprit, adresă greșită),
+apare avertismentul „Driverul DxPrint nu răspunde — se descarcă fișierul .<ext>” și se descarcă
+fișierul operațiunii, ca pe transportul prin fișier. Un răspuns care nu e JSON (de exemplu o pagină de
+eroare) apare ca eroare obișnuită, „Eroare driver DxPrint (HTTP <cod>)”. Dacă driverul nu răspunde în 40
+de secunde sau conexiunea se pierde după prima cerere, fișierul **nu** se descarcă: se deschide dialogul
+de eroare, cu avertismentul că bonul poate fi deja tipărit. Casierul verifică întâi
+casa; **Reîncercați** reia doar cererea care a eșuat (la încasarea cu chitanță, depunerea deja făcută nu
+se repetă). **Download & handle manually** descarcă fișierul doar cât timp nimic n-a ajuns la casă: după
+depunerea de numerar a unei încasări cu chitanță sau după un timeout nu mai descarcă nimic, iar casierul
+termină operațiunea direct pe casă. Detaliile transportului și capturile erorilor sunt în fișa
+`deltatech_ecr_connect` (Pasul 11).
+
+![Ecranul de după plată în POS: Plata realizată cu succes, 6,05 lei, și în dreapta sus mesajul Bon fiscal tipărit #2079, cu numărul întors de driverul DxPrint, evidențiat](screenshots/10_dxprint_bon.png)
+
 ## 7. Reguli funcționale
 
 | Situație | Comportament |
@@ -361,7 +466,10 @@ aceeași grupă.
 | Bon fiscal cu linii cu total negativ (retur) pe o casă Datecs FiscalWire sau Incotex | liniile negative se trimit după cele pozitive, cu ordinea relativă păstrată; pe celelalte tipuri de casă ordinea rămâne cea din comandă |
 | Comandă cu total 0 și fără plată (retur schimbat pe produse de aceeași valoare) | bonul se încheie cu o linie de total de 0.00 în numerar (cod 0); operatorul nu alege nicio metodă de plată |
 | Retur și produse noi la cote de TVA diferite, o cotă iese negativă | validarea este blocată cu dialogul **Negative VAT total**, la orice total final (pozitiv, zero sau negativ) |
+| Punct de vânzare cu **Simulare** = **Simulată în Odoo (fără agent)** | bonul, dispozițiile de plată și rapoartele X/Z merg la casa simulată din browser; butonul casei e galben, **Casă de marcat simulată**, și nu interoghează niciun agent |
+| Punct de vânzare cu **Simulare** = **Simulată prin agent** | documentele merg la agent doar dacă acesta raportează modul simulat; altfel nu se trimit și apare dialogul de eroare |
 | Retur pur cu linii la două cote de TVA (fără produse noi) | validarea reușește; nu se generează bon fiscal: pe numerar dispoziție de plată, pe card sau **Customer Account** niciun document |
+| **Transport ECR** = `DxPrint (driver local)` | bonul, rapoartele X/Z din POS și mișcările de numerar merg la driverul DxPrint (Pasul 10); fișierul se descarcă doar dacă driverul nu poate fi contactat la prima cerere; la timeout sau conexiune pierdută apare dialogul de eroare |
 
 ## 8. Scenarii de test pentru consultant
 
@@ -395,13 +503,20 @@ aceeași grupă.
 | AMEF-25 | Retur pur: un produs la 21% (48 lei) și unul la 11% (3 lei), plată în numerar | validarea reușește, fără dialogul **Negative VAT total**; nu se generează bon fiscal, ci dispoziție de plată de 51 lei în numerar |
 | AMEF-26 | Retur pur: un produs la 21% (48 lei) și garanția SGR la 0% (0,50 lei), plată în numerar | validarea reușește, fără dialogul **Negative VAT total**; nu se generează bon fiscal, ci dispoziție de plată de 48,50 lei în numerar |
 | AMEF-27 | Din ecranul **Comenzi**: **Refund** pe o comandă de 100 lei, apoi atingeți un produs nou de 60 lei pe aceeași comandă (total −40), client selectat, plată de −40 în numerar | produsul se adaugă fără alerta „Ensure you validate the refund before taking another order”; validarea reușește; la casă ajunge dispoziția de plată de 40 lei, fără bon fiscal; dacă se facturează, factura este o notă de credit de 40 lei, cu returul pe +1 și produsul nou pe −1 |
+| AMEF-28 | Punct de vânzare de test cu **Simulată în Odoo (fără agent)**: deschideți POS-ul și apăsați butonul casei; apoi validați un bon și exportați comanda din lista comenzilor POS, cu coloana **Bon simulat** | butoanele **Simulare** și **Casă de marcat simulată** sunt galbene; apare „Casă de marcat simulată: nu se tipărește nimic real.”; comanda are **Bon simulat** bifat (`fiscal_simulated`), iar cu `l10n_ro_pos_fiscal_compliance` instalat are starea fiscală **Bon simulat** și nu intră în raportul Z |
+| AMEF-29 | Pe același punct de vânzare, bon de 6,05 lei în numerar, apoi **Simulare** | „Bon fiscal tipărit #1”; în panou, rola arată bonul cu `*** SIMULARE ***`, grupa A și NUMERAR 6.05 |
+| AMEF-30 | **Următorul răspuns** = **Lipsă hârtie**, apoi un bon | dialogul **Eroare casă de marcat** cu „Lipsă hârtie”; **Reîncercați** tipărește bonul |
+| AMEF-31 | **Simulată prin agent**, agent pornit pe driverul real | dialogul „Agentul Terrabit Connect nu e în mod simulat…”; butonul casei verde, **Casă de marcat (simulată)** |
+| AMEF-32 | Transport `DxPrint (driver local)`, bon cu numerar, driverul pornit | „Bon fiscal tipărit #<număr>”; pe comandă se salvează numărul bonului și raportul Z |
+| AMEF-33 | Transport DxPrint: raport X din fereastra de închidere, apoi **Cash collection** | raportul X se tipărește; încasarea face introducerea de numerar și tipărește chitanța nefiscală |
+| AMEF-34 | Transport DxPrint, driverul oprit, bon cu numerar | avertisment „Driverul DxPrint nu răspunde — se descarcă fișierul .<ext>”, se descarcă fișierul bonului |
 
 ## 9. Legături cu alte module
 
 | Modul | Rol |
 |---|---|
-| `deltatech_pos_base` | configurare bază ECR: tip casă, prefix/extensie fișier, cod ECR pe metodele de plată |
-| `deltatech_ecr_connect` | șabloanele de comenzi pe tip de casă; stabilește care case primesc returul ca linie de vânzare negativă (ordinea liniilor din Pasul 7) și transportul Terrabit Connect |
+| `deltatech_pos_base` | configurare bază ECR: tip casă, transport, URL-ul și autentificarea driverului DxPrint, prefix/extensie fișier, cod ECR pe metodele de plată |
+| `deltatech_ecr_connect` | șabloanele de comenzi pe tip de casă; stabilește care case primesc returul ca linie de vânzare negativă (ordinea liniilor din Pasul 7) și transporturile Terrabit Connect și DxPrint; la DxPrint, dacă driverul nu poate fi contactat, se descarcă fișierul |
 | `deltatech_ecr_fiscal` | câmpurile de audit ale tipăririi pe casa de marcat (număr bon, document fiscal, raport Z, stare, eroare), comune pentru POS, facturare și localizări |
 | `point_of_sale` | fluxul de vânzare și sesiuni POS; core refuză produsele noi pe o comandă de retur, iar `deltatech_pos` permite schimbul (suprascrie `isSaleDisallowed`), pentru că totalul, TVA-ul, factura și nota de sesiune se calculează la fel |
 | `l10n_ro_anaf_d394_pos` | duce bonurile POS în declarația D394 |
@@ -437,6 +552,16 @@ aceeași grupă.
       `l10n_ro_pos_returns` cu **Automatic Return Invoice** activ, altfel manual), plus procesul-verbal de
       retur și dovada rambursării; procedura se confirmă cu contabilul clientului.
 - [ ] Rapoartele X și Z pot fi generate de utilizatorii operaționali.
+- [ ] Cu transportul DxPrint: **URL driver**, **Utilizator** și **Parolă** corespund driverului; bonul,
+      raportul X și o încasare cu chitanță ies pe casă (AMEF-32, AMEF-33), iar cu driverul oprit se
+      descarcă fișierul (AMEF-34); casierii știu că după un timeout verifică pe casă dacă bonul a ieșit
+      înainte de **Reîncercați**.
+- [ ] Pe punctul de vânzare de test cu **Simulare**, bara POS arată **Simulare** și **Casă de marcat
+      simulată**, iar un bon de probă apare pe rola panoului **Dispozitive virtuale** și e salvat pe
+      comandă cu **Bon simulat** bifat (AMEF-28, AMEF-29).
+- [ ] Casierii au exersat pe casa simulată dialogul **Eroare casă de marcat** (AMEF-30).
+- [ ] Înainte de punerea în funcțiune, niciun punct de vânzare al magazinelor nu are **Simulare**
+      pornită: în bara POS nu mai apare butonul **Simulare**.
 - [ ] Pentru retururi și dispoziții de plată există partener selectat.
 - [ ] D394 POS este documentată separat când clientul cere și raportarea fiscală a bonurilor.
 - [ ] Raportul **VAT Sales by Fiscal Device** grupează corect pe punct de lucru și taxă; totalul
@@ -455,7 +580,7 @@ aceeași grupă.
 | Limitare | Impact |
 |---|---|
 | Modulul generează fișier pentru driver, nu comunică direct cu AMEF | depinde de stația locală și de utilitarul casei de marcat |
-| Pe transportul prin fișier, Odoo nu importă răspunsul fiscal de la AMEF | seria/numărul bonului fiscal nu se întorc automat în comanda POS; prin Terrabit Connect se salvează pe comandă numărul bonului, documentul fiscal, raportul Z și starea |
+| Pe transportul prin fișier, Odoo nu importă răspunsul fiscal de la AMEF | seria/numărul bonului fiscal nu se întorc automat în comanda POS; prin Terrabit Connect se salvează pe comandă numărul bonului, documentul fiscal, raportul Z și starea, iar prin DxPrint numărul bonului, raportul Z și starea |
 | Nu există import de jurnal electronic / XML de la casa de marcat | reconcilierea fiscală detaliată rămâne în afara acestui modul |
 | Reconcilierea raportului Z și fiscalizarea e-commerce nu sunt acoperite aici | necesită extensii suplimentare |
 | Retur cu plată negativă pe card sau pe **Customer Account** | nu se trimite niciun document la casa de marcat; evidența fiscală a returului este factura cu valori negative, legată de bon: automată doar cu `l10n_ro_pos_returns` și **Automatic Return Invoice** activ, altfel se emite manual |
@@ -464,6 +589,8 @@ aceeași grupă.
 | Retur pe același bon cu produse noi, pe Optima și Daisy | nu e suportat: șablonul de subtotal lipsește, deci în locul comenzii de subtotal ajunge în fișier textul „undefined”, iar pe Optima și reducerea se tipărește ca text (defect cunoscut în `deltatech_ecr_connect`); returul se face pe o comandă separată |
 | Schimb de aceeași valoare (total 0) între cote diferite, de exemplu retur la 21% și produs nou la 11% | validarea e blocată cu dialogul **Negative VAT total**, pentru că cota returnată iese negativă; testat pe o casă reală Datecs FiscalWire: FiscalWire refuză bonul cu eroarea `valoare_negativa_per_cota_tva`, chiar dacă totalul e 0; schimbul se face în două comenzi |
 | Rambursarea pe card pe un punct de vânzare fără terminal de plată legat la POS | POS doar înregistrează plata negativă: banii se returnează manual, pe terminalul bancar |
+| Casa simulată citește doar formatul FiscalWire, iar ziua ei fiscală stă în browser | celelalte tipuri de casă nu se pot simula; alt browser are altă zi fiscală pentru aceeași casă |
+| O vânzare pe casa simulată se înregistrează contabil ca orice vânzare POS, fără bon fiscal real | simularea se face doar pe o bază sau pe un punct de vânzare de test; comanda e marcată **Bon simulat** (`fiscal_simulated`), iar modulele de conformitate (`l10n_ro_pos_fiscal_compliance`, `_ecr`) o lasă în afara raportului Z și a potrivirii cu jurnalul AMEF, dar raportul „Vânzări TVA pe casă de marcat” din acest modul o citește ca pe orice `pos.order` |
 | „Print X" și „Print Z" generează fișierul cu același nume pe sesiune | a doua apăsare șterge atașamentul creat de prima — vezi Pasul 4 |
 | Raportul „Vânzări TVA pe casă de marcat" citește doar `pos.order`, nu jurnalul/arhiva ANAF a aparatului | nu e o citire directă a arhivei oficiale — folosiți-l ca punct de plecare pentru reconciliere |
 | Raportul nu acoperă vânzările din fluxul separat `deltatech_sale_store` (facturare la bon fiscal, fără POS) | dacă acel modul e instalat la client, vânzările lui rămân neagregat aici |
@@ -482,13 +609,22 @@ conturi RO:
 5. `05_vat_report.png` — raportul Vânzări TVA pe casă de marcat, pivot pe punct de lucru și taxă.
 6. `06_cont_client_doar_retur.png` — setări POS, opțiunea **Cont client doar pentru retur**.
 7. `07_schimb_bon_total_0.png` — comandă de schimb cu total 0, tabul „ECR data": produsul nou, returul la final, totalul 0.00 în numerar.
+8. `08_bara_pos_simulare.png` — bara POS pe o casă simulată: **Simulare**, **Casă de marcat simulată** și avertismentul ei.
+9. `09_panou_dispozitive_virtuale.png` — panoul **Dispozitive virtuale** în POS: rola și **Următorul răspuns**.
+10. `10_dxprint_bon.png` — bonul tipărit prin driverul DxPrint, mesajul cu numărul bonului.
 
-Ecranul de plată din POS (metoda ascunsă sau oferită după total) nu se poate captura din acest test,
-care redă doar ecrane din backoffice.
+Capturile 1–7 vin din `tests/test_screenshots.py` (clasa `TestDeltatechPosScreenshots`), care redă doar
+ecrane din backoffice, deci ecranul de plată din POS (metoda ascunsă sau oferită după total) nu are
+captură. Capturile 8–9 vin din `tests/test_screenshots_simulator.py` (clasa
+`TestPosSimulatorScreenshots`), în POS, pe casa simulată, iar captura 10 din
+`tests/test_screenshots_dxprint.py` (clasa `TestPosDxPrintScreenshots`), cu un driver DxPrint jucat de
+test; versiunile lor în engleză sunt în `static/description/en/`, pentru `readme/USAGE.md`.
 
 Regenerare:
 
 ```bash
 ./odoo/odoo-bin -c odoo.conf -d <db> -i deltatech_pos,l10n_ro_doc_screenshots \
-    --test-tags=fise_screenshots --stop-after-init
+    --test-tags=/deltatech_pos:TestDeltatechPosScreenshots --stop-after-init
+./odoo/odoo-bin -c odoo.conf -d <db> -i deltatech_pos,deltatech_doc_screenshots,l10n_ro \
+    --test-tags=/deltatech_pos:TestPosSimulatorScreenshots --stop-after-init
 ```

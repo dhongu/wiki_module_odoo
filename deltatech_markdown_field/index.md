@@ -1,10 +1,11 @@
 # Deltatech Markdown Field (localizat la `deltatech_markdown_field/index.md`)
 
 - **Nume Tehnic:** `deltatech_markdown_field`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_markdown_field
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_markdown_field`
 - **Ultima Ingestie:** `2026-07-31`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

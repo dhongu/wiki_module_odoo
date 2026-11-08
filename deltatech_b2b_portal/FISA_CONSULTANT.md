@@ -1,7 +1,7 @@
 # Fișă Modul: Portal B2B pentru clienți firmă
 
 **Modul:** `deltatech_b2b_portal`
-**Versiune:** 19.0.1.0.0
+**Versiune:** 19.0.1.4.0
 **Suită:** bitshop
 **Dependențe:** `website_sale`, `sale_management`
 **Utilizator principal:** agentul de vânzări care preia clienții firmă
@@ -29,7 +29,9 @@ Modulul pune un strat de firmă peste magazinul standard:
 - **tabloul de bord al firmei în portal** (*Contul meu*): sold, sumă restantă, credit disponibil,
   oferte de răspuns, facturile de plătit cu întârzierea lor și agentul;
 - **oprirea comenzii** — la finalizarea coșului și la semnarea unei oferte — pentru persoanele care
-  doar văd și pentru conturile suspendate.
+  doar văd și pentru conturile suspendate;
+- opțional, **prețuri doar pentru clienții firme**: catalogul rămâne public, dar prețul, stocul și
+  coșul le văd doar persoanele firmelor cu cont B2B activ și angajații.
 
 Modulul pornește din `agroamat_b2b`, scris pentru AGROAMAT COM SRL și preluat cu acordul lor.
 
@@ -103,11 +105,21 @@ Date minime pentru demo:
    - **Cereri de cont** — agentul care devine responsabil pe firmele noi și primește activitatea
      pentru cererile lor. La o firmă existentă, activitatea o primește agentul ei. Gol: agentul de
      vânzări al website-ului.
+   - **Confirmă cererile pe e-mail** — persoana care trimite formularul primește un e-mail că cererea
+     a fost primită. Implicit oprită.
+   - **Prețuri doar pentru clienții firme** — catalogul rămâne public, dar prețurile, stocul și
+     adăugarea în coș le văd doar persoanele firmelor cu cont B2B activ și angajații (pasul 11).
+     Implicit oprită: la actualizarea modulului nu se schimbă nimic.
    - **Termeni B2B** — adresa paginii cu termenii pentru clienții firmă. Gol: formularul nu cere
      acceptarea.
-4. Dacă magazinul și prețurile nu trebuie să fie vizibile vizitatorilor neautentificați, în aceleași
-   setări alegeți la **Acces eCommerce** varianta **Utilizatori autentificați**. Pagina /b2b rămâne
-   publică.
+4. Ce vede un vizitator neautentificat — alegeți una din două variante:
+   - **Prețuri doar pentru clienții firme** (blocul *Portal B2B*): magazinul rămâne deschis și
+     indexabil de motoarele de căutare, produsele se văd, dar fără preț, stoc și adăugare în coș.
+     Prețurile nu sunt doar ascunse în pagină: serverul nu trimite prețul real (valoarea e zero).
+   - **Acces eCommerce** = **Utilizatori autentificați** (blocul *eCommerce*, setare standard):
+     /shop cere autentificare, deci catalogul nu se vede deloc și nu e indexat.
+
+   În ambele variante pagina /b2b rămâne publică.
 5. Plata online e tot standard: butonul *Plătește* pe facturi urmează setarea *Plată online factură*
    din Contabilitate, iar pe oferte, opțiunea *Plata online* a comenzii.
 6. Pentru limita de credit aplicată pe website, instalați `terrabit_partner_credit_limit_website`.
@@ -227,6 +239,9 @@ firmei.
 
 ### Pasul 9 — Persoana care doar vede încearcă să comande
 
+Rolul *Doar vizualizare* nu ascunde prețurile: persoana le vede, doar nu poate comanda. Pentru a
+ascunde prețurile de vizitatori, folosiți setarea din pasul 11, nu rolul.
+
 O persoană „Doar vizualizare” vede în *Contul meu*, permanent, mesajul că poate vedea prețurile și
 documentele, dar nu poate plasa comenzi. Poate pune produse în coș, dar la **Finalizează comanda** e
 trimisă înapoi aici. Tot așa, dacă e autentificată, **nu poate semna și nu poate plăti online o
@@ -253,6 +268,48 @@ administrator B2B din meniul **Acțiuni → Activează contul B2B** al fișei (s
 contacte): contul devine activ și se deschide fereastra standard de acces în portal pe persoanele
 firmei, unde alegeți cui dați acces.
 
+### Pasul 11 — Prețuri doar pentru clienții firme
+
+Când magazinul vrea să-și arate produsele oricui, dar prețurile doar clienților firmă aprobați:
+**Pagină web → Configurare → Setări**, blocul **Portal B2B**, bifați **Prețuri doar pentru clienții
+firme** și apăsați **Salvează** (captura `01_setari.png`, de la secțiunea 5).
+
+| Cine navighează | Ce vede |
+|---|---|
+| vizitator neautentificat | catalogul, fără prețuri și fără adăugare în coș |
+| persoana unei firme fără cont B2B activ (cerere în așteptare, respinsă, suspendată, sau client obișnuit fără stare B2B) | la fel, catalogul fără prețuri |
+| persoana unei firme cu cont B2B **activ** (și „Doar vizualizare”) | prețurile, ca de obicei |
+| angajat (utilizator intern) | prețurile, ca de obicei |
+
+1. **Găsiți pe ecran** — în **/shop**, ca vizitator: cardurile produselor au denumirea, fără preț;
+   filtrul de interval de preț, dacă e activat în magazin, nu mai apare, iar meniul de sortare nu
+   mai oferă sortarea după preț (nici una cerută în adresă nu se aplică).
+
+   ![Magazinul văzut de un vizitator, fără prețuri](screenshots/12_magazin_fara_preturi.png)
+
+   Pe pagina produsului nu apar prețul, suplimentul de preț al variantelor, stocul, cantitatea și
+   **Adaugă în coș**; în locul lor apare blocul standard **Contactați-ne**.
+
+   ![Pagina produsului fără preț, cu Contactați-ne](screenshots/13_produs_fara_pret.png)
+2. **Verificați** — prețurile lipsesc și din codul paginii și din sugestiile căutării, nu doar de
+   pe ecran: serverul nu trimite prețul real (valoarea e zero). Un interval de preț pus de mână în adresă
+   (`min_price`, `max_price`) se ignoră, iar o adăugare în coș trimisă direct, fără buton, e
+   refuzată.
+3. **Mai departe** — vizitatorul care vrea prețuri cere cont din **/b2b** (pasul 1); după aprobare
+   (pasul 5) și autentificare, le vede.
+
+Diferența față de **Acces eCommerce** = **Utilizatori autentificați**: acolo magazinul se închide cu
+totul (pagină de autentificare, nimic indexat); aici catalogul rămâne public și se găsește din
+motoarele de căutare, doar prețurile se dau după aprobare.
+
+Tot cu setarea pornită:
+
+- **fluxul Google Merchant Center** (setare standard a magazinului) nu mai trimite prețuri: Google
+  citește catalogul ca un vizitator, iar un produs fără preț e lăsat afară din flux. Dacă clientul
+  vrea reclame Google Shopping cu preț, setarea nu i se potrivește;
+- eticheta automată **„Stoc epuizat”** de pe cardul produsului (cu `website_sale_stock`) nu apare
+  celor care nu văd stocul.
+
 ### Note de monografie și raportare
 
 Modulul nu generează note contabile și nu alimentează nicio declarație. Cifrele din portal sunt
@@ -264,7 +321,7 @@ companie), nu în portal.
 
 | Modul | Rol |
 |---|---|
-| `website_sale` | magazinul, coșul și finalizarea comenzii; setarea standard *Acces eCommerce* închide magazinul pentru vizitatori |
+| `website_sale` | magazinul, coșul și finalizarea comenzii. Setarea standard *Acces eCommerce* închide tot magazinul pentru vizitatori (nimic indexat); *Prețuri doar pentru clienții firme* din acest modul lasă catalogul public și scoate doar prețurile, stocul și coșul (pasul 11) |
 | `portal` | invitația în portal și *Contul meu* |
 | `sale_management` | ofertele din portal, numărate în rezumat |
 | `terrabit_partner_credit_limit`, `terrabit_partner_credit_limit_website` | limita de credit și facturile restante, cu toleranță și excepții; pe website, bara de progres în coș și restrângerea metodelor de plată |
@@ -273,7 +330,7 @@ companie), nu în portal.
 
 **Ce e automat:** crearea firmei și a contactului din formular, potrivirea după CUI, activitatea
 agentului, invitația în portal la aprobare, închiderea activității, oprirea la finalizarea comenzii
-și la semnarea ofertei.
+și la semnarea ofertei; cu setarea pornită, afișarea prețurilor doar după aprobarea contului.
 
 **Ce rămâne manual:** verificarea firmei înainte de aprobare, lista de prețuri, termenul de plată și
 limita de credit, rolul fiecărei persoane, suspendarea.
@@ -292,6 +349,8 @@ limita de credit, rolul fiecărei persoane, suspendarea.
 - [ ] O persoană „Doar vizualizare” e oprită la finalizarea comenzii, la semnarea și la plata online a unei oferte, cu mesaj, iar una „Poate comanda” nu.
 - [ ] Clientul are termene de plată în rate? Explicați-i că restanța apare după ultima rată.
 - [ ] Cu *Acces eCommerce* = *Utilizatori autentificați*, /shop cere autentificare, iar /b2b rămâne deschis.
+- [ ] Cu *Prețuri doar pentru clienții firme* bifată, un vizitator neautentificat și persoana unei firme fără cont B2B activ nu văd prețul pe cardul produsului și pe pagina produsului, nici stocul, nici filtrul de preț, nici *Adaugă în coș* (apare *Contactați-ne*), nici eticheta automată „Stoc epuizat”; un angajat și persoana unei firme active le văd.
+- [ ] Cu setarea oprită (implicit), magazinul arată prețurile ca înainte, tuturor.
 - [ ] Dacă se cere limita de credit pe website: `terrabit_partner_credit_limit_website` e instalat, iar un client lăsat peste limită („Permite vânzare peste credit?”) poate comanda.
 
 ## 9. Mesaje de eroare frecvente
@@ -313,7 +372,7 @@ Capturile din `readme/screenshots/`, în ordinea fișei:
 
 | Fișier | Ce arată |
 |---|---|
-| `01_setari.png` | blocul *Portal B2B* din setările paginii web |
+| `01_setari.png` | blocul *Portal B2B* din setările paginii web, cu *Prețuri doar pentru clienții firme* bifată |
 | `02_b2b_formular.png` | pagina /b2b cu formularul de cerere |
 | `03_b2b_trimis.png` | confirmarea după trimitere |
 | `04_cereri_lista.png` | *Vânzări → Comenzi → Cereri de cont B2B* |
@@ -324,6 +383,8 @@ Capturile din `readme/screenshots/`, în ordinea fișei:
 | `09_portal_rezumat.png` | tabloul de bord al firmei în *Contul meu* |
 | `10_portal_comanda_oprita.png` | comanda oprită pentru o persoană „Doar vizualizare” |
 | `11_clienti_b2b.png` | *Vânzări → Comenzi → Clienți B2B*, cu sold, restanțe și credit |
+| `12_magazin_fara_preturi.png` | /shop văzut de un vizitator, cu setarea pornită: fără prețuri |
+| `13_produs_fara_pret.png` | pagina produsului văzută de un vizitator: fără preț și coș, cu *Contactați-ne* |
 
 Se generează automat din `tests/test_screenshots.py` (mixinul `ScreenshotCase` din
 `l10n_ro_doc_screenshots`, import defensiv), în română, pe o firmă românească:
@@ -342,5 +403,10 @@ Se generează automat din `tests/test_screenshots.py` (mixinul `ScreenshotCase` 
 - Rolul *Doar vizualizare* e pentru contabilul sau directorul firmei client, care vrea să vadă
   facturile fără să comande din greșeală. Oprirea ține cât persoana e autentificată; o ofertă
   semnată din e-mail, fără autentificare, nu poate fi atribuită unei persoane.
+- La clientul care întreabă „cum ascund prețurile?”, întrebați întâi dacă vrea ca produsele să se
+  găsească pe Google. Da → *Prețuri doar pentru clienții firme*; nu → *Acces eCommerce* =
+  *Utilizatori autentificați*. Dacă folosesc fluxul Google Merchant Center, cu setarea pornită
+  fluxul rămâne fără produse (pasul 11). Atenție: cu setarea pornită, nici clienții obișnuiți (persoane fizice
+  cu cont) nu mai văd prețurile, doar firmele cu cont B2B activ.
 - Limita de credit nu e în acest modul. Dacă clientul o cere pe website, e o instalare în plus
   (`terrabit_partner_credit_limit_website`), nu o bifă.

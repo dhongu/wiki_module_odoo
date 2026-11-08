@@ -1,10 +1,11 @@
 # ECR Fiscal Audit Fields (localizat la `deltatech_ecr_fiscal/index.md`)
 
 - **Nume Tehnic:** `deltatech_ecr_fiscal`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_ecr_fiscal
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_ecr_fiscal`
 - **Ultima Ingestie:** `2026-10-09`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

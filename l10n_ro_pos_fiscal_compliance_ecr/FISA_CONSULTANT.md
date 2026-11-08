@@ -105,10 +105,24 @@ AMEF**, cu **Importă arhiva**. În fila **Bonuri fiscale**:
    (BF)*, totalul și TVA-ul declarate, *Comandă POS potrivită* și *Stare potrivire*.
 2. **Verificați**: bonul e potrivit cu comanda care are același raport Z și același BF salvate de driver (în demo, Z 14,
    BF 1, comanda Magazin Centru - 000001, 544,50 lei), iar starea e *Reconciliat*. Un BF egal din alt raport Z nu se
-   potrivește.
+   potrivește. Nici o comandă cu *Bon simulat* nu se potrivește, chiar dacă are același Z și BF (pasul 5): numerele
+   casei simulate se pot suprapune cu ale aparatului real.
 3. Abia apoi, după lămurirea discrepanțelor, apăsați **Arhivează**.
 
 ![Bonul din jurnalul AMEF potrivit cu comanda pe Z și BF](screenshots/04_potrivire_jurnal.png)
+
+### Pasul 5 — Bonul de pe o casă simulată
+
+Când punctul de vânzare tipărește pe casa simulată (emulatorul din Odoo sau Terrabit Connect în mod simulat, vezi fișa
+`deltatech_tc`), driverul marchează răspunsul ca simulat. Puntea nu îl declară emis:
+
+1. **Găsiți pe ecran**: *Stare fiscalizare* = *Bon simulat* (insignă albastră), iar în fila *Fiscalizare AMEF* numărul
+   întors de casa simulată (în demo, 3).
+2. **Verificați**: *Serie bon fiscal* e goală, nu seria aparatului din pasul 1; *Eroare fiscalizare* e goală; butonul
+   **Înregistrează bon fiscal** nu apare; comanda nu blochează închiderea sesiunii și nu intră în raportul Z.
+3. Pe o bază de producție nu trebuie să existe comenzi cu *Bon simulat*: verificați că nicio casă nu e simulată.
+
+![Comanda cu bon de pe casa simulată: Stare fiscalizare Bon simulat, fila Fiscalizare AMEF cu Serie bon fiscal goală și Număr bon fiscal 3](screenshots/05_bon_simulat.png)
 
 ### Note de monografie și raportare
 
@@ -139,6 +153,8 @@ importul jurnalului electronic.
 - [ ] La importul jurnalului electronic, bonurile se potrivesc cu comenzile (*Reconciliat*) pe numărul Z și BF.
 - [ ] Pe o arhivă reală, `idB` din fișierul zilei corespunde NR-ului salvat pe comenzi (presupunerea din
       `readme/CONTEXT.md`).
+- [ ] O comandă tipărită pe casa simulată are *Bon simulat*, fără serie, nu blochează închiderea sesiunii și nu e
+      potrivită cu jurnalul AMEF, chiar cu același Z și BF ca un bon real.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -158,6 +174,7 @@ Capturile din `static/description/` sunt **generate automat** din `tests/test_sc
 2. `02_bon_emis.png` — comanda confirmată de casa de marcat, cu *Bon emis*.
 3. `03_bon_eroare.png` — comanda cu eroare de tipărire.
 4. `04_potrivire_jurnal.png` — bonul din jurnalul AMEF potrivit cu comanda.
+5. `05_bon_simulat.png` — comanda cu bon de pe casa simulată, în starea *Bon simulat*.
 
 Regenerare:
 

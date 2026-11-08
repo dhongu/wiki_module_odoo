@@ -1,10 +1,11 @@
 # Website web designer access (localizat la `deltatech_website_access_design/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_access_design`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_access_design
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_access_design`
 - **Ultima Ingestie:** `2026-10-09`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
