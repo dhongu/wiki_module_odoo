@@ -8499,6 +8499,33 @@
     "text": "Price List Currency Extension\ndeltatech_pricelist\nAcest modul permite ca prețul de listă din datele de bază ale unui produs să fie exprimat într-o altă monedă decât moneda companiei. Este util pentru companiile care lucrează cu furnizori sau cataloage de preț în valută, dar care își gestionează contabilitatea în moneda locală.\nPrețul de listă din fișa produsului poate fi exprimat într-o monedă diferită de moneda companiei."
   },
   {
+    "path": "deltatech_pricelist_bulk/index.md",
+    "module": "deltatech_pricelist_bulk",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_pricelist_bulk",
+    "local_path": "odoo-addons/deltatech/deltatech_pricelist_bulk",
+    "last_ingest": "2026-11-09",
+    "friendly_name": "Pricelist Bulk Rules",
+    "summary": "Modulul permite adăugarea de reguli într-o listă de prețuri pentru mai multe produse deodată și aplicarea aceluiași mod de calcul al prețului pe mai multe reguli existente, în loc să introduci regulile una câte una. Economisește timp la încărcarea și actualizarea prețurilor pentru liste mari de produse.",
+    "features": [
+      "Adăugare reguli pentru mai multe produse: butonul Add Rules de pe lista de prețuri și acțiunea Add to Pricelist pe produsele selectate (listă sau kanban, produse sau variante) deschid un asistent.",
+      "Aplicare la: produse, variante de produs sau categorii de produse; lista se poate completa cu toate produsele unor categorii și ale subcategoriilor lor (Add Products of Categories).",
+      "Setări introduse o singură dată: cantitatea minimă, perioada de valabilitate și modul de calcul al prețului, cu aceleași opțiuni ca la o regulă standard: Fixed Price, Discount (opțional față de altă listă de prețuri) sau Formula (pe baza prețului de vânzare, a costului sau a altei liste, cu discount sau adaos, rotunjire, taxă suplimentară și marje).",
+      "Tratarea regulilor existente (același produs, aceeași cantitate minimă și aceeași perioadă): se păstrează, se actualizează sau se adaugă o regulă nouă.",
+      "Rezultat: se creează câte o regulă pentru fiecare produs, variantă sau categorie; un mesaj arată câte reguli au fost adăugate, actualizate sau păstrate, iar regulile rezultate se deschid într-o listă.",
+      "Aplicare formulă pe mai multe reguli: butonul Apply Formula de pe lista de prețuri (toate regulile) sau acțiunea Apply Formula pe regulile selectate dintr-o listă de reguli schimbă, deodată, modul de calcul al prețului (valorile celorlalte tipuri de preț se golesc), cantitatea minimă și/sau perioada de valabilitate; ce nu e bifat rămâne neschimbat.",
+      "Cerință: listele de prețuri trebuie activate în *Vânzări > Configurare > Setări*, secțiunea Pricing.",
+      "Pașii detaliați și capturile sunt în [fișa consultantului](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "product"
+    ],
+    "connections": [
+      "product"
+    ],
+    "text": "Pricelist Bulk Rules\ndeltatech_pricelist_bulk\nModulul permite adăugarea de reguli într-o listă de prețuri pentru mai multe produse deodată și aplicarea aceluiași mod de calcul al prețului pe mai multe reguli existente, în loc să introduci regulile una câte una. Economisește timp la încărcarea și actualizarea prețurilor pentru liste mari de produse.\nAdăugare reguli pentru mai multe produse: butonul Add Rules de pe lista de prețuri și acțiunea Add to Pricelist pe produsele selectate (listă sau kanban, produse sau variante) deschid un asistent.\nAplicare la: produse, variante de produs sau categorii de produse; lista se poate completa cu toate produsele unor categorii și ale subcategoriilor lor (Add Products of Categories).\nSetări introduse o singură dată: cantitatea minimă, perioada de valabilitate și modul de calcul al prețului, cu aceleași opțiuni ca la o regulă standard: Fixed Price, Discount (opțional față de altă listă de prețuri) sau Formula (pe baza prețului de vânzare, a costului sau a altei liste, cu discount sau adaos, rotunjire, taxă suplimentară și marje).\nTratarea regulilor existente (același produs, aceeași cantitate minimă și aceeași perioadă): se păstrează, se actualizează sau se adaugă o regulă nouă.\nRezultat: se creează câte o regulă pentru fiecare produs, variantă sau categorie; un mesaj arată câte reguli au fost adăugate, actualizate sau păstrate, iar regulile rezultate se deschid într-o listă.\nAplicare formulă pe mai multe reguli: butonul Apply Formula de pe lista de prețuri (toate regulile) sau acțiunea Apply Formula pe regulile selectate dintr-o listă de reguli schimbă, deodată, modul de calcul al prețului (valorile celorlalte tipuri de preț se golesc), cantitatea minimă și/sau perioada de valabilitate; ce nu e bifat rămâne neschimbat.\nCerință: listele de prețuri trebuie activate în *Vânzări > Configurare > Setări*, secțiunea Pricing.\nPașii detaliați și capturile sunt în [fișa consultantului](FISA_CONSULTANT.md)."
+  },
+  {
     "path": "deltatech_pricelist_line_viewer/index.md",
     "module": "deltatech_pricelist_line_viewer",
     "version": "19.0.0.0.4",

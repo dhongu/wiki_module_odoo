@@ -277,6 +277,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_price_change](deltatech_price_change/index.md): Jurnal automat al modificărilor prețului de listă și document numerotat de modificare preț, cu proces-verbal, scriere în produse sau liste de prețuri și etichete de raft.
 - [deltatech_price_change_label](deltatech_price_change_label/index.md): Adaugă pe documentul de modificare de preț un buton care tipărește etichetele de raft (cu preț cu taxe incluse) pentru toate produsele din document.
 - [deltatech_pricelist](deltatech_pricelist/index.md): Permite ca prețul de listă din fișa produsului să fie exprimat într-o monedă diferită de cea a companiei.
+- [deltatech_pricelist_bulk](deltatech_pricelist_bulk/index.md): Adaugă reguli într-o listă de prețuri pentru mai multe produse, variante sau categorii deodată și aplică aceeași formulă de preț pe mai multe reguli existente.
 - [deltatech_pricelist_line_viewer](deltatech_pricelist_line_viewer/index.md): Buton pe lista de prețuri care deschide toate regulile ei într-o listă cu căutare și filtre, plus un grup pentru editarea prețurilor fără drepturi de Administrator Vânzări.
 - [deltatech_pricelist_vat_cost](deltatech_pricelist_vat_cost/index.md): Bază „Cost cu TVA” (cost standard plus taxele de achiziție) pentru regulile listelor de prețuri.
 - [deltatech_print_queue](deltatech_print_queue/index.md): Tipărire etichete ZPL și documente PDF direct din Odoo pe imprimantele locale, prin stația Terrabit Connect, fără IoT Box și funcțională pe odoo.sh.

@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-09] Ingestie modul nou: deltatech_pricelist_bulk
+
+- **Acțiune:** Pagină nouă [deltatech_pricelist_bulk](deltatech_pricelist_bulk/index.md) (Pricelist Bulk Rules, 19.0.1.0.0), generată de subagentul documentarist-wiki, din worktree-ul PR-ului dhongu/deltatech#4071 (modul încă nemerged; URL-ul GitHub devine valid după merge).
+- **Sursă:** readme/DESCRIPTION.md + USAGE.md; Componente Cheie din manifest și cod (asistentele `pricelist.bulk.add`, `pricelist.bulk.formula`, mixinul `pricelist.formula.mixin`).
+- **Dependențe/Conexiuni:** `product`, fără pagină wiki, rămas text.
+- **Fișiere actualizate:** `deltatech_pricelist_bulk/index.md`, `deltatech_pricelist_bulk/FISA_CONSULTANT.md` + 6 capturi în `screenshots/`, `index.md`, `log.md`.
+
 ## [2026-11-09] Ingestie modul nou: deltatech_website_sale_campaign
 
 - **Acțiune:** Pagină nouă [deltatech_website_sale_campaign](deltatech_website_sale_campaign/index.md) (Website Sales Campaigns, 19.0.1.2.1, Alpha), generată de subagentul documentarist-wiki.
