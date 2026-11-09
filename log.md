@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-09] Ingestie modul nou: deltatech_website_sale_campaign
+
+- **Acțiune:** Pagină nouă [deltatech_website_sale_campaign](deltatech_website_sale_campaign/index.md) (Website Sales Campaigns, 19.0.1.2.1, Alpha), generată de subagentul documentarist-wiki.
+- **Sursă:** readme/DESCRIPTION.md + USAGE.md + CONFIGURE.md; Componente Cheie din scanarea modelelor, a cron-ului și a filtrului de snippet. Completată starea Anulată, omisă inițial.
+- **Dependențe/Conexiuni:** `website_sale` și `deltatech_product_price_history` (prețul de referință Omnibus), ambele fără pagină wiki, rămase text.
+- **Fișiere actualizate:** `deltatech_website_sale_campaign/index.md`, `deltatech_website_sale_campaign/FISA_CONSULTANT.md` + 14 capturi în `screenshots/`, `index.md`, `log.md`.
+
 ## [2026-11-09] Sincronizare automată de noapte
 
 - **Versiuni aduse la zi** (34): `deltatech_advanced_planner 19.0.1.14.0 → 19.0.1.14.1`, `deltatech_ai_knowledge_sync 19.0.1.1.1 → 19.0.1.1.2`, `deltatech_b2b_portal 19.0.1.4.0 → 19.0.1.4.1`, `deltatech_barcode_picking 19.0.2.2.9 → 19.0.2.2.10`, `deltatech_barcode_sale 19.0.2.1.2 → 19.0.2.1.4`, `deltatech_calendar_caldav 19.0.3.2.7 → 19.0.3.2.9`, `deltatech_chart_of_accounts 19.0.0.1.9 → 19.0.0.1.10`, `deltatech_chatter 19.0.0.0.6 → 19.0.0.1.1`, `deltatech_chatter_quick_info 19.0.1.1.1 → 19.0.1.1.2`, `deltatech_chatter_quick_info_purchase 19.0.1.0.1 → 19.0.1.0.2`, `deltatech_chatter_quick_info_sale 19.0.1.0.1 → 19.0.1.0.2`, `deltatech_chatter_quick_info_stock 19.0.1.0.1 → 19.0.1.0.2`, `deltatech_create_ticket_button 19.0.0.1.10 → 19.0.0.1.12`, `deltatech_invoice_product_filter 19.0.1.1.1 → 19.0.1.2.0`, `deltatech_list_view 19.0.1.0.5 → 19.0.1.1.0`, `deltatech_markdown_field 19.0.1.0.5 → 19.0.1.0.6`, `deltatech_marketplace_extended 19.0.0.0.33 → 19.0.0.0.34`, `deltatech_marketplace_opencart 19.0.0.2.15 → 19.0.0.2.16`, `deltatech_marketplace_prestashop 19.0.0.6.0 → 19.0.0.6.1`, `deltatech_marketplace_shopify 19.0.1.8.17 → 19.0.1.8.18`, `deltatech_no_quick_create 19.0.2.0.2 → 19.0.2.1.0`, `deltatech_payment_on_delivery 19.0.4.1.9 → 19.0.4.1.10`, `deltatech_pos 19.0.2.16.1 → 19.0.2.16.2`, `deltatech_report_layout 19.0.1.0.2 → 19.0.1.1.1`, `deltatech_stock_report 19.0.1.0.8 → 19.0.1.0.9`, `deltatech_website_watermark 19.0.1.0.10 → 19.0.1.0.12`, `l10n_ro_anaf_d318 19.0.1.0.6 → 19.0.1.0.7`, `l10n_ro_anaf_d394 19.0.1.3.15 → 19.0.1.3.16`, `l10n_ro_audit_immutable 19.0.1.1.5 → 19.0.1.2.2`, `l10n_ro_cbam 19.0.1.7.6 → 19.0.1.7.9` și încă 4.
