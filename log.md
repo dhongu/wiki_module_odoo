@@ -3764,3 +3764,8 @@ This is an append-only log of all operations performed on the wiki.
 
 - **Acțiune:** pagina `l10n_ro_account_edi_ubl/` e ștearsă. Modulul era o punte goală (fără cod sau date, doar dependență de `l10n_ro_edi`), iar numele tehnic aparține seriei OCA 14.0–16.0 pe Odoo Apps, deci scanarea 19.0 îl respingea. Modulul e eliminat din `dhongu/l10n-romania` pe 19.0 (5a822180d) și 18.0 (a2ce06a02); niciun proiect activ nu mai depinde de el, iar trimiterea e-Factura rămâne pe `l10n_ro_edi` (standard Odoo).
 - **Fișiere actualizate:** `l10n_ro_account_edi_ubl/` (șters), `index.md`, `log.md`, `.index/` (rebuild lexical; vectorii se regenerează separat cu `--embed`).
+
+## [2026-11-09] Actualizare: `deltatech_delivery_gls` (19.0.2.1.8)
+
+- **Acțiune:** versiunea trecută la `19.0.2.1.8`; adăugate în Funcționalități Cheie câmpul `WebshopEngine` trimis la MyGLS `PrintLabels` (bitshop_delivery#451, eroarea „Webshop engine is required!” pe conturile GLS noi) și capturile fișei și ale USAGE (bitshop_delivery#451, #452). Fișa consultant recopiată din `readme/FISA_CONSULTANT.md` de pe `origin/19.0`.
+- **Fișiere actualizate:** `deltatech_delivery_gls/index.md`, `deltatech_delivery_gls/FISA_CONSULTANT.md`, `log.md`.

@@ -82,7 +82,7 @@ Deschideți **Inventar → Configurare → Livrare → Metode de livrare**, meto
 
 Butonul de mediu din dreapta-sus arată **Test** sau **Production**. Pe MyGLS, lăsați **Test** până la prima expediere reușită pe contul de test.
 
-![Metoda de livrare GLS, tabul Configurare GLS: Țară România, Versiune mygls, ID expeditor, Utilizator și Parolă mascată, Serviciu, Tip etichetă pdf și Format A4 2x2; butonul de mediu arată Test](screenshots/01_metoda_livrare_gls.png)
+![Metoda de livrare GLS, tabul Configurare GLS: Țară România, Versiune mygls, ID expeditor, Utilizator și Parolă mascată, Serviciu, Tip etichetă pdf și Format A4 2x2; butonul de mediu arată Test](../static/description/01_metoda_livrare_gls.png)
 
 ### Pasul 2 — Prețul transportului: preț fix sau grilă
 
@@ -100,13 +100,13 @@ GLS nu întoarce tarife prin API. Costul pus pe comanda de vânzare se calculeaz
 
 **Treci mai departe.** Salvați metoda de livrare. O metodă fără preț fix și fără grilă nu dă un cost pe comandă și afișează un mesaj care cere completarea unuia dintre ele.
 
-![Tabul Configurare GLS, grupul Price Grid: grila JSON cu tranșele de greutate până la 2 kg și 31,5 kg, suplimentul de ramburs și prețul notificării](screenshots/02_grila_preturi_gls.png)
+![Tabul Configurare GLS, grupul Price Grid: grila JSON cu tranșele de greutate până la 2 kg și 31,5 kg, suplimentul de ramburs și prețul notificării](../static/description/02_grila_preturi_gls.png)
 
 ### Pasul 3 — Transportul GLS pe comanda de vânzare
 
 Din **Vânzări → Comenzi → Comenzi**, pe comanda clientului, **Adăugați transportul** → metoda GLS → **Adaugă**. Pe comandă apare linia de transport, cu prețul fix sau cu suma calculată din grilă după greutatea produselor și suma de încasat. Confirmați comanda.
 
-![Comanda de vânzare confirmată, cu linia de transport GLS și prețul calculat din grilă, sub liniile de produse](screenshots/03_comanda_transport_gls.png)
+![Comanda de vânzare confirmată, cu linia de transport GLS și prețul calculat din grilă, sub liniile de produse](../static/description/03_comanda_transport_gls.png)
 
 ### Pasul 4 — Detaliile expedierii
 
@@ -119,7 +119,7 @@ Pe livrarea de ieșire (**Inventar → Operații → Transferuri → Livrări**)
 
 **Aplică** salvează detaliile pe livrare.
 
-![Fereastra Detalii metodă de livrare pentru o livrare GLS: 1 colet, greutatea totală, Sumă de încasat egală cu totalul comenzii, serviciul și opțiunile Package Return și SMS Notification](screenshots/04_detalii_expediere_gls.png)
+![Fereastra Detalii metodă de livrare pentru o livrare GLS: 1 colet, greutatea totală, Sumă de încasat egală cu totalul comenzii, serviciul și lista Opțiuni de livrare deschisă, cu Package Return și SMS Notification](../static/description/04_detalii_expediere_gls.png)
 
 ### Pasul 5 — Emiterea AWB-ului
 
@@ -132,7 +132,7 @@ După **Aplică**, apăsați **Trimite la curier** pe livrare. AWB-ul se mai poa
 
 Dacă răspunsul GLS se pierde pe drum (eroare de rețea), operația e marcată ca **rezultat incert**: GLS poate să fi creat AWB-ul. Nu reapăsați butonul: verificați întâi în portalul GLS.
 
-![Livrarea după trimiterea la curier: Referință de urmărire cu numărul AWB GLS, Stare livrare Avizat, butoanele Tipărire AWB și Anulează AWB, mesajul de expediere creată și eticheta atașată în istoric](screenshots/05_livrare_awb_gls.png)
+![Livrarea după trimiterea la curier: Referință de urmărire cu numărul AWB GLS, butoanele Tipărire AWB și Anulează AWB și, în dreapta, eticheta GLS atașată pe livrare](../static/description/05_livrare_awb_gls.png)
 
 ### Pasul 6 — Eticheta
 
@@ -144,7 +144,7 @@ Dacă răspunsul GLS se pierde pe drum (eroare de rețea), operația e marcată 
 
 **Treci mai departe.** Lipiți eticheta pe colet. Nu ștergeți atașamentul de pe livrare: GLS nu emite eticheta a doua oară.
 
-![Eticheta GLS în format A4 2x2: numărul AWB cu codul de bare, expeditorul, destinatarul cu adresa și suma rambursului](screenshots/06_eticheta_gls.png)
+![Eticheta GLS: numărul AWB cu codul de bare, expeditorul, destinatarul cu adresa (inclusiv a doua linie) și suma rambursului; exemplu ilustrativ, generat fără apel la GLS](../static/description/06_eticheta_gls.png)
 
 ### Pasul 7 — Livrarea la un punct de ridicare sau locker GLS
 
@@ -156,7 +156,7 @@ Livrarea la punct GLS se face cu o metodă de livrare separată, de exemplu „G
 
 **Treci mai departe.** Emiteți AWB-ul ca la pasul 5.
 
-![Comanda de vânzare cu metoda GLS Parcel Shop (serviciul Parcel Shop Delivery) și câmpul Locker completat cu un punct GLS din catalog](screenshots/07_comanda_locker_gls.png)
+![Comanda de vânzare cu metoda GLS Parcel Shop (serviciul Parcel Shop Delivery) și câmpul Locker completat cu un punct GLS din catalog](../static/description/07_comanda_locker_gls.png)
 
 ### Pasul 8 — Urmărirea stării
 
@@ -168,7 +168,7 @@ Acțiunea planificată citește periodic istoricul coletelor de la GLS. Pe livra
 
 **Treci mai departe.** Un colet **Refuzat** cu ramburs se urmărește în lista **Ramburs refuzat - factură deschisă** din `deltatech_delivery`.
 
-![Livrarea GLS, tabul Istoric: evenimentele coletului cu dată, descriere și locație; Stare livrare În tranzit](screenshots/08_istoric_stare_gls.png)
+![Livrarea GLS, tabul Istoric: butonul Reîmprospătează și evenimentele coletului, cu dată, descriere și locație](../static/description/08_istoric_stare_gls.png)
 
 ### Pasul 9 — Lista AWB-urilor (MyGLS)
 
@@ -180,13 +180,13 @@ Acțiunea planificată citește periodic istoricul coletelor de la GLS. Pe livra
 
 **Treci mai departe.** **Vizualizare comandă** deschide comanda legată de AWB.
 
-![Lista AWB de livrare grupată pe transportator, grupul GLS cu numerele AWB, referințele, expeditorul, destinatarul și starea livrării](screenshots/09_lista_awb_gls.png)
+![Lista AWB de livrare cu AWB-urile GLS: numărul, referința, comanda, expeditorul, destinatarul, starea livrării (Avizat, În tranzit) și un AWB emis din portalul GLS, fără referință](../static/description/09_lista_awb_gls.png)
 
 ### Pasul 10 — Anularea AWB-ului
 
 Dacă livrarea nu mai pleacă (comandă anulată, adresă greșită), pe livrare apăsați **Anulează AWB** și confirmați „Sigur doriți să anulați AWB-ul?”. AWB-ul se anulează la GLS, iar livrarea rămâne fără referință de urmărire și poate fi trimisă din nou, după corectare.
 
-![Dialogul de confirmare „Sigur doriți să anulați AWB-ul?” deschis peste livrarea GLS cu AWB emis](screenshots/10_anulare_awb_gls.png)
+![Dialogul de confirmare „Sigur doriți să anulați AWB-ul?” deschis peste livrarea GLS cu AWB emis](../static/description/10_anulare_awb_gls.png)
 
 ### Note de monografie și raportare
 
@@ -252,20 +252,20 @@ Modulul **nu generează note contabile**. Legăturile cu contabilitatea sunt ind
 
 ## 10. Capturi de ecran
 
-Capturile **nu sunt încă generate**. Ele se vor genera automat din `tests/test_screenshots.py` (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în limba română, pe o companie RO, cu apelurile la GLS simulate. Trebuie rulat skill-ul `fisa-screenshots`. Numele planificate, în ordinea pașilor din secțiunea 6, în `static/description/`:
+Capturile se generează din `tests/test_screenshots.py` (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), în limba română, pe o companie RO, cu apelurile la MyGLS simulate. GLS nu are un cont de test public, deci eticheta (captura 6) este un exemplu desenat în test, cu aceleași elemente ca eticheta reală. Fișierele, în ordinea pașilor din secțiunea 6, în `static/description/`:
 
 1. `01_metoda_livrare_gls.png` — metoda de livrare, tabul **Configurare GLS**.
 2. `02_grila_preturi_gls.png` — grupul **Price Grid** cu grila JSON.
 3. `03_comanda_transport_gls.png` — comanda de vânzare cu linia de transport GLS.
 4. `04_detalii_expediere_gls.png` — fereastra **Detalii metodă de livrare**.
-5. `05_livrare_awb_gls.png` — livrarea cu AWB emis, starea **Avizat** și eticheta atașată.
+5. `05_livrare_awb_gls.png` — livrarea cu AWB emis și eticheta atașată.
 6. `06_eticheta_gls.png` — eticheta GLS (PDF).
 7. `07_comanda_locker_gls.png` — comanda cu metoda „GLS Parcel Shop” și punctul GLS ales în câmpul **Locker**.
 8. `08_istoric_stare_gls.png` — tabul **Istoric** al livrării.
-9. `09_lista_awb_gls.png` — **Listă AWB de livrare**, grupul GLS.
+9. `09_lista_awb_gls.png` — **Listă AWB de livrare** cu AWB-urile GLS.
 10. `10_anulare_awb_gls.png` — confirmarea **Anulează AWB**.
 
-Comanda de generare, după ce testul există:
+Comanda de generare:
 
 ```bash
 ./odoo/odoo-bin -c odoo.conf -d <db> -i deltatech_delivery_gls,deltatech_delivery_locker,l10n_ro,l10n_ro_doc_screenshots \

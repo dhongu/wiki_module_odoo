@@ -1,10 +1,10 @@
 # GLS Shipping (localizat la `deltatech_delivery_gls/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_gls`
-- **Versiune:** `19.0.2.1.6`
+- **Versiune:** `19.0.2.1.8`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_gls
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_gls`
-- **Ultima Ingestie:** `2026-09-29`
+- **Ultima Ingestie:** `2026-11-09`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -21,6 +21,8 @@ Modulul GLS Shipping integrează direct în Odoo serviciile de curierat GLS (Gen
 - **Gestionare listă AWB:** preluarea listei de AWB-uri din sistemul GLS, auto-crearea înregistrărilor AWB în Odoo, potrivirea informațiilor expeditor/destinatar și stocarea referințelor.
 - **Opțiuni avansate de expediere:** ramburs (COD), valoare declarată (asigurare), colete multiple, instrucțiuni speciale de livrare, livrare sâmbăta, colet deschis la livrare.
 - **Livrare la locker:** import automat al punctelor de livrare GLS (lockere) pentru România și Ungaria, selecție interactivă a locker-ului în checkout-ul Odoo și sugestii de locker pe bază de proximitate față de client; posibilitatea trimiterii ID-ului de locker în AWB. Catalogul de puncte GLS este identificat după țară, variantă de API și cont (`_gls_locker_catalog_key`), astfel încât un al doilea transportator GLS pe alt cont (ex. cont separat pentru Ungaria) nu arhivează punctele importate de primul; punctele care nu mai apar în feed-ul GLS sunt arhivate la importul următor.
+- **Câmpul `WebshopEngine` la MyGLS (din 19.0.2.1.7):** cererea `PrintLabels` trimite `"WebshopEngine": "Odoo"`, devenit obligatoriu în API-ul MyGLS (schimbarea din 2025-02-12). GLS nu îl cere pe toate conturile: conturile noi refuzau orice AWB cu „GLS Server error. Webshop engine is required!”, iar cele vechi mergeau și fără el.
+- **Capturi și documentație (19.0.2.1.7–19.0.2.1.8):** fișa consultant are cele 10 capturi ale fluxului, generate de `tests/test_screenshots.py` cu MyGLS simulat (eticheta e un exemplu desenat în test, GLS neavând cont de test public); `readme/USAGE.md` are pașii cu capturile în engleză, din `static/description/en/`.
 - **Robustețe la urmărire și autentificare:** interogarea de status ignoră și curăță din livrare referințele non-numerice (AWB-urile GLS sunt mereu numerice), iar un AWB problematic nu mai blochează interogarea celorlalte livrări; un transportator fără parolă configurată returnează eroarea clară „No password is set on the GLS carrier."
 
 Limitări cunoscute (nesuportate): calculul tarifelor pentru o expediere, listele de orașe/județe/puncte de pickup, generarea AWB în format HTML, expedierea cu ID oraș și ID județ, expedierea cu dimensiuni și nota de retur în AWB.
