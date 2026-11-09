@@ -63,7 +63,11 @@ RE_LOCAL = re.compile(r"^- \*\*Cale Local[ăa]:\*\* `([^`]+)`", re.M)
 # Data apare și fără backticks în paginile mai vechi.
 RE_INGEST = re.compile(r"^(- \*\*Ultima Ingestie:\*\* `?)(\d{4}-\d{2}-\d{2})(`?.*)$", re.M)
 RE_FISA_LINE = "- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)"
-RE_IMG = re.compile(r"\]\(((?:\.\./)*)(static/description|screenshots)/([^)]+\.(?:png|jpe?g|gif|svg|webp))\)")
+# Grupul 2 (opțional): alt modul, ex. `../../deltatech_import_lines/static/description/x.png`,
+# când fișa unui modul punte folosește capturile modulului de bază.
+RE_IMG = re.compile(
+    r"\]\(((?:\.\./)*)(?:(\w+)/)?(static/description|screenshots)/([^)]+\.(?:png|jpe?g|gif|svg|webp))\)"
+)
 RE_LOCAL_LINK = re.compile(r"\]\(([^)#\s]+\.md)\)")
 
 CODE_PATHS = ("models", "views", "wizard", "wizards", "data", "report")
@@ -123,7 +127,14 @@ def rewrite_images(md: str, depth: int, src_md_dir: Path, readme: Path, shots: P
 
     def repl(m: re.Match) -> str:
         nonlocal changed
-        ups, kind, name = m.groups()
+        ups, other, kind, name = m.groups()
+        if other:
+            # captura altui modul: rămâne în pagina wiki a acelui modul (frate în wiki)
+            src = (src_md_dir / ups / other / kind / name).resolve()
+            sibling = shots.parent.parent / other / "screenshots"
+            if src.is_file() and sibling.parent.is_dir():
+                changed |= write_if_changed(sibling / name, src.read_bytes())
+            return f"]({'../' * (depth + 1)}{other}/screenshots/{name})"
         src = (src_md_dir / ups / kind / name).resolve()
         for cand in (src, module_dir / "static/description" / name, readme / "screenshots" / name):
             if cand.is_file():
