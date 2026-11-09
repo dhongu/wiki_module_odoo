@@ -19,6 +19,7 @@ Modulul permite adăugarea de reguli într-o listă de prețuri pentru mai multe
 - **Tratarea regulilor existente** (același produs, aceeași cantitate minimă și aceeași perioadă): se păstrează, se actualizează sau se adaugă o regulă nouă.
 - **Rezultat:** se creează câte o regulă pentru fiecare produs, variantă sau categorie; un mesaj arată câte reguli au fost adăugate, actualizate sau păstrate, iar regulile rezultate se deschid într-o listă.
 - **Aplicare formulă pe mai multe reguli:** butonul **Apply Formula** de pe lista de prețuri (toate regulile) sau acțiunea **Apply Formula** pe regulile selectate dintr-o listă de reguli schimbă, deodată, modul de calcul al prețului (valorile celorlalte tipuri de preț se golesc), cantitatea minimă și/sau perioada de valabilitate; ce nu e bifat rămâne neschimbat.
+- **Protecții:** o regulă bazată pe propria listă de prețuri e refuzată în ambele asistente, la orice tip de preț (și Discount pe listă), cu mesaj clar; regulile existente se caută o singură dată pentru toate produsele, deci selecțiile mari (o categorie întreagă) rămân rapide.
 - Cerință: listele de prețuri trebuie activate în *Vânzări > Configurare > Setări*, secțiunea **Pricing**.
 - Pașii detaliați și capturile sunt în [fișa consultantului](FISA_CONSULTANT.md).
 
@@ -49,4 +50,4 @@ Modulul permite adăugarea de reguli într-o listă de prețuri pentru mai multe
 
 #### 5. Conexiuni
 
-- Nicio conexiune funcțională cu alte module ale wiki-ului (modulul depinde doar de `product`).
+- [deltatech_pricelist_line_viewer](../deltatech_pricelist_line_viewer/index.md) (opțional, fără dependență): din lista **Pricelist Lines** a acestuia, regulile selectate se pot modifica cu acțiunea **Apply Formula**.

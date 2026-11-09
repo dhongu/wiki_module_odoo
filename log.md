@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-09] Actualizare: deltatech_pricelist_bulk după merge
+
+- **Acțiune:** Pagina [deltatech_pricelist_bulk](deltatech_pricelist_bulk/index.md) actualizată după unirea PR-ului dhongu/deltatech#4071 (merge `976868c8f`); modulul e acum pe 19.0, deci URL-ul GitHub e valid.
+- **Sursă:** corecția din review-ul Argus (`e003da8a8`): refuzul regulii bazate pe propria listă la orice tip de preț, în ambele asistente, și căutarea unică a regulilor existente. Fișa consultant verificată, identică cu cea din modul.
+- **Dependențe/Conexiuni:** adăugată conexiunea opțională cu [deltatech_pricelist_line_viewer](deltatech_pricelist_line_viewer/index.md) (acțiunea Apply Formula din lista Pricelist Lines).
+- **Fișiere actualizate:** `deltatech_pricelist_bulk/index.md`, `log.md`.
+
 ## [2026-11-09] Ingestie modul nou: deltatech_pricelist_bulk
 
 - **Acțiune:** Pagină nouă [deltatech_pricelist_bulk](deltatech_pricelist_bulk/index.md) (Pricelist Bulk Rules, 19.0.1.0.0), generată de subagentul documentarist-wiki, din worktree-ul PR-ului dhongu/deltatech#4071 (modul încă nemerged; URL-ul GitHub devine valid după merge).
