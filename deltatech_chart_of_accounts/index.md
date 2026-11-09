@@ -1,10 +1,10 @@
-# Chart of Accounts (localizat la `deltatech_chart_of_accounts/index.md`)
+# Chart of Accounts Sync (localizat la `deltatech_chart_of_accounts/index.md`)
 
 - **Nume Tehnic:** `deltatech_chart_of_accounts`
-- **Versiune:** `19.0.0.1.9`
+- **Versiune:** `19.0.0.1.10`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chart_of_accounts
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_chart_of_accounts`
-- **Ultima Ingestie:** `2026-10-22`
+- **Ultima Ingestie:** `2026-11-09`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -26,7 +26,6 @@ Modulul aliniază soldurile conturilor din Odoo cu cele ale altui sistem contabi
 
 #### 3. Dependențe
 
-- `base`
 - `account`
 
 #### 4. Componente Cheie

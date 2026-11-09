@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.0.1.7`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_tnt
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_tnt`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-09`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -13,17 +13,17 @@ Modulul TNT Shipping integrează în Odoo serviciile de curierat internațional 
 
 #### 2. Funcționalități Cheie
 
-- **Creare AWB și etichetă (singura capacitate declarată și testată):** generarea expedierii (`tnt_send_shipping`) direct din livrarea (`stock.picking`) asociată comenzii, urmată automat de preluarea și atașarea etichetei de transport la livrare.
-- **Etichete în mai multe formate:** transformare XSLT a răspunsului XML de la TNT în etichete PDF, HTML sau ZPL (câmpul `tnt_label_type`); fișierele `.xsl` pentru toate cele trei formate (inclusiv variante Franța/Italia/Rest of World) există în modul, dar doar formatul HTML este acoperit de testele automate.
-- **Calcul tarif de transport:** `tnt_rate_shipment` interoghează în timp real serviciul de prețuri TNT (ExpressConnect Pricing) și distinge automat tariful normal, cu ramburs (opțiune „CO”) sau cu retur (opțiune „RT”).
-- **Expediere internațională:** distincție automată domestic/internațional (`line_of_business`) în funcție de țara expeditorului și a destinatarului.
-- **Colete multiple și dimensiuni:** suport pentru mai multe colete pe expediere și pentru dimensiunile/greutatea coletului în calculul volumului.
+- **Tarif pe comanda de vânzare:** `tnt_rate_shipment` interoghează în timp real serviciul de prețuri TNT (ExpressConnect Pricing) pentru greutatea, dimensiunile și serviciul expedierii, convertește tariful în moneda comenzii și alege automat serviciul potrivit (normal, cu ramburs „CO” sau cu retur „RT”); alternativ se poate folosi un preț fix sub pragul metodei de livrare.
+- **Creare AWB și etichetă la validarea livrării:** la validarea transferului (`stock.picking`) expedierea se creează la TNT (`tnt_send_shipping`), numărul ei se scrie ca referință de urmărire, iar eticheta se atașează livrării; butonul **Print AWB** regenerează eticheta.
+- **Etichete în mai multe formate:** transformare XSLT a răspunsului XML de la TNT în etichete PDF, HTML sau ZPL (câmpul `tnt_label_type`), cu layout-urile TNT pentru Franța, Italia și restul lumii; doar formatul HTML este acoperit de testele automate.
+- **Intern și internațional:** distincție automată domestic/internațional (`line_of_business`) după țara expeditorului și a destinatarului; numerele de telefon se despart în prefix și număr, cum cere TNT.
+- **Date de expediere:** mai multe colete cu greutate și dimensiuni, valoare declarată și ramburs (metodele de plată tratate ca ramburs se aleg pe metoda de livrare), pe serviciul TNT ales (Express sau Economy Express, document sau non-document). Detaliile se verifică în **Carrier Details** pe livrare.
 - **Validare XML:** cererea de preț este validată local față de schema XSD (`schemas/PriceRequestIN.xsd`) înainte de a fi trimisă la TNT.
-- **Gestiune erori și rezultate incerte:** apelurile HTTP trec printr-un helper comun (`_tnt_http_post`) cu timeout de 90s; la timeout/eroare de rețea pe apelul de expediere (care are efect secundar), rezultatul e marcat explicit drept incert (`TntUncertainResult`) în loc să fie presupus eșuat sau reușit.
+- **Reîncercări sigure:** apelurile HTTP trec prin `_tnt_http_post` (timeout 90s); la timeout sau eroare de rețea pe apelul de expediere (cu efect secundar), rezultatul e marcat drept incert (`TntUncertainResult`), ca aceeași expediere să nu fie creată de două ori la o nouă apăsare a butonului.
+- **Configurare:** *Inventar > Configurare > Livrare > Metode de expediere*, cu **Provider** = TNT; fila **TNT Configuration** cere **User** și **Password** ExpressConnect și **TNT Account**, plus serviciul și tipul etichetei.
+- **Date trimise la TNT:** numărul contului, datele expeditorului și destinatarului (nume, adresă, contact, telefon), coletele (număr, greutate, dimensiuni, volum), valoarea declarată, rambursul și referința comenzii.
 
-**Atenție — capabilități NEsuportate, confirmate în cod (nu doar declarate în readme):** modulul declară explicit, prin `_tnt_api_capabilities()`, că singura capacitate activă este `"ship"` (creare expediere + etichetă). Nu există în cod și nu sunt implementate: **anularea AWB-ului** (`cancel_shipment`), **urmărirea/istoricul de status** (`get_status_history`), listarea/căutarea AWB-urilor, importul de orașe/județe/lockere/puncte de ridicare sau extrasul de ramburs (COD). Testele automate confirmă explicit acest lucru: *„the TNT module does not implement cancel_shipment or status history methods, so there is nothing to cover for those flows”*.
-
-> Corecție aplicată în `readme/DESCRIPTION.md` (versiunea 19.0.0.1.2, 2026-07-31): descrierea revendica anularea AWB-ului, urmărirea statusului livrării, istoricul de livrare și generarea de link de tracking — niciuna nu există în cod — și, invers, nega formatul ZPL, care este implementat. Au fost eliminate din „Key Features”/„Technical Implementation”, iar ZPL a trecut în „Features” cu mențiunea că nu e acoperit de teste automate. Suplimentar față de contradicțiile inițiale: „Delete AWB” și „Get rates for a shipment” apăreau simultan în ambele liste (anularea e doar nesuportată; calculul de tarif e doar suportat — `tnt_rate_shipment`, acoperit de `test_rate_shipment`); linkul de tracking **nu** e generat de modul (nu există `tnt_get_tracking_link`, deci `get_tracking_link()` din `stock_delivery` întoarce `None` — spre deosebire de modulele surori GLS/DPD/UC etc., care îl implementează); „Customs declaration integration” nu are corespondent în `views/templates.xml`; „Special delivery instructions” nu e expus utilizatorului (`DELIVERYINST` e trimis gol, iar `specialInstructions` conține doar textul de ramburs generat automat). Sursa contradicțiilor: descrierea fusese copiată din `deltatech_delivery_gls`, unde anularea și tracking-ul chiar există. Documentul are acum o singură pereche „Features”/„Without Features”, nu două liste divergente.
+**Atenție — capabilități NEsuportate, confirmate în cod:** `_tnt_api_capabilities()` declară ca singură capacitate activă `"ship"` (creare expediere + etichetă). Nu sunt implementate: **anularea AWB-ului** (TNT ExpressConnect nu o expune; se face din portalul TNT), **urmărirea/istoricul de status** și linkul de tracking (`get_tracking_link()` din `stock_delivery` întoarce `None`), listarea AWB-urilor, importul de localități/județe/lockere/puncte de ridicare, livrarea de sâmbătă, pachetul deschis, documentele vamale și instrucțiunile speciale de livrare. Fluxul pas-cu-pas este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 

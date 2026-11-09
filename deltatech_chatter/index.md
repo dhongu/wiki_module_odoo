@@ -1,10 +1,11 @@
-# Resizable Chatter Panel (localizat la `deltatech_chatter/index.md`)
+# Resizable Chatter Panel (importable, Odoo Online) (localizat la `deltatech_chatter/index.md`)
 
 - **Nume Tehnic:** `deltatech_chatter`
-- **Versiune:** `19.0.0.0.6`
+- **Versiune:** `19.0.0.1.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_chatter`
-- **Ultima Ingestie:** `2026-10-31`
+- **Ultima Ingestie:** `2026-11-09`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -17,10 +18,11 @@ Modulul îmbunătățește vizualizarea de tip formular din Odoo prin introducer
 - **Redimensionare interactivă:** utilizatorii pot trage de separator pentru a ajusta proporția după preferințe; la finalul tragerii, proporția se reține în browser (`localStorage`) și se reaplică la următoarele deschideri.
 - **Design responsiv:** se adaptează automat la redimensionarea ferestrei; separatorul apare doar în formularele afișate pe ecran foarte lat (clasa `.o_xxl_form_view`, chatter lângă formular) și se elimină când condiția nu mai e îndeplinită.
 - **Limite minime de dimensiune:** previne micșorarea excesivă a secțiunilor (300px pentru formular, 250px pentru chatter).
+- **Compatibil Odoo Online:** modulul conține doar JavaScript, stiluri și biblioteca Split.js, fără cod Python, deci poate fi importat și pe Odoo Online (plan Custom) din **Aplicații > Import Module**.
 
 #### 3. Dependențe
 
-- `base`
+- `mail`
 
 #### 4. Componente Cheie
 

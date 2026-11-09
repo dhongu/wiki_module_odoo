@@ -1,10 +1,10 @@
-# Deltatech Line Counter (localizat la `deltatech_line_counter/index.md`)
+# Module Line Counter (localizat la `deltatech_line_counter/index.md`)
 
 - **Nume Tehnic:** `deltatech_line_counter`
 - **Versiune:** `19.0.1.0.3`
-- **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_line_counter](https://github.com/dhongu/deltatech/tree/19.0/deltatech_line_counter)
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_line_counter
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_line_counter`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-09`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -16,8 +16,9 @@ Modulul adaugă un wizard simplu în meniul de Administrare care numără liniil
 - Selectarea unuia sau mai multor module instalate (widget many2many_tags) pentru numărare.
 - Numărarea liniilor ne-goale din fișiere `.py`, `.xml`, `.js`, `.css` și `.scss`.
 - Excluderea automată a directorului `tests` din calcul.
+- Rezultatul este o estimare: se numără doar liniile ne-goale (comentariile și docstring-urile incluse), doar tipurile de fișiere de mai sus, iar fișierele care nu pot fi citite ca UTF-8 sunt omise. Numele modulului din rezultat este escapat HTML.
 - Afișarea rezultatului într-un tabel HTML, cu total pe fiecare modul și un total general.
-- Acces din meniul Setări → Tehnic/Administrare (`base.menu_administration`).
+- Acces din meniul Administrare (`base.menu_administration`).
 
 #### 3. Dependențe
 

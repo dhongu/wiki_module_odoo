@@ -1,10 +1,10 @@
-# Generare/Selectare Lot (localizat la `deltatech_lot/index.md`)
+# Lot Generation & Selection (localizat la `deltatech_lot/index.md`)
 
 - **Nume Tehnic:** `deltatech_lot`
 - **Versiune:** `19.0.1.0.4`
-- **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_lot](https://github.com/dhongu/deltatech/tree/19.0/deltatech_lot)
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_lot
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_lot`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-09`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -13,10 +13,10 @@ Modulul automatizează generarea numerelor de lot la recepția produselor de la 
 
 #### 2. Funcționalități Cheie
 
-- Generare automată a numelui de lot la recepția produselor de la furnizor (operațiuni de tip intrare/dropship), folosind o secvență dedicată (`stock.lot.serial`)
-- Câmp „Locație" pe lot, calculat automat pe baza cantităților disponibile (`quant_ids`) din acel lot
-- Filtrare a loturilor disponibile pentru selecție în funcție de locația liniei de mișcare de stoc, la alegerea manuală a lotului
-- Afișarea locației lotului atât în formularul, cât și în lista și căutarea loturilor de producție
+- **Loturi generate la validare:** la validarea unei recepții de la furnizor (sau a unui dropship), fiecare linie a unui produs urmărit pe loturi care nu are număr de lot primește următorul număr din secvența **Serial Numbers**, câte un lot pe linie; loturile tastate de utilizator se păstrează. Condiția: tipul de operațiune de recepție are bifat **Create New** în grupul **Lots/Serial Numbers** (implicit la recepții). Numerele se generează doar la recepții și dropship, doar pentru produse urmărite pe loturi (nu pe serii) și mereu din secvența generală, nu din prefixul personalizat al produsului.
+- **Locația lotului:** câmpul **Location** arată locația care deține tot stocul lotului (gol dacă lotul e împărțit pe mai multe locații), în formularul lotului și ca coloană în lista de loturi; schimbarea lui mută stocul lotului când acesta e într-o singură locație (*Inventar > Produse > Loturi/Numere de serie*).
+- **Căutare după locație:** lista de loturi se poate căuta după **Location**; sunt afișate doar loturile ținute integral în acea locație.
+- Fluxul pas-cu-pas, cu capturi, este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 

@@ -490,7 +490,7 @@
   {
     "path": "deltatech_advanced_planner/index.md",
     "module": "deltatech_advanced_planner",
-    "version": "19.0.1.14.0",
+    "version": "19.0.1.14.1",
     "github": "`https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_advanced_planner`",
     "local_path": "odoo-addons/bitshop_ent/deltatech_advanced_planner",
     "last_ingest": "2026-10-27",
@@ -784,7 +784,7 @@
   {
     "path": "deltatech_ai_knowledge_sync/index.md",
     "module": "deltatech_ai_knowledge_sync",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.1.2",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_knowledge_sync",
     "local_path": "odoo-addons/bitshop_ent/deltatech_ai_knowledge_sync",
     "last_ingest": "2026-10-22",
@@ -1486,7 +1486,7 @@
   {
     "path": "deltatech_b2b_portal/index.md",
     "module": "deltatech_b2b_portal",
-    "version": "19.0.1.4.0",
+    "version": "19.0.1.4.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_portal",
     "local_path": "odoo-addons/bitshop/deltatech_b2b_portal",
     "last_ingest": "2026-10-12",
@@ -1711,7 +1711,7 @@
   {
     "path": "deltatech_barcode_picking/index.md",
     "module": "deltatech_barcode_picking",
-    "version": "19.0.2.2.9",
+    "version": "19.0.2.2.10",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_barcode_picking",
     "local_path": "odoo-addons/bitshop/deltatech_barcode_picking",
     "last_ingest": "2026-11-08",
@@ -1742,7 +1742,7 @@
   {
     "path": "deltatech_barcode_sale/index.md",
     "module": "deltatech_barcode_sale",
-    "version": "19.0.2.1.2",
+    "version": "19.0.2.1.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_barcode_sale",
     "local_path": "odoo-addons/bitshop/deltatech_barcode_sale",
     "last_ingest": "2026-09-29",
@@ -1895,7 +1895,7 @@
   {
     "path": "deltatech_calendar_caldav/index.md",
     "module": "deltatech_calendar_caldav",
-    "version": "19.0.3.2.7",
+    "version": "19.0.3.2.9",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_calendar_caldav`",
     "local_path": "odoo-addons/bitshop/deltatech_calendar_caldav",
     "last_ingest": "2026-09-29",
@@ -2085,11 +2085,11 @@
   {
     "path": "deltatech_chart_of_accounts/index.md",
     "module": "deltatech_chart_of_accounts",
-    "version": "19.0.0.1.9",
+    "version": "19.0.0.1.10",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chart_of_accounts",
     "local_path": "odoo-addons/bitshop/deltatech_chart_of_accounts",
-    "last_ingest": "2026-10-22",
-    "friendly_name": "Chart of Accounts",
+    "last_ingest": "2026-11-09",
+    "friendly_name": "Chart of Accounts Sync",
     "summary": "Modulul aliniază soldurile conturilor din Odoo cu cele ale altui sistem contabil: balanța de verificare a programului anterior la momentul trecerii în Odoo sau a unui sistem ținut în paralel o perioadă. Odoo calculează soldurile proprii la o dată, utilizatorul introduce sau importă soldurile externe alături de ele, iar modulul postează doar diferențele, sub formă de note contabile legate de sincronizare. Diferențele se văd pe ecran înainte de orice înregistrare, iar dacă o valoare a fost greșită, notele se anulează și se reiau. Modulul nu încarcă planul de conturi: conturile trebuie să existe deja în Odoo.",
     "features": [
       "Solduri Odoo lângă cele externe: pentru o dată, fiecare cont (sau un singur cont) primește o linie cu debitul, creditul și soldul din Odoo și cu debitul și creditul extern. Diferențele sunt evidențiate (roșu pentru diferențe, albastru pentru sume egale și nenule), iar totalurile și bifa Echilibrat arată dacă sincronizarea se închide. La prima generare, valorile externe pornesc de la cele din Odoo.",
@@ -2104,7 +2104,6 @@
       "Fluxul pas-cu-pas, monografia contabilă, exemplul numeric, verificările și erorile frecvente sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
-      "base",
       "account"
     ],
     "connections": [
@@ -2112,34 +2111,35 @@
       "l10n_ro",
       "base_import"
     ],
-    "text": "Chart of Accounts\ndeltatech_chart_of_accounts\nModulul aliniază soldurile conturilor din Odoo cu cele ale altui sistem contabil: balanța de verificare a programului anterior la momentul trecerii în Odoo sau a unui sistem ținut în paralel o perioadă. Odoo calculează soldurile proprii la o dată, utilizatorul introduce sau importă soldurile externe alături de ele, iar modulul postează doar diferențele, sub formă de note contabile legate de sincronizare. Diferențele se văd pe ecran înainte de orice înregistrare, iar dacă o valoare a fost greșită, notele se anulează și se reiau. Modulul nu încarcă planul de conturi: conturile trebuie să existe deja în Odoo.\nSolduri Odoo lângă cele externe: pentru o dată, fiecare cont (sau un singur cont) primește o linie cu debitul, creditul și soldul din Odoo și cu debitul și creditul extern. Diferențele sunt evidențiate (roșu pentru diferențe, albastru pentru sume egale și nenule), iar totalurile și bifa Echilibrat arată dacă sincronizarea se închide. La prima generare, valorile externe pornesc de la cele din Odoo.\nDetaliu pe partener: conturile de creanțe și datorii se compară pe fiecare partener, cu scadență și referință, pentru ca soldurile inițiale ale clienților și furnizorilor să poată fi reconciliate ulterior.\nValori externe din fișier: valorile se introduc manual sau se importă din CSV/Excel cu importul standard Odoo, câte o sincronizare pe cont de terți. Importul potrivește rândurile după partener: reimportul actualizează liniile existente în loc să le dubleze, iar două firme cu același nume opresc importul. Butonul Șterge sumele externe readuce valorile externe la 0 înaintea unui import nou.\nSe postează doar diferența, în două moduri:\nDoar solduri de deschidere (recomandat la go-live): se postează diferența netă de sold, doar cu sume pozitive; conturile de tip rezultat curent nu se ajustează direct, iar contul de echilibrare primește o linie „Diferență” doar dacă nota nu se închide.\nPotrivește totalurile debit/credit (pentru sisteme ținute în paralel): se aliniază separat rulajele de debit și de credit; când rulajul extern e mai mic, corecția se scrie ca notă storno separată (contabilitate în roșu).\nCiornă, Postat, resetare: notele rămân legate de sincronizare (tab Note contabile). Resetare la ciornă le anulează și le șterge, apoi regenerează liniile. Dacă liniile notelor au fost deja reconciliate, un wizard de confirmare listează partenerii afectați, iar confirmarea desface acele reconcilieri.\nConfigurare: sincronizarea cere data, jurnalul (tip Diverse), contul de echilibrare (propus: contul de tip rezultat curent), modul de postare și, opțional, un singur cont. Meniul și toate operațiunile sunt rezervate grupului Contabilitate: Administrator; accesul se face din Contabilitate > Configurare > Conturi > Sincronizare Plan de Conturi.\nAlte reguli: modulul nu generează linii de TVA (soldurile de TVA se preiau ca orice alt cont); jurnalul notelor trebuie să nu fie securizat, iar data sincronizării să nu fie într-o perioadă blocată.\nFluxul pas-cu-pas, monografia contabilă, exemplul numeric, verificările și erorile frecvente sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+    "text": "Chart of Accounts Sync\ndeltatech_chart_of_accounts\nModulul aliniază soldurile conturilor din Odoo cu cele ale altui sistem contabil: balanța de verificare a programului anterior la momentul trecerii în Odoo sau a unui sistem ținut în paralel o perioadă. Odoo calculează soldurile proprii la o dată, utilizatorul introduce sau importă soldurile externe alături de ele, iar modulul postează doar diferențele, sub formă de note contabile legate de sincronizare. Diferențele se văd pe ecran înainte de orice înregistrare, iar dacă o valoare a fost greșită, notele se anulează și se reiau. Modulul nu încarcă planul de conturi: conturile trebuie să existe deja în Odoo.\nSolduri Odoo lângă cele externe: pentru o dată, fiecare cont (sau un singur cont) primește o linie cu debitul, creditul și soldul din Odoo și cu debitul și creditul extern. Diferențele sunt evidențiate (roșu pentru diferențe, albastru pentru sume egale și nenule), iar totalurile și bifa Echilibrat arată dacă sincronizarea se închide. La prima generare, valorile externe pornesc de la cele din Odoo.\nDetaliu pe partener: conturile de creanțe și datorii se compară pe fiecare partener, cu scadență și referință, pentru ca soldurile inițiale ale clienților și furnizorilor să poată fi reconciliate ulterior.\nValori externe din fișier: valorile se introduc manual sau se importă din CSV/Excel cu importul standard Odoo, câte o sincronizare pe cont de terți. Importul potrivește rândurile după partener: reimportul actualizează liniile existente în loc să le dubleze, iar două firme cu același nume opresc importul. Butonul Șterge sumele externe readuce valorile externe la 0 înaintea unui import nou.\nSe postează doar diferența, în două moduri:\nDoar solduri de deschidere (recomandat la go-live): se postează diferența netă de sold, doar cu sume pozitive; conturile de tip rezultat curent nu se ajustează direct, iar contul de echilibrare primește o linie „Diferență” doar dacă nota nu se închide.\nPotrivește totalurile debit/credit (pentru sisteme ținute în paralel): se aliniază separat rulajele de debit și de credit; când rulajul extern e mai mic, corecția se scrie ca notă storno separată (contabilitate în roșu).\nCiornă, Postat, resetare: notele rămân legate de sincronizare (tab Note contabile). Resetare la ciornă le anulează și le șterge, apoi regenerează liniile. Dacă liniile notelor au fost deja reconciliate, un wizard de confirmare listează partenerii afectați, iar confirmarea desface acele reconcilieri.\nConfigurare: sincronizarea cere data, jurnalul (tip Diverse), contul de echilibrare (propus: contul de tip rezultat curent), modul de postare și, opțional, un singur cont. Meniul și toate operațiunile sunt rezervate grupului Contabilitate: Administrator; accesul se face din Contabilitate > Configurare > Conturi > Sincronizare Plan de Conturi.\nAlte reguli: modulul nu generează linii de TVA (soldurile de TVA se preiau ca orice alt cont); jurnalul notelor trebuie să nu fie securizat, iar data sincronizării să nu fie într-o perioadă blocată.\nFluxul pas-cu-pas, monografia contabilă, exemplul numeric, verificările și erorile frecvente sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_chatter/index.md",
     "module": "deltatech_chatter",
-    "version": "19.0.0.0.6",
+    "version": "19.0.0.1.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter",
     "local_path": "odoo-addons/bitshop/deltatech_chatter",
-    "last_ingest": "2026-10-31",
-    "friendly_name": "Resizable Chatter Panel",
+    "last_ingest": "2026-11-09",
+    "friendly_name": "Resizable Chatter Panel (importable, Odoo Online)",
     "summary": "Modulul îmbunătățește vizualizarea de tip formular din Odoo prin introducerea unui panou divizat redimensionabil între conținutul formularului și zona de chatter (istoricul de comunicare). Rezolvă o problemă frecventă de utilizabilitate, în care secțiunea de chatter ocupă fie prea mult, fie prea puțin spațiu pentru o urmărire eficientă a mesajelor. Astfel, fiecare utilizator poate aloca spațiul de pe ecran în funcție de propriile nevoi, glisând separatorul dintre cele două zone. Pe Odoo Apps modulul apare sub numele „Resizable Chatter Panel” (anterior „Resizable Chatter”); numele tehnic nu s-a schimbat.",
     "features": [
       "Interfață divizată redimensionabilă: introduce o separare orizontală între conținutul formularului și secțiunea de chatter.",
       "Raport de dimensiune personalizabil: dimensionare implicită de 70% pentru conținutul formularului și 30% pentru chatter.",
       "Redimensionare interactivă: utilizatorii pot trage de separator pentru a ajusta proporția după preferințe; la finalul tragerii, proporția se reține în browser (`localStorage`) și se reaplică la următoarele deschideri.",
       "Design responsiv: se adaptează automat la redimensionarea ferestrei; separatorul apare doar în formularele afișate pe ecran foarte lat (clasa `.o_xxl_form_view`, chatter lângă formular) și se elimină când condiția nu mai e îndeplinită.",
-      "Limite minime de dimensiune: previne micșorarea excesivă a secțiunilor (300px pentru formular, 250px pentru chatter)."
+      "Limite minime de dimensiune: previne micșorarea excesivă a secțiunilor (300px pentru formular, 250px pentru chatter).",
+      "Compatibil Odoo Online: modulul conține doar JavaScript, stiluri și biblioteca Split.js, fără cod Python, deci poate fi importat și pe Odoo Online (plan Custom) din Aplicații > Import Module."
     ],
     "dependencies": [
-      "base"
+      "mail"
     ],
     "connections": [],
-    "text": "Resizable Chatter Panel\ndeltatech_chatter\nModulul îmbunătățește vizualizarea de tip formular din Odoo prin introducerea unui panou divizat redimensionabil între conținutul formularului și zona de chatter (istoricul de comunicare). Rezolvă o problemă frecventă de utilizabilitate, în care secțiunea de chatter ocupă fie prea mult, fie prea puțin spațiu pentru o urmărire eficientă a mesajelor. Astfel, fiecare utilizator poate aloca spațiul de pe ecran în funcție de propriile nevoi, glisând separatorul dintre cele două zone. Pe Odoo Apps modulul apare sub numele „Resizable Chatter Panel” (anterior „Resizable Chatter”); numele tehnic nu s-a schimbat.\nInterfață divizată redimensionabilă: introduce o separare orizontală între conținutul formularului și secțiunea de chatter.\nRaport de dimensiune personalizabil: dimensionare implicită de 70% pentru conținutul formularului și 30% pentru chatter.\nRedimensionare interactivă: utilizatorii pot trage de separator pentru a ajusta proporția după preferințe; la finalul tragerii, proporția se reține în browser (`localStorage`) și se reaplică la următoarele deschideri.\nDesign responsiv: se adaptează automat la redimensionarea ferestrei; separatorul apare doar în formularele afișate pe ecran foarte lat (clasa `.o_xxl_form_view`, chatter lângă formular) și se elimină când condiția nu mai e îndeplinită.\nLimite minime de dimensiune: previne micșorarea excesivă a secțiunilor (300px pentru formular, 250px pentru chatter)."
+    "text": "Resizable Chatter Panel (importable, Odoo Online)\ndeltatech_chatter\nModulul îmbunătățește vizualizarea de tip formular din Odoo prin introducerea unui panou divizat redimensionabil între conținutul formularului și zona de chatter (istoricul de comunicare). Rezolvă o problemă frecventă de utilizabilitate, în care secțiunea de chatter ocupă fie prea mult, fie prea puțin spațiu pentru o urmărire eficientă a mesajelor. Astfel, fiecare utilizator poate aloca spațiul de pe ecran în funcție de propriile nevoi, glisând separatorul dintre cele două zone. Pe Odoo Apps modulul apare sub numele „Resizable Chatter Panel” (anterior „Resizable Chatter”); numele tehnic nu s-a schimbat.\nInterfață divizată redimensionabilă: introduce o separare orizontală între conținutul formularului și secțiunea de chatter.\nRaport de dimensiune personalizabil: dimensionare implicită de 70% pentru conținutul formularului și 30% pentru chatter.\nRedimensionare interactivă: utilizatorii pot trage de separator pentru a ajusta proporția după preferințe; la finalul tragerii, proporția se reține în browser (`localStorage`) și se reaplică la următoarele deschideri.\nDesign responsiv: se adaptează automat la redimensionarea ferestrei; separatorul apare doar în formularele afișate pe ecran foarte lat (clasa `.o_xxl_form_view`, chatter lângă formular) și se elimină când condiția nu mai e îndeplinită.\nLimite minime de dimensiune: previne micșorarea excesivă a secțiunilor (300px pentru formular, 250px pentru chatter).\nCompatibil Odoo Online: modulul conține doar JavaScript, stiluri și biblioteca Split.js, fără cod Python, deci poate fi importat și pe Odoo Online (plan Custom) din Aplicații > Import Module."
   },
   {
     "path": "deltatech_chatter_quick_info/index.md",
     "module": "deltatech_chatter_quick_info",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.1.2",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter_quick_info",
     "local_path": "odoo-addons/bitshop/deltatech_chatter_quick_info",
     "last_ingest": "2026-10-17",
@@ -2204,7 +2204,7 @@
   {
     "path": "deltatech_chatter_quick_info_purchase/index.md",
     "module": "deltatech_chatter_quick_info_purchase",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter_quick_info_purchase",
     "local_path": "odoo-addons/bitshop/deltatech_chatter_quick_info_purchase",
     "last_ingest": "2026-10-17",
@@ -2235,7 +2235,7 @@
   {
     "path": "deltatech_chatter_quick_info_sale/index.md",
     "module": "deltatech_chatter_quick_info_sale",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter_quick_info_sale",
     "local_path": "odoo-addons/bitshop/deltatech_chatter_quick_info_sale",
     "last_ingest": "2026-10-17",
@@ -2264,7 +2264,7 @@
   {
     "path": "deltatech_chatter_quick_info_stock/index.md",
     "module": "deltatech_chatter_quick_info_stock",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter_quick_info_stock",
     "local_path": "odoo-addons/bitshop/deltatech_chatter_quick_info_stock",
     "last_ingest": "2026-10-17",
@@ -2445,7 +2445,7 @@
   {
     "path": "deltatech_create_ticket_button/index.md",
     "module": "deltatech_create_ticket_button",
-    "version": "19.0.0.1.10",
+    "version": "19.0.0.1.12",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_create_ticket_button",
     "local_path": "odoo-addons/bitshop/deltatech_create_ticket_button",
     "last_ingest": "2026-10-01",
@@ -3972,17 +3972,19 @@
     "version": "19.0.0.1.7",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_tnt",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_tnt",
-    "last_ingest": "2026-07-31",
+    "last_ingest": "2026-11-09",
     "friendly_name": "TNT Shipping",
     "summary": "Modulul TNT Shipping integrează în Odoo serviciile de curierat internațional TNT Express (parte din grupul FedEx). Permite generarea expedierilor (AWB) și a etichetelor de transport direct din livrările Odoo, precum și calculul tarifelor de transport în timp real pe comenzile de vânzare, prin comunicare XML cu API-urile ExpressConnect ale TNT.",
     "features": [
-      "Creare AWB și etichetă (singura capacitate declarată și testată): generarea expedierii (`tnt_send_shipping`) direct din livrarea (`stock.picking`) asociată comenzii, urmată automat de preluarea și atașarea etichetei de transport la livrare.",
-      "Etichete în mai multe formate: transformare XSLT a răspunsului XML de la TNT în etichete PDF, HTML sau ZPL (câmpul `tnt_label_type`); fișierele `.xsl` pentru toate cele trei formate (inclusiv variante Franța/Italia/Rest of World) există în modul, dar doar formatul HTML este acoperit de testele automate.",
-      "Calcul tarif de transport: `tnt_rate_shipment` interoghează în timp real serviciul de prețuri TNT (ExpressConnect Pricing) și distinge automat tariful normal, cu ramburs (opțiune „CO”) sau cu retur (opțiune „RT”).",
-      "Expediere internațională: distincție automată domestic/internațional (`line_of_business`) în funcție de țara expeditorului și a destinatarului.",
-      "Colete multiple și dimensiuni: suport pentru mai multe colete pe expediere și pentru dimensiunile/greutatea coletului în calculul volumului.",
+      "Tarif pe comanda de vânzare: `tnt_rate_shipment` interoghează în timp real serviciul de prețuri TNT (ExpressConnect Pricing) pentru greutatea, dimensiunile și serviciul expedierii, convertește tariful în moneda comenzii și alege automat serviciul potrivit (normal, cu ramburs „CO” sau cu retur „RT”); alternativ se poate folosi un preț fix sub pragul metodei de livrare.",
+      "Creare AWB și etichetă la validarea livrării: la validarea transferului (`stock.picking`) expedierea se creează la TNT (`tnt_send_shipping`), numărul ei se scrie ca referință de urmărire, iar eticheta se atașează livrării; butonul Print AWB regenerează eticheta.",
+      "Etichete în mai multe formate: transformare XSLT a răspunsului XML de la TNT în etichete PDF, HTML sau ZPL (câmpul `tnt_label_type`), cu layout-urile TNT pentru Franța, Italia și restul lumii; doar formatul HTML este acoperit de testele automate.",
+      "Intern și internațional: distincție automată domestic/internațional (`line_of_business`) după țara expeditorului și a destinatarului; numerele de telefon se despart în prefix și număr, cum cere TNT.",
+      "Date de expediere: mai multe colete cu greutate și dimensiuni, valoare declarată și ramburs (metodele de plată tratate ca ramburs se aleg pe metoda de livrare), pe serviciul TNT ales (Express sau Economy Express, document sau non-document). Detaliile se verifică în Carrier Details pe livrare.",
       "Validare XML: cererea de preț este validată local față de schema XSD (`schemas/PriceRequestIN.xsd`) înainte de a fi trimisă la TNT.",
-      "Gestiune erori și rezultate incerte: apelurile HTTP trec printr-un helper comun (`_tnt_http_post`) cu timeout de 90s; la timeout/eroare de rețea pe apelul de expediere (care are efect secundar), rezultatul e marcat explicit drept incert (`TntUncertainResult`) în loc să fie presupus eșuat sau reușit."
+      "Reîncercări sigure: apelurile HTTP trec prin `_tnt_http_post` (timeout 90s); la timeout sau eroare de rețea pe apelul de expediere (cu efect secundar), rezultatul e marcat drept incert (`TntUncertainResult`), ca aceeași expediere să nu fie creată de două ori la o nouă apăsare a butonului.",
+      "Configurare: *Inventar > Configurare > Livrare > Metode de expediere*, cu Provider = TNT; fila TNT Configuration cere User și Password ExpressConnect și TNT Account, plus serviciul și tipul etichetei.",
+      "Date trimise la TNT: numărul contului, datele expeditorului și destinatarului (nume, adresă, contact, telefon), coletele (număr, greutate, dimensiuni, volum), valoarea declarată, rambursul și referința comenzii."
     ],
     "dependencies": [
       "delivery",
@@ -3993,7 +3995,7 @@
     "connections": [
       "deltatech_delivery"
     ],
-    "text": "TNT Shipping\ndeltatech_delivery_tnt\nModulul TNT Shipping integrează în Odoo serviciile de curierat internațional TNT Express (parte din grupul FedEx). Permite generarea expedierilor (AWB) și a etichetelor de transport direct din livrările Odoo, precum și calculul tarifelor de transport în timp real pe comenzile de vânzare, prin comunicare XML cu API-urile ExpressConnect ale TNT.\nCreare AWB și etichetă (singura capacitate declarată și testată): generarea expedierii (`tnt_send_shipping`) direct din livrarea (`stock.picking`) asociată comenzii, urmată automat de preluarea și atașarea etichetei de transport la livrare.\nEtichete în mai multe formate: transformare XSLT a răspunsului XML de la TNT în etichete PDF, HTML sau ZPL (câmpul `tnt_label_type`); fișierele `.xsl` pentru toate cele trei formate (inclusiv variante Franța/Italia/Rest of World) există în modul, dar doar formatul HTML este acoperit de testele automate.\nCalcul tarif de transport: `tnt_rate_shipment` interoghează în timp real serviciul de prețuri TNT (ExpressConnect Pricing) și distinge automat tariful normal, cu ramburs (opțiune „CO”) sau cu retur (opțiune „RT”).\nExpediere internațională: distincție automată domestic/internațional (`line_of_business`) în funcție de țara expeditorului și a destinatarului.\nColete multiple și dimensiuni: suport pentru mai multe colete pe expediere și pentru dimensiunile/greutatea coletului în calculul volumului.\nValidare XML: cererea de preț este validată local față de schema XSD (`schemas/PriceRequestIN.xsd`) înainte de a fi trimisă la TNT.\nGestiune erori și rezultate incerte: apelurile HTTP trec printr-un helper comun (`_tnt_http_post`) cu timeout de 90s; la timeout/eroare de rețea pe apelul de expediere (care are efect secundar), rezultatul e marcat explicit drept incert (`TntUncertainResult`) în loc să fie presupus eșuat sau reușit."
+    "text": "TNT Shipping\ndeltatech_delivery_tnt\nModulul TNT Shipping integrează în Odoo serviciile de curierat internațional TNT Express (parte din grupul FedEx). Permite generarea expedierilor (AWB) și a etichetelor de transport direct din livrările Odoo, precum și calculul tarifelor de transport în timp real pe comenzile de vânzare, prin comunicare XML cu API-urile ExpressConnect ale TNT.\nTarif pe comanda de vânzare: `tnt_rate_shipment` interoghează în timp real serviciul de prețuri TNT (ExpressConnect Pricing) pentru greutatea, dimensiunile și serviciul expedierii, convertește tariful în moneda comenzii și alege automat serviciul potrivit (normal, cu ramburs „CO” sau cu retur „RT”); alternativ se poate folosi un preț fix sub pragul metodei de livrare.\nCreare AWB și etichetă la validarea livrării: la validarea transferului (`stock.picking`) expedierea se creează la TNT (`tnt_send_shipping`), numărul ei se scrie ca referință de urmărire, iar eticheta se atașează livrării; butonul Print AWB regenerează eticheta.\nEtichete în mai multe formate: transformare XSLT a răspunsului XML de la TNT în etichete PDF, HTML sau ZPL (câmpul `tnt_label_type`), cu layout-urile TNT pentru Franța, Italia și restul lumii; doar formatul HTML este acoperit de testele automate.\nIntern și internațional: distincție automată domestic/internațional (`line_of_business`) după țara expeditorului și a destinatarului; numerele de telefon se despart în prefix și număr, cum cere TNT.\nDate de expediere: mai multe colete cu greutate și dimensiuni, valoare declarată și ramburs (metodele de plată tratate ca ramburs se aleg pe metoda de livrare), pe serviciul TNT ales (Express sau Economy Express, document sau non-document). Detaliile se verifică în Carrier Details pe livrare.\nValidare XML: cererea de preț este validată local față de schema XSD (`schemas/PriceRequestIN.xsd`) înainte de a fi trimisă la TNT.\nReîncercări sigure: apelurile HTTP trec prin `_tnt_http_post` (timeout 90s); la timeout sau eroare de rețea pe apelul de expediere (cu efect secundar), rezultatul e marcat drept incert (`TntUncertainResult`), ca aceeași expediere să nu fie creată de două ori la o nouă apăsare a butonului.\nConfigurare: *Inventar > Configurare > Livrare > Metode de expediere*, cu Provider = TNT; fila TNT Configuration cere User și Password ExpressConnect și TNT Account, plus serviciul și tipul etichetei.\nDate trimise la TNT: numărul contului, datele expeditorului și destinatarului (nume, adresă, contact, telefon), coletele (număr, greutate, dimensiuni, volum), valoarea declarată, rambursul și referința comenzii."
   },
   {
     "path": "deltatech_delivery_transport/index.md",
@@ -5122,13 +5124,15 @@
     "version": "19.0.1.0.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_number",
     "local_path": "odoo-addons/deltatech/deltatech_invoice_number",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Invoice Number",
-    "summary": "Modulul asigură renumerotarea și controlul secvenței facturilor de vânzare, garantând că facturile sunt validate în ordine cronologică și oferind utilizatorilor autorizați posibilitatea de a corecta manual numărul unei facturi sau de a atribui un număr dintr-o secvență dedicată a jurnalului, direct din starea de ciornă.",
+    "last_ingest": "2026-11-09",
+    "friendly_name": "Invoice Numbering Control",
+    "summary": "Modulul păstrează facturile de client în ordine cronologică pe jurnalele unde acest lucru contează și oferă unui grup dedicat de utilizatori posibilitatea de a corecta numărul unei facturi. Astfel se evită facturile cu dată anterioară ultimei facturi emise și se pot remedia numerele greșite fără intervenții în baza de date.",
     "features": [
-      "Validează ordinea cronologică a facturilor emise (nu permite validarea unei facturi cu dată anterioară ultimei facturi confirmate pe același jurnal).",
-      "Permite modificarea numărului unei facturi pentru un grup dedicat de utilizatori.",
-      "Permite numerotarea unei facturi aflate în starea de ciornă, folosind o secvență configurată la nivel de jurnal."
+      "Date cronologice: pe un jurnal de vânzări cu Restrict invoice date bifat, o factură sau notă de credit în ciornă nu poate fi confirmată cu dată anterioară ultimului document postat de același tip din jurnal. Eroarea indică cea mai veche dată permisă, iar la alegerea jurnalului pe o factură în ciornă apare un avertisment cu aceeași informație.",
+      "Schimbarea numărului facturii: utilizatorii din grupul Allow to change invoice number primesc acțiunea Change invoice number în meniul Acțiuni (roata dințată) din formularul facturii. Wizardul propune numărul curent; după Apply, noul număr se scrie pe factură și se copiază în referința liniilor sale contabile (și în Reference pentru documentele de client).",
+      "Configurare: *Contabilitate > Configurare > Jurnale*, jurnal de tip Vânzări, fila Journal Entries, secțiunea Invoice numbering (bifa Restrict invoice date); utilizatorii se adaugă în grup din *Setări > Utilizatori și companii > Grupuri*.",
+      "Limitări: câmpul Journal Sequence din secțiunea Invoice numbering nu are efect în interfață — există o metodă care numerotează o factură în ciornă din această secvență, dar niciun buton sau meniu nu o apelează (versiunile anterioare ale paginii o prezentau ca funcționalitate). Noul număr se scrie exact cum e tastat: wizardul nu îl verifică față de formatul de numerotare al jurnalului și nici față de goluri.",
+      "Pașii detaliați sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
       "account"
@@ -5136,7 +5140,7 @@
     "connections": [
       "account"
     ],
-    "text": "Invoice Number\ndeltatech_invoice_number\nModulul asigură renumerotarea și controlul secvenței facturilor de vânzare, garantând că facturile sunt validate în ordine cronologică și oferind utilizatorilor autorizați posibilitatea de a corecta manual numărul unei facturi sau de a atribui un număr dintr-o secvență dedicată a jurnalului, direct din starea de ciornă.\nValidează ordinea cronologică a facturilor emise (nu permite validarea unei facturi cu dată anterioară ultimei facturi confirmate pe același jurnal).\nPermite modificarea numărului unei facturi pentru un grup dedicat de utilizatori.\nPermite numerotarea unei facturi aflate în starea de ciornă, folosind o secvență configurată la nivel de jurnal."
+    "text": "Invoice Numbering Control\ndeltatech_invoice_number\nModulul păstrează facturile de client în ordine cronologică pe jurnalele unde acest lucru contează și oferă unui grup dedicat de utilizatori posibilitatea de a corecta numărul unei facturi. Astfel se evită facturile cu dată anterioară ultimei facturi emise și se pot remedia numerele greșite fără intervenții în baza de date.\nDate cronologice: pe un jurnal de vânzări cu Restrict invoice date bifat, o factură sau notă de credit în ciornă nu poate fi confirmată cu dată anterioară ultimului document postat de același tip din jurnal. Eroarea indică cea mai veche dată permisă, iar la alegerea jurnalului pe o factură în ciornă apare un avertisment cu aceeași informație.\nSchimbarea numărului facturii: utilizatorii din grupul Allow to change invoice number primesc acțiunea Change invoice number în meniul Acțiuni (roata dințată) din formularul facturii. Wizardul propune numărul curent; după Apply, noul număr se scrie pe factură și se copiază în referința liniilor sale contabile (și în Reference pentru documentele de client).\nConfigurare: *Contabilitate > Configurare > Jurnale*, jurnal de tip Vânzări, fila Journal Entries, secțiunea Invoice numbering (bifa Restrict invoice date); utilizatorii se adaugă în grup din *Setări > Utilizatori și companii > Grupuri*.\nLimitări: câmpul Journal Sequence din secțiunea Invoice numbering nu are efect în interfață — există o metodă care numerotează o factură în ciornă din această secvență, dar niciun buton sau meniu nu o apelează (versiunile anterioare ale paginii o prezentau ca funcționalitate). Noul număr se scrie exact cum e tastat: wizardul nu îl verifică față de formatul de numerotare al jurnalului și nici față de goluri.\nPașii detaliați sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_invoice_picking/index.md",
@@ -5204,7 +5208,7 @@
   {
     "path": "deltatech_invoice_product_filter/index.md",
     "module": "deltatech_invoice_product_filter",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.2.0",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_product_filter",
     "local_path": "odoo-addons/deltatech/deltatech_invoice_product_filter",
     "last_ingest": "2026-09-29",
@@ -5249,17 +5253,20 @@
     "path": "deltatech_invoice_report/index.md",
     "module": "deltatech_invoice_report",
     "version": "19.0.1.0.11",
-    "github": "[https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_report](https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_report)",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_report",
     "local_path": "odoo-addons/deltatech/deltatech_invoice_report",
-    "last_ingest": "2026-07-31",
+    "last_ingest": "2026-11-09",
     "friendly_name": "Invoice Report",
     "summary": "Modulul extinde raportul standard de analiză a facturilor din Odoo și fișa produsului cu istoricul cantităților cumpărate și vândute, astfel încât echipele de achiziții și vânzări văd rapid, direct pe fișa produsului, câtă cantitate a fost intrată sau ieșită pe facturi în fiecare an, fără să mai ruleze un raport dedicat.",
     "features": [
       "Adaugă câmpurile Regiune (județul/starea partenerului) și Furnizor Implicit pe raportul",
-      "Adaugă o filă Istoric pe formularul produsului, cu cantitățile facturate pe fiecare an",
-      "Buton Refresh pe fila Istoric, care recalculează istoricul la cerere pentru produsul curent,",
-      "O sarcină `ir.cron` zilnică (Update Product Invoice History by Year) care actualizează automat",
-      "Buton View Invoices pe fișa șablonului de produs și pe varianta de produs, care deschide"
+      "Adaugă o filă History pe formularul produsului (accesibil din Inventar, Vânzări sau Achiziții), cu un rând pe an: Qty In (facturi de achiziție) și Qty Out (facturi de vânzare).",
+      "Buton Refresh (săgeată circulară) pe fila History, care recalculează istoricul la cerere pentru produsul curent din toate facturile postate, folosind o interogare SQL optimizată.",
+      "O sarcină `ir.cron` zilnică (Update Product Invoice History by Year) care reconstruiește tabelul de istoric pentru toate produsele; este activă implicit și apare în *Setări > Tehnic > Automatizare > Acțiuni programate*, unde se pot schimba frecvența (Interval / Interval Unit) sau se poate dezactiva (reîmprospătarea manuală pe produs rămâne posibilă).",
+      "Populare inițială: tabelul se umple la prima rulare a cron-ului; pentru date imediat după instalare, sarcina se rulează manual cu Run Manually.",
+      "Buton View Invoices pe fișa șablonului de produs și pe varianta de produs, care deschide raportul Invoice Analysis (*Contabilitate > Raportare > Invoice Analysis*) pre-filtrat pe produs și grupat pe an, cu tipul documentului ca grup de coloane.",
+      "În raportul Invoice Analysis, filtrul de grupare Region agregă facturile după județul/starea partenerului, iar coloana Default Supplier e disponibilă în vizualizările pivot/grafic.",
+      "Tabelul de istoric (`product.invoice.history`) este un cache materializat; sursa de adevăr rămân înregistrările `account.move` postate."
     ],
     "dependencies": [
       "account",
@@ -5269,7 +5276,7 @@
       "account",
       "product"
     ],
-    "text": "Invoice Report\ndeltatech_invoice_report\nModulul extinde raportul standard de analiză a facturilor din Odoo și fișa produsului cu istoricul cantităților cumpărate și vândute, astfel încât echipele de achiziții și vânzări văd rapid, direct pe fișa produsului, câtă cantitate a fost intrată sau ieșită pe facturi în fiecare an, fără să mai ruleze un raport dedicat.\nAdaugă câmpurile Regiune (județul/starea partenerului) și Furnizor Implicit pe raportul\nAdaugă o filă Istoric pe formularul produsului, cu cantitățile facturate pe fiecare an\nButon Refresh pe fila Istoric, care recalculează istoricul la cerere pentru produsul curent,\nO sarcină `ir.cron` zilnică (Update Product Invoice History by Year) care actualizează automat\nButon View Invoices pe fișa șablonului de produs și pe varianta de produs, care deschide"
+    "text": "Invoice Report\ndeltatech_invoice_report\nModulul extinde raportul standard de analiză a facturilor din Odoo și fișa produsului cu istoricul cantităților cumpărate și vândute, astfel încât echipele de achiziții și vânzări văd rapid, direct pe fișa produsului, câtă cantitate a fost intrată sau ieșită pe facturi în fiecare an, fără să mai ruleze un raport dedicat.\nAdaugă câmpurile Regiune (județul/starea partenerului) și Furnizor Implicit pe raportul\nAdaugă o filă History pe formularul produsului (accesibil din Inventar, Vânzări sau Achiziții), cu un rând pe an: Qty In (facturi de achiziție) și Qty Out (facturi de vânzare).\nButon Refresh (săgeată circulară) pe fila History, care recalculează istoricul la cerere pentru produsul curent din toate facturile postate, folosind o interogare SQL optimizată.\nO sarcină `ir.cron` zilnică (Update Product Invoice History by Year) care reconstruiește tabelul de istoric pentru toate produsele; este activă implicit și apare în *Setări > Tehnic > Automatizare > Acțiuni programate*, unde se pot schimba frecvența (Interval / Interval Unit) sau se poate dezactiva (reîmprospătarea manuală pe produs rămâne posibilă).\nPopulare inițială: tabelul se umple la prima rulare a cron-ului; pentru date imediat după instalare, sarcina se rulează manual cu Run Manually.\nButon View Invoices pe fișa șablonului de produs și pe varianta de produs, care deschide raportul Invoice Analysis (*Contabilitate > Raportare > Invoice Analysis*) pre-filtrat pe produs și grupat pe an, cu tipul documentului ca grup de coloane.\nÎn raportul Invoice Analysis, filtrul de grupare Region agregă facturile după județul/starea partenerului, iar coloana Default Supplier e disponibilă în vizualizările pivot/grafic.\nTabelul de istoric (`product.invoice.history`) este un cache materializat; sursa de adevăr rămân înregistrările `account.move` postate."
   },
   {
     "path": "deltatech_invoice_to_draft/index.md",
@@ -5417,17 +5424,18 @@
     "path": "deltatech_line_counter/index.md",
     "module": "deltatech_line_counter",
     "version": "19.0.1.0.3",
-    "github": "[https://github.com/dhongu/deltatech/tree/19.0/deltatech_line_counter](https://github.com/dhongu/deltatech/tree/19.0/deltatech_line_counter)",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_line_counter",
     "local_path": "odoo-addons/deltatech/deltatech_line_counter",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Deltatech Line Counter",
+    "last_ingest": "2026-11-09",
+    "friendly_name": "Module Line Counter",
     "summary": "Modulul adaugă un wizard simplu în meniul de Administrare care numără liniile de cod ale modulelor Odoo instalate, alese de utilizator. Este util pentru a estima rapid dimensiunea și complexitatea unui modul (de exemplu, la evaluări tehnice, oferte de dezvoltare sau audit de cod), fără a fi nevoie de instrumente externe.",
     "features": [
       "Selectarea unuia sau mai multor module instalate (widget many2many_tags) pentru numărare.",
       "Numărarea liniilor ne-goale din fișiere `.py`, `.xml`, `.js`, `.css` și `.scss`.",
       "Excluderea automată a directorului `tests` din calcul.",
+      "Rezultatul este o estimare: se numără doar liniile ne-goale (comentariile și docstring-urile incluse), doar tipurile de fișiere de mai sus, iar fișierele care nu pot fi citite ca UTF-8 sunt omise. Numele modulului din rezultat este escapat HTML.",
       "Afișarea rezultatului într-un tabel HTML, cu total pe fiecare modul și un total general.",
-      "Acces din meniul Setări → Tehnic/Administrare (`base.menu_administration`)."
+      "Acces din meniul Administrare (`base.menu_administration`)."
     ],
     "dependencies": [
       "base"
@@ -5435,12 +5443,12 @@
     "connections": [
       "base"
     ],
-    "text": "Deltatech Line Counter\ndeltatech_line_counter\nModulul adaugă un wizard simplu în meniul de Administrare care numără liniile de cod ale modulelor Odoo instalate, alese de utilizator. Este util pentru a estima rapid dimensiunea și complexitatea unui modul (de exemplu, la evaluări tehnice, oferte de dezvoltare sau audit de cod), fără a fi nevoie de instrumente externe.\nSelectarea unuia sau mai multor module instalate (widget many2many_tags) pentru numărare.\nNumărarea liniilor ne-goale din fișiere `.py`, `.xml`, `.js`, `.css` și `.scss`.\nExcluderea automată a directorului `tests` din calcul.\nAfișarea rezultatului într-un tabel HTML, cu total pe fiecare modul și un total general.\nAcces din meniul Setări → Tehnic/Administrare (`base.menu_administration`)."
+    "text": "Module Line Counter\ndeltatech_line_counter\nModulul adaugă un wizard simplu în meniul de Administrare care numără liniile de cod ale modulelor Odoo instalate, alese de utilizator. Este util pentru a estima rapid dimensiunea și complexitatea unui modul (de exemplu, la evaluări tehnice, oferte de dezvoltare sau audit de cod), fără a fi nevoie de instrumente externe.\nSelectarea unuia sau mai multor module instalate (widget many2many_tags) pentru numărare.\nNumărarea liniilor ne-goale din fișiere `.py`, `.xml`, `.js`, `.css` și `.scss`.\nExcluderea automată a directorului `tests` din calcul.\nRezultatul este o estimare: se numără doar liniile ne-goale (comentariile și docstring-urile incluse), doar tipurile de fișiere de mai sus, iar fișierele care nu pot fi citite ca UTF-8 sunt omise. Numele modulului din rezultat este escapat HTML.\nAfișarea rezultatului într-un tabel HTML, cu total pe fiecare modul și un total general.\nAcces din meniul Administrare (`base.menu_administration`)."
   },
   {
     "path": "deltatech_list_view/index.md",
     "module": "deltatech_list_view",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_list_view",
     "local_path": "odoo-addons/deltatech/deltatech_list_view",
     "last_ingest": "2026-10-31",
@@ -5492,16 +5500,16 @@
     "path": "deltatech_lot/index.md",
     "module": "deltatech_lot",
     "version": "19.0.1.0.4",
-    "github": "[https://github.com/dhongu/deltatech/tree/19.0/deltatech_lot](https://github.com/dhongu/deltatech/tree/19.0/deltatech_lot)",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_lot",
     "local_path": "odoo-addons/deltatech/deltatech_lot",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Generare/Selectare Lot",
+    "last_ingest": "2026-11-09",
+    "friendly_name": "Lot Generation & Selection",
     "summary": "Modulul automatizează generarea numerelor de lot la recepția produselor de la furnizor și adaugă vizibilitate asupra locației de stoc unde se află fiecare lot. Este util companiilor care lucrează cu produse trasabile pe loturi (tracking pe lot) și vor să elimine introducerea manuală a codului de lot la fiecare recepție, păstrând în același timp o evidență clară a locației curente a fiecărui lot.",
     "features": [
-      "Generare automată a numelui de lot la recepția produselor de la furnizor (operațiuni de tip intrare/dropship), folosind o secvență dedicată (`stock.lot.serial`)",
-      "Câmp „Locație\" pe lot, calculat automat pe baza cantităților disponibile (`quant_ids`) din acel lot",
-      "Filtrare a loturilor disponibile pentru selecție în funcție de locația liniei de mișcare de stoc, la alegerea manuală a lotului",
-      "Afișarea locației lotului atât în formularul, cât și în lista și căutarea loturilor de producție"
+      "Loturi generate la validare: la validarea unei recepții de la furnizor (sau a unui dropship), fiecare linie a unui produs urmărit pe loturi care nu are număr de lot primește următorul număr din secvența Serial Numbers, câte un lot pe linie; loturile tastate de utilizator se păstrează. Condiția: tipul de operațiune de recepție are bifat Create New în grupul Lots/Serial Numbers (implicit la recepții). Numerele se generează doar la recepții și dropship, doar pentru produse urmărite pe loturi (nu pe serii) și mereu din secvența generală, nu din prefixul personalizat al produsului.",
+      "Locația lotului: câmpul Location arată locația care deține tot stocul lotului (gol dacă lotul e împărțit pe mai multe locații), în formularul lotului și ca coloană în lista de loturi; schimbarea lui mută stocul lotului când acesta e într-o singură locație (*Inventar > Produse > Loturi/Numere de serie*).",
+      "Căutare după locație: lista de loturi se poate căuta după Location; sunt afișate doar loturile ținute integral în acea locație.",
+      "Fluxul pas-cu-pas, cu capturi, este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
       "stock"
@@ -5510,7 +5518,7 @@
       "deltatech_lot",
       "stock"
     ],
-    "text": "Generare/Selectare Lot\ndeltatech_lot\nModulul automatizează generarea numerelor de lot la recepția produselor de la furnizor și adaugă vizibilitate asupra locației de stoc unde se află fiecare lot. Este util companiilor care lucrează cu produse trasabile pe loturi (tracking pe lot) și vor să elimine introducerea manuală a codului de lot la fiecare recepție, păstrând în același timp o evidență clară a locației curente a fiecărui lot.\nGenerare automată a numelui de lot la recepția produselor de la furnizor (operațiuni de tip intrare/dropship), folosind o secvență dedicată (`stock.lot.serial`)\nCâmp „Locație\" pe lot, calculat automat pe baza cantităților disponibile (`quant_ids`) din acel lot\nFiltrare a loturilor disponibile pentru selecție în funcție de locația liniei de mișcare de stoc, la alegerea manuală a lotului\nAfișarea locației lotului atât în formularul, cât și în lista și căutarea loturilor de producție"
+    "text": "Lot Generation & Selection\ndeltatech_lot\nModulul automatizează generarea numerelor de lot la recepția produselor de la furnizor și adaugă vizibilitate asupra locației de stoc unde se află fiecare lot. Este util companiilor care lucrează cu produse trasabile pe loturi (tracking pe lot) și vor să elimine introducerea manuală a codului de lot la fiecare recepție, păstrând în același timp o evidență clară a locației curente a fiecărui lot.\nLoturi generate la validare: la validarea unei recepții de la furnizor (sau a unui dropship), fiecare linie a unui produs urmărit pe loturi care nu are număr de lot primește următorul număr din secvența Serial Numbers, câte un lot pe linie; loturile tastate de utilizator se păstrează. Condiția: tipul de operațiune de recepție are bifat Create New în grupul Lots/Serial Numbers (implicit la recepții). Numerele se generează doar la recepții și dropship, doar pentru produse urmărite pe loturi (nu pe serii) și mereu din secvența generală, nu din prefixul personalizat al produsului.\nLocația lotului: câmpul Location arată locația care deține tot stocul lotului (gol dacă lotul e împărțit pe mai multe locații), în formularul lotului și ca coloană în lista de loturi; schimbarea lui mută stocul lotului când acesta e într-o singură locație (*Inventar > Produse > Loturi/Numere de serie*).\nCăutare după locație: lista de loturi se poate căuta după Location; sunt afișate doar loturile ținute integral în acea locație.\nFluxul pas-cu-pas, cu capturi, este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_mail/index.md",
@@ -5540,25 +5548,27 @@
   {
     "path": "deltatech_markdown_field/index.md",
     "module": "deltatech_markdown_field",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_markdown_field",
     "local_path": "odoo-addons/deltatech/deltatech_markdown_field",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Deltatech Markdown Field",
-    "summary": "Modulul adaugă un widget nou de câmp în Odoo — `markdown` — care oferă utilizatorilor o experiență de editare WYSIWYG (bold, italic, titluri, liste, citate, blocuri de cod, link-uri) pentru orice câmp de tip `Text`, în timp ce valoarea stocată în baza de date rămâne text Markdown brut, portabil și ușor de citit sau versionat în afara Odoo.",
+    "last_ingest": "2026-11-09",
+    "friendly_name": "Markdown Field Widget",
+    "summary": "Modulul adaugă un widget nou de câmp în Odoo — `markdown` — care oferă utilizatorilor o experiență de editare WYSIWYG (bold, italic, tăiat, titluri, liste, citate, blocuri de cod, link-uri) pentru orice câmp de tip `Text`, în timp ce valoarea stocată în baza de date rămâne text Markdown brut, portabil și ușor de citit sau versionat în afara Odoo.",
     "features": [
-      "Bară de instrumente WYSIWYG: bold, italic, titluri, liste, citate, blocuri de cod și link-uri.",
-      "Stochează Markdown brut — portabil, prietenos pentru diff-uri și lizibil oriunde.",
+      "Bară de instrumente WYSIWYG: bold, italic, tăiat, titluri (H1–H3), paragraf, liste, citate, cod, link-uri și ștergerea formatării; apare deasupra câmpului în modul de editare.",
+      "Stochează Markdown brut — portabil, prietenos pentru diff-uri și lizibil oriunde; valoarea se salvează la ieșirea din câmp și salvarea înregistrării.",
       "Conversie instantanee Markdown ↔ HTML, complet în browser (fără dependențe server la runtime): la încărcare se folosește biblioteca [marked](https://marked.js.org/) (Markdown → HTML), iar la salvare [turndown](https://github.com/mixmark-io/turndown) (HTML → Markdown).",
       "Ambele biblioteci sunt incluse local ca build-uri UMD, deci modulul funcționează offline, fără CDN extern.",
       "Respectă starea `readonly`: în modul doar-citire afișează Markdown-ul randat ca HTML, fără bara de instrumente.",
-      "Înălțime minimă configurabilă a editorului, prin opțiunea `min_height`."
+      "Înălțime minimă configurabilă a editorului, prin opțiunea `min_height` (în pixeli, implicit `160`).",
+      "Afișare sigură (de la 19.0.1.0.5): HTML-ul produs din Markdown este curățat cu DOMPurify înainte de afișare, în editare și în doar-citire, inclusiv pentru valorile stocate anterior. HTML-ul inofensiv (`<kbd>`, `<mark>`) își păstrează formatarea; scripturile, handler-ele de evenimente inline, link-urile `javascript:` și conținutul încorporat (`<iframe>`, `<object>`, `<embed>`) nu se afișează — videoclipurile sau hărțile încorporate se înlocuiesc cu un link obișnuit.",
+      "Elemente GFM păstrate la salvare (19.0.1.0.6): textul tăiat (`~~text~~`), tabelele (cu aliniere pe coloane) și listele de sarcini (`[x]` / `[ ]`) se scriu înapoi ca Markdown; un tabel pe care Markdown nu-l poate exprima (celule îmbinate, liste sau paragrafe în celulă) rămâne HTML. Valorile aplatizate de o salvare anterioară nu se recuperează. HTML-ul inline de tip `<kbd>` sau `<mark>` nu se păstrează la editare și salvare — se stochează doar Markdown standard."
     ],
     "dependencies": [
       "web"
     ],
     "connections": [],
-    "text": "Deltatech Markdown Field\ndeltatech_markdown_field\nModulul adaugă un widget nou de câmp în Odoo — `markdown` — care oferă utilizatorilor o experiență de editare WYSIWYG (bold, italic, titluri, liste, citate, blocuri de cod, link-uri) pentru orice câmp de tip `Text`, în timp ce valoarea stocată în baza de date rămâne text Markdown brut, portabil și ușor de citit sau versionat în afara Odoo.\nBară de instrumente WYSIWYG: bold, italic, titluri, liste, citate, blocuri de cod și link-uri.\nStochează Markdown brut — portabil, prietenos pentru diff-uri și lizibil oriunde.\nConversie instantanee Markdown ↔ HTML, complet în browser (fără dependențe server la runtime): la încărcare se folosește biblioteca [marked](https://marked.js.org/) (Markdown → HTML), iar la salvare [turndown](https://github.com/mixmark-io/turndown) (HTML → Markdown).\nAmbele biblioteci sunt incluse local ca build-uri UMD, deci modulul funcționează offline, fără CDN extern.\nRespectă starea `readonly`: în modul doar-citire afișează Markdown-ul randat ca HTML, fără bara de instrumente.\nÎnălțime minimă configurabilă a editorului, prin opțiunea `min_height`."
+    "text": "Markdown Field Widget\ndeltatech_markdown_field\nModulul adaugă un widget nou de câmp în Odoo — `markdown` — care oferă utilizatorilor o experiență de editare WYSIWYG (bold, italic, tăiat, titluri, liste, citate, blocuri de cod, link-uri) pentru orice câmp de tip `Text`, în timp ce valoarea stocată în baza de date rămâne text Markdown brut, portabil și ușor de citit sau versionat în afara Odoo.\nBară de instrumente WYSIWYG: bold, italic, tăiat, titluri (H1–H3), paragraf, liste, citate, cod, link-uri și ștergerea formatării; apare deasupra câmpului în modul de editare.\nStochează Markdown brut — portabil, prietenos pentru diff-uri și lizibil oriunde; valoarea se salvează la ieșirea din câmp și salvarea înregistrării.\nConversie instantanee Markdown ↔ HTML, complet în browser (fără dependențe server la runtime): la încărcare se folosește biblioteca [marked](https://marked.js.org/) (Markdown → HTML), iar la salvare [turndown](https://github.com/mixmark-io/turndown) (HTML → Markdown).\nAmbele biblioteci sunt incluse local ca build-uri UMD, deci modulul funcționează offline, fără CDN extern.\nRespectă starea `readonly`: în modul doar-citire afișează Markdown-ul randat ca HTML, fără bara de instrumente.\nÎnălțime minimă configurabilă a editorului, prin opțiunea `min_height` (în pixeli, implicit `160`).\nAfișare sigură (de la 19.0.1.0.5): HTML-ul produs din Markdown este curățat cu DOMPurify înainte de afișare, în editare și în doar-citire, inclusiv pentru valorile stocate anterior. HTML-ul inofensiv (`<kbd>`, `<mark>`) își păstrează formatarea; scripturile, handler-ele de evenimente inline, link-urile `javascript:` și conținutul încorporat (`<iframe>`, `<object>`, `<embed>`) nu se afișează — videoclipurile sau hărțile încorporate se înlocuiesc cu un link obișnuit.\nElemente GFM păstrate la salvare (19.0.1.0.6): textul tăiat (`~~text~~`), tabelele (cu aliniere pe coloane) și listele de sarcini (`[x]` / `[ ]`) se scriu înapoi ca Markdown; un tabel pe care Markdown nu-l poate exprima (celule îmbinate, liste sau paragrafe în celulă) rămâne HTML. Valorile aplatizate de o salvare anterioară nu se recuperează. HTML-ul inline de tip `<kbd>` sau `<mark>` nu se păstrează la editare și salvare — se stochează doar Markdown standard."
   },
   {
     "path": "deltatech_marketplace/index.md",
@@ -5895,7 +5905,7 @@
   {
     "path": "deltatech_marketplace_extended/index.md",
     "module": "deltatech_marketplace_extended",
-    "version": "19.0.0.0.33",
+    "version": "19.0.0.0.34",
     "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_extended`",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_extended",
     "last_ingest": "2026-09-23",
@@ -6074,7 +6084,7 @@
   {
     "path": "deltatech_marketplace_opencart/index.md",
     "module": "deltatech_marketplace_opencart",
-    "version": "19.0.0.2.15",
+    "version": "19.0.0.2.16",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_opencart",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_opencart",
     "last_ingest": "2026-08-20",
@@ -6146,7 +6156,7 @@
   {
     "path": "deltatech_marketplace_prestashop/index.md",
     "module": "deltatech_marketplace_prestashop",
-    "version": "19.0.0.6.0",
+    "version": "19.0.0.6.1",
     "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_prestashop`",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_prestashop",
     "last_ingest": "2026-10-22",
@@ -6356,7 +6366,7 @@
   {
     "path": "deltatech_marketplace_shopify/index.md",
     "module": "deltatech_marketplace_shopify",
-    "version": "19.0.1.8.17",
+    "version": "19.0.1.8.18",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_shopify",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_shopify",
     "last_ingest": "2026-10-09",
@@ -6680,16 +6690,17 @@
     "path": "deltatech_move_negative_stock/index.md",
     "module": "deltatech_move_negative_stock",
     "version": "19.0.1.1.5",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_move_negative_stock`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_move_negative_stock",
     "local_path": "odoo-addons/deltatech/deltatech_move_negative_stock",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Realimentare Stoc Negativ",
+    "last_ingest": "2026-11-09",
+    "friendly_name": "Replenish Negative Stock",
     "summary": "Acest modul oferă un mod simplu și rapid de a identifica și corecta stocurile negative dintr-o locație, completând automat o operațiune de transfer cu cantitățile necesare pentru a le aduce înapoi la cel puțin zero, preluate dintr-o altă locație sursă. În plus, permite desemnarea unui responsabil (manager) pentru fiecare locație internă, care primește zilnic, prin e-mail, un raport automat cu produsele aflate pe stoc negativ în acea locație.",
     "features": [
-      "Identificare automată a cantităților negative: butonul dedicat Get negative products (Obține produse negative) de pe formularul de transfer identifică toate produsele cu cantitate negativă în locația de destinație a transferului curent.",
-      "Completare automată a transferului: adaugă rapid linii în transferul curent pentru toate produsele identificate cu stoc negativ, cu exact cantitățile necesare pentru a aduce inventarul destinației la cel puțin zero.",
-      "Monitorizarea sănătății stocului: gândit pentru gestionarii de inventar care trebuie să mențină evidențe de stoc curate, fără valori negative, în mai multe locații.",
-      "Notificare zilnică: fiecărei locații interne i se poate atribui un Manager; o acțiune programată zilnică trimite prin e-mail managerului lista produselor cu stoc negativ din acea locație, agregată pe sub-locațiile ei. Locațiile fără manager sunt omise."
+      "Realimentare dintr-un click: butonul Get negative products de pe un transfer intern în starea Draft adaugă o linie pentru fiecare produs cu stoc negativ în locația de destinație, cu cantitatea care îl aduce înapoi la zero, luată din locația sursă a transferului. Se aplică locației de destinație propriu-zise, nu și sub-locațiilor ei.",
+      "Transfer editabil: liniile se pot modifica, șterge sau completa manual înainte de validare, ca la orice transfer; fiecare apăsare a butonului adaugă liniile din nou, deci se apasă o singură dată pe transfer.",
+      "Flux: se creează un transfer intern cu locația de realimentat ca Destination Location și locația din care se iau marfa ca Source Location; opțional, un tip de operațiune intern (*Inventar > Configurare > Tipuri de operațiuni*) cu locațiile implicite deja setate (de ex. stoc depozit → showroom).",
+      "E-mail zilnic cu stoc negativ: fiecărei locații interne i se poate atribui un Manager (*Inventar > Configurare > Locații*); acesta primește o dată pe zi, cu subiectul „Negative stock for location …”, lista produselor negative (referință, nume, cantitate negativă, unitate de măsură), cu cantitățile însumate pe produs pentru locație și toate sub-locațiile ei. Locațiile fără manager sunt omise.",
+      "Frecvență: acțiunea programată Send negative stock rulează zilnic; frecvența se schimbă din acțiunile programate (*Setări > Tehnic*, mod dezvoltator)."
     ],
     "dependencies": [
       "stock",
@@ -6699,7 +6710,7 @@
       "deltatech_stock_negative",
       "deltatech_move_negative_stock"
     ],
-    "text": "Realimentare Stoc Negativ\ndeltatech_move_negative_stock\nAcest modul oferă un mod simplu și rapid de a identifica și corecta stocurile negative dintr-o locație, completând automat o operațiune de transfer cu cantitățile necesare pentru a le aduce înapoi la cel puțin zero, preluate dintr-o altă locație sursă. În plus, permite desemnarea unui responsabil (manager) pentru fiecare locație internă, care primește zilnic, prin e-mail, un raport automat cu produsele aflate pe stoc negativ în acea locație.\nIdentificare automată a cantităților negative: butonul dedicat Get negative products (Obține produse negative) de pe formularul de transfer identifică toate produsele cu cantitate negativă în locația de destinație a transferului curent.\nCompletare automată a transferului: adaugă rapid linii în transferul curent pentru toate produsele identificate cu stoc negativ, cu exact cantitățile necesare pentru a aduce inventarul destinației la cel puțin zero.\nMonitorizarea sănătății stocului: gândit pentru gestionarii de inventar care trebuie să mențină evidențe de stoc curate, fără valori negative, în mai multe locații.\nNotificare zilnică: fiecărei locații interne i se poate atribui un Manager; o acțiune programată zilnică trimite prin e-mail managerului lista produselor cu stoc negativ din acea locație, agregată pe sub-locațiile ei. Locațiile fără manager sunt omise."
+    "text": "Replenish Negative Stock\ndeltatech_move_negative_stock\nAcest modul oferă un mod simplu și rapid de a identifica și corecta stocurile negative dintr-o locație, completând automat o operațiune de transfer cu cantitățile necesare pentru a le aduce înapoi la cel puțin zero, preluate dintr-o altă locație sursă. În plus, permite desemnarea unui responsabil (manager) pentru fiecare locație internă, care primește zilnic, prin e-mail, un raport automat cu produsele aflate pe stoc negativ în acea locație.\nRealimentare dintr-un click: butonul Get negative products de pe un transfer intern în starea Draft adaugă o linie pentru fiecare produs cu stoc negativ în locația de destinație, cu cantitatea care îl aduce înapoi la zero, luată din locația sursă a transferului. Se aplică locației de destinație propriu-zise, nu și sub-locațiilor ei.\nTransfer editabil: liniile se pot modifica, șterge sau completa manual înainte de validare, ca la orice transfer; fiecare apăsare a butonului adaugă liniile din nou, deci se apasă o singură dată pe transfer.\nFlux: se creează un transfer intern cu locația de realimentat ca Destination Location și locația din care se iau marfa ca Source Location; opțional, un tip de operațiune intern (*Inventar > Configurare > Tipuri de operațiuni*) cu locațiile implicite deja setate (de ex. stoc depozit → showroom).\nE-mail zilnic cu stoc negativ: fiecărei locații interne i se poate atribui un Manager (*Inventar > Configurare > Locații*); acesta primește o dată pe zi, cu subiectul „Negative stock for location …”, lista produselor negative (referință, nume, cantitate negativă, unitate de măsură), cu cantitățile însumate pe produs pentru locație și toate sub-locațiile ei. Locațiile fără manager sunt omise.\nFrecvență: acțiunea programată Send negative stock rulează zilnic; frecvența se schimbă din acțiunile programate (*Setări > Tehnic*, mod dezvoltator)."
   },
   {
     "path": "deltatech_mrp/index.md",
@@ -7041,7 +7052,7 @@
   {
     "path": "deltatech_no_quick_create/index.md",
     "module": "deltatech_no_quick_create",
-    "version": "19.0.2.0.2",
+    "version": "19.0.2.1.0",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_no_quick_create",
     "local_path": "odoo-addons/deltatech/deltatech_no_quick_create",
     "last_ingest": "2026-08-20",
@@ -7791,7 +7802,7 @@
   {
     "path": "deltatech_payment_on_delivery/index.md",
     "module": "deltatech_payment_on_delivery",
-    "version": "19.0.4.1.9",
+    "version": "19.0.4.1.10",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_on_delivery`",
     "local_path": "odoo-addons/bitshop/deltatech_payment_on_delivery",
     "last_ingest": "2026-08-20",
@@ -8103,7 +8114,7 @@
   {
     "path": "deltatech_pos/index.md",
     "module": "deltatech_pos",
-    "version": "19.0.2.16.1",
+    "version": "19.0.2.16.2",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos",
     "local_path": "odoo-addons/bitshop/deltatech_pos",
     "last_ingest": "2026-10-09",
@@ -9836,7 +9847,7 @@
   {
     "path": "deltatech_report_layout/index.md",
     "module": "deltatech_report_layout",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.1.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_report_layout",
     "local_path": "odoo-addons/deltatech/deltatech_report_layout",
     "last_ingest": "2026-10-09",
@@ -12464,7 +12475,7 @@
   {
     "path": "deltatech_stock_report/index.md",
     "module": "deltatech_stock_report",
-    "version": "19.0.1.0.8",
+    "version": "19.0.1.0.9",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_report",
     "local_path": "odoo-addons/deltatech/deltatech_stock_report",
     "last_ingest": "2026-08-20",
@@ -14518,21 +14529,24 @@
   {
     "path": "deltatech_website_watermark/index.md",
     "module": "deltatech_website_watermark",
-    "version": "19.0.1.0.10",
+    "version": "19.0.1.0.12",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_watermark",
     "local_path": "odoo-addons/bitshop/deltatech_website_watermark",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Website Watermark Image",
+    "last_ingest": "2026-11-09",
+    "friendly_name": "Website Image Watermark",
     "summary": "Acest modul adaugă automat o filigranare (watermark) pe imaginile produselor afișate pe site și pe celelalte dimensiuni de imagine calculate din `image.mixin`. Permite păstrarea imaginilor originale curate, aplicând dinamic filigranul companiei în momentul randării. Astfel, magazinul online beneficiază de protejarea vizuală a imaginilor de produs fără a modifica fișierele sursă încărcate.",
     "features": [
-      "Aplică un filigran centrat și transparent pe imaginile de produs randate în magazinul online.",
-      "Filigranul poate fi dezactivat pentru anumiți parteneri sau pentru anumite produse (comutator per înregistrare).",
-      "Suport complet pentru imaginile sursă WEBP; formatul de ieșire păstrează WEBP când originalul este WEBP, altfel se folosește JPEG.",
+      "Aplică un filigran centrat și transparent (opacitate 20%, scalat la dimensiunea imaginii) pe imaginile de produs randate în magazinul online; miniaturile mici (coș, liste scurte) rămân curate, iar în back office rămâne imaginea originală.",
+      "Filigranul companiei se încarcă în Setări > Setări generale, secțiunea Companii, câmpul Watermark image; fiecare companie are propriul filigran.",
+      "Filigranul poate fi dezactivat pentru anumiți parteneri (câmpul Use Watermark din fila Vânzări și achiziții, bifat implicit pentru toți partenerii, angajați inclusiv) sau pentru anumite produse (câmpul Has Watermark din fila Vânzări, grupul Ecommerce Shop: magazinul trimite toate imaginile ca atare, inclusiv Ecommerce Media).",
+      "O variantă cu imagine proprie afișează pe pagina de produs acea imagine, filigranată; o variantă fără imagine proprie afișează imaginea produsului.",
+      "Suport complet pentru imaginile sursă WEBP; formatul de ieșire păstrează WEBP când originalul este WEBP, altfel se folosește JPEG (un PNG transparent își pierde transparența).",
       "Optimizat pentru performanță la procesarea unui număr mare de imagini (cache în memorie al filigranului și al dimensiunilor pregătite).",
       "Respectă dimensiunea de imagine solicitată din context (ex: `image_1024`, `image_512` etc.).",
       "Trebuie configurată o imagine de filigran la nivelul companiei; altfel filigranarea nu poate fi aplicată.",
-      "Imaginea de filigran ar trebui să fie un PNG transparent pentru rezultate optime (recomandat).",
-      "Când se așteaptă imagini filigranate, asigurați-vă că filigranul companiei este setat pentru a evita erorile de decodare."
+      "Imaginea de filigran ar trebui să fie un PNG cu fundal transparent, într-o culoare închisă (recomandat).",
+      "Când se așteaptă imagini filigranate, asigurați-vă că filigranul companiei este setat pentru a evita erorile de decodare.",
+      "Pașii detaliați sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
       "website_sale",
@@ -14542,7 +14556,7 @@
       "deltatech_watermark",
       "website_sale"
     ],
-    "text": "Website Watermark Image\ndeltatech_website_watermark\nAcest modul adaugă automat o filigranare (watermark) pe imaginile produselor afișate pe site și pe celelalte dimensiuni de imagine calculate din `image.mixin`. Permite păstrarea imaginilor originale curate, aplicând dinamic filigranul companiei în momentul randării. Astfel, magazinul online beneficiază de protejarea vizuală a imaginilor de produs fără a modifica fișierele sursă încărcate.\nAplică un filigran centrat și transparent pe imaginile de produs randate în magazinul online.\nFiligranul poate fi dezactivat pentru anumiți parteneri sau pentru anumite produse (comutator per înregistrare).\nSuport complet pentru imaginile sursă WEBP; formatul de ieșire păstrează WEBP când originalul este WEBP, altfel se folosește JPEG.\nOptimizat pentru performanță la procesarea unui număr mare de imagini (cache în memorie al filigranului și al dimensiunilor pregătite).\nRespectă dimensiunea de imagine solicitată din context (ex: `image_1024`, `image_512` etc.).\nTrebuie configurată o imagine de filigran la nivelul companiei; altfel filigranarea nu poate fi aplicată.\nImaginea de filigran ar trebui să fie un PNG transparent pentru rezultate optime (recomandat).\nCând se așteaptă imagini filigranate, asigurați-vă că filigranul companiei este setat pentru a evita erorile de decodare."
+    "text": "Website Image Watermark\ndeltatech_website_watermark\nAcest modul adaugă automat o filigranare (watermark) pe imaginile produselor afișate pe site și pe celelalte dimensiuni de imagine calculate din `image.mixin`. Permite păstrarea imaginilor originale curate, aplicând dinamic filigranul companiei în momentul randării. Astfel, magazinul online beneficiază de protejarea vizuală a imaginilor de produs fără a modifica fișierele sursă încărcate.\nAplică un filigran centrat și transparent (opacitate 20%, scalat la dimensiunea imaginii) pe imaginile de produs randate în magazinul online; miniaturile mici (coș, liste scurte) rămân curate, iar în back office rămâne imaginea originală.\nFiligranul companiei se încarcă în Setări > Setări generale, secțiunea Companii, câmpul Watermark image; fiecare companie are propriul filigran.\nFiligranul poate fi dezactivat pentru anumiți parteneri (câmpul Use Watermark din fila Vânzări și achiziții, bifat implicit pentru toți partenerii, angajați inclusiv) sau pentru anumite produse (câmpul Has Watermark din fila Vânzări, grupul Ecommerce Shop: magazinul trimite toate imaginile ca atare, inclusiv Ecommerce Media).\nO variantă cu imagine proprie afișează pe pagina de produs acea imagine, filigranată; o variantă fără imagine proprie afișează imaginea produsului.\nSuport complet pentru imaginile sursă WEBP; formatul de ieșire păstrează WEBP când originalul este WEBP, altfel se folosește JPEG (un PNG transparent își pierde transparența).\nOptimizat pentru performanță la procesarea unui număr mare de imagini (cache în memorie al filigranului și al dimensiunilor pregătite).\nRespectă dimensiunea de imagine solicitată din context (ex: `image_1024`, `image_512` etc.).\nTrebuie configurată o imagine de filigran la nivelul companiei; altfel filigranarea nu poate fi aplicată.\nImaginea de filigran ar trebui să fie un PNG cu fundal transparent, într-o culoare închisă (recomandat).\nCând se așteaptă imagini filigranate, asigurați-vă că filigranul companiei este setat pentru a evita erorile de decodare.\nPașii detaliați sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_widget_fontawesome/index.md",
@@ -15811,7 +15825,7 @@
   {
     "path": "l10n_ro_anaf_d318/index.md",
     "module": "l10n_ro_anaf_d318",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.7",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d318",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d318",
     "last_ingest": null,
@@ -15911,7 +15925,7 @@
   {
     "path": "l10n_ro_anaf_d394/index.md",
     "module": "l10n_ro_anaf_d394",
-    "version": "19.0.1.3.15",
+    "version": "19.0.1.3.16",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d394",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d394",
     "last_ingest": null,
@@ -16306,7 +16320,7 @@
   {
     "path": "l10n_ro_audit_immutable/index.md",
     "module": "l10n_ro_audit_immutable",
-    "version": "19.0.1.1.5",
+    "version": "19.0.1.2.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_audit_immutable",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_audit_immutable",
     "last_ingest": null,
@@ -16545,7 +16559,7 @@
   {
     "path": "l10n_ro_cbam/index.md",
     "module": "l10n_ro_cbam",
-    "version": "19.0.1.7.6",
+    "version": "19.0.1.7.9",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cbam",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_cbam",
     "last_ingest": null,
@@ -18307,7 +18321,7 @@
   {
     "path": "l10n_ro_inventory_closing/index.md",
     "module": "l10n_ro_inventory_closing",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.2.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_inventory_closing",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_inventory_closing",
     "last_ingest": "2026-10-28",
@@ -18657,7 +18671,7 @@
   {
     "path": "l10n_ro_micro_tax/index.md",
     "module": "l10n_ro_micro_tax",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.2.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_micro_tax",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_micro_tax",
     "last_ingest": "2026-11-03",
@@ -19583,7 +19597,7 @@
   {
     "path": "l10n_ro_period_close_enhanced/index.md",
     "module": "l10n_ro_period_close_enhanced",
-    "version": "19.0.1.15.0",
+    "version": "19.0.1.15.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_period_close_enhanced",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_period_close_enhanced",
     "last_ingest": null,
@@ -20625,7 +20639,7 @@
   {
     "path": "l10n_ro_sod_matrix/index.md",
     "module": "l10n_ro_sod_matrix",
-    "version": "19.0.1.1.5",
+    "version": "19.0.1.1.6",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_sod_matrix",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_sod_matrix",
     "last_ingest": null,

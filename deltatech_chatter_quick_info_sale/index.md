@@ -1,7 +1,7 @@
 # Chatter Quick Info: Last Price to the Customer (localizat la `deltatech_chatter_quick_info_sale/index.md`)
 
 - **Nume Tehnic:** `deltatech_chatter_quick_info_sale`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter_quick_info_sale
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_chatter_quick_info_sale`
 - **Ultima Ingestie:** `2026-10-17`

@@ -2,9 +2,9 @@
 
 - **Nume Tehnic:** `deltatech_invoice_report`
 - **Versiune:** `19.0.1.0.11`
-- **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_report](https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_report)
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_report
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_invoice_report`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-09`
 
 #### 1. Sumar
 
@@ -18,14 +18,13 @@ ruleze un raport dedicat.
 - Adaugă câmpurile **Regiune** (județul/starea partenerului) și **Furnizor Implicit** pe raportul
   `account.invoice.report`, pentru a putea grupa sau filtra analiza facturilor după regiunea
   clientului/furnizorului sau după furnizorul principal al produsului.
-- Adaugă o filă **Istoric** pe formularul produsului, cu cantitățile facturate pe fiecare an
-  (cantitate intrată din facturi de achiziție, cantitate ieșită din facturi de vânzare).
-- Buton **Refresh** pe fila Istoric, care recalculează istoricul la cerere pentru produsul curent,
-  folosind o interogare SQL optimizată.
-- O sarcină `ir.cron` zilnică (**Update Product Invoice History by Year**) care actualizează automat
-  tabelul de istoric pentru toate produsele.
-- Buton **View Invoices** pe fișa șablonului de produs și pe varianta de produs, care deschide
-  raportul Invoice Analysis pre-filtrat pe produs și grupat pe an și tip de document.
+- Adaugă o filă **History** pe formularul produsului (accesibil din Inventar, Vânzări sau Achiziții), cu un rând pe an: **Qty In** (facturi de achiziție) și **Qty Out** (facturi de vânzare).
+- Buton **Refresh** (săgeată circulară) pe fila History, care recalculează istoricul la cerere pentru produsul curent din toate facturile postate, folosind o interogare SQL optimizată.
+- O sarcină `ir.cron` zilnică (**Update Product Invoice History by Year**) care reconstruiește tabelul de istoric pentru toate produsele; este activă implicit și apare în *Setări > Tehnic > Automatizare > Acțiuni programate*, unde se pot schimba frecvența (**Interval** / **Interval Unit**) sau se poate dezactiva (reîmprospătarea manuală pe produs rămâne posibilă).
+- Populare inițială: tabelul se umple la prima rulare a cron-ului; pentru date imediat după instalare, sarcina se rulează manual cu **Run Manually**.
+- Buton **View Invoices** pe fișa șablonului de produs și pe varianta de produs, care deschide raportul Invoice Analysis (*Contabilitate > Raportare > Invoice Analysis*) pre-filtrat pe produs și grupat pe an, cu tipul documentului ca grup de coloane.
+- În raportul Invoice Analysis, filtrul de grupare **Region** agregă facturile după județul/starea partenerului, iar coloana **Default Supplier** e disponibilă în vizualizările pivot/grafic.
+- Tabelul de istoric (`product.invoice.history`) este un cache materializat; sursa de adevăr rămân înregistrările `account.move` postate.
 
 #### 3. Dependențe
 

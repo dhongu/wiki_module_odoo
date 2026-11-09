@@ -1,10 +1,10 @@
-# Realimentare Stoc Negativ (localizat la `deltatech_move_negative_stock/index.md`)
+# Replenish Negative Stock (localizat la `deltatech_move_negative_stock/index.md`)
 
 - **Nume Tehnic:** `deltatech_move_negative_stock`
 - **Versiune:** `19.0.1.1.5`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_move_negative_stock`
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_move_negative_stock
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_move_negative_stock`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-09`
 
 #### 1. Sumar
 
@@ -12,10 +12,11 @@ Acest modul oferă un mod simplu și rapid de a identifica și corecta stocurile
 
 #### 2. Funcționalități Cheie
 
-- Identificare automată a cantităților negative: butonul dedicat **Get negative products** (Obține produse negative) de pe formularul de transfer identifică toate produsele cu cantitate negativă în locația de destinație a transferului curent.
-- Completare automată a transferului: adaugă rapid linii în transferul curent pentru toate produsele identificate cu stoc negativ, cu exact cantitățile necesare pentru a aduce inventarul destinației la cel puțin zero.
-- Monitorizarea sănătății stocului: gândit pentru gestionarii de inventar care trebuie să mențină evidențe de stoc curate, fără valori negative, în mai multe locații.
-- Notificare zilnică: fiecărei locații interne i se poate atribui un Manager; o acțiune programată zilnică trimite prin e-mail managerului lista produselor cu stoc negativ din acea locație, agregată pe sub-locațiile ei. Locațiile fără manager sunt omise.
+- **Realimentare dintr-un click:** butonul **Get negative products** de pe un transfer intern în starea Draft adaugă o linie pentru fiecare produs cu stoc negativ în locația de destinație, cu cantitatea care îl aduce înapoi la zero, luată din locația sursă a transferului. Se aplică locației de destinație propriu-zise, nu și sub-locațiilor ei.
+- **Transfer editabil:** liniile se pot modifica, șterge sau completa manual înainte de validare, ca la orice transfer; fiecare apăsare a butonului adaugă liniile din nou, deci se apasă o singură dată pe transfer.
+- **Flux:** se creează un transfer intern cu locația de realimentat ca **Destination Location** și locația din care se iau marfa ca **Source Location**; opțional, un tip de operațiune intern (*Inventar > Configurare > Tipuri de operațiuni*) cu locațiile implicite deja setate (de ex. stoc depozit → showroom).
+- **E-mail zilnic cu stoc negativ:** fiecărei locații interne i se poate atribui un **Manager** (*Inventar > Configurare > Locații*); acesta primește o dată pe zi, cu subiectul „Negative stock for location …”, lista produselor negative (referință, nume, cantitate negativă, unitate de măsură), cu cantitățile însumate pe produs pentru locație și toate sub-locațiile ei. Locațiile fără manager sunt omise.
+- **Frecvență:** acțiunea programată **Send negative stock** rulează zilnic; frecvența se schimbă din acțiunile programate (*Setări > Tehnic*, mod dezvoltator).
 
 #### 3. Dependențe
 

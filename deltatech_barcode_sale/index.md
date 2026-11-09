@@ -1,10 +1,11 @@
 # Barcode Sale (localizat la `deltatech_barcode_sale/index.md`)
 
 - **Nume Tehnic:** `deltatech_barcode_sale`
-- **Versiune:** `19.0.2.1.2`
+- **Versiune:** `19.0.2.1.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_barcode_sale
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_barcode_sale`
 - **Ultima Ingestie:** `2026-09-29`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

@@ -1,10 +1,11 @@
 # List View Select Text (localizat la `deltatech_list_view/index.md`)
 
 - **Nume Tehnic:** `deltatech_list_view`
-- **Versiune:** `19.0.1.0.5`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_list_view
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_list_view`
 - **Ultima Ingestie:** `2026-10-31`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

@@ -1,7 +1,7 @@
 # Plată Ramburs / la Livrare (COD) (localizat la `deltatech_payment_on_delivery/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_on_delivery`
-- **Versiune:** `19.0.4.1.9`
+- **Versiune:** `19.0.4.1.10`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_on_delivery`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_on_delivery`
 - **Ultima Ingestie:** `2026-08-20`
