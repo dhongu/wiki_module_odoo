@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_visibility
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_visibility`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-10`
 
 #### 1. Sumar
 

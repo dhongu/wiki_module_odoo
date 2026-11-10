@@ -4,18 +4,18 @@
 - **Versiune:** `19.0.1.0.4`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_pallet_website`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_pallet_website`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-10`
 
 #### 1. Sumar
 
-Modulul extinde logica de paleți din vânzări către magazinul online (eCommerce), astfel încât produsele vândute pe paleți să fie afișate și gestionate corect și pe website. Atunci când un client adaugă în coș un produs care necesită paletizare, modulul recalculează automat liniile de palet direct în coșul de cumpărături, la fel cum se întâmplă deja pe comenzile create din back-office, iar pagina de produs poate afișa prețul corespunzător cantității unui palet.
+Produsele vândute în vrac (cărămizi, plăci) se livrează pe paleți pe care clientul îi plătește. Modulul `deltatech_sale_pallet` adaugă liniile de palet pe comenzile din back-office; acest modul aduce aceeași logică în magazinul online: paleții sunt afișați pe pagina de produs și adăugați automat în coș.
 
 #### 2. Funcționalități Cheie
 
-- Afișarea pe pagina de produs a prețului corespunzător cantității minime a unui palet, atunci când produsul are configurată o astfel de cantitate.
-- Optimizarea experienței de cumpărare pentru achiziții en-gros sau produse vândute în mod tipic pe paleți.
-- Recalcularea automată a liniilor de palet din coșul de cumpărături pe măsură ce clientul adaugă sau modifică cantitatea unui produs pe website, păstrând consistența cu logica din `deltatech_sale_pallet`.
-- Se bazează pe flag-ul „Palet" configurat la nivelul categoriei de produs pentru a identifica articolele cărora li se aplică logica de paletizare pe website.
+- **Prețul paletului pe pagina de produs:** pentru produsele cu cantitate minimă de palet, apare un rând de tipul „When buying 10 units, the price is ...", unde prețul este cantitatea minimă de palet la prețul de vânzare plus prețul produsului-palet.
+- **Linii de palet în coș:** la fiecare adăugare sau modificare de cantitate, liniile de palet se recalculează: o linie per produs-palet, cu numărul de paleți întregi necesari tuturor liniilor din coș care folosesc acel palet. O cantitate sub un palet întreg nu adaugă palet. Când ultimul produs care necesită palet este scos din coș, linia de palet dispare și ea.
+- **Prețul livrării include paleții:** liniile de palet sunt actualizate înainte de recalcularea prețului de livrare și a cantității din coș, deci ambele țin cont de paleți.
+- **Configurare:** pe fișa produsului, tab-ul *Inventar*, secțiunea **Palletizing** (din `deltatech_sale_pallet`): **Pallet Product** (produsul-palet, vândut la propriul preț) și **Pallet Qty Min** (cantitatea care umple un palet). Produsele fără aceste setări se vând normal în magazin. Flag-ul **Pallet** de pe categoriile de produse nu este folosit de magazin.
 
 #### 3. Dependențe
 
@@ -24,15 +24,13 @@ Modulul extinde logica de paleți din vânzări către magazinul online (eCommer
 
 #### 4. Componente Cheie
 
-*Sumarul și funcționalitățile au fost preluate din `readme/DESCRIPTION.md`; analiza detaliată a codului pentru această secțiune nu a fost solicitată explicit în Readme. Componentele de mai jos sunt menționate orientativ, pe baza structurii modulului.*
-
 **Modele**
 
-- `sale.order`: extins cu suprascrierea hook-ului `_verify_cart_after_update` (apelat de website_sale după `_cart_add`/`_cart_update_line_quantity` în Odoo 19) pentru a recalcula liniile de palet direct în coșul de cumpărături.
+- `sale.order`: suprascrie hook-ul `_verify_cart_after_update` (apelat de `website_sale` după `_cart_add` / `_cart_update_line_quantity`) și apelează `_update_cart_pallet_lines` înainte de `super()`, ca livrarea și cantitatea din coș să includă paleții.
 
 **Vizualizări**
 
-- `views/templates.xml` (`show_pallet_price`): extinde șablonul `website_sale.product` pentru a afișa, pe pagina produsului, prețul corespunzător cantității minime de palet.
+- `show_pallet_price` (`views/templates.xml`): extinde `website_sale.product` și afișează prețul pentru cantitatea minimă de palet.
 
 #### 5. Conexiuni
 

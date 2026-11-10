@@ -1,7 +1,7 @@
 # Chatter Quick Info: Product Sales on Purchases
 
 - **Nume Tehnic:** `deltatech_chatter_quick_info_purchase`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter_quick_info_purchase
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_chatter_quick_info_purchase`
 - **Ultima Ingestie:** `2026-10-17`

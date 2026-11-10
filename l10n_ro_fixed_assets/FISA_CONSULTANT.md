@@ -244,7 +244,10 @@ de intrare, amortizarea cumulată și valoarea contabilă la acea dată (acelea�
 Cantitatea faptică, diferențele, valoarea de inventar și deprecierea le completează comisia; pentru
 imobilizări se înscrie valoarea contabilă minus ajustări, comparată cu valoarea actuală (OMFP 2861/2009
 pct. 34 alin. (2), pct. 37). Bunurile terților, imobilizările în curs și activele depreciate se trec pe
-liste distincte (pct. 13, 14, 19, 20), azi întocmite separat. Export PDF și XLSX.
+liste distincte (pct. 13, 14, 19, 20), azi întocmite separat. Export PDF și XLSX. Exportul XLSX are
+la final coloana **Stare fizică** (din 19.0.1.17.5), lăsată necompletată pentru comisie: aici se
+consemnează starea constatată a bunului (de exemplu bună, uzată, degradată); nu influențează valorile,
+totalurile sau fișele activelor și nu apare în PDF.
 
 ![Lista de inventariere (14-3-12) pe gestiune — coloanele de constatare rămân pentru comisie](screenshots/14_lista_inventariere.png)
 
@@ -663,6 +666,9 @@ Ce rămâne manual: validarea numărului de inventar, codului nomenclator și DN
 - [ ] Rezultatul contabil sau operațional corespunde descrierii din plan.
 - [ ] Mesajele de eroare sunt clare pentru un utilizator non-tehnic.
 - [ ] Exporturile sau rapoartele se descarcă și conțin datele testate.
+- [ ] Exportul XLSX al listei de inventariere are ultima coloană „Stare fizică”, goală pe rândurile
+      activelor, iar valoarea de intrare, amortizarea cumulată și valoarea contabilă și totalurile sunt
+      aceleași ca în registru.
 - [ ] Pe conturile gestionate prin modul, valoarea de inventar din registrul imobilizărilor = soldul
       21x din balanță.
 - [ ] Pe aceleași conturi, amortizarea cumulată din registru = soldul 281x din balanță.

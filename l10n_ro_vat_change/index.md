@@ -1,7 +1,7 @@
 # Romania - Account VAT Change - Obsolete (localizat la `l10n_ro_vat_change/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_vat_change`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/l10n_ro_vat_change
 - **Cale Locală:** `odoo-addons/terrabit/l10n_ro_vat_change`
 - **Ultima Ingestie:** `2026-10-22`

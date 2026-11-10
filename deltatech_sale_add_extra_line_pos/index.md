@@ -1,10 +1,10 @@
-# POS Add Extra Line (localizat la `deltatech_sale_add_extra_line_pos/index.md`)
+# POS Auto Extra Lines (localizat la `deltatech_sale_add_extra_line_pos/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_add_extra_line_pos`
 - **Versiune:** `19.0.1.0.5`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_add_extra_line_pos`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_add_extra_line_pos`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-10`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -17,6 +17,8 @@ Acest modul extinde mecanismul de linii suplimentare al modulului [deltatech_sal
 - **Calcul dinamic al cantității**: cantitatea produsului extra se recalculează automat pe baza cantității produsului principal și a multiplicatorului configurat pe fișa produsului (`Cantitate extra = Σ(Cantitate produs principal × multiplicator)`).
 - **Consolidarea liniilor**: dacă mai multe produse din coș trimit către același produs extra, modulul le consolidează într-o singură linie, cu cantitatea totalizată.
 - **Actualizare la modificarea cantității**: la schimbarea cantității produsului principal în coșul POS, linia produsului extra este recalculată și actualizată instantaneu.
+- **Ștergerea liniei principale**: la eliminarea unei linii principale, linia extra se recalculează, iar dacă nicio altă linie nu mai cere acel produs extra, linia extra este ștearsă.
+- **Fără linie extra „orfană”**: dacă produsul principal nu ajunge efectiv în comandă (popup de configurator, lot sau cântărire anulat, restricție la retur), nu se adaugă nici linia extra; cantitatea inițială a liniei extra se ia din liniile pe care comanda le conține efectiv (cântărit, negativ la retur, îmbinat cu o linie existentă).
 - **Sincronizare configurare produs**: câmpurile de configurare a liniei extra (`extra_product_id`, `extra_percent`, `extra_qty`) definite pe șablonul de produs sunt încărcate automat în datele POS ale sesiunii.
 
 #### 3. Dependențe
@@ -37,7 +39,7 @@ Acest modul extinde mecanismul de linii suplimentare al modulului [deltatech_sal
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Nu sunt definite sarcini `ir.cron`, reguli `base.automation` sau acțiuni `ir.actions.server`. Automatizarea este implementată prin patch-uri OWL/JavaScript pe `PosStore`, `PosOrder` și `PosOrderline` (adăugare linie extra la `addLineToCurrentOrder`, recalcul la `setQuantity`).
+- Nu sunt definite sarcini `ir.cron`, reguli `base.automation` sau acțiuni `ir.actions.server`. Automatizarea este implementată prin patch-uri OWL/JavaScript pe `PosStore`, `PosOrder` și `PosOrderline` (adăugare linie extra la `addLineToCurrentOrder`, recalcul la `setQuantity` și la `removeOrderline`).
 
 #### 5. Conexiuni
 

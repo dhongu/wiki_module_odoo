@@ -1,7 +1,7 @@
 # Cloud Storage Cloudflare R2 (localizat la `deltatech_cloud_storage_r2/index.md`)
 
 - **Nume Tehnic:** `deltatech_cloud_storage_r2`
-- **Versiune:** `19.0.1.0.5`
+- **Versiune:** `19.0.1.0.7`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_cloud_storage_r2
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_cloud_storage_r2`
 - **Ultima Ingestie:** `2026-10-27`

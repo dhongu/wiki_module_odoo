@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.1.3`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_multiple_website`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_multiple_website`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-10`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -18,7 +18,11 @@ Acest modul extinde regulile de cantitate minimă și cantitate multiplu de vân
 - Afișarea acelorași restricții pe linia produsului din coșul de cumpărături.
 - Actualizarea dinamică a restricțiilor afișate la schimbarea variantei de produs (fără reîncărcarea paginii).
 - Normalizarea cantității din coș conform regulilor înainte de verificarea stocului disponibil.
-- Recalcularea cantității la cea mai mare valoare validă (respectând minimul/multiplul) atunci când stocul limitează cantitatea cerută.
+- Recalcularea cantității la cea mai mare valoare validă (respectând minimul/multiplul) atunci când stocul limitează cantitatea cerută; sub minim, produsul nu se adaugă în coș.
+- Configurare pe formularul produsului (*Website > eCommerce > Produse*, tab **Vânzări**, grupul **Cantitate**): **Cantitate multiplă**, **Cantitate minimă** și bifa **Verifică cantitatea pe website**.
+- Cu bifa activă (implicit), regulile se aplică doar comenzilor de pe website: o ofertă introdusă în backend păstrează cantitatea tastată (130 rămâne 130); fără bifă, și ofertele din backend sunt rotunjite. Comenzile venite de pe website păstrează regulile și la editarea în backend.
+- Rotunjire în coș: întâi la minim, apoi la următorul multiplu (130 cerute devin 150); regulile sunt reamintite sub numele produsului.
+- La produsele cu variante, regulile se setează pe fiecare variantă, iar cele afișate urmează varianta selectată.
 
 #### 3. Dependențe
 

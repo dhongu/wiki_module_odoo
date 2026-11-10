@@ -1,7 +1,7 @@
 # AI Helpdesk Chat Dispatcher (localizat la `deltatech_ai_helpdesk_chat/index.md`)
 
 - **Nume Tehnic:** `deltatech_ai_helpdesk_chat`
-- **Versiune:** `19.0.0.1.1`
+- **Versiune:** `19.0.0.1.0`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/deltatech_ai_helpdesk_chat
 - **Cale Locală:** `odoo-addons/terrabit/deltatech_ai_helpdesk_chat`
 - **Ultima Ingestie:** `2026-10-30`

@@ -69,7 +69,13 @@ Date minime pentru demo:
    (**Inventar → Configurare → Categorii de produse**): *Metodă de cost* =
    *Costul mediu (AVCO)* și *Evaluarea stocurilor* = *Perpetuă (la
    facturare)*. Valorile sunt implicitele companiei pentru categoriile
-   **noi**; categoriile existente nu sunt modificate.
+   **noi**; categoriile existente nu sunt modificate. **Aliniați manual
+   categoriile existente de produse stocabile** la aceleași valori: cu pachetul
+   instalat, salvarea unui produs stocabil într-o categorie cu altă metodă
+   (FIFO, cost standard) sau cu evaluare *Periodică* este refuzată (vezi pasul
+   1 bis din secțiunea 6). Un produs partajat (fără companie) este verificat pe
+   toate companiile active: o categorie neconformă într-o a doua companie RO
+   blochează salvarea.
 3. Activați recepția fără factură în **Setări → Inventar**, secțiunea de
    valorizare a stocurilor: bifați *Recepție fără factură (371 = 408)* și
    completați *Cont 408 implicit*.
@@ -102,6 +108,35 @@ Pachetul refuză instalarea dacă pachetul FIFO este deja instalat (mesaj de
 incompatibilitate) — se alege o singură metodă per bază de date.
 
 ![Pagina pachetului CMP în Aplicații](screenshots/01_instalare_pachet.png)
+
+### Pasul 1 bis — Blocarea categoriilor stocabile neconforme
+
+Cu pachetul instalat, pe companiile cu țara fiscală România, un produs
+stocabil (*Urmărește stocul*) trebuie să stea într-o categorie cu *Metodă
+de cost* = *Costul mediu (AVCO)* și *Evaluarea stocurilor* = *Perpetuă (la
+facturare)*. Dacă nu sunt setate pe categorie, se aplică valorile companiei.
+
+Regula se aplică când salvați:
+
+- un produs (**Inventar → Produse → Produse**, câmpul *Categorie produs*): la
+  crearea unui produs stocabil, la mutarea lui într-o altă categorie, la
+  bifarea *Urmărește stocul* pe un produs existent, la schimbarea
+  companiei produsului și la dezarhivarea lui; dacă categoria are metoda de
+  cost sau evaluarea diferită de AVCO + Perpetuă (FIFO, cost standard,
+  *Periodică*), salvarea este **refuzată**;
+- o categorie (**Inventar → Configurare → Categorii de produse**): schimbarea
+  metodei de cost sau a evaluării este **refuzată** dacă în categorie există
+  produse stocabile, inclusiv arhivate, și rezultatul nu mai este *Costul
+  mediu (AVCO)* + *Perpetuă*; aducerea unei categorii neconforme la AVCO +
+  Perpetuă este permisă și este remedierea indicată.
+
+Exemplu: bifarea *Urmărește stocul* pe un produs dintr-o categorie FIFO afișează eroarea de validare.
+
+![Eroare de validare: produs stocabil în categorie FIFO](screenshots/09_blocare_categorie.png)
+
+Serviciile și produsele nestocabile **nu** sunt afectate, deci categoriile de
+servicii pot rămâne pe orice metodă. Produsul partajat (fără companie) este
+verificat pe toate companiile active.
 
 ### Pasul 2 — Verificarea configurării implicite
 
@@ -236,6 +271,12 @@ bifarea CMP periodic pe categorii, rularea lunară a wizardului de corecție.
       incompatibilitate.
 - [ ] O categorie de produse nouă primește implicit *Costul mediu (AVCO)* și
       *Perpetuă (la facturare)*.
+- [ ] Un produs stocabil nu poate fi creat, mutat, dezarhivat sau marcat
+      *Urmărește stocul* într-o categorie FIFO sau cu evaluare *Periodică*
+      (salvarea e refuzată), iar un serviciu poate sta în aceeași categorie.
+- [ ] Pe o categorie cu produse stocabile (inclusiv arhivate), schimbarea pe
+      FIFO / cost standard sau pe evaluare *Periodică* este refuzată, iar
+      readucerea ei la AVCO + Perpetuă este permisă.
 - [ ] Recepția generează nota 371 = 408 la valoarea fără TVA.
 - [ ] Factura furnizorului are linia de produs pe 408, iar soldul 408 pe
       documentele perechii recepție+factură este zero.
@@ -253,6 +294,8 @@ bifarea CMP periodic pe categorii, rularea lunară a wizardului de corecție.
 | Compania nu a primit metoda AVCO la instalare | Compania nu are țara fiscală România | Setați țara fiscală RO pe companie și configurați manual metoda de cost |
 | Recepția nu generează nota 371 = 408 | RNI nu este activat pe companie sau contul 408 lipsește | Bifați *Recepție fără factură (371 = 408)* în Setări → Inventar și completați *Cont 408 implicit* |
 | Factura de client nu are liniile 607 = 371 | Produsul nu e stocabil sau categoria nu are valorizare *real time* | Verificați categoria produsului: valorizare automată + cont de stoc 371 |
+| „With the CMP stock package installed, storable products must be in a category with the Average Cost (AVCO) costing method and Perpetual valuation…" la salvarea unui produs | Produsul stocabil (nou, mutat, dezarhivat sau cu *Urmărește stocul* bifat acum) e într-o categorie cu altă metodă de cost sau cu evaluare *Periodică*, pe o companie RO (pentru produs partajat, pe oricare companie activă RO) | Setați categoria pe *Costul mediu (AVCO)* + *Perpetuă (la facturare)* sau alegeți altă categorie |
+| „With the CMP stock package installed, categories of storable products must use the Average Cost (AVCO) costing method and Perpetual valuation" la salvarea unei categorii | Categoria are produse stocabile (și arhivate) și a fost trecută pe altă metodă sau pe evaluare *Periodică*, deci nu mai este AVCO + Perpetuă | Păstrați AVCO + Perpetuă sau mutați întâi produsele stocabile în altă categorie |
 | Wizardul CMP periodic recalculează categorii nedorite | Bifa *CMP Periodic Lunar* e activă implicit pe categoriile noi | Debifați-o pe categoriile care nu trebuie recalculate, apoi rerulați previzualizarea |
 
 ## 10. Capturi de ecran
@@ -270,6 +313,7 @@ conturi RO, cu același scenariu ca testul de flux:
 6. `06_storno_retur.png` — stornarea în roșu la returul către furnizor.
 7. `07_inventar_minus.png` — nota de minus de inventar 607 = 371.
 8. `08_corectie_cmp_periodic.png` — previzualizarea corecției CMP periodic.
+9. `09_blocare_categorie.png` — refuzul la bifarea *Urmărește stocul* într-o categorie FIFO.
 
 Regenerare:
 

@@ -487,6 +487,8 @@ modulul `deltatech_chart_of_accounts`, care trebuie instalat separat), iar nota 
 butonul **Postează diferența**. Acest pas se face o singură dată, la implementare, nu la fiecare
 export lunar.
 
+![Asistentul Mapare balanță cu PDF-ul încărcat, tipul de partener și contul sintetic](screenshots/12_mapare_balanta.png)
+
 ### Pasul 9 — Trimiterea exportului în SAGA prin API
 
 În locul încărcării manuale a fișierelor, exportul în format XML poate fi trimis direct în SAGA Web.
@@ -751,6 +753,8 @@ planul de conturi RO:
 10. `10_trimitere_saga.png` — exportul trimis în SAGA prin API, cu răspunsul pe fiecare fișier XML;
     fișierul de clienți apare *eșuat* cu „Structura XML invalida” (limitarea cunoscută de la Pasul 9).
 11. `11_comparatie_stoc.png` — comparația stocului Odoo cu SAGA, cu câte o linie pe fiecare stare.
+12. `12_mapare_balanta.png` — asistentul Mapare balanță (Pasul 8) cu PDF-ul balanței încărcat, **Tip
+    partener** *Clienți* și **Cont sintetic** `4111`.
 
 Pentru capturile `10` și `11` testul simulează răspunsurile API-ului SAGA (fișierele acceptate și
 fișierul de clienți respins, respectiv situația stocurilor gestiunii `0001`); nu se face niciun apel real către SAGA Web.

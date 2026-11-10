@@ -1,10 +1,10 @@
-# Sale order picking status (localizat la `deltatech_sale_picking_status/index.md`)
+# Sale Delivery Status (localizat la `deltatech_sale_picking_status/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_picking_status`
 - **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_picking_status
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_picking_status`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-10`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -15,7 +15,10 @@ Modulul adaugă pe comanda de vânzare un indicator de stare a livrării (recep�
 
 - Adaugă un câmp de stare a livrării (`picking_status`) pe comanda de vânzare.
 - Starea devine **Efectuat (Done)** atunci când toate transferurile (pickings) comenzii sunt în starea „Efectuat" sau „Anulat".
-- Starea rămâne **În curs (In Progress)** dacă cel puțin un transfer nu este încă finalizat sau anulat.
+- Starea rămâne **În curs (In Progress)** dacă cel puțin un transfer nu este încă finalizat sau anulat, sau dacă comanda nu are încă transferuri.
+- Starea urmărește și schimbările stării comenzii: o ofertă (draft/trimisă) este „În curs", iar o comandă anulată este „Efectuat"; o comandă anulată și readusă la ofertă revine la „În curs".
+- Filtre „Done" / „In progress" în căutarea comenzilor, plus insignă (badge) în liste și în formular.
+- La actualizarea modulului, starea comenzilor existente se recalculează automat (corectează valorile greșite din versiunile anterioare).
 
 #### 3. Dependențe
 
@@ -25,7 +28,7 @@ Modulul adaugă pe comanda de vânzare un indicator de stare a livrării (recep�
 
 **Modele**
 
-- `sale.order` (extindere): adaugă câmpul stocat `picking_status` (selecție Done/In Progress, cu urmărire/`tracking`) și metoda `_compute_picking_status()`, care determină starea în funcție de `state`-ul comenzii și de starea transferurilor din `picking_ids`.
+- `sale.order` (extindere): adaugă câmpul stocat `picking_status` (selecție Done/In Progress, cu urmărire/`tracking`) și metoda `_compute_picking_status()`, care depinde de `state`, `picking_ids` și `picking_ids.state` și determină starea după starea comenzii (anulată → Done, ofertă → In Progress) și după transferurile din `picking_ids`.
 - `stock.picking` (extindere): adaugă metoda `update_sale_order_status()` (declanșată `@api.onchange("state")`) care recalculează `picking_status` pe comanda de vânzare aferentă; este apelată explicit din `action_assign()`, `action_cancel()`, `action_confirm()` și `_action_done()` pentru a ține starea sincronizată la fiecare tranziție relevantă a transferului.
 
 **Vizualizări**

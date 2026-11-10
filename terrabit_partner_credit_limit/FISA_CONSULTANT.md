@@ -181,7 +181,10 @@ Ce tranzacție de plată asociată comenzii (plata online, ramburs, transfer) o 
 | *O plată finalizată care acoperă totalul* | Scutesc doar tranzacțiile autorizate sau finalizate, **și numai dacă împreună acoperă valoarea comenzii**. O plată parțială nu scutește. |
 
 Parametrul `terrabit_partner_credit_limit.skip_only_card` (în Parametri de sistem) se aplică peste oricare dintre
-valori: dacă e pornit, tranzacțiile prin transfer bancar și ramburs nu mai scutesc deloc comanda.
+valori: dacă e pornit, tranzacțiile prin transfer bancar și ramburs nu mai scutesc deloc comanda. Rambursul
+înseamnă providerul „Numerar la livrare" din modulul de livrare (sau providerul „Cash On Delivery (COD)" din
+`deltatech_payment_on_delivery`, la bazele care îl au). Atenție la site: cu parametrul pornit, comanda cu ramburs
+a unui client peste limită nu se mai confirmă singură la finalul comenzii; rămâne ofertă, iar o confirmă un aprobator.
 
 **6. Conturi suplimentare incluse în datorie** (`credit_limit.extra_receivable_accounts`, implicit gol)
 
@@ -267,7 +270,10 @@ comportamentul este intenționat, bifa fiind pusă oricum de un aprobator sau de
 Utilizatorii care **nu** au grupul „Manage credit limits" (indiferent dacă au sau nu „Can
 approve…") văd în schimb butonul **Cere confirmare** (`Req. confirm`) în antet — vizibil doar pe
 ofertă/ofertă trimisă, când verificarea semnalează depășire sau restanțe — care deschide o activitate
-(`mail.activity`) adresată responsabilului echipei de vânzări, cerându-i să aprobe depășirea.
+(`mail.activity`) adresată responsabilului echipei de vânzări, cerându-i să aprobe depășirea. Câmpul
+**Responsabil** al activității vine completat cu **liderul echipei** de vânzări de pe comandă; dacă echipa nu
+are lider, rămâne utilizatorul curent. Îl puteți schimba în fereastra activității: alegerea rămâne și dacă
+schimbați apoi tipul activității.
 
 Dacă vânzătorul mărește apoi comanda peste suma aprobată (plus toleranța) — inclusiv prin schimbarea
 listei de prețuri, a poziției fiscale sau a monedei, dacă totalul ajunge peste sumă — bifa se scoate
@@ -342,10 +348,16 @@ stabilirea limitei de credit pe firmă și a parametrilor globali, alocarea înc
 - [ ] Bifarea „Allow Over Credit?" pe partener sau pe comandă (cu grupul potrivit) permite
       confirmarea peste limită; mărirea comenzii peste suma aprobată scoate bifa și o refuză din nou.
 - [ ] Butonul „Req. confirm" apare doar pentru utilizatorii fără grupul „Manage credit limits" și
-      deschide corect activitatea către responsabilul echipei de vânzări.
+      deschide corect activitatea către responsabilul echipei de vânzări: câmpul „Responsabil" vine
+      completat cu liderul echipei de pe comandă (fără lider, cu utilizatorul curent), iar un alt
+      responsabil ales în fereastră rămâne și după schimbarea tipului activității.
 - [ ] Un utilizator din afara grupului „Can approve…" nu poate muta o comandă confirmată din termen
       „imediat" în alt termen.
 - [ ] Un utilizator cu doar „Manage credit limits" rămâne blocat la confirmare.
+- [ ] Cu parametrul `skip_only_card` pornit, o comandă peste limită cu o tranzacție „Numerar la livrare"
+      (ramburs) sau transfer bancar este blocată la confirmare, iar cu o tranzacție cu cardul rămâne
+      scutită; cu parametrul oprit, rambursul scutește comanda dacă setarea „Comenzi cu o tranzacție de
+      plată" îl lasă.
 - [ ] Setările din Pasul 2 (toleranță, telefon, termen imediat, calcul din facturi, tranzacții,
       conturi suplimentare, comenzi nefacturate, clienți fără limită) se salvează și influențează
       verificarea așa cum este descris.

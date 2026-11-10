@@ -1,7 +1,7 @@
 # Portal Clienți B2B (B2B Customer Portal)
 
 - **Nume Tehnic:** `deltatech_b2b_portal`
-- **Versiune:** `19.0.1.4.2`
+- **Versiune:** `19.0.1.4.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_portal
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_b2b_portal`
 - **Ultima Ingestie:** `2026-10-12`

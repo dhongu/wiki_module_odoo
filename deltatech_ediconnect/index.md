@@ -1,7 +1,7 @@
 # EDIConnect Connector (localizat la `deltatech_ediconnect/index.md`)
 
 - **Nume Tehnic:** `deltatech_ediconnect`
-- **Versiune:** `19.0.1.1.15`
+- **Versiune:** `19.0.1.1.16`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_ediconnect
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_ediconnect`
 - **Ultima Ingestie:** `2026-10-31`

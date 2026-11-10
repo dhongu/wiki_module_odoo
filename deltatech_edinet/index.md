@@ -1,7 +1,7 @@
 # Deltatech EDINET (localizat la `deltatech_edinet/index.md`)
 
 - **Nume Tehnic:** `deltatech_edinet`
-- **Versiune:** `19.0.1.6.9`
+- **Versiune:** `19.0.1.6.10`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edinet`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_edinet`
 - **Ultima Ingestie:** `2026-09-29`

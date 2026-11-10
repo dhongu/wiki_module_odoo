@@ -24,7 +24,7 @@
   {
     "path": "deltatech_access/index.md",
     "module": "deltatech_access",
-    "version": "19.0.0.0.10",
+    "version": "19.0.0.0.11",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_access",
     "local_path": "odoo-addons/bitshop/deltatech_access",
     "last_ingest": "2026-11-03",
@@ -490,7 +490,7 @@
   {
     "path": "deltatech_advanced_planner/index.md",
     "module": "deltatech_advanced_planner",
-    "version": "19.0.1.14.1",
+    "version": "19.0.1.14.0",
     "github": "`https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_advanced_planner`",
     "local_path": "odoo-addons/bitshop_ent/deltatech_advanced_planner",
     "last_ingest": "2026-10-27",
@@ -748,7 +748,7 @@
   {
     "path": "deltatech_ai_helpdesk_chat/index.md",
     "module": "deltatech_ai_helpdesk_chat",
-    "version": "19.0.0.1.1",
+    "version": "19.0.0.1.0",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/deltatech_ai_helpdesk_chat",
     "local_path": "odoo-addons/terrabit/deltatech_ai_helpdesk_chat",
     "last_ingest": "2026-10-30",
@@ -1460,7 +1460,7 @@
   {
     "path": "deltatech_b2b_order_list/index.md",
     "module": "deltatech_b2b_order_list",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_order_list",
     "local_path": "odoo-addons/bitshop/deltatech_b2b_order_list",
     "last_ingest": "2026-10-09",
@@ -1486,7 +1486,7 @@
   {
     "path": "deltatech_b2b_portal/index.md",
     "module": "deltatech_b2b_portal",
-    "version": "19.0.1.4.2",
+    "version": "19.0.1.4.3",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_portal",
     "local_path": "odoo-addons/bitshop/deltatech_b2b_portal",
     "last_ingest": "2026-10-12",
@@ -1527,7 +1527,7 @@
   {
     "path": "deltatech_b2b_price_tier/index.md",
     "module": "deltatech_b2b_price_tier",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.1.2",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_price_tier",
     "local_path": "odoo-addons/bitshop/deltatech_b2b_price_tier",
     "last_ingest": "2026-10-09",
@@ -1554,7 +1554,7 @@
   {
     "path": "deltatech_b2b_quick_order/index.md",
     "module": "deltatech_b2b_quick_order",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_quick_order",
     "local_path": "odoo-addons/bitshop/deltatech_b2b_quick_order",
     "last_ingest": "2026-10-09",
@@ -1583,7 +1583,7 @@
   {
     "path": "deltatech_b2b_website_restrict/index.md",
     "module": "deltatech_b2b_website_restrict",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_website_restrict",
     "local_path": "odoo-addons/bitshop/deltatech_b2b_website_restrict",
     "last_ingest": "2026-10-09",
@@ -1711,7 +1711,7 @@
   {
     "path": "deltatech_barcode_picking/index.md",
     "module": "deltatech_barcode_picking",
-    "version": "19.0.2.2.11",
+    "version": "19.0.2.2.12",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_barcode_picking",
     "local_path": "odoo-addons/bitshop/deltatech_barcode_picking",
     "last_ingest": "2026-11-08",
@@ -1742,7 +1742,7 @@
   {
     "path": "deltatech_barcode_sale/index.md",
     "module": "deltatech_barcode_sale",
-    "version": "19.0.2.1.5",
+    "version": "19.0.2.1.6",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_barcode_sale",
     "local_path": "odoo-addons/bitshop/deltatech_barcode_sale",
     "last_ingest": "2026-09-29",
@@ -1803,7 +1803,7 @@
   {
     "path": "deltatech_brand_field/index.md",
     "module": "deltatech_brand_field",
-    "version": "19.0.0.1.1",
+    "version": "19.0.0.1.2",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_brand_field",
     "local_path": "odoo-addons/bitshop/deltatech_brand_field",
     "last_ingest": "2026-11-04",
@@ -1895,7 +1895,7 @@
   {
     "path": "deltatech_calendar_caldav/index.md",
     "module": "deltatech_calendar_caldav",
-    "version": "19.0.3.2.10",
+    "version": "19.0.3.2.11",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_calendar_caldav`",
     "local_path": "odoo-addons/bitshop/deltatech_calendar_caldav",
     "last_ingest": "2026-09-29",
@@ -2085,7 +2085,7 @@
   {
     "path": "deltatech_chart_of_accounts/index.md",
     "module": "deltatech_chart_of_accounts",
-    "version": "19.0.0.1.11",
+    "version": "19.0.0.1.12",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chart_of_accounts",
     "local_path": "odoo-addons/bitshop/deltatech_chart_of_accounts",
     "last_ingest": "2026-11-09",
@@ -2116,7 +2116,7 @@
   {
     "path": "deltatech_chatter/index.md",
     "module": "deltatech_chatter",
-    "version": "19.0.0.1.3",
+    "version": "19.0.0.1.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter",
     "local_path": "odoo-addons/bitshop/deltatech_chatter",
     "last_ingest": "2026-11-09",
@@ -2139,7 +2139,7 @@
   {
     "path": "deltatech_chatter_quick_info/index.md",
     "module": "deltatech_chatter_quick_info",
-    "version": "19.0.1.1.4",
+    "version": "19.0.1.1.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter_quick_info",
     "local_path": "odoo-addons/bitshop/deltatech_chatter_quick_info",
     "last_ingest": "2026-10-17",
@@ -2173,7 +2173,7 @@
   {
     "path": "deltatech_chatter_quick_info_pack/index.md",
     "module": "deltatech_chatter_quick_info_pack",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter_quick_info_pack",
     "local_path": "odoo-addons/bitshop/deltatech_chatter_quick_info_pack",
     "last_ingest": "2026-10-17",
@@ -2204,7 +2204,7 @@
   {
     "path": "deltatech_chatter_quick_info_purchase/index.md",
     "module": "deltatech_chatter_quick_info_purchase",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter_quick_info_purchase",
     "local_path": "odoo-addons/bitshop/deltatech_chatter_quick_info_purchase",
     "last_ingest": "2026-10-17",
@@ -2235,7 +2235,7 @@
   {
     "path": "deltatech_chatter_quick_info_sale/index.md",
     "module": "deltatech_chatter_quick_info_sale",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter_quick_info_sale",
     "local_path": "odoo-addons/bitshop/deltatech_chatter_quick_info_sale",
     "last_ingest": "2026-10-17",
@@ -2264,7 +2264,7 @@
   {
     "path": "deltatech_chatter_quick_info_stock/index.md",
     "module": "deltatech_chatter_quick_info_stock",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter_quick_info_stock",
     "local_path": "odoo-addons/bitshop/deltatech_chatter_quick_info_stock",
     "last_ingest": "2026-10-17",
@@ -2291,7 +2291,7 @@
   {
     "path": "deltatech_cloud_storage_r2/index.md",
     "module": "deltatech_cloud_storage_r2",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_cloud_storage_r2",
     "local_path": "odoo-addons/bitshop/deltatech_cloud_storage_r2",
     "last_ingest": "2026-10-27",
@@ -2320,7 +2320,7 @@
   {
     "path": "deltatech_cmr_document/index.md",
     "module": "deltatech_cmr_document",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.3.3",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_cmr_document",
     "local_path": "odoo-addons/bitshop/deltatech_cmr_document",
     "last_ingest": "2026-11-10",
@@ -2410,7 +2410,7 @@
   {
     "path": "deltatech_contwin/index.md",
     "module": "deltatech_contwin",
-    "version": "19.0.1.0.16",
+    "version": "19.0.1.0.17",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_contwin",
     "local_path": "odoo-addons/bitshop/deltatech_contwin",
     "last_ingest": "2026-10-31",
@@ -2449,7 +2449,7 @@
   {
     "path": "deltatech_create_ticket_button/index.md",
     "module": "deltatech_create_ticket_button",
-    "version": "19.0.0.1.13",
+    "version": "19.0.0.1.14",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_create_ticket_button",
     "local_path": "odoo-addons/bitshop/deltatech_create_ticket_button",
     "last_ingest": "2026-10-01",
@@ -2620,7 +2620,7 @@
   {
     "path": "deltatech_customer_analysis/index.md",
     "module": "deltatech_customer_analysis",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_customer_analysis",
     "local_path": "odoo-addons/bitshop/deltatech_customer_analysis",
     "last_ingest": "2026-09-29",
@@ -2652,7 +2652,7 @@
   {
     "path": "deltatech_customer_map/index.md",
     "module": "deltatech_customer_map",
-    "version": "19.0.1.1.5",
+    "version": "19.0.1.1.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_customer_map",
     "local_path": "odoo-addons/bitshop/deltatech_customer_map",
     "last_ingest": "2026-09-29",
@@ -2685,7 +2685,7 @@
   {
     "path": "deltatech_customer_segment/index.md",
     "module": "deltatech_customer_segment",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_customer_segment",
     "local_path": "odoo-addons/bitshop/deltatech_customer_segment",
     "last_ingest": "2026-09-29",
@@ -2855,7 +2855,7 @@
   {
     "path": "deltatech_delivery/index.md",
     "module": "deltatech_delivery",
-    "version": "19.0.6.12.5",
+    "version": "19.0.6.12.4",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery",
     "last_ingest": "2026-10-27",
@@ -3127,7 +3127,7 @@
   {
     "path": "deltatech_delivery_dpd/index.md",
     "module": "deltatech_delivery_dpd",
-    "version": "19.0.0.7.2",
+    "version": "19.0.0.7.1",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_dpd",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_dpd",
     "last_ingest": "2026-10-22",
@@ -3281,7 +3281,7 @@
   {
     "path": "deltatech_delivery_gls/index.md",
     "module": "deltatech_delivery_gls",
-    "version": "19.0.2.1.10",
+    "version": "19.0.2.1.6",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_gls",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_gls",
     "last_ingest": "2026-11-09",
@@ -3767,7 +3767,7 @@
   {
     "path": "deltatech_delivery_review/index.md",
     "module": "deltatech_delivery_review",
-    "version": "19.0.0.1.9",
+    "version": "19.0.0.1.10",
     "github": "[https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_review](https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_review)",
     "local_path": "odoo-addons/bitshop/deltatech_delivery_review",
     "last_ingest": "2026-09-24",
@@ -3795,7 +3795,7 @@
   {
     "path": "deltatech_delivery_sd/index.md",
     "module": "deltatech_delivery_sd",
-    "version": "19.0.1.13.11",
+    "version": "19.0.1.13.10",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_sd",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_sd",
     "last_ingest": "2026-09-29",
@@ -3832,7 +3832,7 @@
   {
     "path": "deltatech_delivery_sd_easybox/index.md",
     "module": "deltatech_delivery_sd_easybox",
-    "version": "19.0.0.0.21",
+    "version": "19.0.0.0.22",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_sd_easybox",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_sd_easybox",
     "last_ingest": "2026-08-20",
@@ -3946,7 +3946,7 @@
   {
     "path": "deltatech_delivery_status_review/index.md",
     "module": "deltatech_delivery_status_review",
-    "version": "19.0.0.1.10",
+    "version": "19.0.0.1.11",
     "github": "[https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_status_review](https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_status_review)",
     "local_path": "odoo-addons/bitshop/deltatech_delivery_status_review",
     "last_ingest": "2026-09-24",
@@ -4130,7 +4130,7 @@
   {
     "path": "deltatech_document_template/index.md",
     "module": "deltatech_document_template",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_document_template",
     "local_path": "odoo-addons/bitshop/deltatech_document_template",
     "last_ingest": "2026-10-31",
@@ -4213,7 +4213,7 @@
   {
     "path": "deltatech_ecr_connect/index.md",
     "module": "deltatech_ecr_connect",
-    "version": "19.0.1.3.2",
+    "version": "19.0.1.3.3",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_ecr_connect",
     "local_path": "odoo-addons/bitshop/deltatech_ecr_connect",
     "last_ingest": "2026-08-20",
@@ -4272,7 +4272,7 @@
   {
     "path": "deltatech_edi/index.md",
     "module": "deltatech_edi",
-    "version": "19.0.1.0.8",
+    "version": "19.0.1.0.9",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edi",
     "local_path": "odoo-addons/bitshop/deltatech_edi",
     "last_ingest": "2026-09-29",
@@ -4306,7 +4306,7 @@
   {
     "path": "deltatech_ediconnect/index.md",
     "module": "deltatech_ediconnect",
-    "version": "19.0.1.1.15",
+    "version": "19.0.1.1.16",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_ediconnect",
     "local_path": "odoo-addons/bitshop/deltatech_ediconnect",
     "last_ingest": "2026-10-31",
@@ -4338,7 +4338,7 @@
   {
     "path": "deltatech_edinet/index.md",
     "module": "deltatech_edinet",
-    "version": "19.0.1.6.9",
+    "version": "19.0.1.6.10",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edinet`",
     "local_path": "odoo-addons/bitshop/deltatech_edinet",
     "last_ingest": "2026-09-29",
@@ -4371,7 +4371,7 @@
   {
     "path": "deltatech_event/index.md",
     "module": "deltatech_event",
-    "version": "19.0.0.0.6",
+    "version": "19.0.0.0.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_event",
     "local_path": "odoo-addons/bitshop/deltatech_event",
     "last_ingest": "2026-10-31",
@@ -4558,7 +4558,7 @@
   {
     "path": "deltatech_feed/index.md",
     "module": "deltatech_feed",
-    "version": "19.0.3.8.2",
+    "version": "19.0.3.8.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_feed",
     "local_path": "odoo-addons/bitshop/deltatech_feed",
     "last_ingest": "2026-10-22",
@@ -4801,7 +4801,7 @@
   {
     "path": "deltatech_hr_leave_dashboard/index.md",
     "module": "deltatech_hr_leave_dashboard",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_hr_leave_dashboard",
     "local_path": "odoo-addons/bitshop/deltatech_hr_leave_dashboard",
     "last_ingest": "2026-09-29",
@@ -4830,7 +4830,7 @@
   {
     "path": "deltatech_hr_pay_transparency/index.md",
     "module": "deltatech_hr_pay_transparency",
-    "version": "19.0.0.1.1",
+    "version": "19.0.0.1.3",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_hr_pay_transparency",
     "local_path": "odoo-addons/bitshop/deltatech_hr_pay_transparency",
     "last_ingest": "2026-10-12",
@@ -5336,7 +5336,7 @@
   {
     "path": "deltatech_keez/index.md",
     "module": "deltatech_keez",
-    "version": "19.0.1.1.2",
+    "version": "19.0.1.1.3",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_keez`",
     "local_path": "odoo-addons/bitshop/deltatech_keez",
     "last_ingest": "2026-10-22",
@@ -5911,7 +5911,7 @@
   {
     "path": "deltatech_marketplace_extended/index.md",
     "module": "deltatech_marketplace_extended",
-    "version": "19.0.0.0.34",
+    "version": "19.0.0.0.33",
     "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_extended`",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_extended",
     "last_ingest": "2026-09-23",
@@ -6090,7 +6090,7 @@
   {
     "path": "deltatech_marketplace_opencart/index.md",
     "module": "deltatech_marketplace_opencart",
-    "version": "19.0.0.2.16",
+    "version": "19.0.0.2.15",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_opencart",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_opencart",
     "last_ingest": "2026-08-20",
@@ -6162,7 +6162,7 @@
   {
     "path": "deltatech_marketplace_prestashop/index.md",
     "module": "deltatech_marketplace_prestashop",
-    "version": "19.0.0.6.1",
+    "version": "19.0.0.6.0",
     "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_prestashop`",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_prestashop",
     "last_ingest": "2026-10-22",
@@ -6372,7 +6372,7 @@
   {
     "path": "deltatech_marketplace_shopify/index.md",
     "module": "deltatech_marketplace_shopify",
-    "version": "19.0.1.8.18",
+    "version": "19.0.1.8.17",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_shopify",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_shopify",
     "last_ingest": "2026-10-09",
@@ -6592,7 +6592,7 @@
   {
     "path": "deltatech_mcp_server/index.md",
     "module": "deltatech_mcp_server",
-    "version": "19.0.1.15.6",
+    "version": "19.0.1.15.4",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_mcp_server",
     "local_path": "odoo-addons/bitshop_ent/deltatech_mcp_server",
     "last_ingest": "2026-10-24",
@@ -6632,7 +6632,7 @@
   {
     "path": "deltatech_mentor/index.md",
     "module": "deltatech_mentor",
-    "version": "19.0.2.2.4",
+    "version": "19.0.2.2.5",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_mentor`",
     "local_path": "odoo-addons/bitshop/deltatech_mentor",
     "last_ingest": "2026-10-22",
@@ -6997,7 +6997,7 @@
   {
     "path": "deltatech_nap/index.md",
     "module": "deltatech_nap",
-    "version": "19.0.1.10.3",
+    "version": "19.0.1.10.4",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_nap`",
     "local_path": "odoo-addons/bitshop/deltatech_nap",
     "last_ingest": "2026-10-27",
@@ -7035,7 +7035,7 @@
   {
     "path": "deltatech_nap_website/index.md",
     "module": "deltatech_nap_website",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_nap_website",
     "local_path": "odoo-addons/bitshop/deltatech_nap_website",
     "last_ingest": "2026-11-01",
@@ -7252,7 +7252,7 @@
   {
     "path": "deltatech_partner_gifts/index.md",
     "module": "deltatech_partner_gifts",
-    "version": "19.0.0.1.9",
+    "version": "19.0.0.1.10",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_gifts",
     "local_path": "odoo-addons/bitshop/deltatech_partner_gifts",
     "last_ingest": "2026-06-03",
@@ -7273,7 +7273,7 @@
   {
     "path": "deltatech_partner_gifts_agreement/index.md",
     "module": "deltatech_partner_gifts_agreement",
-    "version": "19.0.0.0.11",
+    "version": "19.0.0.0.12",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_gifts_agreement",
     "local_path": "odoo-addons/bitshop/deltatech_partner_gifts_agreement",
     "last_ingest": "2026-10-01",
@@ -7300,7 +7300,7 @@
   {
     "path": "deltatech_partner_gifts_employees/index.md",
     "module": "deltatech_partner_gifts_employees",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_gifts_employees",
     "local_path": "odoo-addons/bitshop/deltatech_partner_gifts_employees",
     "last_ingest": "2026-10-22",
@@ -7401,7 +7401,7 @@
   {
     "path": "deltatech_partner_rating/index.md",
     "module": "deltatech_partner_rating",
-    "version": "19.0.0.1.11",
+    "version": "19.0.0.1.12",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_rating",
     "local_path": "odoo-addons/bitshop/deltatech_partner_rating",
     "last_ingest": "2026-06-03",
@@ -7427,7 +7427,7 @@
   {
     "path": "deltatech_partner_rating_sale/index.md",
     "module": "deltatech_partner_rating_sale",
-    "version": "19.0.0.0.5",
+    "version": "19.0.0.0.6",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_rating_sale",
     "local_path": "odoo-addons/bitshop/deltatech_partner_rating_sale",
     "last_ingest": "2026-11-01",
@@ -7454,7 +7454,7 @@
   {
     "path": "deltatech_partner_rating_service/index.md",
     "module": "deltatech_partner_rating_service",
-    "version": "19.0.0.0.5",
+    "version": "19.0.0.0.6",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_rating_service",
     "local_path": "odoo-addons/bitshop/deltatech_partner_rating_service",
     "last_ingest": "2026-11-01",
@@ -7483,7 +7483,7 @@
   {
     "path": "deltatech_payment/index.md",
     "module": "deltatech_payment",
-    "version": "19.0.0.0.10",
+    "version": "19.0.0.0.11",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment",
     "local_path": "odoo-addons/bitshop/deltatech_payment",
     "last_ingest": "2026-08-20",
@@ -7536,7 +7536,7 @@
   {
     "path": "deltatech_payment_bt_ipay/index.md",
     "module": "deltatech_payment_bt_ipay",
-    "version": "19.0.0.0.15",
+    "version": "19.0.0.0.16",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_bt_ipay`",
     "local_path": "odoo-addons/bitshop/deltatech_payment_bt_ipay",
     "last_ingest": "2026-08-20",
@@ -7567,7 +7567,7 @@
   {
     "path": "deltatech_payment_card_dummy/index.md",
     "module": "deltatech_payment_card_dummy",
-    "version": "19.0.0.0.8",
+    "version": "19.0.0.0.9",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_card_dummy",
     "local_path": "odoo-addons/bitshop/deltatech_payment_card_dummy",
     "last_ingest": "2026-11-01",
@@ -7623,7 +7623,7 @@
   {
     "path": "deltatech_payment_eu_platesc/index.md",
     "module": "deltatech_payment_eu_platesc",
-    "version": "19.0.0.1.6",
+    "version": "19.0.0.1.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_eu_platesc",
     "local_path": "odoo-addons/bitshop/deltatech_payment_eu_platesc",
     "last_ingest": "2026-10-26",
@@ -7679,7 +7679,7 @@
   {
     "path": "deltatech_payment_ing_webpay/index.md",
     "module": "deltatech_payment_ing_webpay",
-    "version": "19.0.0.0.7",
+    "version": "19.0.0.0.8",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_ing_webpay`",
     "local_path": "odoo-addons/bitshop/deltatech_payment_ing_webpay",
     "last_ingest": "2026-08-20",
@@ -7713,7 +7713,7 @@
   {
     "path": "deltatech_payment_libra_pay/index.md",
     "module": "deltatech_payment_libra_pay",
-    "version": "19.0.1.0.14",
+    "version": "19.0.1.0.15",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_libra_pay`",
     "local_path": "odoo-addons/bitshop/deltatech_payment_libra_pay",
     "last_ingest": "2026-08-20",
@@ -7743,7 +7743,7 @@
   {
     "path": "deltatech_payment_mobilpay/index.md",
     "module": "deltatech_payment_mobilpay",
-    "version": "19.0.1.3.12",
+    "version": "19.0.1.3.13",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_mobilpay",
     "local_path": "odoo-addons/bitshop/deltatech_payment_mobilpay",
     "last_ingest": "2026-10-09",
@@ -7779,7 +7779,7 @@
   {
     "path": "deltatech_payment_monri/index.md",
     "module": "deltatech_payment_monri",
-    "version": "19.0.1.0.7",
+    "version": "19.0.1.0.8",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_monri",
     "local_path": "odoo-addons/bitshop/deltatech_payment_monri",
     "last_ingest": "2026-09-29",
@@ -7809,7 +7809,7 @@
   {
     "path": "deltatech_payment_on_delivery/index.md",
     "module": "deltatech_payment_on_delivery",
-    "version": "19.0.4.1.11",
+    "version": "19.0.4.1.12",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_on_delivery`",
     "local_path": "odoo-addons/bitshop/deltatech_payment_on_delivery",
     "last_ingest": "2026-08-20",
@@ -7868,7 +7868,7 @@
   {
     "path": "deltatech_payment_revolut/index.md",
     "module": "deltatech_payment_revolut",
-    "version": "19.0.0.0.28",
+    "version": "19.0.0.0.31",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_revolut`",
     "local_path": "odoo-addons/bitshop/deltatech_payment_revolut",
     "last_ingest": "2026-08-20",
@@ -7895,7 +7895,7 @@
   {
     "path": "deltatech_payment_tbi_bank/index.md",
     "module": "deltatech_payment_tbi_bank",
-    "version": "19.0.1.0.9",
+    "version": "19.0.1.0.10",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_tbi_bank",
     "local_path": "odoo-addons/bitshop/deltatech_payment_tbi_bank",
     "last_ingest": "2026-10-01",
@@ -8133,7 +8133,7 @@
   {
     "path": "deltatech_pos/index.md",
     "module": "deltatech_pos",
-    "version": "19.0.2.16.3",
+    "version": "19.0.2.16.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos",
     "local_path": "odoo-addons/bitshop/deltatech_pos",
     "last_ingest": "2026-10-09",
@@ -8188,7 +8188,7 @@
   {
     "path": "deltatech_pos_base/index.md",
     "module": "deltatech_pos_base",
-    "version": "19.0.1.2.2",
+    "version": "19.0.1.2.3",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos_base",
     "local_path": "odoo-addons/bitshop/deltatech_pos_base",
     "last_ingest": "2026-08-20",
@@ -8259,7 +8259,7 @@
   {
     "path": "deltatech_pos_online_payment/index.md",
     "module": "deltatech_pos_online_payment",
-    "version": "19.0.0.0.4",
+    "version": "19.0.0.0.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos_online_payment",
     "local_path": "odoo-addons/bitshop/deltatech_pos_online_payment",
     "last_ingest": "2026-08-20",
@@ -8604,7 +8604,7 @@
   {
     "path": "deltatech_print_queue/index.md",
     "module": "deltatech_print_queue",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.1.2",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_print_queue",
     "local_path": "odoo-addons/bitshop/deltatech_print_queue",
     "last_ingest": "2026-09-29",
@@ -8635,7 +8635,7 @@
   {
     "path": "deltatech_product_attribute/index.md",
     "module": "deltatech_product_attribute",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_product_attribute",
     "local_path": "odoo-addons/bitshop/deltatech_product_attribute",
     "last_ingest": "2026-10-01",
@@ -8712,7 +8712,7 @@
   {
     "path": "deltatech_product_brand/index.md",
     "module": "deltatech_product_brand",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_product_brand",
     "local_path": "odoo-addons/bitshop/deltatech_product_brand",
     "last_ingest": "2026-09-03",
@@ -9101,7 +9101,7 @@
     "version": "19.0.1.0.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_visibility",
     "local_path": "odoo-addons/deltatech/deltatech_product_visibility",
-    "last_ingest": "2026-07-31",
+    "last_ingest": "2026-11-10",
     "friendly_name": "Product Website Visibility Score",
     "summary": "`deltatech_product_visibility` acordă fiecărui produs un **scor de vizibilitate pe website între 0 și 100**, afișat ca un indicator colorat tip semafor, astfel încât echipa de vânzări sau marketing să vadă dintr-o privire cât de „găsibil\" și complet este produsul în catalogul online — și exact ce trebuie corectat pentru a-l îmbunătăți. Scorul se calculează din conținutul care influențează cu adevărat vizibilitatea și conversia pe website (SEO, imagini, descrieri, categorie, preț și cod intern), iar starea de publicare este afișată separat, ca informație distinctă, nefiind parte din scor.",
     "features": [
@@ -9285,7 +9285,7 @@
   {
     "path": "deltatech_purchase_lead_time/index.md",
     "module": "deltatech_purchase_lead_time",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_purchase_lead_time",
     "local_path": "odoo-addons/bitshop/deltatech_purchase_lead_time",
     "last_ingest": "2026-10-30",
@@ -9346,15 +9346,16 @@
     "version": "19.0.1.2.9",
     "github": "[https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_phase](https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_phase)",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_phase",
-    "last_ingest": "2026-07-31",
+    "last_ingest": "2026-11-10",
     "friendly_name": "Deltatech Purchase Order Stage",
     "summary": "Modulul adaugă o urmărire ușoară a fazei (stadiului) pe comenzile de achiziție, complementară stării standard a documentului. Fiecare comandă de achiziție primește o fază curentă (ex: RFQ, Confirmat achiziție, Pre-aviz, Expediat, Livrat), actualizată automat pe măsură ce comanda avansează prin flux, dar și modificabilă manual. Astfel, echipa de achiziții și logistică poate vedea dintr-o privire, direct pe formularul comenzii, în ce etapă reală se află aprovizionarea — nu doar starea tehnică a documentului.",
     "features": [
       "Câmp nou `phase_id` pe `purchase.order`, afișat ca insignă colorată (`many2one_badge`) și urmărit în chatter (tracking).",
       "Tranziții automate de fază legate de starea comenzii: la trimiterea RFQ (`state = sent`) faza devine `rfq`; la confirmarea comenzii (`state = purchase`) faza devine `purchase_confirm`.",
-      "Tranziții automate de fază legate de livrare: când un transfer de stoc (`stock.picking`) asociat comenzii de achiziție își schimbă `delivery_state`, faza comenzii este actualizată automat — `pre_advice` → fază `pre_advice`; `in_transit`/`in_warehouse`/`in_delivery` → fază `shipped`; `delivered` → fază `delivered`; `refused` → fază `refused` (*funcționalitate implementată în cod, dar nemenționată în `readme/DESCRIPTION.md` — vezi avertismentul din raport*).",
+      "Tranziții automate de fază legate de livrare: când un transfer de stoc (`stock.picking`) asociat comenzii de achiziție își schimbă `delivery_state`, faza comenzii este actualizată automat — `pre_advice` → fază `pre_advice`; `in_transit`/`in_warehouse`/`in_delivery` → fază `shipped`; `delivered` → fază `delivered`; `refused` → fază `refused`.",
       "Fazele sunt configurabile liber (cod tehnic unic + nume afișat) din meniul Achiziții → Configurare → Purchase Order Phase; dacă un cod de fază referit nu există, se creează automat.",
       "Control manual: utilizatorii pot schimba oricând faza direct din formularul comenzii, iar modificările sunt auditabile prin chatter.",
+      "Metoda helper `set_phase(code)` poate fi apelată și din cod sau acțiuni server pentru faze personalizate.",
       "Opțiune de a sări peste actualizările automate ale fazei, prin contextul `{\"skip_phase_update\": True}` la scrieri programatice pe `purchase.order` (util la import de date sau fluxuri speciale)."
     ],
     "dependencies": [
@@ -9366,7 +9367,7 @@
       "many2one_badge",
       "purchase_stock"
     ],
-    "text": "Deltatech Purchase Order Stage\ndeltatech_purchase_phase\nModulul adaugă o urmărire ușoară a fazei (stadiului) pe comenzile de achiziție, complementară stării standard a documentului. Fiecare comandă de achiziție primește o fază curentă (ex: RFQ, Confirmat achiziție, Pre-aviz, Expediat, Livrat), actualizată automat pe măsură ce comanda avansează prin flux, dar și modificabilă manual. Astfel, echipa de achiziții și logistică poate vedea dintr-o privire, direct pe formularul comenzii, în ce etapă reală se află aprovizionarea — nu doar starea tehnică a documentului.\nCâmp nou `phase_id` pe `purchase.order`, afișat ca insignă colorată (`many2one_badge`) și urmărit în chatter (tracking).\nTranziții automate de fază legate de starea comenzii: la trimiterea RFQ (`state = sent`) faza devine `rfq`; la confirmarea comenzii (`state = purchase`) faza devine `purchase_confirm`.\nTranziții automate de fază legate de livrare: când un transfer de stoc (`stock.picking`) asociat comenzii de achiziție își schimbă `delivery_state`, faza comenzii este actualizată automat — `pre_advice` → fază `pre_advice`; `in_transit`/`in_warehouse`/`in_delivery` → fază `shipped`; `delivered` → fază `delivered`; `refused` → fază `refused` (*funcționalitate implementată în cod, dar nemenționată în `readme/DESCRIPTION.md` — vezi avertismentul din raport*).\nFazele sunt configurabile liber (cod tehnic unic + nume afișat) din meniul Achiziții → Configurare → Purchase Order Phase; dacă un cod de fază referit nu există, se creează automat.\nControl manual: utilizatorii pot schimba oricând faza direct din formularul comenzii, iar modificările sunt auditabile prin chatter.\nOpțiune de a sări peste actualizările automate ale fazei, prin contextul `{\"skip_phase_update\": True}` la scrieri programatice pe `purchase.order` (util la import de date sau fluxuri speciale)."
+    "text": "Deltatech Purchase Order Stage\ndeltatech_purchase_phase\nModulul adaugă o urmărire ușoară a fazei (stadiului) pe comenzile de achiziție, complementară stării standard a documentului. Fiecare comandă de achiziție primește o fază curentă (ex: RFQ, Confirmat achiziție, Pre-aviz, Expediat, Livrat), actualizată automat pe măsură ce comanda avansează prin flux, dar și modificabilă manual. Astfel, echipa de achiziții și logistică poate vedea dintr-o privire, direct pe formularul comenzii, în ce etapă reală se află aprovizionarea — nu doar starea tehnică a documentului.\nCâmp nou `phase_id` pe `purchase.order`, afișat ca insignă colorată (`many2one_badge`) și urmărit în chatter (tracking).\nTranziții automate de fază legate de starea comenzii: la trimiterea RFQ (`state = sent`) faza devine `rfq`; la confirmarea comenzii (`state = purchase`) faza devine `purchase_confirm`.\nTranziții automate de fază legate de livrare: când un transfer de stoc (`stock.picking`) asociat comenzii de achiziție își schimbă `delivery_state`, faza comenzii este actualizată automat — `pre_advice` → fază `pre_advice`; `in_transit`/`in_warehouse`/`in_delivery` → fază `shipped`; `delivered` → fază `delivered`; `refused` → fază `refused`.\nFazele sunt configurabile liber (cod tehnic unic + nume afișat) din meniul Achiziții → Configurare → Purchase Order Phase; dacă un cod de fază referit nu există, se creează automat.\nControl manual: utilizatorii pot schimba oricând faza direct din formularul comenzii, iar modificările sunt auditabile prin chatter.\nMetoda helper `set_phase(code)` poate fi apelată și din cod sau acțiuni server pentru faze personalizate.\nOpțiune de a sări peste actualizările automate ale fazei, prin contextul `{\"skip_phase_update\": True}` la scrieri programatice pe `purchase.order` (util la import de date sau fluxuri speciale)."
   },
   {
     "path": "deltatech_purchase_picking_status/index.md",
@@ -9391,18 +9392,22 @@
   {
     "path": "deltatech_purchase_portal/index.md",
     "module": "deltatech_purchase_portal",
-    "version": "19.0.1.2.6",
+    "version": "19.0.1.2.7",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_purchase_portal`",
     "local_path": "odoo-addons/bitshop/deltatech_purchase_portal",
-    "last_ingest": "2026-07-31",
+    "last_ingest": "2026-11-10",
     "friendly_name": "Purchase Portal",
     "summary": "Acest modul deschide colaborarea cu furnizorii direct în portalul de achiziții: furnizorul poate edita, din pagina web a unei cereri de ofertă (RFQ), prețul unitar și descrierea liniilor, iar apoi poate accepta și semna oferta electronic, exact ca la comenzile de vânzare. Astfel, negocierea prețurilor și confirmarea ofertelor se pot face online, fără schimb de e-mailuri sau documente semnate manual, iar tot procesul rămâne trasabil în chatter-ul comenzii.",
     "features": [
-      "Editare linii RFQ direct din portal (doar cât timp comanda este în starea „trimisă”): preț unitar (câmp numeric inline) și descriere (câmp text pe mai multe rânduri, cu suport pentru linii noi).",
+      "Editare linii RFQ direct din portal (doar cât timp comanda este în starea „trimisă”): preț unitar (câmp numeric inline) și descriere (câmp text pe mai multe rânduri, cu suport pentru linii noi); modificările se trimit prin cereri scurte și se salvează imediat. Pot fi modificate și adresa de ridicare și datele comenzii.",
       "Interfață curată în portal: buton „Edit” vizibil doar pe RFQ-uri, care comută pagina în mod editare; buton „Display” pentru revenirea la vizualizarea read-only; iconițe aliniate consecvent cu butonul standard „View Details”; descrierea articolului afișată inline lângă imaginea produsului.",
       "Acceptare și semnătură electronică (similar comenzilor de vânzare): fereastră modală de semnătură (`portal.signature_form`) care preia semnătura olografă și numele semnatarului; la semnare, RFQ-ul este confirmat automat ca și comandă de achiziție.",
-      "Trasabilitate: se salvează pe comanda de achiziție cine a semnat (`signed_by`), când (`signed_on`) și semnătura (`signature`); PDF-ul semnat este atașat automat în chatter.",
-      "Securitate: toate acțiunile sunt protejate prin token-ul standard de acces al portalului; editarea inline e permisă doar când comanda este în starea „trimisă”, iar liniile de tip afișare (secțiuni/note) nu pot fi editate."
+      "Respingerea RFQ din portal: furnizorul poate respinge cererea de ofertă, cu motiv obligatoriu, lângă butonul de acceptare; RFQ-ul este anulat, iar motivul rămâne documentat în chatter.",
+      "Trasabilitate: se salvează pe comanda de achiziție cine a semnat (`signed_by`), când (`signed_on`) și semnătura (`signature`); PDF-ul semnat este atașat în chatter, ca mesaj din partea furnizorului.",
+      "Adresă de ridicare: câmp „Pickup Address” pe comanda de achiziție (implicit adresa de livrare a furnizorului), selectabil din adresele furnizorului; buton „Preview” în formularul comenzii, care deschide pagina din portal.",
+      "Marcaj „procesat în portal”: comanda este marcată automat ca procesată în portal când ultimul e-mail provine de la un utilizator portal; furnizorul poate comuta marcajul din pagina comenzii.",
+      "Liste în portal: coloane și filtre pentru faza comenzii (din `deltatech_purchase_phase`), coloană de stare și export XLSX al comenzilor din portal (utilizatori autentificați).",
+      "Securitate: toate acțiunile sunt protejate prin token-ul standard de acces al portalului; editarea inline e permisă doar când comanda este în starea „trimisă”, iar liniile de tip afișare (secțiuni/note) nu pot fi editate; orice alt câmp, linie din altă comandă sau preț invalid refuză cererea fără a salva nimic."
     ],
     "dependencies": [
       "purchase",
@@ -9412,7 +9417,7 @@
     "connections": [
       "deltatech_purchase_phase"
     ],
-    "text": "Purchase Portal\ndeltatech_purchase_portal\nAcest modul deschide colaborarea cu furnizorii direct în portalul de achiziții: furnizorul poate edita, din pagina web a unei cereri de ofertă (RFQ), prețul unitar și descrierea liniilor, iar apoi poate accepta și semna oferta electronic, exact ca la comenzile de vânzare. Astfel, negocierea prețurilor și confirmarea ofertelor se pot face online, fără schimb de e-mailuri sau documente semnate manual, iar tot procesul rămâne trasabil în chatter-ul comenzii.\nEditare linii RFQ direct din portal (doar cât timp comanda este în starea „trimisă”): preț unitar (câmp numeric inline) și descriere (câmp text pe mai multe rânduri, cu suport pentru linii noi).\nInterfață curată în portal: buton „Edit” vizibil doar pe RFQ-uri, care comută pagina în mod editare; buton „Display” pentru revenirea la vizualizarea read-only; iconițe aliniate consecvent cu butonul standard „View Details”; descrierea articolului afișată inline lângă imaginea produsului.\nAcceptare și semnătură electronică (similar comenzilor de vânzare): fereastră modală de semnătură (`portal.signature_form`) care preia semnătura olografă și numele semnatarului; la semnare, RFQ-ul este confirmat automat ca și comandă de achiziție.\nTrasabilitate: se salvează pe comanda de achiziție cine a semnat (`signed_by`), când (`signed_on`) și semnătura (`signature`); PDF-ul semnat este atașat automat în chatter.\nSecuritate: toate acțiunile sunt protejate prin token-ul standard de acces al portalului; editarea inline e permisă doar când comanda este în starea „trimisă”, iar liniile de tip afișare (secțiuni/note) nu pot fi editate."
+    "text": "Purchase Portal\ndeltatech_purchase_portal\nAcest modul deschide colaborarea cu furnizorii direct în portalul de achiziții: furnizorul poate edita, din pagina web a unei cereri de ofertă (RFQ), prețul unitar și descrierea liniilor, iar apoi poate accepta și semna oferta electronic, exact ca la comenzile de vânzare. Astfel, negocierea prețurilor și confirmarea ofertelor se pot face online, fără schimb de e-mailuri sau documente semnate manual, iar tot procesul rămâne trasabil în chatter-ul comenzii.\nEditare linii RFQ direct din portal (doar cât timp comanda este în starea „trimisă”): preț unitar (câmp numeric inline) și descriere (câmp text pe mai multe rânduri, cu suport pentru linii noi); modificările se trimit prin cereri scurte și se salvează imediat. Pot fi modificate și adresa de ridicare și datele comenzii.\nInterfață curată în portal: buton „Edit” vizibil doar pe RFQ-uri, care comută pagina în mod editare; buton „Display” pentru revenirea la vizualizarea read-only; iconițe aliniate consecvent cu butonul standard „View Details”; descrierea articolului afișată inline lângă imaginea produsului.\nAcceptare și semnătură electronică (similar comenzilor de vânzare): fereastră modală de semnătură (`portal.signature_form`) care preia semnătura olografă și numele semnatarului; la semnare, RFQ-ul este confirmat automat ca și comandă de achiziție.\nRespingerea RFQ din portal: furnizorul poate respinge cererea de ofertă, cu motiv obligatoriu, lângă butonul de acceptare; RFQ-ul este anulat, iar motivul rămâne documentat în chatter.\nTrasabilitate: se salvează pe comanda de achiziție cine a semnat (`signed_by`), când (`signed_on`) și semnătura (`signature`); PDF-ul semnat este atașat în chatter, ca mesaj din partea furnizorului.\nAdresă de ridicare: câmp „Pickup Address” pe comanda de achiziție (implicit adresa de livrare a furnizorului), selectabil din adresele furnizorului; buton „Preview” în formularul comenzii, care deschide pagina din portal.\nMarcaj „procesat în portal”: comanda este marcată automat ca procesată în portal când ultimul e-mail provine de la un utilizator portal; furnizorul poate comuta marcajul din pagina comenzii.\nListe în portal: coloane și filtre pentru faza comenzii (din `deltatech_purchase_phase`), coloană de stare și export XLSX al comenzilor din portal (utilizatori autentificați).\nSecuritate: toate acțiunile sunt protejate prin token-ul standard de acces al portalului; editarea inline e permisă doar când comanda este în starea „trimisă”, iar liniile de tip afișare (secțiuni/note) nu pot fi editate; orice alt câmp, linie din altă comandă sau preț invalid refuză cererea fără a salva nimic."
   },
   {
     "path": "deltatech_purchase_price/index.md",
@@ -9449,7 +9454,7 @@
   {
     "path": "deltatech_purchase_price_compare/index.md",
     "module": "deltatech_purchase_price_compare",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_purchase_price_compare`",
     "local_path": "odoo-addons/bitshop/deltatech_purchase_price_compare",
     "last_ingest": "2026-09-03",
@@ -9656,21 +9661,26 @@
     "version": "19.0.1.0.7",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_xls`",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_xls",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Deltatech Purchase XLS",
-    "summary": "Modulul **Deltatech Purchase XLS** oferă o modalitate rapidă de a gestiona liniile comenzilor de achiziție prin import și export din/în fișiere Excel. Este util în special pentru achiziții cu multe articole, unde introducerea manuală a liniilor ar consuma mult timp, permițând utilizatorilor să pregătească sau să editeze listele de aprovizionare direct într-un fișier Excel, în afara Odoo.",
+    "last_ingest": "2026-11-10",
+    "friendly_name": "Purchase XLS Import / Export",
+    "summary": "Modulul încarcă liniile unei cereri de ofertă (RFQ) dintr-un fișier Excel și exportă liniile comenzilor de achiziție în Excel, astfel încât listele lungi de articole de la furnizor să nu mai fie introduse manual.",
     "features": [
-      "Import direct al liniilor de comandă de achiziție dintr-un fișier Excel.",
-      "Export al liniilor existente ale unei comenzi de achiziție într-un fișier Excel, pentru editare ulterioară sau raportare externă.",
-      "Simplifică procesul de creare a comenzilor de achiziție voluminoase, cu multe articole.",
-      "Interfață simplă și flexibilă pentru lucrul cu date în masă în procesul de aprovizionare.",
-      "Butoane dedicate (\"Import Lines from Excel\" / \"Export Lines to Excel\") direct pe formularul comenzii de achiziție."
+      "Import linii din Excel: pe o comandă în starea RFQ, din meniul Acțiuni (roata dințată) se alege Import Purchase Line. Wizardul citește prima foaie dintr-un fișier `.xlsx` și adaugă o linie de comandă pentru fiecare rând. Opțiuni:",
+      "Fields: coloanele fișierului, în ordine; implicit `product_code,default_code,product_name,quantity,price,uom_name`, adică formatul produs de export;",
+      "Header row: ignoră primul rând;",
+      "Search by internal code: dacă codul furnizorului nu e găsit, se caută și ca referință internă;",
+      "Create missing product: un produs negăsit este creat ca produs stocabil, cu preț de furnizor pentru furnizorul comenzii; altfel importul se oprește cu un mesaj;",
+      "Is amount: coloana de preț conține valoarea liniei, iar prețul unitar se calculează ca valoare împărțită la cantitate.",
+      "Regăsirea produselor: după codul furnizorului din prețurile de furnizor ale furnizorului comenzii (pentru compania comenzii sau fără companie), apoi după referința internă. Un cod de furnizor care corespunde mai multor produse oprește importul. Dacă fișierul nu are coloană de preț, prețul vine din lista de prețuri a furnizorului. O unitate de măsură diferită de cea a produsului oprește importul.",
+      "Export linii în Excel: pe una sau mai multe comenzi, din meniul Print se alege Export Purchase Lines; rezultă `purchase_order.xlsx` cu coloanele *Code* (codul furnizorului), *Internal Code*, *Name* (denumirea produsului la furnizor, când există), *Qty*, *Price* și *Unit of Measure*.",
+      "Lista liniilor comenzii: butonul inteligent Order lines de pe comandă deschide lista liniilor. Importul cu funcția standard Import records actualizează liniile existente, potrivite după produs (în ordine, când același produs apare pe mai multe linii); rândurile cu produs care nu e pe comandă sunt ignorate. Dacă comanda nu are încă linii, rândurile devin linii noi ale ei.",
+      "Limitări: în wizardul de import, un rând fără cod de furnizor și fără cod intern, sau cu un preț care nu e număr, este sărit fără mesaj; wizardul adaugă mereu linii noi, nu actualizează liniile existente."
     ],
     "dependencies": [
       "purchase_stock"
     ],
     "connections": [],
-    "text": "Deltatech Purchase XLS\ndeltatech_purchase_xls\nModulul **Deltatech Purchase XLS** oferă o modalitate rapidă de a gestiona liniile comenzilor de achiziție prin import și export din/în fișiere Excel. Este util în special pentru achiziții cu multe articole, unde introducerea manuală a liniilor ar consuma mult timp, permițând utilizatorilor să pregătească sau să editeze listele de aprovizionare direct într-un fișier Excel, în afara Odoo.\nImport direct al liniilor de comandă de achiziție dintr-un fișier Excel.\nExport al liniilor existente ale unei comenzi de achiziție într-un fișier Excel, pentru editare ulterioară sau raportare externă.\nSimplifică procesul de creare a comenzilor de achiziție voluminoase, cu multe articole.\nInterfață simplă și flexibilă pentru lucrul cu date în masă în procesul de aprovizionare.\nButoane dedicate (\"Import Lines from Excel\" / \"Export Lines to Excel\") direct pe formularul comenzii de achiziție."
+    "text": "Purchase XLS Import / Export\ndeltatech_purchase_xls\nModulul încarcă liniile unei cereri de ofertă (RFQ) dintr-un fișier Excel și exportă liniile comenzilor de achiziție în Excel, astfel încât listele lungi de articole de la furnizor să nu mai fie introduse manual.\nImport linii din Excel: pe o comandă în starea RFQ, din meniul Acțiuni (roata dințată) se alege Import Purchase Line. Wizardul citește prima foaie dintr-un fișier `.xlsx` și adaugă o linie de comandă pentru fiecare rând. Opțiuni:\nFields: coloanele fișierului, în ordine; implicit `product_code,default_code,product_name,quantity,price,uom_name`, adică formatul produs de export;\nHeader row: ignoră primul rând;\nSearch by internal code: dacă codul furnizorului nu e găsit, se caută și ca referință internă;\nCreate missing product: un produs negăsit este creat ca produs stocabil, cu preț de furnizor pentru furnizorul comenzii; altfel importul se oprește cu un mesaj;\nIs amount: coloana de preț conține valoarea liniei, iar prețul unitar se calculează ca valoare împărțită la cantitate.\nRegăsirea produselor: după codul furnizorului din prețurile de furnizor ale furnizorului comenzii (pentru compania comenzii sau fără companie), apoi după referința internă. Un cod de furnizor care corespunde mai multor produse oprește importul. Dacă fișierul nu are coloană de preț, prețul vine din lista de prețuri a furnizorului. O unitate de măsură diferită de cea a produsului oprește importul.\nExport linii în Excel: pe una sau mai multe comenzi, din meniul Print se alege Export Purchase Lines; rezultă `purchase_order.xlsx` cu coloanele *Code* (codul furnizorului), *Internal Code*, *Name* (denumirea produsului la furnizor, când există), *Qty*, *Price* și *Unit of Measure*.\nLista liniilor comenzii: butonul inteligent Order lines de pe comandă deschide lista liniilor. Importul cu funcția standard Import records actualizează liniile existente, potrivite după produs (în ordine, când același produs apare pe mai multe linii); rândurile cu produs care nu e pe comandă sunt ignorate. Dacă comanda nu are încă linii, rândurile devin linii noi ale ei.\nLimitări: în wizardul de import, un rând fără cod de furnizor și fără cod intern, sau cu un preț care nu e număr, este sărit fără mesaj; wizardul adaugă mereu linii noi, nu actualizează liniile existente."
   },
   {
     "path": "deltatech_putaway_strategy/index.md",
@@ -9982,7 +9992,7 @@
   {
     "path": "deltatech_report_prn_zebra_sdk/index.md",
     "module": "deltatech_report_prn_zebra_sdk",
-    "version": "19.0.1.3.3",
+    "version": "19.0.1.3.4",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_report_prn_zebra_sdk`",
     "local_path": "odoo-addons/bitshop/deltatech_report_prn_zebra_sdk",
     "last_ingest": "2026-07-31",
@@ -10007,7 +10017,7 @@
   {
     "path": "deltatech_restrict_ip/index.md",
     "module": "deltatech_restrict_ip",
-    "version": "19.0.1.3.6",
+    "version": "19.0.1.3.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_restrict_ip",
     "local_path": "odoo-addons/bitshop/deltatech_restrict_ip",
     "last_ingest": "2026-08-20",
@@ -10054,7 +10064,7 @@
   {
     "path": "deltatech_rma/index.md",
     "module": "deltatech_rma",
-    "version": "19.0.1.9.5",
+    "version": "19.0.1.9.6",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma",
     "local_path": "odoo-addons/bitshop/deltatech_rma",
     "last_ingest": null,
@@ -10145,7 +10155,7 @@
   {
     "path": "deltatech_rma_lot/index.md",
     "module": "deltatech_rma_lot",
-    "version": "19.0.1.0.7",
+    "version": "19.0.1.0.8",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma_lot",
     "local_path": "odoo-addons/bitshop/deltatech_rma_lot",
     "last_ingest": null,
@@ -10203,7 +10213,7 @@
   {
     "path": "deltatech_rma_withdrawal/index.md",
     "module": "deltatech_rma_withdrawal",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.8",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma_withdrawal",
     "local_path": "odoo-addons/bitshop/deltatech_rma_withdrawal",
     "last_ingest": null,
@@ -10257,7 +10267,7 @@
   {
     "path": "deltatech_saga/index.md",
     "module": "deltatech_saga",
-    "version": "19.0.6.29.2",
+    "version": "19.0.6.29.3",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga",
     "local_path": "odoo-addons/bitshop/deltatech_saga",
     "last_ingest": "2026-10-27",
@@ -10313,19 +10323,22 @@
   {
     "path": "deltatech_saga_mrp/index.md",
     "module": "deltatech_saga_mrp",
-    "version": "19.0.0.0.12",
+    "version": "19.0.0.0.13",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga_mrp",
     "local_path": "odoo-addons/bitshop/deltatech_saga_mrp",
-    "last_ingest": "2026-07-31",
+    "last_ingest": "2026-11-10",
     "friendly_name": "SAGA Interface MRP Extension",
-    "summary": "Acest modul extinde interfața de export către SAGA astfel încât să acopere și fluxurile specifice de producție (MRP), în special mișcările de stoc generate de kituri (BoM-uri de tip „phantom”). Practic, elimină introducerea manuală de date și reduce erorile prin automatizarea sincronizării dintre producția din Odoo și înregistrările contabile/de gestiune din SAGA, oferind o vedere unitară asupra proceselor de fabricație, în timp ce evidența financiară rămâne consecventă în cele două sisteme.",
+    "summary": "Modulul adaugă kiturile (liste de materiale de tip *Kit*) în exportul către SAGA din modulul *SAGA Interface*. În Odoo, un kit se vinde ca un singur produs, dar se livrează prin componentele sale, în timp ce SAGA are nevoie de kitul însuși în stoc ca să îl poată factura. Pentru fiecare kit livrat în perioadă, modulul exportă consumul componentelor și producția kitului, astfel încât SAGA să primească aceleași mișcări de stoc ca Odoo.",
     "features": [
-      "Sincronizare automată a mișcărilor de stoc generate de comenzile de producție și de kituri (BoM phantom) din Odoo către SAGA.",
-      "Export dedicat pentru consumurile și producțiile aferente kiturilor, cu fișiere separate (`BC_KIT_`, `PRODUCTIE_KIT_`).",
-      "Schimb de date în timp real pentru costurile de producție, actualizările de inventar și contabilitatea de producție.",
-      "Reducerea erorilor umane și a discrepanțelor de date prin transmiterea electronică a înregistrărilor de fabricație.",
-      "Vedere unificată asupra proceselor de producție în Odoo, menținând în același timp înregistrări financiare consistente în SAGA.",
-      "Interoperabilitate scalabilă — se pot adăuga ușor noi facilități de producție și linii de fabricație pe măsură ce afacerea crește."
+      "Consum de componente: mișcările de stoc finalizate ale componentelor unui kit, din perioada și compania exportului, ajung într-un fișier de consum (*BC_KIT_*).",
+      "Producție de kituri: pentru fiecare transfer, cantitatea fiecărui kit se calculează din componente și ajunge într-un fișier de producție (*PRODUCTIE_KIT_*), cu cod, unitate de măsură, cost și gestiunea SAGA a locației.",
+      "Varianta corectă: un kit definit pe un șablon de produs și partajat de mai multe variante se exportă pentru varianta vândută sau cumpărată efectiv, numărând doar componentele aplicabile ei.",
+      "Unități de măsură convertite: cantitățile componentelor și ale kitului se convertesc între unitățile mișcărilor, ale listei de materiale și ale produsului (ex. un kit care cere 2 duzini, livrat ca 24 de bucăți, contează ca un kit).",
+      "Retururi incluse: componentele care revin în stoc se contorizează ca producție negativă de kit.",
+      "Flux de utilizare: exportul se rulează ca de obicei din *Contabilitate > Contabilitate > Saga > Export Saga*; arhiva conține în plus fișierele *BC_KIT_* și *PRODUCTIE_KIT_*, iar sumarul exportului arată câte kituri și câte consumuri de componente au fost exportate. Cele două fișiere se importă în SAGA împreună cu restul exportului, ca kiturile să fie în stoc la importul facturilor de vânzare.",
+      "Configurare necesară: modulul *SAGA Interface* configurat (coduri SAGA pe categorii și gestiuni pe locații); fiecare kit și componentă are Referință internă (codul SAGA) și categorie de produs cu Cod SAGA (altfel linia apare ca eroare sau blochează exportul când Ignoră erorile e dezactivat); costul kiturilor trebuie ținut la zi, producția fiind evaluată la costul curent.",
+      "Doar format DBF: fișierele de kit se scriu numai în DBF, deci în exportul SAGA trebuie bifat Format DBF.",
+      "Fără date trimise în exterior: modulul doar adaugă fișiere în arhiva exportului, pe care utilizatorul o importă singur în SAGA."
     ],
     "dependencies": [
       "deltatech_saga",
@@ -10337,7 +10350,7 @@
       "phantom",
       "stock"
     ],
-    "text": "SAGA Interface MRP Extension\ndeltatech_saga_mrp\nAcest modul extinde interfața de export către SAGA astfel încât să acopere și fluxurile specifice de producție (MRP), în special mișcările de stoc generate de kituri (BoM-uri de tip „phantom”). Practic, elimină introducerea manuală de date și reduce erorile prin automatizarea sincronizării dintre producția din Odoo și înregistrările contabile/de gestiune din SAGA, oferind o vedere unitară asupra proceselor de fabricație, în timp ce evidența financiară rămâne consecventă în cele două sisteme.\nSincronizare automată a mișcărilor de stoc generate de comenzile de producție și de kituri (BoM phantom) din Odoo către SAGA.\nExport dedicat pentru consumurile și producțiile aferente kiturilor, cu fișiere separate (`BC_KIT_`, `PRODUCTIE_KIT_`).\nSchimb de date în timp real pentru costurile de producție, actualizările de inventar și contabilitatea de producție.\nReducerea erorilor umane și a discrepanțelor de date prin transmiterea electronică a înregistrărilor de fabricație.\nVedere unificată asupra proceselor de producție în Odoo, menținând în același timp înregistrări financiare consistente în SAGA.\nInteroperabilitate scalabilă — se pot adăuga ușor noi facilități de producție și linii de fabricație pe măsură ce afacerea crește."
+    "text": "SAGA Interface MRP Extension\ndeltatech_saga_mrp\nModulul adaugă kiturile (liste de materiale de tip *Kit*) în exportul către SAGA din modulul *SAGA Interface*. În Odoo, un kit se vinde ca un singur produs, dar se livrează prin componentele sale, în timp ce SAGA are nevoie de kitul însuși în stoc ca să îl poată factura. Pentru fiecare kit livrat în perioadă, modulul exportă consumul componentelor și producția kitului, astfel încât SAGA să primească aceleași mișcări de stoc ca Odoo.\nConsum de componente: mișcările de stoc finalizate ale componentelor unui kit, din perioada și compania exportului, ajung într-un fișier de consum (*BC_KIT_*).\nProducție de kituri: pentru fiecare transfer, cantitatea fiecărui kit se calculează din componente și ajunge într-un fișier de producție (*PRODUCTIE_KIT_*), cu cod, unitate de măsură, cost și gestiunea SAGA a locației.\nVarianta corectă: un kit definit pe un șablon de produs și partajat de mai multe variante se exportă pentru varianta vândută sau cumpărată efectiv, numărând doar componentele aplicabile ei.\nUnități de măsură convertite: cantitățile componentelor și ale kitului se convertesc între unitățile mișcărilor, ale listei de materiale și ale produsului (ex. un kit care cere 2 duzini, livrat ca 24 de bucăți, contează ca un kit).\nRetururi incluse: componentele care revin în stoc se contorizează ca producție negativă de kit.\nFlux de utilizare: exportul se rulează ca de obicei din *Contabilitate > Contabilitate > Saga > Export Saga*; arhiva conține în plus fișierele *BC_KIT_* și *PRODUCTIE_KIT_*, iar sumarul exportului arată câte kituri și câte consumuri de componente au fost exportate. Cele două fișiere se importă în SAGA împreună cu restul exportului, ca kiturile să fie în stoc la importul facturilor de vânzare.\nConfigurare necesară: modulul *SAGA Interface* configurat (coduri SAGA pe categorii și gestiuni pe locații); fiecare kit și componentă are Referință internă (codul SAGA) și categorie de produs cu Cod SAGA (altfel linia apare ca eroare sau blochează exportul când Ignoră erorile e dezactivat); costul kiturilor trebuie ținut la zi, producția fiind evaluată la costul curent.\nDoar format DBF: fișierele de kit se scriu numai în DBF, deci în exportul SAGA trebuie bifat Format DBF.\nFără date trimise în exterior: modulul doar adaugă fișiere în arhiva exportului, pe care utilizatorul o importă singur în SAGA."
   },
   {
     "path": "deltatech_sale_activity_report/index.md",
@@ -10372,22 +10385,23 @@
     "version": "19.0.0.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_activity_search",
     "local_path": "odoo-addons/deltatech/deltatech_sale_activity_search",
-    "last_ingest": "2026-07-31",
+    "last_ingest": "2026-11-10",
     "friendly_name": "Sale Order activity type search",
-    "summary": "Modulul îmbunătățește căutarea și filtrarea comenzilor de vânzare din Odoo, oferind vizibilitate imediată asupra activităților active asociate fiecărei comenzi. Este util echipelor de vânzări și managerilor care doresc să identifice rapid comenzile ce necesită atenție sau care au sarcini de un anumit tip încă nerezolvate (apeluri, e-mailuri, întâlniri etc.).",
+    "summary": "Modulul păstrează pe fiecare comandă de vânzare un câmp text cu tipurile activităților sale în așteptare, astfel încât comenzile să poată fi găsite după felul de follow-up pe care îl așteaptă (de exemplu „Apel\", „E-mail\" sau un tip de activitate personalizat). Este util echipelor de vânzări și managerilor care vor să identifice rapid comenzile ce necesită atenție.",
     "features": [
-      "Vizibilitate asupra tipurilor de activitate: adaugă un câmp tehnic pe comanda de vânzare care reține tipurile de activități active (în așteptare) pentru acea comandă.",
-      "Permite utilizatorilor să vadă dintr-o privire dacă o comandă are programate activități de tip „Apel\", „E-mail\", „Întâlnire\" sau tipuri personalizate.",
-      "Căutare și filtrare îmbunătățite: oferă filtre specializate pentru găsirea comenzilor de vânzare în funcție de tipurile de activități active.",
-      "Crește eficiența proceselor de urmărire (follow-up), permițând echipelor de vânzări să prioritizeze comenzile în funcție de sarcinile programate.",
-      "Integrare între module: conectează fără fricțiuni modulele native Vânzări (Sale) și Mail (Discuss) din Odoo."
+      "Câmpul stocat „Active Activity Types\": conține, separate prin virgulă, numele tipurilor activităților deschise ale comenzii.",
+      "Actualizare automată: câmpul se reîmprospătează la programarea unei activități pe comandă, la modificarea ei (inclusiv în masă), la mutarea pe altă comandă sau alt document, la marcarea ca efectuată sau la anulare.",
+      "Căutare după tipul activității: fiind stocat, câmpul se folosește într-un filtru personalizat: în Vânzări > Comenzi > Oferte sau Vânzări > Comenzi > Comenzi, din meniul de filtre alegeți Adaugă filtru personalizat și construiți o condiție pe „Active Activity Types\" (ex. *conține* „Call\").",
+      "Limitări:",
+      "modulul nu adaugă vizualizări, filtre sau coloane; câmpul e accesibil doar prin filtru personalizat, grupare personalizată sau export;",
+      "câmpul se completează doar pentru activitățile create, modificate sau șterse după instalare; comenzile cu activități programate înainte rămân goale până la prima modificare a unei activități."
     ],
     "dependencies": [
       "sale",
       "mail"
     ],
     "connections": [],
-    "text": "Sale Order activity type search\ndeltatech_sale_activity_search\nModulul îmbunătățește căutarea și filtrarea comenzilor de vânzare din Odoo, oferind vizibilitate imediată asupra activităților active asociate fiecărei comenzi. Este util echipelor de vânzări și managerilor care doresc să identifice rapid comenzile ce necesită atenție sau care au sarcini de un anumit tip încă nerezolvate (apeluri, e-mailuri, întâlniri etc.).\nVizibilitate asupra tipurilor de activitate: adaugă un câmp tehnic pe comanda de vânzare care reține tipurile de activități active (în așteptare) pentru acea comandă.\nPermite utilizatorilor să vadă dintr-o privire dacă o comandă are programate activități de tip „Apel\", „E-mail\", „Întâlnire\" sau tipuri personalizate.\nCăutare și filtrare îmbunătățite: oferă filtre specializate pentru găsirea comenzilor de vânzare în funcție de tipurile de activități active.\nCrește eficiența proceselor de urmărire (follow-up), permițând echipelor de vânzări să prioritizeze comenzile în funcție de sarcinile programate.\nIntegrare între module: conectează fără fricțiuni modulele native Vânzări (Sale) și Mail (Discuss) din Odoo."
+    "text": "Sale Order activity type search\ndeltatech_sale_activity_search\nModulul păstrează pe fiecare comandă de vânzare un câmp text cu tipurile activităților sale în așteptare, astfel încât comenzile să poată fi găsite după felul de follow-up pe care îl așteaptă (de exemplu „Apel\", „E-mail\" sau un tip de activitate personalizat). Este util echipelor de vânzări și managerilor care vor să identifice rapid comenzile ce necesită atenție.\nCâmpul stocat „Active Activity Types\": conține, separate prin virgulă, numele tipurilor activităților deschise ale comenzii.\nActualizare automată: câmpul se reîmprospătează la programarea unei activități pe comandă, la modificarea ei (inclusiv în masă), la mutarea pe altă comandă sau alt document, la marcarea ca efectuată sau la anulare.\nCăutare după tipul activității: fiind stocat, câmpul se folosește într-un filtru personalizat: în Vânzări > Comenzi > Oferte sau Vânzări > Comenzi > Comenzi, din meniul de filtre alegeți Adaugă filtru personalizat și construiți o condiție pe „Active Activity Types\" (ex. *conține* „Call\").\nLimitări:\nmodulul nu adaugă vizualizări, filtre sau coloane; câmpul e accesibil doar prin filtru personalizat, grupare personalizată sau export;\ncâmpul se completează doar pentru activitățile create, modificate sau șterse după instalare; comenzile cu activități programate înainte rămân goale până la prima modificare a unei activități."
   },
   {
     "path": "deltatech_sale_add_extra_line/index.md",
@@ -10432,14 +10446,16 @@
     "version": "19.0.1.0.5",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_add_extra_line_pos`",
     "local_path": "odoo-addons/deltatech/deltatech_sale_add_extra_line_pos",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "POS Add Extra Line",
+    "last_ingest": "2026-11-10",
+    "friendly_name": "POS Auto Extra Lines",
     "summary": "Acest modul extinde mecanismul de linii suplimentare al modulului [deltatech_sale_add_extra_line](../deltatech_sale_add_extra_line/index.md) pentru a funcționa direct în interfața Punctului de Vânzare (POS). Atunci când casierul adaugă în coșul POS un produs configurat cu un *produs extra* (de exemplu o taxă de mediu, o garanție de ambalaj sau un cost de manipulare), aplicația adaugă automat, în timp real, o linie separată pentru produsul extra, cu cantitatea calculată corect. Astfel se elimină uitarea sau adăugarea manuală a acestor taxe/produse conexe la vânzarea la casă, casierii câștigă timp, iar bonul de casă rămâne transparent pentru client.",
     "features": [
       "Integrare în timp real cu POS: adăugarea automată a liniei extra se face direct în interfața de vânzare, cu feedback vizual instantaneu pe partea de client (JavaScript, fără roundtrip la server).",
       "Calcul dinamic al cantității: cantitatea produsului extra se recalculează automat pe baza cantității produsului principal și a multiplicatorului configurat pe fișa produsului (`Cantitate extra = Σ(Cantitate produs principal × multiplicator)`).",
       "Consolidarea liniilor: dacă mai multe produse din coș trimit către același produs extra, modulul le consolidează într-o singură linie, cu cantitatea totalizată.",
       "Actualizare la modificarea cantității: la schimbarea cantității produsului principal în coșul POS, linia produsului extra este recalculată și actualizată instantaneu.",
+      "Ștergerea liniei principale: la eliminarea unei linii principale, linia extra se recalculează, iar dacă nicio altă linie nu mai cere acel produs extra, linia extra este ștearsă.",
+      "Fără linie extra „orfană”: dacă produsul principal nu ajunge efectiv în comandă (popup de configurator, lot sau cântărire anulat, restricție la retur), nu se adaugă nici linia extra; cantitatea inițială a liniei extra se ia din liniile pe care comanda le conține efectiv (cântărit, negativ la retur, îmbinat cu o linie existentă).",
       "Sincronizare configurare produs: câmpurile de configurare a liniei extra (`extra_product_id`, `extra_percent`, `extra_qty`) definite pe șablonul de produs sunt încărcate automat în datele POS ale sesiunii."
     ],
     "dependencies": [
@@ -10450,7 +10466,7 @@
       "deltatech_sale_add_extra_line",
       "point_of_sale"
     ],
-    "text": "POS Add Extra Line\ndeltatech_sale_add_extra_line_pos\nAcest modul extinde mecanismul de linii suplimentare al modulului [deltatech_sale_add_extra_line](../deltatech_sale_add_extra_line/index.md) pentru a funcționa direct în interfața Punctului de Vânzare (POS). Atunci când casierul adaugă în coșul POS un produs configurat cu un *produs extra* (de exemplu o taxă de mediu, o garanție de ambalaj sau un cost de manipulare), aplicația adaugă automat, în timp real, o linie separată pentru produsul extra, cu cantitatea calculată corect. Astfel se elimină uitarea sau adăugarea manuală a acestor taxe/produse conexe la vânzarea la casă, casierii câștigă timp, iar bonul de casă rămâne transparent pentru client.\nIntegrare în timp real cu POS: adăugarea automată a liniei extra se face direct în interfața de vânzare, cu feedback vizual instantaneu pe partea de client (JavaScript, fără roundtrip la server).\nCalcul dinamic al cantității: cantitatea produsului extra se recalculează automat pe baza cantității produsului principal și a multiplicatorului configurat pe fișa produsului (`Cantitate extra = Σ(Cantitate produs principal × multiplicator)`).\nConsolidarea liniilor: dacă mai multe produse din coș trimit către același produs extra, modulul le consolidează într-o singură linie, cu cantitatea totalizată.\nActualizare la modificarea cantității: la schimbarea cantității produsului principal în coșul POS, linia produsului extra este recalculată și actualizată instantaneu.\nSincronizare configurare produs: câmpurile de configurare a liniei extra (`extra_product_id`, `extra_percent`, `extra_qty`) definite pe șablonul de produs sunt încărcate automat în datele POS ale sesiunii."
+    "text": "POS Auto Extra Lines\ndeltatech_sale_add_extra_line_pos\nAcest modul extinde mecanismul de linii suplimentare al modulului [deltatech_sale_add_extra_line](../deltatech_sale_add_extra_line/index.md) pentru a funcționa direct în interfața Punctului de Vânzare (POS). Atunci când casierul adaugă în coșul POS un produs configurat cu un *produs extra* (de exemplu o taxă de mediu, o garanție de ambalaj sau un cost de manipulare), aplicația adaugă automat, în timp real, o linie separată pentru produsul extra, cu cantitatea calculată corect. Astfel se elimină uitarea sau adăugarea manuală a acestor taxe/produse conexe la vânzarea la casă, casierii câștigă timp, iar bonul de casă rămâne transparent pentru client.\nIntegrare în timp real cu POS: adăugarea automată a liniei extra se face direct în interfața de vânzare, cu feedback vizual instantaneu pe partea de client (JavaScript, fără roundtrip la server).\nCalcul dinamic al cantității: cantitatea produsului extra se recalculează automat pe baza cantității produsului principal și a multiplicatorului configurat pe fișa produsului (`Cantitate extra = Σ(Cantitate produs principal × multiplicator)`).\nConsolidarea liniilor: dacă mai multe produse din coș trimit către același produs extra, modulul le consolidează într-o singură linie, cu cantitatea totalizată.\nActualizare la modificarea cantității: la schimbarea cantității produsului principal în coșul POS, linia produsului extra este recalculată și actualizată instantaneu.\nȘtergerea liniei principale: la eliminarea unei linii principale, linia extra se recalculează, iar dacă nicio altă linie nu mai cere acel produs extra, linia extra este ștearsă.\nFără linie extra „orfană”: dacă produsul principal nu ajunge efectiv în comandă (popup de configurator, lot sau cântărire anulat, restricție la retur), nu se adaugă nici linia extra; cantitatea inițială a liniei extra se ia din liniile pe care comanda le conține efectiv (cântărit, negativ la retur, îmbinat cu o linie existentă).\nSincronizare configurare produs: câmpurile de configurare a liniei extra (`extra_product_id`, `extra_percent`, `extra_qty`) definite pe șablonul de produs sunt încărcate automat în datele POS ale sesiunii."
   },
   {
     "path": "deltatech_sale_analysis_vat/index.md",
@@ -10482,7 +10498,7 @@
   {
     "path": "deltatech_sale_cancel_order/index.md",
     "module": "deltatech_sale_cancel_order",
-    "version": "19.0.0.2.8",
+    "version": "19.0.0.2.9",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_cancel_order`",
     "local_path": "odoo-addons/bitshop/deltatech_sale_cancel_order",
     "last_ingest": "2026-10-27",
@@ -10617,7 +10633,7 @@
   {
     "path": "deltatech_sale_contracts/index.md",
     "module": "deltatech_sale_contracts",
-    "version": "19.0.1.0.7",
+    "version": "19.0.1.0.8",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_contracts`",
     "local_path": "odoo-addons/bitshop/deltatech_sale_contracts",
     "last_ingest": "2026-06-03",
@@ -10898,7 +10914,7 @@
   {
     "path": "deltatech_sale_missions/index.md",
     "module": "deltatech_sale_missions",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_missions",
     "local_path": "odoo-addons/bitshop/deltatech_sale_missions",
     "last_ingest": "2026-09-29",
@@ -10958,7 +10974,7 @@
     "version": "19.0.1.1.3",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_multiple_website`",
     "local_path": "odoo-addons/deltatech/deltatech_sale_multiple_website",
-    "last_ingest": "2026-07-31",
+    "last_ingest": "2026-11-10",
     "friendly_name": "eCommerce Qty Multiple",
     "summary": "Acest modul extinde regulile de cantitate minimă și cantitate multiplu de vânzare (definite de modulul `deltatech_sale_multiple`) și pe canalul eCommerce. Restricțiile pot fi aplicate doar în coșul de pe website sau global, iar valorile active (minim și multiplu) sunt afișate direct pe pagina produsului și în coșul de cumpărături, astfel încât clientul își dă seama imediat ce cantități poate comanda. Cantitatea din coș este normalizată înainte ca Odoo să verifice stocul disponibil; dacă stocul limitează cantitatea cerută, coșul revine automat la cea mai mare cantitate posibilă care respectă în continuare regulile de minim și multiplu.",
     "features": [
@@ -10967,7 +10983,11 @@
       "Afișarea acelorași restricții pe linia produsului din coșul de cumpărături.",
       "Actualizarea dinamică a restricțiilor afișate la schimbarea variantei de produs (fără reîncărcarea paginii).",
       "Normalizarea cantității din coș conform regulilor înainte de verificarea stocului disponibil.",
-      "Recalcularea cantității la cea mai mare valoare validă (respectând minimul/multiplul) atunci când stocul limitează cantitatea cerută."
+      "Recalcularea cantității la cea mai mare valoare validă (respectând minimul/multiplul) atunci când stocul limitează cantitatea cerută; sub minim, produsul nu se adaugă în coș.",
+      "Configurare pe formularul produsului (*Website > eCommerce > Produse*, tab Vânzări, grupul Cantitate): Cantitate multiplă, Cantitate minimă și bifa Verifică cantitatea pe website.",
+      "Cu bifa activă (implicit), regulile se aplică doar comenzilor de pe website: o ofertă introdusă în backend păstrează cantitatea tastată (130 rămâne 130); fără bifă, și ofertele din backend sunt rotunjite. Comenzile venite de pe website păstrează regulile și la editarea în backend.",
+      "Rotunjire în coș: întâi la minim, apoi la următorul multiplu (130 cerute devin 150); regulile sunt reamintite sub numele produsului.",
+      "La produsele cu variante, regulile se setează pe fiecare variantă, iar cele afișate urmează varianta selectată."
     ],
     "dependencies": [
       "deltatech_sale_multiple",
@@ -10977,12 +10997,12 @@
       "deltatech_sale_multiple",
       "website_sale_stock"
     ],
-    "text": "eCommerce Qty Multiple\ndeltatech_sale_multiple_website\nAcest modul extinde regulile de cantitate minimă și cantitate multiplu de vânzare (definite de modulul `deltatech_sale_multiple`) și pe canalul eCommerce. Restricțiile pot fi aplicate doar în coșul de pe website sau global, iar valorile active (minim și multiplu) sunt afișate direct pe pagina produsului și în coșul de cumpărături, astfel încât clientul își dă seama imediat ce cantități poate comanda. Cantitatea din coș este normalizată înainte ca Odoo să verifice stocul disponibil; dacă stocul limitează cantitatea cerută, coșul revine automat la cea mai mare cantitate posibilă care respectă în continuare regulile de minim și multiplu.\nAplicarea regulilor de cantitate minimă/multiplu doar pentru comenzile de pe website (opțiune `check_min_website` per produs) sau global.\nAfișarea pe pagina produsului a restricțiilor active (cantitate minimă, multiplu de vânzare) cu explicații tip popover.\nAfișarea acelorași restricții pe linia produsului din coșul de cumpărături.\nActualizarea dinamică a restricțiilor afișate la schimbarea variantei de produs (fără reîncărcarea paginii).\nNormalizarea cantității din coș conform regulilor înainte de verificarea stocului disponibil.\nRecalcularea cantității la cea mai mare valoare validă (respectând minimul/multiplul) atunci când stocul limitează cantitatea cerută."
+    "text": "eCommerce Qty Multiple\ndeltatech_sale_multiple_website\nAcest modul extinde regulile de cantitate minimă și cantitate multiplu de vânzare (definite de modulul `deltatech_sale_multiple`) și pe canalul eCommerce. Restricțiile pot fi aplicate doar în coșul de pe website sau global, iar valorile active (minim și multiplu) sunt afișate direct pe pagina produsului și în coșul de cumpărături, astfel încât clientul își dă seama imediat ce cantități poate comanda. Cantitatea din coș este normalizată înainte ca Odoo să verifice stocul disponibil; dacă stocul limitează cantitatea cerută, coșul revine automat la cea mai mare cantitate posibilă care respectă în continuare regulile de minim și multiplu.\nAplicarea regulilor de cantitate minimă/multiplu doar pentru comenzile de pe website (opțiune `check_min_website` per produs) sau global.\nAfișarea pe pagina produsului a restricțiilor active (cantitate minimă, multiplu de vânzare) cu explicații tip popover.\nAfișarea acelorași restricții pe linia produsului din coșul de cumpărături.\nActualizarea dinamică a restricțiilor afișate la schimbarea variantei de produs (fără reîncărcarea paginii).\nNormalizarea cantității din coș conform regulilor înainte de verificarea stocului disponibil.\nRecalcularea cantității la cea mai mare valoare validă (respectând minimul/multiplul) atunci când stocul limitează cantitatea cerută; sub minim, produsul nu se adaugă în coș.\nConfigurare pe formularul produsului (*Website > eCommerce > Produse*, tab Vânzări, grupul Cantitate): Cantitate multiplă, Cantitate minimă și bifa Verifică cantitatea pe website.\nCu bifa activă (implicit), regulile se aplică doar comenzilor de pe website: o ofertă introdusă în backend păstrează cantitatea tastată (130 rămâne 130); fără bifă, și ofertele din backend sunt rotunjite. Comenzile venite de pe website păstrează regulile și la editarea în backend.\nRotunjire în coș: întâi la minim, apoi la următorul multiplu (130 cerute devin 150); regulile sunt reamintite sub numele produsului.\nLa produsele cu variante, regulile se setează pe fiecare variantă, iar cele afișate urmează varianta selectată."
   },
   {
     "path": "deltatech_sale_order_report/index.md",
     "module": "deltatech_sale_order_report",
-    "version": "19.0.1.0.9",
+    "version": "19.0.1.0.10",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/deltatech_sale_order_report",
     "local_path": "odoo-addons/terrabit/deltatech_sale_order_report",
     "last_ingest": "2026-10-09",
@@ -11005,7 +11025,7 @@
   {
     "path": "deltatech_sale_order_review/index.md",
     "module": "deltatech_sale_order_review",
-    "version": "19.0.0.1.8",
+    "version": "19.0.0.1.9",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_order_review",
     "local_path": "odoo-addons/bitshop/deltatech_sale_order_review",
     "last_ingest": "2026-09-24",
@@ -11070,14 +11090,14 @@
     "version": "19.0.1.0.4",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_pallet_website`",
     "local_path": "odoo-addons/deltatech/deltatech_sale_pallet_website",
-    "last_ingest": "2026-07-31",
+    "last_ingest": "2026-11-10",
     "friendly_name": "Sale Pallet Website",
-    "summary": "Modulul extinde logica de paleți din vânzări către magazinul online (eCommerce), astfel încât produsele vândute pe paleți să fie afișate și gestionate corect și pe website. Atunci când un client adaugă în coș un produs care necesită paletizare, modulul recalculează automat liniile de palet direct în coșul de cumpărături, la fel cum se întâmplă deja pe comenzile create din back-office, iar pagina de produs poate afișa prețul corespunzător cantității unui palet.",
+    "summary": "Produsele vândute în vrac (cărămizi, plăci) se livrează pe paleți pe care clientul îi plătește. Modulul `deltatech_sale_pallet` adaugă liniile de palet pe comenzile din back-office; acest modul aduce aceeași logică în magazinul online: paleții sunt afișați pe pagina de produs și adăugați automat în coș.",
     "features": [
-      "Afișarea pe pagina de produs a prețului corespunzător cantității minime a unui palet, atunci când produsul are configurată o astfel de cantitate.",
-      "Optimizarea experienței de cumpărare pentru achiziții en-gros sau produse vândute în mod tipic pe paleți.",
-      "Recalcularea automată a liniilor de palet din coșul de cumpărături pe măsură ce clientul adaugă sau modifică cantitatea unui produs pe website, păstrând consistența cu logica din `deltatech_sale_pallet`.",
-      "Se bazează pe flag-ul „Palet\" configurat la nivelul categoriei de produs pentru a identifica articolele cărora li se aplică logica de paletizare pe website."
+      "Prețul paletului pe pagina de produs: pentru produsele cu cantitate minimă de palet, apare un rând de tipul „When buying 10 units, the price is ...\", unde prețul este cantitatea minimă de palet la prețul de vânzare plus prețul produsului-palet.",
+      "Linii de palet în coș: la fiecare adăugare sau modificare de cantitate, liniile de palet se recalculează: o linie per produs-palet, cu numărul de paleți întregi necesari tuturor liniilor din coș care folosesc acel palet. O cantitate sub un palet întreg nu adaugă palet. Când ultimul produs care necesită palet este scos din coș, linia de palet dispare și ea.",
+      "Prețul livrării include paleții: liniile de palet sunt actualizate înainte de recalcularea prețului de livrare și a cantității din coș, deci ambele țin cont de paleți.",
+      "Configurare: pe fișa produsului, tab-ul *Inventar*, secțiunea Palletizing (din `deltatech_sale_pallet`): Pallet Product (produsul-palet, vândut la propriul preț) și Pallet Qty Min (cantitatea care umple un palet). Produsele fără aceste setări se vând normal în magazin. Flag-ul Pallet de pe categoriile de produse nu este folosit de magazin."
     ],
     "dependencies": [
       "deltatech_sale_pallet",
@@ -11087,7 +11107,7 @@
       "deltatech_sale_pallet",
       "website_sale"
     ],
-    "text": "Sale Pallet Website\ndeltatech_sale_pallet_website\nModulul extinde logica de paleți din vânzări către magazinul online (eCommerce), astfel încât produsele vândute pe paleți să fie afișate și gestionate corect și pe website. Atunci când un client adaugă în coș un produs care necesită paletizare, modulul recalculează automat liniile de palet direct în coșul de cumpărături, la fel cum se întâmplă deja pe comenzile create din back-office, iar pagina de produs poate afișa prețul corespunzător cantității unui palet.\nAfișarea pe pagina de produs a prețului corespunzător cantității minime a unui palet, atunci când produsul are configurată o astfel de cantitate.\nOptimizarea experienței de cumpărare pentru achiziții en-gros sau produse vândute în mod tipic pe paleți.\nRecalcularea automată a liniilor de palet din coșul de cumpărături pe măsură ce clientul adaugă sau modifică cantitatea unui produs pe website, păstrând consistența cu logica din `deltatech_sale_pallet`.\nSe bazează pe flag-ul „Palet\" configurat la nivelul categoriei de produs pentru a identifica articolele cărora li se aplică logica de paletizare pe website."
+    "text": "Sale Pallet Website\ndeltatech_sale_pallet_website\nProdusele vândute în vrac (cărămizi, plăci) se livrează pe paleți pe care clientul îi plătește. Modulul `deltatech_sale_pallet` adaugă liniile de palet pe comenzile din back-office; acest modul aduce aceeași logică în magazinul online: paleții sunt afișați pe pagina de produs și adăugați automat în coș.\nPrețul paletului pe pagina de produs: pentru produsele cu cantitate minimă de palet, apare un rând de tipul „When buying 10 units, the price is ...\", unde prețul este cantitatea minimă de palet la prețul de vânzare plus prețul produsului-palet.\nLinii de palet în coș: la fiecare adăugare sau modificare de cantitate, liniile de palet se recalculează: o linie per produs-palet, cu numărul de paleți întregi necesari tuturor liniilor din coș care folosesc acel palet. O cantitate sub un palet întreg nu adaugă palet. Când ultimul produs care necesită palet este scos din coș, linia de palet dispare și ea.\nPrețul livrării include paleții: liniile de palet sunt actualizate înainte de recalcularea prețului de livrare și a cantității din coș, deci ambele țin cont de paleți.\nConfigurare: pe fișa produsului, tab-ul *Inventar*, secțiunea Palletizing (din `deltatech_sale_pallet`): Pallet Product (produsul-palet, vândut la propriul preț) și Pallet Qty Min (cantitatea care umple un palet). Produsele fără aceste setări se vând normal în magazin. Flag-ul Pallet de pe categoriile de produse nu este folosit de magazin."
   },
   {
     "path": "deltatech_sale_payment/index.md",
@@ -11159,13 +11179,16 @@
     "version": "19.0.1.0.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_picking_status",
     "local_path": "odoo-addons/deltatech/deltatech_sale_picking_status",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Sale order picking status",
+    "last_ingest": "2026-11-10",
+    "friendly_name": "Sale Delivery Status",
     "summary": "Modulul adaugă pe comanda de vânzare un indicator de stare a livrării (recepțiilor/expedițiilor), calculat automat pe baza stării transferurilor de stoc asociate. Astfel, echipa de vânzări poate vedea dintr-o privire, direct din lista sau formularul comenzii, dacă marfa a fost complet livrată sau dacă procesul de picking este încă în desfășurare, fără să mai deschidă fiecare transfer în parte.",
     "features": [
       "Adaugă un câmp de stare a livrării (`picking_status`) pe comanda de vânzare.",
       "Starea devine Efectuat (Done) atunci când toate transferurile (pickings) comenzii sunt în starea „Efectuat\" sau „Anulat\".",
-      "Starea rămâne În curs (In Progress) dacă cel puțin un transfer nu este încă finalizat sau anulat."
+      "Starea rămâne În curs (In Progress) dacă cel puțin un transfer nu este încă finalizat sau anulat, sau dacă comanda nu are încă transferuri.",
+      "Starea urmărește și schimbările stării comenzii: o ofertă (draft/trimisă) este „În curs\", iar o comandă anulată este „Efectuat\"; o comandă anulată și readusă la ofertă revine la „În curs\".",
+      "Filtre „Done\" / „In progress\" în căutarea comenzilor, plus insignă (badge) în liste și în formular.",
+      "La actualizarea modulului, starea comenzilor existente se recalculează automat (corectează valorile greșite din versiunile anterioare)."
     ],
     "dependencies": [
       "sale_stock"
@@ -11180,12 +11203,12 @@
       "action_cancel",
       "_action_done"
     ],
-    "text": "Sale order picking status\ndeltatech_sale_picking_status\nModulul adaugă pe comanda de vânzare un indicator de stare a livrării (recepțiilor/expedițiilor), calculat automat pe baza stării transferurilor de stoc asociate. Astfel, echipa de vânzări poate vedea dintr-o privire, direct din lista sau formularul comenzii, dacă marfa a fost complet livrată sau dacă procesul de picking este încă în desfășurare, fără să mai deschidă fiecare transfer în parte.\nAdaugă un câmp de stare a livrării (`picking_status`) pe comanda de vânzare.\nStarea devine Efectuat (Done) atunci când toate transferurile (pickings) comenzii sunt în starea „Efectuat\" sau „Anulat\".\nStarea rămâne În curs (In Progress) dacă cel puțin un transfer nu este încă finalizat sau anulat."
+    "text": "Sale Delivery Status\ndeltatech_sale_picking_status\nModulul adaugă pe comanda de vânzare un indicator de stare a livrării (recepțiilor/expedițiilor), calculat automat pe baza stării transferurilor de stoc asociate. Astfel, echipa de vânzări poate vedea dintr-o privire, direct din lista sau formularul comenzii, dacă marfa a fost complet livrată sau dacă procesul de picking este încă în desfășurare, fără să mai deschidă fiecare transfer în parte.\nAdaugă un câmp de stare a livrării (`picking_status`) pe comanda de vânzare.\nStarea devine Efectuat (Done) atunci când toate transferurile (pickings) comenzii sunt în starea „Efectuat\" sau „Anulat\".\nStarea rămâne În curs (In Progress) dacă cel puțin un transfer nu este încă finalizat sau anulat, sau dacă comanda nu are încă transferuri.\nStarea urmărește și schimbările stării comenzii: o ofertă (draft/trimisă) este „În curs\", iar o comandă anulată este „Efectuat\"; o comandă anulată și readusă la ofertă revine la „În curs\".\nFiltre „Done\" / „In progress\" în căutarea comenzilor, plus insignă (badge) în liste și în formular.\nLa actualizarea modulului, starea comenzilor existente se recalculează automat (corectează valorile greșite din versiunile anterioare)."
   },
   {
     "path": "deltatech_sale_product_reference/index.md",
     "module": "deltatech_sale_product_reference",
-    "version": "19.0.2.2.5",
+    "version": "19.0.2.2.6",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_product_reference`",
     "local_path": "odoo-addons/bitshop/deltatech_sale_product_reference",
     "last_ingest": "2026-09-29",
@@ -11468,7 +11491,7 @@
   {
     "path": "deltatech_sale_store/index.md",
     "module": "deltatech_sale_store",
-    "version": "19.0.2.6.2",
+    "version": "19.0.2.6.3",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_store",
     "local_path": "odoo-addons/bitshop/deltatech_sale_store",
     "last_ingest": "2026-09-29",
@@ -11511,7 +11534,7 @@
   {
     "path": "deltatech_sale_store_report/index.md",
     "module": "deltatech_sale_store_report",
-    "version": "19.0.1.1.9",
+    "version": "19.0.1.1.10",
     "github": "[https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_store_report](https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_store_report)",
     "local_path": "odoo-addons/bitshop/deltatech_sale_store_report",
     "last_ingest": "2026-07-31",
@@ -11594,7 +11617,7 @@
   {
     "path": "deltatech_sale_withdrawal/index.md",
     "module": "deltatech_sale_withdrawal",
-    "version": "19.0.0.3.7",
+    "version": "19.0.0.3.9",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_withdrawal",
     "local_path": "odoo-addons/bitshop/deltatech_sale_withdrawal",
     "last_ingest": null,
@@ -11629,7 +11652,7 @@
   {
     "path": "deltatech_sale_withdrawal_stock/index.md",
     "module": "deltatech_sale_withdrawal_stock",
-    "version": "19.0.0.2.5",
+    "version": "19.0.0.2.10",
     "github": "[https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_withdrawal_stock](https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_withdrawal_stock)",
     "local_path": "odoo-addons/bitshop/deltatech_sale_withdrawal_stock",
     "last_ingest": null,
@@ -11771,7 +11794,7 @@
   {
     "path": "deltatech_service/index.md",
     "module": "deltatech_service",
-    "version": "19.0.2.0.6",
+    "version": "19.0.2.0.7",
     "github": "`https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service`",
     "local_path": "odoo-addons/deltatech_service/deltatech_service",
     "last_ingest": "2026-06-08",
@@ -12034,7 +12057,7 @@
   {
     "path": "deltatech_smartbill/index.md",
     "module": "deltatech_smartbill",
-    "version": "19.0.1.0.8",
+    "version": "19.0.1.0.9",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_smartbill",
     "local_path": "odoo-addons/bitshop/deltatech_smartbill",
     "last_ingest": "2026-10-22",
@@ -12979,7 +13002,7 @@
   {
     "path": "deltatech_van_sales/index.md",
     "module": "deltatech_van_sales",
-    "version": "19.0.1.0.7",
+    "version": "19.0.1.0.8",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_van_sales",
     "local_path": "odoo-addons/bitshop/deltatech_van_sales",
     "last_ingest": "2026-09-13",
@@ -13746,7 +13769,7 @@
   {
     "path": "deltatech_website_effects/index.md",
     "module": "deltatech_website_effects",
-    "version": "19.0.1.3.3",
+    "version": "19.0.1.3.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_effects",
     "local_path": "odoo-addons/bitshop/deltatech_website_effects",
     "last_ingest": "2026-10-18",
@@ -14078,7 +14101,7 @@
   {
     "path": "deltatech_website_sale_campaign/index.md",
     "module": "deltatech_website_sale_campaign",
-    "version": "19.0.1.2.2",
+    "version": "19.0.1.2.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_sale_campaign",
     "local_path": "odoo-addons/bitshop/deltatech_website_sale_campaign",
     "last_ingest": "2026-11-09",
@@ -14113,7 +14136,7 @@
   {
     "path": "deltatech_website_sale_category/index.md",
     "module": "deltatech_website_sale_category",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.1.2",
     "github": "[https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_sale_category](https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_sale_category)",
     "local_path": "odoo-addons/bitshop/deltatech_website_sale_category",
     "last_ingest": "2026-07-31",
@@ -14163,7 +14186,7 @@
   {
     "path": "deltatech_website_sale_effects/index.md",
     "module": "deltatech_website_sale_effects",
-    "version": "19.0.1.4.8",
+    "version": "19.0.1.4.9",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_sale_effects",
     "local_path": "odoo-addons/bitshop/deltatech_website_sale_effects",
     "last_ingest": "2026-10-18",
@@ -14359,7 +14382,7 @@
   {
     "path": "deltatech_website_seo/index.md",
     "module": "deltatech_website_seo",
-    "version": "19.0.1.1.4",
+    "version": "19.0.1.1.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_seo",
     "local_path": "odoo-addons/bitshop/deltatech_website_seo",
     "last_ingest": "2026-07-31",
@@ -14387,7 +14410,7 @@
   {
     "path": "deltatech_website_shop_header/index.md",
     "module": "deltatech_website_shop_header",
-    "version": "19.0.1.0.8",
+    "version": "19.0.1.0.9",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_shop_header",
     "local_path": "odoo-addons/bitshop/deltatech_website_shop_header",
     "last_ingest": "2026-10-22",
@@ -14416,7 +14439,7 @@
   {
     "path": "deltatech_website_shop_snippets/index.md",
     "module": "deltatech_website_shop_snippets",
-    "version": "19.0.1.1.13",
+    "version": "19.0.1.1.14",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_shop_snippets",
     "local_path": "odoo-addons/bitshop/deltatech_website_shop_snippets",
     "last_ingest": "2026-10-22",
@@ -14624,7 +14647,7 @@
   {
     "path": "deltatech_website_watermark/index.md",
     "module": "deltatech_website_watermark",
-    "version": "19.0.1.0.13",
+    "version": "19.0.1.0.14",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_watermark",
     "local_path": "odoo-addons/bitshop/deltatech_website_watermark",
     "last_ingest": "2026-11-09",
@@ -14677,7 +14700,7 @@
   {
     "path": "deltatech_widget_hierarchy_m2o/index.md",
     "module": "deltatech_widget_hierarchy_m2o",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_widget_hierarchy_m2o",
     "local_path": "odoo-addons/bitshop/deltatech_widget_hierarchy_m2o",
     "last_ingest": "2026-07-31",
@@ -14731,7 +14754,7 @@
   {
     "path": "deltatech_work_days_report/index.md",
     "module": "deltatech_work_days_report",
-    "version": "19.0.0.0.10",
+    "version": "19.0.0.0.11",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_work_days_report",
     "local_path": "odoo-addons/bitshop/deltatech_work_days_report",
     "last_ingest": "2026-08-20",
@@ -17862,7 +17885,7 @@
   {
     "path": "l10n_ro_fixed_assets/index.md",
     "module": "l10n_ro_fixed_assets",
-    "version": "19.0.1.17.4",
+    "version": "19.0.1.17.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_fixed_assets",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_fixed_assets",
     "last_ingest": null,
@@ -21208,7 +21231,7 @@
   {
     "path": "l10n_ro_stock_pack_cmp/index.md",
     "module": "l10n_ro_stock_pack_cmp",
-    "version": "19.0.1.3.7",
+    "version": "19.0.1.4.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_pack_cmp",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_pack_cmp",
     "last_ingest": "2026-08-20",
@@ -21656,7 +21679,7 @@
   {
     "path": "l10n_ro_vat_change/index.md",
     "module": "l10n_ro_vat_change",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/l10n_ro_vat_change",
     "local_path": "odoo-addons/terrabit/l10n_ro_vat_change",
     "last_ingest": "2026-10-22",
@@ -22136,7 +22159,7 @@
   {
     "path": "terrabit_delivery_staff/index.md",
     "module": "terrabit_delivery_staff",
-    "version": "19.0.0.0.17",
+    "version": "19.0.0.0.18",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_delivery_staff`",
     "local_path": "odoo-addons/bitshop/terrabit_delivery_staff",
     "last_ingest": "2026-08-20",
@@ -22187,7 +22210,7 @@
   {
     "path": "terrabit_facebook_pixel/index.md",
     "module": "terrabit_facebook_pixel",
-    "version": "19.0.0.1.9",
+    "version": "19.0.0.1.10",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_facebook_pixel",
     "local_path": "odoo-addons/bitshop/terrabit_facebook_pixel",
     "last_ingest": null,
@@ -22218,7 +22241,7 @@
   {
     "path": "terrabit_google_tag/index.md",
     "module": "terrabit_google_tag",
-    "version": "19.0.0.1.4",
+    "version": "19.0.0.1.5",
     "github": "[https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_google_tag](https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_google_tag)",
     "local_path": "odoo-addons/bitshop/terrabit_google_tag",
     "last_ingest": "2026-07-31",
@@ -22757,7 +22780,7 @@
   {
     "path": "terrabit_partner_credit_limit/index.md",
     "module": "terrabit_partner_credit_limit",
-    "version": "19.0.1.5.2",
+    "version": "19.0.1.5.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_partner_credit_limit",
     "local_path": "odoo-addons/bitshop/terrabit_partner_credit_limit",
     "last_ingest": "2026-09-29",
@@ -22796,7 +22819,7 @@
   {
     "path": "terrabit_partner_credit_limit_review/index.md",
     "module": "terrabit_partner_credit_limit_review",
-    "version": "19.0.0.1.7",
+    "version": "19.0.0.1.8",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_partner_credit_limit_review",
     "local_path": "odoo-addons/bitshop/terrabit_partner_credit_limit_review",
     "last_ingest": "2026-10-01",
@@ -22826,7 +22849,7 @@
   {
     "path": "terrabit_partner_credit_limit_website/index.md",
     "module": "terrabit_partner_credit_limit_website",
-    "version": "19.0.0.0.6",
+    "version": "19.0.0.0.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_partner_credit_limit_website",
     "local_path": "odoo-addons/bitshop/terrabit_partner_credit_limit_website",
     "last_ingest": "2026-09-14",
@@ -22857,7 +22880,7 @@
   {
     "path": "terrabit_partner_payable_receivable/index.md",
     "module": "terrabit_partner_payable_receivable",
-    "version": "19.0.1.2.6",
+    "version": "19.0.1.2.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_partner_payable_receivable",
     "local_path": "odoo-addons/bitshop/terrabit_partner_payable_receivable",
     "last_ingest": "2026-08-20",
@@ -22882,7 +22905,7 @@
   {
     "path": "terrabit_picking_flow/index.md",
     "module": "terrabit_picking_flow",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_picking_flow`",
     "local_path": "odoo-addons/bitshop/terrabit_picking_flow",
     "last_ingest": "2026-07-31",
@@ -22940,7 +22963,7 @@
   {
     "path": "terrabit_tiktok_pixel/index.md",
     "module": "terrabit_tiktok_pixel",
-    "version": "19.0.0.1.8",
+    "version": "19.0.0.1.9",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_tiktok_pixel",
     "local_path": "odoo-addons/bitshop/terrabit_tiktok_pixel",
     "last_ingest": null,

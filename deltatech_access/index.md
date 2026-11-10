@@ -1,7 +1,7 @@
 # Access Field Control (localizat la `deltatech_access/index.md`)
 
 - **Nume Tehnic:** `deltatech_access`
-- **Versiune:** `19.0.0.0.10`
+- **Versiune:** `19.0.0.0.11`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_access
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_access`
 - **Ultima Ingestie:** `2026-11-03`

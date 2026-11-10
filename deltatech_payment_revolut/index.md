@@ -1,10 +1,11 @@
 # Revolut Payment Provider (localizat la `deltatech_payment_revolut/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_revolut`
-- **Versiune:** `19.0.0.0.28`
+- **Versiune:** `19.0.0.0.31`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_revolut`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_revolut`
 - **Ultima Ingestie:** `2026-08-20`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

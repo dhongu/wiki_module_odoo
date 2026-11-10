@@ -1,7 +1,7 @@
 # Website Sales Campaigns
 
 - **Nume Tehnic:** `deltatech_website_sale_campaign`
-- **Versiune:** `19.0.1.2.2`
+- **Versiune:** `19.0.1.2.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_sale_campaign
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_website_sale_campaign`
 - **Ultima Ingestie:** `2026-11-09`

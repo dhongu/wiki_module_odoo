@@ -4,19 +4,20 @@
 - **Versiune:** `19.0.0.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_activity_search
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_activity_search`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-10`
 
 #### 1. Sumar
 
-Modulul îmbunătățește căutarea și filtrarea comenzilor de vânzare din Odoo, oferind vizibilitate imediată asupra activităților active asociate fiecărei comenzi. Este util echipelor de vânzări și managerilor care doresc să identifice rapid comenzile ce necesită atenție sau care au sarcini de un anumit tip încă nerezolvate (apeluri, e-mailuri, întâlniri etc.).
+Modulul păstrează pe fiecare comandă de vânzare un câmp text cu tipurile activităților sale în așteptare, astfel încât comenzile să poată fi găsite după felul de follow-up pe care îl așteaptă (de exemplu „Apel", „E-mail" sau un tip de activitate personalizat). Este util echipelor de vânzări și managerilor care vor să identifice rapid comenzile ce necesită atenție.
 
 #### 2. Funcționalități Cheie
 
-- **Vizibilitate asupra tipurilor de activitate:** adaugă un câmp tehnic pe comanda de vânzare care reține tipurile de activități active (în așteptare) pentru acea comandă.
-- Permite utilizatorilor să vadă dintr-o privire dacă o comandă are programate activități de tip „Apel", „E-mail", „Întâlnire" sau tipuri personalizate.
-- **Căutare și filtrare îmbunătățite:** oferă filtre specializate pentru găsirea comenzilor de vânzare în funcție de tipurile de activități active.
-- Crește eficiența proceselor de urmărire (follow-up), permițând echipelor de vânzări să prioritizeze comenzile în funcție de sarcinile programate.
-- **Integrare între module:** conectează fără fricțiuni modulele native **Vânzări (Sale)** și **Mail (Discuss)** din Odoo.
+- **Câmpul stocat „Active Activity Types":** conține, separate prin virgulă, numele tipurilor activităților deschise ale comenzii.
+- **Actualizare automată:** câmpul se reîmprospătează la programarea unei activități pe comandă, la modificarea ei (inclusiv în masă), la mutarea pe altă comandă sau alt document, la marcarea ca efectuată sau la anulare.
+- **Căutare după tipul activității:** fiind stocat, câmpul se folosește într-un filtru personalizat: în **Vânzări > Comenzi > Oferte** sau **Vânzări > Comenzi > Comenzi**, din meniul de filtre alegeți **Adaugă filtru personalizat** și construiți o condiție pe „Active Activity Types" (ex. *conține* „Call").
+- **Limitări:**
+  - modulul nu adaugă vizualizări, filtre sau coloane; câmpul e accesibil doar prin filtru personalizat, grupare personalizată sau export;
+  - câmpul se completează doar pentru activitățile create, modificate sau șterse după instalare; comenzile cu activități programate înainte rămân goale până la prima modificare a unei activități.
 
 #### 3. Dependențe
 
@@ -25,7 +26,7 @@ Modulul îmbunătățește căutarea și filtrarea comenzilor de vânzare din Od
 
 #### 4. Componente Cheie
 
-*Secțiune populată din `readme/DESCRIPTION.md`; analiza detaliată a codului a fost omisă conform fluxului de ingestie.*
+*Secțiune omisă conform fluxului de ingestie: `readme/DESCRIPTION.md` nu menționează explicit componente tehnice, iar modulul nu are fișiere de date sau vizualizări (`data: []`).*
 
 #### 5. Conexiuni
 

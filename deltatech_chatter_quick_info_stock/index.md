@@ -1,7 +1,7 @@
 # Chatter Quick Info: Stock and Reservations
 
 - **Nume Tehnic:** `deltatech_chatter_quick_info_stock`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter_quick_info_stock
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_chatter_quick_info_stock`
 - **Ultima Ingestie:** `2026-10-17`

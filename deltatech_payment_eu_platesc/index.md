@@ -1,7 +1,7 @@
 # EuPlatesc.ro Payment (localizat la `deltatech_payment_eu_platesc/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_eu_platesc`
-- **Versiune:** `19.0.0.1.6`
+- **Versiune:** `19.0.0.1.7`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_eu_platesc
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_eu_platesc`
 - **Ultima Ingestie:** `2026-10-26`

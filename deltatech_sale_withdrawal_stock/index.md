@@ -1,10 +1,11 @@
 # Sale Withdrawal - Stock (localizat la `deltatech_sale_withdrawal_stock/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_withdrawal_stock`
-- **Versiune:** `19.0.0.2.5`
+- **Versiune:** `19.0.0.2.10`
 - **Cale:** [https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_withdrawal_stock](https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_withdrawal_stock)
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_withdrawal_stock`
 - **Ultima Ingestie:** 2026-09-22
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

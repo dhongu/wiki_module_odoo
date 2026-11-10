@@ -1,7 +1,7 @@
 # Interfață ContWin (localizat la `deltatech_contwin/index.md`)
 
 - **Nume Tehnic:** `deltatech_contwin`
-- **Versiune:** `19.0.1.0.16`
+- **Versiune:** `19.0.1.0.17`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_contwin
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_contwin`
 - **Ultima Ingestie:** `2026-10-31`

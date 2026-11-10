@@ -1,7 +1,7 @@
 # Deltatech Sale from Store (localizat la `deltatech_sale_store/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_store`
-- **Versiune:** `19.0.2.6.2`
+- **Versiune:** `19.0.2.6.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_store
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_store`
 - **Ultima Ingestie:** `2026-09-29`

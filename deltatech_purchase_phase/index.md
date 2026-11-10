@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.2.9`
 - **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_phase](https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_phase)
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_phase`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-10`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -15,9 +15,10 @@ Modulul adaugă o urmărire ușoară a fazei (stadiului) pe comenzile de achizi�
 
 - Câmp nou `phase_id` pe `purchase.order`, afișat ca insignă colorată (`many2one_badge`) și urmărit în chatter (tracking).
 - Tranziții automate de fază legate de starea comenzii: la trimiterea RFQ (`state = sent`) faza devine `rfq`; la confirmarea comenzii (`state = purchase`) faza devine `purchase_confirm`.
-- Tranziții automate de fază legate de livrare: când un transfer de stoc (`stock.picking`) asociat comenzii de achiziție își schimbă `delivery_state`, faza comenzii este actualizată automat — `pre_advice` → fază `pre_advice`; `in_transit`/`in_warehouse`/`in_delivery` → fază `shipped`; `delivered` → fază `delivered`; `refused` → fază `refused` (*funcționalitate implementată în cod, dar nemenționată în `readme/DESCRIPTION.md` — vezi avertismentul din raport*).
+- Tranziții automate de fază legate de livrare: când un transfer de stoc (`stock.picking`) asociat comenzii de achiziție își schimbă `delivery_state`, faza comenzii este actualizată automat — `pre_advice` → fază `pre_advice`; `in_transit`/`in_warehouse`/`in_delivery` → fază `shipped`; `delivered` → fază `delivered`; `refused` → fază `refused`.
 - Fazele sunt configurabile liber (cod tehnic unic + nume afișat) din meniul Achiziții → Configurare → Purchase Order Phase; dacă un cod de fază referit nu există, se creează automat.
 - Control manual: utilizatorii pot schimba oricând faza direct din formularul comenzii, iar modificările sunt auditabile prin chatter.
+- Metoda helper `set_phase(code)` poate fi apelată și din cod sau acțiuni server pentru faze personalizate.
 - Opțiune de a sări peste actualizările automate ale fazei, prin contextul `{"skip_phase_update": True}` la scrieri programatice pe `purchase.order` (util la import de date sau fluxuri speciale).
 
 #### 3. Dependențe
@@ -43,7 +44,7 @@ Modulul adaugă o urmărire ușoară a fazei (stadiului) pe comenzile de achizi�
 **Acțiuni Automate / Acțiuni Server**
 
 - Nu sunt definite `ir.cron`, `base.automation` sau `ir.actions.server` proprii în modul. Modelul `purchase.order.phase` expune totuși un câmp opțional `action_id` (legătură către `ir.actions.server`), pregătit pentru extinderi, dar neutilizat implicit.
-- Date demo/configurare inițială (`data/purchase_order_phase_data.xml`): fazele predefinite `rfq`, `purchase_confirm`, `pre_advice`, `shipped`, `delivered`.
+- Date demo/configurare inițială (`data/purchase_order_phase_data.xml`): fazele predefinite `rfq`, `purchase_confirm`, `pre_advice`, `shipped`, `delivered`, `refused`.
 
 #### 5. Conexiuni
 

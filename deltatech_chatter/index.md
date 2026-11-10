@@ -1,7 +1,7 @@
 # Resizable Chatter Panel (importable, Odoo Online) (localizat la `deltatech_chatter/index.md`)
 
 - **Nume Tehnic:** `deltatech_chatter`
-- **Versiune:** `19.0.0.1.3`
+- **Versiune:** `19.0.0.1.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_chatter`
 - **Ultima Ingestie:** `2026-11-09`

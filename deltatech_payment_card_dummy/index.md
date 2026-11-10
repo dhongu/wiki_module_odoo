@@ -1,7 +1,7 @@
 # Card Dummy Payment (localizat la `deltatech_payment_card_dummy/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_card_dummy`
-- **Versiune:** `19.0.0.0.8`
+- **Versiune:** `19.0.0.0.9`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_card_dummy
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_card_dummy`
 - **Ultima Ingestie:** `2026-11-01`

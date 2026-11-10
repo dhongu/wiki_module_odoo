@@ -1,7 +1,7 @@
 # Employee Gifts (Cadouri pentru angajați)
 
 - **Nume Tehnic:** `deltatech_partner_gifts_employees`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_gifts_employees
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_partner_gifts_employees`
 - **Ultima Ingestie:** `2026-10-22`

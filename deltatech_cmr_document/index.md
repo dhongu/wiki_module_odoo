@@ -1,7 +1,7 @@
 # CMR Document (localizat la `deltatech_cmr_document/index.md`)
 
 - **Nume Tehnic:** `deltatech_cmr_document`
-- **Versiune:** `19.0.1.3.0`
+- **Versiune:** `19.0.1.3.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_cmr_document
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_cmr_document`
 - **Ultima Ingestie:** `2026-11-10`
