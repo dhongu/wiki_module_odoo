@@ -1,7 +1,7 @@
 # Barcode Picking (localizat la `deltatech_barcode_picking/index.md`)
 
 - **Nume Tehnic:** `deltatech_barcode_picking`
-- **Versiune:** `19.0.2.2.10`
+- **Versiune:** `19.0.2.2.11`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_barcode_picking
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_barcode_picking`
 - **Ultima Ingestie:** `2026-11-08`

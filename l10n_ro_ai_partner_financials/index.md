@@ -1,7 +1,7 @@
 # Romania - Bonitatea partenerilor pentru Plutus (AI)
 
 - **Nume Tehnic:** `l10n_ro_ai_partner_financials`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_ai_partner_financials
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_ai_partner_financials`
 - **Ultima Ingestie:** `2026-10-27`

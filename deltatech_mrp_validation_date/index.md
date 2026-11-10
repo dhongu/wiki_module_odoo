@@ -2,9 +2,9 @@
 
 - **Nume Tehnic:** `deltatech_mrp_validation_date`
 - **Versiune:** `19.0.0.0.4`
-- **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_validation_date](https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_validation_date)
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_validation_date
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_mrp_validation_date`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-10`
 
 #### 1. Sumar
 
@@ -12,9 +12,12 @@ Modulul înregistrează data exactă la care o comandă de fabricație este vali
 
 #### 2. Funcționalități Cheie
 
-- Adaugă un câmp **Dată Validare** pe formularul comenzii de fabricație, completat automat când operatorul apasă **Marchează ca Efectuată**.
-- Câmpul este needitabil (read-only) — este setat de sistem și nu poate fi modificat manual, garantând integritatea datelor.
+- Adaugă un câmp **Validation Date** (Dată Validare) pe formularul comenzii de fabricație, în antet, înaintea câmpului Responsabil, completat automat când operatorul apasă **Mark as Done** (Marchează ca Efectuată).
+- Câmpul este needitabil: este setat de sistem și nu poate fi modificat manual, ceea ce garantează integritatea datelor.
+- Data se scrie doar pe comenzile care au ajuns efectiv în starea „Efectuată" (nu și când Odoo deschide întâi un wizard de backorder sau de consum și comanda rămâne neterminată după anularea lui), în fusul orar al utilizatorului; data unei comenzi deja efectuate se păstrează.
 - Funcționează alături de câmpurile standard de planificare MRP (dată programată, dată finalizare) pentru a oferi o cronologie completă a producției.
+
+Flux: **Manufacturing > Manufacturing Orders** → se procesează comanda normal (confirmare, consum componente, cantități produse) → **Mark as Done** → **Validation Date** se completează cu data de azi.
 
 #### 3. Dependențe
 
@@ -24,7 +27,7 @@ Modulul înregistrează data exactă la care o comandă de fabricație este vali
 
 **Modele**
 
-- `mrp.production` (extins): adaugă câmpul `validation_date` (Date, needitabil) și suprascrie `button_mark_done()` pentru a seta automat data curentă la validarea comenzii.
+- `mrp.production` (extins): adaugă câmpul `validation_date` (Date, needitabil) și suprascrie `button_mark_done()`; după apelul părintelui, setează data curentă (în fusul orar al utilizatorului) doar pe comenzile trecute efectiv în `done` prin acel apel.
 
 **Vizualizări**
 

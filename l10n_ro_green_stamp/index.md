@@ -1,7 +1,7 @@
 # Romania - Timbru verde (DEEE)
 
 - **Nume Tehnic:** `l10n_ro_green_stamp`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_green_stamp
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_green_stamp`
 - **Ultima Ingestie:** `2026-11-03`

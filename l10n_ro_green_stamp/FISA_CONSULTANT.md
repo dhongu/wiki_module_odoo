@@ -150,6 +150,9 @@ scoateți filtrul „Vânzări” și alegeți **Achiziții**.
   suplimentare.
 - `l10n_ro_sgr`: același mecanism pentru garanția SGR (pe produse diferite).
 - `l10n_ro_environmental_tax`: contribuția la Fondul pentru mediu, separată de timbru.
+- `l10n_ro_green_tax_analytic`: alternativa pentru clienții care nu vor linie separată de timbru pe comenzi
+  și facturi: taxa verde rămâne în preț, se înregistrează în analitic la validarea transferului și se menționează
+  printr-o notă pe factură. Cele două module se exclud reciproc, deci alegerea se face la implementare.
 - Decontul de TVA (D300): timbrul intră pe rândul livrărilor cu cota echipamentului.
 
 ## 8. Verificări pentru consultant
@@ -190,6 +193,8 @@ scoateți filtrul „Vânzări” și alegeți **Achiziții**.
 ## 11. Observații pentru manual
 
 - Punctul de vânzare (POS) nu folosește suma de pe produs.
+- Clienții care nu vor linie separată de timbru verde pe comenzi și facturi folosesc `l10n_ro_green_tax_analytic`
+  (taxa în analitic și notă pe factură); cele două module nu pot fi instalate împreună.
 - Bateriile portabile nu primesc timbru separat (HG nr. 1132/2008, art. 12 alin. (4)).
 - Fără modulul `stock_landed_costs`, linia de timbru din factura furnizorului merge pe contul de
   cheltuieli implicit al produsului „Timbru verde” (în planul RO 607), deci nu intră în costul

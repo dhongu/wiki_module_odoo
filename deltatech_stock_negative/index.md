@@ -1,7 +1,7 @@
 # Fără Stoc Negativ (localizat la `deltatech_stock_negative/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_negative`
-- **Versiune:** `19.0.2.1.1`
+- **Versiune:** `19.0.2.1.2`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_negative`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_negative`
 - **Ultima Ingestie:** `2026-10-22`

@@ -45,6 +45,11 @@ D300 este decontul de taxă pe valoarea adăugată depus de persoanele impozabil
 1. Instalați `l10n_ro_anaf_d300`, `l10n_ro_anaf_base`, `account_reports` și localizarea RO.
 2. Verificați că raportul de taxe RO este disponibil pentru companie.
 3. Verificați taxele de vânzare/cumpărare: fiecare cotă trebuie să alimenteze rândul D300 corect prin tax tags.
+   Dintre taxele cu deducere limitată la 50% (art. 298 Cod fiscal), doar **„21% ND 50%”** și **„19% ND 50%”**
+   sunt active, pentru că doar ele au cod SAF-T activ în nomenclatorul ANAF. „11% ND 50%”, „11% IC ND 50%”,
+   „9% ND 50%” și „5% ND 50%” sunt arhivate și nu mai apar în selecția de taxe de pe facturi. Pe o bază
+   existentă, actualizarea modulului (versiunea 19.0.0.0.34) aplică aceeași stare; facturile deja
+   înregistrate își păstrează taxa.
 4. Completați datele companiei: CUI, județ, oraș, adresă, **cod CAEN** și date reprezentant. Codul CAEN
    (atributul `caen` din XML) se completează pe formularul companiei sau în **Setări → Contabilitate → Declarații ANAF**;
    căutarea ANAF a partenerului nu îl schimbă.
@@ -86,16 +91,16 @@ standard `Contabilitate → Raportare → Raport TVA`:
 
 ### Pasul 2 — Generare fișiere ANAF (XML Soft J / XDP)
 
-Exporturile ANAF se găsesc în meniul **rotiță (⚙)** din bara raportului:
+Exporturile ANAF sunt butoane în bara raportului, lângă PDF și XLSX:
 
-![Meniul de export ANAF: XML (Soft J) și XDP (Soft A)](screenshots/02_export_xml.png)
+![Butoanele de export ANAF: XML (Soft J) și XDP (Soft A)](screenshots/02_export_xml.png)
 
-6. Apăsați rotița ⚙ și alegeți **„D300 file XML (Soft J)"** pentru validare în DUKIntegrator.
+6. Apăsați **„D300 file XML (Soft J)"** pentru validare în DUKIntegrator.
    Înainte de generare, modulul validează datele companiei (CUI, județ, adresă, reprezentant) și,
    pentru XML, structura față de schema XSD; o eroare oprește exportul cu mesaj explicit. XML-ul
    conține și rândurile informative A / A1 / B / B1 (atributele `valoare_a` … `tva_b1`), cu aceleași
    valori ca în PDF.
-7. Alegeți **„D300 file XDP (Soft A)"** dacă se folosește formularul PDF inteligent ANAF. În
+7. Apăsați **„D300 file XDP (Soft A)"** dacă se folosește formularul PDF inteligent ANAF. În
    formular verificați secțiunea „Regularizări conform art. 303": rd. 38 preia TVA de plată din
    decontul precedent neachitat (sold creditor 4423, minus plățile din perioadă), rd. 41 soldul
    negativ reportat (sold debitor 4424, dacă nu s-a cerut rambursarea), iar rd. 39 și rd. 42
@@ -122,6 +127,29 @@ dedicate — „Generează D300 (TVA)" (deschide raportul pre-filtrat pe perioad
 9. Parcurgeți checklist-ul: generați D300, validați/atașați fișierul semnat, marcați verificările ca
    revizuite și avansați declarația prin etape până la depunere.
 
+### Pasul 4 — Achiziții cu deducere limitată la 50% (vehicule, art. 298)
+
+Meniu: `Contabilitate → Furnizori → Facturi`.
+
+10. Pe factura unei cheltuieli cu vehiculul (combustibil, reparații, întreținere, chirie), alegeți pe
+    linie **„21% ND 50%”**. Jumătate din TVA merge în 4426 (dedusă), jumătate pe 6352 (nededusă). În
+    D300, la o bază de 1.000 lei: **rd. 24** are baza și TVA-ul brut (210), **rd. 31** doar TVA-ul
+    dedus (105).
+
+    ![Factură de achiziție cu „21% ND 50%”: TVA-ul pe 4426 și 6352](screenshots/05_factura_nd50.png)
+
+    La **cumpărarea vehiculului ca mijloc fix**, partea nededusă face parte din costul de achiziție
+    (Dr 2133, contrapartida 404), nu din cheltuieli. Taxa trimite însă partea nededusă pe 6352:
+    stabiliți tratamentul cu contabilul înainte de a valida factura.
+11. Pentru o factură la cota veche (înregistrată târziu, storno sau rată de leasing cu fapt generator
+    înainte de 01.08.2025), alegeți **„19% ND 50%”**. Partea dedusă apare pe **rd. 33**
+    (regularizări taxă dedusă), cu baza întreagă și doar TVA-ul dedus (1.000 lei bază → 95), nu pe rd. 24.
+    Rd. 33 nu are coloane separate pentru TVA brut și TVA dedus, ca rd. 24 / 31, deci primește doar
+    partea dedusă.
+12. Taxa „11% ND 50%” este arhivată și nu apare în selecție: nicio cheltuială aferentă vehiculului nu
+    are cota redusă. Dacă o găsiți pe o factură veche, verificați cu contabilul dacă trebuie stornată și reînregistrată cu
+    „21% ND 50%” sau cu 11% integral deductibil.
+
 ## 7. Monografie și controale contabile
 
 | Situație | Control contabil |
@@ -133,6 +161,7 @@ dedicate — „Generează D300 (TVA)" (deschide raportul pre-filtrat pe perioad
 | Rd. B / B1 (facturi primite cu TVA la încasare) | sold nededus la sfârșitul perioadei (art. 297 alin. (2)-(3)); TVA din rd. B ≈ soldul debitor 4428 „TVA neexigibilă deductibilă". O notă de credit primită, încasată parțial, rămâne cu minus doar pentru partea neîncasată (rd. B crește față de decontul anterior, ca în jurnalul de cumpărări). B1 = din care ultimele 6 luni / 2 trimestre |
 | Taxare inversă | verificați simetria 4426/4427 și rândurile D300 aferente |
 | Import fără plata efectivă a TVA în vamă (art. 326 alin. (4)-(5): certificat de amânare, vămuire centralizată, înscriere în evidențele declarantului, bunurile din art. 331 alin. (2) lit. b), c), i)–k)) | pe DVI se alege „21% IMP AM” / „11% IMP AM”: Dr 4426 = Cr 4427 (taxă colectată și deductibilă simultan, art. 326 alin. (5)), fără 446 și fără plată în vamă; baza de impozitare TVA din DVI (art. 289) și TVA-ul pe rd. 7 și 22, în perioada datei DVI (art. 285). Deducerea cere DVI-ul cu importatorul și suma taxei datorate și înscrierea taxei colectate în aceeași perioadă (art. 299 alin. (1) lit. d)). Factura furnizorului extern rămâne pe „0% EX G”, fără grile. Importul cu plata efectivă în vamă (art. 326 alin. (3)) rămâne pe rd. 24 / 25 |
+| Deducere limitată la 50% (art. 298), cota veche 19%, cheltuială cu vehiculul | „19% ND 50%”, bază 1.000 lei: Dr 6xx 1.000 / Dr 4426 95 / Dr 6352 95 = Cr 401 1.190; partea din 4426 pe rd. 33 (regularizări taxă dedusă), partea din 6352 fără rând D300. La cumpărarea vehiculului ca mijloc fix, partea nededusă intră în cost (Dr 2133 = Cr 404), nu pe 6352 |
 | TVA parțial/nedeductibil | rd. 24 / 25 și rd. 30 au TVA-ul deductibil brut (inclusiv partea nededusă: art. 298; art. 297 alin. (4) a contrario, respectiv art. 300 la regim mixt); rd. 31 doar taxa efectiv dedusă — instrucțiunile D300 (OPANAF 174/2026) |
 
 Regularizarea lunară recomandată se documentează separat în fluxul de închidere:
@@ -160,13 +189,15 @@ Notarea exactă depinde de soldurile lunii și de politica modulului de închide
 | D300-05 | TVA parțial deductibilă | doar partea deductibilă intră în deducere |
 | D300-06 | Date companie incomplete | exportul semnalează problema înainte de depunere |
 | D300-07 | Perioadă fără operațiuni | raportul se poate genera fără linii fiscale semnificative |
-| D300-08 | Generare XML Soft J (rotița ⚙) | fișierul XML se generează și trece validarea XSD; cu date companie incomplete → eroare blocantă cu mesaj |
+| D300-08 | Generare XML Soft J (butonul din bara raportului) | fișierul XML se generează și trece validarea XSD; cu date companie incomplete → eroare blocantă cu mesaj |
 | D300-09 | Generare XDP Soft A | fișierul XDP se generează pentru formularul inteligent ANAF |
 | D300-10 | Apăsare buton „Declarații" (Returns) | se deschide tabloul declarațiilor pe perioade; checklist-ul perioadei afișează „Generează D300 (TVA)" și „Atașează D300 (XML semnat)" |
 | D300-11 | Atașare D300 semnat în checklist | fișierul semnat se atașează la declarație, verificarea se marchează revizuită, declarația avansează prin etape |
 | D300-12 | DVI fără plata TVA în vamă (taxa „21% IMP AM”), bază 1.000 lei | rd. 7 și rd. 22: bază 1.000, TVA 210; nimic pe rd. 7.1 / 22.1 sau 24 |
 | D300-13 | Factură emisă și factură primită cu TVA la încasare, neîncasate; o notă de credit primită de 93,56 lei încasată cu 20 lei | factura emisă apare în rd. A / A1, cea primită în rd. B / B1; nota de credit scade rd. B doar cu partea neîncasată (bază 60,79 / TVA 12,77) |
 | D300-14 | Decont precedent cu sold negativ 522 (4424), decont curent cu TVA de plată 1.483, export XDP | în PDF: rd. 39 gol, rd. 41 = 522, rd. 40 = 1.483, rd. 43 = 522, rd. 44 = 961 |
+| D300-15 | Selecția de taxe pe o factură de achiziție, căutare „ND 50%” | apar doar „21% ND 50%” și „19% ND 50%”; „11% ND 50%”, „11% IC ND 50%” (dacă există în bază), „9% ND 50%” și „5% ND 50%” nu apar |
+| D300-16 | Factură de achiziție 1.000 lei cu „19% ND 50%” | rd. 33: bază 1.000, TVA 95; 95 lei pe 6352, fără rând D300; nimic pe rd. 24 |
 
 ## 9. Legături cu alte module / declarații
 
@@ -193,6 +224,7 @@ Ce rămâne de verificat manual: regularizarea contabilă 4426/4427/4423/4424, r
 - [ ] În PDF, rd. 38 / 41 preiau soldurile decontului precedent, iar rd. 39 / 42 sunt goale fără decizie ANAF.
 - [ ] Rd. A / B corespund soldului 4428 la sfârșitul perioadei (facturi emise în A, primite în B).
 - [ ] Datele companiei sunt completate corect.
+- [ ] Taxele „ND 50%” active sunt doar 21% și 19%; achizițiile cu „19% ND 50%” apar pe rd. 33.
 - [ ] Atributul `caen` din XML-ul exportat este codul CAEN de pe companie (formularul companiei sau Setări → Contabilitate → Declarații ANAF).
 - [ ] Perioada închisă nu mai permite modificări fără procedură de corecție.
 - [ ] Fluxul de rambursare/reportare este clar dacă soldul este negativ.
@@ -207,6 +239,7 @@ Ce rămâne de verificat manual: regularizarea contabilă 4426/4427/4423/4424, r
 | Diferență față de balanță | Note manuale fără tax tags sau perioadă greșită | Verificați liniile contabile și data fiscală |
 | TVA la încasare incorectă | 4428/CABA nereconciliat | Verificați plățile și înregistrările cash basis. Rd. A / B sunt solduri la sfârșitul perioadei: includ și facturile încasate / plătite după perioadă, iar notele de credit încasate parțial intră cu minus doar pentru restul neîncasat |
 | TVA deductibilă prea mare | TVA nedeductibilă tratată ca 4426 | Verificați regimul de deductibilitate al taxei |
+| Taxa „11% ND 50%” nu apare în selecție, deși o are o factură veche | Taxele „ND 50%” fără cod SAF-T activ la ANAF sunt arhivate de migrarea 19.0.0.0.34; facturile postate își păstrează taxa | Pentru documente noi folosiți „21% ND 50%” sau, la cota veche, „19% ND 50%”. Factura veche cu „11% ND 50%” se stornează și se reînregistrează cu taxa corectă, după decizia contabilului |
 
 ## 12. Capturi de ecran
 
@@ -217,11 +250,13 @@ Capturile (`static/description/`) sunt **generate automat** din `tests/test_scre
 1. `01_raport_d300.png` — raportul D300 pe **două coloane (Bază / TVA)**: secțiunile TVA colectată,
    TVA deductibilă și regularizări, cu comerț intra-UE, livrări interne (rd. 9 — 21%, rd. 10 — 11%),
    taxare inversă și totalurile pe bază și TVA.
-2. `02_export_xml.png` — meniul rotiță (⚙) cu exporturile ANAF: „D300 file XML (Soft J)" și
+2. `02_export_xml.png` — butoanele de export ANAF din bara raportului: „D300 file XML (Soft J)" și
    „D300 file XDP (Soft A)".
 3. `03_return_dashboard.png` — tabloul „Declarații fiscale" (fluxul Returns), grupat pe perioade.
 4. `04_return_checks.png` — checklist-ul declarației perioadei, cu pașii D300 („Generează D300",
    „Atașează D300 semnat").
+5. `05_factura_nd50.png` — factură de achiziție de 1.000 lei cu „21% ND 50%”: elementele de jurnal
+   cu TVA-ul împărțit între 4426 și 6352.
 
 Regenerare (cu date demo):
 

@@ -1,7 +1,7 @@
 # Website Shop Header (localizat la `deltatech_website_shop_header/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_shop_header`
-- **Versiune:** `19.0.1.0.7`
+- **Versiune:** `19.0.1.0.8`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_shop_header
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_website_shop_header`
 - **Ultima Ingestie:** `2026-10-22`

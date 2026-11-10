@@ -1,10 +1,11 @@
 # Print Queue (Terrabit Connect) (localizat la `deltatech_print_queue/index.md`)
 
 - **Nume Tehnic:** `deltatech_print_queue`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_print_queue
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_print_queue`
 - **Ultima Ingestie:** `2026-09-29`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
