@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-11] Reingestie deltatech_obyc_landed_cost
+
+- **Acțiune:** actualizare la versiunea 19.0.1.0.1: fișa consultant refăcută ca proces complet (comandă de achiziție, recepție, facturi, cost adițional, note), 9 capturi în loc de 5; setarea mutată la configurare.
+- **Sursă:** `readme/FISA_CONSULTANT.md` și `USAGE.md` (PR dhongu/deltatech_stock_valuation#141).
+- **Dependențe/Conexiuni:** neschimbate ([deltatech_obyc](deltatech_obyc/index.md)).
+- **Fișiere actualizate:** `deltatech_obyc_landed_cost/index.md`, `deltatech_obyc_landed_cost/FISA_CONSULTANT.md`, `deltatech_obyc_landed_cost/screenshots/`, `log.md`.
+
 ## [2026-11-11] Ingestie deltatech_obyc_landed_cost
 
 - **Acțiune:** pagină nouă pentru modulul `deltatech_obyc_landed_cost` (costuri adiționale pe OBYC, rutarea creditului clasei 6 printr-un cont intermediar, costul creat din factura furnizorului); fișa consultant copiată cu capturile.

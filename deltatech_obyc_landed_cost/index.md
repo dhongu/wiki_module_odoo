@@ -1,7 +1,7 @@
 # OBYC - Landed Cost Class 6 Routing (localizat la `deltatech_obyc_landed_cost/index.md`)
 
 - **Nume Tehnic:** `deltatech_obyc_landed_cost`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/dhongu/deltatech_stock_valuation/tree/19.0/deltatech_obyc_landed_cost
 - **Cale Locală:** `odoo-addons/deltatech_stock_valuation/deltatech_obyc_landed_cost`
 - **Ultima Ingestie:** `2026-11-11`
@@ -18,7 +18,7 @@ Modulul completează costurile adiționale (landed costs) pentru companiile care
 - Contul intermediar este un cont tehnic ales de companie; nu poate fi din clasa 6 (validare la salvare) și se anulează la zero pe fiecare cost adițional.
 - Nu se rutează niciodată: clasa 609, conturile din afara clasei 6 și debitul unui cost negativ.
 - La crearea costului adițional dintr-o factură de la furnizor (butonul **Creați costuri adiționale**), se preiau recepțiile finalizate ale comenzilor de achiziție din factură care nu sunt deja acoperite de un alt cost adițional validat, iar fiecare linie de cost primește contul liniei corespunzătoare din factură (asociere una-la-una, deci două linii cu același produs își păstrează conturile).
-- Fluxul pas-cu-pas (configurare, document pe recepție, calcul, validare, verificarea notei) este în fișa consultantului.
+- Fluxul complet pas-cu-pas este în fișa consultantului: configurarea (metoda, contul intermediar, regula OBYC), comanda de achiziție, recepția și nota ei, factura furnizorului de marfă, factura transportatorului cu butonul de costuri adiționale, costul adițional (recepția se adaugă în Transferuri dacă factura n-are comandă de achiziție), nota standard și nota prin cont intermediar.
 
 #### 3. Dependențe
 
