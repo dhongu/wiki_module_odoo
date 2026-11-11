@@ -1,7 +1,7 @@
 # Romania - Stock Accounting Landed Cost Account (localizat la `l10n_ro_stock_account_landed_cost_account/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_account_landed_cost_account`
-- **Versiune:** `19.0.1.1.4`
+- **Versiune:** `19.0.1.2.0`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_account_landed_cost_account
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_stock_account_landed_cost_account`
 - **Ultima Ingestie:** `2026-11-11`
@@ -20,10 +20,13 @@ Modulul stabilește conturile contabile corecte pentru notele generate de costur
 - Setare per companie „Landed Cost Class 6 Method" (Contabilitate / setări România):
   - **Standard** (implicit): comportamentul nativ Odoo, valorizare stoc = cont clasa 6;
   - **Prin cont intermediar**: creditul spre clasa 6 este rutat printr-un cont intermediar tehnic (ex. 482.99), rezultând două note echilibrate (valorizare stoc = intermediar și intermediar = clasa 6), utile la exportul în programe de contabilitate externe. Contul intermediar apare și este obligatoriu doar pentru această metodă; contul 609 nu este niciodată redirecționat.
+- **Storno accounting** (bifa companiei, implicit pornită în România) cu metoda „Prin cont intermediar”: a doua pereche a notei se postează în roșu, pe aceleași părți (Dr 624 −X / Cr intermediar −X), deci clasa 6 nu rămâne pe credit; efectul net pe conturi este același. Metoda Standard și companiile fără storno nu se schimbă (Standard lasă 624 pe credit).
+- Avertizare în Setări (alertă în formular + avertisment onchange) când se alege metoda „Prin cont intermediar” cu Storno accounting oprit.
+- Un cost suplimentar negativ rămâne stornare clasică (nu intră în logica roșie).
 - La actualizare, comportamentul rămâne neschimbat (Standard) până la schimbarea explicită a metodei.
 - Costul suplimentar se capitalizează doar pe cantitatea rămasă în stoc la validare: stocul rezervat pentru o vânzare se capitalizează integral, cantitatea deja livrată nu (partea ei rămâne pe contul de cheltuieli al liniei, fără notă suplimentară din modul), iar dacă tot stocul a fost vândut nu se postează nicio linie.
 - Funcționează identic pentru recepția fără aviz (intrarea în stoc 371 / 401 la factura mărfii) și pentru recepția pe bază de aviz (Dr 371 / Cr 408 la recepție, factura mărfii stinge 408); pentru aviz e necesar contul 408 setat în setările de stoc ale companiei.
-- Fișa consultant (cu 18 capturi) detaliază scenariile: flux complet, stoc rezervat, stoc vândut, recepție pe aviz (408), cu notele contabile și mesajele de eroare frecvente.
+- Fișa consultant (cu 21 de capturi) detaliază scenariile: flux complet, stoc rezervat, stoc vândut, recepție fără aviz și recepție pe aviz (408), cu notele contabile (inclusiv varianta storno) și mesajele de eroare frecvente.
 
 #### 3. Dependențe
 
@@ -37,13 +40,13 @@ Modulul stabilește conturile contabile corecte pentru notele generate de costur
 
 - `account.move` (extins): `button_create_landed_costs` atașează recepțiile aferente și aliniază conturile liniilor de cost cu cele din factură (doar pentru înregistrări românești).
 - `account.move.line` (extins): onchange pe `is_landed_costs_line` care setează contul din produs pentru serviciile marcate ca cost suplimentar.
-- `stock.valuation.adjustment.lines` (extins): `_create_account_move_line` determină conturile din locații și poziția fiscală; `_l10n_ro_route_class6_through_intermediary` redirecționează creditele clasa 6 (fără 609) prin contul intermediar.
+- `stock.valuation.adjustment.lines` (extins): `_create_account_move_line` determină conturile din locații și poziția fiscală; `_l10n_ro_route_class6_through_intermediary` redirecționează creditele clasa 6 (fără 609) prin contul intermediar, iar cu Storno accounting pornit postează a doua pereche în roșu.
 - `res.company` (extins): câmpurile `l10n_ro_landed_cost_method` și `l10n_ro_landed_cost_intermediary_account_id`.
-- `res.config.settings` (extins): câmpuri related către cele două setări ale companiei.
+- `res.config.settings` (extins): câmpuri related către cele două setări ale companiei; onchange cu avertisment când metoda intermediar e aleasă cu storno oprit.
 
 **Vizualizări**
 
-- `res_config_settings_view_form`: extinde formularul de setări `l10n_ro_config` cu selectorul metodei și contul intermediar (vizibil doar pentru metoda „intermediary").
+- `res_config_settings_view_form`: extinde formularul de setări `l10n_ro_config` cu selectorul metodei și contul intermediar (vizibil doar pentru metoda „intermediary"), plus o alertă când Storno accounting este oprit.
 
 **Acțiuni Automate / Acțiuni Server**
 
