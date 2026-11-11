@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-11] Reingestie l10n_ro_stock_sheet_gestiune
+
+- **Acțiune:** actualizare la versiunea 19.0.1.0.6: filtrul „Warehouse account” (`l10n_ro_gestiune_account_fallback`) pune pe contul gestiunii mișcările fără notă contabilă (istoric), implicit activ; fișă consultant nouă cu 4 capturi RO.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `FISA_CONSULTANT.md` și cod (PR terrabit-solutions/l10n_ro_ent#1319).
+- **Dependențe/Conexiuni:** neschimbate ([l10n_ro_stock_sheet](l10n_ro_stock_sheet/index.md), [l10n_ro_stock_gestiune](l10n_ro_stock_gestiune/index.md)).
+- **Fișiere actualizate:** `l10n_ro_stock_sheet_gestiune/index.md`, `l10n_ro_stock_sheet_gestiune/FISA_CONSULTANT.md`, `l10n_ro_stock_sheet_gestiune/screenshots/`, `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-11-11] Reingestie deltatech_obyc_landed_cost
 
 - **Acțiune:** actualizare la versiunea 19.0.1.0.1: fișa consultant refăcută ca proces complet (comandă de achiziție, recepție, facturi, cost adițional, note), 9 capturi în loc de 5; setarea mutată la configurare.
