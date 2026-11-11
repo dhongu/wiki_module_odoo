@@ -1,7 +1,7 @@
 # AI - Knowledge Sync (localizat la `deltatech_ai_knowledge_sync/index.md`)
 
 - **Nume Tehnic:** `deltatech_ai_knowledge_sync`
-- **Versiune:** `19.0.1.1.2`
+- **Versiune:** `19.0.1.1.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_knowledge_sync
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_ai_knowledge_sync`
 - **Ultima Ingestie:** `2026-10-22`

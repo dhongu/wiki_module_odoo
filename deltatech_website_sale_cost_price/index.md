@@ -1,10 +1,10 @@
-# Website Sale Cost Price (localizat la `deltatech_website_sale_cost_price/index.md`)
+# Website Cost Price Protection (localizat la `deltatech_website_sale_cost_price/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_sale_cost_price`
 - **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_cost_price
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_sale_cost_price`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-11`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -17,6 +17,9 @@ Acest modul extinde funcționalitatea standard Odoo "Previne Vânzarea Produselo
 - **Marjă configurabilă**: se poate seta un procent minim de marjă în setările website-ului (ex: dacă e setat la 10%, prețul de vânzare trebuie să fie cel puțin 110% din costul produsului).
 - **Comparație corectă cu/fără TVA**: se poate configura dacă prețul de cost include sau nu taxa, pentru o comparație corectă față de prețul afișat pe website.
 - **Conversie valutară**: gestionează automat diferențele de monedă între moneda de cost a produsului și moneda listei de prețuri a website-ului.
+- **Comportament în magazin**: pentru un produs sub prag, clientul nu mai vede prețul și butonul *Add to Cart*, ci butonul **Contact Us** (ca la produsele cu preț zero, cu *Button URL* din setări), iar butonul de coș dispare din lista de produse. Se compară prețul de website (după lista de prețuri a website-ului) cu **Cost** plus marja.
+- **Configurare**: în *Website > Configuration > Settings*, secțiunea eCommerce, se bifează *Prevent Sale of Zero Priced Product*, apoi apar câmpurile modulului. *Cost Price Includes Tax* se lasă debifat când costul produsului e ținut fără taxe (chiar și pe un website cu prețuri fără taxe); se setează *Cost Price Margin %*.
+- Utilizatorii din grupul *Settings* (administratorii) pot adăuga în continuare în coș un produs blocat; verificarea magazinului se face ca vizitator (fereastră privată).
 
 #### 3. Dependențe
 

@@ -1,7 +1,7 @@
 # EMAG Marketplace Delivery (localizat la `deltatech_marketplace_emag_delivery/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_emag_delivery`
-- **Versiune:** `19.0.1.4.1`
+- **Versiune:** `19.0.1.4.2`
 - **Cale:** [https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_emag_delivery](https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_emag_delivery)
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_emag_delivery`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)

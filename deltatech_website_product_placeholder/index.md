@@ -1,10 +1,10 @@
-# Deltatech Website Product Placeholder (localizat la `deltatech_website_product_placeholder/index.md`)
+# Product Image Placeholder (localizat la `deltatech_website_product_placeholder/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_product_placeholder`
 - **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_product_placeholder
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_product_placeholder`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-11`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar

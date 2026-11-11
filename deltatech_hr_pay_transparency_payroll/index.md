@@ -1,10 +1,11 @@
 # Pay Transparency - Payroll (localizat la `deltatech_hr_pay_transparency_payroll/index.md`)
 
 - **Nume Tehnic:** `deltatech_hr_pay_transparency_payroll`
-- **Versiune:** `19.0.0.1.0`
+- **Versiune:** `19.0.0.1.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_hr_pay_transparency_payroll
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_hr_pay_transparency_payroll`
 - **Ultima Ingestie:** `2026-10-12`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

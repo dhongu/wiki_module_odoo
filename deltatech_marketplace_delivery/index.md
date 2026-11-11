@@ -1,7 +1,7 @@
 # Marketplace Delivery addon (localizat la `deltatech_marketplace_delivery/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_delivery`
-- **Versiune:** `19.0.0.0.20`
+- **Versiune:** `19.0.0.0.21`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_delivery`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_delivery`
 - **Ultima Ingestie:** `2026-10-27`

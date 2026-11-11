@@ -1,7 +1,7 @@
 # AI - Shop Assistant
 
 - **Nume Tehnic:** `deltatech_ai_website_product`
-- **Versiune:** `19.0.1.2.4`
+- **Versiune:** `19.0.1.2.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_website_product
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_ai_website_product`
 - **Ultima Ingestie:** `2026-10-21`

@@ -1,7 +1,7 @@
 # eMAG Marketplace Statement Import (localizat la `deltatech_account_bank_statement_import_emag/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_bank_statement_import_emag`
-- **Versiune:** `19.0.2.1.1`
+- **Versiune:** `19.0.2.1.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import_emag
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_account_bank_statement_import_emag`
 - **Ultima Ingestie:** `2026-10-24`

@@ -1,7 +1,7 @@
 # Products Feed (localizat la `deltatech_feed/index.md`)
 
 - **Nume Tehnic:** `deltatech_feed`
-- **Versiune:** `19.0.3.8.4`
+- **Versiune:** `19.0.3.8.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_feed
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_feed`
 - **Ultima Ingestie:** `2026-10-22`

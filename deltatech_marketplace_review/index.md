@@ -1,7 +1,7 @@
 # Sale Order Review - Marketplace (localizat la `deltatech_marketplace_review/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_review`
-- **Versiune:** `19.0.0.3.0`
+- **Versiune:** `19.0.0.3.1`
 - **Cale:** [https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_review](https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_review)
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_review`
 - **Ultima Ingestie:** `2026-10-22`

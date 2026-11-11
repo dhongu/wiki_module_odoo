@@ -1,7 +1,7 @@
 # SAGA Interface MRP Extension (localizat la `deltatech_saga_mrp/index.md`)
 
 - **Nume Tehnic:** `deltatech_saga_mrp`
-- **Versiune:** `19.0.0.0.13`
+- **Versiune:** `19.0.0.0.14`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga_mrp
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_saga_mrp`
 - **Ultima Ingestie:** `2026-11-10`

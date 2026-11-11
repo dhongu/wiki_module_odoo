@@ -1,7 +1,7 @@
 # Marketplace website addon (localizat la `deltatech_marketplace_website/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_website`
-- **Versiune:** `19.0.0.2.1`
+- **Versiune:** `19.0.0.2.2`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_website`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_website`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)

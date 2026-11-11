@@ -1,10 +1,11 @@
 # Deltatech Payment (localizat la `deltatech_payment/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment`
-- **Versiune:** `19.0.0.0.11`
+- **Versiune:** `19.0.0.0.12`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment`
 - **Ultima Ingestie:** `2026-08-20`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

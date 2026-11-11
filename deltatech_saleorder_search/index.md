@@ -1,10 +1,10 @@
-# Deltatech Sale Order Search by Partner Fields (localizat la `deltatech_saleorder_search/index.md`)
+# Sale Order Search by Contact (localizat la `deltatech_saleorder_search/index.md`)
 
 - **Nume Tehnic:** `deltatech_saleorder_search`
 - **Versiune:** `19.0.1.1.1`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_saleorder_search`
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_saleorder_search
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_saleorder_search`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-11`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -13,10 +13,11 @@ Acest modul îmbunătățește căutarea comenzilor de vânzare din Odoo, permi�
 
 #### 2. Funcționalități Cheie
 
-- Extinde opțiunile implicite de căutare din listele de oferte și comenzi de vânzare cu câmpurile de e-mail și telefon ale partenerului.
-- Permite echipelor de vânzări să găsească rapid o comandă atunci când dispun doar de datele de contact ale clientului.
-- Îmbunătățește eficiența căutării și capacitatea de răspuns către clienți.
-- Se integrează direct în vizualizarea standard de căutare (search view) din modulul Vânzări, fără a modifica alte fluxuri.
+- Bara de căutare din oferte și comenzi de vânzare primește opțiunea **Search E-mail for: ...**, care returnează comenzile al căror client are o adresă de e-mail ce conține textul introdus (de exemplu un domeniu comun, `@example.com`, găsește comenzile tuturor clienților de pe acel domeniu).
+- Opțiunea **Search Phone for: ...** face același lucru pentru telefonul clientului; textul se potrivește exact așa cum a fost scris, deci se introduce numărul în formatul stocat pe contact (un fragment scurt, fără spații sau prefix, găsește cele mai multe variante).
+- Funcționează în *Vânzări > Comenzi > Oferte* și *Vânzări > Comenzi > Comenzi*, precum și în orice altă listă de comenzi care folosește vizualizarea de căutare standard; nu necesită configurare.
+- Căutarea se face după e-mailul și telefonul contactului setat ca *Client* pe comandă, nu după celelalte contacte ale aceleiași companii.
+- Modulul conține doar date (fără cod Python), deci poate fi folosit și pe Odoo Online (plan Custom), prin *Aplicații > Importă modul*.
 
 #### 3. Dependențe
 

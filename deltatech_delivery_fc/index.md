@@ -1,7 +1,7 @@
 # FAN Courier Shipping (localizat la `deltatech_delivery_fc/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_fc`
-- **Versiune:** `19.0.1.8.3`
+- **Versiune:** `19.0.1.8.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_fc
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_fc`
 - **Ultima Ingestie:** `2026-10-22`

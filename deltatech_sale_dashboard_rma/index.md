@@ -1,7 +1,7 @@
 # Sales Dashboard - Returns (localizat la `deltatech_sale_dashboard_rma/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_dashboard_rma`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_sale_dashboard_rma
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_sale_dashboard_rma`
 - **Ultima Ingestie:** `2026-10-06`

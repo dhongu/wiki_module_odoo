@@ -1,10 +1,10 @@
-# Deltatech Website SEO (localizat la `deltatech_website_seo/index.md`)
+# Website SEO (localizat la `deltatech_website_seo/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_seo`
-- **Versiune:** `19.0.1.1.5`
+- **Versiune:** `19.0.1.1.6`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_seo
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_website_seo`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-11`
 
 #### 1. Sumar
 
@@ -12,13 +12,14 @@ Acest modul optimizează modul în care Google și celelalte motoare de căutare
 
 #### 2. Funcționalități Cheie
 
-- Adaugă date structurate de tip Website (Sitelinks Searchbox) pe toate paginile magazinului și ale produselor.
-- Adaugă un carusel de tip ItemList și un Breadcrumb structurat (date invizibile, pentru motoarele de căutare) în listarea de categorii a magazinului.
-- Îmbogățește JSON-LD-ul de produs pe care Odoo îl generează deja pe pagina produsului cu SKU, MPN, marcă, categorie și disponibilitate.
-- Validează codul GTIN (îl elimină dacă nu are efectiv 8/12/13/14 cifre), evitând erorile de tip „Invalid GTIN" în Google Search Console pentru coduri interne de referință.
-- Nu duplică datele de Organizație (Corporate Contact, Logo companie) și Breadcrumb per-produs, deoarece acestea sunt deja furnizate nativ de Odoo 19 pe această versiune.
-
-*Notă de corecție:* `readme/DESCRIPTION.md` menționează generic funcționalitățile de mai sus fără referiri la versiuni vechi; `readme/HISTORY.md` confirmă că modulul a fost portat/adaptat explicit pentru Odoo 19 (secțiunea `19.0.1.1.0`), înlocuind markup-ul `itemprop`/`itemscope` (specific versiunilor anterioare) cu îmbogățirea directă a JSON-LD-ului nativ `_to_markup_data()`. Nu a fost necesară nicio corecție suplimentară.
+- Căsuță de căutare în rezultate: pagina de start și paginile magazinului declară căutarea pe site (`WebSite` + `SearchAction` către `/shop?search=`), markup-ul folosit de Google pentru Sitelinks Searchbox.
+- Lista de produse a unei categorii: pagina de magazin își listează produsele ca `ItemList`, cu adresa fiecărui produs, iar o pagină de categorie adaugă și `BreadcrumbList` (Products › categorie), date invizibile, pentru motoarele de căutare.
+- Date de produs mai bogate: JSON-LD-ul pe care Odoo îl generează deja pe pagina produsului primește SKU și MPN (referința internă), marca, categoria publică și disponibilitatea (în stoc / stoc epuizat, după stocul disponibil pe website).
+- Validează codul GTIN: codul de bare se publică drept GTIN doar dacă are 8, 12, 13 sau 14 cifre, evitând erorile „Invalid GTIN" în Google Search Console pentru coduri interne.
+- Nu duplică datele de Organizație și Breadcrumb-ul per-produs, furnizate deja nativ de Odoo 19.
+- Configurare: nu e nevoie de setări; se completează *Internal Reference*, *Barcode*, *Brand* și categoriile website ale produselor. Pentru produsele vândute și fără stoc se bifează *Continue Selling*, ca să fie publicate ca în stoc.
+- Verificare: paginile se testează cu Rich Results Test de la Google și se urmăresc în Search Console; după modificări, se cere Google să reindexeze paginile.
+- Nu trimite date în afara Odoo: markup-ul face parte din pagină.
 
 #### 3. Dependențe
 
@@ -27,11 +28,9 @@ Acest modul optimizează modul în care Google și celelalte motoare de căutare
 
 #### 4. Componente Cheie
 
-Documentația pentru Sumar și Funcționalități Cheie a fost preluată din `readme/DESCRIPTION.md`, prin urmare analiza detaliată a componentelor tehnice de mai jos este una sumară, orientativă (nu înlocuiește o analiză completă), conform fluxului de ingestie din schemă.
-
 **Modele**
 
-- `product.product`: suprascrie `_to_markup_data()` pentru a adăuga `sku`, `mpn`, `brand`, `category` și `availability` în JSON-LD-ul de produs generat nativ de `website_sale`, și pentru a elimina câmpul `gtin` atunci când valoarea din `barcode` nu este un GTIN valid (8/12/13/14 cifre).
+- `product.product`: suprascrie `_to_markup_data()` pentru a adăuga `sku`, `mpn`, `brand` (din `get_brand_name()`), `category` (prima categorie publică) și `availability` în JSON-LD-ul de produs generat nativ de `website_sale`, și pentru a elimina câmpul `gtin` atunci când valoarea din `barcode` nu este un GTIN valid (8/12/13/14 cifre).
 
 **Vizualizări**
 

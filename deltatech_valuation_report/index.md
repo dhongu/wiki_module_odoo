@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.0.0.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_valuation_report
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_valuation_report`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-11`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -13,15 +13,16 @@ Modulul adaugă un raport de tip Enterprise (în cadrul framework-ului `account_
 
 #### 2. Funcționalități Cheie
 
-- Raport dedicat „Stock Valuation vs Balance Check", accesibil din meniul de rapoarte financiare (Contabilitate → Raportare).
-- Compară, per cont de evaluare a stocului, soldul contabil complet cu totalul liniilor care poartă un produs (adică exact ce agregă evaluarea produsului).
+- Raport dedicat „Stock Valuation vs Balance Check", accesibil din meniul de rapoarte financiare (Contabilitate → Raportare → Stock Valuation Check); perioada implicită e luna curentă.
+- Compară, per cont de evaluare a stocului, soldul contabil complet (din note postate, până la data selectată) cu totalul liniilor care poartă un produs (adică exact ce agregă evaluarea produsului).
+- Diferențele se văd înainte de închiderea lunii, nu abia la inventar, fiindcă raportul folosește același cadru ca balanțele oficiale Enterprise.
 - Afișează diferența drept sumă a liniilor contabile fără produs asociat pe conturile de stoc — acestea nu pot fi alocate niciunei evaluări de produs.
 - Acțiune de tip „caret" pe fiecare linie de cont, care deschide direct lista liniilor contabile fără produs, pentru audit și corecție rapidă (asignare produs sau mutare pe un cont fără evaluare).
 - Suportă filtrare pe interval de dată și selecție multi-companie, conform standardului framework-ului `account_reports`.
 
 #### 3. Dependențe
 
-- `account_reports`
+- `account_reports` (Odoo Enterprise)
 - [deltatech_stock_valuation](../deltatech_stock_valuation/index.md)
 
 #### 4. Componente Cheie

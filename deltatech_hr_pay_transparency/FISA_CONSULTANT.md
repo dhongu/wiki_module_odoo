@@ -139,6 +139,8 @@ din 1.03.2026), care nu intră în raportul pe 2025.
 **Angajați → Transparență salarială → Rapoarte privind diferențele de remunerare → Nou.** Anul de
 referință propus este anul trecut. Apăsați **Calculare**.
 
+![Raportul nou, cu anul de referință și butonul Calculare](screenshots/15_raport_nou.png)
+
 ### Pasul 2 — Citirea indicatorilor
 
 **Găsiți pe ecran:** sus, *Număr de lucrători* (cu femei și bărbați) și *Obligație* (anual, la trei ani
@@ -315,6 +317,7 @@ Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixinul `Sc
 | `02_categorie_criterii.png` | Criteriile de stabilire și de progresie a remunerației |
 | `03_functie_categorie.png` | Funcția cu categoria de lucrători |
 | `04_profil_tara.png` | Profilul de țară România |
+| `15_raport_nou.png` | Raportul nou, cu anul de referință și butonul Calculare (Pasul 1) |
 | `05_raport_indicatori.png` | Raportul calculat, indicatorii (a)-(e) |
 | `06_raport_cuartile.png` | Cuartilele de remunerare |
 | `07_raport_categorii.png` | Diferențele pe categorii, categoria peste prag |

@@ -1,7 +1,7 @@
 # Conector Marketplace PrestaShop (localizat la `deltatech_marketplace_prestashop/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_prestashop`
-- **Versiune:** `19.0.0.6.0`
+- **Versiune:** `19.0.0.6.2`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_prestashop`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_prestashop`
 - **Ultima Ingestie:** `2026-10-22`

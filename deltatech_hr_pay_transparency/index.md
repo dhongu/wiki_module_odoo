@@ -1,7 +1,7 @@
 # Transparență salarială (Directiva UE 2023/970)
 
 - **Nume Tehnic:** `deltatech_hr_pay_transparency`
-- **Versiune:** `19.0.0.1.3`
+- **Versiune:** `19.0.0.1.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_hr_pay_transparency
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_hr_pay_transparency`
 - **Ultima Ingestie:** `2026-10-12`

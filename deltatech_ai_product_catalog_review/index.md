@@ -1,7 +1,7 @@
 # AI - Product Catalog Review
 
 - **Nume Tehnic:** `deltatech_ai_product_catalog_review`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_product_catalog_review
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_ai_product_catalog_review`
 - **Ultima Ingestie:** `2026-10-22`

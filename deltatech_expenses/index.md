@@ -1,7 +1,7 @@
 # Expenses Deduction (localizat la `deltatech_expenses/index.md`)
 
 - **Nume Tehnic:** `deltatech_expenses`
-- **Versiune:** `19.0.3.11.0`
+- **Versiune:** `19.0.3.12.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_expenses
 - **Odoo 20:** `20.0.3.8.0`, portat prin dhongu/deltatech#3974 și dhongu/deltatech#3980 (https://github.com/dhongu/deltatech/tree/20.0/deltatech_expenses)
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_expenses`

@@ -1,7 +1,7 @@
 # AI - Conversation Summary for Helpdesk (localizat la `deltatech_ai_thread_summary_helpdesk/index.md`)
 
 - **Nume Tehnic:** `deltatech_ai_thread_summary_helpdesk`
-- **Versiune:** `19.0.1.1.1`
+- **Versiune:** `19.0.1.1.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_thread_summary_helpdesk
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_ai_thread_summary_helpdesk`
 - **Ultima Ingestie:** `2026-10-30`

@@ -1,7 +1,7 @@
 # Deltatech Customer Map
 
 - **Nume Tehnic:** `deltatech_customer_map`
-- **Versiune:** `19.0.1.1.7`
+- **Versiune:** `19.0.1.1.8`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_customer_map
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_customer_map`
 - **Ultima Ingestie:** `2026-09-29`

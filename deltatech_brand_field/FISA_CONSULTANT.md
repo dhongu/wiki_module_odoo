@@ -78,7 +78,7 @@ Date minime pentru demo (cele din capturi):
 
 ### Pasul 1 — Alegeți câmpul care ține brandul
 
-Deschideți **Pagină web → Configurare → Setări**, secțiunea magazinului, blocul **Modul câmp marcă**
+Deschideți **Pagină web → Configurare → Setări**, secțiunea **eCommerce**, blocul **Modul câmp marcă**
 (lângă blocul **Valori implicite inventar**). În câmpul **Câmp marcă** scrieți **numele tehnic** al
 câmpului de produs care ține brandul, aici `product_brand_id`, apoi apăsați **Salvare**.
 
@@ -103,7 +103,7 @@ gol, arată textul de ajutor „Marcă”; completat, arată doar numele brandul
 
 Un produs fără brand are brandul gol. Fiecare canal tratează altfel brandul gol: feed-ul Google
 omite eticheta `g:brand` (la fel Cel și VidaXL); celelalte feed-uri (eMAG, Compari, PTC, Bizoo,
-2Performant) trimit valoarea goală; conectorul eMAG trimite brandul gol, pentru că, odată instalat
+2Performant) trimit valoarea goală; conectorul Shopify trimite câmpul `vendor` gol; conectorul eMAG trimite brandul gol, pentru că, odată instalat
 acest modul, numele companiei nu mai e folosit ca brand de rezervă; feed-ul OpenAI/ChatGPT pune
 în locul brandului numele magazinului (al site-ului), pentru că acolo brandul e obligatoriu.
 
@@ -187,7 +187,7 @@ marketplace nu îl cer: fără el, eMAG trimite numele companiei ca brand, iar S
 
 Ce e automat: citirea brandului din câmpul ales, de către toate modulele de mai sus; numele
 brandului, când câmpul e o selecție dintr-o listă de branduri; brandul gol, când produsul nu are
-brand (Google omite atunci eticheta, celelalte feed-uri și conectorul eMAG trimit valoarea goală,
+brand (Google omite atunci eticheta, celelalte feed-uri, conectorul eMAG și conectorul Shopify (`vendor`) trimit valoarea goală,
 OpenAI pune numele magazinului).
 
 Ce rămâne manual: alegerea câmpului în Setări (o singură dată), completarea brandului pe fiecare

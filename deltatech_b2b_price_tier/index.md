@@ -1,7 +1,7 @@
 # B2B Price Tiers (Prețuri pe trepte de cantitate B2B)
 
 - **Nume Tehnic:** `deltatech_b2b_price_tier`
-- **Versiune:** `19.0.1.1.2`
+- **Versiune:** `19.0.1.1.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_price_tier
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_b2b_price_tier`
 - **Ultima Ingestie:** `2026-10-09`

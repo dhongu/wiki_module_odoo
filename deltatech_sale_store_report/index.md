@@ -1,10 +1,10 @@
-# Deltatech Sale from Store Z Report (localizat la `deltatech_sale_store_report/index.md`)
+# Store Sales Z-Report (localizat la `deltatech_sale_store_report/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_store_report`
-- **Versiune:** `19.0.1.1.10`
-- **Cale:** [https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_store_report](https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_store_report)
+- **Versiune:** `19.0.1.1.11`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_store_report
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_store_report`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-11`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -28,7 +28,14 @@ zilnice sau lunare dintre Odoo și casele de marcat.
 - Documentele sunt selectate după data facturii, deci raportul se potrivește cu raportul Z doar
   dacă bonurile fiscale sunt tipărite în aceeași zi cu data facturii.
 - Raport PDF exportabil, cu aceleași secțiuni ca ecranul de rezultat (totaluri zilnice, bonuri,
-  totaluri TVA, totaluri plăți).
+  totaluri TVA, totaluri plăți), de arhivat lângă raportul Z fizic.
+- Acces din *Contabilitate > Contabilitate > Store Sales Z Report*; intervalul implicit e ziua curentă, iar jurnalele
+  implicite sunt toate jurnalele companiei marcate *Fiscal Receipts Journal*. Pentru un singur raport Z se păstrează doar
+  jurnalul casei respective.
+- Configurare: bifa *Fiscal Receipts Journal* pe jurnalul de vânzări al magazinului (un jurnal per casă de marcat) și
+  **Cod ECR** pe jurnalele de plată (`0` numerar, `1` tichete, `2` card); utilizatorii au nevoie de grupul Facturare.
+- Nu acoperă vânzările din Odoo POS; sumele sunt în moneda companiei. Raportul nu corectează diferențele, doar le face
+  vizibile bon cu bon.
 
 #### 3. Dependențe
 

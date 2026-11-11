@@ -1,7 +1,7 @@
 # Terrabit Pro (localizat la `terrabit_pro/index.md`)
 
 - **Nume Tehnic:** `terrabit_pro`
-- **Versiune:** `19.0.1.0.5`
+- **Versiune:** `19.0.1.0.6`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_pro
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_pro`
 - **Ultima Ingestie:** `2026-10-09`

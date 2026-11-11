@@ -1,10 +1,11 @@
 # Banca TBI Bank Payment Acquirer (localizat la `deltatech_payment_tbi_bank/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_tbi_bank`
-- **Versiune:** `19.0.1.0.10`
+- **Versiune:** `19.0.1.0.11`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_tbi_bank
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_tbi_bank`
 - **Ultima Ingestie:** `2026-10-01`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

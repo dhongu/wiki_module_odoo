@@ -1,10 +1,10 @@
-# Terrabit Google Tag Manager (localizat la `terrabit_google_tag/index.md`)
+# Google Tag Manager (localizat la `terrabit_google_tag/index.md`)
 
 - **Nume Tehnic:** `terrabit_google_tag`
-- **Versiune:** `19.0.0.1.5`
-- **Cale:** [https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_google_tag](https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_google_tag)
+- **Versiune:** `19.0.0.1.6`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_google_tag
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_google_tag`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-11`
 
 #### 1. Sumar
 
@@ -17,6 +17,10 @@ Modulul integrează Google Tag Manager (GTM) cu magazinul online Odoo, permițâ
 - Fiecare eveniment de produs conține detalii bogate (`item_id`, `item_name`, `item_brand`, `item_category`, `price`, `quantity`), cu `item_id` configurabil (variantă / șablon / SKU) prin `terrabit_website_sale_tracking_base`.
 - Suportă opțional un `Cod de Conversie` Google Ads — la finalizarea comenzii trimite și un eveniment `conversion` cu `send_to` setat pe eticheta de conversie.
 - Păstrează formatul (plat) al evenimentelor identic cu versiunea Odoo 18, astfel încât trigger-ele existente din containerul GTM continuă să funcționeze după upgrade.
+- Evenimentele sunt în formatul GA4 eCommerce și includ articolele, valoarea și moneda; `contact` se declanșează la click pe un număr de telefon, iar `generate_lead` la trimiterea unui formular de website, pe paginile magazinului.
+- Configurare: se copiază ID-ul containerului web (`GTM-XXXXXXX`) din Google Tag Manager, se activează **Google Tag Manager** în *Website > Configuration > Settings* și se completează ID-ul și, pentru Google Ads, codul de conversie; în container se creează declanșatoarele și etichetele (ex. un tag GA4 pe `purchase`). Setările comune *Item ID Type for Tracking* și *Exclude Delivery from Tracking Events* vin din `terrabit_website_sale_tracking_base`.
+- Verificare: containerul se deschide în modul *Preview* din Tag Manager și se parcurge magazinul; după ce etichetele se declanșează corect, containerul se publică.
+- Date trimise în afara Odoo: doar evenimentele către `dataLayer`-ul containerului GTM; destinația lor ulterioară (Analytics, Ads etc.) depinde de etichetele din container.
 - Se bazează pe evenimentele native `website_sale` (`view_item_event`, `add_to_cart_event`) și pe evenimentele normalizate din `terrabit_website_sale_tracking_base`, evitând astfel duplicarea logicii de tracking pentru fiecare pixel de marketing.
 
 #### 3. Dependențe

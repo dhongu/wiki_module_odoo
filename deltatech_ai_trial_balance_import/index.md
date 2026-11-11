@@ -1,7 +1,7 @@
 # Trial Balance PDF Import with AI (Import balanță din PDF cu AI)
 
 - **Nume Tehnic:** `deltatech_ai_trial_balance_import`
-- **Versiune:** `19.0.1.3.0`
+- **Versiune:** `19.0.1.3.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_trial_balance_import
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_ai_trial_balance_import`
 - **Ultima Ingestie:** `2026-10-30`

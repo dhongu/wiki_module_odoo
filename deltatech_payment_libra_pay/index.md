@@ -1,10 +1,11 @@
 # LibraPay Acquirer (localizat la `deltatech_payment_libra_pay/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_libra_pay`
-- **Versiune:** `19.0.1.0.15`
+- **Versiune:** `19.0.1.0.16`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_libra_pay`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_libra_pay`
 - **Ultima Ingestie:** `2026-08-20`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

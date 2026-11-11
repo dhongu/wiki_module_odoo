@@ -1,7 +1,7 @@
 # Cargus Shipping (localizat la `deltatech_delivery_uc/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_uc`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_uc`
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_uc`
 - **Ultima Ingestie:** `2026-10-22`

@@ -1,7 +1,7 @@
 # Delivery Tracking Dashboard (localizat la `deltatech_delivery_dashboard/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_dashboard`
-- **Versiune:** `19.0.1.8.1`
+- **Versiune:** `19.0.1.8.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_dashboard
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_dashboard`
 - **Ultima Ingestie:** `2026-10-22`
