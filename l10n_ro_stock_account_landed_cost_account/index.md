@@ -1,10 +1,11 @@
 # Romania - Stock Accounting Landed Cost Account (localizat la `l10n_ro_stock_account_landed_cost_account/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_account_landed_cost_account`
-- **Versiune:** `19.0.1.1.3`
+- **Versiune:** `19.0.1.1.4`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_account_landed_cost_account
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_stock_account_landed_cost_account`
 - **Ultima Ingestie:** `2026-11-11`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -20,6 +21,9 @@ Modulul stabilește conturile contabile corecte pentru notele generate de costur
   - **Standard** (implicit): comportamentul nativ Odoo, valorizare stoc = cont clasa 6;
   - **Prin cont intermediar**: creditul spre clasa 6 este rutat printr-un cont intermediar tehnic (ex. 482.99), rezultând două note echilibrate (valorizare stoc = intermediar și intermediar = clasa 6), utile la exportul în programe de contabilitate externe. Contul intermediar apare și este obligatoriu doar pentru această metodă; contul 609 nu este niciodată redirecționat.
 - La actualizare, comportamentul rămâne neschimbat (Standard) până la schimbarea explicită a metodei.
+- Costul suplimentar se capitalizează doar pe cantitatea rămasă în stoc la validare: stocul rezervat pentru o vânzare se capitalizează integral, cantitatea deja livrată nu (partea ei rămâne pe contul de cheltuieli al liniei, fără notă suplimentară din modul), iar dacă tot stocul a fost vândut nu se postează nicio linie.
+- Funcționează identic pentru recepția fără aviz (intrarea în stoc 371 / 401 la factura mărfii) și pentru recepția pe bază de aviz (Dr 371 / Cr 408 la recepție, factura mărfii stinge 408); pentru aviz e necesar contul 408 setat în setările de stoc ale companiei.
+- Fișa consultant (cu 18 capturi) detaliază scenariile: flux complet, stoc rezervat, stoc vândut, recepție pe aviz (408), cu notele contabile și mesajele de eroare frecvente.
 
 #### 3. Dependențe
 
@@ -49,3 +53,4 @@ Modulul stabilește conturile contabile corecte pentru notele generate de costur
 
 - `l10n_ro_stock_account`: logica de valorizare a stocului pe locații, completată aici pentru costurile suplimentare.
 - `l10n_ro_config`: setările de contabilitate România în care apare opțiunea.
+- [deltatech_obyc_landed_cost](../deltatech_obyc_landed_cost/index.md): modulul echivalent pentru companiile care folosesc `deltatech_obyc` (menționat în fișa consultant).

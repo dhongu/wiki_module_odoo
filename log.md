@@ -6,6 +6,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ## [2026-11-11] Reingestie l10n_ro_stock_account_landed_cost_account
 
+- **Acțiune:** actualizare la versiunea 19.0.1.1.4: fișă consultant nouă (recepții fără aviz și pe aviz 408, stoc rezervat și deja vândut) cu 18 capturi; funcționalități completate; conexiune către `deltatech_obyc_landed_cost`.
+- **Sursă:** `__manifest__.py`, `readme/DESCRIPTION.md`, `HISTORY.md`, `FISA_CONSULTANT.md` și cod.
+- **Dependențe/Conexiuni:** [deltatech_obyc_landed_cost](deltatech_obyc_landed_cost/index.md) (adăugat).
+- **Fișiere actualizate:** `l10n_ro_stock_account_landed_cost_account/index.md`, `l10n_ro_stock_account_landed_cost_account/FISA_CONSULTANT.md`, `l10n_ro_stock_account_landed_cost_account/screenshots/`, `log.md`, `.index/chunks.json`.
+
+## [2026-11-11] Reingestie l10n_ro_stock_account_landed_cost_account
+
 - **Acțiune:** reingestie fără schimbări de conținut; actualizată doar data ultimei ingestii (versiune 19.0.1.1.3).
 - **Sursă:** `__manifest__.py`, `readme/DESCRIPTION.md`, `readme/HISTORY.md` și cod.
 - **Dependențe/Conexiuni:** neschimbate.
