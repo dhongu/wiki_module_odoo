@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-11] Reingestie l10n_ro_stock_account_landed_cost_account
+
+- **Acțiune:** reingestie fără schimbări de conținut; actualizată doar data ultimei ingestii (versiune 19.0.1.1.3).
+- **Sursă:** `__manifest__.py`, `readme/DESCRIPTION.md`, `readme/HISTORY.md` și cod.
+- **Dependențe/Conexiuni:** neschimbate.
+- **Fișiere actualizate:** `l10n_ro_stock_account_landed_cost_account/index.md`, `log.md`.
+
 ## [2026-11-11] Reingestie l10n_ro_stock_sheet_gestiune
 
 - **Acțiune:** actualizare la versiunea 19.0.1.0.6: filtrul „Warehouse account” (`l10n_ro_gestiune_account_fallback`) pune pe contul gestiunii mișcările fără notă contabilă (istoric), implicit activ; fișă consultant nouă cu 4 capturi RO.

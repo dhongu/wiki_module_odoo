@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.1.3`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_account_landed_cost_account
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_stock_account_landed_cost_account`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-11-11`
 
 #### 1. Sumar
 
