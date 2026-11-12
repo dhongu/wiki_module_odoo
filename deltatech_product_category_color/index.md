@@ -1,7 +1,7 @@
 # Product Category Colors (localizat la `deltatech_product_category_color/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_category_color`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_category_color
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_category_color`
 - **Ultima Ingestie:** `2026-11-10`

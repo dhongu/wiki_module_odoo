@@ -1,7 +1,7 @@
 # Product Dimensions (localizat la `deltatech_product_dimension/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_dimension`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_dimension
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_dimension`
 - **Ultima Ingestie:** `2026-11-06`

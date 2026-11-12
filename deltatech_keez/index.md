@@ -1,10 +1,11 @@
 # Interfață Keez (localizat la `deltatech_keez/index.md`)
 
 - **Nume Tehnic:** `deltatech_keez`
-- **Versiune:** `19.0.1.1.3`
+- **Versiune:** `19.0.1.1.4`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_keez`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_keez`
 - **Ultima Ingestie:** `2026-10-22`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

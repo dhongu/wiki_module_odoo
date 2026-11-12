@@ -1,7 +1,7 @@
 # Product Catalog (Catalog de produse)
 
 - **Nume Tehnic:** `deltatech_product_catalog`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_catalog
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_catalog`
 - **Ultima Ingestie:** `2026-10-09`

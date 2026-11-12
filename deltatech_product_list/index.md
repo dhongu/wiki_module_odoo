@@ -1,7 +1,7 @@
 # Product Lists (localizat la `deltatech_product_list/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_list`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_list
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_list`
 - **Ultima Ingestie:** `2026-11-06`

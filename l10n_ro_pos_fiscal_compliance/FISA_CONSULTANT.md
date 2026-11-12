@@ -24,6 +24,10 @@ singur `.p7b`) și reconciliază automat, bon cu bon, ce a emis fizic aparatul f
 tip și valoarea și TVA-ul pe fiecare cotă, cu diferența față de Odoo. Din versiunea 19.0.2.3.0,
 fișierele se citesc după structura publicată de ANAF, verificată pe exporturi reale de la case Datecs.
 
+Din versiunea 19.0.2.4.0, exportul se poate **prelua automat de pe e-mail**: aplicația FiscalWire îl
+trimite la un alias (`fiscalwire`), iar Odoo creează câte o arhivă fiscală AMEF pe aparat, o importă,
+semnalează diferențele și anunță, dacă se dorește, un grup de utilizatori.
+
 ## 2. Bază legală și context
 
 OUG 28/1999 — obligația operatorilor economici care fac vânzări cu amănuntul către populație să
@@ -49,6 +53,15 @@ Roluri recomandate pentru testare:
 - Administrator funcțional: instalează modulul, activează fiscalizarea pe punctul de lucru.
 - Operator POS: înregistrează bonurile fiscale pe comenzi.
 - Contabil/manager retail: generează și reconciliază raportul Z, arhivează jurnalul electronic.
+- Membru al grupului **AMEF: notificări la importul din e-mail**: vede rezultatul importurilor din
+  e-mail în chatterul arhivei, îl primește pe e-mail în funcție de parametrul `amef_notify_mode` (vezi
+  Configurarea inițială, pasul 7) și, când
+  importul are probleme, o activitate pe arhiva fiscală.
+
+Arhiva fiscală AMEF, bonurile ei, raportul Z și liniile lui sunt vizibile doar utilizatorilor cu acces
+la compania respectivă (reguli multi-company). Notificările merg doar la membrii grupului care au acces
+la compania arhivei. Grupul dă acces doar de citire la arhiva fiscală și la bonurile ei: membrii o pot
+deschide și vedea, dar nu o pot modifica.
 
 ## 4. Conturi și date implicate
 
@@ -82,6 +95,27 @@ Date minime pentru demo:
    (numerar, card, tichete etc.): raportul Z al aparatului dă câte un total pe tip, iar reconcilierea
    se face pe acest tip.
 4. Verificați că operatorul are grupul **Punct de vânzare / Utilizator**.
+5. Pentru preluarea din e-mail, completați **NUI aparat fiscal (AMEF)** pe **fiecare** punct de vânzare
+   cu casă de marcat: arhiva se leagă de punctul de vânzare după NUI, iar un NUI necompletat sau
+   necunoscut lasă arhiva în **Ciornă** (Pasul 8).
+6. Adăugați utilizatorii care trebuie anunțați în grupul **AMEF: notificări la importul din e-mail**
+   (**Setări → Utilizatori & Companii → Grupuri**, meniu vizibil cu modul dezvoltator activ).
+7. Reglați notificarea din **Setări → Tehnic → Parametri → Parametri sistem** (cu modul dezvoltator activ):
+
+   | Parametru | Valori | Efect |
+   |---|---|---|
+   | `l10n_ro_pos_fiscal_compliance.amef_notify_mode` | `never` (implicit), `problems`, `always` | `never`: fără e-mail către grup; rezultatul rămâne în chatterul arhivei fiscale. `problems`: e-mail doar când importul are diferențe, Z lipsă sau note, sau când arhiva nu a ajuns în starea **Interpretat**. `always`: e-mail la fiecare import. |
+   | `l10n_ro_pos_fiscal_compliance.amef_notify_activity` | `True` (implicit), `False` | Activitatea „De făcut" pentru fiecare membru al grupului, când importul are probleme. Odoo trimite e-mail pentru ea doar când modul de mai sus trimite e-mail; altfel activitatea apare doar în Odoo. Cu `False`, nu se mai creează. |
+
+   O valoare necunoscută la `amef_notify_mode` se tratează ca `never`. Fără e-mail, mesajul rezultatului
+   se postează ca notă internă (nu pleacă nici la followerii arhivei).
+8. Pentru e-mail, verificați domeniul de alias (**Setări → Tehnic → Email → Domenii Alias**) și că
+   mesajele primite la `fiscalwire@<domeniul-vostru>` ajung în Odoo (server de e-mail de intrare sau
+   rutarea e-mailului către gazda Odoo); modulul creează doar aliasul și depinde de modulul `mail`. În
+   FiscalWire, indicați adresa aliasului ca destinație a raportului XML. Aliasul acceptă mesaje de la
+   oricine, deci păstrați adresa nepublică.
+9. Completați **fusul orar** pe partenerul companiei: la importul din e-mail, ziua Z-ului se calculează în
+   fusul companiei, iar dacă acesta lipsește se folosește `Europe/Bucharest`.
 
 ## 6. Flux de utilizare
 
@@ -95,7 +129,7 @@ De acum, comenzile plătite din acest punct de lucru trebuie să aibă bon fisca
 NUI-ul e cheia cu care importul recunoaște aparatul: un fișier cu alt NUI e refuzat. Seria tipărită pe
 casă (ex. `AMEF-RO-00123`) și NUI-ul (ex. `9000000123`) sunt numere diferite.
 
-![Setări POS — fiscalizare AMEF obligatorie](screenshots/01_config_fiscal.png)
+![Setări Punct de vânzare (Magazin Centru), secțiunea Conformitate fiscală RO (AMEF): bifa Fiscalizare AMEF obligatorie activă, Serie aparat fiscal (AMEF) AMEF-RO-00123 și NUI aparat fiscal (AMEF) 9000000123, evidențiate](screenshots/01_config_fiscal.png)
 
 ### Pasul 2 — Bonul fiscal pe comandă
 
@@ -107,7 +141,7 @@ exportului AMEF (Pasul 5), completați ca serie **NUI-ul** (sau seria aparatului
 bonului în raportul Z** (BF, tipărit pe bon), nu numărul documentului fiscal. Dacă aparatul a întors
 eroare, comanda rămâne **Eroare fiscalizare** și poate fi marcată drept eroare justificată.
 
-![Comanda POS — fila Fiscalizare AMEF](screenshots/02_comanda_fiscal.png)
+![Comanda Magazin Centru - 000001, în starea Plătit, cu Stare fiscalizare Bon emis; fila Fiscalizare AMEF arată seria bonului AMEF-RO-00123, numărul 0042, data și ora fiscală și Raportul Z Z/2026/00002](screenshots/02_comanda_fiscal.png)
 
 **Bon simulat.** Un bon tipărit pe o casă de marcat simulată (teste, demonstrații) primește starea *Bon simulat*
 (insignă albastră), fără serie: nu e document fiscal. O astfel de comandă nu blochează închiderea sesiunii, iar
@@ -137,10 +171,11 @@ vânzările sesiunii, iar importul (Pasul 5) caută comenzile unui Z după ziua 
 > în aceeași zi, pe lângă dispoziția de plată din registrul de casă. Comenzile de retur trebuie
 > facturate pe client, ca factura storno să fie singura reducere a vânzărilor și să nu se dubleze cu
 > nota contabilă a sesiunii.
+
 Dacă sesiunea rămâne deschisă peste noapte (mai multe Z-uri), diferențele apar pe fiecare raport Z;
 închideți sesiunea la sfârșitul zilei.
 
-![Raport Z fiscal — defalcare TVA + plăți, reconciliere](screenshots/03_raport_z.png)
+![Raportul Z/2026/00001 (Magazin Centru, număr raport Z 14) în starea Reconciliat: total calculat și declarat 145,20 lei, diferențe 0,00; fila Defalcare pe cote TVA arată cota 21%, baza 120,00 și TVA 25,20 lei](screenshots/03_raport_z.png)
 
 Comenzile cu *Bon simulat* nu intră în calculul raportului Z: nici în cote, nici în plăți, nici în total. Nu sunt
 pe aparatul fiscal, deci nu au ce compara cu raportul Z al aparatului.
@@ -182,7 +217,7 @@ vederea **listă** (butonul din colțul din dreapta sus): fiecare linie arată r
 data, punctul de lucru, seria aparatului și cota de TVA. Din listă, exportul standard Odoo (XLSX)
 e disponibil pentru a transmite datele mai departe.
 
-![Raport TVA pe casă de marcat — sumar pivot pe interval de dată](screenshots/07_raport_tva_casa_marcat.png)
+![Raportul Vânzări TVA pe casă de marcat, pivot pe octombrie 2026, filtrat Reconciliat sau Închis: Magazin Centru, cota 21, baza 120,00 lei, TVA 25,20 lei, total 145,20 lei](screenshots/07_raport_tva_casa_marcat.png)
 
 ### Pasul 5 — Importul exportului AMEF
 
@@ -198,6 +233,13 @@ al aparatului. Fiecare bon se potrivește cu comanda din Odoo pe **aparat, numă
 bonului**. Când bonul a fost tipărit prin driverul de casă de marcat, potrivirea se face pe numărul Z
 și numărul bonului în Z salvate de driver pe comandă. Starea jurnalului trece în **Interpretat**.
 
+Ziua se ia în **ora locală a aparatului**, nu în UTC. La importul din e-mail se folosește fusul
+companiei (`Europe/Bucharest`, dacă nu e completat); la importul manual, fusul din profilul utilizatorului care apasă **Importă arhiva**, deci
+completați-l pe utilizatorii care importă (la potrivirea de rezervă după dată și sumă, dacă lipsește, se
+folosește fusul companiei, la fel ca la verificarea „Lipsă în arhiva fiscală"). Comenzile făcute după
+miezul nopții local se potrivesc astfel cu Z-ul zilei lor, atât la potrivirea pe aparat și număr de
+bon, cât și la cea de rezervă după dată și sumă.
+
 Un bon cu același total ca al comenzii, dar cu alt TVA (peste un ban de rotunjire), apare **TVA
 diferit**: comanda are altă defalcare pe cote decât bonul tipărit, iar nota arată cele două valori.
 
@@ -205,17 +247,22 @@ diferit**: comanda are altă defalcare pe cote decât bonul tipărit, iar nota a
 > „Lipsă în arhiva fiscală" lucrează pe zi. Dacă pe aceeași casă se scot două rapoarte Z în aceeași zi,
 > același număr de bon există în ambele, iar comenzile unui Z apar „Lipsă în arhiva fiscală" la
 > celălalt. Cu driverul de casă (puntea ECR), potrivirea folosește numărul Z al comenzii și evită
-> primul caz, dar nu și al doilea. Recomandați magazinului un singur raport Z pe zi.
+> primul caz, dar nu și al doilea. Recomandați magazinului un singur raport Z pe zi. Când ziua are mai
+> multe Z-uri și există comenzi „Lipsă în arhiva fiscală", fila **Observații** primește avertismentul
+> „Ziua … are mai multe Z-uri (…): comenzile care aparțin celorlalte Z-uri pot apărea ca „Lipsă în
+> arhiva fiscală”. Verifică acele comenzi după oră." Rezultatul nu se corectează automat: comenzile
+> se verifică după oră.
 
 Un bon pentru care nu se găsește comanda după aparat și număr poate fi totuși marcat **Reconciliat**
 dacă există o comandă nefiscalizată din aceeași zi cu aceeași sumă; în acest caz, coloana **Note
 potrivire** spune că potrivirea s-a făcut după dată și sumă. Verificați aceste bonuri: legătura nu e
 sigură.
 
-![Jurnal AMEF după import — fila cu bonurile reconciliate](screenshots/05_import_arhiva.png)
+![Jurnalul AMEF/2026/0001 după Importă arhiva, în starea Interpretat: NUI aparat fiscal 9000000123 și Rapoarte Z lipsă (OPIS) Z 14 evidențiate; fila Bonuri fiscale are 7 rânduri: 1 Reconciliat, 1 Sumă diferită (Odoo 60,50 lei față de aparat 90,50 lei), 3 Lipsă în Odoo și 2 Lipsă în arhiva fiscală (bonurile 9 și 42)](screenshots/05_import_arhiva.png)
 
 În exemplu, Z 14 a fost scos în aceeași zi și lipsește din export: de aceea bonul lui (42) apare
-„Lipsă în arhiva fiscală", iar Z 14 apare în **Rapoarte Z lipsă (OPIS)**.
+„Lipsă în arhiva fiscală", iar Z 14 apare în **Rapoarte Z lipsă (OPIS)**. Ziua are două Z-uri (14 și
+15), deci fila **Observații** a acestui jurnal arată și avertismentul pentru mai multe Z-uri.
 
 **Găsește pe ecran** — în fila **Bonuri fiscale** e câte o linie pentru fiecare bon din export, cu
 numărul raportului Z, numărul bonului în Z (**Nr. bon în Z (BF)**), totalul și TVA-ul declarate de
@@ -233,7 +280,10 @@ abaterile de coerență ale fiecărui Z și fișierele ignorate.
   pot verifica;
 - fila **Observații** nu are abateri de coerență (total Z diferit de suma bonurilor sau a plăților,
   TVA diferit de suma pe cote, bonuri lipsă din numerotare). O astfel de abatere înseamnă un fișier
-  incomplet sau modificat, nu o diferență față de Odoo.
+  incomplet sau modificat, nu o diferență față de Odoo;
+- dacă fila **Observații** are avertismentul pentru zilele cu mai multe Z-uri, comenzile „Lipsă în arhiva
+  fiscală" din ziua respectivă pot aparține celuilalt Z; verificați-le după oră înainte să le tratați ca
+  vânzări fără bon.
 
 **Treci mai departe** — la raportul Z completat din export (Pasul 6) și la lista discrepanțelor
 (Pasul 7).
@@ -256,7 +306,7 @@ pe aceeași zi. În raport, totalul declarat devine totalul Z-ului din aparat,
 plățile declarate se aliniază pe tipul de plată AMEF, iar liniile pe cotă primesc valoarea și TVA-ul
 declarate de aparat. Apoi raportul se reconciliază automat.
 
-![Raport Z completat din export — cote declarate de aparat și diferențe](screenshots/08_raport_z_declarat.png)
+![Raportul Z/2026/00002 (număr raport Z 15) în starea Diferențe: total declarat 268,00 lei față de 417,45 lei calculat din POS; fila Defalcare pe cote TVA: cota 0% cu Poziții în aparat 3,4 și 21,50 lei declarat, cota 21% cu 246,50 lei declarat](screenshots/08_raport_z_declarat.png)
 
 **Găsește pe ecran** — în fila **Defalcare pe cote TVA**, fiecare rând e o cotă: baza, TVA-ul și
 totalul calculate din Odoo, apoi **Total declarat (raport Z)** (valoarea cu TVA din aparat),
@@ -284,10 +334,20 @@ fila **Defalcare pe tipuri de plată**, fiecare tip are suma calculată și cea 
 Din butonul statistic **Discrepanțe** de pe jurnal (sau din meniul **Punct de vânzare → Fiscalizare
 AMEF → Discrepanțe bonuri fiscale**) se deschide lista completă a bonurilor cu probleme, cu
 filtre pe starea potrivirii: bonuri fără corespondent în Odoo, sume sau cote TVA diferite între
-aparat și Odoo, și — simetric — comenzi fiscalizate în Odoo care nu apar în arhiva fiscală a
-aparatului pentru ziua respectivă.
+aparat și Odoo, și — simetric — comenzi din Odoo care nu apar în arhiva fiscală a aparatului pentru
+ziua respectivă (**Lipsă în arhiva fiscală**). Verificarea inversă ia în calcul:
 
-![Lista discrepanțelor bonurilor fiscale](screenshots/06_discrepante.png)
+- comenzile cu bon înregistrat în Odoo (starea fiscală **Bon emis**);
+- pe casele care nu raportează bonul către Odoo (starea fiscală **Fără bon fiscal** sau necompletată),
+  vânzările plătite cu total pozitiv. Dacă procedura magazinului cere bon pentru orice vânzare din POS, o
+  vânzare pozitivă fără bon în Z e o diferență de lămurit.
+
+**Returul** (comandă cu total negativ) nu se semnalează: casa nu emite bon pentru retur, el se
+documentează cu factură storno (vezi Note de monografie). O comandă cu **total pozitiv și linii de
+retur pe același bon** e o vânzare și trebuie să aibă bon în Z; ea se semnalează dacă lipsește.
+Ciornele și comenzile nefinalizate nu se semnalează.
+
+![Lista Bonuri fiscale filtrată pe Discrepanțe, cu 6 rânduri din AMEF/2026/0001: 1 Sumă diferită, 3 Lipsă în Odoo și 2 Lipsă în arhiva fiscală, cu nota Înregistrat în Odoo, negăsit în arhiva fiscală](screenshots/06_discrepante.png)
 
 Lista se deschide filtrată pe **Discrepanțe**; scoateți filtrul ca să vedeți și bonurile reconciliate.
 
@@ -296,7 +356,60 @@ După ce discrepanțele sunt lămurite (corectare manuală în Odoo sau justific
 chatter-ul jurnalului, nu în fila **Observații**: aceasta se rescrie la fiecare reimport care produce
 mesaje.
 
-![Jurnal electronic AMEF arhivat](screenshots/04_jurnal_amef.png)
+![Jurnalul AMEF/2026/0001 în starea Arhivat, cu butonul Resetează și bara de stare evidențiate; fila Bonuri fiscale păstrează cele 7 bonuri, iar Rapoarte Z lipsă (OPIS) arată Z 14](screenshots/04_jurnal_amef.png)
+
+### Pasul 8 — Preluarea automată din e-mail (FiscalWire)
+
+Aplicația FiscalWire trimite exportul la adresa `fiscalwire@<domeniul-vostru>`, cu fișierele atașate
+(`.p7b`, direct sau într-o arhivă `.zip`). La fiecare e-mail, Odoo creează în **Punct de vânzare →
+Fiscalizare AMEF → Jurnale electronice AMEF** câte o arhivă fiscală pentru fiecare aparat din e-mail
+(după NUI-ul din fișiere), o leagă de punctul de vânzare cu acel NUI și rulează importul (Pasul 5).
+
+- Un Z deja importat nu se mai importă la o retrimitere. Dacă **toate** Z-urile din e-mail erau deja
+  importate, nu se creează o arhivă nouă: în arhiva existentă apar e-mailul primit și mesajul „E-mail
+  primit din nou: rapoartele Z … sunt deja importate, nu s-a modificat nimic."; dacă e-mailul aduce și
+  Z-uri noi, se creează o arhivă nouă doar cu Z-urile noi. Se recunosc ca importate Z-urile care au avut bonuri în fișier.
+- Dacă niciun punct de vânzare nu are NUI-ul din fișiere, arhiva rămâne în **Ciornă**, neimportată, cu
+  nota „Niciun punct de vânzare nu are NUI-ul aparatului fiscal …". Dacă mai multe puncte de vânzare au
+  același NUI, nota e „Mai multe puncte de vânzare au NUI-ul aparatului fiscal …". Arhiva în Ciornă nu
+  notifică pe nimeni: o vedeți în lista jurnalelor.
+- Dacă e-mailul nu conține niciun fișier AMEF, se creează o arhivă în starea **Ciornă**, cu nota „E-mailul nu conține
+  niciun fișier AMEF (.p7b) care să poată fi citit."
+- La o retrimitere parțială (Z-uri noi și Z-uri deja importate), în arhiva nouă Z-urile deja importate nu
+  apar în **Rapoarte Z lipsă (OPIS)**: ele nu sunt lipsă, doar nu mai sunt în această arhivă.
+- Dacă importul eșuează cu o eroare tehnică, arhiva rămâne în **Ciornă**, cu motivul în fila
+  **Observații**, iar membrii grupului sunt notificați (starea nu e **Interpretat**). Verificați motivul,
+  corectați cauza (de exemplu un fișier modificat) și apăsați **Importă arhiva**.
+- **Remedierea unei arhive rămase în Ciornă:** completați NUI-ul pe punctul de vânzare corect, deschideți
+  arhiva și apăsați **Importă arhiva**. Arhiva își găsește singură punctul de vânzare, importă fișierele
+  și șterge nota.
+
+![Arhiva fiscală creată din e-mail, în starea Interpretat, cu Punct de lucru Magazin Mall și NUI aparat fiscal 9000000456 evidențiate; fila Bonuri fiscale: 2 bonuri Reconciliat după dată și sumă și o vânzare de 72,60 lei Lipsă în arhiva fiscală](screenshots/09_arhiva_din_email.png)
+
+**Găsește pe ecran** — arhiva creată din e-mail arată ca una importată manual (Pasul 5): punctul de
+vânzare, **NUI aparat fiscal (AMEF)**, perioada și fila **Bonuri fiscale**. Mesajul original, cu
+atașamentele, e în chatter, ca notă internă, pe prima arhivă a e-mailului (dacă toate Z-urile erau deja
+importate, pe arhiva existentă).
+
+**Verifică** — că punctul de vânzare și NUI-ul sunt cele ale casei care a trimis exportul și că starea
+nu a rămas **Ciornă**.
+
+**Notificarea grupului.** După import, în chatterul arhivei apare un mesaj de rezultat cu subiectul
+„Arhivă fiscală AMEF …: fără diferențe" sau „Arhivă fiscală AMEF …: au apărut diferențe". Conține NUI-ul
+aparatului, punctul de vânzare, perioada, numărul de bonuri și al celor cu diferențe, Z-urile lipsă și
+notele. Importul are probleme când există diferențe, Z lipsă, note sau arhiva nu a ajuns în starea
+**Interpretat**; atunci fiecare membru al grupului primește și o activitate „Verificați arhiva fiscală
+AMEF …". Dacă mesajul și activitatea pleacă și pe e-mail depinde de cei doi parametri de sistem din
+Configurarea inițială (pasul 7): implicit nu pleacă e-mail, iar activitatea apare doar în Odoo.
+
+![Arhiva fiscală creată din e-mail, cu chatterul deschis: activitatea Verificați arhiva fiscală AMEF pentru Administrator și mesajul de rezultat Arhivă fiscală AMEF au apărut diferențe, cu NUI aparat fiscal, punct de vânzare, perioadă, Bonuri 3 și cu diferențe 1](screenshots/10_notificare_chatter.png)
+
+![Arhivă fiscală AMEF în starea Ciornă, cu NUI aparat fiscal 9000000777 evidențiat; fila Observații arată nota Niciun punct de vânzare nu are NUI-ul aparatului fiscal 9000000777](screenshots/11_arhiva_draft_nui.png)
+
+![Parametrul de sistem amef_notify_mode, cu valoarea implicită never: fără e-mail către grupul de notificare](screenshots/12_parametri_notificare.png)
+
+**Treci mai departe** — la raportul Z completat din export (Pasul 6) și la lista discrepanțelor
+(Pasul 7).
 
 ### Note de monografie și raportare
 
@@ -340,6 +453,7 @@ comenzile facturate.
 |---|---|---|
 | `point_of_sale` | comenzi, sesiuni, metode de plată, nota de sesiune | dependență (manifest) |
 | `account` | nota contabilă de sesiune (generată de POS) | dependență (manifest) |
+| `mail` | aliasul `fiscalwire`, mesajele din chatter, activitățile și e-mailul către grup | dependență (manifest) |
 | `l10n_ro` | plan de conturi și taxe RO | dependență (manifest) |
 | `deltatech_pos` / `deltatech_pos_base` | driver fiscal AMEF: trimite bonul la casă și înregistrează răspunsul aparatului pe comandă | integrare opțională (nu dependență) |
 | `l10n_ro_pos_fiscal_compliance_ecr` | puntea cu driverul: starea fiscală din răspunsul aparatului și potrivirea bonurilor din export pe numărul Z și numărul bonului în Z | modul punte, instalat automat când e prezent și `deltatech_ecr_fiscal` (adus de `deltatech_pos`) |
@@ -349,14 +463,17 @@ comenzile facturate.
 > rapoartelor Z — nu are dependențe suplimentare și e disponibil oricărui client cu modulul
 > instalat, nu doar celor care importă arhiva jurnalului electronic (Pasul 5).
 
-Ce este automat: marcarea stării de fiscalizare, blocarea închiderii sesiunii, importul și
-reconcilierea bon-cu-bon din exportul `.zip`/`.p7b`, verificarea aparatului (NUI) și a coerenței
+Ce este automat: marcarea stării de fiscalizare, blocarea închiderii sesiunii, preluarea exportului
+primit pe e-mail (arhivă pe aparat, import, ignorarea Z-urilor deja importate), notificarea grupului,
+importul și reconcilierea bon-cu-bon din exportul `.zip`/`.p7b`, verificarea aparatului (NUI) și a coerenței
 fiecărui Z, lista Z-urilor lipsă, completarea raportului Z cu cifrele aparatului (total, plăți, cote),
 reconcilierea cu vânzările/încasările POS, și agregarea pe interval/casă de marcat/cotă TVA a
 liniilor deja calculate ale rapoartelor Z.
-Ce rămâne manual: configurarea fiscalizării și a NUI-ului pe punctul de lucru, obținerea exportului de la
-casa de marcat și încărcarea ei, lămurirea discrepanțelor semnalate (corectare în Odoo sau
-justificare), și justificarea erorilor de fiscalizare.
+Ce rămâne manual: configurarea fiscalizării și a NUI-ului pe punctul de lucru, configurarea aliasului și a
+serverului de e-mail de intrare, completarea grupului de notificare, obținerea exportului de la casa
+de marcat și încărcarea ei (sau trimiterea lui din FiscalWire pe e-mail, la alias), lămurirea
+discrepanțelor semnalate (corectare în Odoo sau justificare), remedierea arhivelor rămase în Ciornă și
+justificarea erorilor de fiscalizare.
 
 ## 8. Verificări pentru consultant
 
@@ -385,6 +502,14 @@ justificare), și justificarea erorilor de fiscalizare.
 - [ ] Un bon cu același total ca al comenzii, dar cu alt TVA, apare **TVA diferit**.
 - [ ] Un bon din export fără nicio comandă Odoo corespunzătoare apare **Lipsă în Odoo**; o comandă
       fiscalizată în Odoo absentă din exportul zilei respective apare **Lipsă în arhiva fiscală**.
+- [ ] Pe un punct de vânzare fără fiscalizare obligatorie (comenzi în starea fiscală **Fără bon fiscal**
+      sau necompletată), o vânzare plătită, cu total pozitiv, care nu are bon în Z apare **Lipsă în
+      arhiva fiscală**.
+- [ ] Un retur (total negativ) fără bon în Z nu apare ca discrepanță.
+- [ ] O comandă cu total pozitiv și o linie de retur, fără bon în Z, apare **Lipsă în arhiva fiscală**
+      (e vânzare).
+- [ ] O comandă făcută la 00:30 ora locală se potrivește cu Z-ul acelei zile locale, nu cu cel al zilei
+      precedente.
 - [ ] Cu opisul inclus, un Z din intervalul opisului absent din export apare în **Rapoarte Z lipsă
       (OPIS)**; cu exportul complet, câmpul nu apare.
 - [ ] Raportul Z al zilei are totalul declarat egal cu totalul Z-ului tipărit de casă, plățile pe tip
@@ -407,6 +532,24 @@ justificare), și justificarea erorilor de fiscalizare.
       tehnică.
 - [ ] O comandă cu *Bon simulat* (insignă albastră, fără serie) nu blochează închiderea sesiunii, nu intră în totalurile
       raportului Z și nu e potrivită cu bonurile din jurnalul AMEF.
+- [ ] Un e-mail trimis la aliasul `fiscalwire`, cu exportul unui aparat cu NUI cunoscut, creează o arhivă
+      fiscală legată de punctul de vânzare corect și o aduce în starea **Interpretat**.
+- [ ] Același e-mail retrimis nu creează o a doua arhivă pentru Z-urile deja importate; în arhiva
+      existentă apare mesajul „E-mail primit din nou: …".
+- [ ] Un e-mail cu un NUI necunoscut lasă arhiva în **Ciornă**, cu nota despre NUI, fără notificare;
+      după completarea NUI-ului pe punctul de vânzare, **Importă arhiva** o importă și șterge nota.
+- [ ] La o retrimitere parțială a e-mailului (Z noi și Z deja importate), în arhiva nouă Z-urile deja
+      importate nu apar în **Rapoarte Z lipsă (OPIS)**.
+- [ ] Un import din e-mail care eșuează cu o eroare tehnică lasă arhiva în **Ciornă**, cu motivul în fila
+      **Observații**, și notifică membrii grupului.
+- [ ] Cu `amef_notify_mode` = `never` (implicit), un import nu trimite e-mail membrilor grupului; cu
+      `problems`, trimite doar când importul are probleme; cu `always`, trimite la fiecare import.
+- [ ] La un import cu probleme, membrul grupului are activitatea „Verificați arhiva fiscală AMEF …"; cu
+      `amef_notify_activity` = `False`, activitatea nu se mai creează.
+- [ ] Un utilizator din altă companie nu vede arhiva fiscală, bonurile, raportul Z și nu primește
+      notificarea.
+- [ ] Într-o zi cu două rapoarte Z și comenzi „Lipsă în arhiva fiscală", fila **Observații** arată
+      avertismentul „Ziua … are mai multe Z-uri (…)"; cu un singur Z pe zi, avertismentul nu apare.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -422,6 +565,13 @@ justificare), și justificarea erorilor de fiscalizare.
 | „…: ignorat, este o copie text a opisului care nu se mai poate citi…" (în fila **Observații**) | Exportul fiscalwire conține și `OPIS_fiscalwire_*.xml` | Nimic de făcut: opisul se citește din `Perioada_raportare.p7b` |
 | „Z …: totalul Z diferă de suma plăților (Z: …, calculat: …)." și altele similare (în fila **Observații**) | Fișierul zilei e incomplet sau a fost modificat după export | Cereți din nou exportul de la casa de marcat și reimportați |
 | „Opisul este emis pentru codul fiscal …, nu pentru companie (…)." (în fila **Observații**) | Exportul e al altei firme, sau codul fiscal al companiei e completat diferit | Verificați exportul și codul fiscal al companiei |
+| „Niciun punct de vânzare nu are NUI-ul aparatului fiscal …" (nota unei arhive în **Ciornă**) | E-mailul vine de la un aparat al cărui NUI nu e completat pe niciun punct de vânzare | Completați **NUI aparat fiscal (AMEF)** pe punctul de vânzare și apăsați **Importă arhiva** |
+| „Mai multe puncte de vânzare au NUI-ul aparatului fiscal …" (nota unei arhive în **Ciornă**) | Același NUI e completat pe două puncte de vânzare | Lăsați NUI-ul doar pe punctul de vânzare al casei respective, apoi **Importă arhiva** |
+| „E-mailul nu conține niciun fișier AMEF (.p7b) care să poată fi citit." | Mesajul primit la alias n-are atașamente AMEF, sau acestea sunt corupte | Cereți retrimiterea exportului din FiscalWire; arhiva în Ciornă poate fi ignorată |
+| Arhivă în **Ciornă**, cu un mesaj tehnic în fila **Observații** (importul din e-mail a eșuat) | Eroare la import, de exemplu un fișier modificat sau incomplet; membrii grupului au fost notificați | Citiți motivul din **Observații**, corectați cauza sau cereți retrimiterea exportului și apăsați **Importă arhiva** |
+| „E-mail primit din nou: rapoartele Z … sunt deja importate, nu s-a modificat nimic." (în chatter) | Același export trimis a doua oară | Nimic de făcut: nu s-a creat o arhivă nouă |
+| „Ziua … are mai multe Z-uri (…): comenzile care aparțin celorlalte Z-uri pot apărea ca „Lipsă în arhiva fiscală”. Verifică acele comenzi după oră." (în fila **Observații**) | Pe aceeași casă s-au scos două rapoarte Z în aceeași zi | Verificați după oră comenzile „Lipsă în arhiva fiscală"; recomandați un singur raport Z pe zi |
+| Arhiva e importată, dar nu a plecat niciun e-mail către grup | `amef_notify_mode` e `never` (implicit), sau `problems` iar importul n-a avut probleme; sau utilizatorul nu e în grupul **AMEF: notificări la importul din e-mail** ori nu are acces la compania arhivei | Setați parametrul pe `problems` sau `always`, adăugați utilizatorul în grup și verificați compania lui |
 
 ## 10. Capturi de ecran
 
@@ -440,6 +590,11 @@ pe planul de conturi RO (`setup_country("ro")`):
    diferențele față de Odoo.
 7. `06_discrepante.png` — lista discrepanțelor bonurilor fiscale.
 8. `04_jurnal_amef.png` — jurnalul electronic AMEF arhivat (pasul final, după lămurirea discrepanțelor).
+9. `09_arhiva_din_email.png` — arhiva fiscală creată din e-mail, fila „Bonuri fiscale", cu o vânzare din
+   Odoo „Lipsă în arhiva fiscală".
+10. `10_notificare_chatter.png` — mesajul de rezultat din chatterul arhivei și activitatea creată.
+11. `11_arhiva_draft_nui.png` — arhivă rămasă în Ciornă, cu nota despre NUI necunoscut.
+12. `12_parametri_notificare.png` — parametrul de sistem `amef_notify_mode` (cheie și valoare).
 
 Regenerare:
 
@@ -467,6 +622,13 @@ arhivă, și în Odoo — verificarea e pe conținut) versus **Lipsă în Odoo/L
 (bonul există doar de o parte — verificarea e pe existență). A doua categorie e cea care necesită
 investigație operațională (vânzare neînregistrată în Odoo sau bon emis manual fără corespondent
 fizic), nu doar o corecție de sumă.
+
+Pentru preluarea din e-mail, explicați trei lucruri: aliasul acceptă mesaje de la oricine, deci adresa
+rămâne nepublică; NUI-ul trebuie completat pe fiecare punct de vânzare, altfel arhiva rămâne în Ciornă;
+implicit nu pleacă e-mail către grup (parametrul `amef_notify_mode`), rezultatul fiind în chatterul
+arhivei. Precizați și regula verificării inverse: returul nu are bon pe casă și nu se semnalează, în
+timp ce o vânzare plătită fără bon în Z se semnalează; într-o zi cu mai multe Z-uri, rezultatul trebuie
+verificat după oră.
 
 ---
 

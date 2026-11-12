@@ -1,7 +1,7 @@
 # Price Without Tax on Website (localizat la `deltatech_website_price_without_tax/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_price_without_tax`
-- **Versiune:** `19.0.1.0.7`
+- **Versiune:** `19.0.1.0.8`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_price_without_tax
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_price_without_tax`
 - **Ultima Ingestie:** `2026-11-06`

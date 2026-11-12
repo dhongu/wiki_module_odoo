@@ -1,7 +1,7 @@
 # Romania - Stock Report (Fișă Magazie) (localizat la `l10n_ro_stock_report/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_report`
-- **Versiune:** `19.0.2.10.0`
+- **Versiune:** `19.0.2.10.1`
 - **Cale:** https://github.com/terrabit-ro/l10n-romania/tree/19.0/l10n_ro_stock_report
 - **Cale Locală:** `odoo-addons/l10n-romania-oca/l10n_ro_stock_report`
 - **Ultima Ingestie:** `2026-10-22`

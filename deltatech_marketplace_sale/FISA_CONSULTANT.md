@@ -150,6 +150,23 @@ origine.
 
 ![Comanda de vânzare cu marketplace_ref completat și butonul Refresh în antet](screenshots/02_sale_order_marketplace_ref.png)
 
+**Descrierea liniei rămâne cea din magazin.** În comanda de vânzare, deschideți o linie importată
+(**Vânzări → Comenzi →** comanda → tab-ul **Linii comandă**, coloana **Descriere**): textul este
+denumirea trimisă de magazin pentru acea linie (de exemplu „OUTLET …”), cu eventualele atribute
+personalizate adăugate pe rânduri noi, nu denumirea produsului din Odoo. Descrierea se păstrează și
+după ce produsul liniei se schimbă (remapare, îmbinarea a două variante). O linie adăugată manual de
+operator își urmează produsul, ca de obicei. Dacă magazinul nu trimite nicio denumire, linia primește
+la import numele produsului și îl păstrează și după o remapare.
+
+Pe factură, linia preia aceeași descriere: sub **Linii factură**, coloana **Etichetă** arată
+denumirea din magazin (de exemplu „OUTLET …”), fără denumirea produsului din Odoo în față, cum ar
+pune modulul Vânzări în mod standard. Facturile deja emise nu se schimbă. O linie adăugată manual de
+operator se facturează ca de obicei, cu denumirea produsului.
+
+Dacă magazinul trimite același cod pentru combinația outlet și pentru cea normală, produsul
+Odoo rămâne cel potrivit după cod: denumirea din magazin ajută la deosebire, dar variante separate cu
+cod propriu rămân o decizie de date.
+
 ### Pasul 3 — Binding-ul comenzii (Marketplace → Asocieri → Sale Orders)
 
 Meniul **Marketplace → Asocieri → Sale Orders** (submeniu al „Asocieri" / „Bindings", comun tuturor
@@ -292,6 +309,10 @@ importată, alegerea explicită „notific marketplace-ul sau doar anulez în Od
       automat comanda Odoo la anulare raportată de marketplace.
 - [ ] O comandă cu binding de marketplace deschide dialogul de alegere la **Cancel**, nu anulează
       direct — verificați ambele opțiuni (cu/fără notificare).
+- [ ] Pe o comandă importată, descrierea liniei din comandă coincide cu denumirea din magazin (de
+      exemplu „OUTLET …”), inclusiv după ce produsul liniei a fost schimbat sau remapat, iar factura
+      generată din comandă are aceeași denumire pe linie, fără denumirea produsului Odoo în față. O
+      linie adăugată manual își urmează produsul.
 - [ ] O editare de linie făcută dintr-un wizard sau server action (nu doar din formularul comenzii)
       ajunge la binding — verificați că `_marketplace_notify_lines_changed` se declanșează și pe
       această cale.

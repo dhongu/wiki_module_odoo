@@ -5,6 +5,7 @@
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos_online_payment
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_pos_online_payment`
 - **Ultima Ingestie:** `2026-08-20`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

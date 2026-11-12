@@ -18,7 +18,7 @@ Cost (AVCO)* și valorizarea perpetuă (*real time*). Consultantul nu mai
 alege modul cu modul la implementare, iar clientul primește o configurație
 coerentă și verificată: recepție cu pivot 408, dată contabilă cu gardă
 cronologică, protecții de integritate, fișă de magazie, gestiuni contabile,
-note de inventariere și recalculul lunar CMP periodic.
+note de inventariere. Recalculul lunar CMP periodic nu face parte din pachet.
 
 ## 2. Bază legală și context
 
@@ -42,7 +42,7 @@ Roluri recomandate pentru testare:
 - Administrator funcțional: instalează pachetul și verifică configurarea
   automată a companiei;
 - Utilizator operațional: rulează fluxul de recepție/vânzare/inventar;
-- Contabil/manager: validează notele contabile și corecția CMP lunară.
+- Contabil/manager: validează notele contabile (recepție, vânzare, retur, inventar).
 
 ## 4. Conturi și date implicate
 
@@ -63,8 +63,11 @@ Date minime pentru demo:
 ## 5. Configurare inițială
 
 1. Instalați pachetul `l10n_ro_stock_pack_cmp` pe baza demo — dependențele
-   (cmp_periodic, posting_date, constraints, sheet, gestiune,
-   inventory_closing, purchase, sale) se instalează automat.
+   (posting_date, constraints, sheet, gestiune,
+   inventory_closing, purchase, sale) se instalează automat. Recalculul lunar
+   CMP periodic (`l10n_ro_stock_cmp_periodic`) nu face parte din pachet: pe o
+   bază **fără** `deltatech_obyc` se instalează separat, iar pe o bază cu OBYC
+   instalarea lui este refuzată (module incompatibile).
 2. Verificați configurarea automată pe o categorie nouă de produse
    (**Inventar → Configurare → Categorii de produse**): *Metodă de cost* =
    *Costul mediu (AVCO)* și *Evaluarea stocurilor* = *Perpetuă (la
@@ -83,13 +86,6 @@ Date minime pentru demo:
    secțiunea *Inventariere RO*: conturile de plus și de minus (recomandat 607
    pentru mărfuri) — nu au valoare implicită, iar fără ele wizardul de note
    de inventariere refuză generarea.
-5. Pentru corecția lunară, în **Setări → Contabilitate → CMP Periodic
-   Lunar**: bifați întâi *CMP periodic lunar* pe companie (jurnalul e ascuns
-   până atunci), apoi alegeți *Jurnal CMP periodic* (tip Operațiuni diverse).
-   Pe categoriile de produse, bifa *CMP Periodic Lunar* este activă
-   **implicit** pe cele noi — **debifați-o** pe categoriile care nu trebuie
-   recalculate (servicii, ambalaje, consumabile fără evidență valorică).
-
 ## 6. Flux de utilizare
 
 Cifrele de mai jos sunt exact cele din testul automat al pachetului
@@ -99,7 +95,7 @@ Pașii sunt grupați pe tip de operație, dar **cronologia reală a scenariului*
 (cea din capturi, respectată de garda cronologică a pachetului) este:
 1 iunie recepția 1 și factura ei, 5 iunie prima vânzare, 8 iunie returul și
 nota de credit, 10–11 iunie recepția 2 pe aviz și factura ei, 15 iunie a doua
-vânzare, 20 iunie inventarierea, apoi corecția CMP la închiderea lunii.
+vânzare, 20 iunie inventarierea.
 
 ### Pasul 1 — Instalarea pachetului
 
@@ -200,32 +196,6 @@ wizardul de note contabile generează minusul la CMP-ul curent:
 
 ![Nota de minus de inventar 607 = 371](screenshots/07_inventar_minus.png)
 
-### Pasul 7 — Închiderea lunii: corecția CMP periodic
-
-Rulați **Contabilitate → Contabilitate → CMP Periodic Lunar → Recalcul CMP
-Periodic** pe luna închisă. Wizardul se deschide ca dialog, cu butoanele în
-subsol. Înainte de generare, citiți previzualizarea:
-
-1. **Găsiți pe ecran**: fiecare rând este un produs; coloanele arată stocul
-   inițial (cantitate și valoare), intrările lunii, cantitatea ieșirilor,
-   CMP-ul lunar calculat, valoarea periodică a ieșirilor și **delta** față de
-   valorizarea perpetuă.
-2. **Verificați**: CMP-ul lunar corespunde formulei din OMFP 1802 pct. 96
-   alin. (2) — **(valoarea stocului inițial + valoarea intrărilor) /
-   (cantitatea inițială + cantitatea intrărilor)**; în scenariul demo stocul
-   inițial este zero, deci 330 lei / 20 buc = 16,50. Delta are semnul
-   așteptat (pozitivă când prețurile au crescut în cursul lunii), iar
-   produsele fără mișcări nu apar.
-3. **Generați** abia apoi nota cu butonul *Generează nota de corecție* —
-   butoanele apar în subsolul dialogului atunci când wizardul e lansat din
-   meniu (captura de mai jos arată doar tabelul de previzualizare). Nota
-   `607 = 371` (în demo: 21 lei) aduce ieșirile lunii la CMP-ul periodic.
-   Lunile deja procesate se regăsesc în **Registru CMP periodic**, submeniul
-   alăturat. Coloana **÷0** marchează rândurile cu numitor zero (stoc inițial
-   + intrări = 0), unde s-a folosit prețul standard.
-
-![Wizardul CMP periodic cu previzualizarea corecției](screenshots/08_corectie_cmp_periodic.png)
-
 ### Note de monografie și raportare
 
 - Recepție (cu sau fără factură): **Dr 371 = Cr 408**;
@@ -240,8 +210,7 @@ subsol. Înainte de generare, citiți previzualizarea:
   tratează separat, ca deductibile în limitele legale — **art. 25 alin. (3)
   lit. d)**. Dacă lipsa nu e demonstrată, se ajustează și TVA dedusă
   (art. 304), prin **Dr 635 = Cr 4426**;
-- Corecția CMP periodic: **Dr 607 = Cr 371** (sau invers, la delta
-  negativă).
+
 
 Monografia completă, cu cifrele scenariului demo pas cu pas, este în
 `readme/USAGE.md`.
@@ -250,7 +219,7 @@ Monografia completă, cu cifrele scenariului demo pas cu pas, este în
 
 | Modul / proces | Rol în flux | Tip legătură |
 |---|---|---|
-| `l10n_ro_stock_cmp_periodic` | recalculul lunar CMP + nota de corecție | dependență (manifest) |
+| `l10n_ro_stock_cmp_periodic` | recalculul lunar CMP + nota de corecție | **nu e în pachet**; exclus cu `deltatech_obyc` |
 | `l10n_ro_stock_gestiune` | pivotul 408, gestiuni contabile, storno retur | dependență (manifest) |
 | `l10n_ro_stock_posting_date` | dată contabilă cu gardă cronologică | dependență (manifest) |
 | `l10n_ro_stock_constraints` | blochează modificarea mișcărilor valorizate | dependență (manifest) |
@@ -261,8 +230,7 @@ Monografia completă, cu cifrele scenariului demo pas cu pas, este în
 Ce este automat: instalarea suitei, configurarea metodei de cost și a
 valorizării pe companiile RO, notele 371=408 la recepție, rutarea facturilor
 pe 408, descărcarea de gestiune la facturare.
-Ce rămâne manual: activarea RNI și a conturilor de inventariere (pasul 5.3–5.4),
-bifarea CMP periodic pe categorii, rularea lunară a wizardului de corecție.
+Ce rămâne manual: activarea RNI și a conturilor de inventariere (pasul 5.3–5.4).
 
 ## 8. Verificări pentru consultant
 
@@ -281,9 +249,6 @@ bifarea CMP periodic pe categorii, rularea lunară a wizardului de corecție.
 - [ ] Factura furnizorului are linia de produs pe 408, iar soldul 408 pe
       documentele perechii recepție+factură este zero.
 - [ ] Factura de client conține liniile 607 = 371 la CMP-ul curent.
-- [ ] În previzualizarea CMP periodic, CMP-ul lunar = (valoare stoc inițial
-      + valoare intrări) / (cantitate inițială + cantitate intrări), iar delta
-      corespunde diferenței față de valorizarea perpetuă.
 - [ ] Testul automat al fluxului trece: `--test-tags=/l10n_ro_stock_pack_cmp`.
 
 ## 9. Mesaje de eroare frecvente
@@ -296,7 +261,6 @@ bifarea CMP periodic pe categorii, rularea lunară a wizardului de corecție.
 | Factura de client nu are liniile 607 = 371 | Produsul nu e stocabil sau categoria nu are valorizare *real time* | Verificați categoria produsului: valorizare automată + cont de stoc 371 |
 | „With the CMP stock package installed, storable products must be in a category with the Average Cost (AVCO) costing method and Perpetual valuation…" la salvarea unui produs | Produsul stocabil (nou, mutat, dezarhivat sau cu *Urmărește stocul* bifat acum) e într-o categorie cu altă metodă de cost sau cu evaluare *Periodică*, pe o companie RO (pentru produs partajat, pe oricare companie activă RO) | Setați categoria pe *Costul mediu (AVCO)* + *Perpetuă (la facturare)* sau alegeți altă categorie |
 | „With the CMP stock package installed, categories of storable products must use the Average Cost (AVCO) costing method and Perpetual valuation" la salvarea unei categorii | Categoria are produse stocabile (și arhivate) și a fost trecută pe altă metodă sau pe evaluare *Periodică*, deci nu mai este AVCO + Perpetuă | Păstrați AVCO + Perpetuă sau mutați întâi produsele stocabile în altă categorie |
-| Wizardul CMP periodic recalculează categorii nedorite | Bifa *CMP Periodic Lunar* e activă implicit pe categoriile noi | Debifați-o pe categoriile care nu trebuie recalculate, apoi rerulați previzualizarea |
 
 ## 10. Capturi de ecran
 
@@ -312,7 +276,7 @@ conturi RO, cu același scenariu ca testul de flux:
 5. `05_vanzare_cogs.png` — factura de client cu descărcarea 607 = 371.
 6. `06_storno_retur.png` — stornarea în roșu la returul către furnizor.
 7. `07_inventar_minus.png` — nota de minus de inventar 607 = 371.
-8. `08_corectie_cmp_periodic.png` — previzualizarea corecției CMP periodic.
+   (Numărul 8, captura corecției CMP periodic, a fost scos odată cu pasul 7; numerotarea celorlalte rămâne stabilă.)
 9. `09_blocare_categorie.png` — refuzul la bifarea *Urmărește stocul* într-o categorie FIFO.
 
 Regenerare:
@@ -326,7 +290,7 @@ Regenerare:
 
 Păstrați perspectiva de politică contabilă: pachetul este alegerea metodei
 CMP pentru toată baza de date (permanența metodelor), nu un simplu
-instalator. Insistați pe fluxul lunar (corecția CMP periodic) și pe faptul
+instalator. Insistați pe faptul
 că cifrele din monografia `readme/USAGE.md` sunt verificate de testul
 automat — orice regresie în module pică testul, nu ajunge la client.
 

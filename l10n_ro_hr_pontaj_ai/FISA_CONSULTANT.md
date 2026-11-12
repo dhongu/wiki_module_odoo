@@ -28,7 +28,7 @@ Modulul nu introduce reguli de pontaj noi; folosește pe cele din `l10n_ro_hr_po
 
 - **Date personale (GDPR)**: numele angajaților și zilele de absență din mesaje ajung la furnizorul de model ales în *Setări → AI*. Concediul medical este **dată privind sănătatea** (categorie specială). Clientul trebuie să aibă acord de prelucrare cu furnizorul și să decidă dacă folosește modulul; *temeiul exact (articole din Regulamentul UE 2016/679 și Legea 190/2018) nu a fost verificat pe text pentru această fișă*: de confirmat cu responsabilul cu protecția datelor al clientului.
 - **Decizia rămâne a omului**: asistentul doar propune; corecția intră în foaie abia când ofițerul o aplică, cu numele lui și data în evidență (*Decis de*, *Decis la*).
-- **Minimizarea datelor**: uneltele întorc doar id, nume, departament și funcție; CNP, IBAN și adresa nu părăsesc Odoo. Instrucțiunile îi spun modelului să nu ceară și să nu repete identificatori personali.
+- **Minimizarea datelor**: *Găsirea angajaților* întoarce doar id, nume, departament și funcție, iar *Luna unui angajat* întoarce codurile zilelor (inclusiv `CM`, dată de sănătate), orele și totalurile; CNP, IBAN și adresa nu părăsesc Odoo. Instrucțiunile îi spun modelului să nu ceară și să nu repete identificatori personali.
 
 ## 3. Utilizatori și roluri
 
@@ -58,9 +58,9 @@ Nu sunt implicate conturi contabile. Date de demo (cele din capturi, firma „Ex
 
 Din **AI → Agenți → Timesheet Assistant** se vede configurarea: modelul, stilul răspunsului, subiectul **Timesheet** și promptul de sistem (în engleză, intenționat: îl citește modelul).
 
-![Formularul agentului „Timesheet Assistant": modelul GPT-4o, subiectul Timesheet și promptul de sistem](screenshots/01_agent.png)
+![Formularul agentului „Timesheet Assistant": modelul GPT-4o, subiectul Timesheet și promptul de sistem; butonul Test este evidențiat](screenshots/01_agent.png)
 
-**Găsește pe ecran.** *Model LLM*, *Stil Răspuns*, *Subiecte* (Timesheet) și *Prompt de Sistem*. Butonul **Test** deschide chatul cu agentul.
+**Găsește pe ecran.** *Model LLM*, *Stil Răspuns*, *Subiecte* (Timesheet) și *Prompt de Sistem*. Butonul **Test** (①) deschide chatul cu agentul.
 
 **Verifică.** Subiectul **Timesheet** are trei unelte: *Timesheet: Find employees*, *Timesheet: Month of an employee* și *Timesheet: Propose a correction* (*AI → Agenți → Subiecte*, sau *Setări → Tehnic → Acțiuni de server*, cu opțiunea *Use in AI* bifată).
 
@@ -68,15 +68,19 @@ Din **AI → Agenți → Timesheet Assistant** se vede configurarea: modelul, st
 
 Ofițerul deschide chatul cu agentul și scrie cererea. Exemple: *„Radu Dobre a lipsit pe 27 și 28 aprilie"*, *„Ion Marin în concediu 14–15 aprilie"*, *„Maria Ionescu a lucrat sâmbătă 6 ore la inventar"*. Asistentul caută angajatul (întreabă dacă sunt mai mulți sau dacă perioada nu e clară), poate citi luna și propune corecțiile, apoi răspunde cu ce a propus și ce a sărit.
 
-*Captura chatului nu este generată: cere un model real, iar pe baza de capturi nu este configurat niciunul.*
+![Chatul cu agentul „Timesheet Assistant": cererea ofițerului pentru Radu Dobre și Ion Marin și răspunsul asistentului, care spune că propunerile așteaptă aprobare](screenshots/02_cerere_in_chat.png)
 
-**Verifică.** Răspunsul spune că propunerile **așteaptă aprobare** și nu că foaia s-a schimbat. La absențe și concedii asistentul **sare** weekendurile și sărbătorile legale, ce spune deja foaia (ex. `8` pe o zi normală), zilele din afara contractului și lunile închise, și spune de ce.
+**Găsește pe ecran.** Mesajul ofițerului (angajatul, zilele, ce s-a întâmplat) și răspunsul asistentului, cu propunerile pregătite pe angajat, codul și numărul de zile. *Conversația de pe captură este scrisă direct în baza de capturi (nu cere niciun model); conținutul unui răspuns real depinde de modelul configurat.*
+
+**Notă.** Concediile reale (de odihnă, medicale) se înregistrează în *Concediu*; asistentul corectează doar foaia de pontaj și nu creează cereri de concediu și nu mișcă soldul alocării.
+
+**Verifică.** Răspunsul spune că propunerile **așteaptă aprobare** și nu că foaia s-a schimbat. La absențe și concedii asistentul **sare** weekendurile și sărbătorile legale; pentru orice cod sare și ce spune deja foaia (ex. `8` pe o zi normală), zilele din afara contractului și lunile închise, și spune de ce.
 
 ### Pasul 3 — Propunerile de aprobat
 
 Din **Concediu → Management → Propuneri AI** se deschide lista, implicit filtrată pe *De aprobat*.
 
-![Lista „Propuneri AI", filtrată pe De aprobat: data, angajatul, codul, orele, motivul, starea](screenshots/02_propuneri_de_aprobat.png)
+![Lista „Propuneri AI", filtrată pe De aprobat: data, angajatul, codul, orele, motivul, starea](screenshots/03_propuneri_de_aprobat.png)
 
 **Găsește pe ecran.** Un rând pe zi și angajat: data, angajatul, codul (ex. `N - Absență nemotivată`), orele, motivul și starea. Coloanele opționale *Cerere* (textul original al ofițerului), *Decis de* și *Decis la* se activează din selectorul de coloane. Aceeași zi propusă din nou **înlocuiește** propunerea de aprobat.
 
@@ -84,15 +88,17 @@ Din **Concediu → Management → Propuneri AI** se deschide lista, implicit fil
 
 ### Pasul 4 — Aplică sau respinge
 
-Selectați propunerile (bifa din stânga) și apăsați **Aplică** sau **Respinge** din antetul listei; pe formular, aceleași butoane, pe o propunere.
+Selectați propunerile (bifa din stânga) și apăsați **Aplică** (①) sau **Respinge** (②) din antetul listei; pe formular, aceleași butoane, pe o propunere.
 
-**Găsește pe ecran.** După **Aplică**, propunerea trece în starea *Aplicată*, cu *Decis de* și *Decis la*. După **Respinge**, în *Respinsă*. Dacă aplicarea nu se poate (de exemplu luna s-a închis între timp, sau codul nu mai e manual), propunerea **rămâne de aprobat**, cu motivul în coloana *Eroare*, iar ecranul arată un avertisment.
+![Lista „Propuneri AI" cu cele patru propuneri (două cereri, câte două zile) selectate: butoanele Aplică și Respinge din antet sunt evidențiate](screenshots/04_aplica_sau_respinge.png)
+
+**Găsește pe ecran.** După **Aplică**, propunerea trece în starea *Aplicată*, cu *Decis de* și *Decis la*. După **Respinge**, în *Respinsă*. Dacă aplicarea nu se poate (de exemplu luna s-a închis între timp), propunerea **rămâne de aprobat**, cu motivul în coloana *Eroare*, iar ecranul arată un avertisment.
 
 **Verifică.** *Aplică* trece prin aceleași reguli ca o corecție tastată în ecranul *Pontaj*: doar ofițerul o poate face, o lună închisă refuză, iar codul pe care foaia l-ar fi generat oricum nu salvează nicio corecție.
 
 ### Pasul 5 — Foaia după aplicare
 
-![Pontajul lunii după ce a fost aplicată propunerea pentru Andrei Popescu: zilele 21 și 22 apar cu D și colțul marcat](screenshots/03_pontaj_dupa_aplicare.png)
+![Pontajul lunii după ce a fost aplicată propunerea pentru Andrei Popescu: zilele 21 și 22 apar cu D și colțul marcat](screenshots/05_pontaj_dupa_aplicare.png)
 
 **Găsește pe ecran.** Zilele aplicate apar cu codul propus (aici `D` la Andrei Popescu pe 21 și 22.04) și cu colțul marcat de corecție manuală, la fel ca orice corecție; apar și în *Concediu → Management → Corecții pontaj*. Propunerile respinse sau rămase de aprobat nu apar.
 
@@ -140,16 +146,18 @@ Ce este automat: căutarea angajaților, citirea lunii, crearea propunerilor cu 
 | „Dați o perioadă de cel mult 31 de zile…" | Perioada e prea lungă sau datele sunt în ordine inversă | Împărțiți cererea pe luni |
 | „Angajat necunoscut: căutați-l mai întâi." | Id-ul angajatului nu există | Asistentul trebuie să folosească mai întâi *Caută angajați* |
 | „luna este închisă" (la propunere) sau eroare la **Aplică** | Luna pontajului e închisă | Administratorul redeschide luna; propunerea rămâne de aprobat |
-| Propunerea a rămas de aprobat, cu text în **Eroare** | Aplicarea a eșuat (lună închisă, cod nemanual, angajat ieșit din foaie) | Citiți motivul, corectați și apăsați din nou **Aplică**, sau **Respinge** |
+| Propunerea a rămas de aprobat, cu text în **Eroare** | Aplicarea a eșuat (lună închisă, angajat ieșit din foaie) | Citiți motivul, corectați și apăsați din nou **Aplică**, sau **Respinge** |
 | Asistentul „a schimbat" pontajul (spune că e gata) | Modelul a formulat greșit răspunsul; foaia **nu** se schimbă fără **Aplică** | Verificați lista *Propuneri AI*; ajustați instrucțiunile subiectului |
 
 ## 10. Capturi de ecran
 
-Capturile (`static/description/`) sunt generate din `tests/test_screenshots.py` (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), cu interfața în limba română, pe o companie RO („Exemplu Producție SRL") și datele din secțiunea 4. **Propunerile sunt create prin aceleași unelte ale asistentului (`_ai_tool_run`), fără niciun model.** Luna pozată este luna Paștelui ortodox din anul curent. În ordinea pașilor din secțiunea 6:
+Capturile (`static/description/`) sunt generate din `tests/test_screenshots.py` (mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), cu interfața în limba română, pe o companie RO („Exemplu Producție SRL") și datele din secțiunea 4. **Propunerile sunt create prin aceleași unelte ale asistentului (`_ai_tool_run`), iar conversația din chat este scrisă direct pe canal, fără niciun model.** Luna pozată este luna Paștelui ortodox din anul curent. În ordinea pașilor din secțiunea 6:
 
-1. `01_agent.png` — formularul agentului „Timesheet Assistant".
-2. `02_propuneri_de_aprobat.png` — lista „Propuneri AI", filtrată pe *De aprobat*.
-3. `03_pontaj_dupa_aplicare.png` — foaia lunii, cu zilele aplicate.
+1. `01_agent.png` — formularul agentului „Timesheet Assistant", cu butonul *Test* evidențiat.
+2. `02_cerere_in_chat.png` — chatul cu agentul: cererea ofițerului și răspunsul asistentului.
+3. `03_propuneri_de_aprobat.png` — lista „Propuneri AI", filtrată pe *De aprobat*.
+4. `04_aplica_sau_respinge.png` — lista cu propunerile selectate și butoanele *Aplică* / *Respinge* evidențiate.
+5. `05_pontaj_dupa_aplicare.png` — foaia lunii, cu zilele aplicate.
 
 Regenerare (portul implicit poate fi ocupat pe un calculator de dezvoltare: dați alt port):
 

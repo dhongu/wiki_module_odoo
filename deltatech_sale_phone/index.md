@@ -1,20 +1,22 @@
 # Sale Phone (localizat la `deltatech_sale_phone/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_phone`
-- **Versiune:** `19.0.1.0.5`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_phone`
+- **Versiune:** `19.0.1.0.6`
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_phone
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_phone`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-12`
 
 #### 1. Sumar
 
-Acest modul afișează numărul de telefon al partenerului direct pe comenzile de vânzare și pe facturi, fără a fi nevoie de navigare către fișa contactului. Astfel, echipa de vânzări și cea de facturare au la îndemână datele de contact ale clientului chiar în documentul la care lucrează, ceea ce ușurează comunicarea și verificarea rapidă a informațiilor.
+Echipa de vânzări și cea de contabilitate au adesea nevoie să sune un client în timp ce lucrează la o ofertă sau la o factură. Acest modul afișează numărul de telefon al clientului direct pe formularul comenzii de vânzare și pe cel al facturii, fără a fi nevoie să deschidă mai întâi fișa contactului.
 
 #### 2. Funcționalități Cheie
 
-- Adaugă numărul de telefon al partenerului pe formularul comenzii de vânzare.
-- Adaugă numărul de telefon al partenerului pe formularul facturii.
-- Numărul de telefon este preluat automat din fișa partenerului și afișat folosind widget-ul dedicat de telefon.
+- **Telefon pe comenzile de vânzare:** un câmp *Phone* apare imediat după client pe formularul comenzii, afișat cu widget-ul de telefon.
+- **Telefon pe facturi:** același câmp *Phone* apare în grupul din stânga al antetului facturii, după adresa de livrare.
+- **Preluat de la client:** valoarea este telefonul clientului din document, iar câmpul rămâne gol dacă clientul nu are telefon. Este doar pentru citire: pentru a schimba numărul se editează clientul.
+- **Nestocat:** numărul nu se salvează pe document; afișează mereu telefonul curent al clientului, inclusiv pe facturile postate.
+- Modulul nu adaugă meniuri, setări sau grupuri și nu modifică listele sau documentele tipărite.
 
 #### 3. Dependențe
 
@@ -23,10 +25,12 @@ Acest modul afișează numărul de telefon al partenerului direct pe comenzile d
 
 #### 4. Componente Cheie
 
+Conform fluxului de ingestie, Sumarul și Funcționalitățile Cheie provin din `readme/DESCRIPTION.md`; mai jos sunt doar reperele confirmate în cod.
+
 **Modele**
 
-- `sale.order` (extins): adaugă câmpul calculat `partner_phone`, preluat din telefonul partenerului asociat comenzii.
-- `account.move` (extins): adaugă câmpul calculat `partner_phone`, preluat din telefonul partenerului asociat facturii.
+- `sale.order` (extins): adaugă câmpul calculat și nestocat `partner_phone`, preluat din telefonul partenerului comenzii.
+- `account.move` (extins): adaugă câmpul calculat și nestocat `partner_phone`, preluat din telefonul partenerului facturii.
 
 **Vizualizări**
 

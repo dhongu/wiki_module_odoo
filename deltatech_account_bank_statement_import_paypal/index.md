@@ -5,6 +5,7 @@
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import_paypal
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_account_bank_statement_import_paypal`
 - **Ultima Ingestie:** `2026-10-12`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

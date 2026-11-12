@@ -1,7 +1,7 @@
 # Equipment Category Group (localizat la `deltatech_category_group_equipment/index.md`)
 
 - **Nume Tehnic:** `deltatech_category_group_equipment`
-- **Versiune:** `19.0.0.0.4`
+- **Versiune:** `19.0.0.0.5`
 - **Cale:** https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_category_group_equipment
 - **Cale Locală:** `odoo-addons/deltatech_service/deltatech_category_group_equipment`
 - **Ultima Ingestie:** `2026-11-02`

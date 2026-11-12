@@ -5,6 +5,7 @@
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_bank_stmt_foreign_currency
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_bank_stmt_foreign_currency`
 - **Ultima Ingestie:** `2026-11-02`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

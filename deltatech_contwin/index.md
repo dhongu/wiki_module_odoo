@@ -1,10 +1,11 @@
 # Interfață ContWin (localizat la `deltatech_contwin/index.md`)
 
 - **Nume Tehnic:** `deltatech_contwin`
-- **Versiune:** `19.0.1.0.17`
+- **Versiune:** `19.0.1.0.18`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_contwin
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_contwin`
-- **Ultima Ingestie:** `2026-10-31`
+- **Ultima Ingestie:** `2026-11-12`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -12,22 +13,23 @@ Modulul „ContWin Interface" permite ca evidența contabilă să rămână în 
 
 #### 2. Funcționalități Cheie
 
-- **Achiziții și vânzări:** facturi de furnizor și de client, note de credit și recepții, cu conturi, sume în RON și în valută, curs de schimb, scadență, tip și cotă de TVA.
+- **Achiziții și vânzări:** facturi de client, note de credit și recepții, plus facturile de furnizor cu cont de mărfuri sau materiale (clasa 3); facturile de furnizor fără un astfel de cont sunt lăsate deoparte. Se exportă conturile, sumele în RON (moneda companiei), zilele până la scadență și codul de TVA ContWin.
 - **Plăți și încasări:** înregistrările de bancă și de casă din perioadă, câte un fișier pe jurnal, cu contul jurnalului sau al plății.
 - **Transferuri între depozite:** pentru un depozit ales, intrările de stoc ale mărfurilor care au intrat în el și au ieșit din el către alte locații.
 - **Tabele SAF-T:** unități de măsură, produse, linii de facturi de intrare și de ieșire cu tipul și codul de taxă SAF-T și numerele de înregistrare ale partenerilor, pregătite pentru fișierul D406.
-- **Specific TVA românesc:** TVA la încasare se recunoaște din poziția fiscală a facturii; CNP-ul persoanelor fizice este validat înainte de export.
+- **Specific TVA românesc:** codul de TVA ContWin (A, B sau C) se stabilește din cota taxei; CNP-ul persoanelor fizice este validat înainte de export.
 - **Filtre:** jurnale, unitate operațională (jurnalele unei filiale) și depozit.
 - **O singură companie o dată:** se includ doar documentele companiei alese în export, iar jurnalele altei companii sunt refuzate.
 - **Utilizare:** *Contabilitate > Contabilitate > ContWin > Export ContWin* (manageri de contabilitate). Se aleg perioada, **Compania**, **Modul** (*Contwin*, *SAFT* sau *All*) și, la nevoie, jurnalele, unitatea operațională și depozitul; apoi **Apply** și se descarcă ZIP-ul:
-  - *Contwin*: `IN_…` și `IE_…` (facturi), `INT_…` și `IET_…` (transferuri între depozite), `TOT_…` (totul într-un fișier) și un fișier pe jurnal de bancă sau de casă;
+  - *Contwin*: `IN_…` și `IE_…` (facturi), `INT_…` și `IET_…` (transferuri între depozite), `TOT_…` (fișierele de facturi și de transferuri într-unul singur) și un fișier pe jurnal de bancă sau de casă;
   - *SAFT*: `UM_SAFT_…`, `PRODUCTS_SAFT_…`, `IN_SAFT_…`, `IE_SAFT_…` și `TOT_SAFT_…`;
-  - *All*: ambele seturi.
+  - *All*: tabelele SAF-T plus `IN_…`, `IE_…`, `TOT_…` și fișierele de bancă și de casă, fără transferurile între depozite (`INT_…`, `IET_…`).
+  Fișierele `INT_…` și `IET_…` rămân goale dacă nu se alege un depozit.
   Fișierele text se importă apoi în ContWin.
-- **Configurare prealabilă:** planul de conturi românesc (`l10n_ro`) instalat, parteneri cu cod fiscal (sau CNP pentru persoane fizice, din `deltatech_contact`); pentru filiale se setează **Operating Unit** pe jurnalele fiecărei filiale, iar alegerea ei în export selectează acele jurnale; poziția fiscală pentru TVA la încasare este găsită după nume („incasare”) și propusă în wizard, unde poate fi schimbată; pentru tabelele SAF-T se instalează localizarea SAF-T românească, care adaugă tipurile și codurile de taxă.
+- **Configurare prealabilă:** planul de conturi românesc (`l10n_ro`) instalat, parteneri cu cod fiscal (sau CNP pentru persoane fizice, din `deltatech_contact`); pentru filiale se setează **Operating Unit** pe jurnalele fiecărei filiale, iar alegerea ei în export selectează acele jurnale; câmpul **Operating Unit** este stocat pe jurnal, dar modulul nu îl afișează în formularul jurnalului (îl afișează alt modul, ex. `l10n_ro_invoice_report`, sau se completează prin import); wizardul propune pozițiile fiscale pentru taxare inversă și TVA la încasare (găsite după numele „Inversa” și „incasare”), însă alegerea nu schimbă fișierele exportate; pentru tabelele SAF-T se instalează localizarea SAF-T românească, care adaugă tipurile și codurile de taxă.
 - **De știut:**
   - fișierul `IN_…` conține doar facturile de furnizor cu cont din clasa 3 (mărfuri și materiale); facturile doar de servicii se înregistrează altfel în ContWin;
-  - în fișierele de bancă, orice cont în afară de bancă și partener se exportă ca `5125` (inclusiv comisionul bancar), deci un comision necesită nota 627 = 5125 în ContWin; în cele de casă se exportă drept contul de casă, deci o înregistrare de casă cu alte conturi decât casa și partenerul (comision, diferență) trebuie corectată manual în ContWin;
+  - în fișierele de bancă, orice cont în afară de bancă și partener se exportă ca `5125` (inclusiv comisionul bancar), deci un comision necesită nota 627 = 5125 în ContWin; în cele de casă se exportă drept contul de casă, deci o înregistrare de casă cu alte conturi decât casa și partenerul (comision, diferență) trebuie corectată manual în ContWin; o înregistrare de bancă fără cont de partener (de ex. un comision singur) nu se scrie în fișierul de bancă;
   - codul de TVA este A pentru cota standard (21%, 19%), B pentru cota redusă (11%, 9%) și C pentru restul; liniile de TVA (4426/4427) preiau codul taxei lor.
 
 #### 3. Dependențe
@@ -35,6 +37,7 @@ Modulul „ContWin Interface" permite ca evidența contabilă să rămână în 
 - `base`
 - `account`
 - `stock`
+- `stock_account`
 - [deltatech_contact](../deltatech_contact/index.md)
 - `l10n_ro`
 

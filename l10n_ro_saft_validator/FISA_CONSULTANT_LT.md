@@ -37,7 +37,9 @@ reglementărilor în vigoare.
 - conturi contabile (account_type completat);
 - taxe (câmp `l10n_ro_saft_tax_type_id` din l10n_ro_saft Enterprise);
 - articole facturate (referință internă, categorie, conturi de venit/cheltuială);
-- facturi de vânzare **și** de cumpărare postate, linii de extras bancar, note contabile.
+- facturi de vânzare **și** de cumpărare postate, linii de extras bancar, note contabile;
+- modulul `l10n_ro_saft_export_fix` (omite secțiunile goale din fișier): de el depinde severitatea
+  verificării `export_section_empty`, avertisment cu modulul instalat și eroare fără el.
 
 ## 5. Configurare inițială
 
@@ -56,7 +58,8 @@ reglementărilor în vigoare.
    2. Selectați **Tip declarație = Lunar / Trimestrial (L / T)**.
    3. Setați **From / To** = perioada de raportare (lună sau trimestru).
    4. Apăsați **Validate** — lista de probleme se populează.
-   5. Corectați și re-rulați până la 0 erori.
+   5. Corectați și re-rulați până la 0 erori. Pentru perioadele fără documente într-o secțiune,
+      verificați că `l10n_ro_saft_export_fix` e instalat: fără el, `export_section_empty` rămâne eroare.
 2. **Generare D406:**
    1. Deschideți **Contabilitate → Raportare → Carte Mare**.
    2. Selectați perioada (declaration_type se deduce automat: lună → L, trimestru → T).
@@ -79,7 +82,7 @@ reglementărilor în vigoare.
 | `move_line_no_partner` | error | notă contabilă cu linii pe conturi de creanțe/datorii (40x/41x) fără partener |
 | `account_no_type` | error | conturi cu rulaj fără `account_type` (lipsesc din SAF-T) |
 | `tax_no_saft_type` | warning | taxe fără tipul SAF-T configurat |
-| `export_section_empty` | error | o secțiune a declarației ar ieși goală (vânzări, achiziții sau plăți) |
+| `export_section_empty` | warning (error fără `l10n_ro_saft_export_fix`) | o secțiune a declarației ar ieși goală (vânzări, achiziții sau plăți) |
 | `payments_not_exported` | warning | plăți din perioadă care nu provin dintr-o linie de extras bancar |
 | `product_no_default_code` | error | articol facturat fără referință internă — exportul refuză să ruleze |
 | `product_no_category` | error | articol facturat fără categorie |
@@ -90,17 +93,15 @@ reglementărilor în vigoare.
 
 ### Două capcane pe care interfața Odoo nu le arată
 
-**Secțiunile goale invalidează tot fișierul.** Exportul scrie necondiționat secțiunile de vânzări,
-achiziții și plăți, iar validatorul ANAF cere minimum un document în fiecare secțiune prezentă. O
-lună fără nicio achiziție — sau fără nicio încasare — produce o declarație respinsă integral, cu o
-eroare de structură care nu spune nimic despre cauza reală.
+**Secțiunile goale trebuie omise din fișier.** DUKIntegrator acceptă o secțiune lipsă, dar respinge una prezentă și goală (chiar cu `NumberOfEntries = 0`). Modulul `l10n_ro_saft_export_fix` omite secțiunile goale, deci validatorul doar avertizează; fără el, exportul standard scrie secțiunea goală, fișierul e respins, iar verificarea rămâne eroare. Verificați că luna chiar nu are astfel de documente.
 
 **Plățile intră în declarație doar dintr-un extras bancar.** Exportul ia exclusiv plățile venite
 dintr-o linie de extras; o plată înregistrată prin butonul „Înregistrează plata", fără extras, nu
 ajunge nicăieri în fișier. La un client care nu importă extrase în Odoo, secțiunea de plăți rămâne
-goală lună de lună, iar declarația e respinsă de fiecare dată. Validatorul semnalează situația
-înainte de export: eroare când nu există niciun extras în perioadă, avertisment când există extrase
-dar și plăți care nu sunt legate de ele.
+goală lună de lună (omisă din fișier cu `l10n_ro_saft_export_fix`, altfel declarația e respinsă). Validatorul semnalează situația
+înainte de export: când nu există niciun extras în perioadă, secțiunea goală dă avertisment cu
+`l10n_ro_saft_export_fix` instalat și eroare fără el; când există extrase, dar și plăți care nu sunt
+legate de ele, dă avertisment.
 
 ## 8. Scenarii de test pentru consultant
 
@@ -115,8 +116,8 @@ dar și plăți care nu sunt legate de ele.
 | LT-07 | Partener cu județ creat manual („Sector 3", cod `B3") | warning `partner_invalid_state` |
 | LT-08 | Partener cu țară străină și fără prefix de TVA | error `partner_fiscal_type_mismatch` |
 | LT-09 | Notă manuală pe 401 fără partener | error `move_line_no_partner` |
-| LT-10 | Lună cu vânzări, dar fără nicio factură de achiziție | error `export_section_empty` |
-| LT-11 | Perioadă fără nicio linie de extras bancar | error `export_section_empty` |
+| LT-10 | Lună cu vânzări, dar fără nicio factură de achiziție | warning `export_section_empty` (cu `l10n_ro_saft_export_fix` instalat; fără el, error) |
+| LT-11 | Perioadă fără nicio linie de extras bancar | warning `export_section_empty` (cu `l10n_ro_saft_export_fix` instalat; fără el, error) |
 | LT-12 | Plată înregistrată din factură, fără extras, în lună cu extrase | warning `payments_not_exported` |
 | LT-13 | Articol facturat fără referință internă | error `product_no_default_code` |
 | LT-14 | Articol facturat fără categorie | error `product_no_category` |
@@ -145,7 +146,7 @@ dar și plăți care nu sunt legate de ele.
 - [ ] Articolele facturate au referință internă și categorie.
 - [ ] Perioada conține cel puțin o factură de vânzare, una de achiziție și o linie de extras bancar.
 - [ ] Plățile perioadei sunt legate de linii de extras bancar.
-- [ ] Validatorul returnează 0 erori.
+- [ ] Validatorul returnează 0 erori (avertizările `export_section_empty` pentru perioade fără vânzări, achiziții sau plăți sunt acceptabile).
 - [ ] XML-ul exportat trece prin DUK Integrator fără erori („Validare fara erori").
 
 ## 11. Mesaje de eroare frecvente
@@ -155,8 +156,10 @@ dar și plăți care nu sunt legate de ele.
 | Listă lungă de parteneri fără CUI | parteneri importați incomplet | completați CUI/CNP pe parteneri |
 | Conturi nemapate | conturi noi fără tip | setați `account_type` pe contul respectiv |
 | Taxe semnalate | taxe fără tip SAF-T | configurați `l10n_ro_saft_tax_type_id` pe taxă |
-| DUK: „elementul 'Payment' ar fi trebuit sa apara de minimum 1 ori" | perioada nu are nicio linie de extras bancar, deci secțiunea de plăți iese goală | importați sau introduceți extrasul bancar al perioadei, apoi regenerați |
-| DUK: „elementul ''lipsa'' ar fi trebuit sa apara de minimum 1 ori" pe `PurchaseInvoices` | luna nu are nicio factură de achiziție | verificați dacă lipsesc facturi de înregistrat; altfel discutați cu ANAF depunerea pentru o perioadă fără achiziții |
+| Eroare `export_section_empty` pe `SalesInvoices`, `PurchaseInvoices` sau `Payments`, cu textul „…iar l10n_ro_saft_export_fix nu e instalat…” | perioada nu are documente pentru secțiune, iar exportul standard o scrie goală (DUK o respinge) | instalați `l10n_ro_saft_export_fix` (omite secțiunile goale) și verificați că perioada chiar nu are astfel de documente |
+| Avertisment `export_section_empty` pe `SalesInvoices`, `PurchaseInvoices` sau `Payments` | perioada nu are documente pentru secțiunea respectivă | verificați că perioada chiar nu are astfel de documente și că `l10n_ro_saft_export_fix` e instalat (omite secțiunea goală din fișier) |
+| DUK: „elementul 'Payment' ar fi trebuit sa apara de minimum 1 ori" | perioada nu are nicio linie de extras bancar, deci secțiunea de plăți iese goală (apare doar fără `l10n_ro_saft_export_fix`, care o omite) | importați sau introduceți extrasul bancar al perioadei, apoi regenerați |
+| DUK: „elementul ''lipsa'' ar fi trebuit sa apara de minimum 1 ori" pe `PurchaseInvoices` | luna nu are nicio factură de achiziție (apare doar fără `l10n_ro_saft_export_fix`, care omite secțiunea goală) | verificați dacă lipsesc facturi de înregistrat; altfel discutați cu ANAF depunerea pentru o perioadă fără achiziții |
 | DUK: „atribut prezent dar vid nepermis" pe `ProductGroup` | articol fără categorie (în Odoo 19 categoria nu mai are valoare implicită) | completați categoria pe articolele semnalate |
 | DUK: „elementul 'Contact' ar fi trebuit sa apara de minimum 1 ori" | compania nu are contact cu nume din două cuvinte și telefon | adăugați un contact „Nume Prenume" cu telefon pe fișa companiei |
 | Exportul refuză să pornească, fără fișier generat | lipsesc telefonul, contul bancar, baza de impozitare SAF-T, localitatea unui partener sau referința internă a unui articol | rulați validatorul — el arată exact care dintre ele lipsește |

@@ -1,10 +1,11 @@
 # Manager Mărci Produse (Product Brand Manager)
 
 - **Nume Tehnic:** `deltatech_product_brand`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_product_brand
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_product_brand`
 - **Ultima Ingestie:** `2026-09-03`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

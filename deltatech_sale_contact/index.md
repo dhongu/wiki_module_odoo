@@ -1,7 +1,7 @@
 # Sale Contact (localizat la `deltatech_sale_contact/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_contact`
-- **Versiune:** `19.0.1.1.1`
+- **Versiune:** `19.0.1.1.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_contact
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_contact`
 - **Ultima Ingestie:** `2026-10-22`

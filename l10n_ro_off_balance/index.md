@@ -1,7 +1,7 @@
 # Romania - Evidență extrabilanțieră (clasa 8)
 
 - **Nume Tehnic:** `l10n_ro_off_balance`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_off_balance
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_off_balance`
 - **Ultima Ingestie:** `2026-10-13`

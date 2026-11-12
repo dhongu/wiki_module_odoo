@@ -1,7 +1,7 @@
 # Sale Prepare Transfer (localizat la `deltatech_sale_transfer/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_transfer`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_transfer
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_transfer`
 - **Ultima Ingestie:** `2026-10-09`

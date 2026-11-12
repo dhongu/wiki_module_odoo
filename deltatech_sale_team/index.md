@@ -1,7 +1,7 @@
 # Sale Team Access Control (localizat la `deltatech_sale_team/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_team`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_team
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_team`
 - **Ultima Ingestie:** `2026-11-06`

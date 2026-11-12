@@ -1,7 +1,7 @@
 # Mail Substitution (localizat la `deltatech_mail/index.md`)
 
 - **Nume Tehnic:** `deltatech_mail`
-- **Versiune:** `19.0.1.0.7`
+- **Versiune:** `19.0.1.0.8`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_mail
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_mail`
 - **Ultima Ingestie:** `2026-11-08`

@@ -110,7 +110,10 @@ dobândă 8,5%.
 5. Opțional: activați acțiunea programată **Împrumuturi și leasing RO: rate scadente și note de
    sfârșit de lună** din **Setări → Tehnic → Automatizare → Acțiuni planificate** (cu modul
    dezvoltator activ).
-6. Înainte de **Activează contractul**, verificați tipul și felul contractului, moneda și parametrii
+6. Pentru un contract în valută cu facturi în lei de la locator, cursul BNR din data fiecărei facturi trebuie
+   să existe în Odoo (**Contabilitate → Configurare → Monede**, actualizare automată a cursurilor): de el
+   depinde conversia cu care se compară factura cu graficul.
+7. Înainte de **Activează contractul**, verificați tipul și felul contractului, moneda și parametrii
    financiari: după activare nu se mai pot modifica direct pe contract (pasul 11).
 
 ## 6. Flux de utilizare
@@ -261,7 +264,12 @@ factură furnizor**. Verificați pe ecran:
 
 ### Pasul 11 — Nota de activare a leasingului
 
-Apăsați **Activează contractul** și deschideți **Notă activare**. Verificați:
+Apăsați **Activează contractul** și deschideți **Notă activare**. Activarea verifică întâi că graficul
+corespunde parametrilor de acum: numărul de rate, principalul, reziduala și avansul se compară cu linia
+din grafic, iar graficul reține o amprentă a parametrilor din care s-a calculat (moneda, dobânda, data de
+start, convenția de zile, metoda de amortizare, comisionul, TVA-ul și datele de preluare). Dacă oricare
+dintre ei s-a schimbat după **Generează grafic**, contractul nu se activează până nu regenerați graficul.
+Verificați:
 - **Dr 2133** 100.000 (bunul, la costul total: avans + sumă finanțată);
 - **Cr 1672** 100.000 (datoria de leasing).
 
@@ -271,7 +279,11 @@ rate).
 De la activare, contractul nu mai acceptă modificări ale parametrilor din care s-a calculat graficul:
 tip și fel de contract, monedă, dată start, dată sfârșit, număr de rate, sumă finanțată, avans, valoare reziduală,
 dobândă, metodă, convenție de zile, regim și cotă TVA, câmpurile din pagina **Preluare și comisioane**.
-Câmpurile devin needitabile, iar în grafic nu se mai pot adăuga sau șterge rate. Rămân disponibile
+Câmpurile devin needitabile, iar în grafic nu se mai pot adăuga sau șterge rate. Nici ratele existente
+nu se mai editează: principalul, dobânda, comisionul, cota de TVA, TVA-ul, data, numărul și tipul ratei
+sunt blocate, ca totalurile contractului să rămână cele de la activare. Regula se aplică și contractelor
+**Închise**; singura modificare a graficului rămâne **Schimbă dobânda**, care regenerează ratele
+neînregistrate. Rămân disponibile
 **Omite** pe o rată, **Schimbă dobânda** (pasul 9) și **Închidere anticipată** (pasul 13). O greșeală
 de introducere se corectează cu **Resetează la ciornă**, apoi **Generează grafic** și o nouă activare.
 Resetarea e posibilă doar cât contractul nu are note înregistrate: la leasingul financiar nou, anulați
@@ -335,7 +347,9 @@ La confirmarea facturii, verificați:
   și în situația datoriilor; butonul **Facturi furnizor** de pe contract le listează;
 - **sumele facturii trebuie să corespundă ratelor alese.** La **Confirmă**, modulul compară principalul
   (și dobânda, la leasing financiar) de pe liniile facturii cu cele ale ratelor din **Rate leasing**,
-  pe fiecare contract. Dacă diferă, confirmarea se oprește cu un mesaj care arată, pe contract și
+  pe fiecare contract. La un contract în valută (EUR) cu factura locatorului în lei, comparația se face
+  în lei: ratele din grafic se convertesc la cursul BNR din data facturii, iar diferențele de până la
+  2% se acceptă, pentru că cursul locatorului diferă puțin de cel BNR. Dacă diferă, confirmarea se oprește cu un mesaj care arată, pe contract și
   componentă, suma facturată și cea din grafic, iar rata rămâne **În așteptare**. Corectați factura,
   omiteți rata cu **Omite**; factura de închidere se tratează prin **Închidere anticipată** (pasul 13),
   nu prin bifă. Dacă diferența e reală (de exemplu valoarea reziduală facturată altfel decât în
@@ -343,6 +357,15 @@ La confirmarea facturii, verificați:
   (obligatoriu). Bifa apare pe factura de furnizor cu rate legate, iar câmpul pentru motiv apare după
   bifare; se modifică doar în ciornă. După confirmare, contractul primește în istoric mesajul
   „Factura … postată cu diferențe față de grafic. Motiv: …”, scris doar dacă există diferențe.
+- **factura în lei pe un contract în valută.** Factura poate fi în moneda contractului sau în moneda
+  firmei (lei, cum vine de la locator). Factura rămâne în lei: TVA-ul și datoria `404` sunt cele din
+  factură. Soldul contractului pe `167x` se ține în moneda lui: principalul ratei, în EUR, se păstrează pe
+  liniile de principal ale facturii (câmpul **Principal leasing (moneda contractului)**, completat
+  automat la confirmare și șters la **Resetează la ciornă**; nu apare în interfață, deci nu se verifică pe
+  ecran), iar o factură fără linie de principal pe conturile de datorie ale contractului
+  nu se confirmă. **Diferența de curs** dintre leii facturați de locator și valoarea ratei la cursul BNR
+  nu se postează automat: o înregistrează contabilul (`665` / `765`), după regulile de evaluare a
+  elementelor monetare în valută din OMFP 1802/2014.
 
   > **Atenție la diferența de principal.** Bifa permite doar confirmarea facturii; soldul `167x`
   > rămâne diferit de grafic, iar reclasificarea lunară mută diferența pe `1672`, de unde nu o stinge
@@ -596,6 +619,21 @@ automat) și verificarea conturilor liniilor ei, fișa de mijloc fix, diferența
 - [ ] Pe un contract activ, parametrii financiari (tip, fel, monedă, dată start, dată sfârșit, număr de rate, sumă
       finanțată, avans, reziduală, dobândă, metodă, zile, TVA, preluare, comisioane) sunt needitabili,
       iar în grafic nu se pot adăuga sau șterge rate.
+- [ ] Pe un contract activ sau închis, modificarea principalului, dobânzii, comisionului sau datei unei rate
+      este refuzată (mesajul din secțiunea 9), iar totalurile contractului rămân cele de la activare;
+      salvarea formularului fără modificări și **Omite** funcționează.
+- [ ] Dacă după **Generează grafic** schimbați numărul de rate, suma finanțată, reziduala sau avansul,
+      **Activează contractul** este refuzat (mesajul din secțiunea 9) până la regenerarea graficului.
+- [ ] La fel, dacă schimbați după generare dobânda, comisionul lunar sau data de start; după **Generează grafic**,
+      contractul se activează.
+- [ ] Contract preluat: schimbarea principalului rămas sau a numărului de rate plătite după generare blochează
+      activarea până la regenerare.
+- [ ] Contract în EUR, factură în lei de la locator: factura se leagă de rată; la **Confirmă** sumele se compară cu
+      graficul la cursul BNR din data facturii, cu o toleranță de 2% (cursul locatorului diferă puțin de BNR), iar
+      soldul contractului pe `167x` rămâne în EUR, din principalul ratei; TVA-ul și datoria `404` rămân în lei, ca pe factură.
+- [ ] Aceeași factură în lei, fără linie de principal pe conturile de datorie ale contractului, nu se confirmă
+      (mesajul din secțiunea 9); cu două linii de principal, se confirmă, iar soldul contractului scade cu
+      principalul ratei, în EUR, nu cu leii facturați.
 - [ ] **Schimbă dobânda** funcționează pe contractul activ și actualizează **Dobândă anuală**.
 - [ ] După **Resetează la ciornă** (contract fără note înregistrate), câmpurile se pot edita și graficul
       se poate regenera.
@@ -650,6 +688,10 @@ automat) și verificarea conturilor liniilor ei, fișa de mijloc fix, diferența
 | „Ratele contractului … se înregistrează prin factura locatorului: alegeți rata pe factură sau folosiți Creează factură furnizor.” | Înregistrarea ratei din contract (import, automatizare, apel din cod) la un contract pe varianta factură; în interfață butonul nu apare | Alegeți rata în **Rate leasing** pe factura locatorului sau apăsați **Creează factură furnizor** |
 | „Factura diferă de ratele de leasing selectate: …” (cu lista „contract, principal / dobândă / comision: facturat …, grafic …”) | Principalul, dobânda sau comisionul de pe liniile facturii nu corespund ratelor alese în **Rate leasing** | Corectați factura, omiteți rata cu **Omite**, folosiți **Închidere anticipată** ori bifați **Acceptă diferențele față de grafic** și scrieți motivul |
 | „Conturile de datorie ale contractului mai au un sold de …” | **Închide** pe un contract de leasing financiar pe factura locatorului, cu sold pe `1671` / `1672` (de exemplu după o diferență acceptată pe principal) | Înregistrați o notă de corecție (costul bunului sau dobânda), cu contractul completat pe linia `167x`, și închideți din nou |
+| „Rata … a contractului … nu mai poate fi modificată după activare (…). Folosiți Schimbă dobânda sau resetați contractul la ciornă și regenerați graficul.” | S-a editat în grafic principalul, dobânda, comisionul, TVA-ul sau data unei rate a unui contract activ sau închis | Folosiți **Schimbă dobânda** pentru dobândă; pentru altă corecție, **Resetează la ciornă** (la contractul închis, întâi **Redeschide**), apoi **Generează grafic** și activați din nou |
+| „Factura nu e în moneda contractului … și nu are nicio linie de principal pe conturile lui de datorie: soldul contractului nu se poate ține în moneda lui.” | Factura în lei a unui contract în valută nu are nicio linie pe conturile `167x` ale contractului (la leasing operațional, pe contul de cheltuială) | Treceți principalul ratei pe linia facturii, pe contul de datorie al contractului, și confirmați din nou |
+| „Factura … nu are sumă de principal pe conturile de datorie ale contractului …” | Linia de principal a facturii în lei are suma 0 | Completați principalul facturat pe linia de principal |
+| „Graficul de rambursare nu corespunde parametrilor contractului (…)”, cu motivele separate prin „;”: „rate: … în grafic, … pe contract”, „principal: …”, „valoare reziduală: …”, „avans: …” sau „parametri schimbați după generarea graficului (dobândă, date, comision, TVA)” | S-au schimbat numărul de rate, suma finanțată, reziduala, avansul sau alt parametru al graficului (dobândă, dată de start, comision, TVA, preluare) după **Generează grafic**; ultimul motiv apare singur când sumele graficului încă se potrivesc, dar parametrii s-au schimbat | Apăsați din nou **Generează grafic**, apoi **Activează contractul** |
 | „Contul de comision trebuie configurat pe contract.” | Se înregistrează o rată cu comision (nota din contract), dar **Cont comision** lipsește | Completați **Cont comision** în pagina **Contabilitate** (628 la leasing) |
 | „Scrieți motivul pentru care se acceptă diferențele față de grafic.” | **Acceptă diferențele față de grafic** e bifat, factura diferă de grafic, iar **Motivul diferențelor** e gol | Completați **Motivul diferențelor** și confirmați din nou |
 | „Unele dintre ratele de leasing selectate sunt deja înregistrate sau omise.” | Rata aleasă pe factură are altă stare decât **În așteptare** | Alegeți ratele încă în așteptare |
@@ -660,7 +702,7 @@ automat) și verificarea conturilor liniilor ei, fișa de mijloc fix, diferența
 | „Factura a închis deja alt contract de leasing.” | Factura de închidere aleasă a fost folosită la alt contract | Alegeți factura de închidere a acestui contract |
 | „Taxa de achiziție … a contractului … nu are echivalent pentru cota de TVA …” | **Taxă achiziție** de pe contract nu are o variantă la cota ratei (19% / 21%) în planul de conturi | Introduceți factura manual, cu taxa pe linii, și alegeți rata în **Rate leasing** |
 | „Nu există taxă de achiziție pentru cota de TVA …” | Planul de conturi nu are TVA deductibil la cota ratei | Alegeți **Taxă achiziție** pe contract |
-| „Factura trebuie să fie în moneda contractului de leasing.” | Factura are altă monedă decât contractul | Corectați moneda facturii |
+| „Factura trebuie să fie în moneda contractului de leasing sau în moneda firmei.” | Factura nu e nici în moneda contractului, nici în lei | Corectați moneda facturii; factura în lei a locatorului se poate lega și de un contract în valută |
 | „Factura acoperă mai multe contracte de leasing: completați contractul pe fiecare linie a facturii.” | Rate din mai multe contracte pe aceeași factură, linii fără contract | Completați **Contract de împrumut / leasing** pe fiecare linie |
 | „Nicio linie a facturii nu este atribuită contractului …” | Factură pe mai multe contracte, fără linii pentru unul dintre ele | Atribuiți contractului cel puțin o linie |
 | „Selectați factura de închidere confirmată a locatorului.” | Închidere anticipată la leasing pe factură, fără factură aleasă | Confirmați factura de închidere și alegeți-o în asistent |

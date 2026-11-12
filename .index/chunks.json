@@ -277,7 +277,7 @@
   {
     "path": "deltatech_account_bank_statement_import_stripe/index.md",
     "module": "deltatech_account_bank_statement_import_stripe",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import_stripe",
     "local_path": "odoo-addons/bitshop_ent/deltatech_account_bank_statement_import_stripe",
     "last_ingest": "2026-10-12",
@@ -331,7 +331,7 @@
   {
     "path": "deltatech_account_edit_currency_rate/index.md",
     "module": "deltatech_account_edit_currency_rate",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_account_edit_currency_rate",
     "local_path": "odoo-addons/deltatech/deltatech_account_edit_currency_rate",
     "last_ingest": "2026-11-08",
@@ -2030,7 +2030,7 @@
   {
     "path": "deltatech_category_group_equipment/index.md",
     "module": "deltatech_category_group_equipment",
-    "version": "19.0.0.0.4",
+    "version": "19.0.0.0.5",
     "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_category_group_equipment",
     "local_path": "odoo-addons/deltatech_service/deltatech_category_group_equipment",
     "last_ingest": "2026-11-02",
@@ -2054,7 +2054,7 @@
   {
     "path": "deltatech_change_uom/index.md",
     "module": "deltatech_change_uom",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_change_uom",
     "local_path": "odoo-addons/deltatech/deltatech_change_uom",
     "last_ingest": "2026-10-22",
@@ -2410,41 +2410,42 @@
   {
     "path": "deltatech_contwin/index.md",
     "module": "deltatech_contwin",
-    "version": "19.0.1.0.17",
+    "version": "19.0.1.0.18",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_contwin",
     "local_path": "odoo-addons/bitshop/deltatech_contwin",
-    "last_ingest": "2026-10-31",
+    "last_ingest": "2026-11-12",
     "friendly_name": "Interfață ContWin",
     "summary": "Modulul „ContWin Interface\" permite ca evidența contabilă să rămână în ContWin, programul de contabilitate românesc, în timp ce facturarea, achizițiile și stocurile se gestionează în Odoo. Pentru o perioadă aleasă, modulul exportă documentele postate ale unei singure companii în formatul text pe care îl importă ContWin și, la nevoie, în tabele pregătite pentru SAF-T, toate împachetate într-un singur fișier ZIP. Astfel, firmele pot folosi Odoo pentru operațiunile zilnice, păstrând compatibilitatea cu ContWin pentru contabilitate și raportare fiscală.",
     "features": [
-      "Achiziții și vânzări: facturi de furnizor și de client, note de credit și recepții, cu conturi, sume în RON și în valută, curs de schimb, scadență, tip și cotă de TVA.",
+      "Achiziții și vânzări: facturi de client, note de credit și recepții, plus facturile de furnizor cu cont de mărfuri sau materiale (clasa 3); facturile de furnizor fără un astfel de cont sunt lăsate deoparte. Se exportă conturile, sumele în RON (moneda companiei), zilele până la scadență și codul de TVA ContWin.",
       "Plăți și încasări: înregistrările de bancă și de casă din perioadă, câte un fișier pe jurnal, cu contul jurnalului sau al plății.",
       "Transferuri între depozite: pentru un depozit ales, intrările de stoc ale mărfurilor care au intrat în el și au ieșit din el către alte locații.",
       "Tabele SAF-T: unități de măsură, produse, linii de facturi de intrare și de ieșire cu tipul și codul de taxă SAF-T și numerele de înregistrare ale partenerilor, pregătite pentru fișierul D406.",
-      "Specific TVA românesc: TVA la încasare se recunoaște din poziția fiscală a facturii; CNP-ul persoanelor fizice este validat înainte de export.",
+      "Specific TVA românesc: codul de TVA ContWin (A, B sau C) se stabilește din cota taxei; CNP-ul persoanelor fizice este validat înainte de export.",
       "Filtre: jurnale, unitate operațională (jurnalele unei filiale) și depozit.",
       "O singură companie o dată: se includ doar documentele companiei alese în export, iar jurnalele altei companii sunt refuzate.",
       "Utilizare: *Contabilitate > Contabilitate > ContWin > Export ContWin* (manageri de contabilitate). Se aleg perioada, Compania, Modul (*Contwin*, *SAFT* sau *All*) și, la nevoie, jurnalele, unitatea operațională și depozitul; apoi Apply și se descarcă ZIP-ul:",
-      "*Contwin*: `IN_…` și `IE_…` (facturi), `INT_…` și `IET_…` (transferuri între depozite), `TOT_…` (totul într-un fișier) și un fișier pe jurnal de bancă sau de casă;",
+      "*Contwin*: `IN_…` și `IE_…` (facturi), `INT_…` și `IET_…` (transferuri între depozite), `TOT_…` (fișierele de facturi și de transferuri într-unul singur) și un fișier pe jurnal de bancă sau de casă;",
       "*SAFT*: `UM_SAFT_…`, `PRODUCTS_SAFT_…`, `IN_SAFT_…`, `IE_SAFT_…` și `TOT_SAFT_…`;",
-      "*All*: ambele seturi.",
-      "Configurare prealabilă: planul de conturi românesc (`l10n_ro`) instalat, parteneri cu cod fiscal (sau CNP pentru persoane fizice, din `deltatech_contact`); pentru filiale se setează Operating Unit pe jurnalele fiecărei filiale, iar alegerea ei în export selectează acele jurnale; poziția fiscală pentru TVA la încasare este găsită după nume („incasare”) și propusă în wizard, unde poate fi schimbată; pentru tabelele SAF-T se instalează localizarea SAF-T românească, care adaugă tipurile și codurile de taxă.",
+      "*All*: tabelele SAF-T plus `IN_…`, `IE_…`, `TOT_…` și fișierele de bancă și de casă, fără transferurile între depozite (`INT_…`, `IET_…`).",
+      "Configurare prealabilă: planul de conturi românesc (`l10n_ro`) instalat, parteneri cu cod fiscal (sau CNP pentru persoane fizice, din `deltatech_contact`); pentru filiale se setează Operating Unit pe jurnalele fiecărei filiale, iar alegerea ei în export selectează acele jurnale; câmpul Operating Unit este stocat pe jurnal, dar modulul nu îl afișează în formularul jurnalului (îl afișează alt modul, ex. `l10n_ro_invoice_report`, sau se completează prin import); wizardul propune pozițiile fiscale pentru taxare inversă și TVA la încasare (găsite după numele „Inversa” și „incasare”), însă alegerea nu schimbă fișierele exportate; pentru tabelele SAF-T se instalează localizarea SAF-T românească, care adaugă tipurile și codurile de taxă.",
       "De știut:",
       "fișierul `IN_…` conține doar facturile de furnizor cu cont din clasa 3 (mărfuri și materiale); facturile doar de servicii se înregistrează altfel în ContWin;",
-      "în fișierele de bancă, orice cont în afară de bancă și partener se exportă ca `5125` (inclusiv comisionul bancar), deci un comision necesită nota 627 = 5125 în ContWin; în cele de casă se exportă drept contul de casă, deci o înregistrare de casă cu alte conturi decât casa și partenerul (comision, diferență) trebuie corectată manual în ContWin;",
+      "în fișierele de bancă, orice cont în afară de bancă și partener se exportă ca `5125` (inclusiv comisionul bancar), deci un comision necesită nota 627 = 5125 în ContWin; în cele de casă se exportă drept contul de casă, deci o înregistrare de casă cu alte conturi decât casa și partenerul (comision, diferență) trebuie corectată manual în ContWin; o înregistrare de bancă fără cont de partener (de ex. un comision singur) nu se scrie în fișierul de bancă;",
       "codul de TVA este A pentru cota standard (21%, 19%), B pentru cota redusă (11%, 9%) și C pentru restul; liniile de TVA (4426/4427) preiau codul taxei lor."
     ],
     "dependencies": [
       "base",
       "account",
       "stock",
+      "stock_account",
       "deltatech_contact",
       "l10n_ro"
     ],
     "connections": [
       "deltatech_saga"
     ],
-    "text": "Interfață ContWin\ndeltatech_contwin\nModulul „ContWin Interface\" permite ca evidența contabilă să rămână în ContWin, programul de contabilitate românesc, în timp ce facturarea, achizițiile și stocurile se gestionează în Odoo. Pentru o perioadă aleasă, modulul exportă documentele postate ale unei singure companii în formatul text pe care îl importă ContWin și, la nevoie, în tabele pregătite pentru SAF-T, toate împachetate într-un singur fișier ZIP. Astfel, firmele pot folosi Odoo pentru operațiunile zilnice, păstrând compatibilitatea cu ContWin pentru contabilitate și raportare fiscală.\nAchiziții și vânzări: facturi de furnizor și de client, note de credit și recepții, cu conturi, sume în RON și în valută, curs de schimb, scadență, tip și cotă de TVA.\nPlăți și încasări: înregistrările de bancă și de casă din perioadă, câte un fișier pe jurnal, cu contul jurnalului sau al plății.\nTransferuri între depozite: pentru un depozit ales, intrările de stoc ale mărfurilor care au intrat în el și au ieșit din el către alte locații.\nTabele SAF-T: unități de măsură, produse, linii de facturi de intrare și de ieșire cu tipul și codul de taxă SAF-T și numerele de înregistrare ale partenerilor, pregătite pentru fișierul D406.\nSpecific TVA românesc: TVA la încasare se recunoaște din poziția fiscală a facturii; CNP-ul persoanelor fizice este validat înainte de export.\nFiltre: jurnale, unitate operațională (jurnalele unei filiale) și depozit.\nO singură companie o dată: se includ doar documentele companiei alese în export, iar jurnalele altei companii sunt refuzate.\nUtilizare: *Contabilitate > Contabilitate > ContWin > Export ContWin* (manageri de contabilitate). Se aleg perioada, Compania, Modul (*Contwin*, *SAFT* sau *All*) și, la nevoie, jurnalele, unitatea operațională și depozitul; apoi Apply și se descarcă ZIP-ul:\n*Contwin*: `IN_…` și `IE_…` (facturi), `INT_…` și `IET_…` (transferuri între depozite), `TOT_…` (totul într-un fișier) și un fișier pe jurnal de bancă sau de casă;\n*SAFT*: `UM_SAFT_…`, `PRODUCTS_SAFT_…`, `IN_SAFT_…`, `IE_SAFT_…` și `TOT_SAFT_…`;\n*All*: ambele seturi.\nConfigurare prealabilă: planul de conturi românesc (`l10n_ro`) instalat, parteneri cu cod fiscal (sau CNP pentru persoane fizice, din `deltatech_contact`); pentru filiale se setează Operating Unit pe jurnalele fiecărei filiale, iar alegerea ei în export selectează acele jurnale; poziția fiscală pentru TVA la încasare este găsită după nume („incasare”) și propusă în wizard, unde poate fi schimbată; pentru tabelele SAF-T se instalează localizarea SAF-T românească, care adaugă tipurile și codurile de taxă.\nDe știut:\nfișierul `IN_…` conține doar facturile de furnizor cu cont din clasa 3 (mărfuri și materiale); facturile doar de servicii se înregistrează altfel în ContWin;\nîn fișierele de bancă, orice cont în afară de bancă și partener se exportă ca `5125` (inclusiv comisionul bancar), deci un comision necesită nota 627 = 5125 în ContWin; în cele de casă se exportă drept contul de casă, deci o înregistrare de casă cu alte conturi decât casa și partenerul (comision, diferență) trebuie corectată manual în ContWin;\ncodul de TVA este A pentru cota standard (21%, 19%), B pentru cota redusă (11%, 9%) și C pentru restul; liniile de TVA (4426/4427) preiau codul taxei lor."
+    "text": "Interfață ContWin\ndeltatech_contwin\nModulul „ContWin Interface\" permite ca evidența contabilă să rămână în ContWin, programul de contabilitate românesc, în timp ce facturarea, achizițiile și stocurile se gestionează în Odoo. Pentru o perioadă aleasă, modulul exportă documentele postate ale unei singure companii în formatul text pe care îl importă ContWin și, la nevoie, în tabele pregătite pentru SAF-T, toate împachetate într-un singur fișier ZIP. Astfel, firmele pot folosi Odoo pentru operațiunile zilnice, păstrând compatibilitatea cu ContWin pentru contabilitate și raportare fiscală.\nAchiziții și vânzări: facturi de client, note de credit și recepții, plus facturile de furnizor cu cont de mărfuri sau materiale (clasa 3); facturile de furnizor fără un astfel de cont sunt lăsate deoparte. Se exportă conturile, sumele în RON (moneda companiei), zilele până la scadență și codul de TVA ContWin.\nPlăți și încasări: înregistrările de bancă și de casă din perioadă, câte un fișier pe jurnal, cu contul jurnalului sau al plății.\nTransferuri între depozite: pentru un depozit ales, intrările de stoc ale mărfurilor care au intrat în el și au ieșit din el către alte locații.\nTabele SAF-T: unități de măsură, produse, linii de facturi de intrare și de ieșire cu tipul și codul de taxă SAF-T și numerele de înregistrare ale partenerilor, pregătite pentru fișierul D406.\nSpecific TVA românesc: codul de TVA ContWin (A, B sau C) se stabilește din cota taxei; CNP-ul persoanelor fizice este validat înainte de export.\nFiltre: jurnale, unitate operațională (jurnalele unei filiale) și depozit.\nO singură companie o dată: se includ doar documentele companiei alese în export, iar jurnalele altei companii sunt refuzate.\nUtilizare: *Contabilitate > Contabilitate > ContWin > Export ContWin* (manageri de contabilitate). Se aleg perioada, Compania, Modul (*Contwin*, *SAFT* sau *All*) și, la nevoie, jurnalele, unitatea operațională și depozitul; apoi Apply și se descarcă ZIP-ul:\n*Contwin*: `IN_…` și `IE_…` (facturi), `INT_…` și `IET_…` (transferuri între depozite), `TOT_…` (fișierele de facturi și de transferuri într-unul singur) și un fișier pe jurnal de bancă sau de casă;\n*SAFT*: `UM_SAFT_…`, `PRODUCTS_SAFT_…`, `IN_SAFT_…`, `IE_SAFT_…` și `TOT_SAFT_…`;\n*All*: tabelele SAF-T plus `IN_…`, `IE_…`, `TOT_…` și fișierele de bancă și de casă, fără transferurile între depozite (`INT_…`, `IET_…`).\nConfigurare prealabilă: planul de conturi românesc (`l10n_ro`) instalat, parteneri cu cod fiscal (sau CNP pentru persoane fizice, din `deltatech_contact`); pentru filiale se setează Operating Unit pe jurnalele fiecărei filiale, iar alegerea ei în export selectează acele jurnale; câmpul Operating Unit este stocat pe jurnal, dar modulul nu îl afișează în formularul jurnalului (îl afișează alt modul, ex. `l10n_ro_invoice_report`, sau se completează prin import); wizardul propune pozițiile fiscale pentru taxare inversă și TVA la încasare (găsite după numele „Inversa” și „incasare”), însă alegerea nu schimbă fișierele exportate; pentru tabelele SAF-T se instalează localizarea SAF-T românească, care adaugă tipurile și codurile de taxă.\nDe știut:\nfișierul `IN_…` conține doar facturile de furnizor cu cont din clasa 3 (mărfuri și materiale); facturile doar de servicii se înregistrează altfel în ContWin;\nîn fișierele de bancă, orice cont în afară de bancă și partener se exportă ca `5125` (inclusiv comisionul bancar), deci un comision necesită nota 627 = 5125 în ContWin; în cele de casă se exportă drept contul de casă, deci o înregistrare de casă cu alte conturi decât casa și partenerul (comision, diferență) trebuie corectată manual în ContWin; o înregistrare de bancă fără cont de partener (de ex. un comision singur) nu se scrie în fișierul de bancă;\ncodul de TVA este A pentru cota standard (21%, 19%), B pentru cota redusă (11%, 9%) și C pentru restul; liniile de TVA (4426/4427) preiau codul taxei lor."
   },
   {
     "path": "deltatech_create_ticket_button/index.md",
@@ -2831,7 +2832,7 @@
   {
     "path": "deltatech_dc/index.md",
     "module": "deltatech_dc",
-    "version": "19.0.1.0.14",
+    "version": "19.0.1.0.15",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_dc",
     "local_path": "odoo-addons/deltatech/deltatech_dc",
     "last_ingest": "2026-08-20",
@@ -2955,7 +2956,7 @@
   {
     "path": "deltatech_delivery_batch/index.md",
     "module": "deltatech_delivery_batch",
-    "version": "19.0.1.0.9",
+    "version": "19.0.1.0.10",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_batch",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_batch",
     "last_ingest": "2026-11-08",
@@ -2986,7 +2987,7 @@
   {
     "path": "deltatech_delivery_category_price/index.md",
     "module": "deltatech_delivery_category_price",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.7",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_category_price",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_category_price",
     "last_ingest": "2026-07-31",
@@ -3454,7 +3455,7 @@
   {
     "path": "deltatech_delivery_locker_website/index.md",
     "module": "deltatech_delivery_locker_website",
-    "version": "19.0.0.0.13",
+    "version": "19.0.0.0.14",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_locker_website",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_locker_website",
     "last_ingest": "2026-08-20",
@@ -3568,7 +3569,7 @@
   {
     "path": "deltatech_delivery_packeta/index.md",
     "module": "deltatech_delivery_packeta",
-    "version": "19.0.1.5.9",
+    "version": "19.0.1.5.10",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_packeta",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_packeta",
     "last_ingest": "2026-09-29",
@@ -3617,7 +3618,7 @@
   {
     "path": "deltatech_delivery_portal/index.md",
     "module": "deltatech_delivery_portal",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_portal",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_portal",
     "last_ingest": "2026-09-03",
@@ -3682,7 +3683,7 @@
   {
     "path": "deltatech_delivery_postis_locker/index.md",
     "module": "deltatech_delivery_postis_locker",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_postis_locker",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_postis_locker",
     "last_ingest": "2026-09-03",
@@ -3884,7 +3885,7 @@
   {
     "path": "deltatech_delivery_send_sms/index.md",
     "module": "deltatech_delivery_send_sms",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_send_sms",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_send_sms",
     "last_ingest": "2026-08-20",
@@ -4006,7 +4007,7 @@
   {
     "path": "deltatech_delivery_transport/index.md",
     "module": "deltatech_delivery_transport",
-    "version": "19.0.2.0.6",
+    "version": "19.0.2.0.7",
     "github": "`https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_transport`",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_transport",
     "last_ingest": "2026-08-20",
@@ -4503,16 +4504,18 @@
   {
     "path": "deltatech_fast_purchase/index.md",
     "module": "deltatech_fast_purchase",
-    "version": "19.0.1.0.1",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_fast_purchase`",
+    "version": "19.0.1.0.2",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_fast_purchase",
     "local_path": "odoo-addons/deltatech/deltatech_fast_purchase",
-    "last_ingest": "2026-06-02",
+    "last_ingest": "2026-11-12",
     "friendly_name": "Fast Purchase",
-    "summary": "Modulul „Fast Purchase” accelerează procesul de achiziție din Odoo, permițând utilizatorului să parcurgă rapid pașii dintr-o comandă de achiziție — confirmare, recepție și facturare — direct prin butoane dedicate, fără a naviga manual între documente. Astfel, operatorii din departamentul de aprovizionare pot finaliza o achiziție în câțiva pași, economisind timp la introducerea facturilor și la generarea recepțiilor de marfă.",
+    "summary": "Modulul „Fast Purchase” accelerează procesul de achiziție din Odoo pentru comenzile primite integral și facturate imediat: confirmarea, recepția și facturarea se parcurg dintr-un singur clic, prin butoane dedicate pe comanda de achiziție, fără navigare manuală între documente. Operatorii din departamentul de aprovizionare economisesc astfel timp la generarea recepțiilor de marfă și la introducerea facturilor.",
     "features": [
-      "Buton în comanda de achiziție pentru a parcurge pașii de confirmare, recepție și facturare.",
-      "Buton în recepție pentru introducerea directă a facturii.",
-      "Buton în comanda de achiziție pentru generarea recepției pe baza avizului."
+      "Flux dintr-un clic: după o confirmare prealabilă, butonul *Confirm, Receipt and Bill* pe o comandă în ciornă (sau *Receipt and Bill* pe una confirmată) confirmă comanda dacă e nevoie, o recepționează și creează și deschide factura de furnizor.",
+      "Recepție automată: fiecare recepție pregătită este validată cu cantitățile comandate și cu data comenzii ca dată de perioadă; documentul sursă devine referința furnizorului din comandă (sau numele comenzii), iar marcajul de aviz este șters. O recepție în așteptare este rezervată mai întâi; dacă rezervarea eșuează, acțiunea se oprește cu mesajul *The stock transfer cannot be validated!*.",
+      "Aviz de recepție: butonul *Receipt Notice* pe o comandă confirmată setează marcajul de aviz pe recepțiile pregătite și deschide recepțiile comenzii, fără a valida nimic; marcajul este doar stocat și transmis mai departe.",
+      "Factură din recepție: o recepție finalizată a unei comenzi de achiziție afișează butonul *Invoice*, care deschide facturile de furnizor ale comenzii și transmite marcajul de aviz.",
+      "Butoanele de pe comandă sunt destinate utilizatorilor interni; *Confirm, Receipt and Bill* apare și pe o ofertă trimisă, pe care însă nu o confirmă și nu o recepționează."
     ],
     "dependencies": [
       "base",
@@ -4522,7 +4525,7 @@
     "connections": [
       "deltatech_fast_sale"
     ],
-    "text": "Fast Purchase\ndeltatech_fast_purchase\nModulul „Fast Purchase” accelerează procesul de achiziție din Odoo, permițând utilizatorului să parcurgă rapid pașii dintr-o comandă de achiziție — confirmare, recepție și facturare — direct prin butoane dedicate, fără a naviga manual între documente. Astfel, operatorii din departamentul de aprovizionare pot finaliza o achiziție în câțiva pași, economisind timp la introducerea facturilor și la generarea recepțiilor de marfă.\nButon în comanda de achiziție pentru a parcurge pașii de confirmare, recepție și facturare.\nButon în recepție pentru introducerea directă a facturii.\nButon în comanda de achiziție pentru generarea recepției pe baza avizului."
+    "text": "Fast Purchase\ndeltatech_fast_purchase\nModulul „Fast Purchase” accelerează procesul de achiziție din Odoo pentru comenzile primite integral și facturate imediat: confirmarea, recepția și facturarea se parcurg dintr-un singur clic, prin butoane dedicate pe comanda de achiziție, fără navigare manuală între documente. Operatorii din departamentul de aprovizionare economisesc astfel timp la generarea recepțiilor de marfă și la introducerea facturilor.\nFlux dintr-un clic: după o confirmare prealabilă, butonul *Confirm, Receipt and Bill* pe o comandă în ciornă (sau *Receipt and Bill* pe una confirmată) confirmă comanda dacă e nevoie, o recepționează și creează și deschide factura de furnizor.\nRecepție automată: fiecare recepție pregătită este validată cu cantitățile comandate și cu data comenzii ca dată de perioadă; documentul sursă devine referința furnizorului din comandă (sau numele comenzii), iar marcajul de aviz este șters. O recepție în așteptare este rezervată mai întâi; dacă rezervarea eșuează, acțiunea se oprește cu mesajul *The stock transfer cannot be validated!*.\nAviz de recepție: butonul *Receipt Notice* pe o comandă confirmată setează marcajul de aviz pe recepțiile pregătite și deschide recepțiile comenzii, fără a valida nimic; marcajul este doar stocat și transmis mai departe.\nFactură din recepție: o recepție finalizată a unei comenzi de achiziție afișează butonul *Invoice*, care deschide facturile de furnizor ale comenzii și transmite marcajul de aviz.\nButoanele de pe comandă sunt destinate utilizatorilor interni; *Confirm, Receipt and Bill* apare și pe o ofertă trimisă, pe care însă nu o confirmă și nu o recepționează."
   },
   {
     "path": "deltatech_fast_sale/index.md",
@@ -4655,7 +4658,7 @@
   {
     "path": "deltatech_fleet_geo/index.md",
     "module": "deltatech_fleet_geo",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_fleet_geo",
     "local_path": "odoo-addons/deltatech/deltatech_fleet_geo",
     "last_ingest": "2026-10-09",
@@ -5336,7 +5339,7 @@
   {
     "path": "deltatech_keez/index.md",
     "module": "deltatech_keez",
-    "version": "19.0.1.1.3",
+    "version": "19.0.1.1.4",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_keez`",
     "local_path": "odoo-addons/bitshop/deltatech_keez",
     "last_ingest": "2026-10-22",
@@ -5529,7 +5532,7 @@
   {
     "path": "deltatech_mail/index.md",
     "module": "deltatech_mail",
-    "version": "19.0.1.0.7",
+    "version": "19.0.1.0.8",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_mail",
     "local_path": "odoo-addons/deltatech/deltatech_mail",
     "last_ingest": "2026-11-08",
@@ -6266,7 +6269,7 @@
   {
     "path": "deltatech_marketplace_sale/index.md",
     "module": "deltatech_marketplace_sale",
-    "version": "19.0.2.19.4",
+    "version": "19.0.2.19.5",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_sale",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_sale",
     "last_ingest": "2026-11-07",
@@ -6872,18 +6875,18 @@
   {
     "path": "deltatech_mrp_cost/index.md",
     "module": "deltatech_mrp_cost",
-    "version": "19.0.2.0.9",
+    "version": "19.0.2.0.10",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_cost",
     "local_path": "odoo-addons/deltatech/deltatech_mrp_cost",
-    "last_ingest": "2026-06-02",
+    "last_ingest": "2026-11-12",
     "friendly_name": "MRP Cost",
-    "summary": "Modulul permite adăugarea de costuri suplimentare în comanda de producție, dincolo de costul materiilor prime consumate. Pe lângă valoarea materialelor, costul produsului finit poate include regie, consum de utilități, salarii nete și contribuții salariale, calculate în funcție de durata de producție. Astfel, prețul de cost calculat al produsului fabricat reflectă mai fidel costul real, fiind util pentru o evaluare corectă a stocurilor și a marjelor în activitatea de producție.",
+    "summary": "Manopera, utilitățile și regia sunt costuri de producție pe care componentele nu le arată. Modulul le înregistrează pe lista de materiale și pe comanda de producție și le adaugă la costul comenzii. Astfel, prețul de cost al produsului fabricat reflectă mai fidel costul real, fiind util pentru o evaluare corectă a stocurilor și a marjelor în activitatea de producție.",
     "features": [
-      "Adăugarea de costuri suplimentare (extra) în comanda de producție, peste costul materiilor prime.",
-      "Definirea pe lista de materiale (BOM) a parametrilor de cost: regie, consum de utilități, rată salariu net, contribuții salariale și durată.",
-      "Preluarea automată a acestor parametri din BOM în comanda de producție la crearea acesteia.",
-      "Calculul costurilor de manoperă și utilități proporțional cu durata estimată de producție.",
-      "Calculul automat al valorii totale a producției și al prețului de cost unitar al produsului fabricat."
+      "**Fila *Costs*:** pe lista de materiale și pe comanda de producție, o filă *Costs* conține *Overhead* (regie), *Utility consumption*, *Net Salary Rate*, *Salary Contributions* și o *Duration* în ore. O comandă nouă preia valorile din lista de materiale, scalând durata la cantitatea comenzii.",
+      "Costul comenzii: regia este o sumă fixă; utilitățile, salariul net și contribuțiile sunt tarife înmulțite cu durata. *Production Amount* și *Calculate Price* arată costul total și cel unitar: componentele stocabile la preț standard plus aceste costuri sau, după producție, valoarea mișcărilor produselor finite.",
+      "Costul produsului finit: înainte ca Odoo să evalueze produsul finit, modulul setează `extra_cost` al comenzii la costurile împărțite la cantitatea comenzii (dacă nu sunt zero), apoi rulează calculul standard.",
+      "Comanda tipărită: raportul comenzii de producție adaugă data de start, valorile de cost nenule, un tabel *Finished Products* și coloanele *Effective Quantity*, *Price* și *Amount* pe componente.",
+      "Limitări: modificările ulterioare ale listei de materiale nu ajung în comenzile existente, iar costurile introduse pe o comandă nouă sunt înlocuite la prima salvare cu cele din lista de materiale."
     ],
     "dependencies": [
       "mrp_account"
@@ -6891,7 +6894,7 @@
     "connections": [
       "deltatech_mrp"
     ],
-    "text": "MRP Cost\ndeltatech_mrp_cost\nModulul permite adăugarea de costuri suplimentare în comanda de producție, dincolo de costul materiilor prime consumate. Pe lângă valoarea materialelor, costul produsului finit poate include regie, consum de utilități, salarii nete și contribuții salariale, calculate în funcție de durata de producție. Astfel, prețul de cost calculat al produsului fabricat reflectă mai fidel costul real, fiind util pentru o evaluare corectă a stocurilor și a marjelor în activitatea de producție.\nAdăugarea de costuri suplimentare (extra) în comanda de producție, peste costul materiilor prime.\nDefinirea pe lista de materiale (BOM) a parametrilor de cost: regie, consum de utilități, rată salariu net, contribuții salariale și durată.\nPreluarea automată a acestor parametri din BOM în comanda de producție la crearea acesteia.\nCalculul costurilor de manoperă și utilități proporțional cu durata estimată de producție.\nCalculul automat al valorii totale a producției și al prețului de cost unitar al produsului fabricat."
+    "text": "MRP Cost\ndeltatech_mrp_cost\nManopera, utilitățile și regia sunt costuri de producție pe care componentele nu le arată. Modulul le înregistrează pe lista de materiale și pe comanda de producție și le adaugă la costul comenzii. Astfel, prețul de cost al produsului fabricat reflectă mai fidel costul real, fiind util pentru o evaluare corectă a stocurilor și a marjelor în activitatea de producție.\n**Fila *Costs*:** pe lista de materiale și pe comanda de producție, o filă *Costs* conține *Overhead* (regie), *Utility consumption*, *Net Salary Rate*, *Salary Contributions* și o *Duration* în ore. O comandă nouă preia valorile din lista de materiale, scalând durata la cantitatea comenzii.\nCostul comenzii: regia este o sumă fixă; utilitățile, salariul net și contribuțiile sunt tarife înmulțite cu durata. *Production Amount* și *Calculate Price* arată costul total și cel unitar: componentele stocabile la preț standard plus aceste costuri sau, după producție, valoarea mișcărilor produselor finite.\nCostul produsului finit: înainte ca Odoo să evalueze produsul finit, modulul setează `extra_cost` al comenzii la costurile împărțite la cantitatea comenzii (dacă nu sunt zero), apoi rulează calculul standard.\nComanda tipărită: raportul comenzii de producție adaugă data de start, valorile de cost nenule, un tabel *Finished Products* și coloanele *Effective Quantity*, *Price* și *Amount* pe componente.\nLimitări: modificările ulterioare ale listei de materiale nu ajung în comenzile existente, iar costurile introduse pe o comandă nouă sunt înlocuite la prima salvare cu cele din lista de materiale."
   },
   {
     "path": "deltatech_mrp_set_delivery/index.md",
@@ -7155,7 +7158,7 @@
   {
     "path": "deltatech_obyc/index.md",
     "module": "deltatech_obyc",
-    "version": "19.0.1.0.19",
+    "version": "19.0.1.0.22",
     "github": "https://github.com/dhongu/deltatech_stock_valuation/tree/19.0/deltatech_obyc",
     "local_path": "odoo-addons/deltatech_stock_valuation/deltatech_obyc",
     "last_ingest": "2026-10-01",
@@ -7284,23 +7287,25 @@
   {
     "path": "deltatech_partner_gifts/index.md",
     "module": "deltatech_partner_gifts",
-    "version": "19.0.0.1.10",
+    "version": "19.0.0.1.11",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_gifts",
     "local_path": "odoo-addons/bitshop/deltatech_partner_gifts",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-11-12",
     "friendly_name": "Deltatech Partner Gifts",
-    "summary": "Modulul gestionează cadourile oferite anumitor parteneri (clienți sau contacte). Permite generarea de linii de cadou pornind de la partenerii selectați, tipărirea etichetelor de cadou (expeditor/destinatar, pentru livrare) și colectarea de date despre parteneri (de exemplu totalul facturat în anul curent) printr-o acțiune de server. De asemenea, oferă posibilitatea de a copia și modifica în masă cadourile existente, simplificând astfel organizarea campaniilor de cadouri către parteneri.",
+    "summary": "Trimiterea de cadouri către clienți și parteneri cere evidența cine primește ce, unde și cum. Modulul ține cadourile ca linii, le creează în masă și tipărește etichetele de livrare, simplificând organizarea campaniilor de cadouri către parteneri.",
     "features": [
-      "Generarea de linii de cadou pornind de la partenerii selectați.",
-      "Tipărirea etichetei de cadou (expeditor/destinatar) pentru livrare.",
-      "Obținerea datelor despre partener (de exemplu totalul facturat în anul curent) printr-o acțiune de server.",
-      "Copierea și modificarea în masă a cadourilor."
+      "Linii de cadou: meniul *Gift lines* listează câte o linie pe cadou, cu *Partner*, *Partner address* (opțional), *Gift date*, *Type* (Calendar / Simple / Medium / VIP), *Reason*, *Salesperson*, etichetele partenerului (*Tags*) și o stare de la *Draft* la *Done* (Draft, Approved, Ready, Sent, Done).",
+      "Adăugare în masă: acțiunea *Add gifts*, rulată pe contactele selectate, creează pentru fiecare contact o linie *Draft* cu tipul, data, motivul și transportatorul introduse, plus agentul de vânzări al contactului și prima adresă de livrare, dacă există.",
+      "Copiere sau modificare: *Copy/Modify* duplică liniile selectate sau le modifică pe toate deodată, folosind doar valorile completate; o copie cere o *Gift date*.",
+      "Etichetă de livrare: *Print partner gifts* tipărește câte o pagină pe cadou, cu expeditorul (compania utilizatorului) și numele, adresa și telefonul destinatarului, plus *Attention of*. Destinatarul este *Partner address*, altfel prima adresă de livrare a partenerului, altfel partenerul însuși.",
+      "Valoare facturată: acțiunea *Get partner data* setează *Invoiced this year* la facturile de client postate minus notele de credit din anul curent; rămâne zero fără aplicația de facturare.",
+      "Pe contact, butonul *Gifts* deschide liniile de cadou ale acestuia. Grupul *User* poate citi liniile; *Admin* le poate edita și poate rula acțiunile în masă, inclusiv *Set done* și *Set draft*."
     ],
     "dependencies": [
       "contacts"
     ],
     "connections": [],
-    "text": "Deltatech Partner Gifts\ndeltatech_partner_gifts\nModulul gestionează cadourile oferite anumitor parteneri (clienți sau contacte). Permite generarea de linii de cadou pornind de la partenerii selectați, tipărirea etichetelor de cadou (expeditor/destinatar, pentru livrare) și colectarea de date despre parteneri (de exemplu totalul facturat în anul curent) printr-o acțiune de server. De asemenea, oferă posibilitatea de a copia și modifica în masă cadourile existente, simplificând astfel organizarea campaniilor de cadouri către parteneri.\nGenerarea de linii de cadou pornind de la partenerii selectați.\nTipărirea etichetei de cadou (expeditor/destinatar) pentru livrare.\nObținerea datelor despre partener (de exemplu totalul facturat în anul curent) printr-o acțiune de server.\nCopierea și modificarea în masă a cadourilor."
+    "text": "Deltatech Partner Gifts\ndeltatech_partner_gifts\nTrimiterea de cadouri către clienți și parteneri cere evidența cine primește ce, unde și cum. Modulul ține cadourile ca linii, le creează în masă și tipărește etichetele de livrare, simplificând organizarea campaniilor de cadouri către parteneri.\nLinii de cadou: meniul *Gift lines* listează câte o linie pe cadou, cu *Partner*, *Partner address* (opțional), *Gift date*, *Type* (Calendar / Simple / Medium / VIP), *Reason*, *Salesperson*, etichetele partenerului (*Tags*) și o stare de la *Draft* la *Done* (Draft, Approved, Ready, Sent, Done).\nAdăugare în masă: acțiunea *Add gifts*, rulată pe contactele selectate, creează pentru fiecare contact o linie *Draft* cu tipul, data, motivul și transportatorul introduse, plus agentul de vânzări al contactului și prima adresă de livrare, dacă există.\nCopiere sau modificare: *Copy/Modify* duplică liniile selectate sau le modifică pe toate deodată, folosind doar valorile completate; o copie cere o *Gift date*.\nEtichetă de livrare: *Print partner gifts* tipărește câte o pagină pe cadou, cu expeditorul (compania utilizatorului) și numele, adresa și telefonul destinatarului, plus *Attention of*. Destinatarul este *Partner address*, altfel prima adresă de livrare a partenerului, altfel partenerul însuși.\nValoare facturată: acțiunea *Get partner data* setează *Invoiced this year* la facturile de client postate minus notele de credit din anul curent; rămâne zero fără aplicația de facturare.\nPe contact, butonul *Gifts* deschide liniile de cadou ale acestuia. Grupul *User* poate citi liniile; *Admin* le poate edita și poate rula acțiunile în masă, inclusiv *Set done* și *Set draft*."
   },
   {
     "path": "deltatech_partner_gifts_agreement/index.md",
@@ -7433,16 +7438,19 @@
   {
     "path": "deltatech_partner_rating/index.md",
     "module": "deltatech_partner_rating",
-    "version": "19.0.0.1.12",
+    "version": "19.0.0.1.13",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_rating",
     "local_path": "odoo-addons/bitshop/deltatech_partner_rating",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-11-12",
     "friendly_name": "Evaluare parteneri",
-    "summary": "Modulul permite evaluarea (rating-ul) partenerilor de afaceri pe baza unor criterii definite de utilizator. Astfel, echipa poate clasifica și nota furnizorii și clienții după indicatori relevanți pentru companie, obținând o imagine rapidă asupra performanței și fiabilității fiecărui partener. Acesta este modulul de bază al unei familii de module, peste care se construiesc extensii dedicate vânzărilor și service-ului.",
+    "summary": "Condițiile de creditare și de plată depind de cât de de încredere este un partener. Modulul notează clienții și furnizorii pe baza unor criterii definite de utilizator, manual sau pe baza facturilor, oferind o imagine rapidă asupra performanței și fiabilității fiecărui partener. Este modulul de bază al unei familii de module, peste care se construiesc extensii dedicate vânzărilor și service-ului.",
     "features": [
-      "Evaluarea partenerilor pe baza unor criterii definite de utilizator.",
-      "Introducerea manuală a valorii de evaluare (rating manual).",
-      "Posibilitate planificată (Todo) de evaluare automată pe baza sumei facturate."
+      "Criterii de evaluare: managerii de evaluare (*Rating Managers*) definesc criteriile în *Partner ratings* din Contacte: *Criteria Type* (*Manual* sau *Computed*), *Partner Type* (client sau furnizor), *Default value* și un *Partners domain* opțional.",
+      "Parametri calculați: un criteriu calculat măsoară *Total invoiced (untaxed) last 12 months*, *Average payment time*, *First invoice* (ani de la prima factură) sau *Service agreements number*.",
+      "Intervale de scorare: fiecare rând din *Criteria Lines* are un minim, un maxim, o *Rating value* și un *Rating factor*; rândul potrivit dă scorul valoare × factor, altfel se folosește valoarea implicită.",
+      "Scorul partenerului: fila *Partner ratings* a partenerului listează liniile sale, iar doar cele manuale sunt editabile. O bară arată *Customer rating* și, cu *Compute supplier ratings* bifat, *Supplier rating*.",
+      "Acțiuni de recalculare: *Run* pe criterii (limitat de domeniul lor) creează sau actualizează liniile; criteriile manuale adaugă o linie cu valoarea implicită. *Compute ratings* pe parteneri actualizează liniile calculate. *Reset ratings* reconstruiește liniile unui partener dacă un criteriu apare de două ori; valorile manuale revin la cele implicite.",
+      "Utilizatorii interni citesc evaluările; doar managerii de evaluare le modifică. Nu este instalată nicio acțiune programată: nimic nu se recalculează singur (există totuși metoda `compute_ratings_cron`, apelabilă dintr-un cron definit de utilizator). *Average payment time* cere modulul Average Payment Period, iar *Service agreements number* cere Service Agreement."
     ],
     "dependencies": [
       "mail",
@@ -7452,9 +7460,11 @@
     ],
     "connections": [
       "deltatech_partner_rating_sale",
-      "deltatech_partner_rating_service"
+      "deltatech_partner_rating_service",
+      "deltatech_average_payment_period",
+      "deltatech_service_agreement"
     ],
-    "text": "Evaluare parteneri\ndeltatech_partner_rating\nModulul permite evaluarea (rating-ul) partenerilor de afaceri pe baza unor criterii definite de utilizator. Astfel, echipa poate clasifica și nota furnizorii și clienții după indicatori relevanți pentru companie, obținând o imagine rapidă asupra performanței și fiabilității fiecărui partener. Acesta este modulul de bază al unei familii de module, peste care se construiesc extensii dedicate vânzărilor și service-ului.\nEvaluarea partenerilor pe baza unor criterii definite de utilizator.\nIntroducerea manuală a valorii de evaluare (rating manual).\nPosibilitate planificată (Todo) de evaluare automată pe baza sumei facturate."
+    "text": "Evaluare parteneri\ndeltatech_partner_rating\nCondițiile de creditare și de plată depind de cât de de încredere este un partener. Modulul notează clienții și furnizorii pe baza unor criterii definite de utilizator, manual sau pe baza facturilor, oferind o imagine rapidă asupra performanței și fiabilității fiecărui partener. Este modulul de bază al unei familii de module, peste care se construiesc extensii dedicate vânzărilor și service-ului.\nCriterii de evaluare: managerii de evaluare (*Rating Managers*) definesc criteriile în *Partner ratings* din Contacte: *Criteria Type* (*Manual* sau *Computed*), *Partner Type* (client sau furnizor), *Default value* și un *Partners domain* opțional.\nParametri calculați: un criteriu calculat măsoară *Total invoiced (untaxed) last 12 months*, *Average payment time*, *First invoice* (ani de la prima factură) sau *Service agreements number*.\nIntervale de scorare: fiecare rând din *Criteria Lines* are un minim, un maxim, o *Rating value* și un *Rating factor*; rândul potrivit dă scorul valoare × factor, altfel se folosește valoarea implicită.\nScorul partenerului: fila *Partner ratings* a partenerului listează liniile sale, iar doar cele manuale sunt editabile. O bară arată *Customer rating* și, cu *Compute supplier ratings* bifat, *Supplier rating*.\nAcțiuni de recalculare: *Run* pe criterii (limitat de domeniul lor) creează sau actualizează liniile; criteriile manuale adaugă o linie cu valoarea implicită. *Compute ratings* pe parteneri actualizează liniile calculate. *Reset ratings* reconstruiește liniile unui partener dacă un criteriu apare de două ori; valorile manuale revin la cele implicite.\nUtilizatorii interni citesc evaluările; doar managerii de evaluare le modifică. Nu este instalată nicio acțiune programată: nimic nu se recalculează singur (există totuși metoda `compute_ratings_cron`, apelabilă dintr-un cron definit de utilizator). *Average payment time* cere modulul Average Payment Period, iar *Service agreements number* cere Service Agreement."
   },
   {
     "path": "deltatech_partner_rating_sale/index.md",
@@ -7684,7 +7694,7 @@
   {
     "path": "deltatech_payment_forecast/index.md",
     "module": "deltatech_payment_forecast",
-    "version": "19.0.0.0.3",
+    "version": "19.0.0.0.4",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_payment_forecast`",
     "local_path": "odoo-addons/deltatech/deltatech_payment_forecast",
     "last_ingest": "2026-07-31",
@@ -8090,7 +8100,7 @@
   {
     "path": "deltatech_picking_services/index.md",
     "module": "deltatech_picking_services",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_picking_services",
     "local_path": "odoo-addons/deltatech/deltatech_picking_services",
     "last_ingest": "2026-11-10",
@@ -8115,7 +8125,7 @@
   {
     "path": "deltatech_picking_split/index.md",
     "module": "deltatech_picking_split",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_picking_split",
     "local_path": "odoo-addons/deltatech/deltatech_picking_split",
     "last_ingest": "2026-10-09",
@@ -8365,7 +8375,7 @@
   {
     "path": "deltatech_pos_product_filter/index.md",
     "module": "deltatech_pos_product_filter",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "[https://github.com/dhongu/deltatech/tree/19.0/deltatech_pos_product_filter](https://github.com/dhongu/deltatech/tree/19.0/deltatech_pos_product_filter)",
     "local_path": "odoo-addons/deltatech/deltatech_pos_product_filter",
     "last_ingest": "2026-07-31",
@@ -8744,7 +8754,7 @@
   {
     "path": "deltatech_product_brand/index.md",
     "module": "deltatech_product_brand",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_product_brand",
     "local_path": "odoo-addons/bitshop/deltatech_product_brand",
     "last_ingest": "2026-09-03",
@@ -8769,7 +8779,7 @@
   {
     "path": "deltatech_product_catalog/index.md",
     "module": "deltatech_product_catalog",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_catalog",
     "local_path": "odoo-addons/deltatech/deltatech_product_catalog",
     "last_ingest": "2026-10-09",
@@ -8819,7 +8829,7 @@
   {
     "path": "deltatech_product_category_color/index.md",
     "module": "deltatech_product_category_color",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_category_color",
     "local_path": "odoo-addons/deltatech/deltatech_product_category_color",
     "last_ingest": "2026-11-10",
@@ -8921,7 +8931,7 @@
   {
     "path": "deltatech_product_dimension/index.md",
     "module": "deltatech_product_dimension",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_dimension",
     "local_path": "odoo-addons/deltatech/deltatech_product_dimension",
     "last_ingest": "2026-11-06",
@@ -9008,7 +9018,7 @@
   {
     "path": "deltatech_product_list/index.md",
     "module": "deltatech_product_list",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_list",
     "local_path": "odoo-addons/deltatech/deltatech_product_list",
     "last_ingest": "2026-11-06",
@@ -9036,21 +9046,24 @@
   {
     "path": "deltatech_product_mpn/index.md",
     "module": "deltatech_product_mpn",
-    "version": "19.0.0.0.2",
+    "version": "19.0.0.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_mpn",
     "local_path": "odoo-addons/deltatech/deltatech_product_mpn",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-11-12",
     "friendly_name": "Product MPN",
-    "summary": "Modulul adaugă un câmp pentru Codul de Produs al Producătorului (MPN — Manufacturer Part Number) pe șablonul de produs. Acest cod este identificatorul atribuit de producător unei piese sau unui articol și ajută la identificarea precisă a produselor, mai ales atunci când același articol este vândut sub mai multe denumiri sau referințe interne. Câmpul este disponibil și în bara de căutare, astfel încât produsele să poată fi găsite rapid după codul producătorului.",
+    "summary": "Furnizorii și clienții denumesc adesea un produs după codul de piesă al producătorului (MPN — Manufacturer Part Number), care poate diferi de referința internă. Modulul adaugă acest cod pe produse și îl face căutabil în lista de produse, astfel încât articolele să poată fi găsite rapid după codul producătorului.",
     "features": [
-      "Adaugă un câmp MPN (Manufacturer Part Number) pe șablonul de produs.",
-      "Permite căutarea produselor după codul MPN direct din bara de căutare, pentru identificare mai ușoară."
+      "Câmpul MPN: formularul produsului afișează un câmp text *MPN* (ajutor: Manufacturer Part Number), opțional, fără verificare de unicitate sau de format.",
+      "Căutare după MPN: bara de căutare a listei de produse primește o căutare *MPN*; modulul nu adaugă căutare după MPN în lista de variante sau în câmpurile de produs din documente.",
+      "Coloane opționale: lista de produse și lista de variante pot afișa o coloană *MPN*, ascunsă implicit și vizibilă când este bifată în meniul coloanelor opționale.",
+      "O valoare pe produs: MPN aparține produsului (șablonului), nu variantei, deci toate variantele afișează aceeași valoare; câmpul nu este adăugat pe formularul variantei.",
+      "Modulul nu adaugă meniuri, setări sau grupuri de securitate, deci oricine poate edita un produs îi poate edita și MPN-ul. Codul este doar stocat și afișat: nu este copiat în comenzi, facturi, rapoarte sau pe site."
     ],
     "dependencies": [
       "product"
     ],
     "connections": [],
-    "text": "Product MPN\ndeltatech_product_mpn\nModulul adaugă un câmp pentru Codul de Produs al Producătorului (MPN — Manufacturer Part Number) pe șablonul de produs. Acest cod este identificatorul atribuit de producător unei piese sau unui articol și ajută la identificarea precisă a produselor, mai ales atunci când același articol este vândut sub mai multe denumiri sau referințe interne. Câmpul este disponibil și în bara de căutare, astfel încât produsele să poată fi găsite rapid după codul producătorului.\nAdaugă un câmp MPN (Manufacturer Part Number) pe șablonul de produs.\nPermite căutarea produselor după codul MPN direct din bara de căutare, pentru identificare mai ușoară."
+    "text": "Product MPN\ndeltatech_product_mpn\nFurnizorii și clienții denumesc adesea un produs după codul de piesă al producătorului (MPN — Manufacturer Part Number), care poate diferi de referința internă. Modulul adaugă acest cod pe produse și îl face căutabil în lista de produse, astfel încât articolele să poată fi găsite rapid după codul producătorului.\nCâmpul MPN: formularul produsului afișează un câmp text *MPN* (ajutor: Manufacturer Part Number), opțional, fără verificare de unicitate sau de format.\nCăutare după MPN: bara de căutare a listei de produse primește o căutare *MPN*; modulul nu adaugă căutare după MPN în lista de variante sau în câmpurile de produs din documente.\nColoane opționale: lista de produse și lista de variante pot afișa o coloană *MPN*, ascunsă implicit și vizibilă când este bifată în meniul coloanelor opționale.\nO valoare pe produs: MPN aparține produsului (șablonului), nu variantei, deci toate variantele afișează aceeași valoare; câmpul nu este adăugat pe formularul variantei.\nModulul nu adaugă meniuri, setări sau grupuri de securitate, deci oricine poate edita un produs îi poate edita și MPN-ul. Codul este doar stocat și afișat: nu este copiat în comenzi, facturi, rapoarte sau pe site."
   },
   {
     "path": "deltatech_product_reordering_limit/index.md",
@@ -9209,7 +9222,7 @@
   {
     "path": "deltatech_property/index.md",
     "module": "deltatech_property",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_property",
     "local_path": "odoo-addons/deltatech_service/deltatech_property",
     "last_ingest": "2026-10-09",
@@ -9404,7 +9417,7 @@
   {
     "path": "deltatech_purchase_picking_status/index.md",
     "module": "deltatech_purchase_picking_status",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_picking_status`",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_picking_status",
     "last_ingest": "2026-07-31",
@@ -9566,7 +9579,7 @@
   {
     "path": "deltatech_purchase_stock/index.md",
     "module": "deltatech_purchase_stock",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "[https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_stock](https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_stock)",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_stock",
     "last_ingest": "2026-07-31",
@@ -10003,7 +10016,7 @@
   {
     "path": "deltatech_report_prn/index.md",
     "module": "deltatech_report_prn",
-    "version": "19.0.1.1.2",
+    "version": "19.0.1.1.3",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_report_prn`",
     "local_path": "odoo-addons/deltatech/deltatech_report_prn",
     "last_ingest": "2026-08-20",
@@ -10530,7 +10543,7 @@
   {
     "path": "deltatech_sale_cancel_order/index.md",
     "module": "deltatech_sale_cancel_order",
-    "version": "19.0.0.2.9",
+    "version": "19.0.0.2.10",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_cancel_order`",
     "local_path": "odoo-addons/bitshop/deltatech_sale_cancel_order",
     "last_ingest": "2026-10-27",
@@ -10637,7 +10650,7 @@
   {
     "path": "deltatech_sale_contact/index.md",
     "module": "deltatech_sale_contact",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.1.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_contact",
     "local_path": "odoo-addons/deltatech/deltatech_sale_contact",
     "last_ingest": "2026-10-22",
@@ -10665,30 +10678,28 @@
   {
     "path": "deltatech_sale_contracts/index.md",
     "module": "deltatech_sale_contracts",
-    "version": "19.0.1.0.8",
-    "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_contracts`",
+    "version": "19.0.1.0.9",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_contracts",
     "local_path": "odoo-addons/bitshop/deltatech_sale_contracts",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-11-12",
     "friendly_name": "Deltatech Sale Contracts",
     "summary": "Modulul extinde comenzile de vânzare cu o stare dedicată de tip „Contract” (Agreement) și un flux controlat de comenzi părinte–copil. O ofertă acceptată poate fi transformată într-un Contract care nu generează livrări sau facturi, ci stabilește cadrul comercial. Comenzile ulterioare se leagă de Contract și consumă din cantitățile și prețurile agreate, oferind un control clar asupra a ceea ce se livrează și facturează efectiv în cadrul unei înțelegeri-cadru cu clientul.",
     "features": [
-      "Stare Contract (Agreement): transformă o ofertă acceptată într-o stare de Contract non-logistică, care nu creează livrări sau facturi.",
-      "Comenzi părinte–copil: leagă comenzile ulterioare de un Contract printr-un câmp de comandă părinte și urmărește consumul față de Contract, per produs.",
-      "Control supraconsum: pe liniile de Contract, permite sau blochează supraconsumul per produs printr-un simplu bifaj (serviciile îl permit implicit; produsele stocabile/consumabile nu).",
-      "Listă de prețuri de Contract: generează automat o listă de prețuri dedicată din liniile ofertei de Contract și o impune pe toate comenzile copil.",
-      "Valori implicite pentru comenzile copil: comenzile copil moștenesc partenerul, adresele de facturare și livrare și lista de prețuri a Contractului din Contractul părinte.",
-      "UI/Raport:",
-      "Variantă a barei de stare care afișează „Agreement” când comanda este în starea Contract.",
-      "Buton inteligent pentru navigarea către comenzile copil din Contract.",
-      "Titlul raportului de vânzare afișează „Agreement #” pentru starea Contract.",
-      "Construit pentru Odoo 19: folosește expresii moderne de vizualizare (fără `attrs`/`states`).",
-      "Modulul nu modifică logistica standard de confirmare: doar comenzile copil confirmate la stadiul Sale generează livrări și facturi."
+      "Stare Contract (Agreement): butonul *Set to Contract* de pe o ofertă (cu cel puțin o linie de produs) o transformă într-un Contract non-logistic: primește număr din secvența de contracte (ex. `C00001`), este blocat și nu creează livrări sau facturi. Contractele se listează în *Sales → Orders → Contracts*.",
+      "Comenzi părinte–copil: comenzile ulterioare se leagă de un Contract prin câmpul *Contract* (fila *Other Info*) sau din butonul inteligent *Child Orders*; doar documentele în starea Agreement pot fi alese.",
+      "Verificarea consumului la confirmare: la confirmarea unei comenzi copil, cantitatea fiecărui produs se adaugă la cea a comenzilor copil confirmate ale aceluiași Contract (ofertele și comenzile anulate nu consumă) și se compară cu cantitatea contractată. Produsele care nu sunt în Contract nu sunt verificate și se vând la prețul propriu.",
+      "Control supraconsum: depășirea cantității contractate refuză confirmarea, cu excepția liniilor de Contract cu *Allow Overconsumption* (implicit permis pentru servicii), unde se postează o notă în chatterul Contractului și al comenzii. Opțiunea nu apare pe niciun formular (se setează doar prin import sau API), deci din ecran o comandă care depășește Contractul este refuzată. Verificarea poate fi dezactivată prin parametrul de sistem `deltatech_sale_contracts.avoid_check`.",
+      "Listă de prețuri de Contract: la trecerea în Contract se generează o listă de prețuri „Contract <număr>”, cu câte o regulă de preț fix pe produs (egală cu prețul liniei; la produse duplicate se folosește ultimul preț). Se aplică pe comenzile copil, unde nu poate fi editată. Lista se creează o singură dată: modificările ulterioare ale liniilor nu o actualizează.",
+      "Valori implicite pentru comenzile copil: comenzile copil moștenesc partenerul, adresele de facturare și livrare și lista de prețuri din Contractul părinte.",
+      "UI/Raport: bara de stare afișează „Agreement” în starea Contract; butonul inteligent *Child Orders* listează toate comenzile legate (inclusiv ofertele); titlul raportului de vânzare afișează „Agreement #” pentru starea Contract.",
+      "Limitări cunoscute: titlul tipărit este „Agreement #” fără numărul contractului; Contractul nu poate fi anulat din formular (se folosește *Unlock* pentru modificări); nu există raport de consum, cantitățile rămase se calculează la confirmarea comenzilor copil.",
+      "Modulul nu modifică logistica standard de confirmare: doar comenzile copil confirmate la stadiul Sale generează livrări și facturi. Fluxul pas cu pas rămâne în fișa consultant."
     ],
     "dependencies": [
       "sale_management"
     ],
     "connections": [],
-    "text": "Deltatech Sale Contracts\ndeltatech_sale_contracts\nModulul extinde comenzile de vânzare cu o stare dedicată de tip „Contract” (Agreement) și un flux controlat de comenzi părinte–copil. O ofertă acceptată poate fi transformată într-un Contract care nu generează livrări sau facturi, ci stabilește cadrul comercial. Comenzile ulterioare se leagă de Contract și consumă din cantitățile și prețurile agreate, oferind un control clar asupra a ceea ce se livrează și facturează efectiv în cadrul unei înțelegeri-cadru cu clientul.\nStare Contract (Agreement): transformă o ofertă acceptată într-o stare de Contract non-logistică, care nu creează livrări sau facturi.\nComenzi părinte–copil: leagă comenzile ulterioare de un Contract printr-un câmp de comandă părinte și urmărește consumul față de Contract, per produs.\nControl supraconsum: pe liniile de Contract, permite sau blochează supraconsumul per produs printr-un simplu bifaj (serviciile îl permit implicit; produsele stocabile/consumabile nu).\nListă de prețuri de Contract: generează automat o listă de prețuri dedicată din liniile ofertei de Contract și o impune pe toate comenzile copil.\nValori implicite pentru comenzile copil: comenzile copil moștenesc partenerul, adresele de facturare și livrare și lista de prețuri a Contractului din Contractul părinte.\nUI/Raport:\nVariantă a barei de stare care afișează „Agreement” când comanda este în starea Contract.\nButon inteligent pentru navigarea către comenzile copil din Contract.\nTitlul raportului de vânzare afișează „Agreement #” pentru starea Contract.\nConstruit pentru Odoo 19: folosește expresii moderne de vizualizare (fără `attrs`/`states`).\nModulul nu modifică logistica standard de confirmare: doar comenzile copil confirmate la stadiul Sale generează livrări și facturi."
+    "text": "Deltatech Sale Contracts\ndeltatech_sale_contracts\nModulul extinde comenzile de vânzare cu o stare dedicată de tip „Contract” (Agreement) și un flux controlat de comenzi părinte–copil. O ofertă acceptată poate fi transformată într-un Contract care nu generează livrări sau facturi, ci stabilește cadrul comercial. Comenzile ulterioare se leagă de Contract și consumă din cantitățile și prețurile agreate, oferind un control clar asupra a ceea ce se livrează și facturează efectiv în cadrul unei înțelegeri-cadru cu clientul.\nStare Contract (Agreement): butonul *Set to Contract* de pe o ofertă (cu cel puțin o linie de produs) o transformă într-un Contract non-logistic: primește număr din secvența de contracte (ex. `C00001`), este blocat și nu creează livrări sau facturi. Contractele se listează în *Sales → Orders → Contracts*.\nComenzi părinte–copil: comenzile ulterioare se leagă de un Contract prin câmpul *Contract* (fila *Other Info*) sau din butonul inteligent *Child Orders*; doar documentele în starea Agreement pot fi alese.\nVerificarea consumului la confirmare: la confirmarea unei comenzi copil, cantitatea fiecărui produs se adaugă la cea a comenzilor copil confirmate ale aceluiași Contract (ofertele și comenzile anulate nu consumă) și se compară cu cantitatea contractată. Produsele care nu sunt în Contract nu sunt verificate și se vând la prețul propriu.\nControl supraconsum: depășirea cantității contractate refuză confirmarea, cu excepția liniilor de Contract cu *Allow Overconsumption* (implicit permis pentru servicii), unde se postează o notă în chatterul Contractului și al comenzii. Opțiunea nu apare pe niciun formular (se setează doar prin import sau API), deci din ecran o comandă care depășește Contractul este refuzată. Verificarea poate fi dezactivată prin parametrul de sistem `deltatech_sale_contracts.avoid_check`.\nListă de prețuri de Contract: la trecerea în Contract se generează o listă de prețuri „Contract <număr>”, cu câte o regulă de preț fix pe produs (egală cu prețul liniei; la produse duplicate se folosește ultimul preț). Se aplică pe comenzile copil, unde nu poate fi editată. Lista se creează o singură dată: modificările ulterioare ale liniilor nu o actualizează.\nValori implicite pentru comenzile copil: comenzile copil moștenesc partenerul, adresele de facturare și livrare și lista de prețuri din Contractul părinte.\nUI/Raport: bara de stare afișează „Agreement” în starea Contract; butonul inteligent *Child Orders* listează toate comenzile legate (inclusiv ofertele); titlul raportului de vânzare afișează „Agreement #” pentru starea Contract.\nLimitări cunoscute: titlul tipărit este „Agreement #” fără numărul contractului; Contractul nu poate fi anulat din formular (se folosește *Unlock* pentru modificări); nu există raport de consum, cantitățile rămase se calculează la confirmarea comenzilor copil.\nModulul nu modifică logistica standard de confirmare: doar comenzile copil confirmate la stadiul Sale generează livrări și facturi. Fluxul pas cu pas rămâne în fișa consultant."
   },
   {
     "path": "deltatech_sale_cost_product/index.md",
@@ -11144,7 +11155,7 @@
   {
     "path": "deltatech_sale_payment/index.md",
     "module": "deltatech_sale_payment",
-    "version": "19.0.1.3.6",
+    "version": "19.0.1.3.7",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_payment`",
     "local_path": "odoo-addons/deltatech/deltatech_sale_payment",
     "last_ingest": "2026-10-09",
@@ -11187,28 +11198,30 @@
   {
     "path": "deltatech_sale_phone/index.md",
     "module": "deltatech_sale_phone",
-    "version": "19.0.1.0.5",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_phone`",
+    "version": "19.0.1.0.6",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_phone",
     "local_path": "odoo-addons/deltatech/deltatech_sale_phone",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-11-12",
     "friendly_name": "Sale Phone",
-    "summary": "Acest modul afișează numărul de telefon al partenerului direct pe comenzile de vânzare și pe facturi, fără a fi nevoie de navigare către fișa contactului. Astfel, echipa de vânzări și cea de facturare au la îndemână datele de contact ale clientului chiar în documentul la care lucrează, ceea ce ușurează comunicarea și verificarea rapidă a informațiilor.",
+    "summary": "Echipa de vânzări și cea de contabilitate au adesea nevoie să sune un client în timp ce lucrează la o ofertă sau la o factură. Acest modul afișează numărul de telefon al clientului direct pe formularul comenzii de vânzare și pe cel al facturii, fără a fi nevoie să deschidă mai întâi fișa contactului.",
     "features": [
-      "Adaugă numărul de telefon al partenerului pe formularul comenzii de vânzare.",
-      "Adaugă numărul de telefon al partenerului pe formularul facturii.",
-      "Numărul de telefon este preluat automat din fișa partenerului și afișat folosind widget-ul dedicat de telefon."
+      "Telefon pe comenzile de vânzare: un câmp *Phone* apare imediat după client pe formularul comenzii, afișat cu widget-ul de telefon.",
+      "Telefon pe facturi: același câmp *Phone* apare în grupul din stânga al antetului facturii, după adresa de livrare.",
+      "Preluat de la client: valoarea este telefonul clientului din document, iar câmpul rămâne gol dacă clientul nu are telefon. Este doar pentru citire: pentru a schimba numărul se editează clientul.",
+      "Nestocat: numărul nu se salvează pe document; afișează mereu telefonul curent al clientului, inclusiv pe facturile postate.",
+      "Modulul nu adaugă meniuri, setări sau grupuri și nu modifică listele sau documentele tipărite."
     ],
     "dependencies": [
       "sale",
       "account"
     ],
     "connections": [],
-    "text": "Sale Phone\ndeltatech_sale_phone\nAcest modul afișează numărul de telefon al partenerului direct pe comenzile de vânzare și pe facturi, fără a fi nevoie de navigare către fișa contactului. Astfel, echipa de vânzări și cea de facturare au la îndemână datele de contact ale clientului chiar în documentul la care lucrează, ceea ce ușurează comunicarea și verificarea rapidă a informațiilor.\nAdaugă numărul de telefon al partenerului pe formularul comenzii de vânzare.\nAdaugă numărul de telefon al partenerului pe formularul facturii.\nNumărul de telefon este preluat automat din fișa partenerului și afișat folosind widget-ul dedicat de telefon."
+    "text": "Sale Phone\ndeltatech_sale_phone\nEchipa de vânzări și cea de contabilitate au adesea nevoie să sune un client în timp ce lucrează la o ofertă sau la o factură. Acest modul afișează numărul de telefon al clientului direct pe formularul comenzii de vânzare și pe cel al facturii, fără a fi nevoie să deschidă mai întâi fișa contactului.\nTelefon pe comenzile de vânzare: un câmp *Phone* apare imediat după client pe formularul comenzii, afișat cu widget-ul de telefon.\nTelefon pe facturi: același câmp *Phone* apare în grupul din stânga al antetului facturii, după adresa de livrare.\nPreluat de la client: valoarea este telefonul clientului din document, iar câmpul rămâne gol dacă clientul nu are telefon. Este doar pentru citire: pentru a schimba numărul se editează clientul.\nNestocat: numărul nu se salvează pe document; afișează mereu telefonul curent al clientului, inclusiv pe facturile postate.\nModulul nu adaugă meniuri, setări sau grupuri și nu modifică listele sau documentele tipărite."
   },
   {
     "path": "deltatech_sale_picking_status/index.md",
     "module": "deltatech_sale_picking_status",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_picking_status",
     "local_path": "odoo-addons/deltatech/deltatech_sale_picking_status",
     "last_ingest": "2026-11-10",
@@ -11328,7 +11341,7 @@
   {
     "path": "deltatech_sale_qty_available/index.md",
     "module": "deltatech_sale_qty_available",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_qty_available`",
     "local_path": "odoo-addons/deltatech/deltatech_sale_qty_available",
     "last_ingest": "2026-08-20",
@@ -11415,7 +11428,7 @@
   {
     "path": "deltatech_sale_report/index.md",
     "module": "deltatech_sale_report",
-    "version": "19.0.0.0.1",
+    "version": "19.0.0.0.2",
     "github": "[https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_report](https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_report)",
     "local_path": "odoo-addons/deltatech/deltatech_sale_report",
     "last_ingest": "2026-07-31",
@@ -11598,7 +11611,7 @@
   {
     "path": "deltatech_sale_team/index.md",
     "module": "deltatech_sale_team",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_team",
     "local_path": "odoo-addons/deltatech/deltatech_sale_team",
     "last_ingest": "2026-11-06",
@@ -11627,7 +11640,7 @@
   {
     "path": "deltatech_sale_transfer/index.md",
     "module": "deltatech_sale_transfer",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_transfer",
     "local_path": "odoo-addons/deltatech/deltatech_sale_transfer",
     "last_ingest": "2026-10-09",
@@ -11875,7 +11888,7 @@
   {
     "path": "deltatech_service_base/index.md",
     "module": "deltatech_service_base",
-    "version": "19.0.2.0.9",
+    "version": "19.0.2.0.10",
     "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_base",
     "local_path": "odoo-addons/deltatech_service/deltatech_service_base",
     "last_ingest": "2026-06-08",
@@ -11934,7 +11947,7 @@
   {
     "path": "deltatech_service_equipment/index.md",
     "module": "deltatech_service_equipment",
-    "version": "19.0.1.1.19",
+    "version": "19.0.1.1.20",
     "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_equipment",
     "local_path": "odoo-addons/deltatech_service/deltatech_service_equipment",
     "last_ingest": "2026-09-24",
@@ -11973,7 +11986,7 @@
   {
     "path": "deltatech_service_equipment_base/index.md",
     "module": "deltatech_service_equipment_base",
-    "version": "19.0.1.2.12",
+    "version": "19.0.1.2.13",
     "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_equipment_base",
     "local_path": "odoo-addons/deltatech_service/deltatech_service_equipment_base",
     "last_ingest": "2026-09-24",
@@ -12068,7 +12081,7 @@
   {
     "path": "deltatech_service_task/index.md",
     "module": "deltatech_service_task",
-    "version": "19.0.0.0.24",
+    "version": "19.0.0.0.25",
     "github": "`https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_task`",
     "local_path": "odoo-addons/deltatech_service/deltatech_service_task",
     "last_ingest": "2026-06-08",
@@ -12093,7 +12106,7 @@
   {
     "path": "deltatech_smartbill/index.md",
     "module": "deltatech_smartbill",
-    "version": "19.0.1.0.9",
+    "version": "19.0.1.0.10",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_smartbill",
     "local_path": "odoo-addons/bitshop/deltatech_smartbill",
     "last_ingest": "2026-10-22",
@@ -12147,7 +12160,7 @@
   {
     "path": "deltatech_sms_sale/index.md",
     "module": "deltatech_sms_sale",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sms_sale",
     "local_path": "odoo-addons/deltatech/deltatech_sms_sale",
     "last_ingest": "2026-06-03",
@@ -12595,7 +12608,7 @@
   {
     "path": "deltatech_stock_report/index.md",
     "module": "deltatech_stock_report",
-    "version": "19.0.1.0.9",
+    "version": "19.0.1.0.10",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_report",
     "local_path": "odoo-addons/deltatech/deltatech_stock_report",
     "last_ingest": "2026-08-20",
@@ -12844,7 +12857,7 @@
   {
     "path": "deltatech_test_system/index.md",
     "module": "deltatech_test_system",
-    "version": "19.0.0.0.11",
+    "version": "19.0.0.0.12",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_test_system`",
     "local_path": "odoo-addons/deltatech/deltatech_test_system",
     "last_ingest": "2026-08-20",
@@ -13240,7 +13253,7 @@
   {
     "path": "deltatech_vendor_products_storage/index.md",
     "module": "deltatech_vendor_products_storage",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products_storage",
     "local_path": "odoo-addons/bitshop_vendor/deltatech_vendor_products_storage",
     "last_ingest": "2026-10-30",
@@ -13551,7 +13564,7 @@
   {
     "path": "deltatech_website_blog/index.md",
     "module": "deltatech_website_blog",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "[https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_blog](https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_blog)",
     "local_path": "odoo-addons/deltatech/deltatech_website_blog",
     "last_ingest": "2026-07-31",
@@ -13787,7 +13800,7 @@
   {
     "path": "deltatech_website_disable_fuzzy_search/index.md",
     "module": "deltatech_website_disable_fuzzy_search",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_disable_fuzzy_search`",
     "local_path": "odoo-addons/deltatech/deltatech_website_disable_fuzzy_search",
     "last_ingest": "2026-06-03",
@@ -13837,7 +13850,7 @@
   {
     "path": "deltatech_website_fixed_price/index.md",
     "module": "deltatech_website_fixed_price",
-    "version": "19.0.0.0.1",
+    "version": "19.0.0.0.2",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_fixed_price`",
     "local_path": "odoo-addons/deltatech/deltatech_website_fixed_price",
     "last_ingest": "2026-06-03",
@@ -13963,7 +13976,7 @@
   {
     "path": "deltatech_website_phone_validation/index.md",
     "module": "deltatech_website_phone_validation",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_phone_validation`",
     "local_path": "odoo-addons/deltatech/deltatech_website_phone_validation",
     "last_ingest": "2026-08-20",
@@ -13989,7 +14002,7 @@
   {
     "path": "deltatech_website_price_without_tax/index.md",
     "module": "deltatech_website_price_without_tax",
-    "version": "19.0.1.0.7",
+    "version": "19.0.1.0.8",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_price_without_tax",
     "local_path": "odoo-addons/deltatech/deltatech_website_price_without_tax",
     "last_ingest": "2026-11-06",
@@ -14269,7 +14282,7 @@
   {
     "path": "deltatech_website_sale_portal/index.md",
     "module": "deltatech_website_sale_portal",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_portal`",
     "local_path": "odoo-addons/deltatech/deltatech_website_sale_portal",
     "last_ingest": "2026-07-31",
@@ -14290,7 +14303,7 @@
   {
     "path": "deltatech_website_sale_sort/index.md",
     "module": "deltatech_website_sale_sort",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_sort`",
     "local_path": "odoo-addons/deltatech/deltatech_website_sale_sort",
     "last_ingest": "2026-08-20",
@@ -14526,7 +14539,7 @@
   {
     "path": "deltatech_website_short_description/index.md",
     "module": "deltatech_website_short_description",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_short_description`",
     "local_path": "odoo-addons/deltatech/deltatech_website_short_description",
     "last_ingest": "2026-08-20",
@@ -14805,7 +14818,7 @@
   {
     "path": "deltatech_work_days_report/index.md",
     "module": "deltatech_work_days_report",
-    "version": "19.0.0.0.11",
+    "version": "19.0.0.0.12",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_work_days_report",
     "local_path": "odoo-addons/bitshop/deltatech_work_days_report",
     "last_ingest": "2026-08-20",
@@ -15298,7 +15311,7 @@
   {
     "path": "l10n_ro_ai_partner_financials/index.md",
     "module": "l10n_ro_ai_partner_financials",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_ai_partner_financials",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_ai_partner_financials",
     "last_ingest": "2026-10-27",
@@ -15599,7 +15612,7 @@
   {
     "path": "l10n_ro_anaf_d112/index.md",
     "module": "l10n_ro_anaf_d112",
-    "version": "19.0.2.23.5",
+    "version": "19.0.2.23.6",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d112",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d112",
     "last_ingest": "2026-10-22",
@@ -16395,7 +16408,7 @@
   {
     "path": "l10n_ro_anaf_partner_confirm/index.md",
     "module": "l10n_ro_anaf_partner_confirm",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_partner_confirm",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_partner_confirm",
     "last_ingest": "2026-10-22",
@@ -17079,7 +17092,7 @@
   {
     "path": "l10n_ro_doubtful_receivables/index.md",
     "module": "l10n_ro_doubtful_receivables",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.7",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_doubtful_receivables",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_doubtful_receivables",
     "last_ingest": "2026-09-29",
@@ -17318,7 +17331,7 @@
   {
     "path": "l10n_ro_efactura_xml_rules/index.md",
     "module": "l10n_ro_efactura_xml_rules",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_efactura_xml_rules",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_efactura_xml_rules",
     "last_ingest": "2026-10-09",
@@ -17936,7 +17949,7 @@
   {
     "path": "l10n_ro_fixed_assets/index.md",
     "module": "l10n_ro_fixed_assets",
-    "version": "19.0.1.17.5",
+    "version": "19.0.1.17.6",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_fixed_assets",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_fixed_assets",
     "last_ingest": null,
@@ -18242,7 +18255,7 @@
   {
     "path": "l10n_ro_hr_payroll_enhancement/index.md",
     "module": "l10n_ro_hr_payroll_enhancement",
-    "version": "19.0.2.24.5",
+    "version": "19.0.2.24.6",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_payroll_enhancement",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_hr_payroll_enhancement",
     "last_ingest": "2026-10-22",
@@ -18318,7 +18331,7 @@
   {
     "path": "l10n_ro_hr_pontaj/index.md",
     "module": "l10n_ro_hr_pontaj",
-    "version": "19.0.1.4.3",
+    "version": "19.0.1.4.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_pontaj",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_hr_pontaj",
     "last_ingest": "2026-10-09",
@@ -18356,7 +18369,7 @@
   {
     "path": "l10n_ro_hr_pontaj_ai/index.md",
     "module": "l10n_ro_hr_pontaj_ai",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_pontaj_ai",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_hr_pontaj_ai",
     "last_ingest": "2026-10-09",
@@ -18425,7 +18438,7 @@
   {
     "path": "l10n_ro_hr_salary_increase/index.md",
     "module": "l10n_ro_hr_salary_increase",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_salary_increase",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_hr_salary_increase",
     "last_ingest": "2026-10-12",
@@ -18521,7 +18534,7 @@
   {
     "path": "l10n_ro_inventory_items/index.md",
     "module": "l10n_ro_inventory_items",
-    "version": "19.0.2.6.0",
+    "version": "19.0.2.6.1",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_inventory_items`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_inventory_items",
     "last_ingest": "2026-10-22",
@@ -18560,7 +18573,7 @@
   {
     "path": "l10n_ro_inventory_items_hr/index.md",
     "module": "l10n_ro_inventory_items_hr",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_inventory_items_hr",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_inventory_items_hr",
     "last_ingest": "2026-10-09",
@@ -18745,7 +18758,7 @@
   {
     "path": "l10n_ro_leasing/index.md",
     "module": "l10n_ro_leasing",
-    "version": "19.0.2.1.4",
+    "version": "19.0.2.1.8",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_leasing",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_leasing",
     "last_ingest": null,
@@ -18873,7 +18886,7 @@
   {
     "path": "l10n_ro_move_template/index.md",
     "module": "l10n_ro_move_template",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_move_template`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_move_template",
     "last_ingest": "2026-10-27",
@@ -18943,7 +18956,7 @@
   {
     "path": "l10n_ro_off_balance/index.md",
     "module": "l10n_ro_off_balance",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_off_balance",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_off_balance",
     "last_ingest": "2026-10-13",
@@ -19527,7 +19540,7 @@
   {
     "path": "l10n_ro_payroll_copyright/index.md",
     "module": "l10n_ro_payroll_copyright",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.1.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_copyright",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_payroll_copyright",
     "last_ingest": "2026-10-12",
@@ -19560,7 +19573,7 @@
   {
     "path": "l10n_ro_payroll_day_labourers/index.md",
     "module": "l10n_ro_payroll_day_labourers",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.1.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_day_labourers",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_payroll_day_labourers",
     "last_ingest": "2026-10-12",
@@ -19766,7 +19779,7 @@
   {
     "path": "l10n_ro_period_close_enhanced/index.md",
     "module": "l10n_ro_period_close_enhanced",
-    "version": "19.0.1.15.1",
+    "version": "19.0.1.15.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_period_close_enhanced",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_period_close_enhanced",
     "last_ingest": null,
@@ -19873,12 +19886,12 @@
   {
     "path": "l10n_ro_pos_fiscal_compliance/index.md",
     "module": "l10n_ro_pos_fiscal_compliance",
-    "version": "19.0.2.3.5",
-    "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_fiscal_compliance`",
+    "version": "19.0.2.4.0",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_fiscal_compliance",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_pos_fiscal_compliance",
-    "last_ingest": "2026-10-22",
+    "last_ingest": "2026-11-12",
     "friendly_name": "Romania - Conformitate fiscală POS (AMEF)",
-    "summary": "Modulul asigură conformitatea fiscală pentru vânzarea cu amănuntul prin POS, conform OUG 28/1999 privind aparatele de marcat electronice fiscale (AMEF). Completează POS-ul Odoo și driverele de fiscalizare (ex. `deltatech_pos`) cu evidența fiscală cerută în România: urmărirea bonului fiscal pe fiecare comandă, blocarea închiderii sesiunii când există comenzi plătite fără bon emis, raportul Z reconciliat cu vânzările și încasările, returul fiscal legat de bonul inițial și arhivarea jurnalului electronic AMEF. Modulul importă exportul casei de marcat pentru ANAF (o arhivă `.zip` cu fișiere `.p7b` sau un singur `.p7b`, semnate CMS/PKCS7 de aparat), citit după structura ANAF A4200/A4203 din OPANAF 146/2018 și verificat pe exporturi reale Datecs. Recunoaște aparatul după NUI, reconciliază automat, bon cu bon, bonurile cu comenzile din Odoo și completează raportul Z al zilei cu cifrele aparatului: totalul, plățile pe tip și valoarea și TVA-ul pe fiecare cotă, cu diferențele față de Odoo. Modulul oferă și raportul **Vânzări TVA pe casă de marcat** — un sumar pivot/listă peste liniile de TVA ale rapoartelor Z deja existente, pe interval de dată, punct de lucru și cotă de TVA, util pentru verificarea rapidă a încasărilor declarate fiscal pe orice perioadă, comparabil direct cu jurnalul electronic transmis către ANAF. Modulul acoperă latura de conformitate (evidență, blocaj, raport Z, arhivă, import, reconciliere și raportare TVA) peste POS-ul Odoo; comunicarea efectivă cu aparatul fiscal se face printr-un driver opțional, modulul nedepinzând de un driver anume.",
+    "summary": "Modulul asigură conformitatea fiscală pentru vânzarea cu amănuntul prin POS, conform OUG 28/1999 privind aparatele de marcat electronice fiscale (AMEF). Completează POS-ul Odoo și driverele de fiscalizare (ex. `deltatech_pos`) cu evidența fiscală cerută în România: urmărirea bonului fiscal pe fiecare comandă, blocarea închiderii sesiunii când există comenzi plătite fără bon emis, raportul Z reconciliat cu vânzările și încasările, returul fiscal legat de bonul inițial și arhivarea jurnalului electronic AMEF. Modulul importă exportul casei de marcat pentru ANAF (o arhivă `.zip` cu fișiere `.p7b` sau un singur `.p7b`, semnate CMS/PKCS7 de aparat), citit după structura ANAF A4200/A4203 din OPANAF 146/2018 și verificat pe exporturi reale Datecs. Recunoaște aparatul după NUI, reconciliază automat, bon cu bon, bonurile cu comenzile din Odoo și completează raportul Z al zilei cu cifrele aparatului: totalul, plățile pe tip și valoarea și TVA-ul pe fiecare cotă, cu diferențele față de Odoo. Modulul oferă și raportul **Vânzări TVA pe casă de marcat** — un sumar pivot/listă peste liniile de TVA ale rapoartelor Z deja existente, pe interval de dată, punct de lucru și cotă de TVA, util pentru verificarea rapidă a încasărilor declarate fiscal pe orice perioadă, comparabil direct cu jurnalul electronic transmis către ANAF. Exporturile pot fi preluate și automat, din e-mail (alias `fiscalwire`, de ex. de la FiscalWire), cu notificarea utilizatorilor responsabili despre rezultatul importului. Modulul acoperă latura de conformitate (evidență, blocaj, raport Z, arhivă, import, reconciliere și raportare TVA) peste POS-ul Odoo; comunicarea efectivă cu aparatul fiscal se face printr-un driver opțional, modulul nedepinzând de un driver anume.",
     "features": [
       "Urmărirea bonului fiscal pe fiecare comandă POS: serie, număr, dată/oră fiscală și stare (de fiscalizat / emis / eroare), cu punct de integrare pentru răspunsul aparatului fiscal.",
       "Blocarea închiderii sesiunii POS dacă există comenzi plătite fără bon fiscal emis și fără eroare justificată.",
@@ -19894,9 +19907,13 @@
       "Coerența internă a fiecărui Z, verificată la import, cu abaterile în notele jurnalului: total Z diferit de suma bonurilor sau a plăților, TVA diferit de suma pe cote, numerotarea bonurilor.",
       "Verificarea completitudinii perioadei din fișierul OPIS al arhivei: Z-urile lipsă se calculează din intervalul `nrRapI..nrRapF` și apar în câmpul „Rapoarte Z lipsă (OPIS)\" din grupul perioadei.",
       "Raport de discrepanțe pe bonuri fiscale (`l10n.ro.amef.journal.bon`), cu stări: Reconciliat, Sumă diferită, TVA diferit, Lipsă în Odoo, Lipsă în arhiva fiscală — accesibil dintr-un meniu dedicat „Discrepanțe bonuri fiscale\" (deschis filtrat pe discrepanțe) sau din butonul statistic al jurnalului. Un bon cu același total dar alt TVA apare acum „TVA diferit\"; pe rândurile „Lipsă în arhiva fiscală\", numărul bonului din comandă apare în „Nr. bon în Z (BF)\", iar idB rămâne gol.",
-      "Raportul „Vânzări TVA pe casă de marcat\" (*Point of Sale → Fiscalizare AMEF → Vânzări TVA pe casă de marcat*): agregă liniile de TVA ale rapoartelor Z deja existente, fără recalculare, filtrabil pe interval de dată, punct de lucru și cotă de TVA, cu vizualizare pivot (implicit) și listă; implicit sunt afișate doar rapoartele Z reconciliate/închise."
+      "Raportul „Vânzări TVA pe casă de marcat\" (*Point of Sale → Fiscalizare AMEF → Vânzări TVA pe casă de marcat*): agregă liniile de TVA ale rapoartelor Z deja existente, fără recalculare, filtrabil pe interval de dată, punct de lucru și cotă de TVA, cu vizualizare pivot (implicit) și listă; implicit sunt afișate doar rapoartele Z reconciliate/închise.",
+      "Preluare automată din e-mail (FiscalWire): aliasul `fiscalwire` (creat de modul; domeniul de alias și rutarea e-mailului se configurează manual per instanță) primește exportul ca atașament. Pentru fiecare aparat din e-mail (după NUI-ul din fișiere) se creează o arhivă fiscală AMEF și se rulează importul; un Z deja importat nu se mai importă a doua oară (e-mailul retrimis rămâne doar în chatter). Dacă NUI-ul nu aparține niciunui punct de vânzare, arhiva rămâne în Ciornă, cu o notă, până se completează NUI-ul pe punctul de vânzare și se apasă „Importă arhiva\". Atașamentele sunt limitate ca număr de fișiere și dimensiune (alias public).",
+      "Notificări la importul din e-mail: utilizatorii din grupul „AMEF: notificări la importul din e-mail\" văd rezultatul în chatterul arhivei și primesc o activitate „De făcut\" când importul are diferențe, Z lipsă, note sau nu s-a putut face. Trimiterea e-mailului se reglează prin parametrul de sistem `l10n_ro_pos_fiscal_compliance.amef_notify_mode` (`never` — implicit, `problems`, `always`), iar crearea activității prin `l10n_ro_pos_fiscal_compliance.amef_notify_activity` (`True`/`False`).",
+      "Tip de plată AMEF pe metoda de plată (`pos.payment.method`): fiecare metodă de plată POS e încadrată într-un tip raportat de aparat (numerar, card, credit, tichete, tichete valorice, voucher, avans, metode moderne, altele), implicit după metoda de numerar/card; reconcilierea plăților se face pe tip."
     ],
     "dependencies": [
+      "mail",
       "point_of_sale",
       "account",
       "l10n_ro",
@@ -19906,7 +19923,7 @@
       "deltatech_pos",
       "l10n_ro_anaf_d394_pos"
     ],
-    "text": "Romania - Conformitate fiscală POS (AMEF)\nl10n_ro_pos_fiscal_compliance\nModulul asigură conformitatea fiscală pentru vânzarea cu amănuntul prin POS, conform OUG 28/1999 privind aparatele de marcat electronice fiscale (AMEF). Completează POS-ul Odoo și driverele de fiscalizare (ex. `deltatech_pos`) cu evidența fiscală cerută în România: urmărirea bonului fiscal pe fiecare comandă, blocarea închiderii sesiunii când există comenzi plătite fără bon emis, raportul Z reconciliat cu vânzările și încasările, returul fiscal legat de bonul inițial și arhivarea jurnalului electronic AMEF. Modulul importă exportul casei de marcat pentru ANAF (o arhivă `.zip` cu fișiere `.p7b` sau un singur `.p7b`, semnate CMS/PKCS7 de aparat), citit după structura ANAF A4200/A4203 din OPANAF 146/2018 și verificat pe exporturi reale Datecs. Recunoaște aparatul după NUI, reconciliază automat, bon cu bon, bonurile cu comenzile din Odoo și completează raportul Z al zilei cu cifrele aparatului: totalul, plățile pe tip și valoarea și TVA-ul pe fiecare cotă, cu diferențele față de Odoo. Modulul oferă și raportul **Vânzări TVA pe casă de marcat** — un sumar pivot/listă peste liniile de TVA ale rapoartelor Z deja existente, pe interval de dată, punct de lucru și cotă de TVA, util pentru verificarea rapidă a încasărilor declarate fiscal pe orice perioadă, comparabil direct cu jurnalul electronic transmis către ANAF. Modulul acoperă latura de conformitate (evidență, blocaj, raport Z, arhivă, import, reconciliere și raportare TVA) peste POS-ul Odoo; comunicarea efectivă cu aparatul fiscal se face printr-un driver opțional, modulul nedepinzând de un driver anume.\nUrmărirea bonului fiscal pe fiecare comandă POS: serie, număr, dată/oră fiscală și stare (de fiscalizat / emis / eroare), cu punct de integrare pentru răspunsul aparatului fiscal.\nBlocarea închiderii sesiunii POS dacă există comenzi plătite fără bon fiscal emis și fără eroare justificată.\nRaportul Z fiscal cu defalcare pe cote TVA și pe metode de plată, reconciliat cu vânzările și încasările din Odoo, evidențiind diferențele.\nReturul fiscal care referențiază bonul inițial.\nArhiva jurnalului electronic AMEF (fișiere pe perioadă și aparat fiscal, cu stări Draft / Parsed / Archived).\nImport automat al arhivei fiscale: butonul „Importă arhiva\" (acceptă un `.zip` sau un singur fișier `.p7b`, fără arhivă) extrage conținutul XML din fiecare fișier `.p7b` (structură CMS/PKCS7 SignedData, prin biblioteca `asn1crypto`, fără shell-out la `openssl` și fără nevoie de certificat sau cheie privată), parsează bonurile fiscale și raportul Z al fiecărei zile.\nParser conform structurii ANAF (OPANAF 146/2018, anexa 2, A4200/A4203): numărul Z, data și NUI-ul se citesc din identificatorii `idR`, `idB`, `idM`; plățile se citesc pe tipul ANAF `tipP` (inclusiv avans în numerar, tichete valorice, metode moderne de plată).\nNUI aparat fiscal (și seria aparatului) pe punctul de vânzare, preluate automat pe jurnal; bonul se potrivește pe aparat, număr bon în Z și zi, iar importul se oprește dacă fișierele vin de la alt aparat. Copia `OPIS_fiscalwire_*.xml`, ilizibilă, se ignoră cu o notă.\nReconciliere a bonurilor cu `pos.order` pe serie + număr bon, cu fallback euristic (dată apropiată + sumă identică, aceeași zi și punct de lucru) doar dacă bonul nu are corespondent cu serie/număr.\nPopulare automată a raportului Z (`l10n.ro.pos.z.report`) din arhivă: totalul declarat al Z-ului din aparat (nu suma bonurilor), plățile declarate pe metodă și defalcarea pe cote declarată de aparat (valoare cu TVA și TVA, cu diferența față de Odoo; pozițiile cu aceeași cotă se adună). Importul completează și raportul Z creat manual fără număr Z, în loc să creeze un duplicat pe aceeași zi și casă; coloanele declarate rămân goale unde aparatul nu a dat date.\nReconciliere strictă a plăților: raportul Z e „Reconciliat\" doar dacă fiecare tip de plată coincide (un plus pe card nu mai compensează un minus pe numerar).\nCoerența internă a fiecărui Z, verificată la import, cu abaterile în notele jurnalului: total Z diferit de suma bonurilor sau a plăților, TVA diferit de suma pe cote, numerotarea bonurilor.\nVerificarea completitudinii perioadei din fișierul OPIS al arhivei: Z-urile lipsă se calculează din intervalul `nrRapI..nrRapF` și apar în câmpul „Rapoarte Z lipsă (OPIS)\" din grupul perioadei.\nRaport de discrepanțe pe bonuri fiscale (`l10n.ro.amef.journal.bon`), cu stări: Reconciliat, Sumă diferită, TVA diferit, Lipsă în Odoo, Lipsă în arhiva fiscală — accesibil dintr-un meniu dedicat „Discrepanțe bonuri fiscale\" (deschis filtrat pe discrepanțe) sau din butonul statistic al jurnalului. Un bon cu același total dar alt TVA apare acum „TVA diferit\"; pe rândurile „Lipsă în arhiva fiscală\", numărul bonului din comandă apare în „Nr. bon în Z (BF)\", iar idB rămâne gol.\nRaportul „Vânzări TVA pe casă de marcat\" (*Point of Sale → Fiscalizare AMEF → Vânzări TVA pe casă de marcat*): agregă liniile de TVA ale rapoartelor Z deja existente, fără recalculare, filtrabil pe interval de dată, punct de lucru și cotă de TVA, cu vizualizare pivot (implicit) și listă; implicit sunt afișate doar rapoartele Z reconciliate/închise."
+    "text": "Romania - Conformitate fiscală POS (AMEF)\nl10n_ro_pos_fiscal_compliance\nModulul asigură conformitatea fiscală pentru vânzarea cu amănuntul prin POS, conform OUG 28/1999 privind aparatele de marcat electronice fiscale (AMEF). Completează POS-ul Odoo și driverele de fiscalizare (ex. `deltatech_pos`) cu evidența fiscală cerută în România: urmărirea bonului fiscal pe fiecare comandă, blocarea închiderii sesiunii când există comenzi plătite fără bon emis, raportul Z reconciliat cu vânzările și încasările, returul fiscal legat de bonul inițial și arhivarea jurnalului electronic AMEF. Modulul importă exportul casei de marcat pentru ANAF (o arhivă `.zip` cu fișiere `.p7b` sau un singur `.p7b`, semnate CMS/PKCS7 de aparat), citit după structura ANAF A4200/A4203 din OPANAF 146/2018 și verificat pe exporturi reale Datecs. Recunoaște aparatul după NUI, reconciliază automat, bon cu bon, bonurile cu comenzile din Odoo și completează raportul Z al zilei cu cifrele aparatului: totalul, plățile pe tip și valoarea și TVA-ul pe fiecare cotă, cu diferențele față de Odoo. Modulul oferă și raportul **Vânzări TVA pe casă de marcat** — un sumar pivot/listă peste liniile de TVA ale rapoartelor Z deja existente, pe interval de dată, punct de lucru și cotă de TVA, util pentru verificarea rapidă a încasărilor declarate fiscal pe orice perioadă, comparabil direct cu jurnalul electronic transmis către ANAF. Exporturile pot fi preluate și automat, din e-mail (alias `fiscalwire`, de ex. de la FiscalWire), cu notificarea utilizatorilor responsabili despre rezultatul importului. Modulul acoperă latura de conformitate (evidență, blocaj, raport Z, arhivă, import, reconciliere și raportare TVA) peste POS-ul Odoo; comunicarea efectivă cu aparatul fiscal se face printr-un driver opțional, modulul nedepinzând de un driver anume.\nUrmărirea bonului fiscal pe fiecare comandă POS: serie, număr, dată/oră fiscală și stare (de fiscalizat / emis / eroare), cu punct de integrare pentru răspunsul aparatului fiscal.\nBlocarea închiderii sesiunii POS dacă există comenzi plătite fără bon fiscal emis și fără eroare justificată.\nRaportul Z fiscal cu defalcare pe cote TVA și pe metode de plată, reconciliat cu vânzările și încasările din Odoo, evidențiind diferențele.\nReturul fiscal care referențiază bonul inițial.\nArhiva jurnalului electronic AMEF (fișiere pe perioadă și aparat fiscal, cu stări Draft / Parsed / Archived).\nImport automat al arhivei fiscale: butonul „Importă arhiva\" (acceptă un `.zip` sau un singur fișier `.p7b`, fără arhivă) extrage conținutul XML din fiecare fișier `.p7b` (structură CMS/PKCS7 SignedData, prin biblioteca `asn1crypto`, fără shell-out la `openssl` și fără nevoie de certificat sau cheie privată), parsează bonurile fiscale și raportul Z al fiecărei zile.\nParser conform structurii ANAF (OPANAF 146/2018, anexa 2, A4200/A4203): numărul Z, data și NUI-ul se citesc din identificatorii `idR`, `idB`, `idM`; plățile se citesc pe tipul ANAF `tipP` (inclusiv avans în numerar, tichete valorice, metode moderne de plată).\nNUI aparat fiscal (și seria aparatului) pe punctul de vânzare, preluate automat pe jurnal; bonul se potrivește pe aparat, număr bon în Z și zi, iar importul se oprește dacă fișierele vin de la alt aparat. Copia `OPIS_fiscalwire_*.xml`, ilizibilă, se ignoră cu o notă.\nReconciliere a bonurilor cu `pos.order` pe serie + număr bon, cu fallback euristic (dată apropiată + sumă identică, aceeași zi și punct de lucru) doar dacă bonul nu are corespondent cu serie/număr.\nPopulare automată a raportului Z (`l10n.ro.pos.z.report`) din arhivă: totalul declarat al Z-ului din aparat (nu suma bonurilor), plățile declarate pe metodă și defalcarea pe cote declarată de aparat (valoare cu TVA și TVA, cu diferența față de Odoo; pozițiile cu aceeași cotă se adună). Importul completează și raportul Z creat manual fără număr Z, în loc să creeze un duplicat pe aceeași zi și casă; coloanele declarate rămân goale unde aparatul nu a dat date.\nReconciliere strictă a plăților: raportul Z e „Reconciliat\" doar dacă fiecare tip de plată coincide (un plus pe card nu mai compensează un minus pe numerar).\nCoerența internă a fiecărui Z, verificată la import, cu abaterile în notele jurnalului: total Z diferit de suma bonurilor sau a plăților, TVA diferit de suma pe cote, numerotarea bonurilor.\nVerificarea completitudinii perioadei din fișierul OPIS al arhivei: Z-urile lipsă se calculează din intervalul `nrRapI..nrRapF` și apar în câmpul „Rapoarte Z lipsă (OPIS)\" din grupul perioadei.\nRaport de discrepanțe pe bonuri fiscale (`l10n.ro.amef.journal.bon`), cu stări: Reconciliat, Sumă diferită, TVA diferit, Lipsă în Odoo, Lipsă în arhiva fiscală — accesibil dintr-un meniu dedicat „Discrepanțe bonuri fiscale\" (deschis filtrat pe discrepanțe) sau din butonul statistic al jurnalului. Un bon cu același total dar alt TVA apare acum „TVA diferit\"; pe rândurile „Lipsă în arhiva fiscală\", numărul bonului din comandă apare în „Nr. bon în Z (BF)\", iar idB rămâne gol.\nRaportul „Vânzări TVA pe casă de marcat\" (*Point of Sale → Fiscalizare AMEF → Vânzări TVA pe casă de marcat*): agregă liniile de TVA ale rapoartelor Z deja existente, fără recalculare, filtrabil pe interval de dată, punct de lucru și cotă de TVA, cu vizualizare pivot (implicit) și listă; implicit sunt afișate doar rapoartele Z reconciliate/închise.\nPreluare automată din e-mail (FiscalWire): aliasul `fiscalwire` (creat de modul; domeniul de alias și rutarea e-mailului se configurează manual per instanță) primește exportul ca atașament. Pentru fiecare aparat din e-mail (după NUI-ul din fișiere) se creează o arhivă fiscală AMEF și se rulează importul; un Z deja importat nu se mai importă a doua oară (e-mailul retrimis rămâne doar în chatter). Dacă NUI-ul nu aparține niciunui punct de vânzare, arhiva rămâne în Ciornă, cu o notă, până se completează NUI-ul pe punctul de vânzare și se apasă „Importă arhiva\". Atașamentele sunt limitate ca număr de fișiere și dimensiune (alias public).\nNotificări la importul din e-mail: utilizatorii din grupul „AMEF: notificări la importul din e-mail\" văd rezultatul în chatterul arhivei și primesc o activitate „De făcut\" când importul are diferențe, Z lipsă, note sau nu s-a putut face. Trimiterea e-mailului se reglează prin parametrul de sistem `l10n_ro_pos_fiscal_compliance.amef_notify_mode` (`never` — implicit, `problems`, `always`), iar crearea activității prin `l10n_ro_pos_fiscal_compliance.amef_notify_activity` (`True`/`False`).\nTip de plată AMEF pe metoda de plată (`pos.payment.method`): fiecare metodă de plată POS e încadrată într-un tip raportat de aparat (numerar, card, credit, tichete, tichete valorice, voucher, avans, metode moderne, altele), implicit după metoda de numerar/card; reconcilierea plăților se face pe tip."
   },
   {
     "path": "l10n_ro_pos_fiscal_compliance_ecr/index.md",
@@ -20032,7 +20049,7 @@
   {
     "path": "l10n_ro_pos_returns/index.md",
     "module": "l10n_ro_pos_returns",
-    "version": "19.0.1.1.10",
+    "version": "19.0.1.1.11",
     "github": "[https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_returns](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_returns)",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_pos_returns",
     "last_ingest": "2026-09-11",
@@ -20344,7 +20361,7 @@
   {
     "path": "l10n_ro_residual_balance_writeoff/index.md",
     "module": "l10n_ro_residual_balance_writeoff",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_residual_balance_writeoff",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_residual_balance_writeoff",
     "last_ingest": "2026-10-09",
@@ -20630,7 +20647,7 @@
   {
     "path": "l10n_ro_saft_validator/index.md",
     "module": "l10n_ro_saft_validator",
-    "version": "19.0.1.3.5",
+    "version": "19.0.1.3.6",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_saft_validator",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_saft_validator",
     "last_ingest": null,
@@ -21049,7 +21066,7 @@
   {
     "path": "l10n_ro_stock_consignment/index.md",
     "module": "l10n_ro_stock_consignment",
-    "version": "19.0.1.2.2",
+    "version": "19.0.1.2.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_consignment",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_consignment",
     "last_ingest": null,
@@ -21088,7 +21105,7 @@
   {
     "path": "l10n_ro_stock_consignment_d390/index.md",
     "module": "l10n_ro_stock_consignment_d390",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_consignment_d390",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_consignment_d390",
     "last_ingest": "2026-10-20",
@@ -21291,22 +21308,23 @@
   {
     "path": "l10n_ro_stock_pack_cmp/index.md",
     "module": "l10n_ro_stock_pack_cmp",
-    "version": "19.0.1.4.0",
+    "version": "19.0.1.5.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_pack_cmp",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_pack_cmp",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-12",
     "friendly_name": "Romania - Pachet valorizare stocuri CMP",
-    "summary": "Acest modul este un „pachet\" (bundle) care instalează dintr-o singură mișcare toate modulele necesare pentru gestiunea contabilă a stocurilor în România cu metoda costului mediu ponderat (CMP / AVCO), conform OMFP 1802/2014 pct. 96 (metodele de evaluare la ieșire) și pct. 276–291 (evaluarea stocurilor, inventarul permanent). La instalare, configurează automat companiile românești pe metoda de cost „Average Cost\" cu valorizare perpetuă, astfel încât un consultant Terrabit poate porni un client pe fluxul complet de stoc CMP fără să instaleze și să configureze manual șase module separate.",
+    "summary": "Acest modul este un „pachet\" (bundle) care instalează dintr-o singură mișcare modulele necesare pentru gestiunea contabilă a stocurilor în România cu metoda costului mediu ponderat (CMP / AVCO), conform OMFP 1802/2014 pct. 96 (metodele de evaluare la ieșire) și pct. 276–291 (evaluarea stocurilor, inventarul permanent). La instalare, configurează automat companiile românești pe metoda de cost „Average Cost\" cu valorizare perpetuă, astfel încât un consultant Terrabit poate porni un client pe fluxul de stoc CMP fără să instaleze și să configureze manual mai multe module separate.",
     "features": [
-      "Instalează într-un singur pas toate modulele necesare pentru evidența stocurilor pe CMP: recalcul lunar CMP, dată contabilă pe operațiile de stoc, integritatea datelor (blocarea modificării mișcărilor validate și a stocului negativ), fișa de magazie și balanța analitică, gestiuni contabile de stoc (OMFP 2861/2009) și note contabile de inventariere.",
+      "Instalează într-un singur pas modulele necesare pentru evidența stocurilor pe CMP: dată contabilă pe operațiile de stoc, integritatea datelor (blocarea modificării mișcărilor validate și a stocului negativ), fișa de magazie și balanța analitică, gestiuni contabile de stoc (OMFP 2861/2009) și note contabile de inventariere.",
+      "Recalculul lunar CMP (`l10n_ro_stock_cmp_periodic`) nu mai face parte din pachet: nu poate fi instalat împreună cu `deltatech_obyc` (determinarea conturilor prin OBYC). Pe bazele fără OBYC se instalează separat.",
       "Configurare automată la instalare (`post_init_hook`): pe companiile cu țara fiscală România, setează metoda de cost implicită pe *Average Cost (AVCO)* și valorizarea pe *perpetuă (real time)*; valorile se propagă ca implicite pentru categoriile de produse noi — categoriile existente nu sunt modificate, decizia rămânând a consultantului.",
       "Excludere reciprocă declarată în manifest cu `l10n_ro_stock_pack_fifo`: nu pot coexista pe aceeași bază de date, conform principiului permanenței metodelor (OMFP 1802 pct. 287 alin. (1)) — se alege o singură metodă de evaluare per bază de date.",
-      "Documentație de utilizare (`readme/USAGE.md`) cu o monografie contabilă completă a fluxului de stoc pe CMP (achiziție cu factură, vânzare, retur la furnizor, achiziție pe aviz, inventariere, corecție CMP periodic la închiderea lunii), verificată automat de testul `tests/test_stock_flow.py`."
+      "Pași de configurare după instalare: în Setări → Inventar se bifează *Recepție fără factură (371 = 408)* cu *Cont 408 implicit* și se setează conturile de plus și de minus de inventar (recomandat 607 pentru mărfuri; fără ele asistentul de note de inventariere refuză generarea); categoriile de produse se completează cu *Cont stoc* (371 pentru mărfuri).",
+      "Documentație de utilizare (`readme/USAGE.md`) cu o monografie contabilă a fluxului de stoc pe CMP (achiziție cu recepție și factură pe 408, vânzare cu descărcare 607 = 371 la facturare, retur la furnizor cu stornare în roșu, achiziție pe aviz, inventariere cu minus), verificată automat de testul `tests/test_stock_flow.py`; fluxul detaliat pas cu pas rămâne în fișa consultant."
     ],
     "dependencies": [
       "purchase_stock",
       "sale_stock",
-      "l10n_ro_stock_cmp_periodic",
       "l10n_ro_stock_posting_date",
       "l10n_ro_stock_constraints",
       "l10n_ro_stock_sheet",
@@ -21317,10 +21335,11 @@
       "l10n_ro_stock_pack_fifo",
       "excludes",
       "l10n_ro_stock_cmp_periodic",
+      "deltatech_obyc",
       "l10n_ro_stock_gestiune",
       "l10n_ro_inventory_closing"
     ],
-    "text": "Romania - Pachet valorizare stocuri CMP\nl10n_ro_stock_pack_cmp\nAcest modul este un „pachet\" (bundle) care instalează dintr-o singură mișcare toate modulele necesare pentru gestiunea contabilă a stocurilor în România cu metoda costului mediu ponderat (CMP / AVCO), conform OMFP 1802/2014 pct. 96 (metodele de evaluare la ieșire) și pct. 276–291 (evaluarea stocurilor, inventarul permanent). La instalare, configurează automat companiile românești pe metoda de cost „Average Cost\" cu valorizare perpetuă, astfel încât un consultant Terrabit poate porni un client pe fluxul complet de stoc CMP fără să instaleze și să configureze manual șase module separate.\nInstalează într-un singur pas toate modulele necesare pentru evidența stocurilor pe CMP: recalcul lunar CMP, dată contabilă pe operațiile de stoc, integritatea datelor (blocarea modificării mișcărilor validate și a stocului negativ), fișa de magazie și balanța analitică, gestiuni contabile de stoc (OMFP 2861/2009) și note contabile de inventariere.\nConfigurare automată la instalare (`post_init_hook`): pe companiile cu țara fiscală România, setează metoda de cost implicită pe *Average Cost (AVCO)* și valorizarea pe *perpetuă (real time)*; valorile se propagă ca implicite pentru categoriile de produse noi — categoriile existente nu sunt modificate, decizia rămânând a consultantului.\nExcludere reciprocă declarată în manifest cu `l10n_ro_stock_pack_fifo`: nu pot coexista pe aceeași bază de date, conform principiului permanenței metodelor (OMFP 1802 pct. 287 alin. (1)) — se alege o singură metodă de evaluare per bază de date.\nDocumentație de utilizare (`readme/USAGE.md`) cu o monografie contabilă completă a fluxului de stoc pe CMP (achiziție cu factură, vânzare, retur la furnizor, achiziție pe aviz, inventariere, corecție CMP periodic la închiderea lunii), verificată automat de testul `tests/test_stock_flow.py`."
+    "text": "Romania - Pachet valorizare stocuri CMP\nl10n_ro_stock_pack_cmp\nAcest modul este un „pachet\" (bundle) care instalează dintr-o singură mișcare modulele necesare pentru gestiunea contabilă a stocurilor în România cu metoda costului mediu ponderat (CMP / AVCO), conform OMFP 1802/2014 pct. 96 (metodele de evaluare la ieșire) și pct. 276–291 (evaluarea stocurilor, inventarul permanent). La instalare, configurează automat companiile românești pe metoda de cost „Average Cost\" cu valorizare perpetuă, astfel încât un consultant Terrabit poate porni un client pe fluxul de stoc CMP fără să instaleze și să configureze manual mai multe module separate.\nInstalează într-un singur pas modulele necesare pentru evidența stocurilor pe CMP: dată contabilă pe operațiile de stoc, integritatea datelor (blocarea modificării mișcărilor validate și a stocului negativ), fișa de magazie și balanța analitică, gestiuni contabile de stoc (OMFP 2861/2009) și note contabile de inventariere.\nRecalculul lunar CMP (`l10n_ro_stock_cmp_periodic`) nu mai face parte din pachet: nu poate fi instalat împreună cu `deltatech_obyc` (determinarea conturilor prin OBYC). Pe bazele fără OBYC se instalează separat.\nConfigurare automată la instalare (`post_init_hook`): pe companiile cu țara fiscală România, setează metoda de cost implicită pe *Average Cost (AVCO)* și valorizarea pe *perpetuă (real time)*; valorile se propagă ca implicite pentru categoriile de produse noi — categoriile existente nu sunt modificate, decizia rămânând a consultantului.\nExcludere reciprocă declarată în manifest cu `l10n_ro_stock_pack_fifo`: nu pot coexista pe aceeași bază de date, conform principiului permanenței metodelor (OMFP 1802 pct. 287 alin. (1)) — se alege o singură metodă de evaluare per bază de date.\nPași de configurare după instalare: în Setări → Inventar se bifează *Recepție fără factură (371 = 408)* cu *Cont 408 implicit* și se setează conturile de plus și de minus de inventar (recomandat 607 pentru mărfuri; fără ele asistentul de note de inventariere refuză generarea); categoriile de produse se completează cu *Cont stoc* (371 pentru mărfuri).\nDocumentație de utilizare (`readme/USAGE.md`) cu o monografie contabilă a fluxului de stoc pe CMP (achiziție cu recepție și factură pe 408, vânzare cu descărcare 607 = 371 la facturare, retur la furnizor cu stornare în roșu, achiziție pe aviz, inventariere cu minus), verificată automat de testul `tests/test_stock_flow.py`; fluxul detaliat pas cu pas rămâne în fișa consultant."
   },
   {
     "path": "l10n_ro_stock_pack_fifo/index.md",
@@ -21477,7 +21496,7 @@
   {
     "path": "l10n_ro_stock_report/index.md",
     "module": "l10n_ro_stock_report",
-    "version": "19.0.2.10.0",
+    "version": "19.0.2.10.1",
     "github": "https://github.com/terrabit-ro/l10n-romania/tree/19.0/l10n_ro_stock_report",
     "local_path": "odoo-addons/l10n-romania-oca/l10n_ro_stock_report",
     "last_ingest": "2026-10-22",

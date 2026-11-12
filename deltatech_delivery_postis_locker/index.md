@@ -1,10 +1,11 @@
 # Postis Shipping Locker (localizat la `deltatech_delivery_postis_locker/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_postis_locker`
-- **Versiune:** `19.0.1.0.5`
+- **Versiune:** `19.0.1.0.6`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_postis_locker
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_postis_locker`
 - **Ultima Ingestie:** `2026-09-03`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

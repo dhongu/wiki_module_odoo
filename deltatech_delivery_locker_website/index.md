@@ -1,10 +1,11 @@
 # Delivery in locker - website (localizat la `deltatech_delivery_locker_website/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_locker_website`
-- **Versiune:** `19.0.0.0.13`
+- **Versiune:** `19.0.0.0.14`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_locker_website
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_locker_website`
 - **Ultima Ingestie:** `2026-08-20`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
