@@ -6,7 +6,7 @@ This is an append-only log of all operations performed on the wiki.
 
 ## [2026-11-13] Ingestie deltatech_mrp_workorder_qty
 
-- **Acțiune:** pagină nouă pentru modulul `deltatech_mrp_workorder_qty` (19.0.1.0.0, bitshop_ent): jurnal al cantității procesate pe operație, cu dialog de înregistrare din formularul comenzii de lucru și din Shop Floor, linie „Procesat" pe cardul operației și limitare față de operațiile precedente. Modulul e încă în PR bitshop_ent#673 (draft), deci linkul GitHub va funcționa după merge.
+- **Acțiune:** pagină nouă pentru modulul `deltatech_mrp_workorder_qty` (19.0.1.0.0, bitshop_ent): jurnal al cantității procesate pe operație, cu dialog de înregistrare din formularul comenzii de lucru și din Shop Floor, linie „Procesat" pe cardul operației și limitare față de operațiile precedente. Modulul a intrat în bitshop_ent (19.0) prin PR #673.
 - **Sursă:** `__manifest__.py`, `readme/DESCRIPTION.md`, `readme/USAGE.md`, `FISA_CONSULTANT.md` și cod.
 - **Dependențe/Conexiuni:** `mrp_workorder` (Enterprise, fără pagină wiki); nicio conexiune funcțională cu alte module documentate.
 - **Fișiere actualizate:** `deltatech_mrp_workorder_qty/index.md`, `deltatech_mrp_workorder_qty/FISA_CONSULTANT.md`, `deltatech_mrp_workorder_qty/screenshots/` (6 capturi), `index.md`, `.index/chunks.json`.
