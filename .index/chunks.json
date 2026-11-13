@@ -7004,6 +7004,33 @@
     "text": "MRP Validation Date\ndeltatech_mrp_validation_date\nModulul înregistrează data exactă la care o comandă de fabricație este validată (marcată ca „Efectuată\"), oferind managerilor de producție un jurnal de audit sigur pentru momentul finalizării comenzilor.\nAdaugă un câmp Validation Date (Dată Validare) pe formularul comenzii de fabricație, în antet, înaintea câmpului Responsabil, completat automat când operatorul apasă Mark as Done (Marchează ca Efectuată).\nCâmpul este needitabil: este setat de sistem și nu poate fi modificat manual, ceea ce garantează integritatea datelor.\nData se scrie doar pe comenzile care au ajuns efectiv în starea „Efectuată\" (nu și când Odoo deschide întâi un wizard de backorder sau de consum și comanda rămâne neterminată după anularea lui), în fusul orar al utilizatorului; data unei comenzi deja efectuate se păstrează.\nFuncționează alături de câmpurile standard de planificare MRP (dată programată, dată finalizare) pentru a oferi o cronologie completă a producției."
   },
   {
+    "path": "deltatech_mrp_workorder_qty/index.md",
+    "module": "deltatech_mrp_workorder_qty",
+    "version": "19.0.1.0.0",
+    "github": "`https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_mrp_workorder_qty`",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_mrp_workorder_qty",
+    "last_ingest": "2026-11-13",
+    "friendly_name": "Work Order Processed Quantity",
+    "summary": "Modulul urmărește cantitatea procesată pe fiecare comandă de lucru a unui ordin de producție, pe tranșe. În Odoo standard, o singură cantitate de produs este comună tuturor operațiilor; aici fiecare operație își ține propriul jurnal (de exemplu 10 bucăți tăiate în prima zi, 10 vopsite și alte 10 tăiate a doua zi). Astfel se vede exact câte piese au trecut prin fiecare pas, fără mișcări de stoc pentru fiecare tranșă.",
+    "features": [
+      "Înregistrarea cantității procesate pe operație, din formularul comenzii de lucru (butonul Register Quantity) sau din meniul operației din Shop Floor (Register Processed Quantity).",
+      "Fiecare înregistrare este logată cu dată, utilizator și notă; valorile negative corectează greșelile.",
+      "Limitare: o operație nu poate depăși cantitatea procesată de operațiile de care depinde și nici cantitatea ordinului de producție. Pe trasee liniare operațiile se înlănțuie automat; pe trasee neliniare e nevoie de *Work Order Dependencies* și de dependența setată pe fiecare operație (fără dependență, limita nu se aplică).",
+      "Coloane noi, opționale, în lista comenzilor de lucru: Processed Quantity și Remaining to Process.",
+      "Fila Processed Quantity pe comanda de lucru listează toate înregistrările.",
+      "Cardul operației din Shop Floor afișează cantitatea procesată sub cea planificată.",
+      "Operația nu se marchează *Mark as Done* până nu este procesată întreaga cantitate."
+    ],
+    "dependencies": [
+      "mrp_workorder"
+    ],
+    "connections": [
+      "mrp",
+      "mrp_workorder"
+    ],
+    "text": "Work Order Processed Quantity\ndeltatech_mrp_workorder_qty\nModulul urmărește cantitatea procesată pe fiecare comandă de lucru a unui ordin de producție, pe tranșe. În Odoo standard, o singură cantitate de produs este comună tuturor operațiilor; aici fiecare operație își ține propriul jurnal (de exemplu 10 bucăți tăiate în prima zi, 10 vopsite și alte 10 tăiate a doua zi). Astfel se vede exact câte piese au trecut prin fiecare pas, fără mișcări de stoc pentru fiecare tranșă.\nÎnregistrarea cantității procesate pe operație, din formularul comenzii de lucru (butonul Register Quantity) sau din meniul operației din Shop Floor (Register Processed Quantity).\nFiecare înregistrare este logată cu dată, utilizator și notă; valorile negative corectează greșelile.\nLimitare: o operație nu poate depăși cantitatea procesată de operațiile de care depinde și nici cantitatea ordinului de producție. Pe trasee liniare operațiile se înlănțuie automat; pe trasee neliniare e nevoie de *Work Order Dependencies* și de dependența setată pe fiecare operație (fără dependență, limita nu se aplică).\nColoane noi, opționale, în lista comenzilor de lucru: Processed Quantity și Remaining to Process.\nFila Processed Quantity pe comanda de lucru listează toate înregistrările.\nCardul operației din Shop Floor afișează cantitatea procesată sub cea planificată.\nOperația nu se marchează *Mark as Done* până nu este procesată întreaga cantitate."
+  },
+  {
     "path": "deltatech_nap/index.md",
     "module": "deltatech_nap",
     "version": "19.0.1.10.5",

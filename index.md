@@ -223,6 +223,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_mrp_simple](deltatech_mrp_simple/index.md): Producție simplă fără listă de materiale: componente consumate, produse rezultate, ridicări de stoc și cost calculat automat.
 - [deltatech_mrp_simple_barcode](deltatech_mrp_simple_barcode/index.md): Extinde producția simplă cu scanare de coduri de bare pentru adăugarea/incrementarea rapidă a produselor consumate.
 - [deltatech_mrp_validation_date](deltatech_mrp_validation_date/index.md): Înregistrează într-un câmp needitabil data la care o comandă de fabricație este marcată ca efectuată, ca jurnal de audit al finalizării.
+- [deltatech_mrp_workorder_qty](deltatech_mrp_workorder_qty/index.md): Urmărește cantitatea procesată pe fiecare comandă de lucru, pe tranșe, inclusiv din Shop Floor, cu limitare față de operațiile precedente și față de ordinul de producție.
 - [deltatech_nap](deltatech_nap/index.md): Unealtă rapidă de determinare a necesarului de achiziție: raport de prognoză stoc cu cerere medie, stoc de siguranță statistic, clasificare XYZ, metode de prognoză și reaprovizionare consolidată pe furnizor, plus raport de stoc cu mișcare lentă.
 - [deltatech_nap_website](deltatech_nap_website/index.md): Adaugă categoria publică de produse în raportul NAP (Necesar Achiziții Produse), pentru filtrare și grupare pe categorii.
 - [deltatech_no_quick_create](deltatech_no_quick_create/index.md): Dezactivează global crearea rapidă (quick create) din câmpurile Many2one pentru a preveni înregistrările incomplete.

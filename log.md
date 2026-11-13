@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-13] Ingestie deltatech_mrp_workorder_qty
+
+- **Acțiune:** pagină nouă pentru modulul `deltatech_mrp_workorder_qty` (19.0.1.0.0, bitshop_ent): jurnal al cantității procesate pe operație, cu dialog de înregistrare din formularul comenzii de lucru și din Shop Floor, linie „Procesat" pe cardul operației și limitare față de operațiile precedente. Modulul e încă în PR bitshop_ent#673 (draft), deci linkul GitHub va funcționa după merge.
+- **Sursă:** `__manifest__.py`, `readme/DESCRIPTION.md`, `readme/USAGE.md`, `FISA_CONSULTANT.md` și cod.
+- **Dependențe/Conexiuni:** `mrp_workorder` (Enterprise, fără pagină wiki); nicio conexiune funcțională cu alte module documentate.
+- **Fișiere actualizate:** `deltatech_mrp_workorder_qty/index.md`, `deltatech_mrp_workorder_qty/FISA_CONSULTANT.md`, `deltatech_mrp_workorder_qty/screenshots/` (6 capturi), `index.md`, `.index/chunks.json`.
+
 ## [2026-11-13] Sincronizare automată de noapte
 
 - **Versiuni aduse la zi** (16): `deltatech_advanced_planner 19.0.1.14.2 → 19.0.1.14.3`, `deltatech_delivery_dpd 19.0.0.7.4 → 19.0.0.7.6`, `deltatech_obyc 19.0.1.0.22 → 19.0.1.0.23`, `deltatech_product_code 19.0.1.2.1 → 19.0.1.2.2`, `deltatech_product_labels 19.0.1.3.2 → 19.0.1.3.4`, `deltatech_purchase_price 19.0.1.2.14 → 19.0.1.2.15`, `deltatech_sale_margin 19.0.1.3.4 → 19.0.1.3.5`, `deltatech_vendor_products 19.0.1.4.2 → 19.0.1.4.3`, `deltatech_vendor_products_kramp 19.0.1.2.3 → 19.0.1.2.4`, `deltatech_website_shop_snippets 19.0.1.1.15 → 19.0.1.1.17`, `deltatech_website_vat_validation 19.0.0.2.1 → 19.0.0.3.0`, `l10n_ro_cash_register 19.0.1.4.3 → 19.0.1.5.0`, `l10n_ro_saft_export_fix 19.0.1.2.2 → 19.0.1.2.3`, `l10n_ro_stock_gestiune 19.0.3.1.7 → 19.0.3.1.8`, `l10n_ro_stock_obyc 19.0.1.0.5 → 19.0.1.0.6`, `l10n_ro_website_anaf 19.0.1.2.1 → 19.0.1.2.2`.
