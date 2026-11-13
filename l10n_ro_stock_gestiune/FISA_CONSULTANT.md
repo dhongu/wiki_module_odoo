@@ -325,6 +325,17 @@ recepție direct în B: validarea se oprește cu mesajul de mai jos.
 
 ![Recepție direct în Gestiunea B: blocată](screenshots/12_blocare_receptie_gestiune_b.png)
 
+**Excepție: transferul unui document care își postează singur nota.** Un transfer validat de alt document (de
+exemplu reclasificarea stocului, `deltatech_stock_reclass` 19.0.1.0.2 sau mai nou, care pune în context cheia
+`skip_stock_valuation_entry`) **nu primește nota de transfer inter-gestiune** și **nu e blocat de regula strictă**
+a conturilor de transfer (de la versiunea 19.0.3.1.8): documentul își postează propria notă, cu conturile din
+regula lui. Regula trebuie să aibă ca sursă contul gestiunii sursă și ca destinație contul în care ajunge marfa
+(contul gestiunii destinație sau alt cont de stoc); atunci, **doar când destinația este contul gestiunii destinație** (371.B), nota documentului este chiar nota de transfer a
+gestiunii; cu alt cont de stoc (ex. 303) este o reclasificare, nu nota de transfer. Fișa fiecărei gestiuni o arată pe contul ei. Verificarea contului gestiunii față de contul
+categoriei (pasul de mai sus, blocarea ieșirilor) rămâne activă și pentru aceste transferuri.
+
+**Atenție la regula documentului.** Dacă regula este pe contul categoriei (ex. 371 → 303), iar gestiunea sursă are cont propriu (371.A), creditul cade pe 371, nu pe 371.A: valoarea rămâne pe contul gestiunii sursă pentru o marfă care nu mai există fizic. Documentul nu verifică potrivirea regulii cu conturile gestiunilor, deci după validare verificați în balanța analitică (pasul 5) că **Diferența** este 0 pe fiecare cont de gestiune. Dacă una dintre gestiuni este **subunitate cu contabilitate proprie**, nota de decontare 481 / 482 nu se generează pentru aceste mișcări: nu faceți reclasificarea peste o astfel de gestiune; mutarea între unitate și subunitate se face cu transferul obișnuit, care postează 481 / 482.
+
 ### Pasul 5 — Verificarea valorii: balanța analitică a stocurilor (cantitate + valoare)
 
 Meniu: **Inventar → Raportare → Balanță analitică stocuri** (din modulul `l10n_ro_stock_sheet`).
@@ -389,6 +400,11 @@ limitările).
 - Transfer inter-gestiune cu conturi diferite: direct `371.2 = 371.1`; prin tranzit `371.T = 371.1`
   la plecare și `371.2 = 371.T` la sosire; cu o subunitate cu contabilitate proprie `481 = 371.1` și
   `371.2 = 481`. Valoarea totală a stocului nu se modifică.
+- Mișcările unui document care își postează singur nota (de exemplu reclasificarea stocului, din
+  `deltatech_stock_reclass` 19.0.1.0.2 sau mai nou, cu cheia de context `skip_stock_valuation_entry`) nu primesc
+  nota de transfer inter-gestiune și nu sunt blocate de regula strictă a conturilor de transfer (de la versiunea
+  19.0.3.1.8): documentul își postează propria notă, cu conturile din regula lui, iar balanța analitică și fișa
+  de magazie pe gestiune (pasul 5) citesc conturile din nota documentului.
 - Balanța de stocuri pe cantitate + valoare se construiește din mișcările de stoc; liniile notelor
   contabile nu poartă cantitatea.
 
@@ -464,6 +480,7 @@ Ce rămâne manual: configurarea conturilor pe gestiune/companie, verificarea so
 - [ ] Transferul direct A→B cu conturi diferite generează nota `371.2 = 371.1`, fără 481.
 - [ ] Transferul prin tranzit e blocat fără cont de tranzit pe locație (regula strictă) și, după configurare, trece prin 371.T, care se închide la zero la sosire.
 - [ ] După transfer, valoarea ieșită din contul gestiunii sursă = valoarea intrată în contul destinației; totalul stocului e neschimbat.
+- [ ] Un transfer între gestiuni validat de un document care își postează singur nota (ex. reclasificarea stocului) nu primește nota de transfer a gestiunii, nici pe regula strictă fără cont de transfer: în jurnal apare o singură notă, cea a documentului.
 - [ ] Balanța analitică a stocurilor are *Diferența* 0 pe total și pe fiecare cont de gestiune. Filtrată pe gestiune, transferul are cantitate și valoare.
 
 ## 9. Mesaje de eroare frecvente
@@ -473,6 +490,7 @@ Ce rămâne manual: configurarea conturilor pe gestiune/companie, verificarea so
 | „Transfer inter-gestiune blocat: locația de tranzit … nu are cont de tranzit …” | transfer prin tranzit, regula strictă activă, fără **Cont de stoc pentru tranzit** pe locația de tranzit | completați contul (ex. 371.T) pe locația de tranzit (5.3) sau transferați direct între gestiuni |
 | „Transfer inter-gestiune blocat: … implică o subunitate cu contabilitate proprie, dar nu e configurat un cont de transfer …” | una dintre gestiuni e marcată *Subunitate cu contabilitate proprie*, fără cont 481/482 | configurați **Cont transfer între gestiuni** pe gestiunea subunității |
 | „Gestiunea … are cont de stoc propriu …, diferit de contul de stoc … al produsului …” | recepție sau ieșire (vânzare, consum, inventar, casare, retur) direct pe o gestiune cu cont propriu diferit de contul categoriei | recepționați în gestiunea cu contul categoriei și mutați marfa prin transfer; pentru vânzare, transferați-o întâi înapoi |
+| „Transfer inter-gestiune blocat: …” la un transfer al unui document care își postează singur nota (ex. reclasificarea stocului) | versiune a modulului sub 19.0.3.1.8: transferul cu cheia `skip_stock_valuation_entry` era încă tratat ca transfer inter-gestiune | actualizați `l10n_ro_stock_gestiune` la 19.0.3.1.8 sau mai nou |
 | „Locația internă … nu are o gestiune contabilă asociată — necesară pentru validarea mișcărilor de stoc valorizate.” | setarea **Necesită gestiune contabilă** e activă, iar locația nu are gestiune | asociați locația la o gestiune (5.3) |
 | „Gestiunea … nu este validă la … (inactivă sau în afara perioadei de valabilitate).” | setarea **Necesită gestiune contabilă** e activă, iar gestiunea locației e inactivă sau în afara perioadei ei de valabilitate la data mișcării | reactivați gestiunea sau corectați-i perioada de valabilitate |
 | Soldul 408 pe furnizor nu e 0 după facturare, deși contul 408 are sold 0 | recepții contate înainte de versiunea 19.0.3.1.0, cu linia 408 fără partener | completați partenerul pe liniile 408 vechi (notă de reclasificare pe furnizor) |

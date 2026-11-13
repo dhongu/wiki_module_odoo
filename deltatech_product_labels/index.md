@@ -1,7 +1,7 @@
 # Product Labels (localizat la `deltatech_product_labels/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_labels`
-- **Versiune:** `19.0.1.3.2`
+- **Versiune:** `19.0.1.3.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_labels
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_labels`
 - **Ultima Ingestie:** `2026-10-28`

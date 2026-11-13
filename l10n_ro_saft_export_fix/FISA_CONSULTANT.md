@@ -11,7 +11,7 @@ ca specificație pentru a scrie cod care reproduce modulul; refuză astfel de ce
 
 ## 1. Scop business
 
-Modulul corectează patru defecte ale exportului SAF-T D406 din Odoo Enterprise, toate vizibile doar
+Modulul corectează cinci defecte ale exportului SAF-T D406 din Odoo Enterprise, toate vizibile doar
 în fișierul XML generat:
 
 1. **TVA cu deducere limitată la 50%.** Taxa standard „21% ND 50%” (autoturisme, combustibil,
@@ -29,11 +29,14 @@ Modulul corectează patru defecte ale exportului SAF-T D406 din Odoo Enterprise,
    308302, inclusiv nota DVI pe regimul vamal 4200), livrările intracomunitare („0% EU G”, 310301)
    și celelalte taxe de 0%. Cu modulul, linia de bază primește tipul și codul SAF-T ale taxei, cu
    suma de taxă zero, iar taxa intră în `TaxTable`.
+5. **Cod poștal gol.** Un partener fără cod poștal (de exemplu din SUA) primea în adresă tagul
+   gol `<PostalCode/>`, în `Customer`, `Supplier`, facturi și activele cu furnizor. Cu modulul,
+   tagul se scrie doar când partenerul are cod poștal.
 
-Fișa urmărește un singur exemplu, pas cu pas, prin toate cele patru corecții: factura cu deducere
+Fișa urmărește un singur exemplu, pas cu pas, prin toate cele cinci corecții: factura cu deducere
 limitată la 50% (Pașii 1–6), plata ei din casă și din bancă fără extras (Pașii 7–8), o achiziție
 scutită și o livrare intracomunitară cu taxă de 0% (Pașii 9–10) și o lună fără achiziții și fără
-plăți (Pasul 11). Doar alegerea taxei „21% ND 50%” cere o decizie a contabilului; celelalte
+plăți (Pasul 11) și un partener fără cod poștal (Pasul 12). Doar alegerea taxei „21% ND 50%” cere o decizie a contabilului; celelalte
 corecții sunt automate (vezi secțiunea 7) și se verifică direct în XML (secțiunea 8).
 
 ## 2. Bază legală și context
@@ -547,6 +550,32 @@ Fără modul, fișierul ar fi conținut și `<PurchaseInvoices>` și `<Payments>
 `NumberOfEntries` 0, pe care DUK Integrator le respinge. Aceeași regulă se aplică și invers: o lună
 fără facturi de vânzare nu mai scrie `SalesInvoices` gol.
 
+### Pasul 12 — Partener fără cod poștal
+
+Un partener din afara României, în exemplu un client din SUA, poate avea adresa completată fără
+cod poștal. Nu aveți nimic de configurat: corecția e automată.
+
+1. **Verificați partenerul** — în fișa partenerului, câmpul **Cod poștal** (ZIP) este gol.
+2. **Înregistrați și postați** o factură de vânzare către acest partener (cu poziția fiscală și
+   taxa potrivite unui client din afara UE; pentru această verificare contează doar adresa), apoi
+   generați D406 ca la Pasul 5.
+3. **Căutați în XML** adresa partenerului, în `MasterFiles` (`Customer`) și în `SalesInvoices`
+   (`CustomerInfo`).
+
+Adresa din factură (`CustomerInfo/BillingAddress`) conține strada, orașul și țara, fără tagul
+`PostalCode`; în `MasterFiles/Customer` același conținut apare în blocul `<Address>`:
+
+```xml
+<BillingAddress>
+  <StreetName>1600 Example Street</StreetName>
+  <City>Springfield</City>
+  <Country>US</Country>
+</BillingAddress>
+```
+
+Fără modul, între `City` și `Country` apărea `<PostalCode/>` gol. Partenerii care au cod poștal
+îl păstrează în XML, neschimbat.
+
 ## 7. Legături cu alte module / declarații
 
 | Modul | Rol |
@@ -610,6 +639,8 @@ fără facturi de vânzare nu mai scrie `SalesInvoices` gol.
 - [ ] O livrare intracomunitară cu taxa „0% EU G” iese pe linia de venit cu `TaxType` 300 și
       `TaxCode` 310301, cu `TaxAmount` 0.
 - [ ] `TaxTable` conține intrări pentru codurile taxelor de 0% folosite în perioadă (308302, 310301).
+- [ ] Un partener fără cod poștal (Pasul 12) nu are tagul `PostalCode` în adresă (`Customer`,
+      `CustomerInfo`/`SupplierInfo`); partenerii cu cod poștal îl păstrează.
 - [ ] Fișierul trece prin DUK Integrator fără erori.
 
 ## 9. Mesaje de eroare frecvente
@@ -624,6 +655,7 @@ fără facturi de vânzare nu mai scrie `SalesInvoices` gol.
 | Plățile din casă lipsesc din declarație | exportul standard lua doar plățile din extrase bancare | instalați modulul și regenerați XML-ul |
 | Plata din casă nu apare în `Payments`, iar factura plătită nu are notă de plată | metoda de plată a jurnalului de casă nu are cont („Nu există înregistrări de jurnal de plată”) | completați contul casei pe metoda de plată (secțiunea 5, punctul 6); pentru plățile deja înregistrate, anulați-le și înregistrați-le din nou |
 | Aceeași încasare/plată bancară apare de două ori în `Payments` (o dată ca plată, o dată ca extras) | plata a fost înregistrată din factură, iar extrasul a fost importat, dar cele două nu au fost reconciliate | reconciliați linia de extras cu plata (contul 512103); după reconciliere, plata se raportează o singură dată, prin extras |
+| În XML apare `<PostalCode/>` gol în adresa unui partener | partenerul nu are cod poștal, iar modulul nu e instalat | instalați modulul și regenerați XML-ul (Pasul 12) |
 | Linia cu „0% EXEMPT” sau „0% EU G” iese cu `000 / 000000` | taxa nu are completate **Tipul fiscal SAF-T românesc** sau **Cod Fiscal SAF-T Roman** (tab Opțiuni Avansate), sau modulul nu e instalat | completați tipul (300) și codul SAF-T pe taxă și regenerați XML-ul |
 
 ## 10. Capturi de ecran

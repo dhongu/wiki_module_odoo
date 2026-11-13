@@ -330,11 +330,13 @@ proprii planificatorului:
    producție. Când sunt mai multe, se afișează cea aflată cel mai „în urmă”.
    - **Producție**: **Finalizat** apare când toate produsele au fost fabricate; coloana rămâne goală
      dacă nu s-a generat nicio comandă de producție (sau dacă au fost anulate).
-   - **Achiziție**: **Finalizat** apare când nu mai e nicio comandă de achiziție deschisă și stocul
-     acoperă comanda: componentele comenzilor de producție și produsele livrate direct din stoc sunt
-     disponibile. Apare și fără nicio comandă de achiziție generată, când materia primă era deja pe
-     stoc. Coloana rămâne goală cât timp o comandă planificată de achiziție e încă în **Ciornă** /
-     **Planificat** (nelansată) sau stocul nu acoperă necesarul.
+   - **Achiziție**: **Finalizat** apare când toate comenzile de achiziție generate sunt recepționate
+     integral, indiferent de stoc. Când nu s-a generat nicio comandă de achiziție, **Finalizat** apare
+     dacă stocul acoperă comanda: componentele comenzilor de producție și produsele livrate direct din
+     stoc sunt disponibile (materia primă era deja pe stoc). Coloana rămâne goală cât timp o comandă
+     planificată de achiziție e încă în **Ciornă** / **Planificat** (nelansată), chiar dacă celelalte
+     achiziții au fost recepționate, și, la comenzile fără nicio achiziție generată, cât timp stocul nu
+     acoperă necesarul.
 2. **Verificați** — etapele corespund celor din comenzile de achiziție / producție; o comandă cu
    materia primă pe stoc are **Finalizat** la **Achiziție**, chiar dacă nu s-a cumpărat nimic pentru ea.
 3. **Treceți mai departe** — după facturarea integrală, comanda dispare din **Comenzi OK** și se
@@ -460,8 +462,8 @@ proprietarului fiecărei reguli de reaprovizionare (bifa **Planificat de Advance
 - [ ] Tabelul **Comenzi planificate active** din Panoul de control nu mai are coloana **Stare AP**: etapa comenzii lansate se vede doar în coloanele **Document** și **Stare doc.**.
 - [ ] În lista deschisă din cardul **Comenzi OK**, coloanele **Achiziție** și **Producție** arată etapa documentelor generate pentru fiecare comandă de vânzare; după fabricarea produselor, **Producție** arată **Finalizat**.
 - [ ] O comandă de vânzare confirmată, fără comandă de achiziție generată, cu produsele (sau componentele comenzii de producție) pe stoc, are **Finalizat** la **Achiziție**; fără stoc suficient coloana rămâne goală.
-- [ ] După recepția completă a comenzii de achiziție, **Achiziție** arată **Finalizat** dacă stocul acoperă în continuare comanda.
-- [ ] Cât timp o comandă planificată de achiziție a comenzii e în **Ciornă** / **Planificat**, coloana **Achiziție** rămâne goală, chiar dacă restul materialelor e pe stoc.
+- [ ] După recepția completă a tuturor comenzilor de achiziție generate, **Achiziție** arată **Finalizat**, indiferent de stoc.
+- [ ] Cât timp o comandă planificată de achiziție a comenzii e în **Ciornă** / **Planificat**, coloana **Achiziție** rămâne goală, chiar dacă restul materialelor e pe stoc sau celelalte achiziții au fost recepționate.
 - [ ] O comandă OK facturată integral dispare din **Comenzi OK** și apare în **Arhivă**; cifrele celor două carduri se modifică în consecință.
 - [ ] Un clic pe referința din coloana **Document** deschide comanda de achiziție / producție.
 - [ ] O comandă planificată marcată manual **Finalizat** (comanda reală creată în afara planificatorului) nu apare în tabel.
@@ -489,7 +491,7 @@ proprietarului fiecărei reguli de reaprovizionare (bifa **Planificat de Advance
 | O ieșire viitoare nu generează propunere de reaprovizionare | Data ei e după orizontul de planificare | Măriți **Orizont de planificare** în Setări sau așteptați să intre în orizont |
 | În Panoul de control, o comandă recepționată rămâne în tabel cu **Recepționat parțial** | Recepția a fost validată fără cantitatea completă (cu backorder) pentru produsul comenzii planificate | Normal: linia dispare la recepția restului. Dacă restul nu mai vine, anulați backorder-ul și cantitatea rămasă din comanda de achiziție |
 | O comandă lansată nu mai apare în tabelul din Panoul de control | Documentul generat e recepționat integral, produs sau anulat, ori comanda planificată a fost marcată manual **Finalizat**, fără document | Normal. Istoricul rămâne în **Comenzi planificate** (filtrul Finalizat) și în documentul generat |
-| Coloana **Achiziție** din **Comenzi OK** e goală deși există stoc | O comandă planificată de achiziție a comenzii e încă nelansată (**Ciornă** / **Planificat**), sau stocul liber nu acoperă tot necesarul (e rezervat altor comenzi ori sosește abia la o dată viitoare) | Lansați sau anulați comanda planificată de achiziție; verificați disponibilitatea componentelor pe comanda de producție și a produselor pe livrare |
+| Coloana **Achiziție** din **Comenzi OK** e goală deși există stoc | O comandă planificată de achiziție a comenzii e încă nelansată (**Ciornă** / **Planificat**) sau, la o comandă fără nicio achiziție generată, stocul liber nu acoperă tot necesarul (e rezervat altor comenzi ori sosește abia la o dată viitoare) | Lansați sau anulați comanda planificată de achiziție; verificați disponibilitatea componentelor pe comanda de producție și a produselor pe livrare |
 | Capturile nu se generează | Modulul `l10n_ro_doc_screenshots` nu este instalat | Instalați-l și rulați testul de capturi (vezi secțiunea 10) |
 
 ## 10. Capturi de ecran

@@ -235,7 +235,8 @@ Cost standard rămâne costul de evaluare până la o modificare manuală.
   rândurile legate de un produs, încarcă prețurile și stocul și actualizează pe linia de furnizor
   prețul de achiziție, cantitatea disponibilă și **Termen livrare**, iar pe produs prețul de vânzare
   (după regulile din grupul **Preț** al feed-ului). Nu creează produse noi. Un produs pentru care
-  Kramp nu dă preț își păstrează prețul de vânzare.
+  Kramp nu dă preț își păstrează prețul de vânzare. Sincronizarea nu modifică **Ultimul preț de
+  achiziție** al produsului: acesta se schimbă doar la recepția unei comenzi de achiziție.
 
 **Ce rămâne manual:**
 - completarea codului Kramp în **Cod produs furnizor** pe produsele noi; produsele fără Kramp ca

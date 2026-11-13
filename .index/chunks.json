@@ -490,7 +490,7 @@
   {
     "path": "deltatech_advanced_planner/index.md",
     "module": "deltatech_advanced_planner",
-    "version": "19.0.1.14.2",
+    "version": "19.0.1.14.3",
     "github": "`https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_advanced_planner`",
     "local_path": "odoo-addons/bitshop_ent/deltatech_advanced_planner",
     "last_ingest": "2026-10-27",
@@ -2990,22 +2990,28 @@
     "version": "19.0.1.0.7",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_category_price",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_category_price",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Deltatech Delivery Category Price",
-    "summary": "Acest modul calculează tariful de livrare pentru comenzile din magazinul online pe baza categoriilor de website ale produselor din coș, nu pe baza categoriilor contabile interne (adesea prea generice, de ex. o singură categorie „Bunuri\" pentru tot catalogul) sau a unei potriviri fragile după numele produsului. Astfel, echipa de vânzări poate configura prețuri de transport realiste pentru categorii distincte de produse (de exemplu saltele, paturi), inclusiv tarife pe tranșe de greutate, fără să depindă de structura contabilă a catalogului.",
+    "last_ingest": "2026-11-13",
+    "friendly_name": "deltatech_delivery_category_price",
+    "summary": "Modulul calculează tariful de livrare din magazinul online pe baza categoriilor de website ale produselor din coș, nu pe baza categoriilor contabile interne (adesea prea generice, de exemplu o singură categorie „Bunuri” pentru tot catalogul) și nici a unei potriviri fragile după numele produsului. Echipa de vânzări poate astfel configura prețuri de transport realiste pentru categorii distincte (de exemplu saltele, paturi), inclusiv tarife pe tranșe de greutate. Modulul apare în Odoo Apps sub numele *Delivery Price by Category*.",
     "features": [
-      "Fiecare metodă de livrare poate avea propria listă de tarife pe categorii de website: preț fix pentru una sau mai multe categorii (ex. „Saltele\", „Paturi\") sau tarif pe tranșe de greutate pentru alte categorii (ex. lenjerie, accesorii).",
-      "Când o comandă se potrivește cu mai multe tarife, se aplică prețul cel mai mare, nu suma lor — evitând dubla taxare atunci când clientul cumpără, de exemplu, atât o saltea cât și un pat în aceeași comandă.",
-      "Dacă nicio configurare de tarif nu se potrivește comenzii (sau greutatea depășește toate tranșele configurate), curierul revine la un preț implicit configurabil, iar pagina de finalizare a comenzii afișează clar „Se comunică înainte de livrare\" în loc de mesajul „Gratuit\", care ar induce în eroare clientul.",
-      "O bifă opțională „handling\" (manipulare) poate fi oferită la finalizarea comenzii, adăugând un supliment configurabil doar peste tarifele fixe pe categorie (nu și peste tarifele pe greutate sau prețul implicit).",
-      "Solicitarea de handling și suma aferentă sunt afișate direct pe comanda de vânzare, pentru vizibilitate completă a echipei de vânzări."
+      "Tarife pe categorii, per metodă de livrare: fiecare metodă de livrare poate avea o listă de tarife — preț fix pentru una sau mai multe categorii de website (subcategoriile sunt incluse) sau tarif pe tranșe de greutate pentru alte categorii (ex. lenjerie, accesorii).",
+      "Cel mai mare tarif, nu suma: când comanda se potrivește cu mai multe tarife, se aplică cel mai mare preț (de exemplu saltea 300 plus pat 350 se livrează cu 350), evitând dubla taxare.",
+      "Tranșe de greutate: se folosește prima tranșă (*Up to (kg)* și *Price*) care acoperă greutatea totală a produselor din coș aflate în categoriile tarifului, nu greutatea întregii comenzi. Dacă greutatea depășește cea mai mare tranșă, prețul implicit devine candidat.",
+      "Preț implicit: dacă niciun tarif nu se potrivește (sau greutatea depășește toate tranșele și niciun alt tarif din coș nu e mai mare), se aplică prețul implicit al metodei, iar pagina de finalizare afișează „Communicated before delivery” în loc de „Free”; echipa de vânzări comunică ulterior costul real sau împarte livrarea manual. Într-un coș mixt câștigă tariful cel mai mare, deci un tarif fix mai mare se aplică fără nicio notificare.",
+      "Manipulare (handling): o bifă opțională „Add handling” la finalizarea comenzii adaugă un supliment configurabil, doar peste tarifele fixe pe categorie (nu peste cele pe greutate sau prețul implicit).",
+      "Pe comanda de vânzare: solicitarea de manipulare apare ca banner pe ofertă, iar câmpurile *Delivery handling* și *Handling cost* (doar citire) sunt în tabul *Other Info*; suma se reține la momentul comenzii și nu se recalculează dacă tarifele se schimbă ulterior.",
+      "Configurare: *Website → Configuration → eCommerce → Delivery Methods* (sau *Sales → Configuration → Sales Orders → Delivery Methods*); metoda se setează cu *Provider* „Category price (website)”, produsul de livrare și *Published*; în tabul *Category tariffs* se introduc *Default price*, *Handling cost* și câte o linie pe tarif. Pașii cu capturi sunt în fișa consultant.",
+      "Limitări cunoscute: valorile *Default price* și *Handling cost* din dreptul listei apar fără etichetă; mesajul „Communicated before delivery” rămâne în engleză pe un website în română; dacă după bifarea manipulării clientul schimbă coșul sau metoda de livrare, bannerul poate rămâne vizibil cu un cost suplimentar 0,00; la tarifele pe greutate coloana *Price* din listă rămâne 0,00, prețurile fiind în tranșele liniei."
     ],
     "dependencies": [
       "delivery",
       "website_sale"
     ],
-    "connections": [],
-    "text": "Deltatech Delivery Category Price\ndeltatech_delivery_category_price\nAcest modul calculează tariful de livrare pentru comenzile din magazinul online pe baza categoriilor de website ale produselor din coș, nu pe baza categoriilor contabile interne (adesea prea generice, de ex. o singură categorie „Bunuri\" pentru tot catalogul) sau a unei potriviri fragile după numele produsului. Astfel, echipa de vânzări poate configura prețuri de transport realiste pentru categorii distincte de produse (de exemplu saltele, paturi), inclusiv tarife pe tranșe de greutate, fără să depindă de structura contabilă a catalogului.\nFiecare metodă de livrare poate avea propria listă de tarife pe categorii de website: preț fix pentru una sau mai multe categorii (ex. „Saltele\", „Paturi\") sau tarif pe tranșe de greutate pentru alte categorii (ex. lenjerie, accesorii).\nCând o comandă se potrivește cu mai multe tarife, se aplică prețul cel mai mare, nu suma lor — evitând dubla taxare atunci când clientul cumpără, de exemplu, atât o saltea cât și un pat în aceeași comandă.\nDacă nicio configurare de tarif nu se potrivește comenzii (sau greutatea depășește toate tranșele configurate), curierul revine la un preț implicit configurabil, iar pagina de finalizare a comenzii afișează clar „Se comunică înainte de livrare\" în loc de mesajul „Gratuit\", care ar induce în eroare clientul.\nO bifă opțională „handling\" (manipulare) poate fi oferită la finalizarea comenzii, adăugând un supliment configurabil doar peste tarifele fixe pe categorie (nu și peste tarifele pe greutate sau prețul implicit).\nSolicitarea de handling și suma aferentă sunt afișate direct pe comanda de vânzare, pentru vizibilitate completă a echipei de vânzări."
+    "connections": [
+      "delivery",
+      "website_sale"
+    ],
+    "text": "deltatech_delivery_category_price\ndeltatech_delivery_category_price\nModulul calculează tariful de livrare din magazinul online pe baza categoriilor de website ale produselor din coș, nu pe baza categoriilor contabile interne (adesea prea generice, de exemplu o singură categorie „Bunuri” pentru tot catalogul) și nici a unei potriviri fragile după numele produsului. Echipa de vânzări poate astfel configura prețuri de transport realiste pentru categorii distincte (de exemplu saltele, paturi), inclusiv tarife pe tranșe de greutate. Modulul apare în Odoo Apps sub numele *Delivery Price by Category*.\nTarife pe categorii, per metodă de livrare: fiecare metodă de livrare poate avea o listă de tarife — preț fix pentru una sau mai multe categorii de website (subcategoriile sunt incluse) sau tarif pe tranșe de greutate pentru alte categorii (ex. lenjerie, accesorii).\nCel mai mare tarif, nu suma: când comanda se potrivește cu mai multe tarife, se aplică cel mai mare preț (de exemplu saltea 300 plus pat 350 se livrează cu 350), evitând dubla taxare.\nTranșe de greutate: se folosește prima tranșă (*Up to (kg)* și *Price*) care acoperă greutatea totală a produselor din coș aflate în categoriile tarifului, nu greutatea întregii comenzi. Dacă greutatea depășește cea mai mare tranșă, prețul implicit devine candidat.\nPreț implicit: dacă niciun tarif nu se potrivește (sau greutatea depășește toate tranșele și niciun alt tarif din coș nu e mai mare), se aplică prețul implicit al metodei, iar pagina de finalizare afișează „Communicated before delivery” în loc de „Free”; echipa de vânzări comunică ulterior costul real sau împarte livrarea manual. Într-un coș mixt câștigă tariful cel mai mare, deci un tarif fix mai mare se aplică fără nicio notificare.\nManipulare (handling): o bifă opțională „Add handling” la finalizarea comenzii adaugă un supliment configurabil, doar peste tarifele fixe pe categorie (nu peste cele pe greutate sau prețul implicit).\nPe comanda de vânzare: solicitarea de manipulare apare ca banner pe ofertă, iar câmpurile *Delivery handling* și *Handling cost* (doar citire) sunt în tabul *Other Info*; suma se reține la momentul comenzii și nu se recalculează dacă tarifele se schimbă ulterior.\nConfigurare: *Website → Configuration → eCommerce → Delivery Methods* (sau *Sales → Configuration → Sales Orders → Delivery Methods*); metoda se setează cu *Provider* „Category price (website)”, produsul de livrare și *Published*; în tabul *Category tariffs* se introduc *Default price*, *Handling cost* și câte o linie pe tarif. Pașii cu capturi sunt în fișa consultant.\nLimitări cunoscute: valorile *Default price* și *Handling cost* din dreptul listei apar fără etichetă; mesajul „Communicated before delivery” rămâne în engleză pe un website în română; dacă după bifarea manipulării clientul schimbă coșul sau metoda de livrare, bannerul poate rămâne vizibil cu un cost suplimentar 0,00; la tarifele pe greutate coloana *Price* din listă rămâne 0,00, prețurile fiind în tranșele liniei."
   },
   {
     "path": "deltatech_delivery_cm/index.md",
@@ -3128,7 +3134,7 @@
   {
     "path": "deltatech_delivery_dpd/index.md",
     "module": "deltatech_delivery_dpd",
-    "version": "19.0.0.7.4",
+    "version": "19.0.0.7.6",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_dpd",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_dpd",
     "last_ingest": "2026-10-22",
@@ -7158,7 +7164,7 @@
   {
     "path": "deltatech_obyc/index.md",
     "module": "deltatech_obyc",
-    "version": "19.0.1.0.22",
+    "version": "19.0.1.0.23",
     "github": "https://github.com/dhongu/deltatech_stock_valuation/tree/19.0/deltatech_obyc",
     "local_path": "odoo-addons/deltatech_stock_valuation/deltatech_obyc",
     "last_ingest": "2026-10-01",
@@ -7695,18 +7701,17 @@
     "path": "deltatech_payment_forecast/index.md",
     "module": "deltatech_payment_forecast",
     "version": "19.0.0.0.4",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_payment_forecast`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_payment_forecast",
     "local_path": "odoo-addons/deltatech/deltatech_payment_forecast",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Terrabit Payment Forecast",
-    "summary": "Modulul generează un raport care estimează plățile (încasări de la clienți și plăți către furnizori) așteptate până la o anumită dată. Raportul folosește durata medie de plată/încasare calculată per partener pentru a estima cât de probabil este ca o factură neîncasată sau neplătită să fie decontată până la data țintă, oferind echipei financiare o imagine anticipată a cash-flow-ului. Generarea raportului se poate face manual, printr-un wizard, sau automat, printr-o sarcină programată (cron).",
+    "last_ingest": "2026-11-13",
+    "friendly_name": "deltatech_payment_forecast",
+    "summary": "Echipele financiare au nevoie să știe când vor fi plătite efectiv facturile. Modulul estimează plățile așteptate pe facturile deschise de client și de furnizor până la o dată de sfârșit, pornind de la cât de repede plătește de obicei fiecare partener. Rezultatul este un raport care oferă o imagine anticipată a cash-flow-ului.",
     "features": [
-      "Generează un raport de tip „prognoză de plăți\" (`payment.forecast`) cu toate facturile de client și furnizor neîncasate/neplătite, scadente până la o dată aleasă.",
-      "Estimează, pentru fiecare factură, data probabilă de decontare pe baza duratei medii de plată istorice a partenerului (calculată de modulul `deltatech_average_payment_period`).",
-      "Include în raport suma reziduală a facturii și suma estimată a fi efectiv plătită/încasată până la data țintă.",
-      "Permite generarea manuală a raportului printr-un wizard (cu dată de sfârșit și companie configurabile).",
-      "Suportă generare automată, programabilă printr-o sarcină cron, cu regenerare pe un orizont fix de zile (parametrul `days`).",
-      "Raportul poate fi analizat în listă, formular, pivot și grafic, cu grupare/filtrare după interval de zile și tip de mișcare (încasare/plată)."
+      "Generarea prognozei: meniul *Generate payment forecast* deschide o fereastră cu *End Date* și *Company*. Butonul *Compute forecast* salvează câte o linie pentru fiecare factură, factură de furnizor sau notă de credit înregistrată, neplătită sau parțial plătită, scadentă până la acea dată.",
+      "Estimarea plății: întârzierea obișnuită a unui partener este media timpului de plată al facturilor sale din ultimele 365 de zile. Dacă data facturii plus această întârziere cade după data de sfârșit, *Payment amount* al liniei este zero; altfel este suma rămasă de plată.",
+      "Raport: *Payment forecast report* listează partenerul, factura, datele, suma și suma rămasă în moneda companiei, cu vizualizări formular, pivot și grafic și grupare după *Days* și *Move type* (încasare/plată).",
+      "Instantanee: o rulare manuală înlocuiește liniile anterioare *Custom* ale companiei sale. Metoda de wizard `get_forecast_cron(days)` reîmprospătează, pentru fiecare companie a utilizatorului, instantaneul etichetat cu acel număr de zile; acțiunea programată nu este inclusă în modul, deci trebuie creată separat dacă se dorește rularea automată.",
+      "Istoricul plăților și limitări: provine din conturile cu codul 4111 (clienți) sau 401 (furnizori), ca în planul de conturi românesc; un partener fără istoric se ia în calcul integral. Grupul *Payment forecast* vede meniurile."
     ],
     "dependencies": [
       "account",
@@ -7716,7 +7721,7 @@
       "deltatech_average_payment_period",
       "account"
     ],
-    "text": "Terrabit Payment Forecast\ndeltatech_payment_forecast\nModulul generează un raport care estimează plățile (încasări de la clienți și plăți către furnizori) așteptate până la o anumită dată. Raportul folosește durata medie de plată/încasare calculată per partener pentru a estima cât de probabil este ca o factură neîncasată sau neplătită să fie decontată până la data țintă, oferind echipei financiare o imagine anticipată a cash-flow-ului. Generarea raportului se poate face manual, printr-un wizard, sau automat, printr-o sarcină programată (cron).\nGenerează un raport de tip „prognoză de plăți\" (`payment.forecast`) cu toate facturile de client și furnizor neîncasate/neplătite, scadente până la o dată aleasă.\nEstimează, pentru fiecare factură, data probabilă de decontare pe baza duratei medii de plată istorice a partenerului (calculată de modulul `deltatech_average_payment_period`).\nInclude în raport suma reziduală a facturii și suma estimată a fi efectiv plătită/încasată până la data țintă.\nPermite generarea manuală a raportului printr-un wizard (cu dată de sfârșit și companie configurabile).\nSuportă generare automată, programabilă printr-o sarcină cron, cu regenerare pe un orizont fix de zile (parametrul `days`).\nRaportul poate fi analizat în listă, formular, pivot și grafic, cu grupare/filtrare după interval de zile și tip de mișcare (încasare/plată)."
+    "text": "deltatech_payment_forecast\ndeltatech_payment_forecast\nEchipele financiare au nevoie să știe când vor fi plătite efectiv facturile. Modulul estimează plățile așteptate pe facturile deschise de client și de furnizor până la o dată de sfârșit, pornind de la cât de repede plătește de obicei fiecare partener. Rezultatul este un raport care oferă o imagine anticipată a cash-flow-ului.\nGenerarea prognozei: meniul *Generate payment forecast* deschide o fereastră cu *End Date* și *Company*. Butonul *Compute forecast* salvează câte o linie pentru fiecare factură, factură de furnizor sau notă de credit înregistrată, neplătită sau parțial plătită, scadentă până la acea dată.\nEstimarea plății: întârzierea obișnuită a unui partener este media timpului de plată al facturilor sale din ultimele 365 de zile. Dacă data facturii plus această întârziere cade după data de sfârșit, *Payment amount* al liniei este zero; altfel este suma rămasă de plată.\nRaport: *Payment forecast report* listează partenerul, factura, datele, suma și suma rămasă în moneda companiei, cu vizualizări formular, pivot și grafic și grupare după *Days* și *Move type* (încasare/plată).\nInstantanee: o rulare manuală înlocuiește liniile anterioare *Custom* ale companiei sale. Metoda de wizard `get_forecast_cron(days)` reîmprospătează, pentru fiecare companie a utilizatorului, instantaneul etichetat cu acel număr de zile; acțiunea programată nu este inclusă în modul, deci trebuie creată separat dacă se dorește rularea automată.\nIstoricul plăților și limitări: provine din conturile cu codul 4111 (clienți) sau 401 (furnizori), ca în planul de conturi românesc; un partener fără istoric se ia în calcul integral. Grupul *Payment forecast* vede meniurile."
   },
   {
     "path": "deltatech_payment_ing_webpay/index.md",
@@ -8376,21 +8381,31 @@
     "path": "deltatech_pos_product_filter/index.md",
     "module": "deltatech_pos_product_filter",
     "version": "19.0.1.0.2",
-    "github": "[https://github.com/dhongu/deltatech/tree/19.0/deltatech_pos_product_filter](https://github.com/dhongu/deltatech/tree/19.0/deltatech_pos_product_filter)",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_pos_product_filter",
     "local_path": "odoo-addons/deltatech/deltatech_pos_product_filter",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "POS Order Product Filter",
-    "summary": "Acest modul adaugă posibilitatea de a căuta comenzile din Punctul de Vânzare (POS) direct după produsul vândut, nu doar după client sau alte criterii standard. Este util operatorilor de vânzări și celor din contabilitate care trebuie să regăsească rapid toate bonurile/comenzile POS în care apare un anumit articol, fără a parcurge manual liniile fiecărei comenzi.",
+    "last_ingest": "2026-11-13",
+    "friendly_name": "deltatech_pos_product_filter",
+    "summary": "Personalul din magazin are adesea nevoie să găsească comenzile din Punctul de Vânzare care conțin un anumit articol. Modulul adaugă o opțiune *Product* în căutarea comenzilor POS, astfel încât o comandă poate fi regăsită după ceea ce s-a vândut, fără a parcurge manual liniile fiecărei comenzi.",
     "features": [
-      "Căutarea comenzilor POS (`pos.order`) după produsul din liniile comenzii."
+      "**Opțiunea de căutare *Product*:** la scrierea în caseta de căutare a comenzilor POS apare o opțiune nouă *Product*, plasată imediat după cea pentru partener.",
+      "Căutare pe liniile comenzii: opțiunea listează comenzile care au cel puțin o linie al cărei produs se potrivește cu textul introdus; potrivirea este parțială și nu ține cont de majuscule.",
+      "Doar vizualizarea de căutare: modulul nu schimbă nimic în afară de această vizualizare — nu are cod Python, câmpuri noi, meniuri sau grupuri de acces. Nu adaugă coloană de produs în listă sau în rapoarte și nu are setări."
     ],
     "dependencies": [
       "point_of_sale"
     ],
     "connections": [
-      "point_of_sale"
+      "deltatech_pos",
+      "deltatech_pos_base",
+      "deltatech_ecr_connect",
+      "deltatech_pos_stock",
+      "deltatech_pos_price_sync",
+      "deltatech_pos_fix",
+      "l10n_ro_pos_fiscal_compliance",
+      "l10n_ro_anaf_d394_pos",
+      "l10n_ro_pos_returns"
     ],
-    "text": "POS Order Product Filter\ndeltatech_pos_product_filter\nAcest modul adaugă posibilitatea de a căuta comenzile din Punctul de Vânzare (POS) direct după produsul vândut, nu doar după client sau alte criterii standard. Este util operatorilor de vânzări și celor din contabilitate care trebuie să regăsească rapid toate bonurile/comenzile POS în care apare un anumit articol, fără a parcurge manual liniile fiecărei comenzi.\nCăutarea comenzilor POS (`pos.order`) după produsul din liniile comenzii."
+    "text": "deltatech_pos_product_filter\ndeltatech_pos_product_filter\nPersonalul din magazin are adesea nevoie să găsească comenzile din Punctul de Vânzare care conțin un anumit articol. Modulul adaugă o opțiune *Product* în căutarea comenzilor POS, astfel încât o comandă poate fi regăsită după ceea ce s-a vândut, fără a parcurge manual liniile fiecărei comenzi.\n**Opțiunea de căutare *Product*:** la scrierea în caseta de căutare a comenzilor POS apare o opțiune nouă *Product*, plasată imediat după cea pentru partener.\nCăutare pe liniile comenzii: opțiunea listează comenzile care au cel puțin o linie al cărei produs se potrivește cu textul introdus; potrivirea este parțială și nu ține cont de majuscule.\nDoar vizualizarea de căutare: modulul nu schimbă nimic în afară de această vizualizare — nu are cod Python, câmpuri noi, meniuri sau grupuri de acces. Nu adaugă coloană de produs în listă sau în rapoarte și nu are setări."
   },
   {
     "path": "deltatech_pos_stock/index.md",
@@ -8905,7 +8920,7 @@
   {
     "path": "deltatech_product_code/index.md",
     "module": "deltatech_product_code",
-    "version": "19.0.1.2.1",
+    "version": "19.0.1.2.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_code",
     "local_path": "odoo-addons/deltatech/deltatech_product_code",
     "last_ingest": "2026-10-22",
@@ -8986,7 +9001,7 @@
   {
     "path": "deltatech_product_labels/index.md",
     "module": "deltatech_product_labels",
-    "version": "19.0.1.3.2",
+    "version": "19.0.1.3.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_labels",
     "local_path": "odoo-addons/deltatech/deltatech_product_labels",
     "last_ingest": "2026-10-28",
@@ -9418,21 +9433,26 @@
     "path": "deltatech_purchase_picking_status/index.md",
     "module": "deltatech_purchase_picking_status",
     "version": "19.0.1.0.4",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_picking_status`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_picking_status",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_picking_status",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Purchase Picking Status",
-    "summary": "Modulul **Purchase Picking Status** adaugă pe comanda de achiziție un indicator sintetic al stadiului livrărilor asociate, calculat automat pe baza transferurilor de stoc (pickings) legate de acea comandă. Astfel, un agent de achiziții poate vedea dintr-o privire dacă o comandă este complet recepționată/finalizată sau dacă mai are livrări în curs, fără a fi nevoit să deschidă fiecare transfer în parte.",
+    "last_ingest": "2026-11-13",
+    "friendly_name": "deltatech_purchase_picking_status",
+    "summary": "Agenții de achiziții care primesc marfa în mai multe livrări trebuie să vadă dintr-o privire care comenzi de achiziție mai așteaptă marfă. Modulul adaugă pe comanda de achiziție un *Delivery Status*, calculat din recepțiile comenzii, astfel încât nu mai e nevoie să deschidă fiecare transfer în parte.",
     "features": [
-      "Adaugă statusul de livrare (picking status) pe comanda de achiziție",
-      "Marchează statusul ca Done (finalizat) atunci când toate transferurile asociate sunt în stare `done` sau `cancel`",
-      "Marchează statusul ca In Progress (în curs) atunci când cel puțin un transfer asociat nu este încă în stare `done` sau `cancel`"
+      "Statusul livrării: este *In Progress* cât timp o recepție a comenzii nu este nici finalizată, nici anulată, și *Done* când toate recepțiile sunt finalizate sau anulate.",
+      "Comenzi fără recepții: o comandă confirmată fără recepții, de exemplu una de servicii, este *Done*; înainte de confirmare este *In Progress*.",
+      "Insignă și coloană: statusul apare ca insignă (badge) pe formularul comenzii și ca o coloană, vizibilă implicit, în listele de cereri de ofertă și de comenzi de achiziție.",
+      "Filtre: două filtre de căutare, *Done* și *In progress*, selectează comenzile după statusul livrării.",
+      "Actualizare automată: statusul nu este stocat și urmărește comanda imediat ce este confirmată sau când o recepție este validată ori anulată.",
+      "Drepturi și comenzi anulate: modulul nu adaugă grupuri, deci oricine vede comenzile de achiziție vede și statusul. O comandă anulată urmează aceeași regulă: fără recepții afișează *In Progress*."
     ],
     "dependencies": [
       "purchase_stock"
     ],
-    "connections": [],
-    "text": "Purchase Picking Status\ndeltatech_purchase_picking_status\nModulul **Purchase Picking Status** adaugă pe comanda de achiziție un indicator sintetic al stadiului livrărilor asociate, calculat automat pe baza transferurilor de stoc (pickings) legate de acea comandă. Astfel, un agent de achiziții poate vedea dintr-o privire dacă o comandă este complet recepționată/finalizată sau dacă mai are livrări în curs, fără a fi nevoit să deschidă fiecare transfer în parte.\nAdaugă statusul de livrare (picking status) pe comanda de achiziție\nMarchează statusul ca Done (finalizat) atunci când toate transferurile asociate sunt în stare `done` sau `cancel`\nMarchează statusul ca In Progress (în curs) atunci când cel puțin un transfer asociat nu este încă în stare `done` sau `cancel`"
+    "connections": [
+      "purchase_stock"
+    ],
+    "text": "deltatech_purchase_picking_status\ndeltatech_purchase_picking_status\nAgenții de achiziții care primesc marfa în mai multe livrări trebuie să vadă dintr-o privire care comenzi de achiziție mai așteaptă marfă. Modulul adaugă pe comanda de achiziție un *Delivery Status*, calculat din recepțiile comenzii, astfel încât nu mai e nevoie să deschidă fiecare transfer în parte.\nStatusul livrării: este *In Progress* cât timp o recepție a comenzii nu este nici finalizată, nici anulată, și *Done* când toate recepțiile sunt finalizate sau anulate.\nComenzi fără recepții: o comandă confirmată fără recepții, de exemplu una de servicii, este *Done*; înainte de confirmare este *In Progress*.\nInsignă și coloană: statusul apare ca insignă (badge) pe formularul comenzii și ca o coloană, vizibilă implicit, în listele de cereri de ofertă și de comenzi de achiziție.\nFiltre: două filtre de căutare, *Done* și *In progress*, selectează comenzile după statusul livrării.\nActualizare automată: statusul nu este stocat și urmărește comanda imediat ce este confirmată sau când o recepție este validată ori anulată.\nDrepturi și comenzi anulate: modulul nu adaugă grupuri, deci oricine vede comenzile de achiziție vede și statusul. O comandă anulată urmează aceeași regulă: fără recepții afișează *In Progress*."
   },
   {
     "path": "deltatech_purchase_portal/index.md",
@@ -9467,7 +9487,7 @@
   {
     "path": "deltatech_purchase_price/index.md",
     "module": "deltatech_purchase_price",
-    "version": "19.0.1.2.14",
+    "version": "19.0.1.2.15",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_price",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_price",
     "last_ingest": "2026-08-20",
@@ -9580,22 +9600,26 @@
     "path": "deltatech_purchase_stock/index.md",
     "module": "deltatech_purchase_stock",
     "version": "19.0.1.0.3",
-    "github": "[https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_stock](https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_stock)",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_stock",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_stock",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Purchase Stock",
-    "summary": "Modulul separă comenzile de achiziție create automat prin reaprovizionare (replenishment) de cele create manual de un agent de achiziții. Fără el, cu opțiunea `group_rfq = Always` de pe partenerul furnizor, Odoo standard ar amesteca liniile de reaprovizionare în orice comandă de achiziție ciornă existentă a aceluiași furnizor — inclusiv cele întocmite manual — ceea ce ar putea denatura o comandă pe care un agent de achiziții o pregătește cu atenție.",
+    "last_ingest": "2026-11-13",
+    "friendly_name": "deltatech_purchase_stock",
+    "summary": "Reaprovizionarea poate adăuga liniile sale într-o comandă de achiziție ciornă existentă a furnizorului, inclusiv într-una pe care un agent de achiziții o pregătește manual. Modulul marchează comenzile de achiziție create de reaprovizionare și o împiedică să folosească orice altă comandă, astfel încât comenzile întocmite manual să rămână separate de cele generate automat.",
     "features": [
-      "Separă comenzile de achiziție manuale de comenzile de achiziție generate prin reaprovizionare (replenishment)."
+      "Marcaj de reaprovizionare: comenzile de achiziție create de o regulă de stoc, de exemplu dintr-o regulă de reaprovizionare (reordering rule), primesc automat marcajul `from_replenishment`.",
+      "Comenzile manuale rămân curate: căutarea unei comenzi existente în care să se adauge linii primește o condiție în plus — comanda trebuie să poarte marcajul. Comenzile fără marcaj nu sunt niciodată folosite.",
+      "Reaprovizionările se contopesc în continuare: nevoile succesive de reaprovizionare ale aceluiași furnizor merg în aceeași comandă marcată, așa cum verifică testele modulului.",
+      "Comenzi existente: comenzile create înainte de instalare nu au marcaj, deci reaprovizionarea nu adaugă linii în ele.",
+      "Fără ecran: modulul nu adaugă vizualizări, meniuri sau setări, iar marcajul nu apare pe formularul comenzii de achiziție.",
+      "Limitare: marcajul nu se șterge niciodată, deci o comandă marcată rămâne deschisă pentru reaprovizionare chiar dacă un agent adaugă ulterior linii manual."
     ],
     "dependencies": [
       "purchase_stock"
     ],
     "connections": [
-      "deltatech_auto_reorder_rule",
-      "deltatech_purchase_stock"
+      "purchase_stock"
     ],
-    "text": "Purchase Stock\ndeltatech_purchase_stock\nModulul separă comenzile de achiziție create automat prin reaprovizionare (replenishment) de cele create manual de un agent de achiziții. Fără el, cu opțiunea `group_rfq = Always` de pe partenerul furnizor, Odoo standard ar amesteca liniile de reaprovizionare în orice comandă de achiziție ciornă existentă a aceluiași furnizor — inclusiv cele întocmite manual — ceea ce ar putea denatura o comandă pe care un agent de achiziții o pregătește cu atenție.\nSepară comenzile de achiziție manuale de comenzile de achiziție generate prin reaprovizionare (replenishment)."
+    "text": "deltatech_purchase_stock\ndeltatech_purchase_stock\nReaprovizionarea poate adăuga liniile sale într-o comandă de achiziție ciornă existentă a furnizorului, inclusiv într-una pe care un agent de achiziții o pregătește manual. Modulul marchează comenzile de achiziție create de reaprovizionare și o împiedică să folosească orice altă comandă, astfel încât comenzile întocmite manual să rămână separate de cele generate automat.\nMarcaj de reaprovizionare: comenzile de achiziție create de o regulă de stoc, de exemplu dintr-o regulă de reaprovizionare (reordering rule), primesc automat marcajul `from_replenishment`.\nComenzile manuale rămân curate: căutarea unei comenzi existente în care să se adauge linii primește o condiție în plus — comanda trebuie să poarte marcajul. Comenzile fără marcaj nu sunt niciodată folosite.\nReaprovizionările se contopesc în continuare: nevoile succesive de reaprovizionare ale aceluiași furnizor merg în aceeași comandă marcată, așa cum verifică testele modulului.\nComenzi existente: comenzile create înainte de instalare nu au marcaj, deci reaprovizionarea nu adaugă linii în ele.\nFără ecran: modulul nu adaugă vizualizări, meniuri sau setări, iar marcajul nu apare pe formularul comenzii de achiziție.\nLimitare: marcajul nu se șterge niciodată, deci o comandă marcată rămâne deschisă pentru reaprovizionare chiar dacă un agent adaugă ulterior linii manual."
   },
   {
     "path": "deltatech_purchase_target/index.md",
@@ -10890,7 +10914,7 @@
   {
     "path": "deltatech_sale_margin/index.md",
     "module": "deltatech_sale_margin",
-    "version": "19.0.1.3.4",
+    "version": "19.0.1.3.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_margin",
     "local_path": "odoo-addons/deltatech/deltatech_sale_margin",
     "last_ingest": "2026-10-22",
@@ -11891,23 +11915,24 @@
     "version": "19.0.2.0.10",
     "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_base",
     "local_path": "odoo-addons/deltatech_service/deltatech_service_base",
-    "last_ingest": "2026-06-08",
-    "friendly_name": "Services Base",
-    "summary": "Modulul reprezintă fundația suitei de servicii Deltatech. El nu acoperă singur un flux complet de business, ci pune la dispoziție structura comună pe care se construiesc celelalte module de servicii: aplicația „Service\" cu meniurile sale, grupurile de securitate (utilizatori și manageri de service, respectiv roluri de garanție) și câteva date de referință folosite în mod repetat — cicluri de timp și intervale de date. Practic, este stratul de bază care asigură organizarea și drepturile de acces necesare modulelor de service mai avansate. > Notă: fișierul `readme/DESCRIPTION.md` există, dar este gol (conține doar „Features:\"). Prin urmare Sumarul și Funcționalitățile au fost sintetizate din `__manifest__.py` și din codul modulului. Nu există `readme/USAGE.md` sau `readme/FISA_CONSULTANT.md`.",
+    "last_ingest": "2026-11-13",
+    "friendly_name": "deltatech_service_base",
+    "summary": "Modulul oferă modulelor de servicii un meniu comun, grupuri de acces, cicluri și intervale de date. Nu are o funcție de business proprie: este fundația suitei de servicii Deltatech, pe care se construiesc modulele mai avansate (contracte, echipamente etc.). Doar managerii de service pot modifica ciclurile și intervalele de date.",
     "features": [
-      "Creează aplicația „Service\" în meniul principal, cu structura de meniuri aferentă (Master data, Service, Reports, Configuration).",
-      "Definește grupurile de securitate pentru servicii (Client, User, Manager) și pentru garanție (User, Approval, Manager), organizate sub privilegiile „Service\" și „Warranty\".",
-      "Pune la dispoziție noțiunea de „ciclu\" de service (valoare + unitate de măsură: zi, săptămână, lună, an), utilizabilă pentru calcule de intervale recurente.",
-      "Permite gestionarea intervalelor de date (data de început și de sfârșit), inclusiv generarea automată a celor 12 intervale lunare ale anului curent."
+      "Cicluri: un *Cycle* are o denumire, o valoare și o unitate de măsură (*Day*, *Week*, *Month* sau *Year*). Metoda `get_cycle()` întoarce intervalul de timp corespunzător, utilizabil pentru calcule de intervale recurente.",
+      "Intervale de date: un *Date Range* are o denumire, o dată de început și una de sfârșit. Acțiunea *Generate Date Range* creează intervalele lunare ale anului curent, denumite de forma `2026/01`, sărind peste denumirile care există deja.",
+      "Meniu și grupuri: modulul creează aplicația *Service* (cu structura Master data, Service, Reports, Configuration), cu *Cycle* și *Date Ranges* în *Configuration*, grupurile *Client*, *User* și *Manager* pentru service și trei grupuri *Warranty* (*User*, *Approval*, *Manager*)."
     ],
     "dependencies": [
       "product",
       "account"
     ],
     "connections": [
+      "deltatech_service_agreement",
+      "deltatech_service_equipment_base",
       "deltatech_service"
     ],
-    "text": "Services Base\ndeltatech_service_base\nModulul reprezintă fundația suitei de servicii Deltatech. El nu acoperă singur un flux complet de business, ci pune la dispoziție structura comună pe care se construiesc celelalte module de servicii: aplicația „Service\" cu meniurile sale, grupurile de securitate (utilizatori și manageri de service, respectiv roluri de garanție) și câteva date de referință folosite în mod repetat — cicluri de timp și intervale de date. Practic, este stratul de bază care asigură organizarea și drepturile de acces necesare modulelor de service mai avansate. > Notă: fișierul `readme/DESCRIPTION.md` există, dar este gol (conține doar „Features:\"). Prin urmare Sumarul și Funcționalitățile au fost sintetizate din `__manifest__.py` și din codul modulului. Nu există `readme/USAGE.md` sau `readme/FISA_CONSULTANT.md`.\nCreează aplicația „Service\" în meniul principal, cu structura de meniuri aferentă (Master data, Service, Reports, Configuration).\nDefinește grupurile de securitate pentru servicii (Client, User, Manager) și pentru garanție (User, Approval, Manager), organizate sub privilegiile „Service\" și „Warranty\".\nPune la dispoziție noțiunea de „ciclu\" de service (valoare + unitate de măsură: zi, săptămână, lună, an), utilizabilă pentru calcule de intervale recurente.\nPermite gestionarea intervalelor de date (data de început și de sfârșit), inclusiv generarea automată a celor 12 intervale lunare ale anului curent."
+    "text": "deltatech_service_base\ndeltatech_service_base\nModulul oferă modulelor de servicii un meniu comun, grupuri de acces, cicluri și intervale de date. Nu are o funcție de business proprie: este fundația suitei de servicii Deltatech, pe care se construiesc modulele mai avansate (contracte, echipamente etc.). Doar managerii de service pot modifica ciclurile și intervalele de date.\nCicluri: un *Cycle* are o denumire, o valoare și o unitate de măsură (*Day*, *Week*, *Month* sau *Year*). Metoda `get_cycle()` întoarce intervalul de timp corespunzător, utilizabil pentru calcule de intervale recurente.\nIntervale de date: un *Date Range* are o denumire, o dată de început și una de sfârșit. Acțiunea *Generate Date Range* creează intervalele lunare ale anului curent, denumite de forma `2026/01`, sărind peste denumirile care există deja.\nMeniu și grupuri: modulul creează aplicația *Service* (cu structura Master data, Service, Reports, Configuration), cu *Cycle* și *Date Ranges* în *Configuration*, grupurile *Client*, *User* și *Manager* pentru service și trei grupuri *Warranty* (*User*, *Approval*, *Manager*)."
   },
   {
     "path": "deltatech_service_consumable/index.md",
@@ -12082,14 +12107,19 @@
     "path": "deltatech_service_task/index.md",
     "module": "deltatech_service_task",
     "version": "19.0.0.0.25",
-    "github": "`https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_task`",
+    "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_task",
     "local_path": "odoo-addons/deltatech_service/deltatech_service_task",
-    "last_ingest": "2026-06-08",
-    "friendly_name": "Deltatech Services Task",
-    "summary": "Modulul extinde sarcinile de proiect (project.task) cu informații specifice activităților de service și mentenanță. El leagă fiecare sarcină de locul funcțional și de echipamentul vizat, astfel încât echipele de teren și de proiect să poată identifica imediat unde și pe ce utilaj se desfășoară intervenția. Valoarea de afaceri constă în trasabilitatea sarcinilor de mentenanță în contextul echipamentelor gestionate.",
+    "last_ingest": "2026-11-13",
+    "friendly_name": "deltatech_service_task",
+    "summary": "Tehnicienii care intervin la echipamentele clienților au nevoie de o listă de verificare pentru fiecare vizită și de o evidență a rezultatului. Modulul leagă sarcinile de proiect de echipamente, încarcă operațiunile echipamentului ca listă de verificare în sarcină și permite tipărirea unui raport de service. Astfel, intervențiile de mentenanță devin trasabile pe fiecare echipament gestionat.",
     "features": [
-      "Adăugarea câmpului de loc funcțional (`service.location`) în sarcina de proiect.",
-      "Adăugarea câmpului de echipament (`service.equipment`) în sarcina de proiect."
+      "Loc funcțional și echipament: sarcinile primesc câmpurile *Functional Location* și *Service Equipment*. Lista de echipamente urmează locul ales, iar clientul se completează din oricare dintre ele.",
+      "Listă de verificare din echipament: alegerea echipamentului copiază în sarcină piesele, verificările și măsurătorile lui, înlocuind liniile existente. Tehnicianul bifează *Is OK* sau *Not Applicable* și introduce valori și note; listele nu permit adăugarea de rânduri.",
+      "Tipuri de mentenanță: liniile echipamentului și șabloanele tipului de echipament pot fi marcate cu unul sau mai multe *Maintenance Types* (ex. primăvară, toamnă, intermediară). O sarcină cu tip încarcă doar liniile potrivite și pe cele nemarcate, iar subsarcinile noi moștenesc tipul. Lista tipurilor se gestionează în Configurare.",
+      "Raport de service: un PDF tipărit din sarcină arată starea fiecărei linii (*OK*, *Not OK*, *N/A*) sau valoarea ei; fiecare subsarcină cu echipament urmează pe pagină separată.",
+      "Istoric pe echipament: butoanele *Tasks*, *Parts*, *Checks* și *Measurements* din formularul echipamentului arată contoare și deschid înregistrările aferente.",
+      "Echipa urmează persoanele alocate: câmpul *Team* listează angajații utilizatorilor alocați și se actualizează odată cu ei; angajații fără utilizator sunt păstrați.",
+      "Drepturi de acces: liniile (piese, verificări, măsurători) urmează drepturile sarcinii lor. Lista de verificare se încarcă doar la alegerea echipamentului în formular, nu la import."
     ],
     "dependencies": [
       "deltatech_service_equipment_base",
@@ -12098,10 +12128,10 @@
     ],
     "connections": [
       "deltatech_service_equipment_base",
-      "project",
-      "deltatech_service"
+      "deltatech_service",
+      "project"
     ],
-    "text": "Deltatech Services Task\ndeltatech_service_task\nModulul extinde sarcinile de proiect (project.task) cu informații specifice activităților de service și mentenanță. El leagă fiecare sarcină de locul funcțional și de echipamentul vizat, astfel încât echipele de teren și de proiect să poată identifica imediat unde și pe ce utilaj se desfășoară intervenția. Valoarea de afaceri constă în trasabilitatea sarcinilor de mentenanță în contextul echipamentelor gestionate.\nAdăugarea câmpului de loc funcțional (`service.location`) în sarcina de proiect.\nAdăugarea câmpului de echipament (`service.equipment`) în sarcina de proiect."
+    "text": "deltatech_service_task\ndeltatech_service_task\nTehnicienii care intervin la echipamentele clienților au nevoie de o listă de verificare pentru fiecare vizită și de o evidență a rezultatului. Modulul leagă sarcinile de proiect de echipamente, încarcă operațiunile echipamentului ca listă de verificare în sarcină și permite tipărirea unui raport de service. Astfel, intervențiile de mentenanță devin trasabile pe fiecare echipament gestionat.\nLoc funcțional și echipament: sarcinile primesc câmpurile *Functional Location* și *Service Equipment*. Lista de echipamente urmează locul ales, iar clientul se completează din oricare dintre ele.\nListă de verificare din echipament: alegerea echipamentului copiază în sarcină piesele, verificările și măsurătorile lui, înlocuind liniile existente. Tehnicianul bifează *Is OK* sau *Not Applicable* și introduce valori și note; listele nu permit adăugarea de rânduri.\nTipuri de mentenanță: liniile echipamentului și șabloanele tipului de echipament pot fi marcate cu unul sau mai multe *Maintenance Types* (ex. primăvară, toamnă, intermediară). O sarcină cu tip încarcă doar liniile potrivite și pe cele nemarcate, iar subsarcinile noi moștenesc tipul. Lista tipurilor se gestionează în Configurare.\nRaport de service: un PDF tipărit din sarcină arată starea fiecărei linii (*OK*, *Not OK*, *N/A*) sau valoarea ei; fiecare subsarcină cu echipament urmează pe pagină separată.\nIstoric pe echipament: butoanele *Tasks*, *Parts*, *Checks* și *Measurements* din formularul echipamentului arată contoare și deschid înregistrările aferente.\nEchipa urmează persoanele alocate: câmpul *Team* listează angajații utilizatorilor alocați și se actualizează odată cu ei; angajații fără utilizator sunt păstrați.\nDrepturi de acces: liniile (piese, verificări, măsurători) urmează drepturile sarcinii lor. Lista de verificare se încarcă doar la alegerea echipamentului în formular, nu la import."
   },
   {
     "path": "deltatech_smartbill/index.md",
@@ -12163,15 +12193,15 @@
     "version": "19.0.1.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sms_sale",
     "local_path": "odoo-addons/deltatech/deltatech_sms_sale",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-11-13",
     "friendly_name": "deltatech_sms_sale",
-    "summary": "Modulul Deltatech SMS Sale trimite automat un mesaj SMS către client în momentele cheie ale ciclului unei comenzi de vânzare: la confirmarea comenzii și la transmiterea (postarea) acesteia, de exemplu dintr-un magazin online. Astfel, clientul primește o notificare imediată de tipul „Comanda dumneavoastră nr. ... a fost confirmată”, îmbunătățind comunicarea și încrederea, fără intervenție manuală din partea echipei de vânzări. Trimiterea este configurabilă per companie și se bazează pe șabloane SMS editabile, folosind numărul de telefon al clientului din comandă.",
+    "summary": "Clienților le place să afle imediat că le-a fost înregistrată comanda. Modulul trimite automat un SMS către client când o comandă de vânzare este confirmată și când este trimis e-mailul de confirmare a comenzii, folosind șabloane SMS pe care le puteți edita. Modulul nu are furnizor SMS propriu: numărul de telefon al clientului și textul mesajului merg către serviciul SMS configurat în Odoo, iar mesajele se trimit imediat, nu în coadă.",
     "features": [
-      "Trimitere automată a unui SMS către client la confirmarea comenzii de vânzare.",
-      "Trimitere automată a unui SMS la postarea comenzii (de ex. din magazinul online).",
-      "Mesaje bazate pe șabloane SMS predefinite și personalizabile (text de tipul „...your order n° ... has been confirmed.”).",
-      "Activare/dezactivare și alegerea șablonului per companie, din Setări (configurare specifică companiei în mediu multi-company).",
-      "Trimiterea se face doar dacă partenerul are completat numărul de telefon."
+      "SMS la confirmare: la confirmarea comenzii, clientul primește mesajul din șablonul ales la *SMS Sale Order Confirm*, dacă opțiunea este activă și clientul are număr de telefon.",
+      "SMS la postare: de fiecare dată când Odoo trimite e-mailul de confirmare a comenzii, pleacă în același mod mesajul ales la *SMS Sale Order Post*. Setările numesc acest moment „postarea” comenzii (textul de ajutor: din website).",
+      "Texte implicite: ambele șabloane livrate încep cu numele companiei și precizează că numărul comenzii a fost confirmat, respectiv postat.",
+      "Setări per companie: ambele opțiuni se află în setările de Vânzări, se stabilesc per companie și sunt active implicit. Cât timp o opțiune este activă, șablonul ei este obligatoriu.",
+      "Drepturi pe șabloane: managerii de vânzări pot crea, modifica și șterge șabloanele SMS ale comenzilor de vânzare, și doar pe acestea."
     ],
     "dependencies": [
       "sale",
@@ -12181,7 +12211,7 @@
     "connections": [
       "deltatech_sms"
     ],
-    "text": "deltatech_sms_sale\ndeltatech_sms_sale\nModulul Deltatech SMS Sale trimite automat un mesaj SMS către client în momentele cheie ale ciclului unei comenzi de vânzare: la confirmarea comenzii și la transmiterea (postarea) acesteia, de exemplu dintr-un magazin online. Astfel, clientul primește o notificare imediată de tipul „Comanda dumneavoastră nr. ... a fost confirmată”, îmbunătățind comunicarea și încrederea, fără intervenție manuală din partea echipei de vânzări. Trimiterea este configurabilă per companie și se bazează pe șabloane SMS editabile, folosind numărul de telefon al clientului din comandă.\nTrimitere automată a unui SMS către client la confirmarea comenzii de vânzare.\nTrimitere automată a unui SMS la postarea comenzii (de ex. din magazinul online).\nMesaje bazate pe șabloane SMS predefinite și personalizabile (text de tipul „...your order n° ... has been confirmed.”).\nActivare/dezactivare și alegerea șablonului per companie, din Setări (configurare specifică companiei în mediu multi-company).\nTrimiterea se face doar dacă partenerul are completat numărul de telefon."
+    "text": "deltatech_sms_sale\ndeltatech_sms_sale\nClienților le place să afle imediat că le-a fost înregistrată comanda. Modulul trimite automat un SMS către client când o comandă de vânzare este confirmată și când este trimis e-mailul de confirmare a comenzii, folosind șabloane SMS pe care le puteți edita. Modulul nu are furnizor SMS propriu: numărul de telefon al clientului și textul mesajului merg către serviciul SMS configurat în Odoo, iar mesajele se trimit imediat, nu în coadă.\nSMS la confirmare: la confirmarea comenzii, clientul primește mesajul din șablonul ales la *SMS Sale Order Confirm*, dacă opțiunea este activă și clientul are număr de telefon.\nSMS la postare: de fiecare dată când Odoo trimite e-mailul de confirmare a comenzii, pleacă în același mod mesajul ales la *SMS Sale Order Post*. Setările numesc acest moment „postarea” comenzii (textul de ajutor: din website).\nTexte implicite: ambele șabloane livrate încep cu numele companiei și precizează că numărul comenzii a fost confirmat, respectiv postat.\nSetări per companie: ambele opțiuni se află în setările de Vânzări, se stabilesc per companie și sunt active implicit. Cât timp o opțiune este activă, șablonul ei este obligatoriu.\nDrepturi pe șabloane: managerii de vânzări pot crea, modifica și șterge șabloanele SMS ale comenzilor de vânzare, și doar pe acestea."
   },
   {
     "path": "deltatech_stock_account/index.md",
@@ -13092,7 +13122,7 @@
   {
     "path": "deltatech_vendor_products/index.md",
     "module": "deltatech_vendor_products",
-    "version": "19.0.1.4.2",
+    "version": "19.0.1.4.3",
     "github": "https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products",
     "local_path": "odoo-addons/bitshop_vendor/deltatech_vendor_products",
     "last_ingest": "2026-10-22",
@@ -13185,7 +13215,7 @@
   {
     "path": "deltatech_vendor_products_kramp/index.md",
     "module": "deltatech_vendor_products_kramp",
-    "version": "19.0.1.2.3",
+    "version": "19.0.1.2.4",
     "github": "`https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products_kramp`",
     "local_path": "odoo-addons/bitshop_vendor/deltatech_vendor_products_kramp",
     "last_ingest": "2026-10-22",
@@ -13801,13 +13831,16 @@
     "path": "deltatech_website_disable_fuzzy_search/index.md",
     "module": "deltatech_website_disable_fuzzy_search",
     "version": "19.0.1.0.3",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_disable_fuzzy_search`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_disable_fuzzy_search",
     "local_path": "odoo-addons/deltatech/deltatech_website_disable_fuzzy_search",
-    "last_ingest": "2026-06-03",
+    "last_ingest": "2026-11-13",
     "friendly_name": "deltatech_website_disable_fuzzy_search",
-    "summary": "Acest modul dezactivează căutarea „fuzzy\" (aproximativă) din bara de căutare a magazinului online. În mod implicit, Odoo tolerează micile greșeli de scriere și returnează rezultate apropiate de termenul căutat. După instalarea acestui modul, căutarea devine exactă: clientul primește doar produsele care corespund efectiv termenului introdus, fără sugestii aproximative. Este util pentru magazinele care doresc rezultate de căutare precise și predictibile.",
+    "summary": "Când potrivirea „fuzzy” (aproximativă) este activă, căutarea din website poate găsi cuvinte apropiate de cel introdus. Acest modul dezactivează potrivirea aproximativă în bara de căutare a website-ului și în căutarea de produse din magazinul online, astfel încât clientul să primească doar rezultate care corespund efectiv termenului introdus.",
     "features": [
-      "Dezactivează căutarea fuzzy (aproximativă) pentru bara de căutare din magazinul online."
+      "Bara de căutare: bara de căutare a website-ului nu mai folosește potrivirea aproximativă, indiferent ce cere pagina.",
+      "Căutarea în magazin: căutarea de produse din magazinul online nu o folosește nici ea.",
+      "Mereu activ: nu există setare sau meniu. Odată instalat, modulul se aplică tuturor website-urilor, vizitatorilor și limbilor din baza de date.",
+      "Fără excepții per website: fiindcă nu are setări, modulul nu poate fi oprit pentru un singur website; pentru a recăpăta căutarea aproximativă, modulul se dezinstalează."
     ],
     "dependencies": [
       "website_sale"
@@ -13815,7 +13848,7 @@
     "connections": [
       "website_sale"
     ],
-    "text": "deltatech_website_disable_fuzzy_search\ndeltatech_website_disable_fuzzy_search\nAcest modul dezactivează căutarea „fuzzy\" (aproximativă) din bara de căutare a magazinului online. În mod implicit, Odoo tolerează micile greșeli de scriere și returnează rezultate apropiate de termenul căutat. După instalarea acestui modul, căutarea devine exactă: clientul primește doar produsele care corespund efectiv termenului introdus, fără sugestii aproximative. Este util pentru magazinele care doresc rezultate de căutare precise și predictibile.\nDezactivează căutarea fuzzy (aproximativă) pentru bara de căutare din magazinul online."
+    "text": "deltatech_website_disable_fuzzy_search\ndeltatech_website_disable_fuzzy_search\nCând potrivirea „fuzzy” (aproximativă) este activă, căutarea din website poate găsi cuvinte apropiate de cel introdus. Acest modul dezactivează potrivirea aproximativă în bara de căutare a website-ului și în căutarea de produse din magazinul online, astfel încât clientul să primească doar rezultate care corespund efectiv termenului introdus.\nBara de căutare: bara de căutare a website-ului nu mai folosește potrivirea aproximativă, indiferent ce cere pagina.\nCăutarea în magazin: căutarea de produse din magazinul online nu o folosește nici ea.\nMereu activ: nu există setare sau meniu. Odată instalat, modulul se aplică tuturor website-urilor, vizitatorilor și limbilor din baza de date.\nFără excepții per website: fiindcă nu are setări, modulul nu poate fi oprit pentru un singur website; pentru a recăpăta căutarea aproximativă, modulul se dezinstalează."
   },
   {
     "path": "deltatech_website_effects/index.md",
@@ -13851,14 +13884,16 @@
     "path": "deltatech_website_fixed_price/index.md",
     "module": "deltatech_website_fixed_price",
     "version": "19.0.0.0.2",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_fixed_price`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_fixed_price",
     "local_path": "odoo-addons/deltatech/deltatech_website_fixed_price",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "eCommerce Afișare Preț Fix ca Reducere",
-    "summary": "Acest modul ajustează modul în care magazinul online afișează prețurile atunci când se folosesc reguli de listă de prețuri cu preț fix. În mod implicit, Odoo nu arată prețul tăiat (prețul de referință barat) atunci când o regulă de preț fix se aplică unui produs. Modulul face ca prețul de comparație (prețul de listă barat) să fie afișat și în cazul prețurilor fixe, dar numai atunci când prețul fix este efectiv mai mic decât prețul de referință. Astfel, clienții văd clar economia reală, iar comerciantul evită afișarea unei „reduceri” false atunci când prețul fix este de fapt mai mare decât prețul de listă.",
+    "last_ingest": "2026-11-13",
+    "friendly_name": "deltatech_website_fixed_price",
+    "summary": "Magazinele online oferă adesea unui produs un preț special printr-o regulă de listă de prețuri cu preț fix și vor ca prețul vechi să apară barat. Modulul face ca magazinul eCommerce să trateze regulile cu preț fix ca reguli a căror reducere se afișează. Conform descrierii din manifest, prețul tăiat apare când prețul fix este mai mic decât prețul de listă.",
     "features": [
-      "Afișează prețul de comparație (barat) și atunci când se folosesc reguli de preț fix în lista de prețuri.",
-      "Previne afișarea prețului tăiat atunci când prețul fix este mai mare decât prețul de comparație (comportamentul implicit Odoo nu îl afișa deloc)."
+      "Reguli cu preț fix: o regulă de listă de prețuri al cărei calcul este „preț fix” cere acum întotdeauna magazinului să afișeze reducerea. Orice altă regulă păstrează răspunsul dat de codul standard.",
+      "Unde se aplică: conform comentariului din cod, modificarea acoperă magazinul, pagina de produs și configuratoarele de produs, nu coșul și nici finalizarea comenzii.",
+      "Compararea prețurilor: modulul nu compară el însuși prețurile; afișarea prețului tăiat numai când prețul fix este mai mic decât cel de listă rămâne în seama mecanismului standard de afișare din `website_sale`.",
+      "Fără configurare: modulul nu adaugă setări, câmpuri, ecrane sau meniuri. Se aplică tuturor regulilor de listă de prețuri imediat după instalare."
     ],
     "dependencies": [
       "website_sale"
@@ -13866,7 +13901,7 @@
     "connections": [
       "website_sale"
     ],
-    "text": "eCommerce Afișare Preț Fix ca Reducere\ndeltatech_website_fixed_price\nAcest modul ajustează modul în care magazinul online afișează prețurile atunci când se folosesc reguli de listă de prețuri cu preț fix. În mod implicit, Odoo nu arată prețul tăiat (prețul de referință barat) atunci când o regulă de preț fix se aplică unui produs. Modulul face ca prețul de comparație (prețul de listă barat) să fie afișat și în cazul prețurilor fixe, dar numai atunci când prețul fix este efectiv mai mic decât prețul de referință. Astfel, clienții văd clar economia reală, iar comerciantul evită afișarea unei „reduceri” false atunci când prețul fix este de fapt mai mare decât prețul de listă.\nAfișează prețul de comparație (barat) și atunci când se folosesc reguli de preț fix în lista de prețuri.\nPrevine afișarea prețului tăiat atunci când prețul fix este mai mare decât prețul de comparație (comportamentul implicit Odoo nu îl afișa deloc)."
+    "text": "deltatech_website_fixed_price\ndeltatech_website_fixed_price\nMagazinele online oferă adesea unui produs un preț special printr-o regulă de listă de prețuri cu preț fix și vor ca prețul vechi să apară barat. Modulul face ca magazinul eCommerce să trateze regulile cu preț fix ca reguli a căror reducere se afișează. Conform descrierii din manifest, prețul tăiat apare când prețul fix este mai mic decât prețul de listă.\nReguli cu preț fix: o regulă de listă de prețuri al cărei calcul este „preț fix” cere acum întotdeauna magazinului să afișeze reducerea. Orice altă regulă păstrează răspunsul dat de codul standard.\nUnde se aplică: conform comentariului din cod, modificarea acoperă magazinul, pagina de produs și configuratoarele de produs, nu coșul și nici finalizarea comenzii.\nCompararea prețurilor: modulul nu compară el însuși prețurile; afișarea prețului tăiat numai când prețul fix este mai mic decât cel de listă rămâne în seama mecanismului standard de afișare din `website_sale`.\nFără configurare: modulul nu adaugă setări, câmpuri, ecrane sau meniuri. Se aplică tuturor regulilor de listă de prețuri imediat după instalare."
   },
   {
     "path": "deltatech_website_floating_widgets/index.md",
@@ -14503,7 +14538,7 @@
   {
     "path": "deltatech_website_shop_snippets/index.md",
     "module": "deltatech_website_shop_snippets",
-    "version": "19.0.1.1.15",
+    "version": "19.0.1.1.17",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_shop_snippets",
     "local_path": "odoo-addons/bitshop/deltatech_website_shop_snippets",
     "last_ingest": "2026-10-22",
@@ -14649,7 +14684,7 @@
   {
     "path": "deltatech_website_vat_validation/index.md",
     "module": "deltatech_website_vat_validation",
-    "version": "19.0.0.2.1",
+    "version": "19.0.0.3.0",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_vat_validation`",
     "local_path": "odoo-addons/deltatech/deltatech_website_vat_validation",
     "last_ingest": "2026-10-12",
@@ -16663,7 +16698,7 @@
   {
     "path": "l10n_ro_cash_register/index.md",
     "module": "l10n_ro_cash_register",
-    "version": "19.0.1.4.3",
+    "version": "19.0.1.5.0",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_cash_register",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_cash_register",
     "last_ingest": "2026-10-08",
@@ -20581,7 +20616,7 @@
   {
     "path": "l10n_ro_saft_export_fix/index.md",
     "module": "l10n_ro_saft_export_fix",
-    "version": "19.0.1.2.2",
+    "version": "19.0.1.2.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_saft_export_fix",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_saft_export_fix",
     "last_ingest": "2026-10-22",
@@ -21161,7 +21196,7 @@
   {
     "path": "l10n_ro_stock_gestiune/index.md",
     "module": "l10n_ro_stock_gestiune",
-    "version": "19.0.3.1.7",
+    "version": "19.0.3.1.8",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_gestiune`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_gestiune",
     "last_ingest": "2026-09-25",
@@ -21263,7 +21298,7 @@
   {
     "path": "l10n_ro_stock_obyc/index.md",
     "module": "l10n_ro_stock_obyc",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_obyc`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_obyc",
     "last_ingest": "2026-10-27",
@@ -21944,7 +21979,7 @@
   {
     "path": "l10n_ro_website_anaf/index.md",
     "module": "l10n_ro_website_anaf",
-    "version": "19.0.1.2.1",
+    "version": "19.0.1.2.2",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_website_anaf",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_website_anaf",
     "last_ingest": "2026-10-27",

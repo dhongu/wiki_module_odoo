@@ -1,20 +1,23 @@
-# Purchase Picking Status (localizat la `deltatech_purchase_picking_status/index.md`)
+# Purchase picking status
 
 - **Nume Tehnic:** `deltatech_purchase_picking_status`
 - **Versiune:** `19.0.1.0.4`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_picking_status`
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_picking_status
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_picking_status`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-13`
 
 #### 1. Sumar
 
-Modulul **Purchase Picking Status** adaugă pe comanda de achiziție un indicator sintetic al stadiului livrărilor asociate, calculat automat pe baza transferurilor de stoc (pickings) legate de acea comandă. Astfel, un agent de achiziții poate vedea dintr-o privire dacă o comandă este complet recepționată/finalizată sau dacă mai are livrări în curs, fără a fi nevoit să deschidă fiecare transfer în parte.
+Agenții de achiziții care primesc marfa în mai multe livrări trebuie să vadă dintr-o privire care comenzi de achiziție mai așteaptă marfă. Modulul adaugă pe comanda de achiziție un *Delivery Status*, calculat din recepțiile comenzii, astfel încât nu mai e nevoie să deschidă fiecare transfer în parte.
 
 #### 2. Funcționalități Cheie
 
-- Adaugă statusul de livrare (picking status) pe comanda de achiziție
-- Marchează statusul ca **Done** (finalizat) atunci când toate transferurile asociate sunt în stare `done` sau `cancel`
-- Marchează statusul ca **In Progress** (în curs) atunci când cel puțin un transfer asociat nu este încă în stare `done` sau `cancel`
+- **Statusul livrării:** este *In Progress* cât timp o recepție a comenzii nu este nici finalizată, nici anulată, și *Done* când toate recepțiile sunt finalizate sau anulate.
+- **Comenzi fără recepții:** o comandă confirmată fără recepții, de exemplu una de servicii, este *Done*; înainte de confirmare este *In Progress*.
+- **Insignă și coloană:** statusul apare ca insignă (badge) pe formularul comenzii și ca o coloană, vizibilă implicit, în listele de cereri de ofertă și de comenzi de achiziție.
+- **Filtre:** două filtre de căutare, *Done* și *In progress*, selectează comenzile după statusul livrării.
+- **Actualizare automată:** statusul nu este stocat și urmărește comanda imediat ce este confirmată sau când o recepție este validată ori anulată.
+- **Drepturi și comenzi anulate:** modulul nu adaugă grupuri, deci oricine vede comenzile de achiziție vede și statusul. O comandă anulată urmează aceeași regulă: fără recepții afișează *In Progress*.
 
 #### 3. Dependențe
 
@@ -22,8 +25,20 @@ Modulul **Purchase Picking Status** adaugă pe comanda de achiziție un indicato
 
 #### 4. Componente Cheie
 
-Documentația acestei secțiuni se bazează pe fișierul `readme/DESCRIPTION.md`, care nu detaliază componentele tehnice individuale. Conform fluxului de ingestie, analiza codului pentru modele, vizualizări și acțiuni automate a fost omisă, deoarece Readme-ul este prezent și nu solicită explicit această analiză.
+**Modele**
+
+- `purchase.order` (extins): câmpul calculat, nestocat și căutabil `picking_status` (*Delivery Status*: `done` / `in_progress`), cu urmărire în chatter; `_compute_picking_status` aplică regulile de mai sus, iar `_search_picking_status` reproduce aceeași regulă ca domeniu de căutare (inclusiv pentru comenzile anulate).
+
+**Vizualizări**
+
+- `view_purchase_form_picking_status`: insigna *Delivery Status* pe formularul comenzii, după câmpul `origin`.
+- `view_rfq_tree_picking_status` și `view_purchase_tree_picking_status`: coloana-insignă în listele de cereri de ofertă și de comenzi de achiziție.
+- `view_purchase_order_filter_picking_status`: filtrele *Done* și *In progress* în căutarea comenzilor.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Nu sunt definite sarcini `ir.cron`, reguli `base.automation` sau acțiuni server.
 
 #### 5. Conexiuni
 
-Nu au fost identificate conexiuni funcționale documentate către alte module cu pagină în wiki.
+- `purchase_stock`: modulul standard care leagă comenzile de achiziție de recepțiile din stoc, din care se calculează statusul.

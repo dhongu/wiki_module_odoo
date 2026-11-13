@@ -1,18 +1,23 @@
-# Purchase Stock (localizat la `deltatech_purchase_stock/index.md`)
+# Purchase Stock
 
 - **Nume Tehnic:** `deltatech_purchase_stock`
 - **Versiune:** `19.0.1.0.3`
-- **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_stock](https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_stock)
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_stock
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_stock`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-13`
 
 #### 1. Sumar
 
-Modulul separă comenzile de achiziție create automat prin reaprovizionare (replenishment) de cele create manual de un agent de achiziții. Fără el, cu opțiunea `group_rfq = Always` de pe partenerul furnizor, Odoo standard ar amesteca liniile de reaprovizionare în orice comandă de achiziție ciornă existentă a aceluiași furnizor — inclusiv cele întocmite manual — ceea ce ar putea denatura o comandă pe care un agent de achiziții o pregătește cu atenție.
+Reaprovizionarea poate adăuga liniile sale într-o comandă de achiziție ciornă existentă a furnizorului, inclusiv într-una pe care un agent de achiziții o pregătește manual. Modulul marchează comenzile de achiziție create de reaprovizionare și o împiedică să folosească orice altă comandă, astfel încât comenzile întocmite manual să rămână separate de cele generate automat.
 
 #### 2. Funcționalități Cheie
 
-- Separă comenzile de achiziție manuale de comenzile de achiziție generate prin reaprovizionare (replenishment).
+- **Marcaj de reaprovizionare:** comenzile de achiziție create de o regulă de stoc, de exemplu dintr-o regulă de reaprovizionare (reordering rule), primesc automat marcajul `from_replenishment`.
+- **Comenzile manuale rămân curate:** căutarea unei comenzi existente în care să se adauge linii primește o condiție în plus — comanda trebuie să poarte marcajul. Comenzile fără marcaj nu sunt niciodată folosite.
+- **Reaprovizionările se contopesc în continuare:** nevoile succesive de reaprovizionare ale aceluiași furnizor merg în aceeași comandă marcată, așa cum verifică testele modulului.
+- **Comenzi existente:** comenzile create înainte de instalare nu au marcaj, deci reaprovizionarea nu adaugă linii în ele.
+- **Fără ecran:** modulul nu adaugă vizualizări, meniuri sau setări, iar marcajul nu apare pe formularul comenzii de achiziție.
+- **Limitare:** marcajul nu se șterge niciodată, deci o comandă marcată rămâne deschisă pentru reaprovizionare chiar dacă un agent adaugă ulterior linii manual.
 
 #### 3. Dependențe
 
@@ -22,12 +27,12 @@ Modulul separă comenzile de achiziție create automat prin reaprovizionare (rep
 
 **Modele**
 
-- `purchase.order`: adaugă câmpul boolean `from_replenishment`, care marchează dacă o comandă a fost generată automat printr-o regulă de reaprovizionare.
-- `stock.rule`: suprascrie `_prepare_purchase_order` pentru a seta `from_replenishment = True` pe comenzile create de regulile de stoc, și `_make_po_get_domain` pentru a restrânge căutarea/gruparea comenzilor ciornă existente doar la cele cu `from_replenishment = True` — astfel o nouă nevoie de reaprovizionare nu se mai grupează niciodată într-o comandă ciornă creată manual.
+- `purchase.order` (extins): câmpul boolean `from_replenishment`, care marchează comenzile generate printr-o regulă de stoc.
+- `stock.rule` (extins): `_prepare_purchase_order` setează `from_replenishment = True` pe comenzile create de regulile de stoc, iar `_make_po_get_domain` adaugă condiția `from_replenishment = True` la căutarea comenzilor ciornă existente.
 
 **Vizualizări**
 
-- Modulul nu adaugă vizualizări proprii (nu are date XML în `data`); câmpul `from_replenishment` nu este expus într-o vizualizare dedicată.
+- Modulul nu adaugă vizualizări proprii (lista `data` din manifest este goală); câmpul `from_replenishment` nu este afișat.
 
 **Acțiuni Automate / Acțiuni Server**
 
@@ -35,4 +40,4 @@ Modulul separă comenzile de achiziție create automat prin reaprovizionare (rep
 
 #### 5. Conexiuni
 
-- [deltatech_auto_reorder_rule](../deltatech_auto_reorder_rule/index.md): regulile de reordonare create automat de acest modul pentru fiecare produs nou sunt reutilizate de fluxul de reaprovizionare pe care `deltatech_purchase_stock` îl izolează de comenzile manuale (relevant și pentru teste, unde o singură regulă e permisă per produs/locație/companie).
+- `purchase_stock`: modulul standard ale cărui reguli de stoc (`stock.rule`) creează comenzile de achiziție de reaprovizionare, a căror grupare o restrânge acest modul.

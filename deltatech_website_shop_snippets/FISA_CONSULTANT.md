@@ -267,7 +267,9 @@ Deschideți o pagină de categorie din magazin (ex. **Magazin** → categoria *M
 
 1. **Categorii › Stil** (cu *Categorii* = *Sus*): varianta **Carduri cu număr de produse** (*Cards
    with product count*) — fiecare subcategorie a categoriei selectate e un card cu poză, nume și
-   număr de produse; cea selectată e evidențiată.
+   număr de produse; cea selectată e evidențiată. Poza cardului e poza categoriei, inclusiv când e un
+   fișier SVG (plăcuțele mărcilor), ca în lista din stânga; cu `deltatech_website_category_icon`
+   instalat, cardul arată iconița sau poza aleasă de acel modul (*Ordinea iconițelor categoriilor*).
 2. **Subcategorii** (*Subcategories*, cu *Categorii* = *Bară laterală*): lista din stânga arată un
    link înapoi la categoria de deasupra și subcategoriile cu poză și număr de produse.
 3. **Câmp de căutare** (*Search Box*, sub *Subcategorii*): peste cinci subcategorii, o casetă
@@ -431,6 +433,7 @@ textele avantajelor și prețurile de comparație.
 - [ ] *Carduri categorii*: numărul de pe card = produsele publicate din categorie și subcategorii.
 - [ ] Pe o pagină de categorie, bannerul arată *N produse în M subcategorii*: *M* = numărul de subcategorii din stânga, *N* = produsele distincte (poate fi sub suma cifrelor din listă, un produs din două subcategorii se numără o dată).
 - [ ] Caseta *Caută în N subcategorii* apare doar peste cinci subcategorii și găsește și fără diacritice.
+- [ ] Cu varianta *Carduri cu număr de produse*, cardul unei subcategorii cu poză SVG arată poza (nu un spațiu gol), ca în lista din stânga.
 - [ ] `/shop?collection=sale`, `new`, `best_sellers` au banner, file și cipuri; `clearance` apare doar cu eticheta setată.
 - [ ] Pagina de produs: *Cod* se copiază la clic; eticheta de recenzii deschide *Recenziile clienților*; un produs fără recenzii arată *Scrie o recenzie*.
 - [ ] *Livrare estimată*: intervalul sare peste weekend și se mută cu o zi după ora limită; nu apare pentru un produs stocabil fără stoc.
