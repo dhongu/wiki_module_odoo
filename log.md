@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-14] Reingestie terrabit_iap_server și terrabit_iap_server_online
+
+- **Acțiune:** reingestie pentru [terrabit_iap_server](terrabit_iap_server/index.md) (19.0.0.2.1: portalul clientului `/my/iap` cu servicii, sold, istoric și **Buy Credits**, tipurile de tranzacții `Usage` / `Purchase` / `Free Credits` / `Adjustment`) și [terrabit_iap_server_online](terrabit_iap_server_online/index.md) (19.0.1.3.1, cu fișa consultant nouă). Procesare în paralel, cu câte un subagent pe modul.
+- **Sursă:** branch-ul `19.0-doc-fisa-terrabit_iap_server_online` (terrabit-solutions/terrabit#579, încă neunit în 19.0): `__manifest__.py`, `readme/*.md`, `controllers/portal.py`, `models/`, `views/iap_portal_templates.xml`.
+- **Fișe consultant:** copiată pentru `terrabit_iap_server_online` (6 capturi). `terrabit_iap_server` nu are fișă, iar `DESCRIPTION.md` e gol (pagina e făcută după cod și `HISTORY.md`).
+- **Dependențe/Conexiuni:** `terrabit_iap_server` ↔ `terrabit_iap_server_online` (eticheta „Odoo Online” din portal); `terrabit_iap_server_online` ↔ `deltatech_iap_online` (server ↔ client).
+- **Avertismente:** versiunile din pagini o depășesc pe cea de pe `19.0` până la merge-ul #579; `iap`, `portal` și `website` rămân text (fără pagină wiki).
+- **Fișiere actualizate:** `terrabit_iap_server/index.md`, `terrabit_iap_server_online/index.md`, `terrabit_iap_server_online/FISA_CONSULTANT.md`, `terrabit_iap_server_online/screenshots/`, `index.md`, `.index/chunks.json`.
+
 ## [2026-11-14] deltatech_ecr_online: versiunea Odoo 20
 
 - **Acțiune:** linia *Odoo 20* adăugată în [deltatech_ecr_online](deltatech_ecr_online/index.md): `20.0.1.0.1`, portat prin terrabit-solutions/bitshop#3872 și #3873; fișa consultant și cele 18 capturi (RO/EN) refăcute pe Odoo 20 prin #3875, pe o bază curată cu modulele importate din zip, ca pe Odoo Online. Pagina, fișa copiată și capturile din wiki rămân cele de pe 19.0.
