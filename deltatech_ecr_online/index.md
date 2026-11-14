@@ -3,6 +3,7 @@
 - **Nume Tehnic:** `deltatech_ecr_online`
 - **Versiune:** `19.0.1.0.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_ecr_online
+- **Odoo 20:** `20.0.1.0.1`, portat prin terrabit-solutions/bitshop#3872 (`deltatech_ecr_connect`) și terrabit-solutions/bitshop#3873; capturile fișei regenerate pe Odoo 20 și fișa aliniată cu interfața 20.0 prin terrabit-solutions/bitshop#3875 (https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_ecr_online)
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_ecr_online`
 - **Ultima Ingestie:** `2026-11-14`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)

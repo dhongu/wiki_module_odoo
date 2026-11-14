@@ -4,6 +4,10 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-14] deltatech_ecr_online: versiunea Odoo 20
+
+- **Acțiune:** linia *Odoo 20* adăugată în [deltatech_ecr_online](deltatech_ecr_online/index.md): `20.0.1.0.1`, portat prin terrabit-solutions/bitshop#3872 și #3873; fișa consultant și cele 18 capturi (RO/EN) refăcute pe Odoo 20 prin #3875, pe o bază curată cu modulele importate din zip, ca pe Odoo Online. Pagina, fișa copiată și capturile din wiki rămân cele de pe 19.0.
+
 ## [2026-11-14] Ingestie seria Odoo Online și reingestie module devenite data-only
 
 - **Acțiune:** 9 pagini noi pentru modulele fără Python (importabile pe Odoo Online) și serviciile IAP Terrabit: [l10n_ro_report_common_online](l10n_ro_report_common_online/index.md), [l10n_ro_invoice_report_online](l10n_ro_invoice_report_online/index.md), [l10n_ro_message_spv_online](l10n_ro_message_spv_online/index.md), [l10n_ro_anaf_partner_online](l10n_ro_anaf_partner_online/index.md), [deltatech_iap_online](deltatech_iap_online/index.md), [deltatech_delivery_online](deltatech_delivery_online/index.md), [deltatech_delivery_fc_online](deltatech_delivery_fc_online/index.md), [deltatech_ecr_online](deltatech_ecr_online/index.md), [terrabit_iap_server_online](terrabit_iap_server_online/index.md). Reingestie pentru 6 module devenite data-only, cărora li s-a scos sufixul „(importable, Odoo Online)” din nume: [deltatech_saleorder_search](deltatech_saleorder_search/index.md), [deltatech_list_view](deltatech_list_view/index.md), [deltatech_invoice_product_filter](deltatech_invoice_product_filter/index.md), [deltatech_no_quick_create](deltatech_no_quick_create/index.md), [deltatech_report_layout](deltatech_report_layout/index.md), [deltatech_chatter](deltatech_chatter/index.md). Procesare în paralel, cu câte un subagent pe modul, în trei loturi.
