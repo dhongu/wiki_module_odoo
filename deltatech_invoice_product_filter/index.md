@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.2.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_product_filter
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_invoice_product_filter`
-- **Ultima Ingestie:** `2026-09-29`
+- **Ultima Ingestie:** `2026-11-14`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -16,6 +16,10 @@ Acest modul adaugă posibilitatea de a căuta facturi după produsul conținut �
 - Adaugă un filtru de căutare după produs în vizualizarea de căutare a facturilor.
 - Adaugă un filtru de căutare după furnizorul produsului (numele partenerului din lista de furnizori a produsului), pentru a regăsi facturile cu produse cumpărate de la un anumit furnizor.
 - Permite regăsirea facturilor pe baza produselor din liniile documentului, nu doar a câmpurilor de antet.
+- Utilizare: în **Facturare > Clienți > Facturi**, se tastează numele produsului (sau o parte din el) în bara de căutare și apar două sugestii noi, **Search Product for: ...** și **Search Vendor for: ...**. Căutarea după produs folosește numele, referința internă sau codul de bare; cea după furnizor găsește facturile cu produse cumpărate de la furnizorul respectiv, indiferent de produs.
+- Pentru căutarea după furnizor, produsele trebuie să aibă furnizorii completați în fila **Achiziție** a formularului de produs. Nu e nimic de configurat.
+- Criteriile sunt disponibile în toate listele de facturi (facturi clienți, note de credit, facturi furnizor, rambursări) și se pot combina între ele și cu filtrele standard.
+- Modul doar cu date, fără cod Python: pe lângă Odoo.sh și instalările on-premise, poate fi folosit și pe Odoo Online (planul Custom), încărcând arhiva zip din **Apps > Import Module**.
 
 #### 3. Dependențe
 

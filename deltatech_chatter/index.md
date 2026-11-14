@@ -1,10 +1,10 @@
-# Resizable Chatter Panel (importable, Odoo Online) (localizat la `deltatech_chatter/index.md`)
+# Resizable Chatter Panel (localizat la `deltatech_chatter/index.md`)
 
 - **Nume Tehnic:** `deltatech_chatter`
 - **Versiune:** `19.0.0.1.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_chatter`
-- **Ultima Ingestie:** `2026-11-09`
+- **Ultima Ingestie:** `2026-11-14`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -16,7 +16,7 @@ Modulul îmbunătățește vizualizarea de tip formular din Odoo prin introducer
 - **Interfață divizată redimensionabilă:** introduce o separare orizontală între conținutul formularului și secțiunea de chatter.
 - **Raport de dimensiune personalizabil:** dimensionare implicită de 70% pentru conținutul formularului și 30% pentru chatter.
 - **Redimensionare interactivă:** utilizatorii pot trage de separator pentru a ajusta proporția după preferințe; la finalul tragerii, proporția se reține în browser (`localStorage`) și se reaplică la următoarele deschideri.
-- **Design responsiv:** se adaptează automat la redimensionarea ferestrei; separatorul apare doar în formularele afișate pe ecran foarte lat (clasa `.o_xxl_form_view`, chatter lângă formular) și se elimină când condiția nu mai e îndeplinită.
+- **Design responsiv:** se adaptează automat la redimensionarea ferestrei; separatorul apare doar în formularul principal afișat pe ecran foarte lat (clasa `.o_xxl_form_view`, chatter lângă formular), nu și în dialoguri sau sub-formulare, și se elimină când condiția nu mai e îndeplinită. Se resincronizează după fiecare randare, deci apare și când chatterul sau atașamentele se încarcă mai târziu.
 - **Limite minime de dimensiune:** previne micșorarea excesivă a secțiunilor (300px pentru formular, 250px pentru chatter).
 - **Compatibil Odoo Online:** modulul conține doar JavaScript, stiluri și biblioteca Split.js, fără cod Python, deci poate fi importat și pe Odoo Online (plan Custom) din **Aplicații > Import Module**.
 
@@ -26,11 +26,12 @@ Modulul îmbunătățește vizualizarea de tip formular din Odoo prin introducer
 
 #### 4. Componente Cheie
 
-Modulul nu definește modele, vizualizări sau acțiuni automate noi. Funcționalitatea este implementată exclusiv la nivel de frontend, prin active web (`web.assets_backend`):
+Modulul nu definește modele, vizualizări sau acțiuni automate noi. Funcționalitatea este implementată exclusiv la nivel de frontend, prin active web (`web.assets_backend`). Patch-ul lucrează doar în interiorul propriului formular (nu caută separatorul în toată pagina), iar ascultătorul de redimensionare se elimină corect la demontare:
 
 - `static/src/lib/split/split.min.js`: biblioteca Split.js folosită pentru a crea interfața redimensionabilă.
 - `static/src/js/chatter_split.esm.js`: patch aplicat peste `FormRenderer` din Odoo pentru a adăuga divizarea în vizualizările formular (inițializare dinamică a separatorului, curățare la demontarea componentei, ascultător pentru redimensionarea ferestrei, tratarea cazului în care elementele DOM necesare lipsesc).
 - `static/src/scss/style.scss`: stilurile aferente panoului divizat.
+- `static/tests/chatter_split.test.js`: teste Hoot pentru separator, încărcate prin `web.assets_unit_tests` și rulate cu suita Hoot din `web` (modulul rămâne fără cod Python).
 
 #### 5. Conexiuni
 

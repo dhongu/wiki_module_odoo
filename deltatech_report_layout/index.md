@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.1.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_report_layout
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_report_layout`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-11-14`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -14,11 +14,13 @@ Modulul adaugă în Odoo aspecte (layout-uri) de document suplimentare, cu un de
 #### 2. Funcționalități Cheie
 
 - Două aspecte noi de raport, **Style1** și **Style2**, cu antet, subsol și corp de document diferite față de cele standard Odoo.
-- Aspectele apar în configurarea centralizată a layout-ului documentelor, alături de cele standard; alegerea se face din **Setări > Setări generale > Document Layout**, cu previzualizare înainte de salvare.
+- Aspectele apar în configurarea centralizată a layout-ului documentelor, alături de cele standard; alegerea se face din **Setări > Setări generale**, secțiunea **Companii**, butonul **Configurare Document Layout**; cele două stiluri apar sub cele standard, cu previzualizare înainte de salvare.
+- Style1: sigla în stânga, adresa companiei aliniată la dreapta. Style2: adresa lângă siglă, antetul tabelului și totalul folosesc culoarea primară a companiei (culorile se pot schimba în același dialog).
 - După salvare, toate rapoartele care folosesc layout-ul extern (facturi, comenzi de vânzare etc.) preiau stilul ales.
-- Stilurile (SCSS) sunt încărcate prin asset-urile standard de raport (`web.report_assets_common`), deci sunt compatibile cu generarea PDF din Odoo.
+- Stilurile (SCSS) sunt încărcate prin asset-urile standard de raport (`web.report_assets_common`), listate explicit în manifest (fără wildcard, cerință pentru import pe Odoo Online), deci sunt compatibile cu generarea PDF din Odoo.
 - Antetul afișează sigla și adresa/detaliile companiei din configurarea companiei.
-- Stadiu de dezvoltare: Beta.
+- Modul exclusiv de date (fără cod Python): poate fi instalat și pe Odoo Online (plan Custom), ca arhivă zip din **Aplicații > Import Module**, nu doar pe Odoo.sh sau on-premise.
+- Stadiu de dezvoltare: Production/Stable (folosit de mult timp la clienți).
 
 #### 3. Dependențe
 

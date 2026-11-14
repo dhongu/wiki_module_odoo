@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.2.1.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_no_quick_create
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_no_quick_create`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-14`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -13,7 +13,11 @@ Acest modul dezactivează, la nivel global, opțiunea de „creare rapidă" (qui
 
 #### 2. Funcționalități Cheie
 
-- Dezactivează opțiunea de creare rapidă a noilor înregistrări direct din câmpurile relaționale, fără editarea lor, pentru a preveni produse, contacte etc. goale.
+- Dezactivează opțiunea de creare rapidă (`Create "..."`) direct din câmpurile relaționale, pentru a preveni produse, contacte etc. goale.
+- Se aplică tuturor widget-urilor many2one (simplu, avatar, barcode, reference); opțiunea **Create and edit...** rămâne disponibilă, cu numele tastat deja completat în dialog.
+- Nu necesită configurare: după instalare și reîncărcarea paginii, comportamentul e activ peste tot (ex. **Contacte > Contacte**, câmpul **Company**).
+- Modulul nu conține cod Python, doar un fișier JavaScript, deci poate fi folosit și pe Odoo Online (plan Custom): arhiva zip se încarcă din **Apps > Import Module** (mod developer), pe lângă Odoo.sh și on-premise.
+- Pașii ilustrați cu capturi se găsesc în fișa consultant.
 
 #### 3. Dependențe
 
@@ -22,9 +26,9 @@ Acest modul dezactivează, la nivel global, opțiunea de „creare rapidă" (qui
 
 #### 4. Componente Cheie
 
-**Vizualizări**
+**Modele, vizualizări, acțiuni**
 
-Modulul nu definește modele, vizualizări XML, acțiuni automate sau acțiuni server. Întreaga funcționalitate este implementată în partea de frontend (JavaScript).
+Modulul nu definește modele, vizualizări XML, acțiuni automate sau acțiuni server și nu conține cod Python (nu are nici `__init__.py`). Întreaga funcționalitate este implementată în frontend (JavaScript).
 
 **Asset-uri JavaScript**
 
