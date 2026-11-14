@@ -1,10 +1,10 @@
-# MRP BoM Formula (localizat la `deltatech_mrp_bom_formula/index.md`)
+# BoM Quantity Formulas (localizat la `deltatech_mrp_bom_formula/index.md`)
 
 - **Nume Tehnic:** `deltatech_mrp_bom_formula`
 - **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_bom_formula
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_mrp_bom_formula`
-- **Ultima Ingestie:** `2026-08-14`
+- **Ultima Ingestie:** `2026-11-14`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -15,14 +15,16 @@ Este echivalentul funcțional al părții de calcul al consumului din mecanismul
 
 #### 2. Funcționalități Cheie
 
-- Cod de formulă (`code`) pe atribut și pe valoarea atributului, generat automat din denumire, cu diacriticele curățate și sufix numeric la coliziune
-- Valoare numerică (`numeric_value`) pe valoarea atributului, pentru caracteristici măsurabile (lățime, lungime, grosime)
-- Formulă de cantitate (`qty_formula`) pe linia de componentă, evaluată cu `safe_eval` peste dicționarele `attr` (cod atribut → cod valoare) și `num` (cod atribut → valoare numerică)
-- Cantitatea de bază a liniei este disponibilă în formulă ca `qty`; sunt disponibile `ceil`, `floor` și funcțiile matematice uzuale
-- Formulele sunt validate la salvare, nu la lansarea producției, iar un cod inexistent este raportat cu numele lui
-- Un atribut pe care produsul nu îl poartă are valoare neutră (`False` / `0.0`), astfel încât o LDM de semifabricat poate citi o caracteristică a produsului finit
-- Pe LDM-uri imbricate, configurația produsului rădăcină rămâne disponibilă; doar valorile purtate efectiv de produsul intermediar o suprascriu
-- Linia fără formulă își păstrează cantitatea, iar o LDM fără nicio formulă folosește integral codul standard
+- **Cod de formulă** (`code`) pe atribut și pe valoarea atributului: identificatorul din formule, generat automat din denumire (diacritice curățate, sufix numeric la coliziune), editabil și unic.
+- **Valoare numerică** (`numeric_value`) pe valoarea atributului, pentru caracteristici măsurabile (lățime, lungime, grosime).
+- **Formulă de cantitate** (`qty_formula`) pe linia de componentă, evaluată cu `safe_eval` peste dicționarele `attr` (cod atribut → cod valoare) și `num` (cod atribut → valoare numerică); exemple: `0.8 if attr["finish"] == "galvanized" else 0.1`, `num["width"] / 1000`.
+- Cantitatea de bază a liniei este disponibilă în formulă ca `qty`; sunt disponibile `ceil`, `floor` și funcțiile uzuale `min`, `max`, `abs`, `round`, `int`, `float`. Formula trebuie să întoarcă un număr nenegativ și nu poate citi sau modifica înregistrări.
+- Formulele sunt validate la salvare, nu la lansarea producției, iar un cod inexistent este raportat cu numele lui.
+- Un atribut pe care produsul nu îl poartă are valoare neutră (`False` / `0.0`), astfel încât o LDM de semifabricat poate citi o caracteristică a produsului finit.
+- Pe LDM-uri imbricate, configurația produsului rădăcină rămâne disponibilă; doar valorile purtate efectiv de produsul intermediar o suprascriu. Formulele sunt luate în calcul și când se află pe un nivel mai jos, într-o LDM de tip kit.
+- Linia fără formulă își păstrează cantitatea, iar o LDM fără nicio formulă folosește integral codul standard.
+- Calcul la explodarea LDM-ului (ordin de fabricație, kit, prognoză); rotunjirea la unitatea de măsură se face în sus, ca în Odoo standard. Exemplu: 3 bucăți din varianta *Galvanizat, 1250 mm* cu `num["width"] / 1000` dau 3,75 kg de tablă.
+- **Configurare:** formula apare doar utilizatorilor care au activat *Variantele de produs* în Setări; codurile de formulă pot fi editate doar de grupul *Manufacturing / Administrator*. Câmpurile se găsesc în *Inventar ‣ Configurare ‣ Atribute* (coduri, valori numerice) și în *Producție ‣ Produse ‣ Liste de materiale* (coloana opțională *Quantity Formula*, doar pentru LDM definit pe șablon).
 
 #### 3. Dependențe
 
@@ -36,13 +38,13 @@ Este echivalentul funcțional al părții de calcul al consumului din mecanismul
 - `product.attribute.value` (extins): câmpurile `code` și `numeric_value`, valorile returnate de dicționarele `attr`, respectiv `num`.
 - `product.template.attribute.value` (extins): câmpuri `related` către cele de mai sus, pentru acces din interfață.
 - `product.product` (extins): `_get_own_formula_values()` returnează strict valorile purtate de variantă, iar `_get_formula_values()` le suprapune peste dicționarele neutre. Separarea este necesară pentru ca, la LDM-uri imbricate, valorile neutre ale semifabricatului să nu suprascrie configurația produsului rădăcină.
-- `mrp.bom` (extins): metoda `explode()` este rescrisă pentru a folosi rezultatul formulei în locul câmpului stocat `product_qty`. Corpul este copiat din standard, cu o singură diferență funcțională, și trebuie recomparat la fiecare trecere de versiune. O LDM fără nicio formulă apelează `super()`.
+- `mrp.bom` (extins): `explode()` este rescrisă pentru a folosi rezultatul formulei în locul câmpului stocat `product_qty`; corpul este copiat din standard, cu o singură diferență funcțională, și trebuie recomparat la fiecare trecere de versiune. `_has_formula_in_kits()` verifică dacă vreun nivel al ierarhiei de kit-uri are formulă; dacă nu, se apelează `super()`.
 - `mrp.bom.line` (extins): câmpul `qty_formula`, metodele `_get_formula_eval_context()` și `_get_formula_quantity()` (evaluare, cu respingerea rezultatelor non-numerice sau negative) și constrângerea `_check_qty_formula`, care testează formula la salvare pe o configurație plauzibilă.
 
 **Vizualizări**
 
 - `product_attribute_view_form` (moștenește `product.product_attribute_view_form`): câmpul `code` pe atribut și coloanele `code` / `numeric_value` pe valorile atributului, vizibile pentru grupul *Manufacturing / Administrator*.
-- `mrp_bom_form_view` (moștenește `mrp.mrp_bom_form_view`): coloana opțională `qty_formula` pe componentele listei de materiale, ascunsă implicit și afișată doar când LDM-ul este definit pe șablon.
+- `mrp_bom_form_view` (moștenește `mrp.mrp_bom_form_view`): coloana opțională `qty_formula` pe componente, ascunsă implicit, vizibilă doar cu variante activate și când LDM-ul este definit pe șablon.
 - `mrp_bom_line_view_form` (moștenește `mrp.mrp_bom_line_view_form`): câmpul `qty_formula` pe formularul liniei de LDM.
 
 **Acțiuni Automate / Acțiuni Server**

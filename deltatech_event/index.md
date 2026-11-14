@@ -1,7 +1,7 @@
 # Event Badge Numbers (localizat la `deltatech_event/index.md`)
 
 - **Nume Tehnic:** `deltatech_event`
-- **Versiune:** `19.0.0.0.7`
+- **Versiune:** `19.0.0.1.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_event
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_event`
 - **Ultima Ingestie:** `2026-10-31`

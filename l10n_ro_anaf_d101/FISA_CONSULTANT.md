@@ -83,8 +83,12 @@ Postarea merge și când impozitul de plată este zero:
   calculul se postează fără notă contabilă (mesaj în istoric), iar exportul merge normal, cu rd. 52 = 0;
 - **impozit de recuperat** (D100 peste impozitul anual): nota este storno în roșu Dr 691 = Cr 4411 cu
   suma negativă, iar exportul are rd. 53 = diferența;
-- **pierdere fiscală**: calculul se postează, dar exportul automat nu este încă disponibil (rândurile
-  de rezultat ar fi negative); declarația se completează manual (art. 42 alin. (1) CF).
+- **pierdere fiscală**: calculul se postează fără notă contabilă, iar exportul merge. Rd. 7, 10, 22, 35 și
+  38.1 apar negative, rd. 40.1 este pierderea anului de reportat, iar rd. 39.1, 40, 41, 48 și 52 sunt 0
+  (art. 42 alin. (1) CF: declarația se depune și pe pierdere). Limita de protocol de 2% este 0 pe rezultat
+  negativ, deci tot protocolul este nedeductibil; creditul de sponsorizare nu se aplică, fiindcă nu există
+  impozit. Pierderea anului nu se adaugă singură în lista pierderilor reportate, iar sponsorizarea
+  nefolosită nu se reportează automat: ambele se țin separat.
 
 ![Calcul impozit profit — perioada Anual, postat](screenshots/01_calcul_anual.png)
 
@@ -145,7 +149,8 @@ financiare 30.000, cheltuieli nedeductibile 50.000 lei; extras, rândurile cu 0 
 
 `totalPlata_A` este **suma de control** a rândurilor principale (P1–P53), cerută de ANAF, nu suma de
 plată; impozitul de plată este pe rândul 52 (`P52`). Rezultatul financiar (rd. 6) și cel din exploatare
-(rd. 3) pot fi negative și pe profit, ca aici (`P6="-10000"`); nu blochează exportul.
+(rd. 3) pot fi negative și pe profit, ca aici (`P6="-10000"`). Pe pierdere fiscală sunt negative și
+rd. 7, 10, 22, 35 și 38.1, iar rd. 40.1 preia pierderea anului; niciunul nu blochează exportul.
 
 ### Pasul 4 — Exportul XDP (formularul PDF ANAF)
 
@@ -239,8 +244,9 @@ Reguli de mapare:
   făcută într-o singură notă cu conturile de bilanț, rămâne în calcul.
 - Cu impozit de plată zero și profit (impozit acoperit de D100, de credit sau de pierderea
   reportată), calculul se postează fără notă și D101 se exportă normal; cu impozit de recuperat
-  (rd. 53), nota este storno în roșu Dr 691 = Cr 4411 (−). Pe pierdere fiscală, exportul automat nu
-  este încă disponibil și declarația se completează manual (art. 42 alin. (1) CF).
+  (rd. 53), nota este storno în roșu Dr 691 = Cr 4411 (−). Pe pierdere fiscală calculul se postează fără
+  notă, iar D101 se exportă cu rd. 7, 10, 22, 35 și 38.1 negative și rd. 40.1 = pierderea anului
+  (art. 42 alin. (1) CF: declarația se depune și pe pierdere).
 - **Rd. 1, 2, 4 și 5 nu pot fi negative** (XSD-ul ANAF). Când veniturile din exploatare ies negative
   (de exemplu 711/712 pe debit), rd. 1 = 0, iar suma în valoare absolută se adaugă la rd. 2; la fel
   pentru cheltuieli negative (se adaugă la rd. 1) și pentru rd. 4 / rd. 5. Rd. 3, 6 și 7 rămân
@@ -255,10 +261,9 @@ Reguli de mapare:
 - Rd. 39.1 nu poate depăși rd. 39 (regula V1 a validatorului ANAF): dacă pierderea dedusă e mai mare
   decât soldul înregistrat, rd. 39 ia valoarea rd. 39.1; verificați atunci pierderile reportate.
 
-> **Limitare:** exportul automat acoperă scenariul de **profit**. Pentru exerciții cu pierdere
-> fiscală (indicatori care ar deveni negativi), declarația se completează manual. Excepție: rd. 3
-> (rezultatul din exploatare) și rd. 6 (rezultatul financiar) pot fi negative și pe profit și nu
-> blochează exportul.
+> **Limitare:** pe pierdere fiscală exportul merge, dar pierderea anului nu intră singură în lista
+> pierderilor reportate, iar creditul de sponsorizare nefolosit nu se reportează automat. Rd. 7, 10, 22,
+> 35 și 38.1 pot fi negative; la orice alt indicator negativ exportul se oprește cu un mesaj.
 >
 > Nedeductibilele din regulile de ajustare merg pe rd. 33, deducerile suplimentare pe rd. 15, iar
 > veniturile neimpozabile pe rd. 20; rândurile de detaliu ale altor ajustări se corectează în
@@ -277,7 +282,8 @@ Reguli de mapare:
 rotunjirea la leu, nr. de evidență, scadența, validarea XSD, fișierul XML, completarea formularului
 PDF ANAF (XDP).
 **Ce rămâne manual:** verificarea calculului anual și a datelor companiei; amortizarea fiscală acolo
-unde diferă de cea contabilă (rd. 11, pe calcul); scenariul de pierdere; rd. 15.1 (cercetare-dezvoltare)
+unde diferă de cea contabilă (rd. 11, pe calcul); reportarea pierderii anului în lista pierderilor și a creditului de sponsorizare
+nefolosit; rd. 15.1 (cercetare-dezvoltare)
 și defalcarea celorlalte ajustări; impozitul minim pe cifra de afaceri.
 
 ## 8. Verificări pentru consultant
@@ -301,6 +307,9 @@ unde diferă de cea contabilă (rd. 11, pe calcul); scenariul de pierdere; rd. 1
 - [ ] Rd. 23 = rulajul 691 (+ 692, 694, 697), iar rd. 26 = protocolul peste limita de 2%.
 - [ ] Rd. 27 = rulajul conturilor de sponsorizare din setări (implicit 6584), iar rd. 34 = rd. 23 + rd. 26 + rd. 27 + rd. 28 + rd. 33.
 - [ ] Cu impozit zero și profit, calculul se postează fără notă, iar exportul are rd. 52 = 0.
+- [ ] Cu pierdere fiscală (de exemplu venituri 100.000, cheltuieli 130.000): rd. 7, 10, 22, 35 și 38.1 sunt negative,
+  rd. 40.1 = pierderea anului, rd. 39.1, 40, 41, 48 și 52 sunt 0, nu se postează nicio notă, iar XML-ul trece
+  validarea XSD.
 - [ ] Cu impozit de recuperat, nota e storno în roșu Dr 691 = Cr 4411 (−): rd. 2 și rd. 23 scad cu suma stornată, rd. 50 = impozitul din D100, rd. 52 = 0 și rd. 53 = rd. 50 − rd. 48.
 - [ ] Rd. 15.1 e gol.
 - [ ] Rd. 39 este soldul pierderilor la 1 ianuarie, iar rd. 39.1 partea recuperată în an (rd. 39.1 ≤ rd. 39).
@@ -312,7 +321,7 @@ unde diferă de cea contabilă (rd. 11, pe calcul); scenariul de pierdere; rd. 1
 | „Declarația 101 este anuală — poate fi exportată doar pentru perioada Anual." | Export încercat pe o perioadă trimestrială | Selectați înregistrarea anuală |
 | „Calculați și postați impozitul pe profit înainte de exportul D101." | Înregistrare în ciornă | Postați calculul de impozit pe profit |
 | Eroare validare companie (CUI/CAEN/județ) | Date fiscale incomplete sau cod CAEN gol, `0000` sau fără exact 4 cifre | Completați CUI, adresă, un cod CAEN real de 4 cifre și județul pe companie |
-| „Exportul automat D101 acoperă momentan doar scenariul de profit…" | Exercițiu cu pierdere fiscală (rd. 3 și rd. 6 negative nu declanșează mesajul) | Completați D101 manual pentru scenariul de pierdere |
+| „Următorii indicatori D101 ar deveni negativi, ceea ce declarația nu permite: …" | Un indicator în afara rd. 3, 6, 7, 10, 22, 35 și 38.1 iese negativ: eroare de calcul, nu pierdere fiscală | Verificați calculul impozitului pe profit (venituri, cheltuieli, ajustări) și recalculați |
 | „Resursa ANAF … PDF lipsește sau este invalidă…" | Lipsește formularul PDF din modul (instalare incompletă) | Actualizați modulul; temporar alegeți *Descărcare directă XDP* |
 | „Formularul PDF ANAF nu conține pachete XFA." / „… pachetul XFA datasets." | Formularul PDF din modul nu e un formular ANAF valid | Actualizați modulul; temporar alegeți *Arhivă ZIP cu XDP și PDF* |
 | „Fișierul XDP generat nu conține pachetul XFA datasets." | Macheta XDP a declarației nu are pachetul de date | Actualizați modulul; temporar alegeți *Descărcare directă XDP* |
@@ -338,7 +347,8 @@ formularul PDF ANAF e XFA și se deschide doar în Adobe Reader).
 
 - Subliniați că D101 reutilizează calculul din `l10n_ro_profit_tax` — nu se reintroduc date.
 - Menționați validarea XSD la export (garanție că fișierul e acceptat de ANAF/DUKIntegrator).
-- Documentați explicit limitarea pe scenariul de pierdere (completare manuală).
+- Documentați explicit limitarea de pe pierdere: exportul merge, dar pierderea anului nu intră singură în lista
+  pierderilor reportate, iar creditul de sponsorizare nefolosit nu se reportează automat.
 - Explicați că declarația se calculează din rulaje, fără notele de închidere pe 121, și că rândurile
   financiare depind de prefixele de cont din setări.
 - Explicați codurile de obligație (102/103/104/105) din câmpul **Tip impozit D101** și când se aleg.

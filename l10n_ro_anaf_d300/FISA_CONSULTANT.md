@@ -22,6 +22,8 @@ Fișa trebuie prezentată consultantului ca parte din fluxul lunar de închidere
 
 D300 este decontul de taxă pe valoarea adăugată depus de persoanele impozabile înregistrate în scopuri de TVA. Modulul se bazează pe structura ANAF 2026 și pe maparea rândurilor raportului de taxe Odoo către rubricile formularului.
 
+Regularizările din decontul curent au bază legală separată: TVA-ul dedus dintr-o factură primită după perioada ei se raportează pe rândul de regularizare, nu pe rândurile normale ale cotei (art. 301 alin. (2) Cod fiscal), iar datele omise sau înscrise greșit într-un decont depus se corectează în decontul curent, fără decont rectificativ (art. 323 alin. (2)-(3) Cod fiscal; instrucțiunile D300, OPANAF 174/2026).
+
 În implementarea curentă, D300 este un raport fiscal, nu un motor complet de închidere contabilă. Calculul sumelor vine din tax tags și tax report lines; regularizarea contabilă 4426/4427 către 4423/4424 trebuie tratată explicit în procesul de închidere sau într-un modul complementar.
 
 ## 3. Utilizatori și roluri
@@ -53,13 +55,18 @@ D300 este decontul de taxă pe valoarea adăugată depus de persoanele impozabil
 4. Completați datele companiei: CUI, județ, oraș, adresă, **cod CAEN** și date reprezentant. Codul CAEN
    (atributul `caen` din XML) se completează pe formularul companiei sau în **Setări → Contabilitate → Declarații ANAF**;
    căutarea ANAF a partenerului nu îl schimbă.
-5. Pregătiți un set demo cu minimum:
+5. Taxele de regularizare pe cotele curente: **„21% REG D”** și **„11% REG D”** (achiziții, taxă dedusă, rd. 33) și
+   **„21% REG C”** și **„11% REG C”** (vânzări, taxă colectată, rd. 16). Vin din template pe planurile de conturi noi, iar pe
+   companiile existente le creează actualizarea modulului (versiunea 19.0.0.0.35), o singură dată. Au conturile taxei
+   originale (4426 la achiziții, 4427 la vânzări), deci nota contabilă a facturii rămâne cea normală. Cu `l10n_ro_saft`
+   instalat primesc și codurile SAF-T de regularizare; dacă `l10n_ro_saft` se instalează după, actualizați `l10n_ro_anaf_d300`.
+6. Pregătiți un set demo cu minimum:
    - factură vânzare 21%;
    - factură cumpărare 21%;
    - document cu cotă redusă 11%;
    - storno;
    - taxare inversă, dacă se testează scenarii IC/RC.
-6. Pentru TVA la încasare: activați „Cash Basis" pe companie și folosiți taxe cu exigibilitate
+7. Pentru TVA la încasare: activați „Cash Basis" pe companie și folosiți taxe cu exigibilitate
    „La plată" (`tax_exigibility = on_payment`) pe facturile respective. Doar aceste facturi intră în
    rândurile informative A / A1 / B / B1.
 
@@ -150,6 +157,38 @@ Meniu: `Contabilitate → Furnizori → Facturi`.
     are cota redusă. Dacă o găsiți pe o factură veche, verificați cu contabilul dacă trebuie stornată și reînregistrată cu
     „21% ND 50%” sau cu 11% integral deductibil.
 
+### Pasul 5 — Regularizări în decontul curent (factură primită târziu sau factură emisă omisă)
+
+Un D300 depus nu se rectifică: ce trebuia declarat într-o perioadă deja depusă se raportează în decontul curent, pe rândul de regularizare.
+
+**Când se folosesc taxele de regularizare**
+
+| Situație | Taxa | Rând D300 |
+|---|---|---|
+| Factură de furnizor cu TVA 21% / 11%, primită sau descoperită după ce decontul perioadei ei a fost depus (ex.: factură din august, primită în octombrie) | „21% REG D” / „11% REG D” | rd. 33 |
+| Factură emisă clientului, omisă dintr-o perioadă deja declarată (art. 323 alin. (2)-(3) Cod fiscal) | „21% REG C” / „11% REG C” | rd. 16 |
+| Factură de furnizor sau factură emisă înregistrată corect, în perioada ei | taxa normală (24-26, respectiv 9-12) | — |
+| Cote vechi (19% / 9% / 5%) la stornări sau la TVA la încasare exigibil pe facturi vechi | taxele vechi, care au deja grilele de regularizare | rd. 16 / 33 |
+| Achiziții și livrări intracomunitare, taxare inversă | taxele lor, cu rândurile de regularizare dedicate (rd. 2, 4, 6, 8, 21, 23); nu au taxe „REG” | — |
+
+Consultantul decide pentru fiecare factură dacă e regularizare, pentru că programul nu deosebește o factură primită târziu de una înregistrată la timp. Pentru factura de furnizor primită târziu, încadrarea ca regularizare (art. 323 alin. (3) Cod fiscal) e cea susținută de consultant; tratamentul exact (rd. 33 sau rândurile normale ale cotei, art. 301 alin. (2)) trebuie confirmat în instrucțiunile OPANAF 174/2026 înainte de prima utilizare la un client.
+
+**Pași**
+
+Meniu: `Contabilitate → Furnizori → Facturi` (achiziții) sau `Contabilitate → Clienți → Facturi` (vânzări).
+
+1. Deschideți factura în ciornă (sau resetați-o la ciornă) și mergeți la linia de produs.
+2. În câmpul **Taxe**, înlocuiți taxa normală cu cea de regularizare (vezi captura de mai jos):
+   - factură de furnizor primită târziu: **„21% REG D”** sau **„11% REG D”**, după cota facturii;
+   - factură emisă omisă dintr-o perioadă declarată: **„21% REG C”** sau **„11% REG C”**.
+![Factură de achiziție cu „21% REG D”: taxa de regularizare pe linia facturii](screenshots/06_factura_regularizare.png)
+
+3. Setați **Data contabilă** în luna decontului curent (data reală a înregistrării), nu în luna facturii inițiale, apoi validați factura.
+4. Deschideți D300 din `Contabilitate → Raportare → Declarații ANAF → D300`, pe luna curentă: baza și TVA-ul facturii apar pe **rd. 33** (regularizări taxă dedusă) la achiziții, respectiv pe **rd. 16** (regularizări taxă colectată) la vânzări, și nu pe rd. 24-26 / 9-12.
+5. Jurnalele TVA și soldurile 4426 / 4427 rămân corelate cu D300, pentru că taxa de regularizare are aceleași conturi ca taxa normală.
+
+Atenție: taxa se alege manual, programul nu deosebește singur o factură primită târziu de una înregistrată la timp. Taxele de regularizare nu există pentru alte cote decât 21% și 11% (la cotele vechi 19% / 9% / 5% există taxele vechi cu grile de regularizare).
+
 ## 7. Monografie și controale contabile
 
 | Situație | Control contabil |
@@ -159,6 +198,9 @@ Meniu: `Contabilitate → Furnizori → Facturi`.
 | Taxe cu exigibilitate la plată/încasare | verificați 4428 și înregistrările CABA înainte de D300 |
 | Rd. A / A1 (facturi emise cu TVA la încasare) | sold neexigibil la sfârșitul perioadei (art. 282 alin. (3)-(8)): toate facturile emise neîncasate, nu doar cele din lună, inclusiv cele încasate după perioadă; notele de credit emise intră cu minus. TVA din rd. A ≈ soldul creditor 4428 „TVA neexigibilă colectată". A1 = din care facturile din ultimele 6 luni / 2 trimestre calendaristice (după data facturii) |
 | Rd. B / B1 (facturi primite cu TVA la încasare) | sold nededus la sfârșitul perioadei (art. 297 alin. (2)-(3)); TVA din rd. B ≈ soldul debitor 4428 „TVA neexigibilă deductibilă". O notă de credit primită, încasată parțial, rămâne cu minus doar pentru partea neîncasată (rd. B crește față de decontul anterior, ca în jurnalul de cumpărări). B1 = din care ultimele 6 luni / 2 trimestre |
+| Factură de furnizor primită târziu, 21% / 11% („21% REG D” / „11% REG D”) | nota contabilă e cea normală (Dr 6xx / 3xx + Dr 4426 = Cr 401); diferă doar grila D300: baza și TVA-ul pe rd. 33, nu pe rd. 24-26. Art. 301 alin. (2), art. 323 alin. (3) Cod fiscal |
+| Factură emisă omisă dintr-o perioadă declarată, 21% / 11% („21% REG C” / „11% REG C”) | Dr 4111 = Cr 707 + Cr 4427; baza și TVA-ul pe rd. 16 în decontul curent. Art. 323 alin. (3) Cod fiscal |
+| Coduri SAF-T de regularizare (cu `l10n_ro_saft` instalat) | taxă dedusă 21% / 11%: 309106 / 309107; taxă colectată 21% / 11%: 310345 / 310352 (nomenclatorul ANAF 16.02.2026, active din 01.08.2025). În D406 regularizarea ajunge pe codul ei, nu pe cel al achiziției sau vânzării normale |
 | Taxare inversă | verificați simetria 4426/4427 și rândurile D300 aferente |
 | Import fără plata efectivă a TVA în vamă (art. 326 alin. (4)-(5): certificat de amânare, vămuire centralizată, înscriere în evidențele declarantului, bunurile din art. 331 alin. (2) lit. b), c), i)–k)) | pe DVI se alege „21% IMP AM” / „11% IMP AM”: Dr 4426 = Cr 4427 (taxă colectată și deductibilă simultan, art. 326 alin. (5)), fără 446 și fără plată în vamă; baza de impozitare TVA din DVI (art. 289) și TVA-ul pe rd. 7 și 22, în perioada datei DVI (art. 285). Deducerea cere DVI-ul cu importatorul și suma taxei datorate și înscrierea taxei colectate în aceeași perioadă (art. 299 alin. (1) lit. d)). Factura furnizorului extern rămâne pe „0% EX G”, fără grile. Importul cu plata efectivă în vamă (art. 326 alin. (3)) rămâne pe rd. 24 / 25 |
 | Deducere limitată la 50% (art. 298), cota veche 19%, cheltuială cu vehiculul | „19% ND 50%”, bază 1.000 lei: Dr 6xx 1.000 / Dr 4426 95 / Dr 6352 95 = Cr 401 1.190; partea din 4426 pe rd. 33 (regularizări taxă dedusă), partea din 6352 fără rând D300. La cumpărarea vehiculului ca mijloc fix, partea nededusă intră în cost (Dr 2133 = Cr 404), nu pe 6352 |
@@ -198,6 +240,8 @@ Notarea exactă depinde de soldurile lunii și de politica modulului de închide
 | D300-14 | Decont precedent cu sold negativ 522 (4424), decont curent cu TVA de plată 1.483, export XDP | în PDF: rd. 39 gol, rd. 41 = 522, rd. 40 = 1.483, rd. 43 = 522, rd. 44 = 961 |
 | D300-15 | Selecția de taxe pe o factură de achiziție, căutare „ND 50%” | apar doar „21% ND 50%” și „19% ND 50%”; „11% ND 50%”, „11% IC ND 50%” (dacă există în bază), „9% ND 50%” și „5% ND 50%” nu apar |
 | D300-16 | Factură de achiziție 1.000 lei cu „19% ND 50%” | rd. 33: bază 1.000, TVA 95; 95 lei pe 6352, fără rând D300; nimic pe rd. 24 |
+| D300-17 | Factură de achiziție 1.000 lei cu „21% REG D” | rd. 33: bază 1.000, TVA 210; nimic pe rd. 24-26; 4426 debitor 210, ca la taxa normală |
+| D300-18 | Factură de vânzare 1.000 lei cu „11% REG C” | rd. 16: bază 1.000, TVA 110; nimic pe rd. 9-12; 4427 creditor 110 |
 
 ## 9. Legături cu alte module / declarații
 
@@ -210,7 +254,7 @@ Notarea exactă depinde de soldurile lunii și de politica modulului de închide
 | `l10n_ro_vat_deductibility` | trebuie să alimenteze D300 doar cu TVA deductibilă |
 | `l10n_ro_period_close_enhanced` | checklist de închidere perioadă și atașare dovadă D300 |
 | D394 | raport de detaliu pentru operațiunile interne care explică totalurile TVA |
-| e-TVA / SAF-T | reconciliere ulterioară cu datele precompletate sau raportate terților |
+| e-TVA / SAF-T | reconciliere ulterioară cu datele precompletate sau raportate terților; taxele „REG D” / „REG C” poartă codurile SAF-T de regularizare (309106 / 309107, 310345 / 310352), cu `l10n_ro_saft` instalat |
 
 Ce este automat: export XML/XDP și preluare valori din raportul de taxe.
 Ce rămâne de verificat manual: regularizarea contabilă 4426/4427/4423/4424, recipisa și depunerea dacă nu există infrastructură de submission.
@@ -226,6 +270,7 @@ Ce rămâne de verificat manual: regularizarea contabilă 4426/4427/4423/4424, r
 - [ ] Datele companiei sunt completate corect.
 - [ ] Taxele „ND 50%” active sunt doar 21% și 19%; achizițiile cu „19% ND 50%” apar pe rd. 33.
 - [ ] Atributul `caen` din XML-ul exportat este codul CAEN de pe companie (formularul companiei sau Setări → Contabilitate → Declarații ANAF).
+- [ ] Facturile cu taxe „REG D” / „REG C” apar pe rd. 33 / rd. 16, nu pe rd. 24-26 / 9-12, iar în D406 au codurile de regularizare (309106 / 309107, 310345 / 310352).
 - [ ] Perioada închisă nu mai permite modificări fără procedură de corecție.
 - [ ] Fluxul de rambursare/reportare este clar dacă soldul este negativ.
 
@@ -257,6 +302,8 @@ Capturile (`static/description/`) sunt **generate automat** din `tests/test_scre
    „Atașează D300 semnat").
 5. `05_factura_nd50.png` — factură de achiziție de 1.000 lei cu „21% ND 50%”: elementele de jurnal
    cu TVA-ul împărțit între 4426 și 6352.
+6. `06_factura_regularizare.png` — factură de achiziție de 1.000 lei cu „21% REG D”: taxa de regularizare
+   pe linia facturii.
 
 Regenerare (cu date demo):
 

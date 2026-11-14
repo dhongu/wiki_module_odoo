@@ -72,6 +72,8 @@ contabilizate de fluxul standard (recepție, factură de furnizor).
 | Grup | Câmp | Rol |
 |------|------|-----|
 | Furnizor | Furnizor | Partenerul pus pe rândurile catalogului și pe liniile de furnizor |
+| Furnizor | Generare produse | Bifat implicit: **Actualizează Preț Achiziție** generează câte un produs pentru fiecare rând neasociat. Debifat, rândurile fără produs sunt sărite |
+| Furnizor | Actualizare cantitate disponibilă | Bifat implicit: **Actualizează Preț Achiziție** scrie și cantitatea disponibilă pe linia de furnizor. Debifat, cantitatea liniei rămâne neschimbată |
 | Codificare | Tip cod | Referința internă a produselor generate: **Niciunul**, **Secvență** (din **Secvență cod**) sau **Cod** (codul furnizorului) |
 | Codificare | Potrivire după cod normalizat, Ignoră zerourile din față | Asocierea compară și codurile fără spații, cratime, puncte, bare și majuscule (`SKF-6305.2RS` = `SKF 6305 2RS`); opțional `00123` = `123` |
 | Valori implicite | Categorie produs, Întârziere achiziție | Categoria produselor generate și termenul de livrare folosit când rândul nu are unul |
@@ -79,6 +81,8 @@ contabilizate de fluxul standard (recepție, factură de furnizor).
 | Preț | Monedă, Curs valutar | Moneda listei furnizorului și cursul față de moneda companiei, actualizat cu **Actualizează cursul valutar** |
 | Sursă / Conexiune | URL sursă, Tip conexiune și credențialele | Folosite de modulele conector; în modulul de bază rămân **Niciunul** |
 | Fila **Maparea coloanelor** | Coloana din fișier → Încarcă în | Unde se încarcă fiecare coloană a fișierului furnizorului; se completează la primul import |
+
+Opțiunea **Generare produse** oprește crearea de produse doar din **Actualizează Preț Achiziție** și din acțiunea programată: butonul **Generează produs** (pasul 7) creează produse indiferent de ea.
 
 **Date pe fiecare rând din catalog** (*Catalog produse furnizor*): **Cod produs**, **Nume produs**,
 **Cod de bare**, **Preț vânzare** (prețul de listă al furnizorului), **Preț achiziție**, **Preț**
@@ -112,6 +116,11 @@ completat, plus un fișier CSV sau XLSX cu lista de prețuri a furnizorului.
    cod**. Bifați **Potrivire după cod normalizat** dacă furnizorul scrie codurile altfel decât le
    aveți în Odoo.
 5. În grupul **Valori implicite**, alegeți **Categorie produs** și **Întârziere achiziție**.
+   În grupul **Furnizor** sunt două opțiuni bifate implicit. Debifați **Generare produse** când
+   doriți ca **Actualizează Preț Achiziție** să modifice doar produsele care există deja (de
+   exemplu, la o listă de preț care conține și articole pe care nu le cumpărați). Debifați
+   **Actualizare cantitate disponibilă** când fișierul furnizorului nu are cantități: altfel
+   cantitatea liniei de furnizor se resetează la 0.
 6. În grupul **Preț**, alegeți **Bazat pe**, **Discount**, **Adaos** și **Valoare suplimentară**.
    Caseta albastră de sub grup arată regula pe un exemplu de 100.
 7. Dacă moneda feed-ului diferă de moneda companiei, apăsați **Actualizează cursul valutar**.
@@ -136,14 +145,15 @@ cursul valutar**. Butonul **Încarcă preț** apare doar pentru un **Tip conexiu
 furnizor.
 
 **Găsiți pe ecran:** ① **Furnizor**; ② **Tip cod**; ③ **Potrivire după cod normalizat**; ④
-**Discount**, în grupul **Preț**; ⑤ caseta albastră cu regula de preț.
+**Discount**, în grupul **Preț**; ⑤ caseta albastră cu regula de preț; ⑥ **Generare produse**; ⑦
+**Actualizare cantitate disponibilă**, ambele în grupul **Furnizor**.
 
 **Verificați:** caseta albastră ⑤ dă rezultatul așteptat pe exemplul de 100
 (în captură: preț listă 100, discount 5 % → 95,00 lei). Caseta arată regula pentru **Actualizează
 Preț Listă**; prețul calculat pe rândurile catalogului și la generarea produsului pornește mereu de
 la prețul de listă al furnizorului (vezi pașii 5 și 7).
 
-![Feed-ul furnizorului configurat](screenshots/01_feed_furnizor.png)
+![Formularul Feed Furnizor pentru Rulmenți Industriali SRL: Generare produse și Actualizare cantitate disponibilă bifate, Tip cod = Cod, Potrivire după cod normalizat bifată, Discount 5 % și caseta cu exemplul 100 → 95,00 lei](screenshots/01_feed_furnizor.png)
 
 ### Pasul 2 — Încărcați lista de prețuri a furnizorului
 
@@ -314,12 +324,25 @@ actualizați produsele (pasul 10).
 **Meniu:** *Achiziții → Produse → Catalog produse furnizor*, filtrul **Cu produs**, selectați
 rândurile → **Actualizează Preț Achiziție**, apoi **Actualizează Preț Listă**
 
-**Actualizează Preț Achiziție** asociază rândurile, **generează produsele care lipsesc**, apoi scrie
-pe linia furnizorului prețul de achiziție (și cantitatea disponibilă, care nu se afișează pe
-linie), doar pentru rândurile cu preț de achiziție mai mare decât 0. Nu schimbă **Termen livrare**.
+**Actualizează Preț Achiziție** asociază rândurile, apoi:
+- cu **Generare produse** bifat pe feed (implicit), **generează produsele care lipsesc**; debifat,
+  rândurile fără produs sunt sărite, iar produsele existente primesc în continuare linia de furnizor
+  și prețul;
+- scrie pe linia furnizorului prețul de achiziție, doar pentru rândurile cu preț de achiziție mai
+  mare decât 0, și, cu **Actualizare cantitate disponibilă** bifat (implicit), cantitatea
+  disponibilă (care nu se afișează pe linie); debifat, cantitatea liniei rămâne neschimbată.
+
+Prețul se scrie doar pe linia curentă a cantității de bază: cea cu cantitatea minimă până la 1,
+valabilă la data de azi (după **Data început** și **Data sfârșit**) și aflată pe produsul asociat
+sau pe tot șablonul. Treptele de preț (cantitate minimă peste 1), liniile altei variante și liniile
+expirate sau neîncepute își păstrează prețul. Dacă produsul are mai multe linii de bază ale
+aceluiași furnizor, toate primesc prețul din fișier. Dacă produsul are de la acest furnizor doar
+trepte de preț, doar linii expirate sau neîncepute ori doar linii pe altă variantă, nu se adaugă o
+linie nouă și prețul nu se actualizează: adăugați manual linia de bază (cantitate minimă 0 sau 1,
+fără date de valabilitate). Nu schimbă **Termen livrare**.
 Prețul se scrie în moneda feed-ului, fără conversie: verificați ca liniile de furnizor existente să
 aibă aceeași monedă ca feed-ul. Coloana **Cantitate** de pe linie este cantitatea minimă de comandă,
-nu stocul furnizorului. Filtrați **Cu produs** înainte: pe
+nu stocul furnizorului. Filtrați **Cu produs** înainte dacă lăsați **Generare produse** bifat: pe
 tot catalogul, butonul creează câte un produs pentru fiecare rând neasociat. La 80 de rânduri sau
 mai multe, ca la pasul 7, o fereastră arată progresul pe loturi și permite **Oprește după lotul
 curent**.
@@ -375,7 +398,7 @@ pe produs.
   **Niciunul**: actualizarea listei (cu maparea salvată), a prețului de achiziție și a prețului de
   listă. În modulul de bază, actualizarea listei nu are de unde citi fișierul: o folosesc modulele
   conector. Actualizarea prețului de achiziție generează și produsele care lipsesc, pentru toate
-  rândurile feed-ului.
+  rândurile feed-ului, dacă **Generare produse** e bifat pe feed.
 
 **Ce rămâne manual:**
 - încărcarea listei de prețuri primite de la furnizor și maparea la primul fișier;
@@ -406,6 +429,15 @@ pe produs.
   preț de achiziție** pe produs, doar cu `deltatech_purchase_price` instalat).
 - [ ] **Actualizează Preț Listă** scrie pe produs prețul de vânzare după regula feed-ului și cursul
   valutar.
+- [ ] Cu **Generare produse** debifat pe feed, **Actualizează Preț Achiziție** nu creează produse:
+  rândurile fără produs rămân fără produs, iar numărul de produse nu se schimbă.
+- [ ] Cu **Actualizare cantitate disponibilă** debifat, cantitatea liniei de furnizor rămâne
+  neschimbată după **Actualizează Preț Achiziție**.
+- [ ] Treptele de preț (cantitate minimă peste 1), liniile altei variante și liniile expirate sau
+  neîncepute ale furnizorului își păstrează prețul după **Actualizează Preț Achiziție**.
+- [ ] Un produs care are de la furnizor doar trepte, doar linii expirate/neîncepute sau doar linii pe
+  altă variantă nu primește linie nouă și nici preț: prețul rămâne neschimbat până la adăugarea
+  manuală a liniei de bază.
 - [ ] Un utilizator intern fără drepturi de administrare nu vede **Parolă**, **Nume utilizator**,
   **Număr client** și **Token de acces** pe feed.
 
@@ -431,8 +463,9 @@ Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixinul `Sc
 furnizorului este un CSV construit în test. Același test scrie, cu aceleași nume, capturile în
 engleză din `static/description/en/`, folosite de `readme/USAGE.md` (Odoo Apps).
 
-1. `01_feed_furnizor.png` — formularul **Feed Furnizor**: furnizorul, **Tip cod**, **Potrivire după
-   cod normalizat**, regula de preț, **Curs valutar** și caseta cu regula de preț.
+1. `01_feed_furnizor.png` — formularul **Feed Furnizor**: furnizorul, cu opțiunile **Generare produse**
+   și **Actualizare cantitate disponibilă**, **Tip cod**, **Potrivire după cod normalizat**, regula de
+   preț, **Curs valutar** și caseta cu regula de preț.
 2. `02_import_fisier.png` — fereastra **Importă produs**, cu fișierul ales și butonul **Aplică**.
 3. `03_mapare_coloane.png` — pasul de mapare a coloanelor, cu antetele recunoscute și **Salvează
    maparea pe feed**.
@@ -462,7 +495,7 @@ Insistați pe trei lucruri:
 - **maparea coloanelor** se face o singură dată pe furnizor; apoi listele lui se încarcă fără
   întrebări, cât timp antetul rămâne același;
 - **Actualizează Preț Achiziție** creează produse pentru rândurile neasociate, deci se rulează pe
-  rândurile filtrate **Cu produs**;
+  rândurile filtrate **Cu produs** sau cu **Generare produse** debifat pe feed;
 - prețurile din listă trebuie să fie **fără TVA** și în moneda feed-ului.
 
 Pentru furnizorii cu API sau cu site (Kramp, site-ul furnizorului), trimiteți la fișele modulelor

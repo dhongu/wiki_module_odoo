@@ -28,6 +28,8 @@ Nu există o bază legală: modulul ține strict de aspectul site-ului. Context 
   pagină fără formatare (fără stil, animație și copiere) și trebuie șterse manual;
 - efectele cu mișcare respectă setarea de accesibilitate **„reducerea mișcării"** a sistemului
   vizitatorului (Windows/macOS/iOS/Android): pentru acești vizitatori animațiile sunt oprite;
+  asta include *Rețea de particule*, *Apariție la derulare*, *Paralaxă*, *Plutire* și *Progres la
+  derulare*; *Punct și inel la cursor* apare doar cu mouse;
 - **Înclinare 3D** funcționează doar pe dispozitive cu mouse; pe telefon și tabletă cardul rămâne nemișcat.
 
 ## 3. Utilizatori și roluri
@@ -44,8 +46,9 @@ privată (vizitator anonim) pentru verificarea rezultatului, inclusiv pe telefon
 
 Modulul nu are conturi contabile, modele sau câmpuri noi — lucrează doar pe conținutul paginilor
 (HTML-ul salvat) și pe vederi opționale ale website-ului, activate per website: trei pentru antet
-(**Sticlă**, **Meniu la trecerea mouse-ului › Subliniere**, **… › Umplere**) și trei pentru
-**Culoarea barei browserului** (*Temă*, *Antet*, *Personalizat*).
+(**Sticlă**, **Meniu la trecerea mouse-ului › Subliniere**, **… › Umplere**), trei pentru
+**Culoarea barei browserului** (*Temă*, *Antet*, *Personalizat*) și două din tab-ul **Temă › Efecte**:
+**Punct și inel la cursor** (`cursor_ring`) și **Progres la derulare** (`scroll_progress`).
 
 Date minime pentru demo: un website cu o pagină editabilă care are o secțiune cu coloane sau
 carduri (de exemplu blocul *Coloane* sau *Carduri*), o secțiune cu imagine de fundal (pentru
@@ -177,6 +180,22 @@ curente.
 
 ![Tab-ul Temă, blocul Efecte: Culoarea barei browserului = Antet](screenshots/07b_culoare_bara_browser.png)
 
+### Pasul 7 ter — Cursor punct + inel și Progres la derulare (tab-ul Temă › Efecte)
+
+Sunt tot setări ale **website-ului**, în tab-ul **Temă**, blocul **Efecte** (ca *Culoarea barei
+browserului*), cu câte o casetă de bifat:
+
+- **Punct și inel la cursor** (*Cursor Dot + Ring*) — un punct mic urmărește mouse-ul aproape
+  instantaneu, iar un inel îl urmărește cu o mică întârziere; pe linkuri, butoane și câmpuri inelul
+  se mărește, iar la clic se micșorează. Culorile sunt primele două ale temei;
+- **Progres la derulare** (*Scroll Progress*) — o bară subțire sus în pagină, în primele două culori
+  ale temei, se umple pe măsură ce vizitatorul derulează pagina, de la 0 la 100%.
+
+Cursorul punct + inel funcționează doar cu mouse: pe ecrane tactile și pentru vizitatorii cu
+„reducerea mișcării" nu apare. Bara de progres nu apare pentru „reducerea mișcării".
+
+![Tab-ul Temă, blocul Efecte: Punct și inel la cursor și Progres la derulare bifate](screenshots/17_tema_cursor_progres.png)
+
 ### Pasul 8 — Antetul pe site
 
 Salvați și derulați pagina. Cu *Efect de derulare* = *Fix*, antetul rămâne sus, iar conținutul
@@ -288,6 +307,40 @@ nu este pe ecran. Pe carduri, forma stă peste fundalul cardului și sub text.
 
 ![Pagina salvată: pata roșie în colțul secțiunii și cele trei carduri cu Inel, Arc și Pătrat rotunjit](screenshots/16_forma_plutitoare_site.png)
 
+### Pasul 16 — Rețea de particule, Apariție la derulare, Paralaxă și Plutire
+
+Patru efecte de mișcare, în panoul **Stil**:
+
+| Opțiune | Unde apare | Valori |
+|---|---|---|
+| **Rețea de particule** (*Particle Network*) | **secțiune**, lângă *Titlu strălucitor* și *Aurora* | casetă de bifat; rândurile **Culoarea 1** și **Culoarea 2** apar și pentru ea (implicit primele două culori ale temei) |
+| **Apariție la derulare** (*Scroll Reveal*) | secțiune, coloană, card, imagine și blocurile modulului | *Fără*, *Apare de jos*, *Din stânga*, *Din dreapta*, *Se mărește*, *Estompare* |
+| **Paralaxă** (*Parallax*) | coloană, card, imagine și blocurile modulului | *Fără*, *Ușoară*, *Medie*, *Puternică* |
+| **Plutire** (*Float*) | coloană, card, imagine și blocurile modulului | *Fără*, *Lentă*, *Ușoară* |
+
+- *Rețea de particule*: puncte unite prin linii subțiri plutesc în spatele conținutului secțiunii și
+  se feresc de mouse. Se desenează doar cât secțiunea este pe ecran. Pe fundal închis alegeți la
+  *Culoarea 1* și *Culoarea 2* culori deschise, altfel punctele abia se văd.
+- *Apariție la derulare*: blocul este ascuns până intră pe ecran, apoi apare cu direcția aleasă. După
+  apariție își recapătă efectele proprii (de exemplu *Înclinare 3D*).
+- *Paralaxă*: blocul se mișcă mai încet decât pagina cât timp este derulat; *Puternică* îl mută cel
+  mai mult. Nu există pentru secțiuni întregi (pentru fundalul unei secțiuni folosiți *Panoramare
+  fundal*).
+- *Plutire*: blocul plutește încet, tot timpul. **Nu se combină cu *Înclinare 3D***: pe un bloc cu
+  *Înclinare 3D* plutirea nu rulează.
+
+Efectele se văd și se alege din editor, dar mișcarea se vede pe pagina salvată. Sunt setări ale
+blocului ales, nu ale website-ului.
+
+![Secțiunea selectată: Rețea de particule bifată, cu Culoarea 1 și Culoarea 2, și rândul Apariție la derulare](screenshots/18_particule_optiuni_sectiune.png)
+
+![Cardul selectat: Apariție la derulare, Paralaxă = Medie și Plutire](screenshots/19_miscare_optiuni_bloc.png)
+
+Pe pagina salvată, punctele și liniile plutesc în spatele cardurilor, cardurile cu *Plutire* se
+mișcă încet, iar punctul cu inelul urmăresc mouse-ul:
+
+![Pagina salvată: Rețea de particule pe o secțiune închisă, carduri cu Plutire, punct și inel la cursor](screenshots/20_miscare_site.png)
+
 ### Note de monografie și raportare
 
 Modulul nu generează note contabile, documente sau rapoarte: efectele se salvează în conținutul
@@ -303,6 +356,11 @@ paginilor (clase CSS pe blocuri) și, pentru antet, ca vederi active ale website
 - *Eticheta de preț* pusă într-un card cu *Înclinare 3D*, *Ridicare*, *Strălucire* sau *Card
   accentuat* se înclină când cardul este sub mouse.
 - *Sticlă* arată bine doar peste o imagine sau un degrade (secțiune cu fundal).
+- *Apariție la derulare*, *Paralaxă* și *Plutire* se pot pune împreună pe același bloc și cu
+  efectele la trecerea mouse-ului; singura excepție este *Plutire* împreună cu *Înclinare 3D* (nu
+  rulează împreună).
+- *Rețea de particule* se pune pe secțiune și merge cu *Aurora*, *Titlu strălucitor* și *Spot sub
+  cursor*; folosesc aceleași două culori (*Culoarea 1*, *Culoarea 2*).
 - Efectele se pot pune și direct în șabloane QWeb, prin clasele din `readme/USAGE.md`
   (`tb_fx_tilt`, `tb_fx_lift`, `tb_fx_accent_card`, `tb_fx_copy` etc.) — util pentru programatori.
 
@@ -313,8 +371,9 @@ paginilor (clase CSS pe blocuri) și, pentru antet, ca vederi active ale website
 | `website` | editorul în care apar opțiunile și blocurile | dependență (manifest) |
 | `deltatech_website_sale_effects` | aduce efectele pe magazin: /shop, Products Design, checkout, pagina de produs; folosește *Listă de informații* și *Traseu livrare* pe pagina de produs | modul care depinde de acesta |
 
-Ce este automat: dezactivarea animațiilor pentru vizitatorii cu „reducerea mișcării" și a lui
-*Înclinare 3D* pe ecranele tactile; copierea codurilor din *Coduri de copiat*; animația vehiculului
+Ce este automat: dezactivarea animațiilor (inclusiv *Rețea de particule*, *Apariție la derulare*,
+*Paralaxă*, *Plutire* și *Progres la derulare*) pentru vizitatorii cu „reducerea mișcării", a lui
+*Înclinare 3D* și a lui *Punct și inel la cursor* pe ecranele tactile; copierea codurilor din *Coduri de copiat*; animația vehiculului
 din *Traseu livrare*.
 Ce rămâne manual: alegerea efectelor bloc cu bloc, textele blocurilor noi (exemple de rescris),
 linkurile *Casetei de ajutor* (WhatsApp, telefon) și ale *Listei de informații*.
@@ -349,8 +408,21 @@ linkurile *Casetei de ajutor* (WhatsApp, telefon) și ale *Listei de informații
       debifarea lui *Ridicare din magazin* ascunde rândul pe site.
 - [ ] *Coduri de copiat*: clic pe un cod îl copiază (lipiți într-un câmp text ca să verificați).
 - [ ] *Card reversibil* se întoarce la hover; în editor ambele fețe sunt vizibile.
+- [ ] *Punct și inel la cursor* (Temă › Efecte): pe site, cu mouse-ul, un punct și un inel urmăresc
+      cursorul; inelul se mărește peste un link sau un buton. Pe telefon nu apar.
+- [ ] *Progres la derulare* (Temă › Efecte): sus în pagină apare o bară care se umple la derulare și
+      ajunge la lățime plină la sfârșitul paginii.
+- [ ] *Rețea de particule* pe o secțiune cu fundal închis: punctele și liniile se văd în spatele
+      conținutului și se feresc de mouse; cu *Culoarea 1* și *Culoarea 2* alese, au acele culori.
+- [ ] *Apariție la derulare*: blocul nu se vede până intră pe ecran, apoi apare cu direcția aleasă
+      (*Din stânga* vine din stânga); în editor blocul se vede mereu.
+- [ ] *Paralaxă*: la derulare, blocul se mișcă mai încet decât pagina; *Puternică* mișcă mai mult
+      decât *Ușoară*.
+- [ ] *Plutire*: blocul plutește încet pe pagina salvată; pe un bloc cu *Înclinare 3D* nu plutește
+      (comportament așteptat).
 - [ ] În setările de accesibilitate ale sistemului, cu „reducerea mișcării" activă, animațiile
-      (*Puls*, *Înclinare 3D*, *Animație la trecerea mouse-ului*, *Formă plutitoare*) nu mai rulează.
+      (*Puls*, *Înclinare 3D*, *Animație la trecerea mouse-ului*, *Formă plutitoare*, *Rețea de particule*, *Apariție la derulare*, *Paralaxă*, *Plutire*,
+      *Progres la derulare*) nu mai rulează, iar blocurile sunt vizibile de la început.
 - [ ] Blocurile din *Conținut intern* pot fi trase într-o coloană a paginii, iar grupul lor din
       panoul *Stil* le poartă numele.
 
@@ -370,8 +442,8 @@ linkurile *Casetei de ajutor* (WhatsApp, telefon) și ale *Listei de informații
 
 Capturile (`readme/screenshots/`) sunt generate automat din `tests/test_screenshots.py` (mixinul
 `ScreenshotCase` din `l10n_ro_doc_screenshots`, import defensiv), cu interfața în română. Testul
-creează cinci pagini demo (`/efecte-hover`, `/efecte-forme`, `/efecte-glass`, `/efecte-blocuri`,
-`/efecte-forma-plutitoare`) și
+creează șase pagini demo (`/efecte-hover`, `/efecte-forme`, `/efecte-glass`, `/efecte-blocuri`,
+`/efecte-forma-plutitoare`, `/efecte-miscare`) și
 fotografiază site-ul și editorul, cu rândurile modulului evidențiate:
 
 1. `01_optiuni_bloc.png` — opțiunile modulului în panoul Stil al unui card (Înclinare 3D, Reflexie,
@@ -396,6 +468,13 @@ fotografiază site-ul și editorul, cu rândurile modulului evidențiate:
     secțiune.
 16. `16_forma_plutitoare_site.png` — Forma plutitoare pe site: pata din colțul secțiunii și trei
     carduri cu Inel, Arc și Pătrat rotunjit.
+17. `17_tema_cursor_progres.png` — tab-ul Temă, blocul Efecte, cu Punct și inel la cursor și
+    Progres la derulare.
+18. `18_particule_optiuni_sectiune.png` — opțiunile unei secțiuni: Rețea de particule, Culoarea 1,
+    Culoarea 2 și Apariție la derulare.
+19. `19_miscare_optiuni_bloc.png` — opțiunile unui card: Apariție la derulare, Paralaxă și Plutire.
+20. `20_miscare_site.png` — pagina salvată: Rețea de particule, carduri cu Plutire, punct și inel la
+    cursor.
 
 Regenerare:
 

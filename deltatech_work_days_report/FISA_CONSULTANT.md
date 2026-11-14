@@ -47,7 +47,7 @@ sunt în Odoo.
 | Rol | Ce face |
 |---|---|
 | *Angajați / Ofițer* (`hr.group_hr_user`) | Rulează cele două exporturi din lista de angajați (acțiunile apar doar acestui grup) |
-| *Angajați / Administrator* (`hr.group_hr_manager`) | Completează **Ore pe zi** și **Valoare bonuri de masa** (stau în fila *Stat de plată* a angajatului) |
+| *Angajați / Administrator* (`hr.group_hr_manager`) | Completează **Ore pe zi** și **Valoare bon de masă** (stau în fila *Stat de plată* a angajatului) |
 | *Concediu / Administrator* (`hr_holidays.group_hr_holidays_manager`) | Setează **Cod** pe tipul de concediu și introduce sărbătorile legale |
 | Angajat obișnuit | Nu vede acțiunile de export |
 
@@ -62,9 +62,9 @@ Modulul **nu generează note contabile** și nu citește conturi. Datele folosit
 | Dată | Unde se completează | Rol în export |
 |---|---|---|
 | **Cod** | Tipul de concediu | Apare în foaia de pontaj în locul orelor, în ziua de concediu (de exemplu `CO`, `CM`) |
-| **Ore pe zi** (2, 4, 6 sau 8) | Fila *Stat de plată* a angajatului | Coloana *Norma* și totalul de ore |
-| **Valoare bonuri de masa** | Fila *Stat de plată* a angajatului | Suma din fișierul pentru bancă (zile × valoare) |
-| **Nume complet** | Fișa angajatului, sub nume | Numele din fișierul pentru bancă (dacă e gol, se ia numele angajatului) |
+| **Ore pe zi** (2, 4, 6 sau 8) | Fila *Stat de plată* a angajatului | Coloana *Normă* și totalul de ore |
+| **Valoare bon de masă** | Fila *Stat de plată* a angajatului | Suma din fișierul pentru bancă (zile × valoare) |
+| **Nume complet** | Fila *Stat de plată* a angajatului | Numele din fișierul pentru bancă (dacă e gol, se ia numele angajatului) |
 | **CNP** (`Social Security No`) și **cont bancar** | Fila *Personal* a angajatului | Coloanele CNP și IBAN din fișierul pentru bancă |
 | Începutul și sfârșitul contractului | Fila *Stat de plată* a angajatului | Zilele din afara contractului apar cu `-` și nu dau tichete |
 | Sărbători legale | *Concediu → Configurare → Sărbători legale* | Ziua apare cu `SL` și nu dă tichet |
@@ -82,7 +82,7 @@ tichetelor (achiziția lor, reținerile din stat) se face în salarizare, în af
 1. Instalați modulul (aplicațiile *Angajați* și *Concediu* sunt dependențe).
 2. La fiecare tip de concediu, completați **Cod**: o literă sau două (`CO`, `CM`). Implicit, un tip
    de concediu are codul `L`; dacă ștergeți codul, concediul apare ca `ABS`.
-3. La fiecare angajat, completați **Ore pe zi**, **Valoare bonuri de masa**, **CNP**, contul bancar și,
+3. La fiecare angajat, completați **Ore pe zi**, **Valoare bon de masă**, **CNP**, contul bancar și,
    dacă e cazul, **Nume complet** (forma „Nume Prenume” din fișierul pentru bancă).
 4. Introduceți sărbătorile legale ale anului în *Concediu → Configurare → Sărbători legale*.
 5. Datele contractului se completează în fila *Stat de plată*; un angajat fără contract este socotit în
@@ -103,42 +103,40 @@ de acest tip și în coloana de totaluri a codului.
 
 **Meniu:** *Angajați → Angajați*, deschideți angajatul, fila **Stat de plată**.
 
-La **Programare** apar **Ore pe zi** (2, 4, 6 sau 8) și **Valoare bonuri de masa**. **Nume complet** (1)
-este câmpul **fără etichetă** de sub numele angajatului, de pe rândul cu iconița de e-mail (în
-captură, valoarea „Dumitrescu Maria”); câmpul de e-mail este lângă el. Un angajat cu program de 4 ore are
-*Ore pe zi = 4*.
+La **Programare** apar **Ore pe zi** (2, 4, 6 sau 8) și **Valoare bon de masă**. Tot acolo, **Nume complet** este
+numele din fișierul pentru bancă, în forma „Nume Prenume”. Un angajat cu program de 4 ore are *Ore pe zi = 4*.
 
-![Fișa angajatului Maria Dumitrescu: Nume complet Dumitrescu Maria (1) sub nume; în fila Stat de plată, la Programare, Ore pe zi 4 ore (2) și Valoare bonuri de masa 30,00 (3)](screenshots/02_fisa_angajat.png)
+![Fișa angajatului Maria Dumitrescu, fila Stat de plată, la Programare: Ore pe zi 4 ore (1), Valoare bon de masă 30,00 (2) și Nume complet Dumitrescu Maria (3)](screenshots/02_fisa_angajat.png)
 
 ### Pasul 3 — Selectați angajații și deschideți exportul
 
 **Meniu:** *Angajați → Angajați*, vizualizarea listă.
 
 1. Bifați angajații pentru care faceți raportul (sau bifați toți, din caseta din antetul listei).
-2. Apăsați **Acțiuni** și alegeți **Exporta zile muncă** (pontajul) sau **Exporta bonuri de masă banca**
+2. Apăsați **Acțiuni** și alegeți **Exportă zile lucrate** (pontajul) sau **Exportă bonuri de masă pentru bancă**
    (fișierul pentru bancă).
 
 Acțiunile apar doar rolului *Angajați / Ofițer* și lucrează doar pe angajații bifați.
 
-![Lista de angajați cu cei 4 angajați ai raportului bifați (Administrator rămâne nebifat) și meniul Acțiuni deschis: acțiunile Exporta zile muncă (1) și Exporta bonuri de masă banca (2), sub Export, Arhivează, Dezarhivează și Șterge](screenshots/03_lista_actiune_export.png)
+![Lista de angajați cu cei 4 angajați ai raportului bifați (Administrator rămâne nebifat) și meniul Acțiuni deschis: acțiunile Exportă zile lucrate (1) și Exportă bonuri de masă pentru bancă (2), sub Export, Arhivează, Dezarhivează și Șterge](screenshots/03_lista_actiune_export.png)
 
 ### Pasul 4 — Alegeți perioada pontajului
 
-Se deschide fereastra *Export Working Days* (titlul ei rămâne în engleză și în interfața română). La **Data**, alegeți prima și ultima zi (pentru luna întreagă,
+Se deschide fereastra *Exportă zile lucrate*. La **Perioadă**, alegeți prima și ultima zi (pentru luna întreagă,
 de la 1 la ultima zi a lunii) și apăsați **Aplică**.
 
-![Fereastra Export Working Days cu Data de la 1 oct. până la 31 oct. (1) și butonul Aplică (2)](screenshots/04_asistent_prezenta.png)
+![Fereastra Exportă zile lucrate cu Perioadă de la 1 oct. până la 31 oct. (1) și butonul Aplică (2)](screenshots/04_asistent_prezenta.png)
 
 ### Pasul 5 — Descărcați fișierul de pontaj
 
-Fereastra afișează **Export complet** și legătura către fișier. Apăsați pe `work_day_report.xlsx` ca să
-îl descărcați, apoi **Ieșire**.
+Fereastra afișează **Export finalizat** și legătura către fișier. Apăsați pe `work_day_report.xlsx` ca să
+îl descărcați, apoi **Închide**.
 
-![Fereastra Export complet cu legătura de descărcare work_day_report.xlsx (1) și butonul Ieșire](screenshots/05_rezultat_prezenta.png)
+![Fereastra Export finalizat cu legătura de descărcare work_day_report.xlsx (1) și butonul Închide](screenshots/05_rezultat_prezenta.png)
 
 ### Pasul 6 — Verificați foaia de pontaj înainte de predare
 
-**Găsiți pe ecran** foaia *Raport zile lucrate*: un rând pe angajat, coloanele *Nr.crt*, *Nume*, *Norma*,
+**Găsiți pe ecran** foaia *Raport zile lucrate*: un rând pe angajat, coloanele *Nr.crt*, *Nume*, *Normă*,
 câte o coloană pe fiecare zi a perioadei, apoi câte o coloană pe fiecare cod de concediu (`ABS`, `CM`, `CO`,
 `L`, ...) și, ultima, `SL`, iar la sfârșit *Număr total de ore* și *Bonuri de masă*.
 
@@ -162,43 +160,43 @@ foaie ca **zi întreagă** de concediu.
 
 ### Pasul 7 — Alegeți perioada pentru tichetele de masă
 
-Din aceeași listă, cu aceiași angajați bifați, alegeți **Exporta bonuri de masă banca**. Fereastra se numește *Export Bank Meal Vouchers* (titlu rămas în engleză), iar formatul băncii
-este **Banca Transilvania** (singurul disponibil). La **Data**, alegeți perioada (luna întreagă) și apăsați
+Din aceeași listă, cu aceiași angajați bifați, alegeți **Exportă bonuri de masă pentru bancă**. În fereastra *Exportă bonuri de masă pentru bancă*, formatul băncii
+este **Banca Transilvania** (singurul disponibil). La **Perioadă**, alegeți perioada (luna întreagă) și apăsați
 **Aplică**. Detaliul din fișier ia luna de la prima dată.
 
-![Fereastra Export Bank Meal Vouchers cu formatul Banca Transilvania (1), Data de la 1 oct. până la 31 oct. (2) și butonul Aplică (3)](screenshots/07_asistent_tichete.png)
+![Fereastra Exportă bonuri de masă pentru bancă cu formatul Banca Transilvania (1), Perioadă de la 1 oct. până la 31 oct. (2) și butonul Aplică (3)](screenshots/07_asistent_tichete.png)
 
 ### Pasul 8 — Descărcați fișierul pentru bancă
 
-Ca la pontaj, fereastra afișează **Export complet** și legătura `work_day_report.xlsx` (același nume ca
+Ca la pontaj, fereastra afișează **Export finalizat** și legătura `work_day_report.xlsx` (același nume ca
 fișierul de pontaj: redenumiți-l după descărcare).
 
-![Fereastra Export complet cu legătura de descărcare work_day_report.xlsx (1) pentru tichetele de masă](screenshots/08_rezultat_tichete.png)
+![Fereastra Export finalizat cu legătura de descărcare work_day_report.xlsx (1) pentru tichetele de masă](screenshots/08_rezultat_tichete.png)
 
 ### Pasul 9 — Verificați fișierul pentru bancă
 
-**Găsiți pe ecran** foaia *Meal Vouchers Summary*: coloanele *Nr.crt*, *Nume și Prenume*, *CNP*, *Suma*,
-*Cont IBAN* și *Explicatie*, un rând pe angajat, în ordine alfabetică după numele complet, cu majuscule.
+**Găsiți pe ecran** foaia *Centralizator bonuri de masă*: coloanele *Nr.crt*, *Nume și Prenume*, *CNP*, *Suma*,
+*Cont IBAN* și *Explicație*, un rând pe angajat, în ordine alfabetică după numele complet, cu majuscule.
 
 **Verificați:**
 
 1. fiecare angajat are CNP și IBAN completate (altfel celulele rămân goale și banca respinge fișierul);
-2. *Suma* = zilele de tichet × **Valoare bonuri de masa** (Maria Dumitrescu: 20 × 30 = 600; Ion Ionescu:
+2. *Suma* = zilele de tichet × **Valoare bon de masă** (Maria Dumitrescu: 20 × 30 = 600; Ion Ionescu:
    19 × 40 = 760) și zilele coincid cu *Bonuri de masă* din foaia de pontaj;
-3. *Explicatie* arată luna corectă (10.2026);
+3. *Explicație* arată luna corectă (10.2026);
 4. valoarea unui tichet nu depășește maximul legal în vigoare (modulul nu o verifică).
 
 **Atenție:** suma nu ține cont de **Ore pe zi**: un angajat cu program de 4 ore primește tichet pentru
 fiecare zi lucrătoare, ca unul cu 8 ore (Maria Dumitrescu, 20 de zile).
 
-![Fișierul pentru bancă Meal Vouchers Summary: rânduri pentru Dumitrescu Maria 600, Ionescu Ion 760, Marin Vlad 480 și Popescu Ana-Maria 720, cu CNP, IBAN și explicația Tichete de masă: 10.2026](screenshots/09_fisier_tichete.png)
+![Fișierul pentru bancă, foaia Centralizator bonuri de masă: rânduri pentru Dumitrescu Maria 600, Ionescu Ion 760, Marin Vlad 480 și Popescu Ana-Maria 720, cu CNP, IBAN și explicația Tichete de masă: 10.2026](screenshots/09_fisier_tichete.png)
 
 ### Pasul 10 — Perioadă greșită
 
 Dacă prima dată este după ultima, la **Aplică** apare mesajul de mai jos și nu se generează fișier;
 corectați perioada și reluați.
 
-![Mesajul Operație invalidă: Vă rugăm să vă asigurați că a doua dată este după prima, peste fereastra Export Working Days](screenshots/10_eroare_perioada.png)
+![Mesajul Operație invalidă: Vă rugăm să vă asigurați că a doua dată este după prima, peste fereastra Exportă zile lucrate](screenshots/10_eroare_perioada.png)
 
 ## 7. Legături cu alte module / declarații
 
@@ -216,10 +214,10 @@ verificarea foilor; încărcarea efectivă a cardurilor și salarizarea.
 
 ## 8. Verificări pentru consultant
 
-- [ ] Acțiunile *Exporta zile muncă* și *Exporta bonuri de masă banca* apar doar rolului *Angajați /
+- [ ] Acțiunile *Exportă zile lucrate* și *Exportă bonuri de masă pentru bancă* apar doar rolului *Angajați /
       Ofițer* și lucrează doar pe angajații bifați.
 - [ ] Fiecare tip de concediu are **Cod**; cele fără cod apar ca `ABS`.
-- [ ] **Ore pe zi** și **Valoare bonuri de masa** se văd în fila *Stat de plată* doar rolului *Angajați /
+- [ ] **Ore pe zi** și **Valoare bon de masă** se văd în fila *Stat de plată* doar rolului *Angajați /
       Administrator*.
 - [ ] Sărbătorile legale ale lunii sunt introduse și apar ca `SL`.
 - [ ] Un concediu neaprobat nu apare în foaie; unul aprobat apare cu codul lui.
@@ -270,9 +268,6 @@ Capturile în engleză pentru `readme/USAGE.md` (Odoo Apps) se generează din ac
   întreg. Un concediu pe ore sau pe jumătate de zi scoate ziua întreagă din calcul.
 - O sărbătoare legală care cade sâmbăta sau duminica apare ca zi liberă, nu ca `SL`.
 - Doar concediile **aprobate** intră în foaie.
-- **Nume complet** nu are etichetă în formularul angajatului (apare pe rândul iconiței de e-mail, lângă
-  câmpul de e-mail): defect de view, de corectat într-o versiune ulterioară. Titlurile ferestrelor de
-  export rămân în engleză în interfața română (traduceri de completat în `ro.po`).
 - Fișierul pentru bancă are un singur format (Banca Transilvania) și conține date personale (CNP, IBAN).
 
 ---

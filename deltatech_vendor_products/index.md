@@ -1,7 +1,7 @@
 # Produse Furnizori (localizat la `deltatech_vendor_products/index.md`)
 
 - **Nume Tehnic:** `deltatech_vendor_products`
-- **Versiune:** `19.0.1.4.3`
+- **Versiune:** `19.0.1.5.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products
 - **Cale Locală:** `odoo-addons/bitshop_vendor/deltatech_vendor_products`
 - **Ultima Ingestie:** `2026-10-22`

@@ -99,7 +99,7 @@ Roluri recomandate pentru testare:
 | **371 / 301 / 302 / 303** | cont de stoc (debitat la recepție: contul categoriei produsului); contul propriu al gestiunii e folosit doar la transfer |
 | **408** | „Furnizori – facturi nesosite" — datoria estimată la recepția fără factură |
 | **401** | datoria față de furnizor (la sosirea facturii) |
-| **308 / 378** | diferențe de preț la cost standard: 308 pentru materii prime și materiale (301/302/303), 378 pentru mărfuri (371), după contul configurat pe categorie |
+| **308** | diferențe față de prețul standard, la cost standard: doar pentru materii prime, materiale consumabile și obiecte de inventar (301/302/303), după contul configurat pe categorie. La mărfuri (371) OMFP 1802/2014 nu are cont de diferențe față de prețul standard (378 ține adaosul comercial): se recomandă costul FIFO sau mediu |
 | **665 / 765** | cheltuieli / venituri din diferențe de curs valutar |
 | **371.T** (analitic de 371) | cont de tranzit, setat pe locația de tranzit: marfa pe drum între două gestiuni |
 | **481 / 482** | decontări cu subunitățile care conduc contabilitate proprie (OMFP 1802/2014); folosite doar pe gestiunile marcate *Subunitate cu contabilitate proprie* |
@@ -245,10 +245,12 @@ rămân neschimbate; se mută doar datoria, din „estimată" (408) în „cert�
 |---|---|---|---|---|---|---|
 | Gestiunea A | 10 buc | 1.000 | 1.000 D | — | **0** (stins) | **1.210 C** |
 
+**Exemplu de flux, factură la alt preț după o vânzare parțială** (FIFO/CMP): comandă de 10 buc × 10 lei (**Achiziții → Comenzi**), recepție validată (371 = 408 la 100 lei), livrare de 5 buc (**Vânzări → Comenzi**, 607 = 371 la facturarea clientului), apoi *Creează factură* din comanda de achiziție, preț unitar 12 lei, *Confirmă*. În tab-ul *Elemente jurnal* al facturii: 408 stins cu 20 lei, 371 +10 (cele 5 buc rămase) și 607 +10 (cele 5 buc ieșite).
+
 Cazuri particulare (tratate automat, detaliate în „Note de monografie"):
 - **valută**: stocul rămâne la cursul recepției; diferența de curs recepție↔factură merge pe 665/765;
-- **preț diferit pe factură**: diferența ajustează 371 (FIFO/CMP) sau merge pe contul de diferențe
-  de preț la cost standard (378 la mărfuri, 308 la materii prime și materiale).
+- **preț diferit pe factură**: diferența ajustează 371 (FIFO/CMP; partea aferentă cantității deja ieșite din stoc merge pe 607, numai dacă contul de cheltuială al produsului e 607; la 601/602 rămâne pe stoc; la produsele cu clasă de evaluare contul vine din regula OBYC `stock_receipt_price_difference`, vezi fișa `l10n_ro_stock_obyc`) sau merge pe contul de diferențe
+  de preț la cost standard (308, la materii prime și materiale; la mărfuri se recomandă FIFO/CMP, pentru că 378 ține adaosul comercial).
 
 ### Pasul 3 — Returul către furnizor (storno în roșu)
 
@@ -386,8 +388,8 @@ limitările).
   acest modul, nici de `l10n_ro_currency_revaluation` în configurația standard RO: acela reevaluează
   doar conturile cu valută sau de tip creanță / datorie comercială, iar 408 este cont curent fără
   valută (vezi limitările).
-- Diferență de preț (factură ≠ recepție): la cost standard pe **378** (mărfuri) sau **308** (materii
-  prime și materiale), la FIFO/CMP pe **371**, la cursul facturii — datoria suplimentară se naște la
+- Diferență de preț (factură ≠ recepție): la cost standard pe **308** (materii
+  prime și materiale; la mărfuri se recomandă FIFO/CMP, 378 ține adaosul comercial), la FIFO/CMP pe **371**, la cursul facturii — datoria suplimentară se naște la
   data facturii. Factura mai mare: **Dr 371 = Cr 408** în negru. Factura mai mică: pe companiile cu
   storno, stornare în roșu a diferenței **371 = 408** (−x pe ambele linii, OMFP 1802, pct. 69);
   fără storno, **Dr 408 = Cr 371**. În captură: aviz 2 × 100 lei, factură 2 × 90 lei —
@@ -425,7 +427,10 @@ Comportamentul de mai jos este acoperit de `tests/test_rni.py`, `tests/test_noti
 | Recepție EUR @5,0 → factură @6,0 | stoc la curs recepție; diferența de curs pe **665**; 408 = 0 |
 | Recepție EUR, factură cu preț ȘI curs diferite | curs pe partea recepționată → 765/665; surplusul în stoc la cursul facturii |
 | Contul 408 fără bifa de reconciliere | stingerea e identică — mecanismul nu folosește reconcilierea |
-| Diferență de preț, factură mai scumpă / mai ieftină | FIFO/CMP → pe **371**; cost standard → pe contul de diferențe de preț al categoriei (378 / 308) |
+| Diferență de preț, factură mai scumpă / mai ieftină | FIFO/CMP → pe **371** pentru cantitatea rămasă în stoc; cost standard → pe contul de diferențe de preț al categoriei (308, la materii prime și materiale) |
+| Diferență de preț la CMP cu stoc anterior (stoc vechi 10 × 8, recepție 10 × 10, vândute 5, factură la 12) | diferența de 20 se împarte după stocul de după recepție (20 buc): 5 pe **607**, 15 pe **371**; 371 = stocul fizic al CMP-ului |
+| Diferență de preț, retur parțial către furnizor înainte de factură | returul nu e consum: dacă nu s-a vândut nimic, diferența rămâne pe 371 și nimic pe 607; baza de calcul e `recepționat − returnat` (retur 2 buc, vândute 4, factură la 12 pentru 8 buc: din diferența de 16, 8 pe 607 și 8 pe 371) |
+| Diferență de preț, factură după vânzarea unei părți (FIFO/CMP; recepție 10 × 10, vândute 5, factură la 12) | diferența de 20 se împarte: 10 pe **371** (cele 5 buc rămase), 10 pe **607** (cele 5 buc ieșite); 371 = 60 = stocul fizic (5 × 12), 408 = 0 |
 | Facturare parțială (4 din 10) | pe 408 rămâne valoarea cantității nefacturate; 371 nemodificat |
 | Facturare parțială cu preț diferit | diferența se contează doar pentru cantitatea facturată |
 | Retur parțial (4 din 10) | storno roșu; 371 și 408 scad la 600 / -600 |
@@ -475,7 +480,8 @@ Ce rămâne manual: configurarea conturilor pe gestiune/companie, verificarea so
 - [ ] Factura furnizorului contează linia pe 408, stinge contul 408 și **nu** modifică valoarea stocului.
 - [ ] Contul 408 se stinge și dacă nu are bifa „Permite reconcilierea" — mecanismul nu depinde de reconciliere.
 - [ ] La achiziție în valută, stocul rămâne la cursul recepției, iar diferența de curs apare pe 665/765, în negru pe latura normală (și pe firmele cu storno).
-- [ ] Diferența de preț ajunge pe 378 / 308 (cost standard, după categorie) sau pe 371 (FIFO/CMP).
+- [ ] Diferența de preț ajunge pe 308 (cost standard, după categorie, la materii prime și materiale) sau pe 371 (FIFO/CMP).
+- [ ] La FIFO/CMP, dacă o parte din marfă a ieșit deja din stoc la sosirea facturii, partea de diferență aferentă cantității ieșite merge pe cheltuiala produsului (607 la mărfuri), iar 371 rămâne egal cu valoarea stocului fizic.
 - [ ] Returul către furnizor generează storno în roșu, iar gestiunea și 408 scad cu aceeași sumă.
 - [ ] Transferul direct A→B cu conturi diferite generează nota `371.2 = 371.1`, fără 481.
 - [ ] Transferul prin tranzit e blocat fără cont de tranzit pe locație (regula strictă) și, după configurare, trece prin 371.T, care se închide la zero la sosire.
@@ -542,8 +548,7 @@ valoarea stocului, doar mută datoria de pe 408 pe 401; (3) transferul redistrib
 gestiuni fără să schimbe totalul, iar contul de tranzit se închide la zero când marfa ajunge;
 (4) soldul contului gestiunii = valoarea mărfii din ea, garantat de blocarea recepțiilor și
 ieșirilor directe pe gestiunile cu cont propriu. Încheiați cu verificarea în balanța analitică a stocurilor (totalul cu diferență
-0) și tratamentul corect RO al diferențelor de curs (stocul nu se reevaluează) și de preț (378 la
-mărfuri, 308 la materii prime și materiale, la cost standard).
+0) și tratamentul corect RO al diferențelor de curs (stocul nu se reevaluează) și de preț (308 la materii prime și materiale, la cost standard; la mărfuri FIFO/CMP).
 
 ### Limitări cunoscute
 

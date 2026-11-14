@@ -1,19 +1,21 @@
-# Deltatech Web Site Blog (localizat la `deltatech_website_blog/index.md`)
+# Blog Post Sorting (localizat la `deltatech_website_blog/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_blog`
 - **Versiune:** `19.0.1.0.3`
-- **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_blog](https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_blog)
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_blog
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_blog`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-14`
 
 #### 1. Sumar
 
-Modulul ordonează articolele din Blogul de pe website după data de publicare, astfel încât cele mai recente postări apar mereu primele — o corecție simplă, dar utilă, pentru afișarea implicită a blogului Odoo.
+Un blog se citește de obicei de la cea mai nouă postare la cea mai veche, după data publicării. Modulul setează aceasta ca ordine implicită de sortare a articolelor de blog de pe website, astfel încât cele mai recente postări apar mereu primele.
 
 #### 2. Funcționalități Cheie
 
-- Sortează articolele de blog descrescător după data de publicare (`published_date`).
-- Pentru articole cu aceeași dată de publicare, aplică o sortare secundară descrescătoare după ID, ca să păstreze o ordine consistentă și previzibilă.
+- **Data publicării:** articolele sunt sortate descrescător după data publicării (`published_date`).
+- **Aceeași dată:** articolele cu aceeași dată de publicare sunt sortate descrescător după ID, deci cel creat cel mai recent apare primul.
+- **Doar ordinea implicită:** ordinea e setată pe modelul articolului și se aplică oriunde articolele sunt citite fără o ordine cerută explicit; un ecran, filtru sau interogare care cere altă ordine și-o păstrează.
+- **Fără alte schimbări:** modulul nu adaugă câmpuri, vizualizări, meniuri, setări sau drepturi de acces și nu modifică articolele în sine.
 
 #### 3. Dependențe
 
@@ -27,7 +29,7 @@ Modulul ordonează articolele din Blogul de pe website după data de publicare, 
 
 **Vizualizări**
 
-Nu sunt definite vizualizări noi — modulul modifică doar ordinea de bază a modelului, ordine moștenită automat de toate listele/kanban-urile standard de blog.
+Nu sunt definite vizualizări noi.
 
 **Acțiuni Automate / Acțiuni Server**
 

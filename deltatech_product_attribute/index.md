@@ -1,10 +1,11 @@
 # Product Attribute Extension (localizat la `deltatech_product_attribute/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_attribute`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_product_attribute
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_product_attribute`
 - **Ultima Ingestie:** `2026-10-01`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

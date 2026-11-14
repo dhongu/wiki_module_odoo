@@ -56,7 +56,8 @@ Plus 408 (recepție fără factură, nota RNI) și contul de diferențe față d
    Operațiile care nu trebuie să genereze notă primesc o regulă fără conturi.
 4. **Locațiile și tipul de operațiune**: *Inventar → Configurare → Locații* (cu setarea *Locații de stocare* activă): o locație de tip *Consum* și, pentru darea în folosință, una de tip *Dare în folosință*; apoi *Inventar → Configurare → Tip operație*: un tip intern cu sursa Stoc și destinația acea locație.
 5. **Opțional**: *Modificatori de cont* (*Account Modifiers*) pe tipul de operațiune (de exemplu un „Bon consum proiect"), cu reguli proprii.
-6. **Storno**: pe companiile din România este activ implicit; se verifică în *Contabilitate → Configurare → Setări → Contabilitate storno*.
+6. **Diferența de preț la factură**: pentru fiecare clasă cu cost FIFO sau mediu, creați și regula `stock_receipt_price_difference` (*Diferență de preț la recepție stoc*) cu *Cont destinație* = contul de cheltuială (607 la mărfuri, 602 la materiale) și *Cont de evaluare* = contul de stoc. Fără ea, la o factură mai scumpă după ieșiri, toată diferența rămâne pe stoc și contul de stoc depășește valoarea stocului din Odoo.
+7. **Storno**: pe companiile din România este activ implicit; se verifică în *Contabilitate → Configurare → Setări → Contabilitate storno*.
 
 Dacă lipsește o regulă, la validare apare mesajul OBYC *No account determination rule found for transaction key …* (în română, mesajul tradus al OBYC), cu buton *Mergi la configurare*, iar regula se poate defini pe loc.
 
@@ -110,7 +111,7 @@ Cu `project_stock_account`, pe tipul de operațiune trebuie activat *Costuri ana
 
 Precondiții: RNI activ pe companie (`l10n_ro_rni_enabled`) și contul 408 setat pe companie. Recepția contată prin RNI (371 = 408, de la `l10n_ro_stock_gestiune`) are **o singură notă**: OBYC nu mai generează una a doua pentru aceeași mișcare, nici la returul către furnizor stornat prin RNI.
 
-La factura furnizorului cu **diferență de preț**, pentru produsele cu clasă: partea rămasă în stoc ajustează contul de stoc din regula OBYC a recepției (la cost standard rămâne contul nativ de diferențe de preț), iar partea aferentă cantității deja ieșite din stoc merge pe cheltuiala din regula `stock_receipt_price_difference` (*Diferență de preț la recepție stoc*) a clasei (câmpul *Cont destinație*). Fără regulă, toată diferența rămâne pe stoc. Împărțirea se face doar la produse cu cost FIFO sau mediu (nu la cost standard, unde diferența are contul ei), doar pe **factura furnizorului** (nu pe nota de credit) și doar în fluxul RNI. Exemplu: recepție de 10 buc la 100, 4 buc ieșite, factura la 130: diferența de 300 se înregistrează 302 = 408 180 (partea rămasă în stoc) și 602 = 408 120 (partea ieșită). La o reducere de preț, aceleași articole se înregistrează în roșu (sume negative).
+La factura furnizorului cu **diferență de preț**, pentru produsele cu clasă: partea rămasă în stoc ajustează contul de stoc din regula OBYC a recepției (la cost standard rămâne contul nativ de diferențe de preț), iar partea aferentă cantității deja ieșite din stoc merge pe cheltuiala din regula `stock_receipt_price_difference` (*Diferență de preț la recepție stoc*) a clasei (câmpul *Cont destinație*). Fără regulă, toată diferența rămâne pe stoc, iar contul de stoc depășește valoarea stocului rămas după ieșiri: **configurați regula pentru fiecare clasă cu cost FIFO sau mediu**. Împărțirea se face doar la produse cu cost FIFO sau mediu (nu la cost standard, unde diferența are contul ei), doar pe **factura furnizorului** (nu pe nota de credit) și doar în fluxul RNI. Exemplu: recepție de 10 buc la 100, 4 buc ieșite, factura la 130: diferența de 300 se înregistrează 302 = 408 180 (partea rămasă în stoc) și 602 = 408 120 (partea ieșită). La o reducere de preț, aceleași articole se înregistrează în roșu (sume negative).
 
 #### Transfer validat de un document care își postează singur nota
 
@@ -146,8 +147,10 @@ Controale: pe nota bonului fiecare produs are contul de cheltuială al clasei lu
 | OBYC-07 | Bon de consum cu proiect | analiticul proiectului pe linia de cheltuială, fără linii analitice separate |
 | OBYC-08 | Retur storno cu proiect | linia negativă cu același analitic; costul proiectului scade |
 | OBYC-09 | Factură cu diferență de preț, marfă ieșită parțial | diferența se împarte între stoc și cheltuiala regulii |
-| OBYC-10 | Factură cu diferență de preț, fără regulă `stock_receipt_price_difference` | toată diferența pe stoc |
+| OBYC-10 | Factură cu diferență de preț, fără regulă `stock_receipt_price_difference` | toată diferența pe stoc; contul de stoc depășește valoarea stocului rămas după ieșiri, deci regula trebuie configurată |
 | OBYC-11 | Inversarea unei reclasificări (`deltatech_stock_reclass`) făcută spre o locație de tip Inventar, pentru o clasă fără regula *Ajustare inventar plus* | inversarea trece; verificarea gestiunii compară cu contul categoriei |
+| OBYC-12 | Factură la 12 față de recepția la 10, marfă la CMP, 5 din 10 buc ieșite (clasa Marfă, regula `stock_receipt_price_difference` cu 607) | 408 = −20, 371 = +10, 607 = +10; contul de cheltuială al produsului nu se folosește |
+| OBYC-13 | Același caz la cost FIFO (4 din 10 buc ieșite, factură la 130) | 302 +180, 602 +120, 408 −300; la FIFO împărțirea merge pe stratul recepției |
 
 ## 9. Legături cu alte module
 

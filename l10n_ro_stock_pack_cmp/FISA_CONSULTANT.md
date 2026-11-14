@@ -165,6 +165,25 @@ rutează automat pe 408 și stinge pivotul: `408 = 401` + TVA.
 
 ![Factura furnizorului rutată pe 408](screenshots/04_factura_pe_408.png)
 
+### Pasul 3 bis — Factură la alt preț decât comanda
+
+Recepția s-a făcut la prețul din comandă (371 = 408), iar factura sosește la alt preț. Exemplu: comandă 10 buc × 10 lei, factură 10 buc × 12 lei. Factura stinge 408 la valoarea recepției, iar diferența de 20 lei se contează pe 371 pentru cantitatea aflată încă în stoc. CMP-ul se reevaluează la 12 lei (în exemplu nu exista stoc anterior; altfel CMP-ul se reevaluează pe stocul rămas).
+
+Dacă o parte din marfă a fost deja vândută când sosește factura (de exemplu 5 buc din 10), diferența se împarte proporțional: 10 lei pe 371 (cele 5 buc rămase) și 10 lei pe 607 (cele 5 buc ieșite). Astfel 371 rămâne egal cu stocul fizic (5 × 12 = 60 lei), iar 607 ajunge la 60 lei (50 descărcare + 10 diferență). Factura mai mică decât recepția se tratează la fel, cu semn invers. La produsele cu clasă de evaluare (OBYC), contul de cheltuială vine din regula `stock_receipt_price_difference` a clasei; fără regulă, toată diferența rămâne pe stoc. La produsele fără clasă, contul de cheltuială e cel al produsului, dar numai dacă e 607.
+
+![Factura furnizorului la 12 lei: diferența de preț împărțită între 371 și 607](screenshots/10_factura_alt_pret.png)
+
+**Cum se face:** din **Achiziții → Comenzi → Comandă de achiziție** apăsați *Creează factură*, modificați *Prețul unitar* pe linia facturii (12 lei) și apăsați *Confirmă*. Notele se văd în tab-ul *Elemente jurnal* al facturii sau în **Contabilitate → Note contabile**.
+
+**Cazuri de reținut:**
+- *CMP cu stoc anterior:* partea ieșită se raportează la stocul de după recepție. Exemplu: stoc vechi 10 × 8, recepție 10 × 10, vândute 5 buc, factură la 12: din diferența de 20, 5 lei merg pe 607 (5/20) și 15 pe 371 (15/20); 371 rămâne egal cu stocul fizic al CMP-ului. La FIFO, ieșirile se scad din stratul recepției.
+- *Retur către furnizor:* nu e consum; diferența de preț aferentă cantității returnate nu merge pe 607.
+- *Data facturii:* proporția se calculează la postarea facturii, deci vânzările dintre data facturii și postare sunt numărate ca ieșite; evitați postarea cu întârziere.
+- *Perioadă închisă:* nota se face pe data facturii și nu modifică recepția din perioada blocată. Dacă factura pentru o recepție din anul N sosește după bilanț, dar înainte de autorizarea lor pentru emitere (pct. 72), ajustarea se face pe anul N (OMFP 1802/2014 pct. 73 alin. (2) lit. e)), de către contabil.
+- *Alte conturi decât 607:* contul implicit de cheltuială se folosește numai dacă e 607 (mărfuri vândute). La materii prime și materiale (601/602), diferența rămâne pe stoc; tratamentul se stabilește prin OBYC, cu regula `stock_receipt_price_difference`.
+
+Testele automate: `test_price_difference.py` (pachet) și `test_13` din `l10n_ro_stock_obyc`.
+
 ### Pasul 4 — Vânzare cu descărcare de gestiune la CMP
 
 Creați o comandă de vânzare de 5 buc × 20 lei, livrați și facturați. Pe
@@ -249,6 +268,7 @@ Ce rămâne manual: activarea RNI și a conturilor de inventariere (pasul 5.3–
 - [ ] Factura furnizorului are linia de produs pe 408, iar soldul 408 pe
       documentele perechii recepție+factură este zero.
 - [ ] Factura de client conține liniile 607 = 371 la CMP-ul curent.
+- [ ] Factura furnizorului la alt preț decât recepția: diferența ajustează 371 pentru cantitatea rămasă și merge pe 607 pentru cea deja vândută; 371 = stocul fizic la CMP.
 - [ ] Testul automat al fluxului trece: `--test-tags=/l10n_ro_stock_pack_cmp`.
 
 ## 9. Mesaje de eroare frecvente
@@ -278,6 +298,7 @@ conturi RO, cu același scenariu ca testul de flux:
 7. `07_inventar_minus.png` — nota de minus de inventar 607 = 371.
    (Numărul 8, captura corecției CMP periodic, a fost scos odată cu pasul 7; numerotarea celorlalte rămâne stabilă.)
 9. `09_blocare_categorie.png` — refuzul la bifarea *Urmărește stocul* într-o categorie FIFO.
+10. `10_factura_alt_pret.png` — factura furnizorului la 12 lei față de 10 lei în comandă, după vânzarea a 5 din 10 buc: 408 se stinge, diferența de 20 lei se împarte între 371 (10) și 607 (10).
 
 Regenerare:
 

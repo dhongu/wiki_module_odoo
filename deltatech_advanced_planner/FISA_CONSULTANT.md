@@ -78,8 +78,8 @@ Date minime pentru demo:
    lead time achiziție/producție implicit, zile expediere operator→client, adâncime maximă BOM,
    comportament la dată imposibilă (avertizare sau blocare confirmare SO), retenție log-uri,
    replanificare automată la schimbare dată, fereastră consolidare RFQ, **orizont de planificare**
-   (implicit 90 de zile), **fereastră de lansare** (implicit 7 zile), detecție abateri zilnică, prag
-   escaladare.
+   (implicit 90 de zile), **fereastră de lansare** (implicit 7 zile), detecție abateri zilnică,
+   **generare zilnică a cererilor de ofertă** (implicit oprită, vezi Pasul 5), prag escaladare.
 3. Asigurați-vă că posturile de lucru au **calendar de lucru** și `time_efficiency` setate (intră în
    calculul RCCP al lead time-ului de producție).
 4. Verificați că furnizorii componentelor au `delay` (lead time) și, unde e cazul, `min_qty` (MOQ).
@@ -113,6 +113,8 @@ implicite. Acestea sunt folosite ori de câte ori datele de pe produs/furnizor l
   se planifică întotdeauna până la data lor de livrare.
 - **Fereastră de lansare (zile)** — cererile de ofertă și OF-urile se generează doar pentru comenzile
   planificate a căror dată de lansare cade cel mult la azi + N zile (implicit 7).
+- **Generare zilnică a cererilor de ofertă** — bifă, implicit oprită, care pornește acțiunea
+  programată de generare automată a cererilor de ofertă (vezi Pasul 5).
 
 ![Parametrii planificatorului în Setări → Inventar, cu orizontul de planificare și fereastra de lansare](screenshots/01_setari_planificator.png)
 
@@ -178,7 +180,8 @@ comenzilor planificate, acțiunea **Generează cereri de ofertă** lansează cer
 selectate de tip **Achiziție** (cele de producție sunt ignorate; pentru ele folosiți **Generează
 OF-uri**) și afișează la final o notificare cu numărul de cereri de ofertă create sau completate și
 comenzile planificate care au eșuat, cu motivul. Comenzile reale **nu** se creează automat — se
-lansează aici, după revizuire.
+lansează aici, după revizuire — decât dacă activați generarea zilnică a cererilor de ofertă (vezi
+mai jos); ordinele de producție rămân întotdeauna manuale.
 
 Când cantitatea planificată e sub cantitatea minimă a furnizorului (de exemplu 0,6 m² dintr-o
 placă vândută de la 1 m²), cererea de ofertă se generează tot la furnizorul produsului, cu cantitatea
@@ -214,6 +217,18 @@ care intră în fereastră — lista de lucru zilnică a responsabilului de achi
 S-a generat o singură cerere de ofertă; a doua comandă este numită în notificare ca sărită.
 
 ![Notificarea generării în lot, cu o comandă sărită pentru că se lansează după fereastra de lansare](screenshots/05c_fereastra_lansare.png)
+
+**Generare zilnică automată a cererilor de ofertă.** În **Setări → Inventar → Planificator avansat**,
+bifa **Generare zilnică a cererilor de ofertă** (implicit oprită) pornește acțiunea programată
+*Planificator avansat — generare zilnică cereri de ofertă*. La fiecare rulare ea generează cererile de
+ofertă ale comenzilor planificate **de achiziție**, aflate în starea **Planificat**, cu data de
+lansare în fereastra de lansare, începând cu cele mai vechi, cu aceeași consolidare ca la lansarea
+manuală. Comenzile planificate din **Ciornă**, cele cu lansarea după fereastră și cele care au deja o
+cerere de ofertă în ciornă legată sunt sărite și așteaptă rularea următoare; a doua rulare nu creează
+duplicate. **Ordinele de producție rămân manuale.** Un eșec (de exemplu un produs fără furnizor) nu
+oprește celelalte comenzi și se scrie doar în jurnalul serverului, fără notificare. Activați bifa
+doar dacă achiziția vrea cererile de ofertă create din oficiu: altfel rămâne lista de lucru zilnică
+din filtrul **De lansat**.
 
 ### Pasul 6 — Situație Material (proiecție cronologică per produs)
 
@@ -386,7 +401,9 @@ Modulul **nu generează note contabile** (Dr/Cr). Rezultatele unei rulări sunt:
   livrare;
 - **comenzi de reaprovizionare pentru stoc** (fără SO), eșalonate pe deficit, pe orizontul de
   planificare;
-- **RFQ-uri și MO-uri** doar la lansare manuală, în fereastra de lansare (cu consolidare RFQ);
+- **RFQ-uri și MO-uri** la lansare manuală, în fereastra de lansare (cu consolidare RFQ); cererile de
+  ofertă se pot genera și automat, zilnic, cu bifa **Generare zilnică a cererilor de ofertă** activată
+  — ordinele de producție rămân manuale;
 - **sincronizarea livrărilor**: pe SO confirmate, mișcările de livrare primesc legătura AP și data
   efectivă (`scheduled_date` pe picking);
 - **log de execuție** detaliat (`advanced.planner.log`).
@@ -429,8 +446,8 @@ sincronizarea livrărilor, detecția zilnică a abaterilor și escaladarea (dac�
 calculul propunerilor de reaprovizionare pentru stoc (eșalonat, pe orizont, fără dublarea cererilor de
 ofertă neconfirmate).
 
-**Ce rămâne manual:** lansarea RFQ-urilor și a ordinelor de producție din comenzile planificate (în
-fereastra de lansare), revizuirea comenzilor de reaprovizionare (create în `draft`), alegerea
+**Ce rămâne manual:** lansarea ordinelor de producție din comenzile planificate (în fereastra de
+lansare) și a RFQ-urilor, cât timp generarea zilnică a cererilor de ofertă este oprită, revizuirea comenzilor de reaprovizionare (create în `draft`), alegerea
 proprietarului fiecărei reguli de reaprovizionare (bifa **Planificat de Advanced Planner**), fixarea
 (firming) comenzilor care nu trebuie recalculate și decizia de nivelare a capacității.
 
@@ -453,6 +470,7 @@ proprietarului fiecărei reguli de reaprovizionare (bifa **Planificat de Advance
 - [ ] Pe o regulă bifată **Planificat de Advanced Planner** (min 100, max 300, stoc 60), propunerea este de 240 buc; butonul **Comandă** din Reaprovizionare refuză regula, iar programatorul nu creează cerere de ofertă pentru ea.
 - [ ] Un produs cu o regulă automată nebifată nu primește propuneri de la planificator.
 - [ ] Generarea în lot sare comenzile cu lansarea după fereastra de lansare și le numește în notificare; filtrul **De lansat** le exclude.
+- [ ] Cu bifa **Generare zilnică a cererilor de ofertă** activată, acțiunea programată creează cerere de ofertă pentru o comandă planificată de achiziție în starea Planificat, cu lansarea în fereastra de lansare; una cu lansarea după fereastră rămâne în Planificat; a doua rulare nu creează duplicate; comenzile cu o cerere de ofertă în ciornă deja legată sunt sărite.
 - [ ] Situația Material și Stocul Proiectat afișează proiecția cronologică și ATP corect.
 - [ ] Încărcare centru de lucru / CRP reflectă supraîncărcările; nivelarea cu **Doar vizualizare (fără modificări)** previzualizează mutările.
 - [ ] Tabloul Risc de livrare listează comenzile la risc; butonul Escaladează creează o activitate.
@@ -487,6 +505,7 @@ proprietarului fiecărei reguli de reaprovizionare (bifa **Planificat de Advance
 | Cantitate de 1000 de ori mai mare pe cererea de ofertă (ex. 22.500 în loc de 22,5) | Prețul furnizorului e în „ml” (mililitru), produsul în „m” | Pe furnizorul produsului (tabul Achiziție) schimbați UM-ul în „m” și regenerați cererea |
 | „Aceste reguli de reaprovizionare sunt planificate de Advanced Planner…” la butonul **Comandă** din Reaprovizionare | Regula e bifată **Planificat de Advanced Planner**: o comandă planificatorul | Generați cererea de ofertă din comanda planificată de reaprovizionare sau debifați regula ca s-o comande Odoo |
 | Notificarea „Comenzi planificate sărite, cu lansarea după …” la generarea în lot | Comenzile respective se lansează după fereastra de lansare | Normal: se generează când intră în fereastră. Pentru o lansare anticipată, deschideți comanda și confirmați butonul de generare |
+| Comanda planificată de achiziție nu a fost transformată în cerere de ofertă de acțiunea programată zilnică | Produs fără furnizor (eșecul se scrie doar în jurnalul serverului, fără notificare); cerere de ofertă în ciornă deja legată (acțiunea așteaptă confirmarea ei); lansare după fereastra de lansare; comandă rămasă în Ciornă; bifa **Generare zilnică a cererilor de ofertă** oprită | Adăugați furnizorul pe produs, confirmați sau anulați cererea de ofertă în ciornă, măriți fereastra de lansare sau așteptați să intre în ea; motivul exact e în jurnalul serverului |
 | Un produs cu regulă min/max nu primește propuneri de la planificator | Regula e automată sau are minim/maxim și nu e bifată: o comandă Odoo standard | Bifați **Planificat de Advanced Planner** pe regulă dacă vreți propuneri eșalonate |
 | O ieșire viitoare nu generează propunere de reaprovizionare | Data ei e după orizontul de planificare | Măriți **Orizont de planificare** în Setări sau așteptați să intre în orizont |
 | În Panoul de control, o comandă recepționată rămâne în tabel cu **Recepționat parțial** | Recepția a fost validată fără cantitatea completă (cu backorder) pentru produsul comenzii planificate | Normal: linia dispare la recepția restului. Dacă restul nu mai vine, anulați backorder-ul și cantitatea rămasă din comanda de achiziție |
@@ -547,8 +566,8 @@ Păstrați explicația orientată pe **activitatea utilizatorului**: ce întreba
 promisă e realizabilă?), când se rulează (la ofertare, la confirmare, în batch nocturn), ce date
 trebuie pregătite (BOM, calendar posturi, lead time furnizori, `commitment_date`) și cum se citește
 verdictul (semafor OK/Avertisment/Blocat + dată efectivă). Subliniați separarea **planificare vs.
-execuție**: modulul propune și verifică, dar RFQ-urile și ordinele de producție rămân la decizia
-operatorului. Explicați **regula „un singur proprietar”** pentru produsele cu reguli min/max (bifa
+execuție**: modulul propune și verifică, dar ordinele de producție rămân la decizia operatorului, iar RFQ-urile la fel, în afară
+de cazul în care se activează generarea zilnică a cererilor de ofertă. Explicați **regula „un singur proprietar”** pentru produsele cu reguli min/max (bifa
 **Planificat de Advanced Planner**) și diferența față de Odoo standard, care comandă acum tot ce cere
 orizontul său, în timp ce planificatorul propune câte o comandă pe deficit, lansată la momentul
 potrivit (fereastra de lansare). Menționați explicit că modulul **nu generează note contabile** — efectul contabil apare

@@ -1,35 +1,59 @@
-# Website alternative code (localizat la `deltatech_alternative_website/index.md`)
+# Website Alternative Codes (localizat la `deltatech_alternative_website/index.md`)
 
 - **Nume Tehnic:** `deltatech_alternative_website`
 - **Versiune:** `19.0.1.0.13`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_alternative_website`
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_alternative_website
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_alternative_website`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-14`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul extinde magazinul online Odoo astfel încât clienții să poată regăsi produsele și după codurile alternative (echivalente) definite pentru acestea — coduri OEM, coduri de referință încrucișată sau coduri de producător, folosite frecvent de distribuitorii de piese de schimb și furnizorii industriali. Modulul afișează aceste coduri direct pe pagina produsului și le face vizibile motorului de căutare al site-ului, astfel încât un client care caută după un cod cu care este obișnuit (diferit de SKU-ul intern) găsește totuși produsul corect.
+Modulul extinde magazinul online Odoo astfel încât clienții să poată regăsi produsele și după codurile alternative (echivalente) definite pentru ele — coduri OEM, coduri de referință încrucișată sau coduri de producător, folosite frecvent de distribuitorii de piese de schimb și furnizorii industriali. Codurile sunt expuse pe pagina produsului și în căutarea site-ului, astfel încât un client care caută după un cod cu care este obișnuit (diferit de SKU-ul intern) găsește totuși produsul corect.
 
 #### 2. Funcționalități Cheie
 
-- Afișează codurile alternative ale produsului (`alternative_ids`) ca elemente `<span>` ascunse cu `itemprop="alternateName"`, disponibile atât motoarelor de căutare externe, cât și căutării interne a site-ului.
-- Afișează pe pagina produsului o secțiune dedicată **„Cod alternativ”** (vizibilă doar utilizatorilor autentificați) cu valoarea principală `alternative_code`.
-- Afișează o secțiune **„Se folosește pentru”** pe pagina produsului atunci când câmpul `used_for` este completat, indicând vehiculul/echipamentul pentru care se potrivește piesa.
-- Extinde căutarea full-text a magazinului online (`_search_get_detail`) pentru a include `alternative_ids.name` printre câmpurile căutabile, astfel încât clienții găsesc produsele după oricare dintre codurile lor de referință încrucișată.
-- Îmbunătățește normalizarea interogărilor de căutare prin `website.searchable.mixin`: elimină spațiile de la început/sfârșit și reduce spațiile multiple înainte de executarea căutării, scăzând numărul de rezultate „0" false.
-- Depinde de [deltatech_alternative](../deltatech_alternative/index.md) pentru câmpurile de bază `alternative_ids` și `used_for` de pe `product.template`.
+- **Coduri alternative pentru motoarele de căutare**: codurile produsului (`alternative_ids`) care nu sunt ascunse sunt afișate ca elemente `<span>` invizibile cu `itemprop="alternateName"`, citibile de motoarele de căutare externe și de căutarea internă.
+- **Secțiunea „Alternative code”** pe pagina produsului, cu valoarea principală `alternative_code`, vizibilă doar utilizatorilor autentificați.
+- **Secțiunea „Used For”** pe pagina produsului, afișată când `used_for` este completat (de ex. „Ford Focus 2005-2011”), pentru vehiculul/echipamentul căruia îi este destinată piesa.
+- **Căutare după codul alternativ**: căutarea din `/shop` include `alternative_ids.name` printre câmpurile căutabile, deci orice produs cu un cod alternativ care se potrivește apare în rezultate.
+- **Normalizarea interogării**: spațiile de la capete sunt eliminate, iar spațiile multiple sunt reduse la unul înainte de căutare (`website.searchable.mixin`).
+- **Activare/dezactivare**: ambele secțiuni sunt șabloane opționale (`customize_show`), care se pornesc sau se opresc din *Website → Customize* pe pagina unui produs.
+- **Configurarea codurilor**: se face în [deltatech_alternative](../deltatech_alternative/index.md), în tab-ul *Alternatives* al produsului (*Inventar → Produse → Produse* sau *Vânzări → Produse*).
 
 #### 3. Dependențe
 
-- [website](../website/index.md)
+- `website`
 - `website_sale`
 - [deltatech_alternative](../deltatech_alternative/index.md)
 
 #### 4. Componente Cheie
 
-Conform fișierului `readme/DESCRIPTION.md`, funcționalitatea principală este afișarea codurilor alternative pe pagina produsului și extinderea căutării site-ului cu aceste coduri. Întrucât descrierea modulului este disponibilă și acoperă secțiunea de componente, nu a fost efectuată o analiză suplimentară a codului.
+**Modele**
+
+- `product.template` (extins): `_search_get_detail()` adaugă `alternative_ids.name` la câmpurile de căutare și la maparea rezultatelor, și scoate `description` / `description_sale` din câmpurile căutate (dacă sunt prezente), deci căutarea din magazin nu mai folosește descrierile produsului.
+- `website.searchable.mixin` (extins): `_search_build_domain()` curăță spațiile din textul căutat înainte de a construi domeniul.
+
+**Vizualizări**
+
+- `product_alternative_code` (moștenește `website_sale.product`, `customize_show`): spanurile ascunse `alternateName` și blocul „Alternative code” pentru utilizatorii autentificați.
+- `product_used_for` (moștenește `website_sale.product`, `customize_show`): blocul „Used For”, afișat când `used_for` este completat.
+
+**Acțiuni Automate / Acțiuni Server**
+
+Nu sunt definite.
 
 #### 5. Conexiuni
 
-- [deltatech_alternative](../deltatech_alternative/index.md): modulul de bază care definește codurile alternative (echivalente) și câmpul `used_for` ale produselor; acest modul de website expune respectivele date în magazinul online.
+- [deltatech_alternative](../deltatech_alternative/index.md): modulul de bază care definește codurile alternative și câmpul `used_for`; acest modul le expune în magazinul online.
+
+---
+
+#### 6. Roadmap
+
+`readme/ROADMAP.md` descrie funcționalități planificate, încă neimplementate în cod:
+
+- Căutare semantică cu embeddings (pgvector, index HNSW), ca plasă de siguranță când căutarea exactă nu returnează nimic.
+- Căutare în trepte pe `/shop`: potrivire exactă (SQL, `default_code`, `barcode`, coduri alternative), apoi parțială (`ILIKE`), apoi vectorială.
+- Pre-normalizarea căutării (litere mici, separatori de cod unificați în cratimă, eliminarea cuvintelor de zgomot) și cache pentru embeddings.
+- Indexurile PostgreSQL necesare căutării parțiale (trigram pe codurile produselor și pe `product_alternative.name`) există deja; `ilike` le folosește doar dacă funcția `unaccent` este `IMMUTABLE` în bază (vezi `deltatech_alternative`).

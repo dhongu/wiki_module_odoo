@@ -1,23 +1,24 @@
-# Business process handover document (localizat la `deltatech_business_process_handover_document/index.md`)
+# Business Process Handover Document (localizat la `deltatech_business_process_handover_document/index.md`)
 
 - **Nume Tehnic:** `deltatech_business_process_handover_document`
 - **Versiune:** `19.0.0.0.8`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_business_process_handover_document`
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_business_process_handover_document
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_business_process_handover_document`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-14`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul extinde `deltatech_business_process` pentru a genera un document formal de predare-primire (proces-verbal de predare-primire) în format PDF, direct dintr-un Proiect de Business. Acesta adună informațiile despre compania furnizoare și cea beneficiară, reprezentanții acestora, testerii implicați și lista dezvoltărilor realizate în cadrul proiectului, producând un document PDF pregătit pentru semnare. Astfel, echipa de implementare poate formaliza rapid și standardizat predarea unui proiect către client, fără a redacta manual documentul.
+Modulul extinde [deltatech_business_process](../deltatech_business_process/index.md) pentru a genera un document formal de predare-primire (proces-verbal) în format PDF, direct dintr-un Proiect de Business. Documentul adună informațiile despre compania furnizoare și cea beneficiară, reprezentanții și testerii lor și lista dezvoltărilor din proiect, gata de semnat. Echipa de implementare poate astfel formaliza rapid și standardizat predarea unui proiect către client.
 
 #### 2. Funcționalități Cheie
 
-- Adaugă pe formularul Proiectului de Business detaliile companiei furnizoare și beneficiare (nume, reprezentant, testeri).
-- Colectează automat toate dezvoltările asociate proiectului.
-- Adaugă o bifă „Handover Checked" pe fiecare Arie de Business, pentru urmărirea validării la predare.
-- Generează un raport PDF QWeb (format A4), accesibil din meniul Print al Proiectului de Business.
-- Raportul este disponibil atât în limba engleză, cât și în română.
+- **Date de predare pe proiect**: grupurile *Provider Information* (companie, reprezentant, testeri) și *Recipient Information* (companie, reprezentant, testeri) pe formularul Proiectului de Business; reprezentanții sunt persoane (nu companii), iar testerii sunt parteneri.
+- **Dezvoltări colectate automat**: toate dezvoltările legate de proiect sunt incluse în document prin câmpul calculat *Developments*.
+- **Filtrare după etapa de implementare** (nou în 19.0): câmpul *Handover Stage Filter* din grupul *Handover Options* limitează documentul la procesele aflate în etapa aleasă, cu testele și dezvoltările lor; lăsat gol, documentul include toate procesele și toate dezvoltările proiectului.
+- **Bifă de predare pe Aria de Business**: *Handover Checked* marchează aria ca verificată și acceptată la predare.
+- **Raport PDF**: *Handover Document* (QWeb, A4), din *Print ▸ Handover Document* pe Proiectul de Business; conține lista dezvoltărilor și blocuri de semnătură pentru ambele părți; disponibil în engleză și în română.
+- **Flux**: se deschide Proiectul de Business din *Business Processes*, se completează informațiile furnizorului și beneficiarului, se verifică legarea dezvoltărilor, apoi se tipărește documentul.
 
 #### 3. Dependențe
 
@@ -27,19 +28,19 @@ Modulul extinde `deltatech_business_process` pentru a genera un document formal 
 
 **Modele**
 
-- `business.project` (extindere): adaugă informațiile despre compania furnizoare/beneficiară, reprezentanți, testeri și câmpul calculat cu dezvoltările proiectului, folosite la generarea raportului.
-- `business.area` (extindere): adaugă bifa „Handover Checked" pentru marcarea ariei ca verificată/acceptată la predare.
+- `business.project` (extindere): `provider_company`, `provider_representative`, `provider_testers`, `recipient_company`, `recipient_representative`, `recipient_testers`; `development_ids` (calculat, stocat); `handover_stage_id` (filtru de etapă), `handover_process_ids` (procesele incluse, după filtru) și `handover_development_ids` (dezvoltările incluse în document).
+- `business.area` (extindere): bifa `handover_checked`.
 
 **Vizualizări**
 
-- `business_project_view.xml`: adaugă pe formularul Proiectului de Business grupurile „Provider Information" și „Recipient Information" (companie, reprezentant, testeri).
-- `business_area_view.xml`: adaugă bifa „Handover Checked" pe formularul Ariei de Business.
+- `view_business_project_form_inherit` (`business_project_view.xml`): grupurile „Provider Information”, „Recipient Information” și „Handover Options” pe formularul proiectului.
+- `business_area_view.xml`: bifa „Handover Checked” pe formularul Ariei de Business.
 
 **Rapoarte**
 
-- `verbal_process_report.xml` / `verbal_process_template.xml`: acțiunea de raport și șablonul QWeb pentru documentul de predare-primire, accesibile din meniul Print al Proiectului de Business.
-- `paperforat_a4_bp.xml`: definește formatul de hârtie A4 folosit de raport.
+- `action_report_verbal_process` (`verbal_process_report.xml`) și șablonul QWeb din `verbal_process_template.xml`: raportul „Handover Document”, atașat modelului `business.project`.
+- `paperforat_a4_bp.xml`: formatul de hârtie A4 folosit de raport.
 
 #### 5. Conexiuni
 
-- [deltatech_business_process](../deltatech_business_process/index.md): modulul de bază care definește proiectele și procesele de business pe care se generează documentul de predare-primire.
+- [deltatech_business_process](../deltatech_business_process/index.md): modulul de bază care definește proiectele, procesele și dezvoltările pe care se generează documentul.

@@ -75,18 +75,18 @@
     "version": "19.0.0.0.11",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_account_analytic",
     "local_path": "odoo-addons/deltatech/deltatech_account_analytic",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Deltatech Account Analytic",
-    "summary": "`deltatech_account_analytic` îmbunătățește contabilitatea analitică din Odoo cu două direcții complementare. Pe de o parte, leagă automat liniile analitice și distribuțiile analitice de pe facturi de **echipa de vânzări** (client sau furnizor) și adaugă o categorie de produs pe fiecare linie analitică, pentru rapoarte mai fine pe echipe și categorii. Pe de altă parte, oferă un asistent de **împărțire manuală a sumelor pe mai multe conturi analitice**, pe baza unor șabloane procentuale reutilizabile — util atunci când o sumă (comision, cost partajat, alocare de marjă) trebuie distribuită după o cheie fixă, fără a mai calcula manual fiecare linie.",
+    "last_ingest": "2026-11-14",
+    "friendly_name": "Account Analytic Split",
+    "summary": "`deltatech_account_analytic` îmbunătățește contabilitatea analitică din Odoo cu două direcții complementare. Pe de o parte, leagă automat liniile analitice și distribuțiile analitice de pe facturi de **echipa de vânzări** și adaugă categoria produsului pe fiecare linie analitică, pentru rapoarte mai fine pe echipe și categorii. Pe de altă parte, oferă un asistent de **împărțire a sumelor pe mai multe conturi analitice**, pe baza unor șabloane procentuale reutilizabile — util atunci când o sumă (comision, cost partajat, alocare de marjă) trebuie distribuită după o cheie fixă, fără a calcula manual fiecare linie.",
     "features": [
-      "Echipă de vânzări pe liniile analitice (`team_id` pe `account.analytic.line`): la creare, se determină automat din comanda de vânzare a expedierii (pentru notele contabile generate din stoc) sau direct din factura de vânzare, nota de credit sau chitanța de vânzare (`out_invoice`/`out_refund`/`out_receipt`).",
-      "Categorie de produs pe linia analitică (`product_category_id`, câmp `related` stocat din `product_id.categ_id`) — permite gruparea și filtrarea liniilor analitice după categoria produsului.",
-      "Selecție automată a modelului de distribuție analitică pe liniile facturilor de client/notă de credit/chitanță, în funcție de echipa de vânzări a facturii — dacă există exact un `account.analytic.distribution.model` configurat pentru acea echipă, distribuția lui e aplicată automat, inclusiv atunci când echipa se schimbă ulterior pe o factură existentă (nu doar la creare).",
-      "Determinare echipă de vânzări pe facturile de furnizor: la generarea liniilor analitice dintr-o factură/notă de credit de furnizor, se caută o echipă CRM al cărei nume coincide cu numele contului analitic și se completează `team_id`.",
-      "Filtre suplimentare în vizualizarea liniilor analitice: grupare după echipă de vânzări și după categoria de produs.",
-      "Șabloane de împărțire analitică (`account.analytic.split.template`): un set ordonat de conturi analitice, fiecare cu un procent, reutilizabil pe mai multe împărțiri.",
-      "Asistent de împărțire (`account.analytic.split`): pornind de la o sumă introdusă manual sau de la o linie analitică existentă selectată, generează automat linii analitice noi conform procentelor din șablon; flux `draft` → `confirmed`, cu buton de resetare care șterge liniile generate și revine la starea de ciornă.",
-      "Grup de securitate dedicat (\"Analitic split user\") care controlează accesul la șabloane, la asistentul de împărțire și la liniile aferente."
+      "Echipă de vânzări pe distribuția analitică: modelul de distribuție analitică primește câmpul *Sale team*. Pe facturile de client, notele de credit și chitanțele de vânzare, liniile de produs preiau distribuția modelului a cărui echipă este echipa facturii, dacă există exact un astfel de model; distribuția se recalculează și când se schimbă echipa facturii.",
+      "Echipă de vânzări pe liniile analitice (`team_id`): se preia de pe factura de client, nota de credit sau chitanța de vânzare (`out_invoice`/`out_refund`/`out_receipt`); pentru notele contabile ale unui transfer de stoc (când sunt instalate modulele de stoc și `sale_stock`), de pe comanda de vânzare a transferului; pe facturile și notele de credit de furnizor, de la echipa al cărei nume este identic cu numele contului analitic.",
+      "Categorie de produs pe linia analitică (`product_category_id`, related stocat din `product_id.categ_id`).",
+      "Grupări noi: în *Contabilitate → Tranzacții → Analytic Items* și în *Raportare → Analytic Report*, meniul *Group By* oferă *Sale team* și *Product category*.",
+      "Șabloane de împărțire (`account.analytic.split.template`): conturi analitice cu procent fiecare; procentele trebuie să însumeze 100.",
+      "Împărțiri analitice (`account.analytic.split`): distribuie fie o *sumă* fixă, fie o linie analitică existentă (tip *Line*) după un șablon. *Compute* completează liniile din șablon; *Confirm* creează câte o linie analitică per linie de împărțire, la data împărțirii, și verifică totalul; la tipul *Line* linia originală este ștearsă și înlocuită; *Reset* șterge liniile create și readuce împărțirea de tip *Amount* în ciornă (o împărțire *Line* nu poate fi resetată). O împărțire fără *Name* nu poate fi confirmată.",
+      "Configurare: *Sale team* se setează pe modelele de distribuție folosite la vânzări (*Contabilitate → Configurare → Contabilitate analitică → Analytic Distribution Models*); meniurile *Analytic split templates* și *Analytic splits* sunt vizibile administratorilor contabili când setarea *Analytic Accounting* este activă, iar accesul la ele îl au doar membrii grupului *Analitic split user*. În Community aplicația se numește *Invoicing*.",
+      "Limitare: pe facturile de furnizor echipa e găsită doar prin potrivire exactă între numele contului analitic și numele echipei."
     ],
     "dependencies": [
       "account",
@@ -96,11 +96,10 @@
     ],
     "connections": [
       "sale",
-      "sales_team",
       "account",
       "analytic"
     ],
-    "text": "Deltatech Account Analytic\ndeltatech_account_analytic\n`deltatech_account_analytic` îmbunătățește contabilitatea analitică din Odoo cu două direcții complementare. Pe de o parte, leagă automat liniile analitice și distribuțiile analitice de pe facturi de **echipa de vânzări** (client sau furnizor) și adaugă o categorie de produs pe fiecare linie analitică, pentru rapoarte mai fine pe echipe și categorii. Pe de altă parte, oferă un asistent de **împărțire manuală a sumelor pe mai multe conturi analitice**, pe baza unor șabloane procentuale reutilizabile — util atunci când o sumă (comision, cost partajat, alocare de marjă) trebuie distribuită după o cheie fixă, fără a mai calcula manual fiecare linie.\nEchipă de vânzări pe liniile analitice (`team_id` pe `account.analytic.line`): la creare, se determină automat din comanda de vânzare a expedierii (pentru notele contabile generate din stoc) sau direct din factura de vânzare, nota de credit sau chitanța de vânzare (`out_invoice`/`out_refund`/`out_receipt`).\nCategorie de produs pe linia analitică (`product_category_id`, câmp `related` stocat din `product_id.categ_id`) — permite gruparea și filtrarea liniilor analitice după categoria produsului.\nSelecție automată a modelului de distribuție analitică pe liniile facturilor de client/notă de credit/chitanță, în funcție de echipa de vânzări a facturii — dacă există exact un `account.analytic.distribution.model` configurat pentru acea echipă, distribuția lui e aplicată automat, inclusiv atunci când echipa se schimbă ulterior pe o factură existentă (nu doar la creare).\nDeterminare echipă de vânzări pe facturile de furnizor: la generarea liniilor analitice dintr-o factură/notă de credit de furnizor, se caută o echipă CRM al cărei nume coincide cu numele contului analitic și se completează `team_id`.\nFiltre suplimentare în vizualizarea liniilor analitice: grupare după echipă de vânzări și după categoria de produs.\nȘabloane de împărțire analitică (`account.analytic.split.template`): un set ordonat de conturi analitice, fiecare cu un procent, reutilizabil pe mai multe împărțiri.\nAsistent de împărțire (`account.analytic.split`): pornind de la o sumă introdusă manual sau de la o linie analitică existentă selectată, generează automat linii analitice noi conform procentelor din șablon; flux `draft` → `confirmed`, cu buton de resetare care șterge liniile generate și revine la starea de ciornă.\nGrup de securitate dedicat (\"Analitic split user\") care controlează accesul la șabloane, la asistentul de împărțire și la liniile aferente."
+    "text": "Account Analytic Split\ndeltatech_account_analytic\n`deltatech_account_analytic` îmbunătățește contabilitatea analitică din Odoo cu două direcții complementare. Pe de o parte, leagă automat liniile analitice și distribuțiile analitice de pe facturi de **echipa de vânzări** și adaugă categoria produsului pe fiecare linie analitică, pentru rapoarte mai fine pe echipe și categorii. Pe de altă parte, oferă un asistent de **împărțire a sumelor pe mai multe conturi analitice**, pe baza unor șabloane procentuale reutilizabile — util atunci când o sumă (comision, cost partajat, alocare de marjă) trebuie distribuită după o cheie fixă, fără a calcula manual fiecare linie.\nEchipă de vânzări pe distribuția analitică: modelul de distribuție analitică primește câmpul *Sale team*. Pe facturile de client, notele de credit și chitanțele de vânzare, liniile de produs preiau distribuția modelului a cărui echipă este echipa facturii, dacă există exact un astfel de model; distribuția se recalculează și când se schimbă echipa facturii.\nEchipă de vânzări pe liniile analitice (`team_id`): se preia de pe factura de client, nota de credit sau chitanța de vânzare (`out_invoice`/`out_refund`/`out_receipt`); pentru notele contabile ale unui transfer de stoc (când sunt instalate modulele de stoc și `sale_stock`), de pe comanda de vânzare a transferului; pe facturile și notele de credit de furnizor, de la echipa al cărei nume este identic cu numele contului analitic.\nCategorie de produs pe linia analitică (`product_category_id`, related stocat din `product_id.categ_id`).\nGrupări noi: în *Contabilitate → Tranzacții → Analytic Items* și în *Raportare → Analytic Report*, meniul *Group By* oferă *Sale team* și *Product category*.\nȘabloane de împărțire (`account.analytic.split.template`): conturi analitice cu procent fiecare; procentele trebuie să însumeze 100.\nÎmpărțiri analitice (`account.analytic.split`): distribuie fie o *sumă* fixă, fie o linie analitică existentă (tip *Line*) după un șablon. *Compute* completează liniile din șablon; *Confirm* creează câte o linie analitică per linie de împărțire, la data împărțirii, și verifică totalul; la tipul *Line* linia originală este ștearsă și înlocuită; *Reset* șterge liniile create și readuce împărțirea de tip *Amount* în ciornă (o împărțire *Line* nu poate fi resetată). O împărțire fără *Name* nu poate fi confirmată.\nConfigurare: *Sale team* se setează pe modelele de distribuție folosite la vânzări (*Contabilitate → Configurare → Contabilitate analitică → Analytic Distribution Models*); meniurile *Analytic split templates* și *Analytic splits* sunt vizibile administratorilor contabili când setarea *Analytic Accounting* este activă, iar accesul la ele îl au doar membrii grupului *Analitic split user*. În Community aplicația se numește *Invoicing*.\nLimitare: pe facturile de furnizor echipa e găsită doar prin potrivire exactă între numele contului analitic și numele echipei."
   },
   {
     "path": "deltatech_account_bank_statement_import/index.md",
@@ -214,21 +213,25 @@
     "version": "19.0.1.1.5",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import_gls",
     "local_path": "odoo-addons/bitshop_ent/deltatech_account_bank_statement_import_gls",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "GLS Borderou Bank Statements Import",
-    "summary": "Modulul importă borderourile de ramburs GLS (fișiere Excel) direct ca extrase de cont bancar, fără nicio prelucrare manuală prealabilă a fișierului. Magazinele online care livrează cu plata ramburs prin GLS primesc periodic aceste borderouri cu sumele încasate de curier și virate în banca firmei; în loc să fie „curățate\" manual (șters antetul și rândul de total) și mapate coloană cu coloană în asistentul standard de import, fișierul original este încărcat ca atare pe jurnalul de tip bancă dedicat curierului, generând automat o linie de extras per colet.",
+    "last_ingest": "2026-11-14",
+    "friendly_name": "GLS COD Statement Import",
+    "summary": "Modulul importă borderoul de ramburs GLS (fișier XLSX) direct ca extras de cont bancar, fără nicio prelucrare prealabilă a fișierului: o linie pentru fiecare colet plătit la livrare, legată de clientul expedierii, plus o linie pentru suma virată de GLS în banca firmei. Magazinele online care livrează cu ramburs prin GLS încarcă fișierul exact cum îl primesc, pe jurnalul de tip bancă dedicat curierului.",
     "features": [
-      "Import fișier original: se încarcă borderoul exact cum vine de la GLS — antetul (client,",
-      "Detecție prin semnătură: fișierul este recunoscut după semnătura GLS din prima celulă, deci",
-      "O linie per colet: fiecare sumă ramburs devine o linie de extras cu numărul AWB, referința",
-      "Verificare de control: rândul de total din fișier este verificat față de suma liniilor",
-      "Linie opțională de transfer bancar: se poate adăuga automat (configurabil per jurnal) o",
-      "Protecție la duplicate: fiecare colet are un id unic de import (per AWB); reimportul"
+      "Fișierul așa cum vine: antetul (client, cont bancar, data transferului) și rândul de total sunt tratate automat.",
+      "Recunoaștere automată: fișierul este identificat după semnătura GLS din prima celulă, deci se importă de pe orice jurnal bancar, alături de alte formate de extras, fără wizardul de mapare a coloanelor.",
+      "O linie per colet: fiecare sumă ramburs devine o linie de extras cu numărul AWB, referința GLS și numele destinatarului.",
+      "Clientul găsit după AWB: linia este legată de clientul livrării care are același AWB în compania curentă, niciodată după nume; când nu se găsește nicio livrare sau se găsesc mai multe, linia rămâne pentru operator.",
+      "Total verificat: rândul de total trebuie să egaleze suma coletelor, iar un fișier care acoperă mai mult de un transfer este refuzat, astfel încât fiecare extras corespunde unei singure mișcări bancare.",
+      "Linie de transfer și duplicate: o linie negativă opțională cu suma virată echilibrează extrasul la zero; fiecare colet se importă o singură dată, deci reimportul aceluiași fișier este detectat. Importul este refuzat, cu mesaj, și când toate coletele din fișier au fost deja importate.",
+      "Date trimise în afara Odoo: niciuna; modulul doar citește fișierul încărcat și nu se conectează la GLS.",
+      "Flux de utilizare: din tabloul de bord Contabilitate se deschide jurnalul GLS și se folosește *Upload*; se creează un extras „GLS Borderou\" cu data transferului; liniile coletelor se reconciliază cu facturile clienților, iar linia de transfer cu plata GLS din extrasul băncii reale, printr-un cont de viramente interne (581 în planul de conturi românesc).",
+      "Configurare: în *Contabilitate → Configurare → Jurnale* se creează un jurnal de tip Bancă pentru ramburs GLS, cu propriul cont de sume în curs de decontare (subcont 5125); *Bank Feeds* se setează pe *Import*; în tab-ul Advanced Settings, secțiunea Courier COD Settlement, se alege Carrier-ul GLS și se păstrează bifat Add Bank Transfer Line. Pentru găsirea clienților, livrările trebuie să aibă AWB-ul GLS în Tracking Reference (ca în conectorul GLS)."
     ],
     "dependencies": [
       "account_bank_statement_import",
       "account_bank_statement_import_csv",
-      "deltatech_delivery_cod"
+      "deltatech_delivery_cod",
+      "openpyxl"
     ],
     "connections": [
       "deltatech_account_bank_statement_import_euplatesc",
@@ -237,7 +240,7 @@
       "deltatech_stock_delivery",
       "carrier_tracking_ref"
     ],
-    "text": "GLS Borderou Bank Statements Import\ndeltatech_account_bank_statement_import_gls\nModulul importă borderourile de ramburs GLS (fișiere Excel) direct ca extrase de cont bancar, fără nicio prelucrare manuală prealabilă a fișierului. Magazinele online care livrează cu plata ramburs prin GLS primesc periodic aceste borderouri cu sumele încasate de curier și virate în banca firmei; în loc să fie „curățate\" manual (șters antetul și rândul de total) și mapate coloană cu coloană în asistentul standard de import, fișierul original este încărcat ca atare pe jurnalul de tip bancă dedicat curierului, generând automat o linie de extras per colet.\nImport fișier original: se încarcă borderoul exact cum vine de la GLS — antetul (client,\nDetecție prin semnătură: fișierul este recunoscut după semnătura GLS din prima celulă, deci\nO linie per colet: fiecare sumă ramburs devine o linie de extras cu numărul AWB, referința\nVerificare de control: rândul de total din fișier este verificat față de suma liniilor\nLinie opțională de transfer bancar: se poate adăuga automat (configurabil per jurnal) o\nProtecție la duplicate: fiecare colet are un id unic de import (per AWB); reimportul"
+    "text": "GLS COD Statement Import\ndeltatech_account_bank_statement_import_gls\nModulul importă borderoul de ramburs GLS (fișier XLSX) direct ca extras de cont bancar, fără nicio prelucrare prealabilă a fișierului: o linie pentru fiecare colet plătit la livrare, legată de clientul expedierii, plus o linie pentru suma virată de GLS în banca firmei. Magazinele online care livrează cu ramburs prin GLS încarcă fișierul exact cum îl primesc, pe jurnalul de tip bancă dedicat curierului.\nFișierul așa cum vine: antetul (client, cont bancar, data transferului) și rândul de total sunt tratate automat.\nRecunoaștere automată: fișierul este identificat după semnătura GLS din prima celulă, deci se importă de pe orice jurnal bancar, alături de alte formate de extras, fără wizardul de mapare a coloanelor.\nO linie per colet: fiecare sumă ramburs devine o linie de extras cu numărul AWB, referința GLS și numele destinatarului.\nClientul găsit după AWB: linia este legată de clientul livrării care are același AWB în compania curentă, niciodată după nume; când nu se găsește nicio livrare sau se găsesc mai multe, linia rămâne pentru operator.\nTotal verificat: rândul de total trebuie să egaleze suma coletelor, iar un fișier care acoperă mai mult de un transfer este refuzat, astfel încât fiecare extras corespunde unei singure mișcări bancare.\nLinie de transfer și duplicate: o linie negativă opțională cu suma virată echilibrează extrasul la zero; fiecare colet se importă o singură dată, deci reimportul aceluiași fișier este detectat. Importul este refuzat, cu mesaj, și când toate coletele din fișier au fost deja importate.\nDate trimise în afara Odoo: niciuna; modulul doar citește fișierul încărcat și nu se conectează la GLS.\nFlux de utilizare: din tabloul de bord Contabilitate se deschide jurnalul GLS și se folosește *Upload*; se creează un extras „GLS Borderou\" cu data transferului; liniile coletelor se reconciliază cu facturile clienților, iar linia de transfer cu plata GLS din extrasul băncii reale, printr-un cont de viramente interne (581 în planul de conturi românesc).\nConfigurare: în *Contabilitate → Configurare → Jurnale* se creează un jurnal de tip Bancă pentru ramburs GLS, cu propriul cont de sume în curs de decontare (subcont 5125); *Bank Feeds* se setează pe *Import*; în tab-ul Advanced Settings, secțiunea Courier COD Settlement, se alege Carrier-ul GLS și se păstrează bifat Add Bank Transfer Line. Pentru găsirea clienților, livrările trebuie să aibă AWB-ul GLS în Tracking Reference (ca în conectorul GLS)."
   },
   {
     "path": "deltatech_account_bank_statement_import_paypal/index.md",
@@ -490,7 +493,7 @@
   {
     "path": "deltatech_advanced_planner/index.md",
     "module": "deltatech_advanced_planner",
-    "version": "19.0.1.14.3",
+    "version": "19.0.1.15.0",
     "github": "`https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_advanced_planner`",
     "local_path": "odoo-addons/bitshop_ent/deltatech_advanced_planner",
     "last_ingest": "2026-10-27",
@@ -1323,18 +1326,19 @@
     "path": "deltatech_alternative_website/index.md",
     "module": "deltatech_alternative_website",
     "version": "19.0.1.0.13",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_alternative_website`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_alternative_website",
     "local_path": "odoo-addons/deltatech/deltatech_alternative_website",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Website alternative code",
-    "summary": "Acest modul extinde magazinul online Odoo astfel încât clienții să poată regăsi produsele și după codurile alternative (echivalente) definite pentru acestea — coduri OEM, coduri de referință încrucișată sau coduri de producător, folosite frecvent de distribuitorii de piese de schimb și furnizorii industriali. Modulul afișează aceste coduri direct pe pagina produsului și le face vizibile motorului de căutare al site-ului, astfel încât un client care caută după un cod cu care este obișnuit (diferit de SKU-ul intern) găsește totuși produsul corect.",
+    "last_ingest": "2026-11-14",
+    "friendly_name": "Website Alternative Codes",
+    "summary": "Modulul extinde magazinul online Odoo astfel încât clienții să poată regăsi produsele și după codurile alternative (echivalente) definite pentru ele — coduri OEM, coduri de referință încrucișată sau coduri de producător, folosite frecvent de distribuitorii de piese de schimb și furnizorii industriali. Codurile sunt expuse pe pagina produsului și în căutarea site-ului, astfel încât un client care caută după un cod cu care este obișnuit (diferit de SKU-ul intern) găsește totuși produsul corect.",
     "features": [
-      "Afișează codurile alternative ale produsului (`alternative_ids`) ca elemente `<span>` ascunse cu `itemprop=\"alternateName\"`, disponibile atât motoarelor de căutare externe, cât și căutării interne a site-ului.",
-      "Afișează pe pagina produsului o secțiune dedicată „Cod alternativ” (vizibilă doar utilizatorilor autentificați) cu valoarea principală `alternative_code`.",
-      "Afișează o secțiune „Se folosește pentru” pe pagina produsului atunci când câmpul `used_for` este completat, indicând vehiculul/echipamentul pentru care se potrivește piesa.",
-      "Extinde căutarea full-text a magazinului online (`_search_get_detail`) pentru a include `alternative_ids.name` printre câmpurile căutabile, astfel încât clienții găsesc produsele după oricare dintre codurile lor de referință încrucișată.",
-      "Îmbunătățește normalizarea interogărilor de căutare prin `website.searchable.mixin`: elimină spațiile de la început/sfârșit și reduce spațiile multiple înainte de executarea căutării, scăzând numărul de rezultate „0\" false.",
-      "Depinde de [deltatech_alternative](../deltatech_alternative/index.md) pentru câmpurile de bază `alternative_ids` și `used_for` de pe `product.template`."
+      "Coduri alternative pentru motoarele de căutare: codurile produsului (`alternative_ids`) care nu sunt ascunse sunt afișate ca elemente `<span>` invizibile cu `itemprop=\"alternateName\"`, citibile de motoarele de căutare externe și de căutarea internă.",
+      "Secțiunea „Alternative code” pe pagina produsului, cu valoarea principală `alternative_code`, vizibilă doar utilizatorilor autentificați.",
+      "Secțiunea „Used For” pe pagina produsului, afișată când `used_for` este completat (de ex. „Ford Focus 2005-2011”), pentru vehiculul/echipamentul căruia îi este destinată piesa.",
+      "Căutare după codul alternativ: căutarea din `/shop` include `alternative_ids.name` printre câmpurile căutabile, deci orice produs cu un cod alternativ care se potrivește apare în rezultate.",
+      "Normalizarea interogării: spațiile de la capete sunt eliminate, iar spațiile multiple sunt reduse la unul înainte de căutare (`website.searchable.mixin`).",
+      "Activare/dezactivare: ambele secțiuni sunt șabloane opționale (`customize_show`), care se pornesc sau se opresc din *Website → Customize* pe pagina unui produs.",
+      "Configurarea codurilor: se face în [deltatech_alternative](../deltatech_alternative/index.md), în tab-ul *Alternatives* al produsului (*Inventar → Produse → Produse* sau *Vânzări → Produse*)."
     ],
     "dependencies": [
       "website",
@@ -1345,7 +1349,7 @@
       "deltatech_alternative",
       "used_for"
     ],
-    "text": "Website alternative code\ndeltatech_alternative_website\nAcest modul extinde magazinul online Odoo astfel încât clienții să poată regăsi produsele și după codurile alternative (echivalente) definite pentru acestea — coduri OEM, coduri de referință încrucișată sau coduri de producător, folosite frecvent de distribuitorii de piese de schimb și furnizorii industriali. Modulul afișează aceste coduri direct pe pagina produsului și le face vizibile motorului de căutare al site-ului, astfel încât un client care caută după un cod cu care este obișnuit (diferit de SKU-ul intern) găsește totuși produsul corect.\nAfișează codurile alternative ale produsului (`alternative_ids`) ca elemente `<span>` ascunse cu `itemprop=\"alternateName\"`, disponibile atât motoarelor de căutare externe, cât și căutării interne a site-ului.\nAfișează pe pagina produsului o secțiune dedicată „Cod alternativ” (vizibilă doar utilizatorilor autentificați) cu valoarea principală `alternative_code`.\nAfișează o secțiune „Se folosește pentru” pe pagina produsului atunci când câmpul `used_for` este completat, indicând vehiculul/echipamentul pentru care se potrivește piesa.\nExtinde căutarea full-text a magazinului online (`_search_get_detail`) pentru a include `alternative_ids.name` printre câmpurile căutabile, astfel încât clienții găsesc produsele după oricare dintre codurile lor de referință încrucișată.\nÎmbunătățește normalizarea interogărilor de căutare prin `website.searchable.mixin`: elimină spațiile de la început/sfârșit și reduce spațiile multiple înainte de executarea căutării, scăzând numărul de rezultate „0\" false.\nDepinde de [deltatech_alternative](../deltatech_alternative/index.md) pentru câmpurile de bază `alternative_ids` și `used_for` de pe `product.template`."
+    "text": "Website Alternative Codes\ndeltatech_alternative_website\nModulul extinde magazinul online Odoo astfel încât clienții să poată regăsi produsele și după codurile alternative (echivalente) definite pentru ele — coduri OEM, coduri de referință încrucișată sau coduri de producător, folosite frecvent de distribuitorii de piese de schimb și furnizorii industriali. Codurile sunt expuse pe pagina produsului și în căutarea site-ului, astfel încât un client care caută după un cod cu care este obișnuit (diferit de SKU-ul intern) găsește totuși produsul corect.\nCoduri alternative pentru motoarele de căutare: codurile produsului (`alternative_ids`) care nu sunt ascunse sunt afișate ca elemente `<span>` invizibile cu `itemprop=\"alternateName\"`, citibile de motoarele de căutare externe și de căutarea internă.\nSecțiunea „Alternative code” pe pagina produsului, cu valoarea principală `alternative_code`, vizibilă doar utilizatorilor autentificați.\nSecțiunea „Used For” pe pagina produsului, afișată când `used_for` este completat (de ex. „Ford Focus 2005-2011”), pentru vehiculul/echipamentul căruia îi este destinată piesa.\nCăutare după codul alternativ: căutarea din `/shop` include `alternative_ids.name` printre câmpurile căutabile, deci orice produs cu un cod alternativ care se potrivește apare în rezultate.\nNormalizarea interogării: spațiile de la capete sunt eliminate, iar spațiile multiple sunt reduse la unul înainte de căutare (`website.searchable.mixin`).\nActivare/dezactivare: ambele secțiuni sunt șabloane opționale (`customize_show`), care se pornesc sau se opresc din *Website → Customize* pe pagina unui produs.\nConfigurarea codurilor: se face în [deltatech_alternative](../deltatech_alternative/index.md), în tab-ul *Alternatives* al produsului (*Inventar → Produse → Produse* sau *Vânzări → Produse*)."
   },
   {
     "path": "deltatech_analytic_distribution/index.md",
@@ -1663,19 +1667,19 @@
     "path": "deltatech_bank_salary_confidential/index.md",
     "module": "deltatech_bank_salary_confidential",
     "version": "19.0.1.0.6",
-    "github": "[https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_bank_salary_confidential](https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_bank_salary_confidential)",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_bank_salary_confidential",
     "local_path": "odoo-addons/bitshop_ent/deltatech_bank_salary_confidential",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-14",
     "friendly_name": "Confidential Salary Payments in Bank Statements",
-    "summary": "Modulul păstrează confidențialitatea plăților de salarii atunci când liniile de extras bancar sunt importate (fișier, sincronizare online sau introducere manuală). Liniile care se potrivesc cu un model de reconciliere marcat drept \"Anonymize Matched Transactions\" sunt anonimizate automat — eticheta liniei, numele partenerului, contul bancar și notele sunt înlocuite cu o etichetă configurabilă (de ex. \"Plata salarii\") — astfel încât identitatea angajatului nu mai apare în contabilitate, iar linia poate fi reconciliată automat cu contul de contrapartidă (de ex. 421 \"Personal - salarii datorate\").",
+    "summary": "Modulul păstrează confidențialitatea plăților de salarii atunci când liniile de extras bancar sunt importate (fișier, sincronizare online sau creare manuală). Liniile care se potrivesc cu un model de reconciliere marcat **Anonymize Matched Transactions** sunt anonimizate automat — eticheta, numele partenerului, contul bancar și notele sunt înlocuite cu o etichetă configurabilă (de ex. „Plată salarii”) — astfel încât identitatea angajatului nu apare în contabilitate, iar linia se reconciliază automat cu contul de contrapartidă (de ex. 421 „Personal - salarii datorate”).",
     "features": [
-      "Anonimizarea automată a etichetei, numelui partenerului, contului bancar, notelor și detaliilor brute ale tranzacției pentru liniile de extras care se potrivesc unui model de reconciliere marcat corespunzător.",
-      "Reconciliere automată a liniei anonimizate cu contul de contrapartidă configurat pe modelul de reconciliere (ex. 421), când validarea automată este activată pe model.",
-      "Anonimizarea rulează la crearea liniei de extras (import, sincronizare online sau creare manuală), nu doar la cron-ul de reconciliere, astfel încât detaliile personale nu rămân niciodată vizibile.",
-      "Jurnalul contabil generat folosește de asemenea eticheta anonimizată, fără detalii personale pe nota contabilă.",
-      "Mesaj automat pe factură/notă contabilă care confirmă anonimizarea și validarea automată prin modelul de reconciliere folosit.",
-      "Excludere din procesare via cheia de context `skip_salary_anonymization`.",
-      "Suport pentru modele cu declanșator manual: anonimizarea și reconcilierea au loc când utilizatorul aplică modelul din widget-ul de reconciliere bancară."
+      "Anonimizare la crearea liniei: eticheta, numele partenerului, contul bancar, notele și detaliile brute ale tranzacției se înlocuiesc imediat ce linia este creată (import, sincronizare online sau creare manuală), nu abia la cron-ul de reconciliere, deci datele personale nu rămân vizibile.",
+      "Reconciliere automată cu contul de contrapartidă din modelul de reconciliere (ex. 421), când validarea automată (*Auto-validate*) este activă pe model; nota contabilă generată folosește tot eticheta anonimizată, fără partener.",
+      "Mesaj automat în chatter-ul notei contabile, care confirmă anonimizarea și validarea prin modelul folosit.",
+      "Configurare: din tabloul de bord *Contabilitate*, meniul ⋮ al cardului jurnalului bancar → *Reconciliation: Models*; modelul are *Trigger* = *Automated* (necesar pentru anonimizare la import), *Anonymize Matched Transactions* bifat, *Anonymized Label* (ex. `Plată salarii`), condiții pe etichetă (*Contains* sau *Match Regex*, de ex. `^VIRARE SALARIU`), pe sumă (*Is lower than or equal to* `0`, pentru plăți de ieșire) și pe jurnalul bancar de salarii, plus un rând de contrapartidă pe contul `421` cu 100% din sold.",
+      "Condiții stricte: potrivirea ignoră majusculele și se uită și în detaliile tranzacției, deci un text larg (`salar`, chiar `SALARIU`) prinde și avansuri, popriri sau taxe salariale plătite Trezoreriei, care ar fi anonimizate și înregistrate pe 421; pentru acestea se folosesc modele separate, fără anonimizare, cu contul potrivit.",
+      "Excepții: liniile create cu cheia de context `skip_salary_anonymization` nu sunt procesate; butonul Test din wizardul de import CSV doar simulează importul (fără anonimizare), efectul apare la Import; un model cu trigger *Manual* nu rulează la import, ci anonimizează și reconciliază linia când utilizatorul îl aplică din widget-ul de reconciliere bancară.",
+      "Atenție la atașamente: anonimizarea rescrie linia de extras, nu și fișierul original, care, dacă este păstrat ca atașament, conține în continuare datele inițiale — accesul la atașamente se poate restricționa."
     ],
     "dependencies": [
       "account_accountant"
@@ -1683,7 +1687,7 @@
     "connections": [
       "account_accountant"
     ],
-    "text": "Confidential Salary Payments in Bank Statements\ndeltatech_bank_salary_confidential\nModulul păstrează confidențialitatea plăților de salarii atunci când liniile de extras bancar sunt importate (fișier, sincronizare online sau introducere manuală). Liniile care se potrivesc cu un model de reconciliere marcat drept \"Anonymize Matched Transactions\" sunt anonimizate automat — eticheta liniei, numele partenerului, contul bancar și notele sunt înlocuite cu o etichetă configurabilă (de ex. \"Plata salarii\") — astfel încât identitatea angajatului nu mai apare în contabilitate, iar linia poate fi reconciliată automat cu contul de contrapartidă (de ex. 421 \"Personal - salarii datorate\").\nAnonimizarea automată a etichetei, numelui partenerului, contului bancar, notelor și detaliilor brute ale tranzacției pentru liniile de extras care se potrivesc unui model de reconciliere marcat corespunzător.\nReconciliere automată a liniei anonimizate cu contul de contrapartidă configurat pe modelul de reconciliere (ex. 421), când validarea automată este activată pe model.\nAnonimizarea rulează la crearea liniei de extras (import, sincronizare online sau creare manuală), nu doar la cron-ul de reconciliere, astfel încât detaliile personale nu rămân niciodată vizibile.\nJurnalul contabil generat folosește de asemenea eticheta anonimizată, fără detalii personale pe nota contabilă.\nMesaj automat pe factură/notă contabilă care confirmă anonimizarea și validarea automată prin modelul de reconciliere folosit.\nExcludere din procesare via cheia de context `skip_salary_anonymization`.\nSuport pentru modele cu declanșator manual: anonimizarea și reconcilierea au loc când utilizatorul aplică modelul din widget-ul de reconciliere bancară."
+    "text": "Confidential Salary Payments in Bank Statements\ndeltatech_bank_salary_confidential\nModulul păstrează confidențialitatea plăților de salarii atunci când liniile de extras bancar sunt importate (fișier, sincronizare online sau creare manuală). Liniile care se potrivesc cu un model de reconciliere marcat **Anonymize Matched Transactions** sunt anonimizate automat — eticheta, numele partenerului, contul bancar și notele sunt înlocuite cu o etichetă configurabilă (de ex. „Plată salarii”) — astfel încât identitatea angajatului nu apare în contabilitate, iar linia se reconciliază automat cu contul de contrapartidă (de ex. 421 „Personal - salarii datorate”).\nAnonimizare la crearea liniei: eticheta, numele partenerului, contul bancar, notele și detaliile brute ale tranzacției se înlocuiesc imediat ce linia este creată (import, sincronizare online sau creare manuală), nu abia la cron-ul de reconciliere, deci datele personale nu rămân vizibile.\nReconciliere automată cu contul de contrapartidă din modelul de reconciliere (ex. 421), când validarea automată (*Auto-validate*) este activă pe model; nota contabilă generată folosește tot eticheta anonimizată, fără partener.\nMesaj automat în chatter-ul notei contabile, care confirmă anonimizarea și validarea prin modelul folosit.\nConfigurare: din tabloul de bord *Contabilitate*, meniul ⋮ al cardului jurnalului bancar → *Reconciliation: Models*; modelul are *Trigger* = *Automated* (necesar pentru anonimizare la import), *Anonymize Matched Transactions* bifat, *Anonymized Label* (ex. `Plată salarii`), condiții pe etichetă (*Contains* sau *Match Regex*, de ex. `^VIRARE SALARIU`), pe sumă (*Is lower than or equal to* `0`, pentru plăți de ieșire) și pe jurnalul bancar de salarii, plus un rând de contrapartidă pe contul `421` cu 100% din sold.\nCondiții stricte: potrivirea ignoră majusculele și se uită și în detaliile tranzacției, deci un text larg (`salar`, chiar `SALARIU`) prinde și avansuri, popriri sau taxe salariale plătite Trezoreriei, care ar fi anonimizate și înregistrate pe 421; pentru acestea se folosesc modele separate, fără anonimizare, cu contul potrivit.\nExcepții: liniile create cu cheia de context `skip_salary_anonymization` nu sunt procesate; butonul Test din wizardul de import CSV doar simulează importul (fără anonimizare), efectul apare la Import; un model cu trigger *Manual* nu rulează la import, ci anonimizează și reconciliază linia când utilizatorul îl aplică din widget-ul de reconciliere bancară.\nAtenție la atașamente: anonimizarea rescrie linia de extras, nu și fișierul original, care, dacă este păstrat ca atașament, conține în continuare datele inițiale — accesul la atașamente se poate restricționa."
   },
   {
     "path": "deltatech_bank_stmt_foreign_currency/index.md",
@@ -1872,17 +1876,18 @@
     "path": "deltatech_business_process_handover_document/index.md",
     "module": "deltatech_business_process_handover_document",
     "version": "19.0.0.0.8",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_business_process_handover_document`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_business_process_handover_document",
     "local_path": "odoo-addons/deltatech/deltatech_business_process_handover_document",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Business process handover document",
-    "summary": "Modulul extinde `deltatech_business_process` pentru a genera un document formal de predare-primire (proces-verbal de predare-primire) în format PDF, direct dintr-un Proiect de Business. Acesta adună informațiile despre compania furnizoare și cea beneficiară, reprezentanții acestora, testerii implicați și lista dezvoltărilor realizate în cadrul proiectului, producând un document PDF pregătit pentru semnare. Astfel, echipa de implementare poate formaliza rapid și standardizat predarea unui proiect către client, fără a redacta manual documentul.",
+    "last_ingest": "2026-11-14",
+    "friendly_name": "Business Process Handover Document",
+    "summary": "Modulul extinde [deltatech_business_process](../deltatech_business_process/index.md) pentru a genera un document formal de predare-primire (proces-verbal) în format PDF, direct dintr-un Proiect de Business. Documentul adună informațiile despre compania furnizoare și cea beneficiară, reprezentanții și testerii lor și lista dezvoltărilor din proiect, gata de semnat. Echipa de implementare poate astfel formaliza rapid și standardizat predarea unui proiect către client.",
     "features": [
-      "Adaugă pe formularul Proiectului de Business detaliile companiei furnizoare și beneficiare (nume, reprezentant, testeri).",
-      "Colectează automat toate dezvoltările asociate proiectului.",
-      "Adaugă o bifă „Handover Checked\" pe fiecare Arie de Business, pentru urmărirea validării la predare.",
-      "Generează un raport PDF QWeb (format A4), accesibil din meniul Print al Proiectului de Business.",
-      "Raportul este disponibil atât în limba engleză, cât și în română."
+      "Date de predare pe proiect: grupurile *Provider Information* (companie, reprezentant, testeri) și *Recipient Information* (companie, reprezentant, testeri) pe formularul Proiectului de Business; reprezentanții sunt persoane (nu companii), iar testerii sunt parteneri.",
+      "Dezvoltări colectate automat: toate dezvoltările legate de proiect sunt incluse în document prin câmpul calculat *Developments*.",
+      "Filtrare după etapa de implementare (nou în 19.0): câmpul *Handover Stage Filter* din grupul *Handover Options* limitează documentul la procesele aflate în etapa aleasă, cu testele și dezvoltările lor; lăsat gol, documentul include toate procesele și toate dezvoltările proiectului.",
+      "Bifă de predare pe Aria de Business: *Handover Checked* marchează aria ca verificată și acceptată la predare.",
+      "Raport PDF: *Handover Document* (QWeb, A4), din *Print ▸ Handover Document* pe Proiectul de Business; conține lista dezvoltărilor și blocuri de semnătură pentru ambele părți; disponibil în engleză și în română.",
+      "Flux: se deschide Proiectul de Business din *Business Processes*, se completează informațiile furnizorului și beneficiarului, se verifică legarea dezvoltărilor, apoi se tipărește documentul."
     ],
     "dependencies": [
       "deltatech_business_process"
@@ -1890,7 +1895,7 @@
     "connections": [
       "deltatech_business_process"
     ],
-    "text": "Business process handover document\ndeltatech_business_process_handover_document\nModulul extinde `deltatech_business_process` pentru a genera un document formal de predare-primire (proces-verbal de predare-primire) în format PDF, direct dintr-un Proiect de Business. Acesta adună informațiile despre compania furnizoare și cea beneficiară, reprezentanții acestora, testerii implicați și lista dezvoltărilor realizate în cadrul proiectului, producând un document PDF pregătit pentru semnare. Astfel, echipa de implementare poate formaliza rapid și standardizat predarea unui proiect către client, fără a redacta manual documentul.\nAdaugă pe formularul Proiectului de Business detaliile companiei furnizoare și beneficiare (nume, reprezentant, testeri).\nColectează automat toate dezvoltările asociate proiectului.\nAdaugă o bifă „Handover Checked\" pe fiecare Arie de Business, pentru urmărirea validării la predare.\nGenerează un raport PDF QWeb (format A4), accesibil din meniul Print al Proiectului de Business.\nRaportul este disponibil atât în limba engleză, cât și în română."
+    "text": "Business Process Handover Document\ndeltatech_business_process_handover_document\nModulul extinde [deltatech_business_process](../deltatech_business_process/index.md) pentru a genera un document formal de predare-primire (proces-verbal) în format PDF, direct dintr-un Proiect de Business. Documentul adună informațiile despre compania furnizoare și cea beneficiară, reprezentanții și testerii lor și lista dezvoltărilor din proiect, gata de semnat. Echipa de implementare poate astfel formaliza rapid și standardizat predarea unui proiect către client.\nDate de predare pe proiect: grupurile *Provider Information* (companie, reprezentant, testeri) și *Recipient Information* (companie, reprezentant, testeri) pe formularul Proiectului de Business; reprezentanții sunt persoane (nu companii), iar testerii sunt parteneri.\nDezvoltări colectate automat: toate dezvoltările legate de proiect sunt incluse în document prin câmpul calculat *Developments*.\nFiltrare după etapa de implementare (nou în 19.0): câmpul *Handover Stage Filter* din grupul *Handover Options* limitează documentul la procesele aflate în etapa aleasă, cu testele și dezvoltările lor; lăsat gol, documentul include toate procesele și toate dezvoltările proiectului.\nBifă de predare pe Aria de Business: *Handover Checked* marchează aria ca verificată și acceptată la predare.\nRaport PDF: *Handover Document* (QWeb, A4), din *Print ▸ Handover Document* pe Proiectul de Business; conține lista dezvoltărilor și blocuri de semnătură pentru ambele părți; disponibil în engleză și în română.\nFlux: se deschide Proiectul de Business din *Business Processes*, se completează informațiile furnizorului și beneficiarului, se verifică legarea dezvoltărilor, apoi se tipărește documentul."
   },
   {
     "path": "deltatech_calendar_caldav/index.md",
@@ -4378,7 +4383,7 @@
   {
     "path": "deltatech_event/index.md",
     "module": "deltatech_event",
-    "version": "19.0.0.0.7",
+    "version": "19.0.0.1.0",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_event",
     "local_path": "odoo-addons/bitshop/deltatech_event",
     "last_ingest": "2026-10-31",
@@ -6825,18 +6830,20 @@
     "version": "19.0.1.0.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_bom_formula",
     "local_path": "odoo-addons/deltatech/deltatech_mrp_bom_formula",
-    "last_ingest": "2026-08-14",
-    "friendly_name": "MRP BoM Formula",
+    "last_ingest": "2026-11-14",
+    "friendly_name": "BoM Quantity Formulas",
     "summary": "Modulul permite ca **cantitatea unei componente din lista de materiale să fie calculată printr-o formulă**, evaluată în raport cu atributele variantei fabricate. Standardul Odoo poate doar să includă sau să excludă o linie în funcție de valorile unui atribut („Se aplică pe variante\"), cantitatea rămânând constantă; de îndată ce consumul depinde de configurație, singura soluție standard este multiplicarea liniei pentru fiecare combinație de atribute. Cu acest modul, o singură linie acoperă toate variantele. Este echivalentul funcțional al părții de calcul al consumului din mecanismul *variant configuration* al SAP.",
     "features": [
-      "Cod de formulă (`code`) pe atribut și pe valoarea atributului, generat automat din denumire, cu diacriticele curățate și sufix numeric la coliziune",
-      "Valoare numerică (`numeric_value`) pe valoarea atributului, pentru caracteristici măsurabile (lățime, lungime, grosime)",
-      "Formulă de cantitate (`qty_formula`) pe linia de componentă, evaluată cu `safe_eval` peste dicționarele `attr` (cod atribut → cod valoare) și `num` (cod atribut → valoare numerică)",
-      "Cantitatea de bază a liniei este disponibilă în formulă ca `qty`; sunt disponibile `ceil`, `floor` și funcțiile matematice uzuale",
-      "Formulele sunt validate la salvare, nu la lansarea producției, iar un cod inexistent este raportat cu numele lui",
-      "Un atribut pe care produsul nu îl poartă are valoare neutră (`False` / `0.0`), astfel încât o LDM de semifabricat poate citi o caracteristică a produsului finit",
-      "Pe LDM-uri imbricate, configurația produsului rădăcină rămâne disponibilă; doar valorile purtate efectiv de produsul intermediar o suprascriu",
-      "Linia fără formulă își păstrează cantitatea, iar o LDM fără nicio formulă folosește integral codul standard"
+      "Cod de formulă (`code`) pe atribut și pe valoarea atributului: identificatorul din formule, generat automat din denumire (diacritice curățate, sufix numeric la coliziune), editabil și unic.",
+      "Valoare numerică (`numeric_value`) pe valoarea atributului, pentru caracteristici măsurabile (lățime, lungime, grosime).",
+      "Formulă de cantitate (`qty_formula`) pe linia de componentă, evaluată cu `safe_eval` peste dicționarele `attr` (cod atribut → cod valoare) și `num` (cod atribut → valoare numerică); exemple: `0.8 if attr[\"finish\"] == \"galvanized\" else 0.1`, `num[\"width\"] / 1000`.",
+      "Cantitatea de bază a liniei este disponibilă în formulă ca `qty`; sunt disponibile `ceil`, `floor` și funcțiile uzuale `min`, `max`, `abs`, `round`, `int`, `float`. Formula trebuie să întoarcă un număr nenegativ și nu poate citi sau modifica înregistrări.",
+      "Formulele sunt validate la salvare, nu la lansarea producției, iar un cod inexistent este raportat cu numele lui.",
+      "Un atribut pe care produsul nu îl poartă are valoare neutră (`False` / `0.0`), astfel încât o LDM de semifabricat poate citi o caracteristică a produsului finit.",
+      "Pe LDM-uri imbricate, configurația produsului rădăcină rămâne disponibilă; doar valorile purtate efectiv de produsul intermediar o suprascriu. Formulele sunt luate în calcul și când se află pe un nivel mai jos, într-o LDM de tip kit.",
+      "Linia fără formulă își păstrează cantitatea, iar o LDM fără nicio formulă folosește integral codul standard.",
+      "Calcul la explodarea LDM-ului (ordin de fabricație, kit, prognoză); rotunjirea la unitatea de măsură se face în sus, ca în Odoo standard. Exemplu: 3 bucăți din varianta *Galvanizat, 1250 mm* cu `num[\"width\"] / 1000` dau 3,75 kg de tablă.",
+      "Configurare: formula apare doar utilizatorilor care au activat *Variantele de produs* în Setări; codurile de formulă pot fi editate doar de grupul *Manufacturing / Administrator*. Câmpurile se găsesc în *Inventar ‣ Configurare ‣ Atribute* (coduri, valori numerice) și în *Producție ‣ Produse ‣ Liste de materiale* (coloana opțională *Quantity Formula*, doar pentru LDM definit pe șablon)."
     ],
     "dependencies": [
       "mrp"
@@ -6847,7 +6854,7 @@
       "deltatech_mrp_bom",
       "deltatech_mrp_concentration"
     ],
-    "text": "MRP BoM Formula\ndeltatech_mrp_bom_formula\nModulul permite ca **cantitatea unei componente din lista de materiale să fie calculată printr-o formulă**, evaluată în raport cu atributele variantei fabricate. Standardul Odoo poate doar să includă sau să excludă o linie în funcție de valorile unui atribut („Se aplică pe variante\"), cantitatea rămânând constantă; de îndată ce consumul depinde de configurație, singura soluție standard este multiplicarea liniei pentru fiecare combinație de atribute. Cu acest modul, o singură linie acoperă toate variantele. Este echivalentul funcțional al părții de calcul al consumului din mecanismul *variant configuration* al SAP.\nCod de formulă (`code`) pe atribut și pe valoarea atributului, generat automat din denumire, cu diacriticele curățate și sufix numeric la coliziune\nValoare numerică (`numeric_value`) pe valoarea atributului, pentru caracteristici măsurabile (lățime, lungime, grosime)\nFormulă de cantitate (`qty_formula`) pe linia de componentă, evaluată cu `safe_eval` peste dicționarele `attr` (cod atribut → cod valoare) și `num` (cod atribut → valoare numerică)\nCantitatea de bază a liniei este disponibilă în formulă ca `qty`; sunt disponibile `ceil`, `floor` și funcțiile matematice uzuale\nFormulele sunt validate la salvare, nu la lansarea producției, iar un cod inexistent este raportat cu numele lui\nUn atribut pe care produsul nu îl poartă are valoare neutră (`False` / `0.0`), astfel încât o LDM de semifabricat poate citi o caracteristică a produsului finit\nPe LDM-uri imbricate, configurația produsului rădăcină rămâne disponibilă; doar valorile purtate efectiv de produsul intermediar o suprascriu\nLinia fără formulă își păstrează cantitatea, iar o LDM fără nicio formulă folosește integral codul standard"
+    "text": "BoM Quantity Formulas\ndeltatech_mrp_bom_formula\nModulul permite ca **cantitatea unei componente din lista de materiale să fie calculată printr-o formulă**, evaluată în raport cu atributele variantei fabricate. Standardul Odoo poate doar să includă sau să excludă o linie în funcție de valorile unui atribut („Se aplică pe variante\"), cantitatea rămânând constantă; de îndată ce consumul depinde de configurație, singura soluție standard este multiplicarea liniei pentru fiecare combinație de atribute. Cu acest modul, o singură linie acoperă toate variantele. Este echivalentul funcțional al părții de calcul al consumului din mecanismul *variant configuration* al SAP.\nCod de formulă (`code`) pe atribut și pe valoarea atributului: identificatorul din formule, generat automat din denumire (diacritice curățate, sufix numeric la coliziune), editabil și unic.\nValoare numerică (`numeric_value`) pe valoarea atributului, pentru caracteristici măsurabile (lățime, lungime, grosime).\nFormulă de cantitate (`qty_formula`) pe linia de componentă, evaluată cu `safe_eval` peste dicționarele `attr` (cod atribut → cod valoare) și `num` (cod atribut → valoare numerică); exemple: `0.8 if attr[\"finish\"] == \"galvanized\" else 0.1`, `num[\"width\"] / 1000`.\nCantitatea de bază a liniei este disponibilă în formulă ca `qty`; sunt disponibile `ceil`, `floor` și funcțiile uzuale `min`, `max`, `abs`, `round`, `int`, `float`. Formula trebuie să întoarcă un număr nenegativ și nu poate citi sau modifica înregistrări.\nFormulele sunt validate la salvare, nu la lansarea producției, iar un cod inexistent este raportat cu numele lui.\nUn atribut pe care produsul nu îl poartă are valoare neutră (`False` / `0.0`), astfel încât o LDM de semifabricat poate citi o caracteristică a produsului finit.\nPe LDM-uri imbricate, configurația produsului rădăcină rămâne disponibilă; doar valorile purtate efectiv de produsul intermediar o suprascriu. Formulele sunt luate în calcul și când se află pe un nivel mai jos, într-o LDM de tip kit.\nLinia fără formulă își păstrează cantitatea, iar o LDM fără nicio formulă folosește integral codul standard.\nCalcul la explodarea LDM-ului (ordin de fabricație, kit, prognoză); rotunjirea la unitatea de măsură se face în sus, ca în Odoo standard. Exemplu: 3 bucăți din varianta *Galvanizat, 1250 mm* cu `num[\"width\"] / 1000` dau 3,75 kg de tablă.\nConfigurare: formula apare doar utilizatorilor care au activat *Variantele de produs* în Setări; codurile de formulă pot fi editate doar de grupul *Manufacturing / Administrator*. Câmpurile se găsesc în *Inventar ‣ Configurare ‣ Atribute* (coduri, valori numerice) și în *Producție ‣ Produse ‣ Liste de materiale* (coloana opțională *Quantity Formula*, doar pentru LDM definit pe șablon)."
   },
   {
     "path": "deltatech_mrp_concentration/index.md",
@@ -8719,7 +8726,7 @@
   {
     "path": "deltatech_product_attribute/index.md",
     "module": "deltatech_product_attribute",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_product_attribute",
     "local_path": "odoo-addons/bitshop/deltatech_product_attribute",
     "last_ingest": "2026-10-01",
@@ -9351,7 +9358,7 @@
   {
     "path": "deltatech_purchase_create_bill_button/index.md",
     "module": "deltatech_purchase_create_bill_button",
-    "version": "19.0.1.1.4",
+    "version": "19.0.1.1.5",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_create_bill_button`",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_create_bill_button",
     "last_ingest": "2026-09-29",
@@ -11480,13 +11487,16 @@
     "path": "deltatech_sale_report/index.md",
     "module": "deltatech_sale_report",
     "version": "19.0.0.0.2",
-    "github": "[https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_report](https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_report)",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_report",
     "local_path": "odoo-addons/deltatech/deltatech_sale_report",
-    "last_ingest": "2026-07-31",
+    "last_ingest": "2026-11-14",
     "friendly_name": "Sale Report Additional Info",
-    "summary": "Acest modul îmbogățește raportul de vânzări din Odoo (`sale.report`) cu adresa de email a partenerului, astfel încât informația să fie disponibilă direct în analizele și pivotările standard de vânzări, fără a mai fi nevoie de căutări suplimentare în fișele de contact.",
+    "summary": "Agenții de vânzări care analizează vânzările pe clienți au uneori nevoie de adresa de email a clientului lângă cifre. Modulul adaugă această adresă în raportul de analiză a vânzărilor (`sale.report`), ca un câmp *Partner Email*, disponibil direct în analizele și pivotările standard, fără căutări suplimentare în fișele de contact.",
     "features": [
-      "Adaugă câmpul email al partenerului (`partner_email`) în raportul de vânzări (`sale.report`)."
+      "Câmp nou în raport: *Partner Email* (`partner_email`, text) este adăugat în modelul din spatele analizei de vânzări și citit în aceeași interogare ca restul coloanelor raportului.",
+      "Valoare curentă: câmpul arată email-ul stocat în acel moment pe clientul comenzii; nu se copiază nimic pe comandă, deci un email modificat apare și pe comenzile vechi.",
+      "Filtrare și grupare: email-ul face parte și din gruparea interogării, deci raportul poate fi filtrat sau grupat după el. Modulul nu adaugă coloană, filtru sau meniu — câmpul se alege manual, de exemplu într-un filtru sau o grupare personalizată.",
+      "Fără drepturi proprii: modulul nu definește grupuri sau reguli de acces; cine poate deschide raportul poate citi și email-urile."
     ],
     "dependencies": [
       "sale"
@@ -11494,7 +11504,7 @@
     "connections": [
       "sale"
     ],
-    "text": "Sale Report Additional Info\ndeltatech_sale_report\nAcest modul îmbogățește raportul de vânzări din Odoo (`sale.report`) cu adresa de email a partenerului, astfel încât informația să fie disponibilă direct în analizele și pivotările standard de vânzări, fără a mai fi nevoie de căutări suplimentare în fișele de contact.\nAdaugă câmpul email al partenerului (`partner_email`) în raportul de vânzări (`sale.report`)."
+    "text": "Sale Report Additional Info\ndeltatech_sale_report\nAgenții de vânzări care analizează vânzările pe clienți au uneori nevoie de adresa de email a clientului lângă cifre. Modulul adaugă această adresă în raportul de analiză a vânzărilor (`sale.report`), ca un câmp *Partner Email*, disponibil direct în analizele și pivotările standard, fără căutări suplimentare în fișele de contact.\nCâmp nou în raport: *Partner Email* (`partner_email`, text) este adăugat în modelul din spatele analizei de vânzări și citit în aceeași interogare ca restul coloanelor raportului.\nValoare curentă: câmpul arată email-ul stocat în acel moment pe clientul comenzii; nu se copiază nimic pe comandă, deci un email modificat apare și pe comenzile vechi.\nFiltrare și grupare: email-ul face parte și din gruparea interogării, deci raportul poate fi filtrat sau grupat după el. Modulul nu adaugă coloană, filtru sau meniu — câmpul se alege manual, de exemplu într-un filtru sau o grupare personalizată.\nFără drepturi proprii: modulul nu definește grupuri sau reguli de acces; cine poate deschide raportul poate citi și email-urile."
   },
   {
     "path": "deltatech_sale_return_cause/index.md",
@@ -13149,7 +13159,7 @@
   {
     "path": "deltatech_vendor_products/index.md",
     "module": "deltatech_vendor_products",
-    "version": "19.0.1.4.3",
+    "version": "19.0.1.5.0",
     "github": "https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products",
     "local_path": "odoo-addons/bitshop_vendor/deltatech_vendor_products",
     "last_ingest": "2026-10-22",
@@ -13622,14 +13632,16 @@
     "path": "deltatech_website_blog/index.md",
     "module": "deltatech_website_blog",
     "version": "19.0.1.0.3",
-    "github": "[https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_blog](https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_blog)",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_blog",
     "local_path": "odoo-addons/deltatech/deltatech_website_blog",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Deltatech Web Site Blog",
-    "summary": "Modulul ordonează articolele din Blogul de pe website după data de publicare, astfel încât cele mai recente postări apar mereu primele — o corecție simplă, dar utilă, pentru afișarea implicită a blogului Odoo.",
+    "last_ingest": "2026-11-14",
+    "friendly_name": "Blog Post Sorting",
+    "summary": "Un blog se citește de obicei de la cea mai nouă postare la cea mai veche, după data publicării. Modulul setează aceasta ca ordine implicită de sortare a articolelor de blog de pe website, astfel încât cele mai recente postări apar mereu primele.",
     "features": [
-      "Sortează articolele de blog descrescător după data de publicare (`published_date`).",
-      "Pentru articole cu aceeași dată de publicare, aplică o sortare secundară descrescătoare după ID, ca să păstreze o ordine consistentă și previzibilă."
+      "Data publicării: articolele sunt sortate descrescător după data publicării (`published_date`).",
+      "Aceeași dată: articolele cu aceeași dată de publicare sunt sortate descrescător după ID, deci cel creat cel mai recent apare primul.",
+      "Doar ordinea implicită: ordinea e setată pe modelul articolului și se aplică oriunde articolele sunt citite fără o ordine cerută explicit; un ecran, filtru sau interogare care cere altă ordine și-o păstrează.",
+      "Fără alte schimbări: modulul nu adaugă câmpuri, vizualizări, meniuri, setări sau drepturi de acces și nu modifică articolele în sine."
     ],
     "dependencies": [
       "website_blog"
@@ -13637,7 +13649,7 @@
     "connections": [
       "website_blog"
     ],
-    "text": "Deltatech Web Site Blog\ndeltatech_website_blog\nModulul ordonează articolele din Blogul de pe website după data de publicare, astfel încât cele mai recente postări apar mereu primele — o corecție simplă, dar utilă, pentru afișarea implicită a blogului Odoo.\nSortează articolele de blog descrescător după data de publicare (`published_date`).\nPentru articole cu aceeași dată de publicare, aplică o sortare secundară descrescătoare după ID, ca să păstreze o ordine consistentă și previzibilă."
+    "text": "Blog Post Sorting\ndeltatech_website_blog\nUn blog se citește de obicei de la cea mai nouă postare la cea mai veche, după data publicării. Modulul setează aceasta ca ordine implicită de sortare a articolelor de blog de pe website, astfel încât cele mai recente postări apar mereu primele.\nData publicării: articolele sunt sortate descrescător după data publicării (`published_date`).\nAceeași dată: articolele cu aceeași dată de publicare sunt sortate descrescător după ID, deci cel creat cel mai recent apare primul.\nDoar ordinea implicită: ordinea e setată pe modelul articolului și se aplică oriunde articolele sunt citite fără o ordine cerută explicit; un ecran, filtru sau interogare care cere altă ordine și-o păstrează.\nFără alte schimbări: modulul nu adaugă câmpuri, vizualizări, meniuri, setări sau drepturi de acces și nu modifică articolele în sine."
   },
   {
     "path": "deltatech_website_breadcrumb/index.md",
@@ -13880,7 +13892,7 @@
   {
     "path": "deltatech_website_effects/index.md",
     "module": "deltatech_website_effects",
-    "version": "19.0.1.3.4",
+    "version": "19.0.1.4.2",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_effects",
     "local_path": "odoo-addons/bitshop/deltatech_website_effects",
     "last_ingest": "2026-10-18",
@@ -14345,22 +14357,26 @@
     "path": "deltatech_website_sale_portal/index.md",
     "module": "deltatech_website_sale_portal",
     "version": "19.0.1.0.6",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_portal`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_portal",
     "local_path": "odoo-addons/deltatech/deltatech_website_sale_portal",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "eCommerce Portal",
-    "summary": "Acest modul îmbunătățește portalul de client din eCommerce (Website Sale), adăugând clienților posibilitatea de a-și căuta și identifica rapid ofertele și comenzile proprii după referința comenzii clientului (`client_order_ref`), pe lângă căutarea standard după numele documentului. Este util companiilor B2B ale căror clienți urmăresc comenzile plasate în Odoo folosind propriul cod de comandă intern.",
+    "last_ingest": "2026-11-14",
+    "friendly_name": "Portal Order Search",
+    "summary": "Clienții care comandă des își țin propria referință pe fiecare comandă, dar portalul îi lasă să caute ofertele și comenzile doar după numărul Odoo. Modulul adaugă în aceste două liste o coloană de referință și o casetă de căutare, astfel încât clientul să găsească un document după numărul pe care îl cunoaște.",
     "features": [
-      "Adaugă în listele portalului de client (\"Ofertele mele\" / \"Comenzile mele\") o coloană suplimentară cu referința comenzii clientului (`client_order_ref`).",
-      "Extinde bara de căutare a portalului cu opțiunea de sortare/căutare după \"Order Name\" și \"Client Reference\".",
-      "Permite clientului să aleagă unde caută termenul introdus: doar în numele comenzii, doar în referința clientului sau în ambele câmpuri deodată.",
-      "Filtrarea se aplică atât listei de oferte (quotations), cât și listei de comenzi confirmate (orders) din portal."
+      "Coloană de referință: *Customer Reference* (`client_order_ref`) apare imediat după numărul comenzii, atât în lista *Quotations*, cât și în *Orders*.",
+      "Casetă de căutare: clientul alege unde caută: în numele comenzii, în referința clientului sau în ambele (implicit).",
+      "Potriviri parțiale: căutarea găsește părți din text și ignoră majusculele, deci câteva cifre din referință sunt suficiente.",
+      "Sortare suplimentară: listele pot fi sortate și după numele comenzii sau după referința clientului.",
+      "Căutare păstrată între pagini: căutarea rămâne activă la trecerea pe pagina următoare, iar textul căutat rămâne vizibil în casetă.",
+      "Doar ofertele și comenzile: facturile și celelalte documente din portal rămân neschimbate."
     ],
     "dependencies": [
       "website_sale"
     ],
-    "connections": [],
-    "text": "eCommerce Portal\ndeltatech_website_sale_portal\nAcest modul îmbunătățește portalul de client din eCommerce (Website Sale), adăugând clienților posibilitatea de a-și căuta și identifica rapid ofertele și comenzile proprii după referința comenzii clientului (`client_order_ref`), pe lângă căutarea standard după numele documentului. Este util companiilor B2B ale căror clienți urmăresc comenzile plasate în Odoo folosind propriul cod de comandă intern.\nAdaugă în listele portalului de client (\"Ofertele mele\" / \"Comenzile mele\") o coloană suplimentară cu referința comenzii clientului (`client_order_ref`).\nExtinde bara de căutare a portalului cu opțiunea de sortare/căutare după \"Order Name\" și \"Client Reference\".\nPermite clientului să aleagă unde caută termenul introdus: doar în numele comenzii, doar în referința clientului sau în ambele câmpuri deodată.\nFiltrarea se aplică atât listei de oferte (quotations), cât și listei de comenzi confirmate (orders) din portal."
+    "connections": [
+      "sale"
+    ],
+    "text": "Portal Order Search\ndeltatech_website_sale_portal\nClienții care comandă des își țin propria referință pe fiecare comandă, dar portalul îi lasă să caute ofertele și comenzile doar după numărul Odoo. Modulul adaugă în aceste două liste o coloană de referință și o casetă de căutare, astfel încât clientul să găsească un document după numărul pe care îl cunoaște.\nColoană de referință: *Customer Reference* (`client_order_ref`) apare imediat după numărul comenzii, atât în lista *Quotations*, cât și în *Orders*.\nCasetă de căutare: clientul alege unde caută: în numele comenzii, în referința clientului sau în ambele (implicit).\nPotriviri parțiale: căutarea găsește părți din text și ignoră majusculele, deci câteva cifre din referință sunt suficiente.\nSortare suplimentară: listele pot fi sortate și după numele comenzii sau după referința clientului.\nCăutare păstrată între pagini: căutarea rămâne activă la trecerea pe pagina următoare, iar textul căutat rămâne vizibil în casetă.\nDoar ofertele și comenzile: facturile și celelalte documente din portal rămân neschimbate."
   },
   {
     "path": "deltatech_website_sale_sort/index.md",
@@ -14565,7 +14581,7 @@
   {
     "path": "deltatech_website_shop_snippets/index.md",
     "module": "deltatech_website_shop_snippets",
-    "version": "19.0.1.1.17",
+    "version": "19.0.1.1.18",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_shop_snippets",
     "local_path": "odoo-addons/bitshop/deltatech_website_shop_snippets",
     "last_ingest": "2026-10-22",
@@ -14880,7 +14896,7 @@
   {
     "path": "deltatech_work_days_report/index.md",
     "module": "deltatech_work_days_report",
-    "version": "19.0.0.0.12",
+    "version": "19.0.0.0.13",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_work_days_report",
     "local_path": "odoo-addons/bitshop/deltatech_work_days_report",
     "last_ingest": "2026-08-20",
@@ -15580,7 +15596,7 @@
   {
     "path": "l10n_ro_anaf_d101/index.md",
     "module": "l10n_ro_anaf_d101",
-    "version": "19.0.1.2.3",
+    "version": "19.0.1.3.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d101",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d101",
     "last_ingest": "2026-10-27",
@@ -15927,7 +15943,7 @@
   {
     "path": "l10n_ro_anaf_d300/index.md",
     "module": "l10n_ro_anaf_d300",
-    "version": "19.0.0.0.34",
+    "version": "19.0.0.0.35",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d300",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d300",
     "last_ingest": null,
@@ -21223,7 +21239,7 @@
   {
     "path": "l10n_ro_stock_gestiune/index.md",
     "module": "l10n_ro_stock_gestiune",
-    "version": "19.0.3.1.8",
+    "version": "19.0.3.1.10",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_gestiune`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_gestiune",
     "last_ingest": "2026-09-25",
@@ -21325,7 +21341,7 @@
   {
     "path": "l10n_ro_stock_obyc/index.md",
     "module": "l10n_ro_stock_obyc",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.7",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_obyc`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_obyc",
     "last_ingest": "2026-10-27",
@@ -21370,7 +21386,7 @@
   {
     "path": "l10n_ro_stock_pack_cmp/index.md",
     "module": "l10n_ro_stock_pack_cmp",
-    "version": "19.0.1.5.0",
+    "version": "19.0.1.5.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_pack_cmp",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_pack_cmp",
     "last_ingest": "2026-11-12",
@@ -23052,15 +23068,18 @@
     "path": "terrabit_picking_flow/index.md",
     "module": "terrabit_picking_flow",
     "version": "19.0.1.0.6",
-    "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_picking_flow`",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_picking_flow",
     "local_path": "odoo-addons/bitshop/terrabit_picking_flow",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Terrabit Picking Flow",
+    "last_ingest": "2026-11-14",
+    "friendly_name": "Picking Flow Routes",
     "summary": "Modulul permite urmărirea unei livrări/ridicări (picking) printr-o secvență ordonată și predefinită de locații fizice — un „flux de ridicare\" (picking flow). În multe depozite o comandă nu trece direct din stoc la doc-ul de expediere, ci parcurge stații intermediare (de exemplu: *Pregătire → Control calitate → Ambalare → Doc de încărcare*). Modulul modelează acest traseu ca o rută reutilizabilă formată din locații ordonate, atribuie o rută unei comenzi de vânzare și urmărește apoi fiecare picking asociat pe măsură ce avansează de la o locație la următoarea.",
     "features": [
-      "Vizibilitate operațională — un board Kanban grupat după locația din flux arată dintr-o privire unde se află fizic fiecare comandă pe hala de producție/depozit și care este următoarea stație pe care trebuie să o atingă.",
-      "Progres controlat — utilizatorii non-manageri pot avansa un picking doar către locația *următoare* definită în rută. Sărirea peste stații sau mutarea înapoi este respinsă, ceea ce menține disciplina fluxului fizic.",
-      "Trasee reutilizabile — rutele sunt definite o singură dată și reutilizate pe mai multe comenzi; locația din flux a unei comenzi de vânzare se propagă automat către picking-urile sale."
+      "Vizibilitate operațională — un board Kanban grupat după locația din flux (Inventar → Operațiuni → Picking flow) arată dintr-o privire unde se află fiecare comandă și care este următoarea stație; fiecare card are un badge cu locația următoare.",
+      "Progres controlat — un utilizator obișnuit poate avansa un picking doar către locația *următoare* din rută; sărirea peste stații sau mutarea înapoi dă eroarea „Location is not valid\". Un *Picking Flow Manager* poate muta pickingul în orice locație.",
+      "Aceeași regulă și pe comanda de vânzare — restricția se aplică și locației din flux a comenzii în sine, indiferent de punctul de intrare (formular, import, API): un utilizator obișnuit poate muta comanda doar la locația următoare, iar o comandă nouă (sau una care își schimbă ruta) pornește mereu de la prima locație a rutei. O comandă duplicată pornește din nou de la prima locație.",
+      "Trasee reutilizabile — rutele se definesc o singură dată și se reutilizează pe mai multe comenzi; pe comanda de vânzare (secțiunea *Alte informații*) se alege *Flow Route*, locația se setează automat pe prima din rută, iar ambele câmpuri se propagă pe pickingurile comenzii.",
+      "Configurare — locațiile și rutele se administrează din Inventar → Configurare → Picking flow (*Picking flow locations* / *Picking flow routes*), meniu vizibil doar grupului *Picking Flow Manager*; ordinea locațiilor dintr-o rută se stabilește prin handle-ul de secvență de pe linii, iar o rută nefolosită poate fi arhivată.",
+      "Grupare personalizată — căutarea pe pickinguri oferă gruparea „Flow location\" pentru vizualizări proprii ale fluxului."
     ],
     "dependencies": [
       "stock",
@@ -23068,9 +23087,10 @@
       "sale_stock"
     ],
     "connections": [
+      "sale_stock",
       "group_flow_manager"
     ],
-    "text": "Terrabit Picking Flow\nterrabit_picking_flow\nModulul permite urmărirea unei livrări/ridicări (picking) printr-o secvență ordonată și predefinită de locații fizice — un „flux de ridicare\" (picking flow). În multe depozite o comandă nu trece direct din stoc la doc-ul de expediere, ci parcurge stații intermediare (de exemplu: *Pregătire → Control calitate → Ambalare → Doc de încărcare*). Modulul modelează acest traseu ca o rută reutilizabilă formată din locații ordonate, atribuie o rută unei comenzi de vânzare și urmărește apoi fiecare picking asociat pe măsură ce avansează de la o locație la următoarea.\nVizibilitate operațională — un board Kanban grupat după locația din flux arată dintr-o privire unde se află fizic fiecare comandă pe hala de producție/depozit și care este următoarea stație pe care trebuie să o atingă.\nProgres controlat — utilizatorii non-manageri pot avansa un picking doar către locația *următoare* definită în rută. Sărirea peste stații sau mutarea înapoi este respinsă, ceea ce menține disciplina fluxului fizic.\nTrasee reutilizabile — rutele sunt definite o singură dată și reutilizate pe mai multe comenzi; locația din flux a unei comenzi de vânzare se propagă automat către picking-urile sale."
+    "text": "Picking Flow Routes\nterrabit_picking_flow\nModulul permite urmărirea unei livrări/ridicări (picking) printr-o secvență ordonată și predefinită de locații fizice — un „flux de ridicare\" (picking flow). În multe depozite o comandă nu trece direct din stoc la doc-ul de expediere, ci parcurge stații intermediare (de exemplu: *Pregătire → Control calitate → Ambalare → Doc de încărcare*). Modulul modelează acest traseu ca o rută reutilizabilă formată din locații ordonate, atribuie o rută unei comenzi de vânzare și urmărește apoi fiecare picking asociat pe măsură ce avansează de la o locație la următoarea.\nVizibilitate operațională — un board Kanban grupat după locația din flux (Inventar → Operațiuni → Picking flow) arată dintr-o privire unde se află fiecare comandă și care este următoarea stație; fiecare card are un badge cu locația următoare.\nProgres controlat — un utilizator obișnuit poate avansa un picking doar către locația *următoare* din rută; sărirea peste stații sau mutarea înapoi dă eroarea „Location is not valid\". Un *Picking Flow Manager* poate muta pickingul în orice locație.\nAceeași regulă și pe comanda de vânzare — restricția se aplică și locației din flux a comenzii în sine, indiferent de punctul de intrare (formular, import, API): un utilizator obișnuit poate muta comanda doar la locația următoare, iar o comandă nouă (sau una care își schimbă ruta) pornește mereu de la prima locație a rutei. O comandă duplicată pornește din nou de la prima locație.\nTrasee reutilizabile — rutele se definesc o singură dată și se reutilizează pe mai multe comenzi; pe comanda de vânzare (secțiunea *Alte informații*) se alege *Flow Route*, locația se setează automat pe prima din rută, iar ambele câmpuri se propagă pe pickingurile comenzii.\nConfigurare — locațiile și rutele se administrează din Inventar → Configurare → Picking flow (*Picking flow locations* / *Picking flow routes*), meniu vizibil doar grupului *Picking Flow Manager*; ordinea locațiilor dintr-o rută se stabilește prin handle-ul de secvență de pe linii, iar o rută nefolosită poate fi arhivată.\nGrupare personalizată — căutarea pe pickinguri oferă gruparea „Flow location\" pentru vizualizări proprii ale fluxului."
   },
   {
     "path": "terrabit_pro/index.md",

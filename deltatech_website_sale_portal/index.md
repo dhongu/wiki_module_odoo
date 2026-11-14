@@ -1,21 +1,23 @@
-# eCommerce Portal (localizat la `deltatech_website_sale_portal/index.md`)
+# Portal Order Search (localizat la `deltatech_website_sale_portal/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_sale_portal`
 - **Versiune:** `19.0.1.0.6`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_portal`
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_portal
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_sale_portal`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-14`
 
 #### 1. Sumar
 
-Acest modul îmbunătățește portalul de client din eCommerce (Website Sale), adăugând clienților posibilitatea de a-și căuta și identifica rapid ofertele și comenzile proprii după referința comenzii clientului (`client_order_ref`), pe lângă căutarea standard după numele documentului. Este util companiilor B2B ale căror clienți urmăresc comenzile plasate în Odoo folosind propriul cod de comandă intern.
+Clienții care comandă des își țin propria referință pe fiecare comandă, dar portalul îi lasă să caute ofertele și comenzile doar după numărul Odoo. Modulul adaugă în aceste două liste o coloană de referință și o casetă de căutare, astfel încât clientul să găsească un document după numărul pe care îl cunoaște.
 
 #### 2. Funcționalități Cheie
 
-- Adaugă în listele portalului de client ("Ofertele mele" / "Comenzile mele") o coloană suplimentară cu referința comenzii clientului (`client_order_ref`).
-- Extinde bara de căutare a portalului cu opțiunea de sortare/căutare după "Order Name" și "Client Reference".
-- Permite clientului să aleagă unde caută termenul introdus: doar în numele comenzii, doar în referința clientului sau în ambele câmpuri deodată.
-- Filtrarea se aplică atât listei de oferte (quotations), cât și listei de comenzi confirmate (orders) din portal.
+- **Coloană de referință:** *Customer Reference* (`client_order_ref`) apare imediat după numărul comenzii, atât în lista *Quotations*, cât și în *Orders*.
+- **Casetă de căutare:** clientul alege unde caută: în numele comenzii, în referința clientului sau în ambele (implicit).
+- **Potriviri parțiale:** căutarea găsește părți din text și ignoră majusculele, deci câteva cifre din referință sunt suficiente.
+- **Sortare suplimentară:** listele pot fi sortate și după numele comenzii sau după referința clientului.
+- **Căutare păstrată între pagini:** căutarea rămâne activă la trecerea pe pagina următoare, iar textul căutat rămâne vizibil în casetă.
+- **Doar ofertele și comenzile:** facturile și celelalte documente din portal rămân neschimbate.
 
 #### 3. Dependențe
 
@@ -25,17 +27,22 @@ Acest modul îmbunătățește portalul de client din eCommerce (Website Sale), 
 
 **Modele**
 
-- Modulul nu definește sau extinde niciun model Python; toată logica se află într-un controller care extinde portalul de vânzări (`sale.controllers.portal.CustomerPortal`).
+Modulul nu definește și nu extinde modele Python; logica se află în controllerul `CustomerPortal` (extinde `sale.controllers.portal.CustomerPortal`):
+
+- `_get_sale_searchbar_sortings`: adaugă sortările „Order Name" și „Client Reference".
+- `_prepare_quotations_domain` / `_prepare_orders_domain`: aplică filtrul `ilike` pe `name`, `client_order_ref` sau ambele, după parametrii `search` și `search_in`.
+- `_prepare_sale_portal_rendering_values`: păstrează căutarea în link-urile paginatorului.
+- `portal_my_quotes` / `portal_my_orders`: suprascrise pentru a injecta opțiunile din bara de căutare (`searchbar_inputs`, `search_in`).
 
 **Vizualizări**
 
-- `portal_my_quotations` (extinde `sale.portal_my_quotations`): adaugă o coloană "Reference" cu `client_order_ref` în tabelul ofertelor din portal.
-- `portal_my_orders` (extinde `sale.portal_my_orders`): adaugă o coloană "Reference" cu `client_order_ref` în tabelul comenzilor din portal.
+- `portal_my_quotations` (extinde `sale.portal_my_quotations`): adaugă coloana „Reference" cu `client_order_ref` în tabelul ofertelor din portal.
+- `portal_my_orders` (extinde `sale.portal_my_orders`): adaugă coloana „Reference" cu `client_order_ref` în tabelul comenzilor din portal.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Nu sunt definite acțiuni automate, sarcini cron sau acțiuni server în acest modul. Logica de căutare este implementată în controllerul `CustomerPortal` (rutele `portal_my_quotes` și `portal_my_orders` sunt suprascrise pentru a injecta filtrul de căutare și opțiunile din bara de căutare).
+Nu sunt definite acțiuni automate, sarcini cron sau acțiuni server.
 
 #### 5. Conexiuni
 
-- Nu au fost identificate conexiuni funcționale relevante către alte module cu pagină wiki.
+- `sale`: portalul de vânzări standard, ale cărui liste de oferte și comenzi sunt extinse.

@@ -1,37 +1,27 @@
-# GLS Borderou Bank Statements Import (localizat la `deltatech_account_bank_statement_import_gls/index.md`)
+# GLS COD Statement Import (localizat la `deltatech_account_bank_statement_import_gls/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_bank_statement_import_gls`
 - **Versiune:** `19.0.1.1.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import_gls
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_account_bank_statement_import_gls`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-14`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul importă borderourile de ramburs GLS (fișiere Excel) direct ca extrase de cont bancar,
-fără nicio prelucrare manuală prealabilă a fișierului. Magazinele online care livrează cu plata
-ramburs prin GLS primesc periodic aceste borderouri cu sumele încasate de curier și virate în
-banca firmei; în loc să fie „curățate" manual (șters antetul și rândul de total) și mapate
-coloană cu coloană în asistentul standard de import, fișierul original este încărcat ca atare
-pe jurnalul de tip bancă dedicat curierului, generând automat o linie de extras per colet.
+Modulul importă borderoul de ramburs GLS (fișier XLSX) direct ca extras de cont bancar, fără nicio prelucrare prealabilă a fișierului: o linie pentru fiecare colet plătit la livrare, legată de clientul expedierii, plus o linie pentru suma virată de GLS în banca firmei. Magazinele online care livrează cu ramburs prin GLS încarcă fișierul exact cum îl primesc, pe jurnalul de tip bancă dedicat curierului.
 
 #### 2. Funcționalități Cheie
 
-- **Import fișier original**: se încarcă borderoul exact cum vine de la GLS — antetul (client,
-  cont bancar, dată transfer) și rândul de total sunt tratate automat.
-- **Detecție prin semnătură**: fișierul este recunoscut după semnătura GLS din prima celulă, deci
-  poate fi importat de pe orice jurnal de tip bancă, alături de alte formate de extras.
-- **O linie per colet**: fiecare sumă ramburs devine o linie de extras cu numărul AWB, referința
-  GLS și numele destinatarului.
-- **Verificare de control**: rândul de total din fișier este verificat față de suma liniilor
-  importate; o neconcordanță blochează importul.
-- **Linie opțională de transfer bancar**: se poate adăuga automat (configurabil per jurnal) o
-  linie negativă cu totalul virat, astfel încât extrasul jurnalului de curier se echilibrează la
-  zero, iar transferul poate fi reconciliat cu extrasul băncii reale printr-un cont de viramente
-  interne.
-- **Protecție la duplicate**: fiecare colet are un id unic de import (per AWB); reimportul
-  aceluiași fișier este detectat și refuzat.
+- **Fișierul așa cum vine**: antetul (client, cont bancar, data transferului) și rândul de total sunt tratate automat.
+- **Recunoaștere automată**: fișierul este identificat după semnătura GLS din prima celulă, deci se importă de pe orice jurnal bancar, alături de alte formate de extras, fără wizardul de mapare a coloanelor.
+- **O linie per colet**: fiecare sumă ramburs devine o linie de extras cu numărul AWB, referința GLS și numele destinatarului.
+- **Clientul găsit după AWB**: linia este legată de clientul livrării care are același AWB în compania curentă, niciodată după nume; când nu se găsește nicio livrare sau se găsesc mai multe, linia rămâne pentru operator.
+- **Total verificat**: rândul de total trebuie să egaleze suma coletelor, iar un fișier care acoperă mai mult de un transfer este refuzat, astfel încât fiecare extras corespunde unei singure mișcări bancare.
+- **Linie de transfer și duplicate**: o linie negativă opțională cu suma virată echilibrează extrasul la zero; fiecare colet se importă o singură dată, deci reimportul aceluiași fișier este detectat. Importul este refuzat, cu mesaj, și când toate coletele din fișier au fost deja importate.
+- **Date trimise în afara Odoo:** niciuna; modulul doar citește fișierul încărcat și nu se conectează la GLS.
+- **Flux de utilizare**: din tabloul de bord Contabilitate se deschide jurnalul GLS și se folosește *Upload*; se creează un extras „GLS Borderou" cu data transferului; liniile coletelor se reconciliază cu facturile clienților, iar linia de transfer cu plata GLS din extrasul băncii reale, printr-un cont de viramente interne (581 în planul de conturi românesc).
+- **Configurare**: în *Contabilitate → Configurare → Jurnale* se creează un jurnal de tip **Bancă** pentru ramburs GLS, cu propriul cont de sume în curs de decontare (subcont 5125); *Bank Feeds* se setează pe *Import*; în tab-ul **Advanced Settings**, secțiunea **Courier COD Settlement**, se alege **Carrier**-ul GLS și se păstrează bifat **Add Bank Transfer Line**. Pentru găsirea clienților, livrările trebuie să aibă AWB-ul GLS în **Tracking Reference** (ca în conectorul GLS).
 
 #### 3. Dependențe
 
@@ -40,45 +30,30 @@ pe jurnalul de tip bancă dedicat curierului, generând automat o linie de extra
 - [deltatech_delivery_cod](../deltatech_delivery_cod/index.md)
 
 *Note:*
-- `account_bank_statement_import_csv` este inclus în dependențe special pentru a asigura ordinea
-  corectă de MRO — override-ul modulului trebuie să ruleze înaintea interceptorului CSV/XLSX
-  standard.
-- Dependența nouă față de versiunea anterioară este `deltatech_delivery_cod`: puntea comună de
-  decontare ramburs pentru curieri (protecție la duplicate, total de control, linia de
-  echilibrare a extrasului), pe care modulul o folosește acum în loc să reimplementeze aceste
-  verificări local (vezi Componente Cheie).
+- `account_bank_statement_import_csv` este inclus în dependențe special pentru ordinea corectă de MRO — override-ul modulului trebuie să ruleze înaintea interceptorului CSV/XLSX standard.
+- `deltatech_delivery_cod` este puntea comună de decontare ramburs pentru curieri (protecție la duplicate, total de control, linia de echilibrare a extrasului), folosită în locul unor verificări locale.
+- Dependență externă Python: `openpyxl`.
 
 #### 4. Componente Cheie
 
-Sumarul și funcționalitățile din secțiunile 1–2 provin din `readme/DESCRIPTION.md`; conform
-fluxului de ingestie nu s-a mai analizat codul pentru acele secțiuni. Pentru această secțiune
-(neacoperită explicit de DESCRIPTION.md) s-a analizat `models/account_journal.py`:
-
 **Modele**
 
-- `account.journal` (extins): adaugă formatul de import „GLS Borderou" în
-  `_get_bank_statements_available_import_formats()`; recunoaște fișierul după semnătura
-  `GLS General Logistics Systems` din prima celulă a XLSX-ului (`_read_gls_borderou`); pentru
-  fișierele recunoscute forțează fluxul de import standard, ocolind wizardul de mapare CSV/XLSX
-  (`_import_bank_statement`); parsează antetul (data transferării banilor) și rândurile de
-  ramburs, apoi delegă construcția efectivă a extrasului (linii, total de control, linia de
-  transfer, deduplicare) către puntea comună `_cod_prepare_statement()` din
-  [deltatech_delivery_cod](../deltatech_delivery_cod/index.md) (`_parse_gls_borderou`,
-  `_gls_carrier`).
+- `account.journal` (extins): adaugă formatul de import „GLS Borderou" în `_get_bank_statements_available_import_formats()`; recunoaște fișierul după semnătura `GLS General Logistics Systems` din prima celulă a XLSX-ului (`_read_gls_borderou`); pentru fișierele recunoscute forțează fluxul de import standard, ocolind wizardul de mapare CSV/XLSX (`_import_bank_statement`); parsează antetul (data transferului) și rândurile de ramburs (`_parse_gls_borderou`), apoi delegă construcția extrasului (linii, total de control, linia de transfer, deduplicare, clientul după AWB) către `_cod_prepare_statement()` din [deltatech_delivery_cod](../deltatech_delivery_cod/index.md); `_gls_carrier` alege carrier-ul GLS.
 
 **Migrare**
 
-- `migrations/19.0.1.1.0/post-migration.py`: la trecerea de la versiunea `19.0.1.0.0`, mută
-  valoarea câmpului de opțiune vechi `gls_add_transfer_line` (jurnal) pe câmpul comun
-  `cod_add_transfer_line` din puntea `deltatech_delivery_cod`, apoi șterge coloana veche —
-  păstrează setarea „adaugă linie de transfer bancar" a fiecărui jurnal la upgrade.
+- `migrations/19.0.1.1.0/post-migration.py`: mută valoarea opțiunii vechi `gls_add_transfer_line` (jurnal) pe câmpul comun `cod_add_transfer_line` din `deltatech_delivery_cod`, apoi șterge coloana veche, păstrând setarea fiecărui jurnal la upgrade.
 
-*Nu au fost introduse vizualizări sau acțiuni automate proprii în acest modul — bifa „GLS
-Borderou: Add Bank Transfer Line" de pe formularul jurnalului este acum câmpul comun expus de
-`deltatech_delivery_cod`.*
+**Vizualizări**
+
+Modulul nu are vizualizări proprii; opțiunea „Add Bank Transfer Line" de pe formularul jurnalului este câmpul comun expus de `deltatech_delivery_cod`.
+
+**Acțiuni Automate / Acțiuni Server**
+
+Nu sunt definite.
 
 #### 5. Conexiuni
 
-- [deltatech_account_bank_statement_import_euplatesc](../deltatech_account_bank_statement_import_euplatesc/index.md): același tipar (bazat pe aceeași punte `deltatech_delivery_cod`) pentru decontările Euplatesc.
+- [deltatech_account_bank_statement_import_euplatesc](../deltatech_account_bank_statement_import_euplatesc/index.md): același tipar (aceeași punte `deltatech_delivery_cod`) pentru decontările Euplatesc.
 - [l10n_ro_account_bank_statement_import_ing_csv](../l10n_ro_account_bank_statement_import_ing_csv/index.md): extrasul ING pe care sosește efectiv transferul GLS către bancă (complementar, opțional).
-- [deltatech_stock_delivery](../deltatech_stock_delivery/index.md): AWB-ul (`carrier_tracking_ref`) de pe livrări, bază pentru identificarea automată a partenerului într-o fază viitoare (opțional).
+- [deltatech_stock_delivery](../deltatech_stock_delivery/index.md): AWB-ul (`carrier_tracking_ref`) de pe livrări, folosit pentru identificarea clientului.
