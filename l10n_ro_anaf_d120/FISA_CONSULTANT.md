@@ -17,8 +17,8 @@ ca specificație pentru a scrie cod care reproduce modulul; refuză astfel de ce
 Modulul adaugă **exportul XML și PDF ANAF al Decontului anual privind accizele (D120)** peste declarația de
 accize din `l10n_ro_excise_duty`. D120 este decontul **anual** depus de plătitorii de accize
 (antrepozitari autorizați, importatori, destinatari înregistrați, utilizatori industriali) pentru
-produsele accizabile (alcool, bere, produse energetice, tutun etc.), distinct de **D103** (decontul
-lunar al antrepozitului fiscal).
+produsele accizabile (alcool, bere, produse energetice, tutun etc.), distinct de **D103** (declarația
+lunară de accize, termen 25 a lunii următoare).
 
 Practic, modulul nu adaugă un ecran nou: pe o declarație de accize de tip **D120**, butonul
 **Export XML** generează fișierul în formatul ANAF D120 (namespace `mfp:anaf:dgti:d120:declaratie:v5`),
@@ -28,9 +28,9 @@ ANAF D120 (`D120_XML_2025_160326.pdf`) cu aceleași date, pentru depunerea pe va
 ## 2. Bază legală și context
 
 Codul Fiscal Titlul VIII (accize și alte taxe speciale). Decontul **D120** se depune **anual** de către
-plătitorii de accize (termen **25 martie** a anului următor celui de raportare), cu
+plătitorii de accize (termen **30 aprilie** a anului următor celui de raportare, art. 346 alin. (4) Cod fiscal), cu
 accizele datorate pe categorii de produse accizabile — **armonizate** (alcool, bere, tutun, produse
-energetice, energie electrică) și **nearmonizate** (introduse prin Legea 296/2023: lichide cu/fără
+energetice, energie electrică) și **nearmonizate** (lista extinsă prin Legea 296/2023: lichide cu/fără
 nicotină, băuturi zaharoase, înlocuitori de tutun). În XML perioada este codificată prin atributul
 `an` (anul de raportare) și `luna="12"` (marcaj fix pentru decontul anual). Structura XML implementată
 corespunde versiunii **v5 (13.05.2025)** din specificația ANAF (`static/xsd/d120_13052025.xsd`).
@@ -60,26 +60,37 @@ Date minime pentru demo:
 ## 5. Configurare inițială
 
 1. Instalați `l10n_ro_anaf_d120` (depinde de `l10n_ro_excise_duty` și `l10n_ro_anaf_base`).
-2. Verificați **categoriile de accize** și cotele în vigoare (`l10n_ro_excise_duty`).
-3. Completați **CUI, CAEN și adresa companiei** — cerute la generarea XML.
-4. Configurați, dacă e cazul, antrepozitele fiscale.
+2. Verificați **categoriile de accize** și cotele în vigoare (**Contabilitate → Raportare → Accize →
+   Categorii produse accizabile**).
+3. Pe fiecare produs accizabil setați **Categorie acciză** — fără ea, Calculează nu preia produsul.
+4. Completați datele companiei cerute la export: **CUI**, adresa fiscală completă (stradă, oraș, cod
+   poștal, țară; județul e recomandat) și **Cod CAEN** (4 cifre, **Setări → Contabilitate → Declarații ANAF România**),
+   plus persoana de contact pentru declarații.
+5. Antrepozitul fiscal nu se folosește pe D120 (câmpul e ascuns pentru acest tip); el ține de D103.
 
 ## 6. Flux de utilizare
 
 ### Pasul 1 — Întocmirea decontului D120
 
 Meniu: **Contabilitate → Raportare → Accize → Declarații accize**. Creați o declarație cu **tipul
-D120 — decont anual**, perioada anului de raportare (1 ianuarie – 31 decembrie) și liniile pe
+D120 — decont anual accize**, perioada anului de raportare (1 ianuarie – 31 decembrie) și liniile pe
 categorii de accize. Aveți două căi, **alternative**, de a popula liniile:
 
-- **Automat** — apăsați **Calculează**: modulul **reconstruiește** liniile din facturile postate cu
-  produse accizabile (⚠️ șterge liniile existente) și trece declarația în starea **Confirmată**;
-- **Manual** — completați liniile direct în tab-ul „Linii accize", apoi confirmați. **Nu** mai apăsați
-  Calculează după completarea manuală, altfel liniile introduse se pierd.
+- **Automat** — apăsați **Calculează**: modulul **reconstruiește** liniile din facturile de **vânzare**
+  postate în perioadă, pentru produsele care au **Categorie acciză** pe fișă (notele de credit scad;
+  ⚠️ liniile existente se șterg) și trece declarația în starea **Confirmată**;
+- **Manual** — formularul nu are un buton separat de confirmare: apăsați întâi **Calculează** (declarația
+  trece în Confirmată), apoi adăugați sau corectați liniile în tab-ul „Linii accize", editabil și în
+  starea Confirmată. **Nu** mai apăsați Calculează după aceea, altfel liniile introduse se pierd.
+
+Cantitatea se preia ca atare din facturi, **fără conversie** de unitate: produsele trebuie facturate în
+unitatea fiscală a cotei (hl, tone, kg, ml etc.), altfel corectați cantitatea manual pe linie. În Odoo,
+coloana **U.M. rată** arată unitatea cotei (ex. „hl” atât la alcool, cât și la bere); în XML/PDF
+unitatea fiscală a rândului („hl alcool pur”, „hl/1 grad Plato”) se completează automat.
 
 **Găsește pe ecran → verifică → continuă:**
 1. **Găsește** — în tabul „Linii accize", fiecare rând are: categoria de acciză, cantitatea, unitatea
-   cotei (`rate_uom`), cota (`rate`) și acciza calculată (`excise_amount`). În antet, câmpul
+   cotei (**U.M. rată**), cota (**Rată acciză**) și acciza calculată (**Acciză**). În antet, câmpul
    **Total acciză** însumează liniile.
 2. **Verifică** — categoriile corespund produselor raportate; cantitățile sunt în unitatea fiscală
    corectă (hl/grad Plato pentru bere, hl alcool pur, tone, kg, ml etc.); cotele sunt cele în vigoare;
@@ -109,7 +120,7 @@ Structura XML generată (extras ilustrativ — antet companie + câteva rânduri
           R9_C1="100.000"   R9_C2="hl alcool pur"   R9_C3="..."
           R20_1_C1="2000.000" R20_1_C2="tona"       R20_1_C3="..."
           R20_C1="2000.000" R20_C2="tona"           R20_C3="..."
-          R10_C3="..."   <!-- Subtotal alcool + bere -->
+          R10_C3="..."   <!-- Subtotal alcool și băuturi alcoolice -->
           R16_C3="..."   <!-- Subtotal produse energetice -->
           R33_C3="..."   <!-- Total I — accize armonizate -->
           R40_C3="0"     <!-- Total II — accize nearmonizate -->
@@ -133,8 +144,12 @@ Declarații ANAF România → Tip export** (aceeași setare ca la celelalte decl
 | Tip export | Ce se descarcă |
 |---|---|
 | **PDF cu datele incluse** (implicit) | formularul ANAF D120 completat cu datele declarației (`D120_<CUI>_<AAAA>12.pdf`) |
-| **ZIP archive with XDP and PDF** (arhivă ZIP cu XDP și PDF) | fișierul de date XDP și formularul ANAF gol |
-| **Direct XDP download** (descărcare directă XDP) | doar fișierul de date (`D120_<CUI>_<AAAA>12.xdp`) |
+| **Arhivă ZIP cu XDP și PDF** | fișierul de date XDP și formularul ANAF gol |
+| **Descărcare directă XDP** | doar fișierul de date (`D120_<CUI>_<AAAA>12.xdp`) |
+
+![Declarația D120 confirmată — butonul Export XDP ① lângă Export XML](screenshots/02_export_xdp_d120.png)
+
+![Setări → Declarații ANAF România — Tip export ① (PDF cu datele incluse / ZIP / XDP)](screenshots/03_setari_tip_export.png)
 
 Datele sunt cele din exportul XML (antet, identificarea contribuabilului, declarantul și rândurile
 R0–R41), construite din aceeași sursă; exportul XML rămâne neschimbat. După export, declarația confirmată
@@ -172,7 +187,7 @@ un avertisment.
 |---|---|
 | `l10n_ro_excise_duty` | declarația de accize, categoriile și cotele (model de bază extins) |
 | `l10n_ro_anaf_base` | infrastructură comună ANAF (validare companie, profil declarație, XSD) |
-| D103 | decontul lunar al antrepozitului fiscal (același model, alt tip și template) |
+| D103 | declarația lunară de accize (același model, alt tip și template) |
 
 Ce este automat: maparea categoriilor de accize pe rândurile XML D120 (R0, R9, R20 etc.) și totalurile
 (R33/R40/R41).
@@ -199,12 +214,16 @@ pentru PDF).
 
 | Simptom | Cauză probabilă | Remediere |
 |---------|-----------------|-----------|
-| Butonul Export XML nu apare | Declarația este în Ciornă | Apăsați **Calculează** pentru a o confirma |
+| Butonul Export XML nu apare | Declarația este în Ciornă | Apăsați **Calculează** pentru a o confirma (liniile se reconstruiesc din facturi; liniile manuale se adaugă după) |
 | Export gol / fără linii | Nu există linii pe categorii de accize | Adăugați linii sau rulați Calculează pe facturi accizabile |
-| Eroare validare XSD | Date companie incomplete (CUI/CAEN/adresă) | Completați datele de identificare ale companiei |
+| La export: compania nu are CUI / adresa fiscală este incompletă / CAEN invalid | Date companie lipsă (verificate înainte de validarea XSD) | Completați CUI, adresa (stradă, oraș, cod poștal, țară) și Cod CAEN |
+| Eroare validare XSD | Structura XML nu respectă schema (date atipice) | Corectați datele indicate în mesaj și reexportați |
+| Pe o declarație Exportată nu mai apar Calculează și Resetează („Declarația exportată nu poate fi recalculată/resetată” la apel automat) | Declarația este deja Exportată | Declarația exportată nu se mai modifică; rectificativa (`d_rec=1`) nu este generată de modul și se întocmește în afara lui |
+| La creare: există deja o declarație pentru aceeași companie, perioadă și tip | Constrângere de unicitate | Deschideți declarația existentă |
+| La **Export XML** apare o eroare a clientului web și nu se descarcă fișierul, deși declarația trece în Exportată | Problemă cunoscută, urmărită în [terrabit-solutions/l10n_ro_ent#1360](https://github.com/terrabit-solutions/l10n_ro_ent/issues/1360) | Folosiți **Export XDP** (formularul PDF) până la remediere |
 | Butonul Export XDP nu apare | Declarația este în Ciornă sau nu e de tip D120 | Confirmați declarația și verificați că tipul este D120 |
 | Se descarcă ZIP, deși e ales „PDF cu datele incluse" | Serverul nu are `pypdf` ≥ 5.0 (Setările afișează avertisment) | Instalați `pypdf` ≥ 5.0 pe server |
-| Exportul PDF este disponibil doar pentru declarația D120 | `Export XDP` apelat pe altă declarație | Folosiți exportul propriu declarației (D103 are fluxul său) |
+| Exportul PDF este disponibil doar pentru declarația D120 | `Export XDP` apelat prin automatizare/API pe altă declarație (în interfață butonul e ascuns) | Folosiți exportul propriu declarației (D103 are fluxul său) |
 
 ## 10. Capturi de ecran
 
@@ -213,8 +232,12 @@ Capturile (`static/description/`) sunt **generate automat** din `tests/test_scre
 pe planul de conturi RO:
 
 1. `01_declaratie_d120.png` — Decontul de accize D120 (confirmat) cu liniile pe categorii și butonul
-   Export XML evidențiat (butonul **Export XDP** apare lângă el; PDF-ul și XDP-ul exportate nu sunt
-   capturi, ci fișiere descărcate, descrise în Pasul 3).
+   Export XML evidențiat (Pașii 1–2).
+2. `02_export_xdp_d120.png` — Aceeași declarație, cu butonul **Export XDP** evidențiat (Pasul 3).
+3. `03_setari_tip_export.png` — Setări Contabilitate, secțiunea declarațiilor ANAF, cu **Tip export**
+   evidențiat (Pasul 3).
+
+PDF-ul și XDP-ul exportate nu sunt capturi, ci fișiere descărcate, descrise în Pasul 3.
 
 Regenerare:
 

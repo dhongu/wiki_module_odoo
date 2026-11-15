@@ -1,10 +1,11 @@
 # Romania - Contabilizare salarii, conturi implicite pe reguli (localizat la `l10n_ro_hr_payroll_account_enhancement/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_hr_payroll_account_enhancement`
-- **Versiune:** `19.0.1.9.0`
+- **Versiune:** `19.0.1.9.1`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_payroll_account_enhancement
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_hr_payroll_account_enhancement`
 - **Ultima Ingestie:** `2026-10-22`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 > **Origine:** partea contabilă a fostului `l10n_ro_payroll_ro`, separată în 19.0.2.0.0 al modulului [l10n_ro_hr_payroll_enhancement](../l10n_ro_hr_payroll_enhancement/index.md), în linie cu perechea standard `l10n_ro_hr_payroll` / `l10n_ro_hr_payroll_account`.
 

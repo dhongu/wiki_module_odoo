@@ -80,6 +80,9 @@ Date minime pentru demo:
 3. Opțional, activați blocajele din **Setări → Contabilitate → Monitorizare parteneri ANAF (RO)**:
    **Blochează partenerii inactivi ANAF** și/sau **Blochează partenerii radiați la ANAF**.
    Cele două sunt **independente** — activarea unuia nu îl activează pe celălalt.
+   Aceeași secțiune are opțiunea **Avertizări TVA pe facturile de furnizor**, **activă implicit**: afișează
+   o bandă pe factura de furnizor când furnizorul aplică TVA la încasare sau nu e înregistrat în scopuri de
+   TVA la data facturii (Pasul 7). Se debifează dacă nu doriți benzile; ea doar avertizează, nu blochează.
 4. Opțional, activați cronul lunar **„RO: Reverificare parteneri VIES (TVA intracomunitar)"** din Setări tehnice → Programări (dezactivat implicit).
 5. Opțional, dacă întâlniți o stare de înregistrare neacoperită, completați parametrul de sistem
    `l10n_ro_anaf_partner.struck_off_keywords` (implicit `RADIERE,RADIAT,DIZOLVARE`).
@@ -172,23 +175,47 @@ disponibile pentru a le privi individual; eliminați filtrul (×) pentru a vedea
 Implicit, postarea unei facturi pe un partener cu stare neconformă doar afișează un avertisment
 soft în chatter. Pentru a o **bloca efectiv**, activați în **Setări**, aplicația **Contabilitate**,
 secțiunea **Monitorizare parteneri ANAF (RO)** (folosiți caseta de căutare cu „ANAF"), bifele
-corespunzătoare ① ②:
+corespunzătoare ① ② (și, separat, ③ pentru avertizările de pe facturile de furnizor, Pasul 7):
 
 | Bifă | Blochează postarea pe |
 |---|---|
 | **Blochează partenerii inactivi ANAF** | parteneri din registrul contribuabililor inactivi |
 | **Blochează partenerii radiați la ANAF** | parteneri radiați sau dizolvați |
+| **Avertizări TVA pe facturile de furnizor** (③, activă implicit) | nu blochează nimic: afișează benzile de avertizare de pe factura de furnizor |
 
-![Setări căutate după ANAF: secțiunea Monitorizare parteneri ANAF (RO) cu bifele Blochează partenerii inactivi ANAF (1) și Blochează partenerii radiați la ANAF (2), ambele nebifate](screenshots/07_setari_blocaje_anaf.png)
+![Setări căutate după ANAF: secțiunea Monitorizare parteneri ANAF (RO) cu bifele Blochează partenerii inactivi ANAF (1) și Blochează partenerii radiați la ANAF (2), nebifate, și Avertizări TVA pe facturile de furnizor (3), bifată](screenshots/07_setari_blocaje_anaf.png)
 
 Cele două sunt **deliberat independente**: activarea blocajului pe inactivi nu blochează și
 partenerii radiați, ca activarea uneia să nu schimbe tăcut comportamentul celeilalte la
 clienții care rulează deja cu una dintre ele. TVA la încasare **nu** blochează postarea — e un
-regim de deducere, nu o stare neconformă.
+regim de deducere, nu o stare neconformă; pe factura de furnizor el produce doar banda de avertizare
+din Pasul 7.
 
 Tot pe linie de conformitate, un **cron lunar** (opțional, dezactivat implicit) reverifică periodic
 statusul **VIES** al partenerilor cu TVA intracomunitar și semnalează în chatter partenerii al căror
 număr a devenit invalid (vezi **Setări tehnice → Programări → „RO: Reverificare parteneri VIES (TVA intracomunitar)"**).
+
+### Pasul 7 — Avertizări pe factura de furnizor (TVA la încasare, furnizor neplătitor de TVA)
+
+Pe o factură de furnizor (**Contabilitate → Furnizori → Facturi**), ciornă sau postată, modulul afișează
+sus o bandă de avertizare, după regimul de TVA al furnizorului **la data facturii**:
+
+1. **Furnizor în TVA la încasare** (bandă galbenă): „Furnizorul aplică TVA la încasare: TVA de pe această
+   factură se deduce doar după plata către furnizor (art. 297 alin. (2) și art. 299 alin. (1) lit. a) Cod
+   fiscal). Folosiți taxele de achiziție cu TVA la încasare.” Apare **doar dacă nicio linie** nu folosește o
+   taxă cu exigibilitate la plată; dacă ați ales deja taxa cu TVA la încasare, banda dispare.
+2. **Furnizor neînregistrat în scopuri de TVA la data facturii, dar cu TVA pe factură** (bandă roșie): TVA
+   nu e datorată, deci nu e deductibilă (art. 299 alin. (1) lit. a) Cod fiscal; art. 11 alin. (9) dacă i s-a
+   anulat codul de TVA). Cereți furnizorului stornarea facturii sau verificați statutul lui la data livrării.
+
+Regimul se citește din **Perioade TVA** ale partenerului (scpTVA și RTVAI), la data facturii; fără perioade,
+din bifele curente. Nu apare nicio bandă când partenerul nu are **Ultima verificare ANAF**, când factura nu
+are TVA, pe facturile către clienți sau cu opțiunea **Avertizări TVA pe facturile de furnizor** debifată.
+Banda nu schimbă taxele și nu oprește postarea; decizia de deducere rămâne a contabilului.
+
+![Factură de furnizor de la un furnizor în TVA la încasare: banda galbenă de avertizare cu art. 297 alin. (2) și art. 299 alin. (1) lit. a) CF](screenshots/08_factura_furnizor_tva_la_incasare.png)
+
+![Factură de furnizor de la un furnizor neînregistrat în scopuri de TVA, cu TVA pe factură: banda roșie de avertizare](screenshots/09_factura_furnizor_neplatitor_tva.png)
 
 ### Note de monografie și raportare
 
@@ -234,6 +261,10 @@ citirea RTVAI, ca să primească perioadele.
 - [ ] Cu **Blochează partenerii inactivi ANAF** activ, postarea pe un partener inactiv este oprită cu mesaj clar; dezactivat, rămâne avertismentul soft.
 - [ ] Cu **Blochează partenerii radiați la ANAF** activ, postarea pe un partener radiat este oprită; dezactivat, rămâne avertismentul soft.
 - [ ] Activarea unui blocaj **nu** îl activează pe celălalt.
+- [ ] Pe o factură de furnizor cu TVA, de la un furnizor în RTVAI la data facturii și fără taxă cu exigibilitate la plată, apare banda galbenă „Furnizorul aplică TVA la încasare…”; cu taxa de achiziție cu TVA la încasare pe linii, banda dispare.
+- [ ] Pe o factură de furnizor cu TVA, de la un furnizor neînregistrat în scopuri de TVA la data facturii, apare banda roșie „Furnizorul nu este înregistrat în scopuri de TVA…”.
+- [ ] Nicio bandă pe factura fără TVA, pe factura către client, pe un partener fără **Ultima verificare ANAF** sau cu opțiunea **Avertizări TVA pe facturile de furnizor** debifată.
+- [ ] Banda de pe factura de furnizor nu oprește postarea și nu modifică taxele.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -241,6 +272,8 @@ citirea RTVAI, ca să primească perioadele.
 |-----------------|-----------------|-----------|
 | Postare blocată: partener INACTIV la ANAF | Bifa **Blochează partenerii inactivi ANAF** e activă și partenerul e în registrul inactivilor | Reverificați statusul la ANAF; dacă a fost reactivat, resincronizați; altfel evitați tranzacția |
 | Postare blocată: partener RADIAT la ANAF | Bifa **Blochează partenerii radiați la ANAF** e activă și ANAF raportează radiere/dizolvare | Verificați starea la ANAF; dacă partenerul chiar e radiat, tranzacția nu trebuie facturată către el |
+| Bandă „ANAF: Furnizorul aplică TVA la încasare…” pe factura de furnizor | Furnizorul e în RTVAI la data facturii, iar nicio linie nu are taxă cu exigibilitate la plată | Folosiți taxele de achiziție cu TVA la încasare, ca TVA să se deducă la plată (art. 297 alin. (2) și art. 299 alin. (1) lit. a) CF) |
+| Bandă „ANAF: Furnizorul nu este înregistrat în scopuri de TVA…” pe factura de furnizor | La data facturii furnizorul nu are perioadă scpTVA (neînregistrat sau cod anulat), dar factura are TVA | Cereți furnizorului stornarea facturii sau verificați statutul lui la data livrării; TVA nu e deductibilă (art. 299 alin. (1) lit. a) CF) |
 | Partener radiat, dar nesemnalat | Starea întoarsă de ANAF nu e acoperită de lista de cuvinte-cheie | Adăugați starea în parametrul `l10n_ro_anaf_partner.struck_off_keywords` |
 | Preluarea datelor după CUI nu returnează nimic | CUI invalid sau webservice ANAF indisponibil | Verificați CUI-ul și reîncercați; ANAF poate fi temporar indisponibil |
 | Bifa **TVA la încasare (RTVAI)** nu se poate modifica | Câmpul e doar citire: îl scrie sincronizarea ANAF (sau OCA `l10n_ro_vat_on_payment`) | Apăsați **Sincronizează cu ANAF**; dacă ANAF arată alt regim decât știți, verificați registrul RTVAI pe portalul ANAF |
@@ -260,7 +293,9 @@ Capturile (`static/description/`) sunt **generate automat** din `tests/test_scre
 4. `04_parteneri_filtru_rtvai.png` — lista partenerilor cu filtrul **TVA la încasare (RTVAI)**.
 5. `05_log_modificari_anaf.png` — logul global al modificărilor ANAF, fără filtru (Tip modificare / Câmp / Valoare veche / Valoare nouă).
 6. `06_log_stari_neconforme.png` — logul filtrat pe „Stare neconformă", cu ambele stări în listă.
-7. `07_setari_blocaje_anaf.png` — cele două blocaje opt-in la postare: partener inactiv (FR-23) și partener radiat.
+7. `07_setari_blocaje_anaf.png` — cele două blocaje opt-in la postare (partener inactiv, FR-23, și partener radiat) și opțiunea **Avertizări TVA pe facturile de furnizor**.
+8. `08_factura_furnizor_tva_la_incasare.png` — factură de furnizor de la un furnizor în RTVAI: banda galbenă.
+9. `09_factura_furnizor_neplatitor_tva.png` — factură de furnizor de la un furnizor neînregistrat în scopuri de TVA, cu TVA pe factură: banda roșie.
 
 Regenerare:
 

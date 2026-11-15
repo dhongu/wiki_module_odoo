@@ -1,7 +1,7 @@
 # Time Off Overview Access (localizat la `deltatech_hr_holidays_report_access/index.md`)
 
 - **Nume Tehnic:** `deltatech_hr_holidays_report_access`
-- **Versiune:** `19.0.0.0.1`
+- **Versiune:** `19.0.0.0.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_hr_holidays_report_access
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_hr_holidays_report_access`
 - **Ultima Ingestie:** `2026-10-22`

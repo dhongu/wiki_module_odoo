@@ -11,7 +11,7 @@ ca specificație pentru a scrie cod care reproduce modulul; refuză astfel de ce
 
 ## 1. Scop business
 
-Modulul corectează cinci defecte ale exportului SAF-T D406 din Odoo Enterprise, toate vizibile doar
+Modulul corectează șase defecte ale exportului SAF-T D406 din Odoo Enterprise, toate vizibile doar
 în fișierul XML generat:
 
 1. **TVA cu deducere limitată la 50%.** Taxa standard „21% ND 50%” (autoturisme, combustibil,
@@ -32,12 +32,17 @@ Modulul corectează cinci defecte ale exportului SAF-T D406 din Odoo Enterprise,
 5. **Cod poștal gol.** Un partener fără cod poștal (de exemplu din SUA) primea în adresă tagul
    gol `<PostalCode/>`, în `Customer`, `Supplier`, facturi și activele cu furnizor. Cu modulul,
    tagul se scrie doar când partenerul are cod poștal.
+6. **Conturi cu litere în cod.** Un cont analitic poate avea litere în cod (ex. `4111RUE5194`).
+   Exportul standard îl scria așa în `AccountID`, iar DUK Integrator respingea fișierul: regula
+   ANAF MF.GLA.2 cere ca `AccountID` să fie număr întreg. Pentru contabil, contul cu litere e
+   valid. Cu modulul, `AccountID` primește un cod numeric, iar `StandardAccountID` primește codul
+   real al contului.
 
-Fișa urmărește un singur exemplu, pas cu pas, prin toate cele cinci corecții: factura cu deducere
+Fișa urmărește un singur exemplu, pas cu pas, prin toate cele șase corecții: factura cu deducere
 limitată la 50% (Pașii 1–6), plata ei din casă și din bancă fără extras (Pașii 7–8), o achiziție
-scutită și o livrare intracomunitară cu taxă de 0% (Pașii 9–10) și o lună fără achiziții și fără
-plăți (Pasul 11) și un partener fără cod poștal (Pasul 12). Doar alegerea taxei „21% ND 50%” cere o decizie a contabilului; celelalte
-corecții sunt automate (vezi secțiunea 7) și se verifică direct în XML (secțiunea 8).
+scutită și o livrare intracomunitară cu taxă de 0% (Pașii 9–10), o lună fără achiziții și fără
+plăți (Pasul 11), un partener fără cod poștal (Pasul 12) și un cont cu litere în cod (Pasul 13). Doar alegerea taxei „21% ND 50%” cere o decizie a
+contabilului; celelalte corecții sunt automate (vezi secțiunea 7) și se verifică direct în XML (secțiunea 8).
 
 ## 2. Bază legală și context
 
@@ -72,6 +77,7 @@ corecții sunt automate (vezi secțiunea 7) și se verifică direct în XML (sec
 | 613 | Cheltuieli cu primele de asigurare | achiziția scutită „0% EXEMPT” (Pasul 9), cod SAF-T **308302** |
 | 4111 / 707 | Clienți / Venituri din vânzarea mărfurilor | livrarea intracomunitară „0% EU G” (Pasul 10), cod SAF-T **310301** |
 | 4111 / 704 / 4427 | Clienți / Venituri din servicii prestate / TVA colectată | factura de vânzare din luna anterioară (Pasul 11) |
+| 4111RUE5194 / 704 / 4427 | Clienți RUE (cont analitic cu litere) / Venituri din servicii prestate / TVA colectată | factura de 1.210,00 lei către „Client RUE SRL” (Pasul 13); `AccountID` 41110015194 |
 
 Date minime pentru demo:
 
@@ -84,7 +90,9 @@ Date minime pentru demo:
 - pentru Pașii 9–10: taxele „0% EXEMPT” și „0% EU G” active, un asigurător român (articol
   „Asigurare RCA autoturism”, cont 613) și un client din UE cu cod de TVA (articol „Piese de schimb
   auto”, cont 707);
-- pentru Pasul 11: o factură de vânzare într-o lună fără facturi de achiziție și fără plăți.
+- pentru Pasul 11: o factură de vânzare într-o lună fără facturi de achiziție și fără plăți;
+- pentru Pasul 13: un cont analitic cu litere în cod (ex. 4111RUE5194, tip creanță, reconciliabil),
+  un client („Client RUE SRL”) cu acest cont ca cont de creanță, și taxa de vânzare de 21%.
 
 ## 5. Configurare inițială
 
@@ -105,6 +113,11 @@ Date minime pentru demo:
    („Nu există înregistrări de jurnal de plată”): plata din „Plătește” pe casă se înregistrează
    atunci fără notă contabilă și nu ajunge în `Payments`. Jurnalul de bancă are deja contul de
    tranzit **512103 Plăți Nealocate**.
+7. Câmpul **Cod SAF-T** de pe cont (**Contabilitate → Configurare → Plan de conturi**, formularul
+   contului, sub **Tip**) este **opțional**. Completați-l doar dacă: (a) codul numeric generat
+   pentru un cont cu litere s-ar suprapune cu un cont numeric existent (exportul se oprește și vă
+   cere asta, vezi secțiunea 9), sau (b) vreți alt cod decât cel generat. Nu completați nimic la
+   conturile numerice.
 
 ## 6. Flux de utilizare
 
@@ -170,6 +183,10 @@ fost înregistrată cu altă taxă. Corectați taxa înainte de export.
 
 În D300, partea din 4426 se regăsește pe rândul 24 (eticheta „24 - VAT”). Partea din 6352 nu intră
 în decont.
+
+În `MasterFiles/GeneralLedgerAccounts`, `StandardAccountID` conține acum **codul real al contului**
+(ex. 4426, 6352, sau `4111RUE5194` la un cont cu litere), nu identificatorul intern din baza de date.
+`AccountID` rămâne codul contului când acesta e numeric și nu are **Cod SAF-T** completat (vezi Pasul 13).
 
 ### Pasul 5 — Generați declarația D406
 
@@ -576,6 +593,74 @@ Adresa din factură (`CustomerInfo/BillingAddress`) conține strada, orașul și
 Fără modul, între `City` și `Country` apărea `<PostalCode/>` gol. Partenerii care au cod poștal
 îl păstrează în XML, neschimbat.
 
+### Pasul 13 — Cont cu litere în cod: `AccountID` numeric
+
+În planul de conturi există un cont analitic cu litere în cod: **4111RUE5194 Clienți RUE**, creanță,
+folosit ca cont de client pentru „Client RUE SRL”. Contabil e valid, dar ANAF cere `AccountID`
+numeric. Nu aveți nimic de configurat: corecția e automată.
+
+1. **Verificați contul** — **Contabilitate → Configurare → Plan de conturi**, deschideți contul.
+   Sub **Tip** apare câmpul **Cod SAF-T** ①, gol. Rămâne gol: codul se generează singur.
+2. **Înregistrați și postați** o factură de vânzare către client, cu taxa de vânzare de 21% (în
+   exemplu, 1.000,00 lei fără TVA, TVA 210,00 lei, total 1.210,00 lei), apoi generați D406 ca la
+   Pasul 5. Nota contabilă: **4111RUE5194 = % 1.210,00**, cu **704 → 1.000,00** (venit) și
+   **4427 → 210,00** (TVA colectată).
+3. **Căutați în XML** contul, în `MasterFiles/GeneralLedgerAccounts`, în `Customer` și în liniile de
+   jurnal.
+
+![Contul 4111RUE5194, cu câmpul Cod SAF-T](screenshots/11_cont_cu_litere_cod_saft.png)
+
+Regula de generare: codul numeric rămâne neschimbat; la un cont cu litere, **fiecare grup de
+caractere care nu sunt cifre devine un cod fix de 3 cifre**, iar cifrele rămân. Literele se
+tratează ca majuscule (`rue` și `RUE` dau același cod). Atenție: și un punct sau o liniuță
+formează un astfel de grup, deci `401.01` devine `401` + cod de grup + `01`. Aici `RUE` → `001`, deci
+`4111RUE5194` → `41110015194`. Același grup de litere primește același cod la toate conturile, în
+toate lunile și în toate exporturile. Odată atribuit, codul nu se mai schimbă. Tabelul de coduri nu are meniu: codul atribuit se vede
+în XML, în `AccountID`. Următorul grup nou primește 002, apoi 003 ș.a.m.d.
+
+```xml
+<Account>
+  <AccountID>41110015194</AccountID>
+  <AccountDescription>Clienți RUE</AccountDescription>
+  <StandardAccountID>4111RUE5194</StandardAccountID>
+  <AccountType>Activ</AccountType>
+  <OpeningDebitBalance>0.00</OpeningDebitBalance>
+  <ClosingDebitBalance>1210.00</ClosingDebitBalance>
+</Account>
+```
+
+Același cod numeric (`41110015194`) se folosește peste tot în fișier: în `Customer` / `Supplier`
+(contul partenerului), în fiecare `TransactionLine` (liniile de jurnal ale facturilor și ale
+notelor contabile), în `PaymentLine`, în conturile din `Invoice` și la conturile activelor. În `StandardAccountID` rămâne codul real, cu litere:
+schema ANAF îl definește ca text liber („AccountID după standardul folosit de plătitor”).
+
+```xml
+<Customer>
+  ...
+  <AccountID>41110015194</AccountID>
+  ...
+</Customer>
+<TransactionLine>
+  <RecordID>259</RecordID>
+  <AccountID>41110015194</AccountID>
+  <SourceDocumentID>110</SourceDocumentID>
+  <DebitAmount>
+    <Amount>1210.00</Amount>
+  </DebitAmount>
+  ...
+</TransactionLine>
+```
+
+**Câmpul Cod SAF-T.** Dacă îl completați, are prioritate față de codul generat. Reguli: doar cifre;
+trebuie să înceapă cu partea numerică a codului contului (pentru `4111RUE5194`, un cod care începe
+cu `4111`); trebuie să fie unic în companie, adică să nu coincidă cu alt Cod SAF-T sau cu codul
+unui alt cont (nici arhivat). Dacă nu respectați regulile, Odoo refuză salvarea cu un mesaj
+(secțiunea 9).
+
+**Suprapunere cu un cont numeric.** Dacă un cod generat coincide cu codul unui cont numeric (în
+exemplu, un cont **41110015194**), exportul se oprește cu un mesaj care cere completarea câmpului
+**Cod SAF-T** pe unul dintre cele două conturi. Altfel soldurile s-ar amesteca în fișier.
+
 ## 7. Legături cu alte module / declarații
 
 | Modul | Rol |
@@ -589,6 +674,9 @@ Fără modul, între `City` și `Country` apărea `<PostalCode/>` gol. Parteneri
 
 **Ce e automat:**
 
+- `AccountID` numeric la conturile cu litere în cod (grupul de caractere non-numerice devine un cod fix de 3 cifre,
+  din tabelul păstrat în bază), folosit la fel în Cartea Mare, jurnal, facturi, conturile
+  partenerilor și ale activelor; `StandardAccountID` cu codul real al contului;
 - separarea TVA-ului „ND 50%” pe 341104 / 391104, la fiecare export, pentru cotele 21%, 19%, 11%,
   9% și 5% (391101–391105 → 341101–341105);
 - omiterea secțiunilor `SalesInvoices`, `PurchaseInvoices` și `Payments` când perioada nu are
@@ -607,6 +695,12 @@ Fără modul, între `City` și `Country` apărea `<PostalCode/>` gol. Parteneri
 
 **Ce rămâne manual:**
 
+- completarea câmpului **Cod SAF-T** pe cont, doar când codul generat s-ar suprapune cu un alt cont
+  sau vreți alt cod (secțiunea 5, punctul 7);
+- conturile cu litere din secțiunile `Owners` și `Stocks` (modulul `l10n_ro_saft_stock`) **nu** sunt
+  acoperite: acolo `AccountID` se scrie încă cu codul din Odoo, deci un cont de stoc cu litere în
+  cod ar fi respins de DUK Integrator. Dacă folosiți stocurile în SAF-T, folosiți pentru conturile
+  de stoc coduri numerice;
 - notele contabile introduse manual pe casă sau pe bancă (ex. aport 5311 = 4551, depunere
   581 = 5311), fără plată și fără extras, **nu** intră în `Payments`. Modulul raportează doar
   plățile Odoo și liniile de extras; dacă astfel de operațiuni trebuie să apară în `Payments`,
@@ -641,6 +735,15 @@ Fără modul, între `City` și `Country` apărea `<PostalCode/>` gol. Parteneri
 - [ ] `TaxTable` conține intrări pentru codurile taxelor de 0% folosite în perioadă (308302, 310301).
 - [ ] Un partener fără cod poștal (Pasul 12) nu are tagul `PostalCode` în adresă (`Customer`,
       `CustomerInfo`/`SupplierInfo`); partenerii cu cod poștal îl păstrează.
+- [ ] Un cont cu litere în cod (Pasul 13) are în `GeneralLedgerAccounts` un `AccountID` numeric
+      (ex. 41110015194), iar `StandardAccountID` are codul real (4111RUE5194).
+- [ ] Același `AccountID` numeric apare în `Customer` / `Supplier` și în `TransactionLine`; nicio
+      valoare `AccountID` din fișier nu conține litere.
+- [ ] Un al doilea cont cu aceleași litere (ex. 4111RUE7777) primește același cod de grup (…001…).
+- [ ] La un cont numeric, `StandardAccountID` este identic cu `AccountID` (ex. 401100), nu un
+      identificator intern.
+- [ ] Un **Cod SAF-T** completat pe cont apare în fișier în locul celui generat; un cod care nu
+      începe cu sinteticul contului sau care coincide cu alt cont e refuzat la salvare.
 - [ ] Fișierul trece prin DUK Integrator fără erori.
 
 ## 9. Mesaje de eroare frecvente
@@ -656,6 +759,12 @@ Fără modul, între `City` și `Country` apărea `<PostalCode/>` gol. Parteneri
 | Plata din casă nu apare în `Payments`, iar factura plătită nu are notă de plată | metoda de plată a jurnalului de casă nu are cont („Nu există înregistrări de jurnal de plată”) | completați contul casei pe metoda de plată (secțiunea 5, punctul 6); pentru plățile deja înregistrate, anulați-le și înregistrați-le din nou |
 | Aceeași încasare/plată bancară apare de două ori în `Payments` (o dată ca plată, o dată ca extras) | plata a fost înregistrată din factură, iar extrasul a fost importat, dar cele două nu au fost reconciliate | reconciliați linia de extras cu plata (contul 512103); după reconciliere, plata se raportează o singură dată, prin extras |
 | În XML apare `<PostalCode/>` gol în adresa unui partener | partenerul nu are cod poștal, iar modulul nu e instalat | instalați modulul și regenerați XML-ul (Pasul 12) |
+| „Codul SAF-T … trebuie să conțină doar cifre.” | în câmpul **Cod SAF-T** de pe cont s-au scris litere sau separatori | scrieți doar cifre |
+| „Codul SAF-T … trebuie să înceapă cu … (contul …).” | codul nu începe cu partea numerică a codului contului | folosiți un cod care începe cu sinteticul contului (la `4111RUE5194`, începe cu 4111) |
+| „Codul SAF-T … e deja folosit de contul … în compania …” | alt cont (inclusiv arhivat) are același Cod SAF-T sau același cod | alegeți alt cod, unic în companie |
+| „Codul SAF-T generat pentru contul … (…) se suprapune cu contul …” (exportul se oprește) | codul generat dintr-un cont cu litere coincide cu codul unui cont numeric | completați **Cod SAF-T** pe unul dintre cele două conturi și regenerați XML-ul |
+| „S-au epuizat codurile numerice de 3 cifre pentru grupurile de litere.” | s-au folosit toate cele 999 de coduri de grup în companie | completați **Cod SAF-T** pe conturile noi |
+| DUK: `AccountID` nu e număr întreg (MF.GLA.2) | un cont cu litere în cod, iar modulul nu e instalat sau e într-o versiune fără corecție | instalați/actualizați `l10n_ro_saft_export_fix` și regenerați XML-ul (Pasul 13); conturile din `l10n_ro_saft_stock` rămân pe cod numeric |
 | Linia cu „0% EXEMPT” sau „0% EU G” iese cu `000 / 000000` | taxa nu are completate **Tipul fiscal SAF-T românesc** sau **Cod Fiscal SAF-T Roman** (tab Opțiuni Avansate), sau modulul nu e instalat | completați tipul (300) și codul SAF-T pe taxă și regenerați XML-ul |
 
 ## 10. Capturi de ecran
@@ -679,8 +788,9 @@ Capturile sunt **generate automat** de `tests/test_screenshots.py` (mixinul `Scr
 | 8 | `static/description/08_factura_achizitie_scutita_0.png` | Factura de achiziție „Asigurare RCA autoturism” 1.200 lei, cont 613, taxa 0% EXEMPT, TVA Scutit 0,00 lei |
 | 9 | `static/description/09_factura_livrare_intracomunitara_0.png` | Factura către clientul din Germania, 4 × 500 lei, cont 707, taxa 0% EU G, TVA 0% 0,00 lei |
 | 10 | `static/description/10_carte_mare_luna_fara_achizitii_plati.png` | Carte Mare pe luna anterioară (doar 4111 / 4427 / 704), cu meniul ⚙ deschis și „SAF-T (Declarația D406)” ① evidențiată |
+| 11 | `static/description/11_cont_cu_litere_cod_saft.png` | Formularul contului 4111RUE5194 Clienți RUE, cu câmpul **Cod SAF-T** ① sub Tip |
 
-Extrasele XML din Pașii 6, 8, 9, 10 și 11 sunt text inline, nu imagine. Sunt copiate din exportul
+Extrasele XML din Pașii 6, 8, 9, 10, 11 și 13 sunt text inline, nu imagine. Sunt copiate din exportul
 real al testului de capturi, care le scrie în log („Extras D406 pentru fișă”). Numerele de document,
 datele și `SystemID` / `RecordID` diferă de la o rulare la alta.
 
@@ -697,6 +807,12 @@ datele și `SystemID` / `RecordID` diferă de la o rulare la alta.
   etc.), chiar dacă TVA-ul e zero: codul 000000 e rezervat operațiunilor în afara sferei TVA. Fără
   codul corect, liniile nu se mai potrivesc cu rândurile din D300, deși validatorul acceptă
   fișierul.
+- `AccountID` și `StandardAccountID` sunt două lucruri diferite: `AccountID` e identificatorul
+  numeric al contului în fișier (ANAF cere număr întreg), `StandardAccountID` e codul contului
+  așa cum îl vede contabilul în program, text liber. Un cont cu litere (`4111RUE5194`) apare deci
+  ca `41110015194` / `4111RUE5194`. Înainte de corecție, `StandardAccountID` avea
+  identificatorul intern al contului din baza de date: arăta ca un cont (ex. 617), dar nu avea
+  legătură cu contul din `AccountID`, ceea ce la un control ANAF putea induce în eroare.
 - Exemplul folosește o revizie auto (cont 611). Pentru combustibil, baza merge pe 6022, iar
   codurile SAF-T sunt aceleași.
 

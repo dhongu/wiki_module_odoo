@@ -1,7 +1,7 @@
 # Deltatech Replenish (localizat la `deltatech_replenish/index.md`)
 
 - **Nume Tehnic:** `deltatech_replenish`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_replenish
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_replenish`
 - **Ultima Ingestie:** `2026-10-09`

@@ -1,10 +1,11 @@
 # Romania - Import extrase bancare (XLSX) (localizat la `l10n_ro_account_bank_statement_import_xlsx/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_account_bank_statement_import_xlsx`
-- **Versiune:** `19.0.2.1.6`
+- **Versiune:** `19.0.2.1.7`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_bank_statement_import_xlsx
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_account_bank_statement_import_xlsx`
 - **Ultima Ingestie:** `2026-08-20`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

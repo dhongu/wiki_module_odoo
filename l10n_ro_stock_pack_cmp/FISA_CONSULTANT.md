@@ -181,6 +181,7 @@ Dacă o parte din marfă a fost deja vândută când sosește factura (de exempl
 - *Data facturii:* proporția se calculează la postarea facturii, deci vânzările dintre data facturii și postare sunt numărate ca ieșite; evitați postarea cu întârziere.
 - *Perioadă închisă:* nota se face pe data facturii și nu modifică recepția din perioada blocată. Dacă factura pentru o recepție din anul N sosește după bilanț, dar înainte de autorizarea lor pentru emitere (pct. 72), ajustarea se face pe anul N (OMFP 1802/2014 pct. 73 alin. (2) lit. e)), de către contabil.
 - *Alte conturi decât 607:* contul implicit de cheltuială se folosește numai dacă e 607 (mărfuri vândute). La materii prime și materiale (601/602), diferența rămâne pe stoc; tratamentul se stabilește prin OBYC, cu regula `stock_receipt_price_difference`.
+- *Nota de credit de la furnizor:* o reducere de preț fără retur, după vânzare, nu generează linii de diferență pe 371/607; 408 rămâne cu sold și se regularizează manual (limitare cunoscută, tratată separat).
 
 Testele automate: `test_price_difference.py` (pachet) și `test_13` din `l10n_ro_stock_obyc`.
 

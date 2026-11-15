@@ -184,11 +184,13 @@ de marcat**, cu mesajul aparatului și trei variante, numerotate pe captură:
 
 | Nr. | Variantă | Efect |
 |---|---|---|
-| 1 | **Reîncercați** (Retry) | retrimite aceleași comenzi, cu același identificator al bonului; agentul trebuie să-l folosească pentru a nu tipări de două ori (de confirmat în versiunea de Terrabit Connect instalată). Cu DxPrint, se reia de la cererea care a eșuat: cererile deja reușite (de exemplu depunerea de numerar dinaintea chitanței) nu se mai trimit |
-| 2 | **Download & handle manually** | descarcă fișierul de comenzi, pentru procesare manuală. Cu DxPrint, doar cât timp nimic n-a ajuns la casă: după o cerere reușită (de exemplu depunerea de numerar dinaintea chitanței) sau după un timeout, nu se mai descarcă nimic, ca operațiunea să nu se repete |
+| 1 | **Reîncearcă** (Retry) | retrimite aceleași comenzi, cu același identificator al bonului; agentul trebuie să-l folosească pentru a nu tipări de două ori (de confirmat în versiunea de Terrabit Connect instalată). Cu DxPrint, se reia de la cererea care a eșuat: cererile deja reușite (de exemplu depunerea de numerar dinaintea chitanței) nu se mai trimit |
+| 2 | **Descarcă și procesează manual** | descarcă fișierul de comenzi, pentru procesare manuală. Cu DxPrint, doar cât timp nimic n-a ajuns la casă: după o cerere reușită (de exemplu depunerea de numerar dinaintea chitanței) sau după un timeout, nu se mai descarcă nimic, ca operațiunea să nu se repete |
 | 3 | **Anulează** (Cancel) | oprește operațiunea fiscală. În POS, vânzarea este deja validată când apare dialogul: **Anulează** nu o anulează, iar comanda primește starea fiscală „eroare" |
 
-Butonul 2 și textul explicativ de sub mesaj apar momentan în engleză, chiar în interfața în română.
+Butonul 2 și textul explicativ de sub mesaj („Casa de marcat a raportat o eroare. Alegeți o acțiune:”)
+sunt traduse începând cu versiunea 19.0.1.3.5. Capturile 02, 07 și 12 sunt făcute înainte de
+traducere, deci arată încă butonul „Download & handle manually” și textul explicativ în engleză.
 
 Cu transportul DxPrint, același dialog arată eroarea întoarsă de driver (codul și mesajul casei, din
 `errorMessages`) și se deschide și când nu se știe dacă bonul a ajuns la casă (Pasul 11); atunci
@@ -266,8 +268,8 @@ Alegerea se salvează imediat pe punctul de vânzare și o poate face și un cas
 
 Cu **Lipsă hârtie** ales la Pasul 6, următoarea vânzare se validează în Odoo, dar casa simulată răspunde
 cu eroare: se deschide dialogul **Eroare casă de marcat**, cu mesajul „Lipsă hârtie” și aceleași trei
-variante ca la o casă reală (Pasul 2): **Reîncercați**, **Download & handle manually** și **Anulează**.
-Pentru că răspunsul a fost „o singură dată”, **Reîncercați** retrimite bonul și de data asta casa îl
+variante ca la o casă reală (Pasul 2): **Reîncearcă**, **Descarcă și procesează manual** și **Anulează**.
+Pentru că răspunsul a fost „o singură dată”, **Reîncearcă** retrimite bonul și de data asta casa îl
 tipărește; așa se exersează cu casierii procedura de la o eroare reală.
 
 ![Dialogul Eroare casă de marcat peste ecranul de bon: mesajul Lipsă hârtie, evidențiat, și butoanele Reîncercați, Download & handle manually și Anulează](screenshots/07_eroare_simulata.png)
@@ -298,7 +300,7 @@ simulare), bonul **nu se trimite**, ca să nu iasă un bon fiscal real în locul
 dialogul **Eroare casă de marcat** cu mesajul „Agentul Terrabit Connect nu e în mod simulat
 (TERRABIT_FISCAL_DRIVER=simulated): bonul nu a fost trimis.” Butonul casei din bara POS e verde, cu
 textul **Casă de marcat (simulată)**, pentru că agentul răspunde. Remediere: reporniți agentul cu
-`TERRABIT_FISCAL_DRIVER=simulated` și apăsați **Reîncercați**, sau treceți punctul de vânzare pe
+`TERRABIT_FISCAL_DRIVER=simulated` și apăsați **Reîncearcă**, sau treceți punctul de vânzare pe
 **Simulată în Odoo (fără agent)**.
 
 ![Dialogul Eroare casă de marcat cu mesajul Agentul Terrabit Connect nu e în mod simulat (TERRABIT_FISCAL_DRIVER=simulated): bonul nu a fost trimis, evidențiat; în bara POS butonul verde Casă de marcat (simulată)](screenshots/09_agent_nesimulat.png)
@@ -350,9 +352,9 @@ numerar urmată de chitanța pentru client), ele pleacă în ordine și se opres
 |---|---|
 | Driverul nu poate fi contactat la prima cerere (oprit, adresă greșită) | nimic nu a ajuns la casă: apare avertismentul „Driverul DxPrint nu răspunde — se descarcă fișierul .<ext>” și se descarcă fișierul de comenzi, ca la Pasul 3 |
 | Casa sau driverul întoarce o eroare (de exemplu hârtie terminată) | dialogul **Eroare casă de marcat** (Pasul 2), cu codul și mesajul casei din `errorMessages` |
-| Driverul răspunde cu altceva decât JSON (de exemplu o pagină de eroare HTML) | eroare obișnuită a driverului: dialogul **Eroare casă de marcat** cu „Eroare driver DxPrint (HTTP <cod>)”, fără avertisment; **Download & handle manually** descarcă fișierul dacă era prima cerere |
-| Driverul nu răspunde în 40 de secunde, sau conexiunea se pierde după prima cerere | **nu** se descarcă fișierul, pentru că bonul ar putea ieși de două ori: se deschide dialogul **Eroare casă de marcat**, cu avertismentul că bonul poate fi deja tipărit, iar **Download & handle manually** nu mai descarcă nimic |
-| **Reîncercați** în dialog | se reia de la cererea care a eșuat; cererile deja reușite (de exemplu depunerea de numerar) nu se repetă |
+| Driverul răspunde cu altceva decât JSON (de exemplu o pagină de eroare HTML) | eroare obișnuită a driverului: dialogul **Eroare casă de marcat** cu „Eroare driver DxPrint (HTTP <cod>)”, fără avertisment; **Descarcă și procesează manual** descarcă fișierul dacă era prima cerere |
+| Driverul nu răspunde în 40 de secunde, sau conexiunea se pierde după prima cerere | **nu** se descarcă fișierul, pentru că bonul ar putea ieși de două ori: se deschide dialogul **Eroare casă de marcat**, cu avertismentul că bonul poate fi deja tipărit, iar **Descarcă și procesează manual** nu mai descarcă nimic |
+| **Reîncearcă** în dialog | se reia de la cererea care a eșuat; cererile deja reușite (de exemplu depunerea de numerar) nu se repetă |
 
 Când casa refuză bonul, dialogul arată codul și mesajul casei, de exemplu „-1011 VALOARE_INCORECTA”:
 
@@ -362,7 +364,7 @@ Când driverul nu răspunde în 40 de secunde, mesajul spune că bonul poate fi 
 
 ![Dialogul Eroare casă de marcat cu mesajul Driverul DxPrint nu a răspuns în 40 de secunde. Bonul poate fi deja tipărit: verificați casa de marcat înainte să reîncercați, evidențiat, și cele trei butoane](screenshots/13_dxprint_fara_raspuns.png)
 
-Înainte de **Reîncercați** sau de **Download & handle manually** după un timeout, casierul verifică pe
+Înainte de **Reîncearcă** sau de **Descarcă și procesează manual** după un timeout, casierul verifică pe
 casă dacă bonul a ieșit; dacă da, alege **Anulează**.
 
 ## 7. Reguli funcționale
@@ -409,7 +411,7 @@ nu se tipărește nimic.
 | Ordinea alegerii răspunsului | întâi **Următorul răspuns** din panou (sau fixat de un test prin ORM), apoi zecimalele totalului bonului, apoi succes |
 | Totalul se termină în `,91` | Lipsă hârtie (dialog de eroare) |
 | Totalul se termină în `,92` | casa de marcat e deconectată (dialog de eroare) |
-| Totalul se termină în `,93` | răspuns întârziat: bonul **se tipărește**, dar POS-ul primește „Încă niciun răspuns de la casa de marcat”; **Reîncercați** citește bonul deja tipărit, fără să-l tipărească a doua oară |
+| Totalul se termină în `,93` | răspuns întârziat: bonul **se tipărește**, dar POS-ul primește „Încă niciun răspuns de la casa de marcat”; **Reîncearcă** citește bonul deja tipărit, fără să-l tipărească a doua oară |
 | Totalul se termină în `,94` | niciun răspuns, bonul nu se tipărește |
 | Totalul se termină în `,95` | bon anulat la casă: mesajul „Bon fiscal anulat”, pe rolă „BON ANULAT” |
 | Zecimalele `,01`–`,05` | rezervate terminalului de card simulat (`deltatech_payment_terminal`), ca o vânzare cu cardul să nu declanșeze ambele dispozitive; casa răspunde cu succes |
@@ -423,15 +425,15 @@ nu se tipărește nimic.
 
 ### Mesajele casei simulate
 
-Mesajele apar în dialogul **Eroare casă de marcat** (cu **Reîncercați**, **Download & handle manually**,
+Mesajele apar în dialogul **Eroare casă de marcat** (cu **Reîncearcă**, **Descarcă și procesează manual**,
 **Anulează**), cu excepția celor marcate ca notificare.
 
 | Mesaj | Cauză | Remediere |
 |---|---|---|
 | Agentul Terrabit Connect nu e în mod simulat (TERRABIT_FISCAL_DRIVER=simulated): bonul nu a fost trimis. | **Simulată prin agent**, iar agentul rulează cu driverul real sau e o versiune fără simulare | reporniți agentul cu `TERRABIT_FISCAL_DRIVER=simulated` sau treceți pe **Simulată în Odoo (fără agent)** |
 | Format nesuportat de simulator: … | tipul casei nu este FiscalWire (`datecs18`), `datecs` sau `dxprint` | pentru simulare alegeți **FiscalWire** ca **Tip casa marcat** |
-| Lipsă hârtie / Casa de marcat e deconectată / Niciun răspuns de la casa de marcat | răspunsul ales în panou sau zecimalele `,91`, `,92`, `,94` | e scenariul cerut; **Reîncercați** după ce schimbați răspunsul, sau lăsați un răspuns „o singură dată” |
-| Încă niciun răspuns de la casa de marcat | răspuns întârziat (`,93` sau ales în panou); bonul e deja pe rolă | **Reîncercați**: se citește bonul tipărit, fără dublură |
+| Lipsă hârtie / Casa de marcat e deconectată / Niciun răspuns de la casa de marcat | răspunsul ales în panou sau zecimalele `,91`, `,92`, `,94` | e scenariul cerut; **Reîncearcă** după ce schimbați răspunsul, sau lăsați un răspuns „o singură dată” |
+| Încă niciun răspuns de la casa de marcat | răspuns întârziat (`,93` sau ales în panou); bonul e deja pe rolă | **Reîncearcă**: se citește bonul tipărit, fără dublură |
 | Bon fiscal anulat (notificare) | răspunsul **Bon anulat la casă** sau zecimalele `,95` | vânzarea rămâne validată în Odoo, fără bon; refaceți bonul dacă e cazul |
 | Plățile (…) nu acoperă totalul (…) | suma plăților trimise e mai mică decât totalul bonului | verificați plățile și codurile ECR ale metodelor de plată |
 | Restul se poate da doar dintr-o plată în numerar | plata depășește totalul pe o metodă care nu e numerar | verificați **Cod ECR** al metodelor: numerarul trebuie să fie `0` pe casa simulată |
@@ -454,7 +456,7 @@ Mesajele apar în dialogul **Eroare casă de marcat** (cu **Reîncercați**, **D
 |---|---|---|
 | ECR-01 | Bon cu numerar pe casa reală, transport Terrabit Connect | bonul se tipărește, apare „Bon fiscal tipărit #<număr>" („Fiscal receipt printed") |
 | ECR-02 | Același bon cu agentul oprit | avertisment „Agentul fiscal nu răspunde — se descarcă fișierul .inp" („Fiscal agent unreachable"), se descarcă fișierul cu extensia setată |
-| ECR-03 | Eroare provocată la casă (de exemplu hârtie lipsă) | dialogul cu Reîncercați / Download & handle manually / Anulează |
+| ECR-03 | Eroare provocată la casă (de exemplu hârtie lipsă) | dialogul cu Reîncearcă / Descarcă și procesează manual / Anulează |
 | ECR-04 | Retry după remedierea erorii | bonul se tipărește o singură dată, fără dublură (depinde de agent, de confirmat) |
 | ECR-05 | Produs cu denumire peste limita casei, trunchiere oprită | denumirea continuă pe linii suplimentare |
 | ECR-06 | Produs cu diacritice, virgulă și punct și virgulă în nume | ieșire fără diacritice, separatorii înlocuiți cu spațiu (în POS, la denumirea produsului) |
@@ -468,10 +470,10 @@ Mesajele apar în dialogul **Eroare casă de marcat** (cu **Reîncercați**, **D
 | ECR-12 | Client cu CIF, **Print customer VAT on receipt** bifat, sub **VAT print limit**, comandă nefacturată | CIF-ul apare imediat după numele clientului |
 | ECR-15 | Bon cu numerar, transport **DxPrint (driver local)**, driverul pornit | bonul se tipărește, apare „Bon fiscal tipărit #<număr>”; pe comandă se salvează numărul bonului și raportul Z |
 | ECR-16 | Același bon cu driverul DxPrint oprit | avertisment „Driverul DxPrint nu răspunde — se descarcă fișierul .<ext>”, se descarcă fișierul |
-| ECR-17 | Transport DxPrint, eroare provocată la casă (de exemplu hârtie lipsă), apoi **Reîncercați** după remediere | dialogul de eroare cu mesajul casei; la reîncercare bonul se tipărește o singură dată |
+| ECR-17 | Transport DxPrint, eroare provocată la casă (de exemplu hârtie lipsă), apoi **Reîncearcă** după remediere | dialogul de eroare cu mesajul casei; la reîncercare bonul se tipărește o singură dată |
 | SIM-01 | Punct de vânzare de test, **Simulată în Odoo (fără agent)**, bon cu numerar de 6,05 lei | „Bon fiscal tipărit #1”; în panou, rola arată bonul cu `*** SIMULARE ***`, grupa A și NUMERAR 6.05 |
-| SIM-02 | **Următorul răspuns** = **Lipsă hârtie**, **Până la oprire** nebifat, apoi un bon | dialogul cu „Lipsă hârtie”; **Reîncercați** tipărește bonul, iar panoul revine la **După sumă (automat)** |
-| SIM-03 | Bon cu totalul terminat în `,93` | „Încă niciun răspuns de la casa de marcat”, bonul e pe rolă; **Reîncercați** nu adaugă un al doilea bon pe rolă |
+| SIM-02 | **Următorul răspuns** = **Lipsă hârtie**, **Până la oprire** nebifat, apoi un bon | dialogul cu „Lipsă hârtie”; **Reîncearcă** tipărește bonul, iar panoul revine la **După sumă (automat)** |
+| SIM-03 | Bon cu totalul terminat în `,93` | „Încă niciun răspuns de la casa de marcat”, bonul e pe rolă; **Reîncearcă** nu adaugă un al doilea bon pe rolă |
 | SIM-04 | Bon cu totalul terminat în `,95` | „Bon fiscal anulat”, pe rolă „BON ANULAT”, BF nu crește |
 | SIM-05 | Trei bonuri, apoi **Raport X** și **Raport Z** | X arată totalurile fără să închidă ziua; Z are TOTAL = suma bonurilor, apoi Ziua fiscală trece la Z 2, BF 0 |
 | SIM-06 | **Resetează ziua** și confirmare | rola goală, „(niciun document tipărit azi)”, Z 1 |

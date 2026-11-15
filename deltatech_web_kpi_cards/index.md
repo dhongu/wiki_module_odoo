@@ -1,7 +1,7 @@
 # KPI Cards (localizat la `deltatech_web_kpi_cards/index.md`)
 
 - **Nume Tehnic:** `deltatech_web_kpi_cards`
-- **Versiune:** `19.0.1.2.0`
+- **Versiune:** `19.0.1.2.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_web_kpi_cards
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_web_kpi_cards`
 - **Ultima Ingestie:** `2026-10-09`

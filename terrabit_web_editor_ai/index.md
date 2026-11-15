@@ -1,7 +1,7 @@
 # Web Editor AI (OLG) (localizat la `terrabit_web_editor_ai/index.md`)
 
 - **Nume Tehnic:** `terrabit_web_editor_ai`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_web_editor_ai
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_web_editor_ai`
 - **Ultima Ingestie:** `2026-10-09`

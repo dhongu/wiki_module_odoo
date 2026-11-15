@@ -2390,27 +2390,29 @@
   {
     "path": "deltatech_contact/index.md",
     "module": "deltatech_contact",
-    "version": "19.0.1.4.14",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_contact`",
+    "version": "19.0.1.4.15",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_contact",
     "local_path": "odoo-addons/deltatech/deltatech_contact",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Deltatech Contacts",
-    "summary": "Modulul extinde modulul standard de Contacte din Odoo cu date personale suplimentare pentru persoane fizice: CNP (cu validare cifră de control), datele actului de identitate, data nașterii, sexul și mijlocul de transport. Astfel, echipele care lucrează cu persoane fizice au la dispoziție direct în fișa de contact toate câmpurile necesare pentru identificare, fără module externe.",
+    "last_ingest": "2026-11-15",
+    "friendly_name": "Contact Personal Data",
+    "summary": "Modulul extinde modulul standard de Contacte din Odoo cu date personale pentru persoane fizice: CNP (cu validarea cifrei de control), datele actului de identitate, data nașterii, sexul și mijlocul de transport. Echipele care lucrează cu persoane fizice găsesc astfel în fișa de contact câmpurile necesare pentru identificare, fără module externe.",
     "features": [
-      "Adaugă un tab Date personale pe fișa de contact (vizibil doar pentru persoane fizice) cu: CNP, data nașterii, sex, seria/numărul actului de identitate, autoritatea emitentă și data emiterii.",
-      "Validare CNP: verifică la salvare cifra de control a CNP-ului românesc din 13 cifre; la import în masă (context `install_mode`) CNP-urile invalide sunt golite silențios, nu blochează importul.",
-      "Completare automată din CNP: la introducerea CNP-ului, data nașterii și sexul sunt derivate automat din cifrele codului (și invers, la modificarea datei nașterii, CNP-ul e recalculat).",
-      "Afișare nume contact: poate ascunde numele companiei-părinte din numele afișat al contactului, controlat printr-un parametru de sistem (`contact.get_name_only`).",
-      "Câmp Mijloc de transport pe fișa contactului.",
-      "Filtre de căutare extinse: adaugă filtre de tip adresă de Livrare și de Facturare în vizualizarea de căutare a Contactelor.",
-      "Afișare inline a adresei: suportă flag-urile de context `show_phone`, `show_category` și `address_inline` pentru a îmbogăți sau aplatiza numele afișat al contactului în câmpurile relaționale."
+      "Tab Date personale pe fișa unei persoane de tip adresă *Contact*, cu actul de identitate (Card ID Number: serie și număr; Card ID Issued: autoritate emitentă și dată), CNP, data nașterii și sex. Aceleași câmpuri apar și în formularul unui contact adăugat dintr-o companie și în formularul de creare rapidă.",
+      "Data nașterii și sexul din CNP: la introducerea CNP-ului, data nașterii se ia din cifrele 2–7 și sexul din prima cifră (1 sau 5 = masculin). La modificarea datei nașterii, cifrele de dată din CNP se rescriu și cifra de control se recalculează.",
+      "Validare CNP: 13 cifre și cifră de control validă. La salvarea unui contact existent cu CNP invalid apare mesajul *CNP invalid*. Pe un contact nou (din formular sau din import) un CNP invalid este golit la salvare, fără mesaj. Un CNP gol este acceptat. În contextul `install_mode` validarea este omisă.",
+      "Câmpul Mijloc de transport (de exemplu numărul de înmatriculare al mașinii delegatului), afișat sub *Referință* în tabul Vânzări și Achiziții al unei persoane.",
+      "Filtre de căutare: în Contacte > Contacte apar filtrele Livrare și Facturare pentru adrese de acest tip, iar filtrele standard Persoane și Companii arată doar contactele fără companie-părinte.",
+      "Tabul standard Contacte este ascuns pe un contact care aparține unei companii.",
+      "Nume fără companie: dacă parametrul de sistem `contact.get_name_only` este setat, contactele de tip *Contact* sunt afișate doar cu numele propriu.",
+      "Opțiuni de afișare a numelui pentru dezvoltatori: cheile de context `show_phone`, `show_category` și `address_inline` adaugă telefonul sau etichetele la numele contactului în câmpurile relaționale ori aduc numele și adresa pe o singură linie.",
+      "Limitări: un CNP tastat în formular cu cifră de control greșită (sau de 12 cifre) primește silențios cifra corectă, deci se compară cu actul de identitate; prima cifră 1 sau 2 dă anul nașterii în secolul 20, oricare alta în secolul 21; un CNP de 8–11 caractere sau cu cifrele 2–7 care nu formează o dată validă produce o eroare tehnică în formular, nu un mesaj de validare."
     ],
     "dependencies": [
       "base",
       "contacts"
     ],
     "connections": [],
-    "text": "Deltatech Contacts\ndeltatech_contact\nModulul extinde modulul standard de Contacte din Odoo cu date personale suplimentare pentru persoane fizice: CNP (cu validare cifră de control), datele actului de identitate, data nașterii, sexul și mijlocul de transport. Astfel, echipele care lucrează cu persoane fizice au la dispoziție direct în fișa de contact toate câmpurile necesare pentru identificare, fără module externe.\nAdaugă un tab Date personale pe fișa de contact (vizibil doar pentru persoane fizice) cu: CNP, data nașterii, sex, seria/numărul actului de identitate, autoritatea emitentă și data emiterii.\nValidare CNP: verifică la salvare cifra de control a CNP-ului românesc din 13 cifre; la import în masă (context `install_mode`) CNP-urile invalide sunt golite silențios, nu blochează importul.\nCompletare automată din CNP: la introducerea CNP-ului, data nașterii și sexul sunt derivate automat din cifrele codului (și invers, la modificarea datei nașterii, CNP-ul e recalculat).\nAfișare nume contact: poate ascunde numele companiei-părinte din numele afișat al contactului, controlat printr-un parametru de sistem (`contact.get_name_only`).\nCâmp Mijloc de transport pe fișa contactului.\nFiltre de căutare extinse: adaugă filtre de tip adresă de Livrare și de Facturare în vizualizarea de căutare a Contactelor.\nAfișare inline a adresei: suportă flag-urile de context `show_phone`, `show_category` și `address_inline` pentru a îmbogăți sau aplatiza numele afișat al contactului în câmpurile relaționale."
+    "text": "Contact Personal Data\ndeltatech_contact\nModulul extinde modulul standard de Contacte din Odoo cu date personale pentru persoane fizice: CNP (cu validarea cifrei de control), datele actului de identitate, data nașterii, sexul și mijlocul de transport. Echipele care lucrează cu persoane fizice găsesc astfel în fișa de contact câmpurile necesare pentru identificare, fără module externe.\nTab Date personale pe fișa unei persoane de tip adresă *Contact*, cu actul de identitate (Card ID Number: serie și număr; Card ID Issued: autoritate emitentă și dată), CNP, data nașterii și sex. Aceleași câmpuri apar și în formularul unui contact adăugat dintr-o companie și în formularul de creare rapidă.\nData nașterii și sexul din CNP: la introducerea CNP-ului, data nașterii se ia din cifrele 2–7 și sexul din prima cifră (1 sau 5 = masculin). La modificarea datei nașterii, cifrele de dată din CNP se rescriu și cifra de control se recalculează.\nValidare CNP: 13 cifre și cifră de control validă. La salvarea unui contact existent cu CNP invalid apare mesajul *CNP invalid*. Pe un contact nou (din formular sau din import) un CNP invalid este golit la salvare, fără mesaj. Un CNP gol este acceptat. În contextul `install_mode` validarea este omisă.\nCâmpul Mijloc de transport (de exemplu numărul de înmatriculare al mașinii delegatului), afișat sub *Referință* în tabul Vânzări și Achiziții al unei persoane.\nFiltre de căutare: în Contacte > Contacte apar filtrele Livrare și Facturare pentru adrese de acest tip, iar filtrele standard Persoane și Companii arată doar contactele fără companie-părinte.\nTabul standard Contacte este ascuns pe un contact care aparține unei companii.\nNume fără companie: dacă parametrul de sistem `contact.get_name_only` este setat, contactele de tip *Contact* sunt afișate doar cu numele propriu.\nOpțiuni de afișare a numelui pentru dezvoltatori: cheile de context `show_phone`, `show_category` și `address_inline` adaugă telefonul sau etichetele la numele contactului în câmpurile relaționale ori aduc numele și adresa pe o singură linie.\nLimitări: un CNP tastat în formular cu cifră de control greșită (sau de 12 cifre) primește silențios cifra corectă, deci se compară cu actul de identitate; prima cifră 1 sau 2 dă anul nașterii în secolul 20, oricare alta în secolul 21; un CNP de 8–11 caractere sau cu cifrele 2–7 care nu formează o dată validă produce o eroare tehnică în formular, nu un mesaj de validare."
   },
   {
     "path": "deltatech_contwin/index.md",
@@ -2840,12 +2842,16 @@
     "version": "19.0.1.0.15",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_dc",
     "local_path": "odoo-addons/deltatech/deltatech_dc",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-15",
     "friendly_name": "Declaration of Conformity",
-    "summary": "Modulul permite gestionarea și tipărirea declarațiilor de conformitate pentru produse. Acesta oferă posibilitatea de a emite documentul de conformitate, inclusiv direct în momentul facturării, ajutând astfel compania să respecte cerințele privind certificarea conformității produselor livrate către clienți.",
+    "summary": "Clienții cer adesea furnizorilor o declarație că bunurile livrate respectă standardele tehnice. Modulul păstrează pe fiecare produs referințele de calitate și tipărește o Declarație de Conformitate numerotată pentru loturi, facturi și livrări, ajutând compania să documenteze conformitatea produselor livrate.",
     "features": [
-      "Definirea declarațiilor de conformitate pentru produse.",
-      "Tipărirea declarației de conformitate în momentul facturării."
+      "Referințe de calitate: un tab *Quality Control* pe produs conține *Standard of Company*, *Data Sheet*, *Technical Specification* și *Standards*, tipărite în declarație când sunt completate.",
+      "Evidența declarațiilor: lista *Declaration of Conformity* (meniul catalogului de produse din Vânzări) arată *Number*, *Date of Declaration*, *Product* și *Lot*. La tipărire declarațiile sunt numerotate din secvența `DC/`; la creare manuală numărul se introduce de mână.",
+      "Tipărire cu creare automată: acțiunea de tipărire de pe un lot, o factură postată sau o livrare creează declarațiile lipsă și le tipărește: câte una per lot, sau per produs și dată pentru produsele fără lot. Serviciile sunt omise.",
+      "Data producției: câmpul *Production Date* al lotului datează declarația (data de azi dacă e gol) și apare ca dată a planului de calitate pentru loturile cu dată de expirare.",
+      "Al doilea formular de livrare: *Declaration of Conformity 2* pe o livrare tipărește o singură declarație pentru toate liniile (produs, cantitate, lot, dată de utilizare, condiții de depozitare) și nu creează înregistrări.",
+      "Limitări: textul declarației este fix în șabloane; al doilea formular citește un câmp *NRC* al partenerului pe care acest modul nu îl adaugă. Utilizatorii interni pot edita declarațiile companiilor lor. Formatul tipărit a fost curățat în 19.0 (structură și stil)."
     ],
     "dependencies": [
       "base",
@@ -2856,7 +2862,7 @@
       "stock_account"
     ],
     "connections": [],
-    "text": "Declaration of Conformity\ndeltatech_dc\nModulul permite gestionarea și tipărirea declarațiilor de conformitate pentru produse. Acesta oferă posibilitatea de a emite documentul de conformitate, inclusiv direct în momentul facturării, ajutând astfel compania să respecte cerințele privind certificarea conformității produselor livrate către clienți.\nDefinirea declarațiilor de conformitate pentru produse.\nTipărirea declarației de conformitate în momentul facturării."
+    "text": "Declaration of Conformity\ndeltatech_dc\nClienții cer adesea furnizorilor o declarație că bunurile livrate respectă standardele tehnice. Modulul păstrează pe fiecare produs referințele de calitate și tipărește o Declarație de Conformitate numerotată pentru loturi, facturi și livrări, ajutând compania să documenteze conformitatea produselor livrate.\nReferințe de calitate: un tab *Quality Control* pe produs conține *Standard of Company*, *Data Sheet*, *Technical Specification* și *Standards*, tipărite în declarație când sunt completate.\nEvidența declarațiilor: lista *Declaration of Conformity* (meniul catalogului de produse din Vânzări) arată *Number*, *Date of Declaration*, *Product* și *Lot*. La tipărire declarațiile sunt numerotate din secvența `DC/`; la creare manuală numărul se introduce de mână.\nTipărire cu creare automată: acțiunea de tipărire de pe un lot, o factură postată sau o livrare creează declarațiile lipsă și le tipărește: câte una per lot, sau per produs și dată pentru produsele fără lot. Serviciile sunt omise.\nData producției: câmpul *Production Date* al lotului datează declarația (data de azi dacă e gol) și apare ca dată a planului de calitate pentru loturile cu dată de expirare.\nAl doilea formular de livrare: *Declaration of Conformity 2* pe o livrare tipărește o singură declarație pentru toate liniile (produs, cantitate, lot, dată de utilizare, condiții de depozitare) și nu creează înregistrări.\nLimitări: textul declarației este fix în șabloane; al doilea formular citește un câmp *NRC* al partenerului pe care acest modul nu îl adaugă. Utilizatorii interni pot edita declarațiile companiilor lor. Formatul tipărit a fost curățat în 19.0 (structură și stil)."
   },
   {
     "path": "deltatech_delivery/index.md",
@@ -3173,12 +3179,12 @@
     "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_dropshiping",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_dropshiping",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-15",
     "friendly_name": "Deltatech Delivery Dropshiping",
-    "summary": "**Modul depreciat pe 19.0 — nu se instalează (`installable: False`).** Modulul optimiza operațiunile de dropshipping automatizând transmiterea AWB-ului (scrisoare de transport) și a detaliilor de livrare către furnizori, pentru un flux de onorare a comenzilor fără sincope. Pe Odoo 19, [deltatech_delivery](../deltatech_delivery/index.md) acoperă deja acest scenariu: `post_message_delivery()` din acel modul identifică atașamentul cu eticheta, îl redenumește după AWB și, atunci când ridicarea are o comandă de achiziție (`purchase_id`), postează eticheta pe acea comandă **și notifică furnizorul** — exact ceea ce încerca să facă acest modul, dar fără notificare. Codul a rămas în depozit, dezinstalabil, doar ca bazele de date care îl aveau deja instalat să continue să pornească.",
+    "summary": "**Modul depreciat pe 19.0 — nu se instalează (`installable: False`, `development_status: Deprecated`).** Modulul optimiza operațiunile de dropshipping automatizând transmiterea AWB-ului (scrisoare de transport) și a detaliilor de livrare către furnizori. Pe Odoo 19, [deltatech_delivery](../deltatech_delivery/index.md) acoperă deja acest scenariu: `post_message_delivery()` din acel modul identifică atașamentul cu eticheta, îl redenumește după AWB și, când ridicarea are o comandă de achiziție (`purchase_id`), apelează `send_mail_to_vendor()`, care postează eticheta pe acea comandă **și notifică furnizorul**. Acest modul doar adăuga un mesaj în plus, fără notificare, așa că pe comanda de achiziție ajungeau două mesaje cu același AWB (duplicarea exista deja pe 18.0). Codul a rămas în depozit, neinstalabil, doar ca bazele de date care îl au deja instalat să continue să pornească.",
     "features": [
       "Onorare automată: trimite automat etichetele de expediere și informațiile AWB către furnizori pentru procesarea imediată a comenzii.",
-      "Acuratețe îmbunătățită: se asigură că furnizorii primesc informații de livrare corecte și actualizate, reducând erorile de expediere și retururile.",
+      "Acuratețe îmbunătățită: furnizorii primesc informații de livrare corecte și actualizate, ceea ce reduce erorile de expediere și retururile.",
       "Ciclu de comandă mai rapid: simplifică tranziția de la confirmarea comenzii la onorarea de către furnizor.",
       "Vizibilitate sporită: urmărește comenzile în regim de dropshipping prin actualizări de stare a livrării integrate în Odoo.",
       "Logistică scalabilă: gestionează ușor un număr mare de parteneri de dropshipping prin automatizarea sarcinilor de expediere de rutină."
@@ -3192,7 +3198,7 @@
       "stock_dropshipping",
       "is_dropship"
     ],
-    "text": "Deltatech Delivery Dropshiping\ndeltatech_delivery_dropshiping\n**Modul depreciat pe 19.0 — nu se instalează (`installable: False`).** Modulul optimiza operațiunile de dropshipping automatizând transmiterea AWB-ului (scrisoare de transport) și a detaliilor de livrare către furnizori, pentru un flux de onorare a comenzilor fără sincope. Pe Odoo 19, [deltatech_delivery](../deltatech_delivery/index.md) acoperă deja acest scenariu: `post_message_delivery()` din acel modul identifică atașamentul cu eticheta, îl redenumește după AWB și, atunci când ridicarea are o comandă de achiziție (`purchase_id`), postează eticheta pe acea comandă **și notifică furnizorul** — exact ceea ce încerca să facă acest modul, dar fără notificare. Codul a rămas în depozit, dezinstalabil, doar ca bazele de date care îl aveau deja instalat să continue să pornească.\nOnorare automată: trimite automat etichetele de expediere și informațiile AWB către furnizori pentru procesarea imediată a comenzii.\nAcuratețe îmbunătățită: se asigură că furnizorii primesc informații de livrare corecte și actualizate, reducând erorile de expediere și retururile.\nCiclu de comandă mai rapid: simplifică tranziția de la confirmarea comenzii la onorarea de către furnizor.\nVizibilitate sporită: urmărește comenzile în regim de dropshipping prin actualizări de stare a livrării integrate în Odoo.\nLogistică scalabilă: gestionează ușor un număr mare de parteneri de dropshipping prin automatizarea sarcinilor de expediere de rutină."
+    "text": "Deltatech Delivery Dropshiping\ndeltatech_delivery_dropshiping\n**Modul depreciat pe 19.0 — nu se instalează (`installable: False`, `development_status: Deprecated`).** Modulul optimiza operațiunile de dropshipping automatizând transmiterea AWB-ului (scrisoare de transport) și a detaliilor de livrare către furnizori. Pe Odoo 19, [deltatech_delivery](../deltatech_delivery/index.md) acoperă deja acest scenariu: `post_message_delivery()` din acel modul identifică atașamentul cu eticheta, îl redenumește după AWB și, când ridicarea are o comandă de achiziție (`purchase_id`), apelează `send_mail_to_vendor()`, care postează eticheta pe acea comandă **și notifică furnizorul**. Acest modul doar adăuga un mesaj în plus, fără notificare, așa că pe comanda de achiziție ajungeau două mesaje cu același AWB (duplicarea exista deja pe 18.0). Codul a rămas în depozit, neinstalabil, doar ca bazele de date care îl au deja instalat să continue să pornească.\nOnorare automată: trimite automat etichetele de expediere și informațiile AWB către furnizori pentru procesarea imediată a comenzii.\nAcuratețe îmbunătățită: furnizorii primesc informații de livrare corecte și actualizate, ceea ce reduce erorile de expediere și retururile.\nCiclu de comandă mai rapid: simplifică tranziția de la confirmarea comenzii la onorarea de către furnizor.\nVizibilitate sporită: urmărește comenzile în regim de dropshipping prin actualizări de stare a livrării integrate în Odoo.\nLogistică scalabilă: gestionează ușor un număr mare de parteneri de dropshipping prin automatizarea sarcinilor de expediere de rutină."
   },
   {
     "path": "deltatech_delivery_dsc/index.md",
@@ -3431,14 +3437,14 @@
     "version": "19.0.0.0.4",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_delivery_iot",
     "local_path": "odoo-addons/bitshop_ent/deltatech_delivery_iot",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Deltatech Delivery IOT",
-    "summary": "Modulul permite restricționarea imprimantelor IoT folosite la tipărirea automată a etichetelor de expediere, astfel încât fiecare utilizator să vadă și să folosească doar imprimantele care i-au fost atribuite explicit. Este util în depozite cu mai multe stații de ambalare, fiecare echipată cu propria imprimantă IoT, pentru a evita ca etichetele unui operator să iasă la imprimanta altui operator.",
+    "last_ingest": "2026-11-15",
+    "friendly_name": "Delivery IoT Printers per User",
+    "summary": "Modulul atribuie imprimantele IoT utilizatorilor, astfel încât un operator din depozit tipărește etichetele de expediere la imprimanta de lângă propria stație, nu la imprimanta de care e legat raportul. Este util în depozite cu mai multe stații de ambalare, fiecare cu propria imprimantă IoT, pentru ca etichetele unui operator să nu iasă la imprimanta altuia.",
     "features": [
-      "Atribuirea unuia sau mai multor utilizatori fiecărei imprimante IoT (`iot.device`), direct din formularul dispozitivului.",
-      "Filtrarea automată a imprimantelor propuse la tipărirea etichetelor de expediere, păstrând doar imprimantele atribuite utilizatorului curent (dacă cel puțin o imprimantă din raport are utilizatori asignați).",
-      "Filtrarea listei de imprimante afișate în dialogul de selecție a imprimantei (introdus în Odoo 19 pentru tipărirea IoT), astfel încât un utilizator să nu poată alege imprimanta altui utilizator.",
-      "Respectarea alegerii explicite a utilizatorului atunci când imprimanta este selectată manual (`data['device_id']`), fără suprascriere de către filtrul automat."
+      "Câmpul Users pe formularul dispozitivului IoT (`iot.device`), pentru atribuirea imprimantei unuia sau mai multor utilizatori interni.",
+      "Regulă restrânsă de filtrare: dacă cel puțin o imprimantă a raportului are utilizatori atribuiți, rămân doar imprimantele pe care apare utilizatorul curent, iar imprimantele fără utilizatori sunt excluse. Dacă nicio imprimantă a raportului nu are utilizatori, nu se filtrează nimic și se aplică comportamentul standard, deci o singură imprimantă atribuită unei persoane nu ia silențios tipărirea celorlalți.",
+      "Filtrarea se aplică în ambele locuri în care Odoo 19 alege imprimanta: la acțiunea directă de tipărire și în dialogul de selecție a imprimantei (unde alegerea se face acum pe client), astfel încât un utilizator să nu poată alege imprimanta unui coleg.",
+      "O imprimantă transmisă explicit de utilizator (`data['device_id']`) nu este niciodată suprascrisă de filtrul automat."
     ],
     "dependencies": [
       "delivery_iot"
@@ -3448,7 +3454,7 @@
       "iot",
       "stock"
     ],
-    "text": "Deltatech Delivery IOT\ndeltatech_delivery_iot\nModulul permite restricționarea imprimantelor IoT folosite la tipărirea automată a etichetelor de expediere, astfel încât fiecare utilizator să vadă și să folosească doar imprimantele care i-au fost atribuite explicit. Este util în depozite cu mai multe stații de ambalare, fiecare echipată cu propria imprimantă IoT, pentru a evita ca etichetele unui operator să iasă la imprimanta altui operator.\nAtribuirea unuia sau mai multor utilizatori fiecărei imprimante IoT (`iot.device`), direct din formularul dispozitivului.\nFiltrarea automată a imprimantelor propuse la tipărirea etichetelor de expediere, păstrând doar imprimantele atribuite utilizatorului curent (dacă cel puțin o imprimantă din raport are utilizatori asignați).\nFiltrarea listei de imprimante afișate în dialogul de selecție a imprimantei (introdus în Odoo 19 pentru tipărirea IoT), astfel încât un utilizator să nu poată alege imprimanta altui utilizator.\nRespectarea alegerii explicite a utilizatorului atunci când imprimanta este selectată manual (`data['device_id']`), fără suprascriere de către filtrul automat."
+    "text": "Delivery IoT Printers per User\ndeltatech_delivery_iot\nModulul atribuie imprimantele IoT utilizatorilor, astfel încât un operator din depozit tipărește etichetele de expediere la imprimanta de lângă propria stație, nu la imprimanta de care e legat raportul. Este util în depozite cu mai multe stații de ambalare, fiecare cu propria imprimantă IoT, pentru ca etichetele unui operator să nu iasă la imprimanta altuia.\nCâmpul Users pe formularul dispozitivului IoT (`iot.device`), pentru atribuirea imprimantei unuia sau mai multor utilizatori interni.\nRegulă restrânsă de filtrare: dacă cel puțin o imprimantă a raportului are utilizatori atribuiți, rămân doar imprimantele pe care apare utilizatorul curent, iar imprimantele fără utilizatori sunt excluse. Dacă nicio imprimantă a raportului nu are utilizatori, nu se filtrează nimic și se aplică comportamentul standard, deci o singură imprimantă atribuită unei persoane nu ia silențios tipărirea celorlalți.\nFiltrarea se aplică în ambele locuri în care Odoo 19 alege imprimanta: la acțiunea directă de tipărire și în dialogul de selecție a imprimantei (unde alegerea se face acum pe client), astfel încât un utilizator să nu poată alege imprimanta unui coleg.\nO imprimantă transmisă explicit de utilizator (`data['device_id']`) nu este niciodată suprascrisă de filtrul automat."
   },
   {
     "path": "deltatech_delivery_locker/index.md",
@@ -3497,15 +3503,17 @@
     "version": "19.0.0.0.14",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_locker_website",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_locker_website",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-15",
     "friendly_name": "Delivery in locker - website",
-    "summary": "Acest modul extinde funcționalitatea de livrare în locker (punct de ridicare) pentru interfața de website și eCommerce. Rolul său principal este să facă legătura între gestiunea de bază a lockerelor și fluxul de comandă online (`website_sale`), astfel încât metodele de livrare să fie filtrate corect în pagina de checkout, în funcție de compatibilitatea produselor din coș. În acest fel, clientul care plasează o comandă online vede doar opțiunile de livrare relevante și are o experiență fluidă atunci când alege un punct de ridicare.",
+    "summary": "Modulul aduce livrarea în locker în checkout-ul de website. Clientul alege un locker sau un punct de ridicare al curierului pe harta Odoo cu locații de ridicare, alimentată din catalogul comun de lockere din [deltatech_delivery_locker](../deltatech_delivery_locker/index.md), iar metoda de livrare în locker este oferită doar pentru coșurile care încap într-un locker. Astfel clientul vede doar opțiunile de livrare relevante.",
     "features": [
-      "Filtrare inteligentă a metodelor de livrare: filtrează automat metodele de livrare disponibile în pagina de checkout în funcție de compatibilitatea produselor. Dacă un produs stocabil din coș este marcat ca nepotrivit pentru livrarea în locker (`for_locker = False`), curierii care au activată opțiunea „Use Locker” sunt ascunși.",
-      "Context de checkout: furnizează pagina de checkout cu informații suplimentare privind compatibilitatea coșului curent pentru livrarea în locker (`for_locker` în valorile paginii).",
-      "Badge vizual „Locker”: afișează (opțional, prin funcționalități de personalizare website) un badge pe cardul de produs și pe pagina de produs pentru articolele care pot fi livrate în locker.",
-      "Integrare eCommerce: asigură puntea între gestiunea de bază a lockerelor și fluxul Odoo `website_sale`, pentru o experiență coerentă la selectarea punctelor de ridicare.",
-      "Dependențe optimizate: este conceput să funcționeze împreună cu `website_sale`, păstrând în același timp modulul de bază [deltatech_delivery_locker](../deltatech_delivery_locker/index.md) independent de componentele de eCommerce."
+      "Metode locker doar pentru coșuri compatibile: dacă în coș există un produs fizic nemarcat ca livrabil în locker, metodele de livrare care folosesc lockere nu sunt oferite în checkout; serviciile și produsele digitale nu contează.",
+      "Alegerea lockerului pe hartă: locațiile arătate clientului vin din catalogul de lockere al curierului (importat și ținut la zi de modulul de bază); la comenzile plătite la livrare sunt excluse cele care nu încasează plata.",
+      "Lockerul ales ajunge în AWB: lockerul selectat pe website, adresa de livrare și AWB-ul citesc aceeași valoare, deci coletul nu e rezervat la alt locker decât cel ales de client.",
+      "Insignă „Locker” pe produse: o insignă opțională pe pagina de produs arată ce produse pot fi livrate în locker; se activează din vizualizarea ei (Setări → Tehnic → Interfață utilizator → Vizualizări, căutare *Locker badge on product page*, bifat Active, în modul dezvoltator). Insigna de pe cardul de produs nu poate fi activată încă pe 19.0 (remediere în așteptare, issue #491).",
+      "Date de checkout pentru modulele de curieri: pagina de checkout știe dacă coșul încape într-un locker, informație folosită de modulele specifice curierilor (harta Sameday easybox, harta Postis) pentru propriile butoane.",
+      "Configurare: metodele de livrare în locker se configurează cu [deltatech_delivery_locker](../deltatech_delivery_locker/index.md) (Use Locker, Get Lockers) și se publică pe website; Get Lockers încarcă lockerele alese de clienți, iar Get Pickup Locations este alt buton, care încarcă punctele de ridicare ale expeditorului. Pe produsele care încap într-un locker se bifează Can be delivered in locker.",
+      "Flux client (detaliat în fișa consultant): coș → checkout → metoda locker → Select a location → fereastra Choose a pick-up point (listă și hartă) → Choose this location; lockerul devine adresa de livrare, iar pe comandă apar bannerul *Delivery to Locker* și câmpul Locker."
     ],
     "dependencies": [
       "deltatech_delivery_locker",
@@ -3517,36 +3525,28 @@
       "deltatech_website_city",
       "website_sale"
     ],
-    "text": "Delivery in locker - website\ndeltatech_delivery_locker_website\nAcest modul extinde funcționalitatea de livrare în locker (punct de ridicare) pentru interfața de website și eCommerce. Rolul său principal este să facă legătura între gestiunea de bază a lockerelor și fluxul de comandă online (`website_sale`), astfel încât metodele de livrare să fie filtrate corect în pagina de checkout, în funcție de compatibilitatea produselor din coș. În acest fel, clientul care plasează o comandă online vede doar opțiunile de livrare relevante și are o experiență fluidă atunci când alege un punct de ridicare.\nFiltrare inteligentă a metodelor de livrare: filtrează automat metodele de livrare disponibile în pagina de checkout în funcție de compatibilitatea produselor. Dacă un produs stocabil din coș este marcat ca nepotrivit pentru livrarea în locker (`for_locker = False`), curierii care au activată opțiunea „Use Locker” sunt ascunși.\nContext de checkout: furnizează pagina de checkout cu informații suplimentare privind compatibilitatea coșului curent pentru livrarea în locker (`for_locker` în valorile paginii).\nBadge vizual „Locker”: afișează (opțional, prin funcționalități de personalizare website) un badge pe cardul de produs și pe pagina de produs pentru articolele care pot fi livrate în locker.\nIntegrare eCommerce: asigură puntea între gestiunea de bază a lockerelor și fluxul Odoo `website_sale`, pentru o experiență coerentă la selectarea punctelor de ridicare.\nDependențe optimizate: este conceput să funcționeze împreună cu `website_sale`, păstrând în același timp modulul de bază [deltatech_delivery_locker](../deltatech_delivery_locker/index.md) independent de componentele de eCommerce."
+    "text": "Delivery in locker - website\ndeltatech_delivery_locker_website\nModulul aduce livrarea în locker în checkout-ul de website. Clientul alege un locker sau un punct de ridicare al curierului pe harta Odoo cu locații de ridicare, alimentată din catalogul comun de lockere din [deltatech_delivery_locker](../deltatech_delivery_locker/index.md), iar metoda de livrare în locker este oferită doar pentru coșurile care încap într-un locker. Astfel clientul vede doar opțiunile de livrare relevante.\nMetode locker doar pentru coșuri compatibile: dacă în coș există un produs fizic nemarcat ca livrabil în locker, metodele de livrare care folosesc lockere nu sunt oferite în checkout; serviciile și produsele digitale nu contează.\nAlegerea lockerului pe hartă: locațiile arătate clientului vin din catalogul de lockere al curierului (importat și ținut la zi de modulul de bază); la comenzile plătite la livrare sunt excluse cele care nu încasează plata.\nLockerul ales ajunge în AWB: lockerul selectat pe website, adresa de livrare și AWB-ul citesc aceeași valoare, deci coletul nu e rezervat la alt locker decât cel ales de client.\nInsignă „Locker” pe produse: o insignă opțională pe pagina de produs arată ce produse pot fi livrate în locker; se activează din vizualizarea ei (Setări → Tehnic → Interfață utilizator → Vizualizări, căutare *Locker badge on product page*, bifat Active, în modul dezvoltator). Insigna de pe cardul de produs nu poate fi activată încă pe 19.0 (remediere în așteptare, issue #491).\nDate de checkout pentru modulele de curieri: pagina de checkout știe dacă coșul încape într-un locker, informație folosită de modulele specifice curierilor (harta Sameday easybox, harta Postis) pentru propriile butoane.\nConfigurare: metodele de livrare în locker se configurează cu [deltatech_delivery_locker](../deltatech_delivery_locker/index.md) (Use Locker, Get Lockers) și se publică pe website; Get Lockers încarcă lockerele alese de clienți, iar Get Pickup Locations este alt buton, care încarcă punctele de ridicare ale expeditorului. Pe produsele care încap într-un locker se bifează Can be delivered in locker.\nFlux client (detaliat în fișa consultant): coș → checkout → metoda locker → Select a location → fereastra Choose a pick-up point (listă și hartă) → Choose this location; lockerul devine adresa de livrare, iar pe comandă apar bannerul *Delivery to Locker* și câmpul Locker."
   },
   {
     "path": "deltatech_delivery_memex/index.md",
     "module": "deltatech_delivery_memex",
     "version": "19.0.1.0.18",
-    "github": "`https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_memex`",
+    "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_memex",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_memex",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-15",
     "friendly_name": "PTT Express (Memex) Shipping",
-    "summary": "Acest modul integrează curierul PTT Express (Memex) în Odoo, permițând expedierea coletelor direct din platformă. Pe baza datelor din livrări se generează automatizat AWB-ul (scrisoarea de transport) în format PDF, fără a mai fi nevoie de operațiuni manuale în portalul curierului. Modulul acoperă scenarii uzuale de livrare precum colete multiple, valoare declarată (asigurare), ramburs și opțiuni suplimentare de livrare, fiind util companiilor care folosesc acest curier pentru livrarea către clienți.",
+    "summary": "Modulul integrează curierul PTT Express (fost Memex) în Odoo: coletele se expediază direct din livrările Odoo, prin serviciul web al curierului, fără a mai introduce datele manual în WebTrucker. Odoo calculează tariful pe comanda de vânzare, rezervă AWB-ul și atașează etichetele PDF la livrare. Acoperă colete multiple, valoare declarată (asigurare), ramburs și opțiuni suplimentare de livrare, fiind util companiilor care livrează cu acest curier.",
     "features": [
-      "Generare AWB în format PDF",
-      "Ștergere AWB",
-      "Expediere cu colete multiple",
-      "Expediere cu dimensiuni",
-      "Expediere cu valoare declarată (asigurare)",
-      "Expediere cu ramburs (cash on delivery)",
-      "Expediere folosind numele orașului, fără id de oraș",
-      "Opțiune de livrare sâmbăta",
-      "Opțiune de notificare prin SMS",
-      "Obținerea tarifelor pentru o expediere",
-      "Generare AWB în format ZPL sau HTML",
-      "Obținerea listelor de orașe, județe, lockere sau puncte de ridicare",
-      "Obținerea istoricului de stare pentru o expediere",
-      "Nota de retur în AWB",
-      "Opțiunea de colet deschis",
-      "Expediere cu id de oraș și id de județ",
-      "Punct de ridicare doar din punctul indicat",
-      "Trimiterea id-ului de locker în AWB"
+      "Tarif pe comanda de vânzare: costul transportului este calculat de PTT Express pentru serviciul ales, după verificarea că serviciul e disponibil pentru expediția respectivă, sau se folosește un preț fix.",
+      "AWB și etichete: AWB-ul se rezervă din livrare; etichetele tuturor coletelor revin odată cu AWB-ul și sunt unite într-un singur PDF atașat livrării.",
+      "Opțiuni de expediere: mai multe colete cu greutate și dimensiuni, valoare declarată, ramburs, livrare sâmbăta și notificare SMS a destinatarului.",
+      "Sume în moneda curierului: rambursul și suma asigurată sunt convertite din moneda documentului în moneda contractului PTT Express.",
+      "Asigurare coerentă cu rambursul: la o expediție asigurată, valoarea asigurată este ridicată cel puțin la suma de încasat, cum cere PTT Express; refuzurile curierului sunt reformulate ca mesaj despre ce trebuie schimbat.",
+      "Anulare și reîncercări sigure: un AWB poate fi anulat din Odoo; un răspuns pierdut la rezervare sau anulare este raportat ca rezultat incert, deci apăsarea repetată a butonului nu rezervă un al doilea AWB.",
+      "Configurare (*Inventar > Configurare > Livrare > Metode de expediere*, Provider = *PTT Express*, produs de livrare de tip serviciu): în tabul Memex Configuration se completează User și Password ale contului PTT Express, Service (National Standard, Loco Standard, Express 6 ore Bucuresti, Colete Grele), Fixed Price (gol = tarif calculat de curier) și Additional Price for COD (adaos pentru comenzile cu ramburs).",
+      "Utilizare: pe livrare, Carrier Details deschide expediția (serviciu, număr de colete, greutate, dimensiuni, valoare colet, valoare de încasat, opțiuni sâmbătă / SMS); la validarea transferului se rezervă AWB-ul, se scrie referința de urmărire și se atașează etichetele; Cancel AWB anulează expediția, iar linkul de urmărire deschide expediția pe site-ul PTT Express.",
+      "Date trimise către PTT Express: la fiecare ofertă și expediție se transmit numele, persoana de contact, adresa, localitatea, codul poștal, țara, telefonul și e-mailul expeditorului și destinatarului, coletele (greutate, dimensiuni), rambursul, valoarea asigurată și referința comenzii.",
+      "Neacceptate: urmărirea în Odoo (linkul deschide site-ul curierului), listele de localități și județe, etichetele ZPL sau HTML, reluarea etichetei unui AWB existent, lockerele și punctele de ridicare, coletul deschis și nota de restituire."
     ],
     "dependencies": [
       "delivery",
@@ -3554,12 +3554,8 @@
       "deltatech_delivery",
       "zeep"
     ],
-    "connections": [
-      "deltatech_delivery",
-      "deltatech_delivery_status",
-      "deltatech_delivery_locker"
-    ],
-    "text": "PTT Express (Memex) Shipping\ndeltatech_delivery_memex\nAcest modul integrează curierul PTT Express (Memex) în Odoo, permițând expedierea coletelor direct din platformă. Pe baza datelor din livrări se generează automatizat AWB-ul (scrisoarea de transport) în format PDF, fără a mai fi nevoie de operațiuni manuale în portalul curierului. Modulul acoperă scenarii uzuale de livrare precum colete multiple, valoare declarată (asigurare), ramburs și opțiuni suplimentare de livrare, fiind util companiilor care folosesc acest curier pentru livrarea către clienți.\nGenerare AWB în format PDF\nȘtergere AWB\nExpediere cu colete multiple\nExpediere cu dimensiuni\nExpediere cu valoare declarată (asigurare)\nExpediere cu ramburs (cash on delivery)\nExpediere folosind numele orașului, fără id de oraș\nOpțiune de livrare sâmbăta\nOpțiune de notificare prin SMS\nObținerea tarifelor pentru o expediere\nGenerare AWB în format ZPL sau HTML\nObținerea listelor de orașe, județe, lockere sau puncte de ridicare\nObținerea istoricului de stare pentru o expediere\nNota de retur în AWB\nOpțiunea de colet deschis\nExpediere cu id de oraș și id de județ\nPunct de ridicare doar din punctul indicat\nTrimiterea id-ului de locker în AWB"
+    "connections": [],
+    "text": "PTT Express (Memex) Shipping\ndeltatech_delivery_memex\nModulul integrează curierul PTT Express (fost Memex) în Odoo: coletele se expediază direct din livrările Odoo, prin serviciul web al curierului, fără a mai introduce datele manual în WebTrucker. Odoo calculează tariful pe comanda de vânzare, rezervă AWB-ul și atașează etichetele PDF la livrare. Acoperă colete multiple, valoare declarată (asigurare), ramburs și opțiuni suplimentare de livrare, fiind util companiilor care livrează cu acest curier.\nTarif pe comanda de vânzare: costul transportului este calculat de PTT Express pentru serviciul ales, după verificarea că serviciul e disponibil pentru expediția respectivă, sau se folosește un preț fix.\nAWB și etichete: AWB-ul se rezervă din livrare; etichetele tuturor coletelor revin odată cu AWB-ul și sunt unite într-un singur PDF atașat livrării.\nOpțiuni de expediere: mai multe colete cu greutate și dimensiuni, valoare declarată, ramburs, livrare sâmbăta și notificare SMS a destinatarului.\nSume în moneda curierului: rambursul și suma asigurată sunt convertite din moneda documentului în moneda contractului PTT Express.\nAsigurare coerentă cu rambursul: la o expediție asigurată, valoarea asigurată este ridicată cel puțin la suma de încasat, cum cere PTT Express; refuzurile curierului sunt reformulate ca mesaj despre ce trebuie schimbat.\nAnulare și reîncercări sigure: un AWB poate fi anulat din Odoo; un răspuns pierdut la rezervare sau anulare este raportat ca rezultat incert, deci apăsarea repetată a butonului nu rezervă un al doilea AWB.\nConfigurare (*Inventar > Configurare > Livrare > Metode de expediere*, Provider = *PTT Express*, produs de livrare de tip serviciu): în tabul Memex Configuration se completează User și Password ale contului PTT Express, Service (National Standard, Loco Standard, Express 6 ore Bucuresti, Colete Grele), Fixed Price (gol = tarif calculat de curier) și Additional Price for COD (adaos pentru comenzile cu ramburs).\nUtilizare: pe livrare, Carrier Details deschide expediția (serviciu, număr de colete, greutate, dimensiuni, valoare colet, valoare de încasat, opțiuni sâmbătă / SMS); la validarea transferului se rezervă AWB-ul, se scrie referința de urmărire și se atașează etichetele; Cancel AWB anulează expediția, iar linkul de urmărire deschide expediția pe site-ul PTT Express.\nDate trimise către PTT Express: la fiecare ofertă și expediție se transmit numele, persoana de contact, adresa, localitatea, codul poștal, țara, telefonul și e-mailul expeditorului și destinatarului, coletele (greutate, dimensiuni), rambursul, valoarea asigurată și referința comenzii.\nNeacceptate: urmărirea în Odoo (linkul deschide site-ul curierului), listele de localități și județe, etichetele ZPL sau HTML, reluarea etichetei unui AWB existent, lockerele și punctele de ridicare, coletul deschis și nota de restituire."
   },
   {
     "path": "deltatech_delivery_ne/index.md",
@@ -3567,31 +3563,19 @@
     "version": "19.0.0.0.9",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_ne",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_ne",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-15",
     "friendly_name": "Nemo Express Shipping",
-    "summary": "Modulul conectează Odoo la serviciul de curierat **Nemo Express**, permițând expedierea coletelor direct din livrările de stoc și urmărirea lor online. Practic, adaugă Nemo Express ca opțiune de transportator, iar generarea AWB-urilor și schimbul de date cu API-ul curierului se fac prin infrastructura comună Courier Manager, deja folosită de alți curieri din suita Terrabit.",
+    "summary": "Modulul permite expedierea cu **Nemo Express** direct din livrările Odoo: tariful pe comanda de vânzare, AWB-ul cu eticheta PDF, urmărirea și anularea, prin API-ul Nemo Express. Nemo Express rulează pe platforma Courier Manager, deci modulul folosește conectorul [deltatech_delivery_cm](../deltatech_delivery_cm/index.md), cu adresa Nemo Express deja setată.",
     "features": [
-      "Generare AWB în format PDF",
-      "Generare AWB în format ZPL",
-      "Ștergere AWB",
-      "Obținere tarife (rate) pentru o expediere",
-      "Obținere listă orașe",
-      "Obținere listă județe",
-      "Obținere istoric status pentru o expediere",
-      "Expediere cu mai multe colete (multi-parcel)",
-      "Expediere cu valoare declarată (asigurare)",
-      "Expediere cu ramburs (cash on delivery)",
-      "Expediere cu id de oraș și județ",
-      "Expediere cu nume de oraș fără id de oraș",
-      "Generare AWB în format HTML",
-      "Listă lockere",
-      "Listă puncte de ridicare (pickup point)",
-      "Expediere cu dimensiuni",
-      "Notă de restituire în AWB",
-      "Opțiune livrare sâmbăta",
-      "Opțiune \"pachet deschis\"",
-      "Livrare limitată strict la punctul de ridicare indicat",
-      "Trimiterea id-ului de locker în AWB"
+      "Tarif pe comanda de vânzare: costul transportului este cotat de Nemo Express sau se folosește un preț fix, cu un prag opțional peste care se interoghează Nemo Express.",
+      "AWB și etichetă: AWB-ul se rezervă din livrare și se confirmă pentru ridicare, cu eticheta PDF în format A4, A6 sau patru etichete A6 pe o pagină A4; eticheta poate fi adusă din nou, iar AWB-ul anulat.",
+      "Servicii: serviciile Nemo Express ale contului se importă, iar unul se alege per metodă de livrare.",
+      "Opțiuni de expediere: mai multe colete, valoare declarată (asigurare), ramburs virat în contul bancar al companiei și cine plătește transportul (expeditor sau destinatar).",
+      "Urmărire: istoricul de stare este citit de la Nemo Express și scris pe livrare, până la livrarea coletului.",
+      "Configurare (*Inventar > Configurare > Livrare > Metode de expediere*, Provider = *Nemo Express*, produs de livrare de tip serviciu; Endpoint vine precompletat): în tabul Nemo Express Configuration se completează API Key (câmpurile Username și Password sunt cerute de formular, dar API-ul folosește doar cheia); butonul Initialization importă serviciile contului, apoi se alege Service; Get city adaugă localitățile Nemo Express lipsă din agenda Odoo; se aleg formatul etichetei, cine plătește transportul și metodele de plată tratate ca ramburs.",
+      "Utilizare: pe livrare, Carrier Details deschide expediția (serviciu, număr de colete, greutate, valoare colet, valoare de încasat); la validarea transferului AWB-ul este rezervat și confirmat pentru ridicare, referința de urmărire se scrie pe livrare și eticheta PDF se atașează; Print AWB o tipărește, Cancel AWB o anulează.",
+      "Date trimise către Nemo Express: la fiecare ofertă și expediție se transmit numele, strada, numărul, localitatea, județul, codul poștal și telefonul expeditorului și destinatarului, numărul de colete, greutatea, valoarea declarată și rambursul.",
+      "Neacceptate: lockere și puncte de ridicare, etichete ZPL sau HTML, dimensiunile coletelor, livrarea sâmbăta, coletul deschis, nota de restituire și un link de urmărire către site-ul Nemo Express."
     ],
     "dependencies": [
       "delivery",
@@ -3603,7 +3587,7 @@
       "deltatech_delivery",
       "deltatech_delivery_cm"
     ],
-    "text": "Nemo Express Shipping\ndeltatech_delivery_ne\nModulul conectează Odoo la serviciul de curierat **Nemo Express**, permițând expedierea coletelor direct din livrările de stoc și urmărirea lor online. Practic, adaugă Nemo Express ca opțiune de transportator, iar generarea AWB-urilor și schimbul de date cu API-ul curierului se fac prin infrastructura comună Courier Manager, deja folosită de alți curieri din suita Terrabit.\nGenerare AWB în format PDF\nGenerare AWB în format ZPL\nȘtergere AWB\nObținere tarife (rate) pentru o expediere\nObținere listă orașe\nObținere listă județe\nObținere istoric status pentru o expediere\nExpediere cu mai multe colete (multi-parcel)\nExpediere cu valoare declarată (asigurare)\nExpediere cu ramburs (cash on delivery)\nExpediere cu id de oraș și județ\nExpediere cu nume de oraș fără id de oraș\nGenerare AWB în format HTML\nListă lockere\nListă puncte de ridicare (pickup point)\nExpediere cu dimensiuni\nNotă de restituire în AWB\nOpțiune livrare sâmbăta\nOpțiune \"pachet deschis\"\nLivrare limitată strict la punctul de ridicare indicat\nTrimiterea id-ului de locker în AWB"
+    "text": "Nemo Express Shipping\ndeltatech_delivery_ne\nModulul permite expedierea cu **Nemo Express** direct din livrările Odoo: tariful pe comanda de vânzare, AWB-ul cu eticheta PDF, urmărirea și anularea, prin API-ul Nemo Express. Nemo Express rulează pe platforma Courier Manager, deci modulul folosește conectorul [deltatech_delivery_cm](../deltatech_delivery_cm/index.md), cu adresa Nemo Express deja setată.\nTarif pe comanda de vânzare: costul transportului este cotat de Nemo Express sau se folosește un preț fix, cu un prag opțional peste care se interoghează Nemo Express.\nAWB și etichetă: AWB-ul se rezervă din livrare și se confirmă pentru ridicare, cu eticheta PDF în format A4, A6 sau patru etichete A6 pe o pagină A4; eticheta poate fi adusă din nou, iar AWB-ul anulat.\nServicii: serviciile Nemo Express ale contului se importă, iar unul se alege per metodă de livrare.\nOpțiuni de expediere: mai multe colete, valoare declarată (asigurare), ramburs virat în contul bancar al companiei și cine plătește transportul (expeditor sau destinatar).\nUrmărire: istoricul de stare este citit de la Nemo Express și scris pe livrare, până la livrarea coletului.\nConfigurare (*Inventar > Configurare > Livrare > Metode de expediere*, Provider = *Nemo Express*, produs de livrare de tip serviciu; Endpoint vine precompletat): în tabul Nemo Express Configuration se completează API Key (câmpurile Username și Password sunt cerute de formular, dar API-ul folosește doar cheia); butonul Initialization importă serviciile contului, apoi se alege Service; Get city adaugă localitățile Nemo Express lipsă din agenda Odoo; se aleg formatul etichetei, cine plătește transportul și metodele de plată tratate ca ramburs.\nUtilizare: pe livrare, Carrier Details deschide expediția (serviciu, număr de colete, greutate, valoare colet, valoare de încasat); la validarea transferului AWB-ul este rezervat și confirmat pentru ridicare, referința de urmărire se scrie pe livrare și eticheta PDF se atașează; Print AWB o tipărește, Cancel AWB o anulează.\nDate trimise către Nemo Express: la fiecare ofertă și expediție se transmit numele, strada, numărul, localitatea, județul, codul poștal și telefonul expeditorului și destinatarului, numărul de colete, greutatea, valoarea declarată și rambursul.\nNeacceptate: lockere și puncte de ridicare, etichete ZPL sau HTML, dimensiunile coletelor, livrarea sâmbăta, coletul deschis, nota de restituire și un link de urmărire către site-ul Nemo Express."
   },
   {
     "path": "deltatech_delivery_online/index.md",
@@ -3817,15 +3801,17 @@
     "version": "19.0.0.0.8",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_relay",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_relay",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Relay Delivery Shipping",
-    "summary": "Acest modul optimizează operațiunile de expediere prin atașarea automată a etichetelor AWB (Air Waybill) în format PDF direct din sistemele externe de logistică sau ale curierilor în Odoo. Din punct de vedere de business, această integrare asigură gestionarea și accesibilitatea centralizată a întregii documentații de expediere, reducând timpul petrecut de personalul din depozit pentru descărcarea manuală a etichetelor din portalurile externe.",
+    "last_ingest": "2026-11-15",
+    "friendly_name": "Relay Delivery – AWB Attach",
+    "summary": "Modulul atașează în Odoo etichetele AWB în format PDF primite din afara sistemului, de la client sau de la un sistem extern (de exemplu un marketplace), fără să apeleze vreun curier. Personalul din depozit găsește eticheta lângă livrare, o tipărește și o lipește pe colet, fără să o caute prin e-mailuri sau portaluri externe, iar documentația de expediere rămâne centralizată în ERP.",
     "features": [
-      "Documentație de expediere automatizată: primește și stochează instantaneu etichetele AWB în Odoo, pentru tipărire și utilizare imediată.",
-      "Viteză operațională îmbunătățită: elimină nevoia personalului din depozit de a comuta între platforme diferite pentru a obține etichetele de expediere.",
-      "Management logistic centralizat: menține o evidență completă și ușor de căutat a tuturor etichetelor de expediere în cadrul ERP-ului Odoo.",
-      "Acuratețe sporită a livrării: asigură asocierea corectă a etichetelor generate de curier cu comenzile de livrare potrivite.",
-      "Integrare logistică scalabilă: integrare facilă cu o varietate de furnizori externi de livrare printr-un sistem consistent de gestionare a etichetelor."
+      "Metodă de livrare fără curier: adaugă tipul de metodă *Relay Delivery* (în interfața în limba română, „Livrare la punct de ridicare”, fără legătură cu lockerele), care nu are conturi sau credențiale și pune pe comandă doar prețul fix.",
+      "Atașarea etichetei pe comandă: eticheta se încarcă la alegerea metodei pe comanda de vânzare, automat dintr-un fișier `awb_…` primit pe comandă (răspunsul clientului la e-mail sau un atașament din istoric), sau pe livrare, din Carrier Details; apoi trece pe livrare și se tipărește cu Print AWB.",
+      "Numărul AWB din numele fișierului: pentru `awb_1234567890.pdf` numărul este `1234567890`. Într-un mesaj, un fișier este recunoscut doar dacă numele începe cu `awb_`; la confirmarea comenzii și la deschiderea ferestrei de transport se preia orice fișier al cărui nume conține `awb_`.",
+      "Cerere automată către client: la confirmarea unei comenzi cu această metodă și fără etichetă, clientul primește un e-mail care îi cere un fișier AWB cu numele începând cu `awb_`.",
+      "Eticheta în portal: clientul vede în listele de oferte și comenzi o coloană AWB cu linkul de descărcare, iar pagina comenzii arată dacă are AWB.",
+      "Stare de livrare presupusă: Odoo nu citește starea de la un curier; o livrare validată, cu AWB, este considerată *Livrat* după 5 zile de la creare.",
+      "Limitări: AWB-ul nu se anulează din Odoo (aparține curierului clientului sau sistemului extern); un fișier `awb_…` pus pe o comandă cu altă metodă de livrare schimbă metoda și înlocuiește linia de transport cu una la preț 0, deci totalul comenzii scade; validarea unei livrări fără etichetă „emite” totuși un AWB cu numărul comenzii."
     ],
     "dependencies": [
       "sale",
@@ -3833,9 +3819,10 @@
       "deltatech_delivery"
     ],
     "connections": [
-      "deltatech_delivery"
+      "deltatech_delivery",
+      "mail"
     ],
-    "text": "Relay Delivery Shipping\ndeltatech_delivery_relay\nAcest modul optimizează operațiunile de expediere prin atașarea automată a etichetelor AWB (Air Waybill) în format PDF direct din sistemele externe de logistică sau ale curierilor în Odoo. Din punct de vedere de business, această integrare asigură gestionarea și accesibilitatea centralizată a întregii documentații de expediere, reducând timpul petrecut de personalul din depozit pentru descărcarea manuală a etichetelor din portalurile externe.\nDocumentație de expediere automatizată: primește și stochează instantaneu etichetele AWB în Odoo, pentru tipărire și utilizare imediată.\nViteză operațională îmbunătățită: elimină nevoia personalului din depozit de a comuta între platforme diferite pentru a obține etichetele de expediere.\nManagement logistic centralizat: menține o evidență completă și ușor de căutat a tuturor etichetelor de expediere în cadrul ERP-ului Odoo.\nAcuratețe sporită a livrării: asigură asocierea corectă a etichetelor generate de curier cu comenzile de livrare potrivite.\nIntegrare logistică scalabilă: integrare facilă cu o varietate de furnizori externi de livrare printr-un sistem consistent de gestionare a etichetelor."
+    "text": "Relay Delivery – AWB Attach\ndeltatech_delivery_relay\nModulul atașează în Odoo etichetele AWB în format PDF primite din afara sistemului, de la client sau de la un sistem extern (de exemplu un marketplace), fără să apeleze vreun curier. Personalul din depozit găsește eticheta lângă livrare, o tipărește și o lipește pe colet, fără să o caute prin e-mailuri sau portaluri externe, iar documentația de expediere rămâne centralizată în ERP.\nMetodă de livrare fără curier: adaugă tipul de metodă *Relay Delivery* (în interfața în limba română, „Livrare la punct de ridicare”, fără legătură cu lockerele), care nu are conturi sau credențiale și pune pe comandă doar prețul fix.\nAtașarea etichetei pe comandă: eticheta se încarcă la alegerea metodei pe comanda de vânzare, automat dintr-un fișier `awb_…` primit pe comandă (răspunsul clientului la e-mail sau un atașament din istoric), sau pe livrare, din Carrier Details; apoi trece pe livrare și se tipărește cu Print AWB.\nNumărul AWB din numele fișierului: pentru `awb_1234567890.pdf` numărul este `1234567890`. Într-un mesaj, un fișier este recunoscut doar dacă numele începe cu `awb_`; la confirmarea comenzii și la deschiderea ferestrei de transport se preia orice fișier al cărui nume conține `awb_`.\nCerere automată către client: la confirmarea unei comenzi cu această metodă și fără etichetă, clientul primește un e-mail care îi cere un fișier AWB cu numele începând cu `awb_`.\nEticheta în portal: clientul vede în listele de oferte și comenzi o coloană AWB cu linkul de descărcare, iar pagina comenzii arată dacă are AWB.\nStare de livrare presupusă: Odoo nu citește starea de la un curier; o livrare validată, cu AWB, este considerată *Livrat* după 5 zile de la creare.\nLimitări: AWB-ul nu se anulează din Odoo (aparține curierului clientului sau sistemului extern); un fișier `awb_…` pus pe o comandă cu altă metodă de livrare schimbă metoda și înlocuiește linia de transport cu una la preț 0, deci totalul comenzii scade; validarea unei livrări fără etichetă „emite” totuși un AWB cu numărul comenzii."
   },
   {
     "path": "deltatech_delivery_review/index.md",
@@ -3908,25 +3895,28 @@
     "version": "19.0.0.0.23",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_sd_easybox",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_sd_easybox",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Sameday Shipping EasyBox",
-    "summary": "Acest modul adaugă livrarea către lockerele Easybox ale curierului Sameday în magazinul online. Practic, extinde integrarea de bază Sameday astfel încât, la finalizarea comenzii, cumpărătorul să poată alege ca punct de livrare un automat de tip Easybox în loc de o adresă clasică. Modulul aduce și clase CSS pentru a personaliza butoanele de selectare a adresei de livrare și a metodei de curierat în pagina de checkout, oferind o experiență vizuală adaptată magazinului.",
+    "last_ingest": "2026-11-15",
+    "friendly_name": "Sameday Shipping EasyBox - Obsolete",
+    "summary": "**Modul obsolet pe 19.0** (ascuns în Apps, dar încă instalabil). Alegerea lockerului în checkout este acum asigurată de [deltatech_delivery_locker_website](../deltatech_delivery_locker_website/index.md), cu harta Odoo de locații de ridicare alimentată din catalogul de lockere Sameday al [deltatech_delivery_sd](../deltatech_delivery_sd/index.md); pentru instalări noi se folosește acel modul. Acest modul rămâne doar pentru bazele de date care îl au deja instalat și poate fi dezinstalat după ce metoda de livrare în locker trece pe `deltatech_delivery_locker_website`. Modulul adaugă în checkout-ul magazinului online harta proprie Sameday cu lockerele Easybox: clientul apasă **Select Easybox**, alege un locker, iar lockerul devine adresa de livrare a comenzii, cu curierul Sameday setat pe coș. AWB-ul este emis apoi de `deltatech_delivery_sd` către acel Easybox.",
     "features": [
-      "Plugin Easybox pentru integrarea Sameday, care permite alegerea unui locker Easybox ca punct de livrare în comerțul online.",
-      "Clase CSS pentru personalizarea butoanelor de selectare a adresei de livrare: `.select-button-carrier`, `.select-button-easybox`.",
-      "Clasă CSS pentru butonul de adăugare a adresei: `.add-delivery-button`.",
-      "Pentru ca un produs să fie disponibil pentru livrare la Easybox, trebuie bifată o opțiune specifică pe produs."
+      "Harta Sameday în checkout: pluginul oficial Sameday pentru lockere se deschide într-o fereastră la pasul de livrare, deci clientul vede lockerele așa cum le arată Sameday.",
+      "Lockerul ca adresă de livrare: Easybox-ul ales este salvat ca adresă de livrare sub un contact „Sameday EasyBoxs”, cu județul și localitatea potrivite cu agenda de adrese Odoo.",
+      "Curier setat automat: pe comandă se setează curierul Sameday cu ID de client al hărții; dacă există mai mulți, cel deja de pe coș, altfel un curier de tip locker al companiei site-ului.",
+      "Doar pentru produse de locker: butonul apare doar când toate produsele din coș pot fi livrate în locker (Can be delivered in locker pe produs).",
+      "Erori clare: o selecție care nu poate fi citită readuce clientul în checkout cu un mesaj, nu pe o pagină de eroare.",
+      "Configurare: se instalează și se configurează `deltatech_delivery_sd` (credențiale, Initialization, Get city); de la Sameday se cere ID-ul de client al pluginului hărții și se completează ca Sd Client Id în tabul Sameday Configuration al metodei de livrare (nu este credențială API); se bifează Use Locker și se alege un serviciu de locker (Locker NextDay); pe produsele care încap într-un Easybox se bifează Can be delivered in locker.",
+      "Date trimise către Sameday: browserul clientului încarcă pluginul de pe serverele Sameday și primește ID-ul de client al hărții și utilizatorul API Sameday al curierului; datele comenzii și ale clientului nu se trimit la acest pas, ci odată cu AWB-ul, prin `deltatech_delivery_sd`.",
+      "Limitări: harta se deschide pentru România, în limba română. Modulul este în stadiul `Beta` și nu a fost încă validat pe o bază de date de producție. Clasele CSS din modulele anterioare pentru butoanele de selecție nu mai sunt documentate în readme."
     ],
     "dependencies": [
       "deltatech_delivery_sd",
       "deltatech_delivery_locker_website"
     ],
     "connections": [
-      "deltatech_delivery",
-      "deltatech_delivery_status",
-      "deltatech_delivery_locker"
+      "deltatech_delivery_locker",
+      "deltatech_delivery"
     ],
-    "text": "Sameday Shipping EasyBox\ndeltatech_delivery_sd_easybox\nAcest modul adaugă livrarea către lockerele Easybox ale curierului Sameday în magazinul online. Practic, extinde integrarea de bază Sameday astfel încât, la finalizarea comenzii, cumpărătorul să poată alege ca punct de livrare un automat de tip Easybox în loc de o adresă clasică. Modulul aduce și clase CSS pentru a personaliza butoanele de selectare a adresei de livrare și a metodei de curierat în pagina de checkout, oferind o experiență vizuală adaptată magazinului.\nPlugin Easybox pentru integrarea Sameday, care permite alegerea unui locker Easybox ca punct de livrare în comerțul online.\nClase CSS pentru personalizarea butoanelor de selectare a adresei de livrare: `.select-button-carrier`, `.select-button-easybox`.\nClasă CSS pentru butonul de adăugare a adresei: `.add-delivery-button`.\nPentru ca un produs să fie disponibil pentru livrare la Easybox, trebuie bifată o opțiune specifică pe produs."
+    "text": "Sameday Shipping EasyBox - Obsolete\ndeltatech_delivery_sd_easybox\n**Modul obsolet pe 19.0** (ascuns în Apps, dar încă instalabil). Alegerea lockerului în checkout este acum asigurată de [deltatech_delivery_locker_website](../deltatech_delivery_locker_website/index.md), cu harta Odoo de locații de ridicare alimentată din catalogul de lockere Sameday al [deltatech_delivery_sd](../deltatech_delivery_sd/index.md); pentru instalări noi se folosește acel modul. Acest modul rămâne doar pentru bazele de date care îl au deja instalat și poate fi dezinstalat după ce metoda de livrare în locker trece pe `deltatech_delivery_locker_website`. Modulul adaugă în checkout-ul magazinului online harta proprie Sameday cu lockerele Easybox: clientul apasă **Select Easybox**, alege un locker, iar lockerul devine adresa de livrare a comenzii, cu curierul Sameday setat pe coș. AWB-ul este emis apoi de `deltatech_delivery_sd` către acel Easybox.\nHarta Sameday în checkout: pluginul oficial Sameday pentru lockere se deschide într-o fereastră la pasul de livrare, deci clientul vede lockerele așa cum le arată Sameday.\nLockerul ca adresă de livrare: Easybox-ul ales este salvat ca adresă de livrare sub un contact „Sameday EasyBoxs”, cu județul și localitatea potrivite cu agenda de adrese Odoo.\nCurier setat automat: pe comandă se setează curierul Sameday cu ID de client al hărții; dacă există mai mulți, cel deja de pe coș, altfel un curier de tip locker al companiei site-ului.\nDoar pentru produse de locker: butonul apare doar când toate produsele din coș pot fi livrate în locker (Can be delivered in locker pe produs).\nErori clare: o selecție care nu poate fi citită readuce clientul în checkout cu un mesaj, nu pe o pagină de eroare.\nConfigurare: se instalează și se configurează `deltatech_delivery_sd` (credențiale, Initialization, Get city); de la Sameday se cere ID-ul de client al pluginului hărții și se completează ca Sd Client Id în tabul Sameday Configuration al metodei de livrare (nu este credențială API); se bifează Use Locker și se alege un serviciu de locker (Locker NextDay); pe produsele care încap într-un Easybox se bifează Can be delivered in locker.\nDate trimise către Sameday: browserul clientului încarcă pluginul de pe serverele Sameday și primește ID-ul de client al hărții și utilizatorul API Sameday al curierului; datele comenzii și ale clientului nu se trimit la acest pas, ci odată cu AWB-ul, prin `deltatech_delivery_sd`.\nLimitări: harta se deschide pentru România, în limba română. Modulul este în stadiul `Beta` și nu a fost încă validat pe o bază de date de producție. Clasele CSS din modulele anterioare pentru butoanele de selecție nu mai sunt documentate în readme."
   },
   {
     "path": "deltatech_delivery_send_mail/index.md",
@@ -3934,15 +3924,16 @@
     "version": "19.0.1.0.8",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_send_mail",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_send_mail",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Deltatech Delivery Send Mail",
-    "summary": "Acest modul îmbunătățește satisfacția și transparența față de client prin trimiterea automată de notificări pe email atunci când etichetele de expediere (AWB) sunt generate sau când coletele sunt ridicate de curier. Din perspectivă de business, această comunicare automată reduce volumul de întrebări de tip „Unde este comanda mea?\", deoarece clienții sunt informați în timp real despre statusul exact al livrării lor.",
+    "last_ingest": "2026-11-15",
+    "friendly_name": "Delivery Notification – Email",
+    "summary": "Modulul trimite automat clientului e-mailuri atunci când AWB-ul (eticheta de expediere) a fost generat sau când coletul a fost ridicat de curier. Comunicarea automată reduce întrebările de tip „Unde este comanda mea?”, deoarece clienții sunt informați din timp despre starea livrării.",
     "features": [
-      "Experiență îmbunătățită pentru client: informarea proactivă a clienților despre progresul livrării comenzii.",
-      "Costuri de suport reduse: diminuarea volumului de muncă manuală al echipei de relații clienți prin automatizarea actualizărilor de status de rutină.",
-      "Transparență în timp real a expedierii: notificarea imediată a clienților odată ce comanda este împachetată și pregătită pentru transport.",
-      "Încredere sporită în brand: consolidarea încrederii prin actualizări logistice consistente și automate pe parcursul ciclului de onorare a comenzii.",
-      "Comunicare scalabilă: gestionarea automată a notificărilor de expediere pentru un volum mare de comenzi zilnice."
+      "E-mail la generarea AWB-ului: după înregistrarea AWB-ului la curier, clientul primește un mesaj cu numărul de urmărire și linkul de urmărire al curierului.",
+      "E-mail la ridicarea coletului: când starea livrării iese din *Ciornă* / *Pre-aviz* (coletul a fost preluat de curier), clientul primește un mesaj cu aceleași detalii de urmărire.",
+      "Activare pe două niveluri: opțional per curier (bifa `send_email_awb` pe metoda de livrare) și per companie, din Inventar > Setări, secțiunea de expediere: *Email AWB Create* și *Email AWB Picked up*, fiecare cu propriul șablon de e-mail, completat implicit cu șabloanele din modul (setările sunt specifice companiei).",
+      "Destinatar: adresa partenerului livrării; dacă lipsește, e-mailul se preia de la compania-părinte, iar în lipsa ei de la clientul comenzii de vânzare.",
+      "Șabloane dedicate (în română, `Delivery: AWB Created` și `Delivery: AWB Picked Up`), cu numărul AWB și linkul de urmărire al curierului.",
+      "Eșecul notificării nu afectează livrarea: o eroare la trimiterea e-mailului nu anulează AWB-ul și nu blochează schimbarea stării; ea este consemnată în jurnal și în chatter, ca operatorul să nu creadă că clientul a fost notificat. Se poate folosi și un server de e-mail dat în context (`mail_server_id`)."
     ],
     "dependencies": [
       "delivery",
@@ -3950,9 +3941,10 @@
     ],
     "connections": [
       "deltatech_delivery_status",
+      "delivery_state",
       "deltatech_delivery"
     ],
-    "text": "Deltatech Delivery Send Mail\ndeltatech_delivery_send_mail\nAcest modul îmbunătățește satisfacția și transparența față de client prin trimiterea automată de notificări pe email atunci când etichetele de expediere (AWB) sunt generate sau când coletele sunt ridicate de curier. Din perspectivă de business, această comunicare automată reduce volumul de întrebări de tip „Unde este comanda mea?\", deoarece clienții sunt informați în timp real despre statusul exact al livrării lor.\nExperiență îmbunătățită pentru client: informarea proactivă a clienților despre progresul livrării comenzii.\nCosturi de suport reduse: diminuarea volumului de muncă manuală al echipei de relații clienți prin automatizarea actualizărilor de status de rutină.\nTransparență în timp real a expedierii: notificarea imediată a clienților odată ce comanda este împachetată și pregătită pentru transport.\nÎncredere sporită în brand: consolidarea încrederii prin actualizări logistice consistente și automate pe parcursul ciclului de onorare a comenzii.\nComunicare scalabilă: gestionarea automată a notificărilor de expediere pentru un volum mare de comenzi zilnice."
+    "text": "Delivery Notification – Email\ndeltatech_delivery_send_mail\nModulul trimite automat clientului e-mailuri atunci când AWB-ul (eticheta de expediere) a fost generat sau când coletul a fost ridicat de curier. Comunicarea automată reduce întrebările de tip „Unde este comanda mea?”, deoarece clienții sunt informați din timp despre starea livrării.\nE-mail la generarea AWB-ului: după înregistrarea AWB-ului la curier, clientul primește un mesaj cu numărul de urmărire și linkul de urmărire al curierului.\nE-mail la ridicarea coletului: când starea livrării iese din *Ciornă* / *Pre-aviz* (coletul a fost preluat de curier), clientul primește un mesaj cu aceleași detalii de urmărire.\nActivare pe două niveluri: opțional per curier (bifa `send_email_awb` pe metoda de livrare) și per companie, din Inventar > Setări, secțiunea de expediere: *Email AWB Create* și *Email AWB Picked up*, fiecare cu propriul șablon de e-mail, completat implicit cu șabloanele din modul (setările sunt specifice companiei).\nDestinatar: adresa partenerului livrării; dacă lipsește, e-mailul se preia de la compania-părinte, iar în lipsa ei de la clientul comenzii de vânzare.\nȘabloane dedicate (în română, `Delivery: AWB Created` și `Delivery: AWB Picked Up`), cu numărul AWB și linkul de urmărire al curierului.\nEșecul notificării nu afectează livrarea: o eroare la trimiterea e-mailului nu anulează AWB-ul și nu blochează schimbarea stării; ea este consemnată în jurnal și în chatter, ca operatorul să nu creadă că clientul a fost notificat. Se poate folosi și un server de e-mail dat în context (`mail_server_id`)."
   },
   {
     "path": "deltatech_delivery_send_sms/index.md",
@@ -4174,7 +4166,7 @@
   {
     "path": "deltatech_doc_screenshots/index.md",
     "module": "deltatech_doc_screenshots",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.4.0",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_doc_screenshots",
     "local_path": "odoo-addons/deltatech/deltatech_doc_screenshots",
     "last_ingest": "2026-10-30",
@@ -4286,7 +4278,7 @@
   {
     "path": "deltatech_ecr_connect/index.md",
     "module": "deltatech_ecr_connect",
-    "version": "19.0.1.3.3",
+    "version": "19.0.1.3.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_ecr_connect",
     "local_path": "odoo-addons/bitshop/deltatech_ecr_connect",
     "last_ingest": "2026-08-20",
@@ -4888,7 +4880,7 @@
   {
     "path": "deltatech_hr_holidays_report_access/index.md",
     "module": "deltatech_hr_holidays_report_access",
-    "version": "19.0.0.0.1",
+    "version": "19.0.0.0.2",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_hr_holidays_report_access",
     "local_path": "odoo-addons/bitshop_ent/deltatech_hr_holidays_report_access",
     "last_ingest": "2026-10-22",
@@ -5699,7 +5691,7 @@
   {
     "path": "deltatech_markdown_field/index.md",
     "module": "deltatech_markdown_field",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.7",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_markdown_field",
     "local_path": "odoo-addons/deltatech/deltatech_markdown_field",
     "last_ingest": "2026-11-09",
@@ -5919,7 +5911,7 @@
   {
     "path": "deltatech_marketplace_emag/index.md",
     "module": "deltatech_marketplace_emag",
-    "version": "19.0.2.21.4",
+    "version": "19.0.2.21.5",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_emag",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_emag",
     "last_ingest": "2026-10-22",
@@ -7171,7 +7163,7 @@
   {
     "path": "deltatech_nap/index.md",
     "module": "deltatech_nap",
-    "version": "19.0.1.10.5",
+    "version": "19.0.1.10.6",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_nap`",
     "local_path": "odoo-addons/bitshop/deltatech_nap",
     "last_ingest": "2026-10-27",
@@ -8475,7 +8467,7 @@
   {
     "path": "deltatech_pos_online_payment/index.md",
     "module": "deltatech_pos_online_payment",
-    "version": "19.0.0.0.5",
+    "version": "19.0.0.0.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos_online_payment",
     "local_path": "odoo-addons/bitshop/deltatech_pos_online_payment",
     "last_ingest": "2026-08-20",
@@ -8549,7 +8541,7 @@
   {
     "path": "deltatech_pos_product_filter/index.md",
     "module": "deltatech_pos_product_filter",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_pos_product_filter",
     "local_path": "odoo-addons/deltatech/deltatech_pos_product_filter",
     "last_ingest": "2026-11-13",
@@ -10107,7 +10099,7 @@
   {
     "path": "deltatech_replenish/index.md",
     "module": "deltatech_replenish",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_replenish",
     "local_path": "odoo-addons/deltatech/deltatech_replenish",
     "last_ingest": "2026-10-09",
@@ -10280,7 +10272,7 @@
   {
     "path": "deltatech_restrict_reports/index.md",
     "module": "deltatech_restrict_reports",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_restrict_reports",
     "local_path": "odoo-addons/deltatech/deltatech_restrict_reports",
     "last_ingest": "2026-08-20",
@@ -10507,7 +10499,7 @@
   {
     "path": "deltatech_saga/index.md",
     "module": "deltatech_saga",
-    "version": "19.0.6.29.3",
+    "version": "19.0.6.29.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga",
     "local_path": "odoo-addons/bitshop/deltatech_saga",
     "last_ingest": "2026-10-27",
@@ -13683,7 +13675,7 @@
   {
     "path": "deltatech_web_kpi_cards/index.md",
     "module": "deltatech_web_kpi_cards",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_web_kpi_cards",
     "local_path": "odoo-addons/deltatech/deltatech_web_kpi_cards",
     "last_ingest": "2026-10-09",
@@ -14605,7 +14597,7 @@
   {
     "path": "deltatech_website_searchbar/index.md",
     "module": "deltatech_website_searchbar",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/deltatech_website_searchbar",
     "local_path": "odoo-addons/deltatech/deltatech_website_searchbar",
     "last_ingest": "2026-08-20",
@@ -14629,7 +14621,7 @@
   {
     "path": "deltatech_website_searchbar_typing/index.md",
     "module": "deltatech_website_searchbar_typing",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.1.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_searchbar_typing",
     "local_path": "odoo-addons/deltatech/deltatech_website_searchbar_typing",
     "last_ingest": "2026-10-22",
@@ -14959,7 +14951,7 @@
   {
     "path": "deltatech_widget_fontawesome/index.md",
     "module": "deltatech_widget_fontawesome",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_widget_fontawesome",
     "local_path": "odoo-addons/deltatech/deltatech_widget_fontawesome",
     "last_ingest": "2026-11-06",
@@ -14980,7 +14972,7 @@
   {
     "path": "deltatech_widget_hierarchy_m2o/index.md",
     "module": "deltatech_widget_hierarchy_m2o",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_widget_hierarchy_m2o",
     "local_path": "odoo-addons/bitshop/deltatech_widget_hierarchy_m2o",
     "last_ingest": "2026-07-31",
@@ -15006,7 +14998,7 @@
   {
     "path": "deltatech_widget_many2one_badge/index.md",
     "module": "deltatech_widget_many2one_badge",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_widget_many2one_badge",
     "local_path": "odoo-addons/deltatech/deltatech_widget_many2one_badge",
     "last_ingest": "2026-11-03",
@@ -15191,7 +15183,7 @@
   {
     "path": "l10n_ro_account_bank_statement_import_xlsx/index.md",
     "module": "l10n_ro_account_bank_statement_import_xlsx",
-    "version": "19.0.2.1.6",
+    "version": "19.0.2.1.7",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_bank_statement_import_xlsx",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_account_bank_statement_import_xlsx",
     "last_ingest": "2026-08-20",
@@ -15557,7 +15549,7 @@
   {
     "path": "l10n_ro_aml_register/index.md",
     "module": "l10n_ro_aml_register",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_aml_register",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_aml_register",
     "last_ingest": "2026-09-12",
@@ -15943,7 +15935,7 @@
   {
     "path": "l10n_ro_anaf_d120/index.md",
     "module": "l10n_ro_anaf_d120",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d120",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d120",
     "last_ingest": "2026-11-03",
@@ -16429,7 +16421,7 @@
   {
     "path": "l10n_ro_anaf_d700/index.md",
     "module": "l10n_ro_anaf_d700",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d700",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d700",
     "last_ingest": "2026-09-29",
@@ -16488,7 +16480,7 @@
   {
     "path": "l10n_ro_anaf_duk/index.md",
     "module": "l10n_ro_anaf_duk",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_duk",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_duk",
     "last_ingest": "2026-09-12",
@@ -16580,7 +16572,7 @@
   {
     "path": "l10n_ro_anaf_partner/index.md",
     "module": "l10n_ro_anaf_partner",
-    "version": "19.0.2.5.1",
+    "version": "19.0.2.6.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_partner",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_partner",
     "last_ingest": null,
@@ -16652,7 +16644,7 @@
   {
     "path": "l10n_ro_anaf_partner_lookup/index.md",
     "module": "l10n_ro_anaf_partner_lookup",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.3.1",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_anaf_partner_lookup",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_anaf_partner_lookup",
     "last_ingest": "2026-10-30",
@@ -16808,7 +16800,7 @@
   {
     "path": "l10n_ro_bank_register_report/index.md",
     "module": "l10n_ro_bank_register_report",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_bank_register_report",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_bank_register_report",
     "last_ingest": "2026-11-08",
@@ -17518,7 +17510,7 @@
   {
     "path": "l10n_ro_efactura_import_assist/index.md",
     "module": "l10n_ro_efactura_import_assist",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_efactura_import_assist",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_efactura_import_assist",
     "last_ingest": "2026-09-12",
@@ -18248,7 +18240,7 @@
   {
     "path": "l10n_ro_footer_anpc/index.md",
     "module": "l10n_ro_footer_anpc",
-    "version": "19.0.0.0.5",
+    "version": "19.0.0.0.6",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_footer_anpc",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_footer_anpc",
     "last_ingest": "2026-11-02",
@@ -18466,7 +18458,7 @@
   {
     "path": "l10n_ro_hr_payroll_account_enhancement/index.md",
     "module": "l10n_ro_hr_payroll_account_enhancement",
-    "version": "19.0.1.9.0",
+    "version": "19.0.1.9.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_payroll_account_enhancement",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_hr_payroll_account_enhancement",
     "last_ingest": "2026-10-22",
@@ -18642,7 +18634,7 @@
   {
     "path": "l10n_ro_hr_pontaj_payroll/index.md",
     "module": "l10n_ro_hr_pontaj_payroll",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_hr_pontaj_payroll",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_hr_pontaj_payroll",
     "last_ingest": "2026-10-22",
@@ -18818,7 +18810,7 @@
   {
     "path": "l10n_ro_inventory_items_hr/index.md",
     "module": "l10n_ro_inventory_items_hr",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_inventory_items_hr",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_inventory_items_hr",
     "last_ingest": "2026-10-09",
@@ -19239,7 +19231,7 @@
   {
     "path": "l10n_ro_mrp_labour_account/index.md",
     "module": "l10n_ro_mrp_labour_account",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_mrp_labour_account",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_mrp_labour_account",
     "last_ingest": "2026-10-26",
@@ -19709,7 +19701,7 @@
   {
     "path": "l10n_ro_payroll_allowances/index.md",
     "module": "l10n_ro_payroll_allowances",
-    "version": "19.0.1.1.5",
+    "version": "19.0.1.1.6",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_allowances",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_payroll_allowances",
     "last_ingest": "2026-10-09",
@@ -19772,7 +19764,7 @@
   {
     "path": "l10n_ro_payroll_bank_export/index.md",
     "module": "l10n_ro_payroll_bank_export",
-    "version": "19.0.1.1.4",
+    "version": "19.0.1.1.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_bank_export",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_payroll_bank_export",
     "last_ingest": "2026-10-05",
@@ -19920,7 +19912,7 @@
   {
     "path": "l10n_ro_payroll_garnishment/index.md",
     "module": "l10n_ro_payroll_garnishment",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_garnishment",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_payroll_garnishment",
     "last_ingest": "2026-10-12",
@@ -20574,7 +20566,7 @@
   {
     "path": "l10n_ro_registru_jurnal/index.md",
     "module": "l10n_ro_registru_jurnal",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_registru_jurnal",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_registru_jurnal",
     "last_ingest": "2026-11-08",
@@ -20920,7 +20912,7 @@
   {
     "path": "l10n_ro_saft_export_fix/index.md",
     "module": "l10n_ro_saft_export_fix",
-    "version": "19.0.1.2.3",
+    "version": "19.0.1.3.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_saft_export_fix",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_saft_export_fix",
     "last_ingest": "2026-10-22",
@@ -21132,7 +21124,7 @@
   {
     "path": "l10n_ro_shareholder_loan/index.md",
     "module": "l10n_ro_shareholder_loan",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_shareholder_loan",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_shareholder_loan",
     "last_ingest": "2026-10-09",
@@ -21164,7 +21156,7 @@
   {
     "path": "l10n_ro_sod_matrix/index.md",
     "module": "l10n_ro_sod_matrix",
-    "version": "19.0.1.1.6",
+    "version": "19.0.1.1.7",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_sod_matrix",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_sod_matrix",
     "last_ingest": null,
@@ -21500,7 +21492,7 @@
   {
     "path": "l10n_ro_stock_gestiune/index.md",
     "module": "l10n_ro_stock_gestiune",
-    "version": "19.0.3.1.10",
+    "version": "19.0.3.1.11",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_gestiune`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_gestiune",
     "last_ingest": "2026-09-25",
@@ -21647,7 +21639,7 @@
   {
     "path": "l10n_ro_stock_pack_cmp/index.md",
     "module": "l10n_ro_stock_pack_cmp",
-    "version": "19.0.1.5.1",
+    "version": "19.0.1.5.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_pack_cmp",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_pack_cmp",
     "last_ingest": "2026-11-12",
@@ -22017,7 +22009,7 @@
   {
     "path": "l10n_ro_travel_order/index.md",
     "module": "l10n_ro_travel_order",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_travel_order",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_travel_order",
     "last_ingest": "2026-10-09",
@@ -22045,7 +22037,7 @@
   {
     "path": "l10n_ro_travel_order_fleet/index.md",
     "module": "l10n_ro_travel_order_fleet",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_travel_order_fleet",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_travel_order_fleet",
     "last_ingest": "2026-10-09",
@@ -22734,7 +22726,7 @@
   {
     "path": "terrabit_helpdesk_connector/index.md",
     "module": "terrabit_helpdesk_connector",
-    "version": "19.0.0.3.2",
+    "version": "19.0.0.3.3",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector",
     "local_path": "odoo-addons/terrabit/terrabit_helpdesk_connector",
     "last_ingest": "2026-09-24",
@@ -22804,7 +22796,7 @@
   {
     "path": "terrabit_iap/index.md",
     "module": "terrabit_iap",
-    "version": "19.0.1.4.0",
+    "version": "19.0.1.4.1",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap",
     "local_path": "odoo-addons/terrabit/terrabit_iap",
     "last_ingest": "2026-10-22",
@@ -22837,7 +22829,7 @@
   {
     "path": "terrabit_iap_ai/index.md",
     "module": "terrabit_iap_ai",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_ai",
     "local_path": "odoo-addons/terrabit/terrabit_iap_ai",
     "last_ingest": "2026-10-09",
@@ -22861,7 +22853,7 @@
   {
     "path": "terrabit_iap_anaf/index.md",
     "module": "terrabit_iap_anaf",
-    "version": "19.0.1.4.0",
+    "version": "19.0.1.4.1",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_anaf",
     "local_path": "odoo-addons/terrabit/terrabit_iap_anaf",
     "last_ingest": "2026-10-09",
@@ -22891,7 +22883,7 @@
   {
     "path": "terrabit_iap_line_counter/index.md",
     "module": "terrabit_iap_line_counter",
-    "version": "19.0.2.0.3",
+    "version": "19.0.2.0.4",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_line_counter",
     "local_path": "odoo-addons/terrabit/terrabit_iap_line_counter",
     "last_ingest": "2026-10-09",
@@ -22916,7 +22908,7 @@
   {
     "path": "terrabit_iap_params/index.md",
     "module": "terrabit_iap_params",
-    "version": "19.0.1.2.1",
+    "version": "19.0.1.2.2",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_params",
     "local_path": "odoo-addons/terrabit/terrabit_iap_params",
     "last_ingest": "2026-10-09",
@@ -23019,7 +23011,7 @@
   {
     "path": "terrabit_iap_server_anaf/index.md",
     "module": "terrabit_iap_server_anaf",
-    "version": "19.0.1.4.8",
+    "version": "19.0.1.5.0",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_anaf",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_anaf",
     "last_ingest": "2026-10-09",
@@ -23185,7 +23177,7 @@
   {
     "path": "terrabit_iap_server_sale/index.md",
     "module": "terrabit_iap_server_sale",
-    "version": "19.0.1.1.2",
+    "version": "19.0.1.3.0",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_sale",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_sale",
     "last_ingest": null,
@@ -23455,7 +23447,7 @@
   {
     "path": "terrabit_web_editor_ai/index.md",
     "module": "terrabit_web_editor_ai",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_web_editor_ai",
     "local_path": "odoo-addons/terrabit/terrabit_web_editor_ai",
     "last_ingest": "2026-10-09",

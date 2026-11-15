@@ -25,9 +25,9 @@ Aduce în brutul fluturașului sporurile pe care firmele din România le plătes
 - **Utilizator salarizare:** adaugă sporurile pe angajat și introduce orele de noapte.
 - **Administrator salarizare:** configurează nomenclatorul de sporuri.
 
-**Sporuri permanente** de pe fișa angajatului sunt vizibile doar utilizatorilor cu drept HR
-(**Angajați → Ofițer: Gestionează toți angajații**, `hr.group_hr_user`). **Utilizator salarizare** include deja acest drept;
-un utilizator care are doar acces la contabilitate sau la vânzări nu vede sporurile angajatului.
+**Sporuri permanente** de pe fișa angajatului sunt vizibile doar utilizatorilor cu dreptul
+**Utilizator salarizare** (`hr_payroll.group_hr_payroll_user`): fila *Stat de plată* și rândurile de spor
+cer acest drept, iar un **Ofițer** de la Angajați fără drept de salarizare nu le vede. Un utilizator care are doar acces la contabilitate sau la vânzări nu vede sporurile angajatului.
 
 ## 4. Conturi și date implicate
 
@@ -48,7 +48,7 @@ un utilizator care are doar acces la contabilitate sau la vânzări nu vede spor
 
 *Stat de plată → Configurare → Sporuri salariale*. Fiecare spor are cod, tip, procent implicit și bază: **salariul de bază** (integral), **salariul aferent timpului lucrat** (reduce absențele fără plată) sau **salariul de bază plus celelalte sporuri permanente**.
 
-![Nomenclatorul de sporuri](screenshots/01_nomenclator_sporuri.png)
+![Lista Sporuri salariale: ore suplimentare 75%, noapte 25%, sărbători legale 100%, repaus săptămânal cu multiplicator 2, vechime 10% pe salariul de bază și condiții vătămătoare 5% pe salariul aferent timpului lucrat](screenshots/01_nomenclator_sporuri.png)
 
 Sporul pentru repaus săptămânal nu are procent, ci **multiplicator** față de sporul de ore suplimentare (minim 2):
 
@@ -60,11 +60,11 @@ Sporul pentru repaus săptămânal nu are procent, ci **multiplicator** față d
 
 ### Pasul 2 — Sporurile permanente ale angajatului
 
-*Angajați → fișa angajatului → fila Stat de plată → secțiunea Sporuri permanente (RO)*: adăugați sporul, procentul (sau suma fixă) și perioada de valabilitate. Un spor expirat sau început după lună nu intră în fluturaș. La schimbarea sporului pe un rând, procentul se preia din nomenclator (îl puteți modifica apoi); suma fixă are prioritate față de procent.
+*Angajați → fișa angajatului → fila Stat de plată → secțiunea Sporuri permanente (RO)*: adăugați sporul, procentul (sau suma fixă) și perioada de valabilitate. Un spor expirat sau început după lună nu intră în fluturaș. La schimbarea sporului pe un rând, procentul se preia din nomenclator (îl puteți modifica apoi); suma fixă are prioritate față de procent. Secțiunea apare doar la angajații unei companii cu țara **România** (țara din datele companiei); la o companie din altă țară sau fără țară completată, grupul lipsește de pe fișă.
 
-![Sporurile permanente pe fișa angajatului](screenshots/02_sporuri_angajat.png)
+![Fișa angajatului Moraru Elena, secțiunea Sporuri permanente (RO), cu Spor de vechime 10% și Spor condiții vătămătoare 5%, valabile de la 1 ian. 2025](screenshots/02_sporuri_angajat.png)
 
-**Verificați:** fiecare rând are procent sau sumă fixă și data de început.
+**Verificați:** fiecare rând are procent sau sumă fixă și data de început; dacă secțiunea lipsește, verificați întâi că firma angajatului are țara România.
 
 ### Pasul 3 — Ore suplimentare și ore de noapte
 
@@ -75,7 +75,7 @@ Sporul pentru repaus săptămânal nu are procent, ci **multiplicator** față d
 - **Sărbători legale, repaus săptămânal, ore compensate** (cu `l10n_ro_hr_pontaj_payroll`): tipurile de prezență *Ore suplimentare în sărbătoare legală* (`L10N_RO_OT_HOL`, rata implicită 1), *Ore suplimentare în repaus săptămânal suspendat sau cumulat* (`L10N_RO_OT_REST`) și *Ore suplimentare compensate cu timp liber* (`L10N_RO_OT_COMP`, rata 0) apar în fila *Zile lucrate*. Codurile de pontaj: orele într-o zi de sărbătoare legală, pontate cu codul obișnuit, merg automat pe tipul de sărbătoare; `RS` (repaus suspendat sau cumulat) merge pe tipul de repaus; `OC` (ore compensate) pe tipul compensat. Clasificarea ca repaus este explicită, aleasă de ofițerul de pontaj: o zi lucrată fără program poate fi simplă oră suplimentară la 75%.
 - **Ore de noapte:** pe fluturaș, fila *Salary Inputs* (intrări), adăugați intrarea *Ore de noapte* cu numărul de ore.
 
-![Intrarea Ore de noapte](screenshots/04_fluturas_ore_noapte.png)
+![Fluturașul Moraru Elena pe septembrie 2026, fila Salary Inputs, cu intrarea Ore de noapte de 24 de ore](screenshots/04_fluturas_ore_noapte.png)
 
 **Cât se plătește la sărbătoare:** ziua rămâne plătită în salariul lunar; orele lucrate se plătesc 100% prin *Salariu de bază* (ca orele suplimentare, `L10N_RO_OT_HOL` are rata 1) plus *Spor pentru munca în sărbători legale* de 100% = ore × tarif × 100%. Art. 142 alin. (2) nu spune explicit dacă orele se plătesc separat: de confirmat cu contractul colectiv.
 
@@ -85,7 +85,7 @@ Sporul pentru repaus săptămânal nu are procent, ci **multiplicator** față d
 
 ![Foaia de pontaj cu zi de sărbătoare lucrată, RS și OC](screenshots/08_pontaj_foaie_iunie.png)
 
-![Orele de sărbătoare, repaus și compensate în Zile lucrate](screenshots/09_fluturas_zile_sarbatoare_repaus.png)
+![Fila Zile lucrate a fluturașului Stanciu Andrei pe iunie 2026: 2 ore compensate la 0 lei, 6 ore de repaus, 8 ore de sărbătoare legală și 168 de ore de prezență, total 6.500 lei](screenshots/09_fluturas_zile_sarbatoare_repaus.png)
 
 **Cod `RS` pe sărbătoare legală:** codul `RS` câștigă în fața tipului automat de sărbătoare, deci într-o zi de sărbătoare pontată cu `RS` se aplică repausul (≥ 150%), nu 100%; e deliberat (clasificarea explicită a ofițerului de pontaj are prioritate).
 
@@ -99,13 +99,13 @@ Sporul dublu se aplică doar orelor peste programul zilei (în ziua fără progr
 
 ### Pasul 4 — Fluturașul
 
-Calculați fluturașul. În *Calcul Salariu* apar liniile *Sporuri permanente: …*, *Spor pentru ore suplimentare*, *Spor pentru munca de noapte* și, când există ore pe tipurile respective, `SPOR_SARBATOARE` (*Spor pentru munca în sărbători legale*) și `SPOR_REPAUS` (*Spor pentru munca în repaus săptămânal*), în brut, înaintea liniei de salariu impozabil.
+Calculați fluturașul. În *Calcul Salariu* apar liniile *Sporuri permanente: …*, *Spor pentru ore suplimentare*, *Spor pentru munca de noapte* și, când există ore pe tipurile respective, `SPOR_SARBATOARE` (*Spor pentru munca în sărbători legale*) și `SPOR_REPAUS` (*Spor pentru munca în repaus săptămânal*), în brut, înaintea liniei *Salariu brut*.
 
-![Fluturașul cu sporuri](screenshots/05_fluturas_sporuri.png)
+![Fila Calcul Salariu a fluturașului Moraru Elena pe septembrie 2026: salariu de bază 6.341, sporuri permanente 900, spor ore suplimentare 281, spor de noapte 225, salariu brut 7.747 și net 4.531 lei](screenshots/05_fluturas_sporuri.png)
 
 Cu ore de sărbătoare și de repaus apar și liniile `SPOR_SARBATOARE` și `SPOR_REPAUS`:
 
-![Fluturașul cu sporul de sărbătoare și de repaus](screenshots/10_fluturas_spor_sarbatoare_repaus.png)
+![Fila Calcul Salariu a fluturașului Stanciu Andrei pe iunie 2026: salariu de bază 6.500, spor de sărbătoare 286, spor de repaus 321, salariu brut 7.107 și net 4.157 lei](screenshots/10_fluturas_spor_sarbatoare_repaus.png)
 
 **Verificați** cifrele din exemplu (salariu 6.000 lei, septembrie 2026 cu 176 de ore normale):
 
@@ -113,29 +113,29 @@ Cu ore de sărbătoare și de repaus apar și liniile `SPOR_SARBATOARE` și `SPO
 - sporuri permanente: vechime 10% × 6.000 = 600, condiții vătămătoare 5% din timpul lucrat = 300, total 900;
 - tarif pentru sporurile de ore suplimentare și de noapte: (6.000 + 600 vechime marcată «în baza orelor suplimentare») / 176 = 37,50 lei/oră;
 - spor ore suplimentare: 10 × 37,50 × 75% = 281,25 → 281; spor noapte: 24 × 37,50 × 25% = 225 (sporurile se rotunjesc la leu);
-- *Salariu impozabil* = 6.341 + 900 + 281 + 225 = 7.747; CAS 1.937, CASS 775, impozit 503, net 4.532.
+- *Salariu brut* = 6.341 + 900 + 281 + 225 = 7.747; CAS 1.937, CASS 775, impozit 504 (10% × (7.747 − 1.937 − 775) = 503,50, rotunjit la leu), net 4.531.
 
 **Exemplu pentru sărbătoare, repaus și ore compensate** (alt angajat, salariu 6.000 lei, iunie 2026: 21 de zile lucrătoare = 168 de ore normale; 1 iunie este sărbătoare legală; 8 ore lucrate pe 1 iunie, 6 ore `RS` sâmbătă 13 iunie, 10 ore pe 17 iunie cu codul `OC`, deci 2 ore compensate):
 
 - tarif orar: 6.000 / 168 = 35,71 lei/oră; *Salariu de bază* = 6.000 + (8 + 6) × 35,71 = 6.500,00 (orele compensate au rata 0 și nu se plătesc);
-- *Spor pentru munca în sărbători legale*: 8 × 35,71 × 100% = 285,71;
-- *Spor pentru munca în repaus săptămânal*: 6 × 35,71 × 2 × 75% = 321,43 (sâmbăta nu are program, deci toate orele primesc sporul dublu);
-- *Salariu impozabil* = 6.500,00 + 285,71 + 321,43 = 7.107,14; CAS 1.777, CASS 711, impozit 462, net 4.157,14.
+- *Spor pentru munca în sărbători legale*: 8 × 35,71 × 100% = 285,71 → 286 (sporurile se rotunjesc la leu);
+- *Spor pentru munca în repaus săptămânal*: 6 × 35,71 × 2 × 75% = 321,43 → 321 (sâmbăta nu are program, deci toate orele primesc sporul dublu);
+- *Salariu brut* = 6.500 + 286 + 321 = 7.107; CAS 1.777, CASS 711, impozit 462, net 4.157.
 
 ### Note de monografie și raportare
 
 - La validare (cu `l10n_ro_hr_payroll_account_enhancement` instalat; fără el fluturașul nu generează nota), pe exemplul de mai sus (Moraru Elena, septembrie 2026; între paranteze, analiticul postat efectiv):
-    - **Dr 641 = Cr 421** 7.747,16 (brutul, inclusiv sporurile; sporurile nu au conturi proprii);
+    - **Dr 641 = Cr 421** 7.747,00 (brutul, inclusiv sporurile; sporurile nu au conturi proprii);
     - **Dr 421 = Cr 4315 (43151)** 1.937 (CAS) și **Dr 421 = Cr 4316 (43161)** 775 (CASS);
-    - **Dr 421 = Cr 444 (4441)** 503 (impozit);
+    - **Dr 421 = Cr 444 (4441)** 504 (impozit);
     - **Dr 646 (6461 dacă există în plan) = Cr 436 (4361)** 174 (CAM).
-    Soldul 421 rămâne 4.532,16, egal cu netul.
+    Soldul 421 rămâne 4.531,00, egal cu netul.
 - Exemplul din iunie 2026 (Stanciu Andrei, cu sărbătoare și repaus):
-    - **Dr 641 = Cr 421** 7.107,14 (6.500,00 salariu de bază + 285,71 `SPOR_SARBATOARE` + 321,43 `SPOR_REPAUS`; cele două sporuri ajung tot pe 641 = 421, fără conturi proprii);
+    - **Dr 641 = Cr 421** 7.107,00 (6.500 salariu de bază + 286 `SPOR_SARBATOARE` + 321 `SPOR_REPAUS`; cele două sporuri ajung tot pe 641 = 421, fără conturi proprii);
     - **Dr 421 = Cr 4315 (43151)** 1.777 (CAS) și **Dr 421 = Cr 4316 (43161)** 711 (CASS);
     - **Dr 421 = Cr 444 (4441)** 462 (impozit);
     - **Dr 646 (6461 dacă există în plan) = Cr 436 (4361)** 160 (CAM).
-    Soldul 421 rămâne 4.157,14, egal cu netul.
+    Soldul 421 rămâne 4.157,00, egal cu netul.
 - D112 (din fluturași, cu `l10n_ro_anaf_d112_payroll`): sporurile intră în venitul brut (`E3_8`) și în bazele CAS, CASS și impozit ale asiguratului.
 
 ## 7. Legături cu alte module / declarații
@@ -170,7 +170,8 @@ Cu ore de sărbătoare și de repaus apar și liniile `SPOR_SARBATOARE` și `SPO
 | Minimul legal al acestui spor este %(minimum)s%% (Codul muncii art. 123, 126 și 142). În mesaj procentul apare cu zecimală, de exemplu „75.0%” | procent sub minim la ore suplimentare, noapte sau sărbătoare | folosiți cel puțin minimul legal |
 | Sporul de repaus săptămânal este de cel puțin %(minimum)s ori sporul de ore suplimentare (Codul muncii art. 137 și 138). În mesaj apare „2.0” | multiplicator sub 2 | folosiți cel puțin 2 |
 | Procentul unui spor nu poate fi negativ. | procent negativ pe spor în nomenclator | folosiți o valoare pozitivă |
-| Grupul **Sporuri permanente (RO)** nu apare pe fișa angajatului | utilizatorul nu are drept HR (`hr.group_hr_user`) | dați dreptul **Utilizator salarizare** sau **Angajați → Ofițer** |
+| Grupul **Sporuri permanente (RO)** nu apare pe fișa angajatului | utilizatorul nu are dreptul **Utilizator salarizare** (fila *Stat de plată* lipsește) | dați dreptul **Utilizator salarizare** |
+| Grupul **Sporuri permanente (RO)** nu apare, deși utilizatorul are dreptul Utilizator salarizare | compania angajatului nu are țara România (secțiunea apare doar pentru companiile din RO) | completați țara *România* în datele companiei (*Setări → Utilizatori și companii → Companii*) sau verificați compania angajatului |
 | Procentul și suma unui spor nu pot fi negative. | valori negative pe rândul sporului din fișa angajatului | folosiți valori pozitive |
 | Sporurile pentru ore suplimentare, muncă de noapte, sărbători legale și repaus săptămânal nu se pot arhiva: procentul lor ar fi 0. | arhivarea acestor sporuri | lăsați-le active |
 | Completați un procent sau o sumă fixă pentru spor. | rând de spor fără procent și fără sumă | completați unul dintre ele |

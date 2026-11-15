@@ -118,6 +118,9 @@ caracteristicile ei, un produs cu ofertă activă, un client și o comandă exis
 8. Creați manual cele două metode de livrare cu `Provider = EMAG` (**Inventar → Configurare →
    Metode de livrare**); după importul curierilor (§6, Pasul 8), mapați codul lor
    (`courier`/`pickup`) și rulați **Get city** pe fiecare, pentru geografia necesară la AWB.
+9. Alegeți pe backend **lista de prețuri** în moneda platformei eMAG: RON pentru eMAG RO, EUR pentru
+   eMAG BG, HUF pentru eMAG HU. Moneda acestei liste este moneda în care se trimit toate prețurile
+   ofertelor (`currency_type`); fără listă de prețuri, se folosește moneda backend-ului.
 
 ## 6. Flux de utilizare
 
@@ -251,6 +254,12 @@ de vânzare Odoo al produsului) — o ajustare manuală a acestor două câmpuri
 următorul export, dacă nu e reflectată și în lista de prețuri. Excepție: ofertele cu **Auto Price**
 și cu **Max sale price** completat — exportul le trimite propriul preț și propriile limite min/max,
 în care lucrează auto-pricing-ul.
+
+**Moneda prețurilor.** Prețul de vânzare, minimul și maximul pleacă la eMAG în moneda listei de
+prețuri a backend-ului, marcate cu acea monedă (`currency_type`), la exportul de produs, la **Set
+price** și la auto-pricing. Prețul recomandat se calculează din prețul de vânzare al produsului (în
+moneda companiei) și se convertește în moneda listei, la cursul zilei. Pe eMAG BG, cu lista în EUR,
+prețurile ajung în EUR, fără nicio conversie făcută de eMAG.
 
 ![Fișa produsului marketplace: Odoo Price/External Price, Sale Price, Auto Price, Buy Button Rank, Min/Max Sale Price, butoanele Set price/Get price](screenshots/09_product_pricing.png)
 
@@ -531,6 +540,9 @@ cron-ului de auto-pricing.
 - [ ] Nu s-a promis clientului sincronizare de stoc în timp real — exportul e periodic, prin cron-ul
       comun al framework-ului, dezactivat implicit; câmpul **Safe stock** nu are efect în versiunea
       actuală — nu promiteți o rezervă de siguranță pe baza lui.
+- [ ] Pe un backend în altă monedă decât RON (eMAG BG, eMAG HU), lista de prețuri a backend-ului
+      este în moneda platformei, iar după primul export prețul unei oferte citit cu **Get price**
+      este egal cu cel din listă, nu împărțit la curs.
 - [ ] Auto-pricing-ul pe buy box **nu se activează** pe niciun produs fără ca **Min sale price** și
       **Max sale price** să fie completate întâi — altfel riscă să trimită prețul 0 la eMAG.
 - [ ] Clientul nu se așteaptă la un flux de retur/refund automat — cererile RMA se importă și li se
