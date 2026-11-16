@@ -8,10 +8,13 @@
 
 Magazinul online (și linkurile de plată trimise clienților) poate primi plata cu cardul sau cu contul Revolut prin
 **Revolut Merchant**. Clientul plătește pe fereastra Revolut (flux **Direct**, popup în pagina magazinului) sau pe
-pagina Revolut (flux **Redirect**), iar Odoo află rezultatul direct de la Revolut: comanda se confirmă și plata se
+pagina Revolut (flux **Redirecționare**), iar Odoo află rezultatul direct de la Revolut: comanda se confirmă și plata se
 înregistrează fără ca cineva să verifice manual extrasul. Modulul vorbește cu Revolut direct, cu cheile proprii ale
 firmei: nu există un server intermediar. Opțional, plata poate fi doar **autorizată** la finalizarea comenzii și
 **încasată manual** de contabil (confirmarea comenzii, apoi încasarea efectivă; momentan indisponibil pe instalări noi, vezi limitarea cunoscută de la pasul 2).
+
+Plățile primite pot fi **rambursate din Odoo**, integral sau parțial (de mai multe ori pe aceeași plată), fără
+logare în portalul Revolut.
 
 Se adresează firmelor cu cont Revolut Business și magazin online (sau facturi plătite prin link de plată) în Odoo.
 
@@ -35,7 +38,7 @@ Secure). Contextul operațional pe care trebuie să-l cunoască consultantul:
 | Rol | Ce face |
 |---|---|
 | Administrator (grup Setări) | introduce cheile Revolut și generează webhook-ul; secretul de semnare este vizibil doar acestui grup |
-| Contabil (cu drepturi de administrator al contabilității și modul developer pentru meniul Tranzacții) | urmărește tranzacțiile, încasează (sau anulează) plățile autorizate și reconciliază încasările cu extrasul |
+| Contabil (cu drepturi de administrator al contabilității și modul developer pentru meniul Tranzacții) | urmărește tranzacțiile, încasează (sau anulează) plățile autorizate, face rambursările și reconciliază încasările cu extrasul |
 | Client (vizitator al magazinului) | alege Revolut la finalizarea comenzii și plătește în fereastra sau pe pagina Revolut |
 
 ## 4. Conturi și date implicate
@@ -56,18 +59,18 @@ Secure). Contextul operațional pe care trebuie să-l cunoască consultantul:
 1. În contul Revolut Business (sandbox pentru testare) generați cheile API din secțiunea **Merchant API**.
 2. În Odoo deschideți **Contabilitate → Configurare → Plăți online → Furnizori de plată → Revolut** (în lipsa
    modulului Enterprise de contabilitate, sub **Facturare**).
-3. Pe tabul **Date autentificare** completați **Cheie API Revolut** (cheia secretă) și **Revolut Public Key** și alegeți
-   **Revolut Flow**: **Direct (Popup)** sau **Redirect** (vezi pasul 1 din fluxul de mai jos).
-4. Cu cheia API completată și providerul accesibil public pe internet, apăsați **Generate your webhook**: Odoo creează la
+3. Pe tabul **Date autentificare** completați **Cheie API Revolut** (cheia secretă) și **Cheie publică Revolut** și alegeți
+   **Flux Revolut**: **Direct (fereastră)** sau **Redirecționare** (vezi pasul 1 din fluxul de mai jos).
+4. Cu cheia API completată și providerul accesibil public pe internet, apăsați **Generează webhook-ul**: Odoo creează la
    Revolut un webhook către `<adresa site>/payment/revolut/webhook` pentru evenimentele `ORDER_COMPLETED` și
-   `ORDER_AUTHORISED` și salvează secretul de semnare în **Webhook Signing Secret**. Dacă Revolut nu returnează secretul,
+   `ORDER_AUTHORISED` și salvează secretul de semnare în **Secret semnare webhook**. Dacă Revolut nu returnează secretul,
    Odoo anunță că trebuie copiat manual din portalul Revolut în acest câmp.
 5. Pe tabul **Configurare** alegeți **Jurnal plată** (de tip bancă) și, la nevoie, bifați **Captați Valoarea Manual** (vezi pasul 2).
 6. Publicați providerul, ca să apară clienților la finalizarea comenzii. Treceți-l pe **Mod testare** pentru încercări
    cu cheile sandbox, apoi pe **Activ** pentru plăți reale. Starea determină și mediul folosit: sandbox (Mod testare) sau
    producție (Activ).
-7. Opțional, pentru Apple Pay (plată expres): pe același tab, dacă este permisă plata expres, încărcați **Apple Pay
-   Domain File** (fișierul de validare descărcat din documentația Revolut) și apăsați **Register domain for Apple Pay**.
+7. Opțional, pentru Apple Pay (plată expres): pe același tab, dacă este permisă plata expres, încărcați **Fișier domeniu
+   Apple Pay** (fișierul de validare descărcat din documentația Revolut) și apăsați **Înregistrează domeniul pentru Apple Pay**.
    Fișierul este servit la `/.well-known/apple-developer-merchantid-domain-association`.
 
 ## 6. Flux de utilizare
@@ -76,13 +79,13 @@ Secure). Contextul operațional pe care trebuie să-l cunoască consultantul:
 
 **Meniu:** Contabilitate (sau Facturare) → Configurare → Plăți online → Furnizori de plată → Revolut
 
-Pe tabul **Date autentificare** se completează cheile din contul Revolut: **Cheie API Revolut** și **Revolut Public Key**.
-**Revolut Flow** alege felul plății: **Direct (Popup)** (clientul plătește într-o fereastră Revolut deschisă în pagina
-magazinului) sau **Redirect** (clientul este trimis pe pagina de plată Revolut și revine în magazin). Câmpul **Webhook
-Signing Secret** se afișează mascat; butonul **Generate your webhook** apare doar cât timp secretul lipsește și cheia API
+Pe tabul **Date autentificare** se completează cheile din contul Revolut: **Cheie API Revolut** și **Cheie publică Revolut**.
+**Flux Revolut** alege felul plății: **Direct (fereastră)** (clientul plătește într-o fereastră Revolut deschisă în pagina
+magazinului) sau **Redirecționare** (clientul este trimis pe pagina de plată Revolut și revine în magazin). Câmpul **Secret semnare
+webhook** se afișează mascat; butonul **Generează webhook-ul** apare doar cât timp secretul lipsește și cheia API
 este completată.
 
-![Formularul providerului Revolut, tabul Date autentificare: cheia API secretă și cheia publică Revolut, fluxul Direct (Popup) și câmpul Webhook Signing Secret încă gol, cu butonul Generate your webhook alături](screenshots/01_provider_revolut.png)
+![Formularul providerului Revolut, tabul Date autentificare: cheia API secretă și cheia publică Revolut, fluxul Direct (fereastră) și câmpul Secret semnare webhook încă gol, cu butonul Generează webhook-ul alături](screenshots/01_provider_revolut.png)
 
 ### Pasul 2 — Configurarea jurnalului și a capturării manuale
 
@@ -105,8 +108,9 @@ Aici se alege **Jurnal plată** (de tip bancă), pe care se înregistrează înc
 
 Fiecare plată pornită din magazin creează o tranzacție cu **Furnizor** Revolut. Lista arată referința comenzii, suma,
 starea și clientul. Tranzacțiile **Autorizat** așteaptă încasarea manuală; cele **Confirmat** au fost încasate.
+Rambursările apar ca tranzacții separate, cu referința `R-` și suma negativă (pasul 8).
 
-![Lista tranzacțiilor de plată: o tranzacție Revolut în starea Autorizat și una în starea Confirmat, cu referință, client și sumă](screenshots/03_lista_tranzactii.png)
+![Lista tranzacțiilor de plată: o tranzacție Revolut Autorizat, plăți Confirmat și rambursarea R-SO0043-1 cu suma negativă](screenshots/03_lista_tranzactii.png)
 
 ### Pasul 4 — Încasarea sau anularea unei plăți autorizate
 
@@ -122,11 +126,11 @@ revocat.
 
 **Meniu:** deschideți tranzacția în starea **Confirmat**
 
-Tranzacția confirmată păstrează în **Referința furnizor** id-ul comenzii create la Revolut: pe el se potrivește orice
+Tranzacția confirmată păstrează în **Referință furnizor** id-ul comenzii create la Revolut: pe el se potrivește orice
 notificare ulterioară și îl folosiți pentru a găsi plata în portalul Revolut. Confirmarea vine fie din întoarcerea
 clientului în magazin, fie din webhook; în ambele cazuri Odoo verifică la Revolut id-ul, suma și moneda înainte.
 
-![Tranzacție Revolut Confirmat: referința tranzacției, id-ul comenzii Revolut la Referința furnizor, suma și clientul](screenshots/05_tranzactie_confirmata.png)
+![Tranzacție Revolut Confirmat: referința tranzacției, id-ul comenzii Revolut la Referință furnizor, suma și clientul](screenshots/05_tranzactie_confirmata.png)
 
 ### Pasul 6 — Plata contabilă
 
@@ -147,17 +151,65 @@ Plata este înregistrată pe contul de încasări în curs al jurnalului, în a�
 
 ![Nota contabilă a plății: debit cont Încasări restante, credit 411100 Clienți, pe suma încasată](screenshots/07_nota_contabila.png)
 
+### Pasul 8 — Rambursarea din Odoo
+
+**Meniu:** Contabilitate (sau Facturare) → Clienți → Plăți → plata încasată prin Revolut
+
+Pe plata contabilă a unei încasări Revolut apare butonul **Retur** cât timp mai există sumă de rambursat. Asistentul
+**Retur** arată **Valoare plată**, **Valoare rambursată** (rambursările făcute deja), **Maximul de rambursare permis** și
+**Valoare de rambursare**, completată implicit cu tot restul. Se poate rambursa integral sau doar o parte; pe aceeași
+plată se pot face mai multe rambursări parțiale, până la suma ei. La **Retur**, Odoo trimite rambursarea la Revolut,
+fără ca cineva să intre în portalul Revolut. Butonul inteligent **Returnări** de pe plată deschide rambursările făcute. Dacă o rambursare anterioară este încă
+**În așteptare**, asistentul afișează un avertisment.
+
+![Plata contabilă a unei încasări Revolut: butonul Retur și butonul inteligent Returnări cu o rambursare făcută](screenshots/08_plata_rambursare.png)
+
+![Asistentul Retur: valoarea plății 214,00 lei, 64,00 lei rambursați deja, maximum 150,00 lei și valoarea de rambursat](screenshots/09_asistent_rambursare.png)
+
+Rambursarea devine o tranzacție nouă, cu referința `R-<referința plății>`, suma negativă și **Tranzacție Sursă** =
+tranzacția inițială (SO0043-1); **Referință furnizor** este id-ul rambursării la Revolut. Dacă Revolut confirmă imediat, tranzacția
+este **Confirmat** și Odoo creează plata de rambursare; dacă Revolut o are încă în procesare, tranzacția rămâne **În
+așteptare** până o confirmă webhook-ul. Dacă Revolut refuză rambursarea, tranzacția trece în **Eroare**.
+
+![Tranzacția de rambursare R-SO0043-1: Confirmat, -64,00 lei, tranzacția sursă SO0043-1 și id-ul rambursării Revolut la Referință furnizor](screenshots/10_tranzactie_rambursare.png)
+
+### Pasul 9 — Nota contabilă a rambursării
+
+**Meniu:** tranzacția de rambursare → **Plată** → butonul **Înregistrare jurnal**
+
+Plata de rambursare (tip **Trimite**) stinge contul de încasări în curs al jurnalului și reface creanța pe client.
+Dacă rambursarea corespunde unei facturi, contabilul emite nota de credit (factura storno) și o reconciliază cu plata
+de rambursare; modulul nu creează nota de credit.
+
+![Nota contabilă a rambursării: debit 411100 Clienți, credit 512102 Încasări restante, 64,00 lei](screenshots/11_nota_rambursare.png)
+
 #### Note de monografie și raportare
 
-Încasarea online a unei facturi de 380,50 RON (exemplu din capturi):
+Încasarea online a unei facturi de 380,50 RON (SO0041-1, capturile 06–07):
 
 | Moment | Debit | Credit | Sumă |
 |---|---|---|---|
-| Confirmarea plății (plata contabilă) | 512102 Încasări restante | 411100 Clienți | 380,50 |
+| Confirmarea plății (plata contabilă, automat) | 512102 Încasări restante | 411100 Clienți | 380,50 |
 | Decontarea de către Revolut (extras bancar, reconciliere) | 5121 Conturi la bănci în lei | 512102 Încasări restante | 380,50 |
 | Comisionul Revolut, la decontare (manual) | 627 Cheltuieli cu serviciile bancare | 5121 Conturi la bănci în lei | după raportul Revolut |
 
-La decontare în valută se folosește contul în valută (5124), cu diferențe de curs. Conturile pot diferi după jurnalul ales și după planul de conturi al clientului. Modulul creează doar prima notă.
+Rambursarea parțială de 64,00 RON pe plata SO0043-1 de 214,00 RON (capturile 08–11), cu TVA 21%:
+
+| Moment | Debit | Credit | Sumă |
+|---|---|---|---|
+| Rambursare din Odoo (plata de rambursare, automat) | 411100 Clienți | 512102 Încasări restante | 64,00 |
+| Rambursarea pe extrasul Revolut (reconciliere) | 512102 Încasări restante | 5121 Conturi la bănci în lei | 64,00 |
+| Nota de credit a facturii (manual, de contabil), venit stornat în roșu | 411100 Clienți | 707 Venituri din vânzarea mărfurilor (sau 701/704) | -52,89 |
+| Nota de credit: TVA stornată în roșu | 411100 Clienți | 4427 TVA colectată | -11,11 |
+| Dacă marfa se întoarce în stoc (recepția returului) | 607 Cheltuieli privind mărfurile | 371 Mărfuri | -cost, în roșu |
+
+În Odoo, nota de credit apare inversat (Dr 707 și Dr 4427 = Cr 411100, cu sume pozitive), echivalentul stornării
+în roșu; la fel, recepția returului apare ca Dr 371 = Cr 607, pe sumă pozitivă. Dacă rambursarea este o reducere de preț, nu un retur, tratamentul se stabilește cu contabilul. Revolut
+poate scădea rambursarea din decontare: atunci decontarea se înregistrează net, pe suma rămasă.
+
+La decontare în valută se folosește contul în valută (5124), cu diferențe de curs. Conturile pot diferi după jurnalul
+ales și după planul de conturi al clientului. Modulul creează automat nota încasării și nota plății de rambursare;
+celelalte sunt manuale.
 
 ## 7. Legături cu alte module / declarații
 
@@ -170,19 +222,19 @@ La decontare în valută se folosește contul în valută (5124), cu diferențe 
 
 **Automat:** crearea comenzii la Revolut, trimiterea sumei, monedei și datelor clientului, verificarea plății (id comandă,
 sumă, monedă), confirmarea prin webhook sau la întoarcerea clientului, crearea plății contabile, încasarea și anularea
-la Revolut.
+la Revolut, rambursarea totală sau parțială trimisă la Revolut și plata de rambursare.
 
 **Manual:** configurarea contului Revolut (cheile API), reconcilierea extrasului bancar, contabilizarea comisionului
-Revolut, încărcarea fișierului Apple Pay și înregistrarea domeniului.
+Revolut, încărcarea fișierului Apple Pay și înregistrarea domeniului, nota de credit pentru factura rambursată.
 
 ## 8. Verificări pentru consultant
 
-- [ ] Providerul are completate **Cheie API Revolut** și **Revolut Public Key** și starea corectă (**Mod testare** = sandbox,
+- [ ] Providerul are completate **Cheie API Revolut** și **Cheie publică Revolut** și starea corectă (**Mod testare** = sandbox,
   **Activ** = producție).
-- [ ] **Generate your webhook** a completat **Webhook Signing Secret** (sau secretul a fost copiat manual din portalul
+- [ ] **Generează webhook-ul** a completat **Secret semnare webhook** (sau secretul a fost copiat manual din portalul
   Revolut); fără secret, notificările webhook sunt ignorate.
 - [ ] Providerul are **Jurnal plată** de tip bancă și moneda comenzii este acceptată de contul Revolut.
-- [ ] O plată de test cu cardul de test Revolut ajunge în **Confirmat** și are **Referința furnizor** completată cu id-ul
+- [ ] O plată de test cu cardul de test Revolut ajunge în **Confirmat** și are **Referință furnizor** completată cu id-ul
   comenzii Revolut.
 - [ ] Dacă **Captați Valoarea Manual** poate fi bifată (vezi limitarea cunoscută de la pasul 2), cu bifa activă, plata ajunge în **Autorizat**, iar **Captați Tranzacție** o trece în
   **Confirmat**; **Tranzacție nulă** o anulează.
@@ -190,20 +242,26 @@ Revolut, încărcarea fișierului Apple Pay și înregistrarea domeniului.
   ulterior.
 - [ ] Suma și moneda din Revolut coincid cu cele din Odoo; o nepotrivire duce tranzacția în **Eroare**.
 - [ ] Plata contabilă apare în **Contabilitate → Clienți → Plăți**, pe jurnalul providerului.
-- [ ] **Webhook Signing Secret** nu este vizibil utilizatorilor fără drepturi de Setări.
+- [ ] Pe plata unei încasări Revolut, **Retur** cu o sumă parțială creează tranzacția `R-...` legată de tranzacția
+  inițială; după confirmare, **Maximul de rambursare permis** scade cu suma rambursată.
+- [ ] O rambursare rămasă **În așteptare** trece în **Confirmat** după webhook-ul Revolut.
+- [ ] **Secret semnare webhook** nu este vizibil utilizatorilor fără drepturi de Setări.
 
 ## 9. Mesaje de eroare frecvente
 
 | Mesaj | Cauză | Remediere |
 |---|---|---|
-| Missing Revolut API Key | cheia API lipsește de pe provider | completați **Cheie API Revolut** |
-| You cannot create a Revolut Webhook if your API Key is not set. | s-a cerut webhook-ul fără cheia API | completați cheia API, apoi apăsați **Generate your webhook** |
-| Your Revolut Webhook is already set up. | secretul de semnare există deja | nu e nevoie de nicio acțiune; ștergeți secretul doar dacă recreați webhook-ul |
-| The webhook endpoint was created on Revolut, but no signing secret was returned. … | Revolut nu a returnat secretul | copiați secretul din portalul Revolut în **Webhook Signing Secret** |
-| Failed to create Revolut Webhook: … | adresa site-ului nu este publică sau cheia API este greșită / din alt mediu | verificați cheia, mediul (sandbox sau producție) și accesibilitatea site-ului |
-| Revolut amount mismatch / Revolut currency mismatch / Revolut order id mismatch | suma, moneda sau id-ul comenzii din Revolut nu corespund tranzacției | tranzacția rămâne în **Eroare**; verificați plata în portalul Revolut |
-| Upload the Apple Pay domain validation file first. … | s-a cerut înregistrarea domeniului fără fișier | încărcați **Apple Pay Domain File** din documentația Revolut |
+| Lipsește cheia API Revolut | cheia API lipsește de pe provider | completați **Cheie API Revolut** |
+| Nu puteți crea un webhook Revolut dacă cheia API nu este setată. | s-a cerut webhook-ul fără cheia API | completați cheia API, apoi apăsați **Generează webhook-ul** |
+| Webhook-ul Revolut este deja configurat. | secretul de semnare există deja | nu e nevoie de nicio acțiune; ștergeți secretul doar dacă recreați webhook-ul |
+| Endpoint-ul webhook a fost creat în Revolut, dar nu a fost returnat niciun secret de semnare. … | Revolut nu a returnat secretul | copiați secretul din portalul Revolut în **Secret semnare webhook** |
+| Crearea webhook-ului Revolut a eșuat: … | adresa site-ului nu este publică sau cheia API este greșită / din alt mediu | verificați cheia, mediul (sandbox sau producție) și accesibilitatea site-ului |
+| Sumă Revolut nepotrivită / Monedă Revolut nepotrivită / ID comandă Revolut nepotrivit | suma, moneda sau id-ul comenzii din Revolut nu corespund tranzacției | tranzacția rămâne în **Eroare**; verificați plata în portalul Revolut |
+| Încărcați mai întâi fișierul de validare a domeniului Apple Pay. … | s-a cerut înregistrarea domeniului fără fișier | încărcați **Fișier domeniu Apple Pay** din documentația Revolut |
 | The following payment methods must be disabled in order to enable manual capture: Revolut | se bifează **Captați Valoarea Manual**, dar metoda de plată Revolut nu declară suportul pentru captura manuală (limitare cunoscută a modulului) | lăsați bifa nefolosită; plata se încasează automat |
+| Rambursarea a fost respinsă de Revolut. | Revolut a refuzat rambursarea (de pildă suma depășește restul nerambursat) | tranzacția de rambursare rămâne în **Eroare**; verificați plata în portalul Revolut și reluați cu o sumă corectă |
+| Comanda Revolut de rambursat este necunoscută. | plata inițială nu are id-ul comenzii Revolut (**Referință furnizor**) | rambursarea nu se trimite; faceți-o din portalul Revolut |
+| Numai tranzacțiile confirmate pot fi rambursate. | plata inițială nu este încă **Confirmat** | așteptați confirmarea plății |
 | Erori HTTP de la Revolut (de pildă 401 sau 400) | cheie API greșită sau din alt mediu, cerere respinsă | verificați cheia și starea providerului; detaliul este în mesaj și în jurnalul serverului |
 
 ## 10. Capturi de ecran
@@ -218,12 +276,20 @@ cont Revolut real. Lista, în ordinea pașilor:
 - `04_tranzactie_autorizata.png`: tranzacția autorizată, cu butoanele Captați / Tranzacție nulă;
 - `05_tranzactie_confirmata.png`: tranzacția confirmată, cu id-ul comenzii Revolut;
 - `06_plata_contabila.png`: plata contabilă creată la confirmare;
-- `07_nota_contabila.png`: nota contabilă a plății (512102 Încasări restante / 411100 Clienți).
+- `07_nota_contabila.png`: nota contabilă a plății (512102 Încasări restante / 411100 Clienți);
+- `08_plata_rambursare.png`: plata cu butonul Retur și rambursarea făcută;
+- `09_asistent_rambursare.png`: asistentul Retur, cu suma rambursată deja și restul;
+- `10_tranzactie_rambursare.png`: tranzacția de rambursare, legată de plata inițială;
+- `11_nota_rambursare.png`: nota contabilă a rambursării (411100 Clienți / 512102 Încasări restante).
+
+Revolut nu este apelat în teste: răspunsul lui la rambursare este simulat. Același test face și GIF-ul demo al
+paginii Apps (`static/description/en/demo.gif`, în engleză, ca descrierea): checkout-ul cu Revolut în magazin și o
+rambursare parțială; are nevoie de `website_sale` instalat.
 
 Regenerare:
 
 ```
-./odoo/odoo-bin -c odoo.conf -d <db> -i deltatech_payment_revolut,l10n_ro,l10n_ro_doc_screenshots \
+./odoo/odoo-bin -c odoo.conf -d <db> -i deltatech_payment_revolut,l10n_ro,l10n_ro_doc_screenshots,website_sale \
     --without-demo=all --test-tags=/deltatech_payment_revolut:TestRevolutScreenshots --stop-after-init
 ```
 
@@ -237,4 +303,5 @@ Fereastra și pagina de plată Revolut sunt ale Revolut, nu pași ai operatorulu
 - Explicați diferența dintre încasarea automată și **Captați Valoarea Manual** (autorizare, apoi **Captați Tranzacție**
   sau **Tranzacție nulă**); încasarea parțială nu este disponibilă, iar bifa nu poate fi activată momentan (limitarea de la pasul 2).
 - Precizați că modulul nu calculează comisionul Revolut și nu aduce extrasul: reconcilierea rămâne la contabil.
-- Rambursările nu se trimit din Odoo prin acest modul: metoda de plată nu declară suport pentru rambursare.
+- Arătați rambursarea din plata contabilă (**Retur**): integral sau parțial, de mai multe ori, fără portalul Revolut;
+  nota de credit pentru factură rămâne la contabil.

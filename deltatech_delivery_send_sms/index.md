@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.6`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_send_sms
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_send_sms`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-16`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -18,6 +18,12 @@ Acest modul optimizează experiența clientului și transparența livrării prin
 - Consolidarea încrederii în brand: construiește încrederea clientului printr-o comunicare consecventă și profesională pe tot parcursul ciclului de onorare a comenzii.
 - Îmbunătățirea ratei de livrare cu succes: asigură că fiecare client știe momentul exact în care coletul a pornit la drum, reducând tentativele de livrare eșuate.
 - Suport logistic scalabil: gestionează automat notificările SMS pentru un volum mare de comenzi, fără intervenție manuală.
+- Configurare per companie: în **Inventar → Configurare → Setări**, secțiunea **Expediere**, se bifează **SMS AWB Create** și/sau **SMS AWB Picked up**; fiecare opțiune are un șablon SMS (cele două șabloane livrate cu modulul sunt preselectate și pot fi editate, folosind numele companiei, documentul sursă și referința de urmărire).
+- Activare per transportator: în **Inventar → Configurare → Livrare → Metode de livrare** se bifează **Send Sms Awb**; doar transferurile expediate cu un astfel de curier notifică clientul.
+- Două momente de notificare: SMS „AWB creat” la generarea AWB-ului (automat la validare sau prin **Send to Shipper**) și SMS „AWB preluat” când starea livrării trece din *Draft* / *Pre advice* în *In Transit*.
+- Condiții de trimitere: SMS-ul „AWB creat” se trimite doar dacă opțiunea companiei și bifa transportatorului sunt active și clientul are **Telefon**; SMS-ul „AWB preluat” nu verifică telefonul, iar pentru un client fără număr apare în chatter ca SMS eșuat.
+- Trasabilitate și siguranță: fiecare SMS este înregistrat în chatter-ul transferului, cu textul exact trimis; un SMS nelivrat este marcat ca eșuat și poate fi retrimis, iar dacă mesajul nu poate fi construit (ex. șablon invalid) o notă din chatter explică motivul. Expedierea nu este blocată niciodată.
+- Limba clientului: textele în engleză și română sunt livrate cu modulul; șabloanele pot fi adaptate sau extinse cu alte limbi.
 
 #### 3. Dependențe
 
@@ -27,7 +33,7 @@ Acest modul optimizează experiența clientului și transparența livrării prin
 
 #### 4. Componente Cheie
 
-Sumarul și funcționalitățile cheie de mai sus provin din `readme/DESCRIPTION.md`, prin urmare analiza detaliată a codului pentru componente nu a fost solicitată de Readme și a fost omisă conform fluxului de ingestie.
+Sumarul și funcționalitățile cheie de mai sus provin din `readme/DESCRIPTION.md` (completat cu `readme/USAGE.md`), prin urmare analiza detaliată a codului pentru componente nu a fost solicitată de Readme și a fost omisă conform fluxului de ingestie.
 
 #### 5. Conexiuni
 

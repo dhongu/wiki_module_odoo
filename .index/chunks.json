@@ -1490,7 +1490,7 @@
   {
     "path": "deltatech_b2b_portal/index.md",
     "module": "deltatech_b2b_portal",
-    "version": "19.0.1.4.3",
+    "version": "19.0.1.4.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_portal",
     "local_path": "odoo-addons/bitshop/deltatech_b2b_portal",
     "last_ingest": "2026-10-12",
@@ -2325,7 +2325,7 @@
   {
     "path": "deltatech_cmr_document/index.md",
     "module": "deltatech_cmr_document",
-    "version": "19.0.1.3.3",
+    "version": "19.0.1.3.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_cmr_document",
     "local_path": "odoo-addons/bitshop/deltatech_cmr_document",
     "last_ingest": "2026-11-10",
@@ -2628,7 +2628,7 @@
   {
     "path": "deltatech_customer_analysis/index.md",
     "module": "deltatech_customer_analysis",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_customer_analysis",
     "local_path": "odoo-addons/bitshop/deltatech_customer_analysis",
     "last_ingest": "2026-09-29",
@@ -3952,7 +3952,7 @@
     "version": "19.0.1.0.6",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_send_sms",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_send_sms",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-16",
     "friendly_name": "Deltatech Delivery Send SMS",
     "summary": "Acest modul optimizează experiența clientului și transparența livrării prin trimiterea automată de notificări SMS atunci când eticheta de transport (AWB) este generată sau când coletul este preluat de curier. Din perspectivă de business, aceste actualizări instant pe mobil reduc semnificativ întrebările de tip „Unde este comanda mea?”, deoarece clienții primesc actualizări de stare în timp real direct pe telefon.",
     "features": [
@@ -3960,7 +3960,13 @@
       "Reducerea solicitărilor de suport: minimizează volumul de muncă manuală al echipei de suport prin automatizarea notificărilor privind progresul expedierii.",
       "Consolidarea încrederii în brand: construiește încrederea clientului printr-o comunicare consecventă și profesională pe tot parcursul ciclului de onorare a comenzii.",
       "Îmbunătățirea ratei de livrare cu succes: asigură că fiecare client știe momentul exact în care coletul a pornit la drum, reducând tentativele de livrare eșuate.",
-      "Suport logistic scalabil: gestionează automat notificările SMS pentru un volum mare de comenzi, fără intervenție manuală."
+      "Suport logistic scalabil: gestionează automat notificările SMS pentru un volum mare de comenzi, fără intervenție manuală.",
+      "Configurare per companie: în Inventar → Configurare → Setări, secțiunea Expediere, se bifează SMS AWB Create și/sau SMS AWB Picked up; fiecare opțiune are un șablon SMS (cele două șabloane livrate cu modulul sunt preselectate și pot fi editate, folosind numele companiei, documentul sursă și referința de urmărire).",
+      "Activare per transportator: în Inventar → Configurare → Livrare → Metode de livrare se bifează Send Sms Awb; doar transferurile expediate cu un astfel de curier notifică clientul.",
+      "Două momente de notificare: SMS „AWB creat” la generarea AWB-ului (automat la validare sau prin Send to Shipper) și SMS „AWB preluat” când starea livrării trece din *Draft* / *Pre advice* în *In Transit*.",
+      "Condiții de trimitere: SMS-ul „AWB creat” se trimite doar dacă opțiunea companiei și bifa transportatorului sunt active și clientul are Telefon; SMS-ul „AWB preluat” nu verifică telefonul, iar pentru un client fără număr apare în chatter ca SMS eșuat.",
+      "Trasabilitate și siguranță: fiecare SMS este înregistrat în chatter-ul transferului, cu textul exact trimis; un SMS nelivrat este marcat ca eșuat și poate fi retrimis, iar dacă mesajul nu poate fi construit (ex. șablon invalid) o notă din chatter explică motivul. Expedierea nu este blocată niciodată.",
+      "Limba clientului: textele în engleză și română sunt livrate cu modulul; șabloanele pot fi adaptate sau extinse cu alte limbi."
     ],
     "dependencies": [
       "delivery",
@@ -3972,7 +3978,7 @@
       "deltatech_delivery_relay",
       "deltatech_delivery"
     ],
-    "text": "Deltatech Delivery Send SMS\ndeltatech_delivery_send_sms\nAcest modul optimizează experiența clientului și transparența livrării prin trimiterea automată de notificări SMS atunci când eticheta de transport (AWB) este generată sau când coletul este preluat de curier. Din perspectivă de business, aceste actualizări instant pe mobil reduc semnificativ întrebările de tip „Unde este comanda mea?”, deoarece clienții primesc actualizări de stare în timp real direct pe telefon.\nComunicare imediată cu clientul: trimite actualizări SMS instant despre starea livrării, pentru vizibilitate maximă.\nReducerea solicitărilor de suport: minimizează volumul de muncă manuală al echipei de suport prin automatizarea notificărilor privind progresul expedierii.\nConsolidarea încrederii în brand: construiește încrederea clientului printr-o comunicare consecventă și profesională pe tot parcursul ciclului de onorare a comenzii.\nÎmbunătățirea ratei de livrare cu succes: asigură că fiecare client știe momentul exact în care coletul a pornit la drum, reducând tentativele de livrare eșuate.\nSuport logistic scalabil: gestionează automat notificările SMS pentru un volum mare de comenzi, fără intervenție manuală."
+    "text": "Deltatech Delivery Send SMS\ndeltatech_delivery_send_sms\nAcest modul optimizează experiența clientului și transparența livrării prin trimiterea automată de notificări SMS atunci când eticheta de transport (AWB) este generată sau când coletul este preluat de curier. Din perspectivă de business, aceste actualizări instant pe mobil reduc semnificativ întrebările de tip „Unde este comanda mea?”, deoarece clienții primesc actualizări de stare în timp real direct pe telefon.\nComunicare imediată cu clientul: trimite actualizări SMS instant despre starea livrării, pentru vizibilitate maximă.\nReducerea solicitărilor de suport: minimizează volumul de muncă manuală al echipei de suport prin automatizarea notificărilor privind progresul expedierii.\nConsolidarea încrederii în brand: construiește încrederea clientului printr-o comunicare consecventă și profesională pe tot parcursul ciclului de onorare a comenzii.\nÎmbunătățirea ratei de livrare cu succes: asigură că fiecare client știe momentul exact în care coletul a pornit la drum, reducând tentativele de livrare eșuate.\nSuport logistic scalabil: gestionează automat notificările SMS pentru un volum mare de comenzi, fără intervenție manuală.\nConfigurare per companie: în Inventar → Configurare → Setări, secțiunea Expediere, se bifează SMS AWB Create și/sau SMS AWB Picked up; fiecare opțiune are un șablon SMS (cele două șabloane livrate cu modulul sunt preselectate și pot fi editate, folosind numele companiei, documentul sursă și referința de urmărire).\nActivare per transportator: în Inventar → Configurare → Livrare → Metode de livrare se bifează Send Sms Awb; doar transferurile expediate cu un astfel de curier notifică clientul.\nDouă momente de notificare: SMS „AWB creat” la generarea AWB-ului (automat la validare sau prin Send to Shipper) și SMS „AWB preluat” când starea livrării trece din *Draft* / *Pre advice* în *In Transit*.\nCondiții de trimitere: SMS-ul „AWB creat” se trimite doar dacă opțiunea companiei și bifa transportatorului sunt active și clientul are Telefon; SMS-ul „AWB preluat” nu verifică telefonul, iar pentru un client fără număr apare în chatter ca SMS eșuat.\nTrasabilitate și siguranță: fiecare SMS este înregistrat în chatter-ul transferului, cu textul exact trimis; un SMS nelivrat este marcat ca eșuat și poate fi retrimis, iar dacă mesajul nu poate fi construit (ex. șablon invalid) o notă din chatter explică motivul. Expedierea nu este blocată niciodată.\nLimba clientului: textele în engleză și română sunt livrate cu modulul; șabloanele pot fi adaptate sau extinse cu alte limbi."
   },
   {
     "path": "deltatech_delivery_status/index.md",
@@ -3980,7 +3986,7 @@
     "version": "19.0.2.3.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_delivery_status",
     "local_path": "odoo-addons/deltatech/deltatech_delivery_status",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-16",
     "friendly_name": "Deltatech Delivery Status",
     "summary": "Acest modul extinde sistemul de livrare din Odoo pentru a oferi o urmărire detaliată și o gestionare avansată a stării expedierilor. El adaugă o stare de livrare granulară pe transferurile de stoc, integrează informațiile despre starea transmise de curier cu comenzile de vânzare și permite controlul livrărilor în funcție de plată. Astfel, echipele de vânzări, depozit și clienții beneficiază de o vizibilitate clară și de informații precise privind parcursul fiecărui colet, de la pregătirea în depozit până la livrarea finală către client.",
     "features": [
@@ -3996,7 +4002,8 @@
       "Blocare în funcție de furnizorul de plată: amânarea automată a livrărilor pe baza configurației furnizorului de plată. Fiecare furnizor poate fi configurat cu opțiunea „Livrare amânată\"; când este activată, livrările sunt blocate până la confirmarea plății, iar la confirmare sistemul eliberează automat livrările blocate.",
       "Configurare la nivel de echipă de vânzări: echipele de vânzări pot fi configurate să amâne livrările pentru anumite metode de plată (tratament special pentru transferurile bancare, permițând verificarea plății înainte de expediere).",
       "Gestionare la nivel de comandă: funcții pentru amânarea sau eliberarea livrărilor la nivelul comenzii de vânzare.",
-      "Vizibilitatea stării: afișează starea „amânat\" pe comenzi și transferuri pentru o mai bună conștientizare operațională."
+      "Vizibilitatea stării: afișează starea „amânat\" pe comenzi și transferuri pentru o mai bună conștientizare operațională; comenzile cu livrare amânată pot fi găsite cu filtrul „Livrare amânată” (comenzi de vânzare) și „Amânat” (transferuri), iar acțiunile „Postpone Delivery” / „Release Delivery” sunt disponibile și în masă, din meniul *Acțiuni* al listei de comenzi.",
+      "Eliberare la plată: livrarea se amână la confirmare doar cât timp ultima plată nu este finalizată (opțiunea furnizorului și opțiunea echipei pentru transfer bancar); la confirmarea plății, comenzile amânate asociate sunt eliberate, iar o eroare la eliberare nu blochează procesarea plății."
     ],
     "dependencies": [
       "delivery",
@@ -4005,8 +4012,11 @@
       "stock_delivery",
       "payment"
     ],
-    "connections": [],
-    "text": "Deltatech Delivery Status\ndeltatech_delivery_status\nAcest modul extinde sistemul de livrare din Odoo pentru a oferi o urmărire detaliată și o gestionare avansată a stării expedierilor. El adaugă o stare de livrare granulară pe transferurile de stoc, integrează informațiile despre starea transmise de curier cu comenzile de vânzare și permite controlul livrărilor în funcție de plată. Astfel, echipele de vânzări, depozit și clienții beneficiază de o vizibilitate clară și de informații precise privind parcursul fiecărui colet, de la pregătirea în depozit până la livrarea finală către client.\nAdaugă urmărirea detaliată a stării de livrare pe transferurile de stoc.\nIntegrează informațiile de stare de la curier cu comenzile de vânzare.\nPermite gestionarea stării de livrare la nivelul echipelor de vânzări.\nExtinde furnizorii de plată cu informații privind starea de livrare.\nSuportă urmărirea coletelor prin intermediul curierilor.\nPermite monitorizarea stării de livrare pe tot parcursul procesului logistic.\nÎmbunătățește comunicarea între vânzări, depozit și clienți cu privire la starea expedierii.\nCentralizează informațiile de livrare pentru o vizibilitate mai bună în întreaga organizație.\nBlocare manuală a livrării: utilizatorii pot amâna manual livrările marcând transferurile ca amânate.\nBlocare în funcție de furnizorul de plată: amânarea automată a livrărilor pe baza configurației furnizorului de plată. Fiecare furnizor poate fi configurat cu opțiunea „Livrare amânată\"; când este activată, livrările sunt blocate până la confirmarea plății, iar la confirmare sistemul eliberează automat livrările blocate.\nConfigurare la nivel de echipă de vânzări: echipele de vânzări pot fi configurate să amâne livrările pentru anumite metode de plată (tratament special pentru transferurile bancare, permițând verificarea plății înainte de expediere).\nGestionare la nivel de comandă: funcții pentru amânarea sau eliberarea livrărilor la nivelul comenzii de vânzare.\nVizibilitatea stării: afișează starea „amânat\" pe comenzi și transferuri pentru o mai bună conștientizare operațională."
+    "connections": [
+      "deltatech_delivery",
+      "deltatech_delivery_send_sms"
+    ],
+    "text": "Deltatech Delivery Status\ndeltatech_delivery_status\nAcest modul extinde sistemul de livrare din Odoo pentru a oferi o urmărire detaliată și o gestionare avansată a stării expedierilor. El adaugă o stare de livrare granulară pe transferurile de stoc, integrează informațiile despre starea transmise de curier cu comenzile de vânzare și permite controlul livrărilor în funcție de plată. Astfel, echipele de vânzări, depozit și clienții beneficiază de o vizibilitate clară și de informații precise privind parcursul fiecărui colet, de la pregătirea în depozit până la livrarea finală către client.\nAdaugă urmărirea detaliată a stării de livrare pe transferurile de stoc.\nIntegrează informațiile de stare de la curier cu comenzile de vânzare.\nPermite gestionarea stării de livrare la nivelul echipelor de vânzări.\nExtinde furnizorii de plată cu informații privind starea de livrare.\nSuportă urmărirea coletelor prin intermediul curierilor.\nPermite monitorizarea stării de livrare pe tot parcursul procesului logistic.\nÎmbunătățește comunicarea între vânzări, depozit și clienți cu privire la starea expedierii.\nCentralizează informațiile de livrare pentru o vizibilitate mai bună în întreaga organizație.\nBlocare manuală a livrării: utilizatorii pot amâna manual livrările marcând transferurile ca amânate.\nBlocare în funcție de furnizorul de plată: amânarea automată a livrărilor pe baza configurației furnizorului de plată. Fiecare furnizor poate fi configurat cu opțiunea „Livrare amânată\"; când este activată, livrările sunt blocate până la confirmarea plății, iar la confirmare sistemul eliberează automat livrările blocate.\nConfigurare la nivel de echipă de vânzări: echipele de vânzări pot fi configurate să amâne livrările pentru anumite metode de plată (tratament special pentru transferurile bancare, permițând verificarea plății înainte de expediere).\nGestionare la nivel de comandă: funcții pentru amânarea sau eliberarea livrărilor la nivelul comenzii de vânzare.\nVizibilitatea stării: afișează starea „amânat\" pe comenzi și transferuri pentru o mai bună conștientizare operațională; comenzile cu livrare amânată pot fi găsite cu filtrul „Livrare amânată” (comenzi de vânzare) și „Amânat” (transferuri), iar acțiunile „Postpone Delivery” / „Release Delivery” sunt disponibile și în masă, din meniul *Acțiuni* al listei de comenzi.\nEliberare la plată: livrarea se amână la confirmare doar cât timp ultima plată nu este finalizată (opțiunea furnizorului și opțiunea echipei pentru transfer bancar); la confirmarea plății, comenzile amânate asociate sunt eliberate, iar o eroare la eliberare nu blochează procesarea plății."
   },
   {
     "path": "deltatech_delivery_status_review/index.md",
@@ -4072,15 +4082,22 @@
     "path": "deltatech_delivery_transport/index.md",
     "module": "deltatech_delivery_transport",
     "version": "19.0.2.0.7",
-    "github": "`https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_transport`",
+    "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_transport",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_transport",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Deltatech Delivery Auto Transport",
+    "last_ingest": "2026-11-16",
+    "friendly_name": "Delivery – Distance Pricing",
     "summary": "Acest modul permite folosirea unei firme de transport pe post de curier (carrier) în Odoo, oferind livrare cu transportatori diferiți și calcularea prețului de livrare în funcție de distanță. Astfel, costul de transport poate fi estimat automat pentru o expediere, ajutând la stabilirea corectă a tarifului facturat clientului în comenzile de vânzare.",
     "features": [
       "Calcularea prețului de livrare pe baza distanței între adrese.",
       "Folosirea unei firme de transport ca metodă de livrare (carrier).",
-      "Obținerea tarifelor (rates) pentru o expediere."
+      "Obținerea tarifelor (rates) pentru o expediere.",
+      "Metodă de livrare: în Inventar → Configurare → Livrare → Metode de livrare se creează o metodă cu Provider = Transport company, se alege Delivery Product pentru linia de transport, apoi în fila Transport Configuration se alege Transport partner și se adaugă regulile de preț.",
+      "Reguli de preț pe distanță: o regulă poate folosi Distance ca variabilă; prețul este *preț de bază + preț unitar × factor*, unde factorul este Distance (kilometrii comenzii) sau Distance Plus (diferența dintre distanța comenzii și valoarea maximă a regulii); se aplică prima regulă potrivită.",
+      "Distanța pe comandă: câmpul read-only Distance de sub adresa de livrare arată distanța dintre depozitul comenzii și adresa de livrare, calculată cu Google Maps și recalculată la schimbarea adresei sau a depozitului.",
+      "Adăugarea transportului: pe ofertă, Add shipping → alegerea metodei → Get rate → Add; dacă adresa se schimbă ulterior, Update shipping cost reîmprospătează costul.",
+      "Limite: modulul nu rezervă expedierea — nu setează referință de urmărire și nu poate anula expedieri.",
+      "Limitare cunoscută: validarea unei livrări al cărei curier are reguli de preț pe distanță eșuează momentan cu o eroare generică; soluție: se setează Integration Level = Get Rate pe metoda de livrare, caz în care prețul pe distanță din comandă se păstrează, iar livrarea se validează normal.",
+      "Cerințe: biblioteca Python `googlemaps` și o cheie Google Maps API cu Distance Matrix activat, în parametrul de sistem `base_geolocalize.google_map_api_key`; fără cheie, distanța rămâne goală."
     ],
     "dependencies": [
       "delivery",
@@ -4093,7 +4110,7 @@
       "deltatech_delivery",
       "deltatech_delivery_status"
     ],
-    "text": "Deltatech Delivery Auto Transport\ndeltatech_delivery_transport\nAcest modul permite folosirea unei firme de transport pe post de curier (carrier) în Odoo, oferind livrare cu transportatori diferiți și calcularea prețului de livrare în funcție de distanță. Astfel, costul de transport poate fi estimat automat pentru o expediere, ajutând la stabilirea corectă a tarifului facturat clientului în comenzile de vânzare.\nCalcularea prețului de livrare pe baza distanței între adrese.\nFolosirea unei firme de transport ca metodă de livrare (carrier).\nObținerea tarifelor (rates) pentru o expediere."
+    "text": "Delivery – Distance Pricing\ndeltatech_delivery_transport\nAcest modul permite folosirea unei firme de transport pe post de curier (carrier) în Odoo, oferind livrare cu transportatori diferiți și calcularea prețului de livrare în funcție de distanță. Astfel, costul de transport poate fi estimat automat pentru o expediere, ajutând la stabilirea corectă a tarifului facturat clientului în comenzile de vânzare.\nCalcularea prețului de livrare pe baza distanței între adrese.\nFolosirea unei firme de transport ca metodă de livrare (carrier).\nObținerea tarifelor (rates) pentru o expediere.\nMetodă de livrare: în Inventar → Configurare → Livrare → Metode de livrare se creează o metodă cu Provider = Transport company, se alege Delivery Product pentru linia de transport, apoi în fila Transport Configuration se alege Transport partner și se adaugă regulile de preț.\nReguli de preț pe distanță: o regulă poate folosi Distance ca variabilă; prețul este *preț de bază + preț unitar × factor*, unde factorul este Distance (kilometrii comenzii) sau Distance Plus (diferența dintre distanța comenzii și valoarea maximă a regulii); se aplică prima regulă potrivită.\nDistanța pe comandă: câmpul read-only Distance de sub adresa de livrare arată distanța dintre depozitul comenzii și adresa de livrare, calculată cu Google Maps și recalculată la schimbarea adresei sau a depozitului.\nAdăugarea transportului: pe ofertă, Add shipping → alegerea metodei → Get rate → Add; dacă adresa se schimbă ulterior, Update shipping cost reîmprospătează costul.\nLimite: modulul nu rezervă expedierea — nu setează referință de urmărire și nu poate anula expedieri.\nLimitare cunoscută: validarea unei livrări al cărei curier are reguli de preț pe distanță eșuează momentan cu o eroare generică; soluție: se setează Integration Level = Get Rate pe metoda de livrare, caz în care prețul pe distanță din comandă se păstrează, iar livrarea se validează normal.\nCerințe: biblioteca Python `googlemaps` și o cheie Google Maps API cu Distance Matrix activat, în parametrul de sistem `base_geolocalize.google_map_api_key`; fără cheie, distanța rămâne goală."
   },
   {
     "path": "deltatech_delivery_uc/index.md",
@@ -4257,8 +4274,8 @@
     "version": "19.0.1.1.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_dropshipping",
     "local_path": "odoo-addons/deltatech/deltatech_dropshipping",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Deltatech Drop Shipping",
+    "last_ingest": "2026-11-16",
+    "friendly_name": "Drop Shipping Enhanced",
     "summary": "Modulul îmbunătățește fluxul de drop shipping oferind vizibilitate mai bună și control asupra prețurilor. Afișează adresa de livrare direct în documentul de transfer (picking), astfel încât cei care gestionează expedițiile văd rapid unde trebuie livrată marfa fără a deschide alte documente. În plus, atrage atenția pe comanda de achiziție atunci când prețul de achiziție depășește prețul de vânzare al liniei corespunzătoare din comanda de vânzare, calculând și comparând automat valorile fără TVA pentru ambele documente, pentru a preveni pierderile pe fluxurile de drop shipping.",
     "features": [
       "Afișarea adresei de livrare în documentul de transfer (picking).",
@@ -4273,7 +4290,7 @@
       "stock_dropshipping",
       "sale_purchase"
     ],
-    "text": "Deltatech Drop Shipping\ndeltatech_dropshipping\nModulul îmbunătățește fluxul de drop shipping oferind vizibilitate mai bună și control asupra prețurilor. Afișează adresa de livrare direct în documentul de transfer (picking), astfel încât cei care gestionează expedițiile văd rapid unde trebuie livrată marfa fără a deschide alte documente. În plus, atrage atenția pe comanda de achiziție atunci când prețul de achiziție depășește prețul de vânzare al liniei corespunzătoare din comanda de vânzare, calculând și comparând automat valorile fără TVA pentru ambele documente, pentru a preveni pierderile pe fluxurile de drop shipping.\nAfișarea adresei de livrare în documentul de transfer (picking).\nAvertisment pe comanda de achiziție dacă prețul de achiziție este mai mare decât prețul de vânzare al liniei corespunzătoare din comanda de vânzare, în fluxurile de drop shipping.\nCalcul și comparare automată a prețurilor fără TVA pentru comanda de achiziție și cea de vânzare, pentru acuratețea avertismentului."
+    "text": "Drop Shipping Enhanced\ndeltatech_dropshipping\nModulul îmbunătățește fluxul de drop shipping oferind vizibilitate mai bună și control asupra prețurilor. Afișează adresa de livrare direct în documentul de transfer (picking), astfel încât cei care gestionează expedițiile văd rapid unde trebuie livrată marfa fără a deschide alte documente. În plus, atrage atenția pe comanda de achiziție atunci când prețul de achiziție depășește prețul de vânzare al liniei corespunzătoare din comanda de vânzare, calculând și comparând automat valorile fără TVA pentru ambele documente, pentru a preveni pierderile pe fluxurile de drop shipping.\nAfișarea adresei de livrare în documentul de transfer (picking).\nAvertisment pe comanda de achiziție dacă prețul de achiziție este mai mare decât prețul de vânzare al liniei corespunzătoare din comanda de vânzare, în fluxurile de drop shipping.\nCalcul și comparare automată a prețurilor fără TVA pentru comanda de achiziție și cea de vânzare, pentru acuratețea avertismentului."
   },
   {
     "path": "deltatech_ecr_connect/index.md",
@@ -4281,9 +4298,9 @@
     "version": "19.0.1.3.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_ecr_connect",
     "local_path": "odoo-addons/bitshop/deltatech_ecr_connect",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Deltatech ECR Connect (shared)",
-    "summary": "Modulul oferă blocurile comune, de tip bibliotecă JavaScript, pentru trimiterea documentelor fiscale (bon fiscal, dispoziție de plată) către casele de marcat electronice (ECR — Electronic Cash Register), prin agentul local Terrabit Connect. Înainte de acest modul, cunoașterea formatelor de casă de marcat era duplicată — în JavaScript în `deltatech_pos` și în Python în `deltatech_sale_store` — iar orice corecție de protocol sau dispozitiv nou trebuia aplicată în două locuri. Acest modul centralizează logica astfel încât orice modul „producător\" de documente fiscale (comandă POS, factură) să o poată reutiliza fără duplicare.",
+    "last_ingest": "2026-11-16",
+    "friendly_name": "ECR Connect (shared)",
+    "summary": "Modulul oferă blocurile comune, de tip bibliotecă JavaScript, pentru trimiterea documentelor fiscale (bon fiscal, dispoziție de plată) către casele de marcat electronice (ECR — Electronic Cash Register), prin agentul local Terrabit Connect. Înainte de acest modul, cunoașterea formatelor de casă de marcat era duplicată — în JavaScript în `deltatech_pos` și în Python în `deltatech_sale_store` — iar orice corecție de protocol sau dispozitiv nou trebuia aplicată în două locuri. Acest modul centralizează logica astfel încât orice modul „producător\" de documente fiscale (comandă POS, factură) să o poată reutiliza fără duplicare. Se instalează împreună cu modulele care îl folosesc și nu adaugă nimic în interfață de unul singur (nu are meniu; tipul casei de marcat, transportul și simularea se setează pe punctul de vânzare din `deltatech_pos_base`). Nu are cod Python, deci poate fi instalat și pe Odoo Online.",
     "features": [
       "Document fiscal standardizat (`ecr_document.esm.js`) — contract JSON neutru față de tipul casei de marcat (antet, linii, plăți, opțiuni), pe care modulele producătoare (comandă POS, factură) îl construiesc din propriile date, prin `emptyEcrDocument()`.",
       "Convertor de format (`ecr_format.esm.js`) — sursa unică de adevăr pentru șabloanele specifice fiecărui dispozitiv (Datecs/FiscalWire, FiscalNet, Incotex, Optima, Daisy, Succes); funcția `formatEcrDocument(doc, ecrType)` transformă documentul standardizat în conținutul specific casei de marcat.",
@@ -4292,17 +4309,27 @@
       "Cod fiscal client pe antet — `formatHeader()` tipărește CUI-ul clientului (`header.cui`) imediat după numele acestuia, pe toate dispozitivele; apariția e decisă de modulul apelant (ex. `print_cui` în `deltatech_pos`), în funcție de pragul facturii simplificate.",
       "Corecție de vânzare cu cantitate negativă — pe `datecs18`/`dxprint` (FiscalWire 2018), o linie cu preț unitar pozitiv și cantitate negativă (ex. casierul tastează „-2\" pentru a corecta o vânzare fără ecranul de Refund) se tipărește acum cu numele produsului și cantitatea negativă, în loc să cadă pe linia anonimă „subtotal + discount valoric\".",
       "Linie de discount recunoscută după valoare totală — `formatLine()` identifică o linie de discount la nivel de document după valoarea totală (`preț × cantitate`), nu doar după prețul unitar negativ, astfel încât liniile de discount introduse cu preț unitar pozitiv și cantitate negativă (convenția uzuală pe facturi, ex. `deltatech_sale_store`) nu mai sunt omise de pe bonul fiscal.",
-      "Dialog de eroare fiscală partajat (`ecr_error_dialog.esm.js`) — componentă OWL (`FiscalErrorDialog`) reutilizată de toate fluxurile fiscale (POS și backend) pentru a prezenta operatorului mesajul de eroare venit de la casa de marcat."
+      "Dialog de eroare fiscală partajat (`ecr_error_dialog.esm.js`) — componentă OWL (`FiscalErrorDialog`) reutilizată de toate fluxurile fiscale (POS și backend) pentru a prezenta operatorului mesajul de eroare venit de la casa de marcat; casierul poate alege Reîncearcă (același identificator de bon, fără dublă tipărire), Descarcă și procesează manual sau Anulează (vânzarea rămâne validată în Odoo). Textele dialogului sunt traduse.",
+      "Fallback pe fișier — dacă agentul nu răspunde în 40 de secunde (timeout-ul acoperă și citirea răspunsului), fișierul de comenzi se descarcă, iar casele fără agent continuă să funcționeze.",
+      "Transport DxPrint (`ecr_dxprint.esm.js`) — alternativă la Terrabit Connect: driverul DxPrint în mod embedded primește JSON pe API-ul local (implicit `http://127.0.0.1:8080`, autentificare Basic opțională) și răspunde imediat cu numărul bonului și al raportului Z. Documentul standard devine corpul `POST /receipts` (produse cu cota TVA sau *Cod ECR* al taxei, discount unitar/procentual, tipuri de plată din *Cod ECR* al metodei de plată, CUI client, comentarii, cod de bare); o linie cu total negativ devine discount valoric pe tot bonul; dispoziția de plată este o retragere de numerar (`/money/withdraw`), iar rapoartele X / Z și intrările/ieșirile de numerar au cereri proprii. Contractul de rezultat este același ca la `sendEcrToConnect()`; la timeout sau conexiune pierdută după prima cerere, dialogul avertizează că bonul poate fi deja tipărit, iar Reîncearcă reia de la cererea eșuată.",
+      "Casă de marcat simulată (`ecr_simulator.esm.js`) — pentru teste, demonstrații, instruirea casierilor și suport, fără dispozitiv: citește și validează conținutul Datecs FiscalWire ca o casă reală (plăți, grupe TVA programate A 21 %, B 11 %, C/D/E 0 %, lungimea denumirii, prețuri pozitive), cu zi fiscală proprie (numere Z, NR, BF, totaluri pe grupe și tipuri de plată), rolă de hârtie cu antet `* SIMULARE *` și rapoarte X / Z. Simularea se setează pe punctul de vânzare (Punct de vânzare → Configurare → Setări, secțiunea ECR, sub transportul Terrabit Connect): *Simulated in Odoo (no agent)* sau *Simulated through the agent* (agentul pornit cu `TERRABIT_FISCAL_DRIVER=simulated`; altfel Odoo refuză trimiterea). Ziua fiscală e păstrată în browser. Nimic tipărit în simulare nu este bon fiscal; simularea se dezactivează pe toate punctele de vânzare înainte de punerea în funcțiune.",
+      "Panou „Virtual devices” (`virtual_devices.esm.js`) — buton Simulation în bara POS (prin `deltatech_pos`) și în bara de sus din backend (cu o panglică roșie SIMULATION pe ecrane cât timp un dispozitiv e simulat): rola de hârtie, Next answer (implicit *By amount (automatic)* — cenții totalului aleg răspunsul: `,91` fără hârtie, `,92` deconectat, `,93` răspuns târziu, `,94` fără răspuns, `,95` bon anulat), Until stopped, Delay, rapoartele X / Z și Reset the day.",
+      "Cod ECR pe linie — o linie de document poate purta `cod_ecr`, trimis ca atare drept cod de taxă (utile când două taxe cu același procent, ex. garanții SGR și taxare inversă, trebuie să ajungă pe categorii diferite); fără el se folosește maparea pe procent.",
+      "Cod de bare pe bon — opțiunea `barcode_type` (`normal` sau `qr`) alege comanda; Datecs FiscalWire și Daisy au comandă QR, restul tipăresc codul normal.",
+      "Dispoziție de plată — `formatEcrDocument()` tratează `type: \"dp\"` ca retragere din sertarul de numerar, folosind câmpul `amount` de nivel superior (liniile și plățile sunt ignorate).",
+      "Curățarea textelor libere — client, cod fiscal, referință, note, denumire produs, unitate de măsură și cod de bare sunt curățate de caractere de control, separatori (`;` `,` `^`) și ghilimele, ca un nume cu rând nou să nu poată emite comenzi suplimentare în fișierul fiscal."
     ],
     "dependencies": [
       "web"
     ],
     "connections": [
+      "deltatech_pos_base",
       "deltatech_pos",
       "deltatech_sale_store",
-      "deltatech_tc"
+      "deltatech_tc",
+      "deltatech_payment_terminal"
     ],
-    "text": "Deltatech ECR Connect (shared)\ndeltatech_ecr_connect\nModulul oferă blocurile comune, de tip bibliotecă JavaScript, pentru trimiterea documentelor fiscale (bon fiscal, dispoziție de plată) către casele de marcat electronice (ECR — Electronic Cash Register), prin agentul local Terrabit Connect. Înainte de acest modul, cunoașterea formatelor de casă de marcat era duplicată — în JavaScript în `deltatech_pos` și în Python în `deltatech_sale_store` — iar orice corecție de protocol sau dispozitiv nou trebuia aplicată în două locuri. Acest modul centralizează logica astfel încât orice modul „producător\" de documente fiscale (comandă POS, factură) să o poată reutiliza fără duplicare.\nDocument fiscal standardizat (`ecr_document.esm.js`) — contract JSON neutru față de tipul casei de marcat (antet, linii, plăți, opțiuni), pe care modulele producătoare (comandă POS, factură) îl construiesc din propriile date, prin `emptyEcrDocument()`.\nConvertor de format (`ecr_format.esm.js`) — sursa unică de adevăr pentru șabloanele specifice fiecărui dispozitiv (Datecs/FiscalWire, FiscalNet, Incotex, Optima, Daisy, Succes); funcția `formatEcrDocument(doc, ecrType)` transformă documentul standardizat în conținutul specific casei de marcat.\nTrimițător Terrabit Connect (`ecr_connect.esm.js`) — funcția `sendEcrToConnect()` trimite conținutul către agentul local (`http://127.0.0.1:8765/print`), tratează rezultatul sincron, deschide dialogul de eroare (reîncercare / intervenție manuală / anulare) și, la agent inaccesibil, cade automat pe descărcarea fișierului (flote mixte de case de marcat continuă să funcționeze).\nMapare cote TVA post-reformă 2025 — cotele noi (21 %, 11 %) sunt mapate pe grupele fiscale ale cotelor vechi (19 %, 9 %), astfel încât programarea fiscală existentă a caselor de marcat rămâne validă, fără reprogramare; hărțile `cod_tva` nu mai conțin cotele vechi (19 %, 18 %, 9 %, 5 %).\nCod fiscal client pe antet — `formatHeader()` tipărește CUI-ul clientului (`header.cui`) imediat după numele acestuia, pe toate dispozitivele; apariția e decisă de modulul apelant (ex. `print_cui` în `deltatech_pos`), în funcție de pragul facturii simplificate.\nCorecție de vânzare cu cantitate negativă — pe `datecs18`/`dxprint` (FiscalWire 2018), o linie cu preț unitar pozitiv și cantitate negativă (ex. casierul tastează „-2\" pentru a corecta o vânzare fără ecranul de Refund) se tipărește acum cu numele produsului și cantitatea negativă, în loc să cadă pe linia anonimă „subtotal + discount valoric\".\nLinie de discount recunoscută după valoare totală — `formatLine()` identifică o linie de discount la nivel de document după valoarea totală (`preț × cantitate`), nu doar după prețul unitar negativ, astfel încât liniile de discount introduse cu preț unitar pozitiv și cantitate negativă (convenția uzuală pe facturi, ex. `deltatech_sale_store`) nu mai sunt omise de pe bonul fiscal.\nDialog de eroare fiscală partajat (`ecr_error_dialog.esm.js`) — componentă OWL (`FiscalErrorDialog`) reutilizată de toate fluxurile fiscale (POS și backend) pentru a prezenta operatorului mesajul de eroare venit de la casa de marcat."
+    "text": "ECR Connect (shared)\ndeltatech_ecr_connect\nModulul oferă blocurile comune, de tip bibliotecă JavaScript, pentru trimiterea documentelor fiscale (bon fiscal, dispoziție de plată) către casele de marcat electronice (ECR — Electronic Cash Register), prin agentul local Terrabit Connect. Înainte de acest modul, cunoașterea formatelor de casă de marcat era duplicată — în JavaScript în `deltatech_pos` și în Python în `deltatech_sale_store` — iar orice corecție de protocol sau dispozitiv nou trebuia aplicată în două locuri. Acest modul centralizează logica astfel încât orice modul „producător\" de documente fiscale (comandă POS, factură) să o poată reutiliza fără duplicare. Se instalează împreună cu modulele care îl folosesc și nu adaugă nimic în interfață de unul singur (nu are meniu; tipul casei de marcat, transportul și simularea se setează pe punctul de vânzare din `deltatech_pos_base`). Nu are cod Python, deci poate fi instalat și pe Odoo Online.\nDocument fiscal standardizat (`ecr_document.esm.js`) — contract JSON neutru față de tipul casei de marcat (antet, linii, plăți, opțiuni), pe care modulele producătoare (comandă POS, factură) îl construiesc din propriile date, prin `emptyEcrDocument()`.\nConvertor de format (`ecr_format.esm.js`) — sursa unică de adevăr pentru șabloanele specifice fiecărui dispozitiv (Datecs/FiscalWire, FiscalNet, Incotex, Optima, Daisy, Succes); funcția `formatEcrDocument(doc, ecrType)` transformă documentul standardizat în conținutul specific casei de marcat.\nTrimițător Terrabit Connect (`ecr_connect.esm.js`) — funcția `sendEcrToConnect()` trimite conținutul către agentul local (`http://127.0.0.1:8765/print`), tratează rezultatul sincron, deschide dialogul de eroare (reîncercare / intervenție manuală / anulare) și, la agent inaccesibil, cade automat pe descărcarea fișierului (flote mixte de case de marcat continuă să funcționeze).\nMapare cote TVA post-reformă 2025 — cotele noi (21 %, 11 %) sunt mapate pe grupele fiscale ale cotelor vechi (19 %, 9 %), astfel încât programarea fiscală existentă a caselor de marcat rămâne validă, fără reprogramare; hărțile `cod_tva` nu mai conțin cotele vechi (19 %, 18 %, 9 %, 5 %).\nCod fiscal client pe antet — `formatHeader()` tipărește CUI-ul clientului (`header.cui`) imediat după numele acestuia, pe toate dispozitivele; apariția e decisă de modulul apelant (ex. `print_cui` în `deltatech_pos`), în funcție de pragul facturii simplificate.\nCorecție de vânzare cu cantitate negativă — pe `datecs18`/`dxprint` (FiscalWire 2018), o linie cu preț unitar pozitiv și cantitate negativă (ex. casierul tastează „-2\" pentru a corecta o vânzare fără ecranul de Refund) se tipărește acum cu numele produsului și cantitatea negativă, în loc să cadă pe linia anonimă „subtotal + discount valoric\".\nLinie de discount recunoscută după valoare totală — `formatLine()` identifică o linie de discount la nivel de document după valoarea totală (`preț × cantitate`), nu doar după prețul unitar negativ, astfel încât liniile de discount introduse cu preț unitar pozitiv și cantitate negativă (convenția uzuală pe facturi, ex. `deltatech_sale_store`) nu mai sunt omise de pe bonul fiscal.\nDialog de eroare fiscală partajat (`ecr_error_dialog.esm.js`) — componentă OWL (`FiscalErrorDialog`) reutilizată de toate fluxurile fiscale (POS și backend) pentru a prezenta operatorului mesajul de eroare venit de la casa de marcat; casierul poate alege Reîncearcă (același identificator de bon, fără dublă tipărire), Descarcă și procesează manual sau Anulează (vânzarea rămâne validată în Odoo). Textele dialogului sunt traduse.\nFallback pe fișier — dacă agentul nu răspunde în 40 de secunde (timeout-ul acoperă și citirea răspunsului), fișierul de comenzi se descarcă, iar casele fără agent continuă să funcționeze.\nTransport DxPrint (`ecr_dxprint.esm.js`) — alternativă la Terrabit Connect: driverul DxPrint în mod embedded primește JSON pe API-ul local (implicit `http://127.0.0.1:8080`, autentificare Basic opțională) și răspunde imediat cu numărul bonului și al raportului Z. Documentul standard devine corpul `POST /receipts` (produse cu cota TVA sau *Cod ECR* al taxei, discount unitar/procentual, tipuri de plată din *Cod ECR* al metodei de plată, CUI client, comentarii, cod de bare); o linie cu total negativ devine discount valoric pe tot bonul; dispoziția de plată este o retragere de numerar (`/money/withdraw`), iar rapoartele X / Z și intrările/ieșirile de numerar au cereri proprii. Contractul de rezultat este același ca la `sendEcrToConnect()`; la timeout sau conexiune pierdută după prima cerere, dialogul avertizează că bonul poate fi deja tipărit, iar Reîncearcă reia de la cererea eșuată.\nCasă de marcat simulată (`ecr_simulator.esm.js`) — pentru teste, demonstrații, instruirea casierilor și suport, fără dispozitiv: citește și validează conținutul Datecs FiscalWire ca o casă reală (plăți, grupe TVA programate A 21 %, B 11 %, C/D/E 0 %, lungimea denumirii, prețuri pozitive), cu zi fiscală proprie (numere Z, NR, BF, totaluri pe grupe și tipuri de plată), rolă de hârtie cu antet `* SIMULARE *` și rapoarte X / Z. Simularea se setează pe punctul de vânzare (Punct de vânzare → Configurare → Setări, secțiunea ECR, sub transportul Terrabit Connect): *Simulated in Odoo (no agent)* sau *Simulated through the agent* (agentul pornit cu `TERRABIT_FISCAL_DRIVER=simulated`; altfel Odoo refuză trimiterea). Ziua fiscală e păstrată în browser. Nimic tipărit în simulare nu este bon fiscal; simularea se dezactivează pe toate punctele de vânzare înainte de punerea în funcțiune.\nPanou „Virtual devices” (`virtual_devices.esm.js`) — buton Simulation în bara POS (prin `deltatech_pos`) și în bara de sus din backend (cu o panglică roșie SIMULATION pe ecrane cât timp un dispozitiv e simulat): rola de hârtie, Next answer (implicit *By amount (automatic)* — cenții totalului aleg răspunsul: `,91` fără hârtie, `,92` deconectat, `,93` răspuns târziu, `,94` fără răspuns, `,95` bon anulat), Until stopped, Delay, rapoartele X / Z și Reset the day.\nCod ECR pe linie — o linie de document poate purta `cod_ecr`, trimis ca atare drept cod de taxă (utile când două taxe cu același procent, ex. garanții SGR și taxare inversă, trebuie să ajungă pe categorii diferite); fără el se folosește maparea pe procent.\nCod de bare pe bon — opțiunea `barcode_type` (`normal` sau `qr`) alege comanda; Datecs FiscalWire și Daisy au comandă QR, restul tipăresc codul normal.\nDispoziție de plată — `formatEcrDocument()` tratează `type: \"dp\"` ca retragere din sertarul de numerar, folosind câmpul `amount` de nivel superior (liniile și plățile sunt ignorate).\nCurățarea textelor libere — client, cod fiscal, referință, note, denumire produs, unitate de măsură și cod de bare sunt curățate de caractere de control, separatori (`;` `,` `^`) și ghilimele, ca un nume cu rând nou să nu poată emite comenzi suplimentare în fișierul fiscal."
   },
   {
     "path": "deltatech_ecr_fiscal/index.md",
@@ -4994,7 +5021,7 @@
   {
     "path": "deltatech_iap_online/index.md",
     "module": "deltatech_iap_online",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.2.0",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_iap_online",
     "local_path": "odoo-addons/deltatech/deltatech_iap_online",
     "last_ingest": "2026-11-14",
@@ -5506,14 +5533,15 @@
     "version": "19.0.0.0.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_kit_price",
     "local_path": "odoo-addons/deltatech/deltatech_kit_price",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Deltatech Kit Price",
+    "last_ingest": "2026-11-16",
+    "friendly_name": "Kit Price on Sale Orders",
     "summary": "Modulul calculează automat prețul de cost al produselor de tip „kit\" direct pe liniile comenzii de vânzare. Este util pentru companiile care vând produse compuse din mai multe componente (seturi/kituri) și care au nevoie de o marjă calculată corect, pe baza costurilor reale ale componentelor, nu a unui cost static sau introdus manual pe produsul-kit.",
     "features": [
       "Calculează automat costul unui produs pe linia comenzii de vânzare atunci când acesta este configurat ca Kit printr-o Listă de Materiale (BoM) de tip phantom.",
       "Parcurge toate componentele kitului și însumează costurile individuale ale acestora într-un cost total pentru linia comenzii.",
       "Asigură calculul marjelor de vânzare pe baza costurilor reale ale componentelor, nu a unui cost static/manual introdus pe produsul-kit, oferind o imagine financiară mai corectă echipelor de vânzări și managementului.",
-      "Se integrează nativ cu modulele Odoo de Vânzări, Producție (BoM) și Marjă."
+      "Se integrează nativ cu modulele Odoo de Vânzări, Producție (BoM) și Marjă.",
+      "Mod de utilizare: se creează pentru produs o listă de materiale (BoM) de tip Kit, se definește costul fiecărui component, apoi, la adăugarea kitului pe o comandă de vânzare, costul liniei și marja rezultată se calculează automat."
     ],
     "dependencies": [
       "sale_margin",
@@ -5528,7 +5556,7 @@
       "mrp_account",
       "sale_margin"
     ],
-    "text": "Deltatech Kit Price\ndeltatech_kit_price\nModulul calculează automat prețul de cost al produselor de tip „kit\" direct pe liniile comenzii de vânzare. Este util pentru companiile care vând produse compuse din mai multe componente (seturi/kituri) și care au nevoie de o marjă calculată corect, pe baza costurilor reale ale componentelor, nu a unui cost static sau introdus manual pe produsul-kit.\nCalculează automat costul unui produs pe linia comenzii de vânzare atunci când acesta este configurat ca Kit printr-o Listă de Materiale (BoM) de tip phantom.\nParcurge toate componentele kitului și însumează costurile individuale ale acestora într-un cost total pentru linia comenzii.\nAsigură calculul marjelor de vânzare pe baza costurilor reale ale componentelor, nu a unui cost static/manual introdus pe produsul-kit, oferind o imagine financiară mai corectă echipelor de vânzări și managementului.\nSe integrează nativ cu modulele Odoo de Vânzări, Producție (BoM) și Marjă."
+    "text": "Kit Price on Sale Orders\ndeltatech_kit_price\nModulul calculează automat prețul de cost al produselor de tip „kit\" direct pe liniile comenzii de vânzare. Este util pentru companiile care vând produse compuse din mai multe componente (seturi/kituri) și care au nevoie de o marjă calculată corect, pe baza costurilor reale ale componentelor, nu a unui cost static sau introdus manual pe produsul-kit.\nCalculează automat costul unui produs pe linia comenzii de vânzare atunci când acesta este configurat ca Kit printr-o Listă de Materiale (BoM) de tip phantom.\nParcurge toate componentele kitului și însumează costurile individuale ale acestora într-un cost total pentru linia comenzii.\nAsigură calculul marjelor de vânzare pe baza costurilor reale ale componentelor, nu a unui cost static/manual introdus pe produsul-kit, oferind o imagine financiară mai corectă echipelor de vânzări și managementului.\nSe integrează nativ cu modulele Odoo de Vânzări, Producție (BoM) și Marjă.\nMod de utilizare: se creează pentru produs o listă de materiale (BoM) de tip Kit, se definește costul fiecărui component, apoi, la adăugarea kitului pe o comandă de vânzare, costul liniei și marja rezultată se calculează automat."
   },
   {
     "path": "deltatech_ledger/index.md",
@@ -5716,7 +5744,7 @@
   {
     "path": "deltatech_marketplace/index.md",
     "module": "deltatech_marketplace",
-    "version": "19.0.1.43.3",
+    "version": "19.0.1.43.4",
     "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace`",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace",
     "last_ingest": "2026-10-27",
@@ -5786,14 +5814,15 @@
     "version": "19.0.1.0.7",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_brand",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_brand",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-16",
     "friendly_name": "Marketplace Brand addon",
     "summary": "Acest modul extinde funcționalitatea Odoo Marketplace cu un sistem complet de gestionare a brandurilor pentru produsele vândute pe diverse platforme de tip marketplace. Din perspectivă de business, permite companiilor să mențină o identitate de brand unitară și asigură faptul că produsele sunt corect categorizate și pot fi căutate după brand pe toate canalele conectate.",
     "features": [
       "Gestionarea centralizată a brandurilor de produse în cadrul ecosistemului Odoo.",
       "Reprezentare consecventă a brandului pe mai multe platforme marketplace (de exemplu eMAG, MerchantPro, Odoo-to-Odoo).",
       "Raportare și analize îmbunătățite, prin urmărirea vânzărilor în funcție de performanța pe brand.",
-      "Experiență de client îmbunătățită, prin afișarea clară a informațiilor de brand în vitrinele marketplace."
+      "Experiență de client îmbunătățită, prin afișarea clară a informațiilor de brand în vitrinele marketplace.",
+      "Mapările duplicate (același brand mapat de două ori pe același backend, caz în care la trimiterea din Odoo se folosește doar cea mai recentă) apar pe roșu în listă și pot fi găsite cu filtrul *Duplicate mappings*; verificarea (`duplicate_mapping`) provine din `deltatech_marketplace`."
     ],
     "dependencies": [
       "deltatech_marketplace",
@@ -5803,7 +5832,7 @@
       "deltatech_marketplace",
       "deltatech_marketplace_sale"
     ],
-    "text": "Marketplace Brand addon\ndeltatech_marketplace_brand\nAcest modul extinde funcționalitatea Odoo Marketplace cu un sistem complet de gestionare a brandurilor pentru produsele vândute pe diverse platforme de tip marketplace. Din perspectivă de business, permite companiilor să mențină o identitate de brand unitară și asigură faptul că produsele sunt corect categorizate și pot fi căutate după brand pe toate canalele conectate.\nGestionarea centralizată a brandurilor de produse în cadrul ecosistemului Odoo.\nReprezentare consecventă a brandului pe mai multe platforme marketplace (de exemplu eMAG, MerchantPro, Odoo-to-Odoo).\nRaportare și analize îmbunătățite, prin urmărirea vânzărilor în funcție de performanța pe brand.\nExperiență de client îmbunătățită, prin afișarea clară a informațiilor de brand în vitrinele marketplace."
+    "text": "Marketplace Brand addon\ndeltatech_marketplace_brand\nAcest modul extinde funcționalitatea Odoo Marketplace cu un sistem complet de gestionare a brandurilor pentru produsele vândute pe diverse platforme de tip marketplace. Din perspectivă de business, permite companiilor să mențină o identitate de brand unitară și asigură faptul că produsele sunt corect categorizate și pot fi căutate după brand pe toate canalele conectate.\nGestionarea centralizată a brandurilor de produse în cadrul ecosistemului Odoo.\nReprezentare consecventă a brandului pe mai multe platforme marketplace (de exemplu eMAG, MerchantPro, Odoo-to-Odoo).\nRaportare și analize îmbunătățite, prin urmărirea vânzărilor în funcție de performanța pe brand.\nExperiență de client îmbunătățită, prin afișarea clară a informațiilor de brand în vitrinele marketplace.\nMapările duplicate (același brand mapat de două ori pe același backend, caz în care la trimiterea din Odoo se folosește doar cea mai recentă) apar pe roșu în listă și pot fi găsite cu filtrul *Duplicate mappings*; verificarea (`duplicate_mapping`) provine din `deltatech_marketplace`."
   },
   {
     "path": "deltatech_marketplace_dashboard/index.md",
@@ -5878,19 +5907,27 @@
     "path": "deltatech_marketplace_doraly/index.md",
     "module": "deltatech_marketplace_doraly",
     "version": "19.0.0.0.15",
-    "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_doraly`",
+    "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_doraly",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_doraly",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Conector Doraly",
-    "summary": "Modulul oferă un conector între Odoo și marketplace-ul Doraly, extinzând cadrul general de integrare cu marketplace-uri din suita Terrabit. Scopul său principal este să sincronizeze datele comerciale dintre magazinul Doraly și sistemul ERP Odoo: permite autentificarea către platforma Doraly, importul catalogului de produse, exportul parțial al produselor și importul comenzilor primite în marketplace. Astfel, comercianții care vând prin Doraly își pot gestiona produsele și comenzile direct din Odoo, fără introducere manuală a datelor.",
+    "last_ingest": "2026-11-16",
+    "friendly_name": "Doraly Connector",
+    "summary": "Modulul oferă un conector între Odoo și marketplace-ul Doraly, extinzând cadrul general de integrare cu marketplace-uri din suita Terrabit. Scopul său principal este să sincronizeze datele comerciale dintre magazinul Doraly și sistemul ERP Odoo: permite autentificarea către platforma Doraly, importul catalogului de produse, exportul parțial al produselor, importul comenzilor primite în marketplace și trimiterea către Doraly a linkului facturii PDF. Astfel, comercianții care vând prin Doraly își pot gestiona produsele și comenzile direct din Odoo, fără introducere manuală a datelor. Modulul are statut de dezvoltare *Alpha*.",
     "features": [
       "Logare (autentificare) către platforma Doraly: da",
       "Import produse din Doraly în Odoo: da",
-      "Export produse din Odoo către Doraly: parțial",
+      "Export produse din Odoo către Doraly: parțial (brandul nu este încă preluat din produs)",
       "Import comenzi din Doraly în Odoo: da",
       "Export comenzi din Odoo către Doraly: nu",
       "Generare AWB: nu",
-      "Trimitere factură PDF: nu"
+      "Trimitere factură PDF: da (linkul facturii PDF, după postare)",
+      "Configurarea backend-ului: în Marketplace > Backends se creează un backend cu Provider = Doraly; alegerea furnizorului completează Location (fila Credentials), apoi, cu Access Type = User and password, se introduc e-mailul contului de vendor Doraly (Username) și Password, iar Test connection trece backend-ul din Not Confirmed în Confirmed.",
+      "Transportator implicit: în fila Orders and Products, grupul Settings, câmpul Default Carrier — Doraly trimite doar valoarea transportului, nu curierul, deci acest transportator se folosește pentru linia de transport a comenzilor importate; fără el, comenzile se importă fără linie de transport.",
+      "Importul obiectelor: în fila Objects, din meniul ⋮ al unui card, se alege Import pentru Categories, Products, apoi Sale Order; importul rulează ca job în fundal, iar cardul Categories nu este creat automat de backend-ul Doraly — se adaugă manual în fila Objects.",
+      "Produse: se listează în Marketplace > Bindings > Product Variants; fiecare produs Doraly este legat de un produs Odoo (codul vendorului devine referința internă, codul Doraly este External Code); se importă doar codul și denumirea, fără preț, stoc sau descriere. Categoriile apar în Marketplace > Bindings > Categories, dar în această versiune importul de categorii ignoră răspunsul Doraly și creează mereu aceeași categorie-exemplu (*Termometre*).",
+      "Comenzi: fiecare comandă Doraly devine o comandă de vânzare cu numele numărului comenzii Doraly, clientul (identificat după telefon sau e-mail), adresele de facturare și livrare, Phase preluată din statusul Doraly, linie de transport pe transportatorul implicit (valoare fără TVA) și liniile de produs; Doraly trimite valoarea liniei cu TVA, iar prețul unitar fără TVA se extrage din ea cu taxa produsului, astfel încât totalul comenzii să fie egal cu totalul Doraly; Order Date devine data confirmării în Odoo.",
+      "Trimiterea facturii: din comandă se apasă Create Invoice (Regular invoice), se verifică egalitatea totalului facturii cu totalul comenzii Doraly, apoi Confirm; confirmarea facturii pune în coadă jobul `marketplace.sale.order.after_invoice_post`, care trimite către Doraly linkul de portal al facturii PDF, construit din parametrul de sistem `web.base.url` (trebuie să fie adresa publică a Odoo); starea Done a jobului (vizibil prin butonul Jobs, după scoaterea filtrelor implicite) înseamnă că Doraly a acceptat apelul.",
+      "Maparea câmpurilor de produs: ID produs (`external_id`) și cod Doraly (`external_code`) Doraly → Odoo; referința internă (`default_code` ↔ `productCode`) și denumirea (`name` ↔ `productName`) în ambele sensuri; greutate, categorie (cea mapată pentru `categ_id` sau categoria implicită a backend-ului) și descriere (`website_short_description` → `longDescription`) Odoo → Doraly; brandul este trimis fix ca „Philips”.",
+      "Limitări cunoscute: erorile HTTP 429/5xx nu sunt reîncercate automat (jobul eșuat se repune în coadă din Jobs); exportul de produse trimite mereu brandul „Philips”; exportul comenzilor și al stocului, precum și generarea AWB nu sunt implementate; integrarea de livrare (`delivery.py`) este doar un schelet, iar pentru importul de curieri se folosește tipul de livrare `emag`, copiat din conectorul eMAG; nu există paginare la importuri."
     ],
     "dependencies": [
       "deltatech_marketplace",
@@ -5906,12 +5943,12 @@
       "deltatech_marketplace_sale_stage",
       "deltatech_marketplace_delivery"
     ],
-    "text": "Conector Doraly\ndeltatech_marketplace_doraly\nModulul oferă un conector între Odoo și marketplace-ul Doraly, extinzând cadrul general de integrare cu marketplace-uri din suita Terrabit. Scopul său principal este să sincronizeze datele comerciale dintre magazinul Doraly și sistemul ERP Odoo: permite autentificarea către platforma Doraly, importul catalogului de produse, exportul parțial al produselor și importul comenzilor primite în marketplace. Astfel, comercianții care vând prin Doraly își pot gestiona produsele și comenzile direct din Odoo, fără introducere manuală a datelor.\nLogare (autentificare) către platforma Doraly: da\nImport produse din Doraly în Odoo: da\nExport produse din Odoo către Doraly: parțial\nImport comenzi din Doraly în Odoo: da\nExport comenzi din Odoo către Doraly: nu\nGenerare AWB: nu\nTrimitere factură PDF: nu"
+    "text": "Doraly Connector\ndeltatech_marketplace_doraly\nModulul oferă un conector între Odoo și marketplace-ul Doraly, extinzând cadrul general de integrare cu marketplace-uri din suita Terrabit. Scopul său principal este să sincronizeze datele comerciale dintre magazinul Doraly și sistemul ERP Odoo: permite autentificarea către platforma Doraly, importul catalogului de produse, exportul parțial al produselor, importul comenzilor primite în marketplace și trimiterea către Doraly a linkului facturii PDF. Astfel, comercianții care vând prin Doraly își pot gestiona produsele și comenzile direct din Odoo, fără introducere manuală a datelor. Modulul are statut de dezvoltare *Alpha*.\nLogare (autentificare) către platforma Doraly: da\nImport produse din Doraly în Odoo: da\nExport produse din Odoo către Doraly: parțial (brandul nu este încă preluat din produs)\nImport comenzi din Doraly în Odoo: da\nExport comenzi din Odoo către Doraly: nu\nGenerare AWB: nu\nTrimitere factură PDF: da (linkul facturii PDF, după postare)\nConfigurarea backend-ului: în Marketplace > Backends se creează un backend cu Provider = Doraly; alegerea furnizorului completează Location (fila Credentials), apoi, cu Access Type = User and password, se introduc e-mailul contului de vendor Doraly (Username) și Password, iar Test connection trece backend-ul din Not Confirmed în Confirmed.\nTransportator implicit: în fila Orders and Products, grupul Settings, câmpul Default Carrier — Doraly trimite doar valoarea transportului, nu curierul, deci acest transportator se folosește pentru linia de transport a comenzilor importate; fără el, comenzile se importă fără linie de transport.\nImportul obiectelor: în fila Objects, din meniul ⋮ al unui card, se alege Import pentru Categories, Products, apoi Sale Order; importul rulează ca job în fundal, iar cardul Categories nu este creat automat de backend-ul Doraly — se adaugă manual în fila Objects.\nProduse: se listează în Marketplace > Bindings > Product Variants; fiecare produs Doraly este legat de un produs Odoo (codul vendorului devine referința internă, codul Doraly este External Code); se importă doar codul și denumirea, fără preț, stoc sau descriere. Categoriile apar în Marketplace > Bindings > Categories, dar în această versiune importul de categorii ignoră răspunsul Doraly și creează mereu aceeași categorie-exemplu (*Termometre*).\nComenzi: fiecare comandă Doraly devine o comandă de vânzare cu numele numărului comenzii Doraly, clientul (identificat după telefon sau e-mail), adresele de facturare și livrare, Phase preluată din statusul Doraly, linie de transport pe transportatorul implicit (valoare fără TVA) și liniile de produs; Doraly trimite valoarea liniei cu TVA, iar prețul unitar fără TVA se extrage din ea cu taxa produsului, astfel încât totalul comenzii să fie egal cu totalul Doraly; Order Date devine data confirmării în Odoo.\nTrimiterea facturii: din comandă se apasă Create Invoice (Regular invoice), se verifică egalitatea totalului facturii cu totalul comenzii Doraly, apoi Confirm; confirmarea facturii pune în coadă jobul `marketplace.sale.order.after_invoice_post`, care trimite către Doraly linkul de portal al facturii PDF, construit din parametrul de sistem `web.base.url` (trebuie să fie adresa publică a Odoo); starea Done a jobului (vizibil prin butonul Jobs, după scoaterea filtrelor implicite) înseamnă că Doraly a acceptat apelul.\nMaparea câmpurilor de produs: ID produs (`external_id`) și cod Doraly (`external_code`) Doraly → Odoo; referința internă (`default_code` ↔ `productCode`) și denumirea (`name` ↔ `productName`) în ambele sensuri; greutate, categorie (cea mapată pentru `categ_id` sau categoria implicită a backend-ului) și descriere (`website_short_description` → `longDescription`) Odoo → Doraly; brandul este trimis fix ca „Philips”.\nLimitări cunoscute: erorile HTTP 429/5xx nu sunt reîncercate automat (jobul eșuat se repune în coadă din Jobs); exportul de produse trimite mereu brandul „Philips”; exportul comenzilor și al stocului, precum și generarea AWB nu sunt implementate; integrarea de livrare (`delivery.py`) este doar un schelet, iar pentru importul de curieri se folosește tipul de livrare `emag`, copiat din conectorul eMAG; nu există paginare la importuri."
   },
   {
     "path": "deltatech_marketplace_emag/index.md",
     "module": "deltatech_marketplace_emag",
-    "version": "19.0.2.21.5",
+    "version": "19.0.2.21.6",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_emag",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_emag",
     "last_ingest": "2026-10-22",
@@ -6230,7 +6267,7 @@
     "version": "19.0.0.2.17",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_opencart",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_opencart",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-16",
     "friendly_name": "OpenCart Marketplace Connector",
     "summary": "Acest modul este un conector între platforma de comerț electronic OpenCart și Odoo, construit peste cadrul generic Marketplace al suitei Deltatech. El sincronizează bidirecțional informațiile esențiale dintr-un magazin online OpenCart: aduce în Odoo clienții, categoriile, metodele de plată și de livrare, opțiunile (atributele) și produsele cu variantele lor, precum și comenzile cu liniile și adresele aferente. În sens invers, trimite din Odoo către OpenCart stocurile și actualizările de produse (produse noi sau modificate). Astfel, o afacere care folosește OpenCart ca vitrină online își poate gestiona centralizat catalogul, stocul și comenzile direct din Odoo. Conectorul se bazează pe REST Admin API-ul OpenCart (https://opencart-api.com/product/rest-admin-api/).",
     "features": [
@@ -6244,7 +6281,13 @@
       "Preluarea comenzilor cu adrese de livrare și de facturare (un singur contact dacă adresele coincid) și preluarea statutului comenzii în câmpul de etapă.",
       "Maparea automată produs Odoo ↔ produs OpenCart pe baza SKU; preluare nume, sku, model, masă, preț de listă, meta date, descriere website, stare publicare, imagine principală și imagini suplimentare, cod de bare, opțiuni și id-ul produsului OpenCart.",
       "Transmiterea stocului din Odoo în OpenCart pentru produs și pentru fiecare opțiune.",
-      "Completarea câmpului `product_seo_url` din `website_url`-ul Odoo doar pentru produsele noi."
+      "Completarea câmpului `product_seo_url` din `website_url`-ul Odoo doar pentru produsele noi.",
+      "Importul comenzilor include și liniile de discount și comentariile, iar clienții înregistrați și cei ocazionali sunt importați cu adrese de livrare și facturare; metodele de livrare importate creează un produs de tip serviciu corespunzător, dacă nu există deja.",
+      "Importul produselor și clienților rulează pe pagini, fiecare pagină următoare fiind pusă în coadă cu o cheie de identitate per backend și pagină, iar un import nou se oprește la început cât timp paginile altuia încă rulează.",
+      "Webhook în timp real: OpenCart poate apela Odoo (clienți, produse, comenzi), după înregistrarea magazinului pe URL-ul standard de webhook al Marketplace, astfel încât o modificare din magazin să ajungă în Odoo fără a aștepta următorul import programat; rulează alături de import, nu în locul lui.",
+      "Transportatorul unei comenzi importate provine exclusiv din binding-ul `marketplace.delivery.carrier` (găsit sau creat din codul de livrare OpenCart); câmpul *Default Carrier* al backend-ului nu mai este folosit ca alternativă — dacă nu se poate determina un transportator, linia de livrare este omisă și se loghează un avertisment. Punctul de ridicare (locker) importat se stochează pe `marketplace.sale.order.marketplace_locker`.",
+      "Limitări: anularea unei comenzi în OpenCart nu ajunge în Odoo; nu există flux automat de retur/notă de credit în niciun sens; cupoanele apar doar ca linii simple de comandă; nu se verifică stocul la import (fără protecție la supravânzare); nu există tablou de bord de analiză sau puncte de loialitate; mai multe magazine OpenCart pot fi configurate ca backend-uri separate, dar scenariul nu a fost validat; evenimentele de sincronizare se scriu în logul serverului, nu într-un istoric dedicat pe înregistrare.",
+      "Cerințe: magazin OpenCart cu acces la REST Admin API și credențiale API."
     ],
     "dependencies": [
       "deltatech_marketplace",
@@ -6264,7 +6307,7 @@
       "deltatech_marketplace_website",
       "deltatech_marketplace_sale_stage"
     ],
-    "text": "OpenCart Marketplace Connector\ndeltatech_marketplace_opencart\nAcest modul este un conector între platforma de comerț electronic OpenCart și Odoo, construit peste cadrul generic Marketplace al suitei Deltatech. El sincronizează bidirecțional informațiile esențiale dintr-un magazin online OpenCart: aduce în Odoo clienții, categoriile, metodele de plată și de livrare, opțiunile (atributele) și produsele cu variantele lor, precum și comenzile cu liniile și adresele aferente. În sens invers, trimite din Odoo către OpenCart stocurile și actualizările de produse (produse noi sau modificate). Astfel, o afacere care folosește OpenCart ca vitrină online își poate gestiona centralizat catalogul, stocul și comenzile direct din Odoo. Conectorul se bazează pe REST Admin API-ul OpenCart (https://opencart-api.com/product/rest-admin-api/).\nImport șabloane de produs cu variante din OpenCart și export produse din Odoo către OpenCart.\nImport atribute (opțiuni) și valorile lor; crearea automată a atributelor lipsă în OpenCart la exportul produselor.\nImport comenzi de vânzare, inclusiv liniile de comandă, clienții asociați și costul de livrare.\nImport metode de livrare din OpenCart.\nImport categorii publice (categorii de ecommerce) din OpenCart în Odoo.\nImport clienți din OpenCart (nume și prenume concatenate, localitate, cod poștal, telefon, stradă).\nMaparea manuală a metodelor de plată din OpenCart cu metodele de plată din Odoo.\nPreluarea comenzilor cu adrese de livrare și de facturare (un singur contact dacă adresele coincid) și preluarea statutului comenzii în câmpul de etapă.\nMaparea automată produs Odoo ↔ produs OpenCart pe baza SKU; preluare nume, sku, model, masă, preț de listă, meta date, descriere website, stare publicare, imagine principală și imagini suplimentare, cod de bare, opțiuni și id-ul produsului OpenCart.\nTransmiterea stocului din Odoo în OpenCart pentru produs și pentru fiecare opțiune.\nCompletarea câmpului `product_seo_url` din `website_url`-ul Odoo doar pentru produsele noi."
+    "text": "OpenCart Marketplace Connector\ndeltatech_marketplace_opencart\nAcest modul este un conector între platforma de comerț electronic OpenCart și Odoo, construit peste cadrul generic Marketplace al suitei Deltatech. El sincronizează bidirecțional informațiile esențiale dintr-un magazin online OpenCart: aduce în Odoo clienții, categoriile, metodele de plată și de livrare, opțiunile (atributele) și produsele cu variantele lor, precum și comenzile cu liniile și adresele aferente. În sens invers, trimite din Odoo către OpenCart stocurile și actualizările de produse (produse noi sau modificate). Astfel, o afacere care folosește OpenCart ca vitrină online își poate gestiona centralizat catalogul, stocul și comenzile direct din Odoo. Conectorul se bazează pe REST Admin API-ul OpenCart (https://opencart-api.com/product/rest-admin-api/).\nImport șabloane de produs cu variante din OpenCart și export produse din Odoo către OpenCart.\nImport atribute (opțiuni) și valorile lor; crearea automată a atributelor lipsă în OpenCart la exportul produselor.\nImport comenzi de vânzare, inclusiv liniile de comandă, clienții asociați și costul de livrare.\nImport metode de livrare din OpenCart.\nImport categorii publice (categorii de ecommerce) din OpenCart în Odoo.\nImport clienți din OpenCart (nume și prenume concatenate, localitate, cod poștal, telefon, stradă).\nMaparea manuală a metodelor de plată din OpenCart cu metodele de plată din Odoo.\nPreluarea comenzilor cu adrese de livrare și de facturare (un singur contact dacă adresele coincid) și preluarea statutului comenzii în câmpul de etapă.\nMaparea automată produs Odoo ↔ produs OpenCart pe baza SKU; preluare nume, sku, model, masă, preț de listă, meta date, descriere website, stare publicare, imagine principală și imagini suplimentare, cod de bare, opțiuni și id-ul produsului OpenCart.\nTransmiterea stocului din Odoo în OpenCart pentru produs și pentru fiecare opțiune.\nCompletarea câmpului `product_seo_url` din `website_url`-ul Odoo doar pentru produsele noi.\nImportul comenzilor include și liniile de discount și comentariile, iar clienții înregistrați și cei ocazionali sunt importați cu adrese de livrare și facturare; metodele de livrare importate creează un produs de tip serviciu corespunzător, dacă nu există deja.\nImportul produselor și clienților rulează pe pagini, fiecare pagină următoare fiind pusă în coadă cu o cheie de identitate per backend și pagină, iar un import nou se oprește la început cât timp paginile altuia încă rulează.\nWebhook în timp real: OpenCart poate apela Odoo (clienți, produse, comenzi), după înregistrarea magazinului pe URL-ul standard de webhook al Marketplace, astfel încât o modificare din magazin să ajungă în Odoo fără a aștepta următorul import programat; rulează alături de import, nu în locul lui.\nTransportatorul unei comenzi importate provine exclusiv din binding-ul `marketplace.delivery.carrier` (găsit sau creat din codul de livrare OpenCart); câmpul *Default Carrier* al backend-ului nu mai este folosit ca alternativă — dacă nu se poate determina un transportator, linia de livrare este omisă și se loghează un avertisment. Punctul de ridicare (locker) importat se stochează pe `marketplace.sale.order.marketplace_locker`.\nLimitări: anularea unei comenzi în OpenCart nu ajunge în Odoo; nu există flux automat de retur/notă de credit în niciun sens; cupoanele apar doar ca linii simple de comandă; nu se verifică stocul la import (fără protecție la supravânzare); nu există tablou de bord de analiză sau puncte de loialitate; mai multe magazine OpenCart pot fi configurate ca backend-uri separate, dar scenariul nu a fost validat; evenimentele de sincronizare se scriu în logul serverului, nu într-un istoric dedicat pe înregistrare.\nCerințe: magazin OpenCart cu acces la REST Admin API și credențiale API."
   },
   {
     "path": "deltatech_marketplace_payment/index.md",
@@ -6342,15 +6385,16 @@
     "version": "19.0.1.0.10",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_purchase",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_purchase",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Marketplace Purchase Order addon",
-    "summary": "Acest modul extinde ecosistemul marketplace prin integrarea proceselor de aprovizionare cu vânzările din marketplace, permițând decizii de achiziție bazate pe date. Din perspectivă de afaceri, el face legătura între cererea de vânzări externă și gestionarea internă a lanțului de aprovizionare, asigurând că vânzările din marketplace sunt susținute de achiziții oportune și corecte. Practic, comenzile de achiziție sunt aliniate la cererea reală din marketplace, iar achizițiile destinate vânzărilor din marketplace sunt corelate automat cu înregistrările de stoc și de vânzări din Odoo.",
+    "last_ingest": "2026-11-16",
+    "friendly_name": "Marketplace Purchase Orders",
+    "summary": "Acest modul este stratul de bază care leagă comenzile de achiziție din Odoo de un backend marketplace din cadrul Deltatech Marketplace. Păstrează evidența comenzilor de achiziție care aparțin unui sistem extern, permite acelui sistem să creeze comenzi de achiziție în Odoo și trimite înapoi, prin conector, modificările făcute în Odoo. Este folosit de conectorul Odoo-to-Odoo (`deltatech_marketplace_odoo`), care trimite comenzile de achiziție confirmate către baza Odoo a furnizorului.",
     "features": [
-      "Achiziții orientate spre cerere: aliniază comenzile de achiziție la performanța reală a vânzărilor din marketplace și la cererea previzionată.",
-      "Gestionarea furnizorilor: urmărește performanța și costurile furnizorilor pentru produsele destinate vânzării în marketplace.",
-      "Flux de numerar îmbunătățit: optimizează nivelurile de stoc și frecvența achizițiilor pentru a se potrivi mai bine cu ciclurile de vânzare din marketplace.",
-      "Analiză precisă a marjei: combină costurile de achiziție cu datele de vânzare din marketplace pentru o imagine completă a profitabilității produselor.",
-      "Operațiuni eficientizate: corelează automat achizițiile legate de marketplace cu înregistrările corespunzătoare de stoc și de vânzări din Odoo."
+      "Binding-uri pentru comenzile de achiziție: fiecare comandă de achiziție legată de un backend primește o înregistrare de binding cu backend-ul, External ID, External Code și liniile legate; sunt listate în Marketplace > Bindings > Purchase Orders, cu butonul standard Reimport.",
+      "Comenzi de achiziție create din exterior: un sistem extern poate crea o comandă de achiziție prin metoda `create_api`, autentificată cu tokenul de securitate al backend-ului; comanda se creează în compania backend-ului și este legată imediat de acesta.",
+      "Import din marketplace: comenzile și liniile primite de la un conector se creează sau se actualizează în Odoo; o comandă existentă se actualizează doar cât timp este încă cerere de ofertă; liniile își găsesc produsul după ID-ul sau codul extern mapat pe backend.",
+      "Modificări trimise înapoi: când o comandă de achiziție legată este modificată în Odoo, modificarea este pusă în coadă ca job pentru backend, la fel ca la comenzile de vânzare, dacă elementul Purchase Order al backend-ului este activ la scriere.",
+      "Purchase Order Days: câmp nou (implicit 2) în fila *Technical*, grupul *Limits* al formularului backend-ului; conectorul Odoo-to-Odoo trimite doar comenzile de achiziție datate în ultimele zile specificate.",
+      "Limitări: modulul nu are conector propriu și nici import programat — doar conectorii care implementează comenzi de achiziție (în prezent, Odoo-to-Odoo) schimbă astfel de comenzi cu sistemul extern; nu calculează necesarul de achiziții din vânzările marketplace și nu oferă analiză de furnizori sau de marjă."
     ],
     "dependencies": [
       "deltatech_marketplace",
@@ -6358,10 +6402,10 @@
     ],
     "connections": [
       "deltatech_marketplace",
-      "with_delay",
+      "deltatech_marketplace_odoo",
       "purchase_stock"
     ],
-    "text": "Marketplace Purchase Order addon\ndeltatech_marketplace_purchase\nAcest modul extinde ecosistemul marketplace prin integrarea proceselor de aprovizionare cu vânzările din marketplace, permițând decizii de achiziție bazate pe date. Din perspectivă de afaceri, el face legătura între cererea de vânzări externă și gestionarea internă a lanțului de aprovizionare, asigurând că vânzările din marketplace sunt susținute de achiziții oportune și corecte. Practic, comenzile de achiziție sunt aliniate la cererea reală din marketplace, iar achizițiile destinate vânzărilor din marketplace sunt corelate automat cu înregistrările de stoc și de vânzări din Odoo.\nAchiziții orientate spre cerere: aliniază comenzile de achiziție la performanța reală a vânzărilor din marketplace și la cererea previzionată.\nGestionarea furnizorilor: urmărește performanța și costurile furnizorilor pentru produsele destinate vânzării în marketplace.\nFlux de numerar îmbunătățit: optimizează nivelurile de stoc și frecvența achizițiilor pentru a se potrivi mai bine cu ciclurile de vânzare din marketplace.\nAnaliză precisă a marjei: combină costurile de achiziție cu datele de vânzare din marketplace pentru o imagine completă a profitabilității produselor.\nOperațiuni eficientizate: corelează automat achizițiile legate de marketplace cu înregistrările corespunzătoare de stoc și de vânzări din Odoo."
+    "text": "Marketplace Purchase Orders\ndeltatech_marketplace_purchase\nAcest modul este stratul de bază care leagă comenzile de achiziție din Odoo de un backend marketplace din cadrul Deltatech Marketplace. Păstrează evidența comenzilor de achiziție care aparțin unui sistem extern, permite acelui sistem să creeze comenzi de achiziție în Odoo și trimite înapoi, prin conector, modificările făcute în Odoo. Este folosit de conectorul Odoo-to-Odoo (`deltatech_marketplace_odoo`), care trimite comenzile de achiziție confirmate către baza Odoo a furnizorului.\nBinding-uri pentru comenzile de achiziție: fiecare comandă de achiziție legată de un backend primește o înregistrare de binding cu backend-ul, External ID, External Code și liniile legate; sunt listate în Marketplace > Bindings > Purchase Orders, cu butonul standard Reimport.\nComenzi de achiziție create din exterior: un sistem extern poate crea o comandă de achiziție prin metoda `create_api`, autentificată cu tokenul de securitate al backend-ului; comanda se creează în compania backend-ului și este legată imediat de acesta.\nImport din marketplace: comenzile și liniile primite de la un conector se creează sau se actualizează în Odoo; o comandă existentă se actualizează doar cât timp este încă cerere de ofertă; liniile își găsesc produsul după ID-ul sau codul extern mapat pe backend.\nModificări trimise înapoi: când o comandă de achiziție legată este modificată în Odoo, modificarea este pusă în coadă ca job pentru backend, la fel ca la comenzile de vânzare, dacă elementul Purchase Order al backend-ului este activ la scriere.\nPurchase Order Days: câmp nou (implicit 2) în fila *Technical*, grupul *Limits* al formularului backend-ului; conectorul Odoo-to-Odoo trimite doar comenzile de achiziție datate în ultimele zile specificate.\nLimitări: modulul nu are conector propriu și nici import programat — doar conectorii care implementează comenzi de achiziție (în prezent, Odoo-to-Odoo) schimbă astfel de comenzi cu sistemul extern; nu calculează necesarul de achiziții din vânzările marketplace și nu oferă analiză de furnizori sau de marjă."
   },
   {
     "path": "deltatech_marketplace_review/index.md",
@@ -8076,7 +8120,7 @@
   {
     "path": "deltatech_payment_revolut/index.md",
     "module": "deltatech_payment_revolut",
-    "version": "19.0.0.0.31",
+    "version": "19.0.0.0.34",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_revolut`",
     "local_path": "odoo-addons/bitshop/deltatech_payment_revolut",
     "last_ingest": "2026-08-20",
@@ -10296,7 +10340,7 @@
   {
     "path": "deltatech_rma/index.md",
     "module": "deltatech_rma",
-    "version": "19.0.1.9.6",
+    "version": "19.0.1.9.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma",
     "local_path": "odoo-addons/bitshop/deltatech_rma",
     "last_ingest": null,
@@ -12988,7 +13032,7 @@
   {
     "path": "deltatech_tc/index.md",
     "module": "deltatech_tc",
-    "version": "19.0.1.2.5",
+    "version": "19.0.1.2.7",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_tc",
     "local_path": "odoo-addons/deltatech/deltatech_tc",
     "last_ingest": "2026-09-29",
@@ -17626,7 +17670,7 @@
   {
     "path": "l10n_ro_ent_config/index.md",
     "module": "l10n_ro_ent_config",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.1.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_ent_config",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_ent_config",
     "last_ingest": "2026-10-09",
@@ -19351,7 +19395,7 @@
   {
     "path": "l10n_ro_partner_cnp/index.md",
     "module": "l10n_ro_partner_cnp",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.1.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_partner_cnp",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_partner_cnp",
     "last_ingest": "2026-10-12",
@@ -20766,7 +20810,7 @@
   {
     "path": "l10n_ro_reverse_charge_331_pos/index.md",
     "module": "l10n_ro_reverse_charge_331_pos",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.1.1",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_reverse_charge_331_pos`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_reverse_charge_331_pos",
     "last_ingest": "2026-10-22",
@@ -20797,7 +20841,7 @@
   {
     "path": "l10n_ro_reverse_charge_331_purchase/index.md",
     "module": "l10n_ro_reverse_charge_331_purchase",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_reverse_charge_331_purchase",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_reverse_charge_331_purchase",
     "last_ingest": "2026-09-29",
@@ -20823,7 +20867,7 @@
   {
     "path": "l10n_ro_reverse_charge_331_sale/index.md",
     "module": "l10n_ro_reverse_charge_331_sale",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_reverse_charge_331_sale",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_reverse_charge_331_sale",
     "last_ingest": "2026-09-12",
@@ -20947,7 +20991,7 @@
   {
     "path": "l10n_ro_saft_fix/index.md",
     "module": "l10n_ro_saft_fix",
-    "version": "19.0.2.3.1",
+    "version": "19.0.2.3.2",
     "github": "[https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_saft_fix](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_saft_fix)",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_saft_fix",
     "last_ingest": "2026-10-22",
@@ -21436,7 +21480,7 @@
   {
     "path": "l10n_ro_stock_consignment_d390/index.md",
     "module": "l10n_ro_stock_consignment_d390",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_consignment_d390",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_consignment_d390",
     "last_ingest": "2026-10-20",
@@ -21534,7 +21578,7 @@
   {
     "path": "l10n_ro_stock_gestiune_valuation/index.md",
     "module": "l10n_ro_stock_gestiune_valuation",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_gestiune_valuation",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_gestiune_valuation",
     "last_ingest": "2026-09-25",
@@ -22062,7 +22106,7 @@
   {
     "path": "l10n_ro_travel_order_pontaj/index.md",
     "module": "l10n_ro_travel_order_pontaj",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_travel_order_pontaj",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_travel_order_pontaj",
     "last_ingest": "2026-10-09",

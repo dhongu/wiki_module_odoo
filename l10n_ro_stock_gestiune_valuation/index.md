@@ -1,10 +1,11 @@
 # Romania - Gestiuni pe arii de evaluare (localizat la `l10n_ro_stock_gestiune_valuation/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_gestiune_valuation`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_gestiune_valuation
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_gestiune_valuation`
 - **Ultima Ingestie:** `2026-09-25`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

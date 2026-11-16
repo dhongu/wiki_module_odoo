@@ -1,10 +1,10 @@
-# Deltatech Kit Price (localizat la `deltatech_kit_price/index.md`)
+# Kit Price on Sale Orders (localizat la `deltatech_kit_price/index.md`)
 
 - **Nume Tehnic:** `deltatech_kit_price`
 - **Versiune:** `19.0.0.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_kit_price
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_kit_price`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-16`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -17,6 +17,7 @@ Modulul calculează automat prețul de cost al produselor de tip „kit" direct 
 - Parcurge toate componentele kitului și însumează costurile individuale ale acestora într-un cost total pentru linia comenzii.
 - Asigură calculul marjelor de vânzare pe baza costurilor reale ale componentelor, nu a unui cost static/manual introdus pe produsul-kit, oferind o imagine financiară mai corectă echipelor de vânzări și managementului.
 - Se integrează nativ cu modulele Odoo de **Vânzări**, **Producție (BoM)** și **Marjă**.
+- Mod de utilizare: se creează pentru produs o listă de materiale (BoM) de tip **Kit**, se definește costul fiecărui component, apoi, la adăugarea kitului pe o comandă de vânzare, costul liniei și marja rezultată se calculează automat.
 
 #### 3. Dependențe
 

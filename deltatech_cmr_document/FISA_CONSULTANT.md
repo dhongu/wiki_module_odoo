@@ -83,22 +83,22 @@ Date care ajung pe CMR:
 
 | Caseta CMR | Sursa în Odoo |
 |---|---|
-| antet | **Număr CMR** (secvență `CMR/2026/00001`, dat la prima tipărire) și numele exemplarului |
+| antet | **Număr CMR** (secvența companiei transferului, `CMR/2026/00001`, dat la prima tipărire) și numele exemplarului |
 | 1 Expeditor | compania (la recepție: partenerul transferului), cu adresă, țară și codul de TVA |
 | 2 Destinatar | partenerul transferului, cu numele firmei din care face parte (la recepție: compania) |
 | 3 Locul de livrare | adresa partenerului transferului + data programată (la recepție și la transfer intern: depozitul de destinație) |
 | 4 Locul preluării | adresa depozitului tipului de operație + data efectuării (înainte de validare, data programată); la recepție: adresa partenerului; la transfer intern: depozitul sursă |
 | 5 Documente anexate | tabul **CMR**, câmpul **Documente anexate** |
-| 6 Mărci și numere | numele pachetelor (paleților) liniei |
-| 7 Număr de colete | pachetele noi ale liniei: un palet comun mai multor linii se numără o singură dată, pe primul rând; total pe rândul **Total** |
-| 8 Mod de ambalare | tipul pachetului (ex. Europalet) |
+| 6 Mărci și numere | numele pachetelor (paleților) liniei; cutiile puse pe un palet apar cu numele paletului |
+| 7 Număr de colete | pachetele noi ale liniei: un palet comun mai multor linii se numără o singură dată, pe primul rând; cutiile puse pe un palet se numără ca un singur colet, paletul; total pe rândul **Total** |
+| 8 Mod de ambalare | tipul pachetului (ex. Europalet); la cutii puse pe palet, tipul paletului |
 | 9 Natura mărfii | numele produsului sau, pentru marfa periculoasă, mențiunea ADR; peste 7 linii, trimiterea la lista de încărcare |
 | 10 Număr statistic | **Cod SH** al produsului |
 | 11 Greutate brută (kg) | **Masă** × cantitatea în UM-ul produsului; un rând **Tara ambalajelor** cu suma greutăților goale ale paleților, fiecare socotit o dată; totalul e greutatea brută |
 | 12 Volum (m³) | **Volum** × cantitatea în UM-ul produsului, cu total |
 | 13 Instrucțiunile expeditorului | tabul **CMR**, câmpul **Instrucțiunile expeditorului**; dacă e gol, tabul **Notă** |
 | 14 Plata transportului | tabul **CMR**, **Plata transportului**: bifează **Plata la expediere** sau **Plata la destinație** |
-| 15 Ramburs | tabul **CMR**, **Ramburs**, cu moneda |
+| 15 Ramburs | tabul **CMR**, **Ramburs**, cu moneda (propusă din moneda companiei transferului) |
 | 16 Transportator | **Firma de transport** (cu adresă și țară; fără ea, numele metodei de livrare), numerele camionului și remorcii și delegatul (șoferul) |
 | 17 Transportatori succesivi | tabul **CMR**, **Transportator succesiv**, cu adresă și țară |
 | 18 Rezervele transportatorului | tabul **CMR**, **Rezervele transportatorului** |
@@ -143,8 +143,11 @@ Date minime pentru demo:
    (greutatea goală a paletului, care devine tara). Numele tipului se tipărește așa cum e scris.
 8. Verificați **Limba** clienților străini și a adreselor lor de livrare: formularul urmează limba
    partenerului de pe transfer; dacă aceasta lipsește, limba companiei.
-9. Opțional, prefixul și următorul număr CMR se schimbă din **Setări → Tehnic → Secvențe**, secvența
-   „CMR Consignment Note".
+9. Fiecare companie își numerotează CMR-urile dintr-o secvență proprie, „CMR Consignment Note -
+   <compania>", creată la instalarea modulului, la actualizarea lui și la crearea unei companii noi;
+   o secvență nouă continuă de la următorul număr al secvenței comune „CMR Consignment Note", ca să
+   nu se repete un număr deja tipărit. Opțional, prefixul și următorul număr se schimbă din
+   **Setări → Tehnic → Secvențe** (meniul apare după activarea modului dezvoltator), pe secvența companiei (cea comună rămâne doar ca model).
 
 Formatul de hârtie al raportului este **A4 CMR Format** (A4 portret, margini mici), creat de modul.
 
@@ -203,9 +206,11 @@ expeditorului** din tabul **CMR**.
 În **Contacte**, deschideți firma de transport, tabul **Vânzări & Achiziții**, grupul **Transport
 CMR** (vizibil doar pe firme): **Număr camion**, **Număr remorcă** și **Delegat obișnuit** (șoferul,
 o persoană de contact a firmei). Când firma devine transportatorul unei livrări, aceste trei date se
-copiază pe livrare, în tabul **CMR**. Valorile goale ale firmei nu șterg ce era deja pe livrare: dacă
-schimbați firma de transport cu una fără vehicul sau delegat trecut, pe livrare rămân numerele și
-șoferul firmei anterioare — verificați-le sau goliți-le în tabul **CMR**.
+copiază pe livrare, în tabul **CMR**. Valorile goale ale firmei nu șterg numerele deja trecute pe
+livrare: dacă schimbați firma de transport cu una fără vehicul, pe livrare rămân numerele camionului
+și remorcii — verificați-le sau goliți-le în tabul **CMR**. Șoferul firmei anterioare, în schimb, nu
+rămâne lângă firma nouă: un **Delegat** care e persoană de contact a altei firme se golește; rămâne
+un șofer care nu aparține niciunei firme sau care e persoană de contact a firmei noi.
 
 ![Formularul firmei Trans Europa Cargo SRL, tabul Vânzări & Achiziții: grupul Transport CMR cu Număr camion CJ 12 TEC (1), Număr remorcă CJ 34 REM (2) și Delegat obișnuit Ion Ionescu (3) evidențiate](screenshots/05_firma_transport.png)
 
@@ -217,7 +222,8 @@ Livrări**, tabul **CMR**. Toate câmpurile sunt opționale: unul gol lasă case
 - grupul **Transport**: **Număr CMR** (apare după prima tipărire), **Delegat**, **Număr camion** și
   **Număr remorcă** (propuse din firma de transport, caseta 16), **Transportator succesiv** (caseta 17);
 - grupul **Plată**: **Plata transportului** (bifează **Plata la expediere** sau **Plata la
-  destinație** în caseta 14) și **Ramburs** cu moneda (caseta 15);
+  destinație** în caseta 14) și **Ramburs** cu moneda (caseta 15), propusă din moneda companiei
+  livrării;
 - grupul **Expeditor**: **Documente anexate** (caseta 5) și **Instrucțiunile expeditorului** (caseta
   13; dacă e gol, se tipărește tabul **Notă**);
 - grupul **Transportator**: **Rezervele transportatorului** (caseta 18) și **Convenții speciale**
@@ -245,8 +251,12 @@ caseta 16 tipărește doar numele metodei.
 ### Pasul 8 — Validarea și tipărirea CMR-ului
 
 Puneți marfa pe paleți, dacă se folosesc pachete (**Pune în Pachet** din tabul **Operații**), și
-validați livrarea cu **Validează**. Apoi deschideți meniul cu rotița de lângă numărul livrării,
-submeniul **Tipăriți**, și alegeți **Document CMR**. Odoo descarcă `CMR_Document.pdf`, cu trei pagini
+validați livrarea cu **Validează**. Dacă marfa e întâi pusă în cutii, iar cutiile pe un palet, CMR-ul
+numără paletul ca un singur colet (casetele 6–8) și adună la tară greutatea goală a cutiilor și a
+paletului. Apoi deschideți meniul cu rotița de lângă numărul livrării,
+submeniul **Tipăriți**, și alegeți **Document CMR**. Odoo descarcă un PDF numit după numărul CMR
+(`CMR - CMR_2026_00001.pdf`; un transfer fără număr CMR, după numele lui; mai multe transferuri
+tipărite deodată din listă, după numele raportului), cu trei pagini
 (patru, cu exemplarul administrativ); prima tipărire dă livrării numărul CMR. Butonul **Tipăriți** din
 antetul livrării tipărește bonul de livrare, nu CMR-ul. Dacă **Document CMR** lipsește din submeniu,
 tipul de operație nu are bifa (pasul 1).
@@ -355,12 +365,16 @@ operație care tipăresc CMR.
 ## 8. Verificări pentru consultant
 
 - [ ] **Document CMR** apare în meniul **Tipăriți** al livrării și în lista livrărilor, și **nu** apare pe un transfer al cărui tip de operație nu are bifa; tabul **CMR** urmează aceeași bifă.
-- [ ] Prima tipărire dă livrării un **Număr CMR**, vizibil în tabul **CMR** și în antetul documentului; o a doua tipărire păstrează același număr.
+- [ ] Prima tipărire dă livrării un **Număr CMR**, vizibil în tabul **CMR** și în antetul documentului; o a doua tipărire păstrează același număr; PDF-ul descărcat poartă numărul în nume.
+- [ ] Într-o bază cu mai multe companii, fiecare companie are în **Setări → Tehnic → Secvențe** (în modul dezvoltator) propria secvență CMR, iar numerele unei companii vin în serie continuă, fără să le consume cele ale altei companii.
 - [ ] Alegând firma de transport pe livrare, **Delegat**, **Număr camion** și **Număr remorcă** se completează din firmă; caseta 16 le tipărește sub adresa firmei.
+- [ ] Schimbând firma de transport cu una fără delegat obișnuit, delegatul firmei anterioare se golește; un șofer care nu aparține niciunei firme rămâne.
 - [ ] Casetele 2 și 3 arată partenerul transferului, și pe un transfer creat fără comandă; pe o recepție bifată, caseta 1 arată furnizorul și caseta 2 compania.
 - [ ] Caseta 4 arată adresa depozitului din care pleacă marfa, cu data.
 - [ ] Un palet comun mai multor linii apare cu **1** în caseta 7 doar pe primul rând; totalul coletelor e numărul real de paleți.
 - [ ] Rândul **Tara ambalajelor** arată greutatea goală a paleților (25,00 kg pentru un Europalet), iar totalul casetei 11 = suma liniilor + tara.
+- [ ] Cutii puse pe un palet (**Pune în Pachet** pe cutii, apoi pe palet) apar în caseta 7 ca **1** colet, paletul, iar tara adună greutatea goală a cutiilor și a paletului.
+- [ ] **Ramburs** propune moneda companiei livrării, chiar dacă utilizatorul lucrează în altă companie.
 - [ ] O linie în altă unitate de măsură (ex. bax de 12) cântărește cât cantitatea convertită în UM-ul produsului.
 - [ ] Un produs cu **Număr UN** apare în caseta 9 cu mențiunea ADR (UN, denumire, clasă, grupă, cod tunel); unul fără, cu numele.
 - [ ] Pe o livrare cu marfă periculoasă, caseta 13 arată numărul și felul coletelor ei (scrise în **Instrucțiunile expeditorului**).

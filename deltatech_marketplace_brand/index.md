@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.7`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_brand
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_brand`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-16`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -17,6 +17,7 @@ Acest modul extinde funcționalitatea Odoo Marketplace cu un sistem complet de g
 - Reprezentare consecventă a brandului pe mai multe platforme marketplace (de exemplu eMAG, MerchantPro, Odoo-to-Odoo).
 - Raportare și analize îmbunătățite, prin urmărirea vânzărilor în funcție de performanța pe brand.
 - Experiență de client îmbunătățită, prin afișarea clară a informațiilor de brand în vitrinele marketplace.
+- Mapările duplicate (același brand mapat de două ori pe același backend, caz în care la trimiterea din Odoo se folosește doar cea mai recentă) apar pe roșu în listă și pot fi găsite cu filtrul *Duplicate mappings*; verificarea (`duplicate_mapping`) provine din `deltatech_marketplace`.
 
 #### 3. Dependențe
 

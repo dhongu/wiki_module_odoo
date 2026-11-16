@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.2.3.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_delivery_status
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_delivery_status`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-16`
 
 #### 1. Sumar
 
@@ -27,7 +27,8 @@ Acest modul extinde sistemul de livrare din Odoo pentru a oferi o urmărire deta
 - **Blocare în funcție de furnizorul de plată:** amânarea automată a livrărilor pe baza configurației furnizorului de plată. Fiecare furnizor poate fi configurat cu opțiunea „Livrare amânată"; când este activată, livrările sunt blocate până la confirmarea plății, iar la confirmare sistemul eliberează automat livrările blocate.
 - **Configurare la nivel de echipă de vânzări:** echipele de vânzări pot fi configurate să amâne livrările pentru anumite metode de plată (tratament special pentru transferurile bancare, permițând verificarea plății înainte de expediere).
 - **Gestionare la nivel de comandă:** funcții pentru amânarea sau eliberarea livrărilor la nivelul comenzii de vânzare.
-- **Vizibilitatea stării:** afișează starea „amânat" pe comenzi și transferuri pentru o mai bună conștientizare operațională.
+- **Vizibilitatea stării:** afișează starea „amânat" pe comenzi și transferuri pentru o mai bună conștientizare operațională; comenzile cu livrare amânată pot fi găsite cu filtrul „Livrare amânată” (comenzi de vânzare) și „Amânat” (transferuri), iar acțiunile „Postpone Delivery” / „Release Delivery” sunt disponibile și în masă, din meniul *Acțiuni* al listei de comenzi.
+- **Eliberare la plată:** livrarea se amână la confirmare doar cât timp ultima plată nu este finalizată (opțiunea furnizorului și opțiunea echipei pentru transfer bancar); la confirmarea plății, comenzile amânate asociate sunt eliberate, iar o eroare la eliberare nu blochează procesarea plății.
 
 **Urmărirea stării de livrare (`delivery_state`)**
 
@@ -47,4 +48,5 @@ Conform `readme/DESCRIPTION.md`, modulul extinde modele standard Odoo: transferu
 
 #### 5. Conexiuni
 
-- Niciun modul conex cu pagină wiki existentă nu a fost identificat.
+- [deltatech_delivery](../deltatech_delivery/index.md): cron-ul de stare a livrării din acest modul marchează ca livrate transferurile fără curier, după o perioadă de grație; fără el, aceste transferuri rămân pe *Draft*.
+- [deltatech_delivery_send_sms](../deltatech_delivery_send_sms/index.md): depinde de acest modul și trimite SMS clientului la trecerea livrării în *Pre advice* / *In Transit*.
