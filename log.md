@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-17] Ingestie: deltatech_qms
+
+- **Acțiune:** pagină nouă pentru [deltatech_qms](deltatech_qms/index.md), 19.0.1.0.0. Modulul există doar pe `origin/19.0` al suitei bitshop, nu și în checkout-ul local, deci sursa a fost exportul din `origin/19.0`.
+- **Sursă:** `git archive origin/19.0 deltatech_qms` din `odoo-addons/bitshop`, cu `readme/DESCRIPTION.md`, `USAGE.md` și `CONFIGURE.md`.
+- **Fișe consultant:** sincronizată cu `wiki_sync.sync_fisa`.
+- **Conexiuni:** doar `mail` (dependență din manifest) și `res.partner`, verificate în cod.
+- **Fișiere actualizate:** `deltatech_qms/`, `index.md`, `log.md`.
+
 ## [2026-11-17] Re-ingestie: 49 module modificate după 14.11.2026
 
 - **Acțiune:** re-ingestie pentru 37 de module deja documentate și ingestie nouă pentru 12 (listate în [index.md](index.md)). Domeniul a fost ales de utilizator: doar modulele cu fișiere modificate după 14.11.2026, din cele 321 nedocumentate și documentate. Procesare în paralel, cu câte un subagent `documentarist-wiki` pe modul, în opt loturi.
