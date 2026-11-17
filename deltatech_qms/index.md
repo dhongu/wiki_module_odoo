@@ -1,10 +1,11 @@
-# Quality Management ISO 9001 (localizat la `deltatech_qms/index.md`)
+# Quality Management ISO 9001
 
 - **Nume Tehnic:** `deltatech_qms`
 - **Versiune:** `19.0.1.0.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_qms
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_qms`
 - **Ultima Ingestie:** `2026-11-17`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
