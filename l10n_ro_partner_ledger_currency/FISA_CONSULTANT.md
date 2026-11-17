@@ -161,14 +161,21 @@ de plătit** (la furnizori soldul apare negativ).
 **Scenariul:** contabilul vrea fișa de cont a unui partener în valută, în formatul cu care e
 obișnuit din fișa de cont clasică (doar valută, fără coloanele RON/scadență/jurnal/reconciliere).
 
-1. În raport, filtrați după **perioadă**, **partener** și, dacă e cazul, **cont** sau **jurnal**
-   (aceleași filtre folosite pe ecran — nu este nevoie de niciun wizard).
+1. În raport, filtrați după **perioadă**, **partener** (filtrul **Parteneri** sau textul din bara de
+   căutare) și, dacă e cazul, **cont** sau **jurnal** (aceleași filtre folosite pe ecran — nu este
+   nevoie de niciun wizard). Fără partener selectat, exportul cuprinde toți partenerii din perioadă.
 2. Apăsați butonul **Fișă în valută (PDF)** din antetul raportului (alături de Confirmare sold și
    PDF/XLSX).
 3. **Găsiți în document:** câte o **„Fișă a contului"** per (partener, cont, valută) — antet cu
    `Debit precedent` / `Credit precedent` / `Sold inițial`, tabelul `Data | Nr. doc. | Explicație |
    Sumă debitoare | Sumă creditoare | Sold` (toate în valută, o linie per document,
    cu **sold cumulat**), iar la final `Rulaj total` și `Sold final`.
+
+**Limită:** un singur PDF poate conține cel mult **100 de fișe** (partener × cont × valută), fiecare
+cu propria pagină de antet. Dacă selecția ar produce mai multe (de exemplu export fără partener pe o
+perioadă largă), Odoo refuză exportul cu mesajul „Fișa în valută ar avea N fișe (partener × cont ×
+valută), peste limita de 100 pentru un singur PDF". Selectați un partener (filtrul **Parteneri** sau
+bara de căutare) sau restrângeți perioada/jurnalele și apăsați din nou butonul.
 
 Documentul este randat cu **layout-ul de document configurat în Odoo** (antet/subsol cu
 datele și logo-ul firmei din *Setări → Companii → Aspect document*), ca să respecte stilul
@@ -183,6 +190,8 @@ celorlalte documente.
   în aceeași valută (ex. `Global Trading GmbH`, cont 401, EUR: fișa arată sold final creditor
   1.800,00 €, iar antetul grupului -1.600,00 €, pentru că include și avansul de 200 € de pe 409);
 - tranzacțiile în moneda companiei apar ca **fișe separate în RON**;
+- dacă ați căutat un partener în bara de căutare, documentul conține doar fișele lui, nu ale tuturor
+  partenerilor;
 - funcționează și pe conturile de **avans** (419/409) prin filtrarea pe cont.
 
 ### Pasul 4 — Exportul fișei complete (arhivare)
@@ -267,6 +276,11 @@ Ce rămâne manual: trimiterea confirmării către partener și compararea cu ex
       (partener, cont, valută), doar în valută, o linie per document, cu sold cumulat,
       Debit/Credit precedent, Rulaj total și Sold final.
 - [ ] Fișa în valută respectă filtrele curente (perioadă/partener/cont/jurnal) — fără wizard.
+- [ ] Cu un partener căutat în bara de căutare (fără filtrul **Parteneri**), **Fișă în valută (PDF)**
+      și **Confirmare sold (PDF)** conțin doar partenerul căutat, nu toți partenerii.
+- [ ] La un export care ar depăși 100 de fișe (fără partener selectat, pe o perioadă largă),
+      **Fișă în valută (PDF)** se oprește cu mesajul „Fișa în valută ar avea N fișe … peste limita de
+      100 pentru un singur PDF", fără să blocheze serverul; după selectarea unui partener, exportul reușește.
 - [ ] Tranzacțiile în moneda companiei apar ca fișe separate în RON.
 - [ ] Exporturile PDF/XLSX standard conțin coloanele valutare.
 - [ ] Conturile de avans **409** (furnizor cu sold pe 409) și **419** (client cu sold pe 419) apar
@@ -287,6 +301,7 @@ Ce rămâne manual: trimiterea confirmării către partener și compararea cu ex
 | Soldul valutar pare amestecat | Partener cu mai multe valute, raport vechi în cache | Reîncărcați raportul; gruparea pe valută separă soldurile per monedă |
 | **Valută** este goală pe rândul partenerului | Coloana însumează doar mișcările din perioadă și nu se afișează pe rândul partenerului, ca să nu fie citită drept sold final | Normal; soldul de confirmat este **Sold Valută** (sau antetul grupului de valută), valabil când încasările și plățile sunt în aceeași valută. Dacă partenerul plătește în lei, liniile în lei nu modifică soldul valutar, iar nici **Confirmare sold (PDF)** nu le compensează cu soldul în EUR (arată un rând EUR și un rând RON, separate): confirmați soldul în lei (rândul RON și **Poziție netă totală (RON)**), știind că soldul în EUR nu reflectă plățile în lei |
 | **Sold Valută** este gol pe rândul partenerului | Partenerul are mai multe valute străine | Normal; soldurile sunt pe grupurile de valută de dedesubt |
+| La **Fișă în valută (PDF)**: „Fișa în valută ar avea N fișe (partener × cont × valută), peste limita de 100 pentru un singur PDF" | Selecția cuprinde prea mulți parteneri/conturi/valute (de obicei export fără partener, pe o perioadă largă) | Selectați un partener în filtrul **Parteneri** sau în bara de căutare, ori restrângeți perioada/jurnalele, apoi exportați din nou |
 | PDF-ul de confirmare iese gol | Filtrele exclud toți partenerii (perioadă/partener) | Lărgiți perioada sau scoateți filtrul de partener |
 | Sold Inițial 0 deși există istoric | Mișcările istorice sunt în ciornă | Postați documentele din perioadele anterioare |
 | Contul 409/419 nu apare deși are sold | Filtrul „Cont" e restrâns la o singură latură | 409 apare doar cu Datorie bifată, 419 doar cu Creanță bifată — starea implicită „Cont: Parteneri comerciali" le include pe ambele |

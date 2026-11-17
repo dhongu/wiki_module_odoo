@@ -1,10 +1,11 @@
 # Romania - ANPC footer (localizat la `l10n_ro_footer_anpc/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_footer_anpc`
-- **Versiune:** `19.0.0.0.6`
+- **Versiune:** `19.0.0.0.9`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_footer_anpc
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_footer_anpc`
 - **Ultima Ingestie:** `2026-11-02`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

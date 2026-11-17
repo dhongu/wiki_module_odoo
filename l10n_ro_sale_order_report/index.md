@@ -1,10 +1,11 @@
 # Romania - Proforma Invoice Report (localizat la `l10n_ro_sale_order_report/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_sale_order_report`
-- **Versiune:** `19.0.1.0.14`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_sale_order_report
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_sale_order_report`
-- **Ultima Ingestie:** `2026-10-26`
+- **Ultima Ingestie:** `2026-11-17`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -15,7 +16,8 @@ Acest modul permite tipărirea de facturi proforme direct din oferta (cotația) 
 - Tipărirea unei facturi proforme inițiale („Percent Proforma - first") din cotație, cu suma calculată din prima linie a termenului de plată (de tip „procent" sau „fix").
 - Tipărirea unei facturi proforme finale („Percent Proforma - last"), cu suma rămasă de încasat (necesită procesarea prealabilă a unei plăți prin modulul Deltatech Sale Payment; fără plată, se tipărește suma întreagă).
 - Opțiuni pe companie, în Setări, la blocul de cotații (setările comenzilor de vânzare), pentru formularul ofertei:
-  - numărător al liniilor (activ implicit) și imaginea produsului pe linie (activă implicit);
+  - numărător al liniilor (activ implicit), care numără doar liniile de produs, nu secțiunile sau notele;
+  - imaginea produsului pe linie (activă implicit) — setarea `include_image_line` este acum furnizată de modulul `deltatech_sale_order_image`, iar formularul tipărit rămâne neschimbat;
   - excluderea numelui produsului din descrierea liniei, sau reducerea mărimii descrierii;
   - afișarea valorii taxelor și a totalului cu taxe pe fiecare linie;
   - afișarea termenului de livrare (lead time) în zile, doar dacă vreo linie îl are.
@@ -26,12 +28,13 @@ Acest modul permite tipărirea de facturi proforme direct din oferta (cotația) 
 
 - `sale`
 - [l10n_ro_report_common](../l10n_ro_report_common/index.md)
+- `deltatech_sale_order_image`
 
 #### 4. Componente Cheie
 
 **Modele**
 
-- `res.company` (extins): câmpurile `counter_on_sale_order`, `include_image_line`, `exclude_product_name_from_description_offer`, `make_description_smaller`, `show_total_amount_with_taxes_on_so`, `show_lead_time`.
+- `res.company` (extins): câmpurile `counter_on_sale_order`, `exclude_product_name_from_description_offer`, `make_description_smaller`, `show_total_amount_with_taxes_on_so`, `show_lead_time`.
 - `res.config.settings` (extins): expune opțiunile de mai sus în Setări.
 
 **Vizualizări**

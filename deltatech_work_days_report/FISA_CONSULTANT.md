@@ -32,9 +32,10 @@ sunt în Odoo.
 - **Legea nr. 165/2018 privind acordarea biletelor de valoare** — cadrul în care angajatorul poate
   acorda **tichete de masă**, inclusiv pe card, și al cărui text stabilește pentru ce zile se acordă și
   valoarea nominală maximă. Modulul **nu verifică** valoarea tichetului și nu aplică reguli speciale
-  (telemuncă, delegație, program redus): calculează **o zi de tichet pentru fiecare zi lucrătoare
-  din perioada contractului care nu este sărbătoare legală și în care angajatul nu are un concediu
-  aprobat**. Valoarea maximă în vigoare și cazurile particulare se verifică în actul legal, la data
+  (telemuncă, delegație, program redus): calculează **o zi de tichet pentru fiecare zi din programul de
+  lucru al angajatului, din perioada contractului, care nu este sărbătoare legală și în care angajatul a
+  lucrat cel puțin o parte din zi** (o zi cu concediu pe ore sau pe jumătate de zi dă tichet; una cu
+  concediu întreg, nu). Valoarea maximă în vigoare și cazurile particulare se verifică în actul legal, la data
   acordării.
 - **Codul fiscal (Legea 227/2015), art. 76 alin. (3) lit. h)** — valoarea tichetelor de masă acordate
   potrivit legii este venit asimilat salariilor; tichetele intră în baza CASS (art. 157 alin. (2)). Modulul
@@ -61,14 +62,14 @@ Modulul **nu generează note contabile** și nu citește conturi. Datele folosit
 
 | Dată | Unde se completează | Rol în export |
 |---|---|---|
-| **Cod** | Tipul de concediu | Apare în foaia de pontaj în locul orelor, în ziua de concediu (de exemplu `CO`, `CM`) |
+| **Cod** | Tipul de concediu | Apare în foaia de pontaj în ziua de concediu (de exemplu `CO`, `CM`): singur la concediul întreg, după orele rămase la cel parțial (`6/CO`) |
 | **Ore pe zi** (2, 4, 6 sau 8) | Fila *Stat de plată* a angajatului | Coloana *Normă* și totalul de ore |
 | **Valoare bon de masă** | Fila *Stat de plată* a angajatului | Suma din fișierul pentru bancă (zile × valoare) |
 | **Nume complet** | Fila *Stat de plată* a angajatului | Numele din fișierul pentru bancă (dacă e gol, se ia numele angajatului) |
 | **CNP** (`Social Security No`) și **cont bancar** | Fila *Personal* a angajatului | Coloanele CNP și IBAN din fișierul pentru bancă |
 | Începutul și sfârșitul contractului | Fila *Stat de plată* a angajatului | Zilele din afara contractului apar cu `-` și nu dau tichete |
 | Sărbători legale | *Concediu → Configurare → Sărbători legale* | Ziua apare cu `SL` și nu dă tichet |
-| Concedii aprobate | *Concediu* | Ziua apare cu codul concediului și nu dă tichet |
+| Concedii aprobate | *Concediu* | Concediul întreg: ziua apare cu codul și nu dă tichet. Concediul pe ore sau pe jumătate de zi: orele rămase și codul (`6/CO`), cu tichet |
 
 **Date minime pentru demo:** patru angajați cu concedii diferite (unul cu cod, unul fără cod, unul
 medical), unul cu **Ore pe zi = 4**, unul angajat în mijlocul lunii, o sărbătoare legală în lună și, la
@@ -87,6 +88,9 @@ tichetelor (achiziția lor, reținerile din stat) se face în salarizare, în af
 4. Introduceți sărbătorile legale ale anului în *Concediu → Configurare → Sărbători legale*.
 5. Datele contractului se completează în fila *Stat de plată*; un angajat fără contract este socotit în
    firmă pe toată perioada.
+6. Verificați **Program de lucru** al fiecărui angajat (fila *Stat de plată*): zilele lui sunt zilele
+   lucrate din foaie (fără program se ia programul companiei; la program flexibil, luni–vineri). Orele
+   unei zile vin din **Ore pe zi**, nu din program.
 
 ## 6. Flux de utilizare
 
@@ -142,21 +146,28 @@ câte o coloană pe fiecare zi a perioadei, apoi câte o coloană pe fiecare cod
 
 **Verificați:**
 
-1. fiecare zi lucrătoare arată orele angajatului (8, sau 4 la programul redus); sâmbăta și duminica sunt
-   goale;
+1. fiecare zi din programul de lucru al angajatului arată orele lui (8, sau 4 la programul redus); zilele
+   din afara programului sunt goale (în exemplu, programul standard: sâmbăta și duminica). Un angajat cu
+   program de marți până sâmbătă are sâmbăta orele și lunea goală; la un program flexibil se socotesc
+   zilele de luni până vineri;
 2. sărbătoarea legală apare ca `SL` pentru angajații cu contract în ziua respectivă; contează doar
    sărbătorile **companiei angajatului** și ale **programului lui de lucru**: o sărbătoare introdusă pentru
    alt program de lucru sau pentru altă companie nu apare la el;
 3. concediile aprobate apar cu codul lor (în exemplu, `CO` trei zile la Ana Popescu, `CM` două zile la Ion
    Ionescu); concediul fără cod apare ca `ABS`;
-4. zilele de dinainte de începutul contractului apar cu `-` (Vlad Marin, angajat în mijlocul lunii);
-5. *Bonuri de masă* = zilele cu ore trecute (octombrie 2026: Ana 18, Ion 19, Maria 20, Vlad 12), iar
-   *Număr total de ore* = zilele lucrate × *Ore pe zi*.
+4. un concediu pe ore sau pe jumătate de zi apare ca orele lucrate rămase, urmate de cod: la Ion Ionescu,
+   două ore de concediu de odihnă pe 12 octombrie dau `6/CO` (6 ore lucrate); ziua intră și în coloana
+   codului;
+5. zilele din afara contractului apar cu `-`: înainte de început (Vlad Marin, angajat în mijlocul lunii)
+   sau după sfârșit, pentru un angajat plecat în cursul lunii;
+6. *Bonuri de masă* = zilele în care s-a lucrat, inclusiv cele cu concediu parțial (octombrie 2026: Ana 18,
+   Ion 19, Maria 20, Vlad 12), iar *Număr total de ore* = orele lucrate (Ion: 18 × 8 + 6 = 150).
 
-Doar după aceste verificări predați fișierul. Un concediu pe ore sau pe jumătate de zi se socotește în
-foaie ca **zi întreagă** de concediu.
+Doar după aceste verificări predați fișierul. Concediul pe jumătate de zi ia jumătate din *Ore pe zi*,
+cel pe ore ia orele cerute (un concediu pe ore întins pe mai multe zile se socotește pe zile întregi); mai multe concedii parțiale în aceeași zi se adună, iar codul e al primului.
+Când nu mai rămân ore de lucru, ziua apare doar cu codul și nu dă bon de masă.
 
-![Foaia de pontaj pentru octombrie 2026: rând pe angajat, zilele 1-31 cu orele 8 sau 4, SL în ziua de sărbătoare, CO, CM și ABS în zilele de concediu, minus la Vlad Marin până la angajare, iar la final totalurile pe coduri, numărul total de ore și bonurile de masă](screenshots/06_fisier_prezenta.png)
+![Foaia de pontaj pentru octombrie 2026: rând pe angajat, zilele 1-31 cu orele 8 sau 4, SL în ziua de sărbătoare, CO, CM și ABS în zilele de concediu, 6/CO la Ion Ionescu în ziua cu două ore de concediu, minus la Vlad Marin până la angajare, iar la final totalurile pe coduri, numărul total de ore și bonurile de masă](screenshots/06_fisier_prezenta.png)
 
 ### Pasul 7 — Alegeți perioada pentru tichetele de masă
 
@@ -187,7 +198,7 @@ fișierul de pontaj: redenumiți-l după descărcare).
 4. valoarea unui tichet nu depășește maximul legal în vigoare (modulul nu o verifică).
 
 **Atenție:** suma nu ține cont de **Ore pe zi**: un angajat cu program de 4 ore primește tichet pentru
-fiecare zi lucrătoare, ca unul cu 8 ore (Maria Dumitrescu, 20 de zile).
+fiecare zi din program, ca unul cu 8 ore (Maria Dumitrescu, 20 de zile).
 
 ![Fișierul pentru bancă, foaia Centralizator bonuri de masă: rânduri pentru Dumitrescu Maria 600, Ionescu Ion 760, Marin Vlad 480 și Popescu Ana-Maria 720, cu CNP, IBAN și explicația Tichete de masă: 10.2026](screenshots/09_fisier_tichete.png)
 
@@ -221,7 +232,9 @@ verificarea foilor; încărcarea efectivă a cardurilor și salarizarea.
       Administrator*.
 - [ ] Sărbătorile legale ale lunii sunt introduse și apar ca `SL`.
 - [ ] Un concediu neaprobat nu apare în foaie; unul aprobat apare cu codul lui.
-- [ ] Un angajat cu contract început la mijlocul lunii are `-` înainte de început.
+- [ ] Un angajat cu contract început la mijlocul lunii are `-` înainte de început; unul plecat la mijlocul lunii, după sfârșit.
+- [ ] Un angajat cu program de marți până sâmbătă are sâmbăta cu ore (și bon de masă) și lunea goală; la program flexibil se lucrează luni–vineri.
+- [ ] Un concediu de 2 ore într-o zi de 8 apare ca `6/CO`: 6 ore în total, o zi în coloana `CO` și bon de masă (și în fișierul pentru bancă); jumătatea de zi dă `4/CO` la 8 ore pe zi.
 - [ ] *Bonuri de masă* din pontaj coincid cu zilele din fișierul pentru bancă, la fiecare angajat.
 - [ ] CNP-ul și IBAN-ul sunt completate pentru fiecare angajat din fișierul pentru bancă.
 
@@ -264,9 +277,10 @@ Capturile în engleză pentru `readme/USAGE.md` (Odoo Apps) se generează din ac
 - Modulul e în retragere: pentru o firmă din România manualul trebuie să trimită către
   `l10n_ro_hr_pontaj` (pontaj din programul real, tichete pe zile pontate, luni închise).
 - Ambele fișiere se numesc `work_day_report.xlsx`; redenumiți-le după descărcare ca să nu le amestecați.
-- Tichetul se calculează pe zile lucrătoare fără concediu, nu pe ore: programul de 4 ore dă tichet
-  întreg. Un concediu pe ore sau pe jumătate de zi scoate ziua întreagă din calcul.
-- O sărbătoare legală care cade sâmbăta sau duminica apare ca zi liberă, nu ca `SL`.
+- Tichetul se calculează pe zilele în care s-a lucrat, nu pe ore: programul de 4 ore dă tichet întreg, la
+  fel o zi cu concediu pe ore sau pe jumătate de zi; doar ziua de concediu întreg nu dă tichet.
+- Zilele lucrate se iau din programul de lucru al angajatului, orele unei zile din **Ore pe zi**, nu din
+  program. O sărbătoare legală într-o zi din afara programului apare ca zi liberă, nu ca `SL`.
 - Doar concediile **aprobate** intră în foaie.
 - Fișierul pentru bancă are un singur format (Banca Transilvania) și conține date personale (CNP, IBAN).
 

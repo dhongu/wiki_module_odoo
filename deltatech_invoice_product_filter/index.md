@@ -1,7 +1,7 @@
 # Invoice Product Filter (localizat la `deltatech_invoice_product_filter/index.md`)
 
 - **Nume Tehnic:** `deltatech_invoice_product_filter`
-- **Versiune:** `19.0.1.2.1`
+- **Versiune:** `19.0.1.2.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_product_filter
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_invoice_product_filter`
 - **Ultima Ingestie:** `2026-11-14`

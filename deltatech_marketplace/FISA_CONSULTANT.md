@@ -108,7 +108,8 @@ Date minime pentru demo (folosite și în capturi):
    magazinele. E suficient pentru backend-uri, obiecte și citirea joburilor; **Job Queue Manager**
    e necesar doar pentru reluarea sau anularea joburilor din coadă.
 4. **Backend-ul** — *Marketplace → Backend-uri → Nou*: nume, **Platformă**, **Companie**, **Echipa de vânzări**
-   pentru comenzile importate. La creare, Odoo generează automat canalele de coadă ale backend-ului
+   pentru comenzile importate și **Utilizator**, utilizatorul sub care rulează webhook-urile magazinului
+   (lăsat gol, rulează ca superuser). La creare, Odoo generează automat canalele de coadă ale backend-ului
    și cardurile de obiecte cerute de conector.
 5. **Taxele** — verificați că fiecare produs vândut are taxa de vânzare corectă și că pozițiile
    fiscale sunt configurate: de acolo vine TVA-ul comenzilor importate. După **Importă datele de
@@ -215,6 +216,12 @@ Tab-ul **Date de autentificare**:
 
 Parolele, cheile și tokenurile de acces sunt afișate mascat. **Tokenul de securitate** al
 webhook-ului rămâne vizibil, ca să poată fi copiat în magazin.
+
+Notificările primite de la magazin rulează ca **Utilizator** al backend-ului (câmpul de lângă
+**Echipa de vânzări**), cu drepturi depline; dacă e gol, ca superuser. Înregistrările și joburile
+create de un webhook au acest utilizator, iar valorile implicite definite pentru el (**Valori
+implicite** pe obiect) se aplică. Alegeți un utilizator dedicat integrării, ca să recunoașteți în
+**Joburi** ce a venit din magazin.
 
 ![Datele de acces ale backend-ului](screenshots/04_date_autentificare.png)
 
@@ -486,6 +493,8 @@ Modulul **nu generează note contabile**. Contabilitatea apare în fluxurile con
 - [ ] Acțiunile programate sunt inactive la instalare și sunt activate abia după verificarea
       importului.
 - [ ] Runner-ul de joburi rulează: un job nou trece din *În așteptare* în *Efectuat*.
+- [ ] Un webhook primit de la magazin creează joburi cu **Utilizator** al backend-ului, iar cu
+      câmpul gol, cu superuser-ul; niciun job de webhook nu rămâne fără utilizator.
 - [ ] O comandă cu adresă din Budapesta și codul poștal 1124 creează contactul cu *Localitate*
       **Budapest XII** și județul *Budapest*, chiar dacă clientul a scris doar „Budapest” sau alt
       județ; aceeași adresă fără cod poștal lasă *Localitate* goală, cu orașul „Budapest”.
@@ -514,6 +523,7 @@ Modulul **nu generează note contabile**. Contabilitatea apare în fluxurile con
 | Importul schimbă categoria produselor existente | Categoriile magazinului se leagă după nume de categorii Odoo | Debifați **Folosește categoriile** sau adăugați `categ_id` la **Câmpuri ignorate la import** (**Categorie implicită** nu oprește schimbarea) |
 | „Compania acestui produs nu poate fi schimbată atâta timp cât există mișcări de stoc ale acestuia aparținând altei companii” la importul comenzilor | Versiune a modulului mai veche de 19.0.1.42.3: importul scria compania backend-ului peste compania unui produs existent cu mișcări de stoc în altă companie | Actualizați modulul și reluați joburile eșuate din **Joburi**; ca soluție temporară, bifați **Partajează produsul** |
 | Cumpărătorul firmă din România nu e completat din ANAF (fără notă **Actualizat din ANAF** în istoric) | **Actualizează partenerul după codul fiscal** debifat, `l10n_ro_partner_autocomplete` neinstalat, ANAF nu a răspuns sau codul fiscal nu e un CUI valid (eroarea e în jurnalul serverului) | Bifați opțiunea, instalați modulul; pe partener, apăsați **Actualizează din ANAF** |
+| Joburile create de webhook-uri n-au utilizator, iar valorile implicite ale utilizatorului backend-ului nu se aplică | Versiune a modulului mai veche de 19.0.1.43.5: webhook-urile rulau fără utilizator | Actualizați modulul și completați **Utilizator** pe backend |
 | Prețul de vânzare al produsului s-a schimbat „singur” | Cineva a editat **Preț Odoo** pe o legătură | Editați prețul pe produs sau în lista de prețuri, nu pe legătură |
 
 ## 10. Capturi de ecran

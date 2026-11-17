@@ -1,10 +1,10 @@
-# Banca Transilvania iPay Payment Acquirer (localizat la `deltatech_payment_bt_ipay/index.md`)
+# BT iPay Payment (localizat la `deltatech_payment_bt_ipay/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_bt_ipay`
 - **Versiune:** `19.0.0.0.17`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_bt_ipay`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_bt_ipay
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_bt_ipay`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-17`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -13,21 +13,26 @@ Acest modul conectează Odoo cu BT iPay (platforma de plăți online cu cardul a
 
 #### 2. Funcționalități Cheie
 
-- Opțiunea „Plată cu cardul (BT iPay)" la finalizarea comenzii în eCommerce Odoo.
-- Plata facturilor deschise direct din portalul de clienți Odoo.
-- Urmărirea tentativelor de plată și a stării finale de autorizare pe comenzi/facturi.
-- Reducerea reconcilierii manuale prin legarea automată a tranzacțiilor reușite de documentele corecte.
-- Două moduri de operare configurabile pe furnizorul de plată BT iPay:
+- Opțiunea „Plată cu cardul (BT iPay)" la finalizarea comenzii în eCommerce Odoo; clientul plătește pe pagina securizată a băncii, iar datele cardului nu sunt stocate niciodată în Odoo.
+- Plata facturilor deschise direct din portalul de clienți Odoo, cu **Pay Now**.
+- Urmărirea tentativelor de plată și a stării finale de autorizare pe comenzi/facturi; Odoo interoghează banca pentru rezultat și verifică suma, moneda și numărul comenzii față de tranzacție, apoi marchează comanda sau factura ca plătită.
+- Reducerea reconcilierii manuale prin legarea automată a tranzacțiilor reușite de documentele corecte: tranzacția confirmată păstrează id-ul comenzii băncii în **Provider Reference** și generează o plată contabilă pe jurnalul furnizorului, care rămâne „In Process" până la potrivirea cu extrasul de cont.
+- Două moduri de operare configurabile pe furnizorul de plată BT iPay (câmpul **Bt Mode**):
   - **1‑Phase (un pas)** — recomandat pentru servicii online: cardul este autorizat și suma este capturată imediat la finalizarea comenzii (bunuri digitale, abonamente, servicii cu livrare instantă).
-  - **2‑Phase (doi pași)** — recomandat pentru produse fizice: cardul este autorizat la checkout, iar suma este capturată ulterior, după expediere sau confirmarea livrării, oferind echipei operaționale control asupra sumei efectiv capturate.
+  - **2‑Phase (doi pași)** — recomandat pentru produse fizice: cardul este autorizat la checkout (se bifează automat **Capture Amount Manually**), iar suma este capturată ulterior, după expediere. Din tranzacție sau din comanda de vânzare se folosește **Capture Transaction** pentru încasare sau **Void Transaction** pentru eliberarea autorizării; se poate captura doar suma integrală autorizată.
+- Mediu de test și mediu de producție: starea furnizorului **Test** folosește mediul sandbox BT iPay, **Enabled** plățile reale; furnizorul se publică pe site.
+- Plăți în RON, EUR și USD. Sunt necesare un cont de comerciant BT iPay activ (test sau producție) și credențialele API primite de la bancă.
+- Configurare: Facturare → Configurare → Plăți online → Furnizori de plată → **BT iPay**; fila **Credentials** (utilizator și parolă API, Bt Mode), fila **Configuration** (**Payment Journal**, jurnal bancar).
 - Redirecționare către pagina de plată găzduită de BT iPay, atât din linkul de plată al portalului de clienți, cât și din checkout-ul eCommerce, cu revenire automată pe site după finalizarea/anularea plății.
-- Datele cardului nu sunt stocate niciodată în Odoo — introducerea și securitatea lor sunt gestionate integral de BT iPay.
+- Limitări: modulul nu primește notificări de la bancă — dacă clientul închide pagina băncii înainte de revenire, tranzacția rămâne „Pending" și plata se verifică în portalul BT iPay; rambursările și setările de risc/anti-fraudă se gestionează în contul de comerciant BT iPay.
+- Fluxul pas-cu-pas, cu capturi de ecran, este în [Fișa Consultant](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
 - `payment`
 - `website_sale`
 - `phone_validation`
+- Dependență externă Python: `phonenumbers`
 
 #### 4. Componente Cheie
 
@@ -35,8 +40,8 @@ Sumarul și funcționalitățile cheie au fost preluate din `readme/DESCRIPTION.
 
 **Modele**
 
-- `payment.provider` (extins): adaugă codul de furnizor `bt_ipay`, câmpurile de credențiale (`bt_ipay_user`, `bt_ipay_pass`) și modul de operare (`bt_mode`: 1 Phase / 2 Phase), plus autentificarea Basic Auth (header recomandat de BT) și URL-urile API (producție/sandbox) către iPay.
-- `payment.transaction` (extins): construiește payload-ul de înregistrare a tranzacției (`register.do` / `registerPreAuth.do` în funcție de modul 1‑Phase/2‑Phase), interoghează starea tranzacției (`getOrderStatusExtended.do`), tratează codurile de eroare/refuz specifice BT iPay (card blocat, fonduri insuficiente, 3DS2, contestații/chargeback etc.) și trimite cereri de capturare (`deposit.do`) și de anulare/reversare (`reverse.do`).
+- `payment.provider` (extins): adaugă codul de furnizor `bt_ipay`, câmpurile de credențiale (`bt_ipay_user`, `bt_ipay_pass`) și modul de operare (`bt_mode`: 1 Phase / 2 Phase; alegerea 2 Phase bifează captura manuală), declară suportul pentru captură manuală (`support_manual_capture = full_only`), autentificarea Basic Auth (header recomandat de BT) și URL-urile API (producție `ecclients.btrl.ro` / sandbox `ecclients-sandbox.btrl.ro`).
+- `payment.transaction` (extins): construiește payload-ul de înregistrare a tranzacției (`register.do` / `registerPreAuth.do` în funcție de modul 1‑Phase/2‑Phase; monede RON/EUR/USD prin coduri ISO 4217), interoghează starea tranzacției (`getOrderStatusExtended.do`), tratează codurile de eroare/refuz specifice BT iPay (card blocat, fonduri insuficiente, 3DS2, contestații/chargeback etc.) și trimite cereri de capturare (`deposit.do`) și de anulare/reversare (`reverse.do`).
 - `account.payment.method` (extins): înregistrează metoda de plată `bt_ipay` ca fiind de tip "multi", restricționată la conturi bancare.
 - `sale.order` (extins): la capturarea manuală a plății (`payment_action_capture`), recalculează suma de capturat scăzând din totalul comenzii sumele deja facturate.
 
@@ -48,14 +53,20 @@ Sumarul și funcționalitățile cheie au fost preluate din `readme/DESCRIPTION.
 **Controller-e**
 
 - `/payment/bt_ipay/payment` (POST): redirecționează clientul către URL-ul de plată (`formUrl`) primit de la BT iPay.
-- `/payment/bt_ipay/return/<ref>/`: punctul de revenire după finalizarea/anularea plății pe pagina băncii; declanșează procesarea tranzacției (`_process`) și redirecționează către starea plății.
+- `/payment/bt_ipay/return/<ref>/`: punctul de revenire după finalizarea/anularea plății pe pagina băncii; declanșează procesarea tranzacției (`_process`) și redirecționează către starea plății; o referință de tranzacție necunoscută este logată și clientul este redirecționat către pagina de stare a plății.
 
-**Date**
+**Date și hook-uri**
 
 - `payment_provider_data.xml`: creează înregistrarea `payment.provider` „BT iPay" (cod `bt_ipay`, sigla, mesaj pre-plată).
-- `payment_method_data.xml`: creează metoda de plată `payment.method` „BT iPay".
+- `payment_method_data.xml`: creează metoda de plată `payment.method` „BT iPay"; declară suportul pentru captură manuală.
+- `post_init_hook` / `uninstall_hook`: configurează (`setup_provider`) și resetează (`reset_payment_provider`) furnizorul `bt_ipay` la instalare/dezinstalare.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Nu sunt definite sarcini `ir.cron`, reguli `base.automation` sau acțiuni server.
 
 #### 5. Conexiuni
 
 - [deltatech_payment](../deltatech_payment/index.md): modulul de bază al suitei de plăți Terrabit; extinde generic `payment.transaction` (confirmare automată a comenzii la finalizarea plății) și `payment.provider`, mecanisme din care beneficiază și tranzacțiile procesate prin BT iPay.
 - [deltatech_website_delivery_and_payment](../deltatech_website_delivery_and_payment/index.md): controlează la nivel de eCommerce ce furnizori de plată (inclusiv BT iPay) sunt afișați clientului în funcție de metoda de livrare aleasă sau de etichetele partenerului.
+- [deltatech_payment_ing_webpay](../deltatech_payment_ing_webpay/index.md): conector soră pentru ING WebPay, pe același tip de gateway BPC; foaia de parcurs a BT iPay prevede o bază comună pentru Google Pay.

@@ -46,7 +46,7 @@ Modulul nu postează nimic singur. Costul transportului intră pe comanda de vâ
 
 **Meniu:** Pagină web → Configurare → eCommerce → Metode de livrare (sau Vânzări → Configurare → Comenzi de vânzare → Metode de livrare) → **Nou(ă)**.
 
-Dă un nume metodei (ex. „Curier mobilă"), alege la câmpul **Furnizor** valoarea **„Tarif pe categorie de produs (site)"**, alege câmpul **Livrare produs** și publică metoda (butonul **Publicat**, ca să apară în magazin). Apare tab-ul **„Tarife pe categorie"**. În el, primele două valori sunt **Tariful implicit** (folosit când nimic nu se potrivește) și **Cost manevrare** (suma adăugată când clientul bifează manevrarea); urmează lista de tarife, ordonabilă prin tragerea mânerului din stânga. Adaugă câte o linie pentru fiecare tarif. **Limitare cunoscută:** în versiunea curentă cele două valori de deasupra listei apar pe ecran fără etichetă — prima e tariful implicit, a doua costul de manevrare.
+Dă un nume metodei (ex. „Curier mobilă"), alege la câmpul **Furnizor** valoarea **„Tarif pe categorie de produs (site)"**, alege câmpul **Livrare produs** și publică metoda (butonul **Publicat**, ca să apară în magazin). Apare tab-ul **„Tarife pe categorie"**. În el, deasupra listei sunt **Tarif implicit** (folosit când nimic nu se potrivește) și **Cost manevrare** (suma adăugată când clientul bifează manevrarea); urmează lista de tarife, ordonabilă prin tragerea mânerului din stânga. Adaugă câte o linie pentru fiecare tarif. Tarifele se completează în moneda companiei; pentru o comandă cu listă de prețuri în altă monedă, transportul și manevrarea se convertesc la cursul zilei comenzii, ca la livrarea standard pe reguli.
 
 ![Formularul metodei de livrare „Curier mobilă", tab-ul Tarife pe categorie: tariful implicit 25,00 și costul de manevrare 50,00 deasupra listei, apoi trei tarife: preț fix pe categorie pentru Saltele 300,00, preț fix pentru Paturi 350,00 și tarif pe greutate pentru Accesorii](screenshots/01_metoda_livrare_tarife.png)
 
@@ -82,9 +82,9 @@ Pentru un coș cu produse din categoria Accesorii (2 seturi × 6 kg = 12 kg), se
 
 ### Pasul 7 — Tarif implicit (nicio categorie nu se potrivește)
 
-Pentru un coș în care niciun produs nu aparține unei categorii cu tarif (ex. un produs fără categorie), sau în care greutatea depășește cea mai mare treaptă și niciun alt tarif nu e mai mare, se aplică **tariful implicit** (25 lei în rezumat). La metoda de livrare, în loc de preț sau „Gratuit", clientul vede mențiunea **„Comunicat înainte de livrare"** (în textul tradus; în captura RO apare în engleză, „Communicated before delivery": **limitare cunoscută**, traducerile JavaScript se încarcă pe site doar pentru modulele cu „website" în nume, iar acesta nu are); echipa de vânzări îi comunică costul real sau împarte livrarea manual. Comanda reține că prețul nu e unul ferm. Mesajul „Nu s-a putut determina un tarif exact pentru produsele din această comandă; prețul va fi comunicat/ajustat manual." apare doar în backend, în fereastra **Adaugă livrare** a ofertei, nu în magazin.
+Pentru un coș în care niciun produs nu aparține unei categorii cu tarif (ex. un produs fără categorie), sau în care greutatea depășește cea mai mare treaptă și niciun alt tarif nu e mai mare, se aplică **tariful implicit** (25 lei în rezumat). La metoda de livrare, în loc de preț sau „Gratuit", clientul vede mențiunea **„Comunicat înainte de livrare"**; echipa de vânzări îi comunică costul real sau împarte livrarea manual. Comanda reține că prețul nu e unul ferm. Mesajul „Nu s-a putut determina un tarif exact pentru produsele din această comandă; prețul va fi comunicat/ajustat manual." apare doar în backend, în fereastra **Adaugă livrare** a ofertei, nu în magazin.
 
-![Pagina de checkout pentru un coș cu o lampă fără categorie: lângă „Curier mobilă" apare mențiunea „Communicated before delivery", iar în rezumat Livrare 25,00 lei](screenshots/07_checkout_pret_implicit.png)
+![Pagina de checkout pentru un coș cu o lampă fără categorie: lângă „Curier mobilă" apare mențiunea „Comunicat înainte de livrare", iar în rezumat Livrare 25,00 lei](screenshots/07_checkout_pret_implicit.png)
 
 ### Pasul 8 — Comanda cu manevrare, în backend
 
@@ -112,13 +112,14 @@ Modulul nu generează note contabile proprii. Linia de transport urmează produs
 ## 8. Verificări pentru consultant
 
 - [ ] Metoda are furnizorul „Tarif pe categorie de produs (site)" și este publicată; produsul de livrare e un serviciu.
-- [ ] Tariful implicit și costul de manevrare sunt completate (cele două valori fără etichetă, deasupra listei de tarife).
+- [ ] **Tarif implicit** și **Cost manevrare** sunt completate (deasupra listei de tarife).
 - [ ] Fiecare categorie cu transport special are un tarif; produsele sunt în categoriile de pe site corecte.
 - [ ] La tarifele pe greutate, produsele au greutatea completată și treptele sunt crescătoare.
 - [ ] Coș cu o saltea și un pat: transportul e **350** (cel mai mare tarif), nu 650.
 - [ ] Opțiunea „Adaugă manevrare" apare doar la tarife fixe; bifată, adaugă exact costul de manevrare.
 - [ ] Coș fără nicio categorie cu tarif: apare „Comunicat înainte de livrare", nu „Gratuit".
-- [ ] Oferta din backend arată bannerul de manevrare când clientul a bifat opțiunea.
+- [ ] Oferta din backend arată bannerul de manevrare când clientul a bifat opțiunea; dacă apoi coșul nu mai are tarif fix pe categorie sau clientul alege altă metodă, bifa și bannerul dispar.
+- [ ] O comandă cu listă de prețuri în altă monedă primește transportul convertit la cursul zilei.
 - [ ] Produsul de livrare are contul de venit și taxa corecte (cota bunurilor livrate).
 
 ## 9. Mesaje de eroare frecvente
@@ -131,12 +132,7 @@ Modulul nu generează note contabile proprii. Linia de transport urmează produs
 
 **Limitări cunoscute (de comunicat clientului):**
 
-- Valorile „Tarif implicit" și „Cost manevrare" apar fără etichetă deasupra listei de tarife.
-- Eticheta „Communicated before delivery" rămâne în engleză pe checkout-ul în română.
-- Bannerul de manevrare de pe ofertă poate rămâne afișat cu „Cost suplimentar: 0,00 lei" dacă, după ce a bifat manevrarea, clientul schimbă coșul într-unul fără tarif fix pe categorie sau schimbă metoda de livrare: bifa se păstrează pe comandă, dar suma devine 0.
 - La tarifele pe greutate, coloana „Preț" din lista de tarife rămâne 0,00: prețurile sunt în pragurile de greutate, deschise din fereastra rândului.
-
-Defectele de cod sunt urmărite în [terrabit-solutions/bitshop_delivery#498](https://github.com/terrabit-solutions/bitshop_delivery/issues/498).
 
 ## 10. Capturi de ecran
 

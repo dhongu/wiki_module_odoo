@@ -2,9 +2,9 @@
 
 - **Nume Tehnic:** `deltatech_payment_ing_webpay`
 - **Versiune:** `19.0.0.0.9`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_ing_webpay`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_ing_webpay
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_ing_webpay`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-17`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -14,17 +14,19 @@ Acest modul conectează Odoo cu ING WebPay (platforma de plăți online cu cardu
 #### 2. Funcționalități Cheie
 
 - Opțiunea „Plată cu cardul (ING WebPay)" la finalizarea comenzii în eCommerce Odoo.
-- Buton de plată expresă **Google Pay** direct în coșul eCommerce (opțional, necesită parametrii Google Pay furnizați de ING): portofelul preia adresa de facturare/livrare, metodele de livrare și totalurile se recalculează live, iar plata se procesează direct prin endpointul Google Pay al ING.
+- Buton de plată expresă **Google Pay** direct în coșul eCommerce (opțional, necesită parametrii Google Pay furnizați de ING): portofelul preia adresa de facturare/livrare, metodele de livrare și totalurile se recalculează live, iar plata se procesează direct prin endpointul Google Pay al ING. Se activează doar când sunt completate pe furnizor **Google Pay Gateway ID** și **Google Pay Gateway Merchant ID**; în producție se completează și **Google Pay Merchant ID** (înregistrare în Google Pay & Wallet Console), în modul test poate rămâne gol. Sunt acceptate doar tokenurile de dispozitiv `CRYPTOGRAM_3DS`, deci cardurile salvate ca `PAN_ONLY` în contul Google nu sunt oferite.
 - Plata facturilor deschise direct din portalul de clienți Odoo, prin linkurile standard de plată Odoo.
-- Încasare cu cardul în **Point of Sale**: clientul scanează codul QR afișat de casier și plătește pe pagina ING de pe propriul telefon — nu necesită configurare suplimentară în acest modul, folosește fluxul standard `pos_online_payment`, care acceptă orice furnizor de plată publicat a cărui monedă corespunde punctului de vânzare.
-- Urmărirea tentativelor de plată și a stării finale pe comenzi/facturi.
-- Reducerea reconcilierii manuale prin legarea automată a tranzacțiilor reușite de documentele corecte.
-- Verificare server-la-server a rezultatului plății (`getOrderStatusExtended.do`) — starea raportată de browser nu este niciodată de încredere.
-- Sincronizare periodică (job programat) a tranzacțiilor nerezolvate, respectând regulile de interogare ale ING (prima verificare automată la 10 minute după înregistrare, maximum două tentative automate per comandă).
+- Încasare cu cardul în **Point of Sale**: clientul scanează codul QR afișat de casier și plătește pe pagina ING de pe propriul telefon — nu necesită configurare suplimentară în acest modul, folosește fluxul standard `pos_online_payment`, care acceptă orice furnizor de plată publicat a cărui monedă corespunde punctului de vânzare (metodă de plată POS cu **Online Payment** activat).
+- Urmărirea tentativelor de plată și a stării finale pe comenzi/facturi; starea tranzacției este „Confirmed", „Pending" (plată nefinalizată), „Canceled" (refuzată, anulată sau închisă de ING) sau „Error" (eroare raportată de ING sau sumă/monedă care nu corespund). Cu modul developer, tranzacțiile se văd în Facturare → Configurare → Plăți online → Tranzacții de plată.
+- Reducerea reconcilierii manuale prin legarea automată a tranzacțiilor reușite de documentele corecte: confirmarea creează o plată contabilă pe jurnalul furnizorului, „In Process" până la potrivirea cu extrasul de cont; comisionul ING nu este calculat de modul, ci înregistrat la reconcilierea extrasului. **Provider Reference** este id-ul comenzii ING, cel de căutat în back office-ul ING.
+- Verificare server-la-server a rezultatului plății (`getOrderStatusExtended.do`) — starea raportată de browser nu este niciodată de încredere. Butonul **Refresh ING Status** (grupul Settings) interoghează ING imediat.
+- Sincronizare periodică (job programat, la 5 minute) a tranzacțiilor nerezolvate, respectând regulile de interogare ale ING (prima verificare automată la 10 minute după înregistrare, maximum două tentative automate per comandă).
 - Măsuri de siguranță: validarea URL-ului de checkout primit de la ING (host, `mdOrder`) înainte de redirecționare; reutilizarea unei comenzi ING deja înregistrate în loc de o nouă înregistrare (evită duplicate în back office-ul ING); verificarea sumei și monedei unei plăți reușite față de tranzacția Odoo; o plată confirmată nu este retrogradată automat de un status ulterior de reversal/refund — se loghează un avertisment pentru verificare manuală.
 - Datele cardului nu sunt niciodată stocate în Odoo — introducerea și securitatea lor sunt gestionate integral de ING.
 - Suportă doar contractul standard-sale (o singură fază, fără capturare manuală); rambursările se gestionează în back office-ul ING.
-- Monede suportate: RON și EUR — se creează câte un furnizor de plată per monedă, fiecare cu propriile credențiale ING.
+- Monede suportate: RON și EUR — se creează câte un furnizor de plată per monedă (se duplică furnizorul), fiecare cu propriile credențiale ING (**ING WebPay Username** / **Password**, vizibile doar grupului Settings). Starea **Test Mode** folosește mediul UAT ING (`securepay-uat.ing.ro`), **Enabled** producția (`securepay.ing.ro`). Opțiunea **Send orderNumber** se activează doar dacă ING confirmă că contul comerciantului așteaptă un număr de comandă generat de comerciant.
+- Cerințe: cont de comerciant ING WebPay activ (UAT sau producție); pentru POS, `pos_online_payment` și, recomandat, [deltatech_pos_online_payment](../deltatech_pos_online_payment/index.md).
+- Fluxul pas-cu-pas, cu capturi de ecran, este în [Fișa Consultant](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -37,8 +39,8 @@ Sumarul și funcționalitățile cheie au fost preluate din `readme/DESCRIPTION.
 **Modele**
 
 - `payment.provider` (extins): adaugă codul de furnizor `ing_webpay`, câmpurile de credențiale (`ing_webpay_username`, `ing_webpay_password`), opțiunea de trimitere a `orderNumber` propriu și parametrii de tokenizare Google Pay (`ing_webpay_google_pay_gateway`, `ing_webpay_google_pay_gateway_merchant_id`, `ing_webpay_google_pay_merchant_id`); activează expunerea butonului Google Pay doar când parametrii de tokenizare sunt configurați și declară contractul standard-sale (fără capturare manuală, fără rambursare, fără tokenizare a cardului); filtrează monedele suportate la RON/EUR și construiește URL-urile API de producție/test.
-- `payment.transaction` (extins): construiește payload-ul de înregistrare a comenzii ING (`register.do`), reutilizează comanda deja înregistrată pentru a evita duplicatele, validează URL-ul de checkout returnat, procesează plata expresă Google Pay (`google/payment.do`), interoghează starea comenzii server-la-server (`getOrderStatusExtended.do`), caută tranzacția după `orderId`, extrage suma/moneda doar la status de succes și aplică actualizările de stare (confirmată, anulată, în așteptare, preautorizare în afara contractului, eroare); expune și un job programat de sincronizare a tranzacțiilor nerezolvate, cu limitare a numărului de tentative automate.
-- `account.payment.method` (extins): înregistrează metoda de plată `ing_webpay` ca fiind de tip „multi", restricționată la conturi de tip bancă.
+- `payment.transaction` (extins): construiește payload-ul de înregistrare a comenzii ING (`register.do`, cu `reconciliationId` = id-ul tranzacției Odoo), reutilizează comanda deja înregistrată pentru a evita duplicatele, validează URL-ul de checkout returnat, procesează plata expresă Google Pay (`google/payment.do`), interoghează starea comenzii server-la-server (`getOrderStatusExtended.do`), caută tranzacția după `orderId`, extrage suma/moneda doar la status de succes și aplică actualizările de stare (confirmată, anulată, în așteptare, preautorizare în afara contractului, eroare); expune și un job programat de sincronizare a tranzacțiilor nerezolvate, cu limitare a numărului de tentative automate.
+- Modulul nu mai extinde `account.payment.method` (extensia a fost eliminată, fiind fără efect în Odoo 19, iar `account_payment` înregistrează deja codul furnizorului), deci poate fi instalat și fără Contabilitate.
 
 **Vizualizări**
 
@@ -60,5 +62,6 @@ Sumarul și funcționalitățile cheie au fost preluate din `readme/DESCRIPTION.
 
 - [deltatech_pos_online_payment](../deltatech_pos_online_payment/index.md): recomandat pentru plățile la Point of Sale prin ING WebPay — previne marcarea de către casier a unei plăți ca finalizată înainte ca ING să o confirme.
 - [deltatech_website_delivery_and_payment](../deltatech_website_delivery_and_payment/index.md): controlează la nivel de eCommerce ce furnizori de plată (inclusiv ING WebPay) sunt afișați clientului în funcție de metoda de livrare aleasă sau de etichetele partenerului.
+- [deltatech_payment_bt_ipay](../deltatech_payment_bt_ipay/index.md): conector soră pentru BT iPay, pe același tip de gateway BPC; foaia de parcurs BT iPay prevede o bază comună pentru Google Pay, după modelul ING WebPay.
 - `payment` (nucleul de plăți Odoo, fără pagină wiki proprie): furnizează modelele `payment.provider` și `payment.transaction` extinse de acest modul.
 - `pos_online_payment` (Community, fără pagină wiki proprie): oferă fluxul standard de plată online la POS folosit de ING WebPay, fără configurare suplimentară în acest modul.

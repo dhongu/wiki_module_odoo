@@ -2121,7 +2121,7 @@
   {
     "path": "deltatech_chatter/index.md",
     "module": "deltatech_chatter",
-    "version": "19.0.0.1.4",
+    "version": "19.0.0.1.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter",
     "local_path": "odoo-addons/bitshop/deltatech_chatter",
     "last_ingest": "2026-11-14",
@@ -2660,7 +2660,7 @@
   {
     "path": "deltatech_customer_map/index.md",
     "module": "deltatech_customer_map",
-    "version": "19.0.1.1.8",
+    "version": "19.0.1.1.10",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_customer_map",
     "local_path": "odoo-addons/bitshop/deltatech_customer_map",
     "last_ingest": "2026-09-29",
@@ -2693,7 +2693,7 @@
   {
     "path": "deltatech_customer_segment/index.md",
     "module": "deltatech_customer_segment",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_customer_segment",
     "local_path": "odoo-addons/bitshop/deltatech_customer_segment",
     "last_ingest": "2026-09-29",
@@ -2998,7 +2998,7 @@
   {
     "path": "deltatech_delivery_category_price/index.md",
     "module": "deltatech_delivery_category_price",
-    "version": "19.0.1.0.7",
+    "version": "19.0.1.0.8",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_category_price",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_category_price",
     "last_ingest": "2026-11-13",
@@ -3827,7 +3827,7 @@
   {
     "path": "deltatech_delivery_review/index.md",
     "module": "deltatech_delivery_review",
-    "version": "19.0.0.1.11",
+    "version": "19.0.0.1.12",
     "github": "[https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_review](https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_review)",
     "local_path": "odoo-addons/bitshop/deltatech_delivery_review",
     "last_ingest": "2026-09-24",
@@ -4021,7 +4021,7 @@
   {
     "path": "deltatech_delivery_status_review/index.md",
     "module": "deltatech_delivery_status_review",
-    "version": "19.0.0.1.12",
+    "version": "19.0.0.2.0",
     "github": "[https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_status_review](https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_status_review)",
     "local_path": "odoo-addons/bitshop/deltatech_delivery_status_review",
     "last_ingest": "2026-09-24",
@@ -4885,7 +4885,7 @@
   {
     "path": "deltatech_helpdesk_tag_primary/index.md",
     "module": "deltatech_helpdesk_tag_primary",
-    "version": "19.0.0.0.2",
+    "version": "19.0.0.0.3",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_helpdesk_tag_primary",
     "local_path": "odoo-addons/bitshop_ent/deltatech_helpdesk_tag_primary",
     "last_ingest": "2026-11-07",
@@ -5021,7 +5021,7 @@
   {
     "path": "deltatech_iap_online/index.md",
     "module": "deltatech_iap_online",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_iap_online",
     "local_path": "odoo-addons/deltatech/deltatech_iap_online",
     "last_ingest": "2026-11-14",
@@ -5372,7 +5372,7 @@
   {
     "path": "deltatech_invoice_product_filter/index.md",
     "module": "deltatech_invoice_product_filter",
-    "version": "19.0.1.2.1",
+    "version": "19.0.1.2.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_product_filter",
     "local_path": "odoo-addons/deltatech/deltatech_invoice_product_filter",
     "last_ingest": "2026-11-14",
@@ -5617,7 +5617,7 @@
   {
     "path": "deltatech_list_view/index.md",
     "module": "deltatech_list_view",
-    "version": "19.0.1.1.2",
+    "version": "19.0.1.1.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_list_view",
     "local_path": "odoo-addons/deltatech/deltatech_list_view",
     "last_ingest": "2026-11-14",
@@ -5719,7 +5719,7 @@
   {
     "path": "deltatech_markdown_field/index.md",
     "module": "deltatech_markdown_field",
-    "version": "19.0.1.0.7",
+    "version": "19.0.1.1.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_markdown_field",
     "local_path": "odoo-addons/deltatech/deltatech_markdown_field",
     "last_ingest": "2026-11-09",
@@ -5744,7 +5744,7 @@
   {
     "path": "deltatech_marketplace/index.md",
     "module": "deltatech_marketplace",
-    "version": "19.0.1.43.4",
+    "version": "19.0.1.43.5",
     "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace`",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace",
     "last_ingest": "2026-10-27",
@@ -6502,15 +6502,20 @@
     "version": "19.0.1.1.12",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_sale_stage",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_sale_stage",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Marketplace Sales Order Stage addon",
-    "summary": "Acest modul oferă un sistem specializat de gestionare a etapelor (stages) pentru comenzile de vânzare provenite din marketplace-uri, îmbunătățind vizibilitatea și controlul pe parcursul întregului ciclu de procesare a comenzii. Din perspectivă de business, permite companiilor să definească și să urmărească etape personalizate pentru comenzile de marketplace, reflectând fluxurile de lucru și cerințele specifice fiecărui canal conectat. Astfel, echipele pot monitoriza exact statusul comenzilor, de la import până la livrare, pot impune pași obligatorii pentru conformitatea cu marketplace-ul și pot analiza performanța procesării prin urmărirea tranzițiilor între etape.",
+    "last_ingest": "2026-11-17",
+    "friendly_name": "Marketplace Order Stages",
+    "summary": "Acest modul leagă statusurile comenzilor din marketplace-uri de fazele comenzilor de vânzare definite în Sale Stage, astfel încât comenzile importate din magazinele online să urmeze același flux de faze ca restul comenzilor din Odoo. Echipele văd imediat în ce fază se află fiecare comandă de marketplace, iar schimbările de fază sunt păstrate în istoricul comenzii. Modulul doar stochează maparea dintre statusurile magazinului și fazele Odoo; nu calculează durate pe etape și nu oferă un raport separat.",
     "features": [
-      "Vizibilitate sporită a procesului: monitorizarea statusului exact al comenzilor de marketplace pe măsură ce avansează de la import către procesare și livrare.",
-      "Control operațional: implementarea de fluxuri personalizate bazate pe etape, pentru a asigura parcurgerea tuturor pașilor necesari conformității cu marketplace-ul.",
-      "Eficiență îmbunătățită: identificarea și rezolvarea rapidă a blocajelor din ciclul de procesare a comenzilor de marketplace.",
-      "Integrare fără cusur: alinierea etapelor comenzilor de marketplace cu modulele integrate de vânzări și livrare din Odoo.",
-      "Raportare mai bună: analiza performanței și a duratelor de procesare a vânzărilor de marketplace prin urmărirea tranzițiilor și a duratelor pe fiecare etapă."
+      "Maparea statusurilor: pentru fiecare backend de marketplace, fiecare status al comenzii din magazin este asociat cu o fază de vânzare Odoo (Sales → Configuration → Sale Order phase, din `deltatech_sale_stage`).",
+      "Faza la import: conectorii care folosesc maparea (Doraly, Extended, Magento, OpenCart, PrestaShop, Shopify, WooCommerce) setează faza mapată pe comenzile importate.",
+      "Opțiunea Skip Order: marchează statusurile ale căror comenzi nu trebuie importate; este aplicată doar de conectorii care citesc indicatorul (de exemplu OpenCart).",
+      "Istoric: schimbările de fază sunt urmărite în chatter-ul comenzii, iar lista comenzilor de vânzare poate fi grupată după fază.",
+      "Unde se lucrează: în Marketplace → Backends, fila Objects, cardul Sale Stage arată numărul de statusuri mapate; din card se deschide lista Marketplace Sale Phase (Binder Name, Odoo Sale Phase, External ID). Pe conectorii care pot citi lista de statusuri (Marketplace Extended, PrestaShop, Magento) cardul are acțiunea Import; la ceilalți, un status nou se adaugă la importul primei comenzi care îl are.",
+      "Potrivire automată: o fază Odoo cu exact același nume ca statusul din magazin (în limba utilizatorului care rulează importul) este legată automat; altfel se creează o fază nouă. La reimport, numele din magazin se scrie înapoi pe faza Odoo legată.",
+      "Rândurile din listă apar cu roșu când aceeași fază Odoo este folosită de mai multe statusuri ale aceluiași backend; conectorii care trimit statusul înapoi în magazin folosesc atunci cea mai recentă mapare.",
+      "Faza este setată de conector la import; Sale Stage o poate schimba și din Odoo (confirmare, livrare validată, status curier, facturare completă), iar conectorii care trimit statusul înapoi actualizează și magazinul. Indicatorii fazei se aplică la scriere: o fază marcată Confirmed confirmă o comandă ciornă, una marcată Cancelled o anulează.",
+      "Gestionarea mapărilor cere grupul Marketplace manager și dreptul Sales / Administrator, fiindcă fiecare mapare scrie pe faza Odoo; câmpul Name din mapare este numele fazei Odoo, deci redenumirea afectează toate backend-urile.",
+      "Pașii detaliați, cu capturi de ecran, sunt în [Fișa Consultant](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
       "deltatech_marketplace_sale",
@@ -6521,23 +6526,24 @@
       "deltatech_marketplace",
       "deltatech_marketplace_sale_type"
     ],
-    "text": "Marketplace Sales Order Stage addon\ndeltatech_marketplace_sale_stage\nAcest modul oferă un sistem specializat de gestionare a etapelor (stages) pentru comenzile de vânzare provenite din marketplace-uri, îmbunătățind vizibilitatea și controlul pe parcursul întregului ciclu de procesare a comenzii. Din perspectivă de business, permite companiilor să definească și să urmărească etape personalizate pentru comenzile de marketplace, reflectând fluxurile de lucru și cerințele specifice fiecărui canal conectat. Astfel, echipele pot monitoriza exact statusul comenzilor, de la import până la livrare, pot impune pași obligatorii pentru conformitatea cu marketplace-ul și pot analiza performanța procesării prin urmărirea tranzițiilor între etape.\nVizibilitate sporită a procesului: monitorizarea statusului exact al comenzilor de marketplace pe măsură ce avansează de la import către procesare și livrare.\nControl operațional: implementarea de fluxuri personalizate bazate pe etape, pentru a asigura parcurgerea tuturor pașilor necesari conformității cu marketplace-ul.\nEficiență îmbunătățită: identificarea și rezolvarea rapidă a blocajelor din ciclul de procesare a comenzilor de marketplace.\nIntegrare fără cusur: alinierea etapelor comenzilor de marketplace cu modulele integrate de vânzări și livrare din Odoo.\nRaportare mai bună: analiza performanței și a duratelor de procesare a vânzărilor de marketplace prin urmărirea tranzițiilor și a duratelor pe fiecare etapă."
+    "text": "Marketplace Order Stages\ndeltatech_marketplace_sale_stage\nAcest modul leagă statusurile comenzilor din marketplace-uri de fazele comenzilor de vânzare definite în Sale Stage, astfel încât comenzile importate din magazinele online să urmeze același flux de faze ca restul comenzilor din Odoo. Echipele văd imediat în ce fază se află fiecare comandă de marketplace, iar schimbările de fază sunt păstrate în istoricul comenzii. Modulul doar stochează maparea dintre statusurile magazinului și fazele Odoo; nu calculează durate pe etape și nu oferă un raport separat.\nMaparea statusurilor: pentru fiecare backend de marketplace, fiecare status al comenzii din magazin este asociat cu o fază de vânzare Odoo (Sales → Configuration → Sale Order phase, din `deltatech_sale_stage`).\nFaza la import: conectorii care folosesc maparea (Doraly, Extended, Magento, OpenCart, PrestaShop, Shopify, WooCommerce) setează faza mapată pe comenzile importate.\nOpțiunea Skip Order: marchează statusurile ale căror comenzi nu trebuie importate; este aplicată doar de conectorii care citesc indicatorul (de exemplu OpenCart).\nIstoric: schimbările de fază sunt urmărite în chatter-ul comenzii, iar lista comenzilor de vânzare poate fi grupată după fază.\nUnde se lucrează: în Marketplace → Backends, fila Objects, cardul Sale Stage arată numărul de statusuri mapate; din card se deschide lista Marketplace Sale Phase (Binder Name, Odoo Sale Phase, External ID). Pe conectorii care pot citi lista de statusuri (Marketplace Extended, PrestaShop, Magento) cardul are acțiunea Import; la ceilalți, un status nou se adaugă la importul primei comenzi care îl are.\nPotrivire automată: o fază Odoo cu exact același nume ca statusul din magazin (în limba utilizatorului care rulează importul) este legată automat; altfel se creează o fază nouă. La reimport, numele din magazin se scrie înapoi pe faza Odoo legată.\nRândurile din listă apar cu roșu când aceeași fază Odoo este folosită de mai multe statusuri ale aceluiași backend; conectorii care trimit statusul înapoi în magazin folosesc atunci cea mai recentă mapare.\nFaza este setată de conector la import; Sale Stage o poate schimba și din Odoo (confirmare, livrare validată, status curier, facturare completă), iar conectorii care trimit statusul înapoi actualizează și magazinul. Indicatorii fazei se aplică la scriere: o fază marcată Confirmed confirmă o comandă ciornă, una marcată Cancelled o anulează.\nGestionarea mapărilor cere grupul Marketplace manager și dreptul Sales / Administrator, fiindcă fiecare mapare scrie pe faza Odoo; câmpul Name din mapare este numele fazei Odoo, deci redenumirea afectează toate backend-urile.\nPașii detaliați, cu capturi de ecran, sunt în [Fișa Consultant](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_marketplace_sale_type/index.md",
     "module": "deltatech_marketplace_sale_type",
     "version": "19.0.0.0.7",
-    "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_sale_type`",
+    "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_sale_type",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_sale_type",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Tip comandă de vânzare Marketplace",
+    "last_ingest": "2026-11-17",
+    "friendly_name": "Marketplace Order Types",
     "summary": "Acest modul introduce un sistem specializat de clasificare pentru comenzile de vânzare provenite din marketplace, permițând companiilor să categorisească și să analizeze vânzările în funcție de diferite tipuri de comandă. Din perspectivă de business, această categorisire este esențială pentru înțelegerea tiparelor de vânzare specifice fiecărui marketplace și pentru optimizarea strategiilor de vânzare pentru fiecare canal conectat.",
     "features": [
       "Analiză detaliată a vânzărilor: grupare și raportare a vânzărilor din marketplace în funcție de tipul comenzii, pentru o perspectivă mai granulară asupra performanței.",
       "Strategii de vânzare adaptate: dezvoltarea și implementarea de tactici specifice fiecărui marketplace, pe baza tipurilor de comandă și a tendințelor identificate.",
       "Claritate operațională îmbunătățită: distincție clară între comenzile din marketplace și vânzările directe sau alte categorii de comenzi în Odoo.",
       "Integrare fluidă a proceselor: alinierea tipurilor de comandă din marketplace cu fluxurile integrate de vânzări, stocuri și raportare.",
-      "Gestionare scalabilă a marketplace-urilor: adaptare facilă la noi marketplace-uri prin definirea și gestionarea de tipuri de comandă personalizate pentru fiecare platformă."
+      "Gestionare scalabilă a marketplace-urilor: adaptare facilă la noi marketplace-uri prin definirea și gestionarea de tipuri de comandă personalizate pentru fiecare platformă.",
+      "Tipul de comandă se alege pe backend-ul de marketplace, în câmpul Order Type din grupul Orders al formularului backend-ului, și se aplică comenzilor importate prin acel backend."
     ],
     "dependencies": [
       "deltatech_marketplace_sale",
@@ -6548,7 +6554,7 @@
       "deltatech_marketplace_sale",
       "deltatech_marketplace_sale_stage"
     ],
-    "text": "Tip comandă de vânzare Marketplace\ndeltatech_marketplace_sale_type\nAcest modul introduce un sistem specializat de clasificare pentru comenzile de vânzare provenite din marketplace, permițând companiilor să categorisească și să analizeze vânzările în funcție de diferite tipuri de comandă. Din perspectivă de business, această categorisire este esențială pentru înțelegerea tiparelor de vânzare specifice fiecărui marketplace și pentru optimizarea strategiilor de vânzare pentru fiecare canal conectat.\nAnaliză detaliată a vânzărilor: grupare și raportare a vânzărilor din marketplace în funcție de tipul comenzii, pentru o perspectivă mai granulară asupra performanței.\nStrategii de vânzare adaptate: dezvoltarea și implementarea de tactici specifice fiecărui marketplace, pe baza tipurilor de comandă și a tendințelor identificate.\nClaritate operațională îmbunătățită: distincție clară între comenzile din marketplace și vânzările directe sau alte categorii de comenzi în Odoo.\nIntegrare fluidă a proceselor: alinierea tipurilor de comandă din marketplace cu fluxurile integrate de vânzări, stocuri și raportare.\nGestionare scalabilă a marketplace-urilor: adaptare facilă la noi marketplace-uri prin definirea și gestionarea de tipuri de comandă personalizate pentru fiecare platformă."
+    "text": "Marketplace Order Types\ndeltatech_marketplace_sale_type\nAcest modul introduce un sistem specializat de clasificare pentru comenzile de vânzare provenite din marketplace, permițând companiilor să categorisească și să analizeze vânzările în funcție de diferite tipuri de comandă. Din perspectivă de business, această categorisire este esențială pentru înțelegerea tiparelor de vânzare specifice fiecărui marketplace și pentru optimizarea strategiilor de vânzare pentru fiecare canal conectat.\nAnaliză detaliată a vânzărilor: grupare și raportare a vânzărilor din marketplace în funcție de tipul comenzii, pentru o perspectivă mai granulară asupra performanței.\nStrategii de vânzare adaptate: dezvoltarea și implementarea de tactici specifice fiecărui marketplace, pe baza tipurilor de comandă și a tendințelor identificate.\nClaritate operațională îmbunătățită: distincție clară între comenzile din marketplace și vânzările directe sau alte categorii de comenzi în Odoo.\nIntegrare fluidă a proceselor: alinierea tipurilor de comandă din marketplace cu fluxurile integrate de vânzări, stocuri și raportare.\nGestionare scalabilă a marketplace-urilor: adaptare facilă la noi marketplace-uri prin definirea și gestionarea de tipuri de comandă personalizate pentru fiecare platformă.\nTipul de comandă se alege pe backend-ul de marketplace, în câmpul Order Type din grupul Orders al formularului backend-ului, și se aplică comenzilor importate prin acel backend."
   },
   {
     "path": "deltatech_marketplace_shopify/index.md",
@@ -6773,7 +6779,7 @@
   {
     "path": "deltatech_mcp_server/index.md",
     "module": "deltatech_mcp_server",
-    "version": "19.0.1.15.7",
+    "version": "19.0.1.16.1",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_mcp_server",
     "local_path": "odoo-addons/bitshop_ent/deltatech_mcp_server",
     "last_ingest": "2026-10-24",
@@ -7180,7 +7186,7 @@
   {
     "path": "deltatech_mrp_workorder_qty/index.md",
     "module": "deltatech_mrp_workorder_qty",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "github": "`https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_mrp_workorder_qty`",
     "local_path": "odoo-addons/bitshop_ent/deltatech_mrp_workorder_qty",
     "last_ingest": "2026-11-13",
@@ -7270,7 +7276,7 @@
   {
     "path": "deltatech_no_quick_create/index.md",
     "module": "deltatech_no_quick_create",
-    "version": "19.0.2.1.1",
+    "version": "19.0.2.1.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_no_quick_create",
     "local_path": "odoo-addons/deltatech/deltatech_no_quick_create",
     "last_ingest": "2026-11-14",
@@ -7296,27 +7302,28 @@
     "version": "19.0.2.0.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_notification_sound",
     "local_path": "odoo-addons/deltatech/deltatech_notification_sound",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-17",
     "friendly_name": "Notification Sound",
-    "summary": "Modulul adaugă feedback sonor pentru notificările din backend-ul Odoo, astfel încât operatorii sunt avertizați instantaneu fără a urmări permanent ecranul. Când apare o notificare (succes, avertisment, eroare sau informare), se redă automat un sunet scurt și distinct în funcție de tipul mesajului. Fiecare utilizator poate activa sau dezactiva sunetele din preferințele proprii, integrarea fiind complet transparentă, fără elemente suplimentare de interfață.",
+    "summary": "Modulul adaugă feedback sonor pentru notificările din backend-ul Odoo, astfel încât operatorii care lucrează în alte ferestre sau departe de ecran sunt avertizați instantaneu. Când apare o notificare (succes, avertisment, eroare sau informare), se redă automat un sunet scurt și distinct în funcție de tipul mesajului. Sunetele pot fi activate sau dezactivate pentru fiecare utilizator, de către un administrator, iar integrarea este complet transparentă, fără elemente suplimentare de interfață.",
     "features": [
       "Redă sunete diferite în funcție de tipul notificării:",
       "Succes → `notify.wav`",
-      "Avertisment → `exclamation.wav`",
+      "Avertisment (folosit și pentru notificările fără tip) → `exclamation.wav`",
       "Eroare (danger) → `error.wav`",
       "Informare → `bell.wav`",
       "Integrare transparentă cu backend-ul (fără interfață suplimentară); aplică un patch peste serviciul `notification` (`add()`), decuplând funcționalitatea de ciclul de viață al componentei OWL `Notification`.",
       "Activele sunt încărcate prin `web.assets_backend` (JS + sunete).",
-      "Comutator per utilizator în Preferințe: fiecare utilizator poate activa/dezactiva sunetele notificărilor din profilul propriu.",
-      "Preferința este citită direct din informațiile de sesiune (`@web/session`, `session.user_context.notification_sound_enabled`), fără niciun apel RPC suplimentar.",
-      "Fișierele de sunet pot fi înlocuite, fiind stocate în `static/src/sounds/`."
+      "Comutator per utilizator, Enable notification sounds (bifat implicit): se setează de un administrator în Setări → Utilizatori și companii → Utilizatori, în fila Preferințe a formularului utilizatorului. Utilizatorii nu îl pot schimba singuri din „Preferințele mele\"; modificarea are efect după reîncărcarea paginii.",
+      "Preferința este citită din contextul utilizatorului (`user.context.notification_sound_enabled`), fără niciun apel RPC suplimentar; sunetele rămân active dacă preferința lipsește și se opresc doar când a fost dezactivată explicit.",
+      "Fișierele de sunet pot fi înlocuite, fiind stocate în `static/src/sounds/`.",
+      "Limitări: browserele pot bloca sunetul până când utilizatorul face un clic sau tastează în pagină, deci prima notificare după încărcare poate fi silențioasă; browserele mobile pot suprima aceste sunete."
     ],
     "dependencies": [
       "base",
       "web"
     ],
     "connections": [],
-    "text": "Notification Sound\ndeltatech_notification_sound\nModulul adaugă feedback sonor pentru notificările din backend-ul Odoo, astfel încât operatorii sunt avertizați instantaneu fără a urmări permanent ecranul. Când apare o notificare (succes, avertisment, eroare sau informare), se redă automat un sunet scurt și distinct în funcție de tipul mesajului. Fiecare utilizator poate activa sau dezactiva sunetele din preferințele proprii, integrarea fiind complet transparentă, fără elemente suplimentare de interfață.\nRedă sunete diferite în funcție de tipul notificării:\nSucces → `notify.wav`\nAvertisment → `exclamation.wav`\nEroare (danger) → `error.wav`\nInformare → `bell.wav`\nIntegrare transparentă cu backend-ul (fără interfață suplimentară); aplică un patch peste serviciul `notification` (`add()`), decuplând funcționalitatea de ciclul de viață al componentei OWL `Notification`.\nActivele sunt încărcate prin `web.assets_backend` (JS + sunete).\nComutator per utilizator în Preferințe: fiecare utilizator poate activa/dezactiva sunetele notificărilor din profilul propriu.\nPreferința este citită direct din informațiile de sesiune (`@web/session`, `session.user_context.notification_sound_enabled`), fără niciun apel RPC suplimentar.\nFișierele de sunet pot fi înlocuite, fiind stocate în `static/src/sounds/`."
+    "text": "Notification Sound\ndeltatech_notification_sound\nModulul adaugă feedback sonor pentru notificările din backend-ul Odoo, astfel încât operatorii care lucrează în alte ferestre sau departe de ecran sunt avertizați instantaneu. Când apare o notificare (succes, avertisment, eroare sau informare), se redă automat un sunet scurt și distinct în funcție de tipul mesajului. Sunetele pot fi activate sau dezactivate pentru fiecare utilizator, de către un administrator, iar integrarea este complet transparentă, fără elemente suplimentare de interfață.\nRedă sunete diferite în funcție de tipul notificării:\nSucces → `notify.wav`\nAvertisment (folosit și pentru notificările fără tip) → `exclamation.wav`\nEroare (danger) → `error.wav`\nInformare → `bell.wav`\nIntegrare transparentă cu backend-ul (fără interfață suplimentară); aplică un patch peste serviciul `notification` (`add()`), decuplând funcționalitatea de ciclul de viață al componentei OWL `Notification`.\nActivele sunt încărcate prin `web.assets_backend` (JS + sunete).\nComutator per utilizator, Enable notification sounds (bifat implicit): se setează de un administrator în Setări → Utilizatori și companii → Utilizatori, în fila Preferințe a formularului utilizatorului. Utilizatorii nu îl pot schimba singuri din „Preferințele mele\"; modificarea are efect după reîncărcarea paginii.\nPreferința este citită din contextul utilizatorului (`user.context.notification_sound_enabled`), fără niciun apel RPC suplimentar; sunetele rămân active dacă preferința lipsește și se opresc doar când a fost dezactivată explicit.\nFișierele de sunet pot fi înlocuite, fiind stocate în `static/src/sounds/`.\nLimitări: browserele pot bloca sunetul până când utilizatorul face un clic sau tastează în pagină, deci prima notificare după încărcare poate fi silențioasă; browserele mobile pot suprima aceste sunete."
   },
   {
     "path": "deltatech_object_history/index.md",
@@ -7576,7 +7583,7 @@
   {
     "path": "deltatech_partner_match/index.md",
     "module": "deltatech_partner_match",
-    "version": "19.0.1.3.1",
+    "version": "19.0.1.3.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_partner_match",
     "local_path": "odoo-addons/deltatech/deltatech_partner_match",
     "last_ingest": "2026-10-30",
@@ -7739,15 +7746,18 @@
     "version": "19.0.0.0.12",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment",
     "local_path": "odoo-addons/bitshop/deltatech_payment",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Deltatech Payment",
+    "last_ingest": "2026-11-17",
+    "friendly_name": "Payment – Auto Confirm SO",
     "summary": "Modulul extinde stratul de plăți al Odoo cu două comportamente independente folosite în implementările Terrabit: confirmarea automată a unei comenzi de vânzare la o plată parțială și controlul asupra furnizorilor de plată oferiți pe link-urile de plată. Astfel, comercianții pot accepta avansuri fără să aștepte plata integrală și pot restricționa metodele de plată disponibile atunci când trimit un link de plată unui client, fără să afecteze fluxul normal de checkout din magazinul online.",
     "features": [
-      "Confirmă comanda de vânzare aflată în starea „ciornă\" sau „trimisă\" imediat ce se primește o plată (chiar parțială), fără să aștepte suma integrală.",
-      "Permite, prin parametrul de sistem `payment.do_not_set_transaction_done`, ca tranzacția de plată să rămână în afara stării „efectuată\" (done) în timp ce comanda de vânzare este totuși confirmată la o plată pozitivă — util când decontarea reală a tranzacției este gestionată separat.",
-      "Adaugă pe fiecare furnizor de plată o opțiune „Permis pe Linkuri de Plată\" (în secțiunea Disponibilitate), activată implicit, astfel încât furnizorii existenți continuă să funcționeze neschimbat.",
-      "Când se generează un link de plată pentru o comandă de vânzare, comanda este marcată ca restricționată; de atunci, plata online a acelei comenzi oferă doar furnizorii cu opțiunea activată, iar cei cu opțiunea dezactivată sunt ascunși.",
-      "Restricția este aplicată din starea de încredere de pe server (comanda de vânzare, validată prin token de acces), nu dintr-un parametru de URL, deci un cumpărător nu o poate elimina editând link-ul. Checkout-ul standard de e-commerce nu este afectat, deoarece comenzile de coș nu sunt niciodată marcate."
+      "Confirmă comanda de vânzare aflată în starea „ciornă\" sau „trimisă\" imediat ce se primește o plată (chiar parțială), fără să aștepte suma integrală; clientul primește emailul de confirmare.",
+      "Plățile prin furnizorul `on_delivery` (plată la livrare) nu confirmă comanda: nu s-au încasat bani online, deci cotația rămâne pentru confirmare manuală de către un operator.",
+      "Permite, prin parametrul de sistem `payment.do_not_set_transaction_done` (Setări → Tehnic → Parametri de Sistem, modul developer), ca tranzacția de plată să rămână în afara stării „efectuată\" (done) în timp ce comanda de vânzare este totuși confirmată la o plată pozitivă — util când decontarea reală a tranzacției este gestionată separat. Absent sau fals = comportamentul standard Odoo.",
+      "Adaugă pe fiecare furnizor de plată o opțiune „Allowed on Payment Links\" („Permis pe Linkuri de Plată\"), în secțiunea Disponibilitate (Facturare → Configurare → Plăți online → Furnizori de plată). Este activată implicit la furnizorii online; furnizorii offline (transfer bancar, plată la livrare, `on_delivery`) sunt creați cu opțiunea dezactivată, fiindcă nu se încasează bani online. Valoarea implicită se aplică o singură dată (la instalare, pentru furnizorii existenți, și la crearea furnizorului), iar valoarea modificată manual se păstrează.",
+      "Când se generează un link de plată pentru o comandă de vânzare (Acțiuni → Generate a Payment Link), comanda este marcată ca restricționată; de atunci, plata online a acelei comenzi oferă doar furnizorii cu opțiunea activată, iar cei cu opțiunea dezactivată sunt ascunși.",
+      "Restricția este aplicată din starea de încredere de pe server (comanda de vânzare, validată prin token de acces), nu dintr-un parametru de URL, deci un cumpărător nu o poate elimina editând link-ul. Checkout-ul standard de e-commerce nu este afectat, deoarece comenzile de coș nu sunt niciodată marcate.",
+      "Limitări: restricția este legată de comanda de vânzare, deci se aplică oriunde se plătește online acea comandă (link de plată și „Pay Now\" din portal); linkurile de plată pentru facturi nu sunt acoperite; o metodă de plată dispare doar când toți furnizorii compatibili cu ea sunt filtrați.",
+      "Pașii detaliați, cu capturi de ecran, sunt în [Fișa Consultant](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
       "payment",
@@ -7758,7 +7768,7 @@
       "on_delivery",
       "deltatech_website_delivery_and_payment"
     ],
-    "text": "Deltatech Payment\ndeltatech_payment\nModulul extinde stratul de plăți al Odoo cu două comportamente independente folosite în implementările Terrabit: confirmarea automată a unei comenzi de vânzare la o plată parțială și controlul asupra furnizorilor de plată oferiți pe link-urile de plată. Astfel, comercianții pot accepta avansuri fără să aștepte plata integrală și pot restricționa metodele de plată disponibile atunci când trimit un link de plată unui client, fără să afecteze fluxul normal de checkout din magazinul online.\nConfirmă comanda de vânzare aflată în starea „ciornă\" sau „trimisă\" imediat ce se primește o plată (chiar parțială), fără să aștepte suma integrală.\nPermite, prin parametrul de sistem `payment.do_not_set_transaction_done`, ca tranzacția de plată să rămână în afara stării „efectuată\" (done) în timp ce comanda de vânzare este totuși confirmată la o plată pozitivă — util când decontarea reală a tranzacției este gestionată separat.\nAdaugă pe fiecare furnizor de plată o opțiune „Permis pe Linkuri de Plată\" (în secțiunea Disponibilitate), activată implicit, astfel încât furnizorii existenți continuă să funcționeze neschimbat.\nCând se generează un link de plată pentru o comandă de vânzare, comanda este marcată ca restricționată; de atunci, plata online a acelei comenzi oferă doar furnizorii cu opțiunea activată, iar cei cu opțiunea dezactivată sunt ascunși.\nRestricția este aplicată din starea de încredere de pe server (comanda de vânzare, validată prin token de acces), nu dintr-un parametru de URL, deci un cumpărător nu o poate elimina editând link-ul. Checkout-ul standard de e-commerce nu este afectat, deoarece comenzile de coș nu sunt niciodată marcate."
+    "text": "Payment – Auto Confirm SO\ndeltatech_payment\nModulul extinde stratul de plăți al Odoo cu două comportamente independente folosite în implementările Terrabit: confirmarea automată a unei comenzi de vânzare la o plată parțială și controlul asupra furnizorilor de plată oferiți pe link-urile de plată. Astfel, comercianții pot accepta avansuri fără să aștepte plata integrală și pot restricționa metodele de plată disponibile atunci când trimit un link de plată unui client, fără să afecteze fluxul normal de checkout din magazinul online.\nConfirmă comanda de vânzare aflată în starea „ciornă\" sau „trimisă\" imediat ce se primește o plată (chiar parțială), fără să aștepte suma integrală; clientul primește emailul de confirmare.\nPlățile prin furnizorul `on_delivery` (plată la livrare) nu confirmă comanda: nu s-au încasat bani online, deci cotația rămâne pentru confirmare manuală de către un operator.\nPermite, prin parametrul de sistem `payment.do_not_set_transaction_done` (Setări → Tehnic → Parametri de Sistem, modul developer), ca tranzacția de plată să rămână în afara stării „efectuată\" (done) în timp ce comanda de vânzare este totuși confirmată la o plată pozitivă — util când decontarea reală a tranzacției este gestionată separat. Absent sau fals = comportamentul standard Odoo.\nAdaugă pe fiecare furnizor de plată o opțiune „Allowed on Payment Links\" („Permis pe Linkuri de Plată\"), în secțiunea Disponibilitate (Facturare → Configurare → Plăți online → Furnizori de plată). Este activată implicit la furnizorii online; furnizorii offline (transfer bancar, plată la livrare, `on_delivery`) sunt creați cu opțiunea dezactivată, fiindcă nu se încasează bani online. Valoarea implicită se aplică o singură dată (la instalare, pentru furnizorii existenți, și la crearea furnizorului), iar valoarea modificată manual se păstrează.\nCând se generează un link de plată pentru o comandă de vânzare (Acțiuni → Generate a Payment Link), comanda este marcată ca restricționată; de atunci, plata online a acelei comenzi oferă doar furnizorii cu opțiunea activată, iar cei cu opțiunea dezactivată sunt ascunși.\nRestricția este aplicată din starea de încredere de pe server (comanda de vânzare, validată prin token de acces), nu dintr-un parametru de URL, deci un cumpărător nu o poate elimina editând link-ul. Checkout-ul standard de e-commerce nu este afectat, deoarece comenzile de coș nu sunt niciodată marcate.\nLimitări: restricția este legată de comanda de vânzare, deci se aplică oriunde se plătește online acea comandă (link de plată și „Pay Now\" din portal); linkurile de plată pentru facturi nu sunt acoperite; o metodă de plată dispare doar când toți furnizorii compatibili cu ea sunt filtrați.\nPașii detaliați, cu capturi de ecran, sunt în [Fișa Consultant](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_payment_advice/index.md",
@@ -7790,32 +7800,38 @@
     "path": "deltatech_payment_bt_ipay/index.md",
     "module": "deltatech_payment_bt_ipay",
     "version": "19.0.0.0.17",
-    "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_bt_ipay`",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_bt_ipay",
     "local_path": "odoo-addons/bitshop/deltatech_payment_bt_ipay",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Banca Transilvania iPay Payment Acquirer",
+    "last_ingest": "2026-11-17",
+    "friendly_name": "BT iPay Payment",
     "summary": "Acest modul conectează Odoo cu BT iPay (platforma de plăți online cu cardul a Băncii Transilvania), permițând încasarea securizată a plăților cu cardul atât pentru comenzile din magazinul online, cât și pentru facturile clienților. Este gândit pentru comercianții care vând online în România și doresc să centralizeze fluxul comandă-încasare în Odoo, oferind în același timp cumpărătorilor o experiență de plată locală, de încredere.",
     "features": [
-      "Opțiunea „Plată cu cardul (BT iPay)\" la finalizarea comenzii în eCommerce Odoo.",
-      "Plata facturilor deschise direct din portalul de clienți Odoo.",
-      "Urmărirea tentativelor de plată și a stării finale de autorizare pe comenzi/facturi.",
-      "Reducerea reconcilierii manuale prin legarea automată a tranzacțiilor reușite de documentele corecte.",
-      "Două moduri de operare configurabile pe furnizorul de plată BT iPay:",
+      "Opțiunea „Plată cu cardul (BT iPay)\" la finalizarea comenzii în eCommerce Odoo; clientul plătește pe pagina securizată a băncii, iar datele cardului nu sunt stocate niciodată în Odoo.",
+      "Plata facturilor deschise direct din portalul de clienți Odoo, cu Pay Now.",
+      "Urmărirea tentativelor de plată și a stării finale de autorizare pe comenzi/facturi; Odoo interoghează banca pentru rezultat și verifică suma, moneda și numărul comenzii față de tranzacție, apoi marchează comanda sau factura ca plătită.",
+      "Reducerea reconcilierii manuale prin legarea automată a tranzacțiilor reușite de documentele corecte: tranzacția confirmată păstrează id-ul comenzii băncii în Provider Reference și generează o plată contabilă pe jurnalul furnizorului, care rămâne „In Process\" până la potrivirea cu extrasul de cont.",
+      "Două moduri de operare configurabile pe furnizorul de plată BT iPay (câmpul Bt Mode):",
       "1‑Phase (un pas) — recomandat pentru servicii online: cardul este autorizat și suma este capturată imediat la finalizarea comenzii (bunuri digitale, abonamente, servicii cu livrare instantă).",
-      "2‑Phase (doi pași) — recomandat pentru produse fizice: cardul este autorizat la checkout, iar suma este capturată ulterior, după expediere sau confirmarea livrării, oferind echipei operaționale control asupra sumei efectiv capturate.",
+      "2‑Phase (doi pași) — recomandat pentru produse fizice: cardul este autorizat la checkout (se bifează automat Capture Amount Manually), iar suma este capturată ulterior, după expediere. Din tranzacție sau din comanda de vânzare se folosește Capture Transaction pentru încasare sau Void Transaction pentru eliberarea autorizării; se poate captura doar suma integrală autorizată.",
+      "Mediu de test și mediu de producție: starea furnizorului Test folosește mediul sandbox BT iPay, Enabled plățile reale; furnizorul se publică pe site.",
+      "Plăți în RON, EUR și USD. Sunt necesare un cont de comerciant BT iPay activ (test sau producție) și credențialele API primite de la bancă.",
+      "Configurare: Facturare → Configurare → Plăți online → Furnizori de plată → BT iPay; fila Credentials (utilizator și parolă API, Bt Mode), fila Configuration (Payment Journal, jurnal bancar).",
       "Redirecționare către pagina de plată găzduită de BT iPay, atât din linkul de plată al portalului de clienți, cât și din checkout-ul eCommerce, cu revenire automată pe site după finalizarea/anularea plății.",
-      "Datele cardului nu sunt stocate niciodată în Odoo — introducerea și securitatea lor sunt gestionate integral de BT iPay."
+      "Limitări: modulul nu primește notificări de la bancă — dacă clientul închide pagina băncii înainte de revenire, tranzacția rămâne „Pending\" și plata se verifică în portalul BT iPay; rambursările și setările de risc/anti-fraudă se gestionează în contul de comerciant BT iPay.",
+      "Fluxul pas-cu-pas, cu capturi de ecran, este în [Fișa Consultant](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
       "payment",
       "website_sale",
-      "phone_validation"
+      "phone_validation",
+      "phonenumbers"
     ],
     "connections": [
       "deltatech_payment",
-      "deltatech_website_delivery_and_payment"
+      "deltatech_website_delivery_and_payment",
+      "deltatech_payment_ing_webpay"
     ],
-    "text": "Banca Transilvania iPay Payment Acquirer\ndeltatech_payment_bt_ipay\nAcest modul conectează Odoo cu BT iPay (platforma de plăți online cu cardul a Băncii Transilvania), permițând încasarea securizată a plăților cu cardul atât pentru comenzile din magazinul online, cât și pentru facturile clienților. Este gândit pentru comercianții care vând online în România și doresc să centralizeze fluxul comandă-încasare în Odoo, oferind în același timp cumpărătorilor o experiență de plată locală, de încredere.\nOpțiunea „Plată cu cardul (BT iPay)\" la finalizarea comenzii în eCommerce Odoo.\nPlata facturilor deschise direct din portalul de clienți Odoo.\nUrmărirea tentativelor de plată și a stării finale de autorizare pe comenzi/facturi.\nReducerea reconcilierii manuale prin legarea automată a tranzacțiilor reușite de documentele corecte.\nDouă moduri de operare configurabile pe furnizorul de plată BT iPay:\n1‑Phase (un pas) — recomandat pentru servicii online: cardul este autorizat și suma este capturată imediat la finalizarea comenzii (bunuri digitale, abonamente, servicii cu livrare instantă).\n2‑Phase (doi pași) — recomandat pentru produse fizice: cardul este autorizat la checkout, iar suma este capturată ulterior, după expediere sau confirmarea livrării, oferind echipei operaționale control asupra sumei efectiv capturate.\nRedirecționare către pagina de plată găzduită de BT iPay, atât din linkul de plată al portalului de clienți, cât și din checkout-ul eCommerce, cu revenire automată pe site după finalizarea/anularea plății.\nDatele cardului nu sunt stocate niciodată în Odoo — introducerea și securitatea lor sunt gestionate integral de BT iPay."
+    "text": "BT iPay Payment\ndeltatech_payment_bt_ipay\nAcest modul conectează Odoo cu BT iPay (platforma de plăți online cu cardul a Băncii Transilvania), permițând încasarea securizată a plăților cu cardul atât pentru comenzile din magazinul online, cât și pentru facturile clienților. Este gândit pentru comercianții care vând online în România și doresc să centralizeze fluxul comandă-încasare în Odoo, oferind în același timp cumpărătorilor o experiență de plată locală, de încredere.\nOpțiunea „Plată cu cardul (BT iPay)\" la finalizarea comenzii în eCommerce Odoo; clientul plătește pe pagina securizată a băncii, iar datele cardului nu sunt stocate niciodată în Odoo.\nPlata facturilor deschise direct din portalul de clienți Odoo, cu Pay Now.\nUrmărirea tentativelor de plată și a stării finale de autorizare pe comenzi/facturi; Odoo interoghează banca pentru rezultat și verifică suma, moneda și numărul comenzii față de tranzacție, apoi marchează comanda sau factura ca plătită.\nReducerea reconcilierii manuale prin legarea automată a tranzacțiilor reușite de documentele corecte: tranzacția confirmată păstrează id-ul comenzii băncii în Provider Reference și generează o plată contabilă pe jurnalul furnizorului, care rămâne „In Process\" până la potrivirea cu extrasul de cont.\nDouă moduri de operare configurabile pe furnizorul de plată BT iPay (câmpul Bt Mode):\n1‑Phase (un pas) — recomandat pentru servicii online: cardul este autorizat și suma este capturată imediat la finalizarea comenzii (bunuri digitale, abonamente, servicii cu livrare instantă).\n2‑Phase (doi pași) — recomandat pentru produse fizice: cardul este autorizat la checkout (se bifează automat Capture Amount Manually), iar suma este capturată ulterior, după expediere. Din tranzacție sau din comanda de vânzare se folosește Capture Transaction pentru încasare sau Void Transaction pentru eliberarea autorizării; se poate captura doar suma integrală autorizată.\nMediu de test și mediu de producție: starea furnizorului Test folosește mediul sandbox BT iPay, Enabled plățile reale; furnizorul se publică pe site.\nPlăți în RON, EUR și USD. Sunt necesare un cont de comerciant BT iPay activ (test sau producție) și credențialele API primite de la bancă.\nConfigurare: Facturare → Configurare → Plăți online → Furnizori de plată → BT iPay; fila Credentials (utilizator și parolă API, Bt Mode), fila Configuration (Payment Journal, jurnal bancar).\nRedirecționare către pagina de plată găzduită de BT iPay, atât din linkul de plată al portalului de clienți, cât și din checkout-ul eCommerce, cu revenire automată pe site după finalizarea/anularea plății.\nLimitări: modulul nu primește notificări de la bancă — dacă clientul închide pagina băncii înainte de revenire, tranzacția rămâne „Pending\" și plata se verifică în portalul BT iPay; rambursările și setările de risc/anti-fraudă se gestionează în contul de comerciant BT iPay.\nFluxul pas-cu-pas, cu capturi de ecran, este în [Fișa Consultant](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_payment_card_dummy/index.md",
@@ -7932,24 +7948,26 @@
     "path": "deltatech_payment_ing_webpay/index.md",
     "module": "deltatech_payment_ing_webpay",
     "version": "19.0.0.0.9",
-    "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_ing_webpay`",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_ing_webpay",
     "local_path": "odoo-addons/bitshop/deltatech_payment_ing_webpay",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-17",
     "friendly_name": "ING WebPay Payment Acquirer",
     "summary": "Acest modul conectează Odoo cu ING WebPay (platforma de plăți online cu cardul a ING Bank România), permițând încasarea securizată a plăților cu cardul atât pentru comenzile din magazinul online, cât și pentru facturile clienților și, prin fluxul standard de plată online la POS, pentru vânzările din Point of Sale. Este gândit pentru comercianții care vând online în România și doresc să centralizeze fluxul comandă-încasare în Odoo, oferind în același timp cumpărătorilor o experiență de plată locală, de încredere, cu 3-D Secure 2 impus la fiecare tranzacție.",
     "features": [
       "Opțiunea „Plată cu cardul (ING WebPay)\" la finalizarea comenzii în eCommerce Odoo.",
-      "Buton de plată expresă Google Pay direct în coșul eCommerce (opțional, necesită parametrii Google Pay furnizați de ING): portofelul preia adresa de facturare/livrare, metodele de livrare și totalurile se recalculează live, iar plata se procesează direct prin endpointul Google Pay al ING.",
+      "Buton de plată expresă Google Pay direct în coșul eCommerce (opțional, necesită parametrii Google Pay furnizați de ING): portofelul preia adresa de facturare/livrare, metodele de livrare și totalurile se recalculează live, iar plata se procesează direct prin endpointul Google Pay al ING. Se activează doar când sunt completate pe furnizor Google Pay Gateway ID și Google Pay Gateway Merchant ID; în producție se completează și Google Pay Merchant ID (înregistrare în Google Pay & Wallet Console), în modul test poate rămâne gol. Sunt acceptate doar tokenurile de dispozitiv `CRYPTOGRAM_3DS`, deci cardurile salvate ca `PAN_ONLY` în contul Google nu sunt oferite.",
       "Plata facturilor deschise direct din portalul de clienți Odoo, prin linkurile standard de plată Odoo.",
-      "Încasare cu cardul în Point of Sale: clientul scanează codul QR afișat de casier și plătește pe pagina ING de pe propriul telefon — nu necesită configurare suplimentară în acest modul, folosește fluxul standard `pos_online_payment`, care acceptă orice furnizor de plată publicat a cărui monedă corespunde punctului de vânzare.",
-      "Urmărirea tentativelor de plată și a stării finale pe comenzi/facturi.",
-      "Reducerea reconcilierii manuale prin legarea automată a tranzacțiilor reușite de documentele corecte.",
-      "Verificare server-la-server a rezultatului plății (`getOrderStatusExtended.do`) — starea raportată de browser nu este niciodată de încredere.",
-      "Sincronizare periodică (job programat) a tranzacțiilor nerezolvate, respectând regulile de interogare ale ING (prima verificare automată la 10 minute după înregistrare, maximum două tentative automate per comandă).",
+      "Încasare cu cardul în Point of Sale: clientul scanează codul QR afișat de casier și plătește pe pagina ING de pe propriul telefon — nu necesită configurare suplimentară în acest modul, folosește fluxul standard `pos_online_payment`, care acceptă orice furnizor de plată publicat a cărui monedă corespunde punctului de vânzare (metodă de plată POS cu Online Payment activat).",
+      "Urmărirea tentativelor de plată și a stării finale pe comenzi/facturi; starea tranzacției este „Confirmed\", „Pending\" (plată nefinalizată), „Canceled\" (refuzată, anulată sau închisă de ING) sau „Error\" (eroare raportată de ING sau sumă/monedă care nu corespund). Cu modul developer, tranzacțiile se văd în Facturare → Configurare → Plăți online → Tranzacții de plată.",
+      "Reducerea reconcilierii manuale prin legarea automată a tranzacțiilor reușite de documentele corecte: confirmarea creează o plată contabilă pe jurnalul furnizorului, „In Process\" până la potrivirea cu extrasul de cont; comisionul ING nu este calculat de modul, ci înregistrat la reconcilierea extrasului. Provider Reference este id-ul comenzii ING, cel de căutat în back office-ul ING.",
+      "Verificare server-la-server a rezultatului plății (`getOrderStatusExtended.do`) — starea raportată de browser nu este niciodată de încredere. Butonul Refresh ING Status (grupul Settings) interoghează ING imediat.",
+      "Sincronizare periodică (job programat, la 5 minute) a tranzacțiilor nerezolvate, respectând regulile de interogare ale ING (prima verificare automată la 10 minute după înregistrare, maximum două tentative automate per comandă).",
       "Măsuri de siguranță: validarea URL-ului de checkout primit de la ING (host, `mdOrder`) înainte de redirecționare; reutilizarea unei comenzi ING deja înregistrate în loc de o nouă înregistrare (evită duplicate în back office-ul ING); verificarea sumei și monedei unei plăți reușite față de tranzacția Odoo; o plată confirmată nu este retrogradată automat de un status ulterior de reversal/refund — se loghează un avertisment pentru verificare manuală.",
       "Datele cardului nu sunt niciodată stocate în Odoo — introducerea și securitatea lor sunt gestionate integral de ING.",
       "Suportă doar contractul standard-sale (o singură fază, fără capturare manuală); rambursările se gestionează în back office-ul ING.",
-      "Monede suportate: RON și EUR — se creează câte un furnizor de plată per monedă, fiecare cu propriile credențiale ING."
+      "Monede suportate: RON și EUR — se creează câte un furnizor de plată per monedă (se duplică furnizorul), fiecare cu propriile credențiale ING (ING WebPay Username / Password, vizibile doar grupului Settings). Starea Test Mode folosește mediul UAT ING (`securepay-uat.ing.ro`), Enabled producția (`securepay.ing.ro`). Opțiunea Send orderNumber se activează doar dacă ING confirmă că contul comerciantului așteaptă un număr de comandă generat de comerciant.",
+      "Cerințe: cont de comerciant ING WebPay activ (UAT sau producție); pentru POS, `pos_online_payment` și, recomandat, [deltatech_pos_online_payment](../deltatech_pos_online_payment/index.md).",
+      "Fluxul pas-cu-pas, cu capturi de ecran, este în [Fișa Consultant](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
       "payment"
@@ -7957,29 +7975,34 @@
     "connections": [
       "deltatech_pos_online_payment",
       "deltatech_website_delivery_and_payment",
+      "deltatech_payment_bt_ipay",
       "payment",
       "pos_online_payment"
     ],
-    "text": "ING WebPay Payment Acquirer\ndeltatech_payment_ing_webpay\nAcest modul conectează Odoo cu ING WebPay (platforma de plăți online cu cardul a ING Bank România), permițând încasarea securizată a plăților cu cardul atât pentru comenzile din magazinul online, cât și pentru facturile clienților și, prin fluxul standard de plată online la POS, pentru vânzările din Point of Sale. Este gândit pentru comercianții care vând online în România și doresc să centralizeze fluxul comandă-încasare în Odoo, oferind în același timp cumpărătorilor o experiență de plată locală, de încredere, cu 3-D Secure 2 impus la fiecare tranzacție.\nOpțiunea „Plată cu cardul (ING WebPay)\" la finalizarea comenzii în eCommerce Odoo.\nButon de plată expresă Google Pay direct în coșul eCommerce (opțional, necesită parametrii Google Pay furnizați de ING): portofelul preia adresa de facturare/livrare, metodele de livrare și totalurile se recalculează live, iar plata se procesează direct prin endpointul Google Pay al ING.\nPlata facturilor deschise direct din portalul de clienți Odoo, prin linkurile standard de plată Odoo.\nÎncasare cu cardul în Point of Sale: clientul scanează codul QR afișat de casier și plătește pe pagina ING de pe propriul telefon — nu necesită configurare suplimentară în acest modul, folosește fluxul standard `pos_online_payment`, care acceptă orice furnizor de plată publicat a cărui monedă corespunde punctului de vânzare.\nUrmărirea tentativelor de plată și a stării finale pe comenzi/facturi.\nReducerea reconcilierii manuale prin legarea automată a tranzacțiilor reușite de documentele corecte.\nVerificare server-la-server a rezultatului plății (`getOrderStatusExtended.do`) — starea raportată de browser nu este niciodată de încredere.\nSincronizare periodică (job programat) a tranzacțiilor nerezolvate, respectând regulile de interogare ale ING (prima verificare automată la 10 minute după înregistrare, maximum două tentative automate per comandă).\nMăsuri de siguranță: validarea URL-ului de checkout primit de la ING (host, `mdOrder`) înainte de redirecționare; reutilizarea unei comenzi ING deja înregistrate în loc de o nouă înregistrare (evită duplicate în back office-ul ING); verificarea sumei și monedei unei plăți reușite față de tranzacția Odoo; o plată confirmată nu este retrogradată automat de un status ulterior de reversal/refund — se loghează un avertisment pentru verificare manuală.\nDatele cardului nu sunt niciodată stocate în Odoo — introducerea și securitatea lor sunt gestionate integral de ING.\nSuportă doar contractul standard-sale (o singură fază, fără capturare manuală); rambursările se gestionează în back office-ul ING.\nMonede suportate: RON și EUR — se creează câte un furnizor de plată per monedă, fiecare cu propriile credențiale ING."
+    "text": "ING WebPay Payment Acquirer\ndeltatech_payment_ing_webpay\nAcest modul conectează Odoo cu ING WebPay (platforma de plăți online cu cardul a ING Bank România), permițând încasarea securizată a plăților cu cardul atât pentru comenzile din magazinul online, cât și pentru facturile clienților și, prin fluxul standard de plată online la POS, pentru vânzările din Point of Sale. Este gândit pentru comercianții care vând online în România și doresc să centralizeze fluxul comandă-încasare în Odoo, oferind în același timp cumpărătorilor o experiență de plată locală, de încredere, cu 3-D Secure 2 impus la fiecare tranzacție.\nOpțiunea „Plată cu cardul (ING WebPay)\" la finalizarea comenzii în eCommerce Odoo.\nButon de plată expresă Google Pay direct în coșul eCommerce (opțional, necesită parametrii Google Pay furnizați de ING): portofelul preia adresa de facturare/livrare, metodele de livrare și totalurile se recalculează live, iar plata se procesează direct prin endpointul Google Pay al ING. Se activează doar când sunt completate pe furnizor Google Pay Gateway ID și Google Pay Gateway Merchant ID; în producție se completează și Google Pay Merchant ID (înregistrare în Google Pay & Wallet Console), în modul test poate rămâne gol. Sunt acceptate doar tokenurile de dispozitiv `CRYPTOGRAM_3DS`, deci cardurile salvate ca `PAN_ONLY` în contul Google nu sunt oferite.\nPlata facturilor deschise direct din portalul de clienți Odoo, prin linkurile standard de plată Odoo.\nÎncasare cu cardul în Point of Sale: clientul scanează codul QR afișat de casier și plătește pe pagina ING de pe propriul telefon — nu necesită configurare suplimentară în acest modul, folosește fluxul standard `pos_online_payment`, care acceptă orice furnizor de plată publicat a cărui monedă corespunde punctului de vânzare (metodă de plată POS cu Online Payment activat).\nUrmărirea tentativelor de plată și a stării finale pe comenzi/facturi; starea tranzacției este „Confirmed\", „Pending\" (plată nefinalizată), „Canceled\" (refuzată, anulată sau închisă de ING) sau „Error\" (eroare raportată de ING sau sumă/monedă care nu corespund). Cu modul developer, tranzacțiile se văd în Facturare → Configurare → Plăți online → Tranzacții de plată.\nReducerea reconcilierii manuale prin legarea automată a tranzacțiilor reușite de documentele corecte: confirmarea creează o plată contabilă pe jurnalul furnizorului, „In Process\" până la potrivirea cu extrasul de cont; comisionul ING nu este calculat de modul, ci înregistrat la reconcilierea extrasului. Provider Reference este id-ul comenzii ING, cel de căutat în back office-ul ING.\nVerificare server-la-server a rezultatului plății (`getOrderStatusExtended.do`) — starea raportată de browser nu este niciodată de încredere. Butonul Refresh ING Status (grupul Settings) interoghează ING imediat.\nSincronizare periodică (job programat, la 5 minute) a tranzacțiilor nerezolvate, respectând regulile de interogare ale ING (prima verificare automată la 10 minute după înregistrare, maximum două tentative automate per comandă).\nMăsuri de siguranță: validarea URL-ului de checkout primit de la ING (host, `mdOrder`) înainte de redirecționare; reutilizarea unei comenzi ING deja înregistrate în loc de o nouă înregistrare (evită duplicate în back office-ul ING); verificarea sumei și monedei unei plăți reușite față de tranzacția Odoo; o plată confirmată nu este retrogradată automat de un status ulterior de reversal/refund — se loghează un avertisment pentru verificare manuală.\nDatele cardului nu sunt niciodată stocate în Odoo — introducerea și securitatea lor sunt gestionate integral de ING.\nSuportă doar contractul standard-sale (o singură fază, fără capturare manuală); rambursările se gestionează în back office-ul ING.\nMonede suportate: RON și EUR — se creează câte un furnizor de plată per monedă (se duplică furnizorul), fiecare cu propriile credențiale ING (ING WebPay Username / Password, vizibile doar grupului Settings). Starea Test Mode folosește mediul UAT ING (`securepay-uat.ing.ro`), Enabled producția (`securepay.ing.ro`). Opțiunea Send orderNumber se activează doar dacă ING confirmă că contul comerciantului așteaptă un număr de comandă generat de comerciant.\nCerințe: cont de comerciant ING WebPay activ (UAT sau producție); pentru POS, `pos_online_payment` și, recomandat, [deltatech_pos_online_payment](../deltatech_pos_online_payment/index.md).\nFluxul pas-cu-pas, cu capturi de ecran, este în [Fișa Consultant](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_payment_libra_pay/index.md",
     "module": "deltatech_payment_libra_pay",
     "version": "19.0.1.0.16",
-    "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_libra_pay`",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_libra_pay",
     "local_path": "odoo-addons/bitshop/deltatech_payment_libra_pay",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "LibraPay Acquirer",
-    "summary": "Acest modul integrează Odoo cu LibraPay, gateway-ul de plată securizat oferit de Libra Internet Bank în România. Permite companiilor să accepte plăți online cu cardul (Visa, Mastercard) atât pentru comenzile din magazinul online (eCommerce), cât și pentru facturile din portalul clienților, oferind o experiență de plată fiabilă și adaptată pieței românești. Fluxul folosește redirecționarea către pagina de plată găzduită de bancă, astfel încât datele cardului nu ajung niciodată pe serverul Odoo, iar statusul comenzilor și facturilor este actualizat automat pe baza confirmării primite de la bancă.",
+    "last_ingest": "2026-11-17",
+    "friendly_name": "LibraPay Payment",
+    "summary": "Acest modul integrează Odoo cu LibraPay, serviciul de plată online cu cardul oferit de Libra Internet Bank în România. Permite companiilor să accepte plăți cu cardul (Visa, Mastercard) atât pentru comenzile din magazinul online (eCommerce), cât și pentru facturile din portalul clienților, oferind o experiență de plată fiabilă și adaptată pieței românești. Fluxul folosește redirecționarea către pagina de plată găzduită de bancă, astfel încât datele cardului nu ajung niciodată pe serverul Odoo, iar statusul comenzilor și facturilor este actualizat automat pe baza confirmării primite de la bancă.",
     "features": [
       "Acceptarea plăților cu cardul prin metoda „Pay with card (LibraPay)” în procesul de checkout din eCommerce.",
-      "Plata facturilor deschise direct din portalul clientului, cu card de credit sau debit.",
-      "Actualizarea automată a statusului comenzilor de vânzare și al facturilor pe baza feedback-ului în timp real de la Libra Internet Bank.",
-      "Notificări asincrone (IPN — Instant Payment Notifications) pentru a garanta înregistrarea plății chiar dacă clientul închide browserul înainte de redirecționare.",
-      "Flux de redirecționare securizat: datele cardului sunt introduse pe infrastructura sigură a băncii, asigurând conformitatea PCI.",
-      "Moduri de Test (sandbox) și Live (producție), cu endpoint-uri separate.",
-      "Integrare directă cu modulele standard Odoo `payment` și `website_sale`.",
-      "Mesaje configurabile pentru diferitele rezultate ale plății (Done, Cancel, Pending)."
+      "Plata facturilor deschise direct din portalul clientului, cu Pay Now.",
+      "Încasare imediată, într-un singur pas: cardul este debitat și comanda sau factura este marcată ca plătită.",
+      "Actualizarea automată a statusului comenzilor de vânzare și al facturilor pe baza feedback-ului de la Libra Internet Bank.",
+      "Notificări asincrone (IPN — Instant Payment Notifications), pentru a garanta înregistrarea plății chiar dacă clientul închide browserul înainte de redirecționare; adresa IPN se setează în portalul comerciantului LibraPay la `https://<domeniul-tău>/payment/libra_pay/ipn`.",
+      "Mesaje semnate: cererile și răspunsurile sunt semnate cu cheia comerciantului; un răspuns cu semnătură greșită este respins înainte de orice procesare. Codul de răspuns `00` confirmă plata, orice alt cod pune tranzacția în „Error\" cu mesajul băncii; suma și moneda fiecărui răspuns sunt verificate înainte de confirmare.",
+      "Flux de redirecționare securizat: datele cardului sunt introduse pe infrastructura sigură a băncii. Odoo trimite către LibraPay, la fiecare plată, liniile comenzii/facturii (produs, cantitate, preț, TVA) și datele de contact de facturare și livrare ale clientului.",
+      "Moduri de Test (sandbox) și Live (producție), cu adrese separate: starea Test pentru mediul de test LibraPay, Enabled pentru plăți reale; furnizorul se publică pe site.",
+      "Configurare: Facturare → Configurare → Plăți online → Furnizori de plată → Libra Pay; fila Credentials (Terminal, Libra Pay Key — șir hexazecimal, Merchant name, Merchant URL, Merchant, Merchant Email), fila Configuration (jurnalul plăților). Cheia este stocată în clar pe furnizor, deci formularul trebuie deschis doar de utilizatori de încredere.",
+      "Tranzacțiile (modul developer, Plăți online → Tranzacții de plată) apar ca Confirmed, Pending sau Error; Provider Reference este numărul comenzii trimis băncii (cifra 9 urmată de cifrele referinței Odoo), cel de căutat în portalul LibraPay. O plată refuzată rămâne în Error cu mesajul băncii, iar o nouă încercare creează o tranzacție nouă.",
+      "Confirmarea creează o plată contabilă pe jurnalul furnizorului, „In Process\" până la reconcilierea cu extrasul; comisionul băncii nu este calculat de modul, ci înregistrat la reconciliere. Rambursările se fac în portalul LibraPay.",
+      "Pașii detaliați, cu capturi de ecran, sunt în [Fișa Consultant](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
       "payment",
@@ -7990,7 +8013,7 @@
       "payment",
       "website_sale"
     ],
-    "text": "LibraPay Acquirer\ndeltatech_payment_libra_pay\nAcest modul integrează Odoo cu LibraPay, gateway-ul de plată securizat oferit de Libra Internet Bank în România. Permite companiilor să accepte plăți online cu cardul (Visa, Mastercard) atât pentru comenzile din magazinul online (eCommerce), cât și pentru facturile din portalul clienților, oferind o experiență de plată fiabilă și adaptată pieței românești. Fluxul folosește redirecționarea către pagina de plată găzduită de bancă, astfel încât datele cardului nu ajung niciodată pe serverul Odoo, iar statusul comenzilor și facturilor este actualizat automat pe baza confirmării primite de la bancă.\nAcceptarea plăților cu cardul prin metoda „Pay with card (LibraPay)” în procesul de checkout din eCommerce.\nPlata facturilor deschise direct din portalul clientului, cu card de credit sau debit.\nActualizarea automată a statusului comenzilor de vânzare și al facturilor pe baza feedback-ului în timp real de la Libra Internet Bank.\nNotificări asincrone (IPN — Instant Payment Notifications) pentru a garanta înregistrarea plății chiar dacă clientul închide browserul înainte de redirecționare.\nFlux de redirecționare securizat: datele cardului sunt introduse pe infrastructura sigură a băncii, asigurând conformitatea PCI.\nModuri de Test (sandbox) și Live (producție), cu endpoint-uri separate.\nIntegrare directă cu modulele standard Odoo `payment` și `website_sale`.\nMesaje configurabile pentru diferitele rezultate ale plății (Done, Cancel, Pending)."
+    "text": "LibraPay Payment\ndeltatech_payment_libra_pay\nAcest modul integrează Odoo cu LibraPay, serviciul de plată online cu cardul oferit de Libra Internet Bank în România. Permite companiilor să accepte plăți cu cardul (Visa, Mastercard) atât pentru comenzile din magazinul online (eCommerce), cât și pentru facturile din portalul clienților, oferind o experiență de plată fiabilă și adaptată pieței românești. Fluxul folosește redirecționarea către pagina de plată găzduită de bancă, astfel încât datele cardului nu ajung niciodată pe serverul Odoo, iar statusul comenzilor și facturilor este actualizat automat pe baza confirmării primite de la bancă.\nAcceptarea plăților cu cardul prin metoda „Pay with card (LibraPay)” în procesul de checkout din eCommerce.\nPlata facturilor deschise direct din portalul clientului, cu Pay Now.\nÎncasare imediată, într-un singur pas: cardul este debitat și comanda sau factura este marcată ca plătită.\nActualizarea automată a statusului comenzilor de vânzare și al facturilor pe baza feedback-ului de la Libra Internet Bank.\nNotificări asincrone (IPN — Instant Payment Notifications), pentru a garanta înregistrarea plății chiar dacă clientul închide browserul înainte de redirecționare; adresa IPN se setează în portalul comerciantului LibraPay la `https://<domeniul-tău>/payment/libra_pay/ipn`.\nMesaje semnate: cererile și răspunsurile sunt semnate cu cheia comerciantului; un răspuns cu semnătură greșită este respins înainte de orice procesare. Codul de răspuns `00` confirmă plata, orice alt cod pune tranzacția în „Error\" cu mesajul băncii; suma și moneda fiecărui răspuns sunt verificate înainte de confirmare.\nFlux de redirecționare securizat: datele cardului sunt introduse pe infrastructura sigură a băncii. Odoo trimite către LibraPay, la fiecare plată, liniile comenzii/facturii (produs, cantitate, preț, TVA) și datele de contact de facturare și livrare ale clientului.\nModuri de Test (sandbox) și Live (producție), cu adrese separate: starea Test pentru mediul de test LibraPay, Enabled pentru plăți reale; furnizorul se publică pe site.\nConfigurare: Facturare → Configurare → Plăți online → Furnizori de plată → Libra Pay; fila Credentials (Terminal, Libra Pay Key — șir hexazecimal, Merchant name, Merchant URL, Merchant, Merchant Email), fila Configuration (jurnalul plăților). Cheia este stocată în clar pe furnizor, deci formularul trebuie deschis doar de utilizatori de încredere.\nTranzacțiile (modul developer, Plăți online → Tranzacții de plată) apar ca Confirmed, Pending sau Error; Provider Reference este numărul comenzii trimis băncii (cifra 9 urmată de cifrele referinței Odoo), cel de căutat în portalul LibraPay. O plată refuzată rămâne în Error cu mesajul băncii, iar o nouă încercare creează o tranzacție nouă.\nConfirmarea creează o plată contabilă pe jurnalul furnizorului, „In Process\" până la reconcilierea cu extrasul; comisionul băncii nu este calculat de modul, ci înregistrat la reconciliere. Rambursările se fac în portalul LibraPay.\nPașii detaliați, cu capturi de ecran, sunt în [Fișa Consultant](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_payment_mobilpay/index.md",
@@ -8897,7 +8920,7 @@
   {
     "path": "deltatech_product_attribute/index.md",
     "module": "deltatech_product_attribute",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.1.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_product_attribute",
     "local_path": "odoo-addons/bitshop/deltatech_product_attribute",
     "last_ingest": "2026-10-01",
@@ -10191,7 +10214,7 @@
   {
     "path": "deltatech_report_layout/index.md",
     "module": "deltatech_report_layout",
-    "version": "19.0.1.1.2",
+    "version": "19.0.1.3.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_report_layout",
     "local_path": "odoo-addons/deltatech/deltatech_report_layout",
     "last_ingest": "2026-11-14",
@@ -10543,7 +10566,7 @@
   {
     "path": "deltatech_saga/index.md",
     "module": "deltatech_saga",
-    "version": "19.0.6.29.4",
+    "version": "19.0.6.30.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga",
     "local_path": "odoo-addons/bitshop/deltatech_saga",
     "last_ingest": "2026-10-27",
@@ -11629,7 +11652,7 @@
   {
     "path": "deltatech_sale_referrer_raport/index.md",
     "module": "deltatech_sale_referrer_raport",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_sale_referrer_raport",
     "local_path": "odoo-addons/bitshop_ent/deltatech_sale_referrer_raport",
     "last_ingest": "2026-08-20",
@@ -11709,7 +11732,7 @@
   {
     "path": "deltatech_sale_stage/index.md",
     "module": "deltatech_sale_stage",
-    "version": "19.0.1.2.9",
+    "version": "19.0.1.2.10",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_stage`",
     "local_path": "odoo-addons/deltatech/deltatech_sale_stage",
     "last_ingest": "2026-08-20",
@@ -12004,7 +12027,7 @@
   {
     "path": "deltatech_saleorder_search/index.md",
     "module": "deltatech_saleorder_search",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.1.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_saleorder_search",
     "local_path": "odoo-addons/deltatech/deltatech_saleorder_search",
     "last_ingest": "2026-11-14",
@@ -14435,7 +14458,7 @@
   {
     "path": "deltatech_website_sale_category/index.md",
     "module": "deltatech_website_sale_category",
-    "version": "19.0.1.1.2",
+    "version": "19.0.1.1.3",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_sale_category",
     "local_path": "odoo-addons/bitshop/deltatech_website_sale_category",
     "last_ingest": "2026-11-11",
@@ -14665,7 +14688,7 @@
   {
     "path": "deltatech_website_searchbar_typing/index.md",
     "module": "deltatech_website_searchbar_typing",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_searchbar_typing",
     "local_path": "odoo-addons/deltatech/deltatech_website_searchbar_typing",
     "last_ingest": "2026-10-22",
@@ -14695,7 +14718,7 @@
   {
     "path": "deltatech_website_seo/index.md",
     "module": "deltatech_website_seo",
-    "version": "19.0.1.1.6",
+    "version": "19.0.1.1.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_seo",
     "local_path": "odoo-addons/bitshop/deltatech_website_seo",
     "last_ingest": "2026-11-11",
@@ -15016,18 +15039,22 @@
   {
     "path": "deltatech_widget_hierarchy_m2o/index.md",
     "module": "deltatech_widget_hierarchy_m2o",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.1.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_widget_hierarchy_m2o",
     "local_path": "odoo-addons/bitshop/deltatech_widget_hierarchy_m2o",
-    "last_ingest": "2026-07-31",
-    "friendly_name": "Deltatech Hierarchy Many2one Widget",
+    "last_ingest": "2026-11-17",
+    "friendly_name": "Hierarchy Many2one Widget",
     "summary": "Acest modul înlocuiește lista derulantă plată standard a câmpurilor many2one cu un widget de tip arbore părinte/copil, permițând utilizatorului să vadă și să navigheze direct ierarhia unui model (categorii de produse, conturi contabile, conturi analitice, locații de stoc, departamente etc.) atunci când alege o valoare. Este util oriunde structura ierarhică a înregistrărilor contează pentru o selecție corectă și rapidă, evitând confuziile dintr-o listă lungă și fără context de tip părinte-copil.",
     "features": [
       "Arbore expandabil părinte/copil direct în câmpul many2one, cu încărcare leneșă (lazy loading) a copiilor — copiii unui nod se aduc din server doar când nodul este deschis, deci scalează bine pe ierarhii mari.",
-      "Casetă de căutare încorporată, care caută pe întreg arborele (nu doar la nivelul curent vizibil) și afișează rezultatele într-o listă plată.",
+      "Casetă de căutare încorporată, care caută pe întreg arborele (nu doar la nivelul curent vizibil) și afișează rezultatele într-o listă plată, cu calea completă.",
       "Funcționează pe orice câmp many2one al cărui model țintă are un câmp părinte de tip self-relation, configurabil prin opțiunea `parent_field` (implicit `parent_id`).",
-      "Adâncime maximă a arborelui și număr de înregistrări per nivel reglabile din opțiunile câmpului (`level`, `limit`).",
-      "Widget OWL pur, fără biblioteci JavaScript externe (fără jsTree/zTree) și fără dependențe suplimentare de server dincolo de `web`."
+      "Activare într-un formular: `widget=\"hierarchy_m2o\"` pe câmp, cu opțiuni în `options`: `parent_field` (implicit `parent_id`), `limit` (înregistrări per nivel, implicit 80), `level` (adâncimea maximă afișată, implicit 8). Pentru locații de stoc se folosește `'parent_field': 'location_id'`.",
+      "Câmpul afișează calea completă a valorii curente, un buton × pentru ștergere și săgeata care deschide arborele; valoarea curentă este evidențiată în arbore. Pe o înregistrare în citire câmpul apare ca text simplu, fără arbore.",
+      "Alegerea unei categorii ca propriul părinte (sau sub un copil al ei) este refuzată de Odoo la salvare.",
+      "Două vizualizări demonstrative, active după instalare: câmpul *Parent Category* din formularul categoriei de produs (Vânzări → Configurare → Produse → Categorii) și câmpul *Category* din formularul produsului (Vânzări → Produse → Produse, fila General Information). Orice alt modul le poate suprascrie per proiect.",
+      "Widget OWL pur, fără biblioteci JavaScript externe (fără jsTree/zTree) și fără cod Python; poate fi importat și pe Odoo Online (plan Custom), din Apps → Import Module.",
+      "Pașii detaliați, cu capturi de ecran, sunt în [Fișa Consultant](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
       "web",
@@ -15037,12 +15064,12 @@
       "web",
       "product"
     ],
-    "text": "Deltatech Hierarchy Many2one Widget\ndeltatech_widget_hierarchy_m2o\nAcest modul înlocuiește lista derulantă plată standard a câmpurilor many2one cu un widget de tip arbore părinte/copil, permițând utilizatorului să vadă și să navigheze direct ierarhia unui model (categorii de produse, conturi contabile, conturi analitice, locații de stoc, departamente etc.) atunci când alege o valoare. Este util oriunde structura ierarhică a înregistrărilor contează pentru o selecție corectă și rapidă, evitând confuziile dintr-o listă lungă și fără context de tip părinte-copil.\nArbore expandabil părinte/copil direct în câmpul many2one, cu încărcare leneșă (lazy loading) a copiilor — copiii unui nod se aduc din server doar când nodul este deschis, deci scalează bine pe ierarhii mari.\nCasetă de căutare încorporată, care caută pe întreg arborele (nu doar la nivelul curent vizibil) și afișează rezultatele într-o listă plată.\nFuncționează pe orice câmp many2one al cărui model țintă are un câmp părinte de tip self-relation, configurabil prin opțiunea `parent_field` (implicit `parent_id`).\nAdâncime maximă a arborelui și număr de înregistrări per nivel reglabile din opțiunile câmpului (`level`, `limit`).\nWidget OWL pur, fără biblioteci JavaScript externe (fără jsTree/zTree) și fără dependențe suplimentare de server dincolo de `web`."
+    "text": "Hierarchy Many2one Widget\ndeltatech_widget_hierarchy_m2o\nAcest modul înlocuiește lista derulantă plată standard a câmpurilor many2one cu un widget de tip arbore părinte/copil, permițând utilizatorului să vadă și să navigheze direct ierarhia unui model (categorii de produse, conturi contabile, conturi analitice, locații de stoc, departamente etc.) atunci când alege o valoare. Este util oriunde structura ierarhică a înregistrărilor contează pentru o selecție corectă și rapidă, evitând confuziile dintr-o listă lungă și fără context de tip părinte-copil.\nArbore expandabil părinte/copil direct în câmpul many2one, cu încărcare leneșă (lazy loading) a copiilor — copiii unui nod se aduc din server doar când nodul este deschis, deci scalează bine pe ierarhii mari.\nCasetă de căutare încorporată, care caută pe întreg arborele (nu doar la nivelul curent vizibil) și afișează rezultatele într-o listă plată, cu calea completă.\nFuncționează pe orice câmp many2one al cărui model țintă are un câmp părinte de tip self-relation, configurabil prin opțiunea `parent_field` (implicit `parent_id`).\nActivare într-un formular: `widget=\"hierarchy_m2o\"` pe câmp, cu opțiuni în `options`: `parent_field` (implicit `parent_id`), `limit` (înregistrări per nivel, implicit 80), `level` (adâncimea maximă afișată, implicit 8). Pentru locații de stoc se folosește `'parent_field': 'location_id'`.\nCâmpul afișează calea completă a valorii curente, un buton × pentru ștergere și săgeata care deschide arborele; valoarea curentă este evidențiată în arbore. Pe o înregistrare în citire câmpul apare ca text simplu, fără arbore.\nAlegerea unei categorii ca propriul părinte (sau sub un copil al ei) este refuzată de Odoo la salvare.\nDouă vizualizări demonstrative, active după instalare: câmpul *Parent Category* din formularul categoriei de produs (Vânzări → Configurare → Produse → Categorii) și câmpul *Category* din formularul produsului (Vânzări → Produse → Produse, fila General Information). Orice alt modul le poate suprascrie per proiect.\nWidget OWL pur, fără biblioteci JavaScript externe (fără jsTree/zTree) și fără cod Python; poate fi importat și pe Odoo Online (plan Custom), din Apps → Import Module.\nPașii detaliați, cu capturi de ecran, sunt în [Fișa Consultant](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_widget_many2one_badge/index.md",
     "module": "deltatech_widget_many2one_badge",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.1.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_widget_many2one_badge",
     "local_path": "odoo-addons/deltatech/deltatech_widget_many2one_badge",
     "last_ingest": "2026-11-03",
@@ -15070,7 +15097,7 @@
   {
     "path": "deltatech_work_days_report/index.md",
     "module": "deltatech_work_days_report",
-    "version": "19.0.0.0.13",
+    "version": "19.0.0.0.15",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_work_days_report",
     "local_path": "odoo-addons/bitshop/deltatech_work_days_report",
     "last_ingest": "2026-08-20",
@@ -15149,7 +15176,7 @@
   {
     "path": "l10n_ro_account_bank_statement_import_mt940_bt/index.md",
     "module": "l10n_ro_account_bank_statement_import_mt940_bt",
-    "version": "19.0.0.2.2",
+    "version": "19.0.0.2.3",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_account_bank_statement_import_mt940_bt",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_account_bank_statement_import_mt940_bt",
     "last_ingest": "2026-10-09",
@@ -15176,7 +15203,7 @@
   {
     "path": "l10n_ro_account_bank_statement_import_mt940_cec/index.md",
     "module": "l10n_ro_account_bank_statement_import_mt940_cec",
-    "version": "19.0.0.2.4",
+    "version": "19.0.0.2.5",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_account_bank_statement_import_mt940_cec",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_account_bank_statement_import_mt940_cec",
     "last_ingest": "2026-10-09",
@@ -15200,7 +15227,7 @@
   {
     "path": "l10n_ro_account_bank_statement_import_mt940_revolut/index.md",
     "module": "l10n_ro_account_bank_statement_import_mt940_revolut",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_account_bank_statement_import_mt940_revolut",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_account_bank_statement_import_mt940_revolut",
     "last_ingest": "2026-10-09",
@@ -16117,7 +16144,7 @@
   {
     "path": "l10n_ro_anaf_d300/index.md",
     "module": "l10n_ro_anaf_d300",
-    "version": "19.0.0.0.35",
+    "version": "19.0.0.0.36",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d300",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d300",
     "last_ingest": null,
@@ -16721,7 +16748,7 @@
   {
     "path": "l10n_ro_anaf_partner_online/index.md",
     "module": "l10n_ro_anaf_partner_online",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_anaf_partner_online",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_anaf_partner_online",
     "last_ingest": "2026-11-14",
@@ -16944,7 +16971,7 @@
   {
     "path": "l10n_ro_cash_register/index.md",
     "module": "l10n_ro_cash_register",
-    "version": "19.0.1.5.0",
+    "version": "19.0.1.5.1",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_cash_register",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_cash_register",
     "last_ingest": "2026-10-08",
@@ -17053,7 +17080,7 @@
   {
     "path": "l10n_ro_config_fix/index.md",
     "module": "l10n_ro_config_fix",
-    "version": "19.0.0.0.4",
+    "version": "19.0.0.0.5",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_config_fix",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_config_fix",
     "last_ingest": "2026-10-09",
@@ -17435,7 +17462,7 @@
   {
     "path": "l10n_ro_edi_ubl_sale_store/index.md",
     "module": "l10n_ro_edi_ubl_sale_store",
-    "version": "19.0.1.0.10",
+    "version": "19.0.1.0.11",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_edi_ubl_sale_store",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_edi_ubl_sale_store",
     "last_ingest": "2026-06-08",
@@ -17497,7 +17524,7 @@
   {
     "path": "l10n_ro_efactura_enhancement/index.md",
     "module": "l10n_ro_efactura_enhancement",
-    "version": "19.0.0.5.12",
+    "version": "19.0.0.5.13",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_efactura_enhancement",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_efactura_enhancement",
     "last_ingest": "2026-11-04",
@@ -17645,7 +17672,7 @@
   {
     "path": "l10n_ro_einvoice_download/index.md",
     "module": "l10n_ro_einvoice_download",
-    "version": "19.0.0.0.5",
+    "version": "19.0.0.0.6",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_einvoice_download",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_einvoice_download",
     "last_ingest": "2026-10-09",
@@ -17851,7 +17878,7 @@
   {
     "path": "l10n_ro_etransport_batch_enhancement/index.md",
     "module": "l10n_ro_etransport_batch_enhancement",
-    "version": "19.0.0.4.1",
+    "version": "19.0.0.4.2",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_etransport_batch_enhancement",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_etransport_batch_enhancement",
     "last_ingest": "2026-10-09",
@@ -17911,7 +17938,7 @@
   {
     "path": "l10n_ro_etransport_enhancement/index.md",
     "module": "l10n_ro_etransport_enhancement",
-    "version": "19.0.0.10.1",
+    "version": "19.0.0.10.2",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_etransport_enhancement",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_etransport_enhancement",
     "last_ingest": "2026-09-21",
@@ -17960,7 +17987,7 @@
   {
     "path": "l10n_ro_etransport_uit_actions/index.md",
     "module": "l10n_ro_etransport_uit_actions",
-    "version": "19.0.1.1.3",
+    "version": "19.0.1.1.4",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_etransport_uit_actions",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_etransport_uit_actions",
     "last_ingest": "2026-10-09",
@@ -17989,7 +18016,7 @@
   {
     "path": "l10n_ro_etransport_uit_actions_batch/index.md",
     "module": "l10n_ro_etransport_uit_actions_batch",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_etransport_uit_actions_batch",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_etransport_uit_actions_batch",
     "last_ingest": "2026-10-09",
@@ -18284,7 +18311,7 @@
   {
     "path": "l10n_ro_footer_anpc/index.md",
     "module": "l10n_ro_footer_anpc",
-    "version": "19.0.0.0.6",
+    "version": "19.0.0.0.9",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_footer_anpc",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_footer_anpc",
     "last_ingest": "2026-11-02",
@@ -18399,7 +18426,7 @@
   {
     "path": "l10n_ro_hide_net_weight/index.md",
     "module": "l10n_ro_hide_net_weight",
-    "version": "19.0.0.0.5",
+    "version": "19.0.0.0.6",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_hide_net_weight",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_hide_net_weight",
     "last_ingest": "2026-11-04",
@@ -18938,7 +18965,7 @@
   {
     "path": "l10n_ro_invoice_report/index.md",
     "module": "l10n_ro_invoice_report",
-    "version": "19.0.3.4.27",
+    "version": "19.0.3.4.28",
     "github": "`https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_invoice_report`",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_invoice_report",
     "last_ingest": "2026-10-27",
@@ -18990,7 +19017,7 @@
   {
     "path": "l10n_ro_invoice_report_online/index.md",
     "module": "l10n_ro_invoice_report_online",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_invoice_report_online",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_invoice_report_online",
     "last_ingest": "2026-11-14",
@@ -19056,7 +19083,7 @@
   {
     "path": "l10n_ro_lang/index.md",
     "module": "l10n_ro_lang",
-    "version": "19.0.0.0.6",
+    "version": "19.0.0.0.7",
     "github": "`https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_lang`",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_lang",
     "last_ingest": "2026-06-08",
@@ -19115,7 +19142,7 @@
   {
     "path": "l10n_ro_message_spv_online/index.md",
     "module": "l10n_ro_message_spv_online",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_message_spv_online",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_message_spv_online",
     "last_ingest": "2026-11-14",
@@ -19144,7 +19171,7 @@
   {
     "path": "l10n_ro_message_spv_purchase/index.md",
     "module": "l10n_ro_message_spv_purchase",
-    "version": "19.0.0.0.12",
+    "version": "19.0.0.0.13",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_message_spv_purchase",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_message_spv_purchase",
     "last_ingest": "2026-06-08",
@@ -19174,7 +19201,7 @@
   {
     "path": "l10n_ro_message_spv_self_billing/index.md",
     "module": "l10n_ro_message_spv_self_billing",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_message_spv_self_billing",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_message_spv_self_billing",
     "last_ingest": "2026-10-09",
@@ -19428,7 +19455,7 @@
   {
     "path": "l10n_ro_partner_create_by_vat_button/index.md",
     "module": "l10n_ro_partner_create_by_vat_button",
-    "version": "19.0.1.1.13",
+    "version": "19.0.1.1.14",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_partner_create_by_vat_button",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_partner_create_by_vat_button",
     "last_ingest": "2026-11-07",
@@ -19453,7 +19480,7 @@
   {
     "path": "l10n_ro_partner_create_by_vat_openapi/index.md",
     "module": "l10n_ro_partner_create_by_vat_openapi",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.7",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_partner_create_by_vat_openapi",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_partner_create_by_vat_openapi",
     "last_ingest": "2026-11-07",
@@ -19512,7 +19539,7 @@
   {
     "path": "l10n_ro_partner_ledger_currency/index.md",
     "module": "l10n_ro_partner_ledger_currency",
-    "version": "19.0.1.4.11",
+    "version": "19.0.1.4.13",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_partner_ledger_currency",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_partner_ledger_currency",
     "last_ingest": null,
@@ -20644,7 +20671,7 @@
   {
     "path": "l10n_ro_report_common/index.md",
     "module": "l10n_ro_report_common",
-    "version": "19.0.1.1.3",
+    "version": "19.0.1.1.4",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_report_common",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_report_common",
     "last_ingest": "2026-10-09",
@@ -20673,7 +20700,7 @@
   {
     "path": "l10n_ro_report_common_online/index.md",
     "module": "l10n_ro_report_common_online",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_report_common_online",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_report_common_online",
     "last_ingest": "2026-11-14",
@@ -20956,7 +20983,7 @@
   {
     "path": "l10n_ro_saft_export_fix/index.md",
     "module": "l10n_ro_saft_export_fix",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.4.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_saft_export_fix",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_saft_export_fix",
     "last_ingest": "2026-10-22",
@@ -21062,17 +21089,18 @@
   {
     "path": "l10n_ro_sale_order_report/index.md",
     "module": "l10n_ro_sale_order_report",
-    "version": "19.0.1.0.14",
+    "version": "19.0.1.1.1",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_sale_order_report",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_sale_order_report",
-    "last_ingest": "2026-10-26",
+    "last_ingest": "2026-11-17",
     "friendly_name": "Romania - Proforma Invoice Report",
     "summary": "Acest modul permite tipărirea de facturi proforme direct din oferta (cotația) de vânzare. Sunt disponibile două tipuri de proformă: o proformă inițială, al cărei cuantum este calculat din liniile termenului de plată (prima linie de tip „procent\" sau „fix\"), și o proformă finală, care reflectă suma rămasă de încasat. Modulul este util pentru companiile care lucrează cu avansuri și plăți eșalonate, oferind clienților documente de plată clare înainte de emiterea facturii fiscale. În plus, personalizează formularul standard al ofertei de vânzare (adresă companie, numerotare, imagini, coloane suplimentare), pe baza unor opțiuni din setări.",
     "features": [
       "Tipărirea unei facturi proforme inițiale („Percent Proforma - first\") din cotație, cu suma calculată din prima linie a termenului de plată (de tip „procent\" sau „fix\").",
       "Tipărirea unei facturi proforme finale („Percent Proforma - last\"), cu suma rămasă de încasat (necesită procesarea prealabilă a unei plăți prin modulul Deltatech Sale Payment; fără plată, se tipărește suma întreagă).",
       "Opțiuni pe companie, în Setări, la blocul de cotații (setările comenzilor de vânzare), pentru formularul ofertei:",
-      "numărător al liniilor (activ implicit) și imaginea produsului pe linie (activă implicit);",
+      "numărător al liniilor (activ implicit), care numără doar liniile de produs, nu secțiunile sau notele;",
+      "imaginea produsului pe linie (activă implicit) — setarea `include_image_line` este acum furnizată de modulul `deltatech_sale_order_image`, iar formularul tipărit rămâne neschimbat;",
       "excluderea numelui produsului din descrierea liniei, sau reducerea mărimii descrierii;",
       "afișarea valorii taxelor și a totalului cu taxe pe fiecare linie;",
       "afișarea termenului de livrare (lead time) în zile, doar dacă vreo linie îl are.",
@@ -21081,12 +21109,13 @@
     ],
     "dependencies": [
       "sale",
-      "l10n_ro_report_common"
+      "l10n_ro_report_common",
+      "deltatech_sale_order_image"
     ],
     "connections": [
       "deltatech_sale_payment"
     ],
-    "text": "Romania - Proforma Invoice Report\nl10n_ro_sale_order_report\nAcest modul permite tipărirea de facturi proforme direct din oferta (cotația) de vânzare. Sunt disponibile două tipuri de proformă: o proformă inițială, al cărei cuantum este calculat din liniile termenului de plată (prima linie de tip „procent\" sau „fix\"), și o proformă finală, care reflectă suma rămasă de încasat. Modulul este util pentru companiile care lucrează cu avansuri și plăți eșalonate, oferind clienților documente de plată clare înainte de emiterea facturii fiscale. În plus, personalizează formularul standard al ofertei de vânzare (adresă companie, numerotare, imagini, coloane suplimentare), pe baza unor opțiuni din setări.\nTipărirea unei facturi proforme inițiale („Percent Proforma - first\") din cotație, cu suma calculată din prima linie a termenului de plată (de tip „procent\" sau „fix\").\nTipărirea unei facturi proforme finale („Percent Proforma - last\"), cu suma rămasă de încasat (necesită procesarea prealabilă a unei plăți prin modulul Deltatech Sale Payment; fără plată, se tipărește suma întreagă).\nOpțiuni pe companie, în Setări, la blocul de cotații (setările comenzilor de vânzare), pentru formularul ofertei:\nnumărător al liniilor (activ implicit) și imaginea produsului pe linie (activă implicit);\nexcluderea numelui produsului din descrierea liniei, sau reducerea mărimii descrierii;\nafișarea valorii taxelor și a totalului cu taxe pe fiecare linie;\nafișarea termenului de livrare (lead time) în zile, doar dacă vreo linie îl are.\nBlocul de adresă al formularului ofertei folosește datele companiei din `l10n_ro_report_common`.\nLa termene de plată cu două linii, formularul ofertei afișează tranșele de plată și valoarea fiecăreia."
+    "text": "Romania - Proforma Invoice Report\nl10n_ro_sale_order_report\nAcest modul permite tipărirea de facturi proforme direct din oferta (cotația) de vânzare. Sunt disponibile două tipuri de proformă: o proformă inițială, al cărei cuantum este calculat din liniile termenului de plată (prima linie de tip „procent\" sau „fix\"), și o proformă finală, care reflectă suma rămasă de încasat. Modulul este util pentru companiile care lucrează cu avansuri și plăți eșalonate, oferind clienților documente de plată clare înainte de emiterea facturii fiscale. În plus, personalizează formularul standard al ofertei de vânzare (adresă companie, numerotare, imagini, coloane suplimentare), pe baza unor opțiuni din setări.\nTipărirea unei facturi proforme inițiale („Percent Proforma - first\") din cotație, cu suma calculată din prima linie a termenului de plată (de tip „procent\" sau „fix\").\nTipărirea unei facturi proforme finale („Percent Proforma - last\"), cu suma rămasă de încasat (necesită procesarea prealabilă a unei plăți prin modulul Deltatech Sale Payment; fără plată, se tipărește suma întreagă).\nOpțiuni pe companie, în Setări, la blocul de cotații (setările comenzilor de vânzare), pentru formularul ofertei:\nnumărător al liniilor (activ implicit), care numără doar liniile de produs, nu secțiunile sau notele;\nimaginea produsului pe linie (activă implicit) — setarea `include_image_line` este acum furnizată de modulul `deltatech_sale_order_image`, iar formularul tipărit rămâne neschimbat;\nexcluderea numelui produsului din descrierea liniei, sau reducerea mărimii descrierii;\nafișarea valorii taxelor și a totalului cu taxe pe fiecare linie;\nafișarea termenului de livrare (lead time) în zile, doar dacă vreo linie îl are.\nBlocul de adresă al formularului ofertei folosește datele companiei din `l10n_ro_report_common`.\nLa termene de plată cu două linii, formularul ofertei afișează tranșele de plată și valoarea fiecăreia."
   },
   {
     "path": "l10n_ro_sale_receipt_type_report/index.md",
@@ -21231,7 +21260,7 @@
   {
     "path": "l10n_ro_stock_account_check/index.md",
     "module": "l10n_ro_stock_account_check",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_account_check",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_account_check",
     "last_ingest": "2026-10-09",
@@ -21263,16 +21292,17 @@
   {
     "path": "l10n_ro_stock_account_enhancement/index.md",
     "module": "l10n_ro_stock_account_enhancement",
-    "version": "19.0.0.0.3",
+    "version": "19.0.0.0.6",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_account_enhancement",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_account_enhancement",
-    "last_ingest": "2026-06-08",
-    "friendly_name": "Romania - Stock Accounting Enhancement",
-    "summary": "Acest modul aduce verificări suplimentare pentru evidența contabilă a stocurilor în contextul localizării românești. Pe de o parte, se asigură că mișcările de stoc nu se înregistrează cu un preț de cost egal cu zero, evitând astfel valorizări incorecte. Pe de altă parte, introduce o restricție la postarea facturilor de vânzare sau de achiziție care conțin produse stocabile, dar nu sunt legate de o comandă de vânzare (SO) sau de achiziție (PO). Restricția poate fi activată sau dezactivată din setările de configurare, oferind flexibilitate în funcție de practicile fiecărei companii.",
+    "last_ingest": "2026-11-17",
+    "friendly_name": "Romania - Stock Accounting Controls",
+    "summary": "Acest modul aduce verificări suplimentare pentru evidența contabilă a stocurilor în contextul localizării românești. Pe de o parte, se asigură că mișcările de stoc nu se înregistrează cu un preț de cost egal cu zero, evitând astfel valorizări incorecte. Pe de altă parte, introduce o restricție la confirmarea facturilor de vânzare sau de achiziție care conțin produse stocabile, dar nu sunt legate de o comandă de vânzare (SO) sau de achiziție (PO). Restricția poate fi activată sau dezactivată din setările de configurare, oferind flexibilitate în funcție de practicile fiecărei companii.",
     "features": [
-      "Verificare ca prețul de cost să fie diferit de zero la mișcările de stoc.",
-      "Restricție la postarea facturilor (vânzare/achiziție) care conțin produse stocabile fără referință la o comandă de vânzare (SO) sau de achiziție (PO).",
-      "Posibilitatea de a activa/dezactiva această restricție din setările de configurare (Accounting -> România)."
+      "Verificare ca prețul unitar să fie diferit de zero la mișcările reale de stoc (de exemplu, livrarea unei mărfi fără cost): operația se oprește cu mesajul „Price unit is not set for product ...\", iar livrarea rămâne în starea „Ready\". Verificarea este mereu activă; nu se aplică calculelor pe un set gol de mișcări (de exemplu, retururile unei livrări care nu are). Poate fi oprită temporar (de exemplu, pentru un stoc inițial la cost zero) prin parametrul de sistem `l10n_ro_stock_account.skip_price_unit_check`.",
+      "Restricție la confirmarea facturilor și a notelor de credit (vânzare/achiziție) care conțin produse stocabile fără referință la o comandă de vânzare (SO) sau de achiziție (PO). Liniile cu servicii sau consumabile nu sunt verificate.",
+      "Posibilitatea de a activa/dezactiva restricția din Facturare → Configurare → Setări, secțiunea România, opțiunea „Check storable product line source\" (se aplică la nivel de bază de date; valoarea este salvată în parametrul de sistem `l10n_ro_stock_account.check_storable_line_source`).",
+      "Fluxul pas-cu-pas, cu capturi de ecran, se găsește în [Fișa Consultant](FISA_CONSULTANT.md)."
     ],
     "dependencies": [
       "l10n_ro_stock_account",
@@ -21282,12 +21312,12 @@
       "l10n_ro_stock_account",
       "l10n_ro_config"
     ],
-    "text": "Romania - Stock Accounting Enhancement\nl10n_ro_stock_account_enhancement\nAcest modul aduce verificări suplimentare pentru evidența contabilă a stocurilor în contextul localizării românești. Pe de o parte, se asigură că mișcările de stoc nu se înregistrează cu un preț de cost egal cu zero, evitând astfel valorizări incorecte. Pe de altă parte, introduce o restricție la postarea facturilor de vânzare sau de achiziție care conțin produse stocabile, dar nu sunt legate de o comandă de vânzare (SO) sau de achiziție (PO). Restricția poate fi activată sau dezactivată din setările de configurare, oferind flexibilitate în funcție de practicile fiecărei companii.\nVerificare ca prețul de cost să fie diferit de zero la mișcările de stoc.\nRestricție la postarea facturilor (vânzare/achiziție) care conțin produse stocabile fără referință la o comandă de vânzare (SO) sau de achiziție (PO).\nPosibilitatea de a activa/dezactiva această restricție din setările de configurare (Accounting -> România)."
+    "text": "Romania - Stock Accounting Controls\nl10n_ro_stock_account_enhancement\nAcest modul aduce verificări suplimentare pentru evidența contabilă a stocurilor în contextul localizării românești. Pe de o parte, se asigură că mișcările de stoc nu se înregistrează cu un preț de cost egal cu zero, evitând astfel valorizări incorecte. Pe de altă parte, introduce o restricție la confirmarea facturilor de vânzare sau de achiziție care conțin produse stocabile, dar nu sunt legate de o comandă de vânzare (SO) sau de achiziție (PO). Restricția poate fi activată sau dezactivată din setările de configurare, oferind flexibilitate în funcție de practicile fiecărei companii.\nVerificare ca prețul unitar să fie diferit de zero la mișcările reale de stoc (de exemplu, livrarea unei mărfi fără cost): operația se oprește cu mesajul „Price unit is not set for product ...\", iar livrarea rămâne în starea „Ready\". Verificarea este mereu activă; nu se aplică calculelor pe un set gol de mișcări (de exemplu, retururile unei livrări care nu are). Poate fi oprită temporar (de exemplu, pentru un stoc inițial la cost zero) prin parametrul de sistem `l10n_ro_stock_account.skip_price_unit_check`.\nRestricție la confirmarea facturilor și a notelor de credit (vânzare/achiziție) care conțin produse stocabile fără referință la o comandă de vânzare (SO) sau de achiziție (PO). Liniile cu servicii sau consumabile nu sunt verificate.\nPosibilitatea de a activa/dezactiva restricția din Facturare → Configurare → Setări, secțiunea România, opțiunea „Check storable product line source\" (se aplică la nivel de bază de date; valoarea este salvată în parametrul de sistem `l10n_ro_stock_account.check_storable_line_source`).\nFluxul pas-cu-pas, cu capturi de ecran, se găsește în [Fișa Consultant](FISA_CONSULTANT.md)."
   },
   {
     "path": "l10n_ro_stock_account_landed_cost_account/index.md",
     "module": "l10n_ro_stock_account_landed_cost_account",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_account_landed_cost_account",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_account_landed_cost_account",
     "last_ingest": "2026-11-11",
@@ -21750,7 +21780,7 @@
   {
     "path": "l10n_ro_stock_picking_batch_report/index.md",
     "module": "l10n_ro_stock_picking_batch_report",
-    "version": "19.0.0.0.7",
+    "version": "19.0.0.0.8",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_picking_batch_report",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_picking_batch_report",
     "last_ingest": "2026-10-09",

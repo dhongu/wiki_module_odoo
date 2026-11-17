@@ -1,10 +1,11 @@
 # Website SEO (localizat la `deltatech_website_seo/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_seo`
-- **Versiune:** `19.0.1.1.6`
+- **Versiune:** `19.0.1.1.7`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_seo
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_website_seo`
 - **Ultima Ingestie:** `2026-11-11`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

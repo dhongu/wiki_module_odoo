@@ -32,9 +32,12 @@ Nu există o bază legală: modulul ține de prezentarea magazinului online. Con
   *Categorie părinte* ca să le vedeți împreună.
 - Se afișează **toate** subcategoriile directe ale categoriei, chiar și cele care nu au încă produse
   publicate; un card al unei subcategorii goale duce la o listă de produse goală.
-- Pe o bază cu **mai multe website-uri**, apar și subcategoriile restricționate la alt website (câmpul
-  *Website* al categoriei); cardul lor duce la o pagină 404. Defect raportat:
-  [bitshop#3550](https://github.com/terrabit-solutions/bitshop/issues/3550).
+- Pe o bază cu **mai multe website-uri**, apar doar subcategoriile website-ului curent (câmpul *Website*
+  al categoriei, gol sau acest website). Dacă toate subcategoriile sunt ale altui website, categoria
+  își arată direct lista de produse.
+- Dacă magazinul e permis doar utilizatorilor autentificați (**Pagină web → Configurare → Setări**,
+  *Acces eCommerce*: utilizatori autentificați), vizitatorul anonim e trimis la autentificare, ca în
+  magazinul standard, și nu vede pagina de alegere.
 - Poza cardului: imaginea subcategoriei. Dacă este instalat și modulul *eCommerce Category Icons*
   (`deltatech_website_category_icon`), opțiunea lui *Ordinea iconițelor de categorie* decide între
   iconița SVG, imaginea categoriei și poza primului produs. Fără poză, cardul are doar numele.
@@ -127,10 +130,10 @@ alegere.
 
 Verificați: calea de navigare este *Produse / Mobilier*; lista are produse din mai multe subcategorii.
 
-> **Atenție:** pe această listă, schimbarea sortării (*Sortare după*) sau un filtru din stânga
-> (atribute, gamă de prețuri, etichete) readuce vizitatorul la pagina de alegere, pentru că parametrul
-> „toate produsele” nu se păstrează în link. Paginarea funcționează. Defect raportat:
-> [bitshop#3549](https://github.com/terrabit-solutions/bitshop/issues/3549).
+Pe această listă, sortarea (*Sortare după*), filtrele din stânga (atribute, gamă de prețuri, etichete)
+și paginarea rămân pe lista cu toate produsele: pagina de alegere apare doar pe pagina simplă a
+categoriei, fără căutare, sortare, filtru sau pagină a listei. Verificați: după *Sortare după → Nume*,
+lista rămâne cu toate produsele categoriei, sortate.
 
 ![Lista cu toate produsele categoriei Mobilier: calea Produse / Mobilier, filtrele Înălțime, Țesătură, Picioare și Gamă de prețuri, produse din toate subcategoriile: Scaun conferință, Sertar negru, Sertar, o canapea, un scaun și un dulap](screenshots/04_toate_produsele.png)
 
@@ -164,7 +167,9 @@ subcategorii.
 - [ ] **Acasă** duce la `/shop`.
 - [ ] O căutare în magazin nu este oprită de pagina de alegere.
 - [ ] Nu există subcategorii goale (fără produse publicate) care să ducă la liste goale.
-- [ ] Pe o bază cu mai multe website-uri, niciun card nu duce la o subcategorie restricționată la alt website (bitshop#3550).
+- [ ] Pe lista „toate produsele”, sortarea și un filtru din stânga păstrează lista, nu readuc pagina de alegere.
+- [ ] Pe o bază cu mai multe website-uri, apar doar subcategoriile website-ului curent; nicio pagină 404 din carduri.
+- [ ] Cu *Acces eCommerce* doar pentru utilizatori autentificați, un vizitator anonim e trimis la autentificare, fără pagina de alegere.
 - [ ] Pagina de alegere arată bine pe telefon (două carduri pe rând).
 
 ## 9. Mesaje de eroare frecvente
@@ -173,8 +178,8 @@ subcategorii.
 |---|---|---|
 | Lista de produse e goală după clic pe un card | subcategoria nu are produse publicate | publicați produse în subcategorie sau mutați subcategoria |
 | Cardul are doar numele, fără poză | subcategoria nu are imagine | încărcați o imagine pe categorie (sau instalați *eCommerce Category Icons*) |
-| După sortare sau filtrare pe „toate produsele” reapare pagina de alegere | defect cunoscut: parametrul „toate produsele” se pierde | sortați și filtrați pe subcategorie; corecția: [bitshop#3549](https://github.com/terrabit-solutions/bitshop/issues/3549) |
-| Un card al paginii de alegere duce la 404 | subcategoria e restricționată la alt website (defect [bitshop#3550](https://github.com/terrabit-solutions/bitshop/issues/3550)) | goliți câmpul *Website* al subcategoriei sau mutați-o sub altă categorie |
+| O subcategorie lipsește de pe pagina de alegere | subcategoria e restricționată la alt website (câmpul *Website*) | goliți câmpul *Website* al subcategoriei sau alegeți website-ul corect |
+| Vizitatorul ajunge la pagina de autentificare în loc de pagina de alegere | magazinul e permis doar utilizatorilor autentificați (*Acces eCommerce*) | comportament voit; schimbați setarea dacă magazinul trebuie să fie public |
 | Pagina 404 la deschiderea unei categorii | categoria nu există sau nu e accesibilă pe acest website | verificați câmpul *Website* al categoriei |
 
 ## 10. Capturi de ecran
@@ -204,7 +209,6 @@ Regenerare:
   textul *Acasă* poate induce în eroare.
 - Recomandați imagini pe toate subcategoriile: pagina de alegere se bazează pe ele.
 - Capturile din magazin sunt făcute ca administrator (se vede bara *Editor*); vizitatorul nu o vede.
-- Până la corectarea defectului de sortare, nu promovați în manual sortarea pe lista „toate produsele”.
 
 ---
 

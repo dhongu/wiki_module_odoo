@@ -661,6 +661,29 @@ unui alt cont (nici arhivat). Dacă nu respectați regulile, Odoo refuză salvar
 exemplu, un cont **41110015194**), exportul se oprește cu un mesaj care cere completarea câmpului
 **Cod SAF-T** pe unul dintre cele două conturi. Altfel soldurile s-ar amesteca în fișier.
 
+### Pasul 14 — Produse, linii de factură și referința furnizorului (versiunea 19.0.1.4.0)
+
+Exportul D406 scrie acum câmpurile cerute de ANAF pentru produse și pentru liniile de factură. Nu aveți nimic de configurat, dar verificați datele din care se iau.
+
+1. **Produse** — **Vânzări/Achiziții → Produse**. Fiecare produs care apare în declarație primește:
+   - `GoodsServicesID`: `01` pentru bunuri (stocabile sau consumabile), `02` pentru servicii;
+   - `ValuationMethod`, doar la produsele stocabile: „FIFO” sau „Cost mediu”, din **metoda de cost a categoriei**
+     (**Contabilitate → Configurare → Categorii de produse**). Metoda „Preț standard” nu are corespondent în
+     nomenclatorul ANAF și nu se exportă.
+
+![Categoria de produse cu metoda de cost FIFO](screenshots/12_categorie_metoda_fifo.png)
+2. **Unități de măsură** — `UOMTable` are o singură intrare pe cod UNECE. „buc” și „ans” au amândouă codul `C62`, deci
+   apar o singură dată. Unitatea de măsură a produsului intră în tabel și când linia folosește altă unitate.
+3. **Linii de factură** — `ProductCode` ia codul intern al produsului, iar `ProductDescription` numele produsului.
+   Ambele apar doar pe liniile cu produs; `ProductCode` se trunchiază la 70 de caractere, `ProductDescription` și `Description` la 256.
+   `Description` e eticheta liniei fără prefixul „[cod]”. Dacă linia nu are nici etichetă, `Description` ia numele facturii.
+   Liniile fără produs (doar etichetă) nu trimit `ProductCode` și nici `ProductDescription`.
+4. **Facturi de achiziție** — `InvoiceNo` e **referința furnizorului** (câmpul „Referință factură”), nu numărul
+   intern (BILL/2026/…). Dacă referința lipsește, se exportă numărul intern și raportul afișează un avertisment:
+   completați referința înainte de export. Facturile de achiziție trimit doar `SupplierInfo`; cele de vânzare, doar `CustomerInfo`.
+
+![Factură de achiziție cu referința furnizorului în câmpul „Referință factură”](screenshots/13_factura_achizitie_referinta.png)
+
 ## 7. Legături cu alte module / declarații
 
 | Modul | Rol |
@@ -715,6 +738,11 @@ exemplu, un cont **41110015194**), exportul se oprește cu un mesaj care cere co
 ## 8. Verificări pentru consultant
 
 - [ ] Taxa „21% ND 50%” are două linii de repartiție de câte 50%: 4426 (eticheta „24 - VAT”) și 6352.
+- [ ] Un produs stocabil cu metoda de cost FIFO apare cu `GoodsServicesID` 01 și `ValuationMethod` FIFO; un serviciu are `GoodsServicesID` 02 și fără `ValuationMethod`.
+- [ ] `UOMTable` are o singură intrare pentru C62, chiar dacă două unități de măsură au același cod UNECE.
+- [ ] Pe liniile cu produs, `ProductCode` și `ProductDescription` sunt completate, iar `Description` nu începe cu „[cod]”.
+- [ ] O factură de achiziție cu referința „GNW-VL 350” apare cu `InvoiceNo` „GNW-VL 350” și are doar `SupplierInfo`.
+- [ ] O factură de achiziție fără referință se exportă cu numărul intern și raportul afișează un avertisment.
 - [ ] Codul SAF-T al taxei este 391104, iar tipul este 300.
 - [ ] Factura 2 × 250 lei are TVA 105,00 lei, împărțit în 52,50 lei pe 4426 și 52,50 lei pe 6352.
 - [ ] În Carte Mare, pe luna facturii, rulajele 4426 și 6352 sunt egale.
@@ -755,6 +783,7 @@ exemplu, un cont **41110015194**), exportul se oprește cu un mesaj care cere co
 | Taxa „21% ND 50%” are codul 391101 | codul vechi de 19%, copiat greșit de `l10n_ro_saft` | instalați `l10n_ro_saft_fix`, care îl corectează la 391104 |
 | DUK: „elementul 'Payment' ar fi trebuit sa apara de minimum 1 ori” | versiune fără modul: secțiunea `Payments` era scrisă goală | instalați modulul și regenerați XML-ul |
 | DUK: eroare de structură pe `SalesInvoices` sau `PurchaseInvoices` fără niciun `Invoice` | versiune fără modul: secțiunea era scrisă goală într-o lună fără facturi de acel tip | instalați modulul și regenerați XML-ul (Pasul 11) |
+| „Facturile de achiziție fără referința furnizorului au fost exportate cu numărul intern” (buton „View Invoice(s)”, nivel warning) | factura de achiziție nu are câmpul „Referință factură” completat, deci `InvoiceNo` ia numărul intern | completați referința furnizorului pe factură (Pasul 14, punctul 4) și regenerați XML-ul; exportul nu se oprește, dar fișierul cu numărul intern nu e cel corect pentru ANAF |
 | Plățile din casă lipsesc din declarație | exportul standard lua doar plățile din extrase bancare | instalați modulul și regenerați XML-ul |
 | Plata din casă nu apare în `Payments`, iar factura plătită nu are notă de plată | metoda de plată a jurnalului de casă nu are cont („Nu există înregistrări de jurnal de plată”) | completați contul casei pe metoda de plată (secțiunea 5, punctul 6); pentru plățile deja înregistrate, anulați-le și înregistrați-le din nou |
 | Aceeași încasare/plată bancară apare de două ori în `Payments` (o dată ca plată, o dată ca extras) | plata a fost înregistrată din factură, iar extrasul a fost importat, dar cele două nu au fost reconciliate | reconciliați linia de extras cu plata (contul 512103); după reconciliere, plata se raportează o singură dată, prin extras |

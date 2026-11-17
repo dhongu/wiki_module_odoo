@@ -1,7 +1,7 @@
 # Romania - ANAF Partner Data for Odoo Online (localizat la `l10n_ro_anaf_partner_online/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_partner_online`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_anaf_partner_online
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_anaf_partner_online`
 - **Ultima Ingestie:** `2026-11-14`

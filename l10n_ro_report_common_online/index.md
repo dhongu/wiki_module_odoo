@@ -1,7 +1,7 @@
 # Romania - Report Common for Odoo Online (localizat la `l10n_ro_report_common_online/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_report_common_online`
-- **Versiune:** `19.0.1.0.2`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_report_common_online
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_report_common_online`
 - **Ultima Ingestie:** `2026-11-14`

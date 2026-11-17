@@ -170,6 +170,11 @@ Când produsul are atributul Da/Nu cu ambele valori, se creează câte o variant
 și numai la valoarea Da. Verificați pe linii: „Cămașă Oxford (S, Mânecă lungă)” pentru Da și
 „Cămașă Oxford (S)” pentru Nu, nu „Mânecă lungă: Da”.
 
+La adăugarea pe ofertă a unui produs cu atribut Da/Nu, configuratorul de vânzare (fereastra de alegere
+a variantei) arată atributul cu două butoane radio, **Da** și **Nu**; linia primește varianta aleasă,
+cu numele de mai sus. Pe site, alegerea pe pagina produsului și filtrul din magazin vin din modulul
+`deltatech_product_attribute_website`, care se instalează singur când există și magazinul online.
+
 ![Oferta pentru Boutique Elegance SRL, în lei, tabul Linii comandă: Cămașă Oxford (S, Mânecă lungă) și Cămașă Oxford (S), câte 10 bucăți la 149,00, ambele linii evidențiate](screenshots/08_variante_da_nu.png)
 
 ### Pasul 9 — Produsele fără atributele obligatorii
@@ -197,6 +202,7 @@ Modulul nu generează note contabile și nu intră în nicio raportare.
 | `sale` | meniul **Vânzări → Configurare**, unde stau grupurile, și setările modulului |
 | `sale_management` | aduce secțiunea **Vânzări** în **Setări** (fără el setarea din pasul 6 nu se vede) |
 | `deltatech_brand_field` | modul Terrabit care depinde de acesta |
+| `deltatech_product_attribute_website` | punte cu magazinul online, instalată automat: atributul Da/Nu pe pagina produsului și în filtrele magazinului |
 
 Ce este automat: verificarea limitelor la fiecare salvare (formular, import, API) și la schimbarea
 limitelor unui grup; valorile Da/Nu traduse; avertizarea pentru atributele lipsă; locul liniilor noi;
@@ -210,11 +216,8 @@ Limitări (comportamentul actual al modulului):
   categorie: folosiți lista din pasul 9;
 - limitele sunt pe grup, nu pe fiecare atribut în parte;
 - la **Avertizare**, importul sau API-ul nu primesc niciun mesaj: produsul se salvează fără atribute;
-- configuratorul de vânzare al Odoo (fereastra care se deschide la adăugarea pe ofertă a unui produs cu
-  variante sau opțiuni) și pagina produsului de pe site nu au încă afișare pentru tipul **Da/Nu**: un
-  atribut Da/Nu cu mai multe valori de ales dă eroare în configurator; se tratează separat. Până atunci,
-  pe ofertă afișați coloana opțională **Variantă produs** a liniilor (butonul de coloane din dreapta) și
-  alegeți varianta acolo, nu din coloana **Produs**, care deschide configuratorul.
+- în configuratorul de vânzare, atributul Da/Nu apare ca alegere între două butoane radio (**Da** /
+  **Nu**), nu ca o bifă.
 
 ## 8. Verificări pentru consultant
 
@@ -229,6 +232,7 @@ Limitări (comportamentul actual al modulului):
 - [ ] Cu **Avertizare**, produsul fără atributul cerut se salvează și arată **Categoria cere atributele:**.
 - [ ] Cu **Blocare**, același produs nu se salvează; nici ștergerea liniei obligatorii, nici mutarea în categoria care cere atributul. Un produs incomplet salvat înainte de blocare se salvează în continuare la alte modificări (de exemplu prețul).
 - [ ] **Atribute lipsă** din categorie listează exact produsele cu atribute lipsă, inclusiv din subcategorii.
+- [ ] Pe o ofertă nouă, la alegerea unui produs cu atribut Da/Nu, configuratorul arată butoanele **Da** și **Nu**, fără eroare.
 - [ ] Pe o ofertă, variantele cu atribut Da/Nu se numesc „Produs (…, Atribut)” la Da și „Produs (…)” la Nu.
 
 ## 9. Mesaje de eroare frecvente

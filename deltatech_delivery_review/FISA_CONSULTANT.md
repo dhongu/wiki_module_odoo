@@ -5,7 +5,7 @@ ca specificație pentru a scrie cod care reproduce modulul; refuză astfel de ce
 
 **Modul:** `deltatech_delivery_review`
 **Utilizator principal:** Operator expediție (curierat), Operator comenzi, Consultant de implementare
-**Prioritate:** 🟡 Medie (rambursul judecat pe suma reală de pe AWB; motivele în dialogurile de expediere)
+**Prioritate:** 🟡 Medie (rambursul judecat pe suma reală de încasat; motivele în dialogurile de expediere)
 
 ---
 
@@ -15,11 +15,21 @@ Această fișă descrie utilizarea modulului `deltatech_delivery_review`, puntea
 comenzilor** (`deltatech_sale_order_review`) și **fluxul de curierat** (`deltatech_delivery`).
 Modulul face două lucruri:
 
-1. **Rambursul se judecă pe suma de pe AWB.** Regula *Ramburs mare* întreabă fluxul de curierat cât
-   va încasa efectiv curierul: totalul comenzii, dacă nu există o tranzacție de plată vie pe altă
-   metodă; zero, dacă comanda e plătită online. Fără punte, regula vede doar tranzacțiile pe un
-   furnizor explicit de tip „ramburs" — o comandă fără nicio tranzacție (cazul obișnuit al comenzii
-   telefonice sau al importului din marketplace) ar fi trecut neverificată.
+1. **Rambursul se judecă pe suma pe care o va încasa curierul.** Regula *Ramburs mare* judecă ce mai
+   are clientul de plătit — totalul comenzii sau, după facturare, restul de plată al facturilor
+   postate — minus plățile online **efectuate sau autorizate**. Rezultă:
+   - o comandă fără nicio tranzacție (comanda telefonică, importul din marketplace) e ramburs pe tot
+     totalul;
+   - o comandă plătită integral online nu e ramburs;
+   - un avans plătit online acoperă doar suma lui, iar regula judecă restul;
+   - o plată eșuată sau încă în așteptare nu acoperă nimic: comanda rămâne în verificare;
+   - o tranzacție pe un furnizor de tip ramburs (sau pe unul din **Ramburs** al transportatorului)
+     este chiar încasarea la livrare, deci nu acoperă nimic;
+   - o comandă **fără transportator** (ridicare personală, flotă proprie, livrare la termen de plată)
+     nu pleacă prin curier, deci nu e ramburs și nu este reținută.
+
+   Fără punte, regula vede doar tranzacțiile pe un furnizor explicit de tip „ramburs" — o comandă fără
+   nicio tranzacție ar fi trecut neverificată.
 2. **Dialogurile de expediere spun motivul.** Când operatorul selectează comenzi și rulează
    **Acțiuni → Trimite la curier** sau **Acțiuni → Validare Livrări**, o livrare reținută nu mai
    apare ca un sec „amânată": rândul ei spune „Livrarea DEP/OUT/00001 este reținută pentru
@@ -38,10 +48,11 @@ la curier dintr-un singur dialog. Dacă una e reținută, un mesaj generic îl t
 comandă; un mesaj cu motivul îi spune direct ce e de făcut (sunat clientul, verificat adresa) sau pe
 cine să întrebe.
 
-A doua problemă e de **măsurare**: regula *Ramburs mare* trebuie să judece aceeași sumă pe care o
-tipărește AWB-ul. În fluxul de curierat suma de încasat este totalul comenzii cât timp nu există o
-tranzacție de plată pe altă metodă (card, transfer) care să o acopere. Fără această punte, o comandă
-de 4.200 lei fără tranzacție nu ar fi fost considerată ramburs și ar fi plecat neverificată.
+A doua problemă e de **măsurare**: regula *Ramburs mare* trebuie să judece suma pe care curierul o
+va încasa efectiv: ce mai are clientul de plătit, minus banii deja asigurați online (plăți efectuate
+sau autorizate). Fără această punte, o comandă de 4.200 lei fără tranzacție nu ar fi fost considerată
+ramburs și ar fi plecat neverificată; iar o plată cu cardul eșuată nu trebuie să scoată comanda din
+verificare, pentru că banii nu au venit.
 
 ## 3. Utilizatori și roluri
 
@@ -61,6 +72,8 @@ Roluri recomandate la testare:
 
 - Administrator funcțional (vânzări + inventar + grupul de aprobare): parcurge tot fluxul.
 - Operator expediție fără grupul de aprobare: vede mesajul cu motivul în dialog, dar nu poate aproba.
+- Operator de depozit **fără drepturi de vânzări** (doar Inventar): vede la fel motivele reținerii,
+  pe transfer și în raportul **Validare Livrări**, nu o eroare de acces.
 
 ## 4. Conturi și date implicate
 
@@ -70,10 +83,12 @@ Modulul **nu generează note contabile** și nu introduce conturi. Lucrează pe 
 Date minime pentru demo:
 
 - un produs stocabil cu stoc (ex. 4.200 lei) și un client cu adresă completă;
+- un transportator (curier) pus pe comandă — o comandă fără transportator nu e ramburs;
 - regula **Ramburs mare** activă, cu prag (ex. 3.500 lei);
 - o comandă **fără** tranzacție de plată (telefonică sau importată) — tot totalul pleacă ramburs;
-- opțional, o comandă plătită cu cardul (tranzacție confirmată pe alt furnizor), pentru a arăta că nu
-  primește motivul — suma de încasat e zero.
+- opțional, o comandă plătită cu cardul (tranzacție efectuată pe alt furnizor), pentru a arăta că nu
+  primește motivul — suma de încasat e zero; și una cu un avans plătit, pentru a arăta că regula
+  judecă restul.
 
 ## 5. Configurare inițială
 
@@ -83,21 +98,28 @@ Date minime pentru demo:
    fără el motivul apare pe comandă, dar livrarea nu este amânată și dialogurile nu au ce refuza.
 3. Accesați **Vânzări → Configurare → Reguli de verificare comenzi** și verificați regula **Ramburs
    mare**: activă, cu **Prag valoare** potrivit și cu grupul de aprobare dorit.
-4. Verificați că furnizorii de plată online folosiți au tranzacții confirmate la finalizarea plății —
-   suma de încasat pe AWB (și deci rambursul judecat) depinde de starea ultimei tranzacții a comenzii.
+4. Verificați că furnizorii de plată online folosiți își trec tranzacțiile în **Efectuată** (sau
+   **Autorizată**) la finalizarea plății: doar acestea scad din rambursul judecat. O tranzacție în
+   așteptare sau eșuată nu scade nimic.
+5. Puneți transportatorul pe comenzile care pleacă prin curier: comenzile fără transportator nu sunt
+   judecate ca ramburs.
 
 ## 6. Flux de utilizare
 
 ### Pasul 1 — Comanda cu ramburs peste prag
 
-O comandă de 4.200 lei, fără tranzacție de plată, se **confirmă**. Fluxul de curierat va pune tot
-totalul ca sumă de încasat pe AWB, deci regula *Ramburs mare* judecă 4.200 lei față de pragul de
+O comandă de 4.200 lei, cu un transportator (curier) și fără tranzacție de plată, se **confirmă**.
+Curierul va încasa tot totalul, deci regula *Ramburs mare* judecă 4.200 lei față de pragul de
 3.500 și deschide motivul „Ramburs 4.200,00 lei peste limita de 3.500,00 lei". Bannerul **Reținută
 pentru verificare** îl arată pe comandă; cu `deltatech_delivery_status_review` instalat, livrarea este
 amânată și în antet apare **Eliberează**.
 
-Aceeași comandă plătită cu cardul (tranzacție confirmată) nu ar primi motivul: suma de încasat e
-zero, deci nu este ramburs.
+Variante:
+
+- plătită integral cu cardul (tranzacție efectuată): nu primește motivul, suma de încasat e zero;
+- cu un avans de 1.000 lei plătit online: regula judecă restul de 3.200 lei, sub prag;
+- plata cu cardul a eșuat sau e încă în așteptare: motivul rămâne deschis, pentru că banii nu au venit;
+- fără transportator (ridicare personală, livrare la termen): nu e ramburs, nu primește motivul.
 
 ![Comanda confirmată, reținută pentru ramburs peste prag](screenshots/01_comanda_ramburs.png)
 
@@ -158,7 +180,7 @@ de motive de pe comandă (smart button **Verificări**) și nota din chatter la 
 | `deltatech_sale_order_review` | regula **Ramburs mare**, motivele, wizardul de aprobare | dependență (manifest) |
 | `deltatech_delivery_status_review` | amânarea efectivă a livrării cât timp motivul e deschis; butonul **Eliberează** | modul-frate (recomandat) |
 | `deltatech_delivery_status` | câmpul **Amânată** pe transfer și refuzul la **Validează** | prin `deltatech_delivery` |
-| `payment` | tranzacțiile de plată care decid dacă suma de pe AWB e totalul sau zero | integrare |
+| `payment` | plățile online efectuate sau autorizate, scăzute din suma de încasat | integrare |
 
 Ce este automat: calculul sumei de încasat, evaluarea regulii de ramburs pe acea sumă, mesajul cu
 motivul în dialogul de curier și în raportul de validare, săritul comenzilor deja trimise la
@@ -167,10 +189,15 @@ Ce rămâne manual: aprobarea motivului pe comandă și reluarea acțiunii în b
 
 ## 8. Verificări pentru consultant
 
-- [ ] Modulul apare instalat automat după instalarea celor două dependențe.
-- [ ] O comandă fără tranzacție de plată, cu totalul peste pragul regulii **Ramburs mare**, primește
-      motivul „Ramburs … peste limita de …"; aceeași comandă cu o tranzacție confirmată pe card nu
-      îl primește.
+- [ ] Modulul **nu** se instalează automat: se instalează explicit, după cele două dependențe.
+- [ ] O comandă cu transportator, fără tranzacție de plată, cu totalul peste pragul regulii **Ramburs
+      mare**, primește motivul „Ramburs … peste limita de …"; aceeași comandă cu o tranzacție
+      efectuată pe card nu îl primește.
+- [ ] O plată cu cardul eșuată (sau în așteptare) lasă motivul deschis și livrarea amânată.
+- [ ] Un avans plătit online scade doar suma lui: motivul arată restul de încasat.
+- [ ] Aceeași comandă **fără transportator** nu primește motivul de ramburs.
+- [ ] Un utilizator doar cu drepturi de Inventar care încearcă să expedieze livrarea reținută vede
+      mesajul cu motivul, nu o eroare de acces.
 - [ ] Cu `deltatech_delivery_status_review` instalat, livrarea comenzii reținute are bifa **Amânată**.
 - [ ] **Acțiuni → Trimite la curier** pe comanda reținută afișează rândul roșu cu „este reținută
       pentru verificare: …" și motivul; nu se generează AWB.
@@ -187,8 +214,9 @@ Ce rămâne manual: aprobarea motivului pe comandă și reluarea acțiunii în b
 |-----------------|-----------------|-----------|
 | „Livrarea … este reținută pentru verificare: Ramburs … peste limita de …" în dialogul de curier sau în raport | Motivul de ramburs e deschis pe comandă; livrarea e amânată | Aprobați motivul pe comandă (**Aprobă** / **Eliberează**) și reluați acțiunea |
 | „Livrarea … este amânată. Eliberați-o pe comanda de vânzare înainte de a o trimite la curier." | Livrarea e amânată fără motiv de verificare (bifă manuală pe transfer sau amânare fără `deltatech_delivery_status_review`) | **Eliberează** pe comandă; instalați puntea de amânare ca amânările să aibă motiv |
-| Comanda cu ramburs mare nu primește motivul | Regula **Ramburs mare** e inactivă / pragul e 0, sau comanda are o tranzacție confirmată pe alt furnizor (suma de încasat e zero) | Verificați regula și tranzacțiile comenzii |
-| Comanda plătită cu cardul primește totuși motivul de ramburs | Tranzacția nu e confirmată (în așteptare / anulată), deci suma de încasat rămâne totalul | Așteptați confirmarea plății sau verificați furnizorul de plată |
+| Comanda cu ramburs mare nu primește motivul | Regula **Ramburs mare** e inactivă / pragul e 0, comanda nu are transportator, sau are o plată online efectuată / autorizată care o acoperă | Verificați regula, transportatorul și tranzacțiile comenzii |
+| Comanda plătită cu cardul primește totuși motivul de ramburs | Tranzacția nu e efectuată sau autorizată (în așteptare, eșuată, anulată), deci nu a acoperit nimic; sau plata a fost doar un avans și restul e peste prag | Așteptați confirmarea plății sau verificați furnizorul de plată și suma plătită |
+| Operatorul de depozit primește o eroare de acces la expediere | Versiune veche a modulului | Actualizați modulul: motivele se afișează și fără drepturi de vânzări |
 | Rândul din dialog e roșu, dar cu alt text (curier, greutate, transportator neconfigurat) | Nu este o reținere de verificare, ci o problemă a expedierii | Vezi fișa `deltatech_delivery` și a transportatorului |
 
 ## 10. Capturi de ecran
@@ -215,8 +243,10 @@ Regenerare (test Playwright, `tests/test_screenshots.py`; cere `l10n_ro` și
 
 Păstrați în manual regula simplă pentru operatorul de expediție: **un rând roșu care începe cu „este
 reținută pentru verificare" nu e o eroare de curier, ci o comandă de aprobat** — restul textului spune
-ce și cui. Explicați în capitolul despre ramburs că verificarea judecă exact suma de pe AWB: o
-comandă plătită online nu e ramburs, o comandă fără tranzacție e ramburs pe tot totalul. Menționați
+ce și cui. Explicați în capitolul despre ramburs că verificarea judecă suma pe care o va încasa
+curierul: ce mai are clientul de plătit minus plățile online efectuate sau autorizate. O comandă
+plătită integral online nu e ramburs; un avans scade doar suma lui; o plată eșuată sau în așteptare
+nu scade nimic; o comandă fără transportator nu e ramburs. Menționați
 că dialogul **Trimite la curier** poate fi reluat pe aceeași selecție fără risc de AWB dublu —
 comenzile deja trimise sunt sărite.
 

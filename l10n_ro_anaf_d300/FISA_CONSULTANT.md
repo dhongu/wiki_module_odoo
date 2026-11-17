@@ -69,6 +69,14 @@ Regularizările din decontul curent au bază legală separată: TVA-ul dedus din
 7. Pentru TVA la încasare: activați „Cash Basis" pe companie și folosiți taxe cu exigibilitate
    „La plată" (`tax_exigibility = on_payment`) pe facturile respective. Doar aceste facturi intră în
    rândurile informative A / A1 / B / B1.
+8. Taxele noi din tichetul 09952 (achiziții 100% nedeductibile, import deductibil, vânzări la distanță UE, bon fiscal):
+   **„21% ND 100%”** / **„11% ND 100%”**, **„21% Import”** / **„11% Import”**, **„21% VD”** / **„11% VD”** cu
+   **„21% VD REG”** / **„11% VD REG”**, și **„21% BF”** / **„11% BF”**. Pe planurile noi vin din template; pe companiile
+   existente le creează actualizarea modulului (versiunea 19.0.0.0.36), dacă lipsesc. Cu `l10n_ro_saft` instalat au
+   codurile SAF-T: 351104 / 351105, 301204 / 301205, 310346 / 310356, 310347 / 310359 și 310327.
+   Taxele **nu se aplică automat**: pe DVI se alege taxa de import, iar factura emisă din bonul fiscal (POS) primește
+   taxa „BF” doar dacă e aleasă pe factură. Poziția fiscală pentru vânzările la distanță UE sub prag și taxa OSS
+   (310325) nu sunt create de acest modul.
 
 ## 6. Flux de utilizare
 
@@ -189,6 +197,38 @@ Meniu: `Contabilitate → Furnizori → Facturi` (achiziții) sau `Contabilitate
 
 Atenție: taxa se alege manual, programul nu deosebește singur o factură primită târziu de una înregistrată la timp. Taxele de regularizare nu există pentru alte cote decât 21% și 11% (la cotele vechi 19% / 9% / 5% există taxele vechi cu grile de regularizare).
 
+### Pasul 6 — Taxe noi: ND 100%, import, vânzări la distanță și bon fiscal
+
+Taxele se văd în `Contabilitate → Configurare → Taxe`, unde căutați după nume („ND 100%”, „Import”, „VD”, „BF”).
+
+**Achiziție 100% nedeductibilă („21% ND 100%” / „11% ND 100%”)**
+
+![Taxa „21% ND 100%”: cod SAF-T și distribuirea pe 6352](screenshots/07_taxa_nd100_definitie.png)
+1. Creați factura de furnizor și alegeți taxa „21% ND 100%” sau „11% ND 100%” pe linia de produs.
+2. Validați factura. Baza merge pe rd. 24 (11%: rd. 25) ale D300, conform nomenclatorului ANAF. TVA-ul merge integral pe contul 6352 (cheltuială nedeductibilă) și nu are grilă de TVA.
+   O notă de credit cu aceeași taxă (stornare) se raportează cu aceleași grile, cu semnul invers, pe același rând; la fel pentru „Import”, „VD” / „VD REG” (rd. 17 / 18) și „BF”.
+
+![Factură de achiziție cu „21% ND 100%” pe linie](screenshots/08_factura_achizitie_nd100.png)
+
+**Import deductibil 100% („21% Import” / „11% Import”)**
+1. Pe DVI (`l10n_ro_customs_dvi`) alegeți taxa „21% Import” sau „11% Import” în locul taxei de import implicite, dacă e cazul.
+2. Baza și TVA-ul merg pe rd. 24 / 25 ale D300, iar TVA-ul pe 4426. Factura furnizorului extern rămâne pe „0% EX G”, fără grile.
+
+**Vânzare la distanță UE sub pragul de 10.000 €** („21% VD” / „11% VD”)
+1. Alegeți taxa „21% VD” sau „11% VD” pe linia facturii. Baza și TVA-ul merg pe rd. 17 ale D300.
+
+![Factură de vânzare cu „21% VD” pe linie](screenshots/09_factura_vanzare_vd.png)
+2. Regularizarea unei vânzări din perioade declarate se face cu „21% VD REG” / „11% VD REG”, pe rd. 18.
+3. Peste prag se aplică OSS, care nu are taxă în acest modul (cod SAF-T 310325, de configurat separat).
+
+**Factură emisă din bonul fiscal („21% BF” / „11% BF”)**
+1. Pentru vânzarea deja raportată prin bon fiscal și raportul Z, factura emisă la cererea clientului primește taxa „BF” (cod SAF-T 310327), fără grile D300.
+
+![Factură de vânzare cu „21% BF” pe linie](screenshots/10_factura_bon_fiscal_bf.png)
+2. Nu folosiți taxa normală pe această factură: TVA-ul ar apărea de două ori în decont și în D406.
+
+Verificați pe fiecare factură cota și taxa aleasă, înainte de validare; taxele nu se schimbă automat în POS.
+
 ## 7. Monografie și controale contabile
 
 | Situație | Control contabil |
@@ -203,6 +243,10 @@ Atenție: taxa se alege manual, programul nu deosebește singur o factură primi
 | Coduri SAF-T de regularizare (cu `l10n_ro_saft` instalat) | taxă dedusă 21% / 11%: 309106 / 309107; taxă colectată 21% / 11%: 310345 / 310352 (nomenclatorul ANAF 16.02.2026, active din 01.08.2025). În D406 regularizarea ajunge pe codul ei, nu pe cel al achiziției sau vânzării normale |
 | Taxare inversă | verificați simetria 4426/4427 și rândurile D300 aferente |
 | Import fără plata efectivă a TVA în vamă (art. 326 alin. (4)-(5): certificat de amânare, vămuire centralizată, înscriere în evidențele declarantului, bunurile din art. 331 alin. (2) lit. b), c), i)–k)) | pe DVI se alege „21% IMP AM” / „11% IMP AM”: Dr 4426 = Cr 4427 (taxă colectată și deductibilă simultan, art. 326 alin. (5)), fără 446 și fără plată în vamă; baza de impozitare TVA din DVI (art. 289) și TVA-ul pe rd. 7 și 22, în perioada datei DVI (art. 285). Deducerea cere DVI-ul cu importatorul și suma taxei datorate și înscrierea taxei colectate în aceeași perioadă (art. 299 alin. (1) lit. d)). Factura furnizorului extern rămâne pe „0% EX G”, fără grile. Importul cu plata efectivă în vamă (art. 326 alin. (3)) rămâne pe rd. 24 / 25 |
+| Achiziție 100% nedeductibilă („21% ND 100%” / „11% ND 100%”) | Dr 6352 = Cr 401 pentru TVA (la stocuri și mijloace fixe TVA-ul intră în cost: Dr 371 / 2133 = Cr 401, nu pe 6352). Baza pe rd. 24 / 25, TVA-ul pe 6352 fără grilă. Cod SAF-T 351104 / 351105 |
+| Import deductibil 100% („21% Import” / „11% Import”) | pe DVI: Dr 4426 = Cr 5121 (TVA plătită în vamă) sau Cr 401 (comisionarul vamal care a plătit), cu baza și TVA-ul pe rd. 24 / 25. Cod SAF-T 301204 / 301205. Contul 446 nu primește TVA-ul de import |
+| Vânzare la distanță UE sub prag („21% VD” / „11% VD”) | Dr 4111 = Cr 707 + Cr 4427; baza și TVA-ul pe rd. 17. Cod SAF-T 310346 / 310356. Regularizarea „21% VD REG” / „11% VD REG”: rd. 18, cod 310347 / 310359 |
+| Factură din bon fiscal („21% BF” / „11% BF”) | Dr 4111 = Cr venit (707, 701 sau 704, după natura produsului) + Cr 4427 pe factura emisă după bon; TVA pe 4427 fără grile D300 și fără cod de rând, cod SAF-T 310327. Vânzarea rămâne raportată prin bon și raportul Z (rd. 9 / 10) |
 | Deducere limitată la 50% (art. 298), cota veche 19%, cheltuială cu vehiculul | „19% ND 50%”, bază 1.000 lei: Dr 6xx 1.000 / Dr 4426 95 / Dr 6352 95 = Cr 401 1.190; partea din 4426 pe rd. 33 (regularizări taxă dedusă), partea din 6352 fără rând D300. La cumpărarea vehiculului ca mijloc fix, partea nededusă intră în cost (Dr 2133 = Cr 404), nu pe 6352 |
 | TVA parțial/nedeductibil | rd. 24 / 25 și rd. 30 au TVA-ul deductibil brut (inclusiv partea nededusă: art. 298; art. 297 alin. (4) a contrario, respectiv art. 300 la regim mixt); rd. 31 doar taxa efectiv dedusă — instrucțiunile D300 (OPANAF 174/2026) |
 
@@ -242,6 +286,11 @@ Notarea exactă depinde de soldurile lunii și de politica modulului de închide
 | D300-16 | Factură de achiziție 1.000 lei cu „19% ND 50%” | rd. 33: bază 1.000, TVA 95; 95 lei pe 6352, fără rând D300; nimic pe rd. 24 |
 | D300-17 | Factură de achiziție 1.000 lei cu „21% REG D” | rd. 33: bază 1.000, TVA 210; nimic pe rd. 24-26; 4426 debitor 210, ca la taxa normală |
 | D300-18 | Factură de vânzare 1.000 lei cu „11% REG C” | rd. 16: bază 1.000, TVA 110; nimic pe rd. 9-12; 4427 creditor 110 |
+| D300-19 | Achiziție cu „21% ND 100%” | bază pe rd. 24, TVA pe 6352 fără grilă; în D406 cod 351104 |
+| D300-20 | Import cu „21% Import” pe DVI | baza și TVA-ul pe rd. 24; TVA pe 4426; în D406 cod 301204 |
+| D300-21 | Factură de vânzare la distanță UE cu „21% VD” | baza și TVA-ul pe rd. 17; în D406 cod 310346 |
+| D300-22 | Regularizare VD cu „11% VD REG” | baza și TVA-ul pe rd. 18; în D406 cod 310359 |
+| D300-23 | Factură din bon fiscal cu „21% BF” | TVA pe 4427, fără rând D300; în D406 cod 310327 |
 
 ## 9. Legături cu alte module / declarații
 
@@ -271,6 +320,8 @@ Ce rămâne de verificat manual: regularizarea contabilă 4426/4427/4423/4424, r
 - [ ] Taxele „ND 50%” active sunt doar 21% și 19%; achizițiile cu „19% ND 50%” apar pe rd. 33.
 - [ ] Atributul `caen` din XML-ul exportat este codul CAEN de pe companie (formularul companiei sau Setări → Contabilitate → Declarații ANAF).
 - [ ] Facturile cu taxe „REG D” / „REG C” apar pe rd. 33 / rd. 16, nu pe rd. 24-26 / 9-12, iar în D406 au codurile de regularizare (309106 / 309107, 310345 / 310352).
+- [ ] Taxele noi (ND 100%, Import, VD, VD REG, BF) există cu codurile SAF-T din tichetul 09952 și cu grilele din pasul 6; taxa de import se alege pe DVI, iar taxa BF pe factură.
+- [ ] Pe o companie existentă, după actualizarea la 19.0.0.0.36, cele zece taxe există; cele care lipsesc, din cauza unui cont lipsă (6352, 4426 sau 4427), nu se creează și se loghează un avertisment.
 - [ ] Perioada închisă nu mai permite modificări fără procedură de corecție.
 - [ ] Fluxul de rambursare/reportare este clar dacă soldul este negativ.
 
@@ -282,6 +333,9 @@ Ce rămâne de verificat manual: regularizarea contabilă 4426/4427/4423/4424, r
 | Export respins | CUI/județ/date companie incomplete | Completați datele companiei și delegatul |
 | „Compania „…” nu are configurat un cod CAEN valid. Completați-l pe companie (4 cifre, de exemplu 6201).” | Codul CAEN al companiei e gol, `0000` sau fără exact 4 cifre | Completați **Cod CAEN** pe formularul companiei sau în Setări → Contabilitate → Declarații ANAF |
 | Diferență față de balanță | Note manuale fără tax tags sau perioadă greșită | Verificați liniile contabile și data fiscală |
+| Taxa „21% Import” nu apare pe DVI | Taxa de import implicită e alta; taxele noi nu se aplică automat | Alegeți „21% Import” / „11% Import” pe DVI |
+| Taxa „BF” nu apare pe factura din POS | POS nu aplică taxa BF automat | Alegeți „21% BF” / „11% BF” pe factură, după bonul fiscal |
+| Taxa de tip ND 100%, VD sau BF lipsește pe o companie existentă | Contul TVA al taxei (6352, 4426 sau 4427) lipsește; actualizarea nu creează taxa și loghează un avertisment | Verificați planul de conturi, apoi reactualizați `l10n_ro_anaf_d300` |
 | TVA la încasare incorectă | 4428/CABA nereconciliat | Verificați plățile și înregistrările cash basis. Rd. A / B sunt solduri la sfârșitul perioadei: includ și facturile încasate / plătite după perioadă, iar notele de credit încasate parțial intră cu minus doar pentru restul neîncasat |
 | TVA deductibilă prea mare | TVA nedeductibilă tratată ca 4426 | Verificați regimul de deductibilitate al taxei |
 | Taxa „11% ND 50%” nu apare în selecție, deși o are o factură veche | Taxele „ND 50%” fără cod SAF-T activ la ANAF sunt arhivate de migrarea 19.0.0.0.34; facturile postate își păstrează taxa | Pentru documente noi folosiți „21% ND 50%” sau, la cota veche, „19% ND 50%”. Factura veche cu „11% ND 50%” se stornează și se reînregistrează cu taxa corectă, după decizia contabilului |

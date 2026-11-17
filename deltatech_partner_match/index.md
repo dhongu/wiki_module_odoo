@@ -1,7 +1,7 @@
 # Partner Match
 
 - **Nume Tehnic:** `deltatech_partner_match`
-- **Versiune:** `19.0.1.3.1`
+- **Versiune:** `19.0.1.3.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_partner_match
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_partner_match`
 - **Ultima Ingestie:** `2026-10-30`

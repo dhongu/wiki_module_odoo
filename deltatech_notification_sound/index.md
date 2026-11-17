@@ -4,24 +4,25 @@
 - **Versiune:** `19.0.2.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_notification_sound
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_notification_sound`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-17`
 
 #### 1. Sumar
 
-Modulul adaugă feedback sonor pentru notificările din backend-ul Odoo, astfel încât operatorii sunt avertizați instantaneu fără a urmări permanent ecranul. Când apare o notificare (succes, avertisment, eroare sau informare), se redă automat un sunet scurt și distinct în funcție de tipul mesajului. Fiecare utilizator poate activa sau dezactiva sunetele din preferințele proprii, integrarea fiind complet transparentă, fără elemente suplimentare de interfață.
+Modulul adaugă feedback sonor pentru notificările din backend-ul Odoo, astfel încât operatorii care lucrează în alte ferestre sau departe de ecran sunt avertizați instantaneu. Când apare o notificare (succes, avertisment, eroare sau informare), se redă automat un sunet scurt și distinct în funcție de tipul mesajului. Sunetele pot fi activate sau dezactivate pentru fiecare utilizator, de către un administrator, iar integrarea este complet transparentă, fără elemente suplimentare de interfață.
 
 #### 2. Funcționalități Cheie
 
 - Redă sunete diferite în funcție de tipul notificării:
   - Succes → `notify.wav`
-  - Avertisment → `exclamation.wav`
+  - Avertisment (folosit și pentru notificările fără tip) → `exclamation.wav`
   - Eroare (danger) → `error.wav`
   - Informare → `bell.wav`
 - Integrare transparentă cu backend-ul (fără interfață suplimentară); aplică un patch peste serviciul `notification` (`add()`), decuplând funcționalitatea de ciclul de viață al componentei OWL `Notification`.
 - Activele sunt încărcate prin `web.assets_backend` (JS + sunete).
-- Comutator per utilizator în Preferințe: fiecare utilizator poate activa/dezactiva sunetele notificărilor din profilul propriu.
-- Preferința este citită direct din informațiile de sesiune (`@web/session`, `session.user_context.notification_sound_enabled`), fără niciun apel RPC suplimentar.
+- Comutator per utilizator, **Enable notification sounds** (bifat implicit): se setează de un administrator în Setări → Utilizatori și companii → Utilizatori, în fila Preferințe a formularului utilizatorului. Utilizatorii nu îl pot schimba singuri din „Preferințele mele"; modificarea are efect după reîncărcarea paginii.
+- Preferința este citită din contextul utilizatorului (`user.context.notification_sound_enabled`), fără niciun apel RPC suplimentar; sunetele rămân active dacă preferința lipsește și se opresc doar când a fost dezactivată explicit.
 - Fișierele de sunet pot fi înlocuite, fiind stocate în `static/src/sounds/`.
+- Limitări: browserele pot bloca sunetul până când utilizatorul face un clic sau tastează în pagină, deci prima notificare după încărcare poate fi silențioasă; browserele mobile pot suprima aceste sunete.
 
 #### 3. Dependențe
 
@@ -39,7 +40,7 @@ Modulul adaugă feedback sonor pentru notificările din backend-ul Odoo, astfel 
 
 **Vizualizări**
 
-- `views/res_users_views.xml` (`view_users_form_inherit_notification_sound`): adaugă comutatorul „Enable notification sounds" în secțiunea de Preferințe a formularului de utilizator (`base.view_users_form`).
+- `views/res_users_views.xml` (`view_users_form_inherit_notification_sound`): adaugă comutatorul „Enable notification sounds" în grupul de preferințe (`other_preferences`) al formularului de utilizator (`base.view_users_form`).
 
 **Componente Frontend (JS / OWL)**
 

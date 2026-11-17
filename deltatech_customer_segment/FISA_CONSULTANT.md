@@ -15,8 +15,9 @@ O firmă de distribuție are sute sau mii de clienți, iar agenții își dau se
 client bun a încetat să mai cumpere. Modulul răspunde în fiecare noapte, pentru fiecare client, la
 întrebarea **„cum stă clientul acesta față de ce obișnuia să facă?”**:
 
-- **ritmul de cumpărare**: la câte zile cumpără de obicei, măsurat pe istoricul lui, și de câte
-  zile tace;
+- **ritmul de cumpărare**: la câte zile cumpără de obicei, măsurat pe istoricul lui între zilele
+  în care a cumpărat, și de câte zile tace. Mai multe facturi sau comenzi în aceeași zi (de
+  exemplu livrări parțiale) sunt o singură cumpărare pentru ritm;
 - **segmentul de ritm**: nou, activ, în risc, adormit sau pierdut, judecat față de ritmul propriu
   al clientului, nu față de o medie a firmei. Un client săptămânal care tace de trei săptămâni e
   în risc; unul trimestrial care tace de două luni e încă activ;
@@ -40,6 +41,11 @@ Cum lucrează:
 - **Calcul nocturn, în baza de date.** Acțiunea programată *Segment client: recalcul nocturn*
   recalculează toate rândurile unei companii într-o singură interogare. Nu se recalculează la
   fiecare deschidere a ecranului, așa că lista rămâne rapidă și la sute de mii de facturi.
+  Fiecare companie se salvează separat: o rulare oprită de limita de timp a serverului păstrează
+  companiile deja calculate.
+- **Un singur recalcul odată pe companie.** Cât rulează recalculul unei companii (acțiunea de
+  noapte sau *Recalculează acum*), un al doilea recalcul pe aceeași companie e refuzat cu un mesaj,
+  în loc să aștepte după primul.
 - **Instalarea nu calculează nimic.** Primul calcul pornește prin acțiunea programată, la un minut
   după instalare. Pe o bază mare, un calcul în timpul instalării ar depăși limita de timp a
   serverului.
@@ -56,13 +62,23 @@ Cum lucrează:
   venit. Liniile de avans (oricare ar fi contul lor) și de garanție SGR nu sunt vânzări: vânzarea
   se numără pe factura finală, iar o factură formată doar din avans nu e numărată drept cumpărare.
   Pe comenzi, valoarea fără TVA convertită la cursul comenzii.
-- **Soldul și restanța includ TVA.** Sunt restul de plată al facturilor și stornărilor client,
-  **nu soldul fișei de cont**: soldurile inițiale preluate prin notă contabilă, încasările
-  nereconciliate și avansurile încasate pe 419 nu intră. Restanța se calculează pe fiecare rată,
-  după scadența ei. Avansurile acordate personalului (425) și debitorii diverși (461) nu intră,
-  deși au același tip de cont de creanță. Nici clienții reclasificați pe **4118 Clienți incerți**
-  nu mai apar cu restanță, dacă nota de reclasificare e reconciliată cu factura: în Odoo 4118 nu e
-  cont de creanță.
+- **Soldul și restanța includ TVA.** Sunt restul de plată al tuturor liniilor nereconciliate ale
+  clientului pe **conturile de clienți**, adică pe conturile de creanță pe care se înregistrează
+  facturile client ale companiei (implicit **4111 Clienți**):
+  - facturile și stornările client;
+  - soldurile inițiale preluate prin notă contabilă pe 4111, care apar ca restanță după scadența
+    lor. Completați *Data scadenței* pe fiecare linie a notei de preluare: fără ea, scadența e data
+    notei, iar tot soldul preluat apare restant de la acea dată;
+  - încasările și stornările încă nereconciliate cu factura, care scad restanța. Dacă acoperă toată
+    restanța, clientul nu mai are facturi restante și nu e *Risc de neplată*.
+
+  Restanța se calculează pe fiecare rată, după scadența ei. Avansurile acordate personalului
+  (425), debitorii diverși (461) și TVA de recuperat (4424) nu intră, deși au același tip de cont
+  de creanță, cât timp pe ele nu se emite nicio factură client în companie. O factură de vânzare a
+  unui mijloc fix emisă pe 461 (461 = 7583 + 4427) face din 461 un cont de clienți, cu toate
+  liniile lui: emiteți astfel de facturi pe 4111. Avansurile încasate pe 419 nu intră. Nici
+  clienții reclasificați pe **4118 Clienți incerți** nu mai apar cu restanță, dacă nota de
+  reclasificare e reconciliată cu factura: în Odoo 4118 nu e cont de creanță.
 
 ## 3. Utilizatori și roluri
 
@@ -88,14 +104,18 @@ Modulul nu generează note contabile. Citește:
 
 - **facturile client validate** (`out_invoice`) și **stornările** (`out_refund`): data facturii,
   valoarea liniilor de vânzare fără TVA în moneda companiei, scadența fiecărei rate, restul de plată;
+- **liniile nereconciliate ale clientului pe conturile de clienți** din notele contabile:
+  încasările încă nealocate facturilor și soldurile inițiale;
 - **comenzile de vânzare confirmate**, dacă sursa aleasă e *Comenzi de vânzare confirmate*;
 - **mesajele** înregistrate pe client sau pe persoanele lui de contact (note, emailuri), pentru data
   ultimului contact;
 - **agentul de vânzări** și **etichetele** de pe fișa clientului.
 
-Restanța corespunde creanțelor din facturi pe contul de creanță al clientului (implicit **4111
-Clienți**). Nu include soldurile din **425 Avansuri acordate personalului** sau **461 Debitori
-diverși**, nici soldurile inițiale din note contabile.
+Soldul și restanța corespund soldului nereconciliat al clientului pe conturile pe care se
+înregistrează facturile client (implicit **4111 Clienți**), inclusiv soldurile inițiale și
+încasările nealocate de pe aceste conturi. Nu includ soldurile din **425 Avansuri acordate
+personalului**, **461 Debitori diverși** sau **4424 TVA de recuperat**, cât timp pe ele nu se emite
+nicio factură client (§2).
 
 Date minime pentru demo: o firmă RO cu plan de conturi RO, cel puțin 8–10 clienți firme, cu facturi
 validate pe ultimul an și jumătate în tipare diferite. De exemplu: un client lunar mare, unul în
@@ -142,7 +162,9 @@ deschide direct pe compania curentă.
   și trebuie ajustate la mărimea comenzilor proprii.
 
 Apăsați **Recalculează acum**. Mesajul *Segmentele clienților au fost recalculate.* confirmă calculul,
-iar *Ultima rulare* arată momentul lui.
+iar *Ultima rulare* arată momentul lui. Dacă tocmai rulează recalculul de noapte al companiei,
+butonul e refuzat cu mesajul *Segmentele clienților pentru (companie) se recalculează chiar acum.
+Încercați din nou peste câteva minute.*
 
 ![Setările segmentării: sursa datelor, ritmul, inactivitatea și pragurile de portofoliu, cu butonul Recalculează acum](screenshots/01_setari.png)
 
@@ -167,10 +189,14 @@ Deschideți **Vânzări → Portofoliu clienți → Segmente clienți**.
 2. **Verificați:**
    - un client cu *Zile de la ultima cumpărare* mult peste *Ritm (zile)* are ritmul *În risc*,
      *Adormit* sau *Pierdut*;
+   - *Ritm (zile)* se măsoară între zilele de cumpărare: un client facturat de două ori în aceeași
+     zi (două livrări) are *Cumpărări* 2, dar ritmul îl socotește o singură cumpărare;
    - un client cu *Sumă restantă* are clasificarea *Risc de neplată* dacă cea mai veche restanță are
      cel puțin 30 de zile sau are cel puțin 3 facturi restante. Inactivitatea are prioritate: un
      client care nu mai cumpără de peste 60 de zile și nici nu plătește apare *Inactiv*, nu *Risc
      de neplată*. Pentru recuperare folosiți filtrul *Cu restanță*, care îi prinde pe toți;
+   - o încasare înregistrată, dar încă nereconciliată cu factura, scade *Sumă restantă*: clientul
+     care a plătit nu apare restant doar pentru că lettrarea nu s-a făcut;
    - *Vânzări (12 luni)* e fără TVA, iar *Sumă restantă* e cu TVA (suma de încasat);
    - un client cu o singură cumpărare are *Ritm (zile)* 0, pentru că ritmul nu se poate măsura. E
      *Nou* cât timp e în fereastra de client nou; după aceea e judecat după *Ritm implicit*;
@@ -213,6 +239,12 @@ Un clic pe un rând deschide fișa segmentului, doar pentru citire.
    - *Creștere (%)* = (perioada curentă − perioada anterioară) / perioada anterioară × 100, sau 100
      când perioada anterioară e zero;
    - *Cumpărare medie* = *Vânzări totale* / *Cumpărări*;
+   - *Sold deschis* = soldul nereconciliat al clientului pe 4111: facturile neîncasate, plus
+     soldurile inițiale din note contabile, minus încasările și stornările încă nealocate. *Sumă
+     restantă* e partea cu scadența depășită, din care se scad încasările și stornările nealocate,
+     cel puțin 0;
+   - *Facturi restante* numără facturile cu rate depășite și, la o notă de sold inițial, fiecare
+     linie de creanță preluată; e 0 când încasările nealocate acoperă restanța;
    - *Calculat la* e data ultimei rulări.
 3. **Treceți mai departe:** reveniți în listă din breadcrumb, sau deschideți clientul pentru apel
    sau ofertă.
@@ -248,11 +280,16 @@ Modulul **nu generează note contabile** și nu modifică documente. Cifrele sun
   din nota 4111 = 70x + 4427), minus stornările, fără TVA, în moneda companiei. Sau comenzile
   confirmate, dacă sursa e *Comenzi*. Liniile de avans, oricare ar fi contul lor, și garanțiile
   SGR nu intră.
-- *Sold deschis* / *Sumă restantă* = restul de plată al liniilor de creanță (implicit 4111) de pe
-  facturile și stornările client, cu TVA; restanța e partea cu scadența depășită, rată cu rată.
-  Nu e soldul fișei de cont: soldurile inițiale din note contabile și încasările nereconciliate nu
-  intră.
-- Soldurile din 425 și 461 nu intră, deși Odoo le tratează tot ca creanțe.
+- *Sold deschis* / *Sumă restantă* = restul de plată al liniilor nereconciliate ale clientului pe
+  conturile de clienți (implicit 4111), cu TVA:
+  - facturile și stornările (4111 = 70x + 4427);
+  - soldurile inițiale din note contabile (4111 = 473 sau contul de preluare);
+  - încasările (5121 = 4111) și stornările nealocate, care scad soldul și restanța.
+
+  Restanța e partea cu scadența depășită, rată cu rată, minus încasările și stornările nealocate.
+  *Sold deschis* corespunde soldului clientului din fișa contului 4111.
+- Soldurile din 425, 461 și 4424 nu intră, deși Odoo le tratează tot ca creanțe, cât timp pe ele nu
+  se emite nicio factură client. Facturile de vânzare a mijloacelor fixe se emit pe 4111.
 
 ## 7. Legături cu alte module / declarații
 
@@ -264,7 +301,9 @@ Modulul **nu generează note contabile** și nu modifică documente. Cifrele sun
 | analiza clienților și misiunile comerciale (module viitoare) | citesc rândurile acestui modul, nu recalculează istoricul |
 
 **Ce e automat:**
-- recalculul nocturn, pentru toate companiile;
+- recalculul nocturn, pentru toate companiile, cu fiecare companie salvată separat: o rulare
+  oprită de limita de timp păstrează companiile deja calculate;
+- un singur recalcul odată pe companie: *Recalculează acum* e refuzat cât rulează cel de noapte;
 - ștergerea rândului unui client care nu mai are vânzări (de exemplu, după anularea facturilor);
 - respectarea rolului agentului pe server.
 
@@ -286,14 +325,23 @@ Modulul **nu generează note contabile** și nu modifică documente. Cifrele sun
 - [ ] O factură de penalități de întârziere (7581) către client nu îi schimbă *Ultima cumpărare*.
 - [ ] Pe o firmă RO, *Conturi de vânzare* = `70` în setări. Dacă e gol (setările s-au creat înainte
       de planul de conturi RO), completați-l și apăsați *Recalculează acum*.
-- [ ] *Sumă restantă* include doar ratele cu scadența depășită ale facturilor client, nu avansurile salariaților
-      (425).
+- [ ] *Sumă restantă* include doar ratele cu scadența depășită de pe 4111, nu avansurile
+      salariaților (425) sau debitorii diverși (461), nici când partenerul e și client, cât timp
+      nicio factură client nu e emisă pe 461.
 - [ ] La o factură cu plata în două rate, doar rata ajunsă la scadență apare ca restanță.
 - [ ] O factură de avans nu apare ca cumpărare; vânzarea se numără la factura finală.
-- [ ] Cu un sold inițial al clientului preluat prin notă contabilă, *Sold deschis* diferă de fișa
-      partenerului: e normal, modulul citește doar facturile.
+- [ ] Cu un sold inițial al clientului preluat prin notă contabilă pe 4111, cu *Data scadenței*
+      completată și depășită, suma apare în *Sold deschis* și în *Sumă restantă*, iar *Sold
+      deschis* e egal cu soldul clientului din fișa contului 4111.
+- [ ] O încasare înregistrată pe client, dar nereconciliată cu factura, scade *Sumă restantă* după
+      *Recalculează acum*. Dacă acoperă toată restanța, *Facturi restante* e 0, iar clientul nu e
+      *Risc de neplată*.
 - [ ] Un client care cumpără lunar și tace de 50 de zile are ritmul *În risc*. Unul care cumpără
       trimestrial și tace de 60 de zile e *Activ*.
+- [ ] Un client lunar facturat de două ori la fiecare cumpărare (două livrări în aceeași zi) are
+      *Ritm (zile)* în jur de 30, nu de 15, și rămâne *Activ* cât cumpără la timp.
+- [ ] *Recalculează acum* apăsat cât rulează recalculul de noapte al companiei e refuzat cu
+      mesajul de recalcul în curs; după terminarea lui, butonul merge.
 - [ ] Schimbarea pragului *Inactiv, nivel 1 (zile)* schimbă clasificarea după *Recalculează acum*.
 - [ ] Cu *Doar companii (B2B)* bifat, persoanele fizice dispar din listă la următorul calcul.
 - [ ] Un agent cu *Clienții proprii* vede doar clienții lui și nu vede meniul *Setări*.
@@ -310,8 +358,9 @@ Modulul **nu generează note contabile** și nu modifică documente. Cifrele sun
 | *Setările de segmentare există deja pentru această companie.* | o a doua fișă de setări pentru aceeași companie | folosiți fișa existentă, deschisă din meniul *Setări* |
 | *Încă nu există segmente de clienți* (listă goală) | calculul n-a rulat încă, sau compania nu are facturi validate | *Recalculează acum*; verificați sursa din setări |
 | *Acțiune → Segment client* deschide o listă goală | clientul nu are nicio vânzare (prospect) sau calculul n-a rulat după prima lui factură | *Recalculează acum* |
+| *Segmentele clienților pentru (companie) se recalculează chiar acum. Încercați din nou peste câteva minute.* | rulează deja un recalcul al companiei (acțiunea de noapte sau alt utilizator) | așteptați câteva minute și apăsați din nou *Recalculează acum* |
 | lista agentului e goală | agentul nu e trecut pe niciun client | completați *Agent de vânzări* pe fișa clienților |
-| toți clienții apar cu *Risc de neplată* | facturile nu sunt încasate în Odoo (plățile nu sunt reconciliate) | reconciliați încasările; verificați pragurile de restanță |
+| toți clienții apar cu *Risc de neplată* | încasările nu sunt înregistrate în Odoo pe 4111 | înregistrați încasările (extrase bancare, plăți); verificați pragurile de restanță |
 
 ## 10. Capturi de ecran
 

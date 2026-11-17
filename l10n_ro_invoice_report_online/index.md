@@ -1,7 +1,7 @@
 # Romania - Invoice Report for Odoo Online (localizat la `l10n_ro_invoice_report_online/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_invoice_report_online`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_invoice_report_online
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_invoice_report_online`
 - **Ultima Ingestie:** `2026-11-14`

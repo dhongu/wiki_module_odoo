@@ -1,7 +1,7 @@
 # Markdown Field Widget (localizat la `deltatech_markdown_field/index.md`)
 
 - **Nume Tehnic:** `deltatech_markdown_field`
-- **Versiune:** `19.0.1.0.7`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_markdown_field
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_markdown_field`
 - **Ultima Ingestie:** `2026-11-09`

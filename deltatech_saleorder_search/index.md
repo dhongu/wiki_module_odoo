@@ -1,7 +1,7 @@
 # Sale Order Search by Contact (localizat la `deltatech_saleorder_search/index.md`)
 
 - **Nume Tehnic:** `deltatech_saleorder_search`
-- **Versiune:** `19.0.1.1.1`
+- **Versiune:** `19.0.1.1.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_saleorder_search
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_saleorder_search`
 - **Ultima Ingestie:** `2026-11-14`

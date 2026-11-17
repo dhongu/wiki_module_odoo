@@ -33,7 +33,8 @@ venituri și importul de date dinspre SAGA.
   (codul de deducere `N50` al taxei); art. 282 — TVA la încasare (opțiunea *TVA la încasare* pe
   poziția fiscală și în asistent); art. 307/331 — taxare inversă (codul `T` pe poziția fiscală).
 - **OUG 28/1999 (aparate de marcat electronice fiscale)** — bonurile fiscale și facturile emise pe
-  bază de bon fiscal se raportează distinct în SAGA prin coloana `TIP` (`f`, `B`, `C`).
+  bază de bon fiscal (inclusiv cele emise din POS) se raportează distinct în SAGA prin coloana
+  `TIP` (`f`, `B`, `C`).
 
 Contextul operațional: integrarea este **pe fișiere**, nu în timp real. SAGA rămâne autoritatea
 finală asupra validării contabile; erorile de configurare din SAGA se rezolvă în SAGA. Documentația
@@ -123,6 +124,8 @@ Date minime pentru demo:
 9. Pentru bonuri fiscale: configurați jurnalele de bonuri fiscale și partenerul generic conform
    ghidului `deltatech_sale_store`; nu marcați jurnalele obișnuite de vânzări drept jurnale de bonuri.
 10. Verificați că utilizatorul de test este în grupul **Contabilitate / Administrator**.
+11. **Istoricul exporturilor** (Pasul 11) nu cere configurare: fiecare export e salvat pe compania lui,
+    iar în **Exporturi SAGA** fiecare utilizator vede doar exporturile companiilor la care are acces.
 
 ## 6. Flux de utilizare
 
@@ -184,7 +187,8 @@ Pentru fiecare factură mixtă, rezultatul exportului spune ce linii trebuie cor
 ### Pasul 4 — Deschiderea asistentului de export
 
 Accesați **Contabilitate → Contabilitate → SAGA → Export SAGA**. Meniul **SAGA** apare în grupul
-de meniuri contabile și conține **Export SAGA**, **Import SAGA** și **Comparație stoc** (Pasul 10).
+de meniuri contabile și conține **Export SAGA**, **Import SAGA**, **Comparație stoc** (Pasul 10) și
+**Exporturi SAGA** (istoricul exporturilor, Pasul 11).
 
 ![Meniul SAGA din Contabilitate](screenshots/06_meniu_saga.png)
 
@@ -247,7 +251,9 @@ numărul de încasări și plăți din sumar apare la final, după pașii lor.
 
 Ecranul de rezultat are trei zone. **Găsiți pe ecran**:
 
-1. **Fișierul exportat** — linkul de descărcare al arhivei ZIP.
+1. **Fișierul exportat** — linkul de descărcare al arhivei ZIP și, dedesubt, **Salvat în Exporturi
+   SAGA:** cu legătura către exportul păstrat în istoric (Pasul 11). Asistentul e temporar și Odoo îl
+   șterge după câteva ore; arhiva, sumarul și reconcilierea rămân în istoric.
 2. **Sumarul** „Au fost exportate:" — numărul de furnizori, clienți, articole, facturi de intrare
    și ieșire (RON și valută), note contabile și plăți cuprinse. Dacă în perioadă există facturi de
    furnizor al căror partener nu are **țara** completată, sub sumar apare avertismentul „Facturi de
@@ -273,11 +279,17 @@ zero — diferența are câteva cauze structurale, pe lângă cea accidentală:
   clasa 7; acestea sunt în afara exportului de facturi și se discută cu contabilul.
 - Numărul de documente din sumar corespunde cu **Contabilitate → Clienți → Facturi** filtrat pe
   perioadă și stare *Postat*.
-- Rândurile `TIP` = `f`/`B`/`C` există doar dacă ați avut bonuri fiscale în perioadă; rândul cu
-  `TIP` **necompletat** corespunde facturilor obișnuite (fără bon fiscal, fără poziție fiscală cu
-  cod SAGA propriu).
+- Rândurile `TIP` = `f`/`B`/`C` există doar dacă ați avut în perioadă bonuri fiscale, facturi pe bon
+  fiscal sau facturi emise din **Punctul de vânzare (POS)**; rândul cu `TIP` **necompletat**
+  corespunde facturilor obișnuite (fără bon fiscal, fără comandă POS, fără poziție fiscală cu cod
+  SAGA propriu).
+- O factură sau o notă de credit făcută dintr-o comandă POS apare **întotdeauna** cu `TIP` = `f`,
+  indiferent de jurnal, de bifa *Vânzare din magazin* sau de CUI-ul clientului (un client cu CUI
+  rămâne `f`, nu `C`): vânzarea e deja înregistrată pe bonul fiscal. Este aceeași regulă pe care
+  e-Factura o aplică prin codul de tip 751. Doar un cod SAGA pe poziția fiscală are prioritate.
 
-**Apoi** descărcați arhiva și predați-o contabilului. Conținutul, în funcție de datele găsite:
+**Apoi** descărcați arhiva (din asistent sau, oricând mai târziu, din **Exporturi SAGA**) și predați-o
+contabilului. Conținutul, în funcție de datele găsite:
 `Furnizori`/`FUR`, `Clienti`/`CLI`, `Articole`/`ART` (doar cantitativ-valoric), `IN_<jurnal>`
 (furnizori din România sau fără țară) și `INV_<jurnal><valută>` (furnizori străini), `IE_<jurnal>` și
 `IEV_<jurnal><valută>` (ieșiri RON/valută) — în XML, fișierele de facturi au în față prefixul
@@ -513,6 +525,11 @@ altfel importul se finalizează în SAGA Web, *Diverse → Import date*. Răspun
 formular. Dacă o cerere cade la mijloc (de exemplu SAGA nu răspunde), fișierul apare cu *eroare*, iar
 cele de după el ca *netrimis*. Compania verificată e cea a exportului, nu cea curentă.
 
+Răspunsul SAGA și data trimiterii se păstrează și pe exportul din **Exporturi SAGA** (Pasul 11), a cărui
+stare devine **Trimis în SAGA** (toate fișierele importate) sau **Trimis cu erori** (cel puțin un fișier
+importat parțial, eșuat, cu eroare sau netrimis). Filtrul **Trimis cu erori** din istoric arată
+exporturile la care mai sunt fișiere de importat manual.
+
 **Atenție — nu apăsați a doua oară Trimite în SAGA.** Butonul retrimite **toate** fișierele XML din
 arhivă, inclusiv cele deja acceptate, deci facturile, încasările și plățile s-ar dubla în SAGA.
 Fișierele *eșuate*, cu *eroare* sau *netrimise* se importă manual în SAGA Web (*Diverse → Import
@@ -565,6 +582,33 @@ liniile care nu sunt *Egal*. Cantitatea SAGA e stocul final la data aleasă.
 Comparația e doar informativă: nu corectează nimic. Diferențele se rezolvă prin inventar, în Odoo sau
 în SAGA.
 
+### Pasul 11 — Istoricul exporturilor (Exporturi SAGA)
+
+Fiecare export terminat (Pasul 5) rămâne în **Contabilitate → Contabilitate → SAGA → Exporturi SAGA**,
+vizibil grupului **Contabilitate / Administrator**. Lista arată data exportului, perioada, utilizatorul,
+numărul de facturi și de parteneri exportați și starea: **Generat** (netrimis prin API), **Trimis în
+SAGA** sau **Trimis cu erori** (Pasul 9). Filtrele **Netrimis**, **Trimis în SAGA** și **Trimis cu
+erori**, filtrul pe data exportului și gruparea pe utilizator, stare sau perioadă ajută la găsirea unui
+export anume.
+
+Formularul exportului are:
+- **Descarcă** — arhiva ZIP exact cum a fost predată contabilului, oricând, și după ce asistentul a
+  dispărut;
+- **Exportă din nou** — deschide asistentul cu aceeași perioadă, aceleași jurnale și aceleași opțiuni;
+  după **Aplică**, exportul nou intră și el în istoric, lângă cel vechi (cel vechi nu se modifică).
+  Jurnalele șterse între timp sunt lăsate deoparte;
+- blocurile **Export** (data, utilizatorul, fișierul, data trimiterii), **Opțiuni** (tipul de dată,
+  tipul de export, formatele, jurnalele), **Exportate** (numărul de facturi și de parteneri) și
+  **Reconciliere** (venituri clasa 7, total exportat, diferență, ca la Pasul 6);
+- tabul **Rezultat**, cu sumarul și mesajele exportului (lista fișierelor din arhivă la exportul pe
+  pași), și tabul **Răspuns SAGA**, cu raportul trimiterii prin API.
+
+**Verificați** înainte de a reface un export: exportul nou nu înlocuiește arhiva veche, iar importul ei a
+doua oară în SAGA dublează documentele. Folosiți **Exportă din nou** pentru o perioadă corectată, apoi
+importați în SAGA doar ce lipsește.
+
+![Exportul păstrat în Exporturi SAGA, trimis cu erori, cu butoanele Descarcă și Exportă din nou](screenshots/13_exporturi_saga.png)
+
 ### Note de monografie și raportare
 
 Modulul **nu generează note contabile proprii la export**; el transcrie documentele deja postate în
@@ -596,6 +640,7 @@ fiscale configurate.
 | `stock`, `sale_stock`, `purchase_stock` | gestiuni, exportul cantitativ-valoric, consumuri/producție | dependență (manifest) |
 | `deltatech_contact` | CUI/NRC pe partener, folosite ca cod SAGA | dependență (manifest) |
 | `deltatech_sale_store` | flagul *Vânzare din magazin* care stabilește `TIP` = `f` pe facturile cu bon fiscal | opțional |
+| `point_of_sale` | comanda POS legată de factură stabilește `TIP` = `f` pe factură și pe nota de credit (aceeași regulă ca 751 la e-Factura) | opțional (nu e dependență) |
 | `deltatech_saga_mrp` | exportul consumurilor și al producției din MRP | extensie opțională |
 | `deltatech_chart_of_accounts` | importul soldurilor inițiale (`import.chart.of.accounts`, butonul *Postează diferența*) din Pasul 8 | necesar doar pentru Pasul 8 |
 | SAGA Web (API) | trimiterea fișierelor XML (Pasul 9), situația stocurilor (Pasul 10) | extern, opțional (biblioteca `requests` și cheie de acces API) |
@@ -630,6 +675,8 @@ corespondent în SAGA); ele ajung în SAGA doar prin facturile și notele contab
 - [ ] Sumarul „Au fost exportate" corespunde numărului de facturi postate din perioadă.
 - [ ] **Diferența** din reconciliere este zero pe baza demo; după o notă manuală pe 707, diferența
       devine exact valoarea acelei note.
+- [ ] O factură emisă din POS (butonul *Factură* la plată) apare cu `TIP` = `f`, și pentru un client
+      cu CUI (nu `C`); nota de credit a unui retur POS facturat apare tot cu `TIP` = `f`.
 - [ ] O factură pe bon fiscal apare cu `TIP` = `f`; o factură de achiziție cu poziție fiscală de
       taxare inversă apare cu `TIP` = `T` și, după import, SAGA o înregistrează Dr 4426 = Cr 4427.
 - [ ] O factură cu linii pe taxa `21% R331` / `0% R331`, fără cod pe poziția fiscală, apare tot cu
@@ -696,6 +743,13 @@ corespondent în SAGA); ele ajung în SAGA doar prin facturile și notele contab
       fișierului de clienți e verificată (limitarea cunoscută de la Pasul 9).
 - [ ] **Comparație stoc**: un articol SAGA al cărui produs din Odoo nu e stocabil apare *Negăsit în
       Odoo*; același cod SAGA pe două locații oprește comparația cu mesaj.
+- [ ] După export, exportul apare în **Exporturi SAGA** cu perioada, numărul de facturi și de parteneri și
+      starea *Generat*; **Descarcă** dă aceeași arhivă ca asistentul, și a doua zi.
+- [ ] După **Trimite în SAGA**, exportul din istoric are răspunsul SAGA, data trimiterii și starea *Trimis în
+      SAGA* sau *Trimis cu erori*.
+- [ ] **Exportă din nou** deschide asistentul cu aceeași perioadă, aceleași jurnale și opțiuni, iar exportul
+      nou apare separat în istoric.
+- [ ] Un utilizator cu acces doar la compania A nu vede exporturile companiei B.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -745,7 +799,8 @@ planul de conturi RO:
 4. `04_taxa_cod_deducere.png` — taxă cu Cod SAGA deducere `N50`.
 5. `05_pozitie_fiscala_saga.png` — poziție fiscală de taxare inversă cu Cod SAGA `T` (bifa TVA la
    încasare rămâne nesetată pe acest tip de poziție — vezi Pasul 3).
-6. `06_meniu_saga.png` — meniul Contabilitate → Contabilitate → SAGA, cu submeniul **Comparație stoc**.
+6. `06_meniu_saga.png` — meniul Contabilitate → Contabilitate → SAGA, cu submeniurile **Exporturi SAGA**
+   și **Comparație stoc**.
 7. `07_export_wizard.png` — asistentul Export SAGA completat.
 8. `08_export_rezultat.png` — dialogul de rezultat al exportului: arhiva, sumarul, bifa **Finalizează
    importul în SAGA**, reconcilierea pe clasa 7 și butonul **Trimite în SAGA**.
@@ -755,6 +810,8 @@ planul de conturi RO:
 11. `11_comparatie_stoc.png` — comparația stocului Odoo cu SAGA, cu câte o linie pe fiecare stare.
 12. `12_mapare_balanta.png` — asistentul Mapare balanță (Pasul 8) cu PDF-ul balanței încărcat, **Tip
     partener** *Clienți* și **Cont sintetic** `4111`.
+13. `13_exporturi_saga.png` — exportul trimis în SAGA, păstrat în **Exporturi SAGA** (Pasul 11): starea
+    *Trimis cu erori*, butoanele **Descarcă** și **Exportă din nou**, opțiunile și numărul de documente.
 
 Pentru capturile `10` și `11` testul simulează răspunsurile API-ului SAGA (fișierele acceptate și
 fișierul de clienți respins, respectiv situația stocurilor gestiunii `0001`); nu se face niciun apel real către SAGA Web.

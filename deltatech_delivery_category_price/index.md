@@ -1,7 +1,7 @@
 # Delivery Price by Category
 
 - **Nume Tehnic:** `deltatech_delivery_category_price`
-- **Versiune:** `19.0.1.0.7`
+- **Versiune:** `19.0.1.0.8`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_category_price
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_category_price`
 - **Ultima Ingestie:** `2026-11-13`
