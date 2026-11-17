@@ -4,6 +4,12 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-17] Ingestie: deltatech_voip_daktela
+- **Acțiune**: Pagină nouă pentru modulul `deltatech_voip_daktela` (Phone - Daktela, 19.0.1.1.0, suita bitshop_ent, `hidden`), cu fișa consultant copiată prin `sync_fisa` (5 capturi RO).
+- **Sursă**: `readme/DESCRIPTION.md` și `readme/USAGE.md` din origin/19.0 (PR terrabit-solutions/bitshop_ent#701), plus cronul, modelele și view-urile pentru Componente Cheie.
+- **Dependențe/Conexiuni**: `voip` (Telefon, Enterprise), fără pagină wiki.
+- **Fișiere actualizate**: `deltatech_voip_daktela/index.md`, `deltatech_voip_daktela/FISA_CONSULTANT.md`, `deltatech_voip_daktela/screenshots/`, `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-11-17] Ingestie: deltatech_qms
 
 - **Acțiune:** pagină nouă pentru [deltatech_qms](deltatech_qms/index.md), 19.0.1.0.0. Modulul există doar pe `origin/19.0` al suitei bitshop, nu și în checkout-ul local, deci sursa a fost exportul din `origin/19.0`.
