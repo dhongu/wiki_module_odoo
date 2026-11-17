@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.3.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_partner_match
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_partner_match`
-- **Ultima Ingestie:** `2026-10-30`
+- **Ultima Ingestie:** `2026-11-17`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -50,4 +50,4 @@ Logica de normalizare și potrivire stă în `tools/partner_match.py` (Python si
 - [deltatech_partner_merge](../deltatech_partner_merge/index.md): căutarea de dubluri folosește normalizarea numelui, CUI-ului, telefonului, emailului și străzii și `similar_pairs`; efectul se vede în coloanele Scor și Motive.
 - [deltatech_marketplace](../deltatech_marketplace/index.md): la importul clienților apelează `_find_similar_partners` pe email și telefon și decide refolosirea contactului sau marcarea „Posibil duplicat al”.
 - [deltatech_ai_trial_balance_import](../deltatech_ai_trial_balance_import/index.md): potrivește partenerii din balanța PDF după CUI normalizat și nume.
-- [deltatech_ai_pdf_base](../deltatech_ai_pdf_base/index.md): verifică cifra de control a CUI / CNP / TVA UE citite din PDF (și, prin el, [deltatech_ai_purchase_pdf](../deltatech_ai_purchase_pdf/index.md)).
+- [deltatech_ai_pdf_base](../deltatech_ai_pdf_base/index.md): verifică cifra de control a CUI / CNP / TVA UE citite din PDF.

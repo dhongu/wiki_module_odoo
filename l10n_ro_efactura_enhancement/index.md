@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.0.5.13`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_efactura_enhancement
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_efactura_enhancement`
-- **Ultima Ingestie:** `2026-11-04`
+- **Ultima Ingestie:** `2026-11-17`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar

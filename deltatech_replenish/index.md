@@ -1,14 +1,14 @@
-# Deltatech Replenish (localizat la `deltatech_replenish/index.md`)
+# Replenish Vendor (Compatibility) (localizat la `deltatech_replenish/index.md`)
 
 - **Nume Tehnic:** `deltatech_replenish`
 - **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_replenish
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_replenish`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-11-17`
 
 #### 1. Sumar
 
-Modul de compatibilitate, păstrat doar pentru bazele de date migrate de la Odoo 18.0, unde alegerea furnizorului în wizardul de reaprovizionare era oferită de Deltatech. Începând cu Odoo 19.0, această funcție face parte din modulul standard `purchase_stock`, deci modulul nu mai adaugă niciun model, vizualizare sau date proprii. Rămâne instalabil, fără conținut, ca baza de date să nu piardă intrarea modulului după upgrade.
+Modul de compatibilitate, păstrat doar pentru bazele de date migrate de la Odoo 18.0, unde alegerea furnizorului în wizardul de reaprovizionare era oferită de Deltatech. Începând cu Odoo 19.0, această funcție face parte din modulul standard `purchase_stock`, deci modulul nu mai adaugă niciun model, vizualizare sau date proprii. Rămâne instalabil, fără conținut, ca baza de date să nu piardă intrarea modulului după upgrade. Fiind fără cod Python, modulul se poate instala și pe Odoo Online (insignă „Odoo Online” în Apps Store, din 14.11.2026).
 
 #### 2. Funcționalități Cheie
 
@@ -43,4 +43,4 @@ Notă tehnică: în standard, `product.replenish` moștenește `stock.replenish.
 
 #### 5. Conexiuni
 
-- `stock`: wizardul de reaprovizionare (`product.replenish`) la care se referă funcția preluată de standard.
+- Nu are conexiuni funcționale proprii dincolo de dependența din manifest (`purchase_stock`); modulul nu conține cod.

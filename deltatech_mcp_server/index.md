@@ -1,10 +1,10 @@
 # Deltatech MCP Server
 
 - **Nume Tehnic:** `deltatech_mcp_server`
-- **Versiune:** `19.0.1.16.1`
+- **Versiune:** `19.0.1.15.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_mcp_server
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_mcp_server`
-- **Ultima Ingestie:** `2026-10-24`
+- **Ultima Ingestie:** `2026-11-17`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -30,9 +30,10 @@ Modulul transformă Odoo într-un server MCP (Model Context Protocol), astfel î
 - **Mai multe companii**: `whoami` listează companiile și moneda lor; `company_id` pe `search`, `read`, `aggregate`, `create`, `write` și `list_attachments` lucrează într-o singură companie. Fără el, citirea acoperă toate companiile utilizatorului, iar înregistrările noi merg la compania principală.
 - **Monitorizare**: `GET /mcp/health` răspunde fără autentificare și fără date.
 - **Meniu pe roluri** (*MCP Server*): *My Access* (*Generate API Key*, *Access Requests*, *OAuth Connections*), *Reporting* (*Daily Usage*, *Call Log*) și *Configuration* (*Settings*, *Policies*, *Policy Templates*, *Tools*, *Prompts*, *OAuth Applications*). Un utilizator MCP fără drepturi de administrator vede doar *My Access*.
+- **Interfață în română**: traducerea completă (`i18n/ro.po`) acoperă interfața, șabloanele de politici și mesajele returnate clientului AI; notificarea de cerere nouă de acces arată operația în limba utilizatorului.
 - **Audit**: *MCP Server > Reporting > Call Log* (utilizator, client, unealtă, argumente, durată, rezultat, aplicația OAuth; erorile în roșu; conectările refuzate sunt înregistrate ca *authentication* / *Denied*), cu secțiunea **Changes** (valoarea veche și nouă a fiecărui câmp modificat, sau statusul înainte/după pentru un buton) și filtrul *With changes*; *MCP Server > Reporting > Daily Usage* (consum pe utilizator și zi, față de bugetul politicii). Jurnalul se șterge după 90 de zile (configurabil). Poate sprijini obligațiile de păstrare a evidenței și supraveghere umană din Regulamentul UE 2024/1689 (art. 12 și 26), fără a face sistemul conform prin el însuși.
 - **Protocol**: MCP 2026-07-28 (fără stare, fără handshake), cu suport pentru clienții din 2025-11-25 și mai vechi.
-- **Compatibilitate** cu serverul MCP integrat în Odoo 20 Enterprise: același endpoint (`/mcp`) și același scope de cheie (`mcp`), deci clienții își păstrează configurația la upgrade. Pe 20.0 modulul extinde *AI MCP Server* (`ai_mcp`) în loc să-l înlocuiască: cheile (din *My Profile > Account Security*, scope *MCP*) și serverul OAuth sunt cele standard, uneltele generice `ai_tool_*` ale aplicațiilor AI sunt ascunse pe `/mcp`, iar utilizatorii conectați prin OAuth în 19.0 se reconectează o dată.
+- **Compatibilitate** cu serverul MCP integrat în Odoo 20 Enterprise: același endpoint (`/mcp`) și același scope de cheie (`mcp`), deci clienții își păstrează configurația la upgrade.
 - Pașii de configurare pentru consultant sunt în [fișa consultant](FISA_CONSULTANT.md).
 
 #### 3. Dependențe

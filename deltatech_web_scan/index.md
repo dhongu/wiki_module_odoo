@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_web_scan
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_web_scan`
-- **Ultima Ingestie:** `2026-10-30`
+- **Ultima Ingestie:** `2026-11-17`
 
 #### 1. Sumar
 

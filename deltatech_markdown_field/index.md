@@ -1,10 +1,10 @@
 # Markdown Field Widget (localizat la `deltatech_markdown_field/index.md`)
 
 - **Nume Tehnic:** `deltatech_markdown_field`
-- **Versiune:** `19.0.1.1.1`
+- **Versiune:** `19.0.1.0.7`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_markdown_field
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_markdown_field`
-- **Ultima Ingestie:** `2026-11-09`
+- **Ultima Ingestie:** `2026-11-17`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -21,6 +21,7 @@ Modulul adaugă un widget nou de câmp în Odoo — `markdown` — care oferă u
 - Înălțime minimă configurabilă a editorului, prin opțiunea `min_height` (în pixeli, implicit `160`).
 - **Afișare sigură (de la 19.0.1.0.5):** HTML-ul produs din Markdown este curățat cu DOMPurify înainte de afișare, în editare și în doar-citire, inclusiv pentru valorile stocate anterior. HTML-ul inofensiv (`<kbd>`, `<mark>`) își păstrează formatarea; scripturile, handler-ele de evenimente inline, link-urile `javascript:` și conținutul încorporat (`<iframe>`, `<object>`, `<embed>`) nu se afișează — videoclipurile sau hărțile încorporate se înlocuiesc cu un link obișnuit.
 - **Elemente GFM păstrate la salvare (19.0.1.0.6):** textul tăiat (`~~text~~`), tabelele (cu aliniere pe coloane) și listele de sarcini (`[x]` / `[ ]`) se scriu înapoi ca Markdown; un tabel pe care Markdown nu-l poate exprima (celule îmbinate, liste sau paragrafe în celulă) rămâne HTML. Valorile aplatizate de o salvare anterioară nu se recuperează. HTML-ul inline de tip `<kbd>` sau `<mark>` nu se păstrează la editare și salvare — se stochează doar Markdown standard.
+- **Compatibil Odoo Online (19.0.1.0.7):** modulul nu conține cod Python (doar widget front-end), deci se poate instala pe Odoo Online; bannerul din Apps Store afișează insigna „Odoo Online”.
 
 #### 3. Dependențe
 

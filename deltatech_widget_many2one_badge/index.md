@@ -1,10 +1,10 @@
 # Many2one Badge Widget (localizat la `deltatech_widget_many2one_badge/index.md`)
 
 - **Nume Tehnic:** `deltatech_widget_many2one_badge`
-- **Versiune:** `19.0.1.1.1`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_widget_many2one_badge
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_widget_many2one_badge`
-- **Ultima Ingestie:** `2026-11-03`
+- **Ultima Ingestie:** `2026-11-17`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -14,7 +14,7 @@ Modulul adaugă un widget care afișează câmpurile de tip Many2one sub forma u
 #### 2. Funcționalități Cheie
 
 - Afișează câmpul Many2one ca badge colorat, în formulare și în liste.
-- Modulul nu are meniuri proprii: badge-ul apare pe câmpurile unde îl folosesc alte module, de exemplu coloana **Phase** din **Sales → Orders → Orders** (faza comenzii din `deltatech_sale_stage`) sau faza comenzii de achiziție (`deltatech_purchase_phase`).
+- Modulul nu are meniuri proprii: badge-ul apare pe câmpurile unde îl folosesc alte module, de exemplu coloana **Phase** din **Sales → Orders → Orders** (faza comenzii din [deltatech_sale_stage](../deltatech_sale_stage/index.md)) sau faza comenzii de achiziție ([deltatech_purchase_phase](../deltatech_purchase_phase/index.md)).
 - Schimbarea culorii: click pe badge deschide un selector de culori (popover) cu 11 culori (indecșii 1–11); culoarea aleasă se scrie imediat pe înregistrarea relaționată, nu pe document. Pentru salvare e nevoie de drept de scriere pe modelul relaționat (de exemplu Sales / Administrator pentru fazele comenzilor). Indexul 0 (fără culoare, gri) se setează din formularul înregistrării relaționate.
 - Buton de ștergere (`×`) care apare la trecerea cu mouse-ul peste badge și golește valoarea, readucând câmpul de căutare pentru a alege alta.
 - Câmp de autocomplete pentru selectarea unei valori noi când câmpul este gol.
@@ -50,5 +50,5 @@ Modulul nu definește și nu extinde modele Python, vizualizări sau acțiuni au
 
 #### 5. Conexiuni
 
-- `deltatech_sale_stage`: folosește widget-ul pentru faza comenzii de vânzare (exemplul din fișa consultant); modulul nu e o dependență.
-- `deltatech_purchase_phase`: folosește widget-ul pentru faza comenzii de achiziție, în același mod.
+- [deltatech_sale_stage](../deltatech_sale_stage/index.md): folosește widget-ul pentru faza comenzii de vânzare (exemplul din fișa consultant); modulul nu e o dependență.
+- [deltatech_purchase_phase](../deltatech_purchase_phase/index.md): folosește widget-ul pentru faza comenzii de achiziție, în același mod.

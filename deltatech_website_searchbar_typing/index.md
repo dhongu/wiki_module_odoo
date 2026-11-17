@@ -1,11 +1,10 @@
 # Website Searchbar Typing Examples
 
 - **Nume Tehnic:** `deltatech_website_searchbar_typing`
-- **Versiune:** `19.0.1.2.1`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_searchbar_typing
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_searchbar_typing`
-- **Ultima Ingestie:** `2026-10-22`
-- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
+- **Ultima Ingestie:** `2026-11-17`
 
 #### 1. Sumar
 
@@ -24,6 +23,7 @@ Placeholder-ul casetei de căutare de pe site „scrie” pe rând exemple de c�
 - Opțiune în Website Builder pe câmpul de căutare, „Typing examples”: pornește/oprește animația, iar prefixul și exemplele se editează în panou (adăugare, ștergere, reordonare prin tragere), fără editorul HTML.
 - Viteza se reglează prin atribute `data-*` pe elementul `o_searchbar_typing`, în milisecunde: `data-start-delay` (1500), `data-type-delay` (70), `data-hold-delay` (1800), `data-erase-delay` (30), `data-next-delay` (400).
 - Recomandare: alegeți exemple care returnează rezultate.
+- Bannerul din Apps Store afișează insigna „Odoo Online”: modulul nu are cod Python și se instalează pe Odoo Online.
 
 #### 3. Dependențe
 
@@ -33,7 +33,7 @@ Placeholder-ul casetei de căutare de pe site „scrie” pe rând exemple de c�
 
 **Modele**
 
-- Modulul nu definește și nu extinde modele Python; este exclusiv front-end.
+- Modulul nu definește și nu extinde modele Python (`__init__.py` gol); este exclusiv front-end, deci se instalează și pe Odoo Online.
 
 **Vizualizări**
 

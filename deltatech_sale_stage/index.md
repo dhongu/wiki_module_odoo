@@ -1,10 +1,10 @@
-# Deltatech Sale Order Stage (localizat la `deltatech_sale_stage/index.md`)
+# Faze comenzi de vânzare (localizat la `deltatech_sale_stage/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_stage`
 - **Versiune:** `19.0.1.2.10`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_stage`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_stage`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-17`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -15,8 +15,8 @@ Acest modul ajută echipa de vânzări să țină sub control fiecare comandă p
 
 - **Vizibilitate completă pentru back-office:** fiecare comandă de vânzare afișează faza curentă sub forma unui badge colorat, ușor de identificat dintr-o privire.
 - **Configurare flexibilă a fazelor:** se pot defini oricâte faze sunt necesare, fiecare cu nume, culoare și secvență. Fazele se gestionează din Vânzări → Configurare → Faze comenzi de vânzare.
-- **Progresie automată a fazelor:** fazele avansează automat odată cu fluxul standard Odoo — ofertă trimisă → *Trimis*, comandă confirmată → *Confirmat*, comandă facturată → *Facturat*, comandă anulată → *Anulat*.
-- **Actualizare a fazei în funcție de livrare:** la validarea unei expedieri sau la schimbarea statusului de livrare (preluat de curier, livrat clientului, refuzat), faza comenzii de vânzare asociate se actualizează automat, fără intervenție manuală.
+- **Progresie automată a fazelor:** fazele avansează automat odată cu fluxul standard Odoo — ofertă trimisă → *Trimis*, comandă confirmată → *Confirmat*, comandă facturată (la validarea facturii, când comanda este complet facturată) → *Facturat*, comandă anulată → *Anulat*.
+- **Actualizare a fazei în funcție de livrare:** la validarea unei expedieri sau la schimbarea statusului de livrare (preluat de curier / în tranzit → *Expediat*, AWB generat → *Preavizat*, livrat clientului → *Livrat*, refuzat → *Refuzat*), faza comenzii de vânzare asociate se actualizează automat, fără intervenție manuală.
 - **Declanșare de acțiuni automate:** fiecărei faze i se poate atașa o acțiune de server opțională, care rulează automat când comanda intră în acea fază (notificări, actualizări de înregistrări, integrări).
 - **Impunerea fluxului de comandă:** dacă pe o comandă ciornă se setează manual o fază marcată ca *Confirmat*, comanda este confirmată automat; dacă se setează o fază marcată ca *Anulat*, comanda este anulată — păstrând datele consecvente.
 - **Căutare și grupare după fază:** comenzile de vânzare pot fi filtrate și grupate după fază direct din vizualizarea listă.
@@ -33,9 +33,10 @@ Acest modul ajută echipa de vânzări să țină sub control fiecare comandă p
 
 **Modele**
 
-- `sale.order.phase`: definește fazele personalizabile ale comenzii de vânzare (nume, culoare, secvență, acțiune de server opțională, marcaje de tip Confirmat/Anulat).
+- `sale.order.phase`: definește fazele personalizabile ale comenzii de vânzare (nume, culoare, secvență, acțiune de server opțională, marcaje de tip: trimis, confirmat, preavizat, expediat, livrat, refuzat, facturat, plătit, anulat).
 - `sale.order` (extins): adaugă faza curentă a comenzii, progresia automată pe flux și impunerea confirmării/anulării în funcție de fază.
 - `stock.picking.type` (extins): permite atribuirea unei faze implicite per tip de operațiune de depozit.
+- `account.move` (extins): la validarea facturii setează faza *Facturat* pe comenzile complet facturate.
 - `stock.picking` (extins): actualizează faza comenzii de vânzare la validarea livrării sau la schimbarea statusului de curierat.
 
 **Vizualizări**
@@ -50,4 +51,5 @@ Acest modul ajută echipa de vânzări să țină sub control fiecare comandă p
 #### 5. Conexiuni
 
 - [deltatech_marketplace_sale_stage](../deltatech_marketplace_sale_stage/index.md): depinde de acest modul, extinzând sistemul de faze pentru comenzile provenite din marketplace.
-- [deltatech_delivery_status](../deltatech_delivery_status/index.md): furnizează statusurile de curierat care declanșează schimbările automate de fază (preluat, AWB generat, livrat, refuzat).
+- [deltatech_sale_stage_route](../deltatech_sale_stage_route/index.md): depinde de acest modul (manifest).
+- [deltatech_delivery_status](../deltatech_delivery_status/index.md): furnizează câmpul `delivery_state` (verificat în cod), ale cărui valori declanșează schimbările automate de fază (preluat, AWB generat, livrat, refuzat).

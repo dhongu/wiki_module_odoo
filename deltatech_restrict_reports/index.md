@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_restrict_reports
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_restrict_reports`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-17`
 
 #### 1. Sumar
 
@@ -23,7 +23,7 @@ Modulul limitează accesul la rapoartele Analiză Vânzări (Vânzări > Raporta
 
 #### 4. Componente Cheie
 
-Modulul nu definește modele Python noi; funcționalitatea se implementează integral prin securitate declarativă (grupuri, reguli de înregistrare și restricția acțiunilor de meniu existente).
+Modulul nu conține cod Python (`__init__.py` gol, fără modele), deci se poate instala și pe Odoo Online; funcționalitatea se implementează integral prin securitate declarativă (grupuri, reguli de înregistrare și restricția acțiunilor de meniu existente).
 
 **Modele**
 

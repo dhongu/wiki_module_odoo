@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.2.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_web_kpi_cards
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_web_kpi_cards`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-11-17`
 
 #### 1. Sumar
 
@@ -19,7 +19,7 @@ Modul tehnic care oferă o bandă de carduri KPI, pe care alte module o așază 
 - Numere mari: de la 100.000 în sus, sumele și numărătorile se afișează în mii sau milioane (1,9M lei, 123,5k), cu formatul compact Odoo; `formatKpiAmount` și `formatKpiCount` sunt disponibile modulelor care construiesc cardurile, iar `title` (tooltip) poate purta valoarea exactă.
 - Un card are `key` (și atributul `data-card`), `label`, apoi `count` sau `amounts`, opțional `subtitle`, `title`, `icon` (clasă Font Awesome), opțional `delta`/`deltaLabel`, `progress`/`progressLabel`, `trend`, și `tone`: `info`, `success`, `warning`, `danger`, `purple`, `action` sau `slate` (implicit).
 - Convenții de utilizare: filtrele cardurilor stau într-un grup propriu în vizualizarea de căutare, cu `<separator/>` înainte și după; cardul și filtrul lui folosesc același domeniu pe server, astfel încât numărul de pe card este numărul de rânduri deschise la clic.
-- Nu adaugă modele, meniuri sau date; nu are nimic de configurat.
+- Nu adaugă modele, meniuri sau date; nu are nimic de configurat. Nu conține cod Python (doar front-end), deci se instalează și pe Odoo Online (insigna „Odoo Online” din bannerul Apps Store).
 
 #### 3. Dependențe
 
@@ -44,8 +44,8 @@ Modul tehnic care oferă o bandă de carduri KPI, pe care alte module o așază 
 #### 5. Conexiuni
 
 - [deltatech_customer_analysis](../deltatech_customer_analysis/index.md): tabloul de analiză a clienților folosește cardurile (îl are în `depends`).
-- [deltatech_sale_missions](../deltatech_sale_missions/index.md): tabloul de misiuni de vânzare folosește `KpiCards` (dependență indirectă, prin `deltatech_customer_analysis`).
 - [deltatech_delivery_dashboard](../deltatech_delivery_dashboard/index.md): tabloul de livrări, de unde au fost extrase cardurile (îl are în `depends`).
 - [deltatech_sale_dashboard](../deltatech_sale_dashboard/index.md): tabloul de vânzări (îl are în `depends`).
 - [deltatech_dashboard_builder](../deltatech_dashboard_builder/index.md): constructorul de tablouri de bord folosește cardurile (îl are în `depends`).
 - [deltatech_advanced_planner](../deltatech_advanced_planner/index.md): tabloul de planificare avansată folosește cardurile (îl are în `depends`).
+- [deltatech_financial_analysis](../deltatech_financial_analysis/index.md): analiza financiară folosește cardurile (îl are în `depends`).

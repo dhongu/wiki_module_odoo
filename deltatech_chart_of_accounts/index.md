@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.0.1.12`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chart_of_accounts
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_chart_of_accounts`
-- **Ultima Ingestie:** `2026-11-09`
+- **Ultima Ingestie:** `2026-11-17`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -52,6 +52,5 @@ Modulul aliniază soldurile conturilor din Odoo cu cele ale altui sistem contabi
 
 #### 5. Conexiuni
 
-- `account`: conturile, jurnalele, notele contabile și reconcilierile pe care modulul le folosește.
-- `l10n_ro`: planul de conturi RO (inclusiv contul 121000 de tip rezultat curent) și contabilitatea în roșu, activă implicit la firmele din România.
-- `base_import`: importul valorilor externe din CSV/Excel.
+- `account`: conturile, jurnalele, notele contabile și reconcilierile pe care modulul le folosește; modul „Potrivește totalurile debit/credit” scrie corecțiile ca note storno doar dacă firma are `account_storno` activ (contabilitate în roșu).
+- `base_import`: importul standard al valorilor externe din CSV/Excel; `load` și răspunsul de import sunt adaptate schemei așteptate de importul standard.

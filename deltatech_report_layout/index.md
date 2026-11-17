@@ -1,24 +1,26 @@
 # Report Layout (Aspecte personalizate pentru rapoarte)
 
 - **Nume Tehnic:** `deltatech_report_layout`
-- **Versiune:** `19.0.1.3.1`
+- **Versiune:** `19.0.1.3.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_report_layout
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_report_layout`
-- **Ultima Ingestie:** `2026-11-14`
+- **Ultima Ingestie:** `2026-11-17`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul adaugă în Odoo aspecte (layout-uri) de document suplimentare, cu un design modern și profesionist, pentru documentele tipărite: facturi, oferte, comenzi de achiziție și altele. Companiile își pot alege dintre ele stilul preferat, astfel încât toate documentele să păstreze o imagine de brand unitară.
+Modulul adaugă în Odoo opt aspecte (layout-uri) de document suplimentare, cu un design modern și profesionist, pentru documentele tipărite: facturi, oferte, comenzi de achiziție și altele. Companiile își pot alege dintre ele stilul preferat, astfel încât toate documentele să păstreze o imagine de brand unitară.
 
 #### 2. Funcționalități Cheie
 
-- Două aspecte noi de raport, **Style1** și **Style2**, cu antet, subsol și corp de document diferite față de cele standard Odoo.
-- Aspectele apar în configurarea centralizată a layout-ului documentelor, alături de cele standard; alegerea se face din **Setări > Setări generale**, secțiunea **Companii**, butonul **Configurare Document Layout**; cele două stiluri apar sub cele standard, cu previzualizare înainte de salvare.
-- Style1: sigla în stânga, adresa companiei aliniată la dreapta. Style2: adresa lângă siglă, antetul tabelului și totalul folosesc culoarea primară a companiei (culorile se pot schimba în același dialog).
+- Opt aspecte noi de raport: **Style1**, **Style2**, **Band**, **Modern**, **Title Box**, **Compact**, **Minimal** și **Accent**, fiecare cu antet, subsol și tabel proprii, diferite de cele standard Odoo.
+- Aspectele apar în configurarea centralizată a layout-ului documentelor, alături de cele standard; alegerea se face din **Setări > Setări generale**, secțiunea **Companii**, butonul **Configurare Document Layout**, cu previzualizare înainte de salvare.
+- Style1: sigla în stânga, adresa companiei aliniată la dreapta. Style2: adresa lângă siglă, antetul tabelului și totalul în culoarea primară a companiei.
+- Band: titlul documentului și numele companiei pe o bandă colorată pe toată lățimea, subsol sub formă de bandă colorată. Modern: sigla în stânga, titlul și datele companiei în dreapta, bară colorată pentru total. Title Box: titlul într-un chenar centrat, antetul tabelului colorat.
+- Compact: font mic, margini strânse și antet pe o singură linie, potrivit pentru documente cu multe linii. Minimal: alb-negru, fără fundaluri colorate, ieftin la tipărit (ignoră culorile companiei). Accent: bară colorată verticală pe marginea stângă a conținutului, titlu colorat.
+- Culorile urmează culoarea primară și secundară a companiei (mai puțin Minimal), modificabile în același dialog.
 - După salvare, toate rapoartele care folosesc layout-ul extern (facturi, comenzi de vânzare etc.) preiau stilul ales.
 - Stilurile (SCSS) sunt încărcate prin asset-urile standard de raport (`web.report_assets_common`), listate explicit în manifest (fără wildcard, cerință pentru import pe Odoo Online), deci sunt compatibile cu generarea PDF din Odoo.
-- Antetul afișează sigla și adresa/detaliile companiei din configurarea companiei.
 - Modul exclusiv de date (fără cod Python): poate fi instalat și pe Odoo Online (plan Custom), ca arhivă zip din **Aplicații > Import Module**, nu doar pe Odoo.sh sau on-premise.
 - Stadiu de dezvoltare: Production/Stable (folosit de mult timp la clienți).
 
@@ -30,13 +32,12 @@ Modulul adaugă în Odoo aspecte (layout-uri) de document suplimentare, cu un de
 
 **Modele**
 
-- `report.layout` (model standard, nu este extins): modulul adaugă două înregistrări de date, `report_layout_style1` (secvența 101) și `report_layout_style2` (secvența 102).
+- `report.layout` (model standard, nu este extins): modulul adaugă opt înregistrări de date, `report_layout_style1` ... `report_layout_style8` (secvențele 101-108), cu numele Style1, Style2, Band, Modern, Title Box, Compact, Minimal, Accent.
 
 **Vizualizări**
 
-- `external_layout_style1`: șablon QWeb pentru layout-ul Style1 (`views/report_template_style1.xml`).
-- `external_layout_style2`: șablon QWeb pentru layout-ul Style2 (`views/report_template_style2.xml`).
-- `static/src/scss/report_style1.scss` și `report_style2.scss`: stilurile asociate celor două layout-uri.
+- `external_layout_style1` ... `external_layout_style8`: șabloane QWeb pentru cele opt layout-uri (`views/report_template_style1.xml` ... `style8.xml`), fiecare cu un șablon `_css` asociat.
+- `static/src/scss/report_style1.scss` ... `report_style8.scss`: stilurile asociate layout-urilor.
 
 **Acțiuni Automate / Acțiuni Server**
 

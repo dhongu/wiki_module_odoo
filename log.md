@@ -4,6 +4,22 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-17] Re-ingestie: 49 module modificate după 14.11.2026
+
+- **Acțiune:** re-ingestie pentru 37 de module deja documentate și ingestie nouă pentru 12 (listate în [index.md](index.md)). Domeniul a fost ales de utilizator: doar modulele cu fișiere modificate după 14.11.2026, din cele 321 nedocumentate și documentate. Procesare în paralel, cu câte un subagent `documentarist-wiki` pe modul, în opt loturi.
+- **Sursă:** directoarele locale din `odoo-addons/` și `proiecte/`. Excepție: [terrabit_iap_server](terrabit_iap_server/index.md) a fost documentat din `origin/19.0`, pentru că checkout-ul local era în urmă cu 72 de commit-uri (19.0.0.1.11 local, 19.0.0.3.0 pe remote).
+- **Fișe consultant:** sincronizate cu `wiki_sync.sync_fisa` pentru modulele care au `readme/FISA_CONSULTANT.md`. Fișa a fost copiată manual, cu `cp`, la o parte dintre agenți, iar sincronizarea a confirmat-o.
+- **Dependențe/Conexiuni:** legăturile sunt doar cele verificate în manifeste sau în cod. Au fost scoase legăturile făcute prin analogie: `l10n_ro_zip`/`l10n_cz_zip` între modulele zip, `l10n_ro_anaf_partner`, `deltatech_ai_purchase_pdf`, `deltatech_sale_missions`, `deltatech_delivery_status`, `deltatech_price_change_label`, `terrabit_iap_server_anaf` din `terrabit_iap_anaf`, `l10n_ro_anaf_partner_online` din `deltatech_iap_online`.
+- **Avertismente:**
+  - `deltatech_qms` nu există în repo și nu a fost documentat.
+  - [deltatech_delivery_fc](deltatech_delivery_fc/index.md): fișa trimite la 11 capturi care lipsesc din modul. Linkurile sunt rupte până când capturile sunt generate.
+  - [deltatech_mcp_server](deltatech_mcp_server/index.md): pagina veche avea versiunea 19.0.1.15.7 din altă ramură. Pagina e aliniată la 19.0.1.15.4. Ramurile locale `19.0-imp-mcp-tools` și `19.0-imp-mcp-banner-ai` nu au fost verificate.
+  - [deltatech_partner_generic](deltatech_partner_generic/index.md): locul setării s-a mutat în Contabilitate > Setări.
+  - [agroamat_achizitii](agroamat_achizitii/index.md): suita apare cu owner `terrabit-ro`, nu `terrabit-solutions`. De verificat dacă repo-ul s-a mutat.
+  - [theme_terrabit](theme_terrabit/index.md) nu are git propriu în monorepo. Modificările au fost deduse din `HISTORY.md`.
+  - Suitele `l10n-czechia`, `l10n-france`, `l10n-germany`, `l10n-poland`, `l10n-slovakia` și `l10n-spain` nu erau în tabelul suită→repo. Linkurile au fost făcute după remote-ul real (`dhongu/...`).
+- **Fișiere actualizate:** paginile `index.md` ale modulelor din listă, `index.md`, `log.md` și `.index/chunks.json`.
+
 ## [2026-11-17] Sincronizare automată de noapte
 
 - **Versiuni aduse la zi** (61): `deltatech_chatter 19.0.0.1.4 → 19.0.0.1.5`, `deltatech_customer_map 19.0.1.1.8 → 19.0.1.1.10`, `deltatech_customer_segment 19.0.1.0.6 → 19.0.1.0.7`, `deltatech_delivery_category_price 19.0.1.0.7 → 19.0.1.0.8`, `deltatech_delivery_review 19.0.0.1.11 → 19.0.0.1.12`, `deltatech_delivery_status_review 19.0.0.1.12 → 19.0.0.2.0`, `deltatech_helpdesk_tag_primary 19.0.0.0.2 → 19.0.0.0.3`, `deltatech_iap_online 19.0.1.2.0 → 19.0.1.2.1`, `deltatech_invoice_product_filter 19.0.1.2.1 → 19.0.1.2.2`, `deltatech_list_view 19.0.1.1.2 → 19.0.1.1.3`, `deltatech_markdown_field 19.0.1.0.7 → 19.0.1.1.1`, `deltatech_marketplace 19.0.1.43.4 → 19.0.1.43.5`, `deltatech_mcp_server 19.0.1.15.7 → 19.0.1.16.1`, `deltatech_mrp_workorder_qty 19.0.1.0.0 → 19.0.1.0.1`, `deltatech_no_quick_create 19.0.2.1.1 → 19.0.2.1.2`, `deltatech_partner_match 19.0.1.3.1 → 19.0.1.3.2`, `deltatech_product_attribute 19.0.1.1.0 → 19.0.1.1.1`, `deltatech_report_layout 19.0.1.1.2 → 19.0.1.3.1`, `deltatech_saga 19.0.6.29.4 → 19.0.6.30.1`, `deltatech_sale_referrer_raport 19.0.1.0.5 → 19.0.1.1.0`, `deltatech_sale_stage 19.0.1.2.9 → 19.0.1.2.10`, `deltatech_saleorder_search 19.0.1.1.1 → 19.0.1.1.2`, `deltatech_website_sale_category 19.0.1.1.2 → 19.0.1.1.3`, `deltatech_website_searchbar_typing 19.0.1.1.1 → 19.0.1.2.1`, `deltatech_website_seo 19.0.1.1.6 → 19.0.1.1.7`, `deltatech_widget_hierarchy_m2o 19.0.1.0.4 → 19.0.1.1.1`, `deltatech_widget_many2one_badge 19.0.1.0.5 → 19.0.1.1.1`, `deltatech_work_days_report 19.0.0.0.13 → 19.0.0.0.15`, `l10n_ro_account_bank_statement_import_mt940_bt 19.0.0.2.2 → 19.0.0.2.3`, `l10n_ro_account_bank_statement_import_mt940_cec 19.0.0.2.4 → 19.0.0.2.5` și încă 31.

@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_widget_fontawesome
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_widget_fontawesome`
-- **Ultima Ingestie:** `2026-11-06`
+- **Ultima Ingestie:** `2026-11-17`
 
 #### 1. Sumar
 
@@ -16,6 +16,7 @@ Odoo stochează pictogramele Font Awesome ca simple nume de clase (de exemplu `f
 - **Un singur atribut**: se folosește în orice vizualizare formular sau listă prin `<field name="icon" widget="fontawesome"/>`.
 - Limitări: widgetul doar afișează pictograma, fără selector sau casetă de introducere, deci valoarea se setează din cod, prin import sau cu alt widget într-o altă vizualizare; câmpul nu trebuie să fie gol, deoarece tooltip-ul se construiește din valoarea stocată, iar o valoare goală generează o eroare JavaScript în vizualizare.
 - Descrierea din 19.0.1.0.3 corectează o formulare veche: widgetul este o previzualizare, nu un selector de pictograme.
+- Modulul nu conține cod Python și se instalează pe Odoo Online (marcaj în bannerul Apps Store, din 19.0.1.0.4).
 
 #### 3. Dependențe
 

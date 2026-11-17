@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.3.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_labels
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_labels`
-- **Ultima Ingestie:** `2026-10-28`
+- **Ultima Ingestie:** `2026-11-17`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -52,5 +52,4 @@ DESCRIPTION.md acoperă funcționalitățile; fluxul detaliat este în fișa con
 
 #### 5. Conexiuni
 
-- [deltatech_price_change_label](../deltatech_price_change_label/index.md): etichete din modificările de preț; calculul prețului cu taxe (`price_incl`) a fost mutat din acel modul în `deltatech_product_labels`.
 - Labelary (`api.labelary.com`, serviciu extern): transformă ZPL în PDF pentru **Previzualizare**.

@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_breadcrumb
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_breadcrumb`
-- **Ultima Ingestie:** `2026-10-22`
+- **Ultima Ingestie:** `2026-11-17`
 
 #### 1. Sumar
 

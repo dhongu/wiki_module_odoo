@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.2.7`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_tc
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_tc`
-- **Ultima Ingestie:** `2026-09-29`
+- **Ultima Ingestie:** `2026-11-17`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -24,6 +24,8 @@ Modulul este fundația tehnică pentru **Terrabit Connect** — agentul nativ, u
 - Parametri de sistem opționali: `deltatech_tc.claim_timeout_minutes` (15, `0` oprește recuperarea), `deltatech_tc.max_attempts` (3), `deltatech_tc.done_ttl_days` (30), `deltatech_tc.error_ttl_days` (90), `deltatech_tc.pending_ttl_hours` (0 = niciodată). Timeout-ul trebuie ținut peste durata celui mai lung job, altfel un job retry-safe încă în execuție poate rula de două ori.
 - Tip de job `http_request` — Odoo cere stației să apeleze un echipament accesibil doar în rețeaua locală (linie de sortare, cântar, PLC, server de etichete) și să raporteze răspunsul. Se pune în coadă cu `_tc_enqueue_http()`; răspunsul se citește cu `response_dict()` / `response_json()`. Apelul este asincron: rulează la următorul poll, deci butoanele interactive trebuie să afișeze o stare de așteptare.
 - Pe stația de lucru: heartbeat automat la pornire și apoi la 300 de secunde (interval fix); **polling-ul de job-uri este oprit implicit** și se activează cu `TERRABIT_POLL_JOBS=1` (interval `TERRABIT_POLL_SEC`, implicit 30, minim 5). Cât e oprit, job-urile rămân `pending`. Serverul limitează scrierea `last_seen` la una pe 60 de secunde.
+- Limba agentului: răspunsul la `/tc/heartbeat` conține `lang`, limba partenerului companiei stației (`en_US` dacă nu are). Terrabit Connect setat pe **Auto** o folosește pentru interfață: română pentru `ro_*`, engleză în rest; agenții mai vechi ignoră cheia. Interfața agentului este disponibilă în română și engleză.
+- Stația afișează driverul fiscal și dispozitivele simulate de Terrabit Connect (din heartbeat): panglică **Simulation** și avertisment pe formular, rânduri evidențiate în listă.
 - Model de conectare cloud, fără porturi de intrare — stația inițiază mereu conexiunea către Odoo; același agent servește instalări on-premise și cloud.
 - Notificare de tip browser (prin `bus`) către managerii Terrabit Connect la heartbeat manual.
 - Arhitectură extensibilă — modulele de funcționalitate adaugă tipuri de job (`selection_add` pe `job_type`) și transformă rezultatul în înregistrări de business prin hook-ul `_process_result`.

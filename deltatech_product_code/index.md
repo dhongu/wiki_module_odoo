@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.2.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_code
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_code`
-- **Ultima Ingestie:** `2026-10-22`
+- **Ultima Ingestie:** `2026-11-17`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -18,6 +18,9 @@ Acest modul îmbunătățește gestiunea produselor din Odoo, oferind instrument
   - „Internal prefix”: codul se construiește din prefixul intern (2 cifre, implicit `20`, intervalul GS1 rezervat uz intern) și din referința internă sau un număr aleatoriu.
   - „GS1 company prefix”: fiecare produs nou primește următorul GTIN-13 liber din intervalul prefixului de companie primit de la GS1 (6–11 cifre), cu cifra de control calculată automat. Se iau în calcul codurile de bare ale produselor și ale ambalajelor, inclusiv cele arhivate. Categoria afișează câte coduri mai sunt libere, iar la epuizarea intervalului se afișează o eroare.
 - Verificări de consistență pentru a preveni codurile de produs duplicate, ținând cont de companie. Unicitatea referinței interne se verifică în Python (nu printr-o constrângere SQL), pe șabloane și pe variante, inclusiv între un produs comun și unul al unei companii; conflictează doar produsele active, iar verificarea rulează o singură interogare per lot, deci importurile rămân rapide. Utilizatorii din grupul „Allow duplicate product codes” al modulului [deltatech_product_unique_code](../deltatech_product_unique_code/index.md) (dacă este instalat) pot salva coduri duplicate. Acțiunea „Find Duplicate” este disponibilă pe produs și pe variantă.
+- Referința internă goală (inclusiv șirul vid din importuri sau apeluri API) este tratată ca lipsă: codul se generează din secvența categoriei. O referință introdusă manual se păstrează, iar în acest caz nu se generează cod de bare. Un produs creat rapid (doar nume, fără categorie) nu primește cod.
+- Acțiunile din meniul „Acțiuni” al produsului sau al listei (selecție multiplă): „Force new internal code” atribuie un număr nou din secvență chiar dacă produsul are deja referință (codul de bare existent nu se schimbă); „Find Duplicate” listează din tot catalogul produsele care au aceeași referință cu alt produs (același status activ și aceeași companie), indiferent de produsul de la care e lansată; produsele fără referință apar dacă sunt cel puțin două. Salvarea a două produse active ale aceleiași companii cu aceeași referință este refuzată cu „Internal Reference already exists”.
+- Configurare pe categoria de produs (Inventar → Configurare → Categorii de produse, grupul „Products”): „Code Sequence” (poate fi creată direct cu „Create and Edit”), „Generate Barcode”, „Barcode Source”, „Barcode Random” (bifat implicit: cod intern aleatoriu; debifat: construit din cifrele referinței).
 - Suport atât pentru produse (șabloane), cât și pentru variantele de produs; butonul „New internal code” generează un cod nou din formular.
 
 #### 3. Dependențe

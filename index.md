@@ -3,7 +3,7 @@
 Acest fișier este catalogul central al tuturor modulelor documentate. Este menținut de asistentul LLM.
 
 ## Module
-
+- [agroamat_achizitii](agroamat_achizitii/index.md): Comenzi de achiziție Agroamat: data și scadența facturii furnizorului, coduri de furnizor și semnalarea produselor cerute pe oferte validate.
 - [deltatech](deltatech/index.md): Dependență tehnică de bază a suitei Deltatech: câmp `model_name` și widget de domeniu pe regulile de înregistrare, formular de modul curățat.
 - [deltatech_access](deltatech_access/index.md): Reguli pe grupuri de utilizatori care fac câmpurile din formularele și listele de produs readonly, required sau invisible, fără cod.
 - [deltatech_account](deltatech_account/index.md): Setare Anglo-Saxon Accounting (cost de vânzare la facturare) în setările de contabilitate și redenumiri de meniuri contabile.
@@ -189,6 +189,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_logistic_docs](deltatech_logistic_docs/index.md): Buton „Documents” pe comenzi, transferuri și facturi, care arată atașamentele documentelor înrudite din fluxul Comandă → Livrare → Factură.
 - [deltatech_lot](deltatech_lot/index.md): Generează automat numere de lot la recepțiile de la furnizor și afișează/caută locația fiecărui lot.
 - [deltatech_mail](deltatech_mail/index.md): Filtrează emailurile și le redirecționează către altă adresă (substituții de destinatar/expeditor, înlocuire text în mesaje, email companie ca expeditor).
+- [deltatech_mail_client](deltatech_mail_client/index.md): Client de e-mail generic IMAP/SMTP pentru Odoo. Momentan este doar un placeholder (Alpha, neinstalabil), cu plan de dezvoltare în 7 etape.
 - [deltatech_markdown_field](deltatech_markdown_field/index.md): Widget de câmp `markdown` cu editare WYSIWYG pentru câmpuri Text, stocând Markdown brut; conversie în browser și afișare sanitizată.
 - [deltatech_marketplace](deltatech_marketplace/index.md): Conectorul de bază pentru marketplace-uri: backend, legături produse/clienți, export de stoc și preț, coadă de joburi și jurnal centralizat.
 - [deltatech_marketplace_brand](deltatech_marketplace_brand/index.md): Mapează brandurile de produs pe fiecare marketplace conectat, pentru reprezentare unitară a brandului.
@@ -457,6 +458,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_watermark](deltatech_watermark/index.md): Imaginea de filigran a companiei, încărcată o singură dată în Setări generale și folosită de alte module (ex. filigran pe pozele de produs din website).
 - [deltatech_web_kpi_cards](deltatech_web_kpi_cards/index.md): Bandă reutilizabilă de carduri KPI pentru vizualizările backend, cu variație față de perioada anterioară, progres spre țintă și tendință; clic pe card activează filtrul corespunzător.
 - [deltatech_web_scan](deltatech_web_scan/index.md): Bază tehnică pentru citirea sigură și politicoasă a paginilor de produs de pe web (schema.org, selectori, verificări de produs și de salt de preț, istoric).
+- [deltatech_web_side_panel](deltatech_web_side_panel/index.md): Panou lateral în dreapta listelor și kanban-urilor, care afișează formularul înregistrării selectate fără a părăsi ecranul; redimensionabil, cu navigare între înregistrări.
 - [deltatech_website_access_design](deltatech_website_access_design/index.md): Restrânge meniurile Contacte, Vânzări și Facturare la un grup de acces intern, pentru ca un web designer să lucreze doar pe website.
 - [deltatech_website_blog](deltatech_website_blog/index.md): Sortează implicit articolele de blog după data publicării, cele mai noi primele.
 - [deltatech_website_breadcrumb](deltatech_website_breadcrumb/index.md): Breadcrumb pe pagina de produs din magazinul online, cu categoriile părinte și opțiune per website pentru ascunderea numelui produsului.
@@ -472,6 +474,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_website_fixed_price](deltatech_website_fixed_price/index.md): Face ca magazinul online să afișeze reducerea (prețul vechi barat) și pentru regulile de listă de prețuri cu preț fix.
 - [deltatech_website_floating_widgets](deltatech_website_floating_widgets/index.md): Butoane de contact flotante pe marginea site-ului (telefon, e-mail, WhatsApp, rețele sociale), configurabile din backend, cu vizibilitate separată pe desktop și mobil.
 - [deltatech_website_indexnow](deltatech_website_indexnow/index.md): Anunță Bing și celelalte motoare IndexNow ce pagini ale site-ului s-au publicat sau modificat, pentru reindexare rapidă (cheie servită de Odoo, trimitere orară și la cerere).
+- [deltatech_website_legal_guarantee](deltatech_website_legal_guarantee/index.md): Afișează pe site notificarea UE armonizată privind garanția legală de conformitate (pagina /garantie, linkuri în subsol, pe pagina de produs și la checkout), în toate limbile UE.
 - [deltatech_website_llms_txt](deltatech_website_llms_txt/index.md): Publică `/llms.txt` pe site-ul Odoo, un rezumat Markdown generat din pagini, categorii de magazin și contact, pe care asistenții AI îl citesc ca să înțeleagă site-ul.
 - [deltatech_website_pager_guard](deltatech_website_pager_guard/index.md): Returnează 404 pentru paginile de listare din magazin dincolo de ultima pagină reală și pentru un `?order=` invalid, în loc de 200 cu conținut duplicat sau 500, ca să oprească crawlerele care cer pagini inexistente.
 - [deltatech_website_phone_validation](deltatech_website_phone_validation/index.md): Validează și normalizează în format internațional numerele de telefon introduse la checkout-ul eCommerce.
@@ -505,7 +508,12 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_widget_hierarchy_m2o](deltatech_widget_hierarchy_m2o/index.md): Widget OWL pentru câmpuri many2one care permite alegerea dintr-un arbore părinte/copil expandabil, cu încărcare la cerere și căutare pe tot arborele.
 - [deltatech_widget_many2one_badge](deltatech_widget_many2one_badge/index.md): Widget care afișează câmpurile Many2one ca badge-uri colorate, cu selector de culoare salvat pe înregistrarea relaționată.
 - [deltatech_work_days_report](deltatech_work_days_report/index.md): Generează rapoarte Excel pentru prezența angajaților și gestionarea tichetelor de masă.
+- [l10n_cz_zip](l10n_cz_zip/index.md): Localități cehe cu cod poștal și regiune (GeoNames), cu completarea automată a orașului și a regiunii din PSČ pe contacte.
+- [l10n_de_zip](l10n_de_zip/index.md): Localități germane cu cod poștal și land (GeoNames); completează orașul și regiunea pe adresele din Germania pornind de la codul poștal, cu acțiune în masă și cron pentru contactele existente.
+- [l10n_es_zip](l10n_es_zip/index.md): Localități spaniole cu cod poștal și regiune (GeoNames), cu completarea automată a orașului și a regiunii din codul poștal.
+- [l10n_fr_zip](l10n_fr_zip/index.md): Localități franceze cu cod poștal și regiune (GeoNames); completează orașul și regiunea adreselor din codul poștal și leagă contactele existente.
 - [l10n_md](l10n_md/index.md): Localizare contabilă pentru Republica Moldova: plan de conturi (Ordinul MF 119/2013), TVA 20%/8%/0%, jurnale, poziții fiscale, bănci locale și câmpurile IDNO/IBAN pe companie.
+- [l10n_pl_zip](l10n_pl_zip/index.md): Localități poloneze cu cod poștal și regiune (GeoNames), cu oraș și regiune completate automat din codul poștal pe adresele din Polonia.
 - [l10n_ro_account_bank_statement_import_ing_csv](l10n_ro_account_bank_statement_import_ing_csv/index.md): Importă fișierele „Istoric conturi" (CSV) exportate din ING Business direct ca extrase de cont, fără nicio prelucrare manuală, cu detecție automată a fișierului, solduri și date de contrapartidă pentru reconciliere.
 - [l10n_ro_account_bank_statement_import_mt940_bt](l10n_ro_account_bank_statement_import_mt940_bt/index.md): Import de extrase de cont în format MT940 de la Banca Transilvania, cu recunoașterea automată a partenerului după CIF.
 - [l10n_ro_account_bank_statement_import_mt940_cec](l10n_ro_account_bank_statement_import_mt940_cec/index.md): Import de extrase de cont în format MT940 de la CEC Bank, cu recunoaștere automată a băncii (BIC `CECEROBU`) și asocierea partenerilor după CUI.
@@ -685,6 +693,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_sgr](l10n_ro_sgr/index.md): SGR complet: garanții încasate pe 462 și plătite pe 461, taxă în afara sferei TVA (categoria E în e-Factura), raport sold, situația ambalajelor, returnare ambalaje și autofactură RetuRO.
 - [l10n_ro_shareholder_loan](l10n_ro_shareholder_loan/index.md): Evidența împrumuturilor de la asociați pe bază de contract de creditare: tranșe și rambursări legate din casă și bancă, sold pe asociat, contract PDF.
 - [l10n_ro_sod_matrix](l10n_ro_sod_matrix/index.md): Matrice de segregare a atribuțiilor (SoD) pentru detectarea și gestionarea conflictelor de roluri.
+- [l10n_ro_stock_account](l10n_ro_stock_account/index.md): Contabilitate de stoc conform standardelor românești, cu conturi pe locație, FIFO pe locație, compensare automată a stocului negativ și evaluare simetrică a livrărilor dropship.
 - [l10n_ro_stock_account_check](l10n_ro_stock_account_check/index.md): Verifică valoarea stocului din mișcările de stoc față de soldul contabil, pe produs și cont de evaluare, și oferă acțiuni de corectare a diferențelor.
 - [l10n_ro_stock_account_enhancement](l10n_ro_stock_account_enhancement/index.md): Controale contabile pe stoc: blochează mișcările de stoc cu preț unitar zero și confirmarea facturilor cu produse stocabile fără comandă (SO/PO), opțional.
 - [l10n_ro_stock_account_landed_cost_account](l10n_ro_stock_account_landed_cost_account/index.md): Stabilește conturile contabile ale costurilor suplimentare de achiziție din locațiile de stoc, cu metodă opțională prin cont intermediar, inclusiv în roșu cu Storno accounting.
@@ -725,6 +734,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_wip_closing](l10n_ro_wip_closing/index.md): Evaluare și stornare în roșu a producției în curs (331/711) la 1 a lunii următoare, conform OMFP 1802/2014, cu PV PDF și audit trail.
 - [l10n_ro_zip](l10n_ro_zip/index.md): Nomenclator de circa 73.000 de coduri poștale românești legat de județ și localitate, cu căutare după stradă pe partener, care completează codul, localitatea, județul și țara.
 - [l10n_ro_zip_osm](l10n_ro_zip_osm/index.md): Străzile a 269 de orașe mici din România (cu un singur cod poștal), din OpenStreetMap, adăugate în nomenclatorul de coduri poștale din l10n_ro_zip.
+- [l10n_sk_zip](l10n_sk_zip/index.md): Localități slovace cu cod poștal și regiune (GeoNames); completează automat orașul și regiunea adreselor din Slovacia pe baza codului poștal și leagă contactele existente.
 - [terrabit_ai_olg](terrabit_ai_olg/index.md): Furnizor Odoo OLG (serviciu text găzduit de Odoo) pentru agenți AI conversaționali, fără cheie OpenAI sau Gemini.
 - [terrabit_base](terrabit_base/index.md): Metapachet care instalează setul de bază Odoo (stocuri, vânzări, achiziții, contabilitate) plus localizarea română și extensiile Terrabit.
 - [terrabit_clean_chatter](terrabit_clean_chatter/index.md): Curăță automat chatter-ul tichetelor helpdesk (și al task-urilor și lead-urilor) de citate, semnături și disclaimere, deduplică atașamentele și permite rollback.
@@ -760,3 +770,4 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [terrabit_web_editor_ai](terrabit_web_editor_ai/index.md): Reactivează asistentul AI (OLG) pentru generarea și reformularea textului în editorul HTML și în compunerea emailurilor, ca în Odoo 18.
 - [terrabit_web_editor_ai_enterprise](terrabit_web_editor_ai_enterprise/index.md): Punte Enterprise care alege, după configurare, între asistentul AI OLG (serviciul găzduit de Odoo) și cel nativ `ai` (cheie proprie), ca editorul să aibă un singur asistent.
 - [terrabit_website_sale_tracking_base](terrabit_website_sale_tracking_base/index.md): Fundație pentru tracking eCommerce (Meta, TikTok, Google): setări globale Item ID Type și Exclude Delivery, evenimente DOM normalizate și payload îmbogățit.
+- [theme_terrabit](theme_terrabit/index.md): Tema website-ului terrabit.ro, cu paleta verde Terrabit, fonturi Manrope/Roboto, colțuri pătrate, pagini de conținut și optimizări SEO.

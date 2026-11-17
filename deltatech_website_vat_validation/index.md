@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.0.3.0`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_vat_validation`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_vat_validation`
-- **Ultima Ingestie:** `2026-10-12`
+- **Ultima Ingestie:** `2026-11-17`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -20,6 +20,7 @@ Acest modul îmbunătățește validarea codului de TVA și a adresei de e-mail 
 - Verificarea e-mailului: o adresă aparținând altui cont cere autentificarea cu acel cont sau folosirea altei adrese
 - Firma proprie a clientului și contactele ei nu sunt considerate duplicate; telefonul nu se mai verifică (colegii folosesc același telefon)
 - Mesajele nu dezvăluie niciodată contul găsit
+- Firmă creată la checkout: o persoană care completează în adresa de facturare denumirea firmei și codul de TVA cumpără pentru acea firmă. Firma este creată ca partener (companie, cu adresa și codul introduse), persoana devine contactul ei, iar comanda și factura merg către firmă; doar pentru un cod de TVA pe care niciun alt client nu îl are, iar un vizitator care tastează codul unui client existent nu este atașat acelei firme
 - Păstrarea opțiunii „Display Product Prices” a website-ului la recalcularea țării fiscale a companiei (nu se mai resetează tăcut la `tax_excluded`)
 - La actualizare, o bază de date care avea verificarea ANAF (`l10n_ro_partner_create_by_vat` instalat) primește automat `l10n_ro_website_anaf`, dacă l10n-romania este în addons path; altfel se scrie un avertisment în log
 
@@ -29,10 +30,10 @@ Acest modul îmbunătățește validarea codului de TVA și a adresei de e-mail 
 
 #### 4. Componente Cheie
 
-Sumarul și funcționalitățile provin din `readme/DESCRIPTION.md` și `readme/HISTORY.md`; analiza detaliată a codului este omisă, conform fluxului de ingestie (modulul nu are modele noi, vizualizări sau acțiuni automate; extinde un controller și modelul `website`).
+Sumarul și funcționalitățile provin din `readme/DESCRIPTION.md`, completate din `readme/USAGE.md`; analiza detaliată a codului este omisă, conform fluxului de ingestie. Modulul nu are modele noi, vizualizări sau acțiuni automate; extinde controllerul `WebsiteSale` (validarea adresei și crearea firmei cumpărătoare) și modelul `website`.
 
 #### 5. Conexiuni
 
-- `website_sale`: modulul standard de e-commerce Odoo pe care îl extinde (`_validate_address_values`) pentru validarea la checkout și în portal.
+- `website_sale`: dependența din manifest; este extins `WebsiteSale` (`_validate_address_values`, `_create_or_update_address`) pentru validarea la checkout și în portal.
 - [deltatech_b2b_portal](../deltatech_b2b_portal/index.md): dacă este instalat, mesajul de TVA duplicat trimite clientul la formularul de cerere de acces `/b2b`.
-- `l10n_ro_website_anaf` (l10n-romania): verificările românești ale codului fiscal (ANAF, CNP, firmă radiată), mutate din acest modul.
+- [l10n_ro_website_anaf](../l10n_ro_website_anaf/index.md): verificările românești ale codului fiscal (ANAF, CNP, firmă radiată), mutate din acest modul; scriptul de migrare îl instalează la actualizarea unei baze care avea `l10n_ro_partner_create_by_vat`.
