@@ -1,7 +1,7 @@
 # Courier AWB for Odoo Online (localizat la `deltatech_delivery_online/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_online`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_online
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_online`
 - **Ultima Ingestie:** `2026-11-14`

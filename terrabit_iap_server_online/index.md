@@ -1,7 +1,7 @@
 # IAP Server - Odoo Online Services (localizat la `terrabit_iap_server_online/index.md`)
 
 - **Nume Tehnic:** `terrabit_iap_server_online`
-- **Versiune:** `19.0.1.3.1`
+- **Versiune:** `19.0.1.4.0`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_online
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server_online`
 - **Ultima Ingestie:** `2026-11-14`

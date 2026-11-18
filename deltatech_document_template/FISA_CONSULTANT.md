@@ -30,9 +30,12 @@ cel care scrie șablonul, nu de modul.
 Context operațional:
 - documentul generat e unic pe pereche **șablon + înregistrare**: un al doilea document pentru același
   partener și același șablon e refuzat;
-- după **Validare**, conținutul nu mai poate fi modificat decât după **Resetează la ciornă**;
+- după **Validare**, conținutul, șablonul, înregistrarea țintă și data emisiunii nu mai pot fi
+  modificate decât după **Resetează la ciornă**;
 - PDF-ul tipărit se păstrează ca atașament pe înregistrarea țintă, deci rămâne la dosarul partenerului
-  sau al documentului de business.
+  sau al documentului de business;
+- un șablon care are deja documente generate nu își mai poate schimba **Model resursă** și nu poate fi
+  șters cât timp documentele există.
 
 ## 3. Utilizatori și roluri
 
@@ -45,11 +48,23 @@ Modulul nu adaugă grupuri proprii. Drepturile vin din grupurile standard:
 
 Conținutul secțiunilor se execută ca cod QWeb la generare, de aceea doar administratorii îl pot
 modifica. Un utilizator intern care încearcă primește mesajul standard de acces refuzat al Odoo.
-Validarea și resetarea la ciornă sunt la îndemâna oricărui utilizator intern: modulul nu are aprobare
-pe niveluri. La generare, utilizatorul trebuie să aibă drept de citire pe
-înregistrarea țintă: secțiunile se randează cu drepturile lui, fără privilegii suplimentare. Opțiunea
-din meniul **Tipărire** cere în plus drept de **modificare** pe înregistrarea țintă (regula Odoo
-pentru acțiunile server fără grup); un utilizator care doar citește înregistrarea nu o poate folosi.
+Validarea și resetarea la ciornă le poate face orice utilizator intern care poate modifica documentul
+(drept de modificare pe înregistrarea țintă sau creatorul documentului, vezi mai jos): modulul nu are
+aprobare pe niveluri.
+
+Accesul la un document generat urmează accesul la înregistrarea țintă:
+- un utilizator vede (în listă, în formular și pe pagina web) doar documentele ale căror înregistrări
+  țintă le poate citi; secțiunile se randează cu drepturile lui, fără privilegii suplimentare;
+- modificarea sau ștergerea unui document cere drept de **modificare** pe înregistrarea țintă; cel care
+  a creat documentul are nevoie doar de drept de citire;
+- un document fără înregistrare țintă e vizibil doar celui care l-a creat; un document a cărui
+  înregistrare țintă a fost ștearsă e vizibil doar administratorilor;
+- PDF-ul se atașează pe înregistrarea țintă doar dacă utilizatorul are drept de modificare pe ea; altfel
+  PDF-ul se descarcă, dar nu se atașează.
+
+Opțiunea din meniul **Tipărire** cere drept de **modificare** pe înregistrarea țintă (regula Odoo pentru
+acțiunile server fără grup); un utilizator care doar citește înregistrarea nu o poate folosi.
+Administratorii (`base.group_system`) nu au aceste restricții.
 
 Roluri recomandate pentru testare: un administrator (pașii 1–4) și un utilizator intern fără drepturi
 de administrare (pașii 5–10).
@@ -76,6 +91,10 @@ Date minime pentru demo:
    (**Setări → Tehnic → Interfață utilizator → Vizualizări**, tip QWeb). Pentru secțiunile de tip
    **Raport**, raportul trebuie să fie definit pe același model ca șablonul.
 
+4. La actualizarea de la o versiune anterioară, reînregistrați șabloanele în meniul **Tipărire**
+   (**Elimină din meniul 'Print'**, apoi **Adaugă în meniul 'Print'**), ca acțiunea să aplice noile
+   reguli de acces. Prima tipărire a unui document existent creează un atașament PDF nou, lângă cel vechi.
+
 Nu există alte setări.
 
 ## 6. Flux de utilizare
@@ -94,9 +113,14 @@ generează documentul. Apăsați **Nou(ă)** pentru un șablon nou sau deschide�
 ### Pasul 2 — Șablonul și secțiunile lui
 
 În formularul șablonului completați:
-- **Nume** — apare în meniul **Tipărire** și în numele documentelor generate;
+- **Nume** (obligatoriu) — apare în meniul **Tipărire** și în numele documentelor generate;
 - **Model resursă** — numele tehnic al modelului (de exemplu `res.partner`, `sale.order`). Câmpul e
-  text liber: scrieți exact numele tehnic, altfel înregistrarea în meniul **Tipărire** dă eroare.
+  text liber: scrieți exact numele tehnic; un model inexistent e refuzat la salvare cu „Model
+  necunoscut: …”. După ce șablonul are documente generate, modelul nu se mai poate schimba: creați un
+  șablon nou.
+
+Schimbarea numelui sau a modelului actualizează și opțiunea din meniul **Tipărire**. Ștergerea
+șablonului scoate opțiunea din meniu; un șablon care are documente generate nu poate fi șters.
 
 În tabul **Secțiuni**, adăugați rândurile cu **Adaugă o linie**, în ordinea din document (le puteți
 reordona prin tragere). Pentru fiecare secțiune: **Nume**, **Tip conținut** (HTML, Raport sau
@@ -158,7 +182,7 @@ din șablon.
 
 Administratorii pot crea documentul și manual, din **Setări → Tehnic → Șabloane de document →
 Documente Generate → Nou(ă)** (modul dezvoltator), alegând șablonul și înregistrarea țintă. Un al doilea document pentru aceeași
-pereche șablon + înregistrare este refuzat.
+pereche șablon + înregistrare este refuzat. **Generează** funcționează doar din starea **Ciornă**.
 
 ![Documentul nou Contract de prestări servicii: Alfa Construct SRL, în starea Ciornă: câmpul Șablon (1), ID Resursă Alfa Construct SRL (2), butonul Generează (3) și tabul Conținut gol](screenshots/06_document_nou.png)
 
@@ -166,8 +190,9 @@ pereche șablon + înregistrare este refuzat.
 
 Starea devine **Generat**. Citiți conținutul pe ecran înainte de a merge mai departe:
 - antetul are datele partenerului ales (**Alfa Construct SRL**, CUI **RO18547290**, Cluj-Napoca),
-  nu expresiile `o.name`, `o.vat` din șablon. Dacă apar expresiile sau cod QWeb, secțiunea nu s-a
-  putut randa: Odoo pune atunci textul brut al secțiunii, fără mesaj de eroare (vezi secțiunea 9);
+  nu expresiile `o.name`, `o.vat` din șablon. O secțiune care nu se poate randa (expresie greșită,
+  câmp inexistent) oprește generarea cu mesajul „Secțiunea „…” nu a putut fi randată: …”, iar
+  documentul rămâne în **Ciornă** (vezi secțiunea 9);
 - secțiunile sunt în ordinea din șablon: antet, obiectul contractului, anexa;
 - paragraful condiționat (`t-if="o.email"`) apare doar dacă partenerul are e-mail;
 - tabelul anexei are datele partenerului.
@@ -184,9 +209,11 @@ pasul 10) sunt în partea de sus a formularului. Când conținutul e corect, ap�
 
 ### Pasul 8 — Documentul validat
 
-În starea **Validat**, **Conținut** devine needitabil. Orice modificare cere **Resetează la
-ciornă**; o scriere a conținutului pe un document validat e refuzată cu „You cannot modify the Body
-after validation. Reset to Draft first.” **Tipărește PDF** rămâne disponibil.
+În starea **Validat**, **Conținut**, **Șablon**, **ID Resursă** și **Data emisiunii** devin
+needitabile. Orice modificare cere **Resetează la ciornă**; o scriere a acestor câmpuri pe un document
+validat e refuzată cu „Nu puteți modifica un document validat. Resetați-l mai întâi la ciornă.”
+**Validează** funcționează doar din starea **Generat**, iar **Resetează la ciornă** din **Generat** sau
+**Validat**. **Tipărește PDF** rămâne disponibil.
 
 ![Documentul în starea Validat, evidențiată pe bara de stare (1), cu butoanele Resetează la ciornă (2) și Tipărește PDF; conținutul contractului afișat needitabil](screenshots/08_document_validat.png)
 
@@ -198,8 +225,11 @@ suplimentare. Verificați pe PDF că datele partenerului sunt complete și că a
 Saltul de pagină se vede doar în fișierul PDF descărcat; captura de mai jos arată conținutul continuu.
 
 Fișierul se atașează automat partenerului, cu numele documentului
-(`Contract de prestări servicii: Alfa Construct SRL.pdf`; un „/” din nume se înlocuiește cu „-”). O nouă tipărire
-înlocuiește atașamentul cu același nume, nu creează altul.
+(`Contract de prestări servicii: Alfa Construct SRL.pdf`; un „/” din nume se înlocuiește cu „-”), iar
+câmpul **PDF tipărit** de pe document arată atașamentul. O nouă tipărire actualizează același atașament,
+nu creează altul; alte fișiere ale partenerului, chiar cu același nume, rămân neatinse. Atașarea se
+face doar dacă utilizatorul are drept de modificare pe partener. Dacă PDF-ul nu se poate genera (de
+exemplu wkhtmltopdf lipsă), apare mesajul „Generarea PDF-ului a eșuat: …”.
 
 ![PDF-ul documentului: antetul companiei Demo Servicii SRL cu adresa și CUI-ul, titlul CONTRACT DE PRESTĂRI SERVICII, beneficiarul Alfa Construct SRL, obiectul contractului, tabelul Anexa 1 și subsolul companiei](screenshots/09_document_pdf.png)
 
@@ -214,7 +244,8 @@ română. Agrafa din chatter deschide caseta **Fișiere**, cu PDF-ul atașat la 
 **Deschide vizualizarea web** afișează documentul ca pagină a site-ului, cu antetul companiei. În
 stările **Ciornă** și **Generat**, pagina marchează conținutul ca editabil pentru utilizatorul cu
 drept de modificare, prin editorul site-ului. Pe un document validat, pagina afișează mesajul că documentul nu mai
-poate fi editat. Pagina folosește limba site-ului, nu pe cea a utilizatorului; antetul companiei
+poate fi editat. Un utilizator fără acces la înregistrarea țintă primește pagina „negăsit” (404).
+Pagina folosește limba site-ului, nu pe cea a utilizatorului; antetul companiei
 apare de două ori (cel al site-ului și cel al documentului).
 
 ![Pagina web a documentului validat, în cadrul site-ului în română: antetul companiei, titlul Contract de prestări servicii: Alfa Construct SRL, conținutul contractului cu tabelul anexei și mesajul Acest document este validat și nu poate fi editat](screenshots/11_pagina_web.png)
@@ -249,30 +280,38 @@ Ce rămâne manual: scrierea șabloanelor și a secțiunilor, înregistrarea șa
 - [ ] După **Generează**, conținutul are datele înregistrării (nume, CUI, adresă), nu expresiile `o.name`, `o.vat`.
 - [ ] Secțiunile apar în ordinea din șablon; paragraful cu `t-if` apare doar când condiția e adevărată.
 - [ ] Pe PDF, secțiunea care urmează după o secțiune cu **Salt de pagină după** începe pe pagină nouă.
-- [ ] În starea **Validat**, conținutul nu se poate modifica; după **Resetează la ciornă**, da.
-- [ ] **Tipărește PDF** atașează PDF-ul pe înregistrarea țintă; o retipărire înlocuiește atașamentul.
+- [ ] În starea **Validat**, conținutul, șablonul, înregistrarea țintă și data emisiunii nu se pot modifica; după **Resetează la ciornă**, da.
+- [ ] **Tipărește PDF** atașează PDF-ul pe înregistrarea țintă și completează **PDF tipărit**; o retipărire actualizează același atașament.
 - [ ] Chatterul înregistrării țintă are nota cu legătura către documentul generat.
 - [ ] Un al doilea document pentru același șablon și aceeași înregistrare este refuzat.
 - [ ] Un utilizator intern fără drepturi de administrare nu poate modifica conținutul unei secțiuni, dar poate genera și tipări documente.
+- [ ] Un utilizator fără drept de citire pe înregistrarea țintă nu vede documentul generat pentru ea, nici în listă, nici pe pagina web.
+- [ ] Un șablon cu documente generate nu își poate schimba **Model resursă** și nu poate fi șters.
 
 ## 9. Mesaje de eroare frecvente
 
-Mesajele modulului sunt în engleză; unele nu au traducere în română.
+Mesajele modulului sunt scrise în engleză și au traducere în română; tabelul le dă în română, cum apar
+în interfața română.
 
 | Mesaj | Cauză | Remediere |
 |---|---|---|
-| „Only one generated document is allowed per Template and Target record.” | Există deja un document din același șablon pentru aceeași înregistrare | Deschideți documentul din meniul **Tipărire** al înregistrării: se deschide cel existent |
+| „Este permis un singur document generat pentru fiecare Șablon și înregistrare țintă.” | Există deja un document din același șablon pentru aceeași înregistrare | Deschideți documentul din meniul **Tipărire** al înregistrării: se deschide cel existent |
 | Acces refuzat la modificarea unei secțiuni | Un utilizator intern (doar drept de citire pe secțiuni) modifică o secțiune | Modificarea o face un administrator |
-| „Only administrators can edit the content of document template sections.” | Un utilizator care a primit drept de scriere pe secțiuni printr-un grup propriu, dar nu e administrator, modifică conținutul, tipul, raportul sau vizualizarea | Modificarea conținutului o face un administrator |
-| „You cannot modify the Body after validation. Reset to Draft first.” | Modificare de conținut pe un document **Validat** | **Resetează la ciornă**, corectați, generați sau validați din nou |
-| Eroare de server cu „Please set a Resource Model on the template.” sau „Unknown model: …” | **Adaugă în meniul 'Print'** pe un șablon fără **Model resursă** sau cu un nume de model greșit | Completați numele tehnic exact al modelului (ex. `res.partner`) |
-| Eroare la **Adaugă în meniul 'Print'** pe un șablon fără nume | Acțiunea din meniul **Tipărire** primește numele șablonului, iar numele lipsește | Completați **Nume** pe șablon, apoi reîncercați |
-| „Cannot print document: Target Model and Target ID are not set.” | **Tipărește PDF** pe un document fără înregistrare țintă | Completați **ID Resursă** |
-| „You don't have enough access rights to run this action.” la alegerea șablonului din meniul **Tipărire** | Utilizatorul nu are drept de modificare pe înregistrarea țintă | Acordați dreptul sau deschideți documentul cu un utilizator care îl are |
-| Eroare de acces la generare sau la salvarea documentului | Utilizatorul nu are drept de citire pe înregistrarea țintă | Generarea o face un utilizator cu acces la înregistrare |
-| Fără mesaj: în conținut apar expresii QWeb sau textul brut al secțiunii | Secțiunea nu s-a putut randa (expresie greșită, câmp inexistent, vizualizare sau raport cu eroare); eroarea ajunge doar în jurnalul serverului | Corectați secțiunea, apoi **Resetează la ciornă** și **Generează** |
-| Atașamentul PDF lipsește de pe înregistrare, iar descărcarea afișează eroarea de randare a Odoo | Randarea PDF a eșuat (de exemplu wkhtmltopdf lipsă); eșecul atașării ajunge doar în jurnalul serverului | Verificați instalarea wkhtmltopdf pe server |
-| Fără mesaj: nota cu legătura nu apare în chatterul înregistrării țintă | Postarea notei a eșuat: documentul a fost creat manual, din **Documente Generate**, de un utilizator fără drept de modificare pe înregistrare, sau modelul țintă nu are chatter; eroarea ajunge doar în jurnalul serverului | Legătura se poate adăuga manual; documentul se găsește și din meniul **Tipărire** al înregistrării |
+| „Doar administratorii pot modifica conținutul secțiunilor de șablon.” | Un utilizator care a primit drept de scriere pe secțiuni printr-un grup propriu, dar nu e administrator, modifică conținutul, tipul, raportul sau vizualizarea | Modificarea conținutului o face un administrator |
+| „Nu puteți modifica un document validat. Resetați-l mai întâi la ciornă.” | Modificare de conținut, șablon, înregistrare țintă sau dată a emisiunii pe un document **Validat** | **Resetează la ciornă**, corectați, generați sau validați din nou |
+| „Generează nu este posibil pentru … în starea …” (la fel pentru **Validează** și **Resetează la ciornă**) | Acțiunea nu e permisă din starea curentă a documentului | **Generează** din **Ciornă**, **Validează** din **Generat**, **Resetează la ciornă** din **Generat** sau **Validat** |
+| „Model necunoscut: …” | Salvarea unui șablon sau **Adaugă în meniul 'Print'** cu un nume de model greșit | Completați numele tehnic exact al modelului (ex. `res.partner`) |
+| „Completați Modelul resursă pe șablon.” | **Adaugă în meniul 'Print'** pe un șablon fără **Model resursă** | Completați **Model resursă** |
+| „Nu puteți schimba modelul unui șablon care are deja documente generate. Creați un șablon nou.” | Schimbarea **Model resursă** pe un șablon folosit | Creați un șablon nou pe noul model |
+| „Nu puteți șterge un șablon care are încă documente generate. Ștergeți mai întâi documentele generate.” | Ștergerea unui șablon folosit | Ștergeți întâi documentele generate din el |
+| „Documentul nu poate fi tipărit: Modelul țintă și ID-ul țintă nu sunt setate.” | **Tipărește PDF** pe un document fără înregistrare țintă | Completați **ID Resursă** |
+| „Nu aveți suficiente drepturi de acces pentru a rula această acțiune.” la alegerea șablonului din meniul **Tipărire** | Utilizatorul nu are drept de modificare pe înregistrarea țintă | Acordați dreptul sau deschideți documentul cu un utilizator care îl are |
+| „Nu aveți acces la aceste documente generate, deoarece nu aveți acces la înregistrarea pentru care au fost generate.” | Utilizatorul nu are drept de citire pe înregistrarea țintă (sau de modificare, la salvarea ori ștergerea documentului creat de altcineva) | Generarea sau modificarea o face un utilizator cu acces la înregistrare |
+| „Secțiunea „…” nu a putut fi randată: …” | O secțiune are o expresie greșită, un câmp inexistent sau o vizualizare ori un raport cu eroare; documentul rămâne în **Ciornă** | Corectați secțiunea numită în mesaj, apoi **Generează**. O secțiune care citește un câmp la care utilizatorul nu are acces dă mesajul standard de acces refuzat al Odoo |
+| „Înregistrarea țintă a documentului … nu mai există.” | **Generează** pe un document a cărui înregistrare țintă a fost ștearsă | Un administrator șterge documentul sau alege altă înregistrare țintă |
+| „Generarea PDF-ului a eșuat: …” | Randarea PDF a eșuat (de exemplu wkhtmltopdf lipsă) | Verificați instalarea wkhtmltopdf pe server |
+| Fără mesaj: PDF-ul se descarcă, dar nu apare atașat pe înregistrarea țintă | Utilizatorul nu are drept de modificare pe înregistrare | Tipărirea o face un utilizator cu drept de modificare pe înregistrare |
+| Fără mesaj: nota cu legătura nu apare în chatterul înregistrării țintă | Nota nu se postează când documentul a fost creat de un utilizator fără drept de modificare pe înregistrare (de exemplu, o restricție multi-companie), sau când modelul țintă nu are chatter; documentul se creează oricum | Legătura se poate adăuga manual; documentul se găsește și din meniul **Tipărire** al înregistrării |
 
 ## 10. Capturi de ecran
 
@@ -309,7 +348,7 @@ Subliniați ciclul **Generează → verifică → Validează → Tipărește PDF
 **Resetează la ciornă** pierde corecturile manuale. Pentru șabloane, recomandați ca blocurile comune
 (anexe, tabele) să fie vizualizări QWeb reutilizabile, iar textul să stea în secțiuni HTML.
 Menționați limitările: secțiunile nu au acces la câmpurile documentului generat (de exemplu **Data
-emisiunii**), ci doar la înregistrarea țintă; o secțiune care nu se poate randa nu dă eroare pe ecran.
+emisiunii**), ci doar la înregistrarea țintă; o secțiune care nu se poate randa oprește generarea, cu numele secțiunii în mesaj.
 
 ---
 

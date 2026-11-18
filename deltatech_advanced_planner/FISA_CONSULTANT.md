@@ -156,6 +156,18 @@ blocată.
 
 ![Tabul Planificare avansată pe SO confirmat](screenshots/03_so_banner_confirmat.png)
 
+### Pasul 3a — Anularea comenzii de vânzare
+
+Dacă clientul renunță, anulați comanda de vânzare cu **Anulează**. Comenzile ei planificate care nu
+sunt **Finalizat** trec automat în starea **Anulat** și devin fixe: nu mai apar în Panoul de control
+și nu mai intră în recalculări sau în planificarea globală. Comenzile planificate deja **Finalizat**
+(cu cererea de ofertă sau comanda de producție lansată) rămân neschimbate, iar documentele generate
+din ele se anulează separat, din achiziții sau producție. Pe comanda anulată, statusul planificării devine **Necalculat**, fără
+bannerul de status și fără risc de livrare. Anularea funcționează și pentru un vânzător
+care nu are drepturi pe planificator.
+
+![Comenzile planificate ale unei comenzi de vânzare anulate, în starea Anulat](screenshots/03a_anulare_comanda.png)
+
 ### Pasul 4 — Revizuirea comenzilor planificate
 
 Din **Producție → Planificare avansată → Planificare → Comenzi planificate** vedeți comenzile
@@ -343,7 +355,9 @@ proprii planificatorului:
 1. **Găsiți pe ecran** — coloana **Achiziție** arată etapa comenzilor de achiziție generate din
    comenzile planificate ale comenzii de vânzare, iar coloana **Producție** etapa comenzilor de
    producție. Când sunt mai multe, se afișează cea aflată cel mai „în urmă”.
-   - **Producție**: **Finalizat** apare când toate produsele au fost fabricate; coloana rămâne goală
+   - **Producție**: **În lucru** apare de cum a început prima comandă de producție a comenzii (de
+     exemplu un semifabricat), chiar dacă celelalte nu au început încă, ca să știți că lucrul la
+     comandă a pornit. **Finalizat** apare când toate produsele au fost fabricate; coloana rămâne goală
      dacă nu s-a generat nicio comandă de producție (sau dacă au fost anulate).
    - **Achiziție**: **Finalizat** apare când toate comenzile de achiziție generate sunt recepționate
      integral, indiferent de stoc. Când nu s-a generat nicio comandă de achiziție, **Finalizat** apare
@@ -457,6 +471,7 @@ proprietarului fiecărei reguli de reaprovizionare (bifa **Planificat de Advance
 - [ ] Meniul **Producție → Planificare avansată** și submeniurile sunt vizibile pentru rolul potrivit.
 - [ ] Recalcularea pe un SO ciornă afișează bannerul de status și o dată efectivă plauzibilă.
 - [ ] La confirmarea SO se generează comenzi planificate (producție + achiziție per componentă).
+- [ ] După anularea unei comenzi de vânzare confirmate (și de către un vânzător fără drepturi pe planificator), comenzile ei planificate deschise sunt **Anulat** și nu mai apar în Panoul de control; o comandă planificată deja **Finalizat** rămâne **Finalizat**.
 - [ ] Backward scheduling produce date coerente (lansare PO < recepție < start producție < final).
 - [ ] O comandă cu termen imposibil este marcată **Blocat** și propune cea mai devreme dată realizabilă.
 - [ ] **Cea mai devreme dată** pe o ofertă: un produs pe stoc apare „Stoc” cu data de mâine; un produs fabricat apare „Producție”, cu componenta critică în motiv; după **Setează ca dată promisă**, data promisă a comenzii e data pentru toată comanda și nu s-a creat nicio comandă planificată.
@@ -479,6 +494,7 @@ proprietarului fiecărei reguli de reaprovizionare (bifa **Planificat de Advance
 - [ ] Un clic pe starea **În lucru** a unei comenzi de producție deschide comenzile ei de lucru.
 - [ ] Tabelul **Comenzi planificate active** din Panoul de control nu mai are coloana **Stare AP**: etapa comenzii lansate se vede doar în coloanele **Document** și **Stare doc.**.
 - [ ] În lista deschisă din cardul **Comenzi OK**, coloanele **Achiziție** și **Producție** arată etapa documentelor generate pentru fiecare comandă de vânzare; după fabricarea produselor, **Producție** arată **Finalizat**.
+- [ ] La o comandă de vânzare cu două comenzi de producție (semifabricat și produs finit), **Producție** arată **În lucru** de cum începe producția semifabricatului, deși comanda produsului finit nu a început.
 - [ ] O comandă de vânzare confirmată, fără comandă de achiziție generată, cu produsele (sau componentele comenzii de producție) pe stoc, are **Finalizat** la **Achiziție**; fără stoc suficient coloana rămâne goală.
 - [ ] După recepția completă a tuturor comenzilor de achiziție generate, **Achiziție** arată **Finalizat**, indiferent de stoc.
 - [ ] Cât timp o comandă planificată de achiziție a comenzii e în **Ciornă** / **Planificat**, coloana **Achiziție** rămâne goală, chiar dacă restul materialelor e pe stoc sau celelalte achiziții au fost recepționate.
@@ -524,6 +540,7 @@ secțiunea 6:
 2. `02_so_recalcul_oferta.png` — comandă de vânzare în ofertă, cu banner de status după recalcul.
    - `02a_cea_mai_devreme_data.png` — fereastra **Cea mai devreme dată**: data fiecărui produs, sursa, motivul și data pentru toată comanda.
 3. `03_so_banner_confirmat.png` — tabul Planificare avansată pe SO confirmat (status + dată efectivă + risc + banner de blocare).
+   - `03a_anulare_comanda.png` — comenzile planificate ale unei comenzi de vânzare anulate, toate în starea **Anulat**.
 4. `04_planned_orders.png` — lista comenzilor planificate grupate pe produs, cu status colorat.
 5. `05_planned_order_form.png` — formular comandă planificată de producție cu butonul Generează OF.
    - `05a_rfq_linie_cumulata.png` — cerere de ofertă consolidată, cu aceeași materie primă cumulată pe o singură linie (15 + 5 → 20 buc).

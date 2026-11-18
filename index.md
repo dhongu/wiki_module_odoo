@@ -3,6 +3,7 @@
 Acest fișier este catalogul central al tuturor modulelor documentate. Este menținut de asistentul LLM.
 
 ## Module
+
 - [agroamat_achizitii](agroamat_achizitii/index.md): Comenzi de achiziție Agroamat: data și scadența facturii furnizorului, coduri de furnizor și semnalarea produselor cerute pe oferte validate.
 - [deltatech](deltatech/index.md): Dependență tehnică de bază a suitei Deltatech: câmp `model_name` și widget de domeniu pe regulile de înregistrare, formular de modul curățat.
 - [deltatech_access](deltatech_access/index.md): Reguli pe grupuri de utilizatori care fac câmpurile din formularele și listele de produs readonly, required sau invisible, fără cod.
@@ -258,9 +259,9 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_payment_libra_pay](deltatech_payment_libra_pay/index.md): Plăți cu cardul prin LibraPay (Libra Internet Bank) în eCommerce și portalul de clienți, cu mesaje semnate și notificări IPN.
 - [deltatech_payment_mobilpay](deltatech_payment_mobilpay/index.md): Plăți cu cardul prin Netopia MobilPay (API v2) la checkout-ul eCommerce și pentru facturile din portal, cu notificări verificate prin JWT RS512 și fallback GetStatus.
 - [deltatech_payment_monri](deltatech_payment_monri/index.md): Conector Monri WebPay (Payten) prin redirecționare, cu callback server-to-server verificat prin digest, captură manuală, anulare și rambursare parțială.
-- [deltatech_payment_on_delivery](deltatech_payment_on_delivery/index.md): Metodă de plată ramburs la livrare (Cash On Delivery) integrată în fluxurile de vânzare/plată, cu wizard de import al confirmărilor de la curieri.
+- [deltatech_payment_on_delivery](deltatech_payment_on_delivery/index.md): Plată ramburs (COD) pentru webshop: validare de operator, restricții pe sumă/categorie și reconcilierea decontărilor curierilor.
 - [deltatech_payment_report](deltatech_payment_report/index.md): Raport al încasărilor de la clienți pe perioadă și jurnale de bancă/numerar, cu analiză pivot după jurnalul plății și al facturii.
-- [deltatech_payment_revolut](deltatech_payment_revolut/index.md): Furnizor de plată Revolut — plăți prin redirecționare securizată, capturare manuală și sincronizare prin webhook.
+- [deltatech_payment_revolut](deltatech_payment_revolut/index.md): Furnizor de plată Revolut pentru eCommerce: card și cont Revolut, Apple/Google Pay, webhook, captură manuală și rambursări din Odoo.
 - [deltatech_payment_tbi_bank](deltatech_payment_tbi_bank/index.md): Furnizor de plată „tbi Bank” pentru finanțare în rate la checkout sau la plata facturilor, cu cerere criptată RSA și decizia băncii preluată automat.
 - [deltatech_payment_term](deltatech_payment_term/index.md): Asistent care generează termeni de plată în rate (avans, număr de rate, zi de scadență) și marchează facturile, comenzile și partenerii plătibili în rate.
 - [deltatech_payment_term_working_days](deltatech_payment_term_working_days/index.md): Termene de plată numărate în zile lucrătoare, cu mutarea scadențelor din weekend sau de sărbători legale în prima zi lucrătoare următoare.
@@ -271,12 +272,12 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_picking_split](deltatech_picking_split/index.md): Wizard pentru generarea manuală a backorder-urilor, în care operatorul alege cantitatea păstrată pe fiecare linie a transferului.
 - [deltatech_picking_transit](deltatech_picking_transit/index.md): Transfer între două depozite în doi pași printr-o locație de tranzit, cu al doilea transfer creat prin wizard sau automat la validare.
 - [deltatech_pos](deltatech_pos/index.md): Tipărește bonuri fiscale pe case de marcat din POS, cu Cash In/Out, rapoarte X/Z, CIF pe bon și raport de vânzări TVA pe casă de marcat.
-- [deltatech_pos_base](deltatech_pos_base/index.md): Strat de bază POS-ECR care oferă definițiile și structurile de date pentru tipărirea fiscală în Odoo POS.
+- [deltatech_pos_base](deltatech_pos_base/index.md): Stratul de bază POS pentru case de marcat fiscale (ECR): setări, transport (fișier, Terrabit Connect, DxPrint), coduri ECR pe plăți și taxe, simulare.
 - [deltatech_pos_cashier_close](deltatech_pos_cashier_close/index.md): Casierii cu drepturi de bază își închid singuri casa din POS, fără celelalte drepturi de manager, configurabil pe fiecare casă.
-- [deltatech_pos_fix](deltatech_pos_fix/index.md): Corectează calculul totalului în POS când o poziție fiscală transformă o taxă inclusă în preț într-o taxă neinclusă (ex: taxare inversă), aliniind POS la comportamentul din Vânzări.
-- [deltatech_pos_online_payment](deltatech_pos_online_payment/index.md): Ascunde/blochează butonul "Force done" pe plățile POS online, prevenind confirmarea manuală a unei plăți neîncasate efectiv de furnizor.
+- [deltatech_pos_fix](deltatech_pos_fix/index.md): Corectează totalul POS la poziții fiscale cu taxă inclusă mapată pe taxă neinclusă și reconcilierea facturilor POS plătite în numerar cu rest.
+- [deltatech_pos_online_payment](deltatech_pos_online_payment/index.md): Protecție POS: ascunde și blochează „Force done” pe plățile online, ca o plată neconfirmată de procesator să nu fie marcată încasată.
 - [deltatech_pos_price_lock](deltatech_pos_price_lock/index.md): Blochează modificarea manuală a prețului în POS pentru toți utilizatorii casei, inclusiv pentru manageri, printr-o opțiune per casă sub *Price Control*.
-- [deltatech_pos_price_sync](deltatech_pos_price_sync/index.md): Trimite instant modificările de preț produs către sesiunile POS deja deschise, fără reîncărcare de pagină.
+- [deltatech_pos_price_sync](deltatech_pos_price_sync/index.md): Trimite live modificările de preț ale produselor către sesiunile POS deja deschise, fără reîncărcare.
 - [deltatech_pos_product_filter](deltatech_pos_product_filter/index.md): Adaugă opțiunea de căutare „Product” în comenzile POS, pentru a regăsi comenzile după produsul vândut.
 - [deltatech_pos_stock](deltatech_pos_stock/index.md): Afișează stocul (fizic sau disponibil) și prețul pe cardul produsului în POS, cu actualizare live și avertizare la stoc epuizat.
 - [deltatech_pos_stock_shops](deltatech_pos_stock_shops/index.md): Afișează în POS, pe cardul produsului și offline, stocul celorlalte magazine ale companiei, cu filtre și popup pe magazine.
@@ -296,14 +297,14 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_product_category](deltatech_product_category/index.md): Categorii de produse per companie, cu setare de partajare între companii și categorii standard comune.
 - [deltatech_product_category_color](deltatech_product_category_color/index.md): Culoare pe categoria de produse, afișată ca etichete colorate pe cardurile Kanban ale transferurilor de stoc, pentru recunoaștere vizuală rapidă a mărfii.
 - [deltatech_product_category_group](deltatech_product_category_group/index.md): Leagă categoriile de produse de un grup de utilizatori și atribuie echilibrat responsabilul transferurilor Ready, din butonul „Responsible” de pe lista transferurilor.
-- [deltatech_product_chatter](deltatech_product_chatter/index.md): Restricționează ștergerea/editarea mesajelor din chatter-ul produselor (șablon și variantă) doar la utilizatorii dintr-un grup de securitate dedicat.
+- [deltatech_product_chatter](deltatech_product_chatter/index.md): Restricționează ștergerea și editarea mesajelor din chatter-ul produselor la un grup de securitate dedicat.
 - [deltatech_product_code](deltatech_product_code/index.md): Generare automată a referinței interne și a codurilor de bare pe categorii (prefix intern sau GTIN-13 din prefixul GS1 al companiei), cu verificare a duplicatelor la produse și variante.
 - [deltatech_product_dimension](deltatech_product_dimension/index.md): Adaugă pe produs lungime, lățime și înălțime (cm) și calculează automat volumul în unitatea de volum din setări.
 - [deltatech_product_extension](deltatech_product_extension/index.md): Câmpuri noi pe produs (producător, dimensiuni ca text liber, termen de valabilitate) și bifa Producător pe parteneri, cu căutare și grupare în Invoice Analysis.
 - [deltatech_product_labels](deltatech_product_labels/index.md): Tipărire etichete de produs și de lot (A4 3x8, termice 100x50 și 40x25, ZPL cu previzualizare) din produse, comenzi, transferuri, loturi și stoc.
 - [deltatech_product_list](deltatech_product_list/index.md): Definește liste reutilizabile de produse, selectate printr-un filtru (domeniu) și o limită, folosite de alte module (ex. feed-uri).
 - [deltatech_product_mpn](deltatech_product_mpn/index.md): Adaugă codul de piesă al producătorului (MPN) pe produse, căutabil în lista de produse și vizibil ca coloană opțională.
-- [deltatech_product_reordering_limit](deltatech_product_reordering_limit/index.md): Adaugă praguri globale de minim/maxim stoc pe fișa produsului, filtru „Below Minimum" și raport Excel de reaprovizionare.
+- [deltatech_product_reordering_limit](deltatech_product_reordering_limit/index.md): Praguri globale de reaprovizionare (minim/maxim total) pe produs, filtru „Below Minimum” și raport Excel.
 - [deltatech_product_trade_markup](deltatech_product_trade_markup/index.md): Adaugă pe produs câmpul Trade Markup (adaos comercial), doar informativ; calculul prețului îl face deltatech_purchase_price.
 - [deltatech_product_unique_code](deltatech_product_unique_code/index.md): Blochează duplicatele de Referință Internă și Cod de Bare pe articole, inclusiv față de produsele arhivate, cu grup de securitate pentru excepții.
 - [deltatech_product_visibility](deltatech_product_visibility/index.md): Scor de vizibilitate 0–100 pe website pentru fiecare produs, afișat ca semafor colorat cu defalcare pe criterii configurabile (SEO, imagini, descrieri, categorie, preț, SKU).
@@ -318,7 +319,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_purchase_phase](deltatech_purchase_phase/index.md): Faze configurabile pe comenzile de achiziție (RFQ, confirmat, pre-aviz, expediat, livrat, refuzat), cu tranziții automate după starea comenzii și starea livrării.
 - [deltatech_purchase_picking_status](deltatech_purchase_picking_status/index.md): Adaugă pe comanda de achiziție un status al livrării (În curs / Finalizat), calculat din recepții, ca insignă, coloană în liste și filtre de căutare.
 - [deltatech_purchase_portal](deltatech_purchase_portal/index.md): Portal de achiziții pentru furnizori: editare preț și descriere pe liniile RFQ, acceptare cu semnătură electronică sau respingere cu motiv, adresă de ridicare, export XLSX și filtre pe fază.
-- [deltatech_purchase_price](deltatech_purchase_price/index.md): Actualizează automat prețurile de achiziție, costul standard, prețul furnizorului și prețul de vânzare la validarea recepției.
+- [deltatech_purchase_price](deltatech_purchase_price/index.md): Actualizează la recepție ultimul preț de achiziție, prețul furnizorului și prețul de vânzare pe baza adaosului comercial.
 - [deltatech_purchase_price_compare](deltatech_purchase_price_compare/index.md): Buton pe comanda de achiziție pentru compararea prețurilor tuturor furnizorilor unui produs, cu evidențierea celui mai mic preț și aplicare rapidă a prețului ales.
 - [deltatech_purchase_price_history](deltatech_purchase_price_history/index.md): Afișează în fișa produsului prețul minim, maxim și mediu de achiziție din ultimele 12 luni, calculat zilnic din facturile de furnizor.
 - [deltatech_purchase_refund](deltatech_purchase_refund/index.md): Deschide automat nota de credit de la furnizor când o comandă de achiziție are cantități negative de facturat, cu cantități pozitive și sold recalculat în moneda companiei.
@@ -330,7 +331,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_putaway_strategy](deltatech_putaway_strategy/index.md): Capacități și grad de ocupare pe locații, putaway inteligent (respectă capacitatea, preferă locații goale sau raftul cu stoc existent) și opțiuni pe tipul de operație pentru evitarea regulilor de putaway și a rezervării din rădăcină.
 - [deltatech_qms](deltatech_qms/index.md): Management al calității ISO 9001: documente controlate, audituri interne, neconformități și CAPA, obiective, reclamații ale clienților și raport de pregătire pentru certificare.
 - [deltatech_quality_lot](deltatech_quality_lot/index.md): Leagă verificările și alertele de calitate direct de loturile de produse, cu dispozitive de laborator, generare automată de verificări și raport PDF per lot.
-- [deltatech_queue_job](deltatech_queue_job/index.md): Îmbunătățiri de performanță și fiabilitate peste coada de joburi standard, optimizate pentru Odoo.sh.
+- [deltatech_queue_job](deltatech_queue_job/index.md): Coadă de joburi mai rapidă și sigură la blocări (SKIP LOCKED): runner extern prin API, declanșare automată, deduplicare și curățare.
 - [deltatech_ral](deltatech_ral/index.md): Gestionează pigmenții de culoare RAL în producție, înlocuind componenta dummy din BOM cu pigmentul variantei de culoare.
 - [deltatech_reception_note](deltatech_reception_note/index.md): Wizard pentru note de recepție în masă, cu reducerea automată a cantităților din cererile de ofertă deschise.
 - [deltatech_record_type](deltatech_record_type/index.md): Tipuri de documente (comenzi de vânzare, comenzi de achiziție, facturi) cu utilizatori permiși, valori implicite și rute de stoc pe tip, plus blocarea confirmării comenzii fără tip.

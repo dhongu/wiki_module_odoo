@@ -2,26 +2,31 @@
 
 - **Nume Tehnic:** `deltatech_payment_on_delivery`
 - **Versiune:** `19.0.4.1.12`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_on_delivery`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_on_delivery
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_on_delivery`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-18`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul integrează o metodă de plată „Ramburs la livrare" (Cash On Delivery – COD) în ecosistemul Odoo, concepută special pentru a gestiona particularitățile plăților efectuate după livrare, păstrând în același timp coerența cu fluxurile standard de plată și vânzare ale Odoo. Astfel, clienții pot alege să achite comanda în momentul recepției mărfii, iar afacerea beneficiază de un control corect al stărilor tranzacției și al reconcilierii contabile.
+Modulul adaugă o metodă de plată „Ramburs la livrare" (Cash On Delivery – COD) pentru magazinele online care expediază prin curieri ce încasează suma la livrare. Comanda plătită ramburs este validată de un operator, iar banii încasați de curier sunt reconciliați pe baza decontărilor primite de la aceștia. Astfel se reduce riscul coletelor refuzate și se simplifică închiderea contabilă a încasărilor.
 
 #### 2. Funcționalități Cheie
 
-- **Integrare Ramburs la livrare (COD):** adaugă un furnizor și o metodă de plată dedicate COD, permițând clienților să aleagă plata la primirea mărfurilor.
-- **Stări de tranzacție configurabile:** flexibilitate în modul de tratare a tranzacțiilor după confirmarea comenzii — tranzacția poate rămâne în starea „Pending" (utilă pentru verificare sau urmărire manuală) sau poate fi automat „Authorized".
-- **Prag de sumă minimă:** se poate seta o sumă minimă (`minimum_amount`) pentru opțiunea COD; metoda devine disponibilă clientului doar dacă totalul comenzii (convertit în moneda furnizorului) atinge sau depășește acest prag.
-- **Filtrare inteligentă de compatibilitate:** asigură afișarea furnizorului COD doar atunci când este compatibil cu criteriile comenzii, inclusiv moneda și limitele de sumă.
-- **Protecția integrității:** pentru a garanta fluxuri contabile corecte, modulul împiedică trecerea manuală a tranzacțiilor COD în starea „Done", protejând procesul de reconciliere; starea „Done" se atinge doar prin validare corespunzătoare (de exemplu, prin wizard-ul de import).
-- **Wizard de import al plăților COD:** utilitar specializat pentru importul confirmărilor de plată de la curieri, care automatizează validarea tranzacțiilor COD prin potrivirea referințelor de tracking și a sumelor, trecând tranzacțiile în stările finale.
-- **Suport pentru valute multiple:** efectuează conversii automate la evaluarea constrângerilor de sumă minimă în medii multi-valutare.
-- **Restricție pe categorie de produs:** anumite categorii de produse pot fi marcate cu „No Cash On Delivery"; dacă o comandă conține un produs dintr-o astfel de categorie, metoda de plată COD este dezactivată.
-- **Integrare cu Deltatech Delivery:** modulul este utilizat și de `deltatech_delivery` pentru a îmbunătăți fluxurile de plată legate de curier și a simplifica gestionarea încasărilor la livrare.
+Odoo 19 standard (modulul `delivery`) oferă deja un ramburs de bază: furnizor `custom` în modul *Cash On Delivery*, opțiunea „Cash on Delivery" pe metoda de livrare, confirmarea automată a comenzii și o sumă maximă. Nu tratează însă riscul coletelor refuzate, restricția pe produs sau reconcilierea sumelor încasate de curier. Modulul adaugă:
+
+- **Confirmare manuală a comenzii:** cu opțiunea *In pending*, o comandă plătită ramburs nu se confirmă automat; oferta este marcată ca trimisă și așteaptă confirmarea unui operator.
+- **Stare configurabilă a tranzacției:** „Pending" (confirmare manuală) sau „Authorized" (comanda se confirmă automat, ca la COD-ul standard).
+- **Sumă minimă:** COD este oferit doar peste un prag, convertit în moneda companiei (Odoo standard are doar sumă maximă).
+- **Restricție pe categorie de produs:** categoriile de website marcate „No Cash On Delivery" ascund opțiunea COD pentru comenzile care conțin produsele lor.
+- **Fără COD după un link de plată:** dacă pentru o comandă s-a generat un link de plată, COD nu mai este oferit, ca suma să nu fie încasată de două ori.
+- **Protecția integrității:** o tranzacție COD nu poate fi trecută manual în „Done"; se închide doar prin wizard-ul de import.
+- **Wizard de import al plăților COD:** importă decontările curierilor (Excel), potrivește tranzacțiile după referință sau număr de tracking și le închide.
+- **Referință de plată pe factură:** factura unei comenzi COD folosește AWB-ul (referința de tracking) ca referință de plată, ceea ce ușurează reconcilierea bancară a decontării curierului.
+- **Fără e-mail „plată reușită"** pentru comenzile COD, deoarece nimic nu a fost încă plătit.
+- **Integrare cu Deltatech Delivery și conectorii de marketplace:** modulele de livrare, de revizuire a comenzilor și de marketplace (eMAG, PrestaShop) recunosc comenzile COD după furnizorul acestui modul.
+
+**Notă:** modulul folosește propriul furnizor (cod `on_delivery`). Furnizorul standard *Cash On Delivery* trebuie păstrat dezactivat, altfel clienții văd două opțiuni COD la checkout, iar cea standard confirmă comenzile automat, ocolind validarea manuală.
 
 #### 3. Dependențe
 
@@ -33,10 +38,15 @@ Modulul integrează o metodă de plată „Ramburs la livrare" (Cash On Delivery
 - `stock_delivery`
 - `website_sale`
 
+Dependență externă Python: `openpyxl`.
+
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, secțiunile de componente sunt omise deoarece `readme/DESCRIPTION.md` este prezent și acoperă Sumarul și Funcționalitățile Cheie. (Funcționalitățile menționate în Readme indică, la nivel tehnic, un furnizor și o metodă de plată COD, un wizard de import al plăților și extinderi pe categoria de produs și pe tranzacția de plată.)
+Conform fluxului de ingestie, secțiunile de componente sunt omise deoarece `readme/DESCRIPTION.md` este prezent și acoperă Sumarul și Funcționalitățile Cheie. (Din manifest reies: un furnizor și o metodă de plată COD definite în `data/`, un wizard de import al plăților, extinderi pe categoria de produs și pe furnizorul de plată, plus un script JS pentru checkout-ul website.)
 
 #### 5. Conexiuni
 
-- [deltatech_delivery](../deltatech_delivery/index.md): utilizează acest modul pentru a îmbunătăți fluxurile de plată legate de curier și încasările la livrare.
+- [deltatech_delivery](../deltatech_delivery/index.md): recunoaște tranzacțiile cu furnizorul `on_delivery` (legătura se face la rulare; modulul nu îl declară în dependențe, linia fiind comentată în manifest).
+- [deltatech_marketplace_emag](../deltatech_marketplace_emag/index.md): tratează comenzile COD importate din eMAG.
+- [deltatech_marketplace_prestashop](../deltatech_marketplace_prestashop/index.md): tratează comenzile COD importate din PrestaShop.
+- [deltatech_marketplace_review](../deltatech_marketplace_review/index.md): revizuirea comenzilor de marketplace ține cont de comenzile COD.

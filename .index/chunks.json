@@ -525,7 +525,7 @@
   {
     "path": "deltatech_advanced_planner/index.md",
     "module": "deltatech_advanced_planner",
-    "version": "19.0.1.15.0",
+    "version": "19.0.1.16.0",
     "github": "`https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_advanced_planner`",
     "local_path": "odoo-addons/bitshop_ent/deltatech_advanced_planner",
     "last_ingest": "2026-10-27",
@@ -3296,7 +3296,7 @@
   {
     "path": "deltatech_delivery_fc/index.md",
     "module": "deltatech_delivery_fc",
-    "version": "19.0.1.8.3",
+    "version": "19.0.1.8.4",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_fc",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_fc",
     "last_ingest": "2026-11-17",
@@ -3336,7 +3336,7 @@
   {
     "path": "deltatech_delivery_fc_online/index.md",
     "module": "deltatech_delivery_fc_online",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_fc_online",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_fc_online",
     "last_ingest": "2026-11-14",
@@ -3364,7 +3364,7 @@
   {
     "path": "deltatech_delivery_gls/index.md",
     "module": "deltatech_delivery_gls",
-    "version": "19.0.2.2.3",
+    "version": "19.0.2.2.4",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_gls",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_gls",
     "last_ingest": "2026-11-09",
@@ -3629,7 +3629,7 @@
   {
     "path": "deltatech_delivery_online/index.md",
     "module": "deltatech_delivery_online",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_online",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_online",
     "last_ingest": "2026-11-14",
@@ -4220,7 +4220,7 @@
   {
     "path": "deltatech_doc_screenshots/index.md",
     "module": "deltatech_doc_screenshots",
-    "version": "19.0.1.4.0",
+    "version": "19.0.1.4.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_doc_screenshots",
     "local_path": "odoo-addons/deltatech/deltatech_doc_screenshots",
     "last_ingest": "2026-11-17",
@@ -4251,7 +4251,7 @@
   {
     "path": "deltatech_document_template/index.md",
     "module": "deltatech_document_template",
-    "version": "19.0.1.0.7",
+    "version": "19.0.1.0.8",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_document_template",
     "local_path": "odoo-addons/bitshop/deltatech_document_template",
     "last_ingest": "2026-10-31",
@@ -5060,7 +5060,7 @@
   {
     "path": "deltatech_iap_online/index.md",
     "module": "deltatech_iap_online",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_iap_online",
     "local_path": "odoo-addons/deltatech/deltatech_iap_online",
     "last_ingest": "2026-11-17",
@@ -5785,7 +5785,7 @@
   {
     "path": "deltatech_markdown_field/index.md",
     "module": "deltatech_markdown_field",
-    "version": "19.0.1.0.7",
+    "version": "19.0.1.1.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_markdown_field",
     "local_path": "odoo-addons/deltatech/deltatech_markdown_field",
     "last_ingest": "2026-11-17",
@@ -6846,7 +6846,7 @@
   {
     "path": "deltatech_mcp_server/index.md",
     "module": "deltatech_mcp_server",
-    "version": "19.0.1.15.4",
+    "version": "19.0.1.16.1",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_mcp_server",
     "local_path": "odoo-addons/bitshop_ent/deltatech_mcp_server",
     "last_ingest": "2026-11-17",
@@ -8150,21 +8150,22 @@
     "path": "deltatech_payment_on_delivery/index.md",
     "module": "deltatech_payment_on_delivery",
     "version": "19.0.4.1.12",
-    "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_on_delivery`",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_on_delivery",
     "local_path": "odoo-addons/bitshop/deltatech_payment_on_delivery",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-18",
     "friendly_name": "Plată Ramburs / la Livrare (COD)",
-    "summary": "Modulul integrează o metodă de plată „Ramburs la livrare\" (Cash On Delivery – COD) în ecosistemul Odoo, concepută special pentru a gestiona particularitățile plăților efectuate după livrare, păstrând în același timp coerența cu fluxurile standard de plată și vânzare ale Odoo. Astfel, clienții pot alege să achite comanda în momentul recepției mărfii, iar afacerea beneficiază de un control corect al stărilor tranzacției și al reconcilierii contabile.",
+    "summary": "Modulul adaugă o metodă de plată „Ramburs la livrare\" (Cash On Delivery – COD) pentru magazinele online care expediază prin curieri ce încasează suma la livrare. Comanda plătită ramburs este validată de un operator, iar banii încasați de curier sunt reconciliați pe baza decontărilor primite de la aceștia. Astfel se reduce riscul coletelor refuzate și se simplifică închiderea contabilă a încasărilor.",
     "features": [
-      "Integrare Ramburs la livrare (COD): adaugă un furnizor și o metodă de plată dedicate COD, permițând clienților să aleagă plata la primirea mărfurilor.",
-      "Stări de tranzacție configurabile: flexibilitate în modul de tratare a tranzacțiilor după confirmarea comenzii — tranzacția poate rămâne în starea „Pending\" (utilă pentru verificare sau urmărire manuală) sau poate fi automat „Authorized\".",
-      "Prag de sumă minimă: se poate seta o sumă minimă (`minimum_amount`) pentru opțiunea COD; metoda devine disponibilă clientului doar dacă totalul comenzii (convertit în moneda furnizorului) atinge sau depășește acest prag.",
-      "Filtrare inteligentă de compatibilitate: asigură afișarea furnizorului COD doar atunci când este compatibil cu criteriile comenzii, inclusiv moneda și limitele de sumă.",
-      "Protecția integrității: pentru a garanta fluxuri contabile corecte, modulul împiedică trecerea manuală a tranzacțiilor COD în starea „Done\", protejând procesul de reconciliere; starea „Done\" se atinge doar prin validare corespunzătoare (de exemplu, prin wizard-ul de import).",
-      "Wizard de import al plăților COD: utilitar specializat pentru importul confirmărilor de plată de la curieri, care automatizează validarea tranzacțiilor COD prin potrivirea referințelor de tracking și a sumelor, trecând tranzacțiile în stările finale.",
-      "Suport pentru valute multiple: efectuează conversii automate la evaluarea constrângerilor de sumă minimă în medii multi-valutare.",
-      "Restricție pe categorie de produs: anumite categorii de produse pot fi marcate cu „No Cash On Delivery\"; dacă o comandă conține un produs dintr-o astfel de categorie, metoda de plată COD este dezactivată.",
-      "Integrare cu Deltatech Delivery: modulul este utilizat și de `deltatech_delivery` pentru a îmbunătăți fluxurile de plată legate de curier și a simplifica gestionarea încasărilor la livrare."
+      "Confirmare manuală a comenzii: cu opțiunea *In pending*, o comandă plătită ramburs nu se confirmă automat; oferta este marcată ca trimisă și așteaptă confirmarea unui operator.",
+      "Stare configurabilă a tranzacției: „Pending\" (confirmare manuală) sau „Authorized\" (comanda se confirmă automat, ca la COD-ul standard).",
+      "Sumă minimă: COD este oferit doar peste un prag, convertit în moneda companiei (Odoo standard are doar sumă maximă).",
+      "Restricție pe categorie de produs: categoriile de website marcate „No Cash On Delivery\" ascund opțiunea COD pentru comenzile care conțin produsele lor.",
+      "Fără COD după un link de plată: dacă pentru o comandă s-a generat un link de plată, COD nu mai este oferit, ca suma să nu fie încasată de două ori.",
+      "Protecția integrității: o tranzacție COD nu poate fi trecută manual în „Done\"; se închide doar prin wizard-ul de import.",
+      "Wizard de import al plăților COD: importă decontările curierilor (Excel), potrivește tranzacțiile după referință sau număr de tracking și le închide.",
+      "Referință de plată pe factură: factura unei comenzi COD folosește AWB-ul (referința de tracking) ca referință de plată, ceea ce ușurează reconcilierea bancară a decontării curierului.",
+      "Fără e-mail „plată reușită\" pentru comenzile COD, deoarece nimic nu a fost încă plătit.",
+      "Integrare cu Deltatech Delivery și conectorii de marketplace: modulele de livrare, de revizuire a comenzilor și de marketplace (eMAG, PrestaShop) recunosc comenzile COD după furnizorul acestui modul."
     ],
     "dependencies": [
       "payment",
@@ -8173,12 +8174,17 @@
       "payment_custom",
       "account",
       "stock_delivery",
-      "website_sale"
+      "website_sale",
+      "openpyxl"
     ],
     "connections": [
-      "deltatech_delivery"
+      "deltatech_delivery",
+      "on_delivery",
+      "deltatech_marketplace_emag",
+      "deltatech_marketplace_prestashop",
+      "deltatech_marketplace_review"
     ],
-    "text": "Plată Ramburs / la Livrare (COD)\ndeltatech_payment_on_delivery\nModulul integrează o metodă de plată „Ramburs la livrare\" (Cash On Delivery – COD) în ecosistemul Odoo, concepută special pentru a gestiona particularitățile plăților efectuate după livrare, păstrând în același timp coerența cu fluxurile standard de plată și vânzare ale Odoo. Astfel, clienții pot alege să achite comanda în momentul recepției mărfii, iar afacerea beneficiază de un control corect al stărilor tranzacției și al reconcilierii contabile.\nIntegrare Ramburs la livrare (COD): adaugă un furnizor și o metodă de plată dedicate COD, permițând clienților să aleagă plata la primirea mărfurilor.\nStări de tranzacție configurabile: flexibilitate în modul de tratare a tranzacțiilor după confirmarea comenzii — tranzacția poate rămâne în starea „Pending\" (utilă pentru verificare sau urmărire manuală) sau poate fi automat „Authorized\".\nPrag de sumă minimă: se poate seta o sumă minimă (`minimum_amount`) pentru opțiunea COD; metoda devine disponibilă clientului doar dacă totalul comenzii (convertit în moneda furnizorului) atinge sau depășește acest prag.\nFiltrare inteligentă de compatibilitate: asigură afișarea furnizorului COD doar atunci când este compatibil cu criteriile comenzii, inclusiv moneda și limitele de sumă.\nProtecția integrității: pentru a garanta fluxuri contabile corecte, modulul împiedică trecerea manuală a tranzacțiilor COD în starea „Done\", protejând procesul de reconciliere; starea „Done\" se atinge doar prin validare corespunzătoare (de exemplu, prin wizard-ul de import).\nWizard de import al plăților COD: utilitar specializat pentru importul confirmărilor de plată de la curieri, care automatizează validarea tranzacțiilor COD prin potrivirea referințelor de tracking și a sumelor, trecând tranzacțiile în stările finale.\nSuport pentru valute multiple: efectuează conversii automate la evaluarea constrângerilor de sumă minimă în medii multi-valutare.\nRestricție pe categorie de produs: anumite categorii de produse pot fi marcate cu „No Cash On Delivery\"; dacă o comandă conține un produs dintr-o astfel de categorie, metoda de plată COD este dezactivată.\nIntegrare cu Deltatech Delivery: modulul este utilizat și de `deltatech_delivery` pentru a îmbunătăți fluxurile de plată legate de curier și a simplifica gestionarea încasărilor la livrare."
+    "text": "Plată Ramburs / la Livrare (COD)\ndeltatech_payment_on_delivery\nModulul adaugă o metodă de plată „Ramburs la livrare\" (Cash On Delivery – COD) pentru magazinele online care expediază prin curieri ce încasează suma la livrare. Comanda plătită ramburs este validată de un operator, iar banii încasați de curier sunt reconciliați pe baza decontărilor primite de la aceștia. Astfel se reduce riscul coletelor refuzate și se simplifică închiderea contabilă a încasărilor.\nConfirmare manuală a comenzii: cu opțiunea *In pending*, o comandă plătită ramburs nu se confirmă automat; oferta este marcată ca trimisă și așteaptă confirmarea unui operator.\nStare configurabilă a tranzacției: „Pending\" (confirmare manuală) sau „Authorized\" (comanda se confirmă automat, ca la COD-ul standard).\nSumă minimă: COD este oferit doar peste un prag, convertit în moneda companiei (Odoo standard are doar sumă maximă).\nRestricție pe categorie de produs: categoriile de website marcate „No Cash On Delivery\" ascund opțiunea COD pentru comenzile care conțin produsele lor.\nFără COD după un link de plată: dacă pentru o comandă s-a generat un link de plată, COD nu mai este oferit, ca suma să nu fie încasată de două ori.\nProtecția integrității: o tranzacție COD nu poate fi trecută manual în „Done\"; se închide doar prin wizard-ul de import.\nWizard de import al plăților COD: importă decontările curierilor (Excel), potrivește tranzacțiile după referință sau număr de tracking și le închide.\nReferință de plată pe factură: factura unei comenzi COD folosește AWB-ul (referința de tracking) ca referință de plată, ceea ce ușurează reconcilierea bancară a decontării curierului.\nFără e-mail „plată reușită\" pentru comenzile COD, deoarece nimic nu a fost încă plătit.\nIntegrare cu Deltatech Delivery și conectorii de marketplace: modulele de livrare, de revizuire a comenzilor și de marketplace (eMAG, PrestaShop) recunosc comenzile COD după furnizorul acestui modul."
   },
   {
     "path": "deltatech_payment_report/index.md",
@@ -8209,18 +8215,22 @@
     "path": "deltatech_payment_revolut/index.md",
     "module": "deltatech_payment_revolut",
     "version": "19.0.0.0.34",
-    "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_revolut`",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_revolut",
     "local_path": "odoo-addons/bitshop/deltatech_payment_revolut",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-18",
     "friendly_name": "Revolut Payment Provider",
-    "summary": "Acest modul integrează platforma de plăți Revolut în Odoo, oferind clienților o modalitate sigură și fluidă de a plăti pentru produse sau servicii folosind contul lor Revolut sau cardurile de credit/debit. Prin redirecționarea clienților către pagina securizată de checkout Revolut, modulul ajută la reducerea numărului de coșuri abandonate în timpul procesului de finalizare a comenzii și aduce un canal suplimentar de încasare pentru magazinele online.",
+    "summary": "Acest modul integrează platforma de plăți Revolut în Odoo, oferind clienților o modalitate sigură și fluidă de a plăti pentru produse sau servicii folosind contul Revolut sau cardurile de credit/debit. Modulul ajută la reducerea numărului de coșuri abandonate în timpul finalizării comenzii, aduce un canal suplimentar de încasare pentru magazinele online și permite returnarea banilor direct din Odoo, fără acces la portalul Revolut. Funcționează în toate țările în care contul Revolut Business poate încasa plăți, indiferent de planul de conturi sau de localizarea fiscală.",
     "features": [
-      "Plăți prin redirecționare securizată: redirecționează clienții către pagina de checkout securizată Revolut pentru efectuarea plății.",
-      "Capturare manuală: opțiune de capturare manuală a plăților direct din comanda de vânzare.",
-      "Integrare prin webhook: sincronizare automată a stării plății prin intermediul webhook-urilor Revolut.",
-      "Suport sandbox: testare facilă folosind mediul sandbox al Revolut.",
-      "Plăți securizate: complet conform cu procesarea securizată a plăților Revolut.",
-      "Mesaje personalizabile: configurarea de mesaje proprii pentru diferitele stări ale plății (În așteptare, Autorizat, Finalizat, Anulat)."
+      "Rambursări din Odoo: rambursări totale sau parțiale, mai multe pe aceeași plată, trimise la Revolut direct din plata clientului. Butonul Refund apare cât timp mai există sumă rambursabilă, iar butonul inteligent Refunds deschide rambursările făcute. Se creează o tranzacție `R-<referință>` cu sumă negativă, legată de tranzacția sursă: este *Confirmed* când Revolut finalizează rambursarea imediat, altfel rămâne *Pending* până la confirmarea prin webhook; o rambursare respinsă pune tranzacția în *Error*.",
+      "Flux de plată la alegere: Direct (Popup) sau Redirect către pagina securizată de checkout Revolut.",
+      "Plată expresă Apple Pay și Google Pay în checkout (nou în 19.0); pentru Apple Pay se încarcă fișierul de domeniu și se apasă Register domain for Apple Pay.",
+      "Integrare prin webhook: butonul Generate your webhook creează webhook-ul pe Revolut (evenimentele `ORDER_COMPLETED` și `ORDER_AUTHORISED`) și salvează secretul de semnare; webhook-urile fără semnătură validă sunt ignorate.",
+      "Confirmare sigură a plății: Odoo preia comanda de la Revolut și confirmă plata doar dacă id-ul comenzii, suma și moneda coincid; webhook-ul confirmă plata și dacă clientul închide pagina înainte de întoarcerea în magazin.",
+      "Captură manuală: cu opțiunea Capture Amount Manually, plata rămâne *Authorized*, iar din tranzacție se alege Capture Transaction (doar suma integrală autorizată) sau Void Transaction. Dacă Odoo refuză bifarea (metoda de plată nu declară captură manuală), plățile se capturează automat.",
+      "Contabilitate: la confirmare se creează plata contabilă pe jurnalul bancar al furnizorului (Payment Journal); comisionul Revolut nu este calculat de modul și se înregistrează din raportul Revolut la decontarea încasării.",
+      "Suport sandbox: stările Test Mode / Enabled și chei separate pentru testare.",
+      "Mesaje personalizabile pentru stările plății (În așteptare, Autorizat, Finalizat, Anulat).",
+      "Limbi: engleză, română, germană, franceză, italiană, spaniolă, olandeză, poloneză, portugheză (traducerile în afară de engleză și română sunt asistate de AI)."
     ],
     "dependencies": [
       "account",
@@ -8230,7 +8240,7 @@
       "deltatech_payment",
       "deltatech_website_delivery_and_payment"
     ],
-    "text": "Revolut Payment Provider\ndeltatech_payment_revolut\nAcest modul integrează platforma de plăți Revolut în Odoo, oferind clienților o modalitate sigură și fluidă de a plăti pentru produse sau servicii folosind contul lor Revolut sau cardurile de credit/debit. Prin redirecționarea clienților către pagina securizată de checkout Revolut, modulul ajută la reducerea numărului de coșuri abandonate în timpul procesului de finalizare a comenzii și aduce un canal suplimentar de încasare pentru magazinele online.\nPlăți prin redirecționare securizată: redirecționează clienții către pagina de checkout securizată Revolut pentru efectuarea plății.\nCapturare manuală: opțiune de capturare manuală a plăților direct din comanda de vânzare.\nIntegrare prin webhook: sincronizare automată a stării plății prin intermediul webhook-urilor Revolut.\nSuport sandbox: testare facilă folosind mediul sandbox al Revolut.\nPlăți securizate: complet conform cu procesarea securizată a plăților Revolut.\nMesaje personalizabile: configurarea de mesaje proprii pentru diferitele stări ale plății (În așteptare, Autorizat, Finalizat, Anulat)."
+    "text": "Revolut Payment Provider\ndeltatech_payment_revolut\nAcest modul integrează platforma de plăți Revolut în Odoo, oferind clienților o modalitate sigură și fluidă de a plăti pentru produse sau servicii folosind contul Revolut sau cardurile de credit/debit. Modulul ajută la reducerea numărului de coșuri abandonate în timpul finalizării comenzii, aduce un canal suplimentar de încasare pentru magazinele online și permite returnarea banilor direct din Odoo, fără acces la portalul Revolut. Funcționează în toate țările în care contul Revolut Business poate încasa plăți, indiferent de planul de conturi sau de localizarea fiscală.\nRambursări din Odoo: rambursări totale sau parțiale, mai multe pe aceeași plată, trimise la Revolut direct din plata clientului. Butonul Refund apare cât timp mai există sumă rambursabilă, iar butonul inteligent Refunds deschide rambursările făcute. Se creează o tranzacție `R-<referință>` cu sumă negativă, legată de tranzacția sursă: este *Confirmed* când Revolut finalizează rambursarea imediat, altfel rămâne *Pending* până la confirmarea prin webhook; o rambursare respinsă pune tranzacția în *Error*.\nFlux de plată la alegere: Direct (Popup) sau Redirect către pagina securizată de checkout Revolut.\nPlată expresă Apple Pay și Google Pay în checkout (nou în 19.0); pentru Apple Pay se încarcă fișierul de domeniu și se apasă Register domain for Apple Pay.\nIntegrare prin webhook: butonul Generate your webhook creează webhook-ul pe Revolut (evenimentele `ORDER_COMPLETED` și `ORDER_AUTHORISED`) și salvează secretul de semnare; webhook-urile fără semnătură validă sunt ignorate.\nConfirmare sigură a plății: Odoo preia comanda de la Revolut și confirmă plata doar dacă id-ul comenzii, suma și moneda coincid; webhook-ul confirmă plata și dacă clientul închide pagina înainte de întoarcerea în magazin.\nCaptură manuală: cu opțiunea Capture Amount Manually, plata rămâne *Authorized*, iar din tranzacție se alege Capture Transaction (doar suma integrală autorizată) sau Void Transaction. Dacă Odoo refuză bifarea (metoda de plată nu declară captură manuală), plățile se capturează automat.\nContabilitate: la confirmare se creează plata contabilă pe jurnalul bancar al furnizorului (Payment Journal); comisionul Revolut nu este calculat de modul și se înregistrează din raportul Revolut la decontarea încasării.\nSuport sandbox: stările Test Mode / Enabled și chei separate pentru testare.\nMesaje personalizabile pentru stările plății (În așteptare, Autorizat, Finalizat, Anulat).\nLimbi: engleză, română, germană, franceză, italiană, spaniolă, olandeză, poloneză, portugheză (traducerile în afară de engleză și română sunt asistate de AI)."
   },
   {
     "path": "deltatech_payment_tbi_bank/index.md",
@@ -8531,23 +8541,31 @@
     "version": "19.0.1.2.3",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos_base",
     "local_path": "odoo-addons/bitshop/deltatech_pos_base",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Deltatech POS Base",
-    "summary": "Acest modul reprezintă stratul de integrare fundamental dintre sistemele Point of Sale (POS) și casele de marcat electronice (ECR) ale Odoo, oferind definițiile de bază și structurile de date necesare pentru tipărirea fiscală. Din punct de vedere business, este modulul esențial pentru companiile care trebuie să își conecteze POS-ul Odoo sau POS Backend la dispozitive fiscale externe, pentru a asigura conformitatea cu reglementările. El standardizează câmpurile și metodele folosite atât de modulele front-end, cât și de cele back-end de POS, astfel încât operațiunile cu ECR să fie consistente, iar dezvoltarea modulelor fiscale specifice unei piețe să fie simplificată pe o bază comună.",
+    "last_ingest": "2026-11-18",
+    "friendly_name": "POS ECR Base",
+    "summary": "Modulul este stratul de bază al suitei Terrabit de Point of Sale pentru casele de marcat fiscale (ECR) din România. Păstrează setările casei de marcat și codurile ECR ale metodelor de plată și ale taxelor și le încarcă în fiecare sesiune POS, astfel încât modulele de tipărire (`deltatech_pos`, `deltatech_ecr_connect`) să poată construi bonul fiscal. Singur, nu tipărește nimic.",
     "features": [
-      "Integrare robustă POS-ECR: oferă o fundație stabilă pentru comunicarea dintre Odoo și imprimantele fiscale sau casele de marcat conectate.",
-      "Structură de date unificată: standardizează câmpurile și metodele utilizate de modulele POS de tip front-end și back-end pentru operațiuni ECR consistente.",
-      "Conformitate fiscală simplificată: facilitează dezvoltarea și implementarea modulelor fiscale specifice fiecărei piețe pe o bază comună.",
-      "Înregistrare fiabilă a tranzacțiilor: asigură capturarea și formatarea consecventă a datelor POS esențiale pentru fiscalizare.",
-      "Operațiuni de retail scalabile: permite extinderea ușoară a rețelei de magazine folosind o bază POS comună pentru toate locațiile și tipurile de dispozitive fiscale."
+      "Case de marcat și drivere: funcționează cu Datecs, Optima, Incotex, Daisy și Succes, precum și cu alte modele care folosesc aceeași sintaxă de comenzi; testat extensiv cu driverele certificate FiscalWire și FiscalNet. Formatul comenzii (ECR type) se setează pe fiecare punct de vânzare.",
+      "Transportul comenzii către dispozitiv (ECR transport):",
+      "*File (.prn/.inp download)*: fișier de comandă descărcat și preluat de driverul de pe casă (File prefix `order` și File extension `inp` implicit);",
+      "*Terrabit Connect (local agent)*: comanda se trimite agentului local (Agent URL, implicit `http://127.0.0.1:8765`), care o tipărește și returnează rezultatul sincron;",
+      "*DxPrint (local driver)*: bonul se trimite ca JSON driverului DxPrint (Driver URL implicit `http://127.0.0.1:8080`, plus utilizator și parolă dacă driverul are autentificare), care returnează imediat numerele bonului și ale raportului Z; rapoartele X/Z și operațiunile de numerar au cereri proprii;",
+      "pentru agent și DxPrint, dacă dispozitivul nu poate fi contactat, se revine la descărcarea fișierului.",
+      "Coduri ECR pe metodele de plată: câmpul Cod ECR (un singur caracter, implicit `0`) identifică tipul de încasare (numerar, card, tichet) și se trimite cu fiecare bon.",
+      "Coduri ECR pe taxe: câmp opțional Cod ECR, pentru două taxe cu aceeași cotă (de exemplu garanție SGR și vânzare cu taxare inversă, ambele 0%). Gol = categoria se deduce din procentul taxei; valoarea este poziția de TVA programată pe dispozitiv (pentru FiscalWire/datecs18, cifră de la 1 la 7, nu litera A–E).",
+      "Departament implicit: trimis pe fiecare linie de vânzare; gol = departamentul se deduce din cota de TVA; se completează pentru dispozitive cu departamente fixe (FiscalNet / Tremol).",
+      "Nume lungi de produse: Trim long product name și Trim to (implicit 30) scurtează numele la lungimea acceptată de imprimanta fiscală.",
+      "Casă de marcat simulată pentru teste, demonstrații și suport, fără dispozitiv: *Simulated in Odoo (no agent)* sau *Simulated through the agent*, cu Delay (ms); doar administratorul de sistem o poate activa sau dezactiva. Răspunsul simulat depinde de ultimele cenți ale totalului (`,91` fără hârtie, `,92` casă deconectată, `,93` răspuns întârziat, `,94` fără răspuns, `,95` bon anulat pe casă; cardul folosește `,01`–`,05`). Nimic tipărit în simulare nu este bon fiscal; simularea se oprește pe punctele de vânzare reale înainte de lansare.",
+      "Unde se configurează: ecranele standard Odoo, fără meniu propriu: Point of Sale → Configuration → Settings (secțiunea ECR), Point of Sale → Configuration → Payment Methods și Accounting → Configuration → Taxes. După modificarea unui cod ECR se închide și se redeschide sesiunea POS. Pașii detaliați sunt în fișa consultant."
     ],
     "dependencies": [
       "point_of_sale"
     ],
     "connections": [
-      "deltatech_pos"
+      "deltatech_pos",
+      "deltatech_ecr_connect"
     ],
-    "text": "Deltatech POS Base\ndeltatech_pos_base\nAcest modul reprezintă stratul de integrare fundamental dintre sistemele Point of Sale (POS) și casele de marcat electronice (ECR) ale Odoo, oferind definițiile de bază și structurile de date necesare pentru tipărirea fiscală. Din punct de vedere business, este modulul esențial pentru companiile care trebuie să își conecteze POS-ul Odoo sau POS Backend la dispozitive fiscale externe, pentru a asigura conformitatea cu reglementările. El standardizează câmpurile și metodele folosite atât de modulele front-end, cât și de cele back-end de POS, astfel încât operațiunile cu ECR să fie consistente, iar dezvoltarea modulelor fiscale specifice unei piețe să fie simplificată pe o bază comună.\nIntegrare robustă POS-ECR: oferă o fundație stabilă pentru comunicarea dintre Odoo și imprimantele fiscale sau casele de marcat conectate.\nStructură de date unificată: standardizează câmpurile și metodele utilizate de modulele POS de tip front-end și back-end pentru operațiuni ECR consistente.\nConformitate fiscală simplificată: facilitează dezvoltarea și implementarea modulelor fiscale specifice fiecărei piețe pe o bază comună.\nÎnregistrare fiabilă a tranzacțiilor: asigură capturarea și formatarea consecventă a datelor POS esențiale pentru fiscalizare.\nOperațiuni de retail scalabile: permite extinderea ușoară a rețelei de magazine folosind o bază POS comună pentru toate locațiile și tipurile de dispozitive fiscale."
+    "text": "POS ECR Base\ndeltatech_pos_base\nModulul este stratul de bază al suitei Terrabit de Point of Sale pentru casele de marcat fiscale (ECR) din România. Păstrează setările casei de marcat și codurile ECR ale metodelor de plată și ale taxelor și le încarcă în fiecare sesiune POS, astfel încât modulele de tipărire (`deltatech_pos`, `deltatech_ecr_connect`) să poată construi bonul fiscal. Singur, nu tipărește nimic.\nCase de marcat și drivere: funcționează cu Datecs, Optima, Incotex, Daisy și Succes, precum și cu alte modele care folosesc aceeași sintaxă de comenzi; testat extensiv cu driverele certificate FiscalWire și FiscalNet. Formatul comenzii (ECR type) se setează pe fiecare punct de vânzare.\nTransportul comenzii către dispozitiv (ECR transport):\n*File (.prn/.inp download)*: fișier de comandă descărcat și preluat de driverul de pe casă (File prefix `order` și File extension `inp` implicit);\n*Terrabit Connect (local agent)*: comanda se trimite agentului local (Agent URL, implicit `http://127.0.0.1:8765`), care o tipărește și returnează rezultatul sincron;\n*DxPrint (local driver)*: bonul se trimite ca JSON driverului DxPrint (Driver URL implicit `http://127.0.0.1:8080`, plus utilizator și parolă dacă driverul are autentificare), care returnează imediat numerele bonului și ale raportului Z; rapoartele X/Z și operațiunile de numerar au cereri proprii;\npentru agent și DxPrint, dacă dispozitivul nu poate fi contactat, se revine la descărcarea fișierului.\nCoduri ECR pe metodele de plată: câmpul Cod ECR (un singur caracter, implicit `0`) identifică tipul de încasare (numerar, card, tichet) și se trimite cu fiecare bon.\nCoduri ECR pe taxe: câmp opțional Cod ECR, pentru două taxe cu aceeași cotă (de exemplu garanție SGR și vânzare cu taxare inversă, ambele 0%). Gol = categoria se deduce din procentul taxei; valoarea este poziția de TVA programată pe dispozitiv (pentru FiscalWire/datecs18, cifră de la 1 la 7, nu litera A–E).\nDepartament implicit: trimis pe fiecare linie de vânzare; gol = departamentul se deduce din cota de TVA; se completează pentru dispozitive cu departamente fixe (FiscalNet / Tremol).\nNume lungi de produse: Trim long product name și Trim to (implicit 30) scurtează numele la lungimea acceptată de imprimanta fiscală.\nCasă de marcat simulată pentru teste, demonstrații și suport, fără dispozitiv: *Simulated in Odoo (no agent)* sau *Simulated through the agent*, cu Delay (ms); doar administratorul de sistem o poate activa sau dezactiva. Răspunsul simulat depinde de ultimele cenți ale totalului (`,91` fără hârtie, `,92` casă deconectată, `,93` răspuns întârziat, `,94` fără răspuns, `,95` bon anulat pe casă; cardul folosește `,01`–`,05`). Nimic tipărit în simulare nu este bon fiscal; simularea se oprește pe punctele de vânzare reale înainte de lansare.\nUnde se configurează: ecranele standard Odoo, fără meniu propriu: Point of Sale → Configuration → Settings (secțiunea ECR), Point of Sale → Configuration → Payment Methods și Accounting → Configuration → Taxes. După modificarea unui cod ECR se închide și se redeschide sesiunea POS. Pașii detaliați sunt în fișa consultant."
   },
   {
     "path": "deltatech_pos_cashier_close/index.md",
@@ -8580,21 +8598,30 @@
     "version": "19.0.1.0.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_pos_fix",
     "local_path": "odoo-addons/deltatech/deltatech_pos_fix",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Deltatech POS Fix",
-    "summary": "Modulul corectează felul în care Punctul de Vânzare (POS) calculează totalul unei linii de comandă atunci când o poziție fiscală schimbă taxele unui produs de la „taxă inclusă în preț” la o taxă neinclusă (de exemplu taxare inversă/reverse charge cu 0%). Fără această corecție, POS păstrează prețul unitar neschimbat și calculează greșit baza impozabilă, în timp ce modulul de Vânzări face deja acest calcul corect — modulul aliniază comportamentul POS la cel din Vânzări, atât în interfața de vânzare, cât și pe facturile generate din comenzile POS.",
+    "last_ingest": "2026-11-18",
+    "friendly_name": "POS Tax-Included Total Fix",
+    "summary": "Modulul corectează două situații în care Punctul de Vânzare (POS) diferă de restul Odoo. Prima: când o poziție fiscală schimbă taxele unui produs de la „taxă inclusă în preț\" la o taxă neinclusă (de exemplu taxare inversă cu 0%), POS calculează greșit totalul, în timp ce modulul de Vânzări îl calculează corect; modulul aliniază POS la comportamentul din Vânzări, atât în interfața de vânzare, cât și pe facturile generate din comenzile POS. A doua: factura unei comenzi POS plătite în numerar, cu rest, rămânea neachitată când contul de creanțe al POS coincide cu cel al clientului (4111 în planul de conturi românesc).",
     "features": [
       "Recalculează corect prețul unitar în POS atunci când taxele se schimbă prin maparea poziției fiscale.",
       "Asigură consistență între modulul Vânzări și POS în privința tratării taxelor incluse în preț.",
-      "Adaptează prețul unitar pe liniile de factură generate din comenzile POS, pentru a reflecta corect noua mapare de taxe."
+      "Adaptează prețul unitar pe liniile de factură generate din comenzile POS, pentru a reflecta corect noua mapare de taxe.",
+      "Reconciliază factura unei comenzi POS plătite în numerar cu rest, atunci când contul de creanțe al POS este contul de creanțe al clientului; fără corecție, factura rămâne neachitată."
     ],
     "dependencies": [
       "point_of_sale"
     ],
     "connections": [
-      "point_of_sale"
+      "point_of_sale",
+      "deltatech_pos",
+      "deltatech_pos_base",
+      "deltatech_ecr_connect",
+      "deltatech_pos_stock",
+      "deltatech_pos_price_sync",
+      "l10n_ro_pos_fiscal_compliance",
+      "l10n_ro_anaf_d394_pos",
+      "l10n_ro_pos_returns"
     ],
-    "text": "Deltatech POS Fix\ndeltatech_pos_fix\nModulul corectează felul în care Punctul de Vânzare (POS) calculează totalul unei linii de comandă atunci când o poziție fiscală schimbă taxele unui produs de la „taxă inclusă în preț” la o taxă neinclusă (de exemplu taxare inversă/reverse charge cu 0%). Fără această corecție, POS păstrează prețul unitar neschimbat și calculează greșit baza impozabilă, în timp ce modulul de Vânzări face deja acest calcul corect — modulul aliniază comportamentul POS la cel din Vânzări, atât în interfața de vânzare, cât și pe facturile generate din comenzile POS.\nRecalculează corect prețul unitar în POS atunci când taxele se schimbă prin maparea poziției fiscale.\nAsigură consistență între modulul Vânzări și POS în privința tratării taxelor incluse în preț.\nAdaptează prețul unitar pe liniile de factură generate din comenzile POS, pentru a reflecta corect noua mapare de taxe."
+    "text": "POS Tax-Included Total Fix\ndeltatech_pos_fix\nModulul corectează două situații în care Punctul de Vânzare (POS) diferă de restul Odoo. Prima: când o poziție fiscală schimbă taxele unui produs de la „taxă inclusă în preț\" la o taxă neinclusă (de exemplu taxare inversă cu 0%), POS calculează greșit totalul, în timp ce modulul de Vânzări îl calculează corect; modulul aliniază POS la comportamentul din Vânzări, atât în interfața de vânzare, cât și pe facturile generate din comenzile POS. A doua: factura unei comenzi POS plătite în numerar, cu rest, rămânea neachitată când contul de creanțe al POS coincide cu cel al clientului (4111 în planul de conturi românesc).\nRecalculează corect prețul unitar în POS atunci când taxele se schimbă prin maparea poziției fiscale.\nAsigură consistență între modulul Vânzări și POS în privința tratării taxelor incluse în preț.\nAdaptează prețul unitar pe liniile de factură generate din comenzile POS, pentru a reflecta corect noua mapare de taxe.\nReconciliază factura unei comenzi POS plătite în numerar cu rest, atunci când contul de creanțe al POS este contul de creanțe al clientului; fără corecție, factura rămâne neachitată."
   },
   {
     "path": "deltatech_pos_online_payment/index.md",
@@ -8602,23 +8629,33 @@
     "version": "19.0.0.0.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos_online_payment",
     "local_path": "odoo-addons/bitshop/deltatech_pos_online_payment",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-18",
     "friendly_name": "POS Online Payment Safeguards",
-    "summary": "Acest modul elimină posibilitatea ca un casier să marcheze manual, prin butonul \"Force done\", o plată online din Punctul de Vânzare ca fiind încasată înainte ca furnizorul de plăți să o confirme efectiv. Fără această siguranță, folosirea butonului pe o linie de plată online închide comanda și echilibrează sesiunea POS pe bani care nu au ajuns niciodată în cont, iar discrepanța iese la iveală abia la reconcilierea bancară.",
+    "summary": "Modul nou în 19.0. Elimină posibilitatea ca un casier să marcheze manual, prin butonul **Force done**, o plată online din Punctul de Vânzare ca fiind încasată înainte ca furnizorul de plăți să o confirme. Fără această siguranță, butonul închide comanda și echilibrează sesiunea POS pe bani care nu au ajuns niciodată în cont, iar discrepanța apare abia la reconcilierea bancară.",
     "features": [
-      "Ascunde butonul Force done pe liniile de plată care folosesc o metodă de plată online, păstrându-l disponibil pentru terminalele de plată fizice.",
-      "Blochează și acțiunea din spatele butonului (nu doar afișarea lui), astfel încât linia nu poate fi forțată nici printr-un ecran neactualizat, nici printr-un scurtătură de tastatură.",
-      "Afișează casierului o explicație și îl direcționează să reîncerce plata sau să schimbe metoda de plată.",
-      "Funcționează independent de furnizorul de plăți — se aplică oricărui provider folosit ca metodă de plată online în POS (inclusiv cele Terrabit: ING WebPay, EuPlătesc, Monri, Libra Pay, BT iPay, Revolut, mobilPay), precum și oricărui alt provider suportat de Odoo."
+      "Ascunde butonul Force done pe liniile de plată care folosesc o metodă de plată online, păstrându-l disponibil pentru terminalele de plată fizice (starea `waiting` este comună plăților online și terminalelor).",
+      "Blochează și acțiunea din spatele butonului, nu doar afișarea lui, astfel încât linia nu poate fi forțată nici dintr-un ecran rămas deschis de dinainte de instalare.",
+      "Afișează casierului mesajul Online payment cannot be forced, care îl invită să reîncerce plata sau să schimbe metoda de plată.",
+      "Funcționează independent de furnizor: se aplică oricărui provider folosit ca metodă de plată online în POS (inclusiv cele Terrabit: ING WebPay, EuPlatesc, Monri, Libra Pay, BT iPay, Revolut, mobilPay) și oricărui alt provider suportat de Odoo.",
+      "Nu are setări proprii; se aplică imediat ce un punct de vânzare are o metodă de plată online. Pregătirea acesteia se face în Point of Sale > Configuration > Payment Methods (metodă cu Online Payment bifat; Allowed Providers gol = toți furnizorii publicați, toți în moneda punctului de vânzare) și în Point of Sale > Configuration > Settings, secțiunea Payment (Odoo permite o singură metodă online pe punct de vânzare).",
+      "La casă, clientul plătește prin fereastra Scan to pay (cod QR, sumă, referința comenzii), iar comanda se finalizează doar după confirmarea furnizorului; linia afișează Request sent, fără buton Force done.",
+      "Se instalează deliberat, nu automat, pentru ca butonul să nu dispară fără avertisment la clienții ai căror casieri îl folosesc pentru terminale fizice; recomandat înainte de prima plată online la casă."
     ],
     "dependencies": [
       "pos_online_payment"
     ],
     "connections": [
       "pos_online_payment",
-      "waiting"
+      "waiting",
+      "deltatech_payment_revolut",
+      "deltatech_payment_ing_webpay",
+      "deltatech_payment_eu_platesc",
+      "deltatech_payment_monri",
+      "deltatech_payment_libra_pay",
+      "deltatech_payment_bt_ipay",
+      "deltatech_payment_mobilpay"
     ],
-    "text": "POS Online Payment Safeguards\ndeltatech_pos_online_payment\nAcest modul elimină posibilitatea ca un casier să marcheze manual, prin butonul \"Force done\", o plată online din Punctul de Vânzare ca fiind încasată înainte ca furnizorul de plăți să o confirme efectiv. Fără această siguranță, folosirea butonului pe o linie de plată online închide comanda și echilibrează sesiunea POS pe bani care nu au ajuns niciodată în cont, iar discrepanța iese la iveală abia la reconcilierea bancară.\nAscunde butonul Force done pe liniile de plată care folosesc o metodă de plată online, păstrându-l disponibil pentru terminalele de plată fizice.\nBlochează și acțiunea din spatele butonului (nu doar afișarea lui), astfel încât linia nu poate fi forțată nici printr-un ecran neactualizat, nici printr-un scurtătură de tastatură.\nAfișează casierului o explicație și îl direcționează să reîncerce plata sau să schimbe metoda de plată.\nFuncționează independent de furnizorul de plăți — se aplică oricărui provider folosit ca metodă de plată online în POS (inclusiv cele Terrabit: ING WebPay, EuPlătesc, Monri, Libra Pay, BT iPay, Revolut, mobilPay), precum și oricărui alt provider suportat de Odoo."
+    "text": "POS Online Payment Safeguards\ndeltatech_pos_online_payment\nModul nou în 19.0. Elimină posibilitatea ca un casier să marcheze manual, prin butonul **Force done**, o plată online din Punctul de Vânzare ca fiind încasată înainte ca furnizorul de plăți să o confirme. Fără această siguranță, butonul închide comanda și echilibrează sesiunea POS pe bani care nu au ajuns niciodată în cont, iar discrepanța apare abia la reconcilierea bancară.\nAscunde butonul Force done pe liniile de plată care folosesc o metodă de plată online, păstrându-l disponibil pentru terminalele de plată fizice (starea `waiting` este comună plăților online și terminalelor).\nBlochează și acțiunea din spatele butonului, nu doar afișarea lui, astfel încât linia nu poate fi forțată nici dintr-un ecran rămas deschis de dinainte de instalare.\nAfișează casierului mesajul Online payment cannot be forced, care îl invită să reîncerce plata sau să schimbe metoda de plată.\nFuncționează independent de furnizor: se aplică oricărui provider folosit ca metodă de plată online în POS (inclusiv cele Terrabit: ING WebPay, EuPlatesc, Monri, Libra Pay, BT iPay, Revolut, mobilPay) și oricărui alt provider suportat de Odoo.\nNu are setări proprii; se aplică imediat ce un punct de vânzare are o metodă de plată online. Pregătirea acesteia se face în Point of Sale > Configuration > Payment Methods (metodă cu Online Payment bifat; Allowed Providers gol = toți furnizorii publicați, toți în moneda punctului de vânzare) și în Point of Sale > Configuration > Settings, secțiunea Payment (Odoo permite o singură metodă online pe punct de vânzare).\nLa casă, clientul plătește prin fereastra Scan to pay (cod QR, sumă, referința comenzii), iar comanda se finalizează doar după confirmarea furnizorului; linia afișează Request sent, fără buton Force done.\nSe instalează deliberat, nu automat, pentru ca butonul să nu dispară fără avertisment la clienții ai căror casieri îl folosesc pentru terminale fizice; recomandat înainte de prima plată online la casă."
   },
   {
     "path": "deltatech_pos_price_lock/index.md",
@@ -8652,23 +8689,30 @@
     "version": "19.0.1.0.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_pos_price_sync",
     "local_path": "odoo-addons/deltatech/deltatech_pos_price_sync",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Deltatech POS Price Sync",
-    "summary": "Modulul trimite instant modificările de preț ale produselor către sesiunile de Punct de Vânzare (POS) deja deschise, astfel încât casierii să vadă mereu prețul corect fără să fie nevoiți să reîncarce pagina sau să închidă și să redeschidă sesiunea.",
+    "last_ingest": "2026-11-18",
+    "friendly_name": "POS Price Sync",
+    "summary": "Modul nou în 19.0. Trimite instant modificările de preț ale produselor către sesiunile de Punct de Vânzare (POS) deja deschise, astfel încât casierii să vadă mereu prețul corect, fără să închidă și să redeschidă sesiunea. O sesiune deschisă nu recitește prețurile, deci casierul ar continua să vândă la prețul vechi, chiar și după reîncărcarea paginii.",
     "features": [
-      "Detectează modificările câmpurilor `list_price`/`standard_price` pe produsele disponibile în POS.",
-      "Trimite o notificare live prin bus către toate sesiunile POS deschise, reutilizând același model de canal folosit de `deltatech_pos_stock`.",
+      "Detectează modificările câmpurilor `list_price`/`standard_price` (preț de vânzare și cost) pe produsele disponibile în POS.",
+      "Trimite o notificare live prin bus către toate sesiunile POS deschise, reutilizând același model de canal ca `deltatech_pos_stock`.",
       "Interfața POS integrează prețul proaspăt direct în modelul din memorie, fără reîncărcare de pagină.",
-      "Rezolvă problema „am schimbat prețul, dar casierul tot vede prețul vechi chiar și după F5\": o sesiune POS rămasă deschisă nu mai rulează sincronizarea bazată pe `write_date` la reîncărcare."
+      "Rezolvă situația „am schimbat prețul, dar casierul îl vede pe cel vechi chiar și după F5\": o sesiune rămasă deschisă nu mai rulează sincronizarea bazată pe `write_date` la reîncărcare."
     ],
     "dependencies": [
       "point_of_sale"
     ],
     "connections": [
+      "point_of_sale",
       "deltatech_pos_stock",
-      "point_of_sale"
+      "deltatech_pos",
+      "deltatech_pos_base",
+      "deltatech_ecr_connect",
+      "deltatech_pos_fix",
+      "l10n_ro_pos_fiscal_compliance",
+      "l10n_ro_anaf_d394_pos",
+      "l10n_ro_pos_returns"
     ],
-    "text": "Deltatech POS Price Sync\ndeltatech_pos_price_sync\nModulul trimite instant modificările de preț ale produselor către sesiunile de Punct de Vânzare (POS) deja deschise, astfel încât casierii să vadă mereu prețul corect fără să fie nevoiți să reîncarce pagina sau să închidă și să redeschidă sesiunea.\nDetectează modificările câmpurilor `list_price`/`standard_price` pe produsele disponibile în POS.\nTrimite o notificare live prin bus către toate sesiunile POS deschise, reutilizând același model de canal folosit de `deltatech_pos_stock`.\nInterfața POS integrează prețul proaspăt direct în modelul din memorie, fără reîncărcare de pagină.\nRezolvă problema „am schimbat prețul, dar casierul tot vede prețul vechi chiar și după F5\": o sesiune POS rămasă deschisă nu mai rulează sincronizarea bazată pe `write_date` la reîncărcare."
+    "text": "POS Price Sync\ndeltatech_pos_price_sync\nModul nou în 19.0. Trimite instant modificările de preț ale produselor către sesiunile de Punct de Vânzare (POS) deja deschise, astfel încât casierii să vadă mereu prețul corect, fără să închidă și să redeschidă sesiunea. O sesiune deschisă nu recitește prețurile, deci casierul ar continua să vândă la prețul vechi, chiar și după reîncărcarea paginii.\nDetectează modificările câmpurilor `list_price`/`standard_price` (preț de vânzare și cost) pe produsele disponibile în POS.\nTrimite o notificare live prin bus către toate sesiunile POS deschise, reutilizând același model de canal ca `deltatech_pos_stock`.\nInterfața POS integrează prețul proaspăt direct în modelul din memorie, fără reîncărcare de pagină.\nRezolvă situația „am schimbat prețul, dar casierul îl vede pe cel vechi chiar și după F5\": o sesiune rămasă deschisă nu mai rulează sincronizarea bazată pe `write_date` la reîncărcare."
   },
   {
     "path": "deltatech_pos_product_filter/index.md",
@@ -9183,14 +9227,16 @@
     "version": "19.0.1.0.7",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_chatter",
     "local_path": "odoo-addons/deltatech/deltatech_product_chatter",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Deltatech Product Chatter",
-    "summary": "Modulul restricționează ștergerea (și golirea) mesajelor din chatter-ul produselor (șabloane de produs și variante), permițând această acțiune doar utilizatorilor care fac parte dintr-un grup de securitate dedicat. Astfel se păstrează istoricul complet al comunicării și modificărilor legate de produse, evitând ștergerea accidentală sau abuzivă a urmelor de audit.",
+    "last_ingest": "2026-11-18",
+    "friendly_name": "Product Chatter Protection",
+    "summary": "Modulul restricționează ștergerea, editarea și golirea mesajelor din chatter-ul produselor (șabloane de produs și variante), permițând aceste acțiuni doar utilizatorilor care fac parte dintr-un grup de securitate dedicat. Astfel se păstrează istoricul complet al comunicării și al modificărilor legate de produse, evitând ștergerea accidentală sau abuzivă a urmelor de audit.",
     "features": [
-      "Blochează acțiunea de ștergere a mesajelor din chatter pentru produse (șablon și variantă), direct din interfața Odoo.",
-      "Blochează și ștergerile/editările efectuate pe alte căi (ORM/RPC, scripturi, module terțe) asupra mesajelor `mail.message` legate de produse.",
-      "Introduce grupul de securitate dedicat „Delete Product Chatter Messages”, care poate fi acordat doar utilizatorilor de încredere.",
-      "Restricția se aplică exclusiv mesajelor de pe `product.template` și `product.product`; celelalte modele nu sunt afectate."
+      "Blochează acțiunea de ștergere a mesajelor din chatter pentru produse (șablon și variantă), direct din interfața Odoo, inclusiv „ștergerea\" prin golirea conținutului mesajului.",
+      "Blochează ștergerile directe ale înregistrărilor `mail.message` legate de produse (ORM/RPC, scripturi, module terțe) pentru utilizatorii fără grup.",
+      "Blochează editarea directă (ORM/RPC) a conținutului sau a atașamentelor mesajelor legate de produse pentru utilizatorii fără grup.",
+      "Introduce grupul de securitate „Delete Product Chatter Messages\", care trebuie acordat doar utilizatorilor de încredere: Settings → Users & Companies → Users → Access Rights.",
+      "Fără grup, ștergerea/editarea unui mesaj dă eroare; cu grup, comportamentul este cel obișnuit.",
+      "Restricția se aplică exclusiv mesajelor de pe `product.template` și `product.product`; celelalte modele nu sunt afectate, iar datele nu sunt modificate."
     ],
     "dependencies": [
       "product",
@@ -9200,7 +9246,7 @@
       "mail",
       "product"
     ],
-    "text": "Deltatech Product Chatter\ndeltatech_product_chatter\nModulul restricționează ștergerea (și golirea) mesajelor din chatter-ul produselor (șabloane de produs și variante), permițând această acțiune doar utilizatorilor care fac parte dintr-un grup de securitate dedicat. Astfel se păstrează istoricul complet al comunicării și modificărilor legate de produse, evitând ștergerea accidentală sau abuzivă a urmelor de audit.\nBlochează acțiunea de ștergere a mesajelor din chatter pentru produse (șablon și variantă), direct din interfața Odoo.\nBlochează și ștergerile/editările efectuate pe alte căi (ORM/RPC, scripturi, module terțe) asupra mesajelor `mail.message` legate de produse.\nIntroduce grupul de securitate dedicat „Delete Product Chatter Messages”, care poate fi acordat doar utilizatorilor de încredere.\nRestricția se aplică exclusiv mesajelor de pe `product.template` și `product.product`; celelalte modele nu sunt afectate."
+    "text": "Product Chatter Protection\ndeltatech_product_chatter\nModulul restricționează ștergerea, editarea și golirea mesajelor din chatter-ul produselor (șabloane de produs și variante), permițând aceste acțiuni doar utilizatorilor care fac parte dintr-un grup de securitate dedicat. Astfel se păstrează istoricul complet al comunicării și al modificărilor legate de produse, evitând ștergerea accidentală sau abuzivă a urmelor de audit.\nBlochează acțiunea de ștergere a mesajelor din chatter pentru produse (șablon și variantă), direct din interfața Odoo, inclusiv „ștergerea\" prin golirea conținutului mesajului.\nBlochează ștergerile directe ale înregistrărilor `mail.message` legate de produse (ORM/RPC, scripturi, module terțe) pentru utilizatorii fără grup.\nBlochează editarea directă (ORM/RPC) a conținutului sau a atașamentelor mesajelor legate de produse pentru utilizatorii fără grup.\nIntroduce grupul de securitate „Delete Product Chatter Messages\", care trebuie acordat doar utilizatorilor de încredere: Settings → Users & Companies → Users → Access Rights.\nFără grup, ștergerea/editarea unui mesaj dă eroare; cu grup, comportamentul este cel obișnuit.\nRestricția se aplică exclusiv mesajelor de pe `product.template` și `product.product`; celelalte modele nu sunt afectate, iar datele nu sunt modificate."
   },
   {
     "path": "deltatech_product_code/index.md",
@@ -9370,26 +9416,27 @@
     "version": "19.0.1.0.6",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_reordering_limit",
     "local_path": "odoo-addons/deltatech/deltatech_product_reordering_limit",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Product Reordering Limit",
-    "summary": "Acest modul introduce un mod simplificat de a gestiona pragurile de reaprovizionare a stocului direct pe fișa articolului (produsului) în Odoo. Este gândit pentru gestionarii de stoc care au nevoie de un minim și un maxim global valabil pentru întregul produs (inclusiv toate variantele sale), fără complexitatea regulilor de reaprovizionare individuale pe fiecare locație/depozit.",
+    "last_ingest": "2026-11-18",
+    "friendly_name": "Product Reordering Limits",
+    "summary": "Acest modul introduce un mod simplificat de a gestiona pragurile de reaprovizionare a stocului direct pe fișa produsului. Este gândit pentru gestionarii de stoc care au nevoie de un minim și un maxim global valabil pentru întregul produs (inclusiv toate variantele), fără complexitatea regulilor de reaprovizionare individuale pe fiecare locație sau depozit.",
     "features": [
-      "Adaugă câmpurile Total Minimum și Total Maximum direct pe fișa produsului (șablon de produs), aplicabile la nivelul întregului articol, inclusiv toate variantele.",
-      "Calculează automat dacă un produs este Sub Minim (Below Minimum), pe baza cantității totale disponibile în toate locațiile interne de stoc.",
-      "Adaugă un filtru de căutare dedicat („Below Minimum\") în lista de produse, pentru identificarea rapidă a articolelor care necesită reaprovizionare.",
-      "Oferă un raport Excel (generat printr-un wizard) cu produsele selectate, indicând cantitatea sub minim, cantitatea necesară până la maxim și intervalul minim-maxim definit."
+      "Adaugă câmpurile Total Minimum și Total Maximum direct pe fișa produsului (șablon de produs), aplicabile întregului articol, inclusiv variantelor.",
+      "Calculează automat dacă un produs este Below Minimum, pe baza cantității totale disponibile în toate locațiile interne de stoc.",
+      "Adaugă filtrul de căutare Below Minimum în lista de produse, pentru identificarea rapidă a articolelor care necesită reaprovizionare; informația se folosește apoi pentru a declanșa comenzi de achiziție sau de producție.",
+      "Oferă un raport Excel (generat printr-un wizard) pentru produsele selectate, cu cantitatea sub minim, cantitatea necesară până la maxim și intervalul minim-maxim.",
+      "Se folosește din Inventory > Products > Products, în secțiunea Reordering Limits a produsului."
     ],
     "dependencies": [
       "product",
-      "stock"
+      "stock",
+      "xlsxwriter"
     ],
     "connections": [
       "product",
       "stock",
-      "stock_quant",
-      "stock_location"
+      "stock_quant"
     ],
-    "text": "Product Reordering Limit\ndeltatech_product_reordering_limit\nAcest modul introduce un mod simplificat de a gestiona pragurile de reaprovizionare a stocului direct pe fișa articolului (produsului) în Odoo. Este gândit pentru gestionarii de stoc care au nevoie de un minim și un maxim global valabil pentru întregul produs (inclusiv toate variantele sale), fără complexitatea regulilor de reaprovizionare individuale pe fiecare locație/depozit.\nAdaugă câmpurile Total Minimum și Total Maximum direct pe fișa produsului (șablon de produs), aplicabile la nivelul întregului articol, inclusiv toate variantele.\nCalculează automat dacă un produs este Sub Minim (Below Minimum), pe baza cantității totale disponibile în toate locațiile interne de stoc.\nAdaugă un filtru de căutare dedicat („Below Minimum\") în lista de produse, pentru identificarea rapidă a articolelor care necesită reaprovizionare.\nOferă un raport Excel (generat printr-un wizard) cu produsele selectate, indicând cantitatea sub minim, cantitatea necesară până la maxim și intervalul minim-maxim definit."
+    "text": "Product Reordering Limits\ndeltatech_product_reordering_limit\nAcest modul introduce un mod simplificat de a gestiona pragurile de reaprovizionare a stocului direct pe fișa produsului. Este gândit pentru gestionarii de stoc care au nevoie de un minim și un maxim global valabil pentru întregul produs (inclusiv toate variantele), fără complexitatea regulilor de reaprovizionare individuale pe fiecare locație sau depozit.\nAdaugă câmpurile Total Minimum și Total Maximum direct pe fișa produsului (șablon de produs), aplicabile întregului articol, inclusiv variantelor.\nCalculează automat dacă un produs este Below Minimum, pe baza cantității totale disponibile în toate locațiile interne de stoc.\nAdaugă filtrul de căutare Below Minimum în lista de produse, pentru identificarea rapidă a articolelor care necesită reaprovizionare; informația se folosește apoi pentru a declanșa comenzi de achiziție sau de producție.\nOferă un raport Excel (generat printr-un wizard) pentru produsele selectate, cu cantitatea sub minim, cantitatea necesară până la maxim și intervalul minim-maxim.\nSe folosește din Inventory > Products > Products, în secțiunea Reordering Limits a produsului."
   },
   {
     "path": "deltatech_product_trade_markup/index.md",
@@ -9778,20 +9825,22 @@
     "version": "19.0.1.2.15",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_price",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_price",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-18",
     "friendly_name": "Purchase Price",
-    "summary": "Modulul actualizează automat prețurile de achiziție atunci când o recepție de marfă este validată. La fiecare recepție, modulul preia ultimul preț de achiziție și, în funcție de parametrii de sistem configurați, poate rescrie costul standard al produsului, prețul furnizorului, poate adăuga automat furnizorul în lista de furnizori ai produsului și poate recalcula prețul de vânzare pe baza adaosului comercial. Astfel, datele de preț ale produselor rămân mereu sincronizate cu realitatea aprovizionării, fără intervenție manuală.",
+    "summary": "Modulul actualizează automat prețurile de achiziție atunci când o recepție de marfă este validată. La fiecare recepție pe baza unei comenzi de achiziție, preia ultimul preț de achiziție și, în funcție de opțiunile configurate, poate actualiza prețul furnizorului, poate adăuga furnizorul în lista produsului și poate recalcula prețul de vânzare pe baza adaosului comercial. Astfel, datele de preț ale produselor rămân sincronizate cu realitatea aprovizionării, fără intervenție manuală.",
     "features": [
-      "Actualizarea prețurilor după recepția mărfii, controlată prin parametri de sistem:",
-      "`purchase.update_standard_price` — dacă este setat pe True, costul standard (`standard_price`) al produsului este suprascris.",
-      "`purchase.update_product_price` — dacă este False, prețul furnizorului nu se modifică; dacă este True, prețul furnizorului produsului este întotdeauna suprascris.",
-      "`purchase.add_supplier_to_product` — dacă este True, furnizorul și prețul sunt adăugate automat în informațiile de furnizor ale produsului; dacă este False, nu se fac modificări în aceste informații.",
-      "`purchase.update_list_price` — dacă este True, prețul de listă este actualizat conform valorii adaosului comercial; dacă este False, prețul de listă nu se actualizează.",
-      "`sale.list_price_round` — numărul zecimal la care se rotunjește prețul de listă.",
-      "Câmpuri noi adăugate pe șablonul de produs:",
-      "`last_purchase_price` — ultimul preț de achiziție, actualizat la validarea recepției.",
-      "`trade_markup` — adaosul comercial al produsului, care poate fi setat printr-un wizard (Acțiune → Set trade markup).",
-      "Dacă adaosul comercial (`trade_markup`) este setat pentru un produs, la recepție prețul de vânzare se calculează automat din `last_purchase_price` și `trade_markup`."
+      "Opțiuni în Settings → Purchase, secțiunea Products (parametri de sistem):",
+      "Update product price (`purchase.update_product_price`): la recepție, prețul furnizorului din tabul *Purchase* al produsului se înlocuiește cu prețul din comanda de achiziție (doar liniile de furnizor fără cantitate minimă peste 1 și fără perioadă de valabilitate);",
+      "Update list price (`purchase.update_list_price`): prețul de vânzare se recalculează din ultimul preț de achiziție și adaosul comercial — la recepție, la setarea adaosului pe mai multe produse și la modificarea adaosului sau a ultimului preț pe produs;",
+      "Add supplier to product (`purchase.add_supplier_to_product`): furnizorul și prețul se adaugă pe produs la confirmarea comenzii de achiziție;",
+      "Force supplier price at PO and bill confirmation (`purchase.force_price_at_validation`): prețul furnizorului se actualizează și la confirmarea comenzii și la postarea facturii de furnizor;",
+      "`purchase.update_standard_price`: dacă este True, costul standard este forțat la ultimul preț de achiziție (în cod este marcat ca nerecomandat; implicit costul vine din evaluarea stocului);",
+      "`sale.list_price_round`: numărul de zecimale la care se rotunjește prețul de vânzare calculat (implicit 2).",
+      "Câmpuri noi pe produs: `last_purchase_price` (Last Purchase Price, actualizat la validarea recepției, convertit în moneda companiei și în unitatea de măsură a produsului; afișat verde când nu depășește costul, roșu când îl depășește) și `trade_markup` (Trade Markup, 30.00 înseamnă 30%).",
+      "Setare în masă a adaosului: din listă, Actions → Set Trade Markup; cu Selected Line bifat se aplică produselor selectate, altfel se alege un Vendor și adaosul se aplică tuturor produselor lui.",
+      "Recepții fără comandă de achiziție nu modifică prețurile.",
+      "Cu Update list price dezactivat, prețul de vânzare se introduce manual, iar adaosul se recalculează din el (de exemplu preț de vânzare 13.00 și preț de achiziție 12.50 dau adaos 4.00); un adaos introdus manual se păstrează. Un produs fără adaos își păstrează prețul de vânzare.",
+      "Regulă de listă de prețuri: Last Purchase Price poate fi folosit ca preț de bază."
     ],
     "dependencies": [
       "stock",
@@ -9802,7 +9851,7 @@
     "connections": [
       "deltatech_product_trade_markup"
     ],
-    "text": "Purchase Price\ndeltatech_purchase_price\nModulul actualizează automat prețurile de achiziție atunci când o recepție de marfă este validată. La fiecare recepție, modulul preia ultimul preț de achiziție și, în funcție de parametrii de sistem configurați, poate rescrie costul standard al produsului, prețul furnizorului, poate adăuga automat furnizorul în lista de furnizori ai produsului și poate recalcula prețul de vânzare pe baza adaosului comercial. Astfel, datele de preț ale produselor rămân mereu sincronizate cu realitatea aprovizionării, fără intervenție manuală.\nActualizarea prețurilor după recepția mărfii, controlată prin parametri de sistem:\n`purchase.update_standard_price` — dacă este setat pe True, costul standard (`standard_price`) al produsului este suprascris.\n`purchase.update_product_price` — dacă este False, prețul furnizorului nu se modifică; dacă este True, prețul furnizorului produsului este întotdeauna suprascris.\n`purchase.add_supplier_to_product` — dacă este True, furnizorul și prețul sunt adăugate automat în informațiile de furnizor ale produsului; dacă este False, nu se fac modificări în aceste informații.\n`purchase.update_list_price` — dacă este True, prețul de listă este actualizat conform valorii adaosului comercial; dacă este False, prețul de listă nu se actualizează.\n`sale.list_price_round` — numărul zecimal la care se rotunjește prețul de listă.\nCâmpuri noi adăugate pe șablonul de produs:\n`last_purchase_price` — ultimul preț de achiziție, actualizat la validarea recepției.\n`trade_markup` — adaosul comercial al produsului, care poate fi setat printr-un wizard (Acțiune → Set trade markup).\nDacă adaosul comercial (`trade_markup`) este setat pentru un produs, la recepție prețul de vânzare se calculează automat din `last_purchase_price` și `trade_markup`."
+    "text": "Purchase Price\ndeltatech_purchase_price\nModulul actualizează automat prețurile de achiziție atunci când o recepție de marfă este validată. La fiecare recepție pe baza unei comenzi de achiziție, preia ultimul preț de achiziție și, în funcție de opțiunile configurate, poate actualiza prețul furnizorului, poate adăuga furnizorul în lista produsului și poate recalcula prețul de vânzare pe baza adaosului comercial. Astfel, datele de preț ale produselor rămân sincronizate cu realitatea aprovizionării, fără intervenție manuală.\nOpțiuni în Settings → Purchase, secțiunea Products (parametri de sistem):\nUpdate product price (`purchase.update_product_price`): la recepție, prețul furnizorului din tabul *Purchase* al produsului se înlocuiește cu prețul din comanda de achiziție (doar liniile de furnizor fără cantitate minimă peste 1 și fără perioadă de valabilitate);\nUpdate list price (`purchase.update_list_price`): prețul de vânzare se recalculează din ultimul preț de achiziție și adaosul comercial — la recepție, la setarea adaosului pe mai multe produse și la modificarea adaosului sau a ultimului preț pe produs;\nAdd supplier to product (`purchase.add_supplier_to_product`): furnizorul și prețul se adaugă pe produs la confirmarea comenzii de achiziție;\nForce supplier price at PO and bill confirmation (`purchase.force_price_at_validation`): prețul furnizorului se actualizează și la confirmarea comenzii și la postarea facturii de furnizor;\n`purchase.update_standard_price`: dacă este True, costul standard este forțat la ultimul preț de achiziție (în cod este marcat ca nerecomandat; implicit costul vine din evaluarea stocului);\n`sale.list_price_round`: numărul de zecimale la care se rotunjește prețul de vânzare calculat (implicit 2).\nCâmpuri noi pe produs: `last_purchase_price` (Last Purchase Price, actualizat la validarea recepției, convertit în moneda companiei și în unitatea de măsură a produsului; afișat verde când nu depășește costul, roșu când îl depășește) și `trade_markup` (Trade Markup, 30.00 înseamnă 30%).\nSetare în masă a adaosului: din listă, Actions → Set Trade Markup; cu Selected Line bifat se aplică produselor selectate, altfel se alege un Vendor și adaosul se aplică tuturor produselor lui.\nRecepții fără comandă de achiziție nu modifică prețurile.\nCu Update list price dezactivat, prețul de vânzare se introduce manual, iar adaosul se recalculează din el (de exemplu preț de vânzare 13.00 și preț de achiziție 12.50 dau adaos 4.00); un adaos introdus manual se păstrează. Un produs fără adaos își păstrează prețul de vânzare.\nRegulă de listă de prețuri: Last Purchase Price poate fi folosit ca preț de bază."
   },
   {
     "path": "deltatech_purchase_price_compare/index.md",
@@ -10135,23 +10184,29 @@
     "path": "deltatech_queue_job/index.md",
     "module": "deltatech_queue_job",
     "version": "19.0.1.4.6",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_queue_job`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_queue_job",
     "local_path": "odoo-addons/deltatech/deltatech_queue_job",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Joburi în coadă (Queue Job Enhancements)",
-    "summary": "Modulul aduce îmbunătățiri specifice peste funcționalitatea standard de cozi de joburi din Odoo (`queue_job`), concentrându-se pe performanță, fiabilitate și flexibilitate în execuția sarcinilor de fundal. Prin blocare optimizată a bazei de date și procesare tranzacțională sigură, permite mai multor lucrători (worker) să proceseze coada în paralel, fără blocaje reciproce. Este gândit special pentru a depăși limitările platformei Odoo.sh: ocolește limita de 5 minute a cron-ului prin procesare declanșată extern (la fiecare minut) și previne expirarea (timeout) lucrătorilor prin bugete de timp configurabile. Pe scurt, asigură că sarcinile de fundal sunt procesate cât mai rapid posibil, cu un consum minim de resurse și fiabilitate maximă.",
+    "last_ingest": "2026-11-18",
+    "friendly_name": "Queue Job Enhancements",
+    "summary": "Modulul aduce îmbunătățiri peste coada standard de joburi din Odoo (`queue_job`), concentrate pe performanță, fiabilitate și flexibilitate în execuția sarcinilor de fundal. Prin blocare optimizată a bazei de date și procesare tranzacțională sigură, mai mulți lucrători (worker) pot procesa coada în paralel, fără să se blocheze reciproc. Este gândit pentru limitările platformei Odoo.sh: ocolește limita de 5 minute a cron-ului prin procesare declanșată extern (la fiecare minut) și previne expirarea lucrătorilor prin bugete de timp configurabile. Pe scurt, sarcinile de fundal sunt procesate cât mai rapid, cu consum minim de resurse și fiabilitate ridicată.",
     "features": [
-      "Concurență și blocare optimizate: metodă specializată (`_acquire_specific_job`) cu clauza SQL `FOR NO KEY UPDATE SKIP LOCKED`, care permite mai multor lucrători (cron intern sau API extern) să proceseze coada simultan, crescând semnificativ debitul.",
-      "Procesare tranzacțională robustă: execuția joburilor este încapsulată în savepoint-uri de bază de date; dacă un job eșuează, doar modificările sale sunt anulate (rollback), păstrând starea pentru joburile următoare din același lot. Include tratarea automată a erorilor tipice de concurență (precum eșecuri de serializare), cu reprogramarea grațioasă a joburilor.",
-      "Runner-e flexibile pentru joburi:",
-      "*Runner cron intern:* un `_job_runner` îmbunătățit care respectă limite configurabile de dimensiune a lotului și timp de execuție, prevenind timeout-urile lucrătorilor pe platforme precum Odoo.sh.",
-      "*Runner API extern:* un endpoint dedicat (`/api/v1/queue/process`) pentru servicii externe de declanșare (ex. cron-job.org), permițând intervale de procesare la fiecare minut, ocolind limita standard de 5 minute a cron-ului Odoo.",
-      "*Procesare în fir de execuție (thread):* posibilitatea de a lansa un runner în stil API într-un fir de fundal dedicat, direct din interfața Odoo, util pentru procesare manuală imediată fără a bloca interfața web.",
-      "Auto-declanșare inteligentă și debounce real: creează automat declanșatori cron (`ir.cron.trigger`) ori de câte ori un job este creat sau i se actualizează ora programată (`eta`); `_cron_trigger` acceptă acum și liste de ETA (cazul joburilor amânate din runner-ul OCA), le tratează individual, de la cea mai apropiată, și evită declanșatori redundanți verificând corect dacă un trigger existent acoperă deja intervalul cerut.",
-      "Deduplicare inclusiv pentru joburi eșuate: la crearea unui job nou, joburile mai vechi rămase în starea `failed` cu același `identity_key` sunt mutate automat în `cancelled` (deduplicarea standard verifică doar stările active); înregistrarea și traceback-ul rămân pentru diagnostic, iar `autovacuum` standard le șterge ulterior după `removal_interval` al canalului.",
-      "Curățare completă la autovacuum: joburile anulate în lanț prin `cancel_dependent_jobs()` (care scria doar `state`, fără `date_cancelled`) primesc acum data de anulare, astfel încât cron-ul standard de autovacuum le poate colecta; suplimentar, `autovacuum()` extins șterge și joburile terminale (`done`/`cancelled`) rămase fără nicio dată de finalizare, pe baza `date_created`, curățând reziduul acumulat înainte de acest fix (joburile `failed` nu sunt niciodată atinse, fiind singurele utile pentru diagnostic).",
-      "Configurare centralizată: o pagină de setări dedicată sub `Queue Job > Settings` permite administratorilor să genereze și să gestioneze chei API securizate, să definească `Batch Size` (numărul maxim de joburi per rulare) și `Max Seconds` (bugetul de timp per execuție).",
-      "Monitorizare și interfață îmbunătățite: notificări integrate (Client Actions) cu feedback în timp real la declanșarea sau procesarea joburilor; vizualizări de listă îmbunătățite cu date de creare și acces facil la procesarea manuală; butoanele „Cron Trigger\", „Process\" și „Process Background\" sunt mereu accesibile din antetul listei de joburi."
+      "Concurență și blocare optimizate: metoda `_acquire_specific_job` folosește clauza SQL `FOR NO KEY UPDATE SKIP LOCKED`, astfel încât mai mulți lucrători (cron intern sau API extern) procesează coada simultan, fără blocaje.",
+      "Procesare tranzacțională robustă: execuția joburilor este încapsulată în savepoint-uri; dacă un job eșuează, doar modificările lui sunt anulate. Erorile tipice de concurență (de exemplu eșecurile de serializare) sunt tratate automat, cu reprogramarea jobului.",
+      "Runner-e flexibile:",
+      "*Runner cron intern:* un `_job_runner` îmbunătățit, care respectă limite configurabile de dimensiune a lotului și de timp, prevenind timeout-urile pe platforme precum Odoo.sh;",
+      "*Runner API extern:* endpoint-ul `/api/v1/queue/process` pentru servicii externe de declanșare (ex. cron-job.org), cu intervale de procesare de un minut;",
+      "*Procesare în fir de execuție:* lansarea unui runner în stil API într-un fir de fundal, direct din interfață, pentru procesare manuală imediată fără blocarea interfeței web.",
+      "Auto-declanșare și debounce: se creează automat declanșatori cron (`ir.cron.trigger`) la crearea unui job sau la actualizarea orei programate (`eta`); `_cron_trigger` acceptă și liste de ETA, le tratează de la cea mai apropiată și evită declanșatorii redundanți.",
+      "Deduplicare inclusiv pentru joburi eșuate (nou în 19.0): când apare un job nou cu același `identity_key`, joburile mai vechi rămase în `failed` trec în `cancelled`, astfel încât lista de erori arată problemele reale, nu istoricul aceleiași operațiuni reluate; înregistrarea și traceback-ul rămân pentru diagnostic.",
+      "Curățare completă la autovacuum: joburile anulate în lanț primesc data de anulare, iar `autovacuum()` șterge și joburile terminale (`done`/`cancelled`) rămase fără dată de finalizare; joburile `failed` nu sunt atinse.",
+      "Configurare centralizată: Job Queue → Settings permite generarea cheii API (Generate Key), Batch Size (implicit 20) și Max Seconds (implicit 50).",
+      "Configurarea unui serviciu extern (cron-job.org): URL `https://<domeniul-odoo>/api/v1/queue/process`, metoda POST, programare la fiecare minut, antet `Content-Type: application/json`, corp JSON-RPC cu `params.api_key`. Parametri: `api_key` (obligatoriu), `batch_size` și `max_seconds` (opționali).",
+      "Răspunsul API: rezultatul este împachetat de două ori (în `result` → `result`), cu `status`, `processed`, `done`, `failed`, `postponed`, `pending_count`, `time_elapsed`, `timestamp`. Statusul HTTP este întotdeauna 200, chiar și pentru cheie invalidă sau eroare, care apar în corp ca `\"status\": \"error\"`; alertele bazate pe statusul HTTP din serviciul extern nu le vor prinde.",
+      "Statistici: `POST /api/v1/queue/stats`, cu aceeași cheie, doar numără joburile (pending, started, done, failed, total); este o verificare sigură a cheii înainte de activarea procesării.",
+      "Procesare manuală din Job Queue → Queue → Jobs, butoane în antetul listei (și al formularului):",
+      "Cron Trigger: activează cron-ul cozii, care pornește în câteva secunde; notificare verde (programat), galbenă „CRON Trigger already exists\" sau roșie „No CRON Trigger found\";",
+      "Process Background (pe formular Process (Thread)): procesează imediat un lot, într-un fir separat (fix până la 20 de joburi în 50 de secunde, nu valorile din setări);",
+      "Process: apare după selectarea a cel puțin unui job; acționează doar dacă măcar unul este pending și pornește cron-ul, care procesează toată coada, nu doar joburile selectate. Un job eșuat se repune mai întâi în coadă cu Requeue Job."
     ],
     "dependencies": [
       "queue_job",
@@ -10161,7 +10216,7 @@
       "queue_job",
       "queue_job_cron_jobrunner"
     ],
-    "text": "Joburi în coadă (Queue Job Enhancements)\ndeltatech_queue_job\nModulul aduce îmbunătățiri specifice peste funcționalitatea standard de cozi de joburi din Odoo (`queue_job`), concentrându-se pe performanță, fiabilitate și flexibilitate în execuția sarcinilor de fundal. Prin blocare optimizată a bazei de date și procesare tranzacțională sigură, permite mai multor lucrători (worker) să proceseze coada în paralel, fără blocaje reciproce. Este gândit special pentru a depăși limitările platformei Odoo.sh: ocolește limita de 5 minute a cron-ului prin procesare declanșată extern (la fiecare minut) și previne expirarea (timeout) lucrătorilor prin bugete de timp configurabile. Pe scurt, asigură că sarcinile de fundal sunt procesate cât mai rapid posibil, cu un consum minim de resurse și fiabilitate maximă.\nConcurență și blocare optimizate: metodă specializată (`_acquire_specific_job`) cu clauza SQL `FOR NO KEY UPDATE SKIP LOCKED`, care permite mai multor lucrători (cron intern sau API extern) să proceseze coada simultan, crescând semnificativ debitul.\nProcesare tranzacțională robustă: execuția joburilor este încapsulată în savepoint-uri de bază de date; dacă un job eșuează, doar modificările sale sunt anulate (rollback), păstrând starea pentru joburile următoare din același lot. Include tratarea automată a erorilor tipice de concurență (precum eșecuri de serializare), cu reprogramarea grațioasă a joburilor.\nRunner-e flexibile pentru joburi:\n*Runner cron intern:* un `_job_runner` îmbunătățit care respectă limite configurabile de dimensiune a lotului și timp de execuție, prevenind timeout-urile lucrătorilor pe platforme precum Odoo.sh.\n*Runner API extern:* un endpoint dedicat (`/api/v1/queue/process`) pentru servicii externe de declanșare (ex. cron-job.org), permițând intervale de procesare la fiecare minut, ocolind limita standard de 5 minute a cron-ului Odoo.\n*Procesare în fir de execuție (thread):* posibilitatea de a lansa un runner în stil API într-un fir de fundal dedicat, direct din interfața Odoo, util pentru procesare manuală imediată fără a bloca interfața web.\nAuto-declanșare inteligentă și debounce real: creează automat declanșatori cron (`ir.cron.trigger`) ori de câte ori un job este creat sau i se actualizează ora programată (`eta`); `_cron_trigger` acceptă acum și liste de ETA (cazul joburilor amânate din runner-ul OCA), le tratează individual, de la cea mai apropiată, și evită declanșatori redundanți verificând corect dacă un trigger existent acoperă deja intervalul cerut.\nDeduplicare inclusiv pentru joburi eșuate: la crearea unui job nou, joburile mai vechi rămase în starea `failed` cu același `identity_key` sunt mutate automat în `cancelled` (deduplicarea standard verifică doar stările active); înregistrarea și traceback-ul rămân pentru diagnostic, iar `autovacuum` standard le șterge ulterior după `removal_interval` al canalului.\nCurățare completă la autovacuum: joburile anulate în lanț prin `cancel_dependent_jobs()` (care scria doar `state`, fără `date_cancelled`) primesc acum data de anulare, astfel încât cron-ul standard de autovacuum le poate colecta; suplimentar, `autovacuum()` extins șterge și joburile terminale (`done`/`cancelled`) rămase fără nicio dată de finalizare, pe baza `date_created`, curățând reziduul acumulat înainte de acest fix (joburile `failed` nu sunt niciodată atinse, fiind singurele utile pentru diagnostic).\nConfigurare centralizată: o pagină de setări dedicată sub `Queue Job > Settings` permite administratorilor să genereze și să gestioneze chei API securizate, să definească `Batch Size` (numărul maxim de joburi per rulare) și `Max Seconds` (bugetul de timp per execuție).\nMonitorizare și interfață îmbunătățite: notificări integrate (Client Actions) cu feedback în timp real la declanșarea sau procesarea joburilor; vizualizări de listă îmbunătățite cu date de creare și acces facil la procesarea manuală; butoanele „Cron Trigger\", „Process\" și „Process Background\" sunt mereu accesibile din antetul listei de joburi."
+    "text": "Queue Job Enhancements\ndeltatech_queue_job\nModulul aduce îmbunătățiri peste coada standard de joburi din Odoo (`queue_job`), concentrate pe performanță, fiabilitate și flexibilitate în execuția sarcinilor de fundal. Prin blocare optimizată a bazei de date și procesare tranzacțională sigură, mai mulți lucrători (worker) pot procesa coada în paralel, fără să se blocheze reciproc. Este gândit pentru limitările platformei Odoo.sh: ocolește limita de 5 minute a cron-ului prin procesare declanșată extern (la fiecare minut) și previne expirarea lucrătorilor prin bugete de timp configurabile. Pe scurt, sarcinile de fundal sunt procesate cât mai rapid, cu consum minim de resurse și fiabilitate ridicată.\nConcurență și blocare optimizate: metoda `_acquire_specific_job` folosește clauza SQL `FOR NO KEY UPDATE SKIP LOCKED`, astfel încât mai mulți lucrători (cron intern sau API extern) procesează coada simultan, fără blocaje.\nProcesare tranzacțională robustă: execuția joburilor este încapsulată în savepoint-uri; dacă un job eșuează, doar modificările lui sunt anulate. Erorile tipice de concurență (de exemplu eșecurile de serializare) sunt tratate automat, cu reprogramarea jobului.\nRunner-e flexibile:\n*Runner cron intern:* un `_job_runner` îmbunătățit, care respectă limite configurabile de dimensiune a lotului și de timp, prevenind timeout-urile pe platforme precum Odoo.sh;\n*Runner API extern:* endpoint-ul `/api/v1/queue/process` pentru servicii externe de declanșare (ex. cron-job.org), cu intervale de procesare de un minut;\n*Procesare în fir de execuție:* lansarea unui runner în stil API într-un fir de fundal, direct din interfață, pentru procesare manuală imediată fără blocarea interfeței web.\nAuto-declanșare și debounce: se creează automat declanșatori cron (`ir.cron.trigger`) la crearea unui job sau la actualizarea orei programate (`eta`); `_cron_trigger` acceptă și liste de ETA, le tratează de la cea mai apropiată și evită declanșatorii redundanți.\nDeduplicare inclusiv pentru joburi eșuate (nou în 19.0): când apare un job nou cu același `identity_key`, joburile mai vechi rămase în `failed` trec în `cancelled`, astfel încât lista de erori arată problemele reale, nu istoricul aceleiași operațiuni reluate; înregistrarea și traceback-ul rămân pentru diagnostic.\nCurățare completă la autovacuum: joburile anulate în lanț primesc data de anulare, iar `autovacuum()` șterge și joburile terminale (`done`/`cancelled`) rămase fără dată de finalizare; joburile `failed` nu sunt atinse.\nConfigurare centralizată: Job Queue → Settings permite generarea cheii API (Generate Key), Batch Size (implicit 20) și Max Seconds (implicit 50).\nConfigurarea unui serviciu extern (cron-job.org): URL `https://<domeniul-odoo>/api/v1/queue/process`, metoda POST, programare la fiecare minut, antet `Content-Type: application/json`, corp JSON-RPC cu `params.api_key`. Parametri: `api_key` (obligatoriu), `batch_size` și `max_seconds` (opționali).\nRăspunsul API: rezultatul este împachetat de două ori (în `result` → `result`), cu `status`, `processed`, `done`, `failed`, `postponed`, `pending_count`, `time_elapsed`, `timestamp`. Statusul HTTP este întotdeauna 200, chiar și pentru cheie invalidă sau eroare, care apar în corp ca `\"status\": \"error\"`; alertele bazate pe statusul HTTP din serviciul extern nu le vor prinde.\nStatistici: `POST /api/v1/queue/stats`, cu aceeași cheie, doar numără joburile (pending, started, done, failed, total); este o verificare sigură a cheii înainte de activarea procesării.\nProcesare manuală din Job Queue → Queue → Jobs, butoane în antetul listei (și al formularului):\nCron Trigger: activează cron-ul cozii, care pornește în câteva secunde; notificare verde (programat), galbenă „CRON Trigger already exists\" sau roșie „No CRON Trigger found\";\nProcess Background (pe formular Process (Thread)): procesează imediat un lot, într-un fir separat (fix până la 20 de joburi în 50 de secunde, nu valorile din setări);\nProcess: apare după selectarea a cel puțin unui job; acționează doar dacă măcar unul este pending și pornește cron-ul, care procesează toată coada, nu doar joburile selectate. Un job eșuat se repune mai întâi în coadă cu Requeue Job."
   },
   {
     "path": "deltatech_ral/index.md",
@@ -10302,7 +10357,7 @@
   {
     "path": "deltatech_report_layout/index.md",
     "module": "deltatech_report_layout",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.3.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_report_layout",
     "local_path": "odoo-addons/deltatech/deltatech_report_layout",
     "last_ingest": "2026-11-17",
@@ -10429,7 +10484,7 @@
   {
     "path": "deltatech_restrict_reports/index.md",
     "module": "deltatech_restrict_reports",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_restrict_reports",
     "local_path": "odoo-addons/deltatech/deltatech_restrict_reports",
     "last_ingest": "2026-11-17",
@@ -13925,7 +13980,7 @@
   {
     "path": "deltatech_web_side_panel/index.md",
     "module": "deltatech_web_side_panel",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.3.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_web_side_panel",
     "local_path": "odoo-addons/deltatech/deltatech_web_side_panel",
     "last_ingest": "2026-11-17",
@@ -14871,7 +14926,7 @@
   {
     "path": "deltatech_website_searchbar_typing/index.md",
     "module": "deltatech_website_searchbar_typing",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_searchbar_typing",
     "local_path": "odoo-addons/deltatech/deltatech_website_searchbar_typing",
     "last_ingest": "2026-11-17",
@@ -15257,7 +15312,7 @@
   {
     "path": "deltatech_widget_many2one_badge/index.md",
     "module": "deltatech_widget_many2one_badge",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.1.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_widget_many2one_badge",
     "local_path": "odoo-addons/deltatech/deltatech_widget_many2one_badge",
     "last_ingest": "2026-11-17",
@@ -15994,7 +16049,7 @@
   {
     "path": "l10n_ro_anaf_base/index.md",
     "module": "l10n_ro_anaf_base",
-    "version": "19.0.1.4.0",
+    "version": "19.0.1.4.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_base",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_base",
     "last_ingest": "2026-09-29",
@@ -17845,7 +17900,7 @@
   {
     "path": "l10n_ro_efactura_enhancement/index.md",
     "module": "l10n_ro_efactura_enhancement",
-    "version": "19.0.0.5.13",
+    "version": "19.0.0.5.14",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_efactura_enhancement",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_efactura_enhancement",
     "last_ingest": "2026-11-17",
@@ -23575,7 +23630,7 @@
   {
     "path": "terrabit_iap_server_online/index.md",
     "module": "terrabit_iap_server_online",
-    "version": "19.0.1.3.1",
+    "version": "19.0.1.4.0",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_online",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_online",
     "last_ingest": "2026-11-14",
@@ -23634,7 +23689,7 @@
   {
     "path": "terrabit_iap_server_sale/index.md",
     "module": "terrabit_iap_server_sale",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.3.1",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_sale",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_sale",
     "last_ingest": null,

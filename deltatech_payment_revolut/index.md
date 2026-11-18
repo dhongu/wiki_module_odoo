@@ -2,23 +2,29 @@
 
 - **Nume Tehnic:** `deltatech_payment_revolut`
 - **Versiune:** `19.0.0.0.34`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_revolut`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_revolut
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_revolut`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-18`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul integrează platforma de plăți Revolut în Odoo, oferind clienților o modalitate sigură și fluidă de a plăti pentru produse sau servicii folosind contul lor Revolut sau cardurile de credit/debit. Prin redirecționarea clienților către pagina securizată de checkout Revolut, modulul ajută la reducerea numărului de coșuri abandonate în timpul procesului de finalizare a comenzii și aduce un canal suplimentar de încasare pentru magazinele online.
+Acest modul integrează platforma de plăți Revolut în Odoo, oferind clienților o modalitate sigură și fluidă de a plăti pentru produse sau servicii folosind contul Revolut sau cardurile de credit/debit. Modulul ajută la reducerea numărului de coșuri abandonate în timpul finalizării comenzii, aduce un canal suplimentar de încasare pentru magazinele online și permite returnarea banilor direct din Odoo, fără acces la portalul Revolut. Funcționează în toate țările în care contul Revolut Business poate încasa plăți, indiferent de planul de conturi sau de localizarea fiscală.
 
 #### 2. Funcționalități Cheie
 
-- **Plăți prin redirecționare securizată**: redirecționează clienții către pagina de checkout securizată Revolut pentru efectuarea plății.
-- **Capturare manuală**: opțiune de capturare manuală a plăților direct din comanda de vânzare.
-- **Integrare prin webhook**: sincronizare automată a stării plății prin intermediul webhook-urilor Revolut.
-- **Suport sandbox**: testare facilă folosind mediul sandbox al Revolut.
-- **Plăți securizate**: complet conform cu procesarea securizată a plăților Revolut.
-- **Mesaje personalizabile**: configurarea de mesaje proprii pentru diferitele stări ale plății (În așteptare, Autorizat, Finalizat, Anulat).
+- **Rambursări din Odoo:** rambursări totale sau parțiale, mai multe pe aceeași plată, trimise la Revolut direct din plata clientului. Butonul **Refund** apare cât timp mai există sumă rambursabilă, iar butonul inteligent **Refunds** deschide rambursările făcute. Se creează o tranzacție `R-<referință>` cu sumă negativă, legată de tranzacția sursă: este *Confirmed* când Revolut finalizează rambursarea imediat, altfel rămâne *Pending* până la confirmarea prin webhook; o rambursare respinsă pune tranzacția în *Error*.
+- **Flux de plată la alegere:** **Direct (Popup)** sau **Redirect** către pagina securizată de checkout Revolut.
+- **Plată expresă Apple Pay și Google Pay** în checkout (nou în 19.0); pentru Apple Pay se încarcă fișierul de domeniu și se apasă **Register domain for Apple Pay**.
+- **Integrare prin webhook:** butonul **Generate your webhook** creează webhook-ul pe Revolut (evenimentele `ORDER_COMPLETED` și `ORDER_AUTHORISED`) și salvează secretul de semnare; webhook-urile fără semnătură validă sunt ignorate.
+- **Confirmare sigură a plății:** Odoo preia comanda de la Revolut și confirmă plata doar dacă id-ul comenzii, suma și moneda coincid; webhook-ul confirmă plata și dacă clientul închide pagina înainte de întoarcerea în magazin.
+- **Captură manuală:** cu opțiunea **Capture Amount Manually**, plata rămâne *Authorized*, iar din tranzacție se alege **Capture Transaction** (doar suma integrală autorizată) sau **Void Transaction**. Dacă Odoo refuză bifarea (metoda de plată nu declară captură manuală), plățile se capturează automat.
+- **Contabilitate:** la confirmare se creează plata contabilă pe jurnalul bancar al furnizorului (**Payment Journal**); comisionul Revolut nu este calculat de modul și se înregistrează din raportul Revolut la decontarea încasării.
+- **Suport sandbox:** stările **Test Mode** / **Enabled** și chei separate pentru testare.
+- **Mesaje personalizabile** pentru stările plății (În așteptare, Autorizat, Finalizat, Anulat).
+- **Limbi:** engleză, română, germană, franceză, italiană, spaniolă, olandeză, poloneză, portugheză (traducerile în afară de engleză și română sunt asistate de AI).
+
+Configurare: **Accounting > Configuration > Online Payments > Payment Providers > Revolut**; pe tabul **Credentials** se completează cheia secretă (**Revolut Api Key**) și cheia publică (**Revolut Public Key**), pe tabul **Configuration** se alege **Payment Journal**. Fluxul detaliat este în fișa consultant.
 
 #### 3. Dependențe
 
@@ -27,7 +33,7 @@ Acest modul integrează platforma de plăți Revolut în Odoo, oferind cliențil
 
 #### 4. Componente Cheie
 
-Sumarul și funcționalitățile cheie au fost preluate din `readme/DESCRIPTION.md`; conform fluxului de ingestie, analiza detaliată a codului pentru componente nu a fost efectuată, întrucât Readme-ul nu o solicită explicit.
+Conform fluxului de ingestie, secțiunile de componente sunt omise deoarece `readme/DESCRIPTION.md` este prezent și acoperă Sumarul și Funcționalitățile Cheie. (Din manifest reies: un furnizor și o metodă de plată Revolut definite în `data/`, șabloane și view-uri de plată și două scripturi JS pentru checkout: formularul de plată și checkout-ul expres.)
 
 #### 5. Conexiuni
 

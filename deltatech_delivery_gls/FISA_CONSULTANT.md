@@ -76,7 +76,7 @@ Deschideți **Inventar → Configurare → Livrare → Metode de livrare**, meto
 - **Versiune** — `mygls` pentru MyGLS, `online` pentru conturile GLS Online mai vechi din România. O metodă nouă pornește cu `online`: schimbați-o pe `mygls` dacă aveți cont MyGLS;
 - **ID expeditor**, **Utilizator**, **Parolă** — datele contului GLS (Utilizator și Parolă sunt vizibile doar administratorului);
 - **Cheie API de urmărire** — doar pentru versiunea `online`;
-- **Serviciu** — de exemplu Parcel Shop Delivery (PSD) pentru livrarea la punct de ridicare, FlexDelivery Service (FDS) sau PreAdvice Service (SM2) pentru notificarea destinatarului;
+- **Serviciu** — de exemplu Parcel Shop Delivery (PSD) pentru livrarea la punct de ridicare, FlexDelivery Service (FDS) sau PreAdvice Service (SM2) pentru notificarea destinatarului. Serviciile de notificare prin SMS (SM1 și SM2) se trimit la GLS **doar pentru un colet în țara expeditorului**: GLS le oferă numai intern și refuză tot AWB-ul în străinătate. Pe o metodă folosită și pentru comenzi din alte țări (de exemplu România și Ungaria), AWB-ul extern pleacă fără notificare, nu este refuzat;
 - **Plată ramburs** — metodele de plată tratate ca ramburs; **Preț adițional pentru ramburs** se adaugă la costul transportului când comanda e plătită cu una dintre ele. Dacă grila de prețuri are și supliment de ramburs (pasul 2), cele două se adună: folosiți doar unul dintre ele;
 - **Format etichetă GLS** — decide forma etichetei primite de la GLS: pentru `online`, formatele A6 sau 85x85 mm; pentru `mygls`, A4 2x2, A4 4x1, Conectează, Termic, Termic ZPL. **Tip etichetă GLS** (pdf sau ZPL) schimbă doar extensia fișierului salvat: pentru o etichetă ZPL alegeți formatul Termic ZPL.
 
@@ -92,7 +92,7 @@ GLS nu întoarce tarife prin API. Costul pus pe comanda de vânzare se calculeaz
 - fără preț fix, din grila **Price Grid** din tabul **Configurare GLS** (grupul apare doar când prețul fix e zero). Grila e un text JSON cu trei părți:
   - tranșele de greutate (`weight_rules`): se alege prima tranșă cu greutatea expedierii **strict mai mică** decât `max_weight` (un colet de exact 2 kg intră în tranșa următoare celei de 2 kg); peste ultima tranșă se folosește prețul ei;
   - suplimentul de ramburs (`cod_rules`), doar când există sumă de încasat: prima tranșă `max_value` care acoperă suma; regula procentuală se aplică doar dacă nicio tranșă nu acoperă suma;
-  - prețul notificării (`preadvice_price`), adăugat la **fiecare** expediere, indiferent de serviciu.
+  - prețul notificării (`preadvice_price`), adăugat la **fiecare** expediere, indiferent de serviciu și de destinație: se adaugă și pe un colet în străinătate, unde notificarea SM1/SM2 nu pleacă la GLS. Pe o metodă folosită și pentru export, lăsați-l 0 sau creați o metodă separată pentru străinătate.
 
 **Găsește pe ecran.** Câmpul **Price Grid**, cu tranșele de greutate și de ramburs ale contractului.
 
@@ -225,6 +225,7 @@ Modulul **nu generează note contabile**. Legăturile cu contabilitatea sunt ind
 - [ ] Comandă cu plată prin transfer bancar încă neîncasată: **Sumă de încasat** = 0; rambursul se corectează doar cu **Sumă de încasat stabilită manual**.
 - [ ] Cu serviciul PSD și fără punct ales, AWB-ul este refuzat cu mesajul despre parcel shop, fără apel la GLS.
 - [ ] Pe o metodă GLS cu alt serviciu decât PSD, un **Locker** ales pe comandă nu ajunge pe AWB.
+- [ ] Cu **Serviciu** = PreAdvice Service (SM2): o livrare în România primește AWB cu notificarea SMS, iar o livrare în Ungaria primește AWB **fără** notificare, în loc să fie refuzată de GLS cu „Service not available to country”.
 - [ ] Cu valoare asigurată fixă și 2 colete (MyGLS), AWB-ul este refuzat cu mesajul despre un singur colet.
 - [ ] **Preia lockere** importă punctele GLS pentru România și Ungaria; un punct care nu mai apare la GLS este arhivat la reimport.
 - [ ] **Reîmprospătează** din tabul **Istoric** aduce evenimentele coletului și actualizează **Stare livrare**.
@@ -244,6 +245,7 @@ Modulul **nu generează note contabile**. Legăturile cu contabilitatea sunt ind
 | „GLS insures a declared value only for a shipment of one parcel. Set the number of parcels to 1 or clear the Insured Value.” (netradus) | Asigurare cerută pe o expediere cu mai multe colete | Un singur colet pe AWB sau ștergeți valoarea asigurată |
 | „GLS a refuzat cererea (HTTP …). URL: …” | GLS a respins cererea pe MyGLS (date de acces greșite, cerere invalidă) | Verificați **Utilizator**, **Parolă**, **Țară** și mediul; corectați datele și trimiteți din nou |
 | „Eroare server GLS. …” | GLS a refuzat cererea; motivul GLS urmează în mesaj (adresă, cod poștal, serviciu) | Corectați datele indicate de GLS și trimiteți din nou |
+| „Eroare server GLS. Service not available to country, Service '…'” | Serviciul ales pe metodă nu e oferit de GLS pentru țara destinatarului (SM1/SM2 sunt filtrate automat în străinătate; restul serviciilor, nu) | Alegeți alt serviciu sau o metodă de livrare separată pentru acea țară. Detaliile expedierii rămân salvate pe livrarea refuzată: redeschideți-le și verificați serviciul înainte de a retrimite |
 | „Răspunsul GLS s-a pierdut. Rezultatul de la curier este necunoscut.” / „GLS a răspuns HTTP …; rezultatul de la curier este necunoscut.” | Răspunsul s-a pierdut după ce cererea a plecat | Verificați în portalul GLS dacă AWB-ul există înainte de a reîncerca |
 | „Timp de așteptare depășit la conectarea la serverul GLS: …” / „Eroare la conectarea la serverul GLS: …” | GLS Online nu răspunde | Reîncercați mai târziu |
 | „Această expediere nu are un AWB GLS de anulat (lipsește ParcelId).” | Anulare pe o livrare fără numărul intern GLS | Anulați AWB-ul din portalul GLS |

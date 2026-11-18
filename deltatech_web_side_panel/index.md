@@ -1,7 +1,7 @@
 # Side Panel (Panou lateral)
 
 - **Nume Tehnic:** `deltatech_web_side_panel`
-- **Versiune:** `19.0.1.2.0`
+- **Versiune:** `19.0.1.3.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_web_side_panel
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_web_side_panel`
 - **Ultima Ingestie:** `2026-11-17`

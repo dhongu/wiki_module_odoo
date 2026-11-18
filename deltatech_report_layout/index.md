@@ -1,7 +1,7 @@
 # Report Layout (Aspecte personalizate pentru rapoarte)
 
 - **Nume Tehnic:** `deltatech_report_layout`
-- **Versiune:** `19.0.1.3.0`
+- **Versiune:** `19.0.1.3.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_report_layout
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_report_layout`
 - **Ultima Ingestie:** `2026-11-17`

@@ -1,23 +1,30 @@
-# Deltatech POS Base (localizat la `deltatech_pos_base/index.md`)
+# POS ECR Base (localizat la `deltatech_pos_base/index.md`)
 
 - **Nume Tehnic:** `deltatech_pos_base`
 - **Versiune:** `19.0.1.2.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos_base
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_pos_base`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-18`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul reprezintă stratul de integrare fundamental dintre sistemele Point of Sale (POS) și casele de marcat electronice (ECR) ale Odoo, oferind definițiile de bază și structurile de date necesare pentru tipărirea fiscală. Din punct de vedere business, este modulul esențial pentru companiile care trebuie să își conecteze POS-ul Odoo sau POS Backend la dispozitive fiscale externe, pentru a asigura conformitatea cu reglementările. El standardizează câmpurile și metodele folosite atât de modulele front-end, cât și de cele back-end de POS, astfel încât operațiunile cu ECR să fie consistente, iar dezvoltarea modulelor fiscale specifice unei piețe să fie simplificată pe o bază comună.
+Modulul este stratul de bază al suitei Terrabit de Point of Sale pentru casele de marcat fiscale (ECR) din România. Păstrează setările casei de marcat și codurile ECR ale metodelor de plată și ale taxelor și le încarcă în fiecare sesiune POS, astfel încât modulele de tipărire (`deltatech_pos`, `deltatech_ecr_connect`) să poată construi bonul fiscal. Singur, nu tipărește nimic.
 
 #### 2. Funcționalități Cheie
 
-- Integrare robustă POS-ECR: oferă o fundație stabilă pentru comunicarea dintre Odoo și imprimantele fiscale sau casele de marcat conectate.
-- Structură de date unificată: standardizează câmpurile și metodele utilizate de modulele POS de tip front-end și back-end pentru operațiuni ECR consistente.
-- Conformitate fiscală simplificată: facilitează dezvoltarea și implementarea modulelor fiscale specifice fiecărei piețe pe o bază comună.
-- Înregistrare fiabilă a tranzacțiilor: asigură capturarea și formatarea consecventă a datelor POS esențiale pentru fiscalizare.
-- Operațiuni de retail scalabile: permite extinderea ușoară a rețelei de magazine folosind o bază POS comună pentru toate locațiile și tipurile de dispozitive fiscale.
+- **Case de marcat și drivere:** funcționează cu Datecs, Optima, Incotex, Daisy și Succes, precum și cu alte modele care folosesc aceeași sintaxă de comenzi; testat extensiv cu driverele certificate FiscalWire și FiscalNet. Formatul comenzii (**ECR type**) se setează pe fiecare punct de vânzare.
+- **Transportul comenzii către dispozitiv** (**ECR transport**):
+  - *File (.prn/.inp download)*: fișier de comandă descărcat și preluat de driverul de pe casă (**File prefix** `order` și **File extension** `inp` implicit);
+  - *Terrabit Connect (local agent)*: comanda se trimite agentului local (**Agent URL**, implicit `http://127.0.0.1:8765`), care o tipărește și returnează rezultatul sincron;
+  - *DxPrint (local driver)*: bonul se trimite ca JSON driverului DxPrint (**Driver URL** implicit `http://127.0.0.1:8080`, plus utilizator și parolă dacă driverul are autentificare), care returnează imediat numerele bonului și ale raportului Z; rapoartele X/Z și operațiunile de numerar au cereri proprii;
+  - pentru agent și DxPrint, dacă dispozitivul nu poate fi contactat, se revine la descărcarea fișierului.
+- **Coduri ECR pe metodele de plată:** câmpul **Cod ECR** (un singur caracter, implicit `0`) identifică tipul de încasare (numerar, card, tichet) și se trimite cu fiecare bon.
+- **Coduri ECR pe taxe:** câmp opțional **Cod ECR**, pentru două taxe cu aceeași cotă (de exemplu garanție SGR și vânzare cu taxare inversă, ambele 0%). Gol = categoria se deduce din procentul taxei; valoarea este poziția de TVA programată pe dispozitiv (pentru FiscalWire/datecs18, cifră de la 1 la 7, nu litera A–E).
+- **Departament implicit:** trimis pe fiecare linie de vânzare; gol = departamentul se deduce din cota de TVA; se completează pentru dispozitive cu departamente fixe (FiscalNet / Tremol).
+- **Nume lungi de produse:** **Trim long product name** și **Trim to** (implicit 30) scurtează numele la lungimea acceptată de imprimanta fiscală.
+- **Casă de marcat simulată** pentru teste, demonstrații și suport, fără dispozitiv: *Simulated in Odoo (no agent)* sau *Simulated through the agent*, cu **Delay (ms)**; doar administratorul de sistem o poate activa sau dezactiva. Răspunsul simulat depinde de ultimele cenți ale totalului (`,91` fără hârtie, `,92` casă deconectată, `,93` răspuns întârziat, `,94` fără răspuns, `,95` bon anulat pe casă; cardul folosește `,01`–`,05`). Nimic tipărit în simulare nu este bon fiscal; simularea se oprește pe punctele de vânzare reale înainte de lansare.
+- **Unde se configurează:** ecranele standard Odoo, fără meniu propriu: **Point of Sale → Configuration → Settings** (secțiunea ECR), **Point of Sale → Configuration → Payment Methods** și **Accounting → Configuration → Taxes**. După modificarea unui cod ECR se închide și se redeschide sesiunea POS. Pașii detaliați sunt în fișa consultant.
 
 #### 3. Dependențe
 
@@ -25,19 +32,23 @@ Acest modul reprezintă stratul de integrare fundamental dintre sistemele Point 
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, secțiunile de cod nu au fost analizate în detaliu deoarece `readme/DESCRIPTION.md` acoperă Sumarul și Funcționalitățile Cheie. Mai jos sunt listate elementele declarate în `__manifest__.py` și modelele care le susțin, pentru context tehnic suplimentar.
+Sumarul și funcționalitățile provin din `readme/DESCRIPTION.md`, `CONFIGURE.md` și `USAGE.md`; componentele de mai jos sunt cele declarate în manifest și verificate pe cod.
 
 **Modele**
 
-- `pos.payment.method` (extindere): adaugă `cod_ecr` (codul ECR asociat metodei de plată, folosit la tipărirea fiscală) și îl expune datelor încărcate în POS Frontend prin `_load_pos_data_fields`.
-- `pos.config` (extindere): definește tipul casei de marcat (`ecr_type`: FiscalWire/Optima/Daisy/Succes/FiscalNet/Incotex), opțiuni de trunchiere a numelui produsului (`ecr_trim`, `ecr_trim_to`), prefixul și extensia fișierului de comandă fiscală (`file_prefix`, `file_ext`) și modul de transport al comenzii fiscale (`ecr_transport`: descărcare fișier `.prn/.inp` sau trimitere către agentul local Terrabit Connect, `ecr_connect_url`).
-- `res.config.settings` (extindere): expune toate câmpurile de configurare ECR de mai sus (via `related`) în ecranul de setări al Point of Sale.
+- `pos.payment.method` (extindere): câmpul `cod_ecr`, expus datelor încărcate în POS.
+- `pos.config` (extindere): `ecr_type`, `ecr_trim`, `ecr_trim_to`, `file_prefix`, `file_ext`, `default_department`, `ecr_transport`, `ecr_connect_url`, câmpurile DxPrint (`ecr_dxprint_url`, `ecr_dxprint_user`, `ecr_dxprint_password`) și câmpurile de simulare (`ecr_simulation`, `ecr_simulator_next`, `ecr_simulator_sticky`, `ecr_simulator_delay_ms`).
+- `account.tax` (extindere): câmpul `cod_ecr`, categoria dispozitivului pentru taxe cu aceeași cotă.
+- `res.config.settings` (extindere): expune setările ECR în ecranul de setări al Point of Sale.
+- `ir.http` (extindere): extinde datele de sesiune.
 
 **Vizualizări**
 
-- `pos_payment_method_view_form`: extinde formularul metodei de plată POS cu câmpul `cod_ecr`.
-- `res_config_settings_view_form` (secțiunea ECR): adaugă în Settings tipul de casă de marcat, trunchierea numelui de produs, prefixul/extensia fișierului și modul de transport (fișier vs. Terrabit Connect, cu URL-ul agentului local).
+- `pos_payment_method_view_form`: adaugă `cod_ecr` pe formularul metodei de plată POS.
+- `account_tax_view_form`: adaugă `cod_ecr` pe formularul taxei.
+- `res_config_settings_view_form`: secțiunea ECR din setările Point of Sale.
 
 #### 5. Conexiuni
 
-- [deltatech_pos](../deltatech_pos/index.md): modul soră care folosește această bază pentru funcționalitatea de Point of Sale Deltatech.
+- [deltatech_pos](../deltatech_pos/index.md): modul care folosește această bază pentru tipărirea bonului fiscal.
+- [deltatech_ecr_connect](../deltatech_ecr_connect/index.md): transport către casa de marcat (agent local, panou *Virtual devices* pentru simulare).

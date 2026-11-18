@@ -1,7 +1,7 @@
 # FAN Courier AWB for Odoo Online (localizat la `deltatech_delivery_fc_online/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_fc_online`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_fc_online
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_fc_online`
 - **Ultima Ingestie:** `2026-11-14`

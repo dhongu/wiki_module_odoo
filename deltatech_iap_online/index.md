@@ -1,7 +1,7 @@
 # IAP Services for Odoo Online (localizat la `deltatech_iap_online/index.md`)
 
 - **Nume Tehnic:** `deltatech_iap_online`
-- **Versiune:** `19.0.1.2.0`
+- **Versiune:** `19.0.1.2.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_iap_online
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_iap_online`
 - **Ultima Ingestie:** `2026-11-17`
