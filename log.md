@@ -4,6 +4,16 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-19] `deltatech_purchase_currency` — re-ingestie 20.0.1.2.0 (cursul BNR în Curs furnizor)
+
+- **Acțiune:** Actualizare pentru dhongu/deltatech#4254: *Curs furnizor* arată cursul Odoo (BNR) la data facturii, nu 0;
+  schimbarea datei readuce cursul noii date, cu avertisment când înlocuiește un curs scris de mână (câmp ascuns
+  `purchase_odoo_rate`). Notat punctul de extindere pentru BNR + procent, `account.move._get_purchase_odoo_rate()`
+  (dhongu/deltatech#4257), și portarea pe 19.0 în dhongu/deltatech#4256 (neunită). Fișa copiată din nou, capturile 01–11.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/USAGE.md`, `readme/FISA_CONSULTANT.md`, `models/account_move.py`.
+- **Dependențe/Conexiuni:** `purchase`; pereche `deltatech_sale_currency`; folosit de `terrabit_maxima`.
+- **Fișiere actualizate:** `deltatech_purchase_currency/` (index.md, FISA_CONSULTANT.md, screenshots/), `index.md`, `log.md`.
+
 ## [2026-11-19] `deltatech_purchase_currency` — re-ingestie 20.0.1.1.0 (Curs furnizor)
 
 - **Acțiune:** Actualizare pentru dhongu/deltatech#4252: câmpul *Vendor Rate* („Curs furnizor”) pe factura furnizorului,
