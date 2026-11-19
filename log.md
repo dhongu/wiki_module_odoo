@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-19] `deltatech_purchase_currency` — re-ingestie 20.0.1.1.0 (Curs furnizor)
+
+- **Acțiune:** Actualizare pentru dhongu/deltatech#4252: câmpul *Vendor Rate* („Curs furnizor”) pe factura furnizorului,
+  cu cursul scris de furnizor (moneda facturii pentru 1 unitate din moneda comenzii); prețurile se convertesc la acest
+  curs, iar data facturii nu le mai modifică. Fișa consultant copiată din nou, cu capturile 01–10 regenerate.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/USAGE.md`, `readme/FISA_CONSULTANT.md`, `models/account_move.py`.
+- **Dependențe/Conexiuni:** `purchase`; pereche `deltatech_sale_currency`; folosit de `terrabit_maxima`.
+- **Fișiere actualizate:** `deltatech_purchase_currency/` (index.md, FISA_CONSULTANT.md, screenshots/), `index.md`, `log.md`.
+
 ## [2026-11-19] `deltatech_purchase_currency` (nou) și `deltatech_sale_currency` (actualizat) — ingestie pe 20.0, cu fișe consultant
 
 - **Acțiune:** Pagină nouă pentru `deltatech_purchase_currency` (20.0.1.0.0, dhongu/deltatech#4251): jurnal de facturare
