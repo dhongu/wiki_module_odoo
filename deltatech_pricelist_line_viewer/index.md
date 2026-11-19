@@ -1,7 +1,7 @@
 # Vizualizator Linii Listă de Prețuri (localizat la `deltatech_pricelist_line_viewer/index.md`)
 
 - **Nume Tehnic:** `deltatech_pricelist_line_viewer`
-- **Versiune:** `19.0.0.0.4`
+- **Versiune:** `19.0.0.0.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_pricelist_line_viewer
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_pricelist_line_viewer`
 - **Ultima Ingestie:** `2026-11-05`

@@ -1,10 +1,10 @@
 # Romania - Pachet valorizare stocuri CMP (localizat la `l10n_ro_stock_pack_cmp/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_pack_cmp`
-- **Versiune:** `19.0.1.5.2`
+- **Versiune:** `19.0.1.5.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_pack_cmp
-- **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_pack_cmp`
-- **Ultima Ingestie:** `2026-11-12`
+- **Cale Locală:** odoo-addons/l10n_ro_ent/l10n_ro_stock_pack_cmp
+- **Ultima Ingestie:** `2026-11-19`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -13,7 +13,7 @@ Acest modul este un „pachet" (bundle) care instalează dintr-o singură mișca
 
 #### 2. Funcționalități Cheie
 
-- Instalează într-un singur pas modulele necesare pentru evidența stocurilor pe CMP: dată contabilă pe operațiile de stoc, integritatea datelor (blocarea modificării mișcărilor validate și a stocului negativ), fișa de magazie și balanța analitică, gestiuni contabile de stoc (OMFP 2861/2009) și note contabile de inventariere.
+- Instalează într-un singur pas modulele necesare pentru evidența stocurilor pe CMP: dată contabilă pe operațiile de stoc, integritatea datelor (blocarea modificării mișcărilor validate și a stocului negativ), fișa de magazie și balanța analitică, fișa de magazie pe gestiuni contabile (care scade din intrarea recepției partea din diferența de preț trecută direct pe 607), gestiuni contabile de stoc (OMFP 2861/2009) și note contabile de inventariere.
 - Recalculul lunar CMP (`l10n_ro_stock_cmp_periodic`) **nu mai face parte din pachet**: nu poate fi instalat împreună cu `deltatech_obyc` (determinarea conturilor prin OBYC). Pe bazele fără OBYC se instalează separat.
 - Configurare automată la instalare (`post_init_hook`): pe companiile cu țara fiscală România, setează metoda de cost implicită pe *Average Cost (AVCO)* și valorizarea pe *perpetuă (real time)*; valorile se propagă ca implicite pentru categoriile de produse **noi** — categoriile existente nu sunt modificate, decizia rămânând a consultantului.
 - Excludere reciprocă declarată în manifest cu `l10n_ro_stock_pack_fifo`: nu pot coexista pe aceeași bază de date, conform principiului permanenței metodelor (OMFP 1802 pct. 287 alin. (1)) — se alege o singură metodă de evaluare per bază de date.
@@ -28,6 +28,7 @@ Acest modul este un „pachet" (bundle) care instalează dintr-o singură mișca
 - [l10n_ro_stock_constraints](../l10n_ro_stock_constraints/index.md)
 - [l10n_ro_stock_sheet](../l10n_ro_stock_sheet/index.md)
 - [l10n_ro_stock_gestiune](../l10n_ro_stock_gestiune/index.md)
+- [l10n_ro_stock_sheet_gestiune](../l10n_ro_stock_sheet_gestiune/index.md)
 - [l10n_ro_inventory_closing](../l10n_ro_inventory_closing/index.md)
 
 #### 4. Componente Cheie

@@ -196,6 +196,12 @@ rând de **Total** și, sub el, **recapitulația pe rânduri D300**.
   jurnal, cu semnul din decont), comparabile cu D300 generat de Odoo pe rândurile alimentate din
   grile.
 
+În toate jurnalele de TVA (cumpărări și vânzări, standard și pe regimuri), antetul are două
+rânduri, ca exportul XLSX: sus, denumirea taxei sau a regimului, o singură dată, peste coloanele
+ei; jos, doar **Bază** și **TVA** (la autolichidare, **TVA deductibilă** și **TVA colectată**). Atât
+pe ecran, cât și în PDF. O denumire foarte lungă se oprește după 4 rânduri cu „…”, iar denumirea
+completă apare când țineți mouse-ul pe ea.
+
 **Verificați** înainte de a continua:
 - perioada selectată este perioada fiscală de raportat;
 - pe facturile obișnuite și pe cele cu taxare inversă, suma coloanelor TVA pe taxe = coloana `TVA`
@@ -371,6 +377,12 @@ Accesați **Contabilitate → Raportare → Taxe și fiscalitate → Jurnal TVA 
   cu art. 326 alin. (4) și (5)), taxare inversă
   art. 331 pe 11% și pe cote anterioare, achiziții intracomunitare scutite, neimpozabile, alte
   operațiuni.
+
+Ca în toate jurnalele (vezi Pasul 1), denumirea regimului apare o singură dată, deasupra
+coloanelor lui, iar dedesubt rămân doar Bază / TVA. Denumirile lungi, de exemplu „Achiziții de
+bunuri din țară și din import scutite în România sau care sunt supuse regimului special de
+vânzător”, nu mai ridică antetul; peste 4 rânduri se opresc cu „…”, iar denumirea completă apare
+în tooltip.
 
 **Verificați:**
 - la fiecare autolichidare, TVA deductibilă = TVA colectată (cu excepția deducerii limitate);
@@ -580,6 +592,9 @@ totalurilor față de balanță, evidența taxei nededuse și a pro-ratei, și d
       sunt în jurnal).
 - [ ] Cotele anterioare 19% / 9% / 5% apar doar în perioadele în care au operațiuni.
 - [ ] O coloană arhivată dispare din jurnal; una cu „Doar dacă are operațiuni" debifat apare și goală.
+- [ ] În toate jurnalele de TVA, pe ecran și în PDF, denumirea taxei / regimului apare o singură
+      dată, deasupra coloanelor ei, iar dedesubt doar Bază / TVA (ca în XLSX); pe o denumire tăiată
+      (ex. „Achiziții de bunuri din țară și din import scutite…”), tooltip-ul arată denumirea completă.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -600,6 +615,7 @@ totalurilor față de balanță, evidența taxei nededuse și a pro-ratei, și d
 | În jurnalul pe regimuri, coloana „Alte operațiuni" are sume | O taxă cu grile D300 nu e revendicată de nicio coloană (taxă proprie a clientului, grile vechi) | Adăugați taxa în câmpul **Taxe** al coloanei potrivite sau grila ei în **Grile fiscale D300** |
 | În jurnalul pe regimuri lipsește o coloană | Coloana e arhivată sau are „Doar dacă are operațiuni" și perioada n-are sume | Verificați coloana în *Coloane jurnale de TVA (RO)* |
 | Meniul *Coloane jurnale de TVA (RO)* nu apare | Utilizatorul nu e *Administrator contabilitate* | Acordați grupul, sau configurați cu un administrator |
+| Într-un jurnal de TVA, denumirea unei coloane se termină cu „…” | Comportament intenționat: antetul se oprește după 4 rânduri, ca să nu ocupe jumătate de ecran | Țineți mouse-ul pe antet pentru denumirea completă; PDF-ul și XLSX-ul o au întreagă |
 | Antete în engleză pe o interfață în română | Traducerile nu au fost reîncărcate | Actualizați modulul (`-u l10n_ro_account_vat_journal`) |
 
 ## 10. Capturi de ecran

@@ -1,30 +1,27 @@
-# RAL (localizat la `deltatech_ral/index.md`)
+# RAL Pigments (localizat la `deltatech_ral/index.md`)
 
 - **Nume Tehnic:** `deltatech_ral`
 - **Versiune:** `19.0.1.0.8`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_ral`
-- **Cale Locală:** `odoo-addons/deltatech/deltatech_ral`
-- **Ultima Ingestie:** `2026-08-20`
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_ral
+- **Cale Locală:** odoo-addons/deltatech/deltatech_ral
+- **Ultima Ingestie:** `2026-11-19`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul gestionează folosirea pigmenților de culoare RAL (coduri de culoare RAL) în comenzile de producție. Pe baza atributului de culoare al produsului fabricat, modulul determină automat pigmentul RAL corespunzător și înlocuiește componenta generică „dummy" din rețeta de fabricație (BOM) cu pigmentul real. Astfel, o singură rețetă poate fi folosită pentru toate variantele de culoare ale unui produs, iar lotul rezultat din producție este marcat automat cu pigmentul utilizat. Valoarea de afaceri principală este eliminarea rețetelor duplicate per culoare și trasabilitatea pigmentului pe lotul produs.
+Producătorii care vopsesc același produs în mai multe culori RAL ar avea nevoie, fără acest modul, de o rețetă de fabricație (BOM) separată pentru fiecare culoare, diferite doar prin pigment. Cu modulul, o singură rețetă folosește un pigment generic, pe care fiecare comandă de producție îl înlocuiește cu pigmentul real al culorii produse. Culoarea este păstrată și pe lotul produsului finit, ceea ce oferă trasabilitatea pigmentului. Valoarea de afaceri principală este eliminarea rețetelor duplicate per culoare.
 
 #### 2. Funcționalități Cheie
 
-- Permite selectarea unui pigment (RAL) într-o comandă de producție.
-- Pigmentul este un material al cărui cod intern începe cu „RAL".
-- Dacă în BOM este folosit pigmentul „RAL 0000" (dummy), acesta este înlocuit cu pigmentul din comanda de producție.
-- Lotul este creat automat la confirmarea comenzii și primește pigmentul din comanda de producție.
-
-Instrucțiuni de configurare:
-
-- Se creează produsul „Dummy RAL" cu referința internă „RAL 0000".
-- În BOM-ul produsului care folosește pigmenți, „Dummy RAL" se setează ca și componentă (FĂRĂ a selecta o variantă).
-- Produsul final trebuie să aibă un atribut de tip culoare.
-- Se creează produsele pigment cu referința internă „RAL color", unde „color" se înlocuiește cu numele opțiunii din atributul produsului final (ex.: RAL White, RAL Rose etc.).
-- La crearea comenzii de producție pentru o variantă, produsul „Dummy RAL" este înlocuit cu pigmentul RAL corespunzător.
+- **Pigment pe comanda de producție:** câmpul **RAL** conține pigmentul folosit. La crearea comenzii, pigmentul se alege din culoarea variantei produsului: valoarea atributului cu tipul de afișare *Color* indică pigmentul a cărui referință internă conține `RAL <valoare>`. Planificatorul îl poate schimba cât timp comanda e în ciornă sau confirmată.
+- **Pigment generic înlocuit în componente:** componenta provenită din linia de BOM cu pigmentul generic (referința internă `RAL 0000`) este înlocuită cu pigmentul din câmpul **RAL**, cu aceeași cantitate. Înlocuirea se păstrează la recalcularea componentelor (de exemplu la schimbarea cantității de produs), deci se consumă stocul pigmentului real.
+- **RAL pe lot:** loturile și numerele de serie au câmpul **RAL**, afișat pe formular și în listă. Când Odoo generează lotul produsului finit pentru comandă (butonul **Generate Lot** / **Generate Serial**, sau lotul creat la producerea comenzii fără lot), pigmentul comenzii se scrie pe acel lot.
+- **Configurare:**
+  - produsul generic cu referința internă `RAL 0000` și pigmenții reali, cu referința `RAL ` urmată de numele valorii de culoare (ex. `RAL White` pentru valoarea *White*);
+  - un atribut de culoare cu tipul de afișare *Color* (Inventar → Configurare → Produse → Atribute, cu variantele de produs activate), adăugat pe produsul finit;
+  - în BOM-ul șablonului produsului finit (fără variantă) se adaugă `RAL 0000` ca componentă;
+  - pentru a păstra culoarea pe lot, produsul finit se urmărește pe loturi sau numere de serie.
+- **Limitări:** pigmentul se potrivește printr-o căutare parțială pe referința internă, deci referințele care se conțin una pe alta (`RAL White` și `RAL White Matt`) pot da pigmentul greșit — referințele trebuie să rămână distincte; câmpul **RAL** se scrie doar pe loturile generate de Odoo pentru comandă, nu pe cele introduse sau selectate manual.
 
 #### 3. Dependențe
 
@@ -36,13 +33,13 @@ Instrucțiuni de configurare:
 
 **Modele**
 
-- `mrp.production` (extins): adaugă câmpul `ral_id` (Many2one către `product.product`, domeniu pe coduri ce încep cu „RAL"). La schimbarea produsului (`_onchange_product_id`), determină automat pigmentul din atributul de culoare al variantei selectate; la `create` și la selectarea manuală a pigmentului (`onchange_ral_id`) înlocuiește componenta „RAL 0000" din materiile prime cu pigmentul ales. În O19 substituția e reafirmată și în `_get_move_raw_values`, deoarece `move_raw_ids` este acum câmp calculat și componentele sunt regenerate din liniile de BOM la fiecare recalculare (vechiul hook `_generate_moves` din versiunile anterioare nu mai există). La generarea seriei (`action_generate_serial`) propagă pigmentul pe loturile produse.
-- `stock.lot` (extins): adaugă câmpul `ral_id` (Many2one către `product.product`), pentru a marca lotul produs cu pigmentul RAL utilizat.
+- `mrp.production` (extins): adaugă câmpul `ral_id` (Many2one către `product.product`, domeniu pe coduri ce încep cu „RAL"). La schimbarea produsului (`_onchange_product_id`) determină pigmentul din atributul de culoare al variantei; la `create` și la selectarea pigmentului (`onchange_ral_id`) înlocuiește componenta „RAL 0000" din materiile prime. Substituția este reafirmată și în `_get_move_raw_values`, deoarece `move_raw_ids` este câmp calculat în Odoo 19 și componentele sunt regenerate din liniile de BOM la fiecare recalculare. La `action_generate_serial` propagă pigmentul pe loturile produse (`lot_producing_ids`).
+- `stock.lot` (extins): adaugă câmpul `ral_id` (Many2one către `product.product`, indexat), pentru a marca lotul produs cu pigmentul RAL utilizat.
 
 **Vizualizări**
 
-- `views/mrp_view.xml`: extinde formularul comenzii de producție pentru afișarea câmpului RAL.
-- `views/stock_view.xml`: extinde vizualizarea lotului (`stock.lot`) pentru afișarea pigmentului RAL.
+- `deltatech_ral_mrp_production_form_view` (`views/mrp_view.xml`): afișează câmpul RAL sub produs pe comanda de producție, editabil doar în stările ciornă și confirmat.
+- `views/stock_view.xml`: extinde vizualizările lotului (`stock.lot`) pentru afișarea pigmentului RAL.
 
 **Acțiuni Automate / Acțiuni Server**
 

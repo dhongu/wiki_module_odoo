@@ -4594,7 +4594,7 @@
   {
     "path": "deltatech_expenses/index.md",
     "module": "deltatech_expenses",
-    "version": "19.0.3.12.0",
+    "version": "19.0.3.12.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_expenses",
     "local_path": "odoo-addons/deltatech/deltatech_expenses",
     "last_ingest": "2026-11-17",
@@ -5384,30 +5384,34 @@
   {
     "path": "deltatech_invoice_picking_automatically/index.md",
     "module": "deltatech_invoice_picking_automatically",
-    "version": "19.0.0.0.7",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_picking_automatically`",
-    "local_path": "odoo-addons/deltatech/deltatech_invoice_picking_automatically",
-    "last_ingest": "2026-06-02",
-    "friendly_name": "Invoice Pickings Automatically",
-    "summary": "Acest modul automatizează generarea facturilor pornind de la livrările de marfă (pickings) după validarea acestora. Pe fiecare tip de operațiune de stoc se poate configura dacă, la finalizarea livrării, sistemul trebuie să creeze automat factura și, opțional, să o și valideze. Un proces planificat preia periodic livrările marcate pentru facturare și emite facturile fără intervenție manuală, reducând timpul administrativ și eliminând riscul de a uita facturarea unei livrări. Valoarea principală pentru afacere este fluidizarea ciclului vânzare → livrare → factură, mai ales pentru companiile cu volum mare de expedieri.",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_picking_automatically",
+    "local_path": null,
+    "last_ingest": "2026-11-19",
+    "friendly_name": "Auto-Invoice from Delivery",
+    "summary": "Modulul facturează automat transferurile de stoc validate, fiecare transfer pe documentul lui și cu cantitățile pe care le-a mișcat: livrarea devine factură de client, returul de la client devine notă de credit, recepția devine factură de furnizor (lăsată mereu în ciornă, până sosește documentul furnizorului), iar returul către furnizor devine storno de furnizor. Comportamentul se configurează pe tipul de operațiune de stoc, iar facturarea se face fie imediat după validare, fie de o acțiune planificată zilnică. Valoarea pentru afacere: fluidizarea ciclului comandă → livrare → factură și eliminarea riscului ca o livrare să rămână nefacturată.",
     "features": [
-      "Configurare pe tipul de operațiune de stoc (picking type) pentru crearea automată a facturii.",
-      "Configurare pe tipul de operațiune de stoc pentru validarea (postarea) automată a facturii.",
-      "Proces planificat (cron) care generează automat facturile pentru livrările marcate pentru facturare.",
-      "Gestionează eficient mai multe livrări aparținând aceleiași comenzi de vânzare, procesându-le împreună.",
-      "Tratarea erorilor: dacă facturarea eșuează, livrarea este marcată ca „Failed\" pentru a evita încercările repetate eșuate."
+      "Configurare pe tipul de operațiune: Create Invoice Automatically, Invoice Moment și Post Invoice Automatically (meniu: Inventar → Configurare → Tipuri de operațiuni).",
+      "Invoice Moment: *Scheduled* (implicit, acțiunea planificată zilnică facturează transferurile aflate la coadă) sau *On validation* (transferul e facturat imediat după validare).",
+      "Facturile de client și notele de credit se postează automat dacă este bifat Post Invoice Automatically; facturile și storno-urile de furnizor rămân mereu în ciornă.",
+      "Backorder-urile și livrările parțiale se facturează separat, cu cantitățile fiecărui transfer; un transfer deja facturat nu se mai facturează a doua oară.",
+      "Intră la coadă doar transferurile provenite dintr-o comandă de vânzare sau de achiziție.",
+      "Facturarea rulează cu drepturi de sistem, deci un utilizator de depozit fără drepturi de facturare poate valida transferuri pe tipuri de operațiune care facturează la validare.",
+      "Tratarea erorilor: fiecare transfer e facturat într-un savepoint propriu; la eșec, transferul rămâne finalizat, este marcat Failed și păstrează motivul, afișat pe transfer. Butonul Retry Invoicing reîncearcă facturarea după remedierea cauzei.",
+      "Starea Automatic Invoicing pe formularul transferului și ca coloană opțională în listă, plus filtrele Automatic Invoicing Failed și To Invoice Automatically."
     ],
     "dependencies": [
       "stock_account",
       "sale_stock",
       "sale",
       "stock",
-      "account"
+      "account",
+      "deltatech_invoice_picking"
     ],
     "connections": [
       "deltatech_invoice_picking"
     ],
-    "text": "Invoice Pickings Automatically\ndeltatech_invoice_picking_automatically\nAcest modul automatizează generarea facturilor pornind de la livrările de marfă (pickings) după validarea acestora. Pe fiecare tip de operațiune de stoc se poate configura dacă, la finalizarea livrării, sistemul trebuie să creeze automat factura și, opțional, să o și valideze. Un proces planificat preia periodic livrările marcate pentru facturare și emite facturile fără intervenție manuală, reducând timpul administrativ și eliminând riscul de a uita facturarea unei livrări. Valoarea principală pentru afacere este fluidizarea ciclului vânzare → livrare → factură, mai ales pentru companiile cu volum mare de expedieri.\nConfigurare pe tipul de operațiune de stoc (picking type) pentru crearea automată a facturii.\nConfigurare pe tipul de operațiune de stoc pentru validarea (postarea) automată a facturii.\nProces planificat (cron) care generează automat facturile pentru livrările marcate pentru facturare.\nGestionează eficient mai multe livrări aparținând aceleiași comenzi de vânzare, procesându-le împreună.\nTratarea erorilor: dacă facturarea eșuează, livrarea este marcată ca „Failed\" pentru a evita încercările repetate eșuate."
+    "text": "Auto-Invoice from Delivery\ndeltatech_invoice_picking_automatically\nModulul facturează automat transferurile de stoc validate, fiecare transfer pe documentul lui și cu cantitățile pe care le-a mișcat: livrarea devine factură de client, returul de la client devine notă de credit, recepția devine factură de furnizor (lăsată mereu în ciornă, până sosește documentul furnizorului), iar returul către furnizor devine storno de furnizor. Comportamentul se configurează pe tipul de operațiune de stoc, iar facturarea se face fie imediat după validare, fie de o acțiune planificată zilnică. Valoarea pentru afacere: fluidizarea ciclului comandă → livrare → factură și eliminarea riscului ca o livrare să rămână nefacturată.\nConfigurare pe tipul de operațiune: Create Invoice Automatically, Invoice Moment și Post Invoice Automatically (meniu: Inventar → Configurare → Tipuri de operațiuni).\nInvoice Moment: *Scheduled* (implicit, acțiunea planificată zilnică facturează transferurile aflate la coadă) sau *On validation* (transferul e facturat imediat după validare).\nFacturile de client și notele de credit se postează automat dacă este bifat Post Invoice Automatically; facturile și storno-urile de furnizor rămân mereu în ciornă.\nBackorder-urile și livrările parțiale se facturează separat, cu cantitățile fiecărui transfer; un transfer deja facturat nu se mai facturează a doua oară.\nIntră la coadă doar transferurile provenite dintr-o comandă de vânzare sau de achiziție.\nFacturarea rulează cu drepturi de sistem, deci un utilizator de depozit fără drepturi de facturare poate valida transferuri pe tipuri de operațiune care facturează la validare.\nTratarea erorilor: fiecare transfer e facturat într-un savepoint propriu; la eșec, transferul rămâne finalizat, este marcat Failed și păstrează motivul, afișat pe transfer. Butonul Retry Invoicing reîncearcă facturarea după remedierea cauzei.\nStarea Automatic Invoicing pe formularul transferului și ca coloană opțională în listă, plus filtrele Automatic Invoicing Failed și To Invoice Automatically."
   },
   {
     "path": "deltatech_invoice_product_filter/index.md",
@@ -7254,7 +7258,7 @@
   {
     "path": "deltatech_mrp_workorder_qty/index.md",
     "module": "deltatech_mrp_workorder_qty",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.1.0",
     "github": "`https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_mrp_workorder_qty`",
     "local_path": "odoo-addons/bitshop_ent/deltatech_mrp_workorder_qty",
     "last_ingest": "2026-11-13",
@@ -8938,7 +8942,7 @@
   {
     "path": "deltatech_pricelist_line_viewer/index.md",
     "module": "deltatech_pricelist_line_viewer",
-    "version": "19.0.0.0.4",
+    "version": "19.0.0.0.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_pricelist_line_viewer",
     "local_path": "odoo-addons/deltatech/deltatech_pricelist_line_viewer",
     "last_ingest": "2026-11-05",
@@ -10222,21 +10226,21 @@
     "path": "deltatech_ral/index.md",
     "module": "deltatech_ral",
     "version": "19.0.1.0.8",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_ral`",
-    "local_path": "odoo-addons/deltatech/deltatech_ral",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "RAL",
-    "summary": "Modulul gestionează folosirea pigmenților de culoare RAL (coduri de culoare RAL) în comenzile de producție. Pe baza atributului de culoare al produsului fabricat, modulul determină automat pigmentul RAL corespunzător și înlocuiește componenta generică „dummy\" din rețeta de fabricație (BOM) cu pigmentul real. Astfel, o singură rețetă poate fi folosită pentru toate variantele de culoare ale unui produs, iar lotul rezultat din producție este marcat automat cu pigmentul utilizat. Valoarea de afaceri principală este eliminarea rețetelor duplicate per culoare și trasabilitatea pigmentului pe lotul produs.",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_ral",
+    "local_path": null,
+    "last_ingest": "2026-11-19",
+    "friendly_name": "RAL Pigments",
+    "summary": "Producătorii care vopsesc același produs în mai multe culori RAL ar avea nevoie, fără acest modul, de o rețetă de fabricație (BOM) separată pentru fiecare culoare, diferite doar prin pigment. Cu modulul, o singură rețetă folosește un pigment generic, pe care fiecare comandă de producție îl înlocuiește cu pigmentul real al culorii produse. Culoarea este păstrată și pe lotul produsului finit, ceea ce oferă trasabilitatea pigmentului. Valoarea de afaceri principală este eliminarea rețetelor duplicate per culoare.",
     "features": [
-      "Permite selectarea unui pigment (RAL) într-o comandă de producție.",
-      "Pigmentul este un material al cărui cod intern începe cu „RAL\".",
-      "Dacă în BOM este folosit pigmentul „RAL 0000\" (dummy), acesta este înlocuit cu pigmentul din comanda de producție.",
-      "Lotul este creat automat la confirmarea comenzii și primește pigmentul din comanda de producție.",
-      "Se creează produsul „Dummy RAL\" cu referința internă „RAL 0000\".",
-      "În BOM-ul produsului care folosește pigmenți, „Dummy RAL\" se setează ca și componentă (FĂRĂ a selecta o variantă).",
-      "Produsul final trebuie să aibă un atribut de tip culoare.",
-      "Se creează produsele pigment cu referința internă „RAL color\", unde „color\" se înlocuiește cu numele opțiunii din atributul produsului final (ex.: RAL White, RAL Rose etc.).",
-      "La crearea comenzii de producție pentru o variantă, produsul „Dummy RAL\" este înlocuit cu pigmentul RAL corespunzător."
+      "Pigment pe comanda de producție: câmpul RAL conține pigmentul folosit. La crearea comenzii, pigmentul se alege din culoarea variantei produsului: valoarea atributului cu tipul de afișare *Color* indică pigmentul a cărui referință internă conține `RAL <valoare>`. Planificatorul îl poate schimba cât timp comanda e în ciornă sau confirmată.",
+      "Pigment generic înlocuit în componente: componenta provenită din linia de BOM cu pigmentul generic (referința internă `RAL 0000`) este înlocuită cu pigmentul din câmpul RAL, cu aceeași cantitate. Înlocuirea se păstrează la recalcularea componentelor (de exemplu la schimbarea cantității de produs), deci se consumă stocul pigmentului real.",
+      "RAL pe lot: loturile și numerele de serie au câmpul RAL, afișat pe formular și în listă. Când Odoo generează lotul produsului finit pentru comandă (butonul Generate Lot / Generate Serial, sau lotul creat la producerea comenzii fără lot), pigmentul comenzii se scrie pe acel lot.",
+      "Configurare:",
+      "produsul generic cu referința internă `RAL 0000` și pigmenții reali, cu referința `RAL ` urmată de numele valorii de culoare (ex. `RAL White` pentru valoarea *White*);",
+      "un atribut de culoare cu tipul de afișare *Color* (Inventar → Configurare → Produse → Atribute, cu variantele de produs activate), adăugat pe produsul finit;",
+      "în BOM-ul șablonului produsului finit (fără variantă) se adaugă `RAL 0000` ca componentă;",
+      "pentru a păstra culoarea pe lot, produsul finit se urmărește pe loturi sau numere de serie.",
+      "Limitări: pigmentul se potrivește printr-o căutare parțială pe referința internă, deci referințele care se conțin una pe alta (`RAL White` și `RAL White Matt`) pot da pigmentul greșit — referințele trebuie să rămână distincte; câmpul RAL se scrie doar pe loturile generate de Odoo pentru comandă, nu pe cele introduse sau selectate manual."
     ],
     "dependencies": [
       "base",
@@ -10246,34 +10250,32 @@
     "connections": [
       "deltatech_mrp"
     ],
-    "text": "RAL\ndeltatech_ral\nModulul gestionează folosirea pigmenților de culoare RAL (coduri de culoare RAL) în comenzile de producție. Pe baza atributului de culoare al produsului fabricat, modulul determină automat pigmentul RAL corespunzător și înlocuiește componenta generică „dummy\" din rețeta de fabricație (BOM) cu pigmentul real. Astfel, o singură rețetă poate fi folosită pentru toate variantele de culoare ale unui produs, iar lotul rezultat din producție este marcat automat cu pigmentul utilizat. Valoarea de afaceri principală este eliminarea rețetelor duplicate per culoare și trasabilitatea pigmentului pe lotul produs.\nPermite selectarea unui pigment (RAL) într-o comandă de producție.\nPigmentul este un material al cărui cod intern începe cu „RAL\".\nDacă în BOM este folosit pigmentul „RAL 0000\" (dummy), acesta este înlocuit cu pigmentul din comanda de producție.\nLotul este creat automat la confirmarea comenzii și primește pigmentul din comanda de producție.\nSe creează produsul „Dummy RAL\" cu referința internă „RAL 0000\".\nÎn BOM-ul produsului care folosește pigmenți, „Dummy RAL\" se setează ca și componentă (FĂRĂ a selecta o variantă).\nProdusul final trebuie să aibă un atribut de tip culoare.\nSe creează produsele pigment cu referința internă „RAL color\", unde „color\" se înlocuiește cu numele opțiunii din atributul produsului final (ex.: RAL White, RAL Rose etc.).\nLa crearea comenzii de producție pentru o variantă, produsul „Dummy RAL\" este înlocuit cu pigmentul RAL corespunzător."
+    "text": "RAL Pigments\ndeltatech_ral\nProducătorii care vopsesc același produs în mai multe culori RAL ar avea nevoie, fără acest modul, de o rețetă de fabricație (BOM) separată pentru fiecare culoare, diferite doar prin pigment. Cu modulul, o singură rețetă folosește un pigment generic, pe care fiecare comandă de producție îl înlocuiește cu pigmentul real al culorii produse. Culoarea este păstrată și pe lotul produsului finit, ceea ce oferă trasabilitatea pigmentului. Valoarea de afaceri principală este eliminarea rețetelor duplicate per culoare.\nPigment pe comanda de producție: câmpul RAL conține pigmentul folosit. La crearea comenzii, pigmentul se alege din culoarea variantei produsului: valoarea atributului cu tipul de afișare *Color* indică pigmentul a cărui referință internă conține `RAL <valoare>`. Planificatorul îl poate schimba cât timp comanda e în ciornă sau confirmată.\nPigment generic înlocuit în componente: componenta provenită din linia de BOM cu pigmentul generic (referința internă `RAL 0000`) este înlocuită cu pigmentul din câmpul RAL, cu aceeași cantitate. Înlocuirea se păstrează la recalcularea componentelor (de exemplu la schimbarea cantității de produs), deci se consumă stocul pigmentului real.\nRAL pe lot: loturile și numerele de serie au câmpul RAL, afișat pe formular și în listă. Când Odoo generează lotul produsului finit pentru comandă (butonul Generate Lot / Generate Serial, sau lotul creat la producerea comenzii fără lot), pigmentul comenzii se scrie pe acel lot.\nConfigurare:\nprodusul generic cu referința internă `RAL 0000` și pigmenții reali, cu referința `RAL ` urmată de numele valorii de culoare (ex. `RAL White` pentru valoarea *White*);\nun atribut de culoare cu tipul de afișare *Color* (Inventar → Configurare → Produse → Atribute, cu variantele de produs activate), adăugat pe produsul finit;\nîn BOM-ul șablonului produsului finit (fără variantă) se adaugă `RAL 0000` ca componentă;\npentru a păstra culoarea pe lot, produsul finit se urmărește pe loturi sau numere de serie.\nLimitări: pigmentul se potrivește printr-o căutare parțială pe referința internă, deci referințele care se conțin una pe alta (`RAL White` și `RAL White Matt`) pot da pigmentul greșit — referințele trebuie să rămână distincte; câmpul RAL se scrie doar pe loturile generate de Odoo pentru comandă, nu pe cele introduse sau selectate manual."
   },
   {
     "path": "deltatech_reception_note/index.md",
     "module": "deltatech_reception_note",
     "version": "19.0.0.1.8",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_reception_note`",
-    "local_path": "odoo-addons/deltatech/deltatech_reception_note",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Notă de Recepție pe Bază de Cereri de Ofertă",
-    "summary": "Acest modul oferă un instrument specializat pentru gestionarea notelor de recepție în masă (batch) în cadrul modulelor de stoc și achiziții din Odoo. Este conceput pentru a simplifica procesul de recepție a mai multor articole sau de gestionare a documentației de recepție în volum mare, permițând gruparea mai multor cereri de ofertă (RFQ) într-o singură notă de recepție pentru o urmărire și o documentare mai ușoară între aprovizionare și operațiunile de depozit.",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_reception_note",
+    "local_path": null,
+    "last_ingest": "2026-11-19",
+    "friendly_name": "Batch Reception Note",
+    "summary": "Modulul permite recepția mărfii de la furnizor pe note de recepție care consumă cantitățile deschise din mai multe comenzi de achiziție deodată, în loc să se valideze recepția fiecărei comenzi separat. Este util când o singură livrare acoperă mai multe comenzi sau când o comandă sosește în mai multe livrări.",
     "features": [
-      "Procesarea recepției în masă (batch): Adaugă un wizard dedicat pentru crearea și gestionarea notelor de recepție în volum, permițând gruparea mai multor comenzi de achiziție într-o singură notă de recepție.",
-      "Tipuri de comandă diferențiate: Introduce un tip de comandă de achiziție (Normal, RFQ Only, Notă de recepție) care controlează fluxul de confirmare și de recepție.",
-      "Integrare cu fluxul de stoc: Se integrează cu modulul `purchase_stock` pentru a asigura un flux de date consistent între aprovizionare și operațiunile de depozit.",
-      "Reducerea automată din RFQ: La confirmarea unei note de recepție, cantitățile sunt scăzute automat din cererile de ofertă (RFQ) deschise ale aceluiași furnizor, cu validări de cantitate și opțiunea de a forța cantitățile mai mari (`Ignore quantities`).",
-      "Mesaje de eroare mai clare: Cele două erori afișate la confirmarea unei note de recepție (produs negăsit / cantitate neacoperită într-un RFQ trimis) indică acum explicit soluția — bifarea „Ignore quantities” pentru a recepționa oricum marfa — nu doar faptul că produsul sau cantitatea nu au fost găsite.",
-      "Documentație îmbunătățită și meniuri dedicate: Oferă vizualizări și meniuri specializate (pregătire notă de recepție, recepții de sosit, recepții de facturat) pentru informații de recepție sintetizate, utile pentru audit intern și verificarea furnizorilor."
+      "Tipuri de comenzi de achiziție: fiecare comandă primește un *Type*: *Normal* (comanda obișnuită), *RFQ Only* (cerere care păstrează cantitățile încă așteptate de la furnizor; nu poate fi confirmată și are butonul *Set as sent*) și *Reception Note* (livrarea efectiv primită, cu *Delivery Note No* al furnizorului).",
+      "Create reception note: pe o comandă *Normal*, *Actions > Create reception note* mută cantitățile deschise într-o comandă nouă *RFQ Only* în starea *RFQ Sent*, cu același furnizor, aceeași companie, monedă, poziție fiscală, termene de plată, prețuri și taxe, și cu cantitatea încă nerecepționată pe fiecare linie. Recepțiile *Ready* ale comenzii sursă se anulează, deci marfa se primește doar prin note de recepție.",
+      "Nota de recepție: o comandă de tip *Reception Note* conține produsele și cantitățile livrate. La confirmare, cantitățile se scad din comenzile *RFQ Only* trimise ale aceluiași furnizor și ale aceleiași companii, cele mai vechi primele, în unitatea de măsură a produsului; recepția se creează prin confirmarea standard. O comandă *RFQ Only* complet consumată este marcată ca goală (*Empty*). O reconfirmare a unei note deja confirmate nu consumă a doua oară.",
+      "Ignore quantities: dacă un produs sau o cantitate nu se găsește pe un RFQ Only trimis, confirmarea se oprește cu un mesaj care indică soluția; bifa *Ignore quantities* pe nota de recepție permite confirmarea oricum, iar cantitățile forțate sunt listate în chatter.",
+      "Meniuri și filtre: Achiziții > Note de recepție are trei intrări: *Prepare reception note* (notele neconfirmate sau nefacturate), *To arrive* (transferuri de intrare în starea *Ready*) și *To invoice* (transferuri de intrare în starea *Done*). Listele de achiziții afișează *Type* și *Date sent* ca coloane opționale, iar căutarea are filtrele *Not empty* / *Empty* pentru comenzile *RFQ Only*.",
+      "Limitări: modulul nu adaugă un document tipărit propriu — nota de recepție se tipărește cu rapoartele standard ale comenzii de achiziție; *To invoice* listează toate transferurile de intrare finalizate, facturate sau nu."
     ],
     "dependencies": [
       "purchase_stock"
     ],
     "connections": [
-      "deltatech_fast_purchase",
-      "deltatech_purchase_price",
-      "deltatech_stock_account"
+      "purchase_stock"
     ],
-    "text": "Notă de Recepție pe Bază de Cereri de Ofertă\ndeltatech_reception_note\nAcest modul oferă un instrument specializat pentru gestionarea notelor de recepție în masă (batch) în cadrul modulelor de stoc și achiziții din Odoo. Este conceput pentru a simplifica procesul de recepție a mai multor articole sau de gestionare a documentației de recepție în volum mare, permițând gruparea mai multor cereri de ofertă (RFQ) într-o singură notă de recepție pentru o urmărire și o documentare mai ușoară între aprovizionare și operațiunile de depozit.\nProcesarea recepției în masă (batch): Adaugă un wizard dedicat pentru crearea și gestionarea notelor de recepție în volum, permițând gruparea mai multor comenzi de achiziție într-o singură notă de recepție.\nTipuri de comandă diferențiate: Introduce un tip de comandă de achiziție (Normal, RFQ Only, Notă de recepție) care controlează fluxul de confirmare și de recepție.\nIntegrare cu fluxul de stoc: Se integrează cu modulul `purchase_stock` pentru a asigura un flux de date consistent între aprovizionare și operațiunile de depozit.\nReducerea automată din RFQ: La confirmarea unei note de recepție, cantitățile sunt scăzute automat din cererile de ofertă (RFQ) deschise ale aceluiași furnizor, cu validări de cantitate și opțiunea de a forța cantitățile mai mari (`Ignore quantities`).\nMesaje de eroare mai clare: Cele două erori afișate la confirmarea unei note de recepție (produs negăsit / cantitate neacoperită într-un RFQ trimis) indică acum explicit soluția — bifarea „Ignore quantities” pentru a recepționa oricum marfa — nu doar faptul că produsul sau cantitatea nu au fost găsite.\nDocumentație îmbunătățită și meniuri dedicate: Oferă vizualizări și meniuri specializate (pregătire notă de recepție, recepții de sosit, recepții de facturat) pentru informații de recepție sintetizate, utile pentru audit intern și verificarea furnizorilor."
+    "text": "Batch Reception Note\ndeltatech_reception_note\nModulul permite recepția mărfii de la furnizor pe note de recepție care consumă cantitățile deschise din mai multe comenzi de achiziție deodată, în loc să se valideze recepția fiecărei comenzi separat. Este util când o singură livrare acoperă mai multe comenzi sau când o comandă sosește în mai multe livrări.\nTipuri de comenzi de achiziție: fiecare comandă primește un *Type*: *Normal* (comanda obișnuită), *RFQ Only* (cerere care păstrează cantitățile încă așteptate de la furnizor; nu poate fi confirmată și are butonul *Set as sent*) și *Reception Note* (livrarea efectiv primită, cu *Delivery Note No* al furnizorului).\nCreate reception note: pe o comandă *Normal*, *Actions > Create reception note* mută cantitățile deschise într-o comandă nouă *RFQ Only* în starea *RFQ Sent*, cu același furnizor, aceeași companie, monedă, poziție fiscală, termene de plată, prețuri și taxe, și cu cantitatea încă nerecepționată pe fiecare linie. Recepțiile *Ready* ale comenzii sursă se anulează, deci marfa se primește doar prin note de recepție.\nNota de recepție: o comandă de tip *Reception Note* conține produsele și cantitățile livrate. La confirmare, cantitățile se scad din comenzile *RFQ Only* trimise ale aceluiași furnizor și ale aceleiași companii, cele mai vechi primele, în unitatea de măsură a produsului; recepția se creează prin confirmarea standard. O comandă *RFQ Only* complet consumată este marcată ca goală (*Empty*). O reconfirmare a unei note deja confirmate nu consumă a doua oară.\nIgnore quantities: dacă un produs sau o cantitate nu se găsește pe un RFQ Only trimis, confirmarea se oprește cu un mesaj care indică soluția; bifa *Ignore quantities* pe nota de recepție permite confirmarea oricum, iar cantitățile forțate sunt listate în chatter.\nMeniuri și filtre: Achiziții > Note de recepție are trei intrări: *Prepare reception note* (notele neconfirmate sau nefacturate), *To arrive* (transferuri de intrare în starea *Ready*) și *To invoice* (transferuri de intrare în starea *Done*). Listele de achiziții afișează *Type* și *Date sent* ca coloane opționale, iar căutarea are filtrele *Not empty* / *Empty* pentru comenzile *RFQ Only*.\nLimitări: modulul nu adaugă un document tipărit propriu — nota de recepție se tipărește cu rapoartele standard ale comenzii de achiziție; *To invoice* listează toate transferurile de intrare finalizate, facturate sau nu."
   },
   {
     "path": "deltatech_record_type/index.md",
@@ -10416,22 +10418,24 @@
     "path": "deltatech_report_prn/index.md",
     "module": "deltatech_report_prn",
     "version": "19.0.1.1.3",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_report_prn`",
-    "local_path": "odoo-addons/deltatech/deltatech_report_prn",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Raport PRN",
-    "summary": "Modulul adaugă în Odoo un nou tip de raport, în format text brut PRN, destinat tipăririi directe la imprimante de etichete și imprimante matriciale. Spre deosebire de rapoartele PDF, conținutul generat este text neformatat care conține sintaxa nativă a imprimantei (de exemplu limbajul ZPL pentru imprimante de etichete Zebra), astfel încât fișierul descărcat poate fi trimis direct la imprimantă fără conversii intermediare.",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_report_prn",
+    "local_path": null,
+    "last_ingest": "2026-11-19",
+    "friendly_name": "PRN Report",
+    "summary": "Imprimantele de etichete Zebra citesc comenzi text ZPL, nu PDF. Acest modul tehnic adaugă în Odoo un tip de raport *PRN*, astfel încât un șablon QWeb care produce text simplu poate fi tipărit dintr-o acțiune de raport ca fișier `.prn`, trimis apoi direct la imprimantă fără conversii intermediare. Modulul nu livrează rapoarte sau șabloane de etichete proprii; stația de lucru trebuie să trimită fișierul descărcat la imprimantă.",
     "features": [
-      "Permite tipărirea de fișiere cu extensia `.prn`, care conțin sintaxa pentru imprimante de etichete Zebra.",
-      "Adaugă un tip de raport nou (`qweb-prn`) ce poate fi atribuit oricărui raport Odoo pentru a produce ieșire text în loc de PDF.",
-      "Generează un fișier descărcabil cu extensia `.prn`, numit automat conform regulii de denumire a raportului.",
-      "Handler-ul JS de generare a URL-ului raportului (`buildPrnUrl`) este exportat, astfel încât un modul companion (de exemplu, integrarea cu Zebra Browser Print) îl poate intercepta cu o secvență de handler mai mică pentru a tipări direct din browser, cu fallback automat pe descărcarea clasică `.prn` implementată aici. Fluxul legacy de descărcare rămâne neschimbat, iar acest modul rămâne liber de orice cod proprietar sau dependență de Browser Print — funcționalitatea completă de tipărire prin Zebra Browser Print (SDK, comutator de activare și logica de tipărire) trăiește într-un modul companion separat."
+      "Tip de raport PRN: acțiunile de raport de tip *PRN* (`qweb-prn`) randează șablonul ca text simplu, nu ca PDF; tipul se poate atribui oricărui raport Odoo.",
+      "Descărcare fișier: acțiunea descarcă un fișier `.prn`, numit după raport sau, pentru o singură înregistrare, după expresia `print_report_name`.",
+      "Punct de extensie: modulul exportă `buildPrnUrl`, astfel încât un modul companion poate intercepta acțiunea (cu o secvență de handler mai mică) și poate tipări în alt mod, cu revenire pe descărcarea `.prn`; modulul rămâne liber de cod proprietar și de dependența de Zebra Browser Print.",
+      "Dezinstalare: la dezinstalare, rapoartele PRN revin la tipul implicit."
     ],
     "dependencies": [
       "web"
     ],
-    "connections": [],
-    "text": "Raport PRN\ndeltatech_report_prn\nModulul adaugă în Odoo un nou tip de raport, în format text brut PRN, destinat tipăririi directe la imprimante de etichete și imprimante matriciale. Spre deosebire de rapoartele PDF, conținutul generat este text neformatat care conține sintaxa nativă a imprimantei (de exemplu limbajul ZPL pentru imprimante de etichete Zebra), astfel încât fișierul descărcat poate fi trimis direct la imprimantă fără conversii intermediare.\nPermite tipărirea de fișiere cu extensia `.prn`, care conțin sintaxa pentru imprimante de etichete Zebra.\nAdaugă un tip de raport nou (`qweb-prn`) ce poate fi atribuit oricărui raport Odoo pentru a produce ieșire text în loc de PDF.\nGenerează un fișier descărcabil cu extensia `.prn`, numit automat conform regulii de denumire a raportului.\nHandler-ul JS de generare a URL-ului raportului (`buildPrnUrl`) este exportat, astfel încât un modul companion (de exemplu, integrarea cu Zebra Browser Print) îl poate intercepta cu o secvență de handler mai mică pentru a tipări direct din browser, cu fallback automat pe descărcarea clasică `.prn` implementată aici. Fluxul legacy de descărcare rămâne neschimbat, iar acest modul rămâne liber de orice cod proprietar sau dependență de Browser Print — funcționalitatea completă de tipărire prin Zebra Browser Print (SDK, comutator de activare și logica de tipărire) trăiește într-un modul companion separat."
+    "connections": [
+      "deltatech_report_prn_zebra_sdk"
+    ],
+    "text": "PRN Report\ndeltatech_report_prn\nImprimantele de etichete Zebra citesc comenzi text ZPL, nu PDF. Acest modul tehnic adaugă în Odoo un tip de raport *PRN*, astfel încât un șablon QWeb care produce text simplu poate fi tipărit dintr-o acțiune de raport ca fișier `.prn`, trimis apoi direct la imprimantă fără conversii intermediare. Modulul nu livrează rapoarte sau șabloane de etichete proprii; stația de lucru trebuie să trimită fișierul descărcat la imprimantă.\nTip de raport PRN: acțiunile de raport de tip *PRN* (`qweb-prn`) randează șablonul ca text simplu, nu ca PDF; tipul se poate atribui oricărui raport Odoo.\nDescărcare fișier: acțiunea descarcă un fișier `.prn`, numit după raport sau, pentru o singură înregistrare, după expresia `print_report_name`.\nPunct de extensie: modulul exportă `buildPrnUrl`, astfel încât un modul companion poate intercepta acțiunea (cu o secvență de handler mai mică) și poate tipări în alt mod, cu revenire pe descărcarea `.prn`; modulul rămâne liber de cod proprietar și de dependența de Zebra Browser Print.\nDezinstalare: la dezinstalare, rapoartele PRN revin la tipul implicit."
   },
   {
     "path": "deltatech_report_prn_zebra_sdk/index.md",
@@ -11236,7 +11240,7 @@
   {
     "path": "deltatech_sale_feedback/index.md",
     "module": "deltatech_sale_feedback",
-    "version": "19.0.1.0.8",
+    "version": "19.0.1.0.10",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_feedback",
     "local_path": "odoo-addons/deltatech/deltatech_sale_feedback",
     "last_ingest": "2026-11-05",
@@ -11331,7 +11335,7 @@
   {
     "path": "deltatech_sale_margin_pos/index.md",
     "module": "deltatech_sale_margin_pos",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_margin_pos",
     "local_path": "odoo-addons/deltatech/deltatech_sale_margin_pos",
     "last_ingest": "2026-10-22",
@@ -12648,7 +12652,7 @@
   {
     "path": "deltatech_stock_barcode/index.md",
     "module": "deltatech_stock_barcode",
-    "version": "19.0.0.1.7",
+    "version": "19.0.0.1.9",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_stock_barcode",
     "local_path": "odoo-addons/bitshop_ent/deltatech_stock_barcode",
     "last_ingest": "2026-09-29",
@@ -12853,7 +12857,7 @@
   {
     "path": "deltatech_stock_inventory/index.md",
     "module": "deltatech_stock_inventory",
-    "version": "19.0.2.10.9",
+    "version": "19.0.2.10.11",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_inventory",
     "local_path": "odoo-addons/deltatech/deltatech_stock_inventory",
     "last_ingest": "2026-09-24",
@@ -15864,7 +15868,7 @@
   {
     "path": "l10n_ro_account_vat_journal/index.md",
     "module": "l10n_ro_account_vat_journal",
-    "version": "19.0.1.7.1",
+    "version": "19.0.1.7.4",
     "github": "[https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal)",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_account_vat_journal",
     "last_ingest": "2026-10-05",
@@ -16049,45 +16053,43 @@
   {
     "path": "l10n_ro_anaf_base/index.md",
     "module": "l10n_ro_anaf_base",
-    "version": "19.0.1.4.1",
+    "version": "19.0.1.5.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_base",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_base",
-    "last_ingest": "2026-09-29",
+    "local_path": null,
+    "last_ingest": "2026-11-19",
     "friendly_name": "Romania - Bază ANAF",
-    "summary": "Acest modul este infrastructura comună (de bază, ascunsă) pentru toate declarațiile fiscale ANAF din suita `l10n_ro_ent`. Centralizează logica de generare și export a declarațiilor către ANAF (Soft A — Adobe XDP și Soft J — XML), eliminând duplicarea codului între modulele individuale D300, D390, D394, D398 etc.",
+    "summary": "Acest modul este infrastructura comună (de bază, ascunsă) pentru toate declarațiile fiscale ANAF din suita `l10n_ro_ent`. Centralizează logica de generare și export a declarațiilor către ANAF (Soft A — Adobe XDP și Soft J — XML), eliminând duplicarea codului între modulele individuale D300, D390, D394, D398 etc. Nu se instalează manual: vine automat ca dependență a oricărui modul de declarație ANAF.",
     "features": [
       "Mixin pentru handlere (`L10nRoAnafReportHandlerMixin`) — date companie (CUI, CAEN, județ cod ANAF 01–52, reprezentant legal), date declarant (nume, prenume, funcție, identificator fiscal/CNP, email, telefon, adresă) cu fallback pe userul curent.",
       "Validare companie înainte de export: VAT, adresă fiscală, județ, CAEN, contact.",
-      "Validare parteneri: VAT obligatoriu pentru partenerii incluși în declarații.",
+      "Validare parteneri: VAT obligatoriu pentru partenerii incluși în declarații; prefixul codului de TVA ține cont de VIES (ex. Grecia, `GR` → `EL`).",
       "Validare XML față de scheme XSD oficiale ANAF.",
       "Generare nume fișier conform convențiilor ANAF.",
-      "Export XDP (Adobe) cu înglobare PDF și împachetare ZIP.",
-      "Helper-e pentru adăugarea butoanelor de export XML și XDP în interfața rapoartelor.",
+      "Export XDP (Adobe) direct, împachetat ZIP cu formularul PDF sau scris direct în formularul PDF ANAF; helper-e pentru butoanele de export XML și XDP din interfața rapoartelor.",
       "Registru de profile de declarații (funcție `register_anaf_profile` / `_ANAF_PROFILES`) — mecanism centralizat de înregistrare și selecție a versiunilor de formulare ANAF, cu suport pentru perioade istorice.",
-      "Extensii pe `res.company` și `res.config.settings` — persoană responsabilă declarații, identificator declarant, tip export implicit, instalare module ANAF.",
-      "Extensie `account.report` — înregistrare tip MIME `application/vnd.adobe.xdp+xml` pentru fișierele `.xdp`.",
-      "Gardă de postare pentru companii RO (`account.move._l10n_ro_posting_guard_errors`) — hook extensibil, opt-in, prin care alte module de localizare pot bloca postarea unui document (de ex. parteneri inactivi la ANAF) fără a schimba comportamentul implicit al instalărilor existente.",
-      "Codul CAEN al companiei, definit acum aici (nou în 19.0.1.2.0) — câmpul `l10n_ro_caen_code`, pe partener, cu oglindă pe `res.company` (editabil) și expus în setările contabile. E obligatoriu și enumerat strict în schemele ANAF (D100, D101, D112 și celelalte), dar anterior venea doar din `l10n_ro_config` (l10n-romania-oca), de care suita de declarații nu depinde — pe o instalare fără acel modul, orice declarație se genera cu CAEN gol. Când ambele module sunt instalate, definițiile de câmp fuzionează și rămâne un singur câmp.",
-      "Fără fallback tăcut pe `\"0000\"` — spre deosebire de `l10n_ro_config`, câmpul CAEN nu are valoare implicită, pentru că `\"0000\"` nu există în nomenclatorul ANAF și ar produce un XML respins de schemă cu un mesaj criptic. `_get_anaf_company_data` întoarce valoarea reală a companiei, iar `_validate_anaf_export_company(require_caen=True)` prinde atât câmpul gol, cât și placeholderul `\"0000\"` lăsat de `l10n_ro_config`, cu un mesaj acționabil.",
-      "Convenția „Nume Prenume\" pentru numele de persoane (nou în 19.0.1.3.0) — `_split_contact_name` împarte `name` considerând primul cuvânt drept nume de familie, restul prenume (ex. `Popescu Ion` → Popescu / Ion), ca în actele oficiale românești. Se aplică persoanei responsabile cu declarațiile și, în D112, salariaților din liniile nominale (funcția proprie, cu regula opusă, a fost eliminată). Ordinea inversă nu e respinsă de ANAF (câmpuri text liber), dar apare inversată pe declarația depusă. La upgrade, verificați contactul persoanei responsabile dacă e scris „Prenume Nume\".",
-      "Clasa de bază `AnafTestCommon` (`tests/common.py`) — reutilizabilă de toate modulele ANAF pentru configurarea automată a mediului de test (companie RO cu adresă fiscală completă, contact ANAF).",
-      "Persoana responsabilă — contactul care apare ca declarant în XML (`<Declarant>`/`<Preparer>`); numele se scrie „Nume Prenume\" (ex. `Popescu Ion`).",
+      "Cod CAEN al companiei — câmpul `l10n_ro_anaf_caen_code` pe companie (4 cifre), completat pe formularul companiei sau în Setări → Contabilitate → Declarații ANAF. Nu e modificat de căutarea ANAF a partenerilor, deci o firmă trecută pe CAEN Rev.3 își poate păstra în declarații codul acceptat de schema ANAF. Exportul refuză un cod care nu are exact 4 cifre sau e `0000` (`is_valid_caen_code()`), fără fallback tăcut.",
+      "Convenția „Nume Prenume\" pentru numele de persoane — `_split_contact_name` consideră primul cuvânt nume de familie, restul prenume (ex. `Popescu Ion` → Popescu / Ion); se aplică persoanei responsabile cu declarațiile și salariaților din D112. Ordinea inversă nu e respinsă de ANAF, dar apare inversată pe declarația depusă.",
+      "Cod produs pentru taxare inversă (art. 331) — `product.product._l10n_ro_reverse_charge_code()` calculează codul din nomenclatorul ANAF într-un singur loc (categoriile 22–31, prefixul NC al cerealelor sau primele 8 cifre ale codului NC), folosit de D394 și D300.",
+      "Clasa de bază `AnafTestCommon` (`tests/common.py`) — reutilizabilă de toate modulele ANAF pentru configurarea mediului de test.",
+      "Persoana responsabilă — contactul care apare ca declarant în XML (`<Declarant>`/`<Preparer>`); numele se scrie „Nume Prenume\".",
       "Declaration Identifier — codul fiscal/CNP al declarantului; dacă e gol, se preia din VAT/CNP-ul persoanei responsabile.",
-      "Tip export — `XDP direct` (descărcare directă a fișierului, pentru upload pe portalul ANAF) sau `Arhivă ZIP` (XDP + PDF, implicit).",
-      "Din același ecran se pot activa rapid modulele individuale D300, D390, D394 și D398."
+      "Tip export — `XDP direct` (descărcare directă a fișierului XDP), `Arhivă ZIP` (XDP + PDF) sau `PDF cu datele incluse` (implicit, formularul PDF ANAF completat prin actualizare incrementală, care păstrează extensiile Adobe Reader). Opțiunea PDF cere `pypdf` 5.0+ pe server; fără el exportul revine la arhiva ZIP, iar setările afișează un avertisment.",
+      "Din același ecran se pot activa rapid modulele D300, D390, D394 și D398."
     ],
     "dependencies": [
       "account_reports",
       "l10n_ro",
-      "accountant"
+      "accountant",
+      "l10n_ro_move_guard"
     ],
     "connections": [
+      "l10n_ro_move_guard",
       "l10n_ro",
       "account_reports",
       "accountant",
       "l10n_ro_config",
       "l10n_ro_caen_code",
-      "l10n_ro_anaf_base",
+      "l10n_ro_anaf_caen_code",
       "l10n_ro_ent",
       "l10n_ro_anaf_d100",
       "l10n_ro_anaf_d300",
@@ -16096,7 +16098,7 @@
       "l10n_ro_anaf_d398",
       "l10n_ro_anaf_d112"
     ],
-    "text": "Romania - Bază ANAF\nl10n_ro_anaf_base\nAcest modul este infrastructura comună (de bază, ascunsă) pentru toate declarațiile fiscale ANAF din suita `l10n_ro_ent`. Centralizează logica de generare și export a declarațiilor către ANAF (Soft A — Adobe XDP și Soft J — XML), eliminând duplicarea codului între modulele individuale D300, D390, D394, D398 etc.\nMixin pentru handlere (`L10nRoAnafReportHandlerMixin`) — date companie (CUI, CAEN, județ cod ANAF 01–52, reprezentant legal), date declarant (nume, prenume, funcție, identificator fiscal/CNP, email, telefon, adresă) cu fallback pe userul curent.\nValidare companie înainte de export: VAT, adresă fiscală, județ, CAEN, contact.\nValidare parteneri: VAT obligatoriu pentru partenerii incluși în declarații.\nValidare XML față de scheme XSD oficiale ANAF.\nGenerare nume fișier conform convențiilor ANAF.\nExport XDP (Adobe) cu înglobare PDF și împachetare ZIP.\nHelper-e pentru adăugarea butoanelor de export XML și XDP în interfața rapoartelor.\nRegistru de profile de declarații (funcție `register_anaf_profile` / `_ANAF_PROFILES`) — mecanism centralizat de înregistrare și selecție a versiunilor de formulare ANAF, cu suport pentru perioade istorice.\nExtensii pe `res.company` și `res.config.settings` — persoană responsabilă declarații, identificator declarant, tip export implicit, instalare module ANAF.\nExtensie `account.report` — înregistrare tip MIME `application/vnd.adobe.xdp+xml` pentru fișierele `.xdp`.\nGardă de postare pentru companii RO (`account.move._l10n_ro_posting_guard_errors`) — hook extensibil, opt-in, prin care alte module de localizare pot bloca postarea unui document (de ex. parteneri inactivi la ANAF) fără a schimba comportamentul implicit al instalărilor existente.\nCodul CAEN al companiei, definit acum aici (nou în 19.0.1.2.0) — câmpul `l10n_ro_caen_code`, pe partener, cu oglindă pe `res.company` (editabil) și expus în setările contabile. E obligatoriu și enumerat strict în schemele ANAF (D100, D101, D112 și celelalte), dar anterior venea doar din `l10n_ro_config` (l10n-romania-oca), de care suita de declarații nu depinde — pe o instalare fără acel modul, orice declarație se genera cu CAEN gol. Când ambele module sunt instalate, definițiile de câmp fuzionează și rămâne un singur câmp.\nFără fallback tăcut pe `\"0000\"` — spre deosebire de `l10n_ro_config`, câmpul CAEN nu are valoare implicită, pentru că `\"0000\"` nu există în nomenclatorul ANAF și ar produce un XML respins de schemă cu un mesaj criptic. `_get_anaf_company_data` întoarce valoarea reală a companiei, iar `_validate_anaf_export_company(require_caen=True)` prinde atât câmpul gol, cât și placeholderul `\"0000\"` lăsat de `l10n_ro_config`, cu un mesaj acționabil.\nConvenția „Nume Prenume\" pentru numele de persoane (nou în 19.0.1.3.0) — `_split_contact_name` împarte `name` considerând primul cuvânt drept nume de familie, restul prenume (ex. `Popescu Ion` → Popescu / Ion), ca în actele oficiale românești. Se aplică persoanei responsabile cu declarațiile și, în D112, salariaților din liniile nominale (funcția proprie, cu regula opusă, a fost eliminată). Ordinea inversă nu e respinsă de ANAF (câmpuri text liber), dar apare inversată pe declarația depusă. La upgrade, verificați contactul persoanei responsabile dacă e scris „Prenume Nume\".\nClasa de bază `AnafTestCommon` (`tests/common.py`) — reutilizabilă de toate modulele ANAF pentru configurarea automată a mediului de test (companie RO cu adresă fiscală completă, contact ANAF).\nPersoana responsabilă — contactul care apare ca declarant în XML (`<Declarant>`/`<Preparer>`); numele se scrie „Nume Prenume\" (ex. `Popescu Ion`).\nDeclaration Identifier — codul fiscal/CNP al declarantului; dacă e gol, se preia din VAT/CNP-ul persoanei responsabile.\nTip export — `XDP direct` (descărcare directă a fișierului, pentru upload pe portalul ANAF) sau `Arhivă ZIP` (XDP + PDF, implicit).\nDin același ecran se pot activa rapid modulele individuale D300, D390, D394 și D398."
+    "text": "Romania - Bază ANAF\nl10n_ro_anaf_base\nAcest modul este infrastructura comună (de bază, ascunsă) pentru toate declarațiile fiscale ANAF din suita `l10n_ro_ent`. Centralizează logica de generare și export a declarațiilor către ANAF (Soft A — Adobe XDP și Soft J — XML), eliminând duplicarea codului între modulele individuale D300, D390, D394, D398 etc. Nu se instalează manual: vine automat ca dependență a oricărui modul de declarație ANAF.\nMixin pentru handlere (`L10nRoAnafReportHandlerMixin`) — date companie (CUI, CAEN, județ cod ANAF 01–52, reprezentant legal), date declarant (nume, prenume, funcție, identificator fiscal/CNP, email, telefon, adresă) cu fallback pe userul curent.\nValidare companie înainte de export: VAT, adresă fiscală, județ, CAEN, contact.\nValidare parteneri: VAT obligatoriu pentru partenerii incluși în declarații; prefixul codului de TVA ține cont de VIES (ex. Grecia, `GR` → `EL`).\nValidare XML față de scheme XSD oficiale ANAF.\nGenerare nume fișier conform convențiilor ANAF.\nExport XDP (Adobe) direct, împachetat ZIP cu formularul PDF sau scris direct în formularul PDF ANAF; helper-e pentru butoanele de export XML și XDP din interfața rapoartelor.\nRegistru de profile de declarații (funcție `register_anaf_profile` / `_ANAF_PROFILES`) — mecanism centralizat de înregistrare și selecție a versiunilor de formulare ANAF, cu suport pentru perioade istorice.\nCod CAEN al companiei — câmpul `l10n_ro_anaf_caen_code` pe companie (4 cifre), completat pe formularul companiei sau în Setări → Contabilitate → Declarații ANAF. Nu e modificat de căutarea ANAF a partenerilor, deci o firmă trecută pe CAEN Rev.3 își poate păstra în declarații codul acceptat de schema ANAF. Exportul refuză un cod care nu are exact 4 cifre sau e `0000` (`is_valid_caen_code()`), fără fallback tăcut.\nConvenția „Nume Prenume\" pentru numele de persoane — `_split_contact_name` consideră primul cuvânt nume de familie, restul prenume (ex. `Popescu Ion` → Popescu / Ion); se aplică persoanei responsabile cu declarațiile și salariaților din D112. Ordinea inversă nu e respinsă de ANAF, dar apare inversată pe declarația depusă.\nCod produs pentru taxare inversă (art. 331) — `product.product._l10n_ro_reverse_charge_code()` calculează codul din nomenclatorul ANAF într-un singur loc (categoriile 22–31, prefixul NC al cerealelor sau primele 8 cifre ale codului NC), folosit de D394 și D300.\nClasa de bază `AnafTestCommon` (`tests/common.py`) — reutilizabilă de toate modulele ANAF pentru configurarea mediului de test.\nPersoana responsabilă — contactul care apare ca declarant în XML (`<Declarant>`/`<Preparer>`); numele se scrie „Nume Prenume\".\nDeclaration Identifier — codul fiscal/CNP al declarantului; dacă e gol, se preia din VAT/CNP-ul persoanei responsabile.\nTip export — `XDP direct` (descărcare directă a fișierului XDP), `Arhivă ZIP` (XDP + PDF) sau `PDF cu datele incluse` (implicit, formularul PDF ANAF completat prin actualizare incrementală, care păstrează extensiile Adobe Reader). Opțiunea PDF cere `pypdf` 5.0+ pe server; fără el exportul revine la arhiva ZIP, iar setările afișează un avertisment.\nDin același ecran se pot activa rapid modulele D300, D390, D394 și D398."
   },
   {
     "path": "l10n_ro_anaf_d094/index.md",
@@ -17015,46 +17017,41 @@
   {
     "path": "l10n_ro_anaf_partner/index.md",
     "module": "l10n_ro_anaf_partner",
-    "version": "19.0.2.6.0",
+    "version": "19.0.2.7.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_partner",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_partner",
-    "last_ingest": null,
-    "friendly_name": "Romania - Monitorizare modificări date ANAF parteneri (FR-23)",
-    "summary": "Acest modul monitorizează modificările datelor ANAF ale partenerilor, cu **client de sincronizare propriu** (fără dependențe de module OCA de fiscalitate). Interoghează direct serviciul sincron ANAF de verificare TVA, actualizează denumirea, adresa, codul CAEN, statutul de plătitor TVA și starea de înregistrare a fiecărui partener companie din România, înregistrează automat orice modificare detectată într-un jurnal (change log) și emite alerte (activități și note în chatter) atunci când un partener devine inactiv fiscal, este radiat/dizolvat sau își schimbă regimul de TVA — prevenind astfel emiterea de facturi către parteneri cu probleme fiscale.",
+    "local_path": null,
+    "last_ingest": "2026-11-19",
+    "friendly_name": "Romania - Monitorizare modificări date ANAF parteneri",
+    "summary": "Acest modul monitorizează modificările datelor ANAF ale partenerilor, cu **client de sincronizare propriu** (fără dependențe de module OCA de fiscalitate). Interoghează direct serviciul sincron ANAF de verificare TVA, actualizează denumirea, adresa, codul CAEN, statutul de plătitor TVA, regimul de TVA la încasare și starea de înregistrare a fiecărui partener din România, înregistrează automat orice modificare detectată într-un jurnal (change log) și emite alerte (activități și note în chatter) atunci când un partener devine inactiv fiscal, este radiat/dizolvat sau își schimbă regimul de TVA — prevenind astfel emiterea de facturi către parteneri cu probleme fiscale și deducerea greșită a TVA de la furnizori.",
     "features": [
-      "Sincronizare ANAF proprie: client direct pentru serviciul sincron de verificare TVA (loturi de max. 100 CUI-uri, o cerere pe secundă), fără dependențe OCA.",
-      "Change log: înregistrarea automată a oricărei modificări detectate la actualizarea ANAF (denumire, adresă, localitate, cod poștal, CAEN, TVA, scpTVA, stare de înregistrare).",
+      "Sincronizare ANAF proprie: client direct pentru serviciul sincron de verificare TVA (loturi de max. 100 CUI-uri, o cerere pe secundă), fără dependențe OCA; funcționează pentru partenerii din România cu CUI completat (fără prefix „RO\"), inclusiv PFA și alte entități fără statut de companie. Persoanele de contact și partenerii fără CUI nu sunt procesați.",
+      "TVA la încasare (RTVAI): bifa `l10n_ro_vat_on_payment` și datele de început/sfârșit, preluate din blocul `inregistrare_RTVAI`; același câmp ca în modulul OCA `l10n_ro_vat_on_payment`, deci cele două pot coexista.",
+      "Perioade de TVA: istoricul înregistrării în scop de TVA și perioadele RTVAI, păstrate de la o sincronizare la alta, pentru regimul furnizorului la data facturii (folosit de declarația D394).",
+      "Avertizări pe factura de furnizor: banner de avertizare când furnizorul aplică TVA la încasare (TVA deductibilă doar după plată) sau când nu era înregistrat în scop de TVA la data facturii, dar factura conține TVA.",
+      "Change log: înregistrarea automată a oricărei modificări detectate la actualizarea ANAF (denumire, adresă, localitate, cod poștal, CAEN, TVA, scpTVA, TVA la încasare, stare de înregistrare).",
       "Marcare inactiv ANAF: câmpul `l10n_ro_is_inactive_anaf` calculat din `statusInactivi`, cu badge/alertă vizibilă pe fișa partenerului.",
-      "Detectare radiere/dizolvare: câmpul `l10n_ro_is_struck_off_anaf`, semnal separat de registrul inactivilor (pe baza `dataRadiere` sau a textului `stare_inregistrare`), configurabil prin cuvinte-cheie (`l10n_ro_anaf_partner.struck_off_keywords`, implicit `RADIERE,RADIAT,DIZOLVARE`); `TRANSFER` e exclus intenționat.",
-      "Excludere companiile proprii din sincronizare: partenerul propriei companii și toți contactele lui copil (`l10n_ro_is_own_company_partner`) nu mai sunt suprascriși de ANAF — datele lor locale (denumire comercială, adresă operațională) diferă adesea intenționat de registru; excluderea se aplică la cron, la sincronizarea manuală și la re-verificarea VIES, iar butonul „Sync with ANAF\" e ascuns și înlocuit cu o notă explicativă pe fișa acestor parteneri.",
-      "Normalizare sector București pentru e-Factura: localitatea întoarsă de ANAF (ex. „Sector 3 Mun. București\") e convertită la forma cerută de CIUS-RO (`SECTOR1`…`SECTOR6`), derivată din text sau, în lipsă, din prefixul codului poștal; dacă nu poate fi dedus, valoarea rămâne neatinsă și validarea e-Facturii semnalează ulterior problema.",
-      "Alertă inactivare: activitate Odoo plus notă în chatter la prima detectare a statusului inactiv.",
-      "Alertă radiere/dizolvare: activitate Odoo plus notă în chatter la prima detectare a stării de radiat/dizolvat.",
-      "Alertă schimbare regim TVA: notă automată în chatter când `scpTVA` se modifică.",
-      "Avertizare/blocare la postarea facturii: notă informativă în chatter, restrânsă la facturile emise (`out_invoice`) — NU la storno-uri, facturi de furnizor sau note contabile — la postarea pe un partener inactiv sau radiat la ANAF; blocare hard opțională și independentă din Setări (`l10n_ro_anaf_block_inactive`, `l10n_ro_anaf_block_struck_off`), ambele oprite implicit.",
-      "Re-verificare VIES periodică: cron opțional (dezactivat implicit) care reia verificarea VIES pentru partenerii UE și semnalează în chatter numerele devenite invalide.",
-      "Sincronizare manuală: buton „Sync with ANAF\" pe fila ANAF a partenerului (ascuns pentru partenerii propriei companii).",
-      "Ultima verificare ANAF: câmpul `l10n_ro_anaf_last_check` actualizat la fiecare rulare cron.",
-      "Meniu Log Modificări: vizualizare globală a tuturor modificărilor ANAF, filtrabilă pe tip/partener/dată.",
-      "Acces la jurnal pentru orice utilizator intern: citirea log-ului ANAF (embedat în fila partenerului) e permisă tuturor utilizatorilor interni, nu doar celor din grupul de contabilitate — scrierea rămâne restricționată la contabilitate; crearea intrărilor de jurnal se face cu `sudo()`, ca „Sync with ANAF\" să funcționeze și pentru utilizatorii fără drept de scriere pe log.",
-      "Cron-ul „RO: Sync partner data with ANAF\" e activ implicit, rulare zilnică — Setări → Tehnic → Automatizări.",
-      "Parametri de sistem opționali: `l10n_ro_anaf_partner.anaf_url`, `l10n_ro_anaf_partner.anaf_batch_size` (implicit 100), `l10n_ro_anaf_partner.struck_off_keywords`.",
-      "Bifele de blocare se activează separat, per stare, din Setări → Contabilitate → „ANAF Partner Monitoring (RO)\".",
-      "Actualizarea ANAF funcționează doar pentru parteneri tip companie, cu CUI completat (fără prefix „RO\") și țara România.",
-      "Vizualizarea log-ului cere minimum grupul „Utilizator contabilitate\" — extins acum la orice utilizator intern doar pentru citire (vezi mai sus)."
+      "Detectare radiere/dizolvare: câmpul `l10n_ro_is_struck_off_anaf`, semnal separat de registrul inactivilor (pe baza `dataRadiere` sau a textului `stare_inregistrare`), configurabil prin cuvinte-cheie (`l10n_ro_anaf_partner.struck_off_keywords`, implicit `RADIERE,RADIAT,DIZOLVARE`); `TRANSFER` e exclus intenționat. Un partener poate fi radiat fără să fie listat ca inactiv.",
+      "Excludere companiile proprii din sincronizare: partenerul propriei companii și contactele lui copil (`l10n_ro_is_own_company_partner`) nu sunt suprascriși de ANAF; excluderea se aplică la cron, la sincronizarea manuală și la re-verificarea VIES, iar butonul „Sync with ANAF\" e ascuns și înlocuit cu o notă explicativă.",
+      "Normalizare sector București pentru e-Factura: localitatea întoarsă de ANAF (ex. „Sector 3 Mun. București\") e convertită la forma cerută de CIUS-RO (`SECTOR1`…`SECTOR6`), derivată din text sau din prefixul codului poștal; dacă nu poate fi dedus, valoarea rămâne neatinsă.",
+      "Alerte: activitate Odoo plus notă în chatter la prima detectare a stării inactiv sau radiat/dizolvat; notă automată în chatter când se schimbă `scpTVA` sau regimul de TVA la încasare.",
+      "Avertizare/blocare la postarea facturii: notă informativă în chatter, restrânsă la facturile emise (`out_invoice`), la postarea pe un partener inactiv sau radiat; blocare hard opțională și independentă pentru fiecare stare, din Setări → Contabilitate → „ANAF Partner Monitoring (RO)\" (`l10n_ro_anaf_block_inactive`, `l10n_ro_anaf_block_struck_off`), ambele oprite implicit.",
+      "Re-verificare VIES periodică: cron lunar opțional (dezactivat implicit) care reia verificarea VIES pentru partenerii UE și semnalează în chatter numerele devenite invalide.",
+      "Sincronizare manuală și ultima verificare: buton „Sync with ANAF\" pe fila ANAF a partenerului; câmpul `l10n_ro_anaf_last_check` se actualizează la fiecare rulare cron.",
+      "Meniu Log Modificări: vizualizare globală a modificărilor ANAF, filtrabilă pe tip/partener/dată, cu filtru implicit pe stările neconforme; citirea jurnalului e permisă oricărui utilizator intern, scrierea rămâne restricționată la contabilitate.",
+      "Configurare: cron-ul „RO: Sync partner data with ANAF\" e activ implicit, zilnic (Setări → Tehnic → Automatizări); parametri de sistem opționali `l10n_ro_anaf_partner.anaf_url`, `l10n_ro_anaf_partner.anaf_batch_size` (implicit 100) și `l10n_ro_anaf_partner.struck_off_keywords`. Dacă este instalat și modulul OCA `l10n_ro_fiscal_validation`, cron-ul lui sincronizează aceiași parteneri fără jurnal: se dezactivează sau se dezinstalează."
     ],
     "dependencies": [
-      "l10n_ro_anaf_base",
       "account",
+      "l10n_ro_move_guard",
       "requests"
     ],
     "connections": [
-      "l10n_ro_is_inactive_anaf",
-      "l10n_ro_is_struck_off_anaf",
-      "l10n_ro_anaf_base",
-      "l10n_ro_edi"
+      "l10n_ro_anaf_d394",
+      "l10n_ro_move_guard",
+      "l10n_ro_vat_on_payment",
+      "l10n_ro_fiscal_validation"
     ],
-    "text": "Romania - Monitorizare modificări date ANAF parteneri (FR-23)\nl10n_ro_anaf_partner\nAcest modul monitorizează modificările datelor ANAF ale partenerilor, cu **client de sincronizare propriu** (fără dependențe de module OCA de fiscalitate). Interoghează direct serviciul sincron ANAF de verificare TVA, actualizează denumirea, adresa, codul CAEN, statutul de plătitor TVA și starea de înregistrare a fiecărui partener companie din România, înregistrează automat orice modificare detectată într-un jurnal (change log) și emite alerte (activități și note în chatter) atunci când un partener devine inactiv fiscal, este radiat/dizolvat sau își schimbă regimul de TVA — prevenind astfel emiterea de facturi către parteneri cu probleme fiscale.\nSincronizare ANAF proprie: client direct pentru serviciul sincron de verificare TVA (loturi de max. 100 CUI-uri, o cerere pe secundă), fără dependențe OCA.\nChange log: înregistrarea automată a oricărei modificări detectate la actualizarea ANAF (denumire, adresă, localitate, cod poștal, CAEN, TVA, scpTVA, stare de înregistrare).\nMarcare inactiv ANAF: câmpul `l10n_ro_is_inactive_anaf` calculat din `statusInactivi`, cu badge/alertă vizibilă pe fișa partenerului.\nDetectare radiere/dizolvare: câmpul `l10n_ro_is_struck_off_anaf`, semnal separat de registrul inactivilor (pe baza `dataRadiere` sau a textului `stare_inregistrare`), configurabil prin cuvinte-cheie (`l10n_ro_anaf_partner.struck_off_keywords`, implicit `RADIERE,RADIAT,DIZOLVARE`); `TRANSFER` e exclus intenționat.\nExcludere companiile proprii din sincronizare: partenerul propriei companii și toți contactele lui copil (`l10n_ro_is_own_company_partner`) nu mai sunt suprascriși de ANAF — datele lor locale (denumire comercială, adresă operațională) diferă adesea intenționat de registru; excluderea se aplică la cron, la sincronizarea manuală și la re-verificarea VIES, iar butonul „Sync with ANAF\" e ascuns și înlocuit cu o notă explicativă pe fișa acestor parteneri.\nNormalizare sector București pentru e-Factura: localitatea întoarsă de ANAF (ex. „Sector 3 Mun. București\") e convertită la forma cerută de CIUS-RO (`SECTOR1`…`SECTOR6`), derivată din text sau, în lipsă, din prefixul codului poștal; dacă nu poate fi dedus, valoarea rămâne neatinsă și validarea e-Facturii semnalează ulterior problema.\nAlertă inactivare: activitate Odoo plus notă în chatter la prima detectare a statusului inactiv.\nAlertă radiere/dizolvare: activitate Odoo plus notă în chatter la prima detectare a stării de radiat/dizolvat.\nAlertă schimbare regim TVA: notă automată în chatter când `scpTVA` se modifică.\nAvertizare/blocare la postarea facturii: notă informativă în chatter, restrânsă la facturile emise (`out_invoice`) — NU la storno-uri, facturi de furnizor sau note contabile — la postarea pe un partener inactiv sau radiat la ANAF; blocare hard opțională și independentă din Setări (`l10n_ro_anaf_block_inactive`, `l10n_ro_anaf_block_struck_off`), ambele oprite implicit.\nRe-verificare VIES periodică: cron opțional (dezactivat implicit) care reia verificarea VIES pentru partenerii UE și semnalează în chatter numerele devenite invalide.\nSincronizare manuală: buton „Sync with ANAF\" pe fila ANAF a partenerului (ascuns pentru partenerii propriei companii).\nUltima verificare ANAF: câmpul `l10n_ro_anaf_last_check` actualizat la fiecare rulare cron.\nMeniu Log Modificări: vizualizare globală a tuturor modificărilor ANAF, filtrabilă pe tip/partener/dată.\nAcces la jurnal pentru orice utilizator intern: citirea log-ului ANAF (embedat în fila partenerului) e permisă tuturor utilizatorilor interni, nu doar celor din grupul de contabilitate — scrierea rămâne restricționată la contabilitate; crearea intrărilor de jurnal se face cu `sudo()`, ca „Sync with ANAF\" să funcționeze și pentru utilizatorii fără drept de scriere pe log.\nCron-ul „RO: Sync partner data with ANAF\" e activ implicit, rulare zilnică — Setări → Tehnic → Automatizări.\nParametri de sistem opționali: `l10n_ro_anaf_partner.anaf_url`, `l10n_ro_anaf_partner.anaf_batch_size` (implicit 100), `l10n_ro_anaf_partner.struck_off_keywords`.\nBifele de blocare se activează separat, per stare, din Setări → Contabilitate → „ANAF Partner Monitoring (RO)\".\nActualizarea ANAF funcționează doar pentru parteneri tip companie, cu CUI completat (fără prefix „RO\") și țara România.\nVizualizarea log-ului cere minimum grupul „Utilizator contabilitate\" — extins acum la orice utilizator intern doar pentru citire (vezi mai sus)."
+    "text": "Romania - Monitorizare modificări date ANAF parteneri\nl10n_ro_anaf_partner\nAcest modul monitorizează modificările datelor ANAF ale partenerilor, cu **client de sincronizare propriu** (fără dependențe de module OCA de fiscalitate). Interoghează direct serviciul sincron ANAF de verificare TVA, actualizează denumirea, adresa, codul CAEN, statutul de plătitor TVA, regimul de TVA la încasare și starea de înregistrare a fiecărui partener din România, înregistrează automat orice modificare detectată într-un jurnal (change log) și emite alerte (activități și note în chatter) atunci când un partener devine inactiv fiscal, este radiat/dizolvat sau își schimbă regimul de TVA — prevenind astfel emiterea de facturi către parteneri cu probleme fiscale și deducerea greșită a TVA de la furnizori.\nSincronizare ANAF proprie: client direct pentru serviciul sincron de verificare TVA (loturi de max. 100 CUI-uri, o cerere pe secundă), fără dependențe OCA; funcționează pentru partenerii din România cu CUI completat (fără prefix „RO\"), inclusiv PFA și alte entități fără statut de companie. Persoanele de contact și partenerii fără CUI nu sunt procesați.\nTVA la încasare (RTVAI): bifa `l10n_ro_vat_on_payment` și datele de început/sfârșit, preluate din blocul `inregistrare_RTVAI`; același câmp ca în modulul OCA `l10n_ro_vat_on_payment`, deci cele două pot coexista.\nPerioade de TVA: istoricul înregistrării în scop de TVA și perioadele RTVAI, păstrate de la o sincronizare la alta, pentru regimul furnizorului la data facturii (folosit de declarația D394).\nAvertizări pe factura de furnizor: banner de avertizare când furnizorul aplică TVA la încasare (TVA deductibilă doar după plată) sau când nu era înregistrat în scop de TVA la data facturii, dar factura conține TVA.\nChange log: înregistrarea automată a oricărei modificări detectate la actualizarea ANAF (denumire, adresă, localitate, cod poștal, CAEN, TVA, scpTVA, TVA la încasare, stare de înregistrare).\nMarcare inactiv ANAF: câmpul `l10n_ro_is_inactive_anaf` calculat din `statusInactivi`, cu badge/alertă vizibilă pe fișa partenerului.\nDetectare radiere/dizolvare: câmpul `l10n_ro_is_struck_off_anaf`, semnal separat de registrul inactivilor (pe baza `dataRadiere` sau a textului `stare_inregistrare`), configurabil prin cuvinte-cheie (`l10n_ro_anaf_partner.struck_off_keywords`, implicit `RADIERE,RADIAT,DIZOLVARE`); `TRANSFER` e exclus intenționat. Un partener poate fi radiat fără să fie listat ca inactiv.\nExcludere companiile proprii din sincronizare: partenerul propriei companii și contactele lui copil (`l10n_ro_is_own_company_partner`) nu sunt suprascriși de ANAF; excluderea se aplică la cron, la sincronizarea manuală și la re-verificarea VIES, iar butonul „Sync with ANAF\" e ascuns și înlocuit cu o notă explicativă.\nNormalizare sector București pentru e-Factura: localitatea întoarsă de ANAF (ex. „Sector 3 Mun. București\") e convertită la forma cerută de CIUS-RO (`SECTOR1`…`SECTOR6`), derivată din text sau din prefixul codului poștal; dacă nu poate fi dedus, valoarea rămâne neatinsă.\nAlerte: activitate Odoo plus notă în chatter la prima detectare a stării inactiv sau radiat/dizolvat; notă automată în chatter când se schimbă `scpTVA` sau regimul de TVA la încasare.\nAvertizare/blocare la postarea facturii: notă informativă în chatter, restrânsă la facturile emise (`out_invoice`), la postarea pe un partener inactiv sau radiat; blocare hard opțională și independentă pentru fiecare stare, din Setări → Contabilitate → „ANAF Partner Monitoring (RO)\" (`l10n_ro_anaf_block_inactive`, `l10n_ro_anaf_block_struck_off`), ambele oprite implicit.\nRe-verificare VIES periodică: cron lunar opțional (dezactivat implicit) care reia verificarea VIES pentru partenerii UE și semnalează în chatter numerele devenite invalide.\nSincronizare manuală și ultima verificare: buton „Sync with ANAF\" pe fila ANAF a partenerului; câmpul `l10n_ro_anaf_last_check` se actualizează la fiecare rulare cron.\nMeniu Log Modificări: vizualizare globală a modificărilor ANAF, filtrabilă pe tip/partener/dată, cu filtru implicit pe stările neconforme; citirea jurnalului e permisă oricărui utilizator intern, scrierea rămâne restricționată la contabilitate.\nConfigurare: cron-ul „RO: Sync partner data with ANAF\" e activ implicit, zilnic (Setări → Tehnic → Automatizări); parametri de sistem opționali `l10n_ro_anaf_partner.anaf_url`, `l10n_ro_anaf_partner.anaf_batch_size` (implicit 100) și `l10n_ro_anaf_partner.struck_off_keywords`. Dacă este instalat și modulul OCA `l10n_ro_fiscal_validation`, cron-ul lui sincronizează aceiași parteneri fără jurnal: se dezactivează sau se dezinstalează."
   },
   {
     "path": "l10n_ro_anaf_partner_confirm/index.md",
@@ -17900,7 +17897,7 @@
   {
     "path": "l10n_ro_efactura_enhancement/index.md",
     "module": "l10n_ro_efactura_enhancement",
-    "version": "19.0.0.5.14",
+    "version": "19.0.0.5.15",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_efactura_enhancement",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_efactura_enhancement",
     "last_ingest": "2026-11-17",
@@ -20076,10 +20073,10 @@
   {
     "path": "l10n_ro_payment_instruments/index.md",
     "module": "l10n_ro_payment_instruments",
-    "version": "19.0.1.3.1",
+    "version": "19.0.1.4.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payment_instruments",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_payment_instruments",
-    "last_ingest": null,
+    "local_path": null,
+    "last_ingest": "2026-11-19",
     "friendly_name": "Romania - Instrumente de plată (cecuri, bilete la ordin)",
     "summary": "Modulul gestionează instrumentele de plată specifice (cecuri, bilete la ordin, cambii) conform Legii 58/1934 (cambia și biletul la ordin) și Legii 59/1934 (cecul). Urmărește fiecare instrument printr-o mașină de stări de la emitere/primire până la onorare sau refuz, generează automat notele contabile aferente fiecărei etape, stinge facturile acoperite la înregistrare (și le redeschide la refuz) și oferă un scadențar cu alerte. Conturile contabile sunt auto-detectate din planul de conturi RO și pot fi suprascrise manual.",
     "features": [
@@ -20089,27 +20086,30 @@
       "cec primit: Dr 5112 = Cr 4111 la înregistrare; depunerea la bancă nu face notă; încasare Dr 5121 = Cr 5112; refuz Dr 4111 = Cr 5112;",
       "BO/cambie primită: Dr 413 = Cr 4111 la înregistrare; depunere la bancă Dr 5113 = Cr 413; încasare Dr 5121 = Cr 5113 (sau Dr 5121 = Cr 413 fără depunere);",
       "BO/cambie emisă: Dr 401 = Cr 403, plată Dr 403 = Cr 5121, refuz Dr 403 = Cr 401;",
-      "andosare: Dr 401 (furnizorul) = Cr 413 (clientul); factura furnizorului se reconciliază manual cu linia 401 din caseta „Debit nealocat\".",
+      "andosare: implicit Dr 401 (furnizorul) = Cr 413 (clientul); factura furnizorului se reconciliază manual cu linia 401 din caseta „Debit nealocat\".",
+      "Andosare prin 403 (opțional): cu setarea Andosare prin 403 (Setări → Contabilitate → Instrumente de plată (RO), `l10n_ro_endorse_via_403`), nota devine Dr 401 = Cr 403 și Dr 403 = Cr 413, cu furnizorul pe 403, iar cele două linii 403 se reconciliază automat; andosările anterioare rămân neschimbate, soldurile finale sunt aceleași.",
       "Facturi acoperite: se sting la înregistrarea instrumentului și se redeschid, cu scadența inițială, la refuz.",
       "Data operației: fiecare notă se datează cu câmpul „Data operației\" de pe instrument (data primirii, a extrasului, a refuzului), nu cu data apăsării butonului; după fiecare pas câmpul revine la ziua curentă.",
       "Refuzul reface creanța/datoria și creează o activitate de avertizare; butonul Protest trece instrumentul în Protestat, fără notă.",
-      "Blocaj opt-in la facturare (FR-39): dacă `res.company.l10n_ro_block_refused_instrument` e bifat (Setări → Contabilitate → Instrumente de plată (RO)), confirmarea unei facturi de client către un partener cu instrumente în stare Refuzat este blocată; nu se aplică notelor de credit și facturilor de furnizor și încetează la trecerea în Protestat.",
+      "Blocaj opt-in la facturare (FR-39): dacă `res.company.l10n_ro_block_refused_instrument` e bifat (Setări → Contabilitate → Instrumente de plată (RO) → „Blochează partenerii cu instrumente refuzate\"), confirmarea unei facturi de client către un partener cu instrumente în stare Refuzat este blocată; nu se aplică notelor de credit și facturilor de furnizor și încetează la trecerea în Protestat.",
       "Scadențar (Contabilitate → Contabilitate → Instrumente de Plată, filtru implicit „În portofoliu\") cu „Zile până la scadență\" și coduri de culoare: roșu (depășit/refuzat/protestat), portocaliu (în 5 zile), verde (onorat/andosat), gri (anulat).",
-      "Cron zilnic de alertă, dezactivat implicit, cu X zile înainte de scadență (parametru `l10n_ro_payment_instruments.alert_days_before_due`, implicit 5); activitatea se atribuie celui care a creat instrumentul, cu notificare pe email.",
-      "Auto-detectare conturi 5112, 5113, 413, 403, 4111, 401, 5121 din planul RO (potrivire doar ca prefix de cod), cu suprascriere manuală per instrument; jurnalul implicit este primul de tip Operațiuni diverse, schimbabil pe instrument.",
-      "Cu extrase bancare importate: la „Cont bancă\" se poate alege contul reconciliabil de încasări/plăți în curs, ca încasarea să nu apară de două ori pe 5121.",
+      "Cron zilnic de alertă, dezactivat implicit (Setări → Tehnic → Automatizări), cu X zile înainte de scadență (parametru `l10n_ro_payment_instruments.alert_days_before_due`, implicit 5); activitatea se atribuie celui care a creat instrumentul, cu notificare pe email.",
+      "Auto-detectare conturi 5112, 5113, 413, 403, 4111, 401, 5121 din planul RO, cu suprascriere manuală per instrument (secțiunea „Conturi contabile\"); jurnalul implicit este primul de tip Operațiuni diverse, schimbabil pe instrument.",
+      "Cu extrase bancare importate: la „Cont bancă\" se poate alege contul reconciliabil de încasări/plăți în curs, ca încasarea să nu apară de două ori pe 5121; extrasul se potrivește apoi cu nota instrumentului la reconcilierea bancară.",
       "Un instrument cu note postate nu se poate anula până nu se stornează notele; „Resetează la Ciornă\" apare doar pe instrumentele fără notă de înregistrare.",
       "Limitări: fără refuz/încasare parțială, fără scontare (5114, 667), fără calcul de termene de protest; valoarea nominală e în moneda companiei."
     ],
     "dependencies": [
       "account",
       "l10n_ro",
-      "l10n_ro_anaf_base"
+      "l10n_ro_move_guard"
     ],
     "connections": [
-      "l10n_ro_leasing"
+      "l10n_ro_move_guard",
+      "account",
+      "l10n_ro"
     ],
-    "text": "Romania - Instrumente de plată (cecuri, bilete la ordin)\nl10n_ro_payment_instruments\nModulul gestionează instrumentele de plată specifice (cecuri, bilete la ordin, cambii) conform Legii 58/1934 (cambia și biletul la ordin) și Legii 59/1934 (cecul). Urmărește fiecare instrument printr-o mașină de stări de la emitere/primire până la onorare sau refuz, generează automat notele contabile aferente fiecărei etape, stinge facturile acoperite la înregistrare (și le redeschide la refuz) și oferă un scadențar cu alerte. Conturile contabile sunt auto-detectate din planul de conturi RO și pot fi suprascrise manual.\nTipuri suportate: cec primit (5112), cec emis (conturi manuale), bilet la ordin de primit (413) / de plătit (403), cambie de primit (413) / de plătit (403).\nMașină de stări: Ciornă → În portofoliu → Remis la bancă → Onorat, cu ramuri Refuzat → Protestat și Andosat (pentru BO/cambii primite).\nNote contabile automate per etapă:\ncec primit: Dr 5112 = Cr 4111 la înregistrare; depunerea la bancă nu face notă; încasare Dr 5121 = Cr 5112; refuz Dr 4111 = Cr 5112;\nBO/cambie primită: Dr 413 = Cr 4111 la înregistrare; depunere la bancă Dr 5113 = Cr 413; încasare Dr 5121 = Cr 5113 (sau Dr 5121 = Cr 413 fără depunere);\nBO/cambie emisă: Dr 401 = Cr 403, plată Dr 403 = Cr 5121, refuz Dr 403 = Cr 401;\nandosare: Dr 401 (furnizorul) = Cr 413 (clientul); factura furnizorului se reconciliază manual cu linia 401 din caseta „Debit nealocat\".\nFacturi acoperite: se sting la înregistrarea instrumentului și se redeschid, cu scadența inițială, la refuz.\nData operației: fiecare notă se datează cu câmpul „Data operației\" de pe instrument (data primirii, a extrasului, a refuzului), nu cu data apăsării butonului; după fiecare pas câmpul revine la ziua curentă.\nRefuzul reface creanța/datoria și creează o activitate de avertizare; butonul Protest trece instrumentul în Protestat, fără notă.\nBlocaj opt-in la facturare (FR-39): dacă `res.company.l10n_ro_block_refused_instrument` e bifat (Setări → Contabilitate → Instrumente de plată (RO)), confirmarea unei facturi de client către un partener cu instrumente în stare Refuzat este blocată; nu se aplică notelor de credit și facturilor de furnizor și încetează la trecerea în Protestat.\nScadențar (Contabilitate → Contabilitate → Instrumente de Plată, filtru implicit „În portofoliu\") cu „Zile până la scadență\" și coduri de culoare: roșu (depășit/refuzat/protestat), portocaliu (în 5 zile), verde (onorat/andosat), gri (anulat).\nCron zilnic de alertă, dezactivat implicit, cu X zile înainte de scadență (parametru `l10n_ro_payment_instruments.alert_days_before_due`, implicit 5); activitatea se atribuie celui care a creat instrumentul, cu notificare pe email.\nAuto-detectare conturi 5112, 5113, 413, 403, 4111, 401, 5121 din planul RO (potrivire doar ca prefix de cod), cu suprascriere manuală per instrument; jurnalul implicit este primul de tip Operațiuni diverse, schimbabil pe instrument.\nCu extrase bancare importate: la „Cont bancă\" se poate alege contul reconciliabil de încasări/plăți în curs, ca încasarea să nu apară de două ori pe 5121.\nUn instrument cu note postate nu se poate anula până nu se stornează notele; „Resetează la Ciornă\" apare doar pe instrumentele fără notă de înregistrare.\nLimitări: fără refuz/încasare parțială, fără scontare (5114, 667), fără calcul de termene de protest; valoarea nominală e în moneda companiei."
+    "text": "Romania - Instrumente de plată (cecuri, bilete la ordin)\nl10n_ro_payment_instruments\nModulul gestionează instrumentele de plată specifice (cecuri, bilete la ordin, cambii) conform Legii 58/1934 (cambia și biletul la ordin) și Legii 59/1934 (cecul). Urmărește fiecare instrument printr-o mașină de stări de la emitere/primire până la onorare sau refuz, generează automat notele contabile aferente fiecărei etape, stinge facturile acoperite la înregistrare (și le redeschide la refuz) și oferă un scadențar cu alerte. Conturile contabile sunt auto-detectate din planul de conturi RO și pot fi suprascrise manual.\nTipuri suportate: cec primit (5112), cec emis (conturi manuale), bilet la ordin de primit (413) / de plătit (403), cambie de primit (413) / de plătit (403).\nMașină de stări: Ciornă → În portofoliu → Remis la bancă → Onorat, cu ramuri Refuzat → Protestat și Andosat (pentru BO/cambii primite).\nNote contabile automate per etapă:\ncec primit: Dr 5112 = Cr 4111 la înregistrare; depunerea la bancă nu face notă; încasare Dr 5121 = Cr 5112; refuz Dr 4111 = Cr 5112;\nBO/cambie primită: Dr 413 = Cr 4111 la înregistrare; depunere la bancă Dr 5113 = Cr 413; încasare Dr 5121 = Cr 5113 (sau Dr 5121 = Cr 413 fără depunere);\nBO/cambie emisă: Dr 401 = Cr 403, plată Dr 403 = Cr 5121, refuz Dr 403 = Cr 401;\nandosare: implicit Dr 401 (furnizorul) = Cr 413 (clientul); factura furnizorului se reconciliază manual cu linia 401 din caseta „Debit nealocat\".\nAndosare prin 403 (opțional): cu setarea Andosare prin 403 (Setări → Contabilitate → Instrumente de plată (RO), `l10n_ro_endorse_via_403`), nota devine Dr 401 = Cr 403 și Dr 403 = Cr 413, cu furnizorul pe 403, iar cele două linii 403 se reconciliază automat; andosările anterioare rămân neschimbate, soldurile finale sunt aceleași.\nFacturi acoperite: se sting la înregistrarea instrumentului și se redeschid, cu scadența inițială, la refuz.\nData operației: fiecare notă se datează cu câmpul „Data operației\" de pe instrument (data primirii, a extrasului, a refuzului), nu cu data apăsării butonului; după fiecare pas câmpul revine la ziua curentă.\nRefuzul reface creanța/datoria și creează o activitate de avertizare; butonul Protest trece instrumentul în Protestat, fără notă.\nBlocaj opt-in la facturare (FR-39): dacă `res.company.l10n_ro_block_refused_instrument` e bifat (Setări → Contabilitate → Instrumente de plată (RO) → „Blochează partenerii cu instrumente refuzate\"), confirmarea unei facturi de client către un partener cu instrumente în stare Refuzat este blocată; nu se aplică notelor de credit și facturilor de furnizor și încetează la trecerea în Protestat.\nScadențar (Contabilitate → Contabilitate → Instrumente de Plată, filtru implicit „În portofoliu\") cu „Zile până la scadență\" și coduri de culoare: roșu (depășit/refuzat/protestat), portocaliu (în 5 zile), verde (onorat/andosat), gri (anulat).\nCron zilnic de alertă, dezactivat implicit (Setări → Tehnic → Automatizări), cu X zile înainte de scadență (parametru `l10n_ro_payment_instruments.alert_days_before_due`, implicit 5); activitatea se atribuie celui care a creat instrumentul, cu notificare pe email.\nAuto-detectare conturi 5112, 5113, 413, 403, 4111, 401, 5121 din planul RO, cu suprascriere manuală per instrument (secțiunea „Conturi contabile\"); jurnalul implicit este primul de tip Operațiuni diverse, schimbabil pe instrument.\nCu extrase bancare importate: la „Cont bancă\" se poate alege contul reconciliabil de încasări/plăți în curs, ca încasarea să nu apară de două ori pe 5121; extrasul se potrivește apoi cu nota instrumentului la reconcilierea bancară.\nUn instrument cu note postate nu se poate anula până nu se stornează notele; „Resetează la Ciornă\" apare doar pe instrumentele fără notă de înregistrare.\nLimitări: fără refuz/încasare parțială, fără scontare (5114, 667), fără calcul de termene de protest; valoarea nominală e în moneda companiei."
   },
   {
     "path": "l10n_ro_payroll_advance/index.md",
@@ -20943,34 +20943,37 @@
   {
     "path": "l10n_ro_receivables_enhanced/index.md",
     "module": "l10n_ro_receivables_enhanced",
-    "version": "19.0.1.4.0",
+    "version": "19.0.1.5.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_receivables_enhanced",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_receivables_enhanced",
-    "last_ingest": null,
-    "friendly_name": "Romania - Creanțe și datorii extinse (FR-29)",
-    "summary": "Acest modul extinde gestiunea creanțelor și datoriilor cu trei elemente cerute în practica contabilă din România: **compensarea client-furnizor** cu proces-verbal, **penalitățile de întârziere** conform Legii 72/2013 și parametri de **limită de credit** per partener. Servește la stingerea soldurilor reciproce și la controlul expunerii pe client. Pentru un partener care este simultan client și furnizor, contabilul creează o compensare, selectează liniile de creanță (411) și de datorie (401) deschise, iar modulul calculează suma compensată ca minimul dintre cele două totaluri. La confirmare se generează nota contabilă și se reconciliază liniile, iar procesul-verbal de compensare poate fi tipărit în PDF pentru semnătura părților.",
+    "local_path": null,
+    "last_ingest": "2026-11-19",
+    "friendly_name": "Romania - Creanțe și datorii extinse",
+    "summary": "Acest modul extinde gestiunea creanțelor și datoriilor cu trei elemente cerute în practica contabilă din România: **compensarea client-furnizor** cu proces-verbal, **penalitățile de întârziere** calculate pe baza ratei contractuale a partenerului și un parametru de **limită de credit** per partener. Servește la stingerea soldurilor reciproce și la controlul expunerii pe client. Pentru un partener care este simultan client și furnizor, contabilul creează o compensare și încarcă dintr-un clic creanțele (411) și datoriile (401) neachitate la data compensării. Modulul propune alocarea FIFO, iar contabilul poate alege suma compensată pe fiecare factură. La confirmare se generează nota contabilă și se reconciliază exact sumele alese, iar procesul-verbal de compensare poate fi tipărit în PDF pentru semnătura părților.",
     "features": [
-      "Document de compensare client-furnizor (`l10n.ro.partner.compensation`) cu selecția liniilor reciproce ale aceluiași partener.",
-      "Calcul automat al sumei compensate = `min(total creanțe, total datorii)`.",
-      "Generarea notei contabile de compensare și reconcilierea liniilor 411/401.",
-      "Proces-verbal de compensare tipăribil (PDF) cu liniile și suma compensată.",
-      "Anulare / readucere în ciornă cu reluarea liniilor.",
-      "Calcul penalități de întârziere pe baza ratei configurate pe partener (Legea 72/2013), cu wizard de generare a facturii de penalitate.",
-      "Parametri de limită de credit (cu monedă) per partener pentru monitorizarea expunerii.",
-      "Blocare opțională (per companie, în Setări) a postării facturilor de client care depășesc limita de credit a partenerului — implementată prin garda de postare din `l10n_ro_anaf_base`."
+      "Document de compensare client-furnizor (`l10n.ro.partner.compensation`), creat din Contabilitate → Clienți → Compensări client-furnizor, cu liniile reciproce ale aceluiași partener (inclusiv contactele lui).",
+      "Încărcarea creanțelor (tab-ul Receivables 411) și a datoriilor (tab-ul Payables 401/404) neachitate la data compensării; sunt folosite doar conturile comerciale, avansurile și notele de credit rămase pe aceste conturi nu se încarcă.",
+      "Suma compensată aleasă pe fiecare factură (între 0 și soldul inițial; linia cu 0 e omisă), cu alocare FIFO propusă automat și buton de realocare.",
+      "Notă contabilă (Dr 401 = Cr 411) cu o linie pe factură și reconciliere parțială exactă pe 411/401; confirmarea cere reîncărcarea dacă între timp o factură a fost plătită.",
+      "Proces-verbal de compensare tipăribil (PDF) cu soldul inițial, suma compensată și soldul rămas pe fiecare factură.",
+      "Anulare (drept de administrator contabil) și readucere în ciornă cu reluarea liniilor.",
+      "Calcul penalități de întârziere (Contabilitate → Clienți → Calcul penalități): penalitate = sold restant × rată / 100 × zile de întârziere, pe baza ratei contractuale din fișa partenerului (în % pe zi, ex. `0.05` pentru 0,05%/zi). Dobânda legală penalizatoare (Legea 72/2013, OG 13/2011) nu se calculează automat.",
+      "Factură de penalitate generată din wizard, fără TVA, pe contul 7581 (sau pe contul din Setări → Creanțe (RO) → Cont de venituri din penalități): Dr 4111 = Cr 7581; fiecare click creează o factură nouă.",
+      "Limită de credit RO (cu monedă) per partener, în tab-ul „Creanțe RO”; câmp separat de limita de credit standard Odoo, `0` = fără limită.",
+      "Blocare opțională (per companie, Setări → Creanțe (RO) → Aplică limita de credit) a postării facturilor de client care ar depăși limita de credit RO a partenerului."
     ],
     "dependencies": [
       "account",
       "l10n_ro",
-      "l10n_ro_anaf_base"
+      "l10n_ro_move_guard"
     ],
     "connections": [
-      "l10n_ro_anaf_base",
-      "_l10n_ro_posting_guard_errors",
       "l10n_ro_partner_ledger_currency",
+      "l10n_ro_move_guard",
+      "_l10n_ro_posting_guard_errors",
+      "l10n_ro_anaf_base",
       "account"
     ],
-    "text": "Romania - Creanțe și datorii extinse (FR-29)\nl10n_ro_receivables_enhanced\nAcest modul extinde gestiunea creanțelor și datoriilor cu trei elemente cerute în practica contabilă din România: **compensarea client-furnizor** cu proces-verbal, **penalitățile de întârziere** conform Legii 72/2013 și parametri de **limită de credit** per partener. Servește la stingerea soldurilor reciproce și la controlul expunerii pe client. Pentru un partener care este simultan client și furnizor, contabilul creează o compensare, selectează liniile de creanță (411) și de datorie (401) deschise, iar modulul calculează suma compensată ca minimul dintre cele două totaluri. La confirmare se generează nota contabilă și se reconciliază liniile, iar procesul-verbal de compensare poate fi tipărit în PDF pentru semnătura părților.\nDocument de compensare client-furnizor (`l10n.ro.partner.compensation`) cu selecția liniilor reciproce ale aceluiași partener.\nCalcul automat al sumei compensate = `min(total creanțe, total datorii)`.\nGenerarea notei contabile de compensare și reconcilierea liniilor 411/401.\nProces-verbal de compensare tipăribil (PDF) cu liniile și suma compensată.\nAnulare / readucere în ciornă cu reluarea liniilor.\nCalcul penalități de întârziere pe baza ratei configurate pe partener (Legea 72/2013), cu wizard de generare a facturii de penalitate.\nParametri de limită de credit (cu monedă) per partener pentru monitorizarea expunerii.\nBlocare opțională (per companie, în Setări) a postării facturilor de client care depășesc limita de credit a partenerului — implementată prin garda de postare din `l10n_ro_anaf_base`."
+    "text": "Romania - Creanțe și datorii extinse\nl10n_ro_receivables_enhanced\nAcest modul extinde gestiunea creanțelor și datoriilor cu trei elemente cerute în practica contabilă din România: **compensarea client-furnizor** cu proces-verbal, **penalitățile de întârziere** calculate pe baza ratei contractuale a partenerului și un parametru de **limită de credit** per partener. Servește la stingerea soldurilor reciproce și la controlul expunerii pe client. Pentru un partener care este simultan client și furnizor, contabilul creează o compensare și încarcă dintr-un clic creanțele (411) și datoriile (401) neachitate la data compensării. Modulul propune alocarea FIFO, iar contabilul poate alege suma compensată pe fiecare factură. La confirmare se generează nota contabilă și se reconciliază exact sumele alese, iar procesul-verbal de compensare poate fi tipărit în PDF pentru semnătura părților.\nDocument de compensare client-furnizor (`l10n.ro.partner.compensation`), creat din Contabilitate → Clienți → Compensări client-furnizor, cu liniile reciproce ale aceluiași partener (inclusiv contactele lui).\nÎncărcarea creanțelor (tab-ul Receivables 411) și a datoriilor (tab-ul Payables 401/404) neachitate la data compensării; sunt folosite doar conturile comerciale, avansurile și notele de credit rămase pe aceste conturi nu se încarcă.\nSuma compensată aleasă pe fiecare factură (între 0 și soldul inițial; linia cu 0 e omisă), cu alocare FIFO propusă automat și buton de realocare.\nNotă contabilă (Dr 401 = Cr 411) cu o linie pe factură și reconciliere parțială exactă pe 411/401; confirmarea cere reîncărcarea dacă între timp o factură a fost plătită.\nProces-verbal de compensare tipăribil (PDF) cu soldul inițial, suma compensată și soldul rămas pe fiecare factură.\nAnulare (drept de administrator contabil) și readucere în ciornă cu reluarea liniilor.\nCalcul penalități de întârziere (Contabilitate → Clienți → Calcul penalități): penalitate = sold restant × rată / 100 × zile de întârziere, pe baza ratei contractuale din fișa partenerului (în % pe zi, ex. `0.05` pentru 0,05%/zi). Dobânda legală penalizatoare (Legea 72/2013, OG 13/2011) nu se calculează automat.\nFactură de penalitate generată din wizard, fără TVA, pe contul 7581 (sau pe contul din Setări → Creanțe (RO) → Cont de venituri din penalități): Dr 4111 = Cr 7581; fiecare click creează o factură nouă.\nLimită de credit RO (cu monedă) per partener, în tab-ul „Creanțe RO”; câmp separat de limita de credit standard Odoo, `0` = fără limită.\nBlocare opțională (per companie, Setări → Creanțe (RO) → Aplică limita de credit) a postării facturilor de client care ar depăși limita de credit RO a partenerului."
   },
   {
     "path": "l10n_ro_reges/index.md",
@@ -21972,7 +21975,7 @@
   {
     "path": "l10n_ro_stock_gestiune/index.md",
     "module": "l10n_ro_stock_gestiune",
-    "version": "19.0.3.1.11",
+    "version": "19.0.3.1.12",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_gestiune`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_gestiune",
     "last_ingest": "2026-09-25",
@@ -22119,14 +22122,14 @@
   {
     "path": "l10n_ro_stock_pack_cmp/index.md",
     "module": "l10n_ro_stock_pack_cmp",
-    "version": "19.0.1.5.2",
+    "version": "19.0.1.5.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_pack_cmp",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_pack_cmp",
-    "last_ingest": "2026-11-12",
+    "local_path": null,
+    "last_ingest": "2026-11-19",
     "friendly_name": "Romania - Pachet valorizare stocuri CMP",
     "summary": "Acest modul este un „pachet\" (bundle) care instalează dintr-o singură mișcare modulele necesare pentru gestiunea contabilă a stocurilor în România cu metoda costului mediu ponderat (CMP / AVCO), conform OMFP 1802/2014 pct. 96 (metodele de evaluare la ieșire) și pct. 276–291 (evaluarea stocurilor, inventarul permanent). La instalare, configurează automat companiile românești pe metoda de cost „Average Cost\" cu valorizare perpetuă, astfel încât un consultant Terrabit poate porni un client pe fluxul de stoc CMP fără să instaleze și să configureze manual mai multe module separate.",
     "features": [
-      "Instalează într-un singur pas modulele necesare pentru evidența stocurilor pe CMP: dată contabilă pe operațiile de stoc, integritatea datelor (blocarea modificării mișcărilor validate și a stocului negativ), fișa de magazie și balanța analitică, gestiuni contabile de stoc (OMFP 2861/2009) și note contabile de inventariere.",
+      "Instalează într-un singur pas modulele necesare pentru evidența stocurilor pe CMP: dată contabilă pe operațiile de stoc, integritatea datelor (blocarea modificării mișcărilor validate și a stocului negativ), fișa de magazie și balanța analitică, fișa de magazie pe gestiuni contabile (care scade din intrarea recepției partea din diferența de preț trecută direct pe 607), gestiuni contabile de stoc (OMFP 2861/2009) și note contabile de inventariere.",
       "Recalculul lunar CMP (`l10n_ro_stock_cmp_periodic`) nu mai face parte din pachet: nu poate fi instalat împreună cu `deltatech_obyc` (determinarea conturilor prin OBYC). Pe bazele fără OBYC se instalează separat.",
       "Configurare automată la instalare (`post_init_hook`): pe companiile cu țara fiscală România, setează metoda de cost implicită pe *Average Cost (AVCO)* și valorizarea pe *perpetuă (real time)*; valorile se propagă ca implicite pentru categoriile de produse noi — categoriile existente nu sunt modificate, decizia rămânând a consultantului.",
       "Excludere reciprocă declarată în manifest cu `l10n_ro_stock_pack_fifo`: nu pot coexista pe aceeași bază de date, conform principiului permanenței metodelor (OMFP 1802 pct. 287 alin. (1)) — se alege o singură metodă de evaluare per bază de date.",
@@ -22140,6 +22143,7 @@
       "l10n_ro_stock_constraints",
       "l10n_ro_stock_sheet",
       "l10n_ro_stock_gestiune",
+      "l10n_ro_stock_sheet_gestiune",
       "l10n_ro_inventory_closing"
     ],
     "connections": [
@@ -22150,23 +22154,25 @@
       "l10n_ro_stock_gestiune",
       "l10n_ro_inventory_closing"
     ],
-    "text": "Romania - Pachet valorizare stocuri CMP\nl10n_ro_stock_pack_cmp\nAcest modul este un „pachet\" (bundle) care instalează dintr-o singură mișcare modulele necesare pentru gestiunea contabilă a stocurilor în România cu metoda costului mediu ponderat (CMP / AVCO), conform OMFP 1802/2014 pct. 96 (metodele de evaluare la ieșire) și pct. 276–291 (evaluarea stocurilor, inventarul permanent). La instalare, configurează automat companiile românești pe metoda de cost „Average Cost\" cu valorizare perpetuă, astfel încât un consultant Terrabit poate porni un client pe fluxul de stoc CMP fără să instaleze și să configureze manual mai multe module separate.\nInstalează într-un singur pas modulele necesare pentru evidența stocurilor pe CMP: dată contabilă pe operațiile de stoc, integritatea datelor (blocarea modificării mișcărilor validate și a stocului negativ), fișa de magazie și balanța analitică, gestiuni contabile de stoc (OMFP 2861/2009) și note contabile de inventariere.\nRecalculul lunar CMP (`l10n_ro_stock_cmp_periodic`) nu mai face parte din pachet: nu poate fi instalat împreună cu `deltatech_obyc` (determinarea conturilor prin OBYC). Pe bazele fără OBYC se instalează separat.\nConfigurare automată la instalare (`post_init_hook`): pe companiile cu țara fiscală România, setează metoda de cost implicită pe *Average Cost (AVCO)* și valorizarea pe *perpetuă (real time)*; valorile se propagă ca implicite pentru categoriile de produse noi — categoriile existente nu sunt modificate, decizia rămânând a consultantului.\nExcludere reciprocă declarată în manifest cu `l10n_ro_stock_pack_fifo`: nu pot coexista pe aceeași bază de date, conform principiului permanenței metodelor (OMFP 1802 pct. 287 alin. (1)) — se alege o singură metodă de evaluare per bază de date.\nPași de configurare după instalare: în Setări → Inventar se bifează *Recepție fără factură (371 = 408)* cu *Cont 408 implicit* și se setează conturile de plus și de minus de inventar (recomandat 607 pentru mărfuri; fără ele asistentul de note de inventariere refuză generarea); categoriile de produse se completează cu *Cont stoc* (371 pentru mărfuri).\nDocumentație de utilizare (`readme/USAGE.md`) cu o monografie contabilă a fluxului de stoc pe CMP (achiziție cu recepție și factură pe 408, vânzare cu descărcare 607 = 371 la facturare, retur la furnizor cu stornare în roșu, achiziție pe aviz, inventariere cu minus), verificată automat de testul `tests/test_stock_flow.py`; fluxul detaliat pas cu pas rămâne în fișa consultant."
+    "text": "Romania - Pachet valorizare stocuri CMP\nl10n_ro_stock_pack_cmp\nAcest modul este un „pachet\" (bundle) care instalează dintr-o singură mișcare modulele necesare pentru gestiunea contabilă a stocurilor în România cu metoda costului mediu ponderat (CMP / AVCO), conform OMFP 1802/2014 pct. 96 (metodele de evaluare la ieșire) și pct. 276–291 (evaluarea stocurilor, inventarul permanent). La instalare, configurează automat companiile românești pe metoda de cost „Average Cost\" cu valorizare perpetuă, astfel încât un consultant Terrabit poate porni un client pe fluxul de stoc CMP fără să instaleze și să configureze manual mai multe module separate.\nInstalează într-un singur pas modulele necesare pentru evidența stocurilor pe CMP: dată contabilă pe operațiile de stoc, integritatea datelor (blocarea modificării mișcărilor validate și a stocului negativ), fișa de magazie și balanța analitică, fișa de magazie pe gestiuni contabile (care scade din intrarea recepției partea din diferența de preț trecută direct pe 607), gestiuni contabile de stoc (OMFP 2861/2009) și note contabile de inventariere.\nRecalculul lunar CMP (`l10n_ro_stock_cmp_periodic`) nu mai face parte din pachet: nu poate fi instalat împreună cu `deltatech_obyc` (determinarea conturilor prin OBYC). Pe bazele fără OBYC se instalează separat.\nConfigurare automată la instalare (`post_init_hook`): pe companiile cu țara fiscală România, setează metoda de cost implicită pe *Average Cost (AVCO)* și valorizarea pe *perpetuă (real time)*; valorile se propagă ca implicite pentru categoriile de produse noi — categoriile existente nu sunt modificate, decizia rămânând a consultantului.\nExcludere reciprocă declarată în manifest cu `l10n_ro_stock_pack_fifo`: nu pot coexista pe aceeași bază de date, conform principiului permanenței metodelor (OMFP 1802 pct. 287 alin. (1)) — se alege o singură metodă de evaluare per bază de date.\nPași de configurare după instalare: în Setări → Inventar se bifează *Recepție fără factură (371 = 408)* cu *Cont 408 implicit* și se setează conturile de plus și de minus de inventar (recomandat 607 pentru mărfuri; fără ele asistentul de note de inventariere refuză generarea); categoriile de produse se completează cu *Cont stoc* (371 pentru mărfuri).\nDocumentație de utilizare (`readme/USAGE.md`) cu o monografie contabilă a fluxului de stoc pe CMP (achiziție cu recepție și factură pe 408, vânzare cu descărcare 607 = 371 la facturare, retur la furnizor cu stornare în roșu, achiziție pe aviz, inventariere cu minus), verificată automat de testul `tests/test_stock_flow.py`; fluxul detaliat pas cu pas rămâne în fișa consultant."
   },
   {
     "path": "l10n_ro_stock_pack_fifo/index.md",
     "module": "l10n_ro_stock_pack_fifo",
-    "version": "19.0.1.3.7",
-    "github": "[https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_pack_fifo](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_pack_fifo)",
-    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_pack_fifo",
-    "last_ingest": "2026-08-20",
+    "version": "19.0.1.3.10",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_pack_fifo",
+    "local_path": null,
+    "last_ingest": "2026-11-19",
     "friendly_name": "Romania - Pachet valorizare stocuri FIFO",
     "summary": "Modul-pălărie (bundle) care instalează dintr-o singură mișcare toate modulele necesare pentru gestiunea contabilă a stocurilor în România cu metoda FIFO (primul intrat — primul ieșit), conform OMFP 1802/2014 pct. 96 (metode de evaluare la ieșire) și pct. 276–291 (evaluarea stocurilor, inventarul permanent). La instalare, configurează automat pe companiile cu țara fiscală România metoda de cost FIFO și valorizarea perpetuă (real time), simplificând semnificativ setarea corectă a contabilității de stoc pentru un consultant sau implementator.",
     "features": [
-      "Instalează într-un singur pas toate modulele necesare pentru evidența contabilă a stocurilor pe FIFO: dată contabilă pe operațiile de stoc (cu gardă cronologică pentru corectitudinea straturilor FIFO), integritate a datelor (blocare mișcări validate/stoc negativ), fișa de magazie (14-3-8) și balanța analitică a stocurilor, gestiuni contabile de stoc conform OMFP 2861/2009 (gestionar, conturi pe gestiune, transfer 481, recepție fără factură 371=408) și note contabile de inventariere (plusuri/minusuri).",
+      "Instalează într-un singur pas toate modulele necesare pentru evidența contabilă a stocurilor pe FIFO: dată contabilă pe operațiile de stoc (cu gardă cronologică pentru corectitudinea straturilor FIFO), integritate a datelor (blocare mișcări validate/stoc negativ), fișa de magazie (14-3-8) și balanța analitică a stocurilor, fișa de magazie pe gestiuni contabile (care scade din intrarea recepției partea din diferența de preț trecută direct pe 607), gestiuni contabile de stoc conform OMFP 2861/2009 (gestionar, conturi pe gestiune, transfer 481, recepție fără factură 371=408) și note contabile de inventariere (plusuri/minusuri).",
       "La instalare (`post_init_hook`), setează automat pe companiile românești metoda de cost implicită `fifo` și valorizarea stocului `real_time` (perpetuă); valorile se propagă ca implicite doar pentru categoriile de produse noi — categoriile existente nu sunt modificate.",
+      "Două configurări rămân manuale: în Setări → Inventar se activează *Recepție fără factură (371 = 408)* cu *Cont 408 implicit*, iar în secțiunea *Inventariere RO* se setează conturile de plus și de minus (recomandat 607 pentru mărfuri) — fără ele wizardul de note de inventariere refuză generarea.",
+      "Convenție: pivotul 408 se ține la valoarea fără TVA, iar TVA se înregistrează integral la factură.",
       "Exclude reciproc coexistența cu pachetul `l10n_ro_stock_pack_cmp` (o singură metodă de evaluare per bază de date, conform principiului permanenței metodelor — OMFP 1802 pct. 287 alin. (1): metoda aleasă se aplică cu consecvență, schimbarea fiind permisă doar în situații excepționale, cu prezentarea motivului și a efectelor în notele explicative).",
       "FIFO este metoda de cost nativă Odoo, deci pachetul nu conține un modul specific de recalcul periodic — diferența față de pachetul CMP este doar configurarea metodei de cost la instalare și absența corecției lunare.",
-      "Monografia contabilă completă (achiziție cu factură, vânzare, retur la furnizor, achiziție pe aviz cu factură ulterioară, vânzare pe două straturi, inventariere cu minus neimputabil) e documentată în `readme/USAGE.md` și verificată automat prin testul `tests/test_stock_flow.py`; include și un comparativ cu rezultatul aceluiași scenariu rulat pe pachetul CMP."
+      "Monografia contabilă completă (achiziție cu factură, vânzare, retur la furnizor, achiziție pe aviz cu factură ulterioară, vânzare pe două straturi, inventariere cu minus neimputabil) e documentată în fișa consultant și în `readme/USAGE.md`, cu un comparativ față de rezultatul aceluiași scenariu pe pachetul CMP."
     ],
     "dependencies": [
       "purchase_stock",
@@ -22175,13 +22181,14 @@
       "l10n_ro_stock_constraints",
       "l10n_ro_stock_sheet",
       "l10n_ro_stock_gestiune",
+      "l10n_ro_stock_sheet_gestiune",
       "l10n_ro_inventory_closing"
     ],
     "connections": [
       "l10n_ro_stock_pack_cmp",
       "excludes"
     ],
-    "text": "Romania - Pachet valorizare stocuri FIFO\nl10n_ro_stock_pack_fifo\nModul-pălărie (bundle) care instalează dintr-o singură mișcare toate modulele necesare pentru gestiunea contabilă a stocurilor în România cu metoda FIFO (primul intrat — primul ieșit), conform OMFP 1802/2014 pct. 96 (metode de evaluare la ieșire) și pct. 276–291 (evaluarea stocurilor, inventarul permanent). La instalare, configurează automat pe companiile cu țara fiscală România metoda de cost FIFO și valorizarea perpetuă (real time), simplificând semnificativ setarea corectă a contabilității de stoc pentru un consultant sau implementator.\nInstalează într-un singur pas toate modulele necesare pentru evidența contabilă a stocurilor pe FIFO: dată contabilă pe operațiile de stoc (cu gardă cronologică pentru corectitudinea straturilor FIFO), integritate a datelor (blocare mișcări validate/stoc negativ), fișa de magazie (14-3-8) și balanța analitică a stocurilor, gestiuni contabile de stoc conform OMFP 2861/2009 (gestionar, conturi pe gestiune, transfer 481, recepție fără factură 371=408) și note contabile de inventariere (plusuri/minusuri).\nLa instalare (`post_init_hook`), setează automat pe companiile românești metoda de cost implicită `fifo` și valorizarea stocului `real_time` (perpetuă); valorile se propagă ca implicite doar pentru categoriile de produse noi — categoriile existente nu sunt modificate.\nExclude reciproc coexistența cu pachetul `l10n_ro_stock_pack_cmp` (o singură metodă de evaluare per bază de date, conform principiului permanenței metodelor — OMFP 1802 pct. 287 alin. (1): metoda aleasă se aplică cu consecvență, schimbarea fiind permisă doar în situații excepționale, cu prezentarea motivului și a efectelor în notele explicative).\nFIFO este metoda de cost nativă Odoo, deci pachetul nu conține un modul specific de recalcul periodic — diferența față de pachetul CMP este doar configurarea metodei de cost la instalare și absența corecției lunare.\nMonografia contabilă completă (achiziție cu factură, vânzare, retur la furnizor, achiziție pe aviz cu factură ulterioară, vânzare pe două straturi, inventariere cu minus neimputabil) e documentată în `readme/USAGE.md` și verificată automat prin testul `tests/test_stock_flow.py`; include și un comparativ cu rezultatul aceluiași scenariu rulat pe pachetul CMP."
+    "text": "Romania - Pachet valorizare stocuri FIFO\nl10n_ro_stock_pack_fifo\nModul-pălărie (bundle) care instalează dintr-o singură mișcare toate modulele necesare pentru gestiunea contabilă a stocurilor în România cu metoda FIFO (primul intrat — primul ieșit), conform OMFP 1802/2014 pct. 96 (metode de evaluare la ieșire) și pct. 276–291 (evaluarea stocurilor, inventarul permanent). La instalare, configurează automat pe companiile cu țara fiscală România metoda de cost FIFO și valorizarea perpetuă (real time), simplificând semnificativ setarea corectă a contabilității de stoc pentru un consultant sau implementator.\nInstalează într-un singur pas toate modulele necesare pentru evidența contabilă a stocurilor pe FIFO: dată contabilă pe operațiile de stoc (cu gardă cronologică pentru corectitudinea straturilor FIFO), integritate a datelor (blocare mișcări validate/stoc negativ), fișa de magazie (14-3-8) și balanța analitică a stocurilor, fișa de magazie pe gestiuni contabile (care scade din intrarea recepției partea din diferența de preț trecută direct pe 607), gestiuni contabile de stoc conform OMFP 2861/2009 (gestionar, conturi pe gestiune, transfer 481, recepție fără factură 371=408) și note contabile de inventariere (plusuri/minusuri).\nLa instalare (`post_init_hook`), setează automat pe companiile românești metoda de cost implicită `fifo` și valorizarea stocului `real_time` (perpetuă); valorile se propagă ca implicite doar pentru categoriile de produse noi — categoriile existente nu sunt modificate.\nDouă configurări rămân manuale: în Setări → Inventar se activează *Recepție fără factură (371 = 408)* cu *Cont 408 implicit*, iar în secțiunea *Inventariere RO* se setează conturile de plus și de minus (recomandat 607 pentru mărfuri) — fără ele wizardul de note de inventariere refuză generarea.\nConvenție: pivotul 408 se ține la valoarea fără TVA, iar TVA se înregistrează integral la factură.\nExclude reciproc coexistența cu pachetul `l10n_ro_stock_pack_cmp` (o singură metodă de evaluare per bază de date, conform principiului permanenței metodelor — OMFP 1802 pct. 287 alin. (1): metoda aleasă se aplică cu consecvență, schimbarea fiind permisă doar în situații excepționale, cu prezentarea motivului și a efectelor în notele explicative).\nFIFO este metoda de cost nativă Odoo, deci pachetul nu conține un modul specific de recalcul periodic — diferența față de pachetul CMP este doar configurarea metodei de cost la instalare și absența corecției lunare.\nMonografia contabilă completă (achiziție cu factură, vânzare, retur la furnizor, achiziție pe aviz cu factură ulterioară, vânzare pe două straturi, inventariere cu minus neimputabil) e documentată în fișa consultant și în `readme/USAGE.md`, cu un comparativ față de rezultatul aceluiași scenariu pe pachetul CMP."
   },
   {
     "path": "l10n_ro_stock_picking_batch_report/index.md",
@@ -22405,7 +22412,7 @@
   {
     "path": "l10n_ro_stock_sheet_gestiune/index.md",
     "module": "l10n_ro_stock_sheet_gestiune",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.8",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_sheet_gestiune`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_sheet_gestiune",
     "last_ingest": "2026-11-11",

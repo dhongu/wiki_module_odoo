@@ -66,8 +66,8 @@ Date minime pentru demo:
 ## 5. Configurare inițială
 
 1. Instalați pachetul `l10n_ro_stock_pack_fifo` pe baza demo — dependențele
-   (posting_date, constraints, sheet, gestiune, inventory_closing, purchase,
-   sale) se instalează automat.
+   (posting_date, constraints, sheet, sheet_gestiune, gestiune,
+   inventory_closing, purchase, sale) se instalează automat.
 2. Verificați configurarea automată pe o categorie nouă de produse
    (**Inventar → Configurare → Categorii de produse**): *Metodă de cost* =
    *Primul intrat, primul ieșit (FIFO)* și *Evaluarea stocurilor* =
@@ -84,7 +84,8 @@ Date minime pentru demo:
 ## 6. Flux de utilizare
 
 Cifrele de mai jos sunt exact cele din testul automat al pachetului
-(`tests/test_stock_flow.py`) și din monografia din `readme/USAGE.md`.
+(`tests/test_stock_flow.py`, pașii 1–8) și din monografia din `readme/USAGE.md`; cele din Pasul 6 bis vin din
+`tests/test_price_difference_sheet.py`.
 
 Pașii sunt grupați pe tip de operație, dar **cronologia reală a scenariului**
 (cea din capturi, respectată de garda cronologică a pachetului) este:
@@ -125,7 +126,7 @@ Creați și recepționați două comenzi de achiziție: 10 buc × 10 lei, apoi
 
 ![Recepția cu nota contabilă 371 = 408](screenshots/03_receptie_nota_rni.png)
 
-La sosirea fiecărei facturi (**Creează factură** din comandă), linia de
+La sosirea fiecărei facturi (**Creați facturi** din lista comenzilor de achiziție, cu comanda bifată), linia de
 produs se rutează automat pe 408 și stinge pivotul: `408 = 401` + TVA.
 
 ![Factura furnizorului rutată pe 408](screenshots/04_factura_pe_408.png)
@@ -165,6 +166,33 @@ Vânzarea de 6 buc consumă restul stratului vechi și intră în cel nou:
 
 ![Descărcare pe două straturi: 607 = 371 cu 99 lei](screenshots/07_vanzare_doua_straturi.png)
 
+### Pasul 6 bis — Factură la alt preț decât comanda, după vânzare
+
+Exemplu separat, în afara scenariului de mai sus (alt produs): recepție 10 buc × 10 lei, 5 buc vândute din
+stratul ei (livrare validată și factură client confirmată, ca la Pasul 4), apoi factura sosește la 12 lei/buc. Din lista comenzilor (**Achiziții → Comenzi → Comenzi de achiziție**) bifați comanda și apăsați **Creați facturi**, modificați *Preț* pe linia facturii
+(12 lei) și apăsați **Confirmă**. Notele (tab-ul **Elemente jurnal**): Dr 408 120 (linia de produs) și Cr 408 20 (diferența de preț), deci 408
+se stinge cu 100 lei; **Dr 371 10** (cele 5 buc rămase în strat) și **Dr 607 10** (cele 5 buc ieșite);
+Dr 4426 25,20 / Cr 401 145,20. La o factură sub prețul comenzii, pe companiile cu storno activat
+(**Contabilitate → Configurare → Setări**), aceleași note se înregistrează în roșu, inclusiv partea de pe 607
+(607 = 408 cu −10); fără storno: **Dr 408 = Cr 371** și **Dr 408 = Cr 607**. La o factură pe mai multe recepții, partea de pe 607 se
+repartizează pe fiecare recepție după cantitatea consumată din stratul ei (o recepție intactă nu e atinsă).
+
+**Condiții și cazuri de reținut:** împărțirea pe 607 se face doar dacă contul de cheltuială al produsului e 607
+(sau, la produsele cu clasă de evaluare, după regula OBYC `stock_receipt_price_difference`); altfel toată
+diferența rămâne pe 371. Proporția se calculează la postarea facturii, pe stocul de atunci, deci vânzările
+dintre data facturii și postare se numără ca ieșite. Returul la furnizor nu e consum și nu intră în totalul
+trecut pe 607. O notă de credit de la furnizor doar de preț, fără retur, emisă după vânzare, nu generează liniile de diferență pe
+371/607; 408 rămâne cu sold și se regularizează manual (limitare cunoscută); pentru o reducere cereți factura la
+prețul corect, nu notă de credit. 
+
+![Factura furnizorului la 12 lei: diferența de preț împărțită între 371 și 607](screenshots/10_factura_alt_pret.png)
+
+În **fișa de magazie** (**Inventar → Raportare → Balanță analitică stocuri**, filtrați produsul din **Produse** și
+desfășurați-l; perioada trebuie să includă data facturii furnizorului) intrarea recepției apare la valoarea care a ajuns pe 371 (valoarea facturii fără TVA minus partea
+de pe 607): 110 lei, nu 120, iar stocul final la 60 lei, egal cu 371. Limite: stornarea cu anulare a facturii și
+facturile validate înainte de `l10n_ro_stock_gestiune` 19.0.3.1.12 (vezi „Note de monografie”). Captura fișei, pentru un exemplu
+similar, e în fișa `l10n_ro_stock_sheet_gestiune`, Pasul 5.
+
 ### Pasul 7 — Inventariere cu minus
 
 Creați inventarul (**Inventar → Operații → Ajustări → Documente
@@ -203,6 +231,7 @@ Deschideți **Inventar → Raportare → Balanță analitică stocuri** (raportu
 - Retur la furnizor: iese pe stratul de origine; storno în roșu **371 = 408**
   (OMFP 1802 pct. 69, în cadrul exercițiului curent) + nota de credit care
   stinge 408;
+- Factura la alt preț, după ce marfa a ieșit: diferența se împarte între 371 și 607. Partea de pe 607 aparține recepției al cărei strat a fost consumat; la o factură pe mai multe recepții, ea se repartizează pe toate, după cantitatea consumată din stratul fiecăreia (cantitate − rămas), iar fișa de magazie o scade din intrarea acelei recepții; o recepție încă intactă în stoc rămâne la valoarea din factură. Limite: stornarea cu anulare a facturii (nucleul nu reface valoarea recepției, deci fișa nu se mai reconciliază cu 371) și facturile validate înainte de `l10n_ro_stock_gestiune` 19.0.3.1.12 (vezi fișa acelui modul);
 - Minus de inventar: **Dr 607 = Cr 371** la costul stratului curent —
   nedeductibil dacă e neimputabil, cu excepțiile expres prevăzute la
   **art. 25 alin. (4) lit. c)** din Codul fiscal (bunuri asigurate, distruse
@@ -224,12 +253,14 @@ Monografia completă, cu cifrele scenariului demo pas cu pas, este în
 | `l10n_ro_stock_posting_date` | dată contabilă cu gardă cronologică (critică la FIFO) | dependență (manifest) |
 | `l10n_ro_stock_constraints` | blochează modificarea mișcărilor valorizate | dependență (manifest) |
 | `l10n_ro_stock_sheet` | fișa de magazie (14-3-8) și balanța stocurilor | dependență (manifest) |
+| `l10n_ro_stock_sheet_gestiune` | fișa de magazie pe gestiuni, cu scăderea diferenței de preț consumate din intrare | dependență (manifest) |
 | `l10n_ro_inventory_closing` | notele contabile de inventariere + PV | dependență (manifest) |
 | `l10n_ro_stock_pack_cmp` | pachetul echivalent CMP | **exclus reciproc** |
 
 Ce este automat: instalarea suitei, configurarea metodei de cost și a
 valorizării pe companiile RO, notele 371=408 la recepție, rutarea facturilor
-pe 408, descărcarea pe straturi la facturare.
+pe 408, descărcarea pe straturi la facturare, la factura sosită după vânzare
+împărțirea diferenței pe 371/607 și scăderea părții de pe 607 din intrarea recepției în fișa de magazie.
 Ce rămâne manual: activarea RNI și a conturilor de inventariere
 (pasul 5.3–5.4) și disciplina datelor contabile (garda cronologică respinge
 datări care ar strica ordinea straturilor).
@@ -248,6 +279,10 @@ datări care ar strica ordinea straturilor).
       (nu unui preț mediu).
 - [ ] Balanța analitică a stocurilor arată valoarea straturilor rămase, iar
       coloana *Diferență* față de soldul contului 371 este zero.
+- [ ] La factura sosită după vânzare, în fișă intrarea recepției apare la valoarea facturii minus partea trecută pe 607 (110 lei în exemplul din Pasul 6 bis), repartizată pe recepțiile acoperite după stratul consumat.
+- [ ] Factura la 8 lei după vânzarea a 5 din 10: intrarea din fișă 90 lei, stocul 40 lei = 371.
+- [ ] Două recepții 6 + 4, 5 vândute, factură la 12: 607 doar pe prima recepție.
+- [ ] Pe facturile validate înainte de `l10n_ro_stock_gestiune` 19.0.3.1.12 și pe cele stornate cu anulare, decalajul fișă ↔ 371 este identificat și documentat.
 - [ ] Testul automat al fluxului trece: `--test-tags=/l10n_ro_stock_pack_fifo`.
 
 ## 9. Mesaje de eroare frecvente
@@ -257,6 +292,9 @@ datări care ar strica ordinea straturilor).
 | „Modules … are incompatible." la instalare | Pachetul CMP este deja instalat | Dezinstalați pachetul CMP sau păstrați metoda existentă — nu se pot instala ambele |
 | Compania nu a primit metoda FIFO la instalare | Compania nu are țara fiscală România | Setați țara fiscală RO pe companie și configurați manual metoda de cost |
 | Recepția nu generează nota 371 = 408 | RNI nu este activat pe companie sau contul 408 lipsește | Bifați *Recepție fără factură (371 = 408)* în Setări → Inventar și completați *Cont 408 implicit* |
+| Fișa de magazie arată intrarea la valoarea întreagă a facturii, după o factură sosită după vânzare | Factura a fost validată înainte de `l10n_ro_stock_gestiune` 19.0.3.1.12, sau puntea `l10n_ro_stock_sheet_gestiune` nu e actualizată la 19.0.1.0.7 | Verificați întâi versiunea punții (**Aplicații** → `l10n_ro_stock_sheet_gestiune` ≥ 19.0.1.0.7): dacă e mai veche, actualizați-o împreună cu `l10n_ro_stock_gestiune` și **nu** resetați factura. Doar dacă puntea e la zi și factura e validată înainte de 19.0.3.1.12: pe perioadă deschisă, cu acordul contabilului, resetați factura în ciornă și confirmați-o din nou. Atenție: împărțirea 371/607 se recalculează după stocul de la data revalidării, deci nota se poate schimba; comparați *Elemente jurnal* înainte și după. Dacă puntea e în urmă, actualizați împreună `l10n_ro_stock_gestiune` (≥ 19.0.3.1.12) și `l10n_ro_stock_sheet_gestiune` (≥ 19.0.1.0.7), fără reset. Pe perioade blocate sau la facturi primite din SPV pe care nu le mai modificați, nu resetați: lăsați decalajul vizibil și documentați-l |
+| Nota de credit de la furnizor doar de preț (fără retur), după vânzare, nu generează linii 371/607 | Ajustarea 371/607 se face numai pe facturi de furnizor, nu pe note de credit | 408 rămâne cu sold: regularizare manuală, cu acordul contabilului; pentru reducere cereți factura la prețul corect |
+| Fișa de magazie nu se mai reconciliază cu 371 pentru o recepție, după o factură stornată cu anulare | Nucleul Odoo nu reface valoarea recepției la stornarea cu anulare | Nu resetați factura; lăsați decalajul vizibil și documentați-l; tratamentul îl stabilește contabilul (vezi „Limitări cunoscute” din fișa `l10n_ro_stock_gestiune`) |
 | Factura de client nu are liniile 607 = 371 | Produsul nu e stocabil sau categoria nu are valorizare *real time* | Verificați categoria produsului: valorizare automată + cont de stoc 371 |
 | Datarea unei operații de stoc este respinsă | Garda cronologică: data ar strica ordinea straturilor FIFO | Folosiți o dată contabilă ulterioară ultimei mișcări valorizate a produsului |
 
@@ -277,6 +315,8 @@ conturi RO, cu același scenariu ca testul de flux:
 8. `08_inventar_minus.png` — nota de minus de inventar 607 = 371.
 9. `09_balanta_stocuri.png` — balanța analitică a stocurilor (valoare FIFO).
 
+10. `10_factura_alt_pret.png` — Pasul 6 bis: factura furnizorului la 12 lei față de 10 lei în comandă, după vânzarea a 5 din 10 buc: 408 se stinge, diferența de 20 lei se împarte între 371 (10) și 607 (10). Fișa de magazie pentru un exemplu similar e în `05_receptie_valoare_scazuta.png` din fișa `l10n_ro_stock_sheet_gestiune`.
+
 Regenerare:
 
 ```bash
@@ -285,6 +325,12 @@ Regenerare:
 ```
 
 ## 11. Observații pentru manual
+
+Facturile sosite după vânzare la alt preț trec partea ieșită pe 607; fișa de magazie scade această parte din
+intrarea recepției, ca să se reconcilieze cu 371 (limite: stornarea cu anulare, facturile dinainte de
+`l10n_ro_stock_gestiune` 19.0.3.1.12). Totalul trecut pe 607 exclude cantitatea returnată la furnizor; doar repartizarea acestui total între recepții
+(cantitate − rămas pe stratul fiecăreia) numără și returul făcut din stratul unei recepții, care poate primi
+astfel o parte din 607 fără să fi fost vândută.
 
 Păstrați perspectiva de politică contabilă: pachetul este alegerea metodei
 FIFO pentru toată baza de date (permanența metodelor), nu un simplu

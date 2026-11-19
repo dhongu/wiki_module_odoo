@@ -80,7 +80,7 @@ Date minime pentru demo (cele din capturi):
 ## 5. Configurare inițială
 
 1. Instalați modulul `l10n_ro_payment_instruments` (depinde de `account`, `l10n_ro`,
-   `l10n_ro_anaf_base`).
+   `l10n_ro_move_guard`).
 2. Verificați în planul de conturi că există 5112, 5113, 413, 403, 4111, 401 și 5121.
 3. Verificați că există cel puțin un jurnal de tip **Diverse** (notele instrumentelor se fac acolo).
 4. **Activați alertele de scadență**: acțiunea programată „Instrumente de plată RO: alertă
@@ -337,7 +337,7 @@ marcați protestul până la soluționare sau urmăriți-l separat.
 |---|---|
 | `account` | facturile acoperite, notele contabile, reconcilierea liniilor 4111 / 401 |
 | `l10n_ro` | planul de conturi RO (5112, 5113, 413, 403) |
-| `l10n_ro_anaf_base` | mecanismul de blocare la confirmarea facturii (blocajul FR-39) |
+| `l10n_ro_move_guard` | mecanismul de blocare la confirmarea facturii (blocajul FR-39) |
 | Extrasul bancar | încasarea / plata efectivă pe 5121; cu extrase importate, nota modulului se face pe contul de încasări / plăți în curs și se potrivește la reconcilierea bancară (pasul 2) |
 | Fișa partenerului / scadențarul clienților | arată facturile stinse la înregistrare și redeschise la refuz |
 

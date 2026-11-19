@@ -71,7 +71,7 @@ Date minime pentru demo:
 
 ## 5. Configurare inițială
 
-1. Instalați modulul `l10n_ro_anaf_partner` (dependențe: `l10n_ro_anaf_base`, `account`). Modulul nu
+1. Instalați modulul `l10n_ro_anaf_partner` (dependențe: `account`, `l10n_ro_move_guard`). Modulul nu
    depinde de module OCA; poate fi instalat și **împreună** cu OCA `l10n_ro_vat_on_payment`, cu care
    împarte câmpul „TVA la încasare (RTVAI)” (vezi secțiunea 7).
    Dacă pe bază e instalat și `l10n_ro_fiscal_validation` (OCA), modulul se instalează, dar cronul OCA

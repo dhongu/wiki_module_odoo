@@ -63,7 +63,7 @@ Date minime pentru demo:
 ## 5. Configurare inițială
 
 1. Instalați pachetul `l10n_ro_stock_pack_cmp` pe baza demo — dependențele
-   (posting_date, constraints, sheet, gestiune,
+   (posting_date, constraints, sheet, sheet_gestiune, gestiune,
    inventory_closing, purchase, sale) se instalează automat. Recalculul lunar
    CMP periodic (`l10n_ro_stock_cmp_periodic`) nu face parte din pachet: pe o
    bază **fără** `deltatech_obyc` se instalează separat, iar pe o bază cu OBYC
@@ -153,14 +153,14 @@ Categorii de produse → Nou**) și priviți secțiunea *Evaluarea stocurilor*:
 
 ### Pasul 3 — Achiziție cu recepție (pivotul 408)
 
-Creați o comandă de achiziție (**Achiziții → Comenzi → Comandă de
+Creați o comandă de achiziție (**Achiziții → Comenzi → Comenzi de
 achiziție**) de 10 buc × 10 lei, confirmați și validați recepția. La
 validare se generează automat nota de recepție `371 = 408` (100 lei),
 vizibilă din recepție.
 
 ![Recepția cu nota contabilă 371 = 408](screenshots/03_receptie_nota_rni.png)
 
-La sosirea facturii (**Creează factură** din comandă), linia de produs se
+La sosirea facturii (**Creați facturi** din lista comenzilor de achiziție, cu comanda bifată), linia de produs se
 rutează automat pe 408 și stinge pivotul: `408 = 401` + TVA.
 
 ![Factura furnizorului rutată pe 408](screenshots/04_factura_pe_408.png)
@@ -173,7 +173,7 @@ Dacă o parte din marfă a fost deja vândută când sosește factura (de exempl
 
 ![Factura furnizorului la 12 lei: diferența de preț împărțită între 371 și 607](screenshots/10_factura_alt_pret.png)
 
-**Cum se face:** din **Achiziții → Comenzi → Comandă de achiziție** apăsați *Creează factură*, modificați *Prețul unitar* pe linia facturii (12 lei) și apăsați *Confirmă*. Notele se văd în tab-ul *Elemente jurnal* al facturii sau în **Contabilitate → Note contabile**.
+**Cum se face:** din lista comenzilor (**Achiziții → Comenzi → Comenzi de achiziție**) bifați comanda și apăsați **Creați facturi**, modificați *Preț* pe linia facturii (12 lei) și apăsați **Confirmă**. Notele se văd în tab-ul **Elemente jurnal** al facturii sau în **Contabilitate → Note contabile**.
 
 **Cazuri de reținut:**
 - *CMP cu stoc anterior:* partea ieșită se raportează la stocul de după recepție. Exemplu: stoc vechi 10 × 8, recepție 10 × 10, vândute 5 buc, factură la 12: din diferența de 20, 5 lei merg pe 607 (5/20) și 15 pe 371 (15/20); 371 rămâne egal cu stocul fizic al CMP-ului. La FIFO, ieșirile se scad din stratul recepției.
@@ -182,8 +182,12 @@ Dacă o parte din marfă a fost deja vândută când sosește factura (de exempl
 - *Perioadă închisă:* nota se face pe data facturii și nu modifică recepția din perioada blocată. Dacă factura pentru o recepție din anul N sosește după bilanț, dar înainte de autorizarea lor pentru emitere (pct. 72), ajustarea se face pe anul N (OMFP 1802/2014 pct. 73 alin. (2) lit. e)), de către contabil.
 - *Alte conturi decât 607:* contul implicit de cheltuială se folosește numai dacă e 607 (mărfuri vândute). La materii prime și materiale (601/602), diferența rămâne pe stoc; tratamentul se stabilește prin OBYC, cu regula `stock_receipt_price_difference`.
 - *Nota de credit de la furnizor:* o reducere de preț fără retur, după vânzare, nu generează linii de diferență pe 371/607; 408 rămâne cu sold și se regularizează manual (limitare cunoscută, tratată separat).
+- *Fișa de magazie:* intrarea recepției apare la valoarea care a ajuns pe 371 (valoarea facturii fără TVA minus partea trecută pe 607), nu la valoarea facturii. În exemplu (5 buc din 10 vândute, factură la 12), recepția apare la 110 lei, nu la 120, ieșirea la 50 și stocul final la 60 lei, egal cu 371 (captura, pe un exemplu similar — 2 buc, intrare 250 lei — și pașii: fișa `l10n_ro_stock_sheet_gestiune`, Pasul 5).
+- *Stornarea cu anulare a facturii:* suma trecută pe 607 se anulează, dar nucleul nu reface valoarea recepției, deci după un astfel de storno fișa nu se mai reconciliază cu 371. Evitați stornarea cu anulare a unei facturi emise după vânzare; dacă s-a făcut, lăsați decalajul și documentați-l (limitare cunoscută, vezi „Limitări cunoscute” din fișa `l10n_ro_stock_gestiune`).
+- *Facturi validate înainte de 19.0.3.1.12 din `l10n_ro_stock_gestiune`:* nu au legătura cu recepția, deci fișa lor rămâne neajustată. Pe o perioadă deschisă și cu acordul contabilului, factura se poate reseta în ciornă și revalida; atenție, împărțirea 371/607 se recalculează cu ieșirile existente la data revalidării. Pe perioade blocate sau pe facturi primite din SPV pe care nu le mai modificați, decalajul rămâne vizibil în fișă.
+- *Factură pe mai multe recepții:* la CMP partea consumată se împarte proporțional cu cantitatea recepționată (aproximare, ieșirile vin din stocul mediu).
 
-Testele automate: `test_price_difference.py` (pachet) și `test_13` din `l10n_ro_stock_obyc`.
+Testele automate: `test_price_difference.py` și `test_price_difference_sheet.py` (pachet) și `test_13` din `l10n_ro_stock_obyc`.
 
 ### Pasul 4 — Vânzare cu descărcare de gestiune la CMP
 
@@ -221,6 +225,10 @@ wizardul de note contabile generează minusul la CMP-ul curent:
 - Recepție (cu sau fără factură): **Dr 371 = Cr 408**;
 - Factura furnizorului: **Dr 408 + Dr 4426 = Cr 401** (stinge pivotul);
 - Vânzare: **Dr 4111 = Cr 707 + Cr 4427** și **Dr 607 = Cr 371** la CMP;
+- Factura la alt preț, după vânzarea a 5 din 10 (exemplul de la Pasul 3 bis): **Dr 408 120** (linia de produs) /
+  **Cr 408 20** (diferența de preț); **Dr 371 10** + **Dr 607 10**; **Dr 4426 25,20 = Cr 401 145,20**. La o factură
+  sub prețul comenzii, pe companiile cu storno, aceleași note în roșu (607 = 408 cu −10); fără storno, **Dr 408 =
+  Cr 371** și **Dr 408 = Cr 607**;
 - Retur la furnizor: storno în roșu **371 = 408** (OMFP 1802 pct. 69, în
   cadrul exercițiului curent) + nota de credit care stinge 408;
 - Minus de inventar: **Dr 607 = Cr 371** la CMP — nedeductibil dacă e
@@ -244,12 +252,13 @@ Monografia completă, cu cifrele scenariului demo pas cu pas, este în
 | `l10n_ro_stock_posting_date` | dată contabilă cu gardă cronologică | dependență (manifest) |
 | `l10n_ro_stock_constraints` | blochează modificarea mișcărilor valorizate | dependență (manifest) |
 | `l10n_ro_stock_sheet` | fișa de magazie (14-3-8) și balanța stocurilor | dependență (manifest) |
+| `l10n_ro_stock_sheet_gestiune` | fișa de magazie pe gestiuni, cu scăderea diferenței de preț consumate din intrare | dependență (manifest) |
 | `l10n_ro_inventory_closing` | notele contabile de inventariere + PV | dependență (manifest) |
 | `l10n_ro_stock_pack_fifo` | pachetul echivalent FIFO | **exclus reciproc** |
 
 Ce este automat: instalarea suitei, configurarea metodei de cost și a
 valorizării pe companiile RO, notele 371=408 la recepție, rutarea facturilor
-pe 408, descărcarea de gestiune la facturare.
+pe 408, descărcarea de gestiune la facturare, scăderea din intrarea fișei de magazie a diferenței de preț trecute pe 607.
 Ce rămâne manual: activarea RNI și a conturilor de inventariere (pasul 5.3–5.4).
 
 ## 8. Verificări pentru consultant
@@ -270,6 +279,10 @@ Ce rămâne manual: activarea RNI și a conturilor de inventariere (pasul 5.3–
       documentele perechii recepție+factură este zero.
 - [ ] Factura de client conține liniile 607 = 371 la CMP-ul curent.
 - [ ] Factura furnizorului la alt preț decât recepția: diferența ajustează 371 pentru cantitatea rămasă și merge pe 607 pentru cea deja vândută; 371 = stocul fizic la CMP.
+- [ ] În fișa de magazie, intrarea recepției din exemplul cu factură după vânzare (5 buc din 10 vândute, factură la 12) apare la 110 lei, nu la 120, iar stocul final la 60 lei, egal cu 371.
+- [ ] Factura pe două recepții parțiale (6 + 4 buc, 5 vândute, factură la 12): în *Elemente jurnal* ale facturii apar două linii 607, de 6 și de 4 lei (câte una pe recepție); în fișa pe documente, recepțiile apar la 66 și la 44 lei (72 − 6, 48 − 4), iar fișa = 371.
+- [ ] Factura la preț mai mic (8 lei) după vânzarea a 5 din 10: intrarea din fișă 90 lei, stocul 40 lei = 371.
+- [ ] Pe facturile validate înainte de `l10n_ro_stock_gestiune` 19.0.3.1.12 și pe cele stornate cu anulare, decalajul fișă ↔ 371 este identificat și documentat (limitare cunoscută).
 - [ ] Testul automat al fluxului trece: `--test-tags=/l10n_ro_stock_pack_cmp`.
 
 ## 9. Mesaje de eroare frecvente
@@ -279,6 +292,8 @@ Ce rămâne manual: activarea RNI și a conturilor de inventariere (pasul 5.3–
 | „Modules … are incompatible." la instalare | Pachetul FIFO este deja instalat | Dezinstalați pachetul FIFO sau păstrați metoda existentă — nu se pot instala ambele |
 | Compania nu a primit metoda AVCO la instalare | Compania nu are țara fiscală România | Setați țara fiscală RO pe companie și configurați manual metoda de cost |
 | Recepția nu generează nota 371 = 408 | RNI nu este activat pe companie sau contul 408 lipsește | Bifați *Recepție fără factură (371 = 408)* în Setări → Inventar și completați *Cont 408 implicit* |
+| Fișa de magazie arată intrarea la valoarea întreagă a facturii (valoare rămasă la 0 bucăți sau *Diferență* față de 371 ≠ 0), după o factură sosită după vânzare | factura a fost validată înainte de `l10n_ro_stock_gestiune` 19.0.3.1.12, sau puntea `l10n_ro_stock_sheet_gestiune` nu e actualizată la 19.0.1.0.7 | Verificați întâi versiunea punții (**Aplicații** → `l10n_ro_stock_sheet_gestiune` ≥ 19.0.1.0.7): dacă e mai veche, actualizați-o împreună cu `l10n_ro_stock_gestiune` și **nu** resetați factura. Doar dacă puntea e la zi și factura e validată înainte de 19.0.3.1.12: pe perioadă deschisă, cu acordul contabilului, resetați în ciornă și confirmați din nou; împărțirea 371/607 se recalculează după stocul de la data revalidării, comparați *Elemente jurnal* înainte și după; actualizați ambele module împreună |
+| Același simptom, după o factură stornată cu anulare | nucleul nu reface valoarea recepției la stornarea cu anulare | nu resetați factura (ar dubla datoria pe 401); lăsați decalajul fișă ↔ 371 și documentați-l; tratamentul îl stabilește contabilul (vezi „Limitări cunoscute” din fișa `l10n_ro_stock_gestiune`) |
 | Factura de client nu are liniile 607 = 371 | Produsul nu e stocabil sau categoria nu are valorizare *real time* | Verificați categoria produsului: valorizare automată + cont de stoc 371 |
 | „With the CMP stock package installed, storable products must be in a category with the Average Cost (AVCO) costing method and Perpetual valuation…" la salvarea unui produs | Produsul stocabil (nou, mutat, dezarhivat sau cu *Urmărește stocul* bifat acum) e într-o categorie cu altă metodă de cost sau cu evaluare *Periodică*, pe o companie RO (pentru produs partajat, pe oricare companie activă RO) | Setați categoria pe *Costul mediu (AVCO)* + *Perpetuă (la facturare)* sau alegeți altă categorie |
 | „With the CMP stock package installed, categories of storable products must use the Average Cost (AVCO) costing method and Perpetual valuation" la salvarea unei categorii | Categoria are produse stocabile (și arhivate) și a fost trecută pe altă metodă sau pe evaluare *Periodică*, deci nu mai este AVCO + Perpetuă | Păstrați AVCO + Perpetuă sau mutați întâi produsele stocabile în altă categorie |
@@ -308,7 +323,13 @@ Regenerare:
     --test-tags=fise_screenshots --stop-after-init
 ```
 
+Captura fișei de magazie la factura sosită după vânzare: `05_receptie_valoare_scazuta.png` din `l10n_ro_stock_sheet_gestiune` (Pasul 5).
+
 ## 11. Observații pentru manual
+
+Explicați că la facturile sosite după vânzare, la alt preț, intrarea recepției în fișa de magazie diferă de
+valoarea facturii (partea ieșită e pe 607, nu pe 371). Limite: stornarea cu anulare și facturile dinainte de
+`l10n_ro_stock_gestiune` 19.0.3.1.12.
 
 Păstrați perspectiva de politică contabilă: pachetul este alegerea metodei
 CMP pentru toată baza de date (permanența metodelor), nu un simplu

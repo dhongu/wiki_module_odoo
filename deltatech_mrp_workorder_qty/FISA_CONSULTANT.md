@@ -61,7 +61,15 @@ lucru și nu se editează din interfață.
    operație pe BoM (tabul *Diverse*) și setați, pe fiecare operație, operația de care depinde. Pe un
    flux liniar acești pași nu sunt necesari.
 4. Verificați că operațiile din BoM sunt în ordinea corectă a secvenței.
-5. Confirmați un ordin de producție pentru produsul respectiv, ca să existe comenzile de lucru.
+5. Ca operația următoare să poată porni cu bucățile deja procesate pe cea dinainte, bifați
+   **Continuous Production** pe BoM (tabul *Diverse*). Opțiunea are același nume și același rol ca în
+   Odoo 20, deci se păstrează la migrare. Fără ea, operația următoare rămâne **Blocat(ă)** (și nu apare
+   în Shop Floor) până când cea precedentă e marcată ca efectuată. Bifa apare doar pe BoM-urile de tip
+   **Fabrică acest produs** (nu și pe Kit) și doar cu **Ordine de lucru MRP** activ. La actualizarea
+   modulului de la o versiune anterioară, opțiunea se bifează automat pe BoM-urile existente de tip
+   Fabricare care au operații, ca să păstreze comportamentul de până atunci; BoM-urile create după
+   aceea pornesc nebifate.
+6. Confirmați un ordin de producție pentru produsul respectiv, ca să existe comenzile de lucru.
 
 ## 6. Flux de utilizare
 
@@ -90,7 +98,14 @@ devine 10 (rămas 90).
 
 ### Pasul 3 — Lucrul pe operația următoare
 
-Deschideți comanda de lucru a operației următoare (Vopsire). Cantitatea disponibilă de înregistrat este
+Cu **Continuous Production** bifat pe BoM, operația următoare (Vopsire) nu mai așteaptă închiderea
+celei precedente: imediat ce pe Debitare s-a înregistrat prima tranșă, Vopsire trece din starea **Blocat(ă)** în **De făcut**, cu cantitatea pregătită
+egală cu cea procesată pe Debitare (10). Astfel apare în Shop Floor și poate porni cu bucățile deja
+debitate. Comportamentul e același și când BoM-ul nu are **Dependențe de operație**: atunci Odoo leagă
+operațiile în ordinea secvenței, fiecare de cea dinainte. Fără bifă, Vopsire rămâne **Blocat(ă)** până
+când Debitare e marcată ca efectuată.
+
+Deschideți comanda de lucru a operației Vopsire. Cantitatea disponibilă de înregistrat este
 cea procesată de operația de care depinde (10). Înregistrați 10 în același mod. Dacă încercați să
 înregistrați mai mult decât a procesat operația precedentă, modulul refuză cu un mesaj clar
 (vezi secțiunea 9).
@@ -110,7 +125,7 @@ devine cantitatea întreagă a ordinului, oricât s-a procesat efectiv pe prima.
 
 În Shop Floor deschideți operația, apoi meniul ei (butonul cu trei puncte). Apăsați
 **Înregistrează cantitatea procesată** (lângă **Register Production / Serial**, care în Shop Floor apare în engleză). Se deschide același
-dialog ca la pasul 2. Butonul apare doar pe operații, nu pe cardul ordinului de producție. Pe cardul operației, sub cantitatea planificată (de exemplu **100 Unități**), apare și linia **Procesat: 10**, adică totalul din jurnal; se actualizează după fiecare înregistrare.
+dialog ca la pasul 2. Butonul apare doar pe operații, nu pe cardul ordinului de producție. Cu **Continuous Production** bifat pe BoM, după prima tranșă pe o operație, operația următoare apare și ea în Shop Floor (filtrul **De făcut** și cardul ordinului de producție), fără să aștepte închiderea celei precedente. Pe cardul operației, sub cantitatea planificată (de exemplu **100 Unități**), apare și linia **Procesat: 10**, adică totalul din jurnal; se actualizează după fiecare înregistrare.
 
 ![Meniul Opțiuni al operației Debitare în Shop Floor, cu butonul Înregistrează cantitatea procesată evidențiat lângă Register Production / Serial; în spate, cardul operației arată 100 Unități și Procesat: 10](screenshots/04_shop_floor_meniu.png)
 
@@ -141,6 +156,7 @@ consumul de materiale rămân cele standard ale Odoo, la închiderea ordinului d
 |---|---|
 | `mrp` | Ordinul de producție, operațiile din BoM și comenzile de lucru |
 | `mrp_workorder` (Enterprise) | Ecranul Shop Floor, în al cărui meniu apare butonul nou |
+| Odoo 20 `mrp` | Opțiunea **Continuous Production** a BoM-ului devine standard; modulul o adaugă pe 19 cu același nume |
 
 **Ce e automat:** totalul procesat și restul de procesat se recalculează din jurnal; limitele se verifică
 la fiecare înregistrare sau corecție.
@@ -153,6 +169,11 @@ de producție, precum și orice intrare în stoc.
 - [ ] Setarea **Ordine de lucru MRP** este activă (și **Dependențe comandă de lucru**, doar pe fluxuri neliniare).
 - [ ] Operația a doua urmează după prima, în secvență sau prin dependență setată pe BoM.
 - [ ] După înregistrarea a 10 pe prima operație, a doua afișează cantitatea disponibilă 10.
+- [ ] Pe un BoM de tip Fabricare, în tabul **Diverse**, apare bifa **Continuous Production**; pe un Kit nu apare.
+- [ ] După actualizarea modulului, BoM-urile existente cu operații au bifa activă, iar un BoM nou pornește nebifat.
+- [ ] Cu bifa activă: înainte de prima tranșă a doua operație e **Blocat(ă)**; după înregistrarea a 10 pe prima, a doua trece în **De făcut**, are cantitatea pregătită 10 și apare în Shop Floor, inclusiv pe un BoM fără **Dependențe de operație**.
+- [ ] Cu bifa activă: după o corecție care readuce totalul primei operații la 0, a doua revine în **Blocat(ă)**.
+- [ ] Fără bifă: după 10 înregistrate pe prima operație, a doua rămâne **Blocat(ă)** până la închiderea primei.
 - [ ] Încercarea de a înregistra pe a doua operație mai mult decât a procesat prima este refuzată.
 - [ ] O înregistrare de −4 pe prima operație (cu a doua la 10) este refuzată; după corectarea celei de-a doua, trece.
 - [ ] Tabul **Cantitate procesată** arată fiecare tranșă cu data, utilizatorul și nota.

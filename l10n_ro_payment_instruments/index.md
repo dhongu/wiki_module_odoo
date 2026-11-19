@@ -1,10 +1,10 @@
 # Romania - Instrumente de plată (cecuri, bilete la ordin) (localizat la `l10n_ro_payment_instruments/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_payment_instruments`
-- **Versiune:** `19.0.1.3.1`
+- **Versiune:** `19.0.1.4.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payment_instruments
-- **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_payment_instruments`
-- **Ultima Ingestie:** 2026-10-09
+- **Cale Locală:** odoo-addons/l10n_ro_ent/l10n_ro_payment_instruments
+- **Ultima Ingestie:** `2026-11-19`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -19,15 +19,16 @@ Modulul gestionează instrumentele de plată specifice (cecuri, bilete la ordin,
   - cec primit: Dr 5112 = Cr 4111 la înregistrare; depunerea la bancă nu face notă; încasare Dr 5121 = Cr 5112; refuz Dr 4111 = Cr 5112;
   - BO/cambie primită: Dr 413 = Cr 4111 la înregistrare; depunere la bancă Dr 5113 = Cr 413; încasare Dr 5121 = Cr 5113 (sau Dr 5121 = Cr 413 fără depunere);
   - BO/cambie emisă: Dr 401 = Cr 403, plată Dr 403 = Cr 5121, refuz Dr 403 = Cr 401;
-  - andosare: Dr 401 (furnizorul) = Cr 413 (clientul); factura furnizorului se reconciliază manual cu linia 401 din caseta „Debit nealocat".
+  - andosare: implicit Dr 401 (furnizorul) = Cr 413 (clientul); factura furnizorului se reconciliază manual cu linia 401 din caseta „Debit nealocat".
+- Andosare prin 403 (opțional): cu setarea **Andosare prin 403** (Setări → Contabilitate → Instrumente de plată (RO), `l10n_ro_endorse_via_403`), nota devine Dr 401 = Cr 403 și Dr 403 = Cr 413, cu furnizorul pe 403, iar cele două linii 403 se reconciliază automat; andosările anterioare rămân neschimbate, soldurile finale sunt aceleași.
 - Facturi acoperite: se sting la înregistrarea instrumentului și se redeschid, cu scadența inițială, la refuz.
 - Data operației: fiecare notă se datează cu câmpul „Data operației" de pe instrument (data primirii, a extrasului, a refuzului), nu cu data apăsării butonului; după fiecare pas câmpul revine la ziua curentă.
 - Refuzul reface creanța/datoria și creează o activitate de avertizare; butonul Protest trece instrumentul în Protestat, fără notă.
-- Blocaj opt-in la facturare (FR-39): dacă `res.company.l10n_ro_block_refused_instrument` e bifat (Setări → Contabilitate → Instrumente de plată (RO)), confirmarea unei facturi de client către un partener cu instrumente în stare Refuzat este blocată; nu se aplică notelor de credit și facturilor de furnizor și încetează la trecerea în Protestat.
+- Blocaj opt-in la facturare (FR-39): dacă `res.company.l10n_ro_block_refused_instrument` e bifat (Setări → Contabilitate → Instrumente de plată (RO) → „Blochează partenerii cu instrumente refuzate"), confirmarea unei facturi de client către un partener cu instrumente în stare Refuzat este blocată; nu se aplică notelor de credit și facturilor de furnizor și încetează la trecerea în Protestat.
 - Scadențar (Contabilitate → Contabilitate → Instrumente de Plată, filtru implicit „În portofoliu") cu „Zile până la scadență" și coduri de culoare: roșu (depășit/refuzat/protestat), portocaliu (în 5 zile), verde (onorat/andosat), gri (anulat).
-- Cron zilnic de alertă, dezactivat implicit, cu X zile înainte de scadență (parametru `l10n_ro_payment_instruments.alert_days_before_due`, implicit 5); activitatea se atribuie celui care a creat instrumentul, cu notificare pe email.
-- Auto-detectare conturi 5112, 5113, 413, 403, 4111, 401, 5121 din planul RO (potrivire doar ca prefix de cod), cu suprascriere manuală per instrument; jurnalul implicit este primul de tip Operațiuni diverse, schimbabil pe instrument.
-- Cu extrase bancare importate: la „Cont bancă" se poate alege contul reconciliabil de încasări/plăți în curs, ca încasarea să nu apară de două ori pe 5121.
+- Cron zilnic de alertă, dezactivat implicit (Setări → Tehnic → Automatizări), cu X zile înainte de scadență (parametru `l10n_ro_payment_instruments.alert_days_before_due`, implicit 5); activitatea se atribuie celui care a creat instrumentul, cu notificare pe email.
+- Auto-detectare conturi 5112, 5113, 413, 403, 4111, 401, 5121 din planul RO, cu suprascriere manuală per instrument (secțiunea „Conturi contabile"); jurnalul implicit este primul de tip Operațiuni diverse, schimbabil pe instrument.
+- Cu extrase bancare importate: la „Cont bancă" se poate alege contul reconciliabil de încasări/plăți în curs, ca încasarea să nu apară de două ori pe 5121; extrasul se potrivește apoi cu nota instrumentului la reconcilierea bancară.
 - Un instrument cu note postate nu se poate anula până nu se stornează notele; „Resetează la Ciornă" apare doar pe instrumentele fără notă de înregistrare.
 - Limitări: fără refuz/încasare parțială, fără scontare (5114, 667), fără calcul de termene de protest; valoarea nominală e în moneda companiei.
 
@@ -35,23 +36,21 @@ Modulul gestionează instrumentele de plată specifice (cecuri, bilete la ordin,
 
 - `account`
 - `l10n_ro`
-- [l10n_ro_anaf_base](../l10n_ro_anaf_base/index.md)
+- `l10n_ro_move_guard`
 
 #### 4. Componente Cheie
 
 **Modele**
 
 - `l10n.ro.payment.instrument`: Instrumentul de plată cu mașina de stări, conturile asociate, data operației și generarea notelor contabile.
-- `account.move` (extindere): adaugă blocajul opt-in de postare a facturilor de vânzare pentru partenerii cu instrumente refuzate, agregat în garda de postare din `l10n_ro_anaf_base`.
+- `account.move` (extindere): adaugă blocajul opt-in de postare a facturilor de vânzare (`out_invoice`) pentru partenerii cu instrumente refuzate, agregat în garda de postare din `l10n_ro_move_guard`.
 - `res.company` (extindere): câmpul boolean `l10n_ro_block_refused_instrument` care activează blocajul.
-- `res.config.settings` (extindere): expune `l10n_ro_block_refused_instrument` în configurarea companiei.
+- `res.config.settings` (extindere): expune `l10n_ro_block_refused_instrument` și `l10n_ro_endorse_via_403` în configurarea companiei.
 
-**Vizualizări / Date**
+**Vizualizări**
 
-- `views/l10n_ro_payment_instrument_views.xml`: Interfața de gestionare și scadențarul instrumentelor.
-- `views/res_config_settings_views.xml`: Setarea de blocaj facturare pentru parteneri cu instrumente refuzate.
-- `data/ir_cron.xml`: Cron-ul zilnic de alertă scadență.
-- `security/ir.model.access.csv`: Drepturile de acces.
+- `view_l10n_ro_payment_instrument_form` / `view_l10n_ro_payment_instrument_list` / `view_l10n_ro_payment_instrument_search`: formularul, scadențarul (lista cu culori) și filtrele instrumentelor; acțiunea `action_l10n_ro_payment_instrument`.
+- `res_config_settings_view_form_payment_instruments`: setările de blocaj la facturare pentru parteneri cu instrumente refuzate și de andosare prin 403.
 
 **Acțiuni Automate / Acțiuni Server**
 
@@ -59,4 +58,5 @@ Modulul gestionează instrumentele de plată specifice (cecuri, bilete la ordin,
 
 #### 5. Conexiuni
 
-- [l10n_ro_leasing](../l10n_ro_leasing/index.md)
+- `l10n_ro_move_guard`: oferă mecanismul de blocare la confirmarea facturii, folosit de blocajul pentru instrumente refuzate.
+- `account` și `l10n_ro`: facturile acoperite, notele contabile și reconcilierea liniilor 4111/401, respectiv planul de conturi RO.

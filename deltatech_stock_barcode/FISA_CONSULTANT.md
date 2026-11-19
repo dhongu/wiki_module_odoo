@@ -86,6 +86,13 @@ Date minime pentru demo:
 6. Pentru inventarul pe utilizator: în **Inventar → Operații → Ajustări → Inventariere fizică**,
    atribuiți cantitățile de numărat fiecărui operator (coloana **Atribuit către**) și setați data în
    coloana **Programat**.
+7. Pentru amplasarea manuală afișată pe liniile de inventar: dați utilizatorilor grupul **Afișează
+   câmpurile de amplasare manuală (Raft/Rând/Poliță/Cutie)** și completați pe fiecare produs
+   **Raft / Rând / Poliță / Cutie** pe fiecare depozit (`deltatech_stock_inventory`). Poziția se
+   salvează separat pe depozit: același produs poate sta pe rafturi diferite în două depozite.
+8. Opțional, în **Inventar → Configurare → Setări**, blocul **Cod de bare**, bifați **Inventar cod de
+   bare: arată celelalte locații**, ca operatorul să vadă pe fiecare linie de inventar unde mai e
+   produsul în același depozit.
 
 ## 6. Flux de utilizare
 
@@ -162,6 +169,18 @@ utilizatorului curent, cu data programată ajunsă.
 - **Mai departe**: scanați fiecare produs (codul de bare sau referința internă) și introduceți
   cantitatea, apoi **Confirmă**. Un produs care nu e în listă se adaugă prin scanare.
 
+Pentru utilizatorii cu grupul de amplasare manuală, fiecare linie arată sub produs, lângă iconița cu
+cutii, poziția **Raft / Rând / Poliță / Cutie** salvată pe **depozitul cantității** numărate: o
+cantitate dintr-un raft al celui de-al doilea depozit arată poziția din acel depozit, nu pe cea din
+depozitul principal. Un produs adăugat prin scanare, fără cantitate în locație, arată poziția de pe
+produs.
+
+Cu **Inventar cod de bare: arată celelalte locații** bifată, sub cantitate apare rândul **Și în:** cu
+celelalte locații din **același depozit** în care produsul are stoc pozitiv și cantitățile lor (de
+exemplu `B02/Stoc/SH/UL: 5 BUC`). E doar informativ: nu se adaugă linii de numărat și nu se atribuie
+nimic. Dacă operatorul vrea să numere și acolo, scanează locația respectivă și apoi produsul.
+Locațiile din alte depozite și cele fără stoc nu apar.
+
 ![Ecranul Inventariere fizică din aplicația Cod de bare: locația WH/Stock/Raft A2 cu liniile PIU-M8 Piuliță M8 și SAI-M8 Șaibă M8, fiecare cu cantitatea numărată ?, și butonul Confirmă (0)](screenshots/05_inventar_cantitatile_mele.png)
 
 ### Note de monografie și raportare
@@ -210,6 +229,12 @@ numărat pe operatori; ajustarea greutății și a numărului de colete.
 - [ ] Cu **Inventar cod de bare: doar cantitățile mele** bifată, ecranul Inventariere fizică arată
       doar cantitățile atribuite utilizatorului; înainte de a număra, numărul de pe butonul
       **Inventariere** din ecranul principal e egal cu numărul liniilor și scade pe măsură ce numărați.
+- [ ] Cu un produs care are poziții diferite în două depozite și cantități în amândouă, la inventarul
+      dintr-un raft al celui de-al doilea depozit linia arată poziția **Raft / Rând / Poliță / Cutie**
+      din acel depozit, nu pe cea din depozitul principal.
+- [ ] Cu **Inventar cod de bare: arată celelalte locații** bifată și produsul în două locații ale
+      aceluiași depozit, linia de inventar arată **Și în:** cu cealaltă locație și cantitatea ei;
+      locațiile fără stoc și cele din alt depozit nu apar, iar pe ecran nu se adaugă nicio linie.
 - [ ] Scanarea referinței interne a unui produs fără cod de bare găsește produsul.
 
 ## 9. Mesaje de eroare frecvente

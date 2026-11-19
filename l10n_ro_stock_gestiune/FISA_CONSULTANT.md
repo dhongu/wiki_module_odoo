@@ -98,6 +98,7 @@ Roluri recomandate pentru testare:
 |---|---|
 | **371 / 301 / 302 / 303** | cont de stoc (debitat la recepție: contul categoriei produsului); contul propriu al gestiunii e folosit doar la transfer |
 | **408** | „Furnizori – facturi nesosite" — datoria estimată la recepția fără factură |
+| **607** | partea din diferența de preț aferentă mărfii deja ieșite din stoc (FIFO/CMP, numai dacă e contul de cheltuială al produsului); câte o linie pe recepția căreia îi aparține |
 | **401** | datoria față de furnizor (la sosirea facturii) |
 | **308** | diferențe față de prețul standard, la cost standard: doar pentru materii prime, materiale consumabile și obiecte de inventar (301/302/303), după contul configurat pe categorie. La mărfuri (371) OMFP 1802/2014 nu are cont de diferențe față de prețul standard (378 ține adaosul comercial): se recomandă costul FIFO sau mediu |
 | **665 / 765** | cheltuieli / venituri din diferențe de curs valutar |
@@ -107,7 +108,9 @@ Roluri recomandate pentru testare:
 **Unde trăiește valoarea stocului** (Odoo 19, valorizare perpetuă):
 
 - pe fiecare **mișcare de stoc**: câmpul *Valoare* — costul operațiunii la metoda produsului
-  (FIFO/CMP/standard); suma mișcărilor de intrare minus ieșire = valoarea stocului;
+  (FIFO/CMP/standard); suma mișcărilor de intrare minus ieșire = valoarea stocului (excepție: la factura sosită după
+  vânzare, valoarea recepției include și partea trecută pe 607; fișa de magazie o scade, ca intrarea
+  să fie egală cu ce a ajuns pe 371, vezi pasul 2);
 - pe fiecare **linie contabilă** din jurnalul de stoc: debit/credit pe contul de stoc. Cu puntea
   `l10n_ro_stock_gestiune_valuation` instalată, liniile poartă și aria de evaluare a gestiunii;
   cantitatea pe linie nu e completată. Balanța de stocuri citește cantitățile și valorile din
@@ -121,6 +124,7 @@ Date minime pentru demo:
   prin tranzit, un cont de tranzit (ex. 371.T) pe locația de tranzit;
 - produse stocabile cu **valorizare perpetuă (`real_time`)** și metodă de cost (FIFO / CMP / standard);
 - furnizor și, pentru fluxul complet, o comandă de achiziție;
+- pentru exemplul cu factura sosită după vânzare: produs FIFO/CMP cu contul de cheltuială 607 și aplicația Vânzări;
 - pentru pasul de verificare finală: modulul `l10n_ro_stock_sheet` (balanța analitică a stocurilor).
 
 ## 5. Configurare inițială
@@ -225,8 +229,8 @@ datoriei estimate:
 
 ### Pasul 2 — Factura furnizorului (408 = 401)
 
-Meniu: **Achiziții → Comenzi** → comanda de achiziție → **Creare factură**, apoi confirmarea
-facturii în **Contabilitate → Furnizori → Facturi**.
+Meniu: **Achiziții → Comenzi → Comenzi de achiziție** → bifați comanda în listă → **Creați facturi**, apoi
+**Confirmă** pe factura deschisă (sau din **Contabilitate → Furnizori → Facturi**).
 
 Linia de produs stocabil este contată pe **408** (nu pe 371 — marfa e deja în gestiune, valoarea
 ei nu se modifică), iar contul 408 este debitat cu exact valoarea creditată la recepție:
@@ -245,7 +249,26 @@ rămân neschimbate; se mută doar datoria, din „estimată" (408) în „cert�
 |---|---|---|---|---|---|---|
 | Gestiunea A | 10 buc | 1.000 | 1.000 D | — | **0** (stins) | **1.210 C** |
 
-**Exemplu de flux, factură la alt preț după o vânzare parțială** (FIFO/CMP): comandă de 10 buc × 10 lei (**Achiziții → Comenzi**), recepție validată (371 = 408 la 100 lei), livrare de 5 buc (**Vânzări → Comenzi**, 607 = 371 la facturarea clientului), apoi *Creează factură* din comanda de achiziție, preț unitar 12 lei, *Confirmă*. În tab-ul *Elemente jurnal* al facturii: 408 stins cu 20 lei, 371 +10 (cele 5 buc rămase) și 607 +10 (cele 5 buc ieșite).
+**Exemplu de flux, factură la alt preț după o vânzare parțială** (FIFO/CMP): comandă de 10 buc × 10 lei (**Achiziții → Comenzi**), recepție validată (371 = 408 la 100 lei), livrare de 5 buc (**Vânzări → Comenzi**, 607 = 371 la facturarea clientului), apoi factura: în lista comenzilor (**Achiziții → Comenzi → Comenzi de achiziție**) bifați comanda și apăsați
+**Creați facturi**, schimbați *Preț* pe linia facturii la 12 lei și apăsați **Confirmă**. În tab-ul
+**Elemente jurnal** al facturii: Dr 408 120 (linia de produs) și Cr 408 20 (diferența de preț), deci 408 se
+stinge cu 100 lei (valoarea recepției); Dr 371 10 (cele 5 buc rămase) și Dr 607 10 (cele 5 buc ieșite);
+Dr 4426 25,20 / Cr 401 145,20. Captura fișei de magazie pentru un exemplu similar e în fișa
+`l10n_ro_stock_sheet_gestiune`, Pasul 5.
+
+**Linia de cheltuială 607 se leagă de recepție.** Partea trecută pe cheltuială se generează câte o linie
+**pentru fiecare recepție din care a ieșit marfă** (la FIFO, o recepție încă intactă în stoc nu primește
+linie; la CMP primesc toate recepțiile acoperite, proporțional). Fiecare linie poartă legătura cu mișcarea
+de recepție (câmp tehnic, fără vedere în interfață). La FIFO, suma se repartizează după cantitatea consumată
+din stratul fiecărei recepții; la CMP, proporțional cu cantitatea recepționată. Pe recepție, modulul reține
+suma consumată într-un câmp tehnic (*diferență de preț consumată*, fără vedere în interfață), iar fișa de
+magazie o scade din intrarea acelei recepții (vezi fișa `l10n_ro_stock_sheet_gestiune`). Totalul trecut pe 607
+exclude cantitatea returnată la furnizor, dar repartizarea lui între recepții (cantitate − rămas în strat) numără
+și returul: o recepție din care s-a făcut doar retur poate primi astfel o parte din 607. În exemplul de mai
+sus, recepția are 100 lei inițial, 120 lei după factură, din care 10 lei sunt pe 607: în fișă, intrarea apare
+110 lei, adică exact ce a ajuns pe 371. Resetarea facturii în ciornă șterge liniile de
+cheltuială, iar suma consumată revine automat la 0. Valoarea recepției din nucleu se reface la repostarea
+facturii sau la validarea facturii care o înlocuiește; cât factura rămâne în ciornă sau anulată, fișa poate arăta un decalaj față de 371 (vezi limitările).
 
 Cazuri particulare (tratate automat, detaliate în „Note de monografie"):
 - **valută**: stocul rămâne la cursul recepției; diferența de curs recepție↔factură merge pe 665/765;
@@ -392,7 +415,10 @@ limitările).
   prime și materiale; la mărfuri se recomandă FIFO/CMP, 378 ține adaosul comercial), la FIFO/CMP pe **371**, la cursul facturii — datoria suplimentară se naște la
   data facturii. Factura mai mare: **Dr 371 = Cr 408** în negru. Factura mai mică: pe companiile cu
   storno, stornare în roșu a diferenței **371 = 408** (−x pe ambele linii, OMFP 1802, pct. 69);
-  fără storno, **Dr 408 = Cr 371**. În captură: aviz 2 × 100 lei, factură 2 × 90 lei —
+  fără storno, **Dr 408 = Cr 371**. Partea aferentă cantității **deja ieșite din stoc** (FIFO/CMP, cont de
+  cheltuială 607) merge pe cheltuială, câte o linie pe recepția căreia îi aparține: factura mai mare
+  **Dr 607 = Cr 408** în negru; factura mai mică, pe companiile cu storno, **607 = 408** în roșu pe ambele
+  linii (fără storno, **Dr 408 = Cr 607**). În captură: aviz 2 × 100 lei, factură 2 × 90 lei —
   **Dr 371 −20 / Cr 408 −20**.
 
   ![Factura cu reducere de preț: 371 = 408 în roșu](screenshots/14_factura_reducere_pret.png)
@@ -414,11 +440,15 @@ limitările).
 
 Comportamentul de mai jos este acoperit de `tests/test_rni.py`, `tests/test_notice.py`,
 `tests/test_stock_gestiune.py`, `tests/test_transfer_entry.py` (pe FIFO/CMP/standard) și
-`tests/test_ro_company.py` (firmă RO cu plan de conturi RO și storno):
+`tests/test_ro_company.py` (firmă RO cu plan de conturi RO și storno); scenariile cu factură după vânzare sunt
+în `test_price_difference_sheet.py` din `l10n_ro_stock_pack_cmp` și `l10n_ro_stock_pack_fifo`:
 
 | Scenariu | Rezultat așteptat |
 |---|---|
 | Recepție 10×100, fără factură | nota `371 = 408` pe 1000 |
+| Două recepții 6+4, 5 buc vândute, factură la 12 (FIFO) | 10 lei pe 607, legați doar de prima recepție; a doua rămâne 0 |
+| Factură la 12 pe 2 recepții parțiale (CMP) | suma consumată se împarte proporțional cu cantitatea recepționată (6/4) |
+| Factura resetată în ciornă sau stornată cu anulare | suma consumată pe recepție revine la 0 |
 | Re-procesarea recepției | nu se generează a doua notă (idempotent) |
 | Factura furnizor 10×100 | linia pe **408**; `408 = 401`; 408 se stinge la 0 |
 | 371 recunoscut o singură dată | la recepție, nu se dublează la factură |
@@ -457,13 +487,13 @@ Comportamentul de mai jos este acoperit de `tests/test_rni.py`, `tests/test_noti
 | `stock_account` / `purchase_stock` | valorizarea nativă pe mișcarea de stoc și legătura factură↔recepție |
 | `account` | notele contabile 371/408/401 și diferențele de preț/curs |
 | `l10n_ro_stock_sheet` | balanța analitică a stocurilor (cantitate + valoare + diferență) și fișa de magazie — pasul 5 |
-| `l10n_ro_stock_sheet_gestiune` (punte, auto-install) | filtrul pe gestiune în balanță și butonul **Fișă de magazie** din gestiune |
+| `l10n_ro_stock_sheet_gestiune` (punte, auto-install, ≥ 19.0.1.0.7) | filtrul pe gestiune în balanță, butonul **Fișă de magazie** din gestiune și scăderea din intrarea recepției a părții din diferența de preț trecute pe 607; se actualizează **împreună** cu acest modul (19.0.3.1.12) |
 | `l10n_ro_currency_revaluation` | reevaluarea lunară a datoriilor în valută; **nu include 408** în configurația standard RO (vezi limitările) |
 
 Ce este automat: valoarea pe fiecare mișcare de stoc, nota `371 = 408` la recepție, rutarea facturii
 pe 408 și stingerea lui, storno-ul la retur, notele valorice ale transferului, blocarea transferului
 care nu poate fi contat, blocarea recepțiilor și ieșirilor pe gestiunile cu cont propriu,
-diferențele de curs și de preț.
+diferențele de curs și de preț, legarea liniilor de cheltuială 607 de recepție.
 Ce rămâne manual: configurarea conturilor pe gestiune/companie, verificarea soldului 408 la
 închidere și citirea coloanei *Diferență* din balanța de stocuri.
 
@@ -477,11 +507,12 @@ Ce rămâne manual: configurarea conturilor pe gestiune/companie, verificarea so
 - [ ] După recepție, soldul contului de stoc al categoriei = valoarea recepționată (exemplu: 1.000).
 - [ ] Linia 408 a notei de recepție poartă furnizorul; după factură, 408 e 0 și pe cont, și pe furnizor.
 - [ ] O recepție direct într-o gestiune cu cont propriu diferit de contul categoriei e blocată.
-- [ ] Factura furnizorului contează linia pe 408, stinge contul 408 și **nu** modifică valoarea stocului.
+- [ ] Factura furnizorului contează linia pe 408, stinge contul 408 și, la prețul recepției, **nu** modifică valoarea stocului (la preț diferit, diferența ajustează 371 pentru cantitatea rămasă și merge pe 607 pentru cea ieșită).
 - [ ] Contul 408 se stinge și dacă nu are bifa „Permite reconcilierea" — mecanismul nu depinde de reconciliere.
 - [ ] La achiziție în valută, stocul rămâne la cursul recepției, iar diferența de curs apare pe 665/765, în negru pe latura normală (și pe firmele cu storno).
 - [ ] Diferența de preț ajunge pe 308 (cost standard, după categorie, la materii prime și materiale) sau pe 371 (FIFO/CMP).
-- [ ] La FIFO/CMP, dacă o parte din marfă a ieșit deja din stoc la sosirea facturii, partea de diferență aferentă cantității ieșite merge pe cheltuiala produsului (607 la mărfuri), iar 371 rămâne egal cu valoarea stocului fizic.
+- [ ] La FIFO/CMP, dacă o parte din marfă a ieșit deja din stoc la sosirea facturii, partea de diferență aferentă cantității ieșite merge pe 607, numai dacă acesta e contul de cheltuială al produsului (sau contul din regula OBYC `stock_receipt_price_difference`; la 601/602 rămâne pe stoc), iar 371 rămâne egal cu valoarea stocului fizic.
+- [ ] După factura sosită după o vânzare parțială, în *Elemente jurnal* apare pe 607 câte o linie pentru fiecare recepție cu parte consumată (numărul liniilor = numărul acestor recepții; legătura cu recepția nu se vede în *Elemente jurnal*); suma lor = partea aferentă cantității ieșite. Repartizarea se verifică în fișa de magazie, pe rândul fiecărei recepții: intrarea = valoarea facturii pe recepție − partea ei de pe 607. Resetarea facturii în ciornă șterge liniile, iar la repostare ele se refac (în fișa de magazie, intrarea recepției revine la valoarea nativă și apoi la valoarea scăzută).
 - [ ] Returul către furnizor generează storno în roșu, iar gestiunea și 408 scad cu aceeași sumă.
 - [ ] Transferul direct A→B cu conturi diferite generează nota `371.2 = 371.1`, fără 481.
 - [ ] Transferul prin tranzit e blocat fără cont de tranzit pe locație (regula strictă) și, după configurare, trece prin 371.T, care se închide la zero la sosire.
@@ -501,8 +532,11 @@ Ce rămâne manual: configurarea conturilor pe gestiune/companie, verificarea so
 | „Gestiunea … nu este validă la … (inactivă sau în afara perioadei de valabilitate).” | setarea **Necesită gestiune contabilă** e activă, iar gestiunea locației e inactivă sau în afara perioadei ei de valabilitate la data mișcării | reactivați gestiunea sau corectați-i perioada de valabilitate |
 | Soldul 408 pe furnizor nu e 0 după facturare, deși contul 408 are sold 0 | recepții contate înainte de versiunea 19.0.3.1.0, cu linia 408 fără partener | completați partenerul pe liniile 408 vechi (notă de reclasificare pe furnizor) |
 | Recepția nu generează nota 371 = 408 | setarea de companie e oprită **și** recepția nu e marcată „Recepție pe aviz"; sau produsul nu e stocabil / nu are valorizare perpetuă | activați setarea de companie *sau* bifați **Recepție pe aviz** pe transfer (ori implicit pe tipul de operație); verificați tipul produsului și categoria (`real_time`) |
-| Soldul 408 nu se stinge | factura nu e legată de recepție (fără comandă de achiziție), sau e facturată doar o parte din cantitatea recepționată | facturați din comanda de achiziție; verificați cantitatea facturată față de cea recepționată |
+| Soldul 408 nu se stinge | factura nu e legată de recepție (fără comandă de achiziție), sau e facturată doar o parte din cantitatea recepționată | facturați din comanda de achiziție; verificați cantitatea facturată față de cea recepționată; la o notă de credit doar de preț, fără retur, nu se generează linii 371/607 și 408 rămâne cu sold: regularizare manuală |
 | Nu se generează nota RNI deși e activată | lipsește jurnalul de stoc sau contul 408 pe companie/gestiune | configurați jurnalul de stoc și contul 408 |
+| Fișa de magazie arată o intrare la valoarea întreagă a facturii, iar la 0 bucăți rămâne valoare (coloana *Diferență* ≠ 0), la o factură sosită după vânzare | factura a fost validată înainte de versiunea 19.0.3.1.12 (linia 607 nu are legătura cu recepția); sau `l10n_ro_stock_sheet_gestiune` nu e actualizat la 19.0.1.0.7 | Verificați întâi versiunea punții (**Aplicații** → `l10n_ro_stock_sheet_gestiune` ≥ 19.0.1.0.7): dacă e mai veche, actualizați-o împreună cu `l10n_ro_stock_gestiune` și **nu** resetați factura. Doar dacă puntea e la zi și factura e validată înainte de 19.0.3.1.12: pe o perioadă deschisă, cu acordul contabilului, resetați factura în ciornă și revalidați (legătura se completează). Atenție: la revalidare partea 371/607 se recalculează după stocul de la data revalidării, deci nota se poate schimba; comparați *Elemente jurnal* înainte și după. Pe perioade blocate sau la facturi primite din SPV pe care nu le mai modificați, lăsați diferența și documentați-o; actualizați puntea la zi |
+| Același simptom, după o factură stornată cu anulare | nucleul nu reface valoarea recepției la stornarea cu anulare (vezi limitările) | nu resetați factura originală; lăsați decalajul vizibil și documentați-l; tratamentul îl stabilește contabilul |
+| Același simptom, cu factura în ciornă sau anulată | liniile 607 s-au șters, iar valoarea recepției din nucleu se reface doar la o nouă validare | repostați factura sau validați factura corectă care o înlocuiește |
 | Consultantul nu vede meniul gestiunilor | meniul **Gestiuni contabile** cere drepturi de administrator pe Inventar | dați utilizatorului dreptul **Inventar / Administrator** |
 | Coloana *Diferență* din balanța de stocuri nu e 0 | note manuale pe conturile de stoc sau mișcări nevalorizate | identificați nota prin drill-down pe cont → produs → mișcare; corectați sau reclasați |
 
@@ -543,12 +577,13 @@ Păstrați explicația construită pe **firul valoric**: la fiecare operațiune,
 unde se află valoarea (mișcare de stoc → notă contabilă → sold cont de stoc) și folosiți
 exemplul numeric continuu (10 buc × 100 lei) din secțiunea 6 — tabelele „Starea după pas" sunt
 gândite pentru a fi preluate direct în manual. Subliniați invariantele pe care utilizatorul le poate
-verifica singur: (1) valoarea totală a stocului = soldul conturilor de stoc; (2) factura nu modifică
-valoarea stocului, doar mută datoria de pe 408 pe 401; (3) transferul redistribuie valoarea între
+verifica singur: (1) valoarea totală a stocului = soldul conturilor de stoc; (2) factura, la prețul recepției, nu modifică
+valoarea stocului, doar mută datoria de pe 408 pe 401 (la preț diferit, diferența ajustează 371 pentru
+cantitatea rămasă, iar partea ieșită merge pe 607, nu pe stoc); (3) transferul redistribuie valoarea între
 gestiuni fără să schimbe totalul, iar contul de tranzit se închide la zero când marfa ajunge;
 (4) soldul contului gestiunii = valoarea mărfii din ea, garantat de blocarea recepțiilor și
 ieșirilor directe pe gestiunile cu cont propriu. Încheiați cu verificarea în balanța analitică a stocurilor (totalul cu diferență
-0) și tratamentul corect RO al diferențelor de curs (stocul nu se reevaluează) și de preț (308 la materii prime și materiale, la cost standard; la mărfuri FIFO/CMP).
+0; intrarea unei recepții în fișă poate diferi de valoarea facturii, fiindcă partea de pe 607 nu intră în stoc) și tratamentul corect RO al diferențelor de curs (stocul nu se reevaluează) și de preț (308 la materii prime și materiale, la cost standard; la mărfuri FIFO/CMP).
 
 ### Limitări cunoscute
 
@@ -567,6 +602,25 @@ ieșirilor directe pe gestiunile cu cont propriu. Încheiați cu verificarea în
   reevaluează manual.
 - **Liniile 408 contate înainte de versiunea 19.0.3.1.0** nu au partener; soldul 408 pe furnizor al
   acestor recepții se corectează manual.
+- **Stornarea cu anulare a unei facturi emise după vânzare.** Suma trecută pe cheltuială se anulează
+  (linia de cheltuială se copiază cu legătura de recepție și semn invers), dar nucleul Odoo nu mai
+  reface valoarea recepției la o stornare cu anulare: valoarea mișcării de recepție (câmpul *Valoare*) rămâne
+  la valoarea facturii anulate. De aceea, după un astfel de storno, fișa de magazie și valorizarea nativă nu se mai
+  reconciliază cu contul de stoc, iar diferența apare în coloana *Diferență* a balanței analitice.
+  Evitați stornarea cu anulare a unei facturi cu parte consumată; dacă s-a făcut, lăsați decalajul fișă ↔ 371
+  vizibil și documentați-l; tratamentul îl stabilește contabilul.
+- **Factura resetată în ciornă sau anulată definitiv.** Liniile de cheltuială se șterg, dar valoarea recepției din
+  nucleu se reface doar la repostare sau la validarea facturii care o înlocuiește; cât factura rămâne în ciornă sau anulată, fișa poate arăta recepția la
+  valoarea facturii, cu *Diferență* ≠ 0 față de 371.
+- **Facturile validate înainte de versiunea 19.0.3.1.12** nu au legătura cu recepția, deci fișa lor
+  rămâne neajustată (diferență față de sintetic, dacă o parte din marfă ieșise deja). Resetarea în
+  ciornă și revalidarea facturii completează legătura, dar proporția 371/607 se recalculează la data
+  revalidării, după stocul de atunci: dacă s-a mai vândut între timp, nota facturii se schimbă (mai mult pe
+  607, mai puțin pe 371). Nu o faceți pe perioade blocate sau pe facturi primite din SPV pe care nu le mai
+  modificați.
+- **Mai multe recepții pe aceeași linie de factură:** la CMP partea consumată se repartizează
+  proporțional cu cantitatea recepționată (aproximare, ieșirile vin din stocul mediu); la FIFO, după
+  cantitatea consumată din fiecare strat.
 
 ---
 
