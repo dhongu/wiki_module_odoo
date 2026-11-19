@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.0.0.4`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_currency
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_currency`
-- **Ultima Ingestie:** `2026-11-06`
+- **Ultima Ingestie:** `2026-11-19`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -45,4 +45,4 @@ Modulul nu are `readme/USAGE.md`, iar DESCRIPTION.md nu detaliază componentele;
 
 #### 5. Conexiuni
 
-- Nu au fost identificate conexiuni funcționale către alte module documentate în wiki.
+- [deltatech_purchase_currency](../deltatech_purchase_currency/index.md): perechea pe achiziții a acestui modul — jurnal de facturare pe comanda de achiziție, factura furnizorului în moneda jurnalului, prețuri la cursul BNR al datei facturii sau la Cursul furnizorului scris pe factură.

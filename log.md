@@ -4,6 +4,18 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-19] `deltatech_purchase_currency` (nou, 19.0.1.2.0) și `deltatech_sale_currency` (legătură spre pereche)
+
+- **Acțiune:** Pagină nouă pentru modulul portat din 20.0 pe 19.0 (dhongu/deltatech#4256): jurnal de facturare pe comanda de
+  achiziție, factura furnizorului în moneda jurnalului, prețuri la *Curs furnizor* (implicit cursul BNR din data facturii),
+  avertisment când data înlocuiește un curs scris de mână. Notat că pe 19.0 lipsește indicatorul de potrivire a prețului
+  și punctul de extindere `account.move._get_purchase_odoo_rate()` (dhongu/deltatech#4257). Fișa consultant copiată cu
+  10 capturi. Re-ingestie `deltatech_sale_currency` (19.0.0.0.4) doar pentru trimiterea spre pereche. Subagenți în paralel.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/USAGE.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`, `models/`, `views/`.
+- **Dependențe/Conexiuni:** `purchase`; pereche `deltatech_sale_currency`; folosit de `terrabit_interheat`.
+- **Fișiere actualizate:** `deltatech_purchase_currency/` (index.md, FISA_CONSULTANT.md, screenshots/),
+  `deltatech_sale_currency/` (index.md, FISA_CONSULTANT.md), `index.md`, `log.md`.
+
 ## [2026-11-19] Sincronizare automată de noapte
 
 - **Versiuni aduse la zi** (18): `deltatech_expenses 19.0.3.12.0 → 19.0.3.12.2`, `deltatech_invoice_picking_automatically 19.0.0.0.7 → 19.0.1.0.0`, `deltatech_mrp_workorder_qty 19.0.1.0.1 → 19.0.1.1.0`, `deltatech_pricelist_line_viewer 19.0.0.0.4 → 19.0.0.0.5`, `deltatech_sale_feedback 19.0.1.0.8 → 19.0.1.0.10`, `deltatech_sale_margin_pos 19.0.1.0.1 → 19.0.1.1.0`, `deltatech_stock_barcode 19.0.0.1.7 → 19.0.0.1.9`, `deltatech_stock_inventory 19.0.2.10.9 → 19.0.2.10.11`, `l10n_ro_account_vat_journal 19.0.1.7.1 → 19.0.1.7.4`, `l10n_ro_anaf_base 19.0.1.4.1 → 19.0.1.5.0`, `l10n_ro_anaf_partner 19.0.2.6.0 → 19.0.2.7.0`, `l10n_ro_efactura_enhancement 19.0.0.5.14 → 19.0.0.5.15`, `l10n_ro_payment_instruments 19.0.1.3.1 → 19.0.1.4.0`, `l10n_ro_receivables_enhanced 19.0.1.4.0 → 19.0.1.5.0`, `l10n_ro_stock_gestiune 19.0.3.1.11 → 19.0.3.1.12`, `l10n_ro_stock_pack_cmp 19.0.1.5.2 → 19.0.1.5.3`, `l10n_ro_stock_pack_fifo 19.0.1.3.7 → 19.0.1.3.10`, `l10n_ro_stock_sheet_gestiune 19.0.1.0.6 → 19.0.1.0.8`.
