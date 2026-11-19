@@ -5959,6 +5959,32 @@
     "text": "Purchase Create Bill Button\ndeltatech_purchase_create_bill_button\nÎn Odoo 19, butonul clasic „Create Bill\" de pe formularul comenzii de achiziție a fost înlocuit cu un widget „Upload Bill\" care obligă utilizatorul să atașeze un fișier înainte de a putea genera factura. Acest modul restabilește butonul clasic, cu un singur clic, lângă widget-ul de încărcare, astfel încât comenzile de achiziție să poată fi facturate direct, fără a fi nevoie de un fișier atașat — exact ca în Odoo 18. Modulul restaurează totodată și copierea automată a „Referinței Furnizorului\" de pe comanda de achiziție în câmpurile „Referință\" și „Referință Plată\" ale facturii de furnizor generate, comportament eliminat în Odoo 19.\nRestabilește butonul „Create Bill\" (facturare cu un singur clic) pe formularul comenzii de achiziție, alături de widget-ul „Upload Bill\", evidențiat vizual (culoare primară) pentru a fi ușor de identificat\nPermite crearea facturii de furnizor direct din comanda de achiziție, fără a fi necesară atașarea unui fișier\nRestaurează copierea automată a „Referinței Furnizorului\" din comanda de achiziție în câmpurile „Referință\" și „Referință Plată\" ale facturii generate, replicând comportamentul din Odoo 18"
   },
   {
+    "path": "deltatech_purchase_currency/index.md",
+    "module": "deltatech_purchase_currency",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/dhongu/deltatech/tree/20.0/deltatech_purchase_currency",
+    "local_path": "odoo-addons/deltatech/deltatech_purchase_currency",
+    "last_ingest": "2026-11-19",
+    "friendly_name": "deltatech_purchase_currency",
+    "summary": "Modulul permite facturarea unei comenzi de achiziție într-o altă monedă decât cea a comenzii, aleasă printr-un **Jurnal de facturare** setat pe comandă. Este perechea pe achiziții a modulului [deltatech_sale_currency](../deltatech_sale_currency/index.md). Cazul tipic: un furnizor român confirmă comanda în EUR, dar emite factura în RON la cursul din data facturii.",
+    "features": [
+      "Jurnal de facturare pe comanda de achiziție (fila *Other Info*): factura de furnizor se creează în acest jurnal și în moneda lui (moneda companiei, dacă jurnalul nu are monedă). Fără jurnal, factura rămâne în moneda comenzii, ca în Odoo standard, deci furnizorii externi nu sunt afectați.",
+      "Conversia prețurilor: prețurile unitare din comandă se convertesc în moneda facturii la cursul de azi la crearea facturii și din nou la cursul *Bill Date* când data este setată sau modificată. Prețul este adus întâi la unitatea de măsură a liniei de factură.",
+      "Schimbarea monedei facturii reconvertește prețurile; modificările manuale de preț se pierd, deci prețurile se corectează după fixarea datei.",
+      "Completare automată (*Auto-Complete*) a unei facturi noi preia jurnalul și moneda din comandă.",
+      "Indicator de potrivire a prețului pe liniile facturii: compară prețul facturii cu prețul comenzii convertit în moneda facturii, astfel încât liniile convertite nu apar ca diferențe de preț.",
+      "La facturarea în lot din listă, Odoo grupează după furnizor și monedă, nu după jurnal: comenzile cu jurnale diferite, dar aceeași monedă, ajung pe o factură, în jurnalul primei comenzi.",
+      "Punct de extensie `purchase.order.line._get_invoice_price_unit()` pentru alt curs (de exemplu cursul BNR plus un procent convenit cu furnizorul)."
+    ],
+    "dependencies": [
+      "purchase"
+    ],
+    "connections": [
+      "deltatech_sale_currency"
+    ],
+    "text": "deltatech_purchase_currency\ndeltatech_purchase_currency\nModulul permite facturarea unei comenzi de achiziție într-o altă monedă decât cea a comenzii, aleasă printr-un **Jurnal de facturare** setat pe comandă. Este perechea pe achiziții a modulului [deltatech_sale_currency](../deltatech_sale_currency/index.md). Cazul tipic: un furnizor român confirmă comanda în EUR, dar emite factura în RON la cursul din data facturii.\nJurnal de facturare pe comanda de achiziție (fila *Other Info*): factura de furnizor se creează în acest jurnal și în moneda lui (moneda companiei, dacă jurnalul nu are monedă). Fără jurnal, factura rămâne în moneda comenzii, ca în Odoo standard, deci furnizorii externi nu sunt afectați.\nConversia prețurilor: prețurile unitare din comandă se convertesc în moneda facturii la cursul de azi la crearea facturii și din nou la cursul *Bill Date* când data este setată sau modificată. Prețul este adus întâi la unitatea de măsură a liniei de factură.\nSchimbarea monedei facturii reconvertește prețurile; modificările manuale de preț se pierd, deci prețurile se corectează după fixarea datei.\nCompletare automată (*Auto-Complete*) a unei facturi noi preia jurnalul și moneda din comandă.\nIndicator de potrivire a prețului pe liniile facturii: compară prețul facturii cu prețul comenzii convertit în moneda facturii, astfel încât liniile convertite nu apar ca diferențe de preț.\nLa facturarea în lot din listă, Odoo grupează după furnizor și monedă, nu după jurnal: comenzile cu jurnale diferite, dar aceeași monedă, ajung pe o factură, în jurnalul primei comenzi.\nPunct de extensie `purchase.order.line._get_invoice_price_unit()` pentru alt curs (de exemplu cursul BNR plus un procent convenit cu furnizorul)."
+  },
+  {
     "path": "deltatech_purchase_mail/index.md",
     "module": "deltatech_purchase_mail",
     "version": "19.0.1.1.0",
@@ -7049,24 +7075,29 @@
   {
     "path": "deltatech_sale_currency/index.md",
     "module": "deltatech_sale_currency",
-    "version": "19.0.0.0.0",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_currency`",
+    "version": "20.0.0.0.3",
+    "github": "`https://github.com/dhongu/deltatech/tree/20.0/deltatech_sale_currency`",
     "local_path": "odoo-addons/deltatech/deltatech_sale_currency",
-    "last_ingest": "2026-06-03",
-    "friendly_name": "Deltatech Sale Currency",
-    "summary": "Acest modul oferă o gestionare specializată a conversiei valutare între comenzile de vânzare și facturile generate din acestea. Este util în special pentru companiile care își mențin listele de prețuri într-o monedă (de exemplu EUR), dar doresc să emită facturile într-o altă monedă (de exemplu moneda jurnalului de vânzări sau moneda funcțională a companiei, cum ar fi RON). Astfel, prețurile sunt convertite automat la momentul facturării, iar înregistrările financiare reflectă valorile corecte în moneda dorită.",
+    "last_ingest": "2026-11-19",
+    "friendly_name": "Sale Invoice Currency",
+    "summary": "Modulul gestionează conversia valutară între comenzile de vânzare și facturile generate din ele. Este util companiilor care ofertează și își țin listele de prețuri într-o valută (de exemplu EUR), dar facturează în altă monedă: moneda jurnalului de vânzări sau, dacă jurnalul nu are monedă, moneda companiei (de exemplu RON). Prețurile se convertesc automat la cursul zilei, iar evidența contabilă reflectă valorile corecte în moneda facturii.",
     "features": [
-      "Moneda facturii bazată pe jurnal: setează automat moneda facturii generate în funcție de moneda jurnalului de vânzări selectat, înlocuind comportamentul implicit Odoo de a folosi moneda comenzii de vânzare.",
-      "Conversie automată a prețurilor: convertește prețurile unitare din moneda comenzii de vânzare în moneda facturii pe parcursul procesului de facturare, folosind cursul de schimb valabil la data conversiei.",
-      "Coerență financiară: asigură că înregistrările din jurnalul contabil reflectă valorile corecte în moneda dorită.",
-      "Integrare între module: se integrează cu modulele de Vânzări și Contabilitate pentru un flux de date consistent."
+      "Moneda facturii după jurnal: factura creată din comandă primește moneda jurnalului de vânzări al comenzii (sau moneda companiei, dacă jurnalul nu are monedă), în loc de moneda comenzii, cum face Odoo standard.",
+      "Conversia prețurilor la creare: prețurile unitare din moneda listei de prețuri a comenzii se convertesc în moneda facturii, la cursul de la data creării facturii. Dacă moneda comenzii coincide cu cea a facturii, prețurile rămân neschimbate.",
+      "Reconversie la schimbarea datei sau a monedei facturii: liniile provenite din comandă se recalculează pornind mereu de la prețul din comandă, la cursul noii date. Dacă unitatea de măsură a liniei de factură diferă de cea din comandă, prețul se aduce întâi în unitatea facturii.",
+      "Linii manuale neatinse: liniile adăugate direct pe factură, fără legătură cu o comandă, nu se reconvertesc. Prețurile modificate manual pe liniile din comandă se pierd la o nouă schimbare a datei.",
+      "Avansuri: suma avansului deja facturat (în lei, pe o comandă în valută) se reconvertește în moneda comenzii, la cursul de la data facturii de avans, astfel încât factura finală să deducă corect avansul.",
+      "Protecție la monede multiple: dacă o linie de factură provine din linii de comandă în monede diferite, se afișează eroarea „You cannot have multiple currencies in the same invoice line.” Comenzile în monede diferite se facturează separat.",
+      "Configurare: moneda facturii se decide din câmpul Monedă al jurnalului de vânzări (Contabilitate → Configurare → Jurnale); cursurile se încarcă din Contabilitate → Configurare → Monede. Dacă lipsește cursul pentru data facturii, conversia se face cu cursul 1. Pașii detaliați sunt în fișa consultantului."
     ],
     "dependencies": [
       "sale",
       "account"
     ],
-    "connections": [],
-    "text": "Deltatech Sale Currency\ndeltatech_sale_currency\nAcest modul oferă o gestionare specializată a conversiei valutare între comenzile de vânzare și facturile generate din acestea. Este util în special pentru companiile care își mențin listele de prețuri într-o monedă (de exemplu EUR), dar doresc să emită facturile într-o altă monedă (de exemplu moneda jurnalului de vânzări sau moneda funcțională a companiei, cum ar fi RON). Astfel, prețurile sunt convertite automat la momentul facturării, iar înregistrările financiare reflectă valorile corecte în moneda dorită.\nMoneda facturii bazată pe jurnal: setează automat moneda facturii generate în funcție de moneda jurnalului de vânzări selectat, înlocuind comportamentul implicit Odoo de a folosi moneda comenzii de vânzare.\nConversie automată a prețurilor: convertește prețurile unitare din moneda comenzii de vânzare în moneda facturii pe parcursul procesului de facturare, folosind cursul de schimb valabil la data conversiei.\nCoerență financiară: asigură că înregistrările din jurnalul contabil reflectă valorile corecte în moneda dorită.\nIntegrare între module: se integrează cu modulele de Vânzări și Contabilitate pentru un flux de date consistent."
+    "connections": [
+      "deltatech_purchase_currency"
+    ],
+    "text": "Sale Invoice Currency\ndeltatech_sale_currency\nModulul gestionează conversia valutară între comenzile de vânzare și facturile generate din ele. Este util companiilor care ofertează și își țin listele de prețuri într-o valută (de exemplu EUR), dar facturează în altă monedă: moneda jurnalului de vânzări sau, dacă jurnalul nu are monedă, moneda companiei (de exemplu RON). Prețurile se convertesc automat la cursul zilei, iar evidența contabilă reflectă valorile corecte în moneda facturii.\nMoneda facturii după jurnal: factura creată din comandă primește moneda jurnalului de vânzări al comenzii (sau moneda companiei, dacă jurnalul nu are monedă), în loc de moneda comenzii, cum face Odoo standard.\nConversia prețurilor la creare: prețurile unitare din moneda listei de prețuri a comenzii se convertesc în moneda facturii, la cursul de la data creării facturii. Dacă moneda comenzii coincide cu cea a facturii, prețurile rămân neschimbate.\nReconversie la schimbarea datei sau a monedei facturii: liniile provenite din comandă se recalculează pornind mereu de la prețul din comandă, la cursul noii date. Dacă unitatea de măsură a liniei de factură diferă de cea din comandă, prețul se aduce întâi în unitatea facturii.\nLinii manuale neatinse: liniile adăugate direct pe factură, fără legătură cu o comandă, nu se reconvertesc. Prețurile modificate manual pe liniile din comandă se pierd la o nouă schimbare a datei.\nAvansuri: suma avansului deja facturat (în lei, pe o comandă în valută) se reconvertește în moneda comenzii, la cursul de la data facturii de avans, astfel încât factura finală să deducă corect avansul.\nProtecție la monede multiple: dacă o linie de factură provine din linii de comandă în monede diferite, se afișează eroarea „You cannot have multiple currencies in the same invoice line.” Comenzile în monede diferite se facturează separat.\nConfigurare: moneda facturii se decide din câmpul Monedă al jurnalului de vânzări (Contabilitate → Configurare → Jurnale); cursurile se încarcă din Contabilitate → Configurare → Monede. Dacă lipsește cursul pentru data facturii, conversia se face cu cursul 1. Pașii detaliați sunt în fișa consultantului."
   },
   {
     "path": "deltatech_sale_feedback/index.md",

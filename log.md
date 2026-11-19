@@ -4,6 +4,19 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-19] `deltatech_purchase_currency` (nou) și `deltatech_sale_currency` (actualizat) — ingestie pe 20.0, cu fișe consultant
+
+- **Acțiune:** Pagină nouă pentru `deltatech_purchase_currency` (20.0.1.0.0, dhongu/deltatech#4251): jurnal de facturare
+  pe comanda de achiziție, factura furnizorului în moneda jurnalului, prețuri convertite la cursul din data facturii;
+  fișa consultant copiată cu 9 capturi. Re-ingestie `deltatech_sale_currency` (19.0.0.0.0 → 20.0.0.0.3): nume
+  „Sale Invoice Currency”, funcționalități și componente din cod, fișa consultant copiată, legătură către perechea pe
+  achiziții. Procesate în paralel, câte un subagent per modul.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/USAGE.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`, `models/`, `views/`.
+- **Dependențe/Conexiuni:** `purchase`; `sale`, `account`; cele două module se leagă reciproc. Folosite de proiectul Maxima
+  (`terrabit_maxima`).
+- **Fișiere actualizate:** `deltatech_purchase_currency/` (index.md, FISA_CONSULTANT.md, screenshots/),
+  `deltatech_sale_currency/` (index.md, FISA_CONSULTANT.md), `index.md`, `log.md`.
+
 ## [2026-10-22] `l10n_ro_pos_partner_efactura` — ingestie pe 20.0 (20.0.1.0.0), cu fișă consultant
 
 - **Acțiune:** Pagină nouă pentru modulul adăugat în 19.0 (dhongu/l10n-romania#661) și portat pe 20.0
