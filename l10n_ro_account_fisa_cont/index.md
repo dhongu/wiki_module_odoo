@@ -1,15 +1,15 @@
 # Romania - Fișă de cont (localizat la `l10n_ro_account_fisa_cont/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_account_fisa_cont`
-- **Versiune:** `19.0.1.0.7`
+- **Versiune:** `19.0.1.0.8`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_fisa_cont
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_account_fisa_cont`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul oferă un raport nativ „Fișă de Cont" integrat în framework-ul `account_reports` Enterprise, conform **OMFP 1802/2014**. Acesta afișează pentru fiecare cont: sold inițial, mișcări cu cont corespondent, sold progresiv și sold final.
+Acest modul oferă un raport nativ „Fișă de Cont" integrat în framework-ul `account_reports` Enterprise, conform **OMFP 1802/2014** (formular după OMFP 2634/2015). Acesta afișează pentru fiecare cont: sold inițial, mișcări cu cont corespondent, sold progresiv și sold final.
 
 #### 2. Funcționalități Cheie
 
@@ -18,7 +18,7 @@ Acest modul oferă un raport nativ „Fișă de Cont" integrat în framework-ul 
 - Sold progresiv acumulat per linie (running balance).
 - Export **PDF** landscape și **XLSX** nativ.
 - Drill-down la nota contabilă (opțiuni caret moștenite din Grand Livre).
-- Filtre: perioadă, jurnale, analitic, căutare cont/partener.
+- Filtre: perioadă, jurnale, analitic, căutare după cont și filtru **Parteneri**, care listează și contactele de sub firmă (de ex. un angajat), pentru fișa contului 542 pe un angajat; celelalte rapoarte își păstrează selectorul standard.
 - Suport multi-companie cu selector de companie.
 - Vizibil automat doar pentru companiile cu **Țara = România**.
 
@@ -37,6 +37,8 @@ Acest modul oferă un raport nativ „Fișă de Cont" integrat în framework-ul 
 
 - `l10n_ro_fisa_cont_report` (`account.report`): definește raportul „Fișă de Cont", cu coloanele Dată, Partener, Debit, Credit, Sold (running balance) și handler-ul custom pentru coloana Cont Corespondent.
 - `action_account_report_l10n_ro_fisa_cont` (`ir.actions.client`): acțiunea de meniu care deschide raportul (Contabilitate → Rapoarte → Registre → Fișă de Cont).
+
+- `_custom_options_initializer` activează opțiunea `l10n_ro_partner_all_contacts`, iar șablonul OWL `static/src/components/filters/filter_partner.xml` extinde `account_reports.AccountReportFilterPartner` și scoate restricția pe contacte (angajați) din selectorul de parteneri.
 
 **Acțiuni Automate / Acțiuni Server**
 

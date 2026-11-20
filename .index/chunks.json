@@ -16056,19 +16056,19 @@
   {
     "path": "l10n_ro_account_fisa_cont/index.md",
     "module": "l10n_ro_account_fisa_cont",
-    "version": "19.0.1.0.7",
+    "version": "19.0.1.0.8",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_fisa_cont",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_account_fisa_cont",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-20",
     "friendly_name": "Romania - Fișă de cont",
-    "summary": "Acest modul oferă un raport nativ „Fișă de Cont\" integrat în framework-ul `account_reports` Enterprise, conform **OMFP 1802/2014**. Acesta afișează pentru fiecare cont: sold inițial, mișcări cu cont corespondent, sold progresiv și sold final.",
+    "summary": "Acest modul oferă un raport nativ „Fișă de Cont\" integrat în framework-ul `account_reports` Enterprise, conform **OMFP 1802/2014** (formular după OMFP 2634/2015). Acesta afișează pentru fiecare cont: sold inițial, mișcări cu cont corespondent, sold progresiv și sold final.",
     "features": [
       "Sold inițial calculat automat de framework (tranzacții anterioare perioadei selectate).",
       "Coloana Cont Corespondent: cont unic → cod cont; conturi multiple → „Diverși\".",
       "Sold progresiv acumulat per linie (running balance).",
       "Export PDF landscape și XLSX nativ.",
       "Drill-down la nota contabilă (opțiuni caret moștenite din Grand Livre).",
-      "Filtre: perioadă, jurnale, analitic, căutare cont/partener.",
+      "Filtre: perioadă, jurnale, analitic, căutare după cont și filtru Parteneri, care listează și contactele de sub firmă (de ex. un angajat), pentru fișa contului 542 pe un angajat; celelalte rapoarte își păstrează selectorul standard.",
       "Suport multi-companie cu selector de companie.",
       "Vizibil automat doar pentru companiile cu Țara = România."
     ],
@@ -16080,7 +16080,7 @@
       "l10n_ro_account_chart",
       "code_store"
     ],
-    "text": "Romania - Fișă de cont\nl10n_ro_account_fisa_cont\nAcest modul oferă un raport nativ „Fișă de Cont\" integrat în framework-ul `account_reports` Enterprise, conform **OMFP 1802/2014**. Acesta afișează pentru fiecare cont: sold inițial, mișcări cu cont corespondent, sold progresiv și sold final.\nSold inițial calculat automat de framework (tranzacții anterioare perioadei selectate).\nColoana Cont Corespondent: cont unic → cod cont; conturi multiple → „Diverși\".\nSold progresiv acumulat per linie (running balance).\nExport PDF landscape și XLSX nativ.\nDrill-down la nota contabilă (opțiuni caret moștenite din Grand Livre).\nFiltre: perioadă, jurnale, analitic, căutare cont/partener.\nSuport multi-companie cu selector de companie.\nVizibil automat doar pentru companiile cu Țara = România."
+    "text": "Romania - Fișă de cont\nl10n_ro_account_fisa_cont\nAcest modul oferă un raport nativ „Fișă de Cont\" integrat în framework-ul `account_reports` Enterprise, conform **OMFP 1802/2014** (formular după OMFP 2634/2015). Acesta afișează pentru fiecare cont: sold inițial, mișcări cu cont corespondent, sold progresiv și sold final.\nSold inițial calculat automat de framework (tranzacții anterioare perioadei selectate).\nColoana Cont Corespondent: cont unic → cod cont; conturi multiple → „Diverși\".\nSold progresiv acumulat per linie (running balance).\nExport PDF landscape și XLSX nativ.\nDrill-down la nota contabilă (opțiuni caret moștenite din Grand Livre).\nFiltre: perioadă, jurnale, analitic, căutare după cont și filtru Parteneri, care listează și contactele de sub firmă (de ex. un angajat), pentru fișa contului 542 pe un angajat; celelalte rapoarte își păstrează selectorul standard.\nSuport multi-companie cu selector de companie.\nVizibil automat doar pentru companiile cu Țara = România."
   },
   {
     "path": "l10n_ro_account_move_document_type/index.md",

@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-20] Re-ingestie: l10n_ro_account_fisa_cont (19.0.1.0.8)
+
+- **Acțiune:** actualizare [l10n_ro_account_fisa_cont](l10n_ro_account_fisa_cont/index.md) după PR terrabit-solutions/l10n_ro_ent#1480: filtrul „Parteneri” listează și contactele de sub firmă (fișa contului 542 pe un angajat).
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md` și codul (`l10n_ro_partner_all_contacts`, `static/src/components/filters/filter_partner.xml`).
+- **Dependențe/Conexiuni:** neschimbate (`account_reports`, `l10n_ro`; legătură la `l10n_ro_account_chart`).
+- **Fișiere actualizate:** `l10n_ro_account_fisa_cont/index.md`, fișa consultant (11 secțiuni, 6 capturi) sincronizată cu `wiki_sync.sync_fisa`, `index.md`, `log.md`.
+
 ## [2026-11-20] Re-ingestie din origin/19.0: 54 module modificate după 17.11.2026
 
 - **Acțiune:** 54 de module cu schimbări de cod pe `origin/19.0` după 17.11.2026: 14 pagini noi și 40 de re-ingestii. Pagini noi: [deltatech_ehs](deltatech_ehs/index.md), [deltatech_vendor_bill_ubl_review](deltatech_vendor_bill_ubl_review/index.md), [deltatech_invoice_receipt_confirmation](deltatech_invoice_receipt_confirmation/index.md), [deltatech_saga_online](deltatech_saga_online/index.md), [deltatech_delivery_sd_online](deltatech_delivery_sd_online/index.md), [deltatech_inter_company_vendor_stock](deltatech_inter_company_vendor_stock/index.md), [deltatech_account_ubl_import](deltatech_account_ubl_import/index.md), [deltatech_sale_order_image](deltatech_sale_order_image/index.md), [l10n_md_zip](l10n_md_zip/index.md), [l10n_ro_green_tax_analytic](l10n_ro_green_tax_analytic/index.md), [l10n_ro_move_guard](l10n_ro_move_guard/index.md), [terrabit_iap_server_online_anaf](terrabit_iap_server_online_anaf/index.md), [terrabit_iap_server_online_delivery](terrabit_iap_server_online_delivery/index.md), [terrabit_iap_server_online_sd](terrabit_iap_server_online_sd/index.md). Procesare în paralel, cu câte un subagent pe modul. Modulele cu commit-uri doar pe documentație sau doar înaintea ultimei ingestii au fost sărite.
