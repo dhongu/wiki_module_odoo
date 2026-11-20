@@ -14,7 +14,6 @@ This is an append-only log of all operations performed on the wiki.
 - **Avertismente:**
   - [deltatech_marketplace_emag](deltatech_marketplace_emag/index.md): `USAGE.md` din modul spune încă „Currency: fixed (RON)”, deși prețurile pleacă în moneda listei de prețuri.
   - [l10n_ro_intrastat_enhancement](l10n_ro_intrastat_enhancement/index.md): `DESCRIPTION.md` spune că modulul se instalează automat, dar manifestul are `auto_install: False`.
-  - [deltatech_doc_screenshots](deltatech_doc_screenshots/index.md): manifestul trimite la `main_screenshot.png`, dar în `static/description/` există doar `.svg`.
   - [deltatech_sale_feedback](deltatech_sale_feedback/index.md): trimiterea e-mailurilor nu funcționează încă pe 19.0.
   - [deltatech_expenses](deltatech_expenses/index.md): linia „Odoo 20” din metadate nu a putut fi verificată.
 - **Fișiere actualizate:** paginile `index.md` ale modulelor, fișele consultant și capturile sincronizate, `index.md`, `log.md` și `.index/chunks.json`.
