@@ -57,7 +57,8 @@ Regularizările din decontul curent au bază legală separată: TVA-ul dedus din
    căutarea ANAF a partenerului nu îl schimbă.
 5. Taxele de regularizare pe cotele curente: **„21% REG D”** și **„11% REG D”** (achiziții, taxă dedusă, rd. 33) și
    **„21% REG C”** și **„11% REG C”** (vânzări, taxă colectată, rd. 16). Vin din template pe planurile de conturi noi, iar pe
-   companiile existente le creează actualizarea modulului (versiunea 19.0.0.0.35), o singură dată. Au conturile taxei
+   companiile existente le creează actualizarea modulului (versiunea 19.0.0.0.35), o singură dată. Dacă firma are deja o
+   taxă cu același nume, actualizarea o preia în loc să creeze alta (vezi pasul 9). Au conturile taxei
    originale (4426 la achiziții, 4427 la vânzări), deci nota contabilă a facturii rămâne cea normală. Cu `l10n_ro_saft`
    instalat primesc și codurile SAF-T de regularizare; dacă `l10n_ro_saft` se instalează după, actualizați `l10n_ro_anaf_d300`.
 6. Pregătiți un set demo cu minimum:
@@ -72,11 +73,28 @@ Regularizările din decontul curent au bază legală separată: TVA-ul dedus din
 8. Taxele noi din tichetul 09952 (achiziții 100% nedeductibile, import deductibil, vânzări la distanță UE, bon fiscal):
    **„21% ND 100%”** / **„11% ND 100%”**, **„21% Import”** / **„11% Import”**, **„21% VD”** / **„11% VD”** cu
    **„21% VD REG”** / **„11% VD REG”**, și **„21% BF”** / **„11% BF”**. Pe planurile noi vin din template; pe companiile
-   existente le creează actualizarea modulului (versiunea 19.0.0.0.36), dacă lipsesc. Cu `l10n_ro_saft` instalat au
+   existente le creează actualizarea modulului (versiunea 19.0.0.0.36), dacă lipsesc; pe cele create deja manual, cu
+   același nume, le preia (vezi pasul 9). Cu `l10n_ro_saft` instalat au
    codurile SAF-T: 351104 / 351105, 301204 / 301205, 310346 / 310356, 310347 / 310359 și 310327.
    Taxele **nu se aplică automat**: pe DVI se alege taxa de import, iar factura emisă din bonul fiscal (POS) primește
    taxa „BF” doar dacă e aleasă pe factură. Poziția fiscală pentru vânzările la distanță UE sub prag și taxa OSS
    (310325) nu sunt create de acest modul.
+9. Taxe create manual înainte de actualizare (de la versiunea 19.0.0.0.38). Dacă firma are deja o taxă activă cu numele
+   uneia dintre taxele de la pașii 5 și 8 sau al taxelor „21% EX S” / „11% EX S” și „21% IMP AM” / „11% IMP AM” (de exemplu
+   „21% ND 100%” creată de contabil), actualizarea modulului nu mai creează o a doua taxă:
+   - **aceeași cotă:** taxa existentă este preluată și devine taxa modulului. Conturile și distribuirea ei rămân cele
+     puse de contabil. Taxele de la pasul 8 primesc grilele D300 și, dacă lipsește, codul SAF-T; taxele „EX S” sunt
+     legate de poziția fiscală pentru partenerii din afara UE, dar numai dacă autolichidează ca în template
+     (Dr 4426 = Cr 4427, cu grilele rd. 7 și 22); altfel serviciile rămân mapate pe „0% EX S”, fără autolichidare,
+     iar până la corectarea taxei contabilul alege manual „21% EX S” / „11% EX S” pe factură (art. 307 alin. (2));
+   - **altă cotă** (de exemplu „21% ND 100%” cu 19%): taxa nu este preluată, nu primește grile D300 și nici nu se creează
+     alta. Corectați cota sau redenumiți taxa, apoi actualizați din nou `l10n_ro_anaf_d300`.
+
+   Actualizarea nu schimbă niciodată conturile unei taxe preluate și nici codul SAF-T pe care taxa îl are deja. Dacă
+   TVA-ul ei nu e pe conturile așteptate (6352 la „ND 100%”, conturile taxei originale la „REG D” / „REG C”), dacă o taxă
+   „EX S” / „IMP AM” nu are distribuirea de autolichidare (Dr 4426 = Cr 4427, cu grilele rd. 7 și 22) sau dacă codul SAF-T
+   e altul, jurnalul serverului primește un avertisment care începe cu „D300: taxa …”. Cereți administratorului jurnalul după
+   actualizare și verificați taxele semnalate în **Contabilitate → Configurare → Taxe**.
 
 ## 6. Flux de utilizare
 
@@ -242,6 +260,7 @@ Verificați pe fiecare factură cota și taxa aleasă, înainte de validare; tax
 | Factură emisă omisă dintr-o perioadă declarată, 21% / 11% („21% REG C” / „11% REG C”) | Dr 4111 = Cr 707 + Cr 4427; baza și TVA-ul pe rd. 16 în decontul curent. Art. 323 alin. (3) Cod fiscal |
 | Coduri SAF-T de regularizare (cu `l10n_ro_saft` instalat) | taxă dedusă 21% / 11%: 309106 / 309107; taxă colectată 21% / 11%: 310345 / 310352 (nomenclatorul ANAF 16.02.2026, active din 01.08.2025). În D406 regularizarea ajunge pe codul ei, nu pe cel al achiziției sau vânzării normale |
 | Taxare inversă | verificați simetria 4426/4427 și rândurile D300 aferente |
+| Notă de credit pe o taxă de autolichidare („21% EX S” / „11% EX S”, „21% IMP AM” / „11% IMP AM”) | stornează factura: 4426 și 4427 cu semn schimbat (în roșu: Dr 4426 −210 = Cr 4427 −210 la o bază de 1.000 lei cu 21%), pe aceleași rânduri 7 și 22, cu minus. Până la versiunea 19.0.0.0.39 nota de credit avea 4426 și 4427 inversate și înregistra autolichidarea din nou în conturi, în loc să o storneze. Rd. 7 și 22 au ieșit corect și atunci (grilele erau pe liniile corecte), deci D300 nu se rectifică; greșite au fost doar rulajele 4426 / 4427. Actualizarea corectează taxele, iar notele de credit deja înregistrate se corectează manual (vezi secțiunea 11) |
 | Import fără plata efectivă a TVA în vamă (art. 326 alin. (4)-(5): certificat de amânare, vămuire centralizată, înscriere în evidențele declarantului, bunurile din art. 331 alin. (2) lit. b), c), i)–k)) | pe DVI se alege „21% IMP AM” / „11% IMP AM”: Dr 4426 = Cr 4427 (taxă colectată și deductibilă simultan, art. 326 alin. (5)), fără 446 și fără plată în vamă; baza de impozitare TVA din DVI (art. 289) și TVA-ul pe rd. 7 și 22, în perioada datei DVI (art. 285). Deducerea cere DVI-ul cu importatorul și suma taxei datorate și înscrierea taxei colectate în aceeași perioadă (art. 299 alin. (1) lit. d)). Factura furnizorului extern rămâne pe „0% EX G”, fără grile. Importul cu plata efectivă în vamă (art. 326 alin. (3)) rămâne pe rd. 24 / 25 |
 | Achiziție 100% nedeductibilă („21% ND 100%” / „11% ND 100%”) | Dr 6352 = Cr 401 pentru TVA (la stocuri și mijloace fixe TVA-ul intră în cost: Dr 371 / 2133 = Cr 401, nu pe 6352). Baza pe rd. 24 / 25, TVA-ul pe 6352 fără grilă. Cod SAF-T 351104 / 351105 |
 | Import deductibil 100% („21% Import” / „11% Import”) | pe DVI: Dr 4426 = Cr 5121 (TVA plătită în vamă) sau Cr 401 (comisionarul vamal care a plătit), cu baza și TVA-ul pe rd. 24 / 25. Cod SAF-T 301204 / 301205. Contul 446 nu primește TVA-ul de import |
@@ -291,6 +310,7 @@ Notarea exactă depinde de soldurile lunii și de politica modulului de închide
 | D300-21 | Factură de vânzare la distanță UE cu „21% VD” | baza și TVA-ul pe rd. 17; în D406 cod 310346 |
 | D300-22 | Regularizare VD cu „11% VD REG” | baza și TVA-ul pe rd. 18; în D406 cod 310359 |
 | D300-23 | Factură din bon fiscal cu „21% BF” | TVA pe 4427, fără rând D300; în D406 cod 310327 |
+| D300-24 | Factură de 1.000 lei de la un prestator din afara UE cu „21% EX S”, apoi notă de credit integrală | factura: 4426 debitor 210, 4427 creditor 210; după nota de credit soldul ambelor conturi revine la zero, iar rd. 7 și 22 ale perioadei sunt zero |
 
 ## 9. Legături cu alte module / declarații
 
@@ -322,6 +342,9 @@ Ce rămâne de verificat manual: regularizarea contabilă 4426/4427/4423/4424, r
 - [ ] Facturile cu taxe „REG D” / „REG C” apar pe rd. 33 / rd. 16, nu pe rd. 24-26 / 9-12, iar în D406 au codurile de regularizare (309106 / 309107, 310345 / 310352).
 - [ ] Taxele noi (ND 100%, Import, VD, VD REG, BF) există cu codurile SAF-T din tichetul 09952 și cu grilele din pasul 6; taxa de import se alege pe DVI, iar taxa BF pe factură.
 - [ ] Pe o companie existentă, după actualizarea la 19.0.0.0.36, cele zece taxe există; cele care lipsesc, din cauza unui cont lipsă (6352, 4426 sau 4427), nu se creează și se loghează un avertisment.
+- [ ] Pe o companie care avea taxe create manual cu numele celor din pașii 5 și 8 din secțiunea 5: după actualizare există o singură taxă activă cu fiecare nume (fără dubluri), iar taxele preluate au grilele D300 și codul SAF-T.
+- [ ] O notă de credit de furnizor cu „21% EX S” sau „21% IMP AM” stornează factura: soldurile 4426 și 4427 revin la zero (scenariul D300-24).
+- [ ] Jurnalul serverului de la actualizare nu are avertismente „D300: taxa …”; dacă are, fiecare taxă semnalată (altă cotă, alte conturi de TVA, alt cod SAF-T) a fost verificată de contabil.
 - [ ] Perioada închisă nu mai permite modificări fără procedură de corecție.
 - [ ] Fluxul de rambursare/reportare este clar dacă soldul este negativ.
 
@@ -336,6 +359,11 @@ Ce rămâne de verificat manual: regularizarea contabilă 4426/4427/4423/4424, r
 | Taxa „21% Import” nu apare pe DVI | Taxa de import implicită e alta; taxele noi nu se aplică automat | Alegeți „21% Import” / „11% Import” pe DVI |
 | Taxa „BF” nu apare pe factura din POS | POS nu aplică taxa BF automat | Alegeți „21% BF” / „11% BF” pe factură, după bonul fiscal |
 | Taxa de tip ND 100%, VD sau BF lipsește pe o companie existentă | Contul TVA al taxei (6352, 4426 sau 4427) lipsește; actualizarea nu creează taxa și loghează un avertisment | Verificați planul de conturi, apoi reactualizați `l10n_ro_anaf_d300` |
+| Jurnalul serverului: „D300: taxa … are cota …; nu a fost preluată și taxa din template nu s-a creat” | Firma are o taxă cu numele uneia din template, dar cu altă cotă sau alt tip de calcul; actualizarea nu o preia și nu creează alta | Corectați cota taxei sau redenumiți-o, apoi reactualizați `l10n_ro_anaf_d300` |
+| Jurnalul serverului: „D300: taxa … are TVA-ul pe conturile […], nu pe […]” | O taxă preluată are TVA-ul pe alte conturi decât cele din template (de exemplu „21% ND 100%” pe alt cont decât 6352); conturile nu se schimbă automat | Contabilul verifică distribuirea taxei și o corectează, dacă e cazul; documentele deja înregistrate nu se modifică |
+| Jurnalul serverului: „D300: taxa … nu are distribuirea din template (Dr 4426 = Cr 4427, cu grilele rd. 7 și 22)” | O taxă „EX S” sau „IMP AM” preluată nu autolichidează ca în template: lipsește linia pe 4426 sau 4427, 4427 nu are -100% sau lipsesc grilele rd. 7 / 22; distribuirea nu se schimbă automat | Contabilul corectează distribuirea taxei (factură și notă de credit); altfel TVA-ul nu se compensează și rd. 7 / 22 rămân incomplete. O taxă „EX S” în această stare nu e legată de poziția fiscală pentru partenerii din afara UE (mesajul „… nu a fost legată de poziția fiscală …”): după corectare, adăugați pe taxă poziția fiscală și taxa înlocuită (21% S / 11% S) și scoateți taxa înlocuită de pe „0% EX S” |
+| Jurnalul serverului: „D300: … note de credit înregistrate … cu taxa … au 4426 / 4427 inversate și nu stornează autolichidarea” | Notele de credit de furnizor înregistrate înainte de 19.0.0.0.39 cu „EX S” sau „IMP AM” au înregistrat autolichidarea din nou în conturi: 4426 și 4427 au crescut în loc să scadă, cu aceeași sumă pe ambele. Rd. 7 și 22 din D300 au ieșit corect, deci decontul nu se rectifică și TVA de plată nu s-a schimbat. Actualizarea corectează taxa, nu și documentele | Mesajul listează notele de credit de furnizor; stornările de DVI înregistrate altfel (notă contabilă, factură cu minus) nu apar în listă și se verifică separat. În perioadele deschise: resetați nota la ciornă, scoateți și puneți din nou taxa pe linie, verificați că apar 4426 și 4427 cu semn schimbat față de factură, apoi validați. În perioadele închise: notă de corecție Dr 4427 = Cr 4426 cu de două ori TVA-ul notei de credit, fără grile D300 (cu grile ar modifica decontul curent). La final verificați soldurile 4426 / 4427 |
+| Jurnalul serverului: „D300: taxa … are codul SAF-T …, nu …” | Taxa existentă (preluată sau de regularizare) avea deja alt cod SAF-T; actualizarea completează codul doar când lipsește | Verificați codul în nomenclatorul ANAF și corectați-l pe taxă |
 | TVA la încasare incorectă | 4428/CABA nereconciliat | Verificați plățile și înregistrările cash basis. Rd. A / B sunt solduri la sfârșitul perioadei: includ și facturile încasate / plătite după perioadă, iar notele de credit încasate parțial intră cu minus doar pentru restul neîncasat |
 | TVA deductibilă prea mare | TVA nedeductibilă tratată ca 4426 | Verificați regimul de deductibilitate al taxei |
 | Taxa „11% ND 50%” nu apare în selecție, deși o are o factură veche | Taxele „ND 50%” fără cod SAF-T activ la ANAF sunt arhivate de migrarea 19.0.0.0.34; facturile postate își păstrează taxa | Pentru documente noi folosiți „21% ND 50%” sau, la cota veche, „19% ND 50%”. Factura veche cu „11% ND 50%” se stornează și se reînregistrează cu taxa corectă, după decizia contabilului |

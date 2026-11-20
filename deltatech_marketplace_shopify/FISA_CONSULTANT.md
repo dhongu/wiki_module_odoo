@@ -21,9 +21,11 @@ introdusă de două ori sau stoc care nu se mai potrivește.
 
 Modulul rulează integral pe **API-ul modern GraphQL Admin** al Shopify (nu pe REST-ul vechi,
 pe care Shopify îl închide progresiv). Fiecare subsistem (produse, stoc, expediere, clienți,
-comenzi, webhook-uri) are propriul comutator GraphQL/REST pe backend, implicit oprit — un magazin
-trece pe GraphQL treptat, subsistem cu subsistem, și poate reveni la REST dintr-un singur
-comutator dacă apare o problemă.
+comenzi, webhook-uri) are propriul comutator GraphQL/REST pe backend — un magazin trece pe
+GraphQL treptat, subsistem cu subsistem, și poate reveni la REST dintr-un singur comutator dacă
+apare o problemă. **Comenzi prin GraphQL** e implicit pornit (și se pornește la actualizare pe
+backend-urile existente): calea REST a comenzilor nu se mai întreține și dispare în 20.0.
+Celelalte comutatoare sunt implicit oprite.
 
 Autentificarea acceptă două moduri: **Private App clasică** (token permanent, **Token de acces**
 completat manual) și **Dev Dashboard App** (OAuth `client_credentials`, token cu expirare la 24h,
@@ -96,7 +98,8 @@ cu variante, un client și o comandă existentă în magazin.
    categorii cu același nume. Categoria se schimbă doar când se schimbă tipul de produs în
    Shopify. Atunci produsul trece în prima categorie cu noul nume, de aceea e bine ca numele
    categoriilor folosite pentru Shopify să fie unice.
-7. Opțional, activați comutatoarele GraphQL dorite din tab-ul **GraphQL** (toate pornesc oprite).
+7. Opțional, activați comutatoarele GraphQL dorite din tab-ul **GraphQL**. **Comenzi prin GraphQL**
+   pornește bifat și rămâne așa; celelalte pornesc oprite.
    Tot aici, opțional, bifați **Importă doar produsele modificate** dacă importul de produse
    rulează periodic (vezi Pasul 3); câmpul **Produse importate până la** apare doar cât timp
    opțiunea e bifată.
@@ -115,6 +118,11 @@ cu variante, un client și o comandă existentă în magazin.
     (vezi Pasul 5). Cât timp **Granted Access Scopes** e gol (backend pe care încă nu s-a apăsat
     **Testează conexiunea**), conectorul nu știe ce drepturi are și cere locația, ca pe un backend
     cu scope de locații.
+11. Datele de firmă ale cumpărătorului nu cer configurare. Shopify nu are un câmp pentru codul
+    fiscal, așa că conectorul îl caută, în ordine, în atributul de comandă **CUI**, apoi în câmpul
+    **Companie** al adresei de facturare, apoi al adresei de livrare. Numele firmei îl ia din
+    atributul de comandă **Nume firmă**, dacă există; textul din **CUI** sau din **Companie** nu
+    înlocuiește niciodată acest nume. Detaliile sunt în Pasul 9.
 
 ## 6. Flux de utilizare
 
@@ -150,8 +158,11 @@ import comandă — **Importă comenzile cu starea**, **Importă comenzile cu st
 ### Pasul 3 — Comutatoarele GraphQL
 
 Tab-ul **GraphQL** are câte un comutator pentru fiecare subsistem (produse, stoc, expediere,
-clienți, comenzi, webhook-uri), toate oprite implicit. Un magazin trece pe GraphQL treptat, un
-subsistem odată, și poate reveni la REST dintr-un singur comutator dacă ceva nu merge.
+clienți, comenzi, webhook-uri). **Comenzi prin GraphQL** e pornit implicit și se pornește la
+actualizarea modulului și pe backend-urile existente: calea REST a comenzilor nu se mai întreține
+(dispare în 20.0), iar debifarea lui e doar o soluție temporară. Celelalte comutatoare sunt oprite
+implicit: un magazin trece pe GraphQL treptat, un subsistem odată, și poate reveni la REST dintr-un
+singur comutator dacă ceva nu merge.
 
 ![Tab GraphQL: comutatoarele Produse, Stoc, Fulfillment, Clienți, Comenzi și Webhook-uri prin GraphQL, toate bifate pe acest backend de demo; Export Order Lines bifat, iar dedesubt Missing Scopes = read_all_orders, write_order_edits și lista Granted Access Scopes citită de la Shopify](screenshots/04_graphql.png)
 
@@ -334,6 +345,44 @@ Pașii, pentru o aplicație Dev Dashboard (Mode B):
 > Verificare rapidă că a mers, fără să deschideți Shopify: pe backend, **Missing Scopes** nu mai
 > conține scope-ul adăugat, iar **Granted Access Scopes** îl conține.
 
+### Pasul 9 — Firma și codul fiscal ale cumpărătorului
+
+Cumpărătorii firmă scriu adesea numele firmei și codul fiscal împreună, în câmpul **Companie** al
+adresei din Shopify. La importul comenzii, conectorul le separă și creează (sau găsește) partenerul
+firmă, cu **Nume** și **CIF** completate:
+
+| Text în Shopify („Companie” sau atributul „CUI”) | **CIF** pe partener | **Nume** pe partener |
+|---|---|---|
+| `RO 12345674` | `RO12345674` | numele din adresă (persoana) |
+| `Molnár és Halasi 2021 Kft. 27427972-2-18` | `27427972-2-18` | `Molnár és Halasi 2021 Kft.` |
+| `SC Rami Impex SRL RO 34277402 J18/1199/2003` | `RO34277402` | `SC Rami Impex SRL` |
+| `Black Velver kft adószám: 13483429-2-18` | `13483429-2-18` | `Black Velver kft` |
+| `Don Agro Kft` (fără număr) | gol | numele din adresă; clientul e legat după e-mail |
+
+Regulile:
+
+- un text care conține doar codul fiscal (cel mult două litere, de exemplu prefixul `RO`) se
+  scrie ca atare pe partener, fără spații;
+- dintr-un text cu nume și număr, codul fiscal e numărul care arată ca un cod fiscal: întâi
+  numărul fiscal maghiar (`xxxxxxxx-y-zz`), apoi un număr cu prefix de țară UE (`RO`, `HU`…),
+  apoi primul număr de 6–13 cifre. Anul din numele firmei, datele și numărul de la registrul
+  comerțului (`J40/123/2010`) nu intră în codul fiscal;
+- prefixul de țară se păstrează (`HU 97114467` devine `HU97114467`), cu o excepție: lângă numărul
+  fiscal maghiar intern prefixul `HU` se scoate, fiindcă ține doar de forma UE (`HU 67338838-2-30`
+  devine `67338838-2-30`);
+- restul textului, fără etichete (`CUI`, `CIF`, `adószám`, `csoportazonosító`, `P.IVA`), devine
+  numele firmei, cu spațiile păstrate. Dacă din text rămân doar etichete, numele nu se schimbă;
+- numele dat în atributul **Nume firmă** nu e înlocuit de textul din **CUI** sau din **Companie**.
+
+![Partenerul firmă creat dintr-o comandă cu Companie = „Molnár és Halasi 2021 Kft. 27427972-2-18”: numele Molnár és Halasi 2021 Kft. (1) și CIF-ul 27427972-2-18 (2), evidențiate](screenshots/11_company_vat.png)
+
+Clientul firmă rămâne legat de magazin prin codul fiscal: un text care conține doar codul fiscal
+păstrează cheia de dinainte, cu prefix (`vat:RO12345674`), iar un text cu nume și număr e legat
+prin cifrele codului fiscal (`vat:27427972218`), ca înainte de 19.0.1.9.2. De aceea clienții
+importați înainte, cu un singur număr în câmp, își păstrează partenerul; la următoarea comandă, numele lipit
+de atunci (de exemplu „MolnárésHalasiKft”) se rescrie cu spații, dacă **Actualizare** e bifat pe
+obiectul *Clienți*.
+
 ## 7. Legături cu alte module / declarații
 
 | Modul / proces | Rol în flux | Tip legătură |
@@ -355,6 +404,10 @@ vânzare (tag-uri Shopify), verificarea periodică a webhook-urilor.
 
 - [ ] Modulul se instalează fără erori (necesită biblioteca Python `ShopifyAPI`).
 - [ ] **Testează conexiunea** confirmă credențialele înainte de orice import.
+- [ ] După actualizarea modulului, **Comenzi prin GraphQL** e bifat pe toate backend-urile Shopify
+      (îl bifează migrarea). Nu-l debifați decât temporar: calea REST a comenzilor nu se mai
+      întreține, iar o comandă ștearsă în Shopify ar face jobul de webhook să pice la fiecare
+      reîncercare.
 - [ ] Depozitele Odoo există *înainte* de a importa Location-urile Shopify.
 - [ ] Prima sincronizare respectă ordinea din Pasul 4 (depozite → categorii/atribute → produse →
       clienți → comenzi, ultimul).
@@ -379,6 +432,13 @@ vânzare (tag-uri Shopify), verificarea periodică a webhook-urilor.
       e bifat, comanda apare cu câte o expediere pe fiecare fulfillment order, tot cu același AWB.
 - [ ] După regenerarea AWB-ului pe o livrare deja trimisă, expedierea din Shopify arată AWB-ul nou,
       iar comanda nu are o a doua expediere.
+- [ ] O comandă cu **Companie** = „Molnár és Halasi 2021 Kft. 27427972-2-18” creează partenerul
+      firmă **Molnár és Halasi 2021 Kft.**, cu **CIF** `27427972-2-18` (nu `202127427972218`).
+- [ ] O comandă cu **Companie** care conține doar codul fiscal (de exemplu `RO 12345674`) se
+      importă ca înainte: **CIF** `RO12345674`, același partener ca la comenzile anterioare.
+- [ ] Un client importat înainte de 19.0.1.9.2, cu numele lipit (de exemplu „HópiheTranskft”),
+      rămâne pe același partener la comanda următoare, iar numele devine „Hópihe Trans kft”.
+- [ ] Cu atributul **Nume firmă** completat, partenerul nu primește numele din textul codului fiscal.
 
 ### Ce NU pleacă spre Shopify: prețul liniei
 
@@ -410,6 +470,8 @@ mesaj care spune că prețul nu a fost trimis și că cele două părți diferă
 | Mesaj în chatter-ul comenzii „*The tracking number … was NOT sent to Shopify: the transfer is already fulfilled there and no fulfillment matches the number sent before …*” | AWB-ul livrării s-a regenerat, iar conectorul nu știe ce expediere din Shopify să actualizeze: livrarea a plecat înainte de 19.0.1.8.16 și comanda are mai multe expedieri, sau nicio expediere nu mai are AWB-ul trimis anterior | În Shopify, deschideți comanda și puneți AWB-ul din mesaj pe expedierea livrării respective |
 | Job eșuat „*Shopify rejected the tracking update of order … (fulfillment …)*” | Cu **Fulfillment prin GraphQL** bifat, Shopify a refuzat înlocuirea AWB-ului pe expedierea existentă (de exemplu, expedierea a fost anulată); jobul nu se reîncearcă. Fără GraphQL, același refuz apare în job ca eroarea primită de la Shopify, după reîncercări | Verificați expedierea în Shopify: dacă e anulată, creați expedierea din Shopify cu AWB-ul nou; altfel, citiți motivul din job și corectați AWB-ul manual |
 | Job eșuat „*Access denied for location field. Required access: `read_locations` …*” la expediere | Versiune a modulului anterioară 19.0.1.8.15, cu **Fulfillment prin GraphQL** bifat și fără scope de locații în **Granted Access Scopes** | Actualizați modulul, apoi reporniți joburile eșuate (**Repune în coadă**); alternativ, acordați aplicației `read_locations` (Pasul 8) |
+| Partener firmă cu **CIF** prea lung (de exemplu `202127427972218`) și numele lipit, fără spații („MolnárésHalasiKft”) | Versiune a modulului mai veche de 19.0.1.9.2: din câmpul **Companie** se lipeau toate cifrele (inclusiv anul din nume sau numărul de la registrul comerțului) și toate literele | Actualizați modulul; corectați **CIF**-ul și numele pe partener, iar o firmă dublată la comanda următoare se îmbină cu cea corectă (**Acțiune → Îmbină**) |
+| Cumpărătorul firmă e importat fără **CIF** | În **Companie** sau în atributul **CUI** nu e niciun număr de 6–13 cifre (doar numele firmei); clientul e legat după e-mail | Completați **CIF**-ul pe partener; cereți magazinului să colecteze codul fiscal în atributul **CUI** |
 | Comandă anulată în Odoo, dar rămâne activă în Shopify | Anularea nu a ajuns la Shopify (job eșuat) | Verificați job-urile eșuate ale backend-ului; reîncercați anularea |
 
 ## 10. Capturi de ecran
@@ -437,6 +499,8 @@ Capturile (`readme/screenshots/`) ilustrează fluxul din secțiunea 6 și sunt g
 8. `07_webhook_checker.png` — wizardul de verificare a webhook-urilor (Potrivit/Lipsă/Orfan) (Pasul 7).
 9. `08_shopify_app_versions.png` — Shopify Dev Dashboard, lista de versiuni a aplicației (Pasul 8).
 10. `09_shopify_scopes_field.png` — formularul Create version, câmpul Scopes (Pasul 8).
+11. `11_company_vat.png` — partenerul firmă cu numele și CIF-ul separate din câmpul Companie
+    (Pasul 9).
 
 Numerotarea fișierelor nu urmează strict ordinea pașilor: captura 10 a fost adăugată ulterior la
 Pasul 5 și și-a păstrat numele, ca să nu se schimbe referințele existente.

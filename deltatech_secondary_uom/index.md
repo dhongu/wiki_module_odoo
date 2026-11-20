@@ -1,10 +1,11 @@
 # Deltatech Product Secondary UoM (localizat la `deltatech_secondary_uom/index.md`)
 
 - **Nume Tehnic:** `deltatech_secondary_uom`
-- **Versiune:** `19.0.1.2.2`
+- **Versiune:** `19.0.1.2.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_secondary_uom
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_secondary_uom`
 - **Ultima Ingestie:** `2026-10-09`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

@@ -107,14 +107,14 @@ completate automat din calcul:
 | 1–3 | Exploatare: totalul veniturilor și cheltuielilor minus partea financiară; o sumă negativă trece pe rândul pereche |
 | 4–6 | Financiar: *din care venituri / cheltuieli financiare* (prefixele din setări); o sumă negativă trece pe rândul pereche |
 | 7 | Rezultatul brut = rezultatul contabil din balanță |
-| 11 (11.1–11.3) | *Amortizare fiscală* și rândurile „din care” |
+| 11 (11.1–11.3) | *Amortizare fiscală* și rândurile „din care”. Cu modulul de mijloace fixe, amortizarea contabilă minus partea nedeductibilă din planurile fiscale ale activelor (de exemplu, la autoturismele M1, partea peste 1.500 lei/lună); fără el, egală cu rd. 28 și corectabilă manual |
 | 15 | *Deduceri suplimentare*; rd. 15.1 (cercetare-dezvoltare) rămâne gol, se completează manual |
 | 20 / 21 | *Venituri neimpozabile* |
 | 23 | *Cheltuieli cu impozitul pe profit* (691, 692, 694, 697) |
 | 26 | *Cheltuieli de protocol nedeductibile* (peste limita de 2%) |
 | 27 | *Cheltuieli cu sponsorizarea* — conturile din setarea **Conturi de sponsorizare D101** din `l10n_ro_profit_tax` (implicit 6584; poate include un analitic 6582.xx folosit pentru mecenat); creditul fiscal merge la rd. 43 |
 | 28 | *Amortizare contabilă* (6811) |
-| 33 | *Cheltuieli nedeductibile* din regulile de ajustare |
+| 33 | *Cheltuieli nedeductibile* din regulile de ajustare, plus *Nedeductibil la ieșirea activelor* |
 | 39 | *Pierdere de recuperat la începutul anului*: soldul la 1 ianuarie al pierderilor din anii anteriori, fără cele expirate |
 | 39.1 | *Pierdere dedusă*: partea recuperată în anul declarației |
 | 41.1, 48, 52 | Impozitul 16% din rd. 40, impozitul datorat, diferența de plată |
@@ -303,8 +303,9 @@ nefolosit; rd. 15.1 (cercetare-dezvoltare)
 - [ ] Cu venituri din exploatare negative (de exemplu 712 pe debit), rd. 1 = 0, rd. 2 crește cu suma, iar rd. 3 este același ca înainte (rd. 1 − rd. 2 calculat cu semn).
 - [ ] Rd. 4 și rd. 5 au sumele de pe conturile financiare (766, 665 etc.), iar rd. 7 este egal cu rezultatul din balanță.
 - [ ] Toate sumele sunt întregi, rotunjite 0,50 în sus; rd. 41.1 = rd. 40 × 16%, iar nota anuală 691 = 4411 este rd. 52 − rd. 53.
-- [ ] Rd. 11 = rd. 28 = rulajul 6811, dacă amortizarea fiscală nu a fost modificată pe calcul.
+- [ ] Fără modulul de mijloace fixe (sau fără active cu plan fiscal), rd. 11 = rd. 28 = rulajul 6811, dacă amortizarea fiscală nu a fost modificată pe calcul.
 - [ ] Rd. 23 = rulajul 691 (+ 692, 694, 697), iar rd. 26 = protocolul peste limita de 2%.
+- [ ] Cu modulul de mijloace fixe, rd. 11 = rd. 28 minus partea nedeductibilă a autoturismelor M1, iar la vânzarea unui M1 partea nedeductibilă de la ieșire apare în rd. 33.
 - [ ] Rd. 27 = rulajul conturilor de sponsorizare din setări (implicit 6584), iar rd. 34 = rd. 23 + rd. 26 + rd. 27 + rd. 28 + rd. 33.
 - [ ] Cu impozit zero și profit, calculul se postează fără notă, iar exportul are rd. 52 = 0.
 - [ ] Cu pierdere fiscală (de exemplu venituri 100.000, cheltuieli 130.000): rd. 7, 10, 22, 35 și 38.1 sunt negative,

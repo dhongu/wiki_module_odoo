@@ -110,7 +110,8 @@ caracteristicile ei, un produs cu ofertă activă, un client și o comandă exis
 4. În tab-ul **Credentials**, verificați **Access Type = User and password**, apoi completați
    **Username**/**Password** cu contul de webservice eMAG.
 5. Pe tab-ul **Orders and Products**, grupul **Settings**, completați câmpurile specifice eMAG: **Enable
-   Order Push Invoice**, **Mapping Product Code**, **Odoo ID is External ID** (Safe stock rămâne
+   Order Push Invoice**, **Mapping Product Code**, **Odoo ID is External ID**, **Export prices**
+   (debifați-o doar dacă prețurile se stabilesc direct pe eMAG, vezi §6 Pasul 9; Safe stock rămâne
    fără efect în versiunea actuală, vezi §4).
 6. Apăsați **Test connection** din antet — apelează efectiv `/vat`, nu doar validează completarea
    câmpurilor.
@@ -140,7 +141,9 @@ eMAG la validare, vezi §6 Pasul 13 — dezactivați-l în mediul de testare), *
 (`PN` sau `SKU`), **Safe stock** (câmp de configurare, în prezent fără efect asupra exportului — nu
 promiteți clientului o rezervă de stoc pe baza lui) și **Odoo ID is External ID** (leagă produsul
 inițial de ID-ul Odoo primit direct de la eMAG; o potrivire ulterioară după EAN/barcode îl poate
-totuși suprascrie, vezi §6 Pasul 6).
+totuși suprascrie, vezi §6 Pasul 6) și **Export prices** (bifată implicit: exportul ofertei trimite
+prețurile din lista de prețuri a backend-ului; debifată, prețurile de pe eMAG nu se mai modifică la
+export, vezi §6 Pasul 9).
 
 ![Grupul de câmpuri specifice eMAG: Enable Order Push Invoice, Mapping Product Code, Safe stock, Odoo ID is External ID](screenshots/02_provider_details.png)
 
@@ -254,6 +257,14 @@ de vânzare Odoo al produsului) — o ajustare manuală a acestor două câmpuri
 următorul export, dacă nu e reflectată și în lista de prețuri. Excepție: ofertele cu **Auto Price**
 și cu **Max sale price** completat — exportul le trimite propriul preț și propriile limite min/max,
 în care lucrează auto-pricing-ul.
+
+Când prețurile se stabilesc direct pe eMAG, debifați **Export prices** pe backend. Exportul ofertei
+(**Active on write**, **Export** din meniul cardului Products, **Update in Marketplace**) citește
+atunci oferta de pe eMAG și îi retrimite neschimbate prețul de vânzare, prețul recomandat, limitele
+min/max și moneda, iar denumirea, descrierea, imaginile, caracteristicile, stocul și statusul se
+exportă în continuare. Bifa nu oprește crearea ofertelor noi (pleacă cu prețul din lista de
+prețuri), **Set price**, exportul de preț sau auto-pricing-ul pe buy box: dezactivați cron-urile
+lor și nu folosiți butoanele de preț, dacă Odoo nu trebuie să trimită deloc prețuri.
 
 **Moneda prețurilor.** Prețul de vânzare, minimul și maximul pleacă la eMAG în moneda listei de
 prețuri a backend-ului, marcate cu acea monedă (`currency_type`), la exportul de produs, la **Set
@@ -549,6 +560,10 @@ cron-ului de auto-pricing.
       urmărește statusul în **Bindings → Return Requests**, dar recepția, nota de credit și
       rambursarea rămân manuale; statusul AWB „Return to Sender" se reflectă separat, doar ca stare
       de livrare.
+- [ ] Dacă prețurile se stabilesc pe eMAG, **Export prices** e debifată pe backend: după un export
+      al ofertei, prețul, limitele min/max și moneda de pe eMAG au rămas cele de dinainte, iar
+      denumirea, stocul și imaginile s-au actualizat. Cron-urile de export de preț și de
+      auto-pricing sunt dezactivate.
 - [ ] Produsele publicate pe eMAG au greutatea completată (în kg, cel puțin 0,001): un produs fără
       greutate nu își trimite dimensiunile, iar job-ul „eMAG measurements of product …” eșuează cu
       numele și linkul produsului; după corectare, **Requeue** pe job-ul din **Jobs** trimite
@@ -563,6 +578,7 @@ cron-ului de auto-pricing.
 |---|---|---|
 | `Test connection` eșuează cu „You are not allowed to use this API" | IP-ul serverului Odoo nu e whitelist-at la eMAG, sau contul de webservice nu are API activat | Adăugați IP-ul în **Technical Details → Add a new IP**, verificați activarea API-ului la eMAG |
 | Exportul unei oferte e refuzat cu „The VAT value must be in accordance with the delivery country VAT rates" | Cota de TVA trimisă nu există pe platforma eMAG (până la 19.0.2.21.2 se trimitea mereu `vat_id` 1) | Actualizați modulul; dacă eroarea rămâne, verificați taxa de vânzare a produsului și cotele contului eMAG (**Test connection**) |
+| Exportul ofertei eșuează cu „Offer … was not found on eMAG backend …, or it has no price. Its prices are not exported from Odoo, so the offer is not updated" (în română: „Oferta … nu a fost găsită în backend-ul eMAG … sau nu are preț…") | **Export prices** e debifată, iar oferta nu există pe eMAG sau nu are preț acolo, deci nu are ce preț să retrimită | Verificați oferta pe eMAG (ID-ul extern din Odoo); dacă trebuie creată sau are nevoie de un prim preț, puneți prețul direct pe eMAG, apoi reîncercați exportul |
 | Exportul unui produs eșuează cu eroare de categorie lipsă | Categoria Odoo a produsului nu are corespondent eMAG deja importat | Rulați **Categories → Import** (meniul „⋮"), mapați categoria, reîncercați exportul |
 | O comandă importată nu poate emite AWB (transportator „Livrare gratuită") | Codul `courier`/`pickup` nu e mapat pe niciun `marketplace.delivery.carrier`, sau a fost rescris de un re-import de curieri | Deschideți lista de curieri (contorul cardului **Delivery Carrier**) și remapați **Code**-ul |
 | Emiterea AWB-ului eșuează cu eroare de localitate | **Get city** nu a rulat încă pentru geografia respectivă | Rulați **Get city** pe metoda de livrare eMAG |

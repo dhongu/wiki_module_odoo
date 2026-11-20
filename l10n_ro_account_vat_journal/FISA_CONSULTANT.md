@@ -198,8 +198,9 @@ rând de **Total** și, sub el, **recapitulația pe rânduri D300**.
 
 În toate jurnalele de TVA (cumpărări și vânzări, standard și pe regimuri), antetul are două
 rânduri, ca exportul XLSX: sus, denumirea taxei sau a regimului, o singură dată, peste coloanele
-ei; jos, doar **Bază** și **TVA** (la autolichidare, **TVA deductibilă** și **TVA colectată**). Atât
-pe ecran, cât și în PDF. O denumire foarte lungă se oprește după 4 rânduri cu „…”, iar denumirea
+ei; jos, doar **Bază** și **TVA** (la autolichidare, **TVA deductibilă** și **TVA colectată**).
+Coloanele fixe (Nr., Jurnal, Furnizor, Dată document...) ocupă ambele rânduri, cu o singură celulă.
+Atât pe ecran, cât și în PDF. O denumire foarte lungă se oprește după 4 rânduri cu „…”, iar denumirea
 completă apare când țineți mouse-ul pe ea.
 
 **Verificați** înainte de a continua:
@@ -593,7 +594,8 @@ totalurilor față de balanță, evidența taxei nededuse și a pro-ratei, și d
 - [ ] Cotele anterioare 19% / 9% / 5% apar doar în perioadele în care au operațiuni.
 - [ ] O coloană arhivată dispare din jurnal; una cu „Doar dacă are operațiuni" debifat apare și goală.
 - [ ] În toate jurnalele de TVA, pe ecran și în PDF, denumirea taxei / regimului apare o singură
-      dată, deasupra coloanelor ei, iar dedesubt doar Bază / TVA (ca în XLSX); pe o denumire tăiată
+      dată, deasupra coloanelor ei, iar dedesubt doar Bază / TVA (ca în XLSX); coloanele fixe
+      (Nr., Jurnal...) au o singură celulă pe ambele rânduri; pe o denumire tăiată
       (ex. „Achiziții de bunuri din țară și din import scutite…”), tooltip-ul arată denumirea completă.
 
 ## 9. Mesaje de eroare frecvente

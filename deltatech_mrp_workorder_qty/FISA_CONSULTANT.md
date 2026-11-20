@@ -69,6 +69,8 @@ lucru și nu se editează din interfață.
    modulului de la o versiune anterioară, opțiunea se bifează automat pe BoM-urile existente de tip
    Fabricare care au operații, ca să păstreze comportamentul de până atunci; BoM-urile create după
    aceea pornesc nebifate.
+
+   ![Formularul BoM pentru Masă metalică, tabul Diverse: bifa Continuous Production este activă și evidențiată, sub Consum flexibil](screenshots/07_bom_productie_continua.png)
 6. Confirmați un ordin de producție pentru produsul respectiv, ca să existe comenzile de lucru.
 
 ## 6. Flux de utilizare
@@ -126,6 +128,8 @@ devine cantitatea întreagă a ordinului, oricât s-a procesat efectiv pe prima.
 În Shop Floor deschideți operația, apoi meniul ei (butonul cu trei puncte). Apăsați
 **Înregistrează cantitatea procesată** (lângă **Register Production / Serial**, care în Shop Floor apare în engleză). Se deschide același
 dialog ca la pasul 2. Butonul apare doar pe operații, nu pe cardul ordinului de producție. Cu **Continuous Production** bifat pe BoM, după prima tranșă pe o operație, operația următoare apare și ea în Shop Floor (filtrul **De făcut** și cardul ordinului de producție), fără să aștepte închiderea celei precedente. Pe cardul operației, sub cantitatea planificată (de exemplu **100 Unități**), apare și linia **Procesat: 10**, adică totalul din jurnal; se actualizează după fiecare înregistrare.
+
+![Shop Floor, centrul de lucru Atelier producție, după prima tranșă de 10 pe Debitare: lângă cardul Debitare (Procesat: 10) apare și cardul Vopsire, evidențiat, cu Procesat: 0 și butonul START](screenshots/08_shop_floor_operatia_urmatoare.png)
 
 ![Meniul Opțiuni al operației Debitare în Shop Floor, cu butonul Înregistrează cantitatea procesată evidențiat lângă Register Production / Serial; în spate, cardul operației arată 100 Unități și Procesat: 10](screenshots/04_shop_floor_meniu.png)
 
@@ -205,6 +209,8 @@ cu operațiile Debitare și Vopsire. Cele în engleză, pentru `readme/USAGE.md`
 | `04_shop_floor_meniu.png` | Meniul operației din Shop Floor, cu butonul nou |
 | `05_jurnal.png` | Tabul cu jurnalul tranșelor |
 | `06_eroare_limita.png` | Mesajul de refuz la depășirea limitei |
+| `07_bom_productie_continua.png` | Bifa Continuous Production pe BoM, tabul Diverse |
+| `08_shop_floor_operatia_urmatoare.png` | Operația următoare (Vopsire) vizibilă în Shop Floor după prima tranșă pe Debitare |
 
 Regenerare (din rădăcina monorepo-ului, cu `deltatech_doc_screenshots` și Playwright instalate):
 

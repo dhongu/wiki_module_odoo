@@ -1,7 +1,7 @@
 # Romania - Stock Accounting (localizat la `l10n_ro_stock_account/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_account`
-- **Versiune:** `19.0.1.16.0`
+- **Versiune:** `19.0.1.17.0`
 - **Cale:** https://github.com/terrabit-ro/l10n-romania/tree/19.0/l10n_ro_stock_account
 - **Cale Locală:** `odoo-addons/l10n-romania-oca/l10n_ro_stock_account`
 - **Ultima Ingestie:** `2026-11-17`

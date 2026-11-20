@@ -118,6 +118,11 @@ Date minime pentru demo:
    pentru un cont cu litere s-ar suprapune cu un cont numeric existent (exportul se oprește și vă
    cere asta, vezi secțiunea 9), sau (b) vreți alt cod decât cel generat. Nu completați nimic la
    conturile numerice.
+8. **Persoana de contact SAF-T** (**Contabilitate → Configurare → Setări**, blocul **Localizare
+   România**) este opțională. Alegeți persoana care răspunde de D406; trebuie să aibă nume și
+   prenume, telefon și, ideal, funcția completată (de exemplu „Administrator”). Dacă rămâne goală,
+   exportul alege contactul firmei cu funcția de administrator, apoi primul contact cu nume și
+   telefon.
 
 ## 6. Flux de utilizare
 
@@ -684,6 +689,56 @@ Exportul D406 scrie acum câmpurile cerute de ANAF pentru produse și pentru lin
 
 ![Factură de achiziție cu referința furnizorului în câmpul „Referință factură”](screenshots/13_factura_achizitie_referinta.png)
 
+### Pasul 15 — Identificatorii firmei și ai partenerilor (versiunea 19.0.1.5.0)
+
+Exportul D406 scrie acum codurile de identificare după regulile ANAF (GL.19, GL.20, MF.C.3, MF.S.3,
+S.TID.1–S.TID.4). Verificați datele din care se iau, apoi generați declarația din **Contabilitate →
+Raportare → Registre → Carte Mare**, meniul cu rotița (⚙) → **SAF-T (Declarația D406)**, ca la Pasul 5.
+
+1. **Firma (Header/Company)** — `RegistrationNumber` rămâne cu prefixul RO la plătitorii de TVA
+   (RO18547290). `TaxRegistration` are acum:
+   - `TaxRegistrationNumber` și `TaxNumber`: CUI-ul **fără** RO (18547290);
+   - `TaxType`: `100010` (plătitor de TVA) sau `100040` (TVA la încasare, bifa **Compania aplică TVA
+     la încasare** din `l10n_ro_caba`). La firmele neplătitoare de TVA `TaxType` nu se trimite
+     (e opțional, iar regimul nu se poate deduce singur);
+   - `TaxAuthority`: `ANAF`.
+2. **Contactul firmei** — se trimite **un singur** contact: cel ales în setări (secțiunea 5,
+   punctul 8), altfel administratorul, altfel primul contact cu nume și telefon. Funcția lui apare în
+   `OtherTitles`, cu majuscule (maximum 18 caractere): „ADMINISTRATOR”. Persoana se alege din
+   **Contabilitate → Configurare → Setări**, blocul **Localizare România**, câmpul **Persoană de
+   contact SAF-T**; funcția se completează pe fișa contactului (**Contacte** → firma voastră → tab-ul
+   **Contacte și adrese** → contactul → câmpul **Funcție**).
+
+![Setarea „Persoană de contact SAF-T” din blocul Localizare România](screenshots/14_setari_persoana_contact_saft.png)
+3. **Contactele clienților și furnizorilor** — nu se mai trimit (blocul e opțional, S.C.4). Înainte
+   ieșeau denumiri de firme ca persoane și adrese personale de e-mail.
+4. **ID-ul partenerilor** (`CustomerID`, `SupplierID`, `CompanyStructure/RegistrationNumber`) —
+   2 cifre de tip + identificator, după datele din fișa partenerului (țară, cod de TVA, CNP):
+
+   | Partener | ID | Exemplu |
+   |---|---|---|
+   | Firmă din România cu CUI | `00` + CUI fără RO | `0020603502` |
+   | Firmă din UE cu cod de TVA | `01` + țara ISO + cod TVA | `01DE123456788`, `01GR094259216` (prefixul TVA EL devine GR) |
+   | Firmă din afara UE cu cod de TVA | `02` + țara + cod TVA | `02CH…` |
+   | Persoană fizică cu CNP (în `company_registry`) | `03` + CNP | `031800101420010` |
+   | Persoană fizică sau firmă din România fără CNP/CUI | `04` + cod intern | `04C0010` |
+   | Firmă din UE fără cod de TVA | `05` + țara + cod intern | `05DE00DD009` |
+   | Firmă din afara UE fără cod de TVA | `06` + țara + cod intern | `06US245` |
+
+   CNP-ul sau CUI-ul partenerului se citesc din câmpul de cod de înregistrare al partenerului
+   (`company_registry`, CUI-ul firmei sau CNP-ul persoanei) (**Contacte** → partenerul), iar codul de TVA din câmpul **TVA**.
+   **Codul intern** e **Referința internă** a partenerului (**Contacte** → partenerul → tab-ul
+   **Vânzări & Achiziții** → secțiunea **Diverse** → câmpul **Referință**), fără caractere speciale (`C-00.10` → `C0010`);
+   dacă e goală, ID-ul partenerului din bază. Dacă două referințe dau același cod
+   (`A-1` și `A1`), ambii parteneri primesc ID-ul din bază. Înainte, partenerii fără cod fiscal
+   primeau toți `00`, valoare respinsă de ANAF și repetată (159 de apariții pe o lună la Inter Heat),
+   iar persoanele cu CNP primeau CNP-ul fără prefixul `03`.
+
+![Fișa partenerului „Pop Maria”, cu referința internă C-00.10, exportată ca CustomerID 04C0010](screenshots/15_partener_referinta_interna.png)
+
+Exportul nu consultă VIES: o firmă din UE cu cod de TVA completat primește `01`. Dacă știți că
+partenerul nu e înregistrat în scopuri de TVA, ștergeți codul de TVA din fișă (va primi `05`).
+
 ## 7. Legături cu alte module / declarații
 
 | Modul | Rol |
@@ -772,6 +827,13 @@ Exportul D406 scrie acum câmpurile cerute de ANAF pentru produse și pentru lin
       identificator intern.
 - [ ] Un **Cod SAF-T** completat pe cont apare în fișier în locul celui generat; un cod care nu
       începe cu sinteticul contului sau care coincide cu alt cont e refuzat la salvare.
+- [ ] În `Header/Company`, `RegistrationNumber` are prefixul RO, iar `TaxRegistration` are
+      `TaxRegistrationNumber` fără RO, `TaxType` 100010 (100040 la TVA la încasare), `TaxNumber` și
+      `TaxAuthority` ANAF, în această ordine (Pasul 15).
+- [ ] `Header/Company` are un singur `Contact`, cu funcția în `OtherTitles` (ex. ADMINISTRATOR).
+- [ ] `Customers` și `Suppliers` nu au niciun bloc `Contact`.
+- [ ] Niciun `CustomerID` / `SupplierID` nu este doar `00`; persoana cu CNP are `03` + CNP, cea fără
+      CNP `04` + referința internă (sau ID-ul), firma din UE fără TVA `05` + țară + cod intern.
 - [ ] Fișierul trece prin DUK Integrator fără erori.
 
 ## 9. Mesaje de eroare frecvente
@@ -795,6 +857,8 @@ Exportul D406 scrie acum câmpurile cerute de ANAF pentru produse și pentru lin
 | „S-au epuizat codurile numerice de 3 cifre pentru grupurile de litere.” | s-au folosit toate cele 999 de coduri de grup în companie | completați **Cod SAF-T** pe conturile noi |
 | DUK: `AccountID` nu e număr întreg (MF.GLA.2) | un cont cu litere în cod, iar modulul nu e instalat sau e într-o versiune fără corecție | instalați/actualizați `l10n_ro_saft_export_fix` și regenerați XML-ul (Pasul 13); conturile din `l10n_ro_saft_stock` rămân pe cod numeric |
 | Linia cu „0% EXEMPT” sau „0% EU G” iese cu `000 / 000000` | taxa nu are completate **Tipul fiscal SAF-T românesc** sau **Cod Fiscal SAF-T Roman** (tab Opțiuni Avansate), sau modulul nu e instalat | completați tipul (300) și codul SAF-T pe taxă și regenerați XML-ul |
+| „Persoana de contact SAF-T trebuie să aibă nume și prenume și număr de telefon.” (exportul se oprește) | persoana aleasă în setări nu are telefon sau are un singur cuvânt în nume | completați telefonul și numele complet pe contact, sau goliți setarea (secțiunea 5, punctul 8) |
+| DUK: „CustomerID / SupplierID incorrect value” | versiune fără corecție: partener fără cod fiscal exportat cu `00`, sau CNP fără `03` | actualizați modulul la 19.0.1.5.0 și regenerați XML-ul (Pasul 15); la firmele din România verificați CUI-ul |
 
 ## 10. Capturi de ecran
 
@@ -818,6 +882,10 @@ Capturile sunt **generate automat** de `tests/test_screenshots.py` (mixinul `Scr
 | 9 | `static/description/09_factura_livrare_intracomunitara_0.png` | Factura către clientul din Germania, 4 × 500 lei, cont 707, taxa 0% EU G, TVA 0% 0,00 lei |
 | 10 | `static/description/10_carte_mare_luna_fara_achizitii_plati.png` | Carte Mare pe luna anterioară (doar 4111 / 4427 / 704), cu meniul ⚙ deschis și „SAF-T (Declarația D406)” ① evidențiată |
 | 11 | `static/description/11_cont_cu_litere_cod_saft.png` | Formularul contului 4111RUE5194 Clienți RUE, cu câmpul **Cod SAF-T** ① sub Tip |
+| 12 | `static/description/12_categorie_metoda_fifo.png` | Categoria de produse cu **Metoda de cost** ① FIFO → `ValuationMethod` FIFO |
+| 13 | `static/description/13_factura_achizitie_referinta.png` | Factura de achiziție cu **Referință factură** ① GNW-VL 350 → `InvoiceNo` |
+| 14 | `static/description/14_setari_persoana_contact_saft.png` | Setări → Localizare România, câmpul **Persoană de contact SAF-T** ① = Ionescu Mihai (Administrator) |
+| 15 | `static/description/15_partener_referinta_interna.png` | Fișa partenerului „Pop Maria” (persoană fizică fără CNP), tab-ul Vânzări & Achiziții, cu câmpul **Referință** ① = C-00.10 → `CustomerID` 04C0010 |
 
 Extrasele XML din Pașii 6, 8, 9, 10, 11 și 13 sunt text inline, nu imagine. Sunt copiate din exportul
 real al testului de capturi, care le scrie în log („Extras D406 pentru fișă”). Numerele de document,

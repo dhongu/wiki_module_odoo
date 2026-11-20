@@ -1,20 +1,23 @@
-# Deltatech Test System (localizat la `deltatech_test_system/index.md`)
+# Test System Indicator (localizat la `deltatech_test_system/index.md`)
 
 - **Nume Tehnic:** `deltatech_test_system`
 - **Versiune:** `19.0.0.0.12`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_test_system`
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_test_system
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_test_system`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-20`
 
 #### 1. Sumar
 
-Acest modul ajută la marcarea clară a unei baze de date Odoo ca fiind de test sau de producție. Atunci când o bază de date este folosită pentru testare, modulul permite „neutralizarea” ei din setări și afișează permanent, în partea de sus a interfeței, un banner vizibil. Astfel, utilizatorii și administratorii știu imediat că lucrează într-un mediu de test și evită confuzia cu baza de date reală de producție.
+O copie de test a unei baze de date se confundă ușor cu producția. Modulul marchează o bază de date ca fiind de test sau de producție, afișează un banner pe cele de test și ascunde butoanele de instalare și dezinstalare din ecranul Aplicații pe cele de producție. Astfel, utilizatorii și administratorii știu imediat în ce mediu lucrează și evită modificări accidentale pe baza reală.
 
 #### 2. Funcționalități Cheie
 
-- Setarea stării sistemului: test sau producție.
-- Neutralizarea bazei de date direct din setări.
-- Afișarea unui banner permanent în partea de sus a interfeței pentru a indica faptul că baza de date este una de test.
+- **Test sau producție:** setarea **Database Is Neutralized**, în secțiunea de companii din setările generale, marchează o bază de date de test. Textul de sub ea indică „It is a test system” sau „It is a productive system”.
+- **Neutralizare la salvare:** salvarea cu bifa nou activată rulează scriptul `data/neutralize.sql` al fiecărui modul instalat care îl are. O nouă salvare nu repetă operația, iar debifarea nu anulează ce au modificat scripturile.
+- **Banner de test:** la fiecare salvare a setărilor, bannerul de neutralizare al clientului web (`web.neutralize_banner`) se activează sau se dezactivează conform bifei.
+- **Ecran Aplicații mai sigur:** pe o bază care nu este neutralizată (producție), cardurile și formularul modulelor ascund butoanele de instalare și dezinstalare, iar fiecare card arată „Is installed” sau „Is not installed”.
+- **Bare de notificare:** când parametrul de sistem `database_notification_banner` conține un text, utilizatorii interni îl văd într-o bară galbenă; `database_news_notification` face același lucru într-o bară albastru deschis. Parametrii nu au ecran de setări; se completează ca parametri de sistem.
+- Modulul nu are grupuri de securitate proprii.
 
 #### 3. Dependențe
 
@@ -23,22 +26,20 @@ Acest modul ajută la marcarea clară a unei baze de date Odoo ca fiind de test 
 
 #### 4. Componente Cheie
 
-> Notă: Fișierul `readme/DESCRIPTION.md` acoperă Sumarul și Funcționalitățile Cheie, dar nu detaliază componentele tehnice. Acestea au fost sintetizate din `__manifest__.py` și din structura modulului pentru completitudine.
-
 **Modele**
 
-- `res.config.settings`: extins pentru a expune opțiunea de setare a stării sistemului (test/producție) și de neutralizare a bazei de date.
-- `ir.module.module`: extins în contextul gestionării stării sistemului de test.
+- `res.config.settings` (extins): câmpul `database_is_neutralized` (parametrul `database.is_neutralized`) și `neutralize_database()`, care rulează scripturile `neutralize.sql` ale modulelor instalate la prima bifare; `set_values()` activează sau dezactivează bannerul `web.neutralize_banner`.
+- `ir.module.module` (extins): câmpul calculat `database_is_neutralized`, citit din parametrul `database.is_neutralized`, folosit pentru a ascunde butoanele de instalare/dezinstalare.
 
 **Vizualizări**
 
-- `res_config_settings_view.xml`: adaugă în Setări opțiunile pentru marcarea stării sistemului și neutralizarea bazei de date; moștenește vizualizarea `base_setup.res_config_settings_view_form`.
-- `ir_module_module_view.xml`: ajustări de vizualizare aferente modulelor.
-- `templates.xml`: definește bannerul permanent afișat în partea de sus a interfeței pentru bazele de date de test.
+- `res_config_settings_view_form`: setarea „Database Is Neutralized” în secțiunea de companii din Setări (moștenește `base_setup.res_config_settings_view_form`).
+- `module_view_kanban` / `module_form`: ascund butoanele de instalare și dezinstalare pe bazele de producție și afișează starea „Is installed” / „Is not installed” pe carduri.
+- `notification_banner` (`views/templates.xml`, extinde `web.layout`): barele de notificare galbenă și albastră pentru utilizatorii interni.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Modulul include fișierul de date `data/neutralize.sql`, folosit la neutralizarea bazei de date. Nu sunt definite sarcini `ir.cron` sau reguli `base.automation`.
+- Nu sunt definite `ir.cron`, `base.automation` sau `ir.actions.server`. Scripturile de neutralizare rulează doar la salvarea setărilor.
 
 #### 5. Conexiuni
 

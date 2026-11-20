@@ -283,6 +283,12 @@ Tab-ul **Comenzi și produse** grupează regulile de date:
     se creează un contact nou pentru adresa diferită. Documentele emise își păstrează adresa;
   - **Email unic**.
 
+  Un client firmă e legat de magazin prin codul fiscal (legătura are cheia `vat:` urmată de cod).
+  La reimport, legătura își păstrează partenerul chiar dacă numele primit din magazin diferă sau
+  codul fiscal de pe partener a fost corectat manual într-o altă formă (de exemplu `HU14303887`
+  în loc de `14303887-2-09`): nu se mai creează a doua firmă cu același cod fiscal. Un client
+  persoană fizică, legat prin e-mail, primește în continuare un contact nou când numele diferă.
+
   Localitatea contactului importat se leagă automat de lista de localități (*Localitate*), după
   regulile:
   - **România** — după numele orașului și județ; la București, sectorul se deduce din stradă,
@@ -503,6 +509,9 @@ Modulul **nu generează note contabile**. Contabilitatea apare în fluxurile con
       **Plătitor TVA**, iar istoricul lui arată nota **Actualizat din ANAF**; un cumpărător cu cod
       fiscal din altă țară (ex. `DE…`) păstrează datele din magazin, fără notă ANAF.
 - [ ] Cu ANAF indisponibil, comanda se importă totuși, iar codul fiscal al clientului rămâne scris.
+- [ ] Un client firmă al cărui cod fiscal a fost corectat manual pe partener (de exemplu din
+      `14303887209` în `HU14303887`) rămâne pe același partener la următoarea comandă din magazin,
+      chiar dacă numele primit diferă; nu apare a doua firmă cu același cod fiscal.
 - [ ] Cu **Partajează produsul** debifat, legarea sau reimportul unui produs Odoo existent, cu
       mișcări de stoc în altă companie, nu îi schimbă compania, iar un produs nou creat din
       magazin primește compania backend-ului.
@@ -523,6 +532,8 @@ Modulul **nu generează note contabile**. Contabilitatea apare în fluxurile con
 | Importul schimbă categoria produselor existente | Categoriile magazinului se leagă după nume de categorii Odoo | Debifați **Folosește categoriile** sau adăugați `categ_id` la **Câmpuri ignorate la import** (**Categorie implicită** nu oprește schimbarea) |
 | „Compania acestui produs nu poate fi schimbată atâta timp cât există mișcări de stoc ale acestuia aparținând altei companii” la importul comenzilor | Versiune a modulului mai veche de 19.0.1.42.3: importul scria compania backend-ului peste compania unui produs existent cu mișcări de stoc în altă companie | Actualizați modulul și reluați joburile eșuate din **Joburi**; ca soluție temporară, bifați **Partajează produsul** |
 | Cumpărătorul firmă din România nu e completat din ANAF (fără notă **Actualizat din ANAF** în istoric) | **Actualizează partenerul după codul fiscal** debifat, `l10n_ro_partner_autocomplete` neinstalat, ANAF nu a răspuns sau codul fiscal nu e un CUI valid (eroarea e în jurnalul serverului) | Bifați opțiunea, instalați modulul; pe partener, apăsați **Actualizează din ANAF** |
+| A doua firmă cu același cod fiscal apare la o comandă nouă, după ce codul fiscal sau numele partenerului a fost corectat manual | Versiune a modulului mai veche de 19.0.1.43.6: legătura după codul fiscal păstra partenerul doar dacă numele era identic | Actualizați modulul, apoi îmbinați cele două firme (**Acțiune → Îmbină**) |
+| Comanda cu cod fiscal, dar fără adresă de facturare, nu se importă: „*unsupported operand type(s) for +: 'bool' and 'str'*” în job | Versiune a modulului mai veche de 19.0.1.43.6: fără adresă de facturare comanda nu are țară | Actualizați modulul și reluați jobul eșuat din **Joburi** (**Repune în coadă**) |
 | Joburile create de webhook-uri n-au utilizator, iar valorile implicite ale utilizatorului backend-ului nu se aplică | Versiune a modulului mai veche de 19.0.1.43.5: webhook-urile rulau fără utilizator | Actualizați modulul și completați **Utilizator** pe backend |
 | Prețul de vânzare al produsului s-a schimbat „singur” | Cineva a editat **Preț Odoo** pe o legătură | Editați prețul pe produs sau în lista de prețuri, nu pe legătură |
 

@@ -108,9 +108,15 @@ Astfel, închiderea lunară a conturilor de venituri și cheltuieli nu golește 
   impozit pe profit + protocol), 0 dacă baza e ≤ 0, și **partea nedeductibilă** = protocol − limită
   (D101 rd. 26);
 - grupul **Amortizare** — **amortizarea contabilă** (rulajul 6811, D101 rd. 28) și **amortizarea
-  fiscală** (D101 rd. 11), egală implicit cu cea contabilă. Dacă modificați amortizarea fiscală, se
+  fiscală** (D101 rd. 11). Cu modulul de mijloace fixe (`l10n_ro_fixed_assets`), amortizarea fiscală
+  = amortizarea contabilă minus partea nedeductibilă din planurile fiscale ale activelor, pe toate
+  lunile perioadei: la autoturismele M1, partea peste 1.500 lei/lună (art. 28 alin. (14) CF). Fără
+  modulul de active, este egală cu cea contabilă. Dacă modificați amortizarea fiscală, se
   bifează **Amortizare fiscală modificată manual** și un nou calcul nu o mai suprascrie; debifați ca să
-  se preia din nou cea contabilă. Rândurile „din care” se completează **manual**, numai dacă firma are
+  se preia din nou valoarea calculată. **(+) Nedeductibil la ieșirea activelor** (D101 rd. 33) este,
+  pentru activele vândute sau casate în perioadă, valoarea fiscală rămasă la ieșire minus partea
+  deductibilă (la M1, cel mult 1.500 lei × lunile rămase, HG 1/2016 Norme pct. 27); o valoare
+  modificată manual se păstrează la fel, cu bifa **Sumă la ieșire modificată manual**. Rândurile „din care” se completează **manual**, numai dacă firma are
   astfel de active, cu amortizarea fiscală integrală (deducerea dintr-o dată) inclusă în rd. 11:
   - *din care: mijloace fixe pentru prevenirea accidentelor* (rd. 11.1) — mijloacele fixe destinate
     prevenirii accidentelor de muncă și bolilor profesionale;
@@ -190,16 +196,34 @@ Dr 691   −80 RON   (Cheltuieli cu impozitul pe profit, storno)
 ### Pasul 4 — Registrul de evidență fiscală (OMF 808/2026)
 
 Din **Contabilitate → Contabilitate → Registru de evidență fiscală** creați un registru pentru anul
-fiscal, selectați calculul anual (D101) și apăsați **Generează din calculul D101**. Registrul listează
+fiscal și perioada de declarare, selectați calculul perioadei și apăsați **Generează din calcul**.
+Registrul se face pe fiecare perioadă de declarare, cumulat de la 1 ianuarie (art. 3 din OMF 808/2026):
+
+| Perioadă | Calcul | Interval |
+|---|---|---|
+| T1, T2, T3 | trimestrial (D100) | 1 ianuarie – sfârșitul trimestrului |
+| Anual | anual (D101) | 1 ianuarie – 31 decembrie |
+
+Lista de calcule afișează doar calculele companiei pentru anul și perioada registrului; dacă schimbați
+perioada, calculul ales se golește. *Perioada de declarare* apare și în lista registrelor, în antetul
+PDF-ului (registrul și situația analitică) și în numele fișierului, de exemplu
+`Registru_evidenta_fiscala_2026_Q2`. Impozitul din registru este cel din calculul perioadei, deci cel
+din D100, respectiv D101, iar rândul *Impozit declarat pentru perioadele anterioare ale anului* scade ce
+s-a declarat în trimestrele anterioare. Registrul listează
 ajustările fiscale pe rânduri (cu temei legal) și se **reconciliază** automat cu calculul de impozit.
 Pe lângă regulile de ajustare, generarea adaugă trei rânduri luate din calcul, fiecare cu temeiul
 legal:
 
 | Rând | Valoare contabilă | Valoare fiscală | Ajustare | Temei |
 |---|---|---|---|---|
-| **Cheltuieli cu impozitul pe profit (691, 692, 694, 697)** | rulajul conturilor | 0 | + toată suma | art. 25 alin. (4) lit. a) CF |
+| **Cheltuieli cu impozitul pe profit (691, 692, 694, 697)** | rulajul conturilor, plus nota 691 = 4411 a calculului postat | 0 | + toată suma | art. 25 alin. (4) lit. a) CF |
 | **Cheltuieli de protocol peste limita de 2% (6231)** | rulajul 6231 | limita de 2% | + protocolul peste limită | art. 25 alin. (3) lit. a) CF |
 | **Cheltuieli cu sponsorizarea** | rulajul conturilor de sponsorizare din setări (implicit 6584) | 0 | + toată suma | art. 25 alin. (4) lit. i) CF |
+
+Nota de impozit a calculului (Dr 691 = Cr 4411) intră în registru ca în D101: la cheltuieli, pe
+contul 691, deci rezultatul contabil scade cu impozitul, și la rândul *Cheltuieli cu impozitul pe
+profit*, ca nedeductibilă. Profitul impozabil rămâne același. Dacă postați calculul după ce ați
+generat registrul, apăsați din nou **Generează din calcul**.
 
 Reconcilierea compară ajustările din registru cu: nedeductibile + impozit pe profit + protocol
 nedeductibil + sponsorizare − neimpozabile − deduceri suplimentare din calcul.
@@ -221,21 +245,29 @@ e negativ, pierderea de reportat apare ca rând informativ, iar profitul impozab
 
 Două rânduri apar doar când e cazul:
 
-- **Diferență față de calculul D101** sub cheltuieli — s-au postat sau anulat note după rularea
+- **Diferență față de calculul de impozit** sub cheltuieli — s-au postat sau anulat note după rularea
   calculului. Rulați din nou calculul și regenerați registrul înainte de tipărire.
-- **Diferență față de baza impozabilă din calculul D101** — de regulă diferența de amortizare:
-  registrul o ia pe fiecare activ (art. 28 CF), iar calculul din amortizarea contabilă și fiscală
-  (rd. 28 și rd. 11). Rândul arată ce bază s-a folosit pentru impozit; detaliul e în situația analitică.
+- **Diferență față de baza impozabilă din calculul de impozit** — registrul și calculul au fost generate
+  din date diferite (de exemplu, s-a modificat un activ după calcul). Rândul arată ce bază s-a folosit
+  pentru impozit; rulați din nou calculul și regenerați registrul.
 
-> ⚠️ **Limită:** modulul produce azi doar registrul **anual**. Plătitorii trimestriali (D100) și
-> firmele trecute de la micro la profit în cursul anului nu sunt încă acoperite (vezi ROADMAP).
+Amortizarea și ieșirile de active vin din aceleași valori ca D101. Cu modulul de mijloace fixe,
+registrul are câte un rând pe activ: amortizarea contabilă (notele de amortizare din perioadă, fără
+nota de ieșire) față de amortizarea fiscală deductibilă din planul fiscal; un activ fără diferență nu
+apare. La o vânzare sau casare apare un rând separat, la cheltuieli nedeductibile: valoarea fiscală la
+ieșire minus partea deductibilă. Dacă amortizarea fiscală sau suma de la ieșire au fost modificate
+manual pe calcul, registrul are câte un singur rând cu valorile din calcul.
+
+> ⚠️ **Limită:** firmele trecute de la micro la profit în cursul anului nu sunt încă acoperite: registrul
+> și calculul pornesc mereu de la 1 ianuarie (vezi ROADMAP).
 
 Tabelul detaliat pe coloane (valoare contabilă, valoare fiscală, ajustare, temei) se tipărește
 separat, din meniul de tipărire, ca **Situație analitică a ajustărilor fiscale** — notă de lucru, nu registrul.
 
-![Registrul de evidență fiscală, reconciliat cu calculul D101](screenshots/05_registru_evidenta_fiscala.png)
+![Registrul de evidență fiscală, reconciliat cu calculul](screenshots/05_registru_evidenta_fiscala.png)
 
-La **Închide anul**, registrul devine imutabil (retenție legală).
+La **Închide perioada**, registrul devine imutabil (retenție legală). Registrul unui trimestru rămâne
+neschimbat după ce se face registrul trimestrului următor sau cel anual.
 
 ## 7. Legături cu alte module / declarații
 
@@ -249,7 +281,8 @@ La **Închide anul**, registrul devine imutabil (retenție legală).
 
 Ce este automat: calcul YTD din rulaje (fără închiderile pe 121), partea financiară, impozitul pe
 profit, protocolul peste limită, amortizarea contabilă, ajustările fiscale configurate, rotunjirea la leu.
-Ce rămâne manual: amortizarea fiscală acolo unde diferă de cea contabilă; validarea nedeductibilelor,
+Ce rămâne manual: amortizarea fiscală acolo unde diferă de cea contabilă fără modulul de mijloace
+fixe, sau unde planul fiscal al activului nu e completat; validarea nedeductibilelor,
 neimpozabilelor și pierderilor reportate; TVA colectată pe cadourile de protocol (alt cont decât 6231).
 
 ## 8. Verificări pentru consultant
@@ -275,8 +308,13 @@ neimpozabilelor și pierderilor reportate; TVA colectată pe cadourile de protoc
 - [ ] Nota de impozit se înregistrează pe 4411, chiar dacă planul are și alte conturi 441x.
 - [ ] Protocolul: limita este 0 când profitul contabil + impozit + protocol e ≤ 0, iar tot protocolul e nedeductibil.
 - [ ] Amortizarea fiscală modificată manual rămâne după un nou **Calculează din contabilitate**.
+- [ ] Cu un autoturism M1 (amortizare 2.000 lei/lună), *Amortizare fiscală* = rulajul 6811 minus 500 lei pe fiecare lună, iar registrul are rândul activului cu ajustarea +500 × luni; un activ fără parte nedeductibilă nu are rând.
+- [ ] La vânzarea unui M1, *Nedeductibil la ieșirea activelor* = valoarea fiscală la ieșire − 1.500 × lunile rămase, iar registrul are rândul de ieșire cu aceeași sumă, la data vânzării.
 - [ ] Impozitul și nota 691 = 441 sunt în lei întregi (0,50 în sus).
 - [ ] Registrul de evidență fiscală are rândurile de impozit pe profit, protocol (valoarea fiscală = limita de 2%) și *Cheltuieli cu sponsorizarea* și e reconciliat.
+- [ ] După postarea calculului și regenerarea registrului, nota 691 = 4411 apare la cheltuieli (cont 691) și în rândul *Cheltuieli cu impozitul pe profit*, iar profitul impozabil din registru este egal cu baza din calcul.
+- [ ] Registrul pentru T2, generat din calculul D100 al T2, are veniturile și cheltuielile din 1 ianuarie – 30 iunie, rândurile datate 30 iunie și impozitul egal cu cel din calculul T2; calculul anual nu apare în listă pentru un registru trimestrial.
+- [ ] Pe formularul calculului, *Cotă impozit (%)* afișează 16, nu 1600%.
 - [ ] Diferența de reconciliere e 0 și când există sponsorizare (formula include *(+) Cheltuieli cu sponsorizarea și mecenatul*).
 
 ## 9. Mesaje de eroare frecvente
@@ -289,6 +327,8 @@ neimpozabilelor și pierderilor reportate; TVA colectată pe cadourile de protoc
 | Cont lipsă sau jurnal lipsă | Configurarea contabilă este incompletă | Completați conturile și jurnalele în setările modulului |
 | „Conturile 6582… (donații) au cheltuieli, dar nu au regulă de ajustare, deci sunt tratate ca deductibile.” | Donațiile au rulaj și nu există regulă pe 6582 | Donații: adăugați regula **Nedeductibil** pe 6582 (art. 25 alin. (1) CF; excepția: alimentele, art. 25 alin. (4) lit. c) pct. 4 CF) și recalculați. Sponsorizare sau mecenat: treceți contul în *Conturi de sponsorizare D101* sau reclasificați pe 6584 |
 | Vechea eroare „Impozitul de plată este zero” | Nu mai apare: impozitul zero e o situație validă | Postați calculul; nu se face notă, iar D101 se exportă când există profit |
+| „Selectați calculul impozitului pe profit al perioadei (D100 sau D101).” | S-a apăsat **Generează din calcul** fără calcul ales pe registru | Alegeți calculul perioadei (T1–T3: D100; Anual: D101); dacă lista e goală, creați întâi calculul perioadei |
+| „Calculul impozitului pe profit trebuie să fie al aceleiași companii, al aceluiași an și al aceleiași perioade ca registrul.” | Calculul ales e de altă perioadă, alt an sau altă companie (de exemplu, calculul anual pe un registru T1) | Alegeți calculul cu aceeași perioadă de declarare sau schimbați perioada registrului |
 | Perioada este blocată | Data documentului este într-o perioadă închisă | Folosiți o perioadă deschisă sau ajustați lock date-ul în demo |
 
 ## 10. Capturi de ecran
@@ -301,7 +341,7 @@ pe planul de conturi RO:
 2. `02_formular_calcul.png` — Formularul de calcul cu rezultatul fiscal (venituri, cheltuieli, ajustări, bază).
 3. `03_declaratie_postata.png` — Calcul postat, cu link către nota contabilă.
 4. `04_nota_691_441.png` — Nota contabilă generată: Dr 691 = Cr 441.
-5. `05_registru_evidenta_fiscala.png` — Registrul de evidență fiscală, reconciliat cu calculul D101.
+5. `05_registru_evidenta_fiscala.png` — Registrul de evidență fiscală, reconciliat cu calculul.
 
 Regenerare:
 

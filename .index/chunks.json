@@ -1522,7 +1522,7 @@
   {
     "path": "deltatech_b2b_portal/index.md",
     "module": "deltatech_b2b_portal",
-    "version": "19.0.1.4.4",
+    "version": "19.0.1.4.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_portal",
     "local_path": "odoo-addons/bitshop/deltatech_b2b_portal",
     "last_ingest": "2026-10-12",
@@ -2358,7 +2358,7 @@
   {
     "path": "deltatech_cmr_document/index.md",
     "module": "deltatech_cmr_document",
-    "version": "19.0.1.3.4",
+    "version": "19.0.1.3.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_cmr_document",
     "local_path": "odoo-addons/bitshop/deltatech_cmr_document",
     "last_ingest": "2026-11-10",
@@ -5815,7 +5815,7 @@
   {
     "path": "deltatech_marketplace/index.md",
     "module": "deltatech_marketplace",
-    "version": "19.0.1.43.5",
+    "version": "19.0.1.43.6",
     "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace`",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace",
     "last_ingest": "2026-10-27",
@@ -6019,7 +6019,7 @@
   {
     "path": "deltatech_marketplace_emag/index.md",
     "module": "deltatech_marketplace_emag",
-    "version": "19.0.2.21.6",
+    "version": "19.0.2.21.8",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_emag",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_emag",
     "last_ingest": "2026-10-22",
@@ -6630,7 +6630,7 @@
   {
     "path": "deltatech_marketplace_shopify/index.md",
     "module": "deltatech_marketplace_shopify",
-    "version": "19.0.1.9.1",
+    "version": "19.0.1.10.1",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_shopify",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_shopify",
     "last_ingest": "2026-10-09",
@@ -6850,7 +6850,7 @@
   {
     "path": "deltatech_mcp_server/index.md",
     "module": "deltatech_mcp_server",
-    "version": "19.0.1.16.1",
+    "version": "19.0.1.16.2",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_mcp_server",
     "local_path": "odoo-addons/bitshop_ent/deltatech_mcp_server",
     "last_ingest": "2026-11-17",
@@ -10025,11 +10025,11 @@
   {
     "path": "deltatech_purchase_ubl/index.md",
     "module": "deltatech_purchase_ubl",
-    "version": "19.0.1.4.22",
+    "version": "19.0.1.5.0",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_ubl",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_ubl",
-    "last_ingest": "2026-10-21",
-    "friendly_name": "Purchase UBL",
+    "last_ingest": "2026-11-20",
+    "friendly_name": "Purchase UBL Import",
     "summary": "Acest modul importă facturile de la furnizori (în format UBL XML, iar prin extensii și PDF) și le folosește pentru a actualiza fluxurile de achiziție din Odoo. Pe baza documentului, modulul identifică furnizorul și comanda de achiziție, potrivește produsele, actualizează prețurile de la furnizor, poate valida recepția de stoc și poate genera factura de la furnizor. Din versiunea 19.0.1.4.19, butonul de pe comanda de achiziție și titlul asistentului se numesc **Import Invoice** („Import factură”), în loc de „Import UBL”, deoarece asistentul primește și PDF-ul facturii (prin [deltatech_ai_purchase_pdf](../deltatech_ai_purchase_pdf/index.md)). Valoarea de afaceri principală este reducerea muncii manuale și a erorilor la prelucrarea documentelor de achiziție.",
     "features": [
       "Rezolvare automată a furnizorului și a comenzii: asistentul păstrează comanda de achiziție selectată și poate identifica furnizorul și comanda din document (`OrderReference`, codul fiscal al furnizorului, numele furnizorului) când contextul nu mai e disponibil. Codurile fiscale se compară fără spații și fără prefixul RO. O comandă goală creată prin butonul Upload din lista de achiziții (furnizor = utilizatorul curent sau compania) își preia furnizorul din document; un furnizor necunoscut oprește importul cu un mesaj.",
@@ -10052,6 +10052,7 @@
     ],
     "dependencies": [
       "purchase_stock",
+      "deltatech_account_ubl_import",
       "account"
     ],
     "connections": [
@@ -10060,9 +10061,10 @@
       "deltatech_purchase_ubl_ai",
       "purchase_stock",
       "account",
+      "deltatech_account_ubl_import",
       "l10n_ro_message_spv_purchase"
     ],
-    "text": "Purchase UBL\ndeltatech_purchase_ubl\nAcest modul importă facturile de la furnizori (în format UBL XML, iar prin extensii și PDF) și le folosește pentru a actualiza fluxurile de achiziție din Odoo. Pe baza documentului, modulul identifică furnizorul și comanda de achiziție, potrivește produsele, actualizează prețurile de la furnizor, poate valida recepția de stoc și poate genera factura de la furnizor. Din versiunea 19.0.1.4.19, butonul de pe comanda de achiziție și titlul asistentului se numesc **Import Invoice** („Import factură”), în loc de „Import UBL”, deoarece asistentul primește și PDF-ul facturii (prin [deltatech_ai_purchase_pdf](../deltatech_ai_purchase_pdf/index.md)). Valoarea de afaceri principală este reducerea muncii manuale și a erorilor la prelucrarea documentelor de achiziție.\nRezolvare automată a furnizorului și a comenzii: asistentul păstrează comanda de achiziție selectată și poate identifica furnizorul și comanda din document (`OrderReference`, codul fiscal al furnizorului, numele furnizorului) când contextul nu mai e disponibil. Codurile fiscale se compară fără spații și fără prefixul RO. O comandă goală creată prin butonul Upload din lista de achiziții (furnizor = utilizatorul curent sau compania) își preia furnizorul din document; un furnizor necunoscut oprește importul cu un mesaj.\nPotrivire automată a produselor: după cod de bare (GS1/EAN), cod de furnizor, referință internă sau nume exact.\nIntegrare cu comanda de achiziție:\nliniile existente care se potrivesc sunt actualizate (cantitate, preț, discount), iar liniile al căror produs nu e încă pe comandă sunt adăugate, nu ignorate;\nasistentul avertizează înainte de import când comanda are deja linii, ca utilizatorul să verifice ce se schimbă;\nfără comandă rezolvată, asistentul poate totuși identifica furnizorul din document și actualiza prețurile de la furnizor.\nPrevizualizare cu potrivire pe culori: fluxul interactiv are doi pași. „Preview” afișează câte un rând per linie de factură, cu produsul găsit și modul de potrivire: verde = cod de furnizor sau cod de bare, galben = doar nume, roșu = fără potrivire. Fiecare rând are o acțiune: *Use product* (alt produs), *Create new product* sau *Ignore*; liniile fără produs sunt ignorate implicit, iar un produs nou se creează doar la alegerea explicită. Coloana de descriere se numește „Vendor Description”, deoarece liniile pot veni și din PDF.\nGestionarea prețurilor: actualizează prețurile de la furnizor în `product.supplierinfo` direct din date, fără a suprascrie rândul altei variante a aceluiași produs.\nSuport pentru reduceri: extrage reducerile de linie din `AllowanceCharge` (`ChargeIndicator=false`) și le aplică drept reduceri procentuale.\nUnități de măsură: cantitățile și prețurile sunt convertite din `unitCode` în unitatea liniei de comandă (ex. GRM către kg), cu mapări uzuale (C62, KGM, LTR etc.) și avertismente când conversia nu e posibilă.\nVerificarea totalului și a TVA: comanda este comparată cu documentul pe valoarea fără TVA și, când documentul o indică, pe totalul cu TVA; jurnalul le arată pe ambele. Orice diferență oprește importul direct și deschide previzualizarea. O linie al cărei TVA diferă de cota din document este doar raportată în jurnal (TVA-ul se corectează din produse/poziția fiscală). Taxarea inversă sau intracomunitară contează ca 0% pentru documente K/AE, dar este raportată pentru documente scutite/zero/în afara sferei/export (E, Z, O, G).\nFacturi de credit: o notă de credit furnizor (document CreditNote sau Invoice cu cod 381) este recunoscută și nu se importă; comanda rămâne neschimbată, iar jurnalul afișează un avertisment.\nAutomatizare de stoc: validează opțional recepția asociată, potrivind cantitățile din document; la facturi parțiale, restul merge în backorder. Liniile de servicii cu politică de facturare „la recepție” (ex. eco-taxe) sunt marcate manual ca recepționate.\nContabilitate: creează și leagă opțional factura de la furnizor din comanda de achiziție, doar dacă comanda e confirmată (`purchase`/`done`), mai are ceva de facturat și toate liniile au fost potrivite (altfel factura e omisă, cu motivul în jurnal). Cota 0% explicită (Z, E, O, G) se aplică pe factură; existența unei facturi cu același număr se verifică doar în compania comenzii.\nExecuții automate controlate: importul headless (ex. mesaje SPV atașate pe comenzi) respectă cheia de context `purchase_ubl_no_new_products` (nu creează produse duplicate) și, când totalul nu se potrivește sau rămân linii nepotrivite, programează pe comandă o activitate „SPV import needs review”, atribuită cumpărătorului, cu jurnalul colorat în notă. Activitatea nu se dublează la reprocesare.\nJurnal lizibil: mesaje colorate pe nivel (✅ ⚠️ ❌ ℹ️), setat la sursă și în limba utilizatorului; prețurile actualizate sunt rezumate într-un singur mesaj; textele spun „document sursă”.\nTraduceri RO și pictogramă proprie."
+    "text": "Purchase UBL Import\ndeltatech_purchase_ubl\nAcest modul importă facturile de la furnizori (în format UBL XML, iar prin extensii și PDF) și le folosește pentru a actualiza fluxurile de achiziție din Odoo. Pe baza documentului, modulul identifică furnizorul și comanda de achiziție, potrivește produsele, actualizează prețurile de la furnizor, poate valida recepția de stoc și poate genera factura de la furnizor. Din versiunea 19.0.1.4.19, butonul de pe comanda de achiziție și titlul asistentului se numesc **Import Invoice** („Import factură”), în loc de „Import UBL”, deoarece asistentul primește și PDF-ul facturii (prin [deltatech_ai_purchase_pdf](../deltatech_ai_purchase_pdf/index.md)). Valoarea de afaceri principală este reducerea muncii manuale și a erorilor la prelucrarea documentelor de achiziție.\nRezolvare automată a furnizorului și a comenzii: asistentul păstrează comanda de achiziție selectată și poate identifica furnizorul și comanda din document (`OrderReference`, codul fiscal al furnizorului, numele furnizorului) când contextul nu mai e disponibil. Codurile fiscale se compară fără spații și fără prefixul RO. O comandă goală creată prin butonul Upload din lista de achiziții (furnizor = utilizatorul curent sau compania) își preia furnizorul din document; un furnizor necunoscut oprește importul cu un mesaj.\nPotrivire automată a produselor: după cod de bare (GS1/EAN), cod de furnizor, referință internă sau nume exact.\nIntegrare cu comanda de achiziție:\nliniile existente care se potrivesc sunt actualizate (cantitate, preț, discount), iar liniile al căror produs nu e încă pe comandă sunt adăugate, nu ignorate;\nasistentul avertizează înainte de import când comanda are deja linii, ca utilizatorul să verifice ce se schimbă;\nfără comandă rezolvată, asistentul poate totuși identifica furnizorul din document și actualiza prețurile de la furnizor.\nPrevizualizare cu potrivire pe culori: fluxul interactiv are doi pași. „Preview” afișează câte un rând per linie de factură, cu produsul găsit și modul de potrivire: verde = cod de furnizor sau cod de bare, galben = doar nume, roșu = fără potrivire. Fiecare rând are o acțiune: *Use product* (alt produs), *Create new product* sau *Ignore*; liniile fără produs sunt ignorate implicit, iar un produs nou se creează doar la alegerea explicită. Coloana de descriere se numește „Vendor Description”, deoarece liniile pot veni și din PDF.\nGestionarea prețurilor: actualizează prețurile de la furnizor în `product.supplierinfo` direct din date, fără a suprascrie rândul altei variante a aceluiași produs.\nSuport pentru reduceri: extrage reducerile de linie din `AllowanceCharge` (`ChargeIndicator=false`) și le aplică drept reduceri procentuale.\nUnități de măsură: cantitățile și prețurile sunt convertite din `unitCode` în unitatea liniei de comandă (ex. GRM către kg), cu mapări uzuale (C62, KGM, LTR etc.) și avertismente când conversia nu e posibilă.\nVerificarea totalului și a TVA: comanda este comparată cu documentul pe valoarea fără TVA și, când documentul o indică, pe totalul cu TVA; jurnalul le arată pe ambele. Orice diferență oprește importul direct și deschide previzualizarea. O linie al cărei TVA diferă de cota din document este doar raportată în jurnal (TVA-ul se corectează din produse/poziția fiscală). Taxarea inversă sau intracomunitară contează ca 0% pentru documente K/AE, dar este raportată pentru documente scutite/zero/în afara sferei/export (E, Z, O, G).\nFacturi de credit: o notă de credit furnizor (document CreditNote sau Invoice cu cod 381) este recunoscută și nu se importă; comanda rămâne neschimbată, iar jurnalul afișează un avertisment.\nAutomatizare de stoc: validează opțional recepția asociată, potrivind cantitățile din document; la facturi parțiale, restul merge în backorder. Liniile de servicii cu politică de facturare „la recepție” (ex. eco-taxe) sunt marcate manual ca recepționate.\nContabilitate: creează și leagă opțional factura de la furnizor din comanda de achiziție, doar dacă comanda e confirmată (`purchase`/`done`), mai are ceva de facturat și toate liniile au fost potrivite (altfel factura e omisă, cu motivul în jurnal). Cota 0% explicită (Z, E, O, G) se aplică pe factură; existența unei facturi cu același număr se verifică doar în compania comenzii.\nExecuții automate controlate: importul headless (ex. mesaje SPV atașate pe comenzi) respectă cheia de context `purchase_ubl_no_new_products` (nu creează produse duplicate) și, când totalul nu se potrivește sau rămân linii nepotrivite, programează pe comandă o activitate „SPV import needs review”, atribuită cumpărătorului, cu jurnalul colorat în notă. Activitatea nu se dublează la reprocesare.\nJurnal lizibil: mesaje colorate pe nivel (✅ ⚠️ ❌ ℹ️), setat la sursă și în limba utilizatorului; prețurile actualizate sunt rezumate într-un singur mesaj; textele spun „document sursă”.\nTraduceri RO și pictogramă proprie."
   },
   {
     "path": "deltatech_purchase_ubl_ai/index.md",
@@ -10162,30 +10164,37 @@
   {
     "path": "deltatech_qms/index.md",
     "module": "deltatech_qms",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_qms",
     "local_path": "odoo-addons/bitshop/deltatech_qms",
-    "last_ingest": "2026-11-17",
-    "friendly_name": "deltatech_qms",
-    "summary": "Managementul calității pentru companiile care dețin sau pregătesc certificarea ISO 9001, într-un singur loc în Odoo, în locul tabelelor și al e-mailurilor: documente controlate, audituri interne, neconformități cu acțiuni corective și preventive (CAPA), obiective ale calității, reclamații ale clienților și un raport de pregătire pentru certificare. Modulul depinde doar de Discuss (`mail`). Titlurile clauzelor și întrebările din lista de verificare sunt redactate de Terrabit; textul standardului ISO nu este inclus.",
+    "last_ingest": "2026-11-20",
+    "friendly_name": "Quality Management ISO 9001",
+    "summary": "Managementul calității pentru companiile care dețin sau pregătesc certificarea ISO 9001, într-un singur loc în Odoo, în locul tabelelor și al e-mailurilor: documente controlate, audituri interne, neconformități cu acțiuni corective și preventive (CAPA), riscuri și oportunități, analiza managementului, obiective ale calității, reclamații ale clienților, un panou cu indicatori și un raport de pregătire pentru certificare. Modulul depinde de Discuss (`mail`) și de componenta Terrabit de carduri KPI ([deltatech_web_kpi_cards](../deltatech_web_kpi_cards/index.md)). Titlurile clauzelor și întrebările din lista de verificare sunt redactate de Terrabit; textul standardului ISO nu este inclus.",
     "features": [
-      "Documente controlate (clauza 7.5): proceduri, instrucțiuni, formulare și politici trec prin Ciornă, Analiză și Aprobare. Fiecare aprobare păstrează o revizie numerotată, cu descrierea modificării; revizia anterioară devine învechită. Un document aprobat este doar-citire, iar o modificare pornește o revizie nouă (buton New revision).",
+      "Documente controlate (clauza 7.5): proceduri, instrucțiuni, formulare și politici trec prin Ciornă, Analiză și Aprobare. Fiecare aprobare păstrează o revizie numerotată, cu descrierea modificării; revizia anterioară devine învechită. Un document aprobat este doar-citire, iar o modificare pornește o revizie nouă (buton New revision). Fiecare document are un interval de revizuire (Review every (months), implicit 12 luni); data următoarei revizuiri se setează la aprobare.",
       "Audituri interne (clauza 9.2): program de audit pe perioadă, aprobat de responsabilul calității, cu progres; audituri de sistem de calitate, de proces și de furnizor (cu furnizorul auditat), cu calendar; liste de verificare copiate din șabloane reutilizabile (este inclus un șablon de bază pentru clauzele 4–10), rezultat pe fiecare verificare (Conform, Observație, Neconformitate) și generarea unui NCR dintr-un clic. Un audit nu se poate închide cât timp o verificare nu are rezultat.",
-      "Neconformități și CAPA (clauza 10.2): severitate, cauză radăcină, acțiuni corective și preventive cu responsabil, termen și activitate de tip to-do. O neconformitate se închide doar când toate acțiunile sunt verificate ca eficiente de responsabilul calității.",
+      "Neconformități și CAPA (clauza 10.2): severitate, cauză rădăcină, acțiuni corective și preventive cu responsabil, termen și activitate de tip to-do. O neconformitate se închide doar când toate acțiunile sunt verificate ca eficiente de responsabilul calității. Acțiunile pot proveni și dintr-un risc sau dintr-o analiză a managementului, în aceeași listă.",
+      "Riscuri și oportunități (clauza 6.1): probabilitate și impact de la 1 la 5, scor și nivel (Low, Medium, High, Critical), acțiuni de tratare și data următoarei revizuiri; fiecare utilizator vede riscurile pe care le deține.",
+      "Analiza managementului (clauza 9.3): participanți, datele de intrare ale analizei, decizii și acțiuni de urmărire, plus un instantaneu al indicatorilor din panou, luat dintr-un clic, pentru perioada de la analiza precedentă.",
       "Obiectivele calității (clauza 6.2): țintă, unitate, direcție (mai mare sau mai mic e mai bine) și măsurători; obiectivul arată dacă ultima măsurătoare atinge ținta.",
       "Reclamații ale clienților (clauza 9.1.2): termen de răspuns în zile lucrătoare (implicit 5, setat per companie), reclamații depășite evidențiate, escaladare la NCR dintr-un clic.",
-      "Pregătire pentru certificare: câte un rând pentru fiecare clauză principală (4–10), cu documentele în vigoare, verificările auditate și neconformitățile deschise, cu status Ready, Partial sau Gap; se poate tipări ca PDF (*Reporting > Certification readiness*).",
+      "Pregătire pentru certificare: câte un rând pentru fiecare clauză principală (4–10), cu documentele în vigoare, riscurile și analizele managementului, verificările auditate și neconformitățile deschise, cu status Ready, Partial sau Gap; se poate tipări ca PDF (*Reporting > Certification readiness*).",
+      "Panou de calitate (dashboard): șapte carduri KPI (neconformități deschise, acțiuni depășite, audituri în luna curentă, documente de revizuit, obiective neatinse, reclamații depășite, riscuri ridicate și critice); un clic deschide înregistrările din spatele cifrei.",
+      "Memento-uri zilnice: o sarcină programată creează to-do-uri pentru verificarea eficienței acțiunilor încheiate (după 30 de zile implicit), pentru revizuirea documentelor, pentru răspunsul la reclamațiile depășite și pentru revizuirea riscurilor.",
+      "Rapoarte PDF: raport de neconformitate, raport CAPA și raport de audit intern, plus raportul de pregătire pentru certificare.",
       "Niveluri de acces: Utilizator, Auditor intern și Responsabil calitate (setate în *Settings > Users & Companies > Users*, grupul Quality Management (ISO 9001)). Doar responsabilul calității aprobă documente, verifică acțiuni, închide neconformități și escaladează reclamații.",
-      "Multi-companie: documentele, auditurile, neconformitățile, acțiunile, obiectivele și reclamațiile aparțin unei companii; clauzele și șabloanele de verificare pot fi partajate între companii.",
-      "Configurare: *Quality ISO 9001 > Configuration > Settings* pentru termenul de răspuns la reclamații; *Audits > Checklist templates* pentru adaptarea șablonului de bază."
+      "Multi-companie: documentele, auditurile, neconformitățile, acțiunile, riscurile, analizele managementului, obiectivele și reclamațiile aparțin unei companii; clauzele și șabloanele de verificare pot fi partajate între companii.",
+      "Configurare: *Quality ISO 9001 > Configuration > Settings* pentru termenul de răspuns la reclamații (zile lucrătoare, implicit 5) și pentru verificarea eficienței CAPA (zile după încheierea acțiunii, implicit 30); *Audits > Checklist templates* pentru adaptarea șablonului de bază."
     ],
     "dependencies": [
-      "mail"
+      "mail",
+      "deltatech_web_kpi_cards"
     ],
     "connections": [
+      "deltatech_web_kpi_cards",
       "mail"
     ],
-    "text": "deltatech_qms\ndeltatech_qms\nManagementul calității pentru companiile care dețin sau pregătesc certificarea ISO 9001, într-un singur loc în Odoo, în locul tabelelor și al e-mailurilor: documente controlate, audituri interne, neconformități cu acțiuni corective și preventive (CAPA), obiective ale calității, reclamații ale clienților și un raport de pregătire pentru certificare. Modulul depinde doar de Discuss (`mail`). Titlurile clauzelor și întrebările din lista de verificare sunt redactate de Terrabit; textul standardului ISO nu este inclus.\nDocumente controlate (clauza 7.5): proceduri, instrucțiuni, formulare și politici trec prin Ciornă, Analiză și Aprobare. Fiecare aprobare păstrează o revizie numerotată, cu descrierea modificării; revizia anterioară devine învechită. Un document aprobat este doar-citire, iar o modificare pornește o revizie nouă (buton New revision).\nAudituri interne (clauza 9.2): program de audit pe perioadă, aprobat de responsabilul calității, cu progres; audituri de sistem de calitate, de proces și de furnizor (cu furnizorul auditat), cu calendar; liste de verificare copiate din șabloane reutilizabile (este inclus un șablon de bază pentru clauzele 4–10), rezultat pe fiecare verificare (Conform, Observație, Neconformitate) și generarea unui NCR dintr-un clic. Un audit nu se poate închide cât timp o verificare nu are rezultat.\nNeconformități și CAPA (clauza 10.2): severitate, cauză radăcină, acțiuni corective și preventive cu responsabil, termen și activitate de tip to-do. O neconformitate se închide doar când toate acțiunile sunt verificate ca eficiente de responsabilul calității.\nObiectivele calității (clauza 6.2): țintă, unitate, direcție (mai mare sau mai mic e mai bine) și măsurători; obiectivul arată dacă ultima măsurătoare atinge ținta.\nReclamații ale clienților (clauza 9.1.2): termen de răspuns în zile lucrătoare (implicit 5, setat per companie), reclamații depășite evidențiate, escaladare la NCR dintr-un clic.\nPregătire pentru certificare: câte un rând pentru fiecare clauză principală (4–10), cu documentele în vigoare, verificările auditate și neconformitățile deschise, cu status Ready, Partial sau Gap; se poate tipări ca PDF (*Reporting > Certification readiness*).\nNiveluri de acces: Utilizator, Auditor intern și Responsabil calitate (setate în *Settings > Users & Companies > Users*, grupul Quality Management (ISO 9001)). Doar responsabilul calității aprobă documente, verifică acțiuni, închide neconformități și escaladează reclamații.\nMulti-companie: documentele, auditurile, neconformitățile, acțiunile, obiectivele și reclamațiile aparțin unei companii; clauzele și șabloanele de verificare pot fi partajate între companii.\nConfigurare: *Quality ISO 9001 > Configuration > Settings* pentru termenul de răspuns la reclamații; *Audits > Checklist templates* pentru adaptarea șablonului de bază."
+    "text": "Quality Management ISO 9001\ndeltatech_qms\nManagementul calității pentru companiile care dețin sau pregătesc certificarea ISO 9001, într-un singur loc în Odoo, în locul tabelelor și al e-mailurilor: documente controlate, audituri interne, neconformități cu acțiuni corective și preventive (CAPA), riscuri și oportunități, analiza managementului, obiective ale calității, reclamații ale clienților, un panou cu indicatori și un raport de pregătire pentru certificare. Modulul depinde de Discuss (`mail`) și de componenta Terrabit de carduri KPI ([deltatech_web_kpi_cards](../deltatech_web_kpi_cards/index.md)). Titlurile clauzelor și întrebările din lista de verificare sunt redactate de Terrabit; textul standardului ISO nu este inclus.\nDocumente controlate (clauza 7.5): proceduri, instrucțiuni, formulare și politici trec prin Ciornă, Analiză și Aprobare. Fiecare aprobare păstrează o revizie numerotată, cu descrierea modificării; revizia anterioară devine învechită. Un document aprobat este doar-citire, iar o modificare pornește o revizie nouă (buton New revision). Fiecare document are un interval de revizuire (Review every (months), implicit 12 luni); data următoarei revizuiri se setează la aprobare.\nAudituri interne (clauza 9.2): program de audit pe perioadă, aprobat de responsabilul calității, cu progres; audituri de sistem de calitate, de proces și de furnizor (cu furnizorul auditat), cu calendar; liste de verificare copiate din șabloane reutilizabile (este inclus un șablon de bază pentru clauzele 4–10), rezultat pe fiecare verificare (Conform, Observație, Neconformitate) și generarea unui NCR dintr-un clic. Un audit nu se poate închide cât timp o verificare nu are rezultat.\nNeconformități și CAPA (clauza 10.2): severitate, cauză rădăcină, acțiuni corective și preventive cu responsabil, termen și activitate de tip to-do. O neconformitate se închide doar când toate acțiunile sunt verificate ca eficiente de responsabilul calității. Acțiunile pot proveni și dintr-un risc sau dintr-o analiză a managementului, în aceeași listă.\nRiscuri și oportunități (clauza 6.1): probabilitate și impact de la 1 la 5, scor și nivel (Low, Medium, High, Critical), acțiuni de tratare și data următoarei revizuiri; fiecare utilizator vede riscurile pe care le deține.\nAnaliza managementului (clauza 9.3): participanți, datele de intrare ale analizei, decizii și acțiuni de urmărire, plus un instantaneu al indicatorilor din panou, luat dintr-un clic, pentru perioada de la analiza precedentă.\nObiectivele calității (clauza 6.2): țintă, unitate, direcție (mai mare sau mai mic e mai bine) și măsurători; obiectivul arată dacă ultima măsurătoare atinge ținta.\nReclamații ale clienților (clauza 9.1.2): termen de răspuns în zile lucrătoare (implicit 5, setat per companie), reclamații depășite evidențiate, escaladare la NCR dintr-un clic.\nPregătire pentru certificare: câte un rând pentru fiecare clauză principală (4–10), cu documentele în vigoare, riscurile și analizele managementului, verificările auditate și neconformitățile deschise, cu status Ready, Partial sau Gap; se poate tipări ca PDF (*Reporting > Certification readiness*).\nPanou de calitate (dashboard): șapte carduri KPI (neconformități deschise, acțiuni depășite, audituri în luna curentă, documente de revizuit, obiective neatinse, reclamații depășite, riscuri ridicate și critice); un clic deschide înregistrările din spatele cifrei.\nMemento-uri zilnice: o sarcină programată creează to-do-uri pentru verificarea eficienței acțiunilor încheiate (după 30 de zile implicit), pentru revizuirea documentelor, pentru răspunsul la reclamațiile depășite și pentru revizuirea riscurilor.\nRapoarte PDF: raport de neconformitate, raport CAPA și raport de audit intern, plus raportul de pregătire pentru certificare.\nNiveluri de acces: Utilizator, Auditor intern și Responsabil calitate (setate în *Settings > Users & Companies > Users*, grupul Quality Management (ISO 9001)). Doar responsabilul calității aprobă documente, verifică acțiuni, închide neconformități și escaladează reclamații.\nMulti-companie: documentele, auditurile, neconformitățile, acțiunile, riscurile, analizele managementului, obiectivele și reclamațiile aparțin unei companii; clauzele și șabloanele de verificare pot fi partajate între companii.\nConfigurare: *Quality ISO 9001 > Configuration > Settings* pentru termenul de răspuns la reclamații (zile lucrătoare, implicit 5) și pentru verificarea eficienței CAPA (zile după încheierea acțiunii, implicit 30); *Audits > Checklist templates* pentru adaptarea șablonului de bază."
   },
   {
     "path": "deltatech_quality_lot/index.md",
@@ -10496,22 +10505,35 @@
     "version": "19.0.1.3.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_restrict_ip",
     "local_path": "odoo-addons/bitshop/deltatech_restrict_ip",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Deltatech Restrict IP Login",
-    "summary": "Acest modul adaugă un strat de securitate esențial pentru Odoo, permițând restricționarea autentificării în funcție de adresa IP. Astfel, accesul la sistemul ERP poate fi controlat și monitorizat pe baza locației utilizatorului. Din perspectivă de business, funcționalitatea protejează datele sensibile ale companiei și se asigură că accesul este limitat la locațiile autorizate (birouri, conexiuni VPN securizate), reducând suprafața de atac și sprijinind conformitatea cu cerințele de securitate a datelor.",
+    "last_ingest": "2026-11-20",
+    "friendly_name": "IP Login Restriction",
+    "summary": "Acest modul adaugă un strat de securitate pentru Odoo, permițând restricționarea autentificării în funcție de adresa IP, precum și blocarea adreselor IP, a subrețelelor și a roboților nedoriți la nivelul întregii instanțe. Astfel, accesul la sistemul ERP poate fi controlat și monitorizat pe baza locației utilizatorului. Din perspectivă de business, funcționalitatea protejează datele sensibile ale companiei și limitează accesul la locațiile autorizate (birouri, conexiuni VPN securizate), reducând suprafața de atac și sprijinind conformitatea cu cerințele de securitate a datelor.",
     "features": [
-      "Securitate sporită a sistemului: previne accesul neautorizat în Odoo prin restricționarea autentificării la adrese sau intervale IP de încredere.",
-      "Protecție îmbunătățită a datelor: reduce riscul de breșe de securitate și atacuri cibernetice prin limitarea suprafeței potențiale de atac.",
-      "Control mai bun al accesului: păstrează o evidență clară a locațiilor de autentificare autorizate pentru toți utilizatorii și departamentele.",
-      "Conformitate cu reglementările: sprijină cerințele de securitate și conformitate prin implementarea unor politici robuste de control al accesului.",
-      "Muncă la distanță securizată: facilitează accesul remote sigur prin autorizarea unor IP-uri VPN specifice pentru angajații care lucrează în afara biroului."
+      "Securitate sporită: previne accesul neautorizat în Odoo restricționând autentificarea la o listă de adrese IP de încredere. Fiecare adresă se potrivește exact; intervalele, măștile (`/24`) și wildcard-urile nu sunt suportate la autentificare.",
+      "Restricție per utilizator: pe fișa utilizatorului, în fila Access Restricted (*Settings > Users & Companies > Users*):",
+      "cât timp Restrict IPs e debifat, fiecare autentificare reușită dintr-un IP nou adaugă automat un rând în listă; utilizatorul se poate autentifica de oriunde, cu excepția IP-urilor marcate Banned;",
+      "cu Restrict IPs bifat, autentificarea e permisă doar din IP-urile din listă; la o listă goală, prima autentificare reușește de oriunde și IP-ul ei devine singurul permis.",
+      "Refuz discret: o autentificare dintr-un IP nepermis sau banat primește mesajul standard „Wrong login/password”, chiar dacă parola e corectă. Verificarea se face doar la autentificare (sesiunile deja deschise rămân active) și acoperă și integrările XML-RPC / JSON-RPC cu parolă sau cheie API; cheile API trimise în antetul `Authorization: Bearer` nu sunt acoperite, deci IP-ul serverului de integrare trebuie adăugat în listă.",
+      "Evidență a locațiilor: *Settings > Users & Companies > User Log* afișează IP-ul fiecărei autentificări; lista completă de IP-uri rămâne pe fila Access Restricted a utilizatorului (curățarea zilnică standard păstrează în jurnal doar ultima autentificare).",
+      "Muncă la distanță securizată: accesul remote sigur prin autorizarea unor IP-uri VPN specifice.",
+      "Blocare IP, subrețele și roboți la nivel de instanță: se configurează prin directive `# restrict-ip:` în robots.txt (*Website > Configuration > Settings*, secțiunea Tracking & SEO, Edit robots.txt, cu modul dezvoltator activ); se aplică imediat după salvare, pe întreaga instanță (website, backend și pagina de login), nu doar pe website-ul public:",
+      "`blocked_ip` și `blocked_subnet` (CIDR): primesc 403 Forbidden;",
+      "`bad_bot`: User-Agent-urile care conțin unul dintre cuvinte primesc 403 Forbidden;",
+      "`allowed_bot` și `bot_peak_rate_limit`: roboții permiți sunt limitați (implicit 5 cereri/minut) între 04:00 și 17:00 UTC;",
+      "`rate_limit` (implicit 200): cereri pe minut per IP pentru vizitatorii neautentificați; peste limită primesc 429 Too many requests; limitele se numără separat în fiecare worker Odoo.",
+      "Atenție la configurare: de la prima linie `# restrict-ip:` din robots.txt, listele de roboți implicite nu se mai folosesc, deci `allowed_bot` și `bad_bot` trebuie scrise explicit. Directivele sunt publicate în `/robots.txt`, citibil de oricine, deci IP-urile și roboții blocați sunt publici; nu se trec niciodată IP-ul biroului, al VPN-ului sau al proxy-ului.",
+      "Prerechizit: în spatele unui reverse proxy (nginx, Odoo.sh, CDN), serverul trebuie pornit cu `proxy_mode = True`, altfel toți utilizatorii par să vină de la același IP; se verifică în User Log, coloana IP Address.",
+      "Versiunea 19.0: verificarea pe fiecare cerere este optimizată, deci restricționarea nu mai costă timp de răspuns pe instanțele aglomerate."
     ],
     "dependencies": [
       "base",
       "website"
     ],
-    "connections": [],
-    "text": "Deltatech Restrict IP Login\ndeltatech_restrict_ip\nAcest modul adaugă un strat de securitate esențial pentru Odoo, permițând restricționarea autentificării în funcție de adresa IP. Astfel, accesul la sistemul ERP poate fi controlat și monitorizat pe baza locației utilizatorului. Din perspectivă de business, funcționalitatea protejează datele sensibile ale companiei și se asigură că accesul este limitat la locațiile autorizate (birouri, conexiuni VPN securizate), reducând suprafața de atac și sprijinind conformitatea cu cerințele de securitate a datelor.\nSecuritate sporită a sistemului: previne accesul neautorizat în Odoo prin restricționarea autentificării la adrese sau intervale IP de încredere.\nProtecție îmbunătățită a datelor: reduce riscul de breșe de securitate și atacuri cibernetice prin limitarea suprafeței potențiale de atac.\nControl mai bun al accesului: păstrează o evidență clară a locațiilor de autentificare autorizate pentru toți utilizatorii și departamentele.\nConformitate cu reglementările: sprijină cerințele de securitate și conformitate prin implementarea unor politici robuste de control al accesului.\nMuncă la distanță securizată: facilitează accesul remote sigur prin autorizarea unor IP-uri VPN specifice pentru angajații care lucrează în afara biroului."
+    "connections": [
+      "website",
+      "robots_txt"
+    ],
+    "text": "IP Login Restriction\ndeltatech_restrict_ip\nAcest modul adaugă un strat de securitate pentru Odoo, permițând restricționarea autentificării în funcție de adresa IP, precum și blocarea adreselor IP, a subrețelelor și a roboților nedoriți la nivelul întregii instanțe. Astfel, accesul la sistemul ERP poate fi controlat și monitorizat pe baza locației utilizatorului. Din perspectivă de business, funcționalitatea protejează datele sensibile ale companiei și limitează accesul la locațiile autorizate (birouri, conexiuni VPN securizate), reducând suprafața de atac și sprijinind conformitatea cu cerințele de securitate a datelor.\nSecuritate sporită: previne accesul neautorizat în Odoo restricționând autentificarea la o listă de adrese IP de încredere. Fiecare adresă se potrivește exact; intervalele, măștile (`/24`) și wildcard-urile nu sunt suportate la autentificare.\nRestricție per utilizator: pe fișa utilizatorului, în fila Access Restricted (*Settings > Users & Companies > Users*):\ncât timp Restrict IPs e debifat, fiecare autentificare reușită dintr-un IP nou adaugă automat un rând în listă; utilizatorul se poate autentifica de oriunde, cu excepția IP-urilor marcate Banned;\ncu Restrict IPs bifat, autentificarea e permisă doar din IP-urile din listă; la o listă goală, prima autentificare reușește de oriunde și IP-ul ei devine singurul permis.\nRefuz discret: o autentificare dintr-un IP nepermis sau banat primește mesajul standard „Wrong login/password”, chiar dacă parola e corectă. Verificarea se face doar la autentificare (sesiunile deja deschise rămân active) și acoperă și integrările XML-RPC / JSON-RPC cu parolă sau cheie API; cheile API trimise în antetul `Authorization: Bearer` nu sunt acoperite, deci IP-ul serverului de integrare trebuie adăugat în listă.\nEvidență a locațiilor: *Settings > Users & Companies > User Log* afișează IP-ul fiecărei autentificări; lista completă de IP-uri rămâne pe fila Access Restricted a utilizatorului (curățarea zilnică standard păstrează în jurnal doar ultima autentificare).\nMuncă la distanță securizată: accesul remote sigur prin autorizarea unor IP-uri VPN specifice.\nBlocare IP, subrețele și roboți la nivel de instanță: se configurează prin directive `# restrict-ip:` în robots.txt (*Website > Configuration > Settings*, secțiunea Tracking & SEO, Edit robots.txt, cu modul dezvoltator activ); se aplică imediat după salvare, pe întreaga instanță (website, backend și pagina de login), nu doar pe website-ul public:\n`blocked_ip` și `blocked_subnet` (CIDR): primesc 403 Forbidden;\n`bad_bot`: User-Agent-urile care conțin unul dintre cuvinte primesc 403 Forbidden;\n`allowed_bot` și `bot_peak_rate_limit`: roboții permiți sunt limitați (implicit 5 cereri/minut) între 04:00 și 17:00 UTC;\n`rate_limit` (implicit 200): cereri pe minut per IP pentru vizitatorii neautentificați; peste limită primesc 429 Too many requests; limitele se numără separat în fiecare worker Odoo.\nAtenție la configurare: de la prima linie `# restrict-ip:` din robots.txt, listele de roboți implicite nu se mai folosesc, deci `allowed_bot` și `bad_bot` trebuie scrise explicit. Directivele sunt publicate în `/robots.txt`, citibil de oricine, deci IP-urile și roboții blocați sunt publici; nu se trec niciodată IP-ul biroului, al VPN-ului sau al proxy-ului.\nPrerechizit: în spatele unui reverse proxy (nginx, Odoo.sh, CDN), serverul trebuie pornit cu `proxy_mode = True`, altfel toți utilizatorii par să vină de la același IP; se verifică în User Log, coloana IP Address.\nVersiunea 19.0: verificarea pe fiecare cerere este optimizată, deci restricționarea nu mai costă timp de răspuns pe instanțele aglomerate."
   },
   {
     "path": "deltatech_restrict_reports/index.md",
@@ -10540,7 +10562,7 @@
   {
     "path": "deltatech_rma/index.md",
     "module": "deltatech_rma",
-    "version": "19.0.1.9.7",
+    "version": "19.0.1.9.8",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma",
     "local_path": "odoo-addons/bitshop/deltatech_rma",
     "last_ingest": null,
@@ -10721,14 +10743,14 @@
     "version": "19.0.1.2.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_rpc_audit",
     "local_path": "odoo-addons/deltatech/deltatech_rpc_audit",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-20",
     "friendly_name": "RPC Audit Log",
     "summary": "Acest modul înregistrează într-un jurnal (log) apelurile RPC externe primite de server, astfel încât administratorii pot audita ce integrare apelează ce model și ce metodă, și de la ce adresă IP anume. Acoperă atât endpoint-urile vechi — **XML-RPC** (`/xmlrpc`, `/xmlrpc/2`) și **JSON-RPC** (`/jsonrpc`) — cât și endpoint-ul modern **`/json/2/<model>/<method>`**, ceea ce contează pentru că cele vechi sunt marcate ca deprecate în Odoo 19: pe măsură ce integrările trec pe cel nou, un audit care ar urmări doar endpoint-urile vechi ar deveni tăcut fără să semnaleze nimic. Este util pentru depanare, securitate și investigarea integrărilor terțe (de exemplu conectori de e-commerce, aplicații mobile sau scripturi externe) fără a afecta clientul web standard.",
     "features": [
       "Loghează fiecare apel către serviciul `object` (apelurile ORM reale prin",
       "Loghează și apelurile pe endpoint-ul modern `/json/2/<model>/<method>`, cu",
       "Sare peste apelurile `/json/2/ir.cron/acquire_job`: pe Odoo.sh acesta este",
-      "Determină adresa IP reală a clientului din antetul `X-Forwarded-For`, astfel",
+      "Adresa IP a clientului este `remote_addr`, așa cum o rezolvă serverul Odoo.",
       "Poate fi activat/dezactivat fără a dezinstala modulul, fie din cheia de",
       "Permite excluderea IP-urilor „zgomotoase\" (health check-uri, monitorizare)"
     ],
@@ -10738,12 +10760,12 @@
     "connections": [
       "rpc"
     ],
-    "text": "RPC Audit Log\ndeltatech_rpc_audit\nAcest modul înregistrează într-un jurnal (log) apelurile RPC externe primite de server, astfel încât administratorii pot audita ce integrare apelează ce model și ce metodă, și de la ce adresă IP anume. Acoperă atât endpoint-urile vechi — **XML-RPC** (`/xmlrpc`, `/xmlrpc/2`) și **JSON-RPC** (`/jsonrpc`) — cât și endpoint-ul modern **`/json/2/<model>/<method>`**, ceea ce contează pentru că cele vechi sunt marcate ca deprecate în Odoo 19: pe măsură ce integrările trec pe cel nou, un audit care ar urmări doar endpoint-urile vechi ar deveni tăcut fără să semnaleze nimic. Este util pentru depanare, securitate și investigarea integrărilor terțe (de exemplu conectori de e-commerce, aplicații mobile sau scripturi externe) fără a afecta clientul web standard.\nLoghează fiecare apel către serviciul `object` (apelurile ORM reale prin\nLoghează și apelurile pe endpoint-ul modern `/json/2/<model>/<method>`, cu\nSare peste apelurile `/json/2/ir.cron/acquire_job`: pe Odoo.sh acesta este\nDetermină adresa IP reală a clientului din antetul `X-Forwarded-For`, astfel\nPoate fi activat/dezactivat fără a dezinstala modulul, fie din cheia de\nPermite excluderea IP-urilor „zgomotoase\" (health check-uri, monitorizare)"
+    "text": "RPC Audit Log\ndeltatech_rpc_audit\nAcest modul înregistrează într-un jurnal (log) apelurile RPC externe primite de server, astfel încât administratorii pot audita ce integrare apelează ce model și ce metodă, și de la ce adresă IP anume. Acoperă atât endpoint-urile vechi — **XML-RPC** (`/xmlrpc`, `/xmlrpc/2`) și **JSON-RPC** (`/jsonrpc`) — cât și endpoint-ul modern **`/json/2/<model>/<method>`**, ceea ce contează pentru că cele vechi sunt marcate ca deprecate în Odoo 19: pe măsură ce integrările trec pe cel nou, un audit care ar urmări doar endpoint-urile vechi ar deveni tăcut fără să semnaleze nimic. Este util pentru depanare, securitate și investigarea integrărilor terțe (de exemplu conectori de e-commerce, aplicații mobile sau scripturi externe) fără a afecta clientul web standard.\nLoghează fiecare apel către serviciul `object` (apelurile ORM reale prin\nLoghează și apelurile pe endpoint-ul modern `/json/2/<model>/<method>`, cu\nSare peste apelurile `/json/2/ir.cron/acquire_job`: pe Odoo.sh acesta este\nAdresa IP a clientului este `remote_addr`, așa cum o rezolvă serverul Odoo.\nPoate fi activat/dezactivat fără a dezinstala modulul, fie din cheia de\nPermite excluderea IP-urilor „zgomotoase\" (health check-uri, monitorizare)"
   },
   {
     "path": "deltatech_saga/index.md",
     "module": "deltatech_saga",
-    "version": "19.0.6.30.1",
+    "version": "19.0.6.30.3",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga",
     "local_path": "odoo-addons/bitshop/deltatech_saga",
     "last_ingest": "2026-10-27",
@@ -11775,16 +11797,17 @@
     "path": "deltatech_sale_qty_available/index.md",
     "module": "deltatech_sale_qty_available",
     "version": "19.0.1.0.5",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_qty_available`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_qty_available",
     "local_path": "odoo-addons/deltatech/deltatech_sale_qty_available",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-20",
     "friendly_name": "Sale Qty Available",
-    "summary": "Modulul ajută echipa de vânzări să vadă rapid care comenzi pot fi livrate imediat, pe baza stocului disponibil. În lista de comenzi de vânzare, comenzile care sunt gata de livrare sunt evidențiate cu verde, astfel încât operatorii pot prioritiza expedierile fără a deschide fiecare comandă în parte. Pe formularul comenzii, fiecare linie poate afișa o sinteză a disponibilității produsului (stoc, ieșiri și intrări prognozate), oferind context util în momentul ofertării sau confirmării.",
+    "summary": "Modulul ajută vânzătorii și personalul din depozit să vadă dintr-o privire care comenzi pot fi livrate, pe baza stocului disponibil. Comenzile deschise (oferte și comenzi confirmate) primesc un indicator „Is ready”, iar cele gata de livrare sunt evidențiate cu verde în liste, astfel încât operatorii pot prioritiza expedierile fără a deschide fiecare comandă în parte. Pe formularul comenzii, fiecare linie poate afișa o sinteză a disponibilității produsului (stoc, ieșiri și intrări prognozate), oferind context util în momentul ofertării sau confirmării.",
     "features": [
-      "Evidențierea cu verde a comenzilor „gata de livrare\" în listele de comenzi și de oferte de vânzare.",
-      "Indicator „Is ready\" (gata) calculat în funcție de starea comenzii, statusul de facturare, politica de livrare (livrare directă sau completă) și stocul disponibil/rezervat, atât pentru comenzi în ofertă cât și pentru comenzi confirmate (unde se verifică suplimentar rezervarea pe transferurile de livrare).",
-      "Filtru dedicat „Is Ready\" pentru a afișa doar comenzile pregătite de expediere.",
-      "Coloană opțională cu textul disponibilității pe linia de comandă, ce arată disponibilul virtual, stocul curent, ieșirile și intrările prognozate (calculat pe locația din ruta liniei, dacă este definită)."
+      "Rânduri verzi: listele de oferte și de comenzi de vânzare afișează cu verde o comandă gata de livrare; filtrul „Is Ready” din căutare returnează doar comenzile pregătite.",
+      "Oferte (ciornă sau trimise): o ofertă e gata când stocul la îndemână minus cantitatea de ieșire acoperă cantitatea rămasă de livrat pe fiecare linie, sau pe cel puțin o linie când politica de livrare (`picking_policy`) este `direct`.",
+      "Comenzi confirmate: o comandă e gata când transferurile ei au stoc rezervat: orice mișcare rezervată la politica `direct`, respectiv toate mișcările transferurilor neterminate în caz contrar. Comenzile rămân gata și după livrare, până la facturarea completă; cele anulate nu sunt niciodată gata.",
+      "Coloana „Available”: coloană opțională pe liniile comenzii, ascunsă implicit și vizibilă pentru utilizatorii de inventar; arată prognoza (disponibil virtual) cu părțile ei (stoc la îndemână, ieșiri, intrări) sau *N/A* când toate sunt zero. Citește locația sursă din ruta liniei, dacă aceasta are una.",
+      "Indicatorul este stocat pe comandă și poate fi căutat; la calculul cantității la dată pe linia comenzii, modulul setează cheia de context `all_warehouses`, deci se iau în calcul toate depozitele."
     ],
     "dependencies": [
       "sale_stock"
@@ -11792,7 +11815,7 @@
     "connections": [
       "sale_stock"
     ],
-    "text": "Sale Qty Available\ndeltatech_sale_qty_available\nModulul ajută echipa de vânzări să vadă rapid care comenzi pot fi livrate imediat, pe baza stocului disponibil. În lista de comenzi de vânzare, comenzile care sunt gata de livrare sunt evidențiate cu verde, astfel încât operatorii pot prioritiza expedierile fără a deschide fiecare comandă în parte. Pe formularul comenzii, fiecare linie poate afișa o sinteză a disponibilității produsului (stoc, ieșiri și intrări prognozate), oferind context util în momentul ofertării sau confirmării.\nEvidențierea cu verde a comenzilor „gata de livrare\" în listele de comenzi și de oferte de vânzare.\nIndicator „Is ready\" (gata) calculat în funcție de starea comenzii, statusul de facturare, politica de livrare (livrare directă sau completă) și stocul disponibil/rezervat, atât pentru comenzi în ofertă cât și pentru comenzi confirmate (unde se verifică suplimentar rezervarea pe transferurile de livrare).\nFiltru dedicat „Is Ready\" pentru a afișa doar comenzile pregătite de expediere.\nColoană opțională cu textul disponibilității pe linia de comandă, ce arată disponibilul virtual, stocul curent, ieșirile și intrările prognozate (calculat pe locația din ruta liniei, dacă este definită)."
+    "text": "Sale Qty Available\ndeltatech_sale_qty_available\nModulul ajută vânzătorii și personalul din depozit să vadă dintr-o privire care comenzi pot fi livrate, pe baza stocului disponibil. Comenzile deschise (oferte și comenzi confirmate) primesc un indicator „Is ready”, iar cele gata de livrare sunt evidențiate cu verde în liste, astfel încât operatorii pot prioritiza expedierile fără a deschide fiecare comandă în parte. Pe formularul comenzii, fiecare linie poate afișa o sinteză a disponibilității produsului (stoc, ieșiri și intrări prognozate), oferind context util în momentul ofertării sau confirmării.\nRânduri verzi: listele de oferte și de comenzi de vânzare afișează cu verde o comandă gata de livrare; filtrul „Is Ready” din căutare returnează doar comenzile pregătite.\nOferte (ciornă sau trimise): o ofertă e gata când stocul la îndemână minus cantitatea de ieșire acoperă cantitatea rămasă de livrat pe fiecare linie, sau pe cel puțin o linie când politica de livrare (`picking_policy`) este `direct`.\nComenzi confirmate: o comandă e gata când transferurile ei au stoc rezervat: orice mișcare rezervată la politica `direct`, respectiv toate mișcările transferurilor neterminate în caz contrar. Comenzile rămân gata și după livrare, până la facturarea completă; cele anulate nu sunt niciodată gata.\nColoana „Available”: coloană opțională pe liniile comenzii, ascunsă implicit și vizibilă pentru utilizatorii de inventar; arată prognoza (disponibil virtual) cu părțile ei (stoc la îndemână, ieșiri, intrări) sau *N/A* când toate sunt zero. Citește locația sursă din ruta liniei, dacă aceasta are una.\nIndicatorul este stocat pe comandă și poate fi căutat; la calculul cantității la dată pe linia comenzii, modulul setează cheia de context `all_warehouses`, deci se iau în calcul toate depozitele."
   },
   {
     "path": "deltatech_sale_referrer_dashboard/index.md",
@@ -11834,15 +11857,18 @@
     "version": "19.0.1.1.0",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_sale_referrer_raport",
     "local_path": "odoo-addons/bitshop_ent/deltatech_sale_referrer_raport",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Sale Referrer Report",
-    "summary": "Modulul extinde funcționalitatea de vânzări cu urmărirea și raportarea comisioanelor pentru recomandatori (referrer). Permite calcularea automată a comisionului pe liniile comenzii de vânzare, în funcție de planul de comision ales, oferă vizibilitate rapidă asupra vânzărilor generate de fiecare partener recomandator și urmărește dacă respectivul comision a fost plătit.",
+    "last_ingest": "2026-11-20",
+    "friendly_name": "Referrer Commission Report",
+    "summary": "Modulul extinde funcționalitatea de vânzări cu urmărirea și raportarea comisioanelor pentru recomandatori (referrer). Calculează automat comisionul pe liniile comenzii de vânzare, în funcție de planul de comision ales, oferă vizibilitate rapidă asupra vânzărilor generate de fiecare partener recomandator, urmărește dacă respectivul comision a fost plătit și îl integrează în raportul de Analiză Vânzări.",
     "features": [
-      "Calculează automat comisioanele pe liniile comenzii de vânzare, pe baza planului de comision selectat.",
-      "Adaugă un buton inteligent pe fișa partenerului pentru a vizualiza rapid toate comenzile de vânzare unde acel partener este recomandator (referrer).",
-      "Permite urmărirea stării de plată a comisionului de recomandare pentru fiecare comandă de vânzare.",
-      "Integrează informațiile despre recomandator și valoarea comisionului în raportul de Analiză Vânzări.",
-      "Transmite informațiile despre comision din comenzile de vânzare către facturile generate."
+      "Calcul de comision: comisionul se calculează automat pe liniile comenzii, pe baza planului de comision. Cât timp documentul e ofertă, Commission Plan se preia de la recomandator (câmpul Referrer, sub client); Referrer Commission apare sub totaluri și urmărește liniile comenzii. Un recomandator are nevoie de un Partner Level ca să poată fi ales pe o comandă.",
+      "Vânzările unui recomandator: pe fișa partenerului, butonul inteligent Referrer Sales (pictogramă USD) deschide toate ofertele și comenzile cu acel partener ca recomandator.",
+      "Stare de plată a comisionului: doar un Sales Administrator poate marca comisionul ca plătit (butonul Pay, doar pe comenzi confirmate) sau îl poate readuce la neplătit (Reset to Unpaid); vânzătorii văd coloana Paid, dar nu butoanele. Filtrul Commission to Pay (*Sales > Orders > Orders*) listează comenzile confirmate cu comisionul încă nemarcat ca plătit.",
+      "Comision plătit = înghețat: după marcarea ca plătit, modificarea liniilor nu mai schimbă comisionul, iar Referrer și Commission Plan devin doar-citire până la resetarea la neplătit.",
+      "Raportare: în *Sales > Reporting > Sales* (vizualizare pivot) se alege măsura Referrer Commission și se grupează după Referrer. Comisionul se însumează pe liniile comenzii și se convertește în moneda companiei, ca măsurile monetare standard, deci comenzile în valută sunt comparabile. Un plafon (regulă cu plafon) se aplică pe totalul regulii, ca pe comandă.",
+      "Note de credit: o notă de credit creată din comanda de vânzare (marfă returnată, cantitate mai mică) preia înapoi comisionul pe comanda de achiziție de comision, după ce e plătită, ca în cazul unei note de credit care stornează o factură.",
+      "Comanda de achiziție de comision: suma facturată de recomandator provine din comanda de achiziție de comision din aplicația Partner Commissions: fiecare factură client plătită adaugă linia ei de comision, iar fiecare notă de credit plătită o scade. Indicatorul Paid e doar un marcaj intern: nu creează o plată, iar comisionul se decontează prin factura de furnizor a recomandatorului.",
+      "Informațiile de comision din comenzile de vânzare se transmit către facturile generate."
     ],
     "dependencies": [
       "sale_management",
@@ -11856,7 +11882,7 @@
       "commission_plan_id",
       "_match_rules"
     ],
-    "text": "Sale Referrer Report\ndeltatech_sale_referrer_raport\nModulul extinde funcționalitatea de vânzări cu urmărirea și raportarea comisioanelor pentru recomandatori (referrer). Permite calcularea automată a comisionului pe liniile comenzii de vânzare, în funcție de planul de comision ales, oferă vizibilitate rapidă asupra vânzărilor generate de fiecare partener recomandator și urmărește dacă respectivul comision a fost plătit.\nCalculează automat comisioanele pe liniile comenzii de vânzare, pe baza planului de comision selectat.\nAdaugă un buton inteligent pe fișa partenerului pentru a vizualiza rapid toate comenzile de vânzare unde acel partener este recomandator (referrer).\nPermite urmărirea stării de plată a comisionului de recomandare pentru fiecare comandă de vânzare.\nIntegrează informațiile despre recomandator și valoarea comisionului în raportul de Analiză Vânzări.\nTransmite informațiile despre comision din comenzile de vânzare către facturile generate."
+    "text": "Referrer Commission Report\ndeltatech_sale_referrer_raport\nModulul extinde funcționalitatea de vânzări cu urmărirea și raportarea comisioanelor pentru recomandatori (referrer). Calculează automat comisionul pe liniile comenzii de vânzare, în funcție de planul de comision ales, oferă vizibilitate rapidă asupra vânzărilor generate de fiecare partener recomandator, urmărește dacă respectivul comision a fost plătit și îl integrează în raportul de Analiză Vânzări.\nCalcul de comision: comisionul se calculează automat pe liniile comenzii, pe baza planului de comision. Cât timp documentul e ofertă, Commission Plan se preia de la recomandator (câmpul Referrer, sub client); Referrer Commission apare sub totaluri și urmărește liniile comenzii. Un recomandator are nevoie de un Partner Level ca să poată fi ales pe o comandă.\nVânzările unui recomandator: pe fișa partenerului, butonul inteligent Referrer Sales (pictogramă USD) deschide toate ofertele și comenzile cu acel partener ca recomandator.\nStare de plată a comisionului: doar un Sales Administrator poate marca comisionul ca plătit (butonul Pay, doar pe comenzi confirmate) sau îl poate readuce la neplătit (Reset to Unpaid); vânzătorii văd coloana Paid, dar nu butoanele. Filtrul Commission to Pay (*Sales > Orders > Orders*) listează comenzile confirmate cu comisionul încă nemarcat ca plătit.\nComision plătit = înghețat: după marcarea ca plătit, modificarea liniilor nu mai schimbă comisionul, iar Referrer și Commission Plan devin doar-citire până la resetarea la neplătit.\nRaportare: în *Sales > Reporting > Sales* (vizualizare pivot) se alege măsura Referrer Commission și se grupează după Referrer. Comisionul se însumează pe liniile comenzii și se convertește în moneda companiei, ca măsurile monetare standard, deci comenzile în valută sunt comparabile. Un plafon (regulă cu plafon) se aplică pe totalul regulii, ca pe comandă.\nNote de credit: o notă de credit creată din comanda de vânzare (marfă returnată, cantitate mai mică) preia înapoi comisionul pe comanda de achiziție de comision, după ce e plătită, ca în cazul unei note de credit care stornează o factură.\nComanda de achiziție de comision: suma facturată de recomandator provine din comanda de achiziție de comision din aplicația Partner Commissions: fiecare factură client plătită adaugă linia ei de comision, iar fiecare notă de credit plătită o scade. Indicatorul Paid e doar un marcaj intern: nu creează o plată, iar comisionul se decontează prin factura de furnizor a recomandatorului.\nInformațiile de comision din comenzile de vânzare se transmit către facturile generate."
   },
   {
     "path": "deltatech_sale_report/index.md",
@@ -11943,9 +11969,9 @@
     "path": "deltatech_sale_stage_route/index.md",
     "module": "deltatech_sale_stage_route",
     "version": "19.0.1.0.2",
-    "github": "[https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_sale_stage_route](https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_sale_stage_route)",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_sale_stage_route",
     "local_path": "odoo-addons/bitshop_ent/deltatech_sale_stage_route",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-20",
     "friendly_name": "Deltatech Sale Order Stage Route",
     "summary": "Modulul extinde fluxurile de vânzări și de gestiune a stocurilor din Odoo cu un traseu structurat de etape (faze) prin care trebuie să treacă o comandă de vânzare și livrările sale asociate. Astfel, o companie poate defini o succesiune obligatorie de pași — de la comanda inițială până la livrarea finală — cu vizibilitate clară asupra progresului, atât pentru echipa de vânzări, cât și pentru cea de depozit.",
     "features": [
@@ -12164,14 +12190,20 @@
     "path": "deltatech_sale_xls/index.md",
     "module": "deltatech_sale_xls",
     "version": "19.0.1.0.4",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_xls`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_xls",
     "local_path": "odoo-addons/deltatech/deltatech_sale_xls",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Deltatech Sale XLS",
-    "summary": "Modulul **Deltatech Sale XLS** oferă o modalitate rapidă de a gestiona liniile comenzilor de vânzare prin import din fișiere Excel, folosind instrumentul standard de import al Odoo. Este util în special pentru comenzi cu multe articole, unde introducerea manuală a liniilor ar consuma mult timp, permițând echipei de vânzări să pregătească sau să actualizeze liniile comenzii direct dintr-un fișier Excel, în afara Odoo.",
+    "last_ingest": "2026-11-20",
+    "friendly_name": "Sale XLS",
+    "summary": "Clienții își trimit adesea comanda, sau modificările ei, sub formă de tabel. Modulul permite vânzătorului să exporte liniile unei comenzi de vânzare în Excel și să le importe înapoi în aceeași comandă, cu instrumentele standard de export și import ale Odoo. Este util mai ales la comenzile cu multe articole, unde introducerea manuală a liniilor ar consuma mult timp.",
     "features": [
-      "Adaugă o secțiune „Order Lines” (linii comandă) în partea de sus a comenzii de vânzare, pentru vizualizarea și gestionarea rapidă a tuturor liniilor asociate într-un singur loc.",
-      "Import al liniilor comenzii de vânzare direct din fișiere Excel, folosind instrumentul standard de import al Odoo, pentru încărcări și actualizări rapide, în masă, pentru fiecare comandă de vânzare în parte."
+      "Butonul „Order lines”: butonul inteligent de pe comanda de vânzare deschide lista liniilor ei (Sale Order Lines: comandă, produs, cantitate, preț unitar). Din această listă liniile se exportă cu Export standard, iar un fișier se încarcă cu Import records; liniile importate intră în această comandă.",
+      "Import într-o comandă goală: fiecare rând din fișier devine o linie nouă a comenzii.",
+      "Import într-o comandă cu linii: fiecare rând actualizează linia existentă cu același produs (cantitate, preț și celelalte coloane importate). Produsul se recunoaște după referința internă dintre paranteze drepte (`[COD] Nume`, ca în export) sau, în lipsă, după numele exact. Rândurile cu un produs negăsit sau care nu e pe comandă sunt sărite.",
+      "Punct de extensie pentru formule de preț: metoda `use_specific_price_formula` se apelează pe prețurile unitare importate ale unei comenzi noi, deci un modul specific unui client își poate aplica propria regulă de preț.",
+      "Limitări:",
+      "când comanda are deja linii, un rând pentru un produs nou este sărit fără mesaj și nu poate adăuga o linie;",
+      "dacă pe comandă există două linii cu același produs, importul acelui produs eșuează;",
+      "fără butonul „Order lines”, comanda se citește din coloana Order Reference doar când aceasta conține id-ul din baza de date al comenzii, nu numărul ei."
     ],
     "dependencies": [
       "sale_stock"
@@ -12179,7 +12211,7 @@
     "connections": [
       "deltatech_purchase_xls"
     ],
-    "text": "Deltatech Sale XLS\ndeltatech_sale_xls\nModulul **Deltatech Sale XLS** oferă o modalitate rapidă de a gestiona liniile comenzilor de vânzare prin import din fișiere Excel, folosind instrumentul standard de import al Odoo. Este util în special pentru comenzi cu multe articole, unde introducerea manuală a liniilor ar consuma mult timp, permițând echipei de vânzări să pregătească sau să actualizeze liniile comenzii direct dintr-un fișier Excel, în afara Odoo.\nAdaugă o secțiune „Order Lines” (linii comandă) în partea de sus a comenzii de vânzare, pentru vizualizarea și gestionarea rapidă a tuturor liniilor asociate într-un singur loc.\nImport al liniilor comenzii de vânzare direct din fișiere Excel, folosind instrumentul standard de import al Odoo, pentru încărcări și actualizări rapide, în masă, pentru fiecare comandă de vânzare în parte."
+    "text": "Sale XLS\ndeltatech_sale_xls\nClienții își trimit adesea comanda, sau modificările ei, sub formă de tabel. Modulul permite vânzătorului să exporte liniile unei comenzi de vânzare în Excel și să le importe înapoi în aceeași comandă, cu instrumentele standard de export și import ale Odoo. Este util mai ales la comenzile cu multe articole, unde introducerea manuală a liniilor ar consuma mult timp.\nButonul „Order lines”: butonul inteligent de pe comanda de vânzare deschide lista liniilor ei (Sale Order Lines: comandă, produs, cantitate, preț unitar). Din această listă liniile se exportă cu Export standard, iar un fișier se încarcă cu Import records; liniile importate intră în această comandă.\nImport într-o comandă goală: fiecare rând din fișier devine o linie nouă a comenzii.\nImport într-o comandă cu linii: fiecare rând actualizează linia existentă cu același produs (cantitate, preț și celelalte coloane importate). Produsul se recunoaște după referința internă dintre paranteze drepte (`[COD] Nume`, ca în export) sau, în lipsă, după numele exact. Rândurile cu un produs negăsit sau care nu e pe comandă sunt sărite.\nPunct de extensie pentru formule de preț: metoda `use_specific_price_formula` se apelează pe prețurile unitare importate ale unei comenzi noi, deci un modul specific unui client își poate aplica propria regulă de preț.\nLimitări:\ncând comanda are deja linii, un rând pentru un produs nou este sărit fără mesaj și nu poate adăuga o linie;\ndacă pe comandă există două linii cu același produs, importul acelui produs eșuează;\nfără butonul „Order lines”, comanda se citește din coloana Order Reference doar când aceasta conține id-ul din baza de date al comenzii, nu numărul ei."
   },
   {
     "path": "deltatech_saleorder_pickup_list/index.md",
@@ -12254,7 +12286,7 @@
   {
     "path": "deltatech_secondary_uom/index.md",
     "module": "deltatech_secondary_uom",
-    "version": "19.0.1.2.2",
+    "version": "19.0.1.2.3",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_secondary_uom",
     "local_path": "odoo-addons/deltatech/deltatech_secondary_uom",
     "last_ingest": "2026-10-09",
@@ -13056,17 +13088,15 @@
     "version": "19.0.1.0.10",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_report",
     "local_path": "odoo-addons/deltatech/deltatech_stock_report",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Stock Reports",
-    "summary": "Acest modul adaugă un raport analitic dedicat mișcărilor de stoc finalizate, construit pe baza pozițiilor (liniilor) din transferurile de stoc (picking-uri). Practic, agregă toate liniile de mișcare în stare „done\" și le pune la dispoziția utilizatorului sub formă de tabel pivot și listă, cu posibilități bogate de filtrare și grupare. Astfel, departamentul de logistică sau management poate analiza rapid cantitățile și valorile vehiculate pe tipuri de operațiuni (recepții, livrări, transferuri interne), pe parteneri, produse, categorii sau locații, fără a fi nevoie de extrageri manuale din documentele individuale.",
+    "last_ingest": "2026-11-20",
+    "friendly_name": "Stock Picking Report",
+    "summary": "Managerii au adesea nevoie să afle cât a intrat de la un furnizor sau ce a ieșit către un client într-o perioadă. Modulul adaugă un raport *Picking Analysis* pe transferurile de stoc finalizate, sub formă de tabel pivot și de listă, cu filtrare și grupare după tipul operațiunii, partener, produs, categorie sau locație. Astfel, logistica sau managementul analizează rapid cantitățile și valorile vehiculate, fără extrageri manuale din documentele individuale.",
     "features": [
-      "Raport de analiză a transferurilor de stoc bazat pe pozițiile (liniile) din picking-uri finalizate.",
-      "Vizualizare pivot și listă, cu măsuri pe cantitate și valoare (amount).",
-      "Filtre predefinite pe tip de operațiune: Recepții (incoming), Interne (internal) și Livrări (outgoing).",
-      "Grupare configurabilă după tip operațiune, partener, entitate comercială, categorie de produs, produs, locație, locație destinație, dată sau companie.",
-      "Calculul cantității cu semn în funcție de utilizarea locației destinație (intrările în locații interne sunt pozitive, restul negative).",
-      "Calculul valorii și al prețului unitar pe baza valorii mișcării de stoc (`sm.value`), cu revenire la prețul unitar atunci când valoarea lipsește.",
-      "Acces dedicat din meniul de rapoarte al depozitului („Picking Analysis\"), restricționat la grupul de management al stocului."
+      "Doar mișcări finalizate: fiecare rând reprezintă un transfer, un produs, o locație sursă și o locație destinație, construit din mișcări de stoc în stare „done”. Mișcările din afara unui transfer sunt excluse.",
+      "Cantitate și valoare cu semn: *Quantity* este cantitatea procesată, în unitatea de măsură a produsului. *Amount* este valoarea stocată pe mișcarea de stoc sau, în lipsă, cantitatea înmulțită cu prețul unitar al mișcării. Ambele sunt pozitive când destinația este o locație internă (inclusiv la mișcări între două locații interne) și negative în rest.",
+      "Pivot și listă: pivotul se deschide grupat după *Picking Type*, apoi *Commercial Entity*; rândurile arată și *Partner* al transferului. Lista însumează cantitatea și valoarea, iar *Date*, *Location*, *Location Destination* și *Category* sunt coloane opționale.",
+      "Filtre și grupări: filtrele *Incoming*, *Internal* și *Outgoing* aleg după tipul operațiunii, iar filtrul de dată folosește data la care s-a încheiat transferul. Rândurile se mai pot grupa după produs, categorie, partener, locație, locație destinație, dată sau companie.",
+      "Acces și companii: raportul este doar pentru citire, disponibil managerilor de stoc (`stock.group_stock_manager`), din meniul *Picking Analysis* sub rapoartele de depozit; utilizatorii văd doar transferurile companiilor lor active."
     ],
     "dependencies": [
       "stock_account"
@@ -13075,7 +13105,7 @@
       "deltatech_stock_account",
       "l10n_ro_stock_report"
     ],
-    "text": "Stock Reports\ndeltatech_stock_report\nAcest modul adaugă un raport analitic dedicat mișcărilor de stoc finalizate, construit pe baza pozițiilor (liniilor) din transferurile de stoc (picking-uri). Practic, agregă toate liniile de mișcare în stare „done\" și le pune la dispoziția utilizatorului sub formă de tabel pivot și listă, cu posibilități bogate de filtrare și grupare. Astfel, departamentul de logistică sau management poate analiza rapid cantitățile și valorile vehiculate pe tipuri de operațiuni (recepții, livrări, transferuri interne), pe parteneri, produse, categorii sau locații, fără a fi nevoie de extrageri manuale din documentele individuale.\nRaport de analiză a transferurilor de stoc bazat pe pozițiile (liniile) din picking-uri finalizate.\nVizualizare pivot și listă, cu măsuri pe cantitate și valoare (amount).\nFiltre predefinite pe tip de operațiune: Recepții (incoming), Interne (internal) și Livrări (outgoing).\nGrupare configurabilă după tip operațiune, partener, entitate comercială, categorie de produs, produs, locație, locație destinație, dată sau companie.\nCalculul cantității cu semn în funcție de utilizarea locației destinație (intrările în locații interne sunt pozitive, restul negative).\nCalculul valorii și al prețului unitar pe baza valorii mișcării de stoc (`sm.value`), cu revenire la prețul unitar atunci când valoarea lipsește.\nAcces dedicat din meniul de rapoarte al depozitului („Picking Analysis\"), restricționat la grupul de management al stocului."
+    "text": "Stock Picking Report\ndeltatech_stock_report\nManagerii au adesea nevoie să afle cât a intrat de la un furnizor sau ce a ieșit către un client într-o perioadă. Modulul adaugă un raport *Picking Analysis* pe transferurile de stoc finalizate, sub formă de tabel pivot și de listă, cu filtrare și grupare după tipul operațiunii, partener, produs, categorie sau locație. Astfel, logistica sau managementul analizează rapid cantitățile și valorile vehiculate, fără extrageri manuale din documentele individuale.\nDoar mișcări finalizate: fiecare rând reprezintă un transfer, un produs, o locație sursă și o locație destinație, construit din mișcări de stoc în stare „done”. Mișcările din afara unui transfer sunt excluse.\nCantitate și valoare cu semn: *Quantity* este cantitatea procesată, în unitatea de măsură a produsului. *Amount* este valoarea stocată pe mișcarea de stoc sau, în lipsă, cantitatea înmulțită cu prețul unitar al mișcării. Ambele sunt pozitive când destinația este o locație internă (inclusiv la mișcări între două locații interne) și negative în rest.\nPivot și listă: pivotul se deschide grupat după *Picking Type*, apoi *Commercial Entity*; rândurile arată și *Partner* al transferului. Lista însumează cantitatea și valoarea, iar *Date*, *Location*, *Location Destination* și *Category* sunt coloane opționale.\nFiltre și grupări: filtrele *Incoming*, *Internal* și *Outgoing* aleg după tipul operațiunii, iar filtrul de dată folosește data la care s-a încheiat transferul. Rândurile se mai pot grupa după produs, categorie, partener, locație, locație destinație, dată sau companie.\nAcces și companii: raportul este doar pentru citire, disponibil managerilor de stoc (`stock.group_stock_manager`), din meniul *Picking Analysis* sub rapoartele de depozit; utilizatorii văd doar transferurile companiilor lor active."
   },
   {
     "path": "deltatech_stock_reseller/index.md",
@@ -13305,22 +13335,25 @@
     "path": "deltatech_test_system/index.md",
     "module": "deltatech_test_system",
     "version": "19.0.0.0.12",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_test_system`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_test_system",
     "local_path": "odoo-addons/deltatech/deltatech_test_system",
-    "last_ingest": "2026-08-20",
-    "friendly_name": "Deltatech Test System",
-    "summary": "Acest modul ajută la marcarea clară a unei baze de date Odoo ca fiind de test sau de producție. Atunci când o bază de date este folosită pentru testare, modulul permite „neutralizarea” ei din setări și afișează permanent, în partea de sus a interfeței, un banner vizibil. Astfel, utilizatorii și administratorii știu imediat că lucrează într-un mediu de test și evită confuzia cu baza de date reală de producție.",
+    "last_ingest": "2026-11-20",
+    "friendly_name": "Test System Indicator",
+    "summary": "O copie de test a unei baze de date se confundă ușor cu producția. Modulul marchează o bază de date ca fiind de test sau de producție, afișează un banner pe cele de test și ascunde butoanele de instalare și dezinstalare din ecranul Aplicații pe cele de producție. Astfel, utilizatorii și administratorii știu imediat în ce mediu lucrează și evită modificări accidentale pe baza reală.",
     "features": [
-      "Setarea stării sistemului: test sau producție.",
-      "Neutralizarea bazei de date direct din setări.",
-      "Afișarea unui banner permanent în partea de sus a interfeței pentru a indica faptul că baza de date este una de test."
+      "Test sau producție: setarea Database Is Neutralized, în secțiunea de companii din setările generale, marchează o bază de date de test. Textul de sub ea indică „It is a test system” sau „It is a productive system”.",
+      "Neutralizare la salvare: salvarea cu bifa nou activată rulează scriptul `data/neutralize.sql` al fiecărui modul instalat care îl are. O nouă salvare nu repetă operația, iar debifarea nu anulează ce au modificat scripturile.",
+      "Banner de test: la fiecare salvare a setărilor, bannerul de neutralizare al clientului web (`web.neutralize_banner`) se activează sau se dezactivează conform bifei.",
+      "Ecran Aplicații mai sigur: pe o bază care nu este neutralizată (producție), cardurile și formularul modulelor ascund butoanele de instalare și dezinstalare, iar fiecare card arată „Is installed” sau „Is not installed”.",
+      "Bare de notificare: când parametrul de sistem `database_notification_banner` conține un text, utilizatorii interni îl văd într-o bară galbenă; `database_news_notification` face același lucru într-o bară albastru deschis. Parametrii nu au ecran de setări; se completează ca parametri de sistem.",
+      "Modulul nu are grupuri de securitate proprii."
     ],
     "dependencies": [
       "web",
       "base_setup"
     ],
     "connections": [],
-    "text": "Deltatech Test System\ndeltatech_test_system\nAcest modul ajută la marcarea clară a unei baze de date Odoo ca fiind de test sau de producție. Atunci când o bază de date este folosită pentru testare, modulul permite „neutralizarea” ei din setări și afișează permanent, în partea de sus a interfeței, un banner vizibil. Astfel, utilizatorii și administratorii știu imediat că lucrează într-un mediu de test și evită confuzia cu baza de date reală de producție.\nSetarea stării sistemului: test sau producție.\nNeutralizarea bazei de date direct din setări.\nAfișarea unui banner permanent în partea de sus a interfeței pentru a indica faptul că baza de date este una de test."
+    "text": "Test System Indicator\ndeltatech_test_system\nO copie de test a unei baze de date se confundă ușor cu producția. Modulul marchează o bază de date ca fiind de test sau de producție, afișează un banner pe cele de test și ascunde butoanele de instalare și dezinstalare din ecranul Aplicații pe cele de producție. Astfel, utilizatorii și administratorii știu imediat în ce mediu lucrează și evită modificări accidentale pe baza reală.\nTest sau producție: setarea Database Is Neutralized, în secțiunea de companii din setările generale, marchează o bază de date de test. Textul de sub ea indică „It is a test system” sau „It is a productive system”.\nNeutralizare la salvare: salvarea cu bifa nou activată rulează scriptul `data/neutralize.sql` al fiecărui modul instalat care îl are. O nouă salvare nu repetă operația, iar debifarea nu anulează ce au modificat scripturile.\nBanner de test: la fiecare salvare a setărilor, bannerul de neutralizare al clientului web (`web.neutralize_banner`) se activează sau se dezactivează conform bifei.\nEcran Aplicații mai sigur: pe o bază care nu este neutralizată (producție), cardurile și formularul modulelor ascund butoanele de instalare și dezinstalare, iar fiecare card arată „Is installed” sau „Is not installed”.\nBare de notificare: când parametrul de sistem `database_notification_banner` conține un text, utilizatorii interni îl văd într-o bară galbenă; `database_news_notification` face același lucru într-o bară albastru deschis. Parametrii nu au ecran de setări; se completează ca parametri de sistem.\nModulul nu are grupuri de securitate proprii."
   },
   {
     "path": "deltatech_transfer_product_to_product/index.md",
@@ -13798,7 +13831,7 @@
   {
     "path": "deltatech_voip_daktela/index.md",
     "module": "deltatech_voip_daktela",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.4.0",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_voip_daktela",
     "local_path": "odoo-addons/bitshop_ent/deltatech_voip_daktela",
     "last_ingest": "2026-11-17",
@@ -15898,7 +15931,7 @@
   {
     "path": "l10n_ro_account_vat_journal/index.md",
     "module": "l10n_ro_account_vat_journal",
-    "version": "19.0.1.7.4",
+    "version": "19.0.1.7.5",
     "github": "[https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal)",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_account_vat_journal",
     "last_ingest": "2026-10-05",
@@ -16201,7 +16234,7 @@
   {
     "path": "l10n_ro_anaf_d101/index.md",
     "module": "l10n_ro_anaf_d101",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.3.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d101",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d101",
     "last_ingest": "2026-10-27",
@@ -16548,7 +16581,7 @@
   {
     "path": "l10n_ro_anaf_d300/index.md",
     "module": "l10n_ro_anaf_d300",
-    "version": "19.0.0.0.36",
+    "version": "19.0.0.0.39",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d300",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d300",
     "last_ingest": null,
@@ -19179,7 +19212,7 @@
   {
     "path": "l10n_ro_intrastat_enhancement/index.md",
     "module": "l10n_ro_intrastat_enhancement",
-    "version": "19.0.1.9.7",
+    "version": "19.0.1.9.8",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_intrastat_enhancement",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_intrastat_enhancement",
     "last_ingest": "2026-09-29",
@@ -20910,7 +20943,7 @@
   {
     "path": "l10n_ro_profit_tax/index.md",
     "module": "l10n_ro_profit_tax",
-    "version": "19.0.1.2.2",
+    "version": "19.0.1.4.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_profit_tax",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_profit_tax",
     "last_ingest": "2026-11-03",
@@ -21392,7 +21425,7 @@
   {
     "path": "l10n_ro_saft_export_fix/index.md",
     "module": "l10n_ro_saft_export_fix",
-    "version": "19.0.1.4.0",
+    "version": "19.0.1.5.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_saft_export_fix",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_saft_export_fix",
     "last_ingest": "2026-10-22",
@@ -21669,7 +21702,7 @@
   {
     "path": "l10n_ro_stock_account/index.md",
     "module": "l10n_ro_stock_account",
-    "version": "19.0.1.16.0",
+    "version": "19.0.1.17.0",
     "github": "https://github.com/terrabit-ro/l10n-romania/tree/19.0/l10n_ro_stock_account",
     "local_path": "odoo-addons/l10n-romania-oca/l10n_ro_stock_account",
     "last_ingest": "2026-11-17",
@@ -22344,7 +22377,7 @@
   {
     "path": "l10n_ro_stock_report/index.md",
     "module": "l10n_ro_stock_report",
-    "version": "19.0.2.10.1",
+    "version": "19.0.2.10.2",
     "github": "https://github.com/terrabit-ro/l10n-romania/tree/19.0/l10n_ro_stock_report",
     "local_path": "odoo-addons/l10n-romania-oca/l10n_ro_stock_report",
     "last_ingest": "2026-10-22",

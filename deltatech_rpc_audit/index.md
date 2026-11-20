@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.2.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_rpc_audit
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_rpc_audit`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-20`
 
 #### 1. Sumar
 
@@ -32,10 +32,12 @@ aplicații mobile sau scripturi externe) fără a afecta clientul web standard.
 - Sare peste apelurile `/json/2/ir.cron/acquire_job`: pe Odoo.sh acesta este
   motorul planificatorului care rulează într-o buclă strânsă, iar logarea lor
   ar îneca puținele linii pentru care există audit-ul.
-- Determină adresa IP reală a clientului din antetul `X-Forwarded-For`, astfel
-  încât apelurile din spatele unui reverse proxy (nginx, edge-ul Odoo.sh) nu
-  sunt toate atribuite IP-ului proxy-ului (ex. `10.0.0.2`), indiferent de
-  opțiunea de server `proxy_mode`.
+- Adresa IP a clientului este `remote_addr`, așa cum o rezolvă serverul Odoo.
+  În spatele unui reverse proxy (nginx, edge-ul Odoo.sh) serverul trebuie
+  pornit cu `proxy_mode` (mereu activ pe Odoo.sh), altfel toate apelurile sunt
+  atribuite IP-ului proxy-ului (ex. `10.0.0.2`). Antetul `X-Forwarded-For`
+  este setat de apelant și nu e de încredere: se adaugă doar informativ pe
+  linie, ca `xff=...`, și nu decide niciodată dacă un apel e omis.
 - Poate fi activat/dezactivat fără a dezinstala modulul, fie din cheia de
   configurare `rpc_audit_enabled` (pentru instalări self-hosted), fie din
   Parametrul de Sistem `rpc_audit.enabled` (funcționează și pe Odoo.sh, fără
@@ -73,7 +75,9 @@ modulului `rpc`.
   care oglindește clasa `rpc.RPC` din modulul de bază; `AuditJson2` rămâne
   separat intenționat, la fel cum core ține `/json/2` într-un controller
   propriu.
-- Funcții helper: `_client_ip()` (citește `X-Forwarded-For`), `_settings()` /
+- Funcții helper: `_client_ip()` (returnează `remote_addr`, nu citește
+  `X-Forwarded-For`), `_forwarded_for()` (antetul `X-Forwarded-For`, doar
+  pentru informare), `_settings()` /
   `_settings_from_config()` / `_settings_from_param()` (setări efective
   combinate din fișierul de configurare și System Parameters, cu cache de 60
   secunde per bază de date), `_log_rpc_call()` (formatează și scrie linia de
