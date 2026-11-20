@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_online
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_online`
-- **Ultima Ingestie:** `2026-11-14`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -56,4 +56,4 @@ Fără cod Python; modelele și câmpurile se declară prin date XML (importabil
 #### 5. Conexiuni
 
 - [deltatech_iap_online](../deltatech_iap_online/index.md): serviciul Terrabit, tokenul și creditele pe care le folosește acest modul.
-- `deltatech_delivery_fc_online`: modulul curierului FAN Courier, bazat pe acest modul.
+- [deltatech_delivery_fc_online](../deltatech_delivery_fc_online/index.md): modulul curierului FAN Courier, bazat pe acest modul.

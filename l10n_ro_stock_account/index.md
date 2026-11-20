@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.17.0`
 - **Cale:** https://github.com/terrabit-ro/l10n-romania/tree/19.0/l10n_ro_stock_account
 - **Cale Locală:** `odoo-addons/l10n-romania-oca/l10n_ro_stock_account`
-- **Ultima Ingestie:** `2026-11-17`
+- **Ultima Ingestie:** `2026-11-20`
 
 #### 1. Sumar
 
@@ -14,7 +14,7 @@ Modulul adaptează contabilitatea de stoc din Odoo la cerințele standardelor ș
 
 - Configurări contabile specifice pe locație, conturi de evaluare a stocului specifice României, personalizarea conturilor de stoc pe categoria de produs, gestionarea poziției fiscale pe depozit și conturi dedicate operațiunilor de stoc.
 - **FIFO pe locație**: pentru produsele cu metoda de cost FIFO, ieșirile se evaluează din stiva FIFO a locației sursă; fiecare ieșire este împărțită automat într-o mișcare pe fiecare strat FIFO. Controlat prin opțiunea de companie `fifo_per_location` (implicit activă pentru companiile din România).
-- **Transferuri interne** (și prin locații de tranzit): consumă din stiva locației sursă, intră în stiva locației destinație cu valoarea preluată și generează notă contabilă prin contul de evaluare al locației (sau contul de transfer al companiei, 482, dacă locațiile au același cont). Din 19.0.1.15/1.16, contrapartida unui transfer este mereu contul de stoc al locației destinație (fără postări pe cheltuieli 607); notele deja înregistrate nu se modifică.
+- **Transferuri interne** (și prin locații de tranzit): consumă din stiva locației sursă, intră în stiva locației destinație cu valoarea preluată și generează notă contabilă prin contul de evaluare al locației (sau contul de transfer al companiei, 482, dacă locațiile au același cont). Din 19.0.1.15/1.16, contrapartida unui transfer este mereu contul de stoc al locației destinație (fără postări pe cheltuieli 607); notele deja înregistrate nu se modifică. Din 19.0.1.17, contul de transfer al mișcării (`l10n_ro_transfer_account_id`) se setează doar pe mișcările între două locații de stoc (interne sau de tranzit), nu și pe recepții; migrarea îl curăță pe mișcările existente.
 - **Compensarea stocului negativ** pentru produsele FIFO: ieșirea fără intrare corespunzătoare se evaluează la `standard_price`, iar la recepția ulterioară valoarea reală este alocată (FIFO) peste ieșirile în așteptare, cu generarea unei note de corecție (variație/cheltuială față de contul de stoc), legată de mișcarea de intrare. Operațiunea este idempotentă. Controlat prin `fifo_location_negative_compensation` (implicit activă pentru România).
 - **Dropshipping**: livrarea directă furnizor → client este evaluată și contabilizată simetric cu o livrare obișnuită (debit cheltuială 607 / credit stoc 371; retururile `dropshipped_return` în stornare, cu sumă negativă). 408 nu se aplică dropship-ului. Se aplică mișcărilor validate după instalarea corecției; istoricul necesită regularizare separată.
 - Dropshipping-ul unui produs nu influențează valoarea stocului real al aceluiași produs (nici FIFO, nici cost mediu).
@@ -47,5 +47,5 @@ Nu are.
 
 - `l10n_ro_stock_account_date`: dată contabilă pentru mișcările de stoc, depinde de acest modul.
 - `l10n_ro_stock_account_tracking`: urmărire contabilă, depinde de acest modul.
-- `l10n_ro_stock_report`: raport de stoc, depinde de acest modul.
+- [l10n_ro_stock_report](../l10n_ro_stock_report/index.md): raport de stoc, depinde de acest modul.
 - `l10n_ro_nondeductible_vat`: TVA nedeductibil, depinde de acest modul.

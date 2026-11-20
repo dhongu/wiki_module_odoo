@@ -1,10 +1,10 @@
-# Moldova - Accounting (localizare contabilă Republica Moldova)
+# Moldova - Accounting (localizat la `l10n_md/index.md`)
 
 - **Nume Tehnic:** `l10n_md`
 - **Versiune:** `19.0.1.0.0`
 - **Cale:** https://github.com/dhongu/l10n-moldova/tree/19.0/l10n_md
 - **Cale Locală:** `odoo-addons/l10n-moldova/l10n_md`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-11-20`
 
 #### 1. Sumar
 
@@ -12,7 +12,7 @@ Modulul oferă localizarea contabilă de bază pentru firmele din Republica Mold
 
 #### 2. Funcționalități Cheie
 
-(Modulul nu are `readme/DESCRIPTION.md`; informațiile provin din descrierea din `__manifest__.py` și din fișierele de date.)
+(Modulul nu are directorul `readme/` și nici fișă consultant; informațiile provin din descrierea din `__manifest__.py` și din fișierele de date.)
 
 - Plan de conturi „Moldova” (cod șablon `md`), cu conturi pe 3 cifre (aprox. 156 de conturi, grupate pe clase), conform Ordinului MF nr. 119/2013. Conturile de client și furnizor implicite sunt 221, respectiv 521.
 - Prefixe implicite pentru conturile de lichidități: bancă 242, casă 241, transferuri de lichidități 245. Conturi implicite de venituri (611) și cheltuieli (711), plus conturi de diferențe de curs valutar (622 / 722).
@@ -22,7 +22,7 @@ Modulul oferă localizarea contabilă de bază pentru firmele din Republica Mold
 - Termene de plată și grupuri de taxe predefinite pentru localizare.
 - Câmpuri noi pe formularul companiei, lângă codul fiscal: `IDNO (Moldova)` și `IBAN`.
 - Listă de bănci din Moldova (11 înregistrări, cu cod BIC, ex. Moldova Agroindbank, Victoriabank, Moldindconbank, Mobiasbanca).
-- Companie demo „Demo Moldova SRL” pentru teste.
+- Companie demo „Demo Moldova SRL” pentru teste, plus 3 teste automate pentru încărcarea planului de conturi (`tests/test_chart.py`).
 - Descrierea din manifest menționează și cotele de impozit pe profit (12%), asigurări sociale (24%) și asigurare medicală (9%), dar în fișierul de taxe (`account.tax-md.csv`) sunt definite doar cele șase taxe de TVA.
 
 #### 3. Dependențe

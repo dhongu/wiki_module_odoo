@@ -4,28 +4,27 @@
 - **Versiune:** `19.0.2.2.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_gls
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_gls`
-- **Ultima Ingestie:** `2026-11-09`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul GLS Shipping integrează direct în Odoo serviciile de curierat GLS (General Logistics Systems), unul dintre marii furnizori europeni de livrare colete. Permite companiilor să își automatizeze operațiunile de expediere cu GLS fără a părăsi mediul Odoo, acoperind întregul flux de livrare: de la generarea AWB-urilor și a etichetelor de transport, la urmărirea statusului coletelor și reconcilierea plăților ramburs (COD). Beneficiile principale sunt economisirea timpului (elimină crearea manuală a AWB-urilor), reducerea erorilor de transcriere, transparența costurilor de transport și o experiență mai bună pentru client prin informații de urmărire exacte.
+Modulul permite expedierea cu GLS direct din livrările Odoo, în România, Ungaria, Croația, Cehia, Slovenia și Slovacia: AWB-ul și eticheta lui, punctele GLS (parcel shop și lockere), urmărirea, anularea și lista de AWB-uri. Se folosește API-ul MyGLS sau, pentru conturile mai vechi, API-ul GLS Online, fără a reintroduce datele în portalul curierului. Se câștigă timp, scad erorile de transcriere, iar statusul coletului ajunge automat în livrare.
 
 #### 2. Funcționalități Cheie
 
-- **Integrare cu serviciile GLS:** suport pentru ambele versiuni de API (GLS Online și MyGLS), autentificare securizată cu serviciile web GLS, suport multi-țară (România, Croația, Cehia, Ungaria, Slovenia, Slovacia), configurare ID expeditor și suport PSD (Parcel Shop Delivery).
-- **Generare și gestionare etichete:** generarea etichetelor de transport în mai multe formate (PDF, ZPL), suport pentru dimensiuni variate (A4, A6, termic) și machete multiple (A4_2x2, A4_4x1, Thermo etc.), cu atașare automată a etichetei la livrare.
-- **Management expedieri:** creare AWB direct din comenzi de vânzare sau din livrări, anulare AWB pentru comenzi respinse sau modificate, urmărire completă a statusului livrării.
-- **Urmărire (tracking):** generare linkuri de urmărire, preluarea și afișarea istoricului de status al coletului, actualizarea statusului de livrare în Odoo pe baza statusului GLS.
-- **Management tranzacții:** import tranzacții de plată din GLS, urmărirea plăților ramburs (cash-on-delivery), potrivirea tranzacțiilor GLS cu înregistrările Odoo și raportare istorică.
-- **Gestionare listă AWB:** preluarea listei de AWB-uri din sistemul GLS, auto-crearea înregistrărilor AWB în Odoo, potrivirea informațiilor expeditor/destinatar și stocarea referințelor.
-- **Opțiuni avansate de expediere:** ramburs (COD), valoare declarată (asigurare), colete multiple, instrucțiuni speciale de livrare, livrare sâmbăta, colet deschis la livrare.
-- **Livrare la locker:** import automat al punctelor de livrare GLS (lockere) pentru România și Ungaria, selecție interactivă a locker-ului în checkout-ul Odoo și sugestii de locker pe bază de proximitate față de client; posibilitatea trimiterii ID-ului de locker în AWB. Catalogul de puncte GLS este identificat după țară, variantă de API și cont (`_gls_locker_catalog_key`), astfel încât un al doilea transportator GLS pe alt cont (ex. cont separat pentru Ungaria) nu arhivează punctele importate de primul; punctele care nu mai apar în feed-ul GLS sunt arhivate la importul următor.
-- **Câmpul `WebshopEngine` la MyGLS (din 19.0.2.1.7):** cererea `PrintLabels` trimite `"WebshopEngine": "Odoo"`, devenit obligatoriu în API-ul MyGLS (schimbarea din 2025-02-12). GLS nu îl cere pe toate conturile: conturile noi refuzau orice AWB cu „GLS Server error. Webshop engine is required!”, iar cele vechi mergeau și fără el.
-- **Capturi și documentație (19.0.2.1.7–19.0.2.1.8):** fișa consultant are cele 10 capturi ale fluxului, generate de `tests/test_screenshots.py` cu MyGLS simulat (eticheta e un exemplu desenat în test, GLS neavând cont de test public); `readme/USAGE.md` are pașii cu capturile în engleză, din `static/description/en/`.
-- **Robustețe la urmărire și autentificare:** interogarea de status ignoră și curăță din livrare referințele non-numerice (AWB-urile GLS sunt mereu numerice), iar un AWB problematic nu mai blochează interogarea celorlalte livrări; un transportator fără parolă configurată returnează eroarea clară „No password is set on the GLS carrier."
-
-Limitări cunoscute (nesuportate): calculul tarifelor pentru o expediere, listele de orașe/județe/puncte de pickup, generarea AWB în format HTML, expedierea cu ID oraș și ID județ, expedierea cu dimensiuni și nota de retur în AWB.
+- **AWB și etichetă:** AWB-ul se emite din comanda de livrare, iar eticheta vine în același apel, ca PDF sau ZPL, în formatul ales pe metoda de livrare (A4 2x2, A4 4x1, termic, A6 etc.).
+- **Două API-uri GLS:** MyGLS (publicat de GLS în fiecare din cele șase țări) și GLS Online (SOAP, folosit de conturile românești vechi). Țara și API-ul se aleg pe fiecare metodă de livrare; pentru GLS Online e nevoie și de cheia API de urmărire.
+- **Configurare:** în *Inventar > Configurare > Livrare > Metode de expediere*, furnizor GLS, fila *GLS Configuration*: țară, versiune API, ID expeditor, utilizator, parolă, serviciu (PSD, FDS, SM1/SM2 etc.), format etichetă, metode de plată tratate ca ramburs și un adaos pentru ramburs.
+- **Preț de transport calculat în Odoo:** GLS nu returnează tarife. Prețul vine din *Fixed Price* sau, dacă acesta e zero, dintr-o grilă JSON (pe greutate și pe sumă ramburs, plus prețul de preavizare); fără preț fix și fără grilă nu se oferă cotație.
+- **Puncte GLS (parcel shop și lockere):** punctele de livrare ale țării se importă în catalogul comun de lockere și se aleg pe hartă cu `deltatech_delivery_locker`. Punctul ajunge în AWB doar cu serviciul Parcel Shop Delivery, pe MyGLS. Catalogul e identificat după țară, variantă de API și cont (`_gls_locker_catalog_key`), deci un al doilea cont GLS nu arhivează punctele primului; punctele dispărute din feed se arhivează la importul următor.
+- **Servicii și opțiuni:** ramburs cu referință și monedă, mai multe colete, notificare SMS/e-mail a destinatarului, schimb de colet (retur) și, pe MyGLS, asigurare GLS opțională pentru un colet unic, cu valoare fixă setată pe metoda de livrare (se taxează de GLS). Serviciile SM1/SM2 se trimit doar pentru expedieri în țara expeditorului (din 19.0.2.2.4); în străinătate AWB-ul pleacă fără ele.
+- **Urmărire:** istoricul de status se citește din GLS printr-o acțiune programată și se scrie pe livrare până la livrare; fila *History* îl listează, iar *Refresh* îl citește imediat. Referințele non-numerice sunt ignorate, iar un AWB problematic nu blochează celelalte livrări.
+- **Anulare și listă AWB:** *Cancel AWB* anulează AWB-ul la GLS; în *Inventar > Operațiuni > Delivery AWB List* (MyGLS) se listează AWB-urile contului, inclusiv cele emise direct în portalul GLS.
+- **MyGLS `WebshopEngine`:** cererea `PrintLabels` trimite `"WebshopEngine": "Odoo"`, obligatoriu în API-ul MyGLS.
+- **Date trimise la GLS:** nume, adresă, localitate, cod poștal, țară, persoană de contact, telefon și e-mail ale expeditorului și destinatarului, numărul de colete, suma, referința și moneda de ramburs, referința comenzii, valoarea asigurată (dacă e cerută) și ID-ul punctului GLS.
+- **Nesuportat:** tarife de la GLS, valoare declarată pe GLS Online, livrare sâmbătă, colet deschis, dimensiuni colet, etichetă HTML, liste de localități/județe și re-descărcarea etichetei unui AWB existent (GLS nu o emite a doua oară, deci eticheta atașată livrării se păstrează).
+- **Limbi:** engleză, română, maghiară, cehă, croată, slovacă, slovenă (traducerile în afară de en/ro sunt asistate de AI).
 
 #### 3. Dependențe
 
@@ -37,28 +36,22 @@ Dependență externă Python: `zeep` (client SOAP pentru serviciile web GLS).
 
 #### 4. Componente Cheie
 
-> Conform README-ului (secțiunea „Technical Implementation”), modulul extinde modelul de transportator (delivery carrier) din Odoo cu funcționalitate specifică GLS. Componentele de mai jos sunt sintetizate din structura modulului.
-
 **Modele**
 
-- `delivery.carrier` (extins, `models/delivery_gls.py`): adaugă metoda de livrare GLS și logica de creare/anulare AWB, generare etichete și urmărire status.
-- `gls.request` (`models/gls_request.py`): wrapper peste API-urile GLS Online și MyGLS (apeluri SOAP prin `zeep`), responsabil de generarea etichetelor, tracking, import tranzacții și sincronizare listă AWB.
-- `res.config.settings` (extins, `models/res_config_settings.py`): expune setările de configurare GLS (credențiale, ID expeditor, opțiuni API).
+- `delivery.carrier` (extins, `models/delivery_gls.py`): metoda de livrare GLS, cu AWB, anulare, etichete, urmărire, import lockere și calculul prețului.
+- `delivery.carrier.service` (extins, `models/delivery_gls.py`): serviciile GLS (24H, PSD, FDS, SM1, SM2 etc.), încărcate din date.
+- `gls.request` (`models/gls_request.py`): clientul pentru API-urile GLS Online și MyGLS (SOAP prin `zeep`).
+- `res.config.settings` (extins, `models/res_config_settings.py`): setările GLS.
 
 **Vizualizări**
 
-- `views/delivery_gls_view.xml`: vizualizările de configurare a metodei de livrare GLS și acțiunile aferente AWB/tracking.
+- `view_delivery_carrier_form_with_provider_fc` (`views/delivery_gls_view.xml`): fila *GLS Configuration* pe formularul metodei de livrare.
 
-**Date**
+**Acțiuni Automate / Acțiuni Server**
 
-- `data/delivery_gls_data.xml`: înregistrările inițiale ale modulului (metoda de livrare GLS și date de configurare implicite).
-
-**Hook-uri**
-
-- `uninstall_hook`: rutină de curățare executată la dezinstalarea modulului.
+- Citirea statusului de la GLS se face printr-o acțiune programată (conform USAGE.md); modulul nu definește un cron propriu în `data/`. `uninstall_hook` curăță datele la dezinstalare.
 
 #### 5. Conexiuni
 
-- [deltatech_delivery](../deltatech_delivery/index.md): cadrul de bază pentru metodele de livrare Deltatech pe care acest modul îl extinde cu integrarea GLS (dependență directă).
-- [deltatech_delivery_status](../deltatech_delivery_status/index.md): valorifică statusurile de livrare actualizate de pe baza informațiilor de tracking GLS.
-- [deltatech_delivery_locker](../deltatech_delivery_locker/index.md): consumă cheia de catalog `_gls_locker_catalog_key` și metodele de import/arhivare pentru punctele de livrare (lockere) GLS.
+- [deltatech_delivery](../deltatech_delivery/index.md): cadrul de bază al metodelor de livrare Deltatech, extins aici cu GLS (dependență directă).
+- [deltatech_delivery_locker](../deltatech_delivery_locker/index.md): catalogul comun de lockere în care se importă punctele GLS (`delivery.locker`, verificat în cod; modul opțional).

@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.9.8`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_rma`
-- **Ultima Ingestie:** 2026-10-22
+- **Ultima Ingestie:** 2026-11-20
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -41,6 +41,7 @@ Modulul gestionează returul comercial și reclamațiile de garanție pentru vâ
 - Cantitatea returnată se convertește în unitatea livrării înainte de potrivire (`19.0.1.7.2`): comandă în pachete de 12 și livrare la bucată dădea un transfer de retur de 1 bucată în loc de 12.
 - Puncte de extindere pentru retururile care se cer în alt canal: `sale.order._rma_external_return_channel()` (implicit `False`) scoate comanda din formularul de retur din portal, înlocuiește butonul de pe pagina comenzii cu indicația canalului și pune un avertisment pe o cerere deschisă de mână (`external_return_warning`). Le folosește [deltatech_rma_marketplace](../deltatech_rma_marketplace/index.md). O a doua notă de credit pe aceeași factură e semnalată pe cerere.
 - Motivul trimis din portal e verificat pe server (`19.0.1.4.1`): se acceptă doar motivele pe care formularul le arată clientului pentru tipul cererii, adică nu cele *Staff Only* și nu cele din altă categorie. Orice alt id cade pe motivul implicit al tipului, ca un client să nu poată trimite id-ul unui motiv fără taxă sau cu transportul plătit de firmă.
+- Pagina din Odoo Apps arată, la finalul tabului *Overview*, videoclipul de prezentare pe YouTube, în română (`19.0.1.9.8`).
 - Pagina din Odoo Apps (`static/description/index.html`, `19.0.1.4.2`) are tabul *Presentation*, cu toate cele 36 de slide-uri ale prezentării în engleză, ca imagini în `static/description/presentation/`. Sursa e `readme/PRESENTATION.md`. Nu are link extern: prezentarea online cere cont Claude pentru vizualizare. Prezentările online, pentru uz intern: [română](https://claude.ai/artifact/8MzYW31s789wyoA6ZGPBJJ), [engleză](https://claude.ai/artifact/QM2zptNwZU9v6Ah2RPRviR).
 - Fix `19.0.1.4.4`: butonul „New Return Request” de pe comandă nu mai eșuează dacă motivul implicit (*Faulty product*) a fost șters; liniile pregătite vin fără motiv, dar cu taxa implicită a motivului, când există.
 - **Returns → Analysis** arată retururile pe lună și tip, plus rata de retur per produs (raportat la cantitățile vândute).

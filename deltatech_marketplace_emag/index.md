@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.2.21.8`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_emag
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_emag`
-- **Ultima Ingestie:** `2026-10-22`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -60,6 +60,8 @@ Un cont de seller eMAG lângă Odoo, fără conector, înseamnă catalog, comenz
   - Re-ajustare recursivă limitată la 10 pași, ca să nu ruleze necontrolat; verificarea rangului se face la 15 minute după schimbarea prețului și se oprește când nu mai apare nicio modificare
   - Corecții 19.0.2.9.1: în afara buy box-ului prețul coboară cu 0,01 sub oferta care îl deține (`best_offer_sale_price`) sau la jumătatea drumului spre minim dacă acea ofertă nu e mai ieftină; exportul de preț și exportul complet nu mai anulează prețul auto-calculat; trimite 50 de oferte per request, un job per backend, fără oferte fără stoc
   - **Validarea prețurilor** (19.0.2.9.6): înainte de trimitere, toate prețurile trebuie să fie pozitive și `min_sale_price` < `sale_price` < `max_sale_price`; o ofertă care pică nu se trimite și primește o eroare în jurnalul marketplace (operația Price), nu un job reluat la nesfârșit; prețul recomandat se trimite doar dacă e peste prețul de vânzare. Intervalul ±10% la crearea ofertei se păstrează pe binding
+  - **Export prețuri** (19.0.2.21.7, activ implicit, pe backend): cu opțiunea dezactivată, exportul ofertei (*Active on write*, butonul *Export*, *Update in Marketplace*) nu mai schimbă prețurile de pe eMAG — citește prețul de vânzare, cel recomandat, intervalul min/max și moneda ofertei și le retrimite neschimbate, în timp ce numele, descrierea, imaginile, caracteristicile, stocul și statusul se exportă în continuare; dacă oferta nu există pe eMAG sau n-are preț acolo, exportul se oprește cu eroare. Exportul de prețuri, prețul pe buy box și crearea ofertelor noi nu sunt afectate.
+  - **Moneda prețurilor** (19.0.2.21.5): prețurile pleacă cu moneda listei de prețuri a backend-ului (EUR pe eMAG BG, HUF pe eMAG HU), nu cu RON fix; prețul recomandat se convertește din prețul de listă în acea monedă, inclusiv la exportul de prețuri și la prețul pe buy box.
 - **Facturare**:
   - Push automat al unui **link** către PDF-ul facturii din portalul Odoo (nu conținutul PDF-ului) când o factură legată de o comandă eMAG e validată, dacă backend-ul are activă bifa **Enable Order Push Invoice** ȘI **Active On Write**; cere ca `web.base.url` să fie public; tokenul de portal al facturii se creează și se comite înainte de apel (altfel eMAG raporta „Attachment url ... is unreachable"), iar facturile de avans nu se mai atașează — nu e depunere e-Factura/SPV
   - Fără duplicate (19.0.2.9.5): înainte de trimitere comanda e citită de la eMAG, iar un document deja atașat sub același nume nu se retrimite; dacă citirea eșuează, nu se trimite nimic și jobul se reia. Notele de credit se trimit ca facturile (`type: 1`), fiecare o singură dată
@@ -127,7 +129,7 @@ Documentată integral în `readme/USAGE.md` (secțiunea „Product field mapping
 | Familie (variante) | legătura de șablon `marketplace.product.template` | `family.id`, `family.name` | eMAG → Odoo |
 | URL produs | URL-ul de site al produsului (`/shop/...`) | `url` | Odoo → eMAG |
 | Cotă TVA | fix (`vat_id` 1) | `vat_id` | Odoo → eMAG |
-| Monedă | fix (RON) | `currency_type` | Odoo → eMAG |
+| Monedă | moneda listei de prețuri a backend-ului (moneda backend-ului, dacă nu are listă) | `currency_type` | Odoo → eMAG |
 
 **Retururi (RMA) — mapare de status**
 

@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.0.5.15`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_efactura_enhancement
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_efactura_enhancement`
-- **Ultima Ingestie:** `2026-11-17`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -26,6 +26,7 @@ Modulul `l10n_ro_efactura_enhancement` extinde funcționalitatea standard de e-F
     - **Import automat oprit implicit**: opțiunea per companie „Nu importa automat facturile primite din SPV" (Setări → Contabilitate → eFactura SPV) sare peste crearea automată de ciorne din cronul nativ „E-Factura: Synchronize with ANAF", păstrând sincronizarea statusului facturilor trimise. E bifată implicit pentru companiile noi (evită dublurile cu factura introdusă din comanda de achiziție); companiile existente își păstrează valoarea.
     - **Regulă unică de eligibilitate SPV**: `_l10n_ro_is_spv_target()` decide dacă o factură merge în SPV, identic pentru wizardul „Send & Print", butonul manual, cronul și dashboard. Clienții cu altă țară decât RO sunt excluși; partenerul fără țară facturat în RON e tratat ca român.
     - **Blocaj pentru firme românești fără CUI**: o factură către un client marcat firmă, din România, fără CUI (sau cu `0000000000000`) nu mai pleacă în SPV; verificarea apare la generarea XML-ului și din nou înainte de transmitere, iar motivul se scrie în chatter.
+    - **Tranzacții scurte și fără conflicte de scriere**: cronul de preluare a statusului nu ia facturile încărcate în ultimele 10 minute (evită conflictul cu trimiterea automată în paralel). Generarea XML-ului nu mai scrie `company_registry` pe clientul fără CUI (valoarea `0000000000000` se pune doar în XML), iar adresa lipsă a persoanelor fizice din România (`street`, `city`) se completează înainte de lot, pe fiecare partener, cu commit imediat și până la 3 reîncercări la `SerializationFailure`.
     - **Răspunsuri neașteptate de la SPV** (HTTP 200 cu corp neașteptat) nu mai blochează interfața.
 - **Trunchiere și sanitizare a datelor**:
     - Trunchiază denumirile produselor la 100 de caractere și descrierile la 200 de caractere, pentru conformitate cu standardul UBL.

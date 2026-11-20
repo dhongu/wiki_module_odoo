@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_margin_pos
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_margin_pos`
-- **Ultima Ingestie:** `2026-10-22`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -22,6 +22,9 @@ Pentru fiecare linie de comandă POS, raportul afișează:
 
 Rândurile provenite din comenzile POS sunt doar în citire: comisionul real, *Comision plătit* și prețul de achiziție se păstrează doar pe liniile de factură, iar wizardurile de comision și de cost lasă comenzile POS deoparte.
 
+Nota de credit emisă pentru returul unui bon POS nefacturat nu inversează nicio factură; modulul îi preia costul din liniile returului POS (costul vânzării inițiale), în loc de 0. Notele de credit emise înainte de această versiune și rămase cu cost 0 se corectează cu wizardul *Update Purchase Price* (selectare linii în listă, apoi meniul **Acțiune**).
+- Filtrul *Invoices* arată doar liniile de factură, iar *POS Sales* doar comenzile POS; calea în raport: **Vânzări → Raportare → Profit Analysis**.
+
 Modulul nu se instalează automat, deoarece modifică cifrele raportului.
 
 #### 3. Dependențe
@@ -34,11 +37,12 @@ Modulul nu se instalează automat, deoarece modifică cifrele raportului.
 **Modele**
 
 - `sale.margin.report`: raportul SQL existent, extins pentru a include liniile comenzilor POS nefacturate.
+- `account.move.line`: costul liniilor notei de credit pentru un retur POS nefacturat (`_get_refund_purchase_price_from_invoice`) se ia din liniile returului POS.
 
 **Vizualizări**
 
 - `view_sale_margin_report_list`: extinde lista raportului cu informațiile comenzii POS.
-- `view_sale_margin_report_filter`: adaugă filtrul *POS Sales* și gruparea după comandă.
+- `view_sale_margin_report_filter`: adaugă filtrele *POS Sales* și *Invoices* și gruparea după comandă.
 
 **Acțiuni Automate / Acțiuni Server**
 

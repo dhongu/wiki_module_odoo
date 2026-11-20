@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.7.5`
 - **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal)
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_account_vat_journal`
-- **Ultima Ingestie:** `2026-10-05`
+- **Ultima Ingestie:** `2026-11-19`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -27,7 +27,7 @@ Modulul aduce Jurnalul de Vânzări și Jurnalul de Cumpărări — registrele l
 - Tratarea operațiunilor de **taxare inversă** (art. 331), inclusiv TVA colectat din autolichidare pe achiziții intracomunitare, într-o coloană dedicată pe jurnalul de cumpărări;
 - Rând de totaluri pentru fiecare jurnal, cu valoare calculată (nu doar formulă) pe fiecare coloană;
 - Export **XLSX** cu aspect de registru: titlu cu firma, CUI și perioada (format românesc), cap de tabel cu filtre și fundal, sume cu separatori, dată `zz.ll.aaaa`, rândul Total evidențiat, antet fixat la derulare și pregătit de tipărire (peisaj, încadrare pe lățime A4/A3, cap de tabel repetat pe fiecare pagină, numerotare);
-- Export **PDF** (nativ `account.report`);
+- Export **PDF** (nativ `account.report`), cu antet pe două rânduri: denumirea cotei sau a regimului apare o singură dată deasupra coloanelor ei (peste 4 rânduri, textul complet e în tooltip), iar coloanele fără denumire de cotă (Nr., Jurnal, Furnizor, Dată document etc.) au o singură celulă întinsă pe ambele rânduri;
 - Modul de sine stătător: instalarea `l10n_ro_anaf_d394` peste el adaugă direct pe aceste rapoarte un buton de export fișier D394.
 
 #### 3. Dependențe
@@ -56,7 +56,7 @@ Modulul aduce Jurnalul de Vânzări și Jurnalul de Cumpărări — registrele l
 
 **Acțiuni Automate / Acțiuni Server**
 
-- `action_l10n_ro_purchase_tax_report` / `action_l10n_ro_sale_tax_report` (`ir.actions.client`, tag `account_report`): deschid Jurnalul de Cumpărări, respectiv de Vânzări (standard), din meniul Contabilitate → Rapoarte → Taxe (sequence 31/32).
+- `action_l10n_ro_purchase_tax_report` / `action_l10n_ro_sale_tax_report` (`ir.actions.client`, tag `account_report`): deschid Jurnalul de Cumpărări, respectiv de Vânzări (standard), din meniul Contabilitate → Raportare → Taxe și fiscalitate (sequence 31/32).
 - `action_l10n_ro_purchase_regime_report` / `action_l10n_ro_sale_regime_report` (`ir.actions.client`, tag `account_report`): deschid Jurnalul de Cumpărări, respectiv de Vânzări **pe regimuri**, din același meniu (sequence 33/34).
 - `action_l10n_ro_vat_journal_column` (`ir.actions.act_window`): deschide configurarea coloanelor jurnalelor pe regimuri, din meniul Contabilitate → Configurare → Contabilitate → Coloane jurnale de TVA (RO), grupat implicit pe tip de jurnal; vizibilă doar pentru grupul de administrare contabilă.
 - Toate cele patru rapoarte (`l10n_ro_purchase_tax_report`, `l10n_ro_sale_tax_report`, `l10n_ro_purchase_regime_report`, `l10n_ro_sale_regime_report`) sunt definite ca înregistrări `account.report` cu `default_opening_date_filter = previous_month` (perioada implicită e luna închisă anterioară) și `only_tax_exigible = True`.

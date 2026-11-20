@@ -1,4 +1,4 @@
-# Report Layout (Aspecte personalizate pentru rapoarte)
+# Report Layout (Aspecte personalizate pentru rapoarte) (localizat la `deltatech_report_layout/index.md`)
 
 - **Nume Tehnic:** `deltatech_report_layout`
 - **Versiune:** `19.0.1.3.1`

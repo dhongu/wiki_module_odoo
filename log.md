@@ -4,6 +4,21 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-20] Re-ingestie din origin/19.0: 54 module modificate după 17.11.2026
+
+- **Acțiune:** 54 de module cu schimbări de cod pe `origin/19.0` după 17.11.2026: 14 pagini noi și 40 de re-ingestii. Pagini noi: [deltatech_ehs](deltatech_ehs/index.md), [deltatech_vendor_bill_ubl_review](deltatech_vendor_bill_ubl_review/index.md), [deltatech_invoice_receipt_confirmation](deltatech_invoice_receipt_confirmation/index.md), [deltatech_saga_online](deltatech_saga_online/index.md), [deltatech_delivery_sd_online](deltatech_delivery_sd_online/index.md), [deltatech_inter_company_vendor_stock](deltatech_inter_company_vendor_stock/index.md), [deltatech_account_ubl_import](deltatech_account_ubl_import/index.md), [deltatech_sale_order_image](deltatech_sale_order_image/index.md), [l10n_md_zip](l10n_md_zip/index.md), [l10n_ro_green_tax_analytic](l10n_ro_green_tax_analytic/index.md), [l10n_ro_move_guard](l10n_ro_move_guard/index.md), [terrabit_iap_server_online_anaf](terrabit_iap_server_online_anaf/index.md), [terrabit_iap_server_online_delivery](terrabit_iap_server_online_delivery/index.md), [terrabit_iap_server_online_sd](terrabit_iap_server_online_sd/index.md). Procesare în paralel, cu câte un subagent pe modul. Modulele cu commit-uri doar pe documentație sau doar înaintea ultimei ingestii au fost sărite.
+- **Sursă:** exporturi `git archive origin/19.0` pe fiecare modul, pentru că checkout-urile locale sunt în urmă (de exemplu `bitshop`, cu 225 de commit-uri în urmă; `deltatech_qms` există local doar pe branch-ul `19.0-feat-ehs`).
+- **Fișe consultant:** sincronizate cu `wiki_sync.sync_fisa` (25 actualizate).
+- **Titluri:** formatul `(localizat la ...)` din `schema.md` a fost restabilit pe paginile din ingestia din 17.11 și din aceasta, unde fusese scos.
+- **Conexiuni:** legăturile sunt cele din manifest sau din cod. Rămân pe baza documentației modulului, neconfirmate în cod: `l10n_ro_move_guard`, `deltatech_rma`, `deltatech_stock_inventory`, `l10n_ro_stock_report`, `deltatech_sale_margin_pos`, `deltatech_expenses` (către `l10n_ro_expense_allowance_payroll`), `terrabit_iap_server_online_delivery` și `terrabit_iap_server_online_sd`.
+- **Avertismente:**
+  - [deltatech_marketplace_emag](deltatech_marketplace_emag/index.md): `USAGE.md` din modul spune încă „Currency: fixed (RON)”, deși prețurile pleacă în moneda listei de prețuri.
+  - [l10n_ro_intrastat_enhancement](l10n_ro_intrastat_enhancement/index.md): `DESCRIPTION.md` spune că modulul se instalează automat, dar manifestul are `auto_install: False`.
+  - [deltatech_doc_screenshots](deltatech_doc_screenshots/index.md): manifestul trimite la `main_screenshot.png`, dar în `static/description/` există doar `.svg`.
+  - [deltatech_sale_feedback](deltatech_sale_feedback/index.md): trimiterea e-mailurilor nu funcționează încă pe 19.0.
+  - [deltatech_expenses](deltatech_expenses/index.md): linia „Odoo 20” din metadate nu a putut fi verificată.
+- **Fișiere actualizate:** paginile `index.md` ale modulelor, fișele consultant și capturile sincronizate, `index.md`, `log.md` și `.index/chunks.json`.
+
 ## [2026-11-20] Sincronizare automată de noapte
 
 - **Versiuni aduse la zi** (20): `deltatech_b2b_portal 19.0.1.4.4 → 19.0.1.4.5`, `deltatech_cmr_document 19.0.1.3.4 → 19.0.1.3.5`, `deltatech_marketplace 19.0.1.43.5 → 19.0.1.43.6`, `deltatech_marketplace_emag 19.0.2.21.6 → 19.0.2.21.8`, `deltatech_marketplace_shopify 19.0.1.9.1 → 19.0.1.10.1`, `deltatech_mcp_server 19.0.1.16.1 → 19.0.1.16.2`, `deltatech_purchase_ubl 19.0.1.4.22 → 19.0.1.5.0`, `deltatech_qms 19.0.1.0.0 → 19.0.1.1.1`, `deltatech_rma 19.0.1.9.7 → 19.0.1.9.8`, `deltatech_saga 19.0.6.30.1 → 19.0.6.30.3`, `deltatech_secondary_uom 19.0.1.2.2 → 19.0.1.2.3`, `deltatech_voip_daktela 19.0.1.1.0 → 19.0.1.4.0`, `l10n_ro_account_vat_journal 19.0.1.7.4 → 19.0.1.7.5`, `l10n_ro_anaf_d101 19.0.1.3.0 → 19.0.1.3.2`, `l10n_ro_anaf_d300 19.0.0.0.36 → 19.0.0.0.39`, `l10n_ro_intrastat_enhancement 19.0.1.9.7 → 19.0.1.9.8`, `l10n_ro_profit_tax 19.0.1.2.2 → 19.0.1.4.0`, `l10n_ro_saft_export_fix 19.0.1.4.0 → 19.0.1.5.0`, `l10n_ro_stock_account 19.0.1.16.0 → 19.0.1.17.0`, `l10n_ro_stock_report 19.0.2.10.1 → 19.0.2.10.2`.

@@ -1,4 +1,4 @@
-# Germany - City from ZIP
+# Germany - City from ZIP (localizat la `l10n_de_zip/index.md`)
 
 - **Nume Tehnic:** `l10n_de_zip`
 - **Versiune:** `19.0.1.0.0`

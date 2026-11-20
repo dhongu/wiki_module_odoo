@@ -4,34 +4,30 @@
 - **Versiune:** `19.0.0.0.39`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d300
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d300`
-- **Ultima Ingestie:** 2026-10-05
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modul destinat departamentelor financiar-contabile din România care au obligația depunerii Decontului de TVA (Declarația 300) la ANAF. Permite generarea și exportul D300 direct din Odoo, în două formate acceptate oficial, fără re-introducerea manuală a datelor.
+Modul destinat departamentelor financiar-contabile din România care au obligația depunerii Decontului de TVA (Declarația 300) la ANAF. Permite generarea și exportul D300 direct din Odoo, în două formate acceptate oficial (XDP și XML), pornind din jurnalele de TVA ale perioadei, fără re-introducerea manuală a datelor. Fișierul generat se descarcă din Odoo și se depune de utilizator pe portalul e-guvernare.ro; modulul nu transmite nimic automat către ANAF. Necesită Odoo Enterprise (motorul `account_reports`).
 
 #### 2. Funcționalități Cheie
 
-- **Export XDP (Soft A)**: generează un fișier Adobe XDP care poate fi importat instantaneu în formularul PDF inteligent oficial ANAF (D300 v12).
-- **Export XML (Soft J)**: generează fișierul XML conform structurii oficiale ANAF v12.0.0+, gata pentru validare și semnare digitală în DUKIntegrator.
-- **Validare XSD automată**: fișierul XML este validat față de schema XSD oficială înainte de export; erorile de structură sunt raportate înainte de descărcare.
-- **Mapare rânduri de decont**: corelează automat codurile liniilor din raportul de taxe Odoo cu câmpurile corespunzătoare din declarația D300 (rânduri R1–R44).
-- **Date de identificare completate automat**: CUI, denumire companie, reprezentant legal, județ (prin mapare ANAF din `l10n_ro_anaf_base`).
-- **Calcul sold reportat TVA**: preia automat soldul conturilor 4423 (TVA de plată) și 4424 (TVA de recuperat) din perioada precedentă pentru rândurile R35/R38.
-- **Suport TVA la încasare (CABA)**: calculează baza și TVA neexigibil din facturile neîncasate la sfârșitul perioadei.
-- **Integrare account.return**: buton „Generează D300" disponibil în fluxul de închidere lunară/trimestrială, cu pre-filtrare automată pe perioada return-ului.
-- **Tip decont automat**: detectează tipul perioadei (lunar L, trimestrial T, semestrial S, anual A) și generează numărul de evidență al plății conform algoritmului ANAF.
-
-- **Taxe și grile D300 corectate pe planul RO**: „0% EU S” are grilele rândurilor 3 și 3.1; serviciile de la prestatori din afara UE se autolichidează cu taxele „21% EX S” / „11% EX S” (rd. 7 și 22); factura furnizorului extern la import („0% EX G”) nu mai are grile, importul fiind declarat o singură dată din DVI. Planurile existente se corectează la instalare/actualizare.
-- **Import cu TVA amânată la plată în vamă**: taxele „21% IMP AM” / „11% IMP AM” evidențiază TVA din DVI simultan colectat și deductibil (art. 326 alin. (5)), pe rd. 7 și 22, în decontul perioadei datei DVI; se aleg pe DVI (ex. în asistentul din `l10n_ro_customs_dvi`).
-- **TVA nededusă conform instrucțiunilor D300 (OPANAF 174/2026)**: rândurile de achiziții și rd. 30 conțin TVA-ul deductibil brut (inclusiv partea nededusă), iar rd. 31 doar taxa efectiv dedusă. Se recunosc taxele cu repartiție parțială (ex. „21% ND 50%”) și „Deductibilitate” pe linie.
-- **Rotunjire corectă a TVA nededusă**: rândul brut se rotunjește o singură dată pe suma întreagă (nu separat pe partea dedusă și cea nededusă), iar partea nededusă este diferența; evită abaterile de 1 leu la fracțiuni de 0,50.
-- **Fără linii tehnice la „Deductibilitate”**: pentru companiile RO, `l10n_ro_vat_deductibility` nu mai creează liniile `non_deductible_product`, baza rămâne întreagă pe grilă, iar TVA-ul nededus se împarte pe rânduri după liniile de produs cu deductibilitate sub 100% (documentele vechi se citesc ca înainte).
-- **Totaluri calculate din rânduri**: rd. 30 se calculează mereu ca sumă a rd. 20–28 (validatorul ANAF), fără rd. 29; rd. 3.1 are semn negativ ca rd. 3; reconcilierea cu jurnalele de TVA compară rd. 30 cu TVA dedusă + nededusă.
-- **Setări la nivel de companie** (Contabilitate → Configurare → Setări, secțiunea Declarații ANAF): „depus de reprezentant”, bifa operațiuni interne și temeiul legal (0 – standard; 2 – art. 324 alin. (14) Cod fiscal).
-- **Acces**: Contabilitate → Declarații ANAF → Declarație 300 (acțiunile „D300 file XDP” / „D300 file XML (Soft J)”) sau din verificarea „Generează D300 (TVA)" a fluxului `account.return`; fișierul semnat se atașează la „Atașează D300 (XML semnat)". Modulul nu transmite nimic către ANAF; necesită Odoo Enterprise (`account_reports`).
-- **Fișa consultant**: fluxul pas-cu-pas de utilizare este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
+- **Fără re-introducere de date**: codurile liniilor din raportul de taxe (`tax_ro_baza_rdX` / `tax_ro_tva_rdX`) se mapează automat pe rândurile R1–R44 ale declarației, din jurnalele de vânzări și cumpărări.
+- **Raport D300 pe două coloane (Bază și TVA)**: în **Contabilitate → Raportare → Declarații ANAF → Declarație 300**, grupat pe secțiuni (I. TVA colectată, II. TVA deductibilă, III. Regularizări); raportul clasic rămâne în **Raport TVA**.
+- **Două formate, un singur flux**: XDP (Soft A, import în formularul PDF inteligent ANAF) și XML (Soft J, pentru DUKIntegrator), ambele din același raport.
+- **Validare XSD înainte de descărcare**: structura XML se verifică față de schema oficială (`d300_v12.xsd`); datele companiei (CUI, județ, adresă, reprezentant) se validează înainte de export, iar o eroare oprește generarea.
+- **Tip decont detectat din interval**: lunar (L, 301), trimestrial (T, 302), semestrial (S, 303), anual (A, 304), cu numărul de evidență al plății generat conform algoritmului ANAF; un interval nestandard oprește exportul cu eroare.
+- **Sold reportat preluat automat**: rd. 38 din TVA-ul de plată rămas neachitat (cont 4423, minus plățile din perioadă), rd. 41 din soldul negativ reportat (cont 4424), fără sumele cerute la rambursare.
+- **Cerere de rambursare din închiderea de TVA**: bifa „Solicit rambursarea TVA" și contul bancar se aleg pe perioadă; declarația primește banca și IBAN-ul, iar exportul se oprește (eroarea R24) dacă soldul negativ (rd. 45) este sub 5.000 lei.
+- **Bife art. 331 (taxare inversă)**: cereale, telefoane mobile, circuite integrate, console / tablete / laptopuri, recunoscute după codul NC al produsului (ca în D394) sau bifate pe închiderea de TVA.
+- **TVA la încasare (CABA)**: baza și TVA neexigibil din facturile neîncasate la sfârșitul perioadei sunt raportate distinct de TVA exigibil.
+- **Integrare cu `account.return`**: în lista de verificări a declarației apar „Generează D300 (TVA)", „Atașează D300 (XML semnat)" și „Opțiuni decont D300"; accesibilă și din **Contabilitate → Contabilitate → Perioade fiscale**.
+- **Setări la nivel de companie** (**Contabilitate → Configurare → Setări**, secțiunea Declarații ANAF): „Depus de reprezentant", „Bifă operațiuni interne" și „Temei legal" (0 = standard, 2 = art. 324 alin. (14) Cod fiscal).
+- **Totaluri ca în validatorul ANAF**: rd. 19 și rd. 30 sunt suma rândurilor rotunjite, iar rd. 30 nu include achizițiile scutite de la rd. 29.
+- **TVA nededusă (art. 298, OPANAF 174/2026)**: rd. 24 / 25 și rd. 30 au TVA-ul brut, rd. 31 doar TVA-ul efectiv dedus, rotunjit o singură dată; se recunosc taxele cu repartiție parțială (ex. „21% ND 50%") și „Deductibilitate" pe linie.
+- **Corecturi pe planul RO**: servicii intracomunitare pe rd. 3 / 3.1; servicii de la prestatori din afara UE autolichidate pe rd. 7 și 22 (art. 307 alin. (2)); factura furnizorului extern la import nu se mai declară a doua oară lângă DVI; import cu TVA amânată la plată în vamă („21% IMP AM" / „11% IMP AM", art. 326 alin. (5)); cotele anterioare (19%, 9%, 5%) apar pe rd. 16 / 33. Planurile existente se corectează la instalare/actualizare.
+- **Versiune formular acceptată**: v12.0.2, OPANAF 174/2026 (în vigoare de la 01.01.2026); verificat cu DUKIntegrator (soft J 12.0.1) la 12.09.2026.
 
 #### 3. Dependențe
 
@@ -46,34 +42,23 @@ Modul destinat departamentelor financiar-contabile din România care au obligaț
 
 **Modele**
 
-- `account.chart.template` (extins): completează CAEN-ul demo al companiei (`l10n_ro_caen_code`) și corectează grilele D300 / creează taxele suplimentare (EX S, IMP AM) pe planul de conturi RO (`account_chart_template_grids.py`).
-- `account.report` / `tax_report_handler` (extins): logica de mapare a rândurilor raportului de taxe RO pe structura D300 și generarea fișierelor XDP/XML, inclusiv validarea companiei (`_validate_anaf_export_company`, cu `require_caen=True`).
-- `res.company` (extins): câmpuri și configurări necesare identificării companiei/reprezentantului legal în decont.
-- `res.config.settings` (extins): opțiuni de configurare aferente D300 în setările de contabilitate.
-- `check.action.review` (extins): verificările de corelație D300 integrate în fluxul `account.return`.
+- `l10n_ro_anaf_d300.tax.report.handler`: handlerul raportului D300 (extinde `account.tax.report.handler` și mixinul ANAF din `l10n_ro_anaf_base`); mapează rândurile, calculează soldurile reportate și generează exporturile XDP / XML.
+- `account.report`, `account.return`: extinse pentru raportul pe grile și pentru verificările și opțiunile D300 pe declarația perioadei (rambursare, bife art. 331).
+- `res.company`, `res.config.settings`: parametrii D300 (depus de reprezentant, bifă operațiuni interne, temei legal).
+- `account.chart.template`: extins pentru corectarea taxelor și grilelor D300 pe planul RO.
 
 **Vizualizări**
 
-- `data/d300_grid_report.xml`: definirea grilei/structurii raportului D300.
-- `data/l10n_ro_tax_report_fix.xml`: corecții ale raportului de taxe RO (inclusiv semnul rd. 3.1).
-- `data/d300_menu.xml`: intrările de meniu pentru D300.
-- `data/return_checks.xml`: verificările de corelație asociate decontului, afișate în fluxul de închidere (`account.return`).
-- `views/tax_report_xdp_export.xml`: butonul și template-ul de export XDP (Soft A).
-- `views/tax_report_xml_export.xml`: butonul și template-ul de export XML (Soft J).
-- `views/res_config_settings_views.xml`: opțiunile de configurare în setări.
-- `demo/demo_data.xml`: date de test pentru demonstrații.
+- `views/account_return_views.xml`: opțiunile decontului pe declarația perioadei.
+- `views/res_config_settings_views.xml`: setările D300 din configurarea contabilității.
+- `views/tax_report_xdp_export.xml`, `views/tax_report_xml_export.xml`: șabloanele fișierelor XDP și XML.
+- `data/d300_grid_report.xml`, `data/d300_menu.xml`: raportul pe două coloane și meniul „Declarație 300".
 
 **Acțiuni Automate / Acțiuni Server**
 
-*Nu au fost identificate acțiuni automate (`ir.cron`); exportul se declanșează manual din raportul de taxe sau din verificările fluxului de închidere (`account.return`).*
+- Nu există `ir.cron` sau acțiuni server. `data/return_checks.xml` definește verificările adăugate în lista declarației, iar `post_init_hook` corectează taxele și grilele planurilor existente.
 
 #### 5. Conexiuni
 
-- [l10n_ro_anaf_base](../l10n_ro_anaf_base/index.md): furnizează mapările comune ANAF (ex: coduri de județ) folosite la completarea automată a datelor de identificare.
-- [l10n_ro_anaf_partner](../l10n_ro_anaf_partner/index.md): aduce codul CAEN pe partener, cerut obligatoriu la export (`require_caen=True`).
-- [l10n_ro_customs_dvi](../l10n_ro_customs_dvi/index.md): DVI-ul pe care se alege taxa de import cu TVA amânată la plată.
-- [l10n_ro_vat_deductibility](../l10n_ro_vat_deductibility/index.md): „Deductibilitate” pe linie, a cărei TVA nededusă este repartizată pe rândurile D300.
-- [l10n_ro_anaf_d394](../l10n_ro_anaf_d394/index.md): altă declarație ANAF din aceeași suită de raportare fiscală RO.
-- [l10n_ro_anaf_d390](../l10n_ro_anaf_d390/index.md): altă declarație ANAF din aceeași suită de raportare fiscală RO.
-- [l10n_ro_anaf_d398](../l10n_ro_anaf_d398/index.md): altă declarație ANAF din aceeași suită de raportare fiscală RO.
-- [l10n_ro_anaf_d100](../l10n_ro_anaf_d100/index.md): altă declarație ANAF din aceeași suită de raportare fiscală RO.
+- [l10n_ro_anaf_d394](../l10n_ro_anaf_d394/index.md): reconciliere cu jurnalele de TVA din D394 (rapoartele jurnalelor de vânzări și cumpărări) și aceeași recunoaștere a codurilor NC.
+- [l10n_ro_vat_deductibility](../l10n_ro_vat_deductibility/index.md): metoda de calcul al TVA nededus poate fi suprascrisă pentru pro-rata pe perioade.

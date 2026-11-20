@@ -1,4 +1,4 @@
-# Side Panel (Panou lateral)
+# Side Panel (Panou lateral) (localizat la `deltatech_web_side_panel/index.md`)
 
 - **Nume Tehnic:** `deltatech_web_side_panel`
 - **Versiune:** `19.0.1.3.1`

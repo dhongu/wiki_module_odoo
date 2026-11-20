@@ -4,12 +4,12 @@
 - **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_fc_online
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_fc_online`
-- **Ultima Ingestie:** `2026-11-14`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul permite generarea AWB-ului FAN Courier, tipărirea etichetei, anularea și urmărirea coletului direct din livrare, inclusiv în Odoo Online. Nu conține cod Python și se importă ca arhivă zip, împreună cu `deltatech_delivery_online` și [deltatech_iap_online](../deltatech_iap_online/index.md). Apelurile către FAN Courier sunt făcute de serverul Terrabit, iar expedierile se facturează în continuare direct de FAN Courier, pe contractul clientului.
+Modulul permite generarea AWB-ului FAN Courier, tipărirea etichetei, anularea și urmărirea coletului direct din livrare, inclusiv în Odoo Online. Nu conține cod Python și se importă ca arhivă zip, împreună cu [deltatech_delivery_online](../deltatech_delivery_online/index.md) și [deltatech_iap_online](../deltatech_iap_online/index.md). Apelurile către FAN Courier sunt făcute de serverul Terrabit, iar expedierile se facturează în continuare direct de FAN Courier, pe contractul clientului.
 
 #### 2. Funcționalități Cheie
 
@@ -19,12 +19,14 @@ Modulul permite generarea AWB-ului FAN Courier, tipărirea etichetei, anularea �
 - **AWB din livrare**: butonul **AWB** pe transferul cu metoda FAN Courier scrie AWB-ul în referința de urmărire și atașează eticheta; butonul **Tracking** deschide pagina FAN Courier a AWB-ului.
 - **Refuzul FAN Courier** (localitate necunoscută, date lipsă) se postează în chatter cu câmpul și mesajul FAN Courier și nu se taxează; după corectarea adresei se apasă din nou **AWB**.
 - **Credite**: 0,001 credite Terrabit per AWB nou; primul credit (1000 AWB-uri) este gratuit.
+- **Vizibilitate**: modulul este ascuns în Odoo Apps (`hidden`) până la pregătirea vânzării de credite Terrabit; se instalează în continuare din zip. Starea de dezvoltare: Alpha.
+- **Protecție la import**: importul zip nu verifică excluderile, așa că importul se oprește cu o eroare (ID extern lipsă) cât timp `deltatech_delivery_fc` este instalat.
 
 Fluxul detaliat pas cu pas este în [fișa consultantului](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
-- `deltatech_delivery_online`
+- [deltatech_delivery_online](../deltatech_delivery_online/index.md)
 
 Modulul exclude `deltatech_delivery_fc` (varianta clasică, nu rulează împreună cu aceasta).
 
@@ -46,4 +48,4 @@ Modulul exclude `deltatech_delivery_fc` (varianta clasică, nu rulează împreun
 
 - [deltatech_iap_online](../deltatech_iap_online/index.md): serviciile Terrabit, creditele și contul de curier, necesare funcționării modulului.
 - [deltatech_delivery_fc](../deltatech_delivery_fc/index.md): varianta FAN Courier pentru Odoo clasic (incompatibilă, se exclud reciproc).
-- `deltatech_delivery_online`: modulul de bază pentru livrare prin serviciile Terrabit (fără pagină wiki încă).
+- [deltatech_delivery_online](../deltatech_delivery_online/index.md): modulul de bază pentru livrare prin serviciile Terrabit (acțiunea de aplicare a AWB-ului și butoanele din livrare).

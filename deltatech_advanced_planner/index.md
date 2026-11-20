@@ -1,10 +1,10 @@
-# Deltatech Advanced Planner (localizat la `deltatech_advanced_planner/index.md`)
+# Advanced Planner (localizat la `deltatech_advanced_planner/index.md`)
 
 - **Nume Tehnic:** `deltatech_advanced_planner`
 - **Versiune:** `19.0.1.16.0`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_advanced_planner`
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_advanced_planner`
-- **Ultima Ingestie:** `2026-10-27`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -54,6 +54,9 @@ Deltatech Advanced Planner este un planificator avansat de stoc care răspunde l
 - **Dashboard îmbunătățit** — o comandă planificată rămâne în tabel după generarea PO/MO, cu coloanele *Document* și *Doc. Status*; clasamentul produselor cu blocaje arată ponderea din totalul blocajelor.
 - **Curățare date tranzacționale** — cu `terrabit_clear_data`, comenzile planificate, încărcările, sloturile CRP, proiecțiile și situațiile material ale companiei pot fi șterse (`data/clear_data_transactional.sql`).
 - **Date corecte la mutarea producției** — când data promisă e prea aproape și producția e mutată mai târziu, propunerile de achiziție ajung chiar înainte de noul start de producție și se lansează cel mai devreme azi (înainte, RFQ-ul cerea furnizorului o livrare în câteva zile și apăreau abateri „PO întârziat" false).
+- **Etape pe tip de document în dashboard** — etapele sunt denumite per tip: achiziție (De procurat, Comandat, Parțial recepționat) și producție (De fabricat, În producție, În lucru; click pe „În lucru” deschide ordinele de lucru); lista **OK Orders** are coloanele *Purchase* și *Production* (cea mai puțin avansată etapă, „Completed” la finalizare), iar comenzile complet facturate trec în cardul nou **Archive**. Coloana Purchase devine „Completed” când toate PO-urile generate sunt recepționate complet, iar producția arată „In Progress” de la primul MO pornit.
+- **Comenzi de vânzare anulate** — la anularea unei comenzi de vânzare, comenzile planificate deschise (nefinalizate) se anulează și sunt excluse din planificări și din dashboard; SO anulat are starea de planificare „Not Computed”, fără banner „Planning OK” și fără risc de livrare. Comenzile planificate finalizate rămân neschimbate.
+- **Generare zilnică de cereri de ofertă** — cron dedicat (dezactivat implicit, pornit din Setări → Advanced Planner → Daily RFQ generation) care generează RFQ-urile pentru AP-urile de achiziție în starea *Planned* cu lansarea în fereastra de lansare, cea mai veche dată întâi, ca la acțiunea manuală; un AP care eșuează (ex. produs fără furnizor) este scris în log și nu le blochează pe celelalte.
 
 #### 3. Dependențe
 
@@ -71,7 +74,7 @@ Deltatech Advanced Planner este un planificator avansat de stoc care răspunde l
 
 #### 4. Componente Cheie
 
-Sumarul și Funcționalitățile Cheie provin din `readme/DESCRIPTION.md` (completat cu `readme/HISTORY.md` (până la 19.0.1.12.1) pentru funcționalitățile apărute după redactarea lui), care nu solicită explicit detalierea componentelor; mai jos sunt doar elementele tehnice menționate explicit în documentație sau vizibile în manifest.
+Sumarul și Funcționalitățile Cheie provin din `readme/DESCRIPTION.md` (completat cu `readme/HISTORY.md` (până la 19.0.1.16.0) pentru funcționalitățile apărute după redactarea lui), care nu solicită explicit detalierea componentelor; mai jos sunt doar elementele tehnice menționate explicit în documentație sau vizibile în manifest.
 
 **Modele**
 
@@ -92,6 +95,7 @@ Buton **Earliest Date** pe formularul ofertei/comenzii de vânzare (`advanced_ct
 - Curățare log-uri vechi: săptămânal, activ implicit.
 - Detecție abateri zilnică: zilnic, activat din Setări (parametrul comută acțiunea programată).
 - Replanificare nocturnă SO active: zilnic, dezactivat implicit.
+- Generare zilnică cereri de ofertă: zilnic, dezactivat implicit; pornit din Setări (`_cron_generate_rfqs` pe comenzile planificate).
 
 #### 5. Conexiuni
 

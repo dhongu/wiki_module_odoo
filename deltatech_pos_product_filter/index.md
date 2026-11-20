@@ -1,4 +1,4 @@
-# POS Order Product Filter
+# POS Order Product Filter (localizat la `deltatech_pos_product_filter/index.md`)
 
 - **Nume Tehnic:** `deltatech_pos_product_filter`
 - **Versiune:** `19.0.1.0.3`

@@ -4,12 +4,12 @@
 - **Versiune:** `19.0.1.4.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_profit_tax
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_profit_tax`
-- **Ultima Ingestie:** `2026-11-03`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul calculează automat impozitul pe profit conform Legii 227/2015 Titlul II, cu sprijin pentru D100 trimestrial (cumulat de la 1 ianuarie) și D101 anual. Pornind de la profitul contabil (venituri clasa 7 − cheltuieli clasa 6), aplică ajustări fiscale configurabile per cont, gestionează pierderea fiscală reportată (deducere FIFO, limita 70%) și creditul fiscal pentru sponsorizări, generând nota contabilă Dr 691 = Cr 441 la postare. Include și un Registru de evidență fiscală, pe modelul din OMF 808/2026, care listează ajustările pe rânduri, cu temei legal, și se reconciliază cu calculul anual. Se adresează companiilor plătitoare de impozit pe profit la cota de 16%.
+Modulul calculează automat impozitul pe profit conform Legii 227/2015 Titlul II, cu sprijin pentru D100 trimestrial (cumulat de la 1 ianuarie) și D101 anual. Pornind de la profitul contabil (venituri clasa 7 − cheltuieli clasa 6), aplică ajustări fiscale configurabile per cont, gestionează pierderea fiscală reportată (deducere FIFO, limita 70%) și creditul fiscal pentru sponsorizări, generând nota contabilă Dr 691 = Cr 441 la postare. Include și un Registru de evidență fiscală, pe modelul din OMF 808/2026, care listează ajustările pe rânduri, cu temei legal, și se reconciliază cu calculul perioadei (trimestrial sau anual). Se adresează companiilor plătitoare de impozit pe profit la cota de 16%.
 
 #### 2. Funcționalități Cheie
 
@@ -20,9 +20,12 @@ Modulul calculează automat impozitul pe profit conform Legii 227/2015 Titlul II
 - **Pierdere fiscală reportată** (art. 31 CF), la **Configurare → Impozit Profit → Pierderi reportate**: 5 ani pentru pierderile din 2024 încoace și 7 ani pentru cele de până în 2023, cu starea Activă / Epuizată / Expirată. **Sugerează deducere pierdere** aplică FIFO și limita de 70% din profitul impozabil; câmpul **(-) Pierdere dedusă efectiv** se poate modifica în limita impusă. Anularea calculului eliberează utilizările de pierdere.
 - **Credit fiscal sponsorizări** (art. 25 alin. (4) lit. i) CF): cel mai mic dintre cheltuiala efectivă, 0,75% din cifra de afaceri netă și 20% din impozitul calculat, rotunjit în jos la leu.
 - **Rotunjire:** impozitul se rotunjește la leu (0,50 în sus), iar nota are aceeași sumă ca declarația. **Cotă impozit (%)** se poate modifica pe calculul curent (de exemplu cotă redusă prin tratat). **De plată** scade creditul de sponsorizare și impozitul datorat pentru trimestrele anterioare, introdus manual cu valoarea declarată prin D100 (afișat 0 dacă rezultatul ar fi negativ).
-- **Postare:** **Postează nota Dr 691 = Cr 441** (în practică pe 4411), datată în ultima zi a perioadei, cu verificări (stare ciornă, impozit de plată pozitiv, conturi existente, limita de 70% respectată); calculul devine doar pentru citire, iar **Vezi nota contabilă** deschide nota. Cu bază zero sau negativă postarea este refuzată („Impozitul de plată este zero"). Rectificare: **Anulează**, **Resetează la ciornă**, corectare și repostare (într-o perioadă blocată fiscal este nevoie de deblocare prealabilă).
-- **Registru de evidență fiscală** (OMF 808/2026, care a abrogat OMFP 870/2005), la **Contabilitate → Contabilitate → Registru de evidență fiscală**: se creează pentru un an fiscal, se alege calculul anual și se apasă **Generează din calculul D101**; se reconciliază automat cu calculul. **Tipărește registrul** dă documentul cu Nr. crt., Explicații, Valoarea (lei), iar **Situație analitică a ajustărilor fiscale** este raportul detaliat pe coloane. **Închide anul** face registrul imutabil, **Redeschide** îl readuce în lucru. Deocamdată doar registrul anual; cel trimestral nu este acoperit.
-- **Limitări:** impozitul minim pe cifra de afaceri (OUG 115/2023) nu e calculat automat (ajustare manuală a sumei **De plată**); pierderea fiscală a exercițiului se înregistrează manual în **Pierderi reportate**.
+- **Postare:** **Postează nota Dr 691 = Cr 441** (pe 4411 sau, dacă lipsește, pe sinteticul 441), datată în ultima zi a perioadei, cu verificări (stare ciornă, impozit de plată pozitiv, conturi existente, limita de 70% respectată); calculul devine doar pentru citire, iar **Vezi nota contabilă** deschide nota. Cu bază zero sau negativă postarea este refuzată („Impozitul de plată este zero"). Rectificare: **Anulează**, **Resetează la ciornă**, corectare și repostare (într-o perioadă blocată fiscal este nevoie de deblocare prealabilă).
+- **Registru de evidență fiscală** (OMF 808/2026, care a abrogat OMFP 870/2005), la **Contabilitate → Contabilitate → Registru de evidență fiscală**: se creează pentru un an fiscal și o **Perioadă de declarare** (T1, T2, T3 sau Anual, implicit Anual), se alege calculul perioadei (D100 pe trimestru, D101 pe an, cumulat de la 1 ianuarie) și se apasă **Generează din calcul**; se reconciliază automat cu calculul, iar impozitul din registru este cel din calcul. Include nota de impozit (Dr 691 = Cr 4411) la cheltuieli și în rândul de cheltuieli cu impozitul; dacă nota se postează după generare, registrul se regenerează. **Tipărește registrul** dă documentul cu Nr. crt., Explicații, Valoarea (lei) și perioada, iar **Situație analitică a ajustărilor fiscale** este raportul detaliat pe coloane. **Închide perioada** face registrul imutabil, **Redeschide** îl readuce în lucru.
+- **Amortizare fiscală din mijloace fixe:** când modulul de mijloace fixe este instalat, amortizarea fiscală (D101 rd. 11) vine din planurile fiscale ale activelor (amortizarea contabilă minus partea nedeductibilă, de exemplu la autoturismele M1 peste 1.500 lei/lună), iar câmpul **(+) Nedeductibil la ieșirea activelor** (rd. 33) acoperă activele vândute sau casate în perioadă; valorile modificate manual se păstrează la recalcul. Registrul ia amortizarea pe activ din aceleași valori, cu ieșirile pe rând separat.
+- **De recuperat** (D101 rd. 53): pe calculul anual, impozitul declarat prin D100 peste cel datorat se stornează (Dr 691 = Cr 4411 cu suma negativă); pe trimestru diferența e informativă. Fără impozit de plată sau de recuperat, calculul trece în *Postat* fără notă contabilă.
+- **Sponsorizare:** cheltuiala se citește din conturile setării **Conturi de sponsorizare și mecenat** (implicit 6584); donațiile (6582) nu dau drept la credit și se tratează printr-o regulă de ajustare *Nedeductibil*, iar calculul avertizează dacă regula lipsește.
+- **Limitări:** impozitul minim pe cifra de afaceri (OUG 115/2023) nu e calculat automat (ajustare manuală a sumei **De plată**); pierderea fiscală a exercițiului se înregistrează manual în **Pierderi reportate**; la pierdere fiscală, exportul automat D101 nu este încă disponibil.
 
 #### 3. Dependențe
 
@@ -37,7 +40,7 @@ Modulul calculează automat impozitul pe profit conform Legii 227/2015 Titlul II
 - `l10n.ro.tax.adjustment`: ajustări fiscale per cont contabil (tip nedeductibil / neimpozabil / deducere și procent).
 - `l10n.ro.tax.loss`: registrul pierderilor fiscale reportate, cu deducere FIFO și expirare la 5 sau 7 ani.
 - `l10n.ro.tax.loss.usage`: utilizările de pierdere per calcul (suma dedusă).
-- `l10n.ro.tax.register`: registrul de evidență fiscală, reconciliat cu calculul anual.
+- `l10n.ro.tax.register`: registrul de evidență fiscală (trimestrial sau anual), reconciliat cu calculul perioadei.
 - `l10n.ro.tax.register.line`: rândurile registrului (ajustare, temei legal, valori).
 - `res.company` / `res.config.settings` (extinse): conturile financiare D101 și parametrii de calcul.
 
@@ -55,8 +58,6 @@ Modulul calculează automat impozitul pe profit conform Legii 227/2015 Titlul II
 
 #### 5. Conexiuni
 
-- [l10n_ro_micro_tax](../l10n_ro_micro_tax/index.md): regimul alternativ (micro); la depășirea plafonului compania trece la impozit pe profit, iar trimestrele următoare se calculează aici.
-- [l10n_ro_account_return_pl_closing](../l10n_ro_account_return_pl_closing/index.md): închiderea de cont de profit și pierdere, sursă a rezultatului contabil (notele de închidere pe 121 sunt excluse din calcul).
-- [l10n_ro_anaf_d100](../l10n_ro_anaf_d100/index.md): declararea impozitului trimestral; linia 103 se citește din notele postate de acest modul.
-- [l10n_ro_anaf_d107](../l10n_ro_anaf_d107/index.md): raportarea creditului fiscal pentru sponsorizări.
-- [l10n_ro_financial_statements](../l10n_ro_financial_statements/index.md): corelarea rezultatului fiscal cu cel contabil.
+- [l10n_ro_account_return_pl_closing](../l10n_ro_account_return_pl_closing/index.md): declarațiile de închidere (câmpul `closing_return_id`) generează note pe 121, care sunt excluse din calcul.
+- `l10n_ro_account_period_close` (OCA): notele de închidere de perioadă (`l10n_ro_closing_move`) sunt excluse din calcul.
+- `account.asset` (modulul de mijloace fixe, opțional): planurile fiscale ale activelor alimentează amortizarea fiscală și registrul, dacă modulul este instalat.

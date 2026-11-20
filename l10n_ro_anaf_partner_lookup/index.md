@@ -1,4 +1,4 @@
-# Romania - ANAF Partner Lookup
+# Romania - ANAF Partner Lookup (localizat la `l10n_ro_anaf_partner_lookup/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_partner_lookup`
 - **Versiune:** `19.0.1.3.1`

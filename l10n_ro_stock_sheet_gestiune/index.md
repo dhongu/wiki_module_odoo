@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.8`
 - **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_sheet_gestiune`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_sheet_gestiune`
-- **Ultima Ingestie:** `2026-11-11`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -19,6 +19,7 @@ Modulul este puntea dintre **Fișa de magazie / Balanța stocurilor** (`l10n_ro_
 - **Semantică sigură** — o gestiune fără locații produce un raport gol (nu tot stocul companiei), evitând interpretări greșite la inventariere sau predare-primire gestiune.
 - **Transferul valoric între gestiuni intră în balanță (19.0.1.0.2)** — mișcările internă → internă (predare-primire gestiune) sunt ignorate de raportul de bază, pentru că nu sunt nici intrări nici ieșiri pentru companie și `stock_move.value` e 0 pe ele. Modulul reintroduce câte un rând de ieșire pe gestiunea sursă și unul de intrare pe gestiunea destinație, cu contul și valoarea preluate din nota de transfer contabilă (`l10n_ro_transfer_move_id`, ex. 371.A → 371.B, eventual prin contul de tranzit 371.T). Astfel, pe conturile gestiunilor *Diferența* iese 0 (nu ± valoarea transferului nereflectat), iar filtrarea raportului pe o singură gestiune arată corect valoarea transferului, inclusiv marfa pe drum pe contul de tranzit al locației de tranzit.
 - **Filtrul „Warehouse account” / „Cont gestiune” (19.0.1.0.6)** — mișcările fără notă contabilă pe mișcare (istoric din stiva OCA, recepții sau livrări fără notă) apar pe **contul de stoc al gestiunii** locației lor interne (`l10n_ro_account_stock_id`), nu pe contul categoriei produsului. Mișcările cu notă își păstrează contul din notă; o gestiune fără cont, sau o locație fără gestiune, rămâne pe contul categoriei. Butonul din bara de filtre (opțiunea `l10n_ro_gestiune_account_fallback`) este activ implicit; dacă îl oprești, coloana *Diferența* (sold stoc minus balanța sintetică din contabilitate) arată decalajul — pozitiv pe contul categoriei, negativ pe contul gestiunii — iar totalul rămâne 0. Nu se scrie nimic pe mișcare sau în contabilitate; contul gestiunii se citește din locație la deschiderea raportului.
+- **Intrarea la valoarea ajunsă pe contul de stoc (19.0.1.0.7)** — când factura furnizorului sosește după ce o parte din marfă a fost vândută, partea din diferența de preț trecută direct pe cheltuială (607) nu mai este inclusă în intrarea recepției (`l10n_ro_price_diff_consumed`); recepția apare la valoarea care a intrat efectiv pe 371, iar la 0 bucăți soldul final este 0 și *Diferența* față de balanța sintetică este 0. Se aplică la produse cu cost FIFO/mediu și cont de cheltuială 607; cere `l10n_ro_stock_gestiune` 19.0.3.1.12 sau mai nou (facturile postate înainte de această versiune nu se ajustează).
 
 #### 3. Dependențe
 

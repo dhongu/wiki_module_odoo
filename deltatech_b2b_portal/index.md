@@ -1,10 +1,10 @@
-# Portal Clienți B2B (B2B Customer Portal)
+# Portal Clienți B2B (B2B Customer Portal) (localizat la `deltatech_b2b_portal/index.md`)
 
 - **Nume Tehnic:** `deltatech_b2b_portal`
 - **Versiune:** `19.0.1.4.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_portal
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_b2b_portal`
-- **Ultima Ingestie:** `2026-10-12`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -24,7 +24,8 @@ Un portal pentru clienții persoane juridice de pe website-ul Odoo: firmele cer 
 - **Blocarea comenzilor**: un contact „doar vizualizare" sau un cont suspendat nu poate finaliza coșul și nu poate semna sau plăti online o ofertă din portal; portalul explică motivul. Oferta deschisă din e-mail, fără autentificare, se semnează ca de obicei.
 - **Meniuri** sub *Vânzări ▸ Comenzi*: *Cereri de cont B2B* (firmele în starea Solicitat, implicit) și *Clienți B2B* (conturi active și suspendate, cu sold, restanțe, credit disponibil); filtre pe contacte: *Clienți B2B*, *Cereri de cont B2B*, *B2B cu facturi restante*.
 - **Activarea unui client existent**: *Acțiune ▸ Activare cont B2B* (administrator B2B) deschide wizardul standard de acces la portal; **Suspendă** oprește comenzile din portal fără a retrage accesul la documente, **Reactivează** le repornește fără invitație nouă.
-- **Setări** (*Website ▸ Configurare ▸ Setări ▸ Portal B2B*): agentul de vânzări pentru cereri (implicit agentul website-ului), adresa termenilor B2B și confirmarea prin e-mail a cererilor. Accesul în magazin doar pentru utilizatori autentificați se face cu setarea standard *eCommerce Access*.
+- **Prețuri doar pentru clienți firmă** (setare pe website, dezactivată implicit): catalogul rămâne public și indexat, dar un vizitator sau o firmă fără cont B2B activ nu vede preț, stoc, filtru de preț, sortare după preț și nici butonul de adăugare în coș. Serverul exclude prețurile din pagină, din datele produsului și din sugestiile de căutare, iar un adaugă-în-coș trimis manual este refuzat; în locul prețului apare blocul standard *Contact Us*. Angajații și contactele firmelor cu cont activ (inclusiv cele „doar vizualizare”) văd prețurile normal. Setarea acoperă și feed-ul Google Merchant Center (produsele fără preț sunt omise) și ascunde panglica automată *Out of stock* pentru cine nu are voie să vadă stocul. Diferă de setarea standard *eCommerce Access ▸ Logged in users*, care închide tot magazinul.
+- **Setări** (*Website ▸ Configurare ▸ Setări ▸ Portal B2B*): agentul de vânzări pentru cereri (implicit agentul website-ului), adresa termenilor B2B, confirmarea prin e-mail a cererilor și *Prețuri doar pentru clienți firmă*. Accesul în magazin doar pentru utilizatori autentificați se face cu setarea standard *eCommerce Access*.
 - Drepturi de acces: **B2B Portal ▸ User** (aprobă, respinge, suspendă) și **B2B Portal ▸ Administrator** (activează clienți existenți, setează rolurile). Acțiunile de aprobare, suspendare și reactivare rulează cu drepturi de superutilizator, dar verifică mai întâi, pe utilizatorul care le apelează, rolul B2B User și dreptul de citire pe parteneri; un utilizator fără rol (inclusiv un client de portal care își reactivează singur firma suspendată) primește eroare de acces, inclusiv la apel RPC.
 - **Metode ajutătoare pentru modulele construite peste acesta** (în controller): `_b2b_inactive_redirect()` trimite pe /b2b utilizatorul fără cont B2B activ, iar `_b2b_add_to_cart()` adaugă produse în coș, doar pe cele vândute pe website-ul curent. Sunt folosite de comanda rapidă și de listele de comandă salvate.
 - Folosește mecanismele standard Odoo (agent de vânzări, limită de credit, listă de prețuri, termene de plată, invitație portal, acces eCommerce), fără duplicări. Limita de credit și facturile restante se impun prin `terrabit_partner_credit_limit` și `terrabit_partner_credit_limit_website`.
@@ -40,8 +41,10 @@ Un portal pentru clienții persoane juridice de pe website-ul Odoo: firmele cer 
 **Modele**
 
 - `res.partner` (extins): câmpurile `b2b_state`, `b2b_role`, `b2b_access_requested`, `b2b_terms_accepted_date`, `b2b_note`, plus câmpuri calculate (`b2b_balance`, `b2b_overdue_count`, `b2b_overdue_amount`, `b2b_credit_available`); logica de creare/potrivire după CUI a cererilor, aprobare, respingere, suspendare, acordare acces portal (`action_b2b_grant_access`) și trimiterea confirmării (`_b2b_send_request_confirmation`); `_b2b_check_action_access()` verifică rolul B2B User și dreptul de citire ale apelantului înainte ca acțiunile să ruleze ca superutilizator.
-- `website` (extins): `b2b_request_user_id`, `b2b_terms_url` și `b2b_request_confirmation`.
-- `res.config.settings` (extins): expune cele trei setări ale website-ului.
+- `website` (extins): `b2b_request_user_id`, `b2b_terms_url`, `b2b_request_confirmation` și `b2b_prices_companies_only`.
+- `res.config.settings` (extins): expune cele patru setări ale website-ului.
+- `product.template`, `product.product` (extinse): scot prețul din datele produsului pentru cine nu are voie să-l vadă.
+- `product.feed` (extins): feed-ul Google Merchant Center fără preț când setarea e activă.
 - `deltatech.b2b.reject.wizard`: wizard de respingere cu motiv obligatoriu și opțiunea de arhivare a firmei.
 
 **Vizualizări**
@@ -51,6 +54,7 @@ Un portal pentru clienții persoane juridice de pe website-ul Odoo: firmele cer 
 - `view_res_partner_filter_b2b`: filtrele B2B din căutarea contactelor.
 - `view_b2b_reject_wizard_form`: fereastra de respingere.
 - `res_config_settings_view_form`: blocul *Portal B2B* din setările website-ului.
+- `views/shop_templates.xml`: `products_item_b2b_price`, `filter_products_price_b2b`, `products_sort_b2b` (fără preț, filtru de preț și sortare după preț în /shop).
 - `views/portal_templates.xml`: pagina /b2b și tabloul de bord din /my.
 
 **Controllere**

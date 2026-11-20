@@ -1,4 +1,4 @@
-# Purchase Invoice Currency (Facturare achiziții în altă monedă)
+# Purchase Invoice Currency (Facturare achiziții în altă monedă) (localizat la `deltatech_purchase_currency/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_currency`
 - **Versiune:** `19.0.1.2.0`

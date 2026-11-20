@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.0.3.0`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server`
-- **Ultima Ingestie:** `2026-11-17`
+- **Ultima Ingestie:** `2026-11-19`
 
 #### 1. Sumar
 

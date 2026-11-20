@@ -1,10 +1,11 @@
-# Website Searchbar Typing Examples
+# Website Searchbar Typing Examples (localizat la `deltatech_website_searchbar_typing/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_searchbar_typing`
 - **Versiune:** `19.0.1.2.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_searchbar_typing
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_searchbar_typing`
 - **Ultima Ingestie:** `2026-11-17`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

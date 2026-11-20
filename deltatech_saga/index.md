@@ -1,15 +1,15 @@
-# Interfață SAGA
+# Interfață SAGA (localizat la `deltatech_saga/index.md`)
 
 - **Nume Tehnic:** `deltatech_saga`
 - **Versiune:** `19.0.6.30.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_saga`
-- **Ultima Ingestie:** `2026-10-27`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Interfața Deltatech SAGA este un modul cuprinzător conceput pentru a facilita schimbul de date între Odoo și SAGA, un program de contabilitate larg răspândit în România. Această punte de integrare asigură transferul fără probleme al datelor contabile și de stoc între cele două sisteme, eliminând necesitatea introducerii manuale a datelor și reducând riscul de erori. Modulul se adresează companiilor care își gestionează operațiunile în Odoo, dar își păstrează evidența contabilă în SAGA, și este adaptat specific cerințelor fiscale și contabile din România. Integrarea este bazată pe fișiere (export/import), nu pe sincronizare în timp real prin API.
+Interfața Deltatech SAGA este un modul cuprinzător conceput pentru a facilita schimbul de date între Odoo și SAGA, un program de contabilitate larg răspândit în România. Această punte de integrare asigură transferul fără probleme al datelor contabile și de stoc între cele două sisteme, eliminând necesitatea introducerii manuale a datelor și reducând riscul de erori. Modulul se adresează companiilor care își gestionează operațiunile în Odoo, dar își păstrează evidența contabilă în SAGA, și este adaptat specific cerințelor fiscale și contabile din România. Integrarea este bazată pe fișiere (export/import); arhiva XML generată poate fi trimisă opțional în SAGA Web prin API, dar nu există sincronizare în timp real.
 
 #### 2. Funcționalități Cheie
 
@@ -37,6 +37,11 @@ Interfața Deltatech SAGA este un modul cuprinzător conceput pentru a facilita 
 - Import facturi: un al doilea import al aceluiași fișier de furnizor nu mai dublează liniile; import note contabile: partenerul fiecărei părți provine din contul terț SAGA (401.x / 411.x), iar nota ajunge în jurnalul de achiziții / vânzări corespunzător; import parteneri: *Sari peste partenerii existenți* îi lasă efectiv neschimbați.
 - Un asistent auxiliar de mapare a balanței SAGA (`saga.balance.mapping`) generează, dintr-un PDF de balanță pe clienți/furnizori, un XLSX de corespondență cu partenerii Odoo, util la preluarea soldurilor inițiale.
 - Pagina din Odoo Apps are un tab Prezentare cu 13 slide-uri (import coduri SAGA, configurare, export lunar, totalul de control, plăți, cazuri de TVA, import în SAGA).
+- **Istoric exporturi (SAGA Exports):** fiecare export (clasic, pas cu pas sau trimis prin API) este păstrat în *Contabilitate > Saga > SAGA Exports*, cu perioada, jurnalele, opțiunile, utilizatorul, data, arhiva ZIP, mesajele exportului, răspunsul SAGA și numărul de facturi și parteneri exportați. Arhiva poate fi descărcată din nou, iar butonul **Export din nou** deschide asistentul cu aceeași perioadă și aceleași opțiuni. Înregistrările sunt restricționate la companiile utilizatorului.
+- **Trimitere în SAGA prin API:** după exportul în format XML, butonul **Trimite în SAGA** încarcă fiecare fișier XML al arhivei prin SAGA Web API (conexiunea se setează în secțiunea SAGA din setările de contabilitate); rezultatul fiecărui fișier este listat pe export. Nu se apasă a doua oară, pentru că se retrimit toate fișierele și documentele s-ar dubla în SAGA; notele contabile (`NC_`) și fișierele de stoc există doar în DBF și nu se trimit prin API.
+- **Comparare stocuri cu SAGA:** *Contabilitate > Saga > Comparare stocuri* compară, pe dată și gestiune, stocul din Odoo cu cel din SAGA (prin API), cu linii colorate după stare (*Egal*, *Cantitate diferită*, *Lipsă în Odoo*, *Lipsă în SAGA*); informativ, nu corectează nimic.
+- Facturile și notele de credit emise dintr-o comandă **Punct de Vânzare** se exportă cu `TIP` „f” (factură cu bon fiscal), indiferent de jurnal sau de flag-ul „Sale from store”, aceeași regulă ca la e-Factura (cod tip 751); un cod SAGA setat pe poziția fiscală rămâne prioritar.
+- Pagina din Odoo Apps afișează în tabul Prezentare un video de prezentare în română (YouTube), la finalul tabului Prezentare general.
 - Ordinea recomandată de import al fișierelor în SAGA: parteneri (Furnizori/Clienți) → articole → facturi (IN/IE/INV/IEV) → note contabile (NC) → încasări/plăți (I/P); nu se importă simultan fișierele DBF și XML generate din același export, pentru că ar duplica înregistrările în SAGA.
 - Pentru Odoo Community, utilizatorii trebuie incluși în grupul „Show Full Accounting Features" pentru a accesa meniul de export SAGA.
 
@@ -57,7 +62,6 @@ Interfața Deltatech SAGA este un modul cuprinzător conceput pentru a facilita 
 
 #### 5. Conexiuni
 
-- [deltatech_contwin](../deltatech_contwin/index.md): modul înrudit de export contabil (interfață către WinMentor / Contwin), documentat în paralel ca alternativă pentru schimbul de date contabile pe piața RO.
-- [deltatech_sale_store](../deltatech_sale_store/index.md): furnizează flag-ul „Sale from store" propagat pe factură/comandă, folosit pentru a determina automat coloana `TIP` (`f`) la exportul facturilor emise pe bon fiscal.
-- [deltatech_saga_mrp](../deltatech_saga_mrp/index.md): extensie opțională care adaugă exportul consumurilor și producției din MRP la exportul cantitativ-valoric.
+- [deltatech_sale_store](../deltatech_sale_store/index.md): furnizează flag-ul „Sale from store” propagat pe factură/comandă, folosit pentru a determina automat coloana `TIP` (`f`) la exportul facturilor emise pe bon fiscal (verificat în `wizard/export_saga_models.py`).
+- [l10n_ro_efactura_enhancement](../l10n_ro_efactura_enhancement/index.md): regula pentru facturile din Punct de Vânzare (tip 751) este aliniată cu cea din e-Factura, iar exportul o aplică când modulul e prezent.
 - [l10n_ro_doc_screenshots](../l10n_ro_doc_screenshots/index.md): mixin-ul folosit de `tests/test_screenshots.py` pentru generarea reproductibilă a capturilor din fișa consultant.

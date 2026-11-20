@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.10.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_shopify
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_shopify`
-- **Ultima Ingestie:** `2026-10-09`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -18,7 +18,7 @@ Conectorul Shopify Marketplace dezvoltat de Terrabit creează o integrare direct
   - Import de șabloane de produs, variante și imagini din Shopify.
   - Sincronizarea bidirecțională a prețurilor și a informațiilor de bază (cod de bare, greutate, SKU), pe fiecare variantă.
   - Suport pentru imagini multiple per șablon de produs și asocierea imaginilor cu variante specifice.
-  - Actualizări în timp real ale produselor prin webhook (`products/update`).
+  - Actualizări în timp real ale produselor prin webhook (`products/update`); un produs nou creat în Shopify se importă imediat prin webhook-ul `products/create`.
   - Un produs cu mai multe variante Shopify, importat fără opțiunea **Options as Attributes** activată, tot se importă — dar variantele lui sunt sărite (avertisment doar în log-ul serverului), niciodată fuzionate tăcut într-o singură variantă.
   - Potrivirea unui produs Shopify cu un șablon Odoo deja existent se face acum și prin SKU/cod de bare al oricărei variante, înainte de a recurge la potrivirea exactă pe nume — evită duplicate atunci când același produs a fost creat independent în cele două sisteme (ex. produs importat din eMAG în Odoo, creat manual în Shopify cu SKU/cod de bare identic pe variante).
 
@@ -33,6 +33,7 @@ Conectorul Shopify Marketplace dezvoltat de Terrabit creează o integrare direct
   - Import al clienților Shopify în baza de contacte Odoo, cu actualizări în timp real prin webhook (`customers/update`).
   - Menținerea unor înregistrări de client consistente între platforme.
   - Detectarea automată a companiilor pe baza atributelor din nota Shopify sau a câmpului de companie.
+  - **CUI și numele firmei din comandă** (19.0.1.10.1): Shopify nu are câmp de CUI, așa că acesta se citește din atributul de comandă **CUI**, apoi din câmpul **Company** al adresei de facturare, apoi al celei de livrare; numele firmei vine din atributul **Nume firmă**. Când cumpărătorul scrie numele și CUI-ul împreună în **Company**, importul le separă: CUI-ul e numărul care arată ca unul (întâi codul fiscal maghiar, apoi un număr cu prefix de țară UE), anul din denumire, datele și numărul de registru comercial sunt excluse, iar restul textului, fără etichete (CUI, CIF, adószám, P.IVA), devine numele firmei, cu spații. Un CUI scris în grupe de cifre (ex. `RO 401 234 56`) e recunoscut când îl precede o etichetă sau un prefix de țară. Fără niciun număr de 6–13 cifre, firma se importă fără CUI și se potrivește după e-mail.
 
 - **Gestionarea comenzilor**:
   - Import al comenzilor de vânzare din Shopify în Odoo (creare automată a comenzilor Odoo).
@@ -93,7 +94,7 @@ Conectorul Shopify Marketplace dezvoltat de Terrabit creează o integrare direct
   - Secretele de conexiune ale backend-ului se citesc cu `sudo()`: în `deltatech_marketplace` sunt vizibile doar pentru Marketplace Manager, iar utilizatorii fără grup continuă să ruleze fluxurile.
   - Sincronizare programată și asincronă prin `queue_job`, cu retry automat la limitări de rată (HTTP 429 / GraphQL `THROTTLED`) și erori de server.
   - Import de colecții Shopify (custom și smart) ca și categorii publice de produs.
-  - Fiecare subsistem (produse, stoc, expediere, clienți, comenzi, webhook-uri) are propriul comutator GraphQL/REST pe backend, implicit oprit — tranziția se face treptat, subsistem cu subsistem, reversibilă dintr-un singur comutator.
+  - Fiecare subsistem (produse, stoc, expediere, clienți, comenzi, webhook-uri) are propriul comutator GraphQL/REST pe backend — tranziția se face treptat, subsistem cu subsistem, reversibilă dintr-un singur comutator. **Orders via GraphQL** este activ implicit (19.0.1.10.0; actualizarea îl pornește și pe backend-urile existente), fiindcă traseul REST pentru comenzi nu mai e întreținut și dispare în 20.0; celelalte comutatoare rămân oprite implicit.
   - Indicator de sănătate (verde/portocaliu/roșu/gri) pe cardul kanban al backend-ului, cu ora ultimei sincronizări și linkuri către log-uri/job-uri eșuate din ultimele 24h.
   - Wizard **Check webhooks** (buton de antet; din 19.0.1.8.0 vine din conectorul de bază, `marketplace.webhook.checker`, partajat cu celelalte conectoare — funcționează ca înainte) care compară webhook-urile efectiv înregistrate în Shopify cu cele așteptate de Odoo (Matched/Missing/Orphan), cu remediere directă (înregistrare sau ștergere din Shopify). Un webhook blocat pe „Missing" la nesfârșit este aproape mereu parametrul de sistem `web.base.url` setat pe `http://` în loc de `https://` — API-ul Admin al Shopify refuză tăcut să înregistreze un webhook a cărui adresă de callback nu e HTTPS, fără nicio eroare vizibilă în Odoo.
   - Buton **Test connection** care validează credențialele printr-un query GraphQL `shop`, înainte de orice import.
@@ -118,6 +119,7 @@ Dependență externă Python: `ShopifyAPI`.
 - `marketplace.backend` (extins, `backend.py`): configurarea specifică Shopify a backend-ului — credențiale (token permanent sau OAuth, `Access Type`), opțiuni de import/export (atribute din opțiuni, creare variante, categorie publică, tip produs ca și categorie internă), comutatoare GraphQL per subsistem, filtre de comandă, declanșator de onorare, reîmprospătare token, permisiuni acordate/lipsă (`Granted Access Scopes`/`Missing Scopes`), opțiunea `shopify_skip_location_lookup`, indicator de sănătate.
 - `backend_adapter.py`: adaptorul de comunicare REST cu API-ul Shopify (autentificare, apeluri cu retry la rate-limit/erori de server).
 - `shopify_graphql.py` și modulele `shopify_graphql_*.py` (`catalog`, `customer`, `fulfillment`, `inventory`, `order`, `order_edit`, `product`, `return`, `webhook`): mixin-uri cu interogările/mutațiile GraphQL Admin API pentru fiecare subsistem, folosite ca alternativă la transportul REST, activabile per comutator pe backend. `order_edit` conține mutațiile Order Editing API (`orderEditBegin`/`orderEditSetQuantity`/`orderEditAddVariant`/`orderEditCommit`) pentru exportul opțional de linii; `return` conține query-ul de retururi (`Order.returns`, doar citire).
+- `shopify_company_vat.py`: separarea CUI-ului de numele firmei din textul introdus de cumpărător (atributele **CUI** / **Nume firmă**, câmpul **Company** al adreselor).
 - `shopify_order_filters.py`: traducerea filtrelor de listare a comenzilor (status/plată/livrare) între vocabularul REST și cel GraphQL.
 - `binding_product_template.py` / `binding_product.py`: binding-uri de șablon și variantă de produs, inclusiv import/export atribute, opțiuni, imagini, stoc (`shopify_import_stock`, `shopify_stock_export`), preț și potrivirea unui produs Shopify cu un șablon Odoo existent prin SKU/cod de bare al variantelor.
 - `binding_product_image.py`: binding pentru imaginile de produs, cu asociere pe variante.

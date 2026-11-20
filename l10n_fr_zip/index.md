@@ -1,4 +1,4 @@
-# France - City from ZIP
+# France - City from ZIP (localizat la `l10n_fr_zip/index.md`)
 
 - **Nume Tehnic:** `l10n_fr_zip`
 - **Versiune:** `19.0.1.0.0`

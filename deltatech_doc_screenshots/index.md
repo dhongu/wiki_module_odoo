@@ -1,10 +1,10 @@
-# Doc Screenshots
+# Doc Screenshots (localizat la `deltatech_doc_screenshots/index.md`)
 
 - **Nume Tehnic:** `deltatech_doc_screenshots`
 - **Versiune:** `19.0.1.4.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_doc_screenshots
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_doc_screenshots`
-- **Ultima Ingestie:** `2026-11-17`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -20,7 +20,7 @@ Unealtă de dezvoltare, fără funcție de business și fără ecrane proprii. G
 - Două limbi dintr-o singură listă (`_shots`): `test_capture_fise` produce capturile în română pentru fișă, iar `test_capture_usage` (`lang="en_US"`) le produce în engleză în `static/description/en/`, pentru `readme/USAGE.md` de pe Apps Store.
 - Opțiuni per captură: `full`, `wait`, `click_btn`, `click_tab`, `unfold_report`, `eval` (JS propriu), `settle` (pauză în ms); cadrare implicită 1920x950.
 - Generare doar la cerere: capturile rescriu fișierele `.png`, deci o rulare obișnuită le sare. Se cer prin `--test-tags=fise_screenshots` (sau orice tag terminat în `_screenshots`), prin numele clasei sau prin `FISE_SCREENSHOTS=1`; `SKIP_FISE_SCREENSHOTS=1` are prioritate peste orice cerere.
-- Demo animat (GIF): `capture_gif(steps, name="demo.gif")` înregistrează un flux ca GIF pentru pagina Apps Store: cursor simulat cu inel la click, text scris literă cu literă, subtitrări în stil film (fără numerotare) la baza ecranului. GIF-ul începe și se termină cu un slide generat din `static/description/banner.json` și iconița modulului (`intro={...}` îl suprascrie, `intro=False` îl elimină). Pașii sunt dicționare cu chei precum `goto`, `caption`, `type`/`into`, `click`/`wait_after`, `press`, `move`, `clear`, `hide_cursor`, `hold`; dimensiune implicită 1120x700, `scale=0.75` pentru fișier mai mic. Timpul din GIF e virtual, deci ritmul nu depinde de viteza serverului.
+- Demo animat (GIF): `capture_gif(steps, name="demo.gif")` înregistrează un flux ca GIF pentru pagina Apps Store: cursor simulat cu inel la click, text scris literă cu literă, subtitrări în stil film (fără numerotare) la baza ecranului. GIF-ul începe și se termină cu un slide generat din `static/description/banner.json` și iconița modulului (ediția – Community sau Enterprise – vine din `banner.json` sau, dacă lipsește, din dependențe: Enterprise când modulul ori o dependență are licența `OEEL-1`; versiunea Odoo se ia din manifest, în aliniere cu bannerul Apps) (`intro={...}` îl suprascrie, `intro=False` îl elimină). Pașii sunt dicționare cu chei precum `goto`, `caption`, `type`/`into`, `click`/`wait_after`, `press`, `move`, `clear`, `hide_cursor`, `hold`; dimensiune implicită 1120x700, `scale=0.75` pentru fișier mai mic. Timpul din GIF e virtual, deci ritmul nu depinde de viteza serverului.
 - GIF-ul se scrie mereu în `static/description/` (`en/` pentru engleză), inclusiv la modulele care își țin încă PNG-urile în `readme/screenshots/`; `tb-gen-index` îl arată automat primul în tabul Overview, deci nu se referă și din `readme/*.md`.
 - Degradare elegantă: fără `playwright`, testele de capturi sunt sărite, iar suita rămâne verde.
 - Cerințe de mediu: `pip install playwright websocket-client pillow` și `playwright install chrome` (`pillow` e opțional, fără el captura nu e decupată).

@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.3.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_cmr_document
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_cmr_document`
-- **Ultima Ingestie:** `2026-11-10`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -18,7 +18,7 @@ Modulul tipărește scrisoarea de transport internațional CMR (casetele 1–24 
 - **Mențiunea art. 6 (1) k** (transportul este supus Convenției) tipărită pe fiecare exemplar.
 - **Tab CMR pe transfer**: transportator succesiv, numere de înmatriculare camion și remorcă, delegat (șofer), documente anexate, instrucțiunile expeditorului, plata transportului, ramburs, rezervele transportatorului și acordurile speciale, fiecare tipărit în caseta sa. Tab-ul apare doar pe tipurile de operațiune la care CMR este activat.
 - **Firma de transport**: pe contact (tab **Sales & Purchase**, grupul **CMR Transport**) se rețin numerele uzuale și delegatul; la alegerea firmei pe transfer se copiază, fără a suprascrie ce era deja completat. Firma se leagă de metoda de livrare prin câmpul **Transport Company**.
-- **Număr CMR** dintr-o secvență, atribuit la prima tipărire.
+- **Număr CMR** dintr-o secvență proprie fiecărei companii (creată la instalare, la actualizare și la crearea companiei, fără a repeta numere deja tipărite), atribuit la prima tipărire; PDF-ul descărcat poartă numărul CMR în nume.
 - **Greutate brută și tabel de mărfuri**: cantități convertite în unitatea de măsură a produsului, colete numărate o singură dată pe transfer, rând de tară și rând de total. Peste 7 linii, după fiecare exemplar se tipărește o **listă de încărcare**.
 - **Cod HS** și greutate/volum preluate din produs (tab **Inventory**, grupul **Logistics**).
 - **Mărfuri periculoase (ADR)**: număr UN, denumire oficială de transport, clasă, grup de ambalare și cod de tunel pe produs, tipărite în caseta 9 în ordinea ADR 5.4.1.1.1.
@@ -44,7 +44,7 @@ Secțiunile Sumar și Funcționalități Cheie sunt acoperite de `readme/DESCRIP
 - `product.template` (extins): câmpurile ADR (`cmr_un_number`, `cmr_shipping_name`, `cmr_adr_class`, `cmr_packing_group`, `cmr_tunnel_code`) și `l10n_ro_net_weight`.
 - `res.partner` (extins): numerele uzuale ale firmei de transport și delegatul (`cmr_delegate_id`).
 - `delivery.carrier` (extins): firma de transport asociată metodei de livrare (`partner_id`).
-- `res.company` / `res.config.settings` (extinse): setările `cmr_fourth_copy` și `cmr_english_labels`.
+- `res.company` / `res.config.settings` (extinse): setările `cmr_fourth_copy` și `cmr_english_labels`, plus secvența CMR proprie companiei (creată de `post_init_hook` și la crearea companiei).
 - `ir.actions.report` (extins): atribuie numărul CMR la randarea raportului.
 
 **Vizualizări**
@@ -58,7 +58,7 @@ Secțiunile Sumar și Funcționalități Cheie sunt acoperite de `readme/DESCRIP
 
 **Acțiuni Automate / Acțiuni Server**
 
-- `sequence_cmr` (`ir.sequence`, „CMR Consignment Note”): secvența numărului CMR, folosită la prima tipărire. Modulul nu definește acțiuni `ir.cron` sau `base.automation`.
+- `sequence_cmr` (`ir.sequence`, „CMR Consignment Note”): secvența de bază a numărului CMR, din care se copiază secvențele fiecărei companii; folosită la prima tipărire. Modulul nu definește acțiuni `ir.cron` sau `base.automation`.
 
 #### 5. Conexiuni
 

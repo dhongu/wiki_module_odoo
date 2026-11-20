@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.2.10.11`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_inventory
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_inventory`
-- **Ultima Ingestie:** `2026-09-24`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -32,7 +32,7 @@ manuale.
   stocului existent; minusurile ies mereu la costul curent.
 - **Vizibilitate stoc pe mai multe depozite:** stocul defalcat pe coduri de depozit în kanban-ul de
   produse, cu opțiune per depozit (Toate / Locație principală / Detaliat cu rezervat, blocat, în
-  tranzit, așteptat).
+  tranzit, așteptat). Cu setarea *Stoc kanban după secvența depozitelor* (Inventar > Configurare > Setări), depozitele se listează în ordinea din lista Depozite (trasă manual); altfel, alfabetic după nume.
 - **Control manual al locației:** câmpuri Raft, Rând, Etaj și Casetă pe produse și pe liniile de
   inventar, activabile din setările de inventar.
 - **Control de securitate:** grupul „Poate actualiza cantitățile" restricționează cine aplică

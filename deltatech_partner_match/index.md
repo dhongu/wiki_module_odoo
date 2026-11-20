@@ -1,4 +1,4 @@
-# Partner Match
+# Partner Match (localizat la `deltatech_partner_match/index.md`)
 
 - **Nume Tehnic:** `deltatech_partner_match`
 - **Versiune:** `19.0.1.3.2`

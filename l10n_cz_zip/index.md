@@ -1,4 +1,4 @@
-# Czechia - City from ZIP
+# Czechia - City from ZIP (localizat la `l10n_cz_zip/index.md`)
 
 - **Nume Tehnic:** `l10n_cz_zip`
 - **Versiune:** `19.0.1.0.0`

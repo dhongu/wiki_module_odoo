@@ -1,4 +1,4 @@
-# Agroamat: achiziții
+# Agroamat: achiziții (localizat la `agroamat_achizitii/index.md`)
 
 - **Nume Tehnic:** `agroamat_achizitii`
 - **Versiune:** `19.0.1.0.1`

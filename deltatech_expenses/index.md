@@ -5,7 +5,7 @@
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_expenses
 - **Odoo 20:** `20.0.3.8.0`, portat prin dhongu/deltatech#3974 și dhongu/deltatech#3980 (https://github.com/dhongu/deltatech/tree/20.0/deltatech_expenses)
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_expenses`
-- **Ultima Ingestie:** `2026-11-17`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -38,6 +38,8 @@ Modulul gestionează decontarea cheltuielilor efectuate de angajați pe baza ava
 - Meniu: Facturare → Furnizori → Decont Cheltuieli (cu Enterprise: Contabilitate → Furnizori → Decont Cheltuieli).
 - Buton smart „Deconturi" pe fișa angajatului (`hr.employee`), cu numărul deconturilor și listă filtrată; vizibil doar grupurilor modulului.
 - **Diferență pe Odoo 20:** coloana „Sold cumulat” din fișa 542 e câmpul propriu `expenses_cumulated_balance`, deoarece în Odoo 20 `cumulated_balance` standard se calculează doar pe un domeniu cu un singur cont (pe 19.0 se folosește `cumulated_balance`).
+- **Nota de diurnă** debitează diurna din antet așa cum e inclusă în „Total Diurnă” (fără liniile „Diurnă”), nu zile × sumă/zi, deci rămâne echilibrată cu creditul 542 când un modul scoate o parte din decont (diurna impozabilă plătită prin salarizare de `l10n_ro_expense_allowance_payroll`).
+- **Invalidare** funcționează și pentru contabilul de deconturi fără drepturi complete de contabilitate, când aplicația Enterprise Accountant e instalată (anularea notelor, chitanțelor și plăților nu mai se oprește cu „Validated entries can only be changed by your accountant”).
 - Partenerul contabil de pe note derivă din „Work Contact" (`work_contact_id`); dacă lipsește, notele se generează fără partener (înregistrări interne), iar validarea funcționează în ambele cazuri.
 
 > **Configurare:** pe decont, „Jurnal avansuri (542)" (tabul „Alte informații") trebuie să aibă drept cont implicit 542; jurnalul de numerar (Casă) trebuie să aibă contul 5311; „Cont diurnă" (implicit primul 625) e în antet, „Jurnal diurnă" în „Alte informații". Alegerea cotei TVA se face pe linie: taxa se pune doar dacă documentul dă drept de deducere (factură sau bon fiscal ≤ 100 euro cu codul de TVA al firmei tipărit).
@@ -56,6 +58,7 @@ Modulul gestionează decontarea cheltuielilor efectuate de angajați pe baza ava
 
 - `deltatech.expenses.deduction`: decontul de cheltuieli (stări, avans, diurnă, `settlement_mode`, `card_journal_id`, moneda și diferențele de curs, notele contabile generate).
 - `deltatech.expenses.deduction.line`: linia de decont (bon, plată furnizor sau diurnă, `type = per_diem`), cu moneda derivată din decont.
+- `deltatech.expenses.deduction.allocation`: alocarea unei plăți către furnizor pe facturile plătite („Bills Paid”); o factură apare o singură dată pe linie.
 - `account.move`, `account.journal`, `account.payment`: extinderi pentru legătura cu decontul; `account.journal` poartă bifa `expenses_no_payment_moves`.
 - Câmpuri pe decont: `no_payment_moves` (stocat), `employee_balance` și `employee_balance_currency_id` (butonul „Sold 542”).
 - `hr.employee`: butonul „Deconturi" și câmpul `expenses_card_journal_id` (Jurnal card firmă).
@@ -75,3 +78,4 @@ Modulul gestionează decontarea cheltuielilor efectuate de angajați pe baza ava
 - [deltatech_expenses_hr_expense](../deltatech_expenses_hr_expense/index.md): modul-punte care preia cheltuielile standard `hr.expense` ca linii de decont și previne dubla contabilizare la postare; nu este dependență a `deltatech_expenses`, ci invers.
 - [deltatech_partner_generic](../deltatech_partner_generic/index.md): furnizează partenerul generic pentru liniile de decont fără furnizor explicit.
 - [l10n_ro_expense_allowance](../l10n_ro_expense_allowance/index.md) (opțional): plafonul fiscal al diurnei și surplusul impozabil.
+- [l10n_ro_expense_allowance_payroll](../l10n_ro_expense_allowance_payroll/index.md) (opțional): diurna impozabilă plătită prin salarizare, scoasă din „Total Diurnă”.

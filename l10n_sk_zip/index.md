@@ -1,4 +1,4 @@
-# Slovakia - City from ZIP
+# Slovakia - City from ZIP (localizat la `l10n_sk_zip/index.md`)
 
 - **Nume Tehnic:** `l10n_sk_zip`
 - **Versiune:** `19.0.1.0.0`

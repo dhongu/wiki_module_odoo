@@ -31,28 +31,22 @@ Acest modul importă facturile de la furnizori (în format UBL XML, iar prin ext
 - **Jurnal lizibil:** mesaje colorate pe nivel (✅ ⚠️ ❌ ℹ️), setat la sursă și în limba utilizatorului; prețurile actualizate sunt rezumate într-un singur mesaj; textele spun „document sursă”.
 - **Traduceri RO** și pictogramă proprie.
 
-Logica de potrivire produse/preț/recepție/facturare este în mixin-ul comun `purchase.invoice.import.mixin`, reutilizabil de alte asistente de import (ex. PDF). Punctul de extensie `_parse_source` permite altor module să citească alte formate de fișier cu aceeași previzualizare, potrivire și creare de factură; acest asistent păstrează doar partea specifică UBL-XML.
+Cititorul UBL și potrivirea produselor se află, din versiunea 19.0.1.5.0, în modulul de bază [deltatech_account_ubl_import](../deltatech_account_ubl_import/index.md) (mixin `account.ubl.import.mixin`). Logica de preț/recepție/facturare este în mixin-ul comun `purchase.invoice.import.mixin` (care îl extinde și păstrează numele), reutilizabil de alte asistente de import (ex. PDF). Punctul de extensie `_parse_source` permite altor module să citească alte formate de fișier cu aceeași previzualizare, potrivire și creare de factură; acest asistent păstrează doar partea specifică UBL-XML.
 
 #### 3. Dependențe
 
 - `purchase_stock`
-- `deltatech_account_ubl_import`: furnizează mixin-ul `account.ubl.import.mixin` (citirea documentului UBL), pe care îl extinde acest modul. Înainte, modulul depindea direct de `account`, acum moștenit prin această dependență.
+- [deltatech_account_ubl_import](../deltatech_account_ubl_import/index.md): modul de bază (instalat automat) cu cititorul UBL și potrivirea produselor, partajate cu [deltatech_vendor_bill_ubl_review](../deltatech_vendor_bill_ubl_review/index.md).
 
 #### 4. Componente Cheie
 
-Conform `readme/DESCRIPTION.md`, funcționalitatea principală este expusă printr-un asistent (wizard) de import (`purchase.ubl.import.wizard`, buton „Import Invoice” pe comanda de achiziție) care orchestrează rezolvarea furnizorului/comenzii, potrivirea produselor, actualizarea prețurilor, validarea recepției și crearea facturii de la furnizor, pe baza logicii comune din mixin-ul `purchase.invoice.import.mixin`. (Detalierea vizualizărilor/acțiunilor nu a fost extrasă din cod, conform fluxului de ingestie bazat pe Readme.)
-
-**Modele**
-
-- `purchase.invoice.import.mixin` (abstract): logica comună de potrivire produse, prețuri, recepție și facturare; moștenește `account.ubl.import.mixin`.
-- `purchase.ubl.import.wizard` (tranzitoriu): asistentul de import.
-- `purchase.ubl.import.wizard.line` (tranzitoriu): rândurile de previzualizare, câte unul per linie de factură.
-- `purchase.order` (extins): butonul de import pe comanda de achiziție.
+Conform `readme/DESCRIPTION.md`, funcționalitatea principală este expusă printr-un asistent (wizard) de import (`purchase.ubl.import.wizard`, buton „Import Invoice” pe comanda de achiziție) care orchestrează rezolvarea furnizorului/comenzii, potrivirea produselor, actualizarea prețurilor, validarea recepției și crearea facturii de la furnizor, pe baza logicii comune din mixin-ul `purchase.invoice.import.mixin`. Modele: `purchase.ubl.import.wizard` și `purchase.ubl.import.wizard.line` (rândurile previzualizării), `purchase.invoice.import.mixin` (model abstract) și extensia `purchase.order` (buton). Vizualizări: `view_purchase_ubl_import_wizard`, `purchase_order_form_view_inherit_ubl_button`; acțiune: `action_purchase_ubl_import_wizard`. Fără cron-uri.
 
 #### 5. Conexiuni
 
 - [deltatech_ai_purchase_pdf](../deltatech_ai_purchase_pdf/index.md): extinde asistentul prin `_parse_source`, ca să importe și PDF-ul facturii; motivul redenumirii butonului în „Import Invoice”.
 - [deltatech_purchase_ubl_ai](../deltatech_purchase_ubl_ai/index.md): propune cu AI produsul pentru liniile pe care potrivirea standard nu le-a asociat.
+- [deltatech_vendor_bill_ubl_review](../deltatech_vendor_bill_ubl_review/index.md): folosește același cititor UBL și aceeași potrivire din [deltatech_account_ubl_import](../deltatech_account_ubl_import/index.md).
 - `purchase_stock`: actualizează liniile comenzii, prețurile de la furnizor și validează recepția de stoc asociată.
-- `account`: creează și leagă opțional factura de la furnizor pornind de la comanda de achiziție (dependență indirectă, prin `deltatech_account_ubl_import`).
-- `l10n_ro_message_spv_purchase`: apelant automat care atașează XML-ul SPV pe comenzi de achiziție.
+- `account`: creează și leagă opțional factura de la furnizor pornind de la comanda de achiziție (dependență tranzitivă).
+- [l10n_ro_message_spv_purchase](../l10n_ro_message_spv_purchase/index.md): apelant automat care atașează XML-ul SPV pe comenzi de achiziție.

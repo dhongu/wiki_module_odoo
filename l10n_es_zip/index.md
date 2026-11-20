@@ -1,4 +1,4 @@
-# Spain - City from ZIP
+# Spain - City from ZIP (localizat la `l10n_es_zip/index.md`)
 
 - **Nume Tehnic:** `l10n_es_zip`
 - **Versiune:** `19.0.1.0.0`

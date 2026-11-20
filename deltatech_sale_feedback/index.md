@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.10`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_feedback
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_feedback`
-- **Ultima Ingestie:** `2026-11-05`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -17,7 +17,7 @@ Modulul cere clienților, prin email, să evalueze produsele cumpărate, la cât
 - **Evaluare pe produs**: fiecare linie de produs are propria înregistrare de rating pe șablonul de produs, iar un clic pe o legătură de evaluare înregistrează ratingul clientului pentru acel produs prin pagina standard `/rate` din Odoo.
 - **Trimitere programată**: acțiunea programată *Request Feedback* (inactivă la instalare) rulează zilnic și trimite emailul pentru facturile de client datate cu un număr de zile în urmă, implicit 3. Întârzierea se citește din parametrul de sistem `sale.days_request_feedback` (*Settings > Technical > Parameters > System Parameters*).
 - **Trimitere manuală**: pe facturile de client, *Actions > Request feedback* trimite emailul pentru facturile selectate.
-- **Legături pe site-ul companiei**: când compania facturii are adresă de site, modulul încearcă să construiască legăturile din email pe acea adresă, în locul lui `web.base.url` al bazei de date.
+- **Legături pe site-ul companiei**: când niciun domeniu de website nu se aplică facturii, legăturile din emailul de feedback sunt menite să folosească adresa *Website* a companiei în locul lui `web.base.url` (după portarea trimiterii pe 19.0). Celelalte emailuri nu sunt modificate de modul și păstrează adresa de bază standard Odoo.
 - **Limitări**:
   - pe 19.0 trimiterea nu funcționează: codul apelează încă `xmlid_to_res_id` și `message_post_with_template`, care nu mai există în Odoo, deci atât acțiunea programată, cât și *Request feedback* se opresc cu eroare; subiectul, expeditorul, destinatarul și limba șablonului folosesc încă sintaxa veche `${...}`, care nu mai este randată;
   - opțiunea *Email feedback after sale* și șablonul ei din *Sales > Configuration > Settings* se salvează, dar nu sunt folosite: emailul folosește mereu șablonul propriu al modulului;
@@ -32,13 +32,14 @@ Modulul cere clienților, prin email, să evalueze produsele cumpărate, la cât
 
 #### 4. Componente Cheie
 
-Sumarul și Funcționalitățile Cheie provin din `readme/DESCRIPTION.md`; apelurile învechite menționate în limitări au fost confirmate în `models/account_invoice.py`.
+Sumarul și Funcționalitățile Cheie provin din `readme/DESCRIPTION.md` și `readme/USAGE.md`; detaliile pas cu pas sunt în fișa consultant; apelurile învechite menționate în limitări au fost confirmate în `models/account_invoice.py`.
 
 **Modele**
 
 - `account.move` (extins): `cron_request_feedback()` și `request_feedback()`, trimiterea emailului de feedback.
 - `account.move.line` (extins): `rating_get_access_token()`, pentru legăturile de evaluare.
-- `mail.template`, `res.company`, `res.config.settings` (câmpul `days_request_feedback`, parametrul `sale.days_request_feedback`) și `ir.config_parameter`: extinderi pentru șablon, companie și setări.
+- `res.company` (`sale_feedback`, `sale_feedback_template_id`) și `res.config.settings` (`days_request_feedback`, parametrul `sale.days_request_feedback`): opțiunile din setările de vânzări.
+- `ir.config_parameter` (extins): `get_param()` returnează adresa de website a companiei, transmisă în context, doar pentru `web.base.url` în emailul de feedback; celelalte apeluri trec neschimbate prin cache-ul standard.
 
 **Vizualizări**
 

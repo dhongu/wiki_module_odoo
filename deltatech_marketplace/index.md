@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.43.6`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace`
-- **Ultima Ingestie:** `2026-10-27`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -40,6 +40,9 @@ Marketplace Base Connector este modulul de bază al familiei de module marketpla
 - Controlul importului (vezi `readme/USAGE.md`): per tip de obiect, *Create* și *Update* decid dacă importul poate crea sau modifica înregistrări Odoo (cardul spune politica în clar), iar *Only Missing* sare peste înregistrările deja legate. Produsul din spatele unei oferte se găsește în ordine: asocierea existentă, cod de bare, referință internă (potrivire exactă), nume (rezervă riscantă, cu avertisment „possible variant collapse”), prima variantă a șablonului. *Strict variant match* oprește ultimii doi pași. *Ignore Import Fields* (doar pentru grupul Setări) elimină câmpuri la import, iar *Use category* și *Default category* decid dacă o categorie din marketplace ajunge vreodată în `categ_id`.
 - Export de stoc/preț fără dubluri: ofertele deja în așteptare într-un job de export nu mai sunt puse din nou în coadă (jobul citește valoarea la rulare), iar cron-ul *Marketplace: export price* trimite din nou prețurile (verificarea „fără export de preț pe conector” se potrivea greșit și pe conectorii care au export).
 - Potrivirea clienților la import (fără contacte duplicate): un client persoană fizică negăsit după nume exact și e-mail / telefon este comparat cu contactele care au același telefon normalizat (E.164) sau același e-mail, după nume (orice ordine a cuvintelor, fără diacritice), stradă și oraș. Un contact cu scor cel puțin egal cu *Match Threshold* (0,85) este refolosit; în zona gri (de la 0,60) se creează un contact nou, iar clientul din marketplace este marcat *Possible Duplicate Of* (filtru *Possible Duplicates*) pentru verificare manuală. Regulile de potrivire (telefon, e-mail, nume fără forme juridice precum SRL, KFT, PFA) vin din `deltatech_partner_match`; pragurile se setează pe backend (`partner_match_fuzzy`, `partner_match_threshold`, `partner_match_grey_threshold`).
+- Clienți legați după CUI: asocierea unui client cheiată pe CUI (`vat:...`) își păstrează partenerul la reimport chiar dacă numele diferă sau CUI-ul de pe partener a fost corectat manual într-o altă formă (ex. `HU12345678` în loc de `12345678-2-13`), deci nu se mai creează o a doua firmă la următoarea comandă.
+- O comandă cu CUI, dar fără adresă de facturare (fără țară), nu mai oprește importul clientului cu eroare.
+- Webhook-urile rulează cu utilizatorul din câmpul *User* al backend-ului (superuser dacă e gol), astfel că joburile create de ele aplică valorile implicite ale acelui utilizator; contactul adresei de facturare ia limba clientului (sau a magazinului), deci facturile magazinelor străine pleacă în limba corectă.
 - Modificarea limitei de cereri pe secundă a unui backend nu mai blochează apelurile API: noua limită se salvează pe conexiune proprie, cu commit imediat.
 
 #### 3. Dependențe

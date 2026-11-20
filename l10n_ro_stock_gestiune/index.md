@@ -1,10 +1,10 @@
-# Romania - Gestiuni contabile de stoc (FR-54) (localizat la `l10n_ro_stock_gestiune/index.md`)
+# Romania - Gestiuni contabile de stoc (localizat la `l10n_ro_stock_gestiune/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_gestiune`
 - **Versiune:** `19.0.3.1.12`
 - **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_gestiune`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_gestiune`
-- **Ultima Ingestie:** `2026-09-25`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -24,7 +24,7 @@ Modulul aduce în Odoo evidența gestiunilor contabile de stoc așa cum o cere l
 - **Recepție fără factură (371 = 408):** pentru produse stocabile cu valorizare perpetuă, la recepția de la furnizor se generează automat nota 371 = 408 — fie global (setarea de companie „Recepție fără factură (371 = 408)"), fie punctual, per transfer marcat „Recepție pe aviz" (`l10n_ro_notice`), cu posibilitate de valoare implicită pe tipul de operațiune. Recepția intră pe contul de stoc al **categoriei produsului**, nu pe contul propriu al gestiunii. Linia 408 poartă furnizorul comercial al transferului (sau al comenzii de achiziție, sau al recepției originale la retur), astfel încât 408 se stinge și pe fișa furnizorului (OMFP 1802/2014, pct. 329).
 - **Stingerea pivotului 408 la factură, fără reconciliere:** la postarea facturii furnizorului, linia de produs este rutată automat pe contul 408 (nu pe 371); închiderea este determinată de documente, nu de potrivirea sumelor, deci 408 nu trebuie marcat „Permite reconcilierea".
 - **Suport multi-monedă:** pentru achiziții în valută, latura 408 de la recepție păstrează valuta comenzii; diferența de curs recepție↔factură se recunoaște automat pe 765/665 la primirea facturii. Stocul (371) rămâne la cursul recepției — activ nemonetar, nu se reevaluează la curs.
-- **Tratarea diferenței de preț:** când prețul de pe factură diferă de valoarea recepției, diferența se contează pe 308 (materii prime/materiale) sau 378 (mărfuri) la cost standard, sau pe contul de stoc 371 (FIFO/CMP), corectând costul stocului ca în comportamentul nativ Odoo.
+- **Tratarea diferenței de preț:** când prețul de pe factură diferă de valoarea recepției, diferența se contează pe 308 (materii prime/materiale, cost standard) sau pe contul de stoc 371 (FIFO/CMP; la mărfuri se recomandă FIFO/CMP, pentru că 378 ține adaosul comercial). Când marfa a ieșit deja din stoc, partea aferentă cantității ieșite se trece pe 607 (dacă acesta e contul de cheltuială al produsului); linia de cheltuială se leagă de recepția căreia îi aparține (`l10n_ro_receipt_move_id`).
 - **Firmele cu storno la retururi/facturi:** diferențele de curs recepție↔factură și majorarea de preț se contabilizează în negru, pe latura normală (`Dr 408 / Cr 765`, `Dr 665 / Cr 408`, `Dr 371 / Cr 408`); doar reducerea de preț se stornează în roșu, pe ambele linii ale notei (`371 = 408` cu semn negativ) — conform OMFP 1802/2014, pct. 69, care tratează reducerea de preț ca o corecție a valorii recepției, nu ca o operațiune nouă.
 - **Storno la retur către furnizor:** nota 371 = 408 se stornează în roșu (OMFP 1802) proporțional cu valoarea returnată, cu separare corectă a stornourilor de facturare/notele de credit pe cantitatea acoperită.
 - **Compatibilitate cu OCA `l10n_ro_stock_account`:** dezactivează automat câmpul „aviz" duplicat din view-ul OCA, la instalare și la fiecare update; instalarea simultană a ambelor module nu este recomandată.
@@ -43,7 +43,7 @@ Modulul aduce în Odoo evidența gestiunilor contabile de stoc așa cum o cere l
 - `stock.location` (extins): câmpul `l10n_ro_gestiune_id` care leagă locația internă de gestiunea sa contabilă (cu constrângere de companie) și `l10n_ro_account_transit_id`, contul de stoc pentru tranzit pe locațiile de tip *Tranzit*.
 - `stock.move` (extins): generează nota de transfer valoric inter-gestiune (`l10n_ro_transfer_move_id`, direct/tranzit/481-482) și nota de recepție fără factură 371 = 408 (`l10n_ro_rni_move_id`), inclusiv stornarea la retur; blochează recepțiile/ieșirile directe pe o gestiune cu cont propriu și transferurile fără cont de contrapartidă la `_action_done`; expune metodele utilitare inter-gestiune.
 - `account.move` (extins): rutează liniile facturii furnizorului pe contul 408 și adaugă liniile de închidere a pivotului (diferență de preț, diferență de curs); păstrează legătura cu recepția de origine (`l10n_ro_rni_origin_move_id`).
-- `account.move.line` (extins): calculează valorile de recepție din notele RNI, descompune diferența dintre factură și recepție în diferență de preț și diferență de curs, și decide stornarea în roșu (doar reducerea de preț, pe firmele cu `account_storno`).
+- `account.move.line` (extins): câmpul `l10n_ro_receipt_move_id` (recepția de care aparține diferența de preț trecută pe cheltuială); calculează valorile de recepție din notele RNI, descompune diferența dintre factură și recepție în diferență de preț și diferență de curs, și decide stornarea în roșu (doar reducerea de preț, pe firmele cu `account_storno`).
 - `res.company` (extins): flagurile `l10n_ro_gestiune_strict` (blocare transfer fără cont de contrapartidă), `l10n_ro_gestiune_required` (gestiune obligatorie pe locații), `l10n_ro_rni_enabled` (activare recepție fără factură global) și contul 408 implicit (`l10n_ro_account_rni_id`).
 - `res.config.settings` (extins): expune în Setări → Contabilitate opțiunile de mai sus.
 - `stock.picking` / `stock.picking.type` (extinse): câmpul `l10n_ro_notice` (aviz, per transfer) și `l10n_ro_notice_default` (implicit pe tipul de operațiune).
@@ -70,7 +70,7 @@ Modulul aduce în Odoo evidența gestiunilor contabile de stoc așa cum o cere l
 - [l10n_ro_stock_sheet](../l10n_ro_stock_sheet/index.md): balanța analitică a stocurilor (cantitate + valoare + diferență) și fișa de magazie folosite pentru a verifica firul valoric al acestui modul; cu puntea `l10n_ro_stock_sheet_gestiune` (auto_install), transferul între gestiuni apare ca ieșire din sursă și intrare în destinație, cu valoarea notei de transfer, iar *Diferența* e 0 pe fiecare cont de gestiune.
 - [l10n_ro_stock_sheet_gestiune](../l10n_ro_stock_sheet_gestiune/index.md): modul-punte (auto_install) care adaugă Fișa de magazie / Balanța stocurilor filtrată pe gestiune și butonul „Fișă de magazie" din formularul gestiunii.
 - [l10n_ro_currency_revaluation](../l10n_ro_currency_revaluation/index.md): contul 408 alimentat de recepția fără factură în valută este element monetar, dar **nu e reevaluat lunar** de acest modul în configurația standard RO — reevaluarea automată selectează doar conturile cu valută sau de tip creanță/datorie comercială, iar 408 e cont curent fără valută pe planul RO. Soldul 408 în valută rămas nefacturat la finele lunii trebuie reevaluat manual.
-- `l10n_ro_stock_account` (OCA): oferă un câmp „aviz" similar pe formularul de transfer; instalarea simultană cu acest modul nu este recomandată — modulul dezactivează automat view-ul OCA corespunzător.
+- [l10n_ro_stock_account](../l10n_ro_stock_account/index.md) (OCA): oferă un câmp „aviz" similar pe formularul de transfer; instalarea simultană cu acest modul nu este recomandată — modulul dezactivează automat view-ul OCA corespunzător.
 
 #### Limitări cunoscute (din fișa consultant, versiunea 19.0.3.1.0)
 

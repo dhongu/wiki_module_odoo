@@ -4,27 +4,28 @@
 - **Versiune:** `19.0.1.5.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_saft_export_fix
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_saft_export_fix`
-- **Ultima Ingestie:** `2026-10-22`
+- **Ultima Ingestie:** `2026-11-20`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul corectează patru defecte ale exportului SAF-T D406 din modulul Enterprise `l10n_ro_saft`, descoperite prin confruntarea fișierelor generate de Odoo cu validatorul oficial `D406Validator` din DUK Integrator. Primul defect face declarația nedepunabilă (secțiuni goale respinse de ANAF), al doilea lasă în afara declarației plățile care nu provin dintr-un extras bancar, al treilea raportează ca nedeductibil și TVA-ul efectiv dedus la deducerea limitată la 50% (autoturisme, combustibil), iar al patrulea raportează operațiunile cu taxă de 0% ca fiind în afara sferei TVA, deși taxa are cod SAF-T propriu. Corecțiile se aplică fără a modifica codul Enterprise, iar declarațiile care validează deja pe baza extraselor rămân identice. Defectele sunt raportate și către Odoo; modulul acoperă perioada până la rezolvarea în amonte.
+Modulul corectează șase defecte ale exportului SAF-T D406 din modulul Enterprise `l10n_ro_saft`, descoperite prin confruntarea fișierelor generate de Odoo cu validatorul oficial `D406Validator` din DUK Integrator și cu nomenclatorul ANAF de coduri de taxă. Printre ele: secțiuni goale care fac declarația nedepunabilă, plăți lăsate în afara declarației, TVA dedus raportat ca nedeductibil la deducerea limitată la 50%, operațiuni cu taxă de 0% raportate în afara sferei TVA, cod poștal gol în adresa partenerului și conturi cu litere în cod respinse de validator. Din versiunea 1.5.0, modulul completează și identificatorii firmei și ai partenerilor, conform tipurilor ANAF. Corecțiile se aplică fără a modifica codul Enterprise, iar declarațiile care validează deja pe baza extraselor rămân identice. Defectele sunt raportate și către Odoo; modulul acoperă perioada până la rezolvarea în amonte.
 
 #### 2. Funcționalități Cheie
 
-- **Eliminarea secțiunilor goale:** `SalesInvoices`, `PurchaseInvoices` și `Payments` sunt scrise doar dacă au cel puțin un document. O lună fără achiziții nu mai duce la respingerea întregului fișier (eroarea „elementul 'Payment' ar fi trebuit sa apara de minimum 1 ori").
-- **Raportarea plăților fără extras:** plățile înregistrate prin „Înregistrează plata" și operațiunile de casă (jurnalele de casă nu mai lucrează cu extrase din 17.0) apar acum în secțiunea `Payments`.
-- **`PaymentMethod`:** `01` pentru numerar (jurnal de casă), `03` pentru transfer.
-- **Latura de trezorerie corectă:** pentru plățile fără extras, linia de trezorerie este citită de pe contul de tranzit (5125 / 581), astfel încât fiecare `Payment` are cel puțin un `PaymentLine`.
-- **Fără dublare:** o plată reconciliată cu un extras se raportează o singură dată, prin nota extrasului (care poartă referința și data bancară).
-- **Separarea TVA cu deducere limitată la 50%:** taxa „21% ND 50%" duce jumătate din TVA în 4426 și jumătate pe cheltuială (6352), dar are un singur cod SAF-T (391104), iar exportul standard le însuma sub acesta. Modulul împarte suma după repartiția taxei: partea de pe contul de TVA primește codul deductibil (341104), restul păstrează codul nedeductibil (391104), conform notei „Situația 1" din nomenclatorul ANAF.
-- **Toate cotele:** regula se aplică la fel pe 19%, 11%, 9% și 5% (391101–391105 devin 341101–341105); codul deductibil e adăugat și în `TaxTable`, ca orice cod din tranzacții să fie definit în MasterFiles.
-- **Operațiuni cu taxă de 0%:** linia de bază iese cu tipul și codul SAF-T al taxei, cu suma zero (nu cu `000/000000`), iar taxa e adăugată în `TaxTable`. Exemple: achiziții scutite „0% EXEMPT" (308302, inclusiv nota DVI pe regimul vamal 4200) și livrări intracomunitare „0% EU G" (310301), astfel încât codurile se potrivesc cu rândurile din D300. O taxă de 0% fără tip sau cod SAF-T completat rămâne pe 000000.
-- **Fișă consultant:** exemplul pas-cu-pas (taxă, cod SAF-T, factură de achiziție, notă contabilă, export D406) este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md), cu capturi.
-- **Fără meniuri sau câmpuri noi:** declarația se generează ca înainte, din Contabilitate → Raportare → Cartea Mare, butonul „SAF-T (Declarația D406)".
-- **Verificare:** pentru o lună fără plăți prin extras, secțiunea `Payments` lipsește cu totul, iar DUK Integrator întoarce „Validare fara erori".
-- **Flux recomandat:** se rulează întâi `l10n_ro_saft_validator` (semnalează secțiunile care ar ieși goale și plățile nelegate de un extras), apoi se generează declarația și se validează cu DUK Integrator înainte de depunere.
+- **Eliminarea secțiunilor goale:** `SalesInvoices`, `PurchaseInvoices` și `Payments` sunt scrise doar dacă au cel puțin un document. O lună fără achiziții nu mai duce la respingerea întregului fișier.
+- **Raportarea plăților fără extras:** plățile din „Înregistrează plata" și operațiunile de casă (jurnalele de casă nu mai lucrează cu extrase din 17.0) apar în `Payments`, cu latura de trezorerie citită de pe contul de tranzit (5125 / 581). `PaymentMethod` este `01` pentru numerar și `03` pentru transfer. Jurnalul de casă trebuie să aibă cont de plăți configurat (ex. 531101), altfel plata nu are notă contabilă.
+- **Fără dublare:** o plată reconciliată cu un extras se raportează o singură dată, prin nota extrasului.
+- **TVA cu deducere limitată la 50%:** taxa „21% ND 50%" are un singur cod SAF-T (391104), iar exportul standard însuma ambele jumătăți sub el. Modulul separă suma după repartiția taxei: partea de pe contul de TVA (4426) primește codul deductibil (341104), partea de pe cheltuială (6352) păstrează 391104. Regula se aplică și pe 19%, 11%, 9% și 5% (391101–391105 devin 341101–341105), iar codurile apar în `TaxTable`. Codul taxei nu se schimbă manual.
+- **Taxe de 0%:** linia de bază iese cu tipul și codul SAF-T al taxei (ex. 308302 pentru „0% EXEMPT", 310301 pentru „0% EU G"), cu suma zero, iar taxa e adăugată în `TaxTable`, deci codurile se potrivesc cu D300. O taxă de 0% fără tip sau cod SAF-T completat rămâne pe `000/000000`.
+- **Cod poștal:** tagul `<PostalCode/>` se scrie doar când partenerul are cod poștal; șablonul comun, folosit de alte țări, rămâne neschimbat.
+- **Conturi cu litere în cod:** `AccountID` devine număr întreg, înlocuind fiecare grup de litere cu un cod fix de 3 cifre dintr-un tabel salvat în bază (`4111RUE5194` devine `41110015194`), consecvent în tot fișierul și în toate lunile. `StandardAccountID` primește codul real. Câmpul opțional „Cod SAF-T" de pe cont (Contabilitate → Configurare → Plan de conturi) are prioritate; un cod generat care se suprapune cu alt cont oprește exportul. Secțiunile `Owners` și `Stocks` din `l10n_ro_saft_stock` nu sunt acoperite.
+- **Produse și linii de factură:** `GoodsServicesID` (`01` bunuri, `02` servicii) și `ValuationMethod` (FIFO / Cost mediu) din categoria produsului; `UOMTable` cu o intrare pe cod UNECE; `ProductCode` și `ProductDescription` pe liniile facturii; la achiziții, `InvoiceNo` este referința furnizorului (fără ea, numărul intern, cu avertisment).
+- **Identificatorii firmei:** în `Header/Company`, `RegistrationNumber` păstrează RO, iar `TaxRegistration` are numărul fără RO, `TaxType` 100010 (100040 la TVA la încasare), `TaxNumber` și `TaxAuthority` ANAF.
+- **Contact unic:** firma trimite un singur contact, cu funcția în `OtherTitles`, ales în Contabilitate → Configurare → Setări → „Persoană de contact SAF-T", altfel administratorul, altfel primul contact cu nume și telefon. Clienții și furnizorii nu mai trimit blocul `Contact`.
+- **`CustomerID` / `SupplierID`:** `00` + CUI (România), `01` + țară + cod TVA (UE), `02` (în afara UE), `03` + CNP, `04` + cod intern (România fără CUI/CNP), `05` / `06` + țară + cod intern (firmă străină fără cod de TVA). Codul intern este referința internă a partenerului fără caractere speciale, altfel ID-ul din bază.
+- **Fără meniuri noi:** declarația se generează ca înainte, din Contabilitate → Raportare → Registre → Carte Mare, meniul ⚙ → „SAF-T (Declarația D406)". Fluxul pas-cu-pas, cu capturi, este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
+- **Flux recomandat:** se rulează întâi `l10n_ro_saft_validator`, apoi se generează declarația și se validează cu DUK Integrator înainte de depunere.
 
 #### 3. Dependențe
 
@@ -34,11 +35,17 @@ Modulul corectează patru defecte ale exportului SAF-T D406 din modulul Enterpri
 
 **Modele**
 
-- `account.general.ledger.report.handler` (abstract, extins): adaugă `_l10n_ro_saft_fill_zero_tax_details` (interogare SQL care găsește taxele de 0% cu tip și cod SAF-T completate pe liniile de bază și adaugă detaliul de taxă cu sumă zero, plus taxa în `tax_vals_list`); suprascrie `_l10n_ro_saft_fill_tax_values` (desparte detaliul de taxă cu cod ND 50% într-un detaliu deductibil și unul nedeductibil, pe baza repartiției cu `use_in_tax_closing`; tabelul de corespondență 3911xx → 3411xx), `_l10n_ro_saft_get_deductible_tax_amounts` (interogare SQL care calculează suma de taxă pe repartițiile deductibile, pe linie de bază și taxă), `_l10n_ro_saft_fill_payment_values` (construiește `payment_vals` și include și notele plăților fără extras, cu liniile de trezorerie corecte) și adaugă `_l10n_ro_saft_get_payment_move_ids`, care clasifică notele candidate (jurnale bancă/casă) printr-o singură căutare pe `account.payment` după `move_id`, nu prin `origin_payment_id`, gol pentru plățile create din wizardul „Înregistrează plata".
+- `account.general.ledger.report.handler` (abstract, extins): nucleul modulului. Suprascrie metodele `_l10n_ro_saft_fill_*` din `l10n_ro_saft` pentru taxe (separare deductibil/nedeductibil, taxe de 0%), plăți (include plățile fără extras, cu liniile de trezorerie corecte), produse, unități de măsură, linii de factură, parteneri și antet, plus calculul `AccountID` numeric și al identificatorilor firmei și partenerilor.
+- `l10n_ro.saft.letter.code` (nou): corespondența fixă, pe companie, între un grup de litere din codul contului și un cod numeric de 3 cifre (unic pe companie, atât după litere, cât și după cod).
+- `account.account` (extins): câmpul opțional `l10n_ro_saft_code` (Cod SAF-T) cu validări și funcția care furnizează codul numeric de export.
+- `res.company` (extins): câmpul `l10n_ro_saft_contact_id`, persoana de contact trimisă în D406.
+- `res.config.settings` (extins): expune persoana de contact SAF-T în setările contabilității.
 
 **Vizualizări**
 
-- `saft_template` (moștenește `l10n_ro_saft.saft_template`): mută condiția `t-if` pe tag-urile `SalesInvoices`, `PurchaseInvoices` și `Payments`, legată de numărul de documente.
+- `saft_template` și celelalte șabloane QWeb moștenite din `l10n_ro_saft` / `account_saft` (`saft_template_postal_code`, `addresses_contacts_postal_code`, `addresses_contacts_identifiers`, `saft_template_invoices_account_id`, `saft_template_products_goods_services`, `saft_template_invoices_product_lines` ș.a.): mută condiția pe tag la secțiunile goale, elimină `PostalCode` gol (prin copia `address`), folosesc `AccountID` numeric, completează produsele și identificatorii.
+- `view_account_form_saft_code` / `view_account_list_saft_code`: câmpul „Cod SAF-T" pe formularul și lista contului.
+- `res_config_settings_form_saft_contact`: câmpul „Persoană de contact SAF-T" în setările de contabilitate.
 
 **Acțiuni Automate / Acțiuni Server**
 
@@ -46,5 +53,5 @@ Modulul corectează patru defecte ale exportului SAF-T D406 din modulul Enterpri
 
 #### 5. Conexiuni
 
-- [l10n_ro_saft_fix](../l10n_ro_saft_fix/index.md): modul distinct, care rezolvă o problemă de instalare a `l10n_ro_saft` (construit fără `depends` pe acesta); nu se suprapune cu corecțiile de export de aici.
-- [l10n_ro_saft_validator](../l10n_ro_saft_validator/index.md): validare înainte de export; testele sale acoperă avertizarea pentru secțiuni goale și pentru plăți fără linie de extras (verificat în teste, fără dependență în manifest).
+- [l10n_ro_saft_fix](../l10n_ro_saft_fix/index.md): modul distinct, care rezolvă o problemă de instalare a `l10n_ro_saft` (construit fără `depends` pe acesta); nu se suprapune cu corecțiile de export de aici (menționat în manifest).
+- [l10n_ro_saft_validator](../l10n_ro_saft_validator/index.md): verificare înainte de export, recomandată în documentația modulului (fără dependență în manifest sau cod).

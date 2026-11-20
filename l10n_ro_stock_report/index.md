@@ -4,11 +4,11 @@
 - **Versiune:** `19.0.2.10.2`
 - **Cale:** https://github.com/terrabit-ro/l10n-romania/tree/19.0/l10n_ro_stock_report
 - **Cale Locală:** `odoo-addons/l10n-romania-oca/l10n_ro_stock_report`
-- **Ultima Ingestie:** `2026-10-22`
+- **Ultima Ingestie:** `2026-11-20`
 
 #### 1. Sumar
 
-Modulul adaugă raportul de stocuri cerut de legislația din România, cunoscut ca fișă de magazie. Pentru o perioadă și una sau mai multe gestiuni, raportul arată soldul inițial, intrările, ieșirile și soldul final pentru fiecare produs, în cantitate și în valoare, și poate fi consultat în Odoo sau tipărit în PDF. Este documentul de bază pentru evidența mișcărilor și a soldurilor de stoc și se bazează pe valorizarea și pe conturile contabile din localizarea română a stocurilor.
+Modulul adaugă raportul de stocuri cerut de legislația din România, cunoscut ca fișă de magazie. Pentru o perioadă și una sau mai multe gestiuni, raportul arată soldul inițial, intrările, ieșirile și soldul final pentru fiecare produs, în cantitate și în valoare, și poate fi consultat în Odoo sau tipărit în PDF. Este documentul de bază pentru evidența mișcărilor și a soldurilor de stoc și se bazează pe valorizarea și pe conturile contabile din localizarea română a stocurilor. Modulul nu este necesar dacă baza de date folosește [l10n_ro_stock_sheet](../l10n_ro_stock_sheet/index.md) sau determină conturile de stoc prin OBYC ([deltatech_obyc](../deltatech_obyc/index.md)).
 
 #### 2. Funcționalități Cheie
 
@@ -18,13 +18,16 @@ Modulul adaugă raportul de stocuri cerut de legislația din România, cunoscut 
 - Filtrare pe produse alese sau doar pe produsele cu mișcări în perioadă (`products_with_move`).
 - Detaliere pe lot / număr de serie, unde produsul este urmărit.
 - Fiecare linie are tipul valorizat al mișcării (`valued_type`, citit din tipul de mișcare românesc al lui `stock.move`; „indefinite" pentru mișcările fără tip determinat) și contul contabil. Rândurile de sold au tipuri proprii, `initial` și `final`, ca să nu se amestece cu mișcările fără tip.
+- Un transfer intern apare pe contul de stoc al fiecărei locații: sursa pe contul sursei, destinația pe contul destinației (corecție din 19.0.2.10.2; anterior cele două conturi erau citite invers).
 - Rezultat vizualizabil ca listă, formular sau pivot (grupare pe cont, produs, locație, tip valorizat) ori ca raport PDF.
 - Două rapoarte PDF: „Stock Sheet" (pe locație) și „Stock Sheet All" (toate locațiile); opțiunea „un produs pe pagină" (`one_product`). Soldul final tipărit se preia din rândul FINAL calculat (corecție din 19.0.2.9.0).
 - Meniul „Romanian Stock Sheet Report" se află în Inventar > Raportare, pentru grupul de utilizatori de stoc și grupul de meniuri specifice României.
+- Raportul se bazează pe câmpurile adăugate de `l10n_ro_stock_account` (`l10n_ro_move_type`, `l10n_ro_account_id`, `l10n_ro_transfer_account_id`), deci funcționează doar împreună cu acesta.
+- Când se înlocuiește cu `l10n_ro_stock_sheet`: acesta nu împarte raportul pe tip de mișcare (recepție, livrare, plus/minus inventar, consum, transfer etc.), ci grupează pe cont de stoc, produs și document; nu are filtru pe zonă de valorizare (doar pe locație); iar pentru mișcările fără notă contabilă (de exemplu cele migrate dintr-o versiune anterioară) contul este cel al categoriei de produs.
 
 #### 3. Dependențe
 
-- `l10n_ro_stock_account`
+- [l10n_ro_stock_account](../l10n_ro_stock_account/index.md)
 
 #### 4. Componente Cheie
 
@@ -46,7 +49,9 @@ Modulul nu definește `ir.cron`, `base.automation` sau `ir.actions.server`; rapo
 
 #### 5. Conexiuni
 
+- [l10n_ro_stock_account](../l10n_ro_stock_account/index.md): aduce tipurile de mișcare și conturile contabile folosite de raport (dependență).
+- [l10n_ro_stock_sheet](../l10n_ro_stock_sheet/index.md): alternativă fără dependență OCA (fișa de magazie 14-3-8 și balanța analitică de stoc); înlocuiește acest modul.
+- [deltatech_obyc](../deltatech_obyc/index.md): determinarea conturilor de stoc prin OBYC, caz în care acest modul nu se instalează.
 - [l10n_ro_picking_report](../l10n_ro_picking_report/index.md): documentele de mișcare a stocurilor (NIR, bon de consum, aviz), complementare fișei de magazie.
 - [l10n_ro_stock_report_dropship](../l10n_ro_stock_report_dropship/index.md): extinde acest raport pentru fluxurile dropship.
 - [l10n_ro_stock_aged_report](../l10n_ro_stock_aged_report/index.md): raport de vechime a stocurilor, din același domeniu de raportare.
-- `l10n_ro_stock_account`: aduce tipurile de mișcare și conturile contabile folosite de raport.
