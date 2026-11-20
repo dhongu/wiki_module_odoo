@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-20] Re-ingestie: deltatech_mail_client (19.0.1.6.0)
+
+- **Acțiune:** actualizare [deltatech_mail_client](deltatech_mail_client/index.md): pagina descria un placeholder neinstalabil (19.0.1.0.0); modulul are acum etapele 1–5 implementate (cont IMAP/SMTP, foldere, redactare, atașare la documente, verificare SPF/DKIM/DMARC și jurnal de acces) și o temă cu culorile companiei.
+- **Sursă:** export `git archive origin/19.0` din `bitshop` (checkout-ul local e în urmă): `readme/DESCRIPTION.md`, `USAGE.md`, `HISTORY.md`, `ROADMAP.md`, manifest și codul din `models/`, `views/`, `security/`.
+- **Dependențe/Conexiuni:** `mail` (fără pagină wiki), dependența Python `cryptography`; ținte opționale „Attach to...”: `sale`, `purchase`, `account`, `stock`, `crm`, `project`; `agroamat_mail` rămâne ca text (etapa 7, migrarea, neimplementată).
+- **Fișiere actualizate:** `deltatech_mail_client/index.md`, fișa consultant (18 capturi) sincronizată cu `wiki_sync.sync_fisa`, `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-11-20] Re-ingestie: l10n_ro_account_fisa_cont (19.0.1.0.8)
 
 - **Acțiune:** actualizare [l10n_ro_account_fisa_cont](l10n_ro_account_fisa_cont/index.md) după PR terrabit-solutions/l10n_ro_ent#1480: filtrul „Parteneri” listează și contactele de sub firmă (fișa contului 542 pe un angajat).

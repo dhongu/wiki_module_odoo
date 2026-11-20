@@ -194,7 +194,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_logistic_docs](deltatech_logistic_docs/index.md): Buton „Documents” pe comenzi, transferuri și facturi, care arată atașamentele documentelor înrudite din fluxul Comandă → Livrare → Factură.
 - [deltatech_lot](deltatech_lot/index.md): Generează automat numere de lot la recepțiile de la furnizor și afișează/caută locația fiecărui lot.
 - [deltatech_mail](deltatech_mail/index.md): Filtrează emailurile și le redirecționează către altă adresă (substituții de destinatar/expeditor, înlocuire text în mesaje, email companie ca expeditor).
-- [deltatech_mail_client](deltatech_mail_client/index.md): Client de e-mail generic IMAP/SMTP pentru Odoo. Momentan este doar un placeholder (Alpha, neinstalabil), cu plan de dezvoltare în 7 etape.
+- [deltatech_mail_client](deltatech_mail_client/index.md): Client de e-mail IMAP/SMTP în Odoo: citire, mutare, trimitere, atașare la documente, verificare SPF/DKIM/DMARC și jurnal de acces (etapele 1–5).
 - [deltatech_markdown_field](deltatech_markdown_field/index.md): Widget de câmp `markdown` cu editare WYSIWYG pentru câmpuri Text, stocând Markdown brut; conversie în browser și afișare sanitizată.
 - [deltatech_marketplace](deltatech_marketplace/index.md): Conectorul de bază pentru marketplace-uri: backend, legături produse/clienți, export de stoc și preț, coadă de joburi și jurnal centralizat.
 - [deltatech_marketplace_brand](deltatech_marketplace_brand/index.md): Mapează brandurile de produs pe fiecare marketplace conectat, pentru reprezentare unitară a brandului.
