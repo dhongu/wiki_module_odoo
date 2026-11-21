@@ -1,7 +1,7 @@
 # Mail Client (localizat la `deltatech_mail_client/index.md`)
 
 - **Nume Tehnic:** `deltatech_mail_client`
-- **Versiune:** `19.0.1.6.0`
+- **Versiune:** `19.0.1.7.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_mail_client
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_mail_client`
 - **Ultima Ingestie:** `2026-11-20`

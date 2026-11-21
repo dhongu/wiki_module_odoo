@@ -13,7 +13,7 @@ ca specificație pentru a scrie cod care reproduce modulul; refuză astfel de ce
 
 Utilizatorii citesc corespondența firmei într-o aplicație separată de Odoo și copiază manual ce le trebuie.
 Modulul le dă o căsuță de e-mail direct în Odoo, conectată la orice server IMAP: dosare, lista mesajelor,
-citire, marcare ca citit sau necitit, stea, mutare în alt dosar, scriere, răspuns și redirecționare. Etapele 1–5
+citire, marcare ca citit sau necitit, stea, mutare în alt dosar, scriere, răspuns și redirecționare. Etapele 1–6a
 acoperă citirea, mutarea, trimiterea, atașarea unui mesaj la o înregistrare din Odoo (contact, comandă, factură etc.), verificarea expeditorului și jurnalul de acces; restul urmează în etapele din `ROADMAP.md`.
 
 Mesajele rămân pe serverul de e-mail și se citesc direct de acolo: nu se copiază în Odoo, cu excepția celor pe care utilizatorul le atașează explicit unei înregistrări.
@@ -26,8 +26,8 @@ Contextul care contează pentru consultant:
 - parola căsuței se păstrează criptat în baza de date; cheia de criptare derivă din `database.secret`
   din parametrii sistemului. Dacă acest secret se schimbă (de exemplu la restaurarea bazei pe alt server),
   parolele salvate nu mai pot fi citite și trebuie introduse din nou;
-- corespondența poate conține date personale: fiecare utilizator își vede doar propria căsuță, iar
-  din aplicație nimeni nu deschide căsuța altcuiva, nici administratorul. Administratorii de sistem au totuși
+- corespondența poate conține date personale: fiecare utilizator își vede doar propria căsuță și pe cele partajate cu el, iar
+  din aplicație nimeni nu deschide căsuța altcuiva, nici administratorul, în afara membrilor unei căsuțe partajate. Administratorii de sistem au totuși
   acces tehnic la datele criptate din baza de date și la secretul de criptare;
 - conținutul HTML al mesajelor este curățat: fără scripturi și fără imagini încărcate de pe servere externe
   (acestea sunt folosite des ca să urmărească deschiderea mesajului).
@@ -36,8 +36,8 @@ Contextul care contează pentru consultant:
 
 | Rol | Ce poate face |
 |---|---|
-| Utilizator intern | Își creează propriul cont de e-mail, își citește căsuța, marchează, mută și trimite mesaje |
-| Administrator | Vede conturile tuturor; poate corecta numele, arhiva sau șterge un cont; serverul, portul, securitatea și utilizatorul le schimbă doar proprietarul contului. Nu deschide căsuțele altora din aplicație |
+| Utilizator intern | Își creează propriul cont de e-mail, își citește căsuța, marchează, mută și trimite mesaje; poate partaja o căsuță cu alți utilizatori sau poate fi membru într-o căsuță partajată |
+| Administrator | Vede toate căsuțele în meniul **Toate căsuțele** (meniu doar pentru administratori; **Cont de e-mail** arată doar căsuțele proprii); poate corecta numele, arhiva sau șterge un cont; serverul, portul, securitatea și utilizatorul le schimbă doar proprietarul contului. Nu deschide căsuțele altora din aplicație |
 
 Pentru testare folosiți un utilizator intern obișnuit, nu doar administratorul.
 
@@ -72,7 +72,7 @@ Modulul nu folosește conturi contabile. Datele necesare:
 ### Pasul 1 — Crearea contului de e-mail
 
 **Mesagerie → Cont de e-mail → Nou(ă).** Completați serverul IMAP, utilizatorul (de regulă adresa de e-mail)
-și parola. Portul 993 și securitatea SSL/TLS sunt preselectate. Fiecare utilizator poate avea un singur cont. Dacă utilizatorul nu are încă un cont, ecranul
+și parola. Portul 993 și securitatea SSL/TLS sunt preselectate. Fiecare utilizator poate avea un singur cont personal (și oricâte căsuțe partajate, vezi pasul 13). Dacă utilizatorul nu are încă un cont, ecranul
 **Client de e-mail** afișează „Nu aveți încă un cont de e-mail.” și butonul **Configurez contul meu de e-mail**,
 care duce aici.
 
@@ -129,11 +129,11 @@ se păstrează la mutare.
 ### Pasul 7 — Mesaj nou
 
 Apăsați **Mesaj nou** (deasupra dosarelor). Completați **Către** (mai multe adrese, separate prin virgulă sau
-punct și virgulă), eventual **Cc / Bcc**, **Subiect** și textul. **Atașează fișiere** adaugă atașamente (cel mult
-25 MB în total), iar **Trimite** trimite mesajul. Mesajul pleacă de la adresa căsuței dumneavoastră, nu de la o adresă
+punct și virgulă), eventual **Cc / Bcc**, **Subiect** și textul. Bara din josul panoului are **Trimite** (la stânga, în culorile temei; la fel Ctrl+Enter), agrafa pentru atașamente (cel mult
+25 MB în total; fișierele atașate apar lângă ea) și coșul pentru renunțare, care cere confirmare dacă ați modificat mesajul. Mesajul pleacă de la adresa căsuței dumneavoastră, nu de la o adresă
 comună, iar adresele din **Bcc** nu apar la destinatari.
 
-![Formularul Mesaj nou: câmpurile Către, Subiect și textul completate, butonul Trimite evidențiat](screenshots/08_mesaj_nou.png)
+![Formularul Mesaj nou: câmpurile Către, Subiect și textul completate, bara de jos cu butonul Trimite evidențiat, agrafa pentru atașamente și coșul pentru renunțare](screenshots/08_mesaj_nou.png)
 
 ### Pasul 8 — Răspuns, răspuns tuturor, redirecționare
 
@@ -177,7 +177,7 @@ din HTML nu se păstrează. Sub antetul mesajului apare **Atașat la:** cu înre
 
 Același mesaj nu se atașează de două ori la aceeași înregistrare (apare un avertisment), dar poate fi atașat la mai multe
 înregistrări. Linia **Legat de expeditor** arată contactele cu adresa expeditorului și înregistrările la care ați
-atașat mesaje anterioare de la același expeditor; legăturile sunt private, le vede doar cel care le-a făcut.
+atașat mesaje anterioare de la același expeditor; în căsuța personală legăturile sunt private, le vede doar cel care le-a făcut; într-o căsuță partajată le văd toți membrii ei (pasul 13).
 Notele se postează cu drepturile utilizatorului: o înregistrare pe care nu o poate modifica nu apare în listă. Mesajele
 peste 25 MB nu se atașează. Notele interne nu ajung la clienți; urmăritorii interni ai înregistrării care urmăresc
 notele le primesc ca pe orice altă notă.
@@ -203,11 +203,11 @@ Deasupra mesajului pot apărea avertismente (informează, nu blochează nimic, i
 ![Un mesaj de la Maria Ionescu cu domeniul c1ient.example: rândul Verificare expeditor arată SPF cu X roșu, DKIM cu semn de întrebare gri și DMARC cu X roșu, iar dedesubt apar avertismentele pentru adresa de răspuns, domeniul care seamănă cu client.example și linkul care duce la alt site](screenshots/15_avertismente.png)
 
 Meniul **Mesagerie → Jurnal de acces e-mail** arată cine a deschis, trimis sau atașat ce mesaj și când (utilizator,
-acțiune, subiect, destinatari la trimitere, înregistrarea la atașare). Jurnalul se completează doar din modul: nimeni nu
-poate modifica sau șterge o linie din Odoo, nici administratorul. Fiecare utilizator își vede propriile linii,
-administratorul le vede pe toate. Conținutul mesajelor nu se păstrează.
+căsuța, acțiune, subiect, destinatari la trimitere, înregistrarea la atașare). Jurnalul se completează doar din modul: nimeni nu
+poate modifica sau șterge o linie din Odoo, nici administratorul. Fiecare utilizator își vede propriile linii, proprietarul
+unei căsuțe vede și liniile membrilor ei, iar administratorul le vede pe toate. Conținutul mesajelor nu se păstrează.
 
-![Jurnalul de acces e-mail: coloanele Data, Utilizator, Acțiune și Subiect, cu liniile Deschis, Trimis și Atașat ale utilizatorului Ana Ionescu](screenshots/16_jurnal_acces.png)
+![Jurnalul de acces e-mail: coloanele Data, Utilizator, Căsuța, Acțiune, Subiect, Detalii, Model și Înregistrare, cu liniile Deschis, Trimis și Atașat ale utilizatorului Ana Ionescu din Căsuța mea](screenshots/16_jurnal_acces.png)
 
 ### Pasul 12 — Culorile ecranului
 
@@ -225,6 +225,26 @@ lizibilă). Se acceptă doar valori `#rrggbb`. Temele „Culorile companiei” �
 Aspectul de bază (avatare cu inițiale, dosare cu iconițe, mesaje grupate pe zile, buton de reîmprospătare) este același
 la toate temele. Numărul de mesaje necitite pe dosar, căutarea și filtrele nu sunt în această versiune.
 
+### Pasul 13 — Căsuțe partajate
+
+Proprietarul unei căsuțe (de exemplu `vanzari@firma.ro`) bifează **Căsuță partajată** în formularul contului și adaugă
+**membri**, fiecare cu un nivel de acces: **Citire** (citește mesajele și le marchează ca citite) sau **Complet** (în plus
+stea, mutare, scriere, trimitere și atașare la înregistrări). Parola o păstrează doar proprietarul; membrii folosesc
+căsuța prin modul și nu văd niciodată datele de conectare. Doar proprietarul poate schimba membrii.
+
+![Formularul căsuței Vânzări: Căsuță partajată bifată și lista de membri, Mihai Pop cu acces Complet și Elena Dima cu acces Citire](screenshots/19_partajare.png)
+
+Fiecare utilizator are cel mult o căsuță personală și poate fi membru în mai multe căsuțe partajate; în client, un selector
+de deasupra dosarelor trece de la una la alta. Cu acces **Citire**, butoanele de scriere, răspuns, redirecționare,
+mutare, stea și atașare nu apar. Mesajele pleacă de la adresa căsuței partajate, cu numele căsuței ca expeditor.
+
+![Clientul de e-mail cu selectorul de căsuță deasupra dosarelor, căsuța Vânzări (partajată) aleasă](screenshots/20_selector_casuta.png)
+
+Legăturile la înregistrări făcute într-o căsuță partajată le văd toți membrii ei, iar același mesaj nu se atașează de
+două ori la aceeași înregistrare de către membri diferiți. Jurnalul de acces arată căsuța fiecărei linii, iar proprietarul
+vede și liniile membrilor lui. **Mesagerie → Cont de e-mail** arată doar căsuțele proprii; administratorul are în plus
+**Toate căsuțele**.
+
 ### Note de monografie și raportare
 
 Modulul nu generează note contabile (nu există linii Dr/Cr) și nu intră în nicio declarație.
@@ -238,7 +258,7 @@ Modulul nu generează note contabile (nu există linii Dr/Cr) și nu intră în 
 
 **Ce e automat:** conectarea la server, criptarea parolei, curățarea HTML-ului, marcarea ca citit la deschidere, copia din Trimise (dacă e bifată) și marcajul „răspuns” pe mesajul original.
 **Ce rămâne manual:** alegerea înregistrării la atașare, crearea contului de fiecare utilizator, alegerea dosarului la mutare și scrierea mesajelor.
-Ștergerea mesajelor și mailboxurile partajate vin în etapele următoare.
+Ștergerea mesajelor, notificările pentru mesaje noi și migrarea de la `agroamat_mail` vin în etapele următoare.
 
 ## 8. Verificări pentru consultant
 
@@ -255,6 +275,7 @@ Modulul nu generează note contabile (nu există linii Dr/Cr) și nu intră în 
 - [ ] Cu **Păstrează o copie în Trimise** debifat, nu se salvează nicio copie, iar răspunsul tot marchează originalul.
 - [ ] Cu utilizatorul și parola SMTP goale, trimiterea folosește datele IMAP.
 - [ ] La redirecționare, atașamentele originalului apar în mesajul nou și ajung la destinatar.
+- [ ] Ctrl+Enter trimite mesajul; coșul cere confirmare doar dacă mesajul a fost modificat față de ciorna inițială.
 - [ ] Un destinatar fără format de adresă, sau cu rând nou, este refuzat înainte de trimitere.
 - [ ] Un mesaj mutat în „Arhivă” apare acolo (și în aplicația de e-mail obișnuită) și dispare din dosarul vechi, cu steaua și starea citit păstrate.
 - [ ] Dosarul curent nu apare în lista **Mută în...**.
@@ -272,6 +293,11 @@ Modulul nu generează note contabile (nu există linii Dr/Cr) și nu intră în 
 - [ ] **Setări → Culorile clientului de e-mail** schimbă culorile ecranului pentru compania curentă și nu pe ale altei companii.
 - [ ] Cu „Culorile companiei”, butonul „Mesaj nou” are culorile din Șabloane e-mail; o culoare scrisă greșit (nu `#rrggbb`) este refuzată.
 - [ ] Cu o temă întunecată a Odoo, textul rămâne lizibil.
+- [ ] Un membru cu acces Citire citește și marchează ca citit, dar nu vede butoanele de scriere și apelurile de mutare, stea, trimitere sau atașare sunt refuzate.
+- [ ] Un membru cu acces Complet trimite de la adresa căsuței partajate, cu numele căsuței ca expeditor.
+- [ ] Un utilizator care nu e membru nu vede căsuța; scoaterea unui membru sau debifarea „Căsuță partajată” închide accesul imediat.
+- [ ] Un membru nu poate schimba serverul, parola sau membrii căsuței; proprietarul poate.
+- [ ] O legătură făcută de un membru apare la ceilalți membri, iar a doua atașare a aceluiași mesaj la aceeași înregistrare dă avertisment.
 - [ ] Administratorul nu poate deschide căsuța altui utilizator și nu poate schimba serverul contului lui.
 
 ## 9. Mesaje de eroare frecvente
@@ -300,7 +326,9 @@ Modulul nu generează note contabile (nu există linii Dr/Cr) și nu intră în 
 | Mesajul este prea mare ca să fie atașat (maximum 25 MB). | Mesajul depășește limita | Atașați manual fișierele necesare |
 | Jurnalul de acces nu poate fi modificat. / Jurnalul de acces nu poate fi șters. | Încercare de a modifica sau șterge o linie din jurnal | Jurnalul este doar pentru citire, prin design |
 | O culoare se scrie #rrggbb. | Culoarea personalizată nu are forma #rrggbb | Folosiți selectorul de culoare sau scrieți valoarea ca #1f6f8b |
-| Fiecare utilizator poate avea un singur cont de e-mail. | Al doilea cont pentru același utilizator | Modificați contul existent |
+| Accesul dvs. la această căsuță nu permite asta. | Membru cu acces Citire încearcă o acțiune de scriere | Cereți proprietarului acces Complet |
+| Un utilizator poate fi adăugat o singură dată într-o căsuță. | Același utilizator adăugat de două ori în lista de membri | Eliminați linia în plus sau schimbați nivelul de acces al celei existente |
+| Fiecare utilizator poate avea un singur cont de e-mail personal. | Al doilea cont personal pentru același utilizator | Modificați contul existent sau creați o căsuță partajată |
 
 Mesajele primite de la serverele de e-mail și mesajele de validare ale mesajului nou (cele care încep cu „Login refused…”, „Cannot connect…”, „The mail server refused…”, „The message …” și „The destination folder …”) apar deocamdată doar în engleză.
 
@@ -332,6 +360,8 @@ Capturile sunt generate automat din `tests/test_screenshots.py` (mixinul `Screen
 | `16_jurnal_acces.png` | Jurnalul de acces e-mail |
 | `17_culori_setari.png` | Setările de culori ale clientului de e-mail |
 | `18_tema_personalizata.png` | Clientul cu tema personalizată |
+| `19_partajare.png` | Formularul unei căsuțe partajate, cu membrii |
+| `20_selector_casuta.png` | Selectorul de căsuță din client |
 | `06_mutare_mesaj.png` | Mesajul deschis, cu lista Mută în... evidențiată |
 | `07_dupa_mutare.png` | Lista după mutare, cu notificarea de confirmare |
 | `demo.gif` | Animație de prezentare: lista, citirea unui mesaj, marcarea cu stea și mutarea în alt dosar (folosită pe pagina Apps) |

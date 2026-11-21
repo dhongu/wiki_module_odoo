@@ -334,14 +334,17 @@ rândurile → **Actualizează Preț Achiziție**, apoi **Actualizează Preț Li
 
 Prețul se scrie doar pe linia curentă a cantității de bază: cea cu cantitatea minimă până la 1,
 valabilă la data de azi (după **Data început** și **Data sfârșit**) și aflată pe produsul asociat
-sau pe tot șablonul. Treptele de preț (cantitate minimă peste 1), liniile altei variante și liniile
-expirate sau neîncepute își păstrează prețul. Dacă produsul are mai multe linii de bază ale
+sau pe tot șablonul, în compania feed-ului (sau fără companie) și în moneda feed-ului (sau a
+companiei, dacă feed-ul nu are monedă). Treptele de preț (cantitate minimă peste 1), liniile altei
+variante, liniile expirate sau neîncepute, liniile în altă monedă și liniile altei companii își
+păstrează prețul. Dacă produsul are mai multe linii de bază ale
 aceluiași furnizor, toate primesc prețul din fișier. Dacă produsul are de la acest furnizor doar
-trepte de preț, doar linii expirate sau neîncepute ori doar linii pe altă variantă, nu se adaugă o
-linie nouă și prețul nu se actualizează: adăugați manual linia de bază (cantitate minimă 0 sau 1,
-fără date de valabilitate). Nu schimbă **Termen livrare**.
-Prețul se scrie în moneda feed-ului, fără conversie: verificați ca liniile de furnizor existente să
-aibă aceeași monedă ca feed-ul. Coloana **Cantitate** de pe linie este cantitatea minimă de comandă,
+trepte de preț, doar linii expirate sau neîncepute, doar linii pe altă variantă, doar linii în altă
+monedă ori doar linii ale altei companii, nu se adaugă o linie nouă și prețul nu se actualizează:
+adăugați manual linia de bază (cantitate minimă 0 sau 1, fără date de valabilitate, în moneda
+feed-ului). Nu schimbă **Termen livrare**.
+Prețul se scrie în moneda feed-ului, fără conversie: de aceea liniile în altă monedă nu se ating.
+Coloana **Cantitate** de pe linie este cantitatea minimă de comandă,
 nu stocul furnizorului. Filtrați **Cu produs** înainte dacă lăsați **Generare produse** bifat: pe
 tot catalogul, butonul creează câte un produs pentru fiecare rând neasociat. La 80 de rânduri sau
 mai multe, ca la pasul 7, o fereastră arată progresul pe loturi și permite **Oprește după lotul
@@ -427,6 +430,9 @@ pe produs.
 - [ ] **Actualizează Preț Achiziție** (pe rândurile **Cu produs**) scrie noul preț pe
   linia de furnizor; ultimul preț de achiziție al produsului rămâne neschimbat (câmpul **Ultimul
   preț de achiziție** pe produs, doar cu `deltatech_purchase_price` instalat).
+- [ ] Liniile de furnizor în altă monedă decât feed-ul și liniile altei companii își păstrează
+  prețul după **Actualizează Preț Achiziție**; produsul care are doar astfel de linii nu primește
+  linie nouă.
 - [ ] **Actualizează Preț Listă** scrie pe produs prețul de vânzare după regula feed-ului și cursul
   valutar.
 - [ ] Cu **Generare produse** debifat pe feed, **Actualizează Preț Achiziție** nu creează produse:

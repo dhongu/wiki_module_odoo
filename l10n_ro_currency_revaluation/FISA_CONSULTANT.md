@@ -66,7 +66,7 @@ diferite după punctul de intrare folosit.
   datoriile asimilate (`16x`, fără `169`): creditele bancare (`162`), leasingul (`167`) și dobânzile
   datorate (`168`) sunt elemente monetare și se reevaluează. Un cont este eligibil doar dacă
   are **valută proprie setată** (`account.currency_id`), este de tip **client/furnizor**
-  (`asset_receivable`/`liability_payable`) sau este un cont de credite (`16x`, `519`) — nu e suficient ca o linie a lui să provină dintr-un
+  (`asset_receivable`/`liability_payable`) sau este un cont de credite (`16x`, `519`) sau este `4118` (clienți incerți) — nu e suficient ca o linie a lui să provină dintr-un
   document în valută. De exemplu, un cont de imobilizări (`205`) sau de TVA (`4426`/`4427`) rămâne
   exclus chiar dacă a fost debitat/creditat printr-o factură emisă în EUR, pentru că soldul lui
   este, prin natură, exprimat în lei.
@@ -98,7 +98,7 @@ Pe conturile de terți se face câte o linie pe fiecare partener, cu partenerul 
 Conturile de trezorerie (`5124`, `5314`, `5081`, `542` — tip „bancă și numerar”) se reevaluează pe
 cont, fără partener. `267` și `508` sunt incluse doar dacă au valută setată pe cont.
 
-Incluse automat și fără valută pe cont: creditele și datoriile asimilate (`162`, `167`, `168`, `519`).
+Incluse automat și fără valută pe cont: creditele și datoriile asimilate (`162`, `167`, `168`, `519`) și clienții incerți `4118`, unde `l10n_ro_doubtful_receivables` mută creanțele în valută.
 
 Excluse automat: capitaluri (restul clasei `1`, inclusiv `169`), stocuri (`3xx`), venituri și cheltuieli, avansurile din
 **`409`**/**`419`** (pct. 316 alin. (2)), precum și orice combinație cont+valută exclusă manual din
@@ -195,6 +195,11 @@ parțiale) și afișează, pe fiecare cont, partener și valută (băncile și c
 soldul în valută, soldul contabil în RON, cursul
 BNR, soldul recalculat și **diferența** (pierdere `665` / câștig `765`).
 
+Între conturile calculate apare și **`4118` „Clienți incerți sau în litigiu”**, deși în planul RO e cont
+de tip `asset_current`, fără valută setată pe cont: creanța incertă în valută rămâne element monetar
+(OMFP 1802/2014, pct. 315). Linii pe 4118 apar după ce `l10n_ro_doubtful_receivables` reclasifică o
+factură în valută.
+
 **Calculează** convertește soldurile la cursul valabil în ziua de după data reevaluării, adică la
 cursul publicat de BNR în ultima zi bancară a lunii (vezi 5.1). Importați acest curs înainte de
 calcul: dacă lipsește, butonul ia fără avertizare cursul din ziua bancară anterioară.
@@ -278,6 +283,7 @@ reevaluare (pct. 322 alin. (1)).
 | `l10n_ro_expense_currency` | avansuri în valută (542) tratate separat |
 | `l10n_ro_stock_gestiune` | diferențele de curs la 408 (recepție fără factură) — reevaluate ca element monetar |
 | `l10n_ro_period_close_enhanced` | checklist de închidere lunară |
+| `l10n_ro_doubtful_receivables` | reclasifică creanțele în valută pe 4118 (cu valută), unde se reevaluează lunar; la reclasificare mută pe 4118 și reevaluările facturii de pe 4111 |
 
 Ce este automat: calculul soldurilor reziduale valutare, diferențele de curs și nota 665/765 (fără
 stornare, pe OMFP 1802); redirecționarea coerentă între wizard-ul Enterprise și meniul propriu,
@@ -294,9 +300,11 @@ alegerea conturilor incluse (sau excluse manual) și verificarea soldurilor.
 - [ ] **Calculează** produce linii doar pe conturile monetare în valută (nu pe 3xx/409/419 și nici pe clasa 1,
       cu excepția creditelor `16x`) și respectă
       excluderile manuale cont/valută.
-- [ ] Pe conturile de terți (`4111`, `401`, `461`, `462`, `16x` etc.) apare câte o linie pe fiecare
+- [ ] Pe conturile de terți (`4111`, `4118`, `401`, `461`, `462`, `16x` etc.) apare câte o linie pe fiecare
       partener, iar nota contabilă poartă partenerul atât pe contul valutar, cât și pe `665`/`765`;
       pe `5124`/`5314` apare o singură linie pe cont.
+- [ ] După ce o creanță în valută a fost reclasificată pe `4118`, **Calculează** produce o linie pe
+      `4118` (pe partener și valută), cu diferența față de soldul contabil al lui `4118`.
 - [ ] Conturi nemonetare (ex. `205` imobilizări, `4426`/`4427` TVA, `581` viramente interne) **nu**
       apar în liniile calculate, chiar dacă au o linie contabilă provenită dintr-un document în valută.
 - [ ] Câmpurile de provizion (665/765) din Setări → „Revaluation Provision Accounts" sunt distincte

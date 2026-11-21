@@ -419,7 +419,7 @@
   {
     "path": "deltatech_account_scenario/index.md",
     "module": "deltatech_account_scenario",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_scenario",
     "local_path": "odoo-addons/bitshop_ent/deltatech_account_scenario",
     "last_ingest": "2026-11-02",
@@ -482,7 +482,7 @@
   {
     "path": "deltatech_account_ubl_import/index.md",
     "module": "deltatech_account_ubl_import",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_account_ubl_import",
     "local_path": "odoo-addons/deltatech/deltatech_account_ubl_import",
     "last_ingest": "2026-11-20",
@@ -551,7 +551,7 @@
   {
     "path": "deltatech_advanced_planner/index.md",
     "module": "deltatech_advanced_planner",
-    "version": "19.0.1.16.0",
+    "version": "19.0.1.17.2",
     "github": "`https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_advanced_planner`",
     "local_path": "odoo-addons/bitshop_ent/deltatech_advanced_planner",
     "last_ingest": "2026-11-20",
@@ -1032,7 +1032,7 @@
   {
     "path": "deltatech_ai_sale_delivery_check/index.md",
     "module": "deltatech_ai_sale_delivery_check",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_sale_delivery_check",
     "local_path": "odoo-addons/bitshop_ent/deltatech_ai_sale_delivery_check",
     "last_ingest": "2026-10-23",
@@ -1101,7 +1101,7 @@
   {
     "path": "deltatech_ai_thread_summary/index.md",
     "module": "deltatech_ai_thread_summary",
-    "version": "19.0.1.1.2",
+    "version": "19.0.1.2.0",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_thread_summary",
     "local_path": "odoo-addons/bitshop_ent/deltatech_ai_thread_summary",
     "last_ingest": "2026-10-30",
@@ -1161,7 +1161,7 @@
   {
     "path": "deltatech_ai_thread_summary_helpdesk/index.md",
     "module": "deltatech_ai_thread_summary_helpdesk",
-    "version": "19.0.1.1.2",
+    "version": "19.0.1.1.3",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_thread_summary_helpdesk",
     "local_path": "odoo-addons/bitshop_ent/deltatech_ai_thread_summary_helpdesk",
     "last_ingest": "2026-10-30",
@@ -2933,7 +2933,7 @@
   {
     "path": "deltatech_delivery/index.md",
     "module": "deltatech_delivery",
-    "version": "19.0.6.13.1",
+    "version": "19.0.6.13.2",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery",
     "last_ingest": "2026-10-27",
@@ -4690,7 +4690,7 @@
   {
     "path": "deltatech_expenses/index.md",
     "module": "deltatech_expenses",
-    "version": "19.0.3.12.2",
+    "version": "19.0.3.12.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_expenses",
     "local_path": "odoo-addons/deltatech/deltatech_expenses",
     "last_ingest": "2026-11-20",
@@ -4826,7 +4826,7 @@
   {
     "path": "deltatech_feed/index.md",
     "module": "deltatech_feed",
-    "version": "19.0.3.8.5",
+    "version": "19.0.3.8.6",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_feed",
     "local_path": "odoo-addons/bitshop/deltatech_feed",
     "last_ingest": "2026-10-22",
@@ -5098,7 +5098,7 @@
   {
     "path": "deltatech_hr_pay_transparency/index.md",
     "module": "deltatech_hr_pay_transparency",
-    "version": "19.0.0.1.4",
+    "version": "19.0.0.1.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_hr_pay_transparency",
     "local_path": "odoo-addons/bitshop/deltatech_hr_pay_transparency",
     "last_ingest": "2026-10-12",
@@ -5762,7 +5762,7 @@
   {
     "path": "deltatech_ledger/index.md",
     "module": "deltatech_ledger",
-    "version": "19.0.0.1.1",
+    "version": "19.0.0.1.2",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_ledger`",
     "local_path": "odoo-addons/deltatech/deltatech_ledger",
     "last_ingest": "2026-10-09",
@@ -5920,7 +5920,7 @@
   {
     "path": "deltatech_mail_client/index.md",
     "module": "deltatech_mail_client",
-    "version": "19.0.1.6.0",
+    "version": "19.0.1.7.0",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_mail_client",
     "local_path": "odoo-addons/bitshop/deltatech_mail_client",
     "last_ingest": "2026-11-20",
@@ -6189,7 +6189,7 @@
   {
     "path": "deltatech_marketplace_emag/index.md",
     "module": "deltatech_marketplace_emag",
-    "version": "19.0.2.21.8",
+    "version": "19.0.2.21.9",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_emag",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_emag",
     "last_ingest": "2026-11-20",
@@ -7023,7 +7023,7 @@
   {
     "path": "deltatech_mcp_server/index.md",
     "module": "deltatech_mcp_server",
-    "version": "19.0.1.16.2",
+    "version": "19.0.1.16.3",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_mcp_server",
     "local_path": "odoo-addons/bitshop_ent/deltatech_mcp_server",
     "last_ingest": "2026-11-20",
@@ -7357,7 +7357,7 @@
   {
     "path": "deltatech_mrp_simple/index.md",
     "module": "deltatech_mrp_simple",
-    "version": "19.0.1.1.5",
+    "version": "19.0.1.1.6",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_simple",
     "local_path": "odoo-addons/deltatech/deltatech_mrp_simple",
     "last_ingest": "2026-10-26",
@@ -7432,7 +7432,7 @@
   {
     "path": "deltatech_mrp_workorder_qty/index.md",
     "module": "deltatech_mrp_workorder_qty",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.1.1",
     "github": "`https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_mrp_workorder_qty`",
     "local_path": "odoo-addons/bitshop_ent/deltatech_mrp_workorder_qty",
     "last_ingest": "2026-11-20",
@@ -7623,7 +7623,7 @@
   {
     "path": "deltatech_obyc/index.md",
     "module": "deltatech_obyc",
-    "version": "19.0.1.0.23",
+    "version": "19.0.1.0.24",
     "github": "https://github.com/dhongu/deltatech_stock_valuation/tree/19.0/deltatech_obyc",
     "local_path": "odoo-addons/deltatech_stock_valuation/deltatech_obyc",
     "last_ingest": "2026-10-01",
@@ -8262,7 +8262,7 @@
   {
     "path": "deltatech_payment_mobilpay/index.md",
     "module": "deltatech_payment_mobilpay",
-    "version": "19.0.1.3.13",
+    "version": "19.0.1.4.0",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_mobilpay",
     "local_path": "odoo-addons/bitshop/deltatech_payment_mobilpay",
     "last_ingest": "2026-10-09",
@@ -10029,7 +10029,7 @@
   {
     "path": "deltatech_purchase_price/index.md",
     "module": "deltatech_purchase_price",
-    "version": "19.0.1.2.15",
+    "version": "19.0.1.2.16",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_price",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_price",
     "last_ingest": "2026-11-18",
@@ -10200,7 +10200,7 @@
   {
     "path": "deltatech_purchase_ubl/index.md",
     "module": "deltatech_purchase_ubl",
-    "version": "19.0.1.5.0",
+    "version": "19.0.1.5.2",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_ubl",
     "local_path": "odoo-addons/deltatech/deltatech_purchase_ubl",
     "last_ingest": "2026-11-20",
@@ -10572,7 +10572,7 @@
   {
     "path": "deltatech_report_layout/index.md",
     "module": "deltatech_report_layout",
-    "version": "19.0.1.3.1",
+    "version": "19.0.1.4.0",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_report_layout",
     "local_path": "odoo-addons/deltatech/deltatech_report_layout",
     "last_ingest": "2026-11-17",
@@ -10942,7 +10942,7 @@
   {
     "path": "deltatech_saga/index.md",
     "module": "deltatech_saga",
-    "version": "19.0.6.30.3",
+    "version": "19.0.6.30.4",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga",
     "local_path": "odoo-addons/bitshop/deltatech_saga",
     "last_ingest": "2026-11-20",
@@ -12574,16 +12574,26 @@
   {
     "path": "deltatech_service_agreement/index.md",
     "module": "deltatech_service_agreement",
-    "version": "19.0.2.0.18",
-    "github": "`https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_agreement`",
+    "version": "19.0.2.0.20",
+    "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_agreement",
     "local_path": "odoo-addons/deltatech_service/deltatech_service_agreement",
-    "last_ingest": "2026-06-08",
+    "last_ingest": "2026-11-21",
     "friendly_name": "Contracte de Servicii",
-    "summary": "Modulul oferă posibilitatea de a defini și gestiona contracte de servicii cu facturare recurentă. Pe baza acestor contracte, sistemul generează periodic facturi către clienți, ținând cont de moneda, data de facturare și recurența stabilite în fiecare contract. Înainte de facturare, consumurile de servicii planificate pot fi actualizate cu cele efective, astfel încât facturile reflectă serviciile prestate real.",
+    "summary": "Modulul permite definirea și gestionarea contractelor de servicii cu facturare recurentă. Pentru fiecare perioadă, sistemul pregătește consumurile planificate ale contractelor active, care pot fi corectate (cantitate, preț, data facturii) înainte de facturare, iar apoi generează facturile către clienți. Astfel, facturile reflectă serviciile prestate real, iar legătura dintre factură și contract rămâne păstrată.",
     "features": [
-      "Definirea contractelor de servicii, cu precizarea monedei, a datei de facturare și a recurenței.",
-      "Generarea periodică, automată, a facturilor pe baza contractelor definite.",
-      "Actualizarea consumurilor de servicii planificate cu cele efective, înainte de facturare."
+      "Definirea contractelor de servicii pentru fiecare partener și companie, cu monedă, ciclu de facturare (lunar, trimestrial, anual sau personalizat), ziua facturii, termen de plată și linii de servicii.",
+      "Liniile au cantitate, preț unitar, cantitate gratuită și cicluri gratuite.",
+      "Doar contractele *În derulare* se facturează; data următoarei facturi se calculează din ultima factură confirmată (sau data contractului), ciclu și ziua facturii (`-1` = ultima zi a lunii, `0` = fără zi fixă).",
+      "Pregătirea facturării pentru o perioadă (acțiunea *Pregătire facturare*, doar pentru manageri): se creează câte un consum *Fără factură* pentru fiecare linie de contract.",
+      "Corectarea consumurilor înainte de facturare: modificare în masă a prețului (actualizează și prețul de listă al produsului), distribuirea unei cantități sau a unei valori (modurile *Fix* și *Împarte*) și schimbarea datei facturii.",
+      "Generarea facturilor de client din consumuri, grupate pe contract, pe partener sau pe linie de contract (opțional și pe serviciu).",
+      "Un consum cu cantitate negativă devine o corecție cu trimitere la factura inițială (notă de credit dacă valoarea netă este negativă).",
+      "Consumurile care nu depășesc cantitatea gratuită devin *Neaplicabil*.",
+      "Anularea sau ștergerea facturii readuce consumurile în starea *Fără factură*.",
+      "Configurare necesară: bifa *Factură servicii* pe jurnalul de vânzări folosit, tip de contract cu jurnal asociat, cicluri de facturare și perioade de serviciu (intervale de date) pentru luna facturată.",
+      "O acțiune programată zilnică pregătește și facturează (ciornă) contractele setate pe facturare automată (setare tehnică, nu apare în formular; implicit contractele sunt *Manual*).",
+      "Drepturi de acces (19.0): toți utilizatorii interni pot citi contractele, liniile, tipurile, grupurile și consumurile; modificarea rămâne la utilizatorii și managerii de service (crearea contractelor doar manageri). Utilizatorii portal nu au acces.",
+      "Un contract poate fi șters doar în starea *Ciornă*, iar un consum facturat nu poate fi șters."
     ],
     "dependencies": [
       "base",
@@ -12594,7 +12604,7 @@
     "connections": [
       "deltatech_service_base"
     ],
-    "text": "Contracte de Servicii\ndeltatech_service_agreement\nModulul oferă posibilitatea de a defini și gestiona contracte de servicii cu facturare recurentă. Pe baza acestor contracte, sistemul generează periodic facturi către clienți, ținând cont de moneda, data de facturare și recurența stabilite în fiecare contract. Înainte de facturare, consumurile de servicii planificate pot fi actualizate cu cele efective, astfel încât facturile reflectă serviciile prestate real.\nDefinirea contractelor de servicii, cu precizarea monedei, a datei de facturare și a recurenței.\nGenerarea periodică, automată, a facturilor pe baza contractelor definite.\nActualizarea consumurilor de servicii planificate cu cele efective, înainte de facturare."
+    "text": "Contracte de Servicii\ndeltatech_service_agreement\nModulul permite definirea și gestionarea contractelor de servicii cu facturare recurentă. Pentru fiecare perioadă, sistemul pregătește consumurile planificate ale contractelor active, care pot fi corectate (cantitate, preț, data facturii) înainte de facturare, iar apoi generează facturile către clienți. Astfel, facturile reflectă serviciile prestate real, iar legătura dintre factură și contract rămâne păstrată.\nDefinirea contractelor de servicii pentru fiecare partener și companie, cu monedă, ciclu de facturare (lunar, trimestrial, anual sau personalizat), ziua facturii, termen de plată și linii de servicii.\nLiniile au cantitate, preț unitar, cantitate gratuită și cicluri gratuite.\nDoar contractele *În derulare* se facturează; data următoarei facturi se calculează din ultima factură confirmată (sau data contractului), ciclu și ziua facturii (`-1` = ultima zi a lunii, `0` = fără zi fixă).\nPregătirea facturării pentru o perioadă (acțiunea *Pregătire facturare*, doar pentru manageri): se creează câte un consum *Fără factură* pentru fiecare linie de contract.\nCorectarea consumurilor înainte de facturare: modificare în masă a prețului (actualizează și prețul de listă al produsului), distribuirea unei cantități sau a unei valori (modurile *Fix* și *Împarte*) și schimbarea datei facturii.\nGenerarea facturilor de client din consumuri, grupate pe contract, pe partener sau pe linie de contract (opțional și pe serviciu).\nUn consum cu cantitate negativă devine o corecție cu trimitere la factura inițială (notă de credit dacă valoarea netă este negativă).\nConsumurile care nu depășesc cantitatea gratuită devin *Neaplicabil*.\nAnularea sau ștergerea facturii readuce consumurile în starea *Fără factură*.\nConfigurare necesară: bifa *Factură servicii* pe jurnalul de vânzări folosit, tip de contract cu jurnal asociat, cicluri de facturare și perioade de serviciu (intervale de date) pentru luna facturată.\nO acțiune programată zilnică pregătește și facturează (ciornă) contractele setate pe facturare automată (setare tehnică, nu apare în formular; implicit contractele sunt *Manual*).\nDrepturi de acces (19.0): toți utilizatorii interni pot citi contractele, liniile, tipurile, grupurile și consumurile; modificarea rămâne la utilizatorii și managerii de service (crearea contractelor doar manageri). Utilizatorii portal nu au acces.\nUn contract poate fi șters doar în starea *Ciornă*, iar un consum facturat nu poate fi șters."
   },
   {
     "path": "deltatech_service_base/index.md",
@@ -13846,7 +13856,7 @@
   {
     "path": "deltatech_vendor_products/index.md",
     "module": "deltatech_vendor_products",
-    "version": "19.0.1.5.0",
+    "version": "19.0.1.5.1",
     "github": "https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products",
     "local_path": "odoo-addons/bitshop_vendor/deltatech_vendor_products",
     "last_ingest": "2026-10-22",
@@ -14007,7 +14017,7 @@
   {
     "path": "deltatech_vendor_products_storage/index.md",
     "module": "deltatech_vendor_products_storage",
-    "version": "19.0.1.2.1",
+    "version": "19.0.1.2.2",
     "github": "https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products_storage",
     "local_path": "odoo-addons/bitshop_vendor/deltatech_vendor_products_storage",
     "last_ingest": "2026-10-30",
@@ -14105,7 +14115,7 @@
   {
     "path": "deltatech_voip_daktela/index.md",
     "module": "deltatech_voip_daktela",
-    "version": "19.0.1.4.0",
+    "version": "19.0.1.6.0",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_voip_daktela",
     "local_path": "odoo-addons/bitshop_ent/deltatech_voip_daktela",
     "last_ingest": "2026-11-19",
@@ -14587,7 +14597,7 @@
   {
     "path": "deltatech_website_delivery_and_payment/index.md",
     "module": "deltatech_website_delivery_and_payment",
-    "version": "19.0.2.1.8",
+    "version": "19.0.2.1.10",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_delivery_and_payment",
     "local_path": "odoo-addons/deltatech/deltatech_website_delivery_and_payment",
     "last_ingest": "2026-11-04",
@@ -14826,16 +14836,17 @@
     "path": "deltatech_website_phone_validation/index.md",
     "module": "deltatech_website_phone_validation",
     "version": "19.0.1.0.4",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_phone_validation`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_phone_validation",
     "local_path": "odoo-addons/deltatech/deltatech_website_phone_validation",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-21",
     "friendly_name": "Validare Telefon pe Website",
-    "summary": "Acest modul adaugă validarea numerelor de telefon introduse de clienți în formularele de adresă din magazinul online (checkout). Atunci când un client completează datele de livrare sau facturare pe website, numărul de telefon este verificat și normalizat automat în format internațional, în funcție de țara selectată. Astfel se reduc erorile de date și se asigură că numerele colectate sunt corecte și utilizabile pentru comunicarea ulterioară cu clientul.",
+    "summary": "Numerele de telefon introduse în checkout vin în multe formate, iar cele greșite se descoperă abia când cineva sună. Modulul verifică numărul în momentul în care clientul trimite adresa din magazinul online și îl rescrie în format internațional, în funcție de țara selectată. Astfel se reduc erorile de date, iar numerele colectate sunt corecte și utilizabile pentru comunicarea ulterioară cu clientul.",
     "features": [
-      "Validarea numărului de telefon direct în frontend, în pasul de completare a adresei din magazinul online.",
-      "Normalizarea automată a numărului de telefon în format internațional, pe baza țării alese de client.",
-      "Afișarea unui mesaj de eroare clar atunci când numărul de telefon nu este valid, blocând continuarea comenzii până la corectare.",
-      "Curățarea automată a spațiilor din numărul introdus înainte de validare."
+      "Spații eliminate: spațiile de la începutul și sfârșitul numărului sunt șterse înainte de verificările standard.",
+      "Format internațional: dacă verificările standard trec, numărul este citit pentru țara aleasă în adresă și rescris în format internațional, deci un număr local primește prefixul de țară.",
+      "Numere invalide: un număr care nu poate fi citit pentru țara respectivă este marcat ca invalid, cu mesajul *The phone number is not valid:* urmat de motiv; adresa nu poate fi trimisă până la corectare.",
+      "Orice tip de adresă: verificarea se aplică numărului de telefon al oricărei adrese trimise astfel, indiferent de tip.",
+      "Modulul intervine doar asupra validării adresei din checkout-ul website-ului și doar asupra câmpului de telefon."
     ],
     "dependencies": [
       "website_sale",
@@ -14846,7 +14857,7 @@
       "website_sale",
       "phone_validation"
     ],
-    "text": "Validare Telefon pe Website\ndeltatech_website_phone_validation\nAcest modul adaugă validarea numerelor de telefon introduse de clienți în formularele de adresă din magazinul online (checkout). Atunci când un client completează datele de livrare sau facturare pe website, numărul de telefon este verificat și normalizat automat în format internațional, în funcție de țara selectată. Astfel se reduc erorile de date și se asigură că numerele colectate sunt corecte și utilizabile pentru comunicarea ulterioară cu clientul.\nValidarea numărului de telefon direct în frontend, în pasul de completare a adresei din magazinul online.\nNormalizarea automată a numărului de telefon în format internațional, pe baza țării alese de client.\nAfișarea unui mesaj de eroare clar atunci când numărul de telefon nu este valid, blocând continuarea comenzii până la corectare.\nCurățarea automată a spațiilor din numărul introdus înainte de validare."
+    "text": "Validare Telefon pe Website\ndeltatech_website_phone_validation\nNumerele de telefon introduse în checkout vin în multe formate, iar cele greșite se descoperă abia când cineva sună. Modulul verifică numărul în momentul în care clientul trimite adresa din magazinul online și îl rescrie în format internațional, în funcție de țara selectată. Astfel se reduc erorile de date, iar numerele colectate sunt corecte și utilizabile pentru comunicarea ulterioară cu clientul.\nSpații eliminate: spațiile de la începutul și sfârșitul numărului sunt șterse înainte de verificările standard.\nFormat internațional: dacă verificările standard trec, numărul este citit pentru țara aleasă în adresă și rescris în format internațional, deci un număr local primește prefixul de țară.\nNumere invalide: un număr care nu poate fi citit pentru țara respectivă este marcat ca invalid, cu mesajul *The phone number is not valid:* urmat de motiv; adresa nu poate fi trimisă până la corectare.\nOrice tip de adresă: verificarea se aplică numărului de telefon al oricărei adrese trimise astfel, indiferent de tip.\nModulul intervine doar asupra validării adresei din checkout-ul website-ului și doar asupra câmpului de telefon."
   },
   {
     "path": "deltatech_website_price_without_tax/index.md",
@@ -14981,22 +14992,25 @@
     "version": "19.0.1.0.6",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_attributes",
     "local_path": "odoo-addons/deltatech/deltatech_website_sale_attributes",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-21",
     "friendly_name": "eCommerce Attribute Values",
-    "summary": "Acest modul îmbunătățește modul în care sunt afișate valorile atributelor produselor pe site-ul de comerț electronic. În mod implicit, Odoo afișează toate valorile posibile ale unui atribut, chiar și pe cele care nu mai corespund niciunui produs disponibil. Modulul filtrează aceste valori astfel încât clientul vede doar opțiunile relevante pentru produsele afișate efectiv, oferind o experiență de selecție mai clară și mai curată în magazinul online.",
+    "summary": "Modulul ascunde din magazinul online valorile de atribut alese, păstrându-le pe produse în back office. Fiecare valoare a unui atribut primește un câmp *Vizibilitate* (*Visible* sau *Hidden*), iar valorile ascunse nu mai pot fi alese de client în selectorul de variante de pe pagina produsului. În back office valorile rămân disponibile pe produse, comenzi de vânzare și variante.",
     "features": [
-      "Afișarea valorilor de atribut pe baza produselor determinate (relevante pentru selecția curentă).",
-      "Filtrarea valorilor de atribut pentru a afișa doar pe cele relevante pentru produsele disponibile în acel moment.",
-      "Optimizarea experienței de selecție a atributelor pentru clienți în magazinul online.",
-      "Modificarea comportamentului implicit al Odoo prin ajustarea șablonului `website_sale.products_attributes`, astfel încât să afișeze doar opțiunile relevante."
+      "Vizibilitate pe fiecare valoare de atribut: câmpul *Vizibilitate* (*Visible* implicit sau *Hidden*) apare în lista de valori din formularul atributului. Odoo are aceeași alegere pentru un atribut întreg; modulul o aplică pe valori individuale.",
+      "Ascundere pe pagina produsului: când magazinul afișează un produs, valorile ascunse sunt excluse din valorile active ale liniilor de atribut, deci clientul nu le poate alege în selectorul de variante.",
+      "Unde se configurează: *Website > eCommerce > Products > Attributes* (sau *Sales > Configuration > Products > Attributes*); se deschide atributul și se setează *Vizibilitate* pe valorile de ascuns. Meniul este disponibil când opțiunea *Variante* este activată în setări.",
+      "Limitări:",
+      "filtrele de atribute din bara laterală a magazinului listează în continuare valorile ascunse;",
+      "suprascrierea paginii de magazin calculează o listă de valori vizibile (`value_ids`) pe care niciun șablon standard nu o citește, deci nu are efect singură asupra paginii de magazin."
     ],
     "dependencies": [
       "website_sale"
     ],
     "connections": [
-      "website_sale"
+      "website_sale",
+      "deltatech_website_sale_attribute_filter"
     ],
-    "text": "eCommerce Attribute Values\ndeltatech_website_sale_attributes\nAcest modul îmbunătățește modul în care sunt afișate valorile atributelor produselor pe site-ul de comerț electronic. În mod implicit, Odoo afișează toate valorile posibile ale unui atribut, chiar și pe cele care nu mai corespund niciunui produs disponibil. Modulul filtrează aceste valori astfel încât clientul vede doar opțiunile relevante pentru produsele afișate efectiv, oferind o experiență de selecție mai clară și mai curată în magazinul online.\nAfișarea valorilor de atribut pe baza produselor determinate (relevante pentru selecția curentă).\nFiltrarea valorilor de atribut pentru a afișa doar pe cele relevante pentru produsele disponibile în acel moment.\nOptimizarea experienței de selecție a atributelor pentru clienți în magazinul online.\nModificarea comportamentului implicit al Odoo prin ajustarea șablonului `website_sale.products_attributes`, astfel încât să afișeze doar opțiunile relevante."
+    "text": "eCommerce Attribute Values\ndeltatech_website_sale_attributes\nModulul ascunde din magazinul online valorile de atribut alese, păstrându-le pe produse în back office. Fiecare valoare a unui atribut primește un câmp *Vizibilitate* (*Visible* sau *Hidden*), iar valorile ascunse nu mai pot fi alese de client în selectorul de variante de pe pagina produsului. În back office valorile rămân disponibile pe produse, comenzi de vânzare și variante.\nVizibilitate pe fiecare valoare de atribut: câmpul *Vizibilitate* (*Visible* implicit sau *Hidden*) apare în lista de valori din formularul atributului. Odoo are aceeași alegere pentru un atribut întreg; modulul o aplică pe valori individuale.\nAscundere pe pagina produsului: când magazinul afișează un produs, valorile ascunse sunt excluse din valorile active ale liniilor de atribut, deci clientul nu le poate alege în selectorul de variante.\nUnde se configurează: *Website > eCommerce > Products > Attributes* (sau *Sales > Configuration > Products > Attributes*); se deschide atributul și se setează *Vizibilitate* pe valorile de ascuns. Meniul este disponibil când opțiunea *Variante* este activată în setări.\nLimitări:\nfiltrele de atribute din bara laterală a magazinului listează în continuare valorile ascunse;\nsuprascrierea paginii de magazin calculează o listă de valori vizibile (`value_ids`) pe care niciun șablon standard nu o citește, deci nu are efect singură asupra paginii de magazin."
   },
   {
     "path": "deltatech_website_sale_campaign/index.md",
@@ -15158,51 +15172,58 @@
     "path": "deltatech_website_sale_sort/index.md",
     "module": "deltatech_website_sale_sort",
     "version": "19.0.1.0.5",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_sort`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_sort",
     "local_path": "odoo-addons/deltatech/deltatech_website_sale_sort",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-21",
     "friendly_name": "eCommerce Product sort",
-    "summary": "Modulul adaugă criterii suplimentare de sortare a produselor în magazinul online (eCommerce), pe lângă cele standard oferite de Odoo. Astfel, vizitatorii pot ordona produsele după popularitate reală — cele mai vândute, cele mai vizitate sau cele mai bine cotate. Pentru a funcționa rapid, modulul calculează periodic (printr-o sarcină programată) o serie de statistici pe fiecare produs, pe care le stochează direct în baza de date, evitând calcule grele la fiecare afișare a paginii.",
+    "summary": "Cumpărătorii preferă să înceapă cu ce cumpără, vizitează și apreciază alții sau cu ce este în stoc. Modulul adaugă cinci astfel de criterii în lista de sortare a produselor din website și ține la zi cifrele din spatele lor printr-o acțiune programată zilnică. Statisticile sunt stocate direct pe produs, evitând calcule grele la fiecare afișare a paginii.",
     "features": [
-      "Criterii suplimentare de sortare a produselor în magazinul online: cele mai vândute, cele mai vizitate, după număr de recenzii, după nota medie și după disponibilitatea în stoc.",
-      "Câmpuri statistice stocate pe produs (număr vânzări, vizite, recenzii), recalculate periodic pentru performanță.",
-      "Calcul automat al statisticilor printr-o sarcină programată (cron) care rulează zilnic.",
-      "Procesare pe loturi (2000 produse/lot) la recalcularea statisticilor, pentru a evita erorile de memorie pe cataloage mari (~476k șabloane); dacă modulul `queue_job` este instalat, fiecare lot este delegat ca job separat (`with_delay()`), altfel se rulează în proces cu golirea cache-ului ORM între loturi."
+      "Opțiuni noi de sortare: *Best sellers*, *Most Visited*, *Reviews*, *Best Review* și *Availability* se adaugă în lista de sortare a produselor din website, fiecare cu valoarea cea mai mare prima.",
+      "Vânzări și vizite: *Best sellers* folosește cantitatea vândută în ultimele 365 de zile, citită din raportul de vânzări pentru stările finalizate; *Most Visited* folosește vizitele înregistrate pe pagina produsului.",
+      "Recenzii: *Reviews* ordonează produsele după numărul de evaluări primite, iar *Best Review* după media lor.",
+      "Disponibilitate: *Availability* pune primele produsele cu cantitate în stoc mai mare de zero.",
+      "Reîmprospătare zilnică: acțiunea programată *Products: Update products statistics* recalculează cifrele o dată pe zi pentru fiecare produs și variantă, în loturi de 2.000 (job-uri în coadă dacă `queue_job` este instalat, altfel în proces cu golirea cache-ului ORM între loturi).",
+      "Limitări: cifrele sunt stocate pe produse și variante, deci vânzările, vizitele și evaluările noi contează în sortare abia după următoarea rulare; produsele arhivate sunt omise. Acțiunea rulează ca utilizator de sistem, iar modulul nu are grupuri de securitate."
     ],
     "dependencies": [
       "website_sale",
       "stock"
     ],
     "connections": [
-      "deltatech_website_sale_attributes",
-      "website_sale",
-      "terrabit_website_sale_tracking_base",
       "queue_job",
       "depends"
     ],
-    "text": "eCommerce Product sort\ndeltatech_website_sale_sort\nModulul adaugă criterii suplimentare de sortare a produselor în magazinul online (eCommerce), pe lângă cele standard oferite de Odoo. Astfel, vizitatorii pot ordona produsele după popularitate reală — cele mai vândute, cele mai vizitate sau cele mai bine cotate. Pentru a funcționa rapid, modulul calculează periodic (printr-o sarcină programată) o serie de statistici pe fiecare produs, pe care le stochează direct în baza de date, evitând calcule grele la fiecare afișare a paginii.\nCriterii suplimentare de sortare a produselor în magazinul online: cele mai vândute, cele mai vizitate, după număr de recenzii, după nota medie și după disponibilitatea în stoc.\nCâmpuri statistice stocate pe produs (număr vânzări, vizite, recenzii), recalculate periodic pentru performanță.\nCalcul automat al statisticilor printr-o sarcină programată (cron) care rulează zilnic.\nProcesare pe loturi (2000 produse/lot) la recalcularea statisticilor, pentru a evita erorile de memorie pe cataloage mari (~476k șabloane); dacă modulul `queue_job` este instalat, fiecare lot este delegat ca job separat (`with_delay()`), altfel se rulează în proces cu golirea cache-ului ORM între loturi."
+    "text": "eCommerce Product sort\ndeltatech_website_sale_sort\nCumpărătorii preferă să înceapă cu ce cumpără, vizitează și apreciază alții sau cu ce este în stoc. Modulul adaugă cinci astfel de criterii în lista de sortare a produselor din website și ține la zi cifrele din spatele lor printr-o acțiune programată zilnică. Statisticile sunt stocate direct pe produs, evitând calcule grele la fiecare afișare a paginii.\nOpțiuni noi de sortare: *Best sellers*, *Most Visited*, *Reviews*, *Best Review* și *Availability* se adaugă în lista de sortare a produselor din website, fiecare cu valoarea cea mai mare prima.\nVânzări și vizite: *Best sellers* folosește cantitatea vândută în ultimele 365 de zile, citită din raportul de vânzări pentru stările finalizate; *Most Visited* folosește vizitele înregistrate pe pagina produsului.\nRecenzii: *Reviews* ordonează produsele după numărul de evaluări primite, iar *Best Review* după media lor.\nDisponibilitate: *Availability* pune primele produsele cu cantitate în stoc mai mare de zero.\nReîmprospătare zilnică: acțiunea programată *Products: Update products statistics* recalculează cifrele o dată pe zi pentru fiecare produs și variantă, în loturi de 2.000 (job-uri în coadă dacă `queue_job` este instalat, altfel în proces cu golirea cache-ului ORM între loturi).\nLimitări: cifrele sunt stocate pe produse și variante, deci vânzările, vizitele și evaluările noi contează în sortare abia după următoarea rulare; produsele arhivate sunt omise. Acțiunea rulează ca utilizator de sistem, iar modulul nu are grupuri de securitate."
   },
   {
     "path": "deltatech_website_sale_status/index.md",
     "module": "deltatech_website_sale_status",
     "version": "19.0.2.0.14",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_status`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_status",
     "local_path": "odoo-addons/deltatech/deltatech_website_sale_status",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-21",
     "friendly_name": "eCommerce Sale Order status",
-    "summary": "Modulul extinde comenzile de vânzare din magazinul online cu o stare detaliată care urmărește parcursul unei comenzi de la plasarea pe website până la livrarea către client. Astfel, atât operatorii din spate, cât și clienții din portal pot vedea în mod clar în ce etapă se află fiecare comandă (de exemplu „Plasată\", „În procesare\", „De livrat\" sau „Livrată\"), iar comenzile pot fi filtrate suplimentar după aceste stări.",
+    "summary": "Starea standard a comenzii (Ofertă, Comandă de vânzare, Anulată) nu îi spune clientului din magazinul online, nici echipei de vânzări, unde se află comanda: așteaptă stoc, e gata de expediere, la curier sau livrată. Modulul adaugă pe comanda de vânzare un câmp **Etapă** (*Stage*), calculat din comandă, din transferurile ei și din starea curierului, și îl afișează în back office și în portalul clientului.",
     "features": [
-      "Filtre suplimentare pentru comenzile de vânzare în funcție de stare.",
-      "Etape dedicate ciclului de viață al unei comenzi eCommerce:",
-      "Plasată – comanda este plasată pe website de client",
-      "În procesare – comanda introdusă de operator",
-      "Așteaptă disponibilitate – nu sunt disponibile toate produsele",
-      "Amânată – livrarea a fost amânată",
-      "De livrat – produsele sunt disponibile și se poate face livrarea",
-      "În livrare – produsele au fost predate la curier",
-      "Livrată – produsele au ajuns la client",
-      "Anulată – comanda de vânzare a fost anulată",
-      "Returnată – comanda a fost returnată de către client"
+      "Etapa comenzii este calculată și stocată pe fiecare comandă, cu urmărire în chatter:",
+      "Plasată (*Placed*) – ofertă de website trimisă clientului (doar cu opțiunea de etapă detaliată);",
+      "În procesare (*In Process*) – comanda este tratată de echipa de vânzări;",
+      "Request for Quotation – comandă confirmată fără nimic de livrat încă, a cărei cerere de ofertă de achiziție a fost trimisă furnizorului (doar dacă este instalat `sale_purchase`);",
+      "Așteaptă disponibilitate (*Waiting availability*) – un transfer al comenzii așteaptă stoc;",
+      "Amânată (*Postponed*) – livrarea a fost amânată (marcajul *Postponed delivery* al transferurilor);",
+      "De livrat (*To Be Delivery*) – produsele sunt disponibile și comanda poate fi expediată;",
+      "Pre advice – a fost generat un AWB pentru colet (doar etapă detaliată);",
+      "În livrare (*In Delivery*) – coletul este la curier;",
+      "Livrată (*Delivered*) – toate transferurile sunt finalizate sau, cu etapa detaliată, curierul a livrat coletul;",
+      "Anulată (*Canceled*) – comanda a fost anulată.",
+      "Coșurile de website netrimise nu au etapă.",
+      "Etapă detaliată: opțiune în *Sales > Configuration > Settings*, secțiunea *Invoicing*, *Detailed order stage* (dezactivată implicit). Dezactivată, comanda este *Livrată* la validarea transferurilor; activată, o ofertă de website trimisă este *Plasată*, iar după validare etapa urmărește starea curierului (*Pre advice*, *În livrare*) până la livrarea de către curier. Sunt urmărite doar transferurile validate în ultimele 30 de zile.",
+      "Back office: etapa apare ca insignă colorată în listele de oferte și comenzi și în formularul comenzii, lângă termenii de plată. Căutarea comenzilor primește filtrele Placed, In process și To Be Delivery și o căutare după Telefon pe client. Etapa este disponibilă și în raportul de analiză a vânzărilor.",
+      "Portal client: în *My Account > Sales Orders*, lista comenzilor arată etapa ca insignă, poate fi filtrată după Open Orders, Closed Orders sau după fiecare etapă și sortată după Order Stage; filtrele Canceled și Closed Orders includ și comenzile anulate; pager-ul păstrează filtrul ales.",
+      "Unpaid Orders: meniul *Website > eCommerce > Unpaid Orders* listează și comenzile de website confirmate care nu sunt plătite integral.",
+      "Limitări:",
+      "valoarea Returnată (*Returned*) există în listă, dar nicio regulă nu o setează: o comandă returnată nu este afișată ca atare (pagina anterioară o prezenta greșit ca etapă funcțională; corectat);",
+      "domeniul *Unpaid Orders* folosește câmpul de stare a plății adăugat de [deltatech_sale_payment](../deltatech_sale_payment/index.md), care nu este dependență; fără acel modul meniul dă eroare."
     ],
     "dependencies": [
       "portal",
@@ -15211,9 +15232,11 @@
       "sale_stock"
     ],
     "connections": [
-      "deltatech_delivery_status"
+      "deltatech_delivery_status",
+      "deltatech_sale_payment",
+      "sale_purchase"
     ],
-    "text": "eCommerce Sale Order status\ndeltatech_website_sale_status\nModulul extinde comenzile de vânzare din magazinul online cu o stare detaliată care urmărește parcursul unei comenzi de la plasarea pe website până la livrarea către client. Astfel, atât operatorii din spate, cât și clienții din portal pot vedea în mod clar în ce etapă se află fiecare comandă (de exemplu „Plasată\", „În procesare\", „De livrat\" sau „Livrată\"), iar comenzile pot fi filtrate suplimentar după aceste stări.\nFiltre suplimentare pentru comenzile de vânzare în funcție de stare.\nEtape dedicate ciclului de viață al unei comenzi eCommerce:\nPlasată – comanda este plasată pe website de client\nÎn procesare – comanda introdusă de operator\nAșteaptă disponibilitate – nu sunt disponibile toate produsele\nAmânată – livrarea a fost amânată\nDe livrat – produsele sunt disponibile și se poate face livrarea\nÎn livrare – produsele au fost predate la curier\nLivrată – produsele au ajuns la client\nAnulată – comanda de vânzare a fost anulată\nReturnată – comanda a fost returnată de către client"
+    "text": "eCommerce Sale Order status\ndeltatech_website_sale_status\nStarea standard a comenzii (Ofertă, Comandă de vânzare, Anulată) nu îi spune clientului din magazinul online, nici echipei de vânzări, unde se află comanda: așteaptă stoc, e gata de expediere, la curier sau livrată. Modulul adaugă pe comanda de vânzare un câmp **Etapă** (*Stage*), calculat din comandă, din transferurile ei și din starea curierului, și îl afișează în back office și în portalul clientului.\nEtapa comenzii este calculată și stocată pe fiecare comandă, cu urmărire în chatter:\nPlasată (*Placed*) – ofertă de website trimisă clientului (doar cu opțiunea de etapă detaliată);\nÎn procesare (*In Process*) – comanda este tratată de echipa de vânzări;\nRequest for Quotation – comandă confirmată fără nimic de livrat încă, a cărei cerere de ofertă de achiziție a fost trimisă furnizorului (doar dacă este instalat `sale_purchase`);\nAșteaptă disponibilitate (*Waiting availability*) – un transfer al comenzii așteaptă stoc;\nAmânată (*Postponed*) – livrarea a fost amânată (marcajul *Postponed delivery* al transferurilor);\nDe livrat (*To Be Delivery*) – produsele sunt disponibile și comanda poate fi expediată;\nPre advice – a fost generat un AWB pentru colet (doar etapă detaliată);\nÎn livrare (*In Delivery*) – coletul este la curier;\nLivrată (*Delivered*) – toate transferurile sunt finalizate sau, cu etapa detaliată, curierul a livrat coletul;\nAnulată (*Canceled*) – comanda a fost anulată.\nCoșurile de website netrimise nu au etapă.\nEtapă detaliată: opțiune în *Sales > Configuration > Settings*, secțiunea *Invoicing*, *Detailed order stage* (dezactivată implicit). Dezactivată, comanda este *Livrată* la validarea transferurilor; activată, o ofertă de website trimisă este *Plasată*, iar după validare etapa urmărește starea curierului (*Pre advice*, *În livrare*) până la livrarea de către curier. Sunt urmărite doar transferurile validate în ultimele 30 de zile.\nBack office: etapa apare ca insignă colorată în listele de oferte și comenzi și în formularul comenzii, lângă termenii de plată. Căutarea comenzilor primește filtrele Placed, In process și To Be Delivery și o căutare după Telefon pe client. Etapa este disponibilă și în raportul de analiză a vânzărilor.\nPortal client: în *My Account > Sales Orders*, lista comenzilor arată etapa ca insignă, poate fi filtrată după Open Orders, Closed Orders sau după fiecare etapă și sortată după Order Stage; filtrele Canceled și Closed Orders includ și comenzile anulate; pager-ul păstrează filtrul ales.\nUnpaid Orders: meniul *Website > eCommerce > Unpaid Orders* listează și comenzile de website confirmate care nu sunt plătite integral.\nLimitări:\nvaloarea Returnată (*Returned*) există în listă, dar nicio regulă nu o setează: o comandă returnată nu este afișată ca atare (pagina anterioară o prezenta greșit ca etapă funcțională; corectat);\ndomeniul *Unpaid Orders* folosește câmpul de stare a plății adăugat de [deltatech_sale_payment](../deltatech_sale_payment/index.md), care nu este dependență; fără acel modul meniul dă eroare."
   },
   {
     "path": "deltatech_website_sale_wishlist/index.md",
@@ -15396,14 +15419,17 @@
     "path": "deltatech_website_short_description/index.md",
     "module": "deltatech_website_short_description",
     "version": "19.0.1.0.6",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_short_description`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_short_description",
     "local_path": "odoo-addons/deltatech/deltatech_website_short_description",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-21",
     "friendly_name": "eCommerce Sale Short Description",
-    "summary": "Modulul adaugă pe produsele din magazinul online un câmp dedicat de descriere scurtă, separat de descrierea completă afișată pe pagina produsului. Această descriere scurtă este folosită în special în feed-urile de produse (de exemplu cele trimise către platforme externe sau marketplace-uri), unde este nevoie de un text concis. În plus, modulul oferă o cale rapidă de a publica produse pe website direct din lista de produse, fără a deschide fiecare produs în parte.",
+    "summary": "Feed-urile de produse și alte canale de vânzare au nevoie de un text scurt despre produs, pe lângă descrierea completă din website. Modulul adaugă pe produs o descriere scurtă traductibilă și două moduri de a publica produse pe website: un buton pe formularul produsului și o acțiune în masă din lista de produse.",
     "features": [
-      "Câmp nou `website_short_description` pe produse, destinat unei descrieri scurte utilizate în feed-uri.",
-      "Buton / acțiune de publicare a produselor pe website, disponibil direct din lista de produse pentru mai multe produse simultan."
+      "Descriere scurtă: fiecare produs primește câmpul *Website short description*, un editor HTML în pagina *Sales* a formularului de produs; textul este traductibil pe limbi.",
+      "Ambele texte împreună: *Website description* a produsului este afișată alături, în același loc, deci cele două texte se editează împreună.",
+      "Buton de publicare: butonul *Publish* din `button_box` al formularului de produs publică produsul pe website.",
+      "Publicare în masă: acțiunea *Publish on Website* din lista de produse publică produsele selectate care nu sunt încă publicate și le lasă neschimbate pe celelalte.",
+      "Modulul doar stochează descrierea scurtă și nu are grupuri de securitate proprii; alte module Terrabit, precum *Products Feed* (`deltatech_feed`), o citesc."
     ],
     "dependencies": [
       "website_sale_stock"
@@ -15413,22 +15439,26 @@
       "website_short_description",
       "deltatech_marketplace_website"
     ],
-    "text": "eCommerce Sale Short Description\ndeltatech_website_short_description\nModulul adaugă pe produsele din magazinul online un câmp dedicat de descriere scurtă, separat de descrierea completă afișată pe pagina produsului. Această descriere scurtă este folosită în special în feed-urile de produse (de exemplu cele trimise către platforme externe sau marketplace-uri), unde este nevoie de un text concis. În plus, modulul oferă o cale rapidă de a publica produse pe website direct din lista de produse, fără a deschide fiecare produs în parte.\nCâmp nou `website_short_description` pe produse, destinat unei descrieri scurte utilizate în feed-uri.\nButon / acțiune de publicare a produselor pe website, disponibil direct din lista de produse pentru mai multe produse simultan."
+    "text": "eCommerce Sale Short Description\ndeltatech_website_short_description\nFeed-urile de produse și alte canale de vânzare au nevoie de un text scurt despre produs, pe lângă descrierea completă din website. Modulul adaugă pe produs o descriere scurtă traductibilă și două moduri de a publica produse pe website: un buton pe formularul produsului și o acțiune în masă din lista de produse.\nDescriere scurtă: fiecare produs primește câmpul *Website short description*, un editor HTML în pagina *Sales* a formularului de produs; textul este traductibil pe limbi.\nAmbele texte împreună: *Website description* a produsului este afișată alături, în același loc, deci cele două texte se editează împreună.\nButon de publicare: butonul *Publish* din `button_box` al formularului de produs publică produsul pe website.\nPublicare în masă: acțiunea *Publish on Website* din lista de produse publică produsele selectate care nu sunt încă publicate și le lasă neschimbate pe celelalte.\nModulul doar stochează descrierea scurtă și nu are grupuri de securitate proprii; alte module Terrabit, precum *Products Feed* (`deltatech_feed`), o citesc."
   },
   {
     "path": "deltatech_website_stock_availability/index.md",
     "module": "deltatech_website_stock_availability",
     "version": "19.0.1.0.15",
-    "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_stock_availability`",
+    "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_stock_availability",
     "local_path": "odoo-addons/deltatech/deltatech_website_stock_availability",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-21",
     "friendly_name": "eCommerce Stock Availability",
-    "summary": "Modulul permite afișarea stocului pe website sub un anumit prag, oferind clienților posibilitatea de a comanda un produs chiar dacă stocul disponibil nu este suficient. Pe lângă disponibilitate, modulul estimează și numărul de zile în care se va face livrarea, luând în calcul timpul de livrare definit pe produs, numărul de zile de siguranță și numărul de zile de livrare de la furnizor pentru produsele care nu se află pe stoc. Astfel, magazinul online comunică transparent atât cantitatea disponibilă, cât și termenul realist de livrare.",
+    "summary": "Modulul permite afișarea stocului pe website sub un anumit prag, cu posibilitatea de a comanda produse chiar dacă stocul disponibil nu este suficient. Pe lângă disponibilitate, estimează numărul de zile până la livrare, luând în calcul timpul de livrare definit pe produs, zilele de siguranță și, pentru produsele care nu sunt pe stoc, timpul de livrare de la furnizor. Astfel, magazinul online comunică transparent atât disponibilitatea, cât și un termen realist de livrare.",
     "features": [
-      "Afișarea stocului pe website doar atunci când acesta scade sub un anumit prag configurabil.",
-      "Posibilitatea de a comanda produse chiar dacă stocul curent nu este suficient.",
-      "Calculul automat al numărului de zile estimate până la livrare.",
-      "Estimarea termenului de livrare ține cont de timpul de livrare definit pe produs, de numărul de zile de siguranță și de timpul de livrare de la furnizor pentru produsele care nu sunt pe stoc."
+      "Afișarea stocului pe website sub un prag configurabil, cu posibilitatea de a comanda și când stocul nu ajunge.",
+      "Calculul automat al zilelor estimate până la livrare, din termenul de livrare al produsului, zilele de siguranță și, pentru produsele fără stoc, termenul și stocul furnizorului aplicabil (din `deltatech_vendor_stock`).",
+      "Furnizorul se alege dintre liniile de furnizor ale companiei website-ului, pentru varianta afișată; sunt ignorate ofertele altor variante sau companii, ale furnizorilor arhivați și cele expirate, iar o ofertă curentă are prioritate față de una viitoare.",
+      "Statusul stocului pe cardul de produs din magazin (livrare imediată sau ulterioară), configurat din editorul website-ului, în panoul *Products Design*: text, LED sau LED cu text, deasupra prețului, pe imagine sau lângă preț, cu portocaliu, gri sau roșu pentru produsele fără stoc.",
+      "Stilul insignei de stoc de pe pagina produsului, ales din editor, panoul *Product Page* → *Stock Badge*: pastilă (standard), text cu punct, culorile temei, contur, bară de nivel sau doar starea.",
+      "Insigne de livrare în coș, calculate pe stocul depozitului website-ului, exprimat în unitatea de măsură a liniei.",
+      "Câmpuri adăugate pe produs: *Customer Safety Lead Time* (implicit 1 zi) și *Hide \"Out of stock\" message*; pe liniile de furnizor, *Lead Time* acceptă zecimale.",
+      "Limitare cunoscută pe 19.0: pentru un termen de livrare al produsului peste 7 zile se poate afișa „Livrare în NaN săptămâni” (corectat doar pe 20.0). Detalii operaționale în fișa consultant."
     ],
     "dependencies": [
       "website",
@@ -15439,7 +15469,7 @@
     "connections": [
       "deltatech_vendor_stock"
     ],
-    "text": "eCommerce Stock Availability\ndeltatech_website_stock_availability\nModulul permite afișarea stocului pe website sub un anumit prag, oferind clienților posibilitatea de a comanda un produs chiar dacă stocul disponibil nu este suficient. Pe lângă disponibilitate, modulul estimează și numărul de zile în care se va face livrarea, luând în calcul timpul de livrare definit pe produs, numărul de zile de siguranță și numărul de zile de livrare de la furnizor pentru produsele care nu se află pe stoc. Astfel, magazinul online comunică transparent atât cantitatea disponibilă, cât și termenul realist de livrare.\nAfișarea stocului pe website doar atunci când acesta scade sub un anumit prag configurabil.\nPosibilitatea de a comanda produse chiar dacă stocul curent nu este suficient.\nCalculul automat al numărului de zile estimate până la livrare.\nEstimarea termenului de livrare ține cont de timpul de livrare definit pe produs, de numărul de zile de siguranță și de timpul de livrare de la furnizor pentru produsele care nu sunt pe stoc."
+    "text": "eCommerce Stock Availability\ndeltatech_website_stock_availability\nModulul permite afișarea stocului pe website sub un anumit prag, cu posibilitatea de a comanda produse chiar dacă stocul disponibil nu este suficient. Pe lângă disponibilitate, estimează numărul de zile până la livrare, luând în calcul timpul de livrare definit pe produs, zilele de siguranță și, pentru produsele care nu sunt pe stoc, timpul de livrare de la furnizor. Astfel, magazinul online comunică transparent atât disponibilitatea, cât și un termen realist de livrare.\nAfișarea stocului pe website sub un prag configurabil, cu posibilitatea de a comanda și când stocul nu ajunge.\nCalculul automat al zilelor estimate până la livrare, din termenul de livrare al produsului, zilele de siguranță și, pentru produsele fără stoc, termenul și stocul furnizorului aplicabil (din `deltatech_vendor_stock`).\nFurnizorul se alege dintre liniile de furnizor ale companiei website-ului, pentru varianta afișată; sunt ignorate ofertele altor variante sau companii, ale furnizorilor arhivați și cele expirate, iar o ofertă curentă are prioritate față de una viitoare.\nStatusul stocului pe cardul de produs din magazin (livrare imediată sau ulterioară), configurat din editorul website-ului, în panoul *Products Design*: text, LED sau LED cu text, deasupra prețului, pe imagine sau lângă preț, cu portocaliu, gri sau roșu pentru produsele fără stoc.\nStilul insignei de stoc de pe pagina produsului, ales din editor, panoul *Product Page* → *Stock Badge*: pastilă (standard), text cu punct, culorile temei, contur, bară de nivel sau doar starea.\nInsigne de livrare în coș, calculate pe stocul depozitului website-ului, exprimat în unitatea de măsură a liniei.\nCâmpuri adăugate pe produs: *Customer Safety Lead Time* (implicit 1 zi) și *Hide \"Out of stock\" message*; pe liniile de furnizor, *Lead Time* acceptă zecimale.\nLimitare cunoscută pe 19.0: pentru un termen de livrare al produsului peste 7 zile se poate afișa „Livrare în NaN săptămâni” (corectat doar pe 20.0). Detalii operaționale în fișa consultant."
   },
   {
     "path": "deltatech_website_store_selector/index.md",
@@ -15685,22 +15715,32 @@
     "version": "19.0.0.0.15",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_work_days_report",
     "local_path": "odoo-addons/bitshop/deltatech_work_days_report",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-21",
     "friendly_name": "Work Days Report",
-    "summary": "Modulul **Work Days Report** generează rapoarte Excel cuprinzătoare pentru urmărirea prezenței angajaților și gestionarea tichetelor de masă. Este util departamentelor de resurse umane și proceselor de salarizare, oferind automat fișiere Excel cu orele lucrate zilnic, totalurile pe angajat, tichetele de masă cuvenite și perioadele de concediu. Astfel se simplifică monitorizarea tiparelor de lucru ale angajaților și administrarea drepturilor la tichete de masă, asigurând raportări consecvente chiar și atunci când configurarea tipurilor de concediu este incompletă.",
+    "summary": "Modulul generează rapoarte Excel pentru prezența angajaților și pentru gestionarea tichetelor de masă. Este util departamentelor de resurse umane și salarizării: oferă fișiere Excel cu orele lucrate zilnic, totalurile pe angajat, codurile de concediu și tichetele de masă cuvenite, plus un fișier pentru bancă cu tichetele de masă pe card. Raportările rămân consecvente chiar și când configurarea tipurilor de concediu este incompletă.",
     "features": [
-      "Îmbunătățirea tipurilor de concediu: adaugă un câmp configurabil „code\" în formularele de tip de concediu (Time Off Type), pentru o mai bună categorisire și raportare.",
-      "Export Excel în masă: permite exportul în masă accesibil din vizualizarea de listă a angajaților (Acțiune → „Export Working Days\").",
-      "Raportare cuprinzătoare: generează rapoarte Excel detaliate care conțin informații despre angajat și orele lucrate zilnic, totalul orelor lucrate, tichetele de masă câștigate per angajat și perioadele/datele de concediu.",
-      "Flexibilă codificare a concediilor: afișează automat „ABS\" (absență) pentru tipurile de concediu fără cod specificat, asigurând o raportare consecventă chiar și cu o configurare incompletă.",
-      "Export tichete de masă către bancă: acțiune suplimentară „Export Bank Meal Vouchers\", disponibilă tot din lista de angajați, care generează un fișier Excel în formatul cerut de Banca Transilvania (nume, CNP, valoare, cont IBAN), calculând automat numărul de zile lucrate eligibile pentru tichete în intervalul selectat."
+      "Câmpuri pe angajat (în tab-ul *Payroll*, sub *Schedule*): *Hours per Day* (2, 4, 6 sau 8 ore), *Meal Voucher Value* și *Full Name* (numele tipărit în fișierul pentru bancă; dacă lipsește, se folosește numele angajatului). CNP-ul și contul bancar din tab-ul *Personal* sunt tipărite tot în fișierul pentru bancă.",
+      "Cod pe tipul de concediu: câmpul *Code* (implicit `L`) pe *Time Off Types*; un tip cu cod gol apare ca `ABS`.",
+      "Export în masă din lista de angajați (*Actions*, pentru grupul HR Officer): *Export Working Days* și *Export Bank Meal Vouchers*; se alege perioada în *Date* și se apasă *Apply*, apoi se descarcă fișierul `work_day_report.xlsx` (ambele exporturi folosesc același nume de fișier). Dacă prima dată este după ultima, exportul este refuzat cu mesajul *Please make sure the second date is after the first*.",
+      "Foaia de prezență (Excel): un rând pe angajat, cu *Norma* (ore pe zi), câte o coloană pe zi, câte o coloană pe cod de concediu, *Total number of hours* și *Meal Vouchers*.",
+      "Zilele din afara programului angajatului rămân goale (pentru program flexibil sau fără program se folosește luni–vineri); o sâmbătă programată este zi lucrată.",
+      "Zilele de sărbătoare legală apar ca `SL`, cele de concediu aprobat cu codul tipului, iar zilele din afara contractului ca `-`; doar concediile aprobate contează.",
+      "Un concediu în ore sau pe jumătate de zi păstrează orele lucrate și codul (de exemplu `6/CO`): orele intră în total, ziua în coloana codului și ziua dă în continuare un tichet de masă.",
+      "Fișier pentru bancă (tichete de masă pe card): format Banca Transilvania (singurul disponibil), cu un rând pe angajat, sortat după nume: *Nr.*, *Name and Surname*, *SSN No*, *Value* (zilele cu tichet × *Meal Voucher Value*), *IBAN code* și *Details* (luna primei date). Zilele cu tichet sunt zilele din program și din contract care nu sunt sărbători legale și nu sunt concediu aprobat pe zi întreagă, indiferent de *Hours per Day*.",
+      "Migrare către `l10n_ro_hr_pontaj`: *Export Working Days* corespunde cu *Time Off → Management → Timesheet*, iar *Export Bank Meal Vouchers* cu *Time Off → Management → Export Meal Vouchers*; câmpurile `meal_voucher_value` și `full_name` au aceleași nume tehnice, în timp ce *Hours per Day* nu este citit acolo (orele vin din programul de lucru). Diferență de verificat: aici se acordă un tichet pentru fiecare zi lucrătoare care nu e sărbătoare sau concediu, acolo pentru fiecare zi lucrată în pontaj. Detalii și pașii de migrare, în `readme/CONFIGURE.md`; valoarea maximă a tichetului este stabilită prin lege și nu este verificată de niciun modul."
     ],
     "dependencies": [
       "hr",
-      "hr_holidays"
+      "hr_holidays",
+      "xlsxwriter"
     ],
-    "connections": [],
-    "text": "Work Days Report\ndeltatech_work_days_report\nModulul **Work Days Report** generează rapoarte Excel cuprinzătoare pentru urmărirea prezenței angajaților și gestionarea tichetelor de masă. Este util departamentelor de resurse umane și proceselor de salarizare, oferind automat fișiere Excel cu orele lucrate zilnic, totalurile pe angajat, tichetele de masă cuvenite și perioadele de concediu. Astfel se simplifică monitorizarea tiparelor de lucru ale angajaților și administrarea drepturilor la tichete de masă, asigurând raportări consecvente chiar și atunci când configurarea tipurilor de concediu este incompletă.\nÎmbunătățirea tipurilor de concediu: adaugă un câmp configurabil „code\" în formularele de tip de concediu (Time Off Type), pentru o mai bună categorisire și raportare.\nExport Excel în masă: permite exportul în masă accesibil din vizualizarea de listă a angajaților (Acțiune → „Export Working Days\").\nRaportare cuprinzătoare: generează rapoarte Excel detaliate care conțin informații despre angajat și orele lucrate zilnic, totalul orelor lucrate, tichetele de masă câștigate per angajat și perioadele/datele de concediu.\nFlexibilă codificare a concediilor: afișează automat „ABS\" (absență) pentru tipurile de concediu fără cod specificat, asigurând o raportare consecventă chiar și cu o configurare incompletă.\nExport tichete de masă către bancă: acțiune suplimentară „Export Bank Meal Vouchers\", disponibilă tot din lista de angajați, care generează un fișier Excel în formatul cerut de Banca Transilvania (nume, CNP, valoare, cont IBAN), calculând automat numărul de zile lucrate eligibile pentru tichete în intervalul selectat."
+    "connections": [
+      "l10n_ro_hr_pontaj",
+      "meal_voucher_value",
+      "full_name",
+      "l10n_ro_hr_pontaj_payroll"
+    ],
+    "text": "Work Days Report\ndeltatech_work_days_report\nModulul generează rapoarte Excel pentru prezența angajaților și pentru gestionarea tichetelor de masă. Este util departamentelor de resurse umane și salarizării: oferă fișiere Excel cu orele lucrate zilnic, totalurile pe angajat, codurile de concediu și tichetele de masă cuvenite, plus un fișier pentru bancă cu tichetele de masă pe card. Raportările rămân consecvente chiar și când configurarea tipurilor de concediu este incompletă.\nCâmpuri pe angajat (în tab-ul *Payroll*, sub *Schedule*): *Hours per Day* (2, 4, 6 sau 8 ore), *Meal Voucher Value* și *Full Name* (numele tipărit în fișierul pentru bancă; dacă lipsește, se folosește numele angajatului). CNP-ul și contul bancar din tab-ul *Personal* sunt tipărite tot în fișierul pentru bancă.\nCod pe tipul de concediu: câmpul *Code* (implicit `L`) pe *Time Off Types*; un tip cu cod gol apare ca `ABS`.\nExport în masă din lista de angajați (*Actions*, pentru grupul HR Officer): *Export Working Days* și *Export Bank Meal Vouchers*; se alege perioada în *Date* și se apasă *Apply*, apoi se descarcă fișierul `work_day_report.xlsx` (ambele exporturi folosesc același nume de fișier). Dacă prima dată este după ultima, exportul este refuzat cu mesajul *Please make sure the second date is after the first*.\nFoaia de prezență (Excel): un rând pe angajat, cu *Norma* (ore pe zi), câte o coloană pe zi, câte o coloană pe cod de concediu, *Total number of hours* și *Meal Vouchers*.\nZilele din afara programului angajatului rămân goale (pentru program flexibil sau fără program se folosește luni–vineri); o sâmbătă programată este zi lucrată.\nZilele de sărbătoare legală apar ca `SL`, cele de concediu aprobat cu codul tipului, iar zilele din afara contractului ca `-`; doar concediile aprobate contează.\nUn concediu în ore sau pe jumătate de zi păstrează orele lucrate și codul (de exemplu `6/CO`): orele intră în total, ziua în coloana codului și ziua dă în continuare un tichet de masă.\nFișier pentru bancă (tichete de masă pe card): format Banca Transilvania (singurul disponibil), cu un rând pe angajat, sortat după nume: *Nr.*, *Name and Surname*, *SSN No*, *Value* (zilele cu tichet × *Meal Voucher Value*), *IBAN code* și *Details* (luna primei date). Zilele cu tichet sunt zilele din program și din contract care nu sunt sărbători legale și nu sunt concediu aprobat pe zi întreagă, indiferent de *Hours per Day*.\nMigrare către `l10n_ro_hr_pontaj`: *Export Working Days* corespunde cu *Time Off → Management → Timesheet*, iar *Export Bank Meal Vouchers* cu *Time Off → Management → Export Meal Vouchers*; câmpurile `meal_voucher_value` și `full_name` au aceleași nume tehnice, în timp ce *Hours per Day* nu este citit acolo (orele vin din programul de lucru). Diferență de verificat: aici se acordă un tichet pentru fiecare zi lucrătoare care nu e sărbătoare sau concediu, acolo pentru fiecare zi lucrată în pontaj. Detalii și pașii de migrare, în `readme/CONFIGURE.md`; valoarea maximă a tichetului este stabilită prin lege și nu este verificată de niciun modul."
   },
   {
     "path": "l10n_cz_zip/index.md",
@@ -15892,16 +15932,19 @@
     "version": "19.0.1.1.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_bank_statement_import_ing_csv",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_account_bank_statement_import_ing_csv",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-21",
     "friendly_name": "Romania - Import extrase bancare ING (CSV)",
-    "summary": "Acest modul importă fișierele „Istoric conturi\" (CSV) exportate din ING Business direct ca extrase de cont, fără nicio prelucrare manuală a fișierului.",
+    "summary": "Modulul importă fișierele „Istoric conturi” (CSV) exportate din ING Business direct ca extrase de cont, fără nicio prelucrare manuală a fișierului: se încarcă exact cum a fost exportat, fără asistentul de mapare a coloanelor.",
     "features": [
-      "Import fișier original: se încarcă CSV-ul exact cum e exportat din ING Business — antetul, separatorul `;`, sumele în format românesc (`1.234,56`) și codificarea sunt gestionate automat.",
-      "Detecție după semnătură: fișierul e recunoscut după antetul ING, deci poate fi importat de pe orice jurnal de tip bancă, alături de alte formate de extras.",
-      "Validare cont: numărul de cont din fișier e verificat față de contul bancar al jurnalului (mecanismul standard Odoo).",
-      "Solduri: soldul inițial și cel final al extrasului sunt calculate din coloana „sold intermediar\".",
-      "Date bogate pentru reconciliere: numele contrapartidei, contul IBAN și CUI-ul contrapartidei sunt preluate pe linia de extras, pentru identificarea automată a partenerului.",
-      "Protecție la duplicate: fiecare tranzacție e importată o singură dată (id unic de import din referința internă/instant ING); reimportul aceluiași fișier e detectat."
+      "Import fișier original: CSV-ul se încarcă exact cum e exportat din ING Business; antetul, separatorul `;`, sumele în format românesc (`1.234,56`) și codificarea sunt gestionate automat.",
+      "Detecție după semnătură: fișierul e recunoscut după antetul ING (`numar cont;data procesarii;...`), deci poate fi importat de pe orice jurnal de tip bancă, alături de alte formate de extras; un CSV fără antetul ING urmează fluxul obișnuit, cu asistentul de mapare.",
+      "Validare cont: IBAN-ul din fișier se verifică față de contul bancar al jurnalului (mecanismul standard Odoo); dacă jurnalul nu are încă un cont bancar, IBAN-ul din fișier se setează automat la primul import. Un jurnal per IBAN.",
+      "Solduri: soldul inițial și cel final ale extrasului se calculează din coloana „sold intermediar”; extrasul creat se numește ING <data de la> - <data până la>, cu tranzacțiile în ordine cronologică.",
+      "Date pentru reconciliere: numele contrapartidei, IBAN-ul și CUI-ul contrapartidei se preiau pe linia de extras și apar în widgetul de reconciliere bancară. Partenerul se identifică automat după CUI (cu sau fără prefixul `RO`); dacă mai mulți parteneri au același CUI, linia rămâne nealocată, la decizia operatorului.",
+      "Protecție la duplicate: fiecare tranzacție se importă o singură dată (id unic din referința internă/instant ING); reimportul aceluiași fișier este refuzat („You already have imported that file.”), deci se exportă doar perioada nouă.",
+      "Cum se încarcă: *Contabilitate → Tablou de bord*, pe cardul jurnalului ING, meniul ⋮ → Extrase → Încărcare; alternativ, linkul Importă fișier din cardul jurnalului sau tragerea fișierului peste lista de tranzacții.",
+      "Configurare: jurnal de bancă în RON, cu cont tranzitoriu setat (altfel Odoo nu poate crea liniile de extras); utilizatorul care importă are nevoie de drepturi de contabilitate; modulul necesită mecanismul standard de import al extraselor din Odoo Enterprise.",
+      "Limitări: un export fără tranzacții și un fișier cu alt IBAN decât al jurnalului sunt refuzate; modulul nu postează note contabile (acestea rezultă din reconcilierea standard Odoo); un sold final diferit de cel din ING Business indică de regulă un export parțial sau tranzacții în altă monedă. Fluxul pas cu pas este în fișa consultant."
     ],
     "dependencies": [
       "l10n_ro",
@@ -15909,10 +15952,9 @@
       "account_bank_statement_import_csv"
     ],
     "connections": [
-      "deltatech_account_bank_statement_import",
-      "l10n_ro_account_bank_statement_import_mt940_ing"
+      "l10n_ro_account_bank_statement_import_xlsx"
     ],
-    "text": "Romania - Import extrase bancare ING (CSV)\nl10n_ro_account_bank_statement_import_ing_csv\nAcest modul importă fișierele „Istoric conturi\" (CSV) exportate din ING Business direct ca extrase de cont, fără nicio prelucrare manuală a fișierului.\nImport fișier original: se încarcă CSV-ul exact cum e exportat din ING Business — antetul, separatorul `;`, sumele în format românesc (`1.234,56`) și codificarea sunt gestionate automat.\nDetecție după semnătură: fișierul e recunoscut după antetul ING, deci poate fi importat de pe orice jurnal de tip bancă, alături de alte formate de extras.\nValidare cont: numărul de cont din fișier e verificat față de contul bancar al jurnalului (mecanismul standard Odoo).\nSolduri: soldul inițial și cel final al extrasului sunt calculate din coloana „sold intermediar\".\nDate bogate pentru reconciliere: numele contrapartidei, contul IBAN și CUI-ul contrapartidei sunt preluate pe linia de extras, pentru identificarea automată a partenerului.\nProtecție la duplicate: fiecare tranzacție e importată o singură dată (id unic de import din referința internă/instant ING); reimportul aceluiași fișier e detectat."
+    "text": "Romania - Import extrase bancare ING (CSV)\nl10n_ro_account_bank_statement_import_ing_csv\nModulul importă fișierele „Istoric conturi” (CSV) exportate din ING Business direct ca extrase de cont, fără nicio prelucrare manuală a fișierului: se încarcă exact cum a fost exportat, fără asistentul de mapare a coloanelor.\nImport fișier original: CSV-ul se încarcă exact cum e exportat din ING Business; antetul, separatorul `;`, sumele în format românesc (`1.234,56`) și codificarea sunt gestionate automat.\nDetecție după semnătură: fișierul e recunoscut după antetul ING (`numar cont;data procesarii;...`), deci poate fi importat de pe orice jurnal de tip bancă, alături de alte formate de extras; un CSV fără antetul ING urmează fluxul obișnuit, cu asistentul de mapare.\nValidare cont: IBAN-ul din fișier se verifică față de contul bancar al jurnalului (mecanismul standard Odoo); dacă jurnalul nu are încă un cont bancar, IBAN-ul din fișier se setează automat la primul import. Un jurnal per IBAN.\nSolduri: soldul inițial și cel final ale extrasului se calculează din coloana „sold intermediar”; extrasul creat se numește ING <data de la> - <data până la>, cu tranzacțiile în ordine cronologică.\nDate pentru reconciliere: numele contrapartidei, IBAN-ul și CUI-ul contrapartidei se preiau pe linia de extras și apar în widgetul de reconciliere bancară. Partenerul se identifică automat după CUI (cu sau fără prefixul `RO`); dacă mai mulți parteneri au același CUI, linia rămâne nealocată, la decizia operatorului.\nProtecție la duplicate: fiecare tranzacție se importă o singură dată (id unic din referința internă/instant ING); reimportul aceluiași fișier este refuzat („You already have imported that file.”), deci se exportă doar perioada nouă.\nCum se încarcă: *Contabilitate → Tablou de bord*, pe cardul jurnalului ING, meniul ⋮ → Extrase → Încărcare; alternativ, linkul Importă fișier din cardul jurnalului sau tragerea fișierului peste lista de tranzacții.\nConfigurare: jurnal de bancă în RON, cu cont tranzitoriu setat (altfel Odoo nu poate crea liniile de extras); utilizatorul care importă are nevoie de drepturi de contabilitate; modulul necesită mecanismul standard de import al extraselor din Odoo Enterprise.\nLimitări: un export fără tranzacții și un fișier cu alt IBAN decât al jurnalului sunt refuzate; modulul nu postează note contabile (acestea rezultă din reconcilierea standard Odoo); un sold final diferit de cel din ING Business indică de regulă un export parțial sau tranzacții în altă monedă. Fluxul pas cu pas este în fișa consultant."
   },
   {
     "path": "l10n_ro_account_bank_statement_import_mt940_bt/index.md",
@@ -15998,20 +16040,29 @@
     "version": "19.0.2.1.7",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_bank_statement_import_xlsx",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_account_bank_statement_import_xlsx",
-    "last_ingest": "2026-08-20",
+    "last_ingest": "2026-11-21",
     "friendly_name": "Romania - Import extrase bancare (XLSX)",
-    "summary": "Acest modul extinde funcționalitatea de import al extraselor bancare pentru a accepta fișiere XLSX. Se bazează pe mecanismul standard de import din Odoo, permițând utilizatorilor să mapeze coloanele dintr-un fișier Excel pe câmpurile liniilor de extras bancar. Astfel, contabilii pot prelua direct extrasele primite de la bancă în format Excel, fără conversii manuale, simplificând reconcilierea operațiunilor bancare.",
+    "summary": "Modulul completează importul extraselor de cont din fișiere Excel (XLSX) cu identificarea automată a partenerului. Fișierul se încarcă în jurnalul de bancă, iar coloanele lui se asociază cu câmpurile liniei de extras în asistentul de import Odoo (asocierea este reținută pentru importurile următoare). Este util pentru băncile care nu oferă export MT940 sau CAMT, iar contabilii preiau extrasele direct din Excel, fără conversii manuale.",
     "features": [
-      "Suport XLSX: Adaugă formatul XLSX în lista formatelor de import disponibile pentru jurnalele bancare.",
-      "Mapare flexibilă: Folosește asistentul de import din Odoo, permițând utilizatorilor să gestioneze diverse structuri de fișiere.",
-      "Potrivire parteneri specifică României: Identifică automat partenerul după nume sau după referința comenzii de vânzare regăsită în coloana de referință a plății."
+      "Identificarea partenerului după nume: valoarea din coloana asociată cu *Nume partener* se caută printre partenerii din Odoo, după denumirea identică (fără să conteze majusculele); partenerul găsit se completează pe linie.",
+      "Identificarea partenerului după comanda de vânzare: dacă linia nu are partener și detaliile plății (*Eticheta*) conțin exact numărul unei comenzi de vânzare, se completează clientul de facturare al comenzii (necesită aplicația Vânzări instalată). Liniile fără detalii primesc eticheta „N/A”.",
+      "Parsere XLSX dedicate: dacă fișierul este recunoscut de un parser dedicat instalat (de exemplu un borderou de curier), importul trece direct pe acel parser, fără asistentul de mapare.",
+      "Cum se importă:",
+      "fișierul XLSX are un rând de antet și rândurile ordonate după dată;",
+      "din *Contabilitate → Tablou de bord*, pe cardul jurnalului de bancă, se apasă Încărcare (sau ⋮ → Importă fișier);",
+      "în asistentul Importă extras cont bancar se asociază data → *Dată*, detaliile → *Eticheta*, numele → *Nume partener*, suma → *Valoare* (sau *Debit* și *Credit*), soldul → *Cumulative Balance* (opțional, pentru soldurile extrasului), apoi Test și Importă;",
+      "se verifică liniile (cele fără partener se completează manual înainte de reconciliere) și soldurile extrasului; fișierul importat rămâne atașat extrasului.",
+      "Restricții: se poate selecta un singur fișier XLSX o dată și nu se pot amesteca fișiere XLSX cu alte formate."
     ],
     "dependencies": [
       "l10n_ro",
       "account_bank_statement_import_csv"
     ],
-    "connections": [],
-    "text": "Romania - Import extrase bancare (XLSX)\nl10n_ro_account_bank_statement_import_xlsx\nAcest modul extinde funcționalitatea de import al extraselor bancare pentru a accepta fișiere XLSX. Se bazează pe mecanismul standard de import din Odoo, permițând utilizatorilor să mapeze coloanele dintr-un fișier Excel pe câmpurile liniilor de extras bancar. Astfel, contabilii pot prelua direct extrasele primite de la bancă în format Excel, fără conversii manuale, simplificând reconcilierea operațiunilor bancare.\nSuport XLSX: Adaugă formatul XLSX în lista formatelor de import disponibile pentru jurnalele bancare.\nMapare flexibilă: Folosește asistentul de import din Odoo, permițând utilizatorilor să gestioneze diverse structuri de fișiere.\nPotrivire parteneri specifică României: Identifică automat partenerul după nume sau după referința comenzii de vânzare regăsită în coloana de referință a plății."
+    "connections": [
+      "l10n_ro_account_bank_statement_import_ing_csv",
+      "deltatech_account_bank_statement_import"
+    ],
+    "text": "Romania - Import extrase bancare (XLSX)\nl10n_ro_account_bank_statement_import_xlsx\nModulul completează importul extraselor de cont din fișiere Excel (XLSX) cu identificarea automată a partenerului. Fișierul se încarcă în jurnalul de bancă, iar coloanele lui se asociază cu câmpurile liniei de extras în asistentul de import Odoo (asocierea este reținută pentru importurile următoare). Este util pentru băncile care nu oferă export MT940 sau CAMT, iar contabilii preiau extrasele direct din Excel, fără conversii manuale.\nIdentificarea partenerului după nume: valoarea din coloana asociată cu *Nume partener* se caută printre partenerii din Odoo, după denumirea identică (fără să conteze majusculele); partenerul găsit se completează pe linie.\nIdentificarea partenerului după comanda de vânzare: dacă linia nu are partener și detaliile plății (*Eticheta*) conțin exact numărul unei comenzi de vânzare, se completează clientul de facturare al comenzii (necesită aplicația Vânzări instalată). Liniile fără detalii primesc eticheta „N/A”.\nParsere XLSX dedicate: dacă fișierul este recunoscut de un parser dedicat instalat (de exemplu un borderou de curier), importul trece direct pe acel parser, fără asistentul de mapare.\nCum se importă:\nfișierul XLSX are un rând de antet și rândurile ordonate după dată;\ndin *Contabilitate → Tablou de bord*, pe cardul jurnalului de bancă, se apasă Încărcare (sau ⋮ → Importă fișier);\nîn asistentul Importă extras cont bancar se asociază data → *Dată*, detaliile → *Eticheta*, numele → *Nume partener*, suma → *Valoare* (sau *Debit* și *Credit*), soldul → *Cumulative Balance* (opțional, pentru soldurile extrasului), apoi Test și Importă;\nse verifică liniile (cele fără partener se completează manual înainte de reconciliere) și soldurile extrasului; fișierul importat rămâne atașat extrasului.\nRestricții: se poate selecta un singur fișier XLSX o dată și nu se pot amesteca fișiere XLSX cu alte formate."
   },
   {
     "path": "l10n_ro_account_chart/index.md",
@@ -16331,7 +16382,7 @@
   {
     "path": "l10n_ro_ai_partner_financials/index.md",
     "module": "l10n_ro_ai_partner_financials",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_ai_partner_financials",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_ai_partner_financials",
     "last_ingest": "2026-10-27",
@@ -17117,7 +17168,7 @@
   {
     "path": "l10n_ro_anaf_d394/index.md",
     "module": "l10n_ro_anaf_d394",
-    "version": "19.0.1.3.16",
+    "version": "19.0.1.3.17",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d394",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d394",
     "last_ingest": null,
@@ -17157,7 +17208,7 @@
   {
     "path": "l10n_ro_anaf_d394_pos/index.md",
     "module": "l10n_ro_anaf_d394_pos",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.3.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d394_pos",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d394_pos",
     "last_ingest": null,
@@ -17866,7 +17917,7 @@
   {
     "path": "l10n_ro_currency_revaluation/index.md",
     "module": "l10n_ro_currency_revaluation",
-    "version": "19.0.1.3.3",
+    "version": "19.0.1.3.4",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_currency_revaluation`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_currency_revaluation",
     "last_ingest": "2026-10-13",
@@ -18130,7 +18181,7 @@
   {
     "path": "l10n_ro_doubtful_receivables/index.md",
     "module": "l10n_ro_doubtful_receivables",
-    "version": "19.0.1.0.7",
+    "version": "19.0.1.0.9",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_doubtful_receivables",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_doubtful_receivables",
     "last_ingest": "2026-09-29",
@@ -18773,7 +18824,7 @@
   {
     "path": "l10n_ro_excise_duty/index.md",
     "module": "l10n_ro_excise_duty",
-    "version": "19.0.1.4.5",
+    "version": "19.0.1.5.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_excise_duty",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_excise_duty",
     "last_ingest": null,
@@ -18881,7 +18932,7 @@
   {
     "path": "l10n_ro_financial_notes/index.md",
     "module": "l10n_ro_financial_notes",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.2.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_financial_notes",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_financial_notes",
     "last_ingest": "2026-11-03",
@@ -19538,7 +19589,7 @@
   {
     "path": "l10n_ro_intrastat_enhancement/index.md",
     "module": "l10n_ro_intrastat_enhancement",
-    "version": "19.0.1.9.8",
+    "version": "19.0.1.9.9",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_intrastat_enhancement",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_intrastat_enhancement",
     "last_ingest": "2026-11-20",
@@ -20301,7 +20352,7 @@
   {
     "path": "l10n_ro_partner_financials/index.md",
     "module": "l10n_ro_partner_financials",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_partner_financials",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_partner_financials",
     "last_ingest": null,
@@ -23469,7 +23520,7 @@
   {
     "path": "terrabit_clear_data/index.md",
     "module": "terrabit_clear_data",
-    "version": "19.0.1.0.14",
+    "version": "19.0.1.0.15",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_clear_data",
     "local_path": "odoo-addons/terrabit/terrabit_clear_data",
     "last_ingest": "2026-10-09",
@@ -23665,7 +23716,7 @@
   {
     "path": "terrabit_helpdesk_connector/index.md",
     "module": "terrabit_helpdesk_connector",
-    "version": "19.0.0.3.3",
+    "version": "19.0.0.3.8",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector",
     "local_path": "odoo-addons/terrabit/terrabit_helpdesk_connector",
     "last_ingest": "2026-09-24",
@@ -23993,7 +24044,7 @@
   {
     "path": "terrabit_iap_server_helpdesk/index.md",
     "module": "terrabit_iap_server_helpdesk",
-    "version": "19.0.0.2.0",
+    "version": "19.0.0.3.0",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_helpdesk",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_helpdesk",
     "last_ingest": "2026-09-24",

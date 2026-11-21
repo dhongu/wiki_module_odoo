@@ -25,7 +25,7 @@ Modulul nu are temei legal propriu. Contextul este operațional: apelurile trec 
 
 - Nu există conturi contabile implicate; modulul nu generează note contabile.
 - Date necesare de la administratorul Daktela: adresa instanței (de exemplu `https://firma.daktela.com`), un token API static pentru un utilizator de integrare și numele unic al fiecărui agent în Daktela.
-- Pentru softphone-ul din Telefon, în plus: adresa WebSocket, domeniul SIP și, dacă Daktela îl dă separat, utilizatorul de autentificare SIP. Conectarea softphone-ului la Daktela nu e încă confirmată de Daktela (vezi secțiunea 11).
+- Nu e nevoie de date SIP (adresă WebSocket, domeniu SIP, utilizator de autentificare): Daktela a confirmat că softphone-ul Odoo nu se poate conecta la PBX-ul Daktela (vezi secțiunea 11).
 - Datele din capturi (create de testul de capturi; modulul nu instalează date demo): furnizorul „Daktela", utilizatorul administrator legat de agentul `agent.demo` și folosit ca utilizator implicit, contactul „Client Exemplu SRL" cu telefon și trei apeluri importate.
 
 ## 5. Configurare inițială
@@ -33,9 +33,8 @@ Modulul nu are temei legal propriu. Contextul este operațional: apelurile trec 
 1. Instalați aplicația **Telefon** și apoi modulul **Phone - Daktela**.
 2. Mergeți la **Telefon → Configurare → Furnizori** și creați furnizorul Daktela.
 3. În grupul **API Daktela**, completați **Adresă instanță Daktela**, **Token API Daktela**, **Fus orar Daktela** (fusul instanței Daktela, implicit Europe/Bucharest), opțional **Coadă de ieșire Daktela** și **Utilizator implicit Daktela**, apoi apăsați **Test conexiune**. La actualizarea modulului, furnizorii rămași pe UTC trec automat pe Europe/Bucharest; dacă instanța Daktela e în alt fus, setați-l pe acela.
-4. Pentru softphone, completați și **WebSocket** și **Domeniu SIP Daktela**, apoi setați **Mediul VoIP** pe **Producție**.
-După configurare, furnizorul Daktela devine furnizorul implicit al utilizatorilor noi și al celor fără furnizor, iar aplicația Telefon nu mai rulează în „Mod Demo”. Furnizorii de exemplu instalați cu aplicația (Demo, Axivox, DIDWW, OnSIP) se pot șterge. Un utilizator fără agent Daktela care pornește un apel primește mesajul că nu e legat de un agent.
-
+4. **WebSocket**, **Domeniu SIP Daktela** și **Mediul VoIP** nu trebuie completate: cu API-ul Daktela configurat, partea SIP a softphone-ului nu pornește, iar Odoo lucrează singur în modul Producție.
+   După configurare, furnizorul Daktela devine furnizorul implicit al utilizatorilor noi și al celor fără furnizor, iar aplicația Telefon nu mai rulează în „Mod Demo”. Furnizorii de exemplu instalați cu aplicația (Demo, Axivox, DIDWW, OnSIP) se pot șterge. Un utilizator fără agent Daktela care pornește un apel primește mesajul că nu e legat de un agent.
 5. Pentru fiecare agent, deschideți utilizatorul din **Setări → Utilizatori & Companii → Utilizatori**, tabul **VoIP**: alegeți furnizorul și completați **Agent Daktela**. Dacă agentul sună pe altă coadă decât cea a furnizorului (de exemplu un operator pentru Ungaria, pe coada „Efectuare apeluri HU”), completați **Coadă de ieșire Daktela** pe utilizator. Coada utilizatorului are prioritate; fără ea se folosește coada de pe furnizor.
 
 Opțional, completați **Dispozitiv Daktela** și **Tip dispozitiv Daktela** (dispozitiv SIP sau număr extern), ca Odoo să logheze agentul înainte de fiecare apel.
@@ -58,31 +57,43 @@ După ce ați completat adresa și tokenul și ați salvat, apăsați **Test con
 
 Verificați **Utilizator implicit Daktela**: Telefon îi arată fiecărui utilizator doar apelurile lui, deci un apel fără agent cunoscut (de exemplu un apel pierdut din coadă) se atribuie acestui utilizator. Fără el, apelul se importă, dar nu îl vede nimeni.
 
-![Formularul furnizorului Daktela: Adresă instanță Daktela, Token API Daktela, Coadă de ieșire Daktela 1002 și butonul Test conexiune marcate cu 1–4; în grupul API Daktela apar și Fus orar Daktela Europe/Bucharest și Utilizator implicit Daktela Mitchell Admin](screenshots/02_formular_provider.png)
+![Formularul furnizorului Daktela: Adresă instanță Daktela, Token API Daktela, Coadă de ieșire Daktela 1002 și butonul Test conexiune marcate cu 1–4; în grupul API Daktela apar și Fus orar Daktela Europe/Bucharest și Utilizator implicit Daktela Administrator](screenshots/02_formular_provider.png)
 
 ### Pasul 3 — Legați utilizatorul de agentul Daktela
 
-Mergeți la **Setări → Utilizatori & Companii → Utilizatori**, deschideți utilizatorul și tabul **VoIP**. Alegeți furnizorul Daktela și completați **Agent Daktela** cu numele unic al utilizatorului în Daktela; același nume leagă apelurile importate de utilizator. **Utilizator autentificare Daktela** se completează doar dacă Daktela dă pentru SIP un utilizator de autentificare diferit de **Nume utilizator**. **Utilizator autentificare Daktela** apare și în preferințele utilizatorului, ca la OnSIP, unde îl poate completa singur. **Agent Daktela**, **Dispozitiv Daktela** și **Coadă de ieșire Daktela** le setează doar administratorul (în preferințe sunt doar afișate), pentru că de el depinde ale cui apeluri vede utilizatorul și de pe ce telefon pornește apelul; un agent poate fi legat de un singur utilizator.
+Mergeți la **Setări → Utilizatori & Companii → Utilizatori**, deschideți utilizatorul și tabul **VoIP**. Alegeți furnizorul Daktela și completați **Agent Daktela** cu numele unic al utilizatorului în Daktela; același nume leagă apelurile importate de utilizator. **Nume utilizator**, **Utilizator autentificare Daktela** și **Secret** sunt pentru conectarea SIP a softphone-ului și nu au efect cât timp API-ul Daktela e configurat; le puteți lăsa goale. **Agent Daktela**, **Dispozitiv Daktela** și **Coadă de ieșire Daktela** le setează doar administratorul (în preferințe sunt doar afișate), pentru că de el depinde ale cui apeluri vede utilizatorul și de pe ce telefon pornește apelul; un agent poate fi legat de un singur utilizator.
 
 Dacă agentul sună pe altă coadă decât cea a furnizorului (de exemplu un operator pentru Ungaria, pe coada „Efectuare apeluri HU”, 1003), completați **Coadă de ieșire Daktela** pe utilizator. Coada utilizatorului are prioritate față de cea a furnizorului, la apel și la logarea automată.
 
 Opțional, completați **Dispozitiv Daktela** cu numele unic din Daktela al dispozitivului pe care vorbește agentul și alegeți **Tip dispozitiv Daktela**: un **dispozitiv SIP** (telefon de birou sau o aplicație SIP ca Zoiper, înregistrată pe domeniul Daktela) sau un **număr extern** (de exemplu mobilul agentului). Atunci, la fiecare apel pornit din Odoo, Odoo îl loghează pe agent pe acest dispozitiv și în starea Ready și în coada lui de ieșire (cea de pe utilizator sau, dacă lipsește, cea de pe furnizor, dacă e completată), iar agentul nu mai deschide aplicația Daktela. Telefonul web Daktela (WebRTC) nu se poate porni așa: fără dispozitiv completat, agentul se loghează singur în Daktela, într-o coadă de ieșire, pe Ready.
 
-![Tabul VoIP al utilizatorului Mitchell Admin: furnizorul Daktela, câmpul Agent Daktela completat cu agent.demo marcat cu 1 și câmpul Utilizator autentificare Daktela gol marcat cu 2](screenshots/03_tab_voip_utilizator.png)
+![Tabul VoIP al utilizatorului Administrator: furnizorul Daktela, câmpul Agent Daktela completat cu agent.demo marcat cu 1 și câmpul Utilizator autentificare Daktela gol marcat cu 2](screenshots/03_tab_voip_utilizator.png)
 
 ### Pasul 4 — Sunați contactul prin Daktela
 
-Deschideți un contact care are telefon și treceți cu mouse-ul peste număr: lângă el apare linkul **Apeluri**. La clic, Odoo cere Daktela să sune numărul, în format internațional, de pe telefonul Daktela al agentului, iar în colț apare un mesaj de confirmare. Apelul pleacă prin **Coadă de ieșire Daktela** a utilizatorului sau, dacă lipsește, prin cea a furnizorului; fără niciuna, Daktela alege coada. Agentul trebuie să fie logat în Daktela într-o coadă de ieșire, în starea Ready, cu un dispozitiv conectat; altfel Daktela refuză apelul și Odoo afișează motivul. Apelul nu trece prin softphone-ul Odoo.
+Deschideți un contact care are telefon și treceți cu mouse-ul peste număr: lângă el apare linkul **Apeluri**. La clic, Odoo cere Daktela să sune numărul, în format internațional, de pe telefonul Daktela al agentului, iar widgetul **Telefon** se deschide în colțul din stânga jos cu apelul (vezi pasul următor). Apelul pleacă prin **Coadă de ieșire Daktela** a utilizatorului sau, dacă lipsește, prin cea a furnizorului; fără niciuna, Daktela alege coada. Agentul trebuie să fie logat în Daktela într-o coadă de ieșire, în starea Ready, cu un dispozitiv conectat; altfel Daktela refuză apelul și Odoo afișează motivul. Apelul nu trece prin softphone-ul Odoo.
 
-La fel funcționează linkul **Apeluri** de lângă orice număr de telefon din Odoo (telefon sau mobil, pe contact, oportunitate, comandă), precum și apelurile din aplicația Telefon (contacte, activități, istoric): pentru un utilizator legat de un agent Daktela, apelul pleacă prin Daktela, nu prin softphone-ul Odoo. Softphone-ul Odoo nu se mai conectează pentru acești utilizatori, deci nu mai apare apelul simulat „Demo call”.
+La fel funcționează linkul **Apeluri** de lângă orice număr de telefon din Odoo (telefon sau mobil, pe contact, oportunitate, comandă), precum și apelurile din widgetul Telefon (tastatură, contacte, activități, recente): pentru un utilizator legat de un agent Daktela, apelul pleacă prin Daktela. Partea SIP a softphone-ului Odoo nu se conectează pentru acești utilizatori, deci nu mai apare apelul simulat „Demo call”; sunetul e în telefonul Daktela al agentului.
 
 ![Fișa contactului Client Exemplu SRL, companie din București cu telefonul +40 721 000 111, cu numărul de telefon marcat; la trecerea mouse-ului apare lângă el linkul Apeluri](screenshots/04_contact_apel_daktela.png)
 
-### Pasul 5 — Vedeți apelurile în istoric
+### Pasul 5 — Urmăriți apelul în widgetul Telefon
 
-Mergeți la **Telefon → Apeluri**. La fiecare 10 minute, apelurile terminate în Daktela se importă aici (un apel aflat încă în desfășurare se importă la rularea de după încheierea lui), o singură dată fiecare, la ora la care au avut loc: contactul găsit după numărul de telefon, numărul, durata, utilizatorul găsit după agent și starea. Un apel răspuns apare ca efectuat sau primit, un apel intrat fără răspuns ca **Apel ratat**, iar un apel ieșit fără răspuns ca **Apel anulat**. Apelurile interne nu se importă.
+Widgetul arată apelul cu fișa contactului: în antet **Apel extern…** cât timp sună, apoi **În convorbire** și cronometrul, după ce clientul răspunde. Odoo citește starea apelului din Daktela la fiecare 2 secunde, doar cât durează apelul. Butoanele **Transfer**, **Așteptare**, **Înregistrare**, **Mut** și **Tastatură** sunt dezactivate: ele lucrează cu o sesiune SIP din browser, pe care un apel Daktela nu o are (microfonul se oprește din telefonul Daktela). Butonul cu căștile din antet (**Deschide telefonul Daktela**) deschide telefonul web Daktela într-o fereastră separată; acolo e sunetul apelului și trebuie să rămână deschis.
 
-![Lista Apeluri din aplicația Telefon cu trei apeluri importate din Daktela: un apel ieșit către Client Exemplu SRL de 3 minute și 5 secunde cu starea Apeluri efectuate, un apel intrat ratat de la +40731222333 atribuit utilizatorului implicit și un apel ieșit anulat](screenshots/05_istoric_apeluri.png)
+![Fișa contactului Client Exemplu SRL cu widgetul Telefon deschis în stânga jos: antetul În convorbire - 00:05, butonul cu căști Deschide telefonul Daktela marcat, cronometrul 00:05, butoanele Transfer, Așteptare, Înregistrare, Mut și Tastatură dezactivate și butonul roșu de închidere activ](screenshots/05_widget_in_convorbire.png)
+
+### Pasul 6 — Închideți apelul
+
+Apăsați butonul roșu din widget: Odoo închide apelul în Daktela, iar widgetul arată rezumatul apelului (contactul, durata, butoanele **Contact**, **Activitate** și **Apeluri**), apoi revine la tastatură. Dacă apelul se închide în Daktela (clientul închide sau agentul închide din telefonul Daktela), widgetul afișează singur rezumatul, în cel mult 2 secunde, fără niciun clic în Odoo. Dacă Daktela refuză închiderea, Odoo afișează motivul dat de Daktela, iar apelul rămâne afișat în curs.
+
+![Widgetul Telefon după închiderea apelului către Client Exemplu SRL, marcat: starea Disponibil, rezumatul cu A durat și butoanele Contact, Activitate și Apeluri](screenshots/06_widget_apel_incheiat.png)
+
+### Pasul 7 — Vedeți apelurile în istoric
+
+Mergeți la **Telefon → Apeluri**. Un apel pornit din Odoo apare aici imediat, cu contactul; importul de la 10 minute îl completează cu orele și rezultatul din Daktela, fără să creeze un al doilea apel. La fiecare 10 minute, apelurile terminate în Daktela se importă aici (un apel aflat încă în desfășurare se importă la rularea de după încheierea lui), o singură dată fiecare, la ora la care au avut loc: contactul găsit după numărul de telefon, numărul, durata, utilizatorul găsit după agent și starea. Un apel răspuns apare ca efectuat sau primit, un apel intrat fără răspuns ca **Apel ratat**, iar un apel ieșit fără răspuns ca **Apel anulat**. Apelurile interne nu se importă.
+
+![Lista Apeluri din aplicația Telefon cu trei apeluri importate din Daktela: un apel ieșit către Client Exemplu SRL de 3 minute și 5 secunde cu starea Apeluri efectuate, un apel intrat ratat de la +40731222333 atribuit utilizatorului implicit și un apel ieșit anulat](screenshots/07_istoric_apeluri.png)
 
 ### Note de monografie și raportare
 
@@ -95,9 +106,9 @@ Modulul nu generează note contabile. Istoricul apelurilor se poate filtra și g
 | `voip` (Telefon, Enterprise) | Furnizorii VoIP, istoricul apelurilor, softphone-ul și setările VoIP ale utilizatorului. Modulul nu funcționează fără el. |
 | `phone_validation` (prin Telefon) | Aduce numerele în format internațional, pentru apel și pentru găsirea contactului. |
 
-**Ce e automat:** importul apelurilor terminate (la 10 minute), legarea apelurilor de contact și de utilizator, atribuirea apelurilor fără agent utilizatorului implicit, formatul internațional al numărului la apel.
+**Ce e automat:** starea apelului în widgetul Telefon (în curs, în convorbire, încheiat), închiderea în widget a unui apel închis în Daktela, apelul în istoric de la pornire și completarea lui la import, importul apelurilor terminate (la 10 minute), legarea apelurilor de contact și de utilizator, atribuirea apelurilor fără agent utilizatorului implicit, formatul internațional al numărului la apel.
 
-**Ce rămâne manual:** conexiunea API pe furnizor, agentul pe fiecare utilizator, pornirea apelului cu linkul **Apeluri** de lângă număr.
+**Ce rămâne manual:** conexiunea API pe furnizor, agentul pe fiecare utilizator, pornirea apelului (linkul **Apeluri** de lângă număr sau tastatura widgetului), închiderea apelului cu butonul roșu, deschiderea telefonului web Daktela.
 
 ## 8. Verificări pentru consultant
 
@@ -107,8 +118,14 @@ Modulul nu generează note contabile. Istoricul apelurilor se poate filtra și g
 - [ ] Cu **Coadă de ieșire Daktela** completată, apelul pornit din Odoo apare în Daktela pe coada aceea.
 - [ ] Un utilizator cu **Coadă de ieșire Daktela** proprie sună prin coada lui, nu prin cea a furnizorului.
 - [ ] Utilizatorul are în tabul **VoIP** furnizorul Daktela și **Agent Daktela** identic cu numele lui din Daktela.
-- [ ] Pe un contact cu telefon, linkul **Apeluri** de lângă număr face să sune telefonul Daktela al agentului.
-- [ ] Linkul **Apeluri** de lângă un număr de telefon pornește apelul prin Daktela (mesaj în colț sau motivul refuzului), fără fereastra softphone-ului Odoo.
+- [ ] Pe un contact cu telefon, linkul **Apeluri** de lângă număr face să sune telefonul Daktela al agentului; widgetul Telefon arată **Apel extern…** și contactul, sau Odoo afișează motivul refuzului.
+- [ ] După ce clientul răspunde, widgetul trece în cel mult 2 secunde pe **În convorbire**, cu cronometrul pornit.
+- [ ] Butonul roșu închide apelul și în Daktela (telefonul clientului se închide), iar widgetul arată rezumatul.
+- [ ] Un apel închis de client sau din telefonul Daktela se închide singur în widget, fără clic în Odoo.
+- [ ] Pornirea unui apel trimite un singur apel în Daktela (un singur rând în istoricul Daktela).
+- [ ] În timpul apelului, **Transfer**, **Așteptare**, **Înregistrare**, **Mut** și **Tastatură** sunt dezactivate.
+- [ ] Butonul cu căști din antetul widgetului deschide telefonul web Daktela al instanței.
+- [ ] Apelul pornit din Odoo apare imediat în **Telefon → Apeluri**; după import rămâne un singur rând pentru el, cu durata din Daktela.
 - [ ] Cu **Dispozitiv Daktela** completat, agentul delogat din Daktela e logat automat pe dispozitiv și pe Ready (și în coada lui de ieșire: a utilizatorului sau a furnizorului), iar apelul pornește.
 - [ ] Un utilizator nou primește furnizorul Daktela, iar Telefon nu mai afișează „Mod Demo”; un utilizator fără agent care pornește un apel primește mesajul că nu e legat de un agent Daktela.
 - [ ] După cel mult 10 minute de la terminarea apelului, apelul apare în **Telefon → Apeluri**, la ora apelului, cu contactul și utilizatorul corecte.
@@ -133,6 +150,9 @@ Modulul nu generează note contabile. Istoricul apelurilor se poate filtra și g
 | Daktela a răspuns HTTP …: motivul dat de Daktela | Alt refuz al Daktela, cu motivul lui (de exemplu număr blocat) | Citiți motivul; verificați numărul și drepturile utilizatorului de integrare |
 | Daktela nu a putut loga agentul … pe dispozitivul …. | Dispozitivul nu există în Daktela, nu e înregistrat (aplicația SIP oprită) sau nu e de tipul ales | Verificați **Dispozitiv Daktela** și **Tip dispozitiv Daktela** și că aplicația SIP e pornită |
 | Daktela a răspuns cu HTTP … | Daktela a respins cererea fără motiv (de exemplu agent inexistent sau drepturi lipsă pentru utilizatorul de integrare) | Verificați **Agent Daktela** și drepturile utilizatorului de integrare în Daktela |
+| Daktela nu răspunde; starea apelului nu se actualizează. | În timpul unui apel, Odoo nu primește de la Daktela starea apelului (rețea, Daktela indisponibil) | Widgetul încearcă din nou, la intervale tot mai mari; urmăriți apelul în telefonul Daktela și verificați **Adresă instanță Daktela** |
+| Acest apel Daktela aparține altui agent. | Activitatea Daktela a apelului nu e a agentului utilizatorului (de exemplu **Agent Daktela** greșit pe utilizator) | Verificați **Agent Daktela** pe utilizator; un agent nu poate urmări sau închide apelurile altui agent |
+| Acest apel aparține altui utilizator. | Un utilizator încearcă să urmărească sau să închidă apelul altui utilizator | Fiecare agent își închide propriile apeluri, din widgetul lui |
 | Daktela nu a răspuns cu JSON. | Adresa duce la o pagină care nu e API-ul Daktela (proxy, mentenanță, adresă greșită) | Verificați **Adresă instanță Daktela**; importul celorlalți furnizori continuă |
 
 ## 10. Capturi de ecran
@@ -147,14 +167,20 @@ Capturile sunt generate automat din `tests/test_screenshots.py` (mixinul `Screen
 - `02_formular_provider.png`: formularul furnizorului, cu grupul API Daktela: adresa, tokenul, coada de ieșire, butonul Test conexiune și fusul orar Europe/Bucharest.
 - `03_tab_voip_utilizator.png`: tabul VoIP al utilizatorului, cu Agent Daktela și Utilizator autentificare Daktela.
 - `04_contact_apel_daktela.png`: fișa contactului, cu numărul de telefon de lângă care se pornește apelul.
-- `05_istoric_apeluri.png`: lista Apeluri, cu apelurile importate din Daktela.
+- `05_widget_in_convorbire.png`: widgetul Telefon în timpul apelului: În convorbire, cronometrul, butonul Deschide telefonul Daktela și butoanele SIP dezactivate.
+- `06_widget_apel_incheiat.png`: widgetul Telefon după închiderea apelului, cu rezumatul.
+- `07_istoric_apeluri.png`: lista Apeluri, cu apelurile importate din Daktela.
+
+Capturile widgetului se fac cu răspunsurile Daktela simulate în test (apel pornit, apoi răspuns), fără un apel real.
 
 ## 11. Observații pentru manual
 
 - Modulul e ascuns din Apps Store până când Daktela confirmă detaliile din roadmap.
-- Conectarea softphone-ului din Telefon direct la PBX-ul Daktela nu e confirmată de Daktela. Daktela a confirmat că nu se poate (fără SIP over WebSocket): apelul se pornește din linkul **Apeluri**, prin API, pe telefonul Daktela al agentului.
+- Daktela a confirmat că softphone-ul din Telefon nu se poate conecta la PBX-ul Daktela (fără SIP over WebSocket): apelul se pornește din linkul **Apeluri** sau din widgetul Telefon, prin API, pe telefonul Daktela al agentului, iar widgetul doar urmărește și închide apelul.
+- Apelurile de intrare nu apar încă în widget (sunerie și **Răspunde**); sunt în roadmap.
+- În interfața în română, rezumatul apelului din widget arată „A durat:” fără durată: traducerea română a aplicației Telefon din Odoo are un parametru greșit (`%(durata)s` în loc de `%(duration)s`). În engleză apare „Lasted: 00:05”.
 - Importul presupune că Daktela trimite numărul clientului în câmpul `clid` pentru ambele direcții ; de verificat pe o instanță reală. Autentificarea (antetul `X-AUTH-TOKEN`), formatul filtrului și fusul orar al orelor au fost confirmate de Daktela.
-- Fișa contactului nu se deschide automat la apel intrat și nu există legături către înregistrările audio; sunt în roadmap.
+- Nu există legături către înregistrările audio; sunt în roadmap.
 - În interfața în română, coloana **Dată** din lista Apeluri arată „Astăzi," fără oră: e traducerea aplicației Telefon din Odoo, nu a acestui modul.
 
 ---

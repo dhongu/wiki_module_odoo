@@ -1,7 +1,7 @@
 # Accounting Scenario Framework (localizat la `deltatech_account_scenario/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_scenario`
-- **Versiune:** `19.0.1.0.3`
+- **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_scenario
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_account_scenario`
 - **Ultima Ingestie:** `2026-11-02`

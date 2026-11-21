@@ -25,11 +25,10 @@ bonitate slabă.
 ## 2. Bază legală și context
 
 - **Legea 31/1990, art. 153^24** — privește situația în care **activul net** scade sub **jumătate din
-  capitalul social subscris**, din cauza pierderilor. Modulul **nu** verifică acest prag: semnalul
-  „capitaluri proprii negative” se declanșează doar când capitalurile proprii ale ultimului bilanț sunt sub
-  zero, care este un caz extrem al aceleiași situații. Citarea articolului din textul semnalului e deci
-  orientativă: o firmă cu capitaluri pozitive, dar sub jumătate din capitalul social, nu primește semnal. În
-  plus, „Capitaluri – total” din bilanțul public nu coincide exact cu activul net din lege.
+  capitalul social subscris**. Modulul emite un semnal **estimativ** când capitalurile proprii totale ale
+  ultimului bilanț sunt sub jumătate din capitalul subscris vărsat raportat. „Capitaluri – total” din bilanțul public nu
+  coincide exact cu activul net din lege, deci semnalul nu este o constatare juridică. Semnalul de
+  „capitaluri proprii negative” (sub zero) este separat și nu citează articolul.
 - **Bilanțurile publice MFinanțe** — sursa cifrelor: ce a depus partenerul la Ministerul Finanțelor, deci
   datele au cel puțin un an vechime.
 
@@ -52,13 +51,14 @@ Modulul nu generează note contabile. Datele folosite:
 
 | Dată | Sursă |
 |---|---|
-| Bilanțuri publice pe ani (cifra de afaceri, rezultat net, capitaluri proprii, datorii totale, salariați, cod CAEN) | `l10n_ro_partner_financials`, preluate de la MFinanțe |
+| Bilanțuri publice pe ani (cifra de afaceri, rezultat net, capitaluri proprii, capital subscris vărsat, datorii totale, salariați, cod CAEN) | `l10n_ro_partner_financials`, preluate de la MFinanțe |
 | Creanțe deschise pe clienți (scadente sau nu) | unealta de vechime a creanțelor din analiza financiară |
 
 Date minime pentru demo:
 - agentul Plutus configurat în setările analizei financiare;
 - cel puțin doi parteneri cu CUI valid, cu bilanțurile preluate (un partener cu pierdere sau capitaluri
-  negative, ca să apară semnalele);
+  negative, ca să apară semnalele; pentru semnalul estimativ, unul cu capital subscris vărsat pozitiv și
+  capitaluri proprii sub jumătate din el, verificabil pe formularul anului din `l10n_ro_partner_financials`);
 - un partener fără bilanț preluat, pentru mesajul de lipsă;
 - facturi de client neîncasate, pentru vechimea creanțelor.
 
@@ -144,7 +144,8 @@ Semnalele de risc (unealta le întoarce în engleză; Plutus le traduce în limb
 
 | Semnal (unealtă) | În chat | Când apare |
 |---|---|---|
-| negative equity | capitaluri proprii negative | capitalurile proprii ale ultimului bilanț sunt negative |
+| negative equity (based on published financial statements) | capitaluri proprii negative | capitalurile proprii ale ultimului bilanț sunt negative; semnalul nu citează art. 153^24 |
+| equity below half of paid-up subscribed capital (estimate, Law 31/1990, art. 153^24; not a legal finding) | capitaluri proprii sub jumătate din capitalul subscris vărsat (estimare, nu constatare juridică) | capitalul subscris vărsat al ultimului bilanț este pozitiv, iar capitalurile proprii totale sunt sub jumătate din el; apare și la capitaluri pozitive, iar la capitaluri negative apare împreună cu *negative equity*; la capital zero sau lipsă nu apare |
 | net loss | pierdere netă | rezultatul net al ultimului an este negativ |
 | turnover down | cifra de afaceri în scădere | cifra de afaceri a scăzut cu cel puțin 20% față de anul precedent (doar dacă anii sunt consecutivi) |
 | old data | date vechi | cel mai recent bilanț este mai vechi decât anul pe care modulul îl consideră publicat la MFinanțe (N−1 de la 1 iulie, altfel N−2) |
@@ -200,8 +201,11 @@ comercială, adăugarea metodei MCP în politica serverului.
 - [ ] Un CUI incomplet (doar o parte din cifre) nu întoarce o altă firmă.
 - [ ] Un nume care se potrivește la mai mulți parteneri produce lista și cererea de CUI.
 - [ ] Răspunsul arată anul ultimului bilanț și data preluării.
-- [ ] Un partener cu capitaluri proprii negative primește semnalul *negative equity*; unul cu pierdere,
-  *net loss*.
+- [ ] Un partener cu capitaluri proprii negative primește semnalul *negative equity*, fără citare de
+  articol; unul cu pierdere, *net loss*.
+- [ ] Un partener cu capital subscris vărsat pozitiv și capitaluri proprii sub jumătate din el primește
+  semnalul estimativ *equity below half of paid-up subscribed capital*, chiar cu capitaluri pozitive; la
+  capital zero sau la capitaluri peste jumătate, semnalul lipsește.
 - [ ] O scădere a cifrei de afaceri de cel puțin 20% față de anul precedent produce *turnover down*.
 - [ ] Un partener fără bilanț primește mesajul de lipsă și trimiterea la butonul *Retrieve from MFinanțe*.
 - [ ] În vechimea creanțelor, clienții cu semnale au sufixul `| credit: ...`; semnalul de date vechi nu

@@ -107,7 +107,8 @@ Cerințe tehnice pe server: pachetele Python `netopia-sdk` (instalat cu
 ## 5. Configurare inițială
 
 1. Instalați modulul `deltatech_payment_mobilpay`. La instalare se creează furnizorul **MobilPay**,
-   nepublicat, și metoda de plată **Netopia Mobilpay**. Atenție: furnizorul se creează cu **Stare** =
+   nepublicat, și metoda de plată **NETOPIA Payments**, cu mărcile **Card**, **Google Pay** și
+   **Apple Pay**. Atenție: furnizorul se creează cu **Stare** =
    **Activ** (mediul de producție Netopia); treceți-l pe **Mod testare** înainte să-l publicați.
 2. În **Facturare → Configurare → Plan de Conturi**, creați contul **512501 Netopia – sume în curs
    de decontare** (tip **Active Curente**), cu **Permite reconciliere** bifat.
@@ -127,7 +128,12 @@ Cerințe tehnice pe server: pachetele Python `netopia-sdk` (instalat cu
    **Domeniu** din setările acelui site (**Website → Configurare → Setări**). Adresa trebuie să fie
    publică; dacă serverul Odoo stă în spatele unui proxy, el trebuie pornit cu `proxy_mode`. Dacă
    Netopia nu poate accesa adresa, tranzacțiile rămân **În așteptare**.
-7. După testele în sandbox, înlocuiți datele de test cu cele de producție și treceți **Stare** pe
+7. Google Pay și Apple Pay: cereți NETOPIA să le activeze în contul de comerciant; apar apoi pe
+   pagina de plată NETOPIA, fără nicio modificare în Odoo. Siglele lor, afișate la checkout lângă
+   **NETOPIA Payments**, sunt mărci ale metodei de plată; pe cele pe care contul nu le oferă le
+   arhivați din **Facturare → Configurare → Plăți online → Metode de plată** (în modul dezvoltator):
+   deschideți **NETOPIA Payments**, apoi marca respectivă, și arhivați-o.
+8. După testele în sandbox, înlocuiți datele de test cu cele de producție și treceți **Stare** pe
    **Activ**.
 
 ## 6. Flux de utilizare
@@ -152,21 +158,22 @@ certificat al vechiului API sau nu este o cheie publică PEM.
 ### Pasul 3 — Jurnalul plăților
 
 Pe tabul **Configurare**, verificați ① **Jurnal plată** = jurnalul plăților cu cardul. Metoda de
-plată **Netopia Mobilpay** este deja legată de furnizor. Celelalte câmpuri sunt cele standard Odoo:
+plată **NETOPIA Payments** este deja legată de furnizor; mărcile ei (**Card**, **Google Pay**,
+**Apple Pay**) nu apar aici, ci doar ca sigle la checkout. Celelalte câmpuri sunt cele standard Odoo:
 **Valoare maximă** rămâne 0,00 (fără limită), iar **Monede** și **Țări** rămân goale.
 
-![Tabul Configurare al furnizorului MobilPay, cu Jurnal plată Card Netopia marcat 1 și metoda de plată Netopia Mobilpay](screenshots/03_furnizor_jurnal.png)
+![Tabul Configurare al furnizorului MobilPay, cu Jurnal plată Card Netopia marcat 1 și metoda de plată NETOPIA Payments](screenshots/03_furnizor_jurnal.png)
 
-### Pasul 4 — Clientul alege MobilPay la checkout
+### Pasul 4 — Clientul alege NETOPIA Payments la checkout
 
 În magazin, clientul adaugă produsele în coș, completează adresa și ajunge pe pagina **Plată**. În
-secțiunea ① **Metodă de plată** apare opțiunea **Netopia Mobilpay**, cu mențiunea **Securizat de
-MobilPay**; în **Mod testare**, opțiunea are un semn de atenționare. Clientul o selectează și apasă
+secțiunea ① **Metodă de plată** apare opțiunea **NETOPIA Payments**, cu siglele **Card**, **Google Pay**
+și **Apple Pay** și mențiunea **Securizat de MobilPay** (numele furnizorului); în **Mod testare**, opțiunea are un semn de atenționare. Clientul o selectează și apasă
 **Achită acum**. Odoo îl redirecționează pe
-pagina securizată Netopia, unde introduce datele cardului; Odoo nu vede și nu păstrează datele
-cardului. După plată, clientul revine pe pagina de stare a plății din magazin.
+pagina securizată NETOPIA, unde plătește cu cardul sau, dacă NETOPIA le-a activat pe cont, cu
+Google Pay ori Apple Pay; Odoo nu vede și nu păstrează datele cardului. După plată, clientul revine pe pagina de stare a plății din magazin.
 
-![Pagina Plată din magazin: secțiunea Metodă de plată marcată 1, cu opțiunea Netopia Mobilpay selectată, semnul de atenționare al modului testare și mențiunea Securizat de MobilPay; în dreapta, totalul de 387,20 lei și butonul Achită acum](screenshots/04_checkout_mobilpay.png)
+![Pagina Plată din magazin: secțiunea Metodă de plată marcată 1, cu opțiunea NETOPIA Payments selectată și siglele Card, Google Pay și Apple Pay, semnul de atenționare al modului testare și mențiunea Securizat de MobilPay; în dreapta, totalul de 387,20 lei și butonul Achită acum](screenshots/04_checkout_mobilpay.png)
 
 ### Pasul 5 — Comanda este confirmată automat
 
@@ -247,7 +254,9 @@ comisionul Netopia.
       același cont Netopia (test sau producție, după **Stare**).
 - [ ] La încărcarea cheii publice nu apare avertismentul **Cheie publică NETOPIA**.
 - [ ] **Jurnal plată** este jurnalul de bancă dedicat plăților cu cardul.
-- [ ] Furnizorul are eticheta **Publicat**, iar la checkout apare opțiunea **Netopia Mobilpay**.
+- [ ] Furnizorul are eticheta **Publicat**, iar la checkout apare opțiunea **NETOPIA Payments**.
+- [ ] Siglele de la checkout corespund contului: Google Pay și Apple Pay sunt activate de NETOPIA
+      sau mărcile lor sunt arhivate.
 - [ ] O plată de test în sandbox duce comanda în starea **Comandă de vânzare**.
 - [ ] Tranzacția are starea **Confirmat**, **Referință furnizor** completată și câmpul **Plată**
       completat.
@@ -262,14 +271,14 @@ comisionul Netopia.
 
 | Mesaj / simptom | Cauză probabilă | Remediere |
 |-----------------|-----------------|-----------|
-| **Netopia Mobilpay** nu apare la checkout | Furnizorul nu e publicat, e pe altă companie sau e **Dezactivat** | Apăsați **Publicat**, verificați compania și starea furnizorului |
+| **NETOPIA Payments** nu apare la checkout | Furnizorul nu e publicat, e pe altă companie sau e **Dezactivat** | Apăsați **Publicat**, verificați compania și starea furnizorului |
 | La **Achită acum**: „Missing NETOPIA public key on provider.” | **Cheie publică NETOPIA** nu este încărcată | Încărcați fișierul PEM cu cheia publică din contul Netopia |
 | La **Achită acum**: „MobilPay/NETOPIA: server did not return a payment URL.” | **Semnătură** sau **API Key** greșite, ori date de producție folosite în **Mod testare** (sau invers) | Verificați datele în contul Netopia și **Stare** pe furnizor |
 | La încărcarea cheii: avertismentul că fișierul este un certificat X.509 | S-a încărcat certificatul `.cer` al vechiului API MobilPay | Încărcați cheia publică PEM a API-ului v2 Netopia |
 | La încărcarea cheii: avertismentul că fișierul nu este o cheie publică PEM | Fișierul încărcat nu este o cheie publică (ex. cheia privată sau alt fișier) | Descărcați din nou cheia publică din contul Netopia |
 | Clientul a plătit, dar tranzacția rămâne **În așteptare** | Netopia nu poate accesa adresa magazinului pentru notificare (site nepublic, **Domeniu** greșit, proxy fără `proxy_mode`) | Faceți adresa accesibilă public (secțiunea 5, pasul 6); verificați plata în contul Netopia după **Referință furnizor** |
 | Tranzacția trece în **Eroare** cu mesajul băncii (ex. „Fonduri insuficiente”) | Cardul a fost refuzat | Clientul reia plata cu alt card; comanda rămâne neconfirmată |
-| Din tranzacție sau din plată nu se poate face rambursare | Metoda **Netopia Mobilpay** nu permite rambursări din Odoo | Restituiți suma din contul Netopia; în Odoo emiteți factura de stornare și înregistrați manual plata de restituire |
+| Din tranzacție sau din plată nu se poate face rambursare | Metoda **NETOPIA Payments** nu permite rambursări din Odoo | Restituiți suma din contul Netopia; în Odoo emiteți factura de stornare și înregistrați manual plata de restituire |
 
 ## 10. Capturi de ecran
 
@@ -281,8 +290,9 @@ are captură.
 
 1. `01_furnizori_plata.png` — lista furnizorilor de plată, cu MobilPay în Mod testare și publicat.
 2. `02_furnizor_mobilpay.png` — formularul furnizorului: Stare și datele contului Netopia.
-3. `03_furnizor_jurnal.png` — tabul Configurare: Jurnal plată și metoda de plată.
-4. `04_checkout_mobilpay.png` — pagina de plată din magazin, cu opțiunea MobilPay.
+3. `03_furnizor_jurnal.png` — tabul Configurare: Jurnal plată și metoda de plată NETOPIA Payments.
+4. `04_checkout_mobilpay.png` — pagina de plată din magazin, cu opțiunea NETOPIA Payments și siglele
+   Card, Google Pay și Apple Pay.
 5. `05_comanda_platita.png` — comanda confirmată automat după plată.
 6. `06_tranzactie_efectuata.png` — tranzacția MobilPay în starea Confirmat, cu ntpID și plata creată.
 7. `07_nota_plata.png` — nota contabilă a plății, Dr 512501 / Cr 411100.

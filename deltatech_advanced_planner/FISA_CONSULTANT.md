@@ -166,6 +166,21 @@ din ele se anulează separat, din achiziții sau producție. Pe comanda anulată
 bannerul de status și fără risc de livrare. Anularea funcționează și pentru un vânzător
 care nu are drepturi pe planificator.
 
+La recalcularea unei comenzi de vânzare, comenzile planificate nefixate se regenerează, dar componentele
+**fixate** sau **Finalizat** ale unei comenzi părinte nefixate nu se pierd: rămân neschimbate și se
+reatașează la părintele regenerat (după produs), cu programarea făcută manual intactă.
+
+**Recalcularea după lansarea în producție.** Exemplu: pentru o comandă de vânzare s-au generat
+cererile de ofertă, comanda a fost lansată în producție (**Generează OF** pe comanda planificată a
+produsului finit) și materia primă a fost recepționată. Dacă rulați apoi **Recalculare** (de exemplu
+pentru că producția poate începe mai devreme), planificatorul nu mai propune o nouă achiziție și nici
+o nouă comandă de producție: o linie a cărei comandă planificată de produs finit este **Finalizat**
+pentru toată cantitatea nu se mai replanifică, iar comenzile planificate ale componentelor ei rămân
+neschimbate. Când toate liniile sunt lansate, mesajul de planificare spune că nu s-a generat nimic
+nou. Noile date se modifică direct pe comenzile de producție și de achiziție. Materia primă recepționată
+și rezervată de comenzile de producție ale aceleiași comenzi de vânzare acoperă necesarul ei: nu mai
+este socotită stoc ocupat de altă comandă.
+
 ![Comenzile planificate ale unei comenzi de vânzare anulate, în starea Anulat](screenshots/03a_anulare_comanda.png)
 
 ### Pasul 4 — Revizuirea comenzilor planificate
@@ -476,6 +491,7 @@ proprietarului fiecărei reguli de reaprovizionare (bifa **Planificat de Advance
 - [ ] O comandă cu termen imposibil este marcată **Blocat** și propune cea mai devreme dată realizabilă.
 - [ ] **Cea mai devreme dată** pe o ofertă: un produs pe stoc apare „Stoc” cu data de mâine; un produs fabricat apare „Producție”, cu componenta critică în motiv; după **Setează ca dată promisă**, data promisă a comenzii e data pentru toată comanda și nu s-a creat nicio comandă planificată.
 - [ ] RFQ-ul și MO-ul se generează manual din comanda planificată, fără duplicate.
+- [ ] Pe o comandă de vânzare cu achizițiile recepționate și comanda de producție a produsului finit lansată, **Recalculare** nu creează comenzi planificate noi (nici de achiziție, nici de producție), iar mesajul de planificare spune că toate liniile sunt deja lansate.
 - [ ] Două comenzi planificate pentru același produs (de exemplu două variante cu aceeași componentă), cu același furnizor, aceeași UM și același preț, cu data de lansare în fereastra de consolidare și cu prima cerere încă în ciornă, produc pe cerere o singură linie, cu cantitatea totală.
 - [ ] Pe un produs cu componente pe ruta MTO, confirmarea OF-ului generat din planificator nu creează OF-uri sau cereri de ofertă noi pentru componente (în lista OF nu apar ordine cu sursa = alt OF).
 - [ ] Prețurile de furnizor ale produselor gestionate în metri folosesc UM „m”, nu „ml” (mililitru).

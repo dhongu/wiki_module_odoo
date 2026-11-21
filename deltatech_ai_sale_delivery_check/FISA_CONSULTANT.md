@@ -45,8 +45,9 @@ obligații fiscale și merită explicate clientului:
 **Datele trimise furnizorului AI.** La fiecare rulare cu analiză AI pleacă la furnizorul modelului (OpenAI, Google
 sau Anthropic), cu cheia companiei: numărul comenzilor și al transferurilor, numele clienților și ale agenților de
 vânzări, valorile, nota transferului, ultimele trei mesaje din jurnalul comenzii și al transferului și situația
-stocului pentru produsele lipsă. Bifa **Anonimizează clienții pentru AI** trimite clientul ca „Client #id” și nu
-mai trimite mesajele din jurnal. Recomandare: menționați furnizorul AI ca persoană împuternicită în registrul de
+stocului pentru produsele lipsă. Bifa **Anonimizează clienții pentru AI** trimite clientul ca „Client #id”, înlocuiește
+numele clienților (și ale partenerului de livrare) cu „Client #id” și în mesajul anomaliei, și nu mai trimite nici
+mesajele din jurnal, nici nota transferului. Recomandare: menționați furnizorul AI ca persoană împuternicită în registrul de
 prelucrări al clientului (GDPR, Regulamentul UE 2016/679).
 
 ## 3. Utilizatori și roluri
@@ -333,6 +334,9 @@ document (livrare, facturare, AWB, adresă), marcarea anomaliilor văzute sau ig
 - [ ] Cu **Limită zilnică de apeluri AI** = 1, a doua rulare cu anomalii din aceeași zi are **Stare AI** =
       *Sărit: limita zilnică atinsă*, iar anomaliile apar oricum.
 - [ ] Cu **Anonimizează clienții pentru AI** bifat, explicațiile AI nu citează numele clienților.
+- [ ] Cu **Anonimizează clienții pentru AI** bifat, la o anomalie C11 (adresă incompletă, de exemplu client fără
+      stradă) numele partenerului nu apare în ce se trimite la AI, nici în nota transferului, iar mesajul anomaliei din
+      aplicație îl păstrează.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -393,8 +397,9 @@ agentului AI este simulat, ca rezultatul să fie același la fiecare rulare și 
   limitează. Recomandați o primă rulare manuală pe ultima săptămână, înainte de activarea rulării zilnice.
 - **Costul.** O rulare = un singur apel AI, oricâte anomalii ar fi (cel mult **Număr maxim de anomalii trimise la
   AI**). Fără anomalii, AI-ul nu e apelat. Limita zilnică e plasa de siguranță pentru rulările manuale repetate.
-- **Confidențialitate.** Cu **Anonimizează clienții pentru AI**, clienții pleacă ca „Client #id”, iar mesajele din
-  jurnal nu se mai trimit; explicațiile AI sunt atunci mai puțin precise (nu mai pot citi, de exemplu, că clientul a
+- **Confidențialitate.** Cu **Anonimizează clienții pentru AI**, clienții pleacă ca „Client #id”, numele lor
+  dispar și din mesajele anomaliilor trimise la AI (mesajele afișate în aplicație rămân neschimbate), iar mesajele din
+  jurnal și nota transferului nu se mai trimit; explicațiile AI sunt atunci mai puțin precise (nu mai pot citi, de exemplu, că clientul a
   cerut amânarea).
 - Numele agentului (*Sale & Delivery Check AI*) rămâne în engleză în interfață.
 

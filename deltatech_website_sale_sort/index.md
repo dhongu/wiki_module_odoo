@@ -2,20 +2,22 @@
 
 - **Nume Tehnic:** `deltatech_website_sale_sort`
 - **Versiune:** `19.0.1.0.5`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_sort`
+- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_sort
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_sale_sort`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-21`
 
 #### 1. Sumar
 
-Modulul adaugă criterii suplimentare de sortare a produselor în magazinul online (eCommerce), pe lângă cele standard oferite de Odoo. Astfel, vizitatorii pot ordona produsele după popularitate reală — cele mai vândute, cele mai vizitate sau cele mai bine cotate. Pentru a funcționa rapid, modulul calculează periodic (printr-o sarcină programată) o serie de statistici pe fiecare produs, pe care le stochează direct în baza de date, evitând calcule grele la fiecare afișare a paginii.
+Cumpărătorii preferă să înceapă cu ce cumpără, vizitează și apreciază alții sau cu ce este în stoc. Modulul adaugă cinci astfel de criterii în lista de sortare a produselor din website și ține la zi cifrele din spatele lor printr-o acțiune programată zilnică. Statisticile sunt stocate direct pe produs, evitând calcule grele la fiecare afișare a paginii.
 
 #### 2. Funcționalități Cheie
 
-- Criterii suplimentare de sortare a produselor în magazinul online: cele mai vândute, cele mai vizitate, după număr de recenzii, după nota medie și după disponibilitatea în stoc.
-- Câmpuri statistice stocate pe produs (număr vânzări, vizite, recenzii), recalculate periodic pentru performanță.
-- Calcul automat al statisticilor printr-o sarcină programată (cron) care rulează zilnic.
-- Procesare pe loturi (2000 produse/lot) la recalcularea statisticilor, pentru a evita erorile de memorie pe cataloage mari (~476k șabloane); dacă modulul `queue_job` este instalat, fiecare lot este delegat ca job separat (`with_delay()`), altfel se rulează în proces cu golirea cache-ului ORM între loturi.
+- **Opțiuni noi de sortare:** *Best sellers*, *Most Visited*, *Reviews*, *Best Review* și *Availability* se adaugă în lista de sortare a produselor din website, fiecare cu valoarea cea mai mare prima.
+- **Vânzări și vizite:** *Best sellers* folosește cantitatea vândută în ultimele 365 de zile, citită din raportul de vânzări pentru stările finalizate; *Most Visited* folosește vizitele înregistrate pe pagina produsului.
+- **Recenzii:** *Reviews* ordonează produsele după numărul de evaluări primite, iar *Best Review* după media lor.
+- **Disponibilitate:** *Availability* pune primele produsele cu cantitate în stoc mai mare de zero.
+- **Reîmprospătare zilnică:** acțiunea programată *Products: Update products statistics* recalculează cifrele o dată pe zi pentru fiecare produs și variantă, în loturi de 2.000 (job-uri în coadă dacă `queue_job` este instalat, altfel în proces cu golirea cache-ului ORM între loturi).
+- **Limitări:** cifrele sunt stocate pe produse și variante, deci vânzările, vizitele și evaluările noi contează în sortare abia după următoarea rulare; produsele arhivate sunt omise. Acțiunea rulează ca utilizator de sistem, iar modulul nu are grupuri de securitate.
 
 #### 3. Dependențe
 
@@ -24,7 +26,7 @@ Modulul adaugă criterii suplimentare de sortare a produselor în magazinul onli
 
 #### 4. Componente Cheie
 
-Notă: Readme-ul (`DESCRIPTION.md`) menționează explicit existența unui câmp pe produs calculat periodic printr-un cron; componentele de mai jos detaliază aceste elemente, inclusiv mecanismul de procesare pe loturi introdus în versiunea curentă.
+Notă: `readme/DESCRIPTION.md` menționează explicit câmpurile calculate periodic prin cron; componentele de mai jos detaliază aceste elemente (verificate în ultima analiză a codului), inclusiv procesarea pe loturi.
 
 **Modele**
 
@@ -42,6 +44,4 @@ Notă: Readme-ul (`DESCRIPTION.md`) menționează explicit existența unui câmp
 
 #### 5. Conexiuni
 
-- [deltatech_website_sale_attributes](../deltatech_website_sale_attributes/index.md): extinde tot magazinul online (`website_sale`) cu funcționalități complementare de filtrare/afișare a produselor.
-- [terrabit_website_sale_tracking_base](../terrabit_website_sale_tracking_base/index.md): modul din zona de eCommerce/website legat de urmărirea interacțiunilor pe site (sursă a datelor de tip vizită).
 - `queue_job`: dependență opțională (nu figurează în `depends`), folosită doar dacă e instalată, pentru a delega procesarea pe loturi ca joburi asincrone.

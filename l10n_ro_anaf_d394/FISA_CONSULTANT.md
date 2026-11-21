@@ -88,6 +88,12 @@ Date minime pentru demo:
    - **D394 VAT on Collection** (`sistemTVA`): bifați dacă firma aplică sistemul TVA la încasare;
      atunci `tvaDedAI` (rd. 139–142) primește TVA-ul facturilor de la furnizori cu TVA la încasare
      achitate în perioadă, din notele de exigibilitate generate la plată; nebifat, `tvaDedAI` rămâne 0.
+     Tot bifa determină `tvaDed*` (rd. 135–138, 153B–C: facturi achitate de la furnizori în regim normal)
+     și `tvaCol*` (rd. 143–146, 153B–C: facturi de vânzare încasate); nebifat, acestea sunt omise din XML.
+     Cu bifa activă, taxele de achiziție deductibile în regim normal trebuie să fie „la încasare"
+     (art. 297 alin. (3) CF); achizițiile intracomunitare, importurile și taxarea inversă rămân „la
+     facturare". Avansurile se încasează cu factură de avans, iar data de blocare fiscală se setează
+     imediat după depunerea declarației.
      Regimul furnizorului se citește la **data facturii**: cu OCA `l10n_ro_vat_on_payment`, din
      istoricul ANAF al acestuia (`istoric.txt`); fără OCA, din lista **Perioade TVA** a furnizorului
      (fila **Monitorizare ANAF**, modulul `l10n_ro_anaf_partner`), unde o perioadă RTVAI acoperă data
@@ -212,6 +218,18 @@ la încasare. Dacă aplică, fiecare valoare este TVA-ul facturilor de la furniz
 verificați în fila **Monitorizare ANAF** că lista **Perioade TVA** are o perioadă RTVAI care acoperă
 data facturii; dacă nu, apăsați **Sincronizează cu ANAF** și regenerați.
 
+*Verifică în XML (`sistemTVA="1"`):* blocul `informatii` are în plus `tvaDed24`…`tvaDed5` și
+`tvaCol24`…`tvaCol5` (la `sistemTVA="0"` lipsesc). `tvaDed` este TVA-ul facturilor de la furnizori în
+regim normal **achitate în perioadă** (complementul lui `tvaDedAI`: aceeași factură nu apare în ambele,
+regimul furnizorului se citește la data fiecărei facturi);
+`tvaCol` este TVA-ul facturilor de vânzare **încasate în perioadă**, proporțional cu suma încasată. La
+facturile în valută, toate trei se calculează la **cursul facturii**, nu la cel de la plată (art. 290
+alin. (2) CF): diferența de curs nu intră în declarație. Exemplu:
+
+```xml
+<informatii ... tvaDed21="210" tvaDed11="0" ... tvaDedAI21="105" ... tvaCol21="420" tvaCol11="28" ... />
+```
+
 *Verifică în XML (facturi cu mai multe cote):* cota fiecărei operațiuni vine din taxa de pe liniile
 documentului. O factură cu linii pe 21% și pe 11% apare pe două rânduri `op1` (același partener și tip,
 cotele 21 și 11), fiecare cu `nrFact="1"`, iar baza și TVA-ul fiecărui rând sunt cele ale liniilor pe
@@ -312,6 +330,16 @@ sunt cerute. Modulul le emite astfel, deci nu vă mirați că unele atribute lip
   furnizorului: cu OCA `l10n_ro_vat_on_payment`, din `istoric.txt`; fără OCA, din perioadele RTVAI
   ale `l10n_ro_anaf_partner` (început inclusiv, sfârșit exclusiv), cu bifa de la ultima sincronizare
   ca rezervă. Un furnizor nesincronizat, fără bifă, e tratat ca furnizor în regim normal.
+- **`tvaDed`** (rd. 135–138, 153B–C): aceeași linie de TVA a notei de exigibilitate (`Dr 4426 = Cr 4428`),
+  pentru furnizorii în regim normal la data facturii; e complementul lui `tvaDedAI` (art. 297 alin. (3)
+  CF amână deducerea la achizițiile firmei cu TVA la încasare, cu excepția achizițiilor intracomunitare,
+  importurilor și taxării inverse).
+- **`tvaCol`** (rd. 143–146, 153B–C): linia de TVA a notei de exigibilitate generate la încasarea
+  facturii de vânzare (`Dr 4428 = Cr 4427`), proporțional cu suma încasată (art. 282 alin. (3) și (8)
+  CF); stornarea reduce întâi TVA-ul neexigibil (art. 282 alin. (10) CF).
+- **Facturi în valută:** `tvaDed`, `tvaCol` și `tvaDedAI` se calculează la cursul facturii (art. 290
+  alin. (2) CF): partea plătită din TVA-ul în valută al facturii, convertită la cursul liniei de taxă
+  a facturii. Diferența de curs dintre factură și plată, înregistrată separat, nu intră.
 - **Facturi cu mai multe cote:** baza și TVA-ul fiecărui rând D394 se iau din liniile documentului pe
   cota respectivă (aceleași grile ca în D300). La o factură cu TVA la încasare plătită parțial, suma
   devenită exigibilă se repartizează pe cote proporțional, la fel ca notele de exigibilitate pe care
@@ -347,8 +375,9 @@ raportează separat.
 - **Achiziții de la furnizori cu TVA la încasare (tip AI):** nu sunt raportate, indiferent de regimul
   firmei declarante — inclusiv pentru firmele în regim normal. În demo, factura ELY-CONTAB
   SRL (TVA neexigibilă în 4428) lipsește din D394. Adăugați-le manual.
-- **Firme care aplică TVA la încasare:** setarea pune `sistemTVA=1` și calculează `tvaDedAI`; celelalte
-  rubrici pe facturi achitate/încasate (`tvaDed*`, `tvaCol*`) și operațiunile de tip AI nu sunt încă
+- **Firme care aplică TVA la încasare:** setarea pune `sistemTVA=1` și calculează `tvaDedAI`, `tvaDed*`
+  (facturi achitate de la furnizori în regim normal) și `tvaCol*` (facturi încasate), din notele de
+  exigibilitate din perioadă; la `sistemTVA=0` atributele se omit. Operațiunile de tip AI nu sunt încă
   generate.
 - **Regimul furnizorului fără OCA `l10n_ro_vat_on_payment`** e o aproximare bună doar cu sincronizarea
   zilnică a partenerilor cu ANAF:
@@ -404,7 +433,15 @@ raportează separat.
 - [ ] La o firmă cu TVA la încasare, `tvaDedAI` cuprinde doar facturile achitate în perioadă de la
   furnizori cu TVA la încasare la data facturii (fără OCA: perioadele RTVAI din fila **Monitorizare
   ANAF** a furnizorului; cu OCA: istoricul `l10n_ro_vat_on_payment`);
-  facturile de la furnizori în regim normal nu intră (rubrica `tvaDed` nu e încă generată).
+  facturile de la furnizori în regim normal merg la rubrica `tvaDed`.
+- [ ] La firmele cu TVA la încasare, taxele de achiziție deductibile în regim normal trebuie să fie „la
+  încasare" (art. 297 alin. (3) CF). Excepție fac achizițiile intracomunitare, importurile și taxarea
+  inversă, care rămân „la facturare". Achizițiile cu taxe „la facturare" nu intră în `tvaDed`.
+- [ ] Avansul încasat se facturează cu factură de avans, altfel TVA-ul ajunge în perioada facturii, nu a
+  încasării (art. 282 alin. (2) lit. b) și alin. (3) CF). Setați data de blocare fiscală imediat după depunere:
+  o plată sau o anulare de compensare înregistrată într-o perioadă deja declarată îi schimbă sumele.
+- Facturile în valută: TVA-ul din `tvaDed`/`tvaCol`/`tvaDedAI` se calculează la cursul facturii, nu la cel de la
+  plată (art. 290 alin. (2) CF).
 - [ ] Fără OCA, o factură datată în ziua de **sfârșit** a perioadei RTVAI a furnizorului nu intră în
   `tvaDedAI` (sfârșitul e exclusiv), iar una datată în ziua de **început** intră.
 - [ ] Recapitulația pe rânduri D300 de sub **Total** are aceleași sume de TVA ca rândul **Total** al
@@ -430,6 +467,8 @@ raportează separat.
 | DUKIntegrator respinge XML-ul pentru un atribut de adresă sau un grup de atribute lipsă/în plus în `op1` / `rezumat1` | Fișier generat cu un modul sub 19.0.1.3.11, care emitea atribute goale sau grupuri neconforme | Actualizați modulul `l10n_ro_anaf_d394` și regenerați XML-ul |
 | Rapoartele apar goale („Nu există date de afișat!") | Perioada selectată nu conține documente postate | Selectați luna/trimestrul cu facturi postate (implicit luna trecută) |
 | `tvaDedAI` rămâne 0 deși există facturi achitate de la furnizori cu TVA la încasare | Firma nu are bifat **D394 VAT on Collection**; sau furnizorul nu are o perioadă RTVAI care să acopere data facturii (nesincronizat cu ANAF de la actualizarea `l10n_ro_anaf_partner` la 19.0.2.4.0, prima versiune care citește RTVAI) și nici bifa **TVA la încasare (RTVAI)** | Bifați setarea firmei; pe furnizor, în fila **Monitorizare ANAF**, apăsați **Sincronizează cu ANAF** și verificați lista **Perioade TVA** (sau instalați OCA `l10n_ro_vat_on_payment`, care are istoricul complet); apoi regenerați |
+| `tvaDed` rămâne 0 deși facturile de la furnizori în regim normal sunt achitate | Taxele de achiziție sunt „la facturare", deci plata nu generează note de exigibilitate; sau furnizorul e în regim TVA la încasare la data facturii (suma e în `tvaDedAI`) | Configurați taxele de achiziție deductibile în regim normal „la încasare" (art. 297 alin. (3) CF), cu excepția achizițiilor intracomunitare, importurilor și taxării inverse; verificați regimul furnizorului în fila **Monitorizare ANAF** |
+| `tvaDed` / `tvaCol` lipsesc din XML | Firma nu are bifat **D394 VAT on Collection** (`sistemTVA=0`), sau modulul e sub 19.0.1.3.17 | Bifați setarea dacă firma aplică TVA la încasare, actualizați modulul și regenerați |
 
 ## 10. Capturi de ecran
 

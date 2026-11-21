@@ -1,10 +1,11 @@
 # Deltatech Ledger (localizat la `deltatech_ledger/index.md`)
 
 - **Nume Tehnic:** `deltatech_ledger`
-- **Versiune:** `19.0.0.1.1`
+- **Versiune:** `19.0.0.1.2`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_ledger`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_ledger`
 - **Ultima Ingestie:** `2026-10-09`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

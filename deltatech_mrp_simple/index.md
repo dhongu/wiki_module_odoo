@@ -1,10 +1,11 @@
 # Simple MRP (localizat la `deltatech_mrp_simple/index.md`)
 
 - **Nume Tehnic:** `deltatech_mrp_simple`
-- **Versiune:** `19.0.1.1.5`
+- **Versiune:** `19.0.1.1.6`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_simple
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_mrp_simple`
 - **Ultima Ingestie:** `2026-10-26`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

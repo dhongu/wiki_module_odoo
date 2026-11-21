@@ -55,7 +55,7 @@ companiilor bifate în selectorul de companii.
 
 | Notă | Conturi citite (prefix de cod) | Ce se calculează |
 |---|---|---|
-| **Nota 1** — Active imobilizate | cost: 20x (necorporale), 21x/22x/23x (corporale), 26x (financiare); amortizare: 280x, 281x, 296x | sold inițial, intrări, ieșiri, sold final; amortizare inițială, a perioadei, finală; valoarea netă |
+| **Nota 1** — Active imobilizate | cost: 20x (necorporale), 21x/22x/23x (corporale), 261–268 (financiare); amortizare: 280x, 281x, 296x | sold inițial, intrări, ieșiri, sold final; amortizare inițială, a perioadei, finală; valoarea netă |
 | **Nota 2** — Provizioane | fiecare cont 151x | sold inițial, constituiri (rulaj creditor), utilizări / reluări (rulaj debitor), sold final |
 | **Nota 4** — Rezultatul din exploatare | venituri: 70x; 74x, 75x, 72x, 781x și 711 (cu semn); cheltuieli: 60x, 64x, 681x, 61x + 62x + 63x + 65x | cifra de afaceri, alte venituri, cheltuielile pe naturi, rezultatul |
 | **Nota 5** — Creanțe și datorii | vezi tabelul de la Pasul 4 | sold la data de sfârșit, pe intervale de scadență |
@@ -109,10 +109,18 @@ Verificați data **Până la** ①: este data de sfârșit a exercițiului și d
 (inclusiv scadențarul din Nota 5). Apăsați **Calculează automat** ② (vizibil doar în Ciornă). Calculul
 șterge și reface liniile Notelor 1, 2 și 5 și câmpurile Notei 4; notele manuale rămân neatinse.
 
-**Nota 1 — Active imobilizate** are trei rânduri fixe (necorporale, corporale, financiare). Intrările
-și ieșirile se deduc din **mișcarea netă** a conturilor de cost în perioadă (mișcare pozitivă = intrări,
-negativă = ieșiri), nu din rulajele brute. Valorile ei se văd în tab-ul **Nota 1 — Active imobilizate**
-și în PDF (Pasul 5).
+**Nota 1 — Active imobilizate** are trei rânduri fixe (necorporale, corporale, financiare) și se
+calculează pe rulaje brute (OMFP 1802/2014, pct. 471 lit. a): intrările la cost sunt rulajul debitor al
+conturilor de imobilizări, iar ieșirile rulajul creditor, deci o achiziție și o cedare din același an nu
+se compensează. Amortizarea și ajustările perioadei sunt rulajul creditor al 280x/281x/296x, iar coloana
+**Aferentă ieșirilor** ia rulajul debitor al acelorași conturi. La 280x/281x, rulajul debitor este
+amortizarea scoasă din evidență odată cu activul cedat sau casat. La 296x nu este amortizare: „Perioadă”
+înseamnă constituirea ajustării pentru pierderea de valoare (Dr 6863 = Cr 296), iar „Aferentă ieșirilor”
+înseamnă reluarea ei (Dr 296 = Cr 7863), la diminuarea sau anularea ajustării ori la cedarea titlului.
+La imobilizările financiare se iau conturile 261–268; 269 (vărsăminte de efectuat) este cont de pasiv și nu
+intră în cost. Soldul final rămâne soldul contabil. Tabelul are sub „Amortizare cumulată” (care include și
+ajustările 296x) patru coloane: SI, Perioadă, Aferentă ieșirilor, SF, în formular și în PDF (Pasul 5).
+Valorile ei se văd în tab-ul **Nota 1 — Active imobilizate**.
 
 **Nota 2 — Provizioane** are câte un rând pentru fiecare cont 151x cu sold sau rulaj în perioadă:
 
@@ -253,7 +261,9 @@ dată; Nota 4 cu rezultatul din exploatare din contul de profit și pierdere.
 - [ ] Meniul **Note Explicative** apare pentru Contabil și Administrator; un Contabil nu poate crea sau
       modifica un set.
 - [ ] Nota 1: soldul final de cost și de amortizare pe fiecare categorie = soldurile conturilor
-      20x/21x–23x/26x și 280x/281x/296x din balanța la data de sfârșit.
+      20x/21x–23x/261–268 și 280x/281x/296x din balanța la data de sfârșit.
+- [ ] Nota 1, cost: SI + intrări − ieșiri = SF; amortizare: SI + perioadă − aferentă ieșirilor = SF.
+- [ ] O achiziție neachitată de imobilizări financiare (Dr 26x = Cr 269) apare o singură dată la intrări.
 - [ ] Nota 2: pentru fiecare 151x, Intrări = rulajul creditor, Utilizări / anulări = rulajul debitor,
       Sold inițial + Intrări − Utilizări = Sold final.
 - [ ] Nota 4: o înregistrare Dr 345 / Cr 711 mărește „Alte venituri", una Dr 711 / Cr 345 o micșorează;
@@ -306,6 +316,11 @@ Regenerare:
 
 ## 11. Observații pentru manual
 
+- Nota 1: explicați că tabelul arată separat ce s-a cumpărat și ce s-a cedat în exercițiu, nu diferența lor.
+  Transferurile între conturi de imobilizări (de exemplu 231 → 212) apar și la intrări, și la ieșiri; soldul
+  final rămâne corect. Limitări: transferurile nu au coloană proprie, ajustările 290/291/293 nu sunt incluse
+  în blocul „Amortizare cumulată” (amortizare și ajustări), iar o notă de deschidere datată în anul raportat
+  apare ca intrare.
 - Păstrați regula Notei 5: **soldurile sunt cele de la data „Până la"**, cu reconcilierile de până
   atunci; notele anuale se întocmesc după 31.12, când multe facturi sunt deja încasate.
 - Păstrați lista conturilor pe categorii din Nota 5 și regula pentru 4428 (după semnul soldului);

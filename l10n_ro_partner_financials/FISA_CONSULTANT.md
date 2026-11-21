@@ -29,9 +29,10 @@ comercial de date despre firme.
   întârziere, așa că modulul consideră anul N disponibil abia din **1 iulie N+1**: până la 30 iunie se cer
   anii până la N−2, de la 1 iulie până la N−1.
 - **Legea 31/1990, art. 153^24** — privește situația în care activul net scade sub jumătate din capitalul
-  social subscris. Modulul semnalează doar cazul extrem, **capitaluri proprii sub zero** (ultimul bilanț
-  preluat), și citează articolul pe banda de avertizare din formularul anului fiscal. O firmă cu capitaluri pozitive, dar sub jumătate
-  din capitalul social, **nu** primește semnal.
+  social subscris. Modulul compară **capitalurile proprii totale** din ultimul bilanț cu jumătate din
+  **capitalul subscris vărsat** raportat și afișează pe banda formularului anului un semnal **estimativ**; „Capitaluri –
+  total” din bilanțul public nu coincide exact cu activul net din lege, deci semnalul nu constată situația
+  juridică. Separat, **capitalurile proprii sub zero** dau semnalul de capitaluri negative, fără citare de articol.
 - **Sursa:** serviciul public `webservicesp.anaf.ro/bilant`, apelat fără autentificare, cu un singur CUI și
   un an pe cerere, la o cadență de cel mult o cerere pe secundă.
 
@@ -171,9 +172,29 @@ Equity* (②). În lista anilor, rezultatele negative sunt marcate cu roșu.
 2. **Verifică** că semnalul privește **ultimul an preluat**: dacă un an mai nou nu a fost încă preluat,
    reapasă *Retrieve from MFinanțe* înainte de a trage o concluzie. În exemplu, capitalurile scad în fiecare
    an exact cu pierderea anului (180.000 − 230.000 = −50.000; −50.000 − 310.000 = −360.000). Deschis din
-   listă, formularul anului (ecranul din Pasul 2) are o bandă similară, cu trimiterea la art. 153^24 din
-   Legea 31/1990.
+   listă, formularul anului are o bandă similară pentru capitaluri negative (*Negative equity: the company's
+   total equity is below zero.*), fără citare de articol, și, separat, banda estimativă descrisă mai jos.
 3. **Treci mai departe** cu decizia comercială (avans, limită de credit, garanții) — în afara modulului.
+
+### Pasul 3b — Banda estimativă „sub jumătate din capitalul subscris vărsat”
+
+Pe **formularul anului** (*Raportare → Partner Financial Data*, clic pe rând), când *Share Capital* este
+pozitiv și capitalurile proprii totale (*Equity*) sunt **sub jumătate din el**, apare o a doua bandă galbenă (①):
+*Equity below half of the paid-up subscribed capital: an estimate based on published financial statements for
+art. 153^24 of Law 31/1990…*. Banda se bazează pe indicatorul *Equity Below Half of Share Capital* din blocul *Creditworthiness*
+(bifat când banda apare) și **nu depinde de** *Negative Equity*: apare și cu capitaluri pozitive, dar
+sub prag. Cu *Share Capital* zero sau lipsă, banda **nu** apare.
+
+![Formularul anului: banda de capitaluri negative și banda estimativă pentru pragul de jumătate din capitalul subscris vărsat](screenshots/08_banda_sub_jumatate_capital.png)
+
+1. **Găsește** banda estimativă (①) sub titlul anului și indicatorul bifat din *Creditworthiness* (②); în exemplu apar ambele benzi, fiindcă *Equity* este −360.000 și
+   *Share Capital* 200 lei.
+2. **Verifică** în blocul *Balance Sheet* valorile *Equity* și *Share Capital*: banda compară capitalurile
+   proprii totale cu **jumătate** din capitalul subscris vărsat raportat (indicatorul „Capital subscris
+   varsat”, I11).
+3. **Citește-o ca o estimare**: „Capitaluri – total” din bilanțul public nu coincide exact cu activul net din
+   lege, iar capitalul social înregistrat poate diferi de cel raportat. Constatarea situației din art. 153^24
+   cere bilanțul detaliat și actele societății; modulul nu o face.
 
 ### Pasul 4 — Vederea de ansamblu
 
@@ -264,6 +285,10 @@ interpretarea cifrelor și decizia comercială.
 - [ ] Reapăsarea butonului actualizează anul existent fără să dubleze înregistrarea sau indicatorii.
 - [ ] Un partener cu capitaluri proprii negative în ultimul an are banda galbenă și apare la filtrul
   *Negative Equity* din lista de contacte; unul cu capitaluri negative doar într-un an mai vechi, nu.
+- [ ] Banda de capitaluri negative din formularul anului nu citează art. 153^24.
+- [ ] Un an cu *Share Capital* pozitiv și *Equity* sub jumătate din el are banda estimativă (și la
+  capitaluri pozitive, fără *Negative Equity* bifat); cu *Share Capital* zero sau cu *Equity* peste
+  jumătate, banda nu apare.
 - [ ] În vederea de ansamblu funcționează filtrele *Negative Equity*, *At a Loss*, *Non-standard Form*.
 - [ ] O instituție de credit primește formularul *Other reporting form* și banda albastră pe formular.
 - [ ] Cu acțiunea programată pornită, companiile proprii și firmele străine nu sunt interogate (dar ocupă
@@ -299,6 +324,7 @@ sunt fictive.
 | `05_avertizare_capitaluri_negative.png` | Partener cu capitaluri proprii negative: banda de avertizare și semnalul din filă |
 | `06_lista_ansamblu.png` | *Raportare → Partner Financial Data*: toți anii preluați, pe parteneri |
 | `07_filtru_contacte.png` | Lista clienților filtrată pe *Negative Equity* |
+| `08_banda_sub_jumatate_capital.png` | Formularul anului cu banda de capitaluri negative și banda estimativă pentru pragul de jumătate din capitalul subscris vărsat |
 
 Regenerare:
 
@@ -316,8 +342,8 @@ Regenerare:
   anul apare cu separator de mii („2.025”) în Odoo 19.
 - Menționează limita acțiunii programate pe 19.0 (Pasul 6): o bază cu multe firme străine cu cod fiscal
   poate bloca preluarea automată; butonul din fișă funcționează oricum.
-- Semnalul de capitaluri proprii negative este un caz extrem al art. 153^24 din Legea 31/1990, nu
-  verificarea pragului de jumătate din capitalul social.
+- Semnalul de capitaluri negative nu citează art. 153^24; pragul de jumătate din capitalul subscris vărsat e
+  un semnal separat, estimativ (cifre publice, nu activul net din lege).
 - Modulul nu dă rating sau probabilitate de insolvență; acestea vin din conectori comerciali separați.
 - Unele etichete din nucleul Odoo apar fără diacritice (ex. „Ora Urmatoarei Executii” pe acțiunea
   programată); nu țin de modul.

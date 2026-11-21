@@ -117,11 +117,28 @@ cea procesată de operația de care depinde (10). Înregistrați 10 în același
 ### Pasul 4 — Tranșele din zilele următoare
 
 A doua zi înregistrați încă 10 pe Debitare. Pe Vopsire cantitatea disponibilă crește din nou la 10.
-Repetați pe fiecare operație, în ritmul producției. Nu apăsați **Marchează ca Efectuat** pe operație
-până când nu s-a procesat toată cantitatea: odată închisă operația precedentă, limita operației următoare
-devine cantitatea întreagă a ordinului, oricât s-a procesat efectiv pe prima.
+Repetați pe fiecare operație, în ritmul producției. Închideți operația cu **Marchează ca Efectuat**
+doar după ce s-a procesat toată cantitatea (vezi pasul 4a).
 
 ![Comanda de lucru Debitare după două tranșe de câte 10 bucăți: Cantitate procesată 20,00, Rămas de procesat 80,00, iar tabul Cantitate procesată listează ambele înregistrări](screenshots/05_jurnal.png)
+
+### Pasul 4a — Închiderea operației (Marchează ca Efectuat)
+
+Pe un BoM cu **Continuous Production**, modulul controlează butonul **Marchează ca Efectuat** al
+operației, atât din formularul comenzii de lucru, cât și din Shop Floor:
+
+- **Operația anterioară e încă deschisă.** Închiderea este refuzată, cu mesajul „Operația … nu poate
+  fi marcată ca efectuată: operația anterioară … are procesate doar … din …” (vezi secțiunea 9).
+  De exemplu, Debitare are 10 din 20 procesate, iar Vopsire a procesat cele 10: Vopsire nu se poate
+  închide, ca să poată primi și celelalte 10 bucăți. Continuați cu **Înregistrează cantitatea** și
+  închideți operația după ce se închide cea anterioară.
+- **Operațiile anterioare sunt închise (sau nu există).** Operația se închide, iar modulul înscrie
+  automat în jurnal cantitatea rămasă până la cantitatea ordinului, cu nota **Marcată ca efectuată**.
+  **Cantitate procesată** ajunge astfel egală cu cantitatea ordinului, iar operația următoare poate
+  procesa toată cantitatea.
+
+Închiderea întregului ordin de producție închide toate operațiile odată și nu este blocată. Fără
+bifa **Continuous Production**, butonul funcționează ca în Odoo standard și nu adaugă nimic în jurnal.
 
 ### Pasul 5 — Înregistrarea din Shop Floor
 
@@ -138,6 +155,8 @@ dialog ca la pasul 2. Butonul apare doar pe operații, nu pe cardul ordinului de
 În formularul comenzii de lucru, tabul **Cantitate procesată** listează toate înregistrările (dată,
 utilizator, cantitate, notă), cu total. În lista de ordine de lucru, coloana **Cantitate procesată**
 este vizibilă implicit, iar **Rămas de procesat** se poate afișa din selectorul de coloane.
+După **Marchează ca Efectuat** (pasul 4a), jurnalul are o înregistrare în plus, generată de sistem,
+cu cantitatea rămasă și nota **Marcată ca efectuată**.
 
 ![Tabul Cantitate procesată al comenzii de lucru Debitare: două înregistrări de câte 10,00 cu notele Prima zi și A doua zi, total 20,00, iar în dreapta Cantitate procesată 20,00 și Rămas de procesat 80,00](screenshots/05_jurnal.png)
 
@@ -163,7 +182,8 @@ consumul de materiale rămân cele standard ale Odoo, la închiderea ordinului d
 | Odoo 20 `mrp` | Opțiunea **Continuous Production** a BoM-ului devine standard; modulul o adaugă pe 19 cu același nume |
 
 **Ce e automat:** totalul procesat și restul de procesat se recalculează din jurnal; limitele se verifică
-la fiecare înregistrare sau corecție.
+la fiecare înregistrare sau corecție; cu **Continuous Production**, la **Marchează ca Efectuat** restul
+de cantitate se înscrie în jurnal, iar închiderea e refuzată cât timp operația anterioară e deschisă.
 
 **Ce rămâne manual:** înregistrarea cantității pe fiecare operație, închiderea operațiilor și a ordinului
 de producție, precum și orice intrare în stoc.
@@ -181,6 +201,9 @@ de producție, precum și orice intrare în stoc.
 - [ ] Încercarea de a înregistra pe a doua operație mai mult decât a procesat prima este refuzată.
 - [ ] O înregistrare de −4 pe prima operație (cu a doua la 10) este refuzată; după corectarea celei de-a doua, trece.
 - [ ] Tabul **Cantitate procesată** arată fiecare tranșă cu data, utilizatorul și nota.
+- [ ] Cu bifa activă: **Marchează ca Efectuat** pe a doua operație, cât timp prima e deschisă, este refuzat cu mesajul despre operația anterioară; operația rămâne deschisă.
+- [ ] Cu bifa activă: după închiderea primei operații, **Marchează ca Efectuat** pe a doua o închide, iar jurnalul primește restul de cantitate cu nota **Marcată ca efectuată** (Cantitate procesată = cantitatea ordinului).
+- [ ] Fără bifă: **Marchează ca Efectuat** închide operația ca în standard, fără înregistrare nouă în jurnal.
 - [ ] Pe o operație în starea Efectuat sau Anulat butonul **Înregistrează cantitatea** nu mai apare în antet.
 - [ ] În Shop Floor, meniul operației conține **Înregistrează cantitatea procesată**.
 - [ ] Cardul operației din Shop Floor afișează, sub cantitatea planificată, linia **Procesat:** cu totalul din jurnal.
@@ -193,6 +216,7 @@ de producție, precum și orice intrare în stoc.
 | Cantitatea procesată a operației … nu poate fi negativă. | O corecție ar duce totalul operației sub 0 | Reduceți corecția la cel mult cantitatea deja înregistrată |
 | Operația … nu poate avea … procesate: maximul permis este … (cantitatea ordinului de producție sau cantitatea procesată de operația anterioară). | Totalul depășește cantitatea ordinului sau pe cea procesată de operația precedentă | Înregistrați mai puțin, sau înregistrați întâi pe operația precedentă |
 | Același mesaj, la o corecție negativă pe o operație | Operația următoare ar rămâne peste noua limită | Corectați întâi operația următoare, apoi pe cea precedentă |
+| Operația … nu poate fi marcată ca efectuată: operația anterioară … are procesate doar … din …. | Pe un BoM cu Continuous Production, s-a apăsat **Marchează ca Efectuat** cât timp operația anterioară e încă deschisă | Înregistrați cantitatea procesată pe operație și marcați-o ca efectuată după închiderea celei anterioare |
 
 ## 10. Capturi de ecran
 

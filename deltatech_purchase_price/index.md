@@ -1,7 +1,7 @@
 # Purchase Price (localizat la `deltatech_purchase_price/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_price`
-- **Versiune:** `19.0.1.2.15`
+- **Versiune:** `19.0.1.2.16`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_price
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_price`
 - **Ultima Ingestie:** `2026-11-18`

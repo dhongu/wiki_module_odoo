@@ -232,7 +232,7 @@ nu pleacă la lucrător, iar lucrătorul nu vede această cerere în *Cererile m
 ### Pasul 9 — Calculul răspunsului
 
 Deschideți cererea și apăsați **Calculare răspuns**. **Găsiți pe ecran:** perioada (ultimele 12 luni
-întregi dinaintea cererii, alegere a modulului; o puteți modifica înainte de calcul), categoria lucrătorului, remunerația lui anuală și orară și, în dreapta,
+întregi dinaintea cererii, alegere a modulului; o puteți modifica înainte de calcul; la schimbarea ei, a canalului, a angajatului, a datei cererii sau a companiei, cifrele deja calculate se golesc, iar cererea revine în starea *Nouă*, deci trebuie să apăsați din nou **Calculare răspuns**), categoria lucrătorului, remunerația lui anuală și orară și, în dreapta,
 numărul de femei și de bărbați din categorie cu remunerația medie a fiecărui sex. **Verificați** că
 categoria e cea corectă și că remunerația proprie corespunde contractului sau fluturașilor. Dacă cererea vine de la lucrător
 și un sex are prea puțini lucrători, media lui nu se afișează; cererile venite prin reprezentanți sau
@@ -245,7 +245,11 @@ prin organismul de promovare a egalității primesc cifrele complete. Adăugați
 Răspunsul pleacă pe e-mail, cu PDF-ul atașat (formulat către lucrător sau, pe celelalte canale, către
 solicitant, „pentru” lucrătorul în cauză), către lucrător (canalul *Lucrătorul*) sau către
 destinatarul din *Răspuns către* (reprezentanți, organismul de egalitate), iar cererea trece în
-*Răspuns trimis*.
+*Răspuns trimis*. După trimitere, canalul, angajatul, data cererii, perioada și compania nu mai pot fi
+modificate; dacă trebuie refăcută, anulați cererea (**Anulare**) și apăsați **Resetare**. Resetarea
+golește cifrele răspunsului (categoria, remunerațiile, numărul de femei și de bărbați, mascarea), iar
+răspunsul trebuie calculat din nou. Astfel, cifrele complete calculate pentru reprezentanți nu rămân
+pe o cerere care ajunge ulterior la lucrător.
 
 ![Răspunsul PDF trimis lucrătorului](screenshots/14_pdf_raspuns.png)
 
@@ -287,6 +291,8 @@ la autoritate și conținutul evaluării comune.
       proporțional cu lunile din perioadă).
 - [ ] O cerere pe canalul *Reprezentanții lucrătorilor* nu ascunde mediile, chiar și la grupuri mici, pleacă
       la destinatarul din *Răspuns către* și nu apare la lucrător în *Cererile mele*.
+- [ ] După **Anulare** și **Resetare**, sau după schimbarea canalului unei cereri în lucru, cifrele răspunsului sunt goale,
+      cererea e în starea *Nouă* și răspunsul se recalculează cu **Calculare răspuns**.
 - [ ] Niciun angajat din tabul *Lucrători* nu are categoria goală.
 - [ ] Un lucrător fără drepturi pe Transparență salarială își vede doar propriile cereri.
 - [ ] Cu Payroll: sursa angajaților cu fluturași validați este *Fluturași de salariu*.
@@ -304,6 +310,7 @@ la autoritate și conținutul evaluării comune.
 | ... nu a avut contract în perioada cererii. | Angajat fără contract în ultimele 12 luni | Verificați datele contractului |
 | Nicio categorie de lucrători nu are o diferență nejustificată... | Toate categoriile peste prag sunt justificate, remediate sau deja evaluate | Nu e nevoie de o evaluare nouă |
 | Stabiliți cine primește răspunsul: ... | Cerere a reprezentanților fără *Răspuns către* | Completați destinatarul |
+| Răspunsul a fost deja trimis. Resetați cererea înainte de a o modifica. | Schimbarea canalului, a angajatului, a datei, a perioadei sau a companiei după trimiterea răspunsului | Anulați cererea, apăsați **Resetare**, modificați câmpul și calculați din nou răspunsul |
 | Utilizatorul dumneavoastră nu este asociat unui angajat. | Cerere făcută de un utilizator fără fișă de angajat | Legați utilizatorul de fișa angajatului |
 
 ## 10. Capturi de ecran

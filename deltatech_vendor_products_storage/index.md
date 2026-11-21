@@ -1,10 +1,11 @@
 # Vendor Products Storage (localizat la `deltatech_vendor_products_storage/index.md`)
 
 - **Nume Tehnic:** `deltatech_vendor_products_storage`
-- **Versiune:** `19.0.1.2.1`
+- **Versiune:** `19.0.1.2.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_vendor/tree/19.0/deltatech_vendor_products_storage
 - **Cale Locală:** `odoo-addons/bitshop_vendor/deltatech_vendor_products_storage`
 - **Ultima Ingestie:** `2026-10-30`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

@@ -1,7 +1,7 @@
 # UBL Invoice Import Base (localizat la `deltatech_account_ubl_import/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_ubl_import`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_account_ubl_import
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_account_ubl_import`
 - **Ultima Ingestie:** `2026-11-20`

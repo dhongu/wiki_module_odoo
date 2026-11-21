@@ -1,7 +1,7 @@
 # Work Order Processed Quantity (localizat la `deltatech_mrp_workorder_qty/index.md`)
 
 - **Nume Tehnic:** `deltatech_mrp_workorder_qty`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.1.1`
 - **Cale:** `https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_mrp_workorder_qty`
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_mrp_workorder_qty`
 - **Ultima Ingestie:** `2026-11-20`

@@ -175,6 +175,11 @@ Ce face asistentul:
 
 - modelele, câmpurile și metodele modulelor care nu sunt instalate (de exemplu Helpdesk) se sar și se afișează
   într-o notificare **Neinstalat în această bază de date, omis**; politica se creează cu restul;
+- dacă o linie a șablonului are liste **Câmpuri permise** sau **Câmpuri modificabile** completate, dar niciunul dintre
+  câmpuri nu există în această bază (modul opțional neinstalat, câmp redenumit), modelul se sare întreg și apare în
+  notificare (*modelul …: niciunul dintre câmpurile din … nu există*). O listă goală ar însemna „fără restricție”,
+  deci asistentul nu o salvează niciodată în locul unei liste completate; linia existentă a politicii rămâne neschimbată.
+  Dacă măcar o parte din câmpuri există, lista se salvează doar cu ele;
 - pentru fiecare metodă de buton se folosește unealta existentă sau se creează una nouă (Pasul 4), legată de politică;
 - mai multe șabloane alese împreună dau o singură politică: drepturile se adună, câmpurile ascunse și cele doar pentru
   citire se păstrează din toate, iar dintre limite câștigă cea mai strictă.
@@ -459,8 +464,11 @@ cu aceleași coloane de drepturi ca tabul *Modele*, inclusiv **Trimitere e-mailu
 - pentru acel utilizator înlocuiește linia politicii pentru modelul respectiv. Dacă modelul era deja în politică
   (de exemplu doar citire), linia personală preia câmpurile ascunse, mascate și doar pentru citire de acolo și adaugă doar
   dreptul cerut;
-- o a doua cerere aprobată pe același model completează aceeași linie: drepturile se adună, iar data de final
-  rămâne cea mai târzie;
+- o a doua cerere aprobată pe același model, cât timp linia personală e încă valabilă, completează aceeași linie:
+  drepturile se adună, iar data de final rămâne cea mai târzie;
+- dacă linia personală a expirat (chiar dacă mai e vizibilă până la curățarea zilnică), o cerere nouă nu o repune în
+  funcțiune: linia expirată se șterge și se creează una nouă, cu doar operația aprobată (de exemplu citire) și drepturile
+  politicii pe model. Scrierea aprobată înainte și expirată nu revine; dacă e nevoie de ea, se cere din nou;
 - la **Valabil până la** accesul se oprește singur, chiar dacă linia mai e vizibilă până la curățarea zilnică;
 - **Revocare** pe cerere oprește accesul imediat și șterge linia.
 
@@ -606,6 +614,8 @@ fiecărei cereri de acces, configurarea clientului AI.
 - [ ] Politica conține doar modelele necesare; câmpurile sensibile sunt ascunse sau mascate.
 - [ ] Politica făcută din șablon: notificarea arată ce s-a sărit; utilizatorul AI are grupurile aplicațiilor
   din șablon; uneltele create pentru butoane apar pe tabul *Unelte* al politicii.
+- [ ] Șablon cu liste *Câmpuri permise* / *Câmpuri modificabile* care conțin doar câmpuri inexistente: modelul e sărit
+  și listat în notificare; o linie existentă a politicii își păstrează restricțiile (câmpurile ascunse rămân ascunse).
 - [ ] Cu *Doar acestea modificabile* (ex. șablonul *Prețuri produs*): `write` pe `list_price` merge, pe `name` e refuzat
   (*Refuzat* în Jurnal apeluri), iar `describe_model` arată doar câmpurile din listă ca `writable`.
 - [ ] **Permite clienților AI să scrie** este debifat în Setări pe durata testelor.
@@ -651,6 +661,8 @@ fiecărei cereri de acces, configurarea clientului AI.
   utilizator al aceleiași politici nu.
 - [ ] Accesul personal pe un model deja în politică păstrează câmpurile ascunse și mascate ale politicii.
 - [ ] După **Revocare** (sau după *Valabil până la*) modelul e refuzat din nou.
+- [ ] Cerere nouă (de exemplu doar citire) aprobată peste o linie personală expirată cu scriere: linia nouă are doar
+  citirea; scrierea expirată nu revine.
 - [ ] Cu serverul doar-citire, o cerere `request_access` din clientul AI pentru *Modificare*, *Note și activități*,
   *Ștergere* sau *Trimitere e-mailuri* e refuzată; una de *Citire* sau *Atașamente* trece.
 - [ ] O cerere aprobată cu operația *Note și activități* dă o linie personală cu citire și *Note și activități*:
@@ -713,6 +725,7 @@ interfața în engleză.
 | The server is in read-only mode | Scrierea e oprită global | Bifați *Permite clienților AI să scrie* în Setări, doar dacă e nevoie |
 | The field … is set by Odoo or by the workflow | AI-ul a încercat să scrie starea, un câmp calculat sau unul din *Câmpuri doar pentru citire* | Expuneți butonul potrivit ca unealtă (Pasul 4) sau scoateți câmpul din *Câmpuri doar pentru citire* |
 | Neinstalat în această bază de date, omis (notificare la *Creare din șablon*) | Șablonul conține modele, câmpuri sau metode ale unor module neinstalate | Normal; dacă e nevoie de ele, instalați modulul și aplicați din nou șablonul cu *Adăugare șablon* |
+| modelul …: niciunul dintre câmpurile din … nu există (notificare la *Creare din șablon* / *Adăugare șablon*) | Listele *Câmpuri permise* / *Câmpuri modificabile* ale șablonului conțin doar câmpuri care nu există în această bază | Normal, modelul e sărit ca să nu se deschidă toate câmpurile; instalați modulul care aduce câmpurile sau corectați lista din șablon și aplicați din nou |
 | Notes and activities are not allowed on … | Linia modelului din politică nu are bifat *Note și activități*; mesajul numește politica și linia | Bifați-l pe linia modelului sau, cu *Cereri de acces MCP* bifat, aprobați cererea `request_access` cu operația `chatter` |
 | The model mail.activity (mail.message, mail.followers) is not available for create/write | AI-ul a încercat să creeze direct activitatea sau mesajul | Normal: mesajul îl trimite la `post_message` / `schedule_activity` pe document; bifați *Note și activități* pe linia modelului documentului |
 | The model … has no chatter. | Cerere *Note și activități* sau *Trimitere e-mailuri* (ori notă/activitate) pe un model fără chatter | Cereți opțiunea pe modelul documentului care are chatter |

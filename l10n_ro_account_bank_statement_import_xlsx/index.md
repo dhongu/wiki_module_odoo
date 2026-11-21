@@ -4,18 +4,24 @@
 - **Versiune:** `19.0.2.1.7`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_bank_statement_import_xlsx
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_account_bank_statement_import_xlsx`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-21`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul extinde funcționalitatea de import al extraselor bancare pentru a accepta fișiere XLSX. Se bazează pe mecanismul standard de import din Odoo, permițând utilizatorilor să mapeze coloanele dintr-un fișier Excel pe câmpurile liniilor de extras bancar. Astfel, contabilii pot prelua direct extrasele primite de la bancă în format Excel, fără conversii manuale, simplificând reconcilierea operațiunilor bancare.
+Modulul completează importul extraselor de cont din fișiere Excel (XLSX) cu identificarea automată a partenerului. Fișierul se încarcă în jurnalul de bancă, iar coloanele lui se asociază cu câmpurile liniei de extras în asistentul de import Odoo (asocierea este reținută pentru importurile următoare). Este util pentru băncile care nu oferă export MT940 sau CAMT, iar contabilii preiau extrasele direct din Excel, fără conversii manuale.
 
 #### 2. Funcționalități Cheie
 
-- **Suport XLSX**: Adaugă formatul XLSX în lista formatelor de import disponibile pentru jurnalele bancare.
-- **Mapare flexibilă**: Folosește asistentul de import din Odoo, permițând utilizatorilor să gestioneze diverse structuri de fișiere.
-- **Potrivire parteneri specifică României**: Identifică automat partenerul după nume sau după referința comenzii de vânzare regăsită în coloana de referință a plății.
+- **Identificarea partenerului după nume:** valoarea din coloana asociată cu *Nume partener* se caută printre partenerii din Odoo, după denumirea identică (fără să conteze majusculele); partenerul găsit se completează pe linie.
+- **Identificarea partenerului după comanda de vânzare:** dacă linia nu are partener și detaliile plății (*Eticheta*) conțin exact numărul unei comenzi de vânzare, se completează clientul de facturare al comenzii (necesită aplicația Vânzări instalată). Liniile fără detalii primesc eticheta „N/A”.
+- **Parsere XLSX dedicate:** dacă fișierul este recunoscut de un parser dedicat instalat (de exemplu un borderou de curier), importul trece direct pe acel parser, fără asistentul de mapare.
+- **Cum se importă:**
+  - fișierul XLSX are un rând de antet și rândurile ordonate după dată;
+  - din *Contabilitate → Tablou de bord*, pe cardul jurnalului de bancă, se apasă **Încărcare** (sau **⋮** → **Importă fișier**);
+  - în asistentul **Importă extras cont bancar** se asociază data → *Dată*, detaliile → *Eticheta*, numele → *Nume partener*, suma → *Valoare* (sau *Debit* și *Credit*), soldul → *Cumulative Balance* (opțional, pentru soldurile extrasului), apoi **Test** și **Importă**;
+  - se verifică liniile (cele fără partener se completează manual înainte de reconciliere) și soldurile extrasului; fișierul importat rămâne atașat extrasului.
+- **Restricții:** se poate selecta un singur fișier XLSX o dată și nu se pot amesteca fișiere XLSX cu alte formate.
 
 #### 3. Dependențe
 
@@ -26,8 +32,8 @@ Acest modul extinde funcționalitatea de import al extraselor bancare pentru a a
 
 **Modele**
 
-- `base_import.import` (extindere, TransientModel): la `_parse_import_data`, îmbogățește datele importate din fișierul XLSX — completează coloana `partner_id/.id` căutând partenerul după nume (`partner_name`, potrivire `=ilike`) sau, dacă lipsește, după referința comenzii de vânzare regăsită în `payment_ref` (căutare exactă în `sale.order`, cu preluarea partenerului comercial de facturare).
-- `account.journal` (extindere): adaugă `XLSX` în lista formatelor de import disponibile (`_get_bank_statements_available_import_formats`) și suprascrie `_import_bank_statement` pentru a gestiona fișierele XLSX — validează că nu se amestecă XLSX cu alte formate și că se selectează un singur fișier XLSX odată. Dacă un parser dedicat (ex. borderou GLS, detaliere Euplatesc) recunoaște fișierul, deleagă la fluxul standard de import; altfel, deschide asistentul de mapare (`base_import.import`) prin acțiunea client `import_bank_stmt`.
+- `base_import.import` (extindere, TransientModel): la `_parse_import_data` completează coloana `partner_id/.id` căutând partenerul după nume (`partner_name`, potrivire `=ilike`) sau, dacă lipsește, după referința comenzii de vânzare din `payment_ref` (căutare exactă în `sale.order`, cu partenerul comercial de facturare); pentru linii fără `payment_ref` pune „N/A”.
+- `account.journal` (extindere): adaugă `XLSX` la formatele de import (dacă nu există deja) și suprascrie `_import_bank_statement`: validează restricțiile de mai sus; dacă un parser dedicat recunoaște fișierul, urmează fluxul standard de import; altfel deschide asistentul de mapare (`base_import.import`) prin acțiunea client `import_bank_stmt`, cu atașamentul (`attachment_ids`) transmis în context.
 
 **Vizualizări**
 
@@ -39,4 +45,5 @@ Nu sunt definite `ir.cron`, `base.automation` sau `ir.actions.server` în acest 
 
 #### 5. Conexiuni
 
-Nu au fost identificate module conexe (dincolo de dependențe) cu pagină wiki proprie.
+- [l10n_ro_account_bank_statement_import_ing_csv](../l10n_ro_account_bank_statement_import_ing_csv/index.md): modul soră pentru importul fișierului CSV „Istoric conturi” ING Business, fără asistent de mapare.
+- [deltatech_account_bank_statement_import](../deltatech_account_bank_statement_import/index.md): parsere dedicate pentru fișiere de decontare XLSX/CSV; un fișier recunoscut de ele sare peste asistentul de mapare al acestui modul.

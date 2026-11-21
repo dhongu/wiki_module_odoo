@@ -67,12 +67,15 @@ acciză, facturi de vânzare postate în perioada declarată, opțional un antre
 1. Instalați modulul `l10n_ro_excise_duty` — nomenclatorul de categorii (16 armonizate A–G7 +
    6 nearmonizate H1–H6, cu cotele HG 2/2025) se încarcă automat.
 2. Verificați nomenclatorul în **Contabilitate → Raportare → Accize → Categorii produse
-   accizabile** (cod, cotă, U.M., valabilitate de la).
+   accizabile** (cod, cotă, U.M., valabilitate de la); istoricul nivelurilor de cotă e în fila
+   **Istoric cote** a categoriei.
 3. Marcați produsele accizabile: pe fișa produsului, fila **Accize (RO)**, alegeți categoria.
 4. Dacă sunteți antrepozitar: creați antrepozitul în **Accize → Antrepozite fiscale**
-   (cod ANAF, numărul autorizației, starea) și garanția în **Accize → Garanții financiare**.
+   (cod ANAF, numărul autorizației, data autorizației — obligatorie pentru starea Activ — și
+   **categoriile de produse autorizate**) și garanția în **Accize → Garanții financiare**.
+   Completați categoriile autorizate: declarația pe un antrepozit ia doar aceste categorii.
 5. La schimbarea anuală a cotelor (HG), rulați wizardul **Actualizare cote (HG)** — mod
-   manual sau indexare procentuală; declarațiile deja calculate păstrează cotele istorice.
+   manual sau indexare procentuală; wizardul adaugă un nivel nou în istoric, iar declarația ia cota în vigoare la data ieșirii.
 
 ## 6. Flux de utilizare
 
@@ -80,7 +83,8 @@ acciză, facturi de vânzare postate în perioada declarată, opțional un antre
 
 Accesați **Contabilitate → Raportare → Accize → Categorii produse accizabile**. **Găsiți pe
 ecran**: fiecare rând e o categorie (cod A–G7 / H1–H6), cu cota, unitatea de măsură a cotei
-(ex. „hl alcool pur", „1000 buc" la țigarete) și data intrării în vigoare. **Verificați**: cotele
+(ex. „hl alcool pur", „1000 buc" la țigarete) și data intrării în vigoare. Fila **Istoric cote** din formularul categoriei listează nivelurile
+(**Valabil de la** și cota); nu se șterg la actualizarea cotelor. **Verificați**: cotele
 corespund HG-ului în vigoare pentru anul curent; categoriile folosite de produsele voastre
 sunt active.
 
@@ -96,9 +100,13 @@ moment, vânzările postate ale produsului intră în calculul declarațiilor.
 ### Pasul 3 — Antrepozitul fiscal și garanția
 
 În **Accize → Antrepozite fiscale** țineți evidența autorizației (cod ANAF, valabilitate,
-stare activ/suspendat/revocat). În **Accize → Garanții financiare** înregistrați garanția
+stare activ/suspendat/revocat); un antrepozit nu poate fi activat fără data autorizației,
+iar categoriile autorizate se completează aici. În **Accize → Garanții financiare** înregistrați garanția
 (bancară / depozit / asigurare); butonul **Calculează suma recomandată** propune nivelul
-garanției din media declarațiilor anterioare.
+garanției ca **procent (implicit 6%) din acciza declarată în anul calendaristic anterior**, pe
+antrepozitul ales (Norme HG 1/2016, Titlul VIII pct. 8). Procentul e un minim legal pentru
+antrepozitul de producție; pragurile minime și maxime nu sunt aplicate de modul — verificați-le
+separat.
 
 ![Antrepozitul fiscal cu autorizația](screenshots/03_antrepozit.png)
 
@@ -109,13 +117,18 @@ garanției din media declarațiilor anterioare.
 Creați declarația în **Accize → Declarații accize**: tip **D103 — lunar (antrepozit
 fiscal)**, perioada (luna), antrepozitul. Apăsați **Calculează**: modulul agregă liniile
 facturilor de vânzare **postate** din perioadă, pe produs × categorie, cu stornările scăzute
-(semn negativ), și calculează acciza = cantitate × cota categoriei. Starea trece în
-**Confirmată**.
+(semn negativ). Cantitatea facturii se convertește în unitatea cotei (litri în hl, kg în tone,
+bucăți în 1000 buc), apoi acciza = cantitate convertită × cota categoriei. Dacă antrepozitul
+are categorii autorizate, se iau doar acestea. Starea trece în **Confirmată** numai când toate
+liniile se pot calcula; fără nicio linie accizabilă sau cu linii care **necesită date
+suplimentare**, declarația rămâne în **Ciornă** și apare un avertisment.
 
-**Găsiți pe ecran**: liniile declarației — produs, categorie, cantitate, cotă, U.M. cotă și
-acciza pe linie; totalul declarației jos. **Verificați** înainte de export: cantitățile
-corespund jurnalului de vânzări al lunii (inclusiv stornările); cota pe linie e cea istorică
-a perioadei (nu cea curentă, dacă între timp s-a schimbat); totalul accizei se reconciliază
+**Găsiți pe ecran**: liniile declarației — produs, categorie, cantitate (în unitatea cotei),
+cotă, U.M. cotă, **Data cotei**, **Sursa datei cotei** (opțională: livrare sau factură) și
+**Necesită date suplimentare**, plus acciza pe linie; totalul declarației jos. **Verificați** înainte de export: cantitățile
+corespund jurnalului de vânzări al lunii (inclusiv stornările); cota pe linie e cea de la data ieșirii
+(livrare), cu rezerva datei facturii marcată pe linie, nu cea curentă; liniile cu livrări parțiale
+în luni diferite iau data ultimei livrări pentru toată cantitatea (limită cunoscută); totalul accizei se reconciliază
 cu rulajul analiticului 446 de accize.
 
 ![Declarația D103 calculată, cu linii și total](screenshots/05_declaratie_d103.png)
@@ -150,12 +163,26 @@ fișierului (extras):
 > Declarația **D120** (decont anual) urmează același flux, cu tip „D120 — decont anual
 > accize" și perioada întregul an; exportul XML cere modulul `l10n_ro_anaf_d120`.
 
+**Perioada declarației și data cotei.** Liniile se aleg după **data facturii**, iar cota se
+ia la **data ieșirii din antrepozit** (livrarea din stoc; fără livrare, data facturii, iar linia
+e marcată). Pacioli recomandă ca și perioada să urmeze data ieșirii (art. 339 alin. (2),
+art. 340 alin. (1) lit. a) CF): o ieșire din 31.07 facturată pe 02.08 trebuie declarată în
+iulie. Prin decizia utilizatorului s-a ales data facturii, așa că o ieșire facturată în luna
+următoare apare în declarația lunii facturii, deși cota e cea corectă a datei ieșirii.
+Verificați manual aceste cazuri la sfârșitul lunii.
+
+**Linii care cer date suplimentare.** Alcoolul etilic, berea, țigaretele (concentrație, grade
+Plato, componentă ad valorem) și liniile cu unitate de măsură neconvertibilă în unitatea cotei
+sunt marcate **Necesită date suplimentare**: nu intră în total, declarația rămâne în ciornă și
+nu poate fi exportată până la tratarea lor.
+
 ### Pasul 5 — Actualizarea anuală a cotelor (HG)
 
 La publicarea HG-ului cu noile cote, rulați wizardul **Actualizare cote (HG)** (din lista de
 categorii): alegeți data intrării în vigoare și fie introduceți cotele manual, fie aplicați
-o **indexare procentuală** pe toate categoriile. Categoriile primesc cote noi de la data
-efectivă; declarațiile deja calculate rămân pe cotele istorice.
+o **indexare procentuală** pe toate categoriile. Wizardul adaugă un nivel nou în **Istoric cote** al categoriei, fără să șteargă nivelurile
+vechi; declarația ia cota în vigoare la data ieșirii, deci și o declarație veche recalculată
+rămâne pe cotele perioadei ei.
 
 ![Wizardul de actualizare cote cu indexare](screenshots/06_wizard_cote.png)
 
@@ -195,12 +222,16 @@ autorizațiilor și actualizarea cotelor la HG nou.
 - [ ] Fila **Accize (RO)** apare pe fișa produsului pentru grupul Contabil.
 - [ ] **Calculează** pe o declarație D103 agregă doar facturi postate din perioadă; o stornare
       scade cantitatea.
-- [ ] Cota liniei e cea valabilă în perioada declarației, nu cea curentă.
+- [ ] Cota liniei e cea valabilă la data ieșirii (livrare; rezerva: data facturii), nu cea curentă.
+- [ ] Fără nicio linie accizabilă sau cu linii „Necesită date suplimentare”, declarația rămâne în
+      Ciornă, cu avertisment, și **Export XML** e refuzat.
+- [ ] Un antrepozit nu poate fi activat fără data autorizației.
+- [ ] Declarația pe un antrepozit ia doar categoriile autorizate ale acestuia.
 - [ ] **Export XML** produce `D103_<CUI>_<AnLună>.xml` valid și trece starea în Exportată;
       fără modulul `l10n_ro_anaf_d103`, mesajul de eroare e clar.
 - [ ] Declarația exportată nu mai poate fi recalculată (eroare clară la Calculează).
 - [ ] Două antrepozite cu același cod ANAF sunt respinse (unicitate).
-- [ ] **Calculează suma recomandată** pe garanție folosește media declarațiilor anterioare.
+- [ ] **Calculează suma recomandată** pe garanție = procent (6%) din acciza anului anterior, pe antrepozit.
 - [ ] Wizardul de cote aplică indexarea procentuală și păstrează cotele istorice pe
       declarațiile deja calculate.
 
@@ -210,7 +241,11 @@ autorizațiilor și actualizarea cotelor la HG nou.
 |-----------------|-----------------|-----------|
 | „Exportul XML pentru tipul de declarație «d103» necesită modulul ANAF corespunzător…" | `l10n_ro_anaf_d103` / `d120` neinstalat | Instalați modulul de export aferent tipului |
 | „Declarația exportată nu poate fi recalculată." | Calculează apăsat pe o declarație Exportată | Resetați la ciornă (dacă e cazul) sau creați o declarație nouă |
-| Declarația iese goală la Calculează | Facturile nu sunt postate, produsele nu au categorie de acciză sau perioada e greșită | Verificați starea facturilor, fila Accize (RO) pe produse și intervalul de date |
+| Declarația iese goală la Calculează (rămâne în Ciornă, cu avertisment) | Facturile nu sunt postate, produsele nu au categorie de acciză, categoria nu e autorizată pe antrepozit sau perioada e greșită | Verificați starea facturilor, fila Accize (RO) pe produse, categoriile autorizate ale antrepozitului și intervalul de date |
+| „Declarația are linii care cer date suplimentare și nu sunt incluse în total; nu poate fi exportată." | Linii A/B/F1 (concentrație, grade Plato, ad valorem) sau cu unitate neconvertibilă | Tratați liniile (date suplimentare) înainte de export; nu intră în total |
+| Avertisment sticky la Calculează („Unele linii cer date suplimentare…" / „Nu s-au găsit linii de factură accizabile…") | Vezi mesajul | Declarația rămâne în Ciornă până la remedierea cauzei |
+| „Există deja un nivel de cotă cu aceeași dată de început pentru această categorie." | Două niveluri cu aceeași dată „Valabil de la" | Modificați nivelul existent sau alegeți altă dată |
+| „Data autorizării este obligatorie pentru un antrepozit activ." | Antrepozit activat fără dată | Completați data autorizației |
 | Cantități negative pe linie | Stornări mai mari decât vânzările perioadei | Corect — verificați totuși facturile de storno din perioadă |
 | Acciza pe linie diferă de așteptare | Cota istorică a perioadei diferă de cota curentă (HG nou între timp) | Verificați valabilitatea cotelor în nomenclator (data de la / până la) |
 

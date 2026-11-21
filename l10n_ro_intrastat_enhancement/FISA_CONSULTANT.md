@@ -25,8 +25,8 @@ efectivă la Institutul Național de Statistică (INS)**: **export XML** în for
 o **verificare a erorilor** care prinde câmpurile lipsă înainte de depunere și un mecanism de
 **actualizare a codurilor CN** (Nomenclatura Combinată) publicate anual de INS.
 
-Se instalează automat când sunt prezente raportul Intrastat de bază (`l10n_ro_intrastat`) și
-gestionarea livrărilor (`stock_delivery`).
+Nu se instalează automat: îl instalează administratorul, doar la firmele care depun Intrastat.
+Necesită raportul Intrastat de bază (`l10n_ro_intrastat`) și gestionarea livrărilor (`stock_delivery`).
 
 ## 2. Bază legală și context
 
@@ -67,7 +67,7 @@ facturi de vânzare/achiziție intra-UE postate în luna declarată.
 
 ## 5. Configurare inițială
 
-1. Instalați modulul (auto-install când există `l10n_ro_intrastat` + `stock_delivery`).
+1. Instalați modulul (nu are instalare automată; dependențele `l10n_ro_intrastat` + `stock_delivery` se instalează odată cu el).
 2. Deschideți **Setări → Contabilitate**, blocul **Intrastat — Praguri INS România**:
    bifați **Declarat Intrastat obligatoriu** (dacă firma a depășit deja pragul), ajustați
    **Pragul expedieri** / **Pragul sosiri** (RON/an) și **Avertizare la % din prag** (implicit 80%).
