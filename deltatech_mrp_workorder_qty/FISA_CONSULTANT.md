@@ -144,9 +144,11 @@ bifa **Continuous Production**, butonul funcționează ca în Odoo standard și 
 
 În Shop Floor deschideți operația, apoi meniul ei (butonul cu trei puncte). Apăsați
 **Înregistrează cantitatea procesată** (lângă **Register Production / Serial**, care în Shop Floor apare în engleză). Se deschide același
-dialog ca la pasul 2. Butonul apare doar pe operații, nu pe cardul ordinului de producție. Cu **Continuous Production** bifat pe BoM, după prima tranșă pe o operație, operația următoare apare și ea în Shop Floor (filtrul **De făcut** și cardul ordinului de producție), fără să aștepte închiderea celei precedente. Pe cardul operației, sub cantitatea planificată (de exemplu **100 Unități**), apare și linia **Procesat: 10**, adică totalul din jurnal; se actualizează după fiecare înregistrare.
+dialog ca la pasul 2. Butonul apare doar pe operații, nu pe cardul ordinului de producție. Cu **Continuous Production** bifat pe BoM, după prima tranșă pe o operație, operația următoare apare și ea în Shop Floor (filtrul **De făcut** și cardul ordinului de producție), fără să aștepte închiderea celei precedente. Pe cardul operației, sub cantitatea planificată (de exemplu **100 Unități**), apare și linia **Procesat: 10**, adică totalul din jurnal, iar pe operațiile neînchise și linia
+**Disponibil:**, cât se poate înregistra acum (limitat de operația precedentă). Ambele se actualizează după
+fiecare înregistrare. Formularul comenzii de lucru are și el câmpul **Disponibil de procesat**.
 
-![Shop Floor, centrul de lucru Atelier producție, după prima tranșă de 10 pe Debitare: lângă cardul Debitare (Procesat: 10) apare și cardul Vopsire, evidențiat, cu Procesat: 0 și butonul START](screenshots/08_shop_floor_operatia_urmatoare.png)
+![Shop Floor, centrul de lucru Atelier producție, după prima tranșă de 10 pe Debitare: cardul Debitare arată Procesat: 10 și Disponibil: 90, iar cardul Vopsire, evidențiat, Procesat: 0 și Disponibil: 10](screenshots/08_shop_floor_operatia_urmatoare.png)
 
 ![Meniul Opțiuni al operației Debitare în Shop Floor, cu butonul Înregistrează cantitatea procesată evidențiat lângă Register Production / Serial; în spate, cardul operației arată 100 Unități și Procesat: 10](screenshots/04_shop_floor_meniu.png)
 
@@ -206,7 +208,7 @@ de producție, precum și orice intrare în stoc.
 - [ ] Fără bifă: **Marchează ca Efectuat** închide operația ca în standard, fără înregistrare nouă în jurnal.
 - [ ] Pe o operație în starea Efectuat sau Anulat butonul **Înregistrează cantitatea** nu mai apare în antet.
 - [ ] În Shop Floor, meniul operației conține **Înregistrează cantitatea procesată**.
-- [ ] Cardul operației din Shop Floor afișează, sub cantitatea planificată, linia **Procesat:** cu totalul din jurnal.
+- [ ] Cardul operației din Shop Floor afișează, sub cantitatea planificată, linia **Procesat:** cu totalul din jurnal și linia **Disponibil:** (după 10 pe Debitare: Debitare 90, Vopsire 10).
 - [ ] La închiderea ordinului de producție stocul produsului finit crește o singură dată, cu cantitatea totală.
 
 ## 9. Mesaje de eroare frecvente

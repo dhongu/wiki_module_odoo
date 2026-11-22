@@ -1,7 +1,7 @@
 # Phone - Daktela (localizat la `deltatech_voip_daktela/index.md`)
 
 - **Nume Tehnic:** `deltatech_voip_daktela`
-- **Versiune:** `19.0.1.6.0`
+- **Versiune:** `19.0.1.9.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_voip_daktela
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_voip_daktela`
 - **Ultima Ingestie:** `2026-11-19`

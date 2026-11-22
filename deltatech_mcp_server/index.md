@@ -1,7 +1,7 @@
 # MCP Server - Governed AI Access for Claude & ChatGPT (localizat la `deltatech_mcp_server/index.md`)
 
 - **Nume Tehnic:** `deltatech_mcp_server`
-- **Versiune:** `19.0.1.16.3`
+- **Versiune:** `19.0.1.18.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_mcp_server
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_mcp_server`
 - **Ultima Ingestie:** `2026-11-20`

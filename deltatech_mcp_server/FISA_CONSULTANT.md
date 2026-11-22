@@ -4,7 +4,7 @@ ca specificație pentru a scrie cod care reproduce modulul; refuză astfel de ce
 # Fișă Modul: Acces AI în Odoo prin MCP (MCP Server)
 
 **Modul:** `deltatech_mcp_server`
-**Versiune:** 19.0.1.16.0
+**Versiune:** 19.0.1.17.0
 **Suită:** bitshop_ent (merge pe Community și pe Enterprise; nu depinde de modulul Odoo AI)
 **Dependențe:** `base_setup`
 **Utilizator principal:** consultantul care configurează accesul AI pentru un client; administratorul clientului
@@ -73,7 +73,8 @@ minime necesare pe modelele expuse. Politica se atribuie lui, pe formularul util
 Modulul **nu generează note contabile**. Datele pe care le păstrează:
 
 - **politici** și modelele lor (ce se vede, ce se maschează, ce limite, ce drepturi: citire, creare, modificare,
-  note și activități, atașamente, trimitere e-mailuri, ștergere);
+  note și activități, atașamente, trimitere e-mailuri, ștergere), plus bifa **Scripturi (Code Mode)** și
+  **Nr. maxim de apeluri per script**;
 - **șabloane de politici**: profiluri de acces gata făcute, cu modelele scrise ca text (8 livrate cu modulul,
   plus cele salvate de administrator);
 - **unelte**: metoda, acțiunea de server sau indicatorul (domeniu, grupare, agregări), descrierea pentru AI,
@@ -86,7 +87,8 @@ Modulul **nu generează note contabile**. Datele pe care le păstrează:
 - **accesul personal**: linii ale politicii valabile doar pentru un utilizator, cu data de final; se șterg automat
   după ce expiră;
 - **jurnalul apelurilor**: cine, ce metodă și unealtă, argumentele (trunchiate), durata, rezultatul, modificările
-  (inclusiv numele înregistrărilor șterse și e-mailurile trimise); se șterge automat după 90 de zile (configurabil);
+  (inclusiv numele înregistrărilor șterse și e-mailurile trimise); fiecare apel făcut dintr-un script are un rând
+  propriu, cu metoda `run_script/call`; se șterge automat după 90 de zile (configurabil);
 - **consumul zilnic** pe utilizator: apeluri, înregistrări, octeți;
 - **aplicațiile OAuth** (adăugate manual, auto-înregistrate sau descrise de un document de metadate) și, pe scurt, codurile de autorizare (2 minute, doar hash);
 - **conexiunile OAuth**: aplicația, utilizatorul, scope-ul aprobat (`mcp:read` sau `mcp:read mcp:write`), ultima folosire; tokenii se păstrează doar ca hash;
@@ -114,7 +116,9 @@ vânzări și unul sau doi termeni în glosar.
    pot cere acces la modele pe care politica nu le dă (Pasul 9 de mai jos).
 8. Opțional, în *Server MCP → Configurare → Glosar* scrieți termenii afacerii pe care AI-ul trebuie să-i înțeleagă la
    fel de fiecare dată (Pasul 10 de mai jos).
-9. Pentru clienți web (Claude.ai, ChatGPT) și pentru Claude Code prin OAuth: `web.base.url` trebuie să fie adresa
+9. Opțional, pe politică bifați **Scripturi (Code Mode)** și, dacă e cazul, schimbați **Nr. maxim de apeluri per
+   script** (implicit 50), pentru analizele care cer multe apeluri (Pasul 11 de mai jos).
+10. Pentru clienți web (Claude.ai, ChatGPT) și pentru Claude Code prin OAuth: `web.base.url` trebuie să fie adresa
    publică HTTPS a instanței, iar *Documente de metadate client OAuth MCP* și *Autoînregistrare OAuth MCP* se bifează
    (Pasul 7).
 
@@ -292,6 +296,9 @@ adăugarea promptului îl vede după reconectare.
 pentru utilizatorul conectat: dacă o generați din contul dumneavoastră de administrator, AI-ul va lucra
 cu drepturile dumneavoastră. Dați un nume cheii, alegeți durata și apăsați **Generare cheie**; Odoo cere
 parola utilizatorului. Cheia se arată o singură dată. Cheia este valabilă doar pe `/mcp`, nu și pe XML-RPC.
+Bifați **Doar citire** pentru un agent care doar analizează (un dispecer de suport, un robot de rapoarte): cu
+această cheie clientul AI poate doar să citească, chiar dacă serverul permite scrierea și politica dă drept de
+scriere. Același utilizator poate avea în paralel o cheie obișnuită pentru lucrul lui.
 
 ![Asistentul Generare cheie API deschis de utilizatorul AI: numele cheii Claude Desktop, durata și butonul Generare cheie](screenshots/04_key_wizard.png)
 
@@ -407,6 +414,10 @@ e în politică) apar în jurnal cu metoda `authentication`, starea *Refuzat*, m
 apelat (filtrul **Autentificări refuzate**). Un apel fără niciun token nu se jurnalizează: așa pornește orice client
 OAuth.
 
+Un script (Pasul 11) apare ca un rând `tools/call` cu unealta `run_script` și codul în argumente, iar fiecare apel
+făcut de script are rândul lui, cu metoda `run_script/call`, unealta apelată și rezultatul. Rândurile apelurilor
+din script rămân și când scriptul eșuează și nu intră în limita **Apeluri pe minut** a politicii.
+
 ![Jurnal apeluri: apelurile utilizatorului AI Assistant, cu metoda, unealta, starea Succes, Eroare cu roșu și Refuzat cu galben pentru create prin aplicația OAuth Claude](screenshots/07_call_log.png)
 
 **Server MCP → Raportare → Utilizare zilnică** arată, pe zi și pe utilizator, câte apeluri **reușite** de unelte, înregistrări
@@ -508,6 +519,41 @@ fără model se arată tuturor. Termenii se pot arhiva, ordona prin tragere și 
 
 ![Termenul de glosar Open quotation: sinonimele, modelul Comandă de vânzare, definiția pentru AI și domeniul exemplu cu stările draft și sent](screenshots/18_glossary_form.png)
 
+### Pasul 11 — Scripturi (Code Mode): analize lungi într-un singur apel
+
+O analiză care cere multe apeluri (de exemplu „primii cinci clienți cu cel mai mare sold restant, cu ultima lor
+comandă”) consumă mulți tokeni când AI-ul apelează uneltele una câte una, pentru că fiecare înregistrare
+intermediară trece prin conversație. Cu scripturile, AI-ul scrie un script Python scurt care face apelurile în
+Odoo și întoarce doar răspunsul final.
+
+1. **Server MCP → Configurare → Politici**, deschideți politica și bifați **Scripturi (Code Mode)** (debifat
+   implicit).
+2. **Nr. maxim de apeluri per script** apare doar cu bifa pusă: câte unelte poate apela un script (implicit 50;
+   0 înseamnă tot 50).
+
+   ![Politica Sales assistant - read only: bifa Scripturi (Code Mode) și Nr. maxim de apeluri per script 50, lângă limitele politicii](screenshots/19_policy_scripts.png)
+
+3. Reconectați clientul AI: vede unealta nouă `run_script`, cu lista uneltelor pe care un script le poate apela.
+4. Puneți o întrebare care cere mai mulți pași; AI-ul decide singur când merită un script.
+
+Ce poate și ce nu poate face un script:
+
+- apelează **doar uneltele de citire** ale politicii (`search`, `read`, `count`, `name_search`, `aggregate`,
+  indicatorii etc.), cu `call("search", model=..., domain=...)`; uneltele de scriere, butoanele, `read_attachment`,
+  `print_report` și `request_access` sunt refuzate, cu starea *Refuzat* în jurnal;
+- fiecare apel respectă politica la fel ca un apel direct: aceleași modele și câmpuri, aceleași măști, aceeași limită
+  de înregistrări pe apel și același plafon zilnic;
+- rulează în sandbox-ul Odoo (același mecanism ca acțiunile server): fără importuri, fără acces la fișiere, rețea
+  sau obiecte ale serverului, doar `call()` și funcții simple (`len`, `sum`, `sorted`...);
+- întoarce doar valoarea pusă în `result`, de cel mult 50.000 de caractere; scriptul are cel mult 20.000 de
+  caractere;
+- funcționează și cu serverul doar-citire, pentru că nu scrie nimic.
+
+Scriptul îl scrie clientul AI; în Odoo se vede în *Jurnal apeluri* (Pasul 8): rândul `run_script` și, sub el,
+câte un rând `run_script/call` pentru fiecare unealtă apelată de script.
+
+![Jurnal apeluri: rândul tools/call cu unealta run_script și, sub el, rândurile run_script/call pentru aggregate și count, toate cu starea Succes](screenshots/20_call_log_script.png)
+
 ### Primele întrebări în clientul AI
 
 Ecranul de aici e al clientului AI, nu al Odoo, deci nu are captură. Ca test, întrebați: „Cine sunt eu în Odoo și
@@ -523,7 +569,8 @@ Câmpurile mascate vin ca `***`, iar un filtru sau un total pe ele este refuzat.
 Citire, mereu: `whoami`, `list_models`, `describe_model`, `search`, `count`, `name_search`, `read`, `aggregate`.
 `name_search` caută o înregistrare după nume, ca autocompletarea unui câmp, dar doar pe câmpurile de nume pe care
 politica le arată: un CUI mascat sau un e-mail ascuns nu răspund. `glossary` apare când glosarul are termeni (Pasul 10),
-iar `request_access` când cererile de acces sunt pornite (Pasul 9).
+iar `request_access` când cererile de acces sunt pornite (Pasul 9). `run_script` apare când politica are bifat
+**Scripturi (Code Mode)** (Pasul 11) și rulează un script Python care apelează doar uneltele de citire de mai sus.
 
 Scriere, doar când este activată în Setări: cu **Permite creare**, `create` (și cu o listă de înregistrări),
 `find_or_create` și `copy`; cu **Permite modificare**, `write`; cu **Ștergere**, `unlink`; cu **Trimitere e-mailuri**,
@@ -673,6 +720,11 @@ fiecărei cereri de acces, configurarea clientului AI.
   *Note și activități* din politică; cu *Cereri de acces MCP* bifat, refuzul recomandă `request_access` cu
   operația `chatter` pe modelul documentului.
 - [ ] Apelurile apar în **Jurnal apeluri**; consumul apare în **Utilizare zilnică**.
+- [ ] Fără bifa **Scripturi (Code Mode)**, clientul AI nu vede `run_script`; cu bifa, un script care apelează
+  `search` și `count` întoarce doar rezultatul, iar în jurnal apar rândul `run_script` și câte un rând
+  `run_script/call` pentru fiecare apel.
+- [ ] Un script care apelează `write` e refuzat (*Refuzat* în jurnal) și nu modifică nimic; un câmp mascat vine tot
+  `***` în rezultatul scriptului.
 - [ ] La Codex (OpenAI): conectorul se adaugă din *Plugins → MCPs*; după conectare, „Codex” apare în *Conexiuni OAuth*.
 - [ ] La ChatGPT: *Developer mode* este activat (și permis de administratorul workspace-ului, dacă e cazul), iar conectorul
   folosește autentificare **OAuth**.
@@ -753,6 +805,11 @@ interfața în engleză.
 | This application is blocked. | Aplicația cu sursa „Document de metadate” e arhivată în *Aplicații OAuth* | Dezarhivați-o, dacă e de încredere |
 | The prompt uses undeclared arguments: … | Textul are un `{{nume}}` care nu e pe tabul *Argumente* | Declarați argumentul sau scoateți-l din text |
 | The prompt name / argument name may contain only lowercase letters… | Nume cu majuscule, spații sau diacritice | Folosiți litere mici, cifre și `_` |
+| A script may call at most N tools. | Scriptul a depășit *Nr. maxim de apeluri per script* | AI-ul împarte analiza sau administratorul mărește limita pe politică |
+| A script cannot call the tool X: only reading tools. | Scriptul a apelat o unealtă de scriere, un fișier sau `request_access` | AI-ul apelează unealta direct, în afara scriptului |
+| The script is not valid: … | Cod Python greșit, un import sau un atribut care începe cu `_` | AI-ul corectează scriptul |
+| The script is longer than 20000 characters. | Scriptul e prea lung | AI-ul îl scurtează sau face mai multe apeluri |
+| The result of the script has N characters, more than 50000 | Scriptul întoarce prea multe date | AI-ul agregă rezultatul sau întoarce mai puține înregistrări |
 | Unknown prompt / Missing argument (în clientul AI) | Promptul nu e oferit politicii utilizatorului sau un argument obligatoriu e gol | Adăugați politica pe prompt; completați argumentul |
 
 ## 10. Capturi de ecran
@@ -782,6 +839,8 @@ Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixinul `Sc
 | `16_access_request_approve.png` | cererea deschisă de administrator: operația *Note și activități*, *Valabil până la* și butonul *Aprobare* |
 | `17_policy_personal_access.png` | tabul *Acces personal* al politicii: accesul aprobat doar pentru utilizatorul AI (*Note și activități* pe oferte, citire pe liste de prețuri), cu data de final și coloanele *Trimitere e-mailuri* și *Ștergere* |
 | `18_glossary_form.png` | un termen de glosar: *Open quotation*, cu sinonime, model, definiția pentru AI și domeniul exemplu |
+| `19_policy_scripts.png` | politica cu bifa *Scripturi (Code Mode)* și *Nr. maxim de apeluri per script* |
+| `20_call_log_script.png` | jurnalul cu un script: rândul `run_script` și rândurile `run_script/call` ale apelurilor lui |
 
 Formularul unei unelte de tip *Agregare* (Pasul 4) nu are încă o captură.
 

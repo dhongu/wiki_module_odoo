@@ -26,6 +26,14 @@ de transfer și planifică notele lunare fără intervenție manuală.
 Cazuri uzuale: prime de asigurare anuale plătite în avans, chirii trimestriale/anuale plătite sau
 încasate anticipat, abonamente software multi-an, licențe facturate anticipat.
 
+Modulul tratează și facturile a căror perioadă **a început deja** când sosesc: regularizări de
+energie, servicii facturate pentru lunile anterioare sau perioada preluată automat din e-Factura.
+În standard, Odoo ar data câte o notă de recunoaștere la sfârșitul fiecărei luni trecute, adică în
+luni deja raportate. Cu modulul, partea lunilor trecute din exercițiul curent rămâne pe 6xx/7xx în
+luna facturii și doar lunile următoare trec prin 471/472. La cheltuieli, lunile exercițiului
+anterior, dacă acesta nu e blocat, se înregistrează pe 31.12 prin **4081 Furnizori - facturi
+nesosite**.
+
 ## 2. Bază legală și context
 
 **OMFP 1802/2014 — pct. 351 alin. (1)–(2)** și **funcțiunea conturilor 471 și 472** reglementează
@@ -54,6 +62,22 @@ setare pe companie**, deci nu poate distinge automat contractele sub și peste u
 partea care se reia după mai mult de 12 luni se reclasifică manual (`Dr 4712 = Cr 4711`, respectiv
 `Dr 4721 = Cr 4722`) și se stornează la redeschidere.
 
+**Perioade de amânare începute în trecut** (setarea „Lunile trecute ale amânării în luna
+facturii"):
+
+- Cheltuielile și veniturile se raportează pe exercițiul financiar căruia îi aparțin (OMFP
+  1802/2014 pct. 53 alin. (2)). Cheltuiala sau venitul aferent lunilor trecute ale aceluiași exercițiu se înregistrează la data
+  constatării (pct. 65 alin. (2), pct. 67 alin. (1)), iar revizuirea unei estimări se recunoaște
+  prospectiv (pct. 70 alin. (2) și (4)). De aceea partea trecută rămâne pe 6xx/7xx în luna
+  facturii, fără note în lunile deja raportate.
+- Rezultatul fiscal anual se calculează din veniturile și cheltuielile exercițiului (Codul fiscal
+  art. 19 alin. (1)), deci mutarea părții trecute în luna facturii, în același exercițiu, nu
+  schimbă rezultatul fiscal al anului.
+- Partea lunilor viitoare trece prin 471/472 (pct. 351).
+- Partea care ține de **exercițiul anterior**, sosită înainte de aprobarea situațiilor
+  financiare, este un eveniment ulterior care ajustează situațiile: se înregistrează pe 31.12
+  prin 408 (pct. 72 alin. (1) și (4) lit. a), pct. 73 alin. (1)).
+
 ## 3. Utilizatori și roluri
 
 **Utilizator zilnic:** Contabil (înregistrează facturile cu intervale de recunoaștere)
@@ -75,6 +99,7 @@ Roluri recomandate pentru testare:
 | `4721` | Venituri înregistrate în avans | Transit pentru veniturile amânate |
 | `6xx` | Cont de cheltuieli (ex: 613, 612, 628) | Contul real al cheltuielii, recunoscut lunar |
 | `7xx` | Cont de venituri (ex: 704, 706, 708) | Contul real al venitului, recunoscut lunar |
+| `4081` | Furnizori - facturi nesosite | Partea unei facturi de furnizor care ține de exercițiul anterior (pe 31.12, închisă la data facturii) |
 
 Date minime pentru demo:
 - companie românească cu localizarea `l10n_ro` instalată
@@ -112,6 +137,11 @@ Date minime pentru demo:
    - `Zile`: calcul proporțional pe zile
    - `Luni complete`: orice lună începută contează ca lună completă
 
+5. Verificați, sub aceleași grupuri, setarea **„Lunile trecute ale amânării în luna facturii"**
+   (activă implicit, doar pe companiile RO) și **„Cont facturi nesosite"** (`408100`, completat la
+   instalare). Fără cont, partea din exercițiul anterior rămâne în luna facturii. Cu setarea
+   oprită, Odoo datează notele de recunoaștere și în lunile trecute, ca în standard (vezi Pasul 8).
+
 ## 6. Flux de utilizare
 
 ### Pasul 1 — Verificare setări după instalare
@@ -125,7 +155,7 @@ Verificați, în grupurile **„Înregistrări de cheltuieli amânate"** și
 - **Jurnal** = un jurnal de Operațiuni diverse (implicit „Diverse operații")
 - **Generează înregistrare** = `La validarea facturii`, **Bazat pe** = `Luni`
 
-![Setări conturi amânare 471100/472100](screenshots/01_setari_conturi_amanare.png)
+![Setări contabile, secțiunea Conturi implicite: Cheltuială amânată 471100 și Venit amânat 472100 evidențiate, Generează înregistrări La validarea facturii, Bazat pe Luni; dedesubt, setarea bifată Lunile trecute ale amânării în luna facturii cu Cont facturi nesosite 408100](screenshots/01_setari_conturi_amanare.png)
 
 ---
 
@@ -146,8 +176,9 @@ Completați:
 > „Dată contabilă", care poate diferi de data facturii — vezi captura de mai jos) devine data notei
 > de amânare inițiale și
 > punctul de la care Odoo numără notele lunare. Dacă lăsați data implicită (azi) pe o factură
-> primită în urmă cu o lună, transferul intră în luna greșită, iar recunoașterile deja scadente
-> se generează retroactiv. Corectați data **înainte** de confirmare.
+> primită în urmă cu o lună, transferul intră în luna greșită. Lunile perioadei de dinaintea
+> lunii contabile rămân pe 6xx în luna facturii (Pasul 8), deci data contabilă decide și ce parte
+> nu mai trece prin 4711. Corectați data **înainte** de confirmare.
 
 **Contul de pe linie:** dacă introduceți un produs, contul vine din categoria produsului. Verificați
 că este contul **real de cheltuieli** (`613` pentru asigurări, `612` chirii, `628` servicii) —
@@ -368,6 +399,90 @@ tratament se aplică la **Resetare la Ciornă** sau **Anulare** pe nota tranzac�
 
 ---
 
+### Pasul 8 — Factură cu perioada începută în trecut
+
+**Exemplu (regularizare energie):** factură furnizor din **15.08.2026**, linie `605` de
+**900 lei** fără TVA, **Dată amânată** `01.07.2026 → 30.09.2026` (300 lei pe lună).
+
+**8.1. Setarea.** Funcția se controlează din **Contabilitate → Configurare → Setări**, secțiunea
+**Conturi implicite**, sub grupurile de amânare: **„Lunile trecute ale amânării în luna
+facturii"** (bifată implicit) și **„Cont facturi nesosite"** = `408100`.
+
+![Setări contabile, secțiunea Conturi implicite: sub grupurile Înregistrări de cheltuieli amânate și Înregistrări de venituri amânate, rândul evidențiat Lunile trecute ale amânării în luna facturii, bifat, cu explicația lui și câmpul Cont facturi nesosite 408100 Furnizori - f... (trunchiat) evidențiat](screenshots/07_setare_luni_trecute.png)
+
+**8.2. Alerta pe ciornă.** Introduceți factura ca la Pasul 2 și completați **Dată amânată**. Cât
+timp factura e în ciornă și perioada unei linii 6xx/7xx începe înainte de luna **datei
+contabile**, deasupra formularului apare alerta: *„Perioada de amânare a unor linii începe
+înainte de luna facturii. Suma lunilor trecute se recunoaște în luna facturii."* Dacă perioada
+acoperă și luni din exercițiul anterior, alerta adaugă unde merg ele: *„Lunile exercițiului
+anterior se înregistrează pe 31.12.N prin 408100…"* sau, când nu se poate, motivul (exercițiu
+blocat, cont de facturi nesosite necompletat, factură de client). La o factură cu perioada doar
+în viitor alerta nu apare.
+
+![Factură furnizor în ciornă BILL/2026/08/0001 cu referința EN-2026-0815, de la Furnizor Energie SRL: alerta albastră „Perioada de amânare a unor linii începe înainte de luna facturii. Suma lunilor trecute se recunoaște în luna facturii.”, Data facturii și Data contabilă 15 aug. cu data contabilă evidențiată, linia 605000 de 900,00 lei cu Dată amânată 1 iul. - 30 sept. evidențiată](screenshots/07a_factura_ciorna_alerta.png)
+
+Verificați înainte de confirmare:
+- **Dată contabilă** este în luna în care vreți să intre partea trecută (aici august);
+- intervalul **Dată amânată** este cel din factură (aici iulie–septembrie).
+
+**8.3. Mesajul din chatter.** Confirmați factura (**Confirmă**). În chatter apare mesajul cu suma
+care rămâne pe 6xx în luna facturii și lunile acoperite: *„600,00 lei din Regularizare energie
+iul-sep 2026 (01.07.2026 - 31.08.2026) rămân pe 605000 Cheltuieli privind energia și apa în luna
+facturii."*
+
+![Aceeași factură, postată: BILL/2026/08/0001 cu referința EN-2026-0815, cu butoanele Elemente jurnal și Înregistrări de amânare în bara de sus și linia 605000 cu Dată amânată 1 iul. - 30 sept.; în chatter, mesajul evidențiat: 600,00 lei din Regularizare energie iul-sep 2026 (01.07.2026 - 31.08.2026) rămân pe 605000 Cheltuieli privind energia și apa în luna facturii](screenshots/07b_chatter_mesaj_postare.png)
+
+**8.4. Notele rezultate.** Apăsați **„Înregistrări de amânare"**. Lista are doar două note, niciuna
+în iulie:
+
+![Lista Înregistrări amânate a facturii BILL/2026/08/0001: nota din 15 aug. cu 605000 credit 300,00 lei și 471100 debit 300,00 lei, nota din 30 sept. cu 605000 debit 300,00 lei și 471100 credit 300,00 lei; total 600,00 lei pe fiecare coloană](screenshots/07c_note_amanare_luni_trecute.png)
+
+```
+Factura (15.08):            Dr 605   900   /  Cr 401   900 (+ TVA)
+Transfer (15.08, automat):  Dr 4711  300   /  Cr 605   300   ← doar septembrie
+Recunoaștere (30.09):       Dr 605   300   /  Cr 4711  300
+```
+
+Rezultat: în august, `605` are **600 lei** (iulie + august); în septembrie, **300 lei**. Iulie,
+deja raportată, nu se mai atinge. Pe o factură client (linie 7xx), același calcul se face prin
+`4721`.
+
+**Partea din exercițiul anterior (doar la cheltuieli).** Exemplu: factură din **20.01.N+1**, linie
+6xx de **3.000 lei**, perioadă `01.10.N → 31.01.N+1` (750 lei pe lună), exercițiul N **neblocat**:
+
+```
+31.12.N  (automat):  Dr 6xx   2.250  /  Cr 4081  2.250   ← octombrie–decembrie, în exercițiul N
+20.01.N+1 (automat): Dr 4081  2.250  /  Cr 6xx   2.250   ← închide 4081 la data facturii
+```
+
+Cele două linii `4081` se reconciliază automat (dacă contul permite reconcilierea). În ianuarie
+rămân pe 6xx doar **750 lei**, iar chatterul arată și suma înregistrată pe 31.12. Exercițiul N e
+considerat blocat când data de blocare (fiscală sau definitivă) acoperă 31.12.N; atunci cei
+**3.000 lei** rămân în ianuarie, iar mesajul din chatter spune că o parte din perioadă ține de
+exercițiul anterior, care este blocat. Același lucru, cu motivul propriu în chatter, când
+„Cont facturi nesosite" e gol. Facturile de **venit** cu parte din exercițiul anterior merg tot
+în luna facturii (nu se folosește 418).
+
+> **Atenție la exercițiul anterior.** Modulul nu știe dacă situațiile financiare ale anului N au
+> fost aprobate sau dacă D101 a fost depusă: decide doar după data de blocare. **Setați blocarea
+> fiscală pe 31.12.N după aprobarea situațiilor.** Altfel, o factură sosită după aprobare pune o
+> notă pe 31.12.N, schimbă rezultatul anului N și trebuie refăcute închiderea 121 și D101.
+
+> **Note de credit** pe o perioadă începută în trecut: aceeași regulă, cu semn invers.
+
+> **Setarea oprită** (pentru o companie care vrea comportamentul standard): Odoo datează notele
+> de recunoaștere și în lunile trecute, inclusiv într-o lună deja raportată. Dacă luna e blocată,
+> Odoo le mută singur pe prima zi deschisă, fără mesaj.
+
+> **Resetare la ciornă și repostare:** notele de amânare se refac după aceeași regulă, fără
+> dubluri și fără note în lunile trecute.
+
+> **Amânare grupată („Manual și grupat")** și **plăți din extras** (Pasul 7): regula nu se aplică.
+> Pe metoda grupată notele se generează din raport, la data aleasă; la extras perioada începe
+> în luna plății, deci nu are parte trecută.
+
+---
+
 ### Note de monografie și raportare
 
 **Cheltuieli în avans — flux complet:**
@@ -386,7 +501,20 @@ tratament se aplică la **Resetare la Ciornă** sau **Anulare** pe nota tranzac�
 | Nota amânare (automată) | 704 | 4721 | valoare netă |
 | Recunoaștere lunară (×N luni) | 4721 | 704 | cotă lunară |
 
-Sold `4711`/`4721` la expirarea perioadei: **zero**.
+**Perioadă începută în trecut (Pasul 8):**
+
+| Moment | Dr | Cr | Sumă |
+|--------|----|----|------|
+| Factura (luna facturii) | 6xx, 4426 | 401 | total factură |
+| Transfer (data facturii, automat) | 4711 | 6xx | doar lunile de după luna facturii |
+| Recunoaștere lunară (lunile viitoare) | 6xx | 4711 | cotă lunară |
+| Lunile exercițiului anterior neblocat (31.12, automat) | 6xx | 4081 | cotele lunilor din exercițiul anterior |
+| Închiderea 4081 (data facturii, automat) | 4081 | 6xx | aceeași sumă |
+
+Lunile trecute din exercițiul curent nu au notă proprie: rămân pe 6xx/7xx în luna facturii.
+
+Sold `4711`/`4721` la expirarea perioadei: **zero**. Sold `4081` din aceste note: **zero** (cele
+două linii sunt reconciliate).
 
 **Stornare în negru și rulaje.** Nota de amânare (`Dr 4711 = Cr 612`, respectiv `Dr 704 = Cr 4721`)
 iese din funcțiunea standard a conturilor: pe debitul 471 contrapartidele uzuale sunt 401, 512, 531.
@@ -397,21 +525,32 @@ contabilă a clientului trebuie să prevadă acest tratament**. Consecință: î
 (de exemplu cifra de afaceri din rulajul creditor 70x, pentru plafonul micro) ies supraevaluați —
 calculați-i din **soldul net**.
 
+Același tratament se aplică la **închiderea 4081** (`Dr 4081 = Cr 6xx` la data facturii, Pasul 8).
+Monografia obișnuită este `Dr 408 = Cr 401` la sosirea facturii; cum factura e deja postată
+integral pe 6xx, modulul obține același rezultat prin stornarea în negru a părții din 6xx care
+ține de exercițiul anterior (pct. 69), tot pe baza politicii contabile. Consecință: rulajul
+debitor al 6xx din N+1 conține și suma din N (anulată de rulajul creditor al aceleiași note).
+TVA-ul se deduce în N+1, pe factură; nota de pe 31.12.N cuprinde doar valoarea fără TVA.
+
 ## 7. Legături cu alte module / declarații
 
 | Modul / proces | Rol în flux | Tip legătură |
 |---|---|---|
 | `account_accountant` | câmpuri `deferred_start_date`/`deferred_end_date`, generare intrări, rapoarte | dependență (manifest) |
-| `i18n/ro.po` (modulul nostru) | completează traducerile RO lipsă din `account_accountant`: „Înregistrări de amânare", „Amânare diversă" | livrare proprie |
+| `i18n/ro.po` (modulul nostru) | completează traducerile RO lipsă din `account_accountant`: „Înregistrări de amânare", „Amânare diversă"; din `account`: butonul „Elemente jurnal" | livrare proprie |
 | `l10n_ro` | plan de conturi RO (4711/4721), localizare companie | dependență (manifest) |
 | `account_reports` | rapoartele **Cheltuieli reportate** și **Venituri reportate** | dependență tranzitivă |
 | `l10n_ro_anaf_d300` | soldurile 4711/4721 nu intră direct în D300; cheltuielile/veniturile recunoscute lunar intră prin 6xx/7xx | fără integrare directă |
 | FR-27 (închidere lună) | integrarea verificării soldurilor 4711/4721 ca pre-condiție de închidere — planificată | iterația 2 |
 
-**Ce este automat:** transferul la postarea facturii + planificarea notelor lunare.
+**Ce este automat:** transferul la postarea facturii + planificarea notelor lunare; la o perioadă
+începută în trecut, păstrarea lunilor trecute în luna facturii, nota pe 31.12 prin 4081 pentru
+exercițiul anterior neblocat, alerta pe ciornă și mesajul din chatter.
 
 **Ce rămâne manual:** verificarea raportului la finele lunii, postarea manuală dacă metoda este
-„Manual și grupat", ajustarea contului de amânare dacă termenul > 1 an (4712/4722).
+„Manual și grupat", ajustarea contului de amânare dacă termenul > 1 an (4712/4722); partea din
+exercițiul anterior după aprobarea situațiilor financiare (6xx sau 1174, după pragul de
+semnificație din politica contabilă) și partea de venit din exercițiul anterior.
 
 ## 8. Verificări pentru consultant
 
@@ -434,6 +573,21 @@ calculați-i din **soldul net**.
 - [ ] Ștergerea contrapartidei / anularea reconcilierii / ștergerea tranzacției lasă `4711` fără sold
       din acea tranzacție, iar notele postate apar **stornate** (nu șterse), la data lor.
 - [ ] Modelul refuză **Amânare (luni)** pe un cont care nu e de cheltuieli (ex. 704).
+- [ ] În **Setări**, sub grupurile de amânare, „Lunile trecute ale amânării în luna facturii" e
+      bifată și „Cont facturi nesosite" = `408100`.
+- [ ] Factură în ciornă din 15.08, 900 lei pe 6xx, **Dată amânată** 01.07–30.09: apare alerta
+      albastră; la o perioadă 01.09–30.11 alerta nu apare.
+- [ ] După confirmare, chatterul arată 600 lei rămași pe 6xx în luna facturii pentru 01.07–31.08.
+- [ ] **Înregistrări de amânare** are exact două note: `Dr 4711 = Cr 6xx` 300 lei la 15.08 și
+      `Dr 6xx = Cr 4711` 300 lei la 30.09; nicio notă datată în iulie.
+- [ ] Factură cu perioada integral trecută (ex. 01.01–31.07 pe o factură din august): nicio notă
+      de amânare, butonul **„Înregistrări de amânare"** nu apare.
+- [ ] Aceeași factură pe client (7xx): rezultat identic, pe `4721`.
+- [ ] Resetare la ciornă și repostare: aceleași două note, fără dubluri.
+- [ ] Factură din 20.01.N+1, 3.000 lei, perioadă 01.10.N–31.01.N+1, exercițiul N neblocat: notă pe
+      31.12.N `Dr 6xx = Cr 4081` 2.250 lei și notă la 20.01.N+1 `Dr 4081 = Cr 6xx` 2.250 lei,
+      reconciliate pe 4081; cu exercițiul N blocat, nicio notă pe 31.12.N.
+- [ ] Cu setarea debifată, factura din 15.08 primește și nota de recunoaștere din iulie (standard).
 
 ## 9. Mesaje de eroare frecvente
 
@@ -448,6 +602,8 @@ calculați-i din **soldul net**.
 | Butonul „Înregistrări de amânare" nu apare după postare | Câmpul „Dată amânată" nu a fost completat pe linie, sau linia este pe un cont care nu este de tip `expense`/`income` | Verificați că linia e pe 6xx (cheltuieli) sau 7xx (venituri) și că intervalul de date este completat. Dacă linia vine dintr-un produs, contul poate fi cel din categoria produsului |
 | Notele lunare rămân în stare „Ciornă" | Serverul verifică o dată pe zi — poate dura până la 24 ore | Postați-le manual din lista deschisă de butonul „Înregistrări de amânare" |
 | Nu apare butonul **„Generează înregistrare"** în raport | Butonul există doar când metoda e `Manual și grupat`; pe `La validarea facturii` notele sunt deja generate | Verificați **Setări → Conturi implicite → Generează înregistrare** |
+| Pe factura cu perioadă începută în trecut nu apare nota pe 31.12 (exercițiul anterior) | Exercițiul anterior e blocat (data de blocare acoperă 31.12), „Cont facturi nesosite" e gol sau factura e de venit | Comportament prevăzut: partea respectivă rămâne în luna facturii (mesajul din chatter o spune). Pentru 31.12, completați contul `408100` în setări înainte de postare |
+| Nota din luna trecută lipsește, deși perioada începe acolo | Setarea „Lunile trecute ale amânării în luna facturii" e activă | Comportament prevăzut: partea trecută a rămas pe 6xx/7xx în luna facturii (vezi chatterul). Pentru comportamentul standard debifați setarea |
 | „Dată amânată" devine needitabilă după postare | Comportament normal — nu se pot modifica datele pe o linie cu intrări de amânare deja generate | Resetați factura la ciornă (anulați intrările de amânare) → corectați → repostați |
 
 ### Corectarea notelor postate pe 301 / 161
@@ -506,6 +662,10 @@ pe planul de conturi RO (`setup_country("ro")` → conturile 471100/472100):
 11. `06_model_reconciliere_amanare.png` — Modelul de reconciliere „RCA trimestrial" cu amânare pe 3 luni.
 12. `06a_reconciliere_buton_rca.png` — Reconcilierea bancară: meniul ⋮ cu modelul de amânare.
 13. `06b_extras_nota_amanare.png` — Transferul generat din extras: `Dr 471100 = Cr 613000`.
+14. `07_setare_luni_trecute.png` — Setarea „Lunile trecute ale amânării în luna facturii" și „Cont facturi nesosite" 408100.
+15. `07a_factura_ciorna_alerta.png` — Factură furnizor în ciornă (15.08, 900 lei, 01.07–30.09) cu alerta despre perioada începută în trecut.
+16. `07b_chatter_mesaj_postare.png` — Factura postată: mesajul din chatter cu 600 lei rămași pe 605 în luna facturii.
+17. `07c_note_amanare_luni_trecute.png` — Notele de amânare rezultate: transfer 300 lei la 15.08, recunoaștere 300 lei la 30.09.
 
 Regenerare:
 
@@ -513,6 +673,10 @@ Regenerare:
 ./odoo/odoo-bin -c odoo.conf -d <db> -i l10n_ro_deferred_entries,l10n_ro_doc_screenshots \
     --test-tags=fise_screenshots --stop-after-init
 ```
+
+Capturile 01–06b vin din `test_capture_fise`, capturile 07–07c din `test_capture_fise_past`, iar
+GIF-ul demo al paginii Apps (`demo.gif`, `en/demo.gif`) din `test_capture_gif`; fiecare se poate
+rula separat cu `--test-tags=/l10n_ro_deferred_entries:TestDeferredEntriesScreenshots.<metodă>`.
 
 ## 11. Observații pentru manual
 
@@ -522,6 +686,10 @@ iar sistemul face automat transferul la 4711/4721 și planifică recunoașterea 
 
 Această abordare este conformă cu mecanismul nativ Enterprise (`account_accountant`) și elimină
 nevoia de a crea manual planuri de recunoaștere (metoda folosită anterior cu `account.asset`).
+
+Pentru facturile cu perioada începută în trecut, manualul trebuie să spună clar că lipsa notelor
+în lunile trecute este voită: partea trecută stă pe 6xx/7xx în luna facturii, iar explicația e
+în chatterul facturii. Data contabilă a facturii decide ce înseamnă „trecut".
 
 ---
 

@@ -122,7 +122,16 @@ Date minime pentru demo:
    România**) este opțională. Alegeți persoana care răspunde de D406; trebuie să aibă nume și
    prenume, telefon și, ideal, funcția completată (de exemplu „Administrator”). Dacă rămâne goală,
    exportul alege contactul firmei cu funcția de administrator, apoi primul contact cu nume și
-   telefon.
+   telefon. Numele contactului se scrie în ordinea **NUME PRENUME** („LUNGU ELENA-VERONICA”):
+   exportul ia primul cuvânt ca nume de familie și restul ca prenume.
+9. **Județul** firmei și al partenerilor (**Contacte** → partenerul → adresa, câmpul **Județ**) se
+   completează ca să apară `Region` în adrese (Pasul 16). Câmpul e opțional în schema ANAF.
+10. **Funcțiune SAF-T** pe cont (**Contabilitate → Configurare → Plan de conturi**, formularul
+    contului, sub **Tip**) este opțională. Exportul ia funcțiunea din planul general de conturi
+    (Pasul 17); completați câmpul doar pentru un cont la care vreți altă funcțiune decât cea din plan.
+11. **Tip taxă SAF-T** și **Cod taxă SAF-T** pe conturile de datorii către buget și de impozit
+    reținut la sursă (același formular de cont), pe contul analitic (ex. 446100 dividende, nu 446).
+    Vezi Pasul 18 pentru corespondențe.
 
 ## 6. Flux de utilizare
 
@@ -739,6 +748,168 @@ Raportare → Registre → Carte Mare**, meniul cu rotița (⚙) → **SAF-T (De
 Exportul nu consultă VIES: o firmă din UE cu cod de TVA completat primește `01`. Dacă știți că
 partenerul nu e înregistrat în scopuri de TVA, ștergeți codul de TVA din fișă (va primi `05`).
 
+### Pasul 16 — Județul, numele contactului și codul de TVA al partenerilor (versiunea 19.0.1.6.0)
+
+Generați declarația ca la Pasul 5 și verificați în XML:
+
+1. **Region în adrese** — fiecare `Address` (firmă, clienți, furnizori, adresele de pe facturi) are
+   `Region` = codul ISO al județului din fișă: `RO-B` pentru București, `RO-BC` pentru Bacău,
+   `RO-IF` pentru Ilfov. Elementul stă între `PostalCode` și `Country`. La un partener fără județ
+   completat, `Region` lipsește; completați **Județ** pe adresa partenerului (secțiunea 5, punctul 9).
+2. **Numele contactului firmei** — `ContactPerson` are `FirstName` = prenumele și `LastName` =
+   numele de familie, citite din numele scris **NUME PRENUME**: „LUNGU ELENA-VERONICA” → `FirstName`
+   ELENA-VERONICA, `LastName` LUNGU. Înainte cele două ieșeau inversate. Un contact scris „Elena
+   Lungu” iese inversat: corectați ordinea pe fișa contactului. Persoana de contact SAF-T aleasă în
+   setări cu un singur cuvânt în nume (de exemplu „Administrator”) oprește exportul (secțiunea 9);
+   contactele găsite automat au întotdeauna nume și prenume.
+3. **Codul de TVA al clienților și furnizorilor** (`TaxRegistration/TaxRegistrationNumber`) — se
+   scrie la fel indiferent cum e completat câmpul **TVA** din fișă:
+
+   | Partener | Câmpul TVA din fișă | `TaxRegistrationNumber` |
+   |---|---|---|
+   | Firmă din România | `RO1688146` sau `1688146` | `1688146` (fără RO) |
+   | Firmă din Italia | `IT08809160727` sau `08809160727` | `IT08809160727` |
+   | Firmă din Grecia | `EL094259216` | `EL094259216` (prefixul de TVA rămâne EL) |
+
+   Partenerii fără cod de TVA nu au bloc `TaxRegistration`. Numărul firmei (`Header/Company`) rămâne
+   cel de la Pasul 15, punctul 1.
+
+![Fișa clientului „Client Județ București SRL”, cu Județ București ① și TVA RO20603502 ②](screenshots/16_partener_judet_tva.png)
+
+Extras din XML pentru clientul de mai sus (`CustomerID` 0020603502):
+
+```xml
+<Address>
+  <StreetName>Bd. Unirii 5</StreetName>
+  <City>București</City>
+  <PostalCode>030167</PostalCode>
+  <Region>RO-B</Region>
+  <Country>RO</Country>
+</Address>
+<TaxRegistration>
+  <TaxRegistrationNumber>20603502</TaxRegistrationNumber>
+</TaxRegistration>
+```
+
+### Pasul 17 — Funcțiunea contului și partea soldului (versiunea 19.0.1.7.0)
+
+1. **`AccountType` din planul de conturi** — fiecare cont din `GeneralLedgerAccounts` primește
+   funcțiunea contului sintetic din OMFP 1802/2014 (Activ, Pasiv sau Bifunctional), nu tipul de cont
+   din Odoo. Diferențele cele mai frecvente față de versiunea anterioară:
+
+   | Conturi | Înainte | Acum | Motiv |
+   |---|---|---|---|
+   | 117x, 121, 473, 581 | Pasiv / Activ | Bifunctional | conturi (A/P) în plan |
+   | 2678, 4091–4094 | Pasiv | Activ | creanțe, avansuri acordate |
+   | 280x, 281x, 39x, 5191 | Bifunctional / Activ | Pasiv | conturi rectificative, credite bancare |
+
+   Clasele 6 și 7 nu au funcțiune în ordin: cheltuielile ies Activ, veniturile Pasiv (609 și 709
+   invers, 711 și 712 Bifunctional). Clasele 8 și 9 rămân pe tipul de cont Odoo. Deschideți contul
+   din **Contabilitate → Configurare → Plan de conturi**: câmpul **Funcțiune SAF-T** ① e gol, deci
+   se aplică funcțiunea din plan; îl completați doar pentru excepții (secțiunea 5, punctul 10).
+
+![Contul 409100, cu tipul Odoo „Datorii curente” și câmpul Funcțiune SAF-T gol](screenshots/17_cont_functiune_saft.png)
+
+2. **Soldul pe partea funcțiunii** — soldurile inițiale și finale se scriu doar pe partea funcțiunii
+   contului, cu minus când soldul are semn invers (regula ANAF, „2. MasterFiles”):
+   - cont de activ: doar `OpeningDebitBalance` / `ClosingDebitBalance`;
+   - cont de pasiv: doar `OpeningCreditBalance` / `ClosingCreditBalance`;
+   - cont bifuncțional: partea soldului, cu valoare pozitivă, ca înainte;
+   - clienți: doar sold debitor; furnizori: doar sold creditor.
+
+   Înregistrați o factură de stornare (credit note) de 1.000,00 lei către un client fără alte
+   facturi în lună. Clientul are sold creditor; înainte ieșea `ClosingCreditBalance` 1000.00, acum:
+
+```xml
+<OpeningDebitBalance>0.00</OpeningDebitBalance>
+<ClosingDebitBalance>-1000.00</ClosingDebitBalance>
+```
+
+### Pasul 18 — Codurile obligațiilor bugetare și ale impozitelor reținute la sursă (versiunea 19.0.1.8.0)
+
+Liniile fără taxă ieșeau toate cu `TaxType 000 / TaxCode 000000`. ANAF cere pe conturile de
+datorii către buget tipul obligației din foaia TAX-IMP, iar la impozitele reținute la sursă perechea
+tip / cod din foaia WHT a nomenclatorului.
+
+1. **Configurați contul analitic** — **Contabilitate → Configurare → Plan de conturi**, deschideți
+   contul și completați **Tip taxă SAF-T** ① și, la impozitele reținute la sursă, **Cod taxă SAF-T**
+   ②. Fără cod, exportul pune `000000`. Exemple:
+
+   | Cont | Tip taxă SAF-T | Cod taxă SAF-T |
+   |---|---|---|
+   | 4315 CAS reținut | 412 | gol (000000) |
+   | 4316 CASS reținut | 432 | gol (000000) |
+   | 436 CAM | 480 | gol (000000) |
+   | 444 impozit pe salarii | 602 | gol (000000) |
+   | 447 fonduri speciale | 811 | gol (000000) |
+   | 446100 impozit dividende PF | 604 | codul din foaia WHT (ex. 604010) |
+   | 446xxx servicii de la nerezidenți | 636 | codul din foaia WHT (ex. 636010) |
+
+   Numărul contului nu e tipul de taxă: 431, 436, 444, 446 sunt și coduri TAX-IMP, cu alt înțeles.
+   Configurați pe contul analitic, pentru că același sintetic are naturi diferite (446100 dividende,
+   446200 TVA din vamă). Codul are exact 6 cifre și trebuie să fie în lista validatorului D406:
+   DUK Integrator respinge un cod inexistent (de exemplu `604040` sau tipul `628`).
+
+![Contul 446100 cu Tip taxă SAF-T 604 ① și Cod taxă SAF-T 604010 ②](screenshots/18_cont_tip_taxa_saft.png)
+
+2. **Ce se exportă** — codul se pune doar pe linia contului configurat; contrapartida (457, 462)
+   rămâne `000 / 000000`. `TaxAmount` e valoarea liniei. Fiecare pereche tip / cod apare și în
+   `TaxTable`. Pentru nota 457100 = 446100, 1.600,00 lei:
+
+```xml
+<TaxInformation>
+  <TaxType>604</TaxType>
+  <TaxCode>604010</TaxCode>
+  <TaxBaseDescription>Impozit pe veniturile din dividende distribuite persoanelor fizice</TaxBaseDescription>
+  <TaxAmount>
+    <Amount>1600.00</Amount>
+    <CurrencyCode>RON</CurrencyCode>
+    <CurrencyAmount>1600.00</CurrencyAmount>
+    <ExchangeRate>1.0000</ExchangeRate>
+  </TaxAmount>
+</TaxInformation>
+```
+
+3. **Corecția manuală pe linie** — pentru o excepție, deschideți linia din **Contabilitate →
+   Contabilitate → Elemente de jurnal**, apoi blocul **SAF-T (D406)** ① și completați tipul și codul.
+   Linia are prioritate față de cont, iar corecția rămâne la orice regenerare a declarației. Blocul
+   apare doar pe liniile fără taxă; liniile cu TVA își păstrează codurile din taxă.
+
+![Linia 446100 din nota de dividende, cu blocul SAF-T (D406)](screenshots/19_linie_tip_taxa_saft.png)
+
+### Pasul 19 — Contul de client sau de furnizor al facturii (versiunea 19.0.1.9.0)
+
+`AccountID` de la nivel de factură (`SalesInvoices/Invoice` și `PurchaseInvoices/Invoice`) ieșea
+cu contul implicit de furnizor al partenerului pentru toate facturile, deci și pentru vânzări
+(de exemplu factura INV/2026/00001 cu 401100 în loc de 4111). ANAF cere contul de terț folosit la
+înregistrarea facturii (ghidul D406, elementul S.I.4; întrebări frecvente SAF-T, răspunsul 149):
+clientul la vânzare, furnizorul la achiziție, iar pe linii conturile de venit sau de cheltuială.
+
+1. **Factura de vânzare** — deschideți factura, fila **Elemente de jurnal**: linia clientului are
+   contul 4111 (sau analiticul folosit). Generați D406 și căutați factura în
+   `SourceDocuments/SalesInvoices`: `AccountID` de sub `CustomerInfo` este același cont.
+2. **Achiziția de imobilizare** — nota facturii este `% = 404x` (Dr 2131 + Dr 4426), iar linia
+   furnizorului este pe 404x, la fel la 231 sau 20x (contul se schimbă pe linia furnizorului, în fila **Elemente de jurnal**, înainte de
+   validare). În `PurchaseInvoices`, `AccountID` al facturii este 404x, chiar dacă partenerul are
+   ca furnizor implicit 401.
+3. **Ce se exportă** — contul liniei de partener din nota facturii, de regulă 4111, 401 sau 404,
+   dar și 461 la vânzarea de imobilizări sau 451 / 453 la entitățile din grup. La o factură cu
+   două linii de partener (de exemplu 404 și 401) se ia linia cu valoarea mai mare; e o
+   aproximare a raportării, pentru că `Invoice` are un singur `AccountID`. În `GeneralLedgerEntries`
+   ambele conturi apar cu sumele lor. Contul implicit al
+   partenerului (client la vânzare, furnizor la achiziție) se folosește doar dacă factura nu are
+   linie de partener. Contul cu litere în cod primește același `AccountID` numeric ca în Cartea
+   Mare (Pasul 13).
+
+```xml
+<Invoice>
+  <InvoiceNo>INV/2026/00001</InvoiceNo>
+  <CustomerInfo>...</CustomerInfo>
+  <AccountID>4111</AccountID>
+  ...
+</Invoice>
+```
+
 ## 7. Legături cu alte module / declarații
 
 | Modul | Rol |
@@ -752,6 +923,8 @@ partenerul nu e înregistrat în scopuri de TVA, ștergeți codul de TVA din fi�
 
 **Ce e automat:**
 
+- `AccountID` al facturii = contul de terț din nota facturii (de regulă 4111 la vânzare, 401 / 404
+  la achiziție; și 461, 451, 453), nu contul implicit de furnizor al partenerului;
 - `AccountID` numeric la conturile cu litere în cod (grupul de caractere non-numerice devine un cod fix de 3 cifre,
   din tabelul păstrat în bază), folosit la fel în Cartea Mare, jurnal, facturi, conturile
   partenerilor și ale activelor; `StandardAccountID` cu codul real al contului;
@@ -792,6 +965,7 @@ partenerul nu e înregistrat în scopuri de TVA, ștergeți codul de TVA din fi�
 
 ## 8. Verificări pentru consultant
 
+- [ ] O factură de vânzare are în `SalesInvoices` `AccountID` 4111 (contul clientului), iar o achiziție de imobilizare înregistrată pe 404 are în `PurchaseInvoices` `AccountID` 404x.
 - [ ] Taxa „21% ND 50%” are două linii de repartiție de câte 50%: 4426 (eticheta „24 - VAT”) și 6352.
 - [ ] Un produs stocabil cu metoda de cost FIFO apare cu `GoodsServicesID` 01 și `ValuationMethod` FIFO; un serviciu are `GoodsServicesID` 02 și fără `ValuationMethod`.
 - [ ] `UOMTable` are o singură intrare pentru C62, chiar dacă două unități de măsură au același cod UNECE.
@@ -834,6 +1008,17 @@ partenerul nu e înregistrat în scopuri de TVA, ștergeți codul de TVA din fi�
 - [ ] `Customers` și `Suppliers` nu au niciun bloc `Contact`.
 - [ ] Niciun `CustomerID` / `SupplierID` nu este doar `00`; persoana cu CNP are `03` + CNP, cea fără
       CNP `04` + referința internă (sau ID-ul), firma din UE fără TVA `05` + țară + cod intern.
+- [ ] Adresele cu județ completat au `Region` (ex. `RO-B`) între `PostalCode` și `Country`
+      (Pasul 16).
+- [ ] Contactul firmei are numele de familie în `LastName` și prenumele în `FirstName`.
+- [ ] `TaxRegistrationNumber` al clienților și furnizorilor români nu are prefixul RO; cel al
+      partenerilor străini are prefixul țării (ex. IT08809160727).
+- [ ] 4091xx are `AccountType` Activ, 2813xx Pasiv, 121xxx Bifunctional (Pasul 17).
+- [ ] Niciun cont de activ și niciun client nu are `*CreditBalance`; niciun cont de pasiv și niciun
+      furnizor nu are `*DebitBalance`. Soldurile de semn invers apar cu minus.
+- [ ] Liniile conturilor bugetare configurate au tipul TAX-IMP și `000000`; liniile 446 de impozit
+      reținut la sursă au perechea WHT; contrapartidele rămân `000 / 000000` (Pasul 18).
+- [ ] Fiecare `TaxType` / `TaxCode` din tranzacții apare în `TaxTable`.
 - [ ] Fișierul trece prin DUK Integrator fără erori.
 
 ## 9. Mesaje de eroare frecvente
@@ -858,6 +1043,7 @@ partenerul nu e înregistrat în scopuri de TVA, ștergeți codul de TVA din fi�
 | DUK: `AccountID` nu e număr întreg (MF.GLA.2) | un cont cu litere în cod, iar modulul nu e instalat sau e într-o versiune fără corecție | instalați/actualizați `l10n_ro_saft_export_fix` și regenerați XML-ul (Pasul 13); conturile din `l10n_ro_saft_stock` rămân pe cod numeric |
 | Linia cu „0% EXEMPT” sau „0% EU G” iese cu `000 / 000000` | taxa nu are completate **Tipul fiscal SAF-T românesc** sau **Cod Fiscal SAF-T Roman** (tab Opțiuni Avansate), sau modulul nu e instalat | completați tipul (300) și codul SAF-T pe taxă și regenerați XML-ul |
 | „Persoana de contact SAF-T trebuie să aibă nume și prenume și număr de telefon.” (exportul se oprește) | persoana aleasă în setări nu are telefon sau are un singur cuvânt în nume | completați telefonul și numele complet pe contact, sau goliți setarea (secțiunea 5, punctul 8) |
+| „Persoana de contact SAF-T trebuie să aibă nume și prenume și număr de telefon.” (buton „View Contact”) | contactul ales în setări are un singur cuvânt în nume sau nu are telefon | completați pe fișa contactului numele în ordinea NUME PRENUME și telefonul (Pasul 16, punctul 2) |
 | DUK: „CustomerID / SupplierID incorrect value” | versiune fără corecție: partener fără cod fiscal exportat cu `00`, sau CNP fără `03` | actualizați modulul la 19.0.1.5.0 și regenerați XML-ul (Pasul 15); la firmele din România verificați CUI-ul |
 
 ## 10. Capturi de ecran
@@ -886,8 +1072,12 @@ Capturile sunt **generate automat** de `tests/test_screenshots.py` (mixinul `Scr
 | 13 | `static/description/13_factura_achizitie_referinta.png` | Factura de achiziție cu **Referință factură** ① GNW-VL 350 → `InvoiceNo` |
 | 14 | `static/description/14_setari_persoana_contact_saft.png` | Setări → Localizare România, câmpul **Persoană de contact SAF-T** ① = Ionescu Mihai (Administrator) |
 | 15 | `static/description/15_partener_referinta_interna.png` | Fișa partenerului „Pop Maria” (persoană fizică fără CNP), tab-ul Vânzări & Achiziții, cu câmpul **Referință** ① = C-00.10 → `CustomerID` 04C0010 |
+| 16 | `static/description/16_partener_judet_tva.png` | Fișa clientului „Client Județ București SRL”, cu **Județ** ① București (RO) → `Region` RO-B și **TVA** ② RO20603502 → `TaxRegistrationNumber` 20603502 |
+| 17 | `static/description/17_cont_functiune_saft.png` | Formularul contului 409100, cu tipul Odoo „Datorii curente” și câmpul **Funcțiune SAF-T** ① gol → `AccountType` Activ, din planul de conturi |
+| 18 | `static/description/18_cont_tip_taxa_saft.png` | Formularul contului 446100, cu **Tip taxă SAF-T** ① 604 și **Cod taxă SAF-T** ② 604010 |
+| 19 | `static/description/19_linie_tip_taxa_saft.png` | Elementul de jurnal 446100 din nota de dividende, cu blocul **SAF-T (D406)** ① pentru corecția manuală |
 
-Extrasele XML din Pașii 6, 8, 9, 10, 11 și 13 sunt text inline, nu imagine. Sunt copiate din exportul
+Extrasele XML din Pașii 6, 8, 9, 10, 11, 13, 16, 17 și 18 sunt text inline, nu imagine. Sunt copiate din exportul
 real al testului de capturi, care le scrie în log („Extras D406 pentru fișă”). Numerele de document,
 datele și `SystemID` / `RecordID` diferă de la o rulare la alta.
 
