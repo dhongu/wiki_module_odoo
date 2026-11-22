@@ -4,12 +4,12 @@
 - **Versiune:** `19.0.2.2.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_deferred_entries
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_deferred_entries`
-- **Ultima Ingestie:** 2026-09-23
+- **Ultima Ingestie:** 2026-11-22
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul configurează automat mecanismul nativ Odoo Enterprise de recunoaștere a cheltuielilor și veniturilor înregistrate în avans, conform **OMFP 1802/2014 pct. 351 alin. (1)–(2)** și funcțiunii conturilor **471**/**472**, folosind conturile **4711** (Cheltuieli înregistrate în avans) și **4721** (Venituri înregistrate în avans) din planul de conturi românesc. Se bazează pe motorul nativ `account_accountant` (Enterprise) — coloana opțională „Dată amânată" de pe liniile de factură și rapoartele „Cheltuieli reportate" / „Venituri reportate" sunt disponibile fără cod custom adițional; modulul le livrează cu planul RO și traducerile care lipsesc din standard. Pe lângă cheltuielile/veniturile facturate, modulul acoperă și un caz major care nu are echivalent nativ: plăți în avans fără factură (asigurări RCA, CASCO), eșalonate direct dintr-un model de reconciliere aplicat pe extrasul bancar sau pe casă.
+Modulul configurează automat mecanismul nativ Odoo Enterprise de recunoaștere a cheltuielilor și veniturilor înregistrate în avans, conform **OMFP 1802/2014 pct. 351 alin. (1)–(2)** și funcțiunii conturilor **471**/**472**, folosind conturile **4711** (Cheltuieli înregistrate în avans) și **4721** (Venituri înregistrate în avans) din planul de conturi românesc. Se bazează pe motorul nativ `account_accountant` (Enterprise) — coloana opțională „Dată amânată" de pe liniile de factură și rapoartele „Cheltuieli reportate" / „Venituri reportate" sunt disponibile fără cod custom adițional; modulul le livrează cu planul RO și traducerile care lipsesc din standard. Pe lângă cheltuielile/veniturile facturate, modulul acoperă și un caz major care nu are echivalent nativ: plăți în avans fără factură (asigurări RCA, CASCO), eșalonate direct dintr-un model de reconciliere aplicat pe extrasul bancar sau pe casă. Din 19.0.2.2.0 tratează și facturile cu perioadă începută înainte de luna facturii (regularizări de energie, perioada preluată din e-Factura): lunile trecute rămân pe 6xx/7xx în luna facturii, iar prin 471/472 trec doar lunile viitoare.
 
 #### 2. Funcționalități Cheie
 
@@ -21,6 +21,10 @@ Modulul configurează automat mecanismul nativ Odoo Enterprise de recunoaștere 
 - **Amânare configurabilă pe modelul de reconciliere bancară/casă**, pentru plăți fără obligație de facturare (asigurări): pe linia modelului se setează **Amânare (luni)** și **Amânarea începe** (`Luna plății` / `Luna următoare`), doar pe conturi de cheltuieli (6xx) — o încasare în avans pentru o operațiune taxabilă ar cere factură de avans și TVA la încasare, deci veniturile nu se pot eșalona din extras.
 - Modelul aplicat din reconcilierea bancară pune perioada pe contrapartidă și generează imediat notele de amânare (transfer + note lunare), fără să aștepte postarea unei facturi.
 - Ștergerea contrapartidei, anularea reconcilierii, ștergerea sau resetarea la ciornă a tranzacției anulează automat amânarea: ciornele se șterg, notele deja postate se stornează la data lor (sau la prima zi deschisă, dacă luna e blocată) — nu se șterg niciodată note postate.
+- **Perioade de amânare începute în trecut**: lunile trecute din exercițiul curent rămân pe 6xx/7xx în luna facturii, iar prin 471/472 trec doar lunile următoare; nicio notă de recunoaștere nu mai intră în lunile deja raportate (în standard Odoo le datează în trecut). Se aplică facturilor de furnizor și de client (fișă §8).
+- **Exercițiul anterior (doar cheltuieli)**: dacă anul anterior nu e blocat, partea care îi aparține se înregistrează pe 31.12 prin **4081 (Furnizori - facturi nesosite)** și se reia la data facturii, cu reconciliere între cele două note; cu anul blocat, suma rămâne în luna facturii, iar chatterul spune motivul.
+- **Alertă pe factura în ciornă** când perioada unei linii începe înainte de luna datei contabile, și **mesaj în chatter** la postare cu sumele rămase pe 6xx/7xx.
+- **Setări pe companie** (Contabilitate → Configurare → Setări, sub grupurile de amânare): „Lunile trecute ale amânării în luna facturii" (activă implicit, se poate opri, caz în care se revine la comportamentul standard) și „Cont facturi nesosite" (4081, completat la instalare/actualizare).
 - Livrează traducerile RO lipsă din `account_accountant`: „Înregistrări de amânare" (buton pe factură) și „Amânare diversă" (tip de intrare amânată), netraduse în Odoo 19.0 standard.
 
 #### 3. Dependențe
@@ -38,9 +42,15 @@ Modulul configurează automat mecanismul nativ Odoo Enterprise de recunoaștere 
 - `account.bank.statement.line` (extindere): nucleul funcționalității noi — `_l10n_ro_sync_deferred_entries` (compară o „amprentă" a liniilor amânate curente cu cea reținută pe notă și regenerează amânarea la orice schimbare), `_l10n_ro_cancel_deferred_entries` (șterge ciornele, stornează notele postate la data lor sau la prima zi deschisă dacă luna e blocată), plus supraveghere pe `unlink`, `delete_reconciled_line`, `edit_reconcile_line` și `action_undo_reconciliation`, ca orice modificare din ecranul de reconciliere să regenereze sau să anuleze corect amânarea.
 - `account.move` (extindere): câmpul `l10n_ro_deferred_signature` reține amprenta liniilor amânate pentru care s-au generat deja note, ca sincronizarea să nu le storneze/regenereze inutil; suprascrie `button_draft` (stornează manual amânarea unei note de tranzacție bancară înainte ca ștergerea nativă `_unlink_or_reverse` să atingă și stornările proprii) și `_post` (reține amprenta după (re)postarea unei note de tranzacție).
 
+- `res.company` + `res.config.settings` (extindere): `l10n_ro_deferred_past_in_current` (Boolean, implicit activ) și `l10n_ro_deferred_accrual_account_id` (cont 408/4081, `check_company`).
+- `account.move` (extindere, suplimentar): `_l10n_ro_generate_past_deferrals` generează amânarea pentru liniile cu perioadă începută în trecut (inclusiv transferul prin 4081 pe 31.12 pentru anul anterior neblocat), suprascrie `_generate_deferred_entries` și `_get_alerts` (alerta de pe ciornă) și postează mesajul din chatter.
+- `account.move.line` (extindere): `_get_deferred_periods` omite liniile preluate de generarea proprie (context `l10n_ro_deferred_skip_line_ids`), ca motorul nativ să nu le dateze în lunile trecute.
+
 **Vizualizări**
 
 - `view_account_reconcile_model_form`: adaugă coloanele „Amânare (luni)" și „Amânarea începe" pe lista liniilor unui model de reconciliere (`account.view_account_reconcile_model_form`).
+
+- `res_config_settings_view_form`: setarea „Lunile trecute ale amânării în luna facturii" și câmpul „Cont facturi nesosite", vizibile doar pe companii cu țara RO.
 
 Pentru fluxul standard pe factură (fără reconciliere bancară), modulul nu adaugă vizualizări proprii — folosește coloana „Dată amânată" și rapoartele native Enterprise (Contabilitate → Raportare → **Cheltuieli reportate** / **Venituri reportate**).
 
@@ -52,6 +62,7 @@ Pentru fluxul standard pe factură (fără reconciliere bancară), modulul nu ad
 
 - `post_init_hook` (`hooks.py`): la instalare, corectează pe fiecare companie RO conturile de amânare (înlocuiește orice cont din afara grupei 471/472, nu doar câmpurile goale) și jurnalul de amânare, apoi mută ciornele lunare deja generate pe contul greșit.
 - Migrări `19.0.2.0.1` și `19.0.2.0.2` (post-migrate): rulează din nou `_set_ro_deferred_accounts` pe instalările existente — prima corectează conturile pe companie (până atunci hook-ul scria doar în câmpuri goale, dar planul le umpluse deja cu 301/1614), a doua adaugă și mutarea ciornelor lunare rămase pe contul greșit. Notele deja postate nu se modifică în niciun caz — reclasificarea lor rămâne manuală (fișă §9).
+- Migrarea `19.0.2.2.0`: completează pe companiile existente contul de facturi nesosite (4081) pentru noua funcționalitate.
 - Recunoașterea lunară pe fluxul de factură este realizată de mecanismul standard de amânare din `account_accountant`, care generează și postează notele la scadență.
 
 #### 5. Conexiuni

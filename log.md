@@ -4,6 +4,13 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-22] Re-ingestie: l10n_ro_deferred_entries (19.0.2.2.0)
+
+- **Acțiune:** actualizare [l10n_ro_deferred_entries](l10n_ro_deferred_entries/index.md) după PR terrabit-solutions/l10n_ro_ent#1498: perioadele de amânare începute înainte de luna facturii (lunile trecute din exercițiul curent rămân pe 6xx/7xx în luna facturii, doar lunile viitoare prin 471/472; la cheltuieli, exercițiul anterior neblocat pe 31.12 prin 4081), alertă pe ciornă, mesaj în chatter, setare pe companie și cont de facturi nesosite.
+- **Sursă:** export `git archive origin/19.0` din `l10n_ro_ent` (checkout-ul local e în urmă): `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `res_company`, `res_config_settings`, `account_move`, `account_move_line`, migrarea 19.0.2.2.0.
+- **Dependențe/Conexiuni:** neschimbate (`account_accountant`, `l10n_ro`).
+- **Fișiere actualizate:** `l10n_ro_deferred_entries/index.md`, fișa consultant (pasul 8 nou, 17 capturi) sincronizată cu `wiki_sync.sync_fisa`, `index.md`, `log.md`, `.index/chunks.json`.
+
 ## [2026-11-22] Sincronizare automată de noapte
 
 - **Versiuni aduse la zi** (7): `deltatech_mail_client 19.0.1.7.0 → 19.0.1.13.0`, `deltatech_mcp_server 19.0.1.16.3 → 19.0.1.18.0`, `deltatech_mrp_workorder_qty 19.0.1.1.1 → 19.0.1.2.0`, `deltatech_voip_daktela 19.0.1.6.0 → 19.0.1.9.0`, `l10n_ro_account_return_pl_closing 19.0.1.0.8 → 19.0.1.0.10`, `l10n_ro_deferred_entries 19.0.2.1.4 → 19.0.2.2.0`, `l10n_ro_saft_export_fix 19.0.1.5.0 → 19.0.1.9.0`.
