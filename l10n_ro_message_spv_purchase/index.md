@@ -1,26 +1,31 @@
-# Purchase Message SPV (localizat la `l10n_ro_message_spv_purchase/index.md`)
+# SPV Messages to Purchase Orders (localizat la `l10n_ro_message_spv_purchase/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_message_spv_purchase`
-- **Versiune:** `19.0.0.0.13`
+- **Versiune:** `19.0.0.0.14`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_message_spv_purchase
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_message_spv_purchase`
-- **Ultima Ingestie:** `2026-06-08`
+- **Ultima Ingestie:** `2026-11-23`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul extinde mecanismul de mesaje SPV (Spațiul Privat Virtual ANAF) din România pentru a sprijini fluxul de aprovizionare (procure-to-pay). El leagă mesajele SPV primite de comenzile de achiziție (Purchase Orders) și menține sincronizate jurnalul de discuții (chatter) și atașamentele comenzii. Practic, atunci când o factură electronică sosește prin SPV, modulul ajută utilizatorul să identifice rapid comanda de achiziție corespunzătoare sau să creeze una nouă, atașând automat fișierul XML al facturii direct pe comandă.
+Acest modul extinde mecanismul de mesaje SPV (Spațiul Privat Virtual ANAF) din România pentru fluxul de aprovizionare. Când o factură electronică de la furnizor sosește prin SPV, modulul ajută utilizatorul să găsească rapid comanda de achiziție corespunzătoare sau să creeze una nouă, atașează pe comandă o copie a fișierului XML al facturii și leagă liniile facturii de liniile comenzii, astfel încât comanda să nu fie facturată de două ori.
 
 #### 2. Funcționalități Cheie
 
 - Câmpuri noi pe mesajul SPV:
   - `Purchase Reference` (`purchase_ref`) – extras automat din XML, de la `OrderReference/ID`, atunci când este disponibil.
   - `Purchase Order` (`purchase_order_id`) – comanda de achiziție legată, dacă există.
-- Două acțiuni dedicate pe formularul SPV:
-  - **Find Purchase** (Caută Comandă): caută comenzi de achiziție după referință (folosind `purchase_ref` sau, ca alternativă, `ref`) în câmpurile `partner_ref`, `origin` sau `name`, restrânse după partener/companie când acestea sunt disponibile.
-  - **Create Purchase** (Creează Comandă): execută aceeași căutare; dacă nu găsește nimic și un partener este setat, creează o comandă de achiziție în stare ciornă și o leagă.
-- Când o comandă este găsită sau creată, se postează o notă în chatter-ul comenzii cu un mesaj contextual și cu XML-ul SPV atașat.
-- XML-ul SPV nu este doar referențiat; se creează o copie a atașamentului XML pe comandă (`ir.attachment` cu `res_model='purchase.order'`), evitând legarea încrucișată la fișierul original al mesajului.
-- Prevenirea duplicatelor pentru atașamentele de pe comandă, pe baza checksum-ului (cu alternativă la nume și mimetype).
+- Două butoane în antetul formularului SPV, vizibile doar pe mesajele de achiziție (facturi și chitanțe de la furnizor):
+  - **Găsește Comanda**: caută comenzi de achiziție după referință (`purchase_ref` sau, ca alternativă, `ref`) în referința furnizorului, documentul sursă sau numărul comenzii, restrânse la partenerul și compania mesajului și la comenzile care nu sunt complet facturate. Dacă găsește o singură comandă, o leagă și continuă importul; dacă sunt mai multe, deschide lista filtrată; dacă nu găsește nimic, afișează o eroare.
+  - **Creează Comanda**: face aceeași căutare; dacă nu există nicio comandă, creează o cerere de ofertă în stare ciornă pentru partenerul mesajului (partenerul este obligatoriu), cu referința drept referință furnizor, și o leagă.
+- Dacă referința aparține doar unei comenzi deja complet facturate, **Găsește Comanda** nu o mai leagă, iar eroarea numește comanda și facturile ei.
+- Un al doilea clic pe un mesaj deja legat de comanda găsită este blocat, pentru ca documentul să nu fie procesat de două ori.
+- La găsirea sau crearea comenzii se postează o notă în chatter-ul ei, cu o copie a XML-ului SPV atașată (`ir.attachment` pe `purchase.order`, fără dubluri după checksum sau după nume și mimetype). Dacă factura de furnizor nu există încă, XML-ul se extrage din arhiva ZIP descărcată de la ANAF.
+- Factura creată din mesajul SPV se leagă de liniile comenzii (potrivirea standard din `purchase`): cantitatea facturată se actualizează, iar „Create Bill" standard nu mai produce o a doua factură. Liniile care nu sunt pe comandă (transport, ambalaje) rămân pe factură.
+- Cu `deltatech_purchase_ubl` instalat, liniile facturii se importă pe comandă: direct, cu o notificare, când toate liniile se potrivesc după cod furnizor sau cod de bare și totalurile coincid; altfel se deschide asistentul de import în previzualizare, iar utilizatorul decide pentru fiecare linie (folosește un produs, creează un produs nou sau ignoră). Opțiunea de factură de furnizor este dezactivată dacă factura SPV există deja.
+- Avertismente de duplicat, nebloante, în chatter: comandă care are deja altă factură, „Create Bill" pe o comandă legată de o factură SPV și factură cu aceeași cheie de deduplicare, când modulul care furnizează cheia este instalat.
+- Nu necesită configurări speciale; instalarea `deltatech_purchase_ubl` este recomandată pentru importul liniilor din XML.
 
 #### 3. Dependențe
 
@@ -29,22 +34,23 @@ Acest modul extinde mecanismul de mesaje SPV (Spațiul Privat Virtual ANAF) din 
 
 #### 4. Componente Cheie
 
-Conform `readme/DESCRIPTION.md`, modulul aduce următoarele componente principale.
-
 **Modele**
 
-- `l10n.ro.message.spv` (extins): model de mesaj SPV căruia i se adaugă câmpurile `purchase_ref` (referința de achiziție extrasă din XML) și `purchase_order_id` (legătura către comanda de achiziție).
-- `purchase.order` (vizat): pe comanda găsită sau creată se postează o notă în chatter și se atașează o copie clonată a XML-ului SPV (`ir.attachment` cu `res_model='purchase.order'`).
+- `l10n.ro.message.spv` (extins): adaugă `purchase_ref` și `purchase_order_id`, metodele de căutare/creare a comenzii (`action_find_purchase`, `action_create_purchase`) și postarea XML-ului pe comandă.
+- `purchase.order` (extins): la `action_create_invoice` postează în chatter un avertisment de duplicat dacă există deja o factură din SPV legată de comandă.
+- `account.move` (extins): `_l10n_ro_link_spv_purchase_order` leagă factura de liniile comenzii prin potrivirea standard și semnalează duplicatele; `_l10n_ro_flag_cross_stack_duplicate` marchează o posibilă duplicare față de cealaltă stivă SPV, doar dacă există câmpul `l10n_ro_edi_dedup_key`.
 
 **Vizualizări**
 
-- `views/message_spv_view.xml`: extinde formularul mesajului SPV pentru a afișa câmpurile noi și butoanele de antet **Find Purchase** și **Create Purchase**.
+- `view_l10n_ro_message_spv_form_inherit_purchase`: extinde formularul mesajului SPV cu câmpurile noi și butoanele **Găsește Comanda** și **Creează Comanda**.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Nu sunt documentate acțiuni automate (`ir.cron` / `base.automation`) în Readme. Acțiunile sunt declanșate manual prin butoanele din antetul formularului SPV.
+- Nu sunt definite `ir.cron`, `base.automation` sau acțiuni server; acțiunile se declanșează manual din butoanele antetului formularului SPV.
 
 #### 5. Conexiuni
 
 - `l10n_ro_message_spv`: modulul de bază care gestionează mesajele SPV ANAF; acest addon îl extinde pentru fluxul de achiziții.
 - `purchase`: modulul standard Odoo de comenzi de achiziție, ținta legării și a postării notelor/atașamentelor.
+- [deltatech_purchase_ubl](../deltatech_purchase_ubl/index.md): opțional; importă liniile facturii pe comandă din XML-ul UBL, direct sau prin asistent de previzualizare.
+- [l10n_ro_efactura_dedup](../l10n_ro_efactura_dedup/index.md): opțional; furnizează cheia de deduplicare folosită la semnalarea duplicatelor cross-stack.

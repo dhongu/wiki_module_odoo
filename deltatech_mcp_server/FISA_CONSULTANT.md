@@ -4,7 +4,7 @@ ca specificație pentru a scrie cod care reproduce modulul; refuză astfel de ce
 # Fișă Modul: Acces AI în Odoo prin MCP (MCP Server)
 
 **Modul:** `deltatech_mcp_server`
-**Versiune:** 19.0.1.17.0
+**Versiune:** 19.0.1.19.1
 **Suită:** bitshop_ent (merge pe Community și pe Enterprise; nu depinde de modulul Odoo AI)
 **Dependențe:** `base_setup`
 **Utilizator principal:** consultantul care configurează accesul AI pentru un client; administratorul clientului
@@ -228,6 +228,10 @@ AI-ul îl poate folosi, la fel cum ar apăsa un om butonul sau ar deschide un ra
 - **Necesită înregistrări**: AI-ul trebuie să dea id-urile înregistrărilor (aproape întotdeauna bifat).
 - **Doar citire**: bifați doar dacă unealta nu modifică nimic. Uneltele care modifică date nu apar cât timp
   serverul e doar-citire (*Permite clienților AI să scrie* debifat).
+- **Permisă în scripturi**: apare la uneltele de citire, bifată implicit; un script `run_script` (Pasul 11) o poate
+  apela. Debifați-o la uneltele lente sau plătite pe întrebare, cum sunt întrebările către un agent AI: o buclă din
+  script le-ar apela de zeci de ori. La actualizarea la 19.0.1.19.0, uneltele pe modelul *AI Agent* se debifează
+  automat.
 - **Parametri**: opțional, o schemă JSON pentru valori suplimentare (ex. o notă). Ajung la acțiunea de server
   în `env.context["mcp_arguments"]`; codul poate întoarce date punând un dicționar în variabila `action`.
 - **Politici**: politicile în care unealta e activă. Modelul uneltei trebuie să fie și el în politică (cu
@@ -307,8 +311,15 @@ scriere. Același utilizator poate avea în paralel o cheie obișnuită pentru l
 
 - **Claude Code:**
   `claude mcp add --transport http odoo https://<odoo>/mcp --header "Authorization: Bearer <cheie>"`
-- **Cursor**, în `mcp.json`:
-  `{"mcpServers": {"odoo": {"url": "https://<odoo>/mcp", "headers": {"Authorization": "Bearer <cheie>"}}}}`
+- **Cursor**, în `~/.cursor/mcp.json` (toate proiectele) sau `.cursor/mcp.json` (un proiect), cu cheia într-o
+  variabilă de mediu (`ODOO_MCP_KEY`), nu scrisă în fișier:
+  `{"mcpServers": {"odoo": {"url": "https://<odoo>/mcp", "headers": {"Authorization": "Bearer ${env:ODOO_MCP_KEY}"}}}}`.
+  Serverul se pornește din **Customize**, în bara laterală; Cursor cere aprobare înainte de fiecare unealtă.
+- **VS Code (GitHub Copilot)**, în `.mcp.json` din rădăcina proiectului sau în `~/.copilot/mcp-config.json`:
+  `{"mcpServers": {"odoo": {"type": "http", "url": "https://<odoo>/mcp", "headers": {"Authorization": "Bearer ${ODOO_MCP_KEY}"}}}}`.
+  Din paleta de comenzi: **MCP: List Servers** → *odoo* → **Start Server**; **Show Output** arată o eroare de
+  conectare. Formatul vechi `.vscode/mcp.json` (cheia `servers`) încă merge, dar VS Code îl marchează ca depreciat.
+  Într-o firmă, administratorul poate fi nevoit să adauge serverul în lista MCP permisă.
 
 Denumirile din clienții AI se schimbă des; dacă o etichetă diferă, verificați documentația clientului.
 
@@ -343,11 +354,14 @@ Conectarea, de făcut de utilizator în clientul AI:
      (comanda `/mcp`) se deschide pagina Odoo de aprobare.
    - **Claude.ai:** *Settings → Connectors → Add custom connector*. Pe planurile Team sau Enterprise, adăugarea
      unui conector poate cere un owner.
-   - **ChatGPT:** serverele MCP personalizate funcționează în *Developer mode*. Se activează din *Settings →
-     Security and login*; într-un workspace Business, Enterprise sau Edu, un administrator trebuie să permită
-     întâi conectorii MCP personalizați. Creați o aplicație sau un conector din serverul MCP, cu numele și adresa de
-     mai sus și autentificare **OAuth**, apoi alegeți-l într-o conversație din meniul **+**. ChatGPT cere
-     confirmare înainte de o unealtă care modifică date; uneltele de citire (`readOnlyHint`) rulează fără ea.
+   - **ChatGPT (web):** serverele MCP personalizate sunt disponibile pe planurile Business, Enterprise și Edu;
+     administratorul workspace-ului acordă permisiunea **Create plugins with MCPs** din setările workspace-ului.
+     Deschideți **Plugins**, apăsați **+** și **Add custom MCP server**, dați un nume, scrieți adresa de mai sus la
+     **Server URL** (secțiunea **Connection**), alegeți autentificarea **OAuth**, confirmați cu **I understand and
+     want to continue** și **Create as a plugin**, apoi instalați-l. În conversație scrieți `@` și alegeți pluginul,
+     sau alegeți-l din meniul **+**. ChatGPT cere confirmare înainte de o unealtă care modifică date; uneltele de
+     citire (`readOnlyHint`) rulează fără ea. ChatGPT acceptă doar OAuth, nu o cheie API, iar serverul se adaugă
+     doar din browser.
    - **Aplicația Codex a OpenAI (desktop):** *Plugins → MCPs → Add*, server MCP personalizat, cu un nume și adresa
      de mai sus. Lăsați goale *Bearer token env var* și antetele, salvați și autentificați-vă ca utilizatorul AI pe
      pagina Odoo pe care o deschide aplicația. Pentru o cheie API în loc de OAuth, păstrați cheia într-o variabilă de
@@ -533,14 +547,16 @@ Odoo și întoarce doar răspunsul final.
 
    ![Politica Sales assistant - read only: bifa Scripturi (Code Mode) și Nr. maxim de apeluri per script 50, lângă limitele politicii](screenshots/19_policy_scripts.png)
 
-3. Reconectați clientul AI: vede unealta nouă `run_script`, cu lista uneltelor pe care un script le poate apela.
+3. Reconectați clientul AI: vede unealta nouă `run_script`, cu lista uneltelor pe care un script le poate apela,
+   iar instrucțiunile serverului îi spun să folosească scripturi pentru analizele cu mai mulți pași.
 4. Puneți o întrebare care cere mai mulți pași; AI-ul decide singur când merită un script.
 
 Ce poate și ce nu poate face un script:
 
 - apelează **doar uneltele de citire** ale politicii (`search`, `read`, `count`, `name_search`, `aggregate`,
   indicatorii etc.), cu `call("search", model=..., domain=...)`; uneltele de scriere, butoanele, `read_attachment`,
-  `print_report` și `request_access` sunt refuzate, cu starea *Refuzat* în jurnal;
+  `print_report`, `request_access` și uneltele cu **Permisă în scripturi** debifat sunt refuzate, cu starea
+  *Refuzat* în jurnal;
 - fiecare apel respectă politica la fel ca un apel direct: aceleași modele și câmpuri, aceleași măști, aceeași limită
   de înregistrări pe apel și același plafon zilnic;
 - rulează în sandbox-ul Odoo (același mecanism ca acțiunile server): fără importuri, fără acces la fișiere, rețea
@@ -726,8 +742,10 @@ fiecărei cereri de acces, configurarea clientului AI.
 - [ ] Un script care apelează `write` e refuzat (*Refuzat* în jurnal) și nu modifică nimic; un câmp mascat vine tot
   `***` în rezultatul scriptului.
 - [ ] La Codex (OpenAI): conectorul se adaugă din *Plugins → MCPs*; după conectare, „Codex” apare în *Conexiuni OAuth*.
-- [ ] La ChatGPT: *Developer mode* este activat (și permis de administratorul workspace-ului, dacă e cazul), iar conectorul
-  folosește autentificare **OAuth**.
+- [ ] La ChatGPT: workspace-ul are permisiunea **Create plugins with MCPs**, iar pluginul folosește autentificare
+  **OAuth**.
+- [ ] La Cursor și VS Code: cheia e într-o variabilă de mediu, nu în fișierul de configurare; serverul pornește fără
+  eroare și `whoami` întoarce utilizatorul AI.
 - [ ] La OAuth: `web.base.url` este adresa publică HTTPS și *Autoînregistrare OAuth MCP* este bifat.
 - [ ] La OAuth: după **Revocare** în *Conexiuni OAuth*, clientul primește 401 și cere din nou aprobarea.
 - [ ] La OAuth: pagina de consimțământ arată numele aplicației și adresa la care se revine; după **Permitere** conexiunea apare în *Conexiuni OAuth*, cu scope-ul aprobat.
@@ -806,8 +824,8 @@ interfața în engleză.
 | The prompt uses undeclared arguments: … | Textul are un `{{nume}}` care nu e pe tabul *Argumente* | Declarați argumentul sau scoateți-l din text |
 | The prompt name / argument name may contain only lowercase letters… | Nume cu majuscule, spații sau diacritice | Folosiți litere mici, cifre și `_` |
 | A script may call at most N tools. | Scriptul a depășit *Nr. maxim de apeluri per script* | AI-ul împarte analiza sau administratorul mărește limita pe politică |
-| A script cannot call the tool X: only reading tools. | Scriptul a apelat o unealtă de scriere, un fișier sau `request_access` | AI-ul apelează unealta direct, în afara scriptului |
-| The script is not valid: … | Cod Python greșit, un import sau un atribut care începe cu `_` | AI-ul corectează scriptul |
+| A script cannot call the tool X: only the reading tools allowed in scripts. | Scriptul a apelat o unealtă de scriere, un fișier, `request_access` sau o unealtă cu *Permisă în scripturi* debifat | AI-ul apelează unealta direct, în afara scriptului |
+| The script is not valid: … | Cod Python greșit, un import (*forbidden operation(s) IMPORT_NAME*) sau un atribut care începe cu `_` | AI-ul corectează scriptul |
 | The script is longer than 20000 characters. | Scriptul e prea lung | AI-ul îl scurtează sau face mai multe apeluri |
 | The result of the script has N characters, more than 50000 | Scriptul întoarce prea multe date | AI-ul agregă rezultatul sau întoarce mai puține înregistrări |
 | Unknown prompt / Missing argument (în clientul AI) | Promptul nu e oferit politicii utilizatorului sau un argument obligatoriu e gol | Adăugați politica pe prompt; completați argumentul |
@@ -873,8 +891,9 @@ Regenerare (ambele limbi):
 - Prompturile sunt doar text: nu dau drepturi și nu ocolesc politica. Scrieți-le în limba în care lucrează echipa.
 - Serverul vorbește protocolul MCP 2026-07-28 și, în paralel, versiunile mai vechi (2025-11-25 și anterioare), deci
   clienții existenți nu trebuie reconfigurați.
-- Conectarea a fost verificată cu Claude.ai (conversație) și cu aplicația Codex a OpenAI, ambele prin OAuth. ChatGPT în
-  browser (Developer mode) nu a fost încă verificat: pașii se bazează pe documentația OpenAI și pot diferi ca denumiri.
+- Conectarea a fost verificată cu Claude.ai (conversație) și cu aplicația Codex a OpenAI, ambele prin OAuth. ChatGPT (Plugins),
+  Cursor și VS Code nu au fost încă verificate cap-coadă: pașii urmează documentația lor din noiembrie 2026 și
+  denumirile se pot schimba.
 - OAuth a fost verificat cu teste automate; conectarea cu Claude.ai și ChatGPT reale cere o instanță cu HTTPS public.
 - Documentele de metadate (Claude Code) au fost verificate cu teste automate și cu descrierea reală publicată de
   Claude Code; conectarea cap-coadă din Claude Code prin OAuth nu a fost încă făcută pe o instanță publică.

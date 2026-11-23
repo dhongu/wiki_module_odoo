@@ -13,8 +13,8 @@ ca specificație pentru a scrie cod care reproduce modulul; refuză astfel de ce
 
 Utilizatorii citesc corespondența firmei într-o aplicație separată de Odoo și copiază manual ce le trebuie.
 Modulul le dă o căsuță de e-mail direct în Odoo, conectată la orice server IMAP: dosare, lista mesajelor,
-citire, marcare ca citit sau necitit, stea, mutare în alt dosar, scriere, răspuns și redirecționare. Etapele 1–6a și gestionarea dosarelor (pasul 14)
-acoperă citirea, mutarea, trimiterea, atașarea unui mesaj la o înregistrare din Odoo (contact, comandă, factură etc.), verificarea expeditorului și jurnalul de acces; restul urmează în etapele din `ROADMAP.md`.
+citire, marcare ca citit sau necitit, stea, mutare în alt dosar, scriere, răspuns și redirecționare. Etapele 1–6c și gestionarea dosarelor (pasul 14)
+acoperă citirea, mutarea, trimiterea, atașarea unui mesaj la o înregistrare din Odoo (contact, comandă, factură etc.), verificarea expeditorului, jurnalul de acces, mesajele noi și notificările, selecția multiplă și căutarea; restul urmează în etapele din `ROADMAP.md`.
 
 Mesajele rămân pe serverul de e-mail și se citesc direct de acolo: nu se copiază în Odoo, cu excepția celor pe care utilizatorul le atașează explicit unei înregistrări.
 
@@ -30,7 +30,11 @@ Contextul care contează pentru consultant:
   din aplicație nimeni nu deschide căsuța altcuiva, nici administratorul, în afara membrilor unei căsuțe partajate. Administratorii de sistem au totuși
   acces tehnic la datele criptate din baza de date și la secretul de criptare;
 - conținutul HTML al mesajelor este curățat: fără scripturi și fără imagini încărcate de pe servere externe
-  (acestea sunt folosite des ca să urmărească deschiderea mesajului).
+  (acestea sunt folosite des ca să urmărească deschiderea mesajului);
+- pe o copie a bazei de date neutralizată (staging, teste) toate căsuțele se arhivează, ca testele să nu atingă din
+  greșeală corespondența reală (punctul 6 din secțiunea 5);
+- un mesaj mai mare decât limita (implicit 25 MB, parametrul `deltatech_mail_client.max_message_size`) nu se deschide:
+  Odoo cere întâi serverului mărimea mesajului și nu descarcă nimic dacă e peste limită.
 
 ## 3. Utilizatori și roluri
 
@@ -67,6 +71,21 @@ Modulul nu folosește conturi contabile. Datele necesare:
    IMAP; odată salvată o parolă SMTP, ea se poate doar înlocui, nu goli (captura din pasul 2 arată grupul completat).
    **Păstrează o copie în Trimise** e bifat implicit. Serverul SMTP are aceleași protecții ca cel IMAP
    (certificat verificat, adrese private refuzate dacă nu e activ parametrul `allow_private_hosts`).
+5. **Mărimea maximă a unui mesaj.** Un mesaj mai mare de 25 MB nu se deschide în client și nu se poate răspunde la el
+   sau redirecționa; un atașament are aceeași limită la descărcare. Parametrul schimbă doar limita de deschidere (inclusiv
+   pentru răspuns și redirecționare) și de descărcare: **atașarea la o înregistrare** (**Atașează la...**) și **trimiterea** unui mesaj, inclusiv redirecționarea
+   cu atașamente, rămân la cel mult 25 MB, indiferent de parametru. Un administrator de sistem schimbă limita cu parametrul de
+   sistem `deltatech_mail_client.max_message_size` (în MB, de exemplu `50`; gol, zero sau o valoare care nu e număr
+   înseamnă 25). Mărimea se cere serverului înainte de descărcare, deci un mesaj prea mare nu încarcă serverul Odoo.
+6. **Copii ale bazei de date (staging, teste).** La neutralizarea bazei (`odoo-bin neutralize` sau un build de staging
+   odoo.sh) toate căsuțele se arhivează și abonările la notificări (clopoțelul) se șterg, deci după dezarhivarea unei căsuțe fiecare
+   utilizator își repornește clopoțelul; parolele rămân. O căsuță arhivată nu
+   apare în client (nici la membrii unei căsuțe partajate) și nu se poate deschide. Pe o bază neutralizată, în partea de
+   sus a clientului apare un avertisment că baza este o copie neutralizată. Pentru teste: creați o căsuță de test (o
+   căsuță arhivată nu mai blochează regula „un singur cont personal”) sau, dacă vreți să folosiți chiar căsuța reală,
+   dezarhivați-o (dacă ați creat deja o căsuță personală de test, arhivați-o înainte, altfel regula „un singur cont personal”
+   refuză): **Mesagerie → Cont de e-mail**, filtrul **Arhivate**, apoi, din meniul de acțiuni al listei, opțiunea de
+   dezarhivare pe contul bifat (administratorul face la fel din **Toate căsuțele**).
 
 ## 6. Flux de utilizare
 
@@ -74,8 +93,9 @@ Modulul nu folosește conturi contabile. Datele necesare:
 
 **Mesagerie → Cont de e-mail → Nou(ă).** Completați serverul IMAP, utilizatorul (de regulă adresa de e-mail)
 și parola. Portul 993 și securitatea SSL/TLS sunt preselectate. Fiecare utilizator poate avea un singur cont personal (și oricâte căsuțe partajate, vezi pasul 13). Dacă utilizatorul nu are încă un cont, ecranul
-**Client de e-mail** afișează „Nu aveți încă un cont de e-mail.” și butonul **Configurez contul meu de e-mail**,
-care duce aici.
+**Client de e-mail** afișează „Nu aveți încă un cont de e-mail sau contul dumneavoastră de e-mail este arhivat.” și butonul **Configurez
+contul meu de e-mail**, care duce aici. Un cont arhivat nu se numără la regula „un singur cont personal”: utilizatorul își
+poate crea altul (vezi secțiunea 5, punctul 6).
 
 ![Formularul Cont de e-mail, nou: câmpurile Server IMAP, Utilizator (login) și Parolă sunt evidențiate; portul 993 și securitatea SSL/TLS sunt preselectate](screenshots/01_cont_nou.png)
 
@@ -91,7 +111,9 @@ ulterioară, se păstrează parola salvată.
 
 **Mesagerie → Client de e-mail.** În stânga sunt dosarele serverului, în mijloc mesajele dosarului ales,
 cele mai noi primele, câte 30 pe pagină (butoanele `<` și `>` schimbă pagina). Mesajele necitite sunt
-cu litere îngroșate.
+cu litere îngroșate. Pagina se citește de pe server după poziție, fără să se ceară lista tuturor mesajelor dosarului.
+Totalul (**1-30 / N**) este numărul de mesaje al dosarului; un mesaj marcat „șters” de altă aplicație și încă neeliminat
+nu se afișează, dar se numără în total, deci pe o pagină pot apărea mai puțin de 30 de mesaje.
 
 ![Clientul de e-mail: coloana de dosare (INBOX, Trimise, Arhivă) și lista celor 3 mesaje din INBOX, cele necitite cu litere îngroșate](screenshots/03_lista_mesaje.png)
 
@@ -99,7 +121,9 @@ cu litere îngroșate.
 
 Faceți clic pe un mesaj. În dreapta apar expeditorul, destinatarul, data și corpul. Mesajul deschis se
 marchează automat ca citit pe server. Butoanele din dreapta-sus îl marchează înapoi ca necitit sau îi
-pun o stea (la fel, pe server).
+pun o stea (la fel, pe server). Un mesaj mai mare decât limita (implicit 25 MB, secțiunea 5, punctul 5) nu se deschide:
+Odoo cere serverului mărimea înainte de descărcare și afișează „The message is too large to open here (40.0 MB; the
+limit is 25 MB).”, fără să descarce nimic.
 
 ![Mesajul Confirmare comandă 2026-0142 deschis: antetul cu expeditor, destinatar și dată, textul mesajului și butoanele Marchează ca necitit și Stea evidențiate](screenshots/04_citire_mesaj.png)
 
@@ -108,7 +132,9 @@ pun o stea (la fel, pe server).
 Sub antet, fiecare atașament e un buton cu numele și mărimea. Imaginile se deschid într-o previzualizare (se
 închide cu **Închide** sau cu clic pe fundal), PDF-urile într-o filă nouă, iar celelalte tipuri se descarcă direct.
 Butonul cu săgeata descarcă fișierul și când există previzualizare. Fișierul se citește din nou de pe server, nu se
-păstrează în Odoo; limita este 25 MB. HTML, SVG și scripturile se descarcă mereu ca fișier binar, nu se afișează.
+păstrează în Odoo; limita este cea a mesajului (implicit 25 MB, parametrul `max_message_size`, secțiunea 5): un mesaj cu
+un atașament peste limită nu se deschide deloc (pasul 4); „The attachment is too large to download here.” apare doar la
+serverele care nu raportează mărimea mesajului. HTML, SVG și scripturile se descarcă mereu ca fișier binar, nu se afișează.
 Fiecare descărcare apare în jurnalul de acces ca **Descărcat**, cu numele și mărimea fișierului.
 
 ![Mesajul Ofertă de preț deschis: sub antet, atașamentul oferta.pdf apare ca buton cu iconița de previzualizare, cu mărimea fișierului și cu butonul de descărcare alături](screenshots/24_atasamente.png)
@@ -142,7 +168,7 @@ se păstrează la mutare.
 
 Apăsați **Mesaj nou** (deasupra dosarelor). Completați **Către** (mai multe adrese, separate prin virgulă sau
 punct și virgulă), eventual **Cc / Bcc**, **Subiect** și textul. Bara din josul panoului are **Trimite** (la stânga, în culorile temei; la fel Ctrl+Enter), agrafa pentru atașamente (cel mult
-25 MB în total; fișierele atașate apar lângă ea) și coșul pentru renunțare, care cere confirmare dacă ați modificat mesajul. Mesajul pleacă de la adresa căsuței dumneavoastră, nu de la o adresă
+25 MB în total; fișierele atașate apar lângă ea) și **Salvează ciorna** și coșul pentru renunțare, care cere confirmare dacă ați modificat mesajul. Mesajul pleacă de la adresa căsuței dumneavoastră, nu de la o adresă
 comună, iar adresele din **Bcc** nu apar la destinatari.
 
 ![Formularul Mesaj nou: câmpurile Către, Subiect și textul completate, bara de jos cu butonul Trimite evidențiat, agrafa pentru atașamente și coșul pentru renunțare](screenshots/08_mesaj_nou.png)
@@ -168,8 +194,7 @@ apare un avertisment; mesajul nu se retrimite.
 
 ![Dosarul Trimise deschis: lista are un singur mesaj (1-1 / 1), copia răspunsului Re: Confirmare comandă 2026-0142 trimis de Ana Ionescu; panoul de citire este gol](screenshots/11_trimise.png)
 
-Nu există ciorne salvate: dacă deschideți alt mesaj în timp ce scrieți, mesajul început se pierde. Textul este text
-simplu (fără formatare).
+Mesajul început se păstrează singur ca ciornă (pasul 19). Textul se scrie în editor, cu formatare (pasul 22).
 
 ### Pasul 10 — Atașarea unui mesaj la o înregistrare
 
@@ -212,6 +237,10 @@ Deasupra mesajului pot apărea avertismente (informează, nu blochează nimic, i
   `c1ient.example` față de `client.example`);
 - o legătură afișează un site, dar duce la altul.
 
+Domeniile contactelor se iau de la toate contactele active ale companiilor selectate în acel moment în selectorul de
+companii (cele fără companie intră și ele) și se rețin 10 minute pentru fiecare set de companii: un contact adăugat în ultimele minute poate să nu
+fie încă comparat.
+
 ![Un mesaj de la Maria Ionescu cu domeniul c1ient.example: rândul Verificare expeditor arată SPF cu X roșu, DKIM cu semn de întrebare gri și DMARC cu X roșu, iar dedesubt apar avertismentele pentru adresa de răspuns, domeniul care seamănă cu client.example și linkul care duce la alt site](screenshots/15_avertismente.png)
 
 Meniul **Mesagerie → Jurnal de acces e-mail** arată cine a deschis, trimis sau atașat ce mesaj, ce dosare s-au creat, redenumit, șters sau golit (acțiunile „Dosar modificat” și „Golit”), precum și mutările în masă din selecția multiplă (acțiunea „Dosar modificat”, cu numărul de mesaje mutate), ce atașamente s-au descărcat (acțiunea „Descărcat”), și când (utilizator,
@@ -242,7 +271,8 @@ la toate temele. Numărul de necitite pe dosar se vede în eticheta rotundă din
 Proprietarul unei căsuțe (de exemplu `vanzari@firma.ro`) bifează **Căsuță partajată** în formularul contului și adaugă
 **membri**, fiecare cu un nivel de acces: **Citire** (citește mesajele și le marchează ca citite) sau **Complet** (în plus
 stea, mutare, scriere, trimitere și atașare la înregistrări). Parola o păstrează doar proprietarul; membrii folosesc
-căsuța prin modul și nu văd niciodată datele de conectare. Doar proprietarul poate schimba membrii.
+căsuța prin modul și nu primesc niciodată parola. Pot vedea serverul, utilizatorul și adresa expeditorului căsuței, dar doar
+proprietarul le poate schimba, la fel ca lista de membri.
 
 ![Formularul căsuței Vânzări: Căsuță partajată bifată și lista de membri, Mihai Pop cu acces Complet și Elena Dima cu acces Citire](screenshots/19_partajare.png)
 
@@ -255,7 +285,7 @@ mutare, stea și atașare nu apar. Mesajele pleacă de la adresa căsuței parta
 Legăturile la înregistrări făcute într-o căsuță partajată le văd toți membrii ei, iar același mesaj nu se atașează de
 două ori la aceeași înregistrare de către membri diferiți. Jurnalul de acces arată căsuța fiecărei linii, iar proprietarul
 vede și liniile membrilor lui. **Mesagerie → Cont de e-mail** arată doar căsuțele proprii; administratorul are în plus
-**Toate căsuțele**.
+**Toate căsuțele**. O căsuță partajată arhivată dispare și la membri, iar mesajele ei nu se mai pot deschide.
 
 ### Pasul 14 — Dosare: Arhivă, Spam, Șterge și gestionarea dosarelor
 
@@ -294,7 +324,9 @@ utilizatorul curent și căsuța aleasă (implicit sunt oprite). O acțiune prog
 doar starea dosarului Primite (nu deschide mesaje) și, când au apărut mesaje necitite noi, trimite utilizatorilor care au
 cerut asta o notificare (afișată pe oricare ecran Odoo, cât timp utilizatorul e conectat și pagina e deschisă) cu expeditorul și subiectul ultimului mesaj; când au sosit mai multe mesaje, titlul notificării este „N mesaje noi în <căsuța>”, altfel numele căsuței. Numărul din titlul filei se actualizează doar cât ecranul Client de e-mail e deschis. Prima verificare a unei căsuțe doar reține starea dosarului Primite și nu anunță nimic (mesajele existente nu dau notificare); la fel, dacă serverul schimbă numerotarea dosarului, verificarea o ia de la capăt fără notificare. Mesajele citite între timp în altă aplicație nu
 se anunță, iar un membru căruia i s-a retras accesul la o căsuță partajată nu mai primește notificări. Dacă serverul
-nu răspunde, eroarea se păstrează în baza de date, pe căsuță (câmpul „Eroare la verificare”, fără ecran propriu în această versiune), iar celelalte căsuțe se verifică mai departe.
+nu răspunde, eroarea se păstrează în baza de date, pe căsuță (câmpul „Eroare la verificare”, afișat în formularul căsuței, în listă și în filtrul „Verificare eșuată”, vezi pasul 21), iar celelalte căsuțe se verifică mai departe. La fel, o eroare neprevăzută pe o căsuță o marchează cu „Eroare neașteptată
+(<tipul erorii>). Vedeți jurnalul serverului.” (detaliile sunt în jurnalul serverului Odoo) și o trece la sfârșitul
+cozii: celelalte căsuțe se verifică mai departe.
 
 ![Lista de dosare cu eticheta rotundă „2” lângă dosarul Gunoi (două mesaje necitite) și butonul Notificări oprite de sub listă, ambele evidențiate](screenshots/25_necitite.png)
 
@@ -348,8 +380,36 @@ ghilimele, caracterele de control sunt refuzate, iar căutarea are cel mult 200 
 diacritice (ă, ș) se trimit ca UTF-8; un server care nu acceptă UTF-8 primește cuvintele fără diacritice, iar
 utilizatorul este anunțat. **Cu atașament** caută mesajele de tip „mixt” (multipart/mixed, felul obișnuit în care un
 expeditor atașează fișiere): un mesaj construit altfel poate lipsi din rezultat. Pentru căutare ajunge accesul Citire,
-iar căutările nu se scriu în jurnalul de acces. Căutarea în toate dosarele, în textul mesajelor și pe mai multe pagini nu
-există încă.
+iar căutările nu se scriu în jurnalul de acces. Căutarea în toate dosarele (pasul 20) există; în textul mesajelor și pe mai multe pagini nu există încă.
+
+### Pasul 19 — Ciorne salvate automat și sugestii de destinatari
+
+**Ciornele.** Ce scrieți într-un mesaj nou, într-un răspuns sau într-o redirecționare se păstrează singur: la 5 secunde
+după ultima modificare, mesajul se salvează în dosarul **Ciorne** al serverului de e-mail (cu marcajul „ciornă”, ca în
+orice aplicație de e-mail). Lângă butoane apare „Ciornă salvată”. Nu se salvează un mesaj gol. Odoo nu ține nicio copie:
+ciorna se vede și din telefon sau din altă aplicație de e-mail.
+
+Fiecare salvare înlocuiește versiunea de dinainte, deci rămâne o singură ciornă pentru un mesaj. Versiunea nouă se
+scrie întâi și abia apoi se șterge cea veche, așa că o întrerupere nu pierde textul. Butonul **Salvează ciorna** din
+bara de jos salvează pe loc și închide formularul. Dacă deschideți alt mesaj, schimbați căsuța sau părăsiți ecranul în
+timp ce scrieți, ce ați scris se salvează ca ciornă. Coșul (**Renunță**) cere confirmare și șterge și ciorna din dosar.
+
+![Dosarul Ciorne cu o ciornă deschisă: în antetul panoului de citire apare butonul Continuă să scrii, evidențiat](screenshots/30_ciorne.png)
+
+Pentru a continua, deschideți dosarul **Ciorne**, alegeți ciorna și apăsați **Continuă să scrii**: se deschide formularul
+cu destinatarii (inclusiv Cc și Bcc), subiectul, textul și atașamentele, iar răspunsul rămâne legat de conversația lui.
+La **Trimite**, ciorna se șterge din dosar. O adresă începută, dar nescrisă până la capăt (de exemplu `ana@`), se
+păstrează întocmai în ciornă și se poate corecta la reluare; trimiterea cere adrese valide. Dacă serverul nu are un dosar
+Ciorne, apare un avertisment și ciorna nu se salvează; dosarul nu se creează singur. Ciorna nu păstrează legătura cu
+mesajul original pentru marcajul „răspuns” de la trimitere. Salvarea cere acces Complet, iar prima salvare a unei
+ciorne se scrie în jurnalul de acces (acțiunea „Ciornă salvată”), nu și cele următoare.
+
+**Sugestii de destinatari.** Pe câmpurile **Către**, **Cc** și **Bcc**, după două caractere apare o listă cu cel mult 8
+contacte care au adresă de e-mail, căutate după nume sau adresă. Se alege cu mouse-ul sau cu săgețile și **Enter**
+(**Esc** o închide), iar adresa se completează ca „Nume <adresă>”. Câmpul rămâne text liber, deci se poate scrie și o
+adresă care nu e printre contacte. Lista respectă drepturile utilizatorului Odoo asupra contactelor.
+
+![Formularul Mesaj nou cu maria scris în câmpul Către și lista de sugestii sub el, cu contactul Maria Ionescu SRL și adresa lui](screenshots/29_sugestii_destinatari.png)
 
 ### Note de monografie și raportare
 
@@ -363,9 +423,66 @@ Modulul nu generează note contabile (nu există linii Dr/Cr) și nu intră în 
 | `bus` | Canalul prin care ajung notificările de mesaje noi la utilizatori (instalat împreună cu `mail`) |
 | `contacts` / vânzări / achiziții / contabilitate / inventar / CRM / proiect | Tipurile de înregistrări la care se poate atașa un mesaj apar doar dacă aplicația e instalată |
 
-**Ce e automat:** verificarea la 5 minute a căsuțelor cu notificări pornite, conectarea la server, criptarea parolei, curățarea HTML-ului, marcarea ca citit la deschidere, copia din Trimise (dacă e bifată) și marcajul „răspuns” pe mesajul original.
+**Ce e automat:** verificarea la 5 minute a căsuțelor cu notificări pornite, conectarea la server, criptarea parolei, curățarea HTML-ului, marcarea ca citit la deschidere, copia din Trimise (dacă e bifată), marcajul „răspuns” pe mesajul original și arhivarea căsuțelor la neutralizarea bazei de date.
 **Ce rămâne manual:** alegerea înregistrării la atașare, crearea contului de fiecare utilizator, alegerea dosarului la mutare și scrierea mesajelor.
 Migrarea de la `agroamat_mail` vine într-o etapă următoare.
+
+### Pasul 20 — Căutare în toate dosarele
+
+Sub câmpul de căutare, butoanele **Acest dosar** (implicit) și **Toate dosarele** aleg unde se caută. Cu **Toate dosarele**,
+aceeași căutare (cuvinte și operatori din pasul 18) rulează pe serverul de e-mail în fiecare dosar al căsuței, iar
+rezultatele vin într-o singură listă, cu cele mai noi mesaje primele (după data la care serverul a primit mesajul). Fiecare
+rând arată dosarul în care se află mesajul, într-o etichetă mică. Un clic deschide mesajul; răspunsul, redirecționarea,
+steaua, mutarea și atașarea lucrează pe dosarul real al mesajului.
+
+![Căutare în toate dosarele: butonul Toate dosarele activ și, într-o singură listă, mesaje din Primite, Trimise și Arhivă, fiecare cu eticheta dosarului](screenshots/31_cautare_toate_dosarele.png)
+
+Dosarele Gunoi și Spam sunt lăsate deoparte; bifa **Include Gunoiul și Spamul** le adaugă. Dosarele care doar repetă
+altele (de exemplu „All Mail” de la Gmail) nu se caută niciodată, ca să nu apară același mesaj de două ori. Ca un cont mare
+să nu blocheze conexiunea, se caută cel mult 40 de dosare, cele mai noi 500 de potriviri din fiecare și cel mult 40 de
+secunde; dacă s-a atins o limită sau un dosar nu a putut fi căutat (este numit), utilizatorul vede un avertisment că
+rezultatul e parțial. Aceleași drepturi ca la căutarea într-un dosar (ajunge Citire), nimic în jurnalul de acces, iar
+mesajele nu se marchează ca citite. În lista din toate dosarele mesajele se deschid unul câte unul: selecția multiplă
+funcționează doar la căutarea într-un singur dosar.
+
+### Pasul 21 — Starea verificării mesajelor noi
+
+Deschideți căsuța în **Mesagerie → Cont de e-mail**. Grupul **Verificarea mesajelor noi** arată, în câmpul **Urmărită de**, câți
+utilizatori urmăresc căsuța (au pornit notificările), **Ultima verificare**, numărul de mesaje necitite din Primite la acel moment și, dacă
+ultima verificare a eșuat, **Eroarea la verificare**, în roșu, cu textul dat de server (cel mult 200 de caractere, de
+exemplu parola schimbată). Lista căsuțelor are aceleași două coloane (rândul cu eroare e roșu), iar căutarea are
+filtrul **Verificare eșuată**: administratorul găsește rapid căsuțele stricate.
+
+![Formularul unei căsuțe cu grupul Verificarea mesajelor noi: urmărită de 1 utilizator, ora ultimei verificări, 3 mesaje necitite și, în roșu, eroarea Login refused by the mail server. Check the username and password.](screenshots/32_stare_verificare.png)
+
+Se verifică doar căsuțele pe care cineva a pornit notificările (clopoțelul de sub dosare). Pentru o căsuță pe care nu o
+urmărește nimeni, grupul spune asta în loc să arate câmpuri goale, ca să nu fie luat drept defecțiune. Eroarea dispare la
+următoarea verificare reușită. Nu se schimbă acțiunea programată și nici ce se verifică.
+
+### Pasul 22 — Editorul și semnătura
+
+Textul unui mesaj nou, al unui răspuns sau al unei redirecționări se scrie în editorul Odoo: selectând câteva cuvinte,
+apare deasupra lor bara de instrumente (paragraf sau titlu, mărime, aldin, cursiv, subliniat, culoare, listă, link).
+Nu se pot pune imagini sau fișiere în text. Mesajul pleacă cu formatarea și cu o versiune în text simplu, pentru
+programele de e-mail care nu pot afișa formatarea. Pe server, HTML-ul se curăță înainte de trimitere și înainte de
+salvarea ca ciornă: fără scripturi, fără funcții de eveniment, fără formulare; un link păstrează doar adrese web, de
+e-mail sau de telefon; o imagine rămâne doar dacă e link `https`, nimic nu se încorporează.
+
+![Editorul unui mesaj nou: câteva cuvinte selectate cu bara de instrumente deasupra lor și, sub text, semnătura despărțită printr-o linie cu două cratime](screenshots/33_editor_html.png)
+
+La răspuns, originalul se citează într-un bloc de citat, cu linia „La <data>, <nume> a scris:"; imaginile originalului nu
+intră în citat, deci un răspuns nu încarcă și nu retrimite nimic de pe alte servere. Redirecționarea are rândurile de
+antet și originalul. Ciornele se păstrează cu formatarea și se redeschid în editor; o ciornă scrisă ca text simplu (și de
+alt program) apare ca text.
+
+**Semnătura** aparține căsuței: se completează în **Mesagerie → Cont de e-mail**, grupul **Semnătură**, unde se vede
+cum arată. Dacă e goală, se folosește semnătura utilizatorului din preferințele Odoo. Se adaugă la mesajul nou și la
+răspuns sau redirecționare sub text, deasupra citatului, după o linie `-- `, și nu se adaugă din nou când continuați o
+ciornă. La o căsuță partajată se folosește semnătura căsuței, pentru toți membrii (și pentru cei care au una proprie în
+preferințele Odoo); dacă căsuța nu are semnătură, fiecare membru semnează cu a lui. Doar proprietarul căsuței o poate
+schimba. O imagine în semnătură (sigla) merge doar ca link `https`.
+
+![Grupul Semnătură din formularul căsuței, cu semnătura așa cum va arăta: o formulă de încheiere, un nume cu aldin, firma și un link](screenshots/34_semnatura.png)
 
 ## 8. Verificări pentru consultant
 
@@ -386,6 +503,18 @@ Migrarea de la `agroamat_mail` vine într-o etapă următoare.
 - [ ] Un destinatar fără format de adresă, sau cu rând nou, este refuzat înainte de trimitere.
 - [ ] Un mesaj mutat în „Arhivă” apare acolo (și în aplicația de e-mail obișnuită) și dispare din dosarul vechi, cu steaua și starea citit păstrate.
 - [ ] Dosarul curent nu apare în lista **Mută în...**.
+- [ ] Cu **Toate dosarele**, o căutare găsește mesaje din mai multe dosare, într-o singură listă, cele mai noi primele, fiecare cu eticheta dosarului.
+- [ ] Mesajele din Gunoi și Spam nu apar, până se bifează **Include Gunoiul și Spamul**; un dosar „All Mail” nu dublează rezultatele.
+- [ ] Un mesaj găsit într-un alt dosar se deschide, se marchează cu stea și se mută corect, pe dosarul lui; în listă nu apar casetele de selecție.
+- [ ] Dacă un dosar nu poate fi căutat, rezultatul arată avertismentul cu numele lui, iar celelalte dosare tot apar.
+- [ ] Câmpul **Urmărită de** din formularul căsuței arată câți utilizatori o urmăresc; fără urmăritori, grupul spune că nimeni nu o urmărește, în loc de câmpuri goale.
+- [ ] După o parolă schimbată, la următoarea verificare apare eroarea în roșu, rândul din listă devine roșu, iar filtrul **Verificare eșuată** găsește căsuța; după parola corectă eroarea dispare.
+- [ ] Un mesaj scris cu text aldin și o listă ajunge la destinatar cu formatarea, iar în Trimise copia are textul și HTML-ul; într-un program care nu arată HTML se citește versiunea text.
+- [ ] Un script lipit în editor sau un link `javascript:` nu ajunge în mesajul trimis; o imagine `http` sau încorporată este scoasă.
+- [ ] La răspuns, citatul apare într-un bloc de citat, imaginile originalului lipsesc, iar semnătura e deasupra citatului, după linia `-- `.
+- [ ] O ciornă cu formatare se redeschide cu formatarea; o ciornă scrisă în alt program, ca text, se vede ca text.
+- [ ] Semnătura căsuței se adaugă la mesajul nou; fără ea, se folosește semnătura utilizatorului; la continuarea unei ciorne nu se dublează.
+- [ ] Un membru al unei căsuțe partajate nu poate schimba semnătura ei.
 - [ ] Dosarele cu diacritice în nume (de exemplu „Arhivă”) se deschid corect.
 - [ ] **Atașează la...** pune mesajul în discuția contactului ca notă internă, cu expeditorul ca autor, textul, atașamentele și `.eml`-ul original.
 - [ ] A doua atașare a aceluiași mesaj la aceeași înregistrare dă avertisment și nu creează o a doua notă; la altă înregistrare merge.
@@ -430,6 +559,19 @@ Migrarea de la `agroamat_mail` vine într-o etapă următoare.
 - [ ] Un mesaj șters între timp de pe server nu oprește acțiunea: restul se execută, iar utilizatorul vede câte mesaje nu mai existau.
 - [ ] Un membru cu acces Citire poate marca mesajele citite sau necitite, dar nu vede butoanele de stea, arhivare și mutare, iar apelurile directe sunt refuzate.
 - [ ] O mutare în masă apare ca o singură linie în jurnalul de acces (acțiunea „Dosar modificat”), cu numărul de mesaje.
+- [ ] Pe o bază neutralizată (`odoo-bin neutralize`) căsuțele sunt arhivate, abonările la notificări (clopoțelul) sunt șterse, clientul arată avertismentul că baza este o copie neutralizată, iar un membru al unei căsuțe partajate nu o mai vede.
+- [ ] Un utilizator cu contul personal arhivat vede „Nu aveți încă un cont de e-mail sau contul dumneavoastră de e-mail este arhivat.”, își poate crea un cont nou, iar contul arhivat se dezarhivează din filtrul **Arhivate** al listei **Cont de e-mail**.
+- [ ] Cu parametrul `deltatech_mail_client.max_message_size` pus la `1` (MB), un mesaj mai mare de 1 MB nu se deschide și afișează mărimea lui și limita; fără parametru limita este 25 MB, iar cu o valoare care nu e număr sau cu `0` rămâne tot 25 MB.
+- [ ] Un mesaj cu un atașament mai mare decât limita nu se deschide deloc („The message is too large to open here…”); „The attachment is too large to download here.” apare doar la serverele care nu raportează mărimea mesajului.
+- [ ] Un domeniu care seamănă cu al unui contact dă avertisment și când acel contact are numele spre sfârșitul alfabetului; un contact adăugat acum este comparat după cel mult 10 minute.
+- [ ] Într-un dosar cu peste 30 de mesaje, paginile se parcurg fără repetări și fără goluri (un mesaj apare pe o singură pagină), iar ultima pagină arată doar mesajele rămase.
+- [ ] Un mesaj cu data `Fri, 31 Dec 9999 23:59:59 -0100` apare în listă și se deschide normal, cu data goală.
+- [ ] După 5 secunde de scris, mesajul apare în dosarul Ciorne al serverului (și în altă aplicație de e-mail); o modificare nouă înlocuiește ciorna, nu o dublează.
+- [ ] **Continuă să scrii** deschide ciorna cu destinatarii, Cc, Bcc, subiectul, textul și atașamentele; **Trimite** o șterge din dosarul Ciorne.
+- [ ] Coșul cere confirmare și șterge ciorna din dosar; deschiderea altui mesaj în timpul scrisului păstrează mesajul ca ciornă.
+- [ ] Pe un server fără dosar Ciorne apare avertismentul, iar dosarul nu se creează.
+- [ ] Un membru cu acces Citire nu poate salva ciorne; prima salvare a unei ciorne apare o singură dată în jurnalul de acces.
+- [ ] Pe câmpul Către, după două caractere, apar contactele potrivite (cel mult 8); alegerea completează „Nume <adresă>”, iar un utilizator portal nu vede contactele companiei.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -442,6 +584,9 @@ Migrarea de la `agroamat_mail` vine într-o etapă următoare.
 | Parola salvată nu poate fi decriptată. Introduceți-o din nou. | Secretul bazei de date s-a schimbat de la salvarea parolei | Introduceți parola din nou în formularul contului |
 | Puteți deschide doar propria căsuță de e-mail. | Încercare de a deschide căsuța altui utilizator | Fiecare utilizator își folosește contul propriu |
 | The mail server refused the request (…) | Dosarul nu există sau contul nu are drepturi pe el | Reîncărcați lista de dosare |
+| Au fost căutate doar primele 40 de dosare… / Un dosar are mai mult de 500 de potriviri… / Căutarea a durat prea mult… | Căutarea în toate dosarele a atins o limită (40 de dosare, 500 de potriviri pe dosar, 40 de secunde); rezultatul este parțial | Restrângeți căutarea (operatori, interval cu `after:`) sau căutați într-un singur dosar |
+| Aceste dosare nu au putut fi căutate: … | Un dosar a dat eroare la căutare (drepturi, dosar mutat în acest timp) | Căutați în acel dosar separat; celelalte rezultate sunt valabile |
+| Doar proprietarul căsuței îi poate schimba semnătura. | Un alt utilizator (de exemplu un membru al unei căsuțe partajate sau un administrator) a încercat să scrie în câmpul Semnătură | Semnătura o schimbă proprietarul căsuței; ceilalți îi cer proprietarului modificarea |
 | The message no longer exists on the server. | Mesajul a fost șters sau mutat din altă aplicație | Reîncărcați dosarul |
 | Doar proprietarul căsuței poate schimba datele de conectare. | Un administrator încearcă să schimbe serverul sau utilizatorul altui cont | Proprietarul contului face modificarea |
 | The mail server refused the request (flag deleted / expunge) | La serverele fără comanda `MOVE`, mesajul a fost copiat, dar serverul a refuzat ștergerea originalului (de exemplu dosar partajat doar pentru citire) | Mesajul poate fi deja copiat în dosarul ales: verificați dosarul destinație înainte să reîncercați |
@@ -467,12 +612,18 @@ Migrarea de la `agroamat_mail` vine într-o etapă următoare.
 | No message selected. / Invalid message. | Apel fără niciun mesaj, sau cu un identificator care nu e număr pozitiv (nu se întâmplă din ecran) | Selectați din nou mesajele și repetați |
 | A date is written as 2026-11-01. | Dată scrisă altfel în `after:` sau `before:` | Scrieți data ca an-lună-zi, de exemplu `after:2026-10-01` |
 | The search is too long. / The search has too many words. / The search has characters that are not allowed. | Peste 200 de caractere, peste 10 cuvinte sau caractere de control în text | Scurtați căutarea |
+| No Drafts folder was found on the server, so the draft was not saved. | Serverul nu are un dosar Ciorne | Cereți proprietarului să creeze dosarul Ciorne |
+| This message is not a draft. | Apel de continuare pentru un mesaj din alt dosar decât Ciorne (nu se întâmplă din ecran) | Deschideți ciorna din dosarul Ciorne |
 | Too many messages at once. | Peste 200 de mesaje într-un singur apel (nu se întâmplă din ecran, care trimite pe rând) | Repetați cu mai puține mesaje |
 | Căsuța nu are dosarul … Cereți proprietarului să îl creeze. | Membru Complet într-o căsuță fără dosar de Arhivă, Spam sau Coș de gunoi | Proprietarul creează dosarul |
 | Only the Trash and Spam folders can be emptied. | Golire cerută pentru alt dosar | Golirea se face doar în Coșul de gunoi și Spam |
-| Fiecare utilizator poate avea un singur cont de e-mail personal. | Al doilea cont personal pentru același utilizator | Modificați contul existent sau creați o căsuță partajată |
+| Fiecare utilizator poate avea un singur cont de e-mail personal. | Al doilea cont personal activ pentru același utilizator (un cont arhivat nu se numără) | Modificați contul existent sau creați o căsuță partajată |
+| Această căsuță este arhivată. | Căsuța a fost arhivată, de exemplu prin neutralizarea bazei de date | Dezarhivați căsuța din filtrul **Arhivate** al listei Cont de e-mail, sau creați o căsuță de test |
+| The message is too large to open here (… MB; the limit is … MB). | Mesajul depășește limita de mărime (implicit 25 MB) | Deschideți mesajul în aplicația de e-mail obișnuită sau cereți administratorului să ridice `max_message_size` |
+| The attachment is too large to download here. | Atașamentul depășește limita de mărime, pe un server care nu raportează mărimea mesajului (altfel mesajul nu se deschide deloc) | La fel |
+| Eroare neașteptată (…). Vedeți jurnalul serverului. (în câmpul „Eroare la verificare” al căsuței) | O eroare pe care modulul nu o prevede la verificarea mesajelor noi | Cereți administratorului să citească jurnalul serverului; celelalte căsuțe nu sunt afectate |
 
-Mesajele primite de la serverele de e-mail și mesajele de validare ale mesajului nou (cele care încep cu „Login refused…”, „Cannot connect…”, „The mail server refused…”, „The message …”, „The destination folder …”, „The search …” și „A date is written …”) apar deocamdată doar în engleză.
+Mesajele primite de la serverele de e-mail și mesajele de validare ale mesajului nou (cele care încep cu „Login refused…”, „Cannot connect…”, „The mail server refused…”, „The message …”, „The attachment …”, „The destination folder …”, „This message is not a draft.”, „The search …” și „A date is written …”) apar deocamdată doar în engleză. „Eroare neașteptată (…)” e scrisă de acțiunea programată și poate apărea și ea în engleză („Unexpected error (…). See the server log.”), după limba utilizatorului de sistem.
 
 ## 10. Capturi de ecran
 
@@ -491,6 +642,8 @@ Capturile sunt generate automat din `tests/test_screenshots.py` (mixinul `Screen
 | `03_lista_mesaje.png` | Dosarele și lista mesajelor din INBOX |
 | `04_citire_mesaj.png` | Un mesaj text deschis, cu butoanele de marcare |
 | `05_mesaj_html_sigur.png` | Un mesaj HTML, cu imaginile externe blocate |
+| `06_mutare_mesaj.png` | Mesajul deschis, cu lista Mută în... evidențiată |
+| `07_dupa_mutare.png` | Lista după mutare, cu notificarea de confirmare |
 | `08_mesaj_nou.png` | Formularul unui mesaj nou, completat |
 | `09_raspuns.png` | Un răspuns pornit, cu textul original citat |
 | `10_dupa_trimitere.png` | Notificarea după trimitere |
@@ -511,15 +664,26 @@ Capturile sunt generate automat din `tests/test_screenshots.py` (mixinul `Screen
 | `25_necitite.png` | Dosarele cu numărul de necitite și clopoțelul de notificări |
 | `26_plic_bara.png` | Plicul din bara de sus cu insigna de necitite |
 | `27_selectie_multipla.png` | Lista cu două mesaje bifate și bara de acțiuni |
+| `29_sugestii_destinatari.png` | Câmpul Către cu lista de contacte sugerate |
+| `30_ciorne.png` | Dosarul Ciorne cu o ciornă deschisă și butonul Continuă să scrii |
 | `28_cautare.png` | Câmpul de căutare cu ofert has:attachment, butonul Cu atașament activ și rezultatul |
-| `06_mutare_mesaj.png` | Mesajul deschis, cu lista Mută în... evidențiată |
-| `07_dupa_mutare.png` | Lista după mutare, cu notificarea de confirmare |
+| `31_cautare_toate_dosarele.png` | Căutarea în toate dosarele: mesaje din Primite, Trimise și Arhivă într-o listă, cu eticheta dosarului |
+| `32_stare_verificare.png` | Formularul căsuței cu starea verificării: urmăritori, ultima verificare, necitite și eroarea în roșu |
+| `33_editor_html.png` | Editorul unui mesaj nou, cu cuvinte selectate, bara de instrumente și semnătura |
+| `34_semnatura.png` | Grupul Semnătură din formularul căsuței |
 | `demo.gif` | Animație de prezentare: lista, citirea unui mesaj, marcarea cu stea și mutarea în alt dosar (folosită pe pagina Apps) |
+
+Nu există încă o captură pentru avertismentul „bază neutralizată” (secțiunea 5, punctul 6): ea cere o bază neutralizată
+și trebuie generată cu `fisa-screenshots`; până atunci avertismentul este descris doar în text.
 
 ## 11. Observații pentru manual
 
-- Pentru manual: pașii 1–2 (configurare, o singură dată) separat de pașii 3–11 și 14–18 (folosire zilnică) și pașii 12–13 (configurare: culori, căsuțe partajate).
-- Mesajele marcate „șterse” de altă aplicație, dar încă neeliminate de pe server, nu se afișează în Odoo (Thunderbird sau Outlook le pot arăta tăiate).
+- Pentru manual: pașii 1–2 (configurare, o singură dată) separat de pașii 3–11, 14–22 (folosire zilnică) și pașii 12–13 (configurare: culori, căsuțe partajate).
+- Mesajele marcate „șterse” de altă aplicație, dar încă neeliminate de pe server, nu se afișează în Odoo (Thunderbird sau Outlook le pot arăta tăiate), dar se numără în totalul dosarului.
+- Pe copii ale bazei (staging, teste) căsuțele se arhivează la neutralizare; parolele rămân criptate în copie, ca în producție, iar cine vrea să testeze pe o căsuță reală o dezarhivează conștient (secțiunea 5, punctul 6).
+- Limita de mărime a mesajului (25 MB) se schimbă doar prin parametrul de sistem `deltatech_mail_client.max_message_size`; nu are ecran de setări. Parametrul schimbă deschiderea mesajelor și descărcarea atașamentelor; atașarea la înregistrări și trimiterea (inclusiv redirecționarea) rămân la 25 MB.
+- Avertismentul de domeniu asemănător se bazează pe contactele active ale companiilor selectate în selectorul de companii și pe o memorie de 10 minute: un contact nou nu e comparat imediat.
+- O dată cu formă ciudată în antetul unui mesaj (de exemplu anul 9999) nu mai strică lista, deschiderea sau verificarea mesajelor noi: data apare goală.
 - La serverele fără comanda `MOVE`, păstrarea steaguțurilor (stea, citit) la mutare depinde de server.
 - Mutarea se face pe server: mesajul mutat se vede și în aplicația de e-mail obișnuită. Dosarele noi și modificările de dosare se văd și în ea.
 - Subliniați că mesajele nu se copiază în Odoo: dacă serverul e oprit, căsuța nu se poate citi.

@@ -59,10 +59,11 @@ interne (în capturi: *TEST Construcții Oltenia SRL*).
 
 Deschideți **Contacte → Contacte** și un contact cu mesaje în chatter. Formularul ocupă implicit
 70% din lățime, iar chatter-ul 30%. Separatorul este marginea dintre cele două zone: când treceți
-cu mouse-ul peste ea, cursorul devine o săgeată dublă orizontală. În captură, separatorul e încadrat cu roșu; în Odoo
-nu are culoare proprie.
+cu mouse-ul peste ea, cursorul devine o săgeată dublă orizontală. Pe separator, sub bara de sus a
+chatter-ului, stă un buton rotund cu săgeată (folosit la Pasul 3). În captură, separatorul e
+evidențiat cu portocaliu (①); în Odoo nu are culoare proprie.
 
-![Formularul contactului TEST Construcții Oltenia SRL pe un ecran lat: formularul ocupă cea mai mare parte din stânga, chatter-ul îngust din dreapta are trei note rupte pe câte două rânduri, iar separatorul dintre ele este încadrat cu roșu](screenshots/01_separator_formular_chatter.png)
+![Formularul contactului TEST Construcții Oltenia SRL pe un ecran lat: formularul ocupă cea mai mare parte din stânga, chatter-ul îngust din dreapta are trei note rupte pe câte două rânduri, iar separatorul dintre ele, cu butonul rotund cu săgeată, este evidențiat cu portocaliu](screenshots/01_separator_formular_chatter.png)
 
 ### Pasul 2 — Lărgirea chatter-ului
 
@@ -72,6 +73,16 @@ scade sub 300 de pixeli, iar chatter-ul sub 250. La eliberarea mouse-ului, împ�
 după reîncărcarea paginii sau la deschiderea altui formular, Odoo o păstrează.
 
 ![Același contact după tragerea separatorului spre stânga: formularul ocupă mai puțin de jumătate din ecran, iar chatter-ul lărgit afișează fiecare notă pe un singur rând](screenshots/02_chatter_largit.png)
+
+### Pasul 3 — Ascunderea chatter-ului
+
+Pentru documente cu multe linii (de exemplu o comandă de vânzare lungă), apăsați butonul rotund cu
+săgeată din capătul de sus al separatorului sau combinația **Alt+Shift+F** (pe macOS
+**Control+Shift+F**). Chatter-ul dispare, iar formularul ocupă toată lățimea; în dreapta rămâne o
+bandă îngustă cu butonul care readuce chatter-ul (sau aceeași combinație de taste). Alegerea se
+păstrează în browser pentru toate formularele, până o schimbați din nou.
+
+![Același contact cu chatter-ul ascuns: formularul ocupă toată lățimea ecranului, iar în dreapta rămâne o bandă îngustă cu butonul rotund care readuce chatter-ul, evidențiat cu portocaliu](screenshots/03_chatter_ascuns.png)
 
 ### Note de monografie și raportare
 
@@ -101,6 +112,10 @@ salvează la fiecare tragere și se aplică peste tot.
 - [ ] Se deschid și se închid mai multe formulare, apoi fereastra browserului se redimensionează:
   separatorul rămâne unul singur și funcționează.
 - [ ] Un alt formular cu chatter (de exemplu o comandă de vânzare) folosește aceeași împărțire.
+- [ ] Butonul de pe separator ascunde chatter-ul, formularul ocupă toată lățimea, iar butonul de pe
+  banda din dreapta îl readuce; **Alt+Shift+F** face același lucru. Un clic pe buton nu mută separatorul.
+- [ ] După reîncărcarea paginii, chatter-ul ascuns rămâne ascuns; într-o fereastră de dialog și pe un
+  ecran îngust (chatter sub formular) nu apar nici butonul, nici banda.
 - [ ] Pe Odoo Online, după importul arhivei zip (modul dezvoltator, **Aplicații → Importați
   Modulul**), modulul apare în **Aplicații** și separatorul funcționează după reîncărcarea paginii.
 
@@ -110,6 +125,7 @@ salvează la fiecare tragere și se aplică peste tot.
 |---|---|---|
 | Separatorul nu apare | Fereastra e prea îngustă și chatter-ul stă sub formular | Lărgiți fereastra sau folosiți un monitor mai lat |
 | Separatorul nu apare după instalare | Browserul folosește încă fișierele vechi | Reîncărcați pagina (în ultimă instanță, cu golirea cache-ului) |
+| Chatter-ul lipsește din toate formularele; în dreapta e doar o bandă îngustă cu o săgeată | Chatter-ul a fost ascuns cu butonul de pe separator sau cu **Alt+Shift+F**; alegerea se păstrează în browser | Apăsați butonul de pe bandă sau **Alt+Shift+F** |
 | Împărțirea revine la 70/30 | Alt browser, alt calculator sau datele site-ului au fost șterse din browser | Trageți din nou separatorul; împărțirea se salvează pe browser |
 
 ## 10. Capturi de ecran
@@ -122,10 +138,12 @@ aplicația **Contacte** instalată, la o fereastră de 1920 de pixeli lățime:
 |---|---|
 | `01_separator_formular_chatter.png` | Formularul unui contact cu împărțirea implicită 70/30 |
 | `02_chatter_largit.png` | Același formular după tragerea separatorului spre stânga |
+| `03_chatter_ascuns.png` | Același formular cu chatter-ul ascuns și banda cu butonul care îl readuce |
 
 Modulul nu are `tests/test_screenshots.py`: un test Python ar contrazice varianta fără cod Python
-pentru Odoo Online. Capturile s-au făcut cu Playwright, pe formularul de contact din aplicația
-**Contacte**.
+pentru Odoo Online. Capturile și GIF-ul demo (`static/description/en/demo.gif`) s-au făcut cu
+Playwright (`ScreenshotCase` din `deltatech_doc_screenshots`, cu un test ținut în afara modulului),
+pe formularul de contact din aplicația **Contacte**.
 
 ## 11. Observații pentru manual
 

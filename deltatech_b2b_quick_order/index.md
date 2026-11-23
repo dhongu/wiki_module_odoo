@@ -1,10 +1,11 @@
 # B2B Quick Order (localizat la `deltatech_b2b_quick_order/index.md`)
 
 - **Nume Tehnic:** `deltatech_b2b_quick_order`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_quick_order
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_b2b_quick_order`
 - **Ultima Ingestie:** `2026-10-09`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

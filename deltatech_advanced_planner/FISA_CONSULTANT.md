@@ -303,6 +303,8 @@ folosește o alocare globală partajată (fără supraplanificarea aceluiași st
 previne rulările concurente. Butonul **Vizualizare comenzi blocate** deschide direct comenzile blocate
 după rulare.
 
+Planificarea globală (și cronul de noapte) păstrează comenzile planificate **Finalizat** (convertite în RFQ/MO) și documentele generate din ele, inclusiv ciornele; regenerează doar propunerile nefixate și neconvertite. Opțiunea **Regenerate Unfixed Planned Orders** șterge totul, inclusiv comenzile convertite.
+
 ![Wizardul de planificare globală](screenshots/10_global_planning.png)
 
 **Reaprovizionarea pentru stoc.** Cu opțiunea **Analizare mișcări independente (reaprovizionare)**

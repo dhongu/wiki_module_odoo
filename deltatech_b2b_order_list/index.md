@@ -1,10 +1,11 @@
 # B2B Order Lists (localizat la `deltatech_b2b_order_list/index.md`)
 
 - **Nume Tehnic:** `deltatech_b2b_order_list`
-- **Versiune:** `19.0.1.0.4`
+- **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_order_list
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_b2b_order_list`
 - **Ultima Ingestie:** `2026-10-09`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

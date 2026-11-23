@@ -1,10 +1,10 @@
-# Romania - Raport de alocare a plăților
+# Romania - Raport de alocare a plăților (localizat la `l10n_ro_payment_allocation_report/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_payment_allocation_report`
 - **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payment_allocation_report
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_payment_allocation_report`
-- **Ultima Ingestie:** `2026-08-31`
+- **Ultima Ingestie:** `2026-11-23`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -13,15 +13,15 @@ Modulul răspunde la o întrebare pe care contabilitatea o pune la fiecare verif
 
 #### 2. Funcționalități Cheie
 
-- **Alocarea plăților** (*Payment Allocation*) — grupare pe documentul care stinge: plata cu valoarea, suma alocată în perioadă și restul nealocat; sub ea, fiecare factură închisă cu suma alocată și restul neachitat; sub factură, **celelalte** alocări ale ei (note de credit, avansuri, plăți anterioare), fără de care suma nu se închide.
-- **Stingerea facturilor** (*Invoice Settlement*) — aceleași alocări grupate invers, pornind de la factură.
-- **Sursa de date este `account.partial.reconcile`, nu `account.payment`** — acoperă toate modurile de stingere folosite în practică: note contabile reconciliate din extrasul bancar, registru de casă, note de credit, compensări. În majoritatea instalărilor românești plățile de furnizor sunt note contabile, nu înregistrări `account.payment`, iar un raport construit pe `account.payment` le-ar rata aproape complet.
+- **Alocarea plăților** (*Payment Allocation*; **Contabilitate → Raportare → Rapoarte parteneri → Alocarea plăților**) — grupare pe documentul care stinge: plata cu valoarea, suma alocată în perioadă și restul nealocat; sub ea, fiecare factură închisă cu suma alocată și restul neachitat; sub factură, **celelalte** alocări ale ei (note de credit, avansuri, plăți anterioare), în rânduri cursive, fără de care suma nu se închide (ex. factură 1.200 = plată 1.000 + storno 200).
+- **Stingerea facturilor** (*Invoice Settlement*; **Rapoarte parteneri → Stingerea facturilor**) — aceleași alocări grupate invers, pornind de la factură, cu plățile și notele de credit care au închis-o; rândul final **Total alocat** include și stingerile fără numerar. Se folosește când întrebarea pornește de la factură, iar *Alocarea plăților* când pornește de la extras. Atenție: rândurile cursive de nivel trei sunt celelalte alocări ale documentului de plată de deasupra, nu documente care au închis factura de la primul nivel.
+- **Sursa de date este `account.partial.reconcile`, nu `account.payment`** — acoperă toate modurile de stingere folosite în practică: note contabile reconciliate din extrasul bancar, registru de casă, note de credit, compensări. În majoritatea instalărilor românești plățile de furnizor sunt note contabile, nu înregistrări `account.payment`, iar un raport construit pe `account.payment` le-ar rata aproape complet. Raportul arată doar alocările existente, nu plățile nereconciliate.
 - **Până la patru secțiuni cu subtotaluri separate**, fiecare afișată doar dacă are conținut: *Plăți către furnizori* (401), *Încasări de la clienți* (4111), *Alte stingeri* (note de credit, compensări) și *Reconcilieri fără factură* (mecanica POS, stingeri între note contabile). Plățile și încasările stau separat pentru că au sens contrar în trezorerie — un subtotal comun nu s-ar putea confrunta cu rulajul unui extras. Încadrarea ca trezorerie se face după **tipul jurnalului** (bancă/casă), iar sensul după contul de terți.
-- **Câte un total per flux** — *Total plăți către furnizori* (confruntabil cu rulajul creditor al trezoreriei), *Total încasări de la clienți* (cu cel debitor) și *Total stins (toate secțiunile de mai sus)*.
-- Filtre native: perioadă (implicit luna curentă), jurnale (aplicate documentului de la primul nivel), parteneri, creanțe/datorii (`filter_account_type`), selector multi-companie, unfold all. Filtrele de comparație și de ciorne sunt dezactivate intenționat — alocările există numai între note postate, iar coloanele de comparație ar repeta aceleași valori.
-- Meniurile declară explicit grupurile de acces la rapoartele contabile (`account.group_account_readonly` / `account.group_account_basic`). Raportul citește prin interogări directe, deci nu aplică reguli de acces la nivel de înregistrare pe notele contabile.
-- Drill-down la orice document și export PDF/XLSX din bara de instrumente, moștenite din framework-ul de raportare Enterprise.
-- Interfață tradusă integral în română (`i18n/ro.po`).
+- **Câte un total per flux** — *Total plăți către furnizori* (confruntabil cu rulajul creditor al conturilor de trezorerie), *Total încasări de la clienți* (cu cel debitor; cele două se compară separat, nu se adună) și, când există mai multe fluxuri, *Total stins*; reconcilierile fără factură nu intră în acest total.
+- **Cum se citesc cifrele:** pe rândul plății, *Valoare document* este valoarea plății, *Alocat* cât s-a alocat în perioadă, iar *Sold restant* cât din plată a rămas nealocat; pe facturile cu mai multe termene de plată, valoarea documentului este a tranșei stinse; pe rândurile cursive, *Dată* și *Valoare document* sunt ale documentului, nu ale alocării. Sumele sunt în moneda companiei.
+- Filtre native: perioadă (implicit luna curentă), jurnale (aplicate documentului de la primul nivel), parteneri, creanțe/datorii (**Cont: Parteneri comerciali**), selector multi-companie, unfold all. Filtrele de comparație și de ciorne sunt dezactivate intenționat — alocările există numai între note postate, iar coloanele de comparație ar repeta aceleași valori.
+- Drill-down la orice document (rândurile de secțiune și de total nu sunt clicabile) și export PDF/XLSX din bara de instrumente, moștenite din framework-ul de raportare Enterprise. Fără configurare; disponibil doar pentru companiile cu țara România; interfață tradusă integral în română (`i18n/ro.po`).
+- Meniurile declară explicit grupurile de acces la rapoartele contabile (`account.group_account_readonly` / `account.group_account_basic`). Raportul citește prin interogări directe, deci nu aplică reguli de acces la nivel de înregistrare pe notele contabile. Fluxul pas-cu-pas este în fișa consultantului.
 
 #### 3. Dependențe
 
@@ -35,7 +35,7 @@ Modulul răspunde la o întrebare pe care contabilitatea o pune la fiecare verif
 - `l10n.ro.payment.allocation.report.handler` (`account.report.custom.handler`): motorul raportului. Citește reconcilierile parțiale din perioadă, stabilește pentru fiecare alocare care latură **stinge** și care este **stinsă**, grupează pe document și construiește ierarhia pe patru niveluri (secțiune → document de stingere → factură → celelalte alocări ale facturii). Pe nivelul al treilea, *Dată* și *Valoare document* sunt ale documentului, nu ale alocării.
 - `l10n.ro.invoice.settlement.report.handler`: moștenește handlerul de mai sus și inversează rolurile (`_pa_group_by_settlement = False`), pentru raportul care pornește de la factură.
 
-Determinarea rolurilor se face prin scor: o factură este întotdeauna ținta, o linie din jurnal de bancă sau de casă este întotdeauna plata, iar o nota de credit se clasează între cele două (stinge o factură, dar poate fi ea însăși stinsă de o plată). La egalitate — de pildă o compensare între două note contabile — documentul mai recent stinge pe cel mai vechi.
+Determinarea rolurilor se face prin scor: o factură este întotdeauna ținta, o linie din jurnal de bancă sau de casă este întotdeauna plata, iar o notă de credit se clasează între cele două (stinge o factură, dar poate fi ea însăși stinsă de o plată). La egalitate — de pildă o compensare între două note contabile — documentul mai recent stinge pe cel mai vechi.
 
 **Vizualizări**
 

@@ -131,6 +131,9 @@ Date minime pentru demo:
 6. Pentru importul din fișier, metoda de livrare trebuie să aibă un conector care știe să citească
    decontul (în prezent GLS, prin `deltatech_delivery_gls`). Fără conector, rândurile decontului se
    pot introduce manual în listă.
+7. Importul decontului reglează doar tranzacții de tip ramburs (în stările Ciornă, În așteptare, Autorizat, din
+   companiile utilizatorului). Un rând a cărui referință corespunde unei tranzacții de alt tip (de exemplu
+   plată cu cardul) rămâne în **Eroare**, iar tranzacția nu se modifică.
 
 Bifa *Cash on Delivery* de pe metoda de livrare filtrează doar furnizorul standard. Furnizorul
 modulului apare la **orice** metodă de livrare, inclusiv la ridicarea personală; restricția se face
@@ -233,8 +236,11 @@ Două limite de știut:
 - dacă rândul se potrivește doar după numele comenzii, iar comanda nu are tranzacție, modulul creează
   tranzacția **cu valoarea din rând**, deci rândul trece fără comparație cu totalul comenzii.
   Verificați manual aceste rânduri față de comandă.
-- prima căutare, după referință, nu se limitează la furnizorul de ramburs; dacă o comandă a avut și
-  o încercare de plată online, verificați în coloana **Tranzacție** că s-a găsit tranzacția de ramburs.
+- căutările după referință și AWB iau în calcul doar tranzacțiile de ramburs aflate în **Ciornă**,
+  **În așteptare** sau **Autorizat**, din companiile utilizatorului; o tranzacție de alt tip (de
+  exemplu plata online cu cardul) cu aceeași referință este ignorată, iar rândul rămâne în **Eroare**
+  fără să modifice acea tranzacție. La fel se întâmplă dacă tranzacția găsită sau setată pe rând nu
+  este de ramburs, ori dacă tranzacția ramburs a fost deja anulată sau confirmată.
 
 Dacă oferta nu fusese confirmată de operator, validarea rândului o confirmă automat, odată cu
 încasarea.
@@ -309,6 +315,8 @@ cu eroare; reconcilierea extrasului bancar cu suma virată de curier; factura de
 - [ ] Un rând de decont cu valoarea egală cu tranzacția devine **Efectuat**; tranzacția devine
       **Confirmată**, iar plata apare în jurnalul „Ramburs curier", reconciliată cu factura.
 - [ ] Un rând cu valoare diferită devine **Eroare**, iar tranzacția rămâne neschimbată.
+- [ ] Un rând cu referința unei tranzacții care nu e de ramburs (de exemplu plată cu cardul, în
+      așteptare) devine **Eroare**, iar acea tranzacție rămâne **În așteptare**.
 - [ ] Nota plății este **Dr 512501 / Cr 4111**, cu data validării; contul 512501 are reconcilierea
       permisă, iar la reconcilierea extrasului se închide pe 5121.
 - [ ] Soldul 512501 la sfârșitul lunii corespunde decontărilor primite și încă nevirate de curieri;
@@ -325,7 +333,7 @@ cu eroare; reconcilierea extrasului bancar cu suma virată de curier; factura de
 | Comenzile ramburs din magazin se confirmă singure | **În așteptare** nu e bifat pe furnizor, sau e folosit furnizorul standard | Bifați **În așteptare**; dezactivați furnizorul standard |
 | Rambursul nu apare la checkout | Total sub **Valoare minimă**, produs din categorie fără ramburs, link de plată generat, sau furnizor nepublicat / pe altă companie | Verificați pragul, categoriile produselor, starea și compania furnizorului |
 | „The carrier does not support import for delivery type '…'" | Transportatorul ales nu are conector care citește decontul | Alegeți transportatorul corect (ex. GLS) sau introduceți rândurile manual |
-| Rândul decontului rămâne **Eroare** | Valoarea din decont diferă de suma tranzacției sau referința/AWB-ul nu se găsește | Verificați suma cu curierul; corectați referința în rând și validați din nou |
+| Rândul decontului rămâne **Eroare** | Valoarea din decont diferă de suma tranzacției, referința/AWB-ul nu se găsește, referința aparține unei tranzacții de alt tip (de exemplu card) sau unei tranzacții ramburs deja anulate sau confirmate | Verificați suma cu curierul; corectați referința în rând (trebuie să fie a unei tranzacții de ramburs încă deschise) și validați din nou |
 | Plata nu are notă contabilă | Metoda de plată din jurnal nu are **Conturi de încasări restante** | Completați contul 512501 pe metoda de plată a furnizorului, tabul **Plăți de Primit** al jurnalului |
 | Plata nu se poate potrivi cu extrasul bancar | Contul de încasări restante nu are **Permite reconciliere** | Bifați **Permite reconciliere** pe contul 512501 |
 
