@@ -205,11 +205,9 @@ Comenzile și produsele se actualizează prin webhook-urile Shopify (`orders/cre
 `orders/updated`, `orders/paid`, `orders/cancelled`, `products/update`, `products/create`), fără cron de așteptat.
 Exportul de stoc și de preț rulează pe acțiunile programate ale framework-ului comun
 (dezactivate implicit — vizibile în **Marketplace → Configurare → Acțiuni programate**, se
-activează de acolo), iar reînnoirea tokenului OAuth (**„Shopify: Reînnoiește token-urile de
-acces”**, la fiecare 23h, pentru backend-urile Dev Dashboard App) e o acțiune programată
-obișnuită, vizibilă doar în **Setări → Tehnic → Acțiuni planificate** (necesită modul dezvoltator) —
-nu apare în meniul Marketplace → Configurare → Acțiuni programate, care filtrează doar acțiunile
-numite „Marketplace: …”.
+activează de acolo). Tokenul OAuth al backend-urilor Dev Dashboard App nu are acțiune programată:
+se reînnoiește singur la primul apel către Shopify, când lipsește sau expiră în mai puțin de 30 de
+minute.
 
 Ce aduce `products/update` dintr-un produs modificat în Shopify depinde de comutatorul
 **Actualizare** de pe două item-uri din tab-ul Obiecte și de **Actualizează doar prețul** (tab
@@ -396,7 +394,7 @@ obiectul *Clienți*.
 | `sale` / `stock` / `account` | comanda de vânzare, mișcarea de stoc, factura rezultată — flux Odoo standard, neatins direct de acest modul | flux standard Odoo |
 
 Ce este automat: sincronizarea comenzilor/produselor prin webhook, exportul de stoc/preț pe
-cron-urile comune, reînnoirea tokenului OAuth.
+cron-urile comune; tokenul OAuth se reînnoiește singur la apelul API, fără acțiune programată.
 Ce rămâne manual: maparea inițială a depozitelor și listei de prețuri, configurarea fazelor de
 vânzare (tag-uri Shopify), verificarea periodică a webhook-urilor.
 
@@ -464,7 +462,7 @@ mesaj care spune că prețul nu a fost trimis și că cele două părți diferă
 | Produsul se importă, dar variantele lui nu (avertisment doar în log-ul serverului) | **Opțiuni ca atribute** e oprit, iar produsul are mai multe variante reale | Activați **Opțiuni ca atribute** pe backend și reimportați produsul |
 | O comandă nouă nu ajunge deloc în Odoo | Webhook `orders/create` lipsă sau expirat (Shopify a revocat/nu a găsit endpoint-ul) | **Verifică webhook-urile**, înregistrați ce apare ca **Lipsă**; între timp, rulați **Importă** manual pe cardul **Comandă de vânzare** |
 | Prețul exportat către Shopify nu se schimbă | Job în eroare (rate limit `429`/GraphQL `THROTTLED`) sau varianta nu are diferență de preț față de ultima exportare | Verificați job-urile eșuate din cardul kanban al backend-ului; exportul pornește doar pentru variante cu preț schimbat |
-| Token expirat brusc pe un backend Dev Dashboard App | Acțiunea programată „Shopify: Reînnoiește token-urile de acces” nu a rulat (dezactivată) | Verificați că acțiunea programată e activă; fiecare apel API reîmprospătează oricum tokenul dacă expiră în < 30 min |
+| Token expirat brusc pe un backend Dev Dashboard App | **ID client** sau **Secret client / Cheie API** lipsește de pe backend (tokenul e tratat ca static și nu se reînnoiește), ori reînnoirea la apelul API a eșuat (secret schimbat sau aplicație dezinstalată în Shopify) | Completați **ID client** și **Secret client / Cheie API** pe backend; dacă eroarea persistă, verificați în Shopify că aplicația e instalată și că secretul e cel actual, apoi apăsați **Testează conexiunea** |
 | Job eșuat „*Shopify rejected the fulfillment of order … (location …): …*” | Shopify a refuzat expedierea pe acea locație (de exemplu, cantitatea a fost deja marcată ca expediată manual în Shopify, sau comanda e închisă) | Citiți motivul din mesaj, corectați în Shopify sau în Odoo, apoi reporniți jobul (**Repune în coadă**); cantitățile deja expediate nu se trimit a doua oară |
 | Job eșuat „*Invalid fulfillment order line item quantity requested*” după regenerarea AWB-ului | Versiune a modulului anterioară 19.0.1.8.16: livrarea plecase deja în Shopify cu AWB-ul vechi, iar jobul AWB-ului nou a încercat o a doua expediere | Actualizați modulul și reporniți jobul (**Repune în coadă**): AWB-ul nou înlocuiește AWB-ul vechi pe expedierea existentă |
 | Mesaj în chatter-ul comenzii „*The tracking number … was NOT sent to Shopify: the transfer is already fulfilled there and no fulfillment matches the number sent before …*” | AWB-ul livrării s-a regenerat, iar conectorul nu știe ce expediere din Shopify să actualizeze: livrarea a plecat înainte de 19.0.1.8.16 și comanda are mai multe expedieri, sau nicio expediere nu mai are AWB-ul trimis anterior | În Shopify, deschideți comanda și puneți AWB-ul din mesaj pe expedierea livrării respective |

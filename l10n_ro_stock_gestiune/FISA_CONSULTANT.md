@@ -98,6 +98,7 @@ Roluri recomandate pentru testare:
 |---|---|
 | **371 / 301 / 302 / 303** | cont de stoc (debitat la recepție: contul categoriei produsului); contul propriu al gestiunii e folosit doar la transfer |
 | **408** | „Furnizori – facturi nesosite" — datoria estimată la recepția fără factură |
+| **327** | „Mărfuri în curs de aprovizionare" (grupa 32; la alte stocuri 321, 322, 323, 328) — contul ales de contabil pe factura venită înaintea mărfii; debitat din 401 la factură, creditat la recepție (Dr 371 / Cr 327); element de activ și nemonetar, fără diferență de curs (pasul 2b) |
 | **607** | partea din diferența de preț aferentă mărfii deja ieșite din stoc (FIFO/CMP, numai dacă e contul de cheltuială al produsului); câte o linie pe recepția căreia îi aparține |
 | **401** | datoria față de furnizor (la sosirea facturii) |
 | **308** | diferențe față de prețul standard, la cost standard: doar pentru materii prime, materiale consumabile și obiecte de inventar (301/302/303), după contul configurat pe categorie. La mărfuri (371) OMFP 1802/2014 nu are cont de diferențe față de prețul standard (378 ține adaosul comercial): se recomandă costul FIFO sau mediu |
@@ -275,6 +276,61 @@ Cazuri particulare (tratate automat, detaliate în „Note de monografie"):
 - **preț diferit pe factură**: diferența ajustează 371 (FIFO/CMP; partea aferentă cantității deja ieșite din stoc merge pe 607, numai dacă contul de cheltuială al produsului e 607; la 601/602 rămâne pe stoc; la produsele cu clasă de evaluare contul vine din regula OBYC `stock_receipt_price_difference`, vezi fișa `l10n_ro_stock_obyc`) sau merge pe contul de diferențe
   de preț la cost standard (308, la materii prime și materiale; la mărfuri se recomandă FIFO/CMP, pentru că 378 ține adaosul comercial).
 
+### Pasul 2b — Factura vine înaintea mărfii (cont 327 ales de contabil)
+
+Meniu: **Achiziții → Comenzi → Comenzi de achiziție** → comanda confirmată → **Creați facturi** (sau
+**Contabilitate → Furnizori → Facturi**). Pe factura în ciornă, în tab-ul **Linii factură**, coloana **Cont**
+de pe linia de produs; **Confirmă** abia după ce ați schimbat contul. Produsul trebuie să aibă politica de
+facturare *La cantitatea comandată* (altfel factura se poate crea doar după recepție).
+
+Când factura este postată **înainte** de recepție și marfa este deja a cumpărătorului (riscurile și
+beneficiile au trecut), contabilul schimbă pe linia de produs contul propus în **327 „Mărfuri în curs de
+aprovizionare"** (grupa 32, OMFP 1802/2014; pentru alte stocuri: 321, 322, 323, 328). Atâta timp cât
+linia nu are nicio recepție făcută, contul ales rămâne, nu se înlocuiește cu 408 la postare:
+
+- Factura: **Dr 327 = 1.000** + **Dr 4426 = 210** / **Cr 401 = 1.210**.
+- La recepție, nota creditează **contul din factură**, nu 408: **Dr 371 = 1.000** / **Cr 327 = 1.000**.
+  Contul 327 se stinge. La recepție parțială (4 din 10), creditul se ia din factură doar pentru cantitatea
+  recepționată (Dr 371 = 400 / Cr 327 = 400). Cantitatea recepționată peste cea facturată se creditează pe 408.
+![Factura înaintea mărfii, linia pe 327](screenshots/15_factura_inainte_de_marfa_327.png)
+
+![Recepția creditează 327](screenshots/16_receptie_pe_327.png)
+
+- **Mai multe facturi pe aceeași linie de comandă:** recepțiile se alocă facturilor în ordine
+  cronologică, după ce se scade cantitatea acoperită de recepțiile anterioare. Exemplu: factura 1 de 4 buc
+  pe 327 și factura 2 de 6 buc pe alt cont „în curs"; recepția de 10 buc creditează 327 cu 400 și celălalt
+  cont cu 600. Cantitatea recepționată peste cea facturată (6 facturate din 10) merge pe 408: Cr 327 = 600,
+  Cr 408 = 400, în aceeași notă.
+- **Factura în valută:** 327 și 371 sunt elemente nemonetare. Stocul intră la valoarea din factură, la
+  cursul facturii, fără diferență de curs la recepție (pct. 315, 319 OMFP 1802). Doar 401 se reevaluează
+  la sfârșit de lună și la plată (665/765). Pe 327, suma în valută se ia din factură, deci contul se
+  stinge și în valută chiar dacă prețul facturii diferă de cel al comenzii.
+- **Retur după recepție:** se contează **în roșu**, pe aceleași conturi: **Dr 371 −V / Cr 327 −V**
+  (stornare a recepției). „Dr 327 / Cr 371" în negru nu se folosește: 327 se debitează doar din 401. Se
+  face automat, chiar dacă firma nu folosește stornarea. Factura de stornare a furnizorului se
+  înregistrează separat (Dr 327 −V + Dr 4426 / Cr 401, în roșu).
+- Dacă recepția este deja făcută, linia se contează pe 408 ca în Pasul 2. Excepție: nota de credit a
+  facturii făcută **după retur** (stornarea ei) își păstrează contul ales, ca 327 să se stingă. Nota de credit
+  **fără retur** (de exemplu o reducere de preț) urmează regula din Pasul 2: se contează pe 408 și corectează
+  valoarea recepției, nu 327.
+- **Limitare:** la alocarea creditului pe facturi, marfa returnată nu se scade din recepțiile anterioare. Dacă
+  marfa returnată din 327 se relivrează, noua recepție o creditează pe 408, nu pe 327; regularizați manual.
+
+Atenție:
+1. **Riscurile:** 327 se folosește doar dacă riscurile și beneficiile au trecut la cumpărător (de exemplu
+   EXW, FCA). Dacă riscul rămâne la furnizor până la livrare (DAP, DDP), factura este în fapt un avans
+   (Dr 4091 / Cr 401): nu se folosește 327.
+2. **Corespondențe:** 327 se debitează doar din 401 și se creditează prin 371 (sau 30x, 361, 381). Marfa
+   venită fără factură rămâne pe 408 (Pasul 1).
+3. **TVA:** se deduce la data facturii, înainte de recepție (art. 297 alin. (1), art. 299 alin. (1) lit. a)
+   Cod fiscal). Excepții: furnizor cu TVA la încasare (4428), factură neprimită în RO e-Factura, achiziție
+   intracomunitară sau import.
+4. **Închiderea lunii și a anului:** soldul lui 327 se analizează pe furnizor și document; apare în bilanț
+   la Stocuri („Produse finite și mărfuri"). Marfa care nu mai vine (refuz, lipsă) se clarifică cu
+   furnizorul (factură de stornare), nu se lasă pe 327.
+5. **De verificat cu contabilul:** folosirea lui 327 în cursul lunii (nu doar la sfârșitul perioadei),
+   contul pentru pierderea în tranzit și procedura de inventariere a soldului 327.
+
 ### Pasul 3 — Returul către furnizor (storno în roșu)
 
 *Ramură a fluxului: returul presupune că factura nu a sosit încă (nota 371 = 408 e activă). Ca să nu
@@ -287,6 +343,10 @@ Nota `371 = 408` se **stornează în roșu** (OMFP 1802), proporțional cu valoa
 (4 × 100 = 400), astfel încât gestiunea și contul 408 scad împreună:
 
 - **Dr 371.1 = −400** / **Cr 408 = −400** (sume negative pe aceleași poziții).
+
+*Excepție:* dacă recepția a fost creditată pe un cont propriu al facturii (327, pasul 2b), returul se
+contează **mereu în roșu**, chiar dacă firma nu folosește stornarea, pe conturile notei de recepție
+(Dr 371 −400 / Cr 327 −400): 327 se debitează doar din 401, deci „Dr 327 / Cr 371" în negru nu se folosește.
 
 ![Nota de storno în roșu la retur furnizor](screenshots/05_storno_retur.png)
 
@@ -398,6 +458,8 @@ limitările).
 ### Note de monografie și raportare
 
 - Recepție fără factură: **Dr 371 = Cr 408** (la cursul recepției, pentru achiziții în valută).
+- Factură înaintea mărfii, cu cont ales de contabil: **Dr 327 + Dr 4426 = Cr 401**; la recepție **Dr 371 = Cr 327**
+  (cantitatea nefacturată: Cr 408); retur: **Dr 371 −V = Cr 327 −V**, în roșu (pasul 2b, aviz Pacioli).
 - Factură furnizor: **Dr 408 + Dr 4426 = Cr 401**; contul 408 se stinge prin document (fără
   reconciliere), cu valoarea creditată la recepție, proporțional cu cantitatea facturată.
 - Diferență de curs recepție↔factură (valută), recunoscută la primirea facturii: **Dr 408 = Cr 765**
@@ -438,7 +500,7 @@ limitările).
 
 ### Scenarii verificate (din teste)
 
-Comportamentul de mai jos este acoperit de `tests/test_rni.py`, `tests/test_notice.py`,
+Comportamentul de mai jos este acoperit de `tests/test_rni.py`, `tests/test_rni_currency.py`, `tests/test_notice.py`,
 `tests/test_stock_gestiune.py`, `tests/test_transfer_entry.py` (pe FIFO/CMP/standard) și
 `tests/test_ro_company.py` (firmă RO cu plan de conturi RO și storno); scenariile cu factură după vânzare sunt
 în `test_price_difference_sheet.py` din `l10n_ro_stock_pack_cmp` și `l10n_ro_stock_pack_fifo`:
@@ -465,8 +527,16 @@ Comportamentul de mai jos este acoperit de `tests/test_rni.py`, `tests/test_noti
 | Facturare parțială cu preț diferit | diferența se contează doar pentru cantitatea facturată |
 | Retur parțial (4 din 10) | storno roșu; 371 și 408 scad la 600 / -600 |
 | Retur total (10 din 10) | 371 = 0, 408 = 0 |
+| Factură înaintea recepției, cont propriu (327) pe linie | contul rămâne la postare (nu se rutează pe 408); recepția: `Dr 371 = Cr 327`; 327 se stinge |
+| Același caz, recepții parțiale (4 + 6) | `371 = 327` 400, apoi 600; 327 = 0 |
+| Același caz, recepție peste cantitatea facturată (6 din 10) | `Cr 327` 600 și `Cr 408` 400 în aceeași notă |
+| Două facturi pe conturi diferite, o recepție de 10 | creditul se împarte pe cele două conturi, proporțional cu cantitatea facturată |
+| Factură cu cont propriu, dar recepția deja făcută | linia se rutează pe 408, ca în pasul 2 |
+| Cont propriu, factură în valută la preț diferit de comandă | 327 se stinge și în RON, și în valută |
+| Retur după recepție creditată pe 327, firmă fără storno | tot în roșu: `Dr 371 −V / Cr 327 −V` |
 | Recepție fără factură dezactivată (companie) și fără aviz | nu se generează nicio notă RNI |
 | Aviz per-transfer, setarea de companie oprită | recepția marcată **Recepție pe aviz** generează `371 = 408` |
+| Aviz per-transfer, setarea de companie oprită, factură în valută la alt curs | ca și cu setarea pornită: stocul (și câmpul *Valoare* al mișcării de recepție, cel din fișa de magazie) rămâne la cursul recepției, diferența de curs merge pe 665/765 |
 | Aviz implicit pe tipul de operație | recepția din comanda de achiziție moștenește bifa și e rutată pe 408 |
 | Serviciu (non-stocabil) | exclus din mecanismul RNI |
 | Transfer aceeași gestiune / conturi identice | permis, fără notă |
@@ -509,11 +579,15 @@ Ce rămâne manual: configurarea conturilor pe gestiune/companie, verificarea so
 - [ ] O recepție direct într-o gestiune cu cont propriu diferit de contul categoriei e blocată.
 - [ ] Factura furnizorului contează linia pe 408, stinge contul 408 și, la prețul recepției, **nu** modifică valoarea stocului (la preț diferit, diferența ajustează 371 pentru cantitatea rămasă și merge pe 607 pentru cea ieșită).
 - [ ] Contul 408 se stinge și dacă nu are bifa „Permite reconcilierea" — mecanismul nu depinde de reconciliere.
-- [ ] La achiziție în valută, stocul rămâne la cursul recepției, iar diferența de curs apare pe 665/765, în negru pe latura normală (și pe firmele cu storno).
+- [ ] La achiziție în valută, stocul rămâne la cursul recepției, iar diferența de curs apare pe 665/765, în negru pe latura normală (și pe firmele cu storno). Același lucru e valabil și cu setarea de companie oprită, pentru recepțiile marcate **Recepție pe aviz**: câmpul *Valoare* al mișcării de recepție nu include diferența de curs.
 - [ ] Diferența de preț ajunge pe 308 (cost standard, după categorie, la materii prime și materiale) sau pe 371 (FIFO/CMP).
 - [ ] La FIFO/CMP, dacă o parte din marfă a ieșit deja din stoc la sosirea facturii, partea de diferență aferentă cantității ieșite merge pe 607, numai dacă acesta e contul de cheltuială al produsului (sau contul din regula OBYC `stock_receipt_price_difference`; la 601/602 rămâne pe stoc), iar 371 rămâne egal cu valoarea stocului fizic.
 - [ ] După factura sosită după o vânzare parțială, în *Elemente jurnal* apare pe 607 câte o linie pentru fiecare recepție cu parte consumată (numărul liniilor = numărul acestor recepții; legătura cu recepția nu se vede în *Elemente jurnal*); suma lor = partea aferentă cantității ieșite. Repartizarea se verifică în fișa de magazie, pe rândul fiecărei recepții: intrarea = valoarea facturii pe recepție − partea ei de pe 607. Resetarea facturii în ciornă șterge liniile, iar la repostare ele se refac (în fișa de magazie, intrarea recepției revine la valoarea nativă și apoi la valoarea scăzută).
 - [ ] Returul către furnizor generează storno în roșu, iar gestiunea și 408 scad cu aceeași sumă.
+- [ ] Factura înaintea mărfii: contul ales de contabil (327) rămâne pe linie după postare; dacă recepția e deja făcută, linia trece pe 408.
+- [ ] La recepția ulterioară, nota creditează contul din factură (nu 408), iar soldul lui 327 e 0 după recepția totală; la recepție parțială, pe 327 rămâne valoarea cantității nerecepționate.
+- [ ] Returul unei recepții creditate pe 327 e în roșu (`Dr 371 −V / Cr 327 −V`), chiar pe o firmă fără stornare.
+- [ ] Soldul lui 327 la sfârșit de lună se analizează pe furnizor și document; marfa cu riscul rămas la furnizor nu se ține pe 327 (avans, 4091).
 - [ ] Transferul direct A→B cu conturi diferite generează nota `371.2 = 371.1`, fără 481.
 - [ ] Transferul prin tranzit e blocat fără cont de tranzit pe locație (regula strictă) și, după configurare, trece prin 371.T, care se închide la zero la sosire.
 - [ ] După transfer, valoarea ieșită din contul gestiunii sursă = valoarea intrată în contul destinației; totalul stocului e neschimbat.
@@ -560,8 +634,10 @@ pe planul de conturi RO:
 12. `12_blocare_receptie_gestiune_b.png` — mesajul de blocare la recepția direct în Gestiunea B.
 13. `13_factura_diferenta_curs.png` — factura în EUR, firmă cu storno: `Dr 408 = Cr 765`, în negru. Se generează doar cu `purchase_stock` instalat.
 14. `14_factura_reducere_pret.png` — factura sub aviz, firmă cu storno: `371 = 408` în roșu pe ambele linii. Se generează doar cu `purchase_stock` instalat.
+15. `15_factura_inainte_de_marfa_327.png` — factura venită înaintea mărfii, cu 327 ales de contabil: `Dr 327 = 1.000`, `Dr 4426 = 210` / `Cr 401 = 1.210`. Se generează doar cu `purchase_stock` instalat.
+16. `16_receptie_pe_327.png` — nota de recepție care creditează 327: `Dr 371 = Cr 327`, 1.000. Se generează doar cu `purchase_stock` instalat.
 
-Capturile 09–14 sunt generate de `test_capture_fise_corecturi`, într-o tranzacție separată, deci nu
+Capturile 09–16 sunt generate de `test_capture_fise_corecturi`, într-o tranzacție separată, deci nu
 schimbă cifrele exemplului din secțiunea 6.
 
 Regenerare:
@@ -587,6 +663,18 @@ ieșirilor directe pe gestiunile cu cont propriu. Încheiați cu verificarea în
 
 ### Limitări cunoscute
 
+- **Factura înaintea mărfii (cont 327): retururile nu se scad la alocarea creditului pe facturi.** Dacă o
+  marfă recepționată pe 327 este returnată și apoi relivrată pe aceeași linie de comandă, noua recepție
+  creditează 408, nu 327: pe 327 rămâne un sold debitor, iar pe 408 unul creditor, de aceeași sumă. Valoarea
+  stocului (371) rămâne corectă; contrapartida se corectează manual cu **Dr 408 / Cr 327**. Soldul de pe 327
+  se vede la închiderea lunii (pasul 2b, avertismentul 4).
+- **Nota de credit după un retur parțial** (factura cu cont propriu, ex. 327): condiția verifică dacă linia are
+  *vreun* retur făcut, nu cât s-a returnat. Dacă s-au returnat 3 din 10 buc, iar nota de credit acoperă toată
+  factura sau e o reducere de preț, toată nota rămâne pe 327, iar 327 rămâne cu un sold nejustificat (creditor dacă nota depășește valoarea
+  returului). Împărțiți linia notei de credit: cantitatea returnată rămâne pe 327; restul merge pe 408
+  (anulare de facturare pentru marfa păstrată) sau pe diferența de preț (reducere), ca la pasul 2.
+- **Resetarea în ciornă a facturii după recepție** nu reface nota de recepție: nota rămâne creditată pe
+  contul din factură. Dacă factura se corectează, regularizați nota manual.
 - **Contul propriu al gestiunii e folosit doar la transfer.** Recepțiile, retururile, livrările și
   consumurile se contează pe contul categoriei produsului, deci pe o gestiune cu cont propriu diferit
   de al categoriei ele sunt blocate: marfa intră și iese doar prin transfer. O gestiune din care se

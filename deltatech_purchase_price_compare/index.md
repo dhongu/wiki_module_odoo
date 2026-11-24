@@ -2,9 +2,9 @@
 
 - **Nume Tehnic:** `deltatech_purchase_price_compare`
 - **Versiune:** `19.0.1.0.6`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_purchase_price_compare`
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_purchase_price_compare`
-- **Ultima Ingestie:** `2026-09-03`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_purchase_price_compare
+- **Cale Locală:** odoo-addons/bitshop/deltatech_purchase_price_compare
+- **Ultima Ingestie:** `2026-11-24`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -18,10 +18,10 @@ Modulul adaugă pe comanda de achiziție (`purchase.order`) un buton „Compare 
 - Detectarea prețurilor „derapate" — pentru furnizorul comenzii se afișează tariful curent, iar liniile la care prețul comenzii diferă de tariful actual al furnizorului sunt marcate.
 - Aplicare rapidă — scrie prețul ales înapoi pe liniile comenzii și, dacă toate liniile converg către un singur furnizor, actualizează și furnizorul comenzii.
 - Acces din `Purchase → Orders`, prin butonul „Compare supplier prices" din antetul comenzii de achiziție.
-- În grid, furnizorii apar ca și coloane; un clic pe o celulă selectează furnizorul respectiv pentru linie, iar furnizorul curent al comenzii este mereu vizibil, marcat cu eticheta „order".
+- În grid, furnizorii apar ca și coloane; un clic pe o celulă selectează furnizorul respectiv pentru linie (implicit se alege cel mai ieftin), iar furnizorul curent al comenzii este vizibil, marcat cu eticheta „order", ori de câte ori are o intrare în lista de prețuri pentru produsele comenzii.
 - Liniile ale căror preț de pe comandă diferă de tariful curent al furnizorului sunt evidențiate, cu un banner de avertizare în partea de sus care numără liniile afectate.
-- KPI-urile din dialog arată suma curentă a comenzii, suma optimizată (dacă s-ar aplica prețurile alese) și economia estimată.
-- Butonul „Apply selected prices to the order" scrie prețurile alese pe liniile comenzii și actualizează furnizorul comenzii dacă toate liniile converg spre același furnizor.
+- KPI-urile din dialog arată suma curentă a comenzii, suma optimizată (dacă s-ar aplica prețurile alese), economia estimată și procentul economiei; se recalculează la schimbarea furnizorului ales pe o linie.
+- Butonul „Apply selected prices to the order" scrie prețurile alese pe liniile comenzii (doar pe liniile cu furnizor ales) și actualizează furnizorul comenzii dacă toate liniile converg spre același furnizor, diferit de cel curent.
 - Conversie automată monedă/UM: prețul din `product.supplierinfo` (exprimat în moneda și UM-ul furnizorului) este convertit în moneda comenzii (la data `date_order`) și în UM-ul liniei înainte de comparație.
 
 #### 3. Dependențe

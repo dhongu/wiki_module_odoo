@@ -128,6 +128,13 @@ Nota de închidere nu primește distribuție analitică: modelele de distribuți
 conturi (de exemplu 628 → Subcontractori) nu se aplică pe liniile ei, deci nota nu generează linii
 analitice. Rapoartele analitice ale perioadei închise rămân cele din documentele originale.
 
+Nota de închidere este datată la ultima zi a perioadei, chiar dacă declarația fiscală (D300) a unei
+luni ulterioare a fost deja validată. Validarea D300 setează data de blocare a declarației fiscale
+(**Blochează declarația fiscală**), dar nota P&L nu conține TVA, deci această blocare nu i se aplică:
+nota nu este mutată pe data curentă și nu apare mesajul de blocare fiscală. Blocarea exercițiului
+financiar și blocarea definitivă se aplică în continuare: dacă perioada este blocată prin una
+dintre ele, deblocați-o înainte de închidere.
+
 **Nota contabilă generată** — fiecare cont 6xx/7xx are linia proprie de închidere și o linie
 corespondentă pe 121 (în exemplu: 601 creditat 6.000, 701 debitat 10.000 → profit 4.000 pe 121):
 
@@ -172,13 +179,17 @@ Un return care are notă de închidere nu se poate șterge: sistemul afișează 
 „Resetați închiderea înainte de ștergere.” Apăsați întâi **Reset**, care șterge sau stornează nota,
 apoi ștergeți return-ul. Astfel nu rămâne în contabilitate o notă postată fără legătură cu închiderea.
 
+Reset și rerularea funcționează și pentru o lună deja acoperită de blocarea declarației fiscale
+(după validarea D300): nota se șterge sau se stornează, iar nota nouă se postează tot la ultima zi a
+perioadei.
+
 ## 7. Legături cu alte module / declarații
 
 | Modul / proces | Rol în flux |
 |---|---|
 | `account_reports` | infrastructură `account.return` și checks de închidere |
 | `l10n_ro_period_close_enhanced` | checklist general de închidere perioadă |
-| `l10n_ro_anaf_d300` | D300 trebuie finalizat înainte de închiderea completă a lunii |
+| `l10n_ro_anaf_d300` | D300 trebuie finalizat înainte de închiderea completă a lunii; validarea lui setează blocarea declarației fiscale, care nu se aplică notei P&L (nota rămâne la ultima zi a perioadei) |
 | `l10n_ro_financial_statements` | soldul contului 121 intră în raportarea financiară |
 
 Ce este automat: calculul rezultatului și nota de închidere 6xx/7xx în 121.
@@ -198,6 +209,8 @@ Ce rămâne manual: validarea ordinii operațiunilor lunare și rerularea după 
 - [ ] `Reset` elimină nota generată și permite rerularea fluxului.
 - [ ] Ștergerea unui return cu notă de închidere este refuzată cu mesajul „Resetați închiderea înainte de ștergere.”; după `Reset`, return-ul se poate șterge.
 - [ ] Cu un model de distribuție analitică pe un cont 6xx/7xx, liniile notei de închidere nu au distribuție analitică și nu apar linii analitice noi.
+- [ ] Cu **Blochează declarația fiscală** setată după perioada închisă (de exemplu după validarea D300 pe luna următoare), nota de închidere se postează la ultima zi a perioadei, fără mesaj de blocare, iar `Reset` o șterge sau o stornează.
+- [ ] Cu blocarea exercițiului financiar sau blocarea definitivă peste perioadă, închiderea respectă în continuare aceste blocări.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -209,6 +222,7 @@ Ce rămâne manual: validarea ordinii operațiunilor lunare și rerularea după 
 | Cont 711 rămâne neînchis | Contul are sold invers și nu este în bypass | Adăugați `711` în **Bypass Closing Side Check Accounts** |
 | Nu se poate finaliza return-ul | Nota de închidere lipsește sau nu este postată | Rulați `Review` / `Validate` înainte de `Submit` |
 | Resetați închiderea înainte de ștergere. | Return-ul are notă de închidere generată | Apăsați **Reset**, apoi ștergeți return-ul |
+| Nota de închidere primește data curentă în loc de ultima zi a perioadei | Perioada este acoperită de blocarea exercițiului financiar sau de blocarea definitivă (blocarea declarației fiscale nu mai are acest efect) | Deblocați perioada, apăsați **Reset** și rerulați închiderea |
 
 ## 10. Capturi de ecran
 

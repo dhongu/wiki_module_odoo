@@ -1,11 +1,11 @@
-# Romania - Retururi POS
+# Romania - Retururi POS (localizat la `l10n_ro_pos_returns/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_pos_returns`
 - **Versiune:** `19.0.1.1.11`
-- **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_returns](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_returns)
-- **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_pos_returns`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_pos_returns
+- **Cale Locală:** odoo-addons/l10n_ro_ent/l10n_ro_pos_returns
+- **Ultima Ingestie:** `2026-11-24`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
-- **Ultima Ingestie:** `2026-09-11`
 
 #### 1. Sumar
 
@@ -22,11 +22,20 @@ Modulul tratează returul din comerțul cu amănuntul așa cum îl cere legisla�
 - **Filtrele „Returns" și „Returns without Invoice"** pe comenzile POS, pentru inventarierea situației.
 - **Dispoziția de plată din bonul de retur**, când e instalat modulul de casierie: butonul întocmește documentul pe casieria bonului, cu numerarul efectiv restituit.
 - Interfață tradusă în română (`i18n/ro.po`).
+- **Setări per punct de vânzare** (**Punct de vânzare → Configurare → Setări**, secțiunea **RO Return Invoicing**; repetate pentru fiecare casă): **Automatic Return Invoice** (emiterea facturii la fiecare bon de retur; oprită implicit), **Customer Required on Returns** (activă implicit; blochează finalizarea unui retur fără cumpărător) și **Return Invoice Journal** (gol = jurnalul de facturi al punctului de vânzare, care trebuie să existe, cerință a nucleului POS). **Atenție la combinație:** cu prima oprită și a doua pornită (starea implicită), casa blochează retururile fără client fără să emită vreo factură — se pornesc ambele (recomandat) sau se opresc ambele.
+- **Separarea încasărilor de restituiri** se activează la nivel de companie, în **Contabilitate → Configurare → Setări**, secțiunea **RO Cash Register** → **Split POS Cash Receipts and Returns**; activă implicit la instalare, se aplică sesiunilor închise după activare (cele deja închise păstrează linia netă).
+- **Clientul anonim**: contactul care ține locul cumpărătorului anonim se desemnează **partener generic** al companiei, cu modulul de partener generic al suitei (setările de contabilitate → Partener generic); rămâne utilizabil la vânzare, dar e refuzat la retur. Fără acel modul, verificarea se reduce la datele de identificare ale contactului ales.
+- **Verificare**: în **Punct de vânzare → Comenzi**, filtrul **Returns without Invoice** trebuie să rămână gol în funcționare normală; ce apare acolo are nevoie de atenție (retururi fără cumpărător identificat sau bonuri venite prin sincronizare offline). Emiterea în lot se rulează din **Acțiuni → Emite facturile de retur**, iar notificarea spune câte facturi s-au emis și câte bonuri au fost sărite (fără cumpărător, contact incomplet, bon nefinalizat, deja facturat sau fără jurnal de facturi pe casă).
+- **Panglica „Inversat"** de pe factura de retur nu înseamnă anulare: Odoo o afișează după ce documentul a fost stins integral prin plata de pe bon. La un retur introdus prin butonul de retur al POS-ului, în **Termeni și condiții** apare trimiterea la bonul stornat.
+- **Transmitere în SPV**: pentru facturile de retur către persoane fizice se instalează și modulul de e-Factura B2C, care completează CNP-ul în XML-ul CIUS-RO.
+- **Incompatibil cu `l10n_ro_pos_refund` (OCA)** (`excludes` în manifest): ambele emit factura storno și scriu restituirea pe linie proprie de casă, deci împreună ar dubla documentele.
 
 #### 3. Dependențe
 
 - `point_of_sale`
 - `l10n_ro`
+
+Manifestul declară și `excludes: l10n_ro_pos_refund` (vezi mai sus).
 
 #### 4. Componente Cheie
 

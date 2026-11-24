@@ -1,10 +1,10 @@
 # Marketplace Base Connector (localizat la `deltatech_marketplace/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace`
-- **Versiune:** `19.0.1.43.6`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace`
-- **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace`
-- **Ultima Ingestie:** `2026-11-20`
+- **Versiune:** `19.0.2.3.1`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace
+- **Cale Locală:** odoo-addons/bitshop_marketplace/deltatech_marketplace
+- **Ultima Ingestie:** `2026-11-24`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -22,7 +22,10 @@ Marketplace Base Connector este modulul de bază al familiei de module marketpla
 - Produs pentru comision (*Fee Product*) — în ciuda etichetei, nu e comisionul platformei: e produsul cu care conectorul WooCommerce adaugă pe comanda clientului taxele/suprataxele din magazin (venit facturat clientului). Comisionul platformei vine pe factura de furnizor a platformei.
 - Asistent de sincronizare la cerere pe produs (export/import, tot/stoc/preț), pentru un produs urgent între două rulări.
 - Jurnal centralizat al operațiunilor de marketplace (stoc, preț, import, export, webhook, limitare), cu stare de sănătate per backend (Neconfirmat / Erori / Avertismente / În regulă) și curățare automată după un număr configurabil de zile.
-- Coadă de joburi (`queue_job`), cu canale proprii per backend și reîncercare automată a joburilor eșuate.
+- Coadă de joburi, cu canale proprii per backend și reîncercare automată a joburilor eșuate. Din 19.0.2.0.0 modulul **nu mai depinde de `queue_job`**: rulează pe motorul de joburi pe care îl are baza de date — `queue_job` (OCA) sau *Background Jobs* (`deltatech_background_job`, funcționează și pe odoo.sh) —, prin `marketplace.job.adapter`, implementat de câte o punte per motor (`deltatech_marketplace_queue_job`, `deltatech_marketplace_background_job`), instalată automat odată cu motorul. Funcțiile de job sunt declarate o singură dată ca înregistrări `marketplace.job.spec`, iar excepțiile de job vin din `deltatech_marketplace.jobs`.
+- Alegerea motorului de joburi: *Setări > Marketplace > Job engine* (*Background Jobs* sau `queue_job`); pe odoo.sh pagina recomandă *Background Jobs*, iar ieșirea din motorul instalat e refuzată cât timp există joburi în așteptare sau în rulare. Fără motor, setările și formularul fiecărui backend afișează un avertisment (cu link către setare): sincronizările nu rulează.
+- Retenția jurnalului: *Setări > Marketplace > Log* — câte zile se păstrează jurnalul (implicit 90, 0 = pentru totdeauna), cu link către jurnal; editează parametrul de sistem existent `marketplace.log.retention_days`.
+- Sesiune HTTP per fir de execuție (`http_session`, cu semnăturile din `requests`), refolosită de conectori și de descărcarea imaginilor (`load_image_from_url`): reutilizează conexiunea HTTPS către platformă în loc de un handshake TLS la fiecare apel. Sesiunea nu păstrează cookie-uri (cele ale unui magazin sau ale unui host de imagini nu ajung la alt apel); un apel a cărui conexiune a fost închisă de server este retrimis o singură dată, doar când serverul nu l-a putut procesa (resetul după trimitere se reîncearcă doar pentru GET, PUT și DELETE); timeout-urile, conexiunile refuzate și corpurile transmise în flux nu se reîncearcă.
 - Mapare produse existente (**Map Products**, din meniul cardului *Produse* al backend-ului, și **Map in Marketplace** din meniul *Acțiune* al produselor): leagă produsele Odoo de ofertele din magazin după referință internă și cod de bare, în joburi de câte 100, fără a importa nimic (produsul Odoo își păstrează numele, prețul și codurile); conflictele de cod sunt raportate. Apare doar pe backend-urile ai căror conectori implementează căutarea după produse.
 - Asocierile duplicate sunt semnalate (câmp `duplicate_mapping`, în roșu în liste, cu filtru dedicat pe categorii) pentru categorii, atribute, valori de atribut și liste de prețuri.
 - Imaginea principală se descarcă doar când se schimbă linkul ei (linkul ultimei descărcări e ținut pe asociere), iar o descărcare eșuată nu mai șterge imaginea existentă.
@@ -51,7 +54,6 @@ Marketplace Base Connector este modulul de bază al familiei de module marketpla
 - `product`
 - `account`
 - `stock`
-- `queue_job`
 - `base_address_extended`
 - [deltatech_partner_match](../deltatech_partner_match/index.md)
 
@@ -65,7 +67,8 @@ Conform fluxului de ingestie, secțiunile 1–2 provin din `readme/DESCRIPTION.m
 - `marketplace.product` / `marketplace.product.template`: asocierile (bindings) dintre variantele/șabloanele Odoo și ofertele din magazin, cu stoc, preț, categorie marketplace, comision.
 - Asocieri pentru clienți, categorii, atribute, valori, etichete, liste de prețuri, depozite, limbi, țări, județe, monede, furnizori și stoc (`binding_*.py`).
 - `marketplace.log` (`marketplace_log.py`): jurnalul centralizat al operațiunilor.
-- `rate_bucket.py`: găleți pentru limitarea ratei API; `queue_job.py`: extensii pentru coada de joburi.
+- `rate_bucket.py`: găleți pentru limitarea ratei API.
+- `marketplace.job.adapter` (`job_adapter.py`): interfața către motorul de joburi, implementată de puntea fiecărui motor; `marketplace.job.spec` (`job_spec.py`, date în `data/job_spec.xml`): funcțiile de job, copiate de punte în motor. `jobs.py` conține excepțiile de job, recunoscute de ambele motoare; `http_session.py` — sesiunea HTTP per fir.
 - Extensii pe `account.tax` (mapare TVA), `product.product`, `product.template`, `res.partner`, `stock.move`.
 
 **Vizualizări**
@@ -95,5 +98,7 @@ Modulul servește ca fundație pentru un ecosistem complet de management al mark
 - [deltatech_marketplace_opencart](../deltatech_marketplace_opencart/index.md): conector pentru platforma OpenCart.
 - [deltatech_marketplace_doraly](../deltatech_marketplace_doraly/index.md): conector pentru platforma Doraly.
 - [deltatech_marketplace_odoo](../deltatech_marketplace_odoo/index.md): conector pentru sincronizare Odoo-la-Odoo.
+
+Puntea către motorul de joburi: `deltatech_marketplace_queue_job` (pentru `queue_job`) sau `deltatech_marketplace_background_job` (pentru `deltatech_background_job`) — un singur motor per bază de date.
 
 Alte module marketplace care se sprijină pe această fundație: [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md) (comenzile), [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md) (plățile), [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md) (livrarea) și [deltatech_marketplace_website](../deltatech_marketplace_website/index.md) (categoriile publice).

@@ -43,9 +43,14 @@ implicat:
 - **date de conectare**: URL instanță, bază de date, utilizator, parolă (câmpuri moștenite din
   `marketplace.backend`) + câmpurile specifice `odoo_database`, `odoo_version`;
 - **legături cu parteneri**: `odoo_supplier_id` (furnizorul, pentru integrare B2B unde comanda de
-  vânzare a partenerului devine comandă de achiziție la noi) și `odoo_customer_id`;
+  vânzare a partenerului devine comandă de achiziție la noi) și `odoo_customer_id` (păstrat în
+  formular, dar nefolosit de cod: completarea lui nu are efect);
 - pentru integrarea B2B (`odoo_integration_b2b`) se folosesc și `odoo_id_partner` / `odoo_id_pricelist`
-  — utilizatorul/lista de preț din instanța la distanță, citite automat la inițializare.
+  — partenerul și lista de prețuri din instanța la distanță. Se citesc la butonul **Importă datele de
+  bază** din antetul backend-ului, nu automat; fără ele, comanda trimisă pleacă fără partener și fără
+  listă de prețuri;
+- pentru integrarea B2B, un token: instanța la distanță acceptă comenzile doar cu **Token de
+  securitate** al unui backend propriu, copiat local în **Token de acces**.
 
 Date minime pentru demo: două instanțe Odoo accesibile (poate fi și aceeași bază, cu un al doilea
 utilizator), un utilizator API valid pe instanța la distanță, câteva produse/parteneri de test acolo.
@@ -55,27 +60,37 @@ utilizator), un utilizator API valid pe instanța la distanță, câteva produse
 1. Instalați modulul `deltatech_marketplace_odoo` (instalează automat și dependențele:
    `deltatech_marketplace`, `deltatech_marketplace_website`, `deltatech_marketplace_sale`,
    `deltatech_marketplace_purchase`, `deltatech_marketplace_payment`).
-2. Creați un backend nou în **Marketplace → Backends** și alegeți furnizorul **Odoo**.
+2. Creați un backend nou în **Marketplace → Backend-uri** și alegeți furnizorul **Odoo**.
 3. Completați URL-ul instanței la distanță (câmpul `location`), numele bazei de date
-   (`odoo_database`), utilizatorul și parola de conectare, versiunea Odoo a instanței la distanță
-   (`odoo_version`).
-4. Dacă integrarea este de tip B2B (comenzile clientului devin comenzi de vânzare pe instanța la
-   distanță), bifați `odoo_integration_b2b` și completați `odoo_supplier_id`/`odoo_customer_id`.
-5. Testați conexiunea (buton de test conexiune al backend-ului) — verifică credențialele prin login
-   XML-RPC.
-6. Configurați tipurile de articole de sincronizat (categorii, produse, clienți, comenzi) în tab-ul
-   de articole al backend-ului, cu domeniile și câmpurile suplimentare dorite.
+   (`odoo_database`), utilizatorul și parola de conectare și versiunea Odoo a instanței la distanță
+   (`odoo_version`; contează doar pentru instanțele 11.0 sau mai vechi, iar lista merge până la 18.0:
+   pentru o instanță 19.0 alegeți 18.0).
+4. Dacă integrarea este de tip B2B (comenzile de achiziție locale devin comenzi de vânzare pe instanța
+   la distanță), bifați `odoo_integration_b2b` și completați `odoo_supplier_id` (`odoo_customer_id`
+   nu are efect).
+5. Apăsați **Testează conexiunea** — verifică credențialele prin login XML-RPC.
+6. Apăsați **Importă datele de bază**: citește partenerul și lista de prețuri ale utilizatorului API
+   de pe instanța la distanță, necesare comenzilor B2B.
+7. **Pe instanța la distanță** (doar pentru B2B): instalați același modul, creați un backend cu
+   furnizorul **Odoo** și copiați valoarea câmpului **Token de securitate** al acelui backend în câmpul
+   **Token de acces** al backend-ului local. Fără el, comenzile trimise sunt refuzate cu „Token invalid”.
+8. Configurați tipurile de articole de sincronizat (categorii, produse, clienți, comenzi) în tab-ul
+   de articole al backend-ului, cu domeniile și câmpurile suplimentare dorite. Articolul **Listă de
+   prețuri** nu se creează automat: adăugați-l de mână, dacă importați liste de prețuri. Ca starea
+   comenzii de achiziție să ajungă pe instanța la distanță, bifați **Activ la scriere** pe articolul
+   comenzilor de achiziție.
+9. Joburile de import și export rulează prin motorul de joburi al bazei, *Background Jobs*
+   (`deltatech_background_job`) sau `queue_job`, cu puntea lui spre marketplace, instalată singură.
 
 ## 6. Flux de utilizare
 
 ### Pasul 1 — Configurarea backend-ului Odoo
 
-Accesați **Marketplace → Backends**, creați o înregistrare cu furnizorul **Odoo** și completați
+Accesați **Marketplace → Backend-uri**, creați o înregistrare cu furnizorul **Odoo** și completați
 câmpurile adăugate de acest modul: bază de date, versiune Odoo, integrare B2B, furnizor/client
 asociat. Aceste câmpuri apar în formularul standard de backend, în grupul „Provider details".
 
-> Notă: fișa nu conține capturi de ecran deoarece acestea nu au fost încă generate — vezi
-> secțiunea 10.
+> Notă: fișă simplă (`consultant_sheet: "simple"`), fără capturi de ecran.
 
 ### Pasul 2 — Import date de bază (categorii, atribute, țări/județe, clienți)
 
@@ -84,6 +99,10 @@ Din backend rulați acțiunile de import pentru categorii de produs, atribute cu
 importul unui client cu partener-părinte, părintele este importat automat dacă lipsește).
 
 ### Pasul 3 — Import produse (șabloane + variante) și imagini
+
+Dacă produsele există deja în ambele instanțe, mapați-le întâi, din meniul cardului **Produse** →
+**Mapează produsele**: legătura se face după codul intern sau codul de bare, fără să se creeze
+produse noi.
 
 Rulați importul de șabloane de produs (`product.template`) — acesta importă automat categoria,
 atributele/valorile și, pentru fiecare variantă, articolul corespunzător. Dacă integrarea este B2B,
@@ -94,7 +113,8 @@ produs pot fi importate separat, legate de șablonul deja importat.
 
 Importul unei liste de preț (`product.pricelist`) aduce și liniile acesteia (`product.pricelist.item`),
 rezolvând automat legăturile către produs/șablon/categorie sau altă listă de bază; liniile pentru
-produse inactive în instanța locală sunt sărite.
+produse inactive în instanța locală sunt sărite. Articolul **Listă de prețuri** se adaugă de mână în
+tab-ul de articole al backend-ului (vezi secțiunea 5).
 
 ### Pasul 5 — Export comenzi (flux B2B)
 
@@ -103,15 +123,15 @@ ei corespunde cu `odoo_supplier_id` al unui backend Odoo B2B, modulul creează a
 asincron, o comandă de vânzare în instanța la distanță (`sale.order` creat prin `create_api`),
 cu liniile de produs mapate prin codul extern. Dacă produsul nu are încă legătură cu instanța la
 distanță, este căutat și importat automat după cod (`default_code`) înainte de a fi folosit pe linia
-comenzii. Similar, o comandă de vânzare locală confirmată (`sale.order.button_confirm`), pentru
-partenerul-furnizor configurat, este exportată ca și comandă către backend.
+comenzii. Exportul există doar pe partea de achiziție: o comandă de vânzare locală confirmată nu se
+trimite către instanța la distanță.
 
 ### Pasul 6 — Sincronizarea mesajelor și a stării comenzii
 
-Mesajele postate în chatter-ul comenzii (note, atașamente) sunt propagate către comanda
-corespunzătoare din instanța la distanță prin joburi asincrone. Modificările de stare relevante
-(`state`) sunt de asemenea trimise către cealaltă instanță prin metodele API expuse
-(`write_api`/`message_post_api`), astfel încât ambele părți văd statusul actualizat al comenzii.
+Mesajele postate în chatter-ul comenzii de achiziție (note, atașamente) sunt propagate, prin joburi
+asincrone, către comanda de vânzare corespunzătoare din instanța la distanță; în sens invers, mesajele
+nu se propagă. Starea comenzii de achiziție (`state`) se trimite tot spre instanța la distanță
+(`write_api`), doar dacă articolul comenzilor de achiziție are bifat **Activ la scriere**.
 
 ### Note de monografie și raportare
 
@@ -127,26 +147,29 @@ instanță urmează propria lor contabilizare, conform localizării fiecărei in
 | `deltatech_marketplace_sale` | modelul `marketplace.sale.order`, extins de acest conector | dependență (manifest) |
 | `deltatech_marketplace_purchase` | modelul `marketplace.purchase.order`, extins de acest conector | dependență (manifest) |
 | `deltatech_marketplace_payment` | metode de plată marketplace, folosite la exportul comenzilor | dependență (manifest) |
-| `queue_job` | execuția asincronă a importurilor/exporturilor (`with_delay`) | dependență indirectă (prin `deltatech_marketplace`) |
-| `sale` / `purchase` | comenzile locale ale căror confirmări declanșează exportul către instanța la distanță | integrare prin hook pe `button_confirm` |
+| *Background Jobs* (`deltatech_background_job`) sau `queue_job` | motorul de joburi: execuția asincronă a importurilor/exporturilor (`with_delay`) | prin puntea `deltatech_marketplace_background_job` / `deltatech_marketplace_queue_job`, instalată singură cu motorul |
+| `purchase` | comenzile de achiziție locale a căror confirmare declanșează exportul către instanța la distanță | integrare prin hook pe `button_confirm` |
 
 Ce este automat: importul cu rezolvarea automată a legăturilor lipsă (categorie, atribute, părinte),
-exportul comenzilor la confirmare, sincronizarea mesajelor și a stării comenzii.
+exportul comenzilor de achiziție la confirmare, propagarea mesajelor și a stării lor.
 Ce rămâne manual: configurarea inițială a backend-ului (credențiale, tip integrare, furnizor/client
 asociat), alegerea articolelor de sincronizat și verificarea periodică a jurnalului de erori
-(`Marketplace → Logs`).
+(**Marketplace → Jurnale**).
 
 ## 8. Verificări pentru consultant
 
 - [ ] Modulul se instalează fără erori pe baza demo (împreună cu dependențele marketplace).
 - [ ] Testul de conexiune al backend-ului „Odoo" reușește cu credențialele configurate.
 - [ ] Importul de categorii/atribute/produse aduce datele așteptate din instanța la distanță.
-- [ ] La confirmarea unei comenzi de achiziție/vânzare cu partenerul configurat ca
-      furnizor/client marketplace, apare automat un job de export în coadă (`Marketplace → Crons`
-      / jobul `queue_job`).
-- [ ] Jurnalul marketplace (`Marketplace → Logs`) nu conține erori nerezolvate după rularea
+- [ ] La confirmarea unei comenzi de achiziție cu furnizorul configurat pe backend, apare automat un
+      job de export în lista de joburi a motorului (*Procese în execuție → Joburi* la *Background
+      Jobs*, *Queue Jobs* la `queue_job`), iar pe instanța la distanță apare comanda de vânzare.
+- [ ] După **Importă datele de bază**, comanda de vânzare creată pe instanța la distanță are
+      partenerul și lista de prețuri ale utilizatorului API.
+- [ ] Jurnalul marketplace (**Marketplace → Jurnale**) nu conține erori nerezolvate după rularea
       fluxului complet.
-- [ ] Mesajele postate pe comandă apar și în instanța la distanță (flux B2B).
+- [ ] Mesajele postate pe comanda de achiziție apar și pe comanda de vânzare din instanța la distanță
+      (flux B2B).
 
 ## 9. Mesaje de eroare frecvente
 
@@ -156,14 +179,12 @@ asociat), alegerea articolelor de sincronizat și verificarea periodică a jurna
 | „Marketplace X login: …" | Autentificare XML-RPC eșuată (parolă schimbată, cont blocat) | Reintroduceți parola pe backend — la schimbare, conexiunea salvată (`odoo_id_connection`) este resetată automat |
 | „Marketplace X error at call model.method: …" | Metoda apelată nu există sau nu are drepturi pe instanța la distanță (versiune API diferită) | Verificați versiunea Odoo a instanței la distanță (`odoo_version`) și drepturile utilizatorului API |
 | „Product … not found in …" | Produsul de pe linia comenzii exportate nu are cod (`default_code`) recunoscut în instanța la distanță | Verificați că produsul are cod și există (sau poate fi creat) pe cealaltă instanță |
-| Eroare de conexiune / timeout (job reîncercat automat) | Instanța la distanță este indisponibilă temporar sau rețeaua e instabilă | Așteptați reîncercarea automată a jobului (`queue_job`); verificați accesibilitatea URL-ului |
+| „Token invalid” la exportul comenzii | **Token de acces** al backend-ului local nu e **Token de securitate** al unui backend Odoo de pe instanța la distanță | Copiați tokenul de pe backend-ul instanței la distanță în **Token de acces** (secțiunea 5, pasul 7) |
+| Eroare de conexiune / timeout (job reîncercat automat) | Instanța la distanță este indisponibilă temporar sau rețeaua e instabilă | Așteptați reîncercarea automată a jobului de către motorul de joburi; verificați accesibilitatea URL-ului |
 
 ## 10. Capturi de ecran
 
-Fișa nu are încă generate capturi de ecran — folderul `readme/screenshots/` nu există pentru acest
-modul. Recomand rularea skill-ului `fisa-screenshots` pentru a genera capturile pașilor de mai sus
-(configurare backend, import produse/liste de preț, jurnal de sincronizare, comandă exportată),
-numite în ordine `01_...` … `06_...`, corespunzător pașilor din secțiunea 6.
+Fișă simplă (`consultant_sheet: "simple"`), fără capturi de ecran.
 
 ## 11. Observații pentru manual
 

@@ -3,8 +3,8 @@
 - **Nume Tehnic:** `deltatech_delivery_postis`
 - **Versiune:** `19.0.1.0.7`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_postis
-- **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_postis`
-- **Ultima Ingestie:** `2026-09-03`
+- **Cale Locală:** odoo-addons/bitshop_delivery/deltatech_delivery_postis
+- **Ultima Ingestie:** `2026-11-24`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -25,7 +25,10 @@ Modulul conectează Odoo la Postis, platforma românească de management al livr
 - Opțiuni avansate de expediere: ramburs (COD, cu comutarea automată a tipului de plată Postis), valoare declarată (asigurare) per colet, expediere cu mai multe colete (greutatea repartizată pe colete), plătitor expeditor sau destinatar, ridicare de la o adresă înregistrată la Postis (trimisă prin referința ei Postis)
 - Reîncercări sigure: un răspuns pierdut la crearea sau anularea AWB-ului este raportat ca rezultat incert, nu ca eroare simplă, astfel încât apăsarea repetată a butonului nu poate rezerva un al doilea AWB pentru același colet
 - Ce NU acoperă integrarea (declarat explicit ca lipsă, nu ca bug): generare AWB în format ZPL sau HTML, listă de lockere sau puncte de ridicare, raport de decontare ramburs (COD settlement), expediere cu dimensiuni, opțiune livrare sâmbăta, opțiune „colet deschis", notă de restituire în AWB, trimitere id de locker în AWB
-- Postis publică un singur gateway — nu există un host de test separat; contul demo este accesat la aceeași adresă, cu credențiale demo. Debifarea „Production Environment" pe metoda de livrare NU ține un apel departe de contul live — doar credențialele fac asta
+- Postis publică un singur gateway — nu există un host de test separat; contul demo este accesat la aceeași adresă, cu credențiale demo. Comutarea metodei de livrare pe „Test Environment" NU ține un apel departe de contul live — doar credențialele fac asta
+- Configurare: în *Inventory > Configuration > Delivery Methods* se creează o metodă de livrare cu furnizorul **Postis**; în pagina „Postis Configuration" se introduc utilizatorul, parola și ID-ul clientului, se alege **serviciul** (curierul folosit de metodă — se creează câte o metodă de livrare per curier oferit), plătitorul expedierii, metodele de plată tratate ca ramburs și adresa de ridicare înregistrată la Postis
+- Flux de utilizare: costul de transport se adaugă pe comanda de vânzare (prețul e cotat prin Postis pentru curierul ales); pe comanda de livrare, la validare, se generează AWB-ul (numărul și eticheta PDF vin de la Postis și se atașează comenzii); starea expedierii se citește de la Postis până la livrare; anularea se face din AWB, pe comanda de livrare
+- Date trimise către Postis la fiecare expediere: numele, adresa și telefonul destinatarului, coletele (greutate, valoare declarată), suma ramburs și adresa de ridicare
 
 #### 3. Dependențe
 
@@ -38,7 +41,7 @@ Modulul conectează Odoo la Postis, platforma românească de management al livr
 **Modele**
 
 - `delivery.carrier` (extins): metode de dispecerizare Postis — `postis_login`, `postis_rate_shipment`, `postis_send_shipping`, `postis_get_label`, `postis_get_label_filename`, `postis_get_tracking_link`, `postis_cancel_shipment`, `postis_get_status_history`, `postis_import_carrier_city`, `_postis_api_capabilities` (declară ce operații suportă integrarea, astfel încât butoanele pentru operații pe care Postis nu le poate face nu mai sunt oferite)
-- `delivery.carrier.service` (extins): serviciile de curierat Postis (Cargus, GLS, DPD, Sameday, Nemo, DHL, FUN) importate ca înregistrări cu `delivery_type = "postis"`
+- `delivery.carrier.service` (extins): serviciile de curierat Postis (Cargus, GLS, DPD, Sameday, Nemo, DHL, FAN) importate ca înregistrări cu `delivery_type = "postis"`
 - `res.country` / `res.country.state` / `res.city` (extinse): câmpul `postis_id` pentru mapare pe nomenclatorul Postis; `res.city` primește și `postis_name`
 - `stock.package.type` (extins): opțiunea `postis` adăugată la `package_carrier_type`
 - `res.config.settings` (extins): comutatorul `module_deltatech_delivery_postis`

@@ -1,7 +1,7 @@
 # Terrabit IAP Server AI (localizat la `terrabit_iap_server_ai/index.md`)
 
 - **Nume Tehnic:** `terrabit_iap_server_ai`
-- **Versiune:** `19.0.1.1.0`
+- **Versiune:** `19.0.1.2.0`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_ai
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server_ai`
 - **Ultima Ingestie:** `2026-10-22`

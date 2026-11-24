@@ -108,7 +108,10 @@ tipărește bonul de dare în folosință (Pasul 4).
 
 Salariatul se poate completa și direct pe fișa obiectului, înainte de butonul **Dă în Folosință**
 de pe fișă; și acolo, alegerea unui salariat cu utilizator Odoo completează *Responsabil* cu
-utilizatorul lui.
+utilizatorul lui. Din 19.0.1.0.4, butonul **Dă în Folosință** de pe fișă deschide același wizard, cu
+fișa curentă și cu salariatul, responsabilul și locația de pe fișă precompletate, ca data dării în
+folosință să poată fi aleasă. Din listă, selectând una sau mai multe fișe, același wizard se
+deschide cu **Acțiuni → Dare în Folosință OI** și preia fișele aflate în starea *Recepționat*.
 
 ### Pasul 2 — Fișa obiectului de inventar: cine îl are în folosință
 

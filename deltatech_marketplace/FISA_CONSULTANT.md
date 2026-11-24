@@ -44,14 +44,16 @@ contabile. Contextul operațional:
   importate vine din **taxele de vânzare ale produsului**, trecute prin **poziția fiscală** a
   comenzii, nu din maparea TVA a acestui modul. Taxele corecte pe produse (21 %, 11 %) și pozițiile
   fiscale (OSS, UE, export) sunt deci condiția unei facturi corecte;
-- joburile rulează prin modulul OCA `queue_job`, deci serverul trebuie să ruleze runner-ul de
-  joburi (în producție, un worker dedicat), altfel nimic nu se sincronizează.
+- joburile rulează printr-un motor de joburi, la alegere: modulul OCA `queue_job` (pe server
+  propriu, cu runner-ul de joburi pornit) sau *Background Jobs* (`deltatech_background_job`), care
+  rulează și pe odoo.sh, fără runner dedicat. Fără niciunul dintre ele nimic nu se sincronizează.
+  Cele două motoare nu pot fi instalate în aceeași bază.
 
 ## 3. Utilizatori și roluri
 
 | Rol | Ce face | Drept Odoo |
 |---|---|---|
-| Consultant / administrator marketplace | creează și configurează backend-urile, obiectele, cron-urile; citește jurnalul și joburile | grupul **Administrator marketplace** (meniul *Marketplace* e vizibil doar acestui grup). Grupul dă și citirea joburilor și a canalelor din `queue_job`; pentru reluarea sau anularea joburilor eșuate e nevoie în plus de **Job Queue Manager** |
+| Consultant / administrator marketplace | creează și configurează backend-urile, obiectele, cron-urile; citește jurnalul și joburile | grupul **Administrator marketplace** (meniul *Marketplace* e vizibil doar acestui grup). Grupul dă și citirea joburilor marketplace ale motorului de joburi; pentru reluarea sau anularea joburilor eșuate e nevoie în plus de grupul de manager al motorului (**Job Queue Manager** sau **Background Jobs Manager**) |
 | Administrator tehnic | câmpurile tehnice ale obiectelor (model, domeniu, câmpuri ignorate), parametrii de sistem | **Setări / Administrare** (`base.group_system`) |
 | Responsabil e-commerce | urmărește diferențele de stoc și preț pe asocieri, forțează exportul unui produs | **Administrator marketplace** |
 | Operator vânzări / depozit | lucrează normal în Odoo; exportul spre magazin pleacă în fundal | fără drepturi marketplace |
@@ -97,16 +99,34 @@ Date minime pentru demo (folosite și în capturi):
 ## 5. Configurare inițială
 
 1. Instalați `deltatech_marketplace` și conectorul platformei (de exemplu
-   `deltatech_marketplace_emag`). Dependențe: `sale`, `product`, `account`, `stock`, `queue_job`,
+   `deltatech_marketplace_emag`). Dependențe: `sale`, `product`, `account`, `stock`,
    `base_address_extended`.
-2. **Runner-ul de joburi** — pe server, porniți Odoo cu `queue_job` încărcat la pornire
-   (`server_wide_modules`) și cu un worker pentru joburi. Fără el, joburile rămân *În așteptare*.
-   Pe instalările fără worker dedicat (de exemplu odoo.sh), modulul `queue_job_cron_jobrunner` rulează
-   joburile dintr-o acțiune programată. Cu el, butonul **Rulează joburile** din backend pornește
-   imediat rularea; fără el, butonul doar anunță că joburile le rulează runner-ul serverului.
+2. **Motorul de joburi** — în *Marketplace → Configurare → Setări*, secțiunea **Motor de joburi**
+   (doar administratorii), alegeți motorul și salvați: Odoo îl instalează, iar puntea lui cu
+   marketplace urmează singură. Cât timp nu e instalat niciun motor, pagina și formularul fiecărui
+   backend arată avertismentul „Nu e instalat niciun motor de joburi”; pe odoo.sh, pagina recomandă
+   *Background Jobs*. Motoarele:
+   - *Background Jobs* (`deltatech_background_job`, puntea `deltatech_marketplace_background_job`):
+     joburile pornesc în câteva secunde pe workerii HTTP, și pe odoo.sh. Canalele backend-urilor se
+     creează fără limită; capacitatea se pune în *Procese în execuție → Configurare → Canale*;
+   - `queue_job` (puntea `deltatech_marketplace_queue_job`): porniți Odoo cu `queue_job` încărcat la
+     pornire (`server_wide_modules`) și cu un worker pentru joburi, altfel joburile rămân *În
+     așteptare*. Fără worker dedicat, modulul `queue_job_cron_jobrunner` rulează joburile dintr-o
+     acțiune programată.
+   **Bază existentă cu `queue_job`**: la actualizarea modulului la 19.0.2.0.0 puntea
+   `deltatech_marketplace_queue_job` se instalează singură, în aceeași actualizare, iar canalele
+   vechi ale backend-urilor se păstrează și apar ca nume în **Canal de intrare** / **Canal de ieșire**;
+   nu e nimic de configurat. **Trecerea pe celălalt motor**: opriți acțiunile programate ale
+   marketplace și așteptați să nu mai fie joburi în așteptare sau în rulare (altfel setarea refuză
+   schimbarea); alegeți celălalt motor și salvați: Odoo cere confirmarea dezinstalării motorului
+   curent, cu modulele care depind de el (`queue_job_cron_jobrunner`, `deltatech_queue_job`, puntea).
+   După dezinstalare, alegeți din nou motorul nou și salvați: se instalează, iar puntea lui creează
+   canalele backend-urilor fără limită. Dacă `deltatech_background_job` era deja instalat, instalați
+   puntea de mână.
 3. **Drepturi** — adăugați grupul **Administrator marketplace** utilizatorilor care configurează
-   magazinele. E suficient pentru backend-uri, obiecte și citirea joburilor; **Job Queue Manager**
-   e necesar doar pentru reluarea sau anularea joburilor din coadă.
+   magazinele. E suficient pentru backend-uri, obiecte și citirea joburilor; reluarea sau anularea
+   joburilor cere grupul de manager al motorului (*Job Queue Manager* la `queue_job`, *Background
+   Jobs Manager* la *Background Jobs*).
 4. **Backend-ul** — *Marketplace → Backend-uri → Nou*: nume, **Platformă**, **Companie**, **Echipa de vânzări**
    pentru comenzile importate și **Utilizator**, utilizatorul sub care rulează webhook-urile magazinului
    (lăsat gol, rulează ca superuser). La creare, Odoo generează automat canalele de coadă ale backend-ului
@@ -130,8 +150,10 @@ Date minime pentru demo (folosite și în capturi):
    | *Marketplace: importă produsele* | importă produsele din magazin | zilnic, inactivă |
    | *Marketplace: elimină produsele arhivate* | curăță asocierile produselor arhivate | zilnic, inactivă |
 
-7. **Parametri de sistem** (opțional): `marketplace.log.retention_days` — câte zile se păstrează
-   jurnalul (implicit 90; 0 sau negativ = pentru totdeauna).
+7. **Retenția jurnalului** (opțional): în *Marketplace → Configurare → Setări*, secțiunea **Jurnal**,
+   câmpul **Retenția jurnalului** — câte zile se păstrează jurnalul (implicit 90; 0 = pentru
+   totdeauna). Valoarea se salvează în parametrul de sistem `marketplace.log.retention_days`
+   (Pasul 14).
 
 ## 6. Flux de utilizare
 
@@ -170,11 +192,17 @@ Pe fiecare card:
 Butoanele din antet:
 - **Testează conexiunea** — confirmă backend-ul (starea trece în *Confirmat*);
 - **Importă datele de bază** — datele de referință ale platformei (taxe, țări etc., după conector);
-- **Rulează joburile** — cu `queue_job_cron_jobrunner`, pornește imediat rularea joburilor în
-  așteptare (în fundal, nu în ecranul utilizatorului). Fără el, afișează un mesaj: joburile le
-  rulează runner-ul `queue_job` al serverului.
+- **Rulează joburile** — pornește imediat rularea joburilor în așteptare, în fundal, nu în ecranul
+  utilizatorului: la *Background Jobs* trezește sloturile, la `queue_job` cu
+  `queue_job_cron_jobrunner` pornește acțiunea programată. Cu `queue_job` fără
+  `queue_job_cron_jobrunner`, afișează un mesaj: joburile le rulează runner-ul serverului. Fără niciun
+  motor de joburi instalat, afișează avertismentul „Nu e instalat niciun motor de joburi: instalați
+  queue_job sau Background Jobs (deltatech_background_job) pentru sincronizările marketplace.”
 
 Butonul inteligent **Joburi** arată joburile de pe canalele proprii ale backend-ului.
+Dacă baza nu are niciun motor de joburi, deasupra formularului apare avertismentul „Nu e instalat
+niciun motor de joburi: sincronizările acestui backend nu rulează.”; pentru administratori, linkul
+**Alegeți un motor de joburi** deschide setările (Pasul 13).
 **Platformă** e conectorul magazinului (pe demo „Fără”, adică niciun conector).
 
 ![Backend-ul, tab-ul Obiecte, cu regulile pe fiecare card](screenshots/02_backend_obiecte.png)
@@ -321,7 +349,12 @@ Tab-ul **Comenzi și produse** grupează regulile de date:
 Tab-ul **Tehnic** grupează mecanica sincronizării:
 - **Limite** — **Elemente pe pagină** la import; **Doar cele lipsă** (implicit bifat): la reimport
   se sar înregistrările deja legate.
-- **Coadă** — canalele de intrare și de ieșire ale backend-ului, create automat.
+- **Coadă** — **Canal de intrare** și **Canal de ieșire**: numele canalelor de joburi ale backend-ului,
+  create automat la crearea lui (de exemplu `root.magazinul_meu.inbound` și `root.magazinul_meu.outbound`).
+  Sunt câmpuri text: un nume se poate schimba de mână, de exemplu ca două backend-uri să împartă un canal.
+  Un canal pe care motorul de joburi nu îl are încă nu limitează nimic (la `queue_job` contează limita
+  canalului părinte); ca să-i dați o capacitate, creați-l în motor: *Procese în execuție → Configurare →
+  Canale* la *Background Jobs*, canalele `queue_job` la `queue_job`.
 - **Webhook cu job** — webhook-ul doar pune comanda într-un job și răspunde imediat. Îl citesc doar
   conectorii care îl suportă (de exemplu Brickweb); ceilalți procesează webhook-ul pe loc.
 - **Limitare apeluri** — numărul maxim de cereri pe secundă, minut, oră sau zi, pentru platformele
@@ -423,7 +456,8 @@ succesele în verde, iar erorile rezolvate la o reîncercare ulterioară apar es
 3. **Treceți mai departe** — corectați cauza (de exemplu codul de bare lipsă) și rerulați exportul
    de pe legătură sau jobul din coadă.
 
-Jurnalul se curăță automat după 90 de zile (parametrul `marketplace.log.retention_days`).
+Jurnalul se curăță automat după 90 de zile; durata se schimbă din *Marketplace → Configurare → Setări*,
+secțiunea **Jurnal** (Pasul 14).
 
 ![Jurnalul operațiunilor marketplace](screenshots/12_jurnal.png)
 
@@ -434,6 +468,40 @@ marketplace (active și inactive). La o instalare nouă, toate sunt **inactive**
 setați intervalul după cât de repede se mișcă stocul, abia după ce importul a fost verificat.
 
 ![Acțiunile programate marketplace, inactive la instalare](screenshots/13_actiuni_programate.png)
+
+### Pasul 13 — Motorul de joburi (Setări, administratori)
+
+Accesați **Marketplace → Configurare → Setări** (meniul apare doar administratorilor). Secțiunea
+**Motor de joburi** arată motorul instalat, selectat:
+1. **Găsiți pe ecran** cele două opțiuni, **Background Jobs** și **queue_job**. Fără motor instalat,
+   sub ele apare avertismentul „Nu e instalat niciun motor de joburi: sincronizările marketplace nu
+   rulează. Alegeți unul și salvați.”; pe odoo.sh, și recomandarea pentru **Background Jobs**; dacă
+   *Background Jobs* nu e pe server, nota că se găsește pe Odoo Apps Store.
+2. **Alegeți** motorul și apăsați **Salvează**: Odoo îl instalează, iar puntea lui cu marketplace
+   urmează singură. După reîncărcare, motorul apare selectat și avertismentul dispare.
+3. **Schimbarea motorului**: alegerea celuilalt motor afișează nota despre dezinstalare. La
+   **Salvează**, dacă mai sunt joburi în așteptare sau în rulare, Odoo refuză cu mesajul „În motorul
+   de joburi curent mai sunt joburi în așteptare sau în rulare…”; altfel cere confirmarea dezinstalării
+   motorului curent, cu modulele care depind de el. După dezinstalare, alegeți din nou motorul nou și
+   salvați.
+
+![Setări Marketplace pe o bază fără motor de joburi: secțiunea Motor de joburi, cu opțiunile Background Jobs și queue_job și avertismentul că sincronizările nu rulează, și secțiunea Jurnal, cu Retenția jurnalului de 90 de zile și butonul Deschide jurnalul](screenshots/14_setari.png)
+
+### Pasul 14 — Retenția jurnalului (Setări, administratori)
+
+Tot în **Marketplace → Configurare → Setări**, sub motorul de joburi, secțiunea **Jurnal**:
+1. **Găsiți pe ecran** câmpul **Retenția jurnalului**, în zile (implicit **90**), și butonul
+   **Deschide jurnalul**, care duce la lista din Pasul 11.
+2. **Completați** numărul de zile și apăsați **Salvează**. Curățenia zilnică a Odoo (acțiunea
+   programată standard *Baza: Auto-vid date interne*) șterge intrările din jurnal mai vechi de
+   atâtea zile.
+3. **Pentru a păstra tot jurnalul**, completați **0**: nicio intrare nu se mai șterge. Pe un volum
+   mare de sincronizări jurnalul crește repede, deci 0 se alege doar cu motiv (de exemplu un audit).
+
+Valoarea se salvează în parametrul de sistem `marketplace.log.retention_days`; o bază care îl avea
+deja setat își păstrează valoarea.
+
+![Setări Marketplace: secțiunea Jurnal, cu câmpul Retenția jurnalului și butonul Deschide jurnalul](screenshots/14_setari.png)
 
 ### Note de monografie și raportare
 
@@ -448,7 +516,7 @@ Modulul **nu generează note contabile**. Contabilitatea apare în fluxurile con
 
 | Modul / proces | Rol în flux | Tip legătură |
 |---|---|---|
-| `queue_job` | coada de joburi: rulare în fundal, reîncercări, canale per backend | dependență (manifest) |
+| `deltatech_background_job` sau `queue_job` | motorul de joburi: rulare în fundal, reîncercări, canale per backend | prin puntea `deltatech_marketplace_background_job` / `deltatech_marketplace_queue_job` |
 | `sale`, `product`, `stock`, `account`, `base_address_extended` | produse, stoc, taxe, adrese | dependență (manifest) |
 | `deltatech_marketplace_sale` | importul comenzilor (TVA din taxele produselor și poziția fiscală) | extensie |
 | `deltatech_marketplace_emag`, `_shopify`, `_woocommerce`, `_prestashop`, `_magento`, `_trendyol`, `_merchantpro`, `_odoo`, `_doraly` | conectorii de platformă: apelurile API, pașii specifici | extensii (fișă proprie fiecare) |
@@ -494,7 +562,7 @@ Modulul **nu generează note contabile**. Contabilitatea apare în fluxurile con
       la facturare, iar cotele fără taxă apar ca erori în jurnal (importul nu creează taxe).
 - [ ] Cu **Activ la scriere** oprit pe *Produse*, butonul **Exportă prețul** al legăturii trimite
       totuși prețul, iar pe o legătură fără diferență de preț afișează că nu are ce trimite.
-- [ ] Un utilizator doar cu **Administrator marketplace** (fără *Job Queue Manager*) creează un
+- [ ] Un utilizator doar cu **Administrator marketplace** (fără grupul de manager al motorului de joburi) creează un
       backend și deschide lista backend-urilor și butonul **Joburi** fără eroare de acces.
 - [ ] Acțiunile programate sunt inactive la instalare și sunt activate abia după verificarea
       importului.
@@ -516,12 +584,26 @@ Modulul **nu generează note contabile**. Contabilitatea apare în fluxurile con
       mișcări de stoc în altă companie, nu îi schimbă compania, iar un produs nou creat din
       magazin primește compania backend-ului.
 
+- [ ] În **Marketplace → Configurare → Setări**, motorul instalat apare selectat; pe o bază fără
+      motor apare avertismentul, iar după alegerea unui motor și **Salvează** motorul și puntea lui
+      sunt instalate, iar avertismentul dispare (și de pe formularul backend-ului).
+- [ ] Cu un job în așteptare, alegerea celuilalt motor și **Salvează** sunt refuzate cu mesajul
+      despre joburile în așteptare sau în rulare; motorul rămâne cel instalat.
+- [ ] În **Marketplace → Configurare → Setări**, secțiunea **Jurnal**, **Retenția jurnalului** arată
+      90 pe o bază nouă; după ce completați 30 și apăsați **Salvează**, valoarea rămâne 30 la
+      redeschiderea paginii, iar a doua zi intrările din **Marketplace → Jurnale** mai vechi de
+      30 de zile au dispărut.
+- [ ] Cu **Retenția jurnalului** = 0, intrările vechi din jurnal rămân după curățenia zilnică.
+
 ## 9. Mesaje de eroare frecvente
 
 | Mesaj / simptom | Cauză probabilă | Remediere |
 |---|---|---|
 | „Nu s-a găsit TVA de vânzare de X% în compania …” în jurnal, după **Importă datele de bază** | Compania nu are o taxă de vânzare cu acea cotă și exigibilitate la facturare | Creați taxa din planul RO (cont 4427, rânduri D300) și reimportați datele de bază; o cotă nefolosită de magazin poate rămâne nemapată |
-| Joburile rămân *În așteptare* | Runner-ul `queue_job` nu rulează pe server | Porniți Odoo cu `queue_job` în `server_wide_modules` și workeri, sau instalați `queue_job_cron_jobrunner` (atunci **Rulează joburile** pornește rularea imediat) |
+| „În motorul de joburi curent mai sunt joburi în așteptare sau în rulare…” la **Salvează** în Setări | S-a ales celălalt motor cât timp coada motorului curent nu e goală | Opriți acțiunile programate ale marketplace, așteptați să nu mai fie joburi în așteptare sau în rulare, apoi schimbați motorul |
+| „Background Jobs (deltatech_background_job) nu e disponibil pe acest server.” la **Salvează** în Setări | Modulul *Background Jobs* nu e pe addons path (nu a fost cumpărat sau adăugat) | Adăugați modulul pe server (Odoo Apps Store) sau alegeți `queue_job` |
+| „Nu e instalat niciun motor de joburi …” la **Rulează joburile** sau pe formularul backend-ului | Niciun motor de joburi instalat | Alegeți motorul în *Marketplace → Configurare → Setări* (sau linkul **Alegeți un motor de joburi** de pe avertisment); alternativ, instalați *Background Jobs* (`deltatech_background_job`) sau `queue_job`; puntea lui cu marketplace se instalează singură |
+| Joburile rămân *În așteptare* | Niciun motor de joburi instalat sau, la `queue_job`, runner-ul nu rulează pe server | Instalați *Background Jobs* (`deltatech_background_job`); la `queue_job`, porniți Odoo cu `queue_job` în `server_wide_modules` și workeri, sau instalați `queue_job_cron_jobrunner` |
 | „Can not create product for … Please set a default product.” la import | **Creează** oprit pe *Produse* și niciun **Produs fictiv** pe backend | Setați **Produs fictiv** (*Comenzi și produse → Valori implicite*) sau permiteți crearea |
 | Factură cu TVA greșit pe o comandă importată | Taxa de vânzare a produsului sau poziția fiscală greșită | Corectați taxa pe produs și poziția fiscală |
 | Stocul nu ajunge niciodată în magazin | **Poate trimite stocul** debifat sau acțiunea *Marketplace: exportă stocul* inactivă | Bifați comutatorul pe backend și activați acțiunea programată |
@@ -560,6 +642,7 @@ obiecte sunt create de test, pentru că fără conector backend-ul nu își cere
 | 11 | `11_mapare_tva.png` | Maparea TVA |
 | 12 | `12_jurnal.png` | Jurnalul operațiunilor |
 | 13 | `13_actiuni_programate.png` | Acțiunile programate marketplace |
+| 14 | `14_setari.png` | Setările Marketplace: motorul de joburi și retenția jurnalului |
 
 Regenerare:
 
@@ -599,8 +682,8 @@ pașii specifici fiecărei platforme, trimiteți la fișa conectorului.
   (taxă, respectiv produs): editarea lor le redenumește.
 - **Joburile eșuate fără backend** (de exemplu importul comenzilor tuturor backend-urilor) se numără
   pe toate backend-urile. Cele de pe canalele comune care aparțin unui backend se numără doar la el.
-- **Reluarea sau anularea joburilor** din coadă cere în continuare grupul *Job Queue Manager*;
-  **Administrator marketplace** le poate doar vedea.
+- **Reluarea sau anularea joburilor** cere grupul de manager al motorului de joburi (*Job Queue
+  Manager* sau *Background Jobs Manager*); **Administrator marketplace** le poate doar vedea.
 - **Webhook cu job** are efect doar la conectorii care îl citesc (de exemplu Brickweb).
 - **Localitatea în afara României** se completează din codul poștal doar dacă localitățile țării au
   cod poștal în Odoo. Altfel, un oraș cu mai multe localități de același nume (*Budapest*) rămâne

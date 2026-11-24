@@ -3,8 +3,8 @@
 - **Nume Tehnic:** `l10n_ro_cash_register_report`
 - **Versiune:** `19.0.1.0.7`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cash_register_report
-- **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_cash_register_report`
-- **Ultima Ingestie:** `2026-09-11`
+- **Cale Locală:** odoo-addons/l10n_ro_ent/l10n_ro_cash_register_report
+- **Ultima Ingestie:** `2026-11-24`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -15,13 +15,16 @@ Modulul aduce Registrul de casă românesc (cod 14-4-7A, conform OMFP 2634/2015)
 
 - Structurare pe secțiuni per (jurnal, zi), cu totalurile zilei: încasări, plăți și sold final.
 - Rând de report al soldului din ziua precedentă (sold inițial al zilei).
-- Linii de mișcare ale casei, cu încasările pe debit, plățile pe credit și sold cumulat.
+- Linii de mișcare ale casei, cu încasările pe debit, plățile pe credit, **contul corespondent** și sold cumulat.
+- **Cont corespondent** (citit din aceeași notă contabilă): la o încasare, contul creditat (ex. 4111), la o plată, contul debitat (ex. 401); la o notă compusă apar toate conturile, în ordinea sumelor (ex. „628, 4426”), cel mult trei, restul ca „…”; contul casei nu apare. La bancă, o plată înregistrată prin contul intermediar de încasări/plăți arată contul plății reconciliate (nu pe cel intermediar), iar un rând de extras rămas pe contul de așteptare apare marcat „nereconciliat”.
 - Rând de sold final, folosit drept report pentru ziua următoare.
 - Calculul soldurilor pe contul de casă al jurnalului (`default_account_id`, ex. 5311), din mișcările contabile postate, cu report automat al soldului între zile.
 - Drill-down din liniile de mișcare direct către înregistrarea contabilă (`account.move.line`).
 - Filtru de interval de dată, selector de jurnale (doar jurnale de tip casă) și selector multi-companie, moștenite din framework-ul `account_reports`.
 - Export PDF/XLSX și tipărire, disponibile nativ din bara de instrumente a raportului.
 
+- **Cum se folosește**: se deschide din **Contabilitate → Raportare → Rapoarte de extras → Registru de casă** (raportul „Cash Register (RO)", implicit pe luna curentă); filtrul **Jurnale** arată doar jurnalele de casă (tip *Numerar*, cu cont implicit de tip 5311, operațiuni postate), iar filtrul de dată fixează intervalul. Reportul primei zile din interval este soldul casei acumulat din mișcările dinainte de data de început, nu zero. Soldul final al zilei este Report + Încasări − Plăți; un sold negativ indică operațiuni lipsă sau datate greșit. Raportul reflectă notele de casă existente, nu le generează, și necesită Odoo Enterprise (`account_reports`).
+- **Care variantă alegeți**: există două forme de registru de casă, cu aceleași cifre, citite din aceleași linii contabile. Acest modul produce **raportul** (interval de mai multe zile, filtru de jurnale, derulare, drill-down, export PDF/XLSX; verificare și analiză; **nu numerotează** nimic). [l10n_ro_cash_register](../l10n_ro_cash_register/index.md) (suita `l10n-romania`, pentru Community) produce **documentul** numerotat prin secvență, o filă per casierie și zi, arhivabil și tipăribil — evidența oficială, păstrată pentru control. Cele două se pot instala împreună: documentul pentru evidența oficială, raportul pentru verificări pe perioade.
 - **Explicația operațiunii pe fiecare rând** — raportul preia, în ordine, referința documentului
   (`ref`), apoi **eticheta liniei contabile** (`name`), apoi partenerul. Eticheta e cea pusă de
   modulul care a generat mișcarea, deci încasările, viramentele și restituirile de retur se
@@ -47,7 +50,7 @@ Nu există vizualizări (`views/`) proprii; interfața este generată integral d
 
 Nu există `ir.cron`, `base.automation` sau `ir.actions.server`. Modulul definește în schimb configurația raportului prin date (`data/cash_register_report.xml`):
 
-- `l10n_ro_cash_register_report` (`account.report`): definește raportul „Cash Register (RO)”, cu filtre de interval de dată, jurnale și multi-companie (selector), și coloanele Receipts/Payments/Balance.
+- `l10n_ro_cash_register_report` (`account.report`): definește raportul „Cash Register (RO)”, cu filtre de interval de dată, jurnale și multi-companie (selector), și coloanele Receipts/Payments/Counterpart Account/Balance.
 - `action_l10n_ro_cash_register_report` (`ir.actions.client`, tag `account_report`): acțiunea client care deschide raportul.
 - `menu_l10n_ro_cash_register_report`: meniul „Cash Register”, plasat sub „Legal Statements” din meniul Contabilitate.
 
