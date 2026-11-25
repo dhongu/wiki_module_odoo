@@ -63,7 +63,8 @@ Date minime pentru demo:
 - perioadă contabilă deschisă, cu facturi emise și primite **postate**;
 - parteneri RO cu CUI/CIF valid; persoane fizice fără CUI, cu nume/adresă completă;
 - cote TVA 21%/11% și taxe de taxare inversă configurate cu tax tags-urile RO;
-- (TVA la încasare nu este încă acoperit complet de modul — vezi „Limitări cunoscute" în secțiunea 7.)
+- taxe de achiziție „TVA la încasare - X% deductibil” (exigibile la plată, 4428) pentru furnizorii cu TVA
+  la încasare; limitările rămase sunt în „Limitări cunoscute", secțiunea 7.
 
 > Capturile fișei se generează pe compania demo a localizării RO (`base.demo_company_ro`), cu facturile
 > demo din `l10n_ro_anaf_base` (parteneri RO cu CUI, persoană fizică, parteneri UE, furnizor cu TVA la
@@ -90,6 +91,10 @@ Date minime pentru demo:
      achitate în perioadă, din notele de exigibilitate generate la plată; nebifat, `tvaDedAI` rămâne 0.
      Tot bifa determină `tvaDed*` (rd. 135–138, 153B–C: facturi achitate de la furnizori în regim normal)
      și `tvaCol*` (rd. 143–146, 153B–C: facturi de vânzare încasate); nebifat, acestea sunt omise din XML.
+     Bifa schimbă și încadrarea A/AÎ a facturilor cu taxă „la încasare": nebifat, orice factură de
+     furnizor cu taxă „la încasare" merge la **AÎ**; bifat, taxa nu mai arată regimul furnizorului
+     (firma o folosește la toate achizițiile), deci decide regimul furnizorului la data facturii (OCA
+     `l10n_ro_vat_on_payment` sau perioadele RTVAI): furnizor cu TVA la încasare → AÎ, altfel → A.
      Cu bifa activă, taxele de achiziție deductibile în regim normal trebuie să fie „la încasare"
      (art. 297 alin. (3) CF); achizițiile intracomunitare, importurile și taxarea inversă rămân „la
      facturare". Avansurile se încasează cu factură de avans, iar data de blocare fiscală se setează
@@ -158,7 +163,8 @@ cu taxare inversă au TVA autotaxată pe cota reală. Jurnalul nu afișează tip
 încadrarea ca **C** se verifică în XML (`op1 tip="C"`, pasul 4). Achizițiile intracomunitare (în demo,
 furnizorul din Franța) **nu intră în D394** — se declară în D390 — și nici în `tvaDedAI`. Rândul ELY-CONTAB
 SRL (în demo, ultimul rând), fără rând D300, este o achiziție de la un furnizor cu TVA la încasare (TVA neexigibilă, 4428):
-modulul nu o raportează încă în D394 (vezi „Limitări cunoscute"). Coloanele cu sume sunt în dreapta,
+în D394 apare la **AÎ** (`op1 tip="AI"`, pasul 4), în luna datei facturii, chiar dacă nu e plătită; lipsa
+rândului D300 e normală, TVA-ul devine deductibil abia la plată. Coloanele cu sume sunt în dreapta,
 în afara cadrului capturii — derulați tabelul.
 
 ![Raportul de cumpărări D394 — furnizori, taxare inversă, UE](screenshots/02_raport_cumparari.png)
@@ -263,7 +269,9 @@ Arhivați exportul împreună cu raportul de verificare.
 *Rezultat (extras ilustrativ, pe datele demo, dintr-o rulare pe septembrie 2026 — luna diferă de capturi, unde perioada e luna trecută):* antetul cu perioada și datele declarantului,
 blocul `informatii`, rezumatul pe partener și cotă și o operațiune `op1` (partener cu CUI) și una `op2`
 (încasări de la persoane fizice). Achiziția cu taxare inversă apare în `rezumat1` pe cota reală (21%),
-cu TVA autotaxată în `tvaC`. Atributele din `op1` și `rezumat1` se emit doar acolo unde le cere
+cu TVA autotaxată în `tvaC`. Achiziția de la furnizorul cu TVA la încasare (ELY-CONTAB SRL) apare ca
+`op1 tip="AI"` și în grupul `facturiAI`/`bazaAI`/`tvaAI` din `rezumat1`, plus `nrFacturiAI`/`bazaAI`/`tvaAI`
+în `rezumat2` (de la 19.0.1.3.18; extrasul de mai jos e dintr-o rulare anterioară). Atributele din `op1` și `rezumat1` se emit doar acolo unde le cere
 validatorul ANAF: adresa partenerului apare numai la partenerii fără CUI (tip 2), iar fiecare grup din
 `rezumat1` (L, LS, A/AI, V/AS, C) apare doar pe combinațiile tip partener/cotă admise. Extrasul a fost
 generat cu validarea XSD oprită, pe datele demo: exportul real cere întâi completarea codului CAEN și a
@@ -313,6 +321,7 @@ sunt cerute. Modulul le emite astfel, deci nu vă mirați că unele atribute lip
 | Parteneri RO cu CUI (`op1`, `rezumat1` cu `tip_partener=1`) | CUI valid, țară România |
 | Parteneri fără CUI (`op2` — încasări I1 cu bonuri fiscale / I2 alte încasări) | nume și adresă (localitate, țară, județ pentru RO) pentru persoane fizice; tratamentul complet e în lucru (vezi „Limitări cunoscute") |
 | Livrare cu taxare inversă → **V** | vânzare „0% R", fără TVA colectată, cotă 0 |
+| Achiziție de la furnizor cu TVA la încasare → **AÎ** (`op1 tip="AI"`) | factura cu taxă „TVA la încasare - X% deductibil”, în luna datei facturii, plătită sau nu; furnizor RO cu CUI (tip partener 1), cotă nenulă |
 | Achiziție cu taxare inversă → **C** | achiziție autotaxată, pe cota reală, cu TVA autotaxată (`tvaC`) și codul de produs (NC sau categoriile art. 331) |
 | Serii facturi (`serieFacturi`) | plajă min/max **numerică** per serie, calculată automat; stornările cu serie proprie apar separat |
 | Operațiuni excluse | intracomunitar, import/export — nu apar în `op1`/`op2` |
@@ -326,6 +335,12 @@ sunt cerute. Modulul le emite astfel, deci nu vă mirați că unele atribute lip
   acestor operațiuni.
 - Taxarea inversă **trebuie inclusă**: livrarea (**V**) pe cota 0, fără TVA; achiziția (**C**) pe cota
   reală, cu TVA autotaxată în `tvaC`. Nu trebuie omisă și nici nu dublează TVA.
+- **Momentul declarării la A/AÎ:** factura de la un furnizor cu TVA la încasare se declară **o singură
+  dată**, la AÎ, în luna datei facturii, plătită sau nu (HG 1/2016, Titlul VII, pct. 101 alin. (6): cumpărătorul
+  o înregistrează în jurnal chiar dacă deducerea intervine mai târziu). O factură din lunile anterioare plătită
+  în perioadă **nu mai apare** nici la A, nici la AÎ; TVA-ul plătit în perioadă intră doar în `tvaDedAI*` /
+  `tvaDed*` (la firma cu TVA la încasare). Deducerea efectivă (`Dr 4426 = Cr 4428`, la plată, art. 297
+  alin. (2) CF) se vede în D300, deci TVA-ul de la AÎ din D394 nu se potrivește cu D300 din aceeași lună.
 - **`tvaDedAI`** (rd. 139–142): se ia din linia de TVA a notei de exigibilitate generate la plata facturii furnizorului (`Dr 4426 = Cr 4428`), proporțional cu suma plătită, doar pentru furnizorii cu TVA la încasare la data facturii. Regimul
   furnizorului: cu OCA `l10n_ro_vat_on_payment`, din `istoric.txt`; fără OCA, din perioadele RTVAI
   ale `l10n_ro_anaf_partner` (început inclusiv, sfârșit exclusiv), cu bifa de la ultima sincronizare
@@ -372,13 +387,12 @@ raportează separat.
 
 ### Limitări cunoscute (în lucru)
 
-- **Achiziții de la furnizori cu TVA la încasare (tip AI):** nu sunt raportate, indiferent de regimul
-  firmei declarante — inclusiv pentru firmele în regim normal. În demo, factura ELY-CONTAB
-  SRL (TVA neexigibilă în 4428) lipsește din D394. Adăugați-le manual.
+- **Firmă în regim normal, TVA plătit furnizorilor cu TVA la încasare:** `tvaDedAI` rămâne 0 la
+  `sistemTVA=0` (structura ANAF îl lasă gol pentru sistemul normal); facturile însele apar la AÎ.
 - **Firme care aplică TVA la încasare:** setarea pune `sistemTVA=1` și calculează `tvaDedAI`, `tvaDed*`
   (facturi achitate de la furnizori în regim normal) și `tvaCol*` (facturi încasate), din notele de
-  exigibilitate din perioadă; la `sistemTVA=0` atributele se omit. Operațiunile de tip AI nu sunt încă
-  generate.
+  exigibilitate din perioadă; la `sistemTVA=0` atributele se omit. Facturile furnizorilor cu TVA la
+  încasare apar la AÎ, cele ale furnizorilor în regim normal la A (decide regimul furnizorului).
 - **Regimul furnizorului fără OCA `l10n_ro_vat_on_payment`** e o aproximare bună doar cu sincronizarea
   zilnică a partenerilor cu ANAF:
   - istoricul RTVAI începe de la prima sincronizare care a citit registrul (ANAF întoarce doar perioada
@@ -430,6 +444,11 @@ raportează separat.
 - [ ] Pentru partenerii cu CUI, `op1` nu are atribute de adresă; `rezumat1` nu conține grupuri de atribute neadmise pe combinația tip partener/cotă.
 - [ ] „D394 file XDP (Soft A)" se generează pentru formularul inteligent ANAF și cuprinde facturile pe
   parteneri și plaja de facturi emise (cu limitările din secțiunea 7).
+- [ ] O factură de furnizor cu taxă „TVA la încasare - X% deductibil”, plătită sau nu, apare la AÎ
+  (`op1 tip="AI"`, `rezumat1`/`rezumat2` grupul AI) în luna datei facturii, nu la A; o factură din luna
+  anterioară plătită acum nu apare nici la A, nici la AÎ.
+- [ ] La o firmă cu TVA la încasare, factura unui furnizor în regim normal (taxă „la încasare") apare la
+  A, iar a unui furnizor cu TVA la încasare la AÎ.
 - [ ] La o firmă cu TVA la încasare, `tvaDedAI` cuprinde doar facturile achitate în perioadă de la
   furnizori cu TVA la încasare la data facturii (fără OCA: perioadele RTVAI din fila **Monitorizare
   ANAF** a furnizorului; cu OCA: istoricul `l10n_ro_vat_on_payment`);
@@ -468,6 +487,7 @@ raportează separat.
 | Rapoartele apar goale („Nu există date de afișat!") | Perioada selectată nu conține documente postate | Selectați luna/trimestrul cu facturi postate (implicit luna trecută) |
 | `tvaDedAI` rămâne 0 deși există facturi achitate de la furnizori cu TVA la încasare | Firma nu are bifat **D394 VAT on Collection**; sau furnizorul nu are o perioadă RTVAI care să acopere data facturii (nesincronizat cu ANAF de la actualizarea `l10n_ro_anaf_partner` la 19.0.2.4.0, prima versiune care citește RTVAI) și nici bifa **TVA la încasare (RTVAI)** | Bifați setarea firmei; pe furnizor, în fila **Monitorizare ANAF**, apăsați **Sincronizează cu ANAF** și verificați lista **Perioade TVA** (sau instalați OCA `l10n_ro_vat_on_payment`, care are istoricul complet); apoi regenerați |
 | `tvaDed` rămâne 0 deși facturile de la furnizori în regim normal sunt achitate | Taxele de achiziție sunt „la facturare", deci plata nu generează note de exigibilitate; sau furnizorul e în regim TVA la încasare la data facturii (suma e în `tvaDedAI`) | Configurați taxele de achiziție deductibile în regim normal „la încasare" (art. 297 alin. (3) CF), cu excepția achizițiilor intracomunitare, importurilor și taxării inverse; verificați regimul furnizorului în fila **Monitorizare ANAF** |
+| Factura unui furnizor cu TVA la încasare apare la A în loc de AÎ, sau o factură veche plătită acum apare din nou | Modul sub 19.0.1.3.18; sau, la firma cu **D394 VAT on Collection** bifat, furnizorul nu are perioadă RTVAI la data facturii (e tratat ca regim normal) | Actualizați modulul `l10n_ro_anaf_d394`; verificați furnizorul în fila **Monitorizare ANAF** (**Sincronizează cu ANAF**); regenerați |
 | `tvaDed` / `tvaCol` lipsesc din XML | Firma nu are bifat **D394 VAT on Collection** (`sistemTVA=0`), sau modulul e sub 19.0.1.3.17 | Bifați setarea dacă firma aplică TVA la încasare, actualizați modulul și regenerați |
 
 ## 10. Capturi de ecran

@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.2.0.5`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d107
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d107`
-- **Ultima Ingestie:** 2026-09-12
+- **Ultima Ingestie:** `2026-11-25`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -13,13 +13,15 @@ Acest modul gestionează și exportă Declarația 107 privind sponsorizările ș
 
 #### 2. Funcționalități Cheie
 
-- **Import automat din contabilitate:** preia sponsorizările înregistrate pe conturile 658x, grupate pe parteneri, cu sumele debitoare nete > 0 din perioada anului fiscal (`action_import_from_accounting`); dacă sponsorizările sunt înregistrate pe alt cont, liniile se adaugă manual.
+- **Import automat din contabilitate:** preia sponsorizările înregistrate pe conturile 658x, grupate pe parteneri, cu sumele debitoare nete > 0 din perioada anului fiscal (`action_import_from_accounting`); dacă sponsorizările sunt înregistrate pe alt cont, liniile se adaugă manual. Sunt preluate doar liniile cu partener beneficiar, iar un nou import înlocuiește liniile existente (ajustările manuale se pierd); pe fiecare linie se poate ajusta suma eligibilă.
+- **Acces:** *Contabilitate → Raportare → Declarații ANAF → Declarație 107*; se completează anul fiscal, tipul declarantului, cifra de afaceri și impozitul datorat (înainte de scăzământ), apoi se importă, se verifică calculul (limita 1 = 0,75% × CA, limita 2 = 20% × impozit, scăzământ efectiv, suma nedeductibilă) și se exportă.
 - **Calcul scăzământ** conform formulei legale: `scăzământ = min(total sponsorizări, min(0,75% × CA, 20% × impozit datorat))`.
-- **Export XML pe structura oficială ANAF** (rădăcina `<d107>`, namespace `mfp:anaf:dgti:d107:declaratie:v1`, beneficiari `<entit>`), gata de depus prin SPV — fișierul trece validatorul oficial `D107Validator.jar` ("Validare fără erori"). Versiunea anterioară (19.0.1.0.1) genera o structură nedepunabilă (`<declaratie107>`, fără namespace, un singur atribut din peste 20 obligatorii).
+- **Export XML pe structura oficială ANAF** (rădăcina `<d107>`, namespace `mfp:anaf:dgti:d107:declaratie:v1`, beneficiari `<entit>`), gata de depus prin SPV — formular conform OPANAF 355/04.03.2024; ANAF nu publică XSD pentru D107, iar fișierul generat trece validatorul oficial (DUKIntegrator / `D107Validator.jar`) fără erori, verificat la 12.09.2026. Versiunea anterioară (19.0.1.0.1) genera o structură nedepunabilă (`<declaratie107>`, fără namespace, un singur atribut din peste 20 obligatorii).
 - **Câmpuri complete cerute de ANAF:** tipul de impozit (`cod_oblig`: impozit pe profit 102/103/104/105 sau micro 121), exercițiul financiar, declarație rectificativă, alte situații, an fiscal modificat, date de dizolvare cu/fără lichidare, depunere de către succesor, numele semnatarului, beneficiari neindividualizați (anexa `<entit1>`) cu suma reportată/dedusă.
 - **Termenul de plată (`scadenta`) se calculează automat:** ZZ=25, decalat cu 6 luni pentru exerciții încheiate până în 2025; de la 2026, cu o lună la dizolvare, două luni pentru `cod_oblig` 104, trei luni pentru 102/103/105 (fără decalaj pentru 121 — micro-întreprinderi).
 - **Corelații ANAF verificate înainte de export**, cu mesaje explicite despre ce lipsește: beneficiar fără adresă/cod fiscal, succesor fără CIF, sume pentru beneficiari neindividualizați fără liniile aferente, date de dizolvare contradictorii, câmpuri de an modificat pe tipuri de impozit care nu le admit, semnatar necompletat.
-- **Flux de confirmare:** ciornă → confirmată (blochează modificările după depunere).
+- **Flux de confirmare:** ciornă → confirmată (blochează modificările după depunere); pentru corecturi se folosește **Resetează la ciornă**.
+- **Configurare necesară:** sponsorizările se înregistrează în contabilitate pe conturi 658x (sau un analitic dedicat), cu partenerul beneficiar completat pe linia notei contabile.
 - **Cine depune:** contribuabilii plătitori de impozit pe profit sau de impozit pe micro-întreprindere care au acordat sponsorizări eligibile.
 
 #### 3. Dependențe
@@ -29,6 +31,8 @@ Acest modul gestionează și exportă Declarația 107 privind sponsorizările ș
 - [l10n_ro_anaf_base](../l10n_ro_anaf_base/index.md)
 
 #### 4. Componente Cheie
+
+Secțiunea păstrează componentele deja analizate în cod (verificate la această re-ingestie: modelele, `action_*` și structura XML corespund).
 
 **Modele**
 

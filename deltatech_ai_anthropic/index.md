@@ -1,10 +1,11 @@
 # Deltatech AI - Anthropic (Claude) (localizat la `deltatech_ai_anthropic/index.md`)
 
 - **Nume Tehnic:** `deltatech_ai_anthropic`
-- **Versiune:** `19.0.1.3.0`
+- **Versiune:** `19.0.1.3.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_anthropic
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_ai_anthropic`
 - **Ultima Ingestie:** `2026-10-23`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

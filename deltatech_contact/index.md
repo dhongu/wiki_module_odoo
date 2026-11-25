@@ -1,7 +1,7 @@
 # Contact Personal Data (localizat la `deltatech_contact/index.md`)
 
 - **Nume Tehnic:** `deltatech_contact`
-- **Versiune:** `19.0.1.4.15`
+- **Versiune:** `19.0.1.4.16`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_contact`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_contact`
 - **Ultima Ingestie:** `2026-11-17`

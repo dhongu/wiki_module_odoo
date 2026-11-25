@@ -1,10 +1,11 @@
 # IAP Server - Service ANAF (localizat la `terrabit_iap_server_anaf/index.md`)
 
 - **Nume Tehnic:** `terrabit_iap_server_anaf`
-- **Versiune:** `19.0.1.6.0`
+- **Versiune:** `19.0.1.7.1`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_anaf
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server_anaf`
 - **Ultima Ingestie:** `2026-11-17`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

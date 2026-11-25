@@ -31,8 +31,12 @@ cardului nu ajung în Odoo și nu sunt păstrate de el. Contextul operațional p
 - modulul **nu restricționează monedele**: restricția se face pe provider (monedele disponibile). Monri acceptă RON
   pe mediul de producție, dar autorizarea efectivă a cardului depinde de banca procesatoare din contractul
   comerciantului;
-- Monri trimite mesajul server-la-server **doar pentru plățile aprobate**; la o plată refuzată clientul rămâne pe
-  pagina Monri și poate reîncerca, fără să revină în magazin;
+- callback-ul clasic vine **doar pentru plățile aprobate**; la o plată refuzată clientul rămâne pe pagina Monri și
+  poate reîncerca, fără să revină în magazin. Ca refuzurile să ajungă în Odoo, suportul Monri configurează în plus
+  **webhook-urile** (evenimentele `transaction:purchase:approved` și `transaction:purchase:declined`) pe aceeași
+  adresă; webhook-ul aduce și motivul refuzului. Odoo procesează doar evenimentele plății (vânzare/autorizare);
+  evenimentele de captură, anulare și rambursare sunt confirmate sincron prin API și sunt ignorate. Dacă utilizatorul
+  abandonează plata (de exemplu la autentificarea 3D Secure), Monri nu trimite nimic, iar tranzacția rămâne în Ciornă;
 - suma și moneda nu sunt retrimise de Monri în răspuns, deci Odoo nu le poate compara cu tranzacția la confirmare
   (spre deosebire de alți provideri); reconcilierea cu raportul Monri rămâne la contabil;
 - pagina de plată Monri este disponibilă în engleză, spaniolă, bosniacă și croată; pentru orice altă limbă a
@@ -74,8 +78,13 @@ cardului nu ajung în Odoo și nu sunt păstrate de el. Contextul operațional p
    credențialele de test și invers.
 6. Publicați providerul, ca să apară clienților la finalizarea comenzii (butonul **Nepublicat/Publicat** din antetul
    formularului).
-7. Nu este nevoie să înregistrați adresa mesajului server-la-server în contul Monri: Odoo o trimite o dată cu fiecare
-   comandă. Asigurați-vă doar că site-ul este accesibil din internet pe `https` (adresa de bază a sistemului).
+7. Pentru plățile aprobate nu este nevoie să înregistrați adresa mesajului server-la-server în contul Monri: Odoo o
+   trimite o dată cu fiecare comandă. Asigurați-vă că site-ul este accesibil din internet pe `https` (adresa de bază a
+   sistemului).
+8. Ca plățile refuzate să ajungă în Odoo cu motivul refuzului, cereți suportului Monri să configureze webhook-urile
+   `transaction:purchase:approved` și `transaction:purchase:declined` (pentru captură manuală și
+   `transaction:authorize:approved` / `transaction:authorize:declined`) pe adresa `https://<site>/payment/monri/webhook`,
+   aceeași pentru toate evenimentele. Webhook-urile se configurează doar de echipa Monri.
 
 ## 6. Flux de utilizare
 
@@ -99,7 +108,9 @@ Dacă plata este aprobată, Monri trimite server-la-server rezultatul, iar clien
 semnătura și abia apoi confirmă tranzacția, fie la revenirea clientului, fie la mesajul server-la-server, după care ajunge
 prima; la o semnătură greșită mesajul server-la-server este respins (răspuns 401), iar la revenirea browserului
 cu semnătură greșită tranzacția nu se modifică. La plata refuzată clientul rămâne pe pagina Monri
-și poate încerca alt card.
+și poate încerca alt card; dacă webhook-ul este configurat (secțiunea 5), Monri anunță server-la-server și refuzul,
+iar Odoo trece tranzacția în **Anulat(ă)**, cu motivul refuzului. O notificare de refuz întârziată sau duplicată nu
+anulează o tranzacție deja **Confirmat** sau **Autorizat**.
 
 ### Pasul 2 — Urmărirea tranzacțiilor
 
@@ -107,8 +118,9 @@ cu semnătură greșită tranzacția nu se modifică. La plata refuzată clientu
 
 Lista arată fiecare încercare de plată prin Monri cu starea ei: **Confirmat** când plata a fost aprobată, **Ciornă**
 când clientul a început plata și Odoo nu a primit încă un răspuns (starea **În așteptare** nu este folosită de acest provider), **Anulat(ă)** când clientul a renunțat din pagina Monri
-(linkul de anulare) sau Odoo a primit un cod de răspuns diferit de 0000. O plată doar refuzată de bancă de obicei nu
-ajunge în Odoo, iar tranzacția rămâne în Ciornă.
+(linkul de anulare) sau Odoo a primit un cod de răspuns diferit de 0000 (inclusiv plata refuzată de bancă, anunțată
+prin webhook). Fără webhook configurat, o plată doar refuzată de bancă nu ajunge în Odoo, iar tranzacția rămâne în
+Ciornă.
 
 ![Lista tranzacțiilor de plată: trei rânduri Monri (Payten) pentru Hipermag Distribuție SRL: SO0044-1 de 99,90 lei Anulat(ă), SO0043-1 de 380,50 lei Ciornă și SO0042-1 de 1.250,00 lei Confirmat](screenshots/02_lista_tranzactii.png)
 
@@ -127,7 +139,9 @@ numărul mascat), utile la reconcilierea cu extrasul. Dacă plata a fost confirm
 
 O tranzacție în **Ciornă** rămâne așa până când ajunge răspunsul Monri; dacă clientul a închis pagina fără să
 termine plata, tranzacția rămâne în Ciornă și nu se creează nicio plată. O tranzacție **Anulată** conține în mesajul
-de stare codul de răspuns și starea primite de la Monri. Clientul poate reîncerca plata dintr-o tranzacție nouă.
+de stare codul de răspuns și starea primite de la Monri și, când Monri îl trimite (prin webhook), motivul refuzului
+(de exemplu „Insufficient Funds”); la refuzul anunțat prin webhook se completează și **Referința furnizor**.
+Clientul poate reîncerca plata dintr-o tranzacție nouă.
 
 ![Tranzacția SO0043-1 în starea Ciornă, 380,50 lei, cu metoda de plată și furnizorul Monri (Payten), fără plată legată și fără referință furnizor](screenshots/04_tranzactie_in_asteptare.png)
 
@@ -180,7 +194,7 @@ contabilul.
 | `website_sale` (eCommerce) | oferă Monri (Payten) clienților la finalizarea comenzii |
 
 **Automat:** formularul semnat către Monri, verificarea semnăturii la revenirea browserului și la mesajul
-server-la-server, confirmarea tranzacției, jurnalizarea datelor băncii (cod de aprobare, referință, card) pe documentul
+server-la-server (callback sau webhook), confirmarea tranzacției, anularea ei la refuzul anunțat prin webhook, jurnalizarea datelor băncii (cod de aprobare, referință, card) pe documentul
 legat și crearea plății contabile.
 
 **Manual:** obținerea credențialelor de la Monri, reconcilierea extrasului bancar, contabilizarea comisionului,
@@ -194,7 +208,9 @@ așteptare.
 - [ ] Providerul are jurnal de tip bancă, moneda dorită este în monedele disponibile și este publicat; la finalizarea comenzii apare **Monri (Payten)**.
 - [ ] O plată de test pe mediul Monri ajunge în **Confirmat** și are **Referința furnizor** completată cu identificatorul Monri.
 - [ ] Închiderea paginii Monri înainte de plată lasă tranzacția în **Ciornă**, fără plată contabilă.
-- [ ] O plată refuzată de bancă rămâne în **Ciornă** (clientul rămâne pe pagina Monri); renunțarea prin linkul de anulare duce în **Anulat(ă)**; niciuna nu creează plată contabilă.
+- [ ] Webhook-urile Monri (`transaction:purchase:approved` / `declined`) sunt configurate de suportul Monri pe `https://<site>/payment/monri/webhook`.
+- [ ] O plată refuzată de bancă ajunge în **Anulat(ă)**, cu motivul refuzului în mesajul de stare (fără webhook rămâne în **Ciornă**); renunțarea prin linkul de anulare duce în **Anulat(ă)**; niciuna nu creează plată contabilă.
+- [ ] Un refuz primit după confirmare (notificare întârziată sau duplicată) nu schimbă o tranzacție **Confirmat** sau **Autorizat**.
 - [ ] Plata contabilă apare în **Contabilitate → Clienți → Plăți**, pe jurnalul providerului, cu suma brută.
 - [ ] Cheia comerciantului nu este vizibilă utilizatorilor fără drepturi de Setări.
 - [ ] Site-ul este accesibil pe `https` din internet, ca Monri să poată trimite mesajul server-la-server.
@@ -204,11 +220,13 @@ așteptare.
 
 | Mesaj | Cauză | Remediere |
 |---|---|---|
-| Monri declined the payment (response_code=..., status=...). | Odoo a primit de la Monri un răspuns cu cod diferit de 0000 (plată respinsă sau anulată de client) | tranzacția trece în **Anulat(ă)**; clientul reîncearcă dintr-o tranzacție nouă; motivul exact se vede în contul Monri |
+| Monri declined the payment: &lt;motiv&gt; (response_code=..., status=...). | Monri a anunțat prin webhook o plată refuzată; motivul este cel trimis de bancă (de exemplu „Insufficient Funds”) | tranzacția trece în **Anulat(ă)**; clientul reîncearcă dintr-o tranzacție nouă, eventual cu alt card |
+| Monri declined the payment (response_code=..., status=...). | Odoo a primit de la Monri un răspuns cu cod diferit de 0000 fără motiv (de exemplu renunțarea clientului prin linkul de anulare) | tranzacția trece în **Anulat(ă)**; clientul reîncearcă dintr-o tranzacție nouă; detaliile se văd în contul Monri |
 | Monri: refund request failed: ... / Monri: capture request failed: ... / Monri: void request failed: ... | cererea către API-ul Monri nu a ajuns sau a primit o eroare HTTP (credențiale greșite, mediu greșit, rețea) | verificați credențialele și starea providerului (test față de producție); reîncercați |
 | Monri: refund was declined (response_code=...). | Monri a refuzat rambursarea (de exemplu sumă mai mare decât cea încasată sau tranzacție nedecontată încă) | tranzacția de rambursare rămâne în **Eroare**; verificați tranzacția în contul Monri |
 | Monri: unsupported transaction action ... | acțiune în afara captură / anulare / rambursare | nu apare în utilizarea normală; contactați dezvoltatorul |
 | Răspuns „Invalid signature” (401) pe adresa mesajului server-la-server | semnătura nu corespunde cheii comerciantului din Odoo | verificați **Monri Merchant Key** și că provider-ul pe mediul corect este cel folosit |
+| Plata a fost refuzată în Monri, dar tranzacția rămâne în Ciornă | webhook-ul nu este configurat la Monri sau clientul a abandonat plata (de exemplu la 3D Secure), caz în care Monri nu trimite nimic | cereți suportului Monri configurarea webhook-urilor (secțiunea 5); starea încercărilor abandonate se vede doar în contul Monri |
 | Plata a fost aprobată în Monri, dar tranzacția rămâne în Ciornă | mesajul server-la-server nu a ajuns în Odoo (site inaccesibil din internet, `https` lipsă, cheie greșită) | verificați accesibilitatea site-ului și cheia; confirmați plata în contul Monri înainte să livrați |
 
 ## 10. Capturi de ecran
@@ -236,6 +254,9 @@ Pagina de plată Monri este a Monri, nu este un pas al operatorului și nu se ca
 
 - Explicați că plata se confirmă fie la revenirea clientului, fie la mesajul server-la-server (ambele verificate cu
   semnătură); callback-ul aduce identificatorul Monri și datele băncii, deci magazinul trebuie să fie accesibil din internet.
+- Explicați că plățile refuzate ajung în Odoo doar prin webhook-urile configurate de suportul Monri; Odoo procesează
+  doar evenimentele plății (vânzare/autorizare), iar evenimentele de captură, anulare și rambursare sunt ignorate,
+  pentru că aceste operații sunt confirmate sincron prin API.
 - Explicați diferența dintre **Mod testare** și **Activ** (mediu de test față de producție, credențiale diferite).
 - Precizați că pagina de plată se deschide în engleză pentru clienții români și că modulul nu verifică suma încasată
   față de comandă la confirmare: reconcilierea cu raportul Monri rămâne la contabil.

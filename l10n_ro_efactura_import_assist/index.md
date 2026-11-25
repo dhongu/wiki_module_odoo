@@ -4,39 +4,25 @@
 - **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_efactura_import_assist
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_efactura_import_assist`
-- **Ultima Ingestie:** `2026-09-12`
+- **Ultima Ingestie:** `2026-11-25`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul închide ultimul gol din fluxul FR-03 (e-Factura B2B bidirecțional prin SPV):
-atunci când o factură de la furnizor este importată automat din SPV și e legată de o
-comandă de achiziție, factura este confruntată linie cu linie cu comanda pe cantitate și
-preț. Dacă apar diferențe peste toleranțele acceptate, postarea facturii este blocată
-până când operatorul ia o decizie explicită — acceptă cu ajustare sau refuză total, caz
-în care furnizorul este notificat automat prin e-mail cu tabelul diferențelor.
+Modulul adaugă un control intern pentru facturile furnizor importate din SPV: atunci când o factură este legată de o comandă de achiziție, este confruntată linie cu linie cu comanda pe cantitate și preț. Dacă apar diferențe peste toleranțele acceptate, postarea facturii este blocată până când operatorul ia o decizie explicită — acceptă cu ajustare sau refuză, caz în care factura se anulează în Odoo și furnizorul poate fi notificat prin e-mail cu tabelul diferențelor. Modulul nu transmite un refuz în SPV.
 
 #### 2. Funcționalități Cheie
 
-- Verificare automată la import a facturilor SPV legate de o comandă de achiziție:
-  compară **cantitatea** (față de rămasul de facturat — recepționat sau comandat, în
-  funcție de politica de facturare a produsului) și **prețul unitar** (față de linia din
-  PO), cu **toleranțe procentuale configurabile pe companie**.
-- Toleranțele se setează în **Setări → Contabilitate → SPV Import Assistant** (cantitate %
-  și preț %; implicit 0, deci orice diferență e semnalată).
-- La diferențe peste toleranțe, factura intră în starea **„Pending Decision"**: postarea
-  (manuală sau automată) este blocată, apare un banner de avertizare pe factură și o
-  activitate pentru operator; liniile cu probleme sunt listate în fila **„SPV
-  Discrepancies"**.
-- Wizard de decizie explicită, accesibil din butonul **Review Discrepancies**:
-  - **Accept with adjustment** — deblochează postarea (pentru refuz parțial, se
-    ajustează întâi liniile facturii, apoi se acceptă);
-  - **Refuse** — factura se anulează, iar furnizorul poate primi opțional un e-mail cu
-    tabelul diferențelor.
-- Liniile facturate suplimentar, fără corespondent în comandă, sunt semnalate ca
-  „Line not in PO".
-- Verificare manuală re-rulabilă pe orice factură ciornă, cu acțiunea **Re-check
-  Discrepancies** din fila SPV Discrepancies.
+- Verificare automată la import a facturilor SPV legate de o comandă de achiziție: compară **cantitatea** (față de rămasul de facturat — recepționat sau comandat, în funcție de politica de facturare a produsului, minus ce s-a facturat deja) și **prețul unitar** (față de linia din comandă), cu **toleranțe procentuale configurabile pe companie**.
+- Toleranțele se setează în **Setări → Facturare**, secțiunea **SPV Import Assistant (PO Discrepancy Check)** (*Quantity Tolerance* și *Price Tolerance*, în procente; implicit 0, deci orice diferență e semnalată).
+- Facturile descărcate din SPV (automat sau cu **Sincronizează cu ANAF** din *Facturare → Furnizori → Facturi*) sunt verificate la import.
+- La diferențe peste toleranțe, factura intră în starea **„În așteptarea deciziei"**: postarea (manuală sau automată) este blocată cu mesajul „Operație invalidă", apare un banner de avertizare pe factură și o activitate pentru responsabilul facturii; diferențele de tip **Cantitate**, **Preț unitar** și **Linie inexistentă în comandă** sunt listate în fila **„Discrepanțe SPV"**.
+- Wizard **Decizie discrepanțe SPV**, accesibil din butonul **Revizuiește discrepanțele**:
+  - **Acceptă cu ajustare (permite postarea)** — starea devine *Acceptată cu ajustare* și factura se poate confirma, cu nota contabilă standard a facturii furnizor; se acceptă doar factura așa cum a emis-o furnizorul — pentru acceptare parțială, factura se refuză și se cere furnizorului una corectată;
+  - **Refuză (anulează factura și notifică furnizorul)** — factura se anulează, starea devine *Refuzată*, iar cu bifa **Trimite e-mail de notificare furnizorului** furnizorul primește tabelul diferențelor.
+- Fila **Discrepanțe SPV** păstrează diferențele acceptate sau refuzate ca evidență.
+- Verificare re-rulabilă pe factura ciornă cu diferențe semnalate (**Re-verifică discrepanțele**), de exemplu după o recepție nouă.
+- Transportul SPV (trimitere, status, recipisă, import inbound) este nativ în `l10n_ro_edi`; modulul adaugă doar stratul de control.
 
 #### 3. Dependențe
 
@@ -45,8 +31,24 @@ până când operatorul ia o decizie explicită — acceptă cu ajustare sau ref
 
 #### 4. Componente Cheie
 
-Nu au fost analizate separat — conform fluxului de ingestie, secțiunea a fost acoperită
-integral de `readme/DESCRIPTION.md` și `readme/USAGE.md`.
+Sumarul și Funcționalitățile Cheie provin din `readme/DESCRIPTION.md` și `readme/USAGE.md`; Componentele Cheie de mai jos sunt doar elementele evidente din structura modulului.
+
+**Modele**
+
+- `l10n.ro.edi.discrepancy`: o diferență semnalată pe o linie a facturii față de comandă (tip, valori comparate, stare).
+- `account.move` (extins): starea „în așteptarea deciziei", blocarea postării, verificarea față de comandă și acțiunile de revizuire.
+- `l10n.ro.edi.discrepancy.decision` (wizard): decizia de acceptare sau refuz, nota deciziei și opțiunea de e-mail către furnizor.
+- `res.company` / `res.config.settings` (extinse): toleranțele de cantitate și preț.
+
+**Vizualizări**
+
+- `view_move_form_l10n_ro_import_assist`: bannerul, butonul și fila *Discrepanțe SPV* pe factura furnizor.
+- `view_l10n_ro_edi_discrepancy_decision_form`: formularul wizard-ului de decizie.
+- `res_config_settings_view_form_import_assist`: toleranțele în Setări.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- `mail_template_spv_discrepancy_refusal`: șablonul de e-mail către furnizor la refuz (nu e cron; modulul nu definește acțiuni automate).
 
 #### 5. Conexiuni
 

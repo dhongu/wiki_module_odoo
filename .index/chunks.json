@@ -711,7 +711,7 @@
   {
     "path": "deltatech_ai_anthropic/index.md",
     "module": "deltatech_ai_anthropic",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.3.1",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_anthropic",
     "local_path": "odoo-addons/bitshop_ent/deltatech_ai_anthropic",
     "last_ingest": "2026-10-23",
@@ -1525,7 +1525,7 @@
   {
     "path": "deltatech_b2b_order_list/index.md",
     "module": "deltatech_b2b_order_list",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_order_list",
     "local_path": "odoo-addons/bitshop/deltatech_b2b_order_list",
     "last_ingest": "2026-10-09",
@@ -1620,7 +1620,7 @@
   {
     "path": "deltatech_b2b_quick_order/index.md",
     "module": "deltatech_b2b_quick_order",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_quick_order",
     "local_path": "odoo-addons/bitshop/deltatech_b2b_quick_order",
     "last_ingest": "2026-10-09",
@@ -1649,7 +1649,7 @@
   {
     "path": "deltatech_b2b_website_restrict/index.md",
     "module": "deltatech_b2b_website_restrict",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_b2b_website_restrict",
     "local_path": "odoo-addons/bitshop/deltatech_b2b_website_restrict",
     "last_ingest": "2026-10-09",
@@ -2453,7 +2453,7 @@
   {
     "path": "deltatech_contact/index.md",
     "module": "deltatech_contact",
-    "version": "19.0.1.4.15",
+    "version": "19.0.1.4.16",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_contact`",
     "local_path": "odoo-addons/deltatech/deltatech_contact",
     "last_ingest": "2026-11-17",
@@ -3211,7 +3211,7 @@
   {
     "path": "deltatech_delivery_dpd/index.md",
     "module": "deltatech_delivery_dpd",
-    "version": "19.0.0.7.6",
+    "version": "19.0.0.8.0",
     "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_dpd",
     "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_dpd",
     "last_ingest": "2026-10-22",
@@ -4288,7 +4288,7 @@
   {
     "path": "deltatech_doc_screenshots/index.md",
     "module": "deltatech_doc_screenshots",
-    "version": "19.0.1.5.0",
+    "version": "19.0.1.5.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_doc_screenshots",
     "local_path": "odoo-addons/deltatech/deltatech_doc_screenshots",
     "last_ingest": "2026-11-20",
@@ -4612,7 +4612,7 @@
   {
     "path": "deltatech_ehs/index.md",
     "module": "deltatech_ehs",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_ehs",
     "local_path": "odoo-addons/bitshop/deltatech_ehs",
     "last_ingest": "2026-11-19",
@@ -5767,7 +5767,7 @@
   {
     "path": "deltatech_ledger/index.md",
     "module": "deltatech_ledger",
-    "version": "19.0.0.1.2",
+    "version": "19.0.0.1.3",
     "github": "`https://github.com/dhongu/deltatech/tree/19.0/deltatech_ledger`",
     "local_path": "odoo-addons/deltatech/deltatech_ledger",
     "last_ingest": "2026-10-09",
@@ -6403,7 +6403,7 @@
   {
     "path": "deltatech_marketplace_magento/index.md",
     "module": "deltatech_marketplace_magento",
-    "version": "19.0.0.2.2",
+    "version": "19.0.0.2.3",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_magento",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_magento",
     "last_ingest": "2026-09-29",
@@ -6463,7 +6463,7 @@
   {
     "path": "deltatech_marketplace_merchantpro/index.md",
     "module": "deltatech_marketplace_merchantpro",
-    "version": "19.0.0.1.3",
+    "version": "19.0.0.1.4",
     "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_merchantpro`",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_merchantpro",
     "last_ingest": "2026-10-27",
@@ -6613,7 +6613,7 @@
   {
     "path": "deltatech_marketplace_prestashop/index.md",
     "module": "deltatech_marketplace_prestashop",
-    "version": "19.0.0.7.2",
+    "version": "19.0.0.7.3",
     "github": "`https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_prestashop`",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_prestashop",
     "last_ingest": "2026-10-22",
@@ -7460,7 +7460,7 @@
   {
     "path": "deltatech_mrp_workorder_qty/index.md",
     "module": "deltatech_mrp_workorder_qty",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.2.1",
     "github": "`https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_mrp_workorder_qty`",
     "local_path": "odoo-addons/bitshop_ent/deltatech_mrp_workorder_qty",
     "last_ingest": "2026-11-20",
@@ -7488,7 +7488,7 @@
   {
     "path": "deltatech_nap/index.md",
     "module": "deltatech_nap",
-    "version": "19.0.1.10.6",
+    "version": "19.0.1.10.7",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_nap`",
     "local_path": "odoo-addons/bitshop/deltatech_nap",
     "last_ingest": "2026-10-27",
@@ -8290,7 +8290,7 @@
   {
     "path": "deltatech_payment_mobilpay/index.md",
     "module": "deltatech_payment_mobilpay",
-    "version": "19.0.1.4.0",
+    "version": "19.0.1.4.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_mobilpay",
     "local_path": "odoo-addons/bitshop/deltatech_payment_mobilpay",
     "last_ingest": "2026-10-09",
@@ -8326,7 +8326,7 @@
   {
     "path": "deltatech_payment_monri/index.md",
     "module": "deltatech_payment_monri",
-    "version": "19.0.1.0.9",
+    "version": "19.0.1.0.10",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_monri",
     "local_path": "odoo-addons/bitshop/deltatech_payment_monri",
     "last_ingest": "2026-09-29",
@@ -10370,7 +10370,7 @@
   {
     "path": "deltatech_qms/index.md",
     "module": "deltatech_qms",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.1.2",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_qms",
     "local_path": "odoo-addons/bitshop/deltatech_qms",
     "last_ingest": "2026-11-19",
@@ -10602,7 +10602,7 @@
   {
     "path": "deltatech_report_layout/index.md",
     "module": "deltatech_report_layout",
-    "version": "19.0.1.4.0",
+    "version": "19.0.1.4.1",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_report_layout",
     "local_path": "odoo-addons/deltatech/deltatech_report_layout",
     "last_ingest": "2026-11-17",
@@ -10768,7 +10768,7 @@
   {
     "path": "deltatech_rma/index.md",
     "module": "deltatech_rma",
-    "version": "19.0.1.9.8",
+    "version": "19.0.1.9.9",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma",
     "local_path": "odoo-addons/bitshop/deltatech_rma",
     "last_ingest": null,
@@ -10972,7 +10972,7 @@
   {
     "path": "deltatech_saga/index.md",
     "module": "deltatech_saga",
-    "version": "19.0.6.30.4",
+    "version": "19.0.6.30.5",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga",
     "local_path": "odoo-addons/bitshop/deltatech_saga",
     "last_ingest": "2026-11-20",
@@ -12553,7 +12553,7 @@
   {
     "path": "deltatech_secondary_uom/index.md",
     "module": "deltatech_secondary_uom",
-    "version": "19.0.1.2.3",
+    "version": "19.0.1.2.4",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_secondary_uom",
     "local_path": "odoo-addons/deltatech/deltatech_secondary_uom",
     "last_ingest": "2026-11-20",
@@ -12604,7 +12604,7 @@
   {
     "path": "deltatech_service_agreement/index.md",
     "module": "deltatech_service_agreement",
-    "version": "19.0.2.0.20",
+    "version": "19.0.2.0.21",
     "github": "https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_agreement",
     "local_path": "odoo-addons/deltatech_service/deltatech_service_agreement",
     "last_ingest": "2026-11-21",
@@ -13857,7 +13857,7 @@
   {
     "path": "deltatech_vendor_bill_ubl_review/index.md",
     "module": "deltatech_vendor_bill_ubl_review",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_vendor_bill_ubl_review",
     "local_path": "odoo-addons/bitshop/deltatech_vendor_bill_ubl_review",
     "last_ingest": "2026-11-19",
@@ -14627,7 +14627,7 @@
   {
     "path": "deltatech_website_delivery_and_payment/index.md",
     "module": "deltatech_website_delivery_and_payment",
-    "version": "19.0.2.1.10",
+    "version": "19.0.2.1.11",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_delivery_and_payment",
     "local_path": "odoo-addons/deltatech/deltatech_website_delivery_and_payment",
     "last_ingest": "2026-11-04",
@@ -15684,7 +15684,7 @@
   {
     "path": "deltatech_widget_hierarchy_m2o/index.md",
     "module": "deltatech_widget_hierarchy_m2o",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.4.0",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_widget_hierarchy_m2o",
     "local_path": "odoo-addons/bitshop/deltatech_widget_hierarchy_m2o",
     "last_ingest": "2026-11-17",
@@ -16320,7 +16320,7 @@
   {
     "path": "l10n_ro_account_vat_journal/index.md",
     "module": "l10n_ro_account_vat_journal",
-    "version": "19.0.1.7.5",
+    "version": "19.0.1.8.0",
     "github": "[https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal)",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_account_vat_journal",
     "last_ingest": "2026-11-19",
@@ -16453,19 +16453,20 @@
     "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_aml_register",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_aml_register",
-    "last_ingest": "2026-09-12",
+    "last_ingest": "2026-11-25",
     "friendly_name": "Romania - Registru de conformitate AML",
     "summary": "Registrul verificărilor de conformitate AML este jurnalul care dovedește, la un control ONPCSB, că măsurile de cunoaștere a clientelei impuse de Legea 129/2019 au fost aplicate efectiv. Este singurul artefact din zona AML care nu se poate reconstitui retroactiv: o listă de parteneri verificați se poate reface oricând, dar dovada că o verificare a avut loc la o anumită dată, de o anumită persoană, cu o anumită concluzie, se pierde definitiv dacă nu a fost scrisă atunci — de aceea registrul este imutabil odată consemnat.",
     "features": [
-      "Fiecare verificare primește o referință din secvență (`AML/2026/00001`), fără întreruperi.",
+      "Fiecare verificare primește o referință din secvență (`AML/2026/00001`), atribuită încă din ciornă.",
       "Odată consemnată (butonul Consemnează), o verificare nu mai poate fi modificată sau",
+      "Verificările se consemnează manual (Nou în registru: partener, tip, rezultat, *Ce s-a verificat*,",
       "Documentele justificative pot fi anexate și ulterior, fără a altera constatarea; chatter-ul",
-      "Confirmarea unui screening de sancțiuni pe partener (sau verificarea unui beneficiar real)",
+      "Confirmarea unui screening de sancțiuni pe partener (butonul Screening de pe fișa partenerului) sau pe",
       "Tipuri de verificare consemnate: cunoaștere inițială, revizuire periodică, screening",
       "Rezultate posibile: fără suspiciuni, escaladat către persoana desemnată, raportat ONPCSB,",
-      "Pe fișa partenerului apare un buton cu numărul verificărilor consemnate și data ultimei",
-      "Registru accesibil din *Contabilitate → Registru Verificări AML*, filtrat implicit pe",
-      "Nu are ecran de configurare propriu — se bazează pe setările din `l10n_ro_partner_ubo`"
+      "Pe fișa partenerului apare butonul Verificări AML cu numărul verificărilor consemnate (deschide istoricul",
+      "Registrul se deschide din *Facturare/Contabilitate → Configurare → Contabilitate → Registru Verificări AML*,",
+      "Nu are configurare proprie. Câmpul Persoană desemnată AML din *Setări* aparține modulului de beneficiari"
     ],
     "dependencies": [
       "l10n_ro_partner_ubo"
@@ -16474,7 +16475,7 @@
       "l10n_ro_partner_ubo",
       "account"
     ],
-    "text": "Romania - Registru de conformitate AML\nl10n_ro_aml_register\nRegistrul verificărilor de conformitate AML este jurnalul care dovedește, la un control ONPCSB, că măsurile de cunoaștere a clientelei impuse de Legea 129/2019 au fost aplicate efectiv. Este singurul artefact din zona AML care nu se poate reconstitui retroactiv: o listă de parteneri verificați se poate reface oricând, dar dovada că o verificare a avut loc la o anumită dată, de o anumită persoană, cu o anumită concluzie, se pierde definitiv dacă nu a fost scrisă atunci — de aceea registrul este imutabil odată consemnat.\nFiecare verificare primește o referință din secvență (`AML/2026/00001`), fără întreruperi.\nOdată consemnată (butonul Consemnează), o verificare nu mai poate fi modificată sau\nDocumentele justificative pot fi anexate și ulterior, fără a altera constatarea; chatter-ul\nConfirmarea unui screening de sancțiuni pe partener (sau verificarea unui beneficiar real)\nTipuri de verificare consemnate: cunoaștere inițială, revizuire periodică, screening\nRezultate posibile: fără suspiciuni, escaladat către persoana desemnată, raportat ONPCSB,\nPe fișa partenerului apare un buton cu numărul verificărilor consemnate și data ultimei\nRegistru accesibil din *Contabilitate → Registru Verificări AML*, filtrat implicit pe\nNu are ecran de configurare propriu — se bazează pe setările din `l10n_ro_partner_ubo`"
+    "text": "Romania - Registru de conformitate AML\nl10n_ro_aml_register\nRegistrul verificărilor de conformitate AML este jurnalul care dovedește, la un control ONPCSB, că măsurile de cunoaștere a clientelei impuse de Legea 129/2019 au fost aplicate efectiv. Este singurul artefact din zona AML care nu se poate reconstitui retroactiv: o listă de parteneri verificați se poate reface oricând, dar dovada că o verificare a avut loc la o anumită dată, de o anumită persoană, cu o anumită concluzie, se pierde definitiv dacă nu a fost scrisă atunci — de aceea registrul este imutabil odată consemnat.\nFiecare verificare primește o referință din secvență (`AML/2026/00001`), atribuită încă din ciornă.\nOdată consemnată (butonul Consemnează), o verificare nu mai poate fi modificată sau\nVerificările se consemnează manual (Nou în registru: partener, tip, rezultat, *Ce s-a verificat*,\nDocumentele justificative pot fi anexate și ulterior, fără a altera constatarea; chatter-ul\nConfirmarea unui screening de sancțiuni pe partener (butonul Screening de pe fișa partenerului) sau pe\nTipuri de verificare consemnate: cunoaștere inițială, revizuire periodică, screening\nRezultate posibile: fără suspiciuni, escaladat către persoana desemnată, raportat ONPCSB,\nPe fișa partenerului apare butonul Verificări AML cu numărul verificărilor consemnate (deschide istoricul\nRegistrul se deschide din *Facturare/Contabilitate → Configurare → Contabilitate → Registru Verificări AML*,\nNu are configurare proprie. Câmpul Persoană desemnată AML din *Setări* aparține modulului de beneficiari"
   },
   {
     "path": "l10n_ro_anaf_agent/index.md",
@@ -16691,17 +16692,19 @@
     "version": "19.0.2.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d107",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d107",
-    "last_ingest": null,
+    "last_ingest": "2026-11-25",
     "friendly_name": "Romania - Declarația 107 ANAF (sponsorizări)",
     "summary": "Acest modul gestionează și exportă Declarația 107 privind sponsorizările și bursele private acordate în cursul exercițiului fiscal, conform art. 25 alin. (4) lit. i din Codul Fiscal. Este destinat contribuabililor plătitori de impozit pe profit sau impozit micro-întreprindere care au acordat sponsorizări eligibile. Modulul preia automat sponsorizările din contabilitate, calculează scăzământul de impozit conform formulei legale și generează fișierul XML pentru depunere prin SPV, pe structura oficială ANAF.",
     "features": [
-      "Import automat din contabilitate: preia sponsorizările înregistrate pe conturile 658x, grupate pe parteneri, cu sumele debitoare nete > 0 din perioada anului fiscal (`action_import_from_accounting`); dacă sponsorizările sunt înregistrate pe alt cont, liniile se adaugă manual.",
+      "Import automat din contabilitate: preia sponsorizările înregistrate pe conturile 658x, grupate pe parteneri, cu sumele debitoare nete > 0 din perioada anului fiscal (`action_import_from_accounting`); dacă sponsorizările sunt înregistrate pe alt cont, liniile se adaugă manual. Sunt preluate doar liniile cu partener beneficiar, iar un nou import înlocuiește liniile existente (ajustările manuale se pierd); pe fiecare linie se poate ajusta suma eligibilă.",
+      "Acces: *Contabilitate → Raportare → Declarații ANAF → Declarație 107*; se completează anul fiscal, tipul declarantului, cifra de afaceri și impozitul datorat (înainte de scăzământ), apoi se importă, se verifică calculul (limita 1 = 0,75% × CA, limita 2 = 20% × impozit, scăzământ efectiv, suma nedeductibilă) și se exportă.",
       "Calcul scăzământ conform formulei legale: `scăzământ = min(total sponsorizări, min(0,75% × CA, 20% × impozit datorat))`.",
-      "Export XML pe structura oficială ANAF (rădăcina `<d107>`, namespace `mfp:anaf:dgti:d107:declaratie:v1`, beneficiari `<entit>`), gata de depus prin SPV — fișierul trece validatorul oficial `D107Validator.jar` (\"Validare fără erori\"). Versiunea anterioară (19.0.1.0.1) genera o structură nedepunabilă (`<declaratie107>`, fără namespace, un singur atribut din peste 20 obligatorii).",
+      "Export XML pe structura oficială ANAF (rădăcina `<d107>`, namespace `mfp:anaf:dgti:d107:declaratie:v1`, beneficiari `<entit>`), gata de depus prin SPV — formular conform OPANAF 355/04.03.2024; ANAF nu publică XSD pentru D107, iar fișierul generat trece validatorul oficial (DUKIntegrator / `D107Validator.jar`) fără erori, verificat la 12.09.2026. Versiunea anterioară (19.0.1.0.1) genera o structură nedepunabilă (`<declaratie107>`, fără namespace, un singur atribut din peste 20 obligatorii).",
       "Câmpuri complete cerute de ANAF: tipul de impozit (`cod_oblig`: impozit pe profit 102/103/104/105 sau micro 121), exercițiul financiar, declarație rectificativă, alte situații, an fiscal modificat, date de dizolvare cu/fără lichidare, depunere de către succesor, numele semnatarului, beneficiari neindividualizați (anexa `<entit1>`) cu suma reportată/dedusă.",
       "Termenul de plată (`scadenta`) se calculează automat: ZZ=25, decalat cu 6 luni pentru exerciții încheiate până în 2025; de la 2026, cu o lună la dizolvare, două luni pentru `cod_oblig` 104, trei luni pentru 102/103/105 (fără decalaj pentru 121 — micro-întreprinderi).",
       "Corelații ANAF verificate înainte de export, cu mesaje explicite despre ce lipsește: beneficiar fără adresă/cod fiscal, succesor fără CIF, sume pentru beneficiari neindividualizați fără liniile aferente, date de dizolvare contradictorii, câmpuri de an modificat pe tipuri de impozit care nu le admit, semnatar necompletat.",
-      "Flux de confirmare: ciornă → confirmată (blochează modificările după depunere).",
+      "Flux de confirmare: ciornă → confirmată (blochează modificările după depunere); pentru corecturi se folosește Resetează la ciornă.",
+      "Configurare necesară: sponsorizările se înregistrează în contabilitate pe conturi 658x (sau un analitic dedicat), cu partenerul beneficiar completat pe linia notei contabile.",
       "Cine depune: contribuabilii plătitori de impozit pe profit sau de impozit pe micro-întreprindere care au acordat sponsorizări eligibile."
     ],
     "dependencies": [
@@ -16716,7 +16719,7 @@
       "l10n_ro_anaf_d207",
       "l10n_ro_anaf_d101"
     ],
-    "text": "Romania - Declarația 107 ANAF (sponsorizări)\nl10n_ro_anaf_d107\nAcest modul gestionează și exportă Declarația 107 privind sponsorizările și bursele private acordate în cursul exercițiului fiscal, conform art. 25 alin. (4) lit. i din Codul Fiscal. Este destinat contribuabililor plătitori de impozit pe profit sau impozit micro-întreprindere care au acordat sponsorizări eligibile. Modulul preia automat sponsorizările din contabilitate, calculează scăzământul de impozit conform formulei legale și generează fișierul XML pentru depunere prin SPV, pe structura oficială ANAF.\nImport automat din contabilitate: preia sponsorizările înregistrate pe conturile 658x, grupate pe parteneri, cu sumele debitoare nete > 0 din perioada anului fiscal (`action_import_from_accounting`); dacă sponsorizările sunt înregistrate pe alt cont, liniile se adaugă manual.\nCalcul scăzământ conform formulei legale: `scăzământ = min(total sponsorizări, min(0,75% × CA, 20% × impozit datorat))`.\nExport XML pe structura oficială ANAF (rădăcina `<d107>`, namespace `mfp:anaf:dgti:d107:declaratie:v1`, beneficiari `<entit>`), gata de depus prin SPV — fișierul trece validatorul oficial `D107Validator.jar` (\"Validare fără erori\"). Versiunea anterioară (19.0.1.0.1) genera o structură nedepunabilă (`<declaratie107>`, fără namespace, un singur atribut din peste 20 obligatorii).\nCâmpuri complete cerute de ANAF: tipul de impozit (`cod_oblig`: impozit pe profit 102/103/104/105 sau micro 121), exercițiul financiar, declarație rectificativă, alte situații, an fiscal modificat, date de dizolvare cu/fără lichidare, depunere de către succesor, numele semnatarului, beneficiari neindividualizați (anexa `<entit1>`) cu suma reportată/dedusă.\nTermenul de plată (`scadenta`) se calculează automat: ZZ=25, decalat cu 6 luni pentru exerciții încheiate până în 2025; de la 2026, cu o lună la dizolvare, două luni pentru `cod_oblig` 104, trei luni pentru 102/103/105 (fără decalaj pentru 121 — micro-întreprinderi).\nCorelații ANAF verificate înainte de export, cu mesaje explicite despre ce lipsește: beneficiar fără adresă/cod fiscal, succesor fără CIF, sume pentru beneficiari neindividualizați fără liniile aferente, date de dizolvare contradictorii, câmpuri de an modificat pe tipuri de impozit care nu le admit, semnatar necompletat.\nFlux de confirmare: ciornă → confirmată (blochează modificările după depunere).\nCine depune: contribuabilii plătitori de impozit pe profit sau de impozit pe micro-întreprindere care au acordat sponsorizări eligibile."
+    "text": "Romania - Declarația 107 ANAF (sponsorizări)\nl10n_ro_anaf_d107\nAcest modul gestionează și exportă Declarația 107 privind sponsorizările și bursele private acordate în cursul exercițiului fiscal, conform art. 25 alin. (4) lit. i din Codul Fiscal. Este destinat contribuabililor plătitori de impozit pe profit sau impozit micro-întreprindere care au acordat sponsorizări eligibile. Modulul preia automat sponsorizările din contabilitate, calculează scăzământul de impozit conform formulei legale și generează fișierul XML pentru depunere prin SPV, pe structura oficială ANAF.\nImport automat din contabilitate: preia sponsorizările înregistrate pe conturile 658x, grupate pe parteneri, cu sumele debitoare nete > 0 din perioada anului fiscal (`action_import_from_accounting`); dacă sponsorizările sunt înregistrate pe alt cont, liniile se adaugă manual. Sunt preluate doar liniile cu partener beneficiar, iar un nou import înlocuiește liniile existente (ajustările manuale se pierd); pe fiecare linie se poate ajusta suma eligibilă.\nAcces: *Contabilitate → Raportare → Declarații ANAF → Declarație 107*; se completează anul fiscal, tipul declarantului, cifra de afaceri și impozitul datorat (înainte de scăzământ), apoi se importă, se verifică calculul (limita 1 = 0,75% × CA, limita 2 = 20% × impozit, scăzământ efectiv, suma nedeductibilă) și se exportă.\nCalcul scăzământ conform formulei legale: `scăzământ = min(total sponsorizări, min(0,75% × CA, 20% × impozit datorat))`.\nExport XML pe structura oficială ANAF (rădăcina `<d107>`, namespace `mfp:anaf:dgti:d107:declaratie:v1`, beneficiari `<entit>`), gata de depus prin SPV — formular conform OPANAF 355/04.03.2024; ANAF nu publică XSD pentru D107, iar fișierul generat trece validatorul oficial (DUKIntegrator / `D107Validator.jar`) fără erori, verificat la 12.09.2026. Versiunea anterioară (19.0.1.0.1) genera o structură nedepunabilă (`<declaratie107>`, fără namespace, un singur atribut din peste 20 obligatorii).\nCâmpuri complete cerute de ANAF: tipul de impozit (`cod_oblig`: impozit pe profit 102/103/104/105 sau micro 121), exercițiul financiar, declarație rectificativă, alte situații, an fiscal modificat, date de dizolvare cu/fără lichidare, depunere de către succesor, numele semnatarului, beneficiari neindividualizați (anexa `<entit1>`) cu suma reportată/dedusă.\nTermenul de plată (`scadenta`) se calculează automat: ZZ=25, decalat cu 6 luni pentru exerciții încheiate până în 2025; de la 2026, cu o lună la dizolvare, două luni pentru `cod_oblig` 104, trei luni pentru 102/103/105 (fără decalaj pentru 121 — micro-întreprinderi).\nCorelații ANAF verificate înainte de export, cu mesaje explicite despre ce lipsește: beneficiar fără adresă/cod fiscal, succesor fără CIF, sume pentru beneficiari neindividualizați fără liniile aferente, date de dizolvare contradictorii, câmpuri de an modificat pe tipuri de impozit care nu le admit, semnatar necompletat.\nFlux de confirmare: ciornă → confirmată (blochează modificările după depunere); pentru corecturi se folosește Resetează la ciornă.\nConfigurare necesară: sponsorizările se înregistrează în contabilitate pe conturi 658x (sau un analitic dedicat), cu partenerul beneficiar completat pe linia notei contabile.\nCine depune: contribuabilii plătitori de impozit pe profit sau de impozit pe micro-întreprindere care au acordat sponsorizări eligibile."
   },
   {
     "path": "l10n_ro_anaf_d112/index.md",
@@ -17209,7 +17212,7 @@
   {
     "path": "l10n_ro_anaf_d394/index.md",
     "module": "l10n_ro_anaf_d394",
-    "version": "19.0.1.3.17",
+    "version": "19.0.1.3.18",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d394",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d394",
     "last_ingest": null,
@@ -17379,18 +17382,22 @@
     "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_duk",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_duk",
-    "last_ingest": "2026-09-12",
+    "last_ingest": "2026-11-25",
     "friendly_name": "Romania - DUK Integrator (prin agent local)",
     "summary": "Modulul validează declarațiile ANAF cu **DUKIntegrator**, aplicația oficială Java a ANAF, fără să ruleze Java pe serverul Odoo. Spre deosebire de o simplă validare XSD, DUKIntegrator aplică regulile de business ale ANAF (sume de control, câmpuri condiționate, verificare CIF) și generează PDF-ul oficial cu XML-ul inclus. Pentru că Odoo în cloud (ex. odoo.sh) nu poate rula Java, validarea e delegată agentului Terrabit instalat pe stația contabilului — același model „cloud-safe\" folosit de `l10n_ro_anaf_agent`.",
     "features": [
-      "Buton Validate DUK pe depunerea ANAF (*Contabilitate → ANAF → Depuneri*): creează un job `duk_validate`, iar starea DUK devine *Pending Validation* până agentul întoarce rezultatul.",
+      "Buton Validare DUK pe depunerea ANAF (*Contabilitate → Raportare → Declarații ANAF → Depuneri electronice*), vizibil doar dacă depunerea are fișier XML atașat (D100, D101, D112, D300, D390, D394 sau D406): creează un job `duk_validate`, iar starea DUK devine *În așteptarea validării* până agentul întoarce rezultatul. Jobul e vizibil în *Contabilitate → Configurare → Joburi TC* (tip *Validare DUK*, cu fișierul XML și tipul declarației ca parametri).",
+      "Rezultatul DUK nu se resetează la înlocuirea fișierului depunerii: după orice schimbare a XML-ului se apasă din nou Validare DUK. Butonul cere drept de creare pe joburile Terrabit Connect (rolul Contabilitate / Administrator).",
       "Agentul Terrabit Connect de pe stația contabilului preia jobul, rulează DUKIntegrator local (`java -jar DUKIntegrator.jar -usage p <file_type> ...`) și trimite rezultatul înapoi.",
-      "La rezultat: dacă e valid, starea devine *Valid* și se atașează PDF-ul oficial (cu XML inclus); dacă e invalid, starea devine *Invalid* și erorile apar în câmpul *DUK Errors*.",
-      "Câmp calculat Status (ciclu de viață unificat) pe depunere: ciornă → XML generat → validat DUK (valid/invalid) → trimis ANAF → acceptat/respins de ANAF.",
-      "Gardă opțională Require DUK Validation Before Submit (*Setări → Contabilitate*): blochează depunerea (`Submit`) până când validarea DUK trece.",
+      "La rezultat: dacă e valid, starea devine *Valid* (Status *Validat DUK*) și se atașează PDF-ul oficial (cu XML inclus) în PDF DUK; dacă e invalid, starea devine *Invalid* (Status *DUK invalid*) și erorile apar în câmpul Erori DUK; după corectare se atașează noul XML și se validează din nou.",
+      "Coloana Status (ciclu de viață unificat) din registrul depunerilor: XML generat → validat DUK / DUK invalid → trimis la ANAF → validat ANAF; coloana Validare DUK arată rezultatul (*Nevalidat*, *În așteptarea validării*, *Valid*, *Invalid*).",
+      "Gardă opțională Necesită validare DUK înainte de depunere (*Contabilitate → Configurare → Setări*, blocul *Depunere electronică declarație ANAF*, per companie): Depune e blocat, cu mesajul „Validarea DUK este obligatorie înainte de depunere…\", până când validarea are rezultatul *Valid*.",
       "Mixin reutilizabil `l10n.ro.anaf.duk.mixin` — orice alt model poate moșteni mixin-ul, implementa `_l10n_ro_duk_xml()` și capătă automat butonul, starea, PDF-ul și erorile.",
       "Mapare tip declarație → tip fișier DUKIntegrator (D100, D101, D112, D300, D390, D394, D406/SAF-T), extensibilă prin suprascrierea `_l10n_ro_duk_file_type_for`.",
-      "Configurare pe stația contabilului: Java (JRE) + `DUKIntegrator.jar` și pachetele de validare per declarație de la ANAF, cu calea către acestea setată în agentul Terrabit; actualizarea pachetelor rămâne responsabilitatea agentului."
+      "Configurare în Odoo: agentul Terrabit înregistrat pentru companie în *Contabilitate → Configurare → Stație ANAF* (validarea folosește stația activă a companiei), din `l10n_ro_anaf_agent`.",
+      "Configurare pe stația contabilului: Java (JRE) + `DUKIntegrator.jar` și pachetele de validare per declarație de la ANAF, cu calea către `java` și `DUKIntegrator.jar` setată în agentul Terrabit; actualizarea pachetelor rămâne responsabilitatea agentului.",
+      "Modulul livrează partea Odoo și contractul; rularea DUKIntegrator pe stație o face aplicația Terrabit Connect.",
+      "Pe alte modele: un model cu `company_id` care moștenește mixin-ul și implementează `_l10n_ro_duk_xml()` capătă câmpurile și acțiunea; butonul și secțiunea „Validare DUK\" se adaugă prin moștenirea view-ului."
     ],
     "dependencies": [
       "l10n_ro_anaf_agent",
@@ -17401,7 +17408,7 @@
       "duk_validate",
       "l10n_ro_anaf_submission"
     ],
-    "text": "Romania - DUK Integrator (prin agent local)\nl10n_ro_anaf_duk\nModulul validează declarațiile ANAF cu **DUKIntegrator**, aplicația oficială Java a ANAF, fără să ruleze Java pe serverul Odoo. Spre deosebire de o simplă validare XSD, DUKIntegrator aplică regulile de business ale ANAF (sume de control, câmpuri condiționate, verificare CIF) și generează PDF-ul oficial cu XML-ul inclus. Pentru că Odoo în cloud (ex. odoo.sh) nu poate rula Java, validarea e delegată agentului Terrabit instalat pe stația contabilului — același model „cloud-safe\" folosit de `l10n_ro_anaf_agent`.\nButon Validate DUK pe depunerea ANAF (*Contabilitate → ANAF → Depuneri*): creează un job `duk_validate`, iar starea DUK devine *Pending Validation* până agentul întoarce rezultatul.\nAgentul Terrabit Connect de pe stația contabilului preia jobul, rulează DUKIntegrator local (`java -jar DUKIntegrator.jar -usage p <file_type> ...`) și trimite rezultatul înapoi.\nLa rezultat: dacă e valid, starea devine *Valid* și se atașează PDF-ul oficial (cu XML inclus); dacă e invalid, starea devine *Invalid* și erorile apar în câmpul *DUK Errors*.\nCâmp calculat Status (ciclu de viață unificat) pe depunere: ciornă → XML generat → validat DUK (valid/invalid) → trimis ANAF → acceptat/respins de ANAF.\nGardă opțională Require DUK Validation Before Submit (*Setări → Contabilitate*): blochează depunerea (`Submit`) până când validarea DUK trece.\nMixin reutilizabil `l10n.ro.anaf.duk.mixin` — orice alt model poate moșteni mixin-ul, implementa `_l10n_ro_duk_xml()` și capătă automat butonul, starea, PDF-ul și erorile.\nMapare tip declarație → tip fișier DUKIntegrator (D100, D101, D112, D300, D390, D394, D406/SAF-T), extensibilă prin suprascrierea `_l10n_ro_duk_file_type_for`.\nConfigurare pe stația contabilului: Java (JRE) + `DUKIntegrator.jar` și pachetele de validare per declarație de la ANAF, cu calea către acestea setată în agentul Terrabit; actualizarea pachetelor rămâne responsabilitatea agentului."
+    "text": "Romania - DUK Integrator (prin agent local)\nl10n_ro_anaf_duk\nModulul validează declarațiile ANAF cu **DUKIntegrator**, aplicația oficială Java a ANAF, fără să ruleze Java pe serverul Odoo. Spre deosebire de o simplă validare XSD, DUKIntegrator aplică regulile de business ale ANAF (sume de control, câmpuri condiționate, verificare CIF) și generează PDF-ul oficial cu XML-ul inclus. Pentru că Odoo în cloud (ex. odoo.sh) nu poate rula Java, validarea e delegată agentului Terrabit instalat pe stația contabilului — același model „cloud-safe\" folosit de `l10n_ro_anaf_agent`.\nButon Validare DUK pe depunerea ANAF (*Contabilitate → Raportare → Declarații ANAF → Depuneri electronice*), vizibil doar dacă depunerea are fișier XML atașat (D100, D101, D112, D300, D390, D394 sau D406): creează un job `duk_validate`, iar starea DUK devine *În așteptarea validării* până agentul întoarce rezultatul. Jobul e vizibil în *Contabilitate → Configurare → Joburi TC* (tip *Validare DUK*, cu fișierul XML și tipul declarației ca parametri).\nRezultatul DUK nu se resetează la înlocuirea fișierului depunerii: după orice schimbare a XML-ului se apasă din nou Validare DUK. Butonul cere drept de creare pe joburile Terrabit Connect (rolul Contabilitate / Administrator).\nAgentul Terrabit Connect de pe stația contabilului preia jobul, rulează DUKIntegrator local (`java -jar DUKIntegrator.jar -usage p <file_type> ...`) și trimite rezultatul înapoi.\nLa rezultat: dacă e valid, starea devine *Valid* (Status *Validat DUK*) și se atașează PDF-ul oficial (cu XML inclus) în PDF DUK; dacă e invalid, starea devine *Invalid* (Status *DUK invalid*) și erorile apar în câmpul Erori DUK; după corectare se atașează noul XML și se validează din nou.\nColoana Status (ciclu de viață unificat) din registrul depunerilor: XML generat → validat DUK / DUK invalid → trimis la ANAF → validat ANAF; coloana Validare DUK arată rezultatul (*Nevalidat*, *În așteptarea validării*, *Valid*, *Invalid*).\nGardă opțională Necesită validare DUK înainte de depunere (*Contabilitate → Configurare → Setări*, blocul *Depunere electronică declarație ANAF*, per companie): Depune e blocat, cu mesajul „Validarea DUK este obligatorie înainte de depunere…\", până când validarea are rezultatul *Valid*.\nMixin reutilizabil `l10n.ro.anaf.duk.mixin` — orice alt model poate moșteni mixin-ul, implementa `_l10n_ro_duk_xml()` și capătă automat butonul, starea, PDF-ul și erorile.\nMapare tip declarație → tip fișier DUKIntegrator (D100, D101, D112, D300, D390, D394, D406/SAF-T), extensibilă prin suprascrierea `_l10n_ro_duk_file_type_for`.\nConfigurare în Odoo: agentul Terrabit înregistrat pentru companie în *Contabilitate → Configurare → Stație ANAF* (validarea folosește stația activă a companiei), din `l10n_ro_anaf_agent`.\nConfigurare pe stația contabilului: Java (JRE) + `DUKIntegrator.jar` și pachetele de validare per declarație de la ANAF, cu calea către `java` și `DUKIntegrator.jar` setată în agentul Terrabit; actualizarea pachetelor rămâne responsabilitatea agentului.\nModulul livrează partea Odoo și contractul; rularea DUKIntegrator pe stație o face aplicația Terrabit Connect.\nPe alte modele: un model cu `company_id` care moștenește mixin-ul și implementează `_l10n_ro_duk_xml()` capătă câmpurile și acțiunea; butonul și secțiunea „Validare DUK\" se adaugă prin moștenirea view-ului."
   },
   {
     "path": "l10n_ro_anaf_fiscal_status/index.md",
@@ -18420,18 +18427,20 @@
     "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_efactura_import_assist",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_efactura_import_assist",
-    "last_ingest": "2026-09-12",
+    "last_ingest": "2026-11-25",
     "friendly_name": "Romania - Asistent import e-Factura (verificare față de comandă)",
-    "summary": "Modulul închide ultimul gol din fluxul FR-03 (e-Factura B2B bidirecțional prin SPV): atunci când o factură de la furnizor este importată automat din SPV și e legată de o comandă de achiziție, factura este confruntată linie cu linie cu comanda pe cantitate și preț. Dacă apar diferențe peste toleranțele acceptate, postarea facturii este blocată până când operatorul ia o decizie explicită — acceptă cu ajustare sau refuză total, caz în care furnizorul este notificat automat prin e-mail cu tabelul diferențelor.",
+    "summary": "Modulul adaugă un control intern pentru facturile furnizor importate din SPV: atunci când o factură este legată de o comandă de achiziție, este confruntată linie cu linie cu comanda pe cantitate și preț. Dacă apar diferențe peste toleranțele acceptate, postarea facturii este blocată până când operatorul ia o decizie explicită — acceptă cu ajustare sau refuză, caz în care factura se anulează în Odoo și furnizorul poate fi notificat prin e-mail cu tabelul diferențelor. Modulul nu transmite un refuz în SPV.",
     "features": [
-      "Verificare automată la import a facturilor SPV legate de o comandă de achiziție:",
-      "Toleranțele se setează în Setări → Contabilitate → SPV Import Assistant (cantitate %",
-      "La diferențe peste toleranțe, factura intră în starea „Pending Decision\": postarea",
-      "Wizard de decizie explicită, accesibil din butonul Review Discrepancies:",
-      "Accept with adjustment — deblochează postarea (pentru refuz parțial, se",
-      "Refuse — factura se anulează, iar furnizorul poate primi opțional un e-mail cu",
-      "Liniile facturate suplimentar, fără corespondent în comandă, sunt semnalate ca",
-      "Verificare manuală re-rulabilă pe orice factură ciornă, cu acțiunea **Re-check"
+      "Verificare automată la import a facturilor SPV legate de o comandă de achiziție: compară cantitatea (față de rămasul de facturat — recepționat sau comandat, în funcție de politica de facturare a produsului, minus ce s-a facturat deja) și prețul unitar (față de linia din comandă), cu toleranțe procentuale configurabile pe companie.",
+      "Toleranțele se setează în Setări → Facturare, secțiunea SPV Import Assistant (PO Discrepancy Check) (*Quantity Tolerance* și *Price Tolerance*, în procente; implicit 0, deci orice diferență e semnalată).",
+      "Facturile descărcate din SPV (automat sau cu Sincronizează cu ANAF din *Facturare → Furnizori → Facturi*) sunt verificate la import.",
+      "La diferențe peste toleranțe, factura intră în starea „În așteptarea deciziei\": postarea (manuală sau automată) este blocată cu mesajul „Operație invalidă\", apare un banner de avertizare pe factură și o activitate pentru responsabilul facturii; diferențele de tip Cantitate, Preț unitar și Linie inexistentă în comandă sunt listate în fila „Discrepanțe SPV\".",
+      "Wizard Decizie discrepanțe SPV, accesibil din butonul Revizuiește discrepanțele:",
+      "Acceptă cu ajustare (permite postarea) — starea devine *Acceptată cu ajustare* și factura se poate confirma, cu nota contabilă standard a facturii furnizor; se acceptă doar factura așa cum a emis-o furnizorul — pentru acceptare parțială, factura se refuză și se cere furnizorului una corectată;",
+      "Refuză (anulează factura și notifică furnizorul) — factura se anulează, starea devine *Refuzată*, iar cu bifa Trimite e-mail de notificare furnizorului furnizorul primește tabelul diferențelor.",
+      "Fila Discrepanțe SPV păstrează diferențele acceptate sau refuzate ca evidență.",
+      "Verificare re-rulabilă pe factura ciornă cu diferențe semnalate (Re-verifică discrepanțele), de exemplu după o recepție nouă.",
+      "Transportul SPV (trimitere, status, recipisă, import inbound) este nativ în `l10n_ro_edi`; modulul adaugă doar stratul de control."
     ],
     "dependencies": [
       "l10n_ro_edi",
@@ -18441,7 +18450,7 @@
       "l10n_ro_efactura_dedup",
       "l10n_ro_edi"
     ],
-    "text": "Romania - Asistent import e-Factura (verificare față de comandă)\nl10n_ro_efactura_import_assist\nModulul închide ultimul gol din fluxul FR-03 (e-Factura B2B bidirecțional prin SPV): atunci când o factură de la furnizor este importată automat din SPV și e legată de o comandă de achiziție, factura este confruntată linie cu linie cu comanda pe cantitate și preț. Dacă apar diferențe peste toleranțele acceptate, postarea facturii este blocată până când operatorul ia o decizie explicită — acceptă cu ajustare sau refuză total, caz în care furnizorul este notificat automat prin e-mail cu tabelul diferențelor.\nVerificare automată la import a facturilor SPV legate de o comandă de achiziție:\nToleranțele se setează în Setări → Contabilitate → SPV Import Assistant (cantitate %\nLa diferențe peste toleranțe, factura intră în starea „Pending Decision\": postarea\nWizard de decizie explicită, accesibil din butonul Review Discrepancies:\nAccept with adjustment — deblochează postarea (pentru refuz parțial, se\nRefuse — factura se anulează, iar furnizorul poate primi opțional un e-mail cu\nLiniile facturate suplimentar, fără corespondent în comandă, sunt semnalate ca\nVerificare manuală re-rulabilă pe orice factură ciornă, cu acțiunea **Re-check"
+    "text": "Romania - Asistent import e-Factura (verificare față de comandă)\nl10n_ro_efactura_import_assist\nModulul adaugă un control intern pentru facturile furnizor importate din SPV: atunci când o factură este legată de o comandă de achiziție, este confruntată linie cu linie cu comanda pe cantitate și preț. Dacă apar diferențe peste toleranțele acceptate, postarea facturii este blocată până când operatorul ia o decizie explicită — acceptă cu ajustare sau refuză, caz în care factura se anulează în Odoo și furnizorul poate fi notificat prin e-mail cu tabelul diferențelor. Modulul nu transmite un refuz în SPV.\nVerificare automată la import a facturilor SPV legate de o comandă de achiziție: compară cantitatea (față de rămasul de facturat — recepționat sau comandat, în funcție de politica de facturare a produsului, minus ce s-a facturat deja) și prețul unitar (față de linia din comandă), cu toleranțe procentuale configurabile pe companie.\nToleranțele se setează în Setări → Facturare, secțiunea SPV Import Assistant (PO Discrepancy Check) (*Quantity Tolerance* și *Price Tolerance*, în procente; implicit 0, deci orice diferență e semnalată).\nFacturile descărcate din SPV (automat sau cu Sincronizează cu ANAF din *Facturare → Furnizori → Facturi*) sunt verificate la import.\nLa diferențe peste toleranțe, factura intră în starea „În așteptarea deciziei\": postarea (manuală sau automată) este blocată cu mesajul „Operație invalidă\", apare un banner de avertizare pe factură și o activitate pentru responsabilul facturii; diferențele de tip Cantitate, Preț unitar și Linie inexistentă în comandă sunt listate în fila „Discrepanțe SPV\".\nWizard Decizie discrepanțe SPV, accesibil din butonul Revizuiește discrepanțele:\nAcceptă cu ajustare (permite postarea) — starea devine *Acceptată cu ajustare* și factura se poate confirma, cu nota contabilă standard a facturii furnizor; se acceptă doar factura așa cum a emis-o furnizorul — pentru acceptare parțială, factura se refuză și se cere furnizorului una corectată;\nRefuză (anulează factura și notifică furnizorul) — factura se anulează, starea devine *Refuzată*, iar cu bifa Trimite e-mail de notificare furnizorului furnizorul primește tabelul diferențelor.\nFila Discrepanțe SPV păstrează diferențele acceptate sau refuzate ca evidență.\nVerificare re-rulabilă pe factura ciornă cu diferențe semnalate (Re-verifică discrepanțele), de exemplu după o recepție nouă.\nTransportul SPV (trimitere, status, recipisă, import inbound) este nativ în `l10n_ro_edi`; modulul adaugă doar stratul de control."
   },
   {
     "path": "l10n_ro_efactura_product_match/index.md",
@@ -19094,7 +19103,7 @@
   {
     "path": "l10n_ro_fixed_assets/index.md",
     "module": "l10n_ro_fixed_assets",
-    "version": "19.0.1.17.6",
+    "version": "19.0.1.17.7",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_fixed_assets",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_fixed_assets",
     "last_ingest": null,
@@ -20416,13 +20425,14 @@
     "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_partner_financials",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_partner_financials",
-    "last_ingest": null,
+    "last_ingest": "2026-11-25",
     "friendly_name": "Romania - Date financiare partener (MFinanțe)",
     "summary": "Modulul aduce pe fișa partenerului situațiile financiare publice depuse la Ministerul Finanțelor, preluate direct din serviciul deschis MFinanțe/ANAF, fără abonament la un furnizor comercial de date. Pe lângă cifrele brute (cifră de afaceri, profit, datorii, capitaluri, salariați), calculează automat indicatori de bonitate — inclusiv un semnal dedicat pentru capitaluri proprii negative — utili în evaluarea rapidă a riscului comercial al unui client sau furnizor.",
     "features": [
       "Preluare din registrul public MFinanțe/ANAF a poziției financiare (active, stocuri, creanțe, disponibilități, datorii totale, provizioane, capitaluri proprii, capital subscris vărsat) și a performanței (cifră de afaceri netă, venituri/cheltuieli totale, rezultat brut și net, număr mediu de salariați), plus denumirea raportată și codul CAEN.",
       "Indicatori de bonitate calculați automat: lichiditate (active circulante/datorii totale), solvabilitate (capitaluri proprii/total active), grad de îndatorare, marjă netă, rentabilitatea capitalului, cifră de afaceri pe salariat.",
-      "Avertizare de capitaluri proprii negative (situația din art. 153^24 din Legea 31/1990), afișată pe fișa partenerului și disponibilă ca filtru dedicat în lista de contacte (*Negative Equity*).",
+      "Avertizare de capitaluri proprii negative, afișată pe fișa partenerului și disponibilă ca filtru dedicat în lista de contacte (*Negative Equity*, pe ultimul an raportat); banda nu mai citează un articol de lege.",
+      "Semnal estimativ de capitaluri proprii sub jumătate din capitalul subscris vărsat (art. 153^24 din Legea 31/1990), câmpul `net_assets_below_half_capital`, afișat ca bandă dedicată pe formularul anului; este o aproximare din cifrele publice, nu o constatare juridică a activului net.",
       "Buton Retrieve from MFinanțe pe fila *Financial Data* a partenerului, plus buton statistic în antet către istoricul complet pe ani.",
       "Fila *Reported Indicators* a fiecărui an păstrează lista brută a indicatorilor exact cum au fost raportați de ANAF, pentru audit.",
       "Raport de ansamblu la *Contabilitate → Raportare → Partner Financial Data*, cu filtre pentru capitaluri proprii negative, parteneri pe pierdere și societăți care depun alt formular decât cel standard (non-financiar).",
@@ -20437,7 +20447,7 @@
     "connections": [
       "l10n_ro_anaf_partner"
     ],
-    "text": "Romania - Date financiare partener (MFinanțe)\nl10n_ro_partner_financials\nModulul aduce pe fișa partenerului situațiile financiare publice depuse la Ministerul Finanțelor, preluate direct din serviciul deschis MFinanțe/ANAF, fără abonament la un furnizor comercial de date. Pe lângă cifrele brute (cifră de afaceri, profit, datorii, capitaluri, salariați), calculează automat indicatori de bonitate — inclusiv un semnal dedicat pentru capitaluri proprii negative — utili în evaluarea rapidă a riscului comercial al unui client sau furnizor.\nPreluare din registrul public MFinanțe/ANAF a poziției financiare (active, stocuri, creanțe, disponibilități, datorii totale, provizioane, capitaluri proprii, capital subscris vărsat) și a performanței (cifră de afaceri netă, venituri/cheltuieli totale, rezultat brut și net, număr mediu de salariați), plus denumirea raportată și codul CAEN.\nIndicatori de bonitate calculați automat: lichiditate (active circulante/datorii totale), solvabilitate (capitaluri proprii/total active), grad de îndatorare, marjă netă, rentabilitatea capitalului, cifră de afaceri pe salariat.\nAvertizare de capitaluri proprii negative (situația din art. 153^24 din Legea 31/1990), afișată pe fișa partenerului și disponibilă ca filtru dedicat în lista de contacte (*Negative Equity*).\nButon Retrieve from MFinanțe pe fila *Financial Data* a partenerului, plus buton statistic în antet către istoricul complet pe ani.\nFila *Reported Indicators* a fiecărui an păstrează lista brută a indicatorilor exact cum au fost raportați de ANAF, pentru audit.\nRaport de ansamblu la *Contabilitate → Raportare → Partner Financial Data*, cu filtre pentru capitaluri proprii negative, parteneri pe pierdere și societăți care depun alt formular decât cel standard (non-financiar).\nAcțiune programată „RO: Fetch partner financial data (MFinanțe)\" pentru preluare automată în loturi (livrată dezactivată), cu cadență de o cerere pe secundă și reinterogare temporizată a partenerilor fără bilanț depus.\nConfigurare la *Contabilitate → Configurări → Setări → Partner Financial Data (RO)*: numărul de ani fiscali de preluat (implicit 3) și numărul de zile după care se reinterogează un partener fără bilanț găsit (implicit 30); adresa serviciului e reglabilă din parametrul de sistem `l10n_ro_partner_financials.mfinante_url`.\nNu include scoruri proprietare de tip rating financiar sau probabilitate de insolvență — acestea rămân în module-conector separate, cu abonamentul furnizorului respectiv."
+    "text": "Romania - Date financiare partener (MFinanțe)\nl10n_ro_partner_financials\nModulul aduce pe fișa partenerului situațiile financiare publice depuse la Ministerul Finanțelor, preluate direct din serviciul deschis MFinanțe/ANAF, fără abonament la un furnizor comercial de date. Pe lângă cifrele brute (cifră de afaceri, profit, datorii, capitaluri, salariați), calculează automat indicatori de bonitate — inclusiv un semnal dedicat pentru capitaluri proprii negative — utili în evaluarea rapidă a riscului comercial al unui client sau furnizor.\nPreluare din registrul public MFinanțe/ANAF a poziției financiare (active, stocuri, creanțe, disponibilități, datorii totale, provizioane, capitaluri proprii, capital subscris vărsat) și a performanței (cifră de afaceri netă, venituri/cheltuieli totale, rezultat brut și net, număr mediu de salariați), plus denumirea raportată și codul CAEN.\nIndicatori de bonitate calculați automat: lichiditate (active circulante/datorii totale), solvabilitate (capitaluri proprii/total active), grad de îndatorare, marjă netă, rentabilitatea capitalului, cifră de afaceri pe salariat.\nAvertizare de capitaluri proprii negative, afișată pe fișa partenerului și disponibilă ca filtru dedicat în lista de contacte (*Negative Equity*, pe ultimul an raportat); banda nu mai citează un articol de lege.\nSemnal estimativ de capitaluri proprii sub jumătate din capitalul subscris vărsat (art. 153^24 din Legea 31/1990), câmpul `net_assets_below_half_capital`, afișat ca bandă dedicată pe formularul anului; este o aproximare din cifrele publice, nu o constatare juridică a activului net.\nButon Retrieve from MFinanțe pe fila *Financial Data* a partenerului, plus buton statistic în antet către istoricul complet pe ani.\nFila *Reported Indicators* a fiecărui an păstrează lista brută a indicatorilor exact cum au fost raportați de ANAF, pentru audit.\nRaport de ansamblu la *Contabilitate → Raportare → Partner Financial Data*, cu filtre pentru capitaluri proprii negative, parteneri pe pierdere și societăți care depun alt formular decât cel standard (non-financiar).\nAcțiune programată „RO: Fetch partner financial data (MFinanțe)\" pentru preluare automată în loturi (livrată dezactivată), cu cadență de o cerere pe secundă și reinterogare temporizată a partenerilor fără bilanț depus.\nConfigurare la *Contabilitate → Configurări → Setări → Partner Financial Data (RO)*: numărul de ani fiscali de preluat (implicit 3) și numărul de zile după care se reinterogează un partener fără bilanț găsit (implicit 30); adresa serviciului e reglabilă din parametrul de sistem `l10n_ro_partner_financials.mfinante_url`.\nNu include scoruri proprietare de tip rating financiar sau probabilitate de insolvență — acestea rămân în module-conector separate, cu abonamentul furnizorului respectiv."
   },
   {
     "path": "l10n_ro_partner_ledger_currency/index.md",
@@ -20541,18 +20551,20 @@
     "path": "l10n_ro_partner_ubo/index.md",
     "module": "l10n_ro_partner_ubo",
     "version": "19.0.1.0.4",
-    "github": "[odoo-addons/l10n_ro_ent/l10n_ro_partner_ubo](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_partner_ubo)",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_partner_ubo",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_partner_ubo",
-    "last_ingest": "2026-09-12",
+    "last_ingest": "2026-11-25",
     "friendly_name": "Romania - Beneficiarul real al partenerului",
     "summary": "Modulul ține evidența beneficiarilor reali (UBO — Ultimate Beneficial Owner) ai partenerilor de afaceri, conform măsurilor de cunoaștere a clientelei impuse de Legea 129/2019 privind prevenirea și combaterea spălării banilor. Extinde motorul de screening din `l10n_ro_partner_screening` și îl aplică nu doar pe societate, ci pe persoanele fizice care o controlează — acolo unde riscul este de fapt ascuns.",
     "features": [
       "Tab dedicat \"Beneficiari Reali\" pe fișa partenerului persoană juridică, cu identificarea completă a fiecărei persoane fizice care deține sau controlează societatea",
-      "Natura controlului conform art. 4 alin. (2): deținere directă (peste 25%), deținere indirectă, control prin alte mijloace sau conducere de rang înalt (folosită doar ca soluție subsidiară, justificată în câmpul Note, nu prin completarea unei cote fictive)",
+      "Natura controlului conform art. 4 alin. (2): deținere directă (peste 25%), deținere indirectă, control prin alte mijloace sau conducere de rang înalt (art. 4 alin. (2) lit. a) pct. 2 din Legea 129/2019; folosită doar ca soluție subsidiară, cu tipul de control Conducere de rang înalt, justificată în câmpul Note, nu prin completarea unei cote fictive)",
       "Proveniența informației (declarația clientului, extras ONRC, RECOM, registru public al altui stat) și documentele justificative atașate",
       "CNP-ul și documentele sunt vizibile doar grupului \"Ofițer de conformitate AML\" (art. 23)",
       "Screening automat al fiecărui beneficiar real pe listele OFAC și UE Consolidated, limitat la intrările de tip persoană pentru a evita fals-pozitivele; rulează la salvare și după fiecare actualizare a listelor; confirmarea potrivirii rămâne a operatorului, prin butonul \"Screening sancțiuni\" de pe formularul beneficiarului real",
-      "Statusul de screening al partenerului capătă două trepte noi, cu prioritate asupra celorlalte semnale: \"Beneficiar Real Sancționat\" și \"Beneficiar Real Lipsă\" (partener companie fără niciun beneficiar real documentat, semnalat cu banner de avertizare pe fișă)",
+      "O potrivire la screening este semnalată ca „posibilă\" și consemnată în chatter-ul partenerului; screeningul presupune liste de sancțiuni încărcate de `l10n_ro_partner_screening` (altfel verificarea nu rulează)",
+      "Statusul de screening al partenerului capătă două trepte noi, cu prioritate asupra celorlalte semnale: \"Beneficiar Real Sancționat\" (primează asupra oricărui alt semnal, inclusiv asupra unei societăți altfel curate pe liste) și \"Beneficiar Real Lipsă\" (partener companie în relație de afaceri, client sau furnizor, fără niciun beneficiar real documentat, semnalat cu banner de avertizare pe fișă)",
+      "Nivelul de risc AML se stabilește pe fișa fiecărui partener (implicit mediu) și determină periodicitatea revizuirii",
       "Detectare automată a structurilor de proprietate opace (niciun deținător nu depășește 25%)",
       "Revizuire periodică cu termen calculat pe nivelul de risc AML al partenerului — 12 luni (risc ridicat), 24 (mediu, implicit) sau 36 (redus) — vizibilă în meniul *Contabilitate → Beneficiari Reali*, filtrul \"Revizuire expirată\"; cronul săptămânal \"RO UBO: Revizuirea periodică a beneficiarilor reali\" (livrat dezactivat, se activează din *Setări → Tehnic → Acțiuni programate*) creează automat activități pentru persoana desemnată",
       "Evidența ultimei declarații proprii depuse la Registrul Comerțului (ONRC) și semnalarea automată a obligației anuale, rămasă în vigoare după Legea 315/2021 doar pentru societățile cu acționari sau sediu fiscal în jurisdicții necooperante (derivată din lista HG 1/2024 întreținută de modulul de screening)",
@@ -20562,9 +20574,10 @@
       "l10n_ro_partner_screening"
     ],
     "connections": [
-      "l10n_ro_partner_screening"
+      "l10n_ro_partner_screening",
+      "l10n_ro_aml_register"
     ],
-    "text": "Romania - Beneficiarul real al partenerului\nl10n_ro_partner_ubo\nModulul ține evidența beneficiarilor reali (UBO — Ultimate Beneficial Owner) ai partenerilor de afaceri, conform măsurilor de cunoaștere a clientelei impuse de Legea 129/2019 privind prevenirea și combaterea spălării banilor. Extinde motorul de screening din `l10n_ro_partner_screening` și îl aplică nu doar pe societate, ci pe persoanele fizice care o controlează — acolo unde riscul este de fapt ascuns.\nTab dedicat \"Beneficiari Reali\" pe fișa partenerului persoană juridică, cu identificarea completă a fiecărei persoane fizice care deține sau controlează societatea\nNatura controlului conform art. 4 alin. (2): deținere directă (peste 25%), deținere indirectă, control prin alte mijloace sau conducere de rang înalt (folosită doar ca soluție subsidiară, justificată în câmpul Note, nu prin completarea unei cote fictive)\nProveniența informației (declarația clientului, extras ONRC, RECOM, registru public al altui stat) și documentele justificative atașate\nCNP-ul și documentele sunt vizibile doar grupului \"Ofițer de conformitate AML\" (art. 23)\nScreening automat al fiecărui beneficiar real pe listele OFAC și UE Consolidated, limitat la intrările de tip persoană pentru a evita fals-pozitivele; rulează la salvare și după fiecare actualizare a listelor; confirmarea potrivirii rămâne a operatorului, prin butonul \"Screening sancțiuni\" de pe formularul beneficiarului real\nStatusul de screening al partenerului capătă două trepte noi, cu prioritate asupra celorlalte semnale: \"Beneficiar Real Sancționat\" și \"Beneficiar Real Lipsă\" (partener companie fără niciun beneficiar real documentat, semnalat cu banner de avertizare pe fișă)\nDetectare automată a structurilor de proprietate opace (niciun deținător nu depășește 25%)\nRevizuire periodică cu termen calculat pe nivelul de risc AML al partenerului — 12 luni (risc ridicat), 24 (mediu, implicit) sau 36 (redus) — vizibilă în meniul *Contabilitate → Beneficiari Reali*, filtrul \"Revizuire expirată\"; cronul săptămânal \"RO UBO: Revizuirea periodică a beneficiarilor reali\" (livrat dezactivat, se activează din *Setări → Tehnic → Acțiuni programate*) creează automat activități pentru persoana desemnată\nEvidența ultimei declarații proprii depuse la Registrul Comerțului (ONRC) și semnalarea automată a obligației anuale, rămasă în vigoare după Legea 315/2021 doar pentru societățile cu acționari sau sediu fiscal în jurisdicții necooperante (derivată din lista HG 1/2024 întreținută de modulul de screening)\nConfigurare din *Contabilitate → Configurare → Setări → Partner Screening (RO)*: persoana desemnată AML (primește activitățile de revizuire) și data ultimei declarații depuse la ONRC; grupul \"Ofițer de conformitate AML\" se acordă din *Setări → Utilizatori → Contabilitate*"
+    "text": "Romania - Beneficiarul real al partenerului\nl10n_ro_partner_ubo\nModulul ține evidența beneficiarilor reali (UBO — Ultimate Beneficial Owner) ai partenerilor de afaceri, conform măsurilor de cunoaștere a clientelei impuse de Legea 129/2019 privind prevenirea și combaterea spălării banilor. Extinde motorul de screening din `l10n_ro_partner_screening` și îl aplică nu doar pe societate, ci pe persoanele fizice care o controlează — acolo unde riscul este de fapt ascuns.\nTab dedicat \"Beneficiari Reali\" pe fișa partenerului persoană juridică, cu identificarea completă a fiecărei persoane fizice care deține sau controlează societatea\nNatura controlului conform art. 4 alin. (2): deținere directă (peste 25%), deținere indirectă, control prin alte mijloace sau conducere de rang înalt (art. 4 alin. (2) lit. a) pct. 2 din Legea 129/2019; folosită doar ca soluție subsidiară, cu tipul de control Conducere de rang înalt, justificată în câmpul Note, nu prin completarea unei cote fictive)\nProveniența informației (declarația clientului, extras ONRC, RECOM, registru public al altui stat) și documentele justificative atașate\nCNP-ul și documentele sunt vizibile doar grupului \"Ofițer de conformitate AML\" (art. 23)\nScreening automat al fiecărui beneficiar real pe listele OFAC și UE Consolidated, limitat la intrările de tip persoană pentru a evita fals-pozitivele; rulează la salvare și după fiecare actualizare a listelor; confirmarea potrivirii rămâne a operatorului, prin butonul \"Screening sancțiuni\" de pe formularul beneficiarului real\nO potrivire la screening este semnalată ca „posibilă\" și consemnată în chatter-ul partenerului; screeningul presupune liste de sancțiuni încărcate de `l10n_ro_partner_screening` (altfel verificarea nu rulează)\nStatusul de screening al partenerului capătă două trepte noi, cu prioritate asupra celorlalte semnale: \"Beneficiar Real Sancționat\" (primează asupra oricărui alt semnal, inclusiv asupra unei societăți altfel curate pe liste) și \"Beneficiar Real Lipsă\" (partener companie în relație de afaceri, client sau furnizor, fără niciun beneficiar real documentat, semnalat cu banner de avertizare pe fișă)\nNivelul de risc AML se stabilește pe fișa fiecărui partener (implicit mediu) și determină periodicitatea revizuirii\nDetectare automată a structurilor de proprietate opace (niciun deținător nu depășește 25%)\nRevizuire periodică cu termen calculat pe nivelul de risc AML al partenerului — 12 luni (risc ridicat), 24 (mediu, implicit) sau 36 (redus) — vizibilă în meniul *Contabilitate → Beneficiari Reali*, filtrul \"Revizuire expirată\"; cronul săptămânal \"RO UBO: Revizuirea periodică a beneficiarilor reali\" (livrat dezactivat, se activează din *Setări → Tehnic → Acțiuni programate*) creează automat activități pentru persoana desemnată\nEvidența ultimei declarații proprii depuse la Registrul Comerțului (ONRC) și semnalarea automată a obligației anuale, rămasă în vigoare după Legea 315/2021 doar pentru societățile cu acționari sau sediu fiscal în jurisdicții necooperante (derivată din lista HG 1/2024 întreținută de modulul de screening)\nConfigurare din *Contabilitate → Configurare → Setări → Partner Screening (RO)*: persoana desemnată AML (primește activitățile de revizuire) și data ultimei declarații depuse la ONRC; grupul \"Ofițer de conformitate AML\" se acordă din *Setări → Utilizatori → Contabilitate*"
   },
   {
     "path": "l10n_ro_payment_allocation_report/index.md",
@@ -21064,18 +21077,19 @@
     "version": "19.0.1.15.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_period_close_enhanced",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_period_close_enhanced",
-    "last_ingest": null,
+    "last_ingest": "2026-11-25",
     "friendly_name": "Romania - Checklist de închidere de perioadă",
     "summary": "Modul de localizare românească care implementează un checklist lunar de închidere a perioadei contabile, folosind infrastructura Enterprise `account.return.type` din modulul `account_reports`. Se adresează contabililor care efectuează închiderea lunară și doresc un flux structurat, cu verificări automate ale rulajelor și soldurilor, conform cerințelor OMFP 1802/2014, care înlocuiește verificarea manuală ad-hoc a „listei de control\" lunare.",
     "features": [
       "Checklist interactiv de tip `audit` cu flux New → Review → Submit, creat automat pentru fiecare lună (Contabilitate → Closing → RO – Checklist Închidere Perioadă).",
+      "32 de verificări (24 livrate ca șabloane — numărate în `data/period_close_return_type.xml` —, 8 calculate la evaluare; cele pentru modulele opționale apar doar cu modulul instalat), grupate pe patru familii: documente și reconcilieri, confruntări de solduri, depuneri ANAF și controale operaționale.",
       "Verificări automate evaluate direct din date: facturi/avize în stare Schiță datate în perioadă; extrase bancare nereconciliate.",
-      "Confruntări de sold (sursă operațională vs. rulaj contabil, cu diferența afișată explicit în mesaj): registru de casă vs. conturi 531x; jurnalul de TVA vs. conturile 4426/4427; TVA la încasare vs. contul 4428 (comparație unidirecțională — un sold 4428 mai mare e normal, fiindcă include și 408/418); balanța de verificare echilibrată (rulaj și cumulat); cheltuiala cu amortizarea vs. conturile 681x; registrul mijloacelor fixe vs. conturile 21x/28x (valoare brută și amortizare cumulată).",
-      "Verificări operaționale de completitudine: nicio cantitate negativă pe gestiune (`stock.quant`); soldul 408 (marfă recepționată nefacturată) justificat de recepții pe aviz deschise, cu comparație pe sume dacă `l10n_ro_rni_report` e instalat; valorizarea de stoc vs. conturile de stoc 3xx (rulează raportul `stock.accounting.check` din `l10n_ro_stock_account_check`, dacă e instalat); mesajele SPV (e-Factura) fără vreunul rămas neprocesat; avansurile 409/419 fără sume decontate dar nereconciliate.",
-      "Verificări condiționale, active doar dacă modulul opțional e instalat: Coeficient K (`l10n_ro_stock_k_coefficient`), CMP Periodic (`l10n_ro_stock_cmp_periodic`), Reevaluare Valutară 665/765 (`l10n_ro_currency_revaluation`), Regularizare TVA 4426/4427 → 44231/4424 (`l10n_ro_vat_regularization`), WIP producție 331/711 (`l10n_ro_wip_closing`), provizioane stocuri slow-moving 39x (`l10n_ro_stock_provision`), contabilizare completă a inventarelor de stoc (`l10n_ro_inventory_closing`).",
-      "Depunerea declarațiilor lunare/trimestriale la ANAF: D300 (TVA), D390 (recapitulativă UE — doar dacă perioada are operațiuni intracomunitare), D394 și D112, fiecare raportată `todo` până la termenul legal (25 ale lunii următoare) și `anomaly` după, plus o verificare finală că toate depunerile perioadei au recipisă ANAF fără erori (fără rămase respinse/în eroare din `l10n.ro.anaf.submission`).",
+      "Confruntări de sold (sursă operațională vs. rulaj contabil, cu diferența afișată explicit în mesaj; codul contului e separat de sumă, ex. „581000: 1.000,00 lei\"): registru de casă vs. conturi 531x; jurnalul de TVA vs. conturile 4426/4427; TVA la încasare vs. contul 4428 (comparație unidirecțională — un sold 4428 mai mare e normal, fiindcă include și 408/418); balanța de verificare echilibrată (rulaj și cumulat); cheltuiala cu amortizarea vs. conturile 681x; registrul mijloacelor fixe vs. conturile 21x/28x (valoare brută și amortizare cumulată); viramente interne (581) fără sold; conturi de cheltuieli și venituri (clasele 6/7) fără sold după închiderea în 121 (la upgrade, dezactivată la companiile care nu închid lunar în 121); repartizări lunare postate (471/472) pentru documentele cu perioadă de repartizare, ambele metode de generare („la validare\" și „manual și grupat\"; nu se mai afișează când niciun cont de repartizare al companiei nu e în prefix, ex. 301 fără `l10n_ro_deferred_entries`).",
+      "Verificări operaționale de completitudine: nicio cantitate negativă pe gestiune (`stock.quant`); soldul 408 (marfă recepționată nefacturată) justificat de recepții pe aviz deschise, cu comparație pe sume dacă `l10n_ro_rni_report` e instalat; valorizarea de stoc vs. conturile de stoc 3xx (rulează raportul `stock.accounting.check` din `l10n_ro_stock_account_check`, dacă e instalat); mesajele SPV (e-Factura) fără vreunul rămas neprocesat; facturi emise validate în e-Factura (facturile și notele de credit postate în lună către clienți din România, firme și persoane fizice, care sunt netransmise, neindexate, respinse sau în așteptarea validării în SPV, cu numărul pe fiecare stare; clienții din străinătate nu se verifică; apare doar cu `l10n_ro_edi` instalat); avansurile 409/419 fără sume decontate dar nereconciliate.",
+      "Verificări condiționale, active doar dacă modulul opțional e instalat: Coeficient K (`l10n_ro_stock_k_coefficient`), CMP Periodic (`l10n_ro_stock_cmp_periodic`; trece când luna are nota de corecție în starea `posted`), Reevaluare Valutară 665/765 (`l10n_ro_currency_revaluation`), Regularizare TVA 4426/4427 → 44231/4424 (`l10n_ro_vat_regularization`), WIP producție 331/711 (`l10n_ro_wip_closing`), provizioane stocuri slow-moving 39x (`l10n_ro_stock_provision`), contabilizare completă a inventarelor de stoc (`l10n_ro_inventory_closing`).",
+      "Depunerea declarațiilor lunare/trimestriale la ANAF: D300 (TVA), D390 (recapitulativă UE — doar dacă perioada are operațiuni intracomunitare), D394 și D112, fiecare raportată `todo` până la termenul legal și `anomaly` după — termenul se calculează pe periodicitatea reală de raportare a companiei (`account_return_periodicity`; la un plătitor trimestrial, de la sfârșitul trimestrului): 25 ale lunii următoare pentru declarațiile lunare, 30 pentru D394 (OPANAF 3769/2015); D390 nedepusă are termenul lunar și la plătitorii trimestriali (art. 325 CF), iar D112 ia periodicitatea din regimul D112 (`l10n_ro_anaf_d112`), lunar implicit — plus o verificare finală că toate depunerile perioadei au recipisă ANAF fără erori (fără rămase respinse/în eroare din `l10n.ro.anaf.submission`).",
       "Verificări manuale confirmate prin bifare de contabil: registru de casă verificat față de numerar fizic, inventar stocuri regularizat, reconciliere conturi clienți/furnizori 411x/401x.",
-      "Conturile de control folosite în confruntările de sold (casă, TVA deductibilă/colectată/amânată, amortizare, mijloace fixe, marfă nefacturată, avansuri) sunt configurabile pe companie, ca prefixe de cont, din Contabilitate → Configurare → Setări → Period Closing Control Accounts (RO); un prefix golit dezactivează verificarea care depinde de el.",
+      "Conturile de control folosite în confruntările de sold (casă, TVA deductibilă/colectată/amânată, amortizare, mijloace fixe, marfă nefacturată, avansuri, plus prefixele pentru 581, clasele 6/7 și 471/472) sunt configurabile pe companie, ca prefixe de cont, din Contabilitate → Configurare → Setări → Period Closing Control Accounts (RO); un prefix golit dezactivează verificarea care depinde de el.",
       "Blocare perioadă la validare: la închiderea lunii decembrie se setează automat data de blocare a exercițiului financiar (`fiscalyear_lock_date`), avansând doar (nu retrage o blocare existentă mai recentă).",
       "Blocare per-jurnal (`l10n_ro_lock_date` pe `account.journal`): permite blocarea jurnalelor TVA/vânzări după depunerea D300, ținând alte jurnale (ex. salarii) deschise; postarea unei note contabile datate în perioada blocată a jurnalului ei este respinsă.",
       "Raport unic de pre-închidere (PDF): proces-verbal cu toate verificările (verificate / anomalii / în așteptare), observații și semnături — generat automat la validare și atașat la chatter, retipăribil oricând (`action_print_preclose_report`).",
@@ -21107,11 +21121,14 @@
       "l10n_ro_anaf_submission",
       "l10n_ro_message_spv_purchase",
       "l10n_ro_account_return_pl_closing",
+      "l10n_ro_deferred_entries",
+      "l10n_ro_edi",
       "l10n_ro_anaf_d394",
       "l10n_ro_stock_account_check",
-      "l10n_ro_rni_report"
+      "l10n_ro_rni_report",
+      "posted"
     ],
-    "text": "Romania - Checklist de închidere de perioadă\nl10n_ro_period_close_enhanced\nModul de localizare românească care implementează un checklist lunar de închidere a perioadei contabile, folosind infrastructura Enterprise `account.return.type` din modulul `account_reports`. Se adresează contabililor care efectuează închiderea lunară și doresc un flux structurat, cu verificări automate ale rulajelor și soldurilor, conform cerințelor OMFP 1802/2014, care înlocuiește verificarea manuală ad-hoc a „listei de control\" lunare.\nChecklist interactiv de tip `audit` cu flux New → Review → Submit, creat automat pentru fiecare lună (Contabilitate → Closing → RO – Checklist Închidere Perioadă).\nVerificări automate evaluate direct din date: facturi/avize în stare Schiță datate în perioadă; extrase bancare nereconciliate.\nConfruntări de sold (sursă operațională vs. rulaj contabil, cu diferența afișată explicit în mesaj): registru de casă vs. conturi 531x; jurnalul de TVA vs. conturile 4426/4427; TVA la încasare vs. contul 4428 (comparație unidirecțională — un sold 4428 mai mare e normal, fiindcă include și 408/418); balanța de verificare echilibrată (rulaj și cumulat); cheltuiala cu amortizarea vs. conturile 681x; registrul mijloacelor fixe vs. conturile 21x/28x (valoare brută și amortizare cumulată).\nVerificări operaționale de completitudine: nicio cantitate negativă pe gestiune (`stock.quant`); soldul 408 (marfă recepționată nefacturată) justificat de recepții pe aviz deschise, cu comparație pe sume dacă `l10n_ro_rni_report` e instalat; valorizarea de stoc vs. conturile de stoc 3xx (rulează raportul `stock.accounting.check` din `l10n_ro_stock_account_check`, dacă e instalat); mesajele SPV (e-Factura) fără vreunul rămas neprocesat; avansurile 409/419 fără sume decontate dar nereconciliate.\nVerificări condiționale, active doar dacă modulul opțional e instalat: Coeficient K (`l10n_ro_stock_k_coefficient`), CMP Periodic (`l10n_ro_stock_cmp_periodic`), Reevaluare Valutară 665/765 (`l10n_ro_currency_revaluation`), Regularizare TVA 4426/4427 → 44231/4424 (`l10n_ro_vat_regularization`), WIP producție 331/711 (`l10n_ro_wip_closing`), provizioane stocuri slow-moving 39x (`l10n_ro_stock_provision`), contabilizare completă a inventarelor de stoc (`l10n_ro_inventory_closing`).\nDepunerea declarațiilor lunare/trimestriale la ANAF: D300 (TVA), D390 (recapitulativă UE — doar dacă perioada are operațiuni intracomunitare), D394 și D112, fiecare raportată `todo` până la termenul legal (25 ale lunii următoare) și `anomaly` după, plus o verificare finală că toate depunerile perioadei au recipisă ANAF fără erori (fără rămase respinse/în eroare din `l10n.ro.anaf.submission`).\nVerificări manuale confirmate prin bifare de contabil: registru de casă verificat față de numerar fizic, inventar stocuri regularizat, reconciliere conturi clienți/furnizori 411x/401x.\nConturile de control folosite în confruntările de sold (casă, TVA deductibilă/colectată/amânată, amortizare, mijloace fixe, marfă nefacturată, avansuri) sunt configurabile pe companie, ca prefixe de cont, din Contabilitate → Configurare → Setări → Period Closing Control Accounts (RO); un prefix golit dezactivează verificarea care depinde de el.\nBlocare perioadă la validare: la închiderea lunii decembrie se setează automat data de blocare a exercițiului financiar (`fiscalyear_lock_date`), avansând doar (nu retrage o blocare existentă mai recentă).\nBlocare per-jurnal (`l10n_ro_lock_date` pe `account.journal`): permite blocarea jurnalelor TVA/vânzări după depunerea D300, ținând alte jurnale (ex. salarii) deschise; postarea unei note contabile datate în perioada blocată a jurnalului ei este respinsă.\nRaport unic de pre-închidere (PDF): proces-verbal cu toate verificările (verificate / anomalii / în așteptare), observații și semnături — generat automat la validare și atașat la chatter, retipăribil oricând (`action_print_preclose_report`).\nSituații lunare (ZIP): din meniul ⋮ al cardului lunii (doar pentru checklistul RO), asistentul Situații lunare generează deodată rapoartele lunii — balanța de verificare, jurnalele de vânzări și de cumpărări, registrul-jurnal, registrul de casă, jurnalul de bancă și fișele conturilor alese — în PDF, XLSX sau ambele, într-o arhivă `Situatii_lunare_<an>-<lună>.zip` atașată pe checklist și descărcată. Perioada vine din checklist; o nouă generare pe aceeași lună înlocuiește arhiva veche; un raport care eșuează e sărit și numit în istoric. Rapoartele opționale apar doar dacă modulul lor e instalat (`l10n_ro_account_vat_journal`, `l10n_ro_registru_jurnal`, `l10n_ro_cash_register_report`, `l10n_ro_bank_register_report`); balanța și fișa de cont au rezervă rapoartele standard din `account_reports`.\nSetările Situații lunare (RO) (Contabilitate → Configurare → Setări): rapoartele bifate implicit, conturile implicite pentru fișele de cont, formatul și opțiunea Generează situațiile lunare la validare (implicit oprită); o eroare la generarea automată nu anulează validarea, motivul apare în istoricul checklistului.\nTermen implicit de 5 zile după sfârșitul perioadei de raportare (lunară sau trimestrială, după periodicitatea companiei), configurabil pe tipul de return (`RO – Checklist Închidere Perioadă`).\nReguli de reconciliere pentru plățile lunare la buget (TVA 4423, impozit profit 4411, micro 4418, CAS 4315, CASS 4316, CAM 436, impozit salarii 444, alte impozite 446) — livrate ca șablon `account.reconcile.model` la instalare/upgrade și pentru companii noi, cu propunere automată a contrapartidei pe baza narațiunii extrasului bancar (potrivire pe cuvânt-cheie sau regex pentru CAS/CASS/CAM); activare opt-in a reconcilierii complet automate din Contabilitate → Configurare → Setări → Budget Payments Reconciliation (RO) (`res.company.l10n_ro_budget_auto_reconcile`), cu buton de sincronizare a regulilor existente.\nIntegrare nativă cu checklistele de closing din celelalte module RO — checklistul e recomandat ca ultimul pas, după rularea operațiilor de closing dedicate (K, CMP, reevaluare, regularizare TVA, WIP, D300)."
+    "text": "Romania - Checklist de închidere de perioadă\nl10n_ro_period_close_enhanced\nModul de localizare românească care implementează un checklist lunar de închidere a perioadei contabile, folosind infrastructura Enterprise `account.return.type` din modulul `account_reports`. Se adresează contabililor care efectuează închiderea lunară și doresc un flux structurat, cu verificări automate ale rulajelor și soldurilor, conform cerințelor OMFP 1802/2014, care înlocuiește verificarea manuală ad-hoc a „listei de control\" lunare.\nChecklist interactiv de tip `audit` cu flux New → Review → Submit, creat automat pentru fiecare lună (Contabilitate → Closing → RO – Checklist Închidere Perioadă).\n32 de verificări (24 livrate ca șabloane — numărate în `data/period_close_return_type.xml` —, 8 calculate la evaluare; cele pentru modulele opționale apar doar cu modulul instalat), grupate pe patru familii: documente și reconcilieri, confruntări de solduri, depuneri ANAF și controale operaționale.\nVerificări automate evaluate direct din date: facturi/avize în stare Schiță datate în perioadă; extrase bancare nereconciliate.\nConfruntări de sold (sursă operațională vs. rulaj contabil, cu diferența afișată explicit în mesaj; codul contului e separat de sumă, ex. „581000: 1.000,00 lei\"): registru de casă vs. conturi 531x; jurnalul de TVA vs. conturile 4426/4427; TVA la încasare vs. contul 4428 (comparație unidirecțională — un sold 4428 mai mare e normal, fiindcă include și 408/418); balanța de verificare echilibrată (rulaj și cumulat); cheltuiala cu amortizarea vs. conturile 681x; registrul mijloacelor fixe vs. conturile 21x/28x (valoare brută și amortizare cumulată); viramente interne (581) fără sold; conturi de cheltuieli și venituri (clasele 6/7) fără sold după închiderea în 121 (la upgrade, dezactivată la companiile care nu închid lunar în 121); repartizări lunare postate (471/472) pentru documentele cu perioadă de repartizare, ambele metode de generare („la validare\" și „manual și grupat\"; nu se mai afișează când niciun cont de repartizare al companiei nu e în prefix, ex. 301 fără `l10n_ro_deferred_entries`).\nVerificări operaționale de completitudine: nicio cantitate negativă pe gestiune (`stock.quant`); soldul 408 (marfă recepționată nefacturată) justificat de recepții pe aviz deschise, cu comparație pe sume dacă `l10n_ro_rni_report` e instalat; valorizarea de stoc vs. conturile de stoc 3xx (rulează raportul `stock.accounting.check` din `l10n_ro_stock_account_check`, dacă e instalat); mesajele SPV (e-Factura) fără vreunul rămas neprocesat; facturi emise validate în e-Factura (facturile și notele de credit postate în lună către clienți din România, firme și persoane fizice, care sunt netransmise, neindexate, respinse sau în așteptarea validării în SPV, cu numărul pe fiecare stare; clienții din străinătate nu se verifică; apare doar cu `l10n_ro_edi` instalat); avansurile 409/419 fără sume decontate dar nereconciliate.\nVerificări condiționale, active doar dacă modulul opțional e instalat: Coeficient K (`l10n_ro_stock_k_coefficient`), CMP Periodic (`l10n_ro_stock_cmp_periodic`; trece când luna are nota de corecție în starea `posted`), Reevaluare Valutară 665/765 (`l10n_ro_currency_revaluation`), Regularizare TVA 4426/4427 → 44231/4424 (`l10n_ro_vat_regularization`), WIP producție 331/711 (`l10n_ro_wip_closing`), provizioane stocuri slow-moving 39x (`l10n_ro_stock_provision`), contabilizare completă a inventarelor de stoc (`l10n_ro_inventory_closing`).\nDepunerea declarațiilor lunare/trimestriale la ANAF: D300 (TVA), D390 (recapitulativă UE — doar dacă perioada are operațiuni intracomunitare), D394 și D112, fiecare raportată `todo` până la termenul legal și `anomaly` după — termenul se calculează pe periodicitatea reală de raportare a companiei (`account_return_periodicity`; la un plătitor trimestrial, de la sfârșitul trimestrului): 25 ale lunii următoare pentru declarațiile lunare, 30 pentru D394 (OPANAF 3769/2015); D390 nedepusă are termenul lunar și la plătitorii trimestriali (art. 325 CF), iar D112 ia periodicitatea din regimul D112 (`l10n_ro_anaf_d112`), lunar implicit — plus o verificare finală că toate depunerile perioadei au recipisă ANAF fără erori (fără rămase respinse/în eroare din `l10n.ro.anaf.submission`).\nVerificări manuale confirmate prin bifare de contabil: registru de casă verificat față de numerar fizic, inventar stocuri regularizat, reconciliere conturi clienți/furnizori 411x/401x.\nConturile de control folosite în confruntările de sold (casă, TVA deductibilă/colectată/amânată, amortizare, mijloace fixe, marfă nefacturată, avansuri, plus prefixele pentru 581, clasele 6/7 și 471/472) sunt configurabile pe companie, ca prefixe de cont, din Contabilitate → Configurare → Setări → Period Closing Control Accounts (RO); un prefix golit dezactivează verificarea care depinde de el.\nBlocare perioadă la validare: la închiderea lunii decembrie se setează automat data de blocare a exercițiului financiar (`fiscalyear_lock_date`), avansând doar (nu retrage o blocare existentă mai recentă).\nBlocare per-jurnal (`l10n_ro_lock_date` pe `account.journal`): permite blocarea jurnalelor TVA/vânzări după depunerea D300, ținând alte jurnale (ex. salarii) deschise; postarea unei note contabile datate în perioada blocată a jurnalului ei este respinsă.\nRaport unic de pre-închidere (PDF): proces-verbal cu toate verificările (verificate / anomalii / în așteptare), observații și semnături — generat automat la validare și atașat la chatter, retipăribil oricând (`action_print_preclose_report`).\nSituații lunare (ZIP): din meniul ⋮ al cardului lunii (doar pentru checklistul RO), asistentul Situații lunare generează deodată rapoartele lunii — balanța de verificare, jurnalele de vânzări și de cumpărări, registrul-jurnal, registrul de casă, jurnalul de bancă și fișele conturilor alese — în PDF, XLSX sau ambele, într-o arhivă `Situatii_lunare_<an>-<lună>.zip` atașată pe checklist și descărcată. Perioada vine din checklist; o nouă generare pe aceeași lună înlocuiește arhiva veche; un raport care eșuează e sărit și numit în istoric. Rapoartele opționale apar doar dacă modulul lor e instalat (`l10n_ro_account_vat_journal`, `l10n_ro_registru_jurnal`, `l10n_ro_cash_register_report`, `l10n_ro_bank_register_report`); balanța și fișa de cont au rezervă rapoartele standard din `account_reports`.\nSetările Situații lunare (RO) (Contabilitate → Configurare → Setări): rapoartele bifate implicit, conturile implicite pentru fișele de cont, formatul și opțiunea Generează situațiile lunare la validare (implicit oprită); o eroare la generarea automată nu anulează validarea, motivul apare în istoricul checklistului.\nTermen implicit de 5 zile după sfârșitul perioadei de raportare (lunară sau trimestrială, după periodicitatea companiei), configurabil pe tipul de return (`RO – Checklist Închidere Perioadă`).\nReguli de reconciliere pentru plățile lunare la buget (TVA 4423, impozit profit 4411, micro 4418, CAS 4315, CASS 4316, CAM 436, impozit salarii 444, alte impozite 446) — livrate ca șablon `account.reconcile.model` la instalare/upgrade și pentru companii noi, cu propunere automată a contrapartidei pe baza narațiunii extrasului bancar (potrivire pe cuvânt-cheie sau regex pentru CAS/CASS/CAM); activare opt-in a reconcilierii complet automate din Contabilitate → Configurare → Setări → Budget Payments Reconciliation (RO) (`res.company.l10n_ro_budget_auto_reconcile`), cu buton de sincronizare a regulilor existente.\nIntegrare nativă cu checklistele de closing din celelalte module RO — checklistul e recomandat ca ultimul pas, după rularea operațiilor de closing dedicate (K, CMP, reevaluare, regularizare TVA, WIP, D300)."
   },
   {
     "path": "l10n_ro_picking_report/index.md",
@@ -21378,17 +21395,19 @@
     "version": "19.0.2.1.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_process_library",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_process_library",
-    "last_ingest": null,
+    "last_ingest": "2026-11-25",
     "friendly_name": "Romania - Bibliotecă de procese (Business Process)",
-    "summary": "Modulul livrează o bibliotecă versionată de procese de implementare (peste 50 de procese contabile și operaționale românești), organizată ca un catalog de foldere pe care consultantul le importă selectiv într-un proiect din `deltatech_business_process`. Nu adaugă funcționalitate de business proprie: furnizează conținutul (definiții JSON, fișe HTML, capturi) pe care motorul de import și cadrul de procese îl consumă.",
+    "summary": "Modulul livrează o bibliotecă versionată de procese de implementare (50 de procese contabile și operaționale românești), organizată ca un catalog de foldere pe care consultantul le importă selectiv într-un proiect din `deltatech_business_process`. Nu adaugă funcționalitate de business proprie: furnizează conținutul (definiții JSON, fișe HTML, capturi) pe care motorul de import și cadrul de procese îl consumă.",
     "features": [
       "Catalog de procese organizat ca foldere `processes/<COD>_<slug>/` cu `process.json` (definiția: cod, arie, pași, teste UAT, module legate), `fisa.html` (fișa generată) și `screenshots/` (capturi opționale).",
-      "Peste 50 de procese acoperind ariile: CB (Cash & Banking — e-Factură, mesaje SPV, reconcilieri, registru de casă), DEC (declarații fiscale D300/D390/D394/D398/D112/D107/D100/D120/D205/D207/D318/D406), TVA (regularizare, rambursare, grup fiscal, pro-rată, prag OSS, TVA la încasare), IMO (mijloace fixe, obiecte de inventar), INC (închidere perioadă/an, situații financiare, impozit profit/micro), OPS (dividende, leasing, provizioane, subvenții, CBAM, SGR, accize, diurne), TRZ (trezorerie, reevaluări valutare, plată obligații buget), ST (inventariere fizică).",
-      "Import selectiv din wizardul `business.process.import` (parte din `deltatech_business_process`), cu sursa „Bibliotecă de procese\" alături de varianta „Fișier exportat JSON\": lista afișează Cod, Denumire, Arie, Module și o bifă „Capturi\" (dacă procesul are capturi generate); consultantul bifează „Importă\" doar pe procesele relevante pentru proiect.",
-      "Contribuție automată de procese: orice modul instalat care depinde de `deltatech_business_process` și respectă convenția `processes/<COD>_nume/process.json` (fără declarație suplimentară în manifest) e descoperit automat, grupat pe modulul-sursă. Descoperirea globală și restrângerea la o listă explicită de module se controlează din Setări → Business process → Configurare → Bibliotecă de procese.",
+      "50 de procese (în folderul `processes/`), acoperind ariile: CB (Cash & Banking — e-Factură, mesaje SPV, reconcilieri extrase, registru de casă, urmărire plăți, bon fiscal cu CUI), DEC (declarații fiscale D300/D390/D394/D398 (OSS)/D112/D107/D100/D120/D205/D207/D318/D406 (SAF-T)), TVA (regularizare, rambursare, grup fiscal, pro-rată, prag OSS, TVA la încasare), IMO (mijloace fixe, obiecte de inventar 303/603/8035), INC (închidere venituri/cheltuieli prin 121, checklist lunar, situații financiare, note la bilanț, impozit profit/micro), OPS (dividende, leasing, provizioane, venituri/cheltuieli în avans, subvenții, CBAM, SGR, taxe de mediu AFM, accize, diurne), TRZ (reevaluare valutară lunară, reevaluare avansuri în valută 542, cecuri/bilete la ordin, plată obligații buget), ST (inventariere fizică).",
+      "Biblioteca nu se încarcă automat la instalare: importul este selectiv, din wizardul `business.process.import` (parte din `deltatech_business_process`), pornit cu butonul Import de pe formularul unui proiect (*Implementare → Proiecte* sau echivalentul din suită), cu sursa „Bibliotecă de procese\" alături de varianta „Fișier exportat (JSON)\": lista afișează Cod, Denumire, Arie, Module și o bifă „Capturi\" (dacă procesul are capturi generate); consultantul bifează „Importă\" doar pe procesele relevante pentru proiect.",
+      "Contribuție automată de procese: orice modul instalat care depinde de `deltatech_business_process` și respectă convenția `processes/<COD>_nume/process.json` (fără declarație suplimentară în manifest) e descoperit automat, grupat pe modulul-sursă. Descoperirea globală (Descoperă procese din toate modulele, implicit pornită; oprită = doar acest modul) și restrângerea la o listă explicită de module (Restrânge la modulele, ignoră descoperirea automată) se controlează din *Business process → Configurare → Bibliotecă de procese*.",
       "La import se creează `business.process` legat de proiect, se leagă modulele după numele tehnic, se creează pașii și un test UAT cu step-tests; reimportul e idempotent per proiect + cod proces. Coduri duplicate între surse: câștigă prima importată, a doua e sărită (vizibil în log).",
       "Atașarea automată a fișelor ca PDF pe proces (smart button „Documents\"): fișa procesului (`Fisa_<COD>.pdf`, din `fisa.html`) și fișa fiecărui modul legat (`Fisa_modul_<modul>.pdf`, din `readme/FISA_CONSULTANT.md`), cu fallback la HTML dacă wkhtmltopdf lipsește.",
-      "Capturi pentru fișele modulelor legate provin din `<modul>/readme/screenshots/`, generate de mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`; capturile proprii proceselor se generează cu `ProcessScreenshotCase` din `tests/common.py`.",
+      "Capturile pentru fișele modulelor legate provin din `<modul>/static/description/`, generate de mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`; capturile proprii proceselor se generează cu `ProcessScreenshotCase` din `tests/common.py` și se scriu în `processes/<folder>/screenshots/` (necesită Playwright + Chromium, doar pentru generare).",
+      "Dependențe externe: `wkhtmltopdf` pentru conversia fișelor HTML → PDF la import (în mod normal prezent într-o instalare Odoo; dacă lipsește, fișele se atașează ca HTML, iar importul rămâne funcțional); Playwright + Chromium doar pentru generarea capturilor.",
+      "Reimportul este idempotent: un proces cu același cod există deja în proiect nu se recreează.",
       "Instrument `tools/fisa_generator.py` pentru generarea fișei HTML a unui proces nou dintr-un `process.json` — atenție: generatorul folosește doar câmpul `description` al fiecărui pas pentru fișa PDF; conținutul mai bogat din `details` (capcane, referințe de meniu, note tehnice) ajunge doar în Odoo la import (pas + `details`), nu și în PDF-ul fișei.",
       "Proces-exemplu cu capturi proprii — INC002 „Închidere de lună — cele 7 faze\": primul proces din bibliotecă cu screenshot-uri generate special pentru el (`screenshots/step_10.png` … `step_70.png`, câte unul per fază), produse de `tests/test_screenshots_inc002.py` (clasa `ProcessScreenshotCase`) pe convenția `step_<sequence>.png`, pe care `fisa_generator.py` o agață automat pe pasul cu secvența corespunzătoare. Procesul acoperă cele șapte faze ale închiderii lunare RO (checklist, documente și bancă, stocuri, producție în curs, regularizări periodice, TVA și declarații, verificare finală/blocare perioadă) și listează 13 module legate din suita `l10n_ro_ent`."
     ],
@@ -21414,7 +21433,7 @@
       "l10n_ro_currency_revaluation",
       "l10n_ro_vat_regularization"
     ],
-    "text": "Romania - Bibliotecă de procese (Business Process)\nl10n_ro_process_library\nModulul livrează o bibliotecă versionată de procese de implementare (peste 50 de procese contabile și operaționale românești), organizată ca un catalog de foldere pe care consultantul le importă selectiv într-un proiect din `deltatech_business_process`. Nu adaugă funcționalitate de business proprie: furnizează conținutul (definiții JSON, fișe HTML, capturi) pe care motorul de import și cadrul de procese îl consumă.\nCatalog de procese organizat ca foldere `processes/<COD>_<slug>/` cu `process.json` (definiția: cod, arie, pași, teste UAT, module legate), `fisa.html` (fișa generată) și `screenshots/` (capturi opționale).\nPeste 50 de procese acoperind ariile: CB (Cash & Banking — e-Factură, mesaje SPV, reconcilieri, registru de casă), DEC (declarații fiscale D300/D390/D394/D398/D112/D107/D100/D120/D205/D207/D318/D406), TVA (regularizare, rambursare, grup fiscal, pro-rată, prag OSS, TVA la încasare), IMO (mijloace fixe, obiecte de inventar), INC (închidere perioadă/an, situații financiare, impozit profit/micro), OPS (dividende, leasing, provizioane, subvenții, CBAM, SGR, accize, diurne), TRZ (trezorerie, reevaluări valutare, plată obligații buget), ST (inventariere fizică).\nImport selectiv din wizardul `business.process.import` (parte din `deltatech_business_process`), cu sursa „Bibliotecă de procese\" alături de varianta „Fișier exportat JSON\": lista afișează Cod, Denumire, Arie, Module și o bifă „Capturi\" (dacă procesul are capturi generate); consultantul bifează „Importă\" doar pe procesele relevante pentru proiect.\nContribuție automată de procese: orice modul instalat care depinde de `deltatech_business_process` și respectă convenția `processes/<COD>_nume/process.json` (fără declarație suplimentară în manifest) e descoperit automat, grupat pe modulul-sursă. Descoperirea globală și restrângerea la o listă explicită de module se controlează din Setări → Business process → Configurare → Bibliotecă de procese.\nLa import se creează `business.process` legat de proiect, se leagă modulele după numele tehnic, se creează pașii și un test UAT cu step-tests; reimportul e idempotent per proiect + cod proces. Coduri duplicate între surse: câștigă prima importată, a doua e sărită (vizibil în log).\nAtașarea automată a fișelor ca PDF pe proces (smart button „Documents\"): fișa procesului (`Fisa_<COD>.pdf`, din `fisa.html`) și fișa fiecărui modul legat (`Fisa_modul_<modul>.pdf`, din `readme/FISA_CONSULTANT.md`), cu fallback la HTML dacă wkhtmltopdf lipsește.\nCapturi pentru fișele modulelor legate provin din `<modul>/readme/screenshots/`, generate de mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`; capturile proprii proceselor se generează cu `ProcessScreenshotCase` din `tests/common.py`.\nInstrument `tools/fisa_generator.py` pentru generarea fișei HTML a unui proces nou dintr-un `process.json` — atenție: generatorul folosește doar câmpul `description` al fiecărui pas pentru fișa PDF; conținutul mai bogat din `details` (capcane, referințe de meniu, note tehnice) ajunge doar în Odoo la import (pas + `details`), nu și în PDF-ul fișei.\nProces-exemplu cu capturi proprii — INC002 „Închidere de lună — cele 7 faze\": primul proces din bibliotecă cu screenshot-uri generate special pentru el (`screenshots/step_10.png` … `step_70.png`, câte unul per fază), produse de `tests/test_screenshots_inc002.py` (clasa `ProcessScreenshotCase`) pe convenția `step_<sequence>.png`, pe care `fisa_generator.py` o agață automat pe pasul cu secvența corespunzătoare. Procesul acoperă cele șapte faze ale închiderii lunare RO (checklist, documente și bancă, stocuri, producție în curs, regularizări periodice, TVA și declarații, verificare finală/blocare perioadă) și listează 13 module legate din suita `l10n_ro_ent`."
+    "text": "Romania - Bibliotecă de procese (Business Process)\nl10n_ro_process_library\nModulul livrează o bibliotecă versionată de procese de implementare (50 de procese contabile și operaționale românești), organizată ca un catalog de foldere pe care consultantul le importă selectiv într-un proiect din `deltatech_business_process`. Nu adaugă funcționalitate de business proprie: furnizează conținutul (definiții JSON, fișe HTML, capturi) pe care motorul de import și cadrul de procese îl consumă.\nCatalog de procese organizat ca foldere `processes/<COD>_<slug>/` cu `process.json` (definiția: cod, arie, pași, teste UAT, module legate), `fisa.html` (fișa generată) și `screenshots/` (capturi opționale).\n50 de procese (în folderul `processes/`), acoperind ariile: CB (Cash & Banking — e-Factură, mesaje SPV, reconcilieri extrase, registru de casă, urmărire plăți, bon fiscal cu CUI), DEC (declarații fiscale D300/D390/D394/D398 (OSS)/D112/D107/D100/D120/D205/D207/D318/D406 (SAF-T)), TVA (regularizare, rambursare, grup fiscal, pro-rată, prag OSS, TVA la încasare), IMO (mijloace fixe, obiecte de inventar 303/603/8035), INC (închidere venituri/cheltuieli prin 121, checklist lunar, situații financiare, note la bilanț, impozit profit/micro), OPS (dividende, leasing, provizioane, venituri/cheltuieli în avans, subvenții, CBAM, SGR, taxe de mediu AFM, accize, diurne), TRZ (reevaluare valutară lunară, reevaluare avansuri în valută 542, cecuri/bilete la ordin, plată obligații buget), ST (inventariere fizică).\nBiblioteca nu se încarcă automat la instalare: importul este selectiv, din wizardul `business.process.import` (parte din `deltatech_business_process`), pornit cu butonul Import de pe formularul unui proiect (*Implementare → Proiecte* sau echivalentul din suită), cu sursa „Bibliotecă de procese\" alături de varianta „Fișier exportat (JSON)\": lista afișează Cod, Denumire, Arie, Module și o bifă „Capturi\" (dacă procesul are capturi generate); consultantul bifează „Importă\" doar pe procesele relevante pentru proiect.\nContribuție automată de procese: orice modul instalat care depinde de `deltatech_business_process` și respectă convenția `processes/<COD>_nume/process.json` (fără declarație suplimentară în manifest) e descoperit automat, grupat pe modulul-sursă. Descoperirea globală (Descoperă procese din toate modulele, implicit pornită; oprită = doar acest modul) și restrângerea la o listă explicită de module (Restrânge la modulele, ignoră descoperirea automată) se controlează din *Business process → Configurare → Bibliotecă de procese*.\nLa import se creează `business.process` legat de proiect, se leagă modulele după numele tehnic, se creează pașii și un test UAT cu step-tests; reimportul e idempotent per proiect + cod proces. Coduri duplicate între surse: câștigă prima importată, a doua e sărită (vizibil în log).\nAtașarea automată a fișelor ca PDF pe proces (smart button „Documents\"): fișa procesului (`Fisa_<COD>.pdf`, din `fisa.html`) și fișa fiecărui modul legat (`Fisa_modul_<modul>.pdf`, din `readme/FISA_CONSULTANT.md`), cu fallback la HTML dacă wkhtmltopdf lipsește.\nCapturile pentru fișele modulelor legate provin din `<modul>/static/description/`, generate de mixinul `ScreenshotCase` din `l10n_ro_doc_screenshots`; capturile proprii proceselor se generează cu `ProcessScreenshotCase` din `tests/common.py` și se scriu în `processes/<folder>/screenshots/` (necesită Playwright + Chromium, doar pentru generare).\nDependențe externe: `wkhtmltopdf` pentru conversia fișelor HTML → PDF la import (în mod normal prezent într-o instalare Odoo; dacă lipsește, fișele se atașează ca HTML, iar importul rămâne funcțional); Playwright + Chromium doar pentru generarea capturilor.\nReimportul este idempotent: un proces cu același cod există deja în proiect nu se recreează.\nInstrument `tools/fisa_generator.py` pentru generarea fișei HTML a unui proces nou dintr-un `process.json` — atenție: generatorul folosește doar câmpul `description` al fiecărui pas pentru fișa PDF; conținutul mai bogat din `details` (capcane, referințe de meniu, note tehnice) ajunge doar în Odoo la import (pas + `details`), nu și în PDF-ul fișei.\nProces-exemplu cu capturi proprii — INC002 „Închidere de lună — cele 7 faze\": primul proces din bibliotecă cu screenshot-uri generate special pentru el (`screenshots/step_10.png` … `step_70.png`, câte unul per fază), produse de `tests/test_screenshots_inc002.py` (clasa `ProcessScreenshotCase`) pe convenția `step_<sequence>.png`, pe care `fisa_generator.py` o agață automat pe pasul cu secvența corespunzătoare. Procesul acoperă cele șapte faze ale închiderii lunare RO (checklist, documente și bancă, stocuri, producție în curs, regularizări periodice, TVA și declarații, verificare finală/blocare perioadă) și listează 13 module legate din suita `l10n_ro_ent`."
   },
   {
     "path": "l10n_ro_profit_tax/index.md",
@@ -21817,13 +21836,16 @@
     "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_reverse_charge_331_sale",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_reverse_charge_331_sale",
-    "last_ingest": "2026-09-12",
+    "last_ingest": "2026-11-25",
     "friendly_name": "Romania - Taxare inversă art. 331 pe comenzile de vânzare",
     "summary": "Modulul extinde garda de taxare inversă de la articolul 331 (deja aplicată pe facturi de `l10n_ro_reverse_charge_331`) și la oferte și comenzi de vânzare. Fără el, o ofertă către un client neînregistrat în scopuri de TVA ar afișa greșit 0% TVA — corectă doar la facturare — și ar comunica clientului un total eronat încă din faza de ofertare.",
     "features": [
       "Aplică statutul de plătitor de TVA al clientului (`res.partner._l10n_ro_is_vat_registered()`) direct la calculul taxelor pe linia de ofertă/comandă de vânzare (`sale.order.line._compute_tax_ids`), nu doar la facturare.",
       "Ofertele către clienți neplătitori de TVA arată cota normală (nu 0%), iar cele către clienți plătitori de TVA cu poziția fiscală art. 331 arată taxarea inversă (TVA 0%, dar total corect).",
-      "La confirmarea comenzii și generarea facturii, taxa de pe linia comenzii se păstrează pe factură, fără recalculare divergentă.",
+      "Pe linia ofertei apare taxa `0% R331` doar pentru clientul înregistrat în scopuri de TVA cu poziția fiscală a plătitorilor și un produs cu taxa domestică marcată Taxare inversă art. 331; pentru un client neînregistrat, chiar cu aceeași poziție fiscală, rămâne taxa domestică și totalul conține TVA la cota bunului.",
+      "La confirmarea comenzii și generarea facturii, factura preia taxa de pe comandă; la postare, modulul de bază blochează o factură cu taxa art. 331 emisă către un client neînregistrat în scopuri de TVA.",
+      "Schimbarea clientului pe o ofertă care are deja linii nu recalculează singură taxele: când se schimbă și poziția fiscală se apasă Actualizare Taxe din tabul Alte informații, altfel se șterg și se readaugă liniile.",
+      "Nu are setări, meniuri sau ecrane proprii (se folosește *Vânzări → Comenzi → Oferte*); regimul art. 331 se configurează în modulul de bază (poziția fiscală a plătitorilor și taxele domestice marcate).",
       "Se instalează automat (`auto_install`) când sunt prezente ambele module `l10n_ro_reverse_charge_331` și `sale` — nu necesită configurare manuală."
     ],
     "dependencies": [
@@ -21834,7 +21856,7 @@
       "l10n_ro_reverse_charge_331",
       "sale"
     ],
-    "text": "Romania - Taxare inversă art. 331 pe comenzile de vânzare\nl10n_ro_reverse_charge_331_sale\nModulul extinde garda de taxare inversă de la articolul 331 (deja aplicată pe facturi de `l10n_ro_reverse_charge_331`) și la oferte și comenzi de vânzare. Fără el, o ofertă către un client neînregistrat în scopuri de TVA ar afișa greșit 0% TVA — corectă doar la facturare — și ar comunica clientului un total eronat încă din faza de ofertare.\nAplică statutul de plătitor de TVA al clientului (`res.partner._l10n_ro_is_vat_registered()`) direct la calculul taxelor pe linia de ofertă/comandă de vânzare (`sale.order.line._compute_tax_ids`), nu doar la facturare.\nOfertele către clienți neplătitori de TVA arată cota normală (nu 0%), iar cele către clienți plătitori de TVA cu poziția fiscală art. 331 arată taxarea inversă (TVA 0%, dar total corect).\nLa confirmarea comenzii și generarea facturii, taxa de pe linia comenzii se păstrează pe factură, fără recalculare divergentă.\nSe instalează automat (`auto_install`) când sunt prezente ambele module `l10n_ro_reverse_charge_331` și `sale` — nu necesită configurare manuală."
+    "text": "Romania - Taxare inversă art. 331 pe comenzile de vânzare\nl10n_ro_reverse_charge_331_sale\nModulul extinde garda de taxare inversă de la articolul 331 (deja aplicată pe facturi de `l10n_ro_reverse_charge_331`) și la oferte și comenzi de vânzare. Fără el, o ofertă către un client neînregistrat în scopuri de TVA ar afișa greșit 0% TVA — corectă doar la facturare — și ar comunica clientului un total eronat încă din faza de ofertare.\nAplică statutul de plătitor de TVA al clientului (`res.partner._l10n_ro_is_vat_registered()`) direct la calculul taxelor pe linia de ofertă/comandă de vânzare (`sale.order.line._compute_tax_ids`), nu doar la facturare.\nOfertele către clienți neplătitori de TVA arată cota normală (nu 0%), iar cele către clienți plătitori de TVA cu poziția fiscală art. 331 arată taxarea inversă (TVA 0%, dar total corect).\nPe linia ofertei apare taxa `0% R331` doar pentru clientul înregistrat în scopuri de TVA cu poziția fiscală a plătitorilor și un produs cu taxa domestică marcată Taxare inversă art. 331; pentru un client neînregistrat, chiar cu aceeași poziție fiscală, rămâne taxa domestică și totalul conține TVA la cota bunului.\nLa confirmarea comenzii și generarea facturii, factura preia taxa de pe comandă; la postare, modulul de bază blochează o factură cu taxa art. 331 emisă către un client neînregistrat în scopuri de TVA.\nSchimbarea clientului pe o ofertă care are deja linii nu recalculează singură taxele: când se schimbă și poziția fiscală se apasă Actualizare Taxe din tabul Alte informații, altfel se șterg și se readaugă liniile.\nNu are setări, meniuri sau ecrane proprii (se folosește *Vânzări → Comenzi → Oferte*); regimul art. 331 se configurează în modulul de bază (poziția fiscală a plătitorilor și taxele domestice marcate).\nSe instalează automat (`auto_install`) când sunt prezente ambele module `l10n_ro_reverse_charge_331` și `sale` — nu necesită configurare manuală."
   },
   {
     "path": "l10n_ro_rni_report/index.md",
@@ -22245,7 +22267,7 @@
   {
     "path": "l10n_ro_stock_account_enhancement/index.md",
     "module": "l10n_ro_stock_account_enhancement",
-    "version": "19.0.0.0.6",
+    "version": "19.0.0.0.7",
     "github": "https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_account_enhancement",
     "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_account_enhancement",
     "last_ingest": "2026-11-17",
@@ -23859,7 +23881,7 @@
   {
     "path": "terrabit_iap/index.md",
     "module": "terrabit_iap",
-    "version": "19.0.1.4.1",
+    "version": "19.0.1.4.2",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap",
     "local_path": "odoo-addons/terrabit/terrabit_iap",
     "last_ingest": "2026-11-17",
@@ -23894,7 +23916,7 @@
   {
     "path": "terrabit_iap_ai/index.md",
     "module": "terrabit_iap_ai",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_ai",
     "local_path": "odoo-addons/terrabit/terrabit_iap_ai",
     "last_ingest": "2026-10-09",
@@ -23918,7 +23940,7 @@
   {
     "path": "terrabit_iap_anaf/index.md",
     "module": "terrabit_iap_anaf",
-    "version": "19.0.1.4.1",
+    "version": "19.0.1.4.2",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_anaf",
     "local_path": "odoo-addons/terrabit/terrabit_iap_anaf",
     "last_ingest": "2026-11-17",
@@ -23950,7 +23972,7 @@
   {
     "path": "terrabit_iap_line_counter/index.md",
     "module": "terrabit_iap_line_counter",
-    "version": "19.0.2.0.4",
+    "version": "19.0.2.0.5",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_line_counter",
     "local_path": "odoo-addons/terrabit/terrabit_iap_line_counter",
     "last_ingest": "2026-10-09",
@@ -23975,7 +23997,7 @@
   {
     "path": "terrabit_iap_params/index.md",
     "module": "terrabit_iap_params",
-    "version": "19.0.1.2.2",
+    "version": "19.0.1.2.3",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_params",
     "local_path": "odoo-addons/terrabit/terrabit_iap_params",
     "last_ingest": "2026-10-09",
@@ -24000,7 +24022,7 @@
   {
     "path": "terrabit_iap_server/index.md",
     "module": "terrabit_iap_server",
-    "version": "19.0.0.5.0",
+    "version": "19.0.0.5.5",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server",
     "last_ingest": "2026-11-19",
@@ -24046,7 +24068,7 @@
   {
     "path": "terrabit_iap_server_ai/index.md",
     "module": "terrabit_iap_server_ai",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_ai",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_ai",
     "last_ingest": "2026-10-22",
@@ -24077,7 +24099,7 @@
   {
     "path": "terrabit_iap_server_anaf/index.md",
     "module": "terrabit_iap_server_anaf",
-    "version": "19.0.1.6.0",
+    "version": "19.0.1.7.1",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_anaf",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_anaf",
     "last_ingest": "2026-11-17",
@@ -24160,7 +24182,7 @@
   {
     "path": "terrabit_iap_server_line_counter/index.md",
     "module": "terrabit_iap_server_line_counter",
-    "version": "19.0.2.0.2",
+    "version": "19.0.2.0.3",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_line_counter",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_line_counter",
     "last_ingest": "2026-10-09",
@@ -24188,7 +24210,7 @@
   {
     "path": "terrabit_iap_server_online/index.md",
     "module": "terrabit_iap_server_online",
-    "version": "19.0.1.4.0",
+    "version": "19.0.1.5.0",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_online",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_online",
     "last_ingest": "2026-11-20",
@@ -24216,7 +24238,7 @@
   {
     "path": "terrabit_iap_server_online_anaf/index.md",
     "module": "terrabit_iap_server_online_anaf",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.1.3",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_online_anaf",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_online_anaf",
     "last_ingest": "2026-11-20",
@@ -24241,7 +24263,7 @@
   {
     "path": "terrabit_iap_server_online_delivery/index.md",
     "module": "terrabit_iap_server_online_delivery",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.3",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_online_delivery",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_online_delivery",
     "last_ingest": "2026-11-20",
@@ -24267,7 +24289,7 @@
   {
     "path": "terrabit_iap_server_online_sd/index.md",
     "module": "terrabit_iap_server_online_sd",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.2",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_online_sd",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_online_sd",
     "last_ingest": "2026-11-20",
@@ -24295,7 +24317,7 @@
   {
     "path": "terrabit_iap_server_params/index.md",
     "module": "terrabit_iap_server_params",
-    "version": "19.0.1.3.1",
+    "version": "19.0.1.3.2",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_params",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_params",
     "last_ingest": "2026-10-09",
@@ -24326,38 +24348,39 @@
   {
     "path": "terrabit_iap_server_sale/index.md",
     "module": "terrabit_iap_server_sale",
-    "version": "19.0.1.7.1",
+    "version": "19.0.1.8.0",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_sale",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_sale",
-    "last_ingest": null,
+    "last_ingest": "2026-11-25",
     "friendly_name": "IAP Server - eCommerce Credits",
-    "summary": "Modul care permite achiziția de credite IAP direct prin magazinul eCommerce (`website_sale`). Se instalează pe **serverul** IAP al Terrabit (nu la clienți) și transformă produsele obișnuite în pachete de credite ce pot fi cumpărate online: cumpărătorul alege un pachet de pe pagina de credite a serviciului, parcurge checkout-ul standard, iar la confirmarea comenzii contul IAP asociat este creditat automat cu numărul de credite achiziționate.",
+    "summary": "Modul care permite achiziția de credite IAP direct prin magazinul eCommerce (`website_sale`). Se instalează pe **serverul** IAP al Terrabit (nu la clienți) și transformă produsele obișnuite în pachete de credite ce pot fi cumpărate online: cumpărătorul alege un pachet, parcurge checkout-ul standard, iar la confirmarea comenzii contul IAP asociat (sau portofelul bazei Odoo indicate) este creditat automat cu numărul de credite achiziționate. Creditele se vând doar firmelor cu cod fiscal.",
     "features": [
-      "Marchează produse drept „pachete de credite IAP\" (`is_iap_credit`, `iap_credit_amount`, `iap_service_code`), legate de un serviciu de pe serverul IAP.",
-      "Afișează dinamic pachetele disponibile pe pagina de credite a serviciului (`credit_page`), cu preț și buton de cumpărare.",
-      "Adaugă pachetul în coș și conduce cumpărătorul la checkout-ul standard `website_sale`.",
-      "Leagă comanda (`sale.order`) de contul IAP care a inițiat achiziția (token păstrat în sesiune).",
-      "Lista de prețuri a pachetelor se alege pe serviciu (Credit Pricelist, de exemplu în EUR): pagina de credite îi arată prețurile, iar coșul cumpărătorului venit de acolo o folosește, oricare ar fi lista implicită a site-ului.",
-      "Pagina de credite arată soldul cu zecimale și, la serviciile online, câte operații înseamnă creditele (de exemplu „≈ 1.000 AWB\"), plus prețul pe operație (sau pe credit) al fiecărui pachet; insigna merge la cel mai ieftin pachet pe credit.",
-      "Catalog public al serviciilor (`/iap/all-in-app-services`) și o pagină pe serviciu (`/iap/in-app-services/<cod>`), pentru serviciile bifate Published in Catalog: preț pe operație, credite gratuite, pachete cu „cel mai bun preț\" și întrebări frecvente. Paginile nu vând: cumpărarea pornește din baza clientului.",
-      "Cumpărătorii din UE din afara țării companiei plătesc doar ca firmă cu cod TVA (taxare inversă); fără cod TVA, plata e refuzată cu un mesaj clar.",
-      "La confirmarea comenzii, creditează automat contul IAP cu numărul de credite cumpărate, o singură dată (idempotent prin `iap_credited`).",
-      "Creditele acordate apar ca linie Purchase în istoricul contului IAP, cu comanda asociată (Sale Order); istoricul din portal trimite la comandă, iar pagina de credite are link către istoricul contului.",
-      "Conturile legate de un portofel comun de credite primesc pachetele tuturor serviciilor cu credite partajate; coșul acceptă astfel pachete de la mai multe servicii cu credite partajate în aceeași comandă."
+      "Serviciul Credite Terrabit (cod `terrabit_credits`, credite comune) este creat la instalare: pachetele lui încarcă portofelul bazei, pentru toate serviciile cu credite comune (1 credit = 1 EUR).",
+      "Marchează produse drept „pachete de credite IAP\" (`is_iap_credit`, `iap_service_code`, `iap_credit_amount`, `iap_credit_bonus`), cu câmpurile sub prețul de vânzare; bonusul apare pe pagini ca „Bonus: +5 credite\", la fel ca pe pagina produsului.",
+      "Pagina de credite a contului (deschisă cu Cumpără credite din baza clientului) arată soldul cu zecimale, pachetele cu preț fără TVA, prețul pe operație și butonul de cumpărare.",
+      "Cumpără pune pachetul în coșul magazinului și leagă comanda (`sale.order`) de contul IAP care a deschis pagina (token păstrat în sesiune).",
+      "Cumpărare direct din magazin: coșul fără cont IAP cere adresa bazei Odoo care primește creditele (Adresa bazei Odoo pe comandă). Fără cont și fără adresă, plata este refuzată.",
+      "Lista de prețuri a pachetelor se alege pe serviciu (Listă de prețuri pentru credite, de exemplu în EUR): pagina de credite îi arată prețurile, iar coșul cumpărătorului venit de acolo o folosește, oricare ar fi lista implicită a site-ului.",
+      "Catalog public al serviciilor (`/iap/all-in-app-services`) și o pagină pe serviciu (`/iap/in-app-services/<cod>`), pentru serviciile bifate Publicat în catalog: preț pe operație, credite gratuite, pachete cu „cel mai bun preț\" și întrebări frecvente. Pachetele publicate pe site au butonul Cumpără, spre pagina produsului din magazin.",
+      "Creditele se vând doar firmelor: la plată, adresa de facturare trebuie să aibă o firmă cu cod fiscal (CUI sau cod TVA), în orice țară; altfel plata e refuzată cu un mesaj clar.",
+      "Taxarea inversă se aplică doar firmelor din alt stat UE cu cod TVA valid în VIES (*Verify VAT Numbers* activ pe companie); firmele UE neînregistrate în VIES plătesc TVA-ul românesc (21%).",
+      "La confirmarea comenzii, creditează automat contul IAP cu numărul de credite cumpărate, o singură dată (idempotent prin `iap_credited`), cu o linie Cumpărare în istoricul contului, legată de comandă. O comandă pentru o bază încă neconectată la Terrabit așteaptă și primește creditele când baza intră în portofel.",
+      "Pagina de confirmare a comenzii arată creditele adăugate, soldul nou și valabilitatea (12 luni, prelungită la fiecare cumpărare); cumpărătorul primește emailul IAP: Credits Added."
     ],
     "dependencies": [
       "terrabit_iap_server",
-      "website_sale"
+      "website_sale",
+      "base_vat"
     ],
     "connections": [
       "terrabit_iap_server"
     ],
-    "text": "IAP Server - eCommerce Credits\nterrabit_iap_server_sale\nModul care permite achiziția de credite IAP direct prin magazinul eCommerce (`website_sale`). Se instalează pe **serverul** IAP al Terrabit (nu la clienți) și transformă produsele obișnuite în pachete de credite ce pot fi cumpărate online: cumpărătorul alege un pachet de pe pagina de credite a serviciului, parcurge checkout-ul standard, iar la confirmarea comenzii contul IAP asociat este creditat automat cu numărul de credite achiziționate.\nMarchează produse drept „pachete de credite IAP\" (`is_iap_credit`, `iap_credit_amount`, `iap_service_code`), legate de un serviciu de pe serverul IAP.\nAfișează dinamic pachetele disponibile pe pagina de credite a serviciului (`credit_page`), cu preț și buton de cumpărare.\nAdaugă pachetul în coș și conduce cumpărătorul la checkout-ul standard `website_sale`.\nLeagă comanda (`sale.order`) de contul IAP care a inițiat achiziția (token păstrat în sesiune).\nLista de prețuri a pachetelor se alege pe serviciu (Credit Pricelist, de exemplu în EUR): pagina de credite îi arată prețurile, iar coșul cumpărătorului venit de acolo o folosește, oricare ar fi lista implicită a site-ului.\nPagina de credite arată soldul cu zecimale și, la serviciile online, câte operații înseamnă creditele (de exemplu „≈ 1.000 AWB\"), plus prețul pe operație (sau pe credit) al fiecărui pachet; insigna merge la cel mai ieftin pachet pe credit.\nCatalog public al serviciilor (`/iap/all-in-app-services`) și o pagină pe serviciu (`/iap/in-app-services/<cod>`), pentru serviciile bifate Published in Catalog: preț pe operație, credite gratuite, pachete cu „cel mai bun preț\" și întrebări frecvente. Paginile nu vând: cumpărarea pornește din baza clientului.\nCumpărătorii din UE din afara țării companiei plătesc doar ca firmă cu cod TVA (taxare inversă); fără cod TVA, plata e refuzată cu un mesaj clar.\nLa confirmarea comenzii, creditează automat contul IAP cu numărul de credite cumpărate, o singură dată (idempotent prin `iap_credited`).\nCreditele acordate apar ca linie Purchase în istoricul contului IAP, cu comanda asociată (Sale Order); istoricul din portal trimite la comandă, iar pagina de credite are link către istoricul contului.\nConturile legate de un portofel comun de credite primesc pachetele tuturor serviciilor cu credite partajate; coșul acceptă astfel pachete de la mai multe servicii cu credite partajate în aceeași comandă."
+    "text": "IAP Server - eCommerce Credits\nterrabit_iap_server_sale\nModul care permite achiziția de credite IAP direct prin magazinul eCommerce (`website_sale`). Se instalează pe **serverul** IAP al Terrabit (nu la clienți) și transformă produsele obișnuite în pachete de credite ce pot fi cumpărate online: cumpărătorul alege un pachet, parcurge checkout-ul standard, iar la confirmarea comenzii contul IAP asociat (sau portofelul bazei Odoo indicate) este creditat automat cu numărul de credite achiziționate. Creditele se vând doar firmelor cu cod fiscal.\nServiciul Credite Terrabit (cod `terrabit_credits`, credite comune) este creat la instalare: pachetele lui încarcă portofelul bazei, pentru toate serviciile cu credite comune (1 credit = 1 EUR).\nMarchează produse drept „pachete de credite IAP\" (`is_iap_credit`, `iap_service_code`, `iap_credit_amount`, `iap_credit_bonus`), cu câmpurile sub prețul de vânzare; bonusul apare pe pagini ca „Bonus: +5 credite\", la fel ca pe pagina produsului.\nPagina de credite a contului (deschisă cu Cumpără credite din baza clientului) arată soldul cu zecimale, pachetele cu preț fără TVA, prețul pe operație și butonul de cumpărare.\nCumpără pune pachetul în coșul magazinului și leagă comanda (`sale.order`) de contul IAP care a deschis pagina (token păstrat în sesiune).\nCumpărare direct din magazin: coșul fără cont IAP cere adresa bazei Odoo care primește creditele (Adresa bazei Odoo pe comandă). Fără cont și fără adresă, plata este refuzată.\nLista de prețuri a pachetelor se alege pe serviciu (Listă de prețuri pentru credite, de exemplu în EUR): pagina de credite îi arată prețurile, iar coșul cumpărătorului venit de acolo o folosește, oricare ar fi lista implicită a site-ului.\nCatalog public al serviciilor (`/iap/all-in-app-services`) și o pagină pe serviciu (`/iap/in-app-services/<cod>`), pentru serviciile bifate Publicat în catalog: preț pe operație, credite gratuite, pachete cu „cel mai bun preț\" și întrebări frecvente. Pachetele publicate pe site au butonul Cumpără, spre pagina produsului din magazin.\nCreditele se vând doar firmelor: la plată, adresa de facturare trebuie să aibă o firmă cu cod fiscal (CUI sau cod TVA), în orice țară; altfel plata e refuzată cu un mesaj clar.\nTaxarea inversă se aplică doar firmelor din alt stat UE cu cod TVA valid în VIES (*Verify VAT Numbers* activ pe companie); firmele UE neînregistrate în VIES plătesc TVA-ul românesc (21%).\nLa confirmarea comenzii, creditează automat contul IAP cu numărul de credite cumpărate, o singură dată (idempotent prin `iap_credited`), cu o linie Cumpărare în istoricul contului, legată de comandă. O comandă pentru o bază încă neconectată la Terrabit așteaptă și primește creditele când baza intră în portofel.\nPagina de confirmare a comenzii arată creditele adăugate, soldul nou și valabilitatea (12 luni, prelungită la fiecare cumpărare); cumpărătorul primește emailul IAP: Credits Added."
   },
   {
     "path": "terrabit_iap_server_sms/index.md",
     "module": "terrabit_iap_server_sms",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.1.2",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_sms",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_sms",
     "last_ingest": "2026-10-09",

@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_partner_financials
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_partner_financials`
-- **Ultima Ingestie:** 2026-09-12
+- **Ultima Ingestie:** `2026-11-25`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -15,7 +15,8 @@ Modulul aduce pe fișa partenerului situațiile financiare publice depuse la Min
 
 - Preluare din registrul public MFinanțe/ANAF a poziției financiare (active, stocuri, creanțe, disponibilități, datorii totale, provizioane, capitaluri proprii, capital subscris vărsat) și a performanței (cifră de afaceri netă, venituri/cheltuieli totale, rezultat brut și net, număr mediu de salariați), plus denumirea raportată și codul CAEN.
 - Indicatori de bonitate calculați automat: lichiditate (active circulante/datorii totale), solvabilitate (capitaluri proprii/total active), grad de îndatorare, marjă netă, rentabilitatea capitalului, cifră de afaceri pe salariat.
-- Avertizare de **capitaluri proprii negative** (situația din art. 153^24 din Legea 31/1990), afișată pe fișa partenerului și disponibilă ca filtru dedicat în lista de contacte (*Negative Equity*).
+- Avertizare de **capitaluri proprii negative**, afișată pe fișa partenerului și disponibilă ca filtru dedicat în lista de contacte (*Negative Equity*, pe ultimul an raportat); banda nu mai citează un articol de lege.
+- Semnal estimativ de **capitaluri proprii sub jumătate din capitalul subscris vărsat** (art. 153^24 din Legea 31/1990), câmpul `net_assets_below_half_capital`, afișat ca bandă dedicată pe formularul anului; este o aproximare din cifrele publice, nu o constatare juridică a activului net.
 - Buton **Retrieve from MFinanțe** pe fila *Financial Data* a partenerului, plus buton statistic în antet către istoricul complet pe ani.
 - Fila *Reported Indicators* a fiecărui an păstrează lista brută a indicatorilor exact cum au fost raportați de ANAF, pentru audit.
 - Raport de ansamblu la *Contabilitate → Raportare → Partner Financial Data*, cu filtre pentru capitaluri proprii negative, parteneri pe pierdere și societăți care depun alt formular decât cel standard (non-financiar).
@@ -32,7 +33,7 @@ Modulul aduce pe fișa partenerului situațiile financiare publice depuse la Min
 
 **Modele**
 
-- `l10n.ro.partner.financials`: o înregistrare per partener/an, cu indicatorii de poziție financiară și performanță preluați de la MFinanțe, plus rezultatele derivate (`gross_result`, `net_result`, `total_assets`) și indicatorii de bonitate (`liquidity_ratio`, `solvency_ratio` etc.), calculați din câmpurile brute. Maparea indicatorilor ANAF pe câmpurile modelului se face după denumirea normalizată a indicatorului, nu după codul „I<n>", pentru că acele coduri nu sunt stabile între formularele de raportare (societăți nefinanciare vs. instituții de credit).
+- `l10n.ro.partner.financials`: o înregistrare per partener/an, cu indicatorii de poziție financiară și performanță preluați de la MFinanțe, plus rezultatele derivate (`gross_result`, `net_result`, `total_assets`) și indicatorii de bonitate (`liquidity_ratio`, `solvency_ratio` etc.) și semnalul `net_assets_below_half_capital`, calculați din câmpurile brute. Maparea indicatorilor ANAF pe câmpurile modelului se face după denumirea normalizată a indicatorului, nu după codul „I<n>", pentru că acele coduri nu sunt stabile între formularele de raportare (societăți nefinanciare vs. instituții de credit).
 - `res.partner` (extensie): adaugă `l10n_ro_financials_ids` (one2many către istoricul pe ani) și câmpuri de rezumat calculate pe ultimul an disponibil (`l10n_ro_financials_turnover`, `..._net_result`, `..._equity`, `..._employees`, `..._liquidity`, `..._negative_equity`); expune metodele de preluare (`l10n_ro_financials_fetch`, `action_l10n_ro_financials_fetch`) și logica de eligibilitate — doar persoane juridice române cu CUI, cu excluderea partenerilor companiilor proprii din baza de date.
 - `res.config.settings` (extensie): parametrii `l10n_ro_partner_financials.years` (Years to Retrieve) și `l10n_ro_partner_financials.retry_days` (Retry After).
 

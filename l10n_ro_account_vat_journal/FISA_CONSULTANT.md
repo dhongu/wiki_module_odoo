@@ -61,7 +61,14 @@ capitolului din manual dedicat registrelor de TVA.
   achiziție cu autotaxare (4426 = 4427 pe aceeași taxă): taxarea inversă internă (**art. 331**),
   achizițiile intracomunitare de bunuri (**art. 308 alin. (1)** + **art. 326 alin. (2)**) și
   serviciile intracomunitare (**art. 307 alin. (2)**). Nu se emite autofactură, deci taxa apare o
-  singură dată, în jurnalul de cumpărări.
+  singură dată, în jurnalul de cumpărări (ca în exemplele de la **pct. 109** din Norme).
+  Normele nu cer și nu interzic înscrierea taxei colectate în jurnalul de vânzări: **pct. 101
+  alin. (8)** lasă firmei modelul jurnalelor, dacă ele conțin informațiile de la alin. (2)–(7) și
+  permit întocmirea D300. De aceea modulul are opțiunea **TVA colectată prin taxare inversă în
+  jurnalul de vânzări** (vezi secțiunea 5): taxa colectată trece în jurnalul de vânzări, într-o
+  secțiune separată, iar jurnalul de cumpărări păstrează doar TVA deductibilă. Așa, totalul `TVA`
+  din vânzări se corelează direct cu rulajul creditor 4427, iar cel din cumpărări cu rulajul
+  debitor 4426.
 - **Conversie valutară** — art. 290 alin. (2) Cod fiscal reglementează cursul de conversie a bazei.
   Regula „tot registrul exprimat în lei" pe care o aplică modulul e o cerință de coerență internă a
   jurnalului (altfel nu se poate totaliza pe coloană), nu un text distinct din Codul fiscal.
@@ -141,6 +148,21 @@ Date minime pentru demo:
    declarațiilor ANAF, **Semnături pe jurnalele de TVA** — numele și funcția pentru *Întocmit* și
    *Verificat*. Apar la finalul PDF-ului și al XLSX-ului; dacă rămân goale, se tipăresc linii de
    semnat de mână.
+9. **Taxarea inversă la beneficiar** (opțional, pe companie): în aceeași secțiune a setărilor, bifa
+   **Jurnale TVA - TVA colectată prin taxare inversă în jurnalul de vânzări**. Cu bifa activă:
+   - jurnalul de vânzări are, după livrări, secțiunea **Achiziții cu taxare inversă – TVA
+     colectată**, cu achizițiile intracomunitare de bunuri și servicii și taxarea inversă internă
+     (art. 331): baza și TVA colectată, pe coloane proprii; tipul documentului apare cu mențiunea
+     „(taxare inversă)”;
+   - baza acestor achiziții nu intră în coloanele livrărilor, iar `Total document` rămâne gol, ca
+     totalul livrărilor să nu cuprindă achiziții;
+   - TVA colectată intră în totalul coloanei `TVA`, deci totalul TVA din vânzări = rulajul creditor
+     4427 (fără notele de închidere și regularizare a TVA);
+   - jurnalul de cumpărări nu mai are coloana `TVA colectată (taxare inversă)` (nici TVA colectată
+     pe coloanele de autolichidare ale jurnalului pe regimuri) și arată doar TVA deductibilă;
+   - coloana `Rând D300` și recapitulația D300 se împart între jurnale: rândurile taxei colectate
+     în vânzări, cele ale taxei deductibile în cumpărări;
+   - D394 și reconcilierea din D300 nu se schimbă.
 
 ## 6. Flux de utilizare
 
@@ -167,7 +189,9 @@ rând de **Total** și, sub el, **recapitulația pe rânduri D300**.
   valută; la o factură cu TVA la încasare plătită de mai multe ori în perioadă, totalul se repetă pe
   fiecare rând de plată, dar pe rândul de Total documentul se adună o singură dată;
 - `TVA colectată (taxare inversă)` arată TVA-ul autolichidat, pe același rând cu cel deductibil din
-  coloana `TVA`;
+  coloana `TVA`. Cu opțiunea **TVA colectată prin taxare inversă în jurnalul de vânzări** activă,
+  coloana nu mai apare: TVA colectată trece în jurnalul de vânzări (Pasul 10), iar rândul din
+  cumpărări păstrează baza și TVA deductibilă;
 - `TVA neexigibilă (TVA la încasare)` arată soldul încă neexigibil al facturilor cu TVA la încasare,
   iar `Bază neexigibilă (TVA la încasare)` baza lui; pe rândul unei plăți din perioadă,
   `Bază exigibilă (TVA la încasare)` e baza părții devenite exigibile (TVA-ul ei e în `TVA`). Pe
@@ -238,7 +262,9 @@ pentru facturile de vânzare cu TVA la încasare neîncasate integral.
 - totalul coloanei `TVA` se reconciliază cu rulajul contului **4427**, cu excepția autolichidărilor:
   dacă în perioadă există achiziții cu taxare inversă, partea lor din 4427 apare pe jurnalul de
   cumpărări — reconcilierea completă e `4427 = Total „TVA" vânzări + Total „TVA colectată (taxare
-  inversă)" cumpărări`;
+  inversă)" cumpărări`. Cu opțiunea **TVA colectată prin taxare inversă în jurnalul de vânzări**
+  (secțiunea 5, pasul 9), achizițiile apar în secțiunea **Achiziții cu taxare inversă – TVA
+  colectată**, iar reconcilierea devine directă: `4427 = Total „TVA" vânzări`;
 - totalul coloanei `TVA neexigibilă` reține soldul rămas după ultima încasare a fiecărei facturi, nu
   suma tuturor rândurilor ei.
 
@@ -404,7 +430,9 @@ vânzător”, nu mai ridică antetul; peste 4 rânduri se opresc cu „…”, 
 colectată 840; factura 0003, cu TVA la încasare, nu are coloană pe regim — ca în jurnalul standard,
 TVA-ul ei exigibil apare în `TVA`, iar defalcarea pe cote în XLSX. Jurnalul pe regimuri nu are
 coloana globală „TVA colectată (taxare inversă)": TVA-ul colectat e în fiecare coloană de
-autolichidare, iar o coloană globală l-ar număra de două ori.
+autolichidare, iar o coloană globală l-ar număra de două ori. Cu opțiunea **TVA colectată prin
+taxare inversă în jurnalul de vânzări** activă, coloanele de autolichidare au doar **Bază** și
+**TVA**, adică TVA deductibilă; TVA colectată apare în jurnalul de vânzări pe regimuri (Pasul 10).
 
 ### Pasul 8 — Export XLSX al jurnalelor pe regimuri
 
@@ -479,6 +507,40 @@ soldul rămas, până la plată. Suma TVA-ului exigibil din toate lunile este eg
 > nota de corecție (4426/4428 la cumpărări, 4427/4428 la vânzări) trebuie să poarte grilele fiscale
 > de bază și de TVA ale taxei — fără ele nu ajunge nici în jurnal, nici în D300.
 
+### Pasul 10 — Taxarea inversă în jurnalul de vânzări (opțiune)
+
+Pentru firmele care vor ca fiecare jurnal să se coreleze direct cu contul lui (vânzări ↔ 4427,
+cumpărări ↔ 4426), activați în **Contabilitate → Configurare → Setări**, secțiunea declarațiilor
+ANAF, bifa **Jurnale TVA - TVA colectată prin taxare inversă în jurnalul de vânzări** (secțiunea 5,
+pct. 9). Apoi deschideți **Jurnal TVA Vânzări (RO)** pe o perioadă cu achiziții intracomunitare sau
+cu taxare inversă art. 331.
+
+**Găsiți pe ecran:**
+- după livrări, rândul de titlu **Achiziții cu taxare inversă – TVA colectată**, urmat de câte un
+  rând pentru fiecare achiziție cu autolichidare (furnizorul, numărul facturii furnizorului, data
+  facturii);
+- tipul documentului, de exemplu „Factură furnizor (taxare inversă)”;
+- coloanele secțiunii, câte una pe taxa de taxare inversă (pe regimuri, câte una pe coloana de
+  autolichidare a jurnalului de cumpărări), fiecare cu **Bază** și **TVA colectată**;
+- `Total document` gol pe aceste rânduri.
+
+**Verificați:**
+- baza achizițiilor nu apare în coloanele livrărilor, iar `Total document` din rândul Total rămâne
+  totalul livrărilor;
+- totalul coloanei `TVA` cuprinde și TVA colectată a achizițiilor, deci e egal cu rulajul creditor
+  4427 al perioadei (fără notele de închidere și regularizare a TVA);
+- în **Jurnal TVA Cumpărări (RO)** aceleași facturi au baza și TVA deductibilă, fără coloana
+  `TVA colectată (taxare inversă)`; totalul `TVA` = rulajul debitor 4426;
+- `Rând D300` arată în vânzări rândurile taxei colectate (ex. rd. 5 la o achiziție
+  intracomunitară de bunuri), iar în cumpărări pe cele ale taxei deductibile; recapitulația D300 de
+  sub fiecare jurnal nu le dublează;
+- exportul XLSX al jurnalului de vânzări are aceleași rânduri, cu antetul „TVA colectată” pe
+  coloanele secțiunii;
+- D394 nu se schimbă: achizițiile nu devin livrări.
+
+Cu mai multe firme în raport, secțiunea cuprinde doar firmele cu bifa activă, iar jurnalul de
+cumpărări renunță la TVA colectată doar dacă toate firmele au bifa.
+
 ### Note de monografie și raportare
 
 - Jurnalele nu generează note contabile proprii — sunt **registre de raportare** peste notele deja
@@ -488,6 +550,15 @@ soldul rămas, până la plată. Suma TVA-ului exigibil din toate lunile este eg
   - TVA la încasare (până la încasare/plată): TVA stă pe **4428** și se transferă pe 4427/4426 la
     încasare/plată;
   - taxare inversă (art. 331, AIC): **Dr 4426 = Cr 4427** simultan, fără afectarea trezoreriei.
+    În jurnale, implicit, ambele părți ale autolichidării stau pe rândul din jurnalul de
+    cumpărări (TVA deductibilă în `TVA`, TVA colectată în coloana ei); cu opțiunea **TVA colectată
+    prin taxare inversă în jurnalul de vânzări**, partea Cr 4427 apare în jurnalul de vânzări
+    (secțiunea „Achiziții cu taxare inversă – TVA colectată”), iar partea Dr 4426 în jurnalul de
+    cumpărări.
+- Cu opțiunea activă, pe toate jurnalele: **rulajul creditor 4427 = Total „TVA" vânzări** și
+  **rulajul debitor 4426 = Total „TVA" cumpărări** (fără notele de închidere și regularizare a TVA
+  și dacă toate sumele vin din documente cu grile fiscale). Egalitățile de mai jos sunt pentru
+  varianta implicită.
 - Pe **jurnalele pe regimuri** nu există coloana globală „TVA colectată (taxare inversă)":
   **rulajul creditor 4427 = Total „TVA" vânzări + suma coloanelor „TVA colectată" din cumpărări**
   (coloanele de autolichidare și „Alte operațiuni").
@@ -551,7 +622,8 @@ totalurilor față de balanță, evidența taxei nededuse și a pro-ratei, și d
 - [ ] Totalul `TVA` al jurnalului de cumpărări = rulajul debitor 4426 (fără nota de închidere, dacă
       toate sumele de pe 4426 vin din documente cu grile fiscale). Cel
       de vânzări = rulajul creditor 4427 **doar** dacă nu există autolichidări în perioadă — altfel
-      `4427 = Total TVA vânzări + Total TVA colectată (taxare inversă) cumpărări`.
+      `4427 = Total TVA vânzări + Total TVA colectată (taxare inversă) cumpărări`. Cu opțiunea
+      **TVA colectată prin taxare inversă în jurnalul de vânzări**, direct `4427 = Total TVA vânzări`.
 - [ ] Stornourile apar cu bază, TVA și total **negative**.
 - [ ] Un bon fiscal fără factură apare cu bază și TVA **pozitive** în coloana cotei.
 - [ ] La cumpărări, `Nr. document furnizor` (ecran) și `Număr document` (XLSX) arată numărul
@@ -559,8 +631,13 @@ totalurilor față de balanță, evidența taxei nededuse și a pro-ratei, și d
 - [ ] O factură cu TVA la încasare neplătită integral apare în jurnalul perioadei, cu restul
       neexigibil în coloana dedicată — și la rularea retroactivă, după ce a fost plătită.
 - [ ] În XLSX, factura cu TVA la încasare are plata, operațiunile exigibile și neexigibile.
-- [ ] O achiziție cu taxare inversă arată și TVA colectată, pe ecran și în XLSX, fără rând în
-      jurnalul de vânzări.
+- [ ] Fără opțiunea **TVA colectată prin taxare inversă în jurnalul de vânzări**: o achiziție cu
+      taxare inversă arată și TVA colectată, pe ecran și în XLSX, fără rând în jurnalul de vânzări.
+- [ ] Cu opțiunea: jurnalul de vânzări are, după livrări, secțiunea „Achiziții cu taxare inversă –
+      TVA colectată”, cu bază și TVA colectată, `Total document` gol și tipul „… (taxare inversă)”;
+      totalul `TVA` din vânzări = rulajul creditor 4427; jurnalul de cumpărări nu are TVA colectată;
+      `Rând D300` arată în vânzări rândurile taxei colectate, iar în cumpărări pe cele ale taxei
+      deductibile; XLSX-ul de vânzări are antetul „TVA colectată” pe coloanele secțiunii.
 - [ ] Rândul Total din XLSX are valori în toate coloanele, iar antetele sunt în română.
 - [ ] O factură cu TVA la încasare înregistrată într-o lună și plătită în alta apare în luna
       înregistrării cu toată factura neexigibilă (și la redeschiderea raportului după plată), în luna
@@ -611,7 +688,7 @@ totalurilor față de balanță, evidența taxei nededuse și a pro-ratei, și d
 | Coloanele pe taxe dispar | Butonul **Comparație** e activ | Dezactivați comparația |
 | Taxa cu TVA la încasare nu are coloană printre coloanele taxelor | Comportament intenționat: partea exigibilă ar apărea de două ori (coloana taxei și „Operațiuni exigibile") | Citiți-o pe cotă în „Operațiuni exigibile / neexigibile – <taxa>" (XLSX) sau total în coloana `TVA` (ecran) |
 | Totalul jurnalului nu se potrivește cu balanța | Documente nepostate, perioadă diferită, sau sume pe 4426 / 4427 fără grile fiscale (note manuale, DVI, taxe fără grile) | Reconciliați perioada; notele fără grile sunt în coloana `TVA fără grile D300` (rânduri „Notă contabilă”) |
-| Rulajul 4427 nu se potrivește cu totalul jurnalului de vânzări | Există autolichidări în perioadă — TVA-ul lor colectat apare pe jurnalul de cumpărări | Adunați și coloana „TVA colectată (taxare inversă)" din jurnalul de cumpărări standard, respectiv coloanele „TVA colectată" din jurnalul de cumpărări pe regimuri |
+| Rulajul 4427 nu se potrivește cu totalul jurnalului de vânzări | Există autolichidări în perioadă — TVA-ul lor colectat apare pe jurnalul de cumpărări | Adunați și coloana „TVA colectată (taxare inversă)" din jurnalul de cumpărări standard, respectiv coloanele „TVA colectată" din jurnalul de cumpărări pe regimuri; sau bifați **Jurnale TVA - TVA colectată prin taxare inversă în jurnalul de vânzări** (Setări, declarațiile ANAF). Dacă diferența rămâne cu bifa activă, verificați notele fără grile și notele de închidere / regularizare a TVA |
 | Butonul de export D394 lipsește | Modulul `l10n_ro_anaf_d394` nu e instalat | Butonul apare doar cu modulul de declarație instalat |
 | Rest mic (câțiva lei) pe `TVA neexigibilă` la o factură în valută plătită integral | Nota de exigibilizare e făcută la cursul plății, nu la cursul facturii (art. 290 alin. (2) Cod fiscal) — TVA-ul dedus/colectat și baza din D300 diferă | Corectați nota de exigibilizare cu grilele fiscale ale taxei (vezi nota din Pasul 9); verificați soldul real pe 4428 |
 | În jurnalul pe regimuri, coloana „Alte operațiuni" are sume | O taxă cu grile D300 nu e revendicată de nicio coloană (taxă proprie a clientului, grile vechi) | Adăugați taxa în câmpul **Taxe** al coloanei potrivite sau grila ei în **Grile fiscale D300** |

@@ -502,7 +502,7 @@ codul real al conectorului pe ele.
 12. `12_fix_prices_job.png` — Pasul 10: jobul de reparare a prețurilor, în așteptare.
 13. `13_health_badge.png` — Pasul 11: indicatorul de sănătate „În regulă" pe cardul kanban.
 
-Regenerare (RO, EN și GIF-ul demo `static/description/demo.gif` / `en/demo.gif`):
+Regenerare (RO, EN și GIF-ul demo `static/description/en/demo.gif`, doar în engleză):
 
 ```bash
 ./odoo/odoo-bin -c odoo.conf -d <db> \

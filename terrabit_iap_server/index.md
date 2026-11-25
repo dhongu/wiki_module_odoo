@@ -1,10 +1,11 @@
 # IAP Server (localizat la `terrabit_iap_server/index.md`)
 
 - **Nume Tehnic:** `terrabit_iap_server`
-- **Versiune:** `19.0.0.5.0`
+- **Versiune:** `19.0.0.5.5`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server`
 - **Ultima Ingestie:** `2026-11-19`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

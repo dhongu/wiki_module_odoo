@@ -1,7 +1,7 @@
 # Interfață SAGA (localizat la `deltatech_saga/index.md`)
 
 - **Nume Tehnic:** `deltatech_saga`
-- **Versiune:** `19.0.6.30.4`
+- **Versiune:** `19.0.6.30.5`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_saga`
 - **Ultima Ingestie:** `2026-11-20`

@@ -1,7 +1,7 @@
 # IAP Server - Odoo Online Couriers (localizat la `terrabit_iap_server_online_delivery/index.md`)
 
 - **Nume Tehnic:** `terrabit_iap_server_online_delivery`
-- **Versiune:** `19.0.1.0.1`
+- **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_online_delivery
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server_online_delivery`
 - **Ultima Ingestie:** `2026-11-20`

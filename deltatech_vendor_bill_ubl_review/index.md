@@ -1,7 +1,7 @@
 # Vendor Bill UBL Review (localizat la `deltatech_vendor_bill_ubl_review/index.md`)
 
 - **Nume Tehnic:** `deltatech_vendor_bill_ubl_review`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_vendor_bill_ubl_review
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_vendor_bill_ubl_review`
 - **Ultima Ingestie:** `2026-11-19`

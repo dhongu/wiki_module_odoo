@@ -1,7 +1,7 @@
 # Romania - Stock Accounting Controls (localizat la `l10n_ro_stock_account_enhancement/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_account_enhancement`
-- **Versiune:** `19.0.0.0.6`
+- **Versiune:** `19.0.0.0.7`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_stock_account_enhancement
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_stock_account_enhancement`
 - **Ultima Ingestie:** `2026-11-17`

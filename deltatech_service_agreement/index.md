@@ -1,7 +1,7 @@
 # Contracte de Servicii (localizat la `deltatech_service_agreement/index.md`)
 
 - **Nume Tehnic:** `deltatech_service_agreement`
-- **Versiune:** `19.0.2.0.20`
+- **Versiune:** `19.0.2.0.21`
 - **Cale:** https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_agreement
 - **Cale Locală:** `odoo-addons/deltatech_service/deltatech_service_agreement`
 - **Ultima Ingestie:** `2026-11-21`

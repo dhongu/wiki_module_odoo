@@ -1,7 +1,7 @@
 # IAP Server - Odoo Online Sameday (localizat la `terrabit_iap_server_online_sd/index.md`)
 
 - **Nume Tehnic:** `terrabit_iap_server_online_sd`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_online_sd
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server_online_sd`
 - **Ultima Ingestie:** `2026-11-20`

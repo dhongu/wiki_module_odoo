@@ -358,6 +358,15 @@ listă, cu istoricul în chatter.
     sau 60 (negativă, cu sume negative) pe nota de reevaluare, cu diferența; la metoda brută, valoarea
     contabilă a tranzacției include și recalcularea amortizării. Eliminarea amortizării, nota de import și
     închiderea modernizării nu se raportează separat.
+  - AssetTransactions, semnul (din 19.0.1.17.7): la vânzare (cod 20) și casare (cod 50), valoarea contabilă
+    pe tranzacție (BookValueOnTransaction) e valoarea netă scoasă din gestiune, **pozitivă** (Ex.2 ANAF:
+    90.000 − 19.500 = 70.500); câștigul sau pierderea (AssetTransactionAmount) păstrează semnul rezultatului.
+    Amortizarea (cod 30) rămâne **negativă**, ca în Ex.1.
+  - MasterFiles, rata de amortizare (DepreciationPercentage, din 19.0.1.17.7): **în procente**, pe unitatea
+    duratei raportate (lunară la AssetLifeMonth, anuală la AssetLifeYear), după întrebările frecvente SAF-T
+    ANAF („1% se înscrie 1.00”): 48 de luni → 2.08, 36 → 2.78, 96 → 1.04, 5 ani → 20.00; la degresivă, rata
+    anuală din model × 100 (împărțită la 12 când durata e în luni). Ieșirile (AssetDisposal) rămân la cost,
+    cu minus (Ex.2: −90.000), iar amortizarea perioadei și cea cumulată rămân negative.
   - MasterFiles: costurile de achiziție (la început, la sfârșit) și adăugările se raportează fără
     reevaluări; valoarea netă le include (Ex.3: cost 90.000, valoare netă la sfârșit 100.000). Amortizarea
     perioadei cuprinde doar amortizarea, iar aprecierea perioadei diferențele din reevaluare. **Decizie:** o
@@ -677,6 +686,8 @@ Ce rămâne manual: validarea numărului de inventar, codului nomenclator și DN
 - [ ] Creanțele 461 din vânzări de active sunt încasate și reconciliate (nicio pereche 4111 credit /
       461 debit pe același partener).
 - [ ] Amortizarea începe în luna următoare datei PIF.
+- [ ] În D406 Active, DepreciationPercentage e în procente (activ pe 48 de luni → 2.08), iar la un activ
+      vândut sau casat BookValueOnTransaction e valoarea netă, pozitivă; amortizarea (cod 30) e negativă.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -776,6 +787,7 @@ Fixuri livrate pe acest modul, relevante pentru discuția cu clientul (ce s-a sc
 | **19.0.1.7.0** (2026-10-04) | Gestiunea era text liber, fără istoric și fără bon de mișcare; registrul arăta gestiunea de azi; lipseau fișa mijlocului fix, PV-urile de recepție și de scoatere din funcțiune și registrul numerelor de inventar (doar decizia de casare, act intern). | Gestiunea ca nomenclator, transferuri datate cu bon de mișcare (14-2-3A), transfer inițial la PIF, gestiunea la dată în registru; rapoartele 14-2-1, 14-2-2, 14-2-3/aA, 14-2-5 (/a, /b) după OMFP 2634/2015. Textele vechi din câmpul de locație au devenit gestiuni la actualizare. |
 | **19.0.1.16.0** (2026-10-08) | Cu metoda fiscală degresivă sau accelerată, planul fiscal din „Informații RO” era corect, dar notele de amortizare contabilă nu îl urmau. Metodele Enterprise „Declining” lucrează pe exercițiul financiar și revin la liniarul pe valoarea inițială (ex. 213,33 și 133,33 lei/lună în loc de 266,67 și 100). Semnalat în tichetul 9452. | Metodă contabilă nouă, **„Conform planului fiscal (RO)”**: notele lunare iau sumele din planul fiscal, pe an de utilizare. După o reevaluare se păstrează proporția lunară, pe valoarea contabilă rămasă. |
 | **19.0.1.17.0** (2026-10-08) | La accelerat, o reevaluare din primul an se calcula doar cu procentul pe valoarea de intrare. Clienții obișnuiți cu procentul aplicat valorii reevaluate vedeau alte sume lunare (368,42 în loc de 375). | Setare pe companie „Reevaluare în primul an (accelerată)”, cu opțiunile „Pe valoarea de intrare” (implicit) și „Pe valoarea reevaluată”. |
+| **19.0.1.17.7** (2026-11-24) | În D406 Active, rata de amortizare ieșea ca fracție rotunjită (48 de luni → 0.02, adică 0,02%), iar la vânzare și casare valoarea contabilă pe tranzacție ieșea cu minus. | DepreciationPercentage în procente pe unitatea duratei (2.08 la 48 de luni), după întrebările frecvente SAF-T ANAF; BookValueOnTransaction pozitiv la vânzare și casare (Ex.2 ANAF). AssetDisposal la cost și amortizarea negativă rămân, ca în exemplele ANAF. |
 
 > Notă: fix-urile de amortizare (din luna următoare PIF, fără prorata la vânzare) și blocarea legării
 > manuale sunt acoperite direct de teste automate (`tests/test_fixed_assets_ro.py`), reproduse cu date

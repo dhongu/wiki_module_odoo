@@ -94,6 +94,7 @@ câmp many2one al cărui model are un câmp părinte (implicit `parent_id`). Op�
 | `limit` | 80 | câte valori se încarcă pe un nivel și câte rezultate arată căutarea |
 | `level` | 8 | câte niveluri se pot deschide în arbore (doar în modul părinte/copil) |
 | `levels` | — | modul pe niveluri: lista nivelurilor arborelui, de sus în jos; când e completată, `parent_field` și `level` sunt ignorate |
+| `steps` | nu | doar în modul pe niveluri: în loc de arbore, panoul arată un singur nivel o dată (mărcile, apoi seriile mărcii, apoi modelele), cu drumul ales deasupra (Pasul 6) |
 
 Restricția câmpului se pune ca la orice câmp many2one, cu atributul `domain` în vedere sau pe câmpul din
 model; selectorul o aplică valorilor care se pot alege.
@@ -106,6 +107,7 @@ model; selectorul o aplică valorilor care se pot alege.
 | `link` | da, mai puțin la primul nivel | câmpul many2one spre modelul nivelului de deasupra |
 | `fallback_link` | nu | câmp many2one spre un nivel mai de sus, folosit când `link` e gol: înregistrarea apare direct sub acel nivel |
 | `domain` | nu | restricție suplimentară pentru înregistrările nivelului |
+| `detail` | nu | `"câmp.subcâmp"` afișat după numele înregistrărilor nivelului, ca să se deosebească cele cu același nume, de exemplu `"attribute_value_ids.name"`: „Fabia I (2000–2007) · Hatchback” |
 
 Exemplu, alegerea modelului de utilaj pe ofertă (marcă → serie → model):
 
@@ -180,7 +182,7 @@ Salvați produsul ca de obicei; selectorul doar completează câmpul.
 
 ### Pasul 5 — Arborele pe niveluri (marcă → serie → model)
 
-Pe un câmp configurat cu `levels` (secțiunea 5), de exemplu modelul de utilaj pe ofertă, arborele pornește
+Pe un câmp configurat cu `levels` (secțiunea 5), fără opțiunea `steps` (pentru `steps`, vezi Pasul 6), de exemplu modelul de utilaj pe ofertă, arborele pornește
 cu mărcile. Un click pe săgeata sau pe numele unei mărci îi deschide seriile; un click pe o serie îi
 deschide modelele. Mărcile și seriile nu se pot alege: numai un click pe un **model** completează câmpul.
 
@@ -217,6 +219,35 @@ Câmpul închis arată calea pe segmente; un click pe un segment deschide panoul
 Căutarea „Codru” arată companiile potrivite din tot catalogul, cu calea completă.
 
 ![Panoul cu textul Codru în caseta de căutare (1) și rezultatul Moldova / Vinuri Codru SRL (2), o companie fără județ, direct sub țară](screenshots/07_niveluri_cautare.png)
+
+### Pasul 6 — Pe pași, un nivel o dată (opțiunea `steps`)
+
+Pe un câmp configurat cu `levels` și `'steps': True` (de exemplu utilajul de pe ofertă, din modulul
+*Compatibilitatea pieselor pe oferta de vânzare*), panoul nu mai arată arborele, ci un singur nivel o
+dată. E mai ușor de folosit când catalogul are sute de mărci și mii de modele.
+
+1. **Marca** — panoul se deschide pe lista mărcilor. Scrieți câteva litere în casetă (de exemplu
+   „sko”): lista se restrânge. Click pe marcă, sau **Enter** pentru primul rând.
+2. **Seria** — lista arată seriile mărcii (și modelele ei fără serie). Deasupra listei apare drumul
+   ales, **Toate › Škoda**, iar caseta arată „Caută în Škoda...” și caută doar în marcă.
+3. **Modelul** — după serie, lista arată modelele ei; dacă nivelul are `detail`, după nume apare și
+   detaliul, de exemplu „Fabia I (2000–2007) · Hatchback”. Click pe model completează câmpul și închide
+   panoul.
+
+Un click pe **Toate** sau pe un pas din drum întoarce lista la pasul acela. Dacă textul scris nu se
+găsește pe nivelul afișat (de exemplu numele unui model scris încă de la mărci), panoul caută în toată
+lista și arată rezultatele cu calea completă, sub mesajul „Nu e pe acest nivel, găsit în toată lista:”.
+
+Când câmpul are deja o valoare, panoul se deschide pe seria ei, cu modelul marcat. Câmpul închis arată
+calea pe segmente, cu detaliul după model; un click pe segmentul **mărcii** deschide lista seriilor
+mărcii, iar pe segmentul **seriei**, lista modelelor seriei (cu modelul ales marcat). În modul pe pași,
+segmentele nu deschid arborele.
+
+Când un nivel are mai multe înregistrări decât opțiunea `limit`, sub listă apare „N în plus: scrieți ca
+să restrângeți lista”: scrieți câteva litere ca să ajungeți la cele care nu încap.
+
+**Verifică:** după alegerea mărcii, lista are doar seriile ei; **Enter** alege primul rând; click pe
+**Toate** readuce mărcile; un nume de model scris la mărci e găsit cu calea completă.
 
 ### Note de monografie și raportare
 
@@ -258,6 +289,12 @@ nivelul indicat de `fallback_link`.
 - [ ] În modul pe niveluri, mărcile și seriile doar se deschid; numai un model completează câmpul.
 - [ ] În modul pe niveluri, un model fără serie, dar cu marcă, apare direct sub marcă.
 - [ ] În modul pe niveluri, rezultatele căutării arată calea completă marcă / serie / model.
+- [ ] În modul pe pași (`steps`), panoul arată un singur nivel; după marcă apar doar seriile ei, după serie doar modelele ei, cu detaliul (`detail`) după nume.
+- [ ] În modul pe pași, căutarea filtrează doar nivelul afișat, iar **Enter** alege primul rând.
+- [ ] În modul pe pași, click pe **Toate** sau pe un pas din drum întoarce lista la pasul acela.
+- [ ] În modul pe pași, un nume care nu e pe nivelul afișat e găsit în toată lista, cu calea completă.
+- [ ] În modul pe pași, pe un câmp cu valoare, panoul se deschide pe seria valorii, cu valoarea marcată; click pe segmentul mărcii arată seriile ei.
+- [ ] Pe un nivel cu mai multe înregistrări decât `limit`, panoul pe pași arată „N în plus: scrieți ca să restrângeți lista”.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -266,6 +303,8 @@ nivelul indicat de `fallback_link`.
 | „Nu puteți crea categorii recursive.” la salvarea categoriei | categoria a fost aleasă ca propria categorie superioară sau sub unul dintre copiii ei | alegeți o categorie superioară din altă ramură |
 | O ramură are săgeată, dar nu se deschide | s-a atins numărul maxim de niveluri (opțiunea `level`) | măriți `level` în vedere sau alegeți valoarea prin căutare |
 | Lipsesc valori pe un nivel cu foarte multe înregistrări | se încarcă cel mult `limit` valori pe nivel (implicit 80) | căutați valoarea după nume sau măriți `limit` în vedere |
+| „N în plus: scrieți ca să restrângeți lista” sub lista din modul pe pași | nivelul are mai multe înregistrări decât `limit` | scrieți câteva litere în casetă; dacă se întâmplă des, măriți `limit` în vedere |
+| În modul pe pași apare „Nu e pe acest nivel, găsit în toată lista:” | textul scris nu se potrivește cu nimic pe nivelul afișat | alegeți rezultatul cu calea completă sau ștergeți textul ca să reveniți la nivel |
 | „Fără rezultate” pentru o clipă, în timpul tastării | căutarea pornește după o pauză scurtă | așteptați răspunsul; dacă mesajul rămâne, valoarea nu există sau nu aveți drept s-o vedeți |
 | În locul arborelui apare un mesaj roșu care începe cu „hierarchy_m2o:” | configurație `levels` greșită: ultimul nivel nu e modelul câmpului, un nivel (altul decât primul) nu are `link`, sau `fallback_link` nu duce la un nivel de deasupra | corectați opțiunea `levels` din vedere (secțiunea 5) |
 | Un model fără serie nu apare în arborele pe niveluri | nivelul nu are `fallback_link`, sau înregistrarea nu are nici serie, nici marcă | adăugați `fallback_link` în vedere sau completați marca; între timp, alegeți modelul prin căutare |
@@ -292,7 +331,7 @@ județe: Bihor, Cluj, Timiș) și creează câteva companii în România și în
 | 5 | `07_niveluri_cautare.png` | modul pe niveluri: căutarea, cu calea completă a rezultatelor |
 
 Aceleași capturi, în engleză, sunt în `static/description/en/`, pentru `readme/USAGE.md`. Tot de acolo
-vin `demo.gif` (RO) și `en/demo.gif` (EN), afișate pe pagina de Apps sub imaginea principală. Regenerare,
+vine `en/demo.gif` (în engleză, limba paginii), afișat pe pagina de Apps sub imaginea principală. Regenerare,
 cu addonul ajutător în `addons_path`:
 
 ```bash

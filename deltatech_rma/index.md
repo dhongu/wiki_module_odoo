@@ -1,7 +1,7 @@
 # RMA - Returns and Warranty Claims (localizat la `deltatech_rma/index.md`)
 
 - **Nume Tehnic:** `deltatech_rma`
-- **Versiune:** `19.0.1.9.8`
+- **Versiune:** `19.0.1.9.9`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_rma`
 - **Ultima Ingestie:** 2026-11-20

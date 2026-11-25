@@ -1,7 +1,7 @@
 # Terrabit IAP Params
 
 - **Nume Tehnic:** `terrabit_iap_params`
-- **Versiune:** `19.0.1.2.2`
+- **Versiune:** `19.0.1.2.3`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_params
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_params`
 - **Ultima Ingestie:** `2026-10-09`
