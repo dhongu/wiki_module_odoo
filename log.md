@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-26] `deltatech_voip_missed_call` — ingestie 19.0.1.0.0 (modul nou)
+
+- **Acțiune:** Pagină nouă pentru modulul nou din bitshop_ent (ramura `19.0-add-voip-missed-call`, PR în lucru): meniul
+  *Telefon → Apeluri nepreluate*, o linie comună pe client (număr de telefon) cu încercările și nota, închisă automat la o
+  convorbire preluată cu numărul sau cu *Marchează rezolvat*. Fișa consultant copiată, cu 5 capturi.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/USAGE.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`, cod pentru secțiunea 4.
+- **Dependențe/Conexiuni:** `voip` (fără pagină wiki, rămas text); conexiune cu [deltatech_voip_daktela](deltatech_voip_daktela/index.md).
+- **Fișiere actualizate:** `deltatech_voip_missed_call/` (index.md, FISA_CONSULTANT.md, screenshots/), `index.md`, `log.md`.
+
 ## [2026-11-26] `deltatech_delivery_route_planner` — ingestie 20.0.1.0.0 (modul nou)
 
 - **Acțiune:** Pagină nouă pentru modulul nou din bitshop_ent, unit prin terrabit-solutions/bitshop_ent#780: asistentul
