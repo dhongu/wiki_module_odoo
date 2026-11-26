@@ -265,6 +265,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_sale_payment](deltatech_sale_payment/index.md): Buton și gestionare a plăților direct în comanda de vânzare (status, sumă, furnizor, link de plată).
 - [deltatech_sale_phone](deltatech_sale_phone/index.md): Afișează numărul de telefon al partenerului pe comenzile de vânzare și pe facturi.
 - [deltatech_sale_picking_status](deltatech_sale_picking_status/index.md): Adaugă pe comanda de vânzare o stare de livrare (Done/In Progress) calculată automat din starea transferurilor de stoc asociate.
+- [deltatech_sale_plan](deltatech_sale_plan/index.md): Plan anual de vânzări pe client B2B, cu țintă împărțită pe luni după sezonalitate și urmărirea facturatului față de plan, pe lună și de la începutul anului.
 - [deltatech_sale_product_reference](deltatech_sale_product_reference/index.md): Preia automat codul și denumirea sub care fiecare client cunoaște un produs (model propriu `product.customerinfo`) și le pune pe descrierea liniei de vânzare și pe factură, în locul denumirii interne.
 - [deltatech_sale_purchase](deltatech_sale_purchase/index.md): Elimină automat liniile de achiziție ciornă generate din procurement când oferta de vânzare aferentă este anulată, evitând comenzi de achiziție orfane.
 - [deltatech_sale_purchase_requisition](deltatech_sale_purchase_requisition/index.md): Creează cereri de ofertă (RFQ) către furnizori din ofertele de vânzare și le leagă înapoi de cotație.

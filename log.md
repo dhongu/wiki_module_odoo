@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-26] `deltatech_sale_plan` — ingestie 20.0.1.0.0 (modul nou)
+
+- **Acțiune:** Pagină nouă pentru modulul nou din bitshop, unit prin terrabit-solutions/bitshop#4147: plan anual pe client
+  B2B, șabloane de sezonalitate, generare din anul trecut, import după codul fiscal, redistribuirea restului anului pe planul
+  confirmat, raport de realizare (pivot/grafic/listă) și tablou pentru agent și manager. Fișa consultant copiată, cu 13 capturi.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/USAGE.md`, `readme/CONFIGURE.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`.
+- **Dependențe/Conexiuni:** `sale_management`, `account`, `deltatech_web_kpi_cards` (fără pagini wiki, rămase text).
+- **Fișiere actualizate:** `deltatech_sale_plan/` (index.md, FISA_CONSULTANT.md, screenshots/), `index.md`, `log.md`.
+
 ## [2026-11-19] `deltatech_purchase_currency` — re-ingestie 20.0.1.2.0 (cursul BNR în Curs furnizor)
 
 - **Acțiune:** Actualizare pentru dhongu/deltatech#4254: *Curs furnizor* arată cursul Odoo (BNR) la data facturii, nu 0;

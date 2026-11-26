@@ -7405,6 +7405,37 @@
     "text": "Sale order picking status\ndeltatech_sale_picking_status\nModulul adaugă pe comanda de vânzare un indicator de stare a livrării (recepțiilor/expedițiilor), calculat automat pe baza stării transferurilor de stoc asociate. Astfel, echipa de vânzări poate vedea dintr-o privire, direct din lista sau formularul comenzii, dacă marfa a fost complet livrată sau dacă procesul de picking este încă în desfășurare, fără să mai deschidă fiecare transfer în parte.\nAdaugă un câmp de stare a livrării (`picking_status`) pe comanda de vânzare.\nStarea devine Efectuat (Done) atunci când toate transferurile (pickings) comenzii sunt în starea „Efectuat\" sau „Anulat\".\nStarea rămâne În curs (In Progress) dacă cel puțin un transfer nu este încă finalizat sau anulat."
   },
   {
+    "path": "deltatech_sale_plan/index.md",
+    "module": "deltatech_sale_plan",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_sale_plan",
+    "local_path": "odoo-addons/bitshop/deltatech_sale_plan",
+    "last_ingest": "2026-11-26",
+    "friendly_name": "deltatech_sale_plan",
+    "summary": "Un plan anual de vânzări pe client B2B: directorul de vânzări stabilește o țintă pentru fiecare client, ținta se împarte pe luni după un șablon de sezonalitate, iar directorul și fiecare agent urmăresc valoarea facturată față de plan, pe lună și de la începutul anului. Modulul răspunde la întrebarea „care dealeri sunt în urmă față de ținta anuală și cu cât?”, pe care o pun lunar distribuitorii și producătorii care vând prin dealeri. Odoo 20 nu are o țintă pe client: planurile de comision țintesc agenții, iar bugetele cer un cont analitic pe client.",
+    "features": [
+      "Șabloane de sezonalitate (Vânzări › Configurare › Seasonality Templates): douăsprezece procente lunare cu suma 100%, scrise de mână sau calculate din facturile ultimilor ani (*Compute from History*, implicit 2 ani). Un șablon cu suma diferită de 100% nu se poate salva.",
+      "Plan anual (Vânzări › Sales Plan › Plans): un plan pe companie și an, cu stări Ciornă, Confirmat, Închis; câte o țintă pe client (firma, cu facturile tuturor contactelor ei), împărțită imediat pe luni; diferența de rotunjire intră în decembrie. Un client cu ritm propriu primește procente proprii (linie *Custom*).",
+      "Completare rapidă: *Generate from Last Year* (facturat în anul de bază plus procent de creștere, cu prag minim de facturare și opțiunea de actualizare a liniilor existente) sau import din fișier (*Plan*, *Customer VAT* sau *Customer*, *Yearly Target*, opțional *Seasonality*).",
+      "Revizuire în cursul anului: pe un plan confirmat, o țintă anuală nouă păstrează lunile trecute și distribuie restul pe lunile rămase; un client adăugat are 0 pe lunile trecute; fiecare modificare apare în chatter. Liniile se șterg doar pe plan în ciornă (pe plan confirmat ținta se pune 0).",
+      "Realizare (Vânzări › Sales Plan › Achievement): pivot, grafic și listă cu ținta lunară, facturatul (facturi postate minus note de credit, fără TVA, în moneda companiei, după data facturii, fără avansuri), diferența și procentul realizat la fiecare nivel de grupare; comenzile confirmate încă nefacturate apar separat, niciodată adunate la realizat; clienții facturați dar neplanificați apar cu țintă 0.",
+      "Tablou de bord (Vânzări › Sales Plan › Dashboard): plan anual, facturat de la începutul anului (lunile încheiate), diferență, clienți sub plan, luna curentă, comandat nefacturat, grafic lunar și clienți ordonați după diferență; managerul vede și clasamentul agenților și poate alege un agent.",
+      "Drepturi (Setări › Utilizatori › Sales Plan): *Own customers* pentru agenți (văd doar clienții lor și nu modifică nimic) și *All customers* pentru manager; facturatul unui client planificat se atribuie agentului de pe linia de plan. Planurile și realizarea sunt pe companie.",
+      "Fluxul pas-cu-pas, cu capturi, este în [fișa consultantului](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "sale_management",
+      "account",
+      "deltatech_web_kpi_cards"
+    ],
+    "connections": [
+      "deltatech_web_kpi_cards",
+      "sale",
+      "account"
+    ],
+    "text": "deltatech_sale_plan\ndeltatech_sale_plan\nUn plan anual de vânzări pe client B2B: directorul de vânzări stabilește o țintă pentru fiecare client, ținta se împarte pe luni după un șablon de sezonalitate, iar directorul și fiecare agent urmăresc valoarea facturată față de plan, pe lună și de la începutul anului. Modulul răspunde la întrebarea „care dealeri sunt în urmă față de ținta anuală și cu cât?”, pe care o pun lunar distribuitorii și producătorii care vând prin dealeri. Odoo 20 nu are o țintă pe client: planurile de comision țintesc agenții, iar bugetele cer un cont analitic pe client.\nȘabloane de sezonalitate (Vânzări › Configurare › Seasonality Templates): douăsprezece procente lunare cu suma 100%, scrise de mână sau calculate din facturile ultimilor ani (*Compute from History*, implicit 2 ani). Un șablon cu suma diferită de 100% nu se poate salva.\nPlan anual (Vânzări › Sales Plan › Plans): un plan pe companie și an, cu stări Ciornă, Confirmat, Închis; câte o țintă pe client (firma, cu facturile tuturor contactelor ei), împărțită imediat pe luni; diferența de rotunjire intră în decembrie. Un client cu ritm propriu primește procente proprii (linie *Custom*).\nCompletare rapidă: *Generate from Last Year* (facturat în anul de bază plus procent de creștere, cu prag minim de facturare și opțiunea de actualizare a liniilor existente) sau import din fișier (*Plan*, *Customer VAT* sau *Customer*, *Yearly Target*, opțional *Seasonality*).\nRevizuire în cursul anului: pe un plan confirmat, o țintă anuală nouă păstrează lunile trecute și distribuie restul pe lunile rămase; un client adăugat are 0 pe lunile trecute; fiecare modificare apare în chatter. Liniile se șterg doar pe plan în ciornă (pe plan confirmat ținta se pune 0).\nRealizare (Vânzări › Sales Plan › Achievement): pivot, grafic și listă cu ținta lunară, facturatul (facturi postate minus note de credit, fără TVA, în moneda companiei, după data facturii, fără avansuri), diferența și procentul realizat la fiecare nivel de grupare; comenzile confirmate încă nefacturate apar separat, niciodată adunate la realizat; clienții facturați dar neplanificați apar cu țintă 0.\nTablou de bord (Vânzări › Sales Plan › Dashboard): plan anual, facturat de la începutul anului (lunile încheiate), diferență, clienți sub plan, luna curentă, comandat nefacturat, grafic lunar și clienți ordonați după diferență; managerul vede și clasamentul agenților și poate alege un agent.\nDrepturi (Setări › Utilizatori › Sales Plan): *Own customers* pentru agenți (văd doar clienții lor și nu modifică nimic) și *All customers* pentru manager; facturatul unui client planificat se atribuie agentului de pe linia de plan. Planurile și realizarea sunt pe companie.\nFluxul pas-cu-pas, cu capturi, este în [fișa consultantului](FISA_CONSULTANT.md)."
+  },
+  {
     "path": "deltatech_sale_product_reference/index.md",
     "module": "deltatech_sale_product_reference",
     "version": "19.0.2.0.1",
