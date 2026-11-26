@@ -4,6 +4,17 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-26] `deltatech_delivery_route_planner` — ingestie 20.0.1.0.0 (modul nou)
+
+- **Acțiune:** Pagină nouă pentru modulul nou din bitshop_ent, unit prin terrabit-solutions/bitshop_ent#780: asistentul
+  „Planifică livrările” împarte livrările zilei sau ale unei perioade pe vehicule și zile (OR-Tools, distanțe OSRM cu rezervă
+  în linie dreaptă), respectă sarcina utilă, lungimea elementelor, ziua de lucru și intervalul de livrare, creează un lot pe
+  vehicul și zi, cu harta rutei, recalcularea ordinii și lista opririlor. Fișa consultant copiată, cu 13 capturi.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/USAGE.md`, `readme/CONFIGURE.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`.
+- **Dependențe/Conexiuni:** `stock_fleet`, `base_geolocalize`, `web_map` (fără pagini wiki, rămase text); conexiune cu
+  [deltatech_fleet](deltatech_fleet/index.md).
+- **Fișiere actualizate:** `deltatech_delivery_route_planner/` (index.md, FISA_CONSULTANT.md, screenshots/), `index.md`, `log.md`.
+
 ## [2026-11-26] `deltatech_sale_plan` — re-ingestie 20.0.1.0.1 (summary Apps Store)
 
 - **Acțiune:** Actualizare pentru terrabit-solutions/bitshop#4148: summary-ul din manifest (cardul Apps Store) rescris cu
