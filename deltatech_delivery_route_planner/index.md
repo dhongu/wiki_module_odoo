@@ -60,4 +60,5 @@ Fluxul detaliat pas cu pas este în [fișa consultantului](FISA_CONSULTANT.md).
 
 - `stock_picking_batch` (integrat în `stock` pe Odoo 20): loturile create de planificator sunt transferuri în lot.
 - `fleet`: vehiculul, șoferul și categoria cu capacitate de greutate provin din flota Odoo.
+- [deltatech_delivery_route_driver](../deltatech_delivery_route_driver/index.md): partea pentru șofer — opririle lotului pe telefon (portal), navigarea, confirmarea predării sau a refuzului.
 - `deltatech_fleet`: foile de parcurs și rutele flotei înregistrează ce s-a parcurs efectiv; planificatorul propune traseul dinainte.

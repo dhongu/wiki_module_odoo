@@ -4,6 +4,19 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-26] `deltatech_delivery_route_driver` — ingestie 20.0.1.0.0 (modul nou)
+
+- **Acțiune:** Pagină nouă pentru modulul nou din bitshop_ent, unit prin terrabit-solutions/bitshop_ent#791: portalul
+  șoferului pentru loturile planificatorului — opririle în ordinea planificată, navigare Google Maps/Waze, apel, confirmarea
+  predării (primitor, semnătură, poze, poziția la confirmare) sau a refuzului (motiv configurabil, notă, poze, activitate
+  pentru responsabilul lotului), contoarele pe lot. Fișa consultant copiată, cu 14 capturi. În pagina
+  `deltatech_delivery_route_planner` s-a adăugat conexiunea către modulul șoferului.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/USAGE.md`, `readme/CONFIGURE.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`.
+- **Dependențe/Conexiuni:** [deltatech_delivery_route_planner](deltatech_delivery_route_planner/index.md), `portal` (fără
+  pagină, rămas text); conexiune `fleet`.
+- **Fișiere actualizate:** `deltatech_delivery_route_driver/` (index.md, FISA_CONSULTANT.md, screenshots/),
+  `deltatech_delivery_route_planner/index.md`, `index.md`, `log.md`.
+
 ## [2026-11-26] `deltatech_delivery_route_planner` — ingestie 20.0.1.0.0 (modul nou)
 
 - **Acțiune:** Pagină nouă pentru modulul nou din bitshop_ent, unit prin terrabit-solutions/bitshop_ent#780: asistentul
