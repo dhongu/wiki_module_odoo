@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.4`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_rni_report
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_rni_report`
-- **Ultima Ingestie:** `2026-09-12`
+- **Ultima Ingestie:** `2026-11-26`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -13,16 +13,19 @@ Modulul aduce raportul din spatele soldului contului 408 (marfă primită fără
 
 #### 2. Funcționalități Cheie
 
-- Raport contabil (`account.report`) "Goods Received Not Invoiced (408)", disponibil în meniul Contabilitate → Raportare → Situații legale (Legal Statements).
-- Grupare pe furnizor, cu drill-down pe fiecare înregistrare/document individual de pe conturile 408.
-- Pentru fiecare nivel afișează: valoare recepționată, valoare decontată prin facturi, sold rămas și vechimea (în zile) a celei mai vechi înregistrări nedecontate.
-- Furnizorii cu sold stins (recepționat și facturat integral) nu apar în listă.
-- Soldul afișat e cumulat până la data de sfârșit a perioadei selectate (nu doar mișcarea perioadei) — o recepție veche nefacturată continuă să apese soldul lunilor următoare; filtrul de dată restrânge doar ce apare ca document nou.
+- Raport contabil (`account.report`) „Recepții fără factură (408)” (în engleză „Goods Received Not Invoiced (408)”), disponibil în meniul Contabilitate → Rapoarte → Situații legale.
+- Grupare pe furnizor, cu drill-down pe fiecare înregistrare/document individual de pe conturile 408; rândurile cu valoare pe „Recepționat” sunt intrări, cele cu valoare pe „Facturat” sunt decontări.
+- Pentru fiecare nivel afișează: valoare recepționată, valoare decontată prin facturi, sold rămas și vechimea (în zile) a celei mai vechi înregistrări nedecontate, socotită până la data de sfârșit a perioadei selectate, nu până azi.
+- Furnizorii cu sold stins (recepționat și facturat integral) nu apar în listă; o valoare negativă pe „Rămas” înseamnă că s-a facturat mai mult decât s-a recepționat.
+- Soldul afișat e cumulat până la data de sfârșit a perioadei selectate (nu doar mișcarea perioadei) — o recepție veche nefacturată continuă să apese soldul lunilor următoare; filtrul de dată restrânge doar ce apare ca document nou. Totalul trebuie să corespundă soldului contului 408 din balanța de verificare.
 - Funcționează cu ambele mecanisme de contare a 408 existente în suită, pornind din contabilitate — singura lor sursă comună:
   - `l10n_ro_stock_gestiune`: notă separată `371 = 408` la recepție, stinsă de factură prin rutarea liniei de produs pe 408, fără reconciliere; când legătura către recepție există, raportul afișează transferul (numărul recepției), nu numărul notei contabile.
   - `l10n_ro_stock_account` (OCA): pivotul 408 alimentat din valorizarea mișcării marcate `reception_notice`.
-- Conturile 408 luate în calcul provin din configurarea explicită (contul de recepție fără factură de pe gestiune sau de pe companie); dacă nu e configurat, raportul cade pe toate conturile al căror cod începe cu `408`.
-- Suportă filtrare pe interval de dată, multi-companie (selector) și pe partener; căutare activă în bara raportului.
+- Conturile 408 luate în calcul provin din configurarea explicită, în această ordine: contul de recepție fără factură de pe gestiune, apoi cel de pe companie; dacă niciunul nu e configurat, raportul cade pe toate conturile al căror cod începe cu `408`.
+- Partenerul trebuie completat pe liniile contului 408: liniile fără partener ajung într-un rând propriu, fără nume (soldul rămâne corect, dar recepția nu poate fi urmărită).
+- Suportă filtrare pe interval de dată (implicit luna curentă), multi-companie (selector) și pe partener; căutare activă în bara raportului. Export PDF (pentru dosarul de închidere) și XLSX din antetul raportului.
+- Dacă modulul de închidere periodică este instalat, verificarea „Recepții fără factură (408)” din checklistul de închidere confruntă soldul urmărit acolo cu suma văzută de raport pe furnizori și semnalează divergența dintre cele două configurări de cont; butonul verificării deschide raportul.
+- Raportul este un instrument de control intern: nu generează note contabile și nu intră în nicio declarație.
 
 #### 3. Dependențe
 
@@ -46,4 +49,4 @@ Raportul nu are vizualizări XML proprii — este randat prin componenta standar
 #### 5. Conexiuni
 
 - [l10n_ro_stock_gestiune](../l10n_ro_stock_gestiune/index.md): unul din cele două mecanisme de contare a 408 pe care raportul le poate citi; când modulul e instalat, raportul preferă contul configurat pe gestiune și afișează recepția din spatele notei contabile în locul numărului notei.
-- `l10n_ro_stock_account` (OCA): al doilea mecanism suportat — pivotul 408 alimentat din valorizarea mișcării marcate `reception_notice`; modulul nu are încă pagină wiki.
+- [l10n_ro_stock_account](../l10n_ro_stock_account/index.md) (OCA): al doilea mecanism suportat — pivotul 408 alimentat din valorizarea mișcării marcate `reception_notice`.

@@ -1,15 +1,15 @@
-# Euplatesc Settlement Bank Statements Import (localizat la `deltatech_account_bank_statement_import_euplatesc/index.md`)
+# EuPlatesc.ro Settlements (localizat la `deltatech_account_bank_statement_import_euplatesc/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_bank_statement_import_euplatesc`
 - **Versiune:** `19.0.1.2.9`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import_euplatesc
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_account_bank_statement_import_euplatesc`
-- **Ultima Ingestie:** `2026-09-19`
+- **Ultima Ingestie:** `2026-11-26`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul importă direct în Odoo, ca extrase de cont, fișierele de decontare (settlement) Euplatesc.ro pentru comerțul electronic, eliminând procesarea manuală a fișierelor XLSX primite de la procesatorul de plăți cu cardul. Fiecare fișier de decontare devine automat un extras bancar cu linii detaliate pe tranzacție, gata de reconciliere cu comenzile web sau facturile aferente.
+Modulul importă direct în Odoo, ca extrase de cont, fișierele de detaliere a decontării (settlement) de la EuPlatesc.ro — platforma românească de plăți cu cardul operată de EuroPayment Services S.R.L. —, eliminând procesarea manuală a fișierelor XLSX. Fiecare foaie de decontare devine automat un extras bancar cu o linie pe plată cu cardul, comisioanele de procesare și suma pe care EuPlatesc.ro o virează în bancă, gata de reconciliere cu facturile clienților. Modulul doar citește fișierul încărcat; nu se conectează la EuPlatesc.ro și nu trimite date în afara Odoo.
 
 #### 2. Funcționalități Cheie
 
@@ -20,13 +20,18 @@ Modulul importă direct în Odoo, ca extrase de cont, fișierele de decontare (s
 - **Comisioane configurabile**: comisioanele de procesare Euplatesc (Minim1RON + Diff1RON) pot fi importate ca o singură linie agregată per extras (implicit), ca o linie per tranzacție, sau pot fi omise.
 - **Linie opțională de transfer bancar**: se poate adăuga automat o linie negativă cu suma netă transferată (configurabil per jurnal), astfel încât extrasul să se balanseze la zero, iar decontarea să poată fi reconciliată cu extrasul bancar real printr-un cont de transfer intern.
 - **Identificare automată a partenerului**: numărul comenzii (`InvoiceId`) este căutat în `sale.order` (`client_order_ref` sau `name`), iar clientul găsit este setat direct pe liniile de plată și de refund; o potrivire ambiguă lasă linia neatribuită, pentru decizia operatorului.
-- **Protecție la duplicate**: fiecare tranzacție este importată o singură dată (id unic de import per RRN); reimportarea aceluiași fișier este detectată.
+- **Protecție la duplicate**: fiecare tranzacție este importată o singură dată (id unic de import per RRN); reimportarea aceluiași fișier este detectată. Liniile agregate de comision și de transfer au id-ul legat de decontare (data decontării și un rezumat al RRN-urilor), nu de titlul foii, așa că două decontări cu aceeași denumire de foaie nu își mai pierd comisionul și transferul (corecție 19.0.1.2.5).
+- **Valută unică**: un fișier cu mai multe valute este refuzat — se folosește câte un jurnal pe valută.
+- **Configurare jurnal** (Contabilitate → Configurare → Jurnale): jurnal de tip **Bancă** pentru decontările EuPlatesc.ro, cu **Bank Feeds = Import**, cu un cont propriu pentru banii ținuți de procesator până la virare — un sub-cont 461 (creanță față de procesator), creat în prealabil cu tipul **Bancă și numerar** —; opțiunile **Euplatesc: Fees** (implicit o linie agregată per extras) și **Euplatesc: Add Bank Transfer Line** (recomandat bifat, pentru ca extrasul să se echilibreze la zero).
+- **Utilizare**: se descarcă fișierul din interfața de comerciant EuPlatesc.ro; din jurnalul EuPlatesc.ro de pe tabloul de bord Contabilitate, butonul **Upload** importă fișierul nemodificat; se creează câte un extras per foaie de decontare, datat în ziua decontării (linii „Card payment … - client”, rambursări, comisioane și, dacă e activată, linia de transfer).
+- **Reconciliere**: liniile de plată se reconciliază cu facturile clienților (clientul e deja setat când comanda a fost găsită), linia de comision cu contul de comisioane, iar linia de transfer cu încasarea EuPlatesc.ro de pe extrasul bancar real, printr-un cont de transfer intern (581 în planul de conturi românesc).
 
 #### 3. Dependențe
 
 - `account_bank_statement_import`
 - `account_bank_statement_import_csv`
 - [deltatech_account_bank_statement_import](../deltatech_account_bank_statement_import/index.md)
+- Dependență Python externă: `openpyxl`
 
 #### 4. Componente Cheie
 

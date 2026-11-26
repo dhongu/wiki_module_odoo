@@ -91,7 +91,12 @@ documente și nu are implicații contabile.
    Parola se stochează în clar în baza de date (trebuie trimisă serverului), deci folosiți o
    **parolă de aplicație** creată pe serverul de mail, nu parola principală a căsuței. Un
    utilizator are de regulă **un singur** cont activ; dacă are mai multe, evenimentele noi se
-   trimit pe cel mai vechi (cel cu id-ul mai mic).
+   trimit pe cel mai vechi (cel cu id-ul mai mic). Pe server, organizatorul evenimentului este
+   întotdeauna proprietarul contului. **Calendarul proprietarului gestionat de o asistentă:**
+   asistenta creează programarea cu **Organizator** = proprietarul, iar evenimentul ajunge pe
+   serverul proprietarului, prin contul lui. Nu creați al doilea cont pe același calendar de pe
+   server: același eveniment (același UID) intră o singură dată în Odoo, iar contul
+   organizatorului îl păstrează.
    Parola e obligatorie la creare: administratorul pune una provizorie, iar proprietarul o
    înlocuiește cu parola de aplicație din **Calendar → Calendarele mele**.
 4. Apăsați **Test conexiune** — modulul descoperă automat calendarul contului și confirmă
@@ -130,6 +135,13 @@ o serie recurentă (adusă de pe server ca o singură serie, cu regula ei de rep
 afișată în Odoo ca ocurențe săptămânale cu aceeași denumire) și un eveniment simplu, cu un
 participant (`Andrei Popescu`).
 
+**Verificați:** un eveniment care ajunge pe mai multe conturi (organizatorul și un participant își
+sincronizează fiecare calendarul, sau două conturi pe același calendar de pe server) apare **o
+singură dată** în Odoo, după UID-ul de pe server. Dacă participantul a sincronizat primul,
+evenimentul trece pe contul organizatorului la următoarea sincronizare a acestuia (câmpul **Cont
+CalDAV** și **Organizator** devin ale organizatorului); lista **Evenimente** a participantului nu îl
+mai arată, dar participantul îl vede în continuare în Calendar.
+
 ![Evenimentele sincronizate: seria recurentă + evenimentul cu participant](screenshots/03_evenimente_sincronizate.png)
 
 ### Pasul 3 — Utilizarea normală, din Calendar
@@ -163,9 +175,13 @@ previzualizare, apoi tab-ul **Opțiuni**:
 - Alarmele Odoo (`calendar.alarm`) se traduc în/din componente `VALARM` (notificare → `DISPLAY`,
   email → `EMAIL`).
 - Participanții (`partner_ids`) se traduc în/din `ATTENDEE`/`ORGANIZER`, cu potrivire după adresa
-  de email (participanții fără email nu se trimit pe server; organizatorul se trimite doar dacă
-  utilizatorul are email), **fără diferență între litere mari și mici** (contactul se creează automat dacă nu
+  de email (participanții fără email nu se trimit pe server), **fără diferență între litere mari și mici** (contactul se creează automat dacă nu
   există, dar cel mult 50 de contacte noi per eveniment).
+- **ORGANIZER** pe server este întotdeauna **proprietarul contului** prin care se trimite
+  evenimentul (dacă are email), nu neapărat organizatorul din Odoo; proprietarul nu apare și ca
+  `ATTENDEE`. Exemplu: asistenta creează o programare cu **Organizator** = proprietarul; evenimentul
+  se trimite prin contul proprietarului, iar pe server apare cu proprietarul ca organizator și cu
+  ceilalți participanți ca invitați.
 
 ![Eveniment săptămânal cu memento de 15 minute și trei participanți: câmpurile care se sincronizează cu serverul](screenshots/05_recurenta_alarma_participanti.png)
 
@@ -205,6 +221,11 @@ activarea cron-ului de sincronizare periodică.
   reconciliază.
 - [ ] Un participant cu email scris cu alte litere mari/mici decât contactul existent se potrivește
   cu acel contact, nu creează unul nou.
+- [ ] Organizatorul și un participant, fiecare cu cont CalDAV, sincronizează aceeași întâlnire:
+  în Odoo există **un singur** eveniment, pe contul organizatorului, chiar dacă participantul a
+  sincronizat primul.
+- [ ] O programare creată de asistentă cu **Organizator** = proprietarul apare pe serverul
+  proprietarului, cu proprietarul ca ORGANIZER și fără el în lista ATTENDEE.
 - [ ] Un eveniment cu mai mult de 50 de participanți necunoscuți se importă oricum, dar se creează
   cel mult 50 de contacte noi (restul participanților rămân neasociați, cu avertisment în log).
 
@@ -222,6 +243,8 @@ activarea cron-ului de sincronizare periodică.
 | „Only an administrator can change these CalDAV account fields: ..." | Un utilizator obișnuit a încercat să schimbe câmpuri de server ale contului | Câmpurile de server le schimbă administratorul; proprietarul poate schimba doar parola |
 | Evenimentele șterse pe server rămân în Odoo | Serverul nu returnează niciun eveniment pentru interval (calendar greșit, URL golit); modulul nu șterge nimic în acest caz, doar scrie un avertisment în log | Verificați **URL calendar** (rulați din nou Test conexiune) și serverul; la următoarea sincronizare cu răspuns normal, ștergerile se aplică |
 | Un eveniment cu foarte mulți participanți nu are toți participanții asociați; în log apare „only the first 50 are created as contacts" | Plafon de 50 de contacte noi create per eveniment, ca un server să nu poată umple baza cu contacte | Evenimentul se importă normal; adăugați manual participanții lipsă sau creați contactele în prealabil |
+| Un eveniment a dispărut din lista **Evenimente** a unui cont, dar e tot în Calendar | Același eveniment (același UID) e și pe contul organizatorului; contul organizatorului l-a preluat, ca să existe o singură copie în Odoo | Comportament intenționat; evenimentul se editează și se trimite prin contul organizatorului |
+| Același eveniment apare de două ori în Calendar | Serverele au dat UID-uri diferite celor două copii (de exemplu o invitație re-creată manual), deci nu se recunosc ca același eveniment | Ștergeți copia în plus de pe serverul participantului; la următoarea sincronizare dispare și din Odoo |
 | Evenimentele unui utilizator ajung pe alt calendar decât cel așteptat | Utilizatorul are mai multe conturi CalDAV active; se folosește cel mai vechi | Arhivați contul în plus |
 
 ## 10. Limitări cunoscute

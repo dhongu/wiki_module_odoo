@@ -62,6 +62,8 @@ Arhiva fiscală AMEF, bonurile ei, raportul Z și liniile lui sunt vizibile doar
 la compania respectivă (reguli multi-company). Notificările merg doar la membrii grupului care au acces
 la compania arhivei. Grupul dă acces doar de citire la arhiva fiscală și la bonurile ei: membrii o pot
 deschide și vedea, dar nu o pot modifica.
+Arhiva fiscală și raportul Z nu se pot lega de un punct de vânzare sau de o sesiune POS din altă companie:
+sistemul refuză salvarea cu mesajul standard Odoo despre inconsistențe de companie (vezi secțiunea 9).
 
 ## 4. Conturi și date implicate
 
@@ -93,7 +95,8 @@ Date minime pentru demo:
 3. Verificați metodele de plată ale punctului de lucru (**Punct de vânzare → Configurare → Metode de
    plată**) și câmpul **Tip de plată AMEF** al fiecăreia
    (numerar, card, tichete etc.): raportul Z al aparatului dă câte un total pe tip, iar reconcilierea
-   se face pe acest tip.
+   se face pe acest tip. Implicit, o metodă de plată de tip numerar primește **Numerar**, iar celelalte
+   **Card**; valoarea se poate schimba.
 4. Verificați că operatorul are grupul **Punct de vânzare / Utilizator**.
 5. Pentru preluarea din e-mail, completați **NUI aparat fiscal (AMEF)** pe **fiecare** punct de vânzare
    cu casă de marcat: arhiva se leagă de punctul de vânzare după NUI, iar un NUI necompletat sau
@@ -123,6 +126,7 @@ Date minime pentru demo:
 
 În **Punct de vânzare → Configurare → Setări**, la secțiunea **Conformitate fiscală RO (AMEF)**, activați
 **Fiscalizare AMEF obligatorie** și completați seria aparatului fiscal și **NUI aparat fiscal (AMEF)**.
+Câmpurile **Serie aparat fiscal (AMEF)** și **NUI aparat fiscal (AMEF)** apar doar după ce bifa e activă.
 De acum, comenzile plătite din acest punct de lucru trebuie să aibă bon fiscal emis înainte de
 închiderea sesiunii.
 
@@ -158,7 +162,9 @@ Completați apoi cifrele din raportul Z tipărit: **Total declarat (raport Z)** 
 **Defalcare pe tipuri de plată**, coloana declarată a fiecărui tip. Coloana declarată pornește egală cu
 cea calculată, deci trebuie rescrisă cu cifrele din Z, altfel diferența iese zero. Apăsați
 **Reconciliază**: raportul trece în **Reconciliat** doar dacă totalul și fiecare tip de plată coincid;
-altfel trece în **Diferențe**.
+altfel trece în **Diferențe**. Din **Reconciliat** sau **Diferențe**, butonul **Închide** trece raportul în
+**Închis**, starea finală a zilei. Butonul **Resetează** (vizibil în orice stare în afară de **Ciornă**) îl aduce
+înapoi în **Ciornă**, ca să puteți relua calculul și reconcilierea.
 
 Raportul pornește de la ipoteza **o sesiune = un raport Z = o zi**, pe fiecare casă: se calculează din
 vânzările sesiunii, iar importul (Pasul 5) caută comenzile unui Z după ziua lui.
@@ -478,12 +484,16 @@ justificarea erorilor de fiscalizare.
 ## 8. Verificări pentru consultant
 
 - [ ] Modulul se instalează fără erori (cu `point_of_sale` prezent).
-- [ ] În Setări POS apare secțiunea **Conformitate fiscală RO (AMEF)** cu fiscalizarea obligatorie,
-      seria și NUI-ul aparatului.
+- [ ] În Setări POS apare secțiunea **Conformitate fiscală RO (AMEF)** cu fiscalizarea obligatorie;
+      seria și NUI-ul aparatului apar doar după bifarea fiscalizării obligatorii.
 - [ ] Pe comanda POS apare fila **Fiscalizare AMEF** cu starea bonului.
 - [ ] O comandă plătită fără bon fiscal blochează închiderea sesiunii (cu mesaj clar).
 - [ ] „Înregistrează bon fiscal" trece comanda în starea „Bon emis" și salvează seria/numărul.
 - [ ] Raportul Z agregă corect pe cote TVA și pe metode de plată; reconcilierea semnalează diferențele.
+- [ ] **Închide** trece un raport Reconciliat sau cu Diferențe în **Închis**, iar **Resetează** îl readuce în
+      **Ciornă**.
+- [ ] O metodă de plată nouă de tip numerar primește implicit **Tip de plată AMEF** = Numerar, iar una de
+      tip bancă primește Card; valoarea poate fi schimbată.
 - [ ] **Vânzări TVA pe casă de marcat** grupează corect pe punct de lucru și cotă TVA; totalul pe un
       punct de lucru pentru o zi coincide cu totalul raportului Z reconciliat al aceleiași zile.
 - [ ] Cu filtrul „Reconciliat / Închis" activ, rapoartele Z în starea „Ciornă"/„Calculat din POS" nu
@@ -548,6 +558,8 @@ justificarea erorilor de fiscalizare.
       `amef_notify_activity` = `False`, activitatea nu se mai creează.
 - [ ] Un utilizator din altă companie nu vede arhiva fiscală, bonurile, raportul Z și nu primește
       notificarea.
+- [ ] Arhiva fiscală sau raportul Z al unei companii nu se poate lega de un punct de vânzare sau de o sesiune din altă
+      companie: salvarea e refuzată cu mesajul de inconsistențe de companie.
 - [ ] Într-o zi cu două rapoarte Z și comenzi „Lipsă în arhiva fiscală", fila **Observații** arată
       avertismentul „Ziua … are mai multe Z-uri (…)"; cu un singur Z pe zi, avertismentul nu apare.
 
@@ -571,6 +583,7 @@ justificarea erorilor de fiscalizare.
 | Arhivă în **Ciornă**, cu un mesaj tehnic în fila **Observații** (importul din e-mail a eșuat) | Eroare la import, de exemplu un fișier modificat sau incomplet; membrii grupului au fost notificați | Citiți motivul din **Observații**, corectați cauza sau cereți retrimiterea exportului și apăsați **Importă arhiva** |
 | „E-mail primit din nou: rapoartele Z … sunt deja importate, nu s-a modificat nimic." (în chatter) | Același export trimis a doua oară | Nimic de făcut: nu s-a creat o arhivă nouă |
 | „Ziua … are mai multe Z-uri (…): comenzile care aparțin celorlalte Z-uri pot apărea ca „Lipsă în arhiva fiscală”. Verifică acele comenzi după oră." (în fila **Observații**) | Pe aceeași casă s-au scos două rapoarte Z în aceeași zi | Verificați după oră comenzile „Lipsă în arhiva fiscală"; recomandați un singur raport Z pe zi |
+| Uh-oh! You’ve got some company inconsistencies here: … belongs to another company. (mesajul standard Odoo, netradus), la salvarea arhivei fiscale sau a raportului Z | Punctul de vânzare sau sesiunea aleasă aparține altei companii decât arhiva sau raportul | Alegeți punctul de vânzare sau sesiunea companiei înregistrării, sau corectați compania înregistrării |
 | Arhiva e importată, dar nu a plecat niciun e-mail către grup | `amef_notify_mode` e `never` (implicit), sau `problems` iar importul n-a avut probleme; sau utilizatorul nu e în grupul **AMEF: notificări la importul din e-mail** ori nu are acces la compania arhivei | Setați parametrul pe `problems` sau `always`, adăugați utilizatorul în grup și verificați compania lui |
 
 ## 10. Capturi de ecran

@@ -1,19 +1,28 @@
-# eTransport Enhancement (localizat la `l10n_ro_etransport_enhancement/index.md`)
+# e-Transport Enhancements (localizat la `l10n_ro_etransport_enhancement/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_etransport_enhancement`
 - **Versiune:** `19.0.0.10.2`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_etransport_enhancement
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_etransport_enhancement`
-- **Ultima Ingestie:** `2026-09-21`
+- **Ultima Ingestie:** `2026-11-26`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul `l10n_ro_etransport_enhancement` extinde funcționalitatea standard de e-Transport din Odoo pentru piața românească, adăugând îmbunătățiri și opțiuni suplimentare. Scopul său este să facă integrarea cu sistemul e-Transport (SPV) mai flexibilă și mai fiabilă, acoperind atât livrările/recepțiile clasice printr-un depozit, cât și transporturile dropship (furnizor → client, fără mișcare de stoc intermediară), simplificând conformitatea fiscală pentru transporturile de mărfuri și reducând efortul administrativ al departamentelor de logistică și contabilitate.
+Modulul `l10n_ro_etransport_enhancement` („e-Transport Enhancements”) extinde funcționalitatea standard de e-Transport din Odoo pentru piața românească. Modulul standard `l10n_ro_edi_stock` trimite declarația din transfer, dar în mai multe situații ANAF acceptă XML-ul și emite UIT chiar dacă datele declarate sunt greșite, fără nicio eroare vizibilă; modulul completează și corectează declarația, astfel încât ce primește ANAF să corespundă cu marfa transportată. Acoperă atât livrările/recepțiile clasice printr-un depozit, cât și transporturile dropship (furnizor → client, fără mișcare de stoc intermediară), simplificând conformitatea fiscală și reducând efortul departamentelor de logistică și contabilitate.
 
 #### 2. Funcționalități Cheie
 
 - Trimiterea documentelor e-Transport direct din livrările/recepțiile de stoc (stock pickings), cu suport pentru diferite tipuri de trimitere prin parametri de context.
+- **Corecția unei declarații nu mai emite un UIT nou**: butonul „Modificați eTransport” trimite elementul `<corectie uit="…"/>` ca prim copil al `notificare` (cum cere XSD-ul ANAF); standardul îl omitea, deci ANAF emitea alt UIT, iar în SPV rămâneau două UIT-uri active, cu transferul arătându-l pe cel vechi, necorectat. Se aplică și pe loturi.
+- **Codul tarifar vine din „Cod SH” de pe produs** (4, 6 sau 8 cifre; punctele și spațiile se elimină), când `account_intrastat` nu e instalat; standardul trimitea `00000000` pentru orice produs. Un produs fără cod SH valid oprește declarația la validare, cu eroare care numește produsele; la operațiunile 60 și 70 codul e opțional și se omite. Cu Intrastat instalat, rămâne obligatoriu codul Intrastat al produsului. **Atenție la actualizare:** produsele declarate până acum fără cod trebuie completate cu codul SH înainte de următoarea declarație.
+- **Greutatea brută nu mai dublează marfa la colete**: tara coletului (greutatea cântărită minus marfa sau, dacă nu e cântărit, greutatea tipului de colet) se adaugă o singură dată și se împarte pe mișcări proporțional cu marfa; fără colet, greutatea brută e egală cu cea netă (exemplu: colet de 33 kg cu 20 + 10 kg marfă se declară 22 + 11 kg brut, nu 53 + 43).
+- **Declarație post-avarie**: bifa „Post-outage Declaration” (tab-ul eTransport al transferului) trimite `declPostAvarie="D"` (OUG 41/2022 art. 8 alin. 1^3), pentru notificările depuse după o indisponibilitate a sistemului RO e-Transport — se bifează doar în acel caz.
+- **Valoarea declarată** e valoarea liniei (fără TVA), nu prețul unitar; cu setarea „UIT: get price from order” se ia din comanda de vânzare (livrări) sau de achiziție (recepții), altfel din costul produsului × cantitate, cu fallback pe valoarea de stoc a mișcării și apoi pe prețul de vânzare; dacă nu se găsește niciun preț, trimiterea se oprește cu eroare.
+- **Câmp dedicat „Transportator eTransport”** (în română) pe transfer, distinct de metoda de livrare „Transportator” din standard (care poate rămâne goală); se completează după bifarea „eTransport necesar”.
+- Setările UIT se găsesc în Inventar → Configurare → Setări, blocul **UIT** („UIT: preia valoarea din comandă” și „Timp de așteptare eTransport (s)”); conexiunea ANAF (token) vine din setările E-Factura ale companiei.
+- Documentele însoțitoare: butonul „Preia documentele implicite” adaugă avizul (numărul transferului) și facturile/notele de credit postate legate de livrare, fără dubluri; CMR și altele se adaugă manual (număr, dată, observații opționale). Fără niciun rând, declarația conține doar avizul, ca în standard.
+- Mesaje de eroare frecvente: produse fără cod SH valid sau fără masă, preț negăsit, ANAF fără răspuns (se verifică în SPV înainte de retrimitere), „Greutățile totale netă și brută trebuie să fie mai mari decât 0” la „Distribute weights” fără totaluri. Modulul nu decide dacă un transport trebuie declarat și nu produce note contabile; declarația se validează într-un mediu de test înainte de promovare.
 - **Timeout configurabil** pentru API-ul ANAF (implicit 60 s, per companie) — standardul Odoo are 10 s fix, insuficient la ore de vârf.
 - Căderile de rețea către ANAF nu mai aruncă eroare tehnică în interfață: transferul rămâne cu un document eșuat și un mesaj clar care avertizează să se verifice în SPV înainte de retrimitere, ca să nu se emită un al doilea UIT pentru aceleași bunuri.
 - Reîncercare automată doar pentru interogările de stare (GET, idempotent); încărcarea documentului (POST) nu se reîncearcă niciodată automat.
@@ -61,9 +70,14 @@ Secțiunea „Componente Cheie" clasică (Modele/Vizualizări/Acțiuni) e omisă
 - `stock.picking` (extindere separată în `stock_picking_dropship.py`, menținută intenționat distinctă de extinderea principală pentru a controla ordinea `super()`): rezolvă traseul fizic și partenerul comercial pentru transferurile dropship, pornind de la comenzile de vânzare/achiziție legate, în loc de depozit.
 - `l10n.ro.etransport.document`: documentele însoțitoare declarate pe transfer (CMR, factură, aviz, altele), cu tip, număr, dată și observații opționale.
 - `l10n.ro.stock.picking.weight.line`: liniile de greutate (netă/brută) per mișcare de stoc, folosite la calculul și distribuirea greutăților cântărite.
+- `stock.picking` — hook `_l10n_ro_etransport_declaration_record`: întoarce înregistrarea care declară (transferul), ca `l10n_ro_etransport_batch_enhancement` să poată întoarce lotul pe calea de lot; câmpul `l10n_ro_etransport_post_outage` comandă atributul `declPostAvarie`.
 - `stock.move` (extindere): afișare opțională a denumirii produsului în locul `display_name`-ului standard, în lista de linii de greutate.
 - `res.company` / `res.config.settings` (extindere): setările „UIT: get price from order" și timeout-ul API-ului ANAF.
 - Patch pe `ETransportAPI._make_etransport_request` (nu un model ORM): forțează timeout-ul configurat pe sesiunea `requests` și montează reîncercări automate doar pentru cererile GET.
+
+**Șabloane QWeb**
+
+- `data/template_etransport.xml` (inclusiv `l10n_ro_template_etransport_corectie`): extinde șablonul XML al declarației pentru elementul `corectie` (primul copil al `notificare`) și pentru atributul `declPostAvarie` de pe rădăcina `eTransport`.
 
 **Vizualizări**
 
@@ -78,5 +92,8 @@ Niciuna definită direct de modul; comportamentul se declanșează din acțiunea
 
 - `l10n_ro_edi`: modulul de bază pentru integrarea EDI/e-Transport în localizarea românească, pe care acest modul îl extinde.
 - `l10n_ro_edi_stock`: integrarea EDI la nivel de stoc, baza pe care se adaugă îmbunătățirile pentru trimiterea documentelor e-Transport din livrări/recepții și, mai nou, din transferuri dropship.
+- [l10n_ro_etransport_batch_enhancement](../l10n_ro_etransport_batch_enhancement/index.md): aceleași completări pe loturi de transferuri (modul separat).
+- [l10n_ro_etransport_uit_actions](../l10n_ro_etransport_uit_actions/index.md): ștergerea sau confirmarea unui UIT și schimbarea vehiculului (modul separat); util și pentru curățarea UIT-urilor duplicate rămase din corecții făcute înainte de 19.0.0.10.0.
+- `account_intrastat` (opțional): cu el instalat, codul Intrastat al produsului înlocuiește codul SH la validarea codului tarifar.
 - `stock_dropshipping` (fără pagină wiki, dependență opțională la nivel funcțional, nu declarată în manifest): calea de dropship se activează doar acolo unde fluxul nativ de dropship al Odoo e deja instalat; modulul nu adaugă un depozit sau un tip de operațiune fictiv.
 - `deltatech_uom_unece` (fără pagină wiki, suită separată, licență proprietară): dacă e instalată, face configurabil codul UNECE per unitate de măsură; modulul NU depinde de ea — codul unității folosit la declarație rămâne cel al produsului (`uom.uom._get_unece_code()`), nu cel al liniei, chiar dacă `deltatech_uom_unece` e prezentă.

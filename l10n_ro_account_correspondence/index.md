@@ -5,7 +5,7 @@
 - **Versiune:** `19.0.1.0.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_correspondence
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_account_correspondence`
-- **Ultima Ingestie:** 2026-09-23
+- **Ultima Ingestie:** `2026-11-26`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -23,6 +23,10 @@ Modulul adaugă pe fiecare poziție contabilă (`account.move.line`) contul core
 - Liniile fără mișcare (secțiuni, note fără sumă) rămân fără corespondent.
 - Câmpurile sunt stocate și calculate (recalculate automat la modificarea liniilor notei),
   deci pot fi folosite la grupare, filtrare și în rapoarte.
+- Nu necesită configurare: coloana **Cont corespondent** apare automat în Contabilitate → Contabilitate → Poziții contabile (lângă contul liniei) și în tabelul de linii al unei note contabile postate; este informativă, nu schimbă monografia. Câmpurile se calculează la postarea sau modificarea notelor; utilizatorul are nevoie de acces la Contabilitate (grupul „Contabil”).
+- Pe o notă cu două linii, linia de debit arată codul contului de credit și invers (de exemplu, la 5121 debit și 4111 credit, linia 5121 arată 4111, iar linia 4111 arată 5121), așa că perechea contabilă se verifică direct din listă; „Diverși” indică o corespondență „unul-la-mai-mulți” (de exemplu o linie de bancă față de mai multe conturi de cheltuială).
+- Filtrare și grupare: câmpurile stocate pot fi folosite la filtrare (de exemplu „Cont corespondent = 401”), la grupare în vizualizările pivot sau grafic și în rapoarte (Cartea Mare sau registrul-jurnal din `l10n_ro_journal_reports`). Contul corespondent complet (un singur cont) e în aceeași listă, ascuns implicit, în meniul de coloane opționale.
+- Redenumit din `l10n_ro_account_counterpart` (19.0.1.0.1): numele vechi e folosit pe Odoo Apps de alt furnizor; modelele, câmpurile și funcționalitatea au rămas neschimbate. Pe o bază cu modulul vechi instalat, `ir_module_module`, `ir_module_module_dependency` și `ir_model_data` trebuie redenumite prin SQL înainte de actualizare (pașii exacți sunt în `readme/HISTORY.md`), apoi `-u l10n_ro_account_correspondence`.
 - Complementar modulului [l10n_ro_journal_reports](../l10n_ro_journal_reports/index.md), care
   afișează contul corespondent ca o coloană în Cartea Mare (Grand Livre) — acest modul îl
   persistă la nivel de linie.

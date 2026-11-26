@@ -120,6 +120,9 @@ Date minime pentru demo:
    persoană fizică, factură storno, taxare inversă pe vânzare (livrare „0% R" → V) și pe achiziție
    (autotaxare → C).
 7. Verificați că utilizatorul de test are grupul de acces contabil necesar.
+8. Pentru operațiunile cu taxare inversă (V/C), setați **Cod produs D394** pe categoriile produselor folosite
+   (nomenclatorul din `l10n_ro_anaf_base`: `Contabilitate → Raportare → Declarații ANAF → Coduri produs D394`;
+   vezi fișa `l10n_ro_anaf_base`, Pasul 2). Fără cod, produsul nu apare în defalcarea pe produse a D394.
 
 ## 6. Flux de utilizare
 
@@ -309,7 +312,8 @@ sunt cerute. Modulul le emite astfel, deci nu vă mirați că unele atribute lip
 | `op1` cu partener tip 2 fără CUI (regula se aplică doar dacă apar astfel de operațiuni; în prezent vânzările către PF merg în `op2`/`rezumat1`, deci nu căutați `op1` de acest tip în XML) | adresa se completează; `locP`, `strP`, `nrP`, `blP`, `apP`, `detP` goale nu se emit; `taraP` și `judP` se emit cu valoarea primită |
 | `rezumat1`, cotă nenulă | grupul **L** (`facturiL`, `bazaL`, `tvaL`); pentru tip partener 1 și grupul **A/AI**; pentru tip 1, 3 și 4 și grupul **C** |
 | `rezumat1`, cota 0 | pentru tip partener 1: grupurile **V** și **AS**; pentru tip 1, 3 și 4: grupul **LS** — obligatorii chiar cu valoarea 0 (R38–R58) |
-| `detaliu` din `rezumat1` | `nrLivV`/`bazaLivV` doar pe grupul V; `nrAchizC`/`bazaAchizC`/`tvaAchizC` doar pe grupul A |
+| `op11` (defalcarea pe produse a `op1`) | doar la V și C cu tip partener 1; un rând pe cod D394 (R235.2); `tvaPR` lipsește la V și la tip partener 2 și există la C (R237.1) |
+| `detaliu` din `rezumat1` | un rând pe bun, pentru fiecare cod din `op11` (R35, R63); pe cota 0 (V) `nrLivV`/`bazaLivV`, pe cotă nenulă (C) `nrAchizC`/`bazaAchizC`/`tvaAchizC`; cerealele se adună sub bunul 21 |
 
 > Spre deosebire de D300, D394 este o **declarație informativă** și nu se integrează în fluxul
 > „Returns" (nu are checklist `account.return` propriu).
@@ -322,7 +326,8 @@ sunt cerute. Modulul le emite astfel, deci nu vă mirați că unele atribute lip
 | Parteneri fără CUI (`op2` — încasări I1 cu bonuri fiscale / I2 alte încasări) | nume și adresă (localitate, țară, județ pentru RO) pentru persoane fizice; tratamentul complet e în lucru (vezi „Limitări cunoscute") |
 | Livrare cu taxare inversă → **V** | vânzare „0% R", fără TVA colectată, cotă 0 |
 | Achiziție de la furnizor cu TVA la încasare → **AÎ** (`op1 tip="AI"`) | factura cu taxă „TVA la încasare - X% deductibil”, în luna datei facturii, plătită sau nu; furnizor RO cu CUI (tip partener 1), cotă nenulă |
-| Achiziție cu taxare inversă → **C** | achiziție autotaxată, pe cota reală, cu TVA autotaxată (`tvaC`) și codul de produs (NC sau categoriile art. 331) |
+| Achiziție cu taxare inversă → **C** | achiziție autotaxată, pe cota reală, cu TVA autotaxată (`tvaC`) și codul de produs D394 din nomenclator (produs sau categorie) |
+| Defalcarea pe produse (`op11`, `rezumat1/detaliu`) la V și C | fiecare produs are **Cod produs D394**; pe o factură cu mai multe coduri, `nrFactPR` = 1 doar pe codul principal |
 | Serii facturi (`serieFacturi`) | plajă min/max **numerică** per serie, calculată automat; stornările cu serie proprie apar separat |
 | Operațiuni excluse | intracomunitar, import/export — nu apar în `op1`/`op2` |
 | Stornări/anulări | serie/număr și semn corect |
@@ -362,6 +367,16 @@ sunt cerute. Modulul le emite astfel, deci nu vă mirați că unele atribute lip
   această repartizare).
 - **Rotunjire:** sumele se adună cu bani și se rotunjesc la leu pe rândul (partener, tip, cotă), nu
   factură cu factură, ca totalurile din `rezumat1` și `rezumat2` să fie suma rândurilor `op1`/`op2`.
+- **Defalcarea pe produse (`op11`):** liniile cu taxare inversă ale fiecărei facturi se grupează pe **Cod produs
+  D394** (produs, apoi categorie; codul NC doar dacă există în nomenclator). Baza și TVA-ul rândului `op1` se
+  repartizează pe coduri după baza liniilor, deci suma `op11` este rândul `op1`. **`nrFactPR`** (Ghid D394): o
+  factură cu mai multe coduri se numără o singură dată, cu 1 pe codul cu baza cea mai mare la V, respectiv cu
+  TVA-ul cel mai mare la C, și 0 pe celelalte; la egalitate, primul cod din nomenclator. Stornarea se numără 1, cu
+  valori negative, pe același cod ca factura (valoarea absolută decide). Suma `nrFactPR` pe un rând `op1` este
+  `nrFact`.
+- **`rezumat1/detaliu`:** totalurile `op11` pe bun; codurile de cereale (1001 … 10086000) se adună sub bunul 21,
+  care nu se alege pe produs. Codul 36 (gaze naturale) nu poate fi declarat la tip partener 1: nu e în lista
+  `codPR` a XSD-ului, iar validatorul admite în `detaliu` doar bunurile 21–31 (R64.2).
 
 ## 7. Legături cu alte module / declarații
 
@@ -370,7 +385,7 @@ sunt cerute. Modulul le emite astfel, deci nu vă mirați că unele atribute lip
 | `l10n_ro` | plan de conturi RO și localizare | dependență (manifest) |
 | `account_reports` | framework pentru jurnalele de vânzări/cumpărări | dependență (manifest) |
 | `l10n_ro_account_vat_journal` | definește jurnalele TVA (vânzări/cumpărări, inclusiv pe regimuri) pe care D394 adaugă exporturile | dependență (manifest) |
-| `l10n_ro_anaf_base` | infrastructură comună ANAF (validare XSD, butoane XML/XDP, date companie, codul CAEN cerut la export) | dependență (manifest) |
+| `l10n_ro_anaf_base` | infrastructură comună ANAF (validare XSD, butoane XML/XDP, date companie, codul CAEN cerut la export) și nomenclatorul **Coduri produs D394**, cu codul pe categorie și produs, folosit la `op11` și `rezumat1/detaliu` | dependență (manifest) |
 | `l10n_ro_anaf_d300` | la generarea D300, jurnalele TVA sunt reconciliate automat cu decontul (rd. 17/27 + rând cu rând), cu avertisment la neconcordanță; D394 detaliază partea națională | integrare automată |
 | `l10n_ro_anaf_d390` | operațiunile intracomunitare se verifică separat, nu se dublează în D394 | corelare |
 | `l10n_ro_anaf_partner` | sincronizarea partenerilor cu ANAF: perioadele RTVAI ale furnizorului (lista **Perioade TVA**) și bifa **TVA la încasare (RTVAI)**, din care se citește regimul furnizorului la data facturii pentru `tvaDedAI` când OCA nu e instalat | dependență (manifest) |
@@ -466,6 +481,13 @@ raportează separat.
 - [ ] Recapitulația pe rânduri D300 de sub **Total** are aceleași sume de TVA ca rândul **Total** al
   jurnalului (pasul 3).
 - [ ] Exportul XLSX de detaliu se descarcă cu coloanele pe cotă ordonate determinist.
+- [ ] O factură cu taxare inversă pe două produse cu coduri D394 diferite (ex. grâu 1001 și cherestea 23) dă în
+      `op1` două `op11`, cu `nrFactPR="1"` doar pe codul cu baza mai mare (V) sau cu TVA-ul mai mare (C); în
+      `rezumat1` apare `detaliu` cu bunul 21 (cerealele) și bunul 23.
+- [ ] Două facturi către același partener, cu același cod, dau un singur `op11` pe acel cod; `nrFactPR` adunat = 2.
+- [ ] La `op1` V, `op11` nu are atributul `tvaPR`; la C îl are.
+- [ ] Un produs cu taxare inversă fără **Cod produs D394** apare în avertismentul de pe jurnalul de TVA.
+- [ ] Un produs cu codul 36 sau 32–35 pe o factură V/C oprește exportul cu eroarea `codPR` din secțiunea 9.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -484,6 +506,9 @@ raportează separat.
 | „Următoarele documente au o cotă de TVA care nu este admisă în D394 (5, 9, 11, 19, 20, 21, 24): …" | Pe document e o taxă de TVA cu altă cotă (ex. o taxă creată greșit cu 15%) | Corectați taxa de pe document (sau stornați documentul și refaceți-l), apoi regenerați; înainte de 19.0.1.3.16 documentul dispărea din D394 fără mesaj |
 | O factură cu mai multe cote (ex. 21% și 11%) sau cu linii scutite lipsește din XML-ul D394 | Fișier generat cu un modul sub 19.0.1.3.16, care deducea cota din raportul TVA/bază pe toată factura | Actualizați modulul `l10n_ro_anaf_d394` și regenerați XML-ul |
 | DUKIntegrator respinge XML-ul pentru un atribut de adresă sau un grup de atribute lipsă/în plus în `op1` / `rezumat1` | Fișier generat cu un modul sub 19.0.1.3.11, care emitea atribute goale sau grupuri neconforme | Actualizați modulul `l10n_ro_anaf_d394` și regenerați XML-ul |
+| Avertisment pe jurnalul de TVA: „D394: produsele de mai jos apar pe operațiuni cu taxare inversă (V/C), dar nu au cod de produs D394…”, cu lista produselor (cel mult 20) | Produsele și categoriile lor nu au **Cod produs D394**, iar codul NC nu corespunde unui cod din nomenclator (de exemplu cherestea 44071290); exportul nu se oprește, dar declarația iese fără defalcarea pe produse pentru ele | Setați **Cod produs D394** pe categoria sau pe produsul din listă (ex. 23 pentru masă lemnoasă), apoi regenerați |
+| „Validare pre-flight D394…” cu „codPR: codul de produs D394 X nu poate fi declarat la operațiunile V/C…”, cu documentele | Codul nu e admis în secțiunea operațiunii (32–35 sunt doar pentru achiziții N de la neînregistrați) sau nu e în lista `codPR` a XSD-ului (36, gaze naturale) | Alegeți codul corect pe produs sau pe categorie și regenerați |
+| DUKIntegrator respinge XML-ul cu R35, R235.2 sau R237.1 (`op11` fără `detaliu`, cod repetat în `op1`, `tvaPR` la V) | Fișier generat cu un modul sub 19.0.1.4.0 | Actualizați modulul `l10n_ro_anaf_d394` și regenerați XML-ul |
 | Rapoartele apar goale („Nu există date de afișat!") | Perioada selectată nu conține documente postate | Selectați luna/trimestrul cu facturi postate (implicit luna trecută) |
 | `tvaDedAI` rămâne 0 deși există facturi achitate de la furnizori cu TVA la încasare | Firma nu are bifat **D394 VAT on Collection**; sau furnizorul nu are o perioadă RTVAI care să acopere data facturii (nesincronizat cu ANAF de la actualizarea `l10n_ro_anaf_partner` la 19.0.2.4.0, prima versiune care citește RTVAI) și nici bifa **TVA la încasare (RTVAI)** | Bifați setarea firmei; pe furnizor, în fila **Monitorizare ANAF**, apăsați **Sincronizează cu ANAF** și verificați lista **Perioade TVA** (sau instalați OCA `l10n_ro_vat_on_payment`, care are istoricul complet); apoi regenerați |
 | `tvaDed` rămâne 0 deși facturile de la furnizori în regim normal sunt achitate | Taxele de achiziție sunt „la facturare", deci plata nu generează note de exigibilitate; sau furnizorul e în regim TVA la încasare la data facturii (suma e în `tvaDedAI`) | Configurați taxele de achiziție deductibile în regim normal „la încasare" (art. 297 alin. (3) CF), cu excepția achizițiilor intracomunitare, importurilor și taxării inverse; verificați regimul furnizorului în fila **Monitorizare ANAF** |

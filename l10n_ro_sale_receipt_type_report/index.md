@@ -4,17 +4,21 @@
 - **Versiune:** `19.0.1.0.5`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_sale_receipt_type_report
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_sale_receipt_type_report`
-- **Ultima Ingestie:** `2026-09-12`
+- **Ultima Ingestie:** `2026-11-26`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul aduce situația periodică „Vânzări pe tipuri de încasări" ca raport nativ Odoo (`account.report`), cerută explicit de contabilitatea unui client (Damira) pentru reconcilierea lunară a încasărilor pe canal. Spre deosebire de Registrul de casă sau Jurnalul de bancă (care citesc doar mișcările unui singur cont), acest raport unifică două surse de date eterogene — încasările de la casa de marcat (`pos.payment`) și încasările contabile din afara POS-ului (`account.payment`) — într-o singură vedere pe patru canale: numerar, card, transfer bancar (OP) și platformă de plată online. Nu există un formular tipizat legal pentru acest raport; este o situație de gestiune internă.
+Modulul aduce situația periodică „Vânzări pe tipuri de încasări" ca raport nativ Odoo (`account.report`), cerută uzual de contabilitate pentru reconcilierea lunară a încasărilor pe canal. Spre deosebire de Registrul de casă sau Jurnalul de bancă (care citesc doar mișcările unui singur cont), acest raport unifică două surse de date eterogene — încasările de la casa de marcat (`pos.payment`) și încasările contabile din afara POS-ului (`account.payment`) — într-o singură vedere pe patru canale: numerar, card, transfer bancar (OP) și platformă de plată online. Nu există un formular tipizat legal pentru acest raport; este o situație de gestiune internă.
 
 #### 2. Funcționalități Cheie
 
-- Patru secțiuni pliabile, fiecare cu totalul perioadei în antet: Casă — Numerar, Casă — Card, Transfer bancar (OP), Platformă de plată online; secțiunile fără date în perioadă nu apar.
-- Fiecare secțiune desfășurată listează încasările individuale (dată, partener, document, număr factură, sumă), cu drill-down la comanda POS (`pos.payment` → `pos_order_id`) sau la plata contabilă (`account.payment`).
+- Raportul „Vânzări pe tipuri de încasări (RO)” (în engleză „Sales by Receipt Type (RO)”) se deschide din Contabilitate → Raportare → Situații legale (meniul e sub „Legal Statements”; readme-ul îl numește „Rapoarte de extras”), implicit pe luna curentă.
+- Patru secțiuni pliabile, fiecare cu totalul perioadei în antet: Casă — Numerar, Casă — Card, Transfer bancar (OP), Platformă de plată online; secțiunile fără date în perioadă nu apar (comportament normal).
+- Fiecare secțiune desfășurată listează încasările individuale (dată, partener, document, număr factură, sumă), cu drill-down la comanda POS (`pos.payment` → `pos_order_id`, opțiunea „Vezi comanda” din caret) sau la plata contabilă (`account.payment`, caretul standard, pe secțiunile OP și Platformă online).
+- Verificări recomandate pe ecran înainte de export: totalul Casă — Numerar/Card corespunde sesiunilor POS închise în perioadă, totalul OP corespunde extraselor bancare fără proveniență online, totalul Platformă online corespunde decontărilor providerului de plăți.
+- Configurare: metodele de plată POS trebuie să aibă un jurnal (Numerar sau Bancă) configurat, fiindcă raportul clasifică după tipul jurnalului, nu după numele metodei; modulul cere aplicația Contabilitate Enterprise (`account_reports`), `point_of_sale` și `payment`.
+- Raportul nu înlocuiește Registrul de casă sau Jurnalul de bancă; este o reconciliere pe canal de încasare.
 - Rând de Total general la finalul raportului.
 - Coloană „Invoice" distinctă de „Document": „Document" arată memo-ul plății (ex. referință chitanță/voucher „CV15075 - ..."), care altfel ascundea numărul real al facturii; rândurile POS preiau numărul din `pos_order.account_move` (LEFT JOIN, gol când vânzarea n-a avut factură), iar rândurile `account.payment` preiau `reconciled_invoice_ids` printr-o citire ORM în lot (câmp calculat din reconciliere, nejoinabil direct în SQL).
 - Clasificare Casă — Numerar / Card după tipul jurnalului metodei de plată POS (`pos.payment.method`), nu după numele ei — câmpul `type` al metodei de plată e calculat, nestocat, deci interogarea SQL se leagă direct la `account_journal.type`.
@@ -31,7 +35,6 @@ Modulul aduce situația periodică „Vânzări pe tipuri de încasări" ca rapo
 - `point_of_sale`
 - `payment`
 - `account_payment`
-
 #### 4. Componente Cheie
 
 **Modele**

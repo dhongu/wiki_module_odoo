@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.9`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_van_sales
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_van_sales`
-- **Ultima Ingestie:** `2026-09-13`
+- **Ultima Ingestie:** `2026-11-26`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -44,6 +44,13 @@ contabilă automată.
   la meniurile Configurare > Vans și To Invoice).
 - Încasarea caută automat, per companie, primul jurnal **Cash** (pentru Cash) sau **Bank** (pentru
   Card) — trebuie să existe câte un jurnal de fiecare tip folosit, altfel apare eroare explicită.
+- Pentru o comandă în valută, plata încasării se creează în moneda comenzii (ex. 100 EUR), nu în
+  moneda jurnalului/companiei; conversia se face în nota contabilă la cursul de la data plății
+  (corecție din 19.0.1.0.3).
+- Dubele necesită ca depozitul de restocare să aibă configurat tipul de operațiune de transfer
+  intern, altfel **Load Stock** / **Return Unsold Stock** dau eroare la prima folosire.
+- Modulul e marcat ca aplicație (`application`), cu meniu rădăcină propriu **Van Sales**, cu pictograma
+  modulului.
 
 #### 3. Dependențe
 

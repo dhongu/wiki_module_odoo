@@ -1,7 +1,7 @@
 # Romania - Fișă de magazie pe gestiuni (localizat la `l10n_ro_stock_sheet_gestiune/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_sheet_gestiune`
-- **Versiune:** `19.0.1.0.8`
+- **Versiune:** `19.0.1.0.9`
 - **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_sheet_gestiune`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_sheet_gestiune`
 - **Ultima Ingestie:** `2026-11-20`

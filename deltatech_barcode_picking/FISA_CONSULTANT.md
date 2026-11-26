@@ -199,6 +199,11 @@ rezervarea s-a eliberat. După două
 scanări, **Cantitate** este 2,00, egală cu necesarul. Salvați (livrarea revine la **Pregătit** dacă
 stocul e disponibil) și validați-o (flux standard).
 
+Excepție: dacă tipul de operație are bifa **Protejează rezervările** (modulul
+*deltatech_stock_reservation_lock*), golirea cantității este o eliberare a rezervării și e refuzată
+(„Stocul rezervat pe DC/OUT/… este protejat…”). Acolo nu goliți linia: scanați față de cantitatea
+rezervată sau, pentru livrare parțială, micșorați **Cantitate** fără a ajunge la zero.
+
 ![Livrarea DC/OUT/00034 în starea În așteptare, după golirea cantității și două scanări: linia Robinet sferic 1/2 cu Necesar 2,00 și Cantitate 2,00 (1), cu notificarea The Robinet sferic 1/2 product quantity was set to 2.0 (2)](screenshots/09_livrare_scanata.png)
 
 ### Note de monografie și raportare
@@ -249,6 +254,7 @@ micșorează manual pe linie sau în **Operații detaliate**).
 - [ ] Pe recepția **Efectuat**, scanarea dă „Nu se pot scana produse pe …: transferul este Efectuat.”
 - [ ] Pe livrarea **Pregătit** cu cantitatea rezervată completată, scanarea dă „Cantitatea rezervată a fost atinsă”.
 - [ ] Pe aceeași livrare, după **Cantitate** = 0, două scanări readuc cantitatea la 2,00.
+- [ ] Cu *deltatech_stock_reservation_lock* instalat, pe un tip de operație cu **Protejează rezervările**, **Cantitate** = 0 este refuzat cu „Stocul rezervat pe … este protejat”.
 - [ ] Pe o livrare, scanarea unui produs care nu e în transfer dă „Produsul … nu este in această listă”.
 
 ## 9. Mesaje de eroare frecvente
@@ -260,6 +266,7 @@ micșorează manual pe linie sau în **Operații detaliate**).
 | „Nu există un produs cu codul de bare …” la `5940000000024-L-7` | Lotul conține cratimă, iar codul se desparte la ultima cratimă | Folosiți separatorul `/`: `5940000000024/L-7` |
 | „There are several serial number with this barcode …” | Același nume de lot există la mai multe produse | Scanați codul compus produs + lot, nu doar numele lotului |
 | „Cantitatea rezervată a fost atinsă” | Pe livrare (sau alt transfer care nu e recepție), cantitatea a ajuns deja la necesar; pe livrările **Pregătit** cantitatea rezervată e completată din start | Puneți **Cantitate** = 0 pe linie înainte de numărare (pasul 9) sau verificați dacă bucata e în plus |
+| „Stocul rezervat pe DC/OUT/… este protejat: doar utilizatorii grupului Eliberează rezervările protejate îl pot elibera…” | **Cantitate** = 0 pe o livrare al cărei tip de operație are **Protejează rezervările** (*deltatech_stock_reservation_lock*) | Nu goliți linia: scanați față de cantitatea rezervată sau cereți eliberarea unui utilizator al grupului |
 | „Produsul … nu este in această listă” | Pe o livrare sau un transfer intern care nu e în **Ciornă**, produsul scanat nu e în transfer | Produsul nu face parte din comandă; nu se adaugă prin scanare |
 | „Lotul este deja prezent în listă” | Apare și la prima scanare a unui produs nou în transfer (linia se adaugă corect) sau la scanarea repetată a unui număr de serie | Verificați linia: dacă s-a adăugat, mesajul e doar informativ; la produsele cu loturi, verificați lotul în **Operații detaliate**; un număr de serie nu se scanează de două ori |
 | „Nu se pot scana produse pe …: transferul este Efectuat/Anulat.” | Transferul e închis | Primiți sau livrați marfa pe un transfer nou |
