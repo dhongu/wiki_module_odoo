@@ -53,7 +53,7 @@ Mergeți la **Telefon → Configurare → Furnizori**. Lista **Furnizori VoIP** 
 
 Deschideți furnizorul Daktela. Sus sunt **WebSocket** și **Domeniu SIP Daktela**, pentru softphone. Dedesubt, grupul **API Daktela** are adresa instanței, tokenul (ascuns), coada de ieșire, butonul **Test conexiune**, fusul orar, utilizatorul implicit și data ultimului import. Grupul îl văd doar administratorii.
 
-**Fus orar Daktela** este fusul instanței Daktela (implicit Europe/Bucharest): Daktela trimite orele apelurilor în acest fus, fără decalaj. **Coadă de ieșire Daktela** este opțională: numele cozii de apeluri ieșiri din Daktela (de exemplu 1002), în care agentul trebuie să fie logat.
+**Fus orar Daktela** este fusul instanței Daktela (implicit Europe/Bucharest): Daktela trimite orele apelurilor în acest fus, fără decalaj. **Pauză Daktela pentru Nu deranjați** este numele unic al pauzei Daktela (de exemplu 10) pe care e pus agentul când alege **Nu deranjați** în widget (pasul 9); gol, agentul e trecut pe Indisponibil. **Coadă de ieșire Daktela** este opțională: numele cozii de apeluri ieșiri din Daktela (de exemplu 1002), în care agentul trebuie să fie logat.
 
 După ce ați completat adresa și tokenul și ați salvat, apăsați **Test conexiune**. Butonul apare doar când adresa și tokenul sunt completate. Dacă tokenul e bun, apare mesajul „Conectat la Daktela ca …” cu numele utilizatorului Daktela al tokenului; altfel apare o eroare (vezi secțiunea 9).
 
@@ -110,6 +110,18 @@ Mergeți la **Telefon → Apeluri**. Un apel pornit din Odoo apare aici imediat,
 
 ![Lista Apeluri din aplicația Telefon cu trei apeluri importate din Daktela: un apel ieșit către Client Exemplu SRL de 3 minute și 5 secunde cu starea Apeluri efectuate, un apel intrat ratat de la +40731222333 atribuit utilizatorului implicit și un apel ieșit anulat](screenshots/08_istoric_apeluri.png)
 
+### Pasul 9 — Opriți soneria cu Nu deranjați
+
+În antetul widgetului **Telefon**, comutatorul standard **Disponibil / Nu deranjați** lucrează și în Daktela pentru agenții Daktela. **Nu deranjați** (15 minute, o oră, 3 ore, 8 ore, 24 de ore sau **Până când îl pornesc din nou**) oprește soneria Odoo, ca în standard, și pune agentul pe pauza din **Pauză Daktela pentru Nu deranjați** de pe furnizor (fără pauză completată: îl trece pe Indisponibil). Daktela nu mai sună agentul cu apelurile din coadă; clienții așteaptă în coadă și apar în fila **În așteptare**. **Disponibil** încheie pauza (sau îl trece înapoi pe Ready); la expirarea duratei alese, Odoo încheie singur pauza, în cel mult un minut. Odoo anulează doar ce a făcut el: un agent aflat deja pe o pauză proprie în Daktela rămâne pe ea. Dacă Daktela refuză schimbarea, **Nu deranjați** se păstrează în Odoo și utilizatorul primește un avertisment cu motivul dat de Daktela.
+
+![Widgetul Telefon cu butonul Disponibil marcat și meniul deschis: Disponibil și Nu deranjați, cu nota Apelurile primite vor fi mutate; jos, filele widgetului, între care noua filă În așteptare](screenshots/09_widget_nu_deranjati.png)
+
+### Pasul 10 — Preluați manual un apel din așteptare
+
+Deschideți fila **În așteptare** a widgetului. Lista arată apelurile care așteaptă în toate cozile Daktela ale instanței (nu doar în cozile agentului), cel mai vechi primul: contactul găsit după număr (sau numărul), numărul, coada și timpul de așteptare; se actualizează la fiecare 10 secunde cât timp fila e deschisă. **Preia** dă apelul agentului în Daktela: apelul sună în telefonul agentului (softphone-ul Odoo sau telefonul web Daktela) și se răspunde ca orice apel primit. Dacă între timp apelul a fost preluat de altcineva sau clientul a închis, apare mesajul „Acest apel nu mai e în așteptare.” Pentru a prelua apeluri care nu i-au fost oferite, agentul are nevoie în Daktela de dreptul de coadă **Call pickup** pe coada apelului; fără el, Daktela refuză preluarea și Odoo afișează motivul. Preluarea funcționează și pe **Nu deranjați**.
+
+![Fila În așteptare a widgetului Telefon cu două apeluri în coada Vânzări: Client Exemplu SRL (+40721000111) și numărul +40744999888, fiecare cu timpul de așteptare și butonul verde Preia, primul marcat](screenshots/10_widget_in_asteptare.png)
+
 ### Note de monografie și raportare
 
 Modulul nu generează note contabile. Istoricul apelurilor se poate filtra și grupa în **Telefon → Apeluri** (după utilizator, stare, direcție) și se poate vedea și în calendar, grafic sau pivot.
@@ -153,6 +165,10 @@ Modulul nu generează note contabile. Istoricul apelurilor se poate filtra și g
 - [ ] Un apel intrat pierdut, fără agent, apare la utilizatorul implicit.
 - [ ] Pe furnizor, **Ultimul import Daktela** se actualizează după import. Dacă apelurile nu apar și data nu se schimbă, importul a eșuat; cauza (token, adresă) e în logul serverului.
 - [ ] Un apel intern între agenți nu apare în istoric.
+- [ ] **Nu deranjați** pune agentul în Daktela pe pauza din **Pauză Daktela pentru Nu deranjați** (sau pe Indisponibil, fără pauză pe furnizor); **Disponibil** îl readuce pe Ready.
+- [ ] Un **Nu deranjați** de 15 minute încheie singur pauza Daktela după expirare (cron la un minut).
+- [ ] Pe **Nu deranjați**, apelurile din coadă nu mai sună la agent și apar în fila **În așteptare**.
+- [ ] **Preia** pe un apel din **În așteptare** sună în telefonul agentului; un apel preluat între timp de altcineva dă „Acest apel nu mai e în așteptare.”
 
 ## 9. Mesaje de eroare frecvente
 
@@ -177,6 +193,8 @@ Modulul nu generează note contabile. Istoricul apelurilor se poate filtra și g
 | Acest apel Daktela aparține altui agent. | Activitatea Daktela a apelului nu e a agentului utilizatorului (de exemplu **Agent Daktela** greșit pe utilizator) | Verificați **Agent Daktela** pe utilizator; un agent nu poate urmări sau închide apelurile altui agent |
 | Acest apel aparține altui utilizator. | Un utilizator încearcă să urmărească sau să închidă apelul altui utilizator | Fiecare agent își închide propriile apeluri, din widgetul lui |
 | Forbidden (HTTP 403, în jurnalul de evenimente Daktela) | Daktela trimite evenimentele la o adresă webhook cu token greșit sau înlocuit (adresa veche, după **Înlocuiți adresa webhook**); apelurile de intrare nu mai apar în widget | Copiați **URL webhook Daktela** de pe furnizor și setați-l din nou în Daktela la **Manage → Settings → Events** |
+| Acest apel nu mai e în așteptare. | Alt agent a preluat apelul sau clientul a închis între timp | Lista se actualizează singură; alegeți alt apel |
+| Avertisment Daktela la Nu deranjați (motivul Daktela) | Daktela a refuzat pauza (pauză inexistentă în **Pauză Daktela pentru Nu deranjați**, agent într-un apel) | Verificați numele pauzei pe furnizor; Nu deranjați rămâne activ în Odoo, dar Daktela continuă să sune |
 | Daktela nu a răspuns cu JSON. | Adresa duce la o pagină care nu e API-ul Daktela (proxy, mentenanță, adresă greșită) | Verificați **Adresă instanță Daktela**; importul celorlalți furnizori continuă |
 
 ## 10. Capturi de ecran
@@ -195,6 +213,8 @@ Capturile sunt generate automat din `tests/test_screenshots.py` (mixinul `Screen
 - `06_widget_apel_incheiat.png`: widgetul Telefon după închiderea apelului, cu rezumatul.
 - `07_widget_apel_intrare.png`: widgetul Telefon cu un apel primit: Apel primit, fișa contactului și butoanele Respinge și Acceptă.
 - `08_istoric_apeluri.png`: lista Apeluri, cu apelurile importate din Daktela.
+- `09_widget_nu_deranjati.png`: meniul Disponibil / Nu deranjați al widgetului (pasul 9).
+- `10_widget_in_asteptare.png`: fila În așteptare, cu apelurile din coadă și butonul Preia (pasul 10).
 
 Capturile widgetului se fac cu răspunsurile Daktela simulate în test (apel pornit, apoi răspuns), fără un apel real.
 

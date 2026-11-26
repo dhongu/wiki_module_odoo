@@ -4,6 +4,18 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-26] `deltatech_voip_daktela` — reingestie 19.0.1.9.0 → 19.0.1.10.0
+
+- **Acțiune:** Pagina regenerată din ramura `19.0-imp-voip-daktela-pause` (terrabit-solutions/bitshop_ent#783, în
+  review): „Nu deranjați” din widgetul Telefon pune agentul pe pauza Daktela de pe furnizor (`daktela_dnd_pause`, cron
+  la un minut pentru expirare), fila „În așteptare” cu preluarea apelurilor din coadă. Completate și funcțiile deja
+  existente lipsă din pagina veche (telefon web Daktela / softphone Odoo, webhook pentru apeluri primite, apelurile în
+  widget). Fișa consultant recopiată cu 10 capturi (noi: 09, 10; 02 regenerată); șterse capturile vechi nereferite.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/USAGE.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`, verificare în cod.
+- **Dependențe/Conexiuni:** `voip` (fără pagină, text); conexiune funcțională cu
+  [deltatech_voip_missed_call](deltatech_voip_missed_call/index.md).
+- **Fișiere actualizate:** `deltatech_voip_daktela/` (index.md, FISA_CONSULTANT.md, screenshots/), `index.md`, `log.md`.
+
 ## [2026-11-26] `deltatech_voip_missed_call` — ingestie 19.0.1.0.0 (modul nou)
 
 - **Acțiune:** Pagină nouă pentru modulul nou din bitshop_ent (ramura `19.0-add-voip-missed-call`, PR în lucru): meniul
