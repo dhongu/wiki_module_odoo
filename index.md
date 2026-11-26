@@ -128,6 +128,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_delivery_pr](deltatech_delivery_pr/index.md): Integrare Poșta Română: generare AWB PDF, ștergere și reobținere AWB, colete multiple, valoare declarată și ramburs.
 - [deltatech_delivery_relay](deltatech_delivery_relay/index.md): Atașează în Odoo etichete AWB primite din afară (client, marketplace), fără apel către curier, cu cerere automată prin e-mail.
 - [deltatech_delivery_review](deltatech_delivery_review/index.md): Aliniază rambursul judecat de verificarea comenzilor cu suma reală de pe AWB și afișează motivul reținerii în dialogurile „Trimite la curier” și „Validare livrări”.
+- [deltatech_delivery_route_planner](deltatech_delivery_route_planner/index.md): Împarte livrările zilei sau ale săptămânii între vehiculele proprii și ordonează opririle după distanța rutieră (OR-Tools + OSRM), cu un lot pe vehicul, harta traseului și lista de opriri pentru șofer.
 - [deltatech_delivery_sd](deltatech_delivery_sd/index.md): Integrare Sameday Courier: AWB, tarife, tracking, ramburs și livrare la easybox și Sameday Point (PUDO), cu catalog de locații.
 - [deltatech_delivery_sd_easybox](deltatech_delivery_sd_easybox/index.md): OBSOLET: harta Easybox Sameday în checkout; înlocuit de deltatech_delivery_locker_website.
 - [deltatech_delivery_sd_online](deltatech_delivery_sd_online/index.md): AWB Sameday, etichetă, anulare și urmărire din livrare, importabile pe Odoo Online, prin serviciul Terrabit și fără cod Python.

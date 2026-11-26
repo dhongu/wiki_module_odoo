@@ -4,6 +4,17 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-26] `deltatech_delivery_route_planner` — ingestie 20.0.1.0.0 (modul nou)
+
+- **Acțiune:** Pagină nouă pentru modulul nou din bitshop_ent, unit prin terrabit-solutions/bitshop_ent#780: asistentul
+  „Planifică livrările” împarte livrările zilei sau ale unei perioade pe vehicule și zile (OR-Tools, distanțe OSRM cu rezervă
+  în linie dreaptă), respectă sarcina utilă, lungimea elementelor, ziua de lucru și intervalul de livrare, creează un lot pe
+  vehicul și zi, cu harta rutei, recalcularea ordinii și lista opririlor. Fișa consultant copiată, cu 13 capturi.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/USAGE.md`, `readme/CONFIGURE.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`.
+- **Dependențe/Conexiuni:** `stock_fleet`, `base_geolocalize`, `web_map` (fără pagini wiki, rămase text); conexiune cu
+  [deltatech_fleet](deltatech_fleet/index.md).
+- **Fișiere actualizate:** `deltatech_delivery_route_planner/` (index.md, FISA_CONSULTANT.md, screenshots/), `index.md`, `log.md`.
+
 ## [2026-11-26] Sincronizare automată de noapte
 
 - **Versiuni aduse la zi** (12): `deltatech_barcode_picking 19.0.2.2.12 → 19.0.2.2.13`, `deltatech_calendar_caldav 19.0.3.2.11 → 19.0.3.3.0`, `l10n_ro_anaf_d394 19.0.1.3.18 → 19.0.1.4.0`, `l10n_ro_efactura_consumer 19.0.1.0.7 → 19.0.1.0.8`, `l10n_ro_expense_currency 19.0.1.1.0 → 19.0.1.1.1`, `l10n_ro_financial_notes 19.0.1.2.0 → 19.0.1.2.1`, `l10n_ro_force_reconcile 19.0.1.1.0 → 19.0.1.1.1`, `l10n_ro_inventory_items 19.0.2.7.0 → 19.0.2.7.1`, `l10n_ro_pos_fiscal_compliance 19.0.2.4.1 → 19.0.2.4.2`, `l10n_ro_stock_sheet_gestiune 19.0.1.0.8 → 19.0.1.0.9`, `l10n_ro_zip 19.0.1.0.2 → 19.0.1.0.3`, `l10n_ro_zip_osm 19.0.1.0.2 → 19.0.1.0.3`.
