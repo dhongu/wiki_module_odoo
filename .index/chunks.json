@@ -7407,7 +7407,7 @@
   {
     "path": "deltatech_sale_plan/index.md",
     "module": "deltatech_sale_plan",
-    "version": "20.0.1.0.0",
+    "version": "20.0.1.0.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_sale_plan",
     "local_path": "odoo-addons/bitshop/deltatech_sale_plan",
     "last_ingest": "2026-11-26",

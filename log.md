@@ -4,6 +4,15 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-26] `deltatech_sale_plan` — re-ingestie 20.0.1.0.1 (summary Apps Store)
+
+- **Acțiune:** Actualizare pentru terrabit-solutions/bitshop#4148: summary-ul din manifest (cardul Apps Store) rescris cu
+  termenii căutați („Sales targets per customer: yearly B2B sales plan split by seasonality, invoiced vs target,
+  achievement dashboard”). Fără schimbare funcțională; pagina și fișa rămân valabile, s-a actualizat doar versiunea.
+- **Sursă:** `__manifest__.py`, `readme/HISTORY.md`.
+- **Dependențe/Conexiuni:** neschimbate (`sale_management`, `account`, `deltatech_web_kpi_cards`).
+- **Fișiere actualizate:** `deltatech_sale_plan/index.md`, `log.md`.
+
 ## [2026-11-26] `deltatech_sale_plan` — ingestie 20.0.1.0.0 (modul nou)
 
 - **Acțiune:** Pagină nouă pentru modulul nou din bitshop, unit prin terrabit-solutions/bitshop#4147: plan anual pe client
