@@ -12,7 +12,7 @@ This is an append-only log of all operations performed on the wiki.
   vehicul și zi, cu harta rutei, recalcularea ordinii și lista opririlor. Fișa consultant copiată, cu 13 capturi.
 - **Sursă:** `readme/DESCRIPTION.md`, `readme/USAGE.md`, `readme/CONFIGURE.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`.
 - **Dependențe/Conexiuni:** `stock_fleet`, `base_geolocalize`, `web_map` (fără pagini wiki, rămase text); conexiune cu
-  [deltatech_fleet](deltatech_fleet/index.md).
+  `deltatech_fleet` (fără pagină pe 20.0).
 - **Fișiere actualizate:** `deltatech_delivery_route_planner/` (index.md, FISA_CONSULTANT.md, screenshots/), `index.md`, `log.md`.
 
 ## [2026-11-26] `deltatech_sale_plan` — re-ingestie 20.0.1.0.1 (summary Apps Store)
