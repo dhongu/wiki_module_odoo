@@ -1,10 +1,10 @@
 # Romania - Bază ANAF (localizat la `l10n_ro_anaf_base/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_base`
-- **Versiune:** `20.0.1.3.0`
+- **Versiune:** `20.0.1.6.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_anaf_base
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_base`
-- **Ultima Ingestie:** `2026-09-27`
+- **Ultima Ingestie:** `2026-11-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -24,14 +24,23 @@ instalează manual — este adus automat ca dependență de fiecare modul de dec
 - Validare parteneri: VAT obligatoriu pentru partenerii incluși în declarații.
 - Validare XML față de schemele XSD oficiale ANAF.
 - Generare automată a numelui de fișier conform convențiilor ANAF.
-- Export XDP (Adobe) cu înglobare PDF și împachetare ZIP.
+- Export XDP (Adobe) direct, ZIP cu XDP + PDF sau PDF ANAF completat direct (actualizare
+  incrementală, păstrează extensiile Adobe Reader; necesită `pypdf` ≥ 5.0, altfel revine la ZIP).
 - Helper-e pentru adăugarea butoanelor de export XML și XDP în interfața rapoartelor contabile.
 - Registru de profile de declarații (`anaf_declaration_profile`) — mecanism centralizat de
   înregistrare și selecție a versiunilor de formulare ANAF, cu suport pentru perioade istorice.
 - Extensii pe `res.company`/`res.config.settings`: persoană responsabilă declarații
   (**Setări → Contabilitate → Declarații ANAF → Persoana responsabilă**), identificator
   declarant (`Declaration Identifier`, folosește VAT/CNP-ul persoanei selectate dacă e gol) și
-  tip export implicit (**XDP direct** vs. **Arhivă ZIP**, implicit ZIP).
+  tip export implicit (**XDP direct**, **Arhivă ZIP** sau **PDF cu datele incluse**, implicit PDF).
+- Cod CAEN al declarațiilor ținut pe companie (`l10n_ro_anaf_caen_code`, 4 cifre), separat de
+  `l10n_ro_caen_code` de pe partener; la migrare se preia din codul vechi al partenerului companiei.
+- Nomenclator de coduri de produs D394 (`l10n_ro.d394.product.code`, grupe cereale / categorii
+  ANAF, marcaje pentru sumarele C și D), atribuibil pe produs sau pe categorie (cu moștenire de la
+  categoria părinte); meniu **Contabilitate → Declarații ANAF → D394 product codes**.
+- Determinarea codului NC al produsului din primul câmp completat (`l10n_ro_nc_code`,
+  `l10n_ro_nc8_code`, cod Intrastat, `hs_code`), cu liste de coduri pentru taxarea inversă.
+- Facturi demo românești (TVA 21% / 11%) postate pe compania demo.
 - Instalare rapidă din setări a modulelor D300, D390, D394 și D398.
 - Meniu comun **Contabilitate → Declarații ANAF**, sub care fiecare modul individual
   (D300, D390, D394, D398 etc.) își înregistrează propriul sub-meniu.
@@ -47,6 +56,7 @@ instalează manual — este adus automat ca dependență de fiecare modul de dec
 - `account_reports`
 - [l10n_ro](../l10n_ro/index.md)
 - `accountant`
+- `l10n_ro_move_guard`
 
 #### 4. Componente Cheie
 
@@ -56,23 +66,27 @@ instalează manual — este adus automat ca dependență de fiecare modul de dec
   handlerele de rapoarte ANAF (date companie/declarant, validări, generare XML/XDP/ZIP).
 - `anaf.declaration.profile` (`anaf_declaration_profile.py`): registru al profilelor de
   declarații ANAF, cu suport pentru versiuni istorice de formulare.
-- `account.chart.template` (`account_chart_template.py`): extensii de plan de conturi legate
-  de declarațiile ANAF.
-- `account.move` (`account_move.py`): extensii pe factură/notă contabilă necesare rapoartelor.
+- `l10n_ro.d394.product.code` (`l10n_ro_d394_product_code.py`): nomenclatorul codurilor de produs D394.
+- `product.template` / `product.category` (`product_template.py`, `product_category.py`): câmpul
+  `l10n_ro_d394_code_id`.
+- `product.product` (`product_product.py`): `_l10n_ro_d394_code` (cod produs → categorie → părinți),
+  `_l10n_ro_nc_code` și coduri pentru taxarea inversă.
+- `account.chart.template` (`account_chart_template.py`): pregătirea și postarea facturilor demo ANAF.
 - `account.report` (`account_report.py`): metode helper pentru export XML și înregistrarea
   tipului MIME `application/vnd.adobe.xdp+xml` pentru fișierele `.xdp`.
-- `res.company` (`res_company.py`): câmpurile `l10n_ro_anaf_declaration_contact_id`,
+- `res.company` (`res_company.py`): `l10n_ro_anaf_caen_code`, `l10n_ro_anaf_declaration_contact_id`,
   `l10n_ro_anaf_declaration_identifier` și `l10n_ro_anaf_export_type`.
 - `res.config.settings` (`res_config_settings.py`): setările de configurare comună ANAF și
   instalarea rapidă a modulelor de declarații.
-- `res.partner` (`res_partner.py`): câmpuri/validări legate de partenerii incluși în declarații.
 
 **Vizualizări**
 
 - `anaf_menu.xml`: meniul părinte `menu_account_anaf_declarations` (**Contabilitate →
-  Declarații ANAF**), sub `account.menu_finance_reports`.
+  Declarații ANAF**), sub `account.menu_finance_reports`, plus meniul codurilor D394.
+- `l10n_ro_d394_product_code_views.xml`, `product_views.xml`, `res_company_views.xml`: vizualizări
+  pentru coduri D394, câmpul de cod pe produs/categorie și CAEN pe companie.
 - `res_config_settings_views.xml`: secțiunea de setări comună ANAF (persoană responsabilă,
-  identificator declarant, tip export, instalare module D300/D390/D394/D398).
+  identificator declarant, CAEN, tip export, instalare module D300/D390/D394/D398).
 
 **Acțiuni Automate / Acțiuni Server**
 
@@ -91,6 +105,7 @@ instalează manual — este adus automat ca dependență de fiecare modul de dec
 - [l10n_ro_anaf_d112](../l10n_ro_anaf_d112/index.md): declarația privind obligațiile de
   plată la bugetul de stat D112, folosește aceeași convenție de nume de familie/prenume
   pentru liniile nominale.
+- `l10n_ro_move_guard`: dependență directă din manifest.
 - [l10n_ro_anaf_partner](../l10n_ro_anaf_partner/index.md): date suplimentare de parteneri
   folosite la validarea și completarea declarațiilor ANAF.
 - `account_reports`: infrastructura de rapoarte contabile pe care se bazează handlerele ANAF.

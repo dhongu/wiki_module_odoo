@@ -1,62 +1,50 @@
 # Romania - Tooling capturi fișe consultant (localizat la `l10n_ro_doc_screenshots/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_doc_screenshots`
-- **Versiune:** `20.0.1.1.3`
+- **Versiune:** `20.0.1.2.0`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_doc_screenshots
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_doc_screenshots`
-- **Ultima Ingestie:** 2026-09-27
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
+- **Ultima Ingestie:** 2026-11-27
 
 #### 1. Sumar
 
-Modul de **tooling de dezvoltare** — nu adaugă funcționalitate de business, fiind ascuns din Odoo Apps (`hidden: True`). Oferă mixinul `ScreenshotCase` pentru generarea **automată** a capturilor de ecran folosite în fișele consultant (`<modul>/readme/screenshots/`), pornind de la date seedate determinist în teste. Mecanismul combină `HttpCase` (serverul Odoo + tranzacția testului) cu **Playwright** (Chrome de sistem) pentru navigare și capturi cu nume curate, scrise direct în directorul de capturi al modulului consumator. Autentificarea se face prin cookie de sesiune. Capturile se generează **doar la cerere explicită** — orice altă rulare de teste le sare, ca să nu apară diff-uri binare (`.png`) în mijlocul altei modificări.
+Modul **punte** de tooling de dezvoltare, păstrat pentru compatibilitate — nu adaugă funcționalitate de business și este ascuns din Odoo Apps (`hidden: True`, categoria `Hidden`). Mixinul `ScreenshotCase`, care generează automat capturile de ecran folosite în fișele consultant, s-a mutat în modulul `deltatech_doc_screenshots` din suita deltatech (repo public), ca orice suită și CI-ul ei să-l poată folosi fără acces la un repo privat. Acest modul îl reexportă, așa că testele de capturi existente, care importă din `l10n_ro_doc_screenshots`, merg mai departe fără modificări. Pentru module noi se recomandă importul direct din `deltatech_doc_screenshots`. Modulul este gratuit pe Odoo Apps și are propria fișă consultant.
 
 #### 2. Funcționalități Cheie
 
-- `ScreenshotCase` — clasă de bază (`HttpCase`) reutilizabilă în orice modul consumator; descrie capturile ca listă de dict-uri și le generează dintr-o singură comandă (`capture_screenshots`).
-- **Generare doar la cerere** (`_screenshots_requested`) — capturile se produc numai dacă rularea le cere explicit, prin una din:
-  - `--test-tags` conține tagul propriu al clasei, terminat în `_screenshots` (ex. `fise_screenshots`, `shopify_screenshots`);
-  - `--test-tags` numește clasa direct, ex. `--test-tags=/<modul>:TestXScreenshots`;
-  - variabila de mediu `FISE_SCREENSHOTS=1`, pentru scripturi care declanșează generarea altfel.
-  O rulare obișnuită (`-u <modul> --test-tags=/<modul>`) NU cere capturi — testul e sărit (`skipTest`), cu motivul afișat în raport. `SKIP_FISE_SCREENSHOTS=1` rămâne un veto peste orice cerere (îl folosește CI-ul).
-- `prepare_ro_company` — seedează compania cu date RO (țară, monedă RON, CUI, adresă), acordă drepturi contabile adminului, activează limba română și tema luminoasă; maschează complet identitatea companiei (nume, NRC, IBAN, telefon, județ, footer de raport) — util când capturile se generează pe o copie de bază de client, singurul loc cu un plan de conturi RO real. Pe 20.0 nu mai scrie câmpul `res.company.company_registry` (eliminat) — golește în schimb `additional_identifiers` pe partenerul companiei; NRC-ul rămâne mascat prin câmpul `nrc` (l10n_ro). Mascarea IBAN scrie `res.partner.bank.account_number` (fostul `acc_number` din 19.0).
-- `prepare_demo_company` — alternativă pentru module cu date demo pre-populate (ex. facturi din localizarea RO).
-- `force_light_theme` — forțează tema luminoasă pe admin (câmpul Enterprise `res.users.settings.color_scheme`), indiferent de preferința din baza de date; apelat automat din `prepare_ro_company` / `prepare_demo_company`.
-- `account_move_shot` — helper pentru captura unui formular `account.move`, deschis prin acțiunea jurnalului (breadcrumb cu context, nu formular gol), cu tab-ul „Journal Items"/„Elemente jurnal" deschis (liniile Dr/Cr vizibile).
-- `report_shot` — captură pentru un raport tipăribil (PDF), randat ca HTML prin `/report/html/<report_ref>/<res_id>`, fără a depinde de wkhtmltopdf în mediul de test. Trimite `lang` și `allowed_company_ids` în contextul cererii (`companies=False` dezactivează forțarea companiei): `/report/html` e o rută de website, unde regulile multi-companie se evaluează pe contextul cererii.
-- `align_website_company` — aliniază compania site-ului la compania capturilor, apelat automat din `prepare_ro_company` / `prepare_demo_company`. Pe ruta de website, `env.company` din randarea raportului vine de la compania site-ului, nu din `allowed_company_ids`: fără aliniere capturile de raport ies „403 Interzis" sau randate în altă limbă, iar testul trece — imaginea salvată e pagina greșită.
-- `xlsx_shot` — construiește un shot dintr-un XLSX generat de un raport/export, randat exact cum se tipărește: îl convertește cu LibreOffice (`soffice --headless --convert-to pdf`) în PDF, apoi randează prima pagină ca PNG cu `pdftoppm` (sau, ca alternativă, PyMuPDF dacă `pdftoppm` lipsește), decupată la conținutul tipărit prin `_crop_printed_page` (ignoră banda subsolului cu numerotarea paginii, ca `_autotrim` să nu taie greșit spațiul dintre tabel și subsol). Rezultatul păstrează formatarea reală a fișierului — culori, borduri, format de dată și număr, lățimi de coloană, setările de pagină (peisaj, încadrare pe lățime). Dacă LibreOffice/`pdftoppm`/PyMuPDF lipsesc din mediu, revine elegant la tabelul HTML din `xlsx_to_html`.
-- `xlsx_to_html` — randează prima foaie a unui XLSX generat ca tabel HTML stilizat (antet bold cu fundal gri, truncat la `max_rows`/`max_cols`); rămâne planul de rezervă pentru `xlsx_shot` când conversia LibreOffice → PDF → PNG nu e posibilă.
-- `xml_excerpt` — formatează (pretty-print) un extras dintr-un XML generat (D300/D390/e-Factura etc.), gata de inserat în fișă între ``` ```xml ``` ```.
-- Opțiunea `highlight` per captură evidențiază selectoare CSS/Playwright cu contur portocaliu Odoo și buline numerotate ①②③, pentru a indica exact pașii din fișă.
-- Opțiuni suplimentare per captură: `full`, `wait`, `hover`, `click_btn`, `click_tab` (încearcă și eticheta română a tab-ului, interfața fiind capturată în română; pe 20.0 caută `.nav-link` indiferent de tag, tab-urile Notebook fiind acum `<button>`, nu `<a>`), `unfold_report` (desfășoară toate liniile pliabile dintr-un `account.report`; pe 20.0 recunoaște noul caret `[data-id="btn_foldable"][data-icon="arrow_right"]` din `account_reports`), `hide_fields`, `eval`, `hide_chatter`, `settle`.
-- `capture_screenshots(..., hide_systray=True)` — ascunde bara de sistray (AI, notificări, Studio, meniu debug) și tooltip-uri rămase, injectat ca `<style>` ca să supraviețuiască re-randărilor OWL.
-- `_autotrim` — decupează automat marginile uniforme ale capturii (elimină spațiul gol, gestionează și fundaluri neuniforme, ex. chatter alb lângă raport gri).
-- Lățime de viewport implicită `(1920, 950)` — încape tabelele `account.report` cu multe coloane (la 1600px se tăiau coloanele din dreapta).
-- Comandă de rulare (cere explicit capturile): `./odoo/odoo-bin -c odoo.conf -d <db> -u <modul>,l10n_ro_doc_screenshots --test-tags=fise_screenshots --stop-after-init --http-port=<liber> --gevent-port=<liber>`; capturile se scriu în `<modul>/readme/screenshots/`.
-- Degradare elegantă: dacă `playwright` lipsește din mediul Odoo, testele de capturi se sar (`skipTest`) fără a bloca suita; testele sunt sărite explicit pe CI prin variabila `SKIP_FISE_SCREENSHOTS`. Necesită și `websocket-client` (comunicare CDP), `openpyxl` (pentru `xlsx_to_html`) și, opțional, `pillow` (pentru `_autotrim`; fără el, captura rămâne netăiată) + `playwright install chrome`; pentru capturile XLSX cu formatare reală, opțional și LibreOffice (`soffice`) și `pdftoppm` (poppler-utils) sau PyMuPDF.
-- Parcurgere manuală/diagnoză alternativă printr-un browser controlat (Preview MCP) atașat la o instanță deja rulantă — util pentru diagnoză de mediu (cod vechi în memoria unui server dev), dar capturile „de producție" rămân cele generate determinist de test.
+- **Reexport al `ScreenshotCase`** — `tests/screenshot_case.py` importă din `odoo.addons.deltatech_doc_screenshots.tests.screenshot_case`, deci importurile `odoo.addons.l10n_ro_doc_screenshots.tests.screenshot_case` rămân valide.
+- **Înlocuitor de rezervă** — dacă suita deltatech nu e în calea de addon-uri (CI-ul obișnuit al suitei), puntea exportă un `ScreenshotCase` (`HttpCase`) care sare testul în `setUpClass` cu mesajul „deltatech_doc_screenshots nu e în calea de addon-uri.". Astfel consumatorii sunt săriți, nu cad pe metodele mixinului (`prepare_ro_company`), iar registrul se încarcă.
+- **Fără dependență formală** de `deltatech_doc_screenshots`: nu e în `depends`, ca bazele instalate să nu fie afectate.
+- **Test propriu de capturi** (`tests/test_screenshots.py`, tag `fise_screenshots`): capturează formularul companiei demo, cu câmpuri evidențiate, în română (fișa) și în engleză (`static/description/en/`), trecând prin punte, exact ca modulele documentate.
+- **Generare doar la cerere**: capturile se produc numai cu `--test-tags=fise_screenshots` (sau `FISE_SCREENSHOTS=1`); altfel testul e sărit. Comandă: `-i <modul>,l10n_ro_doc_screenshots,deltatech_doc_screenshots --test-tags=fise_screenshots --stop-after-init`.
+- **Cerințe de mediu** pentru generare (descrise în `deltatech_doc_screenshots`): `playwright` + `playwright install chrome`, `websocket-client`, `openpyxl`, opțional `pillow`.
+- Opțiunile capturilor (`highlight`, `click_tab`, `unfold_report`, `xlsx_shot`, `report_shot`, `prepare_ro_company` etc.) sunt documentate acum în `deltatech_doc_screenshots`, nu aici.
 
-Sursă: `readme/DESCRIPTION.md` + `readme/USAGE.md` + `readme/HISTORY.md` (migrarea la 20.0 din 20.0.1.1.3: `additional_identifiers`, `account_number`, tab-uri `<button>`, caret `account_reports` nou) + docstring-ul din `screenshot_case.py` (Componentele Cheie de mai jos completează cu detalii tehnice din cod, dat fiind caracterul de tooling al modulului).
+Sursă: `readme/DESCRIPTION.md` + `readme/USAGE.md` + `readme/HISTORY.md` (20.0.1.2.0) + `tests/screenshot_case.py`, `tests/test_screenshots.py`.
 
 #### 3. Dependențe
 
 - `web`
 
+(Fără dependență formală de `deltatech_doc_screenshots`, care furnizează mixinul propriu-zis.)
+
 #### 4. Componente Cheie
 
 **Modele**
 
-Modul de tooling — nu definește sau extinde modele Odoo de business.
+Modul de tooling — nu definește sau extinde modele Odoo.
 
 **Vizualizări**
 
-Nu definește vizualizări sau date (`"data": []` în manifest); întreaga logică se află în clasa Python `ScreenshotCase` din `tests/screenshot_case.py`.
+Nu definește vizualizări sau date (`"data": []`); logica se reduce la reexportul din `tests/screenshot_case.py` și testul `tests/test_screenshots.py`.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Nu definește `ir.cron`, `base.automation` sau `ir.actions.server`. Generarea capturilor se declanșează manual, per modul consumator, prin `--test-tags=fise_screenshots` (sau tagul echivalent al clasei, sau `FISE_SCREENSHOTS=1`), nu printr-o acțiune de sistem.
+Nu definește `ir.cron`, `base.automation` sau `ir.actions.server`. Capturile se declanșează manual prin `--test-tags=fise_screenshots`.
 
 #### 5. Conexiuni
 
-- [l10n_ro_process_library](../l10n_ro_process_library/index.md): singurul modul care are `l10n_ro_doc_screenshots` ca **dependență formală** în manifest (nu doar import defensiv în teste); extinde `ScreenshotCase` pentru capturile proceselor de business documentate acolo.
-- Zeci de module din `l10n_ro_ent`, [deltatech](../deltatech/index.md), [deltatech_stock_valuation](../deltatech_stock_valuation/index.md), `bitshop`/`bitshop_ent` și din arborele `proiecte/` (ex. [l10n_ro_anaf_d300](../l10n_ro_anaf_d300/index.md), [l10n_ro_fixed_assets](../l10n_ro_fixed_assets/index.md), [deltatech_advanced_planner](../deltatech_advanced_planner/index.md), `terrabit_apps_base` etc.) importă defensiv `ScreenshotCase` în propriile `tests/test_screenshots.py`, fără dependență de manifest — dacă modulul de tooling lipsește de pe disc, testul de capturi pur și simplu nu se definește. Nefiind dependențe reale de business, nu sunt listate individual aici.
+- `deltatech_doc_screenshots` (suita deltatech, fără pagină wiki): sursa reală a mixinului `ScreenshotCase`, reexportat de această punte.
+- [l10n_ro_process_library](../l10n_ro_process_library/index.md): are `l10n_ro_doc_screenshots` ca dependență formală în manifest (preluat din pagina anterioară; neverificat în această ingestie) și extinde `ScreenshotCase` pentru capturile proceselor documentate acolo.
+- Zeci de module din `l10n_ro_ent`, deltatech, bitshop și `proiecte/` importă defensiv `ScreenshotCase` prin această punte în `tests/test_screenshots.py`, fără dependență de manifest; nu sunt listate individual.

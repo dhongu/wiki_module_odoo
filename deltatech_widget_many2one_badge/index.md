@@ -1,10 +1,10 @@
 # Many2one Badge Widget (localizat la `deltatech_widget_many2one_badge/index.md`)
 
 - **Nume Tehnic:** `deltatech_widget_many2one_badge`
-- **Versiune:** `20.0.1.0.1`
+- **Versiune:** `20.0.1.0.4`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/20.0/deltatech_widget_many2one_badge`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_widget_many2one_badge`
-- **Ultima Ingestie:** `2026-09-27`
+- **Ultima Ingestie:** `2026-11-27`
 
 #### 1. Sumar
 
@@ -46,7 +46,11 @@ Modulul nu definește și nu extinde modele Python, vizualizări sau acțiuni au
 - `static/src/js/many2one_badge_field.esm.js`: componenta OWL `Many2oneBadgeField` a widget-ului `many2one_badge`, înregistrată în `registry.category("fields")`; folosește `useProps` (compatibil Owl 3 — `static props`/`static defaultProps` nu mai sunt permise) și un popover `Many2oneBadgeColorPopover` cu `ColorList` din `@web/core/colorlist/colorlist`.
 - `static/src/xml/many2one_badge_field.xml`: template-urile QWeb ale widget-ului (`Many2oneBadgeField` și `ColorPopover`); folosește `t-out` (nu `t-esc`/`t-raw`, ignorate în Odoo 20 pe server-side, dar corect și pentru client-side QWeb).
 - `static/src/css/many2one_badge_field.css`: stilurile pentru badge-ul colorat.
-- `static/tests/many2one_badge_field.test.esm.js`: teste unitare JS (`web.assets_unit_tests`), rulate cu suita de teste OWL/Hoot, nu QUnit.
+- `static/tests/many2one_badge_field.test.js`: teste unitare JS (`web.assets_unit_tests`), rulate cu Hoot (nu QUnit); numele trebuie să se termine în `.test.js`, altfel Hoot sare peste fișier. Acoperă modul readonly, editarea (ștergere valoare, alegere din autocomplete, salvare) și schimbarea culorii prin popover.
+
+**Teste Python**
+
+- `tests/test_js.py`: pornește testele Hoot din suita de teste Python (deci și în CI).
 
 #### 5. Conexiuni
 

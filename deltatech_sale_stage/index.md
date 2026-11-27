@@ -1,10 +1,11 @@
-# Deltatech Sale Order Stage (localizat la `deltatech_sale_stage/index.md`)
+# Sale Order Phases (localizat la `deltatech_sale_stage/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_stage`
-- **Versiune:** `20.0.1.2.6`
+- **Versiune:** `20.0.1.2.10`
 - **Cale:** `https://github.com/dhongu/deltatech/tree/20.0/deltatech_sale_stage`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_stage`
-- **Ultima Ingestie:** `2026-09-27`
+- **Ultima Ingestie:** `2026-11-27`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -13,7 +14,7 @@ Acest modul ajută echipa de vânzări să țină sub control fiecare comandă p
 #### 2. Funcționalități Cheie
 
 - **Vizibilitate completă pentru back-office:** fiecare comandă de vânzare afișează faza curentă sub forma unui badge colorat, ușor de identificat dintr-o privire.
-- **Configurare flexibilă a fazelor:** se pot defini oricâte faze sunt necesare, fiecare cu nume, culoare și secvență. Fazele se gestionează din Vânzări → Configurare → Faze comenzi de vânzare.
+- **Configurare flexibilă a fazelor:** se pot defini oricâte faze sunt necesare, fiecare cu nume, culoare și secvență. Fazele se gestionează din Vânzări → Configurare → Sale Order Phases (fază comandă).
 - **Progresie automată a fazelor:** fazele avansează automat odată cu fluxul standard Odoo — ofertă trimisă → *Trimis*, comandă confirmată → *Confirmat*, comandă facturată → *Facturat*, comandă anulată → *Anulat*.
 - **Actualizare a fazei în funcție de livrare:** la validarea unei expedieri sau la schimbarea statusului de livrare (preluat de curier, în tranzit, preavizat/AWB generat, livrat clientului, refuzat), faza comenzii de vânzare asociate se actualizează automat, fără intervenție manuală.
 - **Declanșare de acțiuni automate:** fiecărei faze i se poate atașa o acțiune de server opțională, care rulează automat când comanda intră în acea fază (notificări, actualizări de înregistrări, integrări).
@@ -32,7 +33,7 @@ Acest modul ajută echipa de vânzări să țină sub control fiecare comandă p
 
 - `sale.order.phase`: definește fazele personalizabile ale comenzii de vânzare — nume, culoare, secvență, marcaje booleene (`send_email`, `confirmed`, `pre_advice`, `shipped`, `delivered`, `refused`, `invoiced`, `paid`, `canceled`) și o acțiune de server opțională (`action_id`).
 - `sale.order` (extins): câmp `phase_id` (urmărit în chatter, `tracking=True`); avansează automat faza la trimiterea ofertei, confirmare și anulare (`action_quotation_sent`, `action_confirm`, `_action_cancel`); metoda `set_phase()` caută faza următoare potrivită pe baza marcajului cerut (și ține cont dacă există o tranzacție de plată reușită, favorizând fazele `paid`); `write()` declanșează acțiunea de server a noii faze și, dacă faza e marcată `confirmed`/`canceled`, forțează confirmarea/anularea comenzii.
-- `account.move` (extins): la validarea unei facturi (`_post`), setează faza `invoiced` pe comenzile de vânzare complet facturate (verificare făcută explicit în modul, deoarece `sale.order._get_invoice_status` nu mai există în core-ul 20.0).
+- `account.move` (extins): la validarea unei facturi (`_post`), setează faza `invoiced` pe comenzile de vânzare complet facturate (verificare făcută explicit în modul, deoarece `sale.order._get_invoice_status` nu mai există în core-ul 20.0); fazele comenzilor sunt citite cu drepturi ridicate, deci un utilizator doar cu drepturi de facturare (ex. contabil) poate valida factura, iar facturile fără comenzi de vânzare sar peste actualizarea fazei.
 - `stock.picking.type` (extins): câmp `phase_id` — faza implicită asociată tipului de operațiune de depozit.
 - `stock.picking` (extins): la validarea livrării (`_action_done`) preia faza implicită a tipului de operațiune; la schimbarea câmpului `delivery_state` (furnizat de `deltatech_delivery_status`) mapează statusurile de curierat pe faze: `in_transit`/`in_warehouse`/`in_delivery` → `shipped`, `pre_advice` → `pre_advice`, `delivered` → `delivered`, `refused` → `refused`.
 

@@ -1,10 +1,10 @@
-# Dummy Shipping (localizat la `deltatech_delivery_dummy/index.md`)
+# Dummy Shipping Method (localizat la `deltatech_delivery_dummy/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_dummy`
-- **Versiune:** `20.0.0.0.1`
+- **Versiune:** `20.0.0.0.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/20.0/deltatech_delivery_dummy
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_dummy`
-- **Ultima Ingestie:** `2026-09-27`
+- **Ultima Ingestie:** `2026-11-27`
 
 #### 1. Sumar
 
@@ -29,6 +29,7 @@ Acest modul introduce o metodă de livrare „fictivă" (dummy) în sistemul de 
 **Modele**
 
 - `delivery.carrier` (extindere): adaugă opțiunea `dummy` la selecția `delivery_type` și implementează metodele `dummy_rate_shipment` (calculează costul de transport, mereu 0.0) și `dummy_send_shipping` (simulează trimiterea coletelor, generând un răspuns cu numărul de urmărire preluat din comanda de vânzare sau din ridicare).
+- `delivery.carrier` mai declară și `_dummy_api_capabilities`, care returnează `{"ship"}` (singura capabilitate suportată: expediere).
 - `stock.picking` (extindere): suprascrie `carrier_generate_label` pentru a genera și atașa eticheta PDF a raportului „Delivery Dummy" atunci când metoda de livrare a ridicării este de tip `dummy`, folosind conținutul binar brut (bytes) specific Odoo 20.
 
 **Vizualizări**

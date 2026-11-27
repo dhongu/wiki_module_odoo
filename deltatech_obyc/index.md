@@ -1,10 +1,10 @@
 # Deltatech OBYC - Account Determination (localizat la `deltatech_obyc/index.md`)
 
 - **Nume Tehnic:** `deltatech_obyc`
-- **Versiune:** `20.0.1.0.6`
+- **Versiune:** `20.0.1.0.18`
 - **Cale:** https://github.com/dhongu/deltatech_stock_valuation/tree/20.0/deltatech_obyc
 - **Cale Locală:** `odoo-addons/deltatech_stock_valuation/deltatech_obyc`
-- **Ultima Ingestie:** `2026-10-01`
+- **Ultima Ingestie:** `2026-11-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -27,13 +27,18 @@ Deltatech OBYC - Account Determination aduce în Odoo un mecanism de determinare
 - Dacă regula lipsește, se ridică un `RedirectWarning` cu trimitere directă la configurarea regulilor; produsele fără clasă de evaluare rămân pe comportamentul standard Odoo.
 - Notele păstrează `product_id`, cantitate semnată și unitate de măsură, convenție necesară stratului `deltatech_stock_valuation`.
 - Neacoperit: stoc evaluat la preț cu amănuntul (371 cu adaos pe 378 și TVA pe 4428); ruta de transfer între arii prin tranzit (`internal_transfer_out`/`in`) nu este validată în Odoo 20 (mișcarea stoc → tranzit nu primește valoare, OBYC-009) și nu trebuie folosită.
+- Reclasificare prin transfer intern: un transfer intern a cărui regulă `internal_transfer` are conturi diferite pe cele două părți (ex. Dr 371 / Cr 3028, selectată printr-un modificator contabil de pe tipul de operațiune) generează notă, evaluată la costul curent, cu cantitatea neschimbată; fără conturi diferite, transferul rămâne fără notă.
+- Cu cheia de context `skip_stock_valuation_entry` (setată de un document care postează propria notă, ex. reclasificarea de stoc din `deltatech_stock_reclass`) mișcările nu postează nota OBYC, evitând dubla înregistrare.
+- Aria de evaluare e obligatorie doar pentru produsele stocabile: pentru serviciu/consumabil fără arie se folosește regula OBYC fără arie, iar dacă nu există, contul standard de venit/cheltuială al produsului sau categoriei. Linia de factură fără produs păstrează contul standard.
+- Compatibil cu `deltatech_stock_valuation`: la categoriile cu „Use valuation area price" livrarea se evaluează la prețul ariei, căutat pe contul de evaluare al regulii OBYC.
+- Licență OPL-1 (din 20.0.1.0.12), stadiu de dezvoltare Beta.
 - Meniuri: configurare în Inventar, submeniul „Account Determination Config" cu „Evaluation Class", „Account Modifiers" și „Product Account Determination".
 
 **Chei de tranzacție (18).** `stock_valuation`, `price_difference`, `stock_receipt`, `return_to_supplier`, `stock_receipt_price_difference`, `stock_delivery`, `return_from_customer`, `stock_income`, `dropship`, `dropship_return`, `internal_transfer`, `internal_transfer_out`, `internal_transfer_in`, `inventory_adjustment_plus`, `inventory_adjustment_minus`, `production_issue`, `production_receipt`, `landed_cost`.
 
 Exemple de mapări (plan de conturi românesc; MF = mărfuri, RM = materii prime, FG = produse finite): recepție MF Dr 371 / Cr 408; livrare MF Dr 607 / Cr 371; livrare FG Dr 711 / Cr 345; retur de la client Dr 371 / Cr 607; consum producție Dr 601 / Cr 301; predare din producție Dr 345 / Cr 711; transfer intern în aceeași arie: fără notă. Fluxul detaliat pas cu pas este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
 
-> **Notă de corecție (2026-10-01):** `readme/DESCRIPTION.md` este deja aliniat la Odoo 20 (fără referințe la versiuni vechi); pagina reflectă codul 20.0.1.0.6, inclusiv trecerea COGS la livrare, cheile de inventar corectate și recunoașterea a 16 combinații de uzanțe (față de 13 în ingestia de 19.0).
+> **Notă de corecție (2026-11-27):** `readme/DESCRIPTION.md` este aliniat la Odoo 20 (fără referințe la versiuni vechi); pagina reflectă codul 20.0.1.0.18. Cheile de inventar sunt corectate (din 20.0.1.0.5), iar cele 16 combinații de uzanțe sunt recunoscute (13 în ingestia de 19.0).
 
 #### 3. Dependențe
 

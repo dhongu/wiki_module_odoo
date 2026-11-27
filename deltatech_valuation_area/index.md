@@ -1,10 +1,10 @@
 # Deltatech Stock Valuation Area (localizat la `deltatech_valuation_area/index.md`)
 
 - **Nume Tehnic:** `deltatech_valuation_area`
-- **Versiune:** `20.0.1.0.5`
+- **Versiune:** `20.0.1.0.9`
 - **Cale:** [https://github.com/dhongu/deltatech_stock_valuation/tree/20.0/deltatech_valuation_area](https://github.com/dhongu/deltatech_stock_valuation/tree/20.0/deltatech_valuation_area)
 - **Cale Locală:** `odoo-addons/deltatech_stock_valuation/deltatech_valuation_area`
-- **Ultima Ingestie:** `2026-10-01`
+- **Ultima Ingestie:** `2026-11-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -22,6 +22,9 @@ Modulul introduce conceptul de **arie de evaluare a stocului** (inspirat din "Va
 - Constrângere: transferurile interne între locații cu arii diferite sunt blocate la validarea mișcării (inclusiv pe liniile ei, ex. putaway pe o sublocație), indiferent dacă se generează sau nu notă contabilă; ruta prin locație de tranzit nu e o trecere validată între arii
 - Setare specifică Odoo 20: **Păstrează valoarea mișcării la recalcularea retroactivă** (`valuation_keep_move_value`, implicit activă) — valoarea mișcărilor deja validate rămâne cea de la validare, coerentă cu notele contabile postate; dacă e dezactivată, recalcularea standard Odoo 20 rescrie valoarea ieșirilor ulterioare, iar notele postate nu se corectează, deci stocul și contabilitatea pot diverge
 - Inversarea unei note de stoc (cu sau fără storno) anulează corect și cantitatea de pe linie (din 20.0.1.0.5)
+- Aria se calculează pe liniile de factură doar pentru produse stocabile; serviciile și consumabilele nu primesc arie și nu mai generează eroarea „Valuation area is not defined” când compania nu are arie implicită (din 20.0.1.0.8)
+- Cantitatea de pe linia de credit a notelor de stoc rămâne negativă și în Odoo 20, unde nucleul generează liniile doar cu `balance`, fără `debit`/`credit` (din 20.0.1.0.9)
+- În câmpul Arie de evaluare codul apare într-o a doua coloană estompată, iar ariile se pot căuta și după cod; numele afișat rămâne `[COD] Nume` (din 20.0.1.0.7)
 - Coloane opționale pe notele contabile manuale: Produs, Cantitate, UM și Arie de evaluare; pe lista generală de elemente de jurnal: Cantitate și Arie de evaluare
 - Fluxul detaliat pas-cu-pas, baza legală și reconcilierea pe arie sunt în [Fișa Consultant](FISA_CONSULTANT.md)
 
@@ -37,13 +40,13 @@ Modulul introduce conceptul de **arie de evaluare a stocului** (inspirat din "Va
 
 **Modele**
 
-- `valuation.area`: modelul principal — cod, nume, companie și jurnal de stoc asociat ariei.
+- `valuation.area`: modelul principal — cod, nume, companie și jurnal de stoc asociat ariei; căutare după nume și cod.
 - `res.company` (extins): `use_valuation_area` (activare), `valuation_area_id` (arie implicită) și `valuation_keep_move_value` (păstrarea valorii mișcării la recalcularea retroactivă).
 - `res.config.settings` (extins): câmpuri related către cele de pe companie.
 - `stock.warehouse` (extins): `valuation_area_id` (arie per depozit).
 - `stock.location` (extins): `valuation_area_id` și metoda `_get_valuation_area()` (aria proprie, altfel cea a depozitului locației).
-- `stock.move` (extins): `_get_valuation_area()` (determinarea ariei), `_check_internal_move_valuation_area()` (apelată din `_action_done`) și `_get_account_move_line_vals()` (injectează aria, cantitatea semnată și UM pe liniile contabile).
-- `account.move.line` (extins): câmpul stocat `valuation_area_id` (calculat, editabil), constrângerea `_check_valuation_area`, metoda `_is_valuation_area_required` și inversarea cantității la reversul notelor de stoc.
+- `stock.move` (extins): `_get_valuation_area()` (determinarea ariei), `_check_internal_move_valuation_area()` (apelată din `_action_done`) și `_get_account_move_line_vals()` (injectează aria, cantitatea semnată — negativă pe liniile cu `balance` negativ — și UM pe liniile contabile).
+- `account.move.line` (extins): câmpul stocat `valuation_area_id` (calculat doar pentru produse stocabile, editabil), constrângerea `_check_valuation_area`, metoda `_is_valuation_area_required` și inversarea cantității la reversul notelor de stoc.
 
 **Vizualizări**
 
@@ -51,7 +54,7 @@ Modulul introduce conceptul de **arie de evaluare a stocului** (inspirat din "Va
 - Meniu sub **Inventar > Configurare** pentru arii de evaluare (`menu_views.xml`).
 - `res_config_settings_view_form` (moștenește `stock_account.res_config_settings_view_form`): activare, arie implicită și opțiunea de păstrare a valorii mișcării.
 - `view_location_form_valuation_area` (moștenește `stock.view_location_form`): câmp pe locație.
-- `view_warehouse_form_valuation_area` / `view_warehouse_tree_valuation_area` (moștenesc `stock.view_warehouse` / `stock.view_warehouse_tree`): câmp pe depozit.
+- `view_warehouse_form_valuation_area` / `view_warehouse_tree_valuation_area` (în `warehouse_views.xml`; moștenesc `stock.view_warehouse` / `stock.view_warehouse_tree`): câmp pe depozit, vizibil managerului de stoc.
 - `view_move_form` (moștenește `account.view_move_form`): coloane opționale pe liniile notei contabile.
 - `view_move_line_tree` (moștenește `account.view_move_line_tree`): coloane opționale Cantitate și Arie de evaluare.
 

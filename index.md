@@ -45,7 +45,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_chatter](deltatech_chatter/index.md): Panou divizat redimensionabil între conținutul formularului și zona de chatter în vizualizările Odoo.
 - [deltatech_cmr_document](deltatech_cmr_document/index.md): Generează documente de transport CMR (scrisoare de transport internațional) în format PDF din livrările de stoc.
 - [deltatech_competitors_price](deltatech_competitors_price/index.md): Urmărește prețurile concurenței pentru produsele proprii, direct pe fișa de produs, cu preluare la cerere din paginile concurenților.
-- [deltatech_contact](deltatech_contact/index.md): Îmbunătățiri pentru contacte: filtre Persoane/Companii refăcute pentru Odoo 20 (fără `company_type`) și câmpuri suplimentare pe partener.
+- [deltatech_contact](deltatech_contact/index.md): Date personale pe contacte: CNP cu validare, carte de identitate, data nașterii, sex și mijloc de transport.
 - [deltatech_contwin](deltatech_contwin/index.md): Export de date contabile din Odoo către programul de contabilitate ContWin (Omnidata/Petrescu), cu formate `.fis` și SAF-T.
 - [deltatech_credentials](deltatech_credentials/index.md): Gestionează centralizat acreditările (utilizator/parolă, client_id/secret, token) pentru conectarea la servicii externe.
 - [deltatech_credit_control](deltatech_credit_control/index.md): Clasament al clienților cu restanțe, cu scor de risc 0-100, telefonul pe rând, comportamentul la plată din ultimul an și tăieturi pe agent, județ și lună a scadenței.
@@ -54,7 +54,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_data_sheet](deltatech_data_sheet/index.md): Atașează fișe tehnice și fișe de securitate (PDF) pe produs, în fila Vânzări.
 - [deltatech_data_sheet_website](deltatech_data_sheet_website/index.md): Expune fișele tehnice și fișele cu date de securitate ale produselor pe paginile din magazinul online.
 - [deltatech_dc](deltatech_dc/index.md): Gestionarea și tipărirea declarațiilor de conformitate pentru produse, inclusiv la facturare.
-- [deltatech_delivery](deltatech_delivery/index.md): Modulul de bază pentru livrări și curieri (AWB, procesare stoc, validare/trimitere în masă), fundația integrărilor `deltatech_delivery_*` (Fan Courier, DPD, GLS, Sameday, TNT etc.).
+- [deltatech_delivery](deltatech_delivery/index.md): Modul de bază pentru livrări prin curier: cadru comun pentru AWB și opțiuni de livrare, acțiuni în masă pe comenzi (validare, trimitere la curier cu progres, facturi), reținerea livrărilor amânate și lista rambursurilor refuzate cu factură deschisă.
 - [deltatech_delivery_batch](deltatech_delivery_batch/index.md): Generează AWB-uri pentru mai multe livrări simultan, prin procesare în lot pe transferurile grupate (`stock.picking.batch`).
 - [deltatech_delivery_category_price](deltatech_delivery_category_price/index.md): Calculează tariful de livrare eCommerce pe baza categoriilor website ale produselor din coș (preț fix sau pe tranșe de greutate), cu preț implicit de rezervă și supliment opțional de handling.
 - [deltatech_delivery_cm](deltatech_delivery_cm/index.md): Integrare Odoo cu platforma de curierat Courier Manager — AWB (PDF/ZPL), tarife, urmărire statusuri și expedieri (ramburs, valoare declarată, colete multiple).
@@ -62,7 +62,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_delivery_dpd](deltatech_delivery_dpd/index.md): Integrare Odoo cu serviciul de curierat DPD pentru calcul tarife, generare AWB (PDF/ZPL), tracking și gestionare livrări.
 - [deltatech_delivery_dropshiping](deltatech_delivery_dropshiping/index.md): Modul depreciat pe 19.0 (installable: False) care trimitea AWB-ul și detaliile de livrare furnizorilor în fluxul de dropshipping; funcționalitatea e acum acoperită integral de `deltatech_delivery`.
 - [deltatech_delivery_dsc](deltatech_delivery_dsc/index.md): Integrare Odoo cu serviciul de curierat Dragon Star Curier (DSC) — generare AWB, tarife și opțiuni de livrare.
-- [deltatech_delivery_dummy](deltatech_delivery_dummy/index.md): Metodă de livrare fictivă pentru testarea fluxurilor de comandă/expediere fără curier real, cu etichetă PDF simplă.
+- [deltatech_delivery_dummy](deltatech_delivery_dummy/index.md): Metodă de livrare fictivă (preț 0, etichetă PDF simplă, tracking din comandă) pentru testarea fluxurilor de livrare fără curier real.
 - [deltatech_delivery_fc](deltatech_delivery_fc/index.md): Integrare Odoo cu Fan Courier pentru generare AWB, calcul tarife, urmărire colete și lockere FanBox.
 - [deltatech_delivery_gls](deltatech_delivery_gls/index.md): Integrare directă a curieratului GLS în Odoo: AWB, etichete (PDF/ZPL), tracking, ramburs (COD) și livrare la locker, multi-țară.
 - [deltatech_delivery_innoship](deltatech_delivery_innoship/index.md): Conectează Odoo la Innoship pentru rezervare AWB, etichete, tarifare, urmărire și lockere prin peste o sută de curieri europeni, printr-o singură cheie API.
@@ -84,7 +84,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_delivery_sd_easybox](deltatech_delivery_sd_easybox/index.md): Livrare către lockerele Easybox ale curierului Sameday în magazinul online, cu butoane de checkout personalizabile.
 - [deltatech_delivery_send_mail](deltatech_delivery_send_mail/index.md): Trimite automat un email clientului când AWB-ul este generat sau coletul este ridicat de curier.
 - [deltatech_delivery_send_sms](deltatech_delivery_send_sms/index.md): Trimite automat notificări SMS clientului când AWB-ul este generat sau coletul este preluat de curier.
-- [deltatech_delivery_status](deltatech_delivery_status/index.md): Urmărire granulară a stării de livrare pe transferuri și blocare/eliberare automată a livrărilor în funcție de plată.
+- [deltatech_delivery_status](deltatech_delivery_status/index.md): Urmărește starea de livrare a coletului și disponibilitatea produselor pe transferuri și permite amânarea/eliberarea livrărilor (manual, după furnizorul de plată sau echipa de vânzări).
 - [deltatech_delivery_status_review](deltatech_delivery_status_review/index.md): Leagă verificarea comenzilor de amânarea livrărilor: un motiv deschis pe poarta „Înainte de livrare” ține livrarea de ieșire, eliberată doar când motivele sunt aprobate sau se rezolvă singure.
 - [deltatech_delivery_tnt](deltatech_delivery_tnt/index.md): Integrare Odoo cu curierul TNT — calcul tarife, generare AWB și etichetă (PDF/HTML/ZPL); anularea AWB și istoricul de status NU sunt implementate.
 - [deltatech_delivery_transport](deltatech_delivery_transport/index.md): Folosirea unei firme de transport ca curier (carrier), cu calcul de preț bazat pe distanță (Google Maps).
@@ -163,8 +163,8 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_notification_sound](deltatech_notification_sound/index.md): Feedback sonor pentru notificările din backend, cu sunete distincte pe tip de mesaj și comutator per utilizator.
 - [deltatech_object_history](deltatech_object_history/index.md): Istoric paralel al documentelor Odoo, separat de mesajele standard, ale cărui intrări nu sunt șterse periodic.
 - [deltatech_object_history_service](deltatech_object_history_service/index.md): Extinde istoricul obiectelor către modelele Acord de service și Echipament de service.
-- [deltatech_obyc](deltatech_obyc/index.md): Determinare automată a conturilor contabile pentru tranzacțiile de stoc (stil SAP OBYC), cu COGS înregistrat la livrare, pe baza cheii de tranzacție, clasei și ariei de evaluare.
-- [deltatech_partner_generic](deltatech_partner_generic/index.md): Partener generic/anonim implicit, folosit ca fallback în vânzări și facturare, cu blocarea postării facturilor pe el și protecție opțională la modificări.
+- [deltatech_obyc](deltatech_obyc/index.md): Determinare automată a conturilor contabile pentru tranzacțiile de stoc în stil SAP OBYC: matrice cheie de tranzacție × clasă și arie de evaluare × modificator × companie, cu costul mărfii vândute înregistrat la livrare.
+- [deltatech_partner_generic](deltatech_partner_generic/index.md): Partener generic pentru clienți anonimi, cu restricții contabile: blochează validarea facturilor pe el, filtrează jurnalele de plată și îl protejează la modificări accidentale.
 - [deltatech_partner_gifts](deltatech_partner_gifts/index.md): Gestionează cadourile oferite partenerilor — generare linii de cadou, etichete de livrare, date partener și copiere/modificare în masă.
 - [deltatech_partner_merge](deltatech_partner_merge/index.md): Unifică în masă fișele de parteneri duplicate pe același CUI, cu simulare obligatorie și verificare post-unificare a totalurilor.
 - [deltatech_partner_rating](deltatech_partner_rating/index.md): Permite evaluarea partenerilor de afaceri pe baza unor criterii definite de utilizator.
@@ -276,7 +276,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_sale_referrer_raport](deltatech_sale_referrer_raport/index.md): Calculează și raportează comisioane pentru parteneri recomandatori (referrer) pe comenzi de vânzare, facturi și raportul de analiză vânzări.
 - [deltatech_sale_report](deltatech_sale_report/index.md): Adaugă e-mailul partenerului în raportul de analiză a vânzărilor (`sale.report`).
 - [deltatech_sale_return_cause](deltatech_sale_return_cause/index.md): Urmărirea și analiza cauzelor de retur pe comenzile de vânzare, cu calcul al valorii returnate.
-- [deltatech_sale_stage](deltatech_sale_stage/index.md): Faze personalizabile pentru comenzile de vânzare, cu progresie automată pe fluxul vânzare/livrare/facturare și badge colorat pe comandă.
+- [deltatech_sale_stage](deltatech_sale_stage/index.md): Faze interne personalizabile pe comenzile de vânzare (confirmată, pregătită, expediată, livrată, facturată), care avansează automat după livrări, statusul curierului și facturare.
 - [deltatech_sale_stage_route](deltatech_sale_stage_route/index.md): Definește trasee de etape (faze) pentru comenzi de vânzare și livrări, cu propagare automată, interfață Barcode dedicată și control de acces pe tranziții.
 - [deltatech_sale_store](deltatech_sale_store/index.md): Vânzare directă din magazin cu emitere de bonuri fiscale (fișier pentru programul de tipărit, client generic, marcaj „Bon fiscal" pe jurnale).
 - [deltatech_sale_store_report](deltatech_sale_store_report/index.md): Raport zilnic al vânzărilor cu bon fiscal tipărit, pentru punctajul cu raportul Z al casei de marcat (totaluri pe zi, TVA și tip de plată).
@@ -374,7 +374,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_advance_invoice](l10n_ro_advance_invoice/index.md): Gestionează facturile de avans cu TVA și regularizarea automată a acestora.
 - [l10n_ro_aml_register](l10n_ro_aml_register/index.md): Registrul imutabil al verificărilor AML (Legea 129/2019), cu consemnare automată din screeningul de sancțiuni și verificarea beneficiarului real.
 - [l10n_ro_anaf_agent](l10n_ro_anaf_agent/index.md): Fundația modelului cloud de comunicare cu ANAF prin Agentul Terrabit (registru de agenți, coadă de joburi, API apelat de agent).
-- [l10n_ro_anaf_base](l10n_ro_anaf_base/index.md): Modul de bază (ascuns) cu infrastructura comună declarațiilor ANAF din `l10n_ro_ent`: mixin handler, validări, export XDP/XML/ZIP, meniu și setări.
+- [l10n_ro_anaf_base](l10n_ro_anaf_base/index.md): Infrastructura comună (ascunsă) a declarațiilor ANAF: mixin de export XML/XDP/PDF, validări, profile de declarații, CAEN, coduri D394 și meniul Declarații ANAF.
 - [l10n_ro_anaf_d100](l10n_ro_anaf_d100/index.md): Generarea Declarației 100 privind obligațiile de plată la bugetul de stat, cu export XML/XDP.
 - [l10n_ro_anaf_d101](l10n_ro_anaf_d101/index.md): Generează XML-ul Declarației 101 (impozit pe profit anual) pentru ANAF, pornind de la calculul din `l10n_ro_profit_tax`, validat automat împotriva XSD-ului oficial.
 - [l10n_ro_anaf_d103](l10n_ro_anaf_d103/index.md): Export XML al Decontului lunar privind accizele (D103) din declarația de accize Odoo, gata de depus pe portalul ANAF.
@@ -393,7 +393,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_anaf_duk](l10n_ro_anaf_duk/index.md): Validează declarațiile ANAF cu aplicația oficială DUKIntegrator, delegând execuția Java agentului Terrabit de pe stația contabilului (cloud-safe).
 - [l10n_ro_anaf_fiscal_status](l10n_ro_anaf_fiscal_status/index.md): Descarcă automat din SPV ANAF vectorul fiscal (obligații declarative active) și fișa pe rol (sume de plată, restanțe, accesorii), cu istoric.
 - [l10n_ro_anaf_messages](l10n_ro_anaf_messages/index.md): Preia mesajele generale din SPV ANAF (notificări și recipise ale declarațiilor fiscale), separat de mesajele e-Factura.
-- [l10n_ro_anaf_partner](l10n_ro_anaf_partner/index.md): Sincronizează partenerii români cu registrul ANAF (nume, adresă, CAEN, TVA, inactivare/radiere), cu jurnal de modificări și alertă/blocare opțională la postarea facturilor.
+- [l10n_ro_anaf_partner](l10n_ro_anaf_partner/index.md): Sincronizare proprie a datelor partenerilor din registrul ANAF, cu jurnal de modificări, alerte la inactivare/radiere/schimbare regim TVA, TVA la încasare automat pe furnizori și blocare opțională la postarea facturilor.
 - [l10n_ro_anaf_submission](l10n_ro_anaf_submission/index.md): Infrastructură comună de urmărire a depunerii electronice și a recipisei pentru declarațiile fiscale ANAF (D112, D300, D394, D406 etc.).
 - [l10n_ro_audit_immutable](l10n_ro_audit_immutable/index.md): Pistă de audit imuabilă cu triggere PostgreSQL și hash chain SHA-256 pe documentele financiare (FR-14, OMFP 1802).
 - [l10n_ro_balance_confirmation](l10n_ro_balance_confirmation/index.md): Generează documente de confirmare a soldului pentru parteneri (clienți/furnizori) la o dată dată.
@@ -403,13 +403,13 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_cash_register](l10n_ro_cash_register/index.md): Registru de casă zilnic pe jurnal și dată, cu solduri reportate automat între zile, operațiuni de numerar și raport tipărit 14-4-7A.
 - [l10n_ro_cash_register_report](l10n_ro_cash_register_report/index.md): Registrul de casă românesc (14-4-7A) ca raport nativ `account.report`, cu filtre de dată/jurnal/companie și export PDF/XLSX.
 - [l10n_ro_cbam](l10n_ro_cbam/index.md): Urmărirea emisiilor CO₂ incorporate la import și declarația CBAM trimestrială/anuală (Reg. UE 2023/956, FR-56).
-- [l10n_ro_config](l10n_ro_config/index.md): Modulul-hub al localizării românești: se instalează cu `l10n_ro`, oferă pagina de configurare din care se activează restul suitei RO și câmpurile românești pe companie, parteneri, conturi bancare și jurnale.
+- [l10n_ro_config](l10n_ro_config/index.md): Hub de instalare și configurare al localizării românești: pagina „România” din Setări și câmpurile `l10n_ro_*` pe companie, partener, cont bancar, jurnal și produs, ascunse pe companiile non-RO.
 - [l10n_ro_cost_centers](l10n_ro_cost_centers/index.md): Repartizarea automată a cheltuielilor indirecte pe centre de cost (conturi analitice), neutră financiar, prin chei configurabile, conform OMFP 1802/2014.
 - [l10n_ro_currency_revaluation](l10n_ro_currency_revaluation/index.md): Reevaluare lunară a soldurilor monetare în valută conform OMFP 1802/2014, cu diferențe de curs definitive pe 665/765, fără stornare automată.
 - [l10n_ro_customs_dvi](l10n_ro_customs_dvi/index.md): Înregistrează Declarația Vamală de Import (DVI) ca landed cost — taxă vamală A00 pe 4462, TVA import B00 deductibil pe 4426, baza dusă în decont printr-o pereche tehnică pe 473, cu MRN-ul ca referință a notei.
 - [l10n_ro_deferred_entries](l10n_ro_deferred_entries/index.md): Configurează automat mecanismul nativ Enterprise de recunoaștere a cheltuielilor/veniturilor înregistrate în avans (conturi 4711/4721) pe planul de conturi RO și livrează traducerile RO lipsă ale mecanismului.
 - [l10n_ro_dividends](l10n_ro_dividends/index.md): Distribuire dividende cu cote 10%/16%, registru acționari și note contabile automate 117/457/446.
-- [l10n_ro_doc_screenshots](l10n_ro_doc_screenshots/index.md): Tooling pentru capturile fișelor consultant: mixin `ScreenshotCase` (HttpCase + Playwright) care generează capturi curate în `readme/screenshots/`.
+- [l10n_ro_doc_screenshots](l10n_ro_doc_screenshots/index.md): Punte către `deltatech_doc_screenshots`: mixinul `ScreenshotCase` pentru capturile fișelor consultant s-a mutat acolo, iar modulul îl reexportă pentru compatibilitate.
 - [l10n_ro_edi_ubl_sale_store](l10n_ro_edi_ubl_sale_store/index.md): Setează automat tipul de e-factură la codul 751 pentru vânzările însoțite de bon fiscal.
 - [l10n_ro_efactura_consumer](l10n_ro_efactura_consumer/index.md): e-Factura către persoane fizice cu CNP valid în XML CIUS-RO (validare Luhn RO, schemeID CNP).
 - [l10n_ro_efactura_dedup](l10n_ro_efactura_dedup/index.md): Prevenire duplicate facturi SPV prin cheie extinsă SHA-256 (CUI + serie/nr + dată + valoare).
@@ -440,12 +440,12 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_journal_tva](l10n_ro_journal_tva/index.md): Generează Jurnalul de TVA Vânzări și Cumpărări cu detaliu pe cote și categorii, plus export XLSX.
 - [l10n_ro_lang](l10n_ro_lang/index.md): Setează automat limba site-ului pe română dacă IP-ul vizitatorului provine din România.
 - [l10n_ro_leasing](l10n_ro_leasing/index.md): Contracte de leasing financiar și operațional cu grafic de rate, note contabile automate și cron scadențar.
-- [l10n_ro_message_spv](l10n_ro_message_spv/index.md): Descarcă și procesează automat mesajele e-Factura din SPV ANAF (ZIP semnate, XML, PDF), creând facturi de furnizor cu maparea automată a furnizorului și produselor.
+- [l10n_ro_message_spv](l10n_ro_message_spv/index.md): Registru al mesajelor SPV ANAF: descarcă zilnic mesajele și arhivele ZIP semnate, creează facturi de furnizor din XML-ul e-Factura și, opțional, cere verificarea (acceptare/respingere) a facturilor primite.
 - [l10n_ro_message_spv_purchase](l10n_ro_message_spv_purchase/index.md): Leagă mesajele SPV (e-Factura ANAF) de comenzile de achiziție și sincronizează chatter + atașament XML.
 - [l10n_ro_micro_tax](l10n_ro_micro_tax/index.md): Calcul trimestrial al impozitului micro-întreprindere (1%/3%) cu monitorizare plafon și tranziție la profit.
 - [l10n_ro_mrp_labour_account](l10n_ro_mrp_labour_account/index.md): Configurează conturile de manoperă producție (331/921/923) pentru contabilizarea automată din mrp_account.
 - [l10n_ro_oss_threshold](l10n_ro_oss_threshold/index.md): Monitorizează pragul anual de 10.000 EUR pentru vânzările B2C UE relevante pentru regimul OSS.
-- [l10n_ro_partner_create_by_vat](l10n_ro_partner_create_by_vat/index.md): Completează automat denumirea, adresa și starea de TVA a partenerului din serviciul web ANAF, pe baza codului de TVA/CUI.
+- [l10n_ro_partner_create_by_vat](l10n_ro_partner_create_by_vat/index.md): Completează automat denumirea, adresa, CAEN și starea de plătitor de TVA a unui partener românesc pe baza CUI, prin serviciul web ANAF, cu istoric al stărilor ANAF.
 - [l10n_ro_partner_create_by_vat_button](l10n_ro_partner_create_by_vat_button/index.md): Buton în fișa partenerului pentru recitirea datelor de la ANAF pe baza codului de TVA.
 - [l10n_ro_partner_create_by_vat_openapi](l10n_ro_partner_create_by_vat_openapi/index.md): Completează automat datele partenerului român după CUI, printr-o căutare cu cheie OpenAPI.
 - [l10n_ro_partner_financials](l10n_ro_partner_financials/index.md): Aduce pe fișa partenerului bilanțurile publice MFinanțe/ANAF și indicatorii de bonitate calculați, inclusiv semnalul de capitaluri proprii negative.
@@ -513,7 +513,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [terrabit_google_tag](terrabit_google_tag/index.md): Integrare Google Tag Manager cu magazinul online — trimite evenimente e-commerce (view_item, add_to_cart, purchase) în dataLayer, configurabil din setările website-ului.
 - [terrabit_helpdesk_connector](terrabit_helpdesk_connector/index.md): Deschide, urmărește și discută tichete de suport Terrabit direct din Odoo, cu sincronizare automată de status și coadă locală pentru cazul în care serverul e indisponibil.
 - [terrabit_helpdesk_link](terrabit_helpdesk_link/index.md): Adaugă meniul de top „Terrabit Help" care deschide portalul de suport Terrabit într-o filă nouă.
-- [terrabit_iap](terrabit_iap/index.md): Extinde contul IAP standard cu endpoint-uri proprii Terrabit, pentru servicii cu credite găzduite pe serverele Terrabit.
+- [terrabit_iap](terrabit_iap/index.md): Client de bază pentru serviciile Terrabit IAP: endpoint propriu per serviciu, înregistrarea contului pe server, hashing de token și secret de apel invers.
 - [terrabit_iap_server_helpdesk](terrabit_iap_server_helpdesk/index.md): Serviciul IAP care primește pe helpdesk-ul Terrabit tichetele deschise de clienți prin conectorul de suport instalat în Odoo-ul lor.
 - [terrabit_iap_server_sale](terrabit_iap_server_sale/index.md): Achiziția de credite IAP prin magazinul eCommerce (website_sale), cu creditare automată a contului IAP la confirmarea comenzii.
 - [terrabit_partner_credit_limit](terrabit_partner_credit_limit/index.md): Reține confirmarea comenzilor când soldul de încasat sau facturile restante ale clientului depășesc limita de credit, ca motive de verificare cu aprobare pe rol prin wizard (deltatech_sale_order_review).

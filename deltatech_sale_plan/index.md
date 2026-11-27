@@ -1,10 +1,10 @@
 # Sales Plan by Customer (Planul de vânzări pe clienți)
 
 - **Nume Tehnic:** `deltatech_sale_plan`
-- **Versiune:** `20.0.1.0.1`
+- **Versiune:** `20.0.1.0.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_sale_plan
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_plan`
-- **Ultima Ingestie:** `2026-11-26`
+- **Ultima Ingestie:** `2026-11-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar

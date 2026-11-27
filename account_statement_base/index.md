@@ -1,10 +1,10 @@
 # Bank Statement Base (localizat la `account_statement_base/index.md`)
 
 - **Nume Tehnic:** `account_statement_base`
-- **Versiune:** `20.0.1.0.0`
+- **Versiune:** `20.0.1.0.1`
 - **Cale:** https://github.com/dhongu/others_addons/tree/20.0/account_statement_base
 - **Cale Locală:** `odoo-addons/others_addons/account_statement_base`
-- **Ultima Ingestie:** `2026-09-27`
+- **Ultima Ingestie:** `2026-11-27`
 
 #### 1. Sumar
 
@@ -12,7 +12,7 @@ Acest modul tehnic readuce în interfața Odoo vizualizările dedicate liniilor 
 
 #### 2. Funcționalități Cheie
 
-- Adaugă o acțiune și un meniu dedicat pentru **Bank Statement Lines** (`account.bank.statement.line`), cu vizualizări listă, formular și kanban.
+- Adaugă o acțiune de fereastră dedicată pentru **Bank Statement Lines** (`account.bank.statement.line`), cu vizualizări listă, formular și kanban.
 - Pe formularul extrasului de cont (`account.bank.statement`) adaugă un buton statistic „Transactions” care deschide direct liniile extrasului curent, plus un buton „Journal Items” către notele contabile aferente (validate, grupate pe operațiune).
 - În lista de extrase de cont adaugă un buton rapid „Open Statement Lines” pentru fiecare rând și permite crearea directă de extrase din listă.
 - Linia de extras (formular) expune sold reconciliere, tip tranzacție, cont bancar al partenerului și plățile asociate (`payment_ids`) pe o filă tehnică separată.

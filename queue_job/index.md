@@ -1,10 +1,10 @@
 # Job Queue (localizat la `queue_job/index.md`)
 
 - **Nume Tehnic:** `queue_job`
-- **Versiune:** `20.0.2.0.1`
+- **Versiune:** `20.0.2.0.2`
 - **Cale:** `https://github.com/dhongu/queue/tree/20.0/queue_job`
 - **Cale Locală:** `odoo-addons/queue/queue_job`
-- **Ultima Ingestie:** `2026-09-27`
+- **Ultima Ingestie:** `2026-11-27`
 
 #### 1. Sumar
 
@@ -24,6 +24,8 @@ Modulul adaugă în Odoo o coadă de joburi integrată, care permite ca anumite 
 - Meniu `Job Queue` (`Queue > Job Queue / Channels / Job Functions`), accesibil grupului „Job Queue Manager", cu wizard-uri pentru marcarea în masă a joburilor ca „Done" sau „Cancelled" și pentru reprogramarea (`requeue`) joburilor eșuate.
 - Facilități pentru dezvoltatori/testare: `with_delay()` / `delayable()` pentru amânarea metodelor; `trap_jobs()` pentru a testa joburile fără să le execute efectiv; execuție sincronă (bypass) prin variabila de mediu `QUEUE_JOB__NO_DELAY=1` sau, în teste, prin cheia de context `queue_job__no_delay=True`.
 - Configurare runner prin variabile de mediu sau fișierul `.conf` (secțiunea `[queue_job]`: `channels`, `scheme`, `host`, `port`, `http_auth_user`, `http_auth_password`); necesită `--workers` > 1 (sau `server_wide_modules = web,queue_job`) pentru ca joburile să pornească în paralel.
+- Amânare automată a metodelor existente: `_patch_job_auto_delay()` pe `base` transformă o metodă în job la apelul din cod (opțional condiționat de o cheie de context), cu opțiunile jobului furnizate de o metodă `<metodă>_job_options`.
+- Jobrunner pornit ca proces worker separat (când Odoo rulează cu `--workers` > 0), nu ca fir în procesul principal; joburile rămase în `enqueued`/`started` (ex. worker oprit) sunt reîncadrate automat.
 - Curățare automată: `ir.cron` zilnic („AutoVacuum Job Queue") care șterge periodic joburile terminate vechi.
 
 #### 3. Dependențe
@@ -31,6 +33,7 @@ Modulul adaugă în Odoo o coadă de joburi integrată, care permite ca anumite 
 - `mail`
 - `base_sparse_field`
 - `web`
+- Dependență externă Python: `requests`
 
 #### 4. Componente Cheie
 
@@ -41,6 +44,8 @@ Modulul adaugă în Odoo o coadă de joburi integrată, care permite ca anumite 
 - `queue.job.function` (`models/queue_job_function.py`): configurarea per model+metodă a canalului implicit, acțiunii asociate și tiparului de reîncercare pentru joburile generate din acea metodă.
 - `queue.job.lock` (`models/queue_job_lock.py`): mecanism de blocare la nivel de bază de date, folosit de Jobrunner pentru a evita execuția concurentă a aceluiași job.
 - `base` (`models/base.py`): adaugă tuturor modelelor metodele `with_delay()` / `delayable()`, punctul de intrare pentru amânarea asincronă a apelurilor de metode.
+- `controllers/main.py`: `RunJobController` — rutele HTTP prin care Jobrunner execută un job (`/queue_job/runjob`) și ruta de test `/queue_job/create_test_job`.
+- `post_init_hook.py` / `post_load.py`: crearea trigger-ului PostgreSQL `queue_job_notify` (`pg_notify` la modificarea joburilor) și patch pe `odoo.http.router` pentru a captura baza de date în medii multi-bază.
 - `ir.model.fields` (`models/ir_model_fields.py`): extindere tehnică legată de câmpurile sparse folosite de `queue.job`.
 
 **Vizualizări**

@@ -1,10 +1,10 @@
-# Romania - Invoice Report Terrabit (localizat la `l10n_ro_invoice_report/index.md`)
+# Romania - Invoice Report (localizat la `l10n_ro_invoice_report/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_invoice_report`
-- **Versiune:** `20.0.3.4.24`
+- **Versiune:** `20.0.3.4.29`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_invoice_report
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_invoice_report`
-- **Ultima Ingestie:** `2026-09-27`
+- **Ultima Ingestie:** `2026-11-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar

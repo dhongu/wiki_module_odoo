@@ -4,6 +4,40 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-27] Lot de 28 de module — re-ingestie pe 20.0 (pagini rămase în urmă față de origin/20.0)
+
+- **Acțiune:** Re-ingestie, procesată în paralel cu câte un subagent `documentarist-wiki` per modul, pentru toate paginile
+  20.x a căror versiune nu mai corespundea manifestului de pe `origin/20.0` (sursa: export `git archive origin/20.0`).
+  Schimbări de conținut: `deltatech_delivery` (dependență nouă `deltatech_task_progress`, trimitere la curier cu dialog de
+  progres, lista „Refused COD - Invoice Open”, cron-uri; conexiune nouă cu `deltatech_payment_on_delivery`),
+  `deltatech_contact` (redenumit „Contact Personal Data”, descriere rescrisă, limitări CNP și `contact.get_name_only` fără efect
+  în 20), `deltatech_delivery_status` (amânare/eliberare livrări), `deltatech_sale_stage` (redenumit „Sale Order Phases”,
+  fazele citite cu drepturi ridicate la validarea facturii), `deltatech_partner_generic` (nu se mai selectează automat;
+  restricția și în „Înregistrare plată”), `deltatech_obyc` (reclasificare prin transfer intern 371/3028,
+  `skip_stock_valuation_entry`, arie doar pe stocabile), `deltatech_valuation_area` (arie doar pe stocabile, cantitate negativă
+  pe credit), `deltatech_stock_valuation` (`_get_valuation_area_price_account()`), `l10n_ro_config` (nu mai e `auto_install`),
+  `l10n_ro_message_spv` (verificarea internă a facturilor primite, potrivire 751, notificare la eroare de sincronizare),
+  `l10n_ro_partner_create_by_vat` (istoricele ANAF corectate față de cod), `l10n_ro_anaf_base` (dependență nouă
+  `l10n_ro_move_guard`, export PDF implicit, CAEN pe companie, nomenclator D394), `l10n_ro_anaf_partner` (dependențe
+  `l10n_ro_caba` + `l10n_ro_move_guard`, `excludes` `l10n_ro_fiscal_validation`, TVA la încasare automat pe furnizori),
+  `l10n_ro_doc_screenshots` (devenit punte către `deltatech_doc_screenshots`), `terrabit_iap` (endpoint `terrabit_iap.endpoint`,
+  secret de apel invers), `queue_job` (auto-delay, jobrunner), `deltatech_delivery_dummy`, `deltatech_service_base`
+  (conexiuni legate), `account_statement_base` („meniu” corectat). Doar metadate/ambalare (versiune, nume, fișă recopiată):
+  `deltatech_sale_plan`, `deltatech_delivery_route_driver`, `deltatech_account_enterprise`, `deltatech_stock_inventory`,
+  `deltatech_website_searchbar_typing`, `deltatech_widget_many2one_badge`, `l10n_ro_invoice_report` (redenumit
+  „Romania - Invoice Report”), `l10n_ro_report_common`, `l10n_ro_vat_on_payment`.
+- **Sursă:** `readme/DESCRIPTION.md`, `USAGE.md`, `CONFIGURE.md`, `HISTORY.md`, `FISA_CONSULTANT.md`, `__manifest__.py`, cod.
+  Fișe consultant copiate sau recopiate (cu capturi) pentru 18 module; fișe noi în wiki: `deltatech_delivery_status`,
+  `deltatech_sale_stage`, `deltatech_partner_generic`, `l10n_ro_message_spv`, `l10n_ro_doc_screenshots`.
+- **Dependențe/Conexiuni:** `deltatech_task_progress`, `l10n_ro_move_guard`, `deltatech_delivery_handover`,
+  `deltatech_doc_screenshots` fără pagini wiki (rămase text).
+- **Avertismente:** `deltatech_sale_stage` — problema dhongu/deltatech#3533 (condiție inversată în `onchange_phase_id`) încă în
+  cod; `deltatech_stock_inventory` — DESCRIPTION.md încă promite arhivarea SVL și coduri de bare, plus „Compatibility with
+  Odoo 19”; `l10n_ro_config` și `l10n_ro_partner_create_by_vat` — `readme/INSTALL.md` cu text vechi (19.0/16.0);
+  `l10n_ro_message_spv` — DESCRIPTION.md neactualizat cu 2.17–2.18; `deltatech_service_agreement` are pagina încă pe 19.0.
+- **Fișiere actualizate:** cele 28 de directoare de modul (index.md, plus FISA_CONSULTANT.md/screenshots/ unde e cazul),
+  `index.md` (14 descrieri), `log.md`, `.index/`.
+
 ## [2026-11-27] `deltatech_sketch_3d` — ingestie 20.0.1.4.0 (modul nou în wiki)
 
 - **Acțiune:** Pagină nouă pentru modulul din bitshop (mutat din repo-ul clientului Maxima prin terrabit-solutions/bitshop#4179):

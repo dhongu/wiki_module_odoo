@@ -1,10 +1,10 @@
 # Customer Follow-up Enhancements (localizat la `deltatech_account_enterprise/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_enterprise`
-- **Versiune:** `20.0.0.1.2`
+- **Versiune:** `20.0.0.1.3`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_account_enterprise
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_account_enterprise`
-- **Ultima Ingestie:** `2026-10-13`
+- **Ultima Ingestie:** `2026-11-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar

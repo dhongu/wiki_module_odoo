@@ -1,10 +1,10 @@
 # Product Valuation (localizat la `deltatech_stock_valuation/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_valuation`
-- **Versiune:** `20.0.0.0.11`
+- **Versiune:** `20.0.0.0.13`
 - **Cale:** [https://github.com/dhongu/deltatech_stock_valuation/tree/20.0/deltatech_stock_valuation](https://github.com/dhongu/deltatech_stock_valuation/tree/20.0/deltatech_stock_valuation)
 - **Cale Locală:** `odoo-addons/deltatech_stock_valuation/deltatech_stock_valuation`
-- **Ultima Ingestie:** `2026-10-01`
+- **Ultima Ingestie:** `2026-11-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -46,7 +46,7 @@ Modulul calculează și urmărește evaluarea stocului de produse pe arie de eva
 - `product.product` / `product.template` (extinse): relația `product_valuation_ids` și recalcul manual per produs.
 - `res.company` (extins): `valuation_area_level`, `valuation_lot_level` și `set_stock_valuation_at_company_level()`.
 - `res.config.settings` (extins): setările de evaluare și urmărirea progresului recalculării.
-- `stock.move` (extins): `_get_valuation_area_price()` și suprascrierea `_set_value()` pentru valorizarea ieșirilor la prețul ariei, inclusiv păstrarea valorii la recalculări retroactive.
+- `stock.move` (extins): `_get_valuation_area_price()`, punctul de extensie `_get_valuation_area_price_account()` (contul pe care se caută prețul ariei; suprascris de `deltatech_obyc`) și suprascrierea `_set_value()` pentru valorizarea ieșirilor la prețul ariei, inclusiv păstrarea valorii la recalculări retroactive.
 - `stock.move.line` (extins): suprascrie `write` pentru corecțiile de cantitate pe mișcări efectuate.
 
 **Vizualizări**

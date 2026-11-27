@@ -1,10 +1,10 @@
 # Delivery Route Driver (Șofer rută de livrare)
 
 - **Nume Tehnic:** `deltatech_delivery_route_driver`
-- **Versiune:** `20.0.1.0.0`
+- **Versiune:** `20.0.1.0.1`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_delivery_route_driver
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_delivery_route_driver`
-- **Ultima Ingestie:** `2026-11-26`
+- **Ultima Ingestie:** `2026-11-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar

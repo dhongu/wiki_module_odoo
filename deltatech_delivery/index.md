@@ -1,15 +1,15 @@
-# Deltatech Delivery Base (localizat la `deltatech_delivery/index.md`)
+# Courier Delivery Base (localizat la `deltatech_delivery/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery`
-- **Versiune:** `20.0.6.7.0`
+- **Versiune:** `20.0.6.12.2`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/20.0/deltatech_delivery
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery`
-- **Ultima Ingestie:** `2026-09-27`
+- **Ultima Ingestie:** `2026-11-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul „Deltatech Delivery Base” este o extensie cuprinzătoare pentru Odoo care îmbunătățește și optimizează capacitățile de gestionare a livrărilor din ecosistemul Odoo. Modulul servește drept fundație pentru diverse integrări specifice fiecărui curier și oferă un cadru robust pentru gestionarea expedierilor către mai mulți furnizori de servicii de livrare. Modulul de bază pune la dispoziție și un cadru partajat de opțiuni de livrare pentru serviciile legate de AWB: opțiuni standard precum livrarea sâmbăta, deschiderea coletului, returul coletului, livrarea personală și notificarea prin SMS sunt definite centralizat și pot fi expuse per curier, în funcție de capabilitățile conectorului. Operatorul selectează doar opțiunile permise de curierul ales, în timp ce structura existentă `shipment_info` rămâne neschimbată pentru compatibilitate retroactivă. Pentru volume mari de comenzi, modulul oferă acum și trei acțiuni în masă direct din lista de comenzi de vânzare: validarea rapidă a livrărilor deja pregătite, trimiterea la curier cu urmărire vizuală a progresului și afișarea facturilor comenzilor selectate. O livrare **amânată** — de operator, de regula de plată sau de verificarea comenzii — este acum respectată peste tot: nu poate pleca la curier prin niciun buton și nicio acțiune în masă, ci este raportată ca reținută, cu motivul.
+Modulul „Deltatech Delivery Base” este o extensie cuprinzătoare pentru Odoo care îmbunătățește și optimizează capacitățile de gestionare a livrărilor din ecosistemul Odoo. Modulul servește drept fundație pentru diverse integrări specifice fiecărui curier și oferă un cadru robust pentru gestionarea expedierilor către mai mulți furnizori de servicii de livrare. Modulul de bază pune la dispoziție și un cadru partajat de opțiuni de livrare pentru serviciile legate de AWB: opțiuni standard precum livrarea sâmbăta, deschiderea coletului, returul coletului, livrarea personală și notificarea prin SMS sunt definite centralizat și pot fi expuse per curier, în funcție de capabilitățile conectorului. Operatorul selectează doar opțiunile permise de curierul ales, în timp ce structura existentă `shipment_info` rămâne neschimbată pentru compatibilitate retroactivă. Pentru volume mari de comenzi, modulul oferă acum și trei acțiuni în masă direct din lista de comenzi de vânzare: validarea rapidă a livrărilor deja pregătite, trimiterea la curier cu dialog de progres (reîncercare pentru comenzile eșuate și oprire după comanda în lucru) și afișarea facturilor comenzilor selectate. O livrare **amânată** — de operator, de regula de plată sau de verificarea comenzii — este acum respectată peste tot: nu poate pleca la curier prin niciun buton și nicio acțiune în masă, ci este raportată ca reținută, cu motivul.
 
 #### 2. Funcționalități Cheie
 
@@ -38,9 +38,29 @@ Modulul „Deltatech Delivery Base” este o extensie cuprinzătoare pentru Odoo
 
 - **Acțiuni în masă pe comenzile de vânzare**:
   - **Validate Deliveries** — din meniul Acțiuni al listei de comenzi de vânzare, validează în masă livrările deja pregătite (rezervare stoc + `button_validate`) pentru comenzile selectate; fiecare comandă e procesată izolat, printr-un wizard de confirmare urmat de o notificare cu numărul de succese și lista comenzilor cu probleme (motiv inclus)
-  - **Send to Carrier** — din același meniu, deschide un dialog OWL care trimite comenzile selectate la curier secvențial (una câte una), cu progres live per linie: succes (cu numărul AWB), eroare clară, rezultat „incert" (când răspunsul curierului s-a pierdut și nu se reîncearcă automat, ca să nu apară un AWB dublu) sau **reținut** (livrare amânată, fără apel la curier); cât rulează, un banner cu rotiță animată arată că acțiunea e în curs, iar „Închide" e dezactivat până la final
+  - **Send to Carrier** — din același meniu, deschide dialogul de progres din `deltatech_task_progress`, care trimite comenzile selectate la curier secvențial (una câte una), cu progres live per linie: succes (cu numărul AWB), eroare clară, rezultat „incert" (când răspunsul curierului s-a pierdut și nu se reîncearcă automat, ca să nu apară un AWB dublu) sau **reținut** (livrare amânată, fără apel la curier); bara de progres arată timpul rămas, iar „Închide" e dezactivat până la final; comenzile eșuate se pot retrimite cu **Trimite comenzile rămase** (rezultatul incert nu se retrimite niciodată)
   - Din același dialog, **Print AWBs** combină într-un singur PDF etichetele deja generate pentru comenzile trimise cu succes, fără să genereze nimic nou
   - **View Invoices** (Afișează facturile) — deschide lista facturilor comenzilor selectate (sau direct factura, dacă e una), de unde se folosește tipărirea standard Odoo în masă
+
+- **Rambursuri refuzate cu factură deschisă**:
+  - lista **Refused COD - Invoice Open** (*Inventar > Delivery AWB* și *Contabilitate > Clienți*), grupată pe curier: AWB-uri cu ramburs a căror livrare este *Refuzată*, iar comanda are încă o factură de client înregistrată și neachitată; coloana *Open Invoice Amount* arată restul de încasat, iar butonul *View Open Invoices* deschide facturile de stornat, anulat sau încasat altfel
+  - lista nu modifică nimic singură: AWB-ul dispare când factura e stornată sau achitată; același filtru există și pe lista Delivery AWB
+
+- **Ramburs și detalii de livrare**:
+  - dacă comanda e facturată (factură înregistrată), rambursul de încasat este restul de plată al facturii, nu totalul ei (voucher sau avans deja decontat nu se încasează de două ori)
+  - parametru de sistem opțional `deltatech_delivery.auto_authorize_on_delivery`: la generarea AWB cu ramburs, tranzacția Cash On Delivery trece în *Pending* (în loc să rămână *Draft*)
+  - în Carrier Details, codul poștal completează orașul și județul pentru toate localizările care o fac (România, Ungaria, Italia, Bulgaria); alegerea orașului completează și județul; adresa clientului nu se modifică, o adresă schimbată devine adresă de livrare (la dropship se păstrează adresa clientului)
+  - retur prin curier: pe o recepție, părțile se inversează (clientul expeditor, compania destinatar)
+  - câmpul **Excluded States** pe metoda de livrare (tab Disponibilitate): metoda nu se oferă pentru adrese din județele excluse
+
+- **Contract extins pentru curieri**: capabilitățile `pickup` (comandă de ridicare pentru un predat-primit întreg) și `pickup_status` (citirea comenzilor de ridicare ale unei zile), folosite de `deltatech_delivery_handover`; adaptoarele FAN Courier și Cargus nu sunt portate încă.
+
+- **Mentenanță**:
+  - cron **Delivery: Update delivery status** (la 12 ore) actualizează istoricul stărilor de livrare
+  - cron **Delivery: Vacuum merged label PDFs** (zilnic) curăță PDF-urile de etichete combinate
+  - `delivery.awb` primește compania livrării (sau a comenzii), ca AWB-urile create de cron să nu fie vizibile tuturor companiilor
+
+- **Limbi**: engleză, română, maghiară, cehă, croată, slovacă, slovenă (traducerile în afara EN/RO sunt asistate de AI).
 
 - **Reținerea livrărilor amânate**:
   - o livrare cu bifa **Amânată** (`postponed` pe transfer, din [deltatech_delivery_status](../deltatech_delivery_status/index.md)) nu poate primi AWB până nu este eliberată, indiferent de calea folosită
@@ -89,6 +109,7 @@ Fluxul pas-cu-pas al acțiunilor în masă și al reținerii livrărilor amânat
 - `stock`
 - `purchase`
 - `purchase_stock`
+- `deltatech_task_progress` (dialogul de progres al acțiunii *Send to Carrier*)
 
 #### 4. Componente Cheie
 
@@ -97,5 +118,6 @@ Conform fluxului de ingestie din schema wiki, secțiunea „Sumar" și „Funcț
 #### 5. Conexiuni
 
 - [deltatech_delivery_status](../deltatech_delivery_status/index.md): furnizează stările de livrare folosite de cadrul de urmărire a expedierilor din acest modul, inclusiv câmpul `postponed` și butoanele Amână/Eliberează pe comandă.
+- [deltatech_payment_on_delivery](../deltatech_payment_on_delivery/index.md): extensii peste rambursul standard (confirmare manuală, import extras curier) — extindere opțională.
 - [deltatech_website_delivery_and_payment](../deltatech_website_delivery_and_payment/index.md): extinde fluxul de livrare și plată în site-ul web, valorificând cadrul de curieri din acest modul (fără pagină wiki proprie încă).
 - [deltatech_sale_order_review](../deltatech_sale_order_review/index.md) + [deltatech_delivery_review](../deltatech_delivery_review/index.md) (bitshop): verificarea comenzii amână livrarea pe poarta „Înainte de livrare"; puntea completează mesajul de reținere din `_delivery_hold_message()` cu motivele concrete (ex. ramburs peste prag, adresă incompletă) — extindere opțională, fără pagină wiki proprie încă.

@@ -1,10 +1,10 @@
 # Romania - VAT on Payment (localizat la `l10n_ro_vat_on_payment/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_vat_on_payment`
-- **Versiune:** `20.0.0.7.0`
+- **Versiune:** `20.0.0.7.1`
 - **Cale:** https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_vat_on_payment
 - **Cale Locală:** `odoo-addons/l10n-romania-oca/l10n_ro_vat_on_payment`
-- **Ultima Ingestie:** `2026-09-27`
+- **Ultima Ingestie:** `2026-11-27`
 
 #### 1. Sumar
 

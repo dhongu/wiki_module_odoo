@@ -1,10 +1,10 @@
 # Website Searchbar Typing Examples (localizat la `deltatech_website_searchbar_typing/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_searchbar_typing`
-- **Versiune:** `20.0.1.1.0`
+- **Versiune:** `20.0.1.1.2`
 - **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_website_searchbar_typing
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_searchbar_typing`
-- **Ultima Ingestie:** `2026-10-17`
+- **Ultima Ingestie:** `2026-11-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -14,11 +14,11 @@ Modulul face ca textul de ajutor (placeholder-ul) dintr-o casetă de căutare a 
 #### 2. Funcționalități Cheie
 
 - Opțiune per casetă: exemplele se pun în formularul de căutare, ca listă ascunsă `<ul class="o_searchbar_typing d-none" aria-hidden="true">`, câte un `li` pe exemplu; un `li` opțional cu clasa `o_searchbar_typing_prefix` (de ex. „ex.:”) apare în fața fiecărui exemplu.
-- Opțiune în Website Builder pe caseta de căutare: **Typing examples** pornește sau oprește animația, iar **Prefix** și **Examples** (adăugare, ștergere, reordonare prin tragere) se editează în panou, fără editorul HTML; opțiunea scrie aceeași listă ascunsă (20.0.1.1.0).
+- Opțiune în Website Builder pe caseta de căutare: **Typing examples** pornește sau oprește animația, iar **Prefix** și **Examples** (adăugare, ștergere, reordonare prin tragere) se editează în panou, fără editorul HTML; opțiunea scrie aceeași listă ascunsă.
 - Exemplele sunt text obișnuit al paginii, deci se traduc cu pagina: fiecare `li` e un termen de traducere separat (cu `span` s-ar traduce tot blocul ca un singur termen).
 - Animația se oprește definitiv la click în casetă sau la prima tastă, iar placeholder-ul inițial revine; căutarea și sugestiile standard (autocomplete) funcționează normal.
 - Nu rulează când vizitatorul a cerut mișcare redusă (`prefers-reduced-motion`) și se oprește dacă preferința se activează în timpul vizitei; stă pe loc cât timp tab-ul e ascuns sau caseta nu e pe ecran; nu rulează în Website Builder.
-- Accesibilitate: dacă și caseta nu are etichetă, placeholder-ul inițial devine `aria-label`, ca cititoarele de ecran să nu citească fiecare literă schimbată.
+- Accesibilitate: dacă caseta nu are etichetă, placeholder-ul inițial devine `aria-label`, ca cititoarele de ecran să nu citească fiecare literă schimbată.
 - Viteza se reglează cu atribute pe lista de exemple, în milisecunde: `data-start-delay` (1500), `data-type-delay` (70), `data-hold-delay` (1800), `data-erase-delay` (30), `data-next-delay` (400).
 - Merge cu snippet-ul standard de căutare și cu șablonul `website.website_search_box_input`. Pe Odoo 20, parametrii șablonului se dau ca atribute pe `t-call` (`search_type.f`, `action.f`, `placeholder.f`), nu prin `t-set` în corpul apelului.
 

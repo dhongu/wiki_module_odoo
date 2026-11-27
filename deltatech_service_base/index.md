@@ -1,10 +1,10 @@
 # Services Base (localizat la `deltatech_service_base/index.md`)
 
 - **Nume Tehnic:** `deltatech_service_base`
-- **Versiune:** `20.0.2.0.6`
+- **Versiune:** `20.0.2.0.8`
 - **Cale:** https://github.com/dhongu/deltatech_service/tree/20.0/deltatech_service_base
 - **Cale Locală:** `odoo-addons/deltatech_service/deltatech_service_base`
-- **Ultima Ingestie:** `2026-09-27`
+- **Ultima Ingestie:** `2026-11-27`
 
 #### 1. Sumar
 
@@ -45,4 +45,4 @@ Fișierul `readme/DESCRIPTION.md` este gol și nu solicită explicit detalierea 
 
 #### 5. Conexiuni
 
-Modulul este baza pe care se sprijină celelalte module din suita [deltatech_service](../deltatech_service/index.md). Niciunul dintre aceste module conexe nu are încă pagină wiki, deci rămân ca text simplu: [deltatech_service](../deltatech_service/index.md).
+Modulul este baza pe care se sprijină celelalte module din suita deltatech_service, între care [deltatech_service_agreement](../deltatech_service_agreement/index.md), [deltatech_service_equipment_base](../deltatech_service_equipment_base/index.md) și [deltatech_service_equipment](../deltatech_service_equipment/index.md), care îl declară ca dependență. Vezi și [deltatech_service](../deltatech_service/index.md) pentru modulul principal al suitei.

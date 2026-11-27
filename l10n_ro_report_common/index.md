@@ -1,10 +1,10 @@
 # Romania - Report Common (localizat la `l10n_ro_report_common/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_report_common`
-- **Versiune:** `20.0.1.1.0`
+- **Versiune:** `20.0.1.1.4`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_report_common
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_report_common`
-- **Ultima Ingestie:** `2026-09-27`
+- **Ultima Ingestie:** `2026-11-27`
 
 #### 1. Sumar
 

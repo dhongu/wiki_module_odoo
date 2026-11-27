@@ -1,14 +1,14 @@
 # Romania - Localization Config (localizat la `l10n_ro_config/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_config`
-- **Versiune:** `20.0.0.9.0`
+- **Versiune:** `20.0.0.9.3`
 - **Cale:** https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_config
 - **Cale Locală:** `odoo-addons/l10n-romania-oca/l10n_ro_config`
-- **Ultima Ingestie:** `2026-09-27`
+- **Ultima Ingestie:** `2026-11-27`
 
 #### 1. Sumar
 
-Acest modul este poarta de intrare a localizării românești în Odoo: instalează automat (`auto_install`) odată cu modulul de bază `l10n_ro` și oferă o pagină dedicată în Configurare de unde se pot activa restul modulelor din suita de localizare română (facturare electronică, ANAF, stoc, TVA la încasare etc.). Pe lângă acest rol de "hub" de instalare, adaugă și câmpurile specifice legislației românești pe companie, parteneri, conturi bancare și jurnale contabile — vizibile doar pentru companiile care au bifat "Utilizează Contabilitatea Românească".
+Acest modul este poarta de intrare a localizării românești în Odoo: se instalează doar când un alt modul depinde de el sau când este instalat explicit (nu mai este `auto_install` cu `l10n_ro`) și oferă o pagină dedicată în Configurare de unde se pot activa restul modulelor din suita de localizare română (facturare electronică, ANAF, stoc, TVA la încasare etc.). Pe lângă acest rol de "hub" de instalare, adaugă și câmpurile specifice legislației românești pe companie, parteneri, conturi bancare și jurnale contabile — vizibile doar pentru companiile care au bifat "Utilizează Contabilitatea Românească".
 
 #### 2. Funcționalități Cheie
 
@@ -16,6 +16,8 @@ Acest modul este poarta de intrare a localizării românești în Odoo: instalea
 - Câmpuri dedicate pe companie: capital social (`l10n_ro_share_capital`), cod CAEN, taxe implicite pentru servicii (vânzare/achiziție), poziții fiscale pentru TVA la încasare și taxare inversă, conturi contabile pentru operațiuni de stoc (custodie, transfer, discount comercial, TVA neeligibil) și cont implicit de cheltuială nedeductibilă.
 - Câmpuri dedicate pe partener: "TVA Subjected" (persoană plătitoare de TVA), cod CAEN, e-Facturare, plus separarea automată a CUI-ului de prefixul de țară (`l10n_ro_vat_number`) — permite introducerea unui CUI/CIF fără prefixul "RO" sau al altei țări (ex. un adószám maghiar pe 11 cifre, acceptat de VIES doar în forma pe 8 cifre).
 - Pe contul bancar și pe jurnalul contabil (jurnal de bancă) există opțiunea "Ro Print in Report" pentru a decide ce cont bancar apare pe rapoarte (ex. antetul facturii); jurnalele contabile primesc și câmpuri pentru "Casă de marcat fiscală" și poziție fiscală românească.
+- Conturile bancare ale partenerilor și ale companiei pot fi marcate „Ro Print in Report”; partenerii fără prefix de țară în CUI se pot introduce selectând și țara.
+- Un `pre_init_hook` precompletează coloana `l10n_ro_vat_number` din `vat`, pentru instalare rapidă pe baze cu sute de mii de parteneri.
 - Pe produse de tip serviciu, taxele implicite de vânzare/achiziție definite la nivel de companie se aplică automat la schimbarea tipului produsului.
 - Mixin-ul `l10n.ro.mixin` (folosit de mai multe modele — companie, partener, cont bancar, jurnal, `res.config.settings`) ascunde automat câmpurile, grupurile, filtrele și butoanele specifice localizării românești (`l10n_ro*`) din formulare/liste/căutări pentru companiile care nu folosesc contabilitatea românească, păstrând interfața curată pentru clienții non-RO.
 - Grup de securitate dedicat "Romania Menus" (`group_ro_menus`) care controlează vizibilitatea paginii de configurare și a filei ANAF din formularul de partener.
@@ -43,7 +45,7 @@ Acest modul este poarta de intrare a localizării românești în Odoo: instalea
 
 - `view_account_bank_journal_tree` / `view_account_bank_journal_form`: adaugă pe jurnalul de bancă/casă câmpurile `l10n_ro_print_report`, `l10n_ro_fiscal_receipt`, `l10n_ro_fiscal_position_id`.
 - `view_partner_bank_form` / `_tree` / `_search`: adaugă `l10n_ro_print_report` pe conturile bancare de parteneri.
-- `view_partner_create_by_vat`: adaugă pe formularul de partener codul CAEN, bifa "TVA Subjected" și câmpul ascuns `l10n_ro_vat_number`, condiționate de `is_company`.
+- `view_partner_create_by_vat`: adaugă pe formularul de partener codul CAEN, bifa "TVA Subjected" și câmpul ascuns `l10n_ro_vat_number`, condiționate de `is_company` și de lipsa `parent_id` (câmpurile specifice firmei sunt ascunse pe persoanele de contact).
 - `view_partner_anaf_status_form`: adaugă fila "ANAF" (vizibilă doar grupului `group_ro_menus`) pe formularul de partener, lângă fila Contabilitate.
 - `res_config_settings_view_form` (moștenire pe formularul de setări): adaugă aplicația "România" (vizibilă doar dacă `country_code == 'RO'` și utilizatorul e în `group_ro_menus`), organizată în blocurile Parteneri & Adrese, Contabilitate, Integrare ANAF, Stoc, cu zeci de comutatoare de module și câmpuri de configurare.
 - `res_config_settings_account_view_form` (moștenire pe setările de Contabilitate): adaugă comutatorul de actualizare curs BNR și taxele implicite de servicii (vânzare/achiziție).

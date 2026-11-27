@@ -1,14 +1,15 @@
 # Romania - Mesaje SPV (localizat la `l10n_ro_message_spv/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_message_spv`
-- **Versiune:** `20.0.2.13.0`
+- **Versiune:** `20.0.2.18.1`
 - **Cale:** https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_message_spv
 - **Cale Locală:** `odoo-addons/l10n-romania-oca/l10n_ro_message_spv`
-- **Ultima Ingestie:** `2026-09-27`
+- **Ultima Ingestie:** `2026-11-27`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul facilitează gestionarea mesajelor din Spațiul Privat Virtual (SPV) ANAF, asigurând descărcarea și procesarea automată a facturilor electronice (e-Factura): sincronizează periodic lista de mesaje SPV, descarcă arhivele ZIP semnate, extrage XML-ul semnat și creează automat facturi de furnizor din acesta, mapând furnizorul după codul fiscal (CIF) și oferind vizibilitate asupra stării fiecărui mesaj (Draft, Downloaded, Invoice, Eroare, Finalizat).
+Acest modul facilitează gestionarea mesajelor din Spațiul Privat Virtual (SPV) ANAF, asigurând descărcarea și procesarea automată a facturilor electronice (e-Factura): sincronizează periodic lista de mesaje SPV, descarcă arhivele ZIP semnate, extrage XML-ul semnat și creează automat facturi de furnizor din acesta, mapând furnizorul după codul fiscal (CIF) și oferind vizibilitate asupra stării fiecărui mesaj (Draft, Downloaded, Invoice, Eroare, Finalizat) și, opțional, a verificării interne.
 
 #### 2. Funcționalități Cheie
 
@@ -24,6 +25,10 @@ Acest modul facilitează gestionarea mesajelor din Spațiul Privat Virtual (SPV)
 - Salvare cod furnizor pe linia de factură: codul furnizorului (`l10n_ro_vendor_code`) este salvat pe linia de factură la import, chiar dacă produsul nu a fost găsit, pentru a permite asocierea ulterioară la validarea facturii; descrierea și prețul unitar venite din SPV se păstrează la corectarea produsului pe o linie importată.
 - Sincronizarea datelor produselor: la validarea unei facturi de achiziție, dacă linia are cod de furnizor, se creează sau se actualizează automat înregistrarea `product.supplierinfo` corespunzătoare.
 - Configurare număr de zile pentru descărcarea e-facturilor (`l10n_ro_download_einvoices_days`, implicit 60 de zile) și pentru reîmprospătarea mesajelor (`l10n_ro_refresh_message_days`, implicit 60 de zile) — accesibile din Setări Contabilitate, secțiunea e-Factura România.
+- Verificare internă a facturilor primite (opțională, activată din Setări → e-Factura prin „Review received invoices"): mesajele primite apar ca „To Review", pot fi Acceptate, Respinse (cu motiv obligatoriu, printr-un wizard, consemnat în chatter) sau readuse la verificare; factura de furnizor se creează doar dintr-un mesaj acceptat, iar respingerea e blocată dacă există deja o factură neanulată creată din mesaj.
+- Potrivire îmbunătățită cu facturile existente: pentru facturile primite cu cod 751 (plătite cu bon fiscal, stocate ca In Receipt) se caută factura de furnizor cu aceeași referință și același furnizor; dintre mai multe potriviri se leagă întâi cea confirmată, apoi ciorna cu furnizor/linii, la urmă ciorna goală; la confirmarea unei facturi de furnizor se leagă automat mesajele SPV nelegate cu aceeași referință și furnizor (sau CIF); „Create Invoice" nu mai lasă o ciornă goală dacă importul XML eșuează.
+- XML-ul facturii este citit integral: mesajul reține numele partenerului, scadența, baza impozabilă, TVA și totalul, afișate în listă cu filtre (scadență, verificare, contabilizat) și grupări (partener, verificare, monedă); partenerii-placeholder („Unknown" sau denumiți după CIF) sunt redenumiți din XML.
+- Notificare la eroare de sincronizare: la prima eroare ANAF contabilii-șefi și administratorii sunt notificați (Discuss/email), iar în Setări se păstrează data ultimei sincronizări reușite (`l10n_ro_spv_last_sync`).
 - Meniu dedicat **Contabilitate → Configurare/Intrări contabile → SPV → Messages SPV**, cu acțiuni per mesaj: Refresh (resincronizare listă), Download, Get Invoice, Create Invoice, Show Invoice, plus butoane de descărcare ZIP/XML/PDF ANAF/PDF încorporat.
 
 #### 3. Dependențe
@@ -36,8 +41,9 @@ Acest modul facilitează gestionarea mesajelor din Spațiul Privat Virtual (SPV)
 
 **Modele**
 
-- `l10n.ro.message.spv`: modelul central al modulului — reprezintă un mesaj SPV (facturi primite/trimise, chitanțe, mesaje sau erori), cu starea de procesare (`draft`/`downloaded`/`invoice`/`error`/`done`), numărul de încercări de descărcare, arhiva ZIP semnată (`attachment_id`) și câmpuri calculate spre atașamentele derivate (XML, PDF ANAF, PDF încorporat) materializate pe factura legată.
-- `res.company` (extins): adaugă `l10n_ro_download_einvoices_days` / `l10n_ro_refresh_message_days` și metodele de cron (`l10n_ro_download_message_spv`, `l10n_ro_download_zip_message_spv`) care interoghează SPV și creează/actualizează mesajele; include și logica de potrivire a partenerului după CIF (`_l10n_ro_get_partner_from_cif`).
+- `l10n.ro.message.spv`: modelul central al modulului — reprezintă un mesaj SPV (facturi primite/trimise, chitanțe, mesaje sau erori), cu starea de procesare (`draft`/`downloaded`/`invoice`/`error`/`done`), numărul de încercări de descărcare, arhiva ZIP semnată (`attachment_id`) și câmpuri calculate spre atașamentele derivate (XML, PDF ANAF, PDF încorporat), datele citite din XML (partener, scadență, sume) și starea de verificare internă (`review_state`: To Review / Accepted / Rejected, `review_reason`), cu urmărire în chatter (`mail.thread`).
+- `l10n.ro.message.spv.reject` (wizard): cere motivul respingerii unei facturi primite și apelează `_l10n_ro_reject` pe mesajele selectate.
+- `res.company` (extins): adaugă `l10n_ro_download_einvoices_days` / `l10n_ro_refresh_message_days` și metodele de cron (`l10n_ro_download_message_spv`, `l10n_ro_download_zip_message_spv`) care interoghează SPV și creează/actualizează mesajele; câmpurile `l10n_ro_spv_last_sync` / `l10n_ro_spv_last_sync_error` / `l10n_ro_spv_review_required` și notificarea de eroare (`_l10n_ro_notify_spv_sync_error`); include și logica de potrivire a partenerului după CIF (`_l10n_ro_get_partner_from_cif`).
 - `account.move` / `account.move.line` (extinse): câmpul invers `l10n_ro_message_spv_ids`, câmpurile tehnice `l10n_ro_edi_transaction` / `l10n_ro_edi_download`, `l10n_ro_vendor_code` pe linie, plus logica de creare a `product.supplierinfo` la validare și de păstrare a descrierii/prețului liniilor importate din SPV.
 - `product.product` (extins): plan de căutare a produsului la import UBL, cu prioritate pe codul de furnizor (`l10n_ro_vendor_code`).
 - `l10n_ro_edi.document` (extins): cererile HTTP către ANAF pentru descărcarea arhivei ZIP semnate și pentru listarea paginată a mesajelor SPV.
@@ -46,10 +52,11 @@ Acest modul facilitează gestionarea mesajelor din Spațiul Privat Virtual (SPV)
 
 **Vizualizări**
 
-- `view_l10n_ro_message_spv_tree` / `view_l10n_ro_message_spv_form` / `view_l10n_ro_message_spv_search`: listă, formular și căutare pentru mesajele SPV, cu butoane de acțiune (Refresh, Download, Get Invoice, Create Invoice, Show Invoice, descărcări ZIP/XML/PDF) și filtre/grupări pe stare, tip și partener.
+- `view_l10n_ro_message_spv_tree` / `view_l10n_ro_message_spv_form` / `view_l10n_ro_message_spv_search`: listă, formular și căutare pentru mesajele SPV, cu butoane de acțiune (Refresh, Download, Get Invoice, Create Invoice, Show Invoice, Accept, Reject, Back to Review, descărcări ZIP/XML/PDF; iconițe Material Symbols) și filtre/grupări pe stare, tip, partener, verificare și monedă.
+- `wizard/message_spv_reject_views.xml`: formularul de respingere a facturii cu motiv obligatoriu.
 - `action_l10n_ro_message_spv` + meniurile `menu_l10n_ro_spv` / `menu_l10n_ro_message_spv`: expun ecranul „Messages SPV” sub Contabilitate, vizibil doar grupului `l10n_ro_config.group_ro_menus`.
 - `views/account_invoice.xml`: extinde formularul facturii cu coloana `l10n_ro_vendor_code` pe linii și cu o filă „ANAF SPV Messages” (read-only) ce listează mesajele SPV legate de factură.
-- `wizard/res_config_settings_views.xml`: extinde Setările de e-Factura România cu cele două câmpuri de configurare a numărului de zile.
+- `wizard/res_config_settings_views.xml`: extinde Setările de e-Factura România cu câmpurile de zile, data ultimei sincronizări și opțiunea de verificare a facturilor primite.
 
 **Acțiuni Automate / Acțiuni Server**
 

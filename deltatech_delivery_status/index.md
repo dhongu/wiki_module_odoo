@@ -1,10 +1,11 @@
 # Deltatech Delivery Status (localizat la `deltatech_delivery_status/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_status`
-- **Versiune:** `20.0.2.3.0`
+- **Versiune:** `20.0.2.3.5`
 - **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_delivery_status
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_delivery_status`
-- **Ultima Ingestie:** `2026-09-27`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
+- **Ultima Ingestie:** `2026-11-27`
 
 #### 1. Sumar
 
@@ -23,15 +24,15 @@ Acest modul extinde sistemul de livrare din Odoo pentru a oferi o urmărire deta
 
 **Blocarea livrărilor**
 
-- **Blocare manuală a livrării:** utilizatorii pot amâna manual livrările marcând transferurile ca amânate (`postponed`); un transfer amânat nu poate fi validat (`button_validate` ridică eroare).
-- **Blocare în funcție de furnizorul de plată:** amânarea automată a livrărilor pe baza configurației furnizorului de plată. Fiecare furnizor poate fi configurat cu opțiunea „Livrare amânată" (`postponed_delivery`); când este activată, livrările sunt blocate la confirmarea comenzii, iar la trecerea tranzacției de plată în starea „efectuată" sistemul eliberează automat livrările blocate ale comenzii respective.
-- **Configurare la nivel de echipă de vânzări:** echipele de vânzări (`crm.team`) pot fi configurate să amâne livrările pentru plata prin transfer bancar (`postpone_payment_transfer`), permițând verificarea plății înainte de expediere.
-- **Gestionare la nivel de comandă:** comanda de vânzare expune `postpone_delivery()` / `release_delivery()` pentru a amâna, respectiv elibera, toate transferurile aferente; câmpul calculat și căutabil `postponed_delivery` arată dacă cel puțin un transfer al comenzii este amânat.
-- **Configurare implicită pe tip de operațiune:** un tip de transfer (`stock.picking.type`) poate fi marcat implicit „Amânat", caz în care transferurile noi create pe acel tip pornesc deja amânate.
+- **Blocare manuală a livrării:** utilizatorii pot amâna manual livrările marcând transferurile ca amânate (`postponed`); un transfer amânat nu poate fi validat (`button_validate` ridică eroare). Transferurile din comanda amânată rămân în așteptare chiar dacă produsele sunt rezervate.
+- **Blocare în funcție de furnizorul de plată:** amânarea automată a livrărilor pe baza configurației furnizorului de plată. Fiecare furnizor poate fi configurat cu opțiunea „Livrare amânată" (`postponed_delivery`); când este activată, livrările sunt blocate la confirmarea comenzii, iar la trecerea tranzacției de plată în starea „efectuată" sistemul eliberează automat livrările blocate ale comenzii respective (o eroare la eliberare este înregistrată în log și nu blochează procesarea plății).
+- **Configurare la nivel de echipă de vânzări:** echipele de vânzări (`crm.team`) pot fi configurate să amâne livrările pentru plata prin transfer bancar (`postpone_payment_transfer`), permițând verificarea plății înainte de expediere; aceste livrări se eliberează manual, din comandă, după încasarea plății.
+- **Gestionare la nivel de comandă:** comanda de vânzare expune `postpone_delivery()` / `release_delivery()` pentru a amâna (doar transferurile nefinalizate sau neanulate), respectiv elibera, transferurile aferente, prin butoanele **Amână** / **Eliberează** și prin acțiunile de grup pe mai multe comenzi; câmpul calculat și căutabil `postponed_delivery` arată dacă cel puțin un transfer al comenzii este amânat.
+- **Configurare implicită pe tip de operațiune:** un tip de transfer (`stock.picking.type`) poate fi marcat implicit „Amânat", caz în care transferurile noi create pe acel tip pornesc deja amânate. Parametrul de sistem `backorders.postponed` = `True` face același lucru pentru comenzile restante (backorder). Căi de configurare: furnizor de plată în Contabilitate → Configurare → Plăți online; echipă în Vânzări → Configurare → Echipe. Pe transferuri există filtrul „Amânat", iar pe comenzi filtrul „Livrare amânată".
 
 **Urmărirea stării de livrare (`delivery_state`)**
 
-Câmp cuprinzător pe transferurile de stoc care urmărește parcursul coletului prin întregul proces logistic: Ciornă, Pregătit în depozit, Pre-aviz (AWB generat, neridicat încă), În tranzit, În depozitul curierului, În livrare, Livrat și Refuzat. Suplimentar, câmpul `available_state` (calculat, stocat) indică vizual disponibilitatea produselor pentru transferurile aflate în lucru: Disponibil, Parțial disponibil sau Indisponibil.
+Câmp cuprinzător pe transferurile de stoc care urmărește parcursul coletului prin întregul proces logistic: Ciornă, Pregătit în depozit, Pre-aviz (AWB generat, neridicat încă), În tranzit, În depozitul curierului, În livrare, Livrat și Refuzat. Suplimentar, câmpul `available_state` (calculat, stocat) indică vizual disponibilitatea produselor pentru transferurile aflate în lucru: Disponibil, Parțial disponibil sau Indisponibil (pentru transferurile livrate dintr-o dată, și rezervarea parțială înseamnă Indisponibil). Starea de livrare este actualizată de integrările cu curierii și poate fi setată și manual.
 
 #### 3. Dependențe
 
@@ -43,7 +44,11 @@ Câmp cuprinzător pe transferurile de stoc care urmărește parcursul coletului
 
 #### 4. Componente Cheie
 
-Conform `readme/DESCRIPTION.md`, modulul extinde modele standard Odoo: transferurile de stoc (`stock.picking` — câmpurile `delivery_state` și `available_state`), comenzile de vânzare (`sale.order`), echipele de vânzări (`crm.team`) și furnizorii de plată (`payment.provider` — opțiunea „Livrare amânată"). Pentru detaliile tehnice complete, consultați codul sursă al modulului.
+- `stock.picking` (`models/stock_picking.py`): câmpurile `postponed`, `delivery_state`, `available_state`; `button_validate` blochează transferurile amânate, iar `_create_backorder` amână restantele dacă `backorders.postponed` este activ.
+- `stock.picking.type`: câmpul `postponed` (implicit amânat pentru transferurile noi).
+- `sale.order` (`models/sale.py`): `postponed_delivery` (calculat, căutabil), `postpone_delivery()`, `release_delivery()`, iar `_action_confirm` aplică regulile de amânare.
+- `crm.team` (`models/sale_team.py`): `postpone_payment_transfer`.
+- `payment.provider`: `postponed_delivery`; `payment.transaction` suprascrie `_set_done` pentru eliberarea automată a livrărilor.
 
 #### 5. Conexiuni
 
