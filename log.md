@@ -4,6 +4,18 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-27] `deltatech_sketch_3d` — ingestie 20.0.1.4.0 (modul nou în wiki)
+
+- **Acțiune:** Pagină nouă pentru modulul din bitshop (mutat din repo-ul clientului Maxima prin terrabit-solutions/bitshop#4179):
+  schița SVG a unei ferestre, uși sau a unui panou pe linia comenzii de vânzare, pe comanda tipărită și în portal; vederea 3D
+  (rotire, deschiderea canatelor, batant/rabatat, secțiune, cer și podea); secțiunile profilelor citite din desene DXF.
+  Documentat după versiunea 20.0.1.4.0 din terrabit-solutions/bitshop#4181 (încă neunit; 20.0 are 20.0.1.3.1): vederea 3D
+  încorporabilă în pagină (`embedSketch3d`, folosită de `deltatech_window_configurator`) și clicul pe canat sau pe mâner
+  care îl deschide. Fișa consultant copiată, cu 9 capturi.
+- **Sursă:** `readme/DESCRIPTION.md`, `readme/USAGE.md`, `readme/HISTORY.md`, `readme/FISA_CONSULTANT.md`, `__manifest__.py`, cod.
+- **Dependențe/Conexiuni:** `sale`, `portal` (fără pagină, rămase text); conexiune `deltatech_window_configurator` (fără pagină).
+- **Fișiere actualizate:** `deltatech_sketch_3d/` (index.md, FISA_CONSULTANT.md, screenshots/), `index.md`, `log.md`.
+
 ## [2026-11-26] `deltatech_delivery_route_driver` — ingestie 20.0.1.0.0 (modul nou)
 
 - **Acțiune:** Pagină nouă pentru modulul nou din bitshop_ent, unit prin terrabit-solutions/bitshop_ent#791: portalul

@@ -295,6 +295,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_service_equipment_base](deltatech_service_equipment_base/index.md): Baza suitei de service: locuri funcționale, echipamente, contoare și citiri cu estimare prin regresie liniară (facturarea pe consum e în modulele derivate).
 - [deltatech_service_maintenance](deltatech_service_maintenance/index.md): Sesizări, comenzi de service și planuri de revizii, cu generare automată a comenzilor de mentenanță.
 - [deltatech_service_task](deltatech_service_task/index.md): Extinde sarcinile de proiect cu loc funcțional și echipament pentru activitățile de service/mentenanță.
+- [deltatech_sketch_3d](deltatech_sketch_3d/index.md): Schiță SVG a unei ferestre, uși sau a unui panou pe linia comenzii de vânzare, cu vedere 3D (rotire, deschiderea canatelor, secțiune; încorporabilă în pagină), secțiuni de profil din DXF, pe comanda tipărită și în portal.
 - [deltatech_sms](deltatech_sms/index.md): Trimite SMS din Odoo prin gateway-uri externe configurabile (4Pay / Wapi), înlocuind serviciul IAP nativ.
 - [deltatech_sms_sale](deltatech_sms_sale/index.md): Trimite automat SMS clientului la confirmarea și postarea comenzii de vânzare, configurabil per companie.
 - [deltatech_stock_account](deltatech_stock_account/index.md): Extinde evaluarea stocurilor afișând valoarea contabilă direct la nivelul transferurilor de marfă (picking).
