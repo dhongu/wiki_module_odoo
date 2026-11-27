@@ -246,6 +246,8 @@ segmentele nu deschid arborele.
 Când un nivel are mai multe înregistrări decât opțiunea `limit`, sub listă apare „N în plus: scrieți ca
 să restrângeți lista”: scrieți câteva litere ca să ajungeți la cele care nu încap.
 
+![Oferta S00002 cu utilajul Case IH › Axial-Flow 20 › Axial-Flow 7120 (2008–2013): panoul pe pași (1), deschis pe seria valorii: caseta „Caută în Case IH Axial-Flow 20...”, sub ea drumul Toate › Case IH › Axial-Flow 20 și modelele seriei, cu modelul ales, Axial-Flow 7120 (2008–2013), marcat deasupra lui Axial-Flow 8120 (2008–2013)](screenshots/08_pasi_nivel.png)
+
 **Verifică:** după alegerea mărcii, lista are doar seriile ei; **Enter** alege primul rând; click pe
 **Toate** readuce mărcile; un nume de model scris la mărci e găsit cu calea completă.
 
@@ -318,7 +320,12 @@ Python (este importabil pe Odoo Online), deci testul de capturi nu stă în modu
 ajutător temporar, care depinde de acest modul, de `deltatech_doc_screenshots` și de `sale_management`
 (pentru meniuri). Pentru capturile modului pe niveluri (Pasul 5), addonul pune `levels` pe câmpul
 **Companie** al persoanei de contact (`res.country` → `res.country.state` → `res.partner`, cu un `domain` pe
-județe: Bihor, Cluj, Timiș) și creează câteva companii în România și în Moldova.
+județe: Bihor, Cluj, Timiș) și creează câteva companii în România și în Moldova. Captura modului pe pași
+(Pasul 6) vine dintr-un al doilea addon ajutător, `tmp_widget_steps_shots` (dependențe:
+`deltatech_sale_vehicle_fitment` și `deltatech_doc_screenshots`): clasa lui de test,
+`TestWidgetSteps`, moștenește clasa de capturi a modulului *Compatibilitatea pieselor pe oferta de
+vânzare*, deci folosește datele ei (clientul Ferma Verde SRL, utilajul Case IH Axial-Flow 7120), și
+scrie aici doar `08_pasi_nivel.png`.
 
 | Pasul | Fișier | Ce arată |
 |---|---|---|
@@ -329,6 +336,7 @@ județe: Bihor, Cluj, Timiș) și creează câteva companii în România și în
 | 5 | `05_niveluri_pas.png` | modul pe niveluri: arborele deschis până la valoare, marcată (exemplu țară → județ → companie) |
 | 5 | `06_niveluri_segmente.png` | modul pe niveluri: câmpul închis, cu calea pe segmente |
 | 5 | `07_niveluri_cautare.png` | modul pe niveluri: căutarea, cu calea completă a rezultatelor |
+| 6 | `08_pasi_nivel.png` | modul pe pași (`steps`), pe utilajul ofertei: panoul deschis pe seria valorii, cu drumul, caseta de căutare în serie și modelul marcat |
 
 Aceleași capturi, în engleză, sunt în `static/description/en/`, pentru `readme/USAGE.md`. Tot de acolo
 vine `en/demo.gif` (în engleză, limba paginii), afișat pe pagina de Apps sub imaginea principală. Regenerare,
@@ -337,6 +345,9 @@ cu addonul ajutător în `addons_path`:
 ```bash
 ./odoo/odoo-bin -c <conf_cu_addon_ajutator> -d <db> -i tb_shots_hierarchy_m2o --without-demo=True \
     --test-tags=/tb_shots_hierarchy_m2o:TestHierarchyM2oScreenshots --stop-after-init
+# Pasul 6, 08_pasi_nivel.png (RO și en/)
+./odoo/odoo-bin -c <conf_cu_addon_ajutator> -d <db> -i tmp_widget_steps_shots --without-demo=True \
+    --test-tags=fise_screenshots/tmp_widget_steps_shots --stop-after-init
 ```
 
 ## 11. Observații pentru manual

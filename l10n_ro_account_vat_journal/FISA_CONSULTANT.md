@@ -86,7 +86,7 @@ capitolului din manual dedicat registrelor de TVA.
 | Servicii intracomunitare — art. 307 alin. (2) (lit. b) pct. 4) | la fel | taxă proprie cu autolichidare, separată de cele de mai sus |
 | TVA la încasare — lit. a)–e) din alin. (3) / (6) | **XLSX:** număr și dată încasare/plată, valoarea integrală cu TVA, baza și TVA-ul întregii facturi **pe fiecare cotă** („Total factură – <taxa>" — lit. c)), suma încasată/plătită, bază/TVA exigibile și bază/TVA neexigibile **pe fiecare cotă** („Operațiuni exigibile – <taxa>", „Operațiuni neexigibile – <taxa>"); **ecran:** baza exigibilă („Bază exigibilă”) și TVA-ul exigibil (coloana `TVA`), soldul neexigibil total (bază și TVA). Taxele cu TVA la încasare nu au coloane printre coloanele taxelor, ca partea exigibilă să nu apară de două ori | taxa are exigibilitate „la plată" |
 | Taxă deductibilă totală vs. taxă dedusă (lit. d)) | la cumpărări: `TVA` (taxa dedusă), `TVA nededusă` și `TVA deductibilă totală`; achiziția cu TVA nedeductibilă rămâne în coloana cotei cu toată baza | partea nededusă e pe cheltuieli (repartiția taxei sau „Deductibilitate” pe linie) |
-| Legătura cu decontul | coloana `Rând D300` pe fiecare document și **recapitulația pe rânduri D300** sub Total (ecran și XLSX), cu valorile din decont | taxa are grile fiscale |
+| Legătura cu decontul | coloana `Rând D300` pe fiecare document și **recapitulația pe rânduri D300** sub Total (ecran și XLSX; în PDF, tabel separat), cu valorile din decont | taxa are grile fiscale |
 | Pro-rata | **neacoperit** | — |
 | Operațiuni fără nicio taxă pe linie | **nu apar** în jurnal | puneți o taxă de 0% pe linie |
 
@@ -224,8 +224,17 @@ rând de **Total** și, sub el, **recapitulația pe rânduri D300**.
 rânduri, ca exportul XLSX: sus, denumirea taxei sau a regimului, o singură dată, peste coloanele
 ei; jos, doar **Bază** și **TVA** (la autolichidare, **TVA deductibilă** și **TVA colectată**).
 Coloanele fixe (Nr., Jurnal, Furnizor, Dată document...) ocupă ambele rânduri, cu o singură celulă.
-Atât pe ecran, cât și în PDF. O denumire foarte lungă se oprește după 4 rânduri cu „…”, iar denumirea
-completă apare când țineți mouse-ul pe ea.
+Atât pe ecran, cât și în PDF. Pe ecran, o denumire foarte lungă se oprește după 4 rânduri cu „…”, iar
+denumirea completă apare când țineți mouse-ul pe ea; în PDF se tipărește întreagă, ruptă pe mai multe
+rânduri.
+
+**PDF-ul** (butonul *PDF* al raportului) iese pe A4 peisaj, nu pe A3 ca XLSX-ul: tabelul se compactează,
+iar jurnalele foarte late (peste circa 24 de coloane) se micșorează proporțional cu numărul de coloane,
+ca toate coloanele să încapă pe lățimea paginii.
+Spre deosebire de ecran, **recapitulația pe rânduri D300 se tipărește ca tabel separat** sub jurnal
+(rând, `Bază D300`, `TVA D300`), iar în tabelul jurnalului nu mai apar coloanele `Bază D300` /
+`TVA D300`; după recapitulație urmează semnăturile (Întocmit / Verificat). Sumele sunt aceleași ca pe
+ecran.
 
 **Verificați** înainte de a continua:
 - perioada selectată este perioada fiscală de raportat;
@@ -333,7 +342,8 @@ o singură dată.
 Capturile XLSX arată pagina exact cum se tipărește: titlul cu firma, CUI și perioada, capul de
 tabel, sumele cu separatori, rândul Total. La tipărire foaia e în peisaj, încadrată pe lățime (A4,
 respectiv A3 pentru jurnalele foarte late), cu capul de tabel repetat pe fiecare pagină; în Excel,
-antetul rămâne vizibil la derulare și capul de tabel are filtre.
+antetul rămâne vizibil la derulare și capul de tabel are filtre. Butonul *PDF* nu folosește această
+foaie: PDF-ul iese pe A4 peisaj, cu tabelul micșorat pe lățimea paginii (vezi Pasul 1).
 
 ### Pasul 5 — Configurarea coloanelor jurnalelor pe regimuri
 
@@ -408,8 +418,8 @@ Accesați **Contabilitate → Raportare → Taxe și fiscalitate → Jurnal TVA 
 Ca în toate jurnalele (vezi Pasul 1), denumirea regimului apare o singură dată, deasupra
 coloanelor lui, iar dedesubt rămân doar Bază / TVA. Denumirile lungi, de exemplu „Achiziții de
 bunuri din țară și din import scutite în România sau care sunt supuse regimului special de
-vânzător”, nu mai ridică antetul; peste 4 rânduri se opresc cu „…”, iar denumirea completă apare
-în tooltip.
+vânzător”, nu mai ridică antetul; pe ecran, peste 4 rânduri se opresc cu „…”, iar denumirea completă
+apare în tooltip; în PDF se tipărește întreagă, ruptă pe mai multe rânduri.
 
 **Verificați:**
 - la fiecare autolichidare, TVA deductibilă = TVA colectată (cu excepția deducerii limitate);
@@ -446,7 +456,7 @@ toate coloanele.
 ![Jurnalul de cumpărări pe regimuri exportat în XLSX](screenshots/10_export_xlsx_cumparari_regimuri.png)
 
 Jurnalul pe regimuri e lat (autolichidarea are trei coloane, iar TVA la încasare câte patru pe cotă),
-de aceea se tipărește pe A3. Descrierile taxelor din antete vin din planul de conturi RO.
+de aceea XLSX-ul se tipărește pe A3 (PDF-ul rămâne pe A4 peisaj, cu tabelul micșorat). Descrierile taxelor din antete vin din planul de conturi RO.
 
 ### Pasul 9 — Factură cu TVA la încasare plătită în altă lună
 
@@ -464,7 +474,9 @@ jurnalul:
   **Dr 4426 = Cr 4428 105** — rulajul debitor 4426 e 105 în iunie și 105 în iulie. Nota de
   exigibilizare are și liniile de bază (500 debit = 500 credit), din care jurnalul ia coloana
   „Operațiuni exigibile – Bază"; cu `l10n_ro_caba` ele stau pe contul tehnic 442830, fără el pe un
-  cont de cheltuială sau venit (rulaj debit = credit). În balanța Odoo, 4428 apare pe analiticele
+  cont de cheltuială sau venit (rulaj debit = credit). **Atenție:** fără 442830 în „Base Tax Received
+  Account”, rulajele 6xx / 7xx (inclusiv cifra de afaceri) sunt umflate artificial de această mișcare în
+  oglindă, deci `l10n_ro_caba` este necesar, nu doar recomandat. În balanța Odoo, 4428 apare pe analiticele
   44282 (cumpărări) și 44281 (vânzări).
 
 Antetul grupurilor („TVA la colectare - 21% deductibil") vine din descrierea taxei în planul de conturi
@@ -514,6 +526,8 @@ cumpărări ↔ 4426), activați în **Contabilitate → Configurare → Setări
 ANAF, bifa **Jurnale TVA - TVA colectată prin taxare inversă în jurnalul de vânzări** (secțiunea 5,
 pct. 9). Apoi deschideți **Jurnal TVA Vânzări (RO)** pe o perioadă cu achiziții intracomunitare sau
 cu taxare inversă art. 331.
+
+![Jurnalul de vânzări cu secțiunea „Achiziții cu taxare inversă – TVA colectată”, după livrări](screenshots/14_taxare_inversa_jurnal_vanzari.png)
 
 **Găsiți pe ecran:**
 - după livrări, rândul de titlu **Achiziții cu taxare inversă – TVA colectată**, urmat de câte un
@@ -674,6 +688,9 @@ totalurilor față de balanță, evidența taxei nededuse și a pro-ratei, și d
       dată, deasupra coloanelor ei, iar dedesubt doar Bază / TVA (ca în XLSX); coloanele fixe
       (Nr., Jurnal...) au o singură celulă pe ambele rânduri; pe o denumire tăiată
       (ex. „Achiziții de bunuri din țară și din import scutite…”), tooltip-ul arată denumirea completă.
+- [ ] PDF-ul jurnalelor (cumpărări și vânzări, standard și pe regimuri) încape pe lățimea paginii A4
+      peisaj, fără coloane tăiate; recapitulația pe rânduri D300 e un tabel separat sub jurnal, cu
+      aceleași sume ca pe ecran, iar semnăturile (Întocmit / Verificat) urmează după ea.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -729,6 +746,9 @@ celelalte capturi:
     neexigibilă.
 12. `12_caba_luna_plata.png` — luna primei plăți: jumătate exigibilă, jumătate neexigibilă.
 13. `13_caba_luna_stingere.png` — luna ultimei plăți: restul exigibil, neexigibilul stins.
+14. `14_taxare_inversa_jurnal_vanzari.png` — jurnalul de vânzări cu opțiunea de taxare inversă activă:
+    secțiunea „Achiziții cu taxare inversă – TVA colectată” după livrări, cu baza și TVA colectată
+    (seed-ul din captura 1, într-o metodă de test proprie, ca opțiunea să nu schimbe celelalte capturi).
 
 Regenerare:
 

@@ -92,7 +92,8 @@ Date minime pentru demo:
    plătitorilor (cea bifată art. 331), plus celelalte poziții folosite la casă.
 4. La **Implicit** lăsați poziția fiscală goală sau puneți o poziție **fără** bifa art. 331.
    Nu puneți poziția art. 331 ca implicită și nici pe o presetare (**La pachet / Livrare /
-   Membri**): o comandă nouă, încă fără client, ar porni cu taxare inversă (vezi secțiunea 11).
+   Membri**): nu are rost, pentru că o comandă nouă fără client plătitor de TVA scoate singură
+   poziția art. 331 (de la versiunea 19.0.1.1.2, vezi secțiunea 11).
 5. Verificați că la **Default Journals** (eticheta nu e tradusă în Odoo) este completat jurnalul pentru **Facturi**; comenzile
    cu taxare inversă se facturează obligatoriu.
 6. Dacă taxa domestică a bunului are TVA inclus în preț, instalați și `deltatech_pos_fix`, ca
@@ -109,6 +110,12 @@ client. Apăsați butonul **Taxă** (iconița de carte; pe ecrane înguste e în
 Fereastra **Alegeți taxa pe care doriți să o aplicați** listează **Taxă originală** (cu restaurantul instalat: **Consumă la fața locului**) și pozițiile
 permise pe casă, **fără** poziția bifată art. 331. Același lucru se întâmplă cu un client
 neînregistrat în scopuri de TVA.
+
+**Poziția art. 331 implicită sau pe presetare.** Dacă, din greșeală, casa are poziția art. 331 la
+**Implicit** sau o presetare (**La pachet / Livrare / Membri**) o impune, comanda nouă, fără client,
+pornește totuși **fără** poziția art. 331: butonul **Taxă** afișează „Taxă”, iar pe linie rămâne
+taxa domestică, cu TVA la cota standard. Același lucru la aplicarea presetării pe o comandă fără
+client plătitor. Dacă apoi alegeți un client plătitor de TVA, poziția se preia ca la Pasul 3.
 
 ### Pasul 2 — Client neînregistrat: poziția art. 331 nu se preia
 
@@ -194,7 +201,7 @@ nota de sesiune nu este document de vânzare.
 | `l10n_ro_anaf_d300` | decontul de TVA în care se raportează baza livrărilor cu taxare inversă |
 
 **Ce e automat:** ascunderea regimului art. 331 din butonul **Taxă** fără client plătitor,
-anularea poziției preluate de la un client neplătitor, bifarea și blocarea facturii pe ecranul de
+anularea poziției preluate de la un client neplătitor, scoaterea poziției art. 331 implicite sau din presetare de pe comanda fără client plătitor, bifarea și blocarea facturii pe ecranul de
 plată, facturarea forțată a comenzilor cu client ajunse fără bifă, nota din chatter pe comenzile
 fără client.
 
@@ -205,6 +212,7 @@ pe ele.
 ## 8. Verificări pentru consultant
 
 - [ ] Pe o comandă fără client, butonul **Taxă** nu listează poziția art. 331.
+- [ ] Cu poziția art. 331 la **Implicit** sau pe o presetare, o comandă nouă fără client pornește fără poziția art. 331 (butonul **Taxă** arată „Taxă”, TVA la cota standard); alegând apoi un client plătitor, poziția se reia.
 - [ ] Pe o comandă cu un client neînregistrat în scopuri de TVA, butonul **Taxă** nu listează poziția art. 331.
 - [ ] Un client neplătitor care are pe fișă poziția plătitorilor nu aduce poziția pe comandă; pe linie rămâne taxa domestică.
 - [ ] Cu un client plătitor, poziția se preia, iar linia de cherestea are `0% R331` și total fără TVA.
@@ -222,7 +230,7 @@ pe ele.
 | Mesaj | Cauză | Remediere |
 |---|---|---|
 | Comanda conține bunuri cu taxare inversă (art. 331): trebuie facturată, bonul fiscal nu este suficient. | casierul a încercat să debifeze **Factură** pe o comandă cu taxare inversă | lăsați factura bifată; dacă clientul nu are dreptul la taxare inversă, schimbați clientul |
-| Nota „Comanda are taxare inversă (art. 331), dar nu are client, deci nu a putut fi facturată…” în chatterul comenzii | comandă cu taxare inversă ajunsă pe server fără client (de regulă poziția art. 331 setată implicit pe casă sau pe o presetare) | regularizați TVA-ul; scoateți poziția art. 331 de la **Implicit** și de pe presetări |
+| Nota „Comanda are taxare inversă (art. 331), dar nu are client, deci nu a putut fi facturată…” în chatterul comenzii | comandă cu taxare inversă ajunsă pe server fără client (de la 19.0.1.1.2 nu mai provine din poziția implicită sau din presetări, ci din date aduse pe alte căi: sesiune veche, sincronizare offline, taxă pusă direct pe produs) | regularizați TVA-ul și verificați de unde a venit comanda |
 | … aplică taxarea inversă art. 331, dar clientul … nu este înregistrat în scopuri de TVA. | factura generată din POS poartă `0% R331` pentru un client neplătitor (taxă pusă direct pe produs, statut de TVA schimbat între timp) | corectați statutul de TVA al clientului sau taxa produsului; vezi secțiunea 11 |
 | În POS, prețul nu scade cu TVA-ul la trecerea pe taxare inversă | taxa domestică are TVA inclus, iar `deltatech_pos_fix` nu e instalat | instalați `deltatech_pos_fix` |
 
@@ -240,12 +248,10 @@ factura cu taxare inversă sunt documentate cu capturi în fișa modulului de ba
   ocolirea listei.
 - Explicați că o vânzare cu taxare inversă la casă se încheie mereu cu factură, inclusiv returul ei.
 - Limitări de menționat:
-  - **Poziția implicită a casei și presetările nu sunt filtrate.** O comandă nouă pornește cu
-    poziția fiscală implicită a casei sau a presetării, fără verificarea clientului. Dacă aceea
-    este poziția art. 331, comanda fără client are taxare inversă: ecranul de plată bifează
-    factura și cere un client, iar dacă comanda ajunge totuși pe server fără client, iese un bon
-    la 0% cu notă în chatter. Remediu: nu puneți poziția art. 331 la **Implicit** și nici pe
-    presetări.
+  - **Poziția implicită a casei și presetările:** de la 19.0.1.1.2, o comandă nouă (sau o
+    presetare aplicată) scoate poziția art. 331 cât timp nu are client plătitor de TVA. Dacă
+    ulterior se alege un client plătitor, poziția se reia ca la orice schimbare de client. Pe
+    sesiunile deschise înainte de actualizare e nevoie de redeschidere.
   - **Comandă cu client neplătitor care poartă totuși `0% R331`** (taxa pusă direct pe produs,
     statutul de TVA schimbat după încărcarea sesiunii): serverul forțează factura, iar postarea
     ei este blocată de modulul de bază, deci sincronizarea comenzii eșuează și comanda rămâne în

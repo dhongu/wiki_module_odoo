@@ -55,7 +55,7 @@ Modulul nu generează note contabile. Datele trimise agentului:
 |---|---|
 | Indicatorii raportului (cod, denumire, valoare anul precedent și anul curent, variație procentuală) | rândurile raportului, calculați din situațiile financiare (documentul de depunere) |
 | Analiza anuală a aceluiași exercițiu, cu abaterile și cauzele lor | *Analiză financiară*, perioadă anuală, cu aceeași dată de sfârșit și în alt status decât ciornă |
-| Denumirea companiei, moneda, exercițiul | raportul |
+| Denumirea companiei (doar când *Anonimizare parteneri* e dezactivată), moneda, exercițiul | raportul |
 
 Date minime pentru demo: companie cu situații financiare pe doi ani, un raport al administratorilor în
 ciornă și, opțional, o analiză anuală calculată pentru același exercițiu.
@@ -65,8 +65,9 @@ ciornă și, opțional, o analiză anuală calculată pentru același exercițiu
 1. Instalează modulul (necesită `l10n_ro_financial_statements` și `deltatech_ai_financial_analysis`).
 2. În setările analizei financiare, blocul *Plutus*, verifică agentul de analiză financiară al companiei
    (implicit este Plutus; fără agent, butonul refuză cu mesaj); aici se configurează și anonimizarea
-   partenerilor, care se aplică doar partenerilor din analiza anuală (denumirea companiei se trimite mereu).
-   Limita zilnică de comentarii AI din același bloc nu se aplică draftului raportului.
+   partenerilor: ea ascunde partenerii din analiza anuală și denumirea companiei (cu anonimizarea activă,
+   denumirea nu se mai trimite agentului). Limita zilnică de comentarii AI din același bloc se aplică și
+   draftului raportului și e comună cu analizele financiare ale companiei (0 = fără limită).
 3. Limba textelor este cea a partenerului companiei (altfel limba utilizatorului, apoi română).
 
 ## 6. Flux de utilizare
@@ -169,10 +170,23 @@ Dacă raportul avea deja un draft nerevizuit, statusul lui rămâne *Draft de re
 verificat*), textele nu se ating, iar eroarea apare totuși în banda roșie. Banda roșie dispare doar la
 următorul draft reușit: nu o scot nici *Texte revizuite*, nici confirmarea.
 
+### Pasul 7 — Limita zilnică atinsă
+
+Dacă numărul apelurilor AI de azi ale companiei (rapoartele administratorilor și analizele financiare) a atins
+limita *Comentarii AI pe zi*, *Draft cu Plutus* nu mai apelează agentul și afișează avertismentul *Limita
+zilnică de apeluri AI a fost atinsă; încearcă mâine.* Raportul primește statusul *Omis: limita zilnică atinsă*,
+iar textele rămân neschimbate. Dacă raportul avea deja un draft nerevizuit, statusul lui rămâne neatins. Un nou
+draft al aceluiași raport consumă din limită, iar un apel eșuat se numără. Ziua se socotește ca în analiza
+financiară (de la miezul nopții UTC).
+
+![Avertismentul: limita zilnică de apeluri AI a fost atinsă](screenshots/08_limita_zilnica.png)
+
+Banda roșie a unui eșec anterior (① din pasul 6) rămâne afișată până la următorul draft reușit.
+
 ### Date tehnice (mod dezvoltator)
 
 Tabul *Plutus*, vizibil doar în modul dezvoltator după primul apel, arată statusul draftului (*Fără draft*,
-*Draft de revizuit*, *Draft, cifre de verificat*, *Revizuit*, *Eșuat*), data draftului și datele JSON trimise
+*Draft de revizuit*, *Draft, cifre de verificat*, *Revizuit*, *Eșuat*, *Omis: limita zilnică atinsă*), data draftului și datele JSON trimise
 agentului. Tabul nu are captură: în versiunea curentă, deschiderea lui afișează o eroare de interfață (vezi
 secțiunea 9).
 
@@ -206,6 +220,8 @@ proprii și resurse necorporale, apăsarea *Texte revizuite* și confirmarea.
 - [ ] După *Texte revizuite*, evidențierile dispar și confirmarea merge, dacă și secțiunile obligatorii sunt completate.
 - [ ] Un eșec AI afișează banda roșie și nu modifică textele.
 - [ ] Un raport confirmat nu mai poate primi draft.
+- [ ] La limita zilnică, draftul cerut nu apelează agentul, apare avertismentul, un draft nerevizuit rămâne neatins, iar un nou draft al aceluiași raport consumă din limită.
+- [ ] Cu *Anonimizare parteneri* activă, datele JSON din tabul *Plutus* nu conțin denumirea companiei.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -217,6 +233,7 @@ proprii și resurse necorporale, apăsarea *Texte revizuite* și confirmarea.
 | Raportul are texte scrise de Plutus care nu au fost revizuite. Citiți-le, corectați-le unde e nevoie și marcați-le ca revizuite înainte de confirmare. | Confirmare înainte de *Texte revizuite* | Citește textele și apasă *Texte revizuite* |
 | Raportul administratorilor trebuie să prezinte: ... (OMFP 1802/2014, pct. 489 și pct. 491 alin. (2)). Când un subiect nu este aplicabil, menționați expres (de exemplu, entitatea nu are sucursale). | Una dintre secțiunile obligatorii (cercetare-dezvoltare, sucursale, dezvoltare previzibilă, riscuri) este goală | Completează-o manual; unde nu se aplică, scrie expres (de exemplu „Societatea nu are sucursale.”) |
 | Secțiunea privind dezvoltarea conține doar cifrele precompletate. Completați-o cu o analiză echilibrată și cuprinzătoare (OMFP 1802/2014, pct. 489). | Dezvoltarea are încă textul precompletat | Golește secțiunea și cere draftul sau scrie analiza manual |
+| Limita zilnică de apeluri AI a fost atinsă; încearcă mâine. | Apelurile AI de azi ale companiei (rapoarte și analize financiare) au atins *Comentarii AI pe zi* | Încearcă mâine sau mărește limita în setările analizei financiare (0 = fără limită) |
 | Răspunsul AI nu conține niciuna dintre secțiunile cerute. | Agentul a răspuns fără secțiunile cerute | Repetă draftul; verifică agentul și datele trimise |
 | Ups! Ceva nu a mers bine... (la deschiderea tabului *Plutus*, în modul dezvoltator) | Defect cunoscut al versiunii curente: câmpul cu datele JSON trimise agentului nu se poate afișa | Nu afectează draftul; până la corectură, tabul nu se folosește |
 
@@ -236,6 +253,7 @@ răspuns fix, scris din indicatorii calculați, plus o cifră care nu e în date
 | `05_cifre_de_verificat.png` | Cifra evidențiată în evoluția previzibilă; secțiunile administratorului neatinse |
 | `06_revizuit.png` | După corectare și *Texte revizuite*: fără bandă, textul corectat, *Confirmă* nu mai e refuzat |
 | `07_draft_esuat.png` | Banda roșie a draftului eșuat |
+| `08_limita_zilnica.png` | Avertismentul afișat când limita zilnică de apeluri AI a fost atinsă |
 
 Regenerare:
 

@@ -49,10 +49,10 @@ primit bunul.
 | Rol | Ce face în flux |
 |---|---|
 | Responsabil patrimoniu (grupul **Gestionar Obiecte Inventar**) | dă obiectele în folosință salariaților, tipărește bonul și registrul |
-| Manager obiecte de inventar (grupul **Manager Obiecte Inventar**) | supervizează, scoate din gestiune, decide imputarea |
+| Manager obiecte de inventar (grupul **Manager Obiecte Inventar**) | de regulă supervizează, scoate din gestiune și decide imputarea (fără restricție tehnică: scoaterea e accesibilă și gestionarului) |
 | Responsabil resurse umane | întreține lista salariaților (aplicația Angajați) |
 
-Grupurile vin din modulul de bază (categoria *Obiecte de Inventar RO*); modulul nu adaugă grupuri
+Grupurile vin din modulul de bază (privilegiul *Obiecte de Inventar RO*); modulul nu adaugă grupuri
 noi. Ca în modulul de bază, darea în folosință validează un transfer de stoc, deci utilizatorul are
 nevoie și de drepturi pe Inventar.
 
@@ -102,16 +102,21 @@ Folosință OI*, secțiunea **Destinație**:
 
 Apăsați **Confirmă și Tipărește Bon**: salariatul se scrie pe fiecare fișă, obiectele trec în
 starea *Dat în Folosință* (cu nota `603 = 303` și evidența `8035` din modulul de bază) și se
-tipărește bonul de dare în folosință (Pasul 4).
+tipărește bonul de dare în folosință (Pasul 4). Se generează câte o notă `Dr 603 = Cr 303` și câte o înregistrare 8035 **pe fiecare obiect**: pe datele
+capturii (lotul Mariei Ionescu), 3.200,00 lei pentru laptop și 900,00 lei pentru telefon, adică 4.100,00 lei
+în total; nu există o singură notă pentru tot lotul.
 
 ![Fereastra Dare în Folosință OI: secțiunea Destinație cu Salariat Maria Ionescu evidențiat, Responsabil Mitchell Admin, Locație Birou 202 și data dării în folosință; în listă două obiecte recepționate, un laptop de 3.200 lei și un telefon de 900 lei, și butonul Confirmă și Tipărește Bon](screenshots/01_wizard_dare_salariat.png)
 
 Salariatul se poate completa și direct pe fișa obiectului, înainte de butonul **Dă în Folosință**
 de pe fișă; și acolo, alegerea unui salariat cu utilizator Odoo completează *Responsabil* cu
-utilizatorul lui. Din 19.0.1.0.4, butonul **Dă în Folosință** de pe fișă deschide același wizard, cu
-fișa curentă și cu salariatul, responsabilul și locația de pe fișă precompletate, ca data dării în
-folosință să poată fi aleasă. Din listă, selectând una sau mai multe fișe, același wizard se
-deschide cu **Acțiuni → Dare în Folosință OI** și preia fișele aflate în starea *Recepționat*.
+utilizatorul lui. Din versiunea 2.7.0 a modulului de bază, butonul **Dă în Folosință** de pe fișă deschide același
+wizard, cu fișa curentă, responsabilul și locația de pe fișă precompletate, ca data dării în
+folosință să poată fi aleasă; din 1.0.4, acest modul preia în wizard și salariatul fișei. Din listă,
+selectând una sau mai multe fișe, același wizard se deschide cu **Acțiuni → Dare în Folosință OI** și
+preia fișele aflate în starea *Recepționat*, **dar nu și salariatul lor**: alegeți-l în wizard.
+Nota `603 = 303` și evidența `8035` ale dării în folosință sunt ilustrate, cu liniile Dr/Cr, în fișa
+modulului de bază (Pasul 2).
 
 ### Pasul 2 — Fișa obiectului de inventar: cine îl are în folosință
 
@@ -119,16 +124,17 @@ Accesați **Inventar → Obiecte de Inventar → Registru OI** și deschideți o
 **Responsabilitate**, câmpul **Salariat** arată salariatul care are obiectul în folosință, deasupra
 câmpului *Responsabil* (utilizatorul Odoo) și a locației.
 
-![Fișa obiectului Laptop birou — Ion Popescu în starea Dat în Folosință: în secțiunea Responsabilitate, Salariat Ion Popescu evidențiat, Responsabil Mitchell Admin și Locație Birou 201; în secțiunea Documente contabile, nota 603=303, înregistrarea 8035 și bonul de dare în folosință](screenshots/02_formular_oi_salariat.png)
+![Fișa obiectului Laptop birou — Ion Popescu în starea Dat în Folosință: în secțiunea Responsabilitate, Salariat Ion Popescu evidențiat, Responsabil Mitchell Admin și Locație Birou 201; în secțiunea Documente Contabile, nota 603=303, înregistrarea 8035 și transferul de stoc WH/INT/00005 (Bon Dare în Folosință, picking)](screenshots/02_formular_oi_salariat.png)
 
 Câmpul *Salariat* rămâne modificabil și după darea în folosință; modificările apar în istoricul
 fișei (chatter). O mutare la alt salariat **nu** generează un bon nou: pentru un document semnat,
-tipăriți din nou bonul din fișă (**Tipărește → Bon de Dare în Folosință**).
+tipăriți din nou bonul din fișă (⚙ de lângă numele fișei → **Tipăriți → Bon de Dare în Folosință**; butonul cu același nume din partea de sus a fișei deschide transferul de stoc, nu PDF-ul).
 
 ### Pasul 3 — Lista obiectelor de inventar pe salariat
 
 În lista **Registru OI**, coloana **Salariat** arată cine are fiecare obiect în folosință (coloana
-se poate ascunde din selectorul de coloane). Pentru obiectele unui salariat:
+se poate ascunde din selectorul de coloane). La deschidere, lista e filtrată pe fișele *Dat în
+Folosință*; ștergeți filtrul din bara de căutare ca să vedeți și obiectele recepționate. Pentru obiectele unui salariat:
 
 1. **Găsiți pe ecran** — scrieți numele salariatului în căutare și alegeți căutarea după
    *Salariat*; lista păstrează coloanele *Stare*, *Valoare Totală* și *Locație / Departament*.
@@ -142,7 +148,7 @@ se poate ascunde din selectorul de coloane). Pentru obiectele unui salariat:
 ### Pasul 4 — Bonul de dare în folosință, pe numele salariatului
 
 Bonul se tipărește automat la confirmarea wizardului din Pasul 1 sau, ulterior, din fișă ori din
-listă: **Tipărește → Bon de Dare în Folosință**.
+listă: **Tipăriți → Bon de Dare în Folosință** (în listă, cu fișele selectate) sau ⚙ (rotița de lângă numele fișei) → **Tipăriți** pe fișă.
 
 1. **Găsiți pe document** — în tabel, coloana **Responsabil** arată **salariatul** (când e
    completat; altfel utilizatorul Odoo), alături de locație, cantitate și valoare.
@@ -150,11 +156,11 @@ listă: **Tipărește → Bon de Dare în Folosință**.
    totală corespunde obiectelor date în folosință.
 3. **Tipăriți** PDF-ul și obțineți semnăturile (gestionar, primitor, șef compartiment).
 
-![Bonul de dare în folosință al RO Company: obiectul Laptop birou — Ion Popescu, 1 bucată, 3.200 lei, coloana Responsabil Ion Popescu și locația Birou 201; jos semnăturile Gestionar, Primitor și Șef Compartiment](screenshots/04_bon_dare_salariat.png)
+![Bonul de dare în folosință al RO Company: obiectul Laptop birou — Ion Popescu, 1 unitate, 3.200 lei, coloana Responsabil Ion Popescu și locația Birou 201; jos semnăturile Gestionar, Primitor și Șef Compartiment](screenshots/04_bon_dare_salariat.png)
 
 ### Pasul 5 — Registrul obiectelor de inventar, grupat pe salariat
 
-Din lista **Registru OI** selectați obiectele (sau toate) și alegeți **Tipărește → Registru OI**.
+Din lista **Registru OI** selectați obiectele (sau toate) și alegeți **Tipăriți → Registru OI**. Pentru confruntarea cu soldul 303, ștergeți mai întâi filtrul *Dat în Folosință* din căutare (altfel totalul *În stoc* iese 0).
 
 1. **Găsiți pe document** — obiectele sunt grupate sub antete *Responsabil: …*, unde numele este
    al **salariatului**, dacă e completat, altfel al utilizatorului Odoo responsabil; fiecare grup are
@@ -175,12 +181,15 @@ Pe fișa unui obiect dat în folosință, apăsați **Scoate din Gestiune**. În
 - **Persoana căreia i se impută** se completează automat cu contactul de serviciu al salariatului
   care are obiectul în folosință (doar dacă toate obiectele selectate sunt ale aceluiași salariat
   și câmpul era gol); verificați-o;
-- *Sumă imputată* lăsată goală înseamnă imputarea la valoarea de înregistrare a fiecărui obiect; o
+- *Sumă imputată* lăsată la 0,00 (necompletată) înseamnă imputarea la valoarea de înregistrare a fiecărui obiect; o
   sumă (de regulă valoarea de înlocuire) se poate completa doar când scoateți un singur obiect.
 
 Apăsați **Confirmă și Tipărește PV**: modulul de bază scoate obiectul din gestiune, înregistrează
-imputarea `Dr 4282 = Cr 7588` pe persoana aleasă și tipărește procesul-verbal, care arată tot
-salariatul.
+imputarea `Dr 4282 = Cr 7588` pe persoana aleasă (aici: `Dr 4282` pe Ion Popescu `= Cr 7588`, 3.200,00 lei,
+fără TVA colectată; eventuala ajustare a TVA deduse, `Dr 635 = Cr 4426`, rămâne manuală, vezi fișa
+modulului de bază, secțiunea 2) și tipărește procesul-verbal, care arată tot salariatul. În lista din
+fereastră, coloana *Responsabil* arată utilizatorul Odoo (aici Mitchell Admin), nu salariatul: imputarea
+se face pe persoana aleasă mai sus.
 
 ![Fereastra Scoate din Gestiune deschisă de pe fișa laptopului lui Ion Popescu: Tip Scoatere Pierdută / Lipsă, motivul lipsei, Imputat bifat, Salariat (4282) și câmpul Persoana căreia i se impută completat automat cu Ion Popescu, evidențiat; în listă laptopul de 3.200 lei](screenshots/06_wizard_lipsa_imputata.png)
 
@@ -193,9 +202,15 @@ Modulul **nu generează note contabile proprii**. Notele rămân cele ale modulu
 | Darea în folosință | `Dr 603 = Cr 303` și evidența extrabilanțieră `8035` | salariatul pe fișă și pe bon |
 | Lipsă imputată salariatului | `Dr 4282 = Cr 7588`, fără TVA | partenerul de pe 4282 propus din contactul de serviciu al salariatului |
 | Scoaterea din gestiune | stornarea evidenței `8035` | salariatul pe procesul-verbal |
+| Restituirea în magazie | `Dr 303 = Cr 603` și descărcarea evidenței `8035`; fișa revine în *Recepționat* | fără efect în acest modul: *Salariat* rămâne pe fișă (vezi nota de mai jos) |
 
 Registrul OI (Pasul 5) rămâne instrumentul de confruntare cu soldurile 8035 și 303; gruparea pe
 salariat nu schimbă totalurile.
+
+**După o restituire în magazie** fișa revine în starea *Recepționat*, dar *Salariat* nu se golește:
+registrul o grupează în continuare sub fostul salariat, iar butonul **Dă în Folosință** de pe fișă îl
+precompletează în wizard. Înainte de o nouă dare în folosință, goliți sau schimbați *Salariat* pe fișă.
+În lista de obiecte, un obiect restituit poate deci avea salariat, deși e în stoc 303.
 
 ## 7. Legături cu alte module / declarații
 
@@ -239,7 +254,9 @@ salariat.
 | Salariatul nu apare în lista de alegere | Salariatul aparține altei companii sau e arhivat | Verificați compania și starea salariatului în Angajați |
 | Pe bon apare utilizatorul, nu salariatul | Fișa obiectului nu are salariat completat | Completați *Salariat* pe fișă și retipăriți bonul |
 | *Persoana căreia i se impută* nu se completează | Obiectele selectate sunt ale mai multor salariați, fără salariat, sau câmpul era deja completat | Alegeți persoana manual, sau scoateți obiectele separat, pe salariat |
-| „Alegeți persoana căreia i se impută lipsurile." | *Imputat* bifat fără persoană (mesaj din modulul de bază) | Completați *Persoana căreia i se impută* |
+| Câmpul *Persoana căreia i se impută* apare marcat în roșu și fereastra nu se confirmă (la apel din cod sau import apare mesajul „Alegeți persoana căreia i se impută lipsurile.") | *Imputat* bifat fără persoană: câmpul e obligatoriu când imputarea e bifată | Completați *Persoana căreia i se impută* |
+| „Factura furnizorului pentru recepție nu este încă postată pentru: …" | Compania are bifa „Cere factura înainte de darea în folosință", iar recepția obiectului nu e acoperită de o factură postată | Postați factura furnizorului și reluați darea în folosință |
+| Data dării în folosință e refuzată (în viitor, înaintea datei de intrare sau într-o perioadă blocată) | Validarea datei operației din modulul de bază | Alegeți o dată între data intrării în stoc și azi, într-o perioadă deschisă |
 | Eroare de drepturi la confirmarea dării în folosință | Utilizatorul nu are drepturi pe stoc (ca în modulul de bază) | Acordați-i drepturi pe Inventar |
 
 ## 10. Capturi de ecran
@@ -256,11 +273,13 @@ compania demo `base.demo_company_ro` (plan de conturi RO), cu datele demo ale mo
 5. `05_registru_oi_salariat.png` — raportul PDF „Registrul obiectelor de inventar", grupat pe salariat.
 6. `06_wizard_lipsa_imputata.png` — fereastra *Scoate din Gestiune*, lipsă imputată salariatului.
 
-Regenerare (cu date demo):
+Aceleași 6 capturi, în engleză, se generează în `static/description/en/` (testul `test_capture_usage`); `readme/USAGE.md`, în română, folosește capturile din `static/description/`.
+
+Regenerare (cu date demo; `test_capture_fise` scrie capturile RO, iar `test_capture_usage` pe cele EN):
 
 ```bash
-./odoo/odoo-bin -c odoo.conf -d <db> -i l10n_ro_inventory_items_hr,l10n_ro_doc_screenshots \
-    --test-tags=/l10n_ro_inventory_items_hr:TestInventoryItemsHrScreenshots --stop-after-init
+./odoo/odoo-bin -c odoo.conf -d <db> -i l10n_ro,l10n_ro_inventory_items_hr,l10n_ro_doc_screenshots \
+    --with-demo --test-tags=/l10n_ro_inventory_items_hr:TestInventoryItemsHrScreenshots --stop-after-init
 ```
 
 ## 11. Observații pentru manual

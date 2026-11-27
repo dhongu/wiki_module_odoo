@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.9`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma_withdrawal
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_rma_withdrawal`
-- **Ultima Ingestie:** 2026-09-24
+- **Ultima Ingestie:** `2026-11-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -13,11 +13,12 @@ Retragerea din contract și returul comercial rămân înregistrări diferite: [
 
 #### 2. Funcționalități Cheie
 
-- Mod de execuție nou, `rma_parcel` (*Așteptăm coletul înapoi, cu fișă de retur*), ales în **Vânzări → Configurare → Setări → Retragere din contract → Execuția retragerii**.
+- Retragerea din contract (UE): dreptul de retragere din Directiva 2011/83/UE privind drepturile consumatorilor, cu funcția de retragere din art. 11a și 14a adăugată de Directiva (UE) 2023/2673, aplicabilă din 19 iunie 2026 oricărui comerciant care vinde online consumatorilor din UE.
+- Mod de execuție nou, `rma_parcel` (*Așteptăm coletul înapoi, cu fișă de retur*), ales în **Vânzări → Configurare → Setări → Retragere din contract → Execuția retragerii**, după ce funcția de retragere e activată; altă configurare nu e necesară.
 - La confirmarea retragerii se creează, ca superuser, o cerere de retur direct în **Așteptăm coletul**, de tip *Retur*, cu rezolvarea *Returnăm banii*: nu trece prin *Ciornă* sau *Trimis*, din care ar putea fi aprobată. Executarea de două ori nu deschide un al doilea colet.
 - Taxa de manipulare e zero (art. 14): motivul rezervat, **Retragere în termenul legal**, are intervalul 0–0, e *Doar pentru colegi* (nu apare în portal) și spune că transportul de întoarcere e pe cheltuiala clientului.
 - Fișa pleacă pe mail cu un șablon propriu, fără nicio formulare de aprobare; spune că banii se returnează după ce produsele ajung sau după dovada expedierii (art. 13 alin. (3)).
-- Coletul urmează apoi fluxul obișnuit: recepție prin scanare, verdicte, repunere în stoc. Nota de credit se pregătește din cererea de retur, iar retragerea se marchează rambursată; câmpul *Notă credit* de pe retragere nu e completat de punte.
+- Coletul urmează apoi fluxul obișnuit: recepție prin scanare, verdicte, repunere în stoc. Nota de credit se pregătește (ciornă) din cererea de retur, după inspecție, o singură dată per retragere, iar retragerea se marchează rambursată; câmpul *Notă credit* de pe retragere nu e completat de punte. Bara de stare arată și *Aprobat* (comună tuturor retururilor), dar această cerere nu trece prin el.
 - Pe formularul retragerii, butonul și câmpul **Colet de retur**; *Mod de execuție* se afișează cu eticheta lui (din `deltatech_sale_withdrawal` 19.0.0.3.2).
 - Liniile coletului iau prețul plătit, după discount; sumele sunt cu TVA pe ambele documente — totalul retragerii e ce se rambursează consumatorului, *De returnat clientului* de pe cerere e totalul notei de credit.
 

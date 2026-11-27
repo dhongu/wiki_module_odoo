@@ -18,7 +18,7 @@ Modulul nu are temei legal propriu. Contextul este operațional: lista se constr
 ## 3. Utilizatori și roluri
 
 - **Operatorul** (orice utilizator intern): vede toate rândurile companiilor lui, nu doar apelurile care l-au sunat pe el, sună clientul înapoi, scrie note și marchează rândurile rezolvate. Nu poate schimba singur starea, contactul sau încercările unui rând: acestea urmează apelurile.
-- **Administratorul Telefon** (grupul Administrator VoIP): are acces complet la rânduri.
+- **Administratorul Telefon** (grupul Administrator VoIP): are drepturi complete pe model (import, API); din interfață lucrează ca operatorul.
 - Pentru testare: un administrator și un al doilea utilizator intern, fără drepturi Telefon speciale.
 
 ## 4. Conturi și date implicate
@@ -31,15 +31,15 @@ Modulul nu are temei legal propriu. Contextul este operațional: lista se constr
 
 1. Instalați aplicația **Telefon** și configurați furnizorul de telefonie (de exemplu modulul **Phone - Daktela**).
 2. Instalați modulul **Phone - Missed Calls to Call Back**. La instalare, apelurile nepreluate și convorbirile din ultimele 7 zile se reiau în ordine cronologică, deci lista pornește cu clienții care încă așteaptă să fie sunați.
-3. Nu există alte setări. Numerele se compară în format internațional, cu țara companiei: verificați că firma are țara completată în **Setări → Companii**.
+3. Nu există alte setări. Numerele se compară în format internațional, cu țara companiei: verificați că firma are țara completată în **Setări → Utilizatori și companii → Companii**.
 
 ## 6. Flux de utilizare
 
 ### Pasul 1 — Deschideți lista clienților de sunat înapoi
 
-Mergeți la **Telefon → Apeluri nepreluate**. Lista se deschide cu filtrul **De sunat înapoi** și are un rând pe client (pe număr de telefon), cu încercarea cea mai recentă sus: **Ultima încercare**, **Contact**, **Număr de telefon**, **Încercări**, **Ultimul sunat** (utilizatorul la care a sunat ultimul apel), **Stare**, **Notă** și **Rezolvat de**. Un rând apare când un apel de intrare e nepreluat sau respins; apelurile următoare de la același număr se adună pe același rând, chiar dacă numărul e scris diferit (`0721 000 111` și `+40721000111`), iar **Încercări** crește. Apelurile de ieșire nepreluate și apelurile interne nu apar aici. Rândul îl vede orice utilizator intern, nu doar cel la care a sunat apelul.
+Mergeți la **Telefon → Apeluri nepreluate**. Lista se deschide cu filtrul **De sunat înapoi** și are un rând pe client (pe număr de telefon), cu încercarea cea mai recentă sus: **Ultima încercare**, **Contact**, **Număr de telefon**, **Încercări**, **Ultimul sunat** (utilizatorul la care a sunat ultimul apel), **Stare**, **Rezolvat de** și **Notă**. Un rând apare când un apel de intrare e nepreluat sau respins; apelurile următoare de la același număr se adună pe același rând, chiar dacă numărul e scris diferit (`0721 000 111` și `+40721000111`), iar **Încercări** crește. Apelurile de ieșire nepreluate și apelurile interne nu apar aici. Rândul îl vede orice utilizator intern, nu doar cel la care a sunat apelul.
 
-![Lista Apeluri nepreluate cu filtrul De sunat înapoi: trei rânduri, Client Exemplu SRL cu 3 încercări, Service Auto Nord SRL cu 1 încercare și un număr fără contact cu 1 încercare, fiecare cu starea De sunat înapoi și butonul Marchează rezolvat](screenshots/01_lista_de_sunat_inapoi.png)
+![Lista Apeluri nepreluate cu filtrul De sunat înapoi: trei rânduri, Client Exemplu SRL cu 3 încercări și nota Vrea ofertă la plăcuțe de frână, un număr fără contact +40755111222 și Service Auto Nord SRL cu câte 1 încercare, toate în starea De sunat înapoi, cu butonul Marchează rezolvat](screenshots/01_lista_de_sunat_inapoi.png)
 
 ### Pasul 2 — Scrieți o notă pe rând
 
@@ -49,17 +49,17 @@ Faceți clic în coloana **Notă** a unui rând și scrieți contextul apelului 
 
 ### Pasul 3 — Vedeți apelurile clientului
 
-Deschideți rândul (săgeata de la capătul rândului). Formularul arată numărul, contactul, **Încercări**, **Prima încercare**, **Ultima încercare**, **Ultimul sunat**, nota și, dedesubt, fiecare apel nepreluat al clientului cu data, utilizatorul și starea. Numărul de telefon din antet e un link de apel: un clic pornește apelul înapoi prin furnizorul de telefonie, ca din orice fișă de contact.
+Deschideți rândul cu **Afișare**, la capătul rândului. Formularul arată numărul, contactul, **Încercări**, **Prima încercare**, **Ultima încercare**, **Ultimul sunat**, nota și, sub **Apeluri nepreluate**, fiecare apel al clientului cu ora apelului, utilizatorul și starea (în Odoo starea apare ca **Apel Ratat**). Numărul de telefon din antet e un link de apel: un clic pornește apelul înapoi prin furnizorul de telefonie, ca din orice fișă de contact.
 
 ![Formularul rândului Client Exemplu SRL în starea De sunat înapoi: numărul +40721000111, Încercări 3, prima și ultima încercare, nota și lista celor trei apeluri ratate, cu butonul Marchează rezolvat în antet](screenshots/03_formular_rand.png)
 
 ### Pasul 4 — Sunați clientul înapoi
 
-Faceți clic pe număr și sunați clientul. Dacă răspunde, apelul se înregistrează în **Telefon → Apeluri** ca apel efectuat și rândul iese singur din listă: trece în starea **Rezolvat**, cu **Rezolvat de** (utilizatorul care a vorbit cu clientul), **Rezolvat la** și **Convorbire** (apelul care l-a închis). La fel se întâmplă dacă clientul sună din nou și un operator îi răspunde. Dacă clientul nu răspunde la apelul înapoi, rândul rămâne în listă. Cu Daktela, apelul se închide pe rând când ajunge în istoric: imediat din widgetul Telefon sau la importul de la 10 minute.
+Faceți clic pe număr și sunați clientul. Dacă răspunde, apelul se înregistrează în **Telefon → Apeluri** cu starea **Încetat** și rândul iese singur din listă: trece în starea **Rezolvat**, cu **Rezolvat de** (utilizatorul care a vorbit cu clientul sau, dacă apelul nu are utilizator, cel al importului), **Rezolvat la** (momentul în care rândul s-a închis în Odoo) și **Convorbire** (apelul care l-a închis). La fel se întâmplă dacă clientul sună din nou și un operator îi răspunde. Dacă clientul nu răspunde la apelul înapoi, rândul rămâne în listă. Cu Daktela, rândul se închide când convorbirea ajunge în istoric: imediat din widgetul Telefon sau la importul de la 10 minute.
 
-Cu filtrul **Rezolvat** vedeți rândurile închise: cine a vorbit cu clientul, când, și nota.
+Cu filtrul **Rezolvat** vedeți rândurile închise: cine a vorbit cu clientul (**Rezolvat de**) și nota; data și convorbirea se văd în formularul rândului.
 
-![Lista Apeluri nepreluate cu filtrul Rezolvat: Piese Rapide SRL, rezolvat de utilizatorul care l-a sunat înapoi, și Service Auto Nord SRL, marcat rezolvat de mână; coloana Rezolvat de arată cine a închis fiecare rând, iar nota Comandă confirmată telefonic rămâne pe rând](screenshots/04_lista_rezolvate.png)
+![Lista Apeluri nepreluate cu filtrul Rezolvat: Service Auto Nord SRL, marcat rezolvat de mână, și Piese Rapide SRL, rezolvat de utilizatorul care l-a sunat înapoi; coloana Rezolvat de arată cine a închis fiecare rând, iar nota Comandă confirmată telefonic rămâne pe rând](screenshots/04_lista_rezolvate.png)
 
 ### Pasul 5 — Marcați rezolvat un client contactat altfel
 
@@ -78,7 +78,7 @@ Modulul nu generează note contabile. Lista se poate filtra după **De sunat în
 | `voip` (Telefon, Enterprise) | Istoricul apelurilor din care se construiește lista, meniul Telefon și linkul de apel de pe număr. Modulul nu funcționează fără el. |
 | `deltatech_voip_daktela` (opțional) | Aduce apelurile Daktela în istoric (import la 10 minute, webhook, widget); modulul le folosește ca pe orice apel din Telefon. |
 
-**Ce e automat:** crearea rândului la primul apel nepreluat, adunarea apelurilor următoare de la același număr, închiderea rândului la o convorbire preluată cu numărul (de intrare sau de ieșire), ignorarea unui apel nepreluat importat târziu, mai vechi decât o convorbire deja înregistrată, reluarea apelurilor din ultimele 7 zile la instalare.
+**Ce e automat:** crearea rândului la primul apel nepreluat, adunarea apelurilor următoare de la același număr, închiderea rândului la o convorbire preluată cu numărul (de intrare sau de ieșire), ignorarea unui apel nepreluat importat târziu, mai vechi decât o convorbire deja înregistrată, reluarea apelurilor din ultimele 7 zile la instalare, închiderea rândului când importul corectează un apel nepreluat în convorbire preluată.
 
 **Ce rămâne manual:** apelul înapoi, nota, **Marchează rezolvat** pentru clienții contactați altfel. Lista *Missed* din Daktela nu se golește din Odoo.
 
@@ -89,19 +89,20 @@ Modulul nu generează note contabile. Lista se poate filtra după **De sunat în
 - [ ] Un al doilea apel nepreluat de la același număr, scris altfel (`0721 000 111`), nu creează un rând nou: **Încercări** devine 2.
 - [ ] Un al doilea utilizator intern, la care nu a sunat apelul, vede rândul și poate apăsa **Marchează rezolvat**.
 - [ ] Nota scrisă în coloana **Notă** se salvează și rămâne după ce rândul e rezolvat.
-- [ ] Un apel înapoi la care clientul răspunde scoate rândul din filtrul **De sunat înapoi**; la filtrul **Rezolvat** apar **Rezolvat de**, **Rezolvat la** și convorbirea.
+- [ ] Un apel înapoi la care clientul răspunde scoate rândul din filtrul **De sunat înapoi**; la filtrul **Rezolvat** apare **Rezolvat de**, iar în formularul rândului **Rezolvat la** și **Convorbire**.
 - [ ] Un apel înapoi la care clientul nu răspunde lasă rândul deschis.
 - [ ] **Marchează rezolvat** trece rândul în **Rezolvat**, cu utilizatorul curent la **Rezolvat de**.
 - [ ] După un rând rezolvat, un nou apel nepreluat de la același client deschide un rând nou cu **Încercări** 1.
-- [ ] Apelurile de ieșire nepreluate și apelurile interne (extensii scurte, colegi din aceeași firmă) nu apar în listă.
+- [ ] Apelurile de ieșire nepreluate și apelurile interne (extensii de 1–2 cifre și apeluri cu contacte ale propriei firme) nu apar în listă.
+- [ ] Un apel nepreluat importat după o convorbire preluată mai nouă cu același număr nu creează rând.
 
 ## 9. Mesaje de eroare frecvente
 
 | Mesaj | Cauză | Remediere |
 |---|---|---|
 | „La un apel nepreluat poți doar să scrii o notă.” | Un utilizator fără drept de administrator Telefon a încercat să modifice alt câmp decât nota (de exemplu printr-un import sau o acțiune de server). | Folosiți **Marchează rezolvat** pentru a închide rândul; restul câmpurilor le completează apelurile. |
-| Clientul apare de două ori în listă | Numerele nu se recunosc ca același număr, de obicei pentru că firma nu are țara completată. | Completați țara companiei în **Setări → Companii**; rândurile noi se vor aduna corect. |
-| Rândul nu dispare după apelul înapoi | Apelul nu e încă în istoric (cu Daktela, importul rulează la 10 minute) sau clientul nu a răspuns. | Verificați apelul în **Telefon → Apeluri**: rândul se închide doar la un apel preluat. Altfel, folosiți **Marchează rezolvat**. |
+| Clientul apare de două ori în listă | Numerele nu se recunosc ca același număr, de obicei pentru că firma nu are țara completată. | Completați țara companiei în **Setări → Utilizatori și companii → Companii**; rândurile noi se vor aduna corect. |
+| Rândul nu dispare după apelul înapoi | Apelul nu e încă în istoric (cu Daktela, importul rulează la 10 minute) sau clientul nu a răspuns. | Verificați apelul în **Telefon → Apeluri**: rândul se închide doar la un apel preluat (starea **Încetat**). Altfel, folosiți **Marchează rezolvat**. |
 
 ## 10. Capturi de ecran
 

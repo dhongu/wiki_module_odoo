@@ -1,7 +1,7 @@
 # Romania - Zilieri (localizat la `l10n_ro_payroll_day_labourers/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_payroll_day_labourers`
-- **Versiune:** `19.0.1.1.2`
+- **Versiune:** `19.0.1.1.3`
 - **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_day_labourers
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_payroll_day_labourers`
 - **Ultima Ingestie:** `2026-10-12`

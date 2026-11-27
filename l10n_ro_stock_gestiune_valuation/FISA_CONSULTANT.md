@@ -133,21 +133,24 @@ primit marfa. Verificați în tabul **Elemente jurnal** al facturii, cu coloana 
 
 ### Pasul 5 — Transferul între gestiuni
 
-**Transferul se face prin locația de tranzit** când ariile de evaluare sunt active pe companie:
-cum fiecare gestiune are aria ei, `deltatech_valuation_area` refuză validarea unei mișcări directe
-între două locații interne cu arii diferite (mesajul din secțiunea 9).
+**Transferul direct A → B este permis și cu ariile bifate pe companie:** fiecare gestiune are aria
+ei, iar mișcarea internă între două gestiuni diferite se validează fără locație de tranzit. Nota
+**Dr 371.2 = Cr 371.1** are linia de credit cu aria gestiunii A (**[DC] Depozit Central**) și linia
+de debit cu aria gestiunii B (**[MG] Magazin**).
+
+Locația de tranzit rămâne opțională, când marfa chiar este pe drum între gestiuni:
 
 1. Plecarea: transfer din locația gestiunii **Depozit Central** în locația de tranzit. Nota
    **Dr 371.T = Cr 371.1** are pe ambele linii aria **[DC] Depozit Central**.
 2. Sosirea: transfer din tranzit în locația gestiunii **Magazin**. Nota **Dr 371.2 = Cr 371.T** are
    pe ambele linii aria **[MG] Magazin**.
 
-**Verificați:** contul 371.T se închide la zero pe total, dar pe arii rămâne cu debit pe
-**Depozit Central** și credit pe **Magazin** (vezi limitările). La subunitățile cu contabilitate
-proprie, fiecare latură a notei prin 481/482 poartă aria gestiunii ei.
+**Verificați:** la transferul prin tranzit, contul 371.T se închide la zero pe total, dar pe arii
+rămâne cu debit pe **Depozit Central** și credit pe **Magazin** (vezi limitările). La subunitățile
+cu contabilitate proprie, fiecare latură a notei prin 481/482 poartă aria gestiunii ei.
 
-Dacă ariile de evaluare nu sunt bifate pe companie, transferul direct A → B rămâne posibil, iar nota
-**Dr 371.2 = Cr 371.1** are linia de credit cu aria lui A și linia de debit cu aria lui B.
+Excepția privește doar mișcările între două locații cu gestiune diferită. Între o locație a unei
+gestiuni și o sublocație fără gestiune, cu arii diferite, mișcarea directă rămâne refuzată.
 
 ### Pasul 6 — Soldul de stoc pe gestiune din contabilitate
 
@@ -171,7 +174,7 @@ Modulul nu generează note contabile și nu schimbă conturile. Adaugă aria de 
 | Recepție fără factură **Dr 371 = Cr 408** | gestiunea destinație; fallback aria companiei |
 | Stornarea RNI la retur | gestiunea sursă a returului sau gestiunea recepției inițiale; fallback aria companiei |
 | Diferențe de preț/curs la factură (închiderea lui 408) | gestiunea care a primit marfa; fallback aria companiei |
-| Transfer direct **Dr 371.B = Cr 371.A** (doar cu ariile nebifate pe companie) | linia de credit: aria lui A; linia de debit: aria lui B |
+| Transfer direct **Dr 371.B = Cr 371.A** (cu ariile bifate sau nu) | linia de credit: aria lui A; linia de debit: aria lui B |
 | Transfer prin tranzit **Dr 371.T = Cr 371.A**, apoi **Dr 371.B = Cr 371.T** | ambele linii ale plecării: aria lui A; ambele linii ale sosirii: aria lui B |
 | Transfer cu subunitate: **Dr 481 = Cr 371.A**, **Dr 371.B = Cr 481** | fiecare latură: aria gestiunii ei |
 
@@ -184,7 +187,7 @@ companie.
 | Modul | Rol |
 |---|---|
 | `l10n_ro_stock_gestiune` | gestiunile contabile, notele RNI, de transfer și de diferențe de preț; fișa fluxului complet |
-| `deltatech_valuation_area` | modelul ariei de evaluare, câmpul de pe locație și de pe linia contabilă, activarea pe companie, blocarea transferului intern între arii diferite |
+| `deltatech_valuation_area` | modelul ariei de evaluare, câmpul de pe locație și de pe linia contabilă, activarea pe companie, blocarea transferului intern între arii diferite (cu excepția transferului între gestiuni, tratată de această punte) |
 | `l10n_ro_stock_sheet` / `l10n_ro_stock_sheet_gestiune` | balanța analitică a stocurilor pe gestiune, cu care se compară soldul pe arie |
 
 **Ce e automat:** crearea ariei la crearea gestiunii, actualizarea numelui, codului și companiei
@@ -203,7 +206,7 @@ compararea soldului pe arie cu balanța stocurilor.
 - [ ] Liniile 371 și 408 ale notei de recepție fără factură au aria gestiunii destinație.
 - [ ] Stornarea RNI la retur are aria gestiunii din care pleacă marfa.
 - [ ] Liniile de diferență de preț de pe factura furnizorului au aria gestiunii care a primit marfa.
-- [ ] Cu ariile bifate pe companie, transferul direct între două gestiuni este refuzat, iar transferul prin tranzit trece; nota plecării are aria sursei, nota sosirii aria destinației.
+- [ ] Cu ariile bifate pe companie, transferul direct între două gestiuni se validează (linia de credit pe aria lui A, cea de debit pe aria lui B); transferul prin tranzit trece și el; mișcarea directă între arii diferite fără gestiuni este refuzată.
 - [ ] Gruparea **Elemente jurnal** pe contul 371 după **Arie de evaluare** dă, pe fiecare gestiune, același sold ca balanța analitică a stocurilor.
 - [ ] Nu rămân linii de stoc fără arie în perioada analizată (grupul gol).
 
@@ -214,7 +217,7 @@ des după instalarea punții:
 
 | Mesaj | Cauză | Remediere |
 |---|---|---|
-| Locațiile sursă și destinație trebuie să aibă aceeași arie de evaluare pentru mișcările interne. | transfer direct între două gestiuni (arii diferite) sau între o locație a gestiunii și o sublocație fără gestiune, cu ariile bifate pe companie | transferați prin locația de tranzit; atribuiți și sublocațiile aceleiași gestiuni |
+| Locațiile sursă și destinație trebuie să aibă aceeași arie de evaluare pentru mișcările interne. | mișcare directă între arii diferite fără gestiuni, sau între o locație a gestiunii și o sublocație fără gestiune, cu ariile bifate pe companie (transferul direct între două gestiuni este permis) | transferați prin locația de tranzit; atribuiți și sublocațiile aceleiași gestiuni |
 | Aria de evaluare este obligatorie pentru produsele stocabile. Dacă produsul nu este stocabil, o puteți lăsa necompletată. | linie contabilă cu produs stocabil fără arie: gestiune creată înainte de instalarea punții, fără arie implicită pe companie | completați aria gestiunii (secțiunea 5, pasul 5) sau setați aria implicită a companiei |
 | Aria de evaluare nu este definită | nici locația, nici depozitul, nici compania nu au arie, cu ariile bifate | setați aria implicită a companiei din setări |
 
@@ -229,8 +232,8 @@ notele contabile și balanța stocurilor sunt documentate cu capturi în fișa
 
 - Prezentați puntea în capitolul gestiunilor, după transferul valoric: „gestiunea = arie de
   evaluare” și citirea soldului pe gestiune prin gruparea liniilor contabile.
-- Spuneți explicit că, odată cu ariile de evaluare active, transferul între gestiuni se face numai
-  prin locația de tranzit.
+- Spuneți explicit că transferul direct între două gestiuni este permis și cu ariile de evaluare
+  active; tranzitul rămâne opțional, iar mutarea între arii diferite fără gestiuni este refuzată.
 - Limitări de menționat:
   - **gestiunile existente la instalarea punții nu primesc arie**, iar locațiile lor nu se aliniază;
     aria se creează doar la crearea gestiunii, iar formularul gestiunii nu are câmpul ariei, deci

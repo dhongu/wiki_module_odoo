@@ -37,8 +37,19 @@ depune până la data de 30 inclusiv a lunii următoare perioadei de raportare.
 > formularului 394 este actualizat periodic.
 
 Operațiunile intracomunitare și importul/exportul **nu** se includ în D394 (merg în D390 pentru intracomunitar,
-respectiv în declarațiile vamale de import/export, și în D300). Operațiunile pe teritoriul național cu parteneri nestabiliți în România intră în D394
-(`tip_partener` 3 și 4), dar modulul nu le generează încă — vezi „Limitări cunoscute".
+respectiv în declarațiile vamale de import/export, și în D300). Excluderea se face după taxă, nu după țara
+partenerului. Partenerii se încadrează pe fiecare document, la data lui, în patru tipuri:
+
+| Tip | Partener | Ce se declară |
+|---|---|---|
+| 1 | înregistrat în scopuri de TVA în România la data documentului | L, A, AÎ, V, C |
+| 2 | neînregistrat: persoană fizică (cu sau fără CNP), firmă fără cod RO, partener inactiv sau cu codul anulat la data documentului, străin fără cod | livrările cu TVA (L), achizițiile (N, pe tipul documentului) |
+| 3 | stabilit în alt stat UE, cu cod de identificare | livrările cu TVA românesc (L); achizițiile merg în D390 |
+| 4 | stabilit în afara UE, cu cod de identificare | livrările cu TVA românesc (L), serviciile primite cu taxare inversă (C) |
+
+Statutul la data documentului vine din perioadele de înregistrare sincronizate cu ANAF (`l10n_ro_anaf_partner`);
+fără ele, din bifa „Plătitor de TVA” sau din prefixul RO al codului. Un partener inactivat la mijlocul lunii
+apare la tipul 1 până la anulare și la tipul 2 după ea.
 
 ## 3. Utilizatori și roluri
 
@@ -86,7 +97,7 @@ Date minime pentru demo:
    deocamdată în engleză):
    - **D394 Period** (`tip_D394`): L / T / S / A, după periodicitatea TVA a firmei (la T/S/A, luna
      declarației este ultima lună a perioadei selectate în raport);
-   - **D394 VAT on Collection** (`sistemTVA`): bifați dacă firma aplică sistemul TVA la încasare;
+   - **D394 TVA la încasare** (`sistemTVA`): bifați dacă firma aplică sistemul TVA la încasare;
      atunci `tvaDedAI` (rd. 139–142) primește TVA-ul facturilor de la furnizori cu TVA la încasare
      achitate în perioadă, din notele de exigibilitate generate la plată; nebifat, `tvaDedAI` rămâne 0.
      Tot bifa determină `tvaDed*` (rd. 135–138, 153B–C: facturi achitate de la furnizori în regim normal)
@@ -112,19 +123,57 @@ Date minime pentru demo:
      sincronizați cu ANAF (butonul **Sincronizează cu ANAF** de pe partener sau cronul zilnic) înainte
      de generarea D394. Doar partea deductibilă a TVA-ului intră;
      la plata parțială intră TVA-ul proporțional cu suma plătită;
-   - **D394 Option** (`optiune`) și **D394 Affiliated Persons** (`prsAfiliat`), după caz.
+   - **Opțiune D394** (`optiune`) și **D394 Persoane afiliate** (`prsAfiliat`), după caz.
    (`op_efectuate` se calculează automat: 1 dacă există operațiuni, 0 pentru declarație nulă.)
 5. Verificați partenerii: companii RO cu CUI valid; persoane fizice fără CUI, cu nume/adresă completă;
    parteneri neînregistrați în scopuri de TVA.
 6. Pregătiți documente demo cu: vânzare către companie RO, achiziție de la companie RO, vânzare către
    persoană fizică, factură storno, taxare inversă pe vânzare (livrare „0% R" → V) și pe achiziție
    (autotaxare → C).
-7. Verificați că utilizatorul de test are grupul de acces contabil necesar.
+7. Verificați că utilizatorul de test are grupul de acces contabil necesar. Plajele alocate de pe jurnal
+   se pot citi cu grupul **Facturare** și se modifică doar cu **Manager Contabilitate**; fiecare companie
+   își vede doar plajele jurnalelor proprii.
 8. Pentru operațiunile cu taxare inversă (V/C), setați **Cod produs D394** pe categoriile produselor folosite
    (nomenclatorul din `l10n_ro_anaf_base`: `Contabilitate → Raportare → Declarații ANAF → Coduri produs D394`;
    vezi fișa `l10n_ro_anaf_base`, Pasul 2). Fără cod, produsul nu apare în defalcarea pe produse a D394.
+9. Configurați jurnalele pentru cartușul I pct. 2 (vezi pasul 0 din secțiunea 6): **Tip facturi D394**
+   pe fiecare jurnal de vânzări / achiziții care emite facturi, terțul pe jurnalele 2.4 și, dacă există o
+   decizie internă de alocare a numerelor, plajele alocate.
+10. Setați **Tip document D394** pe jurnalele care țin altceva decât facturi obișnuite
+   (`Contabilitate → Configurare → Jurnale`, jurnalele de vânzări și cumpărări, câmpul apare doar la companiile
+   RO): de exemplu „Factură simplificată” pe un jurnal de facturi simplificate sau „Bon fiscal” pe jurnalul
+   bonurilor primite. Valoarea jurnalului devine implicită pe documentele noi; fără ea, documentele sunt
+   „Factură”, iar chitanțele de cumpărare/vânzare (Odoo „receipt”) sunt „Bon fiscal”. Pe fiecare document,
+   câmpul se poate schimba cât timp e ciornă (`Contabilitate → Clienți/Furnizori → Facturi`, lângă jurnal).
+   Valorile: factură, factură simplificată, bon fiscal, borderou de achiziție, filă de carnet de comercializare,
+   contract, alt document.
+11. Pentru bonurile fiscale primite cu TVA dedus, verificați că există **cursul EUR** (BNR) cel puțin la data
+   celui mai vechi bon din perioadă: plafonul de 100 EUR se verifică la export și, fără curs, exportul se oprește.
 
 ## 6. Flux de utilizare
+
+### Pasul 0 — Configurarea jurnalelor pentru plajele de facturi (cartușul I pct. 2)
+
+*Navigare:* `Contabilitate → Configurare → Jurnale` → jurnalul de vânzări (sau de achiziții) → fila
+**Configurări avansate** → grupul **„D394 – Plaje de facturi”** (apare doar pe jurnalele de vânzări și achiziții).
+
+*Completează:*
+- **Tip facturi D394** — unde ajung facturile jurnalului în D394:
+  - *Facturi proprii (2.2)* — facturile proprii (implicit);
+  - *Autofacturare (2.2.3)* — autofacturile, raportate în `<facturi>` cu baza și TVA-ul pe cote;
+  - *Emise în numele furnizorilor (2.2.4)* — jurnal de achiziții pentru facturile emise de firmă în numele
+    furnizorilor; un jurnal de achiziții cu bifa **Self Billing** (Odoo) e tratat automat așa;
+  - *Emise de clienți în numele firmei (2.3)* — clientul emite factura în numele firmei;
+  - *Emise de terți în numele firmei (2.4)* — un terț emite factura în numele firmei.
+- **Terț D394** — apare și e obligatoriu doar la tipul 2.4: terțul care emite facturile.
+- **Plaje alocate D394** — lista deciziilor interne de alocare (vizibilă la 2.2, 2.2.3 și 2.2.4): **Serie**
+  (exact prefixul numărului facturii, ex. `INV/2026/`), **De la numărul**, **Până la numărul** (gol dacă decizia nu
+  are sfârșit) și **Decizie** (numărul deciziei).
+
+*Verifică:* jurnalele fără decizie internă pot rămâne fără plaje: seria se ia din facturile emise, plaja
+alocată începe de la 1 și nu are număr final.
+
+![Jurnalul de vânzări, fila Configurări avansate: ① Tip facturi D394 și ② Plaje alocate D394 (serie, de la, până la, decizie)](screenshots/05_jurnal_plaje_d394.png)
 
 ### Pasul 1 — Verificarea jurnalului TVA Vânzări
 
@@ -141,13 +190,15 @@ rândurile decontului. În bara raportului se văd direct butoanele **„D394 fi
 fizice (fără CUI) și partenerii UE se recunosc după coloana **CUI client**. Jurnalul are multe coloane:
 coloanele de total și sumele din recapitulație se văd derulând tabelul spre dreapta.
 
-Rândurile cu parteneri UE (în demo, INV/2026/00013–00014, rândul D300 = 1) apar în jurnal, dar **nu se
-regăsesc în D394**: livrările intracomunitare se declară în D390.
+Rândurile cu parteneri UE pe cota 0 (în demo, INV/2026/00013–00014, rândul D300 = 1) apar în jurnal, dar **nu se
+regăsesc în D394**: livrările intracomunitare se declară în D390, iar exportul nu se declară. Livrările cu TVA
+românesc către parteneri străini cu cod intră în D394, la tipul 3 (UE) sau 4 (în afara UE), operațiunea L.
 
 *Verifică* (înainte de a continua): toate documentele perioadei sunt **postate**; CUI-urile
 partenerilor RO sunt prezente și valide; totalurile pe cotă (21% / 11%) corespund jurnalului de
-vânzări; perioada selectată (implicit luna trecută) este luna declarată; persoanele fizice au
-localitate, țară și — pentru adrese din România — județ completate (altfel exportul se oprește).
+vânzări; perioada selectată (implicit luna trecută) este luna declarată; persoanele fizice și firmele
+fără cod RO valid din România au județul completat (altfel exportul se oprește). Localitatea e opțională,
+iar un partener fără țară e considerat din România. Facturile către ele apar în D394 la tipul 2, L.
 
 ![Raportul de vânzări D394 — tranzacții pe parteneri](screenshots/01_raport_vanzari.png)
 
@@ -164,7 +215,12 @@ Furnizor, CUI furnizor**, coloanele pe cotă
 *Verifică:* TVA deductibilă pe cotă corespunde jurnalului de cumpărări; achizițiile de la furnizori RO
 cu taxare inversă au TVA autotaxată pe cota reală. Jurnalul nu afișează tipul D394 al operațiunii:
 încadrarea ca **C** se verifică în XML (`op1 tip="C"`, pasul 4). Achizițiile intracomunitare (în demo,
-furnizorul din Franța) **nu intră în D394** — se declară în D390 — și nici în `tvaDedAI`. Rândul ELY-CONTAB
+furnizorul din Franța) **nu intră în D394** — se declară în D390 — și nici în `tvaDedAI`; la fel, importul
+(inclusiv cu TVA amânat, art. 326 alin. (4)) nu se declară. Achizițiile de la furnizori neînregistrați în
+scopuri de TVA (persoane fizice, firme fără cod RO) apar la **N** (cota 0, fără TVA, cu valoarea totală), pe
+**Tip document D394** al facturii (factură, borderou, filă de carnet, contract, alt document); verificați
+că tipul documentului e corect. Serviciile cu taxare inversă de la prestatori din afara UE apar la tipul 4,
+**C**. Rândul ELY-CONTAB
 SRL (în demo, ultimul rând), fără rând D300, este o achiziție de la un furnizor cu TVA la încasare (TVA neexigibilă, 4428):
 în D394 apare la **AÎ** (`op1 tip="AI"`, pasul 4), în luna datei facturii, chiar dacă nu e plătită; lipsa
 rândului D300 e normală, TVA-ul devine deductibil abia la plată. Coloanele cu sume sunt în dreapta,
@@ -216,7 +272,7 @@ la export.
 sunt completate — altfel validarea ridică o eroare blocantă; perioada este cea declarată. Pentru D394 trimestrial, semestrial sau anual, selectați în raport
 întreaga perioadă (ex. trimestrul): `luna` din declarație devine ultima lună a perioadei, cum cere
 validatorul ANAF (R04) la aceste periodicități. Înainte de scriere, modulul
-rulează și regulile validatorului ANAF (codurile R04, R17, R35, R84, R96–R104 etc.) și oprește exportul
+rulează și regulile validatorului ANAF (codurile R04, R17, R35, R84, R96–R104, R215 etc.) și oprește exportul
 dacă găsește erori.
 
 *Verifică în XML (blocul `informatii`):* `tvaDedAI21`, `tvaDedAI11` etc. sunt 0 dacă firma nu aplică TVA
@@ -251,11 +307,36 @@ Baza și TVA-ul se rotunjesc la leu după însumare, pe fiecare rând (partener,
 Dacă un document are o taxă cu o cotă care nu există în D394 (alta decât 5, 9, 11, 19, 20, 21, 24),
 exportul se oprește cu lista documentelor (vezi secțiunea 9).
 
+*Verifică în XML (cartușul I pct. 2, `serieFacturi` și `facturi`):*
+- **tip 1 (2.1, plaja alocată)** — câte un rând pe fiecare plajă din **Plaje alocate D394** a jurnalelor;
+  pentru o serie fără decizie, rândul are numărul inițial 1 și **nu are `nrF`** (atribut opțional în XSD).
+- **tip 2 (2.2, plaja emisă)** — intervale de numere **consecutive** ale documentelor numerotate din perioadă
+  (facturi, note de credit, autofacturi, cele emise în numele furnizorilor), inclusiv cele **anulate** care au
+  primit număr. Ex.: INV 3–8 și INV 11 sunt două rânduri, nu INV 3–11. Golurile dintre intervale nu se declară
+  automat ca anulate (pot aparține altor luni). `nrFacturi` din `informatii` = numărul documentelor din
+  aceste intervale.
+- **`<facturi>`** — câte un rând per document: `tip_factura` **1** notă de credit (stornare), **2** factură
+  anulată, **3** autofactură, cu `bazaNN` / `tvaNN` pe fiecare cotă (ex. `baza21="200" tva21="42"`), **4** factură
+  emisă în numele furnizorilor. O notă de credit pe o autofactură sau pe o factură 2.2.4 apare și ca tip 1.
+- **tip 3 (2.3) / tip 4 (2.4)** — intervalele facturilor emise de clienți, respectiv de terți, în numele firmei,
+  cu `den` și `cui` ale emitentului (clientul facturii, respectiv terțul de pe jurnal); totalurile sunt în
+  `nrFacturi_benef` și `nrFacturi_terti`.
+
+```xml
+<serieFacturi tip="1" serieI="INV/2026/" nrI="1" nrF="500"/>
+<serieFacturi tip="2" serieI="INV/2026/" nrI="3" nrF="8"/>
+<serieFacturi tip="2" serieI="INV/2026/" nrI="11" nrF="11"/>
+<serieFacturi tip="3" serieI="CL" nrI="5" nrF="5" den="Client SRL" cui="10000008"/>
+<facturi tip_factura="3" serie="AUTO" nr="1" baza21="200" tva21="42"/>
+```
+
 *Verifică în formularul PDF (după importul XDP):* secțiunea cu partenerii și facturile are câte un rând
 pe document și cotă (o factură cu mai multe cote are câte un rând pe fiecare cotă), cu tipul de partener (1 – cu CUI, 2 – fără CUI), CUI-ul, denumirea, baza și TVA-ul; la
 partenerii fără CUI se completează adresa; la taxarea inversă apar rândurile de produs (cod, număr
-facturi, bază, TVA). Plaja de facturi emise (serie, număr inițial și final) și numele reprezentantului
-sunt completate. Periodicitatea, TVA la încasare, opțiunea, persoanele afiliate, rezumatele și `op2`
+facturi, bază, TVA). La cartușul I pct. 2 se completează: 2.1 plaja alocată reală
+(câte un rând pe plajă, în locul seriei „-”), 2.2 intervalele emise, detaliul facturilor (tip, serie,
+număr, cu baza și TVA pe cote la autofacturi) și plajele 2.3 / 2.4 cu denumirea și CUI-ul emitentului.
+Numele reprezentantului este completat. Periodicitatea, TVA la încasare, opțiunea, persoanele afiliate, rezumatele și `op2`
 nu sunt încă preluate în XDP: le verificați în XML.
 
 *Treci mai departe (export):*
@@ -270,16 +351,15 @@ Arhivați exportul împreună cu raportul de verificare.
 ![Butoanele de export ANAF ① XML (Soft J) și ② XDP (Soft A), pe jurnalul de vânzări pe regimuri](screenshots/04_export_xml.png)
 
 *Rezultat (extras ilustrativ, pe datele demo, dintr-o rulare pe septembrie 2026 — luna diferă de capturi, unde perioada e luna trecută):* antetul cu perioada și datele declarantului,
-blocul `informatii`, rezumatul pe partener și cotă și o operațiune `op1` (partener cu CUI) și una `op2`
-(încasări de la persoane fizice). Achiziția cu taxare inversă apare în `rezumat1` pe cota reală (21%),
+blocul `informatii`, rezumatul pe partener și cotă și o operațiune `op1` (partener cu CUI). Achiziția cu taxare inversă apare în `rezumat1` pe cota reală (21%),
 cu TVA autotaxată în `tvaC`. Achiziția de la furnizorul cu TVA la încasare (ELY-CONTAB SRL) apare ca
 `op1 tip="AI"` și în grupul `facturiAI`/`bazaAI`/`tvaAI` din `rezumat1`, plus `nrFacturiAI`/`bazaAI`/`tvaAI`
 în `rezumat2` (de la 19.0.1.3.18; extrasul de mai jos e dintr-o rulare anterioară). Atributele din `op1` și `rezumat1` se emit doar acolo unde le cere
 validatorul ANAF: adresa partenerului apare numai la partenerii fără CUI (tip 2), iar fiecare grup din
 `rezumat1` (L, LS, A/AI, V/AS, C) apare doar pe combinațiile tip partener/cotă admise. Extrasul a fost
 generat cu validarea XSD oprită, pe datele demo: exportul real cere întâi completarea codului CAEN și a
-contactului cu funcția lui pe companie, iar valorile `rezumat1` cu `tip_partener=2` și `nrFacturi` nu
-sunt încă cele cerute de ANAF:
+contactului cu funcția lui pe companie. Extrasul e dinaintea versiunii 19.0.1.7.0: de atunci factura către
+persoana fizică nu mai apare în `op2` „I2”, ci în `op1` cu `tip_partener="2"` (vezi tabelul de mai jos):
 
 ```xml
 <declaratie394 xmlns="mfp:anaf:dgti:d394:declaratie:v5" luna="9" an="2026" tip_D394="L"
@@ -294,9 +374,10 @@ sunt încă cele cerute de ANAF:
 </declaratie394>
 ```
 
-Încasările `op2` se declară pe luna documentului (data contabilă a facturii sau a bonului): la D394 trimestrial/semestrial/anual apare câte o secțiune
-`op2` pe fiecare lună și tip (I1/I2), iar un document din afara perioadei (ex. TVA la încasare reportată)
-se trece pe prima lună a perioadei. Dacă `op2` conține vânzări, `rezumat2` are câte o secțiune pe fiecare
+`op2` cuprinde doar bonurile fiscale emise (`tip_op2="I1"`), pe luna bonului: la D394 trimestrial/semestrial/anual
+apare câte o secțiune `op2` pe fiecare lună, iar un document din afara perioadei (ex. TVA la încasare reportată)
+se trece pe prima lună a perioadei. „I2” (încasări fără factură din activitățile scutite de AMEF) nu se
+completează, iar `incasari_i2` e 0. Dacă `op2` conține vânzări, `rezumat2` are câte o secțiune pe fiecare
 cotă (5, 9, 11, 19, 20, 21), iar schema admite până la 7.
 
 Verificați în fișier că `luna`/`an` sunt perioada declarată (la T/S/A, ultima lună), `cui` și `caen` sunt ale companiei,
@@ -309,11 +390,36 @@ sunt cerute. Modulul le emite astfel, deci nu vă mirați că unele atribute lip
 | Element | Regulă de emitere |
 |---|---|
 | `op1` cu partener cu CUI | fără atributele de adresă (`taraP`, `locP`, `judP`, `strP`, `nrP`, `blP`, `apP`, `detP`) — R220–R227 |
-| `op1` cu partener tip 2 fără CUI (regula se aplică doar dacă apar astfel de operațiuni; în prezent vânzările către PF merg în `op2`/`rezumat1`, deci nu căutați `op1` de acest tip în XML) | adresa se completează; `locP`, `strP`, `nrP`, `blP`, `apP`, `detP` goale nu se emit; `taraP` și `judP` se emit cu valoarea primită |
+| `op1` cu partener tip 2 fără cod (persoană fizică fără CNP, străin fără cod) | câte un rând pe beneficiar, cu adresa: `taraP` (codul ISO al țării) mereu, `judP` (cod numeric) doar în România; `locP`, `strP`, `nrP`, `blP`, `apP`, `detP` goale nu se emit (R220–R227) |
+| `op1` cu partener tip 2 cu cod | `cuiP` = CNP-ul sau CUI-ul fără RO, doar dacă e valid (cifra de control); un cod invalid nu se trimite, iar partenerul se declară cu adresa (R218.3) |
+| `op1` cu partener tip 3 / 4 | `cuiP` = codul străin așa cum e pe partener; fără adresă și fără `op11` (R218.1, R233.1) |
+| `informatii` | `nrCui1`, `nrCui3`, `nrCui4` = codurile distincte de tip 1, 3, 4; `nrCui2` = numărul de rânduri `op1` de tip 2 (R122–R125) |
 | `rezumat1`, cotă nenulă | grupul **L** (`facturiL`, `bazaL`, `tvaL`); pentru tip partener 1 și grupul **A/AI**; pentru tip 1, 3 și 4 și grupul **C** |
-| `rezumat1`, cota 0 | pentru tip partener 1: grupurile **V** și **AS**; pentru tip 1, 3 și 4: grupul **LS** — obligatorii chiar cu valoarea 0 (R38–R58) |
-| `op11` (defalcarea pe produse a `op1`) | doar la V și C cu tip partener 1; un rând pe cod D394 (R235.2); `tvaPR` lipsește la V și la tip partener 2 și există la C (R237.1) |
-| `detaliu` din `rezumat1` | un rând pe bun, pentru fiecare cod din `op11` (R35, R63); pe cota 0 (V) `nrLivV`/`bazaLivV`, pe cotă nenulă (C) `nrAchizC`/`bazaAchizC`/`tvaAchizC`; cerealele se adună sub bunul 21 |
+| `rezumat1`, cota 0 | pentru tip partener 1: grupurile **V** și **AS**; pentru tip 1, 3 și 4: grupul **LS** — obligatorii chiar cu valoarea 0 (R38–R58); pentru tip 2: câte un `rezumat1` pe `document_N`, cu `facturiN`/`bazaN` (R591, R60, R62) |
+| `op11` (defalcarea pe produse a `op1`) | la V și C cu tip partener 1 și la N de la persoane fizice (tip 2, fără cod sau cu CNP), unde e obligatoriu (R233.6); la N de la firme nu se emite (R233.4); un rând pe cod D394 (R235.2); bunurile și serviciile fără cod merg la N pe 34 / 35; `tvaPR` lipsește la V și la tip partener 2 și există la C (R237.1) |
+| `detaliu` din `rezumat1` | un rând pe bun, pentru fiecare cod din `op11` (R35, R63); pe cota 0 (V) `nrLivV`/`bazaLivV`, pe cotă nenulă (C) `nrAchizC`/`bazaAchizC`/`tvaAchizC`, la tip 2 (N) `nrN`/`valN`; cerealele se adună sub bunul 21 |
+| `op1` N (achiziții de la neînregistrați) | `tip_document` (1–5) din **Tip document D394** al facturii: 1 factură sau factură simplificată, 2 borderou, 3 filă de carnet, 4 contract, 5 bon fiscal sau alt document; pe L/A/AI/V/C atributul nu se emite. Rândurile N se separă pe `tip_document` (un partener cu o factură și un borderou dă două `op1`) |
+
+*Cartușul I, pct. 1 (facturi simplificate și bonuri primite):* documentele cu **Tip document D394** =
+„Factură simplificată” sau bonurile fiscale primite cu TVA dedus nu apar în `op1`, `op2`, `rezumat1` și nici în
+rubricile L/A/AÎ din `rezumat2`. Ele se adună pe cotă în `rezumat2`:
+
+| Document | Rubrica `rezumat2` | Pct. |
+|---|---|---|
+| Factură simplificată emisă, cu codul de TVA al beneficiarului | `bazaFSLcod` / `TVAFSLcod` | 1.1 |
+| Factură simplificată emisă, fără codul beneficiarului | `bazaFSL` / `TVAFSL` | 1.2 |
+| Factură simplificată primită, furnizor în regim normal | `bazaFSA` / `TVAFSA` | 1.3 |
+| Factură simplificată primită, furnizor cu TVA la încasare | `bazaFSAI` / `TVAFSAI` | 1.4 |
+| Bon fiscal primit cu TVA dedus (cel mult 100 EUR cu TVA) | `bazaBFAI` / `TVABFAI` | 1.5 |
+
+```xml
+<rezumat2 cota="21" ... bazaFSLcod="100" TVAFSLcod="21" bazaFSA="200" TVAFSA="42"
+    bazaBFAI="300" TVABFAI="63" .../>
+```
+
+Facturile simplificate emise rămân numărate în `nrFacturi` și în plaja de serii (`serieFacturi`), fiindcă
+folosesc seria de facturi. Bonurile fiscale primite fără TVA nu intră în D394, iar bonurile emise rămân în
+`op2` (I1, cartușul G). Taxarea inversă (V/C) rămâne în `op1` chiar dacă documentul e marcat altfel.
 
 > Spre deosebire de D300, D394 este o **declarație informativă** și nu se integrează în fluxul
 > „Returns" (nu are checklist `account.return` propriu).
@@ -323,15 +429,20 @@ sunt cerute. Modulul le emite astfel, deci nu vă mirați că unele atribute lip
 | Zonă D394 | Ce verifică consultantul |
 |---|---|
 | Parteneri RO cu CUI (`op1`, `rezumat1` cu `tip_partener=1`) | CUI valid, țară România |
-| Parteneri fără CUI (`op2` — încasări I1 cu bonuri fiscale / I2 alte încasări) | nume și adresă (localitate, țară, județ pentru RO) pentru persoane fizice; tratamentul complet e în lucru (vezi „Limitări cunoscute") |
+| Parteneri neînregistrați (`op1` cu `tip_partener=2`) | facturile către persoane fizice și firme fără cod RO la L, achizițiile de la ele la N; CNP / CUI valid sau, fără el, nume și județ pentru RO |
+| Bonuri fiscale emise (`op2` I1) | numărul de bonuri și totalurile pe cotă; facturile nu apar aici |
+| Parteneri străini (`tip_partener=3/4`) | livrările cu TVA românesc (L) și, la tip 4, serviciile cu taxare inversă (C), cu codul străin |
 | Livrare cu taxare inversă → **V** | vânzare „0% R", fără TVA colectată, cotă 0 |
 | Achiziție de la furnizor cu TVA la încasare → **AÎ** (`op1 tip="AI"`) | factura cu taxă „TVA la încasare - X% deductibil”, în luna datei facturii, plătită sau nu; furnizor RO cu CUI (tip partener 1), cotă nenulă |
 | Achiziție cu taxare inversă → **C** | achiziție autotaxată, pe cota reală, cu TVA autotaxată (`tvaC`) și codul de produs D394 din nomenclator (produs sau categorie) |
 | Defalcarea pe produse (`op11`, `rezumat1/detaliu`) la V și C | fiecare produs are **Cod produs D394**; pe o factură cu mai multe coduri, `nrFactPR` = 1 doar pe codul principal |
-| Serii facturi (`serieFacturi`) | plajă min/max **numerică** per serie, calculată automat; stornările cu serie proprie apar separat |
-| Operațiuni excluse | intracomunitar, import/export — nu apar în `op1`/`op2` |
+| Plaja alocată (`serieFacturi tip=1`) | din **Plaje alocate D394** de pe jurnal; fără decizie: de la 1, fără `nrF` |
+| Plaja emisă (`serieFacturi tip=2`) | intervale de numere consecutive din perioadă, inclusiv facturile anulate cu număr; stornările cu serie proprie au intervalele lor |
+| Detaliu facturi (`facturi`) | 1 stornată, 2 anulată, 3 autofactură (bază și TVA pe cote), 4 emisă în numele furnizorilor, după **Tip facturi D394** |
+| Facturi emise de clienți / terți (`serieFacturi tip=3/4`) | denumire și CUI ale emitentului; `nrFacturi_benef` / `nrFacturi_terti` |
+| Operațiuni excluse | intracomunitar (achizițiile de la parteneri din UE), import (inclusiv cu TVA amânat, art. 326 alin. (4)), export, scutiri art. 292 / 294 — nu apar în `op1`/`op2` |
 | Stornări/anulări | serie/număr și semn corect |
-| Parteneri inactivi fiscal | modulul **nu** verifică inactivitatea; încadrarea pe perioade de inactivitate se controlează manual |
+| Parteneri inactivi fiscal | tipul vine din perioadele de înregistrare ANAF la data documentului; fără perioade sincronizate (partener neverificat la ANAF), din bifa „Plătitor de TVA”, deci verificați partenerii nesincronizați |
 
 ### Note de monografie și raportare
 
@@ -365,6 +476,9 @@ sunt cerute. Modulul le emite astfel, deci nu vă mirați că unele atribute lip
   devenită exigibilă se repartizează pe cote proporțional, la fel ca notele de exigibilitate pe care
   Odoo le generează la plată și care ajung în D300 (HG 1/2016, Titlul VII, pct. 26 alin. (16) permite
   această repartizare).
+- **Autofacturi (`<facturi>` tip 3):** baza și TVA-ul se citesc din liniile autofacturii (în lei), pe cota
+  fiecărei linii; modulul nu generează note proprii nici aici. Autofactura poartă mențiunea „autofactură”
+  (art. 319 CF).
 - **Rotunjire:** sumele se adună cu bani și se rotunjesc la leu pe rândul (partener, tip, cotă), nu
   factură cu factură, ca totalurile din `rezumat1` și `rezumat2` să fie suma rândurilor `op1`/`op2`.
 - **Defalcarea pe produse (`op11`):** liniile cu taxare inversă ale fiecărei facturi se grupează pe **Cod produs
@@ -377,6 +491,15 @@ sunt cerute. Modulul le emite astfel, deci nu vă mirați că unele atribute lip
 - **`rezumat1/detaliu`:** totalurile `op11` pe bun; codurile de cereale (1001 … 10086000) se adună sub bunul 21,
   care nu se alege pe produs. Codul 36 (gaze naturale) nu poate fi declarat la tip partener 1: nu e în lista
   `codPR` a XSD-ului, iar validatorul admite în `detaliu` doar bunurile 21–31 (R64.2).
+- **Facturi simplificate (cartușul I, pct. 1.1–1.4):** nu schimbă notele contabile și nici D300 (baza și
+  TVA-ul rămân pe rândurile obișnuite); în D394 se declară doar totalizat pe cotă în `rezumat2` (`FSLcod`/`FSL`
+  la emise, după cum beneficiarul are sau nu cod de TVA; `FSA`/`FSAI` la primite, după regimul furnizorului la
+  data facturii), nu factură cu factură în `op1`.
+- **Bonuri fiscale primite (pct. 1.5, `BFAI`):** un bon de cel mult 100 EUR cu TVA, cu codul de TVA al
+  cumpărătorului, ține loc de factură simplificată (art. 319 alin. (12) CF), deci TVA-ul lui se deduce și se
+  declară la pct. 1.5. Peste plafon (cursul BNR valabil la data bonului) bonul nu dă drept de deducere:
+  exportul se oprește până se înregistrează fără TVA. Bonurile fără TVA nu se declară. Modulul nu verifică
+  dacă pe bon e codul de TVA al firmei; asta rămâne în grija operatorului.
 
 ## 7. Legături cu alte module / declarații
 
@@ -393,12 +516,12 @@ sunt cerute. Modulul le emite astfel, deci nu vă mirați că unele atribute lip
 | `l10n_ro_anaf_d394_pos` | (auto-install cu POS) aduce bonurile fiscale POS în op2 / op1 | extensie |
 
 **Ce este automat:** preluarea datelor din facturile postate, clasificarea pe tipuri de partener (1 și 2;
-vezi limitările) și operațiuni, plaja de serii facturi, regulile validatorului ANAF, generarea XML/XDP/XLSX, reconcilierea
+vezi limitările) și operațiuni, plajele de facturi (alocate, emise pe intervale, 2.3 / 2.4) și secțiunea
+`<facturi>`, regulile validatorului ANAF, generarea XML/XDP/XLSX, reconcilierea
 jurnalelor cu D300 la generarea acesteia.
 **Ce rămâne manual:** corectitudinea datelor partenerilor, documentele speciale (storno, taxare
-inversă), verificarea operațiunilor excluse din D394 și a partenerilor inactivi fiscal. Plaja de facturi
-**alocate** se declară identică cu cea a facturilor emise; o plajă alocată prin decizie internă nu se
-raportează separat.
+inversă), verificarea operațiunilor excluse din D394 și a partenerilor inactivi fiscal, tipul D394 al
+jurnalelor și plajele alocate prin decizie internă (pasul 0).
 
 ### Limitări cunoscute (în lucru)
 
@@ -424,17 +547,14 @@ raportează separat.
 - **Regim special (LS / AS):** livrările și achizițiile în regim special (agenții de turism, bunuri
   second-hand, art. 311 și 312 din Codul fiscal) sunt operațiuni pe cota 0, nu scutiri. Dacă apar astfel
   de operațiuni în `op1`, grupurile LS/AS din `rezumat1` se calculează din ele; modulul nu le generează
-  însă încă din facturi (azi emite doar L, A, V, C).
-- **Parteneri nestabiliți în România** (`tip_partener` 3/4) pentru operațiuni pe teritoriul național: nu
-  sunt generați; se completează manual.
-- **Vânzări către persoane fizice:** facturile intră în `op2` (I2) și direct în `rezumat1` cu
-  `tip_partener=2`, fără `op1` pereche, ceea ce validatorul ANAF poate respinge („mod calcul eronat");
-  tratamentul este în lucru. La fel, achizițiile de la parteneri RO fără CUI ajung în `rezumat1` cu
-  `tip_partener=2`, ca operațiuni A.
-- **`nrFacturi`** din blocul `informatii` numără doar livrările naționale incluse în D394, nu toate
-  facturile emise în perioadă (cum cere rubrica ANAF și cum arată plaja `serieFacturi`). O factură cu
-  mai multe cote se numără o singură dată.
-- **XDP (Soft A):** cuprinde facturile pe parteneri și plaja de facturi emise, dar are valori fixe
+  însă încă din facturi (azi emite L, A, AÎ, V, C și N).
+- **Parteneri din UE (tip 3), achiziții:** toate achizițiile cu taxare inversă de la parteneri din UE se
+  consideră intracomunitare (D390). Achizițiile pe teritoriul național cu taxare inversă art. 307 alin. (2)–(6)
+  de la un furnizor din UE (ex. bunuri cu instalare) nu se deosebesc de ele prin taxă și trebuie adăugate manual.
+- **Încasări fără factură (I2):** nu se completează; activitățile scutite de AMEF (OUG 28/1999) le declară manual.
+- **Plaja emisă (tip 2):** golurile dintre intervale (numere sărite sau emise în altă lună) nu se declară
+  automat ca facturi anulate; o factură anulată fără număr nu apare deloc.
+- **XDP (Soft A):** cuprinde facturile pe parteneri, în cartușe separate pe tipurile de partener 1–4, și plajele de facturi (2.1–2.4, cu detaliul facturilor), dar are valori fixe
   pentru periodicitate, TVA la încasare, opțiune și persoane afiliate și nu cuprinde secțiunile de
   rezumat și `op2`. Folosiți XML-ul (Soft J) ca fișier de referință.
 
@@ -444,9 +564,11 @@ raportează separat.
 - [ ] Butoanele „D394 file XML (Soft J)" și „D394 file XDP (Soft A)" se văd direct în bara celor patru
       jurnale de TVA (vânzări, cumpărări și variantele pe regimuri).
 - [ ] Documentele perioadei sunt postate; facturile apar în jurnalele de vânzări/cumpărări.
-- [ ] Partenerii au identificatori fiscali corecți (CUI pentru companii; nume/adresă pentru persoane fizice).
+- [ ] Partenerii au identificatori fiscali corecți (CUI pentru companii; CNP sau nume și județ pentru persoane fizice; codul străin la partenerii din afara României).
+- [ ] Facturile către persoane fizice apar în `op1` cu `tip_partener="2"`, nu în `op2`; `nrCui2` = numărul acestor rânduri.
+- [ ] Achizițiile de la neînregistrați apar la N, cu `tip_document` corect și, la persoane fizice, cu codul produsului.
 - [ ] Vânzarea către partener RO cu CUI apare în `op1`.
-- [ ] Rândurile cu parteneri UE din jurnale nu apar în XML-ul D394.
+- [ ] Livrările intracomunitare și exportul (cota 0) și achizițiile de la parteneri din UE nu apar în XML-ul D394; livrările cu TVA românesc către parteneri străini cu cod apar la tipul 3 / 4.
 - [ ] Totalurile pe cote TVA (21%/11%) sunt coerente cu jurnalele TVA.
 - [ ] Jurnalele TVA sunt reconciliate cu D300 (verificare automată la generarea D300; controlați logul pentru avertismente).
 - [ ] Stornările și documentele negative au seria/numărul și semnul corecte.
@@ -458,7 +580,16 @@ raportează separat.
 - [ ] La D394 trimestrial (setarea „D394 Period" = T, perioada = trimestrul), `luna` din XML este ultima lună a trimestrului și exportul nu se oprește cu R04; încasările `op2` din luni diferite apar în secțiuni separate.
 - [ ] Pentru partenerii cu CUI, `op1` nu are atribute de adresă; `rezumat1` nu conține grupuri de atribute neadmise pe combinația tip partener/cotă.
 - [ ] „D394 file XDP (Soft A)" se generează pentru formularul inteligent ANAF și cuprinde facturile pe
-  parteneri și plaja de facturi emise (cu limitările din secțiunea 7).
+  parteneri și plajele de facturi 2.1–2.4 (cu limitările din secțiunea 7).
+- [ ] O plajă alocată pe jurnal (ex. INV 1–500) apare ca `serieFacturi tip="1"` cu `nrF="500"`; o serie fără
+  decizie apare cu `nrI="1"` și fără `nrF`.
+- [ ] Facturile INV 3–8 și INV 11 din lună dau două rânduri `tip="2"`; o factură anulată cu număr rămâne în
+  interval și apare în `<facturi>` cu `tip_factura="2"`; `nrFacturi` = documentele din intervale.
+- [ ] O notă de credit apare în `<facturi>` cu `tip_factura="1"`; o autofactură (jurnal *Autofacturare*) cu
+  `tip_factura="3"` și `bazaNN` / `tvaNN` pe cotele ei; o factură dintr-un jurnal de achiziții Self Billing cu
+  `tip_factura="4"`.
+- [ ] O factură dintr-un jurnal *Emise de clienți în numele firmei* (2.3) apare ca `serieFacturi tip="3"` cu `den` și `cui`
+  ale clientului și e numărată în `nrFacturi_benef`; la 2.4, cu terțul jurnalului, în `nrFacturi_terti`.
 - [ ] O factură de furnizor cu taxă „TVA la încasare - X% deductibil”, plătită sau nu, apare la AÎ
   (`op1 tip="AI"`, `rezumat1`/`rezumat2` grupul AI) în luna datei facturii, nu la A; o factură din luna
   anterioară plătită acum nu apare nici la A, nici la AÎ.
@@ -488,6 +619,17 @@ raportează separat.
 - [ ] La `op1` V, `op11` nu are atributul `tvaPR`; la C îl are.
 - [ ] Un produs cu taxare inversă fără **Cod produs D394** apare în avertismentul de pe jurnalul de TVA.
 - [ ] Un produs cu codul 36 sau 32–35 pe o factură V/C oprește exportul cu eroarea `codPR` din secțiunea 9.
+- [ ] Câmpul **Tip document D394** apare pe jurnalele de vânzări/cumpărări și pe facturi (lângă jurnal), ia
+      implicit valoarea jurnalului și devine needitabil după postare.
+- [ ] O factură simplificată emisă către un partener cu CUI apare doar în `rezumat2` (`bazaFSLcod`), fără
+      `op1` și fără să crească `facturiL`/`bazaL`; fără CUI, la `bazaFSL`; ea rămâne numărată în `nrFacturi`.
+- [ ] O factură simplificată primită apare la `bazaFSA` (furnizor în regim normal) sau `bazaFSAI` (furnizor cu
+      TVA la încasare), nu în `op1` A/AI.
+- [ ] Un bon fiscal primit cu TVA dedus, sub 100 EUR, apare la `bazaBFAI`/`TVABFAI`; unul fără TVA nu apare
+      nicăieri; un bon emis rămâne în `op2`.
+- [ ] Un bon primit cu TVA dedus peste 100 EUR cu TVA oprește exportul cu mesajul din secțiunea 9; la fel lipsa
+      cursului EUR la data bonului.
+- [ ] O achiziție N are `tip_document` după tipul documentului (ex. borderou → 2); pe L/A/C atributul lipsește.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -498,7 +640,8 @@ raportează separat.
 | Totaluri diferite de D300 | Taxe sau documente încadrate diferit | Avertismentul de reconciliere de la generarea D300 indică rândul (ex. rd. 9) sau taxa nemapată; verificați tax tags și perioada pe elementul semnalat |
 | Factură lipsă din raport | Document nepostat sau jurnal exclus | Postați documentul și verificați tipul jurnalului |
 | Taxare inversă absentă | Taxă RC configurată greșit (fără tax tags) | Verificați repartition lines și codurile fiscale |
-| „Următorii parteneri fără CUI au adresă incompletă în D394 (localitate, țară și — pentru adrese din România — județ sunt obligatorii): …" | Persoană fizică (fără CUI) fără localitate, țară sau județ | Completați pe partener localitatea, țara și, pentru România, județul/sectorul, apoi regenerați |
+| „Următorii parteneri români fără CUI nu au județul completat în D394 (județul e obligatoriu pentru adresele din România): …" | Partener de tip 2 fără CNP / CUI valid (persoană fizică, firmă fără cod), din România, fără județ | Completați pe partener județul (sau sectorul, pentru București), apoi regenerați |
+| „Validare pre-flight D394…” cu „ANAF R215 — operațiunea X, cota Y, nu e admisă pentru partenerul …” | Operațiune nepermisă pe tipul partenerului: ex. livrare cu taxare inversă (V) către un neînregistrat (tip 2), pe care art. 331 nu o permite | Verificați taxa de pe documentele partenerului (taxarea inversă cere ambele părți înregistrate în scopuri de TVA) sau codul de TVA de pe partener, apoi regenerați |
 | „Company '…' does not have a VAT number set." | CUI-ul (codul de TVA) lipsește de pe companie | Completați CUI-ul companiei (câmpul TVA) și regenerați |
 | „Company '…' does not have a valid CAEN code configured…" | Codul CAEN lipsește de pe companie | Completați codul CAEN (4 cifre) pe companie și regenerați |
 | Butoanele „D394 file XML (Soft J)" / „D394 file XDP (Soft A)" lipsesc din bara jurnalului TVA | Modul neactualizat (sub 19.0.1.3.9) | Actualizați modulul `l10n_ro_anaf_d394` |
@@ -509,11 +652,17 @@ raportează separat.
 | Avertisment pe jurnalul de TVA: „D394: produsele de mai jos apar pe operațiuni cu taxare inversă (V/C), dar nu au cod de produs D394…”, cu lista produselor (cel mult 20) | Produsele și categoriile lor nu au **Cod produs D394**, iar codul NC nu corespunde unui cod din nomenclator (de exemplu cherestea 44071290); exportul nu se oprește, dar declarația iese fără defalcarea pe produse pentru ele | Setați **Cod produs D394** pe categoria sau pe produsul din listă (ex. 23 pentru masă lemnoasă), apoi regenerați |
 | „Validare pre-flight D394…” cu „codPR: codul de produs D394 X nu poate fi declarat la operațiunile V/C…”, cu documentele | Codul nu e admis în secțiunea operațiunii (32–35 sunt doar pentru achiziții N de la neînregistrați) sau nu e în lista `codPR` a XSD-ului (36, gaze naturale) | Alegeți codul corect pe produs sau pe categorie și regenerați |
 | DUKIntegrator respinge XML-ul cu R35, R235.2 sau R237.1 (`op11` fără `detaliu`, cod repetat în `op1`, `tvaPR` la V) | Fișier generat cu un modul sub 19.0.1.4.0 | Actualizați modulul `l10n_ro_anaf_d394` și regenerați XML-ul |
+| „Următoarele bonuri fiscale primite au TVA dedus, dar depășesc 100 EUR cu TVA: … Un astfel de bon nu ține loc de factură simplificată: înregistrați-l fără TVA sau alegeți tipul de document D394 corect…” | Bon fiscal primit (Tip document D394 = Bon fiscal) cu TVA dedus și total peste 100 EUR, la cursul BNR de la data bonului | Stornați bonul și înregistrați-l fără TVA (nu dă drept de deducere), sau, dacă de fapt e o factură, schimbați **Tip document D394**; regenerați |
+| „Nu există curs EUR la data de … sau înainte, necesar pentru verificarea plafonului de 100 EUR al bonului fiscal …” | Lipsește cursul EUR din Odoo la data bonului sau înainte | Actualizați cursurile valutare (`Contabilitate → Configurare → Monede`, EUR) și regenerați |
+| O factură simplificată sau un bon primit lipsește din `op1` | Comportament corect de la 19.0.1.5.0: aceste documente se declară doar la cartușul I, pct. 1 (`rezumat2`) | Verificați rubricile `bazaFS*` / `bazaBFAI` din `rezumat2`; dacă documentul e de fapt o factură, schimbați **Tip document D394** |
 | Rapoartele apar goale („Nu există date de afișat!") | Perioada selectată nu conține documente postate | Selectați luna/trimestrul cu facturi postate (implicit luna trecută) |
-| `tvaDedAI` rămâne 0 deși există facturi achitate de la furnizori cu TVA la încasare | Firma nu are bifat **D394 VAT on Collection**; sau furnizorul nu are o perioadă RTVAI care să acopere data facturii (nesincronizat cu ANAF de la actualizarea `l10n_ro_anaf_partner` la 19.0.2.4.0, prima versiune care citește RTVAI) și nici bifa **TVA la încasare (RTVAI)** | Bifați setarea firmei; pe furnizor, în fila **Monitorizare ANAF**, apăsați **Sincronizează cu ANAF** și verificați lista **Perioade TVA** (sau instalați OCA `l10n_ro_vat_on_payment`, care are istoricul complet); apoi regenerați |
+| `tvaDedAI` rămâne 0 deși există facturi achitate de la furnizori cu TVA la încasare | Firma nu are bifat **D394 TVA la încasare**; sau furnizorul nu are o perioadă RTVAI care să acopere data facturii (nesincronizat cu ANAF de la actualizarea `l10n_ro_anaf_partner` la 19.0.2.4.0, prima versiune care citește RTVAI) și nici bifa **TVA la încasare (RTVAI)** | Bifați setarea firmei; pe furnizor, în fila **Monitorizare ANAF**, apăsați **Sincronizează cu ANAF** și verificați lista **Perioade TVA** (sau instalați OCA `l10n_ro_vat_on_payment`, care are istoricul complet); apoi regenerați |
 | `tvaDed` rămâne 0 deși facturile de la furnizori în regim normal sunt achitate | Taxele de achiziție sunt „la facturare", deci plata nu generează note de exigibilitate; sau furnizorul e în regim TVA la încasare la data facturii (suma e în `tvaDedAI`) | Configurați taxele de achiziție deductibile în regim normal „la încasare" (art. 297 alin. (3) CF), cu excepția achizițiilor intracomunitare, importurilor și taxării inverse; verificați regimul furnizorului în fila **Monitorizare ANAF** |
-| Factura unui furnizor cu TVA la încasare apare la A în loc de AÎ, sau o factură veche plătită acum apare din nou | Modul sub 19.0.1.3.18; sau, la firma cu **D394 VAT on Collection** bifat, furnizorul nu are perioadă RTVAI la data facturii (e tratat ca regim normal) | Actualizați modulul `l10n_ro_anaf_d394`; verificați furnizorul în fila **Monitorizare ANAF** (**Sincronizează cu ANAF**); regenerați |
-| `tvaDed` / `tvaCol` lipsesc din XML | Firma nu are bifat **D394 VAT on Collection** (`sistemTVA=0`), sau modulul e sub 19.0.1.3.17 | Bifați setarea dacă firma aplică TVA la încasare, actualizați modulul și regenerați |
+| Factura unui furnizor cu TVA la încasare apare la A în loc de AÎ, sau o factură veche plătită acum apare din nou | Modul sub 19.0.1.3.18; sau, la firma cu **D394 TVA la încasare** bifat, furnizorul nu are perioadă RTVAI la data facturii (e tratat ca regim normal) | Actualizați modulul `l10n_ro_anaf_d394`; verificați furnizorul în fila **Monitorizare ANAF** (**Sincronizează cu ANAF**); regenerați |
+| „D394 pct. 2.4: completați terțul pe jurnalele …" | Un jurnal marcat *Emise de terți în numele firmei* nu are **Terț D394** | Completați terțul pe jurnal (fila **Configurări avansate**) și regenerați |
+| „ANAF R118/R119 — plaja … (tip 3/4) cere denumirea și CUI-ul clientului sau terțului care emite facturile …" | Clientul (2.3) sau terțul (2.4) nu are nume sau CUI | Completați denumirea și CUI-ul partenerului și regenerați |
+| În XML apare o plajă alocată de la 1, fără număr final, deși firma are decizie internă | Plaja nu e înregistrată pe jurnal sau seria nu se potrivește cu prefixul facturilor | Adăugați plaja în **Plaje alocate D394**, cu seria exact ca în numărul facturii |
+| `tvaDed` / `tvaCol` lipsesc din XML | Firma nu are bifat **D394 TVA la încasare** (`sistemTVA=0`), sau modulul e sub 19.0.1.3.17 | Bifați setarea dacă firma aplică TVA la încasare, actualizați modulul și regenerați |
 
 ## 10. Capturi de ecran
 
@@ -536,6 +685,8 @@ inline, nu fișier în `static/description/`.
    recapitulația pe rânduri D300 cu sumele din coloanele Bază D300 / TVA D300.
 4. `04_export_xml.png` — jurnalul TVA vânzări pe regimuri, cu butoanele ① „D394 file XML (Soft J)" și
    ② „D394 file XDP (Soft A)" evidențiate.
+5. `05_jurnal_plaje_d394.png` — jurnalul de vânzări, fila Configurări avansate, cu ① **Tip facturi D394**
+   și ② **Plaje alocate D394** evidențiate (pasul 0).
 
 Regenerare (cu date demo):
 
@@ -552,7 +703,8 @@ Regenerare (cu date demo):
 În manualul final, păstrați explicația orientată pe activitatea utilizatorului: D394 este o
 **declarație informativă** care detaliază, pe parteneri și documente, operațiunile
 naționale relevante TVA. Subliniați fluxul „verifică jurnalele → reconciliază jurnalele cu D300 →
-exportă", diferența dintre `op1` (parteneri cu CUI) și `op2` (încasări de la persoane fizice), faptul că
+exportă", diferența dintre `op1` (facturi, pe parteneri de tipurile 1–4, inclusiv persoanele fizice) și `op2` (bonurile
+fiscale emise), faptul că
 intracomunitarul nu intră în D394 și tratarea taxării inverse (V pe cota 0, C pe cota reală). Menționați
 că modulul nu generează note contabile proprii, ci citește notele deja postate prin tax tags.
 

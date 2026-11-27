@@ -85,6 +85,7 @@ Date minime pentru demo:
 4. Opțional, activați cron-ul **„ANAF SPV: download fiscal status (vector + ledger)"** (dezactivat
    implicit) din **Setări → Tehnic → Automatizare → Acțiuni programate** — rulează zilnic și pune în
    coadă câte un job de descărcare pentru fiecare agent activ.
+5. **Izolare pe companie:** fiecare utilizator vede doar vectorul fiscal și fișa pe rol companiilor la care are acces (companiile active din selectorul de companii); nu este nevoie de configurare, regula se aplică automat la instalare.
 
 ![Formularul Agentului ANAF cu butonul „Descarcă vector + fișă rol"](screenshots/01_agent_form.png)
 

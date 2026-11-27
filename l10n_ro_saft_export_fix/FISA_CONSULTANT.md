@@ -132,6 +132,10 @@ Date minime pentru demo:
 11. **Tip taxă SAF-T** și **Cod taxă SAF-T** pe conturile de datorii către buget și de impozit
     reținut la sursă (același formular de cont), pe contul analitic (ex. 446100 dividende, nu 446).
     Vezi Pasul 18 pentru corespondențe.
+12. Doar dacă e instalat `l10n_ro_saft_stock` (D406 stocuri): pe fiecare categorie de produse
+    stocabile (**Inventar → Configurare → Categorii produse**) completați **Cont stoc** (contul de
+    evaluare a stocului; ex. 371000 Mărfuri, 301000 Materii prime). Verificarea se face și pentru categoriile
+    produselor fără mișcări în perioadă, dar cu stoc la început sau la sfârșit (Pasul 20).
 
 ## 6. Flux de utilizare
 
@@ -910,6 +914,74 @@ clientul la vânzare, furnizorul la achiziție, iar pe linii conturile de venit 
 </Invoice>
 ```
 
+### Pasul 20 — D406 stocuri: categorii fără cont de evaluare a stocului (versiunea 19.0.1.9.1)
+
+Se aplică doar când e instalat `l10n_ro_saft_stock`. Declarația D406 de stocuri raportează în
+`MasterFiles/PhysicalStock` toate produsele cu cantitate la începutul sau la sfârșitul perioadei,
+inclusiv cele fără nicio mișcare în perioadă. Contul fiecărui produs este **Cont stoc** (contul
+de evaluare a stocului) al categoriei lui. Exportul standard verifică acest cont doar pe categoriile produselor
+mișcate în perioadă; un produs doar cu stoc vechi, într-o categorie fără cont, oprea exportul cu
+eroarea tehnică `KeyError: False`.
+
+1. Deschideți **Contabilitate → Raportare → Registre → Carte Mare**, meniul cu rotița (⚙) → **SAF-T (D406 Declarația de Stocuri)**, pe perioada
+   declarației (sau din **Contabilitate → Raportare → Previzualizare D406**, tipul **Stocuri (la
+   cerere)**).
+2. Dacă o categorie a unui produs raportat nu are cont de evaluare, exportul se oprește cu mesajul
+   „Each product category must have a Stock Valuation Account assigned.” și butonul **View Invalid
+   Categories**.
+3. Apăsați **View Invalid Categories**: se deschide lista categoriilor fără cont. Pe fiecare,
+   completați **Cont stoc** ① (contul de stoc corespunzător: 371, 301, 302, 345 …).
+
+![Formularul categoriei „Mărfuri” (Inventar → Configurare → Categorii produse): metoda de cost FIFO și Cont stoc ① 371000 Mărfuri, lângă conturile de venituri 707000 și de cheltuieli 607000](screenshots/20_categorie_cont_evaluare_stoc.png)
+
+4. Generați din nou declarația. În `GeneralLedgerAccounts` apar conturile de stoc ale categoriilor,
+   iar în `PhysicalStock` fiecare produs are contul categoriei lui.
+
+### Pasul 21 — D406 stocuri: tabelul de taxe când perioada are facturi cu taxă (versiunea 19.0.1.9.2)
+
+Se aplică doar când e instalat `l10n_ro_saft_stock`. Declarația D406 de stocuri cere în
+`MasterFiles` tabelul de taxe (`TaxTable`), dar nu și înregistrările contabile
+(`GeneralLedgerEntries`). Exportul standard lega fiecare taxă din perioadă de linia contabilă de
+bază, pe care, fără `GeneralLedgerEntries`, nu o mai citea: la prima factură cu taxă din perioadă,
+exportul și **Previzualizare D406** (tipul **Stocuri (la cerere)**) se opreau cu eroarea tehnică
+`KeyError: <număr>` (numărul este id-ul liniei contabile).
+
+1. Deschideți **Contabilitate → Raportare → Registre → Carte Mare**, pe perioada declarației, meniul
+   cu rotița (⚙) → **SAF-T (D406 Declarația de Stocuri)** ① (sau din **Contabilitate → Raportare →
+   Previzualizare D406**, tipul **Stocuri (la cerere)**). Perioada poate avea facturi de vânzare și de achiziție cu TVA.
+
+![Carte Mare pe luna curentă, cu meniul rotiței (⚙) deschis și „SAF-T (D406 Declarația de Stocuri)” ① evidențiată; în spate, factura de achiziție cu TVA 21% ND 50% (611 / 4426 / 635 / 401)](screenshots/21_carte_mare_export_d406_stocuri.png)
+
+2. Fișierul se generează fără eroare. În `MasterFiles/TaxTable` apar taxele cu sumă de TVA din
+   perioadă, cu codurile lor SAF-T (inclusiv perechea 341104 / 391104 pentru „21% ND 50%”). Taxele
+   de 0% (scutiri, livrări intracomunitare) nu apar la D406 stocuri, spre deosebire de exportul
+   lunar: declarația de stocuri nu are tranzacții care să trimită la codurile lor. Secțiunea `GeneralLedgerEntries` este goală (fără jurnale și tranzacții), cum cere
+   declarația de stocuri.
+
+```xml
+<TaxTableEntry>
+  <TaxType>300</TaxType>
+  <Description>Taxa pe valoarea adaugata</Description>
+  <TaxCodeDetails>
+    <TaxCode>391104</TaxCode>
+    <Description>21% ND 50%</Description>
+    <TaxPercentage>21.0</TaxPercentage>
+    <BaseRate>1.0</BaseRate>
+    <Country>RO</Country>
+  </TaxCodeDetails>
+</TaxTableEntry>
+<TaxTableEntry>
+  <TaxType>300</TaxType>
+  <Description>Taxa pe valoarea adaugata</Description>
+  <TaxCodeDetails>
+    <TaxCode>341104</TaxCode>
+    <Description>21% ND 50%</Description>
+    ...
+  </TaxCodeDetails>
+</TaxTableEntry>
+<GeneralLedgerEntries/>
+```
+
 ## 7. Legături cu alte module / declarații
 
 | Modul | Rol |
@@ -919,6 +991,8 @@ clientul la vânzare, furnizorul la achiziție, iar pe linii conturile de venit 
 | `l10n_ro_saft_validator` | pre-validare înainte de export (date companie, parteneri, secțiuni goale, plăți fără extras) |
 | `l10n_ro_vat_deductibility` | configurarea deductibilității TVA (integral / parțial / nedeductibil); vezi fișa lui pentru alegerea taxei |
 | `l10n_ro_anaf_d300` | decontul de TVA: partea deductibilă (4426) apare pe rândul 24 |
+| `l10n_ro_saft_stock` (Enterprise) | D406 stocuri; acest modul îi corectează verificarea conturilor de categorie și `TaxTable` (Pașii 20–21) |
+| `l10n_ro_saft_preview` | previzualizarea D406 (**Contabilitate → Raportare → Previzualizare D406**), cu același export |
 | D390 (VIES) | livrarea intracomunitară din Pasul 10 se declară și în D390; acest modul nu o generează |
 
 **Ce e automat:**
@@ -942,7 +1016,10 @@ clientul la vânzare, furnizorul la achiziție, iar pe linii conturile de venit 
   unde doar linia 473 cu taxă primește 308302; contrapartida rămâne 000000). Liniile fără taxă
   (ex. linia furnizorului) rămân pe `000 / 000000`. O taxă de 0% fără tip sau cod SAF-T
   completat rămâne și ea pe 000000, ca înainte, fără eroare nouă la export. Corecția se aplică la
-  exportul lunar/trimestrial (cel cu `TaxTable`); exportul de mijloace fixe nu are linii de taxă.
+  exportul lunar/trimestrial (cel cu linii de tranzacție); exportul de mijloace fixe nu are linii de
+  taxă;
+- la D406 stocuri (`l10n_ro_saft_stock`), completarea `MasterFiles/TaxTable` cu taxele cu sumă de TVA din perioadă,
+  cu `GeneralLedgerEntries` gol și fără eroare când perioada are facturi cu taxă (Pasul 21).
 
 **Ce rămâne manual:**
 
@@ -1019,6 +1096,9 @@ clientul la vânzare, furnizorul la achiziție, iar pe linii conturile de venit 
 - [ ] Liniile conturilor bugetare configurate au tipul TAX-IMP și `000000`; liniile 446 de impozit
       reținut la sursă au perechea WHT; contrapartidele rămân `000 / 000000` (Pasul 18).
 - [ ] Fiecare `TaxType` / `TaxCode` din tranzacții apare în `TaxTable`.
+- [ ] La D406 stocuri (`l10n_ro_saft_stock`), toate categoriile produselor cu stoc au **Cont stoc**; exportul nu se oprește cu „View Invalid Categories” (Pasul 20).
+- [ ] D406 stocuri, pe o perioadă cu facturi cu taxă, se generează fără eroare; `TaxTable` conține
+      taxele cu sumă de TVA din perioadă (fără cele de 0%), iar `GeneralLedgerEntries` este gol (Pasul 21).
 - [ ] Fișierul trece prin DUK Integrator fără erori.
 
 ## 9. Mesaje de eroare frecvente
@@ -1045,6 +1125,9 @@ clientul la vânzare, furnizorul la achiziție, iar pe linii conturile de venit 
 | „Persoana de contact SAF-T trebuie să aibă nume și prenume și număr de telefon.” (exportul se oprește) | persoana aleasă în setări nu are telefon sau are un singur cuvânt în nume | completați telefonul și numele complet pe contact, sau goliți setarea (secțiunea 5, punctul 8) |
 | „Persoana de contact SAF-T trebuie să aibă nume și prenume și număr de telefon.” (buton „View Contact”) | contactul ales în setări are un singur cuvânt în nume sau nu are telefon | completați pe fișa contactului numele în ordinea NUME PRENUME și telefonul (Pasul 16, punctul 2) |
 | DUK: „CustomerID / SupplierID incorrect value” | versiune fără corecție: partener fără cod fiscal exportat cu `00`, sau CNP fără `03` | actualizați modulul la 19.0.1.5.0 și regenerați XML-ul (Pasul 15); la firmele din România verificați CUI-ul |
+| „Each product category must have a Stock Valuation Account assigned.” (buton „View Invalid Categories”, D406 stocuri) | un produs raportat în `PhysicalStock` (cu stoc la început sau la sfârșit de perioadă, chiar fără mișcări) are o categorie fără **Cont stoc** | din **View Invalid Categories**, completați contul pe fiecare categorie și regenerați XML-ul (Pasul 20) |
+| Eroare tehnică `KeyError: False` la generarea D406 stocuri | aceeași cauză, într-o versiune fără corecție | actualizați `l10n_ro_saft_export_fix` la 19.0.1.9.1 și completați contul pe categorii (Pasul 20) |
+| Eroare tehnică `KeyError: <număr>` (id-ul unei linii contabile) la generarea sau previzualizarea D406 stocuri | perioada are facturi cu taxă, iar modulul e într-o versiune sub 19.0.1.9.2 | actualizați `l10n_ro_saft_export_fix` la 19.0.1.9.2 și regenerați XML-ul (Pasul 21) |
 
 ## 10. Capturi de ecran
 
@@ -1076,8 +1159,10 @@ Capturile sunt **generate automat** de `tests/test_screenshots.py` (mixinul `Scr
 | 17 | `static/description/17_cont_functiune_saft.png` | Formularul contului 409100, cu tipul Odoo „Datorii curente” și câmpul **Funcțiune SAF-T** ① gol → `AccountType` Activ, din planul de conturi |
 | 18 | `static/description/18_cont_tip_taxa_saft.png` | Formularul contului 446100, cu **Tip taxă SAF-T** ① 604 și **Cod taxă SAF-T** ② 604010 |
 | 19 | `static/description/19_linie_tip_taxa_saft.png` | Elementul de jurnal 446100 din nota de dividende, cu blocul **SAF-T (D406)** ① pentru corecția manuală |
+| 20 | `static/description/20_categorie_cont_evaluare_stoc.png` | Categoria de produse „Mărfuri”, metoda FIFO, cu **Cont stoc** ① 371 (doar cu `l10n_ro_saft_stock`) |
+| 21 | `static/description/21_carte_mare_export_d406_stocuri.png` | Carte Mare cu meniul ⚙ deschis și „SAF-T (D406 Declarația de Stocuri)” ① evidențiată (doar cu `l10n_ro_saft_stock`) |
 
-Extrasele XML din Pașii 6, 8, 9, 10, 11, 13, 16, 17 și 18 sunt text inline, nu imagine. Sunt copiate din exportul
+Extrasele XML din Pașii 6, 8, 9, 10, 11, 13, 16, 17, 18 și 21 sunt text inline, nu imagine. Sunt copiate din exportul
 real al testului de capturi, care le scrie în log („Extras D406 pentru fișă”). Numerele de document,
 datele și `SystemID` / `RecordID` diferă de la o rulare la alta.
 

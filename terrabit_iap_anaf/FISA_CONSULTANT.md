@@ -94,9 +94,8 @@ date de expirare.
 5. **În producție, debifați Utilizează mediu de testare** (blocul **E-Factura România**) și salvați.
    Bifa vine din Odoo standard și e **implicit bifată**: cât timp rămâne așa, facturile pleacă spre
    mediul de test ANAF și nu sunt transmise legal în RO e-Factura.
-6. **Mai multe companii:** înainte de **Generează token IAP**, lăsați activă în selectorul de
-   companii (dreapta sus) **doar** compania pentru care autorizați. Cu mai multe companii bifate,
-   butonul poate alege contul IAP al altei companii, iar tokenul ajunge pe aceea. Pentru o companie
+6. **Mai multe companii:** butonul **Generează token IAP** folosește contul IAP al companiei din
+   pagina de setări, indiferent de companiile bifate în selectorul din dreapta sus. Pentru o companie
    creată după instalare, contul IAP se creează la prima apăsare a butonului.
 
 ![Contul IAP al serviciului ANAF SPV Token: câmpul Endpoint IAP are valoarea https://terrabit.odoo.com, bifa Secret de apel invers înregistrat e încă debifată, compania este RO Company, iar în antet se vede butonul Register on Server](screenshots/01_cont_iap_anaf.png)
@@ -197,7 +196,7 @@ reînnoirea pe server, oprirea acțiunii planificate locale după preluarea de c
 afișarea butonului când tokenul a expirat.
 
 **Ce rămâne manual:** codul fiscal al companiei; debifarea **Utilizează mediu de testare** în
-producție; o singură companie activă în selector la generarea tokenului; autentificarea cu
+producție; autentificarea cu
 certificatul digital, la autorizare și la fiecare re-autorizare.
 
 ## 8. Verificări pentru consultant
@@ -209,8 +208,8 @@ certificatul digital, la autorizare și la fiecare re-autorizare.
 - [ ] În **Setări → Facturare**, blocul **E-Factura România** arată **Generează token IAP**,
       iar butonul standard **Generare token** nu apare.
 - [ ] În producție, bifa **Utilizează mediu de testare** e debifată.
-- [ ] Cu mai multe companii, tokenul generat cu o singură companie activă în selector ajunge pe
-      acea companie și pe niciuna alta.
+- [ ] Cu mai multe companii active în selector, tokenul generat ajunge pe compania din pagina de
+      setări și pe niciuna alta.
 - [ ] Pe o companie fără CUI, **Generează token IAP** oprește cu mesajul „Please set a VAT number
       for company …".
 - [ ] Pagina de autorizare a serverului arată la **Firmă** numele și CUI-ul corecte, iar la
@@ -275,8 +274,7 @@ Regenerare (Odoo 19):
   soluție fără certificat; merită programată din timp cu titularul lui. Mesajul apare abia după
   expirare, când e-Factura deja nu mai trimite: conturile blocate la reînnoire (**Refresh
   Blocked**) le urmărește Terrabit pe server, înainte de expirare.
-- **Mai multe companii:** generați tokenul pentru fiecare companie separat, cu doar acea companie
-  activă în selector.
+- **Mai multe companii:** generați tokenul pentru fiecare companie separat, din setările ei.
 - **Baze actualizate din 18.0:** acolo, acțiunea planificată locală a putut reînnoi tokenul, iar
   copia serverului a devenit invalidă. Serverul Terrabit își recuperează atunci tokenul din baza
   clientului și abia apoi oprește acțiunea locală. Dacă după actualizare apar erori de

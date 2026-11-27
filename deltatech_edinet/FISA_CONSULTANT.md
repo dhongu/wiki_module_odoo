@@ -103,7 +103,9 @@ Deschideți retailerul din **Facturare → Clienți → Clienți**, tabul **Vân
 1. **Alegeți** **Sistem EDI** = **EDI Net**. Facturile și livrările acestui retailer se trimit apoi prin
    EDINET la **Export EDI**.
 2. **Completați** **EDI Cumpărător** și **EDI Vânzător** (codurile din sistemul retailerului) și
-   verificați **GLN**-ul firmei; fiecare magazin (adresă de livrare) are GLN-ul lui.
+   verificați **GLN**-ul firmei; fiecare magazin (adresă de livrare) are GLN-ul lui. La import, GLN-ul
+   se caută printre partenerii companiei și printre cei partajați (**Companie** goală); o parte fără GLN
+   se caută după **CUI**, apoi după **numele exact**, altfel se creează (regula din `deltatech_edi`).
 3. **Verificați** **Lista de prețuri** a retailerului: cu ea se compară prețurile din comenzi (Pasul 4).
 
 ![Fișa retailerului Hipermag Retail SRL, tabul Vânzări și Achiziții: Listă de prețuri Hipermag 2026, Sistem EDI EDI Net evidențiat, EDI Cumpărător 1001, EDI Vânzător 40012 și GLN evidențiat](screenshots/02_retailer_edi_net.png)
@@ -190,7 +192,7 @@ Livrarea și factura se lucrează ca de obicei; trimiterea se face cu **Export E
 1. **Livrarea validată → Export EDI**: avizul de expediție (DESADV) pleacă în EDINET; în chatter apare
    „Trimis EDI: <id mesaj EDINET>".
 2. **Factura înregistrată → Export EDI**: factura pleacă în EDINET, cu același mesaj în chatter.
-3. **Nota de credit**: în tabul **Alte informații** alegeți **Tip factură EDI** (Storno, Retur, Corecție)
+3. **Nota de credit**: în tabul **Alte informații** (câmpurile vin din `deltatech_edi`) alegeți **Tip factură EDI** (Storno, Retur, Corecție)
    și completați **Număr comandă EDI** (obligatoriu pentru orice tip în afară de Original); la retur,
    **Referința Client** este numărul avizului de retur. Apoi **Export EDI**.
 4. Dacă EDINET refuză documentul (parolă expirată, document invalid), apare eroarea „EDInet a refuzat
@@ -214,7 +216,7 @@ EDINET sunt cele din contabilitate:
 | Modul | Rol |
 |---|---|
 | `deltatech_edi` | importul comenzii, nota de preț față de lista de prețuri, generarea XML-urilor DESADV și INVOICE, butonul **Export EDI** |
-| `deltatech_gln` | câmpul **GLN** pe parteneri |
+| `account_add_gln` | câmpul standard **GLN** pe parteneri |
 | `deltatech_sale_product_reference` | **Referințe client**: codurile articolelor la retailer |
 
 **Ce e automat:** preluarea comenzilor la fiecare oră, marcarea mesajelor ca primite în EDINET, atașarea mesajului pe
@@ -242,6 +244,10 @@ comenzii, **Export EDI** pe fiecare livrare și factură, tipul EDI și numărul
 - [ ] Fără parolă sau fără **Șablon URL WSDL**, **Export EDI** se oprește cu „EDInet nu este configurat
       pentru compania …".
 - [ ] O notă de credit cu **Tip factură EDI** diferit de Original nu se salvează fără **Număr comandă EDI**.
+- [ ] O notă de credit înregistrată cu **Tip factură EDI** rămas pe **Original** se oprește la **Export EDI**
+      cu „Completați Tip factură EDI (Storno, Retur sau Corecție) pe nota de credit …", fără să plece în
+      EDINET.
+- [ ] Pe o factură în ciornă și pe o livrare nevalidată butonul **Export EDI** nu apare.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -249,6 +255,11 @@ comenzii, **Export EDI** pe fiecare livrare și factură, tipul EDI și numărul
 |-----------------|-----------------|-----------|
 | Comanda nu apare în Odoo deși e în EDINET (în jurnal: „Product … not found!") | Un produs din mesaj nu se găsește după cod de bare, referință internă sau **Referințe client**; mesajul nu se marchează ca primit și se reîncearcă la fiecare oră | Completați codul de bare sau referința clientului pe produs (sau, cu grijă, parametrul `deltatech_edi.create_product`), apoi **Rulează manual** pe acțiunea programată |
 | „EDInet nu este configurat pentru compania …" | Lipsește utilizatorul, parola sau **Șablon URL WSDL** pe compania documentului | Completați blocul **EDI Net** (Pasul 1) pe compania corectă și reexportați |
+| „Completați Tip factură EDI (Storno, Retur sau Corecție) pe nota de credit … înainte de exportul în EDI." | Nota de credit are **Tip factură EDI** rămas pe **Original** | Alegeți tipul și completați **Număr comandă EDI** în tabul **Alte informații**, apoi reexportați |
+| „Documentul … trebuie înregistrat înainte de exportul în EDI." / „Livrarea … trebuie validată înainte de exportul în EDI." | Exportul a fost cerut pe un document în ciornă | Înregistrați factura sau validați livrarea și reluați exportul |
+| „Doar facturile și notele de credit către clienți se pot exporta în EDI." | Exportul a fost cerut pe o factură de furnizor sau pe alt document contabil | Exportați doar facturile și notele de credit către clienți |
+| „Sistemul EDI al partenerului … nu poate exporta acest document." | Partenerul are un **Sistem EDI** al cărui conector nu e instalat sau nu trimite acest tip de document | Verificați **Sistem EDI** pe retailer (**EDI Net** pentru EDINET) și conectorul instalat |
+| Importul creează un partener nou pentru un retailer sau magazin existent | GLN lipsă sau diferit pe partenerul existent, ori partenerul aparține altei companii | Corectați GLN-ul și **Companie** (a contului sau goală) pe partenerul existent; uniți partenerii dublați |
 | „EDInet a refuzat documentul: …" | EDINET a respins documentul: parolă expirată, utilizator greșit, document invalid | Citiți motivul din mesaj; reînnoiți parola în portalul EDINET sau corectați documentul și reexportați |
 | Nu mai vin comenzi din EDINET | Acțiunea programată e inactivă, parola a expirat sau lipsește adresa serviciului (în jurnal: „company … skipped") | Activați acțiunea (Pasul 3), corectați conexiunea (Pasul 1) și apăsați **Rulează manual** |
 | Notă internă „Prețurile EDI diferă de lista de prețuri …" pe comandă | Prețul net al liniei (cel din mesaj, fără discount la import) diferă de prețul unei reguli din lista de prețuri a comenzii | Verificați prețul cu retailerul; dacă e corect, actualizați regula din lista de prețuri. Comanda rămâne cu prețul din mesaj |

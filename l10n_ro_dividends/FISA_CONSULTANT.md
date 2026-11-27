@@ -217,6 +217,7 @@ acționarilor privind CASS.
 
 ## 8. Verificări pentru consultant
 
+- [ ] Izolare pe companie: un utilizator care are acces doar la compania A nu vede în listă și nu poate deschide înregistrările companiei B (reguli de înregistrare globale pe `company_id`); un utilizator cu ambele companii bifate le vede pe amândouă.
 - [ ] Registrul arată procentele corecte (ex. 60% / 40%), iar suma lor pe acționarii activi este 100%.
 - [ ] La modificarea numărului de acțiuni al unui acționar, procentele celorlalți se schimbă imediat.
 - [ ] Un acționar arhivat are 0% și nu mai este preluat în distribuire; ceilalți revin la 100% împreună.

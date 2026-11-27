@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.0.9`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma_lot
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_rma_lot`
-- **Ultima Ingestie:** 2026-09-24
+- **Ultima Ingestie:** `2026-11-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -16,7 +16,9 @@ Puntea pune lotul sau seria pe cererea de retur, o verifică față de ce a plec
 - Coloana **Lot / serie** pe fiecare linie de retur, limitată la loturile produsului liniei și editabilă doar la produsele urmărite; vizibilă cu grupul standard *Loturi și numere de serie*.
 - Verificare la salvare față de livrarea liniei de comandă (`stock.move.line` de ieșire, efectuate): un lot al altui produs e refuzat, iar un lot al produsului corect, dar livrat altui client, e refuzat cu lista loturilor livrate efectiv în mesaj.
 - O cerere a cărei livrare n-a fost încă validată nu se blochează: coletul ajunge uneori înaintea hârtiilor.
-- **Repune în stoc** creează transferul de retur cu lotul de pe cerere deja pus pe operațiile detaliate (extindere a `_create_return_picking` din nucleu).
+- **Repune în stoc** (*Put Back In Stock*) creează transferul de retur cu lotul de pe cerere deja pus pe operațiile detaliate (extindere a `_create_return_picking` din nucleu); depozitul doar validează, fără să tasteze numărul a doua oară.
+- Mai multe loturi sau serii ale aceluiași produs pe aceeași cerere: fiecare lot/serie primește propria operație detaliată pe transferul de retur, cu cantitatea liniei sale; cantitatea mișcării neacoperită de un lot rămâne pe o linie fără lot, iar marfa bună și cea defectă își păstrează loturile pe transferurile proprii (corecție RMALOT-001, 19.0.1.0.6).
+- Configurare: se activează **Loturi și numere de serie** (*Inventar → Configurare → Setări*), iar pe produse **Urmărire** se setează *După loturi* sau *După număr de serie unic*; altceva nu e necesar, iar coloana de lot e vizibilă doar utilizatorilor din grupul *Loturi și numere de serie*.
 - Lotul apare și în *Retururi → Analiză → Produse returnate*, cu căutare după lot — util la o reclamație de serie către furnizor.
 
 #### 3. Dependențe

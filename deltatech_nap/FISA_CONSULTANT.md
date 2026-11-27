@@ -165,7 +165,7 @@ activează din selectorul de coloane (⇄).
 1. **Găsiți pe ecran** — pe fiecare rând, coloana **Cant de comandat** e propunerea, iar **XYZ**
    spune cât de mult vă puteți baza pe ea.
 2. **Verificați** — pe demo:
-   - **Bec LED E27 9W**: 110 buc, clasa X — stabilă. Cantitatea e ≥ minimul de 50 și multiplu de
+   - **Bec LED E27 9W**: 110 buc, clasa X — stabilă. Cantitatea e ≥ minimul de 50 (luat de la furnizorul afișat pe linie) și multiplu de
      bax (10). Consumul include cele 20 buc vândute ca bec halogen, produsul înlocuit.
    - **Prelungitor 5 prize**: 66 buc, clasa Y — variabilă. Cererea de ofertă deschisă (10 buc) e
      deja scăzută.
@@ -214,6 +214,10 @@ reaprovizionarea comandă tot ce e selectat.
 Odoo rulează aprovizionarea standard (ruta *Cumpără*). Liniile aceluiași furnizor ajung pe **o
 singură cerere de ofertă** în ciornă, cu originea „NAP". Pe demo, fără lampă: o cerere de ofertă
 către Distribuitor Electrice SRL, cu 110 × Bec LED și 66 × Prelungitor.
+
+Cererea de ofertă se face la **furnizorul afișat pe linie** (cel din filtrul raportului sau cel ales
+de dumneavoastră pe linie), nu la furnizorul prioritar al produsului. Dacă furnizorul de pe linie nu
+are ofertă pentru produs, aprovizionarea se oprește cu un mesaj de eroare.
 
 Consolidarea e cea standard din Odoo și depinde de câmpul **Grupare RFQ** al furnizorului (implicit
 *La comandă*), de cumpărătorul furnizorului și de monedă. Liniile pot ajunge și pe o cerere de ofertă
@@ -352,7 +356,9 @@ Raportul de mișcare lentă poate fundamenta o **ajustare pentru deprecierea sto
 - [ ] Pe demo, liniile sunt Bec LED 110 (X), Prelungitor 66 (Y), Lampă 23 (Z, rând galben). Becul
       halogen și priza nu apar.
 - [ ] Explicația de la Prelungitor dă exact pașii din pasul 3, cu rezultatul 66.
-- [ ] Cantitatea de la Bec LED respectă minimul furnizorului (50) și baxul (10).
+- [ ] Cantitatea de la Bec LED respectă minimul furnizorului afișat pe linie (50) și baxul (10).
+- [ ] Cu doi furnizori pe același produs (A prioritar pe fișă, B în filtrul raportului sau ales pe linie),
+      **Reaprovizionare** creează cererea de ofertă la B, nu la A; minimul folosit e cel al lui B.
 - [ ] Vânzările becului halogen (produsul înlocuit) sunt incluse în consumul becului LED
       (280 buc livrate = 260 LED + 20 halogen).
 - [ ] Cu **Stoc de siguranță statistic** debifat și **Creștere stoc de siguranță** = 10 %, necesarul
@@ -375,6 +381,7 @@ Raportul de mișcare lentă poate fundamenta o **ajustare pentru deprecierea sto
 | „Nici un rezultat" (*No results*) | Niciun produs cu cantitate de comandat peste prag, sau niciun consum în perioadă | Verificați perioada și depozitul; debifați **Produse de comandat** pentru a vedea toate liniile |
 | „Nu s-au găsit produse de la furnizorii specificați" | Furnizorii din filtru nu apar pe nicio fișă de produs | Completați furnizorul în tab-ul *Achiziții* al produselor |
 | „Nu există niciun furnizor pentru a genera comanda de achiziție pentru produsului …" (*There is no matching vendor price…*) la **Reaprovizionare** | Produsul nu are un furnizor valid pe fișă: lipsește furnizorul, minimul nu e atins (de exemplu după o corectură manuală sub minim) sau datele de valabilitate au expirat | Completați furnizorul în tab-ul *Achiziții* al produsului; nu coborâți manual cantitatea sub minimul furnizorului |
+| „Vendor … has no offer for product …; set a valid vendor on the line or on the product.” (*Furnizorul … nu are ofertă pentru produsul …*) la **Reaprovizionare** | Furnizorul afișat pe linie (din filtru sau ales de dumneavoastră) nu are ofertă pe fișa produsului; aprovizionarea nu trece la alt furnizor | Alegeți pe linie un furnizor care are ofertă pe produs sau adăugați oferta în tab-ul *Achiziții* al produsului |
 | Consumul mediu pare prea mic | Perioada implicită se termină la sfârșitul lunii curente și include zile viitoare | Alegeți o perioadă din săptămâni întregi, terminată duminica trecută |
 | Produs nou cu consum mediu umflat | Pentru produsele create în perioadă, raportul împarte doar la zilele de la creare | Comportament voit; bifați **Ignoră data creării** pentru a împărți la toată perioada |
 | Cererile / istoricul introduse ieri au dispărut | Sunt păstrate doar temporar (vezi limitările) | Reintroduceți-le sau reimportați-le înainte de rulare |

@@ -1037,7 +1037,7 @@
   {
     "path": "deltatech_ai_sale_delivery_check/index.md",
     "module": "deltatech_ai_sale_delivery_check",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_ai_sale_delivery_check",
     "local_path": "odoo-addons/bitshop_ent/deltatech_ai_sale_delivery_check",
     "last_ingest": "2026-10-23",
@@ -1907,23 +1907,26 @@
     "version": "19.0.1.9.19",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_business_process",
     "local_path": "odoo-addons/deltatech/deltatech_business_process",
-    "last_ingest": "2026-09-24",
-    "friendly_name": "Business process",
+    "last_ingest": "2026-11-27",
+    "friendly_name": "Business Process Management",
     "summary": "Modulul ajută echipele de implementare să structureze și să execute proiectele de implementare Odoo într-un mod controlat. Introduce conceptele de Proiect, Procese de Afaceri și Pașii acestora, împreună cu fluxuri de Testare și de gestionare a Problemelor (issues), astfel încât procesele să poată fi proiectate, validate și livrate ordonat. Valoarea principală constă în faptul că oferă un spațiu de lucru unic în care un proiect este descompus în procese, fiecare proces în pași, iar pașii pot fi testați și corectați până la momentul punerii în producție, cu evidența documentelor, a responsabililor și a progresului pe parcursul întregului ciclu. Ediția curentă adaugă și o Bibliotecă de Procese reutilizabilă, alimentată din module Odoo instalate și/sau din repository-uri git externe.",
     "features": [
       "Spațiu de lucru pentru proiect: gestionează proiectele de implementare, fazele și progresul general; codul proiectului (`P00001`) se dă automat, iar starea (Pregătire → Realizare → Lansare → În exploatare) se schimbă din bara de stare.",
       "Procese de afaceri: definește procese per proiect, grupate pe zonă de afaceri și, opțional, pe grup de procese; un proces nou dintr-o arie cu responsabil primește automat *Responsabil implementare*.",
       "Pași: descompune fiecare proces în pași ordonați, cu responsabili și tranzacții asociate; pașii se pot modifica doar cât procesul e în *Ciornă* sau *Proiectare*.",
-      "Ciclul de viață al procesului: Ciornă → Proiectare → Test → Gata → Producție (sau Abandonat). Doar grupul „Admin procese” poate schimba starea procesului — butoanele de stare apar și pentru „Responsabil proces”, dar acel grup nu are drept de scriere pe proces și primește eroare de acces.",
+      "Ciclul de viață al procesului: Ciornă → Proiectare → Test → Gata → Producție (sau Abandonat). Doar grupul „Admin procese” poate schimba starea procesului — butoanele de stare apar și pentru „Responsabil proces”, dar acel grup nu are drept de scriere pe proces și primește eroare de acces. „Abandonează” e refuzat și la apel direct pentru non-administratori, precum și pentru procesele în producție sau deja abandonate.",
+      "Drepturi de acces (*Setări → Utilizatori*, nivelul Business process): *Admin procese* (creează proiecte și procese, configurează ariile și biblioteca), *Responsabil proces* (pași, dezvoltări, teste, trecerea procesului prin ciclul de viață) și *Utilizator final* (rulează testele de acceptanță, trece rezultate pe pași, deschide probleme); grupurile sunt moștenite în această ordine.",
+      "Date de bază (*Business process → Configurare*): Arie (cu grupuri de procese și un *Responsabil* care devine automat *Responsabil implementare* pe procesele noi), Etape de implementare (trei etape după instalare, redenumibile), plus liste opționale de tipuri de dezvoltare, roluri și tranzacții.",
       "Testare: creează teste ale Implementatorului, de Integrare și de Acceptanță a Utilizatorului (UAT), pornite din meniul „Acțiuni” al listei de procese; fiecare test se creează cu toți pașii procesului. Pornirea unui test pe o selecție de mai multe procese nu funcționează corect: testul implementatorului dă eroare, iar testele de integrare/acceptanță se creează doar pentru primul proces selectat — porniți testele pe un singur proces odată.",
       "Butonul inteligent „Pornire test” (cu contor) din formularul procesului creează un test de acceptanță nou la fiecare apăsare; pentru a reveni la un test existent se folosește butonul „Teste”.",
       "Rularea testului: rezultatul (Trecut/Eșuat) se trece pe fiecare pas, nu pe test în ansamblu. „Efectuat” închide testul și marchează drept „Trecut” inclusiv pașii eșuați; pașii rămași în *Ciornă* nu se modifică — testul se închide doar după ce toate problemele lui au fost rezolvate. Butonul „Așteaptă” blochează testul: din starea *Așteptare* nu mai există niciun buton de ieșire (remediere: un Admin procese șterge testul și pornește altul).",
-      "Probleme (issues): înregistrează problemele apărute la testare sau în execuție pe un proces ori pe un pas specific de test, le urmărește printr-un flux de stări (Deschis → Alocat → Rezolvat → În testare la client → Închis/Redeschis) și le închide cu validări; o problemă închisă marchează automat pasul de test drept *Trecut*, dacă nu mai rămân alte probleme deschise pe acel pas.",
-      "Dezvoltări: leagă elementele de dezvoltare de procese și/sau proiecte pentru a urmări personalizările necesare, cu aprobare și contribuție la durata proiectului.",
+      "Probleme (issues): înregistrează problemele apărute la testare sau în execuție pe un proces ori pe un pas specific de test, le urmărește printr-un flux de stări (Deschis → Alocat → Rezolvat → În testare la client → Închis/Redeschis) și le închide cu validări; o problemă închisă marchează automat pasul de test drept *Trecut*, dacă nu mai rămân alte probleme deschise pe acel pas. Problemele deschise (Open Issues) au cod propriu, cu prefixul OI.",
+      "Rapoartele de test păstrează fiecare rulare a aceluiași pas ca rând separat (cu rezultat, date și observații proprii), în listă, formular și pivot.",
+      "Dezvoltări: leagă elementele de dezvoltare de procese și/sau proiecte pentru a urmări personalizările necesare, cu aprobare și contribuție la durata proiectului; aprobarea mai multor dezvoltări odată funcționează, iar fiecare dezvoltare aprobată dintr-un proiect cu manager primește propria notă și notificare pe e-mail; filtrul „Respins” arată dezvoltările cu aprobarea respinsă.",
       "Atașamente: acces rapid la toate documentele asociate proiectului, proceselor, pașilor, testelor și problemelor, printr-un buton inteligent cu vizualizare consolidată.",
       "Rapoarte: tipărește rapoartele de Proces de Afaceri (pași pe proiect, arie și stare) și de Test de Proces (pași de test pe arie și rezultat), plus un raport de Probleme pe arie și severitate; exportă/importă procese ca JSON pentru reutilizare (cu opțiuni pentru includerea testelor, a responsabilului, a clientului și a informațiilor de suport).",
       "Raport Excel: din proiect, „Acțiuni → Descarcă raportul Excel” generează `Project_Report.xlsx` cu procesele grupate pe arie și duratele de configurare/instruire/testare/migrare de date, evidențiind cu roșu procesele cu durată totală zero. Coloanele „Testing duration” și „Data Migration Duration” sunt inversate — valoarea migrării apare sub *Testing duration* și invers, inclusiv în totaluri; doar totalul pe rând (*Total Duration*) e corect.",
-      "Bibliotecă de procese: sursă reutilizabilă de procese, populată din module instalate care conțin un folder `processes/` (ex. `l10n_ro_process_library`) și/sau din repository-uri git externe configurabile din Setări (URL-uri separate prin virgulă, cu buton „Sincronizează acum” pentru clonare/actualizare locală); importul selectiv se face în proiect prin acțiunea „Import din bibliotecă”, cu comutator „Include durations” pentru a aduce sau nu estimările de efort (tot sau nimic pentru procesele selectate). Deschiderea bibliotecii creează automat ariile lipsă, chiar dacă nu se importă nimic.",
+      "Bibliotecă de procese: sursă reutilizabilă de procese, populată din module instalate care conțin un folder `processes/` (ex. `l10n_ro_process_library`) și/sau din repository-uri git externe configurabile din Setări (URL-uri separate prin virgulă, cu buton „Sincronizează acum” pentru clonare/actualizare locală); importul selectiv se face în proiect prin acțiunea „Import din bibliotecă”, cu comutator „Include durations” pentru a aduce sau nu estimările de efort (tot sau nimic pentru procesele selectate). Setări (*Business process → Configurare → Process Library*): „Discover processes from all modules” (implicit activ) și „Limit to modules” (listă separată prin virgulă; când e completată, doar acele module sunt surse). Deschiderea bibliotecii creează automat ariile lipsă, chiar dacă nu se importă nimic. Sursele git cu același nume de repository (alt proprietar sau gazdă) își păstrează checkout-uri separate și apar amândouă în bibliotecă. Reimportul unui proces exportat cu durate actualizează duratele procesului existent, iar durata totală se recalculează.",
       "Suport pentru repository-uri git private HTTPS: utilizator (implicit `x-access-token` pentru GitHub, `oauth2` pentru GitLab) și token/parolă, trimise ca antet HTTP Basic Authorization, fără a fi scrise pe disc în configurația clonei; URL-urile SSH sau cele cu credențiale incluse sunt folosite ca atare.",
       "Instalare de module direct de pe un proces, pentru proiecte locale (blocată intenționat pentru proiectele remote — „La distanță”).",
       "Vizibilitate pe proces: câmpul „Vizibil doar pentru” (tab „Responsabil”, editabil doar de Admin procese) restrânge procesul, pașii, testele, problemele și rândurile din rapoarte la utilizatorii din listă; gol înseamnă vizibil tuturor.",
@@ -1937,7 +1940,7 @@
       "l10n_ro_process_library",
       "l10n_ro_doc_screenshots"
     ],
-    "text": "Business process\ndeltatech_business_process\nModulul ajută echipele de implementare să structureze și să execute proiectele de implementare Odoo într-un mod controlat. Introduce conceptele de Proiect, Procese de Afaceri și Pașii acestora, împreună cu fluxuri de Testare și de gestionare a Problemelor (issues), astfel încât procesele să poată fi proiectate, validate și livrate ordonat. Valoarea principală constă în faptul că oferă un spațiu de lucru unic în care un proiect este descompus în procese, fiecare proces în pași, iar pașii pot fi testați și corectați până la momentul punerii în producție, cu evidența documentelor, a responsabililor și a progresului pe parcursul întregului ciclu. Ediția curentă adaugă și o Bibliotecă de Procese reutilizabilă, alimentată din module Odoo instalate și/sau din repository-uri git externe.\nSpațiu de lucru pentru proiect: gestionează proiectele de implementare, fazele și progresul general; codul proiectului (`P00001`) se dă automat, iar starea (Pregătire → Realizare → Lansare → În exploatare) se schimbă din bara de stare.\nProcese de afaceri: definește procese per proiect, grupate pe zonă de afaceri și, opțional, pe grup de procese; un proces nou dintr-o arie cu responsabil primește automat *Responsabil implementare*.\nPași: descompune fiecare proces în pași ordonați, cu responsabili și tranzacții asociate; pașii se pot modifica doar cât procesul e în *Ciornă* sau *Proiectare*.\nCiclul de viață al procesului: Ciornă → Proiectare → Test → Gata → Producție (sau Abandonat). Doar grupul „Admin procese” poate schimba starea procesului — butoanele de stare apar și pentru „Responsabil proces”, dar acel grup nu are drept de scriere pe proces și primește eroare de acces.\nTestare: creează teste ale Implementatorului, de Integrare și de Acceptanță a Utilizatorului (UAT), pornite din meniul „Acțiuni” al listei de procese; fiecare test se creează cu toți pașii procesului. Pornirea unui test pe o selecție de mai multe procese nu funcționează corect: testul implementatorului dă eroare, iar testele de integrare/acceptanță se creează doar pentru primul proces selectat — porniți testele pe un singur proces odată.\nButonul inteligent „Pornire test” (cu contor) din formularul procesului creează un test de acceptanță nou la fiecare apăsare; pentru a reveni la un test existent se folosește butonul „Teste”.\nRularea testului: rezultatul (Trecut/Eșuat) se trece pe fiecare pas, nu pe test în ansamblu. „Efectuat” închide testul și marchează drept „Trecut” inclusiv pașii eșuați; pașii rămași în *Ciornă* nu se modifică — testul se închide doar după ce toate problemele lui au fost rezolvate. Butonul „Așteaptă” blochează testul: din starea *Așteptare* nu mai există niciun buton de ieșire (remediere: un Admin procese șterge testul și pornește altul).\nProbleme (issues): înregistrează problemele apărute la testare sau în execuție pe un proces ori pe un pas specific de test, le urmărește printr-un flux de stări (Deschis → Alocat → Rezolvat → În testare la client → Închis/Redeschis) și le închide cu validări; o problemă închisă marchează automat pasul de test drept *Trecut*, dacă nu mai rămân alte probleme deschise pe acel pas.\nDezvoltări: leagă elementele de dezvoltare de procese și/sau proiecte pentru a urmări personalizările necesare, cu aprobare și contribuție la durata proiectului.\nAtașamente: acces rapid la toate documentele asociate proiectului, proceselor, pașilor, testelor și problemelor, printr-un buton inteligent cu vizualizare consolidată.\nRapoarte: tipărește rapoartele de Proces de Afaceri (pași pe proiect, arie și stare) și de Test de Proces (pași de test pe arie și rezultat), plus un raport de Probleme pe arie și severitate; exportă/importă procese ca JSON pentru reutilizare (cu opțiuni pentru includerea testelor, a responsabilului, a clientului și a informațiilor de suport).\nRaport Excel: din proiect, „Acțiuni → Descarcă raportul Excel” generează `Project_Report.xlsx` cu procesele grupate pe arie și duratele de configurare/instruire/testare/migrare de date, evidențiind cu roșu procesele cu durată totală zero. Coloanele „Testing duration” și „Data Migration Duration” sunt inversate — valoarea migrării apare sub *Testing duration* și invers, inclusiv în totaluri; doar totalul pe rând (*Total Duration*) e corect.\nBibliotecă de procese: sursă reutilizabilă de procese, populată din module instalate care conțin un folder `processes/` (ex. `l10n_ro_process_library`) și/sau din repository-uri git externe configurabile din Setări (URL-uri separate prin virgulă, cu buton „Sincronizează acum” pentru clonare/actualizare locală); importul selectiv se face în proiect prin acțiunea „Import din bibliotecă”, cu comutator „Include durations” pentru a aduce sau nu estimările de efort (tot sau nimic pentru procesele selectate). Deschiderea bibliotecii creează automat ariile lipsă, chiar dacă nu se importă nimic.\nSuport pentru repository-uri git private HTTPS: utilizator (implicit `x-access-token` pentru GitHub, `oauth2` pentru GitLab) și token/parolă, trimise ca antet HTTP Basic Authorization, fără a fi scrise pe disc în configurația clonei; URL-urile SSH sau cele cu credențiale incluse sunt folosite ca atare.\nInstalare de module direct de pe un proces, pentru proiecte locale (blocată intenționat pentru proiectele remote — „La distanță”).\nVizibilitate pe proces: câmpul „Vizibil doar pentru” (tab „Responsabil”, editabil doar de Admin procese) restrânge procesul, pașii, testele, problemele și rândurile din rapoarte la utilizatorii din listă; gol înseamnă vizibil tuturor.\nSecuritate și chatter: majoritatea înregistrărilor moștenesc `mail.thread`/activity pentru urmăritori, jurnalizare și notificări, abonând automat participanții cheie; la crearea unei probleme și la aprobarea unei dezvoltări pleacă e-mailuri automate către managerul de proiect."
+    "text": "Business Process Management\ndeltatech_business_process\nModulul ajută echipele de implementare să structureze și să execute proiectele de implementare Odoo într-un mod controlat. Introduce conceptele de Proiect, Procese de Afaceri și Pașii acestora, împreună cu fluxuri de Testare și de gestionare a Problemelor (issues), astfel încât procesele să poată fi proiectate, validate și livrate ordonat. Valoarea principală constă în faptul că oferă un spațiu de lucru unic în care un proiect este descompus în procese, fiecare proces în pași, iar pașii pot fi testați și corectați până la momentul punerii în producție, cu evidența documentelor, a responsabililor și a progresului pe parcursul întregului ciclu. Ediția curentă adaugă și o Bibliotecă de Procese reutilizabilă, alimentată din module Odoo instalate și/sau din repository-uri git externe.\nSpațiu de lucru pentru proiect: gestionează proiectele de implementare, fazele și progresul general; codul proiectului (`P00001`) se dă automat, iar starea (Pregătire → Realizare → Lansare → În exploatare) se schimbă din bara de stare.\nProcese de afaceri: definește procese per proiect, grupate pe zonă de afaceri și, opțional, pe grup de procese; un proces nou dintr-o arie cu responsabil primește automat *Responsabil implementare*.\nPași: descompune fiecare proces în pași ordonați, cu responsabili și tranzacții asociate; pașii se pot modifica doar cât procesul e în *Ciornă* sau *Proiectare*.\nCiclul de viață al procesului: Ciornă → Proiectare → Test → Gata → Producție (sau Abandonat). Doar grupul „Admin procese” poate schimba starea procesului — butoanele de stare apar și pentru „Responsabil proces”, dar acel grup nu are drept de scriere pe proces și primește eroare de acces. „Abandonează” e refuzat și la apel direct pentru non-administratori, precum și pentru procesele în producție sau deja abandonate.\nDrepturi de acces (*Setări → Utilizatori*, nivelul Business process): *Admin procese* (creează proiecte și procese, configurează ariile și biblioteca), *Responsabil proces* (pași, dezvoltări, teste, trecerea procesului prin ciclul de viață) și *Utilizator final* (rulează testele de acceptanță, trece rezultate pe pași, deschide probleme); grupurile sunt moștenite în această ordine.\nDate de bază (*Business process → Configurare*): Arie (cu grupuri de procese și un *Responsabil* care devine automat *Responsabil implementare* pe procesele noi), Etape de implementare (trei etape după instalare, redenumibile), plus liste opționale de tipuri de dezvoltare, roluri și tranzacții.\nTestare: creează teste ale Implementatorului, de Integrare și de Acceptanță a Utilizatorului (UAT), pornite din meniul „Acțiuni” al listei de procese; fiecare test se creează cu toți pașii procesului. Pornirea unui test pe o selecție de mai multe procese nu funcționează corect: testul implementatorului dă eroare, iar testele de integrare/acceptanță se creează doar pentru primul proces selectat — porniți testele pe un singur proces odată.\nButonul inteligent „Pornire test” (cu contor) din formularul procesului creează un test de acceptanță nou la fiecare apăsare; pentru a reveni la un test existent se folosește butonul „Teste”.\nRularea testului: rezultatul (Trecut/Eșuat) se trece pe fiecare pas, nu pe test în ansamblu. „Efectuat” închide testul și marchează drept „Trecut” inclusiv pașii eșuați; pașii rămași în *Ciornă* nu se modifică — testul se închide doar după ce toate problemele lui au fost rezolvate. Butonul „Așteaptă” blochează testul: din starea *Așteptare* nu mai există niciun buton de ieșire (remediere: un Admin procese șterge testul și pornește altul).\nProbleme (issues): înregistrează problemele apărute la testare sau în execuție pe un proces ori pe un pas specific de test, le urmărește printr-un flux de stări (Deschis → Alocat → Rezolvat → În testare la client → Închis/Redeschis) și le închide cu validări; o problemă închisă marchează automat pasul de test drept *Trecut*, dacă nu mai rămân alte probleme deschise pe acel pas. Problemele deschise (Open Issues) au cod propriu, cu prefixul OI.\nRapoartele de test păstrează fiecare rulare a aceluiași pas ca rând separat (cu rezultat, date și observații proprii), în listă, formular și pivot.\nDezvoltări: leagă elementele de dezvoltare de procese și/sau proiecte pentru a urmări personalizările necesare, cu aprobare și contribuție la durata proiectului; aprobarea mai multor dezvoltări odată funcționează, iar fiecare dezvoltare aprobată dintr-un proiect cu manager primește propria notă și notificare pe e-mail; filtrul „Respins” arată dezvoltările cu aprobarea respinsă.\nAtașamente: acces rapid la toate documentele asociate proiectului, proceselor, pașilor, testelor și problemelor, printr-un buton inteligent cu vizualizare consolidată.\nRapoarte: tipărește rapoartele de Proces de Afaceri (pași pe proiect, arie și stare) și de Test de Proces (pași de test pe arie și rezultat), plus un raport de Probleme pe arie și severitate; exportă/importă procese ca JSON pentru reutilizare (cu opțiuni pentru includerea testelor, a responsabilului, a clientului și a informațiilor de suport).\nRaport Excel: din proiect, „Acțiuni → Descarcă raportul Excel” generează `Project_Report.xlsx` cu procesele grupate pe arie și duratele de configurare/instruire/testare/migrare de date, evidențiind cu roșu procesele cu durată totală zero. Coloanele „Testing duration” și „Data Migration Duration” sunt inversate — valoarea migrării apare sub *Testing duration* și invers, inclusiv în totaluri; doar totalul pe rând (*Total Duration*) e corect.\nBibliotecă de procese: sursă reutilizabilă de procese, populată din module instalate care conțin un folder `processes/` (ex. `l10n_ro_process_library`) și/sau din repository-uri git externe configurabile din Setări (URL-uri separate prin virgulă, cu buton „Sincronizează acum” pentru clonare/actualizare locală); importul selectiv se face în proiect prin acțiunea „Import din bibliotecă”, cu comutator „Include durations” pentru a aduce sau nu estimările de efort (tot sau nimic pentru procesele selectate). Setări (*Business process → Configurare → Process Library*): „Discover processes from all modules” (implicit activ) și „Limit to modules” (listă separată prin virgulă; când e completată, doar acele module sunt surse). Deschiderea bibliotecii creează automat ariile lipsă, chiar dacă nu se importă nimic. Sursele git cu același nume de repository (alt proprietar sau gazdă) își păstrează checkout-uri separate și apar amândouă în bibliotecă. Reimportul unui proces exportat cu durate actualizează duratele procesului existent, iar durata totală se recalculează.\nSuport pentru repository-uri git private HTTPS: utilizator (implicit `x-access-token` pentru GitHub, `oauth2` pentru GitLab) și token/parolă, trimise ca antet HTTP Basic Authorization, fără a fi scrise pe disc în configurația clonei; URL-urile SSH sau cele cu credențiale incluse sunt folosite ca atare.\nInstalare de module direct de pe un proces, pentru proiecte locale (blocată intenționat pentru proiectele remote — „La distanță”).\nVizibilitate pe proces: câmpul „Vizibil doar pentru” (tab „Responsabil”, editabil doar de Admin procese) restrânge procesul, pașii, testele, problemele și rândurile din rapoarte la utilizatorii din listă; gol înseamnă vizibil tuturor.\nSecuritate și chatter: majoritatea înregistrărilor moștenesc `mail.thread`/activity pentru urmăritori, jurnalizare și notificări, abonând automat participanții cheie; la crearea unei probleme și la aprobarea unei dezvoltări pleacă e-mailuri automate către managerul de proiect."
   },
   {
     "path": "deltatech_business_process_handover_document/index.md",
@@ -2795,7 +2798,7 @@
   {
     "path": "deltatech_dashboard_builder/index.md",
     "module": "deltatech_dashboard_builder",
-    "version": "19.0.1.3.3",
+    "version": "19.0.1.3.4",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_dashboard_builder",
     "local_path": "odoo-addons/bitshop_ent/deltatech_dashboard_builder",
     "last_ingest": "2026-10-17",
@@ -3906,17 +3909,22 @@
     "path": "deltatech_delivery_review/index.md",
     "module": "deltatech_delivery_review",
     "version": "19.0.0.1.12",
-    "github": "[https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_review](https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_review)",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_review",
     "local_path": "odoo-addons/bitshop/deltatech_delivery_review",
-    "last_ingest": "2026-09-24",
-    "friendly_name": "Verificarea Comenzilor - Curieri",
-    "summary": "Modulul face puntea dintre verificarea comenzilor și fluxul de curierat: aliniază suma de ramburs judecată de regula „Ramburs mare\" cu suma reală pe care AWB-ul o va încasa, iar în dialogurile de expediere (Trimite la curier, Validare Livrări) afișează motivul concret pentru care o livrare este reținută, în loc de un mesaj generic „amânată\". Se instalează automat, fără configurare proprie, de îndată ce sunt prezente ambele module-suport.",
+    "last_ingest": "2026-11-27",
+    "friendly_name": "Sale Order Review - Couriers",
+    "summary": "Modulul face puntea dintre verificarea comenzilor și fluxul de curierat: aliniază suma de ramburs judecată de regula „Ramburs mare\" cu suma reală pe care AWB-ul o va încasa, iar în dialogurile de expediere (Trimite la curier, Validare Livrări) afișează motivul concret pentru care o livrare este reținută, în loc de un mesaj generic „amânată\". Nu se instalează automat: se instalează explicit, doar acolo unde se folosește verificarea comenzilor. Nu are meniu sau setări proprii.",
     "features": [
-      "Regula Ramburs mare judecă suma reală de pe AWB (`get_value_to_collect()`): totalul comenzii,",
+      "Regula Ramburs mare judecă suma pe care o va încasa curierul: ce mai are de plătit clientul",
+      "Doar o plată online încheiată sau autorizată acoperă comanda: o plată cu cardul eșuată sau în",
+      "O comandă fără curier nu e ramburs și nu e reținută (ridicare personală, flotă proprie, termen de",
       "Dialogul Acțiuni → Trimite la curier afișează pentru livrările reținute rândul cu motivul",
       "Raportul Acțiuni → Validare Livrări listează, pentru fiecare comandă neprocesată, motivul",
+      "Un utilizator de depozit fără drepturi de vânzări vede motivele de verificare care rețin livrarea,",
       "Fără motiv de verificare deschis, o livrare amânată păstrează mesajul simplu standard",
-      "Se instalează automat (`auto_install`) când `deltatech_delivery` și [deltatech_sale_order_review](../deltatech_sale_order_review/index.md)"
+      "Configurare: se verifică în *Vânzări → Configurare → Reguli de verificare a comenzilor* regula",
+      "Se recomandă instalarea modulului-frate",
+      "Motivele rămân pe comandă (butonul inteligent Reviews), iar aprobarea lasă o notă în chatter."
     ],
     "dependencies": [
       "deltatech_delivery",
@@ -3928,17 +3936,17 @@
       "deltatech_delivery",
       "payment"
     ],
-    "text": "Verificarea Comenzilor - Curieri\ndeltatech_delivery_review\nModulul face puntea dintre verificarea comenzilor și fluxul de curierat: aliniază suma de ramburs judecată de regula „Ramburs mare\" cu suma reală pe care AWB-ul o va încasa, iar în dialogurile de expediere (Trimite la curier, Validare Livrări) afișează motivul concret pentru care o livrare este reținută, în loc de un mesaj generic „amânată\". Se instalează automat, fără configurare proprie, de îndată ce sunt prezente ambele module-suport.\nRegula Ramburs mare judecă suma reală de pe AWB (`get_value_to_collect()`): totalul comenzii,\nDialogul Acțiuni → Trimite la curier afișează pentru livrările reținute rândul cu motivul\nRaportul Acțiuni → Validare Livrări listează, pentru fiecare comandă neprocesată, motivul\nFără motiv de verificare deschis, o livrare amânată păstrează mesajul simplu standard\nSe instalează automat (`auto_install`) când `deltatech_delivery` și [deltatech_sale_order_review](../deltatech_sale_order_review/index.md)"
+    "text": "Sale Order Review - Couriers\ndeltatech_delivery_review\nModulul face puntea dintre verificarea comenzilor și fluxul de curierat: aliniază suma de ramburs judecată de regula „Ramburs mare\" cu suma reală pe care AWB-ul o va încasa, iar în dialogurile de expediere (Trimite la curier, Validare Livrări) afișează motivul concret pentru care o livrare este reținută, în loc de un mesaj generic „amânată\". Nu se instalează automat: se instalează explicit, doar acolo unde se folosește verificarea comenzilor. Nu are meniu sau setări proprii.\nRegula Ramburs mare judecă suma pe care o va încasa curierul: ce mai are de plătit clientul\nDoar o plată online încheiată sau autorizată acoperă comanda: o plată cu cardul eșuată sau în\nO comandă fără curier nu e ramburs și nu e reținută (ridicare personală, flotă proprie, termen de\nDialogul Acțiuni → Trimite la curier afișează pentru livrările reținute rândul cu motivul\nRaportul Acțiuni → Validare Livrări listează, pentru fiecare comandă neprocesată, motivul\nUn utilizator de depozit fără drepturi de vânzări vede motivele de verificare care rețin livrarea,\nFără motiv de verificare deschis, o livrare amânată păstrează mesajul simplu standard\nConfigurare: se verifică în *Vânzări → Configurare → Reguli de verificare a comenzilor* regula\nSe recomandă instalarea modulului-frate\nMotivele rămân pe comandă (butonul inteligent Reviews), iar aprobarea lasă o notă în chatter."
   },
   {
     "path": "deltatech_delivery_route_planner/index.md",
     "module": "deltatech_delivery_route_planner",
-    "version": "20.0.1.0.0",
-    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_delivery_route_planner",
+    "version": "19.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_delivery_route_planner",
     "local_path": "odoo-addons/bitshop_ent/deltatech_delivery_route_planner",
-    "last_ingest": "2026-11-26",
-    "friendly_name": "deltatech_delivery_route_planner",
-    "summary": "Planifică livrările zilei (sau ale unei săptămâni) cu vehiculele proprii: le împarte între vehicule și ordonează opririle astfel încât mașinile să parcurgă cât mai puțini kilometri, apoi creează câte un transfer în lot (batch) pentru fiecare vehicul. Dispecerul vede traseul pe hartă, iar șoferul primește lista de opriri cu ora estimată de sosire. Modulul este pe 20.0 (Beta, licență OPL-1, preț 220 EUR).",
+    "last_ingest": "2026-11-27",
+    "friendly_name": "Delivery Route Planner",
+    "summary": "Planifică livrările zilei (sau ale unei săptămâni) cu vehiculele proprii: le împarte între vehicule și ordonează opririle astfel încât mașinile să parcurgă cât mai puțini kilometri, apoi creează câte un transfer în lot (batch) pentru fiecare vehicul. Dispecerul vede traseul pe hartă, iar șoferul primește lista de opriri cu ora estimată de sosire. Modulul este în versiunea 19.0, portat din 20.0 (Beta, licență OPL-1, preț 220 EUR).",
     "features": [
       "Asistentul „Planifică livrări” (*Inventar → Operațiuni → Plan deliveries*): se alege data, depozitul și vehiculele disponibile; livrările de ieșire ale zilei sunt propuse pe vehicule, cu opririle în ordine, ora de sosire, încărcarea și procentul de capacitate, kilometrii și ora de întoarcere. Sunt eligibile livrările de ieșire gata sau în așteptare, programate la data aleasă și neincluse încă într-un lot.",
       "Constrângeri: sarcina utilă a categoriei de vehicul (din *Stock Transport*), lungimea maximă a articolului pe care îl poate transporta caroseria, ziua de lucru a fiecărui vehicul și intervalul de livrare al adresei. Ce nu încape este amânat, cu motiv (capacitate, articol prea lung, zi de lucru, lipsă coordonate).",
@@ -3953,6 +3961,7 @@
       "Necesită pachetul Python `ortools` pe server și un server OSRM propriu (nu serverul demo public în producție)."
     ],
     "dependencies": [
+      "stock_picking_batch",
       "stock_fleet",
       "base_geolocalize",
       "web_map",
@@ -3964,7 +3973,7 @@
       "fleet",
       "deltatech_fleet"
     ],
-    "text": "deltatech_delivery_route_planner\ndeltatech_delivery_route_planner\nPlanifică livrările zilei (sau ale unei săptămâni) cu vehiculele proprii: le împarte între vehicule și ordonează opririle astfel încât mașinile să parcurgă cât mai puțini kilometri, apoi creează câte un transfer în lot (batch) pentru fiecare vehicul. Dispecerul vede traseul pe hartă, iar șoferul primește lista de opriri cu ora estimată de sosire. Modulul este pe 20.0 (Beta, licență OPL-1, preț 220 EUR).\nAsistentul „Planifică livrări” (*Inventar → Operațiuni → Plan deliveries*): se alege data, depozitul și vehiculele disponibile; livrările de ieșire ale zilei sunt propuse pe vehicule, cu opririle în ordine, ora de sosire, încărcarea și procentul de capacitate, kilometrii și ora de întoarcere. Sunt eligibile livrările de ieșire gata sau în așteptare, programate la data aleasă și neincluse încă într-un lot.\nConstrângeri: sarcina utilă a categoriei de vehicul (din *Stock Transport*), lungimea maximă a articolului pe care îl poate transporta caroseria, ziua de lucru a fiecărui vehicul și intervalul de livrare al adresei. Ce nu încape este amânat, cu motiv (capacitate, articol prea lung, zi de lucru, lipsă coordonate).\nDistanțe rutiere de la propriul server OSRM (OpenStreetMap); când acesta nu răspunde, planul folosește linia dreaptă înmulțită cu un factor de drum și este marcat „estimat”. Adresele fără coordonate sunt geocodate automat.\nPlanificare pe săptămână: se alege o perioadă, iar planificatorul stabilește și ziua fiecărei livrări, între data pregătirii mărfii și termenul promis clientului, astfel încât livrările din aceeași zonă să circule împreună. Livrările cu dată fixă își păstrează ziua, weekendul doar la cerere, iar cele mutate primesc noua dată programată (cu notă în chatter).\nOptimizare cu Google OR-Tools (rutare de vehicule cu capacități și ferestre de timp).\nLoturi: unul pe vehicul și zi, cu vehicul, șofer, ordinea opririlor, kilometri și durată planificate și o hartă cu linia traseului și opririle numerotate.\nRecalculare rută pe lot după ce dispecerul adaugă sau scoate o livrare; avertizează la depășirea capacității sau la întoarcere după sfârșitul programului.\nRaport „Listă opriri” pentru șofer: opriri, ora de sosire, adresă, telefon și greutate; pe fiecare livrare apare Sosire planificată.\nConfigurare (*Inventar → Configurare → Setări → Route planning*): serverul OSRM și cheia API (header `X-Api-Key`), factorul de drum, viteza medie și timpii de descărcare pe oprire și la 100 kg. Pe vehicul, fila *Route planning*: lungimea maximă a articolului și orele de început/sfârșit ale zilei; pe adresă (*Sales & Purchase*): fereastra de livrare. Adresa depozitului trebuie să aibă coordonate, iar categoriile de vehicul au *Max Weight* completat.\nDouă puncte de extensie pentru alte module: greutatea și cel mai lung articol al unei livrări.\nNecesită pachetul Python `ortools` pe server și un server OSRM propriu (nu serverul demo public în producție)."
+    "text": "Delivery Route Planner\ndeltatech_delivery_route_planner\nPlanifică livrările zilei (sau ale unei săptămâni) cu vehiculele proprii: le împarte între vehicule și ordonează opririle astfel încât mașinile să parcurgă cât mai puțini kilometri, apoi creează câte un transfer în lot (batch) pentru fiecare vehicul. Dispecerul vede traseul pe hartă, iar șoferul primește lista de opriri cu ora estimată de sosire. Modulul este în versiunea 19.0, portat din 20.0 (Beta, licență OPL-1, preț 220 EUR).\nAsistentul „Planifică livrări” (*Inventar → Operațiuni → Plan deliveries*): se alege data, depozitul și vehiculele disponibile; livrările de ieșire ale zilei sunt propuse pe vehicule, cu opririle în ordine, ora de sosire, încărcarea și procentul de capacitate, kilometrii și ora de întoarcere. Sunt eligibile livrările de ieșire gata sau în așteptare, programate la data aleasă și neincluse încă într-un lot.\nConstrângeri: sarcina utilă a categoriei de vehicul (din *Stock Transport*), lungimea maximă a articolului pe care îl poate transporta caroseria, ziua de lucru a fiecărui vehicul și intervalul de livrare al adresei. Ce nu încape este amânat, cu motiv (capacitate, articol prea lung, zi de lucru, lipsă coordonate).\nDistanțe rutiere de la propriul server OSRM (OpenStreetMap); când acesta nu răspunde, planul folosește linia dreaptă înmulțită cu un factor de drum și este marcat „estimat”. Adresele fără coordonate sunt geocodate automat.\nPlanificare pe săptămână: se alege o perioadă, iar planificatorul stabilește și ziua fiecărei livrări, între data pregătirii mărfii și termenul promis clientului, astfel încât livrările din aceeași zonă să circule împreună. Livrările cu dată fixă își păstrează ziua, weekendul doar la cerere, iar cele mutate primesc noua dată programată (cu notă în chatter).\nOptimizare cu Google OR-Tools (rutare de vehicule cu capacități și ferestre de timp).\nLoturi: unul pe vehicul și zi, cu vehicul, șofer, ordinea opririlor, kilometri și durată planificate și o hartă cu linia traseului și opririle numerotate.\nRecalculare rută pe lot după ce dispecerul adaugă sau scoate o livrare; avertizează la depășirea capacității sau la întoarcere după sfârșitul programului.\nRaport „Listă opriri” pentru șofer: opriri, ora de sosire, adresă, telefon și greutate; pe fiecare livrare apare Sosire planificată.\nConfigurare (*Inventar → Configurare → Setări → Route planning*): serverul OSRM și cheia API (header `X-Api-Key`), factorul de drum, viteza medie și timpii de descărcare pe oprire și la 100 kg. Pe vehicul, fila *Route planning*: lungimea maximă a articolului și orele de început/sfârșit ale zilei; pe adresă (*Sales & Purchase*): fereastra de livrare. Adresa depozitului trebuie să aibă coordonate, iar categoriile de vehicul au *Max Weight* completat.\nDouă puncte de extensie pentru alte module: greutatea și cel mai lung articol al unei livrări.\nNecesită pachetul Python `ortools` pe server și un server OSRM propriu (nu serverul demo public în producție)."
   },
   {
     "path": "deltatech_delivery_sd/index.md",
@@ -4168,19 +4177,26 @@
     "path": "deltatech_delivery_status_review/index.md",
     "module": "deltatech_delivery_status_review",
     "version": "19.0.0.2.0",
-    "github": "[https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_status_review](https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_status_review)",
+    "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_delivery_status_review",
     "local_path": "odoo-addons/bitshop/deltatech_delivery_status_review",
-    "last_ingest": "2026-09-24",
-    "friendly_name": "Verificarea Comenzilor — Livrări Reținute",
-    "summary": "Modulul face puntea dintre verificarea comenzilor și amânarea livrărilor: dacă o comandă are un motiv deschis pe poarta „Înainte de livrare\" (ramburs mare, adresă incompletă, plată online nefinalizată), livrarea ei de ieșire este ținută automat în depozit — rămâne în așteptare și nu poate fi validată — până când motivul este aprobat sau se rezolvă de la sine. Se instalează automat când sunt prezente ambele module pe care le leagă, fără configurare suplimentară.",
+    "last_ingest": "2026-11-27",
+    "friendly_name": "Sale Order Review - Held Deliveries",
+    "summary": "Modulul face puntea dintre verificarea comenzilor și amânarea livrărilor: dacă o comandă are un motiv deschis pe poarta „Înainte de livrare\" (ramburs mare, adresă incompletă, plată online nefinalizată), livrările ei de ieșire sunt ținute automat în depozit — rămân în așteptare și nu pot fi validate — până când motivul este aprobat sau se rezolvă de la sine. Nu se instalează automat: se instalează explicit, doar acolo unde se folosește verificarea comenzilor. Nu are meniu propriu.",
     "features": [
       "O comandă cu un motiv deschis pe poarta *Înainte de livrare* are livrările de ieșire amânate",
+      "Modulul eliberează doar transferurile pe care le-a reținut el (câmp tehnic *Held by Review* pe",
       "Amânările deja existente în `deltatech_delivery_status` (furnizor de plată cu *Postponed",
       "O plată finalizată închide doar propriul motiv — livrarea este eliberată doar dacă nu mai rămâne",
-      "Butonul Eliberează de pe comandă deschide wizardul de aprobare cu motivele care rețin",
-      "Formularul livrării (`stock.picking`) afișează un banner cu aceleași motive ca și comanda, ca",
-      "La instalare, livrările deja amânate prin alte mijloace primesc automat un motiv manual, ca să",
-      "Trei reguli noi de verificare, toate pe poarta *Înainte de livrare*: *Livrare amânată de un"
+      "Motivele se pot șterge în trei moduri echivalente, toate în istoric: Aprobă pe rândul motivului,",
+      "Butonul Eliberează de pe comandă deschide wizardul *Release Held Delivery* (motivele care rețin",
+      "Eliberează livrarea funcționează și pe mai multe comenzi selectate din listă (meniul Acțiune):",
+      "Bifa Amânată nu poate fi debifată manual cât timp comanda are motive deschise, iar validarea e",
+      "Amână pe o comandă fără probleme oprește livrarea (ex. clientul vrea să adauge un produs), cu motivul",
+      "Formularul livrării afișează panglica POSTPONED și un banner cu motivele de pe comandă; filtrul",
+      "La instalare, livrările deja amânate prin alte mijloace primesc automat un motiv manual (*Delivery",
+      "Trei reguli de verificare, toate pe poarta *Înainte de livrare*, active implicit: *Livrare amânată de un",
+      "Configurare: pentru plăți online care trebuie să sosească înainte de expediere se bifează **Postponed",
+      "Audit: lista motivelor pe comandă (butonul inteligent Checks), nota din chatter la aprobare și câmpul"
     ],
     "dependencies": [
       "deltatech_sale_order_review",
@@ -4191,7 +4207,7 @@
       "payment",
       "deltatech_delivery_status"
     ],
-    "text": "Verificarea Comenzilor — Livrări Reținute\ndeltatech_delivery_status_review\nModulul face puntea dintre verificarea comenzilor și amânarea livrărilor: dacă o comandă are un motiv deschis pe poarta „Înainte de livrare\" (ramburs mare, adresă incompletă, plată online nefinalizată), livrarea ei de ieșire este ținută automat în depozit — rămâne în așteptare și nu poate fi validată — până când motivul este aprobat sau se rezolvă de la sine. Se instalează automat când sunt prezente ambele module pe care le leagă, fără configurare suplimentară.\nO comandă cu un motiv deschis pe poarta *Înainte de livrare* are livrările de ieșire amânate\nAmânările deja existente în `deltatech_delivery_status` (furnizor de plată cu *Postponed\nO plată finalizată închide doar propriul motiv — livrarea este eliberată doar dacă nu mai rămâne\nButonul Eliberează de pe comandă deschide wizardul de aprobare cu motivele care rețin\nFormularul livrării (`stock.picking`) afișează un banner cu aceleași motive ca și comanda, ca\nLa instalare, livrările deja amânate prin alte mijloace primesc automat un motiv manual, ca să\nTrei reguli noi de verificare, toate pe poarta *Înainte de livrare*: *Livrare amânată de un"
+    "text": "Sale Order Review - Held Deliveries\ndeltatech_delivery_status_review\nModulul face puntea dintre verificarea comenzilor și amânarea livrărilor: dacă o comandă are un motiv deschis pe poarta „Înainte de livrare\" (ramburs mare, adresă incompletă, plată online nefinalizată), livrările ei de ieșire sunt ținute automat în depozit — rămân în așteptare și nu pot fi validate — până când motivul este aprobat sau se rezolvă de la sine. Nu se instalează automat: se instalează explicit, doar acolo unde se folosește verificarea comenzilor. Nu are meniu propriu.\nO comandă cu un motiv deschis pe poarta *Înainte de livrare* are livrările de ieșire amânate\nModulul eliberează doar transferurile pe care le-a reținut el (câmp tehnic *Held by Review* pe\nAmânările deja existente în `deltatech_delivery_status` (furnizor de plată cu *Postponed\nO plată finalizată închide doar propriul motiv — livrarea este eliberată doar dacă nu mai rămâne\nMotivele se pot șterge în trei moduri echivalente, toate în istoric: Aprobă pe rândul motivului,\nButonul Eliberează de pe comandă deschide wizardul *Release Held Delivery* (motivele care rețin\nEliberează livrarea funcționează și pe mai multe comenzi selectate din listă (meniul Acțiune):\nBifa Amânată nu poate fi debifată manual cât timp comanda are motive deschise, iar validarea e\nAmână pe o comandă fără probleme oprește livrarea (ex. clientul vrea să adauge un produs), cu motivul\nFormularul livrării afișează panglica POSTPONED și un banner cu motivele de pe comandă; filtrul\nLa instalare, livrările deja amânate prin alte mijloace primesc automat un motiv manual (*Delivery\nTrei reguli de verificare, toate pe poarta *Înainte de livrare*, active implicit: *Livrare amânată de un\nConfigurare: pentru plăți online care trebuie să sosească înainte de expediere se bifează **Postponed\nAudit: lista motivelor pe comandă (butonul inteligent Checks), nota din chatter la aprobare și câmpul"
   },
   {
     "path": "deltatech_delivery_tnt/index.md",
@@ -4554,41 +4570,46 @@
   {
     "path": "deltatech_edi/index.md",
     "module": "deltatech_edi",
-    "version": "19.0.1.0.10",
+    "version": "19.0.1.1.0",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edi",
     "local_path": "odoo-addons/bitshop/deltatech_edi",
-    "last_ingest": "2026-09-29",
-    "friendly_name": "Deltatech EDI Base Connector",
-    "summary": "Acest modul reprezintă conectorul EDI (Electronic Data Interchange) de bază pentru Odoo, facilitând comunicarea electronică standardizată cu partenerii și sistemele externe. Din perspectivă de business, conectorul EDI este un instrument esențial pentru digitalizarea lanțului de aprovizionare, reducerea documentelor pe hârtie și îmbunătățirea vitezei și acurateței tranzacțiilor. El permite schimbul automatizat de documente comerciale (facturi, comenzi de achiziție, avize de expediție) între platforme, eliminând introducerea manuală a datelor și reducând costurile operaționale.",
+    "last_ingest": "2026-11-27",
+    "friendly_name": "EDI Base Connector",
+    "summary": "Acest modul reprezintă conectorul EDI (Electronic Data Interchange) de bază pentru Odoo, facilitând comunicarea electronică standardizată cu partenerii și sistemele externe. Din perspectivă de business, conectorul EDI este un instrument esențial pentru digitalizarea lanțului de aprovizionare, reducerea documentelor pe hârtie și îmbunătățirea vitezei și acurateței tranzacțiilor. El permite schimbul automatizat de documente comerciale (facturi, comenzi, avize de expediție) între platforme, eliminând introducerea manuală a datelor și reducând costurile operaționale.",
     "features": [
-      "Coduri de articol ale clientului: codul cumpărătorului (`BuyerItemID`) se ține în `product.customerinfo` (din [deltatech_sale_product_reference](../deltatech_sale_product_reference/index.md)), nu mai în `product.supplierinfo`; cumpărătorul EDI nu mai apare ca furnizor al produsului (reaprovizionare, rute, ecran Furnizori). Migrare automată a referințelor existente la upgrade.",
+      "GLN standard: identificarea partenerilor se face prin câmpul standard `global_location_number` (din `account_add_gln`), nu prin `gln` din [deltatech_gln](../deltatech_gln/index.md); câmpul apare în formular și pe companii, nu doar pe adresele de livrare. La upgrade, vechiul `gln` se copiază unde câmpul standard e gol (la conflict se păstrează valoarea standard, iar partenerul se loghează).",
+      "Configurare pe grupe de taxe: EDI Code și EDI Percent (*Facturare > Configurare > Grupuri de taxe*) devin `TaxCategoryCoded` și `TaxPercent` în XML-ul facturii.",
+      "Configurare partener: Edi System (valorile vin de la conectorul instalat), GLN pe companie și pe fiecare adresă de livrare (magazin), EDI Bayer și EDI Seller (obligatoriu pentru DESADV).",
+      "Import comenzi: clientul și adresa de livrare se găsesc după GLN, produsele după cod de bare, apoi referință internă, apoi codul clientului; numărul comenzii clientului intră în Customer Reference; un mesaj primit de două ori nu creează o a doua comandă. Liniile importate nu primesc discount, iar descrierea lor poartă codul clientului (`[BuyerItemID] nume`).",
+      "Găsirea partenerului: căutarea după GLN se face doar când partidul are GLN (un GLN gol nu mai potrivește orice partener fără GLN); fără GLN se caută după CUI, apoi după nume exact, altfel se creează un partener nou; un partid cu GLN e o locație și nu se potrivește niciodată după nume sau CUI.",
+      "Prețuri la import: când mesajul nu are prețuri, se folosește referința clientului, apoi lista de prețuri; când prețul net diferă de o regulă din lista de prețuri, se postează o notă internă în chatter, fără a modifica lista.",
+      "Coduri de articol ale clientului: codul cumpărătorului (`BuyerItemID`) se ține în `product.customerinfo` (din [deltatech_sale_product_reference](../deltatech_sale_product_reference/index.md)), nu în `product.supplierinfo`; cumpărătorul EDI nu mai apare ca furnizor. Referința introdusă manual are prioritate față de cea scrisă de import.",
       "Cod export determinist: `BuyerItemID` se rezolvă după precedență (variantă peste șablon, partener exact peste entitatea comercială, apoi secvență), fără revenire tăcută la `default_code` propriu.",
-      "Import comenzi: un cod de cumpărător ambiguu se rezolvă după aceeași precedență (cu avertisment în log), iar liniile importate poartă în descriere codul clientului (`[BuyerItemID] nume`).",
-      "Comunicare standardizată: implementarea de protocoale EDI standard din industrie pentru schimbul de documente comerciale (de ex. facturi, comenzi de achiziție) cu partenerii.",
-      "Procesare mai rapidă a tranzacțiilor: automatizarea schimbului de documente între sisteme pentru o comunicare aproape instantanee.",
-      "Acuratețe îmbunătățită a datelor: eliminarea erorilor de introducere manuală prin transmiterea electronică a informațiilor între platforme.",
-      "Costuri operaționale reduse: minimizarea efortului administrativ prin automatizarea schimburilor de documente de rutină și a sarcinilor de reconciliere.",
-      "Interoperabilitate scalabilă: adăugarea cu ușurință de noi parteneri și protocoale EDI pe măsură ce afacerea și rețeaua de parteneri cresc."
+      "Buton Export EDI comun tuturor conectorilor: apare doar pe facturile/notele de credit clienți postate și pe livrările validate către clienți; verifică documentul, partenerul și sistemul EDI, apoi apelează conectorul; dacă sistemul EDI nu poate exporta documentul, oprește cu mesaj clar.",
+      "Aviz de expediție (DESADV) și factură: XML generat și validat pe schema XSD (DESADV, respectiv INVOICE); eroarea de validare apare în chatter. La nota de credit se alege Invoice EDI Type: *Return* (numărul avizului de retur în Reference), *Storno* / *Correction* (`număr factură|dată` în Reference). Codurile din XML (`RETURN`, `O`, `R`, `C`, `PCE`) nu se traduc.",
+      "Fără Edi System pe partener, exportul se oprește cu mesajul „Please select an EDI system for partner …”."
     ],
     "dependencies": [
       "stock",
       "sale_stock",
-      "deltatech_gln",
+      "account_add_gln",
       "account",
       "deltatech_sale_product_reference"
     ],
     "connections": [
       "deltatech_gln",
+      "gln",
+      "global_location_number",
       "deltatech_sale_product_reference",
       "deltatech_ediconnect",
       "deltatech_edinet"
     ],
-    "text": "Deltatech EDI Base Connector\ndeltatech_edi\nAcest modul reprezintă conectorul EDI (Electronic Data Interchange) de bază pentru Odoo, facilitând comunicarea electronică standardizată cu partenerii și sistemele externe. Din perspectivă de business, conectorul EDI este un instrument esențial pentru digitalizarea lanțului de aprovizionare, reducerea documentelor pe hârtie și îmbunătățirea vitezei și acurateței tranzacțiilor. El permite schimbul automatizat de documente comerciale (facturi, comenzi de achiziție, avize de expediție) între platforme, eliminând introducerea manuală a datelor și reducând costurile operaționale.\nCoduri de articol ale clientului: codul cumpărătorului (`BuyerItemID`) se ține în `product.customerinfo` (din [deltatech_sale_product_reference](../deltatech_sale_product_reference/index.md)), nu mai în `product.supplierinfo`; cumpărătorul EDI nu mai apare ca furnizor al produsului (reaprovizionare, rute, ecran Furnizori). Migrare automată a referințelor existente la upgrade.\nCod export determinist: `BuyerItemID` se rezolvă după precedență (variantă peste șablon, partener exact peste entitatea comercială, apoi secvență), fără revenire tăcută la `default_code` propriu.\nImport comenzi: un cod de cumpărător ambiguu se rezolvă după aceeași precedență (cu avertisment în log), iar liniile importate poartă în descriere codul clientului (`[BuyerItemID] nume`).\nComunicare standardizată: implementarea de protocoale EDI standard din industrie pentru schimbul de documente comerciale (de ex. facturi, comenzi de achiziție) cu partenerii.\nProcesare mai rapidă a tranzacțiilor: automatizarea schimbului de documente între sisteme pentru o comunicare aproape instantanee.\nAcuratețe îmbunătățită a datelor: eliminarea erorilor de introducere manuală prin transmiterea electronică a informațiilor între platforme.\nCosturi operaționale reduse: minimizarea efortului administrativ prin automatizarea schimburilor de documente de rutină și a sarcinilor de reconciliere.\nInteroperabilitate scalabilă: adăugarea cu ușurință de noi parteneri și protocoale EDI pe măsură ce afacerea și rețeaua de parteneri cresc."
+    "text": "EDI Base Connector\ndeltatech_edi\nAcest modul reprezintă conectorul EDI (Electronic Data Interchange) de bază pentru Odoo, facilitând comunicarea electronică standardizată cu partenerii și sistemele externe. Din perspectivă de business, conectorul EDI este un instrument esențial pentru digitalizarea lanțului de aprovizionare, reducerea documentelor pe hârtie și îmbunătățirea vitezei și acurateței tranzacțiilor. El permite schimbul automatizat de documente comerciale (facturi, comenzi, avize de expediție) între platforme, eliminând introducerea manuală a datelor și reducând costurile operaționale.\nGLN standard: identificarea partenerilor se face prin câmpul standard `global_location_number` (din `account_add_gln`), nu prin `gln` din [deltatech_gln](../deltatech_gln/index.md); câmpul apare în formular și pe companii, nu doar pe adresele de livrare. La upgrade, vechiul `gln` se copiază unde câmpul standard e gol (la conflict se păstrează valoarea standard, iar partenerul se loghează).\nConfigurare pe grupe de taxe: EDI Code și EDI Percent (*Facturare > Configurare > Grupuri de taxe*) devin `TaxCategoryCoded` și `TaxPercent` în XML-ul facturii.\nConfigurare partener: Edi System (valorile vin de la conectorul instalat), GLN pe companie și pe fiecare adresă de livrare (magazin), EDI Bayer și EDI Seller (obligatoriu pentru DESADV).\nImport comenzi: clientul și adresa de livrare se găsesc după GLN, produsele după cod de bare, apoi referință internă, apoi codul clientului; numărul comenzii clientului intră în Customer Reference; un mesaj primit de două ori nu creează o a doua comandă. Liniile importate nu primesc discount, iar descrierea lor poartă codul clientului (`[BuyerItemID] nume`).\nGăsirea partenerului: căutarea după GLN se face doar când partidul are GLN (un GLN gol nu mai potrivește orice partener fără GLN); fără GLN se caută după CUI, apoi după nume exact, altfel se creează un partener nou; un partid cu GLN e o locație și nu se potrivește niciodată după nume sau CUI.\nPrețuri la import: când mesajul nu are prețuri, se folosește referința clientului, apoi lista de prețuri; când prețul net diferă de o regulă din lista de prețuri, se postează o notă internă în chatter, fără a modifica lista.\nCoduri de articol ale clientului: codul cumpărătorului (`BuyerItemID`) se ține în `product.customerinfo` (din [deltatech_sale_product_reference](../deltatech_sale_product_reference/index.md)), nu în `product.supplierinfo`; cumpărătorul EDI nu mai apare ca furnizor. Referința introdusă manual are prioritate față de cea scrisă de import.\nCod export determinist: `BuyerItemID` se rezolvă după precedență (variantă peste șablon, partener exact peste entitatea comercială, apoi secvență), fără revenire tăcută la `default_code` propriu.\nButon Export EDI comun tuturor conectorilor: apare doar pe facturile/notele de credit clienți postate și pe livrările validate către clienți; verifică documentul, partenerul și sistemul EDI, apoi apelează conectorul; dacă sistemul EDI nu poate exporta documentul, oprește cu mesaj clar.\nAviz de expediție (DESADV) și factură: XML generat și validat pe schema XSD (DESADV, respectiv INVOICE); eroarea de validare apare în chatter. La nota de credit se alege Invoice EDI Type: *Return* (numărul avizului de retur în Reference), *Storno* / *Correction* (`număr factură|dată` în Reference). Codurile din XML (`RETURN`, `O`, `R`, `C`, `PCE`) nu se traduc.\nFără Edi System pe partener, exportul se oprește cu mesajul „Please select an EDI system for partner …”."
   },
   {
     "path": "deltatech_ediconnect/index.md",
     "module": "deltatech_ediconnect",
-    "version": "19.0.1.1.17",
+    "version": "19.0.1.1.19",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_ediconnect",
     "local_path": "odoo-addons/bitshop/deltatech_ediconnect",
     "last_ingest": "2026-10-31",
@@ -4620,7 +4641,7 @@
   {
     "path": "deltatech_edinet/index.md",
     "module": "deltatech_edinet",
-    "version": "19.0.1.6.11",
+    "version": "19.0.1.6.13",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edinet`",
     "local_path": "odoo-addons/bitshop/deltatech_edinet",
     "last_ingest": "2026-09-29",
@@ -4736,7 +4757,7 @@
   {
     "path": "deltatech_expenses/index.md",
     "module": "deltatech_expenses",
-    "version": "19.0.3.12.4",
+    "version": "19.0.3.12.5",
     "github": "https://github.com/dhongu/deltatech/tree/19.0/deltatech_expenses",
     "local_path": "odoo-addons/deltatech/deltatech_expenses",
     "last_ingest": "2026-11-20",
@@ -4872,7 +4893,7 @@
   {
     "path": "deltatech_feed/index.md",
     "module": "deltatech_feed",
-    "version": "19.0.3.8.6",
+    "version": "19.0.3.8.7",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_feed",
     "local_path": "odoo-addons/bitshop/deltatech_feed",
     "last_ingest": "2026-10-22",
@@ -4907,7 +4928,7 @@
   {
     "path": "deltatech_financial_analysis/index.md",
     "module": "deltatech_financial_analysis",
-    "version": "19.0.1.2.2",
+    "version": "19.0.1.2.6",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_financial_analysis",
     "local_path": "odoo-addons/bitshop_ent/deltatech_financial_analysis",
     "last_ingest": "2026-10-27",
@@ -6258,7 +6279,7 @@
   {
     "path": "deltatech_marketplace_emag/index.md",
     "module": "deltatech_marketplace_emag",
-    "version": "19.0.2.22.2",
+    "version": "19.0.2.22.3",
     "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_emag",
     "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_emag",
     "last_ingest": "2026-11-20",
@@ -7536,7 +7557,7 @@
   {
     "path": "deltatech_nap/index.md",
     "module": "deltatech_nap",
-    "version": "19.0.1.10.7",
+    "version": "19.0.1.10.9",
     "github": "`https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_nap`",
     "local_path": "odoo-addons/bitshop/deltatech_nap",
     "last_ingest": "2026-10-27",
@@ -7976,7 +7997,7 @@
   {
     "path": "deltatech_partner_rating/index.md",
     "module": "deltatech_partner_rating",
-    "version": "19.0.0.1.13",
+    "version": "19.0.0.1.14",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_partner_rating",
     "local_path": "odoo-addons/bitshop/deltatech_partner_rating",
     "last_ingest": "2026-11-12",
@@ -10885,13 +10906,14 @@
     "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_rma_helpdesk",
     "local_path": "odoo-addons/bitshop_ent/deltatech_rma_helpdesk",
-    "last_ingest": null,
+    "last_ingest": "2026-11-27",
     "friendly_name": "RMA Helpdesk",
-    "summary": "Un tichet de Helpdesk e o conversație, un retur e un document: linii cu cantități, un motiv care poartă o politică, o fișă care călătorește în colet, un verdict pe fiecare produs și banii la final. Panoul After-Sales din Odoo îi dă tichetului wizardul standard de retur; puntea îi dă în schimb o cerere de retur completă, din [deltatech_rma](../deltatech_rma/index.md), și le leagă pe cele două. Modul Enterprise, din suita bitshop_ent.",
+    "summary": "Un tichet de Helpdesk e o conversație, un retur e un document: linii cu cantități, un motiv care poartă o politică, o fișă care călătorește în colet, un verdict pe fiecare produs și banii la final. Panoul After-Sales din Odoo îi dă tichetului wizardul standard de retur; puntea îi dă în schimb o cerere de retur completă, din [deltatech_rma](../deltatech_rma/index.md), și le leagă pe cele două. Modul Enterprise, din suita bitshop_ent: Helpdesk există doar în Enterprise, așa că nucleul retururilor rămâne în suita bitshop (Community), iar aici stă doar puntea dintre cele două.",
     "features": [
-      "Bifă proprie pe echipă, Cereri de retur, în secțiunea *După Vânzare* (Helpdesk → Configurare → Echipe HelpDesk), separată de *Retururi* din Odoo, care instalează `helpdesk_stock`.",
+      "Bifă proprie pe echipă, Cereri de retur (`use_deltatech_rma`), în secțiunea *După Vânzare* (Helpdesk → Configurare → Echipe HelpDesk), separată de *Retururi* din Odoo (`use_product_returns`), care instalează `helpdesk_stock`; cele două pot coexista (wizardul standard pentru o remediere rapidă, cererea completă pentru restul), dar activarea uneia nu o impune pe cealaltă.",
+      "Cererea completă oferă ce wizardul standard nu are: motiv cu politică proprie, fișă în colet, recepție la depozit, verdict pe produs și nota de credit din [deltatech_rma](../deltatech_rma/index.md).",
       "Butonul Cerere de retur pe tichet (Alt+Shift+R), vizibil doar cu client pe tichet și pentru utilizatorii cu *Retururi / Utilizator*.",
-      "Butonul deschide formularul cererii nesalvat, precompletat cu clientul, comanda de pe tichet, tichetul și liniile returnabile ale comenzii (cantitatea disponibilă, prețul plătit după discount, titlul tichetului ca descriere); cererea primește număr abia la salvare.",
+      "Butonul deschide formularul cererii nesalvat, precompletat cu clientul, comanda de pe tichet, tichetul și liniile returnabile ale comenzii (cantitatea disponibilă, prețul plătit după discount (`_rma_price_unit()` din `deltatech_rma`), titlul tichetului ca descriere); cererea primește număr abia la salvare, deci un clic greșit nu consumă un număr RMA și nu lasă o cerere goală în registru.",
       "Contorul Retururi pe tichet și legătura înapoi pe cerere (câmp și buton *Tichet*, căutare după tichet); ștergerea tichetului nu șterge cererea.",
       "Rezultatul e scris în istoricul tichetului la aprobare, refuz și rezolvare, ca agentul de suport să nu deschidă returul."
     ],
@@ -10903,7 +10925,7 @@
       "deltatech_rma",
       "helpdesk_sale"
     ],
-    "text": "RMA Helpdesk\ndeltatech_rma_helpdesk\nUn tichet de Helpdesk e o conversație, un retur e un document: linii cu cantități, un motiv care poartă o politică, o fișă care călătorește în colet, un verdict pe fiecare produs și banii la final. Panoul After-Sales din Odoo îi dă tichetului wizardul standard de retur; puntea îi dă în schimb o cerere de retur completă, din [deltatech_rma](../deltatech_rma/index.md), și le leagă pe cele două. Modul Enterprise, din suita bitshop_ent.\nBifă proprie pe echipă, Cereri de retur, în secțiunea *După Vânzare* (Helpdesk → Configurare → Echipe HelpDesk), separată de *Retururi* din Odoo, care instalează `helpdesk_stock`.\nButonul Cerere de retur pe tichet (Alt+Shift+R), vizibil doar cu client pe tichet și pentru utilizatorii cu *Retururi / Utilizator*.\nButonul deschide formularul cererii nesalvat, precompletat cu clientul, comanda de pe tichet, tichetul și liniile returnabile ale comenzii (cantitatea disponibilă, prețul plătit după discount, titlul tichetului ca descriere); cererea primește număr abia la salvare.\nContorul Retururi pe tichet și legătura înapoi pe cerere (câmp și buton *Tichet*, căutare după tichet); ștergerea tichetului nu șterge cererea.\nRezultatul e scris în istoricul tichetului la aprobare, refuz și rezolvare, ca agentul de suport să nu deschidă returul."
+    "text": "RMA Helpdesk\ndeltatech_rma_helpdesk\nUn tichet de Helpdesk e o conversație, un retur e un document: linii cu cantități, un motiv care poartă o politică, o fișă care călătorește în colet, un verdict pe fiecare produs și banii la final. Panoul After-Sales din Odoo îi dă tichetului wizardul standard de retur; puntea îi dă în schimb o cerere de retur completă, din [deltatech_rma](../deltatech_rma/index.md), și le leagă pe cele două. Modul Enterprise, din suita bitshop_ent: Helpdesk există doar în Enterprise, așa că nucleul retururilor rămâne în suita bitshop (Community), iar aici stă doar puntea dintre cele două.\nBifă proprie pe echipă, Cereri de retur (`use_deltatech_rma`), în secțiunea *După Vânzare* (Helpdesk → Configurare → Echipe HelpDesk), separată de *Retururi* din Odoo (`use_product_returns`), care instalează `helpdesk_stock`; cele două pot coexista (wizardul standard pentru o remediere rapidă, cererea completă pentru restul), dar activarea uneia nu o impune pe cealaltă.\nCererea completă oferă ce wizardul standard nu are: motiv cu politică proprie, fișă în colet, recepție la depozit, verdict pe produs și nota de credit din [deltatech_rma](../deltatech_rma/index.md).\nButonul Cerere de retur pe tichet (Alt+Shift+R), vizibil doar cu client pe tichet și pentru utilizatorii cu *Retururi / Utilizator*.\nButonul deschide formularul cererii nesalvat, precompletat cu clientul, comanda de pe tichet, tichetul și liniile returnabile ale comenzii (cantitatea disponibilă, prețul plătit după discount (`_rma_price_unit()` din `deltatech_rma`), titlul tichetului ca descriere); cererea primește număr abia la salvare, deci un clic greșit nu consumă un număr RMA și nu lasă o cerere goală în registru.\nContorul Retururi pe tichet și legătura înapoi pe cerere (câmp și buton *Tichet*, căutare după tichet); ștergerea tichetului nu șterge cererea.\nRezultatul e scris în istoricul tichetului la aprobare, refuz și rezolvare, ca agentul de suport să nu deschidă returul."
   },
   {
     "path": "deltatech_rma_lot/index.md",
@@ -10911,14 +10933,16 @@
     "version": "19.0.1.0.9",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma_lot",
     "local_path": "odoo-addons/bitshop/deltatech_rma_lot",
-    "last_ingest": null,
+    "last_ingest": "2026-11-27",
     "friendly_name": "RMA Lot / Serial",
     "summary": "Puntea pune lotul sau seria pe cererea de retur, o verifică față de ce a plecat efectiv din depozit către clientul respectiv și o duce pe transferul de retur, ca depozitul să nu o mai tasteze a doua oară. Trasabilitatea valorează ceva doar dacă e adevărată: un lot tastat de mână la intrare e locul cel mai ușor de stricat, fără ca nimic să semnaleze că seria aceea n-a plecat niciodată către clientul acesta. Stă separat de [deltatech_rma](../deltatech_rma/index.md), pentru că cele mai multe magazine nu vând nimic urmărit pe lot.",
     "features": [
       "Coloana Lot / serie pe fiecare linie de retur, limitată la loturile produsului liniei și editabilă doar la produsele urmărite; vizibilă cu grupul standard *Loturi și numere de serie*.",
       "Verificare la salvare față de livrarea liniei de comandă (`stock.move.line` de ieșire, efectuate): un lot al altui produs e refuzat, iar un lot al produsului corect, dar livrat altui client, e refuzat cu lista loturilor livrate efectiv în mesaj.",
       "O cerere a cărei livrare n-a fost încă validată nu se blochează: coletul ajunge uneori înaintea hârtiilor.",
-      "Repune în stoc creează transferul de retur cu lotul de pe cerere deja pus pe operațiile detaliate (extindere a `_create_return_picking` din nucleu).",
+      "Repune în stoc (*Put Back In Stock*) creează transferul de retur cu lotul de pe cerere deja pus pe operațiile detaliate (extindere a `_create_return_picking` din nucleu); depozitul doar validează, fără să tasteze numărul a doua oară.",
+      "Mai multe loturi sau serii ale aceluiași produs pe aceeași cerere: fiecare lot/serie primește propria operație detaliată pe transferul de retur, cu cantitatea liniei sale; cantitatea mișcării neacoperită de un lot rămâne pe o linie fără lot, iar marfa bună și cea defectă își păstrează loturile pe transferurile proprii (corecție RMALOT-001, 19.0.1.0.6).",
+      "Configurare: se activează Loturi și numere de serie (*Inventar → Configurare → Setări*), iar pe produse Urmărire se setează *După loturi* sau *După număr de serie unic*; altceva nu e necesar, iar coloana de lot e vizibilă doar utilizatorilor din grupul *Loturi și numere de serie*.",
       "Lotul apare și în *Retururi → Analiză → Produse returnate*, cu căutare după lot — util la o reclamație de serie către furnizor."
     ],
     "dependencies": [
@@ -10928,7 +10952,7 @@
       "deltatech_rma",
       "stock"
     ],
-    "text": "RMA Lot / Serial\ndeltatech_rma_lot\nPuntea pune lotul sau seria pe cererea de retur, o verifică față de ce a plecat efectiv din depozit către clientul respectiv și o duce pe transferul de retur, ca depozitul să nu o mai tasteze a doua oară. Trasabilitatea valorează ceva doar dacă e adevărată: un lot tastat de mână la intrare e locul cel mai ușor de stricat, fără ca nimic să semnaleze că seria aceea n-a plecat niciodată către clientul acesta. Stă separat de [deltatech_rma](../deltatech_rma/index.md), pentru că cele mai multe magazine nu vând nimic urmărit pe lot.\nColoana Lot / serie pe fiecare linie de retur, limitată la loturile produsului liniei și editabilă doar la produsele urmărite; vizibilă cu grupul standard *Loturi și numere de serie*.\nVerificare la salvare față de livrarea liniei de comandă (`stock.move.line` de ieșire, efectuate): un lot al altui produs e refuzat, iar un lot al produsului corect, dar livrat altui client, e refuzat cu lista loturilor livrate efectiv în mesaj.\nO cerere a cărei livrare n-a fost încă validată nu se blochează: coletul ajunge uneori înaintea hârtiilor.\nRepune în stoc creează transferul de retur cu lotul de pe cerere deja pus pe operațiile detaliate (extindere a `_create_return_picking` din nucleu).\nLotul apare și în *Retururi → Analiză → Produse returnate*, cu căutare după lot — util la o reclamație de serie către furnizor."
+    "text": "RMA Lot / Serial\ndeltatech_rma_lot\nPuntea pune lotul sau seria pe cererea de retur, o verifică față de ce a plecat efectiv din depozit către clientul respectiv și o duce pe transferul de retur, ca depozitul să nu o mai tasteze a doua oară. Trasabilitatea valorează ceva doar dacă e adevărată: un lot tastat de mână la intrare e locul cel mai ușor de stricat, fără ca nimic să semnaleze că seria aceea n-a plecat niciodată către clientul acesta. Stă separat de [deltatech_rma](../deltatech_rma/index.md), pentru că cele mai multe magazine nu vând nimic urmărit pe lot.\nColoana Lot / serie pe fiecare linie de retur, limitată la loturile produsului liniei și editabilă doar la produsele urmărite; vizibilă cu grupul standard *Loturi și numere de serie*.\nVerificare la salvare față de livrarea liniei de comandă (`stock.move.line` de ieșire, efectuate): un lot al altui produs e refuzat, iar un lot al produsului corect, dar livrat altui client, e refuzat cu lista loturilor livrate efectiv în mesaj.\nO cerere a cărei livrare n-a fost încă validată nu se blochează: coletul ajunge uneori înaintea hârtiilor.\nRepune în stoc (*Put Back In Stock*) creează transferul de retur cu lotul de pe cerere deja pus pe operațiile detaliate (extindere a `_create_return_picking` din nucleu); depozitul doar validează, fără să tasteze numărul a doua oară.\nMai multe loturi sau serii ale aceluiași produs pe aceeași cerere: fiecare lot/serie primește propria operație detaliată pe transferul de retur, cu cantitatea liniei sale; cantitatea mișcării neacoperită de un lot rămâne pe o linie fără lot, iar marfa bună și cea defectă își păstrează loturile pe transferurile proprii (corecție RMALOT-001, 19.0.1.0.6).\nConfigurare: se activează Loturi și numere de serie (*Inventar → Configurare → Setări*), iar pe produse Urmărire se setează *După loturi* sau *După număr de serie unic*; altceva nu e necesar, iar coloana de lot e vizibilă doar utilizatorilor din grupul *Loturi și numere de serie*.\nLotul apare și în *Retururi → Analiză → Produse returnate*, cu căutare după lot — util la o reclamație de serie către furnizor."
   },
   {
     "path": "deltatech_rma_marketplace/index.md",
@@ -10969,15 +10993,16 @@
     "version": "19.0.1.0.9",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma_withdrawal",
     "local_path": "odoo-addons/bitshop/deltatech_rma_withdrawal",
-    "last_ingest": null,
+    "last_ingest": "2026-11-27",
     "friendly_name": "RMA Withdrawal",
     "summary": "Retragerea din contract și returul comercial rămân înregistrări diferite: [deltatech_sale_withdrawal](../deltatech_sale_withdrawal/index.md) ține declarația consumatorului, [deltatech_rma](../deltatech_rma/index.md) ține coletul. Puntea le leagă, ca un consumator care se retrage să primească aceeași fișă de retur cu cod de bare și coletul lui să treacă prin aceeași recepție prin scanare ca orice retur, fără ca retragerea să capete vreodată o stare de aprobare pe care, conform art. 11a din Directiva 2011/83/UE, nu are voie s-o aibă.",
     "features": [
-      "Mod de execuție nou, `rma_parcel` (*Așteptăm coletul înapoi, cu fișă de retur*), ales în Vânzări → Configurare → Setări → Retragere din contract → Execuția retragerii.",
+      "Retragerea din contract (UE): dreptul de retragere din Directiva 2011/83/UE privind drepturile consumatorilor, cu funcția de retragere din art. 11a și 14a adăugată de Directiva (UE) 2023/2673, aplicabilă din 19 iunie 2026 oricărui comerciant care vinde online consumatorilor din UE.",
+      "Mod de execuție nou, `rma_parcel` (*Așteptăm coletul înapoi, cu fișă de retur*), ales în Vânzări → Configurare → Setări → Retragere din contract → Execuția retragerii, după ce funcția de retragere e activată; altă configurare nu e necesară.",
       "La confirmarea retragerii se creează, ca superuser, o cerere de retur direct în Așteptăm coletul, de tip *Retur*, cu rezolvarea *Returnăm banii*: nu trece prin *Ciornă* sau *Trimis*, din care ar putea fi aprobată. Executarea de două ori nu deschide un al doilea colet.",
       "Taxa de manipulare e zero (art. 14): motivul rezervat, Retragere în termenul legal, are intervalul 0–0, e *Doar pentru colegi* (nu apare în portal) și spune că transportul de întoarcere e pe cheltuiala clientului.",
       "Fișa pleacă pe mail cu un șablon propriu, fără nicio formulare de aprobare; spune că banii se returnează după ce produsele ajung sau după dovada expedierii (art. 13 alin. (3)).",
-      "Coletul urmează apoi fluxul obișnuit: recepție prin scanare, verdicte, repunere în stoc. Nota de credit se pregătește din cererea de retur, iar retragerea se marchează rambursată; câmpul *Notă credit* de pe retragere nu e completat de punte.",
+      "Coletul urmează apoi fluxul obișnuit: recepție prin scanare, verdicte, repunere în stoc. Nota de credit se pregătește (ciornă) din cererea de retur, după inspecție, o singură dată per retragere, iar retragerea se marchează rambursată; câmpul *Notă credit* de pe retragere nu e completat de punte. Bara de stare arată și *Aprobat* (comună tuturor retururilor), dar această cerere nu trece prin el.",
       "Pe formularul retragerii, butonul și câmpul Colet de retur; *Mod de execuție* se afișează cu eticheta lui (din `deltatech_sale_withdrawal` 19.0.0.3.2).",
       "Liniile coletului iau prețul plătit, după discount; sumele sunt cu TVA pe ambele documente — totalul retragerii e ce se rambursează consumatorului, *De returnat clientului* de pe cerere e totalul notei de credit."
     ],
@@ -10990,7 +11015,7 @@
       "deltatech_sale_withdrawal_stock",
       "deltatech_rma"
     ],
-    "text": "RMA Withdrawal\ndeltatech_rma_withdrawal\nRetragerea din contract și returul comercial rămân înregistrări diferite: [deltatech_sale_withdrawal](../deltatech_sale_withdrawal/index.md) ține declarația consumatorului, [deltatech_rma](../deltatech_rma/index.md) ține coletul. Puntea le leagă, ca un consumator care se retrage să primească aceeași fișă de retur cu cod de bare și coletul lui să treacă prin aceeași recepție prin scanare ca orice retur, fără ca retragerea să capete vreodată o stare de aprobare pe care, conform art. 11a din Directiva 2011/83/UE, nu are voie s-o aibă.\nMod de execuție nou, `rma_parcel` (*Așteptăm coletul înapoi, cu fișă de retur*), ales în Vânzări → Configurare → Setări → Retragere din contract → Execuția retragerii.\nLa confirmarea retragerii se creează, ca superuser, o cerere de retur direct în Așteptăm coletul, de tip *Retur*, cu rezolvarea *Returnăm banii*: nu trece prin *Ciornă* sau *Trimis*, din care ar putea fi aprobată. Executarea de două ori nu deschide un al doilea colet.\nTaxa de manipulare e zero (art. 14): motivul rezervat, Retragere în termenul legal, are intervalul 0–0, e *Doar pentru colegi* (nu apare în portal) și spune că transportul de întoarcere e pe cheltuiala clientului.\nFișa pleacă pe mail cu un șablon propriu, fără nicio formulare de aprobare; spune că banii se returnează după ce produsele ajung sau după dovada expedierii (art. 13 alin. (3)).\nColetul urmează apoi fluxul obișnuit: recepție prin scanare, verdicte, repunere în stoc. Nota de credit se pregătește din cererea de retur, iar retragerea se marchează rambursată; câmpul *Notă credit* de pe retragere nu e completat de punte.\nPe formularul retragerii, butonul și câmpul Colet de retur; *Mod de execuție* se afișează cu eticheta lui (din `deltatech_sale_withdrawal` 19.0.0.3.2).\nLiniile coletului iau prețul plătit, după discount; sumele sunt cu TVA pe ambele documente — totalul retragerii e ce se rambursează consumatorului, *De returnat clientului* de pe cerere e totalul notei de credit."
+    "text": "RMA Withdrawal\ndeltatech_rma_withdrawal\nRetragerea din contract și returul comercial rămân înregistrări diferite: [deltatech_sale_withdrawal](../deltatech_sale_withdrawal/index.md) ține declarația consumatorului, [deltatech_rma](../deltatech_rma/index.md) ține coletul. Puntea le leagă, ca un consumator care se retrage să primească aceeași fișă de retur cu cod de bare și coletul lui să treacă prin aceeași recepție prin scanare ca orice retur, fără ca retragerea să capete vreodată o stare de aprobare pe care, conform art. 11a din Directiva 2011/83/UE, nu are voie s-o aibă.\nRetragerea din contract (UE): dreptul de retragere din Directiva 2011/83/UE privind drepturile consumatorilor, cu funcția de retragere din art. 11a și 14a adăugată de Directiva (UE) 2023/2673, aplicabilă din 19 iunie 2026 oricărui comerciant care vinde online consumatorilor din UE.\nMod de execuție nou, `rma_parcel` (*Așteptăm coletul înapoi, cu fișă de retur*), ales în Vânzări → Configurare → Setări → Retragere din contract → Execuția retragerii, după ce funcția de retragere e activată; altă configurare nu e necesară.\nLa confirmarea retragerii se creează, ca superuser, o cerere de retur direct în Așteptăm coletul, de tip *Retur*, cu rezolvarea *Returnăm banii*: nu trece prin *Ciornă* sau *Trimis*, din care ar putea fi aprobată. Executarea de două ori nu deschide un al doilea colet.\nTaxa de manipulare e zero (art. 14): motivul rezervat, Retragere în termenul legal, are intervalul 0–0, e *Doar pentru colegi* (nu apare în portal) și spune că transportul de întoarcere e pe cheltuiala clientului.\nFișa pleacă pe mail cu un șablon propriu, fără nicio formulare de aprobare; spune că banii se returnează după ce produsele ajung sau după dovada expedierii (art. 13 alin. (3)).\nColetul urmează apoi fluxul obișnuit: recepție prin scanare, verdicte, repunere în stoc. Nota de credit se pregătește (ciornă) din cererea de retur, după inspecție, o singură dată per retragere, iar retragerea se marchează rambursată; câmpul *Notă credit* de pe retragere nu e completat de punte. Bara de stare arată și *Aprobat* (comună tuturor retururilor), dar această cerere nu trece prin el.\nPe formularul retragerii, butonul și câmpul Colet de retur; *Mod de execuție* se afișează cu eticheta lui (din `deltatech_sale_withdrawal` 19.0.0.3.2).\nLiniile coletului iau prețul plătit, după discount; sumele sunt cu TVA pe ambele documente — totalul retragerii e ce se rambursează consumatorului, *De returnat clientului* de pe cerere e totalul notei de credit."
   },
   {
     "path": "deltatech_rpc_audit/index.md",
@@ -11841,7 +11866,7 @@
     "version": "19.0.0.1.9",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_order_review",
     "local_path": "odoo-addons/bitshop/deltatech_sale_order_review",
-    "last_ingest": "2026-09-24",
+    "last_ingest": "2026-11-27",
     "friendly_name": "Sale Order Review",
     "summary": "Modulul reține comenzile de vânzare care nu sunt sigure de procesat și arată clar de ce, astfel încât operatorul vede dintr-o privire ce trebuie verificat, fără ca nimic să iasă din depozit pe baza unei presupuneri. Odoo poate bloca o comandă, dar nu explică motivul: o ofertă care rămâne ofertă, o livrare care rămâne în așteptare, o notă îngropată într-un chatter pe care nimeni nu-l citește. Modulul atașează fiecărei rețineri un **motiv**, păstrat pe comandă, cu propria stare și cu loc vizibil în lista de comenzi.",
     "features": [
@@ -11850,7 +11875,7 @@
       "Reguli configurabile per companie — fiecare verificare e o regulă cu prag, întârziere și grup de aprobare propriu; regulile livrate acoperă fereastra de așteptare, rambursul, plata online în așteptare, adresa incompletă și ridicarea personală pe comenzi online; alte module pot adăuga reguli proprii cu o singură înregistrare de date și o metodă.",
       "Interfața operatorului — banner pe comandă cu motivele deschise și un buton *Aprobă* per motiv, o etichetă și filtrele *De Revizuit* / *În Așteptare Revizuire* în lista de comenzi, acțiunea *Aprobă Reviziile* pentru o selecție întreagă, plus istoricul complet din butonul inteligent *Revizii*. Butonul *Confirmă* de pe o ofertă reținută deschide lista motivelor în loc să confirme orbește.",
       "Coada de lucru (Vânzări → Comenzi, filtrul De Revizuit) — filtrul În Așteptare Revizuire arată comenzile care se vor debloca singure; aprobarea în masă se face din *Acțiuni → Aprobă Reviziile*.",
-      "Configurare reguli (Vânzări → Configurare → Reguli de Revizuire a Comenzilor) — fiecare regulă are: Gate (Înainte de Confirmare / Înainte de Livrare), Tip (Temporar / Aprobare Manuală), prag valoric, minute de așteptare, întârziere de escaladare, grup de aprobare (gol = orice agent de vânzări; managerii de vânzări sunt impliciți în grupul *Approve held sale orders*) și companie (goală = se aplică peste tot). Regulile *Fereastră de așteptare* și *Ridicare personală pe comandă online* sunt inactive implicit.",
+      "Configurare reguli (Vânzări → Configurare → Reguli de Revizuire a Comenzilor) — fiecare regulă are: Gate (Înainte de Confirmare / Înainte de Livrare), Tip (Temporar / Aprobare Manuală), prag valoric, minute de așteptare, întârziere de escaladare, grup de aprobare (gol = orice agent de vânzări; managerii de vânzări sunt impliciți în grupul *Approve held sale orders*) și companie (goală = se aplică peste tot). Toate regulile sunt inactive după instalare (de la 19.0.0.1.3): instalarea nu schimbă nimic pe comenzi până când o regulă e activată; bazele existente își păstrează starea regulilor (înregistrările sunt `noupdate`).",
       "Ridicare personală — pe metodele de livrare cu ridicare de către client se bifează *Pickup by Customer* (Inventar → Configurare → Metode de Livrare); metodele Click & Collect sunt recunoscute automat, fără bifă.",
       "Reevaluare automată — acțiunea programată *Sale Order Review: re-evaluate held orders* rulează la fiecare 5 minute și elimină ferestrele de așteptare expirate, escaladând motivele temporare.",
       "Integrare pentru fluxuri automate — alte module (import marketplace, confirmări prin cron) verifică `order._review_can_auto_confirm()` înainte de a confirma; o comandă reținută rămâne ofertă cu motivele vizibile, în loc să eșueze silențios.",
@@ -11864,10 +11889,9 @@
       "terrabit_partner_credit_limit",
       "deltatech_delivery_review",
       "deltatech_delivery_status_review",
-      "deltatech_marketplace_review",
-      "cod"
+      "deltatech_marketplace_review"
     ],
-    "text": "Sale Order Review\ndeltatech_sale_order_review\nModulul reține comenzile de vânzare care nu sunt sigure de procesat și arată clar de ce, astfel încât operatorul vede dintr-o privire ce trebuie verificat, fără ca nimic să iasă din depozit pe baza unei presupuneri. Odoo poate bloca o comandă, dar nu explică motivul: o ofertă care rămâne ofertă, o livrare care rămâne în așteptare, o notă îngropată într-un chatter pe care nimeni nu-l citește. Modulul atașează fiecărei rețineri un **motiv**, păstrat pe comandă, cu propria stare și cu loc vizibil în lista de comenzi.\nDouă puncte de blocare (gate-uri) — *Înainte de confirmare*: comanda rămâne ofertă cât timp motivul e deschis (fereastră de așteptare după plasarea comenzii, mesaj de la client); *Înainte de livrare*: comanda e confirmată (stocul e rezervat), dar livrarea rămâne reținută (ramburs mare, plată cu cardul neîncheiată, adresă incompletă, ridicare personală solicitată pe o comandă online).\nDouă tipuri de motiv — *Temporar*: se rezolvă singur când condiția dispare (plata se încheie, fereastra de așteptare trece) și escaladează la aprobare manuală după o întârziere configurabilă; *Manual*: așteaptă aprobarea unei persoane din grupul de securitate potrivit, cu istoric al cine/când/pentru ce valoare a aprobat; dacă valoarea se schimbă ulterior (rambursul crește), motivul se redeschide.\nReguli configurabile per companie — fiecare verificare e o regulă cu prag, întârziere și grup de aprobare propriu; regulile livrate acoperă fereastra de așteptare, rambursul, plata online în așteptare, adresa incompletă și ridicarea personală pe comenzi online; alte module pot adăuga reguli proprii cu o singură înregistrare de date și o metodă.\nInterfața operatorului — banner pe comandă cu motivele deschise și un buton *Aprobă* per motiv, o etichetă și filtrele *De Revizuit* / *În Așteptare Revizuire* în lista de comenzi, acțiunea *Aprobă Reviziile* pentru o selecție întreagă, plus istoricul complet din butonul inteligent *Revizii*. Butonul *Confirmă* de pe o ofertă reținută deschide lista motivelor în loc să confirme orbește.\nCoada de lucru (Vânzări → Comenzi, filtrul De Revizuit) — filtrul În Așteptare Revizuire arată comenzile care se vor debloca singure; aprobarea în masă se face din *Acțiuni → Aprobă Reviziile*.\nConfigurare reguli (Vânzări → Configurare → Reguli de Revizuire a Comenzilor) — fiecare regulă are: Gate (Înainte de Confirmare / Înainte de Livrare), Tip (Temporar / Aprobare Manuală), prag valoric, minute de așteptare, întârziere de escaladare, grup de aprobare (gol = orice agent de vânzări; managerii de vânzări sunt impliciți în grupul *Approve held sale orders*) și companie (goală = se aplică peste tot). Regulile *Fereastră de așteptare* și *Ridicare personală pe comandă online* sunt inactive implicit.\nRidicare personală — pe metodele de livrare cu ridicare de către client se bifează *Pickup by Customer* (Inventar → Configurare → Metode de Livrare); metodele Click & Collect sunt recunoscute automat, fără bifă.\nReevaluare automată — acțiunea programată *Sale Order Review: re-evaluate held orders* rulează la fiecare 5 minute și elimină ferestrele de așteptare expirate, escaladând motivele temporare.\nIntegrare pentru fluxuri automate — alte module (import marketplace, confirmări prin cron) verifică `order._review_can_auto_confirm()` înainte de a confirma; o comandă reținută rămâne ofertă cu motivele vizibile, în loc să eșueze silențios.\nGândit ca bază pentru conectorii de marketplace (fereastră de așteptare, mesaj de la client, discrepanță de total), suita de curierat (livrări reținute, acțiuni în masă care sar peste comenzile reținute) și modulul de limită de credit."
+    "text": "Sale Order Review\ndeltatech_sale_order_review\nModulul reține comenzile de vânzare care nu sunt sigure de procesat și arată clar de ce, astfel încât operatorul vede dintr-o privire ce trebuie verificat, fără ca nimic să iasă din depozit pe baza unei presupuneri. Odoo poate bloca o comandă, dar nu explică motivul: o ofertă care rămâne ofertă, o livrare care rămâne în așteptare, o notă îngropată într-un chatter pe care nimeni nu-l citește. Modulul atașează fiecărei rețineri un **motiv**, păstrat pe comandă, cu propria stare și cu loc vizibil în lista de comenzi.\nDouă puncte de blocare (gate-uri) — *Înainte de confirmare*: comanda rămâne ofertă cât timp motivul e deschis (fereastră de așteptare după plasarea comenzii, mesaj de la client); *Înainte de livrare*: comanda e confirmată (stocul e rezervat), dar livrarea rămâne reținută (ramburs mare, plată cu cardul neîncheiată, adresă incompletă, ridicare personală solicitată pe o comandă online).\nDouă tipuri de motiv — *Temporar*: se rezolvă singur când condiția dispare (plata se încheie, fereastra de așteptare trece) și escaladează la aprobare manuală după o întârziere configurabilă; *Manual*: așteaptă aprobarea unei persoane din grupul de securitate potrivit, cu istoric al cine/când/pentru ce valoare a aprobat; dacă valoarea se schimbă ulterior (rambursul crește), motivul se redeschide.\nReguli configurabile per companie — fiecare verificare e o regulă cu prag, întârziere și grup de aprobare propriu; regulile livrate acoperă fereastra de așteptare, rambursul, plata online în așteptare, adresa incompletă și ridicarea personală pe comenzi online; alte module pot adăuga reguli proprii cu o singură înregistrare de date și o metodă.\nInterfața operatorului — banner pe comandă cu motivele deschise și un buton *Aprobă* per motiv, o etichetă și filtrele *De Revizuit* / *În Așteptare Revizuire* în lista de comenzi, acțiunea *Aprobă Reviziile* pentru o selecție întreagă, plus istoricul complet din butonul inteligent *Revizii*. Butonul *Confirmă* de pe o ofertă reținută deschide lista motivelor în loc să confirme orbește.\nCoada de lucru (Vânzări → Comenzi, filtrul De Revizuit) — filtrul În Așteptare Revizuire arată comenzile care se vor debloca singure; aprobarea în masă se face din *Acțiuni → Aprobă Reviziile*.\nConfigurare reguli (Vânzări → Configurare → Reguli de Revizuire a Comenzilor) — fiecare regulă are: Gate (Înainte de Confirmare / Înainte de Livrare), Tip (Temporar / Aprobare Manuală), prag valoric, minute de așteptare, întârziere de escaladare, grup de aprobare (gol = orice agent de vânzări; managerii de vânzări sunt impliciți în grupul *Approve held sale orders*) și companie (goală = se aplică peste tot). Toate regulile sunt inactive după instalare (de la 19.0.0.1.3): instalarea nu schimbă nimic pe comenzi până când o regulă e activată; bazele existente își păstrează starea regulilor (înregistrările sunt `noupdate`).\nRidicare personală — pe metodele de livrare cu ridicare de către client se bifează *Pickup by Customer* (Inventar → Configurare → Metode de Livrare); metodele Click & Collect sunt recunoscute automat, fără bifă.\nReevaluare automată — acțiunea programată *Sale Order Review: re-evaluate held orders* rulează la fiecare 5 minute și elimină ferestrele de așteptare expirate, escaladând motivele temporare.\nIntegrare pentru fluxuri automate — alte module (import marketplace, confirmări prin cron) verifică `order._review_can_auto_confirm()` înainte de a confirma; o comandă reținută rămâne ofertă cu motivele vizibile, în loc să eșueze silențios.\nGândit ca bază pentru conectorii de marketplace (fereastră de așteptare, mesaj de la client, discrepanță de total), suita de curierat (livrări reținute, acțiuni în masă care sar peste comenzile reținute) și modulul de limită de credit."
   },
   {
     "path": "deltatech_sale_pallet/index.md",
@@ -12919,7 +12943,7 @@
   {
     "path": "deltatech_smartbill/index.md",
     "module": "deltatech_smartbill",
-    "version": "19.0.1.0.10",
+    "version": "19.0.1.0.11",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_smartbill",
     "local_path": "odoo-addons/bitshop/deltatech_smartbill",
     "last_ingest": "2026-10-22",
@@ -14204,7 +14228,7 @@
   {
     "path": "deltatech_voip_daktela/index.md",
     "module": "deltatech_voip_daktela",
-    "version": "19.0.1.10.0",
+    "version": "19.0.1.11.1",
     "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_voip_daktela",
     "local_path": "odoo-addons/bitshop_ent/deltatech_voip_daktela",
     "last_ingest": "2026-11-26",
@@ -15778,7 +15802,7 @@
   {
     "path": "deltatech_widget_hierarchy_m2o/index.md",
     "module": "deltatech_widget_hierarchy_m2o",
-    "version": "19.0.1.4.0",
+    "version": "19.0.1.4.1",
     "github": "https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_widget_hierarchy_m2o",
     "local_path": "odoo-addons/bitshop/deltatech_widget_hierarchy_m2o",
     "last_ingest": "2026-11-17",
@@ -16418,7 +16442,7 @@
   {
     "path": "l10n_ro_account_vat_journal/index.md",
     "module": "l10n_ro_account_vat_journal",
-    "version": "19.0.1.8.0",
+    "version": "19.0.1.8.1",
     "github": "[https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_vat_journal)",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_account_vat_journal",
     "last_ingest": "2026-11-19",
@@ -16489,7 +16513,7 @@
   {
     "path": "l10n_ro_ai_administrators_report/index.md",
     "module": "l10n_ro_ai_administrators_report",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_ai_administrators_report",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_ai_administrators_report",
     "last_ingest": "2026-10-27",
@@ -17075,7 +17099,7 @@
   {
     "path": "l10n_ro_anaf_d300/index.md",
     "module": "l10n_ro_anaf_d300",
-    "version": "19.0.0.0.39",
+    "version": "19.0.0.0.40",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d300",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d300",
     "last_ingest": "2026-11-20",
@@ -17310,7 +17334,7 @@
   {
     "path": "l10n_ro_anaf_d394/index.md",
     "module": "l10n_ro_anaf_d394",
-    "version": "19.0.1.4.0",
+    "version": "19.0.1.7.0",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d394",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d394",
     "last_ingest": null,
@@ -17511,7 +17535,7 @@
   {
     "path": "l10n_ro_anaf_fiscal_status/index.md",
     "module": "l10n_ro_anaf_fiscal_status",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_fiscal_status",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_fiscal_status",
     "last_ingest": "2026-11-07",
@@ -18228,7 +18252,7 @@
   {
     "path": "l10n_ro_dividends/index.md",
     "module": "l10n_ro_dividends",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.1.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_dividends",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_dividends",
     "last_ingest": null,
@@ -18340,7 +18364,7 @@
   {
     "path": "l10n_ro_doubtful_receivables/index.md",
     "module": "l10n_ro_doubtful_receivables",
-    "version": "19.0.1.0.9",
+    "version": "19.0.1.0.10",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_doubtful_receivables",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_doubtful_receivables",
     "last_ingest": "2026-09-29",
@@ -18778,7 +18802,7 @@
   {
     "path": "l10n_ro_environmental_tax/index.md",
     "module": "l10n_ro_environmental_tax",
-    "version": "19.0.1.5.5",
+    "version": "19.0.1.5.6",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_environmental_tax",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_environmental_tax",
     "last_ingest": "2026-11-22",
@@ -18812,7 +18836,7 @@
   {
     "path": "l10n_ro_esigiliu/index.md",
     "module": "l10n_ro_esigiliu",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_esigiliu",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_esigiliu",
     "last_ingest": "2026-11-07",
@@ -19016,22 +19040,26 @@
   {
     "path": "l10n_ro_excise_duty/index.md",
     "module": "l10n_ro_excise_duty",
-    "version": "19.0.1.5.0",
+    "version": "19.0.1.5.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_excise_duty",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_excise_duty",
-    "last_ingest": null,
+    "last_ingest": "2026-11-27",
     "friendly_name": "Romania - Accize (FR-42)",
     "summary": "Modul pentru gestionarea accizelor conform Titlului VIII din Codul Fiscal RO, destinat antrepozitarilor autorizați și importatorilor de produse accizabile. Acoperă întreg ciclul: configurare categorii și rate, marcare produse, calcul automat din facturi, declarații D103/D120 și export XML pentru depunere la ANAF.",
     "features": [
-      "Nomenclator complet de categorii accizabile: 16 categorii armonizate (alcool, bere, vinuri, tutun, combustibili, energie electrică — Anexele I și II CF) și 6 categorii nearmonizate H1–H6 (Legea 296/2023, art. 355¹–355⁶).",
-      "Rate 2025 conform HG 2/2025, cu dată de intrare în vigoare și istoric.",
-      "Marcare produse cu categorie de acciză direct din fișa produsului (fila „Accize RO\").",
-      "Declarație persistentă D103 (lunar, antrepozit fiscal) și D120 (anual, plătitori de accize), cu state machine draft → confirmed → exported.",
-      "Calcul automat al liniilor din facturile de vânzare postate în perioadă — include stornări cu semn negativ.",
-      "Export XML D103/D120 generat prin QWeb, gata de depunere (delegat modulelor ANAF dedicate, vezi mai jos).",
-      "Evidență antrepozite fiscale cu cod ANAF, autorizație și stare (activ/suspendat/revocat).",
-      "Evidență garanții financiare (bancară, depozit, asigurare) cu calcul sumă recomandată pe baza mediei declarațiilor anterioare.",
-      "Wizard „Actualizare cote (HG)\" pentru aplicarea modificărilor anuale de cote prin HG, cu mod manual sau indexare procentuală; declarațiile deja calculate păstrează cotele istorice."
+      "Nomenclator complet de categorii accizabile (*Contabilitate → Raportare → Accize → Categorii produse accizabile*): 16 categorii armonizate (alcool, bere, vinuri, tutun, combustibili, energie electrică — Anexele I și II CF) și 6 categorii nearmonizate H1–H6 (Legea 296/2023, art. 355¹–355⁶), preîncărcate la instalare.",
+      "Rate 2025 conform HG 2/2025, cu istoric: nivelurile datate se rețin în `l10n.ro.excise.rate`, iar pentru o dată anterioară primului nivel se ia cel mai vechi nivel.",
+      "Marcare produse cu categorie de acciză direct din fișa produsului (fila „Accize (RO)\"); produsele fără categorie nu intră în calcul.",
+      "Declarație persistentă D103 (lunar, antrepozit fiscal) și D120 (anual, plătitori de accize), cu state machine draft → confirmed → exported; la D120 nu apare câmpul antrepozit.",
+      "Calcul automat al liniilor din facturile de vânzare postate în perioadă (perioada se alege după data facturii) — include stornări cu semn negativ; se iau doar categoriile autorizate ale antrepozitului ales, iar fără nicio linie de acciză declarația nu se confirmă.",
+      "Cota aplicată e cea în vigoare la data ieșirii din antrepozit (livrarea din stoc, art. 339–340 CF); fără livrare se folosește data facturii, iar linia e marcată. O declarație recalculată după o schimbare de cotă păstrează cota corectă a perioadei. Limită cunoscută: la livrări parțiale în luni diferite, linia ia data ultimei livrări.",
+      "Conversia cantității liniei în unitatea cotei (litri în hl, kg în tone, bucăți în 1000 buc) când conversia e pur dimensională; alcoolul etilic, berea, țigaretele și liniile cu unitate neconvertibilă sunt marcate „necesită date suplimentare\": nu intră în total, declarația rămâne în ciornă și nu se poate exporta.",
+      "Modulul calculează declarațiile, dar nu postează note contabile (acciza datorată și plata ei se înregistrează separat); la datele sursă modificate se folosește „Resetează la ciornă\" și se recalculează.",
+      "Export XML D103/D120 (`D103_<CUI>_<AnLună>.xml`), delegat modulelor ANAF dedicate (`l10n_ro_anaf_d103`, `l10n_ro_anaf_d120`); după export liniile devin needitabile.",
+      "Evidență antrepozite fiscale cu cod ANAF (unic per companie), autorizație și stare (activ/suspendat/revocat); antrepozitul nu poate fi activat fără data autorizației.",
+      "Evidență garanții financiare (bancară, depozit numerar, asigurare), cu butoane Activează / Marchează expirată; suma recomandată se calculează din acciza anului calendaristic anterior, pe antrepozit, cu 6% implicit (Norme HG 1/2016), fără aplicarea pragurilor minime și maxime.",
+      "Wizard „Actualizare cote (HG)\" pentru aplicarea modificărilor anuale: cote manuale sau indexare procentuală, cu dată de intrare în vigoare; adaugă un nivel nou de cotă, iar declarațiile deja calculate păstrează cotele istorice.",
+      "Izolare pe companie: modelele au reguli de înregistrare globale, utilizatorul vede doar înregistrările companiilor la care are acces."
     ],
     "dependencies": [
       "account",
@@ -19041,10 +19069,12 @@
     ],
     "connections": [
       "l10n_ro_anaf_base",
+      "l10n_ro_anaf_d103",
+      "l10n_ro_anaf_d120",
       "l10n_ro_environmental_tax",
       "l10n_ro_cbam"
     ],
-    "text": "Romania - Accize (FR-42)\nl10n_ro_excise_duty\nModul pentru gestionarea accizelor conform Titlului VIII din Codul Fiscal RO, destinat antrepozitarilor autorizați și importatorilor de produse accizabile. Acoperă întreg ciclul: configurare categorii și rate, marcare produse, calcul automat din facturi, declarații D103/D120 și export XML pentru depunere la ANAF.\nNomenclator complet de categorii accizabile: 16 categorii armonizate (alcool, bere, vinuri, tutun, combustibili, energie electrică — Anexele I și II CF) și 6 categorii nearmonizate H1–H6 (Legea 296/2023, art. 355¹–355⁶).\nRate 2025 conform HG 2/2025, cu dată de intrare în vigoare și istoric.\nMarcare produse cu categorie de acciză direct din fișa produsului (fila „Accize RO\").\nDeclarație persistentă D103 (lunar, antrepozit fiscal) și D120 (anual, plătitori de accize), cu state machine draft → confirmed → exported.\nCalcul automat al liniilor din facturile de vânzare postate în perioadă — include stornări cu semn negativ.\nExport XML D103/D120 generat prin QWeb, gata de depunere (delegat modulelor ANAF dedicate, vezi mai jos).\nEvidență antrepozite fiscale cu cod ANAF, autorizație și stare (activ/suspendat/revocat).\nEvidență garanții financiare (bancară, depozit, asigurare) cu calcul sumă recomandată pe baza mediei declarațiilor anterioare.\nWizard „Actualizare cote (HG)\" pentru aplicarea modificărilor anuale de cote prin HG, cu mod manual sau indexare procentuală; declarațiile deja calculate păstrează cotele istorice."
+    "text": "Romania - Accize (FR-42)\nl10n_ro_excise_duty\nModul pentru gestionarea accizelor conform Titlului VIII din Codul Fiscal RO, destinat antrepozitarilor autorizați și importatorilor de produse accizabile. Acoperă întreg ciclul: configurare categorii și rate, marcare produse, calcul automat din facturi, declarații D103/D120 și export XML pentru depunere la ANAF.\nNomenclator complet de categorii accizabile (*Contabilitate → Raportare → Accize → Categorii produse accizabile*): 16 categorii armonizate (alcool, bere, vinuri, tutun, combustibili, energie electrică — Anexele I și II CF) și 6 categorii nearmonizate H1–H6 (Legea 296/2023, art. 355¹–355⁶), preîncărcate la instalare.\nRate 2025 conform HG 2/2025, cu istoric: nivelurile datate se rețin în `l10n.ro.excise.rate`, iar pentru o dată anterioară primului nivel se ia cel mai vechi nivel.\nMarcare produse cu categorie de acciză direct din fișa produsului (fila „Accize (RO)\"); produsele fără categorie nu intră în calcul.\nDeclarație persistentă D103 (lunar, antrepozit fiscal) și D120 (anual, plătitori de accize), cu state machine draft → confirmed → exported; la D120 nu apare câmpul antrepozit.\nCalcul automat al liniilor din facturile de vânzare postate în perioadă (perioada se alege după data facturii) — include stornări cu semn negativ; se iau doar categoriile autorizate ale antrepozitului ales, iar fără nicio linie de acciză declarația nu se confirmă.\nCota aplicată e cea în vigoare la data ieșirii din antrepozit (livrarea din stoc, art. 339–340 CF); fără livrare se folosește data facturii, iar linia e marcată. O declarație recalculată după o schimbare de cotă păstrează cota corectă a perioadei. Limită cunoscută: la livrări parțiale în luni diferite, linia ia data ultimei livrări.\nConversia cantității liniei în unitatea cotei (litri în hl, kg în tone, bucăți în 1000 buc) când conversia e pur dimensională; alcoolul etilic, berea, țigaretele și liniile cu unitate neconvertibilă sunt marcate „necesită date suplimentare\": nu intră în total, declarația rămâne în ciornă și nu se poate exporta.\nModulul calculează declarațiile, dar nu postează note contabile (acciza datorată și plata ei se înregistrează separat); la datele sursă modificate se folosește „Resetează la ciornă\" și se recalculează.\nExport XML D103/D120 (`D103_<CUI>_<AnLună>.xml`), delegat modulelor ANAF dedicate (`l10n_ro_anaf_d103`, `l10n_ro_anaf_d120`); după export liniile devin needitabile.\nEvidență antrepozite fiscale cu cod ANAF (unic per companie), autorizație și stare (activ/suspendat/revocat); antrepozitul nu poate fi activat fără data autorizației.\nEvidență garanții financiare (bancară, depozit numerar, asigurare), cu butoane Activează / Marchează expirată; suma recomandată se calculează din acciza anului calendaristic anterior, pe antrepozit, cu 6% implicit (Norme HG 1/2016), fără aplicarea pragurilor minime și maxime.\nWizard „Actualizare cote (HG)\" pentru aplicarea modificărilor anuale: cote manuale sau indexare procentuală, cu dată de intrare în vigoare; adaugă un nivel nou de cotă, iar declarațiile deja calculate păstrează cotele istorice.\nIzolare pe companie: modelele au reguli de înregistrare globale, utilizatorul vede doar înregistrările companiilor la care are acces."
   },
   {
     "path": "l10n_ro_expense_allowance/index.md",
@@ -19096,7 +19126,7 @@
   {
     "path": "l10n_ro_expense_currency/index.md",
     "module": "l10n_ro_expense_currency",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.1.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_expense_currency",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_expense_currency",
     "last_ingest": "2026-10-28",
@@ -19201,7 +19231,7 @@
   {
     "path": "l10n_ro_fiscal_audit/index.md",
     "module": "l10n_ro_fiscal_audit",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_fiscal_audit",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_fiscal_audit",
     "last_ingest": "2026-11-07",
@@ -19847,7 +19877,7 @@
   {
     "path": "l10n_ro_inventory_items/index.md",
     "module": "l10n_ro_inventory_items",
-    "version": "19.0.2.7.1",
+    "version": "19.0.2.7.2",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_inventory_items`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_inventory_items",
     "last_ingest": "2026-10-22",
@@ -19886,7 +19916,7 @@
   {
     "path": "l10n_ro_inventory_items_hr/index.md",
     "module": "l10n_ro_inventory_items_hr",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_inventory_items_hr",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_inventory_items_hr",
     "last_ingest": "2026-10-09",
@@ -20238,7 +20268,7 @@
   {
     "path": "l10n_ro_micro_tax/index.md",
     "module": "l10n_ro_micro_tax",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.2.1",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_micro_tax",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_micro_tax",
     "last_ingest": "2026-11-03",
@@ -20462,7 +20492,7 @@
   {
     "path": "l10n_ro_partner_cnp/index.md",
     "module": "l10n_ro_partner_cnp",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.1.2",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_partner_cnp",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_partner_cnp",
     "last_ingest": "2026-10-12",
@@ -20995,7 +21025,7 @@
   {
     "path": "l10n_ro_payroll_day_labourers/index.md",
     "module": "l10n_ro_payroll_day_labourers",
-    "version": "19.0.1.1.2",
+    "version": "19.0.1.1.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payroll_day_labourers",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_payroll_day_labourers",
     "last_ingest": "2026-10-12",
@@ -21602,7 +21632,7 @@
   {
     "path": "l10n_ro_provisions/index.md",
     "module": "l10n_ro_provisions",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_provisions",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_provisions",
     "last_ingest": "2026-10-26",
@@ -21904,7 +21934,7 @@
   {
     "path": "l10n_ro_reverse_charge_331_pos/index.md",
     "module": "l10n_ro_reverse_charge_331_pos",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.1.2",
     "github": "`https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_reverse_charge_331_pos`",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_reverse_charge_331_pos",
     "last_ingest": "2026-10-22",
@@ -22058,7 +22088,7 @@
   {
     "path": "l10n_ro_saft_export_fix/index.md",
     "module": "l10n_ro_saft_export_fix",
-    "version": "19.0.1.9.0",
+    "version": "19.0.1.9.3",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_saft_export_fix",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_saft_export_fix",
     "last_ingest": "2026-11-20",
@@ -22718,7 +22748,7 @@
   {
     "path": "l10n_ro_stock_gestiune_valuation/index.md",
     "module": "l10n_ro_stock_gestiune_valuation",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_gestiune_valuation",
     "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_stock_gestiune_valuation",
     "last_ingest": "2026-09-25",
@@ -23946,7 +23976,7 @@
   {
     "path": "terrabit_helpdesk_connector/index.md",
     "module": "terrabit_helpdesk_connector",
-    "version": "19.0.0.3.8",
+    "version": "19.0.0.3.10",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector",
     "local_path": "odoo-addons/terrabit/terrabit_helpdesk_connector",
     "last_ingest": "2026-09-24",
@@ -24075,7 +24105,7 @@
   {
     "path": "terrabit_iap_anaf/index.md",
     "module": "terrabit_iap_anaf",
-    "version": "19.0.1.4.2",
+    "version": "19.0.1.4.3",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_anaf",
     "local_path": "odoo-addons/terrabit/terrabit_iap_anaf",
     "last_ingest": "2026-11-17",
@@ -24234,7 +24264,7 @@
   {
     "path": "terrabit_iap_server_anaf/index.md",
     "module": "terrabit_iap_server_anaf",
-    "version": "19.0.1.7.1",
+    "version": "19.0.1.7.2",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_anaf",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_anaf",
     "last_ingest": "2026-11-17",
@@ -24274,7 +24304,7 @@
   {
     "path": "terrabit_iap_server_helpdesk/index.md",
     "module": "terrabit_iap_server_helpdesk",
-    "version": "19.0.0.3.0",
+    "version": "19.0.0.3.1",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_helpdesk",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_helpdesk",
     "last_ingest": "2026-09-24",
@@ -24317,7 +24347,7 @@
   {
     "path": "terrabit_iap_server_line_counter/index.md",
     "module": "terrabit_iap_server_line_counter",
-    "version": "19.0.2.0.3",
+    "version": "19.0.2.0.4",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_line_counter",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_line_counter",
     "last_ingest": "2026-10-09",
@@ -24345,7 +24375,7 @@
   {
     "path": "terrabit_iap_server_online/index.md",
     "module": "terrabit_iap_server_online",
-    "version": "19.0.1.5.0",
+    "version": "19.0.1.5.1",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_online",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_online",
     "last_ingest": "2026-11-20",
@@ -24452,7 +24482,7 @@
   {
     "path": "terrabit_iap_server_params/index.md",
     "module": "terrabit_iap_server_params",
-    "version": "19.0.1.3.2",
+    "version": "19.0.1.3.3",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_params",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_params",
     "last_ingest": "2026-10-09",
@@ -24515,7 +24545,7 @@
   {
     "path": "terrabit_iap_server_sms/index.md",
     "module": "terrabit_iap_server_sms",
-    "version": "19.0.1.1.2",
+    "version": "19.0.1.1.3",
     "github": "https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_sms",
     "local_path": "odoo-addons/terrabit/terrabit_iap_server_sms",
     "last_ingest": "2026-10-09",

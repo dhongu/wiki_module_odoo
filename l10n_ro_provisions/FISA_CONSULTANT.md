@@ -138,6 +138,7 @@ efectiv plătită și tratamentul fiscal.
 
 ## 8. Verificări pentru consultant
 
+- [ ] Izolare pe companie: un utilizator care are acces doar la compania A nu vede în listă și nu poate deschide înregistrările companiei B (reguli de înregistrare globale pe `company_id`); un utilizator cu ambele companii bifate le vede pe amândouă.
 - [ ] Modulul se instalează fără erori pe baza demo.
 - [ ] La alegerea tipului de provizion se precompletează conturile 151x/6812/7812.
 - [ ] Aprobarea generează nota Dr 6812 = Cr 151x și trece dosarul în „Aprobat".

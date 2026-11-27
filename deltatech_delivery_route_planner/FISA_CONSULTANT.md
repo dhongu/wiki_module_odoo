@@ -61,8 +61,8 @@ Date minime pentru demo:
 
 ## 5. Configurare inițială
 
-1. Instalați modulul `deltatech_delivery_route_planner` (depinde de `stock_fleet`,
-   `base_geolocalize` și `web_map`; pe server trebuie pachetul Python `ortools`).
+1. Instalați modulul `deltatech_delivery_route_planner` (depinde de `stock_picking_batch`,
+   `stock_fleet`, `base_geolocalize` și `web_map`; pe server trebuie pachetul Python `ortools`).
 2. **Inventar → Configurare → Setări**, blocul **Planificarea rutelor**: **Server OSRM** (de exemplu
    `https://osrm.firma.ro`), **Cheie API OSRM** dacă serverul o cere, **Factor de drum** (implicit
    1,3) și **Viteza medie (km/h)** (implicit 60) folosite fără OSRM, **Timp de descărcare pe oprire**
@@ -90,14 +90,14 @@ serverul OSRM și valorile folosite când acesta nu răspunde, apoi apasă **Sal
 utilă (în paranteză, lângă nume); completați **Lungimea maximă a elementelor (mm)**, **Ora de
 plecare** și **Ora de întoarcere**.
 
-![Vehiculul BC 01 RTE: Iveco/Daily, cu șoferul Ion Popa, tabul Planificarea rutelor: Categoria (sarcină utilă) Dubă (1000.0 kg), Lungimea maximă a elementelor 4.000 mm, Ora de plecare 7h și Ora de întoarcere 17h](screenshots/02_vehicul_planificare_rute.png)
+![Vehiculul Iveco/Daily/BC 01 RTE, cu șoferul Ion Popa, tabul Planificarea rutelor: Categoria (sarcină utilă) Dubă (1000.0 kg), Lungimea maximă a elementelor 4.000 mm, Ora de plecare 07:00 și Ora de întoarcere 17:00](screenshots/02_vehicul_planificare_rute.png)
 
 ### Pasul 3 — Intervalul de livrare pe adresă (CA5)
 
 În **Contacte**, pe adresa de livrare, tabul **Vânzări & Achiziții**, grupul **Interval de livrare**:
 **Livrare de la** și **Livrare până la**. Livrările la această adresă vor fi planificate în interval.
 
-![Contactul Ferestre Moldova SRL din Roman, tabul Vânzări & Achiziții: grupul Interval de livrare cu Livrare de la 12h și Livrare până la 14h](screenshots/03_interval_livrare_adresa.png)
+![Contactul Ferestre Moldova SRL din Roman, tabul Vânzări & Achiziții: grupul Interval de livrare cu Livrare de la 12:00 și Livrare până la 14:00](screenshots/03_interval_livrare_adresa.png)
 
 ### Pasul 4 — Asistentul Planifică livrările (CA3)
 
@@ -112,7 +112,7 @@ programate în ziua aleasă și care nu sunt încă într-un lot.
    cele disponibile (scoateți vehiculele în service).
 3. **Treceți mai departe** cu **Calculează**.
 
-![Asistentul Planifică livrările: De la și Până la pe ziua de mâine, Depozitul Bărați, vehiculele BC 01 RTE și BC 02 RTE, 10 livrări de planificat cu greutatea totală 2.835 kg și butonul Calculează](screenshots/04_asistent_planifica_livrari.png)
+![Asistentul Planifică livrările: De la și Până la pe ziua de mâine, Depozitul Bărați, vehiculele Iveco/Daily/BC 01 RTE și Iveco/Daily 35S/BC 02 RTE, 10 livrări de planificat cu greutatea totală 2.835 kg și butonul Calculează](screenshots/04_asistent_planifica_livrari.png)
 
 ### Pasul 5 — Propunerea pe vehicule (CA4, CA5)
 
@@ -129,7 +129,7 @@ livrările. Asistentul arată:
    pe vehiculul care le poate duce și că livrarea cu interval orar are sosirea în interval.
 3. **Treceți mai departe**: **Modifică** (înapoi la dată și vehicule) sau **Creează loturile**.
 
-![Propunerea calculată: rândurile vehiculelor BC 01 RTE și BC 02 RTE cu numărul de opriri, încărcarea în kg, capacitatea, Încărcare % ca bară, distanța și ora întoarcerii; dedesubt opririle fiecărui vehicul în ordine, cu ora de sosire, livrarea, adresa, localitatea și greutatea; Ferestre Moldova SRL, cu interval 12–14, are sosirea la 12:00](screenshots/05_propunere_pe_vehicule.png)
+![Propunerea calculată: rândurile vehiculelor Iveco/Daily/BC 01 RTE și Iveco/Daily 35S/BC 02 RTE cu numărul de opriri, încărcarea în kg, capacitatea, Încărcare % ca bară, distanța și ora întoarcerii; dedesubt opririle fiecărui vehicul în ordine, cu ora de sosire, livrarea, adresa, localitatea și greutatea; Ferestre Moldova SRL, cu interval 12–14, are sosirea la 12:00](screenshots/05_propunere_pe_vehicule.png)
 
 ### Pasul 6 — Livrările amânate (CA4, CA7)
 
@@ -140,7 +140,7 @@ timp), **Fără coordonate** (adresa nu a putut fi geolocalizată) sau **Nicio z
 neplanificate, cu data programată neschimbată: ca să intre în planul altei zile, schimbați-le
 **Dată planificată** pe ziua respectivă.
 
-![Secțiunea Amânate a propunerii: trei livrări lăsate în afara planului, cu motivele Fără coordonate (Client fără adresă SRL), Capacitate (Montaj Buhuși SRL, 1.350 kg) și Element prea lung (Rezidențial Onești SRL)](screenshots/06_livrari_amanate.png)
+![Secțiunea Amânate a propunerii: trei livrări lăsate în afara planului, cu motivele Fără coordonate (Client fără adresă SRL), Capacitate (Montaj Buhuși SRL, Buhuși) și Element prea lung (Rezidențial Onești SRL)](screenshots/06_livrari_amanate.png)
 
 ### Pasul 7 — Plan estimat fără OSRM (CA6)
 
@@ -183,9 +183,9 @@ un rând pe vehicul **și zi**; opririle mutate pe altă zi apar colorate, cu co
 **Creează loturile** creează câte un lot de transfer pe fiecare vehicul cu opriri și deschide lista
 lor; descrierea fiecărui lot are vehiculul și data. Vehiculul, șoferul și livrările în ordinea
 opririlor se văd în formularul lotului (tabul **Transferuri** și tabul **Rută**). Lotul se regăsește
-și în **Inventar → Operații → Jobs → Batch Transfers** (etichetele meniului nu au încă traducere în română; meniul apare cu opțiunea **Batch Transfers** activă în setările Inventar).
+și în **Inventar → Operații → Locuri de muncă → Transferuri în lot**.
 
-![Lista loturilor de transfer, grupată pe tipul de operație Comenzi de livrare: două loturi în Ciornă, cu descrierile BC 01 RTE: Iveco/Daily și BC 02 RTE: Iveco/Daily 35S urmate de dată](screenshots/09_loturi_create.png)
+![Lista loturilor de transfer: două loturi în Ciornă, cu descrierile Iveco/Daily/BC 01 RTE și Iveco/Daily 35S/BC 02 RTE urmate de dată](screenshots/09_loturi_create.png)
 
 ### Pasul 10 — Ruta lotului și harta (CA8, CA12)
 
@@ -215,7 +215,7 @@ opririlor în ordine, cu ora de sosire, livrarea, adresa, telefonul și greutate
 
 ### Pasul 13 — Sosirea planificată pe livrare
 
-Pe fiecare livrare planificată, câmpul **Sosire planificată** arată ora calculată, lângă **Dată planificată**.
+Pe fiecare livrare planificată, câmpul **Sosire planificată** arată ora calculată, sub **Dată planificată**.
 Tot aici, bifa **Dată fixă de livrare** oprește mutarea livrării pe altă zi la planificarea pe
 săptămână.
 
@@ -230,6 +230,7 @@ avizul și UIT-ul rămân pe fiecare livrare.
 
 | Modul | Rol |
 |---|---|
+| `stock_picking_batch` (Loturi de transfer) | lotul de transfer creat pe vehicul și zi |
 | `stock_fleet` (Transport stoc) | vehiculul, șoferul și sarcina utilă a categoriei pe lotul de transfer |
 | `stock_fleet_enterprise` | Gantt-ul de dispecerat pe loturi și harta standard a livrărilor |
 | `base_geolocalize` | coordonatele contactelor, geolocalizarea cu OpenStreetMap |
@@ -317,7 +318,7 @@ Capturile sunt **generate automat** din `tests/test_screenshots.py` (mixinul `Sc
 Regenerare:
 
 ```bash
-.venv/bin/python odoo/odoo-bin -c odoo.conf -d test20_route_planner \
+.venv/bin/python odoo/odoo-bin -c odoo.conf -d test19_route_planner \
     -i deltatech_delivery_route_planner \
     --test-tags=/deltatech_delivery_route_planner:TestRoutePlannerScreenshots --stop-after-init
 ```

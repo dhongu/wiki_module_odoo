@@ -1,7 +1,7 @@
 # Terrabit IAP Server Line Counter
 
 - **Nume Tehnic:** `terrabit_iap_server_line_counter`
-- **Versiune:** `19.0.2.0.3`
+- **Versiune:** `19.0.2.0.4`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_line_counter
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server_line_counter`
 - **Ultima Ingestie:** `2026-10-09`

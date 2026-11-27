@@ -72,12 +72,12 @@ Datele pe care se sprijină documentele EDI:
 
 | Dată | Unde se completează | Ce devine în XML |
 |---|---|---|
-| **GLN** al retailerului, al magazinelor lui și al companiei noastre | fișa partenerului (`deltatech_gln`) | identificarea părților (`ILN`) |
+| **GLN** al retailerului, al magazinelor lui și al companiei noastre | fișa partenerului (câmpul standard, `account_add_gln`) | identificarea părților (`ILN`) |
 | **Cod EDI** și **Procent EDI** | grupul de taxe | categoria și cota TVA pe linie și în total (`TaxCategoryCoded`, `TaxPercent`) |
 | **Codul de bare** (EAN) și **Referința internă** a produsului | fișa produsului | `EAN`, `SellerItemID` |
 | **Codul articolului la retailer** | **Referințe client** (scris automat la import) | `BuyerItemID` |
 | **Referința comenzii client** | comanda de vânzare (din mesajul EDI) | numărul comenzii retailerului |
-| **Tip factură EDI**, **Număr comandă EDI**, **Referință** | factura / nota de credit (câmpurile apar cu conectorul EDINET) | tipul documentului, comanda și avizul de retur |
+| **Tip factură EDI**, **Număr comandă EDI**, **Referință** | factura / nota de credit, tabul **Alte informații** (câmpurile vin din `deltatech_edi` și apar la orice conector; **Tip factură EDI** doar pe nota de credit) | tipul documentului, comanda și avizul de retur |
 
 Date minime pentru demo:
 
@@ -93,7 +93,7 @@ Date minime pentru demo:
 1. **Instalați conectorul** potrivit retailerului (`deltatech_edinet` sau `deltatech_ediconnect`);
    `deltatech_edi` se instalează odată cu el. Modulul cere **Inventar** și **Contabilitate**; pentru
    meniurile **Vânzări** din pașii de mai jos instalați și aplicația **Vânzări** (`sale_management`).
-   Mai cere plus `deltatech_gln` (câmpul GLN) și `deltatech_sale_product_reference`
+   Mai cere `account_add_gln` (câmpul GLN standard, instalat automat cu Contabilitatea) și `deltatech_sale_product_reference`
    (Referințe client).
 2. **GLN-ul companiei**: deschideți partenerul companiei din **Contacte** (căutați numele companiei),
    tabul **Vânzări & Achiziții**, și completați **GLN**.
@@ -110,6 +110,11 @@ Date minime pentru demo:
 7. **Opțional — semnalarea prețurilor diferite de lista de prețuri.** Activați **Liste de prețuri**
    (**Vânzări → Configurare → Setări**) și puneți pe retailer lista lui de prețuri (tabul **Vânzări &
    Achiziții**). Fără ele comanda nu are listă de prețuri și nota de la Pasul 3 nu apare.
+8. **La actualizarea unei baze existente** (versiunea 19.0.1.1.0): GLN-ul trece din câmpul vechi
+   `gln` (modulul `deltatech_gln`) în câmpul standard **GLN**. Migrarea copiază valoarea veche acolo
+   unde câmpul standard e gol; dacă ambele sunt completate și diferă, păstrează valoarea standard și
+   scrie în log-ul actualizării câte un rând „partner … (id …) has GLN … in `gln` and … in the standard
+   field" pentru fiecare partener. Citiți log-ul după actualizare și corectați GLN-ul acelor parteneri.
 
 ## 6. Flux de utilizare
 
@@ -140,11 +145,12 @@ Contabilitatea completă) și treceți în tabul **Vânzări & Achiziții**. În
   retailerului. Apar doar după ce alegeți **Sistem EDI**. **EDI Vânzător** e obligatoriu pentru
   avizul de expediție: fără el, DESADV-ul nu trece validarea pe schemă (vezi secțiunea 9).
 
-Importul comenzilor recunoaște retailerul și magazinul **după GLN**, căutând **doar printre partenerii
-companiei curente**. Verificați și câmpul **Companie** din același grup: un partener partajat (fără
-companie) nu e găsit, chiar cu GLN-ul corect. Alegerea **Sistem EDI** completează compania automat. Un
-GLN lipsă sau greșit face ca importul să creeze un partener nou, în loc să-l folosească pe cel existent;
-un magazin creat astfel nu e legat de firmă și trebuie atașat manual ca adresă de livrare.
+Importul comenzilor recunoaște retailerul și magazinul **după GLN**, căutând printre partenerii
+companiei curente și printre cei partajați între companii (fără **Companie**). Alegerea **Sistem EDI**
+completează compania automat. Dacă mesajul nu are GLN pentru o parte, partenerul se caută după
+**CUI** și apoi după **numele exact** (o firmă fără GLN, al cărei CUI nu e altul); dacă nu se găsește,
+se creează. Un GLN greșit face ca importul să creeze un partener nou, în loc să-l folosească pe cel
+existent; un magazin creat astfel nu e legat de firmă și trebuie atașat manual ca adresă de livrare.
 
 ![Fișa retailerului Hipermag Retail SRL, tabul Vânzări & Achiziții, grupul Diverse: sub Referință HIP apar Sistem EDI, încă necompletat, și GLN 5940000000017](screenshots/02_partener_gln_sistem_edi.png)
 
@@ -215,7 +221,8 @@ pentru același cod și produs se actualizează însă la fiecare comandă primi
 Confirmarea comenzii creează livrarea. După ce o validați, deschideți-o din **Inventar → Operațiuni →
 Transferuri → Livrări** și apăsați **Export EDI**. Cu **EDINET**, conectorul generează XML-ul avizului
 de expediție, validat pe schema DESADV, îl atașează livrării și îl trimite retailerului. **EDI Connect
-nu trimite avize de expediție**: pe livrarea unui retailer EDI Connect, **Export EDI** nu face nimic.
+nu trimite avize de expediție**: pe livrarea unui retailer EDI Connect, **Export EDI** se oprește cu mesajul „Sistemul EDI al
+partenerului … nu poate exporta acest document". Butonul apare doar pe livrările către clienți validate.
 
 **Exportul nu se oprește la o eroare de validare:** documentul pleacă și dacă XML-ul nu respectă schema,
 iar eroarea se scrie în chatter („Eroare validare: …"). Citiți chatter-ul imediat după export; dacă
@@ -261,10 +268,10 @@ codul de bare, codul retailerului, codul nostru și cantitatea livrată:
 ### Pasul 6 — Factura și nota de credit
 
 Înregistrați factura din comandă. **Înainte de export**, completați pe factură **Număr comandă EDI**
-(tabul **Alte informații**, cu conectorul EDINET) cu numărul comenzii retailerului, ex. `05004215`:
+(tabul **Alte informații**) cu numărul comenzii retailerului, ex. `05004215`:
 nu se completează singur, iar fără el `BuyerOrderNumber` din antetul facturii pleacă gol. Apoi
-apăsați **Export EDI**. Cu EDI Connect câmpul nu există: antetul facturii pleacă fără numărul
-comenzii, iar liniile îl au din **Referința clientului** de pe comandă. XML-ul facturii este validat pe
+apăsați **Export EDI** (butonul apare doar pe facturile și notele de credit înregistrate; la o notă
+de credit alegeți întâi **Tip factură EDI**: Storno, Retur sau Corecție). XML-ul facturii este validat pe
 schema INVOICE; ca la livrare, o eroare de
 validare nu oprește exportul, ci se scrie în chatter-ul facturii („Eroare validare: …").
 
@@ -330,12 +337,13 @@ identificate prin GLN, liniile cu codurile articolelor și totalurile pe cote de
 demo are scadența în aceeași zi.
 
 **Nota de credit** are în plus câmpul **Tip factură EDI**, care spune retailerului ce fel de document
-primește. Câmpul îl afișează **conectorul EDINET**; cu EDI Connect nu apare, iar notele de credit pleacă
-drept **Original**, cu sume negative.
+primește. Câmpul îl afișează `deltatech_edi`, în tabul **Alte informații**, la orice conector (EDINET
+sau EDI Connect). Pe o notă de credit trebuie ales **Storno**, **Retur** sau **Corecție**: o notă de
+credit rămasă pe **Original** este refuzată la **Export EDI** (vezi Pasul 7 și secțiunea 9).
 
 | Tip factură EDI | Când se folosește | Ce se completează |
 |---|---|---|
-| **Original** | factura obișnuită (implicit) | — |
+| **Original** | factura obișnuită (implicit); nu se folosește pe nota de credit | — |
 | **Retur** | marfă returnată de retailer | **Referință** = numărul **avizului de retur** primit de la retailer; **Număr comandă EDI** (obligatoriu) |
 | **Storno** | anularea unei facturi | **Referință** = `număr factură|dată` a facturii stornate (obligatoriu, altfel exportul se oprește cu eroare); **Număr comandă EDI** (obligatoriu) |
 | **Corecție** | diferență de preț sau cantitate | **Referință** = `număr factură|dată` a facturii corectate; **Număr comandă EDI** (obligatoriu) |
@@ -379,9 +387,24 @@ numărul comenzii), factura rămâne blocată la el.
 
 ### Pasul 7 — Exportul fără conector
 
-Dacă retailerul nu are **Sistem EDI** completat (sau niciun conector nu e instalat), **Export EDI**
-oprește operația cu mesajul „Selectați un sistem EDI pentru partenerul …". Completați **Sistem EDI**
-pe fișa retailerului (Pasul 2) și reluați exportul.
+Butonul **Export EDI** apare doar pe facturile și notele de credit **înregistrate** și pe livrările
+către clienți **validate**. La apăsare, verificările se fac în ordinea aceasta, iar prima care nu
+trece oprește exportul cu mesajul ei:
+
+1. documentul e o factură / notă de credit către client, respectiv o livrare către client
+   („Doar facturile și notele de credit către clienți se pot exporta în EDI." / „Doar livrările către
+   clienți se pot exporta în EDI.");
+2. documentul e înregistrat, respectiv validat („Documentul … trebuie înregistrat înainte de exportul
+   în EDI." / „Livrarea … trebuie validată înainte de exportul în EDI.");
+3. o notă de credit are **Tip factură EDI** ales, altul decât **Original** („Completați Tip factură EDI
+   (Storno, Retur sau Corecție) pe nota de credit … înainte de exportul în EDI.");
+4. retailerul are **Sistem EDI** („Selectați un sistem EDI pentru partenerul …");
+5. conectorul retailerului poate trimite documentul („Sistemul EDI al partenerului … nu poate exporta
+   acest document.", de exemplu o livrare către un retailer EDI Connect).
+
+Dacă retailerul nu are **Sistem EDI** completat (sau niciun conector nu e instalat), pe o factură
+înregistrată **Export EDI** se oprește cu mesajul „Selectați un sistem EDI pentru partenerul …".
+Completați **Sistem EDI** pe fișa retailerului (Pasul 2) și reluați exportul.
 
 ![Dialogul de eroare deschis de Export EDI pe factura unui partener fără Sistem EDI: Selectați un sistem EDI pentru partenerul Hipermag Retail SRL](screenshots/07_export_fara_sistem_edi.png)
 
@@ -405,9 +428,9 @@ corectarea unei erori); stabiliți-l cu contabilul clientului.
 
 | Modul / proces | Rol în flux | Tip legătură |
 |---|---|---|
-| `deltatech_edinet` | conectorul EDINET: preia comenzile, trimite **avizele (DESADV)** și **facturile**, afișează **Tip factură EDI** și **Număr comandă EDI** pe factură | extinde acest modul |
-| `deltatech_ediconnect` | conectorul EDI Connect: preia comenzile și trimite **facturile**; **nu** trimite avize și **nu** afișează **Tip factură EDI** și **Număr comandă EDI** | extinde acest modul |
-| `deltatech_gln` | câmpul **GLN** pe parteneri | dependență |
+| `deltatech_edinet` | conectorul EDINET: preia comenzile, trimite **avizele (DESADV)**, **facturile** și **notele de credit** | extinde acest modul |
+| `deltatech_ediconnect` | conectorul EDI Connect: preia comenzile și trimite **facturile** și **notele de credit**; **nu** trimite avize | extinde acest modul |
+| `account_add_gln` | câmpul standard **GLN** pe parteneri (`global_location_number`), afișat de `deltatech_edi` și pe firme, nu doar pe adresele de livrare | dependență |
 | `deltatech_sale_product_reference` | **Referințe client**: codurile articolelor la retailer | dependență |
 | `sale_stock`, `account` | comanda, livrarea, factura pe care se generează documentele | dependență |
 | e-Factura (SPV) | merge separat; XML-ul EDI nu o înlocuiește | fără legătură |
@@ -426,10 +449,12 @@ de credit, citirea chatter-ului după export.
 ## 8. Verificări pentru consultant
 
 - [ ] Compania, retailerul și fiecare magazin al lui au **GLN** completat; adresele au cod poștal.
+- [ ] După actualizarea unei baze existente, log-ul nu are rânduri „partner … has GLN … in `gln` and …
+      in the standard field"; dacă are, GLN-ul acelor parteneri a fost verificat și corectat.
 - [ ] Opțiunea **Adresele clientului** (**Facturare → Configurare → Setări**) e activă, ca adresa de
       livrare să apară pe comandă.
-- [ ] Retailerul și magazinele lui au **Companie** completată (aceeași cu compania care primește
-      comenzile).
+- [ ] Retailerul și magazinele lui au **Companie** goală (partener partajat între companii) sau
+      aceeași cu compania care primește comenzile.
 - [ ] Grupurile de taxe folosite pe facturile către retaileri au **Cod EDI** și **Procent EDI**.
 - [ ] Retailerul are **Sistem EDI** ales; după alegere apar **EDI Cumpărător** și **EDI Vânzător**.
 - [ ] O comandă primită are **Referința clientului** egală cu numărul comenzii retailerului, clientul
@@ -455,19 +480,28 @@ de credit, citirea chatter-ului după export.
       cu utilizatorul în limba română) și numărul avizului de retur în `RetAnnNumber`.
 - [ ] Un retailer fără **Sistem EDI** primește la export mesajul „Selectați un sistem EDI pentru
       partenerul …".
+- [ ] Pe o factură în ciornă și pe o livrare nevalidată butonul **Export EDI** nu apare.
+- [ ] O notă de credit înregistrată cu **Tip factură EDI** rămas pe **Original** se oprește la export cu
+      „Completați Tip factură EDI (Storno, Retur sau Corecție) pe nota de credit …"; după alegerea
+      tipului și completarea **Număr comandă EDI**, exportul pleacă.
 
 ## 9. Mesaje de eroare frecvente
 
 | Mesaj / simptom | Cauză probabilă | Remediere |
 |-----------------|-----------------|-----------|
 | „Selectați un sistem EDI pentru partenerul …" | Retailerul nu are **Sistem EDI** | Completați câmpul pe fișa retailerului (Pasul 2) |
+| „Doar facturile și notele de credit către clienți se pot exporta în EDI." | Exportul a fost cerut pe o factură de furnizor sau pe alt document contabil | Exportați doar facturile și notele de credit către clienți |
+| „Documentul … trebuie înregistrat înainte de exportul în EDI." | Factura sau nota de credit e în ciornă sau anulată | Înregistrați documentul și reluați exportul |
+| „Completați Tip factură EDI (Storno, Retur sau Corecție) pe nota de credit … înainte de exportul în EDI." | Nota de credit are **Tip factură EDI** rămas pe **Original** | Alegeți tipul în tabul **Alte informații**, completați **Număr comandă EDI** și reluați exportul |
+| „Doar livrările către clienți se pot exporta în EDI." | Exportul a fost cerut pe o recepție sau pe un transfer intern | Exportați doar livrările către clienți |
+| „Livrarea … trebuie validată înainte de exportul în EDI." | Livrarea nu e validată | Validați livrarea și reluați exportul |
 | Notă internă „Prețurile EDI diferă de lista de prețuri …" pe comandă | Prețul net al liniei (din mesaj sau, dacă mesajul nu are prețuri, din **Referințe client**) diferă de prețul unei reguli din lista de prețuri a comenzii | Dacă prețul a venit din mesaj, verificați-l cu retailerul și, dacă e corect, actualizați regula din lista de prețuri; dacă a venit din **Referințe client**, aliniați rândul de acolo cu lista de prețuri. Comanda rămâne cu prețul de pe linie |
 | „Produsul … nu a fost găsit!" la import | Articolul nu are în Odoo codul de bare, referința internă sau codul retailerului din mesaj | Completați codul de bare sau referința internă pe produs, ori adăugați codul în **Referințe client**; reimportați |
-| Importul creează un partener nou pentru un retailer existent | GLN lipsă sau diferit pe partener; sau partenerul nu are completată **Compania** (căutarea se face doar în compania curentă) | Corectați GLN-ul sau compania pe firmă și pe magazin; uniți partenerii duplicați |
+| Importul creează un partener nou pentru un retailer existent | GLN lipsă sau diferit pe partener; sau partenerul aparține altei companii | Corectați GLN-ul sau compania pe firmă și pe magazin (lăsați **Compania** goală pentru un partener partajat); uniți partenerii duplicați |
 | „Eroare validare: …" în chatter-ul facturii sau al livrării | XML-ul nu respectă schema (dată, câmp obligatoriu gol). Documentul a plecat oricum | Citiți elementul numit în mesaj, completați data lipsă și reexportați |
 | Eroare la **Export EDI** pe o notă de credit **Storno** | **Referința** e goală | Completați **Referința** ca `număr factură|dată` și reexportați |
 | `BuyerOrderNumber` gol în antetul facturii | **Număr comandă EDI** necompletat pe factură | Completați-l și reexportați |
-| **Export EDI** pe livrare nu produce niciun fișier | Retailerul e pe **EDI Connect**, care nu trimite avize | Comportament așteptat: Odoo nu generează avizul pentru EDI Connect; transmiterea lui se stabilește cu retailerul, în afara Odoo |
+| **Export EDI** pe livrare: „Sistemul EDI al partenerului … nu poate exporta acest document" | Retailerul e pe **EDI Connect**, care nu trimite avize | Comportament așteptat: Odoo nu generează avizul pentru EDI Connect; transmiterea lui se stabilește cu retailerul, în afara Odoo |
 | Factura de retur e blocată la retailer: „Această factură nu conține aviz de recepție" | **Referința** e goală sau conține numărul comenzii, nu al avizului de retur; sau tipul documentului nu e recunoscut | Puneți în **Referință** numărul avizului de retur și reexportați. Pe versiuni anterioare lui 19.0.1.0.4, `RETURN` putea pleca tradus („RETURNARE") la utilizatorii în română: actualizați modulul și reexportați retururile |
 | „Eroare validare: … Expected is ( IDInBuyerSys )" pe livrare | Retailerul nu are **EDI Vânzător** | Completați **EDI Vânzător** pe fișa retailerului (Pasul 2) și reexportați avizul |
 | „Eroare validare: … 'PostalCode': '' is not a valid value" | O adresă din document (firmă, magazin, compania noastră) nu are cod poștal | Completați codul poștal și reexportați |

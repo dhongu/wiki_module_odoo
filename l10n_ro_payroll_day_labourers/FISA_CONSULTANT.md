@@ -69,6 +69,9 @@ citire. Pentru testare folosiți un utilizator Contabil.
    curs completat cu contul casei (`5311`), ca plata să genereze nota `401 = 5311` (**Contabilitate →
    Configurare → Jurnale → Plăți efectuate**).
 5. Creați zilierii ca parteneri persoane fizice, cu CNP-ul completat (sau importați-i la pasul 3).
+6. Anularea unui stat depinde de jurnal și de perioadă (pasul 9a): jurnalul de zilieri poate fi securizat cu hash
+   (de exemplu prin `l10n_ro_audit_immutable`), iar **Data de blocare** (**Contabilitate → Configurare → Setări**)
+   trebuie setată după depunerea fiecărei luni, ca nota unei luni raportate să nu poată fi ștearsă.
 
 ![Setări contabile, secțiunea Declarații ANAF: câmpurile Zilieri — cont de cheltuieli și Zilieri — jurnal, evidențiate, sub setările D112 (conturi CAS, CASS, CAM, impozit)](screenshots/01_setari.png)
 
@@ -186,6 +189,26 @@ nu se poate anula până nu se anulează plățile.
 
 ![Lista plăților către zilieri tipărită: Ionescu Ion 1.312,20 lei și Popa Ana 250 lei, cu documentul de plată, coloana Semnătură, totalul de 1.562,20 lei și restul de plată de 1.062,20 lei](screenshots/11_lista_plati.png)
 
+### Pasul 9a — Anularea statului (dacă e nevoie să-l refaceți)
+
+**Contabilitate → Contabilitate → Zilieri → State de plată** → deschideți statul → butonul **Anulează**. Zilele se eliberează în
+registru. Un stat cu plăți nu se anulează până nu se anulează plățile. Nota contabilă se tratează după jurnal și
+perioadă:
+
+- jurnal fără restricții și perioadă deschisă: nota se **șterge**;
+- jurnal securizat cu hash (de exemplu cu `l10n_ro_audit_immutable`): nota se **stornează**, reconciliat cu
+  originalul, la data notei;
+- lună blocată (data de blocare): storno-ul are **data curentă**, iar **Data plății** a statului se mută la aceeași
+  dată, ca nota nouă de la reluare (**Readu în ciornă** → **Confirmă** → **Contabilizează**) să cadă în perioada
+  deschisă.
+
+În chatter rămân nota originală și storno-ul. Dacă D112 a lunii e deja validată sau exportată, chatterul
+avertizează; dacă sumele sau persoanele se schimbă la refacerea statului, verificați cu contabilul dacă e nevoie
+de D112 rectificativă. Anularea nu anulează transmiterea zilelor în registrul ITM: folosiți-o doar pentru
+„refac statul”, nu pentru „munca nu a existat”.
+
+![Stat anulat pe un jurnal securizat cu hash: statusul Anulat, jurnalul Zilieri (securizat) și, în chatter, mesajul că nota contabilă a fost stornată, cu numărul storno-ului și data](screenshots/13_anulare.png)
+
 ### Pasul 10 — Declarația D112
 
 **Contabilitate → Rapoarte → Declarații ANAF → Declarația D112** → creați declarația lunii (sau deschideți-o pe
@@ -227,6 +250,9 @@ ca parteneri.
 - [ ] După contabilizare, soldul deschis în `401` pe zilier este egal cu restul de plată.
 - [ ] Plata parțială a unui zilier lasă diferența în coloana **Rest de plată**; statul cu plăți nu se anulează.
 - [ ] D112 cuprinde fiecare zilier o singură dată, cu zilele și sumele lunii.
+- [ ] Anularea unui stat pe jurnal cu hash reușește: nota originală rămâne, există un storno reconciliat, statul e *Anulat* și zilele sunt libere.
+- [ ] Anularea într-o lună blocată: storno-ul are data curentă, iar **Data plății** a statului s-a mutat la aceeași dată.
+- [ ] Pe jurnal fără restricții, anularea șterge nota; după reluare statul generează o notă nouă.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -242,6 +268,8 @@ ca parteneri.
 | CNP-ul lipsește sau este invalid pentru: … | zilier fără CNP valid la confirmare | completați CNP-ul și recalculați |
 | Contul … nu a fost găsit; setați-l în setările contabile | planul de conturi nu are `621`/`4315`/`444` | completați conturile în Setări |
 | … are plăți. Anulați întâi plățile | încercare de anulare a unui stat cu plăți | anulați sau deconciliați plățile |
+| Journal entry … was reversed by … on … / Journal entry … was removed on cancellation. | mesaje informative din chatter la anularea statului | niciuna: arată ce s-a întâmplat cu nota (stornată sau ștearsă) |
+| Warning: the D112 declaration of LL/AAAA is already validated/exported … | statul anulat aparține unei luni cu D112 validată sau exportată | după refacerea statului, verificați dacă e nevoie de D112 rectificativă |
 
 ## 10. Capturi de ecran
 
@@ -263,6 +291,7 @@ variantele în engleză, cu aceleași nume, în `static/description/en/` (pentru
 | `10_plata.png` | Asistentul de plată |
 | `11_lista_plati.png` | Lista plăților pentru semnătură |
 | `12_d112.png` | Declarația D112 cu liniile zilierilor |
+| `13_anulare.png` | Stat anulat pe jurnal securizat cu hash, cu urma storno-ului în chatter |
 
 Regenerare:
 

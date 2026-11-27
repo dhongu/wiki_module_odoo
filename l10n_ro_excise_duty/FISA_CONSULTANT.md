@@ -216,6 +216,7 @@ autorizațiilor și actualizarea cotelor la HG nou.
 
 ## 8. Verificări pentru consultant
 
+- [ ] Izolare pe companie: un utilizator care are acces doar la compania A nu vede în listă și nu poate deschide înregistrările companiei B (reguli de înregistrare globale pe `company_id`); un utilizator cu ambele companii bifate le vede pe amândouă.
 - [ ] Modulul se instalează fără erori; nomenclatorul are 22 de categorii (unele cu cotă 0 —
       ex. vinurile liniștite, conform CF).
 - [ ] Meniul **Contabilitate → Raportare → Accize** apare, cu cele 4 submeniuri.

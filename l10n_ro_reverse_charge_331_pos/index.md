@@ -1,7 +1,7 @@
 # Romania - Taxare inversă art. 331 în punctul de vânzare (localizat la `l10n_ro_reverse_charge_331_pos/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_reverse_charge_331_pos`
-- **Versiune:** `19.0.1.1.1`
+- **Versiune:** `19.0.1.1.2`
 - **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_reverse_charge_331_pos`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_reverse_charge_331_pos`
 - **Ultima Ingestie:** `2026-10-22`

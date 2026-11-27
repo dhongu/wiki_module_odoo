@@ -63,6 +63,7 @@ Date minime pentru demo:
    (duplicatele e-Factura). Fiecare arie se activează automat dacă modulul ei e prezent.
 3. Nu necesită configurare suplimentară: raportul folosește filtrele standard de perioadă din
    framework-ul de rapoarte.
+4. Pe baze multi-companie, bifați în selectorul de companii ale raportului companiile de auditat: raportul le parcurge pe fiecare, limitat la cele la care utilizatorul are acces.
 
 ## 6. Flux de utilizare
 
@@ -136,6 +137,7 @@ Ce rămâne manual: alegerea perioadei, interpretarea și confirmarea fiecărei 
 
 ## 8. Verificări pentru consultant
 
+- [ ] Cu două companii selectate în raport, constatările au prefixul „[Nume companie]”; o companie selectată la care utilizatorul nu are acces nu este auditată (auditul respectă companiile permise utilizatorului).
 - [ ] Modulul se instalează fără erori pe baza demo.
 - [ ] Meniul **Contabilitate → Raportare → Declarații (Legal) → Audit corelare declarații** e vizibil.
 - [ ] Raportul afișează cele trei arii (TVA D300↔Jurnale, SAF-T, e-Factura).

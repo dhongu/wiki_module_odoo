@@ -1,7 +1,7 @@
 # Financial Analysis by Period (Analiză financiară pe perioade)
 
 - **Nume Tehnic:** `deltatech_financial_analysis`
-- **Versiune:** `19.0.1.2.2`
+- **Versiune:** `19.0.1.2.6`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_financial_analysis
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_financial_analysis`
 - **Ultima Ingestie:** `2026-10-27`

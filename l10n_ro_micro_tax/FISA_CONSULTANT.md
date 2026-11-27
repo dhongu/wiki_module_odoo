@@ -242,6 +242,7 @@ cumulat cu întreprinderile legate), lista conturilor excluse, plata impozitului
 
 ## 8. Verificări pentru consultant
 
+- [ ] Izolare pe companie: un utilizator care are acces doar la compania A nu vede în listă și nu poate deschide înregistrările companiei B (reguli de înregistrare globale pe `company_id`); un utilizator cu ambele companii bifate le vede pe amândouă.
 - [ ] Meniul **Contabilitate → Contabilitate → Impozit Micro-Întreprindere** este vizibil pentru
       utilizatorul cu drept de contabil.
 - [ ] Pe un trimestru din 2026 cu 0 salariați, după **Calculează venituri**, cota este **1%**.

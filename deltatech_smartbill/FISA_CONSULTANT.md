@@ -139,10 +139,9 @@ moneda, datele clientului (nume, CUI, adresă, oraș, județ, țară, e-mail) ș
 unitate de măsură, cantitate, preț, cota de TVA). Un discount pe linie devine o linie separată de discount
 procentual. Clientul și produsele nu se salvează în baza de date SmartBill.
 
-> **Atenție — risc de duplicat.** Dacă SmartBill acceptă factura, dar validarea ciornei în Odoo eșuează
-> (de exemplu o validare contabilă), Odoo își anulează modificările: numărul SmartBill nu se păstrează, iar
-> butonul **Send to SmartBill** reapare, deși factura există deja în SmartBill. **Verificați în SmartBill
-> înainte de a retrimite**, altfel se emite a doua factură (problemă cunoscută, raportată ca issue).
+> **Atenție — validare eșuată după emitere.** Dacă SmartBill acceptă factura, dar validarea ciornei în Odoo eșuează
+> (de exemplu o validare contabilă), Odoo păstrează numărul SmartBill, factura rămâne ciornă, iar o notă în chatter
+> arată eroarea. Corectați cauza și **validați factura manual**; nu o retrimiteți, ea există deja în SmartBill.
 
 ![Factura din Tehnoconstruct SRL după trimiterea simulată: numele FACT0042, factura în starea Postat, liniile cu Cantitate și Disc.% (10% pe a doua), butonul Send to SmartBill nu mai apare](screenshots/04_factura_trimisa.png)
 

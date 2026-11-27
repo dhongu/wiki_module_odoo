@@ -1,15 +1,15 @@
-# Delivery Route Planner (Planificare rute de livrare)
+# Delivery Route Planner (localizat la `deltatech_delivery_route_planner/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_route_planner`
-- **Versiune:** `20.0.1.0.0`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_delivery_route_planner
+- **Versiune:** `19.0.1.0.0`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_delivery_route_planner
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_delivery_route_planner`
-- **Ultima Ingestie:** `2026-11-26`
+- **Ultima Ingestie:** `2026-11-27`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Planifică livrările zilei (sau ale unei săptămâni) cu vehiculele proprii: le împarte între vehicule și ordonează opririle astfel încât mașinile să parcurgă cât mai puțini kilometri, apoi creează câte un transfer în lot (batch) pentru fiecare vehicul. Dispecerul vede traseul pe hartă, iar șoferul primește lista de opriri cu ora estimată de sosire. Modulul este pe 20.0 (Beta, licență OPL-1, preț 220 EUR).
+Planifică livrările zilei (sau ale unei săptămâni) cu vehiculele proprii: le împarte între vehicule și ordonează opririle astfel încât mașinile să parcurgă cât mai puțini kilometri, apoi creează câte un transfer în lot (batch) pentru fiecare vehicul. Dispecerul vede traseul pe hartă, iar șoferul primește lista de opriri cu ora estimată de sosire. Modulul este în versiunea 19.0, portat din 20.0 (Beta, licență OPL-1, preț 220 EUR).
 
 #### 2. Funcționalități Cheie
 
@@ -29,6 +29,7 @@ Fluxul detaliat pas cu pas este în [fișa consultantului](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
+- `stock_picking_batch`
 - `stock_fleet`
 - `base_geolocalize`
 - `web_map` (Enterprise)
@@ -58,6 +59,6 @@ Fluxul detaliat pas cu pas este în [fișa consultantului](FISA_CONSULTANT.md).
 
 #### 5. Conexiuni
 
-- `stock_picking_batch` (integrat în `stock` pe Odoo 20): loturile create de planificator sunt transferuri în lot.
+- `stock_picking_batch`: loturile create de planificator sunt transferuri în lot (dependență directă; integrat în `stock` pe Odoo 20).
 - `fleet`: vehiculul, șoferul și categoria cu capacitate de greutate provin din flota Odoo.
 - [deltatech_fleet](../deltatech_fleet/index.md): foile de parcurs și rutele flotei înregistrează ce s-a parcurs efectiv; planificatorul propune traseul dinainte.

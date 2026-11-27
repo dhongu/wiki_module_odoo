@@ -74,7 +74,7 @@ Date minime pentru demo:
 ## 5. Configurare inițială
 
 1. Instalați modulul `deltatech_ediconnect`. Se instalează și baza `deltatech_edi` (și, prin ea,
-   `deltatech_gln` și `deltatech_sale_product_reference`). Pe server trebuie să existe biblioteca
+   `account_add_gln` și `deltatech_sale_product_reference`). Pe server trebuie să existe biblioteca
    Python `xmltodict`. Meniul **Vânzări** apare cu aplicația Vânzări (`sale_management`), instalată
    de obicei deja.
 2. Completați datele de conectare în **Setări → Configurări generale → Integrare → EDI Connect** (Pasul 1).
@@ -117,11 +117,13 @@ Verificați **GLN** (codul de identificare al retailerului în mesajele EDI) și
   necunoscut în companie nu oprește importul: Odoo **creează un partener nou** cu acel GLN și numele
   din comandă. Completați deci GLN-ul pe retailer și pe magazine înainte de prima preluare, ca să nu
   apară parteneri dublați.
-- GLN-ul se caută **doar printre partenerii companiei** care preia comanda: partenerul trebuie să aibă
-  **Companie** = compania contului (grupul **Diverse**, sub **GLN**). Un partener partajat, cu
-  **Companie** goală, nu este recunoscut și se creează un duplicat. La retailer, **Companie** se
-  completează singură când alegeți **Sistem EDI**; magazinele adăugate ca contacte ale retailerului
-  preiau compania lui, dar un magazin creat separat trebuie completat manual.
+- GLN-ul se caută printre partenerii companiei care preia comanda și printre partenerii partajați între
+  companii (**Companie** goală, grupul **Diverse**, sub **GLN**). Un partener al altei companii nu este
+  recunoscut: se creează unul nou. La retailer, **Companie** se completează singură când alegeți
+  **Sistem EDI**.
+- Dacă o parte din comandă vine **fără GLN**, partenerul se caută după **CUI**, apoi după **numele
+  exact** al unei firme fără GLN al cărei CUI nu e altul; dacă nu se găsește, se creează. O parte cu GLN
+  (magazin, depozit) nu se potrivește niciodată după nume, ca un magazin să nu ajungă pe sediul firmei.
 - **Sistem EDI** contează la export: butonul **Export EDI** trimite factura la EDI Connect doar dacă
   partenerul comercial al facturii are **EDI Connect**.
 - **EDI Vânzător** este codul vostru de furnizor în sistemul retailerului: trece în XML-ul facturii;
@@ -183,8 +185,9 @@ primite prin EDI.
 ### Pasul 6 — Factura și exportul la EDI Connect
 
 Confirmați comanda, validați livrarea, apoi creați factura din comandă (**Crează factura**) și
-confirmați-o (**Confirmă**). Pe factura înregistrată,
-apăsați **Export EDI**. Modulul:
+confirmați-o (**Confirmă**). Înainte de export completați, în tabul **Alte informații**, **Număr
+comandă EDI** cu numărul comenzii retailerului (ex. `05004215`): fără el, `BuyerOrderNumber` din
+antetul facturii pleacă gol. Pe factura înregistrată, apăsați **Export EDI**. Modulul:
 
 1. generează XML-ul facturii (șablonul din `deltatech_edi`) și îl atașează facturii; dacă XML-ul nu
    respectă schema, eroarea se scrie în chatter („Eroare validare: …"), dar fișierul pleacă oricum;
@@ -198,8 +201,9 @@ Verificați după export:
   fișierul **nu** a ajuns, deși începutul notificării spune că a fost transmis;
 - în chatter nu apare „Eroare validare".
 
-Butonul apare și pe facturile în ciornă și pe notele de credit: exportați doar facturile
-**înregistrate**. Reexportul aceleiași facturi înlocuiește fișierul de pe server, dacă retailerul nu
+Butonul apare doar pe facturile și notele de credit **înregistrate**; la o notă de credit alegeți
+întâi **Tip factură EDI** (Storno, Retur, Corecție) în tabul **Alte informații** și completați
+**Număr comandă EDI** (obligatoriu pentru orice tip în afară de Original). Reexportul aceleiași facturi înlocuiește fișierul de pe server, dacă retailerul nu
 l-a preluat încă.
 
 ![Factura INV/2026/00001 în starea Postat pentru Hipermag Retail SRL, cu adresa de livrare Hipermag Magazin Militari, cele două linii de cafea și totalul 13.394,70 lei; butonul Export EDI evidențiat în antet (1)](screenshots/06_factura_export_edi.png)
@@ -222,7 +226,7 @@ Exportul nu schimbă factura și nici starea ei de transmitere în SPV: e-Factur
 | Modul / proces | Rol în flux |
 |---|---|
 | `deltatech_edi` | citirea comenzii (client, magazin, produse, prețuri), XML-ul facturii, câmpul **Sistem EDI** și butonul **Export EDI** |
-| `deltatech_gln` | câmpul **GLN** pe parteneri, după care se recunosc clientul și magazinul |
+| `account_add_gln` | câmpul standard **GLN** pe parteneri, după care se recunosc clientul și magazinul |
 | `deltatech_sale_product_reference` | **Referințe client**: codurile de articol ale retailerului, ținute la zi de import |
 | `sale` / `account` | comanda de vânzare și factura, prin fluxul standard |
 | e-Factura (`l10n_ro_edi`) | factura se transmite în SPV separat; exportul EDI nu o înlocuiește |
@@ -240,7 +244,8 @@ avizul de expediție (nu se trimite prin EDI Connect).
 - [ ] În **Setări → Configurări generale → Integrare → EDI Connect**, compania are URL-ul, utilizatorul,
       parola și cheia API primite de la furnizor.
 - [ ] Acțiunea planificată **EDI Connect: Preia comenzi** este **activă**, cu intervalul dorit.
-- [ ] Retailerul și magazinele lui au **GLN** și **Companie** = compania care preia comenzile;
+- [ ] Retailerul și magazinele lui au **GLN** și **Companie** = compania care preia comenzile sau goală
+      (partener partajat);
       retailerul are **Sistem EDI** = **EDI Connect**.
 - [ ] La **Rulează manual**, comanda din fișierul ORDERS apare în **Vânzări → Comenzi**, cu clientul,
       adresa de livrare, produsele, cantitățile și prețurile din fișier, iar fișierul e atașat.
@@ -249,6 +254,10 @@ avizul de expediție (nu se trimite prin EDI Connect).
 - [ ] Într-o bază cu mai multe companii, comanda apare în compania contului care a adus-o.
 - [ ] Pe factura înregistrată, **Export EDI** afișează notificarea **EDI Connect** cu mesajul de primire
       al serverului, iar în chatter nu apare „Eroare validare".
+- [ ] Pe o factură în ciornă butonul **Export EDI** nu apare.
+- [ ] O notă de credit înregistrată cu **Tip factură EDI** rămas pe **Original** se oprește la export cu
+      „Completați Tip factură EDI (Storno, Retur sau Corecție) pe nota de credit …"; după alegerea
+      tipului și completarea **Număr comandă EDI**, nota pleacă la EDI Connect.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -258,7 +267,12 @@ avizul de expediție (nu se trimite prin EDI Connect).
 | Eroare de conexiune („Max retries exceeded", „Connection refused", „timed out") la preluare sau la **Export EDI** | URL greșit sau server indisponibil | Verificați URL-ul cu furnizorul EDI Connect și conexiunea serverului Odoo |
 | Eroare tehnică „'bool' object is not iterable" la preluare sau la **Export EDI** | Serverul a refuzat autentificarea sau lista fișierelor (date de conectare greșite, cheie API expirată, URL greșit) | Verificați datele din Setări cu furnizorul EDI Connect |
 | Notificarea **EDI Connect** cu „Failed to send file to EDI Connect." | Serverul nu a primit fișierul facturii | Reîncercați **Export EDI**; dacă se repetă, verificați contul la furnizor |
+| Importul creează un partener nou pentru un retailer sau magazin existent | GLN lipsă sau diferit pe partenerul existent, ori partenerul aparține altei companii; fără GLN în comandă, CUI-ul și numele exact nu se potrivesc | Corectați GLN-ul (și **Companie**: a contului sau goală) pe partenerul existent, uniți partenerii dublați și rulați din nou |
 | „Selectați un sistem EDI pentru partenerul …" | Partenerul comercial al facturii nu are **Sistem EDI** | Completați **Sistem EDI** = **EDI Connect** pe retailer |
+| „Documentul … trebuie înregistrat înainte de exportul în EDI." | Factura sau nota de credit nu e înregistrată | Înregistrați documentul și reluați exportul |
+| „Completați Tip factură EDI (Storno, Retur sau Corecție) pe nota de credit … înainte de exportul în EDI." | Nota de credit are **Tip factură EDI** rămas pe **Original** | Alegeți tipul și completați **Număr comandă EDI** în tabul **Alte informații**, apoi reexportați |
+| „Doar facturile și notele de credit către clienți se pot exporta în EDI." | Exportul a fost cerut pe un alt tip de document contabil | Exportați doar facturile și notele de credit către clienți |
+| „Sistemul EDI al partenerului … nu poate exporta acest document." pe o livrare | EDI Connect nu trimite avize de expediție | Comportament așteptat; avizul se transmite retailerului în afara Odoo |
 | „Eroare validare: …" în chatter-ul facturii | XML-ul facturii nu respectă schema (date lipsă pe factură, partener sau produs) | Corectați datele indicate și reexportați |
 | Comanda nu apare deși fișierul e pe server | Acțiunea planificată e inactivă, compania nu are **Cheie API**, numele fișierului nu conține `ORDER` cu majuscule, sau fișierul a fost preluat deja în această companie | Verificați pe rând cele patru condiții |
 
@@ -302,7 +316,7 @@ Limitări de reținut (comportamentul actual):
   preluat, fără comandă și fără mesaj; nu mai este reluat;
 - datele de conectare greșite dau o eroare tehnică, nu un mesaj clar;
 - fișierele preluate rămân pe server;
-- butonul **Export EDI** nu verifică starea facturii, iar o trimitere eșuată are tot titlul „transmis".
+- o trimitere eșuată are tot titlul „transmis".
 
 ---
 

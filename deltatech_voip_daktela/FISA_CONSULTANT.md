@@ -94,9 +94,9 @@ Widgetul arată apelul cu fișa contactului: în antet **Apel extern…** cât t
 
 ### Pasul 6 — Închideți apelul
 
-Apăsați butonul roșu din widget: Odoo închide apelul în Daktela, iar widgetul arată rezumatul apelului (contactul, durata, butoanele **Contact**, **Activitate** și **Apeluri**), apoi revine la tastatură. Dacă apelul se închide în Daktela (clientul închide sau agentul închide din telefonul Daktela), widgetul afișează singur rezumatul, în cel mult 2 secunde, fără niciun clic în Odoo. Dacă Daktela refuză închiderea, Odoo afișează motivul dat de Daktela, iar apelul rămâne afișat în curs.
+Apăsați butonul roșu din widget: Odoo închide apelul în Daktela, iar widgetul arată rezumatul apelului (contactul, durata, de exemplu „A durat: 00:05”, butoanele **Contact**, **Activitate** și **Apeluri**), apoi revine la tastatură. Dacă apelul se închide în Daktela (clientul închide sau agentul închide din telefonul Daktela), widgetul afișează singur rezumatul, în cel mult 2 secunde, fără niciun clic în Odoo. Dacă Daktela refuză închiderea, Odoo afișează motivul dat de Daktela, iar apelul rămâne afișat în curs.
 
-![Widgetul Telefon după închiderea apelului către Client Exemplu SRL, marcat: starea Disponibil, rezumatul cu A durat și butoanele Contact, Activitate și Apeluri](screenshots/06_widget_apel_incheiat.png)
+![Widgetul Telefon după închiderea apelului către Client Exemplu SRL, marcat: starea Disponibil, rezumatul cu A durat: 00:05 și butoanele Contact, Activitate și Apeluri](screenshots/06_widget_apel_incheiat.png)
 
 ### Pasul 7 — Răspundeți la un apel primit
 
@@ -112,15 +112,21 @@ Mergeți la **Telefon → Apeluri**. Un apel pornit din Odoo apare aici imediat,
 
 ### Pasul 9 — Opriți soneria cu Nu deranjați
 
-În antetul widgetului **Telefon**, comutatorul standard **Disponibil / Nu deranjați** lucrează și în Daktela pentru agenții Daktela. **Nu deranjați** (15 minute, o oră, 3 ore, 8 ore, 24 de ore sau **Până când îl pornesc din nou**) oprește soneria Odoo, ca în standard, și pune agentul pe pauza din **Pauză Daktela pentru Nu deranjați** de pe furnizor (fără pauză completată: îl trece pe Indisponibil). Daktela nu mai sună agentul cu apelurile din coadă; clienții așteaptă în coadă și apar în fila **În așteptare**. **Disponibil** încheie pauza (sau îl trece înapoi pe Ready); la expirarea duratei alese, Odoo încheie singur pauza, în cel mult un minut. Odoo anulează doar ce a făcut el: un agent aflat deja pe o pauză proprie în Daktela rămâne pe ea. Dacă Daktela refuză schimbarea, **Nu deranjați** se păstrează în Odoo și utilizatorul primește un avertisment cu motivul dat de Daktela.
+În antetul widgetului **Telefon**, comutatorul standard **Disponibil / Nu deranjați** lucrează și în Daktela pentru agenții Daktela. **Nu deranjați** (15 minute, o oră, 3 ore, 8 ore, 24 de ore sau **Până când îl pornesc din nou**) oprește soneria Odoo, ca în standard, și pune agentul pe pauza din **Pauză Daktela pentru Nu deranjați** de pe furnizor (fără pauză completată: îl trece pe Indisponibil). Daktela nu mai sună agentul cu apelurile din coadă; clienții așteaptă în coadă și apar în fila **Coadă**. **Disponibil** încheie pauza (sau îl trece înapoi pe Ready); la expirarea duratei alese, Odoo încheie singur pauza, în cel mult un minut. Odoo anulează doar ce a făcut el: un agent aflat deja pe o pauză proprie în Daktela rămâne pe ea. Dacă Daktela refuză schimbarea, **Nu deranjați** se păstrează în Odoo și utilizatorul primește un avertisment cu motivul dat de Daktela.
 
-![Widgetul Telefon cu butonul Disponibil marcat și meniul deschis: Disponibil și Nu deranjați, cu nota Apelurile primite vor fi mutate; jos, filele widgetului, între care noua filă În așteptare](screenshots/09_widget_nu_deranjati.png)
+![Widgetul Telefon cu butonul Disponibil marcat și meniul deschis: Disponibil și Nu deranjați, cu nota Apelurile primite vor fi mutate; jos, filele widgetului, între care noua filă Coadă](screenshots/09_widget_nu_deranjati.png)
 
-### Pasul 10 — Preluați manual un apel din așteptare
+### Pasul 10 — Preluați manual un apel din coadă
 
-Deschideți fila **În așteptare** a widgetului. Lista arată apelurile care așteaptă în toate cozile Daktela ale instanței (nu doar în cozile agentului), cel mai vechi primul: contactul găsit după număr (sau numărul), numărul, coada și timpul de așteptare; se actualizează la fiecare 10 secunde cât timp fila e deschisă. **Preia** dă apelul agentului în Daktela: apelul sună în telefonul agentului (softphone-ul Odoo sau telefonul web Daktela) și se răspunde ca orice apel primit. Dacă între timp apelul a fost preluat de altcineva sau clientul a închis, apare mesajul „Acest apel nu mai e în așteptare.” Pentru a prelua apeluri care nu i-au fost oferite, agentul are nevoie în Daktela de dreptul de coadă **Call pickup** pe coada apelului; fără el, Daktela refuză preluarea și Odoo afișează motivul. Preluarea funcționează și pe **Nu deranjați**.
+Deschideți fila **Coadă** a widgetului. Lista arată apelurile care așteaptă în toate cozile Daktela ale instanței (nu doar în cozile agentului), cel mai vechi primul: contactul găsit după număr (sau numărul), numărul, coada și timpul de așteptare; se actualizează la fiecare 10 secunde cât timp fila e deschisă. **Preia** dă apelul agentului în Daktela: apelul sună în telefonul agentului (softphone-ul Odoo sau telefonul web Daktela) și se răspunde ca orice apel primit. Dacă între timp apelul a fost preluat de altcineva sau clientul a închis, apare mesajul „Acest apel nu mai e în așteptare.” Pentru a prelua apeluri care nu i-au fost oferite, agentul are nevoie în Daktela de dreptul de coadă **Call pickup** pe coada apelului; fără el, Daktela refuză preluarea și Odoo afișează motivul. Preluarea funcționează și pe **Nu deranjați**.
 
-![Fila În așteptare a widgetului Telefon cu două apeluri în coada Vânzări: Client Exemplu SRL (+40721000111) și numărul +40744999888, fiecare cu timpul de așteptare și butonul verde Preia, primul marcat](screenshots/10_widget_in_asteptare.png)
+![Fila Coadă a widgetului Telefon cu două apeluri în coada Vânzări: Client Exemplu SRL (+40721000111) și numărul +40744999888, fiecare cu timpul de așteptare și butonul verde Preia, primul marcat](screenshots/10_widget_in_asteptare.png)
+
+### Pasul 11 — Opriți doar soneria
+
+Când agentul vrea să primească în continuare apelurile, dar fără sunet (lucrează cu ochii pe ecran, e deja la telefon cu altcineva), alege din meniul **Disponibil / Nu deranjați** al widgetului **Fără sonerie**. Apelurile din coadă vin mai departe: agentul rămâne Ready în Daktela, iar widgetul arată **Apel primit…** cu **Acceptă** și **Respinge**, doar fără sonerie. Pe buton apare un clopoțel tăiat, iar în meniu o bifă lângă **Fără sonerie**; aceeași opțiune, aleasă din nou, repornește soneria. Setarea rămâne până la oprire, nu are durată, și nu schimbă nimic în Daktela. Pentru a opri și apelurile, folosiți **Nu deranjați** (pasul 9).
+
+![Widgetul Telefon cu meniul Disponibil / Nu deranjați deschis: opțiunea Fără sonerie, cu textul Apelurile vin în continuare, fără sunet, și bifa verde, marcată; pe butonul Disponibil, clopoțelul tăiat](screenshots/11_widget_fara_sonerie.png)
 
 ### Note de monografie și raportare
 
@@ -158,6 +164,7 @@ Modulul nu generează note contabile. Istoricul apelurilor se poate filtra și g
 - [ ] Un apel de intrare închis de apelant înainte de răspuns apare ca **Apel ratat** în istoric, o singură dată și după import.
 - [ ] Cu **Telefon Daktela** pe **Softphone Odoo**, **Sincronizați telefoanele Daktela** afișează „Telefoane Daktela sincronizate pentru N utilizatori.”, iar utilizatorul agentului are în tabul **VoIP** utilizatorul și parola SIP ale dispozitivului WebRTC din Daktela.
 - [ ] Cu **Softphone Odoo**, apelul pornit din Odoo se aude în browser (softphone-ul Telefon), iar un apel de intrare sună în softphone fără webhook; după import, apelurile agenților nu apar de două ori în istoric.
+- [ ] În interfața în română, rezumatul apelului arată durata („A durat: 00:05”), iar în fila **Recent** apelurile apar cu durata („Apel primit (00:05)”), nu cu paranteze goale.
 - [ ] Apelul pornit din Odoo apare imediat în **Telefon → Apeluri**; după import rămâne un singur rând pentru el, cu durata din Daktela.
 - [ ] Cu **Dispozitiv Daktela** completat, agentul delogat din Daktela e logat automat pe dispozitiv și pe Ready (și în coada lui de ieșire: a utilizatorului sau a furnizorului), iar apelul pornește.
 - [ ] Un utilizator nou primește furnizorul Daktela, iar Telefon nu mai afișează „Mod Demo”; un utilizator fără agent care pornește un apel primește mesajul că nu e legat de un agent Daktela.
@@ -167,8 +174,9 @@ Modulul nu generează note contabile. Istoricul apelurilor se poate filtra și g
 - [ ] Un apel intern între agenți nu apare în istoric.
 - [ ] **Nu deranjați** pune agentul în Daktela pe pauza din **Pauză Daktela pentru Nu deranjați** (sau pe Indisponibil, fără pauză pe furnizor); **Disponibil** îl readuce pe Ready.
 - [ ] Un **Nu deranjați** de 15 minute încheie singur pauza Daktela după expirare (cron la un minut).
-- [ ] Pe **Nu deranjați**, apelurile din coadă nu mai sună la agent și apar în fila **În așteptare**.
-- [ ] **Preia** pe un apel din **În așteptare** sună în telefonul agentului; un apel preluat între timp de altcineva dă „Acest apel nu mai e în așteptare.”
+- [ ] Pe **Nu deranjați**, apelurile din coadă nu mai sună la agent și apar în fila **Coadă**.
+- [ ] **Preia** pe un apel din fila **Coadă** sună în telefonul agentului; un apel preluat între timp de altcineva dă „Acest apel nu mai e în așteptare.”
+- [ ] **Fără sonerie** oprește soneria unui apel primit în softphone-ul Odoo, dar apelul apare în widget și poate fi acceptat; agentul rămâne Ready în Daktela.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -214,7 +222,8 @@ Capturile sunt generate automat din `tests/test_screenshots.py` (mixinul `Screen
 - `07_widget_apel_intrare.png`: widgetul Telefon cu un apel primit: Apel primit, fișa contactului și butoanele Respinge și Acceptă.
 - `08_istoric_apeluri.png`: lista Apeluri, cu apelurile importate din Daktela.
 - `09_widget_nu_deranjati.png`: meniul Disponibil / Nu deranjați al widgetului (pasul 9).
-- `10_widget_in_asteptare.png`: fila În așteptare, cu apelurile din coadă și butonul Preia (pasul 10).
+- `11_widget_fara_sonerie.png`: opțiunea Fără sonerie din meniul widgetului (pasul 11).
+- `10_widget_in_asteptare.png`: fila Coadă, cu apelurile din coadă și butonul Preia (pasul 10).
 
 Capturile widgetului se fac cu răspunsurile Daktela simulate în test (apel pornit, apoi răspuns), fără un apel real.
 
@@ -223,7 +232,7 @@ Capturile widgetului se fac cu răspunsurile Daktela simulate în test (apel por
 - Modulul e publicat pe Odoo Apps Store din 21.11.2026, după ce a fost folosit în producție la un client cu Daktela (softphone Odoo, apeluri de intrare, import).
 - Daktela a răspuns inițial că softphone-ul din Telefon nu se poate conecta la PBX-ul Daktela, dar el se conectează ca dispozitivul WebRTC al agentului (testat și folosit în producție din 21.11.2026). Fără agentul pe Ready, Daktela refuză apelurile de ieșire cu mesajul vocal „you are not logged in”: de aceea Odoo face singur **Go Ready**.
 - Răspunsul din Odoo la un apel primit (**Acceptă**) nu e încă verificat pe o instanță Daktela reală; dacă Daktela îl refuză, agentul răspunde din telefonul Daktela. Evenimentele de setat în Daktela pentru apelurile de intrare (sună, răspuns, închis) se confirmă la configurare: Odoo ia din ele doar numele activității și citește apelul din API.
-- În interfața în română, rezumatul apelului din widget arată „A durat:” fără durată: traducerea română a aplicației Telefon din Odoo are un parametru greșit (`%(durata)s` în loc de `%(duration)s`). În engleză apare „Lasted: 00:05”.
+- Traducerea română oficială a aplicației Telefon din Odoo are parametri traduși greșit (`%(durata)s`, `%(durată)s`, `%(timp)s`, `%(ora)s` în loc de `%(duration)s`, `%(time)s`), din care ar rezulta „A durat:” sau „Apel primit ()” fără valoare. Modulul îi corectează la trimiterea traducerilor către browser (19.0.1.11.1), deci în widget durata și ora apar normal; greșeala trebuie raportată și la Odoo.
 - Importul presupune că Daktela trimite numărul clientului în câmpul `clid` pentru ambele direcții ; de verificat pe o instanță reală. Autentificarea (antetul `X-AUTH-TOKEN`), formatul filtrului și fusul orar al orelor au fost confirmate de Daktela.
 - Nu există legături către înregistrările audio; sunt în roadmap.
 - În interfața în română, coloana **Dată** din lista Apeluri arată „Astăzi," fără oră: e traducerea aplicației Telefon din Odoo, nu a acestui modul.

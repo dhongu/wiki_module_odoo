@@ -41,6 +41,7 @@ un partener transportator, un număr de înmatriculare, opțional un UIT e-Trans
 1. Instalați `l10n_ro_esigiliu`.
 2. Verificați accesul utilizatorului la Inventar (grupurile standard Inventar utilizator/manager).
 3. Nu necesită parametri de configurare în faza 1.
+4. **Izolare pe companie:** fiecare utilizator vede doar sigiliile companiilor la care are acces (companiile active din selectorul de companii); nu este nevoie de configurare, regula se aplică automat la instalare.
 
 ## 6. Flux de utilizare
 

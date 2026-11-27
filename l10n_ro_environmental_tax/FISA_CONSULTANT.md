@@ -438,6 +438,7 @@ Limitări / gap-uri cunoscute:
 
 ## 8. Verificări pentru consultant
 
+- [ ] Izolare pe companie: un utilizator care are acces doar la compania A nu vede în listă și nu poate deschide înregistrările companiei B (reguli de înregistrare globale pe `company_id`); un utilizator cu ambele companii bifate le vede pe amândouă.
 - [ ] Materialele folosite de produsele firmei sunt active în **Materiale AFM**.
 - [ ] Fiecare material folosit are o cotă AFM valabilă în perioada declarată (fără **Cotă lipsă** pe linii).
 - [ ] Contractele OIREP relevante sunt în starea **Activ**, cu materialele și cantitatea per perioadă corecte.

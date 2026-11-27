@@ -212,6 +212,8 @@ se dublează.
 Deschideți anomalia. Formularul arată documentele, clientul, agentul de vânzări, valoarea, vechimea, prima detectare
 și ultima rulare care a găsit-o, mesajul regulii și, în **Analiză AI**, prioritatea, grupul, explicația și acțiunea.
 
+Valoarea anomaliei este exprimată întotdeauna în moneda companiei: pentru comenzile în altă monedă, suma este convertită la cursul de la data verificării.
+
 ![Anomalia, cu mesajul regulii și analiza AI](screenshots/08_anomalie_detaliu.png)
 
 Butoanele din antet:

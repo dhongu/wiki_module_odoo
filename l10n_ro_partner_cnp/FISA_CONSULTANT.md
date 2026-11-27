@@ -84,7 +84,7 @@ zilierilor apare și pe contractul de drepturi de autor al aceleiași persoane.
 
 ### Pasul 2 — Validarea la salvare
 
-La salvare, CNP-ul trebuie să aibă exact 13 cifre, prima cifră între 1 și 8 și cifra de control
+La salvare, CNP-ul trebuie să aibă exact 13 cifre, prima cifră între 1 și 9 (9 = rezident străin) și cifra de control
 corectă. Un CNP greșit este respins cu mesajul *„CNP invalid: '…'. CNP-ul trebuie să aibă exact 13
 cifre și cifra de control corectă.”*; valoarea nu se golește, operatorul o corectează și salvează din
 nou. Un CNP corect bifează automat indicatorul **CNP valid** (câmp tehnic, neafișat pe ecran; îl
@@ -98,6 +98,10 @@ fără prefixul `RO`) și salvați. Modulul:
 - golește CIF-ul și mută valoarea în câmpul CNP;
 - marchează partenerul **Persoană**, chiar dacă era bifat **Companie**;
 - completează și câmpul `cnp` din `deltatech_contact`, dacă acel modul e instalat și câmpul e gol.
+
+Același lucru se întâmplă cu un CNP care începe cu **9** (rezident străin), de exemplu `9850615100100`.
+Excepție: NIF-ul `9000…` al persoanelor fără CNP rămâne în CIF, chiar dacă are cifra de control validă
+(de exemplu `9000101400011`); scris direct în câmpul CNP, este respins.
 
 Dacă partenerul are deja **alt** CNP, salvarea este refuzată (vezi secțiunea 9); dacă are același
 CNP, CIF-ul se golește fără eroare.
@@ -162,6 +166,8 @@ verificarea că CNP-ul aparține persoanei (modulul verifică doar forma, nu ide
 - [ ] Un CNP cu ultima cifră schimbată este respins cu mesajul *„CNP invalid”*, iar valoarea rămâne în câmp.
 - [ ] Un CNP valid scris în CIF-ul unui partener din România dispare din CIF, apare la CNP, iar partenerul e **Persoană**.
 - [ ] Același lucru cu prefixul `RO` în față.
+- [ ] CNP-ul `9850615100100` (prima cifră 9, rezident străin) se salvează pe partener; scris în CIF, se mută la CNP.
+- [ ] NIF-ul `9000101400011` (cifră de control validă) scris în CIF rămâne în CIF, iar câmpul CNP rămâne gol.
 - [ ] Un CNP în CIF, pe un partener care are deja alt CNP, este refuzat la salvare.
 - [ ] O persoană din România cu CUI valid în CIF devine **Companie** și nu poate fi trecută înapoi pe **Persoană** fără golirea CIF-ului.
 - [ ] Dacă există deja o companie cu același CUI, a doua persoană rămâne **Persoană**.
@@ -174,7 +180,7 @@ verificarea că CNP-ul aparține persoanei (modulul verifică doar forma, nu ide
 
 | Mesaj | Cauză | Remediere |
 |---|---|---|
-| CNP invalid: '…'. CNP-ul trebuie să aibă exact 13 cifre și cifra de control corectă. | lungime greșită, caractere care nu sunt cifre, prima cifră 0 sau 9, cifra de control greșită | corectați CNP-ul după actul de identitate |
+| CNP invalid: '…'. CNP-ul trebuie să aibă exact 13 cifre și cifra de control corectă. | lungime greșită, caractere care nu sunt cifre, prima cifră 0, cifra de control greșită | corectați CNP-ul după actul de identitate |
 | Partenerul „…”: codul fiscal „…” este un CNP, dar partenerul are deja alt CNP (…). | în CIF s-a scris un CNP diferit de cel din câmpul CNP | păstrați CNP-ul corect în câmpul CNP și goliți CIF-ul |
 | CNP-ul lipsește sau este invalid pentru: … Este obligatoriu în D112. | la confirmarea statului de plată, un beneficiar nu are CNP valid | completați CNP-ul pe zilier sau pe contract și confirmați din nou |
 
@@ -191,7 +197,7 @@ CNP-ul sunt documentate cu capturi în fișele modulelor `l10n_ro_payroll_day_la
 - Spuneți explicit că un PFA/II/IF cu CUI devine **Companie** și nu mai poate fi trecut pe
   **Persoană** cât timp are CUI în CIF.
 - Limitări de menționat:
-  - CNP-urile cu prima cifră **9** sunt respinse, deci un asemenea cod nu poate fi introdus;
+  - prima cifră **9** (rezident străin) e acceptată; NIF-ul `9000…` al persoanelor fără CNP nu e tratat drept CNP, chiar dacă are cifra de control validă;
   - nu se verifică data nașterii (luna, ziua) și codul județului din CNP, doar cifra de control;
   - același CNP poate fi salvat pe mai mulți parteneri (nu există control de unicitate);
   - dubla unei companii se recunoaște doar dacă CUI-ul ei e scris exact `123…` sau `RO123…`; un CIF

@@ -333,6 +333,7 @@ reaprecierea ajustării 491 la inventar, față de soldul reevaluat al lui 4118;
 
 ## 8. Verificări pentru consultant
 
+- [ ] Izolare pe companie: un utilizator care are acces doar la compania A nu vede în listă și nu poate deschide înregistrările companiei B (reguli de înregistrare globale pe `company_id`); un utilizator cu ambele companii bifate le vede pe amândouă.
 - [ ] Modulul se instalează fără erori pe o bază curată cu plan de conturi RO.
 - [ ] Secțiunea **Creanțe incerte (RO)** apare în setări **doar** pentru companiile românești.
 - [ ] Cele cinci conturi și jurnalul sunt completate; dacă lipsește unul, acțiunea se oprește cu un

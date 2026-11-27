@@ -181,6 +181,7 @@ de cheltuieli, verificarea documentelor justificative și apăsarea **Retur rest
 
 ## 8. Verificări pentru consultant
 
+- [ ] Izolare pe companie: un utilizator care are acces doar la compania A nu vede în listă și nu poate deschide înregistrările companiei B (reguli de înregistrare globale pe `company_id`); un utilizator cu ambele companii bifate le vede pe amândouă.
 - [ ] La crearea avansului, **Curs acordare** este cursul BNR al datei acordării și **Suma acordată (RON)** = suma în valută × curs.
 - [ ] Nota de acordare este Dr 542 = Cr 5124 (sau 5314), postată, cu suma în valută pe linia 542.
 - [ ] La alegerea **Datei justificării**, **Curs justificare** se completează din cursurile companiei; valoarea corespunde cursului BNR al zilei.
