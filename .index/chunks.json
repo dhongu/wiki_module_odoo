@@ -14493,6 +14493,35 @@
     "text": "Romania - Fișă de cont\nl10n_ro_account_fisa_cont\nAcest modul oferă un raport nativ „Fișă de Cont\" integrat în framework-ul `account_reports` Enterprise, conform **OMFP 1802/2014**. Acesta afișează pentru fiecare cont: sold inițial, mișcări cu cont corespondent, sold progresiv și sold final.\nSold inițial calculat automat de framework (tranzacții anterioare perioadei selectate).\nColoana Cont Corespondent: cont unic → cod cont; conturi multiple → „Diverși\".\nSold progresiv acumulat per linie (running balance).\nExport PDF landscape și XLSX nativ.\nDrill-down la nota contabilă (opțiuni caret moștenite din Grand Livre).\nFiltre: perioadă, jurnale, analitic, căutare cont/partener.\nSuport multi-companie cu selector de companie.\nVizibil automat doar pentru companiile cu Țara = România."
   },
   {
+    "path": "l10n_ro_account_move_document_type/index.md",
+    "module": "l10n_ro_account_move_document_type",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_account_move_document_type",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_account_move_document_type",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_account_move_document_type",
+    "summary": "Adaugă pe notele contabile **tipul documentului justificativ**, astfel încât registrele și jurnalele românești să arate ce document stă la baza fiecărei înregistrări: factură, notă de credit, factură de la furnizor, declarație vamală de import (DVI), chitanță, dispoziție de plată, extras de cont, stat de plată, decont de cheltuieli sau notă contabilă simplă.",
+    "features": [
+      "Facturile și chitanțele primesc tipul automat, după felul documentului.",
+      "Liniile de extras bancar au tipul *Extras de cont*; o plată într-un jurnal bancar este *Ordin de plată / Document bancar* (se contabilizează pe contul de decontare, înainte de extras, uneori fără reconciliere). În jurnalele de numerar ambele sunt *Document de casă*.",
+      "Orice altă înregistrare este *Notă contabilă*, până când modulul care o creează stabilește altceva (nota DVI din `l10n_ro_customs_dvi`, încasările și plățile de casă din `l10n_ro_account_sequence`).",
+      "Pe o notă contabilă, contabilul poate schimba tipul din formular (de exemplu, TVA de import înregistrat manual, justificat prin DVI), la Contabilitate > Contabilitate > Note contabile.",
+      "Coloana opțională *Tip document* și gruparea după tip în lista notelor contabile.",
+      "Jurnalul de TVA la cumpărări și vânzări din [l10n_ro_account_vat_journal](../l10n_ro_account_vat_journal/index.md) folosește tipul pentru coloana *Tip document*.",
+      "Fluxul pas cu pas este în [fișa consultantului](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_account_vat_journal",
+      "l10n_ro_customs_dvi",
+      "l10n_ro_account_sequence"
+    ],
+    "text": "l10n_ro_account_move_document_type\nl10n_ro_account_move_document_type\nAdaugă pe notele contabile **tipul documentului justificativ**, astfel încât registrele și jurnalele românești să arate ce document stă la baza fiecărei înregistrări: factură, notă de credit, factură de la furnizor, declarație vamală de import (DVI), chitanță, dispoziție de plată, extras de cont, stat de plată, decont de cheltuieli sau notă contabilă simplă.\nFacturile și chitanțele primesc tipul automat, după felul documentului.\nLiniile de extras bancar au tipul *Extras de cont*; o plată într-un jurnal bancar este *Ordin de plată / Document bancar* (se contabilizează pe contul de decontare, înainte de extras, uneori fără reconciliere). În jurnalele de numerar ambele sunt *Document de casă*.\nOrice altă înregistrare este *Notă contabilă*, până când modulul care o creează stabilește altceva (nota DVI din `l10n_ro_customs_dvi`, încasările și plățile de casă din `l10n_ro_account_sequence`).\nPe o notă contabilă, contabilul poate schimba tipul din formular (de exemplu, TVA de import înregistrat manual, justificat prin DVI), la Contabilitate > Contabilitate > Note contabile.\nColoana opțională *Tip document* și gruparea după tip în lista notelor contabile.\nJurnalul de TVA la cumpărări și vânzări din [l10n_ro_account_vat_journal](../l10n_ro_account_vat_journal/index.md) folosește tipul pentru coloana *Tip document*.\nFluxul pas cu pas este în [fișa consultantului](FISA_CONSULTANT.md)."
+  },
+  {
     "path": "l10n_ro_account_report/index.md",
     "module": "l10n_ro_account_report",
     "version": "19.0.1.0.0",
@@ -15716,6 +15745,71 @@
     "text": "l10n_ro_anaf_partner_confirm\nl10n_ro_anaf_partner_confirm\nAdresa unui partener preluată din ANAF rămâne „de confirmat” până o verifică un om. Datele din registrul ANAF sunt adesea incomplete (stradă fără număr, localitate în afara județului), e-Factura le respinge abia după emitere, iar sincronizarea periodică rescrie corecturile făcute de mână. Modulul marchează adresa, avertizează și, opțional, blochează validarea facturii către client până la confirmare.\nMarcaj „Date ANAF de confirmat” pe partener, pus automat când sincronizarea ANAF scrie sau schimbă adresa (stradă, localitate, cod poștal, județ), inclusiv la un partener confirmat anterior.\nBandă de avertizare pe fișa partenerului: date lipsă pentru e-Factura, București fără sector, stradă fără număr, localitate în afara județului.\nButonul „Confirmă adresa” refuză confirmarea cât timp lipsesc datele cerute de e-Factura; cine și când a confirmat rămâne în istoric.\nFiltrul „Date ANAF de confirmat” în lista de parteneri.\nLa validarea facturii către client: notă de avertizare în chatter sau, dacă e bifată setarea „Block Partners with Unconfirmed ANAF Data” (Setări → Contabilitate, secțiunea „ANAF Partner Monitoring (RO)”), blocarea validării. Stornările nu sunt blocate.\nModificările din afara adresei (denumire, CAEN, statut TVA, inactiv) nu pun marcajul; ele rămân în jurnalul de monitorizare ANAF.\nFluxul pas-cu-pas este în [fișa consultant](FISA_CONSULTANT.md)."
   },
   {
+    "path": "l10n_ro_anaf_partner_lookup/index.md",
+    "module": "l10n_ro_anaf_partner_lookup",
+    "version": "20.0.1.4.1",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_anaf_partner_lookup",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_anaf_partner_lookup",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_anaf_partner_lookup",
+    "summary": "Caută o firmă românească la ANAF după CUI și întoarce datele partenerului, pentru ca alte module să poată crea sau verifica un client fără să depindă de alte module de localizare. Modulul nu are ecran propriu: este folosit, de exemplu, de [l10n_ro_pos_partner_efactura](../l10n_ro_pos_partner_efactura/index.md) pentru a aduce clientul persoană juridică la casă.",
+    "features": [
+      "CUI așa cum e tastat: cu sau fără `RO`, cu spații sau cratime; cifra de control se verifică înainte de interogare, deci un cod greșit nu consumă o cerere.",
+      "Date gata de salvat: denumire, cod fiscal (cu `RO` doar pentru plătitorii de TVA), stradă cu număr, localitate fără prefixul `Mun.`/`Oraș`/`Com.`, județ, cod poștal, număr de registrul comerțului (în câmpul NRC) și telefon. Adresa vine dintr-un singur bloc: sediul social, iar dacă lipsește, domiciliul fiscal.",
+      "Cod poștal după stradă: când ANAF nu îl dă și `l10n_ro_zip` este instalat, se găsește în `res.zip` după stradă și număr, sau cel al satului.",
+      "București: localitatea este sectorul (`Sector 3`), cum cere e-Factura; când ANAF nu îl scrie, se citește din codul poștal.",
+      "Orașul din listă: dacă partenerul are `city_id`, se alege după nume și județ, comuna satului sau codul poștal; fără potrivire unică rămâne gol.",
+      "Diacritice corecte: literele cu sedilă (`ş`, `ţ`) devin cele cu virgulă (`ș`, `ț`).",
+      "Stare: plătitor de TVA, TVA la încasare (RTVAI), inactiv, radiat, pentru avertizarea apelantului. Cu `l10n_ro_anaf_partner` instalat, valorile includ și marcajul *TVA la încasare (RTVAI)*.",
+      "Răspuns clar: găsit, negăsit, CUI invalid sau ANAF indisponibil; timpul de așteptare este scurt.",
+      "VIES: `vies_lookup()` interoghează serviciul gratuit al Comisiei Europene pentru un cod de TVA intracomunitar (cu prefixul țării) și întoarce denumirea și adresa împărțită în stradă, cod poștal, oraș. Unele state (Germania, Spania) spun doar dacă numărul e valid.",
+      "Parametri de sistem opționali: `l10n_ro_anaf_partner_lookup.url`, `.timeout` (10 secunde implicit), `.vies_url`, `.vies_timeout`.",
+      "Configurarea și exemplele cu capturi sunt în [fișa consultantului](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "base"
+    ],
+    "connections": [
+      "l10n_ro_pos_partner_efactura",
+      "l10n_ro_zip",
+      "l10n_ro_anaf_partner",
+      "l10n_ro_city"
+    ],
+    "text": "l10n_ro_anaf_partner_lookup\nl10n_ro_anaf_partner_lookup\nCaută o firmă românească la ANAF după CUI și întoarce datele partenerului, pentru ca alte module să poată crea sau verifica un client fără să depindă de alte module de localizare. Modulul nu are ecran propriu: este folosit, de exemplu, de [l10n_ro_pos_partner_efactura](../l10n_ro_pos_partner_efactura/index.md) pentru a aduce clientul persoană juridică la casă.\nCUI așa cum e tastat: cu sau fără `RO`, cu spații sau cratime; cifra de control se verifică înainte de interogare, deci un cod greșit nu consumă o cerere.\nDate gata de salvat: denumire, cod fiscal (cu `RO` doar pentru plătitorii de TVA), stradă cu număr, localitate fără prefixul `Mun.`/`Oraș`/`Com.`, județ, cod poștal, număr de registrul comerțului (în câmpul NRC) și telefon. Adresa vine dintr-un singur bloc: sediul social, iar dacă lipsește, domiciliul fiscal.\nCod poștal după stradă: când ANAF nu îl dă și `l10n_ro_zip` este instalat, se găsește în `res.zip` după stradă și număr, sau cel al satului.\nBucurești: localitatea este sectorul (`Sector 3`), cum cere e-Factura; când ANAF nu îl scrie, se citește din codul poștal.\nOrașul din listă: dacă partenerul are `city_id`, se alege după nume și județ, comuna satului sau codul poștal; fără potrivire unică rămâne gol.\nDiacritice corecte: literele cu sedilă (`ş`, `ţ`) devin cele cu virgulă (`ș`, `ț`).\nStare: plătitor de TVA, TVA la încasare (RTVAI), inactiv, radiat, pentru avertizarea apelantului. Cu `l10n_ro_anaf_partner` instalat, valorile includ și marcajul *TVA la încasare (RTVAI)*.\nRăspuns clar: găsit, negăsit, CUI invalid sau ANAF indisponibil; timpul de așteptare este scurt.\nVIES: `vies_lookup()` interoghează serviciul gratuit al Comisiei Europene pentru un cod de TVA intracomunitar (cu prefixul țării) și întoarce denumirea și adresa împărțită în stradă, cod poștal, oraș. Unele state (Germania, Spania) spun doar dacă numărul e valid.\nParametri de sistem opționali: `l10n_ro_anaf_partner_lookup.url`, `.timeout` (10 secunde implicit), `.vies_url`, `.vies_timeout`.\nConfigurarea și exemplele cu capturi sunt în [fișa consultantului](FISA_CONSULTANT.md)."
+  },
+  {
+    "path": "l10n_ro_anaf_partner_online/index.md",
+    "module": "l10n_ro_anaf_partner_online",
+    "version": "20.0.1.0.3",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_anaf_partner_online",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_anaf_partner_online",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_anaf_partner_online",
+    "summary": "Completează partenerii români din ANAF după CUI, inclusiv pe **Odoo Online**: modulul nu are cod Python și se importă ca arhivă zip (Aplicații > Importați modulul). Căutarea rulează pe serviciul Terrabit, care interoghează ANAF și trimite datele în baza dumneavoastră.",
+    "features": [
+      "Buton ANAF pe formularul partenerului, lângă codul fiscal: completează denumirea, adresa sediului (județ, oraș, cod poștal), codul fiscal cu `RO` doar pentru plătitorii de TVA și telefonul, înainte de salvare. Butonul este ascuns pe contactele unei companii.",
+      "Actualizare în masă: *Acțiuni > Actualizare din ANAF* pe o selecție de parteneri; răspunsul vine în câteva secunde, cu o notă în chatter pe fiecare partener găsit. Partenerii fără cod fiscal sunt săriți.",
+      "Starea ANAF pe tab-ul ANAF: plătitor de TVA, inactiv fiscal, radiat, nr. registrul comerțului (J…), data ultimei verificări.",
+      "Activare dintr-un clic: *Contacte > Configurare > ANAF > Serviciu ANAF*, Activează; tokenul serviciului se scrie automat, cu căutări de probă gratuite. Cumpără credite și Reîmprospătează credite sunt pe același ecran. Se consumă un credit per răspuns ANAF (găsit sau negăsit); CUI invalid sau ANAF indisponibil sunt gratuite.",
+      "Cine ce vede: utilizatorii care editează parteneri pot folosi butonul și acțiunea; doar administratorii activează serviciul, cumpără credite și văd *Cereri ANAF*.",
+      "Cereri ANAF: lista cererilor cu tip, CUI, stare și eroare; o cerere fără răspuns după 10 minute se retrimite o dată.",
+      "Ce iese din baza de date: CUI-ul căutat, tokenurile, id-ul cererii, UUID-ul și adresa bazei; la activare, și denumirea și codul fiscal al firmei.",
+      "Pașii cu capturi sunt în [fișa consultantului](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "deltatech_iap_online",
+      "contacts",
+      "l10n_ro_partner_create_by_vat",
+      "l10n_ro_partner_autocomplete"
+    ],
+    "connections": [
+      "deltatech_iap_online",
+      "l10n_ro_anaf_token_online",
+      "l10n_ro_anaf_partner_lookup"
+    ],
+    "text": "l10n_ro_anaf_partner_online\nl10n_ro_anaf_partner_online\nCompletează partenerii români din ANAF după CUI, inclusiv pe **Odoo Online**: modulul nu are cod Python și se importă ca arhivă zip (Aplicații > Importați modulul). Căutarea rulează pe serviciul Terrabit, care interoghează ANAF și trimite datele în baza dumneavoastră.\nButon ANAF pe formularul partenerului, lângă codul fiscal: completează denumirea, adresa sediului (județ, oraș, cod poștal), codul fiscal cu `RO` doar pentru plătitorii de TVA și telefonul, înainte de salvare. Butonul este ascuns pe contactele unei companii.\nActualizare în masă: *Acțiuni > Actualizare din ANAF* pe o selecție de parteneri; răspunsul vine în câteva secunde, cu o notă în chatter pe fiecare partener găsit. Partenerii fără cod fiscal sunt săriți.\nStarea ANAF pe tab-ul ANAF: plătitor de TVA, inactiv fiscal, radiat, nr. registrul comerțului (J…), data ultimei verificări.\nActivare dintr-un clic: *Contacte > Configurare > ANAF > Serviciu ANAF*, Activează; tokenul serviciului se scrie automat, cu căutări de probă gratuite. Cumpără credite și Reîmprospătează credite sunt pe același ecran. Se consumă un credit per răspuns ANAF (găsit sau negăsit); CUI invalid sau ANAF indisponibil sunt gratuite.\nCine ce vede: utilizatorii care editează parteneri pot folosi butonul și acțiunea; doar administratorii activează serviciul, cumpără credite și văd *Cereri ANAF*.\nCereri ANAF: lista cererilor cu tip, CUI, stare și eroare; o cerere fără răspuns după 10 minute se retrimite o dată.\nCe iese din baza de date: CUI-ul căutat, tokenurile, id-ul cererii, UUID-ul și adresa bazei; la activare, și denumirea și codul fiscal al firmei.\nPașii cu capturi sunt în [fișa consultantului](FISA_CONSULTANT.md)."
+  },
+  {
     "path": "l10n_ro_anaf_submission/index.md",
     "module": "l10n_ro_anaf_submission",
     "version": "19.0.1.0.1",
@@ -15741,6 +15835,37 @@
       "l10n_ro_anaf_d300"
     ],
     "text": "Romania - Depunere electronică a declarațiilor ANAF (FR-53)\nl10n_ro_anaf_submission\nModulul oferă infrastructura comună pentru depunerea electronică a declarațiilor fiscale ANAF generate în Odoo (D112, D300, D394, D406 etc.), conform cerinței FR-53. El nu generează declarațiile — acestea sunt produse de modulele dedicate (`l10n_ro_anaf_d112`, `l10n_ro_anaf_d300`, ...) — ci adaugă stratul de urmărire a depunerii și a recipisei. O înregistrare de depunere păstrează fișierul depus, amprenta SHA-256, ID-ul solicitării ANAF, starea, eventualele erori, recipisa și pista de audit (cine și când a depus), iar declarațiile rectificative păstrează legătura cu depunerea inițială.\nDepunere manuală (SPV / e-guvernare) — fluxul disponibil azi, funcțional complet: contabilul depune fișierul în SPV cu certificatul calificat, introduce ID-ul solicitării în Odoo, iar sistemul verifică starea și păstrează recipisa.\nDepunere prin Terrabit Agent (Terrabit Connect) — conector complet implementat: Odoo pune fișierul într-o coadă de job-uri (`deltatech.tc.job`); agentul local Terrabit, cu certificatul calificat pe stația contabilului, îl semnează și îl urcă direct la ANAF (SPVWS2), iar starea și recipisa se sincronizează înapoi în Odoo.\nDepunere certSIGN Cloud (API) — conector de semnare PAdES + upload automat direct; interfața și configurarea există, însă conectorul propriu-zis este un *stub* care necesită API-ul comercial certSIGN și se activează când acesta devine disponibil.\nVerificarea stării — interoghează endpoint-ul public ANAF de stare prin ID solicitare (nu necesită certificat) și poate rula automat printr-un cron dezactivat implicit.\nUrmărirea depunerii și a recipisei — păstrarea fișierului depus, a amprentei SHA-256, a ID-ului solicitării ANAF, a stării, a erorilor și a recipisei.\nPistă de audit — înregistrarea utilizatorului și a momentului depunerii.\nDeclarații rectificative — păstrarea legăturii cu depunerea inițială."
+  },
+  {
+    "path": "l10n_ro_anaf_token_online/index.md",
+    "module": "l10n_ro_anaf_token_online",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_anaf_token_online",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_anaf_token_online",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_anaf_token_online",
+    "summary": "Tokenul SPV ANAF pentru e-Factura, și pe **Odoo Online**: modulul nu are cod Python și se importă ca arhivă zip. Autorizarea cu certificatul digital se face o singură dată, pe serverul Terrabit, care ține tokenul valabil și îl trimite în baza dumneavoastră. Nu înregistrați o aplicație proprie la ANAF și nu reînnoiți tokenul manual.",
+    "features": [
+      "Generează token (Terrabit), în *Setări > Facturare > E-Factura România*: deschide autorizarea ANAF pe serverul Terrabit. Primul clic activează serviciul; apăsați din nou după câteva secunde.",
+      "Tokenul se completează singur: Client ID, Client Secret, tokenul de acces, cel de reînnoire și expirările se scriu pe firmă (găsită după CUI), în câmpurile standard e-Factura, după autorizare și după fiecare reînnoire.",
+      "Reînnoire într-un singur loc: când sosește tokenul, acțiunea programată standard de reînnoire e-Factura se oprește; într-o bază cu mai multe firme se oprește doar când toate firmele cu token ANAF îl primesc de la Terrabit.",
+      "Cost: o autorizare costă 1 credit (1 credit = 1 EUR), reînnoirile sunt gratuite; consumul apare în *Setări > Credite Terrabit > Consum credite*.",
+      "Butonul standard Generează token este ascuns, pentru că ar invalida tokenul reînnoit de Terrabit.",
+      "Tokenul vine prin HTTPS pe un URL de webhook secret; din bază pleacă adresa și UUID-ul bazei, denumirea și CUI-ul firmei.",
+      "Nu se instalează împreună cu `terrabit_iap_anaf` (același token, alt canal).",
+      "La dezinstalare, reporniți acțiunea programată de reînnoire sau generați un token cu butonul standard. Pașii cu capturi sunt în [fișa consultantului](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "l10n_ro_edi",
+      "deltatech_iap_online",
+      "terrabit_iap_anaf"
+    ],
+    "connections": [
+      "deltatech_iap_online",
+      "l10n_ro_anaf_partner_online",
+      "terrabit_iap_anaf"
+    ],
+    "text": "l10n_ro_anaf_token_online\nl10n_ro_anaf_token_online\nTokenul SPV ANAF pentru e-Factura, și pe **Odoo Online**: modulul nu are cod Python și se importă ca arhivă zip. Autorizarea cu certificatul digital se face o singură dată, pe serverul Terrabit, care ține tokenul valabil și îl trimite în baza dumneavoastră. Nu înregistrați o aplicație proprie la ANAF și nu reînnoiți tokenul manual.\nGenerează token (Terrabit), în *Setări > Facturare > E-Factura România*: deschide autorizarea ANAF pe serverul Terrabit. Primul clic activează serviciul; apăsați din nou după câteva secunde.\nTokenul se completează singur: Client ID, Client Secret, tokenul de acces, cel de reînnoire și expirările se scriu pe firmă (găsită după CUI), în câmpurile standard e-Factura, după autorizare și după fiecare reînnoire.\nReînnoire într-un singur loc: când sosește tokenul, acțiunea programată standard de reînnoire e-Factura se oprește; într-o bază cu mai multe firme se oprește doar când toate firmele cu token ANAF îl primesc de la Terrabit.\nCost: o autorizare costă 1 credit (1 credit = 1 EUR), reînnoirile sunt gratuite; consumul apare în *Setări > Credite Terrabit > Consum credite*.\nButonul standard Generează token este ascuns, pentru că ar invalida tokenul reînnoit de Terrabit.\nTokenul vine prin HTTPS pe un URL de webhook secret; din bază pleacă adresa și UUID-ul bazei, denumirea și CUI-ul firmei.\nNu se instalează împreună cu `terrabit_iap_anaf` (același token, alt canal).\nLa dezinstalare, reporniți acțiunea programată de reînnoire sau generați un token cu butonul standard. Pașii cu capturi sunt în [fișa consultantului](FISA_CONSULTANT.md)."
   },
   {
     "path": "l10n_ro_audit_immutable/index.md",
@@ -16128,6 +16253,32 @@
       "l10n_ro_anaf_d300"
     ],
     "text": "Romania - Customs Import Declaration (DVI)\nl10n_ro_customs_dvi\nModulul înregistrează Declarația Vamală de Import (DVI) pentru importurile din afara Uniunii Europene, legând factura furnizorului extern de costurile vamale printr-un cost de aterizare (landed cost) atașat recepției. Din wizardul deschis de pe factura furnizor se transcriu sumele din declarație — taxa vamală (poziția A00), baza de impozitare și TVA-ul plătit în vamă (poziția B00) — iar modulul repartizează taxa în costul stocului și generează nota de TVA deductibilă. Taxele vamale majorează costul mărfii, în timp ce TVA-ul la import rămâne deductibil pe contul 4426, fără să atingă costul. Nota contabilă primește ca referință numărul MRN al declarației, astfel încât plata către vamă să poată fi reconciliată pe contul 4462 per declarație. Tot în notă intră o pereche tehnică pe un cont neutru 473, care duce baza importului în decontul de TVA.\nWizard DVI pornit de pe factura furnizorului postată, care creează un cost de aterizare legat de recepțiile comenzii de achiziție.\nRepartizează taxa vamală (A00) în costul de achiziție al mărfii, prin mecanismul nativ de cost adițional.\nGenerează nota de TVA la import — Dr 4426 = Cr 4462 — cu eticheta fiscală de taxă, plus o pereche tehnică echilibrată pe contul 473 care poartă eticheta de bază, fără de care rândul din D300 ar ieși cu TVA și cu bază zero.\nCreditează taxa vamală pe 4462 „Alte impozite, taxe și vărsăminte asimilate — reluate într-o perioadă de până la un an”: datoria vamală se stinge în zile, deci e datorie curentă (OMFP 1802/2014 pct. 360). Atenție la ordinea contraintuitivă din planul RO — 4461 înseamnă peste un an.\nScrie numărul declarației (MRN) ca referință a notei contabile, pentru reconcilierea plății pe 4462 per declarație.\nCâmpuri DVI pe costul de aterizare (tip, număr MRN, cotă, bază, valoare TVA), filtru dedicat și coloană în listă.\nMeniu propriu „DVI — Costuri vamale\", cu lista filtrată pe costurile de tip DVI și grupată pe dată.\nAjutoare extinse pe fiecare câmp al wizardului și o casetă de îndrumare cu maparea poziție din declarație → câmp.\nProdusul de serviciu generat automat pentru taxa vamală e marcat ca fiind cost adițional, deci funcționează și pe traseul nativ „factură furnizor → Creați costuri adiționale”.\nOnorariul comisionarului vamal nu se operează prin wizard: brokerul e furnizor obișnuit, cu sold pe 401, iar onorariul se capitalizează prin mecanismul nativ de cost adițional de pe factura lui.\nSe exclude reciproc cu modulul OCA `l10n_ro_dvi`."
+  },
+  {
+    "path": "l10n_ro_customs_dvi_import/index.md",
+    "module": "l10n_ro_customs_dvi_import",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_customs_dvi_import",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_customs_dvi_import",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_customs_dvi_import",
+    "summary": "Preia declarația vamală de import (DVI) direct din PDF-ul tipărit de Sistemul Național de Import (SNI) și completează cu ea wizardul DVI de pe factura furnizorului, din [l10n_ro_customs_dvi](../l10n_ro_customs_dvi/index.md). Se evită transcrierea manuală a valorilor vamale.",
+    "features": [
+      "Din PDF se citesc: MRN și data acceptării (numărul și data DVI), regimul vamal (4000 sau 4200), taxa vamală A00 (intră în costul mărfii prin landed cost), baza și TVA B00 (transcrise, nu recalculate; la 4200 devine TVA reținut ca garanție, importul rămâne scutit) și cota de TVA, după care se propune taxa de achiziție.",
+      "Pentru control se afișează: LRN, data liberului de vamă, moneda și cursul vamal, facturile din documentele justificative (N380) și metoda de plată.",
+      "Verificări înainte de completare: documentul e o declarație SNI, importatorul e compania curentă, declarația nu e deja pe alt DVI, numărul de articole e cel din antet, iar sumele A00 și B00 de pe articole dau totalurile. Dacă una pică, nu se completează nimic.",
+      "Avertisment în wizard dacă factura furnizorului nu apare printre facturile declarației.",
+      "Flux: factura furnizorului confirmată, butonul DVI, câmpul DVI PDF (SNI), verificarea taxei propuse (la TVA amânat se alege taxa de import cu taxare inversă), apoi Apply.",
+      "PDF-ul se atașează pe DVI, cu un rezumat al valorilor citite în istoric.",
+      "Necesită biblioteca Python `pdfminer.six`; pe servere cu `cryptography` veche se instalează păstrând versiunea existentă. Pașii cu capturi sunt în [fișa consultantului](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "l10n_ro_customs_dvi"
+    ],
+    "connections": [
+      "l10n_ro_customs_dvi"
+    ],
+    "text": "l10n_ro_customs_dvi_import\nl10n_ro_customs_dvi_import\nPreia declarația vamală de import (DVI) direct din PDF-ul tipărit de Sistemul Național de Import (SNI) și completează cu ea wizardul DVI de pe factura furnizorului, din [l10n_ro_customs_dvi](../l10n_ro_customs_dvi/index.md). Se evită transcrierea manuală a valorilor vamale.\nDin PDF se citesc: MRN și data acceptării (numărul și data DVI), regimul vamal (4000 sau 4200), taxa vamală A00 (intră în costul mărfii prin landed cost), baza și TVA B00 (transcrise, nu recalculate; la 4200 devine TVA reținut ca garanție, importul rămâne scutit) și cota de TVA, după care se propune taxa de achiziție.\nPentru control se afișează: LRN, data liberului de vamă, moneda și cursul vamal, facturile din documentele justificative (N380) și metoda de plată.\nVerificări înainte de completare: documentul e o declarație SNI, importatorul e compania curentă, declarația nu e deja pe alt DVI, numărul de articole e cel din antet, iar sumele A00 și B00 de pe articole dau totalurile. Dacă una pică, nu se completează nimic.\nAvertisment în wizard dacă factura furnizorului nu apare printre facturile declarației.\nFlux: factura furnizorului confirmată, butonul DVI, câmpul DVI PDF (SNI), verificarea taxei propuse (la TVA amânat se alege taxa de import cu taxare inversă), apoi Apply.\nPDF-ul se atașează pe DVI, cu un rezumat al valorilor citite în istoric.\nNecesită biblioteca Python `pdfminer.six`; pe servere cu `cryptography` veche se instalează păstrând versiunea existentă. Pașii cu capturi sunt în [fișa consultantului](FISA_CONSULTANT.md)."
   },
   {
     "path": "l10n_ro_deferred_entries/index.md",
@@ -16643,6 +16794,37 @@
     "text": "Romania - e-Sigiliu (sigilii electronice)\nl10n_ro_esigiliu\nModulul gestionează sigiliile electronice e-Sigiliu aplicate de autorități (ANAF/Vamă) pe transporturile rutiere de bunuri monitorizate, conform reglementărilor românești privind supravegherea fiscală a mărfurilor în tranzit.\nÎnregistrarea sigiliului electronic cu număr unic per companie, validat printr-o constrângere SQL.\nAsocierea sigiliului la un transfer de stoc (`stock.picking`): transportator, număr de înmatriculare, rută monitorizată și UIT e-Transport.\nCiclu de viață complet: Ciornă → Aplicat → Eliminat, cu înregistrarea automată a datei de aplicare și de eliminare.\nButon statistic e-Sigiliu pe formularul de transfer, cu numărul de sigilii asociate.\nMeniu dedicat Inventar → Raportare → e-Sigiliu Seals pentru vizualizarea centralizată a tuturor sigiliilor.\nAcces bazat pe grupurile standard Inventar (utilizator/manager)."
   },
   {
+    "path": "l10n_ro_etransport_batch_enhancement/index.md",
+    "module": "l10n_ro_etransport_batch_enhancement",
+    "version": "20.0.0.4.3",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_etransport_batch_enhancement",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "e-Transport for Transfer Batches",
+    "summary": "Extinde declarația e-Transport pentru loturile de transferuri (`stock.picking.batch`), astfel încât un camion care duce mai multe livrări să poată fi declarat la ANAF dintr-un singur loc: transportatorul, greutățile și documentele se gestionează central, pe lot, și se propagă către transferurile componente.",
+    "features": [
+      "Câmp pentru partenerul de transport pe lot (`l10n_ro_transport_partner_id`), sincronizat automat către toate transferurile din lot.",
+      "Curier (`delivery.carrier`) ales la nivel de lot, propagat către transferurile individuale.",
+      "Greutăți la nivel de lot: calculul pe liniile de transfer și distribuirea greutății totale (netă și brută) proporțional pe liniile lotului.",
+      "Avertisment când unor mișcări din lot le lipsește linia de greutate, ca declarația să nu plece la ANAF cu greutăți incomplete.",
+      "Validarea datelor e-Transport pentru loturi, cu partenerul de transport injectat corect în datele trimise la ANAF.",
+      "Documente însoțitoare (CMR, avize) pe lot și corecția declarației lotului după validarea UIT.",
+      "Numărul UIT afișat pe raportul de livrare al lotului.",
+      "Fluxul pas cu pas este în fișa consultant."
+    ],
+    "dependencies": [
+      "l10n_ro_edi",
+      "l10n_ro_edi_stock",
+      "l10n_ro_etransport_enhancement",
+      "l10n_ro_stock_picking_batch_report"
+    ],
+    "connections": [
+      "l10n_ro_etransport_enhancement",
+      "l10n_ro_etransport_uit_actions_batch"
+    ],
+    "text": "e-Transport for Transfer Batches\nl10n_ro_etransport_batch_enhancement\nExtinde declarația e-Transport pentru loturile de transferuri (`stock.picking.batch`), astfel încât un camion care duce mai multe livrări să poată fi declarat la ANAF dintr-un singur loc: transportatorul, greutățile și documentele se gestionează central, pe lot, și se propagă către transferurile componente.\nCâmp pentru partenerul de transport pe lot (`l10n_ro_transport_partner_id`), sincronizat automat către toate transferurile din lot.\nCurier (`delivery.carrier`) ales la nivel de lot, propagat către transferurile individuale.\nGreutăți la nivel de lot: calculul pe liniile de transfer și distribuirea greutății totale (netă și brută) proporțional pe liniile lotului.\nAvertisment când unor mișcări din lot le lipsește linia de greutate, ca declarația să nu plece la ANAF cu greutăți incomplete.\nValidarea datelor e-Transport pentru loturi, cu partenerul de transport injectat corect în datele trimise la ANAF.\nDocumente însoțitoare (CMR, avize) pe lot și corecția declarației lotului după validarea UIT.\nNumărul UIT afișat pe raportul de livrare al lotului.\nFluxul pas cu pas este în fișa consultant."
+  },
+  {
     "path": "l10n_ro_etransport_block/index.md",
     "module": "l10n_ro_etransport_block",
     "version": "19.0.1.0.0",
@@ -16704,6 +16886,60 @@
       "deltatech_uom_unece"
     ],
     "text": "eTransport Enhancement\nl10n_ro_etransport_enhancement\nModulul `l10n_ro_etransport_enhancement` extinde funcționalitatea standard de e-Transport din Odoo pentru piața românească, adăugând îmbunătățiri și opțiuni suplimentare. Scopul său este să facă integrarea cu sistemul e-Transport (SPV) mai flexibilă și mai fiabilă, acoperind atât livrările/recepțiile clasice printr-un depozit, cât și transporturile dropship (furnizor → client, fără mișcare de stoc intermediară), simplificând conformitatea fiscală pentru transporturile de mărfuri și reducând efortul administrativ al departamentelor de logistică și contabilitate.\nTrimiterea documentelor e-Transport direct din livrările/recepțiile de stoc (stock pickings), cu suport pentru diferite tipuri de trimitere prin parametri de context.\nTimeout configurabil pentru API-ul ANAF (implicit 60 s, per companie) — standardul Odoo are 10 s fix, insuficient la ore de vârf.\nCăderile de rețea către ANAF nu mai aruncă eroare tehnică în interfață: transferul rămâne cu un document eșuat și un mesaj clar care avertizează să se verifice în SPV înainte de retrimitere, ca să nu se emită un al doilea UIT pentru aceleași bunuri.\nReîncercare automată doar pentru interogările de stare (GET, idempotent); încărcarea documentului (POST) nu se reîncearcă niciodată automat.\nTraseu rutier complet punct de trecere a frontierei ↔ birou vamal la import (operațiune 40) și export (50): standardul Odoo permite biroul vamal doar la un singur capăt al traseului, ceea ce face imposibilă declararea tronsonului aflat sub supraveghere vamală (PTF → birou vamal interior la import, birou vamal → PTF la export).\nData transportului nu mai cade cu eroare când utilizatorul care trimite nu are fus orar setat (cazul tipic al trimiterilor automate rulate ca OdooBot); se folosește implicit fusul României (`Europe/Bucharest`).\nLiniile pe care standardul le trimite cu valoare 0 nu mai ajung la ANAF ca zero: prețul unitar se calculează din valoarea de stoc a mișcării, apoi din costul standard al produsului, apoi din prețul de vânzare; dacă niciunul nu poate fi determinat, trimiterea se oprește cu o eroare explicită în loc să depună o declarație invalidă.\nLiniile fără cantitate sunt eliminate din declarație, iar o greutate netă sau brută lipsă e aproximată cu cealaltă — șablonul QWeb standard scapă tăcut un atribut cu valoare zero, dar schema ANAF le cere pe toate.\nUnitate de măsură aliniată cu cantitatea declarată (`codUnitateMasura`): standardul ia cantitatea din UoM-ul de bază al produsului dar codul unității din UoM-ul liniei; când linia e într-o UoM secundară (cutie, bax, palet), perechea devine incoerentă și declarația e greșită fără nicio eroare vizibilă. Modulul aliniază codul pe unitatea în care e efectiv exprimată cantitatea.\nOpțiunea de companie „UIT: get price from order\" convertește corect prețul de pe linia de comandă la UoM-ul de bază al produsului, evitând supraevaluarea valorii declarate cu factorul de conversie al UoM-ului secundar.\n„Get lines\" (calculul liniilor de greutate) recalculează de la zero, nu adaugă — o a doua apăsare nu mai dublează greutățile trimise la ANAF; un avertisment pe transfer semnalează mișcările fără linie de greutate calculată.\nGreutăți totale (netă/brută) cântărite la rampă, cu buton „Distribute weights\" care ajustează liniile individuale proporțional (sau egal, când toate pornesc de la zero) ca să însumeze greutatea reală cântărită.\nLocație de start specifică (`Specific Start Location`): permite alegerea manuală a unui partener a cărui adresă înlocuiește adresa calculată automat (depozit) pentru capătul de plecare al traseului — util când transportul național pleacă efectiv dintr-un alt loc (ex. birou vamal interior, după vămuire). Vizibil doar pe livrări, doar pentru operațiunea „Transport pe teritoriul național\" și doar când locația e de tip adresă.\nDocumente însoțitoare configurabile pe transfer (CMR, factură, aviz, altele), trimise ca listă la ANAF — standardul trimite un singur document, hardcodat ca aviz cu numărul transferului. Butonul de completare automată adaugă avizul (numărul transferului) și facturile emise deja legate de livrare; observațiile lipsă/goale sunt omise din XML în loc să fie trimise ca șir vid (respins de ANAF).\nPartener de transport dedicat (`Transport Partner`) pe transfer, populat automat din curierul livrării dacă are partener e-Transport configurat; folosit ca declarant al transportatorului fără să mai fie obligatoriu `carrier_id`.\nUIT-ul nu se mai scrie în `carrier_tracking_ref` la preluarea stării — acel câmp e referința reală de urmărire a curierului (AWB), nu un cod ANAF; UIT-ul rămâne disponibil în tab-ul eTransport.\nSuport dropship (furnizor → client direct, fără mișcare de stoc intermediară): trimiterea eTransport funcționează pe transferul dropship nativ, pentru operațiunile 10 (AIC), 20 (LIC), 30 (național), 40 (import) și 50 (export), fără depozit fictiv.\nColoana mișcării din lista de linii de greutate poate afișa denumirea produsului (nu doar codul intern), pentru a distinge vizual liniile pe transferuri cu mai multe produse.\nTraseul fizic și tranzacția declarată se rezolvă din comenzile legate (vânzare + achiziție), nu din depozit: nu există locație de plecare/sosire reală în stoc.\nPartenerul comercial declarat (`partenerComercial`) e clientul pe operațiunile de livrare (20, 30, 50) și furnizorul pe operațiunile de achiziție (10, 40); adresa de încărcare implicită e cea a furnizorului (poate fi înlocuită cu `Specific Start Location`), iar adresa de livrare vine din comanda legată.\nValoarea declarată folosește prețul din comanda legată (achiziție pentru 10/40, vânzare pentru 20/30/50), fără TVA, cu conversia UoM și valutară nativă la RON — dropship folosește mereu valoarea din comandă, indiferent de setarea „UIT: get price from order\" a depozitului.\nFiecare linie de marfă trebuie legată atât de o comandă de vânzare cât și de o comandă de achiziție ale companiei declarante; o declarație are un singur furnizor, un singur client comercial și o singură adresă de livrare. Nepotrivirile de țară față de operațiunea selectată, datele de adresă românești lipsă, operațiunile nesuportate, retururile și dropship-urile în lot/mixte sunt blocate cu eroare explicită.\nDocumentele însoțitoare implicite (buton) adaugă numărul transferului și facturile de vânzare emise; pentru AIC/import, documentul furnizorului trebuie introdus manual.\nFix 19.0.0.9.2: Odoo 19 a primit ulterior suport nativ pentru dropship în `l10n_ro_edi_stock`, iar metoda nucleului care pregătește datele declarației ignoră de atunci `data[\"partner_id\"]` când tipul de operațiune e `dropship` și derivă întotdeauna partenerul din comanda de achiziție (furnizorul) — indiferent de sensul operațiunii. Fără corecție, o livrare dropship (operațiunile 20/30/50) ar pleca la ANAF cu furnizorul în locul clientului, fără nicio eroare vizibilă. Modulul rescrie acum `partenerComercial` (denumire, cod fiscal, cod de țară) după apelul metodei nucleului, cu partenerul corect ales de modul.\nCodul de țară al Greciei se declară `EL`, nu `GR` (conform standardului ANAF), atât pentru partenerul comercial cât și pentru organizatorul transportului — aplicat consecvent și pe calea dropship.\nCâmpurile `l10n_ro_transport_partner_id` și `l10n_ro_etransport_start_address` sunt indexate (chei străine către `res.partner`, tabelă mare) — fără index, ștergerea/unificarea unui partener declanșa scanări secvențiale costisitoare."
+  },
+  {
+    "path": "l10n_ro_etransport_uit_actions/index.md",
+    "module": "l10n_ro_etransport_uit_actions",
+    "version": "20.0.1.2.0",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_etransport_uit_actions",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "e-Transport UIT Actions",
+    "summary": "Permite trimiterea la ANAF, direct din transfer, a evenimentelor ulterioare unui UIT e-Transport: ștergerea notificării, confirmarea sosirii mărfii și schimbarea vehiculului. Fiecare eveniment este urmărit separat, iar efectele se aplică pe transfer abia după ce ANAF îl validează.",
+    "features": [
+      "Trei acțiuni pe un transfer cu notificare Validată: Șterge UIT (DEL), Confirmă UIT (CON: confirmat, parțial confirmat sau refuzat, cu observație) și Schimbă vehiculul (MVH: noile numere de vehicul și remorcă, cu data modificării).",
+      "Un singur dialog, cu acțiunea presetată de butonul apăsat; opțional observație și indicatorul de declarație post-avarie (`declPostAvarie`, OUG 41/2022).",
+      "Fiecare eveniment este o înregistrare proprie (`l10n.ro.etransport.event`), cu XML-ul trimis, indexul de încărcare ANAF și starea proprie: Trimis, apoi Validat sau Eroare. Starea notificării standard nu se modifică.",
+      "ANAF răspunde la upload doar cu un index de încărcare; starea se verifică automat la 15 minute sau la cerere (Fetch Event Status). Cât timp un eveniment e în așteptare, nu se poate trimite altul pentru același UIT.",
+      "Noul număr de vehicul și marcajul „UIT șters” se aplică doar după validarea de la ANAF; după o ștergere validată apare un banner roșu și nu se mai oferă acțiuni.",
+      "Anularea unui transfer cu UIT valabil trece prin ștergere: Anulează deschide dialogul DEL, iar transferul se anulează imediat ce ANAF primește ștergerea. Dacă ștergerea e refuzată ulterior, se programează o activitate de avertizare. Anulările din cod (ex. la anularea comenzii de vânzare) nu sunt afectate.",
+      "Configurare: doar setările e-Transport standard (token ANAF, mediu test/producție); acțiunea programată se ajustează din Setări, Tehnic, Automatizare.",
+      "Fluxul detaliat este în fișa consultant."
+    ],
+    "dependencies": [
+      "l10n_ro_etransport_enhancement"
+    ],
+    "connections": [
+      "l10n_ro_etransport_enhancement",
+      "l10n_ro_etransport_uit_actions_batch"
+    ],
+    "text": "e-Transport UIT Actions\nl10n_ro_etransport_uit_actions\nPermite trimiterea la ANAF, direct din transfer, a evenimentelor ulterioare unui UIT e-Transport: ștergerea notificării, confirmarea sosirii mărfii și schimbarea vehiculului. Fiecare eveniment este urmărit separat, iar efectele se aplică pe transfer abia după ce ANAF îl validează.\nTrei acțiuni pe un transfer cu notificare Validată: Șterge UIT (DEL), Confirmă UIT (CON: confirmat, parțial confirmat sau refuzat, cu observație) și Schimbă vehiculul (MVH: noile numere de vehicul și remorcă, cu data modificării).\nUn singur dialog, cu acțiunea presetată de butonul apăsat; opțional observație și indicatorul de declarație post-avarie (`declPostAvarie`, OUG 41/2022).\nFiecare eveniment este o înregistrare proprie (`l10n.ro.etransport.event`), cu XML-ul trimis, indexul de încărcare ANAF și starea proprie: Trimis, apoi Validat sau Eroare. Starea notificării standard nu se modifică.\nANAF răspunde la upload doar cu un index de încărcare; starea se verifică automat la 15 minute sau la cerere (Fetch Event Status). Cât timp un eveniment e în așteptare, nu se poate trimite altul pentru același UIT.\nNoul număr de vehicul și marcajul „UIT șters” se aplică doar după validarea de la ANAF; după o ștergere validată apare un banner roșu și nu se mai oferă acțiuni.\nAnularea unui transfer cu UIT valabil trece prin ștergere: Anulează deschide dialogul DEL, iar transferul se anulează imediat ce ANAF primește ștergerea. Dacă ștergerea e refuzată ulterior, se programează o activitate de avertizare. Anulările din cod (ex. la anularea comenzii de vânzare) nu sunt afectate.\nConfigurare: doar setările e-Transport standard (token ANAF, mediu test/producție); acțiunea programată se ajustează din Setări, Tehnic, Automatizare.\nFluxul detaliat este în fișa consultant."
+  },
+  {
+    "path": "l10n_ro_etransport_uit_actions_batch/index.md",
+    "module": "l10n_ro_etransport_uit_actions_batch",
+    "version": "20.0.1.1.0",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_etransport_uit_actions_batch",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "e-Transport UIT Actions for Batches",
+    "summary": "Aduce acțiunile pe UIT (ștergere, confirmare, schimbare vehicul) și pe loturile de transferuri declarate cu `l10n_ro_edi_stock`, unde un camion (un lot) poartă un singur UIT pentru mai multe transferuri. Se instalează automat când ambele module părinte sunt prezente.",
+    "features": [
+      "Butoanele Șterge UIT, Confirmă UIT și Schimbă vehiculul pe un lot cu notificare Validată, cu același dialog ca pe transfer.",
+      "Evenimentele se păstrează pe lot (tabelul UIT Events din tab-ul eTransport), se înregistrează în chatter și li se verifică starea la ANAF ca la un transfer singular.",
+      "O schimbare de vehicul validată actualizează numerele pe lot; o ștergere validată marchează UIT-ul lotului ca șters.",
+      "Anulează pe un lot cu UIT valabil deschide dialogul de ștergere și anulează lotul imediat ce ANAF primește ștergerea.",
+      "Fluxul detaliat este în fișa consultant."
+    ],
+    "dependencies": [
+      "l10n_ro_etransport_uit_actions",
+      "l10n_ro_edi_stock"
+    ],
+    "connections": [
+      "l10n_ro_etransport_batch_enhancement",
+      "l10n_ro_etransport_enhancement"
+    ],
+    "text": "e-Transport UIT Actions for Batches\nl10n_ro_etransport_uit_actions_batch\nAduce acțiunile pe UIT (ștergere, confirmare, schimbare vehicul) și pe loturile de transferuri declarate cu `l10n_ro_edi_stock`, unde un camion (un lot) poartă un singur UIT pentru mai multe transferuri. Se instalează automat când ambele module părinte sunt prezente.\nButoanele Șterge UIT, Confirmă UIT și Schimbă vehiculul pe un lot cu notificare Validată, cu același dialog ca pe transfer.\nEvenimentele se păstrează pe lot (tabelul UIT Events din tab-ul eTransport), se înregistrează în chatter și li se verifică starea la ANAF ca la un transfer singular.\nO schimbare de vehicul validată actualizează numerele pe lot; o ștergere validată marchează UIT-ul lotului ca șters.\nAnulează pe un lot cu UIT valabil deschide dialogul de ștergere și anulează lotul imediat ce ANAF primește ștergerea.\nFluxul detaliat este în fișa consultant."
   },
   {
     "path": "l10n_ro_excise_duty/index.md",
@@ -17083,6 +17319,29 @@
     "text": "l10n_ro_green_tax_analytic_edi\nl10n_ro_green_tax_analytic_edi\nModul-punte care duce nota de taxă verde din `l10n_ro_green_tax_analytic` în XML-ul UBL trimis în e-Factura (SPV / ANAF). Fără el, exportul UBL standard omite nota, iar XML-ul ajunge în SPV fără nicio mențiune despre taxa verde.\nTextul notei devine notă pe linie (BT-127, `cbc:Note`) a liniei de produs corespunzătoare; apare în factura tipărită din SPV, sub tabelul liniilor, ca „Nota liniei facturii nr. N”.\nLiniile fără taxă verde nu au notă.\nTotalurile, TVA-ul și numerele liniilor rămân neschimbate: nu se adaugă nicio linie, taxă sau sumă.\nSe instalează singur când sunt instalate `l10n_ro_green_tax_analytic` și `account_edi_ubl_cii`; nu cere configurare, textul fiind cel setat pe companie."
   },
   {
+    "path": "l10n_ro_hide_net_weight/index.md",
+    "module": "l10n_ro_hide_net_weight",
+    "version": "20.0.0.0.6",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_hide_net_weight",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Romania - Hide Net Weight",
+    "summary": "Ascunde câmpul „Greutate netă” (`l10n_ro_net_weight`) de pe formularul produsului, deoarece generează confuzii de interpretare pentru utilizatori. Se instalează când firma nu folosește greutatea netă a produselor.",
+    "features": [
+      "Câmpul Greutate netă, adăugat de `l10n_ro_stock_base`, dispare din formularul produsului și al variantei; în grupul Logistică (tab-ul Inventar) rămân Masă (greutatea brută, folosită la transport) și Volum.",
+      "Câmpul este doar ascuns: valorile deja salvate rămân în baza de date, se pot exporta din lista de produse și reapar la dezinstalarea modulului.",
+      "Nu necesită configurare.",
+      "Atenție: dacă firma folosește liniile de greutate de transport din `l10n_ro_etransport_enhancement`, greutatea netă a produselor se folosește în continuare pentru declarația e-Transport, chiar ascunsă; se golesc mai întâi valorile salvate sau nu se instalează modulul."
+    ],
+    "dependencies": [
+      "l10n_ro_stock_base"
+    ],
+    "connections": [
+      "l10n_ro_etransport_enhancement"
+    ],
+    "text": "Romania - Hide Net Weight\nl10n_ro_hide_net_weight\nAscunde câmpul „Greutate netă” (`l10n_ro_net_weight`) de pe formularul produsului, deoarece generează confuzii de interpretare pentru utilizatori. Se instalează când firma nu folosește greutatea netă a produselor.\nCâmpul Greutate netă, adăugat de `l10n_ro_stock_base`, dispare din formularul produsului și al variantei; în grupul Logistică (tab-ul Inventar) rămân Masă (greutatea brută, folosită la transport) și Volum.\nCâmpul este doar ascuns: valorile deja salvate rămân în baza de date, se pot exporta din lista de produse și reapar la dezinstalarea modulului.\nNu necesită configurare.\nAtenție: dacă firma folosește liniile de greutate de transport din `l10n_ro_etransport_enhancement`, greutatea netă a produselor se folosește în continuare pentru declarația e-Transport, chiar ascunsă; se golesc mai întâi valorile salvate sau nu se instalează modulul."
+  },
+  {
     "path": "l10n_ro_hr_payroll_account_enhancement/index.md",
     "module": "l10n_ro_hr_payroll_account_enhancement",
     "version": "20.0.1.8.1",
@@ -17402,6 +17661,40 @@
     "text": "Romania - Invoice Report\nl10n_ro_invoice_report\nAcest modul extinde raportul de factură standard din Odoo pentru a se conforma cerințelor specifice din România și pentru a oferi opțiuni suplimentare de personalizare. Adaugă pe documentele tipărite detalii la nivel de linie (preț fără TVA, valoare TVA, numerotare), informații legale și logistice (delegat, mijloc de transport, mențiunea privind scutirea de semnătură și ștampilă) și gestionează documentele de plată corelate (chitanțe, dispoziții de plată/încasare), oferind în același timp numeroase opțiuni de configurare din setările de facturare.\nDetalii linii factură:\nAfișarea prețului unitar fără TVA.\nAfișarea valorii TVA pe fiecare linie.\nAfișarea totalului cu taxe pe fiecare linie (configurabil).\nNumerotarea automată a liniilor de factură (Ord).\nOpțiune de a elimina numele produsului de pe linie dacă există o descriere specifică.\nAfișarea prețului fără discount.\nInformații suplimentare pe document:\nCâmpuri dedicate pentru Delegat și Mijloc de transport.\nAfișarea textului legal privind scutirea de semnătură și ștampilă (conform Codului Fiscal).\nPosibilitatea de a adăuga un text adițional de la partener pe factură (`info_for_invoice`).\nVizibilitatea configurabilă pentru email, telefon și marcaje în adresa facturii.\nAfișarea informațiilor despre livrări (Pickings) și AWB-uri direct pe factură.\nInserarea logoului Coface la finalul facturii (activabil din setări).\nGestiune documente corelate:\nChitanță, dispoziție de plată și dispoziție de încasare tipărite din plată (raportul „Voucher / Payment\" pe `account.payment`), cu titlul potrivit tipului de plată și cu suma în cifre și în litere.\nPentru plățile pe jurnal de casă, documentul iese ca formular de casierie: codul formularului (14-4-4 la plată, 14-4-1 la încasare), casieria și rândul pentru actul de identitate al beneficiarului la plăți. Rubricile de semnătură nu se tipăresc: modelele din Anexa 3 la OMFP 2634/2015 le au, dar art. 4 alin. (2) permite adaptarea modelelor, iar semnăturile se dau pe exemplarul tipărit. La plățile bancare elementele de casierie nu apar deloc, nefiind vorba de un document de casă.\nPărțile sunt etichetate după rolul lor real în operațiune: pe documentele de casă, Plătitor / Beneficiar la plată și Beneficiar / Plătitor la încasare. Etichetele „Client / Furnizor\" rămân doar pe celelalte cazuri — la o restituire de marfă către o persoană fizică, beneficiarul nu e furnizor.\nGestionarea corectă a semnelor pentru stornări (Credit Notes).\nRapoarte dedicate:\nRaport de factură în limba companiei, indiferent de limba partenerului.\nConfigurare flexibilă:\nNumeroase opțiuni în setările de facturare pentru a activa sau dezactiva elementele menționate mai sus (Sarcini delegat, comentarii plată, index linii, etc.)."
   },
   {
+    "path": "l10n_ro_invoice_report_online/index.md",
+    "module": "l10n_ro_invoice_report_online",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_invoice_report_online",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Romania - Invoice Report for Odoo Online",
+    "summary": "Machetă românească pentru factură și chitanță, utilizabilă și pe **Odoo Online**: modulul nu are cod Python și se importă ca zip (Aplicații, Import modul). Este varianta doar cu date a modulului [l10n_ro_invoice_report](../l10n_ro_invoice_report/index.md), pentru baze de date unde nu rulează cod Python personalizat. Necesită `l10n_ro_report_common_online`, importat primul.",
+    "features": [
+      "Factura (raportul standard, modificat pe loc): furnizor și client alăturat, cu adrese, conturi bancare, CIF, NRC, capital social, TVA la încasare și adresă de livrare; punctul de lucru al jurnalului, când e setat.",
+      "Linii: număr curent opțional, preț fără TVA, valoarea TVA pe linie, total cu TVA opțional, preț de listă înainte de discount, numele produsului scos din descriere la cerere; notele de credit tipărite cu valori negative.",
+      "Subsol: emitent, delegat și mijloc de transport, livrările (sau recepțiile) facturii cu numerele AWB, mențiunea legală de valabilitate fără semnătură și ștampilă, informațiile suplimentare ale clientului, logo Coface opțional.",
+      "Facturile plătite în numerar poartă dedesubt chitanța, cu suma în litere (doar pe Invoice PDF, nu pe varianta fără plată).",
+      "Alte rapoarte: Voucher / Payment (chitanță sau dispoziție de plată, formularele 14-4-1 și 14-4-4 pentru casierie) și Invoices in company language.",
+      "Setările se fac pe companie, tab-ul Factură România (e-mail, telefon, marcaj în adrese, nr. crt., total cu TVA, preț fără discount, nume produs, comunicare plată, livrări, delegat, logo Coface); pe contul bancar al firmei se bifează tipărirea în raport.",
+      "Pe jurnalul de vânzări se setează Punct de lucru; pe partener, Cont bancar de plată, Mijloc transport și Informații suplimentare în factură.",
+      "Filtre de scadență pe facturile client: scadent mâine, azi, restanțe 1-7, 8-14, 15-30 și peste 30 de zile.",
+      "Automatizări în locul codului Python: mijlocul de transport al delegatului pe factură, contul bancar de plată al partenerului pe facturile client și acțiunea Set origin from pickings, care scrie livrările în originea facturii.",
+      "Față de `l10n_ro_invoice_report`, nu modifică extrasele bancare și nu are delegat implicit din context. Nu se poate instala împreună cu acesta (manifestul îl exclude), pentru că păstrează aceleași date în câmpuri diferite.",
+      "Pașii de configurare și utilizare sunt în fișa consultant."
+    ],
+    "dependencies": [
+      "account",
+      "base_automation",
+      "l10n_ro_report_common_online",
+      "l10n_ro_invoice_report"
+    ],
+    "connections": [
+      "l10n_ro_invoice_report",
+      "l10n_ro_report_common_online"
+    ],
+    "text": "Romania - Invoice Report for Odoo Online\nl10n_ro_invoice_report_online\nMachetă românească pentru factură și chitanță, utilizabilă și pe **Odoo Online**: modulul nu are cod Python și se importă ca zip (Aplicații, Import modul). Este varianta doar cu date a modulului [l10n_ro_invoice_report](../l10n_ro_invoice_report/index.md), pentru baze de date unde nu rulează cod Python personalizat. Necesită `l10n_ro_report_common_online`, importat primul.\nFactura (raportul standard, modificat pe loc): furnizor și client alăturat, cu adrese, conturi bancare, CIF, NRC, capital social, TVA la încasare și adresă de livrare; punctul de lucru al jurnalului, când e setat.\nLinii: număr curent opțional, preț fără TVA, valoarea TVA pe linie, total cu TVA opțional, preț de listă înainte de discount, numele produsului scos din descriere la cerere; notele de credit tipărite cu valori negative.\nSubsol: emitent, delegat și mijloc de transport, livrările (sau recepțiile) facturii cu numerele AWB, mențiunea legală de valabilitate fără semnătură și ștampilă, informațiile suplimentare ale clientului, logo Coface opțional.\nFacturile plătite în numerar poartă dedesubt chitanța, cu suma în litere (doar pe Invoice PDF, nu pe varianta fără plată).\nAlte rapoarte: Voucher / Payment (chitanță sau dispoziție de plată, formularele 14-4-1 și 14-4-4 pentru casierie) și Invoices in company language.\nSetările se fac pe companie, tab-ul Factură România (e-mail, telefon, marcaj în adrese, nr. crt., total cu TVA, preț fără discount, nume produs, comunicare plată, livrări, delegat, logo Coface); pe contul bancar al firmei se bifează tipărirea în raport.\nPe jurnalul de vânzări se setează Punct de lucru; pe partener, Cont bancar de plată, Mijloc transport și Informații suplimentare în factură.\nFiltre de scadență pe facturile client: scadent mâine, azi, restanțe 1-7, 8-14, 15-30 și peste 30 de zile.\nAutomatizări în locul codului Python: mijlocul de transport al delegatului pe factură, contul bancar de plată al partenerului pe facturile client și acțiunea Set origin from pickings, care scrie livrările în originea facturii.\nFață de `l10n_ro_invoice_report`, nu modifică extrasele bancare și nu are delegat implicit din context. Nu se poate instala împreună cu acesta (manifestul îl exclude), pentru că păstrează aceleași date în câmpuri diferite.\nPașii de configurare și utilizare sunt în fișa consultant."
+  },
+  {
     "path": "l10n_ro_journal_reports/index.md",
     "module": "l10n_ro_journal_reports",
     "version": "19.0.2.0.0",
@@ -17533,6 +17826,32 @@
     "text": "Romania - Mesaje SPV\nl10n_ro_message_spv\nAcest modul facilitează gestionarea mesajelor din Spațiul Privat Virtual (SPV) ANAF, asigurând descărcarea și procesarea automată a facturilor electronice (e-Factura): sincronizează periodic lista de mesaje SPV, descarcă arhivele ZIP semnate, extrage XML-ul semnat și creează automat facturi de furnizor din acesta, mapând furnizorul după codul fiscal (CIF) și oferind vizibilitate asupra stării fiecărui mesaj (Draft, Downloaded, Invoice, Eroare, Finalizat) și, opțional, a verificării interne.\nDescărcare automată mesaje SPV: sincronizare periodică (via cron) a listei de mesaje din SPV pentru facturi primite, trimise sau erori.\nProcesare fișiere ZIP: descărcarea automată a arhivelor ZIP semnate de la ANAF; XML-ul semnat este extras la cerere, în memorie — nu se mai creează un atașament separat pentru el, doar arhiva ZIP semnată rămâne stocată ca dovadă legală.\nCreare automată facturi de furnizor: generează schițe de factură direct din fișierele XML descărcate, mapând automat furnizorul pe baza codului fiscal (CIF), cu deduplicare pe referință/tranzacție/index EDI pentru a evita facturile duplicate.\nGestionare PDF-uri e-Factura:\nGenerare PDF ANAF: generează la cerere (via controller HTTP dedicat) vizualizarea PDF oficială a XML-ului, folosind serviciul ANAF de transformare (`FACT1`/`FCN`).\nExtragere PDF încorporat: extrage la cerere PDF-ul atașat direct în fișierul XML (`AdditionalDocumentReference`), dacă există.\nMonitorizare stări: urmărirea stării fiecărui mesaj (Draft, Downloaded, Invoice, Error, Done) și a încercărilor de descărcare — ANAF limitează la 10 descărcări/zi pe mesaj, iar modulul marchează mesajul ca eroare după 3 încercări eșuate într-o zi, reluând automat a doua zi.\nIntegrare cu fluxul de facturare: legarea automată a mesajelor de facturile existente pe baza ID-ului de tranzacție, a indexului EDI sau a referinței facturii; la ștergerea unei facturi, arhiva ZIP semnată e detașată (rămâne pe mesajul SPV ca probă legală), în timp ce documentele EDI sintetice de dedup sunt curățate doar pentru facturile de achiziție în ciornă/anulate.\nCăutare produs după codul furnizorului: la importul UBL/CIUS-RO, produsul este identificat automat după codul furnizorului (`SellersItemIdentification` sau `StandardItemIdentification`) folosind `product.supplierinfo`, cu prioritate maximă față de celelalte criterii de căutare.\nSalvare cod furnizor pe linia de factură: codul furnizorului (`l10n_ro_vendor_code`) este salvat pe linia de factură la import, chiar dacă produsul nu a fost găsit, pentru a permite asocierea ulterioară la validarea facturii; descrierea și prețul unitar venite din SPV se păstrează la corectarea produsului pe o linie importată.\nSincronizarea datelor produselor: la validarea unei facturi de achiziție, dacă linia are cod de furnizor, se creează sau se actualizează automat înregistrarea `product.supplierinfo` corespunzătoare.\nConfigurare număr de zile pentru descărcarea e-facturilor (`l10n_ro_download_einvoices_days`, implicit 60 de zile) și pentru reîmprospătarea mesajelor (`l10n_ro_refresh_message_days`, implicit 60 de zile) — accesibile din Setări Contabilitate, secțiunea e-Factura România.\nVerificare internă a facturilor primite (opțională, activată din Setări → e-Factura prin „Review received invoices\"): mesajele primite apar ca „To Review\", pot fi Acceptate, Respinse (cu motiv obligatoriu, printr-un wizard, consemnat în chatter) sau readuse la verificare; factura de furnizor se creează doar dintr-un mesaj acceptat, iar respingerea e blocată dacă există deja o factură neanulată creată din mesaj.\nPotrivire îmbunătățită cu facturile existente: pentru facturile primite cu cod 751 (plătite cu bon fiscal, stocate ca In Receipt) se caută factura de furnizor cu aceeași referință și același furnizor; dintre mai multe potriviri se leagă întâi cea confirmată, apoi ciorna cu furnizor/linii, la urmă ciorna goală; la confirmarea unei facturi de furnizor se leagă automat mesajele SPV nelegate cu aceeași referință și furnizor (sau CIF); „Create Invoice\" nu mai lasă o ciornă goală dacă importul XML eșuează.\nXML-ul facturii este citit integral: mesajul reține numele partenerului, scadența, baza impozabilă, TVA și totalul, afișate în listă cu filtre (scadență, verificare, contabilizat) și grupări (partener, verificare, monedă); partenerii-placeholder („Unknown\" sau denumiți după CIF) sunt redenumiți din XML.\nNotificare la eroare de sincronizare: la prima eroare ANAF contabilii-șefi și administratorii sunt notificați (Discuss/email), iar în Setări se păstrează data ultimei sincronizări reușite (`l10n_ro_spv_last_sync`).\nMeniu dedicat Contabilitate → Configurare/Intrări contabile → SPV → Messages SPV, cu acțiuni per mesaj: Refresh (resincronizare listă), Download, Get Invoice, Create Invoice, Show Invoice, plus butoane de descărcare ZIP/XML/PDF ANAF/PDF încorporat."
   },
   {
+    "path": "l10n_ro_message_spv_online/index.md",
+    "module": "l10n_ro_message_spv_online",
+    "version": "20.0.1.0.2",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_message_spv_online",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_message_spv_online",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_message_spv_online",
+    "summary": "Registru al mesajelor e-Factura (SPV) care funcționează și pe **Odoo Online**: modulul nu are cod Python și se importă ca arhivă zip. Lucrează peste modulul standard `l10n_ro_edi`, care trimite facturile și descarcă facturile de furnizor, și arată într-un singur loc ce păstrează deja modulul standard: facturi trimise, primite, respinse.",
+    "features": [
+      "Meniul Mesaje SPV în Facturare (Contabilitate): ultimul mesaj al fiecărei facturi trimise și al fiecărei facturi primite, grupate după stare (*Trimis*, *Validat*, *Eroare*).",
+      "Filtre: trimise / primite, în așteptare la ANAF, validate, respinse, cu mesaj de eroare, după dată; grupare după stare, direcție, partener sau lună.",
+      "Formular de mesaj: factura, partenerul, totalul, mesajul ANAF, cheia de descărcare, XML-ul mesajului (factura trimisă sau semnătura ANAF) și fișierele facturii (XML și PDF la o factură primită), toate descărcabile.",
+      "Butonul Sincronizează acum: rulează sincronizarea standard cu SPV (starea facturilor trimise, facturi de furnizor noi) fără a aștepta acțiunea programată; cere data de la care se sincronizează (până la 60 de zile în urmă). Pe o companie fără CIF sau fără token SPV spune ce trebuie setat întâi. Butonul Preia starea întreabă ANAF pentru o singură factură aflată în așteptare.",
+      "Nu potrivește produsele după codul furnizorului și nu creează parteneri din CUI (pe server cu Python o face `l10n_ro_message_spv`). Tokenul ANAF rămâne în baza de date; modulul nu trimite date nicăieri în afara sincronizării standard.",
+      "Se exclude reciproc cu `l10n_ro_message_spv`. Flux detaliat: [Fișa consultant](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "l10n_ro_edi"
+    ],
+    "connections": [
+      "l10n_ro_message_spv",
+      "l10n_ro_message_spv_side_panel_online"
+    ],
+    "text": "l10n_ro_message_spv_online\nl10n_ro_message_spv_online\nRegistru al mesajelor e-Factura (SPV) care funcționează și pe **Odoo Online**: modulul nu are cod Python și se importă ca arhivă zip. Lucrează peste modulul standard `l10n_ro_edi`, care trimite facturile și descarcă facturile de furnizor, și arată într-un singur loc ce păstrează deja modulul standard: facturi trimise, primite, respinse.\nMeniul Mesaje SPV în Facturare (Contabilitate): ultimul mesaj al fiecărei facturi trimise și al fiecărei facturi primite, grupate după stare (*Trimis*, *Validat*, *Eroare*).\nFiltre: trimise / primite, în așteptare la ANAF, validate, respinse, cu mesaj de eroare, după dată; grupare după stare, direcție, partener sau lună.\nFormular de mesaj: factura, partenerul, totalul, mesajul ANAF, cheia de descărcare, XML-ul mesajului (factura trimisă sau semnătura ANAF) și fișierele facturii (XML și PDF la o factură primită), toate descărcabile.\nButonul Sincronizează acum: rulează sincronizarea standard cu SPV (starea facturilor trimise, facturi de furnizor noi) fără a aștepta acțiunea programată; cere data de la care se sincronizează (până la 60 de zile în urmă). Pe o companie fără CIF sau fără token SPV spune ce trebuie setat întâi. Butonul Preia starea întreabă ANAF pentru o singură factură aflată în așteptare.\nNu potrivește produsele după codul furnizorului și nu creează parteneri din CUI (pe server cu Python o face `l10n_ro_message_spv`). Tokenul ANAF rămâne în baza de date; modulul nu trimite date nicăieri în afara sincronizării standard.\nSe exclude reciproc cu `l10n_ro_message_spv`. Flux detaliat: [Fișa consultant](FISA_CONSULTANT.md)."
+  },
+  {
     "path": "l10n_ro_message_spv_purchase/index.md",
     "module": "l10n_ro_message_spv_purchase",
     "version": "19.0.0.0.1",
@@ -17561,6 +17880,81 @@
       "purchase"
     ],
     "text": "Purchase Message SPV\nl10n_ro_message_spv_purchase\nAcest modul extinde mecanismul de mesaje SPV (Spațiul Privat Virtual ANAF) din România pentru a sprijini fluxul de aprovizionare (procure-to-pay). El leagă mesajele SPV primite de comenzile de achiziție (Purchase Orders) și menține sincronizate jurnalul de discuții (chatter) și atașamentele comenzii. Practic, atunci când o factură electronică sosește prin SPV, modulul ajută utilizatorul să identifice rapid comanda de achiziție corespunzătoare sau să creeze una nouă, atașând automat fișierul XML al facturii direct pe comandă.\nCâmpuri noi pe mesajul SPV:\n`Purchase Reference` (`purchase_ref`) – extras automat din XML, de la `OrderReference/ID`, atunci când este disponibil.\n`Purchase Order` (`purchase_order_id`) – comanda de achiziție legată, dacă există.\nDouă acțiuni dedicate pe formularul SPV:\nFind Purchase (Caută Comandă): caută comenzi de achiziție după referință (folosind `purchase_ref` sau, ca alternativă, `ref`) în câmpurile `partner_ref`, `origin` sau `name`, restrânse după partener/companie când acestea sunt disponibile.\nCreate Purchase (Creează Comandă): execută aceeași căutare; dacă nu găsește nimic și un partener este setat, creează o comandă de achiziție în stare ciornă și o leagă.\nCând o comandă este găsită sau creată, se postează o notă în chatter-ul comenzii cu un mesaj contextual și cu XML-ul SPV atașat.\nXML-ul SPV nu este doar referențiat; se creează o copie a atașamentului XML pe comandă (`ir.attachment` cu `res_model='purchase.order'`), evitând legarea încrucișată la fișierul original al mesajului.\nPrevenirea duplicatelor pentru atașamentele de pe comandă, pe baza checksum-ului (cu alternativă la nume și mimetype)."
+  },
+  {
+    "path": "l10n_ro_message_spv_self_billing/index.md",
+    "module": "l10n_ro_message_spv_self_billing",
+    "version": "20.0.1.0.4",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_message_spv_self_billing",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_message_spv_self_billing",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_message_spv_self_billing",
+    "summary": "La autofacturare (Codul fiscal, art. 319 alin. 18) clientul emite factura în numele furnizorului și o raportează în SPV. Numărul legal al unui asemenea document este cel alocat de client, nu unul din secvența proprie a furnizorului. Modulul preia acest număr din mesajul SPV, astfel încât documentele sosite cu întârziere și datate retroactiv să nu fie numerotate din secvența obișnuită de vânzări.",
+    "features": [
+      "Opțiune nouă pe jurnal (vânzări și achiziții): Număr din mesajul SPV, implicit dezactivată.",
+      "La potrivirea unui draft cu mesajul SPV (*Găsește factura*), documentul dintr-un astfel de jurnal primește ca număr referința mesajului, nu numărul din secvența jurnalului.",
+      "Documentele postate nu se renumerotează niciodată.",
+      "Un număr deja folosit în jurnal este sărit și înregistrat în log, pentru că postarea ar eșua pe constrângerea de unicitate.",
+      "Flux: se creează un jurnal dedicat (ex. *Autofacturare*), se bifează opțiunea, se înregistrează documentul ca draft, se potrivește cu mesajul SPV, apoi se postează. Ordinea contează: potrivirea întâi, postarea după, altfel documentul ajunge în SPV, unde clientul l-a raportat deja."
+    ],
+    "dependencies": [
+      "l10n_ro_message_spv"
+    ],
+    "connections": [
+      "l10n_ro_message_spv"
+    ],
+    "text": "l10n_ro_message_spv_self_billing\nl10n_ro_message_spv_self_billing\nLa autofacturare (Codul fiscal, art. 319 alin. 18) clientul emite factura în numele furnizorului și o raportează în SPV. Numărul legal al unui asemenea document este cel alocat de client, nu unul din secvența proprie a furnizorului. Modulul preia acest număr din mesajul SPV, astfel încât documentele sosite cu întârziere și datate retroactiv să nu fie numerotate din secvența obișnuită de vânzări.\nOpțiune nouă pe jurnal (vânzări și achiziții): Număr din mesajul SPV, implicit dezactivată.\nLa potrivirea unui draft cu mesajul SPV (*Găsește factura*), documentul dintr-un astfel de jurnal primește ca număr referința mesajului, nu numărul din secvența jurnalului.\nDocumentele postate nu se renumerotează niciodată.\nUn număr deja folosit în jurnal este sărit și înregistrat în log, pentru că postarea ar eșua pe constrângerea de unicitate.\nFlux: se creează un jurnal dedicat (ex. *Autofacturare*), se bifează opțiunea, se înregistrează documentul ca draft, se potrivește cu mesajul SPV, apoi se postează. Ordinea contează: potrivirea întâi, postarea după, altfel documentul ajunge în SPV, unde clientul l-a raportat deja."
+  },
+  {
+    "path": "l10n_ro_message_spv_side_panel/index.md",
+    "module": "l10n_ro_message_spv_side_panel",
+    "version": "20.0.1.3.0",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_message_spv_side_panel",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_message_spv_side_panel",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_message_spv_side_panel",
+    "summary": "Vedere împărțită pentru mesajele SPV: facturile primite prin SPV apar în stânga, ca carduri, iar în dreapta, într-un panou, detaliile mesajului selectat, fără a părăsi lista. Este o punte între `l10n_ro_message_spv` și `deltatech_web_side_panel`, instalată la cerere.",
+    "features": [
+      "Meniul *Mesaje SPV* deschide un kanban de carduri (furnizor, sumă, număr, dată, stare, zile până la scadență; un mesaj a cărui arhivă nu e descărcată arată id-ul, tipul și data) și lista obișnuită; un clic selectează mesajul și îl arată în panou. Dezinstalarea modulului readuce meniul la forma inițială.",
+      "Panoul: furnizorul, CUI-ul citit din XML, datele, sumele, starea de verificare și butoanele *Creează factura*, *Acceptă*, *Respinge*, *XML*, *PDF* și *ZIP*; *Reîmprospătează* reîncarcă mesajul după o acțiune.",
+      "Documentul: factura așa cum e în XML, ca o foaie de hârtie, cu trei casete (cealaltă parte, datele facturii, firma noastră), liniile (cod, descriere, UM, cantitate, preț, TVA, valoare) și totalurile. Panoul și formularul complet arată același document, fără taburi. Nimic nu se stochează: XML-ul se citește din ZIP la deschiderea mesajului.",
+      "Pe ecrane mai înguste de 1200 px panoul e oprit, iar un clic deschide formularul mesajului. Flux detaliat: [Fișa consultant](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "l10n_ro_message_spv",
+      "deltatech_web_side_panel"
+    ],
+    "connections": [
+      "l10n_ro_message_spv_side_panel_online",
+      "l10n_ro_message_spv_online"
+    ],
+    "text": "l10n_ro_message_spv_side_panel\nl10n_ro_message_spv_side_panel\nVedere împărțită pentru mesajele SPV: facturile primite prin SPV apar în stânga, ca carduri, iar în dreapta, într-un panou, detaliile mesajului selectat, fără a părăsi lista. Este o punte între `l10n_ro_message_spv` și `deltatech_web_side_panel`, instalată la cerere.\nMeniul *Mesaje SPV* deschide un kanban de carduri (furnizor, sumă, număr, dată, stare, zile până la scadență; un mesaj a cărui arhivă nu e descărcată arată id-ul, tipul și data) și lista obișnuită; un clic selectează mesajul și îl arată în panou. Dezinstalarea modulului readuce meniul la forma inițială.\nPanoul: furnizorul, CUI-ul citit din XML, datele, sumele, starea de verificare și butoanele *Creează factura*, *Acceptă*, *Respinge*, *XML*, *PDF* și *ZIP*; *Reîmprospătează* reîncarcă mesajul după o acțiune.\nDocumentul: factura așa cum e în XML, ca o foaie de hârtie, cu trei casete (cealaltă parte, datele facturii, firma noastră), liniile (cod, descriere, UM, cantitate, preț, TVA, valoare) și totalurile. Panoul și formularul complet arată același document, fără taburi. Nimic nu se stochează: XML-ul se citește din ZIP la deschiderea mesajului.\nPe ecrane mai înguste de 1200 px panoul e oprit, iar un clic deschide formularul mesajului. Flux detaliat: [Fișa consultant](FISA_CONSULTANT.md)."
+  },
+  {
+    "path": "l10n_ro_message_spv_side_panel_online/index.md",
+    "module": "l10n_ro_message_spv_side_panel_online",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_message_spv_side_panel_online",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_message_spv_side_panel_online",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_message_spv_side_panel_online",
+    "summary": "Vedere împărțită pentru mesajele e-Factura (SPV) și pe **Odoo Online**: lista sau cardurile mesajelor în stânga, iar în dreapta, într-un panou, factura așa cum e în XML. Modulul nu are cod Python și se importă ca arhivă zip; funcționează peste registrul `l10n_ro_message_spv_online` și panoul lateral `deltatech_web_side_panel`.",
+    "features": [
+      "Meniul *Mesaje SPV (vedere împărțită)* din Facturare: kanban și listă pe mesajele SPV (`l10n_ro_edi.document`), cu aceleași filtre ca registrul; cardurile arată partener, total, număr, stare și direcția *Primit* / *Trimis*.",
+      "Panoul din dreapta: partenerul, factura, totalul, starea, mesajul ANAF, fișierele mesajului și documentul facturii desenat în browser din XML (casete cu cealaltă parte, factura și firma noastră, apoi liniile și totalurile); CUI-ul se citește tot în browser.",
+      "Sursa XML-ului: pentru o factură trimisă aflată în așteptare, XML-ul trimis; altfel, fișierul XML atașat facturii (factura de furnizor descărcată din SPV). La o factură trimisă deja validată modulul standard păstrează doar semnătura ANAF, iar panoul spune că XML-ul nu e disponibil.",
+      "Butonul Preia starea din panou întreabă ANAF pentru o factură trimisă și încă în așteptare.",
+      "Nu creează factura din mesaj, nu are Acceptă / Respinge și nu potrivește produsele după codul furnizorului; pentru acestea există `l10n_ro_message_spv_side_panel`. Cele două module nu se instalează împreună. Flux: [Fișa consultant](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "l10n_ro_message_spv_online",
+      "deltatech_web_side_panel"
+    ],
+    "connections": [
+      "l10n_ro_message_spv_side_panel",
+      "l10n_ro_message_spv_online"
+    ],
+    "text": "l10n_ro_message_spv_side_panel_online\nl10n_ro_message_spv_side_panel_online\nVedere împărțită pentru mesajele e-Factura (SPV) și pe **Odoo Online**: lista sau cardurile mesajelor în stânga, iar în dreapta, într-un panou, factura așa cum e în XML. Modulul nu are cod Python și se importă ca arhivă zip; funcționează peste registrul `l10n_ro_message_spv_online` și panoul lateral `deltatech_web_side_panel`.\nMeniul *Mesaje SPV (vedere împărțită)* din Facturare: kanban și listă pe mesajele SPV (`l10n_ro_edi.document`), cu aceleași filtre ca registrul; cardurile arată partener, total, număr, stare și direcția *Primit* / *Trimis*.\nPanoul din dreapta: partenerul, factura, totalul, starea, mesajul ANAF, fișierele mesajului și documentul facturii desenat în browser din XML (casete cu cealaltă parte, factura și firma noastră, apoi liniile și totalurile); CUI-ul se citește tot în browser.\nSursa XML-ului: pentru o factură trimisă aflată în așteptare, XML-ul trimis; altfel, fișierul XML atașat facturii (factura de furnizor descărcată din SPV). La o factură trimisă deja validată modulul standard păstrează doar semnătura ANAF, iar panoul spune că XML-ul nu e disponibil.\nButonul Preia starea din panou întreabă ANAF pentru o factură trimisă și încă în așteptare.\nNu creează factura din mesaj, nu are Acceptă / Respinge și nu potrivește produsele după codul furnizorului; pentru acestea există `l10n_ro_message_spv_side_panel`. Cele două module nu se instalează împreună. Flux: [Fișa consultant](FISA_CONSULTANT.md)."
   },
   {
     "path": "l10n_ro_micro_tax/index.md",
@@ -17730,6 +18124,34 @@
       "l10n_eu_oss_reports"
     ],
     "text": "Romania - Prag OSS 10.000 € (FR-22)\nl10n_ro_oss_threshold\nModulul monitorizează pragul anual de 10.000 EUR pentru vânzările B2C către alte state membre UE, relevant pentru regimul OSS (One Stop Shop). Urmărește cumulat valoarea vânzărilor intracomunitare către consumatori și avertizează compania la apropierea sau depășirea pragului, peste care taxarea trebuie să se facă cu cota TVA din statul de consum. Include un cron de verificare lunară și un wizard de control la cerere.\nMonitorizarea cumulată a vânzărilor B2C către UE pentru raportare la pragul anual de 10.000 EUR.\nAvertismente pe facturi și la nivel de companie privind apropierea sau depășirea pragului OSS.\nCron lunar de verificare automată a pragului.\nWizard de verificare la cerere a situației curente față de prag.\nConfigurare a parametrilor OSS în setările companiei și în setările generale de contabilitate."
+  },
+  {
+    "path": "l10n_ro_partner_autocomplete/index.md",
+    "module": "l10n_ro_partner_autocomplete",
+    "version": "20.0.1.5.1",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_partner_autocomplete",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_partner_autocomplete",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_partner_autocomplete",
+    "summary": "Autocompletarea standard de parteneri din Odoo propune companii din IAP și consumă credite. Pentru o firmă românească sursa autoritativă este ANAF, gratuit. Cu acest modul, un CUI românesc tastat acolo unde Odoo oferă autocompletarea arată firma găsită la ANAF, iar alegerea ei completează partenerul. Un cod de TVA din alt stat UE se caută în VIES. Niciun credit IAP nu se consumă pentru un CUI românesc.",
+    "features": [
+      "Completare din ANAF: denumire, CUI (cu `RO` doar la plătitor de TVA), plătitor TVA, stradă cu număr, localitate, județ, cod poștal, nr. registrul comerțului, telefon; la București sectorul ca localitate (cerință e-Factura); notă în chatter cu sursa și data. Funcționează în câmpurile *CUI* / *Nume* ale partenerului, *Client* la ofertă și factură și formularul de client din POS.",
+      "Firme din UE prin VIES: nume, stradă, cod poștal, oraș, țară, notă în chatter; dacă VIES nu răspunde sau țara ține numele secret (Germania, Spania), se întreabă IAP. Pentru un plătitor român nota arată și dacă firma e în VIES.",
+      "Butonul Actualizare din ANAF lângă CUI: reîncarcă datele (telefonul existent se păstrează); chatterul listează fiecare câmp modificat cu valoarea veche și nouă și semnalează firma radiată sau inactivă; cu `l10n_ro_anaf_partner` se actualizează și *TVA la încasare (RTVAI)*. La o firmă UE reîncarcă din VIES și setează *Valid intracomunitar*.",
+      "Partener creat cu CUI-ul ca nume (*Creează* sau import): se completează din ANAF; valorile date explicit se păstrează, iar partenerul cu CUI, persoanele de contact și partenerii din altă țară rămân neatinși. Cheia de context `l10n_ro_anaf_no_autofill` dezactivează funcția (ex. import în masă).",
+      "Câmpul Plătitor TVA pe formular, CUI-ul păstrat fără prefix de țară; alegerea orașului (cu `l10n_ro_city`) păstrează codul poștal existent.",
+      "Acțiunea Îmbogățește (Odoo 20) din listă și formular întreabă ANAF (după CUI sau ID companie) sau VIES și completează doar câmpurile goale.",
+      "*Valid intracomunitar* se setează cu `l10n_eu_account_vies`; fără el, răspunsul VIES apare doar în chatter. Fluxul pas cu pas: [Fișa consultant](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "partner_autocomplete",
+      "l10n_ro_anaf_partner_lookup"
+    ],
+    "connections": [
+      "l10n_ro_anaf_partner_lookup",
+      "l10n_ro_partner_create_by_vat"
+    ],
+    "text": "l10n_ro_partner_autocomplete\nl10n_ro_partner_autocomplete\nAutocompletarea standard de parteneri din Odoo propune companii din IAP și consumă credite. Pentru o firmă românească sursa autoritativă este ANAF, gratuit. Cu acest modul, un CUI românesc tastat acolo unde Odoo oferă autocompletarea arată firma găsită la ANAF, iar alegerea ei completează partenerul. Un cod de TVA din alt stat UE se caută în VIES. Niciun credit IAP nu se consumă pentru un CUI românesc.\nCompletare din ANAF: denumire, CUI (cu `RO` doar la plătitor de TVA), plătitor TVA, stradă cu număr, localitate, județ, cod poștal, nr. registrul comerțului, telefon; la București sectorul ca localitate (cerință e-Factura); notă în chatter cu sursa și data. Funcționează în câmpurile *CUI* / *Nume* ale partenerului, *Client* la ofertă și factură și formularul de client din POS.\nFirme din UE prin VIES: nume, stradă, cod poștal, oraș, țară, notă în chatter; dacă VIES nu răspunde sau țara ține numele secret (Germania, Spania), se întreabă IAP. Pentru un plătitor român nota arată și dacă firma e în VIES.\nButonul Actualizare din ANAF lângă CUI: reîncarcă datele (telefonul existent se păstrează); chatterul listează fiecare câmp modificat cu valoarea veche și nouă și semnalează firma radiată sau inactivă; cu `l10n_ro_anaf_partner` se actualizează și *TVA la încasare (RTVAI)*. La o firmă UE reîncarcă din VIES și setează *Valid intracomunitar*.\nPartener creat cu CUI-ul ca nume (*Creează* sau import): se completează din ANAF; valorile date explicit se păstrează, iar partenerul cu CUI, persoanele de contact și partenerii din altă țară rămân neatinși. Cheia de context `l10n_ro_anaf_no_autofill` dezactivează funcția (ex. import în masă).\nCâmpul Plătitor TVA pe formular, CUI-ul păstrat fără prefix de țară; alegerea orașului (cu `l10n_ro_city`) păstrează codul poștal existent.\nAcțiunea Îmbogățește (Odoo 20) din listă și formular întreabă ANAF (după CUI sau ID companie) sau VIES și completează doar câmpurile goale.\n*Valid intracomunitar* se setează cu `l10n_eu_account_vies`; fără el, răspunsul VIES apare doar în chatter. Fluxul pas cu pas: [Fișa consultant](FISA_CONSULTANT.md)."
   },
   {
     "path": "l10n_ro_partner_cnp/index.md",
@@ -18421,6 +18843,74 @@
     "text": "Romania - Checklist de închidere de perioadă\nl10n_ro_period_close_enhanced\nModul de localizare românească care implementează un checklist lunar de închidere a perioadei contabile, folosind infrastructura Enterprise `account.return.type` din modulul `account_reports`. Se adresează contabililor care efectuează închiderea lunară și doresc un flux structurat, cu verificări automate ale rulajelor și soldurilor, conform cerințelor OMFP 1802/2014, care înlocuiește verificarea manuală ad-hoc a „listei de control\" lunare.\nChecklist interactiv de tip `audit` cu flux New → Review → Submit, creat automat pentru fiecare lună (Contabilitate → Closing → RO – Checklist Închidere Perioadă).\nVerificări automate evaluate direct din date: facturi/avize în stare Schiță datate în perioadă; extrase bancare nereconciliate.\nConfruntări de sold (sursă operațională vs. rulaj contabil, cu diferența afișată explicit în mesaj): registru de casă vs. conturi 531x; jurnalul de TVA vs. conturile 4426/4427; TVA la încasare vs. contul 4428 (comparație unidirecțională — un sold 4428 mai mare e normal, fiindcă include și 408/418); balanța de verificare echilibrată (rulaj și cumulat); cheltuiala cu amortizarea vs. conturile 681x; registrul mijloacelor fixe vs. conturile 21x/28x (valoare brută și amortizare cumulată).\nVerificări operaționale de completitudine: nicio cantitate negativă pe gestiune (`stock.quant`); soldul 408 (marfă recepționată nefacturată) justificat de recepții pe aviz deschise, cu comparație pe sume dacă `l10n_ro_rni_report` e instalat; valorizarea de stoc vs. conturile de stoc 3xx (rulează raportul `stock.accounting.check` din `l10n_ro_stock_account_check`, dacă e instalat); mesajele SPV (e-Factura) fără vreunul rămas neprocesat; avansurile 409/419 fără sume decontate dar nereconciliate.\nVerificări condiționale, active doar dacă modulul opțional e instalat: Coeficient K (`l10n_ro_stock_k_coefficient`), CMP Periodic (`l10n_ro_stock_cmp_periodic`), Reevaluare Valutară 665/765 (`l10n_ro_currency_revaluation`), Regularizare TVA 4426/4427 → 44231/4424 (`l10n_ro_vat_regularization`), WIP producție 331/711 (`l10n_ro_wip_closing`), provizioane stocuri slow-moving 39x (`l10n_ro_stock_provision`), contabilizare completă a inventarelor de stoc (`l10n_ro_inventory_closing`).\nDepunerea declarațiilor lunare/trimestriale la ANAF: D300 (TVA), D390 (recapitulativă UE — doar dacă perioada are operațiuni intracomunitare), D394 și D112, fiecare raportată `todo` până la termenul legal (25 ale lunii următoare) și `anomaly` după, plus o verificare finală că toate depunerile perioadei au recipisă ANAF fără erori (fără rămase respinse/în eroare din `l10n.ro.anaf.submission`).\nVerificări manuale confirmate prin bifare de contabil: registru de casă verificat față de numerar fizic, inventar stocuri regularizat, reconciliere conturi clienți/furnizori 411x/401x.\nConturile de control folosite în confruntările de sold (casă, TVA deductibilă/colectată/amânată, amortizare, mijloace fixe, marfă nefacturată, avansuri) sunt configurabile pe companie, ca prefixe de cont, din Contabilitate → Configurare → Setări → Period Closing Control Accounts (RO); un prefix golit dezactivează verificarea care depinde de el.\nBlocare perioadă la validare: la închiderea lunii decembrie se setează automat data de blocare a exercițiului financiar (`fiscalyear_lock_date`), avansând doar (nu retrage o blocare existentă mai recentă).\nBlocare per-jurnal (`l10n_ro_lock_date` pe `account.journal`): permite blocarea jurnalelor TVA/vânzări după depunerea D300, ținând alte jurnale (ex. salarii) deschise; postarea unei note contabile datate în perioada blocată a jurnalului ei este respinsă.\nRaport unic de pre-închidere (PDF): proces-verbal cu toate verificările (verificate / anomalii / în așteptare), observații și semnături — generat automat la validare și atașat la chatter, retipăribil oricând (`action_print_preclose_report`).\nTermen implicit de 5 zile după sfârșitul perioadei de raportare (lunară sau trimestrială, după periodicitatea companiei), configurabil pe tipul de return (`RO – Checklist Închidere Perioadă`).\nReguli de reconciliere pentru plățile lunare la buget (TVA 4423, impozit profit 4411, micro 4418, CAS 4315, CASS 4316, CAM 436, impozit salarii 444, alte impozite 446) — livrate ca șablon `account.reconcile.model` la instalare/upgrade și pentru companii noi, cu propunere automată a contrapartidei pe baza narațiunii extrasului bancar (potrivire pe cuvânt-cheie sau regex pentru CAS/CASS/CAM); activare opt-in a reconcilierii complet automate din Contabilitate → Configurare → Setări → Budget Payments Reconciliation (RO) (`res.company.l10n_ro_budget_auto_reconcile`), cu buton de sincronizare a regulilor existente.\nIntegrare nativă cu checklistele de closing din celelalte module RO — checklistul e recomandat ca ultimul pas, după rularea operațiilor de closing dedicate (K, CMP, reevaluare, regularizare TVA, WIP, D300)."
   },
   {
+    "path": "l10n_ro_picking_report/index.md",
+    "module": "l10n_ro_picking_report",
+    "version": "20.0.2.0.4",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_picking_report",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_picking_report",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_picking_report",
+    "summary": "Modulul oferă documentele de stoc cerute în România, tipărite din transferurile de stoc: recepția (NIR), avizul de însoțire a mărfii, bonul de consum și nota de transfer intern. Documentele au formatul românesc, cu datele firmei, gestionarul, delegatul și semnăturile, iar prețurile sunt preluate din comenzi sau din listele de prețuri.",
+    "features": [
+      "Rapoarte pentru recepție, livrare și transfer intern, tipărite din meniul Tipăriți al transferului: recepție (NIR), recepție fără TVA, recepție cu preț de vânzare, livrare, livrare cu preț, bon de consum, transfer intern.",
+      "Rapoarte cumulative pe perioadă, pentru recepție cu preț de vânzare și pentru transfer intern, generate printr-un wizard.",
+      "Livrările marcate ca aviz (`l10n_ro_notice`) se tipăresc cu titlul „Aviz de însoțire a mărfii\" (14-3-6A); livrările obișnuite rămân „Livrare\".",
+      "Pe livrările fără comandă de vânzare (aviz, custodie, consignație), raportul „Delivery with price\" preia prețul din lista de prețuri a partenerului sau prețul de listă al produsului.",
+      "Referința din comanda de achiziție este copiată în NIR și în factură.",
+      "Opțiuni în setările României: tipărirea taxelor pe recepție și tipărirea băncilor pe rapoarte.",
+      "Pe documente: delegat și mijloc de transport, gestionar pe locație, listă de prețuri a magazinului pentru prețul de vânzare, cantități în unitatea de ambalare de pe document.",
+      "Fluxul pas-cu-pas este în [fișa consultant](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "base",
+      "stock",
+      "l10n_ro_report_common",
+      "purchase_stock",
+      "sale_stock",
+      "l10n_ro_stock",
+      "l10n_ro_invoice_report",
+      "delivery"
+    ],
+    "connections": [
+      "l10n_ro_stock_picking_report",
+      "l10n_ro_picking_report_online",
+      "l10n_ro_stock_picking_comment_template"
+    ],
+    "text": "l10n_ro_picking_report\nl10n_ro_picking_report\nModulul oferă documentele de stoc cerute în România, tipărite din transferurile de stoc: recepția (NIR), avizul de însoțire a mărfii, bonul de consum și nota de transfer intern. Documentele au formatul românesc, cu datele firmei, gestionarul, delegatul și semnăturile, iar prețurile sunt preluate din comenzi sau din listele de prețuri.\nRapoarte pentru recepție, livrare și transfer intern, tipărite din meniul Tipăriți al transferului: recepție (NIR), recepție fără TVA, recepție cu preț de vânzare, livrare, livrare cu preț, bon de consum, transfer intern.\nRapoarte cumulative pe perioadă, pentru recepție cu preț de vânzare și pentru transfer intern, generate printr-un wizard.\nLivrările marcate ca aviz (`l10n_ro_notice`) se tipăresc cu titlul „Aviz de însoțire a mărfii\" (14-3-6A); livrările obișnuite rămân „Livrare\".\nPe livrările fără comandă de vânzare (aviz, custodie, consignație), raportul „Delivery with price\" preia prețul din lista de prețuri a partenerului sau prețul de listă al produsului.\nReferința din comanda de achiziție este copiată în NIR și în factură.\nOpțiuni în setările României: tipărirea taxelor pe recepție și tipărirea băncilor pe rapoarte.\nPe documente: delegat și mijloc de transport, gestionar pe locație, listă de prețuri a magazinului pentru prețul de vânzare, cantități în unitatea de ambalare de pe document.\nFluxul pas-cu-pas este în [fișa consultant](FISA_CONSULTANT.md)."
+  },
+  {
+    "path": "l10n_ro_picking_report_online/index.md",
+    "module": "l10n_ro_picking_report_online",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_picking_report_online",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_picking_report_online",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_picking_report_online",
+    "summary": "Documentele de stoc românești (NIR, aviz, bon de consum, transfer intern), disponibile și pe Odoo Online. Modulul nu conține cod Python și se importă ca arhivă zip (Aplicații > Importați modulul). Este varianta fără Python a modulului [l10n_ro_picking_report](../l10n_ro_picking_report/index.md), pentru bazele în care codul propriu nu poate rula.",
+    "features": [
+      "Rapoarte din meniul Tipăriți al transferului: Recepție (NIR), Recepție fără TVA și Recepție cu preț de vânzare (doar pe recepții), Aviz, Aviz cu preț, Bon de consum și Notă de transfer.",
+      "NIR cu preț unitar, valoare, TVA, preț de vânzare și adaos procentual; cantități și prețuri în unitatea de pe document (o cutie de 13 kg rămâne cutie); prețul din comanda de achiziție sau din valoarea mișcării.",
+      "Aviz și Aviz cu preț: prețul din comanda de vânzare (cu discount, cu TVA inclus sau nu); fără comandă, prețul din lista clientului, altfel prețul de listă.",
+      "Livrarea bifată *Aviz de însoțire* se tipărește ca „Aviz de însoțire a mărfii\" (14-3-6A); celelalte au titlul „Livrare\".",
+      "Pe documente: datele firmei și conturile bancare, gestionarul locației, delegatul și mijlocul de transport, numărul AWB (când e instalat modulul de curierat), semnăturile.",
+      "Setări pe firmă (fila *Factură România*, grupul *Documente de stoc*): ascunde TVA pe NIR, ascunde băncile; pe locație: lista de prețuri a magazinului, gestionarul, *Este locație de tip magazin*.",
+      "Automatizări în locul codului Python: delegatul aduce mijlocul de transport; prețul de vânzare se fixează pe mișcare la validarea recepției; recepția din comanda de achiziție primește ca document sursă referința furnizorului.",
+      "Față de `l10n_ro_picking_report` nu are: rapoartele cumulative pe perioadă, butonul *Tipăriți* care alege singur raportul, facturarea din livrare cu delegatul și atașarea livrării semnate.",
+      "Ordinea de import: `l10n_ro_report_common_online`, `l10n_ro_invoice_report_online`, apoi acest modul; limba română se instalează înainte. Pașii sunt în [fișa consultant](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "purchase_stock",
+      "sale_stock",
+      "l10n_ro_invoice_report_online"
+    ],
+    "connections": [
+      "l10n_ro_picking_report",
+      "l10n_ro_report_common_online",
+      "l10n_ro_invoice_report_online"
+    ],
+    "text": "l10n_ro_picking_report_online\nl10n_ro_picking_report_online\nDocumentele de stoc românești (NIR, aviz, bon de consum, transfer intern), disponibile și pe Odoo Online. Modulul nu conține cod Python și se importă ca arhivă zip (Aplicații > Importați modulul). Este varianta fără Python a modulului [l10n_ro_picking_report](../l10n_ro_picking_report/index.md), pentru bazele în care codul propriu nu poate rula.\nRapoarte din meniul Tipăriți al transferului: Recepție (NIR), Recepție fără TVA și Recepție cu preț de vânzare (doar pe recepții), Aviz, Aviz cu preț, Bon de consum și Notă de transfer.\nNIR cu preț unitar, valoare, TVA, preț de vânzare și adaos procentual; cantități și prețuri în unitatea de pe document (o cutie de 13 kg rămâne cutie); prețul din comanda de achiziție sau din valoarea mișcării.\nAviz și Aviz cu preț: prețul din comanda de vânzare (cu discount, cu TVA inclus sau nu); fără comandă, prețul din lista clientului, altfel prețul de listă.\nLivrarea bifată *Aviz de însoțire* se tipărește ca „Aviz de însoțire a mărfii\" (14-3-6A); celelalte au titlul „Livrare\".\nPe documente: datele firmei și conturile bancare, gestionarul locației, delegatul și mijlocul de transport, numărul AWB (când e instalat modulul de curierat), semnăturile.\nSetări pe firmă (fila *Factură România*, grupul *Documente de stoc*): ascunde TVA pe NIR, ascunde băncile; pe locație: lista de prețuri a magazinului, gestionarul, *Este locație de tip magazin*.\nAutomatizări în locul codului Python: delegatul aduce mijlocul de transport; prețul de vânzare se fixează pe mișcare la validarea recepției; recepția din comanda de achiziție primește ca document sursă referința furnizorului.\nFață de `l10n_ro_picking_report` nu are: rapoartele cumulative pe perioadă, butonul *Tipăriți* care alege singur raportul, facturarea din livrare cu delegatul și atașarea livrării semnate.\nOrdinea de import: `l10n_ro_report_common_online`, `l10n_ro_invoice_report_online`, apoi acest modul; limba română se instalează înainte. Pașii sunt în [fișa consultant](FISA_CONSULTANT.md)."
+  },
+  {
     "path": "l10n_ro_pos_fiscal_compliance/index.md",
     "module": "l10n_ro_pos_fiscal_compliance",
     "version": "19.0.2.2.1",
@@ -18800,6 +19290,33 @@
       "l10n_ro"
     ],
     "text": "Romania - Report Common\nl10n_ro_report_common\nModulul oferă blocurile QWeb comune folosite de rapoartele tipărite românești (factură, comandă de vânzare, aviz de expediție, confirmare de sold): antetul de identificare a companiei și lista conturilor bancare de afișat. În plus, rescrie modul în care Odoo scrie sumele în litere pentru moneda RON, astfel încât textul de pe o chitanță sau factură să respecte uzanța contabilă românească (ex. „opt mii trei sute optzeci și doi de lei și douăzeci și cinci de bani\"), în loc de formularea standard Odoo, nefirească în română.\nȘablon QWeb `l10n_ro_report_common.banks` — tipărește până la 3 conturi\nȘablon QWeb `l10n_ro_report_common.report_address_company` — blocul de\nSuprascrie `res.currency.amount_to_text` pentru RON: numeralul *unu* devine\nNecesită biblioteca Python `num2words` (`>=0.5.12`); dacă lipsește, se revine\nAdaugă câmpul *Print in Report* (`l10n_ro_print_report`) pe conturile\nNumele acestor două câmpuri sunt identice cu cele istorice din modulul OCA"
+  },
+  {
+    "path": "l10n_ro_report_common_online/index.md",
+    "module": "l10n_ro_report_common_online",
+    "version": "20.0.1.0.3",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_report_common_online",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_report_common_online",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_report_common_online",
+    "summary": "Elementele comune ale rapoartelor tipărite românești, disponibile și pe Odoo Online: antetul cu datele firmei, conturile bancare și suma în litere. Modulul nu conține cod Python și se importă ca arhivă zip (Aplicații > Importați modulul); este varianta doar cu date a modulului [l10n_ro_report_common](../l10n_ro_report_common/index.md).",
+    "features": [
+      "Șablonul `banks`: tipărește până la 3 conturi bancare ale partenerului bifate *Romania - Print in Report*, în moneda documentului (sau a firmei); moneda unui cont este cea a jurnalului bancar legat, altfel moneda firmei.",
+      "Șablonul `report_address_company`: blocul de identificare a firmei (nume, adresă, conturi bancare, CUI, nr. Reg. Com., capital social).",
+      "Șablonul `amount_in_words`: suma în litere cum se scrie pe documentele românești (ex. „douăzeci și una de mii de lei\", „un leu și un ban\"), apelat cu `amount` și `currency`; RON este scris în română indiferent de limba tipăririi, celelalte monede păstrează formularea standard Odoo.",
+      "Două câmpuri manuale (`x_`), cerute de Odoo Online: *Romania - Print in Report* pe conturile bancare și *Share Capital* pe firmă (se tipărește fără zecimale).",
+      "Configurare: Setări > Utilizatori și companii > Companii pentru capitalul social; Contacte > Configurare > Conturi bancare pentru bifa de tipărire. Modulul nu are raport propriu; rezultatul apare în rapoartele care îi apelează șabloanele. Limba română se activează înainte de import. Detalii în [fișa consultant](FISA_CONSULTANT.md).",
+      "Nu se poate instala împreună cu `l10n_ro_report_common` (excludere în manifest): cele două țin aceleași date în câmpuri diferite."
+    ],
+    "dependencies": [
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_report_common",
+      "l10n_ro_picking_report_online",
+      "l10n_ro_invoice_report_online"
+    ],
+    "text": "l10n_ro_report_common_online\nl10n_ro_report_common_online\nElementele comune ale rapoartelor tipărite românești, disponibile și pe Odoo Online: antetul cu datele firmei, conturile bancare și suma în litere. Modulul nu conține cod Python și se importă ca arhivă zip (Aplicații > Importați modulul); este varianta doar cu date a modulului [l10n_ro_report_common](../l10n_ro_report_common/index.md).\nȘablonul `banks`: tipărește până la 3 conturi bancare ale partenerului bifate *Romania - Print in Report*, în moneda documentului (sau a firmei); moneda unui cont este cea a jurnalului bancar legat, altfel moneda firmei.\nȘablonul `report_address_company`: blocul de identificare a firmei (nume, adresă, conturi bancare, CUI, nr. Reg. Com., capital social).\nȘablonul `amount_in_words`: suma în litere cum se scrie pe documentele românești (ex. „douăzeci și una de mii de lei\", „un leu și un ban\"), apelat cu `amount` și `currency`; RON este scris în română indiferent de limba tipăririi, celelalte monede păstrează formularea standard Odoo.\nDouă câmpuri manuale (`x_`), cerute de Odoo Online: *Romania - Print in Report* pe conturile bancare și *Share Capital* pe firmă (se tipărește fără zecimale).\nConfigurare: Setări > Utilizatori și companii > Companii pentru capitalul social; Contacte > Configurare > Conturi bancare pentru bifa de tipărire. Modulul nu are raport propriu; rezultatul apare în rapoartele care îi apelează șabloanele. Limba română se activează înainte de import. Detalii în [fișa consultant](FISA_CONSULTANT.md).\nNu se poate instala împreună cu `l10n_ro_report_common` (excludere în manifest): cele două țin aceleași date în câmpuri diferite."
   },
   {
     "path": "l10n_ro_reports_fix/index.md",
@@ -19212,6 +19729,30 @@
     "text": "Romania - Vânzări pe tipuri de încasări\nl10n_ro_sale_receipt_type_report\nModulul aduce situația periodică „Vânzări pe tipuri de încasări\" ca raport nativ Odoo (`account.report`), cerută explicit de contabilitatea unui client (Damira) pentru reconcilierea lunară a încasărilor pe canal. Spre deosebire de Registrul de casă sau Jurnalul de bancă (care citesc doar mișcările unui singur cont), acest raport unifică două surse de date eterogene — încasările de la casa de marcat (`pos.payment`) și încasările contabile din afara POS-ului (`account.payment`) — într-o singură vedere pe patru canale: numerar, card, transfer bancar (OP) și platformă de plată online. Nu există un formular tipizat legal pentru acest raport; este o situație de gestiune internă.\nPatru secțiuni pliabile, fiecare cu totalul perioadei în antet: Casă — Numerar, Casă — Card, Transfer bancar (OP), Platformă de plată online; secțiunile fără date în perioadă nu apar.\nFiecare secțiune desfășurată listează încasările individuale (dată, partener, document, număr factură, sumă), cu drill-down la comanda POS (`pos.payment` → `pos_order_id`) sau la plata contabilă (`account.payment`).\nRând de Total general la finalul raportului.\nColoană „Invoice\" distinctă de „Document\": „Document\" arată memo-ul plății (ex. referință chitanță/voucher „CV15075 - ...\"), care altfel ascundea numărul real al facturii; rândurile POS preiau numărul din `pos_order.account_move` (LEFT JOIN, gol când vânzarea n-a avut factură), iar rândurile `account.payment` preiau `reconciled_invoice_ids` printr-o citire ORM în lot (câmp calculat din reconciliere, nejoinabil direct în SQL).\nClasificare Casă — Numerar / Card după tipul jurnalului metodei de plată POS (`pos.payment.method`), nu după numele ei — câmpul `type` al metodei de plată e calculat, nestocat, deci interogarea SQL se leagă direct la `account_journal.type`.\nClasificare OP / Platformă online / Numerar pentru încasările contabile din afara POS-ului: `payment_transaction_id` prezentă → online; altfel jurnal de tip `cash` → tot la secțiunea Casă — Numerar; orice altceva → OP.\nExcluderi deliberate: metodele „Cont client\" (pay later) la POS (nu sunt o încasare reală), comenzile POS nefinalizate, plățile de decontare a sesiunii POS (`account.payment.pos_session_id`, ar duplica încasarea deja numărată din `pos.payment`), plățile contabile de tip ieșire.\nBeneficiază integral de framework-ul `account_reports`: filtru de interval de dată, selector multi-companie, unfold all, export PDF/XLSX din bara de instrumente.\nLimitare cunoscută (v1): o încasare cu cardul înregistrată manual în contabilitate (fără POS, fără provider de plată online) nu poate fi distinsă de un transfer bancar obișnuit — ambele ajung la secțiunea OP.\nFix 19.0.1.0.2: dependența `account_payment` a fost declarată explicit în manifest — câmpul `account.payment.payment_transaction_id` (folosit pentru a distinge o încasare prin platformă online de un transfer bancar simplu) trăiește în acest modul-punte, nu în `payment`; funcționa \"din întâmplare\" doar acolo unde `account_payment` era deja instalat ca efect colateral al altui modul, iar o instalare curată (CI) expunea `psycopg2.errors.UndefinedColumn`."
   },
   {
+    "path": "l10n_ro_service_tax/index.md",
+    "module": "l10n_ro_service_tax",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_service_tax",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_service_tax",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_service_tax",
+    "summary": "Taxele implicite de vânzare și de achiziție pentru produsele de tip **serviciu**, pentru firmele românești. Planul de conturi românesc are TVA separat pentru servicii (21% S) față de bunuri (21% G), iar Odoo permite o singură pereche de taxe implicite pe firmă; fără modul, un produs nou de tip serviciu ar primi taxele pentru bunuri și serviciile intracomunitare ar ajunge pe rândurile greșite din D300 și D390.",
+    "features": [
+      "Secțiunea *Taxe implicite pentru servicii* în Contabilitate > Configurare > Setări > Taxe, lângă taxele implicite standard (vizibilă pentru firmele cu România ca țară fiscală).",
+      "Valorile `tvac_21_s` / `tvad_21_s` se completează la încărcarea planului de conturi românesc și la instalare pentru firmele care îl au deja.",
+      "Pe produs, când tipul devine *Serviciu*, taxele de serviciu înlocuiesc taxele produsului (inclusiv cele puse manual); la revenirea la *Bunuri*, taxele de serviciu sunt înlocuite cu taxele implicite ale firmei (cele puse manual se păstrează).",
+      "Numele câmpurilor coincid cu cele din modulul OCA `l10n_ro_config`, deci bazele care renunță la stack-ul OCA își păstrează configurarea fără migrare de date; ambele module pot fi instalate împreună.",
+      "Pașii cu capturi sunt în [fișa consultant](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_config"
+    ],
+    "text": "l10n_ro_service_tax\nl10n_ro_service_tax\nTaxele implicite de vânzare și de achiziție pentru produsele de tip **serviciu**, pentru firmele românești. Planul de conturi românesc are TVA separat pentru servicii (21% S) față de bunuri (21% G), iar Odoo permite o singură pereche de taxe implicite pe firmă; fără modul, un produs nou de tip serviciu ar primi taxele pentru bunuri și serviciile intracomunitare ar ajunge pe rândurile greșite din D300 și D390.\nSecțiunea *Taxe implicite pentru servicii* în Contabilitate > Configurare > Setări > Taxe, lângă taxele implicite standard (vizibilă pentru firmele cu România ca țară fiscală).\nValorile `tvac_21_s` / `tvad_21_s` se completează la încărcarea planului de conturi românesc și la instalare pentru firmele care îl au deja.\nPe produs, când tipul devine *Serviciu*, taxele de serviciu înlocuiesc taxele produsului (inclusiv cele puse manual); la revenirea la *Bunuri*, taxele de serviciu sunt înlocuite cu taxele implicite ale firmei (cele puse manual se păstrează).\nNumele câmpurilor coincid cu cele din modulul OCA `l10n_ro_config`, deci bazele care renunță la stack-ul OCA își păstrează configurarea fără migrare de date; ambele module pot fi instalate împreună.\nPașii cu capturi sunt în [fișa consultant](FISA_CONSULTANT.md)."
+  },
+  {
     "path": "l10n_ro_sgr/index.md",
     "module": "l10n_ro_sgr",
     "version": "19.0.1.3.1",
@@ -19330,6 +19871,32 @@
     "text": "Romania - Stock\nl10n_ro_stock\nAcest modul simplifică procesul de \"Consum\" și \"Dare în folosință\" a materialelor și obiectelor de inventar, adăugând automat locațiile și tipurile de operațiuni de stoc necesare pentru fiecare depozit nou creat al companiilor cu contabilitate românească. Practic, oferă cadrul minim de stoc pentru mișcările specifice de scoatere din gestiune a materialelor consumate în producție/exploatare sau a obiectelor de inventar date în folosință angajaților.\nCreează automat, la nivel de companie, două locații de stoc dedicate: \"Consum\" (`usage: consume`) și \"Dare în folosință\" (`usage: usage_giving`) — o singură pereche per companie cu contabilitate românească (funcțiile `create_missing_consume_location` / `create_missing_usage_location` completează locațiile lipsă și la instalare/actualizare, nu doar la crearea companiei).\nPentru fiecare depozit (`stock.warehouse`) al unei companii românești, generează automat câte un tip de operațiune intern dedicat pentru \"Consum\" (cod secvență `CONS`, barcode `<COD_DEPOZIT>-CONSUME`) și pentru \"Dare în Folosință\" (cod secvență `USAGE`, barcode `<COD_DEPOZIT>-USAGE`), fiecare cu propria secvență de numerotare (`<cod_depozit>/CONS/` respectiv `<cod_depozit>/USAGE/`); tipurile de operațiuni sunt vizibile (needitabile) pe formularul depozitului, lângă tipul de operațiune de ieșire.\nMișcările de stoc către locațiile \"Consum\" / \"Dare în folosință\" sunt tratate corect ca ieșiri (`_is_outgoing`), iar cele dinspre aceste locații ca intrări (`_is_incoming`), astfel încât rapoartele și valorizarea de stoc să le clasifice consecvent.\nAdaugă pe fișa produsului (și pe varianta de produs) câmpul \"Greutate Netă\" (`l10n_ro_net_weight`), afișat lângă câmpul de volum pe formularul de produs, cu unitatea de măsură de greutate configurată la nivel de sistem."
   },
   {
+    "path": "l10n_ro_stock_account_base/index.md",
+    "module": "l10n_ro_stock_account_base",
+    "version": "20.0.0.0.2",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_stock_account_base",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_account_base",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_stock_account_base",
+    "summary": "Păstrează câmpurile modulului OCA `l10n_ro_stock_account`, fără logica lui, pentru ca o bază de date care a avut modulul OCA să-și păstreze coloanele și datele, iar modulul OCA să poată fi eliminat și datele migrate la versiunea următoare. Nu adaugă comportament, ecrane sau logică contabilă.",
+    "features": [
+      "Include conturile de firmă folosite de contabilitatea stocurilor din `l10n_ro_config` (aviz de plătit și de încasat, dare în folosință, transfer de stoc, taxă neeligibilă), pentru ca `l10n_ro_config` să poată fi eliminat.",
+      "Câmpurile calculate din modulul OCA (`l10n_ro_move_type`, `l10n_ro_account_id`, `l10n_ro_transfer_account_id`, `fifo_per_location`, `fifo_location_negative_compensation`) sunt aici câmpuri stocate simple: nu se completează pentru înregistrările noi.",
+      "Fără vizualizări și fără dependență de `l10n.ro.mixin`; notele contabile de stoc sunt făcute de modulul de valorizare instalat în bază.",
+      "Procedură: se lucrează pe o copie a bazei, cu backup; se instalează `l10n_ro_stock_base` și acest modul înainte de dezinstalarea modulului OCA `l10n_ro_stock_account` (și `l10n_ro_stock`, dacă nu mai e necesar); `l10n_ro_config` se dezinstalează abia după preluarea celorlalte câmpuri ale lui. Câmpurile se verifică în Setări > Tehnic > Structura bazei de date > Câmpuri (mod dezvoltator), iar valorile se citesc prin Acțiuni > Export. Detalii în [fișa consultant](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "stock_account",
+      "l10n_ro_stock_base"
+    ],
+    "connections": [
+      "l10n_ro_stock",
+      "l10n_ro_stock_base",
+      "l10n_ro_config"
+    ],
+    "text": "l10n_ro_stock_account_base\nl10n_ro_stock_account_base\nPăstrează câmpurile modulului OCA `l10n_ro_stock_account`, fără logica lui, pentru ca o bază de date care a avut modulul OCA să-și păstreze coloanele și datele, iar modulul OCA să poată fi eliminat și datele migrate la versiunea următoare. Nu adaugă comportament, ecrane sau logică contabilă.\nInclude conturile de firmă folosite de contabilitatea stocurilor din `l10n_ro_config` (aviz de plătit și de încasat, dare în folosință, transfer de stoc, taxă neeligibilă), pentru ca `l10n_ro_config` să poată fi eliminat.\nCâmpurile calculate din modulul OCA (`l10n_ro_move_type`, `l10n_ro_account_id`, `l10n_ro_transfer_account_id`, `fifo_per_location`, `fifo_location_negative_compensation`) sunt aici câmpuri stocate simple: nu se completează pentru înregistrările noi.\nFără vizualizări și fără dependență de `l10n.ro.mixin`; notele contabile de stoc sunt făcute de modulul de valorizare instalat în bază.\nProcedură: se lucrează pe o copie a bazei, cu backup; se instalează `l10n_ro_stock_base` și acest modul înainte de dezinstalarea modulului OCA `l10n_ro_stock_account` (și `l10n_ro_stock`, dacă nu mai e necesar); `l10n_ro_config` se dezinstalează abia după preluarea celorlalte câmpuri ale lui. Câmpurile se verifică în Setări > Tehnic > Structura bazei de date > Câmpuri (mod dezvoltator), iar valorile se citesc prin Acțiuni > Export. Detalii în [fișa consultant](FISA_CONSULTANT.md)."
+  },
+  {
     "path": "l10n_ro_stock_account_enhancement/index.md",
     "module": "l10n_ro_stock_account_enhancement",
     "version": "19.0.0.0.0",
@@ -19352,6 +19919,107 @@
       "l10n_ro_config"
     ],
     "text": "Romania - Stock Accounting Enhancement\nl10n_ro_stock_account_enhancement\nAcest modul aduce verificări suplimentare pentru evidența contabilă a stocurilor în contextul localizării românești. Pe de o parte, se asigură că mișcările de stoc nu se înregistrează cu un preț de cost egal cu zero, evitând astfel valorizări incorecte. Pe de altă parte, introduce o restricție la postarea facturilor de vânzare sau de achiziție care conțin produse stocabile, dar nu sunt legate de o comandă de vânzare (SO) sau de achiziție (PO). Restricția poate fi activată sau dezactivată din setările de configurare, oferind flexibilitate în funcție de practicile fiecărei companii.\nVerificare ca prețul de cost să fie diferit de zero la mișcările de stoc.\nRestricție la postarea facturilor (vânzare/achiziție) care conțin produse stocabile fără referință la o comandă de vânzare (SO) sau de achiziție (PO).\nPosibilitatea de a activa/dezactiva această restricție din setările de configurare (Accounting -> România)."
+  },
+  {
+    "path": "l10n_ro_stock_account_landed_cost_account/index.md",
+    "module": "l10n_ro_stock_account_landed_cost_account",
+    "version": "20.0.1.2.1",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_stock_account_landed_cost_account",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_stock_account_landed_cost_account",
+    "summary": "Cheltuielile de transport, manipulare sau vamă, facturate separat de marfă, se adaugă la costul de achiziție al stocului. Modulul completează documentul standard Odoo „Costuri adiționale” cu determinarea contului din locația de stoc și cu completarea automată a costului din factura furnizorului, astfel încât nota contabilă să respecte localizarea românească (371 pe debit, contul de cheltuieli al liniei pe credit).",
+    "features": [
+      "Determinarea contului de evaluare a stocului din locație (destinație la intrări, sursă la ieșiri), împreună cu poziția fiscală a jurnalului.",
+      "Completarea automată a costului adițional creat din factura furnizorului: recepțiile comenzii de achiziție și contul fiecărei linii se preiau din factură.",
+      "Opțional, rutarea creditului de clasa 6 printr-un cont intermediar tehnic, setat pe companie (Metodă cost adițional clasa 6: *Standard* sau *Prin cont intermediar*, plus Cont Intermediar, în *Contabilitate > Configurare > Setări*, blocul România).",
+      "La metoda *Prin cont intermediar*, forma notei depinde de bifa Storno accounting a companiei (a doua pereche în roșu sau clasică); setările afișează un avertisment dacă bifa e oprită.",
+      "Funcționează pentru ambele moduri de recepție (fără Aviz și pe bază de aviz) și tratează stocul rezervat sau deja vândut la validarea costului. Fluxul detaliat este în fișa consultantului."
+    ],
+    "dependencies": [
+      "stock_landed_costs",
+      "l10n_ro_stock_account",
+      "l10n_ro_config"
+    ],
+    "connections": [
+      "l10n_ro_stock_account"
+    ],
+    "text": "l10n_ro_stock_account_landed_cost_account\nl10n_ro_stock_account_landed_cost_account\nCheltuielile de transport, manipulare sau vamă, facturate separat de marfă, se adaugă la costul de achiziție al stocului. Modulul completează documentul standard Odoo „Costuri adiționale” cu determinarea contului din locația de stoc și cu completarea automată a costului din factura furnizorului, astfel încât nota contabilă să respecte localizarea românească (371 pe debit, contul de cheltuieli al liniei pe credit).\nDeterminarea contului de evaluare a stocului din locație (destinație la intrări, sursă la ieșiri), împreună cu poziția fiscală a jurnalului.\nCompletarea automată a costului adițional creat din factura furnizorului: recepțiile comenzii de achiziție și contul fiecărei linii se preiau din factură.\nOpțional, rutarea creditului de clasa 6 printr-un cont intermediar tehnic, setat pe companie (Metodă cost adițional clasa 6: *Standard* sau *Prin cont intermediar*, plus Cont Intermediar, în *Contabilitate > Configurare > Setări*, blocul România).\nLa metoda *Prin cont intermediar*, forma notei depinde de bifa Storno accounting a companiei (a doua pereche în roșu sau clasică); setările afișează un avertisment dacă bifa e oprită.\nFuncționează pentru ambele moduri de recepție (fără Aviz și pe bază de aviz) și tratează stocul rezervat sau deja vândut la validarea costului. Fluxul detaliat este în fișa consultantului."
+  },
+  {
+    "path": "l10n_ro_stock_account_store/index.md",
+    "module": "l10n_ro_stock_account_store",
+    "version": "20.0.1.1.2",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_stock_account_store",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_stock_account_store",
+    "summary": "Contabilitatea stocurilor de mărfuri ținute la preț de vânzare (magazin cu amănuntul) pentru companiile din România. O locație marcată ca **Magazin** păstrează marfa la preț de vânzare, cu TVA inclus; fiecare mișcare care intră sau iese din ea primește, pe lângă nota de stoc la cost, o notă separată pentru adaosul comercial (378) și TVA neexigibil (4428).",
+    "features": [
+      "Primirea mărfii de la furnizor cu factură (371 = 401, 4426 = 401, apoi 371 = 378 și 371 = 4428) sau cu aviz (371 = 408, apoi adaos și TVA; la sosirea facturii 408 = 401).",
+      "Transferul din depozit (la cost) în magazin: transferul la cost, apoi 371 = 378 și 371 = 4428.",
+      "Ieșirea din magazin (livrare, consum, minus la inventar, transfer în depozit): 378 = 371 și 4428 = 371, alături de ieșirea la cost.",
+      "Retururile (către furnizor, de la client) stornează în roșu adaosul și TVA ale mișcării returnate, la prețul ei de vânzare.",
+      "Prețul de vânzare se ia din produs (Sales Price și Customer Taxes); sumele rămân pe mișcarea de stoc (Store Sale Amount, Store Markup, Store Uneligible VAT), vizibile în grupul Store Valuation (*Inventar > Raportare > Moves History*).",
+      "Reevaluarea automată la schimbarea prețului de vânzare, cu document numerotat (*Inventar > Raportare > Store Revaluations*): creștere 371 = 378 / 4428, reducere în sens invers. Reducerea sub costul unitar și schimbarea într-o perioadă blocată sunt refuzate.",
+      "Configurare: Not Eligible Tax Account (4428) pe companie, Romania - Store Markup Account (378) pe categoria de produs cu evaluare perpetuă, opțional un cont dedicat pentru TVA neexigibil, iar pe locație Romania - Merchandise type = Store.",
+      "Limite: transferul între două magazine nu mută adaos sau TVA; stocul existent la instalare cere o notă de deschidere (371 = 378 / 4428); nu acoperă eliberarea lunară cu coeficientul K, vânzările din POS, procesul-verbal de modificare a prețurilor și raportul de inventar la preț de vânzare."
+    ],
+    "dependencies": [
+      "l10n_ro_stock_account"
+    ],
+    "connections": [
+      "l10n_ro_stock_account"
+    ],
+    "text": "l10n_ro_stock_account_store\nl10n_ro_stock_account_store\nContabilitatea stocurilor de mărfuri ținute la preț de vânzare (magazin cu amănuntul) pentru companiile din România. O locație marcată ca **Magazin** păstrează marfa la preț de vânzare, cu TVA inclus; fiecare mișcare care intră sau iese din ea primește, pe lângă nota de stoc la cost, o notă separată pentru adaosul comercial (378) și TVA neexigibil (4428).\nPrimirea mărfii de la furnizor cu factură (371 = 401, 4426 = 401, apoi 371 = 378 și 371 = 4428) sau cu aviz (371 = 408, apoi adaos și TVA; la sosirea facturii 408 = 401).\nTransferul din depozit (la cost) în magazin: transferul la cost, apoi 371 = 378 și 371 = 4428.\nIeșirea din magazin (livrare, consum, minus la inventar, transfer în depozit): 378 = 371 și 4428 = 371, alături de ieșirea la cost.\nRetururile (către furnizor, de la client) stornează în roșu adaosul și TVA ale mișcării returnate, la prețul ei de vânzare.\nPrețul de vânzare se ia din produs (Sales Price și Customer Taxes); sumele rămân pe mișcarea de stoc (Store Sale Amount, Store Markup, Store Uneligible VAT), vizibile în grupul Store Valuation (*Inventar > Raportare > Moves History*).\nReevaluarea automată la schimbarea prețului de vânzare, cu document numerotat (*Inventar > Raportare > Store Revaluations*): creștere 371 = 378 / 4428, reducere în sens invers. Reducerea sub costul unitar și schimbarea într-o perioadă blocată sunt refuzate.\nConfigurare: Not Eligible Tax Account (4428) pe companie, Romania - Store Markup Account (378) pe categoria de produs cu evaluare perpetuă, opțional un cont dedicat pentru TVA neexigibil, iar pe locație Romania - Merchandise type = Store.\nLimite: transferul între două magazine nu mută adaos sau TVA; stocul existent la instalare cere o notă de deschidere (371 = 378 / 4428); nu acoperă eliberarea lunară cu coeficientul K, vânzările din POS, procesul-verbal de modificare a prețurilor și raportul de inventar la preț de vânzare."
+  },
+  {
+    "path": "l10n_ro_stock_account_warehouse_journal/index.md",
+    "module": "l10n_ro_stock_account_warehouse_journal",
+    "version": "20.0.1.1.1",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_stock_account_warehouse_journal",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_stock_account_warehouse_journal",
+    "summary": "Notele contabile de stoc ale fiecărui depozit se postează în jurnalul propriu al depozitului. Odoo postează implicit toate notele de stoc ale unei companii în jurnalul de stoc al companiei; firmele cu mai multe depozite pot astfel numerota și verifica separat notele fiecărui depozit.",
+    "features": [
+      "Câmpul Stock Journal pe depozit (dependent de companie, vizibil utilizatorilor cu drepturi de Contabilitate / Administrator): notele mișcărilor care intră sau ies dintr-o locație a depozitului se postează în el; dacă e gol, se folosește jurnalul de stoc al companiei.",
+      "Acoperă nota de stoc standard a evaluării native Odoo; notele suplimentare românești din `l10n_ro_stock_account` sunt acoperite de modulul-punte [l10n_ro_stock_account_warehouse_journal_extra](../l10n_ro_stock_account_warehouse_journal_extra/index.md).",
+      "O mișcare care generează notă între două depozite cu jurnale de stoc diferite este refuzată, fiindcă nota nu poate aparține ambelor.",
+      "Configurare: se creează câte un jurnal de tip *Miscellaneous* pe depozit, apoi se setează în *Inventar > Configurare > Warehouses*.",
+      "Până la 18.0 câmpul (`l10n_ro_property_stock_journal_id`) făcea parte din `l10n_ro_stock_account`; la migrare din 18.0 modulul se instalează în aceeași rulare cu migrarea acestuia (sau înainte), altfel jurnalele setate se pierd."
+    ],
+    "dependencies": [
+      "stock_account"
+    ],
+    "connections": [
+      "l10n_ro_stock_account_warehouse_journal_extra",
+      "l10n_ro_stock_account"
+    ],
+    "text": "l10n_ro_stock_account_warehouse_journal\nl10n_ro_stock_account_warehouse_journal\nNotele contabile de stoc ale fiecărui depozit se postează în jurnalul propriu al depozitului. Odoo postează implicit toate notele de stoc ale unei companii în jurnalul de stoc al companiei; firmele cu mai multe depozite pot astfel numerota și verifica separat notele fiecărui depozit.\nCâmpul Stock Journal pe depozit (dependent de companie, vizibil utilizatorilor cu drepturi de Contabilitate / Administrator): notele mișcărilor care intră sau ies dintr-o locație a depozitului se postează în el; dacă e gol, se folosește jurnalul de stoc al companiei.\nAcoperă nota de stoc standard a evaluării native Odoo; notele suplimentare românești din `l10n_ro_stock_account` sunt acoperite de modulul-punte [l10n_ro_stock_account_warehouse_journal_extra](../l10n_ro_stock_account_warehouse_journal_extra/index.md).\nO mișcare care generează notă între două depozite cu jurnale de stoc diferite este refuzată, fiindcă nota nu poate aparține ambelor.\nConfigurare: se creează câte un jurnal de tip *Miscellaneous* pe depozit, apoi se setează în *Inventar > Configurare > Warehouses*.\nPână la 18.0 câmpul (`l10n_ro_property_stock_journal_id`) făcea parte din `l10n_ro_stock_account`; la migrare din 18.0 modulul se instalează în aceeași rulare cu migrarea acestuia (sau înainte), altfel jurnalele setate se pierd."
+  },
+  {
+    "path": "l10n_ro_stock_account_warehouse_journal_extra/index.md",
+    "module": "l10n_ro_stock_account_warehouse_journal_extra",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_stock_account_warehouse_journal_extra",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_stock_account_warehouse_journal_extra",
+    "summary": "Punte între `l10n_ro_stock_account_warehouse_journal` și `l10n_ro_stock_account`. Se instalează automat când ambele sunt instalate și postează în jurnalul de stoc al depozitului și notele suplimentare românești, nu doar nota de stoc standard.",
+    "features": [
+      "Postează în jurnalul de stoc al depozitului notele suplimentare ale `l10n_ro_stock_account`.",
+      "Postează în același jurnal compensarea stocului negativ FIFO.",
+      "`auto_install`: nu cere nicio configurare proprie; jurnalul se setează pe depozit în modulul de bază."
+    ],
+    "dependencies": [
+      "l10n_ro_stock_account_warehouse_journal",
+      "l10n_ro_stock_account"
+    ],
+    "connections": [
+      "l10n_ro_stock_account_warehouse_journal"
+    ],
+    "text": "l10n_ro_stock_account_warehouse_journal_extra\nl10n_ro_stock_account_warehouse_journal_extra\nPunte între `l10n_ro_stock_account_warehouse_journal` și `l10n_ro_stock_account`. Se instalează automat când ambele sunt instalate și postează în jurnalul de stoc al depozitului și notele suplimentare românești, nu doar nota de stoc standard.\nPostează în jurnalul de stoc al depozitului notele suplimentare ale `l10n_ro_stock_account`.\nPostează în același jurnal compensarea stocului negativ FIFO.\n`auto_install`: nu cere nicio configurare proprie; jurnalul se setează pe depozit în modulul de bază."
   },
   {
     "path": "l10n_ro_stock_age_report/index.md",
@@ -19380,6 +20048,57 @@
       "l10n_ro_stock_account"
     ],
     "text": "Romania - Stock Aged Report\nl10n_ro_stock_age_report\nAcest modul oferă un raport de vechime a stocului (Stock Aged Report) pentru localizarea românească. El ajută utilizatorii să urmărească vechimea stocurilor prin monitorizarea ultimelor date de intrare și de ieșire pentru fiecare lot de stoc (stock quant), astfel încât să se poată identifica marfa care stagnează în depozit și să se evalueze impactul ei contabil.\nUrmărește automat ultima dată de intrare și ultima dată de ieșire pentru fiecare lot de stoc (stock quant).\nOferă un wizard pentru generarea raportului de vechime pentru un anumit depozit și o anumită dată.\nIntervale de îmbătrânire configurabile (de ex. 15, 30, 90, 180, 365 de zile).\nDefalcă valoarea și cantitatea stocului pe intervale de timp (de ex. [1] 0-15 zile, [2] 15-30 zile etc.).\nInclude informații contabile, cum ar fi contul de evaluare a stocului pentru fiecare produs.\nOferă o vizualizare de tip pivot și o listă pentru analiza detaliată a stocului învechit.\nActualizează retroactiv loturile de stoc existente cu date istorice la momentul instalării."
+  },
+  {
+    "path": "l10n_ro_stock_aged_report/index.md",
+    "module": "l10n_ro_stock_aged_report",
+    "version": "20.0.1.0.6",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_stock_aged_report",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_stock_aged_report",
+    "summary": "Raport de vechime a stocului pentru localizarea românească. Împarte stocul unui depozit pe intervale de vechime și arată, pentru fiecare produs, cantitatea, valoarea, contul de stoc și data ultimei ieșiri, ca să se vadă ce marfă nu se mai mișcă. Este un instrument de analiză: nu generează note contabile.",
+    "features": [
+      "Urmărirea automată a ultimei intrări și a ultimei ieșiri pe fiecare poziție de stoc (`stock.quant`); la instalare, pozițiile existente se completează retroactiv din istoric.",
+      "Wizard pentru un depozit și o dată de referință, cu intervale de vechime configurabile (de exemplu 15, 30, 90, 180, 365 zile).",
+      "Defalcarea cantității și a valorii pe intervale, plus contul de evaluare a stocului din categoria produsului.",
+      "Vizualizări pivot și listă pentru analiza detaliată (inclusiv pivot pe cont).",
+      "Atenție la interpretare (detaliat în fișa consultantului): raportul pornește mereu de la stocul de azi, valoarea este cantitate x costul actual al produsului, iar vechimea înseamnă zile de la ultima intrare în locație."
+    ],
+    "dependencies": [
+      "stock_account"
+    ],
+    "connections": [
+      "stock_account"
+    ],
+    "text": "l10n_ro_stock_aged_report\nl10n_ro_stock_aged_report\nRaport de vechime a stocului pentru localizarea românească. Împarte stocul unui depozit pe intervale de vechime și arată, pentru fiecare produs, cantitatea, valoarea, contul de stoc și data ultimei ieșiri, ca să se vadă ce marfă nu se mai mișcă. Este un instrument de analiză: nu generează note contabile.\nUrmărirea automată a ultimei intrări și a ultimei ieșiri pe fiecare poziție de stoc (`stock.quant`); la instalare, pozițiile existente se completează retroactiv din istoric.\nWizard pentru un depozit și o dată de referință, cu intervale de vechime configurabile (de exemplu 15, 30, 90, 180, 365 zile).\nDefalcarea cantității și a valorii pe intervale, plus contul de evaluare a stocului din categoria produsului.\nVizualizări pivot și listă pentru analiza detaliată (inclusiv pivot pe cont).\nAtenție la interpretare (detaliat în fișa consultantului): raportul pornește mereu de la stocul de azi, valoarea este cantitate x costul actual al produsului, iar vechimea înseamnă zile de la ultima intrare în locație."
+  },
+  {
+    "path": "l10n_ro_stock_base/index.md",
+    "module": "l10n_ro_stock_base",
+    "version": "20.0.0.0.2",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_stock_base",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_base",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_stock_base",
+    "summary": "Pune la dispoziție locațiile și operațiunile de stoc necesare pentru consumul intern și darea în folosință, plus greutatea netă a produselor. Este înlocuitorul Terrabit al modulului OCA `l10n_ro_stock`, scris fără dependență de `l10n_ro_config`. Numele câmpurilor sunt cele din modulul OCA, deci o bază de date care îl avea instalat își păstrează datele la trecerea pe acest modul.",
+    "features": [
+      "Tipuri de locație noi, Dare în folosință și Consum: mișcările din/către ele se consideră intrări, respectiv ieșiri, la evaluarea stocului.",
+      "Fiecare companie cu țara fiscală România primește o locație de consum și una de dare în folosință (`l10n_ro_consume_location_id`, `l10n_ro_usage_location_id`), create la instalare pentru companiile existente și la creare pentru cele noi; locațiile existente sunt refolosite.",
+      "Fiecare depozit al unei astfel de companii primește tipurile de operațiune Consum și Dare în folosință, cu secvențe proprii (`<cod depozit>/CONS/`, `<cod depozit>/USAGE/`); redenumirea depozitului sau schimbarea codului redenumește și secvențele.",
+      "Transferul de tip Consum se creează din *Inventar → Prezentare generală*; ieșirea se validează ca transfer intern către locația de consum, iar returul revine în aceeași secvență, dacă tipul de retur nu e setat altfel.",
+      "Greutate netă (`l10n_ro_net_weight`) pe produs, în fila Inventar, în aceeași unitate ca greutatea.",
+      "Pentru a vedea meniul de locații este nevoie de setarea Locații de stocare; fluxul pas cu pas este în fișa consultantului."
+    ],
+    "dependencies": [
+      "account",
+      "stock"
+    ],
+    "connections": [
+      "l10n_ro_stock_account_base",
+      "l10n_ro_stock_account"
+    ],
+    "text": "l10n_ro_stock_base\nl10n_ro_stock_base\nPune la dispoziție locațiile și operațiunile de stoc necesare pentru consumul intern și darea în folosință, plus greutatea netă a produselor. Este înlocuitorul Terrabit al modulului OCA `l10n_ro_stock`, scris fără dependență de `l10n_ro_config`. Numele câmpurilor sunt cele din modulul OCA, deci o bază de date care îl avea instalat își păstrează datele la trecerea pe acest modul.\nTipuri de locație noi, Dare în folosință și Consum: mișcările din/către ele se consideră intrări, respectiv ieșiri, la evaluarea stocului.\nFiecare companie cu țara fiscală România primește o locație de consum și una de dare în folosință (`l10n_ro_consume_location_id`, `l10n_ro_usage_location_id`), create la instalare pentru companiile existente și la creare pentru cele noi; locațiile existente sunt refolosite.\nFiecare depozit al unei astfel de companii primește tipurile de operațiune Consum și Dare în folosință, cu secvențe proprii (`<cod depozit>/CONS/`, `<cod depozit>/USAGE/`); redenumirea depozitului sau schimbarea codului redenumește și secvențele.\nTransferul de tip Consum se creează din *Inventar → Prezentare generală*; ieșirea se validează ca transfer intern către locația de consum, iar returul revine în aceeași secvență, dacă tipul de retur nu e setat altfel.\nGreutate netă (`l10n_ro_net_weight`) pe produs, în fila Inventar, în aceeași unitate ca greutatea.\nPentru a vedea meniul de locații este nevoie de setarea Locații de stocare; fluxul pas cu pas este în fișa consultantului."
   },
   {
     "path": "l10n_ro_stock_cmp_periodic/index.md",
@@ -19467,6 +20186,35 @@
     "text": "Romania - Constrângeri de integritate a stocului\nl10n_ro_stock_constraints"
   },
   {
+    "path": "l10n_ro_stock_fifo_recompute/index.md",
+    "module": "l10n_ro_stock_fifo_recompute",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_stock_fifo_recompute",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_fifo_recompute",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_stock_fifo_recompute",
+    "summary": "Recalculează în ordine cronologică evaluarea FIFO pe locație a mișcărilor de stoc și corectează valorile greșite din trecut (ieșiri pe stoc negativ necompensat, operații cu dată în urmă, bug-uri reparate între timp), postând nota contabilă de corecție. Astfel soldul conturilor de stoc revine la valoarea reală a stocului.",
+    "features": [
+      "Mișcările efectuate ale fiecărui produs FIFO se parcurg cronologic, cu o coadă FIFO pe fiecare locație; recepțiile și livrările fără aviz se ordonează după data facturii.",
+      "Se recalculează ieșirile, transferurile interne și retururile de la clienți; valoarea intrărilor din facturi și costuri de achiziție rămâne cea înregistrată.",
+      "Ieșirea pe stoc negativ se evaluează la prețul intrărilor care o acoperă în aceeași locație; dacă nu există o astfel de intrare, valoarea rămâne și nu se creează cantitate negativă nouă.",
+      "Diferențele sub un prag ales la rulare (implicit 0,05 lei pe mișcare) sunt tratate ca rotunjiri și nu se corectează.",
+      "Rularea de probă (butonul Calculează) nu modifică nimic: arată pe fiecare mișcare valoarea actuală, cea corectă și diferența, plus un control pe fiecare cont de stoc.",
+      "Aplică corectează valorile mișcărilor și postează o singură notă de corecție, la data aleasă, în jurnalul de stoc: ieșire din exercițiul curent pe conturile notei originale; ieșire din exercițiu închis pe 1174 (OMFP 1802/2014); transfer între gestiuni 371 destinație = 371 sursă.",
+      "Meniu: *Contabilitate → Contabilitate → Închidere → Recalculare FIFO*; în wizard se aleg produsele/categoriile, data corecției, sfârșitul ultimului exercițiu închis și contul de exerciții închise.",
+      "Limitări: costul produselor fabricate, produsele pe loturi și liniile cu proprietar terț nu se recalculează; o rulare aplicată nu se poate anula (nota se stornează manual).",
+      "Recomandare: întâi recalcularea FIFO, apoi verificarea stoc–contabilitate pentru diferențele rămase. Fluxul detaliat este în fișa consultantului."
+    ],
+    "dependencies": [
+      "l10n_ro_stock_account"
+    ],
+    "connections": [
+      "l10n_ro_stock_account",
+      "l10n_ro_stock_account_check"
+    ],
+    "text": "l10n_ro_stock_fifo_recompute\nl10n_ro_stock_fifo_recompute\nRecalculează în ordine cronologică evaluarea FIFO pe locație a mișcărilor de stoc și corectează valorile greșite din trecut (ieșiri pe stoc negativ necompensat, operații cu dată în urmă, bug-uri reparate între timp), postând nota contabilă de corecție. Astfel soldul conturilor de stoc revine la valoarea reală a stocului.\nMișcările efectuate ale fiecărui produs FIFO se parcurg cronologic, cu o coadă FIFO pe fiecare locație; recepțiile și livrările fără aviz se ordonează după data facturii.\nSe recalculează ieșirile, transferurile interne și retururile de la clienți; valoarea intrărilor din facturi și costuri de achiziție rămâne cea înregistrată.\nIeșirea pe stoc negativ se evaluează la prețul intrărilor care o acoperă în aceeași locație; dacă nu există o astfel de intrare, valoarea rămâne și nu se creează cantitate negativă nouă.\nDiferențele sub un prag ales la rulare (implicit 0,05 lei pe mișcare) sunt tratate ca rotunjiri și nu se corectează.\nRularea de probă (butonul Calculează) nu modifică nimic: arată pe fiecare mișcare valoarea actuală, cea corectă și diferența, plus un control pe fiecare cont de stoc.\nAplică corectează valorile mișcărilor și postează o singură notă de corecție, la data aleasă, în jurnalul de stoc: ieșire din exercițiul curent pe conturile notei originale; ieșire din exercițiu închis pe 1174 (OMFP 1802/2014); transfer între gestiuni 371 destinație = 371 sursă.\nMeniu: *Contabilitate → Contabilitate → Închidere → Recalculare FIFO*; în wizard se aleg produsele/categoriile, data corecției, sfârșitul ultimului exercițiu închis și contul de exerciții închise.\nLimitări: costul produselor fabricate, produsele pe loturi și liniile cu proprietar terț nu se recalculează; o rulare aplicată nu se poate anula (nota se stornează manual).\nRecomandare: întâi recalcularea FIFO, apoi verificarea stoc–contabilitate pentru diferențele rămase. Fluxul detaliat este în fișa consultantului."
+  },
+  {
     "path": "l10n_ro_stock_gestiune/index.md",
     "module": "l10n_ro_stock_gestiune",
     "version": "19.0.3.1.0",
@@ -19548,6 +20296,28 @@
     "dependencies": [],
     "connections": [],
     "text": "Romania - Coeficient K pentru diferențe de preț la stocuri\nl10n_ro_stock_k_coefficient"
+  },
+  {
+    "path": "l10n_ro_stock_notice_default/index.md",
+    "module": "l10n_ro_stock_notice_default",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_stock_notice_default",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_notice_default",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_stock_notice_default",
+    "summary": "Adaugă pe tipurile de operațiune de stoc opțiunea „Romania - Is a notice”. Transferurile create pentru un astfel de tip sunt marcate implicit ca aviz, deci recepțiile și livrările folosesc conturile 408/418 fără ca utilizatorul să bifeze avizul pe fiecare transfer.",
+    "features": [
+      "Bifa „Romania - Is a notice” pe tipul de operațiune (*Inventar → Configurare → Tipuri de operațiuni*, de exemplu Recepții).",
+      "Transferurile noi de acel tip au indicatorul de aviz setat de la creare.",
+      "Evaluarea avizului și notele 408/418 le face `l10n_ro_stock_account`; câmpul `l10n_ro_notice` este ținut de `l10n_ro_stock_account_base`."
+    ],
+    "dependencies": [
+      "l10n_ro_stock_account_base"
+    ],
+    "connections": [
+      "l10n_ro_stock_account"
+    ],
+    "text": "l10n_ro_stock_notice_default\nl10n_ro_stock_notice_default\nAdaugă pe tipurile de operațiune de stoc opțiunea „Romania - Is a notice”. Transferurile create pentru un astfel de tip sunt marcate implicit ca aviz, deci recepțiile și livrările folosesc conturile 408/418 fără ca utilizatorul să bifeze avizul pe fiecare transfer.\nBifa „Romania - Is a notice” pe tipul de operațiune (*Inventar → Configurare → Tipuri de operațiuni*, de exemplu Recepții).\nTransferurile noi de acel tip au indicatorul de aviz setat de la creare.\nEvaluarea avizului și notele 408/418 le face `l10n_ro_stock_account`; câmpul `l10n_ro_notice` este ținut de `l10n_ro_stock_account_base`."
   },
   {
     "path": "l10n_ro_stock_obyc/index.md",
@@ -19642,6 +20412,31 @@
       "excludes"
     ],
     "text": "Romania - Pachet valorizare stocuri FIFO\nl10n_ro_stock_pack_fifo\nModul-pălărie (bundle) care instalează dintr-o singură mișcare toate modulele necesare pentru gestiunea contabilă a stocurilor în România cu metoda FIFO (primul intrat — primul ieșit), conform OMFP 1802/2014 pct. 96 (metode de evaluare la ieșire) și pct. 276–291 (evaluarea stocurilor, inventarul permanent). La instalare, configurează automat pe companiile cu țara fiscală România metoda de cost FIFO și valorizarea perpetuă (real time), simplificând semnificativ setarea corectă a contabilității de stoc pentru un consultant sau implementator.\nInstalează într-un singur pas toate modulele necesare pentru evidența contabilă a stocurilor pe FIFO: dată contabilă pe operațiile de stoc (cu gardă cronologică pentru corectitudinea straturilor FIFO), integritate a datelor (blocare mișcări validate/stoc negativ), fișa de magazie (14-3-8) și balanța analitică a stocurilor, gestiuni contabile de stoc conform OMFP 2861/2009 (gestionar, conturi pe gestiune, transfer 481, recepție fără factură 371=408) și note contabile de inventariere (plusuri/minusuri).\nLa instalare (`post_init_hook`), setează automat pe companiile românești metoda de cost implicită `fifo` și valorizarea stocului `real_time` (perpetuă); valorile se propagă ca implicite doar pentru categoriile de produse noi — categoriile existente nu sunt modificate.\nExclude reciproc coexistența cu pachetul `l10n_ro_stock_pack_cmp` (o singură metodă de evaluare per bază de date, conform principiului permanenței metodelor — OMFP 1802 pct. 287 alin. (1): metoda aleasă se aplică cu consecvență, schimbarea fiind permisă doar în situații excepționale, cu prezentarea motivului și a efectelor în notele explicative).\nFIFO este metoda de cost nativă Odoo, deci pachetul nu conține un modul specific de recalcul periodic — diferența față de pachetul CMP este doar configurarea metodei de cost la instalare și absența corecției lunare.\nMonografia contabilă completă (achiziție cu factură, vânzare, retur la furnizor, achiziție pe aviz cu factură ulterioară, vânzare pe două straturi, inventariere cu minus neimputabil) e documentată în `readme/USAGE.md` și verificată automat prin testul `tests/test_stock_flow.py`; include și un comparativ cu rezultatul aceluiași scenariu rulat pe pachetul CMP."
+  },
+  {
+    "path": "l10n_ro_stock_picking_batch_report/index.md",
+    "module": "l10n_ro_stock_picking_batch_report",
+    "version": "20.0.0.0.8",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_stock_picking_batch_report",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_picking_batch_report",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_stock_picking_batch_report",
+    "summary": "Adaugă pe lotul de transferuri raportul **Aviz**, un aviz de însoțire a mărfii pentru tot transportul, în locul câte unui aviz pe livrare. Formatul este cel al avizului din `l10n_ro_picking_report`.",
+    "features": [
+      "Antet cu firma, depozitul, CIF și NRC, și cu destinatarul (cel al primei livrări din lot; modulul nu verifică dacă toate livrările au același destinatar).",
+      "O linie pe produs, cu cantitățile cumulate din toate livrările lotului și unitatea de măsură (afișată doar cu setarea Unități de măsură activă).",
+      "Preț unitar și valoare luate din comenzile de vânzare sau de achiziție, plus total.",
+      "Bloc de semnături: întocmit, delegat, mijloc de transport, recepție.",
+      "Se tipărește din lot, din meniul de rapoarte; incompatibil (`excludes`) cu `l10n_ro_stock_picking_comment_template`."
+    ],
+    "dependencies": [
+      "l10n_ro_picking_report",
+      "stock"
+    ],
+    "connections": [
+      "l10n_ro_picking_report"
+    ],
+    "text": "l10n_ro_stock_picking_batch_report\nl10n_ro_stock_picking_batch_report\nAdaugă pe lotul de transferuri raportul **Aviz**, un aviz de însoțire a mărfii pentru tot transportul, în locul câte unui aviz pe livrare. Formatul este cel al avizului din `l10n_ro_picking_report`.\nAntet cu firma, depozitul, CIF și NRC, și cu destinatarul (cel al primei livrări din lot; modulul nu verifică dacă toate livrările au același destinatar).\nO linie pe produs, cu cantitățile cumulate din toate livrările lotului și unitatea de măsură (afișată doar cu setarea Unități de măsură activă).\nPreț unitar și valoare luate din comenzile de vânzare sau de achiziție, plus total.\nBloc de semnături: întocmit, delegat, mijloc de transport, recepție.\nSe tipărește din lot, din meniul de rapoarte; incompatibil (`excludes`) cu `l10n_ro_stock_picking_comment_template`."
   },
   {
     "path": "l10n_ro_stock_picking_report/index.md",
@@ -19815,6 +20610,33 @@
     "text": "Romania - Stock Report (Fișă Magazie)\nl10n_ro_stock_report\nAcest modul adaugă un raport de stocuri conform cerințelor legislației din România. El generează fișa de magazie (soldul inițial, intrările, ieșirile și soldul final) pe gestiuni și perioadă, document specific gestiunii românești pe care companiile trebuie să îl poată produce pentru evidența mișcărilor și a soldurilor de produse.\nGenerarea fișei de magazie (situație stocuri) pentru un interval de date, cu sold inițial, intrări, ieșiri și sold final pe produs.\nFiltrare pe o singură gestiune (locație) sau pe mai multe, cu opțiunea de a include sub-gestiunile.\nAfișare detaliată pe locații (`detailed_locations`) și opțiune de a arăta explicit locația pe fiecare linie (`show_locations`).\nFiltrare pe produse specifice sau doar pe produsele cu mișcări în perioada selectată (`products_with_move`).\nGrupare a liniilor pe tipul de mișcare valorizată (`valued_type`: intrare, ieșire, sold inițial, sold final etc.), citit din câmpul `stock.move.l10n_ro_move_type`.\nVizualizare a rezultatului atât ca listă/pivot interactiv în Odoo, cât și ca raport PDF (o pagină per produs, opțional).\nVizualizare pivot pentru analiza cantităților și valorilor pe cont contabil, produs, locație sau tip valorizat."
   },
   {
+    "path": "l10n_ro_stock_report_dropship/index.md",
+    "module": "l10n_ro_stock_report_dropship",
+    "version": "20.0.1.1.3",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_stock_report_dropship",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_stock_report_dropship",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_stock_report_dropship",
+    "summary": "Adaugă mișcările dropship în fișa de magazie a stivei OCA de evaluare (`l10n_ro_stock_report` peste `l10n_ro_stock_account`). Un dropship merge de la furnizor direct la client, fără să intre în depozit, dar motorul OCA îl evaluează pe contul de mărfuri (de regulă 371); fișa trebuie deci să-l arate ca intrare și ieșire de aceeași cantitate și valoare.",
+    "features": [
+      "Mișcările dropship primesc tipul de evaluare *Dropship* și apar în liniile fișei, lângă recepții și livrări.",
+      "În lista fișei (*Inventar → Rapoarte → Fișa de magazie*, Arată fișa) transferul apare ca un rând de intrare și unul de ieșire cu aceeași valoare.",
+      "Arată fișa PDF tipărește rândurile pe contul de stoc al categoriei produsului (ex. 371000), iar după ele stocul revine la valoarea anterioară.",
+      "Nu are meniu sau setări proprii; este un add-on tehnic.",
+      "Se aplică doar fișei OCA `l10n_ro_stock_report`, nu și lui `l10n_ro_storage_sheet` (bazat pe evaluarea nativă Odoo). Fluxul complet este în fișa consultantului."
+    ],
+    "dependencies": [
+      "l10n_ro_stock_report",
+      "l10n_ro_stock_account",
+      "stock_dropshipping"
+    ],
+    "connections": [
+      "l10n_ro_stock_report",
+      "l10n_ro_stock_account"
+    ],
+    "text": "l10n_ro_stock_report_dropship\nl10n_ro_stock_report_dropship\nAdaugă mișcările dropship în fișa de magazie a stivei OCA de evaluare (`l10n_ro_stock_report` peste `l10n_ro_stock_account`). Un dropship merge de la furnizor direct la client, fără să intre în depozit, dar motorul OCA îl evaluează pe contul de mărfuri (de regulă 371); fișa trebuie deci să-l arate ca intrare și ieșire de aceeași cantitate și valoare.\nMișcările dropship primesc tipul de evaluare *Dropship* și apar în liniile fișei, lângă recepții și livrări.\nÎn lista fișei (*Inventar → Rapoarte → Fișa de magazie*, Arată fișa) transferul apare ca un rând de intrare și unul de ieșire cu aceeași valoare.\nArată fișa PDF tipărește rândurile pe contul de stoc al categoriei produsului (ex. 371000), iar după ele stocul revine la valoarea anterioară.\nNu are meniu sau setări proprii; este un add-on tehnic.\nSe aplică doar fișei OCA `l10n_ro_stock_report`, nu și lui `l10n_ro_storage_sheet` (bazat pe evaluarea nativă Odoo). Fluxul complet este în fișa consultantului."
+  },
+  {
     "path": "l10n_ro_stock_sheet/index.md",
     "module": "l10n_ro_stock_sheet",
     "version": "19.0.1.1.6",
@@ -19877,6 +20699,58 @@
       "l10n_ro_transfer_move_id"
     ],
     "text": "Romania - Fișă de magazie pe gestiuni\nl10n_ro_stock_sheet_gestiune\nModulul este puntea dintre **Fișa de magazie / Balanța stocurilor** (`l10n_ro_stock_sheet`) și **gestiunile contabile de stoc** (`l10n_ro_stock_gestiune`): permite filtrarea raportului pe una sau mai multe gestiuni, exact cum cere practica românească — fișa de magazie (cod 14-3-8) se ține **per gestiune**, cu gestionar responsabil. Se instalează automat (`auto_install`) de îndată ce ambele module de bază sunt prezente în baza de date.\nButon „Fișă de magazie\" pe gestiune — din fișa gestiunii (`l10n.ro.gestiune`, meniul Inventar → Configurare → Gestiuni contabile) se deschide raportul pre-filtrat pe locațiile interne ale gestiunii, desfășurat complet (cont de stoc → produs → mișcări), cu solduri inițiale, intrări, ieșiri și sold final.\nFiltru pe gestiune în raport — opțiunea `l10n_ro_gestiune_ids` din raportul de bază se traduce automat în mulțimea locațiilor interne ale gestiunilor selectate.\nPrioritate la selecția manuală — o selecție explicită de locații (`l10n_ro_location_ids`) are prioritate față de gestiuni.\nSemantică sigură — o gestiune fără locații produce un raport gol (nu tot stocul companiei), evitând interpretări greșite la inventariere sau predare-primire gestiune.\nTransferul valoric între gestiuni intră în balanță (19.0.1.0.2) — mișcările internă → internă (predare-primire gestiune) sunt ignorate de raportul de bază, pentru că nu sunt nici intrări nici ieșiri pentru companie și `stock_move.value` e 0 pe ele. Modulul reintroduce câte un rând de ieșire pe gestiunea sursă și unul de intrare pe gestiunea destinație, cu contul și valoarea preluate din nota de transfer contabilă (`l10n_ro_transfer_move_id`, ex. 371.A → 371.B, eventual prin contul de tranzit 371.T). Astfel, pe conturile gestiunilor *Diferența* iese 0 (nu ± valoarea transferului nereflectat), iar filtrarea raportului pe o singură gestiune arată corect valoarea transferului, inclusiv marfa pe drum pe contul de tranzit al locației de tranzit."
+  },
+  {
+    "path": "l10n_ro_storage_sheet/index.md",
+    "module": "l10n_ro_storage_sheet",
+    "version": "20.0.1.0.2",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_storage_sheet",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_storage_sheet",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_storage_sheet",
+    "summary": "Modulul adaugă raportul românesc „Fișa de magazie”: stoc inițial, intrări, ieșiri și stoc final, per produs și locație, disponibil ca PDF sau ca analiză pivot. Funcționează pe evaluarea de stoc nativă din Odoo și nu depinde de motorul de evaluare `l10n_ro_stock_account`. A fost publicat anterior în acest repository sub numele `l10n_ro_stock_report`, nume care intra în conflict cu modulul OCA omonim. Bazele de date care au nevoie de tipurile de mișcări evaluate din motorul OCA continuă să folosească modulul OCA `l10n_ro_stock_report`.",
+    "features": [
+      "Raport accesibil din Inventar > Raportare > Romanian Stock Sheet Report, cu alegerea locației și a intervalului de date (luna curentă implicit), prin butonul Show Sheet.",
+      "Analiză pivot per produs, cu cantitate și valoare inițială, de intrare, de ieșire și finală; export XLSX.",
+      "Vizualizare listă cu fiecare mișcare și documentul ei; rândurile INITIAL și FINAL marchează soldul de început și de sfârșit al perioadei.",
+      "Fișa tipărită în PDF (Show Sheet Pdf): per produs și cont de stoc, rândul INITIAL, mișcările și rândul FINAL, cu stocul după fiecare operație.",
+      "Fluxul pas cu pas, cu capturi, se află în fișa consultantului."
+    ],
+    "dependencies": [
+      "stock",
+      "account",
+      "stock_account",
+      "purchase",
+      "sale"
+    ],
+    "connections": [
+      "l10n_ro_stock_report"
+    ],
+    "text": "l10n_ro_storage_sheet\nl10n_ro_storage_sheet\nModulul adaugă raportul românesc „Fișa de magazie”: stoc inițial, intrări, ieșiri și stoc final, per produs și locație, disponibil ca PDF sau ca analiză pivot. Funcționează pe evaluarea de stoc nativă din Odoo și nu depinde de motorul de evaluare `l10n_ro_stock_account`. A fost publicat anterior în acest repository sub numele `l10n_ro_stock_report`, nume care intra în conflict cu modulul OCA omonim. Bazele de date care au nevoie de tipurile de mișcări evaluate din motorul OCA continuă să folosească modulul OCA `l10n_ro_stock_report`.\nRaport accesibil din Inventar > Raportare > Romanian Stock Sheet Report, cu alegerea locației și a intervalului de date (luna curentă implicit), prin butonul Show Sheet.\nAnaliză pivot per produs, cu cantitate și valoare inițială, de intrare, de ieșire și finală; export XLSX.\nVizualizare listă cu fiecare mișcare și documentul ei; rândurile INITIAL și FINAL marchează soldul de început și de sfârșit al perioadei.\nFișa tipărită în PDF (Show Sheet Pdf): per produs și cont de stoc, rândul INITIAL, mișcările și rândul FINAL, cu stocul după fiecare operație.\nFluxul pas cu pas, cu capturi, se află în fișa consultantului."
+  },
+  {
+    "path": "l10n_ro_storno_enhancement/index.md",
+    "module": "l10n_ro_storno_enhancement",
+    "version": "20.0.1.0.2",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_storno_enhancement",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_storno_enhancement",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_storno_enhancement",
+    "summary": "Modulul extinde contabilitatea storno din Odoo pentru localizarea românească: corecțiile se înregistrează „în roșu”, cu sume negative pe aceeași parte a contului ca nota inițială, astfel încât rulajul conturilor să nu fie umflat de o inversare pe partea opusă.",
+    "features": [
+      "Storno la orice inversare: Odoo standard aplică storno doar notelor de credit și doar firmelor cu storno activat (automat, când țara fiscală este România). Cu modulul, orice notă inversată, inclusiv notele contabile diverse, se postează în roșu, iar inversarea unei note storno redă o notă normală.",
+      "Storno manual pe notele contabile: opțiunea „Storno (red reversal)” pe o notă diversă în ciornă postează toate liniile în roșu, pentru corecții introduse manual.",
+      "Utilizarea contului: câmpul „Usage” pe conturi le clasifică în Activ (sold debitor), Pasiv (sold creditor) sau Bifuncțional (implicit). Se completează automat la instalare pentru conturile planului de conturi românesc și poate fi schimbat per cont.",
+      "Fost nume: modulul s-a numit `l10n_ro_account_storno`. Instalat pe o bază care îl are pe cel vechi, preia automat datele acestuia, păstrând valorile de utilizare a conturilor."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro"
+    ],
+    "connections": [
+      "l10n_ro_account_storno"
+    ],
+    "text": "l10n_ro_storno_enhancement\nl10n_ro_storno_enhancement\nModulul extinde contabilitatea storno din Odoo pentru localizarea românească: corecțiile se înregistrează „în roșu”, cu sume negative pe aceeași parte a contului ca nota inițială, astfel încât rulajul conturilor să nu fie umflat de o inversare pe partea opusă.\nStorno la orice inversare: Odoo standard aplică storno doar notelor de credit și doar firmelor cu storno activat (automat, când țara fiscală este România). Cu modulul, orice notă inversată, inclusiv notele contabile diverse, se postează în roșu, iar inversarea unei note storno redă o notă normală.\nStorno manual pe notele contabile: opțiunea „Storno (red reversal)” pe o notă diversă în ciornă postează toate liniile în roșu, pentru corecții introduse manual.\nUtilizarea contului: câmpul „Usage” pe conturi le clasifică în Activ (sold debitor), Pasiv (sold creditor) sau Bifuncțional (implicit). Se completează automat la instalare pentru conturile planului de conturi românesc și poate fi schimbat per cont.\nFost nume: modulul s-a numit `l10n_ro_account_storno`. Instalat pe o bază care îl are pe cel vechi, preia automat datele acestuia, păstrând valorile de utilizare a conturilor."
   },
   {
     "path": "l10n_ro_travel_order/index.md",
@@ -20083,6 +20957,35 @@
     "dependencies": [],
     "connections": [],
     "text": "Romania - Regularizare TVA\nl10n_ro_vat_regularization"
+  },
+  {
+    "path": "l10n_ro_website_anaf/index.md",
+    "module": "l10n_ro_website_anaf",
+    "version": "20.0.1.2.2",
+    "github": "https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_website_anaf",
+    "local_path": "odoo-addons/l10n-romania/l10n_ro_website_anaf",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_website_anaf",
+    "summary": "Aduce ANAF în formularele de adresă ale website-ului (checkout și portal client), pentru o adresă de facturare din România. Firma este completată din datele ANAF în timp ce clientul tastează codul fiscal și este verificată la trimiterea adresei, deci facturile și e-Factura pornesc de la datele legale corecte.",
+    "features": [
+      "La tastarea CUI: sub cod apare firma găsită la ANAF (denumirea pe care se emite factura, adresa, plătitor de TVA); câmpurile goale (firmă, stradă, oraș, cod poștal, județ, nr. registrul comerțului unde există) se completează imediat, iar butonul Fill in from ANAF le înlocuiește și pe cele tastate, doar la cererea clientului.",
+      "Firma inactivă fiscal primește un avertisment, firma radiată află că nu poate comanda, iar un CNP tastat din greșeală are mesaj propriu.",
+      "Rută publică cu limită per vizitator (20 de căutări la 10 minute) și cache de o zi per cod fiscal.",
+      "La trimiterea adresei: firma negăsită sau radiată este refuzată, iar CNP-ul are mesaj propriu. Firma găsită primește denumirea legală (entitatea comercială pe care se emit factura și e-Factura; contactul păstrează numele tastat), iar adresa tastată se păstrează, ANAF completând doar câmpurile goale.",
+      "Firma inactivă fiscal poate comanda: coșul primește o notă internă pentru vânzător (cod TVA anulat: factură cu TVA, fără taxare inversă, verifică încasarea).",
+      "Dacă ANAF nu răspunde, vânzarea nu se oprește: numărul se acceptă așa cum a fost tastat, iar coșul primește o notă.",
+      "Orice formular poate folosi căutarea, printr-un câmp cu `data-anaf-lookup` și o hartă `data-anaf-fill` a câmpurilor de completat (o folosește formularul de cont B2B din `deltatech_b2b_portal`).",
+      "Configurare: nu necesită; adresa serviciului ANAF este cea din `l10n_ro_anaf_partner_lookup` (parametrul `l10n_ro_anaf_partner_lookup.url`), iar site-ul așteaptă cel mult 5 secunde un răspuns. Fluxul cu capturi este în fișa consultantului."
+    ],
+    "dependencies": [
+      "website_sale",
+      "l10n_ro_anaf_partner_lookup"
+    ],
+    "connections": [
+      "deltatech_b2b_portal",
+      "l10n_ro_anaf_partner_lookup"
+    ],
+    "text": "l10n_ro_website_anaf\nl10n_ro_website_anaf\nAduce ANAF în formularele de adresă ale website-ului (checkout și portal client), pentru o adresă de facturare din România. Firma este completată din datele ANAF în timp ce clientul tastează codul fiscal și este verificată la trimiterea adresei, deci facturile și e-Factura pornesc de la datele legale corecte.\nLa tastarea CUI: sub cod apare firma găsită la ANAF (denumirea pe care se emite factura, adresa, plătitor de TVA); câmpurile goale (firmă, stradă, oraș, cod poștal, județ, nr. registrul comerțului unde există) se completează imediat, iar butonul Fill in from ANAF le înlocuiește și pe cele tastate, doar la cererea clientului.\nFirma inactivă fiscal primește un avertisment, firma radiată află că nu poate comanda, iar un CNP tastat din greșeală are mesaj propriu.\nRută publică cu limită per vizitator (20 de căutări la 10 minute) și cache de o zi per cod fiscal.\nLa trimiterea adresei: firma negăsită sau radiată este refuzată, iar CNP-ul are mesaj propriu. Firma găsită primește denumirea legală (entitatea comercială pe care se emit factura și e-Factura; contactul păstrează numele tastat), iar adresa tastată se păstrează, ANAF completând doar câmpurile goale.\nFirma inactivă fiscal poate comanda: coșul primește o notă internă pentru vânzător (cod TVA anulat: factură cu TVA, fără taxare inversă, verifică încasarea).\nDacă ANAF nu răspunde, vânzarea nu se oprește: numărul se acceptă așa cum a fost tastat, iar coșul primește o notă.\nOrice formular poate folosi căutarea, printr-un câmp cu `data-anaf-lookup` și o hartă `data-anaf-fill` a câmpurilor de completat (o folosește formularul de cont B2B din `deltatech_b2b_portal`).\nConfigurare: nu necesită; adresa serviciului ANAF este cea din `l10n_ro_anaf_partner_lookup` (parametrul `l10n_ro_anaf_partner_lookup.url`), iar site-ul așteaptă cel mult 5 secunde un răspuns. Fluxul cu capturi este în fișa consultantului."
   },
   {
     "path": "l10n_ro_wip_closing/index.md",
