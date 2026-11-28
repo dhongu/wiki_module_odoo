@@ -13,6 +13,8 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_account_bank_statement_import_emag](deltatech_account_bank_statement_import_emag/index.md): Importă borderoul de plăți eMAG Marketplace (XLSX) direct ca extras de cont bancar, cu un extras per virare, semnele corectate și potrivire automată a clientului.
 - [deltatech_account_bank_statement_import_euplatesc](deltatech_account_bank_statement_import_euplatesc/index.md): Importă fișierele de decontare Euplatesc.ro (XLSX) ca extrase de cont, cu recunoaștere pe set de coloane obligatorii, potrivire automată a partenerului, deduplicare pe RRN și linii de comision/transfer configurabile.
 - [deltatech_account_bank_statement_import_gls](deltatech_account_bank_statement_import_gls/index.md): Importă borderourile de ramburs GLS (Excel) direct ca extrase de cont bancar, o linie per colet, fără prelucrare manuală a fișierului.
+- [deltatech_account_bank_statement_import_paypal](deltatech_account_bank_statement_import_paypal/index.md): Importă raportul de activitate PayPal ca extras de cont, cu client, conversii și comisioane.
+- [deltatech_account_bank_statement_import_stripe](deltatech_account_bank_statement_import_stripe/index.md): Importă rapoartele de payout Stripe ca extrase de cont, câte unul pe payout, cu client și comisioane.
 - [deltatech_account_edi_ubl_advice](deltatech_account_edi_ubl_advice/index.md): Adaugă în facturile UBL de vânzare o referință (`cac:DespatchDocumentReference`) către avizele de expediție validate care au generat factura.
 - [deltatech_account_edit_currency_rate](deltatech_account_edit_currency_rate/index.md): Permite editarea manuală a cursului valutar direct pe facturi, cu recalcularea automată a sumelor contabile aferente.
 - [deltatech_account_enterprise](deltatech_account_enterprise/index.md): Urmărirea clienților (Customer Follow-up) cu poziții grupate pe restante/nescadente, valoare inițială, stins/aplicat și rest la data raportului, scurtături pe fișa partenerului și memento opțional prin email și SMS înainte de scadență.
@@ -21,12 +23,26 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_actions](deltatech_actions/index.md): Instrumente de mentenanță și curățare a bazei de date (cron-uri pentru atașamente duplicate, PDF-uri vechi, reguli de reaprovizionare), sigure prin mod „dry run” implicit.
 - [deltatech_activity_reminder](deltatech_activity_reminder/index.md): Email zilnic cu activitățile scadente și întârziate ale fiecărui utilizator, plus restanțele echipei pentru manageri.
 - [deltatech_advanced_planner](deltatech_advanced_planner/index.md): Planificator avansat de stoc cu backward scheduling, capacitate finită (RCCP/CRP) și validare automată a datei de livrare, integrat în vânzări/producție/achiziții.
+- [deltatech_advanced_planner_ai](deltatech_advanced_planner_ai/index.md): Asistent AI care explică în limbaj simplu comenzile întârziate sau blocate din Advanced Planner și trimite un rezumat zilnic de risc.
 - [deltatech_agreement_management](deltatech_agreement_management/index.md): Gestionarea acordurilor (număr, dată, stare) cu tipuri configurabile, secvențe de numerotare și șabloane de raport.
+- [deltatech_ai_agent_delegate](deltatech_ai_agent_delegate/index.md): Trece specialiștii agenților AI din Odoo 19 în Allowed Agents din Odoo 20 și face clicabile linkurile din răspunsuri.
 - [deltatech_ai_anthropic](deltatech_ai_anthropic/index.md): Adaugă Anthropic (Claude) ca furnizor LLM în framework-ul nativ de AI al Odoo, cu suport pentru tool use pe agenți, câmpuri și acțiuni AI.
+- [deltatech_ai_financial_analysis](deltatech_ai_financial_analysis/index.md): Agent AI care comentează analiza financiară lunară sau anuală, cu cifrele verificate în cod.
+- [deltatech_ai_knowledge_sync](deltatech_ai_knowledge_sync/index.md): Re-indexează sursele Knowledge ale agenților AI când un articol este editat și adaugă articolele noi în folderele lor.
+- [deltatech_ai_livechat_customer](deltatech_ai_livechat_customer/index.md): Agentul AI din livechat cunoaște compania vizitatorului autentificat și dacă este deja client.
+- [deltatech_ai_pdf_base](deltatech_ai_pdf_base/index.md): Verificări fără AI ale datelor citite cu AI dintr-un PDF: valori găsite în textul paginii, cifra de control a codurilor fiscale.
+- [deltatech_ai_product_catalog_review](deltatech_ai_product_catalog_review/index.md): AI propune categoria de magazin și produsele alternative, accesorii și opționale ale fiecărui produs.
+- [deltatech_ai_purchase_pdf](deltatech_ai_purchase_pdf/index.md): Importă factura furnizor PDF pe comanda de achiziție: liniile sunt citite cu AI și revizuite în previzualizarea importului.
+- [deltatech_ai_sale_delivery_check](deltatech_ai_sale_delivery_check/index.md): Verificare zilnică a comenzilor și livrărilor cu unsprezece reguli, iar un agent AI grupează, prioritizează și explică anomaliile.
+- [deltatech_ai_source_sync](deltatech_ai_source_sync/index.md): Alimentează agenții AI cu documentație Markdown din GitHub, ZIP, fluxuri RSS sau pagini urmărite, cu text Unicode corect.
+- [deltatech_ai_website_product](deltatech_ai_website_product/index.md): Agent AI care răspunde vizitatorilor magazinului din produsele publicate, cu preț și stoc live.
+- [deltatech_ai_website_product_image](deltatech_ai_website_product_image/index.md): Agentul magazinului găsește produsele care seamănă cu fotografia trimisă de vizitator.
 - [deltatech_alternative](deltatech_alternative/index.md): Coduri alternative multiple pe produs (furnizor, producător, cod vechi, client), căutabile și afișate opțional pe comenzi și mișcări de stoc.
 - [deltatech_alternative_website](deltatech_alternative_website/index.md): Permite căutarea produselor în magazinul online după codul alternativ (echivalent) al produsului.
 - [deltatech_analytic_distribution](deltatech_analytic_distribution/index.md): Impune completarea integrală a distribuției analitice (Locație, Departament, Linie de business) și însumarea la 100% pe liniile facturilor de furnizori.
+- [deltatech_approvals_purchase_analytic](deltatech_approvals_purchase_analytic/index.md): Centru de cost (distribuție analitică) pe cererile de aprobare de achiziție, transmis liniilor RFQ.
 - [deltatech_auto_reorder_rule](deltatech_auto_reorder_rule/index.md): Creează automat reguli de reaprovizionare cu valori implicite pentru produse noi și în masă pentru cele existente.
+- [deltatech_auto_translate](deltatech_auto_translate/index.md): Traducere automată a câmpurilor traductibile cu framework-ul AI nativ Odoo, cu cache și respectarea corecțiilor manuale.
 - [deltatech_average_payment_period](deltatech_average_payment_period/index.md): Calculează durata medie de încasare și de plată (perioada medie a contabilității de casă), ponderată cu sumele decontate.
 - [deltatech_b2b_announcement](deltatech_b2b_announcement/index.md): Note datate pentru clienții companie, afișate pe pagina de start a portalului B2B.
 - [deltatech_b2b_portal](deltatech_b2b_portal/index.md): Conturi de companie pe website: cereri potrivite după CUI, aprobare dintr-un clic, tablou de bord în portal și prețuri doar pentru companii.
@@ -45,6 +61,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_business_process](deltatech_business_process/index.md): Organizează proiectele de implementare Odoo (procese, pași, teste, probleme) cu bibliotecă de procese reutilizabilă și export/import JSON.
 - [deltatech_business_process_handover_document](deltatech_business_process_handover_document/index.md): Generează documentul de predare-primire (proces verbal) pentru un proces de business, direct dintr-un Proiect de Business, ca PDF.
 - [deltatech_calendar_caldav](deltatech_calendar_caldav/index.md): Sincronizare bidirecțională a calendarului Odoo cu un server CalDAV extern (cPanel, Nextcloud etc.) — evenimente, recurență, reminder-e și participanți.
+- [deltatech_cash_flow_forecast](deltatech_cash_flow_forecast/index.md): Încasări și plăți așteptate pe scadență, cu soldul de numerar estimat.
 - [deltatech_cash_statement](deltatech_cash_statement/index.md): Unealtă pentru actualizarea rapidă a soldului inițial al extraselor de casă din Odoo.
 - [deltatech_category_group](deltatech_category_group/index.md): Adaugă două niveluri de grupare (tip și clasă) pentru categoriile interne de produse, utilizabile în rapoartele de marjă, stoc și facturi.
 - [deltatech_category_group_equipment](deltatech_category_group_equipment/index.md): Adaugă grupare (tip și clasă) pentru echipamente, preluată din grupurile categoriei interne a produsului.
@@ -71,6 +88,8 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_customer_analysis](deltatech_customer_analysis/index.md): Tablou de bord zilnic pe clienți: de sunat, de încasat sau de vândut mai mult, pe baza segmentelor nocturne.
 - [deltatech_customer_map](deltatech_customer_map/index.md): Vânzări pe județe și țări pe o hartă 3D cu relief real.
 - [deltatech_customer_segment](deltatech_customer_segment/index.md): Calcul nocturn per client: ritm de cumpărare, vânzări, restanțe și segment de portofoliu.
+- [deltatech_dashboard_builder](deltatech_dashboard_builder/index.md): Tablouri de bord cu KPI-uri și grafice pe orice model Odoo, cu ținte, instantanee și alerte.
+- [deltatech_dashboard_builder_ai](deltatech_dashboard_builder_ai/index.md): Agent Odoo AI care redactează și modifică tablouri de bord, văzând doar structura modelelor, nu datele.
 - [deltatech_data_sheet](deltatech_data_sheet/index.md): Atașează fișe tehnice și fișe de securitate (PDF) pe produs, în fila Vânzări.
 - [deltatech_data_sheet_website](deltatech_data_sheet_website/index.md): Expune fișele tehnice și fișele cu date de securitate ale produselor pe paginile din magazinul online.
 - [deltatech_dc](deltatech_dc/index.md): Gestionarea și tipărirea declarațiilor de conformitate pentru produse, inclusiv la facturare.
@@ -125,13 +144,17 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_fast_purchase](deltatech_fast_purchase/index.md): Accelerează achizițiile prin butoane care parcurg rapid confirmarea, recepția și facturarea unei comenzi de achiziție.
 - [deltatech_fast_sale](deltatech_fast_sale/index.md): Vânzare rapidă: buton în comanda de vânzare care parcurge într-un singur pas confirmarea, livrarea și facturarea.
 - [deltatech_feed](deltatech_feed/index.md): Generează feed-uri de produse pentru platforme de e-commerce și marketing (Google Merchant, Facebook, Compari, Bizoo, 2performant, VidaXL), cu reîmprospătare automată zilnică.
+- [deltatech_financial_analysis](deltatech_financial_analysis/index.md): Analiză financiară lunară și anuală: indicatori din balanță, comparații, abateri materiale și verificarea închiderii perioadei.
 - [deltatech_followup](deltatech_followup/index.md): Urmărirea automată a facturilor neîncasate, prin e-mailuri de followup programate, relativ la data facturii sau a scadenței.
 - [deltatech_generic_partner_restriction](deltatech_generic_partner_restriction/index.md): Modul de tranziție, gol — funcționalitatea a fost comasată în `deltatech_partner_generic`.
 - [deltatech_gln](deltatech_gln/index.md): Gestionează Numărul Global de Locație (GLN) la nivel de partener — modul obsolet, înlocuit de `account_add_gln`.
 - [deltatech_helpdesk_tag_primary](deltatech_helpdesk_tag_primary/index.md): Clasificare pe două niveluri a tichetelor Helpdesk, cu etichete principale/secundare și filtrare a etichetelor după echipă.
+- [deltatech_hr_holidays_report_access](deltatech_hr_holidays_report_access/index.md): Angajații văd în Time Off Overview doar concediile proprii, aprobatorii pe cele ale echipei.
 - [deltatech_hr_leave_dashboard](deltatech_hr_leave_dashboard/index.md): Tablou de concedii al echipei: aprobare dintr-un clic, solduri ale întregii echipe și suprapuneri pe departament.
 - [deltatech_hr_pay_transparency](deltatech_hr_pay_transparency/index.md): Raport privind diferența salarială, categorii de lucrători, cereri de informații și evaluare comună conform Directivei UE 2023/970.
+- [deltatech_hr_pay_transparency_payroll](deltatech_hr_pay_transparency_payroll/index.md): Remunerația din raportul de transparență salarială provine din fluturașii validați.
 - [deltatech_image_optimize](deltatech_image_optimize/index.md): Recomprimă automat atașamentele imagine supradimensionate (JPEG/WebP/PNG) pentru a elibera spațiu din filestore, fără să afecteze calitatea vizuală.
+- [deltatech_inter_company_vendor_stock](deltatech_inter_company_vendor_stock/index.md): Stocul liber al companiei furnizoare din grup apare pe linia de furnizor a companiei vânzătoare.
 - [deltatech_invoice_number](deltatech_invoice_number/index.md): Renumerotare facturi și validare a ordinii cronologice de emitere pe jurnalele de vânzare.
 - [deltatech_invoice_picking](deltatech_invoice_picking/index.md): Generează facturi direct din livrări (pickings) sau din loturi, preluând doar produsele și cantitățile efectiv realizate.
 - [deltatech_invoice_picking_automatically](deltatech_invoice_picking_automatically/index.md): Generează automat facturile din livrări după validare, cu configurare pe tipul de operațiune și proces planificat.
@@ -141,6 +164,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_invoice_report](deltatech_invoice_report/index.md): Extinde raportul de analiză a facturilor și fișa produsului cu istoric anual al cantităților cumpărate/vândute, plus dimensiuni Regiune și Furnizor Implicit.
 - [deltatech_invoice_to_draft](deltatech_invoice_to_draft/index.md): Restricționează, printr-un grup dedicat, dreptul de a readuce facturile/notele contabile în starea de ciornă și adaugă un buton de anulare directă.
 - [deltatech_invoice_weight](deltatech_invoice_weight/index.md): Urmărirea greutății nete și brute pe facturi, comenzi de achiziție și de vânzare, cu raportare Pivot.
+- [deltatech_kaizen](deltatech_kaizen/index.md): Proiecte de îmbunătățire legate de o pierdere măsurată: bază, 5 Why, Ishikawa, acțiuni și economii.
 - [deltatech_keez](deltatech_keez/index.md): Generează fișiere Excel (XLS), arhivate în ZIP, pentru importul datelor contabile (furnizori, clienți, facturi, note contabile) în platforma Keez.
 - [deltatech_kit_price](deltatech_kit_price/index.md): Calculează automat costul de kit (BoM phantom) pe liniile comenzii de vânzare, pentru marje corecte.
 - [deltatech_ledger](deltatech_ledger/index.md): Registru centralizat pentru evidența numerelor și descrierilor documentelor de intrare/ieșire, cu secvențiere automată și trasabilitate.
@@ -173,6 +197,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_marketplace_trendyol](deltatech_marketplace_trendyol/index.md): Conector Odoo pentru sincronizarea produselor, prețurilor, stocurilor și comenzilor cu marketplace-ul Trendyol; tracking-ul automat depinde de un transportator real atribuit manual (maparea automată a curierului nu funcționează încă).
 - [deltatech_marketplace_website](deltatech_marketplace_website/index.md): Integrează datele de marketplace în website-ul Odoo, afișând descrieri scurte și branding specific pe paginile de produs din storefront.
 - [deltatech_marketplace_woocommerce](deltatech_marketplace_woocommerce/index.md): Conectează Odoo cu magazine WooCommerce — aduce produse, clienți și comenzi din WooCommerce în Odoo și exportă stocul Odoo înapoi printr-un cron dedicat (nu în timp real).
+- [deltatech_mcp_server](deltatech_mcp_server/index.md): Acces guvernat al clienților AI la Odoo: politici pe rol, acces temporar, date mascate, jurnal complet.
 - [deltatech_mentor](deltatech_mentor/index.md): Export de date din Odoo (parteneri, produse, facturi) pentru import în aplicația de contabilitate WinMentor.
 - [deltatech_move_negative_stock](deltatech_move_negative_stock/index.md): Completează automat transferurile de stoc cu cantitățile necesare pentru corectarea stocului negativ și notifică zilnic managerul locației.
 - [deltatech_mrp](deltatech_mrp/index.md): Extinde MRP cu includerea costurilor indirecte în costul de producție, rotunjirea cantităților la explozia BOM și analiza costurilor de fabricație.
@@ -183,6 +208,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_mrp_simple](deltatech_mrp_simple/index.md): Producție simplă fără listă de materiale: componente și produse rezultate pe un singur ecran, cu generare automată de mișcări de stoc și calcul de preț.
 - [deltatech_mrp_simple_barcode](deltatech_mrp_simple_barcode/index.md): Extinde producția simplă cu scanare de coduri de bare pentru adăugarea/incrementarea rapidă a produselor consumate.
 - [deltatech_mrp_validation_date](deltatech_mrp_validation_date/index.md): Adaugă un câmp „Dată Validare" pe comanda de fabricație, completat automat la marcarea „Efectuată", pentru trasabilitatea finalizării producției.
+- [deltatech_mrp_workorder_qty](deltatech_mrp_workorder_qty/index.md): Cantitatea procesată pe fiecare operație a ordinului de fabricație, pe tranșe, inclusiv din Shop Floor.
 - [deltatech_nap](deltatech_nap/index.md): NAP (Necesar de Aprovizionare) — raport la cerere pentru necesarul de achiziție (cerere medie zilnică, stoc de siguranță statistic, clasificare XYZ) și reaprovizionare consolidată pe furnizor.
 - [deltatech_nap_website](deltatech_nap_website/index.md): Extinde raportul NAP cu categoria publică de produse din website_sale, pentru raportare a achizițiilor pe categorii.
 - [deltatech_no_quick_create](deltatech_no_quick_create/index.md): Dezactivează global crearea rapidă (quick create) din câmpurile Many2one pentru a preveni înregistrările incomplete.
@@ -261,6 +287,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_purchase_stock](deltatech_purchase_stock/index.md): Separă comenzile de achiziție manuale de cele generate automat prin reaprovizionare, ca să nu se amestece pe aceeași comandă ciornă a furnizorului.
 - [deltatech_purchase_tender](deltatech_purchase_tender/index.md): Număr minim de oferte de la furnizori și aprobare peste un prag, pe categoriile de produse alese.
 - [deltatech_purchase_ubl](deltatech_purchase_ubl/index.md): Importă facturi de la furnizori în format UBL XML pentru actualizare prețuri, validare recepții și creare facturi.
+- [deltatech_purchase_ubl_ai](deltatech_purchase_ubl_ai/index.md): Potrivire AI a produselor pentru liniile facturilor UBL nerecunoscute, cu validare umană și învățare pe lista de prețuri.
 - [deltatech_purchase_xls](deltatech_purchase_xls/index.md): Import/export al liniilor comenzilor de achiziție din/în fișiere Excel, pentru gestionarea rapidă a comenzilor cu multe articole.
 - [deltatech_putaway_strategy](deltatech_putaway_strategy/index.md): Capacități de locație și strategie de depozitare (putaway) îmbunătățită pentru Inventar.
 - [deltatech_qms](deltatech_qms/index.md): Documente controlate, audituri interne, neconformități CAPA, riscuri, analiză de management și pregătire pentru certificare ISO 9001.
@@ -281,6 +308,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_rma_marketplace](deltatech_rma_marketplace/index.md): Duce retururile eMAG / Shopify pe fluxul de depozit al retururilor — cererea se deschide la scanarea coletului, cu rambursarea marketplace-ului lângă nota de credit.
 - [deltatech_rma_withdrawal](deltatech_rma_withdrawal/index.md): Dă retragerii în 14 zile fișa de retur cu cod de bare și recepția prin scanare, fără stare de aprobare și fără taxă.
 - [deltatech_rpc_audit](deltatech_rpc_audit/index.md): Loghează apelurile XML-RPC/JSON-RPC externe (IP client real, model, metodă) pentru audit tehnic, configurabil on/off fără dezinstalare.
+- [deltatech_safety_register](deltatech_safety_register/index.md): Registru de aproape-accidente, incidente și accidente de muncă, cu acțiuni corective și LTIFR.
 - [deltatech_saga](deltatech_saga/index.md): Modul de export/import fișiere (XML/DBF) pentru schimbul de date contabile, parteneri, produse și stocuri între Odoo și SAGA, adaptat cerințelor fiscale românești.
 - [deltatech_saga_mrp](deltatech_saga_mrp/index.md): Extinde interfața de export SAGA pentru a sincroniza mișcările de stoc și producția kiturilor (BoM phantom) din MRP către SAGA.
 - [deltatech_saga_online](deltatech_saga_online/index.md): Facturile de vânzare ale unei perioade ca fișiere XML de import SAGA, prin serviciul Terrabit, utilizabil pe Odoo Online.
@@ -296,6 +324,9 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_sale_contracts](deltatech_sale_contracts/index.md): Adaugă o stare de tip „Contract" (Agreement) pe comenzile de vânzare și un flux de consum părinte–copil.
 - [deltatech_sale_cost_product](deltatech_sale_cost_product/index.md): Aduce costul de achiziție și costul bunurilor pe comenzile de vânzare pentru monitorizarea marjelor.
 - [deltatech_sale_currency](deltatech_sale_currency/index.md): Factura din comanda de vânzare primește moneda jurnalului de vânzări (sau a companiei), cu prețurile convertite la cursul zilei și reconvertite la schimbarea datei facturii.
+- [deltatech_sale_dashboard](deltatech_sale_dashboard/index.md): Bord de vânzări: oferte deschise, comenzi de livrat și de facturat, rezultatele perioadei.
+- [deltatech_sale_dashboard_delivery](deltatech_sale_dashboard_delivery/index.md): Colete de pregătit, de ridicat de curier și în drum, pe bordul de vânzări.
+- [deltatech_sale_dashboard_rma](deltatech_sale_dashboard_rma/index.md): Retururile de aprobat și în curs pe tabloul de bord de vânzări.
 - [deltatech_sale_feedback](deltatech_sale_feedback/index.md): Trimite automat clienților, pe baza facturilor, un email de solicitare feedback (prin cron).
 - [deltatech_sale_invoice_status](deltatech_sale_invoice_status/index.md): Corectează statusul de facturare al comenzilor mixte (produse + servicii), astfel încât liniile de produs nelivrate să nu fie facturate pe baza serviciilor.
 - [deltatech_sale_margin](deltatech_sale_margin/index.md): Control extins al prețurilor și marjei pe comenzile de vânzare: ascunde marja/prețul de achiziție, blochează modificarea prețului, iar reacția la vânzarea sub cost se alege per companie (blochează / doar avertisment / fără verificare).
@@ -374,9 +405,13 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_vendor_products_kramp](deltatech_vendor_products_kramp/index.md): Conector specializat pentru importul și sincronizarea catalogului furnizorului Kramp în Odoo.
 - [deltatech_vendor_products_website](deltatech_vendor_products_website/index.md): Căutarea și expunerea produselor furnizorilor în magazinul online, cu import automat în Odoo și posibilitatea de comandă online.
 - [deltatech_vendor_stock](deltatech_vendor_stock/index.md): Vizibilitate asupra stocului disponibil la furnizor, afișat în datele produsului și în comenzile de vânzare.
+- [deltatech_voip_daktela](deltatech_voip_daktela/index.md): Integrare Daktela în Telefon: apel prin Daktela, widget, Nu deranja, istoric importat cu țara.
+- [deltatech_voip_missed_call](deltatech_voip_missed_call/index.md): Listă comună a clienților de sunat înapoi, închisă automat după convorbire.
+- [deltatech_voip_sale](deltatech_voip_sale/index.md): Comenzile clientului din apelul Telefon și telefoanele de facturare și livrare pe comandă.
 - [deltatech_warehouse_arrangement](deltatech_warehouse_arrangement/index.md): Gestionează amplasamentele fizice de depozit (magazie→zonă→raft→secțiune→grilă), în paralel cu locațiile standard.
 - [deltatech_warehouse_map](deltatech_warehouse_map/index.md): Hartă vizuală a depozitului pentru navigarea ierarhică a amplasamentelor de stoc, cu afișarea grafică a gradului de ocupare.
 - [deltatech_watermark](deltatech_watermark/index.md): Câmp de bază centralizat pentru imaginea/textul de filigran, folosit ca fundament de alte module de filigranare.
+- [deltatech_wcm](deltatech_wcm/index.md): Tablou de bord pentru cei zece piloni WCM: indicatori, ținte și semafoare.
 - [deltatech_website_blog](deltatech_website_blog/index.md): Sortează articolele de blog după data de publicare descrescător, cu secundar pe ID descrescător pentru egalități.
 - [deltatech_website_breadcrumb](deltatech_website_breadcrumb/index.md): Linie de navigare (breadcrumb) bazată pe ierarhia categoriilor publice pe pagina de produs din magazinul online.
 - [deltatech_website_category](deltatech_website_category/index.md): Arhivare a categoriilor publice de produse pe website și arbore de categorii cu încărcare leneșă, pentru performanță pe cataloage mari.

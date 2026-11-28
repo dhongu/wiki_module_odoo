@@ -794,6 +794,123 @@
     "text": "deltatech_ai_purchase_pdf\ndeltatech_ai_purchase_pdf\nNu toți furnizorii trimit e-Factura XML. Modulul importă pe comanda de achiziție factura furnizorului în format **PDF**, la fel ca XML-ul: un agent AI citește antetul, liniile și totalurile documentului, iar asistentul de import *Purchase UBL* face restul.\nAcelași asistent, XML sau PDF: butonul *Import Invoice* al comenzii acceptă un PDF; dacă nu există XML UBL atașat, asistentul ia ultimul PDF al comenzii.\nAI citește, Odoo decide: agentul doar transcrie documentul într-un JSON strict; potrivirea produselor (cod de bare, cod furnizor, denumire), acțiunea pe linie, actualizarea prețului furnizorului, recepția și factura sunt pașii deterministi din *Purchase UBL*.\nMereu revizuit: un PDF nu se importă direct; previzualizarea afișează un banner și lista neconcordanțelor (cantitate × preț ≠ valoare, linii ≠ total, TVA + bază ≠ total de plată, CUI furnizor necitit).\nVerificat față de textul PDF: cantitatea, prețul, valoarea și codul fiecărei linii, plus totalurile, sunt căutate în textul paginii; CUI-ul furnizorului este verificat cu cifra de control. Un PDF scanat nu este verificat, iar previzualizarea o spune.\nProgres și relecturi: pentru PDF-uri cu mai multe pagini, un dialog arată paginile citite, liniile găsite și timpul rămas; paginile cu avertismente se pot citi din nou (*Read Again Pages with Warnings* sau *Pages to read again*), păstrând produsele alese pe celelalte pagini.\nUn apel AI per document: extracția este păstrată pe asistent, deci previzualizarea și importul citesc PDF-ul o singură dată.\nCu potrivire AI a produselor: dacă este instalat *Purchase UBL AI Product Matching*, liniile neplasate primesc sugestie de produs, ca la XML.\nCost controlat: activare opțională per companie (implicit oprit) și limită zilnică de documente (implicit 50, 0 = nelimitat), în *Settings → Purchase → Invoicing → PDF Invoice Import with AI*.\nOdoo AI: PDF-ul este citit de LLM-ul serviciului Odoo AI (Enterprise, credite IAP), cu răspunsul constrâns de o schemă JSON; nu se alege model sau cheie pe agent.\nSigur: documentul este tratat ca date, iar agentul nu urmează instrucțiuni scrise în el.\nParametri de sistem opționali: `deltatech_ai_purchase_pdf.timeout` (implicit 300 s), `.pages_per_call` (implicit 1), `.parallel_calls` (implicit 3)."
   },
   {
+    "path": "deltatech_ai_sale_delivery_check/index.md",
+    "module": "deltatech_ai_sale_delivery_check",
+    "version": "20.0.1.0.4",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_ai_sale_delivery_check",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_ai_sale_delivery_check",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Verificare zilnică comenzi și livrări cu AI",
+    "summary": "În fiecare dimineață echipa află ce comenzi și livrări cer atenție și de ce. Modulul verifică comenzile de vânzare și livrările din ziua precedentă (sau din orice perioadă) cu reguli precise, apoi cere unui agent AI să grupeze, să prioritizeze și să explice anomaliile găsite. Nimeni nu mai trebuie să răsfoiască sute de comenzi ca să găsească livrarea întârziată, factura uitată sau expediția fără AWB.",
+    "features": [
+      "Reguli întâi, AI apoi: unsprezece verificări deterministe găsesc anomaliile, exact și gratuit; AI primește doar anomaliile găsite, o singură dată pe rulare, nu tot portofoliul de comenzi.",
+      "Unsprezece verificări gata făcute: comandă fără livrare, livrare întârziată (severitate crescătoare cu întârzierea), backorder vechi, livrat mai mult decât comandat, livrat dar nefacturat, facturat dar nelivrat, comandă blocată ca livrată parțial, gata dar neexpediată, livrare în risc (așteaptă stoc, termen apropiat), expediat fără număr de urmărire, adresă de livrare incompletă.",
+      "Reglabil pe companie: fiecare verificare poate fi activată sau arhivată, cu severitate și prag în zile, fără cod (Vânzări → Configurare → Verificări livrări).",
+      "AI care explică: agentul grupează anomaliile după cauza comună (același produs fără stoc, același curier, același client), dă fiecăreia prioritate de la 1 la 5, o explicație și o acțiune concretă și scrie un rezumat al zilei; citește notele transferului, ultimele mesaje din chatter și situația stocului.",
+      "Fără duplicate, fără alerte vechi: o anomalie regăsită este actualizată, una dispărută se rezolvă automat, una ignorată nu mai este raportată.",
+      "Rezumat zilnic și activități: o rulare programată trimite pe e-mail rezumatul (sumar, numere, anomalii principale) și creează activitate pentru agentul de vânzări pe cele severe.",
+      "Verificare la cerere: Vânzări → Raportare → Verifică comenzi și livrări, cu perioadă, depozite, verificări și opțiunea de analiză AI.",
+      "Lucrul cu anomaliile: Vânzări → Comenzi → Anomalii livrare (și din Inventar); acțiuni Deschide document, Văzut, Rezolvat, Ignoră, Redeschide; butonul inteligent Anomalii pe comenzi și transferuri; istoric în Delivery Check Runs, cu retrimiterea rezumatului.",
+      "Cost și confidențialitate: limită zilnică de apeluri AI, număr maxim de anomalii trimise, anonimizare opțională a clienților; dacă AI eșuează, rularea se încheie cu rezultatele din reguli. AI nu modifică, validează sau anulează niciodată un document.",
+      "Folosește agenții AI din Odoo Enterprise și LLM-ul serviciului Odoo AI (credite IAP)."
+    ],
+    "dependencies": [
+      "sale_stock",
+      "stock_delivery",
+      "ai"
+    ],
+    "connections": [
+      "ai"
+    ],
+    "text": "Verificare zilnică comenzi și livrări cu AI\ndeltatech_ai_sale_delivery_check\nÎn fiecare dimineață echipa află ce comenzi și livrări cer atenție și de ce. Modulul verifică comenzile de vânzare și livrările din ziua precedentă (sau din orice perioadă) cu reguli precise, apoi cere unui agent AI să grupeze, să prioritizeze și să explice anomaliile găsite. Nimeni nu mai trebuie să răsfoiască sute de comenzi ca să găsească livrarea întârziată, factura uitată sau expediția fără AWB.\nReguli întâi, AI apoi: unsprezece verificări deterministe găsesc anomaliile, exact și gratuit; AI primește doar anomaliile găsite, o singură dată pe rulare, nu tot portofoliul de comenzi.\nUnsprezece verificări gata făcute: comandă fără livrare, livrare întârziată (severitate crescătoare cu întârzierea), backorder vechi, livrat mai mult decât comandat, livrat dar nefacturat, facturat dar nelivrat, comandă blocată ca livrată parțial, gata dar neexpediată, livrare în risc (așteaptă stoc, termen apropiat), expediat fără număr de urmărire, adresă de livrare incompletă.\nReglabil pe companie: fiecare verificare poate fi activată sau arhivată, cu severitate și prag în zile, fără cod (Vânzări → Configurare → Verificări livrări).\nAI care explică: agentul grupează anomaliile după cauza comună (același produs fără stoc, același curier, același client), dă fiecăreia prioritate de la 1 la 5, o explicație și o acțiune concretă și scrie un rezumat al zilei; citește notele transferului, ultimele mesaje din chatter și situația stocului.\nFără duplicate, fără alerte vechi: o anomalie regăsită este actualizată, una dispărută se rezolvă automat, una ignorată nu mai este raportată.\nRezumat zilnic și activități: o rulare programată trimite pe e-mail rezumatul (sumar, numere, anomalii principale) și creează activitate pentru agentul de vânzări pe cele severe.\nVerificare la cerere: Vânzări → Raportare → Verifică comenzi și livrări, cu perioadă, depozite, verificări și opțiunea de analiză AI.\nLucrul cu anomaliile: Vânzări → Comenzi → Anomalii livrare (și din Inventar); acțiuni Deschide document, Văzut, Rezolvat, Ignoră, Redeschide; butonul inteligent Anomalii pe comenzi și transferuri; istoric în Delivery Check Runs, cu retrimiterea rezumatului.\nCost și confidențialitate: limită zilnică de apeluri AI, număr maxim de anomalii trimise, anonimizare opțională a clienților; dacă AI eșuează, rularea se încheie cu rezultatele din reguli. AI nu modifică, validează sau anulează niciodată un document.\nFolosește agenții AI din Odoo Enterprise și LLM-ul serviciului Odoo AI (credite IAP)."
+  },
+  {
+    "path": "deltatech_ai_source_sync/index.md",
+    "module": "deltatech_ai_source_sync",
+    "version": "20.0.1.11.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_ai_source_sync",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_ai_source_sync",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "AI - Sincronizare surse (colecții Markdown)",
+    "summary": "Alimentează agenții AI din Odoo 20 Enterprise cu documentație Markdown ținută într-un depozit GitHub sau într-o arhivă ZIP, fără încărcarea fișierelor unul câte unul. O colecție de surse este legată de un agent și menține sursele agentului sincronizate cu fișierele. Modulul corectează și extragerea textului din fișierele Markdown și text, astfel încât cuvintele cu diacritice să fie indexate corect.",
+    "features": [
+      "Origine: depozit GitHub (ramură, token opțional pentru depozit privat, subdirector opțional), arhivă ZIP, fluxuri RSS sau pagini urmărite. Meniu: AI › Configurare › Colecții de surse sau butonul inteligent Colecții de pe agent.",
+      "Fluxuri RSS: fiecare articol devine o sursă (site, dată, titlu, link, rezumatul din flux); articolele mai vechi decât retenția nu se adaugă, iar sursele lor se elimină; fluxurile paginate pot fi citite pe mai multe pagini; RSS 2.0 și Atom, fără entități externe.",
+      "Pagini urmărite: un text oficial lung republicat pe loc (ex. Codul fiscal adnotat ANAF) nu e copiat; liniile potrivite de modelul de actualizare dau starea paginii, iar fiecare stare nouă devine o sursă; stările vechi se șterg după retenție.",
+      "Selecție fișiere și împărțire: tipare de includere/excludere, rădăcină, împărțire pe titluri până la un nivel ales (numele sursei păstrează titlurile de deasupra), secțiuni eliminate; fișierele `*.rst` se convertesc în Markdown.",
+      "Linkuri pentru citări: sursele din GitHub trimit la fișier; un tipar Page URL trimite la un site publicat; opțiunea Public links scrie linkul sub titlul sursei și arată citările tuturor utilizatorilor, inclusiv vizitatorilor de livechat.",
+      "Text mai curat: imaginile se reduc la text alternativ, linkurile la textul lor.",
+      "Sincronizare incrementală: fișierele noi adaugă surse, cele modificate înlocuiesc doar secțiunile schimbate, cele șterse elimină sursele; fișierele neschimbate nu se descarcă, iar embeddings-urile rămân. Butonul Sincronizează pune lucrarea în coadă (cron, reia de unde s-a oprit); sincronizare zilnică opțională.",
+      "Limite de rată: cererile de embeddings refuzate sunt reluate după așteptarea cerută de furnizor; sursele eșuate sunt repuse în coadă (până la 3 ori).",
+      "Glosar de căutare pe agent (`termen[, variantă...] = sens`) adăugat întrebării înainte de căutare; setări de căutare (fragmente în context, un fragment per sursă) și fragmente rezervate pe o colecție mică.",
+      "Prefix de folder: numele surselor poate începe cu folderul fișierului (numele tehnic al modulului într-un wiki de module).",
+      "GitHub App în loc de token personal: ID aplicație și cheie `.pem` în Setări › Integrări, bifat pe fiecare colecție.",
+      "Detaliile pas cu pas și exemplele (wiki de module, legislație, știri legislative, documentația Odoo) sunt în fișa consultantului."
+    ],
+    "dependencies": [
+      "ai_agentic"
+    ],
+    "connections": [
+      "deltatech_ai_website_product"
+    ],
+    "text": "AI - Sincronizare surse (colecții Markdown)\ndeltatech_ai_source_sync\nAlimentează agenții AI din Odoo 20 Enterprise cu documentație Markdown ținută într-un depozit GitHub sau într-o arhivă ZIP, fără încărcarea fișierelor unul câte unul. O colecție de surse este legată de un agent și menține sursele agentului sincronizate cu fișierele. Modulul corectează și extragerea textului din fișierele Markdown și text, astfel încât cuvintele cu diacritice să fie indexate corect.\nOrigine: depozit GitHub (ramură, token opțional pentru depozit privat, subdirector opțional), arhivă ZIP, fluxuri RSS sau pagini urmărite. Meniu: AI › Configurare › Colecții de surse sau butonul inteligent Colecții de pe agent.\nFluxuri RSS: fiecare articol devine o sursă (site, dată, titlu, link, rezumatul din flux); articolele mai vechi decât retenția nu se adaugă, iar sursele lor se elimină; fluxurile paginate pot fi citite pe mai multe pagini; RSS 2.0 și Atom, fără entități externe.\nPagini urmărite: un text oficial lung republicat pe loc (ex. Codul fiscal adnotat ANAF) nu e copiat; liniile potrivite de modelul de actualizare dau starea paginii, iar fiecare stare nouă devine o sursă; stările vechi se șterg după retenție.\nSelecție fișiere și împărțire: tipare de includere/excludere, rădăcină, împărțire pe titluri până la un nivel ales (numele sursei păstrează titlurile de deasupra), secțiuni eliminate; fișierele `*.rst` se convertesc în Markdown.\nLinkuri pentru citări: sursele din GitHub trimit la fișier; un tipar Page URL trimite la un site publicat; opțiunea Public links scrie linkul sub titlul sursei și arată citările tuturor utilizatorilor, inclusiv vizitatorilor de livechat.\nText mai curat: imaginile se reduc la text alternativ, linkurile la textul lor.\nSincronizare incrementală: fișierele noi adaugă surse, cele modificate înlocuiesc doar secțiunile schimbate, cele șterse elimină sursele; fișierele neschimbate nu se descarcă, iar embeddings-urile rămân. Butonul Sincronizează pune lucrarea în coadă (cron, reia de unde s-a oprit); sincronizare zilnică opțională.\nLimite de rată: cererile de embeddings refuzate sunt reluate după așteptarea cerută de furnizor; sursele eșuate sunt repuse în coadă (până la 3 ori).\nGlosar de căutare pe agent (`termen[, variantă...] = sens`) adăugat întrebării înainte de căutare; setări de căutare (fragmente în context, un fragment per sursă) și fragmente rezervate pe o colecție mică.\nPrefix de folder: numele surselor poate începe cu folderul fișierului (numele tehnic al modulului într-un wiki de module).\nGitHub App în loc de token personal: ID aplicație și cheie `.pem` în Setări › Integrări, bifat pe fiecare colecție.\nDetaliile pas cu pas și exemplele (wiki de module, legislație, știri legislative, documentația Odoo) sunt în fișa consultantului."
+  },
+  {
+    "path": "deltatech_ai_website_product/index.md",
+    "module": "deltatech_ai_website_product",
+    "version": "20.0.1.2.4",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_ai_website_product",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_ai_website_product",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "AI - Asistent magazin online",
+    "summary": "Un agent AI din Odoo 20 Enterprise răspunde vizitatorilor magazinului online pe baza produselor publicate și citește în timp real prețul și disponibilitatea. Costul, furnizorii și notele interne nu sunt folosite niciodată.",
+    "features": [
+      "O sursă per produs: fiecare produs publicat devine sursă a agentului (nume, cod, categorii, atribute, descrierea paginii și câmpuri suplimentare alese pe agent, ex. marcă, specificații).",
+      "Sincronizare automată: un produs creat, modificat, publicat, depublicat sau arhivat se sincronizează după câteva minute; un cron zilnic reverifică tot, iar un catalog mare se procesează în pași.",
+      "Preț și disponibilitate live: unealta *AI: Shop Product Price and Availability* dă prețul din magazin (lista de prețuri, taxe ca în magazin), disponibilitatea (în stoc, la comandă, indisponibil) și linkul; skill-ul *Shop Assistant* o adaugă agentului — prețul și stocul vin doar din unealtă.",
+      "Căutare după model și an: unealta *AI: Shop Product Search* găsește produsele ale căror nume conțin toate cuvintele vizitatorului și păstrează pe cele ale căror ani de fabricație, citiți din nume, se potrivesc; fără ani, se cere verificarea compatibilității.",
+      "Fotografiile vizitatorilor: cu Citește fotografii, o poză trimisă în chat este descrisă de model (marcă, model, generație, ani, coduri), iar descrierea se adaugă întrebării; ce nu e sigur este marcat incert. Pozele se trimit furnizorului modelului.",
+      "Citări către magazin și suport pentru mai multe site-uri (un agent urmărește produsele unui site).",
+      "Configurare: în AI › Agenți, tab Magazin (site, produse, câmpuri suplimentare), skill-ul Shop Assistant pe agent, apoi regula de Website › Configurare › Live Chat (mai întâi pe un URL de test, ex. `?assistant=test`)."
+    ],
+    "dependencies": [
+      "website_sale",
+      "ai_agentic",
+      "deltatech_ai_source_sync"
+    ],
+    "connections": [
+      "deltatech_ai_website_product_image",
+      "deltatech_ai_source_sync"
+    ],
+    "text": "AI - Asistent magazin online\ndeltatech_ai_website_product\nUn agent AI din Odoo 20 Enterprise răspunde vizitatorilor magazinului online pe baza produselor publicate și citește în timp real prețul și disponibilitatea. Costul, furnizorii și notele interne nu sunt folosite niciodată.\nO sursă per produs: fiecare produs publicat devine sursă a agentului (nume, cod, categorii, atribute, descrierea paginii și câmpuri suplimentare alese pe agent, ex. marcă, specificații).\nSincronizare automată: un produs creat, modificat, publicat, depublicat sau arhivat se sincronizează după câteva minute; un cron zilnic reverifică tot, iar un catalog mare se procesează în pași.\nPreț și disponibilitate live: unealta *AI: Shop Product Price and Availability* dă prețul din magazin (lista de prețuri, taxe ca în magazin), disponibilitatea (în stoc, la comandă, indisponibil) și linkul; skill-ul *Shop Assistant* o adaugă agentului — prețul și stocul vin doar din unealtă.\nCăutare după model și an: unealta *AI: Shop Product Search* găsește produsele ale căror nume conțin toate cuvintele vizitatorului și păstrează pe cele ale căror ani de fabricație, citiți din nume, se potrivesc; fără ani, se cere verificarea compatibilității.\nFotografiile vizitatorilor: cu Citește fotografii, o poză trimisă în chat este descrisă de model (marcă, model, generație, ani, coduri), iar descrierea se adaugă întrebării; ce nu e sigur este marcat incert. Pozele se trimit furnizorului modelului.\nCitări către magazin și suport pentru mai multe site-uri (un agent urmărește produsele unui site).\nConfigurare: în AI › Agenți, tab Magazin (site, produse, câmpuri suplimentare), skill-ul Shop Assistant pe agent, apoi regula de Website › Configurare › Live Chat (mai întâi pe un URL de test, ex. `?assistant=test`)."
+  },
+  {
+    "path": "deltatech_ai_website_product_image/index.md",
+    "module": "deltatech_ai_website_product_image",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_ai_website_product_image",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_ai_website_product_image",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "AI - Asistent magazin: căutare după fotografie",
+    "summary": "Agentul AI al magazinului online găsește produsele care seamănă cu fotografia trimisă de vizitator în Live Chat: o piesă, o prindere, o decorațiune al cărei nume sau cod vizitatorul nu îl cunoaște. Fotografiile produselor și ale vizitatorilor sunt trimise către Google.",
+    "features": [
+      "Căutare vizuală: fotografia fiecărui produs urmărit de agent este transformată în vector de Gemini (`gemini-embedding-2`, cheia Google); fotografia vizitatorului este comparată cu ele, iar produsele cele mai asemănătoare ajung la agent cu scorul de similaritate, apoi agentul citește prețul și disponibilitatea cu uneltele asistentului de magazin.",
+      "Același fel, nu aceeași mărime: fotografia arată tipul produsului, nu dimensiunea; în teste pe 300 de produse, produsul corect a fost primul la 23 din 40 de poze și printre primele cinci la 34, iar fiecare ratare a fost același produs în altă mărime. Agentul cere dimensiunea sau codul.",
+      "Nimic asemănător: produsele sub Similaritate minimă (0,75 implicit) nu sunt date.",
+      "Sincronizare automată: o fotografie nouă sau schimbată se vectorizează după câteva minute; una neschimbată își păstrează vectorul; la atingerea cotei cheii sincronizarea continuă singură.",
+      "Împreună cu descrierea fotografiei: cu *Citește fotografii* al asistentului, agentul primește și descrierea, și produsele similare.",
+      "Configurare: cheia Gemini în Website › Configurare › Setări (sau `ODOO_AI_GEMINI_TOKEN`; pentru magazin se recomandă cheie plătită), apoi pe agent (tab Magazin) bifa Căutare după fotografie, Produse per fotografie (5) și Similaritate minimă; Sincronizează acum pornește imediat vectorizarea.",
+      "Utilizare: vizitatorul atașează poza în chat (+ › Atașează fișiere), cu sau fără întrebare."
+    ],
+    "dependencies": [
+      "deltatech_ai_website_product"
+    ],
+    "connections": [
+      "deltatech_ai_website_product"
+    ],
+    "text": "AI - Asistent magazin: căutare după fotografie\ndeltatech_ai_website_product_image\nAgentul AI al magazinului online găsește produsele care seamănă cu fotografia trimisă de vizitator în Live Chat: o piesă, o prindere, o decorațiune al cărei nume sau cod vizitatorul nu îl cunoaște. Fotografiile produselor și ale vizitatorilor sunt trimise către Google.\nCăutare vizuală: fotografia fiecărui produs urmărit de agent este transformată în vector de Gemini (`gemini-embedding-2`, cheia Google); fotografia vizitatorului este comparată cu ele, iar produsele cele mai asemănătoare ajung la agent cu scorul de similaritate, apoi agentul citește prețul și disponibilitatea cu uneltele asistentului de magazin.\nAcelași fel, nu aceeași mărime: fotografia arată tipul produsului, nu dimensiunea; în teste pe 300 de produse, produsul corect a fost primul la 23 din 40 de poze și printre primele cinci la 34, iar fiecare ratare a fost același produs în altă mărime. Agentul cere dimensiunea sau codul.\nNimic asemănător: produsele sub Similaritate minimă (0,75 implicit) nu sunt date.\nSincronizare automată: o fotografie nouă sau schimbată se vectorizează după câteva minute; una neschimbată își păstrează vectorul; la atingerea cotei cheii sincronizarea continuă singură.\nÎmpreună cu descrierea fotografiei: cu *Citește fotografii* al asistentului, agentul primește și descrierea, și produsele similare.\nConfigurare: cheia Gemini în Website › Configurare › Setări (sau `ODOO_AI_GEMINI_TOKEN`; pentru magazin se recomandă cheie plătită), apoi pe agent (tab Magazin) bifa Căutare după fotografie, Produse per fotografie (5) și Similaritate minimă; Sincronizează acum pornește imediat vectorizarea.\nUtilizare: vizitatorul atașează poza în chat (+ › Atașează fișiere), cu sau fără întrebare."
+  },
+  {
     "path": "deltatech_alternative/index.md",
     "module": "deltatech_alternative",
     "version": "19.0.2.1.1",
@@ -876,6 +993,32 @@
     "text": "Deltatech Analytic distribution enforcer\ndeltatech_analytic_distribution\nAcest modul impune completarea corectă a distribuției analitice pe facturile de la furnizori. Atunci când validarea este activată, fiecare linie de pe o factură de furnizor trebuie să aibă distribuția analitică completată integral, cu toate dimensiunile cerute (Locație, Departament, Linie de business), iar procentele de pe fiecare linie trebuie să însumeze exact 100%. Astfel se asigură o repartizare analitică completă și coerentă a cheltuielilor, evitând înregistrările incomplete care ar denatura analiza de costuri.\nFacturile de la furnizori vor cere ca distribuția analitică să însumeze 100% pe fiecare linie, iar toate câmpurile să fie completate (Locație, Departament, Linie de business).\nPentru a activa această validare se bifează opțiunea „Enable Analytic Distribution Validation\" din configurare, în blocul Vendor Bills (Facturi furnizori)."
   },
   {
+    "path": "deltatech_approvals_purchase_analytic/index.md",
+    "module": "deltatech_approvals_purchase_analytic",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_approvals_purchase_analytic",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_approvals_purchase_analytic",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Aprobări achiziții: centru de cost",
+    "summary": "Adaugă **centrul de cost** (distribuția analitică) pe cererile de aprobare de achiziție din aplicația *Aprobări*. Solicitantul îl alege o singură dată, pe cerere; când cererea aprobată creează cererea de ofertă (RFQ), liniile RFQ preiau aceeași distribuție, iar de acolo ajunge și pe factura furnizorului. Cumpărătorul nu mai trebuie să seteze distribuția analitică pe fiecare linie.",
+    "features": [
+      "Câmpul Centru de cost pe cererile din categoriile cu *Creează RFQ-uri*, cu widgetul standard de distribuție analitică (mai multe conturi și procente); editabil doar cât cererea este *De trimis*, doar citire după aprobare.",
+      "Distribuția este transmisă liniilor RFQ create sau actualizate de cerere, cât timp RFQ-ul nu este confirmat.",
+      "Funcționează cu RFQ-urile alternative ale unui apel de oferte, care copiază distribuția liniei.",
+      "O cerere fără centru de cost creează RFQ-ul ca înainte (rămâne doar distribuția unui model analitic potrivit, dacă există).",
+      "Coloana Distribuție analitică a liniilor comenzii este opțională, se afișează din comutatorul de coloane.",
+      "Configurare: contabilitate analitică activă și conturile analitice create; categorie de aprobare cu *Creează RFQ-uri* (produs și cantitate devin obligatorii). Fluxul pas cu pas este în fișa consultantului."
+    ],
+    "dependencies": [
+      "approvals_purchase",
+      "analytic"
+    ],
+    "connections": [
+      "deltatech_purchase_tender"
+    ],
+    "text": "Aprobări achiziții: centru de cost\ndeltatech_approvals_purchase_analytic\nAdaugă **centrul de cost** (distribuția analitică) pe cererile de aprobare de achiziție din aplicația *Aprobări*. Solicitantul îl alege o singură dată, pe cerere; când cererea aprobată creează cererea de ofertă (RFQ), liniile RFQ preiau aceeași distribuție, iar de acolo ajunge și pe factura furnizorului. Cumpărătorul nu mai trebuie să seteze distribuția analitică pe fiecare linie.\nCâmpul Centru de cost pe cererile din categoriile cu *Creează RFQ-uri*, cu widgetul standard de distribuție analitică (mai multe conturi și procente); editabil doar cât cererea este *De trimis*, doar citire după aprobare.\nDistribuția este transmisă liniilor RFQ create sau actualizate de cerere, cât timp RFQ-ul nu este confirmat.\nFuncționează cu RFQ-urile alternative ale unui apel de oferte, care copiază distribuția liniei.\nO cerere fără centru de cost creează RFQ-ul ca înainte (rămâne doar distribuția unui model analitic potrivit, dacă există).\nColoana Distribuție analitică a liniilor comenzii este opțională, se afișează din comutatorul de coloane.\nConfigurare: contabilitate analitică activă și conturile analitice create; categorie de aprobare cu *Creează RFQ-uri* (produs și cantitate devin obligatorii). Fluxul pas cu pas este în fișa consultantului."
+  },
+  {
     "path": "deltatech_auto_reorder_rule/index.md",
     "module": "deltatech_auto_reorder_rule",
     "version": "19.0.0.1.3",
@@ -900,6 +1043,34 @@
       "sale_stock"
     ],
     "text": "Deltatech Auto Reorder Rule\ndeltatech_auto_reorder_rule\nModulul automatizează crearea regulilor de reaprovizionare (reordering rules) pentru produse. La adăugarea unui produs nou, modulul generează automat o regulă de reaprovizionare cu valori implicite, eliminând astfel un pas manual repetitiv. Pentru produsele deja existente, oferă o metodă dedicată prin care regulile pot fi create în masă. Astfel, echipa de achiziții și logistică se asigură că fiecare produs gestionat are definite pragurile de stoc necesare pentru reaprovizionarea automată.\nCreează automat o regulă de reaprovizionare cu valori implicite atunci când este creat un produs nou.\nOferă metoda `create_rule()` pe modelul `product.product` pentru a crea reguli pentru produsele deja existente.\nRegulile sunt create doar pentru produsele de tip stocabil (`type='product'`)."
+  },
+  {
+    "path": "deltatech_auto_translate/index.md",
+    "module": "deltatech_auto_translate",
+    "version": "20.0.1.0.2",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_auto_translate",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_auto_translate",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_auto_translate",
+    "summary": "Traduce automat câmpurile traductibile (text simplu și HTML) cu framework-ul AI nativ din Odoo (modulul `ai`, Enterprise). Cererile merg către Odoo AI (credite IAP), care alege modelul. Traducerile sunt reținute în cache, deci nu se plătesc de două ori, iar corecțiile manuale ale utilizatorilor sunt respectate.",
+    "features": [
+      "Joburi de traducere (Setări → Auto Translate): definesc modelul, câmpurile traductibile, domeniul și, opțional, limbile țintă; fiecare job are propriul cursor de progres.",
+      "Acțiune programată instalată inactivă, care rulează joburile în loturi, cu buget de timp; butonul Run now de pe job face același lucru la cerere.",
+      "Textele unei rulări sunt grupate și trimise într-un singur set de cereri pe limbă.",
+      "Cache de traduceri și validarea tagurilor HTML: o traducere cu taguri sau atribute diferite este respinsă.",
+      "Corecțiile manuale sunt păstrate: la câmpurile simple se rețin hash-ul sursei și al traducerii scrise; la câmpurile HTML se retraduc doar propozițiile schimbate în limba sursă.",
+      "Activare din *Setări → Integrări → Traducere automată*.",
+      "Alte module pot apela `env[\"deltatech.translate.service\"].translate_records(records, field_names)` și pot extinde `_system_prompt` pentru terminologia proprie.",
+      "Fluxul pas-cu-pas este în [fișa consultantului](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "ai",
+      "base_setup"
+    ],
+    "connections": [
+      "ai"
+    ],
+    "text": "deltatech_auto_translate\ndeltatech_auto_translate\nTraduce automat câmpurile traductibile (text simplu și HTML) cu framework-ul AI nativ din Odoo (modulul `ai`, Enterprise). Cererile merg către Odoo AI (credite IAP), care alege modelul. Traducerile sunt reținute în cache, deci nu se plătesc de două ori, iar corecțiile manuale ale utilizatorilor sunt respectate.\nJoburi de traducere (Setări → Auto Translate): definesc modelul, câmpurile traductibile, domeniul și, opțional, limbile țintă; fiecare job are propriul cursor de progres.\nAcțiune programată instalată inactivă, care rulează joburile în loturi, cu buget de timp; butonul Run now de pe job face același lucru la cerere.\nTextele unei rulări sunt grupate și trimise într-un singur set de cereri pe limbă.\nCache de traduceri și validarea tagurilor HTML: o traducere cu taguri sau atribute diferite este respinsă.\nCorecțiile manuale sunt păstrate: la câmpurile simple se rețin hash-ul sursei și al traducerii scrise; la câmpurile HTML se retraduc doar propozițiile schimbate în limba sursă.\nActivare din *Setări → Integrări → Traducere automată*.\nAlte module pot apela `env[\"deltatech.translate.service\"].translate_records(records, field_names)` și pot extinde `_system_prompt` pentru terminologia proprie.\nFluxul pas-cu-pas este în [fișa consultantului](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_average_payment_period/index.md",
@@ -1382,6 +1553,31 @@
       "calendar"
     ],
     "text": "deltatech_calendar_caldav\ndeltatech_calendar_caldav\nModulul sincronizează calendarul Odoo (`calendar.event`) cu un server CalDAV extern (cPanel/Horde/SOGo, Nextcloud, sau orice server care implementează standardul CalDAV RFC 4791), în ambele direcții. Un cron (sau butonul „Sync Now\") aduce evenimentele de pe server în Odoo; crearea, modificarea sau ștergerea unui eveniment Odoo pentru un utilizator cu cont CalDAV configurat trimite imediat schimbarea pe server. Spre deosebire de Google Calendar/Microsoft 365 (sincronizate nativ de Odoo), CalDAV nu are conector nativ — acest modul umple acel gol, generic, fără cod specific per furnizor.\nSincronizare bidirecțională CalDAV ↔ Odoo (pull programat/manual + push imediat la create/write/unlink).\nEvenimente recurente: o serie recurentă Odoo se trimite ca o singură resursă CalDAV (eveniment „master\" cu regulă `RRULE`), nu ca evenimente separate; ocurențele aduse de pe server sunt expandate și importate individual, mapate pe `calendar.recurrence` nativ al Odoo (nu mai apar ca evenimente „orfane\").\nReminder-e: alarmele Odoo (`calendar.alarm`) se mapează pe/din componente `VALARM` (notificare → `DISPLAY`, email → `EMAIL`).\nParticipanți: `partner_ids`/organizatorul se mapează pe/din `ATTENDEE`/`ORGANIZER`, cu potrivire automată a contactelor după adresa de email (creare automată dacă lipsesc).\nDetectare conflicte (ETag): înainte de a suprascrie un eveniment pe server, verifică dacă acesta s-a schimbat de la ultima sincronizare; dacă da, push-ul e sărit (serverul câștigă), nu suprascrie orbește.\nDetectare schimbări (CTag): verifică marca de schimbare a colecției înainte de fiecare sincronizare; dacă nimic nu s-a schimbat, sare peste pull-ul complet.\nPull-ul scrie doar câmpurile care s-au schimbat efectiv, ca sincronizarea să nu rupă o serie recurentă existentă rescriind inutil `start`/`stop` pe ocurențe neschimbate."
+  },
+  {
+    "path": "deltatech_cash_flow_forecast/index.md",
+    "module": "deltatech_cash_flow_forecast",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_cash_flow_forecast",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_cash_flow_forecast",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_cash_flow_forecast",
+    "summary": "Arată încasările și plățile așteptate în zilele următoare, pe baza scadențelor facturilor și a bonurilor deschise, precum și soldul de numerar la care duc. Ajută la anticiparea fluxului de numerar fără rapoarte externe.",
+    "features": [
+      "Previziune pe scadență: orice linie postată pe un cont de creanțe sau datorii cu sumă rămasă de plătit (facturi clienți, facturi furnizori, dar și salarii sau alți creditori) apare la data scadenței; conturile non-comerciale (TVA de plată sau de recuperat) sunt excluse. Se lucrează pe suma reziduală în moneda companiei, deci plățile parțiale, plățile nereconciliate și notele de credit reduc sumele.",
+      "Restanțe pe ziua de azi: elementele scadente deja sunt afișate la data de azi; filtrul Overdue le izolează.",
+      "Grafic încasări și plăți: bare zilnice (încasări deasupra axei, plăți dedesubt), pivot pe zi, săptămână sau lună și lista documentelor cu buton de deschidere.",
+      "Sold de numerar estimat: linie cumulativă care pornește de la soldul curent al conturilor din jurnalele de bancă și numerar și adaugă încasări minus plăți, zi cu zi.",
+      "Filtre pe următoarele 7, 30 și 90 de zile, pe partener, jurnal și companie; regulă multi-company.",
+      "Meniu: Contabilitate / Raportare / Management / Cash Flow Forecast și Projected Cash Balance."
+    ],
+    "dependencies": [
+      "account"
+    ],
+    "connections": [
+      "account"
+    ],
+    "text": "deltatech_cash_flow_forecast\ndeltatech_cash_flow_forecast\nArată încasările și plățile așteptate în zilele următoare, pe baza scadențelor facturilor și a bonurilor deschise, precum și soldul de numerar la care duc. Ajută la anticiparea fluxului de numerar fără rapoarte externe.\nPreviziune pe scadență: orice linie postată pe un cont de creanțe sau datorii cu sumă rămasă de plătit (facturi clienți, facturi furnizori, dar și salarii sau alți creditori) apare la data scadenței; conturile non-comerciale (TVA de plată sau de recuperat) sunt excluse. Se lucrează pe suma reziduală în moneda companiei, deci plățile parțiale, plățile nereconciliate și notele de credit reduc sumele.\nRestanțe pe ziua de azi: elementele scadente deja sunt afișate la data de azi; filtrul Overdue le izolează.\nGrafic încasări și plăți: bare zilnice (încasări deasupra axei, plăți dedesubt), pivot pe zi, săptămână sau lună și lista documentelor cu buton de deschidere.\nSold de numerar estimat: linie cumulativă care pornește de la soldul curent al conturilor din jurnalele de bancă și numerar și adaugă încasări minus plăți, zi cu zi.\nFiltre pe următoarele 7, 30 și 90 de zile, pe partener, jurnal și companie; regulă multi-company.\nMeniu: Contabilitate / Raportare / Management / Cash Flow Forecast și Projected Cash Balance."
   },
   {
     "path": "deltatech_cash_statement/index.md",
@@ -2082,6 +2278,72 @@
       "deltatech_customer_map"
     ],
     "text": "deltatech_customer_segment\ndeltatech_customer_segment\nÎn fiecare noapte modulul calculează, pentru fiecare client și companie, unde se află clientul în portofoliul de vânzări: ritmul de cumpărare, vânzările, soldul restant și segmentul de portofoliu. Rezultatele stau într-un tabel propriu și servesc drept bază pentru tabloul de analiză a clienților și pentru misiunile săptămânale de vânzări.\nRitm de cumpărare: numărul mediu de zile între zilele de cumpărare, măsurat pe istoricul clientului, plus zilele de tăcere; mai multe facturi în aceeași zi contează o singură achiziție.\nSegment de ritm: nou, activ, în risc, adormit sau pierdut, raportat la ritmul propriu al clientului, nu la media companiei.\nVânzări: total, ultimele 12 luni, perioada curentă față de precedentă, achiziția medie, creșterea.\nCreanțe: sold deschis, restanță, număr de facturi restante și vechimea celei mai vechi, din liniile deschise ale conturilor de client; plățile nepotrivite încă reduc restanța.\nClasificare de portofoliu: client de top, în creștere, potențial ridicat, comenzi mici, stabil, în scădere, inactiv (trei niveluri) sau risc de plată, plus scor de risc și de potențial.\nDate din facturile postate (note de credit scăzute) sau din comenzile confirmate, fără TVA, în moneda companiei; vânzările contactelor se adună la companie.\nMeniu *Vânzări > Portofoliu clienți > Segmente clienți*, filtre (În scădere, Inactiv, Risc de plată, În risc, Cumpărat o singură dată, Clienții mei), vedere pivot; din fișa partenerului, *Acțiune > Customer Segment*.\nRoluri: *Own customers* (doar clienții proprii) și *All customers* (toți clienții și editarea pragurilor), acordate din *Setări > Utilizatori > Customer Portfolio*.\nSetări în *Vânzări > Portofoliu clienți > Setări*: sursa (facturi/comenzi), excluderea persoanelor fizice, prefixele conturilor de venituri (`70` implicit), perioada de comparație, pragurile; buton *Recompute now* sau acțiunea programată nocturnă."
+  },
+  {
+    "path": "deltatech_dashboard_builder/index.md",
+    "module": "deltatech_dashboard_builder",
+    "version": "20.0.1.3.1",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_dashboard_builder",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_dashboard_builder",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_dashboard_builder",
+    "summary": "Permite construirea fără cod de tablouri de bord cu KPI-uri și grafice pe orice model Odoo. Un tablou este un set de widgeturi care numără, însumează sau fac media înregistrărilor unui model, afișate ca număr, indicator, grafic sau tabel. Fiecare utilizator vede doar datele la care are dreptul.",
+    "features": [
+      "Mereu datele utilizatorului: widgeturile se calculează cu drepturile și companiile celui care privește tabloul (citiri grupate); un widget pe un model necitibil este golit, nu expus.",
+      "De la număr la înregistrări: click pe un KPI, o bară sau un rând de tabel deschide lista înregistrărilor din spate.",
+      "Aceleași carduri peste tot: KPI-urile folosesc cardurile din `deltatech_web_kpi_cards` (numere compacte, variație, progres, trend, mod luminos/întunecat).",
+      "KPI din KPI: formule între KPI-urile tabloului (ex. „companii / parteneri * 100\"), comparate cu perioada anterioară.",
+      "Fără goluri în timp: graficele pe lună/săptămână/zi arată perioadele fără înregistrări ca zero.",
+      "Altă reprezentare: orice grafic sau tabel poate fi redesenat ca alt tip din antet, doar cât timp e deschis tabloul.",
+      "Perioade: un selector unic (luna aceasta, trimestrul trecut, ultimele 12 luni etc.) se aplică widgeturilor cu câmp de perioadă; KPI-ul arată variația față de perioada anterioară.",
+      "Ținte, instantanee și alerte: țintă cu bară de progres, instantaneu zilnic pentru trend și alerte la depășirea unui prag (notifică o singură dată, se rearmează la revenire).",
+      "Mod editare: constructorii îl activează din bara de instrumente și modifică widgeturile direct unde sunt desenate (tragere, redimensionare, meniul *Size*).",
+      "Partajare și prezentare: vizibilitate pe grupuri, intrare proprie de meniu (Add to menu), ecran complet, export PNG sau CSV.",
+      "Meniu: KPI Dashboards ▸ Configuration ▸ Dashboards. Grupurile *Dashboards / Builder* (creează) și *Viewer* (doar vizualizează); alertele se calculează cu drepturile utilizatorului din Computed as.",
+      "Fluxul detaliat este în [fișa consultantului](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "web",
+      "mail",
+      "deltatech_web_kpi_cards"
+    ],
+    "connections": [
+      "deltatech_dashboard_builder_ai",
+      "deltatech_web_kpi_cards"
+    ],
+    "text": "deltatech_dashboard_builder\ndeltatech_dashboard_builder\nPermite construirea fără cod de tablouri de bord cu KPI-uri și grafice pe orice model Odoo. Un tablou este un set de widgeturi care numără, însumează sau fac media înregistrărilor unui model, afișate ca număr, indicator, grafic sau tabel. Fiecare utilizator vede doar datele la care are dreptul.\nMereu datele utilizatorului: widgeturile se calculează cu drepturile și companiile celui care privește tabloul (citiri grupate); un widget pe un model necitibil este golit, nu expus.\nDe la număr la înregistrări: click pe un KPI, o bară sau un rând de tabel deschide lista înregistrărilor din spate.\nAceleași carduri peste tot: KPI-urile folosesc cardurile din `deltatech_web_kpi_cards` (numere compacte, variație, progres, trend, mod luminos/întunecat).\nKPI din KPI: formule între KPI-urile tabloului (ex. „companii / parteneri * 100\"), comparate cu perioada anterioară.\nFără goluri în timp: graficele pe lună/săptămână/zi arată perioadele fără înregistrări ca zero.\nAltă reprezentare: orice grafic sau tabel poate fi redesenat ca alt tip din antet, doar cât timp e deschis tabloul.\nPerioade: un selector unic (luna aceasta, trimestrul trecut, ultimele 12 luni etc.) se aplică widgeturilor cu câmp de perioadă; KPI-ul arată variația față de perioada anterioară.\nȚinte, instantanee și alerte: țintă cu bară de progres, instantaneu zilnic pentru trend și alerte la depășirea unui prag (notifică o singură dată, se rearmează la revenire).\nMod editare: constructorii îl activează din bara de instrumente și modifică widgeturile direct unde sunt desenate (tragere, redimensionare, meniul *Size*).\nPartajare și prezentare: vizibilitate pe grupuri, intrare proprie de meniu (Add to menu), ecran complet, export PNG sau CSV.\nMeniu: KPI Dashboards ▸ Configuration ▸ Dashboards. Grupurile *Dashboards / Builder* (creează) și *Viewer* (doar vizualizează); alertele se calculează cu drepturile utilizatorului din Computed as.\nFluxul detaliat este în [fișa consultantului](FISA_CONSULTANT.md)."
+  },
+  {
+    "path": "deltatech_dashboard_builder_ai/index.md",
+    "module": "deltatech_dashboard_builder_ai",
+    "version": "20.0.1.3.1",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_dashboard_builder_ai",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_dashboard_builder_ai",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_dashboard_builder_ai",
+    "summary": "Adaugă un agent Odoo AI, **Dashboard Assistant**, care redactează tablouri de bord la cerere („vânzări pe lună și top clienți\") și modifică tablourile existente. Asistentul vede doar structura modelelor, niciodată datele: tabloul este calculat de Odoo, cu drepturile utilizatorului, la deschidere.",
+    "features": [
+      "Vede structura, nu datele: AI-ul primește doar nume de modele și câmpuri; nicio înregistrare sau cifră nu pleacă spre serviciul AI.",
+      "Ciornă, nu surpriză: rezultatul este o ciornă vizibilă doar constructorilor, care o verifică și apasă Publish.",
+      "Verificare pe baza reală: fiecare model și câmp propus este validat (inclusiv tipul); un widget greșit anulează întreaga propunere, iar asistentul află motivul și corectează.",
+      "Editează tablouri existente: citește structura (widgeturi și setări), apoi modifică, șterge sau reordonează widgeturi, redenumește tabloul sau schimbă perioada; modificarea e „totul sau nimic\", un tablou publicat rămâne publicat, iar chatterul păstrează o notă.",
+      "Fiecare widget își amintește de ce există: cererile care l-au creat sunt păstrate (AI context); în modul editare, butonul AI al widgetului deschide asistentul pe acel widget.",
+      "Formule între KPI-uri (marjă, valoare medie a comenzii).",
+      "Doar drepturile utilizatorului: uneltele rulează ca utilizatorul; fără grupul *Dashboards / Builder* cererea este refuzată.",
+      "Doar propria abilitate: agentul primește doar skill-ul *Dashboard builder*, nu pe cele native care caută și modifică înregistrări.",
+      "Explicarea cifrelor este opțională: skill-ul *Dashboard insights (sends figures to the AI provider)* nu e legat de niciun agent; atașarea lui este decizia de a trimite cifrele către AI.",
+      "Utilizare: AI ▸ Agents ▸ Dashboard Assistant; ciornele apar în KPI Dashboards ▸ Configuration ▸ Dashboards cu panglica Draft. Rulează pe Odoo AI (`ai`, `ai_agentic`, Enterprise) și consumă credite.",
+      "Fluxul detaliat este în [fișa consultantului](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "deltatech_dashboard_builder",
+      "ai_agentic"
+    ],
+    "connections": [
+      "ai",
+      "deltatech_web_kpi_cards"
+    ],
+    "text": "deltatech_dashboard_builder_ai\ndeltatech_dashboard_builder_ai\nAdaugă un agent Odoo AI, **Dashboard Assistant**, care redactează tablouri de bord la cerere („vânzări pe lună și top clienți\") și modifică tablourile existente. Asistentul vede doar structura modelelor, niciodată datele: tabloul este calculat de Odoo, cu drepturile utilizatorului, la deschidere.\nVede structura, nu datele: AI-ul primește doar nume de modele și câmpuri; nicio înregistrare sau cifră nu pleacă spre serviciul AI.\nCiornă, nu surpriză: rezultatul este o ciornă vizibilă doar constructorilor, care o verifică și apasă Publish.\nVerificare pe baza reală: fiecare model și câmp propus este validat (inclusiv tipul); un widget greșit anulează întreaga propunere, iar asistentul află motivul și corectează.\nEditează tablouri existente: citește structura (widgeturi și setări), apoi modifică, șterge sau reordonează widgeturi, redenumește tabloul sau schimbă perioada; modificarea e „totul sau nimic\", un tablou publicat rămâne publicat, iar chatterul păstrează o notă.\nFiecare widget își amintește de ce există: cererile care l-au creat sunt păstrate (AI context); în modul editare, butonul AI al widgetului deschide asistentul pe acel widget.\nFormule între KPI-uri (marjă, valoare medie a comenzii).\nDoar drepturile utilizatorului: uneltele rulează ca utilizatorul; fără grupul *Dashboards / Builder* cererea este refuzată.\nDoar propria abilitate: agentul primește doar skill-ul *Dashboard builder*, nu pe cele native care caută și modifică înregistrări.\nExplicarea cifrelor este opțională: skill-ul *Dashboard insights (sends figures to the AI provider)* nu e legat de niciun agent; atașarea lui este decizia de a trimite cifrele către AI.\nUtilizare: AI ▸ Agents ▸ Dashboard Assistant; ciornele apar în KPI Dashboards ▸ Configuration ▸ Dashboards cu panglica Draft. Rulează pe Odoo AI (`ai`, `ai_agentic`, Enterprise) și consumă credite.\nFluxul detaliat este în [fișa consultantului](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_data_sheet/index.md",
@@ -3769,6 +4031,40 @@
     "text": "Products Feed\ndeltatech_feed\nModulul Products Feed este o extensie Odoo dezvoltată de Terrabit/Deltatech care permite generarea și administrarea de feed-uri de produse pentru diverse platforme de e-commerce și canale de marketing. Modulul simplifică procesul de creare a exporturilor standardizate de date despre produse, în conformitate cu cerințele mai multor marketplace-uri online și platforme de publicitate. Servește ca punte între catalogul de produse din Odoo și platformele externe de vânzare și promovare, permițând companiilor să gestioneze datele de produs într-un singur loc și să le distribuie eficient pe mai multe canale.\nGenerarea de feed-uri multi-platformă: creează feed-uri standardizate de produse pentru mai multe platforme, printre care Google Merchant Center, Facebook Catalog, Bizoo, Compari, 2performant și VidaXL.\nFormate de feed personalizabile: suportă diferite formate și specificații cerute de fiecare platformă în parte.\nOptimizarea datelor de produs: asigură formatarea și optimizarea corectă a datelor de produs pentru fiecare platformă țintă.\nGenerare automată a feed-urilor: simplifică crearea și actualizarea periodică a feed-urilor.\nAdministrarea listelor de produse: instrumente pentru organizarea și gruparea produselor pe liste destinate diferitelor exporturi de feed.\nIntegrare cu website-ul: integrare cu funcționalitatea de website și e-commerce din Odoo."
   },
   {
+    "path": "deltatech_financial_analysis/index.md",
+    "module": "deltatech_financial_analysis",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_financial_analysis",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_financial_analysis",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_financial_analysis",
+    "summary": "După închiderea lunii, arată într-o singură pagină cum a mers și ce s-a schimbat. Citește indicatorii unei luni, ai unui trimestru, ai anului până la zi sau ai unui an fiscal din balanța de verificare, îi compară cu perioadele anterioare și listează abaterile importante, cu conturile și partenerii din spate. Spune și dacă perioada este cu adevărat închisă, ca cifrele provizorii să nu fie citite drept finale.",
+    "features": [
+      "Indicatori din balanță: cifră de afaceri, marjă brută, EBITDA, rezultat operațional, financiar și net, numerar, creanțe, stocuri, datorii, datorie financiară, capitaluri proprii, capital de lucru, plus marje, lichiditate, solvabilitate și rotații (DSO, DIO, DPO, ciclul de conversie a numerarului).",
+      "Comparații pe perioade: luna față de luna anterioară, aceeași lună din anul trecut și cumulat anul trecut; trimestrul față de cel anterior și de același trimestru anul trecut, cu trendul ultimelor cinci trimestre; anul curent față de doi ani anteriori.",
+      "Preț, volum și mix: abaterea cifrei de afaceri sau a marjei se descompune în volum, preț și mix pe categorii de produse, categorii noi/dispărute și costuri; cauzele însumează abaterea.",
+      "Doar abateri materiale: se raportează abaterea care depășește atât un prag procentual, cât și unul valoric (parte din cifra de afaceri), setate pe companie; fiecare e marcată favorabilă sau nu și explicată prin conturile și partenerii principali.",
+      "Alerte: capitaluri proprii negative sau sub jumătate din capitalul subscris, lichiditate curentă sub 1 și praguri proprii pe indicator.",
+      "Verificarea închiderii perioadei: citește statusul din lista de închidere lunară din [l10n_ro_period_close_enhanced](../l10n_ro_period_close_enhanced/index.md) sau, în lipsa ei, caută note în ciornă, linii bancare nereconciliate, sold pe 473 și sold creditor la casă. O perioadă neînchisă apare ca provizorie.",
+      "Controale: rezultatul este verificat față de soldul claselor 6 și 7, se afișează contul de suspensie bancar și soldurile partenerilor inversate; analiza anuală se verifică față de total active (F10).",
+      "Mapare editabilă: liniile de bază sunt un raport contabil (*Financial Analysis Base (RO)*) pe planul de conturi românesc, cu drill-down; contabilul poate schimba conturile și formulele fără cod.",
+      "Închiderile lunare tratate: închiderea contului de profit și pierdere (6/7 → 121) este lăsată deoparte; închiderea TVA rămâne în solduri.",
+      "Unelte pentru AI și MCP: metode doar-citire (indicatori, trend, explicarea abaterii, vechimea creanțelor/datoriilor, statusul închiderii), declarabile pentru serverul MCP (`mcp_fa_indicators`, `mcp_fa_trend`, `mcp_fa_variance_drilldown`, `mcp_fa_aging`, `mcp_fa_close_status`).",
+      "Validare și tipărire: analiza validată se blochează; raportul PDF conține indicatorii, abaterile și controalele.",
+      "Utilizare: Accounting → Reporting → Financial Analysis (tip perioadă Month/Quarter/Year to Date/Year, apoi Compute, Validate, Print); praguri în Accounting → Configuration → Settings → Financial Analysis; indicatori în Accounting → Configuration → Financial Analysis Indicators.",
+      "Fluxul detaliat este în [fișa consultantului](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "account_reports",
+      "deltatech_web_kpi_cards"
+    ],
+    "connections": [
+      "l10n_ro_period_close_enhanced",
+      "deltatech_mcp_server"
+    ],
+    "text": "deltatech_financial_analysis\ndeltatech_financial_analysis\nDupă închiderea lunii, arată într-o singură pagină cum a mers și ce s-a schimbat. Citește indicatorii unei luni, ai unui trimestru, ai anului până la zi sau ai unui an fiscal din balanța de verificare, îi compară cu perioadele anterioare și listează abaterile importante, cu conturile și partenerii din spate. Spune și dacă perioada este cu adevărat închisă, ca cifrele provizorii să nu fie citite drept finale.\nIndicatori din balanță: cifră de afaceri, marjă brută, EBITDA, rezultat operațional, financiar și net, numerar, creanțe, stocuri, datorii, datorie financiară, capitaluri proprii, capital de lucru, plus marje, lichiditate, solvabilitate și rotații (DSO, DIO, DPO, ciclul de conversie a numerarului).\nComparații pe perioade: luna față de luna anterioară, aceeași lună din anul trecut și cumulat anul trecut; trimestrul față de cel anterior și de același trimestru anul trecut, cu trendul ultimelor cinci trimestre; anul curent față de doi ani anteriori.\nPreț, volum și mix: abaterea cifrei de afaceri sau a marjei se descompune în volum, preț și mix pe categorii de produse, categorii noi/dispărute și costuri; cauzele însumează abaterea.\nDoar abateri materiale: se raportează abaterea care depășește atât un prag procentual, cât și unul valoric (parte din cifra de afaceri), setate pe companie; fiecare e marcată favorabilă sau nu și explicată prin conturile și partenerii principali.\nAlerte: capitaluri proprii negative sau sub jumătate din capitalul subscris, lichiditate curentă sub 1 și praguri proprii pe indicator.\nVerificarea închiderii perioadei: citește statusul din lista de închidere lunară din [l10n_ro_period_close_enhanced](../l10n_ro_period_close_enhanced/index.md) sau, în lipsa ei, caută note în ciornă, linii bancare nereconciliate, sold pe 473 și sold creditor la casă. O perioadă neînchisă apare ca provizorie.\nControale: rezultatul este verificat față de soldul claselor 6 și 7, se afișează contul de suspensie bancar și soldurile partenerilor inversate; analiza anuală se verifică față de total active (F10).\nMapare editabilă: liniile de bază sunt un raport contabil (*Financial Analysis Base (RO)*) pe planul de conturi românesc, cu drill-down; contabilul poate schimba conturile și formulele fără cod.\nÎnchiderile lunare tratate: închiderea contului de profit și pierdere (6/7 → 121) este lăsată deoparte; închiderea TVA rămâne în solduri.\nUnelte pentru AI și MCP: metode doar-citire (indicatori, trend, explicarea abaterii, vechimea creanțelor/datoriilor, statusul închiderii), declarabile pentru serverul MCP (`mcp_fa_indicators`, `mcp_fa_trend`, `mcp_fa_variance_drilldown`, `mcp_fa_aging`, `mcp_fa_close_status`).\nValidare și tipărire: analiza validată se blochează; raportul PDF conține indicatorii, abaterile și controalele.\nUtilizare: Accounting → Reporting → Financial Analysis (tip perioadă Month/Quarter/Year to Date/Year, apoi Compute, Validate, Print); praguri în Accounting → Configuration → Settings → Financial Analysis; indicatori în Accounting → Configuration → Financial Analysis Indicators.\nFluxul detaliat este în [fișa consultantului](FISA_CONSULTANT.md)."
+  },
+  {
     "path": "deltatech_followup/index.md",
     "module": "deltatech_followup",
     "version": "19.0.0.1.1",
@@ -3857,6 +4153,29 @@
     "text": "Helpdesk Tag Primary & Team Filter\ndeltatech_helpdesk_tag_primary\nModulul aduce o organizare pe două niveluri a etichetelor (tag-urilor) folosite la clasificarea tichetelor din Helpdesk. Pe lângă eticheta standard, fiecare etichetă poate fi marcată ca subordonată unei etichete principale și poate fi asociată unei anumite echipe Helpdesk. Astfel, atunci când se completează un tichet, lista de etichete disponibilă devine mai scurtă și mai relevantă: utilizatorul vede întâi doar etichetele principale potrivite pentru echipa tichetului, iar apoi un câmp suplimentar de etichete secundare, dependente de selecția făcută. Rezultatul este o taxonomie mai curată a tichetelor și o selecție mai rapidă și mai corectă pentru agenții de suport.\nAdaugă pe eticheta de Helpdesk două câmpuri noi: echipa Helpdesk și eticheta principală.\nÎn câmpul standard de etichete al tichetului afișează doar etichetele care nu au o etichetă principală setată și care aparțin echipei tichetului sau nu au echipă asociată.\nDupă completarea etichetelor standard, afișează un câmp pentru etichete secundare, unde pot fi adăugate doar etichetele care au ca etichetă principală una dintre etichetele alese în câmpul standard."
   },
   {
+    "path": "deltatech_hr_holidays_report_access/index.md",
+    "module": "deltatech_hr_holidays_report_access",
+    "version": "20.0.0.0.2",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_hr_holidays_report_access",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_hr_holidays_report_access",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Acces Prezentare Generală Concedii",
+    "summary": "În Odoo standard, ecranul *Time Off → Overview* arată concediile întregii companii oricărui utilizator intern, iar filtrul *My Team* este doar o căutare. Modulul adaugă aceleași reguli de citire pe care le are deja `hr.leave`, astfel încât fiecare utilizator să vadă doar concediile la care are dreptul: ale sale, ale echipei pe care o aprobă sau, pentru administratori, ale întregii companii.",
+    "features": [
+      "Angajații văd în prezentarea generală doar propriile concedii.",
+      "Aprobatorii de concedii (grupul *Time Off Responsible*) văd concediile proprii și ale angajaților pe care îi aprobă.",
+      "Responsabilii (*Officer*) și administratorii modulului Time Off văd toată compania.",
+      "Fără configurare dedicată: grupul *Time Off Responsible* se atribuie automat când un utilizator este setat ca aprobator în câmpul *Time Off* (fila *Settings*, secțiunea *Approvers*) al unui angajat; pentru a da unei persoane vizibilitate asupra unei echipe, se setează persoana respectivă ca aprobator pe fiecare angajat din echipă."
+    ],
+    "dependencies": [
+      "hr_holidays"
+    ],
+    "connections": [
+      "hr_holidays"
+    ],
+    "text": "Acces Prezentare Generală Concedii\ndeltatech_hr_holidays_report_access\nÎn Odoo standard, ecranul *Time Off → Overview* arată concediile întregii companii oricărui utilizator intern, iar filtrul *My Team* este doar o căutare. Modulul adaugă aceleași reguli de citire pe care le are deja `hr.leave`, astfel încât fiecare utilizator să vadă doar concediile la care are dreptul: ale sale, ale echipei pe care o aprobă sau, pentru administratori, ale întregii companii.\nAngajații văd în prezentarea generală doar propriile concedii.\nAprobatorii de concedii (grupul *Time Off Responsible*) văd concediile proprii și ale angajaților pe care îi aprobă.\nResponsabilii (*Officer*) și administratorii modulului Time Off văd toată compania.\nFără configurare dedicată: grupul *Time Off Responsible* se atribuie automat când un utilizator este setat ca aprobator în câmpul *Time Off* (fila *Settings*, secțiunea *Approvers*) al unui angajat; pentru a da unei persoane vizibilitate asupra unei echipe, se setează persoana respectivă ca aprobator pe fiecare angajat din echipă."
+  },
+  {
     "path": "deltatech_hr_leave_dashboard/index.md",
     "module": "deltatech_hr_leave_dashboard",
     "version": "20.0.1.0.4",
@@ -3918,6 +4237,33 @@
     "text": "Pay Transparency (EU Directive 2023/970)\ndeltatech_hr_pay_transparency\nModulul sprijină conformarea cu Directiva (UE) 2023/970 privind transparența salarială, pe care statele membre trebuiau s-o transpună până la 7 iunie 2026. Primele rapoarte privind diferența de remunerare între femei și bărbați sunt scadente la 7 iunie 2027, pentru salariile din 2026, la angajatorii cu cel puțin 150 de lucrători (cei cu 100-149 raportează din 2031). Funcționează pe Odoo Community, pornind de la angajați și contractele lor; cu `deltatech_hr_pay_transparency_payroll` (instalat automat cu Payroll) cifrele provin din fluturașii validați.\nCategorii de lucrători de valoare egală, punctate pe cele patru criterii ale directivei (competențe, efort, responsabilitate, condiții de muncă; art. 4). Categoria se setează pe funcție și se păstrează pe fiecare versiune de contract, deci raportul unui an trecut folosește categoria de atunci.\nCriterii salariale publicate per categorie (art. 6) și intervalul salarial al categoriei (art. 5).\nRaportul privind diferența salarială (art. 9), ca instantaneu aprobat: diferențe medii și mediane, aceleași pe componentele complementare/variabile, ponderea femeilor și bărbaților care le primesc, cuartile salariale și diferențele pe categorii, separat pentru salariul de bază și componentele variabile, calculate anual și orar.\nAprobare de conducere (art. 9(6)), data transmiterii și o perioadă de remediere de șase luni pentru categoriile cu diferență de 5% sau mai mare; fiecare categorie roșie se marchează *Justified* (cu motiv) sau *Remedied*.\nEvaluare comună a remunerării (art. 10), deschisă automat când perioada de remediere s-a încheiat și diferența rămâne nejustificată, cu secțiunile (a)-(g) ale directivei.\nCereri de informații (art. 7): înregistrate de HR sau făcute de lucrător din aplicația Employees (*My Requests*), cu termen legal, activitate pentru responsabil și răspuns scris (e-mail și PDF) cu nivelul salarial propriu și mediile pe sexe ale categoriei; cererile primite prin reprezentanți sau organismul de egalitate primesc cifrele complete.\nNotificare anuală către toți lucrătorii privind dreptul de a cere informații (art. 7(3)).\nExport pentru autoritate (Excel, fără mascare) și PDF cu diferențele pe categorii pentru lucrători.\nConfidențialitate: grupuri de securitate dedicate (*Officer* și *Administrator*), cifre individuale vizibile doar administratorilor, medii ascunse pe documentele lucrătorilor când un grup are mai puțini lucrători de un sex decât minimul configurat.\nProfiluri de țară: termen de răspuns, praguri și date de raportare, prag de evaluare, dimensiune minimă de grup și organism de monitorizare, pentru UE (implicit) și România.\nLinii de salarii importate dintr-un payroll extern, pentru firmele care nu rulează salarizarea în Odoo; fără ele, calculul folosește salariul din contract.\nFluxul în 10 pași, cu capturi, este în [fișa consultantului](FISA_CONSULTANT.md). Raportul refuză calculul dacă lipsește sexul legal al angajaților (opțiunea *Compute Without Sex* îi exclude); tipurile de angajați fără relație de muncă se marchează *Outside Pay Transparency*."
   },
   {
+    "path": "deltatech_hr_pay_transparency_payroll/index.md",
+    "module": "deltatech_hr_pay_transparency_payroll",
+    "version": "20.0.0.1.2",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_hr_pay_transparency_payroll",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_hr_pay_transparency_payroll",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Transparență Salarială - Salarizare",
+    "summary": "Modulul preia salariul pentru raportul de transparență salarială (Directiva UE 2023/970) din fluturașii validați din Odoo Payroll, în loc de salariul din contract. Directiva consideră remunerație salariul de bază și orice component complementar sau variabil, în numerar sau în natură; raportul de diferență salarială și răspunsurile la cererile de informare folosesc astfel ce a primit efectiv fiecare angajat. Primele rapoarte privind diferența salarială între femei și bărbați sunt scadente la 7 iunie 2027.",
+    "features": [
+      "Fiecare categorie de reguli salariale indică natura sumelor: *Basic pay*, *Complementary or variable*, *In kind* sau *Not pay* (totaluri, rețineri, contribuții angajator); coloana *Pay Transparency* apare în Payroll → Configuration → Salary → Rule Categories.",
+      "O regulă salarială poate suprascrie categoria (setată sub *Categories*); o categorie fără valoare urmează categoria părinte.",
+      "Categoriile generice sunt mapate la instalare: *Basic* ca salariu de bază, *Allowance* ca variabil, iar *Taxable Salary*, *Deduction*, *Net* și *Company Contribution* ca „not pay”; categoriile din localizare (prime, ore suplimentare, tichete de masă, beneficii în natură) se mapează manual.",
+      "Orele plătite provin din zilele lucrate plătite din fluturași, deci salariul orar corespunde orelor efectiv plătite.",
+      "Se iau în calcul doar fluturașii validați și plătiți din perioadă, inclusiv rambursările; angajații fără fluturași păstrează liniile de remunerație sau salariul din contract.",
+      "Fluxul modulului de bază rămâne neschimbat: în Employees → Pay Transparency → Pay Gap Reports se apasă *Compute*, iar coloana *Source* din fila *Workers* arată *Payslips*, *Pay lines* sau *Contract wage*. Pașii detaliați sunt în fișa consultantului."
+    ],
+    "dependencies": [
+      "deltatech_hr_pay_transparency",
+      "hr_payroll",
+      "auto_install"
+    ],
+    "connections": [
+      "deltatech_hr_pay_transparency"
+    ],
+    "text": "Transparență Salarială - Salarizare\ndeltatech_hr_pay_transparency_payroll\nModulul preia salariul pentru raportul de transparență salarială (Directiva UE 2023/970) din fluturașii validați din Odoo Payroll, în loc de salariul din contract. Directiva consideră remunerație salariul de bază și orice component complementar sau variabil, în numerar sau în natură; raportul de diferență salarială și răspunsurile la cererile de informare folosesc astfel ce a primit efectiv fiecare angajat. Primele rapoarte privind diferența salarială între femei și bărbați sunt scadente la 7 iunie 2027.\nFiecare categorie de reguli salariale indică natura sumelor: *Basic pay*, *Complementary or variable*, *In kind* sau *Not pay* (totaluri, rețineri, contribuții angajator); coloana *Pay Transparency* apare în Payroll → Configuration → Salary → Rule Categories.\nO regulă salarială poate suprascrie categoria (setată sub *Categories*); o categorie fără valoare urmează categoria părinte.\nCategoriile generice sunt mapate la instalare: *Basic* ca salariu de bază, *Allowance* ca variabil, iar *Taxable Salary*, *Deduction*, *Net* și *Company Contribution* ca „not pay”; categoriile din localizare (prime, ore suplimentare, tichete de masă, beneficii în natură) se mapează manual.\nOrele plătite provin din zilele lucrate plătite din fluturași, deci salariul orar corespunde orelor efectiv plătite.\nSe iau în calcul doar fluturașii validați și plătiți din perioadă, inclusiv rambursările; angajații fără fluturași păstrează liniile de remunerație sau salariul din contract.\nFluxul modulului de bază rămâne neschimbat: în Employees → Pay Transparency → Pay Gap Reports se apasă *Compute*, iar coloana *Source* din fila *Workers* arată *Payslips*, *Pay lines* sau *Contract wage*. Pașii detaliați sunt în fișa consultantului."
+  },
+  {
     "path": "deltatech_image_optimize/index.md",
     "module": "deltatech_image_optimize",
     "version": "19.0.1.8.1",
@@ -3945,6 +4291,31 @@
       "deltatech_website_watermark"
     ],
     "text": "Image Optimizer\ndeltatech_image_optimize\nModulul recomprimă automat atașamentele de tip imagine (poze de produs, avatare etc.) care sunt supradimensionate, pentru a elibera spațiu din filestore-ul Odoo. Fiecare imagine originală este redusă ca dimensiune și recodată în JPEG (sau WebP/PNG dacă are transparență reală), păstrând doar rezultatul dacă e efectiv mai mic decât originalul — fără să afecteze vizual imaginile publicate pe site sau în documente.\nRecomprimă imaginile „originale\" (implicit `image_1920` și\nDetectează transparența reală (nu doar modul de culoare) și păstrează\nSare peste GIF-urile animate — nu le aplatizează niciodată.\nScrie imaginea optimizată prin înregistrarea proprietară, astfel încât Odoo\nRecomprimă separat și variantele deja stocate (fără redimensionare, doar\nMarchează atașamentele deja procesate (`deltatech_image_optimized`) ca să nu\nRulează prin acțiune programată (`ir.cron`) zilnică, dezactivată implicit\nConfigurare completă prin parametri de sistem (`ir.config_parameter`):\nOpțiune destructivă `force_jpeg` (dezactivată implicit) care ignoră complet\nLa finalul rulării cron, apelează garbage collection-ul filestore-ului"
+  },
+  {
+    "path": "deltatech_inter_company_vendor_stock/index.md",
+    "module": "deltatech_inter_company_vendor_stock",
+    "version": "20.0.1.0.3",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_inter_company_vendor_stock",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_inter_company_vendor_stock",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Stoc Inter-Company",
+    "summary": "Modulul afișează stocul liber al unei companii din grup în compania care vinde produsele acesteia. Când compania furnizoare rezervă sau validează mișcări de stoc, modulul scrie stocul liber al produsului pe linia de furnizor (**Quantity Available**) pe care compania vânzătoare o ține pentru acel furnizor, iar vânzătorii pot promite livrări pe baza stocului real al grupului.",
+    "features": [
+      "Scenariul: două companii din același grup, în aceeași bază de date, cu regulile inter-company Enterprise; compania furnizoare ține stocul, cea vânzătoare cumpără de la ea și vinde clienților proprii.",
+      "La Validate sau la rezervare în compania furnizoare, stocul liber al produsului se recalculează și se scrie pe linia de furnizor (în fișă: din 20 de unități, după livrarea a 5 rămân 15, iar după rezervarea altor 3 rămân 12).",
+      "Valoarea se vede în Purchase → Configuration → Vendor Pricelists, ca coloană opțională în lista de furnizori de pe produs (fila *Purchase*) și în coloana opțională *Vendor Quantity Available* de pe liniile comenzii de vânzare.",
+      "Rezervarea și validarea se fac cu compania furnizoare activă în selectorul de companii: se caută liniile de furnizor ale partenerului companiei active și se numără doar stocul ei, chiar dacă sunt selectate mai multe companii.",
+      "O linie setată pe o variantă primește stocul variantei; o linie fără variantă (cazul uzual) primește stocul tuturor variantelor produsului."
+    ],
+    "dependencies": [
+      "sale_purchase_inter_company_rules",
+      "deltatech_vendor_stock"
+    ],
+    "connections": [
+      "deltatech_vendor_stock"
+    ],
+    "text": "Stoc Inter-Company\ndeltatech_inter_company_vendor_stock\nModulul afișează stocul liber al unei companii din grup în compania care vinde produsele acesteia. Când compania furnizoare rezervă sau validează mișcări de stoc, modulul scrie stocul liber al produsului pe linia de furnizor (**Quantity Available**) pe care compania vânzătoare o ține pentru acel furnizor, iar vânzătorii pot promite livrări pe baza stocului real al grupului.\nScenariul: două companii din același grup, în aceeași bază de date, cu regulile inter-company Enterprise; compania furnizoare ține stocul, cea vânzătoare cumpără de la ea și vinde clienților proprii.\nLa Validate sau la rezervare în compania furnizoare, stocul liber al produsului se recalculează și se scrie pe linia de furnizor (în fișă: din 20 de unități, după livrarea a 5 rămân 15, iar după rezervarea altor 3 rămân 12).\nValoarea se vede în Purchase → Configuration → Vendor Pricelists, ca coloană opțională în lista de furnizori de pe produs (fila *Purchase*) și în coloana opțională *Vendor Quantity Available* de pe liniile comenzii de vânzare.\nRezervarea și validarea se fac cu compania furnizoare activă în selectorul de companii: se caută liniile de furnizor ale partenerului companiei active și se numără doar stocul ei, chiar dacă sunt selectate mai multe companii.\nO linie setată pe o variantă primește stocul variantei; o linie fără variantă (cazul uzual) primește stocul tuturor variantelor produsului."
   },
   {
     "path": "deltatech_invoice_number/index.md",
@@ -4175,6 +4546,32 @@
       "sale"
     ],
     "text": "Invoice Weight\ndeltatech_invoice_weight\nModulul adaugă urmărirea greutății logistice direct în sistemele de facturare și de gestiune a comenzilor din Odoo. Este destinat companiilor care au nevoie să monitorizeze și să raporteze greutatea netă și greutatea brută totală a articolelor facturate, achiziționate sau vândute, oferind astfel o transparență suplimentară pentru operațiunile logistice și de transport.\nCâmpuri de greutate pe documente: adaugă câmpurile Greutate Netă și Greutate Brută pe facturi, comenzi de achiziție și comenzi de vânzare, cu calculul automat al greutăților totale ale documentului pe baza articolelor incluse.\nRaportare și analiză: activează raportarea pe bază de greutate în vizualizarea de analiză a facturilor și suportă vizualizări de tip Pivot, permițând agregarea greutăților pe partener, produs sau perioadă.\nGreutate pe raportul tipărit: afișează informațiile de greutate pe raportul tipărit al facturii, pentru transparență logistică.\nConsistență între documente: asigură menținerea și transferul corect al datelor de greutate între documentele de vânzare/achiziție și factura finală."
+  },
+  {
+    "path": "deltatech_kaizen/index.md",
+    "module": "deltatech_kaizen",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_kaizen",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_kaizen",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Proiecte Kaizen",
+    "summary": "Kaizen este o metodă de îmbunătățire continuă prin proiecte mici, care corectează pe rând câte o pierdere măsurabilă. Modulul înregistrează fiecare îmbunătățire ca proiect legat de o pierdere: de la nivelul de bază dinainte de intervenție, prin analiza cauzelor și acțiunile corective, până la economiile verificate după remediere.",
+    "features": [
+      "Pierderea de bază pe lună înainte de remediere, cu data ei, și opțional pierderea țintă.",
+      "Analiza *5 Why* (până la cinci linii, una marcată drept cauză rădăcină) și diagrama *Ishikawa* pe cele șase categorii: Man, Machine, Method, Material, Measurement, Environment.",
+      "Acțiuni corective cu responsabil, termen, marcaj de întârziere (roșu) și dată de finalizare (verde).",
+      "Pierderea măsurată după remediere; *Monthly Savings* = pierdere de bază minus pierdere curentă, *Annual Savings (projection)* = economie lunară × 12, iar *Target Reached* se bifează când ținta este atinsă.",
+      "Flux fix: Draft → Analysis → Actions → Verification → Done; la salvare proiectul primește referința `KZN/`.",
+      "Închiderea (*Close project*) este permisă doar managerului Kaizen, din starea Verification, cu cauză rădăcină, toate acțiunile terminate, bază pozitivă și pierdere măsurată; *Cancel* este tot doar pentru manager.",
+      "Meniuri Kaizen → Projects, Ishikawa (cauzele tuturor proiectelor, grupate pe categorii) și Actions (lista de urmărire pentru ședința săptămânală). Pașii detaliați sunt în fișa consultantului."
+    ],
+    "dependencies": [
+      "mail"
+    ],
+    "connections": [
+      "mail"
+    ],
+    "text": "Proiecte Kaizen\ndeltatech_kaizen\nKaizen este o metodă de îmbunătățire continuă prin proiecte mici, care corectează pe rând câte o pierdere măsurabilă. Modulul înregistrează fiecare îmbunătățire ca proiect legat de o pierdere: de la nivelul de bază dinainte de intervenție, prin analiza cauzelor și acțiunile corective, până la economiile verificate după remediere.\nPierderea de bază pe lună înainte de remediere, cu data ei, și opțional pierderea țintă.\nAnaliza *5 Why* (până la cinci linii, una marcată drept cauză rădăcină) și diagrama *Ishikawa* pe cele șase categorii: Man, Machine, Method, Material, Measurement, Environment.\nAcțiuni corective cu responsabil, termen, marcaj de întârziere (roșu) și dată de finalizare (verde).\nPierderea măsurată după remediere; *Monthly Savings* = pierdere de bază minus pierdere curentă, *Annual Savings (projection)* = economie lunară × 12, iar *Target Reached* se bifează când ținta este atinsă.\nFlux fix: Draft → Analysis → Actions → Verification → Done; la salvare proiectul primește referința `KZN/`.\nÎnchiderea (*Close project*) este permisă doar managerului Kaizen, din starea Verification, cu cauză rădăcină, toate acțiunile terminate, bază pozitivă și pierdere măsurată; *Cancel* este tot doar pentru manager.\nMeniuri Kaizen → Projects, Ishikawa (cauzele tuturor proiectelor, grupate pe categorii) și Actions (lista de urmărire pentru ședința săptămânală). Pașii detaliați sunt în fișa consultantului."
   },
   {
     "path": "deltatech_keez/index.md",
@@ -5287,6 +5684,37 @@
     "text": "Conector Marketplace WooCommerce\ndeltatech_marketplace_woocommerce\nModulul conectează Odoo cu magazine online WooCommerce, sincronizând produse, comenzi și clienți din WooCommerce către Odoo și trimițând stocul Odoo înapoi spre magazin, astfel încât o afacere care vinde și pe un site WooCommerce să gestioneze catalogul, comenzile și stocul dintr-un singur backend Odoo, fără introducere manuală de date în două locuri.\nSincronizare bidirecțională: produse, clienți și comenzi din WooCommerce către Odoo; stocul Odoo se exportă înapoi spre WooCommerce printr-un cron dedicat, dezactivat implicit.\nGestiune produse: import produse din WooCommerce, inclusiv variante, mapare categorii, atribute și valori de atribut, sincronizare imagini (dacă „Ignore Images\" nu e bifat).\nGestiune comenzi: import automat al comenzilor WooCommerce, filtrabil după status (`Any`/`pending`/`processing`/`on-hold`/`completed`/`cancelled`/`refunded`/`failed`/`trash`) și după fereastra „Sale Order Days\", cu mapare status → fază de vânzare Odoo creată automat la prima întâlnire a unui status nou.\nIntegrare clienți: sincronizare date client, adrese de facturare/livrare, istoric de achiziții consolidat ca și contacte Odoo.\nIntegrare plăți: mapare metodă de plată WooCommerce către achizitor de plată Odoo, creată automat la prima referință dintr-o comandă.\nLivrare și transport: mapare transportator (creat automat dacă nu există), linie de transport pe comanda importată.\nSuport pentru mai multe magazine WooCommerce, fiecare ca backend separat cu propriile credențiale și setări.\nTest de conexiune care validează efectiv credențialele printr-un apel real către magazin (`system_status`), nu doar completarea câmpurilor.\nImplementare tehnică pe bază de REST API WooCommerce (`wc/v3`), fără bibliotecă Python externă (folosește `requests`), autentificare HTTP Basic Auth (Consumer key/secret) peste HTTPS, procesare pe joburi în fundal (queue jobs) și suport generic de webhook moștenit din framework-ul comun.\nNu exportă prețuri către WooCommerce: lista de prețuri e doar destinația prețului importat din magazin. Nu are un cron dedicat de import recurent (comenzi/produse/clienți noi se aduc prin repetarea manuală a acțiunii Import sau printr-o acțiune programată proprie). Nu urmărește anulările/rambursările făcute în WooCommerce după import."
   },
   {
+    "path": "deltatech_mcp_server/index.md",
+    "module": "deltatech_mcp_server",
+    "version": "20.0.2.5.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_mcp_server",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_mcp_server",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "MCP Server - Acces AI Guvernat pentru Claude și ChatGPT",
+    "summary": "Modulul oferă Claude, ChatGPT, Cursor și Codex acces la Odoo pe care îl poți explica unui auditor: AI-ul fiecărei persoane vede doar modelele și câmpurile rolului ei, accesul suplimentar este aprobat de o persoană și expiră singur, datele personale rămân mascate, iar fiecare apel este înregistrat pe serverul propriu. Se construiește peste serverul MCP din Odoo 20 Enterprise (`ai_mcp`), fără niciun serviciu extern; clientul AI se conectează la `https://<odoo>/mcp` și lucrează mereu cu drepturile Odoo ale persoanei care l-a conectat.",
+    "features": [
+      "Politici de acces pe rol: lista modelelor, drepturile read/create/write și câmpurile vizibile (ascunse, limitate sau mascate ca `***`); șabloane pentru suport, vânzări, achiziții, catalog produse, prețuri, stoc, contabilitate și raportare, combinabile și salvabile ca șabloane proprii.",
+      "Acces temporar aprobat de o persoană: prin `request_access`, AI-ul cere un model cu motiv; un administrator aprobă pentru acel utilizator, până la o dată, iar accesul se oprește singur.",
+      "Date personale mascate implicit (CUI/VAT, IBAN, CNP, data nașterii, salariu), fără a putea fi deduse prin filtre, sortări sau grupări; câmpurile binare nu se returnează niciodată.",
+      "Doar citire până la activare: uneltele de scriere sunt ascunse până se bifează *Allow AI clients to write*; `create`/`write` nu schimbă starea documentelor, o comandă se confirmă doar prin butonul expus ca unealtă.",
+      "Code Mode (*Scripts*, oprit implicit): `run_script` rulează în sandbox-ul Odoo un script care înlănțuie uneltele de citire, iar în chat revine doar rezultatul final.",
+      "Unelte proprii și prompturi: acțiuni de server sau metode-buton (ex. `action_confirm`) în *MCP Server → Configuration → Tools*; întrebări gata făcute în *Prompts*, cu argumente `{{client}}`.",
+      "Unelte standard pentru client: `whoami`, `list_models`, `describe_model`, `search`, `read`, `aggregate`, `list_attachments`, `read_attachment`, iar cu scrierea activă `create`, `write`, `post_message`, `schedule_activity`, `add_followers`.",
+      "Limite per politică: înregistrări pe apel, buget zilnic de înregistrări și date, apeluri pe minut, adrese IP permise.",
+      "Jurnal complet (*Call Log*) cu utilizator, client, unealtă, argumente, durată, rezultat și valorile vechi/noi; ecranul *Daily Usage* arată consumul; ambele se șterg după 90 de zile (configurabil); autentificările refuzate sunt și ele înregistrate.",
+      "Conectare cu cheie API cu scopul *MCP* (Claude Code, Cursor, VS Code), valabilă doar pe `/mcp`, sau prin OAuth 2.1 (Claude.ai, ChatGPT) din *Settings → Integrations → MCP OAuth*; pot conecta doar membrii grupului *MCP Server / User*, recomandat un utilizator dedicat AI.",
+      "Generic data tools din aplicațiile AI Odoo (`ai_tool_search` etc.) sunt ascunse pe `/mcp`, ca să nu ocolească politicile; funcționează doar cu Odoo Enterprise, nu cu Community.",
+      "Susține evidența și supravegherea umană cerute de EU AI Act (articolele 12 și 26), fără a garanta singur conformitatea. Pașii de configurare și utilizare sunt în fișa consultantului."
+    ],
+    "dependencies": [
+      "ai_mcp"
+    ],
+    "connections": [
+      "ai_mcp"
+    ],
+    "text": "MCP Server - Acces AI Guvernat pentru Claude și ChatGPT\ndeltatech_mcp_server\nModulul oferă Claude, ChatGPT, Cursor și Codex acces la Odoo pe care îl poți explica unui auditor: AI-ul fiecărei persoane vede doar modelele și câmpurile rolului ei, accesul suplimentar este aprobat de o persoană și expiră singur, datele personale rămân mascate, iar fiecare apel este înregistrat pe serverul propriu. Se construiește peste serverul MCP din Odoo 20 Enterprise (`ai_mcp`), fără niciun serviciu extern; clientul AI se conectează la `https://<odoo>/mcp` și lucrează mereu cu drepturile Odoo ale persoanei care l-a conectat.\nPolitici de acces pe rol: lista modelelor, drepturile read/create/write și câmpurile vizibile (ascunse, limitate sau mascate ca `***`); șabloane pentru suport, vânzări, achiziții, catalog produse, prețuri, stoc, contabilitate și raportare, combinabile și salvabile ca șabloane proprii.\nAcces temporar aprobat de o persoană: prin `request_access`, AI-ul cere un model cu motiv; un administrator aprobă pentru acel utilizator, până la o dată, iar accesul se oprește singur.\nDate personale mascate implicit (CUI/VAT, IBAN, CNP, data nașterii, salariu), fără a putea fi deduse prin filtre, sortări sau grupări; câmpurile binare nu se returnează niciodată.\nDoar citire până la activare: uneltele de scriere sunt ascunse până se bifează *Allow AI clients to write*; `create`/`write` nu schimbă starea documentelor, o comandă se confirmă doar prin butonul expus ca unealtă.\nCode Mode (*Scripts*, oprit implicit): `run_script` rulează în sandbox-ul Odoo un script care înlănțuie uneltele de citire, iar în chat revine doar rezultatul final.\nUnelte proprii și prompturi: acțiuni de server sau metode-buton (ex. `action_confirm`) în *MCP Server → Configuration → Tools*; întrebări gata făcute în *Prompts*, cu argumente `{{client}}`.\nUnelte standard pentru client: `whoami`, `list_models`, `describe_model`, `search`, `read`, `aggregate`, `list_attachments`, `read_attachment`, iar cu scrierea activă `create`, `write`, `post_message`, `schedule_activity`, `add_followers`.\nLimite per politică: înregistrări pe apel, buget zilnic de înregistrări și date, apeluri pe minut, adrese IP permise.\nJurnal complet (*Call Log*) cu utilizator, client, unealtă, argumente, durată, rezultat și valorile vechi/noi; ecranul *Daily Usage* arată consumul; ambele se șterg după 90 de zile (configurabil); autentificările refuzate sunt și ele înregistrate.\nConectare cu cheie API cu scopul *MCP* (Claude Code, Cursor, VS Code), valabilă doar pe `/mcp`, sau prin OAuth 2.1 (Claude.ai, ChatGPT) din *Settings → Integrations → MCP OAuth*; pot conecta doar membrii grupului *MCP Server / User*, recomandat un utilizator dedicat AI.\nGeneric data tools din aplicațiile AI Odoo (`ai_tool_search` etc.) sunt ascunse pe `/mcp`, ca să nu ocolească politicile; funcționează doar cu Odoo Enterprise, nu cu Community.\nSusține evidența și supravegherea umană cerute de EU AI Act (articolele 12 și 26), fără a garanta singur conformitatea. Pașii de configurare și utilizare sunt în fișa consultantului."
+  },
+  {
     "path": "deltatech_mentor/index.md",
     "module": "deltatech_mentor",
     "version": "19.0.2.1.8",
@@ -5560,6 +5988,32 @@
       "mrp"
     ],
     "text": "MRP Validation Date\ndeltatech_mrp_validation_date\nModulul înregistrează data exactă la care o comandă de fabricație este validată (marcată ca „Efectuată\"), oferind managerilor de producție un jurnal de audit sigur pentru momentul finalizării comenzilor.\nAdaugă un câmp Dată Validare pe formularul comenzii de fabricație, completat automat când operatorul apasă Marchează ca Efectuată.\nCâmpul este needitabil (read-only) — este setat de sistem și nu poate fi modificat manual, garantând integritatea datelor.\nFuncționează alături de câmpurile standard de planificare MRP (dată programată, dată finalizare) pentru a oferi o cronologie completă a producției."
+  },
+  {
+    "path": "deltatech_mrp_workorder_qty/index.md",
+    "module": "deltatech_mrp_workorder_qty",
+    "version": "20.0.1.2.1",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_mrp_workorder_qty",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_mrp_workorder_qty",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_mrp_workorder_qty",
+    "summary": "Modulul ține evidența cantității procesate pe fiecare operație (ordin de lucru) a unui ordin de fabricație, pe tranșe. Odoo standard folosește o singură cantitate de produs pentru toate operațiile; aici fiecare operație are propriul jurnal (de exemplu 10 bucăți tăiate în prima zi, 10 vopsite și alte 10 tăiate a doua zi), fără mișcări de stoc pe tranșă.",
+    "features": [
+      "Înregistrarea cantității pe operație din formularul ordinului de lucru (butonul Register Quantity) sau din meniul operației din Shop Floor.",
+      "Fiecare înregistrare e logată cu dată, utilizator și notă; valorile negative corectează greșelile; tab-ul *Processed Quantity* listează tranșele.",
+      "O operație nu poate depăși cantitatea procesată de operațiile de care depinde și nici cantitatea ordinului de fabricație. Pe rutări liniare operațiile sunt înlănțuite automat; pe rutări neliniare se activează *Work Order Dependencies* și dependențele pe BoM.",
+      "Coloane opționale Processed Quantity și Remaining to Process în lista ordinelor de lucru.",
+      "Cardul operației din Shop Floor afișează cantitatea procesată și cea disponibilă sub cea planificată.",
+      "Continuous Production (pe BoM, tab *Miscellaneous*): operația următoare pornește imediat ce prima tranșă e înregistrată pe cea anterioară; *Mark as done* e refuzat cât timp o operație anterioară e deschisă, iar după închiderea lor loghează cantitatea rămasă.",
+      "Fluxul pas-cu-pas este în [fișa consultantului](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "mrp_workorder"
+    ],
+    "connections": [
+      "mrp"
+    ],
+    "text": "deltatech_mrp_workorder_qty\ndeltatech_mrp_workorder_qty\nModulul ține evidența cantității procesate pe fiecare operație (ordin de lucru) a unui ordin de fabricație, pe tranșe. Odoo standard folosește o singură cantitate de produs pentru toate operațiile; aici fiecare operație are propriul jurnal (de exemplu 10 bucăți tăiate în prima zi, 10 vopsite și alte 10 tăiate a doua zi), fără mișcări de stoc pe tranșă.\nÎnregistrarea cantității pe operație din formularul ordinului de lucru (butonul Register Quantity) sau din meniul operației din Shop Floor.\nFiecare înregistrare e logată cu dată, utilizator și notă; valorile negative corectează greșelile; tab-ul *Processed Quantity* listează tranșele.\nO operație nu poate depăși cantitatea procesată de operațiile de care depinde și nici cantitatea ordinului de fabricație. Pe rutări liniare operațiile sunt înlănțuite automat; pe rutări neliniare se activează *Work Order Dependencies* și dependențele pe BoM.\nColoane opționale Processed Quantity și Remaining to Process în lista ordinelor de lucru.\nCardul operației din Shop Floor afișează cantitatea procesată și cea disponibilă sub cea planificată.\nContinuous Production (pe BoM, tab *Miscellaneous*): operația următoare pornește imediat ce prima tranșă e înregistrată pe cea anterioară; *Mark as done* e refuzat cât timp o operație anterioară e deschisă, iar după închiderea lor loghează cantitatea rămasă.\nFluxul pas-cu-pas este în [fișa consultantului](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_nap/index.md",
@@ -7613,6 +8067,33 @@
     "text": "Deltatech Purchase UBL\ndeltatech_purchase_ubl\nAcest modul importă facturi de la furnizori în format UBL XML (Universal Business Language) și le folosește pentru a actualiza fluxurile de achiziție din Odoo. Pe baza fișierului XML, modulul identifică furnizorul și comanda de achiziție, potrivește produsele, actualizează prețurile de la furnizor, poate valida recepția de stoc și poate genera factura de la furnizor. Valoarea de afaceri principală este reducerea muncii manuale și a erorilor la prelucrarea documentelor electronice de achiziție.\nRezolvare automată a furnizorului și a comenzii: asistentul (wizard) păstrează comanda de achiziție selectată și poate, de asemenea, identifica furnizorul și comanda din XML (`OrderReference`, codul fiscal al furnizorului, numele furnizorului) atunci când contextul nu mai este disponibil.\nPotrivire automată a produselor: produsele sunt potrivite după cod de bare (GS1/EAN), cod de furnizor, referință internă sau nume exact.\nIntegrare cu comanda de achiziție:\ncând comanda are deja linii, importul actualizează doar liniile existente care se potrivesc;\nliniile noi din XML nu sunt adăugate la o comandă existentă cu linii, iar asistentul afișează acest avertisment înainte de import;\nliniile noi neconsumate (produse care nu erau pe comanda originală, ex. o linie de „Ecovaloare\" adăugată de furnizor) sunt totuși adăugate ca linii noi pe comandă;\ncând nu se rezolvă nicio comandă, asistentul poate totuși identifica furnizorul din XML și actualiza prețurile de la furnizor.\nGestionarea prețurilor: actualizează prețurile de la furnizor în `product.supplierinfo` direct din datele XML.\nSuport pentru reduceri: extrage reducerile de pe linii din `AllowanceCharge` (`ChargeIndicator=false`) și le aplică drept reduceri procentuale pe liniile comenzii de achiziție.\nVerificarea totalului: compară totalul comenzii cu totalul din XML (`PayableAmount` / `TaxInclusiveAmount`, cu revenire la valoarea fără taxe) și afișează un avertisment când există o diferență.\nAutomatizare de stoc: validează opțional recepția de stoc asociată, potrivind cantitățile din XML; liniile de servicii cu politică de facturare „la recepție\" (ex. taxele de eco-tax) sunt marcate manual ca recepționate, deoarece nu au mișcări de stoc.\nContabilitate: creează și leagă opțional o factură de la furnizor pornind de la comanda de achiziție. Factura se creează automat când documentul sursă identifică un număr de factură, dar numai dacă înainte comanda a fost confirmată (`state` în `purchase`/`done`) — pentru a evita generarea unor facturi „fantomă\" cu cantități zero pe comenzi neconfirmate.\nProduse lipsă: opțiune de creare automată a produselor lipsă folosind datele din fișierul UBL.\nPrevizualizare cu potrivire pe culori (nou în 19.0.1.3.0, ticket #9315): fluxul interactiv (butonul „Importă UBL” de pe comandă) are acum doi pași — „Preview” analizează XML-ul și afișează câte o linie per articol din factură, cu produsul identificat de algoritm și modul în care a fost găsit, codificat pe culori: verde = potrivire după cod de furnizor sau cod de bare (sigură), galben = potrivire doar după nume (de verificat), roșu = nicio potrivire (s-ar crea un produs nou). Utilizatorul poate alege manual alt produs pe orice linie înainte de a confirma; alegerea manuală înlocuiește potrivirea automată (`_process_invoice_data(product_map=...)`). Punctul de intrare headless `action_import` rămâne neschimbat, deci apelanții automatizați funcționează în continuare.\nCreare de produse controlată pe fluxul automat (fix în 19.0.1.3.0, ticket #9315): `_process_attachments_for_post` rula întotdeauna importul headless cu `create_missing_products=True`. Era în regulă pentru wizard-ul interactiv, unde un utilizator revizuiește ce se creează, dar era și singurul punct de intrare pentru atașamentele XML postate de apelanți automatizați (ex. `l10n_ro_message_spv_purchase`, care atașează XML-ul SPV pe comenzi de achiziție create înainte ca factura să existe). Când linia din factura sursă nu avea cod de furnizor și numele nu se potrivea exact cu un produs existent, importul headless crea în tăcere un produs duplicat, nerevizuit de nimeni. Acum, `_process_attachments_for_post` respectă cheia de context `purchase_ubl_no_new_products`: când e setată, importul headless rulează cu `create_missing_products=False`, iar liniile nepotrivite rămân în jurnalul „produse nepotrivite” al wizard-ului, în loc să creeze un produs."
   },
   {
+    "path": "deltatech_purchase_ubl_ai/index.md",
+    "module": "deltatech_purchase_ubl_ai",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_purchase_ubl_ai",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_purchase_ubl_ai",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_purchase_ubl_ai",
+    "summary": "Importul facturilor de la furnizori (UBL / e-Factura) potrivește deja majoritatea liniilor cu un produs. Acest modul preia doar liniile rămase nepotrivite (descrieri prescurtate, diacritice lipsă, cod nou de furnizor) și întreabă un agent AI ce produs este. Sugestia e validată mereu de o persoană, iar după validare codul și descrierea furnizorului sunt reținute, așa că factura următoare se potrivește fără AI.",
+    "features": [
+      "AI doar unde contează: potrivirea deterministă rulează prima; AI e întrebat o singură dată pe factură, doar despre liniile nepotrivite.",
+      "Fără produse inventate: agentul alege dintr-o listă de candidați construită în Odoo (liniile comenzii, lista de prețuri a furnizorului, produse cu cuvinte comune); un răspuns din afara listei e ignorat.",
+      "Verificări în cod: unitatea de măsură trebuie să fie compatibilă cu produsul, iar un preț departe de ultimul preț de achiziție înjumătățește încrederea și e semnalat.",
+      "Validare umană: în previzualizarea importului (buton *Import UBL* pe comanda de achiziție) sugestia apare precompletată, în albastru, cu încredere și motiv. Importul automat (ex. descărcarea din SPV) doar înregistrează sugestiile pe comandă, în spatele butonului AI Suggestions (și meniul *Purchase → Orders → AI Product Suggestions*); Validate actualizează linia și prețul, Discard lasă linia pentru tratare manuală. Factura nu se creează cât timp există linii nerezolvate.",
+      "Învață din validări: codul și descrierea furnizorului se scriu pe lista de prețuri a furnizorului; un cod deja folosit pentru alt produs nu se suprascrie.",
+      "Cost controlat: activare opțională pe companie (*Settings → Purchase → Invoicing → AI Product Matching*), limită zilnică de apeluri AI (implicit 50, 0 = nelimitat) și încredere minimă (implicit 0,6).",
+      "Furnizorul tău AI: framework-ul AI nativ Odoo și cheia din Settings → AI; agentul *Purchase Product Matching AI* (AI → Agents) poate fi ajustat (model, instrucțiuni traductibile)."
+    ],
+    "dependencies": [
+      "deltatech_purchase_ubl",
+      "ai"
+    ],
+    "connections": [
+      "deltatech_ai_anthropic"
+    ],
+    "text": "deltatech_purchase_ubl_ai\ndeltatech_purchase_ubl_ai\nImportul facturilor de la furnizori (UBL / e-Factura) potrivește deja majoritatea liniilor cu un produs. Acest modul preia doar liniile rămase nepotrivite (descrieri prescurtate, diacritice lipsă, cod nou de furnizor) și întreabă un agent AI ce produs este. Sugestia e validată mereu de o persoană, iar după validare codul și descrierea furnizorului sunt reținute, așa că factura următoare se potrivește fără AI.\nAI doar unde contează: potrivirea deterministă rulează prima; AI e întrebat o singură dată pe factură, doar despre liniile nepotrivite.\nFără produse inventate: agentul alege dintr-o listă de candidați construită în Odoo (liniile comenzii, lista de prețuri a furnizorului, produse cu cuvinte comune); un răspuns din afara listei e ignorat.\nVerificări în cod: unitatea de măsură trebuie să fie compatibilă cu produsul, iar un preț departe de ultimul preț de achiziție înjumătățește încrederea și e semnalat.\nValidare umană: în previzualizarea importului (buton *Import UBL* pe comanda de achiziție) sugestia apare precompletată, în albastru, cu încredere și motiv. Importul automat (ex. descărcarea din SPV) doar înregistrează sugestiile pe comandă, în spatele butonului AI Suggestions (și meniul *Purchase → Orders → AI Product Suggestions*); Validate actualizează linia și prețul, Discard lasă linia pentru tratare manuală. Factura nu se creează cât timp există linii nerezolvate.\nÎnvață din validări: codul și descrierea furnizorului se scriu pe lista de prețuri a furnizorului; un cod deja folosit pentru alt produs nu se suprascrie.\nCost controlat: activare opțională pe companie (*Settings → Purchase → Invoicing → AI Product Matching*), limită zilnică de apeluri AI (implicit 50, 0 = nelimitat) și încredere minimă (implicit 0,6).\nFurnizorul tău AI: framework-ul AI nativ Odoo și cheia din Settings → AI; agentul *Purchase Product Matching AI* (AI → Agents) poate fi ajustat (model, instrucțiuni traductibile)."
+  },
+  {
     "path": "deltatech_purchase_xls/index.md",
     "module": "deltatech_purchase_xls",
     "version": "19.0.1.0.0",
@@ -8174,6 +8655,35 @@
     "text": "RPC Audit Log\ndeltatech_rpc_audit\nAcest modul înregistrează într-un jurnal (log) apelurile RPC externe primite de server, astfel încât administratorii pot audita ce integrare apelează ce model și ce metodă, și de la ce adresă IP anume. Acoperă atât endpoint-urile vechi — **XML-RPC** (`/xmlrpc`, `/xmlrpc/2`) și **JSON-RPC** (`/jsonrpc`) — cât și endpoint-ul modern **`/json/2/<model>/<method>`**, ceea ce contează pentru că cele vechi sunt marcate ca deprecate în Odoo 19: pe măsură ce integrările trec pe cel nou, un audit care ar urmări doar endpoint-urile vechi ar deveni tăcut fără să semnaleze nimic. Este util pentru depanare, securitate și investigarea integrărilor terțe (de exemplu conectori de e-commerce, aplicații mobile sau scripturi externe) fără a afecta clientul web standard.\nLoghează fiecare apel către serviciul `object` (apelurile ORM reale prin\nLoghează și apelurile pe endpoint-ul modern `/json/2/<model>/<method>`, cu\nSare peste apelurile `/json/2/ir.cron/acquire_job`: pe Odoo.sh acesta este\nDetermină adresa IP reală a clientului din antetul `X-Forwarded-For`, astfel\nPoate fi activat/dezactivat fără a dezinstala modulul, fie din cheia de\nPermite excluderea IP-urilor „zgomotoase\" (health check-uri, monitorizare)"
   },
   {
+    "path": "deltatech_safety_register/index.md",
+    "module": "deltatech_safety_register",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_safety_register",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_safety_register",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_safety_register",
+    "summary": "Registru de evenimente de securitate pentru companiile cu programe de securitate sau World Class Manufacturing: aproape-accidente, incidente și accidente de muncă, fiecare cu cauza rădăcină și acțiuni corective, plus indicatorii anuali de securitate.",
+    "features": [
+      "Evenimente clasificate Near miss, Incident (fără vătămare), Injury (fără timp pierdut), Lost-time injury sau Fatal, numerotate `SAF/<an>/NNNN`, cu locație, descriere și cauză rădăcină (meniu Safety → Events, export XLSX).",
+      "Persoana accidentată: angajat, partener (contractor, vizitator) sau nume liber; departamentul se completează din angajat.",
+      "Accidente de traseu marcate separat, păstrate în registru și excluse din LTIFR.",
+      "Acțiuni corective cu responsabil și termen; fiecare programează o activitate To-Do. Un eveniment se închide doar după finalizarea acțiunilor, iar unul închis poate fi modificat doar de Safety manager (și nu poate fi șters). Vedere globală în Safety → Corrective actions.",
+      "Indicatori pe companie și an (Safety → Reporting → Indicators): LTIFR (accidente cu timp pierdut × 1.000.000 / ore lucrate, orele din Attendances), aproape-accidente, accidente cu timp pierdut, accidente de traseu, zile fără accident. LTIFR e ascuns, cu avertisment, dacă lipsesc orele unei luni începute.",
+      "Două grupuri de acces, Safety officer și Safety manager, cu izolare multi-companie; dreptul de export se acordă separat.",
+      "Fluxul pas-cu-pas este în [fișa consultantului](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "base",
+      "mail",
+      "hr",
+      "hr_attendance"
+    ],
+    "connections": [
+      "hr_attendance"
+    ],
+    "text": "deltatech_safety_register\ndeltatech_safety_register\nRegistru de evenimente de securitate pentru companiile cu programe de securitate sau World Class Manufacturing: aproape-accidente, incidente și accidente de muncă, fiecare cu cauza rădăcină și acțiuni corective, plus indicatorii anuali de securitate.\nEvenimente clasificate Near miss, Incident (fără vătămare), Injury (fără timp pierdut), Lost-time injury sau Fatal, numerotate `SAF/<an>/NNNN`, cu locație, descriere și cauză rădăcină (meniu Safety → Events, export XLSX).\nPersoana accidentată: angajat, partener (contractor, vizitator) sau nume liber; departamentul se completează din angajat.\nAccidente de traseu marcate separat, păstrate în registru și excluse din LTIFR.\nAcțiuni corective cu responsabil și termen; fiecare programează o activitate To-Do. Un eveniment se închide doar după finalizarea acțiunilor, iar unul închis poate fi modificat doar de Safety manager (și nu poate fi șters). Vedere globală în Safety → Corrective actions.\nIndicatori pe companie și an (Safety → Reporting → Indicators): LTIFR (accidente cu timp pierdut × 1.000.000 / ore lucrate, orele din Attendances), aproape-accidente, accidente cu timp pierdut, accidente de traseu, zile fără accident. LTIFR e ascuns, cu avertisment, dacă lipsesc orele unei luni începute.\nDouă grupuri de acces, Safety officer și Safety manager, cu izolare multi-companie; dreptul de export se acordă separat.\nFluxul pas-cu-pas este în [fișa consultantului](FISA_CONSULTANT.md)."
+  },
+  {
     "path": "deltatech_saga/index.md",
     "module": "deltatech_saga",
     "version": "19.0.6.15.0",
@@ -8595,6 +9105,87 @@
       "deltatech_purchase_currency"
     ],
     "text": "Sale Invoice Currency\ndeltatech_sale_currency\nModulul gestionează conversia valutară între comenzile de vânzare și facturile generate din ele. Este util companiilor care ofertează și își țin listele de prețuri într-o valută (de exemplu EUR), dar facturează în altă monedă: moneda jurnalului de vânzări sau, dacă jurnalul nu are monedă, moneda companiei (de exemplu RON). Prețurile se convertesc automat la cursul zilei, iar evidența contabilă reflectă valorile corecte în moneda facturii.\nMoneda facturii după jurnal: factura creată din comandă primește moneda jurnalului de vânzări al comenzii (sau moneda companiei, dacă jurnalul nu are monedă), în loc de moneda comenzii, cum face Odoo standard.\nConversia prețurilor la creare: prețurile unitare din moneda listei de prețuri a comenzii se convertesc în moneda facturii, la cursul de la data creării facturii. Dacă moneda comenzii coincide cu cea a facturii, prețurile rămân neschimbate.\nReconversie la schimbarea datei sau a monedei facturii: liniile provenite din comandă se recalculează pornind mereu de la prețul din comandă, la cursul noii date. Dacă unitatea de măsură a liniei de factură diferă de cea din comandă, prețul se aduce întâi în unitatea facturii.\nLinii manuale neatinse: liniile adăugate direct pe factură, fără legătură cu o comandă, nu se reconvertesc. Prețurile modificate manual pe liniile din comandă se pierd la o nouă schimbare a datei.\nAvansuri: suma avansului deja facturat (în lei, pe o comandă în valută) se reconvertește în moneda comenzii, la cursul de la data facturii de avans, astfel încât factura finală să deducă corect avansul.\nProtecție la monede multiple: dacă o linie de factură provine din linii de comandă în monede diferite, se afișează eroarea „You cannot have multiple currencies in the same invoice line.” Comenzile în monede diferite se facturează separat.\nConfigurare: moneda facturii se decide din câmpul Monedă al jurnalului de vânzări (Contabilitate → Configurare → Jurnale); cursurile se încarcă din Contabilitate → Configurare → Monede. Dacă lipsește cursul pentru data facturii, conversia se face cu cursul 1. Pașii detaliați sunt în fișa consultantului."
+  },
+  {
+    "path": "deltatech_sale_dashboard/index.md",
+    "module": "deltatech_sale_dashboard",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_sale_dashboard",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_sale_dashboard",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_sale_dashboard",
+    "summary": "Un singur ecran în aplicația Sales care răspunde la două întrebări: ce ne așteaptă acum și cum a mers perioada. Cardurile sunt cele din `deltatech_web_kpi_cards` și respectă modul luminos și întunecat al Odoo.",
+    "features": [
+      "Banda To Do Now: oferte deschise, oferte expirate, oferte de urmărit (trimise de mai mult de 7 zile, configurabil), comenzi de livrat, livrări întârziate, comenzi de facturat.",
+      "Banda Results pe ultimele 7, 30, 90 sau 365 de zile, comparate cu perioada anterioară, cu linie de tendință: oferte emise, comenzi confirmate, vânzări fără taxe, rată de conversie, facturat fără taxe (note de credit scăzute).",
+      "Alegerea sferei: My Sales, My Team sau Whole Company (ultimele două doar cui are voie); cifrele se citesc cu drepturile utilizatorului, deci se aplică regulile Sales și companiile selectate.",
+      "Sumele sunt vizibile doar managerilor de vânzări (Sales: Administrator); agentul vede numărătorile, variațiile și conversia.",
+      "Click pe card deschide lista înregistrărilor numărate (fără filtrele implicite), în vizualizările standard.",
+      "Extensii automate: `deltatech_sale_dashboard_rma` (retururi) cu `deltatech_rma` și [deltatech_sale_dashboard_delivery](../deltatech_sale_dashboard_delivery/index.md) (colete) cu `deltatech_delivery_status`.",
+      "Configurare: parametrul de sistem `deltatech_sale_dashboard.follow_up_days` (implicit 7); *My Team* folosește echipele din Sales ▸ Configuration ▸ Sales Teams.",
+      "Flux ilustrat în [fișa consultantului](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "sale_stock",
+      "deltatech_web_kpi_cards"
+    ],
+    "connections": [
+      "deltatech_sale_dashboard_delivery",
+      "deltatech_rma",
+      "deltatech_sale_dashboard_rma",
+      "deltatech_delivery_status"
+    ],
+    "text": "deltatech_sale_dashboard\ndeltatech_sale_dashboard\nUn singur ecran în aplicația Sales care răspunde la două întrebări: ce ne așteaptă acum și cum a mers perioada. Cardurile sunt cele din `deltatech_web_kpi_cards` și respectă modul luminos și întunecat al Odoo.\nBanda To Do Now: oferte deschise, oferte expirate, oferte de urmărit (trimise de mai mult de 7 zile, configurabil), comenzi de livrat, livrări întârziate, comenzi de facturat.\nBanda Results pe ultimele 7, 30, 90 sau 365 de zile, comparate cu perioada anterioară, cu linie de tendință: oferte emise, comenzi confirmate, vânzări fără taxe, rată de conversie, facturat fără taxe (note de credit scăzute).\nAlegerea sferei: My Sales, My Team sau Whole Company (ultimele două doar cui are voie); cifrele se citesc cu drepturile utilizatorului, deci se aplică regulile Sales și companiile selectate.\nSumele sunt vizibile doar managerilor de vânzări (Sales: Administrator); agentul vede numărătorile, variațiile și conversia.\nClick pe card deschide lista înregistrărilor numărate (fără filtrele implicite), în vizualizările standard.\nExtensii automate: `deltatech_sale_dashboard_rma` (retururi) cu `deltatech_rma` și [deltatech_sale_dashboard_delivery](../deltatech_sale_dashboard_delivery/index.md) (colete) cu `deltatech_delivery_status`.\nConfigurare: parametrul de sistem `deltatech_sale_dashboard.follow_up_days` (implicit 7); *My Team* folosește echipele din Sales ▸ Configuration ▸ Sales Teams.\nFlux ilustrat în [fișa consultantului](FISA_CONSULTANT.md)."
+  },
+  {
+    "path": "deltatech_sale_dashboard_delivery/index.md",
+    "module": "deltatech_sale_dashboard_delivery",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_sale_dashboard_delivery",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_sale_dashboard_delivery",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_sale_dashboard_delivery",
+    "summary": "Adaugă coletele comenzilor de vânzare pe bordul de vânzări din `deltatech_sale_dashboard`, pe baza statusului de livrare din `deltatech_delivery_status`. Se instalează automat când ambele module sunt prezente.",
+    "features": [
+      "În banda To Do Now, după *Orders to Deliver*: Parcels to Prepare (livrări gata în depozit, cu curier și fără AWB), Awaiting Courier Pickup (AWB emis, necolectat) și Parcels on the Way (în tranzit, în depozitul curierului sau la livrare).",
+      "Coletul aparține agentului și echipei comenzii, deci *My Sales*, *My Team* și *Whole Company* funcționează ca la celelalte carduri; click pe card deschide transferurile numărate.",
+      "Se numără doar transferurile din ultimele 60 de zile (parametrul de sistem `deltatech_sale_dashboard_delivery.recent_days`, Settings ▸ Technical ▸ System Parameters, mod developer).",
+      "Întârzierile față de SLA-ul curierului, retururile și ramburs se urmăresc în bordul de livrări (`deltatech_delivery_dashboard`)."
+    ],
+    "dependencies": [
+      "deltatech_sale_dashboard",
+      "deltatech_delivery_status"
+    ],
+    "connections": [
+      "deltatech_delivery_dashboard"
+    ],
+    "text": "deltatech_sale_dashboard_delivery\ndeltatech_sale_dashboard_delivery\nAdaugă coletele comenzilor de vânzare pe bordul de vânzări din `deltatech_sale_dashboard`, pe baza statusului de livrare din `deltatech_delivery_status`. Se instalează automat când ambele module sunt prezente.\nÎn banda To Do Now, după *Orders to Deliver*: Parcels to Prepare (livrări gata în depozit, cu curier și fără AWB), Awaiting Courier Pickup (AWB emis, necolectat) și Parcels on the Way (în tranzit, în depozitul curierului sau la livrare).\nColetul aparține agentului și echipei comenzii, deci *My Sales*, *My Team* și *Whole Company* funcționează ca la celelalte carduri; click pe card deschide transferurile numărate.\nSe numără doar transferurile din ultimele 60 de zile (parametrul de sistem `deltatech_sale_dashboard_delivery.recent_days`, Settings ▸ Technical ▸ System Parameters, mod developer).\nÎntârzierile față de SLA-ul curierului, retururile și ramburs se urmăresc în bordul de livrări (`deltatech_delivery_dashboard`)."
+  },
+  {
+    "path": "deltatech_sale_dashboard_rma/index.md",
+    "module": "deltatech_sale_dashboard_rma",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_sale_dashboard_rma",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_sale_dashboard_rma",
+    "last_ingest": null,
+    "friendly_name": "Sales Dashboard - Returns",
+    "summary": "Adaugă pe tabloul de bord de vânzări cererile de retur și reclamațiile de garanție din modulul de retururi. Managerul de vânzări vede dintr-o privire câte retururi așteaptă o decizie și câte sunt în curs, fără să deschidă separat aplicația de retururi. Modulul se instalează automat când sunt prezente ambele module de bază.",
+    "features": [
+      "Retururi de aprobat: cererile trimise, care așteaptă o decizie.",
+      "Retururi în curs: cererile aprobate și neînchise (colet așteptat, primit sau inspectat).",
+      "Cereri de retur în rezultatele perioadei, comparate cu perioada anterioară.",
+      "O cerere de retur aparține agentului de vânzări responsabil și echipei de vânzări a comenzii sale.",
+      "Un clic pe card deschide lista cererilor numărate de acesta."
+    ],
+    "dependencies": [
+      "deltatech_sale_dashboard",
+      "deltatech_rma"
+    ],
+    "connections": [
+      "deltatech_sale_dashboard",
+      "deltatech_rma"
+    ],
+    "text": "Sales Dashboard - Returns\ndeltatech_sale_dashboard_rma\nAdaugă pe tabloul de bord de vânzări cererile de retur și reclamațiile de garanție din modulul de retururi. Managerul de vânzări vede dintr-o privire câte retururi așteaptă o decizie și câte sunt în curs, fără să deschidă separat aplicația de retururi. Modulul se instalează automat când sunt prezente ambele module de bază.\nRetururi de aprobat: cererile trimise, care așteaptă o decizie.\nRetururi în curs: cererile aprobate și neînchise (colet așteptat, primit sau inspectat).\nCereri de retur în rezultatele perioadei, comparate cu perioada anterioară.\nO cerere de retur aparține agentului de vânzări responsabil și echipei de vânzări a comenzii sale.\nUn clic pe card deschide lista cererilor numărate de acesta."
   },
   {
     "path": "deltatech_sale_feedback/index.md",
@@ -10739,6 +11330,86 @@
     "text": "Stoc Furnizor\ndeltatech_vendor_stock\nModulul aduce vizibilitate asupra stocului disponibil la furnizor direct în Odoo. Cantitatea disponibilă la furnizor este reținută în datele de bază ale produsului și afișată în comenzile de vânzare, ajutând echipa de vânzări să știe dacă un produs poate fi adus de la furnizor chiar dacă stocul propriu este zero. Astfel, agenții pot confirma mai ușor disponibilitatea către client fără verificări manuale separate.\nActualizarea cantității disponibile la furnizor în datele de bază ale produsului.\nAfișarea cantității disponibile la furnizor în comanda de vânzare.\nAfișarea unui indicator (pictogramă galbenă) atunci când stocul curent este zero, dar produsul urmează să fie aprovizionat de la furnizor."
   },
   {
+    "path": "deltatech_voip_daktela/index.md",
+    "module": "deltatech_voip_daktela",
+    "version": "20.0.1.13.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_voip_daktela",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_voip_daktela",
+    "last_ingest": null,
+    "friendly_name": "Phone - Daktela",
+    "summary": "Conectează aplicația Telefon din Odoo cu Daktela, centrala telefonică în cloud. Operatorii sună direct din Odoo, văd apelul în widgetul Telefon, iar istoricul apelurilor din Daktela ajunge automat în Odoo, legat de contact și de utilizator. Modulul este gândit pentru echipe de suport și vânzări care lucrează cu cozi de apeluri în Daktela.",
+    "features": [
+      "Apel prin Daktela: pentru utilizatorii legați de un agent Daktela, *Apel* de lângă orice număr cere Daktela să sune numărul de pe telefonul agentului.",
+      "Telefon web Daktela sau softphone Odoo: furnizorul alege cine poartă sunetul. Cu softphone-ul Odoo, acesta se înregistrează în Daktela ca dispozitiv WebRTC al agentului, cu credențiale SIP sincronizate (*Sync Daktela phones*), și are suprimare de zgomot.",
+      "Widget Telefon: afișează apelul cu cardul contactului (apel inițiat, apoi în convorbire cu cronometru, citit din Daktela la 2 secunde); închiderea se face din butonul roșu sau din Daktela. Transfer, hold, înregistrare și mute sunt dezactivate la apelurile Daktela.",
+      "Apeluri primite: se anunță în widget cu *Acceptă* și *Respinge*; apelul fără răspuns devine *Pierdut*. Se configurează cu o adresă de webhook generată pe furnizor, setată în Daktela (*Manage > Settings > Events*).",
+      "Nu deranja: pune agentul în pauza Daktela setată pe furnizor (sau *Not ready*); *Disponibil* sau expirarea duratei îl readuce.",
+      "Dezactivare sonerie și fila În așteptare, cu apelurile din cozile Daktela și butonul *Acceptă* (necesită dreptul *Call pickup* în coadă).",
+      "Istoric apeluri: la 10 minute se importă apelurile încheiate, o singură dată fiecare, cu direcție, stare, durată, contact (după număr) și utilizator (după agent). Apelurile interne sunt omise; cele fără agent merg la utilizatorul de rezervă.",
+      "Apeluri pe țări: panou lateral *Țară* în istoric, citit din prefixul internațional; numerele se stochează în format internațional.",
+      "Configurare: pe furnizor, grupul *Daktela API* (URL instanță, token, fus orar, coadă de ieșire, utilizator de rezervă, buton *Test connection*); pe utilizator, *Daktela Agent* (doar administrator, unic), *Daktela Device* și *Daktela Outbound Queue* opționale."
+    ],
+    "dependencies": [
+      "voip"
+    ],
+    "connections": [
+      "deltatech_voip_missed_call",
+      "deltatech_voip_sale"
+    ],
+    "text": "Phone - Daktela\ndeltatech_voip_daktela\nConectează aplicația Telefon din Odoo cu Daktela, centrala telefonică în cloud. Operatorii sună direct din Odoo, văd apelul în widgetul Telefon, iar istoricul apelurilor din Daktela ajunge automat în Odoo, legat de contact și de utilizator. Modulul este gândit pentru echipe de suport și vânzări care lucrează cu cozi de apeluri în Daktela.\nApel prin Daktela: pentru utilizatorii legați de un agent Daktela, *Apel* de lângă orice număr cere Daktela să sune numărul de pe telefonul agentului.\nTelefon web Daktela sau softphone Odoo: furnizorul alege cine poartă sunetul. Cu softphone-ul Odoo, acesta se înregistrează în Daktela ca dispozitiv WebRTC al agentului, cu credențiale SIP sincronizate (*Sync Daktela phones*), și are suprimare de zgomot.\nWidget Telefon: afișează apelul cu cardul contactului (apel inițiat, apoi în convorbire cu cronometru, citit din Daktela la 2 secunde); închiderea se face din butonul roșu sau din Daktela. Transfer, hold, înregistrare și mute sunt dezactivate la apelurile Daktela.\nApeluri primite: se anunță în widget cu *Acceptă* și *Respinge*; apelul fără răspuns devine *Pierdut*. Se configurează cu o adresă de webhook generată pe furnizor, setată în Daktela (*Manage > Settings > Events*).\nNu deranja: pune agentul în pauza Daktela setată pe furnizor (sau *Not ready*); *Disponibil* sau expirarea duratei îl readuce.\nDezactivare sonerie și fila În așteptare, cu apelurile din cozile Daktela și butonul *Acceptă* (necesită dreptul *Call pickup* în coadă).\nIstoric apeluri: la 10 minute se importă apelurile încheiate, o singură dată fiecare, cu direcție, stare, durată, contact (după număr) și utilizator (după agent). Apelurile interne sunt omise; cele fără agent merg la utilizatorul de rezervă.\nApeluri pe țări: panou lateral *Țară* în istoric, citit din prefixul internațional; numerele se stochează în format internațional.\nConfigurare: pe furnizor, grupul *Daktela API* (URL instanță, token, fus orar, coadă de ieșire, utilizator de rezervă, buton *Test connection*); pe utilizator, *Daktela Agent* (doar administrator, unic), *Daktela Device* și *Daktela Outbound Queue* opționale."
+  },
+  {
+    "path": "deltatech_voip_missed_call/index.md",
+    "module": "deltatech_voip_missed_call",
+    "version": "20.0.1.1.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_voip_missed_call",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_voip_missed_call",
+    "last_ingest": null,
+    "friendly_name": "Phone - Missed Calls to Call Back",
+    "summary": "O listă comună a clienților de sunat înapoi, în aplicația Telefon. Fiecare client care a sunat și nu a primit răspuns apare o singură dată, iar linia se închide singură în momentul în care cineva vorbește cu el. Astfel, apelurile pierdute, inclusiv cele din cozi fără agent, nu se mai pierd între operatori.",
+    "features": [
+      "O linie per client: la un apel primit pierdut sau respins, *Telefon > Apeluri pierdute* arată linia numărului, cu contactul, numărul de încercări și ultima încercare; apelurile următoare de la același număr, în orice format, se adaugă la aceeași linie.",
+      "Închidere automată: un apel răspuns cu numărul respectiv (de ieșire sau primit), de orice utilizator, închide linia; un apel înapoi fără răspuns o lasă deschisă.",
+      "Comună operatorilor: fiecare utilizator intern vede liniile companiilor sale, nu doar apelurile care l-au sunat.",
+      "Marchează ca rezolvat: pentru clientul contactat altfel (mobil, email), cu evidența cine și când.",
+      "Note pe linie, în listă sau în formular; rămân și după rezolvare.",
+      "Pe țări (panou lateral, din prefixul numărului) și pe operatori (căutare, grupare, filtre salvate).",
+      "Apel înapoi dintr-un clic: numărul este link Telefon.",
+      "Funcționează cu orice furnizor VoIP (softphone Odoo sau integrări precum Daktela). La instalare se reiau apelurile pierdute și răspunse din ultimele 7 zile. Numerele se compară în format internațional față de țara companiei, deci aceasta trebuie setată."
+    ],
+    "dependencies": [
+      "voip"
+    ],
+    "connections": [
+      "deltatech_voip_daktela",
+      "deltatech_voip_sale"
+    ],
+    "text": "Phone - Missed Calls to Call Back\ndeltatech_voip_missed_call\nO listă comună a clienților de sunat înapoi, în aplicația Telefon. Fiecare client care a sunat și nu a primit răspuns apare o singură dată, iar linia se închide singură în momentul în care cineva vorbește cu el. Astfel, apelurile pierdute, inclusiv cele din cozi fără agent, nu se mai pierd între operatori.\nO linie per client: la un apel primit pierdut sau respins, *Telefon > Apeluri pierdute* arată linia numărului, cu contactul, numărul de încercări și ultima încercare; apelurile următoare de la același număr, în orice format, se adaugă la aceeași linie.\nÎnchidere automată: un apel răspuns cu numărul respectiv (de ieșire sau primit), de orice utilizator, închide linia; un apel înapoi fără răspuns o lasă deschisă.\nComună operatorilor: fiecare utilizator intern vede liniile companiilor sale, nu doar apelurile care l-au sunat.\nMarchează ca rezolvat: pentru clientul contactat altfel (mobil, email), cu evidența cine și când.\nNote pe linie, în listă sau în formular; rămân și după rezolvare.\nPe țări (panou lateral, din prefixul numărului) și pe operatori (căutare, grupare, filtre salvate).\nApel înapoi dintr-un clic: numărul este link Telefon.\nFuncționează cu orice furnizor VoIP (softphone Odoo sau integrări precum Daktela). La instalare se reiau apelurile pierdute și răspunse din ultimele 7 zile. Numerele se compară în format internațional față de țara companiei, deci aceasta trebuie setată."
+  },
+  {
+    "path": "deltatech_voip_sale/index.md",
+    "module": "deltatech_voip_sale",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_voip_sale",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_voip_sale",
+    "last_ingest": null,
+    "friendly_name": "Phone - Sales Orders",
+    "summary": "Comenzile de vânzare la îndemână în timpul unui apel, în aplicația Telefon. Agentul vede imediat comenzile clientului care sună și poate începe o comandă nouă, iar pe comandă are la vedere telefoanele adreselor de facturare și de livrare.",
+    "features": [
+      "Butonul Comenzi în widgetul Telefon, înainte de *Mergi la*: la sunare, în timpul apelului, în rezumat, în istoric și în activități. Deschide comenzile clientului și pe cele livrate la una din adresele lui; o singură comandă se deschide direct, altfel se afișează lista (cele mai noi întâi), iar *Nou* începe o comandă pentru client.",
+      "Ambele telefoane pe comandă: telefonul adresei de facturare și al celei de livrare, ca linkuri Telefon, sub adrese (cu opțiunea *Adresele clientului* activă în setările de facturare).",
+      "Butonul se arată agenților de vânzări (*Vânzări / Utilizator: Numai documente proprii* și peste), pentru apeluri cu contact cunoscut; funcționează cu orice furnizor VoIP."
+    ],
+    "dependencies": [
+      "voip_sale"
+    ],
+    "connections": [
+      "deltatech_voip_daktela",
+      "deltatech_voip_missed_call"
+    ],
+    "text": "Phone - Sales Orders\ndeltatech_voip_sale\nComenzile de vânzare la îndemână în timpul unui apel, în aplicația Telefon. Agentul vede imediat comenzile clientului care sună și poate începe o comandă nouă, iar pe comandă are la vedere telefoanele adreselor de facturare și de livrare.\nButonul Comenzi în widgetul Telefon, înainte de *Mergi la*: la sunare, în timpul apelului, în rezumat, în istoric și în activități. Deschide comenzile clientului și pe cele livrate la una din adresele lui; o singură comandă se deschide direct, altfel se afișează lista (cele mai noi întâi), iar *Nou* începe o comandă pentru client.\nAmbele telefoane pe comandă: telefonul adresei de facturare și al celei de livrare, ca linkuri Telefon, sub adrese (cu opțiunea *Adresele clientului* activă în setările de facturare).\nButonul se arată agenților de vânzări (*Vânzări / Utilizator: Numai documente proprii* și peste), pentru apeluri cu contact cunoscut; funcționează cu orice furnizor VoIP."
+  },
+  {
     "path": "deltatech_warehouse_arrangement/index.md",
     "module": "deltatech_warehouse_arrangement",
     "version": "19.0.0.1.2",
@@ -10818,6 +11489,35 @@
       "deltatech_website_watermark"
     ],
     "text": "Watermark (Filigran)\ndeltatech_watermark\nAcest modul oferă un câmp de bază pentru imaginea sau textul de filigran (watermark) în Odoo. Este conceput să acționeze ca un punct centralizat de stocare și configurare a filigranului, folosit în diferite zone ale sistemului, în special în rapoarte și pe website. Modulul nu aplică el însuși filigranul pe documente sau imagini — el doar pune la dispoziție câmpurile și configurarea necesare, urmând ca module de extensie specifice să realizeze efectiv aplicarea filigranului.\nStocare centralizată a filigranului: adaugă un câmp dedicat Watermark (de obicei pe modelul companiei), oferind un loc standardizat pentru încărcarea imaginii sau definirea textului folosit la filigranarea documentelor sau mediilor corporative.\nSetări de configurare: se integrează cu setările standard Odoo (Settings > General Settings) pentru o administrare ușoară, permițând actualizarea rapidă și globală a filigranului corporativ.\nFundament pentru extensii: acționează ca dependență necesară pentru module de filigranare mai specifice, precum cele care aplică filigranul pe imaginile de website sau pe rapoartele PDF generate."
+  },
+  {
+    "path": "deltatech_wcm/index.md",
+    "module": "deltatech_wcm",
+    "version": "20.0.1.1.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_wcm",
+    "local_path": "odoo-addons/bitshop_ent/deltatech_wcm",
+    "last_ingest": null,
+    "friendly_name": "World Class Manufacturing Dashboard",
+    "summary": "Un singur tablou de bord pentru cei zece piloni tehnici World Class Manufacturing (WCM): Siguranță, Cost Deployment, Îmbunătățire focalizată, Mentenanță autonomă, Mentenanță planificată, Controlul calității, Logistică și servicii clienți, Managementul timpuriu al echipamentelor, Dezvoltarea oamenilor, Mediu și energie. Fiecare pilon grupează indicatori cu țintă, prag de avertizare și semafor, iar pilonul arată starea celui mai slab indicator.",
+    "features": [
+      "Semafor: verde, galben, roșu sau „fără date\" (un pilon fără valori nu apare niciodată verde). Cu *Mai mare e mai bine*, valoarea peste țintă e verde, peste prag galbenă; cu *Mai mic e mai bine* comparația se inversează. Pragul trebuie să stea între țintă și zona roșie.",
+      "Indicatori citiți din Odoo: disponibilitate OEE (centre de lucru), MTBF și MTTR (echipamente de mentenanță), rata de respingere la controlul calității și rata de rebuturi, livrări la timp (transferuri de ieșire).",
+      "Cost Deployment: compară costul unitar real (raportul MO Overview) cu costul standard din rețetă (BoM Structure) și arată cât costă fiecare pierdere pe unitate bună: rebuturi, opriri, schimbări de serie, energie, deșeuri. Indicatorul de abatere se calculează live.",
+      "Costuri energie și deșeuri introduse per centru de lucru și perioadă; se repartizează pe unitățile bune produse.",
+      "Unit Costs: se recalculează cu *Recompute (last 30 days)*; pierderea cu cel mai mare cost pe unitate e candidatul pentru un proiect de îmbunătățire.",
+      "Introducere manuală (valoare și dată) pentru indicatorii fără sursă în Odoo, de exemplu Siguranță.",
+      "Meniu: *Producție > World Class Manufacturing* (Tablou de bord, Indicatori, Costuri energie și deșeuri, Costuri unitare). Țintele implicite sunt orientative și se confirmă cu fabrica."
+    ],
+    "dependencies": [
+      "mrp",
+      "mrp_account",
+      "mrp_workorder",
+      "maintenance",
+      "quality",
+      "stock"
+    ],
+    "connections": [],
+    "text": "World Class Manufacturing Dashboard\ndeltatech_wcm\nUn singur tablou de bord pentru cei zece piloni tehnici World Class Manufacturing (WCM): Siguranță, Cost Deployment, Îmbunătățire focalizată, Mentenanță autonomă, Mentenanță planificată, Controlul calității, Logistică și servicii clienți, Managementul timpuriu al echipamentelor, Dezvoltarea oamenilor, Mediu și energie. Fiecare pilon grupează indicatori cu țintă, prag de avertizare și semafor, iar pilonul arată starea celui mai slab indicator.\nSemafor: verde, galben, roșu sau „fără date\" (un pilon fără valori nu apare niciodată verde). Cu *Mai mare e mai bine*, valoarea peste țintă e verde, peste prag galbenă; cu *Mai mic e mai bine* comparația se inversează. Pragul trebuie să stea între țintă și zona roșie.\nIndicatori citiți din Odoo: disponibilitate OEE (centre de lucru), MTBF și MTTR (echipamente de mentenanță), rata de respingere la controlul calității și rata de rebuturi, livrări la timp (transferuri de ieșire).\nCost Deployment: compară costul unitar real (raportul MO Overview) cu costul standard din rețetă (BoM Structure) și arată cât costă fiecare pierdere pe unitate bună: rebuturi, opriri, schimbări de serie, energie, deșeuri. Indicatorul de abatere se calculează live.\nCosturi energie și deșeuri introduse per centru de lucru și perioadă; se repartizează pe unitățile bune produse.\nUnit Costs: se recalculează cu *Recompute (last 30 days)*; pierderea cu cel mai mare cost pe unitate e candidatul pentru un proiect de îmbunătățire.\nIntroducere manuală (valoare și dată) pentru indicatorii fără sursă în Odoo, de exemplu Siguranță.\nMeniu: *Producție > World Class Manufacturing* (Tablou de bord, Indicatori, Costuri energie și deșeuri, Costuri unitare). Țintele implicite sunt orientative și se confirmă cu fabrica."
   },
   {
     "path": "deltatech_website_blog/index.md",
