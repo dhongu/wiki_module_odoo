@@ -1,28 +1,25 @@
-# Limită de Credit pe Partener — Website (localizat la `terrabit_partner_credit_limit_website/index.md`)
+# Partner Credit Limit Website (localizat la `terrabit_partner_credit_limit_website/index.md`)
 
 - **Nume Tehnic:** `terrabit_partner_credit_limit_website`
-- **Versiune:** `19.0.0.0.2`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_partner_credit_limit_website
+- **Versiune:** `20.0.0.0.7`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/terrabit_partner_credit_limit_website
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_partner_credit_limit_website`
-- **Ultima Ingestie:** `2026-09-14`
+- **Ultima Ingestie:** 2026-11-28
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul extinde funcționalitatea de limită de credit pe partener către platforma de website/e-commerce a Odoo. Integrează gestiunea limitei de credit direct în experiența de cumpărare online, astfel încât politica de credit a companiei să fie aplicată consecvent atât pe canalele de vânzare tradiționale, cât și pe cele de comerț electronic.
+Extinde controlul limitei de credit pe partener către magazinul online, astfel încât politica de credit să fie aplicată la fel pe toate canalele de vânzare. La checkout, clientul autentificat vede un rezumat al soldului față de limită, iar dacă limita e depășită sau există facturi restante, metodele de plată „pe încredere" sunt eliminate.
 
 #### 2. Funcționalități Cheie
 
-- Aplică limitele de credit ale partenerului în timpul procesului de checkout pe website.
-- Împiedică plasarea comenzilor pe website atunci când limita de credit a clientului ar fi depășită.
-- Afișează mesaje de avertizare clienților atunci când se apropie de limita de credit sau o depășesc.
-- Oferă opțiuni configurabile pentru tratarea situațiilor de depășire a limitei de credit în interfața website-ului.
-- Se integrează fără probleme cu sistemul central de gestiune a limitei de credit (`terrabit_partner_credit_limit`).
-- Menține o politică de credit consecventă pe toate canalele de vânzare.
-- Oferă opțiuni de configurare pentru diferite abordări de notificare a clienților.
-- Suportă checkout ca invitat (guest checkout), cu controale corespunzătoare ale limitei de credit.
+- **Restricționarea metodelor de plată:** la depășirea limitei sau la facturi restante se elimină metodele amânate (transfer bancar, numerar la livrare), rămânând cele online; opțional se elimină toate.
+- **Setare unică „Restrict All Providers":** în *Pagină web > Configurare > Setări*, secțiunea eCommerce; bifată, la depășire dispar toate metodele de plată (clientul e blocat la checkout până își rezolvă soldul).
+- **Rezumat pe pagina de plată:** bară de progres (valoarea comenzii față de limită, umplută după sold + comandă) și soldul curent.
+- **Alertă de facturi restante:** casetă roșie cu suma restantă și documentele, plus telefonul contabilității (din setările modulului de bază) pentru clarificări.
+- **Aceeași logică ca în backend:** folosește calculul din `terrabit_partner_credit_limit` (toleranță, termen imediat, clienți fără limită etc.).
 
-Beneficii de afaceri: gestiune unitară a creditului pe toate canalele de vânzare, aplicare în timp real a limitei de credit pentru achizițiile online, reducerea riscului financiar din operațiunile de e-commerce, experiență de client îmbunătățită prin notificări transparente și prevenirea respingerilor neașteptate de comenzi prin informare proactivă.
+Pașii și capturile sunt în [Fișa consultant](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -32,12 +29,22 @@ Beneficii de afaceri: gestiune unitară a creditului pe toate canalele de vânza
 
 #### 4. Componente Cheie
 
-Documentația acestei secțiuni se bazează pe fișierul `readme/DESCRIPTION.md`, care nu detaliază componentele tehnice individuale. Conform fluxului de ingestie, analiza codului pentru Modele, Vizualizări și Acțiuni Automate a fost omisă întrucât Readme-ul este prezent.
+**Modele**
 
-*Notă tehnică orientativă (neexhaustivă):* modulul extinde `payment.provider` (`_get_compatible_providers`) pentru a restricționa metodele de plată disponibile la checkout când limita de credit e depășită (parametrul de sistem `payment_provider_credit_limit.restrict_all_provider` controlează dacă se restricționează toți furnizorii sau doar cei incompatibili cu plata pe loc/transfer bancar), extinde `res.config.settings` cu setarea „Restrict All Providers”, și adaugă în șablonul `website_sale.payment` un bloc cu bara de progres a limitei de credit, soldul curent și eventualele facturi restante.
+- `payment.provider`: filtrează furnizorii disponibili la checkout (`_find_available_providers`) când limita e depășită.
+- `res.config.settings`: setarea „Restrict All Providers".
+
+**Vizualizări**
+
+- `views/templates.xml`: blocul cu bara de progres, soldul și alerta de restanțe pe pagina de plată.
+- `views/res_config_settings_views.xml`: setarea în configurarea website-ului.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Nu sunt definite `ir.cron`, `base.automation` sau `ir.actions.server`.
 
 #### 5. Conexiuni
 
-- [terrabit_partner_credit_limit](../terrabit_partner_credit_limit/index.md): modulul de bază (și dependență) care implementează logica de calcul și verificare a limitei de credit, extinsă aici pentru canalul website.
-- `website_sale`: modulul standard de e-commerce ale cărui șabloane de checkout (`website_sale.payment`) și setări (`res.config.settings`) sunt extinse.
-- `payment_custom`: furnizează modurile de plată personalizate (ex. transfer bancar) folosite în logica de restricționare a furnizorilor de plată.
+- [terrabit_partner_credit_limit](../terrabit_partner_credit_limit/index.md) (dependență): calculul limitei și al restanței.
+- `website_sale`: șabloanele de checkout extinse.
+- `payment_custom`: furnizorii de plată personalizați (transfer bancar) vizați de restricție.

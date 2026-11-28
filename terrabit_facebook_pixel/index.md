@@ -1,26 +1,26 @@
-# Terrabit Facebook Pixel (localizat la `terrabit_facebook_pixel/index.md`)
+# Facebook Pixel (localizat la `terrabit_facebook_pixel/index.md`)
 
 - **Nume Tehnic:** `terrabit_facebook_pixel`
-- **Versiune:** `19.0.0.1.5`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_facebook_pixel
+- **Versiune:** `20.0.0.1.10`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/terrabit_facebook_pixel
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_facebook_pixel`
-- **Ultima Ingestie:** 2026-09-03
+- **Ultima Ingestie:** 2026-11-28
 
 #### 1. Sumar
 
-Integrare Meta (Facebook) Pixel și Conversion API (CAPI) pentru website-ul Odoo 19, pentru urmărirea acțiunilor vizitatorilor și optimizarea campaniilor publicitare cu acuratețe ridicată a datelor. Combină tracking-ul client-side din browser (Pixel) cu evenimente server-side (CAPI), depășind limitările AdBlocker-elor și ale browserelor. Se bazează pe modulul de fundație `terrabit_website_sale_tracking_base` pentru evenimentele de frontend.
+Trimite către **Meta** (reclame Facebook și Instagram) vizitele și pașii de cumpărare de pe website-ul Odoo, prin Meta Pixel din browser și, pentru comenzile confirmate, prin Conversions API de pe server. Astfel campaniile pot fi măsurate și optimizate pe vânzările efectiv realizate, chiar dacă browserul blochează pixelul.
 
 #### 2. Funcționalități Cheie
 
-- **Tracking hibrid (Pixel + CAPI):** evenimente client-side combinate cu evenimente server-side pentru acuratețe maximă.
-- **Advanced Matching:** trimite date de utilizator hash-uite SHA-256 (email, telefon) pentru a crește rata de potrivire (Event Match Quality).
-- **Identificare produs centralizată:** dropdown-ul `Item ID Type` global oferă trei opțiuni pentru potrivirea cu Catalogul Meta — **Product Variant ID** (implicit, ID-ul variantei), **Product Template ID** (ID-ul produsului template) sau **Internal Reference SKU** (`default_code`, cu fallback pe ID dacă produsul nu are SKU).
-- **Exclude Delivery:** comutator care, activat, scade costul de livrare din parametrul `value` trimis către Facebook, astfel încât valoarea de conversie raportată să reflecte doar produsele.
-- **Evenimente standard:** `PageView`, `ViewContent`, `AddToCart`, `RemoveFromCart`, `Search`, `InitiateCheckout`, `AddPaymentInfo`, `Purchase`, `CompleteRegistration`, `Login`, `AddToWishlist`, plus lead-uri (`Contact`, `Lead`).
-- **Lead generation:** urmărește clicurile pe numere de telefon (`tel:`) și trimiterile de formulare (ex. pagina de contact); CAPI pentru lead-uri noi create în CRM.
-- **CAPI asincron:** evenimentele server-side se trimit în thread-uri de fundal, fără impact asupra performanței site-ului.
-- **Configurare:** din **Website > Configuration > Settings**, secțiunea *Google Analytics* — se bifează „Facebook Pixel" și se completează Pixel ID și tokenul Conversion API; opțiunile `Item ID Type` și `Exclude Delivery` se găsesc în aceleași setări de tracking global, sub secțiunea *SEO*.
-- **Verificare:** evenimentele Pixel se verifică cu extensia Chrome „Meta Pixel Helper", iar sosirea evenimentelor CAPI se confirmă în Events Manager din Meta Business Suite.
+- **Pixel pe fiecare pagină:** Meta Pixel se încarcă pe paginile website-ului cu Pixel ID-ul tău și înregistrează fiecare vizualizare de pagină (`PageView`).
+- **Pașii de cumpărare:** produs vizualizat (`ViewContent`), adăugat în coș (`AddToCart`), căutare (`Search`), început de checkout (`InitiateCheckout`), metodă de plată aleasă (`AddPaymentInfo`) și comanda de pe pagina de confirmare (`Purchase`), cu ID-urile produselor, cantități, valoare și monedă.
+- **Purchase de pe server:** cu un token Conversions API, fiecare comandă de website confirmată în Odoo este trimisă și de pe server (`Purchase`), deci este numărată chiar dacă pixelul din browser e blocat.
+- **Potrivire mai bună (Advanced Matching):** pentru clientul autentificat, e-mailul și telefonul se trimit hash-uite SHA-256.
+- **Contacte și formulare:** clicul pe un număr de telefon (`Contact`) și un formular de website trimis (`Lead`) sunt înregistrate.
+- **ID-urile produselor tale:** identificatorul produsului și excluderea transportului din valoare se setează o singură dată, pentru toate modulele de tracking ale website-ului (din `terrabit_website_sale_tracking_base`).
+- **Configurare:** din *Website > Configuration > Settings* se activează **Facebook Pixel Tracker** și se completează Pixel ID-ul și, opțional, **Facebook Conversion API Token**. Opțiunile **Item ID Type for Tracking** (ID variantă, ID șablon de produs sau referință internă/SKU, cu ID când SKU e gol) și **Exclude Delivery from Tracking Events** sunt în aceeași pagină de setări.
+- **Verificare:** evenimentele din browser se văd în Meta Events Manager (*Test events*) sau cu extensia Meta Pixel Helper; la confirmarea unei comenzi, cu token, apare și un `Purchase` de pe server.
+- **Date trimise către Meta:** din browser, evenimentele de mai sus cu ID-uri, nume, prețuri, cantități și valoarea comenzii, plus e-mailul și telefonul hash-uite ale clientului autentificat; de pe server (cu token), comenzile confirmate cu valoare, produse și datele hash-uite ale clientului.
 
 #### 3. Dependențe
 
@@ -32,21 +32,21 @@ Integrare Meta (Facebook) Pixel și Conversion API (CAPI) pentru website-ul Odoo
 
 **Modele**
 
-- `website`: extins cu `facebook_pixel_code`, `facebook_capi_token`, helperul `_hash_data` și `_send_facebook_capi_event` (trimitere CAPI asincronă).
-- `res.config.settings`: expune codul de pixel și token-ul CAPI în configurarea website-ului.
-- `sale.order`: la `action_confirm` trimite evenimentul `Purchase` prin CAPI.
-- `crm.lead`: hook pe `create` pentru evenimentul `Lead` via CAPI.
+- `website`: extins cu codul de pixel, token-ul CAPI și metodele de hash și de trimitere a evenimentelor CAPI.
+- `res.config.settings`: expune pixelul și token-ul CAPI în setările website-ului.
+- `sale.order`: la confirmare trimite evenimentul `Purchase` prin CAPI.
+- `crm.lead`: la creare trimite evenimentul `Lead` prin CAPI.
 
 **Vizualizări**
 
-- `views/res_config_settings_views.xml`: setările Facebook Pixel/CAPI (Website > Configuration > Settings).
-- `views/website_templates.xml`: injectează scriptul de pixel Meta și extinde pagina de confirmare comandă.
+- `views/res_config_settings_views.xml`: setările Facebook Pixel (Website > Configuration > Settings).
+- `views/website_templates.xml`: injectează scriptul Meta Pixel și extinde pagina de confirmare a comenzii.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Nu sunt definite `ir.cron`, `base.automation` sau `ir.actions.server` în acest modul; trimiterea evenimentelor CAPI se face sincron din fluxul de execuție (thread de fundal la `action_confirm` pe `sale.order` și la `create` pe `crm.lead`), nu prin programator.
+- Nu sunt definite `ir.cron`, `base.automation` sau `ir.actions.server` în acest modul.
 
 #### 5. Conexiuni
 
-- [terrabit_website_sale_tracking_base](../terrabit_website_sale_tracking_base/index.md): furnizează magistrala de evenimente normalizate și îmbogățirea payload-ului de tracking.
+- [terrabit_website_sale_tracking_base](../terrabit_website_sale_tracking_base/index.md): furnizează evenimentele normalizate și îmbogățirea payload-ului de tracking.
 - [terrabit_tiktok_pixel](../terrabit_tiktok_pixel/index.md): modul-soră pentru TikTok, cu aceeași arhitectură de tracking.

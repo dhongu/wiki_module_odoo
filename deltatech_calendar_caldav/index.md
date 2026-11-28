@@ -1,47 +1,55 @@
-# Sincronizare Calendar CalDAV
+# Calendar CalDAV Sync (localizat la `deltatech_calendar_caldav/index.md`)
 
 - **Nume Tehnic:** `deltatech_calendar_caldav`
-- **Versiune:** `19.0.3.1.0`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_calendar_caldav`
+- **Versiune:** `20.0.3.3.1`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_calendar_caldav`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_calendar_caldav`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul sincronizează calendarul Odoo (`calendar.event`) cu un server CalDAV extern (cPanel/Horde/SOGo, Nextcloud, sau orice server care implementează standardul CalDAV RFC 4791), în ambele direcții. Un cron (sau butonul „Sync Now") aduce evenimentele de pe server în Odoo; crearea, modificarea sau ștergerea unui eveniment Odoo pentru un utilizator cu cont CalDAV configurat trimite imediat schimbarea pe server. Spre deosebire de Google Calendar/Microsoft 365 (sincronizate nativ de Odoo), CalDAV nu are conector nativ — acest modul umple acel gol, generic, fără cod specific per furnizor.
+Modulul sincronizează în ambele sensuri evenimentele dintre un server CalDAV extern (de exemplu un calendar găzduit în cPanel sau orice furnizor CalDAV standard) și calendarul Odoo. Un cont CalDAV oglindește un calendar Odoo, iar acesta poate fi partajat cu alți utilizatori, care văd și editează aceleași programări fără să aibă un cont CalDAV propriu.
 
 #### 2. Funcționalități Cheie
 
-- Sincronizare bidirecțională CalDAV ↔ Odoo (pull programat/manual + push imediat la create/write/unlink).
-- Evenimente recurente: o serie recurentă Odoo se trimite ca **o singură resursă CalDAV** (eveniment „master" cu regulă `RRULE`), nu ca evenimente separate; ocurențele aduse de pe server sunt expandate și importate individual, mapate pe `calendar.recurrence` nativ al Odoo (nu mai apar ca evenimente „orfane").
-- Reminder-e: alarmele Odoo (`calendar.alarm`) se mapează pe/din componente `VALARM` (notificare → `DISPLAY`, email → `EMAIL`).
-- Participanți: `partner_ids`/organizatorul se mapează pe/din `ATTENDEE`/`ORGANIZER`, cu potrivire automată a contactelor după adresa de email (creare automată dacă lipsesc).
-- Detectare conflicte (ETag): înainte de a suprascrie un eveniment pe server, verifică dacă acesta s-a schimbat de la ultima sincronizare; dacă da, push-ul e sărit (serverul câștigă), nu suprascrie orbește.
-- Detectare schimbări (CTag): verifică marca de schimbare a colecției înainte de fiecare sincronizare; dacă nimic nu s-a schimbat, sare peste pull-ul complet.
-- Pull-ul scrie doar câmpurile care s-au schimbat efectiv, ca sincronizarea să nu rupă o serie recurentă existentă rescriind inutil `start`/`stop` pe ocurențe neschimbate.
+- CalDAV către Odoo: o acțiune programată (sau butonul **Sync Now**) aduce evenimentele de pe server. Odoo către CalDAV: crearea, modificarea sau ștergerea unui eveniment se trimite imediat pe server.
+- Evenimente recurente (RRULE): o serie Odoo ajunge pe server ca un singur eveniment-master, iar o serie de pe server se importă ca o singură serie Odoo.
+- Memento-uri (VALARM): notificare devine `DISPLAY`, email devine `EMAIL`.
+- Participanți: liniile `ATTENDEE` / `ORGANIZER` se mapează pe participanți; contactele se potrivesc după email sau se creează. Proprietarul calendarului apare mereu ca participant.
+- Detectarea conflictelor (ETag): dacă e modificat pe server, push-ul local este sărit, iar următoarea sincronizare aduce versiunea serverului. Detectarea schimbărilor (CTag): dacă nimic nu s-a schimbat, aducerea se omite.
+- Un singur eveniment Odoo per eveniment de server (UID); îl păstrează contul organizatorului.
+- Configurare: **Setări > Tehnic > CalDAV Accounts** (mod dezvoltator) sau, pentru titular, **Calendar > My Calendars**; câmpuri **Server URL**, **Username**, **Password**, **Owner**, **Odoo Calendar**; **Test Connection** descoperă calendarul și completează **Calendar Url**; **Sync Days Past / Future** (implicit 7 și 90 de zile).
+- Partajare: calendarul Odoo al proprietarului se partajează prin **Shared with**, cu **Default visibility** pe **Shared Calendar Members Only** sau **Public**; nu se dă asistentului un al doilea cont CalDAV pe același calendar.
+- Acțiunea programată este dezactivată după instalare și se activează din **Setări > Tehnic > Scheduled Actions**.
+- Securitate: parola CalDAV se stochează în clar pe cont (de preferat o parolă de aplicație); doar administratorii schimbă câmpurile de server, iar proprietarul poate schimba parola. Biblioteca Python `caldav` trebuie instalată în intervalul `>=1.3.9,<=2.0.1`.
+- Limitări: ștergerea unei singure ocurențe dintr-o serie nu se trimite pe server; o ocurență modificată și mutată poate crea un duplicat pe server.
+- Fluxul pas-cu-pas, cu capturi, este în [fișa consultant](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
 - `calendar`
 
+Dependențe externe Python: `caldav`, `icalendar`.
+
 #### 4. Componente Cheie
 
 **Modele**
 
-- `caldav.account` (model nou): un cont = un calendar CalDAV — `url`, `username`, `password` (restricționat la grupul Setări), `calendar_url` (descoperit automat la Test Connection), `user_id` (proprietarul evenimentelor sincronizate), `sync_days_past`/`sync_days_future` (fereastra de sincronizare, implicit -7/+90 zile), `last_sync`/`last_sync_status`/`last_ctag`. Conține logica de conectare (`caldav`/`icalendar`), construirea/parsarea iCalendar (RRULE, VALARM, ATTENDEE/ORGANIZER) și push/pull. Pull-ul cere resursa brută de pe server (`expand=False`, nu expandată) și mapează `RRULE`-ul pe `calendar.recurrence` nativ al Odoo, astfel încât o serie rămâne o singură serie; ocurențele-excepție (`RECURRENCE-ID`) sunt atașate ocurenței cărora le aparțin, nu create ca evenimente noi. Fusul orar al recurenței se ia doar dintr-un `TZID` explicit trimis de server (nu mai cade pe fusul orar al utilizatorului curent).
-- `calendar.event` (extindere): câmpuri noi `caldav_account_id`, `caldav_uid` (identificatorul pe server), `caldav_recurrence_id` (pentru o ocurență a unei serii), `caldav_etag`; suprascrie `create`/`write`/`unlink` pentru a trimite schimbările pe serverul CalDAV al contului asociat utilizatorului evenimentului (operațiune rulată `sudo`, ca sincronizarea să nu depindă de drepturile utilizatorului curent pe `caldav.account`).
+- `caldav.account` (nou): un cont este un calendar CalDAV, cu URL, utilizator, parolă, `calendar_url` descoperit automat, proprietar, fereastra de sincronizare și starea ultimei rulări (data, status, ctag).
+- `calendar.event` (extins): câmpuri `caldav_account_id`, `caldav_uid`, `caldav_recurrence_id`, `caldav_etag`; la `create` / `write` / `unlink` trimite modificările pe serverul contului asociat.
 
 **Vizualizări**
 
-- `view_caldav_account_form`: formularul contului, cu butoanele **Test Connection** și **Sync Now**, butonul-statistică **Events** (evenimentele sincronizate) și secțiunea de sincronizare (zile trecut/viitor, ultima sincronizare, status, ctag).
-- `view_caldav_account_tree`: lista conturilor CalDAV (nume, proprietar, URL, ultima sincronizare, status).
-- `action_caldav_synced_events`: acțiune care deschide evenimentele legate de un cont CalDAV (listă/formular/calendar).
+- `view_caldav_account_form` / `view_caldav_account_tree`: formularul (cu **Test Connection**, **Sync Now** și butonul **Events**) și lista conturilor, pentru administratori.
+- `view_caldav_account_form_user` / `view_caldav_account_tree_user`: variantele pentru titularul contului.
+- `view_calendar_event_list_caldav` / `view_calendar_event_search_caldav`: lista și căutarea evenimentelor sincronizate.
+- `action_caldav_synced_events`: deschide evenimentele legate de un cont.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- `ir_cron_caldav_sync` (`ir.cron`, dezactivat implicit, interval 15 minute): rulează `caldav.account._cron_sync_accounts()`, care sincronizează toate conturile active.
+- `CalDAV: Sync Accounts` (`ir.cron`, dezactivat implicit, la 15 minute): rulează `caldav.account._cron_sync_accounts()` pentru conturile active.
 
 #### 5. Conexiuni
 
-- `calendar`: datele sincronizate sunt evenimentele native de calendar ale utilizatorului — modulul nu introduce o interfață separată, folosește aplicația Calendar existentă.
+- `calendar`: evenimentele sincronizate sunt reuniunile native Odoo, vizibile în aplicația Calendar și luate în calcul la disponibilitate.

@@ -1,10 +1,11 @@
 # SAGA Interface MRP Extension (localizat la `deltatech_saga_mrp/index.md`)
 
 - **Nume Tehnic:** `deltatech_saga_mrp`
-- **Versiune:** `19.0.0.0.2`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga_mrp
+- **Versiune:** `20.0.0.0.9`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_saga_mrp
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_saga_mrp`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -12,12 +13,14 @@ Acest modul extinde interfața de export către SAGA astfel încât să acopere 
 
 #### 2. Funcționalități Cheie
 
-- Sincronizare automată a mișcărilor de stoc generate de comenzile de producție și de kituri (BoM phantom) din Odoo către SAGA.
-- Export dedicat pentru consumurile și producțiile aferente kiturilor, cu fișiere separate (`BC_KIT_`, `PRODUCTIE_KIT_`).
-- Schimb de date în timp real pentru costurile de producție, actualizările de inventar și contabilitatea de producție.
-- Reducerea erorilor umane și a discrepanțelor de date prin transmiterea electronică a înregistrărilor de fabricație.
-- Vedere unificată asupra proceselor de producție în Odoo, menținând în același timp înregistrări financiare consistente în SAGA.
-- Interoperabilitate scalabilă — se pot adăuga ușor noi facilități de producție și linii de fabricație pe măsură ce afacerea crește.
+- Pentru fiecare kit (listă de materiale de tip *Kit*) livrat în perioadă, exportul SAGA primește consumul componentelor (fișierul `BC_KIT_`) și producția kitului (fișierul `PRODUCTIE_KIT_`), ca SAGA să aibă kitul în stoc la importul facturilor de vânzare.
+- **Consumul componentelor**: mișcările de stoc efectuate ale componentelor, în perioada și compania exportului.
+- **Producția kitului**: cantitatea fiecărui kit se calculează din componente, pe transfer, și se scrie cu codul, unitatea, costul și gestiunea SAGA a locației; kitul se evaluează la costul curent, deci costul produselor-kit trebuie ținut la zi.
+- **Varianta corectă**: un kit definit pe șablon și comun mai multor variante se exportă pentru varianta vândută sau cumpărată, cu componentele care i se aplică.
+- **Unități convertite** între mișcări, listă de materiale și produs (2 duzini livrate ca 24 de bucăți înseamnă un kit); **retururile** (componente intrate înapoi în stoc) contează ca producție negativă de kit.
+- Fișierele de kit se generează doar la exportul **Cantitativ-Valoric** (și la exportul incremental), doar în format **DBF**; cu doar XML bifat, rezultatul exportului avertizează. Sumarul arată câte kituri și câte consumuri s-au exportat.
+- Configurare: *Referință internă* (codul SAGA) pe kit și pe componente și categorie de produs cu *Code SAGA*, altfel linia apare ca eroare (sau blochează exportul fără *Ignore Errors*). Modulul nu trimite date în afara Odoo: doar adaugă fișiere în arhiva exportului, pe care o importați singur în SAGA, odată cu celelalte fișiere.
+- Fluxul pas cu pas e în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 

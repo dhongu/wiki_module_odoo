@@ -1,10 +1,10 @@
 # NAP Public Category (localizat la `deltatech_nap_website/index.md`)
 
 - **Nume Tehnic:** `deltatech_nap_website`
-- **Versiune:** `19.0.1.0.2`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_nap_website
+- **Versiune:** `20.0.1.0.5`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_nap_website
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_nap_website`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 

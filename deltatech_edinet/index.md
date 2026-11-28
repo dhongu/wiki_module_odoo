@@ -1,32 +1,33 @@
 # Deltatech EDINET (localizat la `deltatech_edinet/index.md`)
 
 - **Nume Tehnic:** `deltatech_edinet`
-- **Versiune:** `19.0.1.5.0`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edinet`
+- **Versiune:** `20.0.1.6.7`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_edinet`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_edinet`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Modulul integrează Odoo cu platforma **Infinite EDINET**, permițând schimbul electronic de documente comerciale (EDI). Acesta automatizează schimbul de comenzi de vânzare și de facturi între Odoo și platforma EDINET, reducând efortul manual și riscul de erori. Practic, comenzile de la clienți pot fi preluate automat în Odoo, iar facturile validate pot fi trimise către EDINET cu un singur clic sau în loturi.
+Modulul face schimb de comenzi, avize de expediție și facturi cu lanțurile de retail prin platforma **Infinite EDINET**, rețeaua EDI folosită de mulți retaileri din România în relația cu furnizorii. Comenzile primite de la retailer devin automat comenzi de vânzare în Odoo, iar facturile și avizele de expediție ajung la retailer fără reintroducere manuală în portalul EDINET.
 
 #### 2. Funcționalități Cheie
 
-- **Import automat al comenzilor de vânzare:** preia și procesează automat comenzile (ORDERS) din platforma EDINET.
-- **Export de facturi:** trimite facturile validate (INVOICE) direct către EDINET, individual sau în lot.
-- **Integrare Infinite:** proiectat special pentru a funcționa cu serviciile EDI Infinite.
-- **Suport multi-companie:** se pot configura credențiale separate pentru fiecare companie din instanța Odoo.
-- **Configurare flexibilă a credențialelor:** la nivel de companie (**Setări > Companii**) sau prin parametri de sistem (`deltatech_edinet.username`, `deltatech_edinet.password`) ca metodă alternativă.
-- **URL WSDL configurabil per companie:** câmpul `edinet_wsdl_template` permite direcționarea integrării către noua platformă EDInet (placeholder `{service}`), fără modificări de cod, în perspectiva migrării anunțate de furnizor (Axis2 legacy → platformă nouă).
-- **Reimport EDI:** buton pe comanda de vânzare (draft/trimisă, cu `client_order_ref` completat) care rerulează importul EDI din XML-ul EDInet deja atașat pe comandă, fără a mai fi nevoie de intervenția suportului.
-- **Verificare Edinet:** buton care compară comanda cu XML-ul EDInet atașat (adresă de livrare, produse, cantități, prețuri) și scrie diferențele în chatter; verificarea este strict read-only și nu suprascrie comanda.
-- **Control acces dedicat:** butoanele de reimport și verificare sunt restricționate la grupul de securitate *Edinet: reimport și verificare comenzi*, implicat automat de *Vânzări / Administrator*.
+- **Import orar al comenzilor:** o acțiune programată citește comenzile noi (ORDERS) ale fiecărei companii din EDINET și creează comenzile de vânzare; retailerul și punctul de livrare se găsesc după GLN, iar produsele după codurile proprii ale retailerului. Fiecare comandă importată este confirmată înapoi în EDINET.
+- **Verificare Edinet:** compară comanda de vânzare cu comanda EDINET din care provine (punct de livrare, produse, cantități, prețuri) și listează diferențele în chatter; verificarea este strict read-only.
+- **Reimport EDI:** importă din nou comanda din mesajul XML păstrat atașat, fără intervenția suportului.
+- **Facturi către retailer:** factura clientului postată se trimite la EDINET cu un clic sau în lot din lista de facturi; notele de credit pot fi trimise ca factură storno, de retur sau de corecție, cu numărul comenzii retailerului (**EDI Order Number**).
+- **Aviz de expediție (DESADV):** livrarea este trimisă la EDINET ca aviz de expediție înainte de sosirea mărfii (export EDI pe transfer).
+- **Linii de comandă din Excel:** liniile se pot importa într-o comandă de vânzare dintr-un fișier Excel (acțiunea de import Edinet de pe comandă).
+- **Mai multe companii:** fiecare companie are propriul utilizator, parolă și adresă de servicii EDINET, deci conturile de test și de producție pot fi ținute separat.
+- **Configurare:** în *Setări > Setări generale*, secțiunea **EDI Net**, se completează utilizatorul, parola și **șablonul URL WSDL** (cu `{service}` în locul numelui serviciului; Infinite furnizează adresele de test și de producție). Fără ele, exportul se oprește cu eroare de configurare, iar importul sare peste companie. Pe retailer se setează sistemul EDI *EDI Net* și codurile **GLN** (ale retailerului și ale punctelor de livrare); pe produse se completează codurile retailerului. Acțiunea programată *Edinet: Get Orders* trebuie verificată că este activă (în datele modulului este livrată inactivă).
+- **Control acces dedicat:** butoanele de reimport și verificare sunt restricționate la grupul *Edinet: reimport și verificare comenzi*, implicat de *Vânzări / Administrator*.
+- **Date trimise către Infinite EDINET:** facturile și avizele retailerilor care folosesc EDINET, cu linii, cantități, prețuri, numere de comandă și coduri GLN; modulul citește și comenzile retailerilor, conectându-se cu utilizatorul și parola fiecărei companii.
 
 #### 3. Dependențe
 
 - [deltatech_edi](../deltatech_edi/index.md)
 
-Dependențe externe Python: `zeep`, `xmltodict`.
+Dependențe externe Python: `zeep`, `xmltodict`, `xlrd`.
 
 #### 4. Componente Cheie
 
@@ -36,6 +37,9 @@ Dependențe externe Python: `zeep`, `xmltodict`.
 
 - `sale.order` (extindere): adaugă `corn_import_edinet` (cron de import ORDERS), `action_reimport_edinet_button` (reimport din atașamentul XML), `action_check_edinet_button` / `_check_edinet_message` (verificare read-only față de documentul Edinet: adresă, produse, cantități, prețuri) și `_export_edinet_data` (trimitere comandă).
 - `account.move` (extindere): adaugă `export_edinet_button` / `action_mass_export_edinet` pentru exportul facturilor validate către EDINET (individual sau în masă) și suprascrie `button_export_edi` pentru partenerii cu `edi_system == "edi_net"`.
+- `stock.picking` (extindere): `export_edinet_button` / `_export_edinet_data` trimit avizul de expediție (DESADV) la EDINET.
+- `res.partner` (extindere): adaugă valoarea *EDI Net* în `edi_system` și câmpurile `edi_id_bayer`, `edi_id_seller`.
+- `import.sale.edinet.line` (wizard): importă liniile unei comenzi de vânzare dintr-un fișier Excel.
 - `res.company` (extindere): câmpurile `edinet_username`, `edinet_password` și `edinet_wsdl_template` pentru credențiale și URL-ul șablon al serviciilor SOAP.
 
 **Vizualizări**

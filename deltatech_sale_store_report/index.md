@@ -1,10 +1,10 @@
-# Deltatech Sale from Store Z Report (localizat la `deltatech_sale_store_report/index.md`)
+# Store Sales Z-Report (localizat la `deltatech_sale_store_report/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_store_report`
-- **Versiune:** `19.0.1.1.0`
-- **Cale:** [https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_store_report](https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_store_report)
+- **Versiune:** `20.0.1.1.11`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_sale_store_report
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_store_report`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -57,7 +57,7 @@ zilnice sau lunare dintre Odoo și casele de marcat.
   de bonuri fiscale).
 - `view_sale_store_z_report_result_form`: formularul de rezultat, cu totalurile principale și patru
   file (Receipts, Daily Totals, Tax Totals, Payment Totals).
-- Meniu `menu_sale_store_z_report`: acces din contabilitate (`account.menu_finance_entries`),
+- Meniu `menu_sale_store_z_report` („Store Sales Z Report”): acces din contabilitate (`account.menu_finance_entries`),
   restricționat la grupul `account.group_account_invoice`.
 
 **Acțiuni Automate / Acțiuni Server**

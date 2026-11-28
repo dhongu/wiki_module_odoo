@@ -1,10 +1,10 @@
 # Print to ECR from POS (localizat la `deltatech_pos/index.md`)
 
 - **Nume Tehnic:** `deltatech_pos`
-- **Versiune:** `19.0.2.8.1`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_pos
+- **Versiune:** `20.0.2.14.4`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_pos
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_pos`
-- **Ultima Ingestie:** `2026-09-17`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -44,9 +44,10 @@ Modulul Deltatech POS ECR asigură o integrare eficientă între punctul de vân
 #### 3. Dependențe
 
 - `point_of_sale`
+- `pos_stock` (din Odoo 20, integrarea de stoc a POS a fost mutată din `point_of_sale` în `pos_stock`)
 - [deltatech_pos_base](../deltatech_pos_base/index.md)
 - [deltatech_ecr_connect](../deltatech_ecr_connect/index.md)
-- `deltatech_ecr_fiscal`
+- [deltatech_ecr_fiscal](../deltatech_ecr_fiscal/index.md)
 
 #### 4. Componente Cheie
 
@@ -54,11 +55,11 @@ Conform fluxului de ingestie, secțiunile de Componente Cheie sunt în principiu
 
 **Modele**
 
-- `deltatech.pos.vat.report` (`models/deltatech_pos_vat_report.py`): model nestocat (`_auto = False`), definit direct ca vedere SQL peste `pos.order.line` (join cu `pos_order`, `res_company` și taxele procentuale ale liniei, via `account_tax_pos_order_line_rel`). Nu are migrare/backfill — se recreează la fiecare pornire a modulului. Agregă vânzările POS pe dată fiscală (`report_date`, din `date_order`), punct de vânzare (`config_id`) și stare (`paid`/`done`), expunând bază, TVA și total. `tax_name` e numele real al taxei (sau al taxelor concatenate cu „ + ", când sunt mai multe), preluat cu `string_agg` peste taxele procentuale ale liniei; liniile fără nicio taxă procentuală apar cu `tax_name = "Fără taxă TVA"`. `vat_rate` rămâne cota primei taxe procentuale, doar pentru compatibilitate. `multi_tax` e `true` când linia are mai mult de o taxă procentuală simultan — caz de configurare de verificat. `receipt_print`, pentru filtrarea pe bonuri efectiv tipărite.
+- `deltatech.pos.vat.report` (`models/deltatech_pos_vat_report.py`): model nestocat (`_auto = False`), definit direct ca vedere SQL peste `pos.order.line` (join cu `pos_order`, `res_company` și taxele procentuale ale liniei, via `account_tax_pos_order_line_rel`). Nu are migrare/backfill — se recreează la fiecare pornire a modulului. Agregă vânzările POS pe dată fiscală (`report_date`, din `date_order`), punct de vânzare (`config_id`) și stare (`paid`/`done`), expunând bază, TVA și total. `tax_name` e numele real al taxei (sau al taxelor concatenate cu „ + ", când sunt mai multe), preluat cu `string_agg` peste taxele procentuale ale liniei; liniile fără nicio taxă procentuală apar cu `tax_name = "Fără taxă TVA"`. `vat_rate` rămâne cota primei taxe procentuale, doar pentru compatibilitate. `multi_tax` e `true` când linia are mai mult de o taxă procentuală simultan — caz de configurare de verificat. `vat_mismatch` („VAT Differs from Tax Rate”, de verificat) semnalează liniile la care TVA-ul de pe bon nu corespunde cotei taxei de azi — de obicei o poziție fiscală sau o cotă modificate după vânzare; de aceea o poziție fiscală sau o taxă deja folosite în vânzări nu se modifică, ci se creează una nouă și se arhivează cea veche. Raportul citește comenzile POS din Odoo, nu jurnalul electronic al aparatului fiscal. `receipt_print`, pentru filtrarea pe bonuri efectiv tipărite.
 
 **Vizualizări**
 
-- `view_deltatech_pos_vat_report_search`: căutare/filtre pe punct de vânzare, taxă (`tax_name`) și cotă TVA, cu grupare rapidă pe punct de vânzare/taxă/cotă/dată, filtrul „ECR Receipt Text" (`receipt_print`, neactiv implicit) și filtrul „Multiple Taxes (to check)" (`multi_tax`).
+- `view_deltatech_pos_vat_report_search`: căutare/filtre pe punct de vânzare, taxă (`tax_name`) și cotă TVA, filtrul „VAT Differs from Tax Rate (to check)”, cu grupare rapidă pe punct de vânzare/taxă/cotă/dată, filtrul „ECR Receipt Text" (`receipt_print`, neactiv implicit) și filtrul „Multiple Taxes (to check)" (`multi_tax`).
 - `view_deltatech_pos_vat_report_pivot`: vedere implicită a raportului — rânduri pe punct de vânzare și taxă (`tax_name`), coloane pe lună, măsuri Bază/TVA/Total.
 - `view_deltatech_pos_vat_report_list`: vedere listă needitabilă (`create="0" edit="0" delete="0"`) pentru detalierea pe comandă individuală, cu `multi_tax` și `receipt_print` ascunse opțional (`optional="hide"`).
 - `action_deltatech_pos_vat_report` + `menu_deltatech_pos_vat_report`: acțiunea și intrarea de meniu **Point of Sale → Reporting → VAT Sales by Fiscal Device**, cu grupare implicită pe punct de vânzare și taxă din context.

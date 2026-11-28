@@ -1,10 +1,11 @@
 # Banca Transilvania iPay Payment Acquirer (localizat la `deltatech_payment_bt_ipay/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment_bt_ipay`
-- **Versiune:** `19.0.0.0.8`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment_bt_ipay`
+- **Versiune:** `20.0.0.0.15`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_payment_bt_ipay`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment_bt_ipay`
-- **Ultima Ingestie:** `2026-08-20`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
@@ -20,6 +21,9 @@ Acest modul conectează Odoo cu BT iPay (platforma de plăți online cu cardul a
   - **1‑Phase (un pas)** — recomandat pentru servicii online: cardul este autorizat și suma este capturată imediat la finalizarea comenzii (bunuri digitale, abonamente, servicii cu livrare instantă).
   - **2‑Phase (doi pași)** — recomandat pentru produse fizice: cardul este autorizat la checkout, iar suma este capturată ulterior, după expediere sau confirmarea livrării, oferind echipei operaționale control asupra sumei efectiv capturate.
 - Redirecționare către pagina de plată găzduită de BT iPay, atât din linkul de plată al portalului de clienți, cât și din checkout-ul eCommerce, cu revenire automată pe site după finalizarea/anularea plății.
+- Captură sau anulare din Odoo în modul 2‑Phase: din tranzacție sau din comanda de vânzare (*Capture Transaction* / *Void Transaction*); se poate captura doar suma integrală autorizată.
+- Confirmare automată: Odoo interoghează banca și verifică suma, moneda și numărul comenzii; la confirmare se creează plata contabilă pe jurnalul furnizorului (rămâne *În curs de procesare* până la potrivirea cu extrasul). Plăți în RON, EUR și USD; mod Test sau Activ.
+- Limite: banca nu trimite notificări — dacă clientul închide pagina băncii înainte de revenire, tranzacția rămâne *În așteptare* și se verifică în portalul BT iPay; rambursările și setările antifraudă rămân în contul de comerciant. Pașii de configurare sunt în [fișa consultantului](FISA_CONSULTANT.md).
 - Datele cardului nu sunt stocate niciodată în Odoo — introducerea și securitatea lor sunt gestionate integral de BT iPay.
 
 #### 3. Dependențe

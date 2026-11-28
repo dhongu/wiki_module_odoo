@@ -1,10 +1,10 @@
 # Terrabit Sale Cancel Order (localizat la `deltatech_sale_cancel_order/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_cancel_order`
-- **Versiune:** `19.0.0.2.0`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_cancel_order`
+- **Versiune:** `20.0.0.2.9`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_sale_cancel_order`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_cancel_order`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
@@ -24,7 +24,7 @@ Acest modul oferă clienților posibilitatea de a solicita anularea unei comenzi
 
 #### 3. Dependențe
 
-- `sale`
+- `sale_stock`
 - `portal`
 
 #### 4. Componente Cheie

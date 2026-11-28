@@ -1,33 +1,44 @@
 # Barcode Sale (localizat la `deltatech_barcode_sale/index.md`)
 
 - **Nume Tehnic:** `deltatech_barcode_sale`
-- **Versiune:** `19.0.2.0.0`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_barcode_sale
+- **Versiune:** `20.0.2.1.7`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_barcode_sale`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_barcode_sale`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul optimizează procesul de vânzare permițând scanarea directă a codurilor de bare în interfața comenzii de vânzare, astfel încât reprezentanții de vânzări pot construi rapid și precis ofertele și comenzile clienților. Din perspectivă de business, funcționalitatea accelerează ciclul de tranzacționare, reduce riscul de erori în comenzi și oferă o experiență mai profesională clientului, fiind utilă mai ales în medii de tip retail.
+Modulul optimizează procesul de vânzare prin scanarea codurilor de bare direct în comanda de vânzare, astfel încât reprezentanții să poată construi rapid și corect cotații și comenzi. Din punct de vedere comercial, accelerează ciclul tranzacției, reduce erorile de introducere și oferă clienților o experiență mai profesionistă, mai ales în medii de tip retail.
 
 #### 2. Funcționalități Cheie
 
-- **Introducere accelerată a comenzilor:** adăugarea rapidă a produselor pe comenzile de vânzare prin scanarea codurilor de bare, reducând semnificativ timpul de așteptare al clientului.
-- **Reducerea erorilor în comenzi:** eliminarea greșelilor de tastare manuală, asigurând că produsele și variantele corecte sunt întotdeauna adăugate pe comandă.
-- **Control îmbunătățit al stocului:** identificarea produselor în timp real prin coduri de bare ajută la menținerea unor evidențe corecte de stoc în timpul vânzării.
-- **Eficiență sporită a vânzărilor:** personalul se poate concentra pe servirea clientului și pe cross-selling în loc de introducerea laborioasă a datelor.
-- **Serviciu profesional:** o experiență de finalizare a comenzii modernă și eficientă pentru clienți, care crește încrederea și satisfacția.
+- Introducere accelerată a comenzilor: produsele se adaugă prin scanarea codului de bare, ceea ce scurtează timpul de așteptare al clientului.
+- Mai puține erori: se elimină greșelile de tastare, iar produsul și varianta corectă ajung pe comandă.
+- Identificare în timp real a produsului prin cod de bare, utilă pentru evidențe de stoc corecte în timpul vânzării.
+- Personalul de vânzări se poate concentra pe client și pe vânzarea încrucișată, nu pe introducerea manuală.
+- Comportamente observate în cod: prima scanare adaugă linia, următoarele cresc cantitatea; un cod de ambalaj adaugă ambalajul produsului; un produs nevandabil sau un cod necunoscut afișează un mesaj și nu modifică comanda.
+- Fluxul pas-cu-pas, cu capturi, este în [fișa consultant](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
 - `sale`
-- `barcodes`
+- [deltatech_barcode_handler](../deltatech_barcode_handler/index.md)
 
 #### 4. Componente Cheie
 
-Informațiile pentru această secțiune provin din `readme/DESCRIPTION.md`, conform fluxului de ingestie; analiza detaliată a codului (modele, vizualizări, acțiuni) nu a fost necesară. Pe scurt, modulul extinde modelul de comandă de vânzare (`sale.order`) și interfața acestuia (`views/sale_views.xml`) pentru a integra scanarea codurilor de bare la adăugarea liniilor de comandă.
+**Modele**
+
+- `sale.order` (extins): implementează `on_barcode_scanned()` și `_add_product()` pentru a adăuga sau a crește cantitatea liniilor de comandă din codul scanat.
+
+**Vizualizări**
+
+- `view_sale_order_barcode_inherit_form`: adaugă câmpul de captare a scanărilor pe formularul comenzii de vânzare.
+
+**Acțiuni Automate / Acțiuni Server**
+
+Modulul nu definește sarcini `ir.cron`, reguli `base.automation` sau acțiuni server.
 
 #### 5. Conexiuni
 
-- `sale`: modulul de bază al comenzilor de vânzare, peste care se adaugă funcționalitatea de scanare.
-- `barcodes`: motorul Odoo de scanare a codurilor de bare folosit pentru identificarea produselor.
+- [deltatech_barcode_picking](../deltatech_barcode_picking/index.md): același principiu de scanare, aplicat pe transferurile de stoc.

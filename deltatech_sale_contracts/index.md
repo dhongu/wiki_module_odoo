@@ -1,10 +1,10 @@
 # Deltatech Sale Contracts (localizat la `deltatech_sale_contracts/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_contracts`
-- **Versiune:** `19.0.1.0.2`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_contracts`
+- **Versiune:** `20.0.1.0.8`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_sale_contracts`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_contracts`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
@@ -23,7 +23,7 @@ Modulul extinde comenzile de vânzare cu o stare dedicată de tip „Contract”
   - Titlul raportului de vânzare afișează „Agreement #” pentru starea Contract.
 
 Note:
-- Construit pentru Odoo 19: folosește expresii moderne de vizualizare (fără `attrs`/`states`).
+- Construit pentru Odoo 20: folosește expresii moderne de vizualizare (fără `attrs`/`states`).
 - Modulul nu modifică logistica standard de confirmare: doar comenzile copil confirmate la stadiul Sale generează livrări și facturi.
 
 #### 3. Dependențe

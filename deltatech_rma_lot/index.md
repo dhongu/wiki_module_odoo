@@ -1,10 +1,10 @@
 # RMA Lot / Serial (localizat la `deltatech_rma_lot/index.md`)
 
 - **Nume Tehnic:** `deltatech_rma_lot`
-- **Versiune:** `19.0.1.0.2`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_rma_lot
+- **Versiune:** `20.0.1.0.9`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_rma_lot
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_rma_lot`
-- **Ultima Ingestie:** 2026-09-24
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -17,6 +17,7 @@ Puntea pune lotul sau seria pe cererea de retur, o verifică față de ce a plec
 - Verificare la salvare față de livrarea liniei de comandă (`stock.move.line` de ieșire, efectuate): un lot al altui produs e refuzat, iar un lot al produsului corect, dar livrat altui client, e refuzat cu lista loturilor livrate efectiv în mesaj.
 - O cerere a cărei livrare n-a fost încă validată nu se blochează: coletul ajunge uneori înaintea hârtiilor.
 - **Repune în stoc** creează transferul de retur cu lotul de pe cerere deja pus pe operațiile detaliate (extindere a `_create_return_picking` din nucleu).
+- Mai multe serii sau loturi ale aceluiași produs pe aceeași cerere: fiecare primește propria operație detaliată pe transferul de retur, cu cantitatea liniei sale; cantitatea nealocată unui lot rămâne pe o linie fără lot. Marfa bună și cea defectă își păstrează loturile pe transferurile lor.
 - Lotul apare și în *Retururi → Analiză → Produse returnate*, cu căutare după lot — util la o reclamație de serie către furnizor.
 
 #### 3. Dependențe

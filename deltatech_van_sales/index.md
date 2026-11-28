@@ -1,10 +1,10 @@
 # Van Sales (localizat la `deltatech_van_sales/index.md`)
 
 - **Nume Tehnic:** `deltatech_van_sales`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_van_sales
+- **Versiune:** `20.0.1.0.7`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_van_sales
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_van_sales`
-- **Ultima Ingestie:** `2026-09-13`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -40,7 +40,7 @@ contabilă automată.
   filtrabile pe dubă sau agent: **Van Sales** (comenzi pe dubă, cu totaluri) și **Collections**
   (încasări pe agent, grupate pe metodă de plată).
 - Două grupuri de securitate dedicate: **Van Sales / Agent** (vede doar dubă și comenzile/
-  încasările proprii, `agent_id = user.id`) și **Van Sales / Manager** (vede tot, singurul cu acces
+  încasările proprii, `agent_id = user.id`, prin restricții `ir.access`) și **Van Sales / Manager** (vede tot, singurul cu acces
   la meniurile Configurare > Vans și To Invoice).
 - Încasarea caută automat, per companie, primul jurnal **Cash** (pentru Cash) sau **Bank** (pentru
   Card) — trebuie să existe câte un jurnal de fiecare tip folosit, altfel apare eroare explicită.

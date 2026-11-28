@@ -1,10 +1,10 @@
 # NAP (localizat la `deltatech_nap/index.md`)
 
 - **Nume Tehnic:** `deltatech_nap`
-- **Versiune:** `19.0.1.8.3`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_nap`
+- **Versiune:** `20.0.1.9.4`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_nap`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_nap`
-- **Ultima Ingestie:** `2026-09-24`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -18,14 +18,15 @@ NAP (Necesar de Aprovizionare / Purchase requirements) este o unealtă simplă �
 - **Cantități comandabile**: cantitatea propusă respectă cantitatea minimă de comandă a furnizorului (`product.supplierinfo.min_qty`) și este rotunjită la multiplul de ambalare, astfel încât poate fi trimisă furnizorului ca atare.
 - **Reaprovizionare consolidată**: lansarea reaprovizionării grupează liniile aceluiași furnizor într-o singură comandă de achiziție, în loc de o comandă per produs.
 - **Stoc de siguranță statistic (opțional)**: în loc de un procent fix de stoc de siguranță, un mod opțional adaugă `Z × σ_zilnic × √(timp de livrare)`, unde σ este deviația standard a cererii săptămânale (inclusiv săptămânile fără cerere), iar Z provine din nivelul de serviciu ales (90 / 95 / 97,5 / 99%).
-- **Clasificare XYZ**: produsele sunt clasificate după predictibilitatea cererii, folosind coeficientul de variație — X (stabil), Y (variabil), Z (eratic). Produsele erratice (clasa Z) sunt excluse din calculul automat al stocului de siguranță și marcate pentru verificare manuală, astfel încât nu se propune o cifră fals-precisă pe o cerere imprevizibilă.
+- **Metode de prognoză (opțional)**: în locul mediei simple, cantitatea necesară poate proveni dintr-o prognoză săptămânală — sezonieră (aceleași săptămâni din anul anterior, scalate la nivelul recent), tendință amortizată (Holt) sau cerere intermitentă (Croston SBA) — ori dintr-o alegere automată după clasa XYZ și eroarea recentă. Python pur, fără bibliotecă externă; o metodă fără istoric suficient revine vizibil la medie, iar stocul de siguranță se dimensionează atunci pe erorile prognozei.
+- **Clasificare XYZ**: produsele sunt clasificate după predictibilitatea cererii, folosind coeficientul de variație — X (stabil), Y (variabil, cu stoc de siguranță statistic), Z (eratic). Produsele erratice (clasa Z) sunt excluse din calculul automat al stocului de siguranță și marcate pentru verificare manuală, astfel încât nu se propune o cifră fals-precisă pe o cerere imprevizibilă.
 - **Majorări de vânzări și siguranță**: creșteri procentuale opționale, plus filtrarea vânzărilor excepționale (ignorarea mișcărilor mari, punctuale, peste un prag).
 - **Produse de înlocuire**: cererea unui produs scos din uz este preluată de produsul său de înlocuire.
 - **Gestionarea sfârșitului de ciclu de viață (EOL)**: un indicator `EOL` și o acțiune programată care arhivează produsele EOL odată ce stocul acestora ajunge la zero.
 - **Relevanță pentru planificare**: un indicator `planning_relevant` (specific variantei de produs) pentru a exclude din raport produsele care nu sunt planificate.
 - **Raport de stoc cu mișcare lentă (slow move)**: identifică produsele cu stoc pozitiv și fără ieșiri semnificative într-o perioadă, cu filtrare inteligentă care exclude produsele recent recepționate sau nou create.
-- **Meniu**: raportul principal se accesează din *Inventar ▸ Raportare ▸ Stock Forecast Report*, cu opțiuni pentru depozit/locație, perioadă istoric, zile de prognoză, timp de livrare, furnizori/produse, majorare vânzări și comutatorul pentru stocul de siguranță statistic (nivel de serviciu). Din lista rezultată, liniile marcate pentru verificare manuală (clasa Z) sunt evidențiate, iar dialogul „Info” arată explicația de calcul pas cu pas; reaprovizionarea se lansează per linie sau pe întreaga selecție.
-- **Parametri de sistem** (`Setări ▸ Tehnic ▸ Parametri de Sistem`): valorile implicite pentru stocul de siguranță statistic (comutator, nivel de serviciu) și pragurile coeficientului de variație pentru clasele X/Y/Z sunt configurabile centralizat, la fel ca opțiunea de a respecta și minimul regulilor de reaprovizionare ale produsului.
+- **Meniu**: raportul principal se accesează din *Inventar ▸ Raportare ▸ Stock Forecast Report*, cu opțiuni pentru depozit/locație, perioadă istoric, zile de prognoză, timp de livrare, metodă de prognoză, furnizori/produse, majorare vânzări și comutatorul pentru stocul de siguranță statistic (nivel de serviciu). Din lista rezultată, liniile marcate pentru verificare manuală (clasa Z) sunt evidențiate, iar dialogul „Info” arată explicația de calcul pas cu pas; reaprovizionarea se lansează per linie sau pe întreaga selecție.
+- **Parametri de sistem** (`Setări ▸ Tehnic ▸ Parametri de Sistem`): valorile implicite pentru stocul de siguranță statistic (comutator, nivel de serviciu) și pragurile coeficientului de variație pentru clasele X/Y/Z sunt configurabile centralizat, la fel ca metoda de prognoză implicită (`deltatech_nap.forecast_method`) și opțiunea de a respecta și minimul regulilor de reaprovizionare ale produsului.
 
 #### 3. Dependențe
 

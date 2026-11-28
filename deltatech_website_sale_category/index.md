@@ -1,10 +1,11 @@
-# Terrabit Website Sale Category Selection (localizat la `deltatech_website_sale_category/index.md`)
+# Website Sale Category Selection (localizat la `deltatech_website_sale_category/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_sale_category`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** [https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_sale_category](https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_website_sale_category)
+- **Versiune:** `20.0.1.1.3`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_website_sale_category
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_website_sale_category`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -15,6 +16,7 @@ Modulul adaugă un pas intermediar de navigare în magazinul online: atunci cân
 - Permite utilizatorilor să navigheze prin subcategorii înainte de a vedea produsele în magazinul online (e-commerce).
 - Interceptează click-urile pe categorii în pagina de shop.
 - Afișează o pagină de selecție a subcategoriilor dacă respectiva categorie are categorii-copil (`child_id`).
+- Sortarea, filtrele și paginile rămân pe lista „Vezi toate produsele” (nu readuc pagina de selecție); pe baze cu mai multe site-uri se afișează doar subcategoriile site-ului curent.
 - Include o opțiune „Vezi toate produsele" (`all_products=True`) pentru a ocoli pasul de selecție a subcategoriei și a ajunge direct la listarea produselor.
 
 #### 3. Dependențe
@@ -25,7 +27,9 @@ Modulul adaugă un pas intermediar de navigare în magazinul online: atunci cân
 
 **Modele**
 
-Modulul nu definește sau extinde modele Odoo; toată logica este implementată la nivel de controller HTTP.
+- `product.public.category` (extins): metoda `tb_category_visual_soft()` returnează pictograma sau imaginea afișată pe cardul categoriei; folosește `tb_category_visual` din [deltatech_website_category_icon](../deltatech_website_category_icon/index.md) dacă acel modul e instalat (nu e dependență), altfel imaginea categoriei sau nimic.
+
+Restul logicii stă în controllerul HTTP.
 
 **Vizualizări**
 
@@ -37,9 +41,10 @@ Modulul nu definește sarcini `ir.cron`, reguli `base.automation` sau `ir.action
 
 **Controller**
 
-- `WebsiteSaleCategory` (`controllers/main.py`): extinde controllerul `WebsiteSale` din `website_sale` și suprascrie metoda `shop()` pe rutele `/shop`, `/shop/page/<page>`, `/shop/category/<category>` și `/shop/category/<category>/page/<page>`. Dacă se accesează o categorie (fără căutare activă și fără parametrul `all_products`) care are categorii-copil, randează șablonul `category_selection` în loc să continue către listarea standard de produse; altfel deleagă către implementarea standard din `website_sale` prin `super().shop()`.
+- `WebsiteSaleCategory` (`controllers/main.py`): extinde controllerul `WebsiteSale` din `website_sale` și suprascrie metoda `shop()` pe rutele `/shop`, `/shop/page/<page>`, `/shop/category/<category>` și `/shop/category/<category>/page/<page>`. Dacă se accesează pagina simplă a unei categorii (fără căutare, `all_products`, sortare, filtre de atribute/preț/etichete/promoții/stoc sau pagină de listă) care are subcategorii ale site-ului curent și URL-ul canonic, randează șablonul `category_selection` în loc să continue către listarea standard de produse; altfel deleagă către implementarea standard din `website_sale` prin `super().shop()`.
 
 #### 5. Conexiuni
 
 - [deltatech_website_sale_attributes](../deltatech_website_sale_attributes/index.md): ambele module suprascriu metoda `shop()` a controllerului `WebsiteSale` din `website_sale`; ordinea de moștenire (MRO) a celor două extensii afectează comportamentul combinat al paginii de shop (una poate intercepta cererea înainte ca cealaltă să-și aplice filtrele pe atribute).
+- [deltatech_website_category_icon](../deltatech_website_category_icon/index.md): dacă e instalat, furnizează pictograma SVG a categoriei pe carduri (dependență opțională, neimpusă).
 - `website_sale`: modulul standard de e-commerce ale cărui rută `/shop` și pagini de categorie sunt interceptate și extinse de acest modul.

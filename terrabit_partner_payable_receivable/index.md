@@ -1,22 +1,26 @@
-# Terrabit Payable and Receivable in Partner Form (localizat la `terrabit_partner_payable_receivable/index.md`)
+# Payable and Receivable in Partner Form (localizat la `terrabit_partner_payable_receivable/index.md`)
 
 - **Nume Tehnic:** `terrabit_partner_payable_receivable`
-- **Versiune:** `19.0.1.2.1`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/terrabit_partner_payable_receivable
+- **Versiune:** `20.0.1.2.5`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/terrabit_partner_payable_receivable
 - **Cale Locală:** `odoo-addons/bitshop/terrabit_partner_payable_receivable`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** 2026-11-28
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul îmbunătățește fișa partenerului adăugând o vizualizare clară și imediată a sumelor de plată și de încasat, oferind contextul financiar esențial direct în înregistrarea partenerului. Din perspectivă de business, această transparență permite echipelor de vânzări și contabilitate să evalueze instantaneu situația financiară și statutul de credit al unui partener înainte de a lua decizii comerciale importante.
+Adaugă pe fișa partenerului și pe comanda de vânzare o vedere clară a sumelor de încasat și de plătit, plus a avansurilor facturate, direct în locurile în care se iau decizii comerciale. Echipele de vânzări și de contabilitate văd imediat situația financiară a unui partener înainte de o decizie comercială. Modulul doar informează, nu blochează și nu generează note contabile.
 
 #### 2. Funcționalități Cheie
 
-- Vizibilitate financiară în timp real: vezi instantaneu, direct pe fișa partenerului, sumele exacte de plată și de încasat pentru orice partener.
-- Evaluare îmbunătățită a creditului: identifici rapid partenerii cu solduri restante pentru a gestiona mai eficient riscul financiar.
-- Operațiuni contabile simplificate: utilizezi o filă specializată pentru a vizualiza și reconcilia soldurile partenerilor, calculate din liniile de notă contabilă.
-- Decizii comerciale mai bine informate: permiți echipelor de vânzări să poarte discuții mai documentate cu partenerii, pe baza poziției lor financiare curente.
-- Raportare financiară precisă: asiguri reflectarea corectă a soldurilor partenerilor folosind grupuri de conturi dedicate pentru plățile în avans.
+- **Vizibilitate în timp real:** soldul de încasat al firmei și data celei mai vechi poziții deschise, într-un banner galben pe comanda de vânzare (și pe comenzile făcute pe un contact al firmei, soldul fiind al firmei).
+- **Avansuri pe fișa partenerului:** în tabul *Vânzări & Achiziții*, **Deposit Customer** (avans client, ex. 419) și **Deposit Vendor** (avans furnizor, ex. 409), cu un buton **View** care deschide liniile contabile din spatele sumei. Avansul se arată fără TVA.
+- **Grupuri de conturi pentru avans:** configurate în *Facturare > Configurare > Setări*; dacă nu sunt alese ambele, se folosesc conturile 419%, respectiv 409%. Pe o bază nouă trebuie setat și **Cont plată în avans** (setarea nativă) pe 419.
+- **Deducere avans:** în fereastra *Creează factură/facturi* apare opțiunea **Deducere avans** (bifată implicit, doar la factura normală, pentru o singură comandă), care scade avansurile deja facturate din factura finală.
+- **Portal:** sub conținutul paginilor, clientul autentificat vede soldurile deschise ale firmei sale.
+- **Evaluare de credit:** identifici rapid partenerii cu solduri deschise; modulul stă la baza controlului de limită de credit din `terrabit_partner_credit_limit`.
+
+Fluxul pas-cu-pas, cu capturi, este în [Fișa consultant](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -25,27 +29,25 @@ Acest modul îmbunătățește fișa partenerului adăugând o vizualizare clar�
 
 #### 4. Componente Cheie
 
-Documentația acestui modul a fost generată pe baza fișierului `readme/DESCRIPTION.md`, conform fluxului de ingestie. Componentele tehnice de mai jos sunt deduse din `__manifest__.py` și cod, oferite cu titlu orientativ; pentru detalii complete consultă codul sursă.
-
 **Modele**
 
-- `res.partner`: extins cu câmpurile calculate `partner_aml_receivable`, `partner_aml_payable` (sold din liniile de notă contabilă postate, pe conturile de tip `asset_receivable`/`liability_payable`, nereconciliate), `receivable_date` și sumele de avans client/furnizor (`partner_aml_deposit_customer`, `partner_aml_deposit_vendor`) calculate din grupurile de conturi de avans configurate pe companie.
-- `res.company` / `res.config.settings`: extinse pentru configurarea grupurilor de conturi (`account_group_deposit_customer_id`, `account_group_deposit_vendor_id`) folosite la calculul avansurilor client/furnizor.
-- `sale.order` (`models/sale.py`): ajustări conexe fluxului de facturare/avans.
-- `sale.advance.payment.inv` (`wizard/sale_make_invoice_advance.py`): ajustări pe asistentul de facturare în avans.
+- `res.partner`: câmpuri calculate pentru soldul de încasat/de plătit din liniile contabile postate și nereconciliate, `receivable_date` și avansurile client/furnizor.
+- `res.company` / `res.config.settings`: configurarea grupurilor de conturi de avans (`account_group_deposit_customer_id`, `account_group_deposit_vendor_id`).
+- `sale.order`: datele pentru bannerul de sold.
+- `sale.advance.payment.inv` (wizard): opțiunea **Deducere avans**.
 
 **Vizualizări**
 
-- `views/res_partner.xml`: adaugă pe formularul partenerului afișarea sumelor de plată/încasat și fila specializată pentru reconcilierea soldurilor.
-- `views/sale_view.xml`: ajustări pe vizualizările de vânzări.
-- `views/templates.xml`: șabloane QWeb asociate.
-- `views/res_config_settings_views.xml`: opțiuni de configurare a grupurilor de conturi.
-- `wizard/sale_make_invoice_advance.xml`: ajustări pe asistentul de facturare în avans.
+- `views/res_partner.xml`: sumele de avans și butoanele **View** pe fișa partenerului.
+- `views/sale_view.xml`: bannerul de sold pe comanda de vânzare.
+- `views/templates.xml`: soldurile afișate în portal.
+- `views/res_config_settings_views.xml`: grupurile de conturi de avans.
+- `wizard/sale_make_invoice_advance.xml`: opțiunea **Deducere avans** în fereastra de facturare.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Nu sunt definite acțiuni `ir.cron`, reguli `base.automation` sau acțiuni server dedicate în datele modulului.
+- Nu sunt definite `ir.cron`, `base.automation` sau `ir.actions.server`.
 
 #### 5. Conexiuni
 
-- [terrabit_partner_credit_limit](../terrabit_partner_credit_limit/index.md): modul Terrabit înrudit, axat pe gestionarea limitei de credit a partenerului; completează vizibilitatea financiară oferită de acest modul pe fișa partenerului.
+- [terrabit_partner_credit_limit](../terrabit_partner_credit_limit/index.md): depinde de acest modul; folosește soldul din comandă pentru controlul limitei de credit.

@@ -1,52 +1,54 @@
 # Work Days Report (localizat la `deltatech_work_days_report/index.md`)
 
 - **Nume Tehnic:** `deltatech_work_days_report`
-- **Versiune:** `19.0.0.0.3`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_work_days_report
+- **Versiune:** `20.0.0.0.12`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_work_days_report
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_work_days_report`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul **Work Days Report** generează rapoarte Excel cuprinzătoare pentru urmărirea prezenței angajaților și gestionarea tichetelor de masă. Este util departamentelor de resurse umane și proceselor de salarizare, oferind automat fișiere Excel cu orele lucrate zilnic, totalurile pe angajat, tichetele de masă cuvenite și perioadele de concediu. Astfel se simplifică monitorizarea tiparelor de lucru ale angajaților și administrarea drepturilor la tichete de masă, asigurând raportări consecvente chiar și atunci când configurarea tipurilor de concediu este incompletă.
+Modulul generează rapoarte Excel pentru pontajul angajaților și pentru tichetele de masă pe card. **Este în curs de retragere în favoarea modulului [l10n_ro_hr_pontaj](../l10n_ro_hr_pontaj/index.md)** (*Romania - Timesheet*), care face același lucru din programul real de lucru și din contract, cu corecții, luni închise și export de tichete; modulul primește doar remedieri, fără funcționalități noi.
 
 #### 2. Funcționalități Cheie
 
-- **Îmbunătățirea tipurilor de concediu**: adaugă un câmp configurabil „code" în formularele de tip de concediu (Time Off Type), pentru o mai bună categorisire și raportare.
-- **Export Excel în masă**: permite exportul în masă accesibil din vizualizarea de listă a angajaților (Acțiune → „Export Working Days").
-- **Raportare cuprinzătoare**: generează rapoarte Excel detaliate care conțin informații despre angajat și orele lucrate zilnic, totalul orelor lucrate, tichetele de masă câștigate per angajat și perioadele/datele de concediu.
-- **Flexibilă codificare a concediilor**: afișează automat „ABS" (absență) pentru tipurile de concediu fără cod specificat, asigurând o raportare consecventă chiar și cu o configurare incompletă.
-- **Export tichete de masă către bancă**: acțiune suplimentară „Export Bank Meal Vouchers", disponibilă tot din lista de angajați, care generează un fișier Excel în formatul cerut de Banca Transilvania (nume, CNP, valoare, cont IBAN), calculând automat numărul de zile lucrate eligibile pentru tichete în intervalul selectat.
-
-> Notă corecție: `readme/DESCRIPTION.md` din sursă indică încă „Version: 18.0.0.0.2" și nu menționează exportul bancar de tichete de masă; informațiile de mai sus au fost aliniate la manifestul curent (`19.0.0.0.3`) și la codul din `wizard/back_meal_vouchers_export.py`, adăugat ulterior redactării README-ului.
+- **Cod pe tipul de concediu:** câmp **Code** pe *Time Off Type* (implicit `L`); un tip cu codul gol apare ca `ABS`.
+- **Câmpuri pe angajat** (tab-ul **Payroll**, grupul **Schedule**): **Hours per Day** (2, 4, 6 sau 8), **Meal Voucher Value** și **Full Name** (numele din fișierul bancar; dacă e gol se folosește numele angajatului).
+- **Export în masă** din lista de angajați (*Actions*): **Export Working Days** și **Export Bank Meal Vouchers** (grupul HR Officer).
+- **Foaie de prezență:** câte un rând pe angajat, cu orele lucrate pe fiecare zi din programul de lucru (programul flexibil sau lipsa lui înseamnă luni–vineri), codul concediului aprobat și total pe cod, `SL` în sărbători legale, `-` în afara contractului, total ore și număr de tichete; un concediu în ore sau pe jumătate de zi păstrează orele lucrate (de ex. `6/CO`).
+- **Fișier bancar pentru tichete:** Excel în formatul Banca Transilvania (singurul disponibil), cu nume, CNP, valoare (zile cu tichet × **Meal Voucher Value**), IBAN și detaliul lunii primei date; ziua cu tichet = zi din program, în contract, fără sărbătoare legală sau zi întreagă de concediu aprobat.
+- Contează doar concediile aprobate; sărbătorile legale se introduc în *Time Off > Configuration > Public Holidays*. Dacă prima dată e după ultima, exportul este refuzat.
+- Migrare recomandată la `l10n_ro_hr_pontaj`: câmpurile `meal_voucher_value` și `full_name` se păstrează, **Hours per Day** nu mai e citit (se folosește programul de lucru), iar tichetele se acordă pe zi lucrată în pontaj; pașii de migrare sunt în `readme/CONFIGURE.md`.
+- Fluxul pas-cu-pas, cu capturi, este în fișa consultant.
 
 #### 3. Dependențe
 
 - `hr`
 - `hr_holidays`
+- Dependență externă Python: `xlsxwriter`
 
 #### 4. Componente Cheie
 
+Sumarul și funcționalitățile provin din `readme/DESCRIPTION.md` (completat cu `USAGE.md` / `CONFIGURE.md`), deci analiza componentelor este sumară.
+
 **Modele**
 
-- `hr.employee` (extins): adaugă câmpurile `hours_per_day` (normă zilnică: 2/4/6/8 ore), `meal_voucher_value` (valoare tichet de masă) și `full_name` (nume complet folosit la export).
-- `hr.employee.public` (extins): expune aceleași câmpuri (`hours_per_day`, `meal_voucher_value`, `full_name`) prin câmpuri `related`, pentru ca wizard-urile de export să funcționeze și pentru utilizatori fără acces complet la `hr.employee` (fallback pe profilul public).
-- `hr.leave.type` (extins): adaugă câmpul `type_code` („Code") pentru categorisirea tipurilor de concediu în rapoarte.
-- `working.days.export` (wizard, tranzitoriu): construiește fișierul Excel cu foaia de prezență lunară, orele lucrate, codurile de concediu și totalul tichetelor de masă.
-- `bank.meal.voucher.export` (wizard, tranzitoriu): construiește fișierul Excel de export al tichetelor de masă către bancă (momentan suportă formatul Banca Transilvania).
+- `hr.employee` (extins): `hours_per_day`, `meal_voucher_value`, `full_name`.
+- `hr.leave.type` (extins): `type_code` (**Code**).
+- `working.days.export` (wizard): construiește foaia Excel de prezență.
+- `bank.meal.voucher.export` (wizard): construiește fișierul Excel pentru bancă.
 
 **Vizualizări**
 
-- `employee_hors_form`: extinde formularul angajatului (`hr.view_employee_form`) cu norma zilnică, valoarea tichetului de masă și numele complet.
-- `leave_type_form`: extinde formularul tipului de concediu (`hr_holidays.edit_holiday_status_form`) cu câmpul „Code".
-- `view_working_days_export_form`: formularul wizard-ului de export al zilelor lucrate (selecție interval de date, apoi descărcare fișier).
-- `view_bank_meal_vouchers_export_form`: formularul wizard-ului de export al tichetelor de masă către bancă (format bancă + interval de date, apoi descărcare fișier).
+- `employee_hors_form`: extinde formularul angajatului cu cele trei câmpuri, în tab-ul Payroll.
+- `view_working_days_export_form`: wizard-ul de export al prezenței (interval de date).
+- `view_bank_meal_vouchers_export_form`: wizard-ul de export al tichetelor (format bancă + interval).
 
 **Acțiuni Automate / Acțiuni Server**
 
-- `action_working_days_export` („Export Working Days"): acțiune legată de lista de angajați (`binding_model_id` pe `hr.employee`), deschide wizard-ul care generează raportul Excel cu orele lucrate și tichetele de masă.
-- `action_bank_meal_vouchers_export_export` („Export Bank Meal Vouchers"): acțiune legată de lista de angajați, deschide wizard-ul care generează fișierul Excel de export al tichetelor de masă pentru bancă.
+- `action_working_days_export` și `action_bank_meal_vouchers_export_export`: acțiuni legate de lista de angajați, care deschid wizard-urile. Nu există sarcini `ir.cron`.
 
 #### 5. Conexiuni
 
-- Nicio conexiune funcțională suplimentară identificată către alte module cu pagină wiki.
+- [l10n_ro_hr_pontaj](../l10n_ro_hr_pontaj/index.md): modulul care înlocuiește acest raport (pontaj din programul real, export de tichete).

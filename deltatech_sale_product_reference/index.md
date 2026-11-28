@@ -1,10 +1,10 @@
 # Sale Product Reference (localizat la `deltatech_sale_product_reference/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_product_reference`
-- **Versiune:** `19.0.2.0.1`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_product_reference`
+- **Versiune:** `20.0.2.2.4`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_sale_product_reference`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_product_reference`
-- **Ultima Ingestie:** `2026-09-11`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -33,6 +33,8 @@ Acest modul ține, pentru fiecare produs, **codul și denumirea sub care fiecare
 
 - `product.customerinfo` (nou, de la 19.0.2.0.0): modelul propriu al referinței de client — partener, șablon de produs, variantă opțională, cod, denumire, secvență, preț, monedă, dată de start/sfârșit, companie. Oglinda pe partea de vânzări a lui `product.supplierinfo`, izolată intenționat de acesta: până la 19.0.2.0.0 referințele clientului stăteau în `product.supplierinfo`, cu clientul înregistrat ca „furnizor" al produsului, ceea ce se scurgea în achiziții (reaprovizionarea alegea furnizorul după preț, fără să întrebe cine e partenerul, deci un rând de client cu preț 0 ieșea primul; o regulă de stoc își schimba ruta la simpla prezență a unui rând de furnizor; clientul apărea sub „Furnizori" în ecranul de reaprovizionare). Expune `_get_reference(partner, product, date, company)` — căutarea rulează ca superuser, ca și căutarea standard de afișare pe `product.supplierinfo` — și `_get_product_display_name(product)`, care randează `[cod] denumire (variantă)`. Include și `_copy_from_supplierinfo()`, folosită de migrare.
 - `product.template`: extins cu câmpul one2many `customerinfo_ids` către `product.customerinfo`.
+- `product.product`: căutarea după nume afișat și `name_search` găsesc produsul și după codul sau denumirea de client din referințe.
+- `account.move.line`: păstrează pe factură descrierea proprie a liniei (referința clientului).
 - `sale.order.line`: extins cu `_get_customer_reference()` (referința aplicabilă liniei) și suprascrie `_get_sale_order_line_multiline_description_sale()` pentru a compune descrierea din perspectiva referinței clientului, când există una. `order_partner_id` e adăugat ca dependență a `_compute_name`, ca schimbarea clientului să retrigger-uiască descrierea la fel ca schimbarea produsului. `create()` reaplică referința pe liniile create cu `name` explicit (import EDI/API), care ocolesc normal `_compute_name`. `_prepare_invoice_line()` e suprascris (nou în 19.0.2.0.1) ca să păstreze descrierea proprie a liniei pe factură, în loc să lase logica standard (`_get_journal_items_full_name`) să reintroducă denumirea internă a produsului deasupra celei a clientului.
 
 **Vizualizări**
@@ -46,6 +48,7 @@ Acest modul ține, pentru fiecare produs, **codul și denumirea sub care fiecare
 **Migrări**
 
 - `migrations/19.0.2.0.0/post-migration.py`: la actualizarea de pe o versiune anterioară lui 19.0.2.0.0, apelează `product.customerinfo._copy_from_supplierinfo()` pentru a muta rândurile neambigue din `product.supplierinfo` în noul model.
+- `migrations/19.0.2.1.0/post-migration.py`: rulează din nou copierea, cu trecerea suplimentară pe GLN, pentru bazele care au primit la 19.0.2.0.0 doar rândurile exclusiv de client (operația e idempotentă).
 
 #### 5. Conexiuni
 

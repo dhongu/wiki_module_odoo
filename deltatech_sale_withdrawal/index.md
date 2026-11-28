@@ -1,10 +1,10 @@
 # Sale Withdrawal (localizat la `deltatech_sale_withdrawal/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_withdrawal`
-- **Versiune:** `19.0.0.3.2`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_withdrawal
+- **Versiune:** `20.0.0.3.8`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_sale_withdrawal
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_withdrawal`
-- **Ultima Ingestie:** 2026-09-24
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -24,6 +24,7 @@ Modulul implementează funcția de retragere din contract (dreptul de renunțare
 - Registru de retrageri în Vânzări, cu termenul de rambursare din art. 13 și activitate programată pentru responsabil.
 - Contract de execuție conectabil (pluggable), astfel încât urmărirea operațională (retur de stoc, notă de credit, sistem extern) se adaugă prin alte module, fără a atinge acest modul.
 - Interfață tradusă integral în română (`i18n/ro.po`).
+- Paragraful „Withdrawal from contract (EU)” din descrierea Apps Store, cu insigna „European Union” și steagul UE pe banner, ca referință la Directiva 2011/83/UE și la butonul de retragere din Directiva (UE) 2023/2673.
 
 #### 3. Dependențe
 
@@ -37,7 +38,7 @@ Modulul implementează funcția de retragere din contract (dreptul de renunțare
 - `deltatech.sale.withdrawal`: înregistrarea unei retrageri legate de o comandă de vânzare, cu stare (`submitted` / `acknowledged` / `refunded` / `disputed`), data și canalul de transmitere, termenul de rambursare calculat și modul de execuție folosit; nu are stare „aprobat" — retragerea produce efecte prin confirmarea consumatorului, nu prin aprobarea comerciantului.
 - `deltatech.sale.withdrawal.line`: liniile de retragere (produs, cantitate retrasă, subtotal), cu validare că se retrage doar cantitatea încă disponibilă din linia comenzii.
 - `sale.order` (extins): expune retragerile comenzii, numărul lor, termenul-limită de retragere calculat pe linii și disponibilitatea butonului pe portal.
-- `sale.order.line` (extins): calculează termenul de retragere per linie (începe la livrare pentru bunuri, la data comenzii pentru servicii) și determină eligibilitatea/excepția art. 16; liniile de avans (down payment) sunt excluse explicit din verificarea de eligibilitate și din lista de linii oferite pe portal, pentru că nu au produs și unitate de măsură proprii — corecție introdusă în 19.0.0.2.1 după ce lipsa acestei excluderi bloca deschiderea oricărei comenzi cu avans, atât în back office cât și pe portal.
+- `sale.order.line` (extins): calculează termenul de retragere per linie (începe la livrare pentru bunuri, la data comenzii pentru servicii) și determină eligibilitatea/excepția art. 16; liniile de avans (down payment) sunt excluse explicit din verificarea de eligibilitate și din lista de linii oferite pe portal, pentru că nu au produs și unitate de măsură proprii — fără această excludere, comenzile cu avans nu se puteau deschide, nici în back office, nici pe portal.
 - `product.template` / `product.category` (extinse): câmp de excepție de retragere (art. 16), moștenit din categorie dacă nu e setat pe produs.
 - `res.company` / `res.config.settings` (extinse): activarea funcției, perioada de retragere, termenul de rambursare, modul de execuție și opțiunea de a folosi butonul nativ Odoo (când va exista).
 

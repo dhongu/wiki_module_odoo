@@ -1,10 +1,10 @@
 # Interfață SAGA
 
 - **Nume Tehnic:** `deltatech_saga`
-- **Versiune:** `19.0.6.15.0`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_saga`
+- **Versiune:** `20.0.6.26.3`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_saga
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_saga`
-- **Ultima Ingestie:** `2026-09-03`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -26,6 +26,11 @@ Interfața Deltatech SAGA este un modul cuprinzător conceput pentru a facilita 
 - O singură rulare a exportului generează o arhivă ZIP unică (`ExportOdoo_<de la>_<până la>.zip`) cu toate fișierele relevante perioadei: parteneri, articole (doar cantitativ-valoric), facturi RON/valută pe intrări și ieșiri, note contabile, încasări/plăți și mișcări de consum/producție.
 - Coloana `TIP` din exportul facturilor reflectă natura documentului (factură normală, bon fiscal cu factură, bon fiscal fără factură, bon cu CIF, sau un cod SAGA prioritar setat pe poziția fiscală precum `T` taxare inversă sau `A` aviz) — determinată din integrarea cu `deltatech_sale_store`, dacă e instalat, sau din flag-ul jurnalului de bonuri fiscale ca rezervă.
 - La finalul exportului de facturi, wizard-ul afișează un sumar HTML al operațiunilor exportate și o secțiune de reconciliere (total venituri clasa 7 vs. total exportat pe `TIP`), utilă pentru a depista notele contabile manuale sau documentele de furnizor înregistrate greșit pe cont de venit.
+- **Istoric exporturi** (**Accounting → Accounting → Saga → SAGA Exports**, model `saga.export`): fiecare export (clasic, pas cu pas sau trimis prin API) se păstrează cu perioada, jurnalele, opțiunile, utilizatorul, data, arhiva ZIP, mesajele exportului și răspunsul SAGA, numărul de facturi și de parteneri exportați; arhiva se poate descărca oricând, iar **Export again** redeschide asistentul cu aceeași perioadă și aceleași opțiuni. Înregistrările sunt limitate la companiile utilizatorului.
+- **Trimitere în SAGA prin API** (butonul **Send to SAGA**, doar pentru fișierele XML; blocul *SAGA Web API* din setările contabilității): fiecare fișier XML al arhivei se încarcă, rezultatul fiecăruia se vede pe export, iar starea devine *Sent to SAGA* sau *Sent with errors*. Fișierele de furnizori, clienți și articole (`FUR_`, `CLI_`, `ART_`) pleacă primele. Butonul nu se apasă a doua oară (retrimite tot, cu risc de dublare); notele contabile (`NC_`) și fișierele de stoc (`BC_`, `PRODUCTIE_`) există doar în DBF și nu se trimit prin API.
+- **Comparare stocuri cu SAGA** (**Accounting → Accounting → Saga → Stock comparison**, `saga.stock.compare`): compară stocul din Odoo cu cel din SAGA Web pe locații cu *Code SAGA*, cu linii colorate pe stare (*Equal*, *Different quantity*, *Not found in Odoo*, *Not found in SAGA*); are doar rol informativ și nu corectează nimic.
+- Facturile și notele de credit făcute dintr-o comandă de **Point of Sale** se exportă cu `TIP` „f” (factură cu bon fiscal), indiferent de jurnal sau de flag-ul *Sale from store*; un cod SAGA pus pe poziția fiscală rămâne prioritar. La exportul XML, `<ClientTara>` poartă țara clientului.
+- Opțiuni suplimentare la export: *Use product's account* (la facturile de furnizor, produsele stocabile folosesc contul de evaluare al categoriei, doar cu inventar permanent), *Mixed reverse charge invoices* (facturi cu linii de taxare inversă și linii cu TVA normal: nu se exportă / tip T / fără tip), *Export only cash payments*, *Include cancelled documents*, *Ignore Errors*. La import: *Skip existing*, *Reset partner code*, *Import With Delay* (prin `queue_job`, dacă e instalat), *Negative Accounting*.
 - Ordinea recomandată de import al fișierelor în SAGA: parteneri (Furnizori/Clienți) → articole → facturi (IN/IE/INV/IEV) → note contabile (NC) → încasări/plăți (I/P); nu se importă simultan fișierele DBF și XML generate din același export, pentru că ar duplica înregistrările în SAGA.
 - Pentru Odoo Community, utilizatorii trebuie incluși în grupul „Show Full Accounting Features" pentru a accesa meniul de export SAGA.
 
@@ -38,13 +43,15 @@ Interfața Deltatech SAGA este un modul cuprinzător conceput pentru a facilita 
 - `sale_stock`
 - [deltatech_contact](../deltatech_contact/index.md)
 - `l10n_ro`
+- [deltatech_task_progress](../deltatech_task_progress/index.md): bara de progres pentru exportul și importul rulate pe fundal (`task.progress.mixin`).
 
 #### 4. Componente Cheie
 
-*Conform fluxului de ingestie, secțiunea „Componente Cheie" este omisă deoarece modulul dispune de fișierul `readme/DESCRIPTION.md` (completat de `readme/CONFIGURE.md` și `readme/USAGE.md`), care a fost folosit pentru Sumar și Funcționalități Cheie.*
+*Conform fluxului de ingestie, secțiunea „Componente Cheie" este omisă deoarece modulul dispune de fișierul `readme/DESCRIPTION.md` (completat de `readme/CONFIGURE.md` și `readme/USAGE.md`), care a fost folosit pentru Sumar și Funcționalități Cheie. Fluxul pas cu pas, cu capturi, este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).*
 
 #### 5. Conexiuni
 
+- [deltatech_task_progress](../deltatech_task_progress/index.md): progresul exportului și al importului rulate pe fundal.
 - [deltatech_contwin](../deltatech_contwin/index.md): modul înrudit de export contabil (interfață către WinMentor / Contwin), documentat în paralel ca alternativă pentru schimbul de date contabile pe piața RO.
 - [deltatech_sale_store](../deltatech_sale_store/index.md): furnizează flag-ul „Sale from store" propagat pe factură/comandă, folosit pentru a determina automat coloana `TIP` (`f`) la exportul facturilor emise pe bon fiscal.
 - [deltatech_saga_mrp](../deltatech_saga_mrp/index.md): extensie opțională care adaugă exportul consumurilor și producției din MRP la exportul cantitativ-valoric.

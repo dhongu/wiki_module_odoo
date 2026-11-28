@@ -1,22 +1,27 @@
-# Deltatech Hierarchy Many2one Widget (localizat la `deltatech_widget_hierarchy_m2o/index.md`)
+# Hierarchy Many2one Widget (localizat la `deltatech_widget_hierarchy_m2o/index.md`)
 
 - **Nume Tehnic:** `deltatech_widget_hierarchy_m2o`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_widget_hierarchy_m2o
+- **Versiune:** `20.0.1.4.1`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_widget_hierarchy_m2o
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_widget_hierarchy_m2o`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul înlocuiește lista derulantă plată standard a câmpurilor many2one cu un widget de tip arbore părinte/copil, permițând utilizatorului să vadă și să navigheze direct ierarhia unui model (categorii de produse, conturi contabile, conturi analitice, locații de stoc, departamente etc.) atunci când alege o valoare. Este util oriunde structura ierarhică a înregistrărilor contează pentru o selecție corectă și rapidă, evitând confuziile dintr-o listă lungă și fără context de tip părinte-copil.
+Widget OWL care permite alegerea unei înregistrări dintr-un **arbore** părinte/copil expandabil, direct în orice câmp many2one, în loc de o listă plată care ascunde ierarhia. Nu folosește biblioteci JavaScript externe și nu conține cod Python.
 
 #### 2. Funcționalități Cheie
 
-- Arbore expandabil părinte/copil direct în câmpul many2one, cu încărcare leneșă (lazy loading) a copiilor — copiii unui nod se aduc din server doar când nodul este deschis, deci scalează bine pe ierarhii mari.
-- Casetă de căutare încorporată, care caută pe întreg arborele (nu doar la nivelul curent vizibil) și afișează rezultatele într-o listă plată.
-- Funcționează pe **orice** câmp many2one al cărui model țintă are un câmp părinte de tip self-relation, configurabil prin opțiunea `parent_field` (implicit `parent_id`).
-- Adâncime maximă a arborelui și număr de înregistrări per nivel reglabile din opțiunile câmpului (`level`, `limit`).
-- Widget OWL pur, fără biblioteci JavaScript externe (fără jsTree/zTree) și fără dependențe suplimentare de server dincolo de `web`.
+- Arbore expandabil cu încărcare leneșă: copiii se aduc doar la deschiderea nodului, deci scalează la ierarhii mari; nodul curent este expandat și evidențiat la deschidere.
+- Casetă de căutare care aplatizează rezultatele pe tot arborele, cu calea completă.
+- Funcționează pe orice many2one a cărui țintă are un câmp părinte (`parent_field`, implicit `parent_id`); opțiuni `limit` (implicit 80 înregistrări pe nivel) și `level` (adâncime, implicit 8). Cazuri tipice: categorii de produs, planuri analitice, locații de stoc, departamente.
+- **Mod multi-nivel** (`levels`): arborele trece prin modele diferite (de ex. marcă → serie → model); doar înregistrările ultimului nivel se pot selecta. Câmpul închis arată calea ca segmente, iar un click pe segment deschide arborele până la nod. Opțiuni pe nivel: `link`, `fallback_link`, `domain`, `detail`.
+- **Mod pași** (`steps: True`, doar multi-nivel): panoul arată câte un nivel pe rând, cu calea aleasă deasupra, potrivit cataloagelor mari.
+- Domeniul câmpului se aplică înregistrărilor selectabile, în arbore și în căutare; în modul părinte/copil, nodurile din afara domeniului rămân estompate.
+- Pe înregistrare doar-citire câmpul apare ca text simplu. Include două vizualizări demonstrative (categoria de produs și produsul).
+- Utilizabil și pe Odoo Online (plan Custom), prin **Apps > Import Module**.
+- Fluxul pas-cu-pas, cu capturi, este în fișa consultant.
 
 #### 3. Dependențe
 
@@ -25,19 +30,21 @@ Acest modul înlocuiește lista derulantă plată standard a câmpurilor many2on
 
 #### 4. Componente Cheie
 
+Modulul nu definește sau extinde modele Python; logica este client-side (widget OWL).
+
 **Modele**
 
-Modulul nu definește sau extinde modele Python; toată logica este client-side (widget OWL) și citește datele modelului țintă prin ORM (`searchRead`, `formattedReadGroup`).
+Niciun model Python.
 
 **Vizualizări**
 
-- `product_category_form_view_hierarchy`: moștenește formularul `product.category` din modulul `product` și adaugă widget-ul `hierarchy_m2o` pe câmpul `parent_id` (selecția categoriei părinte ca arbore) — vizualizare demonstrativă.
-- `product_template_form_view_hierarchy`: moștenește formularul `product.template` și adaugă widget-ul `hierarchy_m2o` pe câmpul `categ_id` (Categorie Internă) — vizualizare demonstrativă, nu obligatorie în producție.
+- `product_category_form_view_hierarchy`: formularul `product.category` cu widgetul `hierarchy_m2o` pe **Parent Category**.
+- `product_template_form_view_hierarchy`: formularul `product.template` cu widgetul pe **Category** (`categ_id`).
 
 **Componente tehnice (widget OWL)**
 
-- `HierarchyM2OField` (`static/src/hierarchy_m2o_field.esm.js`): componentă OWL înregistrată în `registry.category("fields")` sub cheia `hierarchy_m2o`; gestionează popover-ul de selecție, căutarea cu debounce (250ms) și opțiunile de view `parent_field`, `limit`, `level`.
-- `HierarchyNode`: componentă recursivă pentru fiecare nod al arborelui, cu expandare/încărcare leneșă a copiilor la primul click.
+- `HierarchyM2OField` (`static/src/hierarchy_m2o_field.esm.js`): câmp înregistrat în `registry.category("fields")` sub cheia `hierarchy_m2o`.
+- Șablon și stiluri în `hierarchy_m2o_field.xml` / `.scss`; tur și test unitar în `static/tests/`.
 
 **Acțiuni Automate / Acțiuni Server**
 
@@ -45,4 +52,4 @@ Modulul nu definește sarcini `ir.cron`, reguli `base.automation` sau acțiuni s
 
 #### 5. Conexiuni
 
-Nu au fost identificate în cod alte module din wiki cu legături funcționale directe (widget-ul este generic și nu are dependențe funcționale în afara `web`/`product`).
+Nu există legături funcționale directe cu alte module cu pagină wiki; widgetul este generic.

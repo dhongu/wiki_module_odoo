@@ -1,23 +1,28 @@
 # Products Feed (localizat la `deltatech_feed/index.md`)
 
 - **Nume Tehnic:** `deltatech_feed`
-- **Versiune:** `19.0.3.5.0`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_feed
+- **Versiune:** `20.0.3.8.4`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_feed
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_feed`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul Products Feed este o extensie Odoo dezvoltată de Terrabit/Deltatech care permite generarea și administrarea de feed-uri de produse pentru diverse platforme de e-commerce și canale de marketing. Modulul simplifică procesul de creare a exporturilor standardizate de date despre produse, în conformitate cu cerințele mai multor marketplace-uri online și platforme de publicitate. Servește ca punte între catalogul de produse din Odoo și platformele externe de vânzare și promovare, permițând companiilor să gestioneze datele de produs într-un singur loc și să le distribuie eficient pe mai multe canale.
+Modulul publică produsele magazinului Odoo sub formă de feed-uri pentru site-uri de comparare a prețurilor, marketplace-uri și platforme de reclame: fiecare listă de produse primește o adresă publică de feed pe care platforma o citește singură, după propriul program, cu prețurile unei liste de prețuri alese și cu stocul disponibil pe website. Nimic nu este trimis de Odoo însuși; fiecare platformă descarcă feed-ul.
 
 #### 2. Funcționalități Cheie
 
-- **Generarea de feed-uri multi-platformă**: creează feed-uri standardizate de produse pentru mai multe platforme, printre care Google Merchant Center, Facebook Catalog, Bizoo, Compari, 2performant și VidaXL.
-- **Formate de feed personalizabile**: suportă diferite formate și specificații cerute de fiecare platformă în parte.
-- **Optimizarea datelor de produs**: asigură formatarea și optimizarea corectă a datelor de produs pentru fiecare platformă țintă.
-- **Generare automată a feed-urilor**: simplifică crearea și actualizarea periodică a feed-urilor.
-- **Administrarea listelor de produse**: instrumente pentru organizarea și gruparea produselor pe liste destinate diferitelor exporturi de feed.
-- **Integrare cu website-ul**: integrare cu funcționalitatea de website și e-commerce din Odoo.
+- **Feed-uri pentru platformele principale:** Google Merchant Center (citit și de catalogul Facebook și Instagram), OpenAI (ChatGPT search și Ads), eMAG, CEL.ro, Compari, Bizoo, 2Performant, VidaXL și e-licitatie, plus feed-uri generice: stoc și preț în XML sau CSV, stoc în JSON și export de bază de produse în CSV.
+- **O listă, un feed:** produsele unui feed sunt o listă de produse cu filtru (implicit produsele publicate); fiecare listă alege tipul de feed, formatul, website-ul și lista de prețuri (*Website > eCommerce > Produse > Listă de produse*).
+- **Prețuri și stoc ca în magazin:** prețurile vin din lista de prețuri aleasă, cu extra-urile de atribute ale fiecărei variante; stocul este cantitatea disponibilă pentru website.
+- **Datele cerute de platforme:** SKU și cod de bare al variantei, brand, categoria Google (tab *Vânzări*, blocul *ECOMMERCE SHOP*), categoria publică, descriere scurtă sau HTML (sau numele ca descriere) și imagini redimensionate la mărimea cerută.
+- **Setări per listă:** filtrul **Produse**, **Limita** de produse (0 = fără limită), **Câmp de identificare**, **Restricționează accesul** cu **Access Token**, **Ore cache** și **Auto Refresh**, iar pentru cataloage Google mari, **Use subfeeds**.
+- **Rapid și protejat:** feed-urile se generează în fundal și se servesc din cache (implicit 12 ore), cu reîmprospătare programată; butonul **Refresh Feeds** regenerează după modificări mari, iar platforma primește fișierul anterior până la finalizare.
+- **Cifre de generare:** fiecare listă arată când a fost generat feed-ul, cât a durat și dimensiunea fișierului.
+- **Feed OpenAI / ChatGPT (csv):** OpenAI nu citește feed-ul de la adresă; fișierul CSV se încarcă pe SFTP-ul indicat de OpenAI, de fiecare dată când se schimbă catalogul. Se completează brandul produselor (altfel se trimite numele website-ului) și codurile de bare, iar limita se ridică la tot catalogul.
+- Fluxul pas cu pas, cu capturi, este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
+- **Date publicate:** adresele de feed sunt publice (în afara cazului în care se cere token de acces) și expun datele de produs de mai sus, prețurile listei alese și stocul disponibil.
 
 #### 3. Dependențe
 
@@ -29,11 +34,12 @@ Modulul Products Feed este o extensie Odoo dezvoltată de Terrabit/Deltatech car
 
 #### 4. Componente Cheie
 
-Conform secțiunii „Technical Implementation" din readme, modulul este structurat în jurul următoarelor componente. Analiza codului curent confirmă lista de mai jos și adaugă câteva detalii tehnice (feed-uri active în cod, lock-uri de generare).
+Readme-ul nu detaliază componentele tehnice; lista de mai jos provine din analiza codului curent (feed-uri active în cod, lock-uri de generare).
 
 **Modele**
 
 - `product.template` (`models/product.py`): extins cu câmpul `google_product_category` și metode utilitare (`get_product_ID`, `_get_simple_info`) pentru informații ușoare de preț/stoc folosite la generarea feed-urilor.
+- `product.list` (`models/product_list_openai.py`): extinde lista de produse cu generarea feed-ului OpenAI / ChatGPT (CSV).
 - `product.list` (`models/product_list.py`): moștenește `product.list` și `portal.mixin`; adaugă `id_field`, `brand_field` (calculat), `pricelist_id`, `website_id`, opțiuni de descriere (`use_html`, `use_short_description`, `use_name_as_description`) și domeniul de produse (`products_domain`); găzduiește metoda de reîmprospătare programată (`_cron_refresh_feed`).
 - `website` (`models/website.py`): extinde `sale_product_domain` pentru a include potrivirea căutării pe brand de produs.
 

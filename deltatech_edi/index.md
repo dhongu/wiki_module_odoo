@@ -1,10 +1,10 @@
 # Deltatech EDI Base Connector (localizat la `deltatech_edi/index.md`)
 
 - **Nume Tehnic:** `deltatech_edi`
-- **Versiune:** `19.0.0.1.8`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_edi
+- **Versiune:** `20.0.1.0.6`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_edi
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_edi`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
@@ -24,6 +24,7 @@ Acest modul reprezintă conectorul EDI (Electronic Data Interchange) de bază pe
 - `sale_stock`
 - [deltatech_gln](../deltatech_gln/index.md)
 - `account`
+- [deltatech_sale_product_reference](../deltatech_sale_product_reference/index.md)
 
 #### 4. Componente Cheie
 

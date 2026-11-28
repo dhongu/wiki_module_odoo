@@ -1,22 +1,25 @@
-# Câmp Marcă Produs (Deltatech Brand Field) (localizat la `deltatech_brand_field/index.md`)
+# Brand Field (localizat la `deltatech_brand_field/index.md`)
 
 - **Nume Tehnic:** `deltatech_brand_field`
-- **Versiune:** `19.0.0.0.4`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_brand_field`
+- **Versiune:** `20.0.0.0.11`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_brand_field`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_brand_field`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul oferă un mecanism centralizat pentru gestionarea mărcilor de produse în mai multe module Odoo, asigurând că toate informațiile legate de marcă sunt stocate într-un câmp dedicat, consecvent. Din perspectivă de business, modulul rezolvă complexitatea generată de faptul că diverse module își definesc propriile câmpuri de marcă, creând un sistem unificat și ușor de căutat pentru marca produselor, valabil pentru toate funcțiile integrate.
+Modul tehnic care spune celorlalte module în ce câmp al produsului se află marca. Mai multe module (feed-uri de produse, conectori de marketplace, SEO pentru website) au nevoie de marca produsului, dar aceasta poate fi stocată în câmpuri diferite, în funcție de ce este instalat. Numele tehnic al câmpului se alege o singură dată în Setări, iar toate modulele integrate citesc marca din el.
 
 #### 2. Funcționalități Cheie
 
-- **Identitate de marcă unificată:** consolidează informațiile despre marcă într-un singur câmp standardizat, valabil în toate modulele și procesele Odoo relevante.
-- **Consecvență îmbunătățită a datelor:** asigură uniformitatea datelor de marcă în întregul sistem, ducând la raportări și filtrări mai precise.
-- **Catalogare îmbunătățită a produselor:** construiește o bază de date de produse mai structurată și profesională, ușor de gestionat și de navigat după marcă.
-- **Aliniere strategică a mărcii:** folosește un câmp de marcă consecvent pentru a sprijini strategii mai eficiente de marketing, vânzări și inventar.
-- **Gestionare scalabilă:** permite administrarea cu ușurință a unui număr mare de mărci de produse dintr-o locație centrală, facilitând extinderea catalogului.
+- O singură setare pentru toate modulele integrate, în loc de câte un câmp de marcă pe modul.
+- Funcționează cu câmpuri Many2one (se folosește numele mărcii) și cu câmpuri Char.
+- Produsele fără marcă returnează valoare goală.
+- Setarea: **Website > Configuration > Settings**, blocul **Module Brand Field**, câmpul **Brand Field** (de exemplu `product_brand_id`). Valoarea nu este validată: un nume greșit dă marcă goală pe toate produsele, fără eroare. Debifarea casetei **Module Brand Field** urmată de salvare deschide fereastra de dezinstalare.
+- Modulele integrate citesc marca fără setare proprie; după schimbarea câmpului se apasă **Refresh Feeds**, ca feed-ul să nu fie servit din cache. Fără acest modul, conectorul eMAG trimite numele companiei ca marcă.
+- Modulul nu adaugă un model de mărci și nici ecrane de administrare. `brand_name` este calculat și nestocat, deci nu poate fi folosit în căutări, filtre sau grupări.
+- Fluxul pas-cu-pas, cu capturi, este în [fișa consultant](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -24,9 +27,21 @@ Acest modul oferă un mecanism centralizat pentru gestionarea mărcilor de produ
 
 #### 4. Componente Cheie
 
-Documentația pentru Sumar și Funcționalități Cheie a fost preluată din `readme/DESCRIPTION.md`, prin urmare analiza detaliată a componentelor tehnice (Modele, Vizualizări, Acțiuni Automate / Acțiuni Server) nu a fost efectuată, conform fluxului de ingestie din schemă.
+**Modele**
+
+- `product.template` (extins): câmpul calculat `brand_name` și metoda `get_brand_name()`, care citește marca din câmpul configurat.
+- `product.product` (extins): `get_brand_name()` delegă către șablonul de produs.
+- `res.config.settings` (extins): setarea pentru câmpul de marcă și modulul asociat.
+
+**Vizualizări**
+
+- `res_config_settings_view_form`: blocul **Module Brand Field** din setările Website.
+
+**Acțiuni Automate / Acțiuni Server**
+
+Modulul nu definește sarcini `ir.cron`, reguli `base.automation` sau acțiuni server.
 
 #### 5. Conexiuni
 
-- [deltatech_feed](../deltatech_feed/index.md): folosește câmpul de marcă definit de acest modul pentru a popula informația despre marcă în feed-urile de produse.
-- `deltatech_product_brand`: modul înrudit, documentat în paralel, care gestionează entitatea de marcă a produsului.
+- [deltatech_feed](../deltatech_feed/index.md): citește marca produselor din câmpul configurat aici și instalează singur acest modul.
+- [deltatech_product_brand](../deltatech_product_brand/index.md): adaugă câmpul de marcă pe produs (`product_brand_id`), folosit ca exemplu de câmp configurabil.

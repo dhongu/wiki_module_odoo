@@ -1,34 +1,37 @@
-# Deltatech Chatter
+# Resizable Chatter Panel
 
 - **Nume Tehnic:** `deltatech_chatter`
-- **Versiune:** `19.0.0.0.3`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chatter
+- **Versiune:** `20.0.0.2.1`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_chatter
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_chatter`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul Deltatech Chatter îmbunătățește vizualizarea de tip formular din Odoo prin introducerea unui panou divizat redimensionabil între conținutul formularului și zona de chatter (istoricul de comunicare). Modulul rezolvă o problemă frecventă de utilizabilitate, în care secțiunea de chatter ocupă fie prea mult, fie prea puțin spațiu pentru o urmărire eficientă a mesajelor. Astfel, fiecare utilizator poate aloca spațiul de pe ecran în funcție de propriile nevoi, glisând pur și simplu separatorul dintre cele două zone.
+Modulul îmbunătățește formularele Odoo printr-un panou divizat redimensionabil între conținutul formularului și zona de chatter (istoricul de comunicare). Rezolvă problema în care chatterul ocupă prea mult sau prea puțin loc: fiecare utilizator alocă spațiul de pe ecran după nevoi, glisând separatorul, sau ascunde chatterul când formularul are nevoie de toată lățimea. Modulul nu încarcă cod Python, doar JavaScript, o foaie de stil și biblioteca Split.js, deci poate fi folosit și pe Odoo Online (plan Custom, prin *Apps > Import Module*).
 
 #### 2. Funcționalități Cheie
 
-- **Interfață divizată redimensionabilă:** introduce o separare orizontală între conținutul formularului și secțiunea de chatter.
-- **Raport de dimensiune personalizabil:** dimensionare implicită de 70% pentru conținutul formularului și 30% pentru chatter.
-- **Redimensionare interactivă:** utilizatorii pot trage de separator pentru a ajusta proporția după preferințe.
-- **Design responsiv:** se adaptează automat la redimensionarea ferestrei.
-- **Limite minime de dimensiune:** previne micșorarea excesivă a secțiunilor (300px pentru formular, 250px pentru chatter).
+- **Interfață divizată redimensionabilă:** separare orizontală între formular și chatter, cu raport implicit de 70% pentru formular și 30% pentru chatter.
+- **Redimensionare interactivă:** utilizatorii trag de separator; proporția se salvează în browser la eliberarea mouse-ului și se aplică pe toate formularele.
+- **Design responsiv:** se adaptează la redimensionarea ferestrei; limite minime de 300px pentru formular și 250px pentru chatter.
+- **Ascunderea chatterului:** un buton rotund de pe separator sau **Alt+Shift+F** (pe macOS **Control+Shift+F**) ascunde chatterul, iar formularul ocupă toată lățimea; o bandă subțire cu același buton îl readuce. Alegerea se păstrează în browser pentru toate formularele.
+- **Domeniu de aplicare:** pe ecrane late, unde chatterul stă în dreapta formularului; formularele din dialoguri și ecranele înguste, unde chatterul e sub formular, nu sunt afectate.
+- Nu necesită configurare; pașii cu capturi sunt în [fișa consultantului](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
-- `base`
+- `mail`
 
 #### 4. Componente Cheie
 
-Modulul nu definește modele, vizualizări sau acțiuni automate noi. Funcționalitatea este implementată exclusiv la nivel de frontend, prin active web (`web.assets_backend`):
+Modulul nu definește modele, vizualizări sau acțiuni automate. Funcționalitatea este exclusiv în frontend, prin active `web.assets_backend`:
 
-- `static/src/lib/split/split.min.js`: biblioteca Split.js folosită pentru a crea interfața redimensionabilă.
-- `static/src/js/chatter_split.esm.js`: patch aplicat peste `FormRenderer` din Odoo pentru a adăuga funcționalitatea de divizare în vizualizările formular (inițializare dinamică a separatorului, curățare la demontarea componentei, ascultători pentru redimensionarea ferestrei și tratarea cazurilor în care elementele DOM necesare nu sunt disponibile).
-- `static/src/scss/style.scss`: stilurile aferente panoului divizat.
+- `static/src/lib/split/split.min.js`: biblioteca Split.js pentru panoul redimensionabil.
+- `static/src/js/chatter_split.esm.js`: patch peste `FormRenderer`, care inițializează separatorul, curăță la demontare, ascultă redimensionarea ferestrei, gestionează butonul/scurtătura de ascundere și cazul în care elementele DOM lipsesc.
+- `static/src/scss/style.scss`: stilurile panoului divizat.
+- `static/tests/`: teste unitare web (`web.assets_unit_tests`).
 
 #### 5. Conexiuni
 

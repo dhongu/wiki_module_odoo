@@ -1,43 +1,46 @@
 # Barcode Picking (localizat la `deltatech_barcode_picking/index.md`)
 
 - **Nume Tehnic:** `deltatech_barcode_picking`
-- **Versiune:** `19.0.2.2.3`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_barcode_picking
+- **Versiune:** `20.0.2.2.14`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_barcode_picking`
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_barcode_picking`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul permite operatorilor de depozit să adauge produse pe un transfer de stoc (picking) direct prin scanarea codului de bare, fără să mai completeze manual liniile de operare. Scanarea recunoaște atât codul de bare al produsului, cât și cel al lotului/seriei, inclusiv formatul combinat "cod produs + separator + cod lot" (separatori acceptați: `-`, `/`, spațiu), accelerând semnificativ pregătirea comenzilor și reducând erorile de introducere manuală a datelor.
+Modulul permite operatorilor de depozit să adauge produse pe recepții și livrări prin scanarea codului de bare, fără a completa manual liniile transferului. Se pot scana și etichete compuse, care conțin codul produsului și numele lotului, iar cantitatea se înregistrează pe lotul respectiv. Rezultatul este o introducere mai rapidă a datelor și mai puține erori la recepție și la pregătirea comenzilor.
 
 #### 2. Funcționalități Cheie
 
-- Adăugarea produselor pe un transfer de stoc (picking) prin scanarea codului de bare.
-- Recunoașterea codurilor de bare combinate produs+lot, folosind separatorii `-`, `/` sau spațiu; pentru a scana coduri cu lot pe picking este necesar ca tipul de operațiune să aibă activată opțiunea "Afișează detalii operațiune".
-- Adăugarea produselor și în inventarul de stoc (`stock.inventory`) prin scanarea codului de bare al produsului sau al lotului/seriei (funcționalitate deja implementată în cod, nu doar planificată — vezi corecția de mai jos).
-- Configurare per tip de operațiune (`stock.picking.type`) a permisiunii de scanare cu barcode-ul, printr-un câmp dedicat.
-
-> **Corecție față de `readme/DESCRIPTION.md`:** descrierea originală menționează ca "todo" adăugarea produselor în inventar prin scanare, însă modelul `stock.inventory` din `models/stock_inventory.py` implementează deja complet această funcționalitate (`on_barcode_scanned`, `_add_product`). Nota "todo" este depășită și a fost corectată aici.
+- Adăugarea de produse pe recepții și livrări prin scanare, cu orice cititor care funcționează ca tastatură (tastează codul și trimite Enter). Cursorul trebuie ținut în afara câmpurilor text. Fiecare scanare adaugă **o unitate**.
+- Citirea etichetelor compuse produs + lot, separate prin `-` sau `/` (de exemplu `5940000000024/LOT26`); codul se desparte la ultimul separator. Dacă numele loturilor conțin cratimă, se folosește `/`.
+- Lotul scanat trebuie să existe deja; pentru produsele urmărite pe lot, un lot inexistent este refuzat cu eroare. Pe recepții se bifează **Use Existing ones** (grupul **Lots/Serial Numbers**) la tipul de operațiune.
+- Pe o recepție în stare Draft, prima scanare adaugă linia, iar următoarele cresc **Demand**; pe un transfer **Ready**, scanarea se adaugă peste cantitatea existentă (se recomandă setarea cantității la 0 înainte).
+- La livrări, cererea este o limită: o scanare peste cantitatea rezervată este refuzată. Pentru numărarea prin scanare, **Quantity** se setează la 0 și se salvează. Cu `deltatech_stock_reservation_lock`, pe tipurile cu **Protect Reservations** se scanează față de cantitatea rezervată.
+- Cod necunoscut: transferul rămâne neschimbat (**There is no product with barcode …**); un transfer **Done** sau **Cancelled** nu poate fi scanat (**Invalid Operation**).
+- Fiecare scanare creează în **Detailed Operations** o linie de 1,00; un lot scanat de mai multe ori apare pe mai multe linii.
+- Limitări: scanarea în ajustările de inventar nu este disponibilă în această versiune; casetele **Allowed to add products by scanning** și **Request Effective Date** nu au efect; o scanare în plus nu poate fi anulată prin scanare, ci prin corectarea manuală a cantității.
+- Fluxul pas-cu-pas, cu capturi, este în [fișa consultant](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
 - `stock`
-- `barcodes`
-- [deltatech_stock_inventory](../deltatech_stock_inventory/index.md)
+- [deltatech_barcode_handler](../deltatech_barcode_handler/index.md)
 
 #### 4. Componente Cheie
 
 **Modele**
 
-- `stock.picking.type` (extins): adaugă câmpurile `product_barcode_scanner` (permite scanarea de coduri de bare pe acest tip de operațiune, activat implicit), `request_effective_date` și `force_current_date` (folosit la migrare).
-- `stock.picking` (extins, moștenește și `barcodes.barcode_events_mixin`): adaugă câmpurile `request_effective_date`, `forced_effective_date`, `force_current_date`; implementează `on_barcode_scanned()` (interpretează codul scanat — produs, lot/serie sau combinație produs-lot — și verifică starea transferului) și `_add_product()` (creează sau actualizează liniile de mișcare `stock.move`/`stock.move.line` corespunzătoare cantității scanate).
-- `stock.inventory` (extins, moștenește și `barcodes.barcode_events_mixin`): implementează `on_barcode_scanned()` și `_add_product()` pentru a adăuga/actualiza liniile de inventar (`stock.inventory.line`) direct din scanare.
+- `stock.picking` (extins): implementează `on_barcode_scanned()` și `_add_product()` pentru adăugarea produselor și loturilor prin scanare, cu verificări de scanabilitate și de cantitate disponibilă.
+- `stock.picking.type` (extins): adaugă opțiunile legate de scanare la tipul de operațiune.
+- `stock.move` (extins): leagă liniile de operațiuni detaliate de transfer în fluxul de scanare.
 
 **Vizualizări**
 
-- `view_picking_barcode_inherit_form`: adaugă câmpul `_barcode_scanned` (widget `barcode_handler`) pe formularul de transfer (`stock.picking`), pentru a capta evenimentele de scanare.
-- `view_stock_move_line_detailed_operation_tree`: forțează salvarea (`force_save`) câmpului `product_id` în lista de operațiuni detaliate, necesar pentru fluxul de scanare cu lot.
-- `view_picking_type_form`: expune pe formularul tipului de operațiune (`stock.picking.type`) câmpurile `product_barcode_scanner` și `request_effective_date`.
+- `view_picking_barcode_inherit_form`: adaugă câmpul de captare a scanărilor pe formularul transferului.
+- `view_stock_move_line_detailed_operation_tree`: forțează salvarea produsului în lista de operațiuni detaliate, necesar pentru scanarea cu lot.
+- `view_picking_type_form`: expune opțiunile de scanare pe tipul de operațiune.
 
 **Acțiuni Automate / Acțiuni Server**
 
@@ -45,5 +48,6 @@ Modulul nu definește sarcini `ir.cron`, reguli `base.automation` sau acțiuni s
 
 #### 5. Conexiuni
 
-- [deltatech_barcode_sale](../deltatech_barcode_sale/index.md): aplică același principiu de accelerare a introducerii datelor prin scanare de coduri de bare, dar pe comenzile de vânzare (`sale.order`) în loc de transferurile de stoc.
-- [deltatech_stock_barcode](../deltatech_stock_barcode/index.md): extinde separat aplicația Stock Barcode din Odoo Enterprise pentru transferuri și inventar; face parte din același ecosistem de scanare a codurilor de bare în depozit, dar nu este o dependență directă a acestui modul.
+- [deltatech_barcode_sale](../deltatech_barcode_sale/index.md): același principiu de scanare, aplicat pe comenzile de vânzare.
+- [deltatech_stock_reservation_lock](../deltatech_stock_reservation_lock/index.md): pe tipurile de operațiune cu **Protect Reservations**, scanarea la livrare se face față de cantitatea rezervată.
+- [deltatech_stock_barcode](../deltatech_stock_barcode/index.md): extinde separat aplicația Stock Barcode din Enterprise; același ecosistem de scanare în depozit, fără dependență directă.

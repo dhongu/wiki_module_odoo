@@ -1,14 +1,15 @@
-# Deltatech Document Template (localizat la `deltatech_document_template/index.md`)
+# Document Template Engine (localizat la `deltatech_document_template/index.md`)
 
 - **Nume Tehnic:** `deltatech_document_template`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_document_template
+- **Versiune:** `20.0.1.0.9`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_document_template
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_document_template`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-`deltatech_document_template` oferă un motor generic și reutilizabil pentru definirea de șabloane de documente și generarea de documente finale pornind de la acestea, în Odoo 19. Modulul este agnostic față de domeniul de business și poate viza orice model prin `res_model`/`res_id`. Suportă conținut mixt (HTML manual, rapoarte QWeb încorporate sau vizualizări QWeb), un flux de lucru simplu pe documentele generate și o integrare cu meniul Print care deschide sau reutilizează un document generat unic pentru fiecare șablon și înregistrare țintă.
+`deltatech_document_template` oferă un motor generic și reutilizabil pentru definirea de șabloane de documente și generarea de documente finale pornind de la acestea. Modulul este agnostic față de domeniul de business și poate viza orice model prin `res_model`/`res_id`. Suportă conținut mixt (HTML manual, rapoarte QWeb încorporate sau vizualizări QWeb), un flux de lucru simplu pe documentele generate și o integrare cu meniul Print care deschide sau reutilizează un document generat unic pentru fiecare șablon și înregistrare țintă.
 
 #### 2. Funcționalități Cheie
 
@@ -19,9 +20,12 @@
   - Secțiuni cu vizualizări QWeb încorporate prin `view_id`.
 - Întreruperi de pagină între secțiuni (`page-break-before`) atunci când `page_break_after` este setat (niciodată după ultima secțiune).
 - Integrare cu meniul Print (acțiune server cu `binding_type = 'report'`): deschide un `document.generated` existent pentru înregistrarea și șablonul active, sau pornește unul nou dacă nu există încă.
-- Unicitate impusă: un singur document generat per (`template_id`, `res_model`, `res_id`), printr-o constrângere Python (fără `_sql_constraints` în Odoo 19).
+- Unicitate impusă: un singur document generat per (`template_id`, `res_model`, `res_id`), printr-o constrângere Python (fără `_sql_constraints` ).
 - Flux de lucru clar cu vizibilitate a butoanelor în funcție de stare: Generate (Draft/Generated), Validate (doar Generated), Reset to Draft (Generated/Validated), Print PDF (Generated/Validated).
-- Tipărirea atașează automat PDF-ul rezultat (sau HTML ca alternativă) la înregistrarea țintă `res_model`/`res_id`.
+- Tipărirea atașează PDF-ul rezultat la înregistrarea țintă `res_model`/`res_id`, dacă utilizatorul are drept de scriere pe ea; dacă PDF-ul nu poate fi generat, se afișează o eroare clară și nu se atașează nimic.
+- Fluxul de stări este impus pe server, iar un document validat își îngheață conținutul, șablonul, înregistrarea țintă și data emiterii până la resetarea la Ciornă.
+- Securitate: accesul la document urmează înregistrarea țintă; doar administratorii creează sau editează șabloane și secțiuni (conțin cod QWeb).
+- Pagină web a documentului (**Open Web View**), în limba site-ului; până la validare, corpul este editabil pentru utilizatorii cu drept de scriere.
 - Integrare cu chatter-ul: la crearea unui document generat se postează automat o notă cu link către documentul generat pe chatter-ul înregistrării țintă.
 
 #### 3. Dependențe

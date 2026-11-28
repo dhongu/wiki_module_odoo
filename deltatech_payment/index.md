@@ -1,10 +1,11 @@
 # Deltatech Payment (localizat la `deltatech_payment/index.md`)
 
 - **Nume Tehnic:** `deltatech_payment`
-- **Versiune:** `19.0.0.0.5`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_payment
+- **Versiune:** `20.0.0.0.13`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_payment
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_payment`
-- **Ultima Ingestie:** `2026-08-20`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
@@ -14,7 +15,7 @@ Modulul extinde stratul de plăți al Odoo cu două comportamente independente f
 
 - Confirmă comanda de vânzare aflată în starea „ciornă" sau „trimisă" imediat ce se primește o plată (chiar parțială), fără să aștepte suma integrală.
 - Permite, prin parametrul de sistem `payment.do_not_set_transaction_done`, ca tranzacția de plată să rămână în afara stării „efectuată" (done) în timp ce comanda de vânzare este totuși confirmată la o plată pozitivă — util când decontarea reală a tranzacției este gestionată separat.
-- Adaugă pe fiecare furnizor de plată o opțiune „Permis pe Linkuri de Plată" (în secțiunea Disponibilitate), activată implicit, astfel încât furnizorii existenți continuă să funcționeze neschimbat.
+- Adaugă pe fiecare furnizor de plată o opțiune „Permis pe Linkuri de Plată" (în fila Restricții), activată implicit, cu excepția furnizorilor offline (transfer bancar, plata la livrare, `on_delivery`), la care implicit e dezactivată; valoarea se aplică la instalare și la crearea furnizorului și poate fi schimbată pe fiecare furnizor.
 - Când se generează un link de plată pentru o comandă de vânzare, comanda este marcată ca restricționată; de atunci, plata online a acelei comenzi oferă doar furnizorii cu opțiunea activată, iar cei cu opțiunea dezactivată sunt ascunși.
 - Restricția este aplicată din starea de încredere de pe server (comanda de vânzare, validată prin token de acces), nu dintr-un parametru de URL, deci un cumpărător nu o poate elimina editând link-ul. Checkout-ul standard de e-commerce nu este afectat, deoarece comenzile de coș nu sunt niciodată marcate.
 
@@ -34,7 +35,7 @@ Modulul extinde stratul de plăți al Odoo cu două comportamente independente f
 
 **Vizualizări**
 
-- `payment_provider_form`: extinde formularul standard al furnizorului de plată (`payment.payment_provider_form`), adăugând câmpul `allow_payment_link` în secțiunea Disponibilitate.
+- `payment_provider_form`: extinde formularul standard al furnizorului de plată (`payment.payment_provider_form`), adăugând câmpul `allow_payment_link` în fila Restricții.
 
 **Configurare**
 

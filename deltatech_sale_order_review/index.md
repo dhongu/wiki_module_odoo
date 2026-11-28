@@ -1,10 +1,10 @@
 # Sale Order Review (localizat la `deltatech_sale_order_review/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_order_review`
-- **Versiune:** `19.0.0.1.1`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_order_review
+- **Versiune:** `20.0.0.1.8`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_sale_order_review
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_order_review`
-- **Ultima Ingestie:** `2026-09-24`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar

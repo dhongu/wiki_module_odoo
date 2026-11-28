@@ -1,24 +1,25 @@
-# Chart of Accounts (localizat la `deltatech_chart_of_accounts/index.md`)
+# Chart of Accounts Sync
 
 - **Nume Tehnic:** `deltatech_chart_of_accounts`
-- **Versiune:** `19.0.0.1.1`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_chart_of_accounts
+- **Versiune:** `20.0.0.1.12`
+- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_chart_of_accounts
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_chart_of_accounts`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul extinde funcționalitatea de gestiune a planului de conturi din Odoo, fiind dedicat în special inițializării și corecției soldurilor inițiale la implementări noi și sincronizării lor cu sisteme externe (balanțe de verificare existente). Față de metoda standard Odoo (un singur articol contabil sau import de solduri de deschidere), modulul permite compararea soldurilor curente din Odoo cu soldurile externe și înregistrarea doar a diferențelor. Oferă un flux de lucru clar (ciornă / postat), trasabilitate completă între sesiunea de sincronizare și articolele contabile generate, sincronizare la nivel de partener pentru conturile de creanțe și datorii, precum și suport pentru contabilitatea storno conform standardelor românești, prin marcarea automată a valorilor negative de debit sau credit ca tranzacții storno.
+Modulul aliniază soldurile conturilor din Odoo cu cele dintr-un alt sistem contabil: balanța de verificare a programului anterior la momentul trecerii pe Odoo sau un sistem paralel păstrat o perioadă. Odoo calculează propriile solduri la o dată, utilizatorul introduce sau importă soldurile externe alături de ele, iar în contabilitate se postează doar diferențele, sub formă de note contabile legate de sincronizare. Modulul postează doar în jurnalul ales; nu importă el însuși planul de conturi.
 
 #### 2. Funcționalități Cheie
 
-- Sincronizare incrementală a soldurilor: compară soldurile curente din Odoo cu cele externe și postează doar diferențele.
-- Import al planului de conturi printr-o acțiune dedicată (`action_import_chart_of_accounts`).
-- Inițializare la nivel de partener: soldurile pot fi sincronizate detaliat pe parteneri, util pentru creanțe și datorii.
-- Suport pentru contabilitate storno: valorile negative de debit/credit sunt marcate automat ca tranzacții storno, asigurând conformitatea cu standardele contabile românești.
-- Flux de lucru cu stări „Ciornă" și „Postat": generare linii, revizuire, postare diferențe și revenire la ciornă (care șterge automat articolele contabile generate).
-- Trasabilitate: legătură directă între înregistrarea de sincronizare și toate articolele contabile generate, pentru audit.
-- Posibilitatea introducerii valorilor externe manual sau prin importul standard Odoo (CSV/Excel).
+- **Soldul Odoo lângă cel extern:** pentru o dată, fiecare cont (sau un singur cont) primește o linie cu debitul, creditul și soldul din Odoo și cu debitul și creditul extern; liniile care diferă sunt evidențiate, iar totalurile arată dacă sincronizarea este echilibrată.
+- **Pe partener, când contează:** cu opțiunea **Partner Detail**, conturile de creanțe și datorii se compară pe partener, cu scadență și referință, astfel încât soldurile inițiale ale clienților și furnizorilor să poată fi reconciliate ulterior.
+- **Valori externe dintr-un fișier:** valorile externe se introduc manual sau se importă din CSV/Excel; o balanță SAGA cu parteneri este asociată partener cu partener, deci o a doua importare actualizează liniile, nu le dublează.
+- **Se postează doar diferența:** modul *Opening balances only* postează diferența netă, cu linii pozitive, față de un cont de capitaluri; modul *Match debit/credit totals* aliniază și totalurile de debit și credit și scrie stornările ca note storno, dacă firma folosește contabilitatea storno.
+- **Ciornă, postat, resetare:** notele contabile rămân legate de sincronizare; **Reset to draft** le anulează și le șterge și regenerează liniile, ca o valoare greșită să poată fi corectată și postată din nou (cu confirmare dacă există reconcilieri).
+- **Acces:** meniul *Contabilitate > Configurare > Conturi > Sincronizare Plan de Conturi*, rezervat managerilor de contabilitate; datele sunt restricționate pe companie.
+- Fluxul pas cu pas, cu capturi de ecran, este în [fișa consultantului](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -29,21 +30,22 @@ Modulul extinde funcționalitatea de gestiune a planului de conturi din Odoo, fi
 
 **Modele**
 
-- `sync.chart.of.accounts`: model principal de sincronizare; generează liniile de comparație (debit/credit/sold) până la o dată dată, gestionează stările ciornă/postat și păstrează legătura cu articolele contabile generate.
-- `import.chart.of.accounts`: linia de sincronizare/import care reține valorile Odoo alături de valorile externe (debit/credit extern) și postează diferențele, generând articolele contabile (inclusiv storno acolo unde este cazul).
-- `account.move.line` (extins): implementează logica de storno — la setarea unei valori negative de debit sau credit, tranzacția este marcată automat ca storno.
-- `account.move` (extins): articolul părinte este de asemenea marcat ca storno când conține linii storno.
+- `sync.chart.of.accounts`: sesiunea de sincronizare (nume, dată, jurnal, cont de capitaluri, mod de postare); generează liniile de comparație, gestionează stările ciornă/postat și păstrează legătura cu notele contabile generate.
+- `import.chart.of.accounts`: linia de sincronizare, cu valorile Odoo alături de cele externe (debit/credit extern); postează diferențele, inclusiv note storno.
+- `sync.chart.of.accounts.cancel.wizard` (tranzitoriu): confirmarea anulării/resetării când există reconcilieri.
+- `account.move` (extins): marchează nota ca storno când sincronizarea o cere (context `storno`).
 
 **Vizualizări**
 
-- `import_chart_of_accounts_view.xml`: vizualizările pentru liniile de import/sincronizare a planului de conturi (introducerea valorilor externe, postarea diferențelor).
-- `sync_chart_of_accounts_view.xml`: vizualizarea formular/listă a sesiunii de sincronizare (generare linii, afișare, postare diferență, revenire la ciornă) accesibilă din Contabilitate > Configurare > Conturi > Sincronizare Plan de Conturi.
+- `view_sync_chart_of_accounts_form` / `view_sync_chart_of_accounts_list`: sesiunea de sincronizare, cu butoanele de generare linii, afișare, postare diferență și revenire la ciornă.
+- `view_import_chart_of_accounts_list` / `view_import_chart_of_accounts_search`: liniile de sincronizare, în care se introduc valorile externe.
+- `view_sync_chart_of_accounts_cancel_wizard_form`: dialogul de confirmare a resetării.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- `action_import_chart_of_accounts`: acțiune de import al planului de conturi (referită în DESCRIPTION.md).
+Modulul nu definește `ir.cron`, `base.automation` sau acțiuni server. Acțiunile ferestră `action_sync_chart_of_accounts` și `action_import_chart_of_accounts` deschid sesiunile, respectiv liniile.
 
 #### 5. Conexiuni
 
-- `account`: modulul de contabilitate Odoo pe care îl extinde, prin articolele contabile și planul de conturi.
-- `l10n_ro`: relevant pentru implementările pe localizarea românească, unde se folosesc inițializarea soldurilor și contabilitatea storno.
+- `account`: planul de conturi și notele contabile pe care le extinde.
+- `l10n_ro`: contabilitatea storno din localizarea românească, folosită la postarea stornărilor.
