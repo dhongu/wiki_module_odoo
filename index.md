@@ -5,6 +5,9 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 ## Module
 
 - [account_statement_base](account_statement_base/index.md): Modul tehnic care readuce interfața dedicată liniilor de extras de cont bancar, scoasă din `account` începând cu Odoo 16.
+- [account_statement_import_base](account_statement_import_base/index.md): Cod comun pentru importul extraselor bancare din fișiere și online.
+- [account_statement_import_file](account_statement_import_file/index.md): Cadru de import al extraselor bancare din fișiere, cu suport multi-cont.
+- [date_range](date_range/index.md): Intervale de date globale folosite ca filtre, cu generare recurentă.
 - [deltatech](deltatech/index.md): Modul de bază (fundație) al suitei Deltatech, oferind utilitare partajate, structură unitară și extinderi comune pentru celelalte module Deltatech.
 - [deltatech_access](deltatech_access/index.md): Control granular al accesului la câmpuri din vederile Odoo (readonly / required / invisible) pe bază de grupuri de utilizatori.
 - [deltatech_account](deltatech_account/index.md): Îmbunătățiri pentru contabilitatea și facturarea Odoo: vizibilitate extinsă a facturilor, configurare flexibilă a jurnalelor/conturilor și sincronizare între documente.
@@ -379,6 +382,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_sale_multiple](deltatech_sale_multiple/index.md): Definirea pe produs a unei cantități minime și a unui multiplu de vânzare, cu ajustare automată pe linie.
 - [deltatech_sale_multiple_website](deltatech_sale_multiple_website/index.md): Extinde regulile de cantitate minimă/multiplu de vânzare pe eCommerce, cu afișarea restricțiilor pe pagina produsului și în coș și recalibrare la limitările de stoc.
 - [deltatech_sale_order_image](deltatech_sale_order_image/index.md): Imaginea produsului pe liniile ofertei și comenzii de vânzare în PDF.
+- [deltatech_sale_order_report](deltatech_sale_order_report/index.md): Modul obsolet fără cod, păstrat pentru upgrade; formularul comenzii de vânzare e în l10n_ro_sale_order_report.
 - [deltatech_sale_order_review](deltatech_sale_order_review/index.md): Reține comenzile riscante înainte de confirmare sau de livrare, cu motive vizibile și configurabile (ramburs mare, plată nefinalizată, adresă incompletă, ridicare la comandă online), aprobare pe grup și rezolvare/escaladare automată.
 - [deltatech_sale_pallet](deltatech_sale_pallet/index.md): Adaugă automat produse de tip palet pe comenzi/facturi când produsele ating cantitatea minimă per palet.
 - [deltatech_sale_pallet_website](deltatech_sale_pallet_website/index.md): Extinde logica de paleți din vânzări către magazinul online, cu recalcul automat al liniilor de palet în coș și afișarea prețului per palet.
@@ -776,16 +780,30 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_wip_closing](l10n_ro_wip_closing/index.md): Evaluare și stornare în roșu a producției în curs (331/711) la 1 a lunii următoare, conform OMFP 1802.
 - [l10n_ro_zip](l10n_ro_zip/index.md): Bază de date cu ~52.000 de coduri poștale din România, cu autocompletare în adresa partenerului.
 - [l10n_ro_zip_osm](l10n_ro_zip_osm/index.md): Străzile orașelor mici cu un singur cod poștal, din OpenStreetMap, în nomenclatorul de coduri poștale.
+- [product_brand](product_brand/index.md): Gestionarea mărcilor de produse și raportare pe marcă.
 - [queue_job](queue_job/index.md): Coadă de joburi pentru execuția asincronă a metodelor în fundal, cu canale, prioritate/ETA, reîncercări automate și grafuri de dependențe între joburi.
+- [queue_job_cron_jobrunner](queue_job_cron_jobrunner/index.md): Executor de joburi queue_job bazat pe cron-uri ir.cron, pentru medii fără runner dedicat (ex. Odoo.sh).
+- [terrabit_base](terrabit_base/index.md): Meta-modul care instalează setul de bază Terrabit: stoc, vânzări, achiziții, contabilitate și localizarea românească.
+- [terrabit_clear_data](terrabit_clear_data/index.md): Asistent care șterge datele tranzacționale și, opțional, datele de bază ale unei baze de date.
 - [terrabit_delivery_staff](terrabit_delivery_staff/index.md): Distribuirea livrărilor către personalul propriu de livrare (curieri/șoferi interni), cu acces restricționat și raport PDF dedicat.
 - [terrabit_dvi](terrabit_dvi/index.md): Modul tranzitoriu fără conținut — redenumit în `l10n_ro_customs_dvi`; există doar ca dependențele existente să se încarce. Nu se portează pe 20.0.
 - [terrabit_facebook_pixel](terrabit_facebook_pixel/index.md): Integrare Meta (Facebook) Pixel și Conversion API pentru eCommerce Odoo 19, tracking hibrid client+server.
 - [terrabit_google_tag](terrabit_google_tag/index.md): Integrare Google Tag Manager cu magazinul online — trimite evenimente e-commerce (view_item, add_to_cart, purchase) în dataLayer, configurabil din setările website-ului.
+- [terrabit_helpdesk_ai_reply](terrabit_helpdesk_ai_reply/index.md): Dispecer AI pentru tichete helpdesk: preluare, mementouri, închidere la confirmarea clientului.
 - [terrabit_helpdesk_connector](terrabit_helpdesk_connector/index.md): Deschide, urmărește și discută tichete de suport Terrabit direct din Odoo, cu sincronizare automată de status și coadă locală pentru cazul în care serverul e indisponibil.
 - [terrabit_helpdesk_link](terrabit_helpdesk_link/index.md): Adaugă meniul de top „Terrabit Help" care deschide portalul de suport Terrabit într-o filă nouă.
 - [terrabit_iap](terrabit_iap/index.md): Client de bază pentru serviciile Terrabit IAP: endpoint propriu per serviciu, înregistrarea contului pe server, hashing de token și secret de apel invers.
+- [terrabit_iap_ai](terrabit_iap_ai/index.md): Direcționează AI-ul nativ Odoo 20 prin serverul IAP Terrabit, facturat în credite Terrabit.
+- [terrabit_iap_anaf](terrabit_iap_anaf/index.md): Token ANAF SPV pentru e-Factura obținut și reînnoit prin serviciul Terrabit IAP, fără certificat pe fiecare server.
+- [terrabit_iap_line_counter](terrabit_iap_line_counter/index.md): Expune serverului IAP numărul de linii de cod ale modulelor instalate.
+- [terrabit_iap_server](terrabit_iap_server/index.md): Server IAP Terrabit: servicii, conturi, portofele și credite pentru bazele client.
+- [terrabit_iap_server_ai](terrabit_iap_server_ai/index.md): Serviciu AI pe serverul IAP, compatibil cu AI-ul nativ Odoo 20, cu facturare în credite.
+- [terrabit_iap_server_anaf](terrabit_iap_server_anaf/index.md): Partea de server a serviciului ANAF SPV: obține, reînnoiește și trimite tokenurile OAuth către clienți.
 - [terrabit_iap_server_helpdesk](terrabit_iap_server_helpdesk/index.md): Serviciul IAP care primește pe helpdesk-ul Terrabit tichetele deschise de clienți prin conectorul de suport instalat în Odoo-ul lor.
+- [terrabit_iap_server_line_counter](terrabit_iap_server_line_counter/index.md): Serviciu IAP care numără liniile de cod sursă ale modulelor instalate pe instanța unui client.
+- [terrabit_iap_server_online](terrabit_iap_server_online/index.md): Rulează pe serverul IAP Terrabit logica modulelor data-only ale clienților Odoo Online, cu credite și răspuns prin callback.
 - [terrabit_iap_server_sale](terrabit_iap_server_sale/index.md): Achiziția de credite IAP prin magazinul eCommerce (website_sale), cu creditare automată a contului IAP la confirmarea comenzii.
+- [terrabit_iap_server_sms](terrabit_iap_server_sms/index.md): Serviciu SMS pe serverul IAP (furnizori 4Pay și Wapi), taxat din portofelul bazei client sau din creditele proprii.
 - [terrabit_partner_credit_limit](terrabit_partner_credit_limit/index.md): Reține confirmarea comenzilor când soldul de încasat sau facturile restante ale clientului depășesc limita de credit, ca motive de verificare cu aprobare pe rol prin wizard (deltatech_sale_order_review).
 - [terrabit_partner_credit_limit_review](terrabit_partner_credit_limit_review/index.md): Limita de credit și facturile restante ca motive de revizuire a comenzii de vânzare.
 - [terrabit_partner_credit_limit_website](terrabit_partner_credit_limit_website/index.md): Extinde limita de credit pe partener la checkout-ul website, restricționând metodele de plată „pe încredere" (transfer bancar/ramburs) sau, opțional, toate metodele, la depășirea limitei.
@@ -793,3 +811,4 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [terrabit_picking_flow](terrabit_picking_flow/index.md): Urmărește ridicările (picking) printr-o rută ordonată de locații fizice de depozit, cu progres controlat pe Kanban.
 - [terrabit_tiktok_pixel](terrabit_tiktok_pixel/index.md): Integrare TikTok Pixel și Conversion API pentru eCommerce Odoo 19, tracking hibrid client+server.
 - [terrabit_website_sale_tracking_base](terrabit_website_sale_tracking_base/index.md): Fundație de tracking eCommerce — configurare globală și magistrală de evenimente normalizate pentru pixeli.
+- [website_sale_product_brand](website_sale_product_brand/index.md): Filtru pe marcă și pagini de marcă în magazinul online.

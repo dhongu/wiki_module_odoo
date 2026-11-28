@@ -27,6 +27,78 @@
     "text": "Bank Statement Base\naccount_statement_base\nAcest modul tehnic readuce în interfața Odoo vizualizările dedicate liniilor de extras de cont bancar (*Bank Statement Lines*), care începând cu Odoo 16.0 nu mai fac parte din modulul standard `account`. Practic, oferă contabililor un ecran clasic (listă, formular, kanban) pentru a vedea, filtra și corecta rapid tranzacțiile bancare importate, fără a fi nevoie de instalarea unui modul Enterprise pentru asta.\nAdaugă o acțiune de fereastră dedicată pentru Bank Statement Lines (`account.bank.statement.line`), cu vizualizări listă, formular și kanban.\nPe formularul extrasului de cont (`account.bank.statement`) adaugă un buton statistic „Transactions” care deschide direct liniile extrasului curent, plus un buton „Journal Items” către notele contabile aferente (validate, grupate pe operațiune).\nÎn lista de extrase de cont adaugă un buton rapid „Open Statement Lines” pentru fiecare rând și permite crearea directă de extrase din listă.\nLinia de extras (formular) expune sold reconciliere, tip tranzacție, cont bancar al partenerului și plățile asociate (`payment_ids`) pe o filă tehnică separată.\nLista de linii de extras oferă editare inline (`editable=\"top\"`, `multi_edit`), evidențiere vizuală a liniilor deja reconciliate, sold curent (`running_balance`) și butoane rapide pentru „Revert reconciliation” și deschiderea notei contabile aferente.\nCăutarea liniilor de extras permite filtrare după partener, jurnal, sumă, stare de reconciliere și stare de verificare (`to_check`), plus grupări după partener, jurnal, tip de tranzacție sau dată.\nSuprascrie acțiunea de creare a extraselor de tip „cash” (`create_cash_statement`) astfel încât să funcționeze fără mesajul standard care cere modulul Enterprise."
   },
   {
+    "path": "account_statement_import_base/index.md",
+    "module": "account_statement_import_base",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/dhongu/others_addons/tree/20.0/account_statement_import_base",
+    "local_path": "odoo-addons/others_addons/account_statement_import_base",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "account_statement_import_base",
+    "summary": "Modul tehnic care pune la dispoziție cod comun pentru modulele de import al extraselor bancare: importul din fișiere (`account_statement_import_file`) și importul online prin servicii web/API (`account_statement_import_online`). Nu are o interfață proprie de sine stătătoare, ci este baza pe care se construiesc celelalte.",
+    "features": [
+      "Cod partajat între importul din fișiere și importul online de extrase.",
+      "Extinde jurnalul contabil (`account.journal`) și linia de extras bancar (`account.bank.statement.line`) cu elementele comune importului.",
+      "Adaugă informațiile suplimentare ale importului în formularul liniei de extras."
+    ],
+    "dependencies": [
+      "account_statement_base"
+    ],
+    "connections": [
+      "account_statement_import_file",
+      "account_statement_import_online"
+    ],
+    "text": "account_statement_import_base\naccount_statement_import_base\nModul tehnic care pune la dispoziție cod comun pentru modulele de import al extraselor bancare: importul din fișiere (`account_statement_import_file`) și importul online prin servicii web/API (`account_statement_import_online`). Nu are o interfață proprie de sine stătătoare, ci este baza pe care se construiesc celelalte.\nCod partajat între importul din fișiere și importul online de extrase.\nExtinde jurnalul contabil (`account.journal`) și linia de extras bancar (`account.bank.statement.line`) cu elementele comune importului.\nAdaugă informațiile suplimentare ale importului în formularul liniei de extras."
+  },
+  {
+    "path": "account_statement_import_file/index.md",
+    "module": "account_statement_import_file",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/dhongu/others_addons/tree/20.0/account_statement_import_file",
+    "local_path": "odoo-addons/others_addons/account_statement_import_file",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "account_statement_import_file",
+    "summary": "Oferă cadrul tehnic pentru importul extraselor bancare din fișiere. Este succesorul modulului `account_bank_statement_import`, care a făcut parte din Odoo Community până la v13 și a trecut în Enterprise din v14; a fost redenumit pentru a evita conflictul cu versiunea Enterprise. Formatele concrete (de exemplu OFX) se adaugă prin module separate specifice fiecărui format.",
+    "features": [
+      "Suport pentru fișiere de extras multi-cont (se creează mai multe extrase dintr-un singur fișier).",
+      "Atașarea fișierului importat la extrasul bancar, pentru diagnosticare în caz de probleme.",
+      "Mesaje de eroare îmbunătățite.",
+      "Import din dashboard-ul Contabilitate: pe jurnalul bancar apare un buton de import; wizard-ul listează formatele de fișier suportate, iar butonul Import creează extrasul (sau extrasele).",
+      "Tranzacțiile deja importate nu se creează a doua oară.",
+      "Dacă fișierul conține contul bancar al contrapartidei și acesta există pe un partener din Odoo, partenerul este completat automat pe linia de extras (doar pentru formatele care oferă această informație).",
+      "Modulul oferă doar cadrul: pentru formatele băncilor trebuie instalate module dedicate (ex. `account_statement_import_ofx`)."
+    ],
+    "dependencies": [
+      "account_statement_import_base"
+    ],
+    "connections": [
+      "account_statement_import_base",
+      "account_statement_import_ofx"
+    ],
+    "text": "account_statement_import_file\naccount_statement_import_file\nOferă cadrul tehnic pentru importul extraselor bancare din fișiere. Este succesorul modulului `account_bank_statement_import`, care a făcut parte din Odoo Community până la v13 și a trecut în Enterprise din v14; a fost redenumit pentru a evita conflictul cu versiunea Enterprise. Formatele concrete (de exemplu OFX) se adaugă prin module separate specifice fiecărui format.\nSuport pentru fișiere de extras multi-cont (se creează mai multe extrase dintr-un singur fișier).\nAtașarea fișierului importat la extrasul bancar, pentru diagnosticare în caz de probleme.\nMesaje de eroare îmbunătățite.\nImport din dashboard-ul Contabilitate: pe jurnalul bancar apare un buton de import; wizard-ul listează formatele de fișier suportate, iar butonul Import creează extrasul (sau extrasele).\nTranzacțiile deja importate nu se creează a doua oară.\nDacă fișierul conține contul bancar al contrapartidei și acesta există pe un partener din Odoo, partenerul este completat automat pe linia de extras (doar pentru formatele care oferă această informație).\nModulul oferă doar cadrul: pentru formatele băncilor trebuie instalate module dedicate (ex. `account_statement_import_ofx`)."
+  },
+  {
+    "path": "date_range/index.md",
+    "module": "date_range",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/dhongu/others_addons/tree/20.0/date_range",
+    "local_path": "odoo-addons/others_addons/date_range",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "date_range",
+    "summary": "Permite definirea unor intervale de date globale (luni, trimestre, exerciții financiare etc.), folosite la filtrarea valorilor în liste. Pentru dezvoltatori oferă și un mixin care adaugă în căutare un câmp de tip perioadă, utilizabil ca orice câmp relațional.",
+    "features": [
+      "Tipuri de intervale (Setări > Tehnic > Date ranges > Date Range Types) și intervale propriu-zise (Date Ranges).",
+      "Wizard Generate Date Ranges pentru perioade recurente: se alege data de final sau numărul de intervale, iar durata, unitatea de timp, prefixul numelui și data de start vin din tipul de interval.",
+      "Intervalele apar în filtrul personalizat pentru orice câmp date/datetime: tipul este oferit ca operator („in <tip>\"), iar intervalul ca valoare.",
+      "Pe tipul de interval, fila Generation permite valori implicite pentru wizard și generare automată, făcută de o sarcină programată zilnică.",
+      "Pentru dezvoltatori: moștenirea `date.range.search.mixin` adaugă câmpul Period în căutare; implicit lucrează pe câmpul `date`, schimbabil prin `_date_range_search_field` (ex. `invoice_date`)."
+    ],
+    "dependencies": [
+      "web"
+    ],
+    "connections": [],
+    "text": "date_range\ndate_range\nPermite definirea unor intervale de date globale (luni, trimestre, exerciții financiare etc.), folosite la filtrarea valorilor în liste. Pentru dezvoltatori oferă și un mixin care adaugă în căutare un câmp de tip perioadă, utilizabil ca orice câmp relațional.\nTipuri de intervale (Setări > Tehnic > Date ranges > Date Range Types) și intervale propriu-zise (Date Ranges).\nWizard Generate Date Ranges pentru perioade recurente: se alege data de final sau numărul de intervale, iar durata, unitatea de timp, prefixul numelui și data de start vin din tipul de interval.\nIntervalele apar în filtrul personalizat pentru orice câmp date/datetime: tipul este oferit ca operator („in <tip>\"), iar intervalul ca valoare.\nPe tipul de interval, fila Generation permite valori implicite pentru wizard și generare automată, făcută de o sarcină programată zilnică.\nPentru dezvoltatori: moștenirea `date.range.search.mixin` adaugă câmpul Period în căutare; implicit lucrează pe câmpul `date`, schimbabil prin `_date_range_search_field` (ex. `invoice_date`)."
+  },
+  {
     "path": "deltatech/index.md",
     "module": "deltatech",
     "version": "19.0.1.0.1",
@@ -14367,6 +14439,114 @@
     "text": "Work Days Report\ndeltatech_work_days_report\nModulul **Work Days Report** generează rapoarte Excel cuprinzătoare pentru urmărirea prezenței angajaților și gestionarea tichetelor de masă. Este util departamentelor de resurse umane și proceselor de salarizare, oferind automat fișiere Excel cu orele lucrate zilnic, totalurile pe angajat, tichetele de masă cuvenite și perioadele de concediu. Astfel se simplifică monitorizarea tiparelor de lucru ale angajaților și administrarea drepturilor la tichete de masă, asigurând raportări consecvente chiar și atunci când configurarea tipurilor de concediu este incompletă.\nÎmbunătățirea tipurilor de concediu: adaugă un câmp configurabil „code\" în formularele de tip de concediu (Time Off Type), pentru o mai bună categorisire și raportare.\nExport Excel în masă: permite exportul în masă accesibil din vizualizarea de listă a angajaților (Acțiune → „Export Working Days\").\nRaportare cuprinzătoare: generează rapoarte Excel detaliate care conțin informații despre angajat și orele lucrate zilnic, totalul orelor lucrate, tichetele de masă câștigate per angajat și perioadele/datele de concediu.\nFlexibilă codificare a concediilor: afișează automat „ABS\" (absență) pentru tipurile de concediu fără cod specificat, asigurând o raportare consecventă chiar și cu o configurare incompletă.\nExport tichete de masă către bancă: acțiune suplimentară „Export Bank Meal Vouchers\", disponibilă tot din lista de angajați, care generează un fișier Excel în formatul cerut de Banca Transilvania (nume, CNP, valoare, cont IBAN), calculând automat numărul de zile lucrate eligibile pentru tichete în intervalul selectat."
   },
   {
+    "path": "l10n_bg_zip/index.md",
+    "module": "l10n_bg_zip",
+    "version": "20.0.1.0.2",
+    "github": "https://github.com/dhongu/l10n-bulgaria/tree/20.0/l10n_bg_zip",
+    "local_path": "odoo-addons/l10n-bulgaria/l10n_bg_zip",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Bulgaria - City from ZIP",
+    "summary": "Încarcă localitățile bulgare cu codul poștal și provincia și completează automat orașul și provincia adreselor din Bulgaria pe baza codului poștal introdus. Utilizatorii nu mai caută manual localitatea, iar livrările (de exemplu AWB-urile) pot fi trimise fără completări manuale.",
+    "features": [
+      "Listă de localități cu cod poștal, legate de provincia țării, din [GeoNames](https://www.geonames.org) (licență Creative Commons Attribution 4.0).",
+      "Țara este setată pe *oraș obligatoriu din listă* (enforce cities): orașul unei adrese se alege din lista încărcată.",
+      "Pe formularul contactului, la introducerea codului poștal () se completează orașul și provincia. Dacă un cod poștal este comun mai multor localități, se completează doar provincia, iar orașul se alege din listă; numele orașului, dacă se potrivește (fără diacritice și indiferent de majuscule), alege localitatea.",
+      "Acțiunea *Actions → ... : set city from ZIP* pe contacte leagă contactele existente sau importate de orașul codului lor poștal și completează provincia.",
+      "La instalare, contactele existente sunt legate direct (bază mică) sau în loturi, prin acțiunea programată de legare a contactelor (bază mare; se dezactivează singură la final).",
+      "Orice formular care rulează regulile de cod poștal ale contactului (de exemplu detaliile de livrare ale unui AWB) primește provincia completată.",
+      "Lista localităților se consultă la Contacts → Configuration → Localization → Cities. Fluxul pas cu pas este în fișa consultantului."
+    ],
+    "dependencies": [
+      "base_address_extended"
+    ],
+    "connections": [
+      "base_address_extended",
+      "l10n_ro_zip"
+    ],
+    "text": "Bulgaria - City from ZIP\nl10n_bg_zip\nÎncarcă localitățile bulgare cu codul poștal și provincia și completează automat orașul și provincia adreselor din Bulgaria pe baza codului poștal introdus. Utilizatorii nu mai caută manual localitatea, iar livrările (de exemplu AWB-urile) pot fi trimise fără completări manuale.\nListă de localități cu cod poștal, legate de provincia țării, din [GeoNames](https://www.geonames.org) (licență Creative Commons Attribution 4.0).\nȚara este setată pe *oraș obligatoriu din listă* (enforce cities): orașul unei adrese se alege din lista încărcată.\nPe formularul contactului, la introducerea codului poștal () se completează orașul și provincia. Dacă un cod poștal este comun mai multor localități, se completează doar provincia, iar orașul se alege din listă; numele orașului, dacă se potrivește (fără diacritice și indiferent de majuscule), alege localitatea.\nAcțiunea *Actions → ... : set city from ZIP* pe contacte leagă contactele existente sau importate de orașul codului lor poștal și completează provincia.\nLa instalare, contactele existente sunt legate direct (bază mică) sau în loturi, prin acțiunea programată de legare a contactelor (bază mare; se dezactivează singură la final).\nOrice formular care rulează regulile de cod poștal ale contactului (de exemplu detaliile de livrare ale unui AWB) primește provincia completată.\nLista localităților se consultă la Contacts → Configuration → Localization → Cities. Fluxul pas cu pas este în fișa consultantului."
+  },
+  {
+    "path": "l10n_cz_zip/index.md",
+    "module": "l10n_cz_zip",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/dhongu/l10n-czechia/tree/20.0/l10n_cz_zip",
+    "local_path": "odoo-addons/l10n-czechia/l10n_cz_zip",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Czechia - City from ZIP",
+    "summary": "Încarcă localitățile cehe cu codul poștal și regiunea și completează automat orașul și regiunea adreselor din Cehia pe baza codului poștal introdus. Utilizatorii nu mai caută manual localitatea, iar livrările (de exemplu AWB-urile) pot fi trimise fără completări manuale.",
+    "features": [
+      "Listă de localități cu cod poștal, legate de regiunea țării, din [GeoNames](https://www.geonames.org) (licență Creative Commons Attribution 4.0).",
+      "Țara este setată pe *oraș obligatoriu din listă* (enforce cities): orașul unei adrese se alege din lista încărcată.",
+      "Pe formularul contactului, la introducerea codului poștal (PSČ) se completează orașul și regiunea. Dacă un cod poștal este comun mai multor localități, se completează doar regiunea, iar orașul se alege din listă; numele orașului, dacă se potrivește (fără diacritice și indiferent de majuscule), alege localitatea.",
+      "Acțiunea *Actions → ... : set city from ZIP* pe contacte leagă contactele existente sau importate de orașul codului lor poștal și completează regiunea.",
+      "La instalare, contactele existente sunt legate direct (bază mică) sau în loturi, prin acțiunea programată de legare a contactelor (bază mare; se dezactivează singură la final).",
+      "Orice formular care rulează regulile de cod poștal ale contactului (de exemplu detaliile de livrare ale unui AWB) primește regiunea completată.",
+      "Lista localităților se consultă la Contacts → Configuration → Localization → Cities. Fluxul pas cu pas este în fișa consultantului."
+    ],
+    "dependencies": [
+      "base_address_extended"
+    ],
+    "connections": [
+      "base_address_extended",
+      "l10n_ro_zip"
+    ],
+    "text": "Czechia - City from ZIP\nl10n_cz_zip\nÎncarcă localitățile cehe cu codul poștal și regiunea și completează automat orașul și regiunea adreselor din Cehia pe baza codului poștal introdus. Utilizatorii nu mai caută manual localitatea, iar livrările (de exemplu AWB-urile) pot fi trimise fără completări manuale.\nListă de localități cu cod poștal, legate de regiunea țării, din [GeoNames](https://www.geonames.org) (licență Creative Commons Attribution 4.0).\nȚara este setată pe *oraș obligatoriu din listă* (enforce cities): orașul unei adrese se alege din lista încărcată.\nPe formularul contactului, la introducerea codului poștal (PSČ) se completează orașul și regiunea. Dacă un cod poștal este comun mai multor localități, se completează doar regiunea, iar orașul se alege din listă; numele orașului, dacă se potrivește (fără diacritice și indiferent de majuscule), alege localitatea.\nAcțiunea *Actions → ... : set city from ZIP* pe contacte leagă contactele existente sau importate de orașul codului lor poștal și completează regiunea.\nLa instalare, contactele existente sunt legate direct (bază mică) sau în loturi, prin acțiunea programată de legare a contactelor (bază mare; se dezactivează singură la final).\nOrice formular care rulează regulile de cod poștal ale contactului (de exemplu detaliile de livrare ale unui AWB) primește regiunea completată.\nLista localităților se consultă la Contacts → Configuration → Localization → Cities. Fluxul pas cu pas este în fișa consultantului."
+  },
+  {
+    "path": "l10n_de_zip/index.md",
+    "module": "l10n_de_zip",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/dhongu/l10n-germany/tree/20.0/l10n_de_zip",
+    "local_path": "odoo-addons/l10n-germany/l10n_de_zip",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Germany - City from ZIP",
+    "summary": "Încarcă localitățile germane cu codul poștal și regiunea și completează automat orașul și regiunea adreselor din Germania pe baza codului poștal introdus. Utilizatorii nu mai caută manual localitatea, iar livrările (de exemplu AWB-urile) pot fi trimise fără completări manuale.",
+    "features": [
+      "Listă de localități cu cod poștal, legate de regiunea țării, din [GeoNames](https://www.geonames.org) (licență Creative Commons Attribution 4.0).",
+      "Țara este setată pe *oraș obligatoriu din listă* (enforce cities): orașul unei adrese se alege din lista încărcată.",
+      "Pe formularul contactului, la introducerea codului poștal (Postleitzahl) se completează orașul și regiunea. Dacă un cod poștal este comun mai multor localități, se completează doar regiunea, iar orașul se alege din listă; numele orașului, dacă se potrivește (fără diacritice și indiferent de majuscule), alege localitatea.",
+      "Acțiunea *Actions → ... : set city from ZIP* pe contacte leagă contactele existente sau importate de orașul codului lor poștal și completează regiunea.",
+      "La instalare, contactele existente sunt legate direct (bază mică) sau în loturi, prin acțiunea programată de legare a contactelor (bază mare; se dezactivează singură la final).",
+      "Orice formular care rulează regulile de cod poștal ale contactului (de exemplu detaliile de livrare ale unui AWB) primește regiunea completată.",
+      "Lista localităților se consultă la Contacts → Configuration → Localization → Cities. Fluxul pas cu pas este în fișa consultantului."
+    ],
+    "dependencies": [
+      "base_address_extended"
+    ],
+    "connections": [
+      "base_address_extended",
+      "l10n_ro_zip"
+    ],
+    "text": "Germany - City from ZIP\nl10n_de_zip\nÎncarcă localitățile germane cu codul poștal și regiunea și completează automat orașul și regiunea adreselor din Germania pe baza codului poștal introdus. Utilizatorii nu mai caută manual localitatea, iar livrările (de exemplu AWB-urile) pot fi trimise fără completări manuale.\nListă de localități cu cod poștal, legate de regiunea țării, din [GeoNames](https://www.geonames.org) (licență Creative Commons Attribution 4.0).\nȚara este setată pe *oraș obligatoriu din listă* (enforce cities): orașul unei adrese se alege din lista încărcată.\nPe formularul contactului, la introducerea codului poștal (Postleitzahl) se completează orașul și regiunea. Dacă un cod poștal este comun mai multor localități, se completează doar regiunea, iar orașul se alege din listă; numele orașului, dacă se potrivește (fără diacritice și indiferent de majuscule), alege localitatea.\nAcțiunea *Actions → ... : set city from ZIP* pe contacte leagă contactele existente sau importate de orașul codului lor poștal și completează regiunea.\nLa instalare, contactele existente sunt legate direct (bază mică) sau în loturi, prin acțiunea programată de legare a contactelor (bază mare; se dezactivează singură la final).\nOrice formular care rulează regulile de cod poștal ale contactului (de exemplu detaliile de livrare ale unui AWB) primește regiunea completată.\nLista localităților se consultă la Contacts → Configuration → Localization → Cities. Fluxul pas cu pas este în fișa consultantului."
+  },
+  {
+    "path": "l10n_fr_zip/index.md",
+    "module": "l10n_fr_zip",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/dhongu/l10n-france/tree/20.0/l10n_fr_zip",
+    "local_path": "odoo-addons/l10n-france/l10n_fr_zip",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "France - City from ZIP",
+    "summary": "Încarcă localitățile franceze cu codul poștal și regiunea și completează automat orașul și regiunea adreselor din Franța pe baza codului poștal introdus. Utilizatorii nu mai caută manual localitatea, iar livrările (de exemplu AWB-urile) pot fi trimise fără completări manuale.",
+    "features": [
+      "Listă de localități cu cod poștal, legate de regiunea țării, din [GeoNames](https://www.geonames.org) (licență Creative Commons Attribution 4.0).",
+      "Țara este setată pe *oraș obligatoriu din listă* (enforce cities): orașul unei adrese se alege din lista încărcată.",
+      "Pe formularul contactului, la introducerea codului poștal (code postal) se completează orașul și regiunea. Dacă un cod poștal este comun mai multor localități, se completează doar regiunea, iar orașul se alege din listă; numele orașului, dacă se potrivește (fără diacritice și indiferent de majuscule), alege localitatea.",
+      "Acțiunea *Actions → ... : set city from ZIP* pe contacte leagă contactele existente sau importate de orașul codului lor poștal și completează regiunea.",
+      "La instalare, contactele existente sunt legate direct (bază mică) sau în loturi, prin acțiunea programată de legare a contactelor (bază mare; se dezactivează singură la final).",
+      "Orice formular care rulează regulile de cod poștal ale contactului (de exemplu detaliile de livrare ale unui AWB) primește regiunea completată.",
+      "Lista localităților se consultă la Contacts → Configuration → Localization → Cities. Fluxul pas cu pas este în fișa consultantului."
+    ],
+    "dependencies": [
+      "base_address_extended"
+    ],
+    "connections": [
+      "base_address_extended",
+      "l10n_ro_zip"
+    ],
+    "text": "France - City from ZIP\nl10n_fr_zip\nÎncarcă localitățile franceze cu codul poștal și regiunea și completează automat orașul și regiunea adreselor din Franța pe baza codului poștal introdus. Utilizatorii nu mai caută manual localitatea, iar livrările (de exemplu AWB-urile) pot fi trimise fără completări manuale.\nListă de localități cu cod poștal, legate de regiunea țării, din [GeoNames](https://www.geonames.org) (licență Creative Commons Attribution 4.0).\nȚara este setată pe *oraș obligatoriu din listă* (enforce cities): orașul unei adrese se alege din lista încărcată.\nPe formularul contactului, la introducerea codului poștal (code postal) se completează orașul și regiunea. Dacă un cod poștal este comun mai multor localități, se completează doar regiunea, iar orașul se alege din listă; numele orașului, dacă se potrivește (fără diacritice și indiferent de majuscule), alege localitatea.\nAcțiunea *Actions → ... : set city from ZIP* pe contacte leagă contactele existente sau importate de orașul codului lor poștal și completează regiunea.\nLa instalare, contactele existente sunt legate direct (bază mică) sau în loturi, prin acțiunea programată de legare a contactelor (bază mare; se dezactivează singură la final).\nOrice formular care rulează regulile de cod poștal ale contactului (de exemplu detaliile de livrare ale unui AWB) primește regiunea completată.\nLista localităților se consultă la Contacts → Configuration → Localization → Cities. Fluxul pas cu pas este în fișa consultantului."
+  },
+  {
     "path": "l10n_ro_account/index.md",
     "module": "l10n_ro_account",
     "version": "20.0.0.5.1",
@@ -21620,6 +21800,31 @@
     "text": "Romania - Postal Codes, Streets of Small Towns\nl10n_ro_zip_osm\nAdaugă în nomenclatorul de coduri poștale străzile orașelor mici din România, pentru care Poșta Română publică un singur cod poștal pe oraș. Utilizatorul poate alege strada pe fișa partenerului, cu codul poștal al orașului completat corect.\n15.968 de străzi pentru 269 de orașe sub 50.000 de locuitori (Pantelimon, Voluntari, Lugoj, Tecuci, Câmpina, Bușteni și altele), fiecare cu codul poștal al orașului.\nNumele străzilor provin din OpenStreetMap, sub licența ODbL; codurile poștale vin de pe posta-romana.ro.\nLa instalare străzile se leagă de județ și, dacă `l10n_ro_city` e instalat, de localitate; o stradă existentă nu se adaugă a doua oară.\nVizualizare: Contacte → Configurare → Localizare → Coduri poștale, căutând codul poștal al orașului; un oraș cu un singur rând nu este acoperit.\nPe partener, după alegerea localității, strada se caută în câmpul de cod poștal de sub localitate; numele nu au diacritice.\nNu are nimic de configurat; se instalează automat împreună cu `l10n_ro_zip` (sau manual din Aplicații, dacă `l10n_ro_zip` era deja instalat)."
   },
   {
+    "path": "product_brand/index.md",
+    "module": "product_brand",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/dhongu/others_addons/tree/20.0/product_brand",
+    "local_path": "odoo-addons/others_addons/product_brand",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "product_brand",
+    "summary": "Permite gestionarea simplă a mărcilor de produse. Fiecare marcă poate avea logo, partener asociat și descriere, iar produsele se pot grupa și analiza pe marcă în rapoartele de vânzări și facturare.",
+    "features": [
+      "Mărci în Vânzări > Configurare > Produse > Product Brands, cu logo, partener asociat și descriere.",
+      "Câmpul Brand pe produs, sub numele acestuia.",
+      "Marca devine dimensiune de grupare în Vânzări > Raportare > Vânzări (inclusiv pivot) și în Facturare > Raportare > Management > Invoice Analysis.",
+      "Căutare, kanban și liste de produse cu informația mărcii.",
+      "Planificat (roadmap): câmp cu mărcile asociate unui client sau furnizor în formularul partenerului."
+    ],
+    "dependencies": [
+      "sale"
+    ],
+    "connections": [
+      "website_sale_product_brand",
+      "pagină"
+    ],
+    "text": "product_brand\nproduct_brand\nPermite gestionarea simplă a mărcilor de produse. Fiecare marcă poate avea logo, partener asociat și descriere, iar produsele se pot grupa și analiza pe marcă în rapoartele de vânzări și facturare.\nMărci în Vânzări > Configurare > Produse > Product Brands, cu logo, partener asociat și descriere.\nCâmpul Brand pe produs, sub numele acestuia.\nMarca devine dimensiune de grupare în Vânzări > Raportare > Vânzări (inclusiv pivot) și în Facturare > Raportare > Management > Invoice Analysis.\nCăutare, kanban și liste de produse cu informația mărcii.\nPlanificat (roadmap): câmp cu mărcile asociate unui client sau furnizor în formularul partenerului."
+  },
+  {
     "path": "queue_job/index.md",
     "module": "queue_job",
     "version": "20.0.2.0.2",
@@ -21657,6 +21862,33 @@
       "base_import_async"
     ],
     "text": "Job Queue\nqueue_job\nModulul adaugă în Odoo o coadă de joburi integrată, care permite ca anumite apeluri de metode să fie amânate și executate asincron, în fundal, în loc să blocheze utilizatorul în timpul unei operațiuni. Joburile sunt stocate în PostgreSQL și procesate de un „Jobrunner\" dedicat, fiecare într-o tranzacție proprie, cu reîncercări automate în caz de eșec temporar. Este modulul de bază (OCA) peste care se construiesc majoritatea automatizărilor de fundal — sincronizări, generări de documente, integrări externe — fără a încetini interfața pentru utilizator.\nVizualizări dedicate pentru joburi (listă, formular, kanban), toate persistate în baza de date PostgreSQL.\nJobrunner: proces care execută joburile eficient, folosind mecanismul `NOTIFY` din PostgreSQL pentru a porni joburile aproape instantaneu, fără polling.\nCanale (`queue.job.channel`): permit segregarea joburilor pe canale ierarhice (canal rădăcină `root` + subcanale) și limitarea capacității de procesare paralelă pe fiecare canal (ex: joburile grele pe un canal cu un singur worker, cele ușoare pe un canal cu 4).\nReîncercări automate: joburile eșuate cu un tip de excepție reîncercabil sunt reprogramate automat, cu un tipar de reîncercare configurabil (`retry_pattern`) — ex: primele 3 încercări la 10 secunde distanță, următoarele 5 la 1 minut, etc.\nProprietăți de job: prioritate, dată estimată de execuție (ETA), descriere personalizată, număr de reîncercări, `identity_key` pentru a preveni duplicarea unui job încă neexecutat.\nAcțiuni asociate (Related Actions): un buton pe formularul jobului care poate deschide, de exemplu, înregistrarea vizată de job (implicit deschide formularul/lista aferentă); comportamentul poate fi personalizat pe `queue.job.function` (`enable`, `func_name`, `kwargs`).\nGrafuri de joburi cu dependențe: prin API-ul `delayable()`, joburile pot fi înlănțuite (`chain()`, `on_done()`) sau grupate pentru execuție paralelă (`group()`); un job aflat în `wait_dependencies` așteaptă ca joburile părinte să se termine cu succes înainte de a porni.\nÎmpărțirea unui job mare în mai multe joburi mai mici, cu `.split(n)` (opțional `chain=True` pentru execuție secvențială), utilă la procesarea unor seturi mari de înregistrări.\nConfigurare fără cod prin înregistrări XML `queue.job.function` (model + metodă, canal, acțiune asociată, tipar de reîncercare) și `queue.job.channel` (ierarhie de canale), fără a mai fi nevoie de decoratorul `@job` (obsolet).\nMeniu `Job Queue` (`Queue > Job Queue / Channels / Job Functions`), accesibil grupului „Job Queue Manager\", cu wizard-uri pentru marcarea în masă a joburilor ca „Done\" sau „Cancelled\" și pentru reprogramarea (`requeue`) joburilor eșuate.\nFacilități pentru dezvoltatori/testare: `with_delay()` / `delayable()` pentru amânarea metodelor; `trap_jobs()` pentru a testa joburile fără să le execute efectiv; execuție sincronă (bypass) prin variabila de mediu `QUEUE_JOB__NO_DELAY=1` sau, în teste, prin cheia de context `queue_job__no_delay=True`.\nConfigurare runner prin variabile de mediu sau fișierul `.conf` (secțiunea `[queue_job]`: `channels`, `scheme`, `host`, `port`, `http_auth_user`, `http_auth_password`); necesită `--workers` > 1 (sau `server_wide_modules = web,queue_job`) pentru ca joburile să pornească în paralel.\nAmânare automată a metodelor existente: `_patch_job_auto_delay()` pe `base` transformă o metodă în job la apelul din cod (opțional condiționat de o cheie de context), cu opțiunile jobului furnizate de o metodă `<metodă>_job_options`.\nJobrunner pornit ca proces worker separat (când Odoo rulează cu `--workers` > 0), nu ca fir în procesul principal; joburile rămase în `enqueued`/`started` (ex. worker oprit) sunt reîncadrate automat.\nCurățare automată: `ir.cron` zilnic („AutoVacuum Job Queue\") care șterge periodic joburile terminate vechi."
+  },
+  {
+    "path": "queue_job_cron_jobrunner/index.md",
+    "module": "queue_job_cron_jobrunner",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/dhongu/queue/tree/20.0/queue_job_cron_jobrunner",
+    "local_path": "odoo-addons/queue/queue_job_cron_jobrunner",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Queue Job Cron Jobrunner",
+    "summary": "Modulul oferă un executor simplu pentru joburile `queue.job`, bazat pe cron-urile Odoo (`ir.cron`). Este util în mediile în care runner-ul obișnuit al `queue_job` nu poate rula, de exemplu pe Odoo.sh. Joburile sunt procesate pe thread-urile CronWorker, nu pe HttpWorker, deoarece Odoo.sh adoarme HttpWorker-ii când nu există trafic, iar aceștia trebuie păstrați pentru utilizatori. Modulul nu se folosește împreună cu runner-ul standard al `queue_job`.",
+    "features": [
+      "Procesează joburile din coadă prin cron-ul „Queue Job Runner”, fără un proces dedicat de runner.",
+      "Cron-ul este declanșat la crearea unui job sau la reprogramarea lui, prin trigger-e `ir.cron`.",
+      "Suportă capacitatea canalelor și prioritățile joburilor.",
+      "Gestionează oprirea CronWorker-ului la depășirea timpului CPU și confirmă tranzacția după trecerea jobului în starea „started”.",
+      "`RetryableJobError(seconds=N)` amână jobul cu N secunde. Fără `seconds` se aplică pattern-ul de reîncercare al funcției jobului. Dacă niciunul nu e setat, întârzierea rămâne de 5 secunde.",
+      "Execuție în paralel: se duplică înregistrarea cron `queue_job_cron` de câte ori e nevoie, cu respectarea numărului de CronWorker-i disponibili (`--max-cron-threads`).",
+      "Recomandare: pornirea Odoo cu `--limit-time-real-cron=0`, pentru ca timeout-ul CronWorker-ului să nu oprească brusc procesarea (pe Odoo.sh e setat implicit).",
+      "Pe formularul cron-ului apare câmpul `queue_job_runner`, vizibil doar pentru cron-urile modelului `queue.job`."
+    ],
+    "dependencies": [
+      "queue_job"
+    ],
+    "connections": [
+      "queue_job"
+    ],
+    "text": "Queue Job Cron Jobrunner\nqueue_job_cron_jobrunner\nModulul oferă un executor simplu pentru joburile `queue.job`, bazat pe cron-urile Odoo (`ir.cron`). Este util în mediile în care runner-ul obișnuit al `queue_job` nu poate rula, de exemplu pe Odoo.sh. Joburile sunt procesate pe thread-urile CronWorker, nu pe HttpWorker, deoarece Odoo.sh adoarme HttpWorker-ii când nu există trafic, iar aceștia trebuie păstrați pentru utilizatori. Modulul nu se folosește împreună cu runner-ul standard al `queue_job`.\nProcesează joburile din coadă prin cron-ul „Queue Job Runner”, fără un proces dedicat de runner.\nCron-ul este declanșat la crearea unui job sau la reprogramarea lui, prin trigger-e `ir.cron`.\nSuportă capacitatea canalelor și prioritățile joburilor.\nGestionează oprirea CronWorker-ului la depășirea timpului CPU și confirmă tranzacția după trecerea jobului în starea „started”.\n`RetryableJobError(seconds=N)` amână jobul cu N secunde. Fără `seconds` se aplică pattern-ul de reîncercare al funcției jobului. Dacă niciunul nu e setat, întârzierea rămâne de 5 secunde.\nExecuție în paralel: se duplică înregistrarea cron `queue_job_cron` de câte ori e nevoie, cu respectarea numărului de CronWorker-i disponibili (`--max-cron-threads`).\nRecomandare: pornirea Odoo cu `--limit-time-real-cron=0`, pentru ca timeout-ul CronWorker-ului să nu oprească brusc procesarea (pe Odoo.sh e setat implicit).\nPe formularul cron-ului apare câmpul `queue_job_runner`, vizibil doar pentru cron-urile modelului `queue.job`."
   },
   {
     "path": "terrabit_base/index.md",
@@ -22003,6 +22235,156 @@
     "text": "Terrabit IAP AI\nterrabit_iap_ai\nDirecționează AI-ul nativ din Odoo 20 (chat, agenți, câmpuri AI, acțiuni server AI din Enterprise `ai`) prin serverul IAP Terrabit în loc de serverul Odoo AI, astfel încât consumul AI să fie facturat în credite Terrabit. Instalarea nu schimbă furnizorul: AI-ul rămâne pe Odoo până când un administrator alege Terrabit.\nSetarea AI Provider (Odoo / Terrabit) în *Setări > General Settings > IAP Client*; alegerea Terrabit mută conturile IAP `odoo_ai` și parametrul `ai.endpoint` pe serverul Terrabit, iar revenirea la Odoo șterge `ai.endpoint`.\nEndpoint implicit `https://terrabit.odoo.com`, modificabil dacă Terrabit indică altul.\nButon Register AI Account care înregistrează contul `odoo_ai` al companiei curente (se repetă în fiecare companie); serverul leagă contul de client prin CUI, deci compania trebuie să aibă CUI completat.\nFurnizorul este global (`ai.endpoint`), valabil pentru toate companiile bazei.\nRăspunsurile din chat vin prin webhook `/ai/completion_result_ready`, deci baza trebuie să fie accesibilă din internet; pentru baze locale se setează `ai.use_webhook` pe `False`.\nDomeniu curent (etapa 1): completări text cu unelte, sincron și asincron; embeddings, transcriere, generare de imagini și căutare web cer încă serverul Odoo AI.\nCodul AI al Odoo nu este suprascris. Nu are fișă de consultant."
   },
   {
+    "path": "terrabit_iap_anaf/index.md",
+    "module": "terrabit_iap_anaf",
+    "version": "20.0.1.4.1",
+    "github": "https://github.com/terrabit-solutions/terrabit/tree/20.0/terrabit_iap_anaf",
+    "local_path": "odoo-addons/terrabit/terrabit_iap_anaf",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "ANAF IAP Client",
+    "summary": "Conectează Odoo la ANAF SPV, sistemul online al fiscului, pentru e-Factura, fără să fie nevoie să instalați certificatul digital pe fiecare server. Autorizarea se face o singură dată prin serviciul Terrabit IAP, care păstrează tokenul de acces valid și îl trimite în baza dvs. de date.",
+    "features": [
+      "Autorizare din setări: butonul Generate Token IAP, lângă setările standard e-Factura, pornește autorizarea ANAF prin Terrabit IAP (în locul butonului standard Generate Token).",
+      "Token completat automat: Client ID, Client Secret, tokenurile de acces și de reîmprospătare și datele de expirare se scriu pe companie, în câmpurile standard din `l10n_ro_edi`.",
+      "Reînnoire într-un singur loc: serverul Terrabit IAP reînnoiește tokenul, iar jobul local standard de reînnoire este oprit (ANAF invalidează tokenul anterior la fiecare reînnoire).",
+      "Token expirat semnalat: când tokenul a expirat, butonul reapare cu un avertisment că este necesară o nouă autorizare cu certificatul digital.",
+      "Fără tokenuri în loguri: se înregistrează doar numele câmpurilor și datele de expirare.",
+      "Cont IAP per companie: la instalare se creează contul IAP pentru serviciul ANAF SPV Token (endpoint `https://terrabit.odoo.com`); Callback Secret Registered arată că serverul a confirmat secretul bazei, iar apelurile serverului sunt acceptate doar cu acest secret. Bazele cu token existent sunt înregistrate de acțiunea programată IAP ANAF: Register Callback Secret.",
+      "Înainte de autorizare: în producție se debifează Use Test Environment, iar la mai multe companii rămâne selectată în comutator doar compania autorizată.",
+      "Serviciu extern: modulul schimbă tokenul ANAF cu serverul Terrabit IAP, care îl trimite în baza dvs. după autorizare și îl cere înapoi când are nevoie."
+    ],
+    "dependencies": [
+      "iap",
+      "terrabit_iap",
+      "l10n_ro_edi"
+    ],
+    "connections": [
+      "terrabit_iap",
+      "terrabit_iap_server_anaf"
+    ],
+    "text": "ANAF IAP Client\nterrabit_iap_anaf\nConectează Odoo la ANAF SPV, sistemul online al fiscului, pentru e-Factura, fără să fie nevoie să instalați certificatul digital pe fiecare server. Autorizarea se face o singură dată prin serviciul Terrabit IAP, care păstrează tokenul de acces valid și îl trimite în baza dvs. de date.\nAutorizare din setări: butonul Generate Token IAP, lângă setările standard e-Factura, pornește autorizarea ANAF prin Terrabit IAP (în locul butonului standard Generate Token).\nToken completat automat: Client ID, Client Secret, tokenurile de acces și de reîmprospătare și datele de expirare se scriu pe companie, în câmpurile standard din `l10n_ro_edi`.\nReînnoire într-un singur loc: serverul Terrabit IAP reînnoiește tokenul, iar jobul local standard de reînnoire este oprit (ANAF invalidează tokenul anterior la fiecare reînnoire).\nToken expirat semnalat: când tokenul a expirat, butonul reapare cu un avertisment că este necesară o nouă autorizare cu certificatul digital.\nFără tokenuri în loguri: se înregistrează doar numele câmpurilor și datele de expirare.\nCont IAP per companie: la instalare se creează contul IAP pentru serviciul ANAF SPV Token (endpoint `https://terrabit.odoo.com`); Callback Secret Registered arată că serverul a confirmat secretul bazei, iar apelurile serverului sunt acceptate doar cu acest secret. Bazele cu token existent sunt înregistrate de acțiunea programată IAP ANAF: Register Callback Secret.\nÎnainte de autorizare: în producție se debifează Use Test Environment, iar la mai multe companii rămâne selectată în comutator doar compania autorizată.\nServiciu extern: modulul schimbă tokenul ANAF cu serverul Terrabit IAP, care îl trimite în baza dvs. după autorizare și îl cere înapoi când are nevoie."
+  },
+  {
+    "path": "terrabit_iap_line_counter/index.md",
+    "module": "terrabit_iap_line_counter",
+    "version": "20.0.2.0.4",
+    "github": "https://github.com/terrabit-solutions/terrabit/tree/20.0/terrabit_iap_line_counter",
+    "local_path": "odoo-addons/terrabit/terrabit_iap_line_counter",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Terrabit IAP Line Counter",
+    "summary": "Expune serverului Terrabit IAP numărul de linii de cod sursă ale modulelor instalate într-o bază de date client. Serverul poate astfel să afle ce module are instalate clientul și cât cod conțin. Modulul nu are readme de descriere; sumarul provine din manifest și cod.",
+    "features": [
+      "Serviciu IAP „Module Line Counter”: se înregistrează la instalare (cod tehnic `line_counter`, sold întreg).",
+      "Lista modulelor instalate: ruta `/iap/line_counter/modules` returnează numele, denumirea, autorul și dacă modulul se află într-un submodul git.",
+      "Numărarea liniilor: ruta `/iap/line_counter/count` numără liniile de cod (stil cloc, fără linii goale și comentarii) din fișierele `.py`, `.xml`, `.js`, `.css`, `.scss`; sunt excluse `tests`, `i18n`, `migrations` și `static/lib`. Fără listă de module se numără toate cele instalate.",
+      "Autentificare: apelurile sunt acceptate doar cu tokenul contului IAP.",
+      "Bug cunoscut (LINECOUNT-001, P2, deschis): marcajele de comentariu din interiorul șirurilor de caractere pot face ca liniile următoare să nu fie numărate, deci totalurile pot fi subestimate."
+    ],
+    "dependencies": [
+      "terrabit_iap"
+    ],
+    "connections": [
+      "terrabit_iap",
+      "terrabit_iap_server"
+    ],
+    "text": "Terrabit IAP Line Counter\nterrabit_iap_line_counter\nExpune serverului Terrabit IAP numărul de linii de cod sursă ale modulelor instalate într-o bază de date client. Serverul poate astfel să afle ce module are instalate clientul și cât cod conțin. Modulul nu are readme de descriere; sumarul provine din manifest și cod.\nServiciu IAP „Module Line Counter”: se înregistrează la instalare (cod tehnic `line_counter`, sold întreg).\nLista modulelor instalate: ruta `/iap/line_counter/modules` returnează numele, denumirea, autorul și dacă modulul se află într-un submodul git.\nNumărarea liniilor: ruta `/iap/line_counter/count` numără liniile de cod (stil cloc, fără linii goale și comentarii) din fișierele `.py`, `.xml`, `.js`, `.css`, `.scss`; sunt excluse `tests`, `i18n`, `migrations` și `static/lib`. Fără listă de module se numără toate cele instalate.\nAutentificare: apelurile sunt acceptate doar cu tokenul contului IAP.\nBug cunoscut (LINECOUNT-001, P2, deschis): marcajele de comentariu din interiorul șirurilor de caractere pot face ca liniile următoare să nu fie numărate, deci totalurile pot fi subestimate."
+  },
+  {
+    "path": "terrabit_iap_server/index.md",
+    "module": "terrabit_iap_server",
+    "version": "20.0.0.5.1",
+    "github": "https://github.com/terrabit-solutions/terrabit/tree/20.0/terrabit_iap_server",
+    "local_path": "odoo-addons/terrabit/terrabit_iap_server",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "IAP Server",
+    "summary": "Implementează funcționalitatea de server IAP (In-App Purchase) a Terrabit: bazele de date client se înregistrează aici, iar serverul ține evidența serviciilor, conturilor, portofelelor și creditelor lor. Clienții își văd și completează creditele dintr-o pagină publică și din portalul `/my/iap`. DESCRIPTION.md conține doar un titlu gol, deci pagina e sintetizată din cod, HISTORY și manifest.",
+    "features": [
+      "Servicii IAP (`iap.server.service`): nume, unitate, credite inițiale gratuite, credite comune între servicii, Wallet Rate (EUR per unitate) și valabilitatea creditelor.",
+      "Înregistrarea conturilor: ruta `/iap/register` creează contul unei baze client; ruta `/iap/services-token` și `/iap/1/get-accounts-information` returnează conturile.",
+      "Protocol IAP standard: rutele `/iap/1/authorize`, `/iap/1/capture`, `/iap/1/cancel` și `/iap/1/balance` rezervă, consumă și anulează credite.",
+      "Portofel comun per bază de date: un cont înregistrat intră în portofelul bazei sale după ce serverul verifică, prin `/iap/get_info`, că baza deține tokenul contului; verificarea rulează la deschiderea paginii de credite, zilnic prin cron și din butonul Link Wallet.",
+      "Tranzacții și registru: `iap.server.transaction` reține încărcările (cumpărate, gratuite, ajustări) și consumurile.",
+      "Expirarea creditelor: o achiziție prelungește valabilitatea creditelor neconsumate (12 luni de la ultima achiziție); creditele expirate rămân expirate.",
+      "Pagina de credite și portal: `/iap/1/credit`, `/iap/<serviciu>/account`, `/my/iap` și `/my/iap/<id>/buy`, cu intrare în portalul clientului.",
+      "Securitate: secret de callback per cont, tokenul brut al contului nu apare în portal, reguli de acces în `ir.access.csv`.",
+      "Roadmap: achiziția de credite prin eCommerce este implementată în `terrabit_iap_server_sale`."
+    ],
+    "dependencies": [
+      "iap",
+      "terrabit_iap",
+      "website",
+      "portal",
+      "json2html"
+    ],
+    "connections": [
+      "terrabit_iap",
+      "terrabit_iap_server_sale",
+      "terrabit_iap_server_helpdesk",
+      "terrabit_iap_server_anaf",
+      "terrabit_iap_server_ai",
+      "terrabit_iap_line_counter"
+    ],
+    "text": "IAP Server\nterrabit_iap_server\nImplementează funcționalitatea de server IAP (In-App Purchase) a Terrabit: bazele de date client se înregistrează aici, iar serverul ține evidența serviciilor, conturilor, portofelelor și creditelor lor. Clienții își văd și completează creditele dintr-o pagină publică și din portalul `/my/iap`. DESCRIPTION.md conține doar un titlu gol, deci pagina e sintetizată din cod, HISTORY și manifest.\nServicii IAP (`iap.server.service`): nume, unitate, credite inițiale gratuite, credite comune între servicii, Wallet Rate (EUR per unitate) și valabilitatea creditelor.\nÎnregistrarea conturilor: ruta `/iap/register` creează contul unei baze client; ruta `/iap/services-token` și `/iap/1/get-accounts-information` returnează conturile.\nProtocol IAP standard: rutele `/iap/1/authorize`, `/iap/1/capture`, `/iap/1/cancel` și `/iap/1/balance` rezervă, consumă și anulează credite.\nPortofel comun per bază de date: un cont înregistrat intră în portofelul bazei sale după ce serverul verifică, prin `/iap/get_info`, că baza deține tokenul contului; verificarea rulează la deschiderea paginii de credite, zilnic prin cron și din butonul Link Wallet.\nTranzacții și registru: `iap.server.transaction` reține încărcările (cumpărate, gratuite, ajustări) și consumurile.\nExpirarea creditelor: o achiziție prelungește valabilitatea creditelor neconsumate (12 luni de la ultima achiziție); creditele expirate rămân expirate.\nPagina de credite și portal: `/iap/1/credit`, `/iap/<serviciu>/account`, `/my/iap` și `/my/iap/<id>/buy`, cu intrare în portalul clientului.\nSecuritate: secret de callback per cont, tokenul brut al contului nu apare în portal, reguli de acces în `ir.access.csv`.\nRoadmap: achiziția de credite prin eCommerce este implementată în `terrabit_iap_server_sale`."
+  },
+  {
+    "path": "terrabit_iap_server_ai/index.md",
+    "module": "terrabit_iap_server_ai",
+    "version": "20.0.1.2.0",
+    "github": "https://github.com/terrabit-solutions/terrabit/tree/20.0/terrabit_iap_server_ai",
+    "local_path": "odoo-addons/terrabit/terrabit_iap_server_ai",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Terrabit IAP Server AI",
+    "summary": "Adaugă un serviciu AI pe serverul Terrabit IAP, astfel încât clienții conectați să folosească funcții AI prin server, fără să configureze un furnizor AI pe fiecare bază. AI-ul nativ din Odoo 20 (modulul Enterprise `ai`) trimite fiecare cerere la endpoint-ul din parametrul de sistem `ai.endpoint`; acest modul servește acel protocol, deci agenții, câmpurile și acțiunile AI ale clientului rulează pe credite Terrabit.",
+    "features": [
+      "Rute Odoo AI: `/api/odoo_ai/1/get_completions_sync` răspunde în aceeași cerere; `/api/odoo_ai/1/get_completions` acceptă cererea imediat și trimite rezultatul mai târziu la webhook-ul `/ai/completion_result_ready` al clientului, semnat cu secretul per cerere.",
+      "Traducere către OpenAI Responses API: text, imagini și PDF-uri în conversație, apeluri de funcții, ieșire structurată (JSON schema) și „Think longer\" (efort de raționament mai mare). Căutarea web și generarea de imagini sunt refuzate deocamdată cu un mesaj clar.",
+      "Credite: fiecare cerere rezervă o estimare (dimensiunea intrării plus ieșirea maximă) și captează costul real după răspuns, din numărul de tokeni și prețurile per milion de tokeni ale serviciului, cu un minim per cerere. La sold insuficient clientul primește notificarea standard *Not enough credits* cu linkul de cumpărare; o cerere eșuată nu costă nimic.",
+      "Jurnal: fiecare cerere apare în *IAP > AI Requests* (eticheta de utilizare, model, tokeni, credite, starea livrării webhook-ului); conversația se șterge după procesare.",
+      "Configurare: în *IAP > IAP Service* > Odoo AI, grupul *OpenAI* (cheia API, modelul — implicit `gpt-5-mini` — și Reasoning Effort, *None* pentru modele fără raționament) și grupul *Pricing* (credite per milion de tokeni de intrare și ieșire, minim per cerere). Pe client se orientează contul IAP `odoo_ai` spre acest server cu modulul `terrabit_iap_ai`."
+    ],
+    "dependencies": [
+      "iap",
+      "terrabit_iap_server"
+    ],
+    "connections": [
+      "terrabit_iap_server",
+      "terrabit_iap",
+      "terrabit_iap_ai",
+      "odoo_ai"
+    ],
+    "text": "Terrabit IAP Server AI\nterrabit_iap_server_ai\nAdaugă un serviciu AI pe serverul Terrabit IAP, astfel încât clienții conectați să folosească funcții AI prin server, fără să configureze un furnizor AI pe fiecare bază. AI-ul nativ din Odoo 20 (modulul Enterprise `ai`) trimite fiecare cerere la endpoint-ul din parametrul de sistem `ai.endpoint`; acest modul servește acel protocol, deci agenții, câmpurile și acțiunile AI ale clientului rulează pe credite Terrabit.\nRute Odoo AI: `/api/odoo_ai/1/get_completions_sync` răspunde în aceeași cerere; `/api/odoo_ai/1/get_completions` acceptă cererea imediat și trimite rezultatul mai târziu la webhook-ul `/ai/completion_result_ready` al clientului, semnat cu secretul per cerere.\nTraducere către OpenAI Responses API: text, imagini și PDF-uri în conversație, apeluri de funcții, ieșire structurată (JSON schema) și „Think longer\" (efort de raționament mai mare). Căutarea web și generarea de imagini sunt refuzate deocamdată cu un mesaj clar.\nCredite: fiecare cerere rezervă o estimare (dimensiunea intrării plus ieșirea maximă) și captează costul real după răspuns, din numărul de tokeni și prețurile per milion de tokeni ale serviciului, cu un minim per cerere. La sold insuficient clientul primește notificarea standard *Not enough credits* cu linkul de cumpărare; o cerere eșuată nu costă nimic.\nJurnal: fiecare cerere apare în *IAP > AI Requests* (eticheta de utilizare, model, tokeni, credite, starea livrării webhook-ului); conversația se șterge după procesare.\nConfigurare: în *IAP > IAP Service* > Odoo AI, grupul *OpenAI* (cheia API, modelul — implicit `gpt-5-mini` — și Reasoning Effort, *None* pentru modele fără raționament) și grupul *Pricing* (credite per milion de tokeni de intrare și ieșire, minim per cerere). Pe client se orientează contul IAP `odoo_ai` spre acest server cu modulul `terrabit_iap_ai`."
+  },
+  {
+    "path": "terrabit_iap_server_anaf/index.md",
+    "module": "terrabit_iap_server_anaf",
+    "version": "20.0.1.7.2",
+    "github": "https://github.com/terrabit-solutions/terrabit/tree/20.0/terrabit_iap_server_anaf",
+    "local_path": "odoo-addons/terrabit/terrabit_iap_server_anaf",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "IAP Server - Service ANAF",
+    "summary": "Partea de server a serviciului de token ANAF SPV: serverul Terrabit IAP obține tokenul OAuth ANAF cu certificatul digital al clientului, îl păstrează valid și îl trimite în baza de date a clientului. Rulează doar pe serverul Terrabit IAP.",
+    "features": [
+      "Pagină de autorizare (`/iap_anaf/authorize/<account_token>`): arată cărei firme (cu CUI) și cărui server Odoo îi va fi atașat tokenul; fluxul OAuth pornește doar după confirmare, cu un `state` de unică folosință valabil 15 minute. Paginile sunt în română.",
+      "Închiderea sesiunii ANAF anterioare (opțional): opțiunea Close Previous ANAF Session deschide întâi logout-ul ANAF într-o filă nouă, util când clienții ajung la „Your session is finished\" fără solicitarea certificatului.",
+      "Configurare serviciu: în meniul Settings > Technical > IAP (mod dezvoltator), serviciul ANAF Token cere Client ID și Client Secret ale aplicației OAuth înregistrate la ANAF (vizibile doar administratorilor) și afișează Anaf Callback Url de declarat la ANAF. O autorizare nouă costă 1 credit; reînnoirile sunt gratuite.",
+      "Reînnoire într-un singur loc: jobul zilnic IAP ANAF: Refresh Access Tokens reînnoiește tokenurile care expiră în 30 de zile, reîncearcă trimiterile eșuate și cere bazei clientului să oprească propria reînnoire `l10n_ro_edi`.",
+      "Trimitere către client: prin ruta `/iap/anaf_token_response` din `terrabit_iap_anaf` sau, pentru o bază Odoo Online (`l10n_ro_anaf_token_online`, fără Python), către automatizarea *On webhook* din linkul de autorizare, acceptată doar pe host-ul contului.",
+      "Urmărirea tokenului: pe contul înregistrat, fila ANAF Token arată datele de expirare și grupul Refresh Status; butoanele Send Token, Refresh Token și Force Send Token (cu confirmare).",
+      "Reînnoire blocată: când ANAF respinge tokenul de reîmprospătare, contul afișează avertisment, Refresh Blocked și eroarea; jobul nu mai reîncearcă.",
+      "Recuperare: Adopt Client Token preia tokenul curent al bazei clientului, îl face token al serverului și cere clientului să oprească reînnoirea proprie."
+    ],
+    "dependencies": [
+      "iap",
+      "terrabit_iap_server",
+      "l10n_ro_edi"
+    ],
+    "connections": [
+      "terrabit_iap_anaf",
+      "terrabit_iap"
+    ],
+    "text": "IAP Server - Service ANAF\nterrabit_iap_server_anaf\nPartea de server a serviciului de token ANAF SPV: serverul Terrabit IAP obține tokenul OAuth ANAF cu certificatul digital al clientului, îl păstrează valid și îl trimite în baza de date a clientului. Rulează doar pe serverul Terrabit IAP.\nPagină de autorizare (`/iap_anaf/authorize/<account_token>`): arată cărei firme (cu CUI) și cărui server Odoo îi va fi atașat tokenul; fluxul OAuth pornește doar după confirmare, cu un `state` de unică folosință valabil 15 minute. Paginile sunt în română.\nÎnchiderea sesiunii ANAF anterioare (opțional): opțiunea Close Previous ANAF Session deschide întâi logout-ul ANAF într-o filă nouă, util când clienții ajung la „Your session is finished\" fără solicitarea certificatului.\nConfigurare serviciu: în meniul Settings > Technical > IAP (mod dezvoltator), serviciul ANAF Token cere Client ID și Client Secret ale aplicației OAuth înregistrate la ANAF (vizibile doar administratorilor) și afișează Anaf Callback Url de declarat la ANAF. O autorizare nouă costă 1 credit; reînnoirile sunt gratuite.\nReînnoire într-un singur loc: jobul zilnic IAP ANAF: Refresh Access Tokens reînnoiește tokenurile care expiră în 30 de zile, reîncearcă trimiterile eșuate și cere bazei clientului să oprească propria reînnoire `l10n_ro_edi`.\nTrimitere către client: prin ruta `/iap/anaf_token_response` din `terrabit_iap_anaf` sau, pentru o bază Odoo Online (`l10n_ro_anaf_token_online`, fără Python), către automatizarea *On webhook* din linkul de autorizare, acceptată doar pe host-ul contului.\nUrmărirea tokenului: pe contul înregistrat, fila ANAF Token arată datele de expirare și grupul Refresh Status; butoanele Send Token, Refresh Token și Force Send Token (cu confirmare).\nReînnoire blocată: când ANAF respinge tokenul de reîmprospătare, contul afișează avertisment, Refresh Blocked și eroarea; jobul nu mai reîncearcă.\nRecuperare: Adopt Client Token preia tokenul curent al bazei clientului, îl face token al serverului și cere clientului să oprească reînnoirea proprie."
+  },
+  {
     "path": "terrabit_iap_server_helpdesk/index.md",
     "module": "terrabit_iap_server_helpdesk",
     "version": "19.0.0.1.16",
@@ -22045,6 +22427,63 @@
     "text": "IAP Server - Service Helpdesk\nterrabit_iap_server_helpdesk\nModulul e partea de server a conectorului de suport Terrabit și rulează doar pe helpdesk-ul Terrabit, niciodată la clienți. El primește tichetele pe care clienții cu modulul `terrabit_helpdesk_connector` le deschid din propriul Odoo, le leagă automat de firma clientului (după codul fiscal al partenerului) și le atribuie echipei de helpdesk configurate. Pentru consultant, un tichet venit astfel se tratează exact ca oricare altul: preluare, pontaj, răspuns, schimbare de stadiu, închidere. Modulul se ocupă doar de rutarea inițială, de traducerea stadiului intern într-un status simplu pentru client (Nou / În lucru / De răspuns / Închis) și de sincronizarea mesajelor publice; nu trimite nimic din proprie inițiativă — conectorul clientului cere datele la fiecare sincronizare. Fiecare client are pe cont și un sold de credite, dar alocarea acestora este în prezent **manuală**, per client; consumul automat al creditelor din orele pontate pe tichete este doar planificat, nu funcționează încă.\nAdaugă serviciul IAP `terrabit_helpdesk`, folosit de conectorul de suport instalat în Odoo-ul\nFiecare client cu conector are un cont (`iap.server.account`) legat automat de compania lui,\nFiecare stadiu al helpdesk-ului nostru primește un status vizibil clientului: Nou, **În\nLa instalare, modulul propune singur o mapare inițială a stadiilor existente: cele cu „răspuns\"\nTichetele fiecărei firme se grupează sub un singur partener-companie (`partner_company_id`),\nClientul vede doar mesajele publice; notele interne ale consultanților nu ajung niciodată la\nCererile de creare tichet sunt idempotente printr-o cheie trimisă de conector\nSincronizare incrementală: cu parametrul `since`, listele de tichete și mesaje întorc doar ce\nLa o modificare vizibilă clientului sau la un răspuns public, serverul anunță după commit baza\nÎnchidere de către client (`/iap/terrabit_helpdesk/tickets/close`), după bifa Closure by Customers\nMesajele și autorii lor vin dintr-o singură căutare; avatarul unui autor pe care clientul îl are deja\nPentru reconcilierea zilnică, `/tickets/messages` întoarce doar id-urile (`ids_only`, până la 20.000)\nLista de tichete trimite timpul pe fiecare status al clientului (`state_durations`, din\nAtașamentele venite de la client se salvează local ca bytes; cele trimise către client\nUrgența aleasă de client în conector se traduce 1:1 în prioritatea nativă a tichetului\nCreditele nu se acordă automat la înregistrarea contului — se alocă manual, per client, direct\nÎnchiderea unui tichet pe helpdesk-ul Terrabit cere pontaj (regulă venită din alt modul, nu din"
   },
   {
+    "path": "terrabit_iap_server_line_counter/index.md",
+    "module": "terrabit_iap_server_line_counter",
+    "version": "20.0.2.0.2",
+    "github": "https://github.com/terrabit-solutions/terrabit/tree/20.0/terrabit_iap_server_line_counter",
+    "local_path": "odoo-addons/terrabit/terrabit_iap_server_line_counter",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Terrabit IAP Server Line Counter",
+    "summary": "Serviciu al serverului IAP Terrabit care numără liniile de cod sursă ale modulelor instalate pe instanța unui client. Operatorul Terrabit alege dintr-o listă modulele care contează (de regulă cele Terrabit sau de la terți, nu cele oficiale Odoo), iar rezultatul rămâne pe contul clientului, pentru evidență și facturare în funcție de volumul de cod livrat.",
+    "features": [
+      "Serviciu nou „Module Line Counter” (`line_counter`) în catalogul serviciilor serverului IAP.",
+      "Buton de preluare a listei de module instalate de la client; la reîncărcare se păstrează bifele existente și se elimină modulele dezinstalate.",
+      "Opțiunea „Hide Odoo S.A. Modules” (implicit activă) omite modulele oficiale Odoo; modulele OCA rămân vizibile.",
+      "Modulele găsite direct în repo-ul principal al clientului (nu în submodul) sunt bifate automat pentru numărare; bifele manuale pe submodule se păstrează.",
+      "Buton de numărare: clientul numără liniile doar pentru modulele bifate, iar pe cont se salvează liniile pe modul și totalul.",
+      "Apelurile către client nu scriu tokenul contului în jurnal.",
+      "Limitare cunoscută (P1, deschisă): apelurile nu folosesc validarea URL și restricția la redirecționări ale serviciului părinte."
+    ],
+    "dependencies": [
+      "terrabit_iap_server"
+    ],
+    "connections": [
+      "terrabit_iap_server"
+    ],
+    "text": "Terrabit IAP Server Line Counter\nterrabit_iap_server_line_counter\nServiciu al serverului IAP Terrabit care numără liniile de cod sursă ale modulelor instalate pe instanța unui client. Operatorul Terrabit alege dintr-o listă modulele care contează (de regulă cele Terrabit sau de la terți, nu cele oficiale Odoo), iar rezultatul rămâne pe contul clientului, pentru evidență și facturare în funcție de volumul de cod livrat.\nServiciu nou „Module Line Counter” (`line_counter`) în catalogul serviciilor serverului IAP.\nButon de preluare a listei de module instalate de la client; la reîncărcare se păstrează bifele existente și se elimină modulele dezinstalate.\nOpțiunea „Hide Odoo S.A. Modules” (implicit activă) omite modulele oficiale Odoo; modulele OCA rămân vizibile.\nModulele găsite direct în repo-ul principal al clientului (nu în submodul) sunt bifate automat pentru numărare; bifele manuale pe submodule se păstrează.\nButon de numărare: clientul numără liniile doar pentru modulele bifate, iar pe cont se salvează liniile pe modul și totalul.\nApelurile către client nu scriu tokenul contului în jurnal.\nLimitare cunoscută (P1, deschisă): apelurile nu folosesc validarea URL și restricția la redirecționări ale serviciului părinte."
+  },
+  {
+    "path": "terrabit_iap_server_online/index.md",
+    "module": "terrabit_iap_server_online",
+    "version": "20.0.1.4.0",
+    "github": "https://github.com/terrabit-solutions/terrabit/tree/20.0/terrabit_iap_server_online",
+    "local_path": "odoo-addons/terrabit/terrabit_iap_server_online",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "IAP Server - Odoo Online Services",
+    "summary": "Rulează pe serverul IAP Terrabit logica modulelor „data-only” pe care clienții de pe Odoo Online le importă ca arhivă zip, fără Python. Modulul din baza clientului trimite cererea, serverul face munca, iar rezultatul este scris înapoi în baza clientului. Astfel clienții Odoo Online pot folosi servicii Terrabit (de exemplu interogări ANAF) cu credite și facturare.",
+    "features": [
+      "Două intrări pentru același serviciu: `/iap_online/<serviciu>` primește webhook-ul clientului și pune cererea în coadă (webhook-ul renunță după o secundă), iar `/iap_online/<serviciu>/sync` răspunde imediat butonului dintr-un formular (JavaScript, CORS).",
+      "Răspuns prin callback: un cron procesează coada și trimite rezultatul către automatizarea „On webhook” a clientului, cu reîncercări (după 5 încercări eșuate serverul renunță, iar clientul retrimite cererea).",
+      "Înregistrare fără copierea cheilor: tokenul contului ajunge doar la URL-ul de callback de pe gazda bazei clientului, iar contul se leagă de acea gazdă. Creditele de probă se acordă o singură dată per bază de date.",
+      "Contul se leagă de partenerul firmei clientului când CUI-ul este cunoscut; nu se creează parteneri din date anonime, iar o firmă necunoscută rămâne pe cont pentru verificare, cu butonul „Link Company”.",
+      "Credite la cerere: o cerere `balance` întoarce creditele rămase, fără taxare; pagina de credite `/iap/1/credit` funcționează și pentru aceste conturi.",
+      "Fiecare răspuns rezervă și capturează credite pe cont și întoarce clientului `cost` și `balance`; o intrare invalidă sau o sursă care nu răspunde nu se taxează.",
+      "Înregistrare protejată: limitată per IP și la conturi noi pe oră; un cont existent își păstrează callback-ul cât timp automatizarea „On webhook” există (suport: „Reset Online Callback”).",
+      "Limite și confidențialitate: cereri pe minut per cont; intrările și răspunsurile se șterg după 30 de zile (tranzacțiile rămân pentru facturare).",
+      "Pe serviciu (Settings → Technical → IAP → IAP Service, grupul „Odoo Online”): bifa „Odoo Online”, „Credits per Answer” (0 = gratuit) și „Max Request Size” (64 de caractere implicit). Cererile se urmăresc în „Odoo Online Requests”, cu filtrele „Errors” și „Not delivered”.",
+      "Portalul serverului IAP (`/my/iap`) afișează insigna „Odoo Online” pentru aceste conturi, cu soldul, istoricul și „Buy Credits”.",
+      "Un modul de serviciu (de exemplu `terrabit_iap_server_online_anaf`) își adaugă codul, bifează „Odoo Online” și implementează `_service_<cod>(valoare)`. Fluxul pas cu pas este în [fișa consultantului](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "terrabit_iap_server"
+    ],
+    "connections": [
+      "deltatech_iap_online",
+      "terrabit_iap_server"
+    ],
+    "text": "IAP Server - Odoo Online Services\nterrabit_iap_server_online\nRulează pe serverul IAP Terrabit logica modulelor „data-only” pe care clienții de pe Odoo Online le importă ca arhivă zip, fără Python. Modulul din baza clientului trimite cererea, serverul face munca, iar rezultatul este scris înapoi în baza clientului. Astfel clienții Odoo Online pot folosi servicii Terrabit (de exemplu interogări ANAF) cu credite și facturare.\nDouă intrări pentru același serviciu: `/iap_online/<serviciu>` primește webhook-ul clientului și pune cererea în coadă (webhook-ul renunță după o secundă), iar `/iap_online/<serviciu>/sync` răspunde imediat butonului dintr-un formular (JavaScript, CORS).\nRăspuns prin callback: un cron procesează coada și trimite rezultatul către automatizarea „On webhook” a clientului, cu reîncercări (după 5 încercări eșuate serverul renunță, iar clientul retrimite cererea).\nÎnregistrare fără copierea cheilor: tokenul contului ajunge doar la URL-ul de callback de pe gazda bazei clientului, iar contul se leagă de acea gazdă. Creditele de probă se acordă o singură dată per bază de date.\nContul se leagă de partenerul firmei clientului când CUI-ul este cunoscut; nu se creează parteneri din date anonime, iar o firmă necunoscută rămâne pe cont pentru verificare, cu butonul „Link Company”.\nCredite la cerere: o cerere `balance` întoarce creditele rămase, fără taxare; pagina de credite `/iap/1/credit` funcționează și pentru aceste conturi.\nFiecare răspuns rezervă și capturează credite pe cont și întoarce clientului `cost` și `balance`; o intrare invalidă sau o sursă care nu răspunde nu se taxează.\nÎnregistrare protejată: limitată per IP și la conturi noi pe oră; un cont existent își păstrează callback-ul cât timp automatizarea „On webhook” există (suport: „Reset Online Callback”).\nLimite și confidențialitate: cereri pe minut per cont; intrările și răspunsurile se șterg după 30 de zile (tranzacțiile rămân pentru facturare).\nPe serviciu (Settings → Technical → IAP → IAP Service, grupul „Odoo Online”): bifa „Odoo Online”, „Credits per Answer” (0 = gratuit) și „Max Request Size” (64 de caractere implicit). Cererile se urmăresc în „Odoo Online Requests”, cu filtrele „Errors” și „Not delivered”.\nPortalul serverului IAP (`/my/iap`) afișează insigna „Odoo Online” pentru aceste conturi, cu soldul, istoricul și „Buy Credits”.\nUn modul de serviciu (de exemplu `terrabit_iap_server_online_anaf`) își adaugă codul, bifează „Odoo Online” și implementează `_service_<cod>(valoare)`. Fluxul pas cu pas este în [fișa consultantului](FISA_CONSULTANT.md)."
+  },
+  {
     "path": "terrabit_iap_server_sale/index.md",
     "module": "terrabit_iap_server_sale",
     "version": "19.0.1.1.0",
@@ -22068,6 +22507,33 @@
       "terrabit_iap_server"
     ],
     "text": "IAP Server - eCommerce Credits\nterrabit_iap_server_sale\nModul care permite achiziția de credite IAP direct prin magazinul eCommerce (`website_sale`). Se instalează pe **serverul** IAP al Terrabit (nu la clienți) și transformă produsele obișnuite în pachete de credite ce pot fi cumpărate online: cumpărătorul alege un pachet de pe pagina de credite a serviciului, parcurge checkout-ul standard, iar la confirmarea comenzii contul IAP asociat este creditat automat cu numărul de credite achiziționate.\nMarchează produse drept „pachete de credite IAP\" (`is_iap_credit`, `iap_credit_amount`, `iap_service_code`), legate de un serviciu de pe serverul IAP.\nAfișează dinamic pachetele disponibile pe pagina de credite a serviciului (`credit_page`), cu preț și buton de cumpărare.\nAdaugă pachetul în coș și conduce cumpărătorul la checkout-ul standard `website_sale`.\nLeagă comanda (`sale.order`) de contul IAP care a inițiat achiziția (token păstrat în sesiune).\nLa confirmarea comenzii, creditează automat contul IAP cu numărul de credite cumpărate, o singură dată (idempotent prin `iap_credited`)."
+  },
+  {
+    "path": "terrabit_iap_server_sms/index.md",
+    "module": "terrabit_iap_server_sms",
+    "version": "20.0.1.1.0",
+    "github": "https://github.com/terrabit-solutions/terrabit/tree/20.0/terrabit_iap_server_sms",
+    "local_path": "odoo-addons/terrabit/terrabit_iap_server_sms",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "IAP Server - Service SMS",
+    "summary": "Implementează pe serverul IAP Terrabit serviciul de SMS: instanțele client trimit mesajele către server, iar acesta le expediază printr-un furnizor de SMS și taxează creditele contului. Modulul nu are fișier `readme/DESCRIPTION.md`, deci descrierea provine din manifest și cod.",
+    "features": [
+      "Serviciu „SMS” (`sms`) cu credite partajate în portofelul bazei de date client.",
+      "Furnizori acceptați: SMS 4Pay și SMS Wapi; pe serviciu se setează furnizorul, secretul și gateway-ul.",
+      "Rută JSON-RPC `/api/sms/3/send` pentru trimitere în lot: câte un rezultat per destinatar, cu uuid-ul propriu și starea `success`, `insufficient_credit` sau `server_error`.",
+      "Taxare: un SMS al unui cont legat costă „Wallet Rate” al serviciului (0,04 EUR), iar un cont pe sold propriu plătește 1 credit SMS. Rezervarea se confirmă după trimitere reușită și se anulează la eroare.",
+      "Soldul disponibil (credite minus rezervările în așteptare) se verifică înainte de fiecare mesaj; un destinatar fără credit nu oprește lotul.",
+      "Erorile de parametri (lipsă) sau de cont necunoscut se întorc ca erori JSON-RPC, pentru ca clientul SMS Odoo să le interpreteze corect.",
+      "La legarea contului, creditele SMS cumpărate și nefolosite intră în portofel la 0,04 EUR bucata."
+    ],
+    "dependencies": [
+      "iap",
+      "terrabit_iap_server"
+    ],
+    "connections": [
+      "terrabit_iap_server"
+    ],
+    "text": "IAP Server - Service SMS\nterrabit_iap_server_sms\nImplementează pe serverul IAP Terrabit serviciul de SMS: instanțele client trimit mesajele către server, iar acesta le expediază printr-un furnizor de SMS și taxează creditele contului. Modulul nu are fișier `readme/DESCRIPTION.md`, deci descrierea provine din manifest și cod.\nServiciu „SMS” (`sms`) cu credite partajate în portofelul bazei de date client.\nFurnizori acceptați: SMS 4Pay și SMS Wapi; pe serviciu se setează furnizorul, secretul și gateway-ul.\nRută JSON-RPC `/api/sms/3/send` pentru trimitere în lot: câte un rezultat per destinatar, cu uuid-ul propriu și starea `success`, `insufficient_credit` sau `server_error`.\nTaxare: un SMS al unui cont legat costă „Wallet Rate” al serviciului (0,04 EUR), iar un cont pe sold propriu plătește 1 credit SMS. Rezervarea se confirmă după trimitere reușită și se anulează la eroare.\nSoldul disponibil (credite minus rezervările în așteptare) se verifică înainte de fiecare mesaj; un destinatar fără credit nu oprește lotul.\nErorile de parametri (lipsă) sau de cont necunoscut se întorc ca erori JSON-RPC, pentru ca clientul SMS Odoo să le interpreteze corect.\nLa legarea contului, creditele SMS cumpărate și nefolosite intră în portofel la 0,04 EUR bucata."
   },
   {
     "path": "terrabit_partner_credit_limit/index.md",
@@ -22259,5 +22725,32 @@
     "dependencies": [],
     "connections": [],
     "text": "Website Sale Tracking Base\nterrabit_website_sale_tracking_base"
+  },
+  {
+    "path": "website_sale_product_brand/index.md",
+    "module": "website_sale_product_brand",
+    "version": "20.0.2.4.0",
+    "github": "https://github.com/dhongu/others_addons/tree/20.0/website_sale_product_brand",
+    "local_path": "odoo-addons/others_addons/website_sale_product_brand",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "website_sale_product_brand",
+    "summary": "Extinde filtrarea produselor din magazinul online cu filtrare după marcă și adaugă pagini de destinație pentru fiecare marcă, la `/shop/brand/<slug>`, cu conținut propriu în antet și subsol. Reduce efortul clientului în căutarea produselor unei anumite mărci.",
+    "features": [
+      "Filtru pe marcă în magazin și meniul „shop by brand\" lângă Shop; selectarea unei mărci publicate din `/shop/brands` duce la pagina ei.",
+      "Formularul mărcii (Website > Setări > Produse > Product brands): logo, descriere, imagine de copertă, blocuri de descriere în antet și subsol, aliniere antet, afișare nume/descriere.",
+      "Logo-ul mărcii apare pe pagina produsului și trimite la pagina mărcii; descrierea mărcii se poate afișa sub descrierea produsului (opțiunea *Show description on product page*, dezactivată implicit).",
+      "Ascunderea unei mărci din magazin prin butonul *Website published*.",
+      "Multi-website: marca poate fi legată de un website (câmp vizibil în grupul `website.group_multi_website`); paginile, listările, indexul de căutare și sitemap-ul expun doar mărcile website-ului curent sau globale.",
+      "Setarea *Brand Filter Display* (Website > Configurare > Setări, secțiunea Shop - Products): *Full list*, *Limited list* (primele 5 și „Show more\") sau *Alphabetical accordion* (grupare pe litere, peste 50 de mărci)."
+    ],
+    "dependencies": [
+      "product_brand",
+      "website",
+      "website_sale"
+    ],
+    "connections": [
+      "product_brand"
+    ],
+    "text": "website_sale_product_brand\nwebsite_sale_product_brand\nExtinde filtrarea produselor din magazinul online cu filtrare după marcă și adaugă pagini de destinație pentru fiecare marcă, la `/shop/brand/<slug>`, cu conținut propriu în antet și subsol. Reduce efortul clientului în căutarea produselor unei anumite mărci.\nFiltru pe marcă în magazin și meniul „shop by brand\" lângă Shop; selectarea unei mărci publicate din `/shop/brands` duce la pagina ei.\nFormularul mărcii (Website > Setări > Produse > Product brands): logo, descriere, imagine de copertă, blocuri de descriere în antet și subsol, aliniere antet, afișare nume/descriere.\nLogo-ul mărcii apare pe pagina produsului și trimite la pagina mărcii; descrierea mărcii se poate afișa sub descrierea produsului (opțiunea *Show description on product page*, dezactivată implicit).\nAscunderea unei mărci din magazin prin butonul *Website published*.\nMulti-website: marca poate fi legată de un website (câmp vizibil în grupul `website.group_multi_website`); paginile, listările, indexul de căutare și sitemap-ul expun doar mărcile website-ului curent sau globale.\nSetarea *Brand Filter Display* (Website > Configurare > Setări, secțiunea Shop - Products): *Full list*, *Limited list* (primele 5 și „Show more\") sau *Alphabetical accordion* (grupare pe litere, peste 50 de mărci)."
   }
 ]
