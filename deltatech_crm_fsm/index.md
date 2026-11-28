@@ -1,22 +1,23 @@
-# Deltatech CRM FSM (localizat la `deltatech_crm_fsm/index.md`)
+# CRM + FSM Bridge (localizat la `deltatech_crm_fsm/index.md`)
 
 - **Nume Tehnic:** `deltatech_crm_fsm`
-- **Versiune:** `19.0.0.0.1`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_crm_fsm
+- **Versiune:** `20.0.0.0.3`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_crm_fsm
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_crm_fsm`
-- **Ultima Ingestie:** `2026-06-09`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Acest modul leagă oportunitățile din CRM de sarcinile din Project/FSM și permite crearea rapidă a unei sarcini direct dintr-o oportunitate. În multe fluxuri de vânzare este necesară o vizită pe teren înainte de a întocmi o ofertă (recunoaștere la fața locului, colectare de date, măsurători). Pornind de la oportunitate, utilizatorii pot crea o sarcină asociată pentru echipa de teren și pot urmări ulterior toate sarcinile conectate la acea oportunitate.
+Acest modul leagă oportunitățile din CRM de sarcinile din Project/FSM și permite crearea rapidă a unei sarcini direct dintr-o oportunitate. În multe fluxuri de vânzare este necesară o vizită pe teren înainte de ofertare (recunoaștere la fața locului, colectare de date, măsurători). Pornind de la oportunitate, utilizatorii pot crea o sarcină pentru echipa de teren și pot urmări ulterior toate sarcinile conectate la acea oportunitate.
 
 #### 2. Funcționalități Cheie
 
 - Adaugă un câmp „Oportunitate" pe sarcinile de proiect (`project.task.lead_id`).
 - Pe formularul oportunității:
-  - Buton inteligent „Tasks" care afișează numărul de sarcini asociate și le deschide; dacă există o singură sarcină, aceasta se deschide direct în vizualizare formular.
+  - Buton inteligent „Tasks" cu numărul de sarcini asociate (calculat cu `search_count`); dacă există o singură sarcină, aceasta se deschide direct în formular.
   - Buton de antet „Create FSM Task" pentru a crea rapid o sarcină precompletată cu oportunitatea, partenerul și un nume contextual.
-- Căutare și grupare după Oportunitate în vizualizările de sarcini. Oportunitatea este vizibilă și ca o coloană în listele de sarcini.
+- Căutare și grupare după Oportunitate în vizualizările de sarcini; oportunitatea apare și ca coloană în liste.
+- Securitate: butoanele și accesul la sarcini urmează drepturile din Project (de regulă grupul Project User).
 
 #### 3. Dependențe
 

@@ -1,22 +1,27 @@
-# Deltatech Stock Barcode (localizat la `deltatech_stock_barcode/index.md`)
+# Stock Barcode Enhanced (localizat la `deltatech_stock_barcode/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_barcode`
-- **Versiune:** `19.0.0.0.9`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_stock_barcode
+- **Versiune:** `20.0.0.1.5`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_stock_barcode
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_stock_barcode`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul extinde funcționalitatea Stock Barcode din Odoo Enterprise cu mai multe îmbunătățiri pentru transferuri (pickings) și gestiunea stocului. Operatorul de depozit poate, direct din interfața de scanare cu codul de bare, să gestioneze greutatea coletelor și numărul de pachete, să genereze și să tipărească etichetele de curier (AWB) și să vadă detaliile precise de amplasare a produselor în depozit. Scopul principal este accelerarea și simplificarea procesului de pregătire a livrărilor, oferind operatorilor toate informațiile necesare într-un singur loc.
+Modulul extinde aplicația Stock Barcode din Odoo Enterprise cu îmbunătățiri pentru transferuri și inventar. Operatorul de depozit poate, direct din interfața de scanare, să gestioneze greutatea și numărul de colete, să genereze și să tipărească etichetele de curier (AWB) și să vadă detaliile de amplasare a produselor. Scopul este accelerarea pregătirii livrărilor și a inventarului, cu toate informațiile necesare într-un singur loc.
 
 #### 2. Funcționalități Cheie
 
-- **Gestiunea greutății și a coletelor:** posibilitatea de a administra greutatea pachetelor și numărul de colete direct din interfața de scanare cu codul de bare.
-- **Integrare cu curierul:** generarea și tipărirea etichetelor de curier (AWB) la salvarea detaliilor de greutate în cadrul fluxului de scanare.
-- **Detalii de amplasare îmbunătățite:** integrarea informațiilor detaliate de locație (Raft, Rând, Poliță, Cutie) în vizualizările de scanare a codului de bare, pentru o mai bună vizibilitate a poziției articolelor.
-- **Îmbunătățiri ale fluxului de lucru:** include un formular simplificat pentru capturarea detaliilor de livrare în timpul procesului de transfer.
-- **Listă de prețuri configurabilă pentru scanare:** permite alegerea unei liste de prețuri specifice din setări, pentru calcularea prețului produsului la scanarea codului de bare, oferind mai multă flexibilitate în gestiunea stocului.
+- **Greutate și colete:** numărul de colete și greutatea totală se introduc din scanare, într-un dialog simplificat cu butoane mari -1 / +1. Pe tipul de operație de livrare, **Require Weight on Barcode Scan** (secțiunea Final Validation) cere datele la validare; **Apply and Print** le salvează, trimite livrarea la curier (AWB) și continuă validarea, iar închiderea dialogului o anulează.
+- **Integrare cu curierul:** butonul **Print AWB** din meniul de tipărire scoate eticheta de curier.
+- **Detalii de amplasare:** Raft, Rând, Poliță și Cutie apar în vizualizările de scanare.
+- **Destinație propusă la transferuri interne:** la scanarea unui produs fără linie, aplicația cere serverului destinația dată de regulile de putaway și capacitățile rafturilor (`deltatech_putaway_strategy`); raftul din care pleacă marfa nu este propus, iar o cantitate peste capacitatea maximă a raftului este refuzată. Cu **Require Scanning Putaway Destination** (**Inventar > Configurare > Tipuri de operații**, fila Barcode App), operatorul trebuie să scaneze exact raftul propus.
+- **Listă de prețuri pentru scanare:** setarea **Barcode Pricelist** (**Inventar > Configurare > Setări**, blocul Barcode) stabilește prețul afișat pe cardul produsului scanat din ecranul principal.
+- **Inventar pe baze mari:** setarea **Barcode Inventory: Only My Quants** încarcă pe ecranul de inventar doar quant-urile alocate utilizatorului curent (celelalte produse se adaugă prin scanare), ca ecranul să se deschidă rapid chiar cu zeci de mii de quant-uri.
+- Căutarea la scanare folosește și referința internă (`default_code`) ca alternativă la codul de bare.
+
+Fluxul pas-cu-pas, cu capturi, este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -27,28 +32,33 @@ Acest modul extinde funcționalitatea Stock Barcode din Odoo Enterprise cu mai m
 
 #### 4. Componente Cheie
 
-Sumarul și funcționalitățile provin din `readme/DESCRIPTION.md`; componentele de mai jos completează informația cu elementele tehnice notabile identificate în cod (permise explicit, dat fiind că readme-ul nu acoperă în detaliu partea de modele/controller).
-
 **Modele**
 
-- `res.config.settings` (extindere): adaugă câmpul `barcode_pricelist_id`, ce permite configurarea listei de prețuri folosite la calculul prețului produsului în timpul scanării.
-- `stock.location` (extindere): adaugă `max_products_leaf` în lista de câmpuri expuse către interfața Stock Barcode.
-- `product.product` (extindere): adaugă `loc_rack`, `loc_row`, `loc_shelf`, `loc_case` în lista de câmpuri expuse către interfața Stock Barcode, pentru afișarea detaliilor de amplasare.
-- `stock.picking`, `stock.quant` (extinderi): susțin integrarea greutății/coletelor și a fluxului de scanare pentru transferuri și inventar.
+- `res.config.settings` (extins): `barcode_pricelist_id` și opțiunea de inventar doar cu quant-urile proprii.
+- `stock.picking` (extins): `action_get_weight`, `do_print_picking_awb`, `barcode_get_putaway_dest` (destinația propusă) și câmpurile expuse în interfața de scanare.
+- `stock.picking.type` (extins): `_get_barcode_config`, configurația de scanare a destinației și a greutății.
+- `stock.quant` (extins): `_compute_list_price`, `_barcode_inventory_own_quants`, `_get_barcode_inventory_quant_domain`, `_get_stock_barcode_data`.
+- `stock.location`, `product.product` (extinse): câmpurile de amplasare (`max_products_leaf`, `loc_rack`, `loc_row`, `loc_shelf`, `loc_case`) expuse interfeței de scanare.
+- `delivery.carrier.details` (extins): dialogul de greutate și colete.
 
 **Vizualizări**
 
-- `res_config_settings_views.xml`: adaugă opțiunea de listă de prețuri pentru scanarea codurilor de bare în setările de Inventar.
-- `stock_picking_view.xml`: extensii pe formularul de transfer pentru greutate, colete și date de curier.
-- `stock_inventory_view.xml`: integrează detaliile de amplasare (raft/rând/poliță/cutie) în vizualizările de inventar.
-- `wizard/delivery_carrier_details_view.xml`: formular simplificat (wizard `delivery.carrier.details`) pentru capturarea greutății și generarea/tipărirea etichetei AWB direct din fluxul de scanare.
+- `res_config_settings_view_form`: setările din blocul Barcode.
+- `stock_barcode_view_picking_type_form`: opțiunile pe tipul de operație.
+- `view_stock_quant_stock_barcode_tree` / `stock_quant_barcode` / `stock_quant_barcode_kanban_2`: vizualizările de inventar cu detaliile de amplasare.
+- `wizard/delivery_carrier_details_view.xml`: formularul simplificat pentru greutate și AWB.
 
 **Controller**
 
-- `controllers/stock_barcode.py`: suprascrie ruta `/stock_barcode/get_specific_barcode_data` (declarată `type="jsonrpc"` din 19.0) și implementează fallback-ul de căutare după referința internă (`default_code`) pe baza payload-ului curent (`barcode`, `barcodes`, `barcodes_by_model`), folosind helper-ul standard `_get_records_fields_stock_barcode`.
+- `controllers/stock_barcode.py`: rutele `/stock_barcode/get_main_menu_data` și `/stock_barcode/get_specific_barcode_data` (`type="jsonrpc"`), cu fallback de căutare după referința internă.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Nu sunt definite `ir.cron`, `base.automation` sau `ir.actions.server` în acest modul.
 
 #### 5. Conexiuni
 
-- [deltatech_delivery](../deltatech_delivery/index.md): furnizează integrarea cu curierul, folosită la generarea și tipărirea etichetelor AWB din fluxul de scanare.
-- [deltatech_stock_inventory](../deltatech_stock_inventory/index.md): asigură funcționalitatea de inventar extinsă pe care se grefează vizualizările de scanare ale acestui modul.
-- [deltatech_putaway_strategy](../deltatech_putaway_strategy/index.md): furnizează strategia de amplasare (raft/rând/poliță/cutie) ale cărei detalii sunt expuse acum și în interfața de scanare cu codul de bare.
+- [deltatech_delivery](../deltatech_delivery/index.md): integrarea cu curierul, folosită la AWB.
+- [deltatech_stock_inventory](../deltatech_stock_inventory/index.md): inventarul extins pe care se grefează vizualizările.
+- [deltatech_putaway_strategy](../deltatech_putaway_strategy/index.md): strategia de amplasare ale cărei destinații sunt propuse la scanare.
+- `stock_barcode`: aplicația Enterprise extinsă.

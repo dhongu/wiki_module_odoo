@@ -1,34 +1,28 @@
 # Cargus Shipping (localizat la `deltatech_delivery_uc/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_uc`
-- **Versiune:** `19.0.0.2.2`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_uc`
+- **Versiune:** `20.0.1.0.9`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/20.0/deltatech_delivery_uc
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_uc`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul integrează în Odoo serviciul de curierat Urgent Cargus (UC), permițând expedierea coletelor și urmărirea lor online direct din platformă. Pentru fiecare livrare poate genera AWB-ul (scrisoarea de transport) în format PDF, ZPL sau HTML, poate solicita tarife de transport și poate sincroniza istoricul de stare al expedierii. Modulul aduce valoare prin automatizarea completă a relației cu Urgent Cargus pentru companiile românești, inclusiv expedierea către lockere și puncte de ridicare Cargus.
+Modulul integrează în Odoo curierul Cargus. Expediați coletele prin Cargus și le urmăriți online: AWB-ul și eticheta se generează din livrare, tarifele se calculează pe comanda de vânzare cu tabelul de prețuri al contractului, iar starea coletului se citește din Cargus până la livrare. Sunt suportate și lockerele Cargus și livrările în alte țări deservite de același API.
 
 #### 2. Funcționalități Cheie
 
-- Generare AWB în format PDF, ZPL și HTML.
-- Ștergere AWB.
-- Calcul tarife pentru o expediere.
-- Obținere liste de localități, județe, lockere și puncte de ridicare.
-- Obținere istoric de stare pentru o expediere și listă de AWB-uri.
-- Import și gestiune lockere Cargus (puncte de ridicare).
-- Hartă interactivă pentru selecția lockerului în checkout.
-- Curățare automată a lockerelor cu coordonate invalide.
-- Expediere cu colete multiple și cu dimensiuni.
-- Expediere cu valoare declarată (asigurare) și cu ramburs (cash on delivery).
-- Expediere cu id localitate și id județ.
-- Opțiune de livrare sâmbăta și opțiune de colet deschis.
-- Ridicare doar din punctul de ridicare indicat și posibilitatea trimiterii id-ului de locker în AWB.
-
-> Notă: Pentru funcționalitatea de selecție a lockerului pe hartă este necesară și instalarea modulului `deltatech_delivery_locker`. De asemenea, extensia `unaccent` trebuie instalată în baza de date (`CREATE EXTENSION IF NOT EXISTS unaccent`), deoarece unele localități din România au denumiri diferite față de baza SIRUTA (ex: Popești-Leordeni).
->
-> Limitări cunoscute: expedierea cu nume de localitate fără id de localitate și nota de retur (restitution note) în AWB nu sunt suportate.
+- Generare AWB în format PDF, ZPL sau HTML; etichetă A4 sau 10x14; **Print AWB** și **Cancel AWB** (anulare la Cargus).
+- Calcul de tarif pe comandă cu tabelul de prețuri Cargus, sau preț fix sub un prag.
+- Colete multiple, dimensiuni, valoare declarată (asigurare), ramburs, livrare sâmbăta, deschiderea coletului.
+- Oraș și județ prin identificatorii Cargus; liste de orașe, județe, lockere și puncte de ridicare, importate din API.
+- Istoric de stare al coletului (fila **History**, buton **Refresh**) și lista de AWB-uri.
+- Lockere și puncte de ridicare: import și administrare, curățarea automată a lockerelor cu coordonate invalide, trimiterea identificatorului de locker în AWB, hartă de selecție în checkout (necesită `deltatech_delivery_locker`).
+- Expedieri în alte țări deservite de același API (inclusiv Polonia): țările cu catalog importat se aleg pe curier, iar AWB-ul poartă țara destinatarului.
+- Cu `deltatech_delivery_cod`, import al extrasului Cargus pentru o perioadă (doar sumele deja plătite de Cargus).
+- Neacoperit: oraș dat doar prin nume, fără identificator, și nota de restituire în AWB. Extensia PostgreSQL `unaccent` trebuie instalată; unele localități au în SIRUTA alt nume decât cel din Cargus (ex. Popești-Leordeni).
+- Configurare: în metoda de livrare cu *Provider* = Cargus, fila **Cargus Configuration**: *Subscription Key*, utilizator, parolă; **Initialization** (importă tabelele de prețuri), **Get Pickup Locations** (cel puțin o locație de ridicare, necesară pentru fiecare AWB), țările din **Cargus Catalog Countries** și **Get city**; apoi tip și format etichetă, plătitor și metodele de plată tratate ca ramburs. Pașii cu capturi în [fișa consultantului](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -38,9 +32,25 @@ Modulul integrează în Odoo serviciul de curierat Urgent Cargus (UC), permițâ
 
 #### 4. Componente Cheie
 
-Documentația pentru Sumar și Funcționalități Cheie a fost preluată din `readme/DESCRIPTION.md`. Conform fluxului de ingestie, analiza detaliată a codului pentru această secțiune a fost omisă, întrucât Readme-ul nu o acoperă explicit.
+**Modele**
+
+- `delivery.carrier` (extins, `models/delivery_uc.py`): tipul `uc` (Cargus), credențialele și opțiunile Cargus, `uc_rate_shipment`, `uc_send_shipping`, `uc_get_label`, `uc_cancel_shipment`, `uc_get_status_history`, `uc_get_awb_list`, importul de locații, orașe și lockere, `uc_cod_fetch_rows`.
+- `delivery.carrier.service` (extins): valoarea `uc` la `delivery_type`, pentru serviciile Cargus.
+- `stock.package.type` (extins): tipul de curier `uc` pentru ambalaje.
+- `res.country`, `res.country.state`, `res.city` (extinse): câmpul `uc_id` (identificator Cargus).
+- `res.country.street` (nou): străzile Cargus, legate de oraș.
+- `res.config.settings` (extins): opțiuni de configurare Cargus.
+
+**Vizualizări**
+
+- `view_delivery_carrier_form_with_provider_uc`: fila de configurare Cargus pe formularul metodei de livrare.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Nu există `ir.cron`, `base.automation` sau `ir.actions.server`. `data/delivery_uc_data.xml` definește serviciile Cargus (`service_1`, `service_4`, `service_34`, `service_35`, `service_36`).
 
 #### 5. Conexiuni
 
-- [deltatech_delivery_locker](../deltatech_delivery_locker/index.md): necesar pentru selecția lockerului Cargus pe hartă în checkout.
-- [deltatech_delivery_status](../deltatech_delivery_status/index.md): gestionarea și urmărirea stărilor de expediere/AWB.
+- [deltatech_delivery_locker](../deltatech_delivery_locker/index.md): selecția lockerului Cargus pe hartă în checkout.
+- [deltatech_delivery_status](../deltatech_delivery_status/index.md): gestionarea și urmărirea stărilor de expediere.
+- [deltatech_delivery_cod](../deltatech_delivery_cod/index.md): importul extrasului de ramburs Cargus.

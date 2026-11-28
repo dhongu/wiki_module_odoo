@@ -1,26 +1,28 @@
 # DPD Romania Shipping (localizat la `deltatech_delivery_dpd/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_dpd`
-- **Versiune:** `19.0.0.5.0`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_dpd
+- **Versiune:** `20.0.0.8.0`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/20.0/deltatech_delivery_dpd
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_dpd`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul DPD Romania Shipping integrează Odoo cu serviciul de curierat DPD (Dynamic Parcel Distribution), automatizând operațiunile de livrare direct din ERP. Permite calcularea tarifelor de transport, generarea etichetelor de expediere (AWB), urmărirea coletelor și gestionarea livrărilor, eliminând introducerea manuală a datelor și reducând erorile. Modulul este deosebit de util pentru companiile din România și țările vecine care folosesc DPD și au nevoie de o legătură strânsă între Odoo și operațiunile de expediere. Se construiește peste funcționalitatea de bază oferită de modulul Deltatech Delivery.
+Modulul DPD Romania Shipping integrează Odoo cu serviciul de curierat DPD, automatizând expedierile direct din ERP: calculul tarifelor, generarea etichetelor (AWB), urmărirea coletelor și gestionarea livrărilor, fără introducere manuală a datelor. Din contul DPD România se importă localitățile tuturor țărilor europene deservite de DPD, deci expedierile externe se adresează ca cele interne. Se construiește peste modulul de bază Deltatech Delivery.
 
 #### 2. Funcționalități Cheie
 
-- **Integrare cu serviciile DPD**: import automat al tipurilor de servicii DPD, suport pentru multiple servicii de expediere (DPD Standard, DPD International etc.), conectivitate cu API-urile DPD și autentificare securizată.
-- **Generare și gestionare AWB**: generarea etichetelor de expediere în formate PDF și ZPL, suport pentru diverse dimensiuni de etichete (A4, A6, A4_4xA6), integrare directă în fluxul de livrare Odoo și funcție de anulare a expedierilor.
-- **Calculul tarifelor**: calculul tarifelor de transport în timp real, estimarea automată a costurilor pe comenzile de vânzare și prețuri în funcție de greutate și dimensiuni.
-- **Gestionarea localizărilor**: import automat al bazei de date de orașe DPD pentru România, maparea orașelor și județelor cu ID-urile de localizare DPD și validarea adreselor.
-- **Funcții de urmărire**: generarea linkurilor de tracking, accesul la istoricul de stare al expedierii și actualizarea stării livrării în Odoo pe baza statusului DPD.
-- **Opțiuni avansate de expediere**: ramburs (cash on delivery), valoare declarată (asigurare), instrucțiuni speciale de livrare și gestionarea coletelor multiple, opțiune de pachet deschis și livrare sâmbăta.
-- **Gestionarea punctelor de ridicare (pickup)**: configurarea punctelor de ridicare DPD, asocierea cu adresele companiei și detectarea automată a client ID-ului.
-
-Funcționalități explicit neacoperite (conform DESCRIPTION.md): generare AWB în format HTML, listă de lockere, listă de puncte de ridicare (pickup point), expediere cu dimensiuni, notă de restituire în AWB, trimiterea unui locker id în AWB, restricționarea la un singur punct de ridicare indicat.
+- **Servicii DPD**: import automat al serviciilor din contract (DPD Standard, DPD International etc.) și al **DPD Client IDs** prin butonul **Initialization**; autentificare cu **User** și **Password**.
+- **AWB**: etichete PDF sau ZPL, formate A4, A6, A4_4xA6; **Contents** (implicit „Marfa", maximum 100 de caractere) și **Shipment Payer** (Sender, Recipient, Third Party); **Print AWB** cere eticheta din nou dacă livrarea nu o are; AWB-ul se salvează înainte de cererea etichetei, deci rămâne valid chiar dacă eticheta nu poate fi obținută; **Cancel AWB** anulează expedierea la DPD.
+- **Tarife**: pe comanda de vânzare, **Shipping** > **Get rate** > **Add**; un preț fix fără prag ocolește DPD, iar cu prag înlocuiește prețul DPD mai mic decât pragul.
+- **Localități**: **Get city** importă localitățile DPD pentru țările europene și le potrivește cu orașele Odoo; butonul **To map** arată localitățile încă nepotrivite.
+- **Locații de ridicare**: tab-ul **Pickup Location**, cu sursa *From Carrier*, depozitul livrării sau compania; **Ref** al adresei este client id-ul DPD trimis ca expeditor.
+- **Urmărire**: link de tracking, istoric în tab-ul **History** (**Refresh**), o acțiune programată citește starea coletului, iar **Delivery State** o urmează.
+- **Opțiuni de expediere**: ramburs, valoare declarată (asigurare), colete multiple, pachet deschis, livrare sâmbăta.
+- **Retururi**: pe o recepție cu metoda DPD părțile se inversează (clientul expeditor, compania destinatar); cu **Shipment Payer** *Third Party* plătește tot compania.
+- **Atenție**: DPD publică o singură adresă API; comutarea metodei pe *Test Environment* nu ferește apelurile de contul real, doar credențialele.
+- **Neacoperit**: AWB în format HTML, listă de lockere și de puncte de ridicare, expediere cu dimensiuni, notă de restituire, id de locker în AWB, restricționare la un singur punct de ridicare. Fluxul pas cu pas este în fișa consultantului.
 
 #### 3. Dependențe
 
@@ -30,7 +32,7 @@ Funcționalități explicit neacoperite (conform DESCRIPTION.md): generare AWB �
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, secțiunea „Componente Cheie" este omisă deoarece fișierul `readme/DESCRIPTION.md` acoperă „Sumarul" și „Funcționalitățile Cheie", iar componentele tehnice nu sunt cerute explicit în Readme.
+Conform fluxului de ingestie, secțiunea „Componente Cheie" este omisă: `readme/DESCRIPTION.md` acoperă Sumarul și Funcționalitățile Cheie, iar componentele tehnice nu sunt cerute explicit în Readme.
 
 #### 5. Conexiuni
 

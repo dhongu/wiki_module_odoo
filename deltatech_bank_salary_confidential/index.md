@@ -1,10 +1,11 @@
 # Confidential Salary Payments in Bank Statements (localizat la `deltatech_bank_salary_confidential/index.md`)
 
 - **Nume Tehnic:** `deltatech_bank_salary_confidential`
-- **Versiune:** `19.0.1.0.1`
-- **Cale:** [https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_bank_salary_confidential](https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_bank_salary_confidential)
+- **Versiune:** `20.0.1.0.6`
+- **Cale:** [https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_bank_salary_confidential](https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_bank_salary_confidential)
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_bank_salary_confidential`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -18,6 +19,7 @@ Modulul păstrează confidențialitatea plăților de salarii atunci când linii
 - Jurnalul contabil generat folosește de asemenea eticheta anonimizată, fără detalii personale pe nota contabilă.
 - Mesaj automat pe factură/notă contabilă care confirmă anonimizarea și validarea automată prin modelul de reconciliere folosit.
 - Excludere din procesare via cheia de context `skip_salary_anonymization`.
+- Liniile create de butonul *Test* al importului (dry-run, anulat la final) nu sunt anonimizate și nici reconciliate.
 - Suport pentru modele cu declanșator manual: anonimizarea și reconcilierea au loc când utilizatorul aplică modelul din widget-ul de reconciliere bancară.
 
 #### 3. Dependențe

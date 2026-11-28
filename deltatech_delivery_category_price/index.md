@@ -1,22 +1,24 @@
-# Deltatech Delivery Category Price (localizat la `deltatech_delivery_category_price/index.md`)
+# Delivery Price by Category (localizat la `deltatech_delivery_category_price/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_category_price`
-- **Versiune:** `19.0.1.0.1`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_category_price
+- **Versiune:** `20.0.1.0.8`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/20.0/deltatech_delivery_category_price
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_category_price`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul calculează tariful de livrare pentru comenzile din magazinul online pe baza categoriilor de website ale produselor din coș, nu pe baza categoriilor contabile interne (adesea prea generice, de ex. o singură categorie „Bunuri" pentru tot catalogul) sau a unei potriviri fragile după numele produsului. Astfel, echipa de vânzări poate configura prețuri de transport realiste pentru categorii distincte de produse (de exemplu saltele, paturi), inclusiv tarife pe tranșe de greutate, fără să depindă de structura contabilă a catalogului.
+Modulul calculează tarifele de livrare din magazinul online pe baza categoriilor de produse de website ale articolelor din coș, nu pe baza categoriilor contabile (adesea generice) sau a potrivirii fragile după nume. Fiecare metodă de livrare poate avea o listă de tarife pe categorii, iar echipa de vânzări vede clar pe comandă dacă s-a cerut manevrare.
 
 #### 2. Funcționalități Cheie
 
-- Fiecare metodă de livrare poate avea propria listă de tarife pe categorii de website: preț fix pentru una sau mai multe categorii (ex. „Saltele", „Paturi") sau tarif pe tranșe de greutate pentru alte categorii (ex. lenjerie, accesorii).
-- Când o comandă se potrivește cu mai multe tarife, se aplică prețul cel mai mare, nu suma lor — evitând dubla taxare atunci când clientul cumpără, de exemplu, atât o saltea cât și un pat în aceeași comandă.
-- Dacă nicio configurare de tarif nu se potrivește comenzii (sau greutatea depășește toate tranșele configurate), curierul revine la un preț implicit configurabil, iar pagina de finalizare a comenzii afișează clar „Se comunică înainte de livrare" în loc de mesajul „Gratuit", care ar induce în eroare clientul.
-- O bifă opțională „handling" (manipulare) poate fi oferită la finalizarea comenzii, adăugând un supliment configurabil doar peste tarifele fixe pe categorie (nu și peste tarifele pe greutate sau prețul implicit).
-- Solicitarea de handling și suma aferentă sunt afișate direct pe comanda de vânzare, pentru vizibilitate completă a echipei de vânzări.
+- **Tarife pe categorii**: preț fix pentru una sau mai multe categorii de website (subcategoriile sunt incluse) sau tarif în funcție de greutate, cu praguri configurabile (*Up to (kg)* și *Price*); se folosește prima treaptă care acoperă greutatea totală a produselor din categoriile tarifului.
+- **Cel mai mare tarif, nu suma**: dacă mai multe tarife se potrivesc coșului, se percepe cel mai mare (ex. saltea 300 + pat 350 = 350).
+- **Preț implicit**: dacă niciun tarif nu se potrivește (sau greutatea depășește toate treptele și nimic mai mare nu se aplică), se percepe prețul implicit, iar în checkout apare „Communicated before delivery" în loc de „Free"; echipa poate comunica sau împărți manual expedierea.
+- **Manevrare opțională**: bifă „Add handling" în checkout, cu taxă configurabilă, adăugată doar peste tarifele fixe pe categorie (nu peste tarifele pe greutate sau prețul implicit); cererea și suma apar pe comanda de vânzare (banner, câmpurile *Delivery handling* și *Handling cost* în tab-ul *Other Info*), suma fiind stocată la momentul comenzii.
+- **Configurare**: *Website > Configuration > eCommerce > Delivery Methods* (sau *Sales > Configuration > Sales Orders > Delivery Methods*), **Provider** *Category price (website)*, tab-ul **Category tariffs**; tarifele sunt în moneda companiei și se convertesc pentru liste de prețuri în altă monedă.
+- **Limitare**: la tarifele pe greutate coloana *Price* din listă rămâne 0.00, prețurile fiind în treptele de greutate.
 
 #### 3. Dependențe
 
@@ -25,7 +27,7 @@ Acest modul calculează tariful de livrare pentru comenzile din magazinul online
 
 #### 4. Componente Cheie
 
-Detaliile componentelor tehnice nu sunt documentate aici, deoarece fișierul `readme/DESCRIPTION.md` acoperă scopul și funcționalitățile modulului și nu solicită explicit analiza codului pentru această secțiune.
+Conform fluxului de ingestie, secțiunea „Componente Cheie" este omisă: `readme/DESCRIPTION.md` acoperă Sumarul și Funcționalitățile Cheie, iar componentele tehnice nu sunt cerute explicit în Readme.
 
 #### 5. Conexiuni
 

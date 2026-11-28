@@ -1,21 +1,21 @@
-# Deltatech Delivery IOT (localizat la `deltatech_delivery_iot/index.md`)
+# Delivery IoT Printers per User (localizat la `deltatech_delivery_iot/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_iot`
-- **Versiune:** `19.0.0.0.2`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_delivery_iot
+- **Versiune:** `20.0.0.0.4`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_delivery_iot
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_delivery_iot`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Modulul permite restricționarea imprimantelor IoT folosite la tipărirea automată a etichetelor de expediere, astfel încât fiecare utilizator să vadă și să folosească doar imprimantele care i-au fost atribuite explicit. Este util în depozite cu mai multe stații de ambalare, fiecare echipată cu propria imprimantă IoT, pentru a evita ca etichetele unui operator să iasă la imprimanta altui operator.
+Modulul atribuie imprimante IoT utilizatorilor, astfel încât fiecare operator din depozit să tipărească etichetele de expediere la imprimanta de lângă propria stație, nu la imprimanta de care este atașat raportul. Este util în depozite cu mai multe stații de ambalare, evitând ca etichetele unui operator să iasă la imprimanta altuia.
 
 #### 2. Funcționalități Cheie
 
-- Atribuirea unuia sau mai multor utilizatori fiecărei imprimante IoT (`iot.device`), direct din formularul dispozitivului.
-- Filtrarea automată a imprimantelor propuse la tipărirea etichetelor de expediere, păstrând doar imprimantele atribuite utilizatorului curent (dacă cel puțin o imprimantă din raport are utilizatori asignați).
-- Filtrarea listei de imprimante afișate în dialogul de selecție a imprimantei (introdus în Odoo 19 pentru tipărirea IoT), astfel încât un utilizator să nu poată alege imprimanta altui utilizator.
-- Respectarea alegerii explicite a utilizatorului atunci când imprimanta este selectată manual (`data['device_id']`), fără suprascriere de către filtrul automat.
+- Câmpul **Users** pe formularul dispozitivului IoT (`iot.device`), pentru a atribui imprimanta unuia sau mai multor utilizatori.
+- Regulă deliberat îngustă: dacă cel puțin o imprimantă a raportului are utilizatori atribuiți, rămân doar imprimantele care îl listează pe utilizatorul curent, iar cele fără utilizatori sunt excluse. Dacă nicio imprimantă nu are utilizatori, nu se filtrează nimic și rămâne comportamentul standard — astfel o imprimantă atribuită unei singure persoane nu blochează tipărirea pentru ceilalți.
+- Dialogul de selecție a imprimantei (deschis la tipărirea unui raport legat de imprimante) oferă doar imprimantele permise utilizatorului curent, iar prima sa imprimantă este preselectată când nu se aplică o alegere anterioară.
+- Alegerea explicită a utilizatorului (`data['device_id']`) nu este suprascrisă de filtrul automat.
 
 #### 3. Dependențe
 
@@ -25,19 +25,19 @@ Modulul permite restricționarea imprimantelor IoT folosite la tipărirea automa
 
 **Modele**
 
-- `iot.device` (extindere): adaugă câmpul `user_ids` (Many2many către `res.users`, exclude utilizatorii partajați/portal) pentru a atribui imprimanta unuia sau mai multor utilizatori interni.
-- `ir.actions.report` (extindere): adaugă logica de filtrare a imprimantelor IoT pe baza utilizatorului curent, atât la generarea directă a raportului (`report_action`), cât și în dialogul de selecție a imprimantei (`get_action_wizard`); include și un hook `_get_report_from_name` care poate sări peste raportul de etichete de expediere via contextul `skip_report_shipping_labels`.
+- `iot.device` (extindere): adaugă câmpul `user_ids` (Many2many către `res.users`, exclude utilizatorii partajați/portal).
+- `ir.actions.report` (extindere): filtrarea imprimantelor IoT pe baza utilizatorului curent, la generarea directă a raportului și în dialogul de selecție a imprimantei; include un hook `_get_report_from_name` care poate sări peste raportul de etichete de expediere prin contextul `skip_report_shipping_labels`.
 
 **Vizualizări**
 
-- `iot_device_view_form`: extinde formularul standard al dispozitivului IoT (`iot.iot_device_view_form`), adăugând câmpul `user_ids` ca tag-uri many2many lângă identificatorul dispozitivului.
+- `iot_device_view_form`: extinde formularul dispozitivului IoT, adăugând `user_ids` ca tag-uri many2many.
 
 **Acțiuni Automate / Acțiuni Server**
 
-Modulul nu definește sarcini `ir.cron`, reguli `base.automation` sau acțiuni server; logica de filtrare rulează sincron la apelarea acțiunilor de tipărire.
+Modulul nu definește sarcini `ir.cron`, reguli `base.automation` sau acțiuni server.
 
 #### 5. Conexiuni
 
 - `delivery_iot`: modulul de bază care oferă tipărirea automată prin imprimante IoT; acest modul îi adaugă restricția pe utilizator.
-- `iot`: furnizează modelul `iot.device` și dialogul de selecție a imprimantei (`select.printers.wizard`) extinse de acest modul.
+- `iot`: furnizează modelul `iot.device` și dialogul de selecție a imprimantei extinse de acest modul.
 - `stock`: fluxul de expediere (`stock.picking`) declanșează tipărirea etichetelor filtrate de acest modul.

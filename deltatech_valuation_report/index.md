@@ -1,10 +1,10 @@
 # Product Valuation Check Report (localizat la `deltatech_valuation_report/index.md`)
 
 - **Nume Tehnic:** `deltatech_valuation_report`
-- **Versiune:** `19.0.0.0.2`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_valuation_report
+- **Versiune:** `20.0.0.0.4`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_valuation_report
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_valuation_report`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar

@@ -1,22 +1,24 @@
 # Delivery in locker - website (localizat la `deltatech_delivery_locker_website/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_locker_website`
-- **Versiune:** `19.0.0.0.9`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_locker_website
+- **Versiune:** `20.0.0.0.12`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/20.0/deltatech_delivery_locker_website
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_locker_website`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul extinde funcționalitatea de livrare în locker (punct de ridicare) pentru interfața de website și eCommerce. Rolul său principal este să facă legătura între gestiunea de bază a lockerelor și fluxul de comandă online (`website_sale`), astfel încât metodele de livrare să fie filtrate corect în pagina de checkout, în funcție de compatibilitatea produselor din coș. În acest fel, clientul care plasează o comandă online vede doar opțiunile de livrare relevante și are o experiență fluidă atunci când alege un punct de ridicare.
+Acest modul aduce livrarea în locker (punct de ridicare) în magazinul online. Leagă gestiunea de bază a lockerelor de fluxul de comandă `website_sale`, astfel încât metodele de livrare din checkout să fie filtrate după compatibilitatea produselor din coș. Clientul vede doar opțiunile relevante și alege fluid punctul de ridicare.
 
 #### 2. Funcționalități Cheie
 
-- **Filtrare inteligentă a metodelor de livrare**: filtrează automat metodele de livrare disponibile în pagina de checkout în funcție de compatibilitatea produselor. Dacă un produs stocabil din coș este marcat ca nepotrivit pentru livrarea în locker (`for_locker = False`), curierii care au activată opțiunea „Use Locker” sunt ascunși.
-- **Context de checkout**: furnizează pagina de checkout cu informații suplimentare privind compatibilitatea coșului curent pentru livrarea în locker (`for_locker` în valorile paginii).
-- **Badge vizual „Locker”**: afișează (opțional, prin funcționalități de personalizare website) un badge pe cardul de produs și pe pagina de produs pentru articolele care pot fi livrate în locker.
-- **Integrare eCommerce**: asigură puntea între gestiunea de bază a lockerelor și fluxul Odoo `website_sale`, pentru o experiență coerentă la selectarea punctelor de ridicare.
-- **Dependențe optimizate**: este conceput să funcționeze împreună cu `website_sale`, păstrând în același timp modulul de bază [deltatech_delivery_locker](../deltatech_delivery_locker/index.md) independent de componentele de eCommerce.
+- **Filtrare a metodelor de livrare:** dacă un produs stocabil din coș este marcat nepotrivit pentru locker (`for_locker = False`), metodele cu **Use Locker** sunt ascunse în checkout.
+- **Alegerea lockerului:** pentru o metodă cu locker, clientul apasă **Select a location**, alege punctul din listă sau de pe hartă (**Choose this location**), iar lockerul devine adresa de livrare a comenzii; pe comandă apar bannerul „Delivery to Locker" și câmpul **Locker**.
+- **Context de checkout:** pagina de checkout primește indicatorul `for_locker` pentru coșul curent.
+- **Insignă „Locker":** opțională, pe cardul și pe pagina produsului pentru articolele livrabile în locker; se activează din vizualizările tehnice (inactivă implicit).
+- **Locker unic până la AWB:** selecția din magazin, adresa de livrare și AWB-ul citesc aceeași valoare, deci coletul pleacă la lockerul ales de client.
+- **Dependențe separate:** modulul de bază [deltatech_delivery_locker](../deltatech_delivery_locker/index.md) rămâne independent de eCommerce. Fluxul pas cu pas este în [fișa consultantului](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -26,23 +28,20 @@ Acest modul extinde funcționalitatea de livrare în locker (punct de ridicare) 
 
 #### 4. Componente Cheie
 
-Conform `readme/DESCRIPTION.md`, secțiunile de Sumar și Funcționalități Cheie provin din readme; suplimentar, câmpurile HISTORY.md și codul sursă indică următoarele componente tehnice relevante.
-
 **Modele**
 
-- `sale.order` (extindere): adaugă metoda `_get_delivery_methods()`, care exclude din lista de curieri disponibili pe cei cu `use_locker` activat dacă în comandă există cel puțin un produs stocabil marcat `for_locker = False`. Câmpul `locker` este definit ca derivat (calculat, cu invers) în [deltatech_delivery_locker](../deltatech_delivery_locker/index.md) și nu mai este redefinit aici.
+- `sale.order` (extindere): `_get_delivery_methods()` exclude metodele cu `use_locker` dacă în comandă există un produs stocabil cu `for_locker = False`.
 
 **Controlere**
 
-- `WebsiteSaleLocker` (extinde `website_sale.WebsiteSale`): suprascrie `shop_checkout` (elimină parametrul `express` la apelul standard) și `_prepare_checkout_page_values`, adăugând în valorile paginii de checkout indicatorul `for_locker`, calculat pe baza compatibilității tuturor produselor stocabile din comandă.
+- `WebsiteSaleLocker` (extinde `website_sale.WebsiteSale`): adaugă în valorile paginii de checkout indicatorul `for_locker`, calculat pe produsele stocabile din comandă.
 
 **Vizualizări**
 
-- `products_item_locker_badge_on_card` (moștenește `website_sale.products_item`, inactiv implicit, activabil din personalizarea temei): afișează un badge „Locker” pe cardul de produs din listare, pentru produsele cu `for_locker = True`.
-- `product_locker_badge_on_pdp` (moștenește `website_sale.product`, inactiv implicit, activabil din personalizarea temei): afișează același badge pe pagina de detaliu a produsului.
+- `views/templates.xml`: insigna „Locker" pe cardul de produs și pe pagina produsului (`products_item_locker_badge_on_card`, `product_locker_badge_on_pdp`), inactive implicit.
 
 #### 5. Conexiuni
 
-- [deltatech_delivery_locker](../deltatech_delivery_locker/index.md): modulul de bază pentru gestiunea livrării în locker, pe care acest modul îl extinde pentru website/eCommerce.
-- [deltatech_website_city](../deltatech_website_city/index.md): componenta de website pentru selecția localității, utilizată în fluxul de checkout.
-- `website_sale`: fluxul standard Odoo de eCommerce în care sunt filtrate metodele de livrare și în care se afișează badge-urile de produs.
+- [deltatech_delivery_locker](../deltatech_delivery_locker/index.md): modulul de bază al livrării în locker, extins pentru website.
+- [deltatech_website_city](../deltatech_website_city/index.md): selecția localității în checkout.
+- `website_sale`: fluxul standard eCommerce în care se filtrează metodele de livrare și se afișează insignele.

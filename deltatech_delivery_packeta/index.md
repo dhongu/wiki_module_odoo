@@ -1,10 +1,11 @@
 # Packeta Shipping (localizat la `deltatech_delivery_packeta/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_packeta`
-- **Versiune:** `19.0.1.4.1`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_packeta
+- **Versiune:** `20.0.1.5.7`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop_delivery/tree/20.0/deltatech_delivery_packeta`
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_packeta`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -36,7 +37,14 @@ Modulul **Packeta Shipping**, dezvoltat de Terrabit, oferă o integrare complet�
 
 *Limitări (versiunea curentă):* nu sunt incluse calculul automat al tarifelor (Get rates) și opțiunile de livrare sâmbăta sau deschiderea coletului la livrare.
 
-*Notă de corecție:* `readme/DESCRIPTION.md` menționează încă „Odoo 18 Interactive Map" și „Odoo 18 checkout" — referințe rămase de la o versiune anterioară a textului. Modulul rulează pe Odoo 19.0, iar funcționalitatea de hartă în checkout este validă și pe această versiune; textul de mai sus a fost corectat pentru a reflecta realitatea curentă.
+*Detalii operaționale (fluxul pas-cu-pas e în fișa consultantului):*
+
+- Pe metoda de livrare, fila **Packeta**: cheie API, parolă API, e-shop, serviciu și **Fix Price** (Packeta nu returnează tarif prin acest modul, deci costul pe comandă e prețul fix al metodei).
+- **Initialization** importă curierii parteneri ca servicii (*Inventar > Configurare > Livrare > Carrier Services*); serviciul se alege pentru livrare la domiciliu și se lasă gol pentru puncte de ridicare.
+- Cu **Use Locker** bifat, **Get Lockers** importă punctele și Z-BOX-urile în *Delivery Lockers*; un al doilea import le actualizează, fără dubluri.
+- Rambursul se calculează din ultima plată a comenzii; se poate corecta cu **Manual Value to Collect**.
+- Anularea (**Cancel AWB**) șterge referința de urmărire și eticheta; dacă Packeta raportează un răspuns pierdut, nu se reîncearcă, ci se verifică mai întâi coletul la Packeta.
+- Fila **History** arată evenimentele Packeta și ale curierului partener, citite la **Refresh** sau printr-o acțiune programată.
 
 #### 3. Dependențe
 
@@ -48,9 +56,9 @@ Modulul **Packeta Shipping**, dezvoltat de Terrabit, oferă o integrare complet�
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, secțiunea „Sumar" și „Funcționalități Cheie" provin din `readme/DESCRIPTION.md`, prin urmare analiza detaliată a codului (Modele, Vizualizări, Acțiuni Automate) a fost omisă. Singura informație structurală derivată din manifest este fișierul de date `views/delivery_view.xml`, care extinde vizualizarea de configurare a metodei de livrare (`delivery.carrier`) cu o pagină dedicată „Packeta" (chei API, plătitor transport, serviciu, e-shop, formate/tip etichetă, folosirea locațiilor PUDO/Z-BOX etc.), vizibilă doar când `delivery_type = 'packeta'`.
+Conform fluxului de ingestie, secțiunea „Sumar" și „Funcționalități Cheie" provin din `readme/DESCRIPTION.md` (cu detalii din `USAGE.md`), prin urmare analiza detaliată a codului (Modele, Vizualizări, Acțiuni Automate) a fost omisă. Singura informație structurală derivată din manifest este fișierul de date `views/delivery_view.xml`, care extinde vizualizarea de configurare a metodei de livrare (`delivery.carrier`) cu o pagină dedicată „Packeta" (chei API, plătitor transport, serviciu, e-shop, formate/tip etichetă, folosirea locațiilor PUDO/Z-BOX etc.), vizibilă doar când `delivery_type = 'packeta'`.
 
 #### 5. Conexiuni
 
 - [deltatech_delivery_locker](../deltatech_delivery_locker/index.md): necesar pentru selectarea punctelor de ridicare (PUDO/Z-BOX) direct pe hartă în checkout; oferă interfața unificată și integrarea hărții pentru mai mulți furnizori de livrare.
-- `deltatech_product_dimension`: oferă dimensiunile produsului (lungime/lățime/înălțime) folosite la calculul automat al dimensiunilor coletului.
+- [deltatech_product_dimension](../deltatech_product_dimension/index.md): oferă dimensiunile produsului (lungime/lățime/înălțime) folosite la calculul automat al dimensiunilor coletului.

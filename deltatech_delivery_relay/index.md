@@ -1,22 +1,23 @@
-# Relay Delivery Shipping (localizat la `deltatech_delivery_relay/index.md`)
+# Relay Delivery – AWB Attach (localizat la `deltatech_delivery_relay/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_relay`
-- **Versiune:** `19.0.0.0.4`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_relay
+- **Versiune:** `20.0.0.0.9`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/20.0/deltatech_delivery_relay
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_relay`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul optimizează operațiunile de expediere prin atașarea automată a etichetelor AWB (Air Waybill) în format PDF direct din sistemele externe de logistică sau ale curierilor în Odoo. Din punct de vedere de business, această integrare asigură gestionarea și accesibilitatea centralizată a întregii documentații de expediere, reducând timpul petrecut de personalul din depozit pentru descărcarea manuală a etichetelor din portalurile externe.
+Modulul atașează automat etichetele AWB în format PDF, primite din sisteme externe de logistică sau de la curieri, direct în Odoo. Documentele de expediere sunt astfel centralizate și accesibile, iar personalul din depozit nu mai caută etichetele pe portaluri externe.
 
 #### 2. Funcționalități Cheie
 
-- Documentație de expediere automatizată: primește și stochează instantaneu etichetele AWB în Odoo, pentru tipărire și utilizare imediată.
-- Viteză operațională îmbunătățită: elimină nevoia personalului din depozit de a comuta între platforme diferite pentru a obține etichetele de expediere.
-- Management logistic centralizat: menține o evidență completă și ușor de căutat a tuturor etichetelor de expediere în cadrul ERP-ului Odoo.
-- Acuratețe sporită a livrării: asigură asocierea corectă a etichetelor generate de curier cu comenzile de livrare potrivite.
-- Integrare logistică scalabilă: integrare facilă cu o varietate de furnizori externi de livrare printr-un sistem consistent de gestionare a etichetelor.
+- Tip de metodă de livrare care nu apelează niciun curier: eticheta AWB (PDF) se atașează comenzii de vânzare, la alegerea metodei de livrare, automat dintr-un fișier `awb_…` primit pe comandă sau din **Detalii transportator** pe livrare.
+- Eticheta trece pe livrare și se tipărește cu **Tipărire AWB**; clientul o poate descărca din portal.
+- Documentație AWB centralizată: etichete căutabile în Odoo, asociate corect livrărilor.
+- Integrare simplă cu diverși furnizori externi printr-un mecanism comun de gestionare a etichetelor.
+- Fluxul pas cu pas este în [fișa consultantului](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -26,8 +27,8 @@ Acest modul optimizează operațiunile de expediere prin atașarea automată a e
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, componentele tehnice nu sunt detaliate deoarece modulul dispune de un fișier `readme/DESCRIPTION.md` care acoperă Sumarul și Funcționalitățile Cheie, iar acesta nu solicită explicit analiza codului pentru această secțiune.
+Conform fluxului de ingestie, deoarece există `readme/DESCRIPTION.md`, analiza codului pentru această secțiune este omisă. Pentru orientare, modulul extinde `delivery.carrier`, `delivery.carrier.service`, `sale.order`, `stock.package.type` și `stock.picking`, și adaugă șabloanele de portal din `views/portal_templates.xml`.
 
 #### 5. Conexiuni
 
-- [deltatech_delivery](../deltatech_delivery/index.md): modul de bază pentru livrare pe care se sprijină gestionarea curierilor și a comenzilor de livrare extinse de acest modul.
+- [deltatech_delivery](../deltatech_delivery/index.md): modul de bază pentru livrare, pe care se sprijină gestionarea curierilor și a livrărilor.

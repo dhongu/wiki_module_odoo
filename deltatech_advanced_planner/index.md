@@ -1,10 +1,10 @@
 # Deltatech Advanced Planner (localizat la `deltatech_advanced_planner/index.md`)
 
 - **Nume Tehnic:** `deltatech_advanced_planner`
-- **Versiune:** `19.0.1.3.1`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_advanced_planner
+- **Versiune:** `20.0.1.14.0`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_advanced_planner
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_advanced_planner`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -38,19 +38,45 @@ Deltatech Advanced Planner este un planificator avansat de stoc care răspunde l
 #### 3. Dependențe
 
 - `sale_management`
+- `sale_stock`
 - `mrp`
 - `purchase`
+- `purchase_stock`
 - `stock`
 - `resource`
 - `mail`
 - `web_gantt`
+- [deltatech_web_kpi_cards](../deltatech_web_kpi_cards/index.md)
+- [deltatech_purchase_lead_time](../deltatech_purchase_lead_time/index.md)
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, secțiunile de mai sus (Sumar și Funcționalități Cheie) sunt preluate din `readme/DESCRIPTION.md`, iar acesta nu solicită explicit detalierea Componentelor Cheie (Modele, Vizualizări, Acțiuni Automate). În consecință, analiza dedicată a codului pentru această secțiune a fost omisă intenționat.
+Sumarul și funcționalitățile provin din `readme/DESCRIPTION.md`, completat din `USAGE.md` / `CONFIGURE.md` (interfața este în engleză în cod, cu traducerea română în `i18n/ro.po`). DESCRIPTION.md nu cere detalierea componentelor; mai jos sunt doar reperele tehnice principale, din cod.
 
-Notă: din `readme/DESCRIPTION.md` reies, ca elemente tehnice menționate explicit, modelele `advanced.planned.order` (comanda planificată), `advanced.planner.log` (logul de execuție), precum și un job `ir.cron` zilnic de detecție a abaterilor.
+**Modele**
+
+- `advanced.planned.order`: comanda planificată (ciclul `draft → planned → done`, fixare prin `is_fixed`, legătură cu PO/MO).
+- `advanced.planner.engine` (model abstract) și `advanced.planner.log`: motorul de planificare și jurnalul de execuție.
+- `advanced.workcenter.load`, `advanced.crp.slot`, `advanced.workcenter.efficiency`: încărcarea și eficiența posturilor de lucru (RCCP/CRP).
+- `advanced.material.situation` (+ `.line`) și `advanced.stock.projection` (+ `.line`): Situația Material și Stocul Proiectat Agregat.
+- Wizarduri: `advanced.planner.wizard`, `advanced.global.planner.wizard`, `advanced.crp.leveling.wizard`, `advanced.ctp.wizard`, `advanced.report.wizard`, `advanced.material.situation.snapshot.wizard`.
+- Extinse: `sale.order`, `sale.order.line`, `purchase.order`, `purchase.order.line`, `mrp.production`, `mrp.workcenter`, `stock.move`, `stock.picking`, `stock.warehouse.orderpoint`, `product.product`, `product.template`, `res.config.settings`.
+
+**Vizualizări**
+
+- Meniul rădăcină al planificatorului cu: panou de bord (componentă OWL), tabloul riscului de livrare, comenzi planificate (listă, pivot, Gantt), planificare globală, Situație Material și snapshot-uri, stoc proiectat, încărcarea posturilor de lucru, CRP, eficiența posturilor, nivelare CRP și rapoarte.
+- Banner de status și rezultatul planificării pe formularul comenzii de vânzare; raportul PDF „Plan Livrări" și raportul de situație material.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- `ir_cron_detect_deviations` — detecția zilnică a abaterilor (PO nelansat, PO întârziat, MO blocat), cu note în chatter și activități.
+- `ir_cron_replan_active_orders` — replanificarea nocturnă a comenzilor de vânzare active.
+- `ir_cron_clean_planner_logs` — curățarea jurnalelor vechi ale planificatorului.
+- Acțiune de server pentru planificare bulk din lista comenzilor de vânzare.
 
 #### 5. Conexiuni
 
-Nicio conexiune către alte module documentate în wiki nu a fost confirmată în manifest sau în cod. Modulele de referință menționate în documentație pentru cerințe APS avansate (`APS4MFG`, `frePPLe`) sunt sisteme externe, nu module din acest monorepo, și nu au pagină wiki.
+- [deltatech_web_kpi_cards](../deltatech_web_kpi_cards/index.md): cardurile KPI folosite de panoul de bord al planificatorului.
+- [deltatech_purchase_lead_time](../deltatech_purchase_lead_time/index.md): termenele de aprovizionare ale furnizorilor, luate în calcul la planificarea înapoi.
+
+Modulele `APS4MFG` și `frePPLe`, menționate în documentație pentru cerințe APS avansate, sunt sisteme externe fără pagină wiki.

@@ -1,41 +1,26 @@
 # Nemo Express Shipping (localizat la `deltatech_delivery_ne/index.md`)
 
 - **Nume Tehnic:** `deltatech_delivery_ne`
-- **Versiune:** `19.0.0.0.3`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_delivery/tree/19.0/deltatech_delivery_ne
+- **Versiune:** `20.0.0.0.8`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop_delivery/tree/20.0/deltatech_delivery_ne`
 - **Cale Locală:** `odoo-addons/bitshop_delivery/deltatech_delivery_ne`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul conectează Odoo la serviciul de curierat **Nemo Express**, permițând expedierea coletelor direct din livrările de stoc și urmărirea lor online. Practic, adaugă Nemo Express ca opțiune de transportator, iar generarea AWB-urilor și schimbul de date cu API-ul curierului se fac prin infrastructura comună Courier Manager, deja folosită de alți curieri din suita Terrabit.
+Modulul permite expedierea cu Nemo Express direct din livrările Odoo: tariful pe comanda de vânzare, AWB-ul și eticheta PDF, urmărirea și anularea, prin API-ul Nemo Express. Nemo Express funcționează pe platforma Courier Manager, deci modulul folosește conectorul `deltatech_delivery_cm`, cu adresa Nemo Express deja setată.
 
 #### 2. Funcționalități Cheie
 
-- Generare AWB în format PDF
-- Generare AWB în format ZPL
-- Ștergere AWB
-- Obținere tarife (rate) pentru o expediere
-- Obținere listă orașe
-- Obținere listă județe
-- Obținere istoric status pentru o expediere
-- Expediere cu mai multe colete (multi-parcel)
-- Expediere cu valoare declarată (asigurare)
-- Expediere cu ramburs (cash on delivery)
-- Expediere cu id de oraș și județ
-- Expediere cu nume de oraș fără id de oraș
-
-Funcționalități **neacoperite** momentan de integrare (conform DESCRIPTION.md):
-
-- Generare AWB în format HTML
-- Listă lockere
-- Listă puncte de ridicare (pickup point)
-- Expediere cu dimensiuni
-- Notă de restituire în AWB
-- Opțiune livrare sâmbăta
-- Opțiune "pachet deschis"
-- Livrare limitată strict la punctul de ridicare indicat
-- Trimiterea id-ului de locker în AWB
+- Tarif pe comanda de vânzare calculat de Nemo Express, sau preț fix: întotdeauna ori doar când tariful curierului e sub o limită de preț.
+- AWB emis din livrare și confirmat pentru ridicare, cu etichetă PDF în format A4, A6 sau patru etichete A6 pe o pagină A4; AWB-ul se poate anula, iar eticheta se salvează la emitere.
+- Serviciile Nemo Express ale contului se importă (buton **Initialization**), iar pe fiecare metodă de livrare se alege unul; **Get city** adaugă localitățile lipsă din nomenclatorul Odoo.
+- Opțiuni de expediere: mai multe colete, valoare declarată (asigurare), ramburs virat în cont bancar (metodele de plată tratate ca ramburs se aleg în configurare).
+- Urmărire: istoricul stărilor se citește de la Nemo Express și se scrie pe livrare, până la predare.
+- Configurare: *Inventar > Configurare > Livrare > Metode de livrare*, provider *Nemo Express*, fila **Nemo Express Configuration** (**API Key**; username și parolă sunt cerute de formular, dar API-ul folosește doar cheia).
+- Date trimise curierului: nume, adresă, localitate, județ, cod poștal și telefon ale expeditorului și destinatarului, numărul de colete, greutatea, valoarea declarată și rambursul.
+- Nesuportate: lockere și puncte de ridicare, etichete ZPL sau HTML, dimensiunile coletului, livrare sâmbăta, colet deschis, nota de restituire, link de urmărire pe site-ul Nemo Express.
 
 #### 3. Dependențe
 

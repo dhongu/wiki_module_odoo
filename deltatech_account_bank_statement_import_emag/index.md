@@ -1,86 +1,58 @@
 # eMAG Marketplace Statement Import (localizat la `deltatech_account_bank_statement_import_emag/index.md`)
 
 - **Nume Tehnic:** `deltatech_account_bank_statement_import_emag`
-- **Versiune:** `19.0.2.0.0`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_account_bank_statement_import_emag
+- **Versiune:** `20.0.2.1.0`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/20.0/deltatech_account_bank_statement_import_emag
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_account_bank_statement_import_emag`
-- **Ultima Ingestie:** `2026-09-19`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Comercianții care vând pe eMAG Marketplace nu încasează direct de la fiecare client: eMAG
-colectează încasările (card online și ramburs), își reține comisioanele și virează periodic o
-singură sumă către comerciant. Modulul importă raportul *Account statement details* (XLSX),
-descărcat exact cum vine din panoul de comerciant eMAG, direct ca extras de cont bancar — fără
-nicio mapare manuală de coloane — și creează câte un extras de cont pentru fiecare virare, cu
-liniile pregătite pentru reconciliere și clientul completat automat acolo unde referința permite.
+Comercianții care vând pe eMAG Marketplace nu încasează direct de la fiecare client: eMAG colectează încasările (card online și ramburs), își reține comisioanele și virează periodic o singură sumă către comerciant. Modulul importă raportul *Account statement details* (XLSX), descărcat exact cum vine din panoul de comerciant eMAG, direct ca extras de cont bancar — fără nicio mapare manuală de coloane — și creează câte un extras pentru fiecare virare, cu liniile pregătite pentru reconciliere și clientul completat automat acolo unde referința permite. Modulul doar citește fișierul încărcat; nu se conectează la eMAG și nu trimite date în afara Odoo.
 
 #### 2. Funcționalități Cheie
 
-- **Import fișier original**: se încarcă raportul *Account statement details* exact cum vine de la
-  eMAG — rândurile de sold (inițial/final) de la începutul și sfârșitul fișierului sunt ignorate
-  automat.
-- **Detecție prin semnătură**: fișierul este recunoscut după un **set** de coloane obligatorii din
-  antet (Customer ID, Seller company, SAP document ID, Document code, Document amount, Clearing
-  document), indiferent de ordinea lor și în oricare foaie a fișierului — nu mai contează un prefix
-  fix de coloane în ordine, ca la versiunea anterioară. Detecția folosește helperul comun
-  `_statement_sheet_matching_header()` din
-  [deltatech_account_bank_statement_import](../deltatech_account_bank_statement_import/index.md),
-  folosit și de modulul Euplatesc.
-- **O linie de extras per virare**: liniile sunt grupate după *Clearing document*, deci un fișier
-  care acoperă mai multe virări produce câte un extras pentru fiecare, reconciliabil cu o singură
-  linie din extrasul bancar real.
-- **Semn corectat**: eMAG scrie sumele din propria perspectivă (încasările comerciantului apar cu
-  minus, documentele proprii ale eMAG cu plus); modulul inversează semnul, astfel încât încasările
-  intră în jurnal și virarea iese spre bancă.
-- **Verificare de închidere pe zero, obligatorie**: suma liniilor unei virări este verificată să fie
-  zero — linia de virare (`ZP`) este prin construcție negativul tuturor celorlalte. O sumă
-  diferită de zero înseamnă fișier incomplet, iar importul este refuzat. Din versiunea 2.0.0
-  verificarea **nu mai poate fi dezactivată** (câmpul `emag_check_balance` de pe jurnal a fost
-  eliminat) — un borderou tăiat se descarcă din nou, întreg, în loc să fie forțat parțial.
-- **Identificare automată a partenerului**: pe încasări și restituiri, referința este numărul
-  comenzii eMAG, căutat în comenzile de vânzare; pe documentele proprii ale eMAG (facturi de
-  comision), referința este numărul facturii, căutat în facturile de furnizor deja înregistrate.
-  Potrivirile ambigue lasă linia neasignată, pentru decizia operatorului.
-- **Protecție la duplicate**: fiecare linie primește un identificator unic de import bazat pe *SAP
-  document ID*; reimportul aceluiași fișier este detectat.
-- **Interfață în română**: mesajele de eroare ale importului sunt traduse (`i18n/ro.po`).
+- **Import fișier original**: raportul se încarcă exact cum a fost descărcat; rândurile de sold de la începutul și sfârșitul fișierului sunt ignorate automat.
+- **Detecție prin semnătură**: fișierul este recunoscut după setul de coloane din antet (Customer ID, Seller company, SAP document ID, Document code, Document amount, Clearing document), în orice ordine și pe orice foaie, deci poate fi importat din orice jurnal de tip bancă, alături de alte formate de extras.
+- **Un extras per virare**: liniile sunt grupate după *Clearing document*; un fișier cu mai multe virări produce mai multe extrase, fiecare reconciliabil cu o singură linie bancară.
+- **Semn corectat**: eMAG scrie sumele din perspectiva proprie; semnul se inversează la import, astfel încât încasările intră, iar virarea iese spre bancă.
+- **Închidere pe zero, verificare obligatorie**: linia de virare (`ZP`) este negativul celorlalte; o sumă nenulă înseamnă fișier incomplet și importul este refuzat (verificarea nu poate fi dezactivată).
+- **Identificare automată a partenerului**: pe încasări și restituiri, după numărul comenzii eMAG (`client_order_ref` sau `name` pe `sale.order`); pe documentele proprii eMAG, după numărul facturii de furnizor deja înregistrate. Potrivirile ambigue rămân neasignate.
+- **Tipuri de linii**: încasări `KD` (card) și `KX` (ramburs), restituiri `ZC`, documente eMAG `DM` / `C3`, virarea `ZP`, reconciliată cu extrasul bancar real printr-un cont de viramente interne (581).
+- **Diferență de curs per virare**: pentru extrasele importate într-un jurnal în altă monedă decât cea a companiei (eMAG HU în HUF, eMAG BG în EUR), fiecare linie este convertită la cursul zilei ei, iar o notă contabilă pe 665/765, la data virării, aduce contul de decontare la zero în RON; butoanele **Exchange difference** și **Recompute exchange difference** apar pe extras.
+- **Protecție la duplicate**: identificator unic de import per *SAP document ID* (cu număr de apariție pentru liniile `ZP` cu același ID); reimportul aceluiași fișier este detectat.
+- **Situații care cer atenția operatorului**: linie peste soldul rămas al facturii (surplusul rămâne avans client) și diferență egală cu valoarea unui voucher eMAG (reconciliere parțială).
+- **Configurare**: jurnal de tip Bancă dedicat marketplace-ului, cu subcont propriu 5125 (sume în curs de decontare) și cont de suspend, **Bank Feeds = Import**. Fluxul pas cu pas este în fișa consultant.
 
 #### 3. Dependențe
 
 - `account_bank_statement_import`
+- `account_accountant`
 - `account_bank_statement_import_csv`
 - [deltatech_account_bank_statement_import](../deltatech_account_bank_statement_import/index.md)
 
-*Notă:* `account_bank_statement_import_csv` este inclus special pentru ordinea corectă de MRO —
-override-ul modulului trebuie să ruleze înaintea interceptorului CSV/XLSX standard.
+*Notă:* `account_bank_statement_import_csv` este inclus special pentru ordinea corectă de MRO — override-ul modulului trebuie să ruleze înaintea interceptorului CSV/XLSX standard. Dependență externă Python: `openpyxl`.
 
 #### 4. Componente Cheie
 
-Sumarul și funcționalitățile din secțiunile 1–2 provin din `readme/DESCRIPTION.md` (cu corectarea
-notată mai jos); pentru această secțiune s-a analizat suplimentar `models/account_journal.py`,
-fiindcă DESCRIPTION.md nu detaliază implementarea tehnică.
+Sumarul și funcționalitățile provin din `readme/DESCRIPTION.md`, completate din `USAGE.md`, `CONFIGURE.md` și `HISTORY.md`. Componentele de mai jos sunt menționate explicit în istoricul modulului (diferența de curs) sau reies din cod.
 
 **Modele**
 
-- `account.journal` (extins): adaugă formatul de import „eMAG Marketplace" în
-  `_get_bank_statements_available_import_formats()`; recunoaște fișierul prin
-  `_read_emag_file()`, care deleagă la helperul comun `_statement_sheet_matching_header()` cu
-  setul de coloane obligatorii `EMAG_REQUIRED_COLUMNS`; pentru fișierele recunoscute forțează
-  fluxul standard de import, ocolind wizardul de mapare CSV/XLSX (`_import_bank_statement`);
-  parsează antetul și grupează rândurile pe *Clearing document*, inversează semnul sumelor,
-  verifică închiderea pe zero și construiește un extras per virare (`_parse_emag_file`); asociază
-  partenerul fiecărei linii după numărul comenzii sau numărul facturii de furnizor
-  (`_emag_partner_from_row`).
+- `account.journal` (extins): adaugă formatul de import „eMAG Marketplace", recunoaște fișierul după setul de coloane obligatorii (`_read_emag_file`, prin helperul comun `_statement_sheet_matching_header()`), ocolește wizardul de mapare CSV/XLSX, grupează rândurile pe *Clearing document*, inversează semnul, verifică închiderea pe zero și construiește un extras per virare (`_parse_emag_file`); asociază partenerul după numărul comenzii sau al facturii de furnizor (`_emag_partner_from_row`).
+- `account.bank.statement` (extins): câmpurile `emag_exchange_move_id` (nota de diferență de curs) și `emag_exchange_applicable` (calculat: jurnal în valută, cu linii eMAG); calculează diferența de curs realizată pe contul de decontare și postează nota pe 665/765 (`_emag_exchange_difference`, `_emag_post_exchange_difference`, `action_emag_recompute_exchange_difference`).
 
-*Nu mai există câmpuri sau vizualizări proprii pe jurnal în această versiune: câmpul
-`emag_check_balance` și view-ul care îl afișa (`views/account_journal_views.xml`) au fost
-eliminate odată cu scoaterea opțiunii de dezactivare a verificării de sold.*
+**Vizualizări**
+
+- `view_bank_statement_form_emag_exchange`: extinde formularul extrasului bancar (`account_accountant.view_bank_statement_form_bank_rec_widget`) cu butonul **Recompute exchange difference** în antet și butonul inteligent **Exchange difference**, vizibile doar când se aplică.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Nu sunt definite `ir.cron`, `base.automation` sau `ir.actions.server` în acest modul.
 
 #### 5. Conexiuni
 
-- [deltatech_marketplace_emag](../deltatech_marketplace_emag/index.md): importă comenzile eMAG și
-  scrie numărul comenzii în referință — baza identificării automate a clientului la reconciliere.
-- [deltatech_account_bank_statement_import_euplatesc](../deltatech_account_bank_statement_import_euplatesc/index.md): același tipar de import prin semnătură de antet, pentru decontările Euplatesc, folosind același helper comun.
+- [deltatech_marketplace_emag](../deltatech_marketplace_emag/index.md): importă comenzile eMAG și scrie numărul comenzii în referință — baza identificării automate a clientului la reconciliere.
+- [deltatech_account_bank_statement_import_euplatesc](../deltatech_account_bank_statement_import_euplatesc/index.md): același tipar de import prin semnătură de antet, pentru decontările EuPlatesc.ro.
 - [deltatech_account_bank_statement_import_gls](../deltatech_account_bank_statement_import_gls/index.md): același tipar, pentru borderourile de ramburs GLS.
