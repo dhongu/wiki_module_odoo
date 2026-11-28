@@ -1,27 +1,30 @@
-# Products Alternative (localizat la `deltatech_alternative/index.md`)
+# Alternative Product Codes (localizat la `deltatech_alternative/index.md`)
 
 - **Nume Tehnic:** `deltatech_alternative`
-- **Versiune:** `19.0.2.1.1`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_alternative
+- **Versiune:** `20.0.2.2.1`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_alternative
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_alternative`
-- **Ultima Ingestie:** `2026-09-03`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Modulul permite gestiunea mai multor coduri alternative pentru același produs, astfel încât acesta să poată fi găsit indiferent de codul cu care este cunoscut — cod de furnizor, cod de producător, cod vechi (legacy) sau identificator specific unui client. Este util companiilor care lucrează cu nomenclatoare provenite din surse multiple, unde același articol circulă sub denumiri sau coduri diferite.
+Modulul permite gestiunea mai multor coduri alternative pentru același produs, astfel încât acesta să poată fi găsit indiferent de codul cu care este cunoscut: cod de furnizor, cod de producător, cod vechi (legacy) sau identificator specific unui client. Este util companiilor care lucrează cu nomenclatoare provenite din surse multiple, unde același articol circulă sub denumiri sau coduri diferite.
 
 #### 2. Funcționalități Cheie
 
-- Tab dedicat **Alternative** pe fișa produsului, unde se pot adăuga oricâte coduri suplimentare, reordona (prin drag handle) și marca individual ca ascunse din afișarea combinată (`hide`).
-- Câmp calculat **Alternative Code** (concatenarea codurilor vizibile, separate prin „; ”), afișat în lista de produse și pe fișa produsului, în secțiunea de informații generale.
-- Extinderea căutării de produs (`name_search`) astfel încât introducerea unui cod alternativ să returneze produsul potrivit, atât pentru șabloane de produs cât și pentru variante. Căutarea este opțională (dezactivată implicit) și configurabilă din Setări.
-- Coloană opțională **Alternative Code** (needit, ascunsă implicit) pe liniile de Comandă de Vânzare, Comandă de Achiziție și Mișcare de Stoc — se activează din meniul coloanelor opționale al listei de linii.
-- Câmp text liber **Used For** pe produs, pentru a nota utilizarea acestuia (ajută la identificare și la vânzarea încrucișată).
-- Configurare din **Setări > Inventar** (secțiunea injectată după *Unități de Măsură*):
-  - **Alternative Search** (`alternative.search_name`, implicit dezactivat) — activează scanarea codurilor alternative în căutarea de produse.
-  - **Alternative Limit** (`alternative.limit`, implicit 10) — numărul maxim de rezultate suplimentare din căutarea după cod alternativ.
-  - **Minimum Length** (`alternative.length_min`, implicit 3) — numărul minim de caractere introduse înainte ca această căutare să se declanșeze.
-  - Cei trei parametri sunt salvați ca `ir.config_parameter` și pot fi editați și direct din **Setări > Tehnic > Parametri > Parametri de Sistem**.
+- Tab dedicat **Alternative** pe fișa produsului (**Inventar > Produse > Produse** sau **Vânzări > Produse > Produse**), unde se pot adăuga oricâte coduri suplimentare, reordona prin drag handle și marca individual ca ascunse (`Hide`) din afișarea combinată.
+- Câmp calculat **Alternative Code**, care concatenează codurile vizibile; apare în lista de produse și în secțiunea de informații generale a fișei.
+- Căutarea de produs (șabloane și variante) returnează produsul și după un cod alternativ. Căutarea este opțională (dezactivată implicit) și se configurează din **Setări > Inventar**.
+- Coloană opțională **Alternative Code** (doar citire, ascunsă implicit) pe liniile de comandă de vânzare, comandă de achiziție și mișcări de stoc, activată din butonul coloanelor opționale.
+- Câmp text liber **Used For** pe produs, pentru a nota utilizarea articolului (ajută la identificare și vânzare încrucișată).
+- Acțiune programată zilnică (inactivă implicit) care separă codurile introduse pe aceeași linie cu `;` sau `,` în câte o înregistrare alternativă per cod, fără a crea coduri deja existente. Spațiile rămân parte din cod (de ex. numere OEM de tipul `366 200 05 01`). Se activează din **Setări > Tehnic > Acțiuni programate**.
+- Parametri din **Setări > Inventar** (după secțiunea *Unități de Măsură*), salvați ca parametri de sistem și editabili și din **Setări > Tehnic > Parametri de sistem**:
+  - **Alternative Search** (`alternative.search_name`, implicit dezactivat): scanarea codurilor alternative în căutarea de produse.
+  - **Alternative Limit** (`alternative.limit`, implicit 10): numărul maxim de rezultate suplimentare.
+  - **Minimum Length** (`alternative.length_min`, implicit 3): numărul minim de caractere înainte de declanșarea căutării.
+  - **Code Before Name** (`alternative.dropdown_code_first`, implicit dezactivat): lista de selecție a produsului afișează `[cod] nume`.
+  - **Show Stock in Dropdown** (`alternative.dropdown_show_qty`, implicit dezactivat): lista de selecție afișează cantitatea în stoc a produselor stocabile.
+- Pentru baze de date mari, codurile alternative folosesc un index trigram (GIN). Necesită extensia PostgreSQL `pg_trgm`, iar indexul include `unaccent` doar dacă funcția `public.unaccent(text)` este `IMMUTABLE` (pe odoo.sh este deja asigurat; pe instalări proprii se configurează după procedura din `readme/CONFIGURE.md`).
 
 #### 3. Dependențe
 
@@ -32,12 +35,22 @@ Modulul permite gestiunea mai multor coduri alternative pentru același produs, 
 
 #### 4. Componente Cheie
 
-- Model `product.alternative` (`_name = "product.alternative"`): stochează codurile alternative (`name`, `sequence`, `hide`), legate many2one de `product.template` (`product_tmpl_id`, `ondelete="cascade"`).
-- `ProductTemplate`: câmpul calculat/inversat `alternative_code` (compute `_compute_alternative_code`, inverse `_inverse_alternative_code`) sincronizează textul concatenat cu liniile `alternative_ids`; câmpul `used_for`.
-- `ProductTemplate.name_search` / `ProductProduct.name_search`: suprascriu căutarea standard pentru a include și potriviri pe `product.alternative.name`, condiționat de parametrul `alternative.search_name`.
-- `res.config.settings`: expune cei trei parametri de configurare (`alternative_search`, `alternative_limit`, `alternative_length_min`).
-- Câmpuri `related` `alternative_code` (needit, nestocat) pe `sale.order.line`, `purchase.order.line`, `stock.move` și `stock.move.line`, pentru afișare pe documente.
+**Modele**
+
+- `product.alternative`: stochează codurile alternative (`name`, `sequence`, `hide`), legate many2one de `product.template` (`product_tmpl_id`, ștergere în cascadă).
+- `product.template`: câmpul `alternative_code` (calculat și inversabil, sincronizat cu liniile `alternative_ids`) și câmpul `used_for`; suprascrie căutarea după nume.
+- `product.product`: extinde căutarea după nume cu potriviri pe codurile alternative.
+- `res.config.settings`: expune parametrii de configurare ai căutării.
+- `sale.order.line`, `purchase.order.line`, `stock.move`, `stock.move.line`: câmp `alternative_code` (related, nestocat) pentru afișare pe documente.
+
+**Vizualizări**
+
+- Vizualizări moștenite pe produs (șablon și variantă), `product.alternative`, linii de comandă de vânzare/achiziție, mișcări de stoc, transferuri și setările de Inventar.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- `ir_cron_split_alternative_codes`: acțiune programată zilnică, inactivă implicit, care împarte codurile multiple de pe o linie în înregistrări separate.
 
 #### 5. Conexiuni
 
-Nu au fost identificate conexiuni către alte module documentate în acest wiki (dependențele `product`, `stock`, `sale`, `purchase` nu au încă pagină proprie).
+- [deltatech_alternative_website](../deltatech_alternative_website/index.md): afișează codurile alternative și câmpul `used_for` în magazinul online și le include în căutarea site-ului.

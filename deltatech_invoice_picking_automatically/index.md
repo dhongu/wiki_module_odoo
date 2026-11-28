@@ -1,25 +1,31 @@
-# Invoice Pickings Automatically (localizat la `deltatech_invoice_picking_automatically/index.md`)
+# Auto-Invoice from Delivery (localizat la `deltatech_invoice_picking_automatically/index.md`)
 
 - **Nume Tehnic:** `deltatech_invoice_picking_automatically`
-- **Versiune:** `19.0.0.0.4`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_picking_automatically`
+- **Versiune:** `20.0.1.0.0`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_invoice_picking_automatically
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_invoice_picking_automatically`
-- **Ultima Ingestie:** `2026-06-02`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul automatizează generarea facturilor pornind de la livrările de marfă (pickings) după validarea acestora. Pe fiecare tip de operațiune de stoc se poate configura dacă, la finalizarea livrării, sistemul trebuie să creeze automat factura și, opțional, să o și valideze. Un proces planificat preia periodic livrările marcate pentru facturare și emite facturile fără intervenție manuală, reducând timpul administrativ și eliminând riscul de a uita facturarea unei livrări. Valoarea principală pentru afacere este fluidizarea ciclului vânzare → livrare → factură, mai ales pentru companiile cu volum mare de expedieri.
+Modulul facturează automat transferurile de stoc validate, fiecare pe propriul document și cu cantitățile mutate efectiv. Elimină munca manuală de facturare a livrărilor și recepțiilor și tratează separat erorile, fără să blocheze depozitul.
 
 #### 2. Funcționalități Cheie
 
-- Configurare pe tipul de operațiune de stoc (picking type) pentru crearea automată a facturii.
-- Configurare pe tipul de operațiune de stoc pentru validarea (postarea) automată a facturii.
-- Proces planificat (cron) care generează automat facturile pentru livrările marcate pentru facturare.
-- Gestionează eficient mai multe livrări aparținând aceleiași comenzi de vânzare, procesându-le împreună.
-- Tratarea erorilor: dacă facturarea eșuează, livrarea este marcată ca „Failed" pentru a evita încercările repetate eșuate.
+- Livrare → factură de client, postată automat dacă este bifat **Post Invoice Automatically**; retur de la client → notă de credit; recepție → factură de furnizor, mereu în ciornă; retur către furnizor → refund de furnizor, în ciornă.
+- Configurare pe tipul de operațiune: **Create Invoice Automatically**, **Invoice Moment** și **Post Invoice Automatically**.
+- **Invoice Moment**: *Scheduled* (implicit; acțiunea programată zilnică facturează transferurile aflate la coadă) sau *On validation* (transferul se facturează imediat după validare).
+- Backorder-urile și livrările parțiale se facturează separat, cu cantitățile fiecărui transfer; un transfer deja facturat nu se mai facturează. Se pun la coadă doar transferurile provenite dintr-o comandă de vânzare sau de achiziție.
+- Facturarea rulează cu drepturi de sistem, deci un utilizator de depozit fără drepturi de facturare poate valida transferuri care se facturează la validare.
+- Tratarea erorilor: fiecare transfer se facturează într-un savepoint propriu; la eșec transferul rămâne efectuat, este marcat **Failed** și păstrează motivul, iar butonul **Retry Invoicing** reia facturarea după remedierea cauzei.
+- Starea **Automatic Invoicing** pe formularul transferului și ca coloană opțională în listă, plus filtrele **Automatic Invoicing Failed** și **To Invoice Automatically**.
+
+Fluxul pas-cu-pas se găsește în [fișa consultantului](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
+- [deltatech_invoice_picking](../deltatech_invoice_picking/index.md)
 - `stock_account`
 - `sale_stock`
 - `sale`
@@ -28,10 +34,22 @@ Acest modul automatizează generarea facturilor pornind de la livrările de marf
 
 #### 4. Componente Cheie
 
+**Modele**
+
+- `stock.picking.type` (extins): opțiunile de facturare automată pe tipul de operațiune.
+- `stock.picking` (extins): starea Automatic Invoicing, motivul eșecului, coada de facturare și butonul Retry Invoicing.
+
+**Vizualizări**
+
+- `view_picking_type_form`: opțiunile de facturare automată pe tipul de operațiune.
+- `view_picking_form`: starea facturării automate, motivul eșecului și butonul Retry Invoicing.
+- `vpicktree`: coloana opțională Automatic Invoicing în lista transferurilor.
+- `view_picking_internal_search`: filtrele Automatic Invoicing Failed și To Invoice Automatically.
+
 **Acțiuni Automate / Acțiuni Server**
 
-- `ir_cron_generate_invoices` (Generate Invoices from Pickings): proces planificat care rulează zilnic și apelează `model._cron_generate_invoices()` pentru a genera automat facturile aferente livrărilor marcate pentru facturare.
+- `ir_cron_generate_invoices` (*Generate Invoices from Pickings*): rulează zilnic și facturează transferurile aflate la coadă pe tipurile de operațiune cu momentul *Scheduled*.
 
 #### 5. Conexiuni
 
-- [deltatech_invoice_picking](../deltatech_invoice_picking/index.md): modul înrudit din aceeași suită care tratează facturarea pornind de la livrări; acest modul adaugă componenta de automatizare (configurare pe tip de operațiune și cron) peste fluxul de facturare din livrări.
+- [deltatech_invoice_picking](../deltatech_invoice_picking/index.md): dependență funcțională; modulul adaugă automatizarea (configurare pe tip de operațiune și cron) peste facturarea manuală din transferuri.

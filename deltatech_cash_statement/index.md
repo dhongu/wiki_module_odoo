@@ -1,20 +1,25 @@
-# Deltatech Cash Statement Extension (localizat la `deltatech_cash_statement/index.md`)
+# Cash Statement Extension (localizat la `deltatech_cash_statement/index.md`)
 
 - **Nume Tehnic:** `deltatech_cash_statement`
-- **Versiune:** `19.0.3.0.0`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_cash_statement
+- **Versiune:** `20.0.3.1.4`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_cash_statement
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_cash_statement`
-- **Ultima Ingestie:** `2026-06-02`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul oferă o unealtă pentru actualizarea rapidă a soldurilor de casă din extrasele bancare (registrele de casă) din Odoo. Este util în special pentru responsabilii de contabilitate care trebuie să ajusteze soldurile inițiale ale extraselor de casă, pentru ca evidențele financiare să fie corecte. Modulul ajută la rezolvarea diferențelor apărute în registrele de casă, integrându-se direct în fluxul de lucru contabil standard.
+Modulul menține soldurile extraselor de casă în concordanță cu contabilitatea și înregistrează o diferență de casă constatată ca o notă datată, în loc să suprascrie tăcut un sold. Este util contabililor care trebuie să alinieze registrele de casă și să documenteze corect plusurile sau minusurile găsite la inventar.
 
 #### 2. Funcționalități Cheie
 
-- **Actualizare rapidă a soldului**: adaugă un asistent (wizard) dedicat pentru actualizarea soldului inițial al extraselor de casă selectate, printr-o interfață simplă.
-- **Integrare în fluxul contabil**: se integrează fără fricțiuni cu modelul standard de extras bancar din Odoo și este accesibil direct din vizualizarea de tip listă a extraselor, prin meniul **Acțiune**.
-- **Integritatea datelor**: conceput pentru profesioniștii din contabilitate, pentru a ajuta la rezolvarea diferențelor din registrele de casă.
+- Asistent disponibil din lista extraselor bancare, la **Acțiune > Cash Update Balances**, după selectarea unuia sau mai multor extrase ale aceluiași jurnal (**Contabilitate > Contabilitate > Extrase bancare**, vizualizare listă).
+- Modul **Align with the accounting balance**: soldul inițial al primului extras selectat devine soldul contului de numerar din înregistrările poștate dinaintea lui, iar fiecare extras următor pornește de la soldul final real al celui precedent; nu se creează notă contabilă.
+- Modul **Register a cash difference**: se introduce **Counted Balance** (numerarul numărat la începutul zilei), iar diferența se înregistrează ca linie de extras la data inventarului, pe contul de venituri (plus) sau de cheltuieli (minus). La o companie românească implicit se folosesc 7588 și 6588; în alte cazuri, conturile de diferențe de casă ale jurnalului. Contul se poate schimba, de exemplu pe 4282 când lipsa se imputează casierului (cu **Responsible Person**).
+- Data diferenței nu poate fi anterioară extrasului; nota apare deja poștată, iar soldurile extraselor se aliniază automat.
+- O lipsă neimputată (6588) este de regulă cheltuială nedeductibilă la impozitul pe profit; se verifică cu contabilul.
+
+Pașii ilustrați cu capturi sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -22,14 +27,8 @@ Acest modul oferă o unealtă pentru actualizarea rapidă a soldurilor de casă 
 
 #### 4. Componente Cheie
 
-Conform fișierului `readme/DESCRIPTION.md`, modulul pune la dispoziție un asistent (wizard) accesibil din meniul **Acțiune** al listei de extrase de casă. Pașii de utilizare:
-
-1. Se navighează la **Contabilitate > Tablouri de bord** sau **Facturare > Tablouri de bord**.
-2. Se deschide un jurnal de tip **Numerar (Cash)** și lista extraselor sale.
-3. Se selectează unul sau mai multe extrase care trebuie actualizate.
-4. Din meniul **Acțiune** se alege **Cash Update Balances**.
-5. În asistentul afișat se introduce soldul inițial corect (**Balance Start**) și se apasă butonul **Aplică** pentru a actualiza extrasele selectate.
+Documentația pentru acest modul a fost generată pe baza fișierului `readme/DESCRIPTION.md`. Conform fluxului de ingestie, analiza detaliată a codului pentru această secțiune a fost omisă, deoarece nu este solicitată explicit în Readme. Funcționalitatea este un asistent (wizard) pe `account.bank.statement`, definit în `wizard/account_cash_update_balances_view.xml`.
 
 #### 5. Conexiuni
 
-Nu au fost identificate conexiuni către alte module documentate în wiki. Singura dependență este modulul standard `account`.
+Nu au fost identificate conexiuni către alte module cu pagină wiki existentă. Singura dependență este modulul standard `account`.

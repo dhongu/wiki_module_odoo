@@ -1,27 +1,25 @@
 # Agreement Management (localizat la `deltatech_agreement_management/index.md`)
 
 - **Nume Tehnic:** `deltatech_agreement_management`
-- **Versiune:** `19.0.0.0.3`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_agreement_management
+- **Versiune:** `20.0.0.0.8`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_agreement_management
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_agreement_management`
-- **Ultima Ingestie:** `2026-09-03`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Modulul oferă o evidență centralizată a acordurilor (contractelor) comerciale și de servicii încheiate cu partenerii companiei — număr de referință, dată, stare și tipărirea documentului direct din Odoo. Acordurile pot fi clasificate pe tipuri configurabile, fiecare tip având propria secvență de numerotare și șablon de raport, ceea ce simplifică emiterea și organizarea documentelor contractuale.
+Modulul gestionează acordurile comerciale și de servicii cu partenerii: numere de referință, date, stări și tipărirea documentului acordului direct din Odoo. Fiecare acord urmează un ciclu de viață simplu, iar tipul acordului stabilește secvența de numerotare și șablonul de tipărire.
 
 #### 2. Funcționalități Cheie
 
-- Creare acorduri legate de un partener, cu dată a acordului și dată de expirare (opțională).
-- Ciclu de viață al acordului cu trei stări: **Draft** → **In Progress** → **Terminated**; câmpurile devin needitabile odată ce acordul iese din Draft.
-- Buton **Get number** (vizibil doar în Draft, cât timp referința e `/`) generează numărul de acord din secvența configurată pe tip.
-- Tipurile de acord (meniu **Agreement → Configuration → Agreement types**) definesc secvența de numerotare și șablonul de raport (QWeb) folosit la tipărire; fără șablon setat, tipărirea generează eroare.
-- Buton **Print** generează PDF-ul acordului folosind șablonul de raport asociat tipului.
-- Butoane **Set In Progress**, **Close Contract** (→ Terminated) și **Set Draft** (reactivare) pentru tranziția între stări.
-- Ștergerea unui acord e permisă doar în starea Draft; pentru In Progress/Terminated se ridică eroare de validare.
-- Pe fișa partenerului: buton inteligent **Agreements** cu numărul de acorduri legate, plus filtru de căutare **With agreement** în lista de parteneri.
-- Două grupuri de securitate: **Agreement / User** (vizualizare și creare acorduri, acces la butonul inteligent de pe partener) și **Agreement / Manager** (drepturi User + meniul de Configurare pentru tipuri de acord); administratorul e inclus implicit în grupul Manager.
-- Urmărirea modificărilor prin firul de discuții și activitățile Odoo (mesagerie și activități) pe fiecare acord.
+- Acorduri legate de un partener, cu dată a acordului (implicit azi), dată finală opțională, descriere și monedă (implicit moneda companiei).
+- Ciclu de viață: **Draft** → **In Progress** (*Set In Progress*) → **Terminated** (*Close Contract*); înapoi în ciornă cu *Set Draft*. După ieșirea din ciornă câmpurile devin doar pentru citire.
+- Numărul de referință se generează din secvența tipului de acord, prin butonul **Get number**, cât timp acordul e în ciornă și referința este `/`.
+- Tipărirea acordului în PDF cu raportul configurat pe tipul de acord; fără raport configurat, tipărirea dă eroare.
+- Doar acordurile în ciornă pot fi șterse.
+- Pe partener: buton inteligent **Agreements** cu numărul de acorduri și filtrul de căutare **With agreement**.
+- Istoric și activități (chatter) pe fiecare acord.
+- Configurare: tipurile de acord (denumire, secvență, raport opțional) la **Agreement → Configuration → Agreement types**; grupurile *Agreement / User* (vizualizare și creare) și *Agreement / Manager* (în plus, meniul de configurare), atribuite din **Settings → Users**.
 
 #### 3. Dependențe
 
@@ -32,15 +30,20 @@ Modulul oferă o evidență centralizată a acordurilor (contractelor) comercial
 
 **Modele**
 
-- `general.agreement`: Modelul principal de acord; integrează `mail.thread` și `mail.activity.mixin` pentru urmărirea istoricului și a activităților.
-- `general.agreement.type`: Tipul de acord configurabil (secvență de numerotare și șablon de raport).
-- `res.partner` (extins): Adaugă legătura dintre parteneri și acorduri.
+- `general.agreement`: modelul principal; integrează `mail.thread` și `mail.activity.mixin`.
+- `general.agreement.type`: tipul de acord (secvență de numerotare și raport de tipărire).
+- `res.partner` (extins): legătura dintre parteneri și acorduri.
 
 **Vizualizări**
 
-- `views/agreement.xml`: Interfețele pentru acorduri și tipurile de acord.
-- `views/res_partner.xml`: Extinderea formularului de partener cu informații legate de acorduri.
+- `view_agreement_form`, `view_general_agreement_tree` + `action_general_agreement`: interfața acordurilor.
+- `view_general_agreement_type_form`, `view_general_agreement_type_tree` + `action_general_agreement_type`: tipurile de acord.
+- `view_partner_form_agreement`, `view_partner_search_agreement`: butonul inteligent și filtrul pe partener.
+
+**Acțiuni Automate / Acțiuni Server**
+
+Nu sunt definite `ir.cron`, `base.automation` sau `ir.actions.server`.
 
 #### 5. Conexiuni
 
-Nu au fost identificate conexiuni funcționale către alte module cu pagină wiki existentă.
+Nu au fost identificate conexiuni funcționale către alte module cu pagină în wiki.

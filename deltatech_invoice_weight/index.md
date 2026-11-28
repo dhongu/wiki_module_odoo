@@ -1,21 +1,23 @@
 # Invoice Weight (localizat la `deltatech_invoice_weight/index.md`)
 
 - **Nume Tehnic:** `deltatech_invoice_weight`
-- **Versiune:** `19.0.1.0.2`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_weight
+- **Versiune:** `20.0.1.0.6`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_invoice_weight
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_invoice_weight`
-- **Ultima Ingestie:** `2026-06-02`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Modulul adaugă urmărirea greutății logistice direct în sistemele de facturare și de gestiune a comenzilor din Odoo. Este destinat companiilor care au nevoie să monitorizeze și să raporteze greutatea netă și greutatea brută totală a articolelor facturate, achiziționate sau vândute, oferind astfel o transparență suplimentară pentru operațiunile logistice și de transport.
+Modulul afișează greutatea netă și brută totală a mărfurilor pe comenzile de vânzare, comenzile de achiziție și facturi, și o tipărește pe factură. Este util pentru documentele de transport și pentru cererile clienților.
 
 #### 2. Funcționalități Cheie
 
-- **Câmpuri de greutate pe documente**: adaugă câmpurile Greutate Netă și Greutate Brută pe facturi, comenzi de achiziție și comenzi de vânzare, cu calculul automat al greutăților totale ale documentului pe baza articolelor incluse.
-- **Raportare și analiză**: activează raportarea pe bază de greutate în vizualizarea de analiză a facturilor și suportă vizualizări de tip Pivot, permițând agregarea greutăților pe partener, produs sau perioadă.
-- **Greutate pe raportul tipărit**: afișează informațiile de greutate pe raportul tipărit al facturii, pentru transparență logistică.
-- **Consistență între documente**: asigură menținerea și transferul corect al datelor de greutate între documentele de vânzare/achiziție și factura finală.
+- **Greutăți pe documente:** câmpurile **Gross Weight** și **Net Weight** pe comenzile de vânzare și de achiziție (fila nouă **Weight**) și pe facturi (fila *Other Info*, după *Fiscal Position*); facturile au în plus **Package Weight**, completat manual.
+- **Calcul la crearea documentului:** suma pe liniile de produs, cu cantitatea convertită în unitatea de măsură a produsului și înmulțită cu greutatea produsului; greutatea brută vine din câmpul standard **Weight** (convertit în kg dacă se lucrează în livre), cea netă din `l10n_ro_net_weight`, câmp pe care modulul nu-l afișează pe produs (îl afișează, de ex., localizarea română de stoc).
+- **Totaluri editabile:** câmpurile pot fi corectate manual.
+- **Greutate pe factura tipărită:** dacă factura are greutate brută, greutățile brută și netă se tipăresc sub comunicarea de plată.
+- **Configurare:** greutatea se setează pe produs (fila *Inventory*), iar unitatea (kg sau livre) în *Inventory > Configuration > Settings*.
+- Limitări: greutățile se calculează o singură dată, la creare (liniile modificate ulterior nu le actualizează); nu apar în rapoartele de analiză; pe factura tipărită greutatea netă are eticheta „New weight".
 
 #### 3. Dependențe
 
@@ -26,8 +28,18 @@ Modulul adaugă urmărirea greutății logistice direct în sistemele de factura
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, această secțiune este derivată din `readme/DESCRIPTION.md`. Modulul extinde documentele standard de facturare, vânzare și achiziție pentru a adăuga câmpurile de greutate netă și brută, calculul automat al acestora, raportarea de tip Pivot pe analiza facturilor și afișarea greutăților pe raportul tipărit al facturii.
+**Modele**
+
+- `account.move` (extins): `weight`, `weight_net`, `weight_package` și calculul greutăților la creare (`_compute_weights`).
+- `sale.order` și `purchase.order` (extinse): `weight_gross` și `weight_net`, calculate la creare.
+- `product.template` (extins): câmpul `l10n_ro_net_weight`.
+- `product.product` (extins): `_get_line_weights`, greutatea unei linii în funcție de cantitate și unitate.
+
+**Vizualizări**
+
+- `view_move_form`, `view_purchase_form`, `view_sale_form`: adaugă câmpurile de greutate pe factură, comanda de achiziție și comanda de vânzare.
+- `views/invoice_report.xml`: extinde raportul tipărit al facturii cu greutățile.
 
 #### 5. Conexiuni
 
-Nu au fost identificate conexiuni către alte module documentate în wiki. Modulul se integrează cu funcționalitățile standard Odoo de contabilitate (`account`), achiziții (`purchase`), stoc (`stock`) și vânzări (`sale`).
+Nu au fost identificate conexiuni cu alte module documentate în wiki.

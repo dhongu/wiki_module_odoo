@@ -1,10 +1,11 @@
 # Deltatech Markdown Field (localizat la `deltatech_markdown_field/index.md`)
 
 - **Nume Tehnic:** `deltatech_markdown_field`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_markdown_field
+- **Versiune:** `20.0.1.1.1`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_markdown_field
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_markdown_field`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -17,6 +18,9 @@ Modulul adaugă un widget nou de câmp în Odoo — `markdown` — care oferă u
 - Conversie instantanee Markdown ↔ HTML, complet în browser (fără dependențe server la runtime): la încărcare se folosește biblioteca [marked](https://marked.js.org/) (Markdown → HTML), iar la salvare [turndown](https://github.com/mixmark-io/turndown) (HTML → Markdown).
 - Ambele biblioteci sunt incluse local ca build-uri UMD, deci modulul funcționează offline, fără CDN extern.
 - Respectă starea `readonly`: în modul doar-citire afișează Markdown-ul randat ca HTML, fără bara de instrumente.
+- Afișare sigură: HTML-ul rezultat este sanitizat la afișare (și pentru valorile stocate anterior); HTML inofensiv (`<kbd>`, `<mark>`) rămâne formatat, iar scripturile, handler-ele inline, linkurile `javascript:` și conținutul încorporat (`<iframe>`, `<object>`, `<embed>`) nu se afișează.
+- La editare și salvare se păstrează doar Markdown standard (tăierea textului, HTML inline și tabelele nu se mențin).
+- Textul indicativ (`placeholder`) apare cât timp zona de scris e goală.
 - Înălțime minimă configurabilă a editorului, prin opțiunea `min_height`.
 
 #### 3. Dependențe

@@ -1,19 +1,20 @@
 # Declaration of Conformity (localizat la `deltatech_dc/index.md`)
 
 - **Nume Tehnic:** `deltatech_dc`
-- **Versiune:** `19.0.1.0.12`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_dc
+- **Versiune:** `20.0.1.0.13`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_dc
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_dc`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Modulul permite gestionarea și tipărirea declarațiilor de conformitate pentru produse. Acesta oferă posibilitatea de a emite documentul de conformitate, inclusiv direct în momentul facturării, ajutând astfel compania să respecte cerințele privind certificarea conformității produselor livrate către clienți.
+Modulul permite gestionarea și tipărirea declarațiilor de conformitate pentru produse. Documentul poate fi emis inclusiv direct în momentul facturării, ajutând compania să respecte cerințele privind certificarea conformității produselor livrate către clienți.
 
 #### 2. Funcționalități Cheie
 
 - Definirea declarațiilor de conformitate pentru produse.
 - Tipărirea declarației de conformitate în momentul facturării.
+- Formatul tipărit al declarației a fost curățat (structură și stil), astfel încât documentul trimis clientului arată corect indiferent de lungimea denumirilor.
 
 #### 3. Dependențe
 
@@ -26,7 +27,7 @@ Modulul permite gestionarea și tipărirea declarațiilor de conformitate pentru
 
 #### 4. Componente Cheie
 
-Secțiunile de mai sus (Sumar și Funcționalități Cheie) provin din fișierul `readme/DESCRIPTION.md`. Conform fluxului de ingestie, analiza detaliată a codului pentru componente nu a fost efectuată, deoarece Readme-ul nu o solicită explicit.
+Sumarul și funcționalitățile provin din `readme/DESCRIPTION.md`, care nu cere explicit analiza componentelor; analiza detaliată a codului a fost omisă conform schemei.
 
 #### 5. Conexiuni
 

@@ -1,95 +1,65 @@
 # Image Optimizer (localizat la `deltatech_image_optimize/index.md`)
 
 - **Nume Tehnic:** `deltatech_image_optimize`
-- **Versiune:** `19.0.1.8.1`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_image_optimize
+- **Versiune:** `20.0.1.14.1`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_image_optimize
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_image_optimize`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul recomprimă automat atașamentele de tip imagine (poze de produs, avatare
-etc.) care sunt supradimensionate, pentru a elibera spațiu din filestore-ul
-Odoo. Fiecare imagine originală este redusă ca dimensiune și recodată în JPEG
-(sau WebP/PNG dacă are transparență reală), păstrând doar rezultatul dacă e
-efectiv mai mic decât originalul — fără să afecteze vizual imaginile publicate
-pe site sau în documente.
+Modulul curăță și ușurează imaginile de produs din catalogul eCommerce, în patru operații pe aceleași imagini: eliminarea fundalului, eliminarea unui watermark, ștergerea imaginilor duplicate și recomprimarea imaginilor supradimensionate. Totul rulează pe serverul Odoo; nicio imagine nu este trimisă către un serviciu extern. Imaginea originală nu este păstrată, de aceea rezultatul se verifică înainte de aplicare.
 
 #### 2. Funcționalități Cheie
 
-- Recomprimă imaginile „originale" (implicit `image_1920` și
-  `image_variant_1920`) la o dimensiune maximă configurabilă (implicit 1920 px)
-  și o calitate JPEG configurabilă (implicit 85).
-- Detectează transparența reală (nu doar modul de culoare) și păstrează
-  imaginile cu transparență ca WebP (sau PNG optimizat dacă Pillow nu are
-  encoder WebP), fără să le transforme niciodată în JPEG implicit.
-- Sare peste GIF-urile animate — nu le aplatizează niciodată.
-- Scrie imaginea optimizată prin înregistrarea proprietară, astfel încât Odoo
-  regenerează automat variantele redimensionate (`image_1024/512/256/128`).
-- Recomprimă separat și variantele deja stocate (fără redimensionare, doar
-  recodare la o calitate mai mică), fără să propage schimbarea înapoi spre
-  imaginea originală.
-- Marchează atașamentele deja procesate (`deltatech_image_optimized`) ca să nu
-  fie reprocesate la rulările următoare; imaginile noi/schimbate sunt reluate
-  automat pentru că Odoo creează un atașament nou la fiecare modificare.
-- Rulează prin acțiune programată (`ir.cron`) zilnică, **dezactivată implicit**
-  — trebuie activată manual după testare pe staging.
-- Configurare completă prin parametri de sistem (`ir.config_parameter`):
-  calitate JPEG/WebP, dimensiune maximă, dimensiune minimă de procesat,
-  dimensiune batch, câmpuri țintă, frecvență de flush ORM.
-- Opțiune destructivă `force_jpeg` (dezactivată implicit) care ignoră complet
-  canalul alfa și forțează JPEG pentru economie maximă — documentată explicit
-  ca ireversibilă și recomandată doar după verificare prealabilă a
-  catalogului.
-- La finalul rulării cron, apelează garbage collection-ul filestore-ului
-  pentru a recupera efectiv spațiul de pe disc.
+- **Eliminare fundal**: *Actions → Remove Image Background* pe lista de produse (pe un produs include și galeria eCommerce) sau *Background → Remove Background* din editorul website, pentru o singură imagine. Un asistent arată înainte / după, pe tablă de șah; se debifează imaginile slab decupate, apoi **Apply**.
+  - Metode: **Uniform background** (după culoarea marginii, fără model AI), **AI model** (`rembg`, ISNet implicit, bibliotecă opțională) și **Automatic** (implicit); **Frame only (keep background)** încadrează produsul într-un pătrat fără a elimina fundalul.
+  - Până la `bg_sync_limit` imagini (implicit 5) există previzualizare; o selecție mai mare se pune la coadă și o procesează acțiunea programată, în loturi de `bg_batch`. Imaginile care eșuează rămân neschimbate și sunt marcate *Failed*.
+  - Când modelul AI pierde o parte din produs pe un fundal uniform, rândul este avertizat și debifat.
+  - Rezultat salvat WebP (PNG fără encoder WebP, JPEG pentru fundal plin), cu variantele redimensionate.
+- **Eliminare watermark**: *Actions → Remove Watermark*; watermark-ul semi-transparent este învățat din imaginile selectate și inversat, cu previzualizare până la `wm_sync_limit` și coadă peste. Se aplică doar imaginilor al căror watermark ai dreptul să-l elimini.
+- **Imagini duplicate**: *Website → eCommerce → Products → Duplicated Images* (administrator) listează grupurile de conținut identic byte cu byte; **Remove Duplicated Images** păstrează imaginea afișată prima pe fiecare produs. O imagine partajată între produse este raportată, niciodată ștearsă.
+- **Recomprimare**: acțiunea programată *Image Optimizer: recompress oversized images* (inactivă după instalare) reduce originalele la maximum 1920 px, re-codifică în JPEG progresiv (calitate 85) sau WebP pentru transparență, apoi recomprimă variantele; rezultatul se păstrează doar dacă este mai mic. Parametrii sunt în *Settings → Technical → Parameters → System Parameters*, chei `deltatech_image_optimize.*`.
+- `force_jpeg` este distructiv (transparența devine neagră definitiv) și nu se activează fără verificarea catalogului.
+
+Fluxul pas-cu-pas, cu capturi, se găsește în [fișa consultantului](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
 - `base`
+- `website_sale`
+
+Dependență Python opțională, nedeclarată în manifest: `rembg` (pentru fotografii pe fundal real); pentru eliminarea watermark-ului este necesar `numpy`.
 
 #### 4. Componente Cheie
 
 **Modele**
 
-- `ir.attachment` (extins): adaugă câmpul `deltatech_image_optimized`
-  (Datetime) și metodele de recomprimare/optimizare:
-  - `_dt_image_optimize_params()`: citește configurația din
-    `ir.config_parameter`.
-  - `_dt_image_recompress()`: funcție pură de recomprimare a octeților unei
-    imagini (JPEG/WebP/PNG), fără scriere, folosită și pentru testare/probă
-    manuală a efectului `force_jpeg`.
-  - `_dt_image_shared_file()`: verifică dacă fișierul din filestore e partajat
-    cu alte atașamente (același `store_fname`), pentru a raporta corect
-    spațiul eliberat efectiv pe disc (`freed_disk`) față de suma diferențelor
-    per-atașament (`freed`).
-  - `_dt_image_optimize_run()`: rulează un batch de optimizare pe imaginile
-    originale (`image_1920`, `image_variant_1920`).
-  - `_dt_image_optimize_variants_run()`: recomprimă în același mod variantele
-    redimensionate (`image_1024/512/256/128`), fără a le redimensiona din nou.
-  - `_dt_image_optimize_cron()`: punctul de intrare pentru acțiunea
-    programată — rulează întâi originalele, apoi variantele, apoi GC-ul
-    filestore-ului.
+- `deltatech.image.background.mixin`: logica de eliminare a fundalului, moștenită de `product.template`, `product.product` și `product.image`.
+- `deltatech.image.background.wizard` / `deltatech.image.background.wizard.line`: asistentul cu previzualizare înainte / după.
+- `deltatech.image.watermark.profile`: watermark-ul învățat, folosit de acțiunea programată pentru imaginile din coadă.
+- `deltatech.image.watermark.wizard` / `deltatech.image.watermark.wizard.line`: asistentul de eliminare a watermark-ului.
+- `deltatech.product.image.duplicate`: grupurile de imagini cu conținut identic.
+- `deltatech.product.image.dedup`: asistentul de ștergere a duplicatelor.
+- `ir.attachment` (extins): recomprimarea imaginilor supradimensionate.
+- `product.image` (extins): checksum pentru detectarea duplicatelor.
 
 **Vizualizări**
 
-Modulul nu adaugă vizualizări proprii; configurarea se face prin parametrii de
-sistem standard (Settings → Technical → System Parameters) și prin ecranul
-standard de acțiuni programate (Settings → Technical → Scheduled Actions).
+- `view_image_background_wizard_form`: asistentul Remove Image Background.
+- `view_image_watermark_wizard_form`: asistentul Remove Watermark.
+- `view_product_image_duplicate_list` / `view_product_image_duplicate_search`: lista și filtrele pentru Duplicated Images.
+- `view_product_image_dedup_form` / `view_product_image_dedup_list`: asistentul Remove Duplicated Images.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- `ir_cron_dt_image_optimize` (*Image Optimizer: recompress oversized
-  images*): rulează zilnic (implicit dezactivată) și apelează
-  `_dt_image_optimize_cron()` pe `ir.attachment`.
-- Parametri de sistem definiți la instalare (`data/ir_config_parameter.xml`):
-  `deltatech_image_optimize.quality`, `.max_dim`, `.min_size`, `.batch`,
-  `.flush_every`, `.target_fields`, `.variant_fields`, `.variant_quality`,
-  `.webp_quality`, `.force_jpeg`, `.variant_min_size` — toate `noupdate="1"`
-  pentru a nu suprascrie modificările utilizatorului la upgrade.
+- `ir_cron_dt_image_optimize` (*Image Optimizer: recompress oversized images*): zilnic, dezactivată implicit.
+- `ir_cron_dt_image_remove_background` (*Image Optimizer: remove product image background*): procesează coada în loturi.
+- `ir_cron_dt_image_remove_watermark` (*Image Optimizer: remove product image watermark*): procesează coada de watermark.
+- `action_product_template_remove_background` / `action_product_image_remove_background`: acțiuni server *Remove Image Background*.
+- `action_product_template_remove_watermark` / `action_product_image_remove_watermark`: acțiuni server *Remove Watermark*.
 
 #### 5. Conexiuni
 
-- [deltatech_website_watermark](../deltatech_website_watermark/index.md): folosește aceeași tehnică de înregistrare a
-  plugin-ului WebP pentru Pillow (menționată explicit în codul acestui modul
-  ca precedent).
+- [deltatech_website_watermark](../deltatech_website_watermark/index.md): modul din aceeași suită legat tematic de watermark-urile imaginilor; folosește aceeași tehnică de înregistrare a plugin-ului WebP pentru Pillow.

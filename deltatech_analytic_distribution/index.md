@@ -1,19 +1,21 @@
-# Deltatech Analytic distribution enforcer (localizat la `deltatech_analytic_distribution/index.md`)
+# Analytic Distribution Enforcer (localizat la `deltatech_analytic_distribution/index.md`)
 
 - **Nume Tehnic:** `deltatech_analytic_distribution`
-- **Versiune:** `19.0.0.0.2`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_analytic_distribution
+- **Versiune:** `20.0.0.0.7`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_analytic_distribution
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_analytic_distribution`
-- **Ultima Ingestie:** `2026-06-02`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Acest modul impune completarea corectă a distribuției analitice pe facturile de la furnizori. Atunci când validarea este activată, fiecare linie de pe o factură de furnizor trebuie să aibă distribuția analitică completată integral, cu toate dimensiunile cerute (Locație, Departament, Linie de business), iar procentele de pe fiecare linie trebuie să însumeze exact 100%. Astfel se asigură o repartizare analitică completă și coerentă a cheltuielilor, evitând înregistrările incomplete care ar denatura analiza de costuri.
+Modulul impune completarea corectă a distribuției analitice pe facturile de la furnizori. Când validarea este activată, fiecare linie trebuie să aibă distribuția completă pe toate dimensiunile cerute (Locație, Departament, Linie de business), iar procentele trebuie să însumeze exact 100%. Astfel cheltuielile sunt repartizate complet și coerent, fără înregistrări incomplete care ar denatura analiza de costuri.
 
 #### 2. Funcționalități Cheie
 
-- Facturile de la furnizori vor cere ca distribuția analitică să însumeze 100% pe fiecare linie, iar toate câmpurile să fie completate (Locație, Departament, Linie de business).
-- Pentru a activa această validare se bifează opțiunea „Enable Analytic Distribution Validation" din configurare, în blocul Vendor Bills (Facturi furnizori).
+- Blochează postarea documentelor de furnizor (facturi, rambursări, bonuri) dacă o linie nu are distribuție analitică.
+- Verifică ca procentele distribuției de pe fiecare linie să însumeze exact 100%.
+- Cere ca fiecare distribuție să acopere exact cele trei dimensiuni analitice: Locație, Departament și Linie de business.
+- Setare specifică fiecărei companii: **Contabilitate > Configurare > Setări**, secțiunea **Vendor Bills**, opțiunea **Enable Analytic Distribution Validation**. În mediu multi-companie, validarea se activează independent pentru fiecare companie.
 
 #### 3. Dependențe
 
@@ -21,7 +23,14 @@ Acest modul impune completarea corectă a distribuției analitice pe facturile d
 
 #### 4. Componente Cheie
 
-Conform `readme/DESCRIPTION.md`, documentarea componentelor tehnice se face la nivel de funcționalitate (vezi secțiunile 1 și 2). Analiza detaliată a modelelor, vizualizărilor și acțiunilor nu este reluată aici, întrucât DESCRIPTION.md acoperă scopul modulului.
+**Modele**
+
+- `account.move`: validarea distribuției analitice la postarea documentelor de furnizor.
+- `res.company` și `res.config.settings`: setarea de activare a validării.
+
+**Vizualizări**
+
+- `views/res_config_view.xml`: opțiunea din setările de contabilitate, blocul Vendor Bills.
 
 #### 5. Conexiuni
 

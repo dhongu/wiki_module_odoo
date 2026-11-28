@@ -1,20 +1,24 @@
-# Invoice Number (localizat la `deltatech_invoice_number/index.md`)
+# Invoice Numbering Control (localizat la `deltatech_invoice_number/index.md`)
 
 - **Nume Tehnic:** `deltatech_invoice_number`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_invoice_number
+- **Versiune:** `20.0.1.0.4`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_invoice_number
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_invoice_number`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul asigură renumerotarea și controlul secvenței facturilor de vânzare, garantând că facturile sunt validate în ordine cronologică și oferind utilizatorilor autorizați posibilitatea de a corecta manual numărul unei facturi sau de a atribui un număr dintr-o secvență dedicată a jurnalului, direct din starea de ciornă.
+Modulul păstrează facturile de client în ordine cronologică pe jurnalele unde acest lucru contează și permite unui grup dedicat de utilizatori să corecteze numărul unei facturi.
 
 #### 2. Funcționalități Cheie
 
-- Validează ordinea cronologică a facturilor emise (nu permite validarea unei facturi cu dată anterioară ultimei facturi confirmate pe același jurnal).
-- Permite modificarea numărului unei facturi pentru un grup dedicat de utilizatori.
-- Permite numerotarea unei facturi aflate în starea de ciornă, folosind o secvență configurată la nivel de jurnal.
+- **Date cronologice ale facturilor:** pe un jurnal de vânzări cu opțiunea *Restrict invoice date* activă, o factură sau o notă de credit în ciornă nu poate fi confirmată cu o dată anterioară ultimului document postat de același tip din jurnal. Eroarea indică cea mai veche dată permisă; la alegerea jurnalului pe factura în ciornă apare un avertisment cu aceeași informație.
+- **Schimbarea numărului facturii:** utilizatorii din grupul *Allow to change invoice number* primesc acțiunea **Change invoice number** în meniul Acțiuni al facturii. Asistentul propune numărul curent; după **Apply**, noul număr se scrie pe factură și se copiază în referința articolelor contabile (și în *Reference* pentru documentele de client).
+- **Configurare:** *Accounting > Configuration > Journals*, jurnal de tip *Sales*, fila **Journal Entries**, secțiunea **Invoice numbering** (*Restrict invoice date*); grupul se acordă din *Settings > Users & Companies > Groups*.
+- **Limitări:** câmpul *Journal Sequence* din secțiunea Invoice numbering nu are efect în interfață (nicio acțiune nu apelează metoda de numerotare), iar noul număr se scrie exact cum a fost tastat, fără verificarea formatului jurnalului sau a golurilor.
+
+Fluxul pas-cu-pas se găsește în [fișa consultantului](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -24,21 +28,20 @@ Modulul asigură renumerotarea și controlul secvenței facturilor de vânzare, 
 
 **Modele**
 
-- `account.move` (extindere): adaugă verificarea ordinii cronologice (`check_data`), acțiunea `action_get_number` pentru alocarea unui număr din secvența jurnalului pe o factură în ciornă și `action_number` pentru sincronizarea referinței (`ref`) facturii și a liniilor sale după o renumerotare manuală; suprascrie `action_post` pentru a bloca postarea facturilor de client în afara ordinii cronologice dacă jurnalul are bifat `restrict_date`.
-- `account.journal` (extindere): adaugă câmpurile `journal_sequence_id` (secvența folosită pentru numerotarea facturilor) și `restrict_date` (activează restricția de ordine cronologică).
-- `account.invoice.change.number` (model tranzitoriu — wizard): permite introducerea manuală a unui nou număr de factură și sincronizarea acestuia prin `do_change_number`.
+- `account.journal` (extins): opțiunea *Restrict invoice date* și câmpul de secvență din secțiunea Invoice numbering.
+- `account.move` (extins): verificarea cronologiei datei facturii la confirmare și avertismentul la schimbarea jurnalului.
+- `account.invoice.change.number` (model tranzitoriu): asistentul de schimbare a numărului facturii.
 
 **Vizualizări**
 
-- `journal_restrict_date_form`: extinde formularul jurnalului contabil (`account.view_account_journal_form`) cu grupul „Invoice numbering", vizibil doar pentru jurnalele de vânzare, unde se configurează `journal_sequence_id` și `restrict_date`.
-- `view_account_invoice_change_number_form`: formular wizard pentru introducerea noului număr de factură, cu butoane „Apply" și „Cancel".
+- `journal_restrict_date_form`: adaugă secțiunea Invoice numbering pe formularul jurnalului.
+- `view_account_invoice_change_number_form`: formularul asistentului Change invoice number.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- `action_account_invoice_change_number_server`: acțiune de server legată de formularul facturii (`account.move`), vizibilă doar grupului `group_change_invoice_number`, care deschide wizard-ul de schimbare a numărului de factură.
+- `action_account_invoice_change_number_server`: acțiunea de server **Change invoice number** din meniul Acțiuni al facturii (vizibilă pentru grupul dedicat).
+- `action_account_invoice_change_number`: acțiunea de fereastră care deschide asistentul.
 
 #### 5. Conexiuni
 
-- `account`: modulul de bază contabilitate peste care se extinde numerotarea facturilor.
-
----
+- `account`: modulul de bază de contabilitate peste care se extinde numerotarea facturilor.

@@ -1,20 +1,22 @@
-# Deltatech Drop Shipping (localizat la `deltatech_dropshipping/index.md`)
+# Drop Shipping Enhanced (localizat la `deltatech_dropshipping/index.md`)
 
 - **Nume Tehnic:** `deltatech_dropshipping`
-- **Versiune:** `19.0.1.1.0`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_dropshipping
+- **Versiune:** `20.0.1.1.3`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_dropshipping
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_dropshipping`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul îmbunătățește fluxul de drop shipping oferind vizibilitate mai bună și control asupra prețurilor. Afișează adresa de livrare direct în documentul de transfer (picking), astfel încât cei care gestionează expedițiile văd rapid unde trebuie livrată marfa fără a deschide alte documente. În plus, atrage atenția pe comanda de achiziție atunci când prețul de achiziție depășește prețul de vânzare al liniei corespunzătoare din comanda de vânzare, calculând și comparând automat valorile fără TVA pentru ambele documente, pentru a preveni pierderile pe fluxurile de drop shipping.
+Modulul îmbunătățește fluxul de livrare directă (drop shipping) prin vizibilitate mai bună și control al prețurilor. Afișează adresa de livrare în transfer, astfel încât cei care gestionează expedițiile văd rapid unde trebuie să ajungă marfa. În plus, avertizează pe comanda de achiziție când prețul de achiziție depășește prețul de vânzare al liniei corespunzătoare din comanda de vânzare, comparând automat valorile fără TVA, pentru a preveni vânzarea în pierdere.
 
 #### 2. Funcționalități Cheie
 
-- Afișarea adresei de livrare în documentul de transfer (picking).
-- Avertisment pe comanda de achiziție dacă prețul de achiziție este mai mare decât prețul de vânzare al liniei corespunzătoare din comanda de vânzare, în fluxurile de drop shipping.
-- Calcul și comparare automată a prețurilor fără TVA pentru comanda de achiziție și cea de vânzare, pentru acuratețea avertismentului.
+- Câmpul **Livrare la** pe transfer (formular și coloană în lista de transferuri), lângă **Contact**: adresa de livrare a comenzii de vânzare pe transferurile de livrare directă și de recepție legate de o vânzare, contactul transferului pe livrări, adresa depozitului pe celelalte transferuri.
+- Avertisment (chenar galben) pe comanda de achiziție dacă prețul de achiziție este mai mare decât prețul de vânzare al liniei corespunzătoare din comanda de vânzare; nu blochează confirmarea.
+- Calcul și comparare automată a prețurilor fără TVA pentru ambele documente.
+- Limitare cunoscută: comparația nu ține cont de unitatea de măsură, monedă și discount (vezi fișa consultant).
 
 #### 3. Dependențe
 
@@ -23,9 +25,13 @@ Modulul îmbunătățește fluxul de drop shipping oferind vizibilitate mai bun�
 
 #### 4. Componente Cheie
 
-Conform fișierului `readme/DESCRIPTION.md`, funcționalitatea modulului constă în afișarea adresei de livrare în picking și avertizarea de preț pe comanda de achiziție; nu sunt detaliate componente tehnice suplimentare în Readme. Din structura modulului, extinderile ating documentul de transfer (`views/stock_picking_view.xml`) și comanda de achiziție (`views/purchase_order_view.xml`).
+**Vizualizări**
+
+- `view_picking_form` (`views/stock_picking_view.xml`): adaugă câmpul **Livrare la** pe formularul transferului.
+- `vpicktree` (`views/stock_picking_view.xml`): adaugă coloana **Livrare la** în lista de transferuri.
+- `purchase_order_form` (`views/purchase_order_view.xml`): afișează avertismentul de preț pe comanda de achiziție.
 
 #### 5. Conexiuni
 
-- `stock_dropshipping`: modulul core de drop shipping din Odoo, pe care acest modul îl extinde pentru a evidenția adresa de livrare în transferuri.
-- `sale_purchase`: puntea standard Odoo dintre vânzări și achiziții, folosită pentru a lega linia comenzii de achiziție de linia comenzii de vânzare corespunzătoare, necesară pentru compararea prețurilor.
+- `stock_dropshipping`: modulul standard de livrare directă, extins pentru a evidenția adresa de livrare în transferuri.
+- `sale_purchase`: legătura standard dintre linia de achiziție și linia de vânzare, necesară pentru compararea prețurilor.

@@ -1,15 +1,17 @@
-# MRP BoM Formula (localizat la `deltatech_mrp_bom_formula/index.md`)
+# BoM Quantity Formulas (localizat la `deltatech_mrp_bom_formula/index.md`)
 
 - **Nume Tehnic:** `deltatech_mrp_bom_formula`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_mrp_bom_formula
+- **Versiune:** `20.0.1.0.2`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_mrp_bom_formula
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_mrp_bom_formula`
-- **Ultima Ingestie:** `2026-08-14`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
 Modulul permite ca **cantitatea unei componente din lista de materiale să fie calculată printr-o formulă**, evaluată în raport cu atributele variantei fabricate. Standardul Odoo poate doar să includă sau să excludă o linie în funcție de valorile unui atribut („Se aplică pe variante"), cantitatea rămânând constantă; de îndată ce consumul depinde de configurație, singura soluție standard este multiplicarea liniei pentru fiecare combinație de atribute. Cu acest modul, o singură linie acoperă toate variantele.
+
+În Odoo Apps modulul apare ca „BoM Quantity Formulas" (fost „MRP BoM Formula"); numele tehnic nu s-a schimbat.
 
 Este echivalentul funcțional al părții de calcul al consumului din mecanismul *variant configuration* al SAP.
 

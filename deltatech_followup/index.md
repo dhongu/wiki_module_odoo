@@ -1,22 +1,29 @@
 # Invoice Followup (localizat la `deltatech_followup/index.md`)
 
 - **Nume Tehnic:** `deltatech_followup`
-- **Versiune:** `19.0.0.1.1`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_followup`
+- **Versiune:** `20.0.0.1.4`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_followup
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_followup`
-- **Ultima Ingestie:** `2026-06-02`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul oferă un sistem simplu de urmărire a facturilor neîncasate (followup), prin trimiterea automată de e-mailuri către clienți. Fiecare element de followup definește când și cum se trimite notificarea, raportându-se la data facturii sau la data scadenței, cu un decalaj configurabil în zile (înainte sau după). Trimiterea se face programat, printr-o sarcină cron, fie pentru toate elementele de followup, fie doar pentru cele selectate prin cod. Valoarea de afaceri constă în reducerea efortului manual de relaționare cu clienții pentru încasarea creanțelor și în îmbunătățirea fluxului de numerar.
+Modulul trimite clienților mementouri automate prin e-mail pentru facturi: cu câteva zile înainte de scadență, la scadență sau după. Pentru fiecare etapă (followup) se aleg data de referință, decalajul în zile și șablonul de e-mail, iar mesajul poate lista facturile vizate împreună cu totalurile clientului. Reduce munca manuală de urmărire a încasărilor.
 
 #### 2. Funcționalități Cheie
 
-- Configurarea elementelor de followup cu: nume, cod (utilizabil în cron pentru a rula doar anumite followup-uri), stare activă, câmpul de dată de referință (data facturii sau data scadenței) și numărul relativ de zile față de acea dată (ex. `-5` = cu 5 zile înainte, `3` = la 3 zile după).
-- Personalizarea mesajului trimis: subiectul e-mailului, adresa expeditorului și corpul mesajului (cu blocuri preconfigurate disponibile prin ajutorul câmpului).
-- Marcarea partenerilor care vor primi followup-uri, printr-o opțiune dedicată la nivel de partener.
-- Programarea trimiterii prin cron, folosind modelul `followup.send.wizard`: `model.run_followup()` pentru toate elementele sau `model.run_followup(["12D", "20D"])` pentru cele selectate prin cod.
-- Configurarea unui partener de test (override), prin parametrul de sistem `followup.override_partner_id`, pentru a redirecționa e-mailurile în scop de testare.
+- **Etape configurabile**: data folosită (data facturii sau scadența), decalajul în zile (`-2` înseamnă cu două zile înainte, `3` după trei zile) și dacă se procesează doar ziua exactă sau în fiecare zi de atunci încolo.
+- **Doar facturi deschise**: notele de credit sunt opționale, iar totalurile apar în moneda companiei sau a clientului.
+- **Șablon propriu**: definit pe Contact, cu facturile inserate la `[invoices]`, câte un rând pe factură (număr, date, termen de plată, sume), plus totalul de plată, debitul total și suma restantă.
+- **Doar clienții marcați**: primesc mementouri cei cu bifa „Send followup e-mails".
+- **Marjă de sumă**: nu se trimite nimic când facturile din e-mail însumează mai puțin decât marja (sau o sumă negativă); pe client rămâne o notă cu motivul.
+- **Sume și date în limba clientului**: notele de credit apar negative și se scad din total.
+- **Erorile rămân locale**: dacă un client nu poate fi procesat (de exemplu un înlocuitor necunoscut), eroarea se loghează și se notează pe client, iar ceilalți sunt procesați.
+- **Rulare din acțiune programată**: pentru toate etapele (`model.run_followup()`) sau doar pentru cele cu anumite coduri (`model.run_followup(["f-1", "AZI"])`); utilizatorul acțiunii are nevoie de grupul „Followup manager".
+- **Testare**: parametrul de sistem `followup.override_partner_id` redirecționează e-mailurile către un contact de test.
+
+Pașii detaliați sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -24,8 +31,8 @@ Modulul oferă un sistem simplu de urmărire a facturilor neîncasate (followup)
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, această secțiune este omisă deoarece există un fișier `readme/DESCRIPTION.md`, iar acesta acoperă scopul și funcționalitățile modulului fără a solicita explicit detalierea componentelor tehnice.
+Componentele tehnice nu sunt detaliate în `readme/DESCRIPTION.md`, deci această secțiune nu este dezvoltată (conform fluxului de ingestie). Principalele modele sunt `account.invoice.followup` (etapa de followup), `followup.send.wizard` (rulat din acțiunea programată) și extensia `res.partner` (bifa de followup).
 
 #### 5. Conexiuni
 
-Nu au fost identificate module conexe cu pagină wiki existentă. Modulul se integrează cu funcționalitatea standard de contabilitate (`account`) pentru gestionarea facturilor clienți.
+Nu există module conexe cu pagină wiki. Modulul se bazează pe facturile clienților din `account`.

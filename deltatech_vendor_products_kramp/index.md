@@ -1,22 +1,25 @@
 # Vendor Products Kramp (localizat la `deltatech_vendor_products_kramp/index.md`)
 
 - **Nume Tehnic:** `deltatech_vendor_products_kramp`
-- **Versiune:** `19.0.1.0.1`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_vendor_products_kramp
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_vendor_products_kramp`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `20.0.1.2.4`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_vendor/tree/20.0/deltatech_vendor_products_kramp
+- **Cale Locală:** `odoo-addons/bitshop_vendor/deltatech_vendor_products_kramp`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul oferă un conector specializat pentru importul și sincronizarea datelor despre produse din catalogul furnizorului Kramp în Odoo, simplificând aprovizionarea și gestiunea stocurilor. Din punct de vedere business, automatizarea elimină introducerea manuală a produselor Kramp, asigurând că în Odoo catalogul este mereu actualizat cu cele mai recente informații despre produse și prețuri.
+Modulul conectează catalogul de produse al furnizorilor la Kramp, distribuitorul de piese de schimb agricole, prin API-ul webshop-ului Kramp. Elimină introducerea manuală a produselor și ține în Odoo prețurile, disponibilitatea și termenele de livrare actualizate.
 
 #### 2. Funcționalități Cheie
 
-- Import automat al catalogului: construiește și actualizează rapid catalogul de produse folosind date preluate direct de la Kramp.
-- Acuratețe sporită a datelor: elimină erorile de tastare și asigură reflectarea corectă în Odoo a specificațiilor și a codurilor de produs.
-- Aprovizionare simplificată: identifici și comanzi ușor produsele Kramp, având toate detaliile lor disponibile în ERP.
-- Vizibilitate mai bună a stocului: menține informații corecte despre stoc și variante pentru toate produsele Kramp, pentru o planificare mai eficientă.
-- Management scalabil al furnizorului: gestionezi eficient un volum mare de produse Kramp printr-un conector integrat și automatizat.
+- **Căutare online:** un cod sau un termen căutat în shop-ul website-ului este căutat la Kramp, iar articolele găsite intră în catalogul furnizorului cu nume, imagine, preț net (de achiziție) și preț brut (de listă).
+- **Actualizare prețuri:** butonul „Load Price API” de pe flux sau de pe produsele furnizorului citește prețurile curente, în loturi de 25 de produse pe cerere.
+- **Disponibilitate:** Kramp nu publică stocul, așa că el este dedus din planurile de livrare: cantitatea livrată în 10 zile devine cantitate disponibilă (maximum 999), iar zilele până la prima livrare devin termenul de achiziție.
+- **Adăugare din produse:** produsele care au deja Kramp ca furnizor sunt căutate la Kramp după codul din linia de furnizor sau după codul de bare (EAN) și adăugate în catalog, legate de produs.
+- **Sincronizare nocturnă:** acțiunea programată adaugă produsele noi, apoi actualizează pentru fiecare produs legat prețul de achiziție, cantitatea și termenul pe linia de furnizor, plus prețul de vânzare (după regulile de preț ale fluxului). Nu creează produse, iar un produs fără preț Kramp își păstrează prețul de vânzare.
+- **Configurare:** *Purchase > Products > Vendor Feed*, tip conexiune **Kramp**, utilizator și parolă ale contului webshop, moneda fluxului (RON pentru Kramp România) și *Kramp Locale* (implicit `ro_RO`; prețurile se întorc doar în locale-ul propriului shop). Fără credențiale căutarea întoarce doar nume și imagini, fără prețuri.
+- Butonul **Kramp Sync** de pe flux rulează sincronizarea la cerere. Fluxul detaliat este în [fișa consultant](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -24,9 +27,21 @@ Acest modul oferă un conector specializat pentru importul și sincronizarea dat
 
 #### 4. Componente Cheie
 
-Documentația acestui modul se bazează pe fișierul `readme/DESCRIPTION.md`, conform fluxului de ingestie. Analiza detaliată a componentelor tehnice (modele, vizualizări, acțiuni automate) nu este inclusă, întrucât Readme-ul nu o solicită explicit.
+Sumarul și funcționalitățile provin din `readme/DESCRIPTION.md`; componentele sunt listate pe scurt, din codul modulului.
+
+**Modele**
+
+- `vendor.feed` (extins): adaugă tipul de conexiune `kramp`, `kramp_locale` și câmpurile de token (vizibile doar administratorilor); conține clientul webshop Kramp.
+
+**Vizualizări**
+
+- `view_vendor_feed_form`: extinde formularul fluxului de furnizor cu setările Kramp.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- `ir_cron_kramp_sync` („Kramp: Sync Prices and Stock”): rulează zilnic, activă după instalare.
 
 #### 5. Conexiuni
 
-- [deltatech_vendor_products_website](../deltatech_vendor_products_website/index.md): dependența directă; conectorul Kramp extinde infrastructura de produse furnizor expusă pe website.
-- [deltatech_vendor_products](../deltatech_vendor_products/index.md): modulul de bază al suitei de produse furnizor pe care se construiește acest conector.
+- [deltatech_vendor_products_website](../deltatech_vendor_products_website/index.md): căutarea online în shop folosită de conectorul Kramp.
+- [deltatech_vendor_products](../deltatech_vendor_products/index.md): catalogul de produse furnizor (`vendor.feed`, `vendor.product`) pe care se construiește conectorul.

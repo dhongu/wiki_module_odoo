@@ -1,22 +1,21 @@
-# Deltatech Partner GLN (localizat la `deltatech_gln/index.md`)
+# Partner GLN (localizat la `deltatech_gln/index.md`)
 
 - **Nume Tehnic:** `deltatech_gln`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_gln
+- **Versiune:** `20.0.1.1.1`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_gln
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_gln`
-- **Ultima Ingestie:** `2026-06-02`
-
-> **Notă:** Conform documentației modulului, acesta este considerat **Obsolet**. Funcționalitatea sa de bază a fost mutată și este acum mai bine acoperită de modulul `account_add_gln`. Pentru proiecte noi se recomandă utilizarea directă a `account_add_gln`.
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Acest modul a fost conceput pentru a gestiona Numărul Global de Locație (GLN — Global Location Number) la nivel de parteneri în Odoo. Rolul său este să se asigure că datele GLN sunt corect stocate și sincronizate pentru schimbul electronic de date (EDI) și pentru procesele logistice. În prezent modulul este marcat ca **obsolet**: funcționalitatea sa principală a fost preluată de modulul `account_add_gln`, iar `deltatech_gln` rămâne în principal ca strat de compatibilitate pentru configurațiile mai vechi care încă depind de el.
+Modulul afișează codul **GLN (Global Location Number)** pe formularul partenerului, pe sub-formularul de contact / adresă și pe formularul simplificat de partener, prin câmpul `gln`. Începând cu Odoo 20.0, GLN-ul este un identificator standard al partenerului (`EAN/GLN`), păstrat de `base`; modulul nu mai are o copie proprie a valorii, ci citește, scrie și caută direct în identificatorul standard. Astfel, modulele construite peste `deltatech_gln` (EDI, EDINET etc.) continuă să funcționeze și văd aceeași valoare ca facturarea electronică standard (UBL/Peppol).
 
 #### 2. Funcționalități Cheie
 
-- **Integrarea câmpului GLN**: adaugă un câmp dedicat **GLN (Global Location Number)** în vizualizarea formularului de partener, făcând datele GLN ușor accesibile și editabile pentru fiecare locație de business.
-- **Strat de compatibilitate**: acționează ca punte pentru configurațiile vechi (legacy) care necesită dependența `deltatech_gln`.
-- **Suport pentru migrare**: sprijină migrarea datelor GLN către noul standard `account_add_gln`.
+- Câmpul **GLN** (`gln`) pe formularul de partener, pe sub-formularul de contact / adresă și pe formularul simplificat.
+- Câmpul este doar un proxy peste identificatorul standard `EAN/GLN` al partenerului: citire, scriere și căutare (inclusiv operatori de tip `like` / `ilike` și `in`) se fac pe stocarea standard.
+- Se aplică validarea standard: un GLN malformat (cifră de control EAN greșită) este refuzat.
+- Păstrează compatibilitatea cu modulele care depind de `gln`.
 
 #### 3. Dependențe
 
@@ -24,8 +23,19 @@ Acest modul a fost conceput pentru a gestiona Numărul Global de Locație (GLN �
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, secțiunile „Componente Cheie" sunt omise deoarece „Sumar" și „Funcționalități Cheie" provin din `readme/DESCRIPTION.md`, iar acesta nu solicită explicit analiza codului. Modulul adaugă, la nivel de implementare, un câmp GLN pe partener prin vizualizarea `views/res_partner_view.xml`.
+**Modele**
+
+- `res.partner` (extins): câmpul `gln`, calculat din `additional_identifiers["EAN_GLN"]`, cu `inverse` (scriere în identificatorul standard) și `search` (căutare SQL pe identificator).
+
+**Vizualizări**
+
+- `view_partner_form`: moștenește `base.view_partner_form` și adaugă câmpul GLN.
+- `view_partner_simple_form`: moștenește `base.view_partner_simple_form` și adaugă câmpul GLN.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Modulul nu definește acțiuni automate sau acțiuni server.
 
 #### 5. Conexiuni
 
-- `account_add_gln`: modulul succesor care preia gestionarea GLN; modulele noi ar trebui să îl folosească pe acesta în locul lui `deltatech_gln`. (Nu are încă pagină wiki.)
+- [deltatech_edi](../deltatech_edi/index.md): modul care depinde de `deltatech_gln` și folosește GLN-ul partenerului.

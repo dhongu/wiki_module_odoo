@@ -1,10 +1,10 @@
-# Business process (localizat la `deltatech_business_process/index.md`)
+# Business Process Management (localizat la `deltatech_business_process/index.md`)
 
 - **Nume Tehnic:** `deltatech_business_process`
-- **Versiune:** `19.0.1.9.2`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_business_process
+- **Versiune:** `20.0.1.9.16`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_business_process
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_business_process`
-- **Ultima Ingestie:** `2026-09-24`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -68,7 +68,7 @@ Detaliile pas-cu-pas (configurare inițială, fluxul complet, tabele de stări, 
 - Secvențe definite în `data/ir_sequence_data.xml` și șabloane de email în `data/email_templates.xml`, încărcate la instalare.
 - Date implicite pentru etapele de implementare în `data/implementation_stage_data.xml` și date generale în `data/data.xml`.
 - Vrăjitoare de export/import procese ca JSON (`wizard/export_business_process.py`, `wizard/import_business_process.py`): exportul din lista de procese (cu opțiuni pentru teste, responsabil, client și suport) și importul dintr-un JSON pe formularul proiectului.
-- Migrare de date la actualizare (`migrations/19.0.1.6.0/post-migrate.py`).
+- Migrare de date la actualizare (`migrations/` — script post-migrate pentru versiunea 1.6.0).
 
 #### 5. Conexiuni
 

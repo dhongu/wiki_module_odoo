@@ -1,20 +1,24 @@
-# Deltatech Auto Reorder Rule (localizat la `deltatech_auto_reorder_rule/index.md`)
+# Auto Reorder Rules (localizat la `deltatech_auto_reorder_rule/index.md`)
 
 - **Nume Tehnic:** `deltatech_auto_reorder_rule`
-- **Versiune:** `19.0.0.1.3`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_auto_reorder_rule`
+- **Versiune:** `20.0.0.1.11`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_auto_reorder_rule
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_auto_reorder_rule`
-- **Ultima Ingestie:** `2026-06-02`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul automatizează crearea regulilor de reaprovizionare (reordering rules) pentru produse. La adăugarea unui produs nou, modulul generează automat o regulă de reaprovizionare cu valori implicite, eliminând astfel un pas manual repetitiv. Pentru produsele deja existente, oferă o metodă dedicată prin care regulile pot fi create în masă. Astfel, echipa de achiziții și logistică se asigură că fiecare produs gestionat are definite pragurile de stoc necesare pentru reaprovizionarea automată.
+Modulul automatizează crearea regulilor de reaprovizionare pentru produse. La adăugarea unui produs stocabil nou, generează automat o regulă de reaprovizionare pentru fiecare depozit marcat în acest scop. Pentru produsele existente oferă acțiuni de creare în masă sau cu cantități personalizate. Astfel, echipa de achiziții și logistică are definite pragurile de stoc pentru fiecare produs gestionat, fără pași manuali repetitivi.
 
 #### 2. Funcționalități Cheie
 
-- Creează automat o regulă de reaprovizionare cu valori implicite atunci când este creat un produs nou.
-- Oferă metoda `create_rule()` pe modelul `product.product` pentru a crea reguli pentru produsele deja existente.
-- Regulile sunt create doar pentru produsele de tip stocabil (`type='product'`).
+- Creare automată a unei înregistrări `stock.warehouse.orderpoint` pentru fiecare produs stocabil nou, în fiecare depozit cu opțiunea **Generate Reorder Rules** activă (implicit activă la depozitele noi), folosind ruta marcată **Use This for Auto Rules**. Dacă nicio rută nu e marcată, regulile se creează fără rută.
+- Acțiunea server **Create rule** (în meniul Acțiune al listei de produse) creează reguli în masă pentru produsele selectate care nu au încă una.
+- Acțiunea server **Open Rules Wizard** (pe formularul produsului) deschide un asistent pentru reguli pe locații alese, cu **Minimum Quantity**, **Maximum Quantity** și **Trigger** (automat sau manual). Se creează câte o regulă pentru fiecare variantă de produs și fiecare locație.
+- Dezactivarea creării automate fără dezinstalare: parametrul de sistem `deltatech_auto_reorder_rule.dont_auto_create_rule` cu valoarea `True`; regulile se pot genera în continuare manual.
+- Regulile create se verifică în **Inventar > Operațiuni > Reaprovizionare**.
+- Configurare: opțiunea de depozit în **Inventar > Configurare > Depozite**, opțiunea de rută în **Inventar > Configurare > Rute** (detaliile pas cu pas sunt în fișa consultantului).
 
 #### 3. Dependențe
 
@@ -24,13 +28,22 @@ Modulul automatizează crearea regulilor de reaprovizionare (reordering rules) p
 
 #### 4. Componente Cheie
 
-DESCRIPTION.md acoperă scopul și funcționalitățile principale ale modulului. Întrucât descrierea face referire explicită la mecanismul de creare a regulilor (metoda `create_rule()`), se notează componentele de declanșare puse la dispoziția utilizatorului.
+**Modele**
+
+- `product.product`: creează regulile (metoda `create_rule()`) la crearea produsului sau la cerere.
+- `stock.warehouse`: opțiunea **Generate Reorder Rules**.
+- `stock.route`: marcajul **Use This for Auto Rules**.
+- `order.rules.details.wizard`: asistentul pentru reguli cu cantități și locații personalizate.
+
+**Vizualizări**
+
+- Vizualizări moștenite pe depozit și rută, plus formularul asistentului de reguli (`wizard/order_rules_details_view.xml`).
 
 **Acțiuni Automate / Acțiuni Server**
 
-- `product_action_create_rule`: Acțiune server legată de `product.template`, disponibilă din meniul de acțiuni pe produse; apelează `create_rule()` pe variantele produselor selectate pentru a genera regulile de reaprovizionare.
-- `product_action_create_variant_rule`: Acțiune server legată de formularul `product.template`; deschide asistentul `order.rules.details.wizard` pentru detalierea regulilor de comandă.
+- `product_action_create_rule`: acțiune server pe produs; apelează `create_rule()` pentru produsele selectate.
+- `product_action_create_variant_rule`: acțiune server pe formularul produsului; deschide `order.rules.details.wizard`.
 
 #### 5. Conexiuni
 
-Nu au fost identificate conexiuni către alte module documentate în acest wiki. Modulul se integrează cu funcționalitatea nativă Odoo de reaprovizionare din `stock`, `purchase_stock` și `sale_stock`.
+- Nu au fost identificate conexiuni către alte module documentate în wiki. Modulul se integrează cu reaprovizionarea nativă din `stock`, `purchase_stock` și `sale_stock`.

@@ -1,22 +1,23 @@
-# Deltatech Line Counter (localizat la `deltatech_line_counter/index.md`)
+# Module Line Counter (localizat la `deltatech_line_counter/index.md`)
 
 - **Nume Tehnic:** `deltatech_line_counter`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_line_counter](https://github.com/dhongu/deltatech/tree/19.0/deltatech_line_counter)
+- **Versiune:** `20.0.1.0.3`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_line_counter
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_line_counter`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul adaugă un wizard simplu în meniul de Administrare care numără liniile de cod ale modulelor Odoo instalate, alese de utilizator. Este util pentru a estima rapid dimensiunea și complexitatea unui modul (de exemplu, la evaluări tehnice, oferte de dezvoltare sau audit de cod), fără a fi nevoie de instrumente externe.
+Modulul adaugă un wizard în meniul de Administrare care numără liniile de cod ale modulelor Odoo instalate, alese de utilizator. Oferă o estimare rapidă a dimensiunii și complexității unui modul (evaluări tehnice, oferte de dezvoltare, audit), fără instrumente externe.
 
 #### 2. Funcționalități Cheie
 
-- Selectarea unuia sau mai multor module instalate (widget many2many_tags) pentru numărare.
-- Numărarea liniilor ne-goale din fișiere `.py`, `.xml`, `.js`, `.css` și `.scss`.
-- Excluderea automată a directorului `tests` din calcul.
-- Afișarea rezultatului într-un tabel HTML, cu total pe fiecare modul și un total general.
-- Acces din meniul Setări → Tehnic/Administrare (`base.menu_administration`).
+- Selectarea unuia sau mai multor module instalate pentru numărare.
+- Numărarea liniilor ne-goale din fișierele `.py`, `.xml`, `.js`, `.css` și `.scss`; comentariile și docstring-urile sunt incluse în număr.
+- Excluderea directorului `tests` din calcul; fișierele care nu pot fi citite ca UTF-8 sunt ignorate.
+- Rezultat într-un tabel cu total pe modul și total general; valoarea este o estimare.
+- Acces din meniul Administrare (**Line Counter**).
 
 #### 3. Dependențe
 
@@ -26,16 +27,16 @@ Modulul adaugă un wizard simplu în meniul de Administrare care numără liniil
 
 **Modele**
 
-- `line.counter.wizard` (model tranzitoriu): reține modulele selectate (`module_ids`, m2m către `ir.module.module`, filtrate pe `state = installed`) și rezultatul numărătorii (`result`, câmp HTML); metoda `action_count_lines()` parcurge directorul fiecărui modul cu `os.walk`, numără liniile ne-goale din fișierele relevante și construiește tabelul HTML de rezultat.
+- `line.counter.wizard` (tranzitoriu): reține modulele selectate și rezultatul numărătorii (câmp HTML); `action_count_lines()` parcurge directorul fiecărui modul și construiește tabelul.
 
 **Vizualizări**
 
-- `view_line_counter_wizard_form`: formularul wizard-ului, cu selecția modulelor, butonul „Count Lines” și afișarea rezultatului (vizibil doar după calcul).
+- `line.counter.wizard.form`: formularul wizard-ului, cu selecția modulelor, butonul **Count Lines** și rezultatul.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Nu există `ir.cron`, `base.automation` sau `ir.actions.server` definite în acest modul; există doar acțiunea de fereastră `action_line_counter_wizard` și meniul `menu_line_counter_wizard` (Setări → Administrare) care deschid wizard-ul.
+- Nu există `ir.cron`, `base.automation` sau `ir.actions.server`; doar acțiunea de fereastră și meniul `menu_line_counter_wizard` care deschid wizard-ul.
 
 #### 5. Conexiuni
 
-Nu au fost identificate module conexe funcțional (dincolo de dependența `base`); modulul este un utilitar independent pentru dezvoltatori/consultanți.
+Nu au fost identificate module conexe; este un utilitar independent pentru dezvoltatori și consultanți.

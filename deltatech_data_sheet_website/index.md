@@ -1,19 +1,21 @@
 # Product Data Sheet Website (localizat la `deltatech_data_sheet_website/index.md`)
 
 - **Nume Tehnic:** `deltatech_data_sheet_website`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_data_sheet_website
+- **Versiune:** `20.0.1.0.1`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_data_sheet_website
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_data_sheet_website`
-- **Ultima Ingestie:** `2026-06-02`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Acest modul extinde magazinul online (website e-commerce) pentru a pune la dispoziția clienților fișele tehnice și fișele cu date de securitate ale produselor. Pe pagina publică a unui produs, vizitatorul primește butoane dedicate prin care poate deschide și consulta documentația asociată produsului, fără a fi nevoie de asistență din partea vânzătorului. Astfel, informația tehnică relevantă pentru decizia de cumpărare devine direct accesibilă online.
+Modulul extinde magazinul online pentru a pune la dispoziția vizitatorilor fișele tehnice și fișele cu date de securitate ale produselor. Când un produs are asociată o astfel de fișă (gestionată prin modulul de bază), pe pagina publică a produsului apar automat butoane de descărcare, fără configurare suplimentară. Astfel, informația tehnică necesară deciziei de cumpărare este direct accesibilă clientului.
 
 #### 2. Funcționalități Cheie
 
-- Adaugă pe pagina de produs din website butonul „Show Data Sheet" (Afișare fișă tehnică), care permite vizualizarea fișei tehnice asociate șablonului de produs.
-- Adaugă pe pagina de produs din website butonul „Show Safety Data Sheet" (Afișare fișă cu date de securitate), care permite vizualizarea fișei cu date de securitate asociate șablonului de produs.
+- Buton „Show Data Sheet” pe pagina de produs din website, afișat doar dacă șablonul de produs are o fișă tehnică atașată.
+- Buton „Show Safety Data Sheet” pe pagina de produs, afișat doar dacă șablonul de produs are o fișă cu date de securitate atașată.
+- Butoanele trimit direct la document, care se poate deschide sau descărca în browser; produsele fără documente nu afișează butoane.
+- Fișele se atașează din **Inventar > Produse > Produse** (sau **Vânzări > Produse**), prin câmpurile oferite de `deltatech_data_sheet`; pe site, butoanele apar în pagina de detaliu a produsului (`/shop`), sub descrierea produsului.
 
 #### 3. Dependențe
 
@@ -22,7 +24,9 @@ Acest modul extinde magazinul online (website e-commerce) pentru a pune la dispo
 
 #### 4. Componente Cheie
 
-Conform `readme/DESCRIPTION.md`, modulul se concentrează pe extinderea interfeței publice a produsului prin butoanele de acces la fișele tehnice. Componenta cheie este șablonul de website definit în `views/templates.xml`, care injectează butoanele de afișare a fișelor pe pagina publică a produsului.
+**Vizualizări**
+
+- `product_data_sheet`: șablon de website care moștenește `website_sale.product` și injectează butoanele de fișă tehnică și fișă de securitate pe pagina produsului.
 
 #### 5. Conexiuni
 

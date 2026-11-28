@@ -1,19 +1,22 @@
 # Download File (localizat la `deltatech_download/index.md`)
 
 - **Nume Tehnic:** `deltatech_download`
-- **Versiune:** `19.0.0.1.2`
-- **Cale:** [https://github.com/dhongu/deltatech/tree/19.0/deltatech_download](https://github.com/dhongu/deltatech/tree/19.0/deltatech_download)
+- **Versiune:** `20.0.0.1.5`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_download
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_download`
-- **Ultima Ingestie:** `2026-06-02`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Modulul oferă un mecanism simplu de descărcare a fișierelor generate de Odoo. Principala sa valoare de afaceri constă în posibilitatea de a marca un raport astfel încât rezultatul acestuia să fie oferit utilizatorului direct ca descărcare de fișier, în loc să fie afișat în interfață. Astfel, utilizatorii obțin fișierele de care au nevoie într-un mod mai rapid și mai comod.
+Implicit, Odoo descarcă fiecare raport PDF ca fișier, iar utilizatorul trebuie să-l deschidă din folderul de descărcări. Cu acest modul, rapoartele PDF se deschid direct într-o filă nouă a browserului, gata de citit sau tipărit, fără a aglomera folderul de descărcări.
 
 #### 2. Funcționalități Cheie
 
-- Descărcarea fișierelor generate de sistem.
-- Posibilitatea de a configura, la nivelul unui raport, opțiunea de descărcare directă a fișierului.
+- **Rapoarte PDF într-o filă nouă**: facturi, oferte, avize de livrare și orice alt raport PDF se deschid în vizualizatorul PDF al browserului în loc să fie descărcate.
+- **Descărcare directă per raport**: rapoartele care trebuie totuși salvate ca fișier pot fi marcate pentru descărcare directă, unul câte unul.
+- **Mobil și IoT neschimbate**: pe telefoane și tablete, precum și pentru rapoartele tipărite printr-un IoT Box, rămâne comportamentul standard Odoo.
+- **Compatibil cu blocarea ferestrelor pop-up**: dacă browserul blochează fila nouă, utilizatorul nu este oprit de o eroare.
+- Nu necesită configurare. Pentru a păstra descărcarea standard la un raport: modul dezvoltator, **Setări > Tehnic > Acțiuni > Rapoarte**, deschideți raportul și bifați **Direct Download**.
 
 #### 3. Dependențe
 
@@ -21,8 +24,8 @@ Modulul oferă un mecanism simplu de descărcare a fișierelor generate de Odoo.
 
 #### 4. Componente Cheie
 
-*Conform fluxului de ingestie, această secțiune este omisă deoarece fișierul `readme/DESCRIPTION.md` este prezent și acoperă Sumarul și Funcționalitățile Cheie, fără a solicita explicit analiza componentelor tehnice.*
+Sumarul și funcționalitățile provin din `readme/DESCRIPTION.md` și `readme/CONFIGURE.md`, care nu cer explicit analiza componentelor; analiza detaliată a codului a fost omisă conform schemei.
 
 #### 5. Conexiuni
 
-Nu au fost identificate conexiuni funcționale documentate către alte module cu pagină wiki existentă.
+Nu au fost identificate conexiuni funcționale către alte module cu pagină wiki existentă.

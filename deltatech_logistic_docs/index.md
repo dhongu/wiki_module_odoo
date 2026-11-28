@@ -1,21 +1,22 @@
 # Logistic Documents (localizat la `deltatech_logistic_docs/index.md`)
 
 - **Nume Tehnic:** `deltatech_logistic_docs`
-- **Versiune:** `19.0.1.0.3`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_logistic_docs`
+- **Versiune:** `20.0.1.0.5`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_logistic_docs
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_logistic_docs`
-- **Ultima Ingestie:** `2026-06-02`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Acest modul oferă un depozit centralizat pentru documentația logistică și de transport în Odoo. Este conceput pentru a simplifica gestionarea documentelor fizice (precum scrisori de trăsură CMR, certificate de origine sau avize de însoțire a mărfii) de-a lungul diferitelor etape ale lanțului de aprovizionare. În loc ca fișierele să fie risipite pe comenzi, livrări și facturi separate, echipele de logistică au un singur loc din care pot accesa și verifica toate documentele relevante pentru o expediere sau o tranzacție.
+Documentele de transport (CMR, certificate de origine, avize semnate) sunt adesea atașate altui document decât cel deschis de utilizator: CMR-ul pe livrare, certificatul pe comanda de achiziție, PDF-ul furnizorului pe factură. Modulul arată, din orice document din flux, și fișierele atașate documentelor înrudite.
 
 #### 2. Funcționalități Cheie
 
-- **Hub unificat de documentație**: adaugă o vizualizare dedicată **Documente Logistică** care agregă atașamentele din mai multe modele și urmărește documentele legate de **Comenzi de Vânzare**, **Comenzi de Achiziție**, **Transferuri de Stoc** și **Facturi** într-un singur loc.
-- **Legare inteligentă**: identifică și leagă automat documentele pe baza fluxului logic al documentelor Odoo (de la Comandă la Livrare și apoi la Factură), permițând echipelor de logistică să acceseze rapid toate fișierele relevante pentru o anumită expediere sau tranzacție.
-- **Categorizarea documentelor**: permite etichetarea și clasificarea fișierelor logistice pentru o filtrare și o căutare mai ușoară în timpul auditurilor.
-- **Utilizare**: documentele se accesează dintr-un meniu dedicat, cu opțiuni de căutare și filtrare după **Partener**, **Comandă** sau **Livrare**; fișierele noi se încarcă direct pe documentul relevant (comandă de vânzare, livrare etc.) și apar în vizualizatorul central, de unde pot fi descărcate sau vizualizate pentru verificare în timpul procesului de expediere și livrare.
+- Buton **Documents** pe comanda de vânzare, comanda de achiziție, transfer și factură/factură furnizor, cu numărul de atașamente găsite pe flux; se deschid în kanban, listă sau formular.
+- Atașamente colectate pe flux: la comanda de vânzare, ale ei, ale transferurilor și ale facturilor; la comanda de achiziție, ale ei, ale recepțiilor și ale facturilor; la transfer, ale lui, ale comenzii asociate și ale facturilor comenzii; la factură, ale ei și ale comenzilor de vânzare/achiziție din linii, cu transferurile lor (la alte note contabile, doar propriile atașamente).
+- Un atașament creat din vizualizarea deschisă de buton se leagă implicit de documentul de pe care s-a apăsat butonul.
+- Buton **Download** pe cardul kanban al atașamentului; fișierele `.zplpdf` se descarcă ca date brute, pentru imprimante de etichete.
+- Fără meniu și fără configurare.
 
 #### 3. Dependențe
 
@@ -24,8 +25,8 @@ Acest modul oferă un depozit centralizat pentru documentația logistică și de
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, secțiunile pentru Sumar și Funcționalități Cheie au fost preluate din `readme/DESCRIPTION.md`, care nu solicită explicit detalierea componentelor tehnice. Analiza codului pentru această secțiune a fost, prin urmare, omisă. La nivel general, modulul extinde modelele `stock.picking`, `sale.order`, `purchase.order`, `account.move` și `ir.attachment`, cu vizualizările aferente pentru centralizarea documentelor logistice.
+Secțiunile 1 și 2 provin din `readme/DESCRIPTION.md`, care nu cere analiza componentelor. Modulul extinde `stock.picking`, `sale.order`, `purchase.order`, `account.move`, `ir.attachment` și `ir.actions.report`, cu vizualizările aferente (`view_picking_form`, `view_order_form`, `purchase_order_form`, `view_move_form`, `view_document_file_kanban`).
 
 #### 5. Conexiuni
 
-- [deltatech_invoice_picking](../deltatech_invoice_picking/index.md): leagă livrările de facturi, completând fluxul Comandă → Livrare → Factură pe care acest modul îl folosește pentru centralizarea documentelor.
+- [deltatech_invoice_picking](../deltatech_invoice_picking/index.md): leagă livrările de facturi, completând fluxul Comandă → Livrare → Factură folosit de acest modul.
