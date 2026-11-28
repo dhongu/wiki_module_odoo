@@ -36,7 +36,7 @@ din comandă preia taxa corectă. Se instalează automat când sunt instalate at
   comandă să poarte de la început taxa corectă.
 
 Baza legală completă (lista bunurilor, mențiunea pe e-Factura, rândurile din D300) este în
-[fișa modulului de bază](../../l10n_ro_reverse_charge_331/readme/FISA_CONSULTANT.md).
+[fișa modulului de bază](../l10n_ro_reverse_charge_331/FISA_CONSULTANT.md).
 
 ## 3. Utilizatori și roluri
 
@@ -67,7 +67,7 @@ Date minime pentru demo (aceleași ca la modulul de bază):
 ## 5. Configurare inițială
 
 1. Configurați modulul de bază conform pașilor 1–2 din
-   [fișa lui](../../l10n_ro_reverse_charge_331/readme/FISA_CONSULTANT.md).
+   [fișa lui](../l10n_ro_reverse_charge_331/FISA_CONSULTANT.md).
 2. Instalați aplicația **Vânzări**, dacă nu e deja instalată; `l10n_ro_reverse_charge_331_sale` se
    instalează automat. Nu are setări proprii, meniuri sau ecrane.
 3. Verificați statutul de TVA al clienților (**Plătitor TVA (scpTVA)**); de el depinde taxa aleasă
@@ -127,10 +127,10 @@ Raportarea în D300 este cea descrisă în fișa modulului de bază.
 
 | Modul | Rol |
 |---|---|
-| `l10n_ro_reverse_charge_331` | modulul de bază: taxele `0% R331` / `21% R331`, bifele pe poziția fiscală și pe taxe, garda la postarea facturii — [fișa](../../l10n_ro_reverse_charge_331/readme/FISA_CONSULTANT.md) |
+| `l10n_ro_reverse_charge_331` | modulul de bază: taxele `0% R331` / `21% R331`, bifele pe poziția fiscală și pe taxe, garda la postarea facturii — [fișa](../l10n_ro_reverse_charge_331/FISA_CONSULTANT.md) |
 | `sale` | ofertele și comenzile de vânzare pe care se aplică regula |
-| `l10n_ro_reverse_charge_331_purchase` | aceeași regulă pe cererile de ofertă și comenzile de achiziție — [fișa](../../l10n_ro_reverse_charge_331_purchase/readme/FISA_CONSULTANT.md) |
-| `l10n_ro_reverse_charge_331_pos` | aceeași regulă în Punctul de vânzare — [fișa](../../l10n_ro_reverse_charge_331_pos/readme/FISA_CONSULTANT.md) |
+| `l10n_ro_reverse_charge_331_purchase` | aceeași regulă pe cererile de ofertă și comenzile de achiziție — [fișa](../l10n_ro_reverse_charge_331_purchase/FISA_CONSULTANT.md) |
+| `l10n_ro_reverse_charge_331_pos` | aceeași regulă în Punctul de vânzare — [fișa](../l10n_ro_reverse_charge_331_pos/FISA_CONSULTANT.md) |
 | `l10n_ro_config` / `l10n_ro_anaf_partner` | câmpul **Plătitor TVA (scpTVA)** al clientului, după care se decide taxa |
 
 **Ce e automat:** alegerea taxei pe linia ofertei după statutul de TVA al clientului (al firmei-mamă,
@@ -162,7 +162,7 @@ clienților, apăsarea **Actualizare Taxe** după schimbarea clientului pe o ofe
 Modulul este triat cu fișă simplă, fără capturi: nu are ecrane proprii, iar efectul lui (taxa de pe
 linie și totalurile) se vede în ecranele standard ale ofertei. Configurarea regimului și facturile
 cu taxare inversă sunt documentate cu capturi în
-[fișa modulului de bază](../../l10n_ro_reverse_charge_331/readme/FISA_CONSULTANT.md).
+[fișa modulului de bază](../l10n_ro_reverse_charge_331/FISA_CONSULTANT.md).
 
 ## 11. Observații pentru manual
 

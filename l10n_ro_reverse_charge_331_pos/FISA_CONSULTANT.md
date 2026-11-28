@@ -21,7 +21,7 @@ dreptul la el. În plus, o comandă cu taxare inversă se facturează obligatori
 
 Configurarea regimului (poziția fiscală, taxa `0% R331`, maparea) și facturarea din backend sunt
 descrise în fișa modulului de bază,
-[`l10n_ro_reverse_charge_331`](../../l10n_ro_reverse_charge_331/readme/FISA_CONSULTANT.md);
+[`l10n_ro_reverse_charge_331`](../l10n_ro_reverse_charge_331/FISA_CONSULTANT.md);
 fișa de față acoperă doar ce se schimbă în punctul de vânzare.
 
 ## 2. Bază legală și context
@@ -187,8 +187,8 @@ nota de sesiune nu este document de vânzare.
 | Modul | Rol |
 |---|---|
 | `l10n_ro_reverse_charge_331` | regimul propriu-zis: poziția fiscală, taxa `0% R331`, maparea, mențiunea pe factură, blocajul la postare |
-| `l10n_ro_reverse_charge_331_sale` | același regim pe comenzile de vânzare ([fișa](../../l10n_ro_reverse_charge_331_sale/readme/FISA_CONSULTANT.md)) |
-| `l10n_ro_reverse_charge_331_purchase` | garda art. 331 pe achiziții ([fișa](../../l10n_ro_reverse_charge_331_purchase/readme/FISA_CONSULTANT.md)) |
+| `l10n_ro_reverse_charge_331_sale` | același regim pe comenzile de vânzare ([fișa](../l10n_ro_reverse_charge_331_sale/FISA_CONSULTANT.md)) |
+| `l10n_ro_reverse_charge_331_purchase` | garda art. 331 pe achiziții ([fișa](../l10n_ro_reverse_charge_331_purchase/FISA_CONSULTANT.md)) |
 | `l10n_ro_anaf_partner` / `l10n_ro_config` | bifa **Plătitor TVA (scpTVA)** / **TVA aplicabil** pe partener, pe care se bazează filtrarea |
 | `deltatech_pos_fix` | recalculează prețul în POS când o taxă cu TVA inclus e mapată la `0% R331` |
 | `l10n_ro_anaf_d300` | decontul de TVA în care se raportează baza livrărilor cu taxare inversă |

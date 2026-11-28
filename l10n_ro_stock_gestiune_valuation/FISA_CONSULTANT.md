@@ -22,7 +22,7 @@ pentru fiecare gestiune.
 
 Fluxul complet al gestiunilor (configurare, recepție 371 = 408, factură, retur, transfer, balanța
 stocurilor) este descris în fișa modulului
-[`l10n_ro_stock_gestiune`](../../l10n_ro_stock_gestiune/readme/FISA_CONSULTANT.md); această fișă
+[`l10n_ro_stock_gestiune`](../l10n_ro_stock_gestiune/FISA_CONSULTANT.md); această fișă
 acoperă doar ce adaugă puntea.
 
 ## 2. Bază legală și context
